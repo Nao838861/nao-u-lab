@@ -261,3 +261,15 @@
 ## 未決質問
 
 - `AGENTS.md` が参照する v004 `product_spec.md` は存在しない。今回の要求正本は HANDOFF / PLAYTEST / README / 本書とし、`product_spec.md` を新設するかは勝手に決めず HANDOFF の質問欄へ残す。
+
+## 2026-07-24 追補 — 描画場面compilerと地形層cache
+
+- [x] rendererが毎frame行っていた自然物抽出、道路／獣道parse、静的wrapper生成、全面sortを`render_scene.js`へ移し、snapshotごとに一度だけ行う。
+- [x] 静的drawableと動的drawableを別々にsortし、同じ深度式のまま線形mergeする。
+- [x] cameraの可視world境界を一度だけ求め、4tile余白の外にある地形と静的物だけCanvas命令を省く。
+- [x] 地形本体を地形fingerprint、季節、camera、viewport単位のoffscreen層へ分離する。水面の波は毎frame描画し続ける。
+- [x] camera移動時は層を無効化するが、canvas要素は消去して再利用し、drag中の割当てを増やさない。
+- [x] offscreen層は物理1200万画素を上限にし、それを超える高DPI大画面では直接描画へ戻して追加メモリを確保しない。
+- [x] 120日目test cityの実Chrome 240frame×5回中央値を13.0183ms/frameから2.5954ms/frameへ約80.1%短縮した。
+- [x] 複合path案は31.7908ms/frameへ悪化し、道路境界の見た目も変えたため撤回した。詳しい3設計サイクルと失敗案は`ARCHITECTURAL_OPTIMIZATION_DESIGN_CYCLES_20260724.md`を正本とする。
+- [x] engine、人物数、在庫荷姿数、連続移動、補間頻度は変更していない。

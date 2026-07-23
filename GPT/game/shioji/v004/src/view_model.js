@@ -1,11 +1,12 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.13.0-elena-voice';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.14.0-render-scene';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.13.0-elena-voice';
-import { analyzeRoadConnections } from './placement.js?v=v004.13.0-elena-voice';
+} from './engine_bridge.js?v=v004.14.0-render-scene';
+import { analyzeRoadConnections } from './placement.js?v=v004.14.0-render-scene';
+import { compileRenderScene } from './render_scene.js?v=v004.14.0-render-scene';
 import {
   buildingAppearance, buildingStructureLayout, pileVisual, trailVisual, yardSlots, yardStockRows,
-} from './visuals.js?v=v004.13.0-elena-voice';
+} from './visuals.js?v=v004.14.0-render-scene';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
@@ -488,7 +489,11 @@ export function snapshotToViewModel(snapshot) {
     activeOrder: snapshot.economy.order ? { ...snapshot.economy.order } : null,
     marketLowest,
   };
-  return deepFreeze({ ...base, roadConnection: analyzeRoadConnections(base) });
+  const withRoadConnection = { ...base, roadConnection: analyzeRoadConnections(base) };
+  return deepFreeze({
+    ...withRoadConnection,
+    renderScene: compileRenderScene(withRoadConnection),
+  });
 }
 
 export { INVENTORY_SECTIONS };

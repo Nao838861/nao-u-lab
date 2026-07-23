@@ -82,6 +82,16 @@ const result = await page.evaluate(`(() => {
     samples.push(performance.now() - started);
   }
   samples.sort((left, right) => left - right);
+  const steadyHit = game.renderer.lastFrameMetrics.terrainCacheHit;
+  const cacheCanvas = game.renderer.terrainCache.canvas;
+  game.camera.pan(1, 0);
+  game.renderer.render(game.displayModel, 1 / 60);
+  const panInvalidated = !game.renderer.lastFrameMetrics.terrainCacheHit;
+  const canvasReused = cacheCanvas === game.renderer.terrainCache.canvas;
+  game.camera.pan(-1, 0);
+  game.renderer.render(game.displayModel, 1 / 60);
+  game.renderer.render(game.displayModel, 1 / 60);
+  const restoredHit = game.renderer.lastFrameMetrics.terrainCacheHit;
   return {
     build: document.querySelector('#build-version')?.textContent,
     frames: ${FRAMES},
@@ -91,9 +101,17 @@ const result = await page.evaluate(`(() => {
     medianTotalMs: samples[Math.floor(samples.length / 2)],
     medianFrameMs: samples[Math.floor(samples.length / 2)] / ${FRAMES},
     samples,
+    cacheChecks: { steadyHit, panInvalidated, canvasReused, restoredHit },
+    frameMetrics: game.renderer.lastFrameMetrics,
   };
 })()`);
 assert.equal(page.errors.length, 0, page.errors.join(' | '));
+assert.deepEqual(result.cacheChecks, {
+  steadyHit: true,
+  panInvalidated: true,
+  canvasReused: true,
+  restoredHit: true,
+});
 console.log(JSON.stringify(result));
 const screenshot = await page.send('Page.captureScreenshot', { format: 'png', fromSurface: true });
 fs.writeFileSync('/tmp/shioji_v004_visible_logistics.png', Buffer.from(screenshot.data, 'base64'));

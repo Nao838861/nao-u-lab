@@ -156,3 +156,16 @@ UI完成度向上は`UI_POLISH_STEPBOOK.md`の12/12を完了した。`v004.6.0-u
 - `npm test`: v004 24件、150日UIジャーナル再生、エンジン111件が成功。
 - `npm run audit:stable --prefix ../engine`: seed11/13/14の各8年、全帯、物資保存、物理不変条件、悪配置対照が成功。帯変更なし。
 - 実Chromeの1440×900と390×844で開始3択、港1棟、人口0、道路0、市場・蔵の配置選択肢、テスト都市と既存操作の維持、runtime errorゼロを確認した。
+
+## 2026-07-24 — v004.14.0 描画構造最適化
+
+- [x] 描画専用の静的資料を`render_scene.js`へ分離し、snapshotごとに一度だけ不変生成する。
+- [x] 自然物、建物、実在庫、屋台は一度だけ安定sortし、人物、船、荷役の動的列と毎frame線形mergeする。
+- [x] 道路座標、道路segment、獣道座標、未接続警告を描画前にcompileし、rendererの毎frame Set生成・文字列parseを除いた。
+- [x] camera四隅を含む4tile余白つき可視境界を単体testし、地形と静的物は範囲外のCanvas命令だけを省く。動的物は削減しない。
+- [x] 地形本体を地形fingerprint・季節・camera・viewportで無効化するoffscreen層へ分離した。水面の波は毎frame動く。
+- [x] steady hit、camera panでのmiss、canvas再利用、復帰後hitを実Chrome benchmarkで自動確認した。
+- [x] 同一test cityの240frame×5回中央値を13.0183ms/frameから2.5954ms/frameへ約80.1%短縮した。
+- [x] 最終frameは地形1920/1920、道路75/75、segment 108/108、静的物363/363、動的物16。個数や動きを減らしていない。
+- [x] 関連focused 15件とPC／スマホ全browser smokeに成功し、runtime error 0、変更前後の画像一致を確認した。
+- [x] engine、経済規則、保存則、長期帯、教程条件は無変更。方針どおりfull Node、engine全件、8年監査は省略した。

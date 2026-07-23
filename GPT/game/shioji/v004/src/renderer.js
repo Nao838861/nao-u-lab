@@ -1,18 +1,13 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, SECTION_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.13.0-elena-voice';
-import { islandCalendar } from './ui_summary.js?v=v004.13.0-elena-voice';
+} from './config.js?v=v004.14.0-render-scene';
+import { islandCalendar } from './ui_summary.js?v=v004.14.0-render-scene';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.14.0-render-scene';
 import {
   buildingStructureLayout, pileVisual,
-} from './visuals.js?v=v004.13.0-elena-voice';
+} from './visuals.js?v=v004.14.0-render-scene';
 
-function keyOf(x, y) {
-  return `${x},${y}`;
-}
-
-function parseKey(key) {
-  return key.split(',').map(Number);
-}
+const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
 export class Renderer {
   constructor(canvas, camera) {
@@ -26,6 +21,10 @@ export class Renderer {
     this.selectedBuildingId = null;
     this.operationPreview = null;
     this.season = '冬';
+    this.backgroundGradient = null;
+    this.terrainCache = null;
+    this.frameBounds = null;
+    this.lastFrameMetrics = {};
     this.resize();
   }
 
@@ -39,6 +38,8 @@ export class Renderer {
     this.ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
     this.ctx.imageSmoothingEnabled = false;
     this.camera.resize(this.width, this.height);
+    this.backgroundGradient = null;
+    this.terrainCache = null;
   }
 
   diamond(x, y, fill, stroke = null, alpha = 1) {
@@ -65,6 +66,19 @@ export class Renderer {
       ctx.stroke();
     }
     ctx.restore();
+  }
+
+  sceneFor(model) {
+    return model.renderScene ?? compileRenderScene(model);
+  }
+
+  boundsVisible({ x, y, width = 1, height = 1 }) {
+    const bounds = this.frameBounds;
+    if (!bounds) return true;
+    return x + width >= bounds.minX
+      && x <= bounds.maxX + 1
+      && y + height >= bounds.minY
+      && y <= bounds.maxY + 1;
   }
 
   footprint(x, y, width, height, fill, stroke, alpha = 1) {
@@ -136,12 +150,16 @@ export class Renderer {
   render(model, elapsedSeconds = 0) {
     this.pulse += elapsedSeconds;
     this.season = islandCalendar(model.day).season;
+    this.frameBounds = this.camera.visibleWorldBounds(4);
+    this.lastFrameMetrics = {};
     const ctx = this.ctx;
     ctx.clearRect(0, 0, this.width, this.height);
-    const gradient = ctx.createLinearGradient(0, 0, 0, this.height);
-    gradient.addColorStop(0, '#173f43');
-    gradient.addColorStop(1, '#0d2930');
-    ctx.fillStyle = gradient;
+    if (!this.backgroundGradient) {
+      this.backgroundGradient = ctx.createLinearGradient(0, 0, 0, this.height);
+      this.backgroundGradient.addColorStop(0, '#173f43');
+      this.backgroundGradient.addColorStop(1, '#0d2930');
+    }
+    ctx.fillStyle = this.backgroundGradient;
     ctx.fillRect(0, 0, this.width, this.height);
 
     // 地面要素は3Dソートへ混ぜない。建物敷地の後に道路を描く。
@@ -153,41 +171,105 @@ export class Renderer {
   }
 
   drawTerrain(model) {
+    const scene = this.sceneFor(model);
+    const cacheEnabled = this.canvas.width * this.canvas.height <= MAX_TERRAIN_CACHE_PIXELS;
+    const cacheKey = [
+      scene.terrainKey, this.season,
+      this.canvas.width, this.canvas.height,
+      this.camera.zoom, this.camera.panX, this.camera.panY,
+    ].join(':');
+    const cacheHit = cacheEnabled && this.terrainCache?.key === cacheKey;
+    if (cacheEnabled) {
+      if (!cacheHit) this.rebuildTerrainCache(model, cacheKey);
+      this.ctx.drawImage(
+        this.terrainCache.canvas,
+        0, 0, this.terrainCache.canvas.width, this.terrainCache.canvas.height,
+        0, 0, this.width, this.height,
+      );
+    } else {
+      this.terrainCache = null;
+      this.drawTerrainBase(model);
+    }
+    this.drawWaterWaves(model);
+    const bounds = this.frameBounds;
+    const visibleWidth = Math.max(0, bounds.maxX - bounds.minX + 1);
+    const visibleHeight = Math.max(0, bounds.maxY - bounds.minY + 1);
+    this.lastFrameMetrics.terrainCandidates = model.width * model.height;
+    this.lastFrameMetrics.terrainDrawn = visibleWidth * visibleHeight;
+    this.lastFrameMetrics.terrainCacheEnabled = cacheEnabled;
+    this.lastFrameMetrics.terrainCacheHit = cacheHit;
+  }
+
+  rebuildTerrainCache(model, key) {
+    const cacheCanvas = this.terrainCache?.canvas ?? document.createElement('canvas');
+    if (cacheCanvas.width !== this.canvas.width) cacheCanvas.width = this.canvas.width;
+    if (cacheCanvas.height !== this.canvas.height) cacheCanvas.height = this.canvas.height;
+    const cacheContext = cacheCanvas.getContext('2d');
+    const ratio = cacheCanvas.width / this.width;
+    cacheContext.setTransform(1, 0, 0, 1, 0, 0);
+    cacheContext.clearRect(0, 0, cacheCanvas.width, cacheCanvas.height);
+    cacheContext.setTransform(ratio, 0, 0, ratio, 0, 0);
+    cacheContext.imageSmoothingEnabled = false;
+    const visibleContext = this.ctx;
+    this.ctx = cacheContext;
+    try {
+      this.drawTerrainBase(model);
+    } finally {
+      this.ctx = visibleContext;
+    }
+    this.terrainCache = { key, canvas: cacheCanvas };
+  }
+
+  drawTerrainBase(model) {
     const seasonWash = {
       '春': 'rgba(214,221,151,.045)',
       '夏': 'rgba(238,202,99,.035)',
       '秋': 'rgba(190,107,61,.055)',
       '冬': 'rgba(204,226,218,.07)',
     }[this.season];
-    for (let sum = 0; sum < model.width + model.height - 1; sum += 1) {
-      for (let y = 0; y < model.height; y += 1) {
+    const bounds = this.frameBounds ?? {
+      minX: 0, maxX: model.width - 1, minY: 0, maxY: model.height - 1,
+    };
+    for (let sum = bounds.minX + bounds.minY; sum <= bounds.maxX + bounds.maxY; sum += 1) {
+      for (let y = bounds.minY; y <= bounds.maxY; y += 1) {
         const x = sum - y;
-        if (x < 0 || x >= model.width) continue;
+        if (x < bounds.minX || x > bounds.maxX) continue;
         const tile = model.terrain[y][x];
         const palette = TERRAIN_COLORS[tile.kind] ?? TERRAIN_COLORS.grass;
         const fill = palette[(tile.variant ?? 0) % palette.length];
         this.diamond(x, y, fill, tile.kind === 'water' ? '#1b626a' : '#4f6942');
-        if (tile.kind !== 'water') this.diamond(x, y, seasonWash, null, 1);
-        if (tile.kind === 'water' && (x * 3 + y + (tile.variant ?? 0)) % 4 === 0) {
-          const ctx = this.ctx;
-          const from = this.camera.project(x + 0.22, y + 0.46, 1);
-          const to = this.camera.project(x + 0.62, y + 0.46, 1);
-          ctx.save();
-          ctx.globalAlpha = 0.28 + Math.sin(this.pulse * 1.4 + x + y) * 0.06;
-          ctx.strokeStyle = '#76b6b0';
-          ctx.lineWidth = Math.max(0.7, this.camera.zoom);
-          ctx.beginPath();
-          ctx.moveTo(from.x, from.y);
-          ctx.quadraticCurveTo((from.x + to.x) / 2, from.y - 2 * this.camera.zoom, to.x, to.y);
-          ctx.stroke();
-          ctx.restore();
-        }
+        if (tile.kind !== 'water') this.diamond(x, y, seasonWash);
       }
     }
   }
 
+  drawWaterWaves(model) {
+    const bounds = this.frameBounds ?? {
+      minX: 0, maxX: model.width - 1, minY: 0, maxY: model.height - 1,
+    };
+    const ctx = this.ctx;
+    ctx.save();
+    ctx.strokeStyle = '#76b6b0';
+    ctx.lineWidth = Math.max(0.7, this.camera.zoom);
+    for (let y = bounds.minY; y <= bounds.maxY; y += 1) {
+      for (let x = bounds.minX; x <= bounds.maxX; x += 1) {
+        const tile = model.terrain[y][x];
+        if (tile.kind !== 'water' || (x * 3 + y + (tile.variant ?? 0)) % 4 !== 0) continue;
+        const from = this.camera.project(x + 0.22, y + 0.46, 1);
+        const to = this.camera.project(x + 0.62, y + 0.46, 1);
+        ctx.globalAlpha = 0.28 + Math.sin(this.pulse * 1.4 + x + y) * 0.06;
+        ctx.beginPath();
+        ctx.moveTo(from.x, from.y);
+        ctx.quadraticCurveTo((from.x + to.x) / 2, from.y - 2 * this.camera.zoom, to.x, to.y);
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
+  }
+
   drawBuildingGrounds(model) {
     for (const building of model.buildings) {
+      if (!this.boundsVisible(building)) continue;
       const fill = building.type === 'port' ? '#887b68'
         : building.type === 'market' ? '#b59d72' : '#6f784f';
       this.footprint(
@@ -216,7 +298,7 @@ export class Renderer {
       for (const slot of building.yardSlots ?? []) this.drawYardMarker(slot);
     }
     const selected = model.buildings.find(building => building.id === this.selectedBuildingId);
-    if (selected) {
+    if (selected && this.boundsVisible(selected)) {
       this.footprint(
         selected.x, selected.y, selected.width, selected.height,
         '#f2c45d', '#ffe39a', 0.34,
@@ -256,45 +338,54 @@ export class Renderer {
   }
 
   drawRoads(model) {
-    const roadSet = new Set(model.roadKeys);
-    const connected = new Set(model.roadConnection?.connectedRoadKeys ?? []);
-    const roads = model.roadKeys.map(parseKey);
-    for (const [x, y] of roads) {
-      const isConnected = connected.has(keyOf(x, y));
-      this.diamond(x, y, isConnected ? '#a78e61' : '#9f6355', isConnected ? '#69593f' : '#713f3b', 0.94);
+    const scene = this.sceneFor(model);
+    const roads = scene.roadRows.filter(row => this.boundsVisible(row));
+    for (const road of roads) {
+      this.diamond(
+        road.x, road.y,
+        road.connected ? '#a78e61' : '#9f6355',
+        road.connected ? '#69593f' : '#713f3b',
+        0.94,
+      );
     }
+    const segments = scene.roadSegments.filter(segment => this.boundsVisible({
+      x: Math.min(segment.x, segment.toX),
+      y: Math.min(segment.y, segment.toY),
+      width: Math.abs(segment.toX - segment.x) + 1,
+      height: Math.abs(segment.toY - segment.y) + 1,
+    }));
     const ctx = this.ctx;
     ctx.save();
     ctx.lineCap = 'round';
-    for (const [x, y] of roads) {
-      const center = this.camera.project(x + 0.5, y + 0.5);
-      for (const [dx, dy] of [[1, 0], [0, 1], [1, 1], [1, -1]]) {
-        if (!roadSet.has(keyOf(x + dx, y + dy))) continue;
-        const other = this.camera.project(x + dx + 0.5, y + dy + 0.5);
-        const segmentConnected = connected.has(keyOf(x, y)) && connected.has(keyOf(x + dx, y + dy));
-        ctx.strokeStyle = segmentConnected ? '#69593f' : '#713f3b';
-        ctx.lineWidth = Math.max(5, 13 * this.camera.zoom);
-        ctx.beginPath();
-        ctx.moveTo(center.x, center.y);
-        ctx.lineTo(other.x, other.y);
-        ctx.stroke();
-        ctx.strokeStyle = segmentConnected ? '#b39a6b' : '#bd7867';
-        ctx.lineWidth = Math.max(3, 9 * this.camera.zoom);
-        ctx.beginPath();
-        ctx.moveTo(center.x, center.y);
-        ctx.lineTo(other.x, other.y);
-        ctx.stroke();
-      }
+    for (const segment of segments) {
+      const center = this.camera.project(segment.x + 0.5, segment.y + 0.5);
+      const other = this.camera.project(segment.toX + 0.5, segment.toY + 0.5);
+      ctx.strokeStyle = segment.connected ? '#69593f' : '#713f3b';
+      ctx.lineWidth = Math.max(5, 13 * this.camera.zoom);
+      ctx.beginPath();
+      ctx.moveTo(center.x, center.y);
+      ctx.lineTo(other.x, other.y);
+      ctx.stroke();
+      ctx.strokeStyle = segment.connected ? '#b39a6b' : '#bd7867';
+      ctx.lineWidth = Math.max(3, 9 * this.camera.zoom);
+      ctx.beginPath();
+      ctx.moveTo(center.x, center.y);
+      ctx.lineTo(other.x, other.y);
+      ctx.stroke();
     }
     ctx.restore();
+    this.lastFrameMetrics.roadCandidates = scene.roadRows.length;
+    this.lastFrameMetrics.roadDrawn = roads.length;
+    this.lastFrameMetrics.roadSegmentCandidates = scene.roadSegments.length;
+    this.lastFrameMetrics.roadSegmentsDrawn = segments.length;
   }
 
   drawGroundOverlays(model) {
-    const roads = new Set(model.roadKeys);
+    const scene = this.sceneFor(model);
     const ctx = this.ctx;
-    for (const trail of model.trailRows) {
-      if (roads.has(trail.key)) continue;
-      const [x, y] = parseKey(trail.key);
+    for (const trail of scene.trailRows) {
+      if (!this.boundsVisible(trail)) continue;
+      const { x, y } = trail;
       const from = this.camera.project(x + 0.14, y + 0.48, 1);
       const to = this.camera.project(x + 0.86, y + 0.52, 1);
       ctx.save();
@@ -317,7 +408,7 @@ export class Renderer {
       ctx.restore();
     }
     for (const building of model.buildings) {
-      if (!building.entrance) continue;
+      if (!building.entrance || !this.boundsVisible(building)) continue;
       const point = this.camera.project(
         building.entrance.x + 0.5,
         building.entrance.y + 0.5,
@@ -340,11 +431,9 @@ export class Renderer {
   }
 
   drawConnectionWarnings(model) {
-    const disconnected = new Set((model.roadConnection?.buildings ?? [])
-      .filter(row => !row.connected).map(row => row.id));
     const ctx = this.ctx;
-    for (const building of model.buildings) {
-      if (!disconnected.has(building.id) || !building.entrance) continue;
+    for (const building of this.sceneFor(model).warningBuildings) {
+      if (!this.boundsVisible(building)) continue;
       const point = this.camera.project(building.entrance.x + 0.5, building.entrance.y + 0.5, 4);
       ctx.save();
       ctx.strokeStyle = '#e26f5d';
@@ -406,61 +495,23 @@ export class Renderer {
     ctx.restore();
   }
 
-  collectWorldDrawables(model) {
-    const occupied = new Set(model.occupiedKeys);
+  collectDynamicDrawables(model, scene) {
     const drawables = [];
-    for (let y = 0; y < model.height; y += 1) {
-      for (let x = 0; x < model.width; x += 1) {
-        if (occupied.has(keyOf(x, y))) continue;
-        const tile = model.terrain[y][x];
-        if (tile.kind === 'forest') {
-          drawables.push({ kind: 'tree', data: { x, y, variant: tile.variant }, depth: x + y + 1 });
-        } else if (['rock', 'ore', 'coal'].includes(tile.kind) && (x + y) % 2 === 0) {
-          drawables.push({ kind: 'rock', data: { x, y, type: tile.kind }, depth: x + y + 1 });
-        }
-      }
-    }
-    for (const building of model.buildings) {
-      const buildingDepth = building.x + building.width + building.y + building.height;
-      drawables.push({
-        kind: 'building', data: building,
-        depth: buildingDepth,
-      });
-      (building.yardSlots ?? []).forEach(({ row, x, y }, index) => {
-        drawables.push({
-          kind: 'inventory',
-          data: {
-            row,
-            ownerId: building.id,
-            x,
-            y,
-          },
-          depth: buildingDepth + 0.1 + index * 0.001,
-        });
-      });
-    }
-    const market = model.buildings.find(building => building.type === 'market');
-    const marketDepth = market
-      ? market.x + market.width + market.y + market.height
-      : 0;
-    model.marketStalls.forEach((stall, index) => drawables.push({
-      kind: 'stall',
-      data: stall,
-      depth: marketDepth + 0.4 + index * 0.001,
-    }));
     for (const carrier of model.carriers) {
-      drawables.push({ kind: 'carrier', data: carrier, depth: carrier.x + carrier.y + 1 });
+      drawables.push({
+        kind: 'carrier', data: carrier, depth: carrier.x + carrier.y + 1, dynamic: true,
+      });
     }
     for (const ship of model.portVisuals ?? []) {
       const position = this.shipPosition(model.portBerth, ship);
       drawables.push({
-        kind: 'ship', data: { ...ship, ...position }, depth: position.x + position.y + 1,
+        kind: 'ship', data: { ...ship, ...position },
+        depth: position.x + position.y + 1, dynamic: true,
       });
     }
     for (const handling of model.handlingVisuals ?? []) {
-      const port = model.buildings.find(building => building.type === 'port');
-      if (!port || !model.portBerth) continue;
-      const yard = { x: port.x + port.width * 0.55, y: port.y + port.height * 0.58 };
+      if (!scene.portYard || !model.portBerth) continue;
+      const yard = scene.portYard;
       const ship = model.portBerth.dock;
       const start = handling.direction === 'import' ? ship : yard;
       const finish = handling.direction === 'import' ? yard : ship;
@@ -470,14 +521,29 @@ export class Renderer {
         y: start.y + (finish.y - start.y) * progress,
       };
       drawables.push({
-        kind: 'handling', data: { ...handling, ...position }, depth: position.x + position.y + 1.2,
+        kind: 'handling', data: { ...handling, ...position },
+        depth: position.x + position.y + 1.2, dynamic: true,
       });
     }
     return drawables.sort((left, right) => left.depth - right.depth);
   }
 
+  collectWorldDrawables(model) {
+    const scene = this.sceneFor(model);
+    return mergeDrawables(
+      scene.staticDrawables,
+      this.collectDynamicDrawables(model, scene),
+    );
+  }
+
   drawWorldObjects(model) {
+    const scene = this.sceneFor(model);
+    let staticDrawn = 0;
+    let dynamicDrawn = 0;
     for (const drawable of this.collectWorldDrawables(model)) {
+      if (!drawable.dynamic && !this.boundsVisible(drawable.bounds)) continue;
+      if (drawable.dynamic) dynamicDrawn += 1;
+      else staticDrawn += 1;
       if (drawable.kind === 'tree') this.drawTree(drawable.data);
       if (drawable.kind === 'rock') this.drawRock(drawable.data);
       if (drawable.kind === 'building') this.drawBuilding(drawable.data);
@@ -487,6 +553,9 @@ export class Renderer {
       if (drawable.kind === 'ship') this.drawShip(drawable.data);
       if (drawable.kind === 'handling') this.drawHandlingBlock(drawable.data);
     }
+    this.lastFrameMetrics.staticCandidates = scene.staticDrawables.length;
+    this.lastFrameMetrics.staticDrawn = staticDrawn;
+    this.lastFrameMetrics.dynamicDrawn = dynamicDrawn;
   }
 
   shipPosition(berth, ship) {

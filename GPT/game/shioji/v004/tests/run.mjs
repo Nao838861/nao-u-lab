@@ -27,6 +27,7 @@ import {
 import {
   WorldPresentation, interpolateWorldModel, transitionDuration,
 } from '../src/presentation.js';
+import { mergeDrawables } from '../src/render_scene.js';
 import { Renderer } from '../src/renderer.js';
 import { START_MODES, parseStartMode, urlForStartMode } from '../src/start_modes.js';
 import {
@@ -1893,7 +1894,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.13.0-elena-voice');
+  assert.equal(VERSION, 'v004.14.0-render-scene');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2139,7 +2140,52 @@ test('段2: full snapshotを地形・建物・キャリア・棚の不変描画�
   assert.ok(model.buildings.every(building => Array.isArray(building.shelves)));
   assert.equal(Object.isFrozen(model), true);
   assert.equal(Object.isFrozen(model.terrain[0][0]), true);
+  assert.equal(Object.isFrozen(model.renderScene), true);
+  assert.equal(Object.isFrozen(model.renderScene.staticDrawables), true);
   assert.throws(() => { model.terrain[0][0].kind = 'coal'; }, TypeError);
+});
+
+test('描画構造最適化: snapshot更新時に静的描画場面を一度だけ編成し動的列と安定mergeする', () => {
+  const api = createEngineApi(buildBaseCity(11));
+  const first = snapshotToViewModel(api.snapshot({ scope: 'full' }));
+  const scene = first.renderScene;
+  assert.equal(scene.roadRows.length, first.roadKeys.length);
+  assert.equal(scene.counts.roadTiles, first.roadKeys.length);
+  assert.ok(scene.staticDrawables.some(row => row.kind === 'building'));
+  assert.equal(scene.staticDrawables.some(row => (
+    row.kind === 'carrier' || row.kind === 'ship' || row.kind === 'handling'
+  )), false);
+  assert.ok(scene.staticDrawables.every((row, index, rows) => (
+    index === 0 || rows[index - 1].depth <= row.depth
+  )));
+  const roadKeys = new Set(first.roadKeys);
+  assert.ok(scene.trailRows.every(row => (
+    !roadKeys.has(row.key) && Number.isFinite(row.x) && Number.isFinite(row.y)
+  )));
+
+  const dynamic = [
+    { kind: 'dynamic-a', depth: scene.staticDrawables[0].depth },
+    { kind: 'dynamic-b', depth: scene.staticDrawables.at(-1).depth + 1 },
+  ];
+  const expected = [...scene.staticDrawables, ...dynamic]
+    .sort((left, right) => left.depth - right.depth);
+  assert.deepEqual(mergeDrawables(scene.staticDrawables, dynamic), expected);
+
+  const copied = snapshotToViewModel(structuredClone(api.snapshot({ scope: 'full' })));
+  assert.equal(copied.renderScene.terrainKey, scene.terrainKey,
+    '同じ地形ならsnapshotのcloneが変わってもcache keyを保つ');
+  const changedSnapshot = structuredClone(api.snapshot({ scope: 'full' }));
+  changedSnapshot.physical.terrain[0][0].kind = (
+    changedSnapshot.physical.terrain[0][0].kind === 'water' ? 'grass' : 'water'
+  );
+  const terrainChanged = snapshotToViewModel(changedSnapshot);
+  assert.notEqual(terrainChanged.renderScene.terrainKey, scene.terrainKey,
+    '伐採などで地形が変わればcache keyを更新する');
+
+  api.advanceTicks(1);
+  const second = snapshotToViewModel(api.snapshot({ scope: 'full' }));
+  assert.notEqual(second.renderScene, scene, '新しいsnapshotでは場面を再編成する');
+  assert.equal(second.renderScene.counts.staticDrawables, second.renderScene.staticDrawables.length);
 });
 
 test('可視物流AC: 家族列は実人数・実活動状態・実仕事先を描画モデルへ渡す', () => {
@@ -2205,7 +2251,7 @@ test('段2: UIあり/なしで60tick後のエンジンJSON状態が完全一致�
 test('段2: engine importをbridge一か所へ隔離しrendererへAPIを渡さない', () => {
   const sources = Object.fromEntries([
     'camera.js', 'clock.js', 'config.js', 'controller.js', 'event_view.js', 'main.js',
-    'placement.js', 'presentation.js', 'renderer.js', 'start_modes.js', 'tutorial_content.js',
+    'placement.js', 'presentation.js', 'render_scene.js', 'renderer.js', 'start_modes.js', 'tutorial_content.js',
     'tutorial_director.js', 'ui_guidance.js', 'view_model.js',
   ].map(file => [file, fs.readFileSync(new URL(`../src/${file}`, import.meta.url), 'utf8')]));
   for (const [file, source] of Object.entries(sources)) {
@@ -2250,6 +2296,26 @@ test('段3: PCドラッグとホイール、スマホのピンチに使うpan/zo
   assert.ok(Math.abs(afterZoom.x - beforeZoom.x) < 1e-9);
   assert.ok(Math.abs(afterZoom.y - beforeZoom.y) < 1e-9);
   assert.ok(camera.zoom >= camera.minZoom && camera.zoom <= camera.maxZoom);
+});
+
+test('描画構造最適化: 可視world境界は画面四隅を含み盤外へはみ出さない', () => {
+  const camera = new IsometricCamera();
+  camera.resize(1280, 720);
+  camera.setWorldSize(56, 56);
+  camera.focus(28, 28);
+  camera.zoomAt(1.35, 640, 360);
+  const bounds = camera.visibleWorldBounds(4);
+  assert.ok(bounds.minX >= 0 && bounds.maxX <= 55);
+  assert.ok(bounds.minY >= 0 && bounds.maxY <= 55);
+  for (const [screenX, screenY] of [[0, 0], [1280, 0], [1280, 720], [0, 720]]) {
+    const point = camera.unproject(screenX, screenY);
+    if (point.x >= 0 && point.x <= 55) {
+      assert.ok(point.x >= bounds.minX && point.x <= bounds.maxX);
+    }
+    if (point.y >= 0 && point.y <= 55) {
+      assert.ok(point.y >= bounds.minY && point.y <= bounds.maxY);
+    }
+  }
 });
 
 function runSpeedSchedule({ frameSeconds, speedPattern }) {

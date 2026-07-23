@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.13.0-elena-voice';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.14.0-render-scene';
 
 export const MAX_PILE_SPRITES = 24;
 export const MAX_YARD_GOODS = 6;

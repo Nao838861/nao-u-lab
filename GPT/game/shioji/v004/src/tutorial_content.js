@@ -2,8 +2,8 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.13.0-elena-voice';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.13.0-elena-voice';
+} from './engine_bridge.js?v=v004.14.0-render-scene';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.14.0-render-scene';
 
 const LIVING_REQUIREMENT_LABELS = Object.freeze({
   food1: '食料1種', food2: '食料2種', food3: '食料3種', grain: '穀物',

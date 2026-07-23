@@ -2,7 +2,7 @@ import {
   TUTORIAL_ADVICE, TUTORIAL_GOALS, TUTORIAL_LETTERS, TUTORIAL_LETTER_ATTENTION,
   TUTORIAL_ELENA_MESSAGES, TUTORIAL_PLAYER_TITLES, TUTORIAL_SYSTEM_INSTRUCTIONS,
   isRequiredTutorialGoal,
-} from './tutorial_content.js?v=v004.13.0-elena-voice';
+} from './tutorial_content.js?v=v004.14.0-render-scene';
 
 const SAVE_VERSION = 1;
 

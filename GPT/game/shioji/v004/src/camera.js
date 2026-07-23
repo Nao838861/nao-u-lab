@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.13.0-elena-voice';
+import { TILE } from './config.js?v=v004.14.0-render-scene';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));
@@ -53,6 +53,27 @@ export class IsometricCamera {
     const dx = (screenX - this.panX) / (this.tileWidth * 0.5 * this.zoom);
     const dy = (screenY - this.panY) / (this.tileHeight * 0.5 * this.zoom);
     return { x: (dx + dy) * 0.5, y: (dy - dx) * 0.5 };
+  }
+
+  visibleWorldBounds(padding = 4) {
+    const corners = [
+      this.unproject(0, 0),
+      this.unproject(this.viewportWidth, 0),
+      this.unproject(this.viewportWidth, this.viewportHeight),
+      this.unproject(0, this.viewportHeight),
+    ];
+    return {
+      minX: Math.max(0, Math.floor(Math.min(...corners.map(point => point.x))) - padding),
+      maxX: Math.min(
+        this.worldWidth - 1,
+        Math.ceil(Math.max(...corners.map(point => point.x))) + padding,
+      ),
+      minY: Math.max(0, Math.floor(Math.min(...corners.map(point => point.y))) - padding),
+      maxY: Math.min(
+        this.worldHeight - 1,
+        Math.ceil(Math.max(...corners.map(point => point.y))) + padding,
+      ),
+    };
   }
 
   focus(x, y) {

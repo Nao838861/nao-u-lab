@@ -2,13 +2,13 @@
 
 ## 現在地
 
-`STEPBOOK.md`の全18段、`TUTORIAL_STEPBOOK.md`の24/24、`UI_POLISH_STEPBOOK.md`の12/12を完了した。2026-07-23のClaude申し送りL〜ADとAEの縮小方針、起動キャッシュ事故、旧版より弱かった視覚階層と島の絵、通知重要度、待機導線を統合した。現在版は`v004.13.0-elena-voice`。ABの3×3敷地内実在庫とACの連続移動に加え、エレナを見出し付き操作ボタンから「声」へ戻し、現在目標を一行の「計器」へ分離した。猫、好感度、表情、締め文変化、会話分岐などAEの情緒機能は、Nao_uの更新指示どおり完成後の将来枠である。
+`STEPBOOK.md`の全18段、`TUTORIAL_STEPBOOK.md`の24/24、`UI_POLISH_STEPBOOK.md`の12/12を完了した。2026-07-23のClaude申し送りL〜ADとAEの縮小方針、起動キャッシュ事故、旧版より弱かった視覚階層と島の絵、通知重要度、待機導線を統合した。現在版は`v004.14.0-render-scene`。ABの3×3敷地内実在庫とACの連続移動、既存の声／計器UI機構を変えず、snapshotごとの静的描画場面と毎frameの動的物を分離し、動かない地形層だけを正確に再利用する構造へ整理した。同一実Chrome都市の描画中央値は13.02ms/frameから2.60ms/frameへ約80%短縮した。猫、好感度、表情、締め文変化、会話分岐などAEの情緒機能は、Nao_uの更新指示どおり完成後の将来枠である。
 
-**Nao_u 申し送り**: [PLAYTEST_FEEDBACK_20260723.md](PLAYTEST_FEEDBACK_20260723.md)。A〜ADの現バッチを対応済み。AEは「ゲームの流れに必要な固定文だけ」を現在の正とし、凝った演出は未着手のまま保持した。L〜Zの設計正本と受け入れ証拠は [PERFORMANCE_RENDERING_STEPBOOK.md](PERFORMANCE_RENDERING_STEPBOOK.md)、[EXPERIENCE_TUTORIAL_STEPBOOK.md](EXPERIENCE_TUTORIAL_STEPBOOK.md)、[completion_audit.md](completion_audit.md) にある。Zの子供による初見実測を受け、建物成長を核体験の実測候補、成功／危険／季節の因果表示を常設要件にした。
+**Nao_u 申し送り**: [PLAYTEST_FEEDBACK_20260723.md](PLAYTEST_FEEDBACK_20260723.md)。A〜ADの機構は対応済み。AEは「ゲームの流れに必要な固定文だけ」を現在の正とし、凝った演出は未着手のまま保持した。2026-07-24追記のAF／AF-2「エレナ発話をシステム文字列の連結で作らず、彼女の言葉だけで指示まで自己完結させる」は本最適化とは別の未実装・最優先項目である。計器は理由と指示の代替ではなく、経過表示と備忘録へ下げる。AGの世界観・通貨正典はNao_u裁可待ちであり、決定までは話し言葉を「お金／代金」、数値UIを現行デナリとする。今回エレナ文と教程条件は変更していない。L〜Zの設計正本と受け入れ証拠は [PERFORMANCE_RENDERING_STEPBOOK.md](PERFORMANCE_RENDERING_STEPBOOK.md)、[EXPERIENCE_TUTORIAL_STEPBOOK.md](EXPERIENCE_TUTORIAL_STEPBOOK.md)、[completion_audit.md](completion_audit.md) にある。Zの子供による初見実測を受け、建物成長を核体験の実測候補、成功／危険／季節の因果表示を常設要件にした。
 
 **次セッションの進め方**:
 
-1. 公開版またはローカル版を初見手順で実プレイし、建物を選ばずに「作る→積む→運ぶ→船へ渡す」を説明できるか、開始画面、会社のEnter／blur適用、待機目標の一日毎秒ボタン、注文の残りと期限、エレナの発話と現在目標の分業を体感確認する。
+1. AF／AF-2を起点に`ui_guidance.js`の発話発生箇所を棚卸しし、他チャネルのtitle／detail／数値を連結する発話を、状況専用の自己完結した話し言葉か沈黙へ置き換える。現在目標は経過表示と備忘録に限定し、エレナの指示本文を肩代わりさせない。
 2. 再現する不具合があれば [TESTING_POLICY.md](TESTING_POLICY.md) の変更範囲別テストで直す。UIだけなら実Chrome、教程ならfocused＋`test:tutorial-early`、軽微engineなら該当unit＋影響focusedまでとし、経済定数・保存則・長期帯を変えない限りfullを常用しない。
 3. 創発15教材は進行条件へ戻さない。必達へ追加する目標は、有限上限とプレイヤーが理解できる完了条件を同じdiffに記録する。
 4. `product_spec.md`新設とグラフ履歴のセーブ永続化は下記未決質問の裁可後に行う。
@@ -21,8 +21,10 @@
 
 - `src/engine_bridge.js`だけがエンジンの公開APIと基準都市生成器をimportする。
 - controllerは不変snapshotを描画モデルへ変換し、rendererへエンジンAPIやworldを渡さない。
+- `src/render_scene.js`はsnapshotごとに自然物、建物、実在庫、屋台、道路、獣道、警告をplain objectの不変描画場面へ一度だけ編成する。rendererは少数の人物・船・荷役だけを毎frameで安定mergeする。
 - 変更操作は`place_building`、`remove_building`、`add_road`、`remove_road`、`set_stock_target`、`release_stock`、`accept_order`の公開操作APIだけを使う。
 - 描画frameとエンジンtickは分離し、移動・接岸・荷役はsnapshotと観測イベント間を表示側で補間する。
+- 地形本体は地形fingerprint、季節、camera、viewportが同じ間だけoffscreen canvasを再利用する。水面の波、人物、船、荷役は再利用層へ焼き込まず、従来どおり毎frame動かす。
 - 地面要素は先に固定順で描き、その後に建物・自然物・キャリアを共通深度でソートする。
 - チュートリアルディレクターは描画モデルと取得済み観測イベントだけを受け取り、controller、操作API、worldを持たない。目標、書状、既読、離脱だけを自分の状態へ記録する。
 
@@ -50,6 +52,7 @@
 
 ## 現在の検証
 
+- `v004.14.0-render-scene`はengine、経済規則、教程条件を変更していない。関連focused 15件とPC／スマホ全browser smokeに成功し、runtime errorは0。同じ120日目test city（48×40、16棟、14キャリア、可視在庫915.15荷）の実Chrome 240frame×5回中央値は13.02ms/frameから2.60ms/frameへ約80%短縮した。最終frameも地形1920/1920、道路75/75・segment 108/108、静的物363/363、動的物16を描画しており、個数削減ではない。steady cache hit、camera移動時の無効化、canvas再利用、復帰後hitを自動確認した。full Node／engine／8年監査は変更範囲外として省略した。
 - `v004.13.0-elena-voice`はengineを変更せず、ADの声／計器DOM、復唱、達成中の計器非表示、次課題への明示切替を既存の教程・UI・可視物流focused 8件で確認した。PC／スマホ全browser smokeで、開始直後のエレナ発話、現在目標側の［案内］、木こり設置後の完了発話、復唱しても進まないこと、約3.2秒後に自動で市場目標が現れること、runtime error 0を確認した。full Node／engine／8年監査は変更範囲外として省略した。
 - `v004.12.0-visible-logistics`はengineを変更せず、可視物流・carrier端点・第四章null・起動cacheのfocused 8件と、PC／スマホ全browser smokeに合格した。120日目、16棟・14キャリア・可視在庫915.15荷の実Chrome描画中央値は変更前11.87ms/frame、最終14.46ms/frameで、60fpsの16.67ms以内。full Node／engine／8年監査は変更範囲外として省略した。
 - Z対応は季節境界、島況危険判定、空腹30日警告、死亡原因、建物Lv1の「食料1種・45日」因果をfocused testで確認し、実Chromeで季節・基調シグナルと建物成長欄のPC／スマホ表示を確認した。engine規則は無変更。
