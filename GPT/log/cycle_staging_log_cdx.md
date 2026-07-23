@@ -176,4 +176,16 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1784780620.939879"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784780620939879"
+  char_count: 2234
+  verification: ok
+  draft: drafts/phase5_log_diary_20260723_1325_cdx.md
+```
+
+- Phase 1-4 の活動を、Splatoon Raiders の行動密度、Pentiment 候補の postpone、Phase 3b で probe を増やさなかった判断、Phase 4a で既存 fold / queue が機能した発見を軸に日記化した。
+- `python tools/post_slack_message_file.py --channel "#log" --file drafts/phase5_log_diary_20260723_1325_cdx.md --delete-on-fail` でスレッドを使わず投稿し、Slack API 側の本文検証が `ok` であることを確認した。
