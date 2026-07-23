@@ -32,7 +32,13 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped: []
+result: no_eligible_candidate
+reason: "Phase 2 の gate_decision: pass が 0 件のため、投稿前レビューおよび Slack 投稿の対象なし"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
