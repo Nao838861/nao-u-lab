@@ -42,7 +42,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784834821-2d208e19ca
+    source_ts: "1784834821.252529"
+    title: "Same Game, Different Story: payoff-equivalent framing に対する strategic robustness"
+    reason: "未レビューの最新 score 10 atom で、memory・harness・evaluation・agent・operation・game-design の優先6タグを持ち、同一 state・utility に対する narrative framing 依存を headless agent/NPC 評価へ接続できるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "能力と framing invariance を別列で測る差分は有用だが、旧 model の図から復元した限定実証であり、同値 framing の人手 oracle が必要。既存4 probe が行動分布・held-out variant・social framing artifact・neutral/adversarial wording を既に扱い、今サイクルには比較可能な headless/NPC artifact もないため state-only review とした。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを更新。probe・metric・directive・恒久ルール・lease は追加なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-24T04:31:11+09:00",
+  "updated_at": "2026-07-24T06:30:16+09:00",
   "reviewed_source_ts": [
+    "1784834821.252529",
     "1780759560.252029",
     "1780802949.440169",
     "1784812374.972069",
@@ -483,6 +484,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-24T06:30:16+09:00",
+      "selected": {
+        "id": "sr-1784834821-2d208e19ca",
+        "source_ts": "1784834821.252529",
+        "title": "Same Game, Different Story: payoff-equivalent framing に対する strategic robustness",
+        "reason": "未レビュー条件を満たす最新の score 10 atom で、memory・harness・evaluation・agent・operation・game-design の優先6タグをすべて持つ。同一の game state・action・utility を保った narrative variant で行動分布が変わるかを測り、task competence と framing invariance を分ける観点が headless playtest agent や NPC policy の評価へ直接つながるため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の採用条件は満たす。shared-reads 本文は canonical action、invalid rate、action distribution、task performance、Jensen-Shannon divergence を分ける小規模 metamorphic test まで具体化している。一方、実証値は旧 model の公開図から復元した count と二つの framing に依存し、同値変換が役割・相手への事前信念・社会規範を変えていないという oracle も人手確認が必要なため evidence=2 とした。既存の behavior-signature-distribution-shift は行動分布、omni-game-arena-improvement-transfer は held-out variant、meeplelm-profile-specific-virtual-playtest は theme/social framing と prompt/persona artifact、seduced-narrative-rhetorical-rule-gate は neutral/adversarial wording と機械的妥当性を既に扱うため non_redundancy=1 とした。差分は『state・utility を固定した同値 framing 間の不変性を task performance と別列で測る』点に残るが、今サイクルには比較可能な headless/NPC trigger artifact がなく、consumer・artifact・before/after 判断差を具体化できない。さらに Phase 4a には別 probe の pending lease が1件あるため、active_probes や ledger を増やさず state-only defer とする。次の具体的な headless agent/NPC 評価で同値性を確認した framing pair と baseline trace が用意できた時だけ再検討する。",
+      "existing_probes": [
+        "probe-20260619-behavior-signature-distribution-shift",
+        "probe-20260619-omni-game-arena-improvement-transfer",
+        "probe-20260620-meeplelm-profile-specific-virtual-playtest",
+        "probe-20260708-seduced-narrative-rhetorical-rule-gate"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と defer 理由だけを更新した。probe・metric・directive・恒久ルール・lease は追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-24T04:31:11+09:00",
       "selected": {
