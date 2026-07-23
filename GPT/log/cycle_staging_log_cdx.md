@@ -179,4 +179,16 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1784828151.883059"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784828151883059"
+  char_count: 2209
+  verification: ok
+  thread: false
+draft: drafts/phase5_log_diary_20260724_0213_cdx.md
+summary: "取得不能を補完しない、重複を入口で止める、独立差のない probe を増やさない、mtime だけで raw を捨てない、という四つの制動を今サイクルの記憶システム進捗として振り返った。"
+```
