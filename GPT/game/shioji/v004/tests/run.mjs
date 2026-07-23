@@ -36,13 +36,16 @@ import {
   SEASONAL_SURPLUS_MIN, SEASONAL_VALLEY_RATIO, TOOLS_PRICE_RISE_DELTA,
   TOOLS_PRICE_RISE_RATIO,
   TUTORIAL_GOALS, TUTORIAL_LETTERS, TUTORIAL_LETTER_ATTENTION,
-  TUTORIAL_OPTIONAL_GOAL_IDS, TUTORIAL_PLAYER_TITLES, TUTORIAL_SYSTEM_INSTRUCTIONS,
+  TUTORIAL_ELENA_MESSAGES, TUTORIAL_OPTIONAL_GOAL_IDS,
+  TUTORIAL_PLAYER_TITLES, TUTORIAL_SYSTEM_INSTRUCTIONS,
   isRequiredTutorialGoal, estimateWalkLen,
 } from '../src/tutorial_content.js';
 import {
   TutorialDirector, createTutorialDirector, createTutorialDirectorForMode,
 } from '../src/tutorial_director.js';
-import { GUIDANCE_TIERS, objectiveActionFor, secretaryRouteFor } from '../src/ui_guidance.js';
+import {
+  GUIDANCE_TIERS, objectiveActionFor, secretaryRouteFor, tutorialHandoffFor,
+} from '../src/ui_guidance.js';
 import { islandCalendar, islandHealthSummary, recentCompanySummary } from '../src/ui_summary.js';
 import { snapshotToViewModel } from '../src/view_model.js';
 import {
@@ -104,8 +107,10 @@ test('教程T/U: 全目標をエレナ概要と一意なsystem操作へ分け、
   ]);
   const forbidden = /適格日|EMA|snapshot|\btick\b|haulJobId|productionCost|\bengine\b|\bjournal\b|E-Stable/;
   for (const goal of TUTORIAL_GOALS) {
-    assert.ok(TUTORIAL_PLAYER_TITLES[goal.id], `${goal.id}のエレナ概要`);
+    assert.ok(TUTORIAL_PLAYER_TITLES[goal.id], `${goal.id}のplayer-facing目標名`);
+    assert.ok(TUTORIAL_ELENA_MESSAGES[goal.id], `${goal.id}のエレナによる意味づけ`);
     assert.equal(forbidden.test(TUTORIAL_PLAYER_TITLES[goal.id]), false, goal.id);
+    assert.equal(forbidden.test(TUTORIAL_ELENA_MESSAGES[goal.id]), false, goal.id);
     const instruction = TUTORIAL_SYSTEM_INSTRUCTIONS[goal.id];
     assert.equal(typeof instruction, 'string', `${goal.id}のsystem操作`);
     if (!reportOnly.has(goal.id)) assert.ok(instruction.length > 0, `${goal.id}は次の操作が一意`);
@@ -115,8 +120,11 @@ test('教程T/U: 全目標をエレナ概要と一意なsystem操作へ分け、
   director.observe(snapshotToViewModel(createEngineApi(buildBlankCity(11)).snapshot()), []);
   const objective = director.currentObjective();
   assert.equal(objective.title, TUTORIAL_PLAYER_TITLES[objective.id]);
+  assert.equal(objective.elenaMessage, TUTORIAL_ELENA_MESSAGES[objective.id]);
   assert.equal(objective.systemInstruction, TUTORIAL_SYSTEM_INSTRUCTIONS[objective.id]);
-  assert.equal(forbidden.test(`${objective.title} ${objective.detail} ${objective.systemInstruction}`), false);
+  assert.equal(forbidden.test(
+    `${objective.title} ${objective.elenaMessage} ${objective.detail} ${objective.systemInstruction}`,
+  ), false);
   const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
   assert.doesNotMatch(main, /書状を閉じ、画面上部の現在目標/);
 });
@@ -1868,7 +1876,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.10.0-final-polish');
+  assert.equal(VERSION, 'v004.11.0-elena-guidance');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2805,6 +2813,30 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
   assert.equal(goal.priority, 'objective');
   assert.equal(goal.title, objective.title);
   assert.deepEqual(goal.target, objectiveAction);
+  const nextObjective = {
+    id: 'goal-2', chapter: '第一章', title: '港へつなぐ',
+    elenaMessage: 'この道を荷が行き来します。', detail: '道路 0/1', complete: false,
+  };
+  const handoff = tutorialHandoffFor(objective, nextObjective);
+  assert.deepEqual(
+    { completedId: handoff.completedId, nextId: handoff.nextId },
+    { completedId: 'goal-1', nextId: 'goal-2' },
+  );
+  assert.match(handoff.title, /できました.*市場を置く/);
+  assert.equal(handoff.detail, nextObjective.elenaMessage);
+  const handoffRoute = secretaryRouteFor({
+    letters: [{ ...letter, unread: false }],
+    handoff, objective: nextObjective, objectiveAction, events, fallback,
+  });
+  assert.equal(handoffRoute.priority, 'goal-complete');
+  assert.equal(handoffRoute.badge, '達成');
+  assert.equal(handoffRoute.action, '次の案内へ');
+  assert.deepEqual(handoffRoute.target, { kind: 'tutorial-handoff' });
+  const urgentBeforeHandoff = secretaryRouteFor({
+    letters: [letter], handoff, objective: nextObjective, objectiveAction, events, fallback,
+  });
+  assert.equal(urgentBeforeHandoff.priority, 'unread-letter', '要対応書状は達成案内より先に読む');
+  assert.equal(tutorialHandoffFor(nextObjective, nextObjective), null, '同じ目標の再描画では達成を再発行しない');
   assert.deepEqual(objectiveActionFor({ id: 'first-settlers-arrive' }, { buildings: [] }), {
     kind: 'speed', speed: 3, label: '一日毎秒で入植を待つ',
   });
@@ -2821,7 +2853,7 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   assert.match(html, /id="secretary"/);
   assert.match(html, /elena_vance\.png/);
-  assert.match(html, /secretary-kicker.*secretary-title.*secretary-detail/s);
+  assert.match(html, /secretary-name.*secretary-kicker.*secretary-title.*secretary-detail/s);
 });
 
 test('UI向上段10: WASDは連続・斜め等速で、編集入力とmodifierを奪わず速度キーを案内する', () => {

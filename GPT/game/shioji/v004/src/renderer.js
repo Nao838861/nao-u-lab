@@ -1,7 +1,7 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, SECTION_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.10.0-final-polish';
-import { islandCalendar } from './ui_summary.js?v=v004.10.0-final-polish';
+} from './config.js?v=v004.11.0-elena-guidance';
+import { islandCalendar } from './ui_summary.js?v=v004.11.0-elena-guidance';
 
 function keyOf(x, y) {
   return `${x},${y}`;

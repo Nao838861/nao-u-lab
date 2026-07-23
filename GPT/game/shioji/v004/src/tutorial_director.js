@@ -1,8 +1,8 @@
 import {
   TUTORIAL_ADVICE, TUTORIAL_GOALS, TUTORIAL_LETTERS, TUTORIAL_LETTER_ATTENTION,
-  TUTORIAL_PLAYER_TITLES, TUTORIAL_SYSTEM_INSTRUCTIONS,
+  TUTORIAL_ELENA_MESSAGES, TUTORIAL_PLAYER_TITLES, TUTORIAL_SYSTEM_INSTRUCTIONS,
   isRequiredTutorialGoal,
-} from './tutorial_content.js?v=v004.10.0-final-polish';
+} from './tutorial_content.js?v=v004.11.0-elena-guidance';
 
 const SAVE_VERSION = 1;
 
@@ -167,6 +167,7 @@ export class TutorialDirector {
       id: goal.id,
       chapter: goal.chapter,
       title: TUTORIAL_PLAYER_TITLES[goal.id] ?? goal.title,
+      elenaMessage: TUTORIAL_ELENA_MESSAGES[goal.id] ?? '',
       systemInstruction: TUTORIAL_SYSTEM_INSTRUCTIONS[goal.id] ?? '',
       ...result,
       detail: playerFacingText(result.detail),

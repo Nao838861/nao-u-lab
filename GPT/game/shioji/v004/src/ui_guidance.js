@@ -25,6 +25,22 @@ export const GUIDANCE_TIERS = Object.freeze({
   notice: Object.freeze({ label: '報告', action: '詳しく見る' }),
 });
 
+export function tutorialHandoffFor(previous, next) {
+  if (!previous || !next) return null;
+  const advanced = previous.id !== next.id;
+  const finished = previous.id === next.id && !previous.complete && next.complete;
+  if (!advanced && !finished) return null;
+  const nextObjective = advanced && !next.complete ? next : null;
+  return Object.freeze({
+    completedId: previous.id,
+    nextId: nextObjective?.id ?? null,
+    kicker: `${previous.chapter}・目標達成`,
+    title: `できました――${previous.title}`,
+    detail: nextObjective?.elenaMessage
+      ?? 'ここまでの案内は終わりです。島の営みは、このまま続いていきます。',
+  });
+}
+
 function buildingCount(model, job) {
   return model.buildings.filter(building => building.type === job).length;
 }
@@ -86,7 +102,8 @@ export function objectiveActionFor(objective, model) {
 }
 
 export function secretaryRouteFor({
-  letters = [], advice = [], objective = null, objectiveAction = null, events = [], fallback = null,
+  letters = [], advice = [], handoff = null, objective = null, objectiveAction = null,
+  events = [], fallback = null,
 } = {}) {
   const unreadAction = [...letters].reverse().find(letter => (
     letter.unread && letter.attention !== 'notice' && letter.attention !== 'silent'
@@ -114,6 +131,18 @@ export function secretaryRouteFor({
       detail: actionAdvice.detail,
     };
   }
+  if (handoff) {
+    return {
+      priority: 'goal-complete',
+      tier: 'guidance',
+      target: { kind: 'tutorial-handoff' },
+      badge: '達成',
+      action: handoff.nextId ? '次の案内へ' : '島へ戻る',
+      kicker: handoff.kicker,
+      title: handoff.title,
+      detail: handoff.detail,
+    };
+  }
   if (objective && !objective.complete) {
     return {
       priority: 'objective',
@@ -121,7 +150,8 @@ export function secretaryRouteFor({
       target: objectiveAction ?? { kind: 'objective' },
       kicker: objective.chapter,
       title: objective.title,
-      detail: objective.detail,
+      detail: objective.elenaMessage || objective.detail,
+      action: objectiveAction?.label ?? '操作メモを見る',
     };
   }
   const infoAdvice = [...advice].reverse().find(row => (

@@ -1,24 +1,26 @@
-import { IsometricCamera } from './camera.js?v=v004.10.0-final-polish';
-import { SimulationClock } from './clock.js?v=v004.10.0-final-polish';
+import { IsometricCamera } from './camera.js?v=v004.11.0-elena-guidance';
+import { SimulationClock } from './clock.js?v=v004.11.0-elena-guidance';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.10.0-final-polish';
+} from './config.js?v=v004.11.0-elena-guidance';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.10.0-final-polish';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.10.0-final-polish';
-import { presentEvent } from './event_view.js?v=v004.10.0-final-polish';
+} from './display_batch.js?v=v004.11.0-elena-guidance';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.11.0-elena-guidance';
+import { presentEvent } from './event_view.js?v=v004.11.0-elena-guidance';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.10.0-final-polish';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.10.0-final-polish';
-import { WorldPresentation } from './presentation.js?v=v004.10.0-final-polish';
-import { Renderer } from './renderer.js?v=v004.10.0-final-polish';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.10.0-final-polish';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.10.0-final-polish';
-import { GUIDANCE_TIERS, objectiveActionFor, secretaryRouteFor } from './ui_guidance.js?v=v004.10.0-final-polish';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.10.0-final-polish';
+} from './keyboard.js?v=v004.11.0-elena-guidance';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.11.0-elena-guidance';
+import { WorldPresentation } from './presentation.js?v=v004.11.0-elena-guidance';
+import { Renderer } from './renderer.js?v=v004.11.0-elena-guidance';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.11.0-elena-guidance';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.11.0-elena-guidance';
+import {
+  GUIDANCE_TIERS, objectiveActionFor, secretaryRouteFor, tutorialHandoffFor,
+} from './ui_guidance.js?v=v004.11.0-elena-guidance';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.11.0-elena-guidance';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -49,6 +51,8 @@ let openTutorialLetterId = null;
 let speedBeforeLetter = null;
 let lastRunningSpeed = clock.speedIndex || 1;
 let currentSecretaryRoute = null;
+let lastTutorialObjective = tutorialDirector?.currentObjective() ?? null;
+let currentTutorialHandoff = null;
 let highSpeedPendingTicks = 0;
 const pressedMovementKeys = new Set();
 const companyInteractionPointers = new Set();
@@ -858,11 +862,18 @@ function renderTutorial() {
   const available = Boolean(tutorialDirector);
   const state = tutorialDirector?.readState() ?? null;
   const objective = tutorialDirector?.currentObjective() ?? null;
+  const handoff = tutorialHandoffFor(lastTutorialObjective, objective);
+  if (handoff) currentTutorialHandoff = handoff;
+  lastTutorialObjective = objective;
   const objectivePanel = $('#tutorial-objective');
   const letterButton = $('#open-tutorial-letters');
   setHiddenIfChanged(objectivePanel, !objective || Boolean(tutorialDirector?.isComplete()));
   renderIfChanged('tutorial-complete-class', String(Boolean(objective?.complete)), () => {
     objectivePanel.classList.toggle('complete', Boolean(objective?.complete));
+    uiMetrics.domWrites += 1;
+  });
+  renderIfChanged('tutorial-handoff-class', String(Boolean(currentTutorialHandoff)), () => {
+    objectivePanel.classList.toggle('handoff-pending', Boolean(currentTutorialHandoff));
     uiMetrics.domWrites += 1;
   });
   setHiddenIfChanged(letterButton, !available || Boolean(state?.skipped));
@@ -876,11 +887,14 @@ function renderTutorial() {
   if (state?.skipped) setTextIfChanged('#start-mode-label', '自由プレイ（案内終了）');
   else if (tutorialDirector?.isComplete()) setTextIfChanged('#start-mode-label', '自由プレイ（教程完了）');
   if (objective) {
-    setTextIfChanged('#tutorial-chapter', objective.chapter);
-    setTextIfChanged('#tutorial-goal', objective.title);
+    setTextIfChanged('#tutorial-chapter',
+      `${currentTutorialHandoff ? '次の操作' : '操作メモ'}・${objective.chapter}`);
+    setTextIfChanged('#tutorial-goal', currentTutorialAction?.label ?? objective.title);
     setTextIfChanged('#tutorial-detail', objective.detail);
-    setTextIfChanged($('#tutorial-system strong'), objective.systemInstruction);
-    setHiddenIfChanged('#tutorial-system', !objective.systemInstruction);
+    const systemInstruction = objective.systemInstruction
+      || currentTutorialAction?.label || objective.title;
+    setTextIfChanged($('#tutorial-system strong'), systemInstruction);
+    setHiddenIfChanged('#tutorial-system', !systemInstruction);
     setTextIfChanged('#tutorial-progress', `${objective.progress.done} / ${objective.progress.total}`);
     const progress = $('#tutorial-progress-bar');
     if (progress.max !== objective.progress.total || progress.value !== objective.progress.done) {
@@ -927,6 +941,7 @@ function renderSecretary() {
   currentSecretaryRoute = secretaryRouteFor({
     letters: tutorialDirector?.letters() ?? [],
     advice: guidanceDirector.advice(),
+    handoff: currentTutorialHandoff,
     objective: tutorialDirector?.isComplete() ? null : objective,
     objectiveAction: currentTutorialAction,
     events: eventLog,
@@ -938,11 +953,11 @@ function renderSecretary() {
     button.dataset.secretaryPriority = currentSecretaryRoute.priority;
     button.dataset.secretaryTier = currentSecretaryRoute.tier ?? 'notice';
     const tier = GUIDANCE_TIERS[currentSecretaryRoute.tier] ?? GUIDANCE_TIERS.notice;
-    setTextIfChanged('#secretary-tier', tier.label);
+    setTextIfChanged('#secretary-tier', currentSecretaryRoute.badge ?? tier.label);
     setTextIfChanged('#secretary-kicker', currentSecretaryRoute.kicker);
     setTextIfChanged('#secretary-title', currentSecretaryRoute.title);
     setTextIfChanged('#secretary-detail', currentSecretaryRoute.detail);
-    setTextIfChanged('#secretary-action', `${tier.action} →`);
+    setTextIfChanged('#secretary-action', `${currentSecretaryRoute.action ?? tier.action} →`);
   });
 }
 
@@ -980,6 +995,15 @@ function focusEvent(row) {
 function followSecretaryRoute() {
   const target = currentSecretaryRoute?.target;
   if (!target) return false;
+  if (target.kind === 'tutorial-handoff') {
+    currentTutorialHandoff = null;
+    renderTutorial();
+    renderSecretary();
+    $('#status span').textContent = tutorialDirector?.isComplete()
+      ? 'エレナの案内を終え、同じ島で自由プレイを続けます'
+      : '次の操作メモへ進みました';
+    return true;
+  }
   if (target.kind === 'letter') return openTutorialLetter(target.id);
   if (target.kind === 'advice') {
     guidanceDirector.markAdviceRead(target.id);
@@ -1728,6 +1752,7 @@ window.__SHIOJI_V004__ = Object.freeze({
   get selectedBuildingId() { return selectedBuildingId; },
   get activeTool() { return activeTool; },
   get secretaryRoute() { return structuredClone(currentSecretaryRoute); },
+  get tutorialHandoff() { return structuredClone(currentTutorialHandoff); },
   get pressedMovementKeys() { return [...pressedMovementKeys]; },
   get eventLog() { return eventLog.map(row => ({ ...row })); },
   get economyHistory() { return structuredClone(economyHistory); },

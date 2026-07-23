@@ -1,9 +1,9 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.10.0-final-polish';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.11.0-elena-guidance';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.10.0-final-polish';
-import { analyzeRoadConnections } from './placement.js?v=v004.10.0-final-polish';
-import { buildingAppearance, pileVisual, trailVisual } from './visuals.js?v=v004.10.0-final-polish';
+} from './engine_bridge.js?v=v004.11.0-elena-guidance';
+import { analyzeRoadConnections } from './placement.js?v=v004.11.0-elena-guidance';
+import { buildingAppearance, pileVisual, trailVisual } from './visuals.js?v=v004.11.0-elena-guidance';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',

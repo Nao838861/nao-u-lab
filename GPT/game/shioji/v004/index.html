@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.10.0-final-polish">
+  <link rel="stylesheet" href="./style.css?v=v004.11.0-elena-guidance">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -42,8 +42,8 @@
     <div>
       <small id="tutorial-chapter">—</small>
       <b id="tutorial-goal">—</b>
-      <span id="tutorial-detail">—</span>
       <span id="tutorial-system" class="tutorial-system"><small>操作</small><strong>—</strong></span>
+      <span id="tutorial-detail">—</span>
     </div>
     <label><span id="tutorial-progress">0 / 0</span><progress id="tutorial-progress-bar" max="1" value="0"></progress></label>
     <div class="tutorial-actions">
@@ -51,11 +51,15 @@
     </div>
   </aside>
 
-  <aside id="observer" class="observer" data-testid="observer" aria-label="エレナからの案内">
+  <aside id="observer" class="observer" data-testid="observer" aria-label="エレナからの案内" aria-live="polite">
     <button id="secretary" class="secretary" type="button" data-testid="secretary">
       <img src="../v002/assets/elena_vance.png" alt="会社秘書エレナ・ヴァンス">
       <span>
-        <span class="secretary-meta"><i id="secretary-tier">今やること</i><small id="secretary-kicker">観測の案内</small></span>
+        <span class="secretary-meta">
+          <i id="secretary-tier">今やること</i>
+          <span class="secretary-name">エレナ・ヴァンス</span>
+          <small id="secretary-kicker">観測の案内</small>
+        </span>
         <b id="secretary-title">—</b>
         <em id="secretary-detail">—</em>
         <strong id="secretary-action">操作へ進む →</strong>
@@ -281,7 +285,7 @@
       });
     })();
   </script>
-  <script id="game-module" type="module" src="./src/main.js?v=v004.10.0-final-polish"
+  <script id="game-module" type="module" src="./src/main.js?v=v004.11.0-elena-guidance"
     onerror="window.__SHIOJI_BOOT__?.failed()"></script>
 </body>
 </html>

@@ -2,8 +2,8 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.10.0-final-polish';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.10.0-final-polish';
+} from './engine_bridge.js?v=v004.11.0-elena-guidance';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.11.0-elena-guidance';
 
 const LIVING_REQUIREMENT_LABELS = Object.freeze({
   food1: '食料1種', food2: '食料2種', food3: '食料3種', grain: '穀物',
@@ -312,6 +312,48 @@ export const TUTORIAL_PLAYER_TITLES = Object.freeze({
   'observe-household-level-up': '品物が暮らしを豊かにする様子を見る',
   'close-fifth-chapter': '仕事の連鎖が暮らしへ届いた結果を知る',
   'graduate-governor': '自分の島を読み続ける',
+});
+
+// エレナは操作手順を読み上げず、その一手が島にとって持つ意味を伝える。
+// 具体的な押し場所・置き場所は TUTORIAL_SYSTEM_INSTRUCTIONS だけが受け持つ。
+export const TUTORIAL_ELENA_MESSAGES = Object.freeze({
+  'first-road-and-logger': '丸太は、森と港を結ぶ道があって初めて島の商いに加わります。',
+  'market-for-logs': '木こりの荷を受け取る市場があれば、最初の家族は丸太を売って暮らし始められます。',
+  'connect-market-to-port': '港と市場の道は、本土から届く食料と、島から出す荷の共通の通り道です。',
+  'request-first-aid': '漁家と菜園が働き始めるまでの食卓だけ、本土へ頼みましょう。',
+  'first-settlers-arrive': '市場と当座の食料は整いました。今なら、最初の家族を迎えられます。',
+  'place-island-food': '一便の支援だけに頼らず、魚と野菜が毎日の食卓へ届く流れを作ります。',
+  'first-woodshop': '丸太の行き先を増やし、島で道具へ変える仕事を始めましょう。',
+  'warehouse-for-order': '会社が買い上げた品は、蔵があって初めて注文のために保管できます。',
+  'prepare-first-tools-stock': '注文を受けてから集めるより、道具を先に備えれば期限に追われません。',
+  'accept-first-order': '道具の備えができました。注文状の量と期限を確かめ、最初の取引を始めましょう。',
+  'order-procurement-target': '注文の量と買上げの量は別です。足りる数を会社へ下命してください。',
+  'first-order-procurement': '市場で買った道具が、会社の荷車で蔵へ移るところを見届けましょう。',
+  'complete-first-order': '船が出るだけでは完遂ではありません。残りがなくなるまで、一荷ずつの流れを見ます。',
+  'close-first-chapter': '森の丸太が道具になり、本国へ渡りました。その結果を帳簿と一緒に振り返ります。',
+  'improve-logger-route': '遠回りは木こりの仕事時間を削ります。短い道が暮らしと生産をどう変えるか確かめましょう。',
+  'observe-island-food-change': '魚と野菜が市場へ届けば、本土へ流れる銀と島の食卓が同時に変わります。',
+  'reduce-food-imports': '島で作る食料が増えるほど、毎日の食卓を本土に頼らず保てるようになります。',
+  'close-second-chapter': '食料を作る仕事と市場への道が、島の銀を島の中で巡らせ始めました。',
+  'observe-seasonal-food-valley': '食料は一年中同じ量ではありません。市場の山が細る時期を見つけます。',
+  'set-seasonal-stock-target': '余る時に買い上げておけば、品薄の季節へ実物の備えを残せます。',
+  'fill-seasonal-reserve': '数字だけでなく、買い上げた食料が蔵へ積まれるところを見届けましょう。',
+  'release-seasonal-reserve': '市場の品が薄い時こそ、蔵の備えを暮らしへ戻す時です。',
+  'close-third-chapter': '余る季節の荷が、足りない季節の食卓へ届きました。蔵がつないだ流れを振り返ります。',
+  'assess-profitable-order': '本国の支払が大きく見えても、島で集める費用を引かなければ利益は分かりません。',
+  'accept-profitable-order': '見込みを比べたうえで、島に利益が残る注文を選びましょう。',
+  'target-profitable-order': '引き受けた品は、注文数まで買い上げて初めて出荷の流れに乗ります。',
+  'complete-profitable-order': '見立てが正しかったかは、完遂後の売上と仕入の差で確かめられます。',
+  'observe-skippable-order': '注文状は命令ではありません。島に不利なら引き受けない判断もできます。',
+  'let-skippable-order-expire': '見送ると決めた注文は、島の品と銀を動かさず期限まで観察します。',
+  'close-fourth-chapter': '引き受ける自由と見送る自由の両方が、会社の帳簿を形づくります。',
+  'observe-tools-price-rise': '道具を求める人が増えれば、相場の動きに町の変化が表れます。',
+  'place-conversion-workshops': '一つの原料から仕事をつなげると、島の中で品と銀が巡る道が増えます。',
+  'observe-conversion-cost-chain': '原料の値は消えず、加工された品の原価へ順に渡っていきます。',
+  'sustain-conversion-workshops': '建物を置くだけでなく、原料と働く家族が途切れず届く町にしましょう。',
+  'observe-household-level-up': '品物が毎日届く暮らしは、やがて建物の姿にも表れます。',
+  'close-fifth-chapter': '仕事の連鎖が品を生み、その品が家族の暮らしを豊かにしました。',
+  'graduate-governor': 'ここから先は、荷車と在庫と人の暮らしを見て、次の一手をご自身で見立てられます。',
 });
 
 export const TUTORIAL_SYSTEM_INSTRUCTIONS = Object.freeze({

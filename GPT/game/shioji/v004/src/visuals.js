@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.10.0-final-polish';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.11.0-elena-guidance';
 
 export const MAX_PILE_SPRITES = 5;
 

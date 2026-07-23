@@ -235,6 +235,97 @@ async function checkTutorialCompanyPointerStability() {
   await page.close();
 }
 
+async function checkTutorialGoalHandoff(width = 1000, height = 760, mobile = false) {
+  const page = await newPage(width, height, mobile, gameForMode('tutorial'));
+  const transition = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.closeTutorialLetter();
+    game.setSpeed(0);
+    const model = game.model;
+    const port = model.buildings.find(building => building.roles.includes('port'));
+    const candidates = [];
+    for (let y = 0; y < model.height; y += 1) {
+      for (let x = 0; x < model.width; x += 1) {
+        const logger = game.previewBuilding('logger', x, y);
+        if (!logger.ok) continue;
+        const road = game.previewRoad(port.entrance, logger.entrance);
+        if (!road.ok) continue;
+        const reachesForest = road.cells.some(cell => {
+          for (let dy = -1; dy <= 1; dy += 1) {
+            for (let dx = -1; dx <= 1; dx += 1) {
+              if ((dx || dy)
+                && model.terrain[cell.y + dy]?.[cell.x + dx]?.kind === 'forest') return true;
+            }
+          }
+          return false;
+        });
+        const footprint = new Set(logger.cells.map(cell => cell.x + ',' + cell.y));
+        if (!reachesForest || road.cells.some(cell => footprint.has(cell.x + ',' + cell.y))) continue;
+        candidates.push({ logger, road });
+      }
+    }
+    const setup = candidates.sort((left, right) => left.road.cells.length - right.road.cells.length)[0];
+    if (!setup) throw new Error('tutorial handoff用の木こり配置が見つかりません');
+    game.controller.operate({
+      type: 'add_road', start: setup.road.start, end: setup.road.end,
+    });
+    game.advanceTicks(0, { animate: false });
+    game.controller.operate({
+      type: 'place_building', job: 'logger',
+      x: setup.logger.entrance.x, y: setup.logger.entrance.y,
+      buildingX: setup.logger.x, buildingY: setup.logger.y,
+    });
+    game.advanceTicks(0, { animate: false });
+    const observer = document.querySelector('#observer').getBoundingClientRect();
+    const dock = document.querySelector('#build-dock').getBoundingClientRect();
+    return {
+      handoff: game.tutorialHandoff,
+      objective: game.tutorialState.completedGoals,
+      priority: document.querySelector('#secretary').dataset.secretaryPriority,
+      tier: document.querySelector('#secretary-tier').textContent,
+      title: document.querySelector('#secretary-title').textContent,
+      detail: document.querySelector('#secretary-detail').textContent,
+      action: document.querySelector('#secretary-action').textContent,
+      memoChapter: document.querySelector('#tutorial-chapter').textContent,
+      memoTitle: document.querySelector('#tutorial-goal').textContent,
+      memoInstruction: document.querySelector('#tutorial-system').textContent,
+      observer: { top: observer.top, bottom: observer.bottom, width: observer.width },
+      dock: { top: dock.top, bottom: dock.bottom },
+    };
+  })()`);
+  assert.equal(transition.handoff.completedId, 'first-road-and-logger', JSON.stringify(transition));
+  assert.equal(transition.handoff.nextId, 'market-for-logs', JSON.stringify(transition));
+  assert.ok(transition.objective.includes('first-road-and-logger'), JSON.stringify(transition));
+  assert.equal(transition.priority, 'goal-complete', JSON.stringify(transition));
+  assert.equal(transition.tier, '達成', JSON.stringify(transition));
+  assert.match(transition.title, /できました.*森の丸太/);
+  assert.match(transition.detail, /市場/);
+  assert.match(transition.action, /次の案内/);
+  assert.match(transition.memoChapter, /次の操作.*第一章/);
+  assert.match(transition.memoTitle, /市場を選ぶ/);
+  assert.match(transition.memoInstruction, /市場/);
+  assert.ok(transition.observer.width >= (mobile ? width - 20 : 440), JSON.stringify(transition));
+  assert.ok(transition.observer.bottom < transition.dock.top, JSON.stringify(transition));
+  await page.screenshot(`/tmp/shioji_v004_tutorial_handoff_${mobile ? 'mobile' : 'desktop'}.png`);
+
+  const continued = await page.evaluate(`(() => {
+    document.querySelector('#secretary').click();
+    const game = window.__SHIOJI_V004__;
+    return {
+      handoff: game.tutorialHandoff,
+      priority: document.querySelector('#secretary').dataset.secretaryPriority,
+      title: document.querySelector('#secretary-title').textContent,
+      detail: document.querySelector('#secretary-detail').textContent,
+    };
+  })()`);
+  assert.equal(continued.handoff, null, JSON.stringify(continued));
+  assert.equal(continued.priority, 'objective', JSON.stringify(continued));
+  assert.match(continued.title, /市場/);
+  assert.match(continued.detail, /木こりの荷/);
+  assert.deepEqual(page.errors, []);
+  await page.close();
+}
+
 async function checkStartChoice(width, height, mobile, mode) {
   const page = await newPage(width, height, mobile, START_GAME);
   const launcher = await page.evaluate(`(() => {
@@ -382,8 +473,8 @@ async function checkStartChoice(width, height, mobile, mode) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.10.0-final-polish');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.10.0-final-polish');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.11.0-elena-guidance');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.11.0-elena-guidance');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -1014,6 +1105,10 @@ async function checkViewport(width, height, mobile) {
 if (process.argv.includes('--company-pointer-only')) {
   await checkTutorialCompanyPointerStability();
   console.log('CHARTER ISLE v004 company pointer smoke: PASS');
+} else if (process.argv.includes('--tutorial-handoff-only')) {
+  await checkTutorialGoalHandoff();
+  await checkTutorialGoalHandoff(390, 844, true);
+  console.log('CHARTER ISLE v004 tutorial handoff smoke: PASS');
 } else {
   await checkBootFailureRecovery();
   await checkStartChoice(1440, 900, false, 'tutorial');
@@ -1021,6 +1116,8 @@ if (process.argv.includes('--company-pointer-only')) {
   await checkStartChoice(390, 844, true, 'sandbox');
   await checkStartChoice(800, 700, false, 'test');
   await checkTutorialCompanyPointerStability();
+  await checkTutorialGoalHandoff();
+  await checkTutorialGoalHandoff(390, 844, true);
   await checkViewport(1440, 900, false);
   await checkViewport(390, 844, true);
   console.log('CHARTER ISLE v004 browser smoke: PASS');
