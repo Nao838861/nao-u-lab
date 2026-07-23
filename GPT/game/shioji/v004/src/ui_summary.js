@@ -7,9 +7,18 @@ export function recentCompanySummary(model, days = 30) {
   }
   const toDay = Number.isFinite(model.day) ? model.day : 0;
   const fromDay = Math.max(0, toDay - days + 1);
-  const rows = model.companyLedger.filter(row => row.day >= fromDay && row.day <= toDay);
-  const income = rows.reduce((total, row) => row.amount > 0 ? total + row.amount : total, 0);
-  const expense = rows.reduce((total, row) => row.amount < 0 ? total - row.amount : total, 0);
+  const dailyRows = model.companyDailyLedger?.filter(
+    row => row.day >= fromDay && row.day <= toDay,
+  );
+  const rows = dailyRows?.length
+    ? dailyRows
+    : model.companyLedger.filter(row => row.day >= fromDay && row.day <= toDay);
+  const income = dailyRows?.length
+    ? rows.reduce((total, row) => total + row.income, 0)
+    : rows.reduce((total, row) => row.amount > 0 ? total + row.amount : total, 0);
+  const expense = dailyRows?.length
+    ? rows.reduce((total, row) => total + row.expense, 0)
+    : rows.reduce((total, row) => row.amount < 0 ? total - row.amount : total, 0);
   return Object.freeze({
     days,
     fromDay,
@@ -59,8 +68,8 @@ export function islandHealthSummary(model, history = []) {
     reason = `直近30日ほどで人口が${Math.abs(populationDelta)}人減りました`;
   } else if ((model.companyMoney ?? 0) < 0) {
     tone = 'warning';
-    label = '会社資金に注意';
-    reason = '会社資金が0を下回っています';
+    label = '資金に注意';
+    reason = '取引資金が0を下回っています';
   } else if (populationDelta > 0) {
     tone = 'good';
     label = '暮らしが成長中';

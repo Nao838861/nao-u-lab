@@ -1,26 +1,26 @@
-import { IsometricCamera } from './camera.js?v=v004.18.0-elena-letters';
-import { SimulationClock } from './clock.js?v=v004.18.0-elena-letters';
+import { IsometricCamera } from './camera.js?v=v004.19.0-canon-performance';
+import { SimulationClock } from './clock.js?v=v004.19.0-canon-performance';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.18.0-elena-letters';
+} from './config.js?v=v004.19.0-canon-performance';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.18.0-elena-letters';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.18.0-elena-letters';
-import { presentEvent } from './event_view.js?v=v004.18.0-elena-letters';
+} from './display_batch.js?v=v004.19.0-canon-performance';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.19.0-canon-performance';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.19.0-canon-performance';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.18.0-elena-letters';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.18.0-elena-letters';
-import { WorldPresentation } from './presentation.js?v=v004.18.0-elena-letters';
-import { Renderer } from './renderer.js?v=v004.18.0-elena-letters';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.18.0-elena-letters';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.18.0-elena-letters';
+} from './keyboard.js?v=v004.19.0-canon-performance';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.19.0-canon-performance';
+import { WorldPresentation } from './presentation.js?v=v004.19.0-canon-performance';
+import { Renderer } from './renderer.js?v=v004.19.0-canon-performance';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.19.0-canon-performance';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.19.0-canon-performance';
 import {
   objectiveActionFor, secretaryRouteFor, tutorialHandoffFor,
-} from './ui_guidance.js?v=v004.18.0-elena-letters';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.18.0-elena-letters';
+} from './ui_guidance.js?v=v004.19.0-canon-performance';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.19.0-canon-performance';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -37,10 +37,10 @@ guidanceDirector.observe(model, []);
 const presentation = new WorldPresentation(model);
 let displayModel = presentation.reset(model);
 let lastEventSequence = 0;
-let visibleEventCount = 0;
 let selectedCarrierId = null;
 let selectedBuildingId = null;
 let activeTool = null;
+let activeBuildingJob = PLACEMENT_JOBS[0];
 let activeBuildCategory = 'logistics';
 let recommendedBuildingJob = null;
 let currentTutorialAction = null;
@@ -158,9 +158,12 @@ function recordEconomyHistory(currentModel) {
     ),
     population: currentModel.population,
     cash: toDenari(currentModel.companyMoney),
-    net: toDenari(currentModel.companyLedger
-      .filter(entry => entry.day === currentModel.day)
-      .reduce((total, entry) => total + entry.amount, 0)),
+    net: toDenari(
+      currentModel.companyDailyLedger?.find(entry => entry.day === currentModel.day)?.net
+      ?? currentModel.companyLedger
+        .filter(entry => entry.day === currentModel.day)
+        .reduce((total, entry) => total + entry.amount, 0),
+    ),
     prices: Object.fromEntries(Object.entries(currentModel.marketPrices).map(([goods, price]) => [goods, toDenari(price)])),
   };
   if (economyHistory.at(-1)?.day === row.day) economyHistory[economyHistory.length - 1] = row;
@@ -208,7 +211,7 @@ const HOUSEHOLD_STATE_LABELS = Object.freeze({
 
 const SATISFACTION_LABELS = Object.freeze({
   food1: '食料1種', food2: '食料2種', food3: '食料3種', grain: '穀物',
-  saltchar: '塩と燃料', tools: '道具', salt: '塩', char: '燃料', cloth: '布', iron: '鉄材',
+  saltchar: '塩と燃料', tools: '木製品', salt: '塩', char: '燃料', cloth: '布', iron: '鉄材',
 });
 
 function showToast(row) {
@@ -221,9 +224,9 @@ function showToast(row) {
 }
 
 function appendEvents(events, { allowToasts = true } = {}) {
-  const rows = events.map(presentEvent);
+  const rows = events.filter(shouldPresentEvent).map(presentEvent);
   eventLog.push(...rows);
-  if (eventLog.length > 100) eventLog.splice(0, eventLog.length - 100);
+  if (eventLog.length > 24) eventLog.splice(0, eventLog.length - 24);
   if (allowToasts) {
     const routine = rows.filter(row => !row.important && (
       ['docking', 'birth', 'inheritance'].includes(row.type)
@@ -245,7 +248,6 @@ function refreshModel({ animate = false, baseSeconds = 0.12 } = {}) {
   const events = controller.events(lastEventSequence);
   if (events.length) {
     lastEventSequence = events.at(-1).sequence;
-    visibleEventCount += events.length;
     appendEvents(events, { allowToasts: animate && events.length <= 30 });
   }
   if (animate) presentation.enqueue(nextModel, events, baseSeconds);
@@ -266,7 +268,6 @@ function renderHud() {
   const calendar = islandCalendar(model.day);
   setTextIfChanged('#season-value', calendar.label);
   setTextIfChanged('#population-value', `${formatNumber(model.population)}人`);
-  setTextIfChanged('#event-count', formatNumber(visibleEventCount));
   const health = islandHealthSummary(model, economyHistory);
   const signal = $('#island-signal');
   const shortHealth = health.tone === 'danger' ? '危険'
@@ -372,12 +373,6 @@ function categoryForJob(job) {
 }
 
 function initializeBuildDock() {
-  for (const job of PLACEMENT_JOBS) {
-    const option = document.createElement('option');
-    option.value = job;
-    option.textContent = JOB_LABELS[job] ?? job;
-    $('#building-kind').append(option);
-  }
   for (const category of BUILD_CATEGORIES) {
     const button = document.createElement('button');
     button.type = 'button';
@@ -401,7 +396,7 @@ function initializeHistoryGoods() {
 
 function renderBuildDock() {
   const category = BUILD_CATEGORIES.find(row => row.id === activeBuildCategory) ?? BUILD_CATEGORIES[1];
-  const signature = [category.id, activeTool, $('#building-kind').value, recommendedBuildingJob].join('|');
+  const signature = [category.id, activeTool, activeBuildingJob, recommendedBuildingJob].join('|');
   if (!renderIfChanged('build-dock', signature, () => renderBuildDockContents(category))) return;
 }
 
@@ -428,9 +423,9 @@ function renderBuildDockContents(category) {
     button.type = 'button';
     button.className = 'building-choice';
     button.dataset.buildingJob = job;
-    button.classList.toggle('on', activeTool === 'building' && $('#building-kind').value === job);
+    button.classList.toggle('on', activeTool === 'building' && activeBuildingJob === job);
     button.classList.toggle('recommended', recommendedBuildingJob === job);
-    button.setAttribute('aria-pressed', String(activeTool === 'building' && $('#building-kind').value === job));
+    button.setAttribute('aria-pressed', String(activeTool === 'building' && activeBuildingJob === job));
     const icon = document.createElement('i');
     icon.setAttribute('aria-hidden', 'true');
     icon.textContent = JOB_ICONS[job] ?? '建';
@@ -462,7 +457,7 @@ function setToolHint(message, tone = '') {
 }
 
 function toolInstruction(tool) {
-  return tool === 'building' ? `${JOB_LABELS[$('#building-kind').value] ?? '建物'}の入口にする区画を押してください。実寸敷地も同時に表示します。`
+  return tool === 'building' ? `${JOB_LABELS[activeBuildingJob] ?? '建物'}の入口にする区画を押してください。実寸敷地も同時に表示します。`
     : tool === 'road' ? '始点から終点へドラッグしてください。'
       : tool === 'remove-building' ? '空き建物を押してください。'
         : tool === 'remove-road' ? '撤去する完成道路を押してください。' : '';
@@ -502,7 +497,7 @@ function updateToolPreview(tile, start = toolDragStart) {
   }
   let preview;
   if (activeTool === 'building') {
-    preview = previewBuildingPlacement(model, $('#building-kind').value, tile);
+    preview = previewBuildingPlacement(model, activeBuildingJob, tile);
   } else if (activeTool === 'road') {
     preview = previewRoadPlacement(model, start ?? tile, tile);
   } else if (activeTool === 'remove-building') preview = removalPreview(tile);
@@ -528,8 +523,8 @@ function selectTool(tool) {
 
 function activateBuildingJob(job) {
   if (!PLACEMENT_JOBS.includes(job)) return null;
-  const same = activeTool === 'building' && $('#building-kind').value === job;
-  $('#building-kind').value = job;
+  const same = activeTool === 'building' && activeBuildingJob === job;
+  activeBuildingJob = job;
   activeBuildCategory = categoryForJob(job)?.id ?? activeBuildCategory;
   if (same) selectTool('building');
   else {
@@ -597,7 +592,7 @@ $('#build-tabs').addEventListener('click', event => {
   if (!button) return;
   activeBuildCategory = button.dataset.buildCategory;
   const category = BUILD_CATEGORIES.find(row => row.id === activeBuildCategory);
-  if (activeTool === 'building' && !category?.jobs.includes($('#building-kind').value)) selectTool('building');
+  if (activeTool === 'building' && !category?.jobs.includes(activeBuildingJob)) selectTool('building');
   else renderBuildDock();
 });
 $('#building-palette').addEventListener('click', event => {
@@ -605,10 +600,6 @@ $('#building-palette').addEventListener('click', event => {
   if (button) activateBuildingJob(button.dataset.buildingJob);
 });
 $('#cancel-tool').addEventListener('click', () => selectTool(activeTool));
-$('#building-kind').addEventListener('change', () => {
-  if (activeTool === 'building') setToolHint('建物の入口にする区画を押してください。実寸敷地も同時に表示します。');
-});
-
 const pointers = new Map();
 let panLast = null;
 let pinchDistance = null;
@@ -834,7 +825,7 @@ function renderCompanyGoods() {
       const feedback = stockTargetFeedback.get(goods) ?? (dirty ? '未反映' : '');
       return `
         <div class="goods-row${dirty ? ' dirty' : ''}" data-goods="${goods}">
-          <span class="goods-identity"><b>${GOODS_LABELS[goods]}</b><small>蔵 ${formatQuantity(stock)}荷</small></span>
+          <span class="goods-identity"><b>${GOODS_LABELS[goods]}</b><small>倉庫 ${formatQuantity(stock)}荷</small></span>
           <label class="target-editor"><span>買上げ目標</span><input data-stock-target type="number" min="0" step="1" value="${escapeHtml(targetValue)}" aria-label="${GOODS_LABELS[goods]}の買上げ目標"><small data-target-feedback>${escapeHtml(feedback)}</small></label>
           <div class="release-quote"><small>平均仕入 ${Number.isFinite(averageCost) ? `${formatQuantity(toDenari(averageCost))}D/荷` : '—'}</small><small>市場へ出す希望単価 ${Number.isFinite(releaseQuote) ? `${formatQuantity(toDenari(releaseQuote))}D/荷` : '—'}</small></div>
           <label class="release-editor"><span>市場へ出す量</span><input data-release-qty type="number" min="1" max="${Math.max(1, Math.floor(stock))}" step="1" value="${escapeHtml(releaseValue)}" aria-label="${GOODS_LABELS[goods]}を市場へ出す量"><small>荷</small></label>
@@ -987,7 +978,7 @@ function secretaryFallback() {
     target: { kind: 'sheet', sheet: 'island-sheet' },
     speech: '島は今日も動いています。荷車が運ぶ品と、家々の食料を見ていれば、次に足りなくなるものが分かります。',
     kicker: '観測の案内',
-    title: '島況で現物と相場を見る',
+    title: '統計で現物と相場を見る',
     detail: `所在を確認できる現物 ${formatQuantity(model.totalVisibleStock)}荷`,
   };
 }
@@ -1259,15 +1250,15 @@ function renderBuildingSheet() {
       .filter(([, amount]) => amount > 1e-9)
       .sort((left, right) => right[1] - left[1]);
     companyStockPanel.innerHTML = `
-      <h3>会社の蔵にある品</h3>
-      <p>会社が市場で買い上げた品です。本国注文の船積みと、品薄時の蔵出しはここから運びます。</p>
+      <h3>会社の倉庫にある品</h3>
+      <p>会社が市場で買い上げた品です。本国注文の船積みと、品薄時の市場へ出すはここから運びます。</p>
       ${companyRows.length ? `<div class="shelf-list">${companyRows.map(([goods, amount]) => {
         const averageCost = model.companyStockAverageCosts[goods];
         const cost = Number.isFinite(averageCost)
           ? `平均仕入 ${formatQuantity(averageCost * 10)}デナリ/荷` : '平均仕入 —';
         return `<div class="company-stock-row"><span><b>${escapeHtml(GOODS_LABELS[goods] ?? goods)}</b><small>${cost}</small></span><b>${formatQuantity(amount)}荷</b></div>`;
       }).join('')}</div>` : '<p>会社在庫はありません。買上げ目標を定めると、市場から届いた品がここに保管されます。</p>'}
-      <button class="focus-building" type="button" data-open-company-stock>買上げ目標・蔵出しを開く</button>`;
+      <button class="focus-building" type="button" data-open-company-stock>買上げ目標・市場へ出すを開く</button>`;
   }
 
   const conversion = selectedConversion;
@@ -1294,7 +1285,7 @@ function stockReleaseMarkerMarkup(rows) {
   return stockReleaseDays.filter(row => CHART_FOOD_GOODS.has(row.goods)
     && row.day >= first && row.day <= last).map(row => {
     const x = 28 + ((row.day - first) / Math.max(1, last - first)) * 285;
-    return `<path d="M${x.toFixed(1)} 7V94" class="chart-release-marker"><title>${row.day}日目 ${GOODS_LABELS[row.goods] ?? row.goods} ${row.qty}荷を蔵出し</title></path>`;
+    return `<path d="M${x.toFixed(1)} 7V94" class="chart-release-marker"><title>${row.day}日目 ${GOODS_LABELS[row.goods] ?? row.goods} ${row.qty}荷を市場へ出す</title></path>`;
   }).join('');
 }
 
@@ -1724,7 +1715,7 @@ companySheet.addEventListener('click', event => {
       return;
     }
     const result = applyEngineOperation({ type: 'release_stock', goods, qty },
-      `${GOODS_LABELS[goods]} ${qty}荷を蔵から市場へ運びます`, '蔵出しできる在庫または経路がありません');
+      `${GOODS_LABELS[goods]} ${qty}荷を倉庫から市場へ運びます`, '市場へ出せる在庫または経路がありません');
     if (result?.ok !== false) {
       stockReleaseDrafts.delete(goods);
       stockReleaseDays.push({ day: model.day, goods, qty });

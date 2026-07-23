@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.18.0-elena-letters">
+  <link rel="stylesheet" href="./style.css?v=v004.19.0-canon-performance">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -17,15 +17,15 @@
       <span><b>CHARTER ISLE</b><small>潮路の島 <span id="build-version" data-testid="build-version">—</span></small></span>
     </div>
     <div class="funds hud-stat" data-testid="funds">
-      <small>会社資金</small><b id="funds-value">—</b>
+      <small>資金</small><b id="funds-value">—</b>
     </div>
     <div class="hud-stat calendar-stat"><small>日付</small><b id="day-value">0日目</b><em id="season-value">冬・1月</em></div>
     <div class="hud-stat population-stat"><small>人口</small><b id="population-value">0人</b></div>
     <nav id="top-menu" class="top-menu" aria-label="情報ウインドウ">
-      <button id="open-company" type="button">会社</button>
-      <button id="open-island" type="button">島況 <i id="island-signal" data-tone="steady">平穏</i></button>
+      <button id="open-company" type="button">取引</button>
+      <button id="open-island" type="button">統計 <i id="island-signal" data-tone="steady">平穏</i></button>
       <button id="open-building" type="button" disabled>選択建物</button>
-      <button id="open-events" type="button">出来事 <b id="event-count">0</b></button>
+      <button id="open-events" type="button">出来事</button>
       <button id="open-tutorial-letters" type="button" hidden>書状 <b id="tutorial-unread" class="unread-badge" hidden>0</b></button>
       <button id="choose-start" class="top-menu-subtle" type="button" title="開始方法を選び直す">最初から</button>
     </nav>
@@ -64,7 +64,6 @@
   </aside>
 
   <nav id="build-dock" class="panel build-dock" aria-label="建築と道路" data-testid="build-dock">
-    <select id="building-kind" class="legacy-building-kind" aria-label="配置する建物" tabindex="-1"></select>
     <div id="build-tabs" class="build-tabs" role="tablist" aria-label="建築カテゴリ"></div>
     <div class="build-dock-row">
       <div id="building-palette" class="building-palette" aria-label="建物を直接選択"></div>
@@ -107,16 +106,16 @@
 
   <aside id="island-sheet" class="panel sheet island-sheet" hidden data-testid="island-sheet">
     <header>
-      <div><small>会社の収支・市場・現物</small><h2>島の流れ</h2></div>
-      <button type="button" data-close-sheet="island-sheet" aria-label="島況を閉じる">×</button>
+      <div><small>取引収支・市場・現物</small><h2>島の統計</h2></div>
+      <button type="button" data-close-sheet="island-sheet" aria-label="統計を閉じる">×</button>
     </header>
     <section id="island-health" class="island-health" data-tone="steady">
       <b id="island-health-title">島は落ち着いています</b>
-      <span id="island-health-detail">人口・食料・会社資金の変化をまとめます。</span>
+      <span id="island-health-detail">人口・食料・資金の変化をまとめます。</span>
     </section>
     <section class="island-finance-section">
-      <h3>直近30日の会社収支</h3>
-      <div id="island-finance" class="island-finance" aria-label="直近30日の会社収支">
+      <h3>直近30日の取引収支</h3>
+      <div id="island-finance" class="island-finance" aria-label="直近30日の取引収支">
         <span><small>現在資金</small><b id="island-funds">—</b></span>
         <span><small>入金</small><b id="island-income" class="plus">—</b></span>
         <span><small>支出</small><b id="island-expense" class="minus">—</b></span>
@@ -132,12 +131,12 @@
       </div>
       <div id="economy-charts" class="economy-charts">
         <figure data-chart="food-flow"><figcaption>食料の流れ <small>荷/日</small></figcaption><svg id="food-flow-chart" viewBox="0 0 320 112" role="img" aria-label="食料の生産、消費、本土購入の推移"></svg></figure>
-        <figure data-chart="food-stock"><figcaption>食料と蔵の備え <small>荷</small></figcaption><svg id="food-stock-chart" viewBox="0 0 320 112" role="img" aria-label="島内食料と会社の食料在庫の推移"></svg></figure>
+        <figure data-chart="food-stock"><figcaption>食料と倉庫の備え <small>荷</small></figcaption><svg id="food-stock-chart" viewBox="0 0 320 112" role="img" aria-label="島内食料と会社の食料在庫の推移"></svg></figure>
         <figure data-chart="population"><figcaption>人口 <small>人</small></figcaption><svg id="population-chart" viewBox="0 0 320 112" role="img" aria-label="人口の推移"></svg></figure>
-        <figure data-chart="finance"><figcaption>会社の資金と日々の差引 <small>デナリ</small></figcaption><svg id="finance-chart" viewBox="0 0 320 112" role="img" aria-label="会社資金と日々の差引の推移"></svg></figure>
+        <figure data-chart="finance"><figcaption>資金と日々の差引 <small>デナリ</small></figcaption><svg id="finance-chart" viewBox="0 0 320 112" role="img" aria-label="資金と日々の差引の推移"></svg></figure>
         <figure data-chart="price"><figcaption><span id="price-chart-title">市場相場</span> <small>デナリ/荷</small></figcaption><svg id="price-chart" viewBox="0 0 320 112" role="img" aria-label="選択した品目の市場相場の推移"></svg></figure>
       </div>
-      <div class="chart-legend" aria-label="グラフの色の説明"><span class="food-prod">島内生産</span><span class="food-cons">消費</span><span class="food-imp">本土購入</span><span class="reserve">会社の蔵</span></div>
+      <div class="chart-legend" aria-label="グラフの色の説明"><span class="food-prod">島内生産</span><span class="food-cons">消費</span><span class="food-imp">本土購入</span><span class="reserve">会社の倉庫</span></div>
     </section>
     <section class="island-market-section">
       <h3>市場相場と最近の流れ</h3>
@@ -153,29 +152,29 @@
 
   <aside id="company-sheet" class="panel sheet" hidden data-testid="company-sheet">
     <header>
-      <div><small>勅許会社</small><h2>会社と本国注文</h2></div>
-      <button type="button" data-close-sheet="company-sheet" aria-label="会社パネルを閉じる">×</button>
+      <div><small>勅許会社の帳場</small><h2>取引と本国注文</h2></div>
+      <button type="button" data-close-sheet="company-sheet" aria-label="取引を閉じる">×</button>
     </header>
-    <div class="company-balance"><small>会社資金</small><b id="company-balance">—</b></div>
+    <div class="company-balance"><small>資金</small><b id="company-balance">—</b></div>
     <section id="order-panel" class="order-panel"></section>
     <section id="aid-panel" class="order-panel"></section>
     <section>
-      <h3>買上げ目標・蔵出し</h3>
-      <p class="sheet-note">目標は会社が市場から買う上限。蔵出しは実在庫を市場へ運びます。</p>
+      <h3>買上げ目標・市場へ出す</h3>
+      <p class="sheet-note">目標は会社が市場から買う上限。市場へ出すは実在庫を市場へ運びます。</p>
       <div id="company-goods" class="company-goods"></div>
     </section>
     <section>
-      <h3>会社台帳</h3>
+      <h3>取引台帳</h3>
       <div id="company-ledger" class="company-ledger"></div>
     </section>
   </aside>
 
   <aside id="event-sheet" class="panel sheet" hidden data-testid="event-sheet">
     <header>
-      <div><small>観測API</small><h2>島の出来事</h2></div>
+      <div><small>いま起きていること</small><h2>最近の出来事</h2></div>
       <button type="button" data-close-sheet="event-sheet" aria-label="出来事を閉じる">×</button>
     </header>
-    <p class="sheet-note">出来事を押すと、その座標へ移動します。</p>
+    <p class="sheet-note">直近24件だけを表示します。押すと、その場所へ移動します。</p>
     <div id="event-log" class="event-log"></div>
   </aside>
 
@@ -280,7 +279,7 @@
       });
     })();
   </script>
-  <script id="game-module" type="module" src="./src/main.js?v=v004.18.0-elena-letters"
+  <script id="game-module" type="module" src="./src/main.js?v=v004.19.0-canon-performance"
     onerror="window.__SHIOJI_BOOT__?.failed()"></script>
 </body>
 </html>

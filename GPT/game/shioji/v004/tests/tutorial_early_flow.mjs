@@ -158,7 +158,7 @@ function measureSeed(seed) {
   assert.equal(director.currentObjective().id, 'warehouse-for-order');
   model = controller.readModel();
   const warehouseSetup = findConnectablePreview(model, 'warehouse', market.entrance);
-  assert.ok(warehouseSetup, '市場から道を結べる蔵の配置候補がある');
+  assert.ok(warehouseSetup, '市場から道を結べる倉庫の配置候補がある');
   place(controller, 'warehouse', warehouseSetup.preview);
   collect();
   connect(controller, market.entrance, warehouseSetup.preview.entrance);
@@ -166,7 +166,7 @@ function measureSeed(seed) {
   assert.equal(director.currentObjective().id, 'prepare-first-tools-stock');
   assert.equal(controller.operate({
     type: 'set_stock_target', goods: 'tools', qty: 80,
-  }).ok, true, '初注文の最大量まで道具を先に買い集める');
+  }).ok, true, '初注文の最大量まで木製品を先に買い集める');
   collect();
   assert.equal(director.currentObjective().id, 'accept-first-order');
 
@@ -267,7 +267,7 @@ assert.equal(rows.every(row => row.deathEventsUntilFirstOrder === 0), true,
   '教程の表示手順だけで初注文完遂まで餓死ゼロ');
 assert.equal(rows.every(row => row.aidRequests === AID_REQUESTS), true, '指定した本国支援回数だけを使う');
 assert.equal(rows.every(row => row.firstOfferDay !== null), true, '全seedで最初の注文状が届く');
-assert.equal(rows.every(row => row.firstOfferGoods === 'tools'), true, '最初の生産適格注文は道具になる');
+assert.equal(rows.every(row => row.firstOfferGoods === 'tools'), true, '最初の生産適格注文は木製品になる');
 assert.equal(rows.every(row => row.firstCompletionDay !== null), true, '全seedで最初の注文を完遂する');
 assert.equal(rows.every(row => row.prematureGoalsAtFirstOffer.length === 0), true,
   '最初の注文中に未来章の観察目標を先回り完了しない');

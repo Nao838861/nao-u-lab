@@ -1,4 +1,4 @@
-import { snapshotToViewModel } from './view_model.js?v=v004.18.0-elena-letters';
+import { snapshotToViewModel } from './view_model.js?v=v004.19.0-canon-performance';
 
 export function createViewController(api) {
   if (!api?.snapshot || !api?.advanceTicks || !api?.applyOperation) {
@@ -14,7 +14,7 @@ export function createViewController(api) {
   return Object.freeze({
     readModel() {
       counts.snapshotReads += 1;
-      const snapshot = api.snapshot({ scope: 'full' });
+      const snapshot = api.snapshot({ scope: 'view' });
       counts.viewModelBuilds += 1;
       return snapshotToViewModel(snapshot);
     },

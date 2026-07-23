@@ -293,7 +293,12 @@ async function checkTutorialGoalHandoff(width = 1000, height = 760, mobile = fal
   assert.equal(transition.priority, 'goal-complete', JSON.stringify(transition));
   assert.match(transition.speech, /森まで道が届きました.*木こりを建てましょう/s);
   assert.equal(transition.objectiveHidden, true, '達成中は次の現在目標を見せない');
-  assert.ok(transition.observer.width >= (mobile ? width - 20 : 480), JSON.stringify(transition));
+  assert.ok(
+    mobile
+      ? transition.observer.width >= width - 20
+      : transition.observer.width >= 420 && transition.observer.width <= 480,
+    JSON.stringify(transition),
+  );
   assert.ok(transition.observer.bottom < transition.dock.top, JSON.stringify(transition));
   await page.screenshot(`/tmp/shioji_v004_tutorial_road_handoff_${mobile ? 'mobile' : 'desktop'}.png`);
 
@@ -400,7 +405,7 @@ async function checkStartChoice(width, height, mobile, mode) {
       speed: window.__SHIOJI_V004__.clock.speedIndex,
       startMode: window.__SHIOJI_V004__.startMode,
       buildings: window.__SHIOJI_V004__.model.buildings.map(building => building.type).sort(),
-      buildingOptions: [...document.querySelectorAll('#building-kind option')].map(option => option.value),
+      hasLegacyBuildingSelect: Boolean(document.querySelector('#building-kind')),
       households: window.__SHIOJI_V004__.model.households.length,
       roads: window.__SHIOJI_V004__.model.roadKeys.length,
       bootState: document.querySelector('#boot-status').dataset.state,
@@ -418,7 +423,7 @@ async function checkStartChoice(width, height, mobile, mode) {
   assert.match(launcher.bootText, /遊び方を選べます/);
   assert.equal(launcher.portraitVisible, true, JSON.stringify(launcher));
   assert.deepEqual(launcher.buildings, ['port']);
-  assert.deepEqual(launcher.buildingOptions.slice(0, 2), ['market', 'warehouse']);
+  assert.equal(launcher.hasLegacyBuildingSelect, false);
   assert.deepEqual(launcher.buildCategories, ['整備', '流通', '食料', '採取', '加工']);
   assert.equal(launcher.buildingPalette.length, 2);
   assert.match(launcher.buildingPalette[0], /市場.*2,500D.*5×5/s);
@@ -473,7 +478,7 @@ async function checkStartChoice(width, height, mobile, mode) {
     assert.equal(started.tutorialState.active, true, JSON.stringify(started));
     assert.equal(started.objectiveVisible, true, JSON.stringify(started));
     assert.equal(started.tutorialActionHidden, false, JSON.stringify(started));
-    assert.equal(started.tutorialActionText, '道を敷く道具を選ぶ');
+    assert.equal(started.tutorialActionText, '道を敷き始める');
     assert.equal(started.secretaryPriority, 'forced-letter', JSON.stringify(started));
     assert.match(started.secretarySpeech, /いま島にあるのは港だけ.*このあと自動で開きます/s);
     assert.equal(started.secretaryTag, 'DIV');
@@ -639,7 +644,7 @@ async function checkTutorialLetterDelivery() {
     }
     requireOk(game.controller.operate({
       type: 'set_stock_target', goods: 'tools', qty: 80,
-    }), '道具の事前買上げ');
+    }), '木製品の事前買上げ');
     for (let pass = 0; pass < 3; pass += 1) refresh();
     game.advanceTicks(Math.max(0, 75 * 30 - game.model.tick), { animate: false });
     return {
@@ -719,8 +724,8 @@ async function checkTutorialLetterDelivery() {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.18.0-elena-letters');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.18.0-elena-letters');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.19.0-canon-performance');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.19.0-canon-performance');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -764,7 +769,7 @@ async function checkViewport(width, height, mobile) {
   }
   assert.deepEqual(controlBounds.categories, ['整備', '流通', '食料', '採取', '加工']);
   assert.equal(controlBounds.palette.length, 2);
-  assert.match(controlBounds.palette.join(' '), /市場.*2,500D.*5×5.*蔵.*2,500D.*4×4/s);
+  assert.match(controlBounds.palette.join(' '), /市場.*2,500D.*5×5.*倉庫.*2,500D.*4×4/s);
   assert.equal(controlBounds.secretaryPriority, 'operation-guide');
   assert.match(controlBounds.secretaryAlt, /エレナ/);
   assert.match(controlBounds.secretaryText, /エレナ・ヴァンス.*荷車が運ぶ品.*家々の食料/s);
@@ -979,7 +984,7 @@ async function checkViewport(width, height, mobile) {
         manifestRows: document.querySelectorAll('.manifest-row').length,
         locationRows: document.querySelectorAll('[data-stock-location]').length,
         companyLocations: [...document.querySelectorAll('[data-stock-location]')]
-          .filter(button => button.textContent.includes('会社の蔵')).length,
+          .filter(button => button.textContent.includes('会社の倉庫')).length,
         companyStock: Object.values(window.__SHIOJI_V004__.model.companyStock)
           .reduce((total, amount) => total + amount, 0),
         marketRows: document.querySelectorAll('.market-flow-row').length,
@@ -1023,7 +1028,7 @@ async function checkViewport(width, height, mobile) {
       };
     })()`);
     assert.equal(warehouseDetail.hidden, false, JSON.stringify(warehouseDetail));
-    assert.match(warehouseDetail.text, /会社の蔵にある品.*本国注文.*蔵出し/s);
+    assert.match(warehouseDetail.text, /会社の倉庫にある品.*本国注文.*市場へ出す/s);
     assert.match(warehouseDetail.status, /会社の物流施設/);
 
     const buildingPoint = await page.evaluate(`(() => {
@@ -1241,9 +1246,10 @@ async function checkViewport(width, height, mobile) {
     })()`);
     assert.ok(company.sheet.left >= 0 && company.sheet.right <= width, JSON.stringify(company));
     assert.ok(company.sheet.top >= 0 && company.sheet.bottom <= height, JSON.stringify(company));
-    assert.ok(company.observer.bottom < company.sheet.top, JSON.stringify(company));
-    assert.ok(Math.abs((company.observer.left + company.observer.right) / 2 - width / 2) < 1,
-      JSON.stringify(company));
+    assert.ok(company.observer.right < company.sheet.left, JSON.stringify(company));
+    assert.ok(company.observer.left <= 20, JSON.stringify(company));
+    assert.ok(company.sheet.top <= 100, JSON.stringify(company));
+    assert.ok(company.sheet.bottom - company.sheet.top >= 680, JSON.stringify(company));
     assert.match(company.secretaryTheme.backgroundImage, /linear-gradient/);
     assert.equal(company.secretaryTheme.color, 'rgb(57, 45, 32)');
     assert.ok(company.offer, JSON.stringify(company));
@@ -1295,12 +1301,16 @@ async function checkViewport(width, height, mobile) {
       return {
         rows: document.querySelectorAll('.event-row').length,
         operation: game.eventLog.some(row => row.type === 'operation'),
-        important: game.eventLog.some(row => row.important),
+        silent: game.eventLog.some(row => (
+          ['operation', 'departure', 'arrival', 'transaction', 'docking', 'handling']
+            .includes(row.type)
+        )),
       };
     })()`);
     assert.ok(eventPanel.rows > 0, JSON.stringify(eventPanel));
-    assert.equal(eventPanel.operation, true, JSON.stringify(eventPanel));
-    assert.equal(eventPanel.important, true, JSON.stringify(eventPanel));
+    assert.equal(eventPanel.operation, false, JSON.stringify(eventPanel));
+    assert.equal(eventPanel.silent, false, JSON.stringify(eventPanel));
+    assert.ok(eventPanel.rows <= 24, JSON.stringify(eventPanel));
     await page.screenshot('/tmp/shioji_v004_events.png');
     await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;

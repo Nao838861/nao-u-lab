@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.18.0-elena-letters';
+import { SPEEDS } from './config.js?v=v004.19.0-canon-performance';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

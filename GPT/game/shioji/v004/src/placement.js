@@ -1,4 +1,4 @@
-import { BUILDING_SIZES } from './config.js?v=v004.18.0-elena-letters';
+import { BUILDING_SIZES } from './config.js?v=v004.19.0-canon-performance';
 
 export const tileKey = (x, y) => `${x},${y}`;
 
@@ -78,7 +78,7 @@ function rejection(model, job, entrance) {
   if (
     (job === 'market' || job === 'warehouse')
     && model.buildings.some(building => building.roles?.includes(job))
-  ) return job === 'market' ? '市場はすでにあります' : '蔵はすでにあります';
+  ) return job === 'market' ? '市場はすでにあります' : '倉庫はすでにあります';
   const terrain = terrainAt(model, entrance.x, entrance.y);
   if (!terrain || terrain === 'water') return '水の上には建てられません';
   if ((model.zones ?? []).some(zone => Math.round(zone.x) === entrance.x && Math.round(zone.y) === entrance.y)
@@ -93,7 +93,7 @@ function rejection(model, job, entrance) {
   }
   if (terrain === 'forest') return '森そのものではなく森の際へ配置してください';
   if (terrain === 'rock') return '岩場そのものではなく岩場の際へ配置してください';
-  const required = job === 'fisher' || job === 'fisher2' ? ['water', '漁家は水際にしか置けません']
+  const required = job === 'fisher' || job === 'fisher2' ? ['water', '漁師は水際にしか置けません']
     : job === 'logger' ? ['forest', '木こりは森の際に置いてください']
       : job === 'quarryman' ? ['rock', '採石場は岩場の際に置いてください']
         : job === 'miner' ? ['ore', '鉱山は鉄鉱床の2区画以内に置いてください']

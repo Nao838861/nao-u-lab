@@ -3,14 +3,14 @@ export const START_MODES = Object.freeze({
     id: 'tutorial',
     label: 'エレナと開拓する',
     shortLabel: 'チュートリアル',
-    description: '未開拓島で、実際の島況に沿う書状と目標を手がかりに開拓します。',
+    description: '未開拓島で、実際の統計に沿う書状と目標を手がかりに開拓します。',
     blank: true,
   }),
   sandbox: Object.freeze({
     id: 'sandbox',
     label: '自分でゼロから開拓',
     shortLabel: '未開拓サンドボックス',
-    description: '港だけがある島で、市場・蔵・職建物と道を自分で配置します。',
+    description: '港だけがある島で、市場・倉庫・職建物と道を自分で配置します。',
     blank: true,
   }),
   test: Object.freeze({

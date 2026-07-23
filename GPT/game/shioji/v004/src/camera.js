@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.18.0-elena-letters';
+import { TILE } from './config.js?v=v004.19.0-canon-performance';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

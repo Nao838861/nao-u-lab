@@ -5,20 +5,20 @@ export {
   companyStockReleasePrice,
   householdClass,
   productionCost,
-} from '../../engine/src/econ.js?v=v004.18.0-elena-letters';
-import { P } from '../../engine/src/econ.js?v=v004.18.0-elena-letters';
-import { createEngineApi } from '../../engine/src/api.js?v=v004.18.0-elena-letters';
+} from '../../engine/src/econ.js?v=v004.19.0-canon-performance';
+import { P } from '../../engine/src/econ.js?v=v004.19.0-canon-performance';
+import { createEngineApi } from '../../engine/src/api.js?v=v004.19.0-canon-performance';
 import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
   buildBaseCity,
   makeStableCityPlan,
-} from '../../engine/src/audit.js?v=v004.18.0-elena-letters';
-import { createPhysicalState, makeFlowIslandTerrain } from '../../engine/src/physical.js?v=v004.18.0-elena-letters';
-import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.18.0-elena-letters';
-import { createViewController } from './controller.js?v=v004.18.0-elena-letters';
-import { START_MODES } from './start_modes.js?v=v004.18.0-elena-letters';
+} from '../../engine/src/audit.js?v=v004.19.0-canon-performance';
+import { createPhysicalState, makeFlowIslandTerrain } from '../../engine/src/physical.js?v=v004.19.0-canon-performance';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.19.0-canon-performance';
+import { createViewController } from './controller.js?v=v004.19.0-canon-performance';
+import { START_MODES } from './start_modes.js?v=v004.19.0-canon-performance';
 
 export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS };
 export const BUILD_COST_DENARI = P.BUILD_COST * 10;

@@ -1,12 +1,12 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.18.0-elena-letters';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.19.0-canon-performance';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.18.0-elena-letters';
-import { analyzeRoadConnections } from './placement.js?v=v004.18.0-elena-letters';
-import { compileRenderScene } from './render_scene.js?v=v004.18.0-elena-letters';
+} from './engine_bridge.js?v=v004.19.0-canon-performance';
+import { analyzeRoadConnections } from './placement.js?v=v004.19.0-canon-performance';
+import { compileRenderScene } from './render_scene.js?v=v004.19.0-canon-performance';
 import {
   buildingAppearance, buildingStructureLayout, pileVisual, trailVisual, yardSlots, yardStockRows,
-} from './visuals.js?v=v004.18.0-elena-letters';
+} from './visuals.js?v=v004.19.0-canon-performance';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
@@ -133,7 +133,7 @@ function stockManifest(
       if (amount <= 1e-9) continue;
       rows.push({
         source: 'company', sourceId: warehouse.id,
-        sourceLabel: `会社の蔵 #${warehouse.id}・保管`,
+        sourceLabel: `会社の倉庫 #${warehouse.id}・保管`,
         x: warehouse.x, y: warehouse.y,
         section: 'companyStock', goods, amount,
         averageCost: (companyStockCost[goods] ?? 0) / amount,
@@ -465,6 +465,18 @@ export function snapshotToViewModel(snapshot) {
     reservedBuildingSites: (snapshot.economy.reservedBuildingSites ?? []).map(site => ({ ...site })),
     roadWorksites: snapshot.physical.roadWorksites.map(site => ({ ...site })),
     companyLedger: snapshot.economy.company.ledger.map(row => ({ ...row })),
+    companyLedgerCount: snapshot.economy.company.ledgerCount
+      ?? snapshot.economy.company.ledger.length,
+    companyLedgerIncome: snapshot.economy.company.ledgerIncome
+      ?? snapshot.economy.company.ledger
+        .filter(row => row.amount > 0)
+        .reduce((total, row) => total + row.amount, 0),
+    companyLedgerExpense: snapshot.economy.company.ledgerExpense
+      ?? snapshot.economy.company.ledger
+        .filter(row => row.amount < 0)
+        .reduce((total, row) => total - row.amount, 0),
+    companyLedgerByReason: { ...(snapshot.economy.company.ledgerByReason ?? {}) },
+    companyDailyLedger: (snapshot.economy.company.ledgerDaily ?? []).map(row => ({ ...row })),
     marketPrices: { ...snapshot.economy.px },
     flowEma: Object.fromEntries(Object.entries(snapshot.economy.f30 ?? {}).map(([goods, flow]) => [
       goods, { ...flow },

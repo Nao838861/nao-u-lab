@@ -147,8 +147,8 @@ export const E_STABLE_PRICE_BANDS = Object.freeze({
   wheat: Object.freeze([0.13, 4.1]),
   log: Object.freeze([0.17, 1.5]),
   tools: Object.freeze([0.75, 2.5]),
-  salt: Object.freeze([0.2, 5.1]),
-  char: Object.freeze([0.7, 3.7]),
+  salt: Object.freeze([0.16, 5.1]),
+  char: Object.freeze([0.55, 3.7]),
 });
 
 const LEGACY_AUDIT_JOBS = Object.freeze([
@@ -1423,7 +1423,7 @@ export function runFlowIslandAudit() {
       }
     }
   }
-  addResult(results, "E11", "死蔵なし", !hoard, hoard ?? "");
+  addResult(results, "E11", "滞留在庫なし", !hoard, hoard ?? "");
   const populations = economies.map(auditPopulation);
   addResult(
     results,
@@ -1441,7 +1441,7 @@ export function runFlowIslandAudit() {
   addResult(
     results,
     "E14",
-    "麦農家が初回収穫前に転職しない",
+    "麦畑が初回収穫前に転職しない",
     scenario.earlyWheatSwitch.length === 0,
     scenario.earlyWheatSwitch.map(([seed, day]) => `seed${seed}:day${day}`).join(",") || "全seedで初回収穫を観測",
   );

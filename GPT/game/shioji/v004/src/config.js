@@ -1,4 +1,4 @@
-export const VERSION = 'v004.18.0-elena-letters';
+export const VERSION = 'v004.19.0-canon-performance';
 
 // 経済エンジンの貨幣値は表示単位の1/10。UIへ出す時だけデナリへ直す。
 export const DENARI_PER_MONEY_UNIT = 10;
@@ -27,19 +27,19 @@ export const TERRAIN_COLORS = Object.freeze({
 });
 
 export const JOB_LABELS = Object.freeze({
-  market: '市場', warehouse: '蔵', port: '港',
-  fisher: '漁家', fisher2: '魚粉屋', logger: '木こり', woodshop: '木工房',
-  charburner: '炭焼', saltworks: '製塩所', quarryman: '採石場',
+  market: '市場', warehouse: '倉庫', port: '港',
+  fisher: '漁師', fisher2: '魚粉屋', logger: '木こり', woodshop: '木工房',
+  charburner: '炭焼き小屋', saltworks: '塩田', quarryman: '採石場',
   miner: '鉱山', collier: '炭鉱', smelter: '製鉄所', smith: '鍛冶屋',
-  wheat: '麦農家', veg: '菜園', shepherd: '牧場', rapeseed: '菜種農家',
+  wheat: '麦畑', veg: '野菜畑', shepherd: '牧場', rapeseed: '綿花畑',
 });
 
 export const JOB_ICONS = Object.freeze({
-  market: '市', warehouse: '蔵', port: '港',
-  fisher: '魚', fisher2: '粉', logger: '木', woodshop: '具',
+  market: '市', warehouse: '倉', port: '港',
+  fisher: '魚', fisher2: '粉', logger: '木', woodshop: '工',
   charburner: '炭', saltworks: '塩', quarryman: '石',
   miner: '鉱', collier: '煤', smelter: '炉', smith: '鍛',
-  wheat: '麦', veg: '菜', shepherd: '羊', rapeseed: '油',
+  wheat: '麦', veg: '菜', shepherd: '羊', rapeseed: '綿',
 });
 
 export const BUILDING_COLORS = Object.freeze({
@@ -132,13 +132,13 @@ export const GOODS_ART = Object.freeze({
 });
 
 export const GOODS_LABELS = Object.freeze({
-  log: '丸太', ore: '鉄鉱石', coal: '石炭', bar: '銑鉄', iron: '鉄材', tools: '道具',
+  log: '丸太', ore: '鉄鉱石', coal: '石炭', bar: '銑鉄', iron: '鉄材', tools: '木製品',
   stone: '石材', wheat: '麦', fish: '魚', veg: '野菜', meat: '肉', pres: '保存食',
   pick: '漬物', meal: '粉', salt: '塩', char: '木炭', cloth: '布', oil: '油',
 });
 
 export const SECTION_LABELS = Object.freeze({
-  input: '入', output: '出', storage: '蔵', construction: '工',
+  input: '入', output: '出', storage: '倉庫', construction: '工',
   inbound: '輸入', outbound: '輸出', pickup: '返', pantry: '家', stall: '市',
-  companyStock: '会社蔵',
+  companyStock: '会社倉庫',
 });

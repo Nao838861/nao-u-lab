@@ -10,6 +10,7 @@
     "test:acceptance": "node tests/acceptance.mjs",
     "test:browser": "node tests/browser_smoke.mjs",
     "test:browser-company": "node tests/browser_smoke.mjs --company-pointer-only",
-    "benchmark:render": "node tests/render_benchmark.mjs"
+    "benchmark:render": "node tests/render_benchmark.mjs",
+    "benchmark:long": "node --expose-gc tests/long_run_performance.mjs"
   }
 }

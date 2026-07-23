@@ -47,7 +47,7 @@ function buildingCount(model, job) {
 export function objectiveActionFor(objective, model) {
   if (!objective || !model) return null;
   if (objective.id === 'first-road-and-logger') {
-    return { kind: 'tool', tool: 'road', label: '道を敷く道具を選ぶ' };
+    return { kind: 'tool', tool: 'road', label: '道を敷き始める' };
   }
   if (objective.id === 'first-logger') {
     return { kind: 'building', job: 'logger', label: '木こりを選ぶ' };
@@ -56,21 +56,21 @@ export function objectiveActionFor(objective, model) {
     return { kind: 'building', job: 'market', label: '市場を選ぶ' };
   }
   if (objective.id === 'connect-market-to-port' || objective.id === 'improve-logger-route') {
-    return { kind: 'tool', tool: 'road', label: '道を敷く道具を選ぶ' };
+    return { kind: 'tool', tool: 'road', label: '道を敷き始める' };
   }
   if (objective.id === 'first-woodshop') {
     return { kind: 'building', job: 'woodshop', label: '木工房を選ぶ' };
   }
   if (objective.id === 'warehouse-for-order') {
     return buildingCount(model, 'warehouse') === 0
-      ? { kind: 'building', job: 'warehouse', label: '蔵を選ぶ' }
-      : { kind: 'tool', tool: 'road', label: '蔵へ道を結ぶ' };
+      ? { kind: 'building', job: 'warehouse', label: '倉庫を選ぶ' }
+      : { kind: 'tool', tool: 'road', label: '倉庫へ道を結ぶ' };
   }
   if (objective.id === 'place-island-food') {
     if (buildingCount(model, 'fisher') === 0) {
-      return { kind: 'building', job: 'fisher', label: '漁家を選ぶ' };
+      return { kind: 'building', job: 'fisher', label: '漁師を選ぶ' };
     }
-    return { kind: 'building', job: 'veg', label: '菜園を選ぶ' };
+    return { kind: 'building', job: 'veg', label: '野菜畑を選ぶ' };
   }
   if (objective.id === 'first-settlers-arrive') {
     return { kind: 'speed', speed: 3, label: '一日毎秒にして入植を待つ' };
@@ -84,16 +84,16 @@ export function objectiveActionFor(objective, model) {
   if (objective.id === 'place-conversion-workshops') {
     for (const job of ['woodshop', 'charburner', 'saltworks']) {
       if (buildingCount(model, job) === 0) {
-        const labels = { woodshop: '木工房', charburner: '炭焼', saltworks: '製塩所' };
+        const labels = { woodshop: '木工房', charburner: '炭焼き小屋', saltworks: '塩田' };
         return { kind: 'building', job, label: `${labels[job]}を選ぶ` };
       }
     }
   }
   if (COMPANY_GOALS.has(objective.id)) {
-    return { kind: 'sheet', sheet: 'company-sheet', label: '会社を開く' };
+    return { kind: 'sheet', sheet: 'company-sheet', label: '取引を開く' };
   }
   if (ISLAND_GOALS.has(objective.id)) {
-    return { kind: 'sheet', sheet: 'island-sheet', label: '島況を見る' };
+    return { kind: 'sheet', sheet: 'island-sheet', label: '統計を見る' };
   }
   if (LETTER_GOALS.has(objective.id)) {
     return { kind: 'sheet', sheet: 'tutorial-letter-sheet', label: '書状を開く' };

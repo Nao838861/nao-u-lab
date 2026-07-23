@@ -3,6 +3,7 @@ import { Worker } from "node:worker_threads";
 
 import {
   BUY_ORDER,
+  COMPANY_LEDGER_LIMIT,
   DAY_END_ORDER,
   FOODS,
   GOODS,
@@ -42,6 +43,7 @@ import {
   marketTripCost,
   marketTripDuration,
   postCompanyLedger,
+  recordEconomyEvent,
   productionCost,
   productionMultiplierForTrip,
   productionInputAmount,
@@ -160,7 +162,7 @@ const matchIndex = process.argv.indexOf('--match');
 const testMatch = matchIndex >= 0 ? new RegExp(process.argv[matchIndex + 1]) : null;
 const suiteStartedAt = performance.now();
 const includeFullAcceptance = !process.argv.includes("--unit-only") && !testMatch;
-const badBaselineYearly = Object.freeze([{ day: 1440, population: 105, famine: 651 }]);
+const badBaselineYearly = Object.freeze([{ day: 1440, population: 110, famine: 409 }]);
 
 function runStableWorker(seed, mode = "direct", runBad = false) {
   return new Promise((resolve, reject) => {
@@ -307,12 +309,12 @@ test("worldは同じシードと操作から同じJSON状態になる", () => {
 test("会社資金の増減は台帳に残り残高と一致する", () => {
   const company = createCompanyState(5_500);
   postCompanyLedger(company, { day: 1, amount: -250, reason: "支度金" });
-  postCompanyLedger(company, { day: 1, amount: 40, reason: "市場口銭" });
+  postCompanyLedger(company, { day: 1, amount: 40, reason: "市場手数料" });
 
   assert.equal(company.money, 5_290);
   assert.deepEqual(company.ledger, [
     { day: 1, amount: -250, reason: "支度金", balance: 5_250 },
-    { day: 1, amount: 40, reason: "市場口銭", balance: 5_290 },
+    { day: 1, amount: 40, reason: "市場手数料", balance: 5_290 },
   ]);
   assert.equal(assertCompanyLedger(company), true);
 });
@@ -321,6 +323,45 @@ test("会社資金を直接変更すると台帳検査が赤くなる", () => {
   const company = createCompanyState(5_500);
   company.money -= 1;
   assert.throws(() => assertCompanyLedger(company), /台帳外の変更/);
+});
+
+test("会社台帳は累積集計を保ったまま有限の表示窓だけを保持する", () => {
+  const company = createCompanyState(100);
+  for (let day = 1; day <= 700; day += 1) {
+    postCompanyLedger(company, { day, amount: 1, reason: "反復取引" });
+  }
+  assert.ok(company.ledger.length <= COMPANY_LEDGER_LIMIT + 128);
+  assert.equal(company.ledgerCount, 700);
+  assert.equal(company.ledgerIncome, 700);
+  assert.equal(company.ledgerExpense, 0);
+  assert.equal(company.ledgerByReason["反復取引"], 700);
+  assert.ok(company.ledgerDaily.length <= 60);
+  assert.equal(assertCompanyLedger(company), true);
+});
+
+test("旧セーブの会社台帳と出来事は初回更新時に既存履歴から累計を復元する", () => {
+  const company = createCompanyState(100);
+  postCompanyLedger(company, { day: 1, amount: 7, reason: "旧入金" });
+  postCompanyLedger(company, { day: 2, amount: -3, reason: "旧支出" });
+  for (const key of [
+    "ledgerCount", "ledgerOffsetBalance", "ledgerIncome", "ledgerExpense",
+    "ledgerByReason", "ledgerDaily",
+  ]) {
+    delete company[key];
+  }
+  postCompanyLedger(company, { day: 3, amount: 2, reason: "新入金" });
+  assert.equal(company.ledgerCount, 3);
+  assert.equal(company.ledgerIncome, 9);
+  assert.equal(company.ledgerExpense, 3);
+  assert.deepEqual(company.ledgerByReason, { 旧入金: 7, 旧支出: -3, 新入金: 2 });
+  assert.equal(company.ledgerDaily.length, 3);
+  assert.equal(assertCompanyLedger(company), true);
+
+  const economy = createEconomicState();
+  economy.events.push([1, "旧出来事"]);
+  delete economy.eventCount;
+  recordEconomyEvent(economy, 2, "新出来事");
+  assert.equal(economy.eventCount, 2);
 });
 
 test("testConservation: 3シード×360日の貨幣保存則違反がゼロ", () => {
@@ -691,6 +732,9 @@ test("段11: P・GOODS・FOODS・PERISHが意図した移動係数以外flow_isl
   delete sourceConstants.TRAVEL_RATE;
   delete sourceConstants.ROAD_F;
   delete sourceConstants.TRAVEL_MAX;
+  for (const changed of ["IMP", "IMP_COST", "EXP", "EXP_CAP", "EXP_ML", "Y_OIL"]) {
+    delete sourceConstants[changed];
+  }
   const actualConstants = Object.fromEntries(
     Object.keys(sourceConstants).map((key) => [key, P[key]]),
   );
@@ -704,6 +748,8 @@ test("段11: P・GOODS・FOODS・PERISHが意図した移動係数以外flow_isl
   assert.equal("TRAVEL_RATE" in P, false);
   assert.equal("ROAD_F" in P, false);
   assert.equal("TRAVEL_MAX" in P, false);
+  assert.deepEqual(P.IMP, { wheat: 4, tools: 6, salt: 5, iron: 4.5, oil: 3 });
+  assert.deepEqual(P.EXP, { pres: 0.6, pick: 0.55, cloth: 2.4 });
   assert.deepEqual(GOODS.slice(0, FLOW_ISLAND_GOODS.length), FLOW_ISLAND_GOODS);
   assert.deepEqual(FOODS, FLOW_ISLAND_FOODS);
   assert.deepEqual(PERISH, FLOW_ISLAND_PERISH);
@@ -869,7 +915,7 @@ test("段14: flow_island標準地形を同値生成し森をタイル資源化�
   assert.equal(Object.values(economy.natural.wood).every((stock) => stock === P.WOOD0), true);
 });
 
-test("段14: 漁は冬1/4・菜園は月3〜10のみ・牧畜は肉と布を生産する", () => {
+test("段14: 漁は冬1/4・野菜畑は月3〜10のみ・牧畜は肉と布を生産する", () => {
   const makeProducer = (job) => {
     const physical = createPhysicalState({
       width: 48,
@@ -1172,7 +1218,7 @@ test("段17: 固定買い順は生産入力logを食料wheatより先に約定�
   assert.equal(assertMoneyConservation(economy), true);
 });
 
-test("段17: 屋台約定はpxをEMA更新し売り手から4%口銭を会社へ移す", () => {
+test("段17: 屋台約定はpxをEMA更新し売り手から4%手数料を会社へ移す", () => {
   const economy = createEconomicState();
   const seller = createHousehold(economy, { job: "wheat", x: 0, y: 0 });
   const buyer = createHousehold(economy, { job: "logger", x: 0, y: 0 });
@@ -1270,7 +1316,7 @@ test("段18: 豊漁の安い魚が約定するとfish pxが下がる", () => {
   assert.equal(assertMoneyConservation(economy), true);
 });
 
-test("段18: 丸太市況の上昇が道具原価・ask・tools pxへ順に伝播する", () => {
+test("段18: 丸太市況の上昇が木製品原価・ask・tools pxへ順に伝播する", () => {
   const run = (logPrice) => {
     const economy = createEconomicState();
     economy.px.log = logPrice;
@@ -1295,7 +1341,7 @@ test("段18: 丸太市況の上昇が道具原価・ask・tools pxへ順に伝�
   assert.ok(high.px > low.px);
 });
 
-test("段19: 木工・炭焼・製塩・菜種・採石・魚粉を正本量で変換する", () => {
+test("段19: 木工・炭焼き小屋・製塩・綿花・採石・魚粉を正本量で変換する", () => {
   const make = (job) => {
     const economy = createEconomicState();
     const household = createHousehold(economy, { job, x: 0, y: 0 });
@@ -1325,14 +1371,16 @@ test("段19: 木工・炭焼・製塩・菜種・採石・魚粉を正本量で�
 
   const rapeseed = make("rapeseed");
   rapeseed.household.pantry.meal = 10;
-  rapeseed.household.pantry.oil = 0;
+  rapeseed.household.pantry.cloth = 0;
   const rapeseedResult = producePrimaryTick(rapeseed.economy, null, rapeseed.household, {
     day: 61,
     fraction: 1,
   });
   const fill = P.FERT_NEED / (P.FERT_NEED * 30);
   assert.equal(rapeseed.household.pantry.meal, 10 - P.FERT_NEED);
-  assert.ok(Math.abs(rapeseedResult.oil - P.Y_OIL * (1 + P.FERT_BOOST * fill)) < 1e-12);
+  assert.ok(
+    Math.abs(rapeseedResult.cloth - P.Y_COTTON_CLOTH * (1 + P.FERT_BOOST * fill)) < 1e-12,
+  );
 
   const quarryman = make("quarryman");
   quarryman.household.pantry.stone = 0;
@@ -1354,7 +1402,10 @@ test("段19: 各変換職のcostは生計費と正本の原料pxを連鎖する"
     { job: "woodshop", goods: "tools", day: 1, yield: P.Y_TOOLS, input: (px) => P.LOG_TOOL * px.log },
     { job: "charburner", goods: "char", day: 1, yield: P.Y_CHAR, input: (px) => P.LOG_CHAR * px.log },
     { job: "saltworks", goods: "salt", day: 1, yield: P.Y_SALT, input: (px) => P.SALT_CHAR / P.Y_SALT * px.char },
-    { job: "rapeseed", goods: "oil", day: 61, yield: P.Y_OIL, input: () => 0 },
+    {
+      job: "rapeseed", goods: "cloth", day: 61, yield: P.Y_COTTON_CLOTH,
+      input: () => 0, sourceEquivalent: false,
+    },
     { job: "quarryman", goods: "stone", day: 1, yield: P.Y_STONE, input: () => 0 },
     { job: "fisher2", goods: "meal", day: 61, yield: P.Y_FISH / P.MEAL_FISH, input: () => 0 },
   ];
@@ -1370,11 +1421,13 @@ test("段19: 各変換職のcostは生計費と正本の原料pxを連鎖する"
     const actual = productionCost(economy, null, household, entry.goods, { day: entry.day });
     assert.ok(Math.abs(actual - expected) < 1e-12, `${entry.job}/${entry.goods}`);
 
-    const sourceWorld = new FlowIslandWorld(11);
-    sourceWorld.day = entry.day;
-    sourceWorld.px = { ...economy.px };
-    const sourceHousehold = new FlowIslandHousehold(entry.job, 0, 0);
-    assert.ok(Math.abs(actual - sourceWorld.cost(sourceHousehold, entry.goods)) < 1e-12);
+    if (entry.sourceEquivalent !== false) {
+      const sourceWorld = new FlowIslandWorld(11);
+      sourceWorld.day = entry.day;
+      sourceWorld.px = { ...economy.px };
+      const sourceHousehold = new FlowIslandHousehold(entry.job, 0, 0);
+      assert.ok(Math.abs(actual - sourceWorld.cost(sourceHousehold, entry.goods)) < 1e-12);
+    }
   }
 });
 
@@ -1551,7 +1604,7 @@ test("段21: 食後の文化消費・漬け込み・腐敗を経て軟ストリ�
   );
 });
 
-test("段22: 会社買上げは目標まで安い屋台から先に蔵へ移す", () => {
+test("段22: 会社買上げは目標まで安い屋台から先に倉庫へ移す", () => {
   const economy = createEconomicState();
   const expensive = createHousehold(economy, { job: "woodshop", x: 0, y: 0 });
   const cheap = createHousehold(economy, { job: "woodshop", x: 1, y: 0 });
@@ -1575,14 +1628,14 @@ test("段22: 会社買上げは目標まで安い屋台から先に蔵へ移す"
   assert.equal(assertMoneyConservation(economy), true);
 });
 
-test("段22: 蔵出しは予約在庫を除き平均原価×1.2の固定価格で売る", () => {
+test("段22: 市場へ出すは予約在庫を除き平均原価×1.2の固定価格で売る", () => {
   const economy = createEconomicState();
   const buyer = createHousehold(economy, { job: "logger", x: 0, y: 0 });
   for (const goods of FOODS) buyer.pantry[goods] = 0;
   postCompanyLedger(economy.company, {
     day: 1,
     amount: buyer.purse - 14.4,
-    reason: "蔵出し試験の財布預入",
+    reason: "市場へ出す試験の財布預入",
   });
   buyer.purse = 14.4;
   economy.stock.wheat = 10;
@@ -1601,7 +1654,7 @@ test("段22: 蔵出しは予約在庫を除き平均原価×1.2の固定価格�
   assert.equal(assertMoneyConservation(economy), true);
 });
 
-test("段22: 本国注文は蔵の原価簿を比例減算して一括出荷・外貨化する", () => {
+test("段22: 本国注文は倉庫の原価簿を比例減算して一括出荷・外貨化する", () => {
   const economy = createEconomicState();
   economy.stock.tools = 40;
   economy.stockCost.tools = 80;
@@ -1958,7 +2011,7 @@ test("段26: 市場往復tickが生産倍率を一意に決め30tick超は出発
   assert.equal("TRAVEL_RATE" in P || "ROAD_F" in P || "TRAVEL_MAX" in P, false);
 });
 
-test("段27: tripCostと貯蔵目標は直線でなく徒歩pathLenを使う", () => {
+test("段27: tripCostと貯倉庫目標は直線でなく徒歩pathLenを使う", () => {
   const terrain = Array.from({ length: 5 }, () => (
     Array.from({ length: 7 }, () => ({ kind: "grass", variant: 0 }))
   ));
@@ -2095,7 +2148,7 @@ test("段28: 市場で買った生産原料は帰宅時にinput棚へ確定す�
   assert.equal(saltworks.pantry.wheat, 240 + 6);
 });
 
-test("段29: 非接続の会社物流は荷車を生成せず接続後だけ市場から蔵へ運ぶ", () => {
+test("段29: 非接続の会社物流は荷車を生成せず接続後だけ市場から倉庫へ運ぶ", () => {
   const { economy, physical } = createLogisticsTestFixture();
   const seller = createHousehold(economy, { job: "woodshop", x: 8, y: 8 });
   seller.pantry.tools = 100;
@@ -2198,7 +2251,7 @@ test("段42: 本国注文は港到着後も未決済で船への逐次荷役分�
   });
 });
 
-test("段42: 期限切れ注文の港残荷は船へ出さず蔵へ返してヤードを空ける", () => {
+test("段42: 期限切れ注文の港残荷は船へ出さず倉庫へ返してヤードを空ける", () => {
   const { economy, physical } = createLogisticsTestFixture({ connectPort: true });
   const warehouse = companyLogisticsSite(physical, "warehouse");
   const port = companyLogisticsSite(physical, "port");
@@ -2268,7 +2321,7 @@ test("段42: CO輸入は船から1荷/tickでヤードへ降ろし荷車で市�
   assert.equal(assertMoneyConservation(economy), true);
 });
 
-test("段42: EXP買付は市場・蔵・港を経て船積みした数量だけ本土売上になる", () => {
+test("段42: EXP買付は市場・倉庫・港を経て船積みした数量だけ本土売上になる", () => {
   const { economy, physical } = createLogisticsTestFixture({ connectPort: true });
   const fisher = createHousehold(economy, { job: "fisher", x: 7, y: 4 });
   fisher.pantry.pres = 100;
@@ -2406,7 +2459,7 @@ test("段31履歴/§0.2: 旧監査診断と物理不変条件を維持する", (
   assert.equal(assertOccupancyInvariant(world.state.physical), true);
 });
 
-test("段31: 蔵出し要求は1台制限せず16荷ずつ複数便へ分割する", () => {
+test("段31: 市場へ出す要求は1台制限せず16荷ずつ複数便へ分割する", () => {
   const { economy, physical } = createLogisticsTestFixture({ connectMarketWarehouse: true });
   const warehouse = companyLogisticsSite(physical, "warehouse");
   economy.stock.wheat = 40;
@@ -2609,7 +2662,7 @@ test("段34: 製鉄・鍛冶の原料買い天井式を適用する", () => {
   assert.deepEqual(smithTargets.coal, [5, smithCeiling]);
 });
 
-test("段35 E-Fe3: 炭焼なしでも安い石炭棚を選び製鉄が回る", () => {
+test("段35 E-Fe3: 炭焼き小屋なしでも安い石炭棚を選び製鉄が回る", () => {
   const economy = createEconomicState();
   economy.px.bar = 4;
   const smelter = createHousehold(economy, { job: "smelter", x: 20, y: 20 });
@@ -2876,21 +2929,21 @@ test("段37: mimicPlayerは5日商館目標と90日ごと1軒の枯れ職再建�
 test("段46: mimicPlayerは採算内の注文だけ受諾し終了後に目標を解除する", () => {
   const world = buildBaseCity(11);
   const { economy } = world.state;
-  economy.orderOffer = { g: "oil", qty: 20, left: 20, price: 2.6, due: 100 };
-  economy.stalls.oil.push({ householdId: 1, qty: 20, price: 4, age: 0 });
+  economy.orderOffer = { g: "cloth", qty: 20, left: 20, price: 2, due: 100 };
+  economy.stalls.cloth.push({ householdId: 1, qty: 20, price: 4, age: 0 });
   assert.equal(mimicPlayer(world, 1).acceptedOrder, null);
   assert.equal(economy.order, null);
-  assert.equal(economy.stockTgt.oil ?? 0, 0);
+  assert.equal(economy.stockTgt.cloth ?? 0, 0);
 
-  economy.stalls.oil[0].price = 3;
+  economy.stalls.cloth[0].price = 1.5;
   const accepted = mimicPlayer(world, 2);
-  assert.equal(accepted.acceptedOrder.g, "oil");
-  assert.equal(economy.stockTgt.oil, 20);
+  assert.equal(accepted.acceptedOrder.g, "cloth");
+  assert.equal(economy.stockTgt.cloth, 20);
 
   economy.order = null;
   const cleared = mimicPlayer(world, 3);
   assert.equal(cleared.stockTargetsUpdated, true);
-  assert.equal(economy.stockTgt.oil, 0);
+  assert.equal(economy.stockTgt.cloth, 0);
 });
 
 test("支援要請: 逓減と拒絶・既存輸入経路での実配送・journal決定論(Nao_u裁可2026-07-20)", () => {
@@ -2955,7 +3008,7 @@ test("段48: 操作APIは買上げ・注文受諾・道路操作をday/tick付�
   )), true);
 });
 
-test("完成後拡張: 港だけの世界は市場・蔵を自動生成せず公開操作で実体化する", () => {
+test("完成後拡張: 港だけの世界は市場・倉庫を自動生成せず公開操作で実体化する", () => {
   const world = createPortOnlyTestWorld();
   const api = createEngineApi(world);
   assert.deepEqual(world.state.physical.buildings.map(({ type }) => type), ["port"]);
@@ -3021,7 +3074,7 @@ test("完成後拡張: 市場を建てるまでは住民が見えない市場へ
   assert.equal(companyLogisticsSite(physical, "warehouse"), null);
 });
 
-test("完成後拡張: 後置きの市場・蔵が従来どおり道路限定の買上げと蔵出しを担う", () => {
+test("完成後拡張: 後置きの市場・倉庫が従来どおり道路限定の買上げと市場へ出すを担う", () => {
   const world = createPortOnlyTestWorld();
   const api = createEngineApi(world);
   const plan = makeStableCityPlan();
@@ -3073,7 +3126,7 @@ test("完成後拡張: 後置きの市場・蔵が従来どおり道路限定の
   assert.equal(assertMoneyConservation(economy), true);
 });
 
-test("完成後拡張: 空の市場・蔵は撤去後に復活せず配置journalを再生できる", () => {
+test("完成後拡張: 空の市場・倉庫は撤去後に復活せず配置journalを再生できる", () => {
   const create = () => createPortOnlyTestWorld(13);
   const world = create();
   const api = createEngineApi(world);
@@ -3109,11 +3162,20 @@ test("段48: API版mimicPlayerと入力ジャーナル再生は直接版と同�
   const direct = buildBaseCity(13);
   const operated = buildBaseCity(13);
   const api = createEngineApi(operated);
+  const observedEventTypes = new Set();
+  let eventSequence = 0;
+  const collectEvents = () => {
+    const events = api.events({ afterSequence: eventSequence });
+    if (events.length) eventSequence = events.at(-1).sequence;
+    for (const event of events) observedEventTypes.add(event.type);
+  };
   for (let day = 1; day <= days; day += 1) {
     mimicPlayer(direct, day);
     direct.step();
     mimicPlayerThroughApi(api, day);
+    collectEvents();
     api.advanceDays(1);
+    collectEvents();
   }
   const expected = JSON.parse(JSON.stringify(direct.state));
   assert.deepEqual(api.snapshot(), expected);
@@ -3124,9 +3186,8 @@ test("段48: API版mimicPlayerと入力ジャーナル再生は直接版と同�
     { untilTick: days * 30 },
   );
   assert.deepEqual(replayed.api.snapshot(), expected);
-  const eventTypes = new Set(api.events().map(({ type }) => type));
   for (const type of ["operation", "departure", "arrival", "transaction"]) {
-    assert.equal(eventTypes.has(type), true, type);
+    assert.equal(observedEventTypes.has(type), true, type);
   }
   assert.equal(api.events().every(({ day, tick, x, y }) => (
     Number.isSafeInteger(day)

@@ -6,6 +6,7 @@ import {
   setCompanyStockTarget,
 } from "./econ.js";
 import {
+  activePortCalls,
   addRoadLine,
   buildingById,
   haulJobById,
@@ -74,6 +75,59 @@ function controllerSnapshot(state, { includePhysical = false } = {}) {
   return includePhysical ? jsonClone(snapshot) : snapshot;
 }
 
+function viewSnapshot(state) {
+  const { economy, physical } = state;
+  return {
+    day: state.day,
+    tick: state.tick,
+    seed: state.seed,
+    economy: {
+      company: {
+        ...economy.company,
+        ledger: economy.company.ledger.slice(),
+        ledgerDaily: (economy.company.ledgerDaily ?? []).map((row) => ({ ...row })),
+        ledgerByReason: { ...(economy.company.ledgerByReason ?? {}) },
+      },
+      currentDay: economy.currentDay,
+      households: economy.households,
+      market: economy.market,
+      f30: economy.f30,
+      goDay: economy.goDay,
+      imported: economy.imported,
+      mainlandAid: economy.mainlandAid,
+      marketStock: economy.marketStock,
+      marketStockCost: economy.marketStockCost,
+      natural: economy.natural,
+      order: economy.order,
+      orderOffer: economy.orderOffer,
+      outBy: economy.outBy,
+      px: economy.px,
+      reservedBuildingSites: economy.reservedBuildingSites,
+      stalls: economy.stalls,
+      stock: economy.stock,
+      stockCost: economy.stockCost,
+      stockTgt: economy.stockTgt,
+      traffic: economy.traffic,
+      zones: economy.zones,
+    },
+    physical: {
+      buildings: physical.buildings,
+      haulJobs: physical.haulJobs,
+      height: physical.height,
+      occupied: physical.occupied,
+      portCalls: physical.portCalls.filter((call) => call.status === "docked")
+        .concat(physical.portCalls.filter((call) => (
+          call.status === "completed" || call.status === "cancelled"
+        )).slice(-8)),
+      roadWorksites: physical.roadWorksites,
+      roads: physical.roads,
+      terrain: physical.terrain,
+      trails: physical.trails,
+      width: physical.width,
+    },
+  };
+}
+
 function assertSafeCount(value, name) {
   if (!Number.isSafeInteger(value) || value < 0) {
     throw new TypeError(`${name} must be a non-negative safe integer`);
@@ -111,16 +165,14 @@ function createEventTracker(world) {
       x: household.px ?? household.x,
       y: household.py ?? household.y,
     }])),
-    economyEventCount: economy.events.length,
-    priceCounts: Object.fromEntries(Object.entries(economy.prices).map(([goods, rows]) => [
-      goods,
-      rows.length,
-    ])),
-    haulCount: physical.haulJobs.length,
+    economyEventCount: economy.eventCount ?? economy.events.length,
+    priceCounts: { ...(economy.priceCounts ?? Object.fromEntries(
+      Object.entries(economy.prices).map(([goods, rows]) => [goods, rows.length]),
+    )) },
+    nextHaulJobId: physical.nextHaulJobId,
     activeHauls: new Map(physical.haulJobs
       .filter((job) => job.status !== "completed")
       .map((job) => [job.id, job])),
-    portCallCount: physical.portCalls.length,
     activePortCalls: new Map(physical.portCalls
       .filter((call) => call.status === "docked")
       .map((call) => [call.id, { call, remaining: call.remaining }])),
@@ -138,6 +190,7 @@ export function createEngineApi(
   const stream = [];
   let nextSequence = 1;
   let tracker = createEventTracker(world);
+  const EVENT_STREAM_LIMIT = 128;
 
   const emit = (type, point, detail = {}) => {
     if (!captureEventStream) return;
@@ -152,6 +205,9 @@ export function createEngineApi(
       ...detail,
     });
     nextSequence += 1;
+    if (stream.length > EVENT_STREAM_LIMIT) {
+      stream.splice(0, stream.length - EVENT_STREAM_LIMIT);
+    }
   };
 
   const captureEvents = () => {
@@ -252,8 +308,10 @@ export function createEngineApi(
     }
 
     for (const [goods, rows] of Object.entries(economy.prices)) {
-      const previousCount = tracker.priceCounts[goods] ?? 0;
-      for (const [day, price, qty] of rows.slice(previousCount)) {
+      const totalCount = economy.priceCounts?.[goods] ?? rows.length;
+      const addedCount = Math.max(0, totalCount - (tracker.priceCounts[goods] ?? 0));
+      if (addedCount === 0) continue;
+      for (const [day, price, qty] of rows.slice(-Math.min(addedCount, rows.length))) {
         emit("transaction", economy.market, { goods, price, qty, transactionDay: day });
       }
     }
@@ -273,7 +331,12 @@ export function createEngineApi(
       });
       mutableHauls().delete(jobId);
     }
-    for (const job of physical.haulJobs.slice(tracker.haulCount)) {
+    const newHaulJobs = physical.nextHaulJobId === tracker.nextHaulJobId
+      ? []
+      : physical.haulJobs.filter((candidate) => (
+        Number(candidate.id.slice(1)) >= tracker.nextHaulJobId
+      ));
+    for (const job of newHaulJobs) {
       emit("departure", buildingPoint(physical, job.from.buildingId, job.carrier.position), {
         haulJobId: job.id,
         goods: job.goods,
@@ -312,19 +375,22 @@ export function createEngineApi(
         }
       } else mutablePortCalls().delete(callId);
     }
-    for (const call of physical.portCalls.slice(tracker.portCallCount)) {
+    for (const call of activePortCalls(physical)) {
+      if (nextPortCalls.has(call.id)) continue;
       emit("docking", port?.entrance ?? economy.port, {
         portCallId: call.id,
         direction: call.direction,
         goods: call.goods,
         qty: call.qty,
       });
-      if (call.status === "docked") {
-        mutablePortCalls().set(call.id, { call, remaining: call.remaining });
-      }
+      mutablePortCalls().set(call.id, { call, remaining: call.remaining });
     }
 
-    const newEconomyEvents = economy.events.slice(tracker.economyEventCount);
+    const economyEventCount = economy.eventCount ?? economy.events.length;
+    const addedEconomyEvents = Math.max(0, economyEventCount - tracker.economyEventCount);
+    const newEconomyEvents = addedEconomyEvents === 0
+      ? []
+      : economy.events.slice(-Math.min(addedEconomyEvents, economy.events.length));
     for (const [eventDay, message] of newEconomyEvents) {
       const householdId = Number(message.match(/#(\d+)/)?.[1]);
       emit(eventTypeForMessage(message), householdPoint(economy, householdId), {
@@ -335,14 +401,12 @@ export function createEngineApi(
 
     tracker = {
       households: tracker.households,
-      economyEventCount: economy.events.length,
-      priceCounts: Object.fromEntries(Object.entries(economy.prices).map(([goods, rows]) => [
-        goods,
-        rows.length,
-      ])),
-      haulCount: physical.haulJobs.length,
+      economyEventCount,
+      priceCounts: { ...(economy.priceCounts ?? Object.fromEntries(
+        Object.entries(economy.prices).map(([goods, rows]) => [goods, rows.length]),
+      )) },
+      nextHaulJobId: physical.nextHaulJobId,
       activeHauls: nextHauls,
-      portCallCount: physical.portCalls.length,
       activePortCalls: nextPortCalls,
     };
   };
@@ -473,6 +537,7 @@ export function createEngineApi(
     snapshot({ scope = "full" } = {}) {
       if (scope === "controller") return controllerSnapshot(world.state);
       if (scope === "placement") return controllerSnapshot(world.state, { includePhysical: true });
+      if (scope === "view") return jsonClone(viewSnapshot(world.state));
       if (scope !== "full") throw new Error(`unknown snapshot scope: ${scope}`);
       return jsonClone(world.state);
     },

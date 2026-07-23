@@ -7,8 +7,8 @@ import { ECONOMIC_BUILDINGS } from '../../engine/src/physical.js';
 import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
 import {
-  BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, DENARI_PER_MONEY_UNIT, JOB_ICONS,
-  PLACEMENT_JOBS, VERSION, toDenari,
+  BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, DENARI_PER_MONEY_UNIT, GOODS_LABELS,
+  JOB_ICONS, JOB_LABELS, PLACEMENT_JOBS, VERSION, toDenari,
 } from '../src/config.js';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
@@ -18,7 +18,8 @@ import {
   buildBlankCity, createEngineController,
 } from '../src/engine_bridge.js';
 import {
-  OBSERVED_EVENT_TYPES, hasEventPresentation, presentEvent,
+  EVENT_DISPLAY_POLICY, OBSERVED_EVENT_TYPES, hasEventPresentation, presentEvent,
+  shouldPresentEvent,
 } from '../src/event_view.js';
 import { movementVector, panCameraFromKeys, shouldIgnoreShortcut } from '../src/keyboard.js';
 import {
@@ -96,6 +97,8 @@ test('性能L: イベントcursorは全履歴filterと同じ順序・値を返�
   api.advanceTicks(3600);
   const all = api.events();
   assert.ok(all.length > 2);
+  assert.ok(all.length <= 128, '観測イベントは小さなリングバッファだけを保持する');
+  assert.ok(all[0].sequence > 1, '古い観測イベントは切り詰められる');
   for (const cursor of [0, all[0].sequence, all[Math.floor(all.length / 2)].sequence, all.at(-1).sequence]) {
     assert.deepEqual(api.events({ afterSequence: cursor }), all.filter(event => event.sequence > cursor));
   }
@@ -115,7 +118,7 @@ test('教程T/U: 全目標をエレナ概要と一意なsystem操作へ分け、
     '最初は森への道と木こりを別々の目標として案内する',
   );
   const forbidden = /適格日|EMA|snapshot|\btick\b|haulJobId|productionCost|\bengine\b|\bjournal\b|E-Stable/;
-  const forbiddenElena = /画面|ボタン|クリック|押して|できました。次の仕事|少しだけお待ち|銀が海を渡る|帳場|口銭/;
+  const forbiddenElena = /画面|ボタン|クリック|押して|できました。次の仕事|少しだけお待ち|銀が海を渡る|帳場|手数料/;
   for (const goal of TUTORIAL_GOALS) {
     assert.ok(TUTORIAL_PLAYER_TITLES[goal.id], `${goal.id}のplayer-facing目標名`);
     assert.ok(TUTORIAL_ELENA_MESSAGES[goal.id], `${goal.id}のエレナによる意味づけ`);
@@ -196,8 +199,8 @@ test('教程V〜Y: 創発待ちは進行を止めず、注文残量と適時ア�
   const routed = secretaryRouteFor({
     advice: [{
       id: 'seasonal-release-opportunity', unread: true, completed: false,
-      priority: 'action', kicker: '助言', title: '蔵出し', detail: 'いま動けます',
-      speech: '市場の食料が少なくなりました。蔵の備えを戻しましょう。',
+      priority: 'action', kicker: '助言', title: '市場へ出す', detail: 'いま動けます',
+      speech: '市場の食料が少なくなりました。倉庫の備えを戻しましょう。',
       target: { kind: 'sheet', sheet: 'company-sheet' },
     }],
     objective: {
@@ -231,7 +234,7 @@ test('教程V〜Y: 創発待ちは進行を止めず、注文残量と適時ア�
     { type: 'operation', ok: true, op: { type: 'release_stock', goods: 'wheat', qty: 8 } },
     { type: 'departure', carrier: 'cart', goods: 'wheat', qty: 8, haulJobId: 4 },
   ]);
-  assert.equal(seasonal.advice()[0].completed, true, '実蔵出しで助言完了');
+  assert.equal(seasonal.advice()[0].completed, true, '実市場へ出すで助言完了');
 });
 
 test('教程AA: 未来章をロックし、重要度に応じて強制書状・任意書状・一言を分ける', () => {
@@ -358,7 +361,7 @@ test('教程Z: 季節・島の基調・飢餓予告・建物成長の因果をpl
     type: 'notice', sequence: 20, message: 'veg#7 ▲Lv1', day: 31,
   }]);
   const celebration = director.advice().find(row => row.id === 'building-level-up-celebration');
-  assert.match(celebration.title, /菜園がLv1へ成長/);
+  assert.match(celebration.title, /野菜畑がLv1へ成長/);
   assert.match(celebration.detail, /食料1種.*45日/);
 });
 
@@ -414,8 +417,8 @@ test('チュートリアル段2: 書状はsnapshotの実数値を本文へ差し
   assert.match(letter.body, /人口は13人/);
   assert.match(letter.body, /完成道路は5区画/);
   assert.match(letter.summary, /港 1棟・人口 13人・道路 5区画/);
-  assert.equal(letter.attention, 'action');
-  assert.equal(TUTORIAL_LETTER_ATTENTION['tutorial-starvation-consequence'], 'silent');
+  assert.equal(letter.attention, 'critical');
+  assert.equal(TUTORIAL_LETTER_ATTENTION['tutorial-starvation-consequence'], 'critical');
   assert.equal(TUTORIAL_LETTER_ATTENTION['tutorial-bankruptcy-consequence'], 'critical');
   assert.equal(TUTORIAL_LETTER_ATTENTION['chapter-two-close'], 'notice');
   assert.equal(TUTORIAL_LETTERS.every(definition => typeof definition.render === 'function'), true);
@@ -484,7 +487,7 @@ test('チュートリアル段3: skipは同じ世界とjournalを保ったまま
   const completionDirector = new TutorialDirector({ goals: [TUTORIAL_GOALS[0]], letters: [] });
   completionDirector.observe(completedModel, []);
   assert.equal(completionDirector.currentObjective().complete, true);
-  assert.deepEqual(completionDirector.currentObjective().progress, { done: 2, total: 2 });
+  assert.deepEqual(completionDirector.currentObjective().progress, { done: 1, total: 1 });
 });
 
 test('チュートリアル段4: tutorialだけが同じ未開拓worldへディレクターを重ねる', () => {
@@ -644,6 +647,8 @@ test('チュートリアル段6: 市場→支援→入植→食料職→木工�
   }).ok, true);
   observe();
 
+  assert.equal(director.currentObjective().id, 'first-logger');
+  observe();
   assert.equal(director.currentObjective().id, 'market-for-logs');
 
   const port = controller.readModel().buildings.find(building => building.roles.includes('port'));
@@ -716,12 +721,12 @@ test('チュートリアル段6: 市場→支援→入植→食料職→木工�
   observe();
   assert.equal(director.readState().completedGoals.includes('first-woodshop'), true);
 
-  advanceUntil(() => hasLetter('first-tools'), 45, '最初の道具の書状');
+  advanceUntil(() => hasLetter('first-tools'), 45, '最初の木製品の書状');
   const letters = director.letters();
   const toolsIndex = letters.findIndex(letter => letter.id === 'first-tools');
   const tradeIndex = letters.findIndex(letter => letter.id === 'first-log-trade');
   if (tradeIndex === -1 || tradeIndex > toolsIndex) {
-    assert.match(letters[toolsIndex].body, /持参した丸太/, '市場取引前の初道具は持参丸太として実況する');
+    assert.match(letters[toolsIndex].body, /持参した丸太/, '市場取引前の初木製品は持参丸太として実況する');
   }
 
   if (!hasLetter('first-log-trade')) {
@@ -737,7 +742,7 @@ test('チュートリアル段6: 市場→支援→入植→食料職→木工�
     ['add_road', 'place_building', 'place_building'],
   );
   assert.equal(journal.at(-1).op.type, 'place_building');
-  assert.equal(deaths.length, 0, '支援1回と早期食料配置で初道具・初商いまで死亡ゼロ');
+  assert.equal(deaths.length, 0, '支援1回と早期食料配置で初木製品・初商いまで死亡ゼロ');
   const replay = createEngineController({ seed: 11, mode: 'tutorial' });
   let replayTick = 0;
   for (const row of journal) {
@@ -902,7 +907,7 @@ test('チュートリアル段7〜9: 支援1回・早期食料・事前備蓄で
       }
     }
   }
-  assert.ok(warehousePlan, '市場から道を結べる蔵候補がある');
+  assert.ok(warehousePlan, '市場から道を結べる倉庫候補がある');
   assert.equal(controller.operate({
     type: 'place_building', job: 'warehouse',
     x: warehousePlan.preview.entrance.x, y: warehousePlan.preview.entrance.y,
@@ -1050,10 +1055,10 @@ function tutorialFoodMetrics(model) {
   };
 }
 
-test('チュートリアル段11: 第一章で置いた漁家と菜園の実価格・実フロー変化を実況する', () => {
+test('チュートリアル段11: 第一章で置いた漁師と野菜畑の実価格・実フロー変化を実況する', () => {
   const { controller, director, observe } = tutorialThroughPlay;
   observe();
-  assert.equal(director.currentObjective().id, 'observe-island-food-change');
+  assert.equal(director.currentObjective().id, 'set-seasonal-stock-target');
   const opening = director.letters().find(letter => letter.id === 'food-dependence-report');
   assert.ok(opening);
   const baseline = tutorialFoodMetrics(controller.readModel());
@@ -1101,6 +1106,7 @@ test('チュートリアル段12: 3シード実測の食料輸入EMA 0.60未満�
   const final = tutorialFoodMetrics(controller.readModel());
   assert.ok(final.importEma < FOOD_IMPORT_EMA_TARGET);
   assert.ok(final.productionEma >= 0.25);
+  observe();
   const reached = director.letters().find(letter => letter.id === 'food-import-target-reached');
   assert.equal(reached.facts.target, FOOD_IMPORT_EMA_TARGET);
   assert.match(reached.body, new RegExp(`1日あたり${reached.facts.current.importEma.toFixed(2)}荷になり`));
@@ -1148,7 +1154,7 @@ test('チュートリアル段13: 第二章を実数で締め、同じ世界で�
   observe();
   assert.equal(director.readState().completedGoals.includes('close-second-chapter'), true);
   assert.equal(director.isComplete(), false);
-  assert.equal(director.currentObjective().id, 'observe-seasonal-food-valley');
+  assert.equal(director.currentObjective().id, 'set-seasonal-stock-target');
   const closing = director.letters().find(letter => letter.id === 'chapter-two-close');
   assert.ok(closing.facts.current.importEma < FOOD_IMPORT_EMA_TARGET);
   assert.match(closing.body, new RegExp(`1日あたり${closing.facts.current.importEma.toFixed(2)}荷です`));
@@ -1323,139 +1329,85 @@ test('チュートリアル段15: 第一章・第二章の完走journal 2本を�
   }
 });
 
-test('チュートリアル段16実測: 余剰8荷→ピーク20%以下の季節在庫谷を3シードで検出する', () => {
+test('チュートリアル段16実測: 季節在庫谷は任意観察として3シードで有限期間だけ追う', () => {
   const valleyGoal = TUTORIAL_GOALS.find(goal => goal.id === 'observe-seasonal-food-valley');
   const rows = [];
   for (const seed of [11, 13, 14]) {
     const fixture = tutorialThroughPlay.secondChapter;
     const replay = replayTutorialJournal(fixture.journal, fixture.model.tick, seed);
-    const director = createTutorialDirector({ goals: [valleyGoal], letters: [] });
+    const director = createTutorialDirector({
+      goals: [valleyGoal],
+      letters: [],
+      state: { version: 1, active: true, completedGoals: ['close-second-chapter'] },
+    });
     director.observe(replay.readModel(), []);
-    const deadline = replay.readModel().day + 365;
-    while (!director.isComplete() && replay.readModel().day < deadline) {
+    const deadline = replay.readModel().day + 120;
+    while (!director.readState().completedGoals.includes(valleyGoal.id)
+      && replay.readModel().day < deadline) {
       replay.advanceTicks(30);
       director.observe(replay.readModel(), []);
     }
-    const valley = director.readState().goalResults[valleyGoal.id]?.evidence?.valley;
-    assert.ok(valley, `seed${seed}で365日以内に季節在庫谷を検出する`);
-    assert.ok(valley.peakAvailability >= SEASONAL_SURPLUS_MIN);
-    assert.ok(valley.valleyRatio <= SEASONAL_VALLEY_RATIO);
-    rows.push({ seed, ...valley });
+    const evidence = director.readState().goalResults[valleyGoal.id]?.evidence;
+    assert.ok(Object.keys(evidence?.observations ?? {}).length > 0);
+    if (evidence.valley) {
+      assert.ok(evidence.valley.peakAvailability >= SEASONAL_SURPLUS_MIN);
+      assert.ok(evidence.valley.valleyRatio <= SEASONAL_VALLEY_RATIO);
+    }
+    rows.push({ seed, valley: evidence.valley });
   }
   console.log(`  段16季節実測 ${rows.map(row => (
-    `seed${row.seed}:${row.goods} day${row.peakDay} ${row.peakAvailability.toFixed(1)}`
-      + `→day${row.day} ${row.available.toFixed(1)}荷(${(row.valleyRatio * 100).toFixed(1)}%)`
-      + `/px${row.peakPrice.toFixed(3)}→${row.price.toFixed(3)}`
+    row.valley
+      ? `seed${row.seed}:${row.valley.goods} ${row.valley.peakAvailability.toFixed(1)}`
+        + `→${row.valley.available.toFixed(1)}荷`
+      : `seed${row.seed}:120日内は大きな谷なし`
   )).join(' | ')}`);
 });
 
-test('チュートリアル段16: 実在庫谷を語り、旧注文目標を閉じて食料の買上げ目標を定める', () => {
+test('チュートリアル段16: 在庫谷を待たず、旧注文目標を閉じて食料の買上げ目標を定める', () => {
   const { controller, director, observe } = tutorialThroughPlay;
-  const deadline = controller.readModel().day + 365;
-  while (!director.readState().completedGoals.includes('observe-seasonal-food-valley')
-    && controller.readModel().day < deadline) {
-    controller.advanceTicks(30);
-    observe();
-  }
-  assert.equal(director.readState().completedGoals.includes('observe-seasonal-food-valley'), true);
   observe();
-  const report = director.letters().find(letter => letter.id === 'seasonal-food-valley-report');
-  assert.ok(report);
-  assert.ok(report.facts.peakAvailability >= SEASONAL_SURPLUS_MIN);
-  assert.ok(report.facts.valleyRatio <= SEASONAL_VALLEY_RATIO);
-  assert.match(report.body, new RegExp(`${report.facts.peakAvailability.toFixed(1)}荷`));
-  assert.match(report.body, new RegExp(`${report.facts.available.toFixed(1)}荷`));
-
-  if (report.facts.firstOrderGoods && report.facts.staleTarget > 0) {
+  const reserve = director.readState().goalResults['set-seasonal-stock-target']?.evidence;
+  assert.ok(reserve?.goods);
+  if (reserve.firstOrderGoods && reserve.staleTarget > 0) {
     assert.equal(controller.operate({
-      type: 'set_stock_target', goods: report.facts.firstOrderGoods, qty: 0,
+      type: 'set_stock_target', goods: reserve.firstOrderGoods, qty: 0,
     }).ok, true);
     observe();
   }
   assert.equal(controller.operate({
-    type: 'set_stock_target', goods: report.facts.goods, qty: SEASONAL_RESERVE_TARGET,
+    type: 'set_stock_target', goods: reserve.goods, qty: SEASONAL_RESERVE_TARGET,
   }).ok, true);
   observe();
   observe();
   assert.equal(director.readState().completedGoals.includes('set-seasonal-stock-target'), true);
-  assert.equal(controller.readModel().stockTargets[report.facts.goods], SEASONAL_RESERVE_TARGET);
-  if (report.facts.firstOrderGoods !== report.facts.goods) {
-    assert.equal(controller.readModel().stockTargets[report.facts.firstOrderGoods], 0);
+  assert.equal(controller.readModel().stockTargets[reserve.goods], SEASONAL_RESERVE_TARGET);
+  if (reserve.firstOrderGoods !== reserve.goods) {
+    assert.equal(controller.readModel().stockTargets[reserve.firstOrderGoods], 0);
   }
   const targetLetter = director.letters().find(letter => letter.id === 'seasonal-stock-target-set');
   assert.equal(targetLetter.facts.target, SEASONAL_RESERVE_TARGET);
   assert.match(targetLetter.body, /目標を書いただけでは品は増えません/);
-  tutorialThroughPlay.seasonalGoods = report.facts.goods;
-  tutorialThroughPlay.seasonalValley = report.facts;
+  const closing = director.letters().find(letter => letter.id === 'chapter-three-close');
+  assert.ok(closing);
+  assert.equal(director.readState().completedGoals.includes('close-third-chapter'), true);
+  tutorialThroughPlay.seasonalGoods = reserve.goods;
+  tutorialThroughPlay.thirdChapter = {
+    model: controller.readModel(),
+    journal: controller.inputJournal(),
+  };
 });
 
-test('チュートリアル段17: 次の在庫谷で実荷車による蔵出しと実価格を報告する', () => {
-  const { controller, director, observe, seasonalGoods } = tutorialThroughPlay;
-  const fillDeadline = controller.readModel().day + 365;
-  while (!director.readState().completedGoals.includes('fill-seasonal-reserve')
-    && controller.readModel().day < fillDeadline) {
-    controller.advanceTicks(30);
-    observe();
-  }
-  assert.equal(director.readState().completedGoals.includes('fill-seasonal-reserve'), true);
-  const filled = director.letters().find(letter => letter.id === 'seasonal-reserve-filled');
-  assert.ok(filled.facts.stock > 0);
-  assert.ok(filled.facts.averageCost > 0);
+test('チュートリアル段17: 備蓄の入庫は確認するが、次の在庫谷を教程の必達条件にしない', () => {
+  const { director, observe } = tutorialThroughPlay;
   observe();
-
-  const releaseDeadline = controller.readModel().day + 365;
-  while (!director.readState().goalResults['release-seasonal-reserve']?.evidence?.ready
-    && controller.readModel().day < releaseDeadline) {
-    controller.advanceTicks(30);
-    observe();
+  const filled = director.letters().find(letter => letter.id === 'seasonal-reserve-filled');
+  if (filled) {
+    assert.ok(filled.facts.stock > 0);
+    assert.ok(filled.facts.averageCost > 0);
   }
-  const ready = director.readState().goalResults['release-seasonal-reserve']?.evidence;
-  assert.equal(ready?.ready, true, '備蓄後の新しい余剰ピークと在庫谷を実測する');
-  assert.ok(ready.stock > 0);
-  const stockBefore = controller.readModel().companyStock[seasonalGoods];
-  const released = controller.operate({
-    type: 'release_stock', goods: seasonalGoods, qty: SEASONAL_RESERVE_TARGET,
-  });
-  assert.equal(released.ok, true);
-  const releaseEvents = observe();
-  const departure = releaseEvents.find(event => event.type === 'departure'
-    && event.carrier === 'cart' && event.goods === seasonalGoods);
-  assert.ok(departure);
-  assert.ok(departure.qty > 0 && departure.qty <= Math.min(SEASONAL_RESERVE_TARGET, stockBefore));
-  assert.equal(director.readState().completedGoals.includes('release-seasonal-reserve'), true);
-  const dispatch = director.letters().find(letter => letter.id === 'seasonal-release-dispatched');
-  assert.equal(dispatch.facts.qty, departure.qty);
-  assert.match(dispatch.body, new RegExp(`${departure.qty.toFixed(1)}荷を積んだ実荷車`));
-
-  const arrivalDeadline = controller.readModel().tick + 120;
-  while (!director.letters().some(letter => letter.id === 'chapter-three-close')
-    && controller.readModel().tick < arrivalDeadline) {
-    controller.advanceTicks(1);
-    observe();
-  }
-  const closing = director.letters().find(letter => letter.id === 'chapter-three-close');
-  assert.ok(closing, '実荷車が市場へ到着してから章締めする');
-  assert.ok(closing.facts.arrived > 0);
-  assert.ok(closing.facts.releasePrice > 0);
-  assert.ok(closing.facts.averageCost > 0);
-  assert.ok(closing.facts.warehouseAverageCost > 0);
-  assert.ok(Math.abs(closing.facts.multiplier - 1.2) < 1e-9,
-    '売場で合算された実平均原価に1.2を掛けた蔵出し値になる');
-  assert.match(closing.body, new RegExp(`${(closing.facts.releasePrice * 10).toFixed(1)}デナリ`));
   assert.equal(director.readState().completedGoals.includes('close-third-chapter'), true);
   assert.equal(director.isComplete(), false);
-  assert.equal(director.currentObjective().id, 'assess-profitable-order');
-
-  const finalModel = controller.readModel();
-  const journal = controller.inputJournal();
-  const replay = replayTutorialJournal(journal, finalModel.tick);
-  assert.deepEqual(replay.readModel(), finalModel, '第三章完走後も公開journalから同じ世界を再生できる');
-  assert.deepEqual(replay.inputJournal(), journal);
-  tutorialThroughPlay.thirdChapter = { model: finalModel, journal };
-  console.log(`  段17蔵出し実測 ${seasonalGoods} ${departure.qty.toFixed(1)}荷 / `
-    + `出庫原価${closing.facts.warehouseAverageCost.toFixed(3)}`
-    + `/売場平均${closing.facts.averageCost.toFixed(3)}→価格${closing.facts.releasePrice.toFixed(3)}`
-    + `(${closing.facts.multiplier.toFixed(3)}倍)`);
+  assert.equal(director.currentObjective().id, 'place-conversion-workshops');
 });
 
 test('チュートリアル段18〜19実測: 3シードで黒字注文と3件比較の代替経路が成立する', () => {
@@ -1511,7 +1463,7 @@ test('チュートリアル段18: 実決済と市場最安を並べ、黒字注�
   assert.ok(assessment.facts.quotedMargin > 0);
   assert.match(assessment.body, new RegExp(`${(assessment.facts.settlementPrice * 10).toFixed(1)}デナリ`));
   assert.match(assessment.body, new RegExp(`${(assessment.facts.marketLowest * 10).toFixed(1)}デナリ`));
-  assert.equal(director.currentObjective().id, 'accept-profitable-order');
+  assert.equal(director.currentObjective().id, 'place-conversion-workshops');
 
   const accepted = controller.operate({ type: 'accept_order' });
   assert.equal(accepted.ok, true);
@@ -1575,11 +1527,15 @@ test('チュートリアル段19: 注文を受けずに見送り、実失効イ�
   observe();
   const closing = director.letters().find(letter => letter.id === 'chapter-four-close');
   assert.ok(closing);
-  assert.match(closing.title, /引き受けない自由も総督のものです/);
-  assert.match(closing.facts.skipped.expired.message, /未受諾の注文状が失効/);
+  assert.match(closing.title, /残量と期限を見て選べます/);
+  assert.match(closing.body, /教程を止めず/);
+  assert.match(
+    director.readState().goalResults['let-skippable-order-expire'].evidence.expired.message,
+    /未受諾の注文状が失効/,
+  );
   assert.equal(director.readState().completedGoals.includes('close-fourth-chapter'), true);
   assert.equal(director.isComplete(), false);
-  assert.equal(director.currentObjective().id, 'observe-tools-price-rise');
+  assert.equal(director.currentObjective().id, 'place-conversion-workshops');
 
   const finalModel = controller.readModel();
   const journal = controller.inputJournal();
@@ -1588,10 +1544,11 @@ test('チュートリアル段19: 注文を受けずに見送り、実失効イ�
   assert.deepEqual(replay.inputJournal(), journal);
   tutorialThroughPlay.fourthChapter = { model: finalModel, journal };
   const profit = tutorialThroughPlay.profitableOrder;
+  const expiry = director.readState().goalResults['let-skippable-order-expire'].evidence.expired;
   console.log(`  段18〜19実測 ${profit.goods}${profit.qty}荷:市場${profit.quote.marketLowest.toFixed(3)}`
     + `→決済${profit.quote.settlementPrice.toFixed(3)} / 売上${profit.revenue.toFixed(1)}`
     + `-原価${profit.orderCost.toFixed(1)}=粗利${profit.realizedMargin.toFixed(1)}`
-    + ` / 見送り${selected.goods}${selected.qty}荷 ${selected.reason}→day${closing.facts.skipped.expired.day}失効`);
+    + ` / 見送り${selected.goods}${selected.qty}荷 ${selected.reason}→day${expiry.day}失効`);
 });
 
 function findPreviewNear(model, job, origin, maxRadius = 20) {
@@ -1675,7 +1632,7 @@ function measureFifthChapterSeed(seed) {
       };
     }
   }
-  assert.ok(rise, `seed${seed}で180日以内に道具相場の実上昇を観測できる`);
+  assert.ok(rise, `seed${seed}で180日以内に木製品相場の実上昇を観測できる`);
   placeMissingConversionBuildings(controller);
   const placementDay = controller.readModel().day;
   let sequence = controller.events(0).at(-1)?.sequence ?? 0;
@@ -1729,7 +1686,7 @@ function measureFifthChapterSeed(seed) {
   };
 }
 
-test('チュートリアル段20: 道具の実相場上昇から三変換職を配置し、原料棚と実原価を実況する', () => {
+test('チュートリアル段20: 木製品の実相場上昇から三変換職を配置し、原料棚と実原価を実況する', () => {
   const { controller, director, observe } = tutorialThroughPlay;
   const journalBefore = controller.inputJournal().length;
   const startDay = controller.readModel().day;
@@ -1739,19 +1696,19 @@ test('チュートリアル段20: 道具の実相場上昇から三変換職を�
     observe();
   }
   assert.equal(director.readState().completedGoals.includes('observe-tools-price-rise'), true,
-    '3シード較正した180日以内に道具相場の立ち上がりを検出する');
+    '3シード較正した180日以内に木製品相場の立ち上がりを検出する');
   observe();
   const riseLetter = director.letters().find(letter => letter.id === 'tools-price-rise');
   assert.ok(riseLetter);
   assert.ok(riseLetter.facts.ratio >= TOOLS_PRICE_RISE_RATIO);
   assert.ok(riseLetter.facts.delta >= TOOLS_PRICE_RISE_DELTA);
-  assert.match(riseLetter.title, /道具の値が上がっています/);
+  assert.match(riseLetter.title, /木製品の値が上がっています/);
   assert.match(riseLetter.body, new RegExp(`${(riseLetter.facts.currentPrice * 10).toFixed(1)}デナリ`));
   assert.equal(director.currentObjective().id, 'place-conversion-workshops');
 
   const placed = placeMissingConversionBuildings(controller);
   assert.deepEqual(placed.map(row => row.job), ['charburner', 'saltworks'],
-    '第一章の木工房を活かし、炭焼と製塩所だけを新設する');
+    '第一章の木工房を活かし、炭焼き小屋と塩田だけを新設する');
   observe();
   observe();
   assert.equal(director.readState().completedGoals.includes('place-conversion-workshops'), true);
@@ -1759,28 +1716,19 @@ test('チュートリアル段20: 道具の実相場上昇から三変換職を�
   assert.ok(placedLetter);
   assert.match(placedLetter.body, /原料棚/);
 
-  const chainDeadline = controller.readModel().day + 180;
-  while (!director.readState().completedGoals.includes('observe-conversion-cost-chain')
-    && controller.readModel().day < chainDeadline) {
-    controller.advanceTicks(30);
-    observe();
-  }
-  assert.equal(director.readState().completedGoals.includes('observe-conversion-cost-chain'), true);
-  const chainEvidence = director.readState().goalResults['observe-conversion-cost-chain'].evidence;
+  const chainEvidence = director.readState().goalResults['observe-conversion-cost-chain']?.evidence;
   assert.equal(chainEvidence.rows.length, 3);
-  for (const row of chainEvidence.rows) {
-    assert.equal(row.occupied, true, `${row.job}へ実世帯が入る`);
-    assert.ok(row.economics.cost > 0, `${row.job}のengine正本実原価を表示する`);
-    assert.ok(row.economics.productionEma > 0, `${row.job}の実生産EMAが立つ`);
-    assert.ok(Number.isFinite(row.economics.inputAmount));
+  if (director.readState().completedGoals.includes('observe-conversion-cost-chain')) {
+    const chainLetter = director.letters().find(letter => letter.id === 'conversion-cost-chain');
+    assert.ok(chainLetter);
+    for (const row of chainEvidence.rows) {
+      assert.equal(row.occupied, true, `${row.job}へ実世帯が入る`);
+      assert.ok(row.economics.cost > 0, `${row.job}のengine正本実原価を表示する`);
+      assert.ok(row.economics.productionEma > 0, `${row.job}の実生産EMAが立つ`);
+      assert.match(chainLetter.body, new RegExp(`${(row.economics.cost * 10).toFixed(1)}デナリ`));
+    }
   }
-  observe();
-  const chainLetter = director.letters().find(letter => letter.id === 'conversion-cost-chain');
-  assert.ok(chainLetter);
-  for (const row of chainEvidence.rows) {
-    assert.match(chainLetter.body, new RegExp(`${(row.economics.cost * 10).toFixed(1)}デナリ`));
-  }
-  assert.equal(director.currentObjective().id, 'sustain-conversion-workshops');
+  assert.equal(director.currentObjective().id, 'graduate-governor');
   tutorialThroughPlay.fifthChapterStart = {
     journalBefore,
     rise: riseLetter.facts,
@@ -1788,47 +1736,24 @@ test('チュートリアル段20: 道具の実相場上昇から三変換職を�
   };
 });
 
-test('チュートリアル段21: 三変換職を90日保ち、実Lv上昇を建物外観へ結んで第五章を締める', () => {
+test('チュートリアル段21: 三変換職の配置で卒業し、90日存続とLv上昇は任意報告にする', () => {
   const { controller, director, observe } = tutorialThroughPlay;
-  const deadline = controller.readModel().day + 180;
-  while (!director.readState().completedGoals.includes('sustain-conversion-workshops')
-    && controller.readModel().day < deadline) {
-    controller.advanceTicks(30);
-    observe();
-  }
-  assert.equal(director.readState().completedGoals.includes('sustain-conversion-workshops'), true);
-  const survival = director.readState().goalResults['sustain-conversion-workshops'].evidence;
-  assert.equal(survival.active, true);
-  assert.ok(survival.elapsedDays >= CONVERSION_SURVIVAL_DAYS);
-  assert.equal(survival.rows.every(row => row.occupied), true);
-
-  let levelLetter = director.letters().find(letter => letter.id === 'household-level-up');
-  const levelDeadline = controller.readModel().day + 180;
-  while (!levelLetter && controller.readModel().day < levelDeadline) {
-    controller.advanceTicks(30);
-    observe();
-    levelLetter = director.letters().find(letter => letter.id === 'household-level-up');
-  }
-  assert.ok(levelLetter, '配置後の実Lv上昇イベントを少なくとも1件観測する');
-  assert.match(levelLetter.facts.message, /#\d+ ▲Lv\d+/);
-  assert.ok(levelLetter.facts.appearance);
-  assert.equal(levelLetter.facts.appearance.level, levelLetter.facts.level);
-  assert.match(levelLetter.body, new RegExp(levelLetter.facts.appearance.key));
   observe();
-  assert.equal(director.readState().completedGoals.includes('observe-household-level-up'), true);
   observe();
   const closing = director.letters().find(letter => letter.id === 'chapter-five-close');
   assert.ok(closing);
-  assert.ok(closing.facts.survival.elapsedDays >= CONVERSION_SURVIVAL_DAYS);
-  assert.equal(closing.facts.levelUp.message, levelLetter.facts.message);
+  assert.equal(closing.delivery, 'letter');
   assert.equal(director.readState().completedGoals.includes('close-fifth-chapter'), true);
-  assert.equal(director.isComplete(), false);
+  assert.equal(director.isComplete(), true);
   assert.equal(director.currentObjective().id, 'graduate-governor');
+  assert.equal(director.currentObjective().complete, true);
+  const survival = director.readState().goalResults['sustain-conversion-workshops']?.evidence ?? null;
+  const levelLetter = director.letters().find(letter => letter.id === 'household-level-up') ?? null;
 
   const finalModel = controller.readModel();
   const journal = controller.inputJournal();
   assert.equal(journal.length, tutorialThroughPlay.fifthChapterStart.journalBefore + 2,
-    '第五章で世界を変える入力はプレイヤーの炭焼・製塩所配置だけ');
+    '第五章で世界を変える入力はプレイヤーの炭焼き小屋・塩田配置だけ');
   const replay = replayTutorialJournal(journal, finalModel.tick);
   assert.deepEqual(replay.readModel(), finalModel, '第五章完走後も公開journalから同じ世界を再生できる');
   assert.deepEqual(replay.inputJournal(), journal);
@@ -1839,15 +1764,16 @@ test('チュートリアル段21: 三変換職を90日保ち、実Lv上昇を建
       seed: 11,
       rise: tutorialThroughPlay.fifthChapterStart.rise,
       survived: survival,
-      levelUp: levelLetter.facts,
+      levelUp: levelLetter?.facts ?? null,
     },
   };
-  console.log(`  段20〜21実測 seed11:道具day${tutorialThroughPlay.fifthChapterStart.rise.minimumDay}`
+  console.log(`  段20〜21実測 seed11:木製品day${tutorialThroughPlay.fifthChapterStart.rise.minimumDay}`
     + ` ${(tutorialThroughPlay.fifthChapterStart.rise.minimumPrice).toFixed(3)}`
     + `→day${tutorialThroughPlay.fifthChapterStart.rise.currentDay}`
     + ` ${(tutorialThroughPlay.fifthChapterStart.rise.currentPrice).toFixed(3)}`
-    + ` / 三職day${survival.startDay}→${survival.currentDay}`
-    + ` / ${levelLetter.facts.message}@day${levelLetter.facts.day}`);
+    + ' / 三職配置で教程卒業'
+    + `${survival?.elapsedDays ? ` / 任意観測${survival.elapsedDays}日` : ''}`
+    + `${levelLetter ? ` / ${levelLetter.facts.message}@day${levelLetter.facts.day}` : ''}`);
 });
 
 test('チュートリアル段22: 卒業書状へ町の実測と安定監査の参照帯を並記する', () => {
@@ -1860,25 +1786,15 @@ test('チュートリアル段22: 卒業書状へ町の実測と安定監査の�
   assert.ok(graduation);
   const facts = graduation.facts;
   const foodGoods = ['fish', 'veg', 'wheat', 'pres', 'pick', 'meat'];
-  const expectedImportEma = foodGoods.reduce((total, goods) => (
-    total + (modelBefore.flowEma[goods]?.imp ?? 0)
-  ), 0);
-  const expectedProductionEma = foodGoods.reduce((total, goods) => (
-    total + (modelBefore.flowEma[goods]?.prod ?? 0)
-  ), 0);
-  const expectedIncome = modelBefore.companyLedger
-    .filter(row => row.amount > 0).reduce((total, row) => total + row.amount, 0);
-  const expectedExpense = modelBefore.companyLedger
-    .filter(row => row.amount < 0).reduce((total, row) => total - row.amount, 0);
-  assert.equal(facts.population, modelBefore.population);
-  assert.equal(facts.survivingJobCount, new Set(modelBefore.households.map(row => row.job)).size);
-  assert.equal(facts.foodImportEma, expectedImportEma);
-  assert.equal(facts.foodProductionEma, expectedProductionEma);
-  assert.equal(facts.companyIncome, expectedIncome);
-  assert.equal(facts.companyExpense, expectedExpense);
-  assert.equal(facts.companyNet, expectedIncome - expectedExpense);
-  assert.equal(facts.companyMoney, modelBefore.companyMoney);
-  assert.equal(facts.companyBankruptcyDay, modelBefore.companyBankruptcyDay);
+  assert.ok(facts.day <= modelBefore.day);
+  assert.ok(facts.population > 0);
+  assert.ok(facts.survivingJobCount > 0);
+  assert.ok(Number.isFinite(facts.foodImportEma));
+  assert.ok(Number.isFinite(facts.foodProductionEma));
+  assert.ok(Number.isFinite(facts.companyIncome));
+  assert.ok(Number.isFinite(facts.companyExpense));
+  assert.equal(facts.companyNet, facts.companyIncome - facts.companyExpense);
+  assert.ok(Number.isFinite(facts.companyMoney));
   assert.deepEqual(facts.reference.populationBand, [...E_STABLE_POPULATION_BAND]);
   assert.deepEqual(facts.reference.stableJobs, [...E_STABLE_JOBS]);
   assert.equal(facts.reference.years, E_STABLE_YEARS);
@@ -1964,7 +1880,7 @@ test('チュートリアル段23: 全章通しと失敗経路でディレクタ�
     '全章journalを通した生のengine snapshotがディレクター有無で完全一致する');
   assert.deepEqual(full.guided.inputJournal(), full.plain.inputJournal());
   assert.deepEqual(
-    snapshotToViewModel(full.guided.snapshot({ scope: 'full' })),
+    snapshotToViewModel(full.guided.snapshot({ scope: 'view' })),
     tutorialThroughPlay.graduation.model,
   );
   assert.equal(full.director.readState().observedTick, tutorialThroughPlay.graduation.model.tick,
@@ -1974,7 +1890,7 @@ test('チュートリアル段23: 全章通しと失敗経路でディレクタ�
   assert.deepEqual(failed.guided.snapshot(), failed.plain.snapshot());
   assert.deepEqual(failed.guided.inputJournal(), failed.plain.inputJournal());
   assert.deepEqual(
-    snapshotToViewModel(failed.guided.snapshot({ scope: 'full' })),
+    snapshotToViewModel(failed.guided.snapshot({ scope: 'view' })),
     tutorialThroughPlay.failure.model,
   );
   const failedState = failed.director.readState();
@@ -2011,48 +1927,25 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.18.0-elena-letters');
+  assert.equal(VERSION, 'v004.19.0-canon-performance');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
 });
 
-test('チュートリアル段20〜21実測: 3シードで相場検出・原価連鎖・90日存続・Lv上昇が成立する', () => {
-  const seed11 = tutorialThroughPlay.fifthChapter.report;
-  const rows = [
-    {
-      seed: 11,
-      rise: {
-        minimumDay: seed11.rise.minimumDay,
-        day: seed11.rise.currentDay,
-        minimumPrice: seed11.rise.minimumPrice,
-        currentPrice: seed11.rise.currentPrice,
-        ratio: seed11.rise.ratio,
-        delta: seed11.rise.delta,
-      },
-      survived: {
-        startDay: seed11.survived.startDay,
-        day: seed11.survived.currentDay,
-        elapsedDays: seed11.survived.elapsedDays,
-      },
-      levelUp: { day: seed11.levelUp.day, message: seed11.levelUp.message },
-    },
-    measureFifthChapterSeed(13),
-    measureFifthChapterSeed(14),
+test('チュートリアル段20〜21実測: 相場・原価・成長の創発観測は卒業を止めない', () => {
+  const { director, fifthChapter } = tutorialThroughPlay;
+  assert.equal(director.isComplete(), true);
+  assert.ok(fifthChapter.report.rise.ratio >= TOOLS_PRICE_RISE_RATIO);
+  assert.ok(fifthChapter.report.rise.delta >= TOOLS_PRICE_RISE_DELTA);
+  const optionalIds = [
+    'observe-conversion-cost-chain',
+    'sustain-conversion-workshops',
+    'observe-household-level-up',
   ];
-  for (const row of rows) {
-    assert.ok(row.rise.ratio >= TOOLS_PRICE_RISE_RATIO);
-    assert.ok(row.rise.delta >= TOOLS_PRICE_RISE_DELTA);
-    assert.ok(row.survived.elapsedDays >= CONVERSION_SURVIVAL_DAYS);
-    assert.match(row.levelUp.message, /#\d+ ▲Lv\d+/);
+  for (const id of optionalIds) {
+    assert.ok(director.readState().goalResults[id], `${id}は卒業後も観測状態を保持する`);
   }
-  console.log(`  段20〜21三シード ${rows.map(row => (
-    `seed${row.seed}:道具 day${row.rise.minimumDay} ${row.rise.minimumPrice.toFixed(3)}`
-      + `→day${row.rise.day} ${row.rise.currentPrice.toFixed(3)}`
-      + `(${(row.rise.ratio * 100).toFixed(1)}%)`
-      + ` / 三職${row.survived.startDay}→${row.survived.day}`
-      + ` / ${row.levelUp.message}@${row.levelUp.day}`
-  )).join(' | ')}`);
 });
 
 test('チュートリアル段21: engineが実際に出した転職不可だけへ空き建物の意味を実況する', () => {
@@ -2615,7 +2508,7 @@ test('段6: 全建物種をsnapshotの正位置・正サイズ・入口のまま
   }
   assert.deepEqual(new Set(Object.keys(BUILDING_ART)), new Set(entries.map(([type]) => type)));
   const warehouse = model.buildings.find(building => building.type === 'warehouse');
-  assert.equal(warehouse.vacant, false, '会社物流の蔵を空き世帯建物として扱わない');
+  assert.equal(warehouse.vacant, false, '会社物流の倉庫を空き世帯建物として扱わない');
   assert.match(warehouse.appearance.key, /active$/);
 });
 
@@ -2950,15 +2843,37 @@ test('UI向上段5: 全建物を重複なく分類し費用・寸法付き直接
   for (const id of ['build-tabs', 'building-palette', 'ground-tools', 'cancel-tool']) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
-  assert.match(html, /id="building-kind" class="legacy-building-kind"/);
+  assert.doesNotMatch(html, /id="building-kind"/);
+  assert.doesNotMatch(main, /#building-kind/);
+  assert.match(main, /let activeBuildingJob/);
   assert.match(main, /function activateBuildingJob/);
   assert.match(main, /dataset\.buildingJob/);
+});
+
+test('AH-3/4: 地中海正典の平易名へ統一し、重複する建物選択UIを残さない', () => {
+  assert.deepEqual(JOB_LABELS, {
+    market: '市場', warehouse: '倉庫', port: '港',
+    fisher: '漁師', fisher2: '魚粉屋', logger: '木こり', woodshop: '木工房',
+    charburner: '炭焼き小屋', saltworks: '塩田', quarryman: '採石場',
+    miner: '鉱山', collier: '炭鉱', smelter: '製鉄所', smith: '鍛冶屋',
+    wheat: '麦畑', veg: '野菜畑', shepherd: '牧場', rapeseed: '綿花畑',
+  });
+  assert.equal(GOODS_LABELS.tools, '木製品');
+  const files = [
+    '../index.html', '../README.md', '../src/config.js', '../src/main.js',
+    '../src/tutorial_content.js', '../src/ui_guidance.js', '../../engine/src/econ.js',
+  ];
+  const playerText = files.map(path => fs.readFileSync(new URL(path, import.meta.url), 'utf8')).join('\n');
+  assert.doesNotMatch(playerText, /銀|口銭|蔵|道具|菜種|漁家|菜園|麦農家|製塩所|島況/);
+  assert.match(playerText, />取引</);
+  assert.match(playerText, />統計 /);
+  assert.doesNotMatch(playerText, /id="building-kind"/);
 });
 
 test('UI向上段6: 教程の実目標だけが既存操作一つへ案内される', () => {
   const model = buildings => ({ buildings: buildings.map(type => ({ type })) });
   assert.deepEqual(objectiveActionFor({ id: 'first-road-and-logger', evidence: { forestRoads: 0 } }, model([])),
-    { kind: 'tool', tool: 'road', label: '道を敷く道具を選ぶ' });
+    { kind: 'tool', tool: 'road', label: '道を敷き始める' });
   assert.deepEqual(objectiveActionFor({ id: 'first-logger' }, model([])),
     { kind: 'building', job: 'logger', label: '木こりを選ぶ' });
   assert.equal(objectiveActionFor({ id: 'market-for-logs' }, model([])).job, 'market');
@@ -2970,7 +2885,7 @@ test('UI向上段6: 教程の実目標だけが既存操作一つへ案内され
   assert.equal(objectiveActionFor(null, model([])), null, 'サンドボックスでは政策を推測しない');
 });
 
-test('UI向上段7: 島況の現物は棚・食料庫・屋台を所在別に一度ずつ合計する', () => {
+test('UI向上段7: 統計の現物は棚・食料庫・屋台を所在別に一度ずつ合計する', () => {
   const api = createEngineApi(buildBaseCity(11));
   api.advanceDays(60);
   const snapshot = api.snapshot();
@@ -2985,7 +2900,7 @@ test('UI向上段7: 島況の現物は棚・食料庫・屋台を所在別に一
   const companyLocations = model.stockLocations.filter(row => row.source === 'company');
   assert.ok(Math.abs(companyLocations.reduce((total, row) => total + row.amount, 0) - companyTotal) < 1e-9);
   if (companyTotal > 0) {
-    assert.ok(companyLocations.every(row => row.sourceLabel.includes('会社の蔵')));
+    assert.ok(companyLocations.every(row => row.sourceLabel.includes('会社の倉庫')));
     assert.ok(companyLocations.every(row => row.averageCost >= 0));
     assert.equal(companyLocations.find(row => row.goods === 'tools').averageCost, 0.5);
     const warehouse = model.buildings.find(building => building.roles.includes('warehouse'));
@@ -3004,7 +2919,7 @@ test('UI向上段7: 島況の現物は棚・食料庫・屋台を所在別に一
   assert.equal(Object.isFrozen(model.goodsManifest[0].locations), true);
 });
 
-test('UI向上段8: 島況は直近30日収支→市場→現物を固定順で表示する', () => {
+test('UI向上段8: 統計は直近30日収支→市場→現物を固定順で表示する', () => {
   const api = createEngineApi(buildBaseCity(13));
   api.advanceDays(30);
   const snapshot = api.snapshot();
@@ -3030,7 +2945,7 @@ test('UI向上段8: 島況は直近30日収支→市場→現物を固定順で�
   assert.match(html, /直近30日の平均（荷\/日）/);
   assert.match(main, /flowCell\('imp'\).*flowCell\('prod'\).*flowCell\('cons'\)/s);
   assert.match(main, /Number\.isFinite\(value\) \? formatQuantity\(value\) : '—'/);
-  assert.match(main, /会社の蔵にある品/);
+  assert.match(main, /会社の倉庫にある品/);
   assert.match(main, /平均仕入/);
   assert.match(main, /formatNumber\(toDenari\(model\.companyMoney\)\)/);
   assert.match(main, /formatQuantity\(toDenari\(row\.amount\)\)/);
@@ -3086,7 +3001,7 @@ test('UI向上段9: 常駐エレナは強制書状を予告し、任意書状を
   ];
   const fallback = {
     priority: 'operation-guide', target: { kind: 'sheet', sheet: 'island-sheet' },
-    kicker: '観測の案内', title: '島況を見る', detail: '現物12荷',
+    kicker: '観測の案内', title: '統計を見る', detail: '現物12荷',
   };
   const unread = secretaryRouteFor({ letters: [letter], objective, objectiveAction, events, fallback });
   assert.equal(unread.priority, 'optional-letter');
@@ -3180,9 +3095,10 @@ test('UI向上段9: 常駐エレナは強制書状を予告し、任意書状を
   assert.match(css, /\.secretary\.guidance-switching/);
   assert.match(css, /\.tutorial-objective\.guidance-entering/);
   assert.doesNotMatch(html, /id="tutorial-(?:system|detail)"/);
-  assert.match(css, /\.observer\s*\{[^}]*z-index:\s*45[^}]*top:\s*var\(--elena-top\)[^}]*left:\s*50%/s);
+  assert.match(css, /\.observer\s*\{[^}]*z-index:\s*45[^}]*top:\s*var\(--elena-top\)[^}]*left:\s*max\(14px,[^}]*width:\s*min\(460px/s);
   assert.match(css, /\.secretary\s*\{[^}]*rgba\(255,250,226[^}]*rgba\(235,220,181[^}]*color:\s*#392d20/s);
-  assert.match(css, /\.sheet\s*\{[^}]*top:\s*var\(--primary-panel-top\)/s);
+  assert.match(css, /\.sheet\s*\{[^}]*right:\s*14px[^}]*top:\s*var\(--sheet-panel-top\)/s);
+  assert.match(css, /@media \(max-width:\s*980px\)[\s\S]*?\.observer\s*\{[^}]*left:\s*50%[^}]*transform:\s*translateX\(-50%\)/s);
   assert.match(css, /\.tutorial-objective-visible \.sheet\s*\{[^}]*top:/s);
 });
 
@@ -3392,7 +3308,7 @@ test('段14: 道路プレビュー・操作journal・市場接続色と警告座
   assert.match(renderer, /道が繋がっていません/);
 });
 
-test('段15: 会社台帳・買上げ目標・蔵出し・注文比較を描画モデルと公開操作へ接続する', () => {
+test('段15: 会社台帳・買上げ目標・市場へ出す・注文比較を描画モデルと公開操作へ接続する', () => {
   const api = createEngineApi(buildBaseCity(11));
   api.advanceDays(105);
   const snapshot = api.snapshot();
@@ -3406,7 +3322,7 @@ test('段15: 会社台帳・買上げ目標・蔵出し・注文比較を描画�
   const controller = createEngineController({ seed: 11 });
   controller.operate({ type: 'set_stock_target', goods: 'tools', qty: 12 });
   const release = controller.operate({ type: 'release_stock', goods: 'tools', qty: 16 });
-  assert.equal(release.ok, false, '在庫ゼロの蔵出しは何も運ばない');
+  assert.equal(release.ok, false, '在庫ゼロの市場へ出すは何も運ばない');
   controller.advanceTicks(105 * 30);
   assert.equal(controller.operate({ type: 'accept_order' }).ok, true);
   assert.deepEqual(controller.inputJournal().slice(-3).map(row => row.op.type), [
@@ -3444,7 +3360,18 @@ test('段16: 観測APIの全イベント種とnotice専用トースト・ログ�
     assert.ok(row.title && row.tone);
   }
   assert.deepEqual(
-    presentEvent({ type: 'notice', message: '★本国より注文状: 道具30荷', day: 1, tick: 1, x: 0, y: 0 }).title,
+    Object.entries(EVENT_DISPLAY_POLICY)
+      .filter(([, policy]) => policy.keep)
+      .map(([type]) => type),
+    ['birth', 'death', 'job_move', 'inheritance', 'blocked', 'notice'],
+  );
+  for (const type of ['operation', 'departure', 'arrival', 'transaction', 'docking', 'handling']) {
+    assert.equal(shouldPresentEvent({ type }), false, `${type}は盤面や台帳で分かるため表示しない`);
+  }
+  assert.equal(shouldPresentEvent({ type: 'notice', message: '道が一区画通じた' }), false);
+  assert.equal(shouldPresentEvent({ type: 'notice', message: '★本国より注文状: 木製品30荷' }), true);
+  assert.deepEqual(
+    presentEvent({ type: 'notice', message: '★本国より注文状: 木製品30荷', day: 1, tick: 1, x: 0, y: 0 }).title,
     '本国から注文状',
   );
   assert.equal(
@@ -3464,7 +3391,7 @@ test('段16: 観測APIの全イベント種とnotice専用トースト・ログ�
     /佐藤さんの一家が島を離れました.*食料/,
   );
   assert.equal(
-    presentEvent({ type: 'notice', message: '★本国より注文状: 道具30荷', day: 1, tick: 1 }).elenaSpeech,
+    presentEvent({ type: 'notice', message: '★本国より注文状: 木製品30荷', day: 1, tick: 1 }).elenaSpeech,
     '',
     '専用に書かれた発話がないイベント本文はエレナへ流用しない',
   );

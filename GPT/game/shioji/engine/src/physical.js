@@ -163,10 +163,51 @@ export function createPhysicalState({
     portCalls: [],
     portCallIndex: {},
     activePortCallIds: [],
+    portCallQueueIds: [],
     nextPortCallId: 1,
     groundPiles: [],
     nextGroundPileId: 1,
   };
+}
+
+export const COMPLETED_LOGISTICS_HISTORY_LIMIT = 96;
+
+function retainRecentCompleted(records, activeIds, limit = COMPLETED_LOGISTICS_HISTORY_LIMIT) {
+  if (records.length <= (activeIds?.length ?? 0) + limit) return records;
+  const active = new Set(activeIds ?? []);
+  const completed = records.filter((record) => !active.has(record.id));
+  if (completed.length <= limit + 32) return records;
+  const keepCompleted = new Set(completed.slice(-limit).map((record) => record.id));
+  return records.filter((record) => active.has(record.id) || keepCompleted.has(record.id));
+}
+
+function rebuildRecordIndex(records) {
+  return Object.fromEntries(records.map((record, index) => [record.id, index]));
+}
+
+export function prunePhysicalHistory(physical) {
+  const haulJobs = retainRecentCompleted(
+    physical.haulJobs ?? [],
+    physical.activeHaulJobIds,
+  );
+  if (haulJobs !== physical.haulJobs) {
+    physical.haulJobs = haulJobs;
+    physical.haulJobIndex = rebuildRecordIndex(haulJobs);
+  }
+  const currentPortCalls = physical.portCalls ?? [];
+  const retainedPortCount = (physical.activePortCallIds?.length ?? 0)
+    + (physical.portCallQueueIds?.length ?? 0);
+  const portCalls = currentPortCalls.length <= retainedPortCount + COMPLETED_LOGISTICS_HISTORY_LIMIT
+    ? currentPortCalls
+    : retainRecentCompleted(
+      currentPortCalls,
+      [...(physical.activePortCallIds ?? []), ...(physical.portCallQueueIds ?? [])],
+    );
+  if (portCalls !== physical.portCalls) {
+    physical.portCalls = portCalls;
+    physical.portCallIndex = rebuildRecordIndex(portCalls);
+  }
+  return physical;
 }
 
 export function inside(physical, x, y) {
@@ -694,6 +735,7 @@ export function dockVessel(
   if (typeof goods !== "string" || !Number.isFinite(qty) || qty <= 0) {
     throw new TypeError("port transfer goods/qty must be positive");
   }
+  const dockImmediately = (physical.activePortCallIds?.length ?? 0) === 0;
   const call = {
     id: `pc${physical.nextPortCallId}`,
     portBuildingId: port.id,
@@ -703,13 +745,14 @@ export function dockVessel(
     remaining: qty,
     transferred: 0,
     vesselCargo: direction === "import" ? qty : 0,
-    status: "docked",
+    status: dockImmediately ? "docked" : "waiting",
     metadata: structuredClone(metadata),
   };
   physical.nextPortCallId += 1;
   physical.portCalls.push(call);
   (physical.portCallIndex ??= {})[call.id] = physical.portCalls.length - 1;
-  (physical.activePortCallIds ??= []).push(call.id);
+  if (dockImmediately) (physical.activePortCallIds ??= []).push(call.id);
+  else (physical.portCallQueueIds ??= []).push(call.id);
   return call;
 }
 
@@ -744,17 +787,47 @@ export function activePortCalls(physical) {
   return active;
 }
 
+function activateNextPortCall(physical) {
+  const queue = physical.portCallQueueIds ??= [];
+  while (queue.length > 0) {
+    const call = portCallById(physical, queue.shift());
+    if (!call || call.status !== "waiting") continue;
+    call.status = "docked";
+    (physical.activePortCallIds ??= []).push(call.id);
+    return call;
+  }
+  return null;
+}
+
+export function cancelPortCall(physical, callId) {
+  const call = portCallById(physical, callId);
+  if (!call || !["docked", "waiting"].includes(call.status)) return null;
+  const wasDocked = call.status === "docked";
+  call.status = "cancelled";
+  const activeIndex = physical.activePortCallIds?.indexOf(call.id) ?? -1;
+  if (activeIndex >= 0) physical.activePortCallIds.splice(activeIndex, 1);
+  const queueIndex = physical.portCallQueueIds?.indexOf(call.id) ?? -1;
+  if (queueIndex >= 0) physical.portCallQueueIds.splice(queueIndex, 1);
+  if (wasDocked) activateNextPortCall(physical);
+  return call;
+}
+
 export function stepPortHandling(physical, ticks = 1) {
   if (!Number.isSafeInteger(ticks) || ticks < 0) {
     throw new TypeError("port handling ticks must be a non-negative safe integer");
   }
   const transfers = [];
   for (let tick = 0; tick < ticks; tick += 1) {
-    const call = activePortCalls(physical).find((candidate) => (
-      candidate.status === "docked"
-      && candidate.remaining > 1e-9
-      && (candidate.direction === "import" || candidate.metadata?.yardReady === true)
-    ));
+    let call = null;
+    while ((physical.activePortCallIds?.length ?? 0) > 0) {
+      const candidate = portCallById(physical, physical.activePortCallIds[0]);
+      if (candidate?.status === "docked" && candidate.remaining > 1e-9) {
+        call = candidate;
+        break;
+      }
+      physical.activePortCallIds.shift();
+    }
+    if (call && call.direction !== "import" && call.metadata?.yardReady !== true) call = null;
     if (!call) break;
     const port = buildingById(physical, call.portBuildingId);
     const section = call.direction === "export" ? "outbound" : "inbound";
@@ -775,8 +848,12 @@ export function stepPortHandling(physical, ticks = 1) {
     if (call.remaining <= 1e-9) {
       call.remaining = 0;
       call.status = "completed";
-      const activeIndex = physical.activePortCallIds.indexOf(call.id);
-      if (activeIndex >= 0) physical.activePortCallIds.splice(activeIndex, 1);
+      if (physical.activePortCallIds[0] === call.id) physical.activePortCallIds.shift();
+      else {
+        const activeIndex = physical.activePortCallIds.indexOf(call.id);
+        if (activeIndex >= 0) physical.activePortCallIds.splice(activeIndex, 1);
+      }
+      activateNextPortCall(physical);
     }
     transfers.push({
       callId: call.id,

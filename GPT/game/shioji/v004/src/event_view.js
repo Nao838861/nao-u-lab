@@ -5,6 +5,30 @@ const TYPE_PRESENTATION = Object.freeze({
   inheritance: ['相続・分家', 'warn'], blocked: ['接続不能', 'bad'], notice: ['島からの報せ', 'neutral'],
 });
 
+export const EVENT_DISPLAY_POLICY = Object.freeze({
+  operation: Object.freeze({ keep: false, reason: '操作結果は操作した場所と状態表示に即時反映される' }),
+  departure: Object.freeze({ keep: false, reason: '日常の移動開始は盤面の人と荷車で見える' }),
+  arrival: Object.freeze({ keep: false, reason: '日常の移動完了は盤面と在庫へ反映される' }),
+  transaction: Object.freeze({ keep: false, reason: '日常売買は市場・台帳・統計で確認できる' }),
+  docking: Object.freeze({ keep: false, reason: '定期船の接岸は港の船と荷役表示で見える' }),
+  handling: Object.freeze({ keep: false, reason: '一荷ごとの荷役は港の船荷と注文残量で見える' }),
+  birth: Object.freeze({ keep: true, reason: '人口が変わる節目で、食料判断に影響する' }),
+  death: Object.freeze({ keep: true, reason: '取り返せない人口減を発生時に知らせる' }),
+  job_move: Object.freeze({ keep: true, reason: '産業構成と空き家が変わる' }),
+  inheritance: Object.freeze({ keep: true, reason: '新世帯と住居需要が生まれる' }),
+  blocked: Object.freeze({ keep: true, reason: '物流停止に対してプレイヤーの修正が要る' }),
+  notice: Object.freeze({ keep: true, reason: '節目だけを内容で選別する' }),
+});
+
+const SIGNIFICANT_NOTICE = /^(★|☠)|注文|最終通告|期限切れ|餓え|離散|食料支援|道が繋がっていません|森が禿げた/;
+
+export function shouldPresentEvent(event) {
+  const policy = EVENT_DISPLAY_POLICY[event?.type];
+  if (!policy?.keep) return false;
+  if (event.type !== 'notice') return true;
+  return SIGNIFICANT_NOTICE.test(event.message ?? '');
+}
+
 function noticeTitle(message = '') {
   if (message.includes('★本国より注文状')) return ['本国から注文状', 'order'];
   if (message.includes('最終通告')) return ['会社へ最終通告', 'bad'];
@@ -30,7 +54,7 @@ function elenaSpeechFor(event, tone) {
     const family = familyName(event.message);
     return event.message?.includes('離散')
       ? `${family}が島を離れました。次の家族を失わないよう、市場の食料と道を確かめましょう。`
-      : `${family}で、食べ物を得られず亡くなった方がいます。市場へ食料が届くよう、漁家か菜園を増やしましょう。`;
+      : `${family}で、食べ物を得られず亡くなった方がいます。市場へ食料が届くよう、漁師か野菜畑を増やしましょう。`;
   }
   if (event.type === 'job_move') {
     return '仕事を替えた家族が、新しい家へ移りました。空いた家と仕事の変化を見ておきましょう。';

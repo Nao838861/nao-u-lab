@@ -16,6 +16,8 @@ import {
   producePrimaryTick,
   productionInputAmount,
   productionMultiplierForTrip,
+  pruneEconomyHistory,
+  recordEconomyEvent,
   runCompanyDayStart,
   runDayEnd,
   sellOffers,
@@ -36,6 +38,7 @@ import {
   hasRoad,
   keyOf,
   routeTravelCarrier,
+  prunePhysicalHistory,
   stepTravelCarrier,
   stepHaulCarriers,
   stepPortHandling,
@@ -448,8 +451,11 @@ export function createWorld({
         if (stepTo(economy, physical, household, household.x, household.y)) {
           household.state = "building";
           household.buildDays = 10;
-          economy.events.push([state.day, `${household.job}#${household.id} 入居——普請開始`]);
-          if (economy.events.length > 400) economy.events.shift();
+          recordEconomyEvent(
+            economy,
+            state.day,
+            `${household.job}#${household.id} 入居——普請開始`,
+          );
         }
       } else if (household.state === "building") {
         // 建築日数はdayStartで減算する。
@@ -489,6 +495,8 @@ export function createWorld({
     settleCompanyLogistics(state.economy, state.physical, { day: state.day });
     const transfers = stepPortHandling(state.physical, 1);
     settlePortTransfers(state.economy, state.physical, { day: state.day, transfers });
+    pruneEconomyHistory(state.economy);
+    prunePhysicalHistory(state.physical);
     return state;
   }
 

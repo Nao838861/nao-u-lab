@@ -1,6 +1,7 @@
 import {
   activePortCalls,
   buildingById,
+  cancelPortCall,
   completeHaulJob,
   carrierGoodsCapacity,
   createCartCarrier,
@@ -62,6 +63,7 @@ export const P = deepFreeze({
   Y_SALT: 12,
   Y_MEAT: 16,
   Y_CLOTH: 0.35,
+  Y_COTTON_CLOTH: 6,
   D_CLOTH: 0.03,
   D_IRON: 0.03,
   SALT_CHAR: 1,
@@ -77,11 +79,11 @@ export const P = deepFreeze({
   UP_DAYS: 45,
   DOWN_DAYS: 60,
   HAUL: 40,
-  IMP: { wheat: 4, tools: 6, salt: 5, iron: 4.5 },
-  IMP_COST: { wheat: 2.4, tools: 4.2, salt: 3.5, iron: 3.2 },
-  EXP: { pres: 0.6, pick: 0.55, oil: 2.4 },
-  EXP_CAP: { pres: 25, pick: 15, oil: 12 },
-  EXP_ML: { pres: 0.66, pick: 0.6, oil: 2.64 },
+  IMP: { wheat: 4, tools: 6, salt: 5, iron: 4.5, oil: 3 },
+  IMP_COST: { wheat: 2.4, tools: 4.2, salt: 3.5, iron: 3.2, oil: 2.6 },
+  EXP: { pres: 0.6, pick: 0.55, cloth: 2.4 },
+  EXP_CAP: { pres: 25, pick: 15, cloth: 12 },
+  EXP_ML: { pres: 0.66, pick: 0.6, cloth: 2.64 },
   FREE_M: 42,
   IRATE: 0.012,
   LIMIT0: 20000,
@@ -105,7 +107,6 @@ export const P = deepFreeze({
   FERT_NEED: 3,
   FERT_BOOST: 0.15,
   Y_STONE: 8,
-  Y_OIL: 6,
   WOOD0: 350,
   WOOD_R: 0.7,
   ROAD_WORK: 3,
@@ -229,6 +230,9 @@ export function recordEconomicMaterialFlow(
   flow[kind] += qty;
   economy.materialFlows[goods] = flow;
   economy.materialLedger.push({ goods, kind, qty, reason });
+  if (economy.materialLedger.length > 640) {
+    economy.materialLedger.splice(0, economy.materialLedger.length - 512);
+  }
   if (includeInDaily) {
     const daily = economy.dailyMaterialFlows[goods] ?? { prod: 0, cons: 0, imp: 0, exp: 0 };
     daily[kind] += qty;
@@ -481,8 +485,9 @@ function consumeFood(economy, household, goods, qty, kinds) {
   return qty;
 }
 
-function recordEconomyEvent(economy, day, message) {
+export function recordEconomyEvent(economy, day, message) {
   economy.events.push([day, message]);
+  economy.eventCount = (economy.eventCount ?? economy.events.length - 1) + 1;
   if (economy.events.length > 400) economy.events.shift();
 }
 
@@ -894,7 +899,7 @@ const OUTPUT_GOODS_BY_JOB = deepFreeze({
   collier: "coal",
   smelter: "bar",
   smith: "iron",
-  rapeseed: "oil",
+  rapeseed: "cloth",
   fisher2: "meal",
   shepherd: "meat",
 });
@@ -909,7 +914,7 @@ const DAILY_OUTPUT_BY_GOODS = deepFreeze({
   coal: P.Y_COAL,
   bar: P.Y_SMELT,
   iron: P.Y_SMITH,
-  oil: P.Y_OIL,
+  cloth: P.Y_COTTON_CLOTH,
   meal: P.Y_FISH / P.MEAL_FISH,
   meat: P.Y_MEAT,
   veg: P.Y_VEG,
@@ -986,12 +991,11 @@ export function productionCost(economy, physical, household, goods, { day = econ
     veg: month >= 3 && month <= 10 ? P.Y_VEG : 0.01,
     wheat: P.Y_WHEAT / 360,
     meat: P.Y_MEAT,
-    cloth: P.Y_CLOTH,
+    cloth: household.job === "rapeseed" ? P.Y_COTTON_CLOTH : P.Y_CLOTH,
     tools: P.Y_TOOLS,
     char: P.Y_CHAR,
     salt: P.Y_SALT,
     stone: P.Y_STONE,
-    oil: month >= 3 && month <= 8 ? P.Y_OIL : 0.01,
     meal: P.Y_FISH / P.MEAL_FISH,
     log: P.Y_LOG,
     ore: P.Y_ORE,
@@ -1043,7 +1047,7 @@ export function sellOffers(economy, household) {
     collier: "coal",
     smelter: "bar",
     smith: "iron",
-    rapeseed: "oil",
+    rapeseed: "cloth",
   }[household.job];
 
   if (goods === "meal") {
@@ -1185,9 +1189,9 @@ export function buyTargets(
   ) {
     const benefit = (household.job === "wheat"
       ? P.Y_WHEAT * householdMult(household)
-      : P.Y_OIL * householdMult(household) * 540)
+      : P.Y_COTTON_CLOTH * householdMult(household) * 540)
       * P.FERT_BOOST
-      * (household.job === "wheat" ? (px.wheat ?? 2) : (px.oil ?? 3))
+      * (household.job === "wheat" ? (px.wheat ?? 2) : (px.cloth ?? 2.5))
       / (P.FERT_NEED * 180);
     targets.meal = [P.FERT_NEED * 20 - inputQty("meal"), benefit * 0.7];
   }
@@ -1549,7 +1553,7 @@ export function buyAtMarket(
         postCompanyLedger(economy.company, {
           day,
           amount: payment,
-          reason: `世帯${household.id}へ蔵出し${goods}を小売`,
+          reason: `世帯${household.id}へ倉庫在庫${goods}を小売`,
         });
         const stockTable = physical ? economy.marketStock : economy.stock;
         const costTable = physical ? economy.marketStockCost : economy.stockCost;
@@ -1579,12 +1583,17 @@ export function buyAtMarket(
         postCompanyLedger(economy.company, {
           day,
           amount: fee,
-          reason: `${goods}市場取引の口銭`,
+          reason: `${goods}市場取引の手数料`,
         });
         economy.co.fee += fee;
       }
 
+      const previousPriceCount = economy.priceCounts[goods] ?? economy.prices[goods].length;
       economy.prices[goods].push([day, shelf.price, qty]);
+      economy.priceCounts[goods] = previousPriceCount + 1;
+      if (economy.prices[goods].length > 320) {
+        economy.prices[goods].splice(0, economy.prices[goods].length - 256);
+      }
       if (shelf.kind !== "AID") {
         economy.px[goods] = (economy.px[goods] ?? shelf.price) * 0.9 + shelf.price * 0.1;
         transactions.push({
@@ -1985,16 +1994,16 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
       withdrawProductionInput(physical, household, "meal", used);
       household.fert = (household.fert ?? 0) + used;
       if (used > 0) {
-        recordEconomicMaterialFlow(economy, "meal", "cons", used, `世帯${household.id}の菜種施肥`);
+        recordEconomicMaterialFlow(economy, "meal", "cons", used, `世帯${household.id}の綿花施肥`);
       }
       const fill = Math.min(
         1,
         household.fert / Math.max(1, P.FERT_NEED * (month - 2) * 30),
       );
-      const qty = P.Y_OIL * work * (1 + P.FERT_BOOST * fill);
-      household.pantry.oil += qty;
-      recordEconomicMaterialFlow(economy, "oil", "prod", qty, `世帯${household.id}の搾油`);
-      produced.oil = qty;
+      const qty = P.Y_COTTON_CLOTH * work * (1 + P.FERT_BOOST * fill);
+      household.pantry.cloth += qty;
+      recordEconomicMaterialFlow(economy, "cloth", "prod", qty, `世帯${household.id}の綿織り`);
+      produced.cloth = qty;
     }
   } else if (household.job === "fisher") {
     const depletion = economy.natural.bay / P.BAY0;
@@ -2014,7 +2023,7 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     const qty = P.Y_VEG * work;
     household.pantry.veg += qty;
     economy.led.prod.veg = (economy.led.prod.veg ?? 0) + qty;
-    recordEconomicMaterialFlow(economy, "veg", "prod", qty, `世帯${household.id}の菜園`);
+    recordEconomicMaterialFlow(economy, "veg", "prod", qty, `世帯${household.id}の野菜畑`);
     produced.veg = qty;
   } else if (household.job === "shepherd") {
     const meat = P.Y_MEAT * work;
@@ -2114,8 +2123,8 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     );
     withdrawProductionInput(physical, household, "log", qty * P.LOG_CHAR);
     household.pantry.char += qty;
-    recordEconomicMaterialFlow(economy, "char", "prod", qty, `世帯${household.id}の炭焼`);
-    recordEconomicMaterialFlow(economy, "log", "cons", qty * P.LOG_CHAR, `世帯${household.id}の炭焼`);
+    recordEconomicMaterialFlow(economy, "char", "prod", qty, `世帯${household.id}の炭焼き小屋`);
+    recordEconomicMaterialFlow(economy, "log", "cons", qty * P.LOG_CHAR, `世帯${household.id}の炭焼き小屋`);
     produced.char = qty;
   } else if (household.job === "saltworks") {
     const fuel = Math.max(
@@ -2276,12 +2285,11 @@ export function regenerateForest(economy, physical, { day, random }) {
 }
 
 const ORDER_NAMES = deepFreeze({
-  tools: "道具",
+  tools: "木製品",
   char: "炭",
   salt: "塩",
   pres: "保存食",
   pick: "漬物",
-  oil: "油",
   cloth: "布",
   stone: "石",
 });
@@ -2294,7 +2302,6 @@ const ORDER_PRICES = deepFreeze({
   salt: 1.5,
   pres: 0.9,
   pick: 0.8,
-  oil: 2.6,
   cloth: 2,
   stone: 1.2,
 });
@@ -2352,9 +2359,9 @@ function pendingCompanyHaul(physical, kind, goods) {
 }
 
 function pendingOrderPortQuantity(physical, goods) {
-  return activePortCalls(physical)
+  return physical.portCalls
     .filter((call) => (
-      call.status === "docked"
+      ["docked", "waiting"].includes(call.status)
       && call.direction === "export"
       && call.goods === goods
       && call.metadata?.kind === "order"
@@ -2426,6 +2433,57 @@ function portReturnById(economy, returnId) {
 function deactivateId(ids, id) {
   const index = ids?.indexOf(id) ?? -1;
   if (index >= 0) ids.splice(index, 1);
+}
+
+const COMPLETED_ECONOMY_LOGISTICS_LIMIT = 96;
+
+function retainEconomyLogistics(records, requiredIds) {
+  if (records.length <= requiredIds.length + COMPLETED_ECONOMY_LOGISTICS_LIMIT + 32) {
+    return records;
+  }
+  const required = new Set(requiredIds);
+  const optional = records.filter((record) => !required.has(record.id));
+  if (optional.length <= COMPLETED_ECONOMY_LOGISTICS_LIMIT + 32) return records;
+  const recent = new Set(
+    optional.slice(-COMPLETED_ECONOMY_LOGISTICS_LIMIT).map((record) => record.id),
+  );
+  return records.filter((record) => required.has(record.id) || recent.has(record.id));
+}
+
+function rebuildEconomyLogisticsIndex(records) {
+  return Object.fromEntries(records.map((record, index) => [record.id, index]));
+}
+
+export function pruneEconomyHistory(economy) {
+  const importIds = [
+    ...(economy.activeImportRequestIds ?? []),
+    ...(economy.unsoldImportRequestIds ?? []),
+  ];
+  const importRequests = retainEconomyLogistics(economy.importRequests ?? [], importIds);
+  if (importRequests !== economy.importRequests) {
+    economy.importRequests = importRequests;
+    economy.importRequestIndex = rebuildEconomyLogisticsIndex(importRequests);
+  }
+
+  const exportIds = [
+    ...(economy.activeExportLotIds ?? []),
+    ...(economy.pendingExportLotIds ?? []),
+  ];
+  const exportLots = retainEconomyLogistics(economy.exportLots ?? [], exportIds);
+  if (exportLots !== economy.exportLots) {
+    economy.exportLots = exportLots;
+    economy.exportLotIndex = rebuildEconomyLogisticsIndex(exportLots);
+  }
+
+  const portReturns = retainEconomyLogistics(
+    economy.portReturns ?? [],
+    economy.activePortReturnIds ?? [],
+  );
+  if (portReturns !== economy.portReturns) {
+    economy.portReturns = portReturns;
+    economy.portReturnIndex = rebuildEconomyLogisticsIndex(portReturns);
+  }
+  return economy;
 }
 
 function activeExportLots(economy) {
@@ -2579,9 +2637,9 @@ function queuePortReturn(economy, physical, { day, goods, qty, unitCost }) {
 }
 
 function cancelOrderPortCalls(economy, physical, { day }) {
-  for (const call of activePortCalls(physical)) {
-    if (call.status !== "docked" || call.metadata?.kind !== "order") continue;
-    call.status = "cancelled";
+  for (const call of [...physical.portCalls]) {
+    if (!["docked", "waiting"].includes(call.status) || call.metadata?.kind !== "order") continue;
+    cancelPortCall(physical, call.id);
     queuePortReturn(economy, physical, {
       day,
       goods: call.goods,
@@ -2675,7 +2733,7 @@ export function runCompanyProcurement(economy, { day, physical = null }) {
         postCompanyLedger(economy.company, {
           day,
           amount: -payment,
-          reason: `世帯${seller.id}から蔵へ${goods}を買上げ`,
+          reason: `世帯${seller.id}から倉庫へ${goods}を買上げ`,
         });
         economy.co.procBuy += payment;
         if (!physical) {
@@ -2868,7 +2926,7 @@ export function settlePortTransfers(economy, physical, { day, transfers }) {
           transfer.goods,
           "imp",
           transfer.qty,
-          `本国からの食料支援(${transfer.goods})が港ヤードへ届く——贈与のため銀は動かない`,
+          `本国からの食料支援(${transfer.goods})が港ヤードへ届く——贈与のため代金は動かない`,
         );
       } else {
         const wholesale = transfer.qty * request.unitCost;
@@ -3175,7 +3233,7 @@ export function fundSettlementZone(
 }
 
 export function fundCompanyBuilding(economy, { type, day }) {
-  const label = type === "market" ? "市場" : type === "warehouse" ? "蔵" : null;
+  const label = type === "market" ? "市場" : type === "warehouse" ? "倉庫" : null;
   if (!label) throw new Error(`会社施設の建築対象外です: ${type}`);
   if (!Number.isSafeInteger(day) || day < 0) {
     throw new TypeError("company building day must be a non-negative safe integer");
@@ -3553,6 +3611,8 @@ export function runDayEnd(economy, physical, { day, random = () => 1, trace = []
 }
 
 const MONEY_EPSILON = 1e-9;
+export const COMPANY_LEDGER_LIMIT = 512;
+export const MONEY_BOUNDARY_LEDGER_LIMIT = 64;
 
 function requireFiniteMoney(value, label) {
   if (!Number.isFinite(value)) {
@@ -3566,9 +3626,54 @@ export function createCompanyState(initialMoney = 0) {
     money: initialMoney,
     openingMoney: initialMoney,
     ledger: [],
+    ledgerCount: 0,
+    ledgerOffsetBalance: initialMoney,
+    ledgerIncome: 0,
+    ledgerExpense: 0,
+    ledgerByReason: {},
+    ledgerDaily: [],
     validatedLedgerLength: 0,
     validatedLedgerBalance: initialMoney,
   };
+}
+
+function ensureCompanyLedgerAggregates(company) {
+  const ledger = company.ledger ??= [];
+  company.ledgerCount ??= ledger.length;
+  company.ledgerOffsetBalance ??= ledger.length > 0
+    ? ledger[0].balance - ledger[0].amount
+    : company.openingMoney;
+  company.ledgerIncome ??= ledger
+    .filter((entry) => entry.amount > 0)
+    .reduce((total, entry) => total + entry.amount, 0);
+  company.ledgerExpense ??= ledger
+    .filter((entry) => entry.amount < 0)
+    .reduce((total, entry) => total - entry.amount, 0);
+  if (!company.ledgerByReason) {
+    company.ledgerByReason = {};
+    for (const entry of ledger) {
+      company.ledgerByReason[entry.reason] = (
+        company.ledgerByReason[entry.reason] ?? 0
+      ) + entry.amount;
+    }
+  }
+  if (!company.ledgerDaily) {
+    const dailyByDay = new Map();
+    for (const entry of ledger) {
+      const daily = dailyByDay.get(entry.day) ?? {
+        day: entry.day,
+        income: 0,
+        expense: 0,
+        net: 0,
+      };
+      if (entry.amount > 0) daily.income += entry.amount;
+      else daily.expense += -entry.amount;
+      daily.net += entry.amount;
+      dailyByDay.set(entry.day, daily);
+    }
+    company.ledgerDaily = [...dailyByDay.values()].slice(-60);
+  }
+  return company;
 }
 
 export function postCompanyLedger(company, { day, amount, reason }) {
@@ -3580,14 +3685,39 @@ export function postCompanyLedger(company, { day, amount, reason }) {
     throw new TypeError("ledger reason must be a non-empty string");
   }
 
+  ensureCompanyLedgerAggregates(company);
   company.money += amount;
+  company.ledgerCount += 1;
+  if (amount > 0) company.ledgerIncome += amount;
+  else company.ledgerExpense -= amount;
+  company.ledgerByReason[reason] = (company.ledgerByReason[reason] ?? 0) + amount;
+  let daily = company.ledgerDaily.at(-1);
+  if (daily?.day !== day) {
+    daily = { day, income: 0, expense: 0, net: 0 };
+    company.ledgerDaily.push(daily);
+    if (company.ledgerDaily.length > 60) company.ledgerDaily.shift();
+  }
+  if (amount > 0) daily.income += amount;
+  else daily.expense += -amount;
+  daily.net += amount;
   company.ledger.push({ day, amount, reason, balance: company.money });
+  if (company.ledger.length > COMPANY_LEDGER_LIMIT + 128) {
+    const removed = company.ledger.splice(0, company.ledger.length - COMPANY_LEDGER_LIMIT);
+    company.ledgerOffsetBalance = removed.at(-1)?.balance ?? company.ledgerOffsetBalance;
+    const validatedLength = company.validatedLedgerLength ?? 0;
+    if (validatedLength <= removed.length) {
+      company.validatedLedgerLength = 0;
+      company.validatedLedgerBalance = company.ledgerOffsetBalance;
+    } else {
+      company.validatedLedgerLength = validatedLength - removed.length;
+    }
+  }
   return company.money;
 }
 
 export function assertCompanyLedger(company) {
-  let expected = company.openingMoney;
-  requireFiniteMoney(expected, "company.openingMoney");
+  let expected = company.ledgerOffsetBalance ?? company.openingMoney;
+  requireFiniteMoney(expected, "company.ledgerOffsetBalance");
 
   for (const [index, entry] of company.ledger.entries()) {
     requireFiniteMoney(entry.amount, `company.ledger[${index}].amount`);
@@ -3608,7 +3738,7 @@ function assertCompanyLedgerIncremental(company) {
   let expected = company.validatedLedgerBalance ?? company.openingMoney;
   if (start < 0 || start > company.ledger.length) {
     start = 0;
-    expected = company.openingMoney;
+    expected = company.ledgerOffsetBalance ?? company.openingMoney;
   }
   requireFiniteMoney(expected, "company.validatedLedgerBalance");
   for (let index = start; index < company.ledger.length; index += 1) {
@@ -3637,6 +3767,12 @@ export function recordExternalMoneyFlow(economy, { amount, reason }) {
   if (amount > 0) economy.moneyBoundary.in += amount;
   else economy.moneyBoundary.out += -amount;
   economy.moneyBoundary.ledger.push({ amount, reason });
+  if (economy.moneyBoundary.ledger.length > MONEY_BOUNDARY_LEDGER_LIMIT + 16) {
+    economy.moneyBoundary.ledger.splice(
+      0,
+      economy.moneyBoundary.ledger.length - MONEY_BOUNDARY_LEDGER_LIMIT,
+    );
+  }
 }
 
 export function moneyTotal(economy) {
@@ -3676,6 +3812,7 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
     famine: 0,
     ruins: [],
     events: [],
+    eventCount: 0,
     traffic: {},
     currentDay: 0,
     currentTick: null,
@@ -3706,6 +3843,7 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
     imported: {},
     outBy: { pass: 0 },
     prices: Object.fromEntries(GOODS.map((goods) => [goods, []])),
+    priceCounts: Object.fromEntries(GOODS.map((goods) => [goods, 0])),
     market: { x: 0, y: 0 },
     warehouse: null,
     port: null,
