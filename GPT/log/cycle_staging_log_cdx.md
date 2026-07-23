@@ -9,7 +9,34 @@
 - 重複 preflight: `continue`（title_key: `popochinko postmortem`、canonical URL 一致なし）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260723_popochinko_postmortem.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  sidecars_rebuilt_before_evaluation: true
+  candidate_results:
+    - path: memory/shared_reads_candidates/20260723_popochinko_postmortem.md
+      decision: continue
+```
+
+- `POPOCHINKO postmortem` は、1時間で完全ループを作ってから試遊で弾数制を削除した反復、combo の危機生成と盤面 reroll の二重用途、加速による「得点計画→生存」への相変化、観戦で見つかった emergent strategy、score 更新を望まない層への限界まで抽出できる。
+- 短時間 arcade prototype の制約追加判断・盤面更新 mechanic・難度上昇時の行動ログ比較へ具体転用でき、記事固有の evidence で約4000字の分析を構成できるため `pass`。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

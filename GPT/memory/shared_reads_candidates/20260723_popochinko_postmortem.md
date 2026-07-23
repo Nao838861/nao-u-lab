@@ -4,6 +4,26 @@ url: "https://pavro-o.itch.io/popochinko/devlog/1541807/popochinko-postmortem"
 collected_at: "2026-07-23T19:46:43+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, mechanics, postmortem, game-jam, arcade, scoring]
+evaluated_at: "2026-07-23T19:51:24+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-23T19:51:24+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-23T19:51:24+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-22"
+supersedes: []
+gate_reason: >-
+  早い完全ループ、試遊による弾数制の削除、combo の二重用途、速度上昇による目的の相変化まで、問題設定・反復・観察・限界を一次 postmortem から抽出できる。
+  score-attack prototype の制約追加判断、盤面更新 mechanic、難度上昇時の戦略転換へ具体適用でき、記事固有の evidence で約4000字の分析を構成できる。
+suggested_post_outline:
+  overview_angle: "8時間 jam で一周可能な MVP を先に作り、試遊で不要な制約を削りながら、combo と加速から計画・反応の二相を立ち上げた設計過程"
+  analysis_axis: "制約を足す前の摩擦検証、同一 mechanic の驚きと盤面操作の二重用途、速度上昇がプレイヤーの目的関数を変える過程"
+  application_target: "Log_cdx の短時間 arcade prototype で、最初の playable loop、制約の削除基準、盤面 reroll、序盤と終盤の行動ログ比較を設計する場面"
+  pros_cons: "短時間制作でも検証点と emergent strategy が具体的な一方、単一作者の事後分析であり、得点更新を動機にしないプレイヤーへの緊張設計は弱い"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
