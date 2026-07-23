@@ -2574,14 +2574,17 @@ export const TUTORIAL_LETTERS = Object.freeze([
       const profit = state.goalResults['complete-profitable-order']?.evidence ?? null;
       const skipped = state.goalResults['let-skippable-order-expire']?.evidence ?? null;
       const selected = skipped?.selected ?? null;
+      // profit は evidence フォールバック {completed:false} で常に truthy になるため、
+      // 完遂実績と失効実績が両方揃った時だけ詳細文を出す（失効前は expired が null）
+      const detailed = Boolean(profit?.completed && selected && skipped?.expired);
       return {
         kicker: '第四章・商い判断報告',
         title: '注文は、残量と期限を見て選べます',
-        summary: profit && selected
+        summary: detailed
           ? `利益注文の粗利 ${toDenari(profit.realizedMargin).toFixed(1)}デナリ / 見送り ${goodsLabel(selected.goods)} ${selected.qty}荷`
           : '注文の完遂と船出を分け、採算を比べる準備ができました',
         facts: { profit, skipped },
-        body: profit && selected ? [
+        body: detailed ? [
           `ひとつの注文は、実売上${toDenari(profit.revenue).toFixed(1)}デナリから出荷原価${toDenari(profit.orderCost).toFixed(1)}デナリを引き、粗利${toDenari(profit.realizedMargin).toFixed(1)}デナリで完遂しました。もうひとつの${goodsLabel(selected.goods)}${selected.qty}荷は受諾せず、${skipped.expired.day}日目に実際に失効しました。`,
           '注文状は命令ではありません。決済と市場を比べ、会社の銀を使うか決めること。引き受けない自由も総督のものです。',
         ].join('\n\n') : [
