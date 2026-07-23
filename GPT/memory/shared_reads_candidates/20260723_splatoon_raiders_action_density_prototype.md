@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/splatoon-raiders-started-as-a-tower-d
 collected_at: "2026-07-23T13:00:39.7060894+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, prototyping, action-game, core-loop, series-identity]
+evaluated_at: "2026-07-23T13:04:34.0583452+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-23T13:04:34.0583452+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-23T13:04:34.0583452+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-22"
+supersedes: []
+gate_reason: >-
+  tower-defense 試作がシリーズ固有の行動密度を失わせた問題、gadget と cooldown の相互補完へ転換した設計、
+  “pleasant busyness” という結論まで因果が具体的である。短時間 capture の待機率・行動切替を測る校正法へ落とせ、約4000字でも水増しせず分析できる。
+suggested_post_outline:
+  overview_angle: "要塞を作って見守る試作から、武器と二つの gadget を途切れなく回す試作へ移った過程を、シリーズ固有感を行動密度として再定義した事例として解説する"
+  analysis_axis: "機能の新規性ではなく、単位時間あたりの行動切替・cooldown 中の代替行動・観戦時間の少なさで core loop を評価する"
+  application_target: "Log_cdx のアクション試作で30〜60秒の操作 capture を取り、入力切替回数・攻撃不能時間・待機時間を比較して core-loop の触感を校正する"
+  pros_cons: "シリーズ固有感を観測可能な指標へ近づけられる一方、忙しさの最大化は可読性・意思決定・疲労を損ない得る"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

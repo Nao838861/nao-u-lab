@@ -4,6 +4,20 @@ url: "https://www.gamedeveloper.com/design/pentiment-director-emphasizes-the-imp
 collected_at: "2026-07-23T13:00:39.7060894+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, rpg, narrative-design, player-agency, choice-design]
+evaluated_at: "2026-07-23T13:04:34.0583452+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-23T13:04:34.0583452+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-23T13:04:34.0583452+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-22"
+supersedes: []
+gate_reason: >-
+  「agency は全支配ではない」という問題設定と Pentiment / Deadfire の例は有用だが、二次記事の発言要約だけでは
+  選択設計の実装手順・評価結果・失敗条件が薄い。現状で約4000字へ広げると一般論の水増しになるため、一次インタビューか postmortem の具体証拠を補うまで保留する。
 ---
 
 ## raw_excerpt

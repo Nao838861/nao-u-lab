@@ -10,7 +10,32 @@
 - 収集時点では重複 preflight のみ実施し、品質判定・採否判断・Slack 投稿は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260723_splatoon_raiders_action_density_prototype.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260723_pentiment_imperfect_choice_control.md
+    reason: "二次記事の発言要約だけでは実装手順・評価結果・失敗条件が薄く、約4000字化すると一般論の水増しになる"
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
+
+- duplicate preflight: 2 件とも `continue`。posted-source / closed canonical / open duplicate group の衝突なし。
+- sidecar audit: Phase 2 開始時と candidate frontmatter 更新後に posted-source / title canonical / open duplicate group の各 builder を再実行済み。
+- 判定要旨: Splatoon Raiders は試作変更の因果、core loop の評価軸、短時間 capture への適用が揃うため pass。Pentiment は着想と事例は有用だが、一次資料または postmortem の具体証拠を補うまで postpone。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
