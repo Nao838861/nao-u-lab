@@ -89,7 +89,95 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語（記憶 / ゲーム設計 / 敵パターン / 評価軸）を取得。index validator は OK、Markdown link 0件、記載された path 4件はすべて存在した。"
+  - "memory/atoms.jsonl を監査。2732 rows、duplicate id 0、duplicate source_ts 0。mirror audit は per-file / index / jsonl の欠落・parse error・content conflict 0。既知の normalized-content 重複40群80 rowsは canonical fold 対象のまま保持した。"
+  - "memory/raw/ の30日超ファイルを棚卸し。95 files / 62979319 bytes。論文本文・headless評価log・Slack archive は consumer evidence pointer の原文なので、この cycle では移動しなかった。"
+  - "shared-reads candidate lifecycle を監査。status / candidate_status mismatch 0、postponed / needs_review の stale_after 欠損 0。未評価で status 未付与の candidate は1件あり、stale期限前のため本体を変更せず通常 Phase 2 評価に残した。"
+  - "open duplicate group queue → stale triage queue → group action queue の順に再生成。live lease 適用後の group action は0件で、永続 group handoff inbox の pending も0件だった。"
+  - "Slack inbox を監査。slack_directives pending 0、slack_broadcasts pending 0のため handled 更新はなし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 source として正常。memory_health の既知 mojibake suspect atom は2件だが、MEMORY.md 本文の破損ではない。"
+  display_or_tooling_status: "Get-Content -Encoding UTF8 と validator 出力は正常。表示経路の mojibake は観測せず。"
+atom_audit:
+  rows: 2732
+  duplicate_ids: 0
+  duplicate_source_ts: 0
+  raw_normalized_content_duplicate_groups: 40
+  raw_normalized_content_duplicate_rows: 80
+  mirror_content_conflicts: 0
+candidate_lifecycle:
+  counts:
+    posted: 465
+    ready_to_post: 10
+    postponed: 331
+    failed: 246
+    needs_review: 18
+    missing_unreviewed: 1
+  status_pair_mismatches: 0
+  overdue_open_total: 184
+  open_missing_stale_after: 0
+raw_archive_audit:
+  cutoff: "2026-06-23"
+  candidate_files: 95
+  candidate_bytes: 62979319
+  moved_files: 0
+  reason: "原文 evidence pointer を壊さないため棚卸しのみ。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 184
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 56
+  mixed_group_count: 49
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total > queue rows だが actionable group が3件未満（0件）のため、両条件を満たさない。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+group_action_handoff: []
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "39日超過。Zork による LLM の探索・計画限界は headless playtest に転用価値が高いが、評価条件・失敗分類・model比較の本文証拠が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "38日超過。検証可能な遷移モデルを持つ短い puzzle benchmark は制作評価に使いやすいが、実験設計・比較対象・結果の補完が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_inmind_social_deduction_reasoning_styles.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "38日超過。social deduction の個別推論style追跡は有用だが、評価指標・失敗例と既投稿 atom との重複関係を再確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_pangea_procedural_artificial_narrative.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "38日超過。memory / validation / Unity demo の構成はゲーム制作へ接続できるが、empirical study・ablation・失敗条件が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_access_profiles_game_accessibility.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "37日超過。accessibility を player・developer・engine・launcher・retailer 間の基盤として扱う着想の転用価値が高く、本文評価の再確認を優先する。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
