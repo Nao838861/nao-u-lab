@@ -79,7 +79,118 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、per-file atom index との参照整合を検証した。broken index reference は 0 件。"
+  - "memory/atoms.jsonl を memory_health で監査した。2732 rows、parse/index/content conflict 0、duplicate id 0、atoms.jsonl / per-file .md / index.jsonl は各2732件で一致。"
+  - "shared-reads candidate 1072件の lifecycle を dry-run 監査した。frontmatter変更 0、status/candidate_status conflict 0。"
+  - "open duplicate group / stale triage / group action queue を指定順で再生成した。candidate本体は変更していない。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending は各0件で、handled更新対象はなかった。"
+  - "memory/raw/ の30日超未更新ファイル95件を抽出した。一次資料・既存slack_archive・PDF/text対をmtimeだけで移動せず、archive移動は0件。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "recall smoke 3 query は各3 hits、MEMORY indexとatom mirrorは整合している。未group化の反復title 14種、fold後も残る同内容重複3群、mojibake suspect atom 2件は既存health warningとして観測したが、新しい検索断絶・矛盾・孤児化の証拠はなく、今回4bを起動する強さではない。"
+source_encoding_audit:
+  path: memory/MEMORY.md
+  source_file_status: "UTF-8 strict decode可能。代表語は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false。評価軸の不在は現行生成indexの内容差であり、文字化け証拠ではない。"
+  display_or_tooling_status: "PowerShell配列構文を使った初回probeはparse errorで起動前停止したが、配列を使わないUTF-8読みとrgで再検証済み。source file破損なし。"
+atom_audit:
+  rows: 2732
+  duplicate_ids: 0
+  raw_normalized_content_duplicate_groups: 40
+  raw_normalized_content_duplicate_rows: 80
+  recall_visible_normalized_content_duplicate_groups: 3
+  recall_visible_normalized_content_duplicate_rows: 6
+  mirror_content_conflicts: 0
+  contradictions_found: 0
+candidate_lifecycle:
+  total_files: 1072
+  counts:
+    posted: 465
+    ready_to_post: 10
+    postponed: 331
+    failed: 247
+    needs_review: 18
+    unclassified: 1
+  audit_skipped_unreviewed: 26
+  missing_stale_after: 4
+  overdue_open_total: 184
+raw_archive_audit:
+  cutoff: "2026-06-24T00:00:00+09:00"
+  inactive_file_count: 95
+  moved_count: 0
+  decision: "mtimeだけでは参照中の一次資料と退役可能物を区別できないため、このphaseでは候補抽出に留めた。"
+stale_backlog:
+  overdue_open_total: 184
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 56
+  mixed_group_count: 49
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total > stale_triage_queue_rows は真だが、actionable_group_count >= 3 は偽。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+group_action_handoff: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  receipt: null
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+scope_ladder_probe:
+  probe_id: probe-20260724-minimum-sufficient-scope-ladder
+  initial_scope:
+    - memory/MEMORY.md
+    - memory/atoms.jsonl
+    - memory/shared_reads_candidates/ frontmatter summary
+    - memory/raw/ mtime summary
+  verifier:
+    - tools/validate_memory_index.py
+    - tools/memory_health.py
+    - tools/backfill_shared_reads_candidate_status.py
+    - tools/shared_reads_group_handoff.py audit
+  bounded_expansion:
+    - "memory_health warningを受け、既存title quality issueの履歴だけを検索した。既知の低優先警告であり、新規issueへ拡張しなかった。"
+    - "stale candidate本文1072件は開かず、live lease適用済みstale triage sidecarの上位5件だけを読んだ。"
+  avoided_full_reads:
+    - memory/atoms/2732 per-file bodies
+    - memory/shared_reads_candidates/1072 full bodies
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "age_days=40、open duplicateなし。Zork探索・計画限界とheadless playtestへの転用価値は高いが、評価条件・失敗分類・モデル比較は本文再確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=39、open duplicateなし。検証可能な短いplanning benchmarkとして転用価値は高いが、実験設計・比較対象・結果の補強が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_inmind_social_deduction_reasoning_styles.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=39、open duplicateなし。個別推論style追跡はsocial deduction設計に有用だが、過去shared-reads断片との重複と評価詳細を確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_pangea_procedural_artificial_narrative.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=39、open duplicateなし。memory / validation / Unity demoの構成は有用だが、評価指標・失敗例・validation systemの実装詳細が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_access_profiles_game_accessibility.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "age_days=38、open duplicateなし。accessibilityを基盤として扱う転用価値は高く、player/developer側の評価詳細をPhase 2で再確認する価値がある。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
