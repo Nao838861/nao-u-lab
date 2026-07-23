@@ -1,2 +1,2 @@
 - [nao-u-lab backup committer hazard](nao-u-lab-backup-committer-hazard.md) — 外部バックアップが worktree に commit を差し込む。commit 後は即 push + リモート先端検証
-- [shioji Elena galge backlog](shioji-elena-galge-backlog.md) — 本編完成後のクオリティフェーズで、エレナ会話拡張・左遷継続システムを Mir から再提案する約束 (2026-07-23)
+- [shioji 提案待ちバックログ](shioji-elena-galge-backlog.md) — トリガー5段階（バッチ消化/サイクル完成/流通/完成後/夢物語）で Mir から再提案する約束。正本は repo の PROPOSAL_BACKLOG.md (2026-07-24)
