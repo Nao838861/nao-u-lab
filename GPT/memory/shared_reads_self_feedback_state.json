@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-23T13:14:30+09:00",
+  "updated_at": "2026-07-23T15:16:23+09:00",
   "reviewed_source_ts": [
+    "1780867666.850759",
     "1784772269.706609",
     "1780910895.393589",
     "1780921802.479599",
@@ -476,6 +477,49 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-23T15:16:23+09:00",
+      "selected": {
+        "id": "sr-1780867666-4a9d4d0ea0",
+        "source_ts": "1780867666.850759",
+        "title": "retention-aware memory hierarchy 3 論文束ね — MaRS の reflective consolidation が当方 §I C 案 (cross_review 委譲) の理論裏付けになる構造分析",
+        "reason": "未レビュー条件を満たす最新の score 12 atom で、memory・agent・operation・evaluation を含む8タグを持つ。retention policy と retrieval path の差別化、および reflective consolidation の複数視点化が、現在の Phase 4 memory cleanup に既存 probe と異なる判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。投稿は AgeMem・Externalization review・MaRS の3体系を retention policy、判定主体、global 情報依存で比較し、retrieval path 差別化まで具体化しているため actionability は3とした。一方、3論文から当方設計への接続はローカル実験結果ではなく構造対応で、raw 投稿も「自分達の環境への適用」見出しで終わっているため evidence は2に留める。memory-retention-gate、memory-discard-operation-gate、forget-usage-signal-gate、amvl-retention-utility-lifecycle が retention／discard／外部usage／utility分離を、trigger-class-conflict-proxy と modular-memory-nonisomorphic-transfer が consolidation の発火条件と外部論文からの転用境界をすでに扱う。さらに主案の Log/Mir/Ash cross_review 委譲は 2026-06-26 の active directive で停止済みで、shared-prior-check も複数instance合意の非独立性を扱う。retrieval path 差別化には部分的新規性があるが、比較対象となる具体的 memory item と before/after artifact がなく、active_probes 320件へ stale premise を含む別名 probe を増やしても次回判断を改善する確証がないため state-only review に留める。",
+      "existing_probes": [
+        "probe-20260602-memory-retention-gate",
+        "probe-20260604-memory-discard-operation-gate",
+        "probe-20260607-forget-usage-signal-gate",
+        "probe-20260625-amvl-retention-utility-lifecycle",
+        "probe-20260608-trigger-class-conflict-proxy",
+        "probe-20260626-modular-memory-nonisomorphic-transfer",
+        "probe-20260708-algorithmic-collusion-shared-prior-check"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存 retention／discard／utility／transfer-boundary probes および後続 directive により失効した cross_review 前提との重複・矛盾による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-23T13:14:30+09:00",
       "selected": {
