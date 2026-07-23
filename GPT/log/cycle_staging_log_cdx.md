@@ -10,7 +10,30 @@
 - duplicate preflight: `continue`（canonical URL `https://arxiv.org/abs/2607.19670`）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260724_same_game_different_story_strategic_robustness.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
+
+- 判定根拠: 問題設定、手法、7,200 decision の評価、数値結果、限界を分離して説明でき、同一 payoff の局面を異なる narrative で replay する NPC／playtest agent の metamorphic test へ具体化できる。
+- 注意点: trial-level data ではなく公開図から近似 count を復元した再分析であり、高 robustness は戦略能力そのものを意味しない。Phase 3 ではこの二点を制約として明示する。
+- duplicate preflight: `continue`（posted-source／closed canonical／open duplicate group のいずれにも該当なし）。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
