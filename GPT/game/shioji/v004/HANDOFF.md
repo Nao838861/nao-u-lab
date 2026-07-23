@@ -4,14 +4,15 @@
 
 `STEPBOOK.md`の全18段、`TUTORIAL_STEPBOOK.md`の24/24、`UI_POLISH_STEPBOOK.md`の12/12を完了した。2026-07-23のClaude申し送りL〜ADとAEの縮小方針、起動キャッシュ事故、旧版より弱かった視覚階層と島の絵、通知重要度、待機導線を統合した。現在版は`v004.14.0-render-scene`。ABの3×3敷地内実在庫とACの連続移動、既存の声／計器UI機構を変えず、snapshotごとの静的描画場面と毎frameの動的物を分離し、動かない地形層だけを正確に再利用する構造へ整理した。同一実Chrome都市の描画中央値は13.02ms/frameから2.60ms/frameへ約80%短縮した。猫、好感度、表情、締め文変化、会話分岐などAEの情緒機能は、Nao_uの更新指示どおり完成後の将来枠である。
 
-**Nao_u 申し送り**: [PLAYTEST_FEEDBACK_20260723.md](PLAYTEST_FEEDBACK_20260723.md)。A〜ADの機構は対応済み。AEは「ゲームの流れに必要な固定文だけ」を現在の正とし、凝った演出は未着手のまま保持した。2026-07-24追記のAF／AF-2「エレナ発話をシステム文字列の連結で作らず、彼女の言葉だけで指示まで自己完結させる」は本最適化とは別の未実装・最優先項目である。計器は理由と指示の代替ではなく、経過表示と備忘録へ下げる。AGの世界観・通貨正典はNao_u裁可待ちであり、決定までは話し言葉を「お金／代金」、数値UIを現行デナリとする。今回エレナ文と教程条件は変更していない。L〜Zの設計正本と受け入れ証拠は [PERFORMANCE_RENDERING_STEPBOOK.md](PERFORMANCE_RENDERING_STEPBOOK.md)、[EXPERIENCE_TUTORIAL_STEPBOOK.md](EXPERIENCE_TUTORIAL_STEPBOOK.md)、[completion_audit.md](completion_audit.md) にある。Zの子供による初見実測を受け、建物成長を核体験の実測候補、成功／危険／季節の因果表示を常設要件にした。
+**Nao_u 申し送り**: [PLAYTEST_FEEDBACK_20260723.md](PLAYTEST_FEEDBACK_20260723.md)。A〜ADの機構は対応済み。AEは「ゲームの流れに必要な固定文だけ」を現在の正とし、凝った演出は未着手のまま保持した。2026-07-24追記のAF／AF-2「エレナ発話をシステム文字列の連結で作らず、彼女の言葉だけで指示まで自己完結させる」は本最適化とは別の未実装・最優先項目である。エレナはUI語を話さず、具体操作だけを計器が補う。AHのメニュー名・平易な建物名・出来事ログ粒度も未実装で、名称はAGの世界観・通貨正典と一緒にNao_u裁可が必要である。決定までは話し言葉を「お金／代金」、数値UIを現行デナリとする。今回エレナ文と教程条件は変更していない。L〜Zの設計正本と受け入れ証拠は [PERFORMANCE_RENDERING_STEPBOOK.md](PERFORMANCE_RENDERING_STEPBOOK.md)、[EXPERIENCE_TUTORIAL_STEPBOOK.md](EXPERIENCE_TUTORIAL_STEPBOOK.md)、[completion_audit.md](completion_audit.md) にある。Zの子供による初見実測を受け、建物成長を核体験の実測候補、成功／危険／季節の因果表示を常設要件にした。
 
 **次セッションの進め方**:
 
 1. AF／AF-2を起点に`ui_guidance.js`の発話発生箇所を棚卸しし、他チャネルのtitle／detail／数値を連結する発話を、状況専用の自己完結した話し言葉か沈黙へ置き換える。現在目標は経過表示と備忘録に限定し、エレナの指示本文を肩代わりさせない。
-2. 再現する不具合があれば [TESTING_POLICY.md](TESTING_POLICY.md) の変更範囲別テストで直す。UIだけなら実Chrome、教程ならfocused＋`test:tutorial-early`、軽微engineなら該当unit＋影響focusedまでとし、経済定数・保存則・長期帯を変えない限りfullを常用しない。
-3. 創発15教材は進行条件へ戻さない。必達へ追加する目標は、有限上限とプレイヤーが理解できる完了条件を同じdiffに記録する。
-4. `product_spec.md`新設とグラフ履歴のセーブ永続化は下記未決質問の裁可後に行う。
+2. AF文面と同時にAHのUI用語禁止を守る。メニュー／建物の改名と出来事ログ再設計は、AGの世界観・通貨・語彙案を複数提示しNao_u裁可を得てから一括で行う。
+3. 再現する不具合があれば [TESTING_POLICY.md](TESTING_POLICY.md) の変更範囲別テストで直す。UIだけなら実Chrome、教程ならfocused＋`test:tutorial-early`、軽微engineなら該当unit＋影響focusedまでとし、経済定数・保存則・長期帯を変えない限りfullを常用しない。
+4. 創発15教材は進行条件へ戻さない。必達へ追加する目標は、有限上限とプレイヤーが理解できる完了条件を同じdiffに記録する。
+5. `product_spec.md`新設とグラフ履歴のセーブ永続化は下記未決質問の裁可後に行う。
 
 - 公開URL: <https://nao838861.github.io/nao-u-lab/GPT/game/shioji/v004/>
 - v003の公開入口は変更していない。
