@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-24T06:30:16+09:00",
+  "updated_at": "2026-07-24T08:24:12+09:00",
   "reviewed_source_ts": [
+    "1784841957.382629",
     "1784834821.252529",
     "1780759560.252029",
     "1780802949.440169",
@@ -484,6 +485,47 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-24T08:24:12+09:00",
+      "selected": {
+        "id": "sr-1784841957-0a4497c5d1",
+        "source_ts": "1784841957.382629",
+        "title": "Overcoming Struggles in Playtesting — tester role と feedback 収集・設計判断の分離",
+        "reason": "未レビュー条件を満たす最新の score 12 atom で、memory・harness・game-design・operation・evaluation の優先5タグを持つ。初見理解、設計探索、反復 balance を同一 feedback 集計へ潰さず、player proposal を症状・原因仮説・設計案へ分ける観点が、次の playable diff の playtest 記録を具体的に改善できるため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で採用条件の必須閾値は満たす。shared-reads 本文は Developer／Kleenex／Expert tester の測定対象差、観察中に説明・反論しない収集手順、player proposal を症状と原因仮説へ戻す Cannon Brawl の事例、3 iteration の小規模適用案まで具体化している。一方、2015年の単一開発者による実践記事であり、200回超／20回超の playtest は経験量を示すが、三分類や非反論手順の統制比較、tester 構成、honesty・継続率・設計品質への定量効果はないため evidence=2 とした。既存の agent-repair-report-constraints は observed／expected／reproduction を、autobg critic probes は critic defect と accept／reject を、critical-stage-feedback-routing は feedback を actionable stage へ戻すことを、commonroad-human-operation-regression-fixture は build／seed／route／oracle をすでに扱う。新しい差は tester role、事前質問、observation、player proposal、designer hypothesis、decision later を一つの packet で分離する点にあるが、今サイクル後半には具体的な playable diff／playtest packet がなく、consumer phase、before／after trigger artifact、期待判断差を lease 契約どおりに指定できない。さらに Phase 4a には別 probe の pending lease が1件あり、321件ある active_probesへ対象 artifact なしに追加すると確認負荷だけが増える。次の具体的な game-start／playtest で role 未分類の feedback が初見問題と反復 balance を混同した時に再評価する。",
+      "existing_probes": [
+        "probe-20260717-agent-repair-report-constraints",
+        "probe-20260619-autobg-critic-gated-design-draft",
+        "probe-20260603-autobg-critic-gate",
+        "probe-20260709-critical-stage-feedback-routing",
+        "probe-20260708-commonroad-human-operation-regression-fixture"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、採用閾値は満たすが具体的な playtest consumer／artifact がないため defer する理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-24T06:30:16+09:00",
       "selected": {
