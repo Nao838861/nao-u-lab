@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-23T20:02:24+09:00",
+  "updated_at": "2026-07-23T22:17:38+09:00",
   "reviewed_source_ts": [
+    "1780837923.934419",
     "1780853278.343919",
     "1780860682.962599",
     "1780867666.850759",
@@ -479,6 +480,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-23T22:17:38+09:00",
+      "selected": {
+        "id": "sr-1780837923-45150942b5",
+        "source_ts": "1780837923.934419",
+        "title": "Do Vision Language Models Understand Human Engagement in Games? — visual cue と心理状態の分離",
+        "reason": "未レビュー条件を満たす最新の score 10 atom で、memory・harness・game-design・operation・evaluation を含む9タグを持つ。VLM の visual intensity bias、surface shortcut、temporal inconsistency、confidence miscalibration が、次の gameplay-video／headless 評価に既存 probe と異なる判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は9ゲーム、61秒 clip の1秒 window、16 frames、5人の continuous trace、pointwise／pairwise、3 VLM と6 prompting strategy を分離し、majority baseline 67.2%に対する zero-shot 約57%、一部 retrieval 条件の改善、pairwise の chance 付近、CSGO18 の human label 比18倍の flip rate を根拠に failure taxonomy を示しているため evidence=3 とした。一方、この source を直接接続した後続 synthesis 1780910895.393589 はすでに review 済みで、『VLM／LLM／proxy を面白さ判定器へ昇格せず観測器として使う』提案を重複として reject している。state-abstraction-action-loop は technical metric と fun の区別、lab-proxy-vs-real-use-gap は proxy と human-facing evidence の区別、calibration-boundary-human-judgment は calibratable domain と subjective readiness の境界をすでに要求する。video-glitch-temporal-grounding も gameplay video の時間区間と expected／observed state を保持する。ここへ visual intensity／surface cue／confidence の別 probe を足しても次回判断は変わらず、active_probes 320件の確認負荷だけを増やすため、本 atom は根拠 source としてのみ保持する。",
+      "existing_probes": [
+        "probe-20260525-state-abstraction-action-loop",
+        "probe-20260526-lab-proxy-vs-real-use-gap",
+        "probe-20260608-calibration-boundary-human-judgment",
+        "probe-20260620-video-glitch-temporal-grounding"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、review 済み downstream synthesis および既存 proxy／human judgment／temporal grounding probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-23T20:02:24+09:00",
       "selected": {

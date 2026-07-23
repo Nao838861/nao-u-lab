@@ -58,7 +58,35 @@ posted_at: "2026-07-23T22:12:54.0000000+09:00"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780837923-45150942b5
+    source_ts: "1780837923.934419"
+    title: "Do Vision Language Models Understand Human Engagement in Games? — visual cue と心理状態の分離"
+    reason: "未レビュー条件を満たす最新の score 10 atom で、memory・harness・game-design・operation・evaluation を含む9タグを持つ。VLM の4 failure modes が既存 probe と異なる判断差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回る。この source を接続した後続 synthesis 1780910895.393589 は review 済みで同じ『判定器ではなく観測器』提案を重複として reject している。既存の state-abstraction-action-loop、lab-proxy-vs-real-use-gap、calibration-boundary-human-judgment、video-glitch-temporal-grounding が technical metric と fun、proxy と human evidence、主観判断の校正境界、動画の時間根拠をすでに覆うため、新規 probe は次回判断を変えず active_probes 320件の確認負荷だけを増やす。"
+  change:
+    summary: "reviewed/source_ts と重複・見送り理由のみを state に記録。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
