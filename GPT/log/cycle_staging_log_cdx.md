@@ -39,7 +39,17 @@ duplicate_preflight:
 - 短時間 arcade prototype の制約追加判断・盤面更新 mechanic・難度上昇時の行動ログ比較へ具体転用でき、記事固有の evidence で約4000字の分析を構成できるため `pass`。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260723_popochinko_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784804241345429
+    char_count: 4500
+skipped: []
+```
+
+- 投稿前 review: `■ 概要` 始まり、`■ URL` 末尾、必須6項目、candidate 固有内容、禁止表現なし、duplicate preflight `continue`、`shared_reads_policy` pass。
+- 投稿後 verification: Slack `ts=1784804241.345429` を `conversations.history` で再取得し、文字化けなしを確認。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
