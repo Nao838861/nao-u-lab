@@ -37,7 +37,8 @@ import {
   SEASONAL_SURPLUS_MIN, SEASONAL_VALLEY_RATIO, TOOLS_PRICE_RISE_DELTA,
   TOOLS_PRICE_RISE_RATIO,
   TUTORIAL_GOALS, TUTORIAL_LETTERS, TUTORIAL_LETTER_ATTENTION,
-  TUTORIAL_ELENA_MESSAGES, TUTORIAL_OPTIONAL_GOAL_IDS,
+  TUTORIAL_ELENA_COMPLETIONS, TUTORIAL_ELENA_MESSAGES, TUTORIAL_LETTER_MESSAGES,
+  TUTORIAL_OPTIONAL_GOAL_IDS,
   TUTORIAL_PLAYER_TITLES, TUTORIAL_SYSTEM_INSTRUCTIONS,
   isRequiredTutorialGoal, estimateWalkLen,
 } from '../src/tutorial_content.js';
@@ -108,25 +109,48 @@ test('教程T/U: 全目標をエレナ概要と一意なsystem操作へ分け、
     'close-fourth-chapter', 'close-fifth-chapter', 'graduate-governor',
   ]);
   const forbidden = /適格日|EMA|snapshot|\btick\b|haulJobId|productionCost|\bengine\b|\bjournal\b|E-Stable/;
+  const forbiddenElena = /画面|ボタン|クリック|押して|できました。次の仕事|少しだけお待ち|銀が海を渡る|帳場|口銭/;
   for (const goal of TUTORIAL_GOALS) {
     assert.ok(TUTORIAL_PLAYER_TITLES[goal.id], `${goal.id}のplayer-facing目標名`);
     assert.ok(TUTORIAL_ELENA_MESSAGES[goal.id], `${goal.id}のエレナによる意味づけ`);
+    assert.ok(TUTORIAL_ELENA_COMPLETIONS[goal.id], `${goal.id}のエレナによる達成報告`);
     assert.equal(forbidden.test(TUTORIAL_PLAYER_TITLES[goal.id]), false, goal.id);
     assert.equal(forbidden.test(TUTORIAL_ELENA_MESSAGES[goal.id]), false, goal.id);
+    assert.equal(forbidden.test(TUTORIAL_ELENA_COMPLETIONS[goal.id]), false, goal.id);
+    assert.equal(forbiddenElena.test(TUTORIAL_ELENA_MESSAGES[goal.id]), false, goal.id);
+    assert.equal(forbiddenElena.test(TUTORIAL_ELENA_COMPLETIONS[goal.id]), false, goal.id);
     const instruction = TUTORIAL_SYSTEM_INSTRUCTIONS[goal.id];
     assert.equal(typeof instruction, 'string', `${goal.id}のsystem操作`);
     if (!reportOnly.has(goal.id)) assert.ok(instruction.length > 0, `${goal.id}は次の操作が一意`);
     assert.equal(forbidden.test(instruction), false, goal.id);
+  }
+  for (const letter of TUTORIAL_LETTERS) {
+    assert.ok(TUTORIAL_LETTER_MESSAGES[letter.id], `${letter.id}のエレナによる書状案内`);
+    assert.equal(forbidden.test(TUTORIAL_LETTER_MESSAGES[letter.id]), false, letter.id);
+    assert.equal(forbiddenElena.test(TUTORIAL_LETTER_MESSAGES[letter.id]), false, letter.id);
   }
   const director = createTutorialDirector();
   director.observe(snapshotToViewModel(createEngineApi(buildBlankCity(11)).snapshot()), []);
   const objective = director.currentObjective();
   assert.equal(objective.title, TUTORIAL_PLAYER_TITLES[objective.id]);
   assert.equal(objective.elenaMessage, TUTORIAL_ELENA_MESSAGES[objective.id]);
+  assert.equal(objective.elenaCompletion, TUTORIAL_ELENA_COMPLETIONS[objective.id]);
   assert.equal(objective.systemInstruction, TUTORIAL_SYSTEM_INSTRUCTIONS[objective.id]);
   assert.equal(forbidden.test(
     `${objective.title} ${objective.elenaMessage} ${objective.detail} ${objective.systemInstruction}`,
   ), false);
+  const restoredOldLetter = new TutorialDirector({
+    goals: [],
+    letters: [],
+    state: {
+      version: 1,
+      letters: [{
+        id: 'arrival-report', unread: true, attention: 'action',
+        issuedDay: 0, issuedTick: 0, title: '着任報告', summary: '港だけの島',
+      }],
+    },
+  }).letters()[0];
+  assert.equal(restoredOldLetter.elenaMessage, TUTORIAL_LETTER_MESSAGES['arrival-report']);
   const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
   assert.doesNotMatch(main, /書状を閉じ、画面上部の現在目標/);
 });
@@ -167,9 +191,13 @@ test('教程V〜Y: 創発待ちは進行を止めず、注文残量と適時ア�
     advice: [{
       id: 'seasonal-release-opportunity', unread: true, completed: false,
       priority: 'action', kicker: '助言', title: '蔵出し', detail: 'いま動けます',
+      speech: '市場の食料が少なくなりました。蔵の備えを戻しましょう。',
       target: { kind: 'sheet', sheet: 'company-sheet' },
     }],
-    objective: { id: 'first-road-and-logger', complete: false, title: '道', detail: '森へ' },
+    objective: {
+      id: 'first-road-and-logger', complete: false, title: '道', detail: '森へ',
+      elenaMessage: '森まで道を敷き、木こりを建てましょう。',
+    },
   });
   assert.equal(routed.priority, 'timely-advice');
   assert.equal(routed.target.route.sheet, 'company-sheet');
@@ -1894,7 +1922,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.15.0-elena-first-seat');
+  assert.equal(VERSION, 'v004.16.0-elena-written-voice');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2951,9 +2979,13 @@ test('通貨表示: engine内部値はfactsを変えず10倍のデナリで示�
 test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけなら現在目標を隠さない', () => {
   const letter = {
     id: 'letter-1', unread: true, issuedDay: 7, title: '実測の書状', summary: '人口13人',
+    elenaMessage: '人口の変化を、書状にまとめました。食料と仕事を確かめましょう。',
   };
   const objective = {
-    id: 'goal-1', chapter: '第一章', title: '市場を置く', detail: '丸太の売場を作ります', complete: false,
+    id: 'goal-1', chapter: '第一章', title: '市場を置く', detail: '丸太の売場を作ります',
+    elenaMessage: '木こりが丸太を売れるよう、道沿いに市場を開きましょう。',
+    elenaCompletion: '市場が開きました。木こりが丸太を売れる場所ができました。',
+    complete: false,
   };
   const objectiveAction = { kind: 'building', job: 'market', label: '市場を選ぶ' };
   const events = [
@@ -2968,7 +3000,7 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
   assert.equal(unread.priority, 'unread-letter');
   assert.deepEqual(unread.target, { kind: 'letter', id: 'letter-1' });
   assert.match(unread.detail, /7日目.*人口13人/);
-  assert.match(unread.speech, /詳しくは書状/);
+  assert.equal(unread.speech, letter.elenaMessage);
   const goalBeforeReport = secretaryRouteFor({
     letters: [{ ...letter, attention: 'notice' }], objective, objectiveAction, events, fallback,
   });
@@ -2978,7 +3010,8 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
   const goalBeforeInfo = secretaryRouteFor({
     advice: [{
       id: 'daily-report', unread: true, completed: false, priority: 'info',
-      kicker: '報告', title: '日々の出来事', detail: 'あとで読めます', target: null,
+      kicker: '報告', title: '日々の出来事', detail: 'あとで読めます',
+      speech: '今日の出来事をまとめました。暮らしの変化を確かめましょう。', target: null,
     }],
     objective, objectiveAction, events, fallback,
   });
@@ -2996,7 +3029,7 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
   });
   assert.equal(goal.priority, 'objective');
   assert.equal(goal.title, objective.title);
-  assert.equal(goal.speech, '丸太の売場を作ります。');
+  assert.equal(goal.speech, objective.elenaMessage);
   assert.deepEqual(goal.target, objectiveAction);
   const nextObjective = {
     id: 'goal-2', chapter: '第一章', title: '港へつなぐ',
@@ -3007,7 +3040,7 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
     { completedId: handoff.completedId, nextId: handoff.nextId },
     { completedId: 'goal-1', nextId: 'goal-2' },
   );
-  assert.match(handoff.speech, /できました。.*少しだけお待ちください/);
+  assert.equal(handoff.speech, objective.elenaCompletion);
   const handoffRoute = secretaryRouteFor({
     letters: [{ ...letter, unread: false }],
     handoff, objective: nextObjective, objectiveAction, events, fallback,
@@ -3027,7 +3060,11 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
     buildings: [], orderOffer: null,
   }), { kind: 'speed', speed: 3, label: '一日毎秒で注文を待つ' });
   const important = secretaryRouteFor({
-    letters: [], objective: { ...objective, complete: true }, events, fallback,
+    letters: [], objective: { ...objective, complete: true },
+    events: events.map(event => event.important
+      ? { ...event, elenaSpeech: '大切な出来事がありました。暮らしへの影響を確かめましょう。' }
+      : event),
+    fallback,
   });
   assert.equal(important.priority, 'important-event');
   assert.deepEqual(important.target, { kind: 'event', sequence: 2 });
@@ -3037,7 +3074,9 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
   const css = fs.readFileSync(new URL('../style.css', import.meta.url), 'utf8');
   assert.match(html, /id="secretary"/);
   assert.match(html, /elena_vance\.png/);
-  assert.match(html, /secretary-name.*secretary-speech.*もう一度言って/s);
+  assert.match(html, /<div id="secretary"[^>]*>[\s\S]*secretary-name[\s\S]*secretary-speech/);
+  assert.doesNotMatch(html, /secretary-action|もう一度言って/);
+  assert.doesNotMatch(css, /secretary-repeat|secretary\.repeating/);
   assert.doesNotMatch(html, /id="secretary-(?:tier|kicker|title|detail)"/);
   assert.match(html, /id="tutorial-action"[^>]*>［案内］/);
   assert.doesNotMatch(html, /id="tutorial-(?:system|detail)"/);
@@ -3310,6 +3349,23 @@ test('段16: 観測APIの全イベント種とnotice専用トースト・ログ�
   assert.equal(
     presentEvent({ type: 'notice', message: '会社へ最終通告', day: 1, tick: 1, x: 0, y: 0 }).tone,
     'bad',
+  );
+  assert.match(
+    presentEvent({ type: 'birth', message: '子どもが生まれた', day: 1, tick: 1 }).elenaSpeech,
+    /新しい子ども.*食料/,
+  );
+  assert.match(
+    presentEvent({ type: 'blocked', message: '道が切れた', day: 1, tick: 1 }).elenaSpeech,
+    /道が切れて.*つなぎ直しましょう/,
+  );
+  assert.match(
+    presentEvent({ type: 'death', message: '☠ 佐藤家は離散した', day: 1, tick: 1 }).elenaSpeech,
+    /佐藤さんの一家が島を離れました.*食料/,
+  );
+  assert.equal(
+    presentEvent({ type: 'notice', message: '★本国より注文状: 道具30荷', day: 1, tick: 1 }).elenaSpeech,
+    '',
+    '専用に書かれた発話がないイベント本文はエレナへ流用しない',
   );
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');

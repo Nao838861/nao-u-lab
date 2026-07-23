@@ -1,8 +1,9 @@
 import {
   TUTORIAL_ADVICE, TUTORIAL_GOALS, TUTORIAL_LETTERS, TUTORIAL_LETTER_ATTENTION,
-  TUTORIAL_ELENA_MESSAGES, TUTORIAL_PLAYER_TITLES, TUTORIAL_SYSTEM_INSTRUCTIONS,
+  TUTORIAL_ELENA_COMPLETIONS, TUTORIAL_ELENA_MESSAGES, TUTORIAL_LETTER_MESSAGES,
+  TUTORIAL_PLAYER_TITLES, TUTORIAL_SYSTEM_INSTRUCTIONS,
   isRequiredTutorialGoal,
-} from './tutorial_content.js?v=v004.15.0-elena-first-seat';
+} from './tutorial_content.js?v=v004.16.0-elena-written-voice';
 
 const SAVE_VERSION = 1;
 
@@ -48,7 +49,18 @@ function initialState() {
 function restoredState(state) {
   if (!state) return initialState();
   if (state.version !== SAVE_VERSION) throw new Error(`未対応のチュートリアル保存版です: ${state.version}`);
-  return { ...initialState(), ...clone(state), advice: clone(state.advice ?? []), adviceState: clone(state.adviceState ?? {}) };
+  return {
+    ...initialState(),
+    ...clone(state),
+    letters: clone(state.letters ?? []).map(letter => ({
+      ...letter,
+      elenaMessage: playerFacingText(
+        letter.elenaMessage ?? TUTORIAL_LETTER_MESSAGES[letter.id] ?? '',
+      ),
+    })),
+    advice: clone(state.advice ?? []),
+    adviceState: clone(state.adviceState ?? {}),
+  };
 }
 
 export class TutorialDirector {
@@ -92,6 +104,9 @@ export class TutorialDirector {
         title: playerFacingText(rendered.title),
         summary: playerFacingText(rendered.summary),
         body: playerFacingText(rendered.body),
+        elenaMessage: playerFacingText(
+          rendered.elenaMessage ?? TUTORIAL_LETTER_MESSAGES[definition.id] ?? '',
+        ),
       });
     }
 
@@ -138,6 +153,7 @@ export class TutorialDirector {
         kicker: result.kicker ?? 'エレナの助言',
         title: playerFacingText(result.title),
         detail: playerFacingText(result.detail),
+        speech: playerFacingText(result.speech ?? ''),
         target: clone(result.target ?? null),
         issuedDay: model.day,
         issuedTick: model.tick,
@@ -168,6 +184,7 @@ export class TutorialDirector {
       chapter: goal.chapter,
       title: TUTORIAL_PLAYER_TITLES[goal.id] ?? goal.title,
       elenaMessage: TUTORIAL_ELENA_MESSAGES[goal.id] ?? '',
+      elenaCompletion: TUTORIAL_ELENA_COMPLETIONS[goal.id] ?? '',
       systemInstruction: TUTORIAL_SYSTEM_INSTRUCTIONS[goal.id] ?? '',
       ...result,
       detail: playerFacingText(result.detail),

@@ -1,26 +1,26 @@
-import { IsometricCamera } from './camera.js?v=v004.15.0-elena-first-seat';
-import { SimulationClock } from './clock.js?v=v004.15.0-elena-first-seat';
+import { IsometricCamera } from './camera.js?v=v004.16.0-elena-written-voice';
+import { SimulationClock } from './clock.js?v=v004.16.0-elena-written-voice';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.15.0-elena-first-seat';
+} from './config.js?v=v004.16.0-elena-written-voice';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.15.0-elena-first-seat';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.15.0-elena-first-seat';
-import { presentEvent } from './event_view.js?v=v004.15.0-elena-first-seat';
+} from './display_batch.js?v=v004.16.0-elena-written-voice';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.16.0-elena-written-voice';
+import { presentEvent } from './event_view.js?v=v004.16.0-elena-written-voice';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.15.0-elena-first-seat';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.15.0-elena-first-seat';
-import { WorldPresentation } from './presentation.js?v=v004.15.0-elena-first-seat';
-import { Renderer } from './renderer.js?v=v004.15.0-elena-first-seat';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.15.0-elena-first-seat';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.15.0-elena-first-seat';
+} from './keyboard.js?v=v004.16.0-elena-written-voice';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.16.0-elena-written-voice';
+import { WorldPresentation } from './presentation.js?v=v004.16.0-elena-written-voice';
+import { Renderer } from './renderer.js?v=v004.16.0-elena-written-voice';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.16.0-elena-written-voice';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.16.0-elena-written-voice';
 import {
   objectiveActionFor, secretaryRouteFor, tutorialHandoffFor,
-} from './ui_guidance.js?v=v004.15.0-elena-first-seat';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.15.0-elena-first-seat';
+} from './ui_guidance.js?v=v004.16.0-elena-written-voice';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.16.0-elena-written-voice';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -935,7 +935,7 @@ function secretaryFallback() {
       priority: 'operation-guide',
       tier: 'guidance',
       target: { kind: 'sheet', sheet: 'building-sheet' },
-      speech: `${JOB_LABELS[selected.type] ?? selected.type}を選んでいます。建物情報で、働き手と在庫を確かめられます。`,
+      speech: `${JOB_LABELS[selected.type] ?? selected.type}を見ています。品がどこから届き、どこへ運ばれるのかを追えば、この建物の役目が分かります。`,
       kicker: '盤面の選択',
       title: JOB_LABELS[selected.type] ?? selected.type,
       detail: `座標 ${selected.x}, ${selected.y}・建物情報を開きます`,
@@ -945,7 +945,7 @@ function secretaryFallback() {
     priority: 'operation-guide',
     tier: 'guidance',
     target: { kind: 'sheet', sheet: 'island-sheet' },
-    speech: '島は今日も動いています。品物の流れは、島況と盤面の両方から確かめられます。',
+    speech: '島は今日も動いています。荷車が運ぶ品と、家々の食料を見ていれば、次に足りなくなるものが分かります。',
     kicker: '観測の案内',
     title: '島況で現物と相場を見る',
     detail: `所在を確認できる現物 ${formatQuantity(model.totalVisibleStock)}荷`,
@@ -965,12 +965,11 @@ function renderSecretary() {
   });
   const signature = JSON.stringify(currentSecretaryRoute);
   renderIfChanged('secretary', signature, () => {
-    const button = $('#secretary');
-    button.dataset.secretaryPriority = currentSecretaryRoute.priority;
-    button.dataset.secretaryTier = currentSecretaryRoute.tier ?? 'notice';
+    const panel = $('#secretary');
+    panel.dataset.secretaryPriority = currentSecretaryRoute.priority;
+    panel.dataset.secretaryTier = currentSecretaryRoute.tier ?? 'notice';
     setTextIfChanged('#secretary-speech',
       currentSecretaryRoute.speech ?? '島の様子を、引き続き見ていきましょう。');
-    setTextIfChanged('#secretary-action', 'もう一度言って');
   });
 }
 
@@ -1002,19 +1001,6 @@ function focusEvent(row) {
   camera.focus(row.x + 0.5, row.y + 0.5);
   closeSheet('event-sheet');
   $('#status span').textContent = `${row.title}の場所へ移動しました`;
-  return true;
-}
-
-function repeatSecretarySpeech() {
-  const spoken = currentSecretaryRoute?.speech;
-  if (!spoken) return false;
-  const button = $('#secretary');
-  button.classList.remove('repeating');
-  void button.offsetWidth;
-  button.classList.add('repeating');
-  setTimeout(() => button.classList.remove('repeating'), 360);
-  if (currentTutorialHandoff) holdTutorialHandoff(currentTutorialHandoff);
-  $('#status span').textContent = `エレナ「${spoken}」`;
   return true;
 }
 
@@ -1467,7 +1453,6 @@ $('#tutorial-letter-list').addEventListener('click', event => {
 $('#close-tutorial-letter').addEventListener('click', closeTutorialLetter);
 $('#continue-tutorial-letter').addEventListener('click', closeTutorialLetter);
 $('#tutorial-action').addEventListener('click', () => performGuidanceAction(currentTutorialAction));
-$('#secretary').addEventListener('click', repeatSecretarySpeech);
 
 const companySheet = $('#company-sheet');
 companySheet.addEventListener('input', event => {

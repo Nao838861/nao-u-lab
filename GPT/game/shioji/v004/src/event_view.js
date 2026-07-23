@@ -14,6 +14,39 @@ function noticeTitle(message = '') {
   return TYPE_PRESENTATION.notice;
 }
 
+function familyName(message = '') {
+  const name = message.match(/^☠\s*([^家]+)家/)?.[1];
+  return name ? `${name}さんの一家` : 'ひとつの家族';
+}
+
+function elenaSpeechFor(event, tone) {
+  if (event.type === 'docking') {
+    return '本国からの船が港に着きました。荷下ろしが始まります。';
+  }
+  if (event.type === 'birth') {
+    return '新しい子どもが生まれました。家族が増えても食料が足りるか、確かめておきましょう。';
+  }
+  if (event.type === 'death') {
+    const family = familyName(event.message);
+    return event.message?.includes('離散')
+      ? `${family}が島を離れました。次の家族を失わないよう、市場の食料と道を確かめましょう。`
+      : `${family}で、食べ物を得られず亡くなった方がいます。市場へ食料が届くよう、漁家か菜園を増やしましょう。`;
+  }
+  if (event.type === 'job_move') {
+    return '仕事を替えた家族が、新しい家へ移りました。空いた家と仕事の変化を見ておきましょう。';
+  }
+  if (event.type === 'inheritance') {
+    return 'ひとつの家族から、新しい世帯が分かれました。新しい家族が住む家と仕事が必要です。';
+  }
+  if (event.type === 'blocked') {
+    return '道が切れて、荷を運べない建物があります。市場からその建物まで、道をつなぎ直しましょう。';
+  }
+  if (event.type === 'notice' && tone === 'bad' && event.message?.includes('道が繋がっていません')) {
+    return '道が切れて、荷を運べない建物があります。市場からその建物まで、道をつなぎ直しましょう。';
+  }
+  return '';
+}
+
 export function presentEvent(event) {
   const [title, tone] = event.type === 'notice'
     ? noticeTitle(event.message)
@@ -26,6 +59,7 @@ export function presentEvent(event) {
     title,
     tone,
     details,
+    elenaSpeech: elenaSpeechFor(event, tone),
     important: ['bad', 'warn', 'order'].includes(tone)
       || ['docking', 'birth', 'death', 'job_move', 'inheritance', 'blocked'].includes(event.type),
   };

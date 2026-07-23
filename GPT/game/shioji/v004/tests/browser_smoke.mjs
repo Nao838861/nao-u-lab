@@ -283,7 +283,6 @@ async function checkTutorialGoalHandoff(width = 1000, height = 760, mobile = fal
       objective: game.tutorialState.completedGoals,
       priority: document.querySelector('#secretary').dataset.secretaryPriority,
       speech: document.querySelector('#secretary-speech').textContent,
-      action: document.querySelector('#secretary-action').textContent,
       objectiveHidden: document.querySelector('#tutorial-objective').hidden,
       memoChapter: document.querySelector('#tutorial-chapter').textContent,
       memoTitle: document.querySelector('#tutorial-goal').textContent,
@@ -295,25 +294,11 @@ async function checkTutorialGoalHandoff(width = 1000, height = 760, mobile = fal
   assert.equal(transition.handoff.nextId, 'market-for-logs', JSON.stringify(transition));
   assert.ok(transition.objective.includes('first-road-and-logger'), JSON.stringify(transition));
   assert.equal(transition.priority, 'goal-complete', JSON.stringify(transition));
-  assert.match(transition.speech, /できました/);
-  assert.equal(transition.action, 'もう一度言って');
+  assert.match(transition.speech, /森へ続く道と木こりが整いました.*まだ売る場所がありません/s);
   assert.equal(transition.objectiveHidden, true, '達成中は次の現在目標を見せない');
   assert.ok(transition.observer.width >= (mobile ? width - 20 : 480), JSON.stringify(transition));
   assert.ok(transition.observer.bottom < transition.dock.top, JSON.stringify(transition));
   await page.screenshot(`/tmp/shioji_v004_tutorial_handoff_${mobile ? 'mobile' : 'desktop'}.png`);
-
-  const repeated = await page.evaluate(`(() => {
-    document.querySelector('#secretary').click();
-    const game = window.__SHIOJI_V004__;
-    return {
-      handoff: game.tutorialHandoff,
-      priority: document.querySelector('#secretary').dataset.secretaryPriority,
-      status: document.querySelector('#status').textContent,
-    };
-  })()`);
-  assert.equal(repeated.handoff.completedId, 'first-road-and-logger',
-    'エレナを押しても次へ進まず復唱する');
-  assert.match(repeated.status, /エレナ「できました/);
 
   await wait(3400);
   const continued = await page.evaluate(`(() => {
@@ -329,7 +314,7 @@ async function checkTutorialGoalHandoff(width = 1000, height = 760, mobile = fal
   })()`);
   assert.equal(continued.handoff, null, '約3.2秒後に自動で次へ移る');
   assert.equal(continued.priority, 'objective', JSON.stringify(continued));
-  assert.match(continued.speech, /木こりの荷/);
+  assert.match(continued.speech, /木こりが丸太を売れるよう.*市場を開きましょう/s);
   assert.equal(continued.objectiveHidden, false);
   assert.match(continued.memoChapter, /第一章/);
   assert.match(continued.memoTitle, /市場/);
@@ -397,7 +382,8 @@ async function checkStartChoice(width, height, mobile, mode) {
     tutorialActionText: document.querySelector('#tutorial-action').textContent,
     secretaryPriority: document.querySelector('#secretary').dataset.secretaryPriority,
     secretarySpeech: document.querySelector('#secretary-speech').textContent,
-    secretaryRepeat: document.querySelector('#secretary-action').textContent,
+    secretaryTag: document.querySelector('#secretary').tagName,
+    secretaryActionPresent: Boolean(document.querySelector('#secretary-action')),
     objectiveInstruction: document.querySelector('#tutorial-goal').textContent,
     letterVisible: !document.querySelector('#tutorial-letter-modal').hidden,
     letterText: document.querySelector('#tutorial-letter-modal').textContent,
@@ -424,8 +410,9 @@ async function checkStartChoice(width, height, mobile, mode) {
     assert.equal(started.tutorialActionHidden, false, JSON.stringify(started));
     assert.equal(started.tutorialActionText, '［案内］');
     assert.equal(started.secretaryPriority, 'objective', JSON.stringify(started));
-    assert.match(started.secretarySpeech, /丸太.*森と港/);
-    assert.equal(started.secretaryRepeat, 'もう一度言って');
+    assert.match(started.secretarySpeech, /港から森のそばまで道を敷き.*木こりを建てましょう/s);
+    assert.equal(started.secretaryTag, 'DIV');
+    assert.equal(started.secretaryActionPresent, false);
     assert.match(started.objectiveInstruction, /森まで道を敷く/);
     assert.equal(started.letterVisible, true, JSON.stringify(started));
     assert.equal(started.speed, 0, JSON.stringify(started));
@@ -486,8 +473,8 @@ async function checkStartChoice(width, height, mobile, mode) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.15.0-elena-first-seat');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.15.0-elena-first-seat');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.16.0-elena-written-voice');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.16.0-elena-written-voice');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -515,6 +502,8 @@ async function checkViewport(width, height, mobile) {
       secretaryPriority: document.querySelector('#secretary').dataset.secretaryPriority,
       secretaryText: document.querySelector('#secretary').textContent,
       secretaryAlt: document.querySelector('#secretary img').alt,
+      secretaryTag: document.querySelector('#secretary').tagName,
+      secretaryActionPresent: Boolean(document.querySelector('#secretary-action')),
       hasEngineWindow: document.body.textContent.includes('エンジンの世界'),
       season: document.querySelector('#season-value').textContent,
       islandSignal: document.querySelector('#island-signal').textContent,
@@ -532,20 +521,12 @@ async function checkViewport(width, height, mobile) {
   assert.match(controlBounds.palette.join(' '), /市場.*2,500D.*5×5.*蔵.*2,500D.*4×4/s);
   assert.equal(controlBounds.secretaryPriority, 'operation-guide');
   assert.match(controlBounds.secretaryAlt, /エレナ/);
-  assert.match(controlBounds.secretaryText, /エレナ・ヴァンス.*島況.*もう一度言って/s);
+  assert.match(controlBounds.secretaryText, /エレナ・ヴァンス.*荷車が運ぶ品.*家々の食料/s);
+  assert.equal(controlBounds.secretaryTag, 'DIV');
+  assert.equal(controlBounds.secretaryActionPresent, false);
   assert.equal(controlBounds.hasEngineWindow, false);
   assert.match(controlBounds.season, /^(冬|春|夏|秋)・\d+月$/);
   assert.match(controlBounds.islandSignal, /^(平穏|成長|注意|危険)$/);
-
-  const secretaryRepeat = await page.evaluate(`(() => {
-    document.querySelector('#secretary').click();
-    return {
-      sheetHidden: document.querySelector('#island-sheet').hidden,
-      status: document.querySelector('#status').textContent,
-    };
-  })()`);
-  assert.equal(secretaryRepeat.sheetHidden, true, 'エレナの発話は操作UIを兼ねない');
-  assert.match(secretaryRepeat.status, /エレナ「島は今日も動いています/);
 
   const cameraBefore = await page.evaluate(`({
     x: window.__SHIOJI_V004__.camera.panX,

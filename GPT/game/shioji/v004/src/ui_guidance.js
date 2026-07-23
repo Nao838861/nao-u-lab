@@ -25,31 +25,18 @@ export const GUIDANCE_TIERS = Object.freeze({
   notice: Object.freeze({ label: '報告', action: '詳しく見る' }),
 });
 
-function sentence(text) {
-  const value = String(text ?? '').trim();
-  if (!value) return '';
-  return /[。！？]$/.test(value) ? value : `${value}。`;
-}
-
-function speech(...parts) {
-  return parts.map(sentence).filter(Boolean).slice(0, 3).join('');
-}
-
 export function tutorialHandoffFor(previous, next) {
   if (!previous || !next) return null;
   const advanced = previous.id !== next.id;
   const finished = previous.id === next.id && !previous.complete && next.complete;
   if (!advanced && !finished) return null;
+  const writtenSpeech = String(previous.elenaCompletion ?? '').trim();
+  if (!writtenSpeech) return null;
   const nextObjective = advanced && !next.complete ? next : null;
   return Object.freeze({
     completedId: previous.id,
     nextId: nextObjective?.id ?? null,
-    speech: speech(
-      'できました',
-      nextObjective
-        ? '次の仕事を整えますので、少しだけお待ちください'
-        : 'ここまでの案内は終わりです。島の営みを、このまま見守っていきましょう',
-    ),
+    speech: writtenSpeech,
   });
 }
 
@@ -119,15 +106,14 @@ export function secretaryRouteFor({
 } = {}) {
   const unreadAction = [...letters].reverse().find(letter => (
     letter.unread && letter.attention !== 'notice' && letter.attention !== 'silent'
+      && String(letter.elenaMessage ?? '').trim()
   ));
   if (unreadAction) {
     return {
       priority: 'unread-letter',
       tier: unreadAction.attention === 'critical' ? 'stop' : 'action',
       target: { kind: 'letter', id: unreadAction.id },
-      speech: unreadAction.attention === 'critical'
-        ? speech('大切な知らせが届いています', '詳しくは書状をご覧ください')
-        : speech('確かめていただきたい知らせがあります', '詳しくは書状をご覧ください'),
+      speech: unreadAction.elenaMessage,
       kicker: '未読書状',
       title: unreadAction.title,
       detail: `${unreadAction.issuedDay}日目・${unreadAction.summary}`,
@@ -135,13 +121,14 @@ export function secretaryRouteFor({
   }
   const actionAdvice = [...advice].reverse().find(row => (
     row.unread && !row.completed && row.priority === 'action'
+      && String(row.speech ?? '').trim()
   ));
   if (actionAdvice) {
     return {
       priority: 'timely-advice',
       tier: 'action',
       target: { kind: 'advice', id: actionAdvice.id, route: actionAdvice.target },
-      speech: speech(actionAdvice.title, actionAdvice.detail),
+      speech: actionAdvice.speech,
       kicker: actionAdvice.kicker,
       title: actionAdvice.title,
       detail: actionAdvice.detail,
@@ -157,12 +144,12 @@ export function secretaryRouteFor({
       speech: handoff.speech,
     };
   }
-  if (objective && !objective.complete) {
+  if (objective && !objective.complete && String(objective.elenaMessage ?? '').trim()) {
     return {
       priority: 'objective',
       tier: 'guidance',
       target: objectiveAction ?? { kind: 'objective' },
-      speech: speech(objective.elenaMessage || objective.detail),
+      speech: objective.elenaMessage,
       kicker: objective.chapter,
       title: objective.title,
       detail: objective.elenaMessage || objective.detail,
@@ -171,13 +158,14 @@ export function secretaryRouteFor({
   }
   const infoAdvice = [...advice].reverse().find(row => (
     row.unread && !row.completed && row.priority === 'info'
+      && String(row.speech ?? '').trim()
   ));
   if (infoAdvice) {
     return {
       priority: 'timely-message',
       tier: 'notice',
       target: { kind: 'advice', id: infoAdvice.id, route: infoAdvice.target },
-      speech: speech(infoAdvice.title, infoAdvice.detail),
+      speech: infoAdvice.speech,
       kicker: infoAdvice.kicker,
       title: infoAdvice.title,
       detail: infoAdvice.detail,
@@ -185,25 +173,28 @@ export function secretaryRouteFor({
   }
   const unreadNotice = [...letters].reverse().find(letter => (
     letter.unread && letter.attention === 'notice'
+      && String(letter.elenaMessage ?? '').trim()
   ));
   if (unreadNotice) {
     return {
       priority: 'unread-report',
       tier: 'notice',
       target: { kind: 'letter', id: unreadNotice.id },
-      speech: speech('新しい報告をまとめました', '詳しくは書状をご覧ください'),
+      speech: unreadNotice.elenaMessage,
       kicker: '未読の報告',
       title: unreadNotice.title,
       detail: `${unreadNotice.issuedDay}日目・${unreadNotice.summary}`,
     };
   }
-  const important = [...events].reverse().find(event => event.important);
+  const important = [...events].reverse().find(event => (
+    event.important && String(event.elenaSpeech ?? '').trim()
+  ));
   if (important) {
     return {
       priority: 'important-event',
       tier: 'notice',
       target: { kind: 'event', sequence: important.sequence },
-      speech: speech(important.title, important.details || `${important.day}日目の出来事です`),
+      speech: important.elenaSpeech,
       kicker: `${important.day}日目・重要な出来事`,
       title: important.title,
       detail: important.details || `${important.day}日目の出来事`,

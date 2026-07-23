@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.15.0-elena-first-seat">
+  <link rel="stylesheet" href="./style.css?v=v004.16.0-elena-written-voice">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -50,14 +50,13 @@
   </aside>
 
   <aside id="observer" class="observer" data-testid="observer" aria-label="エレナからの案内" aria-live="polite">
-    <button id="secretary" class="secretary" type="button" data-testid="secretary">
+    <div id="secretary" class="secretary" data-testid="secretary">
       <img src="../v002/assets/elena_vance.png" alt="会社秘書エレナ・ヴァンス">
       <span>
         <span class="secretary-name">エレナ・ヴァンス</span>
         <p id="secretary-speech">—</p>
-        <strong id="secretary-action">もう一度言って</strong>
       </span>
-    </button>
+    </div>
     <span id="start-mode-label" hidden>—</span>
   </aside>
 
@@ -278,7 +277,7 @@
       });
     })();
   </script>
-  <script id="game-module" type="module" src="./src/main.js?v=v004.15.0-elena-first-seat"
+  <script id="game-module" type="module" src="./src/main.js?v=v004.16.0-elena-written-voice"
     onerror="window.__SHIOJI_BOOT__?.failed()"></script>
 </body>
 </html>

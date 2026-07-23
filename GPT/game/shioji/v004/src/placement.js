@@ -1,4 +1,4 @@
-import { BUILDING_SIZES } from './config.js?v=v004.15.0-elena-first-seat';
+import { BUILDING_SIZES } from './config.js?v=v004.16.0-elena-written-voice';
 
 export const tileKey = (x, y) => `${x},${y}`;
 
