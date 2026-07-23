@@ -43,7 +43,19 @@ evaluated_at: "2026-07-23T22:04:54+09:00"
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260723_e3_complexity_aware_agent_execution.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784812374972069
+    char_count: 4479
+skipped: []
+review:
+  policy: pass
+  duplicate_preflight: continue
+  basis: "MSE-Bench の controlled result と gpt-4o LLM-Case の小さく不均一な効果を分離し、hard task・weak oracle・visual/creative task への限界まで明記"
+posted_at: "2026-07-23T22:12:54.0000000+09:00"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
