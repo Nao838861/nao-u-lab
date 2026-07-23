@@ -7,12 +7,17 @@ genre_tags: [game-design, criticism, player-experience, feedback, playtesting]
 evaluated_at: 2026-07-23T15:04:50.5300890+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: 2026-07-23T15:04:50.5300890+09:00
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-23T15:04:50.5300890+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1784787066.220169"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784787066220169"
+  char_count: 4231
+  posted_at: "2026-07-23T15:11:37.0588058+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-23T15:11:37.0588058+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784787066220169"
+next_action: none
 stale_after: "2026-08-22"
 supersedes: []
 gate_reason: >-
