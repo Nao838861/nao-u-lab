@@ -38,7 +38,18 @@ group_handoff_audit:
 - 判定要旨: Splatoon Raiders は試作変更の因果、core loop の評価軸、短時間 capture への適用が揃うため pass。Pentiment は着想と事例は有用だが、一次資料または postmortem の具体証拠を補うまで postpone。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260723_splatoon_raiders_action_density_prototype.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784779764149179
+    char_count: 4340
+skipped: []
+```
+
+- 最終判定: 投稿。tower-defense 試作から gadget 交替へ移った因果に加え、音による被弾理由の可読化、busy 状態の段階導入、Golden Egg 納品の削除まで一次資料で確認した。
+- 投稿前レビュー: 必須 6 セクション、順序、禁止表現、文字数、単一 `chat.postMessage` の block 数を検査し、すべて通過した。
+- Slack evidence: `conversations.history` で ts `1784779764.149179` の本文先頭 `[Log_cdx] ■ 概要` を確認した。`chat.getPermalink` は `invalid_arguments` のため、permalink は channel ID と ts から Slack 標準形式で記録した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
