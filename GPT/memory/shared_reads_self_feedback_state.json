@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-23T06:53:56+09:00",
+  "updated_at": "2026-07-23T09:00:00+09:00",
   "reviewed_source_ts": [
+    "1780921802.479599",
     "1784750272.072049",
     "1780932516.537239",
     "1780975880.419269",
@@ -473,6 +474,47 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-23T09:00:00+09:00",
+      "selected": {
+        "id": "sr-1780921802-ec4566c9fa",
+        "source_ts": "1780921802.479599",
+        "title": "SleepGate — KV cache 層で sleep-inspired Forget を学習する3モジュール構造",
+        "reason": "未レビュー条件を満たす最新の score 10 atom で、memory・operation・evaluation を含む6タグを持つ。proactive interference を conflict tagger・learned forgetting gate・consolidation module に分ける主投稿が、現在の memory cleanup と phase consolidation に固有の次回行動を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。この主投稿の実運用案は、同一 Slack 投稿の続き source_ts 1780921802.505439 から、固定 schedule・user/directive・observed conflict・entropy-like proxy・deterministic failure signal を区別する既存 probe へすでに変換されている。さらに mechanism-level gap は human-inspired-memory-mechanism-gap、Forget の根拠と可逆性は forget-usage-signal-gate、評価軸の混同防止は memoryagentbench-axis-boundary が覆う。原論文は793K parameter の小規模 transformer と offline consolidation に限られ、Codex の file/atom 層で learned KV-cache gate を再現できる local baseline もない。ここから別の learned-forgetting probe を足すと、同一 source cluster の重複と active_probes 320件の確認負荷を増やすため state-only review に留める。",
+      "existing_review": "source_ts 1780921802.505439: kaizen #131 stage 2 hook extension - entropy-based trigger imitation",
+      "existing_probes": [
+        "probe-20260608-trigger-class-conflict-proxy",
+        "probe-20260605-memory-mechanism-gap-check",
+        "probe-20260607-forget-usage-signal-gate",
+        "probe-20260608-memoryagentbench-axis-boundary"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、同一投稿 continuation および既存 Forget／consolidation probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-23T06:53:56+09:00",
       "selected": {
