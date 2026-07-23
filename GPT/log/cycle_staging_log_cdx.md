@@ -76,7 +76,67 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。Markdown link は0件、validate_memory_index.py は OK、置換文字 U+FFFD は0件。代表語は『記憶』『ゲーム設計』『敵パターン』を取得し、『評価軸』は本文に literal 不在（文字化けではない）。"
+  - "memory/atoms.jsonl を memory_health.py で監査。2726 atom、atoms.jsonl / per-file md / index.jsonl は各2726件で欠落・parse error・content conflict なし。raw normalized-content duplicate 40群は canonical overlay で fold 済み。"
+  - "memory/raw/ の30日超無更新ファイル95件を確認。大半は web_research / headless_eval の一次資料で、provenance pointer を保つため移動なし。"
+  - "candidate lifecycle を監査。posted 461 / ready_to_post 9 / postponed 329 / failed 244 / needs_review 18。現状態の backfill 変更候補は0件。"
+  - "open duplicate group / stale triage / group action sidecar を契約順に再生成し、check で一致を確認。canonical title index も66行で current。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending はともに0件。handled 更新なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 185
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 56
+  mixed_group_count: 49
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+group_action_handoff: []
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "age_days=39。Zork 上の探索・計画限界は headless playtest に転用価値が高いが、評価条件・失敗分類・モデル比較の本文確認が必要。duplicate group 外。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=38。検証可能な短い planning benchmark はゲーム制作に使いやすいが、実験設計・比較対象・結果の補完が必要。duplicate group 外。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_inmind_social_deduction_reasoning_styles.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=38。個別推論スタイル追跡の適用価値は高いが、評価指標・失敗例と既投稿断片との重複確認が必要。duplicate group 外。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_pangea_procedural_artificial_narrative.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=38。LLM NPC の破綻抑制への接続は明確だが、empirical study・ablation・validation system の評価詳細確認が必要。duplicate group 外。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_access_profiles_game_accessibility.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "age_days=37。accessibility を基盤として扱う転用価値が高いが、player / developer 両面の評価詳細を本文で再確認する必要がある。duplicate group 外。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
