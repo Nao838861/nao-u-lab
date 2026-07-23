@@ -7,7 +7,7 @@ import { ECONOMIC_BUILDINGS } from '../../engine/src/physical.js';
 import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
 import {
-  BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, DENARI_PER_MONEY_UNIT,
+  BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, DENARI_PER_MONEY_UNIT, JOB_ICONS,
   PLACEMENT_JOBS, VERSION, toDenari,
 } from '../src/config.js';
 import {
@@ -42,7 +42,7 @@ import {
 import {
   TutorialDirector, createTutorialDirector, createTutorialDirectorForMode,
 } from '../src/tutorial_director.js';
-import { objectiveActionFor, secretaryRouteFor } from '../src/ui_guidance.js';
+import { GUIDANCE_TIERS, objectiveActionFor, secretaryRouteFor } from '../src/ui_guidance.js';
 import { islandCalendar, islandHealthSummary, recentCompanySummary } from '../src/ui_summary.js';
 import { snapshotToViewModel } from '../src/view_model.js';
 import {
@@ -295,7 +295,8 @@ test('チュートリアル段2: 書状はsnapshotの実数値を本文へ差し
   assert.match(letter.body, /完成道路は5区画/);
   assert.match(letter.summary, /港 1棟・人口 13人・道路 5区画/);
   assert.equal(letter.attention, 'action');
-  assert.equal(TUTORIAL_LETTER_ATTENTION['tutorial-starvation-consequence'], 'critical');
+  assert.equal(TUTORIAL_LETTER_ATTENTION['tutorial-starvation-consequence'], 'silent');
+  assert.equal(TUTORIAL_LETTER_ATTENTION['tutorial-bankruptcy-consequence'], 'critical');
   assert.equal(TUTORIAL_LETTER_ATTENTION['chapter-two-close'], 'notice');
   assert.equal(TUTORIAL_LETTERS.every(definition => typeof definition.render === 'function'), true);
 });
@@ -1867,7 +1868,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.8.1-denari-units');
+  assert.equal(VERSION, 'v004.10.0-final-polish');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2277,6 +2278,27 @@ test('段3/4: レスポンシブHUDとカメラ・速度操作のブラウザ契
   assert.match(css, /@media \(max-width: 640px\)/);
 });
 
+test('起動AA: 公開cacheで新旧moduleを混在させず、失敗時も開始画面と復旧導線を残す', () => {
+  const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const sourceRoot = new URL('../src/', import.meta.url);
+  const importPattern = /(?:from\s+|import\s*)['"](\.{1,2}\/[^'"]+\.js(?:\?[^'"]*)?)['"]/g;
+  for (const filename of fs.readdirSync(sourceRoot).filter(name => name.endsWith('.js'))) {
+    const source = fs.readFileSync(new URL(filename, sourceRoot), 'utf8');
+    for (const match of source.matchAll(importPattern)) {
+      assert.match(match[1], new RegExp(`\\?v=${VERSION.replaceAll('.', '\\.')}$`),
+        `${filename}: ${match[1]} は公開build版と同じqueryを持つ`);
+    }
+  }
+  assert.match(html, new RegExp(`style\\.css\\?v=${VERSION.replaceAll('.', '\\.')}`));
+  assert.match(html, new RegExp(`main\\.js\\?v=${VERSION.replaceAll('.', '\\.')}`));
+  assert.match(html, /id="start-screen" class="start-screen" data-testid=/,
+    'JavaScript起動前から開始画面を安全殻として表示する');
+  assert.match(html, /id="boot-status"[\s\S]*id="retry-boot"/);
+  assert.match(html, /v002\/assets\/elena_vance\.png/);
+  assert.match(html, /id="continue-tutorial-letter"[\s\S]*島を開いて時間を進める/);
+  assert.match(html, /書状を読んでいる間、島の時間は止まっています/);
+});
+
 test('UI O〜R: 上部メニュー・非重複通知・自動適用在庫・時系列グラフの契約を持つ', () => {
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const css = fs.readFileSync(new URL('../style.css', import.meta.url), 'utf8');
@@ -2293,6 +2315,9 @@ test('UI O〜R: 上部メニュー・非重複通知・自動適用在庫・時�
   assert.doesNotMatch(main, /release_stock', goods, qty: 16/);
   assert.match(main, /data-release-qty/);
   assert.match(main, /companyStockReleaseQuotes/);
+  assert.match(main, /deathNotice[\s\S]*row\.title === '餓死'[\s\S]*showToast/,
+    '死亡は現在目標を奪わず、一時toastでも伝える');
+  assert.match(main, /children\.length > 2/, '報告toastは同時に2件まで');
   assert.match(css, /#toast-stack[^}]*left:/);
   assert.match(css, /pointer-events:\s*none/);
 });
@@ -2585,6 +2610,12 @@ test('UI向上段3/4: 建物sheet・クリック選択・地面先行の選択�
   assert.match(main, /function renderBuildingSheet/);
   assert.match(main, /camera\.focus\(building\.x \+ building\.width \/ 2/);
   assert.match(renderer, /selectedBuildingId/);
+  assert.match(renderer, /islandCalendar\(model\.day\)\.season/);
+  assert.match(renderer, /drawGabledRoof/);
+  assert.match(renderer, /drawBuildingProps/);
+  assert.match(renderer, /this\.camera\.zoom >= 1\.02/);
+  assert.equal(Object.keys(BUILDING_ART).every(job => JOB_ICONS[job]), true,
+    '全18職は常駐バッジで見分けられる');
   assert.match(renderer, /drawTerrain\(model\);[\s\S]*drawBuildingGrounds\(model\);[\s\S]*drawRoads\(model\);[\s\S]*drawGroundOverlays\(model\);[\s\S]*drawWorldObjects\(model\);/);
   assert.match(css, /#world\s*\{[\s\S]*cursor:\s*default/);
   assert.match(css, /#world\.map-dragging\s*\{\s*cursor:\s*grabbing/);
@@ -2750,12 +2781,23 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
     letters: [{ ...letter, attention: 'notice' }], objective, objectiveAction, events, fallback,
   });
   assert.equal(goalBeforeReport.priority, 'objective');
+  assert.equal(goalBeforeReport.tier, 'guidance');
+  assert.deepEqual(Object.keys(GUIDANCE_TIERS), ['stop', 'action', 'guidance', 'notice']);
+  const goalBeforeInfo = secretaryRouteFor({
+    advice: [{
+      id: 'daily-report', unread: true, completed: false, priority: 'info',
+      kicker: '報告', title: '日々の出来事', detail: 'あとで読めます', target: null,
+    }],
+    objective, objectiveAction, events, fallback,
+  });
+  assert.equal(goalBeforeInfo.priority, 'objective', '止めない報告は現在目標を奪わない');
   assert.deepEqual(goalBeforeReport.target, objectiveAction);
   const report = secretaryRouteFor({
     letters: [{ ...letter, attention: 'notice' }],
     objective: { ...objective, complete: true }, events: [], fallback,
   });
   assert.equal(report.priority, 'unread-report');
+  assert.equal(report.tier, 'notice');
   assert.deepEqual(report.target, { kind: 'letter', id: 'letter-1' });
   const goal = secretaryRouteFor({
     letters: [{ ...letter, unread: false }], objective, objectiveAction, events, fallback,
@@ -2763,6 +2805,12 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
   assert.equal(goal.priority, 'objective');
   assert.equal(goal.title, objective.title);
   assert.deepEqual(goal.target, objectiveAction);
+  assert.deepEqual(objectiveActionFor({ id: 'first-settlers-arrive' }, { buildings: [] }), {
+    kind: 'speed', speed: 3, label: '一日毎秒で入植を待つ',
+  });
+  assert.deepEqual(objectiveActionFor({ id: 'accept-first-order' }, {
+    buildings: [], orderOffer: null,
+  }), { kind: 'speed', speed: 3, label: '一日毎秒で注文を待つ' });
   const important = secretaryRouteFor({
     letters: [], objective: { ...objective, complete: true }, events, fallback,
   });

@@ -1,6 +1,7 @@
 import {
-  BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_LABELS, SECTION_LABELS, TERRAIN_COLORS,
-} from './config.js';
+  BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, SECTION_LABELS, TERRAIN_COLORS,
+} from './config.js?v=v004.10.0-final-polish';
+import { islandCalendar } from './ui_summary.js?v=v004.10.0-final-polish';
 
 function keyOf(x, y) {
   return `${x},${y}`;
@@ -21,6 +22,7 @@ export class Renderer {
     this.selectedCarrierId = null;
     this.selectedBuildingId = null;
     this.operationPreview = null;
+    this.season = '冬';
     this.resize();
   }
 
@@ -130,6 +132,7 @@ export class Renderer {
 
   render(model, elapsedSeconds = 0) {
     this.pulse += elapsedSeconds;
+    this.season = islandCalendar(model.day).season;
     const ctx = this.ctx;
     ctx.clearRect(0, 0, this.width, this.height);
     const gradient = ctx.createLinearGradient(0, 0, 0, this.height);
@@ -147,6 +150,12 @@ export class Renderer {
   }
 
   drawTerrain(model) {
+    const seasonWash = {
+      '春': 'rgba(214,221,151,.045)',
+      '夏': 'rgba(238,202,99,.035)',
+      '秋': 'rgba(190,107,61,.055)',
+      '冬': 'rgba(204,226,218,.07)',
+    }[this.season];
     for (let sum = 0; sum < model.width + model.height - 1; sum += 1) {
       for (let y = 0; y < model.height; y += 1) {
         const x = sum - y;
@@ -155,6 +164,21 @@ export class Renderer {
         const palette = TERRAIN_COLORS[tile.kind] ?? TERRAIN_COLORS.grass;
         const fill = palette[(tile.variant ?? 0) % palette.length];
         this.diamond(x, y, fill, tile.kind === 'water' ? '#1b626a' : '#4f6942');
+        if (tile.kind !== 'water') this.diamond(x, y, seasonWash, null, 1);
+        if (tile.kind === 'water' && (x * 3 + y + (tile.variant ?? 0)) % 4 === 0) {
+          const ctx = this.ctx;
+          const from = this.camera.project(x + 0.22, y + 0.46, 1);
+          const to = this.camera.project(x + 0.62, y + 0.46, 1);
+          ctx.save();
+          ctx.globalAlpha = 0.28 + Math.sin(this.pulse * 1.4 + x + y) * 0.06;
+          ctx.strokeStyle = '#76b6b0';
+          ctx.lineWidth = Math.max(0.7, this.camera.zoom);
+          ctx.beginPath();
+          ctx.moveTo(from.x, from.y);
+          ctx.quadraticCurveTo((from.x + to.x) / 2, from.y - 2 * this.camera.zoom, to.x, to.y);
+          ctx.stroke();
+          ctx.restore();
+        }
       }
     }
   }
@@ -354,6 +378,7 @@ export class Renderer {
           kind: 'inventory',
           data: {
             row,
+            ownerId: building.id,
             x: building.x + building.width - 0.42 - column * 0.62,
             y: building.y + building.height - 0.34,
           },
@@ -368,6 +393,7 @@ export class Renderer {
         kind: 'inventory',
         data: {
           row: household.pantryStock,
+          ownerId: home.id,
           x: home.x + 0.48,
           y: home.y + home.height - 0.35,
         },
@@ -439,12 +465,39 @@ export class Renderer {
     const scale = this.camera.zoom * (0.84 + variant * 0.04);
     const ctx = this.ctx;
     ctx.save();
+    ctx.globalAlpha = 0.2;
+    ctx.fillStyle = '#172d2a';
+    ctx.beginPath();
+    ctx.ellipse(base.x + 8 * scale, base.y + 1 * scale, 18 * scale, 6 * scale, 0.12, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
     ctx.fillStyle = '#4b3022';
     ctx.fillRect(base.x - 2 * scale, base.y - 21 * scale, 4 * scale, 22 * scale);
+    const seasonal = this.season === '秋'
+      ? ['#5a5230', '#71613a', '#8a7443']
+      : this.season === '冬'
+        ? ['#28493e', '#35594a', '#466957']
+        : ['#254f3c', '#2f6144', '#3d714b'];
+    if (variant % 4 === 3) {
+      for (const crown of [
+        { x: -7, y: -30, r: 14, color: seasonal[1] },
+        { x: 7, y: -31, r: 15, color: seasonal[2] },
+        { x: 0, y: -43, r: 15, color: seasonal[0] },
+      ]) {
+        ctx.beginPath();
+        ctx.arc(base.x + crown.x * scale, base.y + crown.y * scale, crown.r * scale, 0, Math.PI * 2);
+        ctx.fillStyle = crown.color;
+        ctx.fill();
+        ctx.strokeStyle = '#173b32';
+        ctx.stroke();
+      }
+      ctx.restore();
+      return;
+    }
     for (const layer of [
-      { y: -45, width: 16, color: '#254f3c' },
-      { y: -34, width: 21, color: '#2f6144' },
-      { y: -23, width: 25, color: '#3d714b' },
+      { y: -45, width: 16, color: seasonal[0] },
+      { y: -34, width: 21, color: seasonal[1] },
+      { y: -23, width: 25, color: seasonal[2] },
     ]) {
       ctx.beginPath();
       ctx.moveTo(base.x, base.y + layer.y * scale);
@@ -524,15 +577,20 @@ export class Renderer {
         left: colors[1],
       },
     );
+    if (!['market', 'pit'].includes(appearance.archetype)) {
+      this.drawGabledRoof(bodyX, bodyY, bodyWidth, bodyHeight, elevation, appearance);
+    }
     if (['kiln', 'industrial'].includes(appearance.archetype)) {
       const chimney = this.camera.project(bodyX + bodyWidth * 0.72, bodyY + bodyHeight * 0.3, elevation);
       ctx.fillStyle = appearance.archetype === 'industrial' ? '#4a403a' : '#3d413d';
       ctx.fillRect(chimney.x - 3 * this.camera.zoom, chimney.y - 24 * this.camera.zoom, 6 * this.camera.zoom, 25 * this.camera.zoom);
-      ctx.globalAlpha *= 0.35 + Math.sin(this.pulse * 1.7) * 0.08;
-      ctx.fillStyle = '#c3c1b3';
-      ctx.beginPath();
-      ctx.arc(chimney.x, chimney.y - 29 * this.camera.zoom, 6 * this.camera.zoom, 0, Math.PI * 2);
-      ctx.fill();
+      if (!building.vacant) {
+        ctx.globalAlpha *= 0.28 + Math.sin(this.pulse * 1.7) * 0.06;
+        ctx.fillStyle = '#c3c1b3';
+        ctx.beginPath();
+        ctx.arc(chimney.x, chimney.y - 29 * this.camera.zoom, 6 * this.camera.zoom, 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
     if (appearance.windows > 0) {
       const base = this.camera.project(bodyX + bodyWidth, bodyY + bodyHeight * 0.58, elevation * 0.48);
@@ -544,6 +602,7 @@ export class Renderer {
     if (building.type === 'port') {
       this.drawCrane(building.x + building.width * 0.72, building.y + building.height * 0.78);
     }
+    this.drawBuildingProps(building);
     ctx.restore();
     const labelPoint = this.camera.project(
       building.x + building.width / 2,
@@ -552,20 +611,127 @@ export class Renderer {
     );
     ctx.save();
     ctx.textAlign = 'center';
-    ctx.font = `700 ${Math.max(9, 10 * this.camera.zoom)}px "Yu Gothic", sans-serif`;
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = 'rgba(19,39,42,.8)';
-    ctx.fillStyle = '#f1e4c2';
     const typeLabel = JOB_LABELS[building.type] ?? building.type;
     const label = building.vacant
       ? `${typeLabel}・空き`
       : `${typeLabel}${appearance.level ? ` Lv${appearance.level}` : ''}`;
-    ctx.strokeText(label, labelPoint.x, labelPoint.y);
-    ctx.fillText(label, labelPoint.x, labelPoint.y);
+    const icon = building.vacant ? '空' : (JOB_ICONS[building.type] ?? '?');
+    const badgeRadius = Math.max(8, 10 * this.camera.zoom);
+    ctx.fillStyle = building.id === this.selectedBuildingId ? '#f4c95f'
+      : building.vacant ? '#746f62' : '#183f3d';
+    ctx.strokeStyle = building.id === this.selectedBuildingId ? '#fff0ad' : '#e2c67f';
+    ctx.lineWidth = Math.max(1.2, 1.5 * this.camera.zoom);
+    ctx.beginPath();
+    ctx.arc(labelPoint.x, labelPoint.y - 3 * this.camera.zoom, badgeRadius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+    ctx.font = `800 ${Math.max(9, 10 * this.camera.zoom)}px "Yu Gothic", sans-serif`;
+    ctx.fillStyle = '#fff3cf';
+    ctx.fillText(icon, labelPoint.x, labelPoint.y + 0.5 * this.camera.zoom);
+    if (this.camera.zoom >= 1.02 || building.id === this.selectedBuildingId || building.vacant) {
+      ctx.font = `700 ${Math.max(9, 10 * this.camera.zoom)}px "Yu Gothic", sans-serif`;
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = 'rgba(19,39,42,.84)';
+      ctx.fillStyle = '#f6e9c8';
+      ctx.strokeText(label, labelPoint.x, labelPoint.y + 18 * this.camera.zoom);
+      ctx.fillText(label, labelPoint.x, labelPoint.y + 18 * this.camera.zoom);
+    }
     ctx.restore();
   }
 
-  drawInventoryPile({ row, x, y }) {
+  drawGabledRoof(x, y, width, height, elevation, appearance) {
+    const ctx = this.ctx;
+    const lift = 7 + appearance.tier * 1.5;
+    const top = [
+      this.camera.project(x, y, elevation),
+      this.camera.project(x + width, y, elevation),
+      this.camera.project(x + width, y + height, elevation),
+      this.camera.project(x, y + height, elevation),
+    ];
+    const ridgeA = this.camera.project(x, y + height / 2, elevation + lift);
+    const ridgeB = this.camera.project(x + width, y + height / 2, elevation + lift);
+    const plane = (points, fill) => {
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      points.slice(1).forEach(point => ctx.lineTo(point.x, point.y));
+      ctx.closePath();
+      ctx.fillStyle = fill;
+      ctx.fill();
+      ctx.strokeStyle = '#3c3a32';
+      ctx.lineWidth = Math.max(1, 1.2 * this.camera.zoom);
+      ctx.stroke();
+    };
+    plane([top[0], top[1], ridgeB, ridgeA], appearance.roof);
+    plane([ridgeA, ridgeB, top[2], top[3]], appearance.accent);
+    if (this.season === '冬') {
+      ctx.strokeStyle = 'rgba(224,236,224,.55)';
+      ctx.lineWidth = Math.max(1, 2 * this.camera.zoom);
+      ctx.beginPath();
+      ctx.moveTo(ridgeA.x, ridgeA.y - this.camera.zoom);
+      ctx.lineTo(ridgeB.x, ridgeB.y - this.camera.zoom);
+      ctx.stroke();
+    }
+  }
+
+  drawBuildingProps(building) {
+    const { archetype, accent } = building.appearance;
+    const ctx = this.ctx;
+    const scale = this.camera.zoom;
+    const point = this.camera.project(
+      building.x + building.width * 0.23,
+      building.y + building.height * 0.76,
+      5,
+    );
+    if (['workshop', 'warehouse'].includes(archetype)) {
+      ctx.strokeStyle = '#4f3525';
+      ctx.lineWidth = Math.max(2, 4 * scale);
+      for (let row = 0; row < 3; row += 1) {
+        ctx.beginPath();
+        ctx.moveTo(point.x - 10 * scale, point.y - row * 5 * scale);
+        ctx.lineTo(point.x + 10 * scale, point.y - 4 * scale - row * 5 * scale);
+        ctx.stroke();
+      }
+    } else if (['pit', 'industrial'].includes(archetype)) {
+      ctx.fillStyle = archetype === 'industrial' ? '#d56d3d' : '#898476';
+      for (const [dx, dy, radius] of [[-7, 0, 5], [2, -4, 6], [9, 1, 4]]) {
+        ctx.beginPath();
+        ctx.arc(point.x + dx * scale, point.y + dy * scale, radius * scale, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#4e4d47';
+        ctx.stroke();
+      }
+    } else if (archetype === 'coastal') {
+      ctx.strokeStyle = '#8fc0b5';
+      ctx.lineWidth = Math.max(1, 1.2 * scale);
+      ctx.beginPath();
+      ctx.arc(point.x, point.y - 5 * scale, 11 * scale, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(point.x - 8 * scale, point.y - 13 * scale);
+      ctx.lineTo(point.x + 8 * scale, point.y + 3 * scale);
+      ctx.moveTo(point.x + 8 * scale, point.y - 13 * scale);
+      ctx.lineTo(point.x - 8 * scale, point.y + 3 * scale);
+      ctx.stroke();
+    } else if (archetype === 'works') {
+      ctx.fillStyle = 'rgba(225,236,220,.72)';
+      ctx.strokeStyle = '#a5b7aa';
+      ctx.fillRect(point.x - 12 * scale, point.y - 8 * scale, 24 * scale, 10 * scale);
+      ctx.strokeRect(point.x - 12 * scale, point.y - 8 * scale, 24 * scale, 10 * scale);
+    } else if (archetype === 'market') {
+      ctx.fillStyle = accent;
+      ctx.beginPath();
+      ctx.moveTo(point.x - 13 * scale, point.y - 13 * scale);
+      ctx.lineTo(point.x + 13 * scale, point.y - 13 * scale);
+      ctx.lineTo(point.x + 9 * scale, point.y - 5 * scale);
+      ctx.lineTo(point.x - 9 * scale, point.y - 5 * scale);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = '#493d30';
+      ctx.stroke();
+    }
+  }
+
+  drawInventoryPile({ row, ownerId, x, y }) {
     const point = this.camera.project(x, y, 5);
     const scale = this.camera.zoom;
     const ctx = this.ctx;
@@ -575,14 +741,16 @@ export class Renderer {
       const spriteY = point.y - Math.floor(index / 3) * 5 * scale - index * 1.4 * scale;
       this.drawGoodsSprite(row.visual.art, spriteX, spriteY, scale * 0.72);
     }
-    const text = `${SECTION_LABELS[row.section] ?? row.section}${row.visual.label}`;
-    ctx.font = `700 ${Math.max(7, 8 * scale)}px ui-sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = 'rgba(21,35,35,.88)';
-    ctx.fillStyle = '#f1e4c2';
-    ctx.strokeText(text, point.x, point.y + 9 * scale);
-    ctx.fillText(text, point.x, point.y + 9 * scale);
+    if (scale >= 1.02 || ownerId === this.selectedBuildingId) {
+      const text = `${SECTION_LABELS[row.section] ?? row.section}${row.visual.label}`;
+      ctx.font = `700 ${Math.max(7, 8 * scale)}px ui-sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = 'rgba(21,35,35,.88)';
+      ctx.fillStyle = '#f1e4c2';
+      ctx.strokeText(text, point.x, point.y + 9 * scale);
+      ctx.fillText(text, point.x, point.y + 9 * scale);
+    }
     ctx.restore();
   }
 
@@ -639,14 +807,16 @@ export class Renderer {
     ctx.fill();
     ctx.stroke();
     if (primary) this.drawGoodsSprite(primary.visual.art, point.x, point.y, scale * 0.65);
-    ctx.font = `700 ${Math.max(8, 8.5 * scale)}px ui-sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = '#253331';
-    ctx.fillStyle = '#f1e4c2';
-    const label = `#${stall.householdId} ${Math.round(stall.totalAmount * 10) / 10}`;
-    ctx.strokeText(label, point.x, point.y + 11 * scale);
-    ctx.fillText(label, point.x, point.y + 11 * scale);
+    if (scale >= 1.02 || this.selectedBuildingId !== null) {
+      ctx.font = `700 ${Math.max(8, 8.5 * scale)}px ui-sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = '#253331';
+      ctx.fillStyle = '#f1e4c2';
+      const label = `#${stall.householdId} ${Math.round(stall.totalAmount * 10) / 10}`;
+      ctx.strokeText(label, point.x, point.y + 11 * scale);
+      ctx.fillText(label, point.x, point.y + 11 * scale);
+    }
     ctx.restore();
   }
 

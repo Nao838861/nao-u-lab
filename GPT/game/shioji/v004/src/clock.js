@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js';
+import { SPEEDS } from './config.js?v=v004.10.0-final-polish';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

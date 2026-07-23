@@ -1,24 +1,24 @@
-import { IsometricCamera } from './camera.js';
-import { SimulationClock } from './clock.js';
+import { IsometricCamera } from './camera.js?v=v004.10.0-final-polish';
+import { SimulationClock } from './clock.js?v=v004.10.0-final-polish';
 import {
-  BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_LABELS, JOB_LABELS,
+  BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js';
+} from './config.js?v=v004.10.0-final-polish';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js';
-import { presentEvent } from './event_view.js';
+} from './display_batch.js?v=v004.10.0-final-polish';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.10.0-final-polish';
+import { presentEvent } from './event_view.js?v=v004.10.0-final-polish';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js';
-import { WorldPresentation } from './presentation.js';
-import { Renderer } from './renderer.js';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js';
-import { objectiveActionFor, secretaryRouteFor } from './ui_guidance.js';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js';
+} from './keyboard.js?v=v004.10.0-final-polish';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.10.0-final-polish';
+import { WorldPresentation } from './presentation.js?v=v004.10.0-final-polish';
+import { Renderer } from './renderer.js?v=v004.10.0-final-polish';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.10.0-final-polish';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.10.0-final-polish';
+import { GUIDANCE_TIERS, objectiveActionFor, secretaryRouteFor } from './ui_guidance.js?v=v004.10.0-final-polish';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.10.0-final-polish';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -197,7 +197,7 @@ function showToast(row) {
   toast.className = `toast ${row.tone}`;
   toast.innerHTML = `<b>${row.title}</b><span>${row.details || `${row.day}日目の知らせ`}</span>`;
   $('#toast-stack').append(toast);
-  while ($('#toast-stack').children.length > 4) $('#toast-stack').firstElementChild.remove();
+  while ($('#toast-stack').children.length > 2) $('#toast-stack').firstElementChild.remove();
   setTimeout(() => toast.remove(), 5200);
 }
 
@@ -206,10 +206,16 @@ function appendEvents(events, { allowToasts = true } = {}) {
   eventLog.push(...rows);
   if (eventLog.length > 100) eventLog.splice(0, eventLog.length - 100);
   if (allowToasts) {
-    const notices = rows.filter(row => !row.important && (
+    const routine = rows.filter(row => !row.important && (
       ['docking', 'birth', 'inheritance'].includes(row.type)
       || (row.type === 'notice' && ['neutral', 'good'].includes(row.tone))
-    )).slice(-2);
+    ));
+    const deathNotice = [...rows].reverse().find(row => row.title === '餓死')
+      ?? [...rows].reverse().find(row => row.type === 'death');
+    const notices = [...routine.slice(-2), deathNotice]
+      .filter(Boolean)
+      .filter((row, index, all) => all.findIndex(candidate => candidate.sequence === row.sequence) === index)
+      .slice(-2);
     for (const row of notices) showToast(row);
   }
   if (!$('#event-sheet').hidden) renderEventSheet();
@@ -408,6 +414,7 @@ function renderBuildDockContents(category) {
     button.setAttribute('aria-pressed', String(activeTool === 'building' && $('#building-kind').value === job));
     const icon = document.createElement('i');
     icon.setAttribute('aria-hidden', 'true');
+    icon.textContent = JOB_ICONS[job] ?? '建';
     icon.style.setProperty('--roof', art.roof);
     icon.style.setProperty('--wall', art.wall);
     const name = document.createElement('b');
@@ -898,6 +905,7 @@ function secretaryFallback() {
   if (selected) {
     return {
       priority: 'operation-guide',
+      tier: 'guidance',
       target: { kind: 'sheet', sheet: 'building-sheet' },
       kicker: '盤面の選択',
       title: JOB_LABELS[selected.type] ?? selected.type,
@@ -906,6 +914,7 @@ function secretaryFallback() {
   }
   return {
     priority: 'operation-guide',
+    tier: 'guidance',
     target: { kind: 'sheet', sheet: 'island-sheet' },
     kicker: '観測の案内',
     title: '島況で現物と相場を見る',
@@ -927,9 +936,13 @@ function renderSecretary() {
   renderIfChanged('secretary', signature, () => {
     const button = $('#secretary');
     button.dataset.secretaryPriority = currentSecretaryRoute.priority;
+    button.dataset.secretaryTier = currentSecretaryRoute.tier ?? 'notice';
+    const tier = GUIDANCE_TIERS[currentSecretaryRoute.tier] ?? GUIDANCE_TIERS.notice;
+    setTextIfChanged('#secretary-tier', tier.label);
     setTextIfChanged('#secretary-kicker', currentSecretaryRoute.kicker);
     setTextIfChanged('#secretary-title', currentSecretaryRoute.title);
     setTextIfChanged('#secretary-detail', currentSecretaryRoute.detail);
+    setTextIfChanged('#secretary-action', `${tier.action} →`);
   });
 }
 
@@ -944,6 +957,11 @@ function performGuidanceAction(action) {
   }
   else if (action.kind === 'tool') activateGroundTool(action.tool);
   else if (action.kind === 'sheet') openSheet(action.sheet);
+  else if (action.kind === 'speed') {
+    const speedIndex = action.speed ?? 3;
+    setSpeed(speedIndex);
+    $('#status span').textContent = `${SPEEDS[speedIndex].label}で待ちます`;
+  }
   else if (action.kind === 'objective') {
     $('#tutorial-objective').focus();
     $('#status span').textContent = '現在目標を表示しています';
@@ -1302,7 +1320,7 @@ function openTutorialLetter(id) {
   document.body.classList.add('letter-open');
   renderTutorial();
   renderSecretary();
-  $('#close-tutorial-letter').focus();
+  $('#continue-tutorial-letter').focus();
   return true;
 }
 
@@ -1424,6 +1442,7 @@ $('#tutorial-letter-list').addEventListener('click', event => {
   if (button) openTutorialLetter(button.dataset.tutorialLetter);
 });
 $('#close-tutorial-letter').addEventListener('click', closeTutorialLetter);
+$('#continue-tutorial-letter').addEventListener('click', closeTutorialLetter);
 $('#tutorial-action').addEventListener('click', () => performGuidanceAction(currentTutorialAction));
 $('#secretary').addEventListener('click', followSecretaryRoute);
 
@@ -1638,6 +1657,12 @@ function showStartScreen() {
   $('#start-screen [data-start-mode="tutorial"]').focus();
 }
 
+function hideStartScreen() {
+  $('#start-screen').hidden = true;
+  document.body.classList.remove('choosing-start');
+  for (const element of gameUiElements) element.inert = false;
+}
+
 function chooseStartMode(mode) {
   location.assign(urlForStartMode(location.href, mode));
 }
@@ -1733,6 +1758,7 @@ renderer.render(displayModel, 0);
 requestAnimationFrame(frame);
 
 if (requestedStartMode) {
+  hideStartScreen();
   $('#status span').textContent = startMode === 'tutorial'
     ? 'エレナの案内で未開拓島から開始しました'
     : `${START_MODES[startMode].shortLabel}で開始しました`;
@@ -1745,3 +1771,5 @@ if (requestedStartMode) {
 }
 
 if (SPEEDS.length !== 4) throw new Error('speed controls and speed definitions must stay aligned');
+
+window.__SHIOJI_BOOT__?.ready();

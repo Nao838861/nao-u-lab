@@ -5,20 +5,20 @@ export {
   companyStockReleasePrice,
   householdClass,
   productionCost,
-} from '../../engine/src/econ.js';
-import { P } from '../../engine/src/econ.js';
-import { createEngineApi } from '../../engine/src/api.js';
+} from '../../engine/src/econ.js?v=v004.10.0-final-polish';
+import { P } from '../../engine/src/econ.js?v=v004.10.0-final-polish';
+import { createEngineApi } from '../../engine/src/api.js?v=v004.10.0-final-polish';
 import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
   buildBaseCity,
   makeStableCityPlan,
-} from '../../engine/src/audit.js';
-import { createPhysicalState, makeFlowIslandTerrain } from '../../engine/src/physical.js';
-import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js';
-import { createViewController } from './controller.js';
-import { START_MODES } from './start_modes.js';
+} from '../../engine/src/audit.js?v=v004.10.0-final-polish';
+import { createPhysicalState, makeFlowIslandTerrain } from '../../engine/src/physical.js?v=v004.10.0-final-polish';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.10.0-final-polish';
+import { createViewController } from './controller.js?v=v004.10.0-final-polish';
+import { START_MODES } from './start_modes.js?v=v004.10.0-final-polish';
 
 export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS };
 export const BUILD_COST_DENARI = P.BUILD_COST * 10;

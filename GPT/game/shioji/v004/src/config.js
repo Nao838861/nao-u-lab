@@ -1,4 +1,4 @@
-export const VERSION = 'v004.9.1-causal-feedback';
+export const VERSION = 'v004.10.0-final-polish';
 
 // 経済エンジンの貨幣値は表示単位の1/10。UIへ出す時だけデナリへ直す。
 export const DENARI_PER_MONEY_UNIT = 10;
@@ -32,6 +32,14 @@ export const JOB_LABELS = Object.freeze({
   charburner: '炭焼', saltworks: '製塩所', quarryman: '採石場',
   miner: '鉱山', collier: '炭鉱', smelter: '製鉄所', smith: '鍛冶屋',
   wheat: '麦農家', veg: '菜園', shepherd: '牧場', rapeseed: '菜種農家',
+});
+
+export const JOB_ICONS = Object.freeze({
+  market: '市', warehouse: '蔵', port: '港',
+  fisher: '魚', fisher2: '粉', logger: '木', woodshop: '具',
+  charburner: '炭', saltworks: '塩', quarryman: '石',
+  miner: '鉱', collier: '煤', smelter: '炉', smith: '鍛',
+  wheat: '麦', veg: '菜', shepherd: '羊', rapeseed: '油',
 });
 
 export const BUILDING_COLORS = Object.freeze({

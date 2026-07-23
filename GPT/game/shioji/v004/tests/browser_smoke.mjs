@@ -20,6 +20,7 @@ class Page {
     this.nextId = 1;
     this.pending = new Map();
     this.errors = [];
+    this.failModuleRequests = false;
   }
 
   async connect() {
@@ -38,6 +39,11 @@ class Page {
       } else if (message.method === 'Runtime.exceptionThrown') {
         this.errors.push(message.params.exceptionDetails.exception?.description
           ?? message.params.exceptionDetails.text);
+      } else if (message.method === 'Fetch.requestPaused' && this.failModuleRequests) {
+        this.send('Fetch.failRequest', {
+          requestId: message.params.requestId,
+          errorReason: 'Failed',
+        }).catch(error => this.errors.push(error.message));
       }
     });
     await this.send('Page.enable');
@@ -73,6 +79,33 @@ class Page {
   }
 }
 
+async function checkBootFailureRecovery() {
+  const target = await fetch(`${CDP}/json/new?${encodeURIComponent('about:blank')}`, {
+    method: 'PUT',
+  }).then(response => response.json());
+  const page = new Page(target.webSocketDebuggerUrl, target.id);
+  await page.connect();
+  page.failModuleRequests = true;
+  await page.send('Fetch.enable', {
+    patterns: [{ urlPattern: '*src/main.js*', requestStage: 'Request' }],
+  });
+  await page.send('Page.navigate', { url: START_GAME });
+  await wait(500);
+  const failure = await page.evaluate(`({
+    bootState: document.querySelector('#boot-status').dataset.state,
+    bootText: document.querySelector('#boot-status').textContent,
+    startVisible: !document.querySelector('#start-screen').hidden,
+    retryVisible: !document.querySelector('#retry-boot').hidden,
+    gameLoaded: Boolean(window.__SHIOJI_V004__),
+  })`);
+  assert.equal(failure.gameLoaded, false, JSON.stringify(failure));
+  assert.equal(failure.startVisible, true, JSON.stringify(failure));
+  assert.equal(failure.bootState, 'failed', JSON.stringify(failure));
+  assert.equal(failure.retryVisible, true, JSON.stringify(failure));
+  assert.match(failure.bootText, /もう一度読み込/);
+  await page.close();
+}
+
 async function newPage(width, height, mobile, url = GAME) {
   const target = await fetch(`${CDP}/json/new?${encodeURIComponent('about:blank')}`, {
     method: 'PUT',
@@ -80,7 +113,7 @@ async function newPage(width, height, mobile, url = GAME) {
   const page = new Page(target.webSocketDebuggerUrl, target.id);
   await page.connect();
   await page.send('Network.enable');
-  await page.send('Network.setCacheDisabled', { cacheDisabled: true });
+  await page.send('Network.setCacheDisabled', { cacheDisabled: process.env.SHIOJI_CACHE !== '1' });
   await page.send('Emulation.setDeviceMetricsOverride', {
     width,
     height,
@@ -218,6 +251,9 @@ async function checkStartChoice(width, height, mobile, mode) {
       buildingOptions: [...document.querySelectorAll('#building-kind option')].map(option => option.value),
       households: window.__SHIOJI_V004__.model.households.length,
       roads: window.__SHIOJI_V004__.model.roadKeys.length,
+      bootState: document.querySelector('#boot-status').dataset.state,
+      bootText: document.querySelector('#boot-status').textContent,
+      portraitVisible: document.querySelector('.start-story img').getBoundingClientRect().height > 100,
       buildCategories: [...document.querySelectorAll('[data-build-category]')].map(button => button.textContent),
       buildingPalette: [...document.querySelectorAll('[data-building-job]')].map(button => button.textContent),
     };
@@ -226,6 +262,9 @@ async function checkStartChoice(width, height, mobile, mode) {
   assert.deepEqual(launcher.buttonModes, ['tutorial', 'sandbox', 'test']);
   assert.equal(launcher.speed, 0);
   assert.equal(launcher.startMode, 'sandbox');
+  assert.equal(launcher.bootState, 'ready', JSON.stringify(launcher));
+  assert.match(launcher.bootText, /遊び方を選べます/);
+  assert.equal(launcher.portraitVisible, true, JSON.stringify(launcher));
   assert.deepEqual(launcher.buildings, ['port']);
   assert.deepEqual(launcher.buildingOptions.slice(0, 2), ['market', 'warehouse']);
   assert.deepEqual(launcher.buildCategories, ['整備', '流通', '食料', '採取', '加工']);
@@ -295,7 +334,7 @@ async function checkStartChoice(width, height, mobile, mode) {
     await page.screenshot(`/tmp/shioji_v004_tutorial_letter_${mobile ? 'mobile' : 'desktop'}.png`);
     const restoredSpeed = await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
-      document.querySelector('#close-tutorial-letter').click();
+      document.querySelector('#continue-tutorial-letter').click();
       const speed = game.clock.speedIndex;
       game.setSpeed(0);
       return speed;
@@ -343,8 +382,8 @@ async function checkStartChoice(width, height, mobile, mode) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.9.1-causal-feedback');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.9.1-causal-feedback');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.10.0-final-polish');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.10.0-final-polish');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -976,6 +1015,7 @@ if (process.argv.includes('--company-pointer-only')) {
   await checkTutorialCompanyPointerStability();
   console.log('CHARTER ISLE v004 company pointer smoke: PASS');
 } else {
+  await checkBootFailureRecovery();
   await checkStartChoice(1440, 900, false, 'tutorial');
   await checkStartChoice(390, 844, true, 'tutorial');
   await checkStartChoice(390, 844, true, 'sandbox');

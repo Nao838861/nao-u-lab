@@ -1,22 +1,22 @@
 export const START_MODES = Object.freeze({
   tutorial: Object.freeze({
     id: 'tutorial',
-    label: 'チュートリアルから',
+    label: 'エレナと開拓する',
     shortLabel: 'チュートリアル',
     description: '未開拓島で、実際の島況に沿う書状と目標を手がかりに開拓します。',
     blank: true,
   }),
   sandbox: Object.freeze({
     id: 'sandbox',
-    label: 'ゼロから開拓',
+    label: '自分でゼロから開拓',
     shortLabel: '未開拓サンドボックス',
     description: '港だけがある島で、市場・蔵・職建物と道を自分で配置します。',
     blank: true,
   }),
   test: Object.freeze({
     id: 'test',
-    label: 'テスト配置で観察',
-    shortLabel: '安定テスト都市',
+    label: '見本の町を眺める',
+    shortLabel: '見本の町',
     description: 'これまでと同じ、人口・道路・産業が動く検証済みの「見本の町」です。',
     blank: false,
   }),

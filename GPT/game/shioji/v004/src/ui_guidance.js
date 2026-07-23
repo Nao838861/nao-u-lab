@@ -18,6 +18,13 @@ const LETTER_GOALS = new Set([
   'close-fourth-chapter', 'close-fifth-chapter', 'graduate-governor',
 ]);
 
+export const GUIDANCE_TIERS = Object.freeze({
+  stop: Object.freeze({ label: '時間を止めて確認', action: '書状を読む' }),
+  action: Object.freeze({ label: '要対応', action: '対応する' }),
+  guidance: Object.freeze({ label: '今やること', action: '操作へ進む' }),
+  notice: Object.freeze({ label: '報告', action: '詳しく見る' }),
+});
+
 function buildingCount(model, job) {
   return model.buildings.filter(building => building.type === job).length;
 }
@@ -49,6 +56,15 @@ export function objectiveActionFor(objective, model) {
     }
     return { kind: 'building', job: 'veg', label: '菜園を選ぶ' };
   }
+  if (objective.id === 'first-settlers-arrive') {
+    return { kind: 'speed', speed: 3, label: '一日毎秒で入植を待つ' };
+  }
+  if (objective.id === 'accept-first-order' && !model.orderOffer) {
+    return { kind: 'speed', speed: 3, label: '一日毎秒で注文を待つ' };
+  }
+  if (['first-order-procurement', 'complete-first-order'].includes(objective.id)) {
+    return { kind: 'speed', speed: 3, label: '一日毎秒で荷車を待つ' };
+  }
   if (objective.id === 'place-conversion-workshops') {
     for (const job of ['woodshop', 'charburner', 'saltworks']) {
       if (buildingCount(model, job) === 0) {
@@ -78,6 +94,7 @@ export function secretaryRouteFor({
   if (unreadAction) {
     return {
       priority: 'unread-letter',
+      tier: unreadAction.attention === 'critical' ? 'stop' : 'action',
       target: { kind: 'letter', id: unreadAction.id },
       kicker: '未読書状',
       title: unreadAction.title,
@@ -90,10 +107,21 @@ export function secretaryRouteFor({
   if (actionAdvice) {
     return {
       priority: 'timely-advice',
+      tier: 'action',
       target: { kind: 'advice', id: actionAdvice.id, route: actionAdvice.target },
       kicker: actionAdvice.kicker,
       title: actionAdvice.title,
       detail: actionAdvice.detail,
+    };
+  }
+  if (objective && !objective.complete) {
+    return {
+      priority: 'objective',
+      tier: 'guidance',
+      target: objectiveAction ?? { kind: 'objective' },
+      kicker: objective.chapter,
+      title: objective.title,
+      detail: objective.detail,
     };
   }
   const infoAdvice = [...advice].reverse().find(row => (
@@ -102,19 +130,11 @@ export function secretaryRouteFor({
   if (infoAdvice) {
     return {
       priority: 'timely-message',
+      tier: 'notice',
       target: { kind: 'advice', id: infoAdvice.id, route: infoAdvice.target },
       kicker: infoAdvice.kicker,
       title: infoAdvice.title,
       detail: infoAdvice.detail,
-    };
-  }
-  if (objective && !objective.complete) {
-    return {
-      priority: 'objective',
-      target: objectiveAction ?? { kind: 'objective' },
-      kicker: objective.chapter,
-      title: objective.title,
-      detail: objective.detail,
     };
   }
   const unreadNotice = [...letters].reverse().find(letter => (
@@ -123,6 +143,7 @@ export function secretaryRouteFor({
   if (unreadNotice) {
     return {
       priority: 'unread-report',
+      tier: 'notice',
       target: { kind: 'letter', id: unreadNotice.id },
       kicker: '未読の報告',
       title: unreadNotice.title,
@@ -133,6 +154,7 @@ export function secretaryRouteFor({
   if (important) {
     return {
       priority: 'important-event',
+      tier: 'notice',
       target: { kind: 'event', sequence: important.sequence },
       kicker: `${important.day}日目・重要な出来事`,
       title: important.title,

@@ -8,6 +8,7 @@ const SEEDS = process.env.TUTORIAL_PROBE_SEEDS
   ? process.env.TUTORIAL_PROBE_SEEDS.split(':').map(Number)
   : [11];
 const AID_REQUESTS = Number(process.env.TUTORIAL_AID_REQUESTS ?? 1);
+const AUDIT_DAY = Number(process.env.TUTORIAL_AUDIT_DAY ?? 0);
 
 function findPreviewNear(model, job, origin) {
   let best = null;
@@ -198,17 +199,35 @@ function measureSeed(seed) {
     }
   }
 
+  const deathEventsUntilFirstOrder = events.filter(event => event.type === 'death').length;
+  while (AUDIT_DAY > 0 && controller.readModel().day < AUDIT_DAY) advanceDay();
   model = controller.readModel();
   const deaths = events.filter(event => event.type === 'death');
+  const letters = director.letters();
+  const advice = director.advice();
   return {
     seed,
     firstOfferDay,
     firstOfferGoods,
     firstCompletionDay,
     deathEvents: deaths.length,
+    deathEventsUntilFirstOrder,
+    deathDays: deaths.map(event => event.eventDay ?? event.day ?? null),
     population: model.population,
     aidRequests: model.mainlandAid.requests,
     deathReasons: deaths.map(event => event.reason ?? event.cause ?? event.message ?? null),
+    finalDay: model.day,
+    currentObjective: director.currentObjective()?.id ?? null,
+    letterAttention: Object.fromEntries(['critical', 'action', 'notice', 'silent'].map(attention => [
+      attention, letters.filter(letter => letter.attention === attention).length,
+    ])),
+    duplicateLetterIds: letters.length - new Set(letters.map(letter => letter.id)).size,
+    invalidLetterAttention: letters.filter(letter => (
+      !['critical', 'action', 'notice', 'silent'].includes(letter.attention)
+    )).length,
+    advicePriorities: Object.fromEntries(['action', 'info'].map(priority => [
+      priority, advice.filter(row => row.priority === priority).length,
+    ])),
     flowEma: Object.fromEntries(['fish', 'veg', 'log', 'tools'].map(goods => [
       goods, model.flowEma[goods] ?? null,
     ])),
@@ -225,9 +244,16 @@ function measureSeed(seed) {
 
 const rows = SEEDS.map(measureSeed);
 for (const row of rows) console.log(`  early-flow ${JSON.stringify(row)}`);
-assert.equal(rows.every(row => row.deathEvents === 0), true, '教程の表示手順だけで初注文完遂まで餓死ゼロ');
+assert.equal(rows.every(row => row.deathEventsUntilFirstOrder === 0), true,
+  '教程の表示手順だけで初注文完遂まで餓死ゼロ');
 assert.equal(rows.every(row => row.aidRequests === AID_REQUESTS), true, '指定した本国支援回数だけを使う');
 assert.equal(rows.every(row => row.firstOfferDay !== null), true, '全seedで最初の注文状が届く');
 assert.equal(rows.every(row => row.firstOfferGoods === 'tools'), true, '最初の生産適格注文は道具になる');
 assert.equal(rows.every(row => row.firstCompletionDay !== null), true, '全seedで最初の注文を完遂する');
+if (AUDIT_DAY > 0) {
+  assert.equal(rows.every(row => row.finalDay >= AUDIT_DAY), true, `${AUDIT_DAY}日まで同じ島を監査する`);
+  assert.equal(rows.every(row => row.duplicateLetterIds === 0), true, '書状は同一IDを重複発行しない');
+  assert.equal(rows.every(row => row.invalidLetterAttention === 0), true,
+    '長期通知も停止・要対応・報告・非表示の契約に収まる');
+}
 console.log(`${rows.length} seeds tutorial early-flow: PASS`);

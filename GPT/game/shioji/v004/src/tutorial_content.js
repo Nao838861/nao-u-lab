@@ -2,8 +2,8 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js';
-import { JOB_LABELS, toDenari } from './config.js';
+} from './engine_bridge.js?v=v004.10.0-final-polish';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.10.0-final-polish';
 
 const LIVING_REQUIREMENT_LABELS = Object.freeze({
   food1: '食料1種', food2: '食料2種', food3: '食料3種', grain: '穀物',
@@ -884,10 +884,13 @@ export const TUTORIAL_GOALS = Object.freeze([
     title: '市場と食料便を整えて、最初の入植世帯を迎える',
     evaluate({ model }) {
       const households = model.households.filter(household => household.job === 'logger').length;
+      const daysToJudgment = 15 - (model.day % 15);
       return {
         complete: households > 0,
         progress: { done: Number(households > 0), total: 1 },
-        detail: `木こりの入植世帯 ${households}世帯 / 島の人口 ${model.population}人`,
+        detail: households > 0
+          ? `木こりの入植世帯 ${households}世帯 / 島の人口 ${model.population}人`
+          : `入植判定まで最大あと${daysToJudgment}日。市場と支援食料を整えたので、一日毎秒で進められます`,
         evidence: { households, population: model.population },
       };
     },
@@ -965,11 +968,12 @@ export const TUTORIAL_GOALS = Object.freeze([
     evaluate({ model }) {
       const accepted = Boolean(model.activeOrder);
       const offer = model.orderOffer;
+      const daysToJudgment = 15 - (model.day % 15);
       const detail = accepted
         ? `受諾済み: ${goodsLabel(model.activeOrder.g)} ${model.activeOrder.qty}荷`
         : offer
           ? `注文状が届いています: ${goodsLabel(offer.g)} ${offer.qty}荷(${offer.due}日目まで)`
-          : `蔵の道具 ${(model.companyStock?.tools ?? 0).toFixed(1)}荷 / 生産条件を満たす最初の15日区切りを待っています`;
+          : `蔵の道具 ${(model.companyStock?.tools ?? 0).toFixed(1)}荷 / 次の注文判定まで最大あと${daysToJudgment}日。一日毎秒で待てます`;
       return {
         complete: accepted,
         progress: { done: Number(accepted), total: 1 },

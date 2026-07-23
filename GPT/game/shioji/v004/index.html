@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" class="booting">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.9.1-causal-feedback">
+  <link rel="stylesheet" href="./style.css?v=v004.10.0-final-polish">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -55,9 +55,10 @@
     <button id="secretary" class="secretary" type="button" data-testid="secretary">
       <img src="../v002/assets/elena_vance.png" alt="会社秘書エレナ・ヴァンス">
       <span>
-        <small id="secretary-kicker">観測の案内</small>
+        <span class="secretary-meta"><i id="secretary-tier">今やること</i><small id="secretary-kicker">観測の案内</small></span>
         <b id="secretary-title">—</b>
         <em id="secretary-detail">—</em>
+        <strong id="secretary-action">操作へ進む →</strong>
       </span>
     </button>
     <span id="start-mode-label" hidden>—</span>
@@ -191,42 +192,96 @@
   <div id="tutorial-letter-modal" class="tutorial-letter-modal" hidden data-testid="tutorial-letter-modal">
     <article class="tutorial-paper" role="dialog" aria-modal="true" aria-labelledby="tutorial-letter-title">
       <button id="close-tutorial-letter" class="paper-close" type="button" aria-label="書状を閉じる">×</button>
+      <p class="paper-pause"><span aria-hidden="true">Ⅱ</span> この書状を読んでいる間、島の時間は止まっています</p>
       <small id="tutorial-letter-kicker" class="paper-kicker">—</small>
       <h2 id="tutorial-letter-title">—</h2>
       <strong id="tutorial-letter-summary">—</strong>
       <div id="tutorial-letter-body" class="paper-body"></div>
       <footer id="tutorial-letter-signature">—</footer>
+      <button id="continue-tutorial-letter" class="paper-continue" type="button">
+        島を開いて時間を進める
+        <small>閉じると、書状を開く前の速度へ戻ります</small>
+      </button>
     </article>
+  </div>
+
+  <div id="key-hints" class="panel key-hints" aria-label="PC操作ショートカット">
+    <span><kbd>WASD</kbd> 移動</span><span><kbd>Space</kbd> 停止/再開</span>
+    <span><kbd>1–4</kbd> 速度</span><span><kbd>Esc</kbd> 戻る</span>
   </div>
 
   <div id="status" class="panel status" role="status" aria-live="polite">
     <i></i><span>島の営みを観測中</span>
   </div>
 
-  <div id="start-screen" class="start-screen" hidden data-testid="start-screen">
+  <div id="start-screen" class="start-screen" data-testid="start-screen">
     <section class="panel start-dialog" role="dialog" aria-modal="true" aria-labelledby="start-title">
-      <div class="start-seal">CI</div>
-      <small>CHARTER ISLE</small>
-      <h1 id="start-title">島の始め方を選ぶ</h1>
-      <p>同じ島の仕組みを、異なる初期状態から始めます。</p>
-      <div class="start-options">
-        <button type="button" data-start-mode="tutorial">
-          <span><b>チュートリアルから</b><em>案内つき</em></span>
-          <small>未開拓島で、実際の島況に沿う書状と目標を手がかりに開拓します。</small>
-        </button>
-        <button type="button" data-start-mode="sandbox">
-          <span><b>ゼロから開拓</b><em>サンドボックス</em></span>
-          <small>港だけがある島で、市場・蔵・職建物と道を自分で配置します。</small>
-        </button>
-        <button type="button" data-start-mode="test">
-          <span><b>テスト配置で観察</b><em>従来の開始</em></span>
-          <small>人口・道路・産業が動いている、これまでと同じ検証済み都市です。</small>
-        </button>
+      <div class="start-story" aria-hidden="true">
+        <img src="../v002/assets/elena_vance.png" alt="">
+        <div class="start-story-copy">
+          <small>勅許会社からの着任書</small>
+          <b>島の暮らしを、<br>一つずつ結んでください。</b>
+          <p>道を敷き、働く場所をつくり、島の変化を見届ける。数字の理由は私、エレナがお伝えします。</p>
+        </div>
+      </div>
+      <div class="start-choice">
+        <div class="start-seal">CI</div>
+        <small>CHARTER ISLE</small>
+        <h1 id="start-title">潮路の島をはじめる</h1>
+        <p>初めてなら、案内つきがおすすめです。同じ仕組みを別の始め方でも遊べます。</p>
+        <div id="boot-status" class="boot-status" role="status" aria-live="polite">
+          <i></i><span>ゲームを準備しています…</span>
+          <button id="retry-boot" type="button" hidden onclick="location.reload()">もう一度読み込む</button>
+        </div>
+        <div class="start-options">
+          <button class="start-primary" type="button" data-start-mode="tutorial">
+            <span><b>エレナと開拓する</b><em>初めての方へ</em></span>
+            <small>港だけの島から、道・食料・市場・本国注文まで順に進めます。</small>
+          </button>
+          <button type="button" data-start-mode="sandbox">
+            <span><b>自分でゼロから開拓</b><em>自由プレイ</em></span>
+            <small>説明を待たず、港だけの島を好きな順で育てます。</small>
+          </button>
+          <button type="button" data-start-mode="test">
+            <span><b>見本の町を眺める</b><em>すぐ観察</em></span>
+            <small>人、荷車、産業がすでに動く町から、島の仕組みを眺めます。</small>
+          </button>
+        </div>
       </div>
     </section>
   </div>
 
   <noscript>このゲームにはJavaScriptが必要です。</noscript>
-  <script type="module" src="./src/main.js?v=v004.9.1-causal-feedback"></script>
+  <script>
+    (() => {
+      const status = () => document.querySelector('#boot-status');
+      const setState = (state, message) => {
+        const node = status();
+        if (!node) return;
+        node.dataset.state = state;
+        node.querySelector('span').textContent = message;
+        node.querySelector('#retry-boot').hidden = state !== 'failed';
+      };
+      const timeout = window.setTimeout(() => {
+        if (!window.__SHIOJI_V004__) setState('failed', '読み込みが完了しませんでした。通信を確認して、もう一度お試しください。');
+      }, 8000);
+      window.__SHIOJI_BOOT__ = Object.freeze({
+        ready() {
+          window.clearTimeout(timeout);
+          document.documentElement.classList.remove('booting');
+          setState('ready', '遊び方を選べます');
+        },
+        failed() {
+          window.clearTimeout(timeout);
+          setState('failed', '新しい版を読み込めませんでした。もう一度読み込んでください。');
+        },
+      });
+      window.addEventListener('error', () => {
+        if (!window.__SHIOJI_V004__) window.__SHIOJI_BOOT__.failed();
+      });
+    })();
+  </script>
+  <script id="game-module" type="module" src="./src/main.js?v=v004.10.0-final-polish"
+    onerror="window.__SHIOJI_BOOT__?.failed()"></script>
 </body>
 </html>

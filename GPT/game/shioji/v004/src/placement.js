@@ -1,4 +1,4 @@
-import { BUILDING_SIZES } from './config.js';
+import { BUILDING_SIZES } from './config.js?v=v004.10.0-final-polish';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

@@ -1,4 +1,4 @@
-import { snapshotToViewModel } from './view_model.js';
+import { snapshotToViewModel } from './view_model.js?v=v004.10.0-final-polish';
 
 export function createViewController(api) {
   if (!api?.snapshot || !api?.advanceTicks || !api?.applyOperation) {

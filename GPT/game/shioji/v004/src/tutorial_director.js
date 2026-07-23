@@ -2,7 +2,7 @@ import {
   TUTORIAL_ADVICE, TUTORIAL_GOALS, TUTORIAL_LETTERS, TUTORIAL_LETTER_ATTENTION,
   TUTORIAL_PLAYER_TITLES, TUTORIAL_SYSTEM_INSTRUCTIONS,
   isRequiredTutorialGoal,
-} from './tutorial_content.js';
+} from './tutorial_content.js?v=v004.10.0-final-polish';
 
 const SAVE_VERSION = 1;
 
