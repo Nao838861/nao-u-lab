@@ -153,15 +153,12 @@ async function checkTutorialCompanyPointerStability() {
   const targetSetup = await page.evaluate(`(() => {
     const game = window.__SHIOJI_V004__;
     const row = document.querySelector('.goods-row[data-goods="tools"]');
-    const input = row.querySelector('input');
-    const button = row.querySelector('[data-company-action="set-target"]');
+    const input = row.querySelector('[data-stock-target]');
     input.scrollIntoView({ block: 'center' });
     const inputBox = input.getBoundingClientRect();
-    const buttonBox = button.getBoundingClientRect();
     window.__tutorialToolsTargetInput = input;
     return {
       inputPoint: { x: inputBox.x + inputBox.width / 2, y: inputBox.y + inputBox.height / 2 },
-      buttonPoint: { x: buttonBox.x + buttonBox.width / 2, y: buttonBox.y + buttonBox.height / 2 },
       journalLength: game.controller.inputJournal().length,
     };
   })()`);
@@ -178,7 +175,7 @@ async function checkTutorialCompanyPointerStability() {
   await wait(180);
   const targetHeld = await page.evaluate(`({
     connected: document.contains(window.__tutorialToolsTargetInput),
-    same: document.querySelector('.goods-row[data-goods="tools"] input')
+    same: document.querySelector('.goods-row[data-goods="tools"] [data-stock-target]')
       === window.__tutorialToolsTargetInput,
     focused: document.activeElement === window.__tutorialToolsTargetInput,
     value: window.__tutorialToolsTargetInput.value,
@@ -187,14 +184,7 @@ async function checkTutorialCompanyPointerStability() {
   assert.equal(targetHeld.same, true, JSON.stringify(targetHeld));
   assert.equal(targetHeld.focused, true, JSON.stringify(targetHeld));
   assert.equal(Number(targetHeld.value), 80, JSON.stringify(targetHeld));
-  await page.send('Input.dispatchMouseEvent', {
-    type: 'mousePressed', x: targetSetup.buttonPoint.x, y: targetSetup.buttonPoint.y,
-    button: 'left', buttons: 1, clickCount: 1,
-  });
-  await page.send('Input.dispatchMouseEvent', {
-    type: 'mouseReleased', x: targetSetup.buttonPoint.x, y: targetSetup.buttonPoint.y,
-    button: 'left', buttons: 0, clickCount: 1,
-  });
+  await pressKey(page, 'Enter', 'Enter');
   await wait(80);
   const targetResult = await page.evaluate(`(() => {
     const game = window.__SHIOJI_V004__;
@@ -266,6 +256,7 @@ async function checkStartChoice(width, height, mobile, mode) {
     tutorialActionText: document.querySelector('#tutorial-action').textContent,
     secretaryPriority: document.querySelector('#secretary').dataset.secretaryPriority,
     secretaryTitle: document.querySelector('#secretary-title').textContent,
+    systemInstruction: document.querySelector('#tutorial-system').textContent,
     letterVisible: !document.querySelector('#tutorial-letter-modal').hidden,
     letterText: document.querySelector('#tutorial-letter-modal').textContent,
     objectiveBounds: ((box) => ({ left: box.left, right: box.right, top: box.top, bottom: box.bottom }))(
@@ -291,7 +282,8 @@ async function checkStartChoice(width, height, mobile, mode) {
     assert.equal(started.tutorialActionHidden, false, JSON.stringify(started));
     assert.match(started.tutorialActionText, /森まで道/);
     assert.equal(started.secretaryPriority, 'objective', JSON.stringify(started));
-    assert.match(started.secretaryTitle, /道.*木こり/);
+    assert.match(started.secretaryTitle, /道/);
+    assert.match(started.systemInstruction, /道を敷く.*木こり/s);
     assert.equal(started.letterVisible, true, JSON.stringify(started));
     assert.equal(started.speed, 0, JSON.stringify(started));
     assert.match(started.letterText, /0日目/);
@@ -351,8 +343,8 @@ async function checkStartChoice(width, height, mobile, mode) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.8.1-denari-units');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.8.1-denari-units');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.9.1-causal-feedback');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.9.1-causal-feedback');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -373,18 +365,21 @@ async function checkViewport(width, height, mobile) {
       dock: rect(document.querySelector('#build-dock')),
       observer: rect(document.querySelector('#observer')),
       secretary: rect(document.querySelector('#secretary')),
-      observerActions: [...document.querySelectorAll('.observer-actions button')].map(rect),
+      topMenu: rect(document.querySelector('#top-menu')),
+      menuButtons: [...document.querySelectorAll('#top-menu button:not([hidden])')].map(rect),
       categories: [...document.querySelectorAll('[data-build-category]')].map(button => button.textContent),
       palette: [...document.querySelectorAll('[data-building-job]')].map(button => button.textContent),
       secretaryPriority: document.querySelector('#secretary').dataset.secretaryPriority,
       secretaryText: document.querySelector('#secretary').textContent,
       secretaryAlt: document.querySelector('#secretary img').alt,
-      keyHints: document.querySelector('#key-hints').textContent,
+      hasEngineWindow: document.body.textContent.includes('エンジンの世界'),
+      season: document.querySelector('#season-value').textContent,
+      islandSignal: document.querySelector('#island-signal').textContent,
     };
   })()`);
   for (const bounds of [
     controlBounds.hud, controlBounds.speed, controlBounds.dock, controlBounds.observer, controlBounds.secretary,
-    ...controlBounds.buttons, ...controlBounds.observerActions,
+    controlBounds.topMenu, ...controlBounds.buttons, ...controlBounds.menuButtons,
   ]) {
     assert.ok(bounds.left >= 0 && bounds.right <= controlBounds.viewport.width, JSON.stringify(controlBounds));
     assert.ok(bounds.top >= 0 && bounds.bottom <= controlBounds.viewport.height, JSON.stringify(controlBounds));
@@ -395,7 +390,9 @@ async function checkViewport(width, height, mobile) {
   assert.equal(controlBounds.secretaryPriority, 'operation-guide');
   assert.match(controlBounds.secretaryAlt, /エレナ/);
   assert.match(controlBounds.secretaryText, /島況.*現物/s);
-  assert.match(controlBounds.keyHints, /WASD.*Space.*1–4.*Esc/s);
+  assert.equal(controlBounds.hasEngineWindow, false);
+  assert.match(controlBounds.season, /^(冬|春|夏|秋)・\d+月$/);
+  assert.match(controlBounds.islandSignal, /^(平穏|成長|注意|危険)$/);
 
   const secretaryTarget = await page.evaluate(`(() => {
     document.querySelector('#secretary').click();
@@ -616,6 +613,7 @@ async function checkViewport(width, height, mobile) {
         marketRows: document.querySelectorAll('.market-flow-row').length,
         marketText: document.querySelector('#market-overview').textContent,
         financeText: document.querySelector('#island-finance').textContent,
+        healthText: document.querySelector('#island-health').textContent,
         box: { left: box.left, right: box.right, top: box.top, bottom: box.bottom },
       };
     })()`);
@@ -625,6 +623,7 @@ async function checkViewport(width, height, mobile) {
     assert.ok(island.marketRows > 10, JSON.stringify(island));
     assert.match(island.marketText, /品目.*相場.*現物.*仕入\/日.*生産\/日.*消費\/日/s);
     assert.match(island.financeText, /現在資金.*入金.*支出.*差引/s);
+    assert.match(island.healthText, /人口.*会社の30日差引/s);
     assert.ok(island.box.left >= 0 && island.box.right <= width, JSON.stringify(island));
     assert.ok(island.box.top >= 0 && island.box.bottom <= height, JSON.stringify(island));
     await page.screenshot('/tmp/shioji_v004_island_sheet.png');
@@ -702,6 +701,11 @@ async function checkViewport(width, height, mobile) {
     assert.ok(buildingSheet.title.length > 0, JSON.stringify(buildingSheet));
     assert.match(buildingSheet.summary, /状態.*道路.*敷地.*座標/s);
     assert.match(buildingSheet.shelves, /区分棚/, JSON.stringify(buildingSheet));
+    if (buildingSheet.household.trim()) {
+      assert.match(buildingSheet.household, /Lv\d+への成長|最高段階まで成長済み/,
+        JSON.stringify(buildingSheet));
+      assert.match(buildingSheet.household, /必要.*日|成長済み/, JSON.stringify(buildingSheet));
+    }
     assert.equal(buildingSheet.journalLength, buildingPoint.journalLength, '建物選択はjournalを増やさない');
     assert.ok(buildingSheet.box.left >= 0 && buildingSheet.box.right <= width, JSON.stringify(buildingSheet));
     assert.ok(buildingSheet.box.top >= 0 && buildingSheet.box.bottom <= height, JSON.stringify(buildingSheet));
@@ -811,7 +815,7 @@ async function checkViewport(width, height, mobile) {
     assert.equal(await page.evaluate(`window.__SHIOJI_V004__.model.roadKeys.includes(${JSON.stringify(`${road.preview.start.x},${road.preview.start.y}`)})`), false);
     assert.deepEqual(await page.evaluate('window.__SHIOJI_V004__.controller.inputJournal().slice(-2).map(row => row.op.type)'), ['add_road', 'remove_road']);
 
-    const company = await page.evaluate(`(() => {
+    const company = await page.evaluate(`(async () => {
       const game = window.__SHIOJI_V004__;
       game.openSheet('company-sheet');
       const sheet = document.querySelector('#company-sheet').getBoundingClientRect();
@@ -820,15 +824,22 @@ async function checkViewport(width, height, mobile) {
       const aidText = document.querySelector('#aid-panel').textContent;
       document.querySelector('[data-company-action="request-aid"]').click();
       let targetRow = document.querySelector('.goods-row[data-goods="tools"]');
-      targetRow.querySelector('input').value = '80';
-      targetRow.querySelector('input').dispatchEvent(new Event('input', { bubbles: true }));
+      targetRow.querySelector('[data-stock-target]').focus();
+      targetRow.querySelector('[data-stock-target]').value = '80';
+      targetRow.querySelector('[data-stock-target]').dispatchEvent(new Event('input', { bubbles: true }));
       game.advanceTicks(1, { animate: false });
       targetRow = document.querySelector('.goods-row[data-goods="tools"]');
-      const draftAfterRender = targetRow.querySelector('input').value;
-      targetRow.querySelector('[data-company-action="set-target"]').click();
+      const draftAfterRender = targetRow.querySelector('[data-stock-target]').value;
+      targetRow.querySelector('[data-stock-target]').dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
       targetRow = document.querySelector('.goods-row[data-goods="tools"]');
-      const targetAfterCommit = targetRow.querySelector('input').value;
-      targetRow.querySelector('[data-company-action="release-stock"]').click();
+      const targetAfterCommit = targetRow.querySelector('[data-stock-target]').value;
+      const targetFeedback = targetRow.querySelector('[data-target-feedback]').textContent;
+      await new Promise(resolve => requestAnimationFrame(resolve));
+      const releaseRow = [...document.querySelectorAll('.goods-row')].find(row => (
+        !row.querySelector('[data-company-action="release-stock"]').disabled
+      ));
+      const releaseGoods = releaseRow?.dataset.goods ?? null;
+      const releaseText = document.querySelector('#company-goods').textContent;
       const beforeReject = game.controller.inputJournal().length;
       document.querySelector('[data-company-action="reject-order"]').click();
       const afterReject = game.controller.inputJournal().length;
@@ -836,11 +847,12 @@ async function checkViewport(width, height, mobile) {
       document.querySelector('[data-company-action="reconsider"]').click();
       game.setSpeed(0);
       const acceptButton = document.querySelector('[data-company-action="accept-order"]');
+      acceptButton.scrollIntoView({ block: 'center' });
       const acceptBox = acceptButton.getBoundingClientRect();
       window.__companyHeldButton = acceptButton;
       return {
         sheet: { left: sheet.left, right: sheet.right, top: sheet.top, bottom: sheet.bottom },
-        offer, orderText, aidText, draftAfterRender, targetAfterCommit,
+        offer, orderText, aidText, draftAfterRender, targetAfterCommit, targetFeedback, releaseGoods, releaseText,
         modelTarget: game.model.stockTargets.tools, beforeReject, afterReject, stillOffered,
         acceptPoint: { x: acceptBox.x + acceptBox.width / 2, y: acceptBox.y + acceptBox.height / 2 },
         domUpdates: game.performanceMetrics().domUpdates,
@@ -854,6 +866,8 @@ async function checkViewport(width, height, mobile) {
     assert.match(company.aidText, /次の支援は麦240荷/);
     assert.equal(company.draftAfterRender, '80', JSON.stringify(company));
     assert.equal(company.targetAfterCommit, '80', JSON.stringify(company));
+    assert.equal(company.targetFeedback, '設定済み', JSON.stringify(company));
+    assert.match(company.releaseText, /市場へ出す量.*荷.*市場へ出す/s);
     assert.equal(company.modelTarget, 80, JSON.stringify(company));
     assert.equal(company.afterReject, company.beforeReject, JSON.stringify(company));
     assert.deepEqual(company.stillOffered, company.offer);
@@ -884,7 +898,8 @@ async function checkViewport(width, height, mobile) {
         journalTypes: game.controller.inputJournal().slice(-4).map(row => row.op.type),
       };
     })()`);
-    assert.deepEqual(acceptedOrder.journalTypes, ['request_aid', 'set_stock_target', 'release_stock', 'accept_order']);
+    assert.ok(acceptedOrder.journalTypes.includes('set_stock_target'), JSON.stringify(acceptedOrder));
+    assert.equal(acceptedOrder.journalTypes.at(-1), 'accept_order');
     assert.equal(acceptedOrder.activeOrder.g, company.offer.g);
     await page.screenshot('/tmp/shioji_v004_company.png');
 

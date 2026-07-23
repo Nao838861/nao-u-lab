@@ -1,6 +1,9 @@
 export {
+  LADDER,
   MAINLAND_AID,
+  P,
   companyStockReleasePrice,
+  householdClass,
   productionCost,
 } from '../../engine/src/econ.js';
 import { P } from '../../engine/src/econ.js';

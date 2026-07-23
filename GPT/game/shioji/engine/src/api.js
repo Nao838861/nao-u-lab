@@ -157,17 +157,31 @@ export function createEngineApi(
   const captureEvents = () => {
     if (!captureEventStream) return;
     const { economy, physical } = world.state;
-    const nextHouseholds = new Map();
     const newcomers = [];
     const memberDecreases = [];
-    const trackedSurs = new Set(
-      [...tracker.households.values()].map((previous) => previous.sur).filter(Boolean),
-    );
+    const seenHouseholds = new Set();
+    let trackedSurs = null;
     for (const household of economy.households) {
+      seenHouseholds.add(household.id);
       const point = { x: household.px ?? household.x, y: household.py ?? household.y };
       const previous = tracker.households.get(household.id);
-      if (!previous) newcomers.push({ household, point });
-      else {
+      if (!previous) {
+        if (trackedSurs === null) {
+          trackedSurs = new Set(
+            [...tracker.households.values()].map((row) => row.sur).filter(Boolean),
+          );
+        }
+        newcomers.push({ household, point });
+        tracker.households.set(household.id, {
+          state: household.state,
+          members: household.members.length,
+          sur: household.sur,
+          job: household.job,
+          buildingId: household.buildingId,
+          x: point.x,
+          y: point.y,
+        });
+      } else {
         if (household.members.length > previous.members) {
           emit("birth", point, { householdId: household.id, count: household.members.length - previous.members });
         } else if (household.members.length < previous.members) {
@@ -198,21 +212,21 @@ export function createEngineApi(
             });
           }
         }
+        previous.state = household.state;
+        previous.members = household.members.length;
+        previous.sur = household.sur;
+        previous.job = household.job;
+        previous.buildingId = household.buildingId;
+        previous.x = point.x;
+        previous.y = point.y;
       }
-      nextHouseholds.set(household.id, {
-        state: household.state,
-        members: household.members.length,
-        sur: household.sur,
-        job: household.job,
-        buildingId: household.buildingId,
-        x: point.x,
-        y: point.y,
-      });
     }
     // 家督分家は「人数減+同tickに同じ家名の新世帯」で識別し、死亡と区別して報告する
-    const newcomerBySur = new Map(newcomers.map(({ household }) => [household.sur, household.id]));
+    const newcomerBySur = memberDecreases.length
+      ? new Map(newcomers.map(({ household }) => [household.sur, household.id]))
+      : null;
     for (const { household, point, lost } of memberDecreases) {
-      const splitTo = newcomerBySur.get(household.sur);
+      const splitTo = newcomerBySur?.get(household.sur);
       if (splitTo !== undefined) {
         emit("departure", point, {
           householdId: household.id,
@@ -227,12 +241,13 @@ export function createEngineApi(
     for (const { household, point } of newcomers) {
       emit("arrival", point, {
         householdId: household.id,
-        reason: trackedSurs.has(household.sur) ? "successor" : "new_household",
+        reason: trackedSurs?.has(household.sur) ? "successor" : "new_household",
       });
     }
     for (const [householdId, previous] of tracker.households) {
-      if (!nextHouseholds.has(householdId)) {
+      if (!seenHouseholds.has(householdId)) {
         emit("death", previous, { householdId, reason: "household_removed" });
+        tracker.households.delete(householdId);
       }
     }
 
@@ -243,7 +258,11 @@ export function createEngineApi(
       }
     }
 
-    const nextHauls = new Map(tracker.activeHauls);
+    let nextHauls = tracker.activeHauls;
+    const mutableHauls = () => {
+      if (nextHauls === tracker.activeHauls) nextHauls = new Map(tracker.activeHauls);
+      return nextHauls;
+    };
     for (const [jobId, job] of tracker.activeHauls) {
       if (job.status !== "completed") continue;
       emit("arrival", buildingPoint(physical, job.to.buildingId, job.carrier.position), {
@@ -252,7 +271,7 @@ export function createEngineApi(
         qty: job.qty,
         carrier: job.carrier.mode,
       });
-      nextHauls.delete(jobId);
+      mutableHauls().delete(jobId);
     }
     for (const job of physical.haulJobs.slice(tracker.haulCount)) {
       emit("departure", buildingPoint(physical, job.from.buildingId, job.carrier.position), {
@@ -268,11 +287,15 @@ export function createEngineApi(
           qty: job.qty,
           carrier: job.carrier.mode,
         });
-      } else nextHauls.set(job.id, job);
+      } else mutableHauls().set(job.id, job);
     }
 
     const port = buildingById(physical, physical.roleBuildingIds?.port);
-    const nextPortCalls = new Map(tracker.activePortCalls);
+    let nextPortCalls = tracker.activePortCalls;
+    const mutablePortCalls = () => {
+      if (nextPortCalls === tracker.activePortCalls) nextPortCalls = new Map(tracker.activePortCalls);
+      return nextPortCalls;
+    };
     for (const [callId, previous] of tracker.activePortCalls) {
       const { call } = previous;
       if (call.remaining < previous.remaining - 1e-9) {
@@ -283,8 +306,11 @@ export function createEngineApi(
           qty: previous.remaining - call.remaining,
         });
       }
-      if (call.status === "docked") nextPortCalls.set(callId, { call, remaining: call.remaining });
-      else nextPortCalls.delete(callId);
+      if (call.status === "docked") {
+        if (call.remaining !== previous.remaining) {
+          mutablePortCalls().set(callId, { call, remaining: call.remaining });
+        }
+      } else mutablePortCalls().delete(callId);
     }
     for (const call of physical.portCalls.slice(tracker.portCallCount)) {
       emit("docking", port?.entrance ?? economy.port, {
@@ -293,7 +319,9 @@ export function createEngineApi(
         goods: call.goods,
         qty: call.qty,
       });
-      if (call.status === "docked") nextPortCalls.set(call.id, { call, remaining: call.remaining });
+      if (call.status === "docked") {
+        mutablePortCalls().set(call.id, { call, remaining: call.remaining });
+      }
     }
 
     const newEconomyEvents = economy.events.slice(tracker.economyEventCount);
@@ -306,7 +334,7 @@ export function createEngineApi(
     }
 
     tracker = {
-      households: nextHouseholds,
+      households: tracker.households,
       economyEventCount: economy.events.length,
       priceCounts: Object.fromEntries(Object.entries(economy.prices).map(([goods, rows]) => [
         goods,
@@ -449,7 +477,17 @@ export function createEngineApi(
       return jsonClone(world.state);
     },
     events({ afterSequence = 0 } = {}) {
-      return jsonClone(stream.filter(({ sequence }) => sequence > afterSequence));
+      if (!stream.length || afterSequence >= stream.at(-1).sequence) return [];
+      if (afterSequence < stream[0].sequence) return jsonClone(stream);
+      // sequence の欠番や将来の履歴切詰めにも耐える、最初の未読位置の二分探索。
+      let low = 0;
+      let high = stream.length;
+      while (low < high) {
+        const middle = (low + high) >>> 1;
+        if (stream[middle].sequence <= afterSequence) low = middle + 1;
+        else high = middle;
+      }
+      return jsonClone(stream.slice(low));
     },
     inputJournal() {
       return jsonClone(journal);

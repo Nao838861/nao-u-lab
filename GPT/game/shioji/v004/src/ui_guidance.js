@@ -70,7 +70,7 @@ export function objectiveActionFor(objective, model) {
 }
 
 export function secretaryRouteFor({
-  letters = [], objective = null, objectiveAction = null, events = [], fallback = null,
+  letters = [], advice = [], objective = null, objectiveAction = null, events = [], fallback = null,
 } = {}) {
   const unreadAction = [...letters].reverse().find(letter => (
     letter.unread && letter.attention !== 'notice' && letter.attention !== 'silent'
@@ -82,6 +82,30 @@ export function secretaryRouteFor({
       kicker: '未読書状',
       title: unreadAction.title,
       detail: `${unreadAction.issuedDay}日目・${unreadAction.summary}`,
+    };
+  }
+  const actionAdvice = [...advice].reverse().find(row => (
+    row.unread && !row.completed && row.priority === 'action'
+  ));
+  if (actionAdvice) {
+    return {
+      priority: 'timely-advice',
+      target: { kind: 'advice', id: actionAdvice.id, route: actionAdvice.target },
+      kicker: actionAdvice.kicker,
+      title: actionAdvice.title,
+      detail: actionAdvice.detail,
+    };
+  }
+  const infoAdvice = [...advice].reverse().find(row => (
+    row.unread && !row.completed && row.priority === 'info'
+  ));
+  if (infoAdvice) {
+    return {
+      priority: 'timely-message',
+      target: { kind: 'advice', id: infoAdvice.id, route: infoAdvice.target },
+      kicker: infoAdvice.kicker,
+      title: infoAdvice.title,
+      detail: infoAdvice.detail,
     };
   }
   if (objective && !objective.complete) {
@@ -112,7 +136,7 @@ export function secretaryRouteFor({
       target: { kind: 'event', sequence: important.sequence },
       kicker: `${important.day}日目・重要な出来事`,
       title: important.title,
-      detail: important.details || `tick ${important.tick}`,
+      detail: important.details || `${important.day}日目の出来事`,
     };
   }
   return fallback;

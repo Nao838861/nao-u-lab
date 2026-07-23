@@ -16,9 +16,9 @@ import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './place
 import { WorldPresentation } from './presentation.js';
 import { Renderer } from './renderer.js';
 import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js';
-import { createTutorialDirectorForMode } from './tutorial_director.js';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js';
 import { objectiveActionFor, secretaryRouteFor } from './ui_guidance.js';
-import { recentCompanySummary } from './ui_summary.js';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -30,7 +30,8 @@ const renderer = new Renderer(canvas, camera);
 const clock = new SimulationClock({ speedIndex: requestedStartMode ? 1 : 0 });
 let model = controller.readModel();
 const tutorialDirector = createTutorialDirectorForMode(startMode);
-tutorialDirector?.observe(model, []);
+const guidanceDirector = tutorialDirector ?? createTutorialDirector({ goals: [], letters: [] });
+guidanceDirector.observe(model, []);
 const presentation = new WorldPresentation(model);
 let displayModel = presentation.reset(model);
 let lastEventSequence = 0;
@@ -55,7 +56,21 @@ let companyMouseInteraction = false;
 let companyInteractionReleasePending = false;
 let companyEditingInput = null;
 const stockTargetDrafts = new Map();
-const uiMetrics = { domUpdates: 0, displayBatches: 0, batchedTicks: 0 };
+const stockTargetFeedback = new Map();
+const stockReleaseDrafts = new Map();
+const renderSignatures = new Map();
+const economyHistory = [];
+const stockReleaseDays = [];
+const HISTORY_DAYS = 180;
+const CHART_FOOD_GOODS = new Set(['fish', 'veg', 'wheat', 'pres', 'pick', 'meat']);
+const uiMetrics = {
+  domUpdates: 0,
+  domWrites: 0,
+  componentRenders: 0,
+  componentSkips: 0,
+  displayBatches: 0,
+  batchedTicks: 0,
+};
 camera.setWorldSize(model.width, model.height);
 if (START_MODES[startMode].blank) camera.focus(model.economyMarket.x + 0.5, model.economyMarket.y + 0.5);
 
@@ -73,6 +88,99 @@ function escapeHtml(value) {
   })[character]);
 }
 
+function renderIfChanged(key, signature, render) {
+  if (renderSignatures.get(key) === signature) {
+    uiMetrics.componentSkips += 1;
+    return false;
+  }
+  renderSignatures.set(key, signature);
+  render();
+  uiMetrics.componentRenders += 1;
+  return true;
+}
+
+function setTextIfChanged(target, value) {
+  const element = typeof target === 'string' ? $(target) : target;
+  const text = String(value);
+  if (!element || element.textContent === text) return false;
+  element.textContent = text;
+  uiMetrics.domWrites += 1;
+  return true;
+}
+
+function setHiddenIfChanged(target, hidden) {
+  const element = typeof target === 'string' ? $(target) : target;
+  if (!element || element.hidden === Boolean(hidden)) return false;
+  element.hidden = Boolean(hidden);
+  uiMetrics.domWrites += 1;
+  return true;
+}
+
+function totalForGoods(rows, goodsSet) {
+  return rows.reduce((total, row) => goodsSet.has(row.goods) ? total + row.totalAmount : total, 0);
+}
+
+function recordEconomyHistory(currentModel) {
+  const food = Object.entries(currentModel.flowEma).reduce((totals, [goods, flow]) => {
+    if (!CHART_FOOD_GOODS.has(goods)) return totals;
+    totals.imported += flow.imp ?? 0;
+    totals.produced += flow.prod ?? 0;
+    totals.consumed += flow.cons ?? 0;
+    return totals;
+  }, { imported: 0, produced: 0, consumed: 0 });
+  const row = {
+    day: currentModel.day,
+    foodImported: food.imported,
+    foodProduced: food.produced,
+    foodConsumed: food.consumed,
+    foodStock: totalForGoods(currentModel.goodsManifest, CHART_FOOD_GOODS),
+    companyFoodStock: Object.entries(currentModel.companyStock).reduce(
+      (total, [goods, qty]) => CHART_FOOD_GOODS.has(goods) ? total + qty : total, 0,
+    ),
+    population: currentModel.population,
+    cash: toDenari(currentModel.companyMoney),
+    net: toDenari(currentModel.companyLedger
+      .filter(entry => entry.day === currentModel.day)
+      .reduce((total, entry) => total + entry.amount, 0)),
+    prices: Object.fromEntries(Object.entries(currentModel.marketPrices).map(([goods, price]) => [goods, toDenari(price)])),
+  };
+  if (economyHistory.at(-1)?.day === row.day) economyHistory[economyHistory.length - 1] = row;
+  else economyHistory.push(row);
+  while (economyHistory.length > HISTORY_DAYS) economyHistory.shift();
+}
+
+function linePath(rows, accessor, { width = 320, height = 112, minValue = 0, maxValue = null } = {}) {
+  if (!rows.length) return '';
+  const values = rows.map(accessor).filter(Number.isFinite);
+  const min = Math.min(minValue, ...values);
+  const max = maxValue ?? Math.max(min + 1, ...values);
+  const left = 28;
+  const right = width - 7;
+  const top = 7;
+  const bottom = height - 18;
+  return rows.map((row, index) => {
+    const value = accessor(row);
+    const x = rows.length === 1 ? left : left + (index / (rows.length - 1)) * (right - left);
+    const y = bottom - ((value - min) / Math.max(1e-9, max - min)) * (bottom - top);
+    return `${index ? 'L' : 'M'}${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+}
+
+function chartMarkup(rows, series, { includeZero = true } = {}) {
+  if (rows.length < 2) {
+    return '<text x="160" y="58" text-anchor="middle" class="chart-axis-label">日が進むと線になります</text>';
+  }
+  const values = series.flatMap(row => rows.map(row.value)).filter(Number.isFinite);
+  const min = includeZero ? Math.min(0, ...values) : Math.min(...values);
+  const max = Math.max(min + 1, ...values);
+  const grid = '<path d="M28 7V94H313 M28 50.5H313" class="chart-grid"/>';
+  const labels = `<text x="2" y="11" class="chart-axis-label">${formatQuantity(max)}</text><text x="2" y="94" class="chart-axis-label">${formatQuantity(min)}</text><text x="28" y="108" class="chart-axis-label">${rows[0].day}日</text><text x="313" y="108" text-anchor="end" class="chart-axis-label">${rows.at(-1).day}日</text>`;
+  const paths = series.map(row => `<path d="${linePath(rows, row.value, { minValue: min, maxValue: max })}" class="chart-line ${row.className}"/>`).join('');
+  return `${grid}${labels}${paths}`;
+}
+
+recordEconomyHistory(model);
+
 const HOUSEHOLD_STATE_LABELS = Object.freeze({
   home: '在宅', toMarket: '市場へ移動中', atMarket: '市場で取引中',
   fromMarket: '帰宅中', working: '仕事中', toWork: '仕事場へ移動中',
@@ -87,7 +195,7 @@ const SATISFACTION_LABELS = Object.freeze({
 function showToast(row) {
   const toast = document.createElement('div');
   toast.className = `toast ${row.tone}`;
-  toast.innerHTML = `<b>${row.title}</b><span>${row.details || `${row.day}日目 tick ${row.tick}`}</span>`;
+  toast.innerHTML = `<b>${row.title}</b><span>${row.details || `${row.day}日目の知らせ`}</span>`;
   $('#toast-stack').append(toast);
   while ($('#toast-stack').children.length > 4) $('#toast-stack').firstElementChild.remove();
   setTimeout(() => toast.remove(), 5200);
@@ -98,10 +206,11 @@ function appendEvents(events, { allowToasts = true } = {}) {
   eventLog.push(...rows);
   if (eventLog.length > 100) eventLog.splice(0, eventLog.length - 100);
   if (allowToasts) {
-    const important = rows.filter(row => row.important).slice(-4);
-    for (const row of important) showToast(row);
-  } else if (rows.some(row => row.important)) {
-    showToast({ title: '早送り中の重要イベント', details: `${rows.filter(row => row.important).length}件を出来事へ記録`, tone: 'warn' });
+    const notices = rows.filter(row => !row.important && (
+      ['docking', 'birth', 'inheritance'].includes(row.type)
+      || (row.type === 'notice' && ['neutral', 'good'].includes(row.tone))
+    )).slice(-2);
+    for (const row of notices) showToast(row);
   }
   if (!$('#event-sheet').hidden) renderEventSheet();
 }
@@ -117,27 +226,42 @@ function refreshModel({ animate = false, baseSeconds = 0.12 } = {}) {
   if (animate) presentation.enqueue(nextModel, events, baseSeconds);
   else displayModel = presentation.reset(nextModel);
   model = nextModel;
-  tutorialDirector?.observe(model, events);
+  recordEconomyHistory(model);
+  guidanceDirector.observe(model, events);
   return events;
 }
 
 function renderHud() {
   uiMetrics.domUpdates += 1;
   syncSelectedBuilding();
-  $('#build-version').textContent = `Build ${VERSION}`;
-  $('#start-mode-label').textContent = START_MODES[startMode].shortLabel;
-  $('#funds-value').textContent = formatNumber(toDenari(model.companyMoney));
-  $('#day-value').textContent = `${model.day}日目`;
-  $('#tick-value').textContent = `tick ${model.tick}`;
-  $('#population-value').textContent = `${formatNumber(model.population)}人`;
-  $('#world-size').textContent = `${model.width}×${model.height}`;
-  $('#building-count').textContent = `${model.buildings.length}棟`;
-  $('#carrier-count').textContent = `${model.carriers.length}`;
-  $('#trail-count').textContent = `${model.trailRows.length}区画`;
-  $('#stock-count').textContent = formatNumber(model.totalVisibleStock);
-  $('#event-count').textContent = formatNumber(visibleEventCount);
-  document.querySelectorAll('[data-speed]').forEach(button => {
-    button.classList.toggle('on', Number(button.dataset.speed) === clock.speedIndex);
+  setTextIfChanged('#build-version', VERSION);
+  setTextIfChanged('#start-mode-label', START_MODES[startMode].shortLabel);
+  setTextIfChanged('#funds-value', formatNumber(toDenari(model.companyMoney)));
+  setTextIfChanged('#day-value', `${model.day}日目`);
+  const calendar = islandCalendar(model.day);
+  setTextIfChanged('#season-value', calendar.label);
+  setTextIfChanged('#population-value', `${formatNumber(model.population)}人`);
+  setTextIfChanged('#event-count', formatNumber(visibleEventCount));
+  const health = islandHealthSummary(model, economyHistory);
+  const signal = $('#island-signal');
+  const shortHealth = health.tone === 'danger' ? '危険'
+    : health.tone === 'warning' ? '注意' : health.tone === 'good' ? '成長' : '平穏';
+  setTextIfChanged(signal, shortHealth);
+  renderIfChanged('island-signal-tone', health.tone, () => {
+    signal.dataset.tone = health.tone;
+    $('#open-island').title = `${health.label}。${health.reason}`;
+    uiMetrics.domWrites += 1;
+  });
+  const selected = selectedBuildingId !== null;
+  if ($('#open-building').disabled === selected) {
+    $('#open-building').disabled = !selected;
+    uiMetrics.domWrites += 1;
+  }
+  renderIfChanged('hud-speed', String(clock.speedIndex), () => {
+    document.querySelectorAll('[data-speed]').forEach(button => {
+      button.classList.toggle('on', Number(button.dataset.speed) === clock.speedIndex);
+    });
+    uiMetrics.domWrites += 1;
   });
   renderBuildDock();
   if (!$('#company-sheet').hidden && !isEditableTarget(document.activeElement)) renderCompanySheet();
@@ -239,8 +363,24 @@ function initializeBuildDock() {
   }
 }
 
+function initializeHistoryGoods() {
+  const select = $('#history-goods');
+  for (const [goods, label] of Object.entries(GOODS_LABELS)) {
+    const option = document.createElement('option');
+    option.value = goods;
+    option.textContent = label;
+    select.append(option);
+  }
+  select.value = 'tools';
+}
+
 function renderBuildDock() {
   const category = BUILD_CATEGORIES.find(row => row.id === activeBuildCategory) ?? BUILD_CATEGORIES[1];
+  const signature = [category.id, activeTool, $('#building-kind').value, recommendedBuildingJob].join('|');
+  if (!renderIfChanged('build-dock', signature, () => renderBuildDockContents(category))) return;
+}
+
+function renderBuildDockContents(category) {
   document.querySelectorAll('[data-build-category]').forEach(button => {
     const selected = button.dataset.buildCategory === category.id;
     button.classList.toggle('on', selected);
@@ -277,9 +417,11 @@ function renderBuildDock() {
     button.append(icon, name, facts);
     palette.append(button);
   }
+  uiMetrics.domWrites += 1;
 }
 
 initializeBuildDock();
+initializeHistoryGoods();
 
 function worldTile(screenPoint) {
   const point = camera.unproject(screenPoint.x, screenPoint.y);
@@ -386,17 +528,11 @@ function applyEngineOperation(operation, successMessage, failureMessage) {
     renderHud();
     const ok = result?.ok ?? true;
     $('#status span').textContent = ok ? successMessage : failureMessage;
-    showToast({
-      title: ok ? '操作を記録しました' : '操作できません',
-      details: ok ? successMessage : failureMessage,
-      tone: ok ? 'good' : 'bad',
-    });
     return result;
   } catch (error) {
     refreshModel({ animate: false });
     renderHud();
     $('#status span').textContent = error.message;
-    showToast({ title: '操作できません', details: error.message, tone: 'bad' });
     return { ok: false, error: error.message };
   }
 }
@@ -597,69 +733,118 @@ function orderKey(order) {
 
 function renderAidPanel() {
   const aid = model.mainlandAid ?? { requests: 0, refused: false, nextQty: 240 };
-  $('#aid-panel').innerHTML = aid.refused
-    ? `<h3>本国の食料支援</h3><p>度重なる要請(${aid.requests}回)に本国の心象は冷え、支援は望めません。</p>`
-    : `<h3>本国の食料支援</h3>
-       <p>これまでの要請 ${aid.requests}回・次の支援は麦${aid.nextQty}荷。重ねるほど本国の心象を損ね、量は減っていきます。</p>
-       <div class="order-actions"><button type="button" data-company-action="request-aid">支援を要請する</button></div>`;
+  renderIfChanged('company-aid', `${aid.requests}|${aid.refused}|${aid.nextQty}`, () => {
+    $('#aid-panel').innerHTML = aid.refused
+      ? `<h3>本国の食料支援</h3><p>度重なる要請(${aid.requests}回)に本国の心象は冷え、支援は望めません。</p>`
+      : `<h3>本国の食料支援</h3>
+         <p>これまでの要請 ${aid.requests}回・次の支援は麦${aid.nextQty}荷。重ねるほど本国の心象を損ね、量は減っていきます。</p>
+         <div class="order-actions"><button type="button" data-company-action="request-aid">支援を要請する</button></div>`;
+    uiMetrics.domWrites += 1;
+  });
 }
-function renderCompanySheet() {
-  if (companyInteractionPointers.size > 0
-    || companyMouseInteraction || companyInteractionReleasePending) return;
-  $('#company-balance').textContent = formatNumber(toDenari(model.companyMoney));
-  renderAidPanel();
+
+function renderCompanyOrder() {
   const offer = model.orderOffer;
   const active = model.activeOrder;
-  if (active) {
-    $('#order-panel').innerHTML = `
-      <h3>受諾済みの本国注文</h3>
-      <p><b>${GOODS_LABELS[active.g] ?? active.g} ${formatQuantity(active.left)} / ${formatQuantity(active.qty)}荷</b></p>
-      <p>期限 ${active.due}日目・完遂決済単価 ${formatQuantity(active.price * 1.25 * 10)}デナリ（注文基準 ${formatQuantity(active.price * 10)}）</p>`;
-  } else if (offer && dismissedOfferKey === orderKey(offer)) {
-    $('#order-panel').innerHTML = `
-      <h3>注文状を見送り中</h3>
-      <p>${GOODS_LABELS[offer.g] ?? offer.g} ${formatQuantity(offer.qty)}荷。エンジン状態と入力ジャーナルは変更していません。</p>
-      <div class="order-actions"><button type="button" data-company-action="reconsider">再検討する</button></div>`;
-  } else if (offer) {
-    const cheapest = model.marketLowest[offer.g];
-    const marketText = Number.isFinite(cheapest)
-      ? `${formatQuantity(cheapest * 10)}デナリ`
-      : '市場在庫なし';
-    $('#order-panel').innerHTML = `
-      <h3>本国から注文状</h3>
-      <p><b>${GOODS_LABELS[offer.g] ?? offer.g} ${formatQuantity(offer.qty)}荷</b>・期限 ${offer.due}日目</p>
-      <p>完遂決済単価 ${formatQuantity(offer.price * 1.25 * 10)}デナリ（注文基準 ${formatQuantity(offer.price * 10)}） / 市場最安 ${marketText}</p>
-      <div class="order-actions">
-        <button class="accept" type="button" data-company-action="accept-order">受諾する</button>
-        <button class="reject" type="button" data-company-action="reject-order">拒否する</button>
-      </div>`;
-  } else {
-    $('#order-panel').innerHTML = '<h3>本国注文</h3><p>現在届いている注文状はありません。</p>';
-  }
+  const signature = JSON.stringify({
+    day: model.day, offer, active, dismissedOfferKey, lowest: offer ? model.marketLowest[offer.g] : null,
+  });
+  renderIfChanged('company-order', signature, () => {
+    if (active) {
+      const shipped = Math.max(0, active.qty - active.left);
+      const daysLeft = Math.max(0, active.due - model.day);
+      $('#order-panel').innerHTML = `
+        <h3>受諾済みの本国注文</h3>
+        <p><b>${GOODS_LABELS[active.g] ?? active.g}・納品済み ${formatQuantity(shipped)} / ${formatQuantity(active.qty)}荷</b></p>
+        <p class="order-progress">残り <b>${formatQuantity(active.left)}荷</b>・期限まで <b>あと${daysLeft}日</b>（${active.due}日目まで）</p>
+        <p>全量を期限内に納めた時だけ完遂です。船が出ても残りがあれば注文は続きます。</p>
+        <p>完遂決済単価 ${formatQuantity(active.price * 1.25 * 10)}デナリ（注文基準 ${formatQuantity(active.price * 10)}）</p>`;
+    } else if (offer && dismissedOfferKey === orderKey(offer)) {
+      $('#order-panel').innerHTML = `
+        <h3>注文状を見送り中</h3>
+        <p>${GOODS_LABELS[offer.g] ?? offer.g} ${formatQuantity(offer.qty)}荷。島の状態と操作記録は変えず、期限まで観察できます。</p>
+        <div class="order-actions"><button type="button" data-company-action="reconsider">再検討する</button></div>`;
+    } else if (offer) {
+      const cheapest = model.marketLowest[offer.g];
+      const marketText = Number.isFinite(cheapest)
+        ? `${formatQuantity(cheapest * 10)}デナリ`
+        : '市場在庫なし';
+      $('#order-panel').innerHTML = `
+        <h3>本国から注文状</h3>
+        <p><b>${GOODS_LABELS[offer.g] ?? offer.g} ${formatQuantity(offer.qty)}荷</b>・期限 ${offer.due}日目</p>
+        <p>完遂決済単価 ${formatQuantity(offer.price * 1.25 * 10)}デナリ（注文基準 ${formatQuantity(offer.price * 10)}） / 市場最安 ${marketText}</p>
+        <div class="order-actions">
+          <button class="accept" type="button" data-company-action="accept-order">受諾する</button>
+          <button class="reject" type="button" data-company-action="reject-order">拒否する</button>
+        </div>`;
+    } else {
+      $('#order-panel').innerHTML = '<h3>本国注文</h3><p>現在届いている注文状はありません。</p>';
+    }
+    uiMetrics.domWrites += 1;
+  });
+}
 
-  $('#company-goods').innerHTML = Object.keys(GOODS_LABELS).map(goods => {
-    const targetValue = stockTargetDrafts.has(goods)
-      ? stockTargetDrafts.get(goods) : Math.round(model.stockTargets[goods] ?? 0);
-    return `
-      <div class="goods-row" data-goods="${goods}">
-        <span>${GOODS_LABELS[goods]}<small> 在庫${formatQuantity(model.companyStock[goods] ?? 0)}</small></span>
-        <input type="number" min="0" step="1" value="${escapeHtml(targetValue)}" aria-label="${GOODS_LABELS[goods]}の買上げ目標">
-        <button type="button" data-company-action="set-target" data-goods="${goods}">目標設定</button>
-        <button type="button" data-company-action="release-stock" data-goods="${goods}">16蔵出し</button>
-      </div>`;
-  }).join('');
+function renderCompanyGoods() {
+  const signature = JSON.stringify(Object.keys(GOODS_LABELS).map(goods => [
+    goods,
+    model.companyStock[goods] ?? 0,
+    model.stockTargets[goods] ?? 0,
+    model.companyStockAverageCosts[goods] ?? null,
+    model.companyStockReleaseQuotes[goods] ?? null,
+    stockTargetDrafts.get(goods) ?? null,
+    stockReleaseDrafts.get(goods) ?? null,
+    stockTargetFeedback.get(goods) ?? null,
+  ]));
+  renderIfChanged('company-goods', signature, () => {
+    $('#company-goods').innerHTML = Object.keys(GOODS_LABELS).map(goods => {
+      const stock = model.companyStock[goods] ?? 0;
+      const target = Math.round(model.stockTargets[goods] ?? 0);
+      const targetValue = stockTargetDrafts.has(goods) ? stockTargetDrafts.get(goods) : target;
+      const dirty = stockTargetDrafts.has(goods) && Number(targetValue) !== target;
+      const releaseValue = stockReleaseDrafts.has(goods)
+        ? stockReleaseDrafts.get(goods) : Math.min(16, Math.floor(stock));
+      const averageCost = model.companyStockAverageCosts[goods];
+      const releaseQuote = model.companyStockReleaseQuotes[goods];
+      const feedback = stockTargetFeedback.get(goods) ?? (dirty ? '未反映' : '');
+      return `
+        <div class="goods-row${dirty ? ' dirty' : ''}" data-goods="${goods}">
+          <span class="goods-identity"><b>${GOODS_LABELS[goods]}</b><small>蔵 ${formatQuantity(stock)}荷</small></span>
+          <label class="target-editor"><span>買上げ目標</span><input data-stock-target type="number" min="0" step="1" value="${escapeHtml(targetValue)}" aria-label="${GOODS_LABELS[goods]}の買上げ目標"><small data-target-feedback>${escapeHtml(feedback)}</small></label>
+          <div class="release-quote"><small>平均仕入 ${Number.isFinite(averageCost) ? `${formatQuantity(toDenari(averageCost))}D/荷` : '—'}</small><small>市場へ出す希望単価 ${Number.isFinite(releaseQuote) ? `${formatQuantity(toDenari(releaseQuote))}D/荷` : '—'}</small></div>
+          <label class="release-editor"><span>市場へ出す量</span><input data-release-qty type="number" min="1" max="${Math.max(1, Math.floor(stock))}" step="1" value="${escapeHtml(releaseValue)}" aria-label="${GOODS_LABELS[goods]}を市場へ出す量"><small>荷</small></label>
+          <button type="button" data-company-action="release-stock" data-goods="${goods}" ${stock < 1 ? 'disabled' : ''}>市場へ出す</button>
+        </div>`;
+    }).join('');
+    uiMetrics.domWrites += 1;
+  });
+}
+
+function renderCompanySheet() {
+  if (companyInteractionPointers.size > 0
+    || companyMouseInteraction || companyInteractionReleasePending || companyEditingInput) return;
+  setTextIfChanged('#company-balance', formatNumber(toDenari(model.companyMoney)));
+  renderAidPanel();
+  renderCompanyOrder();
+  renderCompanyGoods();
   const ledger = model.companyLedger.slice(-24).reverse();
-  $('#company-ledger').innerHTML = ledger.length ? ledger.map(row => `
-    <div class="ledger-row"><small>${row.day}日</small><span>${row.reason}</span><b class="${row.amount >= 0 ? 'plus' : 'minus'}">${row.amount >= 0 ? '+' : ''}${formatQuantity(toDenari(row.amount))}</b></div>`).join('')
-    : '<p class="sheet-note">まだ記帳はありません。</p>';
+  renderIfChanged('company-ledger', JSON.stringify(ledger), () => {
+    $('#company-ledger').innerHTML = ledger.length ? ledger.map(row => `
+      <div class="ledger-row"><small>${row.day}日</small><span>${row.reason}</span><b class="${row.amount >= 0 ? 'plus' : 'minus'}">${row.amount >= 0 ? '+' : ''}${formatQuantity(toDenari(row.amount))}</b></div>`).join('')
+      : '<p class="sheet-note">まだ記帳はありません。</p>';
+    uiMetrics.domWrites += 1;
+  });
 }
 
 function renderEventSheet() {
-  $('#event-log').innerHTML = eventLog.length ? [...eventLog].reverse().map(row => `
-    <button type="button" class="event-row ${row.tone}" data-event-sequence="${row.sequence}">
-      <b><span>${row.title}</span><span>${row.day}日 / ${row.tick}</span></b>
-      <small>${row.details || `座標 ${formatQuantity(row.x)}, ${formatQuantity(row.y)}`}</small>
-    </button>`).join('') : '<p class="sheet-note">まだ出来事はありません。</p>';
+  const signature = `${eventLog.length}|${eventLog.at(-1)?.sequence ?? 0}`;
+  renderIfChanged('event-log', signature, () => {
+    $('#event-log').innerHTML = eventLog.length ? [...eventLog].reverse().map(row => `
+      <button type="button" class="event-row ${row.tone}" data-event-sequence="${row.sequence}">
+        <b><span>${row.title}</span><span>${row.day}日 / ${row.tick}刻</span></b>
+        <small>${row.details || `座標 ${formatQuantity(row.x)}, ${formatQuantity(row.y)}`}</small>
+      </button>`).join('') : '<p class="sheet-note">まだ出来事はありません。</p>';
+    uiMetrics.domWrites += 1;
+  });
 }
 
 function renderTutorial() {
@@ -668,31 +853,40 @@ function renderTutorial() {
   const objective = tutorialDirector?.currentObjective() ?? null;
   const objectivePanel = $('#tutorial-objective');
   const letterButton = $('#open-tutorial-letters');
-  objectivePanel.hidden = !objective || Boolean(tutorialDirector?.isComplete());
-  objectivePanel.classList.toggle('complete', Boolean(objective?.complete));
-  letterButton.hidden = !available || Boolean(state?.skipped);
+  setHiddenIfChanged(objectivePanel, !objective || Boolean(tutorialDirector?.isComplete()));
+  renderIfChanged('tutorial-complete-class', String(Boolean(objective?.complete)), () => {
+    objectivePanel.classList.toggle('complete', Boolean(objective?.complete));
+    uiMetrics.domWrites += 1;
+  });
+  setHiddenIfChanged(letterButton, !available || Boolean(state?.skipped));
   currentTutorialAction = objectiveActionFor(objective, model);
   recommendedBuildingJob = currentTutorialAction?.kind === 'building'
     ? currentTutorialAction.job : null;
   const actionButton = $('#tutorial-action');
-  actionButton.hidden = !currentTutorialAction;
-  actionButton.textContent = currentTutorialAction?.label ?? '次の操作';
+  setHiddenIfChanged(actionButton, !currentTutorialAction);
+  setTextIfChanged(actionButton, currentTutorialAction?.label ?? '次の操作');
   renderBuildDock();
-  if (state?.skipped) $('#start-mode-label').textContent = '自由プレイ（案内終了）';
-  else if (tutorialDirector?.isComplete()) $('#start-mode-label').textContent = '自由プレイ（教程完了）';
+  if (state?.skipped) setTextIfChanged('#start-mode-label', '自由プレイ（案内終了）');
+  else if (tutorialDirector?.isComplete()) setTextIfChanged('#start-mode-label', '自由プレイ（教程完了）');
   if (objective) {
-    $('#tutorial-chapter').textContent = objective.chapter;
-    $('#tutorial-goal').textContent = objective.title;
-    $('#tutorial-detail').textContent = objective.detail;
-    $('#tutorial-progress').textContent = `${objective.progress.done} / ${objective.progress.total}`;
-    $('#tutorial-progress-bar').max = objective.progress.total;
-    $('#tutorial-progress-bar').value = objective.progress.done;
+    setTextIfChanged('#tutorial-chapter', objective.chapter);
+    setTextIfChanged('#tutorial-goal', objective.title);
+    setTextIfChanged('#tutorial-detail', objective.detail);
+    setTextIfChanged($('#tutorial-system strong'), objective.systemInstruction);
+    setHiddenIfChanged('#tutorial-system', !objective.systemInstruction);
+    setTextIfChanged('#tutorial-progress', `${objective.progress.done} / ${objective.progress.total}`);
+    const progress = $('#tutorial-progress-bar');
+    if (progress.max !== objective.progress.total || progress.value !== objective.progress.done) {
+      progress.max = objective.progress.total;
+      progress.value = objective.progress.done;
+      uiMetrics.domWrites += 1;
+    }
   }
   if (!available) return;
   const letters = tutorialDirector.letters();
   const unread = letters.filter(letter => letter.unread && letter.attention !== 'silent').length;
-  $('#tutorial-unread').hidden = unread === 0 || Boolean(state?.skipped);
-  $('#tutorial-unread').textContent = String(unread);
+  setHiddenIfChanged('#tutorial-unread', unread === 0 || Boolean(state?.skipped));
+  setTextIfChanged('#tutorial-unread', String(unread));
   if (!$('#tutorial-letter-sheet').hidden) renderTutorialLetterSheet();
   const critical = letters.find(letter => letter.unread && letter.attention === 'critical');
   if (critical && openTutorialLetterId === null) openTutorialLetter(critical.id);
@@ -723,21 +917,31 @@ function renderSecretary() {
   const objective = tutorialDirector?.currentObjective() ?? null;
   currentSecretaryRoute = secretaryRouteFor({
     letters: tutorialDirector?.letters() ?? [],
+    advice: guidanceDirector.advice(),
     objective: tutorialDirector?.isComplete() ? null : objective,
     objectiveAction: currentTutorialAction,
     events: eventLog,
     fallback: secretaryFallback(),
   });
-  const button = $('#secretary');
-  button.dataset.secretaryPriority = currentSecretaryRoute.priority;
-  $('#secretary-kicker').textContent = currentSecretaryRoute.kicker;
-  $('#secretary-title').textContent = currentSecretaryRoute.title;
-  $('#secretary-detail').textContent = currentSecretaryRoute.detail;
+  const signature = JSON.stringify(currentSecretaryRoute);
+  renderIfChanged('secretary', signature, () => {
+    const button = $('#secretary');
+    button.dataset.secretaryPriority = currentSecretaryRoute.priority;
+    setTextIfChanged('#secretary-kicker', currentSecretaryRoute.kicker);
+    setTextIfChanged('#secretary-title', currentSecretaryRoute.title);
+    setTextIfChanged('#secretary-detail', currentSecretaryRoute.detail);
+  });
 }
 
 function performGuidanceAction(action) {
   if (!action) return false;
   if (action.kind === 'building') activateBuildingJob(action.job);
+  else if (action.kind === 'building-detail') {
+    const building = model.buildings.find(row => row.id === action.buildingId);
+    if (!building) return false;
+    selectBuilding(building.id);
+    camera.focus(building.x + building.width / 2, building.y + building.height / 2);
+  }
   else if (action.kind === 'tool') activateGroundTool(action.tool);
   else if (action.kind === 'sheet') openSheet(action.sheet);
   else if (action.kind === 'objective') {
@@ -759,6 +963,14 @@ function followSecretaryRoute() {
   const target = currentSecretaryRoute?.target;
   if (!target) return false;
   if (target.kind === 'letter') return openTutorialLetter(target.id);
+  if (target.kind === 'advice') {
+    guidanceDirector.markAdviceRead(target.id);
+    const handled = target.route?.kind === 'event'
+      ? focusEvent(eventLog.find(row => row.sequence === target.route.sequence))
+      : target.route ? performGuidanceAction(target.route) : true;
+    renderSecretary();
+    return handled;
+  }
   if (target.kind === 'event') {
     return focusEvent(eventLog.find(row => row.sequence === target.sequence));
   }
@@ -767,6 +979,13 @@ function followSecretaryRoute() {
 
 function renderTutorialLetterSheet() {
   const letters = tutorialDirector?.letters() ?? [];
+  const signature = JSON.stringify(letters.map(letter => [
+    letter.id, letter.unread, letter.attention, letter.title, letter.summary,
+  ]));
+  if (!renderIfChanged('tutorial-letter-list', signature, () => renderTutorialLetterSheetContents(letters))) return;
+}
+
+function renderTutorialLetterSheetContents(letters) {
   const list = $('#tutorial-letter-list');
   list.replaceChildren();
   if (!letters.length) {
@@ -793,6 +1012,7 @@ function renderTutorialLetterSheet() {
     button.append(kind, heading, summary);
     list.append(button);
   }
+  uiMetrics.domWrites += 1;
 }
 
 function renderBuildingSheet() {
@@ -800,6 +1020,21 @@ function renderBuildingSheet() {
   if (!building) return false;
   const household = model.households.find(row => row.id === building.ownerHouseholdId) ?? null;
   const connection = model.roadConnection?.buildings?.find(row => row.id === building.id);
+  const selectedConversion = model.conversionEconomics.find(row => row.buildingId === building.id) ?? null;
+  const signature = JSON.stringify({
+    building,
+    household,
+    connection,
+    conversion: selectedConversion,
+    companyStock: building.roles?.includes('warehouse') ? model.companyStock : null,
+    companyCosts: building.roles?.includes('warehouse') ? model.companyStockAverageCosts : null,
+  });
+  if (renderSignatures.get('building-sheet') === signature) {
+    uiMetrics.componentSkips += 1;
+    return true;
+  }
+  renderSignatures.set('building-sheet', signature);
+  uiMetrics.componentRenders += 1;
   const hasMarket = model.buildings.some(row => row.roles?.includes('market'));
   const companyLogistics = building.roles?.some(role => role === 'market' || role === 'warehouse');
   const status = building.fixed ? '会社の固定施設'
@@ -826,6 +1061,22 @@ function renderBuildingSheet() {
       ? Object.entries(household.satisfaction).map(([key, met]) => (
         `<span class="${met ? 'met' : ''}">${escapeHtml(SATISFACTION_LABELS[key] ?? GOODS_LABELS[key] ?? key)}</span>`
       )).join('') : '<span>未観測</span>';
+    const growth = household.cultureGrowth;
+    const nextNeed = growth?.nextRequirement
+      ? (SATISFACTION_LABELS[growth.nextRequirement] ?? growth.nextRequirement) : null;
+    const missingKeep = growth?.missingForCurrent?.map(
+      key => SATISFACTION_LABELS[key] ?? key,
+    ) ?? [];
+    const growthPercent = growth?.requiredDays > 0
+      ? Math.min(100, growth.upDays / growth.requiredDays * 100) : 100;
+    const growthMarkup = growth ? `
+      <div class="culture-growth" data-state="${missingKeep.length ? 'falling' : growth.nextSatisfied ? 'rising' : 'waiting'}">
+        <b>${nextNeed ? `Lv${growth.level + 1}への成長` : '最高段階まで成長済み'}</b>
+        ${nextNeed ? `<span>次に必要: ${escapeHtml(nextNeed)}（今日は${growth.nextSatisfied ? '満たしています' : '不足'}）</span>
+          <i><i style="width:${growthPercent.toFixed(1)}%"></i></i>
+          <small>${growth.upDays}/${growth.requiredDays}日。必要な暮らしが続くと建物も成長します。不足日は進みが3日ぶん戻ります。</small>` : ''}
+        ${missingKeep.length ? `<small class="culture-danger">現在Lvの維持に不足: ${escapeHtml(missingKeep.join('・'))}。不足が${growth.downgradeDays}日続くとLvが下がります（現在${growth.downDays}日）。</small>` : ''}
+      </div>` : '';
     householdPanel.innerHTML = `
       <h3>${family}・${household.members}人</h3>
       <div class="household-vitals">
@@ -837,8 +1088,9 @@ function renderBuildingSheet() {
         <span><small>生産倍率</small><b>${Math.round(household.productionMultiplier * 100)}%</b></span>
       </div>
       <p>家族: ${names}</p>
-      <p>連続空腹 ${household.hungerRun}日・累計歩行 ${formatQuantity(household.walkingDistance)}区画・${household.marketTripActive ? `市場往復 ${household.marketTripTicks}tick` : '市場往復なし'}</p>
-      <div class="satisfaction-list" aria-label="直近の暮らしの充足">${satisfaction}</div>`;
+      <p>連続空腹 ${household.hungerRun}日・累計歩行 ${formatQuantity(household.walkingDistance)}区画・${household.marketTripActive ? `市場往復 ${household.marketTripTicks}時間ぶん` : '市場往復なし'}</p>
+      <div class="satisfaction-list" aria-label="直近の暮らしの充足">${satisfaction}</div>
+      ${growthMarkup}`;
   }
 
   const shelfPanel = $('#building-shelves');
@@ -873,7 +1125,7 @@ function renderBuildingSheet() {
       <button class="focus-building" type="button" data-open-company-stock>買上げ目標・蔵出しを開く</button>`;
   }
 
-  const conversion = model.conversionEconomics.find(row => row.buildingId === building.id) ?? null;
+  const conversion = selectedConversion;
   const conversionPanel = $('#building-conversion');
   conversionPanel.hidden = !conversion;
   if (conversion) {
@@ -884,79 +1136,145 @@ function renderBuildingSheet() {
         <b>→</b>
         <span><small>産出棚</small><b>${escapeHtml(GOODS_LABELS[conversion.goods] ?? conversion.goods)} ${formatQuantity(conversion.outputAmount)}荷</b></span>
       </div>
-      <p>実生産原価 ${formatQuantity(conversion.cost * 10)}デナリ/荷・市場相場 ${formatQuantity(conversion.marketPrice * 10)}デナリ/荷・生産EMA ${formatQuantity(conversion.productionEma)}</p>`;
+      <p>実際にかかった原価 ${formatQuantity(conversion.cost * 10)}デナリ/荷・市場相場 ${formatQuantity(conversion.marketPrice * 10)}デナリ/荷・生産量（1日あたり・30日ならし） ${formatQuantity(conversion.productionEma)}</p>`;
   }
+  uiMetrics.domWrites += 1;
   return true;
 }
 
-function renderIslandSheet() {
-  const manifest = $('#island-manifest');
-  const marketOverview = $('#market-overview');
-  const manifestScroll = manifest.scrollTop;
-  const marketScroll = marketOverview.scrollTop;
-  const finance = recentCompanySummary(model);
-  $('#island-funds').textContent = `${formatNumber(toDenari(finance.funds))} D`;
-  $('#island-income').textContent = `+${formatQuantity(toDenari(finance.income))} D`;
-  $('#island-expense').textContent = `−${formatQuantity(toDenari(finance.expense))} D`;
-  const net = $('#island-net');
-  net.textContent = `${finance.net >= 0 ? '+' : '−'}${formatQuantity(toDenari(Math.abs(finance.net)))} D`;
-  net.classList.toggle('plus', finance.net >= 0);
-  net.classList.toggle('minus', finance.net < 0);
-  manifest.replaceChildren();
-  if (!model.goodsManifest.length) {
-    const empty = document.createElement('p');
-    empty.className = 'sheet-note';
-    empty.textContent = '島内で所在を確認できる現物はありません。';
-    manifest.append(empty);
-  }
-  for (const goodsRow of model.goodsManifest) {
-    const row = document.createElement('article');
-    row.className = 'manifest-row';
-    const heading = document.createElement('b');
-    const name = document.createElement('span');
-    name.textContent = GOODS_LABELS[goodsRow.goods] ?? goodsRow.goods;
-    const total = document.createElement('span');
-    total.textContent = `${formatQuantity(goodsRow.totalAmount)}荷`;
-    heading.append(name, total);
-    const locations = document.createElement('div');
-    locations.className = 'manifest-locations';
-    for (const location of goodsRow.locations) {
-      const locationIndex = model.stockLocations.indexOf(location);
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.dataset.stockLocation = String(locationIndex);
-      const source = document.createElement('span');
-      source.textContent = location.sourceLabel;
-      const amount = document.createElement('b');
-      amount.textContent = `${formatQuantity(location.amount)}荷`;
-      button.append(source, amount);
-      locations.append(button);
-    }
-    row.append(heading, locations);
-    manifest.append(row);
-  }
-
-  const formatObserved = value => Number.isFinite(value) ? formatQuantity(value) : '—';
-  const rows = Object.keys(GOODS_LABELS).map(goods => {
-    const stock = model.goodsManifest.find(row => row.goods === goods)?.totalAmount ?? 0;
-    const flow = model.flowEma[goods] ?? null;
-    const flowCell = (key) => {
-      const value = flow?.[key];
-      const className = Number.isFinite(value) && value > 0.005 ? ' class="active-flow"' : '';
-      return `<span${className}>${formatObserved(value)}</span>`;
-    };
-    return `<div class="market-flow-row">
-      <span>${escapeHtml(GOODS_LABELS[goods])}</span>
-      <span>${Number.isFinite(model.marketPrices[goods]) ? `${formatQuantity(model.marketPrices[goods] * 10)}D` : '—'}</span>
-      <span>${formatQuantity(stock)}</span>
-      ${flowCell('imp')}${flowCell('prod')}${flowCell('cons')}
-    </div>`;
+function stockReleaseMarkerMarkup(rows) {
+  if (rows.length < 2) return '';
+  const first = rows[0].day;
+  const last = rows.at(-1).day;
+  return stockReleaseDays.filter(row => CHART_FOOD_GOODS.has(row.goods)
+    && row.day >= first && row.day <= last).map(row => {
+    const x = 28 + ((row.day - first) / Math.max(1, last - first)) * 285;
+    return `<path d="M${x.toFixed(1)} 7V94" class="chart-release-marker"><title>${row.day}日目 ${GOODS_LABELS[row.goods] ?? row.goods} ${row.qty}荷を蔵出し</title></path>`;
   }).join('');
-  marketOverview.innerHTML = `
-    <div class="market-flow-row header"><span>品目</span><span>相場</span><span>現物</span><span>仕入/日</span><span>生産/日</span><span>消費/日</span></div>
-    ${rows}`;
-  manifest.scrollTop = manifestScroll;
-  marketOverview.scrollTop = marketScroll;
+}
+
+function renderEconomyCharts() {
+  const selectedGoods = $('#history-goods').value || 'tools';
+  const signature = JSON.stringify({ history: economyHistory, selectedGoods, stockReleaseDays });
+  renderIfChanged('economy-charts', signature, () => {
+    const rows = economyHistory;
+    setTextIfChanged('#history-status', rows.length < 2
+      ? '日が進むと線になります。'
+      : `${rows[0].day}日目〜${rows.at(-1).day}日目（このプレイ中の記録）`);
+    $('#food-flow-chart').innerHTML = chartMarkup(rows, [
+      { value: row => row.foodProduced, className: 'line-food-prod' },
+      { value: row => row.foodConsumed, className: 'line-food-cons' },
+      { value: row => row.foodImported, className: 'line-food-imp' },
+    ]);
+    $('#food-stock-chart').innerHTML = chartMarkup(rows, [
+      { value: row => row.foodStock, className: 'line-food-stock' },
+      { value: row => row.companyFoodStock, className: 'line-reserve' },
+    ]) + stockReleaseMarkerMarkup(rows);
+    $('#population-chart').innerHTML = chartMarkup(rows, [
+      { value: row => row.population, className: 'line-population' },
+    ]);
+    $('#finance-chart').innerHTML = chartMarkup(rows, [
+      { value: row => row.cash, className: 'line-cash' },
+      { value: row => row.net, className: 'line-net' },
+    ]);
+    $('#price-chart').innerHTML = chartMarkup(rows, [
+      { value: row => row.prices[selectedGoods] ?? 0, className: 'line-price' },
+    ]);
+    setTextIfChanged('#price-chart-title', `${GOODS_LABELS[selectedGoods] ?? selectedGoods}の相場`);
+    uiMetrics.domWrites += 5;
+  });
+}
+
+function renderIslandFinance() {
+  const health = islandHealthSummary(model, economyHistory);
+  renderIfChanged('island-health', JSON.stringify(health), () => {
+    $('#island-health').dataset.tone = health.tone;
+    setTextIfChanged('#island-health-title', health.label);
+    const population = health.populationDelta === 0 ? '人口は横ばい'
+      : `人口は直近30日ほどで${health.populationDelta > 0 ? '+' : ''}${health.populationDelta}人`;
+    const net = `${health.companyNet >= 0 ? '+' : '−'}${formatQuantity(toDenari(Math.abs(health.companyNet)))}デナリ`;
+    setTextIfChanged('#island-health-detail', `${health.reason}。${population}、会社の30日差引は${net}です。`);
+  });
+  const finance = recentCompanySummary(model);
+  const signature = JSON.stringify(finance);
+  renderIfChanged('island-finance', signature, () => {
+    setTextIfChanged('#island-funds', `${formatNumber(toDenari(finance.funds))} D`);
+    setTextIfChanged('#island-income', `+${formatQuantity(toDenari(finance.income))} D`);
+    setTextIfChanged('#island-expense', `−${formatQuantity(toDenari(finance.expense))} D`);
+    const net = $('#island-net');
+    setTextIfChanged(net, `${finance.net >= 0 ? '+' : '−'}${formatQuantity(toDenari(Math.abs(finance.net)))} D`);
+    net.classList.toggle('plus', finance.net >= 0);
+    net.classList.toggle('minus', finance.net < 0);
+  });
+}
+
+function renderIslandManifest() {
+  const signature = JSON.stringify(model.goodsManifest.map(row => [
+    row.goods, row.totalAmount, row.locations.map(location => [location.sourceLabel, location.amount, location.x, location.y]),
+  ]));
+  renderIfChanged('island-manifest', signature, () => {
+    const manifest = $('#island-manifest');
+    const scroll = manifest.scrollTop;
+    manifest.replaceChildren();
+    if (!model.goodsManifest.length) {
+      const empty = document.createElement('p');
+      empty.className = 'sheet-note';
+      empty.textContent = '島内で所在を確認できる現物はありません。';
+      manifest.append(empty);
+    }
+    for (const goodsRow of model.goodsManifest) {
+      const row = document.createElement('article');
+      row.className = 'manifest-row';
+      const heading = document.createElement('b');
+      const name = document.createElement('span');
+      name.textContent = GOODS_LABELS[goodsRow.goods] ?? goodsRow.goods;
+      const total = document.createElement('span');
+      total.textContent = `${formatQuantity(goodsRow.totalAmount)}荷`;
+      heading.append(name, total);
+      const locations = document.createElement('div');
+      locations.className = 'manifest-locations';
+      for (const location of goodsRow.locations) {
+        const locationIndex = model.stockLocations.indexOf(location);
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.dataset.stockLocation = String(locationIndex);
+        button.innerHTML = `<span>${escapeHtml(location.sourceLabel)}</span><b>${formatQuantity(location.amount)}荷</b>`;
+        locations.append(button);
+      }
+      row.append(heading, locations);
+      manifest.append(row);
+    }
+    manifest.scrollTop = scroll;
+    uiMetrics.domWrites += 1;
+  });
+}
+
+function renderIslandMarket() {
+  const signature = JSON.stringify(Object.keys(GOODS_LABELS).map(goods => [
+    goods, model.marketPrices[goods], model.goodsManifest.find(row => row.goods === goods)?.totalAmount ?? 0,
+    model.flowEma[goods]?.imp, model.flowEma[goods]?.prod, model.flowEma[goods]?.cons,
+  ]));
+  renderIfChanged('island-market', signature, () => {
+    const marketOverview = $('#market-overview');
+    const scroll = marketOverview.scrollTop;
+    const formatObserved = value => Number.isFinite(value) ? formatQuantity(value) : '—';
+    const rows = Object.keys(GOODS_LABELS).map(goods => {
+      const stock = model.goodsManifest.find(row => row.goods === goods)?.totalAmount ?? 0;
+      const flow = model.flowEma[goods] ?? null;
+      const flowCell = key => `<span${Number.isFinite(flow?.[key]) && flow[key] > 0.005 ? ' class="active-flow"' : ''}>${formatObserved(flow?.[key])}</span>`;
+      return `<div class="market-flow-row"><span>${escapeHtml(GOODS_LABELS[goods])}</span><span>${Number.isFinite(model.marketPrices[goods]) ? `${formatQuantity(toDenari(model.marketPrices[goods]))}D` : '—'}</span><span>${formatQuantity(stock)}</span>${flowCell('imp')}${flowCell('prod')}${flowCell('cons')}</div>`;
+    }).join('');
+    marketOverview.innerHTML = `<div class="market-flow-row header"><span>品目</span><span>相場</span><span>現物</span><span>仕入/日</span><span>生産/日</span><span>消費/日</span></div>${rows}`;
+    marketOverview.scrollTop = scroll;
+    uiMetrics.domWrites += 1;
+  });
+}
+
+function renderIslandSheet() {
+  renderIslandFinance();
+  renderEconomyCharts();
+  renderIslandMarket();
+  renderIslandManifest();
 }
 
 function openTutorialLetter(id) {
@@ -978,16 +1296,6 @@ function openTutorialLetter(id) {
     const node = document.createElement('p');
     node.textContent = paragraph;
     body.append(node);
-  }
-  if (!/やること[:：]/.test(letter.body)) {
-    const action = document.createElement('p');
-    action.className = 'paper-action';
-    action.textContent = letter.attention === 'notice'
-      ? 'やること: 操作はありません。この書状は報告です。'
-      : letter.attention === 'critical'
-        ? 'やること: 最重要の知らせです。内容を確認し、現在目標から対応してください。'
-        : 'やること: 書状を閉じ、画面上部の現在目標から次の操作へ進んでください。';
-    body.append(action);
   }
   $('#tutorial-letter-signature').textContent = letter.signature;
   $('#tutorial-letter-modal').hidden = false;
@@ -1024,6 +1332,14 @@ function tutorialSave() {
 function openSheet(id) {
   for (const sheet of document.querySelectorAll('.sheet')) sheet.hidden = sheet.id !== id;
   document.body.classList.add('sheet-open');
+  document.querySelectorAll('#top-menu button').forEach(button => {
+    const target = {
+      'open-company': 'company-sheet', 'open-island': 'island-sheet',
+      'open-building': 'building-sheet', 'open-events': 'event-sheet',
+      'open-tutorial-letters': 'tutorial-letter-sheet',
+    }[button.id];
+    if (target) button.setAttribute('aria-pressed', String(target === id));
+  });
   if (id === 'building-sheet') renderBuildingSheet();
   if (id === 'company-sheet') renderCompanySheet();
   if (id === 'event-sheet') renderEventSheet();
@@ -1037,12 +1353,19 @@ function closeSheet(id) {
   if (![...document.querySelectorAll('.sheet')].some(candidate => !candidate.hidden)) {
     document.body.classList.remove('sheet-open');
   }
+  document.querySelectorAll('#top-menu button[aria-pressed="true"]').forEach(button => {
+    button.setAttribute('aria-pressed', 'false');
+  });
 }
 
 $('#open-company').addEventListener('click', () => openSheet('company-sheet'));
 $('#open-island').addEventListener('click', () => openSheet('island-sheet'));
+$('#open-building').addEventListener('click', () => {
+  if (selectedBuildingId !== null) openSheet('building-sheet');
+});
 $('#open-events').addEventListener('click', () => openSheet('event-sheet'));
 $('#open-tutorial-letters').addEventListener('click', () => openSheet('tutorial-letter-sheet'));
+$('#history-goods').addEventListener('change', renderEconomyCharts);
 document.querySelectorAll('[data-close-sheet]').forEach(button => {
   button.addEventListener('click', () => closeSheet(button.dataset.closeSheet));
 });
@@ -1109,7 +1432,52 @@ companySheet.addEventListener('input', event => {
   if (!(event.target instanceof HTMLInputElement)) return;
   const row = event.target.closest('.goods-row');
   if (!row?.dataset.goods) return;
-  stockTargetDrafts.set(row.dataset.goods, event.target.value);
+  if (event.target.matches('[data-stock-target]')) {
+    stockTargetDrafts.set(row.dataset.goods, event.target.value);
+    stockTargetFeedback.set(row.dataset.goods, '未反映');
+    row.classList.add('dirty');
+    setTextIfChanged(row.querySelector('[data-target-feedback]'), '未反映');
+  } else if (event.target.matches('[data-release-qty]')) {
+    stockReleaseDrafts.set(row.dataset.goods, event.target.value);
+  }
+});
+
+function applyStockTargetInput(input) {
+  const row = input?.closest('.goods-row');
+  const goods = row?.dataset.goods;
+  if (!goods || !input.matches('[data-stock-target]')) return false;
+  const parsed = Number(input.value);
+  if (!Number.isFinite(parsed) || parsed < 0) {
+    stockTargetDrafts.delete(goods);
+    stockTargetFeedback.set(goods, '0以上の数字を入力');
+    input.value = String(Math.round(model.stockTargets[goods] ?? 0));
+    row.classList.remove('dirty');
+    setTextIfChanged(row.querySelector('[data-target-feedback]'), '0以上の数字を入力');
+    return false;
+  }
+  const qty = Math.max(0, Math.round(parsed));
+  if (!stockTargetDrafts.has(goods) && qty === Math.round(model.stockTargets[goods] ?? 0)) return true;
+  const result = applyEngineOperation({ type: 'set_stock_target', goods, qty },
+    `${GOODS_LABELS[goods]}の買上げ目標を${qty}荷にしました`, '目標を設定できません');
+  if (result?.ok === false) {
+    stockTargetFeedback.set(goods, '設定できません');
+    setTextIfChanged(row.querySelector('[data-target-feedback]'), '設定できません');
+    return false;
+  }
+  stockTargetDrafts.delete(goods);
+  stockTargetFeedback.set(goods, '設定済み');
+  input.value = String(qty);
+  row.classList.remove('dirty');
+  row.classList.add('applied');
+  setTextIfChanged(row.querySelector('[data-target-feedback]'), '設定済み');
+  return true;
+}
+
+companySheet.addEventListener('keydown', event => {
+  if (event.key !== 'Enter' || !event.target.matches('[data-stock-target]')) return;
+  event.preventDefault();
+  applyStockTargetInput(event.target);
+  event.target.blur();
 });
 companySheet.addEventListener('pointerdown', event => {
   const control = event.target.closest('button, input, select, textarea');
@@ -1128,6 +1496,7 @@ companySheet.addEventListener('focusin', event => {
 });
 companySheet.addEventListener('focusout', event => {
   if (companyEditingInput !== event.target) return;
+  if (event.target.matches('[data-stock-target]')) applyStockTargetInput(event.target);
   companyEditingInput = null;
   queueCompanyInteractionRelease();
 });
@@ -1196,15 +1565,20 @@ companySheet.addEventListener('click', event => {
     return;
   }
   const goods = button.dataset.goods;
-  if (action === 'set-target') {
-    const input = button.closest('.goods-row').querySelector('input');
-    const qty = Math.max(0, Math.round(Number(input.value) || 0));
-    const result = applyEngineOperation({ type: 'set_stock_target', goods, qty },
-      `${GOODS_LABELS[goods]}の買上げ目標を${qty}にしました`, '目標を設定できません');
-    if (result?.ok !== false) stockTargetDrafts.delete(goods);
-  } else if (action === 'release-stock') {
-    applyEngineOperation({ type: 'release_stock', goods, qty: 16 },
-      `${GOODS_LABELS[goods]}を蔵から市場へ出します`, '蔵出しできる在庫または経路がありません');
+  if (action === 'release-stock') {
+    const input = button.closest('.goods-row').querySelector('[data-release-qty]');
+    const available = Math.floor(model.companyStock[goods] ?? 0);
+    const qty = Math.min(available, Math.max(1, Math.round(Number(input.value) || 0)));
+    if (available < 1 || qty < 1) {
+      $('#status span').textContent = '市場へ出せる会社在庫がありません';
+      return;
+    }
+    const result = applyEngineOperation({ type: 'release_stock', goods, qty },
+      `${GOODS_LABELS[goods]} ${qty}荷を蔵から市場へ運びます`, '蔵出しできる在庫または経路がありません');
+    if (result?.ok !== false) {
+      stockReleaseDrafts.delete(goods);
+      stockReleaseDays.push({ day: model.day, goods, qty });
+    }
   }
   renderCompanySheet();
 });
@@ -1232,11 +1606,11 @@ function selectCarrier(carrier) {
   renderer.selectedCarrierId = carrier.id;
   const goods = carrier.goods ? (GOODS_LABELS[carrier.goods] ?? carrier.goods) : '人の移動';
   const amount = carrier.goods ? ` ${formatQuantity(carrier.amount)}` : ` ${carrier.members ?? carrier.people ?? 1}人`;
-  $('#tracking-label').textContent = `${goods}${amount}`;
-  $('#tracking-route').textContent = `${carrier.from?.label ?? '出所不明'} → ${carrier.to?.label ?? '行き先不明'}`;
-  $('#tracking-kind').textContent = carrier.kind === 'cart' ? '荷車を追跡中' : '徒歩便を追跡中';
-  $('#tracking').hidden = false;
-  $('#status span').textContent = `${goods}の行方を地図上で追跡します`;
+  setTextIfChanged('#tracking-label', `${goods}${amount}`);
+  setTextIfChanged('#tracking-route', `${carrier.from?.label ?? '出所不明'} → ${carrier.to?.label ?? '行き先不明'}`);
+  setTextIfChanged('#tracking-kind', carrier.kind === 'cart' ? '荷車を追跡中' : '徒歩便を追跡中');
+  setHiddenIfChanged('#tracking', false);
+  setTextIfChanged($('#status span'), `${goods}の行方を地図上で追跡します`);
 }
 
 $('#stop-tracking').addEventListener('click', () => stopTracking('追跡を終了しました'));
@@ -1309,6 +1683,9 @@ function performanceMetrics() {
 function resetPerformanceMetrics() {
   controller.resetMetrics();
   uiMetrics.domUpdates = 0;
+  uiMetrics.domWrites = 0;
+  uiMetrics.componentRenders = 0;
+  uiMetrics.componentSkips = 0;
   uiMetrics.displayBatches = 0;
   uiMetrics.batchedTicks = 0;
 }
@@ -1328,6 +1705,7 @@ window.__SHIOJI_V004__ = Object.freeze({
   get secretaryRoute() { return structuredClone(currentSecretaryRoute); },
   get pressedMovementKeys() { return [...pressedMovementKeys]; },
   get eventLog() { return eventLog.map(row => ({ ...row })); },
+  get economyHistory() { return structuredClone(economyHistory); },
   presentation,
   performanceMetrics,
   resetPerformanceMetrics,

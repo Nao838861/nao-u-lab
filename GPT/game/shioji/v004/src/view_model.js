@@ -1,5 +1,7 @@
 import { JOB_LABELS, SECTION_LABELS } from './config.js';
-import { MAINLAND_AID, companyStockReleasePrice, productionCost } from './engine_bridge.js';
+import {
+  LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
+} from './engine_bridge.js';
 import { analyzeRoadConnections } from './placement.js';
 import { buildingAppearance, pileVisual, trailVisual } from './visuals.js';
 
@@ -62,6 +64,25 @@ function groupedStock(rows) {
       visual: pileVisual(totalAmount, primary.goods),
     };
   });
+}
+
+function cultureProgress(household) {
+  const level = household.lv ?? 0;
+  const requirements = LADDER[householdClass(household)] ?? [];
+  const satisfaction = household.satLast ?? {};
+  const nextRequirement = requirements[level] ?? null;
+  const requiredDays = nextRequirement ? P.UP_DAYS * (level + 1) : 0;
+  return {
+    level,
+    upDays: household.up ?? 0,
+    requiredDays,
+    nextRequirement,
+    nextSatisfied: nextRequirement ? Boolean(satisfaction[nextRequirement]) : true,
+    achievedRequirement: level > 0 ? requirements[level - 1] ?? null : null,
+    missingForCurrent: requirements.slice(0, level).filter(key => !satisfaction[key]),
+    downDays: household.down ?? 0,
+    downgradeDays: P.DOWN_DAYS,
+  };
 }
 
 function stockManifest(
@@ -264,6 +285,7 @@ export function snapshotToViewModel(snapshot) {
       homeY: household.y,
       members: household.members?.length ?? 0,
       cultureLevel: household.lv ?? 0,
+      cultureGrowth: cultureProgress(household),
       buildingId: household.buildingId,
       state: household.state,
       marketTripActive: Boolean(household.marketCarrier),
@@ -342,6 +364,10 @@ export function snapshotToViewModel(snapshot) {
     goods,
     qty > 1e-9 ? companyStockReleasePrice(snapshot.economy, goods, { market: true }) : null,
   ]));
+  const companyStockReleaseQuotes = Object.fromEntries(Object.entries(snapshot.economy.stock).map(([goods, qty]) => [
+    goods,
+    qty > 1e-9 ? companyStockReleasePrice(snapshot.economy, goods) : null,
+  ]));
   const conversionEconomics = snapshot.economy.households.flatMap(household => {
     const definition = CONVERSION_JOBS[household.job];
     if (!definition) return [];
@@ -414,6 +440,7 @@ export function snapshotToViewModel(snapshot) {
     companyMarketStock: { ...snapshot.economy.marketStock },
     companyMarketStockAverageCosts,
     companyReleasePrices,
+    companyStockReleaseQuotes,
     conversionEconomics,
     stockTargets: { ...snapshot.economy.stockTgt },
     mainlandAid: (() => {

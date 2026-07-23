@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#143d42">
-  <meta name="description" content="潮路の島の経済エンジンを眺めるクォータービュー都市ゲーム">
+  <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.8.1-denari-units">
+  <link rel="stylesheet" href="./style.css?v=v004.9.1-causal-feedback">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -14,14 +14,21 @@
   <header id="hud" class="panel" data-testid="hud">
     <div class="brand">
       <span class="brand-seal">CI</span>
-      <span><b>CHARTER ISLE</b><small>潮路の島 v004</small></span>
+      <span><b>CHARTER ISLE</b><small>潮路の島 <span id="build-version" data-testid="build-version">—</span></small></span>
     </div>
     <div class="funds hud-stat" data-testid="funds">
       <small>会社資金</small><b id="funds-value">—</b>
     </div>
-    <div class="hud-stat"><small>日付</small><b id="day-value">0日目</b></div>
-    <div class="hud-stat tick-stat"><small>時刻</small><b id="tick-value">tick 0</b></div>
+    <div class="hud-stat calendar-stat"><small>日付</small><b id="day-value">0日目</b><em id="season-value">冬・1月</em></div>
     <div class="hud-stat population-stat"><small>人口</small><b id="population-value">0人</b></div>
+    <nav id="top-menu" class="top-menu" aria-label="情報ウインドウ">
+      <button id="open-company" type="button">会社</button>
+      <button id="open-island" type="button">島況 <i id="island-signal" data-tone="steady">平穏</i></button>
+      <button id="open-building" type="button" disabled>選択建物</button>
+      <button id="open-events" type="button">出来事 <b id="event-count">0</b></button>
+      <button id="open-tutorial-letters" type="button" hidden>書状 <b id="tutorial-unread" class="unread-badge" hidden>0</b></button>
+      <button id="choose-start" class="top-menu-subtle" type="button" title="開始方法を選び直す">最初から</button>
+    </nav>
     <div id="speed-controls" class="speed" aria-label="時間速度" data-testid="speed-controls">
       <button type="button" data-speed="0" aria-label="一時停止">Ⅱ</button>
       <button type="button" data-speed="1" class="on" aria-label="通常速度">▶</button>
@@ -36,6 +43,7 @@
       <small id="tutorial-chapter">—</small>
       <b id="tutorial-goal">—</b>
       <span id="tutorial-detail">—</span>
+      <span id="tutorial-system" class="tutorial-system"><small>操作</small><strong>—</strong></span>
     </div>
     <label><span id="tutorial-progress">0 / 0</span><progress id="tutorial-progress-bar" max="1" value="0"></progress></label>
     <div class="tutorial-actions">
@@ -43,9 +51,7 @@
     </div>
   </aside>
 
-  <aside id="observer" class="panel observer" data-testid="observer">
-    <small>島の観測</small>
-    <h1>エンジンの世界</h1>
+  <aside id="observer" class="observer" data-testid="observer" aria-label="エレナからの案内">
     <button id="secretary" class="secretary" type="button" data-testid="secretary">
       <img src="../v002/assets/elena_vance.png" alt="会社秘書エレナ・ヴァンス">
       <span>
@@ -54,24 +60,7 @@
         <em id="secretary-detail">—</em>
       </span>
     </button>
-    <dl>
-      <div><dt>盤面</dt><dd id="world-size">—</dd></div>
-      <div><dt>建物</dt><dd id="building-count">—</dd></div>
-      <div><dt>移動中</dt><dd id="carrier-count">—</dd></div>
-      <div><dt>獣道</dt><dd id="trail-count">—</dd></div>
-      <div><dt>見える在庫</dt><dd id="stock-count">—</dd></div>
-      <div><dt>直近イベント</dt><dd id="event-count">0</dd></div>
-      <div><dt>開始</dt><dd id="start-mode-label">—</dd></div>
-    </dl>
-    <div class="observer-actions">
-      <button id="open-company" type="button">会社</button>
-      <button id="open-island" type="button">島況</button>
-      <button id="open-events" type="button">出来事</button>
-      <button id="open-tutorial-letters" type="button" hidden>書状 <b id="tutorial-unread" class="unread-badge" hidden>0</b></button>
-      <button id="choose-start" type="button">最初から</button>
-    </div>
-    <p id="key-hints" class="key-hints"><kbd>WASD</kbd> 移動　<kbd>Space</kbd> 停止／復帰　<kbd>1–4</kbd> 速度　<kbd>Esc</kbd> 戻る</p>
-    <small id="build-version" data-testid="build-version">Build —</small>
+    <span id="start-mode-label" hidden>—</span>
   </aside>
 
   <nav id="build-dock" class="panel build-dock" aria-label="建築と道路" data-testid="build-dock">
@@ -121,6 +110,10 @@
       <div><small>会社の収支・市場・現物</small><h2>島の流れ</h2></div>
       <button type="button" data-close-sheet="island-sheet" aria-label="島況を閉じる">×</button>
     </header>
+    <section id="island-health" class="island-health" data-tone="steady">
+      <b id="island-health-title">島は落ち着いています</b>
+      <span id="island-health-detail">人口・食料・会社資金の変化をまとめます。</span>
+    </section>
     <section class="island-finance-section">
       <h3>直近30日の会社収支</h3>
       <div id="island-finance" class="island-finance" aria-label="直近30日の会社収支">
@@ -129,6 +122,22 @@
         <span><small>支出</small><b id="island-expense" class="minus">—</b></span>
         <span><small>差引</small><b id="island-net">—</b></span>
       </div>
+    </section>
+    <section class="island-history-section">
+      <div class="history-heading">
+        <div><h3>島の変化</h3><p id="history-status" class="sheet-note">日が進むと線になります。</p></div>
+        <label>相場を見る品
+          <select id="history-goods" aria-label="相場グラフの品目"></select>
+        </label>
+      </div>
+      <div id="economy-charts" class="economy-charts">
+        <figure data-chart="food-flow"><figcaption>食料の流れ <small>荷/日</small></figcaption><svg id="food-flow-chart" viewBox="0 0 320 112" role="img" aria-label="食料の生産、消費、本土購入の推移"></svg></figure>
+        <figure data-chart="food-stock"><figcaption>食料と蔵の備え <small>荷</small></figcaption><svg id="food-stock-chart" viewBox="0 0 320 112" role="img" aria-label="島内食料と会社の食料在庫の推移"></svg></figure>
+        <figure data-chart="population"><figcaption>人口 <small>人</small></figcaption><svg id="population-chart" viewBox="0 0 320 112" role="img" aria-label="人口の推移"></svg></figure>
+        <figure data-chart="finance"><figcaption>会社の資金と日々の差引 <small>デナリ</small></figcaption><svg id="finance-chart" viewBox="0 0 320 112" role="img" aria-label="会社資金と日々の差引の推移"></svg></figure>
+        <figure data-chart="price"><figcaption><span id="price-chart-title">市場相場</span> <small>デナリ/荷</small></figcaption><svg id="price-chart" viewBox="0 0 320 112" role="img" aria-label="選択した品目の市場相場の推移"></svg></figure>
+      </div>
+      <div class="chart-legend" aria-label="グラフの色の説明"><span class="food-prod">島内生産</span><span class="food-cons">消費</span><span class="food-imp">本土購入</span><span class="reserve">会社の蔵</span></div>
     </section>
     <section class="island-market-section">
       <h3>市場相場と最近の流れ</h3>
@@ -191,7 +200,7 @@
   </div>
 
   <div id="status" class="panel status" role="status" aria-live="polite">
-    <i></i><span>経済エンジンに接続済み</span>
+    <i></i><span>島の営みを観測中</span>
   </div>
 
   <div id="start-screen" class="start-screen" hidden data-testid="start-screen">
@@ -199,7 +208,7 @@
       <div class="start-seal">CI</div>
       <small>CHARTER ISLE</small>
       <h1 id="start-title">島の始め方を選ぶ</h1>
-      <p>同じ経済エンジンを、異なる初期状態から始めます。</p>
+      <p>同じ島の仕組みを、異なる初期状態から始めます。</p>
       <div class="start-options">
         <button type="button" data-start-mode="tutorial">
           <span><b>チュートリアルから</b><em>案内つき</em></span>
@@ -218,6 +227,6 @@
   </div>
 
   <noscript>このゲームにはJavaScriptが必要です。</noscript>
-  <script type="module" src="./src/main.js?v=v004.8.1-denari-units"></script>
+  <script type="module" src="./src/main.js?v=v004.9.1-causal-feedback"></script>
 </body>
 </html>

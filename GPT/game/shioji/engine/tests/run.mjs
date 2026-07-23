@@ -3270,8 +3270,10 @@ let failures = 0;
 const selectedTests = testMatch ? tests.filter(({ name }) => testMatch.test(name)) : tests;
 for (const { name, run } of selectedTests) {
   try {
+    console.log(`run - ${name}`);
+    const startedAt = performance.now();
     await run();
-    console.log(`ok - ${name}`);
+    console.log(`ok - ${name} (${((performance.now() - startedAt) / 1000).toFixed(2)}s)`);
   } catch (error) {
     failures += 1;
     console.error(`not ok - ${name}`);

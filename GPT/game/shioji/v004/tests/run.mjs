@@ -35,13 +35,15 @@ import {
   ORDER_JUDGMENT_FALLBACK_OFFERS, SEASONAL_RESERVE_TARGET,
   SEASONAL_SURPLUS_MIN, SEASONAL_VALLEY_RATIO, TOOLS_PRICE_RISE_DELTA,
   TOOLS_PRICE_RISE_RATIO,
-  TUTORIAL_GOALS, TUTORIAL_LETTERS, TUTORIAL_LETTER_ATTENTION, estimateWalkLen,
+  TUTORIAL_GOALS, TUTORIAL_LETTERS, TUTORIAL_LETTER_ATTENTION,
+  TUTORIAL_OPTIONAL_GOAL_IDS, TUTORIAL_PLAYER_TITLES, TUTORIAL_SYSTEM_INSTRUCTIONS,
+  isRequiredTutorialGoal, estimateWalkLen,
 } from '../src/tutorial_content.js';
 import {
   TutorialDirector, createTutorialDirector, createTutorialDirectorForMode,
 } from '../src/tutorial_director.js';
 import { objectiveActionFor, secretaryRouteFor } from '../src/ui_guidance.js';
-import { recentCompanySummary } from '../src/ui_summary.js';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from '../src/ui_summary.js';
 import { snapshotToViewModel } from '../src/view_model.js';
 import {
   MAX_PILE_SPRITES, buildingAppearance, pileVisual, trailVisual,
@@ -49,6 +51,8 @@ import {
 
 let passed = 0;
 let tutorialThroughPlay = null;
+const suiteStartedAt = performance.now();
+const testTimings = [];
 const matchIndex = process.argv.indexOf('--match');
 const testMatchSource = matchIndex >= 0 ? process.argv[matchIndex + 1] : null;
 const testMatch = testMatchSource ? new RegExp(testMatchSource) : null;
@@ -58,9 +62,13 @@ const tutorialStage17Dependency = /^チュートリアル段(?:7〜9|1[0-7])(?::
 function test(name, body) {
   if (testMatch && !testMatch.test(name)
     && !(tutorialStage17Requested && tutorialStage17Dependency.test(name))) return;
+  console.log(`run - ${name}`);
+  const startedAt = performance.now();
   body();
+  const elapsedMs = performance.now() - startedAt;
+  testTimings.push({ name, elapsedMs });
   passed += 1;
-  console.log(`ok - ${name}`);
+  console.log(`ok - ${name} (${(elapsedMs / 1000).toFixed(2)}s)`);
 }
 
 test('段1: createEngineApiで基準都市を起動し1日30tick進める', () => {
@@ -74,6 +82,164 @@ test('段1: createEngineApiで基準都市を起動し1日30tick進める', () =
   const after = controller.readModel();
   assert.equal(after.day, 1);
   assert.equal(after.tick, 30);
+});
+
+test('性能L: イベントcursorは全履歴filterと同じ順序・値を返し、返却値は内部から分離する', () => {
+  const api = createEngineApi(buildBaseCity(11));
+  api.advanceTicks(3600);
+  const all = api.events();
+  assert.ok(all.length > 2);
+  for (const cursor of [0, all[0].sequence, all[Math.floor(all.length / 2)].sequence, all.at(-1).sequence]) {
+    assert.deepEqual(api.events({ afterSequence: cursor }), all.filter(event => event.sequence > cursor));
+  }
+  const tail = api.events({ afterSequence: all.at(-2).sequence });
+  tail[0].type = 'mutated-outside';
+  assert.notEqual(api.events({ afterSequence: all.at(-2).sequence })[0].type, 'mutated-outside');
+});
+
+test('教程T/U: 全目標をエレナ概要と一意なsystem操作へ分け、player-facing内部語を出さない', () => {
+  const reportOnly = new Set([
+    'close-first-chapter', 'close-second-chapter', 'close-third-chapter',
+    'close-fourth-chapter', 'close-fifth-chapter', 'graduate-governor',
+  ]);
+  const forbidden = /適格日|EMA|snapshot|\btick\b|haulJobId|productionCost|\bengine\b|\bjournal\b|E-Stable/;
+  for (const goal of TUTORIAL_GOALS) {
+    assert.ok(TUTORIAL_PLAYER_TITLES[goal.id], `${goal.id}のエレナ概要`);
+    assert.equal(forbidden.test(TUTORIAL_PLAYER_TITLES[goal.id]), false, goal.id);
+    const instruction = TUTORIAL_SYSTEM_INSTRUCTIONS[goal.id];
+    assert.equal(typeof instruction, 'string', `${goal.id}のsystem操作`);
+    if (!reportOnly.has(goal.id)) assert.ok(instruction.length > 0, `${goal.id}は次の操作が一意`);
+    assert.equal(forbidden.test(instruction), false, goal.id);
+  }
+  const director = createTutorialDirector();
+  director.observe(snapshotToViewModel(createEngineApi(buildBlankCity(11)).snapshot()), []);
+  const objective = director.currentObjective();
+  assert.equal(objective.title, TUTORIAL_PLAYER_TITLES[objective.id]);
+  assert.equal(objective.systemInstruction, TUTORIAL_SYSTEM_INSTRUCTIONS[objective.id]);
+  assert.equal(forbidden.test(`${objective.title} ${objective.detail} ${objective.systemInstruction}`), false);
+  const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(main, /書状を閉じ、画面上部の現在目標/);
+});
+
+test('教程V〜Y: 創発待ちは進行を止めず、注文残量と適時アドバイスを別層で扱う', () => {
+  for (const id of [
+    'observe-seasonal-food-valley', 'fill-seasonal-reserve', 'release-seasonal-reserve',
+    'observe-tools-price-rise', 'sustain-conversion-workshops',
+  ]) {
+    assert.ok(TUTORIAL_OPTIONAL_GOAL_IDS.includes(id), `${id}は任意観察`);
+    assert.equal(isRequiredTutorialGoal(TUTORIAL_GOALS.find(goal => goal.id === id)), false);
+  }
+
+  const completeOrder = TUTORIAL_GOALS.find(goal => goal.id === 'complete-first-order');
+  const orderModel = {
+    day: 70,
+    activeOrder: { g: 'tools', qty: 60, left: 24, due: 80, price: 5 },
+    companyLedger: [],
+  };
+  const progress = completeOrder.evaluate({ model: orderModel, events: [], state: { goalResults: {} } });
+  assert.equal(progress.complete, false);
+  assert.deepEqual(progress.progress, { done: 36, total: 60 });
+  assert.match(progress.detail, /納品済み 36\.0\/60荷・残り 24\.0荷・期限まであと10日/);
+
+  const deathAdvice = new TutorialDirector({ goals: [], letters: [] });
+  const adviceModel = {
+    day: 20, tick: 600, companyStock: { wheat: 0 }, marketPrices: { wheat: 1 },
+    stalls: [], buildings: [], households: [],
+  };
+  deathAdvice.observe(adviceModel, [{
+    type: 'death', sequence: 9, day: 20, message: '住民が餓えで亡くなった',
+  }]);
+  const message = deathAdvice.advice().find(row => row.id === 'resident-death-message');
+  assert.equal(message.priority, 'info');
+  assert.equal(message.unread, true);
+  assert.equal(deathAdvice.letters().length, 0, '死亡は停止書状にしない');
+  const routed = secretaryRouteFor({
+    advice: [{
+      id: 'seasonal-release-opportunity', unread: true, completed: false,
+      priority: 'action', kicker: '助言', title: '蔵出し', detail: 'いま動けます',
+      target: { kind: 'sheet', sheet: 'company-sheet' },
+    }],
+    objective: { id: 'first-road-and-logger', complete: false, title: '道', detail: '森へ' },
+  });
+  assert.equal(routed.priority, 'timely-advice');
+  assert.equal(routed.target.route.sheet, 'company-sheet');
+
+  const seasonal = new TutorialDirector({
+    goals: [], letters: [],
+    state: {
+      version: 1, active: true, skipped: false, completedGoals: [], letters: [],
+      goalResults: { 'set-seasonal-stock-target': { evidence: { goods: 'wheat' } } },
+    },
+  });
+  const seasonalModel = (day, available) => ({
+    day, tick: day * 30, companyStock: { wheat: 16 }, marketPrices: { wheat: 1 },
+    stalls: [{ goods: 'wheat', qty: available }], buildings: [], households: [],
+  });
+  seasonal.observe(seasonalModel(10, 10), []);
+  assert.equal(seasonal.advice().length, 0);
+  seasonal.observe(seasonalModel(15, 1), []);
+  assert.equal(seasonal.advice()[0].unread, true);
+  seasonal.markAdviceRead('seasonal-release-opportunity');
+  seasonal.observe(seasonalModel(20, 1), []);
+  assert.equal(seasonal.advice()[0].repeatCount, 2, '未実行なら5日後に再通知');
+  seasonal.observe(seasonalModel(21, 1), [
+    { type: 'operation', ok: true, op: { type: 'release_stock', goods: 'wheat', qty: 8 } },
+    { type: 'departure', carrier: 'cart', goods: 'wheat', qty: 8, haulJobId: 4 },
+  ]);
+  assert.equal(seasonal.advice()[0].completed, true, '実蔵出しで助言完了');
+});
+
+test('教程Z: 季節・島の基調・飢餓予告・建物成長の因果をplayer-facing表示へ出す', () => {
+  assert.deepEqual(islandCalendar(1), {
+    year: 1, month: 1, dayOfMonth: 1, season: '冬', label: '冬・1月',
+  });
+  assert.equal(islandCalendar(61).label, '春・3月');
+  assert.equal(islandCalendar(241).label, '秋・9月');
+
+  const observedController = createEngineController({ seed: 11 });
+  observedController.advanceTicks(15 * 30);
+  const observed = observedController.readModel();
+  const growth = observed.households[0].cultureGrowth;
+  assert.equal(growth.level, observed.households[0].cultureLevel);
+  assert.ok(growth.requiredDays >= 45);
+  assert.equal(typeof growth.nextRequirement, 'string');
+  assert.equal(growth.downgradeDays, 60);
+
+  const healthModel = {
+    day: 40, population: 8, companyMoney: 100, companyLedger: [],
+    households: [{ hungerRun: 31 }],
+  };
+  const health = islandHealthSummary(healthModel, [{ day: 11, population: 10 }]);
+  assert.equal(health.tone, 'danger');
+  assert.match(health.reason, /31日連続/);
+
+  const director = new TutorialDirector({ goals: [], letters: [] });
+  const hungryModel = {
+    day: 30, tick: 900, companyStock: { wheat: 0 }, marketPrices: { wheat: 1 }, stalls: [],
+    households: [{
+      id: 7, familyName: 'テスト', hungerRun: 30, buildingId: 4,
+      cultureGrowth: { achievedRequirement: null },
+    }],
+    buildings: [{ id: 4, type: 'veg', x: 2, y: 3 }],
+  };
+  director.observe(hungryModel, []);
+  const warning = director.advice().find(row => row.id === 'household-hunger-warning');
+  assert.equal(warning.priority, 'action');
+  assert.match(warning.detail, /60日に達すると家族が亡くなります/);
+  assert.equal(warning.target.kind, 'building-detail');
+
+  director.markAdviceRead('household-hunger-warning');
+  const levelModel = structuredClone(hungryModel);
+  levelModel.day = 31;
+  levelModel.tick = 930;
+  levelModel.households[0].hungerRun = 0;
+  levelModel.households[0].cultureGrowth.achievedRequirement = 'food1';
+  director.observe(levelModel, [{
+    type: 'notice', sequence: 20, message: 'veg#7 ▲Lv1', day: 31,
+  }]);
+  const celebration = director.advice().find(row => row.id === 'building-level-up-celebration');
+  assert.match(celebration.title, /菜園がLv1へ成長/);
+  assert.match(celebration.detail, /食料1種.*45日/);
 });
 
 test('チュートリアル段1: v003の旧Worldを持ち込まず観測ディレクターを分離する', () => {
@@ -703,7 +869,7 @@ test('チュートリアル段10: 第一章を終えた同じ世界で既設道�
     letter.id === 'logger-road-already-good' || letter.id === 'logger-road-recovered'
   ));
   assert.ok(resultLetter);
-  assert.match(resultLetter.body, new RegExp(`${evidence.tripTicks.toFixed(1)}tick`));
+  assert.match(resultLetter.body, new RegExp(`${evidence.tripTicks.toFixed(1)}時間ぶん`));
 });
 
 test('チュートリアル段10実測: 遠回りの木こりは実往復tickが長く、直結道路で倍率が回復する', () => {
@@ -717,8 +883,8 @@ test('チュートリアル段10実測: 遠回りの木こりは実往復tickが
     assert.ok(row.before.tripTicks - row.after.tripTicks >= LOGGER_TRIP_RECOVERY_TICKS);
     const warning = row.director.letters().find(letter => letter.id === 'logger-trip-warning');
     const recovered = row.director.letters().find(letter => letter.id === 'logger-road-recovered');
-    assert.match(warning.body, new RegExp(`${row.before.tripTicks.toFixed(1)}tick`));
-    assert.match(recovered.body, new RegExp(`${row.after.tripTicks.toFixed(1)}tick`));
+    assert.match(warning.body, new RegExp(`${row.before.tripTicks.toFixed(1)}時間ぶん`));
+    assert.match(recovered.body, new RegExp(`${row.after.tripTicks.toFixed(1)}時間ぶん`));
     assert.equal(row.director.currentObjective().complete, true);
   }
   console.log(`  段10実測 ${rows.map(row => (
@@ -1447,7 +1613,7 @@ test('チュートリアル段20: 道具の実相場上昇から三変換職を�
   assert.equal(director.readState().completedGoals.includes('place-conversion-workshops'), true);
   const placedLetter = director.letters().find(letter => letter.id === 'conversion-workshops-placed');
   assert.ok(placedLetter);
-  assert.match(placedLetter.body, /input棚/);
+  assert.match(placedLetter.body, /原料棚/);
 
   const chainDeadline = controller.readModel().day + 180;
   while (!director.readState().completedGoals.includes('observe-conversion-cost-chain')
@@ -2103,12 +2269,32 @@ test('段4: 時間制御は停止・通常・四倍・一日毎秒の4段階を�
 test('段3/4: レスポンシブHUDとカメラ・速度操作のブラウザ契約を持つ', () => {
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const css = fs.readFileSync(new URL('../style.css', import.meta.url), 'utf8');
-  for (const id of ['world', 'hud', 'funds-value', 'day-value', 'tick-value', 'speed-controls', 'step-day']) {
+  for (const id of ['world', 'hud', 'funds-value', 'day-value', 'top-menu', 'speed-controls', 'step-day']) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
   assert.match(css, /html, body[\s\S]*overflow:\s*hidden/);
   assert.match(css, /touch-action:\s*none/);
   assert.match(css, /@media \(max-width: 640px\)/);
+});
+
+test('UI O〜R: 上部メニュー・非重複通知・自動適用在庫・時系列グラフの契約を持つ', () => {
+  const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const css = fs.readFileSync(new URL('../style.css', import.meta.url), 'utf8');
+  const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(html, /エンジンの世界/);
+  assert.match(html, /id="top-menu"[\s\S]*id="open-company"[\s\S]*id="open-island"[\s\S]*id="open-building"[\s\S]*id="open-events"/);
+  for (const id of ['food-flow-chart', 'food-stock-chart', 'population-chart', 'finance-chart', 'price-chart']) {
+    assert.match(html, new RegExp(`id=["']${id}["']`));
+  }
+  assert.match(html, /id="tutorial-system"/);
+  assert.match(main, /data-stock-target/);
+  assert.match(main, /event\.key !== 'Enter'/);
+  assert.match(main, /focusout[\s\S]*applyStockTargetInput/);
+  assert.doesNotMatch(main, /release_stock', goods, qty: 16/);
+  assert.match(main, /data-release-qty/);
+  assert.match(main, /companyStockReleaseQuotes/);
+  assert.match(css, /#toast-stack[^}]*left:/);
+  assert.match(css, /pointer-events:\s*none/);
 });
 
 test('段5: economy.trafficの踏圧を使用頻度5段階の獣道へ変換する', () => {
@@ -2841,7 +3027,7 @@ test('段7支援UI: 逓減量と拒絶を描画モデルへ出し、要請を公
   );
 });
 
-test('段16: 観測APIの全イベント種と重要メッセージがトースト・ログ表示経路を持つ', () => {
+test('段16: 観測APIの全イベント種とnotice専用トースト・ログ表示経路を持つ', () => {
   for (const type of OBSERVED_EVENT_TYPES) {
     assert.equal(hasEventPresentation(type), true, type);
     const row = presentEvent({ type, day: 3, tick: 81, x: 4, y: 5, goods: 'wheat', qty: 1 });
@@ -2863,4 +3049,8 @@ test('段16: 観測APIの全イベント種と重要メッセージがトース�
   assert.match(main, /camera\.focus\(row\.x/);
 });
 
-console.log(`\n${passed} v004 tests passed`);
+const slowTests = [...testTimings].sort((left, right) => right.elapsedMs - left.elapsedMs).slice(0, 5);
+console.log(`\n${passed} v004 tests passed in ${((performance.now() - suiteStartedAt) / 1000).toFixed(2)}s`);
+if (slowTests[0]?.elapsedMs >= 1000) {
+  console.log(`slow: ${slowTests.map(row => `${(row.elapsedMs / 1000).toFixed(2)}s ${row.name}`).join(' | ')}`);
+}
