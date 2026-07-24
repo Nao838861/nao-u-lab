@@ -4,6 +4,21 @@ url: "https://robobarbie.itch.io/love-is-trauma/devlog/1452513/love-is-trauma-or
 collected_at: "2026-07-25T06:01:48.8075063+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, postmortem, visual-novel, game-jam, scope]
+evaluated_at: "2026-07-25T06:05:11.4693285+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-25T06:05:11.4693285+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-25T06:05:11.4693285+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-24"
+supersedes: []
+gate_reason: >-
+  scope 削減を tone の発明へ変えた具体例は短期ゲーム制作へ直接適用できる。
+  ただし単一制作の回顧で、比較・再現条件・評価結果がなく、記事固有の情報だけでは
+  CoopEval 水準の約4000字概要を支えられないため、参考メモとして保持する。
 ---
 
 ## raw_excerpt
