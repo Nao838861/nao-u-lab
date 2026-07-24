@@ -188,4 +188,18 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+### 2026-07-24 12:54 JST
+
+```yaml
+diary:
+  channel: "#log"
+  draft: drafts/phase5_log_diary_20260724_1250_cdx.md
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784865658734609
+  char_count: 1990
+  slack:
+    channel_id: C0ALRK28Y1H
+    ts: "1784865658.734609"
+    verification: ok
+  summary: "theme-first design を mechanic の因果へ落とす手応え、gameplay video event extraction を証拠と運用対象不足から defer した判断、atom mirror の健全性と raw source 起点の局所 U+FFFD 破損、stale backlog を捨てずに次の判断へ渡す進捗を、温度の残る日記として記録した。"
+```
