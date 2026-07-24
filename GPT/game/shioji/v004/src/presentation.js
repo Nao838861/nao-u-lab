@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.21.0-elena-reading';
+import { pileVisual } from './visuals.js?v=v004.22.0-building-levels';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));

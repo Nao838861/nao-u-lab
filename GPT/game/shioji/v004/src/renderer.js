@@ -1,11 +1,11 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, SECTION_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.21.0-elena-reading';
-import { islandCalendar } from './ui_summary.js?v=v004.21.0-elena-reading';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.21.0-elena-reading';
+} from './config.js?v=v004.22.0-building-levels';
+import { islandCalendar } from './ui_summary.js?v=v004.22.0-building-levels';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.22.0-building-levels';
 import {
   buildingStructureLayout, pileVisual,
-} from './visuals.js?v=v004.21.0-elena-reading';
+} from './visuals.js?v=v004.22.0-building-levels';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
@@ -175,6 +175,7 @@ export class Renderer {
     this.drawRoads(model);
     this.drawGroundOverlays(model);
     this.drawWorldObjects(model);
+    this.drawWorldOverlays(model);
   }
 
   drawTerrain(model) {
@@ -433,10 +434,14 @@ export class Renderer {
       ctx.restore();
     }
     this.drawTrackedRoute(model);
+    this.drawOperationPreview();
+  }
+
+  drawWorldOverlays(model) {
+    // 危機・接続警告は建物や人物の深度ソート後に描き、常に読める最前面へ置く。
+    this.drawFocusMarker(model);
     this.drawConnectionWarnings(model);
     this.drawCrisisSignals(model);
-    this.drawFocusMarker(model);
-    this.drawOperationPreview();
   }
 
   drawConnectionWarnings(model) {
@@ -746,75 +751,95 @@ export class Renderer {
     const elevation = appearance.elevation;
     const ctx = this.ctx;
     ctx.save();
-    if (building.vacant) ctx.globalAlpha = 0.58;
+    if (building.vacant) ctx.globalAlpha = 0.76;
+    if (appearance.leveled && appearance.tier === 1 && !building.vacant) {
+      this.footprint(
+        building.x + 0.22,
+        building.y + 0.22,
+        Math.min(1.15, building.width - 0.44),
+        Math.min(1.05, building.height - 0.44),
+        '#8e754f', '#5f523d', 0.82,
+      );
+    }
     if (farm) {
       ctx.strokeStyle = appearance.accent;
       ctx.lineWidth = Math.max(1, 1.2 * this.camera.zoom);
-      for (let row = 1; row <= 4; row += 1) {
-        const from = this.camera.project(building.x + 0.3, building.y + 0.35 + row * 0.62, 2);
-        const to = this.camera.project(building.x + building.width - 0.3, building.y + 0.35 + row * 0.62, 2);
+      const furrowCount = appearance.leveled
+        ? Math.max(2, Math.min(5, appearance.tier + 1)) : 4;
+      for (let row = 1; row <= furrowCount; row += 1) {
+        const rowY = building.y + 0.25 + row * ((building.height - 0.5) / (furrowCount + 1));
+        const from = this.camera.project(building.x + 0.3, rowY, 2);
+        const to = this.camera.project(building.x + building.width - 0.3, rowY, 2);
         ctx.beginPath();
         ctx.moveTo(from.x, from.y);
         ctx.lineTo(to.x, to.y);
         ctx.stroke();
       }
     }
-    if (appearance.stoneBase) {
-      this.prism(bodyX - 0.08, bodyY - 0.08, bodyWidth + 0.16, bodyHeight + 0.16, 6, {
-        top: '#9a9589', right: '#6f6c65', left: '#5c5b57',
-      });
-    }
-    this.prism(
-      bodyX,
-      bodyY,
-      bodyWidth,
-      bodyHeight,
-      elevation,
-      {
-        top: appearance.roof ?? colors[2],
-        right: appearance.wall ?? colors[0],
-        left: colors[1],
-      },
-    );
-    if (!['market', 'pit'].includes(appearance.archetype)) {
-      this.drawGabledRoof(bodyX, bodyY, bodyWidth, bodyHeight, elevation, appearance);
-    }
-    if (['kiln', 'industrial'].includes(appearance.archetype)) {
-      const chimney = this.camera.project(bodyX + bodyWidth * 0.72, bodyY + bodyHeight * 0.3, elevation);
-      ctx.fillStyle = appearance.archetype === 'industrial' ? '#4a403a' : '#3d413d';
-      ctx.fillRect(chimney.x - 3 * this.camera.zoom, chimney.y - 24 * this.camera.zoom, 6 * this.camera.zoom, 25 * this.camera.zoom);
-      if (!building.vacant) {
-        ctx.globalAlpha *= 0.28 + Math.sin(this.pulse * 1.7) * 0.06;
-        ctx.fillStyle = '#c3c1b3';
-        ctx.beginPath();
-        ctx.arc(chimney.x, chimney.y - 29 * this.camera.zoom, 6 * this.camera.zoom, 0, Math.PI * 2);
-        ctx.fill();
+    if (appearance.structureVisible) {
+      if (appearance.stoneBase) {
+        this.prism(bodyX - 0.08, bodyY - 0.08, bodyWidth + 0.16, bodyHeight + 0.16, 6, {
+          top: '#aaa699', right: '#77746d', left: '#62615d',
+        });
       }
-    }
-    if (appearance.windows > 0) {
-      const base = this.camera.project(bodyX + bodyWidth, bodyY + bodyHeight * 0.58, elevation * 0.48);
-      for (let index = 0; index < appearance.windows; index += 1) {
-        ctx.fillStyle = '#e6c673';
-        ctx.fillRect(base.x - index * 8 * this.camera.zoom, base.y, 4 * this.camera.zoom, 5 * this.camera.zoom);
+      const facade = building.vacant
+        ? { ...appearance, roof: '#736c5e', wall: '#766c5c', accent: '#5e5b52' }
+        : appearance;
+      this.prism(
+        bodyX,
+        bodyY,
+        bodyWidth,
+        bodyHeight,
+        elevation,
+        {
+          top: facade.roof ?? colors[2],
+          right: facade.wall ?? colors[0],
+          left: building.vacant ? '#5d5950' : colors[1],
+        },
+      );
+      if (!['market', 'pit'].includes(appearance.archetype)) {
+        this.drawGabledRoof(bodyX, bodyY, bodyWidth, bodyHeight, elevation, facade);
+      }
+      if (['kiln', 'industrial'].includes(appearance.archetype)) {
+        const chimney = this.camera.project(bodyX + bodyWidth * 0.72, bodyY + bodyHeight * 0.3, elevation);
+        ctx.fillStyle = appearance.archetype === 'industrial' ? '#4a403a' : '#3d413d';
+        ctx.fillRect(chimney.x - 3 * this.camera.zoom, chimney.y - 24 * this.camera.zoom, 6 * this.camera.zoom, 25 * this.camera.zoom);
+        if (!building.vacant) {
+          ctx.globalAlpha *= 0.28 + Math.sin(this.pulse * 1.7) * 0.06;
+          ctx.fillStyle = '#c3c1b3';
+          ctx.beginPath();
+          ctx.arc(chimney.x, chimney.y - 29 * this.camera.zoom, 6 * this.camera.zoom, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+      }
+      if (appearance.windows > 0) {
+        const base = this.camera.project(bodyX + bodyWidth, bodyY + bodyHeight * 0.58, elevation * 0.48);
+        for (let index = 0; index < appearance.windows; index += 1) {
+          ctx.fillStyle = '#f0cf75';
+          ctx.fillRect(base.x - index * 8 * this.camera.zoom, base.y, 4 * this.camera.zoom, 5 * this.camera.zoom);
+        }
       }
     }
     if (building.type === 'port') {
       this.drawCrane(building.x + building.width * 0.72, building.y + building.height * 0.78);
     }
     this.drawBuildingProps(building);
+    this.drawCultureStageDetails(building);
+    if (building.vacant) this.drawVacancyDetails(building);
     ctx.restore();
     const labelPoint = this.camera.project(
       building.x + building.width / 2,
       building.y + building.height / 2,
-      elevation + 8,
+      appearance.structureVisible ? elevation + 8 : 22,
     );
     ctx.save();
     ctx.textAlign = 'center';
     const typeLabel = JOB_LABELS[building.type] ?? building.type;
     const label = building.vacant
-      ? `${typeLabel}・空き`
-      : `${typeLabel}${appearance.level ? ` Lv${appearance.level}` : ''}`;
-    const icon = building.vacant ? '空' : (JOB_ICONS[building.type] ?? '?');
+      ? `${typeLabel}・無人`
+      : `${typeLabel}${appearance.leveled ? ` Lv${appearance.level}` : ''}`;
+    const icon = building.vacant ? '無' : (JOB_ICONS[building.type] ?? '?');
     const badgeRadius = Math.max(8, 10 * this.camera.zoom);
     ctx.fillStyle = building.id === this.selectedBuildingId ? '#f4c95f'
       : building.vacant ? '#746f62' : '#183f3d';
@@ -827,16 +852,31 @@ export class Renderer {
     ctx.font = `800 ${Math.max(9, 10 * this.camera.zoom)}px "Yu Gothic", sans-serif`;
     ctx.fillStyle = '#fff3cf';
     ctx.fillText(icon, labelPoint.x, labelPoint.y + 0.5 * this.camera.zoom);
-    if (!building.vacant) {
+    if (!building.vacant && appearance.leveled) {
       const trend = building.stateSignals?.trend === 'up' ? '↑'
         : building.stateSignals?.trend === 'down' ? '↓' : '—';
+      const pillY = labelPoint.y + 12 * this.camera.zoom;
+      ctx.fillStyle = 'rgba(23,48,44,.9)';
+      ctx.strokeStyle = building.stateSignals?.trend === 'down' ? '#d88670'
+        : building.stateSignals?.trend === 'up' ? '#8fc78a' : '#b8a878';
+      ctx.lineWidth = Math.max(1, this.camera.zoom);
+      ctx.beginPath();
+      ctx.roundRect(
+        labelPoint.x - 17 * this.camera.zoom,
+        pillY - 7 * this.camera.zoom,
+        34 * this.camera.zoom,
+        13 * this.camera.zoom,
+        5 * this.camera.zoom,
+      );
+      ctx.fill();
+      ctx.stroke();
       ctx.font = `800 ${Math.max(7, 8 * this.camera.zoom)}px "Yu Gothic", sans-serif`;
       ctx.fillStyle = building.stateSignals?.trend === 'down' ? '#ffb09a'
         : building.stateSignals?.trend === 'up' ? '#bce5ae' : '#efe1b4';
       ctx.fillText(
-        `Lv${building.cultureLevel ?? 0}${trend}`,
+        `Lv${appearance.level}${trend}`,
         labelPoint.x,
-        labelPoint.y + 12 * this.camera.zoom,
+        pillY + 2 * this.camera.zoom,
       );
     }
     if (this.camera.zoom >= 1.02 || building.id === this.selectedBuildingId || building.vacant) {
@@ -847,6 +887,129 @@ export class Renderer {
       ctx.strokeText(label, labelPoint.x, labelPoint.y + 25 * this.camera.zoom);
       ctx.fillText(label, labelPoint.x, labelPoint.y + 25 * this.camera.zoom);
     }
+    ctx.restore();
+  }
+
+  drawCultureStageDetails(building) {
+    const appearance = building.appearance;
+    if (!appearance.leveled || building.vacant) return;
+    const ctx = this.ctx;
+    const scale = this.camera.zoom;
+    const structure = building.structure ?? buildingStructureLayout(building);
+    const toolBase = this.camera.project(
+      building.x + building.width * 0.24,
+      building.y + building.height * 0.7,
+      5,
+    );
+    ctx.save();
+    ctx.lineCap = 'round';
+    for (let index = 0; index < appearance.toolCount; index += 1) {
+      const column = index % 3;
+      const row = Math.floor(index / 3);
+      const x = toolBase.x + (column - 1) * 7 * scale + row * 2 * scale;
+      const y = toolBase.y - row * 6 * scale - (column % 2) * 2 * scale;
+      ctx.strokeStyle = index % 2 ? '#d3ad61' : '#705037';
+      ctx.lineWidth = Math.max(1.2, 2 * scale);
+      ctx.beginPath();
+      ctx.moveTo(x - 3 * scale, y + 4 * scale);
+      ctx.lineTo(x + 3 * scale, y - 5 * scale);
+      ctx.moveTo(x, y - 2 * scale);
+      ctx.lineTo(x + 5 * scale, y + 1 * scale);
+      ctx.stroke();
+    }
+    for (let index = 0; index < appearance.bannerCount; index += 1) {
+      const anchor = this.camera.project(
+        structure.x + structure.width * (0.22 + index * 0.5),
+        structure.y + structure.height * 0.18,
+        appearance.elevation + 7,
+      );
+      const poleHeight = (15 + appearance.tier * 2) * scale;
+      ctx.strokeStyle = '#4d3826';
+      ctx.lineWidth = Math.max(1, 1.2 * scale);
+      ctx.beginPath();
+      ctx.moveTo(anchor.x, anchor.y);
+      ctx.lineTo(anchor.x, anchor.y - poleHeight);
+      ctx.stroke();
+      ctx.fillStyle = index % 2 ? '#e0b85a' : appearance.accent;
+      ctx.beginPath();
+      ctx.moveTo(anchor.x, anchor.y - poleHeight);
+      ctx.lineTo(anchor.x + 10 * scale, anchor.y - poleHeight + 4 * scale);
+      ctx.lineTo(anchor.x, anchor.y - poleHeight + 8 * scale);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
+    for (let index = 0; index < appearance.gardenCount; index += 1) {
+      const flower = this.camera.project(
+        building.x + building.width * (0.38 + index * 0.11),
+        building.y + building.height * 0.9,
+        4,
+      );
+      ctx.strokeStyle = '#49683e';
+      ctx.lineWidth = Math.max(1, scale);
+      ctx.beginPath();
+      ctx.moveTo(flower.x, flower.y + 4 * scale);
+      ctx.lineTo(flower.x, flower.y - 3 * scale);
+      ctx.stroke();
+      ctx.fillStyle = index % 2 ? '#f0cf68' : '#d77b65';
+      ctx.beginPath();
+      ctx.arc(flower.x, flower.y - 5 * scale, 2.5 * scale, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  drawVacancyDetails(building) {
+    const appearance = building.appearance;
+    const structure = building.structure ?? buildingStructureLayout(building);
+    const ctx = this.ctx;
+    const scale = this.camera.zoom;
+    ctx.save();
+    if (appearance.structureVisible) {
+      const board = this.camera.project(
+        structure.x + structure.width,
+        structure.y + structure.height * 0.55,
+        appearance.elevation * 0.48,
+      );
+      ctx.strokeStyle = '#493f35';
+      ctx.lineWidth = Math.max(2, 3 * scale);
+      ctx.beginPath();
+      ctx.moveTo(board.x - 7 * scale, board.y - 5 * scale);
+      ctx.lineTo(board.x + 7 * scale, board.y + 5 * scale);
+      ctx.moveTo(board.x + 7 * scale, board.y - 5 * scale);
+      ctx.lineTo(board.x - 7 * scale, board.y + 5 * scale);
+      ctx.stroke();
+    }
+    for (const [xRatio, yRatio] of [[0.18, 0.72], [0.43, 0.88], [0.72, 0.76], [0.86, 0.57]]) {
+      const weed = this.camera.project(
+        building.x + building.width * xRatio,
+        building.y + building.height * yRatio,
+        3,
+      );
+      ctx.strokeStyle = '#465e37';
+      ctx.lineWidth = Math.max(1, 1.4 * scale);
+      ctx.beginPath();
+      ctx.moveTo(weed.x, weed.y);
+      ctx.lineTo(weed.x - 4 * scale, weed.y - 8 * scale);
+      ctx.moveTo(weed.x, weed.y);
+      ctx.lineTo(weed.x + 2 * scale, weed.y - 10 * scale);
+      ctx.moveTo(weed.x, weed.y);
+      ctx.lineTo(weed.x + 6 * scale, weed.y - 6 * scale);
+      ctx.stroke();
+    }
+    const abandoned = this.camera.project(
+      building.x + building.width * 0.64,
+      building.y + building.height * 0.82,
+      4,
+    );
+    ctx.strokeStyle = '#59412f';
+    ctx.lineWidth = Math.max(1.5, 2.3 * scale);
+    ctx.beginPath();
+    ctx.moveTo(abandoned.x - 8 * scale, abandoned.y + 3 * scale);
+    ctx.lineTo(abandoned.x + 7 * scale, abandoned.y - 5 * scale);
+    ctx.moveTo(abandoned.x + 4 * scale, abandoned.y - 7 * scale);
+    ctx.lineTo(abandoned.x + 10 * scale, abandoned.y + 1 * scale);
+    ctx.stroke();
     ctx.restore();
   }
 
@@ -885,7 +1048,7 @@ export class Renderer {
   }
 
   drawBuildingProps(building) {
-    const { archetype, accent } = building.appearance;
+    const { archetype, accent, toolCount = 2 } = building.appearance;
     const ctx = this.ctx;
     const scale = this.camera.zoom;
     const structure = building.structure ?? buildingStructureLayout(building);
@@ -897,7 +1060,8 @@ export class Renderer {
     if (archetype === 'workshop') {
       ctx.strokeStyle = '#4f3525';
       ctx.lineWidth = Math.max(2, 4 * scale);
-      for (let row = 0; row < 3; row += 1) {
+      const rackRows = Math.max(1, Math.min(3, Math.ceil(toolCount / 2)));
+      for (let row = 0; row < rackRows; row += 1) {
         ctx.beginPath();
         ctx.moveTo(point.x - 10 * scale, point.y - row * 5 * scale);
         ctx.lineTo(point.x + 10 * scale, point.y - 4 * scale - row * 5 * scale);

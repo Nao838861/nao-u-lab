@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.21.0-elena-reading';
+import { TILE } from './config.js?v=v004.22.0-building-levels';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

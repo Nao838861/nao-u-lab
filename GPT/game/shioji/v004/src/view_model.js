@@ -1,12 +1,13 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.21.0-elena-reading';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.22.0-building-levels';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.21.0-elena-reading';
-import { analyzeRoadConnections } from './placement.js?v=v004.21.0-elena-reading';
-import { compileRenderScene } from './render_scene.js?v=v004.21.0-elena-reading';
+} from './engine_bridge.js?v=v004.22.0-building-levels';
+import { analyzeRoadConnections } from './placement.js?v=v004.22.0-building-levels';
+import { compileRenderScene } from './render_scene.js?v=v004.22.0-building-levels';
 import {
-  buildingAppearance, buildingStructureLayout, pileVisual, trailVisual, yardSlots, yardStockRows,
-} from './visuals.js?v=v004.21.0-elena-reading';
+  buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
+  yardSlots, yardStockRows,
+} from './visuals.js?v=v004.22.0-building-levels';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
@@ -77,6 +78,8 @@ function cultureProgress(household) {
   const requiredDays = nextRequirement ? P.UP_DAYS * (level + 1) : 0;
   return {
     level,
+    displayLevel: displayCultureLevel(level),
+    nextDisplayLevel: nextRequirement ? displayCultureLevel(level + 1) : null,
     upDays: household.up ?? 0,
     requiredDays,
     nextRequirement,
@@ -381,6 +384,7 @@ export function snapshotToViewModel(snapshot) {
       ownerHouseholdId: building.ownerHouseholdId,
       occupied: building.ownerHouseholdId !== null,
       vacant: !building.fixed && !companyLogistics && building.ownerHouseholdId === null,
+      cultureLeveled: !building.fixed && !companyLogistics,
       cultureLevel: owner?.lv ?? 0,
       stateSignals: householdStateSignals(owner),
       cartWork: owner?.cartWork ? { ...owner.cartWork } : null,
@@ -407,6 +411,7 @@ export function snapshotToViewModel(snapshot) {
       homeY: household.y,
       members: household.members?.length ?? 0,
       cultureLevel: household.lv ?? 0,
+      displayCultureLevel: displayCultureLevel(household.lv),
       cultureGrowth: cultureProgress(household),
       buildingId: household.buildingId,
       state: household.state,

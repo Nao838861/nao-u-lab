@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.21.0-elena-reading';
+import { SPEEDS } from './config.js?v=v004.22.0-building-levels';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

@@ -463,6 +463,87 @@ async function checkSecretaryEventLifecycle() {
   await page.close();
 }
 
+async function checkBuildingLevelVisuals(width = 1440, height = 900, mobile = false) {
+  const page = await newPage(width, height, mobile, GAME);
+  const checkpoints = [30, 90, 270, 360];
+  const observations = [];
+  for (const day of checkpoints) {
+    const observation = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      game.setSpeed(0);
+      game.advanceTicks(Math.max(0, ${day} * 30 - game.model.tick), { animate: false });
+      const buildings = game.model.buildings.filter(row => row.cultureLeveled);
+      const occupied = buildings.filter(row => !row.vacant);
+      const levels = [...new Set(occupied.map(row => row.appearance.level))].sort((a, b) => a - b);
+      const stages = Object.fromEntries(levels.map(level => {
+        const rows = occupied.filter(row => row.appearance.level === level);
+        return [level, {
+          count: rows.length,
+          structures: rows.filter(row => row.appearance.structureVisible).length,
+          tools: [...new Set(rows.map(row => row.appearance.toolCount))],
+          banners: [...new Set(rows.map(row => row.appearance.bannerCount))],
+        }];
+      }));
+      const center = buildings.reduce((sum, row) => ({
+        x: sum.x + row.x + row.width / 2,
+        y: sum.y + row.y + row.height / 2,
+      }), { x: 0, y: 0 });
+      if (buildings.length) {
+        game.camera.zoom = ${mobile ? 0.56 : 0.82};
+        game.camera.focus(center.x / buildings.length, center.y / buildings.length);
+      }
+      const calls = [];
+      const drawWorldObjects = game.renderer.drawWorldObjects.bind(game.renderer);
+      const drawWorldOverlays = game.renderer.drawWorldOverlays.bind(game.renderer);
+      game.renderer.drawWorldObjects = model => {
+        calls.push('world');
+        return drawWorldObjects(model);
+      };
+      game.renderer.drawWorldOverlays = model => {
+        calls.push('overlay');
+        return drawWorldOverlays(model);
+      };
+      game.renderer.render(game.displayModel, 0);
+      game.renderer.drawWorldObjects = drawWorldObjects;
+      game.renderer.drawWorldOverlays = drawWorldOverlays;
+      return {
+        day: game.model.day,
+        levels,
+        stages,
+        vacant: buildings.filter(row => row.vacant).length,
+        abandoned: buildings.filter(row => row.vacant && row.appearance.abandoned).length,
+        calls,
+      };
+    })()`);
+    observations.push(observation);
+    await wait(120);
+    await page.screenshot(
+      `/tmp/shioji_v004_building_levels_${mobile ? 'mobile' : 'desktop'}_day${day}.png`,
+    );
+  }
+
+  assert.deepEqual(observations[0].levels, [1], JSON.stringify(observations[0]));
+  assert.ok(observations[0].vacant > 0, JSON.stringify(observations[0]));
+  assert.equal(observations[0].abandoned, observations[0].vacant,
+    '無人建物はすべて荒廃外観へ写す');
+  assert.equal(observations[0].stages[1].structures, 0,
+    'Lv1は建屋を立てず道具だけを見せる');
+  assert.ok(observations[1].levels.includes(1) && observations[1].levels.includes(2),
+    JSON.stringify(observations[1]));
+  assert.ok(observations[2].levels.includes(3), JSON.stringify(observations[2]));
+  assert.deepEqual(observations[3].levels, [1, 2, 3, 4], JSON.stringify(observations[3]));
+  assert.deepEqual(observations[3].stages[1].tools, [1]);
+  assert.deepEqual(observations[3].stages[2].tools, [2]);
+  assert.deepEqual(observations[3].stages[3].tools, [4]);
+  assert.deepEqual(observations[3].stages[4].tools, [6]);
+  assert.deepEqual(observations[3].stages[3].banners, [1]);
+  assert.deepEqual(observations[3].stages[4].banners, [2]);
+  assert.deepEqual(observations[3].calls.slice(-2), ['world', 'overlay'],
+    '危機・警告overlayを建物と人物より後に描く');
+  assert.deepEqual(page.errors, []);
+  await page.close();
+}
+
 async function checkStartChoice(width, height, mobile, mode) {
   const page = await newPage(width, height, mobile, START_GAME);
   const launcher = await page.evaluate(`(() => {
@@ -820,8 +901,8 @@ async function checkTutorialLetterDelivery() {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.21.0-elena-reading');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.21.0-elena-reading');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.22.0-building-levels');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.22.0-building-levels');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -1518,6 +1599,10 @@ if (process.argv.includes('--company-pointer-only')) {
 } else if (process.argv.includes('--secretary-lifecycle-only')) {
   await checkSecretaryEventLifecycle();
   console.log('CHARTER ISLE v004 secretary lifecycle smoke: PASS');
+} else if (process.argv.includes('--building-levels-only')) {
+  await checkBuildingLevelVisuals();
+  await checkBuildingLevelVisuals(390, 844, true);
+  console.log('CHARTER ISLE v004 building levels smoke: PASS');
 } else {
   await checkBootFailureRecovery();
   await checkStartChoice(1440, 900, false, 'tutorial');
@@ -1528,6 +1613,8 @@ if (process.argv.includes('--company-pointer-only')) {
   await checkTutorialGoalHandoff();
   await checkTutorialGoalHandoff(390, 844, true);
   await checkSecretaryEventLifecycle();
+  await checkBuildingLevelVisuals();
+  await checkBuildingLevelVisuals(390, 844, true);
   await checkTutorialLetterDelivery();
   await checkViewport(1440, 900, false);
   await checkViewport(390, 844, true);
