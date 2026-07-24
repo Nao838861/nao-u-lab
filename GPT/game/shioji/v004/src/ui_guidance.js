@@ -116,10 +116,10 @@ export function secretaryRouteFor({
       priority: 'forced-letter',
       tier: 'stop',
       target: { kind: 'letter', id: forcedLetter.id, delivery: 'forced' },
-      speech: `${forcedLetter.elenaMessage} 大切な書状です。このあと自動で開きます。`,
+      speech: forcedLetter.elenaMessage,
       kicker: '重要書状',
       title: forcedLetter.title,
-      detail: `${forcedLetter.issuedDay}日目・${forcedLetter.summary}`,
+      detail: forcedLetter.summary,
     };
   }
   const actionAdvice = [...advice].reverse().find(row => (
@@ -159,7 +159,7 @@ export function secretaryRouteFor({
       speech: optionalLetter.elenaMessage,
       kicker: 'エレナからの書状',
       title: optionalLetter.title,
-      detail: `${optionalLetter.issuedDay}日目・${optionalLetter.summary}`,
+      detail: optionalLetter.summary,
       action: '書状を開く',
     };
   }
@@ -174,7 +174,7 @@ export function secretaryRouteFor({
       speech: unreadMessage.elenaMessage,
       kicker: 'エレナからの報告',
       title: unreadMessage.title,
-      detail: `${unreadMessage.issuedDay}日目・${unreadMessage.summary}`,
+      detail: unreadMessage.summary,
     };
   }
   if (objective && !objective.complete && String(objective.elenaMessage ?? '').trim()) {
@@ -213,7 +213,7 @@ export function secretaryRouteFor({
       tier: 'notice',
       target: { kind: 'event', sequence: important.sequence },
       speech: important.elenaSpeech,
-      kicker: `${important.day}日目・重要な出来事`,
+      kicker: '重要な出来事',
       title: important.title,
       detail: important.details || `${important.day}日目の出来事`,
     };

@@ -294,7 +294,8 @@ test('教程AA: 未来章をロックし、重要度に応じて強制書状・�
     letters: delivery.visibleLetters(), messages: delivery.messages(),
   });
   assert.equal(route.priority, 'forced-letter');
-  assert.match(route.speech, /このあと自動で開きます/);
+  assert.equal(route.speech, TUTORIAL_LETTER_MESSAGES['arrival-report']);
+  assert.doesNotMatch(route.speech, /このあと自動で開きます/);
   delivery.markLetterRead('arrival-report');
   route = secretaryRouteFor({
     letters: delivery.visibleLetters(), messages: delivery.messages(),
@@ -402,7 +403,7 @@ test('チュートリアル段1: ディレクター有無で操作なしの世�
   assert.deepEqual(roundTrip.engineJournal, guided.inputJournal());
 });
 
-test('チュートリアル段2: 書状はsnapshotの実数値を本文へ差し込み一度だけ発行する', () => {
+test('チュートリアル段2: 書状は専用文面で一度だけ発行する', () => {
   const model = snapshotToViewModel(createEngineApi(buildBlankCity(11)).snapshot({ scope: 'full' }));
   const observed = structuredClone(model);
   observed.day = 7;
@@ -413,10 +414,9 @@ test('チュートリアル段2: 書状はsnapshotの実数値を本文へ差し
   director.observe(observed, []);
   const [letter] = director.letters();
   assert.equal(director.letters().length, 1);
-  assert.match(letter.body, /7日目/);
-  assert.match(letter.body, /人口は13人/);
-  assert.match(letter.body, /完成道路は5区画/);
-  assert.match(letter.summary, /港 1棟・人口 13人・道路 5区画/);
+  assert.match(letter.body, /港だけがあります/);
+  assert.match(letter.body, /道を敷いてください/);
+  assert.doesNotMatch(`${letter.summary}\n${letter.body}`, /7日目|人口は13人|完成道路は5区画/);
   assert.equal(letter.attention, 'critical');
   assert.equal(TUTORIAL_LETTER_ATTENTION['tutorial-starvation-consequence'], 'critical');
   assert.equal(TUTORIAL_LETTER_ATTENTION['tutorial-bankruptcy-consequence'], 'critical');
@@ -935,8 +935,8 @@ test('チュートリアル段7〜9: 支援1回・早期食料・事前備蓄で
   const offer = controller.readModel().orderOffer;
   assert.equal(controller.readModel().day, 75, '初回は最初の生産適格日に届く');
   assert.equal(offer.g, 'tools');
-  assert.match(director.letters().find(letter => letter.id === 'first-order-offer').body,
-    new RegExp(`${offer.qty}荷の注文状`));
+  assert.match(director.letters().find(letter => letter.id === 'first-order-offer').summary,
+    new RegExp(`${offer.qty}荷`));
   assert.equal(controller.operate({ type: 'accept_order' }).ok, true);
   observe();
   assert.equal(director.currentObjective().id, 'order-procurement-target');
@@ -1157,7 +1157,8 @@ test('チュートリアル段13: 第二章を実数で締め、同じ世界で�
   assert.equal(director.currentObjective().id, 'set-seasonal-stock-target');
   const closing = director.letters().find(letter => letter.id === 'chapter-two-close');
   assert.ok(closing.facts.current.importEma < FOOD_IMPORT_EMA_TARGET);
-  assert.match(closing.body, new RegExp(`1日あたり${closing.facts.current.importEma.toFixed(2)}荷です`));
+  assert.match(closing.body, /ご報告だけです/);
+  assert.doesNotMatch(closing.body, /EMA|直近30日/);
 
   const beforeJournal = controller.inputJournal().length;
   const beforeTick = controller.readModel().tick;
@@ -1281,8 +1282,9 @@ test('チュートリアル段14: 目標を無視した飢餓・破産を実数�
   assert.ok(bankruptcy.facts.debt > bankruptcy.facts.limit);
   assert.equal(bankruptcy.facts.companyMoney, controller.readModel().companyMoney);
   assert.equal(bankruptcy.facts.currentGoal.id, 'first-road-and-logger');
-  assert.match(starvation.body, /教程は食料を足さず、亡くなった人も戻しません/);
-  assert.match(bankruptcy.body, /教程は支出を取り消さず、帳簿を巻き戻しません/);
+  assert.match(starvation.body, /漁師か野菜畑を増やし.*市場まで道が続いているか/);
+  assert.match(bankruptcy.body, /新しい建設と買上げを止め.*収入と支出を比べてください/);
+  assert.doesNotMatch(`${starvation.body}\n${bankruptcy.body}`, /教程|実記録|EMA/);
   assert.equal(director.currentObjective().id, 'first-road-and-logger');
   console.log(`  段14失敗実測 飢餓day${starvation.issuedDay}:人口${starvation.facts.population}`
     + ` / 破産day${bankruptcy.issuedDay}:債務${bankruptcy.facts.debt}>限度${bankruptcy.facts.limit}`
@@ -1461,8 +1463,8 @@ test('チュートリアル段18: 実決済と市場最安を並べ、黒字注�
   assert.ok(assessment);
   assert.ok(assessment.facts.marketLowest < assessment.facts.settlementPrice);
   assert.ok(assessment.facts.quotedMargin > 0);
-  assert.match(assessment.body, new RegExp(`${(assessment.facts.settlementPrice * 10).toFixed(1)}デナリ`));
-  assert.match(assessment.body, new RegExp(`${(assessment.facts.marketLowest * 10).toFixed(1)}デナリ`));
+  assert.match(assessment.body, /一荷あたりの支払と.*値段を比べました/);
+  assert.match(assessment.body, /受諾してください/);
   assert.equal(director.currentObjective().id, 'place-conversion-workshops');
 
   const accepted = controller.operate({ type: 'accept_order' });
@@ -1511,7 +1513,7 @@ test('チュートリアル段19: 注文を受けずに見送り、実失効イ�
   assert.ok(advice);
   const selected = advice.facts.selected;
   assert.ok(['loss', 'no_market', 'comparison_fallback'].includes(selected.reason));
-  assert.match(advice.body, /受諾せず期限まで置き/);
+  assert.match(advice.body, /受諾せず、期限まで待ってください/);
   assert.equal(controller.readModel().activeOrder, null, '見送りは受諾操作を行わない');
   const journalBeforeWait = controller.inputJournal();
 
@@ -1527,8 +1529,8 @@ test('チュートリアル段19: 注文を受けずに見送り、実失効イ�
   observe();
   const closing = director.letters().find(letter => letter.id === 'chapter-four-close');
   assert.ok(closing);
-  assert.match(closing.title, /残量と期限を見て選べます/);
-  assert.match(closing.body, /教程を止めず/);
+  assert.equal(closing.title, '受ける判断と見送る判断');
+  assert.match(closing.body, /ご報告だけです/);
   assert.match(
     director.readState().goalResults['let-skippable-order-expire'].evidence.expired.message,
     /未受諾の注文状が失効/,
@@ -1725,8 +1727,9 @@ test('チュートリアル段20: 木製品の実相場上昇から三変換職�
       assert.equal(row.occupied, true, `${row.job}へ実世帯が入る`);
       assert.ok(row.economics.cost > 0, `${row.job}のengine正本実原価を表示する`);
       assert.ok(row.economics.productionEma > 0, `${row.job}の実生産EMAが立つ`);
-      assert.match(chainLetter.body, new RegExp(`${(row.economics.cost * 10).toFixed(1)}デナリ`));
     }
+    assert.match(chainLetter.body, /原料へ払った代金は、作った品の費用に含まれます/);
+    assert.doesNotMatch(chainLetter.body, /EMA/);
   }
   assert.equal(director.currentObjective().id, 'graduate-governor');
   tutorialThroughPlay.fifthChapterStart = {
@@ -1800,10 +1803,9 @@ test('チュートリアル段22: 卒業書状へ町の実測と安定監査の�
   assert.equal(facts.reference.years, E_STABLE_YEARS);
   assert.equal(facts.reference.foodImportEmaMax, FOOD_IMPORT_EMA_TARGET);
   assert.equal(facts.stableJobsRequired, E_STABLE_JOBS.length);
-  assert.match(graduation.title, /あとは総督の思うままに/);
-  assert.match(graduation.body, /合否ではなく行く先を測る物差し/);
-  assert.match(graduation.body, /テスト配置で観察/);
-  assert.match(graduation.body, /見本の町/);
+  assert.equal(graduation.title, 'この先は、総督の島です');
+  assert.match(graduation.body, new RegExp(`いま島には${facts.population}人`));
+  assert.match(graduation.body, /ご報告だけです/);
   assert.equal(director.isComplete(), true);
   assert.equal(director.readState().completedGoals.includes('graduate-governor'), true);
   assert.deepEqual(controller.readModel(), modelBefore, '卒業書状は世界を変更しない');
@@ -1988,7 +1990,7 @@ test('チュートリアル段21: engineが実際に出した転職不可だけ�
   assert.equal(letter.facts.message, message);
   assert.equal(letter.facts.vacantBuildingCount, 0);
   assert.match(letter.body, new RegExp(message));
-  assert.match(letter.body, /空いている別職の建物へ実際に移り住みます/);
+  assert.match(letter.body, /空いている別職の建物へ移り住みます/);
 });
 
 function measureLoggerRoadRecovery(seed) {
@@ -2596,6 +2598,29 @@ test('可視物流AB: 3×3敷地の建屋を奥へ寄せ、各品目を最大6�
   assert.ok(structure.y + structure.height < building.y + building.height);
 });
 
+test('ラン2 P4: 飢え・離散間際・段階低下を建物外の危機信号へまとめる', () => {
+  const world = buildBaseCity(11);
+  const api = createEngineApi(world);
+  api.advanceDays(60);
+  const household = world.state.economy.households[0];
+  household.hungerRun = 51;
+  household.insolvM = 5;
+  household.lv = Math.max(1, household.lv ?? 0);
+  household.down = 55;
+  const model = snapshotToViewModel(api.snapshot({ scope: 'full' }));
+  const building = model.buildings.find(row => row.ownerHouseholdId === household.id);
+  assert.equal(building.stateSignals.crisis.kind, 'hunger');
+  assert.equal(building.stateSignals.crisis.severity, 'critical');
+  assert.equal(building.stateSignals.trend, 'down');
+  assert.equal(model.renderScene.crisisBuildings.some(row => row.id === building.id), true);
+  const death = presentEvent({
+    type: 'death', householdId: household.id, buildingId: building.id,
+    familyName: household.sur, job: household.job, message: '餓えで亡くなった',
+  }, model);
+  assert.match(death.title, new RegExp(`${JOB_LABELS[household.job]}の${household.sur}家`));
+  assert.equal(death.buildingId, building.id);
+});
+
 test('段8: 区分棚・pantry・市場屋台をsnapshotと同量で世帯単位に表示する', () => {
   const api = createEngineApi(buildBaseCity(11));
   api.advanceDays(120);
@@ -2979,7 +3004,7 @@ test('通貨表示: engine内部値はfactsを変えず10倍のデナリで示�
     },
   });
   assert.equal(graduation.facts.companyNet, 1, '卒業factsもengine内部値を保つ');
-  assert.match(graduation.body, /収入30\.0デナリ、支出20\.0デナリ、差引\+10\.0デナリ、残高40\.0デナリ/);
+  assert.doesNotMatch(graduation.body, /収入30\.0|支出20\.0|差引\+10\.0|残高40\.0/);
 });
 
 test('UI向上段9: 常駐エレナは強制書状を予告し、任意書状を直接開ける', () => {
@@ -3006,7 +3031,7 @@ test('UI向上段9: 常駐エレナは強制書状を予告し、任意書状を
   const unread = secretaryRouteFor({ letters: [letter], objective, objectiveAction, events, fallback });
   assert.equal(unread.priority, 'optional-letter');
   assert.deepEqual(unread.target, { kind: 'letter', id: 'letter-1', delivery: 'letter' });
-  assert.match(unread.detail, /7日目.*人口13人/);
+  assert.equal(unread.detail, '人口13人');
   assert.equal(unread.speech, letter.elenaMessage);
   const goalBeforeReport = secretaryRouteFor({
     messages: [{ ...letter, delivery: 'message' }], objective, objectiveAction, events, fallback,
@@ -3388,7 +3413,7 @@ test('段16: 観測APIの全イベント種とnotice専用トースト・ログ�
   );
   assert.match(
     presentEvent({ type: 'death', message: '☠ 佐藤家は離散した', day: 1, tick: 1 }).elenaSpeech,
-    /佐藤さんの一家が島を離れました.*食料/,
+    /住民の佐藤家が島を離れました.*食料/,
   );
   assert.equal(
     presentEvent({ type: 'notice', message: '★本国より注文状: 木製品30荷', day: 1, tick: 1 }).elenaSpeech,
@@ -3400,7 +3425,8 @@ test('段16: 観測APIの全イベント種とnotice専用トースト・ログ�
   assert.match(html, /id="toast-stack"/);
   assert.match(html, /id="event-log"/);
   assert.match(main, /appendEvents/);
-  assert.match(main, /camera\.focus\(row\.x/);
+  assert.match(main, /function focusEvent[\s\S]+camera\.focus\(/);
+  assert.match(main, /renderer\.markBuilding/);
 });
 
 const slowTests = [...testTimings].sort((left, right) => right.elapsedMs - left.elapsedMs).slice(0, 5);

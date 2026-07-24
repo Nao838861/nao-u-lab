@@ -160,6 +160,7 @@ function createEventTracker(world) {
     households: new Map(economy.households.map((household) => [household.id, {
       state: household.state,
       members: household.members.length,
+      sur: household.sur,
       job: household.job,
       buildingId: household.buildingId,
       x: household.px ?? household.x,
@@ -291,7 +292,13 @@ export function createEngineApi(
           count: lost,
         });
       } else {
-        emit("death", point, { householdId: household.id, count: lost });
+        emit("death", point, {
+          householdId: household.id,
+          buildingId: household.buildingId,
+          job: household.job,
+          familyName: household.sur,
+          count: lost,
+        });
       }
     }
     for (const { household, point } of newcomers) {
@@ -302,7 +309,13 @@ export function createEngineApi(
     }
     for (const [householdId, previous] of tracker.households) {
       if (!seenHouseholds.has(householdId)) {
-        emit("death", previous, { householdId, reason: "household_removed" });
+        emit("death", previous, {
+          householdId,
+          buildingId: previous.buildingId,
+          job: previous.job,
+          familyName: previous.sur,
+          reason: "household_removed",
+        });
         tracker.households.delete(householdId);
       }
     }
@@ -393,9 +406,15 @@ export function createEngineApi(
       : economy.events.slice(-Math.min(addedEconomyEvents, economy.events.length));
     for (const [eventDay, message] of newEconomyEvents) {
       const householdId = Number(message.match(/#(\d+)/)?.[1]);
+      const household = economy.households.find(candidate => candidate.id === householdId);
+      const previous = tracker.households.get(householdId);
       emit(eventTypeForMessage(message), householdPoint(economy, householdId), {
         eventDay,
         message,
+        householdId: Number.isSafeInteger(householdId) ? householdId : undefined,
+        buildingId: household?.buildingId ?? previous?.buildingId,
+        job: household?.job ?? previous?.job,
+        familyName: household?.sur ?? previous?.sur,
       });
     }
 

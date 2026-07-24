@@ -133,6 +133,9 @@ export function compileRenderScene(model) {
   const warningBuildings = model.buildings.filter(building => (
     disconnected.has(building.id) && building.entrance
   ));
+  const crisisBuildings = model.buildings.filter(building => (
+    building.stateSignals?.crisis
+  ));
   const port = model.buildings.find(building => building.type === 'port');
   const staticRows = staticDrawables(model, occupied);
   return {
@@ -142,6 +145,7 @@ export function compileRenderScene(model) {
     roadSegments: roads.segments,
     trailRows: trails,
     warningBuildings,
+    crisisBuildings,
     portYard: port
       ? { x: port.x + port.width * 0.55, y: port.y + port.height * 0.58 }
       : null,
@@ -151,6 +155,7 @@ export function compileRenderScene(model) {
       roadSegments: roads.segments.length,
       trails: trails.length,
       warnings: warningBuildings.length,
+      crises: crisisBuildings.length,
     },
   };
 }

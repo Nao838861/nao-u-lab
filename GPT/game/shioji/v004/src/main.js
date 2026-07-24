@@ -223,8 +223,8 @@ function showToast(row) {
   setTimeout(() => toast.remove(), 5200);
 }
 
-function appendEvents(events, { allowToasts = true } = {}) {
-  const rows = events.filter(shouldPresentEvent).map(presentEvent);
+function appendEvents(events, { allowToasts = true, currentModel = model } = {}) {
+  const rows = events.filter(shouldPresentEvent).map(event => presentEvent(event, currentModel));
   eventLog.push(...rows);
   if (eventLog.length > 24) eventLog.splice(0, eventLog.length - 24);
   if (allowToasts) {
@@ -248,7 +248,7 @@ function refreshModel({ animate = false, baseSeconds = 0.12 } = {}) {
   const events = controller.events(lastEventSequence);
   if (events.length) {
     lastEventSequence = events.at(-1).sequence;
-    appendEvents(events, { allowToasts: animate && events.length <= 30 });
+    appendEvents(events, { allowToasts: animate && events.length <= 30, currentModel: nextModel });
   }
   if (animate) presentation.enqueue(nextModel, events, baseSeconds);
   else displayModel = presentation.reset(nextModel);
@@ -1001,13 +1001,23 @@ function renderSecretary() {
     const letterAction = $('#secretary-letter-action');
     const canOpenLetter = currentSecretaryRoute.target?.kind === 'letter'
       && currentSecretaryRoute.target.delivery === 'letter';
+    const canFollowTarget = canOpenLetter
+      || currentSecretaryRoute.target?.kind === 'advice'
+      || currentSecretaryRoute.target?.kind === 'event'
+      || ['building', 'building-detail', 'tool', 'sheet', 'speed', 'objective']
+        .includes(currentSecretaryRoute.target?.kind);
     panel.dataset.secretaryPriority = currentSecretaryRoute.priority;
     panel.dataset.secretaryTier = currentSecretaryRoute.tier ?? 'notice';
-    panel.classList.toggle('has-letter-action', canOpenLetter);
+    panel.classList.toggle('has-letter-action', canFollowTarget);
     setTextIfChanged('#secretary-speech',
       currentSecretaryRoute.speech ?? '島の様子を、引き続き見ていきましょう。');
-    setHiddenIfChanged(letterAction, !canOpenLetter);
-    setTextIfChanged(letterAction, currentSecretaryRoute.action ?? '書状を開く');
+    setHiddenIfChanged(letterAction, !canFollowTarget);
+    const targetLabel = currentSecretaryRoute.target?.kind === 'event'
+      ? 'この家を見る'
+      : currentSecretaryRoute.target?.kind === 'advice'
+        ? (currentSecretaryRoute.action ?? '該当場所を見る')
+        : currentSecretaryRoute.action ?? '書状を開く';
+    setTextIfChanged(letterAction, targetLabel);
     letterAction.dataset.letterId = canOpenLetter ? currentSecretaryRoute.target.id : '';
     if (!tutorialTransitionPending) {
       if (secretaryEnterTimer !== null) clearTimeout(secretaryEnterTimer);
@@ -1088,8 +1098,9 @@ function performGuidanceAction(action) {
   else if (action.kind === 'building-detail') {
     const building = model.buildings.find(row => row.id === action.buildingId);
     if (!building) return false;
-    selectBuilding(building.id);
+    selectBuilding(building);
     camera.focus(building.x + building.width / 2, building.y + building.height / 2);
+    renderer.markBuilding(building.id);
   }
   else if (action.kind === 'tool') activateGroundTool(action.tool);
   else if (action.kind === 'sheet') openSheet(action.sheet);
@@ -1107,7 +1118,16 @@ function performGuidanceAction(action) {
 
 function focusEvent(row) {
   if (!row) return false;
-  camera.focus(row.x + 0.5, row.y + 0.5);
+  const household = row.householdId === undefined
+    ? null : model.households.find(item => item.id === row.householdId);
+  const buildingId = row.buildingId ?? household?.buildingId ?? null;
+  const building = buildingId === null
+    ? null : model.buildings.find(item => item.id === buildingId);
+  camera.focus(
+    building ? building.x + building.width / 2 : row.x + 0.5,
+    building ? building.y + building.height / 2 : row.y + 0.5,
+  );
+  if (building) renderer.markBuilding(building.id);
   closeSheet('event-sheet');
   $('#status span').textContent = `${row.title}の場所へ移動しました`;
   return true;
@@ -1144,7 +1164,7 @@ function renderTutorialLetterSheetContents(letters) {
     const heading = document.createElement('b');
     heading.textContent = letter.title;
     const summary = document.createElement('small');
-    summary.textContent = `${letter.issuedDay}日目・${letter.summary}`;
+    summary.textContent = letter.summary;
     button.append(kind, heading, summary);
     list.append(button);
   }
@@ -1564,8 +1584,22 @@ $('#close-tutorial-letter').addEventListener('click', closeTutorialLetter);
 $('#continue-tutorial-letter').addEventListener('click', closeTutorialLetter);
 $('#tutorial-action').addEventListener('click', () => performGuidanceAction(currentTutorialAction));
 $('#secretary-letter-action').addEventListener('click', event => {
-  const id = event.currentTarget.dataset.letterId;
-  if (id) openTutorialLetter(id);
+  const target = currentSecretaryRoute?.target;
+  if (!target) return;
+  if (target.kind === 'letter') {
+    const id = event.currentTarget.dataset.letterId;
+    if (id) openTutorialLetter(id);
+    return;
+  }
+  if (target.kind === 'advice') {
+    guidanceDirector.markAdviceRead(target.id);
+    performGuidanceAction(target.route);
+  } else if (target.kind === 'event') {
+    focusEvent(eventLog.find(row => row.sequence === target.sequence));
+  } else {
+    performGuidanceAction(target);
+  }
+  renderSecretary();
 });
 
 const companySheet = $('#company-sheet');

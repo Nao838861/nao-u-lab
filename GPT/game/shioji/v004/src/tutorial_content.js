@@ -484,6 +484,159 @@ export const TUTORIAL_LETTER_MESSAGES = Object.freeze({
   'first-log-trade': '木こりの丸太が、市場で初めて売れました。売れたお金は、木こりの家の財布に入っています。',
 });
 
+// 後から読み返す必然がある14通だけを、書状として読みやすい文章へ整える。
+// render() が保持する facts は検証・保存の証拠として残し、表示文だけをここで執筆する。
+const TUTORIAL_AUTHORED_LETTERS = Object.freeze({
+  'tutorial-starvation-consequence': ({ facts = {} }) => ({
+    kicker: '島からの急報',
+    title: '食料を立て直してください',
+    summary: '住民をこれ以上失わないため、食料と市場への道を確かめてください。',
+    body: [
+      facts.peopleLost > 0
+        ? `食べ物を得られず、${facts.peopleLost}人を失いました。亡くなった人は戻りません。`
+        : '食べ物を得られず、亡くなった人と島を離れた家族がいます。',
+      '漁師か野菜畑を増やし、それぞれの家から市場まで道が続いているか確かめてください。',
+    ].join('\n\n'),
+  }),
+  'tutorial-bankruptcy-consequence': ({ facts = {} }) => ({
+    kicker: '会社からの最終通告',
+    title: '支出を止め、帳簿を立て直してください',
+    summary: '会社の借金が信用の限度に達しました。',
+    body: [
+      Number.isFinite(facts.companyMoney)
+        ? `会社の残高は${toDenari(facts.companyMoney).toFixed(0)}デナリです。これ以上の借金は認められません。`
+        : '会社の借金が、これ以上は認められない額に達しました。',
+      '新しい建設と買上げを止め、取引の収入と支出を比べてください。島の暮らしと帳簿は、この状態から続きます。',
+    ].join('\n\n'),
+  }),
+  'arrival-report': () => ({
+    kicker: 'エレナからの着任書',
+    title: '港から最初の道を始めましょう',
+    summary: '港から森のそばまで道を敷いてください。',
+    body: [
+      '総督、島には港だけがあります。丸太を得ることが、最初の暮らしと商いの始まりです。',
+      'まず港から森のそばまで道を敷いてください。道が届いたら、その隣に木こりを建てましょう。',
+    ].join('\n\n'),
+  }),
+  'first-order-offer': ({ facts = {} }) => ({
+    kicker: '本国からの注文状',
+    title: `${goodsLabel(facts.goods)}の注文が届きました`,
+    summary: `${goodsLabel(facts.goods)}を${facts.qty ?? '指定の量'}荷、期限までに納める依頼です。`,
+    body: [
+      `本国が${goodsLabel(facts.goods)}を求めています。全量を期限までに納めた時だけ、注文は完遂になります。`,
+      '引き受けるなら、取引で量と期限を確かめて受諾してください。その後、買上げ目標が注文数に足りているかも確かめましょう。',
+    ].join('\n\n'),
+  }),
+  'accepted-order-expired': ({ facts = {} }) => ({
+    kicker: '本国注文の失効報告',
+    title: '受けた注文を納め切れませんでした',
+    summary: '船が出ても、残りがあれば注文は完遂ではありません。',
+    body: [
+      Number(facts.remaining) > 0
+        ? `期限を迎えた時、まだ${Number(facts.remaining).toFixed(1)}荷が残っていました。注文は期限切れです。`
+        : '期限までに全量を納め切れず、注文は期限切れになりました。',
+      '次の注文では、残りの量とあと何日かを見ながら、買上げ目標、倉庫への道、市場の在庫を早めに整えてください。',
+    ].join('\n\n'),
+  }),
+  'chapter-one-close': ({ facts = {} }) => ({
+    kicker: '第一章の報告',
+    title: facts.expired ? '最初の注文から学んだこと' : '最初の輸出が結んだ道',
+    summary: '丸太から木製品を作り、倉庫と港を通して本国へ届ける流れを確かめました。',
+    body: [
+      facts.expired
+        ? '最初の注文は期限切れになりました。それでも、残りと期限を見て準備する理由は確かめられました。'
+        : '木こりの丸太が木製品になり、市場、倉庫、港を通って本国へ届きました。',
+      'ご報告だけです。次は、家族の歩く距離を短くし、本土に頼っている食料を島で作る流れを見ていきましょう。',
+    ].join('\n\n'),
+  }),
+  'chapter-two-close': () => ({
+    kicker: '第二章の報告',
+    title: '島の食卓が育ちました',
+    summary: '魚と野菜が市場へ届き、本土から買う食料を減らせるようになりました。',
+    body: [
+      '漁師と野菜畑が働き、島で作った食料が家族の食卓へ届き始めました。本土へ出ていくお金も、これから抑えやすくなります。',
+      'ご報告だけです。統計の食料の流れを見れば、島内生産、消費、本土購入の変化をいつでも確かめられます。',
+    ].join('\n\n'),
+  }),
+  'chapter-three-close': ({ facts = {} }) => ({
+    kicker: '第三章の報告',
+    title: '倉庫へ備える命令を出しました',
+    summary: `${goodsLabel(facts.goods)}を、余る時期から品薄の時期へ残す準備ができました。`,
+    body: [
+      `${goodsLabel(facts.goods)}の買上げ目標を定めました。市場に余りがあれば、会社が買って倉庫へ運びます。`,
+      'いまは待つ時期です。市場の品が少なくなったらエレナがお知らせします。その時は倉庫の備えを市場へ戻せます。',
+    ].join('\n\n'),
+  }),
+  'profitable-order-assessment': ({ facts = {} }) => ({
+    kicker: '注文の見立て',
+    title: `${goodsLabel(facts.goods)}の注文は利益を見込めます`,
+    summary: '本国の支払が、市場で集める費用を上回る見込みです。',
+    body: [
+      '本国の一荷あたりの支払と、市場で買える一荷あたりの値段を比べました。いまの相場なら差が残ります。',
+      'この注文を進めるなら受諾してください。相場は動くので、受諾後も残りの量と期限を見守りましょう。',
+    ].join('\n\n'),
+  }),
+  'skippable-order-assessment': ({ facts = {} }) => ({
+    kicker: '注文の見立て',
+    title: `${goodsLabel(facts.goods)}の注文は見送れます`,
+    summary: '注文状は命令ではありません。会社に合わない取引は受けなくて構いません。',
+    body: [
+      facts.reason === 'loss'
+        ? '本国の支払より市場で集める費用が高く、受ければ損をする見込みです。'
+        : '市場に必要な品がなく、期限までに集められる確かな見込みがありません。',
+      '見送るなら受諾せず、期限まで待ってください。品もお金も使わず、次の注文を待てます。',
+    ].join('\n\n'),
+  }),
+  'chapter-four-close': () => ({
+    kicker: '第四章の報告',
+    title: '受ける判断と見送る判断',
+    summary: '支払と仕入を比べ、会社に残る取引だけを選べます。',
+    body: [
+      '利益を見込んで引き受けることも、損や品不足を避けて見送ることも、どちらも会社を守る判断です。',
+      'ご報告だけです。取引では、受諾中の注文の残りと期限をいつでも確かめられます。',
+    ].join('\n\n'),
+  }),
+  'conversion-cost-chain': () => ({
+    kicker: '手仕事の報告',
+    title: '原料の値は、次の品へ渡ります',
+    summary: '丸太から木製品と木炭が生まれ、木炭から塩が生まれます。',
+    body: [
+      '木工房と炭焼き小屋が丸太を買い、塩田が木炭を買います。原料へ払った代金は、作った品の費用に含まれます。',
+      'ご報告だけです。建物を選ぶと、原料棚、産出棚、作るのにかかった費用を確かめられます。',
+    ].join('\n\n'),
+  }),
+  'chapter-five-close': () => ({
+    kicker: '第五章の報告',
+    title: '手仕事が暮らしへ届く町になりました',
+    summary: '仕事場、原料、市場、家族の暮らしが一つの流れで結ばれました。',
+    body: [
+      '木工房、炭焼き小屋、塩田が、原料を買って品を作る受け皿になりました。品が家族へ届き続ければ、家と仕事場も育ちます。',
+      'ご報告だけです。空いた仕事場は、困った家族が新しい仕事へ移るための受け皿にもなります。',
+    ].join('\n\n'),
+  }),
+  'tutorial-graduation': ({ facts = {} }) => ({
+    kicker: '総督への最後の書状',
+    title: 'この先は、総督の島です',
+    summary: '案内は終わりますが、島の暮らしと取引はこのまま続きます。',
+    body: [
+      Number.isFinite(facts.population)
+        ? `いま島には${facts.population}人が暮らしています。道、仕事、市場、倉庫を結んだのは総督です。`
+        : '道、仕事、市場、倉庫を結んだのは総督です。',
+      'ご報告だけです。統計と地図を手がかりに、伸ばしたい仕事と守りたい暮らしを、ご自身で選んでください。',
+    ].join('\n\n'),
+  }),
+});
+
+export function authorTutorialLetter(id, rendered) {
+  const author = TUTORIAL_AUTHORED_LETTERS[id];
+  if (!author) return rendered;
+  return {
+    ...rendered,
+    ...author(rendered),
+    signature: rendered.signature ?? '会社秘書 エレナ',
+  };
+}
+
 export const TUTORIAL_SYSTEM_INSTRUCTIONS = Object.freeze({
   'first-road-and-logger': '港から森の隣まで道を引く',
   'first-logger': '森と道の両方に接する場所へ木こりを建てる',
@@ -1152,7 +1305,7 @@ export const TUTORIAL_GOALS = Object.freeze([
   Object.freeze({
     id: 'accept-first-order',
     chapter: '第一章・最初の一荷',
-    title: '最初の適格日に届く本国注文を受ける',
+    title: '届いた最初の本国注文を受ける',
     evaluate({ model }) {
       const accepted = Boolean(model.activeOrder);
       const offer = model.orderOffer;
@@ -1281,21 +1434,28 @@ export const TUTORIAL_GOALS = Object.freeze([
       const current = loggerTripObservation(model);
       const warning = loggerWarningFacts(state);
       const recovered = loggerTripRecovered(model, state);
+      const previous = state?.goalResults?.['improve-logger-route']?.evidence ?? {};
+      const startDay = previous.startDay ?? model.day;
+      const observationEnded = model.day - startDay >= 30;
       const alreadyGood = Boolean(current && !warning
         && current.tripTicks <= LOGGER_TRIP_WARNING_TICKS);
-      const complete = Boolean(recovered) || alreadyGood;
+      const complete = Boolean(recovered) || alreadyGood || observationEnded;
       return {
         complete,
         progress: { done: Number(complete), total: 1 },
-        detail: current
-          ? `実往復 ${current.tripTicks.toFixed(1)}tick / 生産 ${(current.multiplier * 100).toFixed(1)}%`
-          : '木こりが次に市場を往復する日を観測中です',
+        detail: observationEnded && !current
+          ? '30日観察して買い物が起きなかったため、これ以上待たず次へ進みます'
+          : current
+            ? `市場への往復 ${current.tripTicks.toFixed(1)}刻 / 丸太を切る時間 ${(current.multiplier * 100).toFixed(0)}%`
+            : `木こりの次の買い物を観察中（あと最大${Math.max(0, 30 - (model.day - startDay))}日）`,
         evidence: {
+          startDay,
           tripTicks: current?.tripTicks ?? null,
           multiplier: current?.multiplier ?? null,
           warned: Boolean(warning),
           recovered: Boolean(recovered),
           alreadyGood,
+          observationEnded,
         },
       };
     },
@@ -1310,7 +1470,7 @@ export const TUTORIAL_GOALS = Object.freeze([
       return {
         complete: Boolean(change),
         progress: { done: Number(Boolean(change)), total: 1 },
-        detail: `食料生産EMA ${metrics.productionEma.toFixed(2)} / 輸入EMA ${metrics.importEma.toFixed(2)}`,
+        detail: `最近一日あたり: 島の食料 ${metrics.productionEma.toFixed(2)}荷 / 本土購入 ${metrics.importEma.toFixed(2)}荷`,
         evidence: { ...metrics, changed: Boolean(change) },
       };
     },
@@ -1318,7 +1478,7 @@ export const TUTORIAL_GOALS = Object.freeze([
   Object.freeze({
     id: 'reduce-food-imports',
     chapter: '第二章・島の食卓',
-    title: '食料輸入EMAを0.60未満へ下げる',
+    title: '本土から買う食料を一日0.60荷未満へ減らす',
     evaluate({ model }) {
       const metrics = foodFlowMetrics(model);
       const complete = metrics.productionEma >= FOOD_PRODUCTION_EMA_MIN
@@ -1326,7 +1486,7 @@ export const TUTORIAL_GOALS = Object.freeze([
       return {
         complete,
         progress: { done: Number(complete), total: 1 },
-        detail: `食料輸入EMA ${metrics.importEma.toFixed(3)}（目標 < ${FOOD_IMPORT_EMA_TARGET.toFixed(2)}） / 島内生産 ${metrics.productionEma.toFixed(2)}`,
+        detail: `最近一日あたり: 本土購入 ${metrics.importEma.toFixed(2)}荷 / 島の生産 ${metrics.productionEma.toFixed(2)}荷`,
         evidence: metrics,
       };
     },
@@ -1340,7 +1500,7 @@ export const TUTORIAL_GOALS = Object.freeze([
       return {
         complete: issued,
         progress: { done: Number(issued), total: 1 },
-        detail: issued ? '食料自給と本土流出の報告書が届きました' : '輸入EMAの低下を確認しています',
+        detail: issued ? '島の食卓についての報告書が届きました' : '本土から買う食料の減り方を確かめています',
         evidence: { issued },
       };
     },
@@ -1655,7 +1815,7 @@ export const TUTORIAL_GOALS = Object.freeze([
         complete: chain.active,
         progress: { done, total: chain.rows.length },
         detail: chain.rows.map(row => (
-          `${row.label} ${row.occupied ? `生産EMA ${(row.economics?.productionEma ?? 0).toFixed(2)}` : '入植待ち'}`
+          `${row.label} ${row.occupied ? `最近一日 ${(row.economics?.productionEma ?? 0).toFixed(2)}荷` : '働く家族を待っています'}`
         )).join(' / '),
         evidence: chain,
       };
@@ -1721,7 +1881,7 @@ export const TUTORIAL_GOALS = Object.freeze([
         complete: issued,
         progress: { done: Number(issued), total: 1 },
         detail: issued
-          ? '教程の目標を閉じ、同じ島で自由プレイが始まりました'
+          ? '案内が終わり、同じ島で自由に続けられます'
           : '第五章までの実測を卒業書状へまとめています',
         evidence: { issued },
       };
@@ -1824,15 +1984,17 @@ export const TUTORIAL_ADVICE = Object.freeze([
       const hungerRun = household?.hungerRun ?? 0;
       const building = model.buildings.find(row => row.id === household?.buildingId) ?? null;
       const family = household?.familyName ? `${household.familyName}家` : `世帯#${household?.id ?? '—'}`;
+      const job = JOB_LABELS[household?.job] ?? household?.job ?? '住民';
+      const subject = `${job}の${family}`;
       return {
         active: hungerRun >= 30,
         completed: false,
         evidence: { householdId: household?.id ?? null, hungerRun },
         priority: 'action',
         kicker: 'エレナの早期警告',
-        title: `${family}の食料が危険です`,
+        title: `${subject}の食料が危険です`,
         detail: `必要な食料を${hungerRun}日連続で食べられていません。60日に達すると家族が亡くなります。家の食料庫、市場への道、漁師・野菜畑を確認してください。`,
-        speech: `${family}は${hungerRun}日、必要な食料を食べられていません。60日に達する前に、食料庫と市場への道、漁師と野菜畑を確かめましょう。`,
+        speech: `${subject}は食べ物を得られない日が続いています。食料庫と市場への道、漁師と野菜畑を確かめましょう。`,
         target: building ? { kind: 'building-detail', buildingId: building.id } : { kind: 'sheet', sheet: 'island-sheet' },
       };
     },
@@ -1873,10 +2035,13 @@ export const TUTORIAL_ADVICE = Object.freeze([
       const sequence = adviceEventSequence(death);
       const fresh = Boolean(death) && sequence !== previous.sequence;
       const familyHead = death?.message?.match(/^☠\s*([^家]+)家/)?.[1];
-      const family = familyHead ? `${familyHead}さんの一家` : 'ひとつの家族';
+      const household = model.households.find(row => row.id === death?.householdId);
+      const family = household?.familyName ?? familyHead ?? death?.familyName ?? null;
+      const job = JOB_LABELS[household?.job ?? death?.job] ?? household?.job ?? death?.job ?? '住民';
+      const subject = family ? `${job}の${family}家` : `${job}の家族`;
       const happened = death?.message?.includes('離散')
-        ? `${family}が、島を出ていきました。`
-        : `${family}で、食べ物を得られず亡くなった方がいます。`;
+        ? `${subject}が、島を出ていきました。`
+        : `${subject}で、食べ物を得られず亡くなった方がいます。`;
       return {
         active: fresh,
         completed: false,

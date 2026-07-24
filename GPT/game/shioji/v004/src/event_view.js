@@ -1,3 +1,5 @@
+import { JOB_LABELS } from './config.js?v=v004.19.0-canon-performance';
+
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],
   transaction: ['市場取引', 'neutral'], docking: ['船が接岸', 'good'], handling: ['港で荷役', 'neutral'],
@@ -38,12 +40,20 @@ function noticeTitle(message = '') {
   return TYPE_PRESENTATION.notice;
 }
 
-function familyName(message = '') {
-  const name = message.match(/^☠\s*([^家]+)家/)?.[1];
-  return name ? `${name}さんの一家` : 'ひとつの家族';
+function eventHousehold(event, model = null) {
+  return model?.households?.find(household => household.id === event.householdId) ?? null;
 }
 
-function elenaSpeechFor(event, tone) {
+function householdSubject(event, model = null) {
+  const household = eventHousehold(event, model);
+  const familyName = household?.familyName ?? event.familyName
+    ?? event.message?.match(/^☠\s*([^家]+)家/)?.[1] ?? null;
+  const job = household?.job ?? event.job ?? event.toJob ?? event.fromJob ?? null;
+  const jobLabel = JOB_LABELS[job] ?? job ?? '住民';
+  return familyName ? `${jobLabel}の${familyName}家` : `${jobLabel}の家族`;
+}
+
+function elenaSpeechFor(event, tone, model = null) {
   if (event.type === 'docking') {
     return '本国からの船が港に着きました。荷下ろしが始まります。';
   }
@@ -51,13 +61,13 @@ function elenaSpeechFor(event, tone) {
     return '新しい子どもが生まれました。家族が増えても食料が足りるか、確かめておきましょう。';
   }
   if (event.type === 'death') {
-    const family = familyName(event.message);
+    const family = householdSubject(event, model);
     return event.message?.includes('離散')
       ? `${family}が島を離れました。次の家族を失わないよう、市場の食料と道を確かめましょう。`
       : `${family}で、食べ物を得られず亡くなった方がいます。市場へ食料が届くよう、漁師か野菜畑を増やしましょう。`;
   }
   if (event.type === 'job_move') {
-    return '仕事を替えた家族が、新しい家へ移りました。空いた家と仕事の変化を見ておきましょう。';
+    return `${householdSubject(event, model)}が新しい仕事へ移りました。空いた家と仕事の変化を見ておきましょう。`;
   }
   if (event.type === 'inheritance') {
     return 'ひとつの家族から、新しい世帯が分かれました。新しい家族が住む家と仕事が必要です。';
@@ -71,11 +81,15 @@ function elenaSpeechFor(event, tone) {
   return '';
 }
 
-export function presentEvent(event) {
-  const [title, tone] = event.type === 'notice'
+export function presentEvent(event, model = null) {
+  let [title, tone] = event.type === 'notice'
     ? noticeTitle(event.message)
     : TYPE_PRESENTATION[event.type] ?? ['未分類イベント', 'neutral'];
-  const details = event.message ?? (event.goods
+  const subject = event.householdId !== undefined ? householdSubject(event, model) : null;
+  if (event.type === 'death' && subject) title = `${subject}で死亡・離散`;
+  else if (event.type === 'birth' && subject) title = `${subject}に子ども`;
+  else if (event.type === 'job_move' && subject) title = `${subject}が転職・移住`;
+  const details = subject && event.message ? `${subject} — ${event.message}` : event.message ?? (event.goods
     ? `${event.goods} ${Math.round((event.qty ?? 0) * 10) / 10}`
     : event.op ? `${event.op.type}${event.ok === false ? '（失敗）' : ''}` : '');
   return {
@@ -83,7 +97,7 @@ export function presentEvent(event) {
     title,
     tone,
     details,
-    elenaSpeech: elenaSpeechFor(event, tone),
+    elenaSpeech: elenaSpeechFor(event, tone, model),
     important: ['bad', 'warn', 'order'].includes(tone)
       || ['docking', 'birth', 'death', 'job_move', 'inheritance', 'blocked'].includes(event.type),
   };

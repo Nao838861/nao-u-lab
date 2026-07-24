@@ -88,6 +88,39 @@ function cultureProgress(household) {
   };
 }
 
+function householdStateSignals(household) {
+  const hungerDays = household?.hungerRun ?? 0;
+  const insolvencyMonths = household?.insolvM ?? 0;
+  const level = household?.lv ?? 0;
+  const downDays = household?.down ?? 0;
+  const upDays = household?.up ?? 0;
+  const requiredDays = P.UP_DAYS * (level + 1);
+  const crises = [
+    hungerDays >= 30 ? {
+      kind: 'hunger',
+      severity: hungerDays >= 50 ? 'critical' : 'warning',
+      label: hungerDays >= 50 ? '飢え・危険' : '食料不足',
+    } : null,
+    insolvencyMonths >= 3 ? {
+      kind: 'dispersal',
+      severity: insolvencyMonths >= 5 ? 'critical' : 'warning',
+      label: insolvencyMonths >= 5 ? '離散間際' : '暮らしが苦しい',
+    } : null,
+    level > 0 && downDays >= P.DOWN_DAYS * 0.55 ? {
+      kind: 'demotion',
+      severity: downDays >= P.DOWN_DAYS * 0.84 ? 'critical' : 'warning',
+      label: downDays >= P.DOWN_DAYS * 0.84 ? '段階低下間際' : '暮らしが後退',
+    } : null,
+  ].filter(Boolean);
+  const crisis = crises.sort((left, right) => (
+    Number(right.severity === 'critical') - Number(left.severity === 'critical')
+  ))[0] ?? null;
+  const trend = level > 0 && downDays >= P.DOWN_DAYS * 0.25
+    ? 'down'
+    : requiredDays > 0 && upDays >= requiredDays * 0.45 ? 'up' : 'steady';
+  return { crisis, trend, level };
+}
+
 function stockManifest(
   buildings, households, stalls, marketBuilding, companyStock = {}, companyStockCost = {},
 ) {
@@ -291,6 +324,7 @@ export function snapshotToViewModel(snapshot) {
       occupied: building.ownerHouseholdId !== null,
       vacant: !building.fixed && !companyLogistics && building.ownerHouseholdId === null,
       cultureLevel: owner?.lv ?? 0,
+      stateSignals: householdStateSignals(owner),
       shelves,
       shelfGroups: groupedStock([...shelves, ...companyStockShelves]),
       shelfAmount: shelves.reduce((total, row) => total + row.amount, 0),
@@ -330,6 +364,7 @@ export function snapshotToViewModel(snapshot) {
       hungerDays: hungerHistory.reduce((total, hungry) => total + Number(Boolean(hungry)), 0),
       hungerWindow: hungerHistory.length,
       hungerRun: household.hungerRun ?? 0,
+      insolvencyMonths: household.insolvM ?? 0,
       walkingDistance: household.walk ?? 0,
       roadConnected: Boolean(household.road),
       marketTransactionTicks: household.marketTransactionTicks ?? 0,

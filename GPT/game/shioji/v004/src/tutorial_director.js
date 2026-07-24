@@ -2,7 +2,7 @@ import {
   TUTORIAL_ADVICE, TUTORIAL_GOALS, TUTORIAL_LETTERS, TUTORIAL_LETTER_ATTENTION,
   TUTORIAL_ELENA_COMPLETIONS, TUTORIAL_ELENA_MESSAGES, TUTORIAL_LETTER_MESSAGES,
   TUTORIAL_PLAYER_TITLES, TUTORIAL_SYSTEM_INSTRUCTIONS,
-  isRequiredTutorialGoal, isTutorialGoalUnlocked, tutorialLetterDelivery,
+  authorTutorialLetter, isRequiredTutorialGoal, isTutorialGoalUnlocked, tutorialLetterDelivery,
 } from './tutorial_content.js?v=v004.19.0-canon-performance';
 
 const SAVE_VERSION = 1;
@@ -27,7 +27,10 @@ function playerFacingText(value) {
     .replaceAll('journal', '操作記録')
     .replaceAll('エンジン状態', '島の状態')
     .replaceAll('経済エンジン', '島の営み')
-    .replaceAll('E-Stable', '長期見本都市');
+    .replaceAll('E-Stable', '長期見本都市')
+    .replaceAll('教程', '案内')
+    .replaceAll('実記録', '記録')
+    .replaceAll('実際に', '');
 }
 
 function initialState() {
@@ -93,7 +96,10 @@ export class TutorialDirector {
     for (const definition of this.letterDefinitions) {
       if (this.state.letters.some(letter => letter.id === definition.id)) continue;
       if (!definition.when({ model, events, state: this.readState() })) continue;
-      const rendered = definition.render({ model, events, state: this.readState() });
+      const rendered = authorTutorialLetter(
+        definition.id,
+        definition.render({ model, events, state: this.readState() }),
+      );
       const delivery = rendered.delivery ?? definition.delivery
         ?? tutorialLetterDelivery(definition.id);
       for (const letter of this.state.letters) {

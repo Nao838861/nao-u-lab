@@ -19,6 +19,7 @@ export class Renderer {
     this.pulse = 0;
     this.selectedCarrierId = null;
     this.selectedBuildingId = null;
+    this.focusMarker = null;
     this.operationPreview = null;
     this.season = '冬';
     this.backgroundGradient = null;
@@ -26,6 +27,12 @@ export class Renderer {
     this.frameBounds = null;
     this.lastFrameMetrics = {};
     this.resize();
+  }
+
+  markBuilding(buildingId, durationSeconds = 5) {
+    this.focusMarker = buildingId === null
+      ? null
+      : { buildingId, until: this.pulse + durationSeconds };
   }
 
   resize() {
@@ -427,6 +434,8 @@ export class Renderer {
     }
     this.drawTrackedRoute(model);
     this.drawConnectionWarnings(model);
+    this.drawCrisisSignals(model);
+    this.drawFocusMarker(model);
     this.drawOperationPreview();
   }
 
@@ -452,6 +461,78 @@ export class Renderer {
       ctx.fillText('道が繋がっていません', point.x, point.y - 12 * this.camera.zoom);
       ctx.restore();
     }
+  }
+
+  drawCrisisSignals(model) {
+    const ctx = this.ctx;
+    for (const building of this.sceneFor(model).crisisBuildings ?? []) {
+      if (!this.boundsVisible(building)) continue;
+      const crisis = building.stateSignals.crisis;
+      const point = this.camera.project(
+        building.x + building.width * 0.5,
+        building.y + building.height * 0.12,
+        28,
+      );
+      const critical = crisis.severity === 'critical';
+      const icon = crisis.kind === 'hunger' ? '🍽'
+        : crisis.kind === 'demotion' ? '↓' : '!';
+      ctx.save();
+      ctx.fillStyle = critical ? 'rgba(126,31,28,.94)' : 'rgba(114,73,28,.92)';
+      ctx.strokeStyle = critical ? '#ff9b7c' : '#f3c66a';
+      ctx.lineWidth = Math.max(1.5, 2 * this.camera.zoom);
+      ctx.beginPath();
+      ctx.roundRect(
+        point.x - 43 * this.camera.zoom,
+        point.y - 13 * this.camera.zoom,
+        86 * this.camera.zoom,
+        23 * this.camera.zoom,
+        8 * this.camera.zoom,
+      );
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#fff2cf';
+      ctx.font = `800 ${Math.max(8, 9 * this.camera.zoom)}px "Yu Gothic", sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillText(
+        `${icon} ${crisis.label}`,
+        point.x,
+        point.y + 3 * this.camera.zoom,
+      );
+      ctx.restore();
+    }
+  }
+
+  drawFocusMarker(model) {
+    if (!this.focusMarker) return;
+    if (this.pulse >= this.focusMarker.until) {
+      this.focusMarker = null;
+      return;
+    }
+    const building = model.buildings.find(row => row.id === this.focusMarker.buildingId);
+    if (!building || !this.boundsVisible(building)) return;
+    const point = this.camera.project(
+      building.x + building.width / 2,
+      building.y + building.height / 2,
+      34,
+    );
+    const ctx = this.ctx;
+    const radius = (15 + Math.sin(this.pulse * 7) * 3) * this.camera.zoom;
+    ctx.save();
+    ctx.strokeStyle = '#fff0a5';
+    ctx.fillStyle = 'rgba(236,169,58,.18)';
+    ctx.lineWidth = Math.max(2, 3 * this.camera.zoom);
+    ctx.beginPath();
+    ctx.arc(point.x, point.y, radius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(point.x, point.y - radius - 12 * this.camera.zoom);
+    ctx.lineTo(point.x - 6 * this.camera.zoom, point.y - radius - 22 * this.camera.zoom);
+    ctx.lineTo(point.x + 6 * this.camera.zoom, point.y - radius - 22 * this.camera.zoom);
+    ctx.closePath();
+    ctx.fillStyle = '#fff0a5';
+    ctx.fill();
+    ctx.restore();
   }
 
   drawOperationPreview() {
@@ -731,13 +812,25 @@ export class Renderer {
     ctx.font = `800 ${Math.max(9, 10 * this.camera.zoom)}px "Yu Gothic", sans-serif`;
     ctx.fillStyle = '#fff3cf';
     ctx.fillText(icon, labelPoint.x, labelPoint.y + 0.5 * this.camera.zoom);
+    if (!building.vacant) {
+      const trend = building.stateSignals?.trend === 'up' ? '↑'
+        : building.stateSignals?.trend === 'down' ? '↓' : '—';
+      ctx.font = `800 ${Math.max(7, 8 * this.camera.zoom)}px "Yu Gothic", sans-serif`;
+      ctx.fillStyle = building.stateSignals?.trend === 'down' ? '#ffb09a'
+        : building.stateSignals?.trend === 'up' ? '#bce5ae' : '#efe1b4';
+      ctx.fillText(
+        `Lv${building.cultureLevel ?? 0}${trend}`,
+        labelPoint.x,
+        labelPoint.y + 12 * this.camera.zoom,
+      );
+    }
     if (this.camera.zoom >= 1.02 || building.id === this.selectedBuildingId || building.vacant) {
       ctx.font = `700 ${Math.max(9, 10 * this.camera.zoom)}px "Yu Gothic", sans-serif`;
       ctx.lineWidth = 3;
       ctx.strokeStyle = 'rgba(19,39,42,.84)';
       ctx.fillStyle = '#f6e9c8';
-      ctx.strokeText(label, labelPoint.x, labelPoint.y + 18 * this.camera.zoom);
-      ctx.fillText(label, labelPoint.x, labelPoint.y + 18 * this.camera.zoom);
+      ctx.strokeText(label, labelPoint.x, labelPoint.y + 25 * this.camera.zoom);
+      ctx.fillText(label, labelPoint.x, labelPoint.y + 25 * this.camera.zoom);
     }
     ctx.restore();
   }
