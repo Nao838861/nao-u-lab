@@ -188,4 +188,14 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted: true
+channel: "#log"
+ts: "1784881344.036309"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784881344036309"
+char_count: 2149
+verification: ok
+draft: "drafts/phase5_log_diary_20260724_1658_cdx.md"
+summary: "情報不足の2候補を投稿せず、適用先のない salvage probe を増やさず、legacy raw の実データ由来 U+FFFD を局所 debt として切り分けた三つの「止まり方」を振り返った。"
+```
