@@ -7,12 +7,15 @@ import {
   completeAssignedWork,
   createEconomicState,
   fundCompanyBuilding,
+  finishHouseholdCartTrip,
   initializeNaturalResources,
   isProductionInput,
+  householdHaul,
   householdMaterialAmount,
   loadMarketSellCargo,
   marketTripCost,
   marketTripDuration,
+  marketPathLength,
   producePrimaryTick,
   productionInputAmount,
   productionMultiplierForTrip,
@@ -31,6 +34,7 @@ import {
   addBuilding,
   buildingById,
   canPlaceBuilding,
+  createCartCarrier,
   createWalkCarrier,
   createPhysicalState,
   depositInventory,
@@ -75,8 +79,14 @@ function syncHouseholdToCarrier(economy, household) {
   tread(economy, household.px, household.py);
 }
 
-function finishMarketTrip(physical, household) {
+function finishMarketTrip(economy, physical, household, { day }) {
   unloadMarketBuyCargo(household, physical);
+  finishHouseholdCartTrip(economy, household, {
+    day,
+    assetId: household.marketCarrier.assetId,
+    distance: (household.marketCarrier.tripDistance ?? 0)
+      + (household.marketCarrier.routeCost ?? 0),
+  });
   household.marketCarrier.cargo = null;
   household.marketCarrier = null;
   household.marketTransactionTicks = 0;
@@ -268,8 +278,17 @@ export function beginMarketTrip(economy, physical, household) {
   const tripTicks = marketTripDuration(economy, physical, household);
   if (tripTicks > 30) return { started: false, tripTicks };
 
-  loadMarketSellCargo(economy, household);
-  const carrier = createWalkCarrier(physical, { people: household.members.length });
+  const useCart = Boolean(household.cart)
+    && Number.isFinite(marketPathLength(economy, physical, household, "cart"));
+  loadMarketSellCargo(economy, household, { useCart });
+  const carrier = useCart
+    ? createCartCarrier(physical, {
+      capacity: householdHaul(household, { useCart: true }),
+      cartKind: household.cart.kind,
+      assetId: household.cart.id,
+    })
+    : createWalkCarrier(physical, { people: household.members.length });
+  if (!useCart) carrier.capacity = householdHaul(household, { useCart: false });
   carrier.cargo = household.cargo;
   const start = household.state === "home"
     ? householdEntrance(physical, household)
@@ -282,6 +301,7 @@ export function beginMarketTrip(economy, physical, household) {
     start,
     logisticsEntrance(physical, "market", economy.market),
   );
+  carrier.tripDistance = carrier.routeCost;
   household.px = start.x;
   household.py = start.y;
   household.marketCarrier = carrier;
@@ -315,7 +335,7 @@ export function stepMarketTrip(economy, physical, household, { day, random }) {
       householdEntrance(physical, household),
     );
     if (household.marketCarrier.routeCost === 0) {
-      finishMarketTrip(physical, household);
+      finishMarketTrip(economy, physical, household, { day });
       return true;
     }
     household.state = "toHome";
@@ -323,7 +343,7 @@ export function stepMarketTrip(economy, physical, household, { day, random }) {
   }
   if (household.state === "toHome") {
     if (stepTravelCarrier(physical, household.marketCarrier)) {
-      finishMarketTrip(physical, household);
+      finishMarketTrip(economy, physical, household, { day });
       return true;
     }
     syncHouseholdToCarrier(economy, household);

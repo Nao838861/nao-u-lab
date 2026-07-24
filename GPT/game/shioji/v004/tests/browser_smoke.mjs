@@ -480,7 +480,8 @@ async function checkStartChoice(width, height, mobile, mode) {
     assert.equal(started.tutorialActionHidden, false, JSON.stringify(started));
     assert.equal(started.tutorialActionText, '道を敷き始める');
     assert.equal(started.secretaryPriority, 'forced-letter', JSON.stringify(started));
-    assert.match(started.secretarySpeech, /いま島にあるのは港だけ.*このあと自動で開きます/s);
+    assert.match(started.secretarySpeech, /いま島にあるのは港だけ.*木こりが丸太を運べるように/s);
+    assert.doesNotMatch(started.secretarySpeech, /このあと自動で開きます/);
     assert.equal(started.secretaryTag, 'DIV');
     assert.equal(started.secretaryActionPresent, false);
     assert.equal(started.objectiveInstruction, '港から森の隣まで道を引く');
@@ -501,8 +502,9 @@ async function checkStartChoice(width, height, mobile, mode) {
     })`);
     assert.equal(opened.letterVisible, true, JSON.stringify(opened));
     assert.equal(opened.speed, 0, JSON.stringify(opened));
-    assert.match(opened.letterText, /0日目/);
-    assert.match(opened.letterText, /港 1棟・人口 0人・道路 0区画/);
+    assert.match(opened.letterText, /港から最初の道を始めましょう/);
+    assert.match(opened.letterText, /道が届いたら、その隣に木こりを建てましょう/);
+    assert.doesNotMatch(opened.letterText, /\d+日目・/);
     assert.ok(opened.paperBounds.left >= 0 && opened.paperBounds.right <= width, JSON.stringify(opened));
     assert.ok(opened.paperBounds.top >= 0 && opened.paperBounds.bottom <= height, JSON.stringify(opened));
     await page.screenshot(`/tmp/shioji_v004_tutorial_letter_${mobile ? 'mobile' : 'desktop'}.png`);
@@ -565,7 +567,8 @@ async function checkTutorialLetterDelivery() {
     speed: window.__SHIOJI_V004__.clock.speedIndex,
   })`);
   assert.equal(preview.priority, 'forced-letter', JSON.stringify(preview));
-  assert.match(preview.speech, /このあと自動で開きます/);
+  assert.match(preview.speech, /いま島にあるのは港だけ/);
+  assert.doesNotMatch(preview.speech, /このあと自動で開きます/);
   assert.equal(preview.modalHidden, true, JSON.stringify(preview));
   assert.equal(preview.actionHidden, true, JSON.stringify(preview));
   assert.equal(preview.speed, 0, JSON.stringify(preview));
@@ -577,7 +580,7 @@ async function checkTutorialLetterDelivery() {
     speed: window.__SHIOJI_V004__.clock.speedIndex,
   })`);
   assert.equal(forced.modalHidden, false, JSON.stringify(forced));
-  assert.match(forced.text, /島の現況を報告します/);
+  assert.match(forced.text, /港から最初の道を始めましょう/);
   assert.equal(forced.speed, 0, JSON.stringify(forced));
 
   const overlap = await page.evaluate(`(() => {
@@ -678,7 +681,9 @@ async function checkTutorialLetterDelivery() {
     for (let day = 0; day < 8 && game.model.activeOrder; day += 1) {
       game.advanceTicks(30, { animate: false });
     }
-    game.advanceTicks(0, { animate: false });
+    // まとめ進行で同じ観測内に「倉庫到着→船積み→完遂」まで起きても、
+    // 必達目標は一段ずつ切り替えて読める。その後続段まで実画面で送る。
+    for (let pass = 0; pass < 2; pass += 1) game.advanceTicks(0, { animate: false });
     return {
       day: game.model.day,
       activeOrder: game.model.activeOrder,
@@ -715,7 +720,7 @@ async function checkTutorialLetterDelivery() {
     unread: document.querySelector('#tutorial-unread').textContent,
   })`);
   assert.equal(direct.modalHidden, false, JSON.stringify(direct));
-  assert.match(direct.title, /最初の一荷|期限切れ/);
+  assert.match(direct.title, /最初の輸出|期限切れ/);
   await page.screenshot('/tmp/shioji_v004_tutorial_letter_delivery_mobile.png');
   assert.deepEqual(page.errors, []);
   await page.close();
@@ -724,8 +729,8 @@ async function checkTutorialLetterDelivery() {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.19.0-canon-performance');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.19.0-canon-performance');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.20.0-carts-development');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.20.0-carts-development');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -917,17 +922,17 @@ async function checkViewport(width, height, mobile) {
       return {
         phase: game.displayModel.portVisuals[0]?.phase,
         qty: game.displayModel.handlingVisuals[0]?.qty,
-        cart: game.model.carriers.find(carrier => carrier.kind === 'cart')?.id ?? null,
+        carrier: game.model.carriers.find(row => row.goods === 'wheat')?.id ?? null,
       };
     })()`);
     assert.equal(departureVisual.phase, 'departing', JSON.stringify(departureVisual));
     assert.ok(departureVisual.qty > 0 && departureVisual.qty <= 1, JSON.stringify(departureVisual));
-    assert.ok(departureVisual.cart, JSON.stringify(departureVisual));
+    assert.ok(departureVisual.carrier, JSON.stringify(departureVisual));
 
     await wait(2100);
     const carrierPoint = await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
-      const carrier = game.displayModel.carriers.find(row => row.kind === 'cart');
+      const carrier = game.displayModel.carriers.find(row => row.goods === 'wheat');
       game.camera.focus(carrier.x + 0.5, carrier.y + 0.5);
       const point = game.camera.project(carrier.x + 0.5, carrier.y + 0.5, 4);
       return { id: carrier.id, x: point.x, y: point.y - 8 * game.camera.zoom };
@@ -1378,6 +1383,32 @@ async function checkViewport(width, height, mobile) {
     assert.ok(mobileCompany.left >= 0 && mobileCompany.right <= width, JSON.stringify(mobileCompany));
     assert.ok(mobileCompany.top >= 0 && mobileCompany.bottom <= height, JSON.stringify(mobileCompany));
   }
+  const development = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.openSheet('development-sheet');
+    const sheet = document.querySelector('#development-sheet');
+    const box = sheet.getBoundingClientRect();
+    return {
+      hidden: sheet.hidden,
+      branches: document.querySelectorAll('.development-branch').length,
+      active: document.querySelectorAll('.development-node[data-state="active"]').length,
+      future: document.querySelectorAll('.development-node[data-state="future"]').length,
+      buttonsInsideMap: document.querySelectorAll('#development-map button').length,
+      text: document.querySelector('#development-map').textContent,
+      box: { left: box.left, right: box.right, top: box.top, bottom: box.bottom },
+      documentFits: document.documentElement.scrollWidth <= innerWidth,
+    };
+  })()`);
+  assert.equal(development.hidden, false, JSON.stringify(development));
+  assert.equal(development.branches, 4, JSON.stringify(development));
+  assert.ok(development.active > 0 && development.future > 0, JSON.stringify(development));
+  assert.equal(development.buttonsInsideMap, 0, '発展図は現段階では閲覧専用');
+  assert.match(development.text, /荷車工房.*造船所.*鉄製荷車/s);
+  assert.ok(development.box.left >= 0 && development.box.right <= width, JSON.stringify(development));
+  assert.ok(development.box.top >= 0 && development.box.bottom <= height, JSON.stringify(development));
+  assert.equal(development.documentFits, true, JSON.stringify(development));
+  await page.screenshot(`/tmp/shioji_v004_development_${mobile ? 'mobile' : 'desktop'}.png`);
+  await page.evaluate("document.querySelector('[data-close-sheet=\"development-sheet\"]').click()");
   await page.screenshot(`/tmp/shioji_v004_browser_${mobile ? 'mobile' : 'desktop'}.png`);
   assert.deepEqual(page.errors, []);
   await page.close();

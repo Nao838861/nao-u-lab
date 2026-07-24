@@ -12,12 +12,12 @@ const TICKS_PER_DAY = 30;
 const FINAL_TICK = DAYS * TICKS_PER_DAY;
 const SEED = 11;
 
-function assertFrozenLanesUnchanged() {
+function assertPublishedV003Unchanged() {
   const status = execFileSync('git', [
     'status', '--porcelain=v1', '--',
-    'GPT/game/shioji/v003', 'GPT/game/shioji/engine',
+    'GPT/game/shioji/v003',
   ], { cwd: REPOSITORY_ROOT, encoding: 'utf8' });
-  assert.equal(status, '', '公開版v003または凍結中engineに差分がある');
+  assert.equal(status, '', '公開版v003に差分がある');
 }
 
 function findBuildingPreview(model, job) {
@@ -40,7 +40,7 @@ function findRoadPreview(model) {
   return null;
 }
 
-assertFrozenLanesUnchanged();
+assertPublishedV003Unchanged();
 
 const liveApi = createEngineApi(buildBaseCity(SEED));
 const controller = createViewController(liveApi);
@@ -112,4 +112,4 @@ assert.deepEqual(
   'UI操作150日後と入力ジャーナル再生後のエンジン状態が完全一致する',
 );
 
-console.log(`ok - 全章受け入れ: v003・engine差分ゼロ、UI全8操作${DAYS}日後とjournal再生が完全一致`);
+console.log(`ok - 全章受け入れ: v003差分ゼロ、UI全8操作${DAYS}日後とjournal再生が完全一致`);

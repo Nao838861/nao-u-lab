@@ -2148,7 +2148,7 @@ test("段28: 市場で買った生産原料は帰宅時にinput棚へ確定す�
   assert.equal(saltworks.pantry.wheat, 240 + 6);
 });
 
-test("段29: 非接続の会社物流は荷車を生成せず接続後だけ市場から倉庫へ運ぶ", () => {
+test("段29: 非接続の会社物流は輸送人員を生成せず接続後だけ有限の手運びで運ぶ", () => {
   const { economy, physical } = createLogisticsTestFixture();
   const seller = createHousehold(economy, { job: "woodshop", x: 8, y: 8 });
   seller.pantry.tools = 100;
@@ -2168,15 +2168,23 @@ test("段29: 非接続の会社物流は荷車を生成せず接続後だけ市�
   assert.ok(purchases.length > 0);
   assert.equal(purchases.every((purchase) => purchase.jobId), true);
   assert.equal(economy.stock.tools ?? 0, 0);
-  assert.equal(physical.haulJobs.every((job) => job.carrier.mode === "cart"), true);
+  assert.equal(physical.haulJobs.every((job) => job.carrier.mode === "walk"), true);
+  assert.equal(
+    physical.haulJobs.reduce((total, job) => total + job.carrier.people, 0)
+      <= P.COMPANY_HAND_PORTERS,
+    true,
+  );
   assertMaterialBalance({
     before,
     after: economicMaterialSnapshot(economy, physical),
     flows: {},
   });
 
-  stepHaulCarriers(physical, 2);
-  settleCompanyLogistics(economy, physical, { day: 3 });
+  for (let tick = 0; tick < 30 && (economy.stock.tools ?? 0) < offered; tick += 1) {
+    stepHaulCarriers(physical, 1);
+    settleCompanyLogistics(economy, physical, { day: 3 });
+    runCompanyProcurement(economy, { day: 3, physical });
+  }
   assert.equal(economy.stock.tools, offered);
   assert.equal(
     sectionAmount(companyLogisticsSite(physical, "warehouse"), "storage", "tools"),
@@ -2190,14 +2198,17 @@ test("段29: 非接続の会社物流は荷車を生成せず接続後だけ市�
 
   const release = requestCompanyStockRelease(economy, physical, "tools", { day: 3 });
   assert.ok(release);
-  assert.equal(release.carrier.mode, "cart");
-  stepHaulCarriers(physical, 2);
-  settleCompanyLogistics(economy, physical, { day: 4 });
-  assert.equal(economy.marketStock.tools, release.qty);
-  assert.equal(economy.stock.tools, offered - release.qty);
+  assert.equal(release.carrier.mode, "walk");
+  const requestedRelease = Math.min(16, offered);
+  for (let tick = 0; tick < 80 && (economy.marketStock.tools ?? 0) < requestedRelease; tick += 1) {
+    stepHaulCarriers(physical, 1);
+    settleCompanyLogistics(economy, physical, { day: 4 });
+  }
+  assert.equal(economy.marketStock.tools, requestedRelease);
+  assert.equal(economy.stock.tools, offered - requestedRelease);
   assert.equal(
     sectionAmount(companyLogisticsSite(physical, "market"), "inbound", "tools"),
-    release.qty,
+    requestedRelease,
   );
 });
 
@@ -2222,14 +2233,18 @@ test("段42: 本国注文は港到着後も未決済で船への逐次荷役分�
     flows: {},
   });
 
-  for (let tick = 0; tick < 20 && physical.haulJobs[0].status !== "completed"; tick += 1) {
+  for (let tick = 0; tick < 20 && physical.activeHaulJobIds.length > 0; tick += 1) {
     stepHaulCarriers(physical, 1);
+    settleCompanyLogistics(economy, physical, { day: 2 });
   }
-  settleCompanyLogistics(economy, physical, { day: 3 });
   assert.equal(economy.order.left, 8);
   assert.equal(economy.company.money, moneyBefore);
+  assert.equal(economy.stock.tools, 0);
   assert.equal(sectionAmount(companyLogisticsSite(physical, "port"), "outbound", "tools"), 8);
-  assert.equal(physical.portCalls.length, 1);
+  assert.equal(
+    physical.portCalls.reduce((total, call) => total + call.remaining, 0),
+    8,
+  );
 
   const firstTransfers = stepPortHandling(physical, 3);
   settlePortTransfers(economy, physical, { day: 3, transfers: firstTransfers });
@@ -2345,10 +2360,17 @@ test("段42: EXP買付は市場・倉庫・港を経て船積みした数量だ�
   settlePortTransfers(economy, physical, { day: 64, transfers: first });
   assert.equal(economy.exported.pres, 1);
   assert.equal(lot.shippedQty, 1);
-  while (lot.status !== "shipped") {
+  for (let tick = 0; tick < 200 && lot.status !== "shipped"; tick += 1) {
+    stepHaulCarriers(physical, 1);
+    settleCompanyLogistics(economy, physical, { day: 64 });
     const transfers = stepPortHandling(physical, 1);
     settlePortTransfers(economy, physical, { day: 64, transfers });
   }
+  assert.equal(
+    lot.status,
+    "shipped",
+    `輸出便が停止: qty=${lot.qty} market=${lot.marketQty} warehouse=${lot.warehouseQty} port=${lot.portQty} shipped=${lot.shippedQty}`,
+  );
   assert.equal(economy.exported.pres, lot.qty);
   assert.equal(sectionAmount(companyLogisticsSite(physical, "port"), "outbound", "pres"), 0);
   assert.equal(assertMoneyConservation(economy), true);
@@ -2459,7 +2481,7 @@ test("段31履歴/§0.2: 旧監査診断と物理不変条件を維持する", (
   assert.equal(assertOccupancyInvariant(world.state.physical), true);
 });
 
-test("段31: 市場へ出す要求は1台制限せず16荷ずつ複数便へ分割する", () => {
+test("段31: 市場へ出す要求は有限の輸送人員で予約全量を順次運ぶ", () => {
   const { economy, physical } = createLogisticsTestFixture({ connectMarketWarehouse: true });
   const warehouse = companyLogisticsSite(physical, "warehouse");
   economy.stock.wheat = 40;
@@ -2467,14 +2489,25 @@ test("段31: 市場へ出す要求は1台制限せず16荷ずつ複数便へ分�
   depositInventory(warehouse, "storage", "wheat", 40);
 
   const first = requestCompanyStockRelease(economy, physical, "wheat", { day: 1, qty: 40 });
-  const jobs = physical.haulJobs.filter((job) => job.economicLogistics?.kind === "stock_release");
-  assert.equal(first, jobs[0]);
-  assert.deepEqual(jobs.map((job) => job.qty), [16, 16, 8]);
+  const initialJobs = physical.haulJobs
+    .filter((job) => job.economicLogistics?.kind === "stock_release");
+  assert.equal(first, initialJobs[0]);
+  assert.deepEqual(initialJobs.map((job) => job.qty), [40]);
   assert.equal(economy.stock.wheat, 0);
-  assert.equal(jobs.reduce((total, job) => total + job.carrier.cargo.qty, 0), 40);
-  stepHaulCarriers(physical, 3);
-  settleCompanyLogistics(economy, physical, { day: 2 });
+  assert.deepEqual(economy.stockReleaseQueue, []);
+  for (let tick = 0; tick < 200 && (economy.marketStock.wheat ?? 0) < 40; tick += 1) {
+    stepHaulCarriers(physical, 1);
+    settleCompanyLogistics(economy, physical, { day: 2 });
+    const activePorters = physical.activeHaulJobIds
+      .map(jobId => physical.haulJobs.find(job => job.id === jobId))
+      .reduce((total, job) => total + (job?.carrier.people ?? 0), 0);
+    assert.equal(activePorters <= P.COMPANY_HAND_PORTERS, true);
+  }
   assert.equal(economy.marketStock.wheat, 40);
+  assert.equal(economy.stock.wheat, 0);
+  assert.deepEqual(economy.stockReleaseQueue, []);
+  const jobs = physical.haulJobs.filter((job) => job.economicLogistics?.kind === "stock_release");
+  assert.equal(jobs.reduce((total, job) => total + job.qty, 0), 40);
   assert.equal(sectionAmount(companyLogisticsSite(physical, "market"), "inbound", "wheat"), 40);
 });
 

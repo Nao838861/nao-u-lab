@@ -1,6 +1,7 @@
 import {
   COMPANY_ORDER_GOODS,
   acceptCompanyOrder,
+  purchaseCompanyWoodCart,
   requestCompanyStockRelease,
   requestMainlandAid,
   setCompanyStockTarget,
@@ -516,6 +517,13 @@ export function createEngineApi(
           ? world.state.day + 1
           : world.state.day;
         return requestMainlandAid(economy, physical, { day: actionDay });
+      }
+      case "purchase_company_cart": {
+        const actionDay = world.state.tick % 30 === 0
+          ? world.state.day + 1
+          : world.state.day;
+        const cart = purchaseCompanyWoodCart(economy, { day: actionDay });
+        return { ok: Boolean(cart), cart };
       }
       default:
         throw new Error(`unknown engine operation: ${op.type}`);

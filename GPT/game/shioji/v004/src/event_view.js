@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.19.0-canon-performance';
+import { JOB_LABELS } from './config.js?v=v004.20.0-carts-development';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.19.0-canon-performance">
+  <link rel="stylesheet" href="./style.css?v=v004.20.0-carts-development">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -26,6 +26,7 @@
       <button id="open-island" type="button">統計 <i id="island-signal" data-tone="steady">平穏</i></button>
       <button id="open-building" type="button" disabled>選択建物</button>
       <button id="open-events" type="button">出来事</button>
+      <button id="open-development" type="button">発展図</button>
       <button id="open-tutorial-letters" type="button" hidden>書状 <b id="tutorial-unread" class="unread-badge" hidden>0</b></button>
       <button id="choose-start" class="top-menu-subtle" type="button" title="開始方法を選び直す">最初から</button>
     </nav>
@@ -158,6 +159,7 @@
     <div class="company-balance"><small>資金</small><b id="company-balance">—</b></div>
     <section id="order-panel" class="order-panel"></section>
     <section id="aid-panel" class="order-panel"></section>
+    <section id="cart-panel" class="order-panel"></section>
     <section>
       <h3>買上げ目標・市場へ出す</h3>
       <p class="sheet-note">目標は会社が市場から買う上限。市場へ出すは実在庫を市場へ運びます。</p>
@@ -176,6 +178,15 @@
     </header>
     <p class="sheet-note">直近24件だけを表示します。押すと、その場所へ移動します。</p>
     <div id="event-log" class="event-log"></div>
+  </aside>
+
+  <aside id="development-sheet" class="panel sheet development-sheet" hidden data-testid="development-sheet">
+    <header>
+      <div><small>島でつながっていく仕事</small><h2>発展図</h2></div>
+      <button type="button" data-close-sheet="development-sheet" aria-label="発展図を閉じる">×</button>
+    </header>
+    <p class="sheet-note">これは建築を縛る技術ツリーではありません。今ある産業と、その先に考えられる仕事を一枚で眺める地図です。</p>
+    <div id="development-map" class="development-map"></div>
   </aside>
 
   <aside id="tutorial-letter-sheet" class="panel sheet" hidden data-testid="tutorial-letter-sheet">
@@ -279,7 +290,7 @@
       });
     })();
   </script>
-  <script id="game-module" type="module" src="./src/main.js?v=v004.19.0-canon-performance"
+  <script id="game-module" type="module" src="./src/main.js?v=v004.20.0-carts-development"
     onerror="window.__SHIOJI_BOOT__?.failed()"></script>
 </body>
 </html>

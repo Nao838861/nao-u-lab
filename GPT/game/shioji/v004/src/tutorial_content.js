@@ -2,8 +2,8 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.19.0-canon-performance';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.19.0-canon-performance';
+} from './engine_bridge.js?v=v004.20.0-carts-development';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.20.0-carts-development';
 
 const LIVING_REQUIREMENT_LABELS = Object.freeze({
   food1: '食料1種', food2: '食料2種', food3: '食料3種', grain: '穀物',
@@ -366,7 +366,7 @@ export const TUTORIAL_ELENA_MESSAGES = Object.freeze({
   'prepare-first-tools-stock': '注文が来る前に、木製品を80荷、倉庫に買い集めておきましょう。先に備えれば、期限に追われずに済みます。',
   'accept-first-order': '本国から注文が届いたら、品の量と期限を確かめて引き受けましょう。倉庫の木製品が、最初の取引に使われます。',
   'order-procurement-target': '注文を引き受けても、買い付ける量は自動では増えません。注文数に足りるだけ、木製品の買上げ目標を定めましょう。',
-  'first-order-procurement': '会社の荷車が、市場の木製品を倉庫へ運びます。注文分がそろうまで、荷車の行き先を見届けましょう。',
+  'first-order-procurement': '会社の運び手が、市場の木製品を倉庫へ運びます。会社用の荷車を買えば、一度に運べる量を増やせます。',
   'complete-first-order': 'そろった木製品は、倉庫から港へ一荷ずつ運ばれます。残りがなくなり、船が出るまで見届けましょう。',
   'close-first-chapter': '最初の注文がどう終わったか、書状で振り返りましょう。丸太から船出までの流れをまとめています。',
   'improve-logger-route': '木こりから市場までの遠回りを、短い道へ直しましょう。歩く時間が減れば、その分だけ丸太を多く切れます。',
@@ -404,9 +404,9 @@ export const TUTORIAL_ELENA_COMPLETIONS = Object.freeze({
   'place-island-food': '漁師と野菜畑が建ちました。家族が働き始めれば、魚と野菜が市場へ届きます。',
   'first-woodshop': '木工房が建ちました。木こりの丸太を、注文にも使える木製品へ変えられます。',
   'warehouse-for-order': '倉庫が道につながりました。これで、買い付けた品を運び込めます。',
-  'prepare-first-tools-stock': '木製品の買上げ目標を80荷に定めました。市場に木製品が並べば、会社の荷車が倉庫へ運びます。',
+  'prepare-first-tools-stock': '木製品の買上げ目標を80荷に定めました。市場に木製品が並べば、会社の運び手が倉庫へ運びます。',
   'accept-first-order': '最初の注文を引き受けました。受けただけでは品は集まらないので、買い付ける量を注文数に合わせましょう。',
-  'order-procurement-target': '注文分の木製品を買い付けるよう定めました。あとは荷車が市場と倉庫を往復して集めます。',
+  'order-procurement-target': '注文分の木製品を買い付けるよう定めました。あとは会社の運搬便が市場と倉庫を往復して集めます。',
   'first-order-procurement': '注文に必要な木製品が倉庫へそろいました。これから港へ運び、一荷ずつ船に積みます。',
   'complete-first-order': '最後の一荷を積んで、船が出ました。はじめての注文を、無事に届けられます。',
   'close-first-chapter': '最初の取引を振り返りました。次は、家族が歩く道と、毎日の食料を整えます。',
@@ -450,9 +450,9 @@ export const TUTORIAL_LETTER_MESSAGES = Object.freeze({
   'aid-suggestion': '島の食料が心もとなくなっています。漁師と野菜畑が間に合わないなら、もう一便の支援も考えましょう。',
   'first-order-offer': '本国から、最初の注文が届きました。求められた品、量、期限を、書状で確かめてください。',
   'order-needs-warehouse': '注文の品を保管する倉庫がありません。市場と港へ道が通る場所に、倉庫を建てましょう。',
-  'warehouse-unconnected': '倉庫の入口まで道が届いていません。市場から倉庫へ、さらに港へ荷車が通れるようにつなぎましょう。',
+  'warehouse-unconnected': '倉庫の入口まで道が届いていません。市場から倉庫へ、さらに港へ運搬便が通れるようにつなぎましょう。',
   'order-needs-target': '注文を引き受けましたが、買い付ける量が足りません。注文数以上の買上げ目標を定めましょう。',
-  'first-company-procurement': '会社の荷車が、市場で買った品を倉庫へ運び始めました。注文分がそろうまで見届けましょう。',
+  'first-company-procurement': '会社の運搬便が、市場で買った品を倉庫へ運び始めました。注文分がそろうまで見届けましょう。',
   'first-order-handling': '港で船積みが始まりました。人足たちが注文の品を、一荷ずつ船へ運んでいます。',
   'accepted-order-expired': '受けた注文を、期限までに納め切れませんでした。何が足りなかったか、書状で振り返りましょう。',
   'first-order-complete': '最後の一荷を積んで、船が出ました。はじめての注文を、無事に届けられます。',
@@ -650,8 +650,8 @@ export const TUTORIAL_SYSTEM_INSTRUCTIONS = Object.freeze({
   'prepare-first-tools-stock': '上の［取引］を開き、木製品の買上げ目標へ80と入力してEnterを押す。',
   'accept-first-order': '注文状が届いたら上の［取引］を開き、注文カードの［受諾する］を押す。',
   'order-procurement-target': '［取引］の注文数と木製品の買上げ目標を比べ、目標が少なければ注文数以上を入力してEnterを押す。',
-  'first-order-procurement': '時間を進め、会社の荷車が市場から倉庫へ着くのを見る。',
-  'complete-first-order': '［取引］で「納品済み／残り／あと何日」を確認しながら時間を進め、残りが0荷になるまで倉庫から港への荷車を追う。',
+  'first-order-procurement': '時間を進め、市場から倉庫へ買付品が届くのを見る。',
+  'complete-first-order': '［取引］で「納品済み／残り／あと何日」を確認しながら時間を進め、残りが0荷になるまで倉庫から港への運搬便を追う。',
   'close-first-chapter': '',
   'improve-logger-route': '木こりを押して市場までの往復を読み、［整備］の［道を敷く］で遠回りを短くする。',
   'observe-island-food-change': '上の［統計］を開き、［食料の流れ］の三本の線を見ながら時間を進める。',
@@ -748,12 +748,13 @@ function seasonalReserveFacts(model, state) {
 }
 
 function stockReleaseReport(events, expectedGoods = null) {
-  const operation = events.find(event => event.type === 'operation'
+  const operationIndex = events.findIndex(event => event.type === 'operation'
     && event.ok && event.op?.type === 'release_stock'
     && (!expectedGoods || event.op.goods === expectedGoods));
+  const operation = events[operationIndex];
   if (!operation) return null;
-  const departure = events.find(event => event.type === 'departure'
-    && event.carrier === 'cart' && event.goods === operation.op.goods);
+  const departure = events.slice(operationIndex + 1).find(event => event.type === 'departure'
+    && ['walk', 'cart'].includes(event.carrier) && event.goods === operation.op.goods);
   if (!departure) return null;
   return {
     goods: operation.op.goods,
@@ -1353,19 +1354,42 @@ export const TUTORIAL_GOALS = Object.freeze([
     id: 'first-order-procurement',
     chapter: '第一章・最初の一荷',
     title: '最初の買付品が倉庫へ届くのを見届ける',
-    evaluate({ model, state }) {
+    evaluate({ model, events, state }) {
       const order = model.activeOrder;
-      const stocked = order ? (model.companyStock?.[order.g] ?? 0) : 0;
+      const facts = firstOrderFacts(state);
+      const goods = order?.g ?? facts?.goods ?? null;
+      const stocked = goods ? (model.companyStock?.[goods] ?? 0) : 0;
       const expired = state?.letters?.find(letter => letter.id === 'accepted-order-expired') ?? null;
+      const completion = orderCompletedEvent(events);
+      const observedProcurement = state?.letters?.find(letter => (
+        ['first-company-procurement', 'first-order-handling', 'first-order-complete']
+          .includes(letter.id)
+      )) ?? null;
+      // 一日をまとめて進めると、倉庫へ着いた品が同じ観測内で港へ出て
+      // 在庫が再び0になる。瞬間在庫だけを条件にすると教程が永久停止するため、
+      // 後続の船積み・完了記録も「調達を見届けた」確実な証拠として扱う。
+      const finishedBetweenObservations = Boolean(facts) && !order
+        && state?.completedGoals?.includes('order-procurement-target');
+      const complete = stocked > 0 || Boolean(expired) || Boolean(completion)
+        || Boolean(observedProcurement) || finishedBetweenObservations;
       return {
-        complete: stocked > 0 || Boolean(expired),
-        progress: { done: Number(stocked > 0 || Boolean(expired)), total: 1 },
+        complete,
+        progress: { done: Number(complete), total: 1 },
         detail: expired
           ? '前の注文は期限切れになりました。原因を確認して次の章へ進めます'
           : order
           ? `倉庫の${goodsLabel(order.g)} ${stocked.toFixed(1)}荷 / 注文 ${order.qty}荷`
-          : '注文の受諾が先です',
-        evidence: { stocked, goods: order?.g ?? null, expired: Boolean(expired) },
+          : complete
+            ? '買付品は倉庫を経て、すでに港へ運ばれました'
+            : '注文の受諾が先です',
+        evidence: {
+          stocked,
+          goods,
+          expired: Boolean(expired),
+          completion: Boolean(completion),
+          observedProcurement: observedProcurement?.id ?? null,
+          finishedBetweenObservations,
+        },
       };
     },
   }),
@@ -1375,15 +1399,21 @@ export const TUTORIAL_GOALS = Object.freeze([
     title: '注文の船積みと船出を見届ける',
     evaluate({ model, events, state }) {
       const completion = orderCompletedEvent(events);
+      const completionLetter = state?.letters?.find(letter => letter.id === 'first-order-complete') ?? null;
       const expiryLetter = state?.letters?.find(letter => letter.id === 'accepted-order-expired') ?? null;
       const previous = state?.goalResults?.['complete-first-order']?.evidence ?? {};
       const active = model.activeOrder;
-      const completed = Boolean(completion);
+      // まとめ進行では前の必達目標と同じ観測内に注文完遂まで起きる。
+      // 完遂イベントから発行済みの書状も永続的な証拠として引き継ぐ。
+      const completed = Boolean(completion || completionLetter);
       const expired = Boolean(expiryLetter);
       const exportHandling = events.filter(event => (
         event.type === 'handling' && event.direction === 'export'
       ));
-      const lastOrder = active ? { ...active } : previous.lastOrder ?? null;
+      const acceptedFacts = firstOrderFacts(state);
+      const lastOrder = active
+        ? { ...active }
+        : previous.lastOrder ?? (acceptedFacts ? { ...acceptedFacts, left: 0 } : null);
       const remaining = active?.left ?? lastOrder?.left ?? 0;
       const shipped = active ? Math.max(0, active.qty - active.left) : previous.shipped ?? 0;
       const daysLeft = active ? Math.max(0, active.due - model.day) : 0;
@@ -1401,6 +1431,7 @@ export const TUTORIAL_GOALS = Object.freeze([
               : '次の注文状を待っています。届いたら会社で受諾してください',
         evidence: {
           completed,
+          completionLetter: Boolean(completionLetter),
           expired,
           remaining,
           shipped,
@@ -2155,7 +2186,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
       return {
         kicker: '入植船の着岸報告',
         title: '最初の世帯が島へ入りました',
-        summary: `${event.day}日目・${household.members}人の世帯・島の人口 ${model.population}人`,
+        summary: `${household.members}人の世帯が着岸し、島の人口は${model.population}人になりました`,
         body: [
           `${event.day}日目。入植船から${household.members}人の世帯が降り、木こりの区画へ入りました。島の人口は${model.population}人です。`,
           '市場と食料便は先に整いました。木工房を急ぐ前に、水際へ漁師、市場近くの平地へ野菜畑を置き、島の食卓を立ち上げましょう。',
@@ -2178,7 +2209,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
         summary: `木こりの手元に丸太 ${logs.toFixed(1)}荷・市場 0棟`,
         body: [
           `${model.day}日目。木こりの手元には丸太が${logs.toFixed(1)}荷積み上がりましたが、島にはまだ売り買いの場がありません。`,
-          '市場の区画をお決めください。港の近くの平地が良いでしょう——のちに会社の荷車が市場と港を行き来します。入植者が持参した食料が尽きる前に、買い物のできる場を。',
+          '市場の区画をお決めください。港の近くの平地が良いでしょう——のちに会社の運搬便が市場と港を行き来します。入植者が持参した食料が尽きる前に、買い物のできる場を。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -2214,9 +2245,9 @@ export const TUTORIAL_LETTERS = Object.freeze([
       return {
         kicker: '空の輸入棚',
         title: '本土の食料が市場に届きません',
-        summary: `${model.day}日目・市場は開きましたが港と道が結ばれていません`,
+        summary: '市場は開きましたが、港と道が結ばれていません',
         body: [
-          `${model.day}日目。市場は開きましたが、本土から届く食料は港のヤードに降りたまま——会社の荷車は道のない所を通れません。`,
+          `${model.day}日目。市場は開きましたが、本土から届く食料は港のヤードに降りたまま——会社の運び手は道のない所を通れません。`,
           '港と市場を道でお結びください。結ばれるまで市場の輸入棚は空のままで、入植者たちは持参の食料を食べ尽くせば飢えます。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
@@ -2254,7 +2285,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
       return {
         kicker: '本土からの荷',
         title: '本土の食料が市場に並びました',
-        summary: `${model.day}日目・市場の食料棚 ${amount.toFixed(1)}荷`,
+        summary: `市場の食料棚に${amount.toFixed(1)}荷が届きました`,
         body: [
           `${model.day}日目。港に降りた本土の食料が荷車で運ばれ、市場の棚に${amount.toFixed(1)}荷並びました。これで入植者たちは代金を払えば食べていけます。`,
           'ただし本土の食料は買うたびに島のお金が海を渡って出ていきます。いずれ、島の食卓は島で賄う日が要りましょう。',
@@ -2274,7 +2305,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
       return {
         kicker: '市の立った日',
         title: '市場に丸太が並びました',
-        summary: `${model.day}日目・屋台の丸太 ${amount.toFixed(1)}荷`,
+        summary: `屋台に丸太が${amount.toFixed(1)}荷並びました`,
         body: [
           `${model.day}日目。木こりが市場まで歩き、屋台に丸太を${amount.toFixed(1)}荷並べました。`,
           '値付けは彼ら自身が行い、買い手がつけば商いになります。食料の区画が整ったら、丸太の買い手となる木工房を置きましょう。',
@@ -2301,7 +2332,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
       return {
         kicker: '工房の初仕事',
         title: '最初の木製品が挽かれました',
-        summary: `${model.day}日目・木製品 ${tools.toFixed(1)}荷`,
+        summary: `木製品が${tools.toFixed(1)}荷できました`,
         body: [
           `${model.day}日目。木工房が${provenance}、最初の木製品を${tools.toFixed(1)}荷仕上げました。`,
           '棚の丸太が減れば、工房は市場で買い足します。物が育ち、代金が島を回り始めています。',
@@ -2368,7 +2399,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
         title: '納めるには倉庫が要ります',
         summary: `${goodsLabel(order.g)} ${order.qty}荷の調達には会社の倉庫が必要です`,
         body: [
-          `${model.day}日目。${goodsLabel(order.g)}${order.qty}荷の注文をお受けになりました。会社の荷車は市場で買い付けた品を一度倉庫へ納め、そこから港へ運びます。`,
+          `${model.day}日目。${goodsLabel(order.g)}${order.qty}荷の注文をお受けになりました。会社の運搬便は市場で買い付けた品を一度倉庫へ納め、そこから港へ運びます。`,
           'いまの島には倉庫がありません。市場と港を結ぶ道の沿いに、倉庫の区画をお決めください。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
@@ -2385,9 +2416,9 @@ export const TUTORIAL_LETTERS = Object.freeze([
       return {
         kicker: '道の切れ目',
         title: '倉庫まで道が繋がっていません',
-        summary: `${model.day}日目・倉庫の入口は道路の外です`,
+        summary: '倉庫の入口は道路の外です',
         body: [
-          `${model.day}日目。倉庫は建ちましたが、入口が市場からの道と繋がっていません。会社の荷車は道のない所を通れず、買い付けた品を運び込めません。`,
+          `${model.day}日目。倉庫は建ちましたが、入口が市場からの道と繋がっていません。会社の運搬便は道のない所を通れず、買い付けた品を運び込めません。`,
           '倉庫の入口まで道をお延ばしください。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
@@ -2428,10 +2459,10 @@ export const TUTORIAL_LETTERS = Object.freeze([
       const stocked = model.companyStock[order.g];
       return {
         kicker: '調達はじまる',
-        title: '会社の荷車が倉庫へ運び始めました',
-        summary: `${model.day}日目・倉庫の${goodsLabel(order.g)} ${stocked.toFixed(1)}荷/${order.qty}荷`,
+        title: '会社の運搬便が倉庫へ届きました',
+        summary: `倉庫の${goodsLabel(order.g)} ${stocked.toFixed(1)}荷/${order.qty}荷`,
         body: [
-          `${model.day}日目。会社が市場の屋台から${goodsLabel(order.g)}を買い付け、荷車が倉庫へ${stocked.toFixed(1)}荷を納めました。注文の${order.qty}荷まで、買い付けは続きます。`,
+          `会社が市場の屋台から${goodsLabel(order.g)}を買い付け、運び手が倉庫へ${stocked.toFixed(1)}荷を納めました。注文の${order.qty}荷まで、買い付けは続きます。`,
           '作った者に代金が入り、島の品が本国へ向かう仕度が進んでいます。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
@@ -2450,9 +2481,9 @@ export const TUTORIAL_LETTERS = Object.freeze([
       return {
         kicker: '港の荷役報告',
         title: '注文の品を一荷ずつ船へ',
-        summary: `${handling.day}日目・${goodsLabel(handling.goods)} ${handling.qty.toFixed(1)}荷を船積み`,
+        summary: `${goodsLabel(handling.goods)}を${handling.qty.toFixed(1)}荷、船へ積みました`,
         body: [
-          `${handling.day}日目。倉庫から港へ届いた${goodsLabel(handling.goods)}を、このtickは${handling.qty.toFixed(1)}荷だけ船へ移しました。荷役は一度に消えず、実際に一荷ずつ進みます。`,
+          `${handling.day}日目。倉庫から港へ届いた${goodsLabel(handling.goods)}を、今回は${handling.qty.toFixed(1)}荷だけ船へ移しました。荷役は一度に終わらず、一荷ずつ進みます。`,
           `注文は${facts?.qty ?? '—'}荷。最後の荷を積み終えるまで、港のヤードと船をご覧ください。`,
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
@@ -2474,7 +2505,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
       return {
         kicker: '本国注文・要対応',
         title: '受けた注文が期限切れになりました',
-        summary: `${model.day}日目・残り${Number(remaining).toFixed(1)}荷を納め切れませんでした`,
+        summary: `残り${Number(remaining).toFixed(1)}荷を納め切れませんでした`,
         facts: { goods: order?.g ?? order?.goods ?? null, remaining, message: expired?.message ?? '' },
         body: [
           `${model.day}日目。船は出ましたが、注文の全量を期限までに納め切れず、残り${Number(remaining).toFixed(1)}荷で期限切れになりました。船出は一部の荷が動いた合図で、注文完遂とは別です。`,
@@ -2499,7 +2530,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
       return {
         kicker: '第一便の完遂報告',
         title: '注文の船が本国へ発ちました',
-        summary: `${completed.eventDay ?? completed.day}日目・売上 ${toDenari(revenue).toFixed(1)}デナリ・達成上乗せ ${toDenari(premium).toFixed(1)}デナリ`,
+        summary: `注文を納め、売上${toDenari(revenue).toFixed(1)}デナリが入りました`,
         facts: { goods: facts.goods, qty: facts.qty, revenue, premium },
         body: [
           `${completed.eventDay ?? completed.day}日目。最後の一荷が船へ移り、${goodsLabel(facts.goods)}${facts.qty}荷の注文を納めました。会社の実台帳に、本国注文売上として${toDenari(revenue).toFixed(1)}デナリが記帳されています。`,
@@ -2741,8 +2772,8 @@ export const TUTORIAL_LETTERS = Object.freeze([
         summary: `${goodsLabel(facts.goods)}の買上げ目標 ${target}荷`,
         facts: { goods: facts.goods, target },
         body: [
-          `${model.day}日目。${goodsLabel(facts.goods)}の買上げ目標を${target}荷と定めました。会社の荷車は価格と在庫のある時だけ市場で買い、実物を倉庫へ運びます。`,
-          '目標を書いただけでは品は増えません。作り手の余剰が市場に出て、会社が代金を払い、荷車が到着するまでを見届けましょう。',
+          `${model.day}日目。${goodsLabel(facts.goods)}の買上げ目標を${target}荷と定めました。会社は価格と在庫のある時だけ市場で買い、運搬便が実物を倉庫へ運びます。`,
+          '目標を書いただけでは品は増えません。作り手の余剰が市場に出て、会社が代金を払い、運搬便が到着するまでを見届けましょう。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -2786,9 +2817,9 @@ export const TUTORIAL_LETTERS = Object.freeze([
       const prior = state.goalResults['release-seasonal-reserve'].evidence;
       const release = stockReleaseReport(events, valley.goods);
       return {
-        kicker: '市場へ向かう荷車',
+        kicker: '市場へ向かう運搬便',
         title: '備えを市場へ戻します',
-        summary: `${goodsLabel(release.goods)} ${release.qty.toFixed(1)}荷・実荷車が出発`,
+        summary: `${goodsLabel(release.goods)} ${release.qty.toFixed(1)}荷・運搬便が出発`,
         facts: {
           ...release,
           averageCost: prior.averageCost,
@@ -3103,19 +3134,14 @@ export const TUTORIAL_LETTERS = Object.freeze([
     },
     render({ model }) {
       const facts = tutorialGraduationFacts(model);
-      const netSign = facts.companyNet >= 0 ? '+' : '';
-      const bankruptcy = facts.companyBankruptcyDay === null
-        ? '破産なし'
-        : `${facts.companyBankruptcyDay}日目に破産記録あり`;
       return {
-        kicker: '終章・総督の島',
-        title: 'あとは総督の思うままに',
-        summary: `人口${facts.population}人・存続${facts.survivingJobCount}職・食料輸入EMA ${facts.foodImportEma.toFixed(3)}・取引収支 ${netSign}${toDenari(facts.companyNet).toFixed(1)}デナリ`,
+        kicker: '総督への最後の書状',
+        title: 'この先は、総督の島です',
+        summary: '案内は終わりますが、島の暮らしと取引はこのまま続きます。',
         facts,
         body: [
-          `${facts.day}日目。総督が育てた町は人口${facts.population}人、現に世帯が働く職は${facts.survivingJobCount}種です。安定監査の中核${facts.stableJobsRequired}職のうち${facts.stableJobsPresent}職が存続しています。食料輸入EMAは${facts.foodImportEma.toFixed(3)}、島内食料生産EMAは${facts.foodProductionEma.toFixed(2)}です。`,
-          `会社の実台帳は収入${toDenari(facts.companyIncome).toFixed(1)}デナリ、支出${toDenari(facts.companyExpense).toFixed(1)}デナリ、差引${netSign}${toDenari(facts.companyNet).toFixed(1)}デナリ、残高${toDenari(facts.companyMoney).toFixed(1)}デナリ、${bankruptcy}。見本となるE-Stableは${facts.reference.years}年の各年に人口${facts.reference.populationBand[0]}〜${facts.reference.populationBand[1]}人、中核${facts.stableJobsRequired}職を各1以上、破産なしを確かめる参照帯です。食料自給の節目は、この島で較正した輸入EMA ${facts.reference.foodImportEmaMax.toFixed(2)}未満です。町の年齢も総督の選択も違うため、これは合否ではなく行く先を測る物差しとしてお読みください。`,
-          '開始メニューの「テスト配置で観察」は、同じエンジンでこの安定帯を通った「見本の町」です。見比べることも、ここから別の産業を伸ばすこともできます。教程の目標はここで閉じますが、島も帳簿も作り直しません。エレナは重要な出来事だけをお届けします——あとは総督の思うままに。',
+          `いま島には${facts.population}人が暮らしています。道、仕事、市場、倉庫を結んだのは総督です。`,
+          'ご報告だけです。統計と地図を手がかりに、伸ばしたい仕事と守りたい暮らしを、ご自身で選んでください。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -3133,7 +3159,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
       return {
         kicker: '市場の初商い',
         title: '丸太に買い手がつきました',
-        summary: `${trade.transactionDay ?? model.day}日目・${trade.qty}荷・${price}デナリ/荷`,
+        summary: `丸太${trade.qty}荷が、一荷${price}デナリで売れました`,
         body: [
           `${trade.transactionDay ?? model.day}日目。市場で丸太${trade.qty}荷が1荷あたり${price}デナリで商われました。木工房の棚が満ち、木こりの財布に代金が入りました。`,
           '値は私どもが決めたものではありません。売り手の言い値に買い手がついた、それだけのことです。市場とはそういう場所でございます。',

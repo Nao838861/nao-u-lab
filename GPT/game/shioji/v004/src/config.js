@@ -1,4 +1,4 @@
-export const VERSION = 'v004.19.0-canon-performance';
+export const VERSION = 'v004.20.0-carts-development';
 
 // 経済エンジンの貨幣値は表示単位の1/10。UIへ出す時だけデナリへ直す。
 export const DENARI_PER_MONEY_UNIT = 10;
@@ -29,7 +29,7 @@ export const TERRAIN_COLORS = Object.freeze({
 export const JOB_LABELS = Object.freeze({
   market: '市場', warehouse: '倉庫', port: '港',
   fisher: '漁師', fisher2: '魚粉屋', logger: '木こり', woodshop: '木工房',
-  charburner: '炭焼き小屋', saltworks: '塩田', quarryman: '採石場',
+  cartwright: '荷車工房', charburner: '炭焼き小屋', saltworks: '塩田', quarryman: '採石場',
   miner: '鉱山', collier: '炭鉱', smelter: '製鉄所', smith: '鍛冶屋',
   wheat: '麦畑', veg: '野菜畑', shepherd: '牧場', rapeseed: '綿花畑',
 });
@@ -37,7 +37,7 @@ export const JOB_LABELS = Object.freeze({
 export const JOB_ICONS = Object.freeze({
   market: '市', warehouse: '倉', port: '港',
   fisher: '魚', fisher2: '粉', logger: '木', woodshop: '工',
-  charburner: '炭', saltworks: '塩', quarryman: '石',
+  cartwright: '車', charburner: '炭', saltworks: '塩', quarryman: '石',
   miner: '鉱', collier: '煤', smelter: '炉', smith: '鍛',
   wheat: '麦', veg: '菜', shepherd: '羊', rapeseed: '綿',
 });
@@ -59,6 +59,7 @@ export const BUILDING_ART = Object.freeze({
   fisher2: art('coastal', '#466b72', '#766047', '#bdcfcb'),
   logger: art('workshop', '#6f563d', '#8b724f', '#b87539'),
   woodshop: art('workshop', '#754e31', '#a17b4f', '#e0a653'),
+  cartwright: art('workshop', '#65462f', '#97734e', '#d8a34f'),
   charburner: art('kiln', '#454b45', '#705a43', '#373d39'),
   saltworks: art('works', '#d1c6a3', '#8b7b5f', '#dfe9df'),
   quarryman: art('pit', '#75766d', '#746653', '#aaa79b'),
@@ -77,6 +78,7 @@ export const BUILDING_SIZES = Object.freeze({
   fisher2: Object.freeze({ width: 3, height: 3 }),
   logger: Object.freeze({ width: 3, height: 3 }),
   woodshop: Object.freeze({ width: 3, height: 3 }),
+  cartwright: Object.freeze({ width: 3, height: 3 }),
   charburner: Object.freeze({ width: 3, height: 3 }),
   saltworks: Object.freeze({ width: 3, height: 3 }),
   quarryman: Object.freeze({ width: 3, height: 3 }),
@@ -95,7 +97,7 @@ export const BUILDING_SIZES = Object.freeze({
 
 export const PLACEMENT_JOBS = Object.freeze([
   'market', 'warehouse',
-  'fisher', 'fisher2', 'logger', 'woodshop', 'charburner', 'saltworks', 'quarryman',
+  'fisher', 'fisher2', 'logger', 'woodshop', 'cartwright', 'charburner', 'saltworks', 'quarryman',
   'miner', 'collier', 'smelter', 'smith', 'wheat', 'veg', 'shepherd', 'rapeseed',
 ]);
 
@@ -106,7 +108,9 @@ export const BUILD_CATEGORIES = Object.freeze([
   Object.freeze({ id: 'gathering', label: '採取', jobs: Object.freeze(['logger', 'quarryman', 'miner', 'collier']) }),
   Object.freeze({
     id: 'processing', label: '加工',
-    jobs: Object.freeze(['fisher2', 'woodshop', 'charburner', 'saltworks', 'smelter', 'smith', 'rapeseed']),
+    jobs: Object.freeze([
+      'fisher2', 'woodshop', 'cartwright', 'charburner', 'saltworks', 'smelter', 'smith', 'rapeseed',
+    ]),
   }),
 ]);
 

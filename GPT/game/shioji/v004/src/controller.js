@@ -1,4 +1,4 @@
-import { snapshotToViewModel } from './view_model.js?v=v004.19.0-canon-performance';
+import { snapshotToViewModel } from './view_model.js?v=v004.20.0-carts-development';
 
 export function createViewController(api) {
   if (!api?.snapshot || !api?.advanceTicks || !api?.applyOperation) {

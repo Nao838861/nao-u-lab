@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.19.0-canon-performance';
+import { SPEEDS } from './config.js?v=v004.20.0-carts-development';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

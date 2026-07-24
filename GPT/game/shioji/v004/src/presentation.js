@@ -1,5 +1,46 @@
+import { pileVisual } from './visuals.js?v=v004.20.0-carts-development';
+
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));
+}
+
+function inventorySlots(model) {
+  return (model.buildings ?? []).flatMap(building => (
+    (building.yardSlots ?? []).map(slot => ({
+      ...slot,
+      ownerId: building.id,
+      key: `${building.id}:${slot.row.section}:${slot.row.goods}`,
+    }))
+  ));
+}
+
+function interpolateInventory(from, to, alpha) {
+  const fromByKey = new Map(inventorySlots(from).map(row => [row.key, row]));
+  const toByKey = new Map(inventorySlots(to).map(row => [row.key, row]));
+  const keys = new Set([...fromByKey.keys(), ...toByKey.keys()]);
+  const rows = [];
+  for (const key of keys) {
+    const before = fromByKey.get(key);
+    const after = toByKey.get(key);
+    const source = before ?? after;
+    const target = after ?? before;
+    const beforeAmount = before?.row.amount ?? 0;
+    const afterAmount = after?.row.amount ?? 0;
+    const amount = beforeAmount + (afterAmount - beforeAmount) * alpha;
+    if (amount <= 1e-9) continue;
+    const goods = target.row.goods;
+    rows.push({
+      ownerId: target.ownerId,
+      x: source.x + (target.x - source.x) * alpha,
+      y: source.y + (target.y - source.y) * alpha,
+      row: {
+        ...target.row,
+        amount,
+        visual: pileVisual(amount, goods),
+      },
+    });
+  }
+  return rows;
 }
 
 function eventCarrierId(event) {
@@ -118,6 +159,7 @@ export function interpolateWorldModel(from, to, events = [], alpha = 1) {
   return {
     ...to,
     carriers: interpolateCarriers(from.carriers ?? [], to.carriers ?? [], events, progress),
+    inventoryVisuals: interpolateInventory(from, to, progress),
     portVisuals: portVisualRows(from, to, events, progress),
     handlingVisuals: handlingRows(from, to, events, progress),
     presentationProgress: progress,
@@ -129,6 +171,7 @@ function stableWorldModel(model) {
     ...model,
     portVisuals: portVisualRows(model, model, [], 1),
     handlingVisuals: [],
+    inventoryVisuals: null,
     presentationProgress: 1,
   };
 }

@@ -1,11 +1,11 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, SECTION_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.19.0-canon-performance';
-import { islandCalendar } from './ui_summary.js?v=v004.19.0-canon-performance';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.19.0-canon-performance';
+} from './config.js?v=v004.20.0-carts-development';
+import { islandCalendar } from './ui_summary.js?v=v004.20.0-carts-development';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.20.0-carts-development';
 import {
   buildingStructureLayout, pileVisual,
-} from './visuals.js?v=v004.19.0-canon-performance';
+} from './visuals.js?v=v004.20.0-carts-development';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
@@ -578,9 +578,22 @@ export class Renderer {
 
   collectDynamicDrawables(model, scene) {
     const drawables = [];
+    for (const inventory of model.inventoryVisuals ?? []) {
+      drawables.push({
+        kind: 'inventory',
+        data: inventory,
+        depth: inventory.x + inventory.y + 1.1,
+        bounds: { x: inventory.x - 0.5, y: inventory.y - 0.5, width: 1, height: 1 },
+        dynamic: true,
+      });
+    }
     for (const carrier of model.carriers) {
       drawables.push({
-        kind: 'carrier', data: carrier, depth: carrier.x + carrier.y + 1, dynamic: true,
+        kind: 'carrier',
+        data: carrier,
+        depth: carrier.x + carrier.y + 1,
+        bounds: { x: carrier.x - 0.5, y: carrier.y - 0.5, width: 2, height: 2 },
+        dynamic: true,
       });
     }
     for (const ship of model.portVisuals ?? []) {
@@ -623,6 +636,8 @@ export class Renderer {
     let dynamicDrawn = 0;
     for (const drawable of this.collectWorldDrawables(model)) {
       if (!drawable.dynamic && !this.boundsVisible(drawable.bounds)) continue;
+      if (drawable.dynamic && drawable.bounds && !this.boundsVisible(drawable.bounds)) continue;
+      if (!drawable.dynamic && drawable.kind === 'inventory' && model.inventoryVisuals) continue;
       if (drawable.dynamic) dynamicDrawn += 1;
       else staticDrawn += 1;
       if (drawable.kind === 'tree') this.drawTree(drawable.data);
@@ -886,6 +901,25 @@ export class Renderer {
         ctx.beginPath();
         ctx.moveTo(point.x - 10 * scale, point.y - row * 5 * scale);
         ctx.lineTo(point.x + 10 * scale, point.y - 4 * scale - row * 5 * scale);
+        ctx.stroke();
+      }
+      if (building.type === 'cartwright') {
+        const progress = building.cartWork
+          ? Math.min(1, building.cartWork.progress / building.cartWork.required)
+          : building.cartStock?.length ? 1 : 0;
+        ctx.strokeStyle = '#2f2d28';
+        ctx.lineWidth = Math.max(1.5, 2 * scale);
+        for (const offset of [-8, 8]) {
+          ctx.beginPath();
+          ctx.arc(point.x + offset * scale, point.y + 5 * scale, 6 * scale, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+        ctx.strokeStyle = '#8b5b32';
+        ctx.lineWidth = Math.max(2, 3 * scale);
+        ctx.beginPath();
+        ctx.moveTo(point.x - 12 * scale, point.y);
+        ctx.lineTo(point.x - 12 * scale + 24 * scale * progress, point.y - 5 * scale);
+        ctx.lineTo(point.x - 5 * scale + 17 * scale * progress, point.y + 2 * scale);
         ctx.stroke();
       }
     } else if (['pit', 'industrial'].includes(archetype)) {
@@ -1182,20 +1216,22 @@ export class Renderer {
       ctx.globalAlpha = 1;
     }
     if (carrier.kind === 'cart') {
-      const personX = point.x - 18 * scale;
-      const personY = point.y - 18 * scale;
-      ctx.fillStyle = '#c98b58';
-      ctx.beginPath();
-      ctx.arc(personX, personY - 7 * scale, 4 * scale, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = '#527c72';
-      ctx.fillRect(personX - 4 * scale, personY - 3 * scale, 8 * scale, 11 * scale);
-      ctx.strokeStyle = '#d5b48a';
-      ctx.lineWidth = Math.max(1, 1.8 * scale);
-      ctx.beginPath();
-      ctx.moveTo(personX + 2 * scale, personY - 1 * scale);
-      ctx.lineTo(point.x - 9 * scale, point.y - 10 * scale);
-      ctx.stroke();
+      if (!carrier.idle) {
+        const personX = point.x - 18 * scale;
+        const personY = point.y - 18 * scale;
+        ctx.fillStyle = '#c98b58';
+        ctx.beginPath();
+        ctx.arc(personX, personY - 7 * scale, 4 * scale, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#527c72';
+        ctx.fillRect(personX - 4 * scale, personY - 3 * scale, 8 * scale, 11 * scale);
+        ctx.strokeStyle = '#d5b48a';
+        ctx.lineWidth = Math.max(1, 1.8 * scale);
+        ctx.beginPath();
+        ctx.moveTo(personX + 2 * scale, personY - 1 * scale);
+        ctx.lineTo(point.x - 9 * scale, point.y - 10 * scale);
+        ctx.stroke();
+      }
       ctx.fillStyle = '#6c472e';
       ctx.strokeStyle = '#292a28';
       ctx.beginPath();
@@ -1223,20 +1259,40 @@ export class Renderer {
             false,
           );
         }
+      } else if (!carrier.idle) {
+        ctx.font = `800 ${Math.max(7, 8 * scale)}px "Yu Gothic", sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#f2dcae';
+        ctx.fillText('空', point.x, point.y - 8 * scale);
+      }
+      for (let index = 1; index < (carrier.peopleRows?.length ?? 1); index += 1) {
+        const angle = index * 2.399963;
+        const radius = (9 + (index % 3) * 3) * scale;
+        const x = point.x - 18 * scale + Math.cos(angle) * radius;
+        const y = point.y - 13 * scale + Math.sin(angle) * radius * 0.52;
+        const bob = Math.sin(this.pulse * 7 + index) * scale;
+        ctx.fillStyle = '#d6b087';
+        ctx.beginPath();
+        ctx.arc(x, y - 7 * scale + bob, 3.1 * scale, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = index % 2 ? '#6e7861' : '#4f746d';
+        ctx.fillRect(x - 3 * scale, y - 4 * scale + bob, 6 * scale, 9 * scale);
       }
     } else {
-      const count = Math.max(1, Math.min(8, carrier.members ?? carrier.people ?? 1));
+      const count = Math.max(1, carrier.peopleRows?.length ?? carrier.members ?? carrier.people ?? 1);
       const shopping = ['toMarket', 'atMarket'].includes(carrier.state)
         || (carrier.state === 'toHome' && Boolean(carrier.goods));
-      const working = carrier.state === 'toWork'
+      const working = carrier.activity === 'working' || carrier.state === 'toWork'
         || (carrier.state === 'home' && carrier.productionMultiplier > 0);
       const moving = ['arriving', 'toMarket', 'toHome', 'toWork'].includes(carrier.state);
       const bodyColor = shopping ? '#b78349'
         : working ? '#4f746d'
           : carrier.state === 'building' ? '#9a6b43' : '#6a7660';
       for (let index = count - 1; index >= 0; index -= 1) {
-        const offsetX = index * 5 * scale;
-        const offsetY = index * 3 * scale;
+        const angle = index * 2.399963;
+        const radius = index === 0 ? 0 : (working ? 8 + (index % 4) * 3 : 4 + (index % 3) * 2);
+        const offsetX = Math.cos(angle) * radius * scale;
+        const offsetY = Math.sin(angle) * radius * (working ? 0.7 : 0.45) * scale;
         const bob = moving ? Math.sin(this.pulse * 7 + carrier.x + index) * scale : 0;
         ctx.fillStyle = '#d6b087';
         ctx.beginPath();
@@ -1244,6 +1300,15 @@ export class Renderer {
         ctx.fill();
         ctx.fillStyle = index === 0 ? bodyColor : '#70775f';
         ctx.fillRect(point.x - 3 * scale + offsetX, point.y - 10 * scale + offsetY + bob, 6 * scale, 10 * scale);
+        if (carrier.goods && index < 2) {
+          const art = GOODS_ART[carrier.goods] ?? GOODS_ART.tools;
+          this.drawGoodsSprite(
+            art,
+            point.x + offsetX + 4 * scale,
+            point.y - 5 * scale + offsetY + bob,
+            scale * 0.34,
+          );
+        }
       }
       if (shopping) {
         ctx.strokeStyle = '#e1c17b';

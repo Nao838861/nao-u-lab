@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.19.0-canon-performance';
+import { TILE } from './config.js?v=v004.20.0-carts-development';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

@@ -6,6 +6,7 @@ import {
   carrierGoodsCapacity,
   createCartCarrier,
   createHaulJob,
+  createWalkCarrier,
   depositInventory,
   dockVessel,
   goodsUnitWeight,
@@ -110,6 +111,18 @@ export const P = deepFreeze({
   WOOD0: 350,
   WOOD_R: 0.7,
   ROAD_WORK: 3,
+  CART_LOG: 4,
+  CART_TOOLS: 0.5,
+  CART_WORK_DAYS: 8,
+  CART_HAND_CAPACITY: 1,
+  CART_WOOD_CAPACITY: 4,
+  CART_IRON_CAPACITY: 8,
+  CART_WOOD_DURABILITY: 360,
+  CART_MARKUP: 1.7,
+  CART_TIME_VALUE: 0.35,
+  // 商館・港・倉庫を支える会社の有限な荷役人員。1人1荷を守りつつ、
+  // 13職の調達が同日に重なる基準都市でも荷車ゼロの生活床を落とさない人数。
+  COMPANY_HAND_PORTERS: 128,
   PAVE_STONE: 200,
   PAVE_ROAD_F: 0.45,
   DISTRESS: 40,
@@ -130,6 +143,7 @@ export const JOBCLS = deepFreeze({
   rapeseed: "farm",
   logger: "lumber",
   woodshop: "lumber",
+  cartwright: "lumber",
   charburner: "lumber",
   quarryman: "lumber",
   miner: "lumber",
@@ -196,6 +210,10 @@ function applyImmigrantKit(household) {
   household.pantry.wheat = 240;
   if (household.job === "saltworks") household.pantry.char = 15;
   if (household.job === "woodshop" || household.job === "charburner") household.pantry.log = 20;
+  if (household.job === "cartwright") {
+    household.pantry.log = 16;
+    household.pantry.tools = 8;
+  }
   if (household.job === "smelter") {
     household.pantry.ore = 20;
     household.pantry.char = 10;
@@ -277,6 +295,11 @@ function makeHouseholdRecord(economy, { job, x, y }) {
     buildingId: null,
     cargo: null,
     marketCarrier: null,
+    cart: null,
+    cartStock: [],
+    cartWork: null,
+    cartsPurchased: 0,
+    cartsBroken: 0,
     marketTransactionTicks: 0,
     marketTripTicks: 0,
     productionMultiplier: 1,
@@ -327,8 +350,14 @@ export function householdEat(household) {
   return household.members.length;
 }
 
-export function householdHaul(household) {
-  return household.members.length * 4;
+export function householdHaul(household, { useCart = Boolean(household.cart) } = {}) {
+  // 世帯の一人分の手運び1単位は、従来互換の4重量として扱う。
+  // 荷車はこの基準に対して木4倍・鉄8倍になり、荷車ゼロ時の生活床を変えない。
+  const handWeightPerPerson = 4;
+  const ratio = useCart
+    ? household.cart?.kind === "iron" ? P.CART_IRON_CAPACITY : P.CART_WOOD_CAPACITY
+    : P.CART_HAND_CAPACITY;
+  return household.members.length * handWeightPerPerson * ratio;
 }
 
 export function householdInputBuilding(physical, household) {
@@ -379,7 +408,7 @@ function logisticsEntrance(physical, role, fallback) {
   return buildingById(physical, buildingId)?.entrance ?? tilePosition(fallback);
 }
 
-export function marketPathLength(economy, physical, household) {
+export function marketPathLength(economy, physical, household, mode = "walk") {
   if (!physical) {
     return Math.hypot(household.x - economy.market.x, household.y - economy.market.y);
   }
@@ -387,12 +416,16 @@ export function marketPathLength(economy, physical, household) {
     physical,
     householdEntrance(physical, household),
     logisticsEntrance(physical, "market", economy.market),
-    "walk",
+    mode,
   );
 }
 
 export function marketTripDuration(economy, physical, household) {
-  return marketPathLength(economy, physical, household) * 2 + 2;
+  const cartDistance = household.cart
+    ? marketPathLength(economy, physical, household, "cart")
+    : Infinity;
+  const mode = Number.isFinite(cartDistance) ? "cart" : "walk";
+  return marketPathLength(economy, physical, household, mode) * 2 + 2;
 }
 
 export function productionMultiplierForTrip(tripTicks) {
@@ -1093,9 +1126,13 @@ export function sellOffers(economy, household) {
   return offers;
 }
 
-export function loadMarketSellCargo(economy, household) {
+export function loadMarketSellCargo(
+  economy,
+  household,
+  { useCart = Boolean(household.cart) } = {},
+) {
   if (household.cargo) throw new Error(`世帯${household.id}は既にcargoを運搬中です`);
-  let capacity = householdHaul(household);
+  let capacity = householdHaul(household, { useCart });
   const offers = sellOffers(economy, household);
   const manifest = {};
   for (const [goods, offered] of Object.entries(offers)) {
@@ -1210,6 +1247,20 @@ export function buyTargets(
       Math.max(0.9, (px.char ?? 2) / P.LOG_CHAR * 0.6),
     ];
   }
+  if (household.job === "cartwright") {
+    if (inputQty("log") < P.CART_LOG * 3) {
+      targets.log = [
+        P.CART_LOG * 5 - inputQty("log"),
+        Math.max(0.9, (px.log ?? P.BELIEF0.log) * 1.5),
+      ];
+    }
+    if (inputQty("tools") < P.CART_TOOLS * 3) {
+      targets.tools = [
+        P.CART_TOOLS * 5 - inputQty("tools"),
+        Math.max(P.IMP.tools * 1.05, (px.tools ?? P.BELIEF0.tools) * 1.4),
+      ];
+    }
+  }
   if (household.job === "smelter") {
     const inputCeiling = (px.bar ?? P.BELIEF0.bar) / P.SMELT_ORE * 0.6;
     if (inputQty("ore") < 10) {
@@ -1293,6 +1344,7 @@ export function isProductionInput(household, goods) {
     || ((household.job === "wheat" || household.job === "rapeseed") && goods === "meal")
     || (household.job === "smelter" && ["ore", "char", "coal"].includes(goods))
     || (household.job === "smith" && ["bar", "char", "coal"].includes(goods))
+    || (household.job === "cartwright" && ["log", "tools"].includes(goods))
     || ((household.job === "woodshop" || household.job === "charburner") && goods === "log");
 }
 
@@ -1306,6 +1358,147 @@ export function quoteAskPrice(cost, goods, random) {
 
 function findHousehold(economy, householdId) {
   return economy.households.find((household) => household.id === householdId);
+}
+
+function ensureCartEconomy(economy) {
+  economy.nextCartAssetId ??= 1;
+  economy.companyCarts ??= [];
+  economy.cartStats ??= {
+    produced: 0,
+    householdPurchased: 0,
+    companyPurchased: 0,
+    householdBroken: 0,
+    companyBroken: 0,
+    householdUses: 0,
+    companyUses: 0,
+  };
+  return economy.cartStats;
+}
+
+function offeredWoodCarts(economy, { excludingHouseholdId = null } = {}) {
+  return economy.households
+    .filter((household) => household.id !== excludingHouseholdId)
+    .flatMap((household) => (household.cartStock ?? []).map((cart) => ({
+      household,
+      cart,
+    })))
+    .filter(({ cart }) => cart.kind === "wood" && Number.isFinite(cart.price) && cart.price > 0)
+    .sort((left, right) => left.cart.price - right.cart.price
+      || left.household.id - right.household.id
+      || left.cart.id.localeCompare(right.cart.id));
+}
+
+export function householdCartPurchaseDecision(economy, physical, household, cart) {
+  if (!cart || household.cart || household.job === "cartwright") {
+    return { buy: false, reason: "not_needed" };
+  }
+  const walkDuration = marketPathLength(economy, physical, household, "walk") * 2 + 2;
+  const cartOneWay = marketPathLength(economy, physical, household, "cart");
+  if (!Number.isFinite(cartOneWay)) return { buy: false, reason: "no_cart_route" };
+  const cartDuration = cartOneWay * 2 + 2;
+  const capacityRatio = cart.kind === "iron"
+    ? P.CART_IRON_CAPACITY / P.CART_HAND_CAPACITY
+    : P.CART_WOOD_CAPACITY / P.CART_HAND_CAPACITY;
+  const timeSaved = Math.max(0, walkDuration * capacityRatio - cartDuration);
+  const wearPerTrip = Math.max(1, cartOneWay * 2);
+  const usefulTrips = cart.durability / wearPerTrip;
+  const recoveredValue = timeSaved * P.CART_TIME_VALUE * usefulTrips;
+  const foodReserve = staplePrice(economy) * householdEat(household);
+  const affordable = household.purse >= cart.price + foodReserve;
+  return {
+    buy: affordable && recoveredValue >= cart.price,
+    reason: !affordable ? "food_reserve" : recoveredValue < cart.price ? "slow_payback" : "value",
+    walkDuration,
+    cartDuration,
+    capacityRatio,
+    timeSaved,
+    wearPerTrip,
+    usefulTrips,
+    recoveredValue,
+    price: cart.price,
+  };
+}
+
+export function buyHouseholdWoodCart(economy, physical, household, { day }) {
+  ensureCartEconomy(economy);
+  const offer = offeredWoodCarts(economy, { excludingHouseholdId: household.id })[0];
+  if (!offer) return null;
+  const decision = householdCartPurchaseDecision(economy, physical, household, offer.cart);
+  if (!decision.buy) return null;
+  const index = offer.household.cartStock.findIndex((cart) => cart.id === offer.cart.id);
+  if (index < 0) return null;
+  const [cart] = offer.household.cartStock.splice(index, 1);
+  household.purse -= cart.price;
+  offer.household.purse += cart.price;
+  offer.household.income30 += cart.price;
+  household.cart = {
+    ...cart,
+    ownerKind: "household",
+    ownerId: household.id,
+    purchasedDay: day,
+  };
+  household.cartsPurchased = (household.cartsPurchased ?? 0) + 1;
+  economy.cartStats.householdPurchased += 1;
+  recordEconomyEvent(
+    economy,
+    day,
+    `荷車購入: ${household.job}#${household.id}がcartwright#${offer.household.id}から木の荷車${cart.id}`,
+  );
+  return { cart: household.cart, sellerHouseholdId: offer.household.id, decision };
+}
+
+export function finishHouseholdCartTrip(economy, household, { day, assetId, distance }) {
+  if (!assetId || household.cart?.id !== assetId) return null;
+  if (!Number.isFinite(distance) || distance < 0) {
+    throw new TypeError("cart trip distance must be non-negative and finite");
+  }
+  ensureCartEconomy(economy);
+  household.cart.durability = Math.max(0, household.cart.durability - distance);
+  economy.cartStats.householdUses += 1;
+  if (household.cart.durability > 1e-9) return household.cart;
+  const broken = household.cart;
+  household.cart = null;
+  household.cartsBroken = (household.cartsBroken ?? 0) + 1;
+  economy.cartStats.householdBroken += 1;
+  recordEconomyEvent(
+    economy,
+    day,
+    `荷車摩耗: ${household.job}#${household.id}の木の荷車${broken.id}が役目を終えた`,
+  );
+  return null;
+}
+
+export function purchaseCompanyWoodCart(economy, { day }) {
+  ensureCartEconomy(economy);
+  const offer = offeredWoodCarts(economy)[0];
+  if (!offer) return null;
+  if (economy.company.money < offer.cart.price) return null;
+  const index = offer.household.cartStock.findIndex((cart) => cart.id === offer.cart.id);
+  if (index < 0) return null;
+  const [cart] = offer.household.cartStock.splice(index, 1);
+  offer.household.purse += cart.price;
+  offer.household.income30 += cart.price;
+  postCompanyLedger(economy.company, {
+    day,
+    amount: -cart.price,
+    reason: `世帯${offer.household.id}から木の荷車${cart.id}を購入`,
+  });
+  const asset = {
+    ...cart,
+    ownerKind: "company",
+    ownerId: "company",
+    purchasedDay: day,
+    busyJobId: null,
+  };
+  economy.companyCarts.push(asset);
+  economy.cartStats.companyPurchased += 1;
+  recordEconomyEvent(
+    economy,
+    day,
+    `会社荷車購入: cartwright#${offer.household.id}から木の荷車${cart.id}`,
+  );
+  assertMoneyConservation(economy, { incremental: true });
+  return asset;
 }
 
 export function companyStockReleasePrice(economy, goods, { market = false } = {}) {
@@ -1388,14 +1581,17 @@ export function requestCompanyImport(economy, physical, goods, { day, qty, aid =
 export function buyAtMarket(
   economy,
   household,
-  { day, physical = null, delivery = "pantry" },
+  { day, physical = null, delivery = "pantry", capacityLimit = null },
 ) {
   if (delivery !== "pantry" && delivery !== "cargo") {
     throw new Error(`unknown market delivery: ${delivery}`);
   }
-  let capacity = householdHaul(household);
+  let capacity = capacityLimit ?? householdHaul(household);
   const targets = buyTargets(economy, household, { day, physical });
-  const order = BUY_ORDER.filter((goods) => targets[goods]);
+  const preferredOrder = household.job === "cartwright"
+    ? ["tools", "log", ...BUY_ORDER.filter((goods) => goods !== "tools" && goods !== "log")]
+    : BUY_ORDER;
+  const order = preferredOrder.filter((goods) => targets[goods]);
   const transactions = [];
   const manifest = {};
   const processed = new Set();
@@ -1764,12 +1960,20 @@ export function sellMarketCargo(economy, physical, household, { day, random }) {
 export function transactAtMarket(economy, physical, household, { day, random }) {
   const sold = sellAtMarket(economy, physical, household, { day, random });
   const bought = buyAtMarket(economy, household, { day, physical });
-  return { sold, bought };
+  const cartPurchase = physical
+    ? buyHouseholdWoodCart(economy, physical, household, { day })
+    : null;
+  return { sold, bought, cartPurchase };
 }
 
 export function transactMarketCargo(economy, physical, household, { day, random }) {
   const sold = sellMarketCargo(economy, physical, household, { day, random });
-  const bought = buyAtMarket(economy, household, { day, physical, delivery: "cargo" });
+  const bought = buyAtMarket(economy, household, {
+    day,
+    physical,
+    delivery: "cargo",
+    capacityLimit: household.marketCarrier?.capacity ?? null,
+  });
   const returnManifest = loadMarketReturns(
     economy,
     physical,
@@ -1778,7 +1982,8 @@ export function transactMarketCargo(economy, physical, household, { day, random 
   );
   bought.cargo.returnManifest = returnManifest;
   household.cargo = bought.cargo;
-  return { sold, bought };
+  const cartPurchase = buyHouseholdWoodCart(economy, physical, household, { day });
+  return { sold, bought, cartPurchase };
 }
 
 export function loadMarketReturns(economy, physical, household, availableCapacity) {
@@ -2106,6 +2311,51 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
       }
     }
     produced.iron = qty;
+  } else if (household.job === "cartwright") {
+    ensureCartEconomy(economy);
+    household.cartStock ??= [];
+    if (
+      !household.cartWork
+      && household.cartStock.length < 3
+      && productionInputAmount(physical, household, "log") >= P.CART_LOG
+      && productionInputAmount(physical, household, "tools") >= P.CART_TOOLS
+    ) {
+      withdrawProductionInput(physical, household, "log", P.CART_LOG);
+      withdrawProductionInput(physical, household, "tools", P.CART_TOOLS);
+      recordEconomicMaterialFlow(
+        economy, "log", "cons", P.CART_LOG, `世帯${household.id}の木の荷車製作`,
+      );
+      recordEconomicMaterialFlow(
+        economy, "tools", "cons", P.CART_TOOLS, `世帯${household.id}の木の荷車製作`,
+      );
+      household.cartWork = {
+        kind: "wood",
+        progress: 0,
+        required: P.CART_WORK_DAYS,
+        materialCost: P.CART_LOG * (economy.px.log ?? P.BELIEF0.log)
+          + P.CART_TOOLS * (economy.px.tools ?? P.BELIEF0.tools),
+      };
+    }
+    if (household.cartWork) {
+      household.cartWork.progress += work;
+      produced.cartWork = work;
+      if (household.cartWork.progress >= household.cartWork.required - 1e-9) {
+        const asset = {
+          id: `wood-cart-${economy.nextCartAssetId}`,
+          kind: "wood",
+          durability: P.CART_WOOD_DURABILITY,
+          maxDurability: P.CART_WOOD_DURABILITY,
+          price: Math.max(1, household.cartWork.materialCost * P.CART_MARKUP),
+          makerHouseholdId: household.id,
+        };
+        economy.nextCartAssetId += 1;
+        household.cartStock.push(asset);
+        household.cartWork = null;
+        economy.cartStats.produced += 1;
+        recordEconomyEvent(economy, day, `荷車完成: cartwright#${household.id} 木の荷車${asset.id}`);
+        produced.cart = 1;
+      }
+    }
   } else if (household.job === "woodshop") {
     const qty = Math.max(
       0,
@@ -2369,6 +2619,40 @@ function pendingOrderPortQuantity(physical, goods) {
     .reduce((total, call) => total + call.remaining, 0);
 }
 
+function availableCompanyTransport(economy, physical) {
+  ensureCartEconomy(economy);
+  if (!physical) return { kind: "legacy", asset: null, capacity: 16 };
+  const cart = economy.companyCarts.find((asset) => (
+    !asset.broken && !asset.busyJobId && asset.durability > 0
+  ));
+  if (cart) {
+    return {
+      kind: "cart",
+      asset: cart,
+      capacity: cart.kind === "iron" ? P.CART_IRON_CAPACITY : P.CART_WOOD_CAPACITY,
+    };
+  }
+  const activeHandPorters = (physical.activeHaulJobIds ?? [])
+    .map((jobId) => haulJobById(physical, jobId))
+    .filter((job) => (
+      job?.status === "in_transit"
+      && job.carrier?.companyTransport
+      && !job.carrier.assetId
+    ))
+    .reduce((total, job) => total + Math.max(1, job.carrier.people ?? 1), 0);
+  if (activeHandPorters >= P.COMPANY_HAND_PORTERS) return null;
+  return {
+    kind: "walk",
+    asset: null,
+    capacity: (P.COMPANY_HAND_PORTERS - activeHandPorters) * P.CART_HAND_CAPACITY,
+  };
+}
+
+export function companyAvailableGoodsCapacity(economy, physical, goods) {
+  const transport = availableCompanyTransport(economy, physical);
+  return transport ? transport.capacity / goodsUnitWeight(goods) : 0;
+}
+
 function dispatchCompanyHaul(
   economy,
   physical,
@@ -2380,13 +2664,30 @@ function dispatchCompanyHaul(
     recordLogisticsBlocked(economy, day, fromRole, toRole);
     return null;
   }
+  const transport = availableCompanyTransport(economy, physical);
+  if (!transport || qty > transport.capacity / goodsUnitWeight(goods) + 1e-9) return null;
+  const carrier = transport.kind === "cart"
+    ? createCartCarrier(physical, {
+      capacity: transport.capacity,
+      cartKind: transport.asset.kind,
+      assetId: transport.asset.id,
+    })
+    : createWalkCarrier(physical, {
+      people: Math.max(1, Math.ceil(qty * goodsUnitWeight(goods) / P.CART_HAND_CAPACITY)),
+    });
+  if (transport.kind === "walk") carrier.routeMode = "cart";
+  carrier.capacity = transport.kind === "cart"
+    ? transport.capacity
+    : Math.max(1, carrier.people) * P.CART_HAND_CAPACITY;
+  carrier.companyTransport = true;
   const job = createHaulJob(physical, {
     from: { building: from, section: fromSection },
     to: { building: to, section: toSection },
     goods,
     qty,
-    carrier: createCartCarrier(physical),
+    carrier,
   });
+  if (transport.asset) transport.asset.busyJobId = job.id;
   job.economicLogistics = { kind, day, ...metadata };
   job.economicReconciled = false;
   (physical.economicHaulJobIds ??= []).push(job.id);
@@ -2520,7 +2821,8 @@ function dispatchPendingExportLots(economy, physical, { day }) {
     const lot = exportLotById(economy, lotId);
     if (!lot) continue;
     while (lot.marketQty > 1e-9) {
-      const qty = Math.min(carrierGoodsCapacity({ capacity: 16 }, lot.goods), lot.marketQty);
+      const qty = Math.min(companyAvailableGoodsCapacity(economy, physical, lot.goods), lot.marketQty);
+      if (qty <= 1e-9) break;
       const job = dispatchCompanyHaul(economy, physical, {
         day,
         kind: "export_market",
@@ -2538,7 +2840,8 @@ function dispatchPendingExportLots(economy, physical, { day }) {
       jobs.push(job);
     }
     while (lot.warehouseQty > 1e-9) {
-      const qty = Math.min(carrierGoodsCapacity({ capacity: 16 }, lot.goods), lot.warehouseQty);
+      const qty = Math.min(companyAvailableGoodsCapacity(economy, physical, lot.goods), lot.warehouseQty);
+      if (qty <= 1e-9) break;
       const job = dispatchCompanyHaul(economy, physical, {
         day,
         kind: "export_port",
@@ -2566,7 +2869,11 @@ function dispatchPendingImports(economy, physical, { day }) {
   for (const request of activeImportRequests(economy)) {
     if (request.status !== "port") continue;
     while (request.portQty > 1e-9) {
-      const qty = Math.min(carrierGoodsCapacity({ capacity: 16 }, request.goods), request.portQty);
+      const qty = Math.min(
+        companyAvailableGoodsCapacity(economy, physical, request.goods),
+        request.portQty,
+      );
+      if (qty <= 1e-9) break;
       const job = dispatchCompanyHaul(economy, physical, {
         day,
         kind: "import_delivery",
@@ -2595,7 +2902,8 @@ function dispatchPendingPortReturns(economy, physical, { day }) {
   const jobs = [];
   for (const lot of activePortReturns(economy)) {
     while (lot.portQty > 1e-9) {
-      const qty = Math.min(carrierGoodsCapacity({ capacity: 16 }, lot.goods), lot.portQty);
+      const qty = Math.min(companyAvailableGoodsCapacity(economy, physical, lot.goods), lot.portQty);
+      if (qty <= 1e-9) break;
       const job = dispatchCompanyHaul(economy, physical, {
         day,
         kind: "order_return",
@@ -2654,35 +2962,63 @@ export function requestCompanyStockRelease(economy, physical, goods, { day, qty 
     throw new TypeError("stock release quantity must be non-negative and finite");
   }
   const reserved = economy.order?.g === goods ? economy.order.left : 0;
-  const free = Math.max(0, (economy.stock[goods] ?? 0) - reserved);
-  let remaining = Math.min(qty, free);
+  economy.stockReleaseQueue ??= [];
+  const queued = economy.stockReleaseQueue
+    .filter((request) => request.goods === goods)
+    .reduce((total, request) => total + request.remaining, 0);
+  const free = Math.max(0, (economy.stock[goods] ?? 0) - reserved - queued);
+  const remaining = Math.min(qty, free);
   if (remaining <= 1e-9) return null;
   const averageCost = (economy.stockCost[goods] ?? 0)
     / Math.max(1e-9, economy.stock[goods] ?? 0);
-  const jobs = [];
-  while (remaining > 1e-9) {
-    const load = Math.min(carrierGoodsCapacity({ capacity: 16 }, goods), remaining);
-    const job = dispatchCompanyHaul(economy, physical, {
-      day,
-      kind: "stock_release",
-      fromRole: "warehouse",
-      fromSection: "storage",
-      toRole: "market",
-      toSection: "inbound",
-      goods,
-      qty: load,
-      metadata: { cost: load * averageCost },
-    });
-    if (!job) break;
-    economy.stock[goods] -= load;
-    economy.stockCost[goods] = Math.max(
-      0,
-      (economy.stockCost[goods] ?? 0) - load * averageCost,
-    );
-    remaining -= load;
-    jobs.push(job);
-  }
+  const request = {
+    id: `release${economy.nextStockReleaseId ?? 1}`,
+    goods,
+    remaining,
+    averageCost,
+    requestedDay: day,
+  };
+  economy.nextStockReleaseId = (economy.nextStockReleaseId ?? 1) + 1;
+  economy.stockReleaseQueue.push(request);
+  const jobs = dispatchPendingStockReleases(economy, physical, { day });
   return jobs[0] ?? null;
+}
+
+function dispatchPendingStockReleases(economy, physical, { day }) {
+  const jobs = [];
+  const pending = [];
+  for (const request of economy.stockReleaseQueue ?? []) {
+    while (request.remaining > 1e-9) {
+      const load = Math.min(
+        companyAvailableGoodsCapacity(economy, physical, request.goods),
+        request.remaining,
+        economy.stock[request.goods] ?? 0,
+      );
+      if (load <= 1e-9) break;
+      const job = dispatchCompanyHaul(economy, physical, {
+        day,
+        kind: "stock_release",
+        fromRole: "warehouse",
+        fromSection: "storage",
+        toRole: "market",
+        toSection: "inbound",
+        goods: request.goods,
+        qty: load,
+        metadata: { cost: load * request.averageCost, releaseRequestId: request.id },
+      });
+      if (!job) break;
+      economy.stock[request.goods] -= load;
+      economy.stockCost[request.goods] = Math.max(
+        0,
+        (economy.stockCost[request.goods] ?? 0) - load * request.averageCost,
+      );
+      request.remaining -= load;
+      jobs.push(job);
+    }
+    if (request.remaining > 1e-9) pending.push(request);
+  }
+  economy.stockReleaseQueue = pending;
+  return jobs;
 }
 
 export function setCompanyStockTarget(economy, goods, qty) {
@@ -2710,7 +3046,8 @@ export function runCompanyProcurement(economy, { day, physical = null }) {
       if (!seller) continue;
       let remaining = Math.min(stall.qty, lack);
       while (remaining > 1e-9) {
-        const qty = Math.min(carrierGoodsCapacity({ capacity: 16 }, goods), remaining);
+        const qty = Math.min(companyAvailableGoodsCapacity(economy, physical, goods), remaining);
+        if (qty <= 1e-9) break;
         const payment = qty * stall.price;
         let job = null;
         if (physical) {
@@ -2769,7 +3106,8 @@ function dispatchCompanyOrder(economy, physical, { day }) {
   );
   const jobs = [];
   while (remaining > 1e-9) {
-    const qty = Math.min(carrierGoodsCapacity({ capacity: 16 }, goods), remaining);
+    const qty = Math.min(companyAvailableGoodsCapacity(economy, physical, goods), remaining);
+    if (qty <= 1e-9) break;
     const averageCost = (economy.stockCost[goods] ?? 0)
       / Math.max(1e-9, economy.stock[goods] ?? 0);
     const job = dispatchCompanyHaul(economy, physical, {
@@ -2819,6 +3157,23 @@ export function settleCompanyLogistics(economy, physical, { day }) {
       continue;
     }
     const metadata = job.economicLogistics;
+    if (job.carrier.assetId) {
+      ensureCartEconomy(economy);
+      const assetIndex = economy.companyCarts.findIndex((cart) => (
+        cart.id === job.carrier.assetId
+      ));
+      if (assetIndex >= 0) {
+        const asset = economy.companyCarts[assetIndex];
+        asset.busyJobId = null;
+        asset.durability = Math.max(0, asset.durability - Math.max(0, job.carrier.routeCost ?? 0));
+        economy.cartStats.companyUses += 1;
+        if (asset.durability <= 1e-9) {
+          economy.companyCarts.splice(assetIndex, 1);
+          economy.cartStats.companyBroken += 1;
+          recordEconomyEvent(economy, day, `会社の木の荷車${asset.id}が摩耗して役目を終えた`);
+        }
+      }
+    }
     if (metadata.kind === "procurement") {
       economy.stock[job.goods] = (economy.stock[job.goods] ?? 0) + job.qty;
       economy.stockCost[job.goods] = (economy.stockCost[job.goods] ?? 0) + metadata.payment;
@@ -2905,6 +3260,7 @@ export function settleCompanyLogistics(economy, physical, { day }) {
     settled.push({ jobId: job.id, kind: metadata.kind, goods: job.goods, qty: job.qty });
   }
   physical.economicHaulJobIds = stillPending;
+  dispatchPendingStockReleases(economy, physical, { day });
   dispatchPendingExportLots(economy, physical, { day });
   dispatchPendingImports(economy, physical, { day });
   dispatchPendingPortReturns(economy, physical, { day });
@@ -3803,6 +4159,17 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
     company: createCompanyState(initialCompanyMoney),
     households: [],
     nextHouseholdId: 0,
+    nextCartAssetId: 1,
+    companyCarts: [],
+    cartStats: {
+      produced: 0,
+      householdPurchased: 0,
+      companyPurchased: 0,
+      householdBroken: 0,
+      companyBroken: 0,
+      householdUses: 0,
+      companyUses: 0,
+    },
     materialFlows: {},
     dailyMaterialFlows: {},
     f30: {},

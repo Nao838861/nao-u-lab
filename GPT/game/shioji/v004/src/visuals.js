@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.19.0-canon-performance';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.20.0-carts-development';
 
 export const MAX_PILE_SPRITES = 24;
 export const MAX_YARD_GOODS = 6;

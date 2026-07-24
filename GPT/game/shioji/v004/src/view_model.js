@@ -1,12 +1,12 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.19.0-canon-performance';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.20.0-carts-development';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.19.0-canon-performance';
-import { analyzeRoadConnections } from './placement.js?v=v004.19.0-canon-performance';
-import { compileRenderScene } from './render_scene.js?v=v004.19.0-canon-performance';
+} from './engine_bridge.js?v=v004.20.0-carts-development';
+import { analyzeRoadConnections } from './placement.js?v=v004.20.0-carts-development';
+import { compileRenderScene } from './render_scene.js?v=v004.20.0-carts-development';
 import {
   buildingAppearance, buildingStructureLayout, pileVisual, trailVisual, yardSlots, yardStockRows,
-} from './visuals.js?v=v004.19.0-canon-performance';
+} from './visuals.js?v=v004.20.0-carts-development';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
@@ -216,6 +216,8 @@ function carrierRows(snapshot, buildings) {
       haulJobId: job.id,
       kind: job.carrier.mode === 'cart' ? 'cart' : 'walker',
       mode: job.carrier.mode,
+      cartKind: job.carrier.cartKind ?? null,
+      assetId: job.carrier.assetId ?? null,
       x: job.carrier.position.x,
       y: job.carrier.position.y,
       goods: job.goods,
@@ -226,6 +228,7 @@ function carrierRows(snapshot, buildings) {
       to: buildingEndpoint(buildingById, job.to),
     }));
   const households = snapshot.economy.households.map(household => {
+    const homeBuilding = buildingById.get(household.buildingId);
     const home = {
       label: `${JOB_LABELS[household.job] ?? household.job}の家`,
       x: household.x,
@@ -240,24 +243,79 @@ function carrierRows(snapshot, buildings) {
     const to = ['toMarket', 'atMarket'].includes(household.state)
       ? marketEndpoint
       : household.state === 'toWork' ? work : home;
+    const cargo = household.marketCarrier?.cargo ?? household.cargo;
+    const cargoRows = [
+      ...Object.entries(cargo?.manifest ?? {}),
+      ...Object.entries(cargo?.returnManifest ?? {}),
+    ].filter(([, qty]) => qty > 1e-9);
+    const workingAtYard = household.state === 'home'
+      && (household.productionMultiplier ?? 0) > 0
+      && homeBuilding;
+    const visualX = workingAtYard
+      ? homeBuilding.x + homeBuilding.width * 0.76 : household.px ?? household.x;
+    const visualY = workingAtYard
+      ? homeBuilding.y + homeBuilding.height * 0.7 : household.py ?? household.y;
     return {
       id: `household:${household.id}`,
       householdId: household.id,
-      kind: 'household',
-      x: household.px ?? household.x,
-      y: household.py ?? household.y,
+      kind: household.marketCarrier?.mode === 'cart' ? 'cart' : 'household',
+      mode: household.marketCarrier?.mode ?? 'walk',
+      cartKind: household.marketCarrier?.cartKind ?? household.cart?.kind ?? null,
+      assetId: household.marketCarrier?.assetId ?? null,
+      x: visualX,
+      y: visualY,
       state: household.state,
       job: household.job,
       members: household.members?.length ?? 0,
+      peopleRows: (household.members ?? []).map((member, index) => ({
+        id: `${household.id}:${member?.name ?? index}`,
+        name: member?.name ?? `住民${index + 1}`,
+      })),
+      activity: workingAtYard ? 'working' : household.state,
       productionMultiplier: household.productionMultiplier ?? 0,
-      goods: household.marketCarrier?.cargo?.goods ?? null,
-      amount: household.marketCarrier?.cargo?.qty ?? 0,
+      goods: cargoRows[0]?.[0] ?? null,
+      amount: cargoRows.reduce((total, [, qty]) => total + qty, 0),
       path: (household.marketCarrier?.path ?? []).map(point => ({ ...point })),
       from,
       to,
     };
   });
-  return [...hauls, ...households];
+  const idleHouseholdCarts = snapshot.economy.households
+    .filter(household => household.cart && household.marketCarrier?.mode !== 'cart')
+    .map(household => ({
+      id: `asset:household-cart:${household.cart.id}`,
+      kind: 'cart',
+      mode: 'cart',
+      cartKind: household.cart.kind,
+      assetId: household.cart.id,
+      x: household.x + 0.35,
+      y: household.y + 0.2,
+      goods: null,
+      amount: 0,
+      members: 0,
+      idle: true,
+      durability: household.cart.durability,
+      maxDurability: household.cart.maxDurability,
+    }));
+  const warehouse = buildings.find(building => building.roles.includes('warehouse'));
+  const idleCompanyCarts = (snapshot.economy.companyCarts ?? [])
+    .filter(cart => !cart.busyJobId)
+    .map((cart, index) => ({
+      id: `asset:company-cart:${cart.id}`,
+      kind: 'cart',
+      mode: 'cart',
+      cartKind: cart.kind,
+      assetId: cart.id,
+      x: (warehouse?.entrance?.x ?? snapshot.economy.market.x) + 0.25 + index * 0.18,
+      y: (warehouse?.entrance?.y ?? snapshot.economy.market.y) - 0.15 + index * 0.12,
+      goods: null,
+      amount: 0,
+      members: 0,
+      idle: true,
+      durability: cart.durability,
+      maxDurability: cart.maxDurability,
+    }));
+  return [...hauls, ...households, ...idleHouseholdCarts, ...idleCompanyCarts];
 }
 
 function portBerth(building, terrain, width, height) {
@@ -325,6 +383,8 @@ export function snapshotToViewModel(snapshot) {
       vacant: !building.fixed && !companyLogistics && building.ownerHouseholdId === null,
       cultureLevel: owner?.lv ?? 0,
       stateSignals: householdStateSignals(owner),
+      cartWork: owner?.cartWork ? { ...owner.cartWork } : null,
+      cartStock: (owner?.cartStock ?? []).map(cart => ({ ...cart })),
       shelves,
       shelfGroups: groupedStock([...shelves, ...companyStockShelves]),
       shelfAmount: shelves.reduce((total, row) => total + row.amount, 0),
@@ -352,6 +412,9 @@ export function snapshotToViewModel(snapshot) {
       state: household.state,
       marketTripActive: Boolean(household.marketCarrier),
       marketTripTicks: household.marketTripTicks ?? 0,
+      cart: household.cart ? { ...household.cart } : null,
+      cartStock: (household.cartStock ?? []).map(cart => ({ ...cart })),
+      cartWork: household.cartWork ? { ...household.cartWork } : null,
       productionMultiplier: household.productionMultiplier ?? 1,
       tookMarketTripToday: Boolean(household.tookMarketTripToday),
       purse: Number.isFinite(household.purse) ? household.purse : null,
@@ -512,6 +575,8 @@ export function snapshotToViewModel(snapshot) {
         .reduce((total, row) => total - row.amount, 0),
     companyLedgerByReason: { ...(snapshot.economy.company.ledgerByReason ?? {}) },
     companyDailyLedger: (snapshot.economy.company.ledgerDaily ?? []).map(row => ({ ...row })),
+    companyCarts: (snapshot.economy.companyCarts ?? []).map(cart => ({ ...cart })),
+    cartStats: { ...(snapshot.economy.cartStats ?? {}) },
     marketPrices: { ...snapshot.economy.px },
     flowEma: Object.fromEntries(Object.entries(snapshot.economy.f30 ?? {}).map(([goods, flow]) => [
       goods, { ...flow },

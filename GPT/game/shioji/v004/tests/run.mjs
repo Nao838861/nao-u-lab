@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { createEngineApi } from '../../engine/src/api.js';
-import { buildBaseCity } from '../../engine/src/audit.js';
+import { createEngineApi, replayInputJournal } from '../../engine/src/api.js';
+import { buildBaseCity, findAuditSpot } from '../../engine/src/audit.js';
 import { runPopulationDynamicsPhase } from '../../engine/src/econ.js';
 import { ECONOMIC_BUILDINGS } from '../../engine/src/physical.js';
 import { IsometricCamera } from '../src/camera.js';
@@ -13,6 +13,7 @@ import {
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
 } from '../src/display_batch.js';
+import { developmentMapView } from '../src/development_map.js';
 import {
   BUILD_COST_DENARI, E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS,
   buildBlankCity, createEngineController,
@@ -90,6 +91,92 @@ test('段1: createEngineApiで基準都市を起動し1日30tick進める', () =
   const after = controller.readModel();
   assert.equal(after.day, 1);
   assert.equal(after.tick, 30);
+});
+
+test('ラン3: 発展図は現存産業を点灯し、将来案を操作ロックに使わない', () => {
+  const model = snapshotToViewModel(createEngineApi(buildBaseCity(11)).snapshot({ scope: 'full' }));
+  const branches = developmentMapView(model);
+  const nodes = branches.flatMap(branch => branch.nodes);
+  assert.equal(branches.length, 4);
+  assert.equal(nodes.find(node => node.id === 'port').state, 'active');
+  assert.equal(nodes.find(node => node.id === 'cartwright').state, 'available');
+  assert.equal(nodes.find(node => node.id === 'future-shipwright').state, 'future');
+  assert.equal(nodes.find(node => node.id === 'future-mine').state, 'future');
+  assert.equal(nodes.every(node => !('locked' in node)), true);
+  const source = fs.readFileSync(new URL('../src/development_map.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(source, /operate|place_building|unlock|requiredNode/);
+});
+
+test('ラン3: 3シードで木製荷車が製造・世帯購入・使用・摩耗・買い替えまで循環する', () => {
+  const rows = [];
+  for (const seed of [11, 13, 14]) {
+    const world = buildBaseCity(seed);
+    const api = createEngineApi(world);
+    api.advanceDays(60);
+    const spot = findAuditSpot(world, 'cartwright');
+    assert.ok(spot, `seed${seed}で荷車工房を配置できる`);
+    assert.equal(api.applyOperation({
+      type: 'place_building', job: 'cartwright', x: spot[0], y: spot[1],
+    }).ok, true);
+    for (let day = 0; day < 600; day += 1) {
+      api.advanceDays(1);
+      const stats = world.state.economy.cartStats;
+      if (stats.produced > 0
+        && stats.householdPurchased >= 2
+        && stats.householdUses > 0
+        && stats.householdBroken > 0) break;
+    }
+    const stats = { ...world.state.economy.cartStats };
+    assert.ok(stats.produced > 0, `seed${seed}で荷車を製造`);
+    assert.ok(stats.householdPurchased >= 2, `seed${seed}で買い替えを含む世帯購入`);
+    assert.ok(stats.householdUses > 0, `seed${seed}で市場往復に使用`);
+    assert.ok(stats.householdBroken > 0, `seed${seed}で距離摩耗`);
+    assert.ok(stats.householdPurchased > stats.householdBroken,
+      `seed${seed}で摩耗後に次の荷車が残る`);
+    rows.push({ seed, day: world.state.day, ...stats });
+  }
+  console.log(`  荷車循環実測 ${rows.map(row => (
+    `seed${row.seed}:d${row.day} 製${row.produced}/買${row.householdPurchased}`
+    + `/便${row.householdUses}/摩${row.householdBroken}`
+  )).join(' | ')}`);
+});
+
+test('ラン3: 会社の木製荷車は公開操作でだけ購入され、有限容量で使われ摩耗する', () => {
+  const world = buildBaseCity(11);
+  const api = createEngineApi(world);
+  api.advanceDays(60);
+  const spot = findAuditSpot(world, 'cartwright');
+  assert.ok(spot);
+  assert.equal(api.applyOperation({
+    type: 'place_building', job: 'cartwright', x: spot[0], y: spot[1],
+  }).ok, true);
+  let offer = null;
+  for (let day = 0; day < 400 && !offer; day += 1) {
+    api.advanceDays(1);
+    offer = world.state.economy.households
+      .flatMap(household => household.cartStock ?? [])[0] ?? null;
+  }
+  assert.ok(offer, '荷車工房の実在庫が販売待ちになる');
+  assert.equal(world.state.economy.cartStats.companyPurchased, 0, '会社は自動購入しない');
+  const moneyBefore = world.state.economy.company.money;
+  const result = api.applyOperation({ type: 'purchase_company_cart' });
+  assert.equal(result.ok, true);
+  assert.equal(world.state.economy.companyCarts.length, 1);
+  assert.equal(world.state.economy.cartStats.companyPurchased, 1);
+  assert.ok(world.state.economy.company.money < moneyBefore);
+  api.applyOperation({ type: 'set_stock_target', goods: 'tools', qty: 80 });
+  for (let day = 0; day < 300 && world.state.economy.cartStats.companyBroken < 1; day += 1) {
+    api.advanceDays(1);
+  }
+  assert.ok(world.state.economy.cartStats.companyUses > 0);
+  assert.equal(world.state.economy.cartStats.companyBroken, 1);
+  const journal = api.inputJournal();
+  const replay = replayInputJournal(
+    () => buildBaseCity(11),
+    journal,
+    { untilTick: world.state.tick },
+  );
+  assert.deepEqual(replay.world.state, world.state, '荷車購入を含む公開journalが同じ世界を再生する');
 });
 
 test('性能L: イベントcursorは全履歴filterと同じ順序・値を返し、返却値は内部から分離する', () => {
@@ -1929,7 +2016,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.19.0-canon-performance');
+  assert.equal(VERSION, 'v004.20.0-carts-development');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2735,6 +2822,56 @@ test('段9: tick間とdayEnd束イベントを表示時間へ展開しキャリ�
   assert.equal(presentation.advance(0.2).presentationProgress, 1);
 });
 
+test('ラン3 AO: 棚の最後の一荷は遷移中に連続して減り、論理確定後だけ消える', () => {
+  const slot = amount => ({
+    x: 5.25,
+    y: 7.5,
+    row: { section: 'output', goods: 'tools', amount, visual: pileVisual(amount, 'tools') },
+  });
+  const from = {
+    carriers: [], portCalls: [], portBerth: null,
+    buildings: [{ id: 3, yardSlots: [slot(1)] }],
+  };
+  const to = {
+    ...from,
+    buildings: [{ id: 3, yardSlots: [] }],
+  };
+  const start = interpolateWorldModel(from, to, [], 0);
+  const half = interpolateWorldModel(from, to, [], 0.5);
+  const end = interpolateWorldModel(from, to, [], 1);
+  assert.equal(start.inventoryVisuals[0].row.amount, 1);
+  assert.equal(half.inventoryVisuals[0].row.amount, 0.5);
+  assert.equal(half.inventoryVisuals[0].row.visual.spriteCount > 0, true);
+  assert.deepEqual(end.inventoryVisuals, []);
+
+  const arriving = interpolateWorldModel(to, from, [], 0.5);
+  assert.equal(arriving.inventoryVisuals[0].row.amount, 0.5);
+  assert.deepEqual(
+    { x: arriving.inventoryVisuals[0].x, y: arriving.inventoryVisuals[0].y },
+    { x: 5.25, y: 7.5 },
+  );
+});
+
+test('ラン3 AO: 世帯人数ぶんの個人IDを保ち、在宅生産者を敷地内の作業場へ出す', () => {
+  const api = createEngineApi(buildBaseCity(11));
+  api.advanceDays(30);
+  const model = snapshotToViewModel(api.snapshot({ scope: 'full' }));
+  const householdCarriers = model.carriers.filter(carrier => carrier.householdId !== undefined);
+  assert.equal(householdCarriers.length, model.households.length);
+  for (const carrier of householdCarriers) {
+    const household = model.households.find(row => row.id === carrier.householdId);
+    assert.equal(carrier.peopleRows.length, household.members);
+    assert.equal(new Set(carrier.peopleRows.map(person => person.id)).size, household.members);
+  }
+  const working = householdCarriers.find(carrier => carrier.activity === 'working');
+  assert.ok(working, '在宅生産中の世帯が作業ヤードにいる');
+  const home = model.households.find(row => row.id === working.householdId);
+  const building = model.buildings.find(row => row.id === home.buildingId);
+  assert.ok(working.x > building.x && working.x < building.x + building.width);
+  assert.ok(working.y > building.y && working.y < building.y + building.height);
+  assert.notDeepEqual({ x: working.x, y: working.y }, { x: home.homeX, y: home.homeY });
+});
+
 test('段10/11: 実港便の接岸・1荷/tick・出港をsnapshotとイベント差分へ同期する', () => {
   const api = createEngineApi(buildBaseCity(11));
   api.advanceTicks(1292);
@@ -2795,7 +2932,8 @@ test('段12: 実キャリアは荷・出所・行き先・経路を追跡表示�
   const model = snapshotToViewModel(api.snapshot());
   const carrier = model.carriers.find(row => row.haulJobId);
   assert.ok(carrier, '最初の港荷を運ぶキャリアが存在する');
-  assert.equal(carrier.kind, 'cart');
+  assert.equal(carrier.kind, 'walker', '会社が荷車を買う前は有限の運び手が担う');
+  assert.ok(carrier.people >= 1);
   assert.equal(carrier.goods, 'wheat');
   assert.ok(carrier.amount > 0);
   assert.match(carrier.from.label, /港/);
@@ -2842,7 +2980,7 @@ test('UI向上段3/4: 建物sheet・クリック選択・地面先行の選択�
   assert.match(renderer, /drawBuildingProps/);
   assert.match(renderer, /this\.camera\.zoom >= 1\.02/);
   assert.equal(Object.keys(BUILDING_ART).every(job => JOB_ICONS[job]), true,
-    '全18職は常駐バッジで見分けられる');
+    '全19職は常駐バッジで見分けられる');
   assert.match(renderer, /drawTerrain\(model\);[\s\S]*drawBuildingGrounds\(model\);[\s\S]*drawRoads\(model\);[\s\S]*drawGroundOverlays\(model\);[\s\S]*drawWorldObjects\(model\);/);
   assert.match(css, /#world\s*\{[\s\S]*cursor:\s*default/);
   assert.match(css, /#world\.map-dragging\s*\{\s*cursor:\s*grabbing/);
@@ -2879,7 +3017,7 @@ test('AH-3/4: 地中海正典の平易名へ統一し、重複する建物選択
   assert.deepEqual(JOB_LABELS, {
     market: '市場', warehouse: '倉庫', port: '港',
     fisher: '漁師', fisher2: '魚粉屋', logger: '木こり', woodshop: '木工房',
-    charburner: '炭焼き小屋', saltworks: '塩田', quarryman: '採石場',
+    cartwright: '荷車工房', charburner: '炭焼き小屋', saltworks: '塩田', quarryman: '採石場',
     miner: '鉱山', collier: '炭鉱', smelter: '製鉄所', smith: '鍛冶屋',
     wheat: '麦畑', veg: '野菜畑', shepherd: '牧場', rapeseed: '綿花畑',
   });

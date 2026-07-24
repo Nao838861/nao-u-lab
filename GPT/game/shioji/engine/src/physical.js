@@ -51,6 +51,7 @@ const ECONOMIC_JOB_BUILDINGS = Object.freeze({
   fisher2: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
   logger: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
   woodshop: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
+  cartwright: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
   charburner: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
   saltworks: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
   quarryman: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
@@ -965,11 +966,17 @@ export function createWalkCarrier(physical, { people = 1, id = null } = {}) {
   return carrier;
 }
 
-export function createCartCarrier(physical, { id = null } = {}) {
+export function createCartCarrier(
+  physical,
+  { id = null, capacity = 16, cartKind = "wood", assetId = null } = {},
+) {
+  requirePositiveQuantity(capacity, "cart carrier capacity");
   const carrier = {
     id: id ?? `cart${physical.nextCarrierId}`,
     mode: "cart",
-    capacity: 16,
+    capacity,
+    cartKind,
+    assetId,
   };
   physical.nextCarrierId += 1;
   return carrier;
@@ -979,8 +986,9 @@ export function routeTravelCarrier(physical, carrier, start, goal) {
   if (!carrier || (carrier.mode !== "walk" && carrier.mode !== "cart")) {
     throw new TypeError("travel carrier mode must be walk or cart");
   }
-  const route = findTravelPath(physical, start, goal, carrier.mode);
-  if (!route) throw new Error(`${carrier.mode}で到達できる経路がありません`);
+  const routeMode = carrier.routeMode ?? carrier.mode;
+  const route = findTravelPath(physical, start, goal, routeMode);
+  if (!route) throw new Error(`${routeMode}で到達できる経路がありません`);
   carrier.active = true;
   carrier.path = route.path;
   carrier.routeCost = route.cost;
@@ -1136,7 +1144,7 @@ function assertActiveCarrierJobs(physical, jobs, { checkRoadPaths = true } = {})
     if (!Number.isFinite(carrier.position?.x) || !Number.isFinite(carrier.position?.y)) {
       throw new Error(`キャリア位置不正 ${job.id}`);
     }
-    if (checkRoadPaths && carrier.mode === "cart") {
+    if (checkRoadPaths && (carrier.routeMode ?? carrier.mode) === "cart") {
       if (!carrier.path?.every(({ x, y }) => hasRoad(physical, x, y))) {
         throw new Error(`道路外荷車 ${job.id}`);
       }

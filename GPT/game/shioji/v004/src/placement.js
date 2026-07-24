@@ -1,4 +1,4 @@
-import { BUILDING_SIZES } from './config.js?v=v004.19.0-canon-performance';
+import { BUILDING_SIZES } from './config.js?v=v004.20.0-carts-development';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

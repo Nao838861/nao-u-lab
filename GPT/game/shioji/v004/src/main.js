@@ -1,26 +1,27 @@
-import { IsometricCamera } from './camera.js?v=v004.19.0-canon-performance';
-import { SimulationClock } from './clock.js?v=v004.19.0-canon-performance';
+import { IsometricCamera } from './camera.js?v=v004.20.0-carts-development';
+import { SimulationClock } from './clock.js?v=v004.20.0-carts-development';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.19.0-canon-performance';
+} from './config.js?v=v004.20.0-carts-development';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.19.0-canon-performance';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.19.0-canon-performance';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.19.0-canon-performance';
+} from './display_batch.js?v=v004.20.0-carts-development';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.20.0-carts-development';
+import { developmentMapView } from './development_map.js?v=v004.20.0-carts-development';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.20.0-carts-development';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.19.0-canon-performance';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.19.0-canon-performance';
-import { WorldPresentation } from './presentation.js?v=v004.19.0-canon-performance';
-import { Renderer } from './renderer.js?v=v004.19.0-canon-performance';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.19.0-canon-performance';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.19.0-canon-performance';
+} from './keyboard.js?v=v004.20.0-carts-development';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.20.0-carts-development';
+import { WorldPresentation } from './presentation.js?v=v004.20.0-carts-development';
+import { Renderer } from './renderer.js?v=v004.20.0-carts-development';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.20.0-carts-development';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.20.0-carts-development';
 import {
   objectiveActionFor, secretaryRouteFor, tutorialHandoffFor,
-} from './ui_guidance.js?v=v004.19.0-canon-performance';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.19.0-canon-performance';
+} from './ui_guidance.js?v=v004.20.0-carts-development';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.20.0-carts-development';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -293,6 +294,7 @@ function renderHud() {
   if (!$('#company-sheet').hidden && !isEditableTarget(document.activeElement)) renderCompanySheet();
   if (!$('#building-sheet').hidden) renderBuildingSheet();
   if (!$('#island-sheet').hidden) renderIslandSheet();
+  if (!$('#development-sheet').hidden) renderDevelopmentMap();
   renderTutorial();
   renderSecretary();
 }
@@ -760,6 +762,33 @@ function renderAidPanel() {
   });
 }
 
+function renderCartPanel() {
+  const offers = model.households.flatMap(household => (
+    (household.cartStock ?? []).map(cart => ({ ...cart, seller: household }))
+  )).sort((left, right) => left.price - right.price);
+  const offer = offers[0] ?? null;
+  const carts = model.companyCarts ?? [];
+  const signature = JSON.stringify([
+    offers.map(row => [row.id, row.price]),
+    carts.map(row => [row.id, row.durability, row.busyJobId]),
+    model.cartStats,
+  ]);
+  renderIfChanged('company-carts', signature, () => {
+    const working = carts.filter(cart => cart.busyJobId).length;
+    const offerText = offer
+      ? `最安 ${formatQuantity(toDenari(offer.price))}デナリ（${JOB_LABELS[offer.seller.job]}の${offer.seller.familyName}家）`
+      : '市場へ出ている荷車はありません';
+    $('#cart-panel').innerHTML = `
+      <h3>会社の木の荷車</h3>
+      <p>所有 ${carts.length}台・運搬中 ${working}台。荷車工房の世帯から会社資金で購入します。</p>
+      <p>${offerText}</p>
+      <div class="order-actions">
+        <button type="button" data-company-action="purchase-cart" ${offer ? '' : 'disabled'}>木の荷車を1台買う</button>
+      </div>`;
+    uiMetrics.domWrites += 1;
+  });
+}
+
 function renderCompanyOrder() {
   const offer = model.orderOffer;
   const active = model.activeOrder;
@@ -841,6 +870,7 @@ function renderCompanySheet() {
     || companyMouseInteraction || companyInteractionReleasePending || companyEditingInput) return;
   setTextIfChanged('#company-balance', formatNumber(toDenari(model.companyMoney)));
   renderAidPanel();
+  renderCartPanel();
   renderCompanyOrder();
   renderCompanyGoods();
   const ledger = model.companyLedger.slice(-24).reverse();
@@ -1196,6 +1226,9 @@ function renderBuildingSheet() {
   const status = building.fixed ? '会社の固定施設'
     : companyLogistics ? '会社の物流施設' : building.occupied ? '世帯が稼働中' : '空き区画';
   const road = !hasMarket ? '市場未設置' : connection?.connected ? '市場へ接続' : '市場へ未接続';
+  const cartwrightFact = building.type === 'cartwright'
+    ? `<div class="building-fact"><small>荷車</small><b>${building.cartStock.length}台 販売待ち${building.cartWork ? ` / 製作 ${Math.floor(building.cartWork.progress)}/${building.cartWork.required}日` : ''}</b></div>`
+    : '';
   $('#building-sheet-kicker').textContent = building.roles?.includes('port') ? '港湾物流'
     : building.roles?.includes('market') ? '市場物流'
       : building.roles?.includes('warehouse') ? '会社物流' : '職住一体の区画';
@@ -1204,7 +1237,8 @@ function renderBuildingSheet() {
     <div class="building-fact"><small>状態</small><b>${status}</b></div>
     <div class="building-fact"><small>道路</small><b>${road}</b></div>
     <div class="building-fact"><small>敷地</small><b>${building.width}×${building.height}区画</b></div>
-    <div class="building-fact"><small>座標 / 入口</small><b>${building.x},${building.y} / ${building.entrance ? `${building.entrance.x},${building.entrance.y}` : 'なし'}</b></div>`;
+    <div class="building-fact"><small>座標 / 入口</small><b>${building.x},${building.y} / ${building.entrance ? `${building.entrance.x},${building.entrance.y}` : 'なし'}</b></div>
+    ${cartwrightFact}`;
 
   const householdPanel = $('#building-household');
   householdPanel.hidden = !household;
@@ -1225,6 +1259,10 @@ function renderBuildingSheet() {
     ) ?? [];
     const growthPercent = growth?.requiredDays > 0
       ? Math.min(100, growth.upDays / growth.requiredDays * 100) : 100;
+    const cart = household.cart;
+    const cartMarkup = cart
+      ? `<p class="household-cart"><b>${cart.kind === 'iron' ? '鉄製荷車' : '木製荷車'}</b>を所有・耐久 ${Math.ceil(cart.durability)}/${cart.maxDurability}</p>`
+      : '<p class="household-cart">荷車なし・手運び</p>';
     const growthMarkup = growth ? `
       <div class="culture-growth" data-state="${missingKeep.length ? 'falling' : growth.nextSatisfied ? 'rising' : 'waiting'}">
         <b>${nextNeed ? `Lv${growth.level + 1}への成長` : '最高段階まで成長済み'}</b>
@@ -1244,6 +1282,7 @@ function renderBuildingSheet() {
         <span><small>生産倍率</small><b>${Math.round(household.productionMultiplier * 100)}%</b></span>
       </div>
       <p>家族: ${names}</p>
+      ${cartMarkup}
       <p>連続空腹 ${household.hungerRun}日・累計歩行 ${formatQuantity(household.walkingDistance)}区画・${household.marketTripActive ? `市場往復 ${household.marketTripTicks}時間ぶん` : '市場往復なし'}</p>
       <div class="satisfaction-list" aria-label="直近の暮らしの充足">${satisfaction}</div>
       ${growthMarkup}`;
@@ -1296,6 +1335,32 @@ function renderBuildingSheet() {
   }
   uiMetrics.domWrites += 1;
   return true;
+}
+
+function renderDevelopmentMap() {
+  const branches = developmentMapView(model);
+  const signature = JSON.stringify(branches.map(branch => (
+    branch.nodes.map(node => [node.id, node.state, node.count])
+  )));
+  renderIfChanged('development-map', signature, () => {
+    $('#development-map').innerHTML = branches.map(branch => `
+      <section class="development-branch" data-branch="${escapeHtml(branch.id)}">
+        <header>
+          <h3>${escapeHtml(branch.label)}</h3>
+          <p>${escapeHtml(branch.note)}</p>
+        </header>
+        <div class="development-path">
+          ${branch.nodes.map((node, index) => `
+            ${index ? '<i class="development-link" aria-hidden="true"></i>' : ''}
+            <article class="development-node" data-state="${node.state}">
+              <small>${node.state === 'active' ? (node.count > 0 ? `島内 ${node.count}軒` : '島の起点') : node.state === 'future' ? '将来案' : '建築可能'}</small>
+              <b>${escapeHtml(node.label)}</b>
+              <span>${escapeHtml(node.detail)}</span>
+            </article>`).join('')}
+        </div>
+      </section>`).join('');
+    uiMetrics.domWrites += 1;
+  });
 }
 
 function stockReleaseMarkerMarkup(rows) {
@@ -1493,6 +1558,7 @@ function openSheet(id) {
     const target = {
       'open-company': 'company-sheet', 'open-island': 'island-sheet',
       'open-building': 'building-sheet', 'open-events': 'event-sheet',
+      'open-development': 'development-sheet',
       'open-tutorial-letters': 'tutorial-letter-sheet',
     }[button.id];
     if (target) button.setAttribute('aria-pressed', String(target === id));
@@ -1500,6 +1566,7 @@ function openSheet(id) {
   if (id === 'building-sheet') renderBuildingSheet();
   if (id === 'company-sheet') renderCompanySheet();
   if (id === 'event-sheet') renderEventSheet();
+  if (id === 'development-sheet') renderDevelopmentMap();
   if (id === 'tutorial-letter-sheet') renderTutorialLetterSheet();
   if (id === 'island-sheet') renderIslandSheet();
 }
@@ -1521,6 +1588,7 @@ $('#open-building').addEventListener('click', () => {
   if (selectedBuildingId !== null) openSheet('building-sheet');
 });
 $('#open-events').addEventListener('click', () => openSheet('event-sheet'));
+$('#open-development').addEventListener('click', () => openSheet('development-sheet'));
 $('#open-tutorial-letters').addEventListener('click', () => openSheet('tutorial-letter-sheet'));
 $('#history-goods').addEventListener('change', renderEconomyCharts);
 document.querySelectorAll('[data-close-sheet]').forEach(button => {
@@ -1730,6 +1798,15 @@ companySheet.addEventListener('click', event => {
   }
   if (action === 'request-aid') {
     applyEngineOperation({ type: 'request_aid' }, '本国へ食料支援を要請しました', '本国は要請に応じません');
+    renderCompanySheet();
+    return;
+  }
+  if (action === 'purchase-cart') {
+    applyEngineOperation(
+      { type: 'purchase_company_cart' },
+      '会社の木の荷車を1台購入しました',
+      '購入できる木の荷車または会社資金がありません',
+    );
     renderCompanySheet();
     return;
   }
