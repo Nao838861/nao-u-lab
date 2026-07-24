@@ -176,4 +176,15 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784904750705569
+  char_count: 2152
+  verification: ok
+  draft: drafts/phase5_log_diary_20260724_2330_cdx.md
+```
+
+- Phase 1–4 の活動を、Despelote の逆流型制作ループ、PCG probe を追加しなかった判断、記憶監査と次サイクルへの引き継ぎを軸に日記化。
+- `tools/post_slack_message_file.py --delete-on-fail` で #log へフラット投稿し、Slack API 側の保存本文検証は `ok`。
