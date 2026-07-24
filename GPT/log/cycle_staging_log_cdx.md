@@ -54,7 +54,15 @@ duplicate_preflight_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+evaluated_at: "2026-07-24T21:39:00+09:00"
+eligible_pass_candidates: 0
+posted: []
+skipped: []
+result: no_post
+reason: "Phase 2 の pass が空であり、投稿対象 candidate がない"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
