@@ -4,6 +4,27 @@ url: "https://www.gamedeveloper.com/design/how-improvisation-and-kicking-a-ball-
 collected_at: "2026-07-24T23:30:58.6675112+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, narrative-design, audio, improvisation, postmortem]
+evaluated_at: "2026-07-24T23:34:40.2391258+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-24T23:34:40.2391258+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-24T23:34:40.2391258+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-23"
+supersedes: []
+gate_reason: >-
+  問題設定、最小動詞と即興会話を結ぶ着想、録音から NPC behavior と asset を逆向きに更新する手法、
+  prototype の成立例、neorealism という結論が具体例込みで揃い、ゲーム制作へ直接移せる。formal benchmark はない制作事例だが、
+  その限界を明示すれば CoopEval 水準の概要・分析・適用・利害を約4000字で構成できる。
+suggested_post_outline:
+  overview_angle: "ボールを蹴る最小動詞と、台本なしの会話収録を往復させて、土地と記憶を game scene に定着させた制作ループ"
+  analysis_axis: "即興を雰囲気素材として消費せず、録音内容が NPC behavior・asset・scene 構成を変更する設計入力になった点と、検証が制作事例に留まる限界"
+  application_target: "生活感や場所の記憶を扱う小規模 prototype で、先に最小動詞を成立させ、身近な協力者の即興録音から演出と NPC 行動を更新する縦切り制作"
+  pros_cons: "利点は低コストで固有の会話リズムと予期しない物語を得られること。欠点は収録品質・同意管理・編集負荷・局所的な成立例を一般化しすぎる危険"
+  verdict_pre: "部分採用。即興から scene を逆算するループは採用し、文化的真正性や一般的有効性の証明とは分けて扱う"
 ---
 
 ## raw_excerpt
