@@ -4,6 +4,26 @@ url: "https://futur-null.itch.io/informash/devlog/1509502/the-informash-post-mor
 collected_at: "2026-07-24T14:47:54.8478580+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [postmortem, metroidvania, scope-control, project-recovery, exploration, rpg]
+evaluated_at: "2026-07-24T14:52:35+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-24T14:52:35+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-24T14:52:35+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-23"
+supersedes: []
+gate_reason: |-
+  2022年のjam prototype、複数回の停止、hard deadlineとscope約70%化による完成までの因果を一次postmortemとして追え、成功と需要不足の自己評価も抽出できる。
+  必須能力の限定、障害への複数解、resource frictionという作品設計と、停滞projectをplayable completionへ戻す判断を接続でき、約4000字でも具体性を維持できる。
+suggested_post_outline:
+  overview_angle: "長期停止したjam prototypeを、追加開発ではなく期限・scope縮小・必須能力の限定で完成へ戻したsalvageの因果を、作品設計と開発史を往復して説明する"
+  analysis_axis: "完成を成功と同一視せず、作者の関心、player需要、探索の複数解、resource friction、削ったscopeの関係から、何を残した縮小だったかを評価する"
+  application_target: "停止中のgame prototypeで、核となる操作と必須進行能力を列挙し、複数解を残したままdeadline内で切れるchapter・system・contentを決めるsalvage reviewに使う"
+  pros_cons: "利点は抽象的なscope管理論ではなく、約70%化と二か月のfinish期間を作品構造に結び付けて読めること。欠点は単一作者の回顧で、工数内訳・player数・削除項目別の効果測定がないこと"
+  verdict_pre: "部分採用。停止projectにはまず必須能力・残す複数解・削除可能contentを分離し、hard deadlineから逆算する一回限りのsalvage reviewを適用する"
 ---
 
 ## raw_excerpt

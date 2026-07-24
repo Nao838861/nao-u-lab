@@ -11,7 +11,33 @@
 - duplicate preflight: 上記2件とも `continue`。Phase 1では品質判定・Slack投稿・記憶整理を行っていない。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260724_informash_long_project_salvage_postmortem.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260724_keling_offline_playtesting_marketing.md
+    reason: "対面playtestの観察は具体的だが、参加人数・session条件・比較手順・結果指標がなく、操作schemeとtutorial／習熟時間も未分離"
+stale_reviewed: []
+duplicate_preflight:
+  - path: memory/shared_reads_candidates/20260724_keling_offline_playtesting_marketing.md
+    decision: continue
+  - path: memory/shared_reads_candidates/20260724_informash_long_project_salvage_postmortem.md
+    decision: continue
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
