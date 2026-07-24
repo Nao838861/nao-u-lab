@@ -1,13 +1,14 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.22.0-building-levels';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.23.0-readability';
+import { perishableFreshness } from './food_readability.js?v=v004.23.0-readability';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.22.0-building-levels';
-import { analyzeRoadConnections } from './placement.js?v=v004.22.0-building-levels';
-import { compileRenderScene } from './render_scene.js?v=v004.22.0-building-levels';
+} from './engine_bridge.js?v=v004.23.0-readability';
+import { analyzeRoadConnections } from './placement.js?v=v004.23.0-readability';
+import { compileRenderScene } from './render_scene.js?v=v004.23.0-readability';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardSlots, yardStockRows,
-} from './visuals.js?v=v004.22.0-building-levels';
+} from './visuals.js?v=v004.23.0-readability';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
@@ -111,7 +112,8 @@ function householdStateSignals(household) {
     } : null,
     level > 0 && downDays >= P.DOWN_DAYS * 0.55 ? {
       kind: 'demotion',
-      severity: downDays >= P.DOWN_DAYS * 0.84 ? 'critical' : 'warning',
+      // 降格間際は重要だが死亡・離散ではない。点滅させず静的な警告に留める。
+      severity: 'warning',
       label: downDays >= P.DOWN_DAYS * 0.84 ? '段階低下間際' : '暮らしが後退',
     } : null,
   ].filter(Boolean);
@@ -449,7 +451,14 @@ export function snapshotToViewModel(snapshot) {
     building.yardSlots = yardSlots(building, building.yardStock);
   }
   const stalls = Object.entries(snapshot.economy.stalls).flatMap(([goods, rows]) => (
-    rows.map(stall => ({ goods, ...stall, visual: pileVisual(stall.qty, goods) }))
+    rows.map(stall => ({
+      goods,
+      ...stall,
+      visual: {
+        ...pileVisual(stall.qty, goods),
+        freshness: perishableFreshness(goods, stall.age),
+      },
+    }))
   ));
   const marketBuilding = buildings.find(building => building.type === 'market');
   const marketStallGroups = new Map();
@@ -460,6 +469,7 @@ export function snapshotToViewModel(snapshot) {
   const marketStalls = [...marketStallGroups.entries()].map(([householdId, items], index) => ({
     id: `stall:${householdId}`,
     householdId,
+    familyName: households.find(row => row.id === householdId)?.familyName ?? '',
     items,
     x: marketBuilding ? marketBuilding.x + 0.7 + (index % 4) * 1.05 : snapshot.economy.market.x,
     y: marketBuilding ? marketBuilding.y + 0.8 + (Math.floor(index / 4) % 4) * 1.0 : snapshot.economy.market.y,
@@ -594,6 +604,7 @@ export function snapshotToViewModel(snapshot) {
     companyMarketStockAverageCosts,
     companyReleasePrices,
     companyStockReleaseQuotes,
+    spoilTotal: snapshot.economy.spoil ?? 0,
     conversionEconomics,
     stockTargets: { ...snapshot.economy.stockTgt },
     mainlandAid: (() => {

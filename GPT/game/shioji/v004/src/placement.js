@@ -1,4 +1,4 @@
-import { BUILDING_SIZES } from './config.js?v=v004.22.0-building-levels';
+import { BUILDING_SIZES } from './config.js?v=v004.23.0-readability';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

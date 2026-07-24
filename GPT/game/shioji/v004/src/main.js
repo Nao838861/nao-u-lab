@@ -1,28 +1,35 @@
-import { IsometricCamera } from './camera.js?v=v004.22.0-building-levels';
-import { SimulationClock } from './clock.js?v=v004.22.0-building-levels';
+import { IsometricCamera } from './camera.js?v=v004.23.0-readability';
+import { SimulationClock } from './clock.js?v=v004.23.0-readability';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.22.0-building-levels';
+} from './config.js?v=v004.23.0-readability';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.22.0-building-levels';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.22.0-building-levels';
-import { developmentMapView } from './development_map.js?v=v004.22.0-building-levels';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.22.0-building-levels';
+} from './display_batch.js?v=v004.23.0-readability';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.23.0-readability';
+import { developmentMapView } from './development_map.js?v=v004.23.0-readability';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.23.0-readability';
+import {
+  FOOD_GOODS,
+  foodHudSummary,
+  householdFoodDays,
+  islandFoodSummary,
+  winterFoodForecast,
+} from './food_readability.js?v=v004.23.0-readability';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.22.0-building-levels';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.22.0-building-levels';
-import { WorldPresentation } from './presentation.js?v=v004.22.0-building-levels';
-import { Renderer } from './renderer.js?v=v004.22.0-building-levels';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.22.0-building-levels';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.22.0-building-levels';
+} from './keyboard.js?v=v004.23.0-readability';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.23.0-readability';
+import { WorldPresentation } from './presentation.js?v=v004.23.0-readability';
+import { Renderer } from './renderer.js?v=v004.23.0-readability';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.23.0-readability';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.23.0-readability';
 import {
-  guidanceReadingTimeMs, objectiveActionFor, secretaryEventsAfter, secretaryRouteFor,
-  tutorialHandoffFor,
-} from './ui_guidance.js?v=v004.22.0-building-levels';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.22.0-building-levels';
+  guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
+  secretaryRouteFor, tutorialHandoffFor,
+} from './ui_guidance.js?v=v004.23.0-readability';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.23.0-readability';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -85,7 +92,7 @@ const OPTIONAL_LETTER_MINIMUM_MS = 6500;
 const TUTORIAL_MESSAGE_MINIMUM_MS = 5800;
 const INFO_ADVICE_MINIMUM_MS = 5800;
 const IMPORTANT_EVENT_MINIMUM_MS = 6500;
-const CHART_FOOD_GOODS = new Set(['fish', 'veg', 'wheat', 'pres', 'pick', 'meat']);
+const CHART_FOOD_GOODS = new Set(FOOD_GOODS);
 const uiMetrics = {
   domUpdates: 0,
   domWrites: 0,
@@ -139,10 +146,6 @@ function setHiddenIfChanged(target, hidden) {
   return true;
 }
 
-function totalForGoods(rows, goodsSet) {
-  return rows.reduce((total, row) => goodsSet.has(row.goods) ? total + row.totalAmount : total, 0);
-}
-
 function recordEconomyHistory(currentModel) {
   const food = Object.entries(currentModel.flowEma).reduce((totals, [goods, flow]) => {
     if (!CHART_FOOD_GOODS.has(goods)) return totals;
@@ -151,15 +154,15 @@ function recordEconomyHistory(currentModel) {
     totals.consumed += flow.cons ?? 0;
     return totals;
   }, { imported: 0, produced: 0, consumed: 0 });
+  const foodSummary = islandFoodSummary(currentModel);
   const row = {
     day: currentModel.day,
     foodImported: food.imported,
     foodProduced: food.produced,
     foodConsumed: food.consumed,
-    foodStock: totalForGoods(currentModel.goodsManifest, CHART_FOOD_GOODS),
-    companyFoodStock: Object.entries(currentModel.companyStock).reduce(
-      (total, [goods, qty]) => CHART_FOOD_GOODS.has(goods) ? total + qty : total, 0,
-    ),
+    foodStock: foodSummary.available,
+    companyFoodStock: foodSummary.companyReserve,
+    foodRunwayDays: foodSummary.runwayDays,
     population: currentModel.population,
     cash: toDenari(currentModel.companyMoney),
     net: toDenari(
@@ -272,6 +275,14 @@ function renderHud() {
   const calendar = islandCalendar(model.day);
   setTextIfChanged('#season-value', calendar.label);
   setTextIfChanged('#population-value', `${formatNumber(model.population)}人`);
+  const foodHud = foodHudSummary(model, economyHistory);
+  setTextIfChanged('#food-days-value', `あと${Math.max(0, Math.floor(foodHud.runwayDays))}日分 ${foodHud.arrow}`);
+  setTextIfChanged('#food-reason', foodHud.reason);
+  renderIfChanged('hud-food-tone', foodHud.tone, () => {
+    $('#food-runway').dataset.tone = foodHud.tone;
+    $('#food-runway').title = `食料はあと約${foodHud.runwayDays.toFixed(1)}日分。${foodHud.reason}。押すと食料グラフを開きます`;
+    uiMetrics.domWrites += 1;
+  });
   const health = islandHealthSummary(model, economyHistory);
   const signal = $('#island-signal');
   const shortHealth = health.tone === 'danger' ? '危険'
@@ -1032,26 +1043,16 @@ function renderSecretary() {
   renderIfChanged('secretary', signature, () => {
     const panel = $('#secretary');
     const letterAction = $('#secretary-letter-action');
-    const canOpenLetter = currentSecretaryRoute.target?.kind === 'letter'
-      && currentSecretaryRoute.target.delivery === 'letter';
-    const canFollowTarget = canOpenLetter
-      || currentSecretaryRoute.target?.kind === 'advice'
-      || currentSecretaryRoute.target?.kind === 'event'
-      || ['building', 'building-detail', 'tool', 'sheet', 'speed', 'objective']
-        .includes(currentSecretaryRoute.target?.kind);
+    const secretaryAction = secretaryActionForRoute(currentSecretaryRoute);
+    const canFollowTarget = Boolean(secretaryAction);
     panel.dataset.secretaryPriority = currentSecretaryRoute.priority;
     panel.dataset.secretaryTier = currentSecretaryRoute.tier ?? 'notice';
     panel.classList.toggle('has-letter-action', canFollowTarget);
     setTextIfChanged('#secretary-speech',
       currentSecretaryRoute.speech ?? '島の様子を、引き続き見ていきましょう。');
     setHiddenIfChanged(letterAction, !canFollowTarget);
-    const targetLabel = currentSecretaryRoute.target?.kind === 'event'
-      ? 'この家を見る'
-      : currentSecretaryRoute.target?.kind === 'advice'
-        ? (currentSecretaryRoute.action ?? '該当場所を見る')
-        : currentSecretaryRoute.action ?? '書状を開く';
-    setTextIfChanged(letterAction, targetLabel);
-    letterAction.dataset.letterId = canOpenLetter ? currentSecretaryRoute.target.id : '';
+    setTextIfChanged(letterAction, secretaryAction?.label ?? '書状を開く');
+    letterAction.dataset.letterId = secretaryAction?.kind === 'letter' ? secretaryAction.id : '';
     if (!tutorialTransitionPending) {
       if (secretaryEnterTimer !== null) clearTimeout(secretaryEnterTimer);
       panel.classList.remove('guidance-entering');
@@ -1227,12 +1228,10 @@ function renderBuildingSheet() {
   const building = model.buildings.find(row => row.id === selectedBuildingId);
   if (!building) return false;
   const household = model.households.find(row => row.id === building.ownerHouseholdId) ?? null;
-  const connection = model.roadConnection?.buildings?.find(row => row.id === building.id);
   const selectedConversion = model.conversionEconomics.find(row => row.buildingId === building.id) ?? null;
   const signature = JSON.stringify({
     building,
     household,
-    connection,
     conversion: selectedConversion,
     companyStock: building.roles?.includes('warehouse') ? model.companyStock : null,
     companyCosts: building.roles?.includes('warehouse') ? model.companyStockAverageCosts : null,
@@ -1243,88 +1242,98 @@ function renderBuildingSheet() {
   }
   renderSignatures.set('building-sheet', signature);
   uiMetrics.componentRenders += 1;
-  const hasMarket = model.buildings.some(row => row.roles?.includes('market'));
-  const companyLogistics = building.roles?.some(role => role === 'market' || role === 'warehouse');
-  const status = building.fixed ? '会社の固定施設'
-    : companyLogistics ? '会社の物流施設' : building.occupied ? '世帯が稼働中' : '空き区画';
-  const road = !hasMarket ? '市場未設置' : connection?.connected ? '市場へ接続' : '市場へ未接続';
-  const cartwrightFact = building.type === 'cartwright'
-    ? `<div class="building-fact"><small>荷車</small><b>${building.cartStock.length}台 販売待ち${building.cartWork ? ` / 製作 ${Math.floor(building.cartWork.progress)}/${building.cartWork.required}日` : ''}</b></div>`
-    : '';
-  $('#building-sheet-kicker').textContent = building.roles?.includes('port') ? '港湾物流'
-    : building.roles?.includes('market') ? '市場物流'
-      : building.roles?.includes('warehouse') ? '会社物流' : '職住一体の区画';
-  $('#building-sheet-title').textContent = JOB_LABELS[building.type] ?? building.type;
-  $('#building-summary').innerHTML = `
-    <div class="building-fact"><small>状態</small><b>${status}</b></div>
-    <div class="building-fact"><small>道路</small><b>${road}</b></div>
-    <div class="building-fact"><small>敷地</small><b>${building.width}×${building.height}区画</b></div>
-    <div class="building-fact"><small>座標 / 入口</small><b>${building.x},${building.y} / ${building.entrance ? `${building.entrance.x},${building.entrance.y}` : 'なし'}</b></div>
-    ${cartwrightFact}`;
-
+  const jobLabel = JOB_LABELS[building.type] ?? building.type;
+  const family = household?.familyName ? `${household.familyName}家` : household ? `世帯${household.id}` : null;
+  $('#building-sheet-kicker').textContent = household
+    ? `${family}・${household.members}人`
+    : building.roles?.includes('port') ? '港湾物流'
+      : building.roles?.includes('market') ? '市場物流'
+        : building.roles?.includes('warehouse') ? '会社物流' : '無人の仕事場';
+  $('#building-sheet-title').textContent = household
+    ? `${jobLabel}の${family} Lv${household.displayCultureLevel}`
+    : jobLabel;
   const householdPanel = $('#building-household');
   householdPanel.hidden = !household;
   if (household) {
-    const family = household.familyName ? `${escapeHtml(household.familyName)}家` : `世帯#${household.id}`;
-    const names = household.memberNames.length ? household.memberNames.map(escapeHtml).join('、') : '名前の記録なし';
+    const foodDays = householdFoodDays(household);
     const purse = household.purse === null ? '未観測' : `${formatQuantity(household.purse * 10)}デナリ`;
     const income = `${household.recentIncome >= 0 ? '+' : ''}${formatQuantity(household.recentIncome * 10)}デナリ`;
-    const satisfaction = household.satisfaction
-      ? Object.entries(household.satisfaction).map(([key, met]) => (
-        `<span class="${met ? 'met' : ''}">${escapeHtml(SATISFACTION_LABELS[key] ?? GOODS_LABELS[key] ?? key)}</span>`
-      )).join('') : '<span>未観測</span>';
     const growth = household.cultureGrowth;
     const nextNeed = growth?.nextRequirement
       ? (SATISFACTION_LABELS[growth.nextRequirement] ?? growth.nextRequirement) : null;
     const missingKeep = growth?.missingForCurrent?.map(
       key => SATISFACTION_LABELS[key] ?? key,
     ) ?? [];
-    const growthPercent = growth?.requiredDays > 0
-      ? Math.min(100, growth.upDays / growth.requiredDays * 100) : 100;
-    const growthTitle = !nextNeed ? '最高段階まで成長済み'
-      : growth.nextDisplayLevel > growth.displayLevel
-        ? `Lv${growth.nextDisplayLevel}への成長`
-        : `Lv${growth.displayLevel}の暮らしを深める`;
-    const cart = household.cart;
-    const cartMarkup = cart
-      ? `<p class="household-cart"><b>${cart.kind === 'iron' ? '鉄製荷車' : '木製荷車'}</b>を所有・耐久 ${Math.ceil(cart.durability)}/${cart.maxDurability}</p>`
-      : '<p class="household-cart">荷車なし・手運び</p>';
-    const growthMarkup = growth ? `
-      <div class="culture-growth" data-state="${missingKeep.length ? 'falling' : growth.nextSatisfied ? 'rising' : 'waiting'}">
-        <b>${growthTitle}</b>
-        ${nextNeed ? `<span>次に必要: ${escapeHtml(nextNeed)}（今日は${growth.nextSatisfied ? '満たしています' : '不足'}）</span>
-          <i><i style="width:${growthPercent.toFixed(1)}%"></i></i>
-          <small>${growth.upDays}/${growth.requiredDays}日。必要な暮らしが続くと建物も成長します。不足日は進みが3日ぶん戻ります。</small>` : ''}
-        ${missingKeep.length ? `<small class="culture-danger">現在Lvの維持に不足: ${escapeHtml(missingKeep.join('・'))}。不足が${growth.downgradeDays}日続くとLvが下がります（現在${growth.downDays}日）。</small>` : ''}
-      </div>` : '';
-    householdPanel.innerHTML = `
-      <h3>${family}・${household.members}人</h3>
-      <div class="household-vitals">
-        <span><small>現在</small><b>${escapeHtml(HOUSEHOLD_STATE_LABELS[household.state] ?? household.state)}</b></span>
-        <span><small>財布</small><b>${purse}</b></span>
-        <span><small>直近日収</small><b>${income}</b></span>
-        <span><small>文化</small><b>Lv${household.displayCultureLevel}</b></span>
-        <span><small>空腹</small><b>${household.hungerWindow ? `${household.hungerDays}/${household.hungerWindow}日` : '記録なし'}</b></span>
-        <span><small>生産倍率</small><b>${Math.round(household.productionMultiplier * 100)}%</b></span>
+    const growthRatio = growth?.requiredDays > 0 ? growth.upDays / growth.requiredDays : 1;
+    const filledMarks = nextNeed ? Math.max(0, Math.min(3, Math.floor(growthRatio * 3))) : 3;
+    const marks = `${'◆'.repeat(filledMarks)}${'◇'.repeat(3 - filledMarks)}`;
+    const headline = household.hungerRun >= 10 || foodDays < 7
+      ? `⚠ 食料があと${Math.max(0, Math.floor(foodDays))}日分`
+      : !household.roadConnected ? '⚠ 市場へ道がつながっていません'
+        : household.insolvencyMonths >= 3 ? '⚠ 暮らしの資金が続いていません'
+          : missingKeep.length ? `⚠ ${missingKeep[0]}が足りず、今の暮らしを保てません`
+            : '順調';
+    const headlineTone = headline.startsWith('⚠') ? 'warning' : 'good';
+    $('#building-summary').innerHTML = `
+      <div class="building-health" data-tone="${headlineTone}">${escapeHtml(headline)}</div>`;
+    const outputRows = building.shelves.filter(row => row.section === 'output' && row.amount > 1e-9);
+    const outputNow = outputRows.length
+      ? outputRows.map(row => `${GOODS_LABELS[row.goods] ?? row.goods} ${formatQuantity(row.amount)}荷`).join('・')
+      : '製品棚は空';
+    const conversionMarkup = selectedConversion ? `
+      <div class="conversion-chain">
+        <span><small>原料棚</small><b>${escapeHtml(GOODS_LABELS[selectedConversion.inputGoods] ?? selectedConversion.inputGoods)} ${formatQuantity(selectedConversion.inputAmount)}荷</b></span>
+        <b>→</b>
+        <span><small>製品棚</small><b>${escapeHtml(GOODS_LABELS[selectedConversion.goods] ?? selectedConversion.goods)} ${formatQuantity(selectedConversion.outputAmount)}荷</b></span>
       </div>
-      <p>家族: ${names}</p>
-      ${cartMarkup}
-      <p>連続空腹 ${household.hungerRun}日・累計歩行 ${formatQuantity(household.walkingDistance)}区画・${household.marketTripActive ? `市場往復 ${household.marketTripTicks}時間ぶん` : '市場往復なし'}</p>
-      <div class="satisfaction-list" aria-label="直近の暮らしの充足">${satisfaction}</div>
-      ${growthMarkup}`;
+      <small>1日あたり（30日ならし）${formatQuantity(selectedConversion.productionEma)}荷・実原価 ${formatQuantity(selectedConversion.cost * 10)}デナリ/荷</small>` : '';
+    householdPanel.innerHTML = `
+      <div class="household-vitals" aria-label="家の数字">
+        <span><small>食料</small><b>あと${Math.max(0, Math.floor(foodDays))}日分</b></span>
+        <span><small>財布</small><b>${purse}</b></span>
+        <span><small>最近の収支</small><b>${income}</b></span>
+      </div>
+      <section class="next-living">
+        <h3>次の暮らし</h3>
+        ${nextNeed ? `<div class="living-requirement ${growth.nextSatisfied ? 'met' : 'missing'}"
+          title="${growth.upDays}/${growth.requiredDays}日。必要な暮らしが続くとLv${growth.nextDisplayLevel}になります">
+          <b>${escapeHtml(nextNeed)}</b><span aria-label="進み具合 ${growth.upDays}/${growth.requiredDays}日">${marks}</span>
+          <small>${growth.nextSatisfied ? '今日は満たしています' : '不足しています'}</small>
+        </div>` : '<p class="sheet-note">この家は最高の暮らしに達しています。</p>'}
+        ${missingKeep.length ? `<small class="living-danger">今のLvを保つには ${escapeHtml(missingKeep.join('・'))} が必要です。</small>` : ''}
+      </section>
+      <section class="job-now">
+        <h3>仕事のいま</h3>
+        <p><b>${escapeHtml(HOUSEHOLD_STATE_LABELS[household.state] ?? household.state)}</b>・働きやすさ ${Math.round(household.productionMultiplier * 100)}%</p>
+        <p>${escapeHtml(outputNow)}</p>
+        ${building.type === 'cartwright' ? `<p>販売待ちの荷車 ${building.cartStock.length}台${building.cartWork ? `・製作 ${Math.floor(building.cartWork.progress)}/${building.cartWork.required}日` : ''}</p>` : ''}
+        ${conversionMarkup}
+      </section>`;
+  } else {
+    const headline = building.vacant ? '⚠ 働く家族がいません' : '順調';
+    $('#building-summary').innerHTML = `
+      <div class="building-health" data-tone="${building.vacant ? 'warning' : 'good'}">${headline}</div>`;
   }
 
   const shelfPanel = $('#building-shelves');
   const boundedCapacity = row => Number.isFinite(row.capacity)
     && row.capacity > 0 && row.capacity < Number.MAX_SAFE_INTEGER / 2;
-  const shelves = building.shelves.filter(row => row.amount > 1e-9 || boundedCapacity(row));
-  shelfPanel.innerHTML = `<h3>区分棚</h3>${shelves.length ? `<div class="shelf-list">${shelves.map(row => {
+  const sectionNames = {
+    pantry: '家の食料庫', input: '原料棚', output: '製品棚', storage: '保管棚',
+    construction: '建築資材', inbound: '搬入待ち', outbound: '搬出待ち',
+    pickup: '引取待ち', stall: '市場の屋台', companyStock: '会社の倉庫',
+  };
+  const shelves = [
+    ...(household?.pantry ?? []),
+    ...building.shelves,
+  ].filter(row => row.amount > 1e-9 || boundedCapacity(row));
+  shelfPanel.innerHTML = `<h3>在庫</h3>${shelves.length ? `<div class="shelf-list">${shelves.map(row => {
     const bounded = boundedCapacity(row);
     const capacity = bounded ? ` / ${formatQuantity(row.capacity)}荷`
       : row.capacity > 0 ? '荷 / 上限なし' : '荷';
     const percent = bounded ? Math.min(100, Math.max(0, row.amount / row.capacity * 100)) : 0;
     const meter = bounded ? `<i class="shelf-meter"><i style="width:${percent}%"></i></i>` : '';
-    return `<div class="shelf-row"><small>${escapeHtml(SECTION_LABELS[row.section] ?? row.section)}</small><span>${escapeHtml(GOODS_LABELS[row.goods] ?? row.goods)}${meter}</span><b>${formatQuantity(row.amount)}${capacity}</b></div>`;
+    return `<div class="shelf-row"><small>${escapeHtml(sectionNames[row.section] ?? SECTION_LABELS[row.section] ?? row.section)}</small><span>${escapeHtml(GOODS_LABELS[row.goods] ?? row.goods)}${meter}</span><b>${formatQuantity(row.amount)}${capacity}</b></div>`;
   }).join('')}</div>` : '<p>棚に割り当てられた現物はありません。</p>'}`;
 
   const companyStockPanel = $('#building-company-stock');
@@ -1348,12 +1357,12 @@ function renderBuildingSheet() {
 
   const conversion = selectedConversion;
   const conversionPanel = $('#building-conversion');
-  conversionPanel.hidden = !conversion;
-  if (conversion) {
+  conversionPanel.hidden = !conversion || Boolean(household);
+  if (conversion && !household) {
     conversionPanel.innerHTML = `
       <h3>加工のつながり</h3>
       <div class="conversion-chain">
-        <span><small>投入棚</small><b>${escapeHtml(GOODS_LABELS[conversion.inputGoods] ?? conversion.inputGoods)} ${formatQuantity(conversion.inputAmount)}荷</b></span>
+        <span><small>原料棚</small><b>${escapeHtml(GOODS_LABELS[conversion.inputGoods] ?? conversion.inputGoods)} ${formatQuantity(conversion.inputAmount)}荷</b></span>
         <b>→</b>
         <span><small>産出棚</small><b>${escapeHtml(GOODS_LABELS[conversion.goods] ?? conversion.goods)} ${formatQuantity(conversion.outputAmount)}荷</b></span>
       </div>
@@ -1452,6 +1461,15 @@ function renderIslandFinance() {
     setTextIfChanged(net, `${finance.net >= 0 ? '+' : '−'}${formatQuantity(toDenari(Math.abs(finance.net)))} D`);
     net.classList.toggle('plus', finance.net >= 0);
     net.classList.toggle('minus', finance.net < 0);
+  });
+  const forecast = winterFoodForecast(model);
+  renderIfChanged('winter-forecast', JSON.stringify(forecast), () => {
+    setTextIfChanged('#winter-required', `必要 約${formatNumber(forecast.required)}荷`);
+    setTextIfChanged('#winter-reserve', `備え ${formatNumber(Math.floor(forecast.reserve))}荷`);
+    setTextIfChanged('#winter-shortage', forecast.sufficient
+      ? '足りています' : `← 不足 ${formatNumber(Math.ceil(forecast.shortage))}荷`);
+    $('#winter-forecast').dataset.tone = forecast.sufficient ? 'steady' : 'danger';
+    uiMetrics.domWrites += 1;
   });
 }
 
@@ -1610,6 +1628,12 @@ function closeSheet(id) {
 
 $('#open-company').addEventListener('click', () => openSheet('company-sheet'));
 $('#open-island').addEventListener('click', () => openSheet('island-sheet'));
+$('#food-runway').addEventListener('click', () => {
+  openSheet('island-sheet');
+  requestAnimationFrame(() => {
+    $('[data-chart="food-stock"]')?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  });
+});
 $('#open-building').addEventListener('click', () => {
   if (selectedBuildingId !== null) openSheet('building-sheet');
 });
@@ -1678,25 +1702,23 @@ $('#close-tutorial-letter').addEventListener('click', closeTutorialLetter);
 $('#continue-tutorial-letter').addEventListener('click', closeTutorialLetter);
 $('#tutorial-action').addEventListener('click', () => performGuidanceAction(currentTutorialAction));
 $('#secretary-letter-action').addEventListener('click', event => {
-  const target = currentSecretaryRoute?.target;
-  if (!target) return;
-  if (target.kind === 'letter') {
+  const action = secretaryActionForRoute(currentSecretaryRoute);
+  if (!action) return;
+  if (action.kind === 'letter') {
     const id = event.currentTarget.dataset.letterId;
     if (id) openTutorialLetter(id);
     return;
   }
-  if (target.kind === 'advice') {
-    guidanceDirector.markAdviceRead(target.id);
-    performGuidanceAction(target.route);
-  } else if (target.kind === 'event') {
+  if (action.kind === 'advice-building') {
+    guidanceDirector.markAdviceRead(action.adviceId);
+    performGuidanceAction(action.target);
+  } else if (action.kind === 'event') {
     lastDeliveredSecretaryEventSequence = Math.max(
       lastDeliveredSecretaryEventSequence,
-      Number(target.sequence ?? 0),
+      Number(action.sequence ?? 0),
     );
-    focusEvent(eventLog.find(row => row.sequence === target.sequence));
+    focusEvent(eventLog.find(row => row.sequence === action.sequence));
     renderSecretary();
-  } else {
-    performGuidanceAction(target);
   }
   renderSecretary();
 });

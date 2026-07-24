@@ -114,6 +114,25 @@ export function objectiveActionFor(objective, model) {
   return null;
 }
 
+export function secretaryActionForRoute(route) {
+  const target = route?.target ?? null;
+  if (target?.kind === 'letter' && target.delivery === 'letter') {
+    return Object.freeze({ kind: 'letter', id: target.id, label: route.action ?? '書状を開く' });
+  }
+  if (target?.kind === 'event') {
+    return Object.freeze({ kind: 'event', sequence: target.sequence, label: 'この家を見る' });
+  }
+  if (target?.kind === 'advice' && target.route?.kind === 'building-detail') {
+    return Object.freeze({
+      kind: 'advice-building',
+      adviceId: target.id,
+      target: target.route,
+      label: route.action ?? 'この家を見る',
+    });
+  }
+  return null;
+}
+
 export function secretaryRouteFor({
   letters = [], messages = [], advice = [], handoff = null, objective = null, objectiveAction = null,
   events = [], fallback = null,

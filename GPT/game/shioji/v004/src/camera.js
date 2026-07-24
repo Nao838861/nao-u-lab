@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.22.0-building-levels';
+import { TILE } from './config.js?v=v004.23.0-readability';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

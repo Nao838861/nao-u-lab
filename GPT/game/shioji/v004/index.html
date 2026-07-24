@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.22.0-building-levels">
+  <link rel="stylesheet" href="./style.css?v=v004.23.0-readability">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -20,6 +20,9 @@
       <small>資金</small><b id="funds-value">—</b>
     </div>
     <div class="hud-stat calendar-stat"><small>日付</small><b id="day-value">0日目</b><em id="season-value">冬・1月</em></div>
+    <button id="food-runway" class="hud-stat food-runway" type="button" data-tone="steady">
+      <small>島の食料</small><b id="food-days-value">あと—日分 →</b><em id="food-reason">集計中</em>
+    </button>
     <div class="hud-stat population-stat"><small>人口</small><b id="population-value">0人</b></div>
     <nav id="top-menu" class="top-menu" aria-label="情報ウインドウ">
       <button id="open-company" type="button">取引</button>
@@ -95,14 +98,14 @@
       <button type="button" data-close-sheet="building-sheet" aria-label="建物情報を閉じる">×</button>
     </header>
     <div id="building-summary" class="building-summary"></div>
-    <div class="building-sheet-actions">
-      <button id="focus-selected-building" class="focus-building" type="button">この建物を画面中央へ</button>
-      <button id="open-island-from-building" class="focus-building" type="button">島全体の現物を見る</button>
-    </div>
     <section id="building-household" class="building-detail"></section>
     <section id="building-shelves" class="building-detail"></section>
     <section id="building-company-stock" class="building-detail company-stock-detail" hidden></section>
     <section id="building-conversion" class="building-detail"></section>
+    <div class="building-sheet-actions">
+      <button id="focus-selected-building" class="focus-building" type="button">この建物を画面中央へ</button>
+      <button id="open-island-from-building" class="focus-building" type="button">島全体の現物を見る</button>
+    </div>
   </aside>
 
   <aside id="island-sheet" class="panel sheet island-sheet" hidden data-testid="island-sheet">
@@ -122,6 +125,11 @@
         <span><small>支出</small><b id="island-expense" class="minus">—</b></span>
         <span><small>差引</small><b id="island-net">—</b></span>
       </div>
+    </section>
+    <section id="winter-forecast" class="winter-forecast" data-tone="steady">
+      <h3>冬越しの見積もり</h3>
+      <p><b id="winter-required">必要 約—荷</b><span>／</span><b id="winter-reserve">備え —荷</b><strong id="winter-shortage">集計中</strong></p>
+      <small>3シードの実測から、冬の取り崩しを人口1人あたり約46荷で見積もります。</small>
     </section>
     <section class="island-history-section">
       <div class="history-heading">
@@ -290,7 +298,7 @@
       });
     })();
   </script>
-  <script id="game-module" type="module" src="./src/main.js?v=v004.22.0-building-levels"
+  <script id="game-module" type="module" src="./src/main.js?v=v004.23.0-readability"
     onerror="window.__SHIOJI_BOOT__?.failed()"></script>
 </body>
 </html>

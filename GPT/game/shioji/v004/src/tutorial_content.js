@@ -2,9 +2,17 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.22.0-building-levels';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.22.0-building-levels';
-import { displayCultureLevel } from './visuals.js?v=v004.22.0-building-levels';
+} from './engine_bridge.js?v=v004.23.0-readability';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.23.0-readability';
+import { displayCultureLevel } from './visuals.js?v=v004.23.0-readability';
+import {
+  PLAYER_FACING_BANNED_TERMS,
+  executableFoodIntervention,
+  islandFoodSummary,
+  winterFoodForecast,
+} from './food_readability.js?v=v004.23.0-readability';
+
+export { PLAYER_FACING_BANNED_TERMS };
 
 const LIVING_REQUIREMENT_LABELS = Object.freeze({
   food1: '食料1種', food2: '食料2種', food3: '食料3種', grain: '穀物',
@@ -211,14 +219,7 @@ export function estimateWalkLen(model, from, to) {
 }
 
 export function islandFoodRunwayDays(model) {
-  const pantryFood = model.households.reduce((total, household) => total
-    + (household.pantry ?? []).filter(row => FOOD_GOODS.includes(row.goods))
-      .reduce((sum, row) => sum + row.amount, 0), 0);
-  const stallFood = model.stalls
-    .filter(stall => FOOD_GOODS.includes(stall.goods))
-    .reduce((total, stall) => total + (stall.qty ?? 0), 0);
-  const total = pantryFood + stallFood + marketFoodShelfAmount(model);
-  return total / Math.max(1, model.population);
+  return islandFoodSummary(model).runwayDays;
 }
 
 function farHouseholdFromMarket(model) {
@@ -375,8 +376,8 @@ export const TUTORIAL_ELENA_MESSAGES = Object.freeze({
   'reduce-food-imports': '魚と野菜を作る家が働き続ければ、本国から買う食料は減っていきます。市場への道と食料の量を見守りましょう。',
   'close-second-chapter': '島で食料を作った結果を、書状で確かめましょう。本国へ払うお金がどう変わったかもまとめています。',
   'observe-seasonal-food-valley': '食料の量は季節で変わります。市場の食料が多い時と少ない時を見比べ、備える時期を覚えましょう。',
-  'set-seasonal-stock-target': '食料が多い季節のうちに、16荷を倉庫へ買い集めましょう。品薄になる季節へ残す備えです。',
-  'fill-seasonal-reserve': '買い上げた食料を、荷車が倉庫へ運びます。16荷が実際に積まれるまで見届けましょう。',
+  'set-seasonal-stock-target': '食料が多い季節のうちに、まず16荷を倉庫へ買い集めましょう。これは備蓄操作を覚える最初の一便です。冬全体の必要量は［統計］の予報で確かめられます。',
+  'fill-seasonal-reserve': '買い上げた食料を、荷車が倉庫へ運びます。最初の備え16荷が実際に積まれるまで見届けましょう。',
   'release-seasonal-reserve': '市場の食料が少なくなりました。倉庫に備えた16荷を市場へ戻し、家族が買えるようにしましょう。',
   'close-third-chapter': '倉庫へ備えた食料が、品薄の時にどう役立ったか、書状で振り返りましょう。',
   'assess-profitable-order': '本国が払う一荷あたりの代金と、市場で買う値段を比べましょう。差が残る注文だけを引き受けます。',
@@ -1370,7 +1371,7 @@ export const TUTORIAL_GOALS = Object.freeze([
           .includes(letter.id)
       )) ?? null;
       // 一日をまとめて進めると、倉庫へ着いた品が同じ観測内で港へ出て
-      // 在庫が再び0になる。瞬間在庫だけを条件にすると教程が永久停止するため、
+      // 在庫が再び0になる。瞬間在庫だけを条件にすると案内が永久停止するため、
       // 後続の船積み・完了記録も「調達を見届けた」確実な証拠として扱う。
       const finishedBetweenObservations = Boolean(facts) && !order
         && state?.completedGoals?.includes('order-procurement-target');
@@ -1924,7 +1925,7 @@ export const TUTORIAL_GOALS = Object.freeze([
   }),
 ]);
 
-// 創発を待つ観察課題は教程の進行を止めない。条件が実際に起きた時だけ
+// 創発を待つ観察課題は案内の進行を止めない。条件が実際に起きた時だけ
 // エレナの報告・助言として回収し、建設や設定など直接操作できる課題を背骨にする。
 export const TUTORIAL_OPTIONAL_GOAL_IDS = Object.freeze([
   'observe-island-food-change',
@@ -1949,7 +1950,7 @@ export function isRequiredTutorialGoal(goal) {
 }
 
 // 非必須の観察課題も、対応する章へ入るまでは評価しない。
-// 必須/任意と開始時期を分離し、未来章の出来事が教程を先回りするのを防ぐ。
+// 必須/任意と開始時期を分離し、未来章の出来事が案内を先回りするのを防ぐ。
 export const TUTORIAL_GOAL_START_AFTER = Object.freeze({
   'observe-island-food-change': 'close-first-chapter',
   'reduce-food-imports': 'close-first-chapter',
@@ -1979,6 +1980,54 @@ function adviceEventSequence(event) {
 }
 
 export const TUTORIAL_ADVICE = Object.freeze([
+  Object.freeze({
+    id: 'annual-autumn-food-forecast',
+    channel: 'message',
+    repeatAfterDays: 300,
+    evaluate({ model, previous = {} }) {
+      const day = Math.max(1, Math.floor(model.day ?? 1));
+      const month = (Math.floor((day - 1) / 30) % 12) + 1;
+      const year = Math.floor((day - 1) / 360) + 1;
+      const active = month === 9 && previous.announcedYear !== year;
+      const food = islandFoodSummary(model);
+      const forecast = winterFoodForecast(model);
+      const intervention = executableFoodIntervention(model);
+      return {
+        active,
+        completed: false,
+        evidence: active ? { announcedYear: year } : previous,
+        priority: 'info',
+        kicker: '秋の冬支度',
+        title: `冬までにあと${Math.ceil(forecast.shortage)}荷`,
+        detail: `いまの食料は約${Math.floor(food.runwayDays)}日分。冬越しの目安は${forecast.required}荷、島と会社の備えは${Math.floor(forecast.reserve)}荷です。`,
+        speech: forecast.sufficient
+          ? `冬が来ます。畑は休み、魚と蓄えで越します。いま食べられる分は約${Math.floor(food.runwayDays)}日分、冬越しの備えは足りています。`
+          : `冬が来ます。畑は休み、魚と蓄えで越します。いま食べられる分は約${Math.floor(food.runwayDays)}日分、冬越しにはあと${Math.ceil(forecast.shortage)}荷必要です。${intervention.speech}`,
+        target: null,
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'large-food-spoilage',
+    channel: 'message',
+    repeatAfterDays: 20,
+    evaluate({ model, previous = {} }) {
+      const current = Number(model.spoilTotal ?? 0);
+      const before = Number(previous.spoilTotal);
+      const lost = Number.isFinite(before) ? Math.max(0, current - before) : 0;
+      return {
+        active: lost >= 5,
+        completed: false,
+        evidence: { spoilTotal: current },
+        priority: 'info',
+        kicker: '食料の廃棄',
+        title: `食料が${Math.floor(lost)}荷傷みました`,
+        detail: '魚は約3日、野菜は約30日で傷みます。買い上げすぎず、売れる量を市場へ回す必要があります。',
+        speech: `食料が${Math.floor(lost)}荷傷みました。［統計］で魚と野菜の量を見て、余らせている品の買上げ目標を下げましょう。`,
+        target: { kind: 'sheet', sheet: 'island-sheet' },
+      };
+    },
+  }),
   Object.freeze({
     id: 'seasonal-release-opportunity',
     channel: 'advice',
@@ -2021,6 +2070,7 @@ export const TUTORIAL_ADVICE = Object.freeze([
       const family = household?.familyName ? `${household.familyName}家` : `世帯#${household?.id ?? '—'}`;
       const job = JOB_LABELS[household?.job] ?? household?.job ?? '住民';
       const subject = `${job}の${family}`;
+      const intervention = executableFoodIntervention(model);
       return {
         active: hungerRun >= 30,
         completed: false,
@@ -2028,8 +2078,8 @@ export const TUTORIAL_ADVICE = Object.freeze([
         priority: 'action',
         kicker: 'エレナの早期警告',
         title: `${subject}の食料が危険です`,
-        detail: `必要な食料を${hungerRun}日連続で食べられていません。60日に達すると家族が亡くなります。家の食料庫、市場への道、漁師・野菜畑を確認してください。`,
-        speech: `${subject}は食べ物を得られない日が続いています。食料庫と市場への道、漁師と野菜畑を確かめましょう。`,
+        detail: `必要な食料を${hungerRun}日連続で食べられていません。60日に達すると家族が亡くなります。${intervention.speech}`,
+        speech: `${subject}は食べ物を得られない日が続いています。${intervention.speech}`,
         target: building ? { kind: 'building-detail', buildingId: building.id } : { kind: 'sheet', sheet: 'island-sheet' },
       };
     },
@@ -2077,6 +2127,7 @@ export const TUTORIAL_ADVICE = Object.freeze([
       const happened = death?.message?.includes('離散')
         ? `${subject}が、島を出ていきました。`
         : `${subject}で、食べ物を得られず亡くなった方がいます。`;
+      const intervention = executableFoodIntervention(model);
       return {
         active: fresh,
         completed: false,
@@ -2088,7 +2139,7 @@ export const TUTORIAL_ADVICE = Object.freeze([
           ? `${death.message}。必要な食料を60日連続で食べられなかったためです。家の食料庫、市場への道、漁師・野菜畑を確認すると次の死を防げます。`
           : `${model.day}日目の人口変化です。統計で食料と暮らしを確認できます。`,
         speech: death
-          ? `${happened}食料が足りていません。市場に食べ物が届くよう、漁師か野菜畑を増やしましょう。`
+          ? `${happened}${intervention.speech}`
           : '',
         target: death?.sequence ? { kind: 'event', sequence: death.sequence } : null,
       };

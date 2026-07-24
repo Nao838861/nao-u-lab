@@ -101,6 +101,21 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
 .hud-stat b { display: block; margin-top: 3px; font-size: 16px; white-space: nowrap; }
 .calendar-stat em { display: block; margin-top: 1px; color: var(--gold); font-size: 10px; font-style: normal; white-space: nowrap; }
+.food-runway {
+  min-width: 142px;
+  border: 0;
+  border-right: 1px solid var(--line);
+  background: rgba(159,203,118,.055);
+  color: var(--cream);
+  text-align: left;
+  cursor: pointer;
+}
+.food-runway em { display: block; margin-top: 1px; color: var(--green); font-size: 9px; font-style: normal; white-space: nowrap; }
+.food-runway[data-tone="warning"] { background: rgba(229,182,91,.1); }
+.food-runway[data-tone="warning"] b, .food-runway[data-tone="warning"] em { color: var(--gold); }
+.food-runway[data-tone="danger"] { background: rgba(157,52,44,.32); box-shadow: inset 0 0 0 1px rgba(255,133,105,.42); }
+.food-runway[data-tone="danger"] b, .food-runway[data-tone="danger"] em { color: #ffb09a; }
+.food-runway:hover { background: rgba(159,203,118,.13); }
 .funds { min-width: 132px; }
 .funds b { font: 800 23px Georgia, serif; }
 
@@ -364,7 +379,9 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .tutorial-letter-row b { font: 700 12px Georgia, "Yu Mincho", serif; }
 .tutorial-letter-row small { color: var(--muted); font-size: 9px; }
 
-.building-summary { margin-top: 11px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.building-summary { margin-top: 11px; }
+.building-health { padding: 9px 11px; border: 1px solid rgba(159,203,118,.3); border-radius: 7px; background: rgba(159,203,118,.07); color: var(--green); font-weight: 800; font-size: 12px; }
+.building-health[data-tone="warning"] { border-color: rgba(239,140,119,.5); background: rgba(239,140,119,.1); color: #ffb09a; }
 .building-fact { min-width: 0; padding: 8px; border: 1px solid rgba(226,209,161,.11); border-radius: 6px; background: rgba(255,255,255,.025); }
 .building-fact small { display: block; color: var(--muted); font-size: 8px; }
 .building-fact b { display: block; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; }
@@ -378,6 +395,18 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .household-vitals span { display: grid; gap: 2px; padding: 6px; border-radius: 5px; background: rgba(255,255,255,.035); }
 .household-vitals small { color: var(--muted); font-size: 8px; }
 .household-vitals b { font-size: 9px; }
+.next-living, .job-now { margin-top: 12px; }
+.next-living h3, .job-now h3 { margin-bottom: 6px; }
+.living-requirement { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 3px 8px; align-items: center; padding: 9px 10px; border: 1px solid rgba(229,182,91,.3); border-radius: 7px; background: rgba(229,182,91,.06); }
+.living-requirement b { color: var(--gold); font-size: 13px; }
+.living-requirement > span { color: var(--gold); letter-spacing: .12em; font-size: 15px; }
+.living-requirement small { grid-column: 1 / -1; color: var(--muted); font-size: 9px; }
+.living-requirement.missing { border-color: rgba(239,140,119,.42); }
+.living-requirement.missing b, .living-requirement.missing small { color: #ffb09a; }
+.living-danger { display: block; margin-top: 5px; color: #ffb09a; font-size: 9px; }
+.job-now { padding: 9px 10px; border: 1px solid rgba(226,209,161,.12); border-radius: 7px; background: rgba(255,255,255,.025); }
+.job-now p { margin: 4px 0; color: var(--muted); font-size: 9px; line-height: 1.5; }
+.job-now p b { color: var(--cream); }
 .satisfaction-list { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; }
 .satisfaction-list span { padding: 3px 5px; border: 1px solid rgba(226,111,93,.28); border-radius: 999px; color: #d7a99a; font-size: 8px; }
 .satisfaction-list span.met { border-color: rgba(159,203,118,.35); color: var(--green); }
@@ -408,6 +437,15 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .island-health[data-tone="warning"] b { color: var(--gold); }
 .island-health[data-tone="danger"] { border-color: rgba(239,140,119,.55); background: rgba(239,140,119,.09); }
 .island-health[data-tone="danger"] b { color: #ef8c77; }
+.winter-forecast { margin-top: 12px; padding: 10px; border: 1px solid rgba(126,183,189,.32); border-radius: 7px; background: rgba(126,183,189,.06); }
+.winter-forecast h3 { margin: 0 0 7px; }
+.winter-forecast p { display: flex; flex-wrap: wrap; gap: 5px; align-items: baseline; margin: 0; }
+.winter-forecast p b { font-size: 11px; }
+.winter-forecast p span { color: var(--muted); }
+.winter-forecast strong { margin-left: auto; color: var(--green); font-size: 11px; }
+.winter-forecast > small { display: block; margin-top: 5px; color: var(--muted); font-size: 8px; line-height: 1.45; }
+.winter-forecast[data-tone="danger"] { border-color: rgba(239,140,119,.5); background: rgba(239,140,119,.08); }
+.winter-forecast[data-tone="danger"] strong { color: #ffb09a; }
 .island-finance { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 6px; }
 .island-finance span { min-width: 0; display: grid; gap: 3px; padding: 8px; border: 1px solid rgba(226,209,161,.12); border-radius: 6px; background: rgba(255,255,255,.03); }
 .island-finance small { color: var(--muted); font-size: 9px; }
@@ -579,11 +617,13 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   }
   .brand, .population-stat, .step-day { display: none; }
   .hud-stat { min-width: 68px; padding: 6px 7px; }
+  .food-runway { min-width: 86px; padding: 5px 6px; }
+  .food-runway em { max-width: 84px; overflow: hidden; font-size: 7px; text-overflow: ellipsis; }
   .funds { min-width: 112px; }
   .funds b { font-size: 17px; }
   .hud-stat b { font-size: 11px; }
   .speed { padding-left: 2px; }
-  .speed button { min-width: 32px; width: 32px; padding: 0; font-size: 9px; }
+  .speed button { min-width: 25px; width: 25px; padding: 0; font-size: 8px; }
   .observer {
     left: 7px;
     right: 7px;

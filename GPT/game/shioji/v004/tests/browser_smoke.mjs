@@ -536,10 +536,88 @@ async function checkBuildingLevelVisuals(width = 1440, height = 900, mobile = fa
   assert.deepEqual(observations[3].stages[2].tools, [2]);
   assert.deepEqual(observations[3].stages[3].tools, [4]);
   assert.deepEqual(observations[3].stages[4].tools, [6]);
-  assert.deepEqual(observations[3].stages[3].banners, [1]);
-  assert.deepEqual(observations[3].stages[4].banners, [2]);
+  assert.deepEqual(observations[3].stages[1].banners, [1]);
+  assert.deepEqual(observations[3].stages[2].banners, [2]);
+  assert.deepEqual(observations[3].stages[3].banners, [3]);
+  assert.deepEqual(observations[3].stages[4].banners, [4]);
   assert.deepEqual(observations[3].calls.slice(-2), ['world', 'overlay'],
     '危機・警告overlayを建物と人物より後に描く');
+  assert.deepEqual(page.errors, []);
+  await page.close();
+}
+
+async function checkReadabilityUi(width = 1440, height = 900, mobile = false) {
+  const page = await newPage(width, height, mobile);
+  const hud = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.setSpeed(0);
+    game.advanceTicks(60 * 30, { animate: false });
+    const food = document.querySelector('#food-runway');
+    const box = food.getBoundingClientRect();
+    return {
+      text: food.textContent,
+      tone: food.dataset.tone,
+      box: { left: box.left, right: box.right, top: box.top, bottom: box.bottom },
+    };
+  })()`);
+  assert.match(hud.text, /島の食料.*あと\d+日分 (?:→|↘|↘↘)/s);
+  assert.ok(['steady', 'warning', 'danger'].includes(hud.tone));
+  assert.ok(hud.box.left >= 0 && hud.box.right <= width, JSON.stringify(hud));
+  assert.ok(hud.box.top >= 0 && hud.box.bottom <= height, JSON.stringify(hud));
+
+  await page.evaluate("document.querySelector('#food-runway').click()");
+  await wait(200);
+  const island = await page.evaluate(`(() => {
+    const sheet = document.querySelector('#island-sheet');
+    const chart = document.querySelector('[data-chart="food-stock"]');
+    const box = sheet.getBoundingClientRect();
+    return {
+      hidden: sheet.hidden,
+      forecast: document.querySelector('#winter-forecast').textContent,
+      chartVisible: chart.getBoundingClientRect().top < box.bottom
+        && chart.getBoundingClientRect().bottom > box.top,
+      box: { left: box.left, right: box.right, top: box.top, bottom: box.bottom },
+    };
+  })()`);
+  assert.equal(island.hidden, false);
+  assert.match(island.forecast, /必要 約[\d,]+荷.*備え [\d,]+荷/s);
+  assert.equal(island.chartVisible, true, JSON.stringify(island));
+  await page.screenshot(`/tmp/shioji_v004_readability_island_${mobile ? 'mobile' : 'desktop'}.png`);
+
+  const building = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    document.querySelector('[data-close-sheet="island-sheet"]').click();
+    const buildingIds = new Set(game.model.households.map(row => row.buildingId));
+    const home = game.model.buildings.find(row => buildingIds.has(row.id));
+    game.selectBuilding(home);
+    const sheet = document.querySelector('#building-sheet');
+    const text = sheet.textContent;
+    const box = sheet.getBoundingClientRect();
+    const observer = document.querySelector('#observer').getBoundingClientRect();
+    return {
+      title: document.querySelector('#building-sheet-title').textContent,
+      health: document.querySelector('#building-summary').textContent,
+      text,
+      positions: ['食料', '財布', '最近の収支', '次の暮らし', '仕事のいま', '在庫']
+        .map(label => text.indexOf(label)),
+      box: { left: box.left, right: box.right, top: box.top, bottom: box.bottom },
+      observer: {
+        left: observer.left, right: observer.right,
+        top: observer.top, bottom: observer.bottom,
+      },
+    };
+  })()`);
+  assert.match(building.title, /の.+家 Lv\d+$/);
+  assert.match(building.health, /順調|⚠/);
+  assert.ok(building.positions.every(position => position >= 0), JSON.stringify(building));
+  assert.deepEqual([...building.positions].sort((a, b) => a - b), building.positions,
+    '建物シートは健康→数字→次の暮らし→仕事→在庫の順');
+  assert.doesNotMatch(building.text, /敷地|座標|入口/);
+  assert.ok(building.box.left >= 0 && building.box.right <= width, JSON.stringify(building));
+  assert.ok(building.box.top >= 0 && building.box.bottom <= height, JSON.stringify(building));
+  if (mobile) assert.ok(building.observer.bottom < building.box.top, JSON.stringify(building));
+  else assert.ok(building.observer.right < building.box.left, JSON.stringify(building));
+  await page.screenshot(`/tmp/shioji_v004_readability_building_${mobile ? 'mobile' : 'desktop'}.png`);
   assert.deepEqual(page.errors, []);
   await page.close();
 }
@@ -643,7 +721,7 @@ async function checkStartChoice(width, height, mobile, mode) {
       assert.ok(bounds.left >= 0 && bounds.right <= width, JSON.stringify(started));
       assert.ok(bounds.top >= 0 && bounds.bottom <= height, JSON.stringify(started));
     }
-    await wait(2050);
+    await wait(5600);
     const opened = await page.evaluate(`({
       letterVisible: !document.querySelector('#tutorial-letter-modal').hidden,
       letterText: document.querySelector('#tutorial-letter-modal').textContent,
@@ -901,8 +979,8 @@ async function checkTutorialLetterDelivery() {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.22.0-building-levels');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.22.0-building-levels');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.23.0-readability');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.23.0-readability');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -924,6 +1002,7 @@ async function checkViewport(width, height, mobile) {
       observer: rect(document.querySelector('#observer')),
       secretary: rect(document.querySelector('#secretary')),
       topMenu: rect(document.querySelector('#top-menu')),
+      foodRunway: rect(document.querySelector('#food-runway')),
       menuButtons: [...document.querySelectorAll('#top-menu button:not([hidden])')].map(rect),
       categories: [...document.querySelectorAll('[data-build-category]')].map(button => button.textContent),
       palette: [...document.querySelectorAll('[data-building-job]')].map(button => button.textContent),
@@ -935,11 +1014,12 @@ async function checkViewport(width, height, mobile) {
       hasEngineWindow: document.body.textContent.includes('エンジンの世界'),
       season: document.querySelector('#season-value').textContent,
       islandSignal: document.querySelector('#island-signal').textContent,
+      foodText: document.querySelector('#food-runway').textContent,
     };
   })()`);
   for (const bounds of [
     controlBounds.hud, controlBounds.speed, controlBounds.dock, controlBounds.observer, controlBounds.secretary,
-    controlBounds.topMenu, ...controlBounds.buttons, ...controlBounds.menuButtons,
+    controlBounds.topMenu, controlBounds.foodRunway, ...controlBounds.buttons, ...controlBounds.menuButtons,
   ]) {
     assert.ok(bounds.left >= 0 && bounds.right <= controlBounds.viewport.width, JSON.stringify(controlBounds));
     assert.ok(bounds.top >= 0 && bounds.bottom <= controlBounds.viewport.height, JSON.stringify(controlBounds));
@@ -955,6 +1035,7 @@ async function checkViewport(width, height, mobile) {
   assert.equal(controlBounds.hasEngineWindow, false);
   assert.match(controlBounds.season, /^(冬|春|夏|秋)・\d+月$/);
   assert.match(controlBounds.islandSignal, /^(平穏|成長|注意|危険)$/);
+  assert.match(controlBounds.foodText, /島の食料.*あと\d+日分 (?:→|↘|↘↘)/s);
 
   const cameraBefore = await page.evaluate(`({
     x: window.__SHIOJI_V004__.camera.panX,
@@ -1168,6 +1249,7 @@ async function checkViewport(width, height, mobile) {
         marketText: document.querySelector('#market-overview').textContent,
         financeText: document.querySelector('#island-finance').textContent,
         healthText: document.querySelector('#island-health').textContent,
+        winterText: document.querySelector('#winter-forecast').textContent,
         box: { left: box.left, right: box.right, top: box.top, bottom: box.bottom },
       };
     })()`);
@@ -1178,6 +1260,8 @@ async function checkViewport(width, height, mobile) {
     assert.match(island.marketText, /品目.*相場.*現物.*仕入\/日.*生産\/日.*消費\/日/s);
     assert.match(island.financeText, /現在資金.*入金.*支出.*差引/s);
     assert.match(island.healthText, /人口.*会社の30日差引/s);
+    assert.match(island.winterText,
+      /必要 約[\d,]+荷.*備え [\d,]+荷.*(?:不足|足りています)/s);
     assert.ok(island.box.left >= 0 && island.box.right <= width, JSON.stringify(island));
     assert.ok(island.box.top >= 0 && island.box.bottom <= height, JSON.stringify(island));
     await page.screenshot('/tmp/shioji_v004_island_sheet.png');
@@ -1206,12 +1290,14 @@ async function checkViewport(width, height, mobile) {
     })()`);
     assert.equal(warehouseDetail.hidden, false, JSON.stringify(warehouseDetail));
     assert.match(warehouseDetail.text, /会社の倉庫にある品.*本国注文.*市場へ出す/s);
-    assert.match(warehouseDetail.status, /会社の物流施設/);
+    assert.match(warehouseDetail.status, /順調/);
+    assert.doesNotMatch(warehouseDetail.status, /状態|道路|敷地|座標/);
 
     const buildingPoint = await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
+      const householdBuildings = new Set(game.model.households.map(row => row.buildingId));
       const buildings = [...game.displayModel.buildings]
-        .sort((left, right) => Number(right.occupied) - Number(left.occupied));
+        .filter(row => householdBuildings.has(row.id));
       for (const building of buildings) {
         const point = game.camera.project(
           building.x + building.width / 2,
@@ -1252,14 +1338,13 @@ async function checkViewport(width, height, mobile) {
     assert.equal(buildingSheet.selected, buildingPoint.id, JSON.stringify(buildingSheet));
     assert.equal(buildingSheet.rendererSelected, buildingPoint.id, JSON.stringify(buildingSheet));
     assert.equal(buildingSheet.hidden, false, JSON.stringify(buildingSheet));
-    assert.ok(buildingSheet.title.length > 0, JSON.stringify(buildingSheet));
-    assert.match(buildingSheet.summary, /状態.*道路.*敷地.*座標/s);
-    assert.match(buildingSheet.shelves, /区分棚/, JSON.stringify(buildingSheet));
-    if (buildingSheet.household.trim()) {
-      assert.match(buildingSheet.household, /Lv\d+への成長|最高段階まで成長済み/,
-        JSON.stringify(buildingSheet));
-      assert.match(buildingSheet.household, /必要.*日|成長済み/, JSON.stringify(buildingSheet));
-    }
+    assert.match(buildingSheet.title, /の.+家 Lv\d+$/, JSON.stringify(buildingSheet));
+    assert.match(buildingSheet.summary, /順調|⚠/);
+    assert.doesNotMatch(buildingSheet.summary, /状態|道路|敷地|座標/);
+    assert.match(buildingSheet.shelves, /在庫/, JSON.stringify(buildingSheet));
+    assert.match(buildingSheet.household,
+      /食料.*財布.*最近の収支.*次の暮らし.*(?:◆|◇).*仕事のいま/s,
+      JSON.stringify(buildingSheet));
     assert.equal(buildingSheet.journalLength, buildingPoint.journalLength, '建物選択はjournalを増やさない');
     assert.ok(buildingSheet.box.left >= 0 && buildingSheet.box.right <= width, JSON.stringify(buildingSheet));
     assert.ok(buildingSheet.box.top >= 0 && buildingSheet.box.bottom <= height, JSON.stringify(buildingSheet));
@@ -1500,7 +1585,9 @@ async function checkViewport(width, height, mobile) {
     const mobileBuilding = await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
       game.advanceTicks(60 * 30 - game.model.tick, { animate: false });
-      game.selectBuilding(game.model.buildings.find(building => building.occupied) ?? game.model.buildings[0]);
+      const householdBuildingIds = new Set(game.model.households.map(row => row.buildingId));
+      game.selectBuilding(game.model.buildings.find(building => householdBuildingIds.has(building.id))
+        ?? game.model.buildings[0]);
       const buildingBox = document.querySelector('#building-sheet').getBoundingClientRect();
       const observerBox = document.querySelector('#observer').getBoundingClientRect();
       const secretaryStyle = getComputedStyle(document.querySelector('#secretary'));
@@ -1525,7 +1612,9 @@ async function checkViewport(width, height, mobile) {
       JSON.stringify(mobileBuilding));
     assert.match(mobileBuilding.secretaryTheme.backgroundImage, /linear-gradient/);
     assert.equal(mobileBuilding.secretaryTheme.color, 'rgb(57, 45, 32)');
-    assert.match(mobileBuilding.text, /状態.*道路.*敷地.*座標/s);
+    assert.match(mobileBuilding.text,
+      /Lv\d+.*(?:順調|⚠).*食料.*財布.*最近の収支.*次の暮らし.*仕事のいま.*在庫/s);
+    assert.doesNotMatch(mobileBuilding.text, /状態.*道路|敷地|座標/);
     await page.screenshot('/tmp/shioji_v004_building_sheet_mobile.png');
     const mobileIsland = await page.evaluate(`(() => {
       document.querySelector('#open-island-from-building').click();
@@ -1603,6 +1692,10 @@ if (process.argv.includes('--company-pointer-only')) {
   await checkBuildingLevelVisuals();
   await checkBuildingLevelVisuals(390, 844, true);
   console.log('CHARTER ISLE v004 building levels smoke: PASS');
+} else if (process.argv.includes('--readability-only')) {
+  await checkReadabilityUi();
+  await checkReadabilityUi(390, 844, true);
+  console.log('CHARTER ISLE v004 readability smoke: PASS');
 } else {
   await checkBootFailureRecovery();
   await checkStartChoice(1440, 900, false, 'tutorial');

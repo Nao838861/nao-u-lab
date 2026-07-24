@@ -1,13 +1,22 @@
 import {
-  BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, SECTION_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.22.0-building-levels';
-import { islandCalendar } from './ui_summary.js?v=v004.22.0-building-levels';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.22.0-building-levels';
+  BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
+} from './config.js?v=v004.23.0-readability';
+import { islandCalendar } from './ui_summary.js?v=v004.23.0-readability';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.23.0-readability';
 import {
   buildingStructureLayout, pileVisual,
-} from './visuals.js?v=v004.22.0-building-levels';
+} from './visuals.js?v=v004.23.0-readability';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
+
+function freshnessArt(visual) {
+  const art = visual?.art;
+  const stage = visual?.freshness?.stage;
+  if (!art || !['aging', 'spoiling'].includes(stage)) return art;
+  return stage === 'spoiling'
+    ? { ...art, color: '#756b55', dark: '#443f35' }
+    : { ...art, color: '#9a8758', dark: '#665538' };
+}
 
 export class Renderer {
   constructor(canvas, camera) {
@@ -474,14 +483,16 @@ export class Renderer {
       if (!this.boundsVisible(building)) continue;
       const crisis = building.stateSignals.crisis;
       const point = this.camera.project(
-        building.x + building.width * 0.5,
-        building.y + building.height * 0.12,
+        building.x + building.width * 0.92,
+        building.y + building.height * 0.08,
         28,
       );
       const critical = crisis.severity === 'critical';
       const icon = crisis.kind === 'hunger' ? '🍽'
         : crisis.kind === 'demotion' ? '↓' : '!';
       ctx.save();
+      // 動く警告は死亡・離散間際だけ。中程度と降格間際は静止させる。
+      if (critical) ctx.globalAlpha = 0.72 + Math.sin(this.pulse * 5.2) * 0.22;
       ctx.fillStyle = critical ? 'rgba(126,31,28,.94)' : 'rgba(114,73,28,.92)';
       ctx.strokeStyle = critical ? '#ff9b7c' : '#f3c66a';
       ctx.lineWidth = Math.max(1.5, 2 * this.camera.zoom);
@@ -592,6 +603,15 @@ export class Renderer {
         dynamic: true,
       });
     }
+    for (const stall of model.marketStallVisuals ?? []) {
+      drawables.push({
+        kind: 'stall',
+        data: stall,
+        depth: stall.x + stall.y + 1.1,
+        bounds: { x: stall.x - 0.5, y: stall.y - 0.5, width: 1, height: 1 },
+        dynamic: true,
+      });
+    }
     for (const carrier of model.carriers) {
       drawables.push({
         kind: 'carrier',
@@ -643,6 +663,7 @@ export class Renderer {
       if (!drawable.dynamic && !this.boundsVisible(drawable.bounds)) continue;
       if (drawable.dynamic && drawable.bounds && !this.boundsVisible(drawable.bounds)) continue;
       if (!drawable.dynamic && drawable.kind === 'inventory' && model.inventoryVisuals) continue;
+      if (!drawable.dynamic && drawable.kind === 'stall' && model.marketStallVisuals) continue;
       if (drawable.dynamic) dynamicDrawn += 1;
       else staticDrawn += 1;
       if (drawable.kind === 'tree') this.drawTree(drawable.data);
@@ -762,7 +783,8 @@ export class Renderer {
       );
     }
     if (farm) {
-      ctx.strokeStyle = appearance.accent;
+      ctx.strokeStyle = this.season === '冬' ? '#b9c9bd'
+        : this.season === '秋' ? '#927449' : appearance.accent;
       ctx.lineWidth = Math.max(1, 1.2 * this.camera.zoom);
       const furrowCount = appearance.leveled
         ? Math.max(2, Math.min(5, appearance.tier + 1)) : 4;
@@ -774,6 +796,17 @@ export class Renderer {
         ctx.moveTo(from.x, from.y);
         ctx.lineTo(to.x, to.y);
         ctx.stroke();
+      }
+      if (this.season === '冬') {
+        this.footprint(
+          building.x + 0.18,
+          building.y + 0.18,
+          building.width - 0.36,
+          building.height - 0.36,
+          'rgba(224,235,226,.34)',
+          'rgba(230,241,235,.36)',
+          1,
+        );
       }
     }
     if (appearance.structureVisible) {
@@ -919,11 +952,11 @@ export class Renderer {
     }
     for (let index = 0; index < appearance.bannerCount; index += 1) {
       const anchor = this.camera.project(
-        structure.x + structure.width * (0.22 + index * 0.5),
-        structure.y + structure.height * 0.18,
-        appearance.elevation + 7,
+        building.x + building.width * 0.13 + index * 0.14,
+        building.y + building.height * 0.22,
+        Math.max(10, appearance.elevation + 4),
       );
-      const poleHeight = (15 + appearance.tier * 2) * scale;
+      const poleHeight = (12 + appearance.tier) * scale;
       ctx.strokeStyle = '#4d3826';
       ctx.lineWidth = Math.max(1, 1.2 * scale);
       ctx.beginPath();
@@ -933,8 +966,8 @@ export class Renderer {
       ctx.fillStyle = index % 2 ? '#e0b85a' : appearance.accent;
       ctx.beginPath();
       ctx.moveTo(anchor.x, anchor.y - poleHeight);
-      ctx.lineTo(anchor.x + 10 * scale, anchor.y - poleHeight + 4 * scale);
-      ctx.lineTo(anchor.x, anchor.y - poleHeight + 8 * scale);
+      ctx.lineTo(anchor.x + 7 * scale, anchor.y - poleHeight + 3 * scale);
+      ctx.lineTo(anchor.x, anchor.y - poleHeight + 6 * scale);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
@@ -1147,9 +1180,9 @@ export class Renderer {
         y: point.y - layer * 4.4 * scale - (column % 2) * 1.1 * scale,
       });
     }
-    this.drawGoodsPileSprites(row.visual.art, positions, scale * spriteScale, count <= 12);
+    this.drawGoodsPileSprites(freshnessArt(row.visual), positions, scale * spriteScale, count <= 12);
     if (scale >= 1.16 || ownerId === this.selectedBuildingId) {
-      const text = `${SECTION_LABELS[row.section] ?? row.section}${row.visual.label}`;
+      const text = `${GOODS_LABELS[row.goods] ?? row.goods} ${row.visual.label}荷`;
       ctx.font = `700 ${Math.max(7, 8 * scale)}px ui-sans-serif`;
       ctx.textAlign = 'center';
       ctx.lineWidth = 3;
@@ -1260,14 +1293,26 @@ export class Renderer {
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
-    if (primary) this.drawGoodsSprite(primary.visual.art, point.x, point.y, scale * 0.65);
+    if (primary) {
+      const count = Math.max(1, Math.min(5, primary.visual.spriteCount));
+      for (let index = 0; index < count; index += 1) {
+        this.drawGoodsSprite(
+          freshnessArt(primary.visual),
+          point.x + (index - (count - 1) / 2) * 4.2 * scale,
+          point.y - (index % 2) * 2 * scale,
+          scale * 0.48,
+        );
+      }
+    }
     if (scale >= 1.02 || this.selectedBuildingId !== null) {
       ctx.font = `700 ${Math.max(8, 8.5 * scale)}px ui-sans-serif`;
       ctx.textAlign = 'center';
       ctx.lineWidth = 3;
       ctx.strokeStyle = '#253331';
       ctx.fillStyle = '#f1e4c2';
-      const label = `#${stall.householdId} ${Math.round(stall.totalAmount * 10) / 10}`;
+      const label = primary
+        ? `${GOODS_LABELS[primary.goods] ?? primary.goods} ${Math.round(stall.totalAmount * 10) / 10}荷`
+        : '品切れ';
       ctx.strokeText(label, point.x, point.y + 11 * scale);
       ctx.fillText(label, point.x, point.y + 11 * scale);
     }

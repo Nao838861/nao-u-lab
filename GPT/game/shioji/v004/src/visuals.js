@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.22.0-building-levels';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.23.0-readability';
 
 export const MAX_PILE_SPRITES = 24;
 export const MAX_YARD_GOODS = 6;
@@ -163,7 +163,8 @@ export function buildingAppearance(building) {
       : tier === 2 ? 1 : tier === 3 ? 2 : tier >= 4 ? 3 : 0,
     stoneBase: leveled && !building.vacant && tier >= 4,
     toolCount: !leveled ? 2 : building.vacant ? 1 : [0, 1, 2, 4, 6][tier],
-    bannerCount: leveled && !building.vacant ? Math.max(0, tier - 2) : 0,
+    // 外観だけではLv1（空き地＋道具）を見落としやすいため、1始まりの旗も必ず併記する。
+    bannerCount: leveled && !building.vacant ? tier : 0,
     gardenCount: leveled && !building.vacant ? Math.max(0, tier - 2) : 0,
     abandoned: Boolean(building.vacant),
     fallback: !BUILDING_ART[building.type],

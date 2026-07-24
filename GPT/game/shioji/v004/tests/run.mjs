@@ -22,6 +22,10 @@ import {
   EVENT_DISPLAY_POLICY, OBSERVED_EVENT_TYPES, hasEventPresentation, presentEvent,
   shouldPresentEvent,
 } from '../src/event_view.js';
+import {
+  PLAYER_FACING_BANNED_TERMS, WINTER_RESERVE_PER_PERSON, executableFoodIntervention,
+  foodHudSummary, islandFoodSummary, perishableFreshness, winterFoodForecast,
+} from '../src/food_readability.js';
 import { movementVector, panCameraFromKeys, shouldIgnoreShortcut } from '../src/keyboard.js';
 import {
   analyzeRoadConnections, previewBuildingPlacement, previewRoadPlacement,
@@ -49,8 +53,8 @@ import {
   TutorialDirector, createTutorialDirector, createTutorialDirectorForMode,
 } from '../src/tutorial_director.js';
 import {
-  GUIDANCE_TIERS, guidanceReadingTimeMs, objectiveActionFor, secretaryRouteFor,
-  secretaryEventsAfter, tutorialHandoffFor,
+  GUIDANCE_TIERS, guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute,
+  secretaryRouteFor, secretaryEventsAfter, tutorialHandoffFor,
 } from '../src/ui_guidance.js';
 import { islandCalendar, islandHealthSummary, recentCompanySummary } from '../src/ui_summary.js';
 import { snapshotToViewModel } from '../src/view_model.js';
@@ -254,6 +258,17 @@ test('教程T/U: 全目標をエレナ概要と一意なsystem操作へ分け、
   assert.doesNotMatch(contentSource,
     /相場EMA|生産EMA|input棚|教程は|教程の必達条件|教程を止め/,
     'Mir検査で見つかったプレイヤー向け内部語を発話・書状の原文へ戻さない');
+  const canonicalPlayerText = JSON.stringify({
+    titles: TUTORIAL_PLAYER_TITLES,
+    instructions: TUTORIAL_SYSTEM_INSTRUCTIONS,
+    messages: TUTORIAL_ELENA_MESSAGES,
+    completions: TUTORIAL_ELENA_COMPLETIONS,
+    letters: TUTORIAL_LETTER_MESSAGES,
+  });
+  for (const term of PLAYER_FACING_BANNED_TERMS) {
+    assert.equal(canonicalPlayerText.includes(term), false,
+      `プレイヤー向けcanonへ内部語「${term}」を戻さない`);
+  }
 });
 
 test('教程V〜Y: 創発待ちは進行を止めず、注文残量と適時アドバイスを別層で扱う', () => {
@@ -327,6 +342,116 @@ test('教程V〜Y: 創発待ちは進行を止めず、注文残量と適時ア�
     { type: 'departure', carrier: 'cart', goods: 'wheat', qty: 8, haulJobId: 4 },
   ]);
   assert.equal(seasonal.advice()[0].completed, true, '実市場へ出すで助言完了');
+});
+
+test('可読性B: 食料日数・冬予報・鮮度・実行可能な打ち手を状態だけから決める', () => {
+  const foodModel = {
+    day: 241,
+    population: 4,
+    households: [
+      { members: 2, pantry: [{ goods: 'fish', amount: 8 }, { goods: 'tools', amount: 99 }] },
+      { members: 2, pantry: [{ goods: 'wheat', amount: 12 }] },
+    ],
+    stalls: [{ goods: 'veg', qty: 8 }],
+    companyMarketStock: { wheat: 4 },
+    companyStock: { wheat: 20 },
+    stockTargets: {},
+    mainlandAid: { refused: false },
+    buildings: [],
+    flowEma: { fish: { prod: 1, cons: 2 } },
+  };
+  const summary = islandFoodSummary(foodModel);
+  assert.deepEqual(
+    [summary.available, summary.companyReserve, summary.runwayDays],
+    [32, 20, 8],
+  );
+  const hud = foodHudSummary(foodModel, [{ day: 234, foodRunwayDays: 12 }]);
+  assert.equal(hud.arrow, '↘↘');
+  assert.equal(hud.tone, 'warning');
+  const forecast = winterFoodForecast(foodModel);
+  assert.equal(forecast.required, 4 * WINTER_RESERVE_PER_PERSON);
+  assert.equal(forecast.reserve, 52);
+  assert.equal(forecast.shortage, forecast.required - 52);
+  assert.equal(perishableFreshness('fish', 0).stage, 'fresh');
+  assert.equal(perishableFreshness('fish', 2).stage, 'aging');
+  assert.equal(perishableFreshness('fish', 3).stage, 'spoiling');
+  assert.equal(perishableFreshness('wheat', 99).stage, 'stable',
+    '実際に日次腐敗する魚・野菜だけを鮮度表示する');
+  assert.equal(executableFoodIntervention(foodModel).kind, 'release');
+  assert.equal(executableFoodIntervention({
+    ...foodModel, companyStock: {}, mainlandAid: { refused: false },
+  }).kind, 'aid');
+  assert.equal(executableFoodIntervention({
+    ...foodModel, companyStock: {}, mainlandAid: { refused: true },
+  }).kind, 'target');
+
+  const api = createEngineApi(buildBaseCity(11));
+  api.advanceDays(2);
+  const full = api.snapshot();
+  const view = snapshotToViewModel(api.snapshot({ scope: 'view' }));
+  assert.equal(
+    view.spoilTotal,
+    Object.values(full.economy.led.spoil).reduce((total, amount) => total + amount, 0),
+    '表示snapshotへ腐敗累計だけを加え、経済状態は読み取り専用に保つ');
+});
+
+test('可読性B: エレナの秋予告は毎年一度、大量廃棄だけを一言にする', () => {
+  const director = new TutorialDirector({ goals: [], letters: [] });
+  const model = day => ({
+    day,
+    tick: day * 30,
+    population: 4,
+    households: [{ members: 4, pantry: [{ goods: 'wheat', amount: 40 }] }],
+    stalls: [],
+    companyMarketStock: {},
+    companyStock: {},
+    stockTargets: {},
+    mainlandAid: { refused: false },
+    buildings: [],
+    flowEma: {},
+    spoilTotal: 0,
+  });
+  director.observe(model(241), []);
+  const first = director.advice().find(row => row.id === 'annual-autumn-food-forecast');
+  assert.match(first.speech, /冬が来ます.*約10日分/s);
+  director.markAdviceRead(first.id);
+  director.observe(model(250), []);
+  assert.equal(director.advice().find(row => row.id === first.id).repeatCount, 1);
+  director.observe(model(601), []);
+  assert.equal(director.advice().find(row => row.id === first.id).repeatCount, 2);
+
+  director.observe({ ...model(602), spoilTotal: 3 }, []);
+  assert.equal(director.advice().some(row => row.id === 'large-food-spoilage'), false);
+  director.observe({ ...model(603), spoilTotal: 9 }, []);
+  assert.match(
+    director.advice().find(row => row.id === 'large-food-spoilage').speech,
+    /6荷傷みました/,
+  );
+});
+
+test('可読性B: エレナのボタンは書状・家ジャンプだけ、操作はシステム側に残す', () => {
+  const optionalLetter = {
+    action: '書状を開く',
+    target: { kind: 'letter', id: 'report', delivery: 'letter' },
+  };
+  assert.equal(secretaryActionForRoute(optionalLetter).kind, 'letter');
+  assert.equal(secretaryActionForRoute({
+    target: { kind: 'event', sequence: 9 },
+  }).kind, 'event');
+  assert.equal(secretaryActionForRoute({
+    target: {
+      kind: 'advice', id: 'hungry',
+      route: { kind: 'building-detail', buildingId: 8 },
+    },
+  }).kind, 'advice-building');
+  for (const target of [
+    { kind: 'sheet', sheet: 'company-sheet' },
+    { kind: 'tool', tool: 'road' },
+    { kind: 'building', job: 'logger' },
+    { kind: 'speed', speed: 3 },
+  ]) {
+    assert.equal(secretaryActionForRoute({ target }), null);
+  }
 });
 
 test('教程AA: 未来章をロックし、重要度に応じて強制書状・任意書状・一言を分ける', () => {
@@ -2021,7 +2146,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.22.0-building-levels');
+  assert.equal(VERSION, 'v004.23.0-readability');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2637,12 +2762,14 @@ test('段7: Lvイベント後の世帯文化Lvが職建物の外観キーと段�
   assert.equal(base.level, 1);
   assert.equal(base.structureVisible, false, 'Lv1は建屋でなく最小限の道具だけ');
   assert.equal(base.toolCount, 1);
+  assert.equal(base.bannerCount, 1, 'Lv1から左側の旗で表示Lvを読める');
   assert.equal(second.level, 2);
   assert.equal(second.structureVisible, true, 'Lv2で小屋が立つ');
   assert.ok(second.elevation > base.elevation);
   assert.ok(third.structureScale > second.structureScale && third.toolCount > second.toolCount,
     'Lv3は小屋と道具が増える');
   assert.equal(raised.level, 4);
+  assert.deepEqual([base, second, third, raised].map(row => row.bannerCount), [1, 2, 3, 4]);
   assert.ok(raised.structureScale > third.structureScale);
   assert.ok(raised.elevation > third.elevation && raised.stoneBase);
   assert.ok(raised.bannerCount > third.bannerCount, 'Lv4は大きな小屋と装飾で豪華になる');

@@ -108,6 +108,9 @@ function viewSnapshot(state) {
       stock: economy.stock,
       stockCost: economy.stockCost,
       stockTgt: economy.stockTgt,
+      spoil: Object.values(economy.led?.spoil ?? {}).reduce((
+        total, amount,
+      ) => total + Number(amount ?? 0), 0),
       traffic: economy.traffic,
       zones: economy.zones,
     },
