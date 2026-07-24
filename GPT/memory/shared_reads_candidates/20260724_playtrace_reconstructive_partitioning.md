@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2607.12097"
 collected_at: "2026-07-24T17:01:34+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-content-generation, level-design, playtrace, puzzle]
+evaluated_at: "2026-07-24T17:08:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-24T17:08:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-24T17:08:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-23"
+supersedes: []
+gate_reason: |-
+  level を静的配置でなく解法中の状態遷移として表す問題設定と、Sokoban で6手法に比較した評価枠は、時間的な攻略体験を生成・比較するレベル設計へ具体的に接続できる。
+  ただし現 candidate では cake representation の構造、PRP の再構成・分割手順、baseline、validity と diversity の指標・数値・失敗条件が不明で、手法の中核と評価内容を約4000字で再現できない。
 ---
 
 ## raw_excerpt

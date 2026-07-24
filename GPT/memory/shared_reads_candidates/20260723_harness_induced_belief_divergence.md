@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.04528v1"
 collected_at: "2026-07-23T19:15:03.8521073+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [llm-agent, harness, evaluation, observability, game-testing]
+evaluated_at: "2026-07-23T19:19:27+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-23T19:19:27+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-23T19:19:27+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-22"
+supersedes: []
+gate_reason: |-
+  harness を単なる実装差ではなく agent の belief trajectory を変える実験変数として測る問題設定、診断軸、stress test、BIWM の対策まで抽出できる。
+  同一 game build に対する bot の観測・repair・verification・evidence を比較する headless test へ直接移せ、成功率だけでは見えない支配戦略や誤った回復可能性判断を約4000字で具体化できる。
+suggested_post_outline:
+  overview_angle: "terminal success が同じでも harness が途中の信念と次行動を変えるという測定問題から、belief-rollout・arrival/growth 分解・BIWM までを一続きで説明する"
+  analysis_axis: "成功率から belief trajectory へ評価単位を移す利点と、自己申告 belief・shadow execution・evidence cost に残る限界を分けて検討する"
+  application_target: "headless game test で同一 build と bot policy を固定し、telemetry・失敗 trace・verification mask の差が支配戦略検出と次の調整判断をどう変えるか比較する"
+  pros_cons: "利点は harness 由来の判断差を実装変更や model 差から分離できること。欠点は belief probe 自体の忠実度、記録量、分岐実行コスト、gameplay 主観との距離"
+  verdict_pre: "部分採用。まず同一 replay seed に対する観測 canonicalization と censored branch 記録を可逆な probe として導入する"
 ---
 
 ## raw_excerpt

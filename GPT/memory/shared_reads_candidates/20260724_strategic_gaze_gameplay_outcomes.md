@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2607.17151"
 collected_at: "2026-07-24T17:01:34+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, player-experience, ui, eye-tracking, evaluation]
+evaluated_at: "2026-07-24T17:08:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-24T17:08:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-24T17:08:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-23"
+supersedes: []
+gate_reason: |-
+  視線の累積量だけでなく AOI 間遷移と勝敗を結ぶ問題設定、32人の within-subject study、6領域、transition probability と entropy という評価軸は明確で、戦略 UI の playtest に直接適用できる。
+  ただし現 candidate は抄録要点のみで、game task、勝敗群の分け方、統計検定・効果量、各 AOI pair の具体差、因果解釈の限界がなく、CoopEval 水準の約4000字を根拠付きで書くには不足する。
 ---
 
 ## raw_excerpt
