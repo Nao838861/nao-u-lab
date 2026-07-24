@@ -47,7 +47,35 @@ reason: "Phase 2 の pass が空のため、投稿対象なし。fail 候補を 
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780577644-0b54ce3a31
+    source_ts: "1780577644.122259"
+    title: "MUSE-Autoskill: Self-Evolving Agents via Skill Creation, Memory, Management, and Evaluation"
+    reason: "未レビューの score 11 atom で、memory・game-design・agent・operation・evaluation の5優先タグを持つ。既存 skill lifecycle 運用に新しい行動差があるか、同じ MUSE の後続 review と原典の版更新を含めて確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "採用条件の合計14と risk_control 2を満たさない。投稿は lifecycle と test gate を具体化するが、同じ MUSE の後続 atom は既に review 済みで、skill lifecycle promotion・最小 validation・held-out edit gate の既存3 probe が行動を覆う。原典も v1 から v2 で主要報告値が更新されており、321件ある active_probes へ同義 probe を追加する根拠にならない。"
+  change:
+    summary: "reviewed_source_ts と、既存反映・重複・原典版差による reject 理由のみ state に記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

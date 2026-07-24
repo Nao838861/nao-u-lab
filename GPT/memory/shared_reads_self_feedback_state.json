@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-24T08:24:12+09:00",
+  "updated_at": "2026-07-24T10:44:45+09:00",
   "reviewed_source_ts": [
+    "1780577644.122259",
     "1784841957.382629",
     "1784834821.252529",
     "1780759560.252029",
@@ -485,6 +486,49 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-24T10:44:45+09:00",
+      "selected": {
+        "id": "sr-1780577644-0b54ce3a31",
+        "source_ts": "1780577644.122259",
+        "title": "MUSE-Autoskill: Self-Evolving Agents via Skill Creation, Memory, Management, and Evaluation",
+        "reason": "未レビューの score 11 atom で、memory・game-design・agent・operation・evaluation の5優先タグを持つ。skill を creation・memory・management・evaluation・refinement の lifecycle で扱う知見が、321件ある active_probes と既存 skill lifecycle 運用に新しい行動差を作るか、同じ MUSE を扱った後続 review と原典の版更新を含めて確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は skill creation、unit-test gate、per-skill memory、catalog から詳細を読む二段階検索、runtime refinement を具体化しており actionability は3とした。一方、投稿は arXiv v1 時点で、2026-07-03 の v2 では abstract の主要報告値が更新されているため、投稿内の数値を現行根拠としてそのまま使えず evidence=2 に留める。同じ MUSE の後続 atom 1780515997.460089 はすでに review 済みで、probe-20260604-skill-lifecycle-promotion-gate が atom／candidate skill／evaluated skill／retire の遷移と一回利用後の keep・refine・retire を扱う。SkillOpt 由来の probe-20260620-skillopt-skill-doc-validation と probe-20260626-skillopt-instruction-edit-validation-gate も最小 validation、add・delete・replace、held-out case、退役条件を要求する。321件ある active_probes へ同義 lifecycle を追加すると管理負荷だけが増え、現在の Phase 4a には別 probe の pending lease もあるため、本 atom は既存反映と版差を確認した source record としてのみ保持する。",
+      "existing_reviews": [
+        "1780515997.460089",
+        "1780644277.510099"
+      ],
+      "existing_probes": [
+        "probe-20260604-skill-lifecycle-promotion-gate",
+        "probe-20260620-skillopt-skill-doc-validation",
+        "probe-20260626-skillopt-instruction-edit-validation-gate"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、同じ MUSE の後続 review・既存 skill lifecycle probes・原典 v1/v2 差による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-24T08:24:12+09:00",
       "selected": {
