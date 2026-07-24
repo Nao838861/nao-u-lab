@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-24T21:42:30+09:00",
+  "updated_at": "2026-07-24T23:43:40+09:00",
   "reviewed_source_ts": [
+    "1780671443.002719",
     "1784889638.957859",
     "1780679407.929099",
     "1784872621.515779",
@@ -491,6 +492,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-24T23:43:40+09:00",
+      "selected": {
+        "id": "sr-1780671443-b51a7e8e59",
+        "source_ts": "1780671443.002719",
+        "title": "Level Generation with Constrained Expressive Range — underrepresented cell を生成目標にする PCG systematic traversal",
+        "reason": "未レビュー条件を満たす score 10 以上の atom のうち source_ts が最新で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。expressive range の空白セルを事後可視化ではなく次の生成目標へ変える知見が、既存 PCG probes と異なる次回行動を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14で数値上の下限には届くが、risk_control=1で必須閾値2を満たさないため、新規 probe・metric・directive は追加しない。shared-reads 本文は VGLC Mario の2,302 segment、density／difficulty の2軸、ring・block2・nbr-plus の3 template、各12時間と1試行15分 timeout、成功数・timeout 数・平均 solve time、systematic traversal と random generation、coverage と normalized interestingness の分離まで具体化しているため evidence=3 とした。一方、2軸は tile count で制約化しやすい指標に限られ、linearity・pacing・導線・操作感や人間の面白さを直接保証しない。新しい差は underrepresented cell を prioritized random selection の生成要求へ戻す点だが、pcg-tool-loop-evidence は generator／repair／verifier と rejected output を、behavior-trace-pcg-diversity は見た目ではなく行動軌跡の多様性を、snappable-layout-pcg-responsibility は seed／decision log と失敗層分類を、plg-evaluation-claim-fit は coverage・controllability 等の主張と evidence の対応を既に扱う。今サイクルには比較可能な level generator、expressive-range grid、consumer phase、before／after trigger artifact がなく、Phase 4a 向け pending lease も1件ある。321件の active_probes へ広い coverage 探索 probe を足すと確認負荷が便益を上回るため、本 atom は既存 PCG controls の具体例としてのみ保持する。",
+      "existing_probes": [
+        "probe-20260528-pcg-tool-loop-evidence",
+        "probe-20260616-behavior-trace-pcg-diversity",
+        "probe-20260618-snappable-layout-pcg-responsibility",
+        "probe-20260615-plg-evaluation-claim-fit"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存 PCG controls との重複および具体的な generator／consumer／artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-24T21:42:30+09:00",
       "selected": {

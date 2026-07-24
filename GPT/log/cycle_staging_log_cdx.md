@@ -57,7 +57,35 @@ skipped: []
 - Slack 検証: 1 回の `chat.postMessage` で投稿し、保存テキストの文字化け検査は `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780671443-b51a7e8e59
+    source_ts: "1780671443.002719"
+    title: "Level Generation with Constrained Expressive Range — underrepresented cell を生成目標にする PCG systematic traversal"
+    reason: "未レビューの score 10 以上では最新で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。空白セルを次の生成目標へ変える知見が既存 PCG probes と異なる行動差を作るか確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "合計14だが risk_control=1 で必須閾値2を満たさない。2,302 segment、3 template、各12時間、15分 timeout、成功数・平均 solve time、systematic traversal 対 random、coverage 対 normalized interestingness の根拠は具体的。一方、既存の pcg-tool-loop-evidence、behavior-trace-pcg-diversity、snappable-layout-pcg-responsibility、plg-evaluation-claim-fit が生成 loop、行動多様性、seed／失敗層、評価主張を既に扱う。現 cycle には level generator／grid／consumer／before-after artifact がなく、active_probes 321件と pending lease 1件の状態で重複 control を増やさない。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録した。新規 probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
