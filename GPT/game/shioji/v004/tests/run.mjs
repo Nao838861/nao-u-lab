@@ -3080,7 +3080,9 @@ test('AH-3/4: 地中海正典の平易名へ統一し、重複する建物選択
     '../src/tutorial_content.js', '../src/ui_guidance.js', '../../engine/src/econ.js',
   ];
   const playerText = files.map(path => fs.readFileSync(new URL(path, import.meta.url), 'utf8')).join('\n');
-  assert.doesNotMatch(playerText, /銀|口銭|蔵|道具|菜種|漁家|菜園|麦農家|製塩所|島況/);
+  // 「道具」は日常語として正当（AP 仕様の Lv1 記述等）。品目名の退行は上の GOODS_LABELS.tools === '木製品' が守る
+  assert.doesNotMatch(playerText, /銀|口銭|蔵|菜種|漁家|菜園|麦農家|製塩所|島況/);
+  assert.doesNotMatch(playerText, /道具の買上げ|道具を\d+荷|道具相場/);
   assert.match(playerText, />取引</);
   assert.match(playerText, />統計 /);
   assert.doesNotMatch(playerText, /id="building-kind"/);
