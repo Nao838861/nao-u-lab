@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-24T17:12:20+09:00",
+  "updated_at": "2026-07-24T19:45:00+09:00",
   "reviewed_source_ts": [
+    "1780679407.929099",
     "1784872621.515779",
     "1784864516.751069",
     "1780686897.406349",
@@ -489,6 +490,47 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-24T19:45:00+09:00",
+      "selected": {
+        "id": "sr-1780679407-ba99f5c08a",
+        "source_ts": "1780679407.929099",
+        "title": "Player Driven / GDC 2026 game design workshop — target_feeling から初見行動の欠落までを往復する設計",
+        "reason": "未レビュー条件を満たす最新の score 10 atom で、harness・game-design・evaluation の3優先タグを持つ。感情目標から verbs と rules へ降り、初回 playtest で必須 action の見落としを観察して修正へ戻す往復が、次の game prototype に既存 control とは異なる行動差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、Doom Eternal の紙 prototype で「強い」という感情目標から verbs・lane・敵・勝利条件へ降り、初見 player が advance action を選ばず endless loop が露出した例と、Us vs. It の climax を先に置く balancing exercise を示しており、target_feeling → verbs → must_notice_actions → first_playtest_miss へ具体化できるため actionability=3 とした。一方、根拠は1日 workshop の参加記録と少数の演習例で、対照条件、参加者数ごとの結果、感情目標の達成測定、長期的な設計品質の比較がないため evidence=2 とした。既存の probe-20260602-event-appraisal-timeline は具体 event から appraisal 仮説へ進み最終品質判定と分ける境界を、experience_verb_observability_chain metric は cue・代替選択・意図入力・結果・回復と first_broken_link／first_contact を、probe-20260602-game-scope-brief-cut-gate は core loop・pillar test・最小 risk test をすでに扱う。must_notice_actions を別名で足しても新しい判断差がなく、321件の active probe と Phase 4a 向け pending lease 1件がある状態では確認負荷だけが増えるため non_redundancy=0、risk_control=1 とした。既存 control を次の該当 game task で使い、本 atom は重複を確認した参照としてのみ保持する。",
+      "existing_probes": [
+        "probe-20260602-event-appraisal-timeline",
+        "probe-20260602-game-scope-brief-cut-gate"
+      ],
+      "existing_metrics": [
+        "experience_verb_observability_chain"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存 event-appraisal／experience-verb／game-scope controls との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-24T17:12:20+09:00",
       "selected": {

@@ -44,7 +44,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780679407-ba99f5c08a
+    source_ts: "1780679407.929099"
+    title: "Player Driven / GDC 2026 game design workshop — target_feeling から初見行動の欠落までを往復する設計"
+    reason: "未レビュー条件を満たす最新の score 10 atom で、harness・game-design・evaluation の3優先タグを持つ。感情目標から verbs と rules へ降り、初回 playtest で必須 action の見落としを観察して修正へ戻す往復が、次の game prototype に既存 control とは異なる行動差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回る。Doom Eternal の紙 prototype と Us vs. It の balancing exercise は target_feeling → verbs → must_notice_actions → first_playtest_miss へ具体化できるが、根拠は1日 workshop の参加記録と少数演習で、対照条件・感情達成測定・長期比較がない。既存の event-appraisal timeline、experience_verb_observability_chain、game-scope brief/cut gate が event→感情仮説、cue→行動→結果、core loop→risk test をすでに覆い、321件の active probe と pending lease 1件があるため、別名 control の追加は判断差より確認負荷を増やす。"
+  change:
+    summary: "reviewed_source_ts と既存 controls との重複による reject 理由だけを state に記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
