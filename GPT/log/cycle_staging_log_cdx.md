@@ -82,7 +82,93 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の entry sections を per-file atom index と照合し、broken index reference 0 件を確認した"
+  - "memory/atoms.jsonl 2,741 件を監査し、duplicate id・parse error・mirror content conflict 0 件、既知 duplicate cluster 45 群の sidecar 整合を確認した"
+  - "shared-reads の open duplicate group / stale triage / group action sidecar を指定順で再生成した（56 group / 50 rows / 0 actionable group）"
+  - "Slack inbox lifecycle を監査し、directives / broadcasts とも pending 0 件を確認したため handled 更新は行わなかった"
+  - "30日以上更新のない memory/raw/ 配下 95 件を確認した。Slack archive 正本と再利用可能な論文原文が中心で、根拠なしの移動は行わなかった"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+source_audit:
+  memory_index:
+    validation: "OK: memory/MEMORY.md entry sections match per-file atom index"
+    broken_index_references: 0
+    source_file_status: "UTF-8 読みは正常。代表語は 記憶 / ゲーム設計 / 敵パターン を取得でき、評価軸 は現行生成 index 本文に存在しなかったが、文字化けや source file 破損の evidence はない"
+    display_or_tooling_status: "none"
+  atoms:
+    rows: 2741
+    duplicate_ids: 0
+    parse_errors: 0
+    mirror_content_conflicts: 0
+    raw_normalized_content_duplicate_groups: 40
+    recall_visible_normalized_content_duplicate_groups: 3
+    duplicate_cluster_index_groups: 45
+    contradiction_evidence: "none"
+  candidate_lifecycle:
+    files: 1090
+    status_counts:
+      posted: 474
+      ready_to_post: 10
+      postponed: 331
+      failed: 256
+      needs_review: 18
+    missing_stale_after: 4
+    overdue_for_reassessment: 191
+    current_state_conflicts: 0
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+  validation_errors: 0
+stale_backlog:
+  overdue_open_total: 191
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 56
+  mixed_group_count: 49
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+group_action_handoff: []
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "Zork を使った LLM の探索・計画限界は headless playtest に接続しやすいが、評価条件・失敗分類・model 比較の本文確認が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "検証可能な遷移モデルを持つ短い puzzle benchmark はゲーム制作へ転用しやすいが、実験設計・比較対象・結果の補完が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_inmind_social_deduction_reasoning_styles.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "social deduction の個別推論 style 追跡は有用だが、既存投稿との重複関係と評価指標・失敗例を確認する必要がある"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_pangea_procedural_artificial_narrative.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "LLM NPC の memory / validation / Unity 接続は適用先が明確だが、empirical evaluation と failure case の本文確認が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_access_profiles_game_accessibility.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "accessibility 設定を player / engine / launcher 間で運ぶ基盤案は制作実務へ近く、一次記事の参加者・評価・制約を精読する価値が高い"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
