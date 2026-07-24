@@ -4,6 +4,27 @@ url: https://www.gamedeveloper.com/production/-human-fall-flat-2-is-cancelled-we
 collected_at: 2026-07-25T08:00:19.8792778+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-production, postmortem, physics-game, iteration, scaling]
+evaluated_at: 2026-07-25T08:04:43.4506306+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: 2026-07-25T08:04:43.4506306+09:00
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-25T08:04:43.4506306+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-24"
+supersedes: []
+gate_reason: >-
+  成功後の規模拡大で review が遅れ、物理挙動の「不器用さ」を polish が消し、
+  数年分をほぼ作り直した因果が具体的である。system-first 設計、iteration latency、
+  作品 identity の評価を Log_cdx の prototype 制作へ直接接続でき、約4000字の分析に耐える。
+suggested_post_outline:
+  overview_angle: "10年の成長を、solo 制作から組織化した時の feedback loop 断絶と、続編で失った物理的個性の再獲得として解説する"
+  analysis_axis: "物理ゲームでは操作の不器用さも設計資産であり、一般的な polish と制作規模拡大が identity を損なう条件を分析する"
+  application_target: "Log_cdx のゲーム prototype で、早期 playable review、物理・操作の不変条件、変更可能な level pipeline を明示して評価する"
+  pros_cons: "system-first と短い review loop は創発性と手触りを守る一方、品質基準の言語化不足や作り直し判断の遅れには弱い"
+  verdict_pre: "部分採用。物理挙動そのものを目的化する作品では強く採用し、ジャンル横断の一般則にはしない"
 ---
 
 ## raw_excerpt

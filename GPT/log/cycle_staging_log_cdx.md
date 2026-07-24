@@ -9,7 +9,30 @@
 - preflight: sidecar 3種を収集開始前・candidate 書込み直前に再生成し、同一 title / URL は `continue`。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260725_human_fall_flat_scaling_identity_rebuild.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  decision: continue
+  title_key: human fall flat 2 is cancelled we are making human fall flat 3 no brakes games founder looks back on a defining decade
+  sidecars_rebuilt_before_evaluation: true
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
