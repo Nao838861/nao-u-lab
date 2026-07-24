@@ -7,12 +7,17 @@ genre_tags: [game-design, mechanics, audio, mobile, interaction-design]
 evaluated_at: "2026-07-25T01:37:09+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-25T01:37:09+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-25T01:37:09+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1784911438.430069"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784911438430069"
+  char_count: 4348
+  posted_at: "2026-07-25T01:44:10+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-25T01:44:10+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784911438430069"
+next_action: none
 stale_after: "2026-08-24"
 supersedes: []
 gate_reason: >-
