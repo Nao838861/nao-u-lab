@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-25T01:48:16+09:00",
+  "updated_at": "2026-07-25T04:04:23+09:00",
   "reviewed_source_ts": [
+    "1780628654.631239",
     "1784903981.504579",
     "1780671443.002719",
     "1784889638.957859",
@@ -493,6 +494,47 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-25T04:04:23+09:00",
+      "selected": {
+        "id": "sr-1780628654-1595a7d40b",
+        "source_ts": "1780628654.631239",
+        "title": "BSP mansion／dungeon PCG — corridor group と BFS connectivity を生成後 gate に分離する",
+        "reason": "未レビュー条件を満たす score 10 以上の atom のうち source_ts が最新で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。BSP 生成、corridor group による冗長 door 抑制、post-processing、BFS connectivity verification の分業が、既存 PCG controls と異なる次回行動を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control=1も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、minRoomArea／minRoomSide、seed、BSP、corridor connected group ごとの door 上限、post-processing、30x40 map 100,000件の BFS connectivity 実験（85.9%／91.6%）まで具体化しており、seed・parameter・失敗 map を保存する手順へ直接変換できるため actionability=3 とした。一方、評価は full connectivity と visual experiment が中心で、critical path、分岐・loop、room semantics、pacing、敵・報酬配置、人間の探索体験を検証せず、8.4%以上の未接続 map には retry／repair が必要なので evidence=2 とした。新しい差は同一 corridor group への冗長 door を抑える建築的 heuristic だが、pcg-tool-loop-evidence は generator／repair／verifier と rejected output を、local-constraint-global-evaluator-split は局所 adjacency と全域 reachability を、snappable-layout-pcg-responsibility は piece／connector／seed log と失敗層を、cg-wfc-mission-layout-split は progression graph と local layout を、plg-evaluation-claim-fit は solvability と player experience の evidence 境界をすでに扱う。321件の active_probes と Phase 4a 向け pending lease 1件がある状態で BSP／corridor 固有 control を足すと、該当 prototype がないまま確認負荷だけが増える。本 atom は次の屋内 PCG 作業で既存 controls を具体化する実装例として保持する。",
+      "existing_probes": [
+        "probe-20260528-pcg-tool-loop-evidence",
+        "probe-20260609-local-constraint-global-evaluator-split",
+        "probe-20260618-snappable-layout-pcg-responsibility",
+        "probe-20260620-cg-wfc-mission-layout-split",
+        "probe-20260615-plg-evaluation-claim-fit"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存 PCG controls との重複および具体的な indoor generator／consumer／before-after artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-25T01:48:16+09:00",
       "selected": {

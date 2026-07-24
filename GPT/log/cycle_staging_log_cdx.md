@@ -69,7 +69,34 @@ skipped: []
 - Cosmic Hero 2: 2～6分の初見離脱、laser barrier、第5 map の同時可変要素、breathing map、secret による再周回強制を設計仮説の反証として分析し、`採用` とした。Slack 保存本文を検証済み。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780628654-1595a7d40b
+    source_ts: "1780628654.631239"
+    title: "BSP mansion／dungeon PCG — corridor group と BFS connectivity を生成後 gate に分離する"
+    reason: "未レビュー条件を満たす score 10 以上の atom のうち source_ts が最新で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。BSP 生成、corridor group による冗長 door 抑制、post-processing、BFS connectivity verification の分業が、既存 PCG controls と異なる次回行動を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件の14に届かず、risk_control=1も必須閾値2を下回る。本文は seed・BSP・corridor group・post-processing・100,000件の connectivity 実験まで具体的だが、評価は到達可能性中心で、critical path、room semantics、pacing、人間の探索体験は未検証。既存の pcg-tool-loop-evidence、local-constraint-global-evaluator-split、snappable-layout-pcg-responsibility、cg-wfc-mission-layout-split、plg-evaluation-claim-fit が generator／repair／verifier、局所制約と全域評価、seed/log、progression と local layout、solvability と player-facing quality の境界をすでに覆う。321件の active_probes と Phase 4a 向け pending lease 1件があるため、BSP／corridor 固有 control は追加せず、将来の屋内 PCG 作業で既存 controls を具体化する実装例として保持する。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
