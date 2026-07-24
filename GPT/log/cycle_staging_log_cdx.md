@@ -50,7 +50,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784864516-645e85620c
+    source_ts: "1784864516.751069"
+    title: "Don't Kill Them All — 主題を戦闘制約・資源保存・拠点成長へ通す theme-first 設計"
+    reason: "未レビュー条件を満たす最新の score 11 atom で、harness・game-design・operation・evaluation を含む7タグを持つ。主題を lore や見た目に留めず、戦闘中の節制、保存資源、帰還後の成長へ接続する因果が、次の小規模 game prototype の仕様と headless 評価に新しい行動差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "合計15で採用条件は満たすが、比較可能な playable diff、consumer phase、before／after trigger artifact が現サイクルにない。単一 studio の定性的自己報告で長期 progression・経済 balance・dominant build の定量検証もなく、既存 theme／reward／causal-log probes と Phase 4a 向け pending lease があるため、対象 prototype が具体化するまで state-only review に留めた。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

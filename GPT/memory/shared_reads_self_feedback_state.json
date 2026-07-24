@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-24T12:47:49+09:00",
+  "updated_at": "2026-07-24T15:03:30+09:00",
   "reviewed_source_ts": [
+    "1784864516.751069",
     "1780686897.406349",
     "1780577644.122259",
     "1784841957.382629",
@@ -487,6 +488,45 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-24T15:03:30+09:00",
+      "selected": {
+        "id": "sr-1784864516-645e85620c",
+        "source_ts": "1784864516.751069",
+        "title": "Don't Kill Them All — 主題を戦闘制約・資源保存・拠点成長へ通す theme-first 設計",
+        "reason": "未レビュー条件を満たす最新の score 11 atom で、harness・game-design・operation・evaluation を含む7タグを持つ。主題を lore や見た目に留めず、戦闘中の節制、保存資源、帰還後の成長へ接続する因果が、次の小規模 game prototype の仕様と headless 評価に新しい行動差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たすが、probe lease 契約を満たす比較可能な playable diff、実際に判断へ使う consumer phase、before／after trigger artifact が現サイクルにないため state-only review に留める。shared-reads 本文は、node protection と gathering、予告 AOE、保存資源による camp 建設、手作り topology と限定 randomization、trait・装備・外見・戦闘履歴による unit 個体化を一つの設計因果として示し、1 raid／3 encounter／1 unlock と複数 policy の同一 seed 比較まで具体化しているため actionability=3 とした。一方、根拠は Early Access 前の単一 studio による定性的自己報告で、長期 progression、経済 balance、dominant build、工数、retention の定量結果や A/B 比較がないため evidence=2 とした。既存の crawllm-theme-slot-contract は theme と gameplay contract の分離を、reward-probe-feedback-loop は観測可能な reward 指標を、egocs-causal-gameplay-log は action／state／event／outcome の因果 log を既に扱う。新しい差は主題→戦闘制約→保存資源→macro feedback を一本で検証する点だが、active_probes 321件と Phase 4a 向け pending lease がある状態で対象 game artifact なしに追加すると確認負荷だけが増える。次に同一 seed で damage 最大化 policy と資源保存 policy を比較できる小規模 prototype が具体化した時に、保存率と unlock 到達が設計判断を変えるか再評価する。",
+      "existing_probes": [
+        "probe-20260620-crawllm-theme-slot-contract",
+        "probe-20260516-reward-probe-feedback-loop",
+        "probe-20260622-egocs-causal-gameplay-log"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、具体的な game artifact／consumer phase の不在および既存 theme／reward／causal-log probes との重複による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-24T12:47:49+09:00",
       "selected": {
