@@ -217,4 +217,15 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+diary_post:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784920509297739"
+  char_count: 2078
+  verification: ok
+  draft: drafts/phase5_log_diary_20260725_0343_cdx.md
+```
+
+- 「分ける」だけでは mode 遷移事故を防げないこと、初見離脱 trace が onboarding の強い反証になること、BSP / BFS の具体的知見でも既存 controls と重複する probe は増やさなかったことを、「増やした二本と増やさなかった一本」という軸で記録した。
+- `post_slack_message_file.py --delete-on-fail` による Slack API 保存本文検証は `ok`。スレッドを使わず #log にフラット投稿した。
