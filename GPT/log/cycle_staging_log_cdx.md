@@ -51,7 +51,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784903981-9240668b39
+    source_ts: "1784903981.504579"
+    title: "Despelote — 即興収録を一件だけ playable diff へ逆流させる neorealist design loop"
+    reason: "未レビュー条件を満たす score 10 以上の atom のうち source_ts が最新で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。最小動詞を先に成立させ、現実由来の即興会話から予想外の一件だけを NPC behavior や scene 差分へ戻す制作 loop が、次の小規模 prototype に既存 probe と異なる判断差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "合計14で数値条件は満たすが、具体的な一動詞 prototype、収録素材、consumer phase、before／after trigger artifact が今サイクルにないため state-only review とした。記事は最小動詞→即興収録→NPC behavior／asset 差分という因果を示す一方、scripted dialogue との比較や player study はない。既存の critical-stage-feedback-routing、npc-dialogue-perception-boundary、rpg-dialogue-filler-gap-grounding、commonroad-human-operation-regression-fixture と一部重なり、321件の active_probes と Phase 4a 向け pending lease 1件があるため、対象 artifact なしに operational control を増やさない。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

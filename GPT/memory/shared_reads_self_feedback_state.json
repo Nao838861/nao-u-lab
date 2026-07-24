@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-24T23:43:40+09:00",
+  "updated_at": "2026-07-25T01:48:16+09:00",
   "reviewed_source_ts": [
+    "1784903981.504579",
     "1780671443.002719",
     "1784889638.957859",
     "1780679407.929099",
@@ -492,6 +493,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-25T01:48:16+09:00",
+      "selected": {
+        "id": "sr-1784903981-9240668b39",
+        "source_ts": "1784903981.504579",
+        "title": "Despelote — 即興収録を一件だけ playable diff へ逆流させる neorealist design loop",
+        "reason": "未レビュー条件を満たす score 10 以上の atom のうち source_ts が最新で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。最小動詞を先に成立させ、現実由来の即興会話から予想外の一件だけを NPC behavior や scene 差分へ戻す制作 loop が、次の小規模 prototype に既存 probe と異なる判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で採用の数値条件は満たすが、probe lease 契約に必要な具体的 prototype、収録素材、consumer phase、before／after trigger artifact が今サイクルにないため state-only review に留める。本文は、蹴るという最小動詞、友人との video-call test、scenario だけを渡す即興収録、恋人をからかう会話から NPC の群がり behavior と asset を追加した因果まで具体的である。一方、scripted dialogue との比較、player study、理解度・没入感の定量評価はなく、authenticity は制作側の解釈なので evidence=2 とした。適用手順は小さいが、協力者、同意・撤回・字幕・翻訳・音声整備を要し、対象 artifact なしには actionability=2 に留まる。新しい差は、外部の即興素材が playable diff を逆向きに発生させた provenance を検証単位にする点である。ただし critical-stage-feedback-routing は feedback をまだ変えられる stage decision へ接続し、npc-dialogue-perception-boundary と rpg-dialogue-filler-gap-grounding は会話の game-state 境界と発話 moment を、commonroad-human-operation-regression-fixture は人手由来 evidence の再現 fixture を既に扱う。さらに active_probes は321件で Phase 4a 向け pending lease も1件ある。具体的な一動詞 prototype と一件の収録候補が揃った時だけ、収録前後で NPC behavior／scene decision が変わるかを再評価し、それまでは新規 probe・metric・directive を増やさない。",
+      "existing_probes": [
+        "probe-20260709-critical-stage-feedback-routing",
+        "probe-20260622-npc-dialogue-perception-boundary",
+        "probe-20260621-rpg-dialogue-filler-gap-grounding",
+        "probe-20260708-commonroad-human-operation-regression-fixture"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、具体的な一動詞 prototype／収録素材／比較 artifact が揃うまで defer する理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-24T23:43:40+09:00",
       "selected": {
