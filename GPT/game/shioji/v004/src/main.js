@@ -1,28 +1,28 @@
-import { IsometricCamera } from './camera.js?v=v004.21.0-elena-reading';
-import { SimulationClock } from './clock.js?v=v004.21.0-elena-reading';
+import { IsometricCamera } from './camera.js?v=v004.22.0-building-levels';
+import { SimulationClock } from './clock.js?v=v004.22.0-building-levels';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.21.0-elena-reading';
+} from './config.js?v=v004.22.0-building-levels';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.21.0-elena-reading';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.21.0-elena-reading';
-import { developmentMapView } from './development_map.js?v=v004.21.0-elena-reading';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.21.0-elena-reading';
+} from './display_batch.js?v=v004.22.0-building-levels';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.22.0-building-levels';
+import { developmentMapView } from './development_map.js?v=v004.22.0-building-levels';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.22.0-building-levels';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.21.0-elena-reading';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.21.0-elena-reading';
-import { WorldPresentation } from './presentation.js?v=v004.21.0-elena-reading';
-import { Renderer } from './renderer.js?v=v004.21.0-elena-reading';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.21.0-elena-reading';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.21.0-elena-reading';
+} from './keyboard.js?v=v004.22.0-building-levels';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.22.0-building-levels';
+import { WorldPresentation } from './presentation.js?v=v004.22.0-building-levels';
+import { Renderer } from './renderer.js?v=v004.22.0-building-levels';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.22.0-building-levels';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.22.0-building-levels';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryEventsAfter, secretaryRouteFor,
   tutorialHandoffFor,
-} from './ui_guidance.js?v=v004.21.0-elena-reading';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.21.0-elena-reading';
+} from './ui_guidance.js?v=v004.22.0-building-levels';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.22.0-building-levels';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -1281,13 +1281,17 @@ function renderBuildingSheet() {
     ) ?? [];
     const growthPercent = growth?.requiredDays > 0
       ? Math.min(100, growth.upDays / growth.requiredDays * 100) : 100;
+    const growthTitle = !nextNeed ? '最高段階まで成長済み'
+      : growth.nextDisplayLevel > growth.displayLevel
+        ? `Lv${growth.nextDisplayLevel}への成長`
+        : `Lv${growth.displayLevel}の暮らしを深める`;
     const cart = household.cart;
     const cartMarkup = cart
       ? `<p class="household-cart"><b>${cart.kind === 'iron' ? '鉄製荷車' : '木製荷車'}</b>を所有・耐久 ${Math.ceil(cart.durability)}/${cart.maxDurability}</p>`
       : '<p class="household-cart">荷車なし・手運び</p>';
     const growthMarkup = growth ? `
       <div class="culture-growth" data-state="${missingKeep.length ? 'falling' : growth.nextSatisfied ? 'rising' : 'waiting'}">
-        <b>${nextNeed ? `Lv${growth.level + 1}への成長` : '最高段階まで成長済み'}</b>
+        <b>${growthTitle}</b>
         ${nextNeed ? `<span>次に必要: ${escapeHtml(nextNeed)}（今日は${growth.nextSatisfied ? '満たしています' : '不足'}）</span>
           <i><i style="width:${growthPercent.toFixed(1)}%"></i></i>
           <small>${growth.upDays}/${growth.requiredDays}日。必要な暮らしが続くと建物も成長します。不足日は進みが3日ぶん戻ります。</small>` : ''}
@@ -1299,7 +1303,7 @@ function renderBuildingSheet() {
         <span><small>現在</small><b>${escapeHtml(HOUSEHOLD_STATE_LABELS[household.state] ?? household.state)}</b></span>
         <span><small>財布</small><b>${purse}</b></span>
         <span><small>直近日収</small><b>${income}</b></span>
-        <span><small>文化</small><b>Lv${household.cultureLevel}</b></span>
+        <span><small>文化</small><b>Lv${household.displayCultureLevel}</b></span>
         <span><small>空腹</small><b>${household.hungerWindow ? `${household.hungerDays}/${household.hungerWindow}日` : '記録なし'}</b></span>
         <span><small>生産倍率</small><b>${Math.round(household.productionMultiplier * 100)}%</b></span>
       </div>

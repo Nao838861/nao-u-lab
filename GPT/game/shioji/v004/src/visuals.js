@@ -1,7 +1,8 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.21.0-elena-reading';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.22.0-building-levels';
 
 export const MAX_PILE_SPRITES = 24;
 export const MAX_YARD_GOODS = 6;
+export const MAX_DISPLAY_CULTURE_LEVEL = 4;
 
 const SECTION_ORDER = Object.freeze([
   'input', 'inbound', 'pickup', 'output', 'outbound',
@@ -45,6 +46,11 @@ export function pileVisual(amount, goods) {
   });
 }
 
+export function displayCultureLevel(internalLevel) {
+  const level = Math.max(0, Math.floor(internalLevel ?? 0));
+  return Math.min(MAX_DISPLAY_CULTURE_LEVEL, level + 1);
+}
+
 export function buildingStructureLayout(building) {
   const archetype = building.appearance?.archetype ?? 'workshop';
   if (archetype === 'market') {
@@ -58,19 +64,21 @@ export function buildingStructureLayout(building) {
     });
   }
   if (['farm', 'pasture'].includes(archetype)) {
+    const scale = building.appearance?.structureScale ?? 0.42;
     return Object.freeze({
       x: building.x + 0.45,
       y: building.y + 0.45,
-      width: Math.min(1.55 + (building.appearance?.tier ?? 0) * 0.12, building.width - 0.8),
-      height: Math.min(1.45 + (building.appearance?.tier ?? 0) * 0.12, building.height - 0.8),
+      width: Math.max(0.9, Math.min(building.width * scale, building.width - 0.8)),
+      height: Math.max(0.85, Math.min(building.height * scale, building.height - 0.8)),
       openYard: false,
     });
   }
+  const scale = building.appearance?.structureScale ?? 0.58;
   return Object.freeze({
     x: building.x + 0.28,
     y: building.y + 0.28,
-    width: Math.max(1.25, Math.min(building.width - 0.9, building.width * 0.58)),
-    height: Math.max(1.2, Math.min(building.height - 0.9, building.height * 0.58)),
+    width: Math.max(0.86, Math.min(building.width - 0.9, building.width * scale)),
+    height: Math.max(0.82, Math.min(building.height - 0.9, building.height * scale)),
     openYard: true,
   });
 }
@@ -123,22 +131,41 @@ export function trailVisual(tread) {
 }
 
 export function buildingAppearance(building) {
-  const level = Math.max(0, Math.floor(building.cultureLevel ?? 0));
-  const tier = Math.min(4, level);
+  const internalLevel = Math.max(0, Math.floor(building.cultureLevel ?? 0));
+  const leveled = building.cultureLeveled ?? (
+    building.vacant || !['market', 'warehouse', 'port'].includes(building.type)
+  );
+  const level = leveled ? displayCultureLevel(internalLevel) : null;
+  const tier = building.vacant ? 0 : level ?? 0;
   const art = BUILDING_ART[building.type] ?? Object.freeze({
     archetype: 'workshop', roof: '#80684d', wall: '#8a7451', accent: '#d2a85d',
   });
+  const structureScale = !leveled ? 0.58
+    : building.vacant ? 0.38
+      : [0, 0.3, 0.36, 0.48, 0.6][tier];
+  const elevation = !leveled ? 16
+    : building.vacant ? 12
+      : [0, 0, 11, 18, 27][tier];
   return Object.freeze({
-    key: `${building.type}:lv${tier}:${building.vacant ? 'vacant' : 'active'}`,
+    key: `${building.type}:${leveled ? `lv${level}` : 'fixed'}:${building.vacant ? 'vacant' : 'active'}`,
+    internalLevel,
     level,
     tier,
+    leveled,
+    structureVisible: !leveled || building.vacant || tier >= 2,
+    structureScale,
     archetype: art.archetype,
     roof: art.roof,
     wall: art.wall,
     accent: art.accent,
-    elevation: 16 + tier * 4,
-    windows: tier >= 2 ? Math.min(3, tier - 1) : 0,
-    stoneBase: tier >= 3,
+    elevation,
+    windows: building.vacant || !leveled ? 0
+      : tier === 2 ? 1 : tier === 3 ? 2 : tier >= 4 ? 3 : 0,
+    stoneBase: leveled && !building.vacant && tier >= 4,
+    toolCount: !leveled ? 2 : building.vacant ? 1 : [0, 1, 2, 4, 6][tier],
+    bannerCount: leveled && !building.vacant ? Math.max(0, tier - 2) : 0,
+    gardenCount: leveled && !building.vacant ? Math.max(0, tier - 2) : 0,
+    abandoned: Boolean(building.vacant),
     fallback: !BUILDING_ART[building.type],
   });
 }

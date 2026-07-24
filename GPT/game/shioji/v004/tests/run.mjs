@@ -55,8 +55,8 @@ import {
 import { islandCalendar, islandHealthSummary, recentCompanySummary } from '../src/ui_summary.js';
 import { snapshotToViewModel } from '../src/view_model.js';
 import {
-  MAX_PILE_SPRITES, MAX_YARD_GOODS, buildingAppearance, buildingStructureLayout,
-  pileVisual, trailVisual, yardSlots, yardStockRows,
+  MAX_DISPLAY_CULTURE_LEVEL, MAX_PILE_SPRITES, MAX_YARD_GOODS, buildingAppearance,
+  buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual, yardSlots, yardStockRows,
 } from '../src/visuals.js';
 
 let passed = 0;
@@ -454,7 +454,7 @@ test('教程Z: 季節・島の基調・飢餓予告・建物成長の因果をpl
     type: 'notice', sequence: 20, message: 'veg#7 ▲Lv1', day: 31,
   }]);
   const celebration = director.advice().find(row => row.id === 'building-level-up-celebration');
-  assert.match(celebration.title, /野菜畑がLv1へ成長/);
+  assert.match(celebration.title, /野菜畑がLv2へ成長/);
   assert.match(celebration.detail, /食料1種.*45日/);
 });
 
@@ -2021,7 +2021,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.21.0-elena-reading');
+  assert.equal(VERSION, 'v004.22.0-building-levels');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2621,10 +2621,50 @@ test('段7: Lvイベント後の世帯文化Lvが職建物の外観キーと段�
     if (building) assert.ok(building.appearance.level >= 1);
   }
   const base = buildingAppearance({ type: 'woodshop', cultureLevel: 0, vacant: false });
+  const second = buildingAppearance({ type: 'woodshop', cultureLevel: 1, vacant: false });
+  const third = buildingAppearance({ type: 'woodshop', cultureLevel: 2, vacant: false });
   const raised = buildingAppearance({ type: 'woodshop', cultureLevel: 3, vacant: false });
+  const vacant = buildingAppearance({ type: 'woodshop', cultureLevel: 0, vacant: true });
+  const fixed = buildingAppearance({
+    type: 'port', cultureLevel: 0, cultureLeveled: false, vacant: false,
+  });
+  assert.deepEqual(
+    [0, 1, 2, 3, 6].map(displayCultureLevel),
+    [1, 2, 3, 4, 4],
+    '内部Lvは保存互換のまま、プレイヤー表示だけをLv1〜4へ写す',
+  );
+  assert.equal(MAX_DISPLAY_CULTURE_LEVEL, 4);
+  assert.equal(base.level, 1);
+  assert.equal(base.structureVisible, false, 'Lv1は建屋でなく最小限の道具だけ');
+  assert.equal(base.toolCount, 1);
+  assert.equal(second.level, 2);
+  assert.equal(second.structureVisible, true, 'Lv2で小屋が立つ');
+  assert.ok(second.elevation > base.elevation);
+  assert.ok(third.structureScale > second.structureScale && third.toolCount > second.toolCount,
+    'Lv3は小屋と道具が増える');
+  assert.equal(raised.level, 4);
+  assert.ok(raised.structureScale > third.structureScale);
+  assert.ok(raised.elevation > third.elevation && raised.stoneBase);
+  assert.ok(raised.bannerCount > third.bannerCount, 'Lv4は大きな小屋と装飾で豪華になる');
+  assert.equal(vacant.abandoned, true);
+  assert.equal(vacant.structureVisible, true);
+  assert.equal(vacant.level, 1, '再入居時に始まる表示段階はLv1');
+  assert.equal(fixed.level, null, '港など会社施設へ文化Lvを付けない');
+  assert.equal(fixed.structureVisible, true);
   assert.notEqual(base.key, raised.key);
-  assert.ok(raised.elevation > base.elevation && raised.stoneBase);
   assert.equal(buildingAppearance({ type: 'future-job', cultureLevel: 2, vacant: false }).fallback, true);
+
+  const structures = [base, second, third, raised].map(appearance => buildingStructureLayout({
+    x: 10, y: 20, width: 3, height: 3, appearance,
+  }));
+  assert.ok(structures.every(structure => (
+    structure.x >= 10 && structure.y >= 20
+    && structure.x + structure.width <= 13
+    && structure.y + structure.height <= 23
+  )), 'Lv外観は3×3敷地から出ない');
+  assert.ok(structures[1].width < structures[2].width
+    && structures[2].width < structures[3].width,
+    'Lv2〜4で建屋規模が単調に増える');
 });
 
 test('可視物流AB: 少量は一荷ずつ、大量も単調に増える荷姿と正確な数字へ変換する', () => {
@@ -2711,6 +2751,14 @@ test('ラン2 P4: 飢え・離散間際・段階低下を建物外の危機信�
   }, model);
   assert.match(death.title, new RegExp(`${JOB_LABELS[household.job]}の${household.sur}家`));
   assert.equal(death.buildingId, building.id);
+  const rendererSource = fs.readFileSync(new URL('../src/renderer.js', import.meta.url), 'utf8');
+  const renderBody = rendererSource.match(/render\(model, elapsedSeconds = 0\) \{[\s\S]*?\n  \}\n\n  drawTerrain/)?.[0] ?? '';
+  assert.ok(renderBody.indexOf('this.drawWorldObjects(model)')
+    < renderBody.indexOf('this.drawWorldOverlays(model)'),
+  '警告・危機アイコンは建物と人物の描画後に最前面へ描く');
+  assert.match(rendererSource,
+    /drawWorldOverlays\(model\) \{[\s\S]*drawConnectionWarnings\(model\)[\s\S]*drawCrisisSignals\(model\)/,
+    '最前面overlayへ接続警告と危機信号をまとめる');
 });
 
 test('段8: 区分棚・pantry・市場屋台をsnapshotと同量で世帯単位に表示する', () => {

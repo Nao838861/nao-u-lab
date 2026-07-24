@@ -2,8 +2,9 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.21.0-elena-reading';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.21.0-elena-reading';
+} from './engine_bridge.js?v=v004.22.0-building-levels';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.22.0-building-levels';
+import { displayCultureLevel } from './visuals.js?v=v004.22.0-building-levels';
 
 const LIVING_REQUIREMENT_LABELS = Object.freeze({
   food1: '食料1種', food2: '食料2種', food3: '食料3種', grain: '穀物',
@@ -950,16 +951,19 @@ function householdLevelUpReport(model, events) {
   const match = event.message.match(/^([^#]+)#(\d+) ▲Lv(\d+)$/);
   if (!match) return null;
   const householdId = Number(match[2]);
-  const level = Number(match[3]);
+  const internalLevel = Number(match[3]);
+  const level = displayCultureLevel(internalLevel);
   const household = model.households.find(row => row.id === householdId);
   const building = model.buildings.find(row => row.id === household?.buildingId);
   return {
     day: event.eventDay ?? event.day ?? model.day,
-    message: event.message,
+    message: `${match[1]}#${householdId} ▲Lv${level}`,
     job: match[1],
     householdId,
-    previousLevel: Math.max(0, level - 1),
+    internalLevel,
+    previousLevel: displayCultureLevel(Math.max(0, internalLevel - 1)),
     level,
+    requiredDays: 45 * Math.max(1, internalLevel),
     buildingId: building?.id ?? household?.buildingId ?? null,
     buildingType: building?.type ?? household?.job ?? match[1],
     appearance: building?.appearance ? { ...building.appearance } : null,
@@ -2051,7 +2055,7 @@ export const TUTORIAL_ADVICE = Object.freeze([
         priority: 'info',
         kicker: '暮らしの成長',
         title: `${job}がLv${report?.level ?? '—'}へ成長しました！`,
-        detail: `${requirementLabel}を含む暮らしを${45 * (report?.level ?? 1)}日積み重ねた成果です。建物を開くと、次の成長条件と日数が分かります。`,
+        detail: `${requirementLabel}を含む暮らしを${report?.requiredDays ?? 45}日積み重ねた成果です。建物を開くと、次の成長条件と日数が分かります。`,
         speech: `お見事です。${job}がLv${report?.level ?? '—'}へ育ちました。${requirementLabel}のある暮らしが続いた成果です。`,
         target: report?.buildingId ? { kind: 'building-detail', buildingId: report.buildingId } : null,
       };

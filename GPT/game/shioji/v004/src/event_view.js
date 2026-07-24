@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.21.0-elena-reading';
+import { JOB_LABELS } from './config.js?v=v004.22.0-building-levels';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],
