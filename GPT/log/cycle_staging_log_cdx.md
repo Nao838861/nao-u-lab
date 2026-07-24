@@ -88,7 +88,86 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。Markdown link は 0 件、index に現れる atom ID 50 件は memory/atoms/index.jsonl に全件存在し、broken index reference は 0 件。代表語 probe は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false で、本文全体の日本語は正常なため source mojibake なし。"
+  - "memory/atoms.jsonl / per-file md / index.jsonl は各 2737 件で一致し、parse error・index error・content conflict は 0 件。normalized content duplicate は raw 40 group / 80 rows、recall-visible 3 group / 6 rowsだが、既存 lifecycle/content fold が適用されており新規矛盾なし。"
+  - "memory/raw/ の 30 日超無更新は 95 files（web_research 87 / headless_eval 6 / slack_archive 1 / sync state 1）。日付別 source pointer または再現 evidence として参照中の immutable raw であり、今回 archive move は行わない。"
+  - "shared-reads candidate 1085 files の lifecycle を dry-run 監査し、open duplicate group / stale triage / group-action sidecar を指定順に再生成。candidate 本体の変更は 0 件。"
+  - "slack_directives / slack_broadcasts は pending 0 件で、handled 更新対象なし。"
+issues:
+  - id: ISS-4A-20260724-01
+    description: "legacy shared-reads raw の同一 ts 2 行と派生 active atom 1 件に、AIエージェントの一部が U+FFFD へ置換された source-originated mojibake が残る。memory_health のもう 1 件の suspect は Nao_u 原文の literal ??? による false positive。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl#ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl#id=sr-1776127289-4d9239b255"
+    source_file_status: "Get-Content -Encoding UTF8 と rg で確認。legacy raw 2 行と atom に U+FFFD が実在し、atom mirror は jsonl / per-file / index 間で同じ破損値に整合している。"
+    display_or_tooling_status: "none; UTF-8 明示読みでも同値であり、shell / staging 表示だけの mojibake ではない。"
+    why_blocks_game_memory: "直接の game lesson ではないため影響は限定的だが、progressive disclosure / agent memory を扱う active atom の完全一致検索を弱める source data-quality debt になる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+candidate_lifecycle:
+  total_files: 1085
+  status_counts:
+    posted: 471
+    ready_to_post: 10
+    postponed: 335
+    failed: 250
+    needs_review: 18
+    skipped_unreviewed: 1
+  missing_stale_after: 4
+  overdue_open_total: 184
+  dry_run_changed: 0
+  dry_run_skipped_unreviewed: 26
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 184
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 57
+  mixed_group_count: 50
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+group_action_handoff: []
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game_transfer_value=high / age_days=40。Zork による探索・計画限界と headless playtest への転用価値が高い一方、評価条件・失敗分類・model comparison の本文確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "game_transfer_value=high / age_days=39。検証可能な遷移モデルを持つ planning benchmark は転用しやすいが、実験設計・比較対象・結果の本文確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_inmind_social_deduction_reasoning_styles.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "game_transfer_value=high / age_days=39。個別 reasoning style の social deduction 応用価値は高いが、既存 atom / 投稿との重複と評価指標・失敗例を再確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_pangea_procedural_artificial_narrative.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "game_transfer_value=high / age_days=39。memory / validation / Unity demo の接続は強いが、empirical study・ablation・失敗例の evidence を本文で補う必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_access_profiles_game_accessibility.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "game_transfer_value=high / age_days=38。accessibility を player / developer / engine / launcher / retailer 間の基盤として扱う価値が高く、評価詳細と prototype への転用条件を再確認する。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
