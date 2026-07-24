@@ -45,7 +45,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784919550-996ade3295
+    source_ts: "1784919550.484869"
+    title: "Ecliptic postmortem — game state／machine state 分離と mode 遷移規律"
+    reason: "未レビュー条件を満たす score 10 以上の atom のうち source_ts が最新で、memory・harness・game-design・evaluation の4優先タグを持つ。保存境界、deterministic replay、割り込み由来 soft lock、engine work から playable content への切替が、既存 probe と異なる次回行動を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回る。保存可能 state、off-nominal trace、近隣 system snapshot、first-playable scope は既存4 probes が覆い、321件の active_probes と既存 pending lease がある。単一作者の回顧で定量比較もないため、具体的な save/load または mode-transition artifact がない今は state-only review に留める。"
+  change:
+    summary: "reviewed_source_ts と、既存 replay／off-nominal／runtime integration／scope probes との重複および具体的な consumer artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

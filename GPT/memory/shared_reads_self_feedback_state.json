@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-25T06:10:46+09:00",
+  "updated_at": "2026-07-25T08:16:58+09:00",
   "reviewed_source_ts": [
+    "1784919550.484869",
     "1784919561.878169",
     "1780628654.631239",
     "1784903981.504579",
@@ -495,6 +496,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-25T08:16:58+09:00",
+      "selected": {
+        "id": "sr-1784919550-996ade3295",
+        "source_ts": "1784919550.484869",
+        "title": "Ecliptic postmortem — game state／machine state 分離と mode 遷移規律",
+        "reason": "未レビュー条件を満たす score 10 以上の atom のうち source_ts が最新で、memory・harness・game-design・evaluation の4優先タグを持つ。保存境界、deterministic replay、割り込み由来 soft lock、engine work から playable content への切替が、既存 probe と異なる次回行動を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、simulation state／presentation state／external I/O の分離、同一 snapshot・input trace・seed の state hash、mode graph の許可 edge・復帰先・最大滞在 tick、割り込み event の soft-lock trace、engine diff と playable content diff の別計測まで具体化しており、次の prototype へ変換しやすいため actionability=3 とした。一方、根拠は単一作者の完成後回顧で、mode 数、遷移辺数、bug 件数、rewrite 期間、save/load 境界や固定 room への変更前後の比較がなく、Amiga toolchain・独自 GC／VM／DSL の影響も分離できないため evidence=2 とした。新しい差は保存境界と mode edge を同じ state 設計として扱う点だが、rules-core-parity-regression は deterministic seed・scenario・input trace・save/load roundtrip を、off-nominal-scenario-evidence は割り込みや異常入力の trace を、gameenginebench-runtime-integration-gate は固定 trace と近隣 state snapshot を、game-scope-brief-cut-gate は first playable と Must／Should／Cut をすでに扱う。321件の active_probes と Phase 4a 向け pending lease がある状態で、具体的な save/load または mode-transition artifact なしに複合 probe を足すと確認負荷だけが増える。本 atom は次の該当 prototype で既存 probes を具体化する設計例としてのみ保持する。",
+      "existing_probes": [
+        "probe-20260603-rules-core-parity-regression",
+        "probe-20260531-off-nominal-scenario-evidence",
+        "probe-20260709-gameenginebench-runtime-integration-gate",
+        "probe-20260602-game-scope-brief-cut-gate"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存 replay／off-nominal／runtime integration／scope probes との重複および具体的な consumer artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-25T06:10:46+09:00",
       "selected": {
