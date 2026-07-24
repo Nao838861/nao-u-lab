@@ -49,7 +49,18 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped: []
+result: no_pass_candidates
+reason: "Phase 2 の pass が空。今回の2候補はいずれも情報不足で postpone 判定のため、#shared-reads には投稿しない"
+deferred_groups:
+  - group_key: reflection at design actualization rda a tool and process for research through game design
+    action: not_eligible
+    reason: "Phase 2 で representative_decision: postpone とされ、pass リストに含まれていないため Phase 3 の処理対象外"
+slack_posted: false
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
