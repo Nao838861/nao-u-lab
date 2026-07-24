@@ -16,6 +16,34 @@
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
+### 2026-07-24 12:36 JST
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260724_dont_kill_them_all_strategy_design.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  path: memory/shared_reads_candidates/20260724_dont_kill_them_all_strategy_design.md
+  decision: continue
+  title_key: behind the development of hand drawn strategy game don t kill them all
+decision_notes:
+  - "pass: 主題を mechanic へ変換する順序、戦闘→拠点成長の因果、unit 個体化、level/art 制作制約、demo feedback まで一つの開発判断として抽出できる。形式的な比較実験の不在は限界として明示する。"
+```
+
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 

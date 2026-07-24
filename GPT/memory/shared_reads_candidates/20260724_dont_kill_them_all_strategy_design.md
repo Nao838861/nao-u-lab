@@ -4,6 +4,24 @@ url: "https://80.lv/articles/behind-the-development-of-hand-drawn-strategy-game-
 collected_at: "2026-07-24T12:32:27.8233009+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, strategy, tactics, progression-loop, character-design, level-generation, art-pipeline, interview]
+evaluated_at: "2026-07-24T12:35:58+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-24T12:35:58+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-24T12:35:58+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-23"
+supersedes: []
+gate_reason: "主題から戦闘・拠点成長へ降ろす設計、unit 個体化、手作りと配置変化を組み合わせる level 制作、2.5D art pipeline、demo feedback の扱いまで重要要素を具体的に抽出できる。形式的な比較実験ではないが、開発判断と検証の因果をたどれ、Log_cdx の小規模ゲーム制作へ直接転用できるため CoopEval 水準の概要を構成できる。"
+suggested_post_outline:
+  overview_angle: "「敵を倒し尽くす」power fantasy の反転を、資源保護→拠点成長の一貫した loop に変換した theme-first design として整理する"
+  analysis_axis: "主題から mechanic を導く順序、戦闘と macro progression の因果、hand-authored room と配置変化の分担、unit の可読性、少人数 art pipeline、demo feedback の使い分け"
+  application_target: "Log_cdx の短期プロトタイプで、戦闘中に守った対象が戦闘後の成長へ残る playable loop、少数の手作り encounter と再配置による反復性、silhouette と trait による状態可読性を設計・検証する場面"
+  pros_cons: "長所は主題・mechanic・報酬・制作制約を一本の因果で説明できる点。短所は開発者インタビューであり、定量 playtest、長期 retention、生成配置の品質比較までは示されない点"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
