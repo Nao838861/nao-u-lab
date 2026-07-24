@@ -7,12 +7,17 @@ genre_tags: [game-design, strategy, tactics, progression-loop, character-design,
 evaluated_at: "2026-07-24T12:35:58+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-24T12:35:58+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-24T12:35:58+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1784864516.751069"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784864516751069"
+  char_count: 4494
+  posted_at: "2026-07-24T12:41:56.751069+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-24T12:42:38.9035811+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784864516751069"
+next_action: none
 stale_after: "2026-08-23"
 supersedes: []
 gate_reason: "主題から戦闘・拠点成長へ降ろす設計、unit 個体化、手作りと配置変化を組み合わせる level 制作、2.5D art pipeline、demo feedback の扱いまで重要要素を具体的に抽出できる。形式的な比較実験ではないが、開発判断と検証の因果をたどれ、Log_cdx の小規模ゲーム制作へ直接転用できるため CoopEval 水準の概要を構成できる。"

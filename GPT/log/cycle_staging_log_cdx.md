@@ -45,7 +45,23 @@ decision_notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+### 2026-07-24 12:42 JST
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260724_dont_kill_them_all_strategy_design.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784864516751069
+    char_count: 4494
+skipped: []
+decision_notes:
+  - "元記事全文と照合し、theme-first design、資源保護→拠点成長、hand-authored topology と限定ランダム配置、unit 個体化、2.5D pipeline、demo feedback の証拠限界を記事固有の因果として記述した。"
+  - "必須6項目、3500-4500字程度、禁止表現不在、URL末尾、単一 chat.postMessage、Slack保存後の文字化け検証を通過。最終判定は部分採用。"
+slack:
+  channel: C0AN2FEHEJJ
+  ts: "1784864516.751069"
+  verification: ok
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
