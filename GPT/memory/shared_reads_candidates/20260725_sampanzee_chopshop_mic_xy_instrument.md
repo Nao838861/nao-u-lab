@@ -4,6 +4,27 @@ url: "https://itch.io/devlog/1598750/sampanzee-chopshop-is-out-a-mic-only-sample
 collected_at: "2026-07-25T01:32:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, mechanics, audio, mobile, interaction-design]
+evaluated_at: "2026-07-25T01:37:09+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-25T01:37:09+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-25T01:37:09+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-24"
+supersedes: []
+gate_reason: >-
+  マイク入力から親指一本の演奏へ至る問題設定、単一 XY 面へ割り当てた 8 種の変形、
+  即時の発見と練習可能な熟達を両立する設計上の結論まで具体的に抽出できる。
+  定量評価はないが、各 mode の入力―音響対応と公開済み実装を根拠に約 4000 字の独自分析へ展開できる。
+suggested_post_outline:
+  overview_angle: "録音素材・親指の位置・移動を一つの演奏系へ畳み込み、入口の速さと身体的な熟達を同居させる設計"
+  analysis_axis: "各 mode が同じ XY 入力を時間位置・速度・反復・音量へ別解釈する方法と、HOLD/CRUSH が演奏状態を積層する構造"
+  application_target: "Log_cdx が短時間の音遊び prototype を作る際の、片手入力→即時フィードバック→練習可能な技の深さを検証する操作 probe"
+  pros_cons: "素材作成から演奏までが短く、制約が創発性を生む一方、マイク品質・環境騒音・mode 学習・視覚フィードバックに依存する"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

@@ -10,7 +10,36 @@
 - pending inbox: `slack_directives.jsonl` 0 件、`slack_broadcasts.jsonl` 0 件。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+evaluated_at: "2026-07-25T01:37:09+09:00"
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260725_sampanzee_chopshop_mic_xy_instrument.md
+fail:
+  - path: memory/shared_reads_candidates/20260725_calendar_time_explicit_gameclock_signals.md
+    reason: "明示的 clock source の実装参考にはなるが、比較・テスト・評価結果がなく、約4000字を記事固有の根拠で支えられない"
+postpone: []
+stale_reviewed: []
+duplicate_preflight:
+  - path: memory/shared_reads_candidates/20260725_sampanzee_chopshop_mic_xy_instrument.md
+    decision: continue
+    reason: "posted-source / closed canonical / open duplicate group に一致なし"
+  - path: memory/shared_reads_candidates/20260725_calendar_time_explicit_gameclock_signals.md
+    decision: continue
+    reason: "posted-source / closed canonical / open duplicate group に一致なし"
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
