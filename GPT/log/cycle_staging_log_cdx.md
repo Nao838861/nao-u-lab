@@ -81,7 +81,91 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index を validate_memory_index.py で照合し、per-file atom index との不一致 0 件を確認した。"
+  - "memory/atoms.jsonl と per-file/index mirror を監査し、parse/index/content conflict 0 件、duplicate id 0 件を確認した。normalized content 重複 40 群 80 行は既存 overlay 45 群で管理済みだったため、raw atom は変更していない。"
+  - "memory/raw/ の30日超未更新ファイルを列挙し、95件（web_research 87、headless_eval 6、slack_archive 1、sync_state.txt 1）を archive 候補として確認した。raw evidence pointer を壊さない移動契約がないため、この phase では移動していない。"
+  - "shared-reads candidate lifecycle を dry-run 監査し、frontmatter の自動修正対象 0 件、Slack directives / broadcasts の pending 0 件を確認した。"
+  - "open duplicate / stale triage / group action sidecar を live lease 合成込みで再生成した。candidate 本体は変更していない。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+encoding_audit:
+  memory_index:
+    source_file_status: "UTF-8 明示読みで代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」を取得でき、index validation も成功した。"
+    display_or_tooling_status: none
+  memory_health_suspects:
+    - id: sr-1776127289-4d9239b255
+      source_file_status: "UTF-8 明示読みでも replacement characters が raw slack_archive、atoms.jsonl、per-file atom に存在するため、表示経路ではなく取得済み原文由来の局所破損。"
+      display_or_tooling_status: none
+      disposition: "既知の低優先 data-quality warning として保持。今回のゲーム記憶検索を塞ぐ新規構造問題ではないため 4b は起動しない。"
+    - id: gr-1777083728-44d444ab7a
+      source_file_status: "原文の「???」は意図されたゲーム内表記で、UTF-8 source に replacement character はない。"
+      display_or_tooling_status: "memory_health.py の heuristic false positive。"
+      disposition: "修復対象外。"
+candidate_lifecycle:
+  counts:
+    posted: 469
+    ready_to_post: 10
+    postponed: 333
+    failed: 249
+    needs_review: 18
+  skipped_unreviewed: 1
+  missing_stale_after: 4
+  overdue_for_reassessment: 184
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+  receipt: "pending --due-only --limit 1 は items=[]。期限到来 lease がないため resolve / dormant receipt の追記なし。validate errors 0。"
+stale_backlog:
+  overdue_open_total: 184
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 56
+  mixed_group_count: 49
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "184 > 50 は成立するが actionable group が3件以上ではない（0件）ため。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+group_action_handoff: []
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "age_days=40、duplicate group なし。Zork での探索・計画失敗は headless playtest に転用価値が高いが、評価条件と失敗分類の本文確認が未完。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=39、duplicate group なし。検証可能な短い planning puzzle は有用だが、実験設計・比較対象・結果の詳細が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_inmind_social_deduction_reasoning_styles.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=39、duplicate group なし。個別推論スタイル追跡は social deduction に有用だが、既存 atom との重複関係と評価指標の確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_pangea_procedural_artificial_narrative.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=39、duplicate group なし。memory / validation / Unity demo の適用先は明確だが、ablation・失敗例・validation 実効性が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_access_profiles_game_accessibility.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "age_days=38、duplicate group なし。accessibility infrastructure の転用価値は高いが、formatted version と方法・評価詳細の再確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
