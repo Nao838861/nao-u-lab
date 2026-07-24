@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-24T15:03:30+09:00",
+  "updated_at": "2026-07-24T17:12:20+09:00",
   "reviewed_source_ts": [
+    "1784872621.515779",
     "1784864516.751069",
     "1780686897.406349",
     "1780577644.122259",
@@ -488,6 +489,47 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-24T17:12:20+09:00",
+      "selected": {
+        "id": "sr-1784872621-c4a94f33e0",
+        "source_ts": "1784872621.515779",
+        "title": "The Informash post-mortem — 停滞 prototype の核を保つ一回限りの salvage review",
+        "reason": "未レビュー条件を満たす最新の score 12 atom で、memory・skills・harness・game-design・operation・evaluation の6優先タグを持つ。長期停滞作を追加実装ではなく終了条件の再定義として扱い、体験の核・必須能力 graph・代替解を保ちながら波及面積の大きい system を切る知見が、次の停滞 prototype 再開時に新しい行動差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たすが、probe lease 契約を満たす具体的な停滞 prototype、実際に判断へ使う consumer phase、before／after trigger artifact が現サイクルにないため state-only review に留める。shared-reads 本文は、Git 履歴で停止区間を確認し、残す体験を一文で固定し、必須能力と代替解を graph 化し、UI・tutorial・balance・content・test への波及面積が大きい system から切り、削減後の到達・代替経路・削除参照を deterministic に回帰確認するところまで具体化しているため actionability=3 とした。一方、根拠は単一作者の回顧で、約70%の測定単位、削減前後の playtest、工数、retention、売上、機能別効果がなく、deadline と完成の因果を分離できないため evidence=2 とした。既存の game-scope-brief-cut-gate は Must／Should／Cut と first playable、short-hike-constraint-shortcut は核と延期要素、ai-readable-playtest-acceptance-surface と runtime-verifiable-production-slices は milestone と runtime evidence、critical-stage-feedback-routing は postmortem を actionable stage へ戻す境界をすでに扱う。新しい差は長期停滞作に一回だけ行う salvage と、コード量ではなく依存波及面積で切る点だが、321件の active_probes と Phase 4a 向け pending lease がある状態で対象 artifact なしに追加すると確認負荷だけが増える。次に現行 build が起動でき、同じ未解決箇所で複数回停止した prototype を再開する時、再開前の completion definition と cut dependency graph が継続・縮小・中止判断を変えるか再評価する。",
+      "existing_probes": [
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260713-short-hike-constraint-shortcut",
+        "probe-20260621-ai-readable-playtest-acceptance-surface",
+        "probe-20260518-runtime-verifiable-production-slices",
+        "probe-20260709-critical-stage-feedback-routing"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存 scope／cut／acceptance probes との重複および具体的な停滞 prototype／consumer／artifact 不足による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-24T15:03:30+09:00",
       "selected": {

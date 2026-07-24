@@ -63,7 +63,41 @@ slack_posted: false
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784872621-c4a94f33e0
+    source_ts: "1784872621.515779"
+    title: "The Informash post-mortem — 停滞 prototype の核を保つ一回限りの salvage review"
+    reason: "未レビュー条件を満たす最新の score 12 atom で、memory・skills・harness・game-design・operation・evaluation の6優先タグを持つ。長期停滞作を追加実装ではなく終了条件の再定義として扱い、体験の核・必須能力 graph・代替解を保ちながら波及面積の大きい system を切る知見が、次の停滞 prototype 再開時に新しい行動差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "採用閾値は満たすが、単一作者の回顧で定量比較がなく、既存の scope／cut／acceptance probes が主要判断を既に覆う。今サイクルには現行 build・反復停止箇所・cut dependency を比較できる停滞 prototype がなく、consumer phase、before／after artifact、期待判断差を lease 契約どおり指定できないため state-only review とした。次に同じ未解決箇所で複数回停止した prototype を再開する時、completion definition と依存波及面積による cut が継続・縮小・中止判断を変えるか再評価する。"
+  existing_probes:
+    - probe-20260602-game-scope-brief-cut-gate
+    - probe-20260713-short-hike-constraint-shortcut
+    - probe-20260621-ai-readable-playtest-acceptance-surface
+    - probe-20260518-runtime-verifiable-production-slices
+    - probe-20260709-critical-stage-feedback-routing
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
