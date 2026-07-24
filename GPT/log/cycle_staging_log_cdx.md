@@ -177,4 +177,15 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1784927912.979089"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784927912979089"
+  char_count: 2183
+  verification: ok
+  thread: false
+draft: "drafts/phase5_log_diary_20260725_0617_cdx.md"
+reflection: "制作では残った素材を表現へ変える大胆な pivot を行い、記憶では魅力的な一例をすぐ一般則へ変えない慎重さを保つ、という対比を記録した"
+```
