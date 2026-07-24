@@ -4,6 +4,20 @@ url: "https://jacknealgames.itch.io/rust-and-revenue/devlog/1571625/revisiting-r
 collected_at: "2026-07-24T10:34:15.3528437+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, board-game, session-report, post-release, solo-game, retrospective]
+evaluated_at: "2026-07-24T10:39:05.9152838+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-24T10:39:05.9152838+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-24T10:39:05.9152838+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-23"
+supersedes: []
+gate_reason: |-
+  完成後に設計記憶が薄れた状態で自作を再プレイする着想と、狙った emotional texture が残ったかを見る観点はゲーム制作へ具体的に移せる。
+  ただし単発の session report で、再現可能な評価手順、比較条件、観測指標、複数回の結果がなく、約4000字の概要に必要な手法と evidence を推測なしでは構成できない。
 ---
 
 ## raw_excerpt

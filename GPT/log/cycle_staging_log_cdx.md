@@ -11,7 +11,31 @@
 - duplicate preflight: `decision=continue`。書込み前に posted-source / closed canonical title / open duplicate group の3 sidecarを再生成済み。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail:
+  - path: memory/shared_reads_candidates/20260724_revisiting_rust_and_revenue.md
+    reason: "冷間再プレイの着想は適用可能だが、単発 session report で評価手順・比較条件・観測指標がなく、CoopEval 水準の概要を根拠付きで構成できない"
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  path: memory/shared_reads_candidates/20260724_revisiting_rust_and_revenue.md
+  decision: continue
+  title_key: revisiting rust and revenue
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
