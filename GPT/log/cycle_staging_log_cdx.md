@@ -64,7 +64,37 @@ slack:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+### 2026-07-24 12:47 JST
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780686897-9289c4446d
+    source_ts: "1780686897.406349"
+    title: "Player Experience Extraction from Gameplay Video"
+    reason: "未レビュー条件を満たす atom のうち source_ts が最も新しい score 10 の1件で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。内部 log がない gameplay video を event sequence へ変換し、動画側の観察と telemetry の差分を測る提案が playable diff／playtest 記録に新しい行動差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "採用閾値は満たすが、2018年の小規模・class-imbalanced な評価で rare event 別 precision／recall、player／video 単位 holdout、clip leakage を確認できず evidence は2。30秒の人手正解と extractor／telemetry 差分は具体的だが、既存の Mind-Studio／EgoCS／D2E／video-glitch probes が event row、direct／inferred／missing、同期 stream、動画 defect span を扱う。後続 Phase 4a に具体的な gameplay video／telemetry pair がなく、別 probe の pending lease もあるため operational active にしない。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを state に記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

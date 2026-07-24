@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-24T10:44:45+09:00",
+  "updated_at": "2026-07-24T12:47:49+09:00",
   "reviewed_source_ts": [
+    "1780686897.406349",
     "1780577644.122259",
     "1784841957.382629",
     "1784834821.252529",
@@ -486,6 +487,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-24T12:47:49+09:00",
+      "selected": {
+        "id": "sr-1780686897-9289c4446d",
+        "source_ts": "1780686897.406349",
+        "title": "Player Experience Extraction from Gameplay Video",
+        "reason": "未レビュー条件を満たす atom のうち source_ts が最も新しい score 10 の1件で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。内部 log がない gameplay video を感想で終わらせず event sequence へ変換し、動画側の観察と telemetry の差分を測る提案が、現在の playable diff／playtest 記録に新しい行動差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で採用条件の必須閾値は満たす。shared-reads 本文は paired approach と transfer approach を分け、Gwario の30 event・約3500 frame・5-fold、Mega Man の5 event・80/20 split、Skyrim の10 activity と複数 split、さらに prototype ごとの5-10 event schema と30秒 annotation まで具体化しているため actionability は3とした。一方、2018年の AlexNet／ResNet 系手法で、Gwario は no-event baseline が88.0%に達する class imbalance があり、rare event 別の precision／recall、player／video 単位の独立 holdout、Skyrim のほぼ100% accuracy に対する clip leakage や domain diversity の検証が投稿本文からは確認できないため evidence=2に留める。新しい差は、小さな人手正解を作り video extractor と内部 telemetry の不一致を直接測る点だが、probe-20260626-mindstudio-executable-branch-preview は rule-bearing event row と held-out row／extractor_gap を、probe-20260622-egocs-causal-gameplay-log は input／view／state／event／outcome と直接記録・推論・欠損を、probe-20260622-d2e-synchronized-playtest-stream は frame／input／state／outcome の同期 stream を、probe-20260620-video-glitch-temporal-grounding は動画上の defect span と expected／observed state をすでに扱うため non_redundancy は1とした。現在の後続 Phase 4a には対象となる gameplay video／telemetry pair がなく、別 probe の pending lease も1件あるため、consumer、before／after artifact、期待判断差を lease 契約どおり指定できない。具体的な playtest 録画と対応 telemetry が同時に現れ、既存 probe だけでは extractor の誤差を判定できない時に再評価する。",
+      "existing_probes": [
+        "probe-20260626-mindstudio-executable-branch-preview",
+        "probe-20260622-egocs-causal-gameplay-log",
+        "probe-20260622-d2e-synchronized-playtest-stream",
+        "probe-20260620-video-glitch-temporal-grounding"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、採用閾値は満たすが具体的な gameplay video／telemetry pair がなく既存 trace probes と重なるため defer する理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-24T10:44:45+09:00",
       "selected": {
