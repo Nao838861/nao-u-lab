@@ -1,3 +1,4 @@
 - [nao-u-lab backup committer hazard](nao-u-lab-backup-committer-hazard.md) — 外部バックアップが worktree に commit を差し込む。commit 後は即 push + リモート先端検証
 - [shioji 提案待ちバックログ](shioji-elena-galge-backlog.md) — トリガー5段階（バッチ消化/サイクル完成/流通/完成後/夢物語）で Mir から再提案する約束。正本は repo の PROPOSAL_BACKLOG.md (2026-07-24)
 - [説明は一度言うことではない](principle-explanation-is-not-telling.md) — Nao_u の根源原則: 人は見ないし忘れる。プレイしながら理解できる状態でないといけない (2026-07-25)
+- [指示の希釈防止](feedback-instruction-dilution.md) — 指示書は索引・設計文書全文が正。議論の結論は全要素を文書本体へ。検証は設計書の受け入れ基準で (Nao_u 恒久指示 2026-07-25)
