@@ -65,7 +65,35 @@ reason: "Phase 2 の pass が空であり、投稿対象 candidate がない"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784889638-a249eef8fa
+    source_ts: "1784889638.957859"
+    title: "AdaMAST — evidence-grounded failure taxonomy を共有 feedback infrastructure にする"
+    reason: "未レビュー条件を満たす最新の score 10 atom で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。失敗 trace の再利用可能な3軸分類が、既存 control と異なる判断差を作るか確認するため選定した。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "複数 benchmark と annotation 検証があり根拠は強いが、比較用の同型失敗 trace 集合と具体的 consumer artifact が現 staging にない。既存の HarnessFix repair-scope、interactive-agent failure-layer、observability-layer、agent-repair-report constraints と判断面が重なり、active_probes 321件・Phase 4a 向け pending lease 1件の状態で A/B/C taxonomy を足すと確認負荷と語彙競合を増やす。合計12で採用条件14未満、risk_control も必須閾値2未満のため state-only review とする。"
+  change:
+    summary: "reviewed_source_ts と重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-24T19:45:00+09:00",
+  "updated_at": "2026-07-24T21:42:30+09:00",
   "reviewed_source_ts": [
+    "1784889638.957859",
     "1780679407.929099",
     "1784872621.515779",
     "1784864516.751069",
@@ -490,6 +491,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-24T21:42:30+09:00",
+      "selected": {
+        "id": "sr-1784889638-a249eef8fa",
+        "source_ts": "1784889638.957859",
+        "title": "AdaMAST — evidence-grounded failure taxonomy を共有 feedback infrastructure にする",
+        "reason": "未レビュー条件を満たす最新の score 10 atom で、memory・harness・game-design・agent・operation・evaluation の6優先タグを横断する。失敗 trace を A（system-level）・B（role-specific）・C（domain-specific）の介入層へ接地し、search・runtime repair・trajectory selection で再利用する発想が、現在の制作・評価 loop に新しい判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。本文は複数 benchmark、TRAIL expert annotation、圧縮率、κ、coverage を示し、強い主張と弱い主張も分離しているため evidence=3 とした。5件の失敗 trace で free-form reflection と evidence 付き3軸 code を比較する案は具体的だが、比較対象となる同型 trace 集合と consumer artifact が現 staging にないため actionability=2 とした。既存の probe-20260708-harnessfix-failure-anchor-repair-scope は failed_step・expected/observed effect・harness_layer・repair_scope を、probe-20260612-interactive-agent-failure-layer-split は Exploration・Modeling・Goal-Setting・Execution/Control・Observation の主要 bottleneck と discriminating run を、probe-20260708-observability-layer-cross-signal-check は observation layer と cross-layer evidence を、probe-20260717-agent-repair-report-constraints は再現手順・assertion・修復 trajectory をすでに要求する。さらに GameVerse review は failure_type と固定 retry 条件を既に採用済みであり、AdaMAST の A/B/C を追加しても現時点の介入層判定はほぼ増えないため non_redundancy=0 とした。active_probes が321件、Phase 4a 向け pending lease が1件ある状態で新 taxonomy を加えると確認負荷と語彙競合が増えるため risk_control=1 とした。raw trace を置換せず sidecar とする発想は保持するが、同型失敗 trace と具体的 consumer が揃うまで operational control にはしない。",
+      "existing_probes": [
+        "probe-20260708-harnessfix-failure-anchor-repair-scope",
+        "probe-20260612-interactive-agent-failure-layer-split",
+        "probe-20260708-observability-layer-cross-signal-check",
+        "probe-20260717-agent-repair-report-constraints"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存 failure-layer・repair-scope・observability・repair-report controls との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-24T19:45:00+09:00",
       "selected": {
