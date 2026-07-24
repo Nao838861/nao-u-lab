@@ -25,6 +25,19 @@ export const GUIDANCE_TIERS = Object.freeze({
   notice: Object.freeze({ label: '報告', action: '詳しく見る' }),
 });
 
+export function guidanceReadingTimeMs(
+  text,
+  { minimumMs = 5200, maximumMs = 10000, millisecondsPerCharacter = 115 } = {},
+) {
+  const characterCount = [...String(text ?? '').replace(/\s/g, '')].length;
+  return Math.min(maximumMs,
+    Math.max(minimumMs, characterCount * millisecondsPerCharacter));
+}
+
+export function secretaryEventsAfter(events = [], deliveredSequence = 0) {
+  return events.filter(event => Number(event?.sequence ?? 0) > deliveredSequence);
+}
+
 export function tutorialHandoffFor(previous, next) {
   if (!previous || !next) return null;
   const advanced = previous.id !== next.id;

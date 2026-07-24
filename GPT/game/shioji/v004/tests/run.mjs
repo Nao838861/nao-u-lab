@@ -49,7 +49,8 @@ import {
   TutorialDirector, createTutorialDirector, createTutorialDirectorForMode,
 } from '../src/tutorial_director.js';
 import {
-  GUIDANCE_TIERS, objectiveActionFor, secretaryRouteFor, tutorialHandoffFor,
+  GUIDANCE_TIERS, guidanceReadingTimeMs, objectiveActionFor, secretaryRouteFor,
+  secretaryEventsAfter, tutorialHandoffFor,
 } from '../src/ui_guidance.js';
 import { islandCalendar, islandHealthSummary, recentCompanySummary } from '../src/ui_summary.js';
 import { snapshotToViewModel } from '../src/view_model.js';
@@ -204,7 +205,7 @@ test('教程T/U: 全目標をエレナ概要と一意なsystem操作へ分け、
     ['first-road-and-logger', 'first-logger'],
     '最初は森への道と木こりを別々の目標として案内する',
   );
-  const forbidden = /適格日|EMA|snapshot|\btick\b|haulJobId|productionCost|\bengine\b|\bjournal\b|E-Stable/;
+  const forbidden = /適格日|教程|EMA|input棚|snapshot|\btick\b|haulJobId|productionCost|\bengine\b|\bjournal\b|E-Stable/;
   const forbiddenElena = /画面|ボタン|クリック|押して|できました。次の仕事|少しだけお待ち|銀が海を渡る|帳場|手数料/;
   for (const goal of TUTORIAL_GOALS) {
     assert.ok(TUTORIAL_PLAYER_TITLES[goal.id], `${goal.id}のplayer-facing目標名`);
@@ -248,7 +249,11 @@ test('教程T/U: 全目標をエレナ概要と一意なsystem操作へ分け、
   }).letters()[0];
   assert.equal(restoredOldLetter.elenaMessage, TUTORIAL_LETTER_MESSAGES['arrival-report']);
   const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  const contentSource = fs.readFileSync(new URL('../src/tutorial_content.js', import.meta.url), 'utf8');
   assert.doesNotMatch(main, /書状を閉じ、画面上部の現在目標/);
+  assert.doesNotMatch(contentSource,
+    /相場EMA|生産EMA|input棚|教程は|教程の必達条件|教程を止め/,
+    'Mir検査で見つかったプレイヤー向け内部語を発話・書状の原文へ戻さない');
 });
 
 test('教程V〜Y: 創発待ちは進行を止めず、注文残量と適時アドバイスを別層で扱う', () => {
@@ -2016,7 +2021,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.20.0-carts-development');
+  assert.equal(VERSION, 'v004.21.0-elena-reading');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -3243,10 +3248,30 @@ test('UI向上段9: 常駐エレナは強制書状を予告し、任意書状を
   });
   assert.equal(important.priority, 'important-event');
   assert.deepEqual(important.target, { kind: 'event', sequence: 2 });
+  assert.equal(
+    secretaryRouteFor({ events: secretaryEventsAfter(events, 2), fallback }),
+    fallback,
+    '一度伝えた重要イベントはエレナの常駐発話を占有し続けない',
+  );
+  const laterEvent = {
+    sequence: 3, important: true, elenaSpeech: 'その後に起きた、新しい出来事です。',
+  };
+  assert.equal(
+    secretaryRouteFor({ events: secretaryEventsAfter([...events, laterEvent], 2), fallback })
+      .target.sequence,
+    3,
+    '伝えた後でも、新しく起きた出来事は一度表示する',
+  );
   assert.equal(secretaryRouteFor({ events: events.slice(0, 1), fallback }), fallback);
+  assert.equal(guidanceReadingTimeMs('短い発話です。'), 5200);
+  assert.ok(guidanceReadingTimeMs('長い発話です。'.repeat(12)) > 5200,
+    '長い発話は文字数に応じて保持時間を延ばす');
+  assert.equal(guidanceReadingTimeMs('長文'.repeat(200)), 10000,
+    '極端な長文でも自動切替を無制限には遅らせない');
 
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const css = fs.readFileSync(new URL('../style.css', import.meta.url), 'utf8');
+  const mainSource = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
   assert.match(html, /id="secretary"/);
   assert.match(html, /elena_vance\.png/);
   assert.match(html, /<div id="secretary"[^>]*>[\s\S]*secretary-name[\s\S]*secretary-speech/);
@@ -3258,11 +3283,13 @@ test('UI向上段9: 常駐エレナは強制書状を予告し、任意書状を
   assert.match(css, /\.secretary\.guidance-switching/);
   assert.match(css, /\.tutorial-objective\.guidance-entering/);
   assert.doesNotMatch(html, /id="tutorial-(?:system|detail)"/);
-  assert.match(css, /\.observer\s*\{[^}]*z-index:\s*45[^}]*top:\s*var\(--elena-top\)[^}]*left:\s*max\(14px,[^}]*width:\s*min\(460px/s);
+  assert.match(css, /\.observer\s*\{[^}]*z-index:\s*45[^}]*top:\s*var\(--elena-top\)[^}]*left:\s*max\(14px,[^}]*width:\s*min\(640px/s);
   assert.match(css, /\.secretary\s*\{[^}]*rgba\(255,250,226[^}]*rgba\(235,220,181[^}]*color:\s*#392d20/s);
   assert.match(css, /\.sheet\s*\{[^}]*right:\s*14px[^}]*top:\s*var\(--sheet-panel-top\)/s);
   assert.match(css, /@media \(max-width:\s*980px\)[\s\S]*?\.observer\s*\{[^}]*left:\s*50%[^}]*transform:\s*translateX\(-50%\)/s);
   assert.match(css, /\.tutorial-objective-visible \.sheet\s*\{[^}]*top:/s);
+  assert.match(mainSource, /lastDeliveredSecretaryEventSequence/);
+  assert.match(mainSource, /IMPORTANT_EVENT_MINIMUM_MS\s*=\s*6500/);
 });
 
 test('UI向上段10: WASDは連続・斜め等速で、編集入力とmodifierを奪わず速度キーを案内する', () => {

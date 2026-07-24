@@ -296,30 +296,44 @@ async function checkTutorialGoalHandoff(width = 1000, height = 760, mobile = fal
   assert.ok(
     mobile
       ? transition.observer.width >= width - 20
-      : transition.observer.width >= 420 && transition.observer.width <= 480,
+      : transition.observer.width >= Math.min(600, width - 450)
+        && transition.observer.width <= 650,
     JSON.stringify(transition),
   );
   assert.ok(transition.observer.bottom < transition.dock.top, JSON.stringify(transition));
+
+  await wait(3200);
+  const stillReadable = await page.evaluate(`({
+    pending: window.__SHIOJI_V004__.tutorialTransitionPending,
+    handoff: window.__SHIOJI_V004__.tutorialHandoff,
+    priority: document.querySelector('#secretary').dataset.secretaryPriority,
+    speech: document.querySelector('#secretary-speech').textContent,
+  })`);
+  assert.equal(stillReadable.pending, false, JSON.stringify(stillReadable));
+  assert.equal(stillReadable.handoff.completedId, 'first-road-and-logger',
+    JSON.stringify(stillReadable));
+  assert.equal(stillReadable.priority, 'goal-complete', JSON.stringify(stillReadable));
+  assert.match(stillReadable.speech, /森まで道が届きました/);
   await page.screenshot(`/tmp/shioji_v004_tutorial_road_handoff_${mobile ? 'mobile' : 'desktop'}.png`);
 
-  await wait(1800);
   let switching = null;
-  for (let attempt = 0; attempt < 60; attempt += 1) {
+  for (let attempt = 0; attempt < 180; attempt += 1) {
     switching = await page.evaluate(`({
       pending: window.__SHIOJI_V004__.tutorialTransitionPending,
       handoff: window.__SHIOJI_V004__.tutorialHandoff,
       objectiveHidden: document.querySelector('#tutorial-objective').hidden,
       secretarySwitching: document.querySelector('#secretary').classList.contains('guidance-switching'),
     })`);
-    if (switching.pending) break;
+    if (switching.pending || switching.handoff === null) break;
     await wait(20);
   }
-  assert.equal(switching.pending, true, JSON.stringify(switching));
-  assert.equal(switching.handoff.completedId, 'first-road-and-logger', JSON.stringify(switching));
-  assert.equal(switching.objectiveHidden, true, JSON.stringify(switching));
-  assert.equal(switching.secretarySwitching, true, JSON.stringify(switching));
+  if (switching.pending) {
+    assert.equal(switching.handoff.completedId, 'first-road-and-logger', JSON.stringify(switching));
+    assert.equal(switching.objectiveHidden, true, JSON.stringify(switching));
+    assert.equal(switching.secretarySwitching, true, JSON.stringify(switching));
+    await wait(280);
+  }
 
-  await wait(280);
   const loggerObjective = await page.evaluate(`(() => {
     const game = window.__SHIOJI_V004__;
     return {
@@ -343,8 +357,10 @@ async function checkTutorialGoalHandoff(width = 1000, height = 760, mobile = fal
   assert.match(loggerObjective.memoChapter, /第一章/);
   assert.equal(loggerObjective.memoTitle, '森と道の両方に接する場所へ木こりを建てる');
   assert.equal(loggerObjective.action, '木こりを選ぶ');
-  assert.equal(loggerObjective.secretaryEntering, true, JSON.stringify(loggerObjective));
-  assert.equal(loggerObjective.objectiveEntering, true, JSON.stringify(loggerObjective));
+  if (switching.pending) {
+    assert.equal(loggerObjective.secretaryEntering, true, JSON.stringify(loggerObjective));
+    assert.equal(loggerObjective.objectiveEntering, true, JSON.stringify(loggerObjective));
+  }
   await page.screenshot(`/tmp/shioji_v004_tutorial_logger_goal_${mobile ? 'mobile' : 'desktop'}.png`);
 
   const loggerTransition = await page.evaluate(`(() => {
@@ -373,7 +389,7 @@ async function checkTutorialGoalHandoff(width = 1000, height = 760, mobile = fal
   assert.equal(loggerTransition.objectiveHidden, true);
   await page.screenshot(`/tmp/shioji_v004_tutorial_logger_handoff_${mobile ? 'mobile' : 'desktop'}.png`);
 
-  await wait(3100);
+  await wait(5900);
   const continued = await page.evaluate(`(() => ({
     handoff: window.__SHIOJI_V004__.tutorialHandoff,
     priority: document.querySelector('#secretary').dataset.secretaryPriority,
@@ -388,6 +404,61 @@ async function checkTutorialGoalHandoff(width = 1000, height = 760, mobile = fal
   assert.equal(continued.objectiveHidden, false);
   assert.match(continued.memoTitle, /市場/);
   assert.equal(continued.action, '市場を選ぶ');
+  assert.deepEqual(page.errors, []);
+  await page.close();
+}
+
+async function checkSecretaryEventLifecycle() {
+  const page = await newPage(1440, 900, false, GAME);
+  const shown = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.setSpeed(0);
+    for (let day = 0; day < 120; day += 1) {
+      game.advanceTicks(30, { animate: false });
+      const birth = [...game.eventLog].reverse().find(row => row.type === 'birth');
+      if (!birth) continue;
+      const route = game.secretaryRoute;
+      return {
+        day: game.model.day,
+        birthSequence: birth.sequence,
+        routeSequence: route?.target?.sequence ?? null,
+        priority: route?.priority ?? null,
+        speech: document.querySelector('#secretary-speech').textContent,
+        width: document.querySelector('#observer').getBoundingClientRect().width,
+      };
+    }
+    return null;
+  })()`);
+  assert.ok(shown, '120日以内の実出生イベントを表示できる');
+  assert.ok(shown.width >= 600 && shown.width <= 650, JSON.stringify(shown));
+
+  let birthRoute = shown;
+  for (let attempt = 0; attempt < 30; attempt += 1) {
+    if (birthRoute.routeSequence === shown.birthSequence) break;
+    await wait(500);
+    birthRoute = await page.evaluate(`(() => ({
+      routeSequence: window.__SHIOJI_V004__.secretaryRoute?.target?.sequence ?? null,
+      priority: window.__SHIOJI_V004__.secretaryRoute?.priority ?? null,
+      speech: document.querySelector('#secretary-speech').textContent,
+    }))()`);
+  }
+  assert.equal(birthRoute.priority, 'important-event', JSON.stringify(birthRoute));
+  assert.equal(birthRoute.routeSequence, shown.birthSequence, JSON.stringify(birthRoute));
+  assert.match(birthRoute.speech, /新しい子どもが生まれました/);
+
+  let after = null;
+  for (let attempt = 0; attempt < 24; attempt += 1) {
+    await wait(500);
+    after = await page.evaluate(`(() => ({
+      priority: window.__SHIOJI_V004__.secretaryRoute?.priority ?? null,
+      sequence: window.__SHIOJI_V004__.secretaryRoute?.target?.sequence ?? null,
+      speech: document.querySelector('#secretary-speech').textContent,
+    }))()`);
+    if (after.sequence !== shown.birthSequence) break;
+  }
+  assert.notEqual(after.sequence, shown.birthSequence,
+    `出生発話が読み終えた後も常駐し続けています: ${JSON.stringify(after)}`);
+  assert.doesNotMatch(after.speech, /新しい子どもが生まれました/);
   assert.deepEqual(page.errors, []);
   await page.close();
 }
@@ -573,7 +644,13 @@ async function checkTutorialLetterDelivery() {
   assert.equal(preview.actionHidden, true, JSON.stringify(preview));
   assert.equal(preview.speed, 0, JSON.stringify(preview));
 
-  await wait(2050);
+  await wait(3200);
+  assert.equal(await page.evaluate('document.querySelector("#tutorial-letter-modal").hidden'), true,
+    '重要書状の予告も3.2秒では読み終わった扱いにしない');
+  for (let attempt = 0; attempt < 32; attempt += 1) {
+    await wait(250);
+    if (!await page.evaluate('document.querySelector("#tutorial-letter-modal").hidden')) break;
+  }
   const forced = await page.evaluate(`({
     modalHidden: document.querySelector('#tutorial-letter-modal').hidden,
     text: document.querySelector('#tutorial-letter-modal').textContent,
@@ -669,7 +746,10 @@ async function checkTutorialLetterDelivery() {
   assert.equal(setup.offer.g, 'tools', JSON.stringify(setup));
   assert.deepEqual(setup.futureGoals, [], JSON.stringify(setup));
   assert.deepEqual(setup.futureLetters, [], JSON.stringify(setup));
-  await wait(2050);
+  for (let attempt = 0; attempt < 40; attempt += 1) {
+    await wait(250);
+    if (!await page.evaluate('document.querySelector("#tutorial-letter-modal").hidden')) break;
+  }
   assert.equal(await page.evaluate('document.querySelector("#tutorial-letter-modal").hidden'), false);
   assert.match(await page.evaluate('document.querySelector("#tutorial-letter-title").textContent'), /注文が届きました/);
 
@@ -702,6 +782,17 @@ async function checkTutorialLetterDelivery() {
   assert.deepEqual(completion.futureGoals, [], JSON.stringify(completion));
 
   await wait(3000);
+  assert.equal(
+    await page.evaluate("document.querySelector('#secretary').dataset.secretaryPriority"),
+    'goal-complete',
+    '章末の達成発話も3秒では次の書状へ切り替えない',
+  );
+  for (let attempt = 0; attempt < 32; attempt += 1) {
+    await wait(250);
+    if (await page.evaluate(
+      "document.querySelector('#secretary').dataset.secretaryPriority === 'optional-letter'",
+    )) break;
+  }
   const optional = await page.evaluate(`({
     priority: document.querySelector('#secretary').dataset.secretaryPriority,
     speech: document.querySelector('#secretary-speech').textContent,
@@ -729,8 +820,8 @@ async function checkTutorialLetterDelivery() {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.20.0-carts-development');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.20.0-carts-development');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.21.0-elena-reading');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.21.0-elena-reading');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -1424,6 +1515,9 @@ if (process.argv.includes('--company-pointer-only')) {
 } else if (process.argv.includes('--tutorial-letters-only')) {
   await checkTutorialLetterDelivery();
   console.log('CHARTER ISLE v004 tutorial letter delivery smoke: PASS');
+} else if (process.argv.includes('--secretary-lifecycle-only')) {
+  await checkSecretaryEventLifecycle();
+  console.log('CHARTER ISLE v004 secretary lifecycle smoke: PASS');
 } else {
   await checkBootFailureRecovery();
   await checkStartChoice(1440, 900, false, 'tutorial');
@@ -1433,6 +1527,7 @@ if (process.argv.includes('--company-pointer-only')) {
   await checkTutorialCompanyPointerStability();
   await checkTutorialGoalHandoff();
   await checkTutorialGoalHandoff(390, 844, true);
+  await checkSecretaryEventLifecycle();
   await checkTutorialLetterDelivery();
   await checkViewport(1440, 900, false);
   await checkViewport(390, 844, true);

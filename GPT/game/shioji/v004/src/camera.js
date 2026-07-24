@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.20.0-carts-development';
+import { TILE } from './config.js?v=v004.21.0-elena-reading';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

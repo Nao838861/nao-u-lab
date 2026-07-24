@@ -1,11 +1,11 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, SECTION_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.20.0-carts-development';
-import { islandCalendar } from './ui_summary.js?v=v004.20.0-carts-development';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.20.0-carts-development';
+} from './config.js?v=v004.21.0-elena-reading';
+import { islandCalendar } from './ui_summary.js?v=v004.21.0-elena-reading';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.21.0-elena-reading';
 import {
   buildingStructureLayout, pileVisual,
-} from './visuals.js?v=v004.20.0-carts-development';
+} from './visuals.js?v=v004.21.0-elena-reading';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 

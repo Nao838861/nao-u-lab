@@ -3,7 +3,7 @@ import {
   TUTORIAL_ELENA_COMPLETIONS, TUTORIAL_ELENA_MESSAGES, TUTORIAL_LETTER_MESSAGES,
   TUTORIAL_PLAYER_TITLES, TUTORIAL_SYSTEM_INSTRUCTIONS,
   authorTutorialLetter, isRequiredTutorialGoal, isTutorialGoalUnlocked, tutorialLetterDelivery,
-} from './tutorial_content.js?v=v004.20.0-carts-development';
+} from './tutorial_content.js?v=v004.21.0-elena-reading';
 
 const SAVE_VERSION = 1;
 

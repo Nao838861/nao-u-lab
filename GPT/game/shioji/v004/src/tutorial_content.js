@@ -2,8 +2,8 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.20.0-carts-development';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.20.0-carts-development';
+} from './engine_bridge.js?v=v004.21.0-elena-reading';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.21.0-elena-reading';
 
 const LIVING_REQUIREMENT_LABELS = Object.freeze({
   food1: '食料1種', food2: '食料2種', food3: '食料3種', grain: '穀物',
@@ -2120,7 +2120,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
         facts: { ...report, population: model.population, runwayDays, currentGoal },
         body: [
           `${model.day}日目。観測された死亡・離散事象はこの報告で${report.events}件、人数が確定できる事象では${report.peopleLost}人です。現在人口は${model.population}人、島内で見える食料は人口1人あたり${runwayDays.toFixed(1)}日分です。${report.message ? `実記録は「${report.message}」。` : ''}`,
-          `教程は食料を足さず、亡くなった人も戻しません。${currentGoal ? `未完了の目標「${currentGoal.title}」はそのままです。` : ''}市場と食料の流れを作るか、この帰結を抱えたまま別の道をお選びください。`,
+          `私は帳簿にない食料を足せず、亡くなった人を戻すこともできません。${currentGoal ? `まだ終えていない仕事「${currentGoal.title}」はそのままです。` : ''}市場と食料の流れを作るか、この帰結を抱えたまま別の道をお選びください。`,
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -2140,12 +2140,12 @@ export const TUTORIAL_LETTERS = Object.freeze([
       const balanceText = toDenari(model.companyMoney).toFixed(1);
       return {
         kicker: '会社・最終通告',
-        title: '帳簿は、教程の外でも閉じません',
+        title: '帳簿は、見ていない間も動きます',
         summary: `債務 ${debtText}デナリ・信用限度 ${limitText}デナリ・会社残高 ${balanceText}デナリ`,
         facts: { ...report, companyMoney: model.companyMoney, currentGoal },
         body: [
           `${model.day}日目。会社から最終通告が出ました。会社残高は${balanceText}デナリ、記録された債務は${debtText}デナリ、信用限度は${limitText}デナリです。`,
-          `教程は支出を取り消さず、帳簿を巻き戻しません。${currentGoal ? `未完了の目標「${currentGoal.title}」も消えていません。` : ''}この島は同じ規則のまま続きます。`,
+          `支出を取り消し、帳簿を巻き戻すことはできません。${currentGoal ? `まだ終えていない仕事「${currentGoal.title}」も消えていません。` : ''}この島は同じ規則のまま続きます。`,
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -2563,7 +2563,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
           `最初の注文で、会社の実台帳には売上${toDenari(revenue).toFixed(1)}デナリが入りました。同じ時点までに、本土から買った食料の仕入は累計${toDenari(foodOutflow).toFixed(1)}デナリです。`,
           `食料支援は${aidRequests}回要請しましたが、贈与なのでこの仕入額には含まれません。輸出で代金を得る道は通りました。次は、島の食卓を本土任せにせず、島の中で作る番です。`,
         ].join('\n\n') : [
-          '最初の注文は納め切れませんでしたが、教程はここで止まりません。帳場には残量と期限が残るので、次の注文では準備と進み具合を自分で確かめられます。',
+          '最初の注文は納め切れませんでしたが、島の歩みはここで止まりません。帳場には残量と期限が残るので、次の注文では準備と進み具合を自分で確かめられます。',
           `同じ時点までに、本土から買った食料の仕入は累計${toDenari(foodOutflow).toFixed(1)}デナリです。次は島の食料づくりと道を整え、暮らしを立て直します。`,
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
@@ -2750,7 +2750,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
         summary: `${goodsLabel(facts.goods)} ${facts.peakAvailability.toFixed(1)}→${facts.available.toFixed(1)}荷・相場 ${(facts.price * 10).toFixed(1)}デナリ`,
         facts: { ...facts, firstOrderGoods: firstGoods, staleTarget },
         body: [
-          `${facts.peakDay}日目に市場で見えた${goodsLabel(facts.goods)}の余剰は${facts.peakAvailability.toFixed(1)}荷でしたが、${facts.day}日目には${facts.available.toFixed(1)}荷、ピークの${(facts.valleyRatio * 100).toFixed(1)}%まで薄くなりました。その日の相場EMAは1荷あたり${(facts.price * 10).toFixed(1)}デナリです。`,
+          `${facts.peakDay}日目に市場で見えた${goodsLabel(facts.goods)}の余剰は${facts.peakAvailability.toFixed(1)}荷でしたが、${facts.day}日目には${facts.available.toFixed(1)}荷、ピークの${(facts.valleyRatio * 100).toFixed(1)}%まで薄くなりました。その日のならした相場は1荷あたり${(facts.price * 10).toFixed(1)}デナリです。`,
           `${firstGoods ? `最初の注文で定めた${goodsLabel(firstGoods)}の買上げ目標は、いまも${staleTarget}荷のままです。役目を終えた命令は0へ戻し、` : ''}${goodsLabel(facts.goods)}の買上げ目標を${SEASONAL_RESERVE_TARGET}荷にしてください。目標は注文ではなく、余る季節の品を会社の倉庫へ備えるためにも使えます。`,
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
@@ -2850,7 +2850,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
         facts: { goods: reserve.goods, target },
         body: [
           `${model.day}日目。${goodsLabel(reserve.goods)}の買上げ目標を${target}荷にしました。市場に余りが出れば会社が買い、実物が倉庫へ届きます。`,
-          '品薄の好機は季節や住民の売買で変わるため、教程の必達条件にはしません。実際に好機が来た時だけ、エレナがお知らせします。見送っても教程は進みます。',
+          '品薄の好機は季節や住民の売買で変わるため、この章を終える条件にはしません。実際に好機が来た時だけ、エレナがお知らせします。見送っても次へ進めます。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -2975,7 +2975,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
           '注文状は命令ではありません。決済と市場を比べ、取引資金を使うか決めること。引き受けない自由も総督のものです。',
         ].join('\n\n') : [
           '注文は届く時期も内容も島の生産によって変わります。好都合な注文を必達条件として待たせず、届いた時に帳場で決済単価、市場最安、残量、期限を比べられるようにしました。',
-          '利益を見込める注文や見送るべき注文が実際に来た時は、エレナが観測結果を報告します。教程を止めず、自分の島の商いとして判断できます。',
+          '利益を見込める注文や見送るべき注文が実際に来た時は、エレナが観測結果を報告します。この章を止めず、自分の島の商いとして判断できます。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -2995,8 +2995,8 @@ export const TUTORIAL_LETTERS = Object.freeze([
         summary: `底値 ${(facts.minimumPrice * 10).toFixed(1)}→${(facts.currentPrice * 10).toFixed(1)}デナリ/荷（+${(facts.ratio * 100).toFixed(1)}%）`,
         facts,
         body: [
-          `${facts.minimumDay}日目に1荷あたり${(facts.minimumPrice * 10).toFixed(1)}デナリだった木製品相場EMAが、${facts.currentDay}日目には${(facts.currentPrice * 10).toFixed(1)}デナリ、底から${(facts.ratio * 100).toFixed(1)}%上がりました。台詞のための固定相場ではなく、この島で動いた実値です。`,
-          '既設の木工房に加え、炭焼き小屋と塩田をお置きください。木工と炭焼き小屋は丸太を、塩田は木炭をinput棚へ買い、木製品・木炭・塩へ作り替えます。',
+          `${facts.minimumDay}日目に1荷あたり${(facts.minimumPrice * 10).toFixed(1)}デナリだった、ならした木製品相場が、${facts.currentDay}日目には${(facts.currentPrice * 10).toFixed(1)}デナリ、底から${(facts.ratio * 100).toFixed(1)}%上がりました。台詞のための固定相場ではなく、この島で動いた実値です。`,
+          '既設の木工房に加え、炭焼き小屋と塩田をお置きください。木工と炭焼き小屋は丸太を、塩田は木炭を原料棚へ買い、木製品・木炭・塩へ作り替えます。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -3016,8 +3016,8 @@ export const TUTORIAL_LETTERS = Object.freeze([
         summary: rows.map(row => `${row.label}${row.buildingCount}棟`).join('・'),
         facts: { rows },
         body: [
-          `${model.day}日目。${rows.map(row => `${row.label}${row.buildingCount}棟`).join('、')}が島に揃いました。建物を置いただけでは品は生まれません。移民が入り、原料を市場で買ってinput棚へ運ぶまでを待ちます。`,
-          'input棚の中身、原料相場、作る品の原価と生産EMAを、同じ瞬間の実帳面で並べてご報告します。',
+          `${model.day}日目。${rows.map(row => `${row.label}${row.buildingCount}棟`).join('、')}が島に揃いました。建物を置いただけでは品は生まれません。移民が入り、原料を市場で買って原料棚へ運ぶまでを待ちます。`,
+          '原料棚の中身、原料相場、作る品の原価と1日あたりの生産量を、同じ瞬間の実帳面で並べてご報告します。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -3037,11 +3037,11 @@ export const TUTORIAL_LETTERS = Object.freeze([
       return {
         kicker: '原価連鎖の実測',
         title: '丸太から木製品と木炭へ、木炭から塩へ',
-        summary: `生産EMA 木製品${woodshop.productionEma.toFixed(2)}・木炭${charburner.productionEma.toFixed(2)}・塩${saltworks.productionEma.toFixed(2)}`,
+        summary: `1日あたりの生産 木製品${woodshop.productionEma.toFixed(2)}・木炭${charburner.productionEma.toFixed(2)}・塩${saltworks.productionEma.toFixed(2)}`,
         facts,
         body: [
-          `${model.day}日目。丸太相場は1荷あたり${(facts.logPrice * 10).toFixed(1)}デナリ。木工房のinput棚には${woodshop.inputAmount.toFixed(1)}荷あり、木製品の実生産原価は${(woodshop.cost * 10).toFixed(1)}デナリ/荷、生産EMAは${woodshop.productionEma.toFixed(2)}です。炭焼き小屋のinput棚は丸太${charburner.inputAmount.toFixed(1)}荷、木炭原価${(charburner.cost * 10).toFixed(1)}デナリ/荷、生産EMA${charburner.productionEma.toFixed(2)}です。`,
-          `その木炭相場は1荷あたり${(facts.charPrice * 10).toFixed(1)}デナリ。塩田のinput棚には${saltworks.inputAmount.toFixed(1)}荷あり、塩の実生産原価は${(saltworks.cost * 10).toFixed(1)}デナリ/荷、生産EMAは${saltworks.productionEma.toFixed(2)}です。原料の値が次の作り手の原価へ渡る——これが島内の連鎖です。`,
+          `${model.day}日目。丸太相場は1荷あたり${(facts.logPrice * 10).toFixed(1)}デナリ。木工房の原料棚には${woodshop.inputAmount.toFixed(1)}荷あり、木製品の実生産原価は${(woodshop.cost * 10).toFixed(1)}デナリ/荷、1日あたりの生産は${woodshop.productionEma.toFixed(2)}荷です。炭焼き小屋の原料棚は丸太${charburner.inputAmount.toFixed(1)}荷、木炭原価${(charburner.cost * 10).toFixed(1)}デナリ/荷、1日あたりの生産は${charburner.productionEma.toFixed(2)}荷です。`,
+          `その木炭相場は1荷あたり${(facts.charPrice * 10).toFixed(1)}デナリ。塩田の原料棚には${saltworks.inputAmount.toFixed(1)}荷あり、塩の実生産原価は${(saltworks.cost * 10).toFixed(1)}デナリ/荷、1日あたりの生産は${saltworks.productionEma.toFixed(2)}荷です。原料の値が次の作り手の原価へ渡る——これが島内の連鎖です。`,
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -3119,7 +3119,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
           `木工房・炭焼き小屋・塩田は${survival.startDay}日目から${survival.currentDay}日目まで、連続${survival.elapsedDays}日存続しました。丸太は木製品と木炭へ、木炭は塩へ渡り、三つの品の生産が続いています。`,
           `${levelUp.day}日目には${levelUp.job}#${levelUp.householdId}がLv${levelUp.level}へ上がり、建物${levelUp.buildingId}の外観にも反映されました。${vacancyBody}`,
         ].join('\n\n') : [
-          '木工房・炭焼き小屋・塩田が揃いました。入植、原料の入荷、相場の変化、90日の存続は創発する結果なので、教程の必達条件にはしません。',
+          '木工房・炭焼き小屋・塩田が揃いました。入植、原料の入荷、相場の変化、90日の存続は島の営みから生まれる結果なので、この章を終える条件にはしません。',
           '建物を押せば原料棚と産出棚、実際にかかった原価を読めます。変化が実際に起きた時だけ、エレナが止めない報告としてお知らせします。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',

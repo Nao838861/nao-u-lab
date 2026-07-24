@@ -174,7 +174,7 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   z-index: 45;
   top: var(--elena-top);
   left: max(14px, env(safe-area-inset-left));
-  width: min(460px, calc(100vw - 28px));
+  width: min(640px, calc(100vw - 440px));
   transform: none;
 }
 .secretary { width: 100%; min-width: 0; min-height: 124px; display: grid; grid-template-columns: 104px minmax(0,1fr); gap: 13px; align-items: stretch; margin: 0; padding: 0; overflow: hidden; border: 1px solid rgba(110,81,43,.94); border-radius: 12px; background: linear-gradient(105deg, rgba(255,250,226,.82), rgba(235,220,181,.98) 30%, rgba(224,202,150,.98)); box-shadow: 0 16px 38px rgba(0,0,0,.36), inset 0 0 0 2px rgba(255,250,228,.45), inset 0 -18px 32px rgba(112,78,36,.08); color: #392d20; text-align: left; }

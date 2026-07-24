@@ -1,4 +1,4 @@
-import { BUILDING_SIZES } from './config.js?v=v004.20.0-carts-development';
+import { BUILDING_SIZES } from './config.js?v=v004.21.0-elena-reading';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

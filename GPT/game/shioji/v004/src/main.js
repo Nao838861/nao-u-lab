@@ -1,27 +1,28 @@
-import { IsometricCamera } from './camera.js?v=v004.20.0-carts-development';
-import { SimulationClock } from './clock.js?v=v004.20.0-carts-development';
+import { IsometricCamera } from './camera.js?v=v004.21.0-elena-reading';
+import { SimulationClock } from './clock.js?v=v004.21.0-elena-reading';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.20.0-carts-development';
+} from './config.js?v=v004.21.0-elena-reading';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.20.0-carts-development';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.20.0-carts-development';
-import { developmentMapView } from './development_map.js?v=v004.20.0-carts-development';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.20.0-carts-development';
+} from './display_batch.js?v=v004.21.0-elena-reading';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.21.0-elena-reading';
+import { developmentMapView } from './development_map.js?v=v004.21.0-elena-reading';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.21.0-elena-reading';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.20.0-carts-development';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.20.0-carts-development';
-import { WorldPresentation } from './presentation.js?v=v004.20.0-carts-development';
-import { Renderer } from './renderer.js?v=v004.20.0-carts-development';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.20.0-carts-development';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.20.0-carts-development';
+} from './keyboard.js?v=v004.21.0-elena-reading';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.21.0-elena-reading';
+import { WorldPresentation } from './presentation.js?v=v004.21.0-elena-reading';
+import { Renderer } from './renderer.js?v=v004.21.0-elena-reading';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.21.0-elena-reading';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.21.0-elena-reading';
 import {
-  objectiveActionFor, secretaryRouteFor, tutorialHandoffFor,
-} from './ui_guidance.js?v=v004.20.0-carts-development';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.20.0-carts-development';
+  guidanceReadingTimeMs, objectiveActionFor, secretaryEventsAfter, secretaryRouteFor,
+  tutorialHandoffFor,
+} from './ui_guidance.js?v=v004.21.0-elena-reading';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.21.0-elena-reading';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -63,6 +64,7 @@ let tutorialObjectiveEnterTimer = null;
 let secretaryEnterTimer = null;
 let secretaryDeliveryTimer = null;
 let secretaryDeliveryKey = null;
+let lastDeliveredSecretaryEventSequence = 0;
 let highSpeedPendingTicks = 0;
 const pressedMovementKeys = new Set();
 const companyInteractionPointers = new Set();
@@ -76,12 +78,13 @@ const renderSignatures = new Map();
 const economyHistory = [];
 const stockReleaseDays = [];
 const HISTORY_DAYS = 180;
-const TUTORIAL_HANDOFF_HOLD_MS = 2600;
 const TUTORIAL_HANDOFF_GAP_MS = 240;
 const GUIDANCE_ENTER_MS = 420;
-const FORCED_LETTER_DELAY_MS = 1800;
-const OPTIONAL_LETTER_NOTICE_MS = 3400;
-const TUTORIAL_MESSAGE_NOTICE_MS = 2600;
+const FORCED_LETTER_MINIMUM_MS = 5200;
+const OPTIONAL_LETTER_MINIMUM_MS = 6500;
+const TUTORIAL_MESSAGE_MINIMUM_MS = 5800;
+const INFO_ADVICE_MINIMUM_MS = 5800;
+const IMPORTANT_EVENT_MINIMUM_MS = 6500;
 const CHART_FOOD_GOODS = new Set(['fish', 'veg', 'wheat', 'pres', 'pick', 'meat']);
 const uiMetrics = {
   domUpdates: 0,
@@ -926,7 +929,7 @@ function holdTutorialHandoff(handoff) {
   if (tutorialHandoffTimer !== null) clearTimeout(tutorialHandoffTimer);
   tutorialHandoffTimer = setTimeout(() => {
     if (currentTutorialHandoff === handoff) finishTutorialHandoff();
-  }, TUTORIAL_HANDOFF_HOLD_MS);
+  }, guidanceReadingTimeMs(handoff.speech));
 }
 
 function renderTutorial() {
@@ -954,7 +957,7 @@ function renderTutorial() {
     currentTutorialAction ? `押すと${currentTutorialAction.label}` : '現在目標の操作を始める');
   renderBuildDock();
   if (state?.skipped) setTextIfChanged('#start-mode-label', '自由プレイ（案内終了）');
-  else if (tutorialDirector?.isComplete()) setTextIfChanged('#start-mode-label', '自由プレイ（教程完了）');
+  else if (tutorialDirector?.isComplete()) setTextIfChanged('#start-mode-label', '自由プレイ（案内完了）');
   if (objective) {
     const systemInstruction = objective.systemInstruction || objective.title;
     setTextIfChanged('#tutorial-chapter', objective.chapter);
@@ -1022,7 +1025,7 @@ function renderSecretary() {
     handoff: currentTutorialHandoff,
     objective: tutorialDirector?.isComplete() ? null : objective,
     objectiveAction: currentTutorialAction,
-    events: eventLog,
+    events: secretaryEventsAfter(eventLog, lastDeliveredSecretaryEventSequence),
     fallback: secretaryFallback(),
   });
   const signature = JSON.stringify(currentSecretaryRoute);
@@ -1066,10 +1069,20 @@ function renderSecretary() {
 function scheduleSecretaryDelivery(route) {
   const target = route?.target ?? null;
   const delivery = target?.kind === 'letter' ? target.delivery : target?.kind;
-  const delay = delivery === 'forced' ? FORCED_LETTER_DELAY_MS
-    : delivery === 'letter' ? OPTIONAL_LETTER_NOTICE_MS
-      : delivery === 'message' ? TUTORIAL_MESSAGE_NOTICE_MS : null;
-  const key = delay === null ? null : `${delivery}:${target.id}`;
+  const transientAdvice = delivery === 'advice' && route?.priority === 'timely-message';
+  const delay = delivery === 'forced'
+    ? guidanceReadingTimeMs(route.speech, { minimumMs: FORCED_LETTER_MINIMUM_MS })
+    : delivery === 'letter'
+      ? guidanceReadingTimeMs(route.speech, { minimumMs: OPTIONAL_LETTER_MINIMUM_MS })
+      : delivery === 'message'
+        ? guidanceReadingTimeMs(route.speech, { minimumMs: TUTORIAL_MESSAGE_MINIMUM_MS })
+        : transientAdvice
+          ? guidanceReadingTimeMs(route.speech, { minimumMs: INFO_ADVICE_MINIMUM_MS })
+        : delivery === 'event'
+          ? guidanceReadingTimeMs(route.speech, { minimumMs: IMPORTANT_EVENT_MINIMUM_MS })
+          : null;
+  const deliveryId = delivery === 'event' ? target.sequence : target?.id;
+  const key = delay === null ? null : `${delivery}:${deliveryId}`;
   if (delivery === 'forced' || delivery === 'letter') pauseForTutorialInterlude();
   else if (delivery === 'message') resumeTutorialInterludeIfReady();
   if (key === secretaryDeliveryKey) return;
@@ -1084,14 +1097,23 @@ function scheduleSecretaryDelivery(route) {
     secretaryDeliveryTimer = null;
     if (secretaryDeliveryKey !== key) return;
     const currentTarget = currentSecretaryRoute?.target;
-    if (currentTarget?.id !== target.id) return;
+    if (delivery === 'event') {
+      if (currentTarget?.sequence !== target.sequence) return;
+    } else if (currentTarget?.id !== target.id) return;
     secretaryDeliveryKey = null;
     if (delivery === 'forced') {
       if (openTutorialLetterId === null) openTutorialLetter(target.id);
       return;
     }
     if (delivery === 'letter') tutorialDirector?.markLetterAnnounced(target.id);
-    else tutorialDirector?.markLetterRead(target.id);
+    else if (delivery === 'message') tutorialDirector?.markLetterRead(target.id);
+    else if (transientAdvice) guidanceDirector.markAdviceRead(target.id);
+    else if (delivery === 'event') {
+      lastDeliveredSecretaryEventSequence = Math.max(
+        lastDeliveredSecretaryEventSequence,
+        Number(target.sequence ?? 0),
+      );
+    }
     renderTutorial();
     renderSecretary();
   }, delay);
@@ -1663,7 +1685,12 @@ $('#secretary-letter-action').addEventListener('click', event => {
     guidanceDirector.markAdviceRead(target.id);
     performGuidanceAction(target.route);
   } else if (target.kind === 'event') {
+    lastDeliveredSecretaryEventSequence = Math.max(
+      lastDeliveredSecretaryEventSequence,
+      Number(target.sequence ?? 0),
+    );
     focusEvent(eventLog.find(row => row.sequence === target.sequence));
+    renderSecretary();
   } else {
     performGuidanceAction(target);
   }
