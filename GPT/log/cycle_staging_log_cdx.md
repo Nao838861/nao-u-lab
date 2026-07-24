@@ -43,7 +43,18 @@ duplicate_preflight:
 - ゲーム制作への適用: 生活感や場所の記憶を扱う小規模 prototype で、最小動詞を先に作り、身近な協力者の即興から場面設計を更新する手順へ落とせる。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260724_despelote_improvised_neorealism.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784903981504579
+    char_count: 4275
+skipped: []
+```
+
+- 最終判定: 投稿。原記事と、記事が設計思想の根拠として参照する Robert Yang の video game neorealism 論を照合した。
+- 投稿前レビュー: 必須セクション順、`■ 概要` 開始、`■ URL` 末尾、禁止語不在、3500–4500 字範囲を確認。`tools/shared_reads_policy.py` の検査は `ok`。
+- Slack 検証: 1 回の `chat.postMessage` で投稿し、保存テキストの文字化け検査は `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
