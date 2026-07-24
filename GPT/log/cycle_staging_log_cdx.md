@@ -18,7 +18,40 @@
 - Phase 1 では品質判定・4000字概要化・Slack 投稿を行っていない。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+evaluated_at: "2026-07-24T21:36:20+09:00"
+total_candidates: 1
+pass: []
+fail:
+  - path: memory/shared_reads_candidates/20260724_harness_induced_belief_divergence.md
+    reason: "arXiv work ID・正規化 URL・題名・内容が既存 ready_to_post candidate と一致し、独立した追加情報がない"
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight_audit:
+  builder_refresh:
+    posted_source_rows: 601
+    title_canonical_rows: 67
+    open_duplicate_group_rows: 57
+    freshness_check: passed
+  candidate_path: memory/shared_reads_candidates/20260724_harness_induced_belief_divergence.md
+  decision: review
+  reason: open_duplicate_title_match
+  group_kind: mixed
+  representative: memory/shared_reads_candidates/20260723_harness_induced_belief_divergence.md
+  work_identity_evidence: "arxiv:2607.04528 / canonical URL https://arxiv.org/abs/2607.04528"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
