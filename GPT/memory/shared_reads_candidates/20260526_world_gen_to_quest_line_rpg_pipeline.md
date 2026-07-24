@@ -7,12 +7,12 @@ genre_tags: [game-design, rpg, narrative-generation, llm, procedural-content-gen
 evaluated_at: "2026-05-26T03:11:06+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-07-12T10:15:54+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md"
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-25T03:50:41+09:00"
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-0ebf6b845bdd81d0; terminal:memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md: posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833809466169; reason:4件は同一 arXiv work 2604.25482 の URL variant で、20260515 candidate に実投稿 permalink があるため重複として閉じる。"
 stale_after: "2026-08-11"
 supersedes: []
 next_action: none

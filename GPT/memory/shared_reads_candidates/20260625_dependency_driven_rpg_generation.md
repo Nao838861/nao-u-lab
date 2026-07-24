@@ -7,15 +7,16 @@ genre_tags: [rpg, narrative-generation, llm, procedural-content, structured-ir]
 evaluated_at: "2026-06-25T07:52:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-25T07:52:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-25T07:52:00+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-25T03:50:41+09:00"
+last_decision: failed
+evidence: "group_handoff:gha-0ebf6b845bdd81d0; terminal:memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md: posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833809466169; reason:4件は同一 arXiv work 2604.25482 の URL variant で、20260515 candidate に実投稿 permalink があるため重複として閉じる。"
+next_action: none
 stale_after: "2026-07-25"
 supersedes: []
 gate_reason: "依存順に world/NPC/PC/campaign/quest expansion を分ける着想は、RPG/ADV の生成パイプラインに使える。ただし現候補は abstract ベースで、評価の具体例と失敗例が薄く、CoopEval 水準の4000字概要にするには本文確認が必要。"
+duplicate_reason: failed_duplicate_of_terminal_sibling
 ---
 
 ## raw_excerpt

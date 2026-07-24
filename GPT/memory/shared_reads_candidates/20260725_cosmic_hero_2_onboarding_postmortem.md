@@ -4,6 +4,26 @@ url: "https://pazur3d.itch.io/cosmic-hero-2-prologue/devlog/1375110/postmortem-t
 collected_at: "2026-07-25T03:49:14+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, postmortem, puzzle, onboarding, difficulty-curve, level-design]
+evaluated_at: "2026-07-25T03:50:43+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-25T03:50:43+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-25T03:50:43+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-24"
+supersedes: []
+gate_reason: >-
+  「説明を削る」「短ければ耐える」「発見させる」という三つの設計仮説を、2～6分の離脱 trace と具体 map 構成で反証している。
+  mechanic の一要素ずつの導入、breathing map、再周回強制の監査へ直結し、約4000字で失敗条件まで説明できる。
+suggested_post_outline:
+  overview_angle: "tutorial の有無ではなく、最初の数分で player が一度に解く不確実性の数を playthrough trace から減らす設計として書く。"
+  analysis_axis: "早期離脱地点、laser barrier、複数 mechanic の同時導入、難度曲線、secret による再周回要求を仮説と観察結果の対応で分析する。"
+  application_target: "Nao_u_BOT の puzzle / action prototype で最初の10分を action 単位に分解し、初見 trace の停止点と同時導入要素数を評価する。"
+  pros_cons: "小規模でもすぐ試せる診断軸になる一方、少数の公開 playthrough は母集団を代表せず、難度を下げるだけでは作品固有の発見性を損なう。"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt
