@@ -81,7 +81,127 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+audited_at: "2026-07-25T01:52:25+09:00"
+cleaned:
+  - "shared_reads_open_duplicate_group_queue / stale_triage_queue / group_action_queue を所定順で再生成した"
+  - "actionable な mixed duplicate 1群を handoff inbox へ cycle ID 付きで冪等 enqueue した (gha-0ebf6b845bdd81d0)"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+memory_index_audit:
+  broken_link_count: 0
+  validator: "OK: memory/MEMORY.md entry sections match per-file atom index"
+  source_file_status: "UTF-8 明示読み成功。代表語は 記憶 / ゲーム設計 / 敵パターン を取得し、評価軸の完全一致語は本文に存在しなかった。日本語本文と index 構造に破損兆候なし"
+  display_or_tooling_status: "none"
+atom_audit:
+  atoms_jsonl_rows: 2738
+  per_file_rows: 2738
+  index_rows: 2738
+  parse_errors: 0
+  content_conflicts: 0
+  canonical_overlay_duplicate_groups: 45
+  recall_visible_duplicate_groups: 3
+  duplicate_handling: "既存 canonical overlay で非破壊 fold 済み。新しい矛盾・mirror drift は検出されなかった"
+  encoding_findings:
+    - atom_id: "sr-1776127289-4d9239b255"
+      source_file_status: "UTF-8 読みで raw slack archive と atom の双方に AIエ��ジェント を確認。source artifact 自体に replacement character がある既知の単発破損"
+      display_or_tooling_status: "表示経路の mojibake ではない"
+    - atom_id: "gr-1777083728-44d444ab7a"
+      source_file_status: "UTF-8 読みで atom / raw Slack とも正常。本文中の意図的な ??? を health check が疑義扱いした false positive"
+      display_or_tooling_status: "none"
+raw_archive_audit:
+  raw_file_count: 245
+  inactive_over_30_days: 95
+  archived_now: 0
+  decision: "古い対象は slack_archive と論文・調査の一次資料が中心で provenance 保持中。単独で安全に退避すべき対象はなく、広範移動は行わなかった"
+candidate_lifecycle:
+  files: 1087
+  counts:
+    posted: 472
+    ready_to_post: 10
+    postponed: 335
+    failed: 251
+    needs_review: 18
+    skipped_unreviewed: 1
+  overdue_open_total: 192
+  missing_stale_after: 4
+  missing_stale_after_note: "3件は posted、1件は開始時から未追跡の未評価 candidate。postponed / needs_review の stale_after 欠損ではない"
+  current_state_conflicts: 0
+  historical_gate_notes: 14
+  historical_gate_note_detail: "stale_after が古い filename 基準の30日既定値と異なるだけで、現在状態と decision evidence は整合"
+inbox_audit:
+  directives_pending: 0
+  broadcasts_pending: 0
+  handled_now: 0
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 192
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 57
+  mixed_group_count: 50
+  all_open_group_count: 7
+  actionable_group_count: 1
+  remaining_actionable_group_count_after_live_lease: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total は queue 収載数を超えるが、actionable group が3件未満のため両条件を満たさない"
+  group_handoff_budget: 1
+  handed_off_group_count: 1
+  handoff_inbox_pending_count: 1
+  handoff_inbox_ids:
+    - "gha-0ebf6b845bdd81d0"
+group_action_handoff:
+  - id: "gha-0ebf6b845bdd81d0"
+    group_key: "from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation"
+    group_kind: mixed
+    representative: "memory/shared_reads_candidates/20260625_dependency_driven_rpg_generation.md"
+    open_siblings:
+      - "memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md"
+      - "memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md"
+      - "memory/shared_reads_candidates/20260625_dependency_driven_rpg_generation.md"
+      - "memory/shared_reads_candidates/20260708_rpg_dependency_prompt_pipeline.md"
+    terminal_siblings:
+      - "memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md"
+      - "memory/shared_reads_candidates/20260609_world_gen_to_quest_line_rpg_pipeline.md"
+    latest_evidence:
+      path: "memory/shared_reads_candidates/20260625_dependency_driven_rpg_generation.md"
+      stale_after: "2026-07-25"
+      reason: "依存順の生成 pipeline はゲーム転用価値が高いが、abstract ベースで評価例と失敗例が薄く、同一 title 群を URL evidence 込みで再評価する必要がある"
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "Zork による探索・計画限界は headless playtest に直結するが、position paper の評価条件・失敗分類・model 比較を本文で補う必要がある"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "検証可能な遷移を持つ短い puzzle benchmark は制作評価へ転用しやすいが、実験設計・比較対象・結果が candidate だけでは不足する"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260516_inmind_social_deduction_reasoning_styles.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "social deduction の個別推論 style 追跡は有用だが、評価指標・失敗例の精読と過去投稿断片との重複確認が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260516_pangea_procedural_artificial_narrative.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "memory / validation / Unity demo の接続はゲーム転用価値が高いが、empirical study・ablation・失敗例の根拠が不足する"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260517_access_profiles_game_accessibility.md"
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "accessibility を player / developer / engine / launcher / retailer 間の基盤として扱う着想が具体的で、本文評価を再確認する価値が高い"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
