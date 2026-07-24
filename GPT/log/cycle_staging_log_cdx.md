@@ -51,7 +51,35 @@ reason: "Phase 2 の pass が空のため、Phase 3 の最終レビュー対象�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784919561-2ba0983a2b
+    source_ts: "1784919561.878169"
+    title: "Cosmic Hero 2 Prologue — discovery と mastery を三段階に分ける onboarding postmortem"
+    reason: "未レビュー条件を満たす score 10 以上の atom のうち source_ts が最新で、harness・game-design・operation・evaluation の4優先タグを持つ。固定観察→一変数操作→自由応用が既存 onboarding／rule-discovery probes と異なる次回行動を作るか確認するため選んだ"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回る。単一作者の回顧と数件の動画は原因仮説には使えるが、改善版 A/B、人間の因果理解、clear time・retry・離脱率の再測定がない。三段階 scene と consolidation scene は具体的だが、insight-design-discovery-path、game-learning-hypothesis-trace、mechanic-observation-channel-gate、tutorial-order-controller-sensitivity が観察→行動、未知 rule と transfer、初見 observation channel、segment 順序を既に扱う。321件の active_probes と Phase 4a 向け pending lease があるため、新規 control は増やさない"
+  change:
+    summary: "reviewed_source_ts と state-only review を追加した。probe・metric・lease・directive・恒久ルールは追加していない"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-25T04:04:23+09:00",
+  "updated_at": "2026-07-25T06:10:46+09:00",
   "reviewed_source_ts": [
+    "1784919561.878169",
     "1780628654.631239",
     "1784903981.504579",
     "1780671443.002719",
@@ -494,6 +495,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-25T06:10:46+09:00",
+      "selected": {
+        "id": "sr-1784919561-2ba0983a2b",
+        "source_ts": "1784919561.878169",
+        "title": "Cosmic Hero 2 Prologue — discovery と mastery を三段階に分ける onboarding postmortem",
+        "reason": "未レビュー条件を満たす score 10 以上の atom のうち source_ts が最新で、harness・game-design・operation・evaluation の4優先タグを持つ。少数の初見 playthrough から、固定された観察、一変数の操作、自由な応用へ mechanic 導入を分ける知見が、既存 onboarding／rule-discovery probes と異なる次回行動を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、第1 map の laser barrier で main area 前に離脱した trace、第5 map で電源・可動 block・通路・余分な部品を同時に導入した失敗、固定観察→一変数操作→自由応用という修正案、breathing scene を既知 rule の再実行確認にする案まで具体化しており、次の prototype へ変換しやすいため actionability=3 とした。一方、根拠は単一作者の回顧と数件の公開動画で、離脱理由を難度・録画都合・興味・操作環境に分離できず、改善版との A/B test、clear time、retry、離脱率、人間の因果理解の再測定もないため evidence=2 とした。新しい差は三段階 scene と consolidation scene の組み合わせだが、insight-design-discovery-path は観察対象から行動変化へ至る説明なしの発見経路を、game-learning-hypothesis-trace は未知 rule・仮説更新・later-level transfer を、mechanic-observation-channel-gate は初見理解に必要な screen／input／audio／utterance を、tutorial-order-controller-sensitivity は segment 順序と入口失敗率をすでに扱う。321件の active_probes と Phase 4a 向け pending lease がある状態で同義の onboarding probe を加えると確認負荷だけが増えるため、本 atom は次の具体的な tutorial scene で既存 probes を適用する設計例としてのみ保持する。",
+      "existing_probes": [
+        "probe-20260515-insight-design-discovery-path",
+        "probe-20260604-game-learning-hypothesis-trace",
+        "probe-20260603-mechanic-observation-channel-gate",
+        "probe-20260720-tutorial-order-controller-sensitivity"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存 onboarding／rule-discovery probes との重複および probe inventory 過多による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-25T04:04:23+09:00",
       "selected": {
