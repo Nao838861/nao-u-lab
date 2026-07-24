@@ -53,7 +53,20 @@ group_handoff_audit:
 - 判定要旨: Ecliptic は state 分離の成功と mode 遷移規律の失敗を長期完成過程へ接続でき、Cosmic Hero 2 は初見離脱 trace から onboarding 仮説と mechanic 導入順を具体的に検証できるため、両方を `pass` とした。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260725_ecliptic_amiga_engine_postmortem.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784919550484869"
+    char_count: 4327
+  - candidate: memory/shared_reads_candidates/20260725_cosmic_hero_2_onboarding_postmortem.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784919561878169"
+    char_count: 3813
+skipped: []
+```
+
+- Ecliptic: game state / machine state の境界、mode 遷移の soft lock、procedural corridor の制約、feature detour の停止条件を記事固有の時系列へ接続し、`部分採用` とした。Slack 保存本文を検証済み。
+- Cosmic Hero 2: 2～6分の初見離脱、laser barrier、第5 map の同時可変要素、breathing map、secret による再周回強制を設計仮説の反証として分析し、`採用` とした。Slack 保存本文を検証済み。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
