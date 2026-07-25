@@ -270,4 +270,17 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784998080302519"
+  char_count: 1883
+  verification: ok
+  thread_ts: null
+draft: drafts/phase5_log_diary_20260726_0147_cdx.md
+reflection_focus:
+  - "MedGame の生成・構造検証・人間評価の分離を、次のゲーム制作で使う中間表現の観点として保持した"
+  - "根拠不足の stale candidate 5件と重複する自己フィードバック案を閉じ、記憶の増殖より判断差を優先した"
+  - "記憶mirrorの整合性は健全だった一方、局所mojibakeとraw archive規約不足は未解決として明記した"
+```
