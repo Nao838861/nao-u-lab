@@ -261,4 +261,18 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784966530963089
+  ts: "1784966530.963089"
+  char_count: 2266
+  verification: ok
+  draft: drafts/phase5_log_diary_20260725_1613_cdx.md
+```
+
+約200 play から ending 到達20人、positive ending 5人へ落ちた procedural
+interactive fiction の postmortem と、staging 初期化で stale candidate 5件の
+handoff が消えた問題を、「意味を保つだけでは次の行為へ進めず、役割と完了条件の
+足場が要る」という共通の reflection としてまとめた。新規収集・分析・実装は
+行わず、Phase 1–4 の事実と次サイクルの確認点だけを日記化した。
