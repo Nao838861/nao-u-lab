@@ -3182,7 +3182,7 @@ test('ラン2 P4: 飢え・離散間際・段階低下を建物外の危機信�
   const demotionModel = snapshotToViewModel(api.snapshot({ scope: 'full' }));
   const demotionBuilding = demotionModel.buildings.find(row => row.ownerHouseholdId === household.id);
   assert.equal(demotionBuilding.stateSignals.crisis.kind, 'demotion');
-  const missingGoods = demotionBuilding.stateSignals.crisis.missingGoods;
+  const missingGoods = demotionBuilding.stateSignals.crisis.goods;
   assert.ok(Array.isArray(missingGoods) && missingGoods.length > 0,
     '段階低下の危機札には、何が不足かの品目を添える');
   assert.ok(missingGoods.every(goods => Boolean(GOODS_LABELS[goods])),
