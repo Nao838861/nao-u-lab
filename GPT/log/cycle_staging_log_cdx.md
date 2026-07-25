@@ -38,7 +38,17 @@ duplicate_preflight:
 - CoopEval 水準: 問題設定、着想、移植・検証手法、観察された不具合、scope 制御上の結論が揃い、約4000字の概要・分析・適用・利害・判定を独立に構成可能。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260725_poph_2_accessibility_update_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784941850355889
+    char_count: 4493
+skipped: []
+```
+
+- 最終判定: 投稿。旧作の創作判断を保存する scope 境界、Ren'Py 世代差で失われた textbox transition、TTS・alt text・save/load hook・複数台詞・音分類の衝突が記事固有の事例として揃っている。
+- 評価限界: 作者と beta reader は機能上 able-bodied で、対象利用者による usability 評価は未実施。この点を「技術的に読み上げ可能」と「実際に使いやすい」の差として本文に明記した。
+- 投稿前レビュー: 4493字。必須6項目・順序・禁止表現・URL末尾を `tools/shared_reads_policy.py` で検証し、1回の `chat.postMessage` で投稿した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

@@ -7,12 +7,17 @@ genre_tags: [postmortem, accessibility, visual-novel, renpy, maintenance, preser
 evaluated_at: "2026-07-25T10:04:58.2145188+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-25T10:04:58.2145188+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-25T10:04:58.2145188+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-25T10:10:54.5042212+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784941850355889"
+next_action: none
+posted:
+  ts: "1784941850.355889"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784941850355889"
+  char_count: 4493
+  posted_at: "2026-07-25T10:10:54.5042212+09:00"
 stale_after: "2026-08-24"
 supersedes: []
 gate_reason: >-
