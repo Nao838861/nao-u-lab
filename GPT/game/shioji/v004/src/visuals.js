@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.31.0-elena-punctuation';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.32.0-supply-readability';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({

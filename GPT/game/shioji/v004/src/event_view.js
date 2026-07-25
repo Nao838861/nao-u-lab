@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.31.0-elena-punctuation';
+import { JOB_LABELS } from './config.js?v=v004.32.0-supply-readability';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

@@ -1,12 +1,12 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.31.0-elena-punctuation';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.31.0-elena-punctuation';
-import { islandCalendar } from './ui_summary.js?v=v004.31.0-elena-punctuation';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.31.0-elena-punctuation';
+} from './config.js?v=v004.32.0-supply-readability';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.32.0-supply-readability';
+import { islandCalendar } from './ui_summary.js?v=v004.32.0-supply-readability';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.32.0-supply-readability';
 import {
   buildingStructureLayout, pileVisual,
-} from './visuals.js?v=v004.31.0-elena-punctuation';
+} from './visuals.js?v=v004.32.0-supply-readability';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 

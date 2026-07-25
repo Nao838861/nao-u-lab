@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.31.0-elena-punctuation';
+import { SPEEDS } from './config.js?v=v004.32.0-supply-readability';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {
