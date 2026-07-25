@@ -150,7 +150,107 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。Markdown link は 0 件、index に露出した atom ID の欠落は 0 件。代表語は「記憶」「ゲーム設計」「敵パターン」を取得でき、「評価軸」は現行本文に存在しないため encoding 破損とは判定しなかった。"
+  - "memory/atoms.jsonl / per-file .md / index.jsonl は各 2748 件で mirror 一致。ID 重複・content conflict は 0 件、raw normalized-content 重複 40 群は既存 canonical overlay 45 群に収容済み。"
+  - "shared-reads の title canonical / mixed duplicate / open duplicate group / stale triage / group action sidecar を再生成。closed canonical 68 群、mixed 49 群、open group 56 群、stale triage 50 行、actionable group 0 群。"
+  - "candidate lifecycle 1098 files を dry-run 監査。status / candidate_status の修正対象は 0 件。"
+  - "candidate handoff inbox へ stale triage 上位 5 件を source_cycle_id 2026-07-25 20:43 で冪等 enqueue し、audit errors 0 件を確認。"
+  - "Slack inbox は directives 0 件 / broadcasts 0 件の pending。handled 更新対象なし。"
+issues:
+  - id: ISS-4A-20260725-01
+    description: "1 atom の source raw と派生 atom に U+FFFD が残り、「AIエージェント」が「AIエ��ジェント」になっている。新規の階層問題ではなく、既知の単一 source data damage が継続している。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492,1216; memory/atoms/2026-04/sr-1776127289-4d9239b255.md:3,16,20,24; memory/atoms.jsonl:317"
+    source_file_status: "UTF-8 明示読みで source raw と per-atom .md の双方に literal U+FFFD を確認。memory/MEMORY.md 自体は UTF-8 として読め、atom mirror / index validation は pass。"
+    display_or_tooling_status: "rg と Get-Content -Encoding UTF8 で同じ文字列を再現。memory_health が併記した gr-1777083728-44d444ab7a は原文の意図的な question mark を検知した false positive で、U+FFFD はない。"
+    why_blocks_game_memory: "該当 atom の title / trigger / excerpt に誤字が伝播し、memory/agent 系の recall 表示品質を局所的に下げる。ただし source_ts と tags で到達でき、ゲーム制作記憶全体を遮断しない。"
+  - id: ISS-4A-20260725-02
+    description: "2026-06-05 作成の candidate 4件に日本語が連続 ASCII question mark へ置換された source damage があり、うち postponed 2件は再評価対象に残っている。"
+    severity: low
+    evidence: "memory/shared_reads_candidates/20260605_ludoscope_procedural_level_maintenance.md:18,22,25; memory/shared_reads_candidates/20260605_constrained_expressive_range_level_generation.md:23-36; memory/shared_reads_candidates/20260605_one_billion_spells_simulator_possibility_space.md:18-25; memory/shared_reads_candidates/20260605_softlock_constraint_level_generation.md:23-36"
+    source_file_status: "Get-Content -Encoding UTF8 と rg の双方で literal ASCII question mark の連続を確認。4件中 posted 2 / postponed 2 で、postponed 2件の stale_after は 2026-07-05。"
+    display_or_tooling_status: "UTF-8 decoding error や shell 表示差ではなく source file 本文・frontmatter 自体の置換。stale triage sidecar は正本から同じ damaged reason を忠実に派生している。"
+    why_blocks_game_memory: "postponed candidate の gate_reason と本文根拠が読めず、Phase 2 が PCG / constraint / level-generation 知見を再評価する際に原文へ戻るコストが増える。対象は4件に限定され、queue 全体は機能している。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+candidate_lifecycle:
+  status_counts:
+    posted: 481
+    ready_to_post: 10
+    postponed: 330
+    failed: 258
+    needs_review: 18
+    skipped_unreviewed: 1
+  overdue_open_total: 181
+  missing_stale_after: 4
+raw_archive_audit:
+  inactive_30d_count: 95
+  action: "archive せず保持"
+  reason: "web_research 一次資料 87 件を中心に、slack_archive 正本、同期 state、headless evidence が混在する。mtime だけでは参照生存性を判定できないため、この cycle では移動しない。"
+stale_backlog:
+  overdue_open_total: 181
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 56
+  mixed_group_count: 49
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-7d7eec4047f90523
+    - cha-01ebba9044c990d2
+    - cha-603b87c1142f5203
+    - cha-ce982a94c61840b7
+    - cha-596516996450148c
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-7d7eec4047f90523
+    path: memory/shared_reads_candidates/20260518_pcg_player_personas_evolution.md
+    status: postponed
+    stale_after: "2026-06-17"
+    priority_reason: "persona agents と experience metrics による PCG 評価枠は headless 評価や難易度調整へ接続できるが、4 personas / 3 metrics / evolutionary architecture の実験条件と結果を本文から補う必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-01ebba9044c990d2
+    path: memory/shared_reads_candidates/20260518_personalized_super_mario_level_gan.md
+    status: needs_review
+    stale_after: "2026-06-17"
+    priority_reason: "personalized level generation はゲーム制作への転用価値が高いが、現 candidate は needs_review のまま期限到来しており、手法・比較条件・player model の妥当性を再確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-603b87c1142f5203
+    path: memory/shared_reads_candidates/20260525_deadhaus_persistent_history_rpg.md
+    status: postponed
+    stale_after: "2026-06-24"
+    priority_reason: "persistent history / deterministic world state は次作へ接続できるが、候補は長期運用構想と抽象語が中心で、run 履歴が次回プレイを変える具体例と評価方法を補う必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-ce982a94c61840b7
+    path: memory/shared_reads_candidates/20260526_designing_game_feel_survey.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "physicality / amplification / support と tuning / juicing / streamlining の分類は適用性が高いが、survey の分類根拠・文献整理・各 domain の具体例を本文から再確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-596516996450148c
+    path: memory/shared_reads_candidates/20260526_sphinx2_narrative_puzzles_open_world.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "narrative puzzle 生成の適用先は強いが、SPHINX 2 の生成手順・heuristics・user study の測定設計を補わないと投稿品質を判定できない。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
