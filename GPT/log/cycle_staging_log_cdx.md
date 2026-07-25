@@ -9,7 +9,32 @@
 - duplicate preflight: `continue`（GDC Vault canonical URL / title、書込み直前に3 sidecarを再生成）
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260725_grappling_smooth_movement_indie_budget.md
+    reason: "ゲーム制作への適用先は具体的だが、講演内の調整事例・評価内容・結論が候補材料に不足し、約4000字を根拠付きで構成できない"
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  builders_refreshed: true
+  decision: continue
+  title_key: grappling with success smooth movement on an indie budget
+evaluated_at: "2026-07-25T12:06:41.1666887+09:00"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
