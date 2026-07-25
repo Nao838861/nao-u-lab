@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-26T05:59:58+09:00",
+  "updated_at": "2026-07-26T07:59:10+09:00",
   "reviewed_source_ts": [
+    "1785013005.204159",
     "1785005253.893229",
     "1780620630.252239",
     "1784989190.154389",
@@ -506,6 +507,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-26T07:59:10+09:00",
+      "selected": {
+        "id": "sr-1785013005-7c462c2679",
+        "source_ts": "1785013005.204159",
+        "title": "ElectroCute: Maximum Resistance — 早いprototypeを外部検証とcontentへ移す三milestone",
+        "reason": "source が slack_api/shared-reads、score 13、未レビューという条件を満たす最新候補で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。最初の週末にplayable prototypeができても、外部初見観察とlevel contentへの移行条件がなく、前回言語化したcontent trapを再発した事例が、次の短期制作で既存controlsと異なる判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たすが、probe lease契約を満たす具体的な短期制作計画、playable diff、before／after trigger artifactが今サイクルにないためstate-only reviewに留める。shared-reads本文は、十日間の最初の週末にcore actionとweb buildが完成した後、「一つ足したら見せる」が増殖して外部feedbackを一度も得られず、level制作が締切前日まで遅れ、前回のretrospectiveで把握済みだったcontent trapを再発した時系列を示す。component progress、validated player experience、level contentを別milestoneへ分け、placeholder三場面、component freeze、team interface sheetへ変換できるためactionability=3とした。一方、根拠は単一チーム・一回のgame jamの自己報告で、外部playtestを実施した対照、各工程の工数、freezeや専任化の効果比較がなく、作者自身も固定時刻や手描きdraftの一般化を支持していないためevidence=2、risk_control=2とした。game-scope-brief-cut-gateはfirst playable done conditionと拡張前risk testを、core-density-before-expansionは追加要素の分類と延期を、ai-readable-playtest-acceptance-surfaceはcode／AI-readable／manual feelの分離を、lab-proxy-vs-real-use-gapは最小のhuman-facing observationをすでに扱う。新しい差は、早いprototypeから外部初見観察とplaceholder contentへ移る期限付きtransition gateを一組にする点でnon_redundancy=2だが、321件のactive_probesとPhase 4a向けpending lease 1件がある状態で対象artifactなしに追加すると確認負荷が増える。次の十日前後のprototypeで、既存probesだけでは外部観察またはcontent開始が再び無期限延期された時に再評価する。",
+      "existing_probes": [
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260528-core-density-before-expansion",
+        "probe-20260621-ai-readable-playtest-acceptance-surface",
+        "probe-20260526-lab-proxy-vs-real-use-gap"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_tsと、既存scope／feature expansion／playtest acceptance／human-facing evidence probesとの重複、具体的consumer・artifact不足、未消化leaseを踏まえたdefer理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-26T05:59:58+09:00",
       "selected": {

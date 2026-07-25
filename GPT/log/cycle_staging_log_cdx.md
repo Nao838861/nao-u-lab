@@ -95,7 +95,35 @@ reason: "Phase 2 の pass が空のため、Phase 3 の投稿対象なし。#sha
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785013005-7c462c2679
+    source_ts: "1785013005.204159"
+    title: "ElectroCute: Maximum Resistance — 早いprototypeを外部検証とcontentへ移す三milestone"
+    reason: "score 13の最新未レビューatomで、memory・harness・game-design・operation・evaluationの5優先タグを持つ。最初の週末にplayable prototypeが完成しても、外部初見観察とlevel contentへの移行条件がなく、既知のcontent trapを再発した事例が、次の短期制作で既存controlsと異なる判断差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "採用閾値は満たす。component progress、validated player experience、level contentを別milestoneにし、placeholder三場面とcomponent freezeへ変換できる点は実行可能である。一方、単一jamの自己報告で比較検証がなく、固定時刻やfreezeはcore未成立時に逆効果となり得る。既存のgame-scope-brief-cut-gate、core-density-before-expansion、ai-readable-playtest-acceptance-surface、lab-proxy-vs-real-use-gapがscope・追加抑制・manual feel・human-facing evidenceをすでに扱う。期限付きtransition gateには差分があるが、具体的な短期制作artifactがなく、active_probes 321件とpending lease 1件があるため、今はstate-only reviewに留める。"
+  change:
+    summary: "reviewed_source_tsとdefer理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
