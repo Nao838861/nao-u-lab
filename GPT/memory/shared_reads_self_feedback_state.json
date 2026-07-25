@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-25T08:16:58+09:00",
+  "updated_at": "2026-07-25T10:14:32+09:00",
   "reviewed_source_ts": [
+    "1784934693.631459",
     "1784919550.484869",
     "1784919561.878169",
     "1780628654.631239",
@@ -496,6 +497,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-25T10:14:32+09:00",
+      "selected": {
+        "id": "sr-1784934693-9a38dafd94",
+        "source_ts": "1784934693.631459",
+        "title": "Human: Fall Flat — 規模拡大で遅れた playable review と polish による identity 喪失",
+        "reason": "未レビュー条件を満たす最新の score 12 atom で、memory・harness・game-design・agent・operation・evaluation を含む8タグを持つ。探索型 prototype で一般的な polish を改善とみなす前に、保存する摩擦と除去する摩擦、作品 identity を示す代表 trace、review 遅延を一度だけ比較できる知見か確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で採用条件の必須閾値は満たす。shared-reads 本文は、physics 中心の反復が組織拡大で遅れたこと、level が変更困難になってから review へ届いたこと、続編の physics が「硬すぎ、磨かれすぎ」て原作固有の不器用さを失い全面再構築へ至ったことを、保存する摩擦／除去する摩擦、基準版／追従性強化版／揺らぎ強化版、固定 seed trace、playable checkpoint へ変換している。一方、根拠は当事者インタビューであり、review 日数、比較 build、player test、physics parameter、組織変更前後の定量値は示されず、6000万人規模の継続収益が可能にした reset を小規模制作へ一般化できないため evidence=2 とした。core-density-before-expansion は core vector と追加軸の干渉を、game-feedback-loop-asymmetry は play-facing evidence の遅延と粒度を、meta-horizon-friction-layer-triage は friction layer と observable cue を、paperclaw-prototype-hypothesis-contract は事前の observable verdict と test path をすでに扱う。新しい差は、polish 前後で保存対象の意図的な不器用さと除去対象の不具合を同一 physics scene で対比する点にあるため non_redundancy=2 とした。ただし今サイクルには基準版と比較版を持つ physics scene／playable diff がなく、consumer phase、before／after trigger artifact、期待判断差を lease 契約どおりに指定できない。Phase 4a には別 probe の pending lease もあるため、321件の active_probesへ先行追加せず、次の該当 playable artifact が具体化した時に再評価する。",
+      "existing_probes": [
+        "probe-20260528-core-density-before-expansion",
+        "probe-20260606-game-feedback-loop-asymmetry",
+        "probe-20260626-meta-horizon-friction-layer-triage",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、採用閾値は満たすが具体的な physics scene／playable artifact と lease consumer がないため defer する理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-25T08:16:58+09:00",
       "selected": {

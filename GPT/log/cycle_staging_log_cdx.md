@@ -51,7 +51,35 @@ skipped: []
 - 投稿前レビュー: 4493字。必須6項目・順序・禁止表現・URL末尾を `tools/shared_reads_policy.py` で検証し、1回の `chat.postMessage` で投稿した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784934693-9a38dafd94
+    source_ts: "1784934693.631459"
+    title: "Human: Fall Flat — 規模拡大で遅れた playable review と polish による identity 喪失"
+    reason: "未レビュー条件を満たす最新の score 12 atom で、memory・harness・game-design・agent・operation・evaluation を含む8タグを持つ。探索型 prototype で一般的な polish を改善とみなす前に、保存する摩擦と除去する摩擦、作品 identity を示す代表 trace、review 遅延を一度だけ比較できる知見か確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "合計15で採用条件を満たすが、今サイクルには基準版と比較版を持つ physics scene／playable diff がなく、consumer phase、before／after trigger artifact、期待判断差を具体化できない。既存4 probes が core vector、feedback loop、friction layer、事前仮説と test path を覆い、Phase 4a 向け pending lease も1件あるため state-only review に留める。"
+  change:
+    summary: "reviewed_source_ts と、具体的な physics scene／playable artifact と lease consumer がないため defer する理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
