@@ -22,7 +22,7 @@ log_cdx 定時サイクルのフェーズプロンプト集。
 
 ## 設計原則
 
-1 phase = 1 LLM 起動。同一 cycle 内の Phase 間の情報受け渡しは staging file (`log/cycle_staging_log_cdx.md`) を使う。一気にやらない (末尾劣化を避ける)。跨 cycle で acknowledge まで保持すべき group action だけは `memory/shared_reads_group_handoff_inbox.jsonl` を正本とし、staging は当該 cycle の入出力表示に限定する。各 phase プロンプトに「やること / やらないこと」を明示してスコープを制御する。
+1 phase = 1 LLM 起動。同一 cycle 内の Phase 間の情報受け渡しは staging file (`log/cycle_staging_log_cdx.md`) を使う。一気にやらない (末尾劣化を避ける)。跨 cycle で acknowledgment まで保持すべき group action と stale candidate は、それぞれ `memory/shared_reads_group_handoff_inbox.jsonl` と `memory/shared_reads_candidate_handoff_inbox.jsonl` を正本とし、staging は当該 cycle の入出力表示に限定する。各 phase プロンプトに「やること / やらないこと」を明示してスコープを制御する。
 
 Phase 3b は、過去の shared-reads から 1 件だけ選び、Codex 自身の行動へ小さく反映するための安全弁付きフェーズ。恒久ルールを増やすのではなく、原則として一時 probe、評価表、state 更新に留める。採用は relevance / actionability / evidence / non_redundancy / risk_control / reversibility の 6 指標で絞る。
 
@@ -40,7 +40,7 @@ Phase 3b は、過去の shared-reads から 1 件だけ選び、Codex 自身の
 
 各サイクル開始時に `log/cycle_staging_log_cdx.md` を初期化 (空テンプレート) し、各 phase が自分のセクションに追記していく。前 phase の内容は **消さない**。
 
-Phase 4a から次 cycle の Phase 2 へ渡す group action は staging 初期化をまたぐため、`tools/shared_reads_group_handoff.py` で pending/handled を管理する。Phase 2 は `group_actions` を記録した item だけ acknowledge する。
+Phase 4a から次 cycle の Phase 2 へ渡す group action は `tools/shared_reads_group_handoff.py`、stale candidate は `tools/shared_reads_candidate_handoff.py` で pending / handled / deferred を管理する。Phase 2 は対応する staging 結果と candidate frontmatter の完了条件を満たした item だけ resolve する。
 
 ## 既存の deterministic cycle (`codex_log_cycle.py`) との関係
 

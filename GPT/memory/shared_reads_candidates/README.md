@@ -89,9 +89,7 @@ python tools\backfill_shared_reads_candidate_status.py --apply --fix-conflicts
 
 2026-06-17 Phase 4c で再評価 queue の監査方針を `stale_after` 正本に寄せた。`postponed` / `needs_review` は `stale_after <= 今日` なら Phase 4a の priority issue 候補として扱い、mtime や filename date は補助情報に留める。`ready_to_post` は投稿待ち queue として lifecycle 欠損を補う。`posted` / `failed` は原則として再評価 queue から外し、必要な場合も `last_reviewed_at` 欠損の補完だけに留める。
 
-2026-06-17 Phase 4c で stale candidate の handoff 契約を追加した。Phase 4a は `postponed` / `needs_review` のうち `stale_after <= 今日` のものから最大 5 件程度を staging の `stale_review_batch` に残す。Phase 2 は新規 candidate 評価の前にこの batch を再評価し、各 candidate の `status` / `candidate_status` / `gate_decision` / `gate_reason` / `last_reviewed_at` / `last_decision` / `evidence` / `next_action` / `stale_after` を更新する。機械的な一括降格はしない。永続 queue index は作らず、正本は per-file frontmatter と staging の handoff に限定する。
-
-2026-06-19 Phase 4c で stale_review_batch を Phase 2 の明示入力として再確認した。通常の新規 candidate より前に最大 5 件を処理し、game production に直結する候補を優先する。Phase 2 の判定結果は candidate frontmatter の `status` / `candidate_status` / `last_reviewed_at` / `last_decision` / `evidence` / `next_action` / `stale_after` まで閉じ、staging の `stale_reviewed` にも残す。今回も lifecycle index は導入しない。
+2026-07-25 Phase 4c で stale candidate の跨 cycle handoff を `memory/shared_reads_candidate_handoff_inbox.jsonl` へ移した。Phase 4a は `postponed` / `needs_review` かつ `stale_after <= 今日` の上位 5 件を冪等 enqueue し、staging の `stale_review_batch` は当該 cycle の選定表示にだけ使う。Phase 2 は inbox の oldest pending を新規 candidate より先に処理し、candidate frontmatter と staging `stale_reviewed` の双方を検証してから handled にする。機械的な一括降格はしない。
 
 件数確認:
 
@@ -137,7 +135,7 @@ python tools\audit_shared_reads_title_duplicates.py --unindexed-only --limit 20
 
 `memory/shared_reads_mixed_duplicate_queue.jsonl` は、同一 `title_key` 内に `posted` / `failed` と `ready_to_post` / `postponed` / `needs_review` が混在する group だけを記録する派生 sidecar である。candidate frontmatter は lifecycle の正本として維持し、この queue から自動 close はしない。
 
-1 行 1 group で、`title_key` / `title` / `status_counts` / `terminal_paths` / `open_paths` / `recommended_representative` / `priority_reason` / `generated_at` を持つ。Phase 4a は `recommended_representative` を `stale_review_batch` に渡す候補として使い、Phase 2 は同じ `title_key` から複数件を同時処理しない。
+1 行 1 group で、`title_key` / `title` / `status_counts` / `terminal_paths` / `open_paths` / `recommended_representative` / `priority_reason` / `generated_at` を持つ。Phase 4a は `recommended_representative` を candidate handoff に渡す候補として使い、Phase 2 は同じ `title_key` から複数件を同時処理しない。
 
 再生成:
 
@@ -149,7 +147,7 @@ python tools\build_shared_reads_mixed_duplicate_queue.py --check
 
 Phase 4c で `memory/shared_reads_stale_triage_queue.jsonl` を追加した。これは `postponed` / `needs_review` かつ `stale_after <= today` の candidate だけを、mixed duplicate、game production への転用価値、古さの順で並べる再生成可能 sidecar である。candidate frontmatter は正本のまま維持し、この queue から自動 fail や一括更新はしない。
 
-1 行 1 candidate で、schema は `path` / `title` / `status` / `stale_after` / `age_days` / `duplicate_group_key` / `game_transfer_value` / `recommended_review_action` / `reason` に固定する。Phase 4a はこの queue の上位 5 件を `stale_review_batch` に引用し、Phase 2 が代表 candidate のみを評価して frontmatter を更新する。
+1 行 1 candidate で、schema は `path` / `title` / `status` / `stale_after` / `age_days` / `duplicate_group_key` / `game_transfer_value` / `recommended_review_action` / `reason` に固定する。Phase 4a はこの queue の上位 5 件を candidate handoff inbox へ enqueue し、同じ内容を staging の `stale_review_batch` に表示する。
 
 再生成:
 
@@ -158,5 +156,19 @@ python tools\build_shared_reads_open_duplicate_group_queue.py
 python tools\build_shared_reads_stale_triage_queue.py --today <YYYY-MM-DD>
 python tools\build_shared_reads_stale_triage_queue.py --today <YYYY-MM-DD> --check
 ```
+
+stale triage builder は group handoff と candidate handoff の live lease を合成する。candidate 単位では pending と期限前 deferred の同一 `path + status + stale_after` を除外し、候補状態または `stale_after` が変われば fail-open で再提示する。
+
+## stale candidate handoff inbox (2026-07-25)
+
+`memory/shared_reads_candidate_handoff_inbox.jsonl` は stale candidate の配送状態だけを持つ operational ledger であり、candidate lifecycle の正本ではない。1 行 1 lease で、`id` / `candidate_path` / `selected_status` / `selected_stale_after` / `priority_reason` / `recommended_review_action` / `source_cycle_id` / `selected_at` / `status` / `retry_after` / handled evidence を持つ。
+
+```powershell
+python tools\shared_reads_candidate_handoff.py enqueue --source-cycle-id "<cycle id>" --limit 5
+python tools\shared_reads_candidate_handoff.py pending --limit 5
+python tools\shared_reads_candidate_handoff.py audit
+```
+
+Phase 2 の `resolve` は、`pass → ready_to_post`、`fail → failed`、`postpone → postponed + 前回より後の stale_after` と、`last_reviewed_at` / `last_decision` / `evidence` / `next_action`、staging evidence を検証する。不足時は pending のまま replay できる。一次資料不足で再試行日が明確な場合だけ deferred にし、期限到来後は同じ lease を再配送する。handled と同じ選定状態は再投入せず、postpone 後の新しい `stale_after` が到来した時は別 lease にする。
 
 2026-07-06 現在の mixed duplicate queue schema は `group_key` / `title` / `status_counts` / `representative_paths` / `evidence` / `recommended_action` を正とする。古い説明に出る `title_key` / `terminal_paths` / `open_paths` / `recommended_representative` は、現在は `group_key` と `evidence` / `representative_paths` に畳み込まれている。

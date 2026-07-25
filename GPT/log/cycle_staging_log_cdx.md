@@ -221,7 +221,44 @@ stale_review_batch:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260725-02
+    files_changed:
+      - path: tools/shared_reads_candidate_handoff.py
+        change: created
+      - path: tools/test_shared_reads_candidate_handoff.py
+        change: created
+      - path: tools/build_shared_reads_stale_triage_queue.py
+        change: modified
+      - path: memory/shared_reads_candidate_handoff_inbox.jsonl
+        change: created
+      - path: memory/shared_reads_stale_triage_queue.jsonl
+        change: modified
+      - path: phases/phase2_analyze.md
+        change: modified
+      - path: phases/phase4a_cleanup.md
+        change: modified
+      - path: phases/README.md
+        change: modified
+      - path: memory/shared_reads_candidates/README.md
+        change: modified
+      - path: memory/directive_shared_reads_candidate_gate_20260512.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "stale candidate の配送状態を staging から専用の replay-safe inbox へ移し、Phase 4a の冪等 enqueue、Phase 2 の bounded consume / completion verification、stale triage の live lease 除外を接続した。"
+    partial: false
+migrations:
+  - what: "前 cycle から消失した stale_review_batch 5件を source_cycle_id 2026-07-25T16:13+09:00 の pending lease として重複なく seed した。"
+    affected: "Zork / Countdown / InMind / PANGeA / Access Profiles の5 candidate。candidate frontmatter は未変更。"
+verification:
+  - "python -m unittest discover -s tools -p \"test_shared_reads_*.py\": 39 tests OK。"
+  - "固定時刻テストで enqueue 冪等性、staging 初期化後の pending 復元、部分完了 replay、handled state の再配送抑止、新 stale_after の再 lease、deferred 期限・状態変更時の fail-open を確認した。"
+  - "candidate handoff audit: rows=5、pending_count=5、stale_pending_count=0、schema errors=0。"
+  - "stale triage --check: rows=50、seed 済み5 path は live lease により queue から除外。"
+  - "python tools/memory_recall.py \"stale candidate handoff\" と python tools/validate_memory_index.py が正常終了。"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

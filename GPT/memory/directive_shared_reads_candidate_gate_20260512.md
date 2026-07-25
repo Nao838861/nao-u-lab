@@ -54,3 +54,7 @@ open sibling を持つ同一 title 群を mixed / all-open に分ける `memory/
 ## 実装メモ（2026-07-22 Phase 4c）
 
 stale triage queue の生成時に永続 group handoff inbox の live lease を合成し、pending と期限前 deferred の同一 membership group を candidate 単位で再投入しないようにした。期限到来または membership 変化では再提示する。candidate lifecycle audit は当初の `gate_decision` と後続の現在状態を分離し、evidence 付き terminal 遷移を保持する。候補本文や投稿品質基準は変更しない。
+
+## 実装メモ（2026-07-25 Phase 4c）
+
+Phase 4a の stale candidate 選定を `memory/shared_reads_candidate_handoff_inbox.jsonl` へ永続化した。Phase 2 は oldest pending を新規候補より先に最大5件処理し、candidate frontmatter と staging receipt の両方を検証して handled にする。pending と期限前 deferred の同一 candidate state は stale triage から除外し、状態変更または新しい `stale_after` 到来時は再提示する。候補本文・投稿品質基準・candidate lifecycle の正本は変更しない。

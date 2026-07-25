@@ -21,7 +21,7 @@ outputs: [staging Phase 4a セクション (issues + needs_design 判定 + probe
 1. `memory/MEMORY.md` の index 行で broken link 確認
 2. `memory/atoms.jsonl` の重複・矛盾の有無を確認
 3. `memory/raw/` の古いファイルでアーカイブすべきもの (30 日以上動きがない原文等)
-4. `memory/shared_reads_candidates/` で lifecycle frontmatter の内訳を確認する (`status: posted | ready_to_post | postponed | failed | needs_review`)。`postponed` / `needs_review` candidate は mtime や filename date ではなく `stale_after` を優先し、`stale_after <= 今日` のものを fail 降格、明示保持、または次 Phase 2 再評価のどれにするか記録する。`posted` / `failed` は原則として再評価 queue から外す。再評価に送る場合は、最大 5 件程度を `stale_review_batch` として staging に残し、Phase 2 が少数処理できる handoff にする
+4. `memory/shared_reads_candidates/` で lifecycle frontmatter の内訳を確認する (`status: posted | ready_to_post | postponed | failed | needs_review`)。`postponed` / `needs_review` candidate は mtime や filename date ではなく `stale_after` を優先し、`stale_after <= 今日` のものを fail 降格、明示保持、または次 Phase 2 再評価のどれにするか記録する。`posted` / `failed` は原則として再評価 queue から外す。再評価に送る最大 5 件は `memory/shared_reads_candidate_handoff_inbox.jsonl` へ冪等 enqueue し、同じ内容を当該 cycle の `stale_review_batch` に表示する
 5. inbox 系 (`slack_directives.jsonl`, `slack_broadcasts.jsonl`) で処理済みのものを `status: handled` に更新
 6. `python tools\shared_reads_probe_lifecycle.py pending --due-only --limit 1` で期限到来 probe lease を1件だけ確認し、consumer artifact の判断前後と evidence pointer を receipt に残す
 
@@ -85,7 +85,8 @@ probe_lifecycle:
     resolved: <件数>
     dormant: <件数>
 stale_review_batch:
-  - path: <memory/shared_reads_candidates/...md>
+  - handoff_id: <cha-...>
+    path: <memory/shared_reads_candidates/...md>
     status: postponed | needs_review
     stale_after: "YYYY-MM-DD"
     priority_reason: <Phase 2 に送る理由>
@@ -130,7 +131,7 @@ python tools\audit_shared_reads_title_duplicates.py --unindexed-only --limit 20
 `memory/shared_reads_title_canonical_index.jsonl` に未登録の duplicate title group があり、posted / failed / postponed が混在して Phase 2 の再評価を濁す場合は、`memory/shared_reads_mixed_duplicate_queue.jsonl` から Phase 4a の `issues` または `stale_review_batch` に出す。canonical index 登録済み group は全 sibling が `posted` / `failed` の closed group なので再評価 queue から外れる。
 ## stale_review_batch / duplicate title handoff 記録 (2026-06-26)
 
-`postponed` / `needs_review` の `stale_after <= 今日` を見る時は、残 backlog 件数と今回 `stale_review_batch` に渡す件数を分けて staging に書く。Phase 2 に渡すのは最大 5 件を目安にし、処理契約は Phase 2 の `stale_reviewed` と candidate frontmatter 更新で閉じる。
+`postponed` / `needs_review` の `stale_after <= 今日` を見る時は、残 backlog 件数と candidate handoff inbox へ enqueue した件数を分けて staging に書く。Phase 2 に渡すのは最大 5 件を目安にし、跨 cycle の配送状態は `memory/shared_reads_candidate_handoff_inbox.jsonl`、candidate の現在状態は per-file frontmatter を正本とする。staging の `stale_review_batch` は当該 cycle の選定表示であり、未処理 receipt には使わない。
 
 duplicate title group は、group 全体が `posted` / `failed` で閉じている terminal group と、`ready_to_post` / `postponed` / `needs_review` を含む mixed group に分けて扱う。terminal group だけを `memory/shared_reads_title_canonical_index.jsonl` に `source_url` / `duplicate_paths` / `status_counts` / `decision_note` 付きで登録し、mixed group は自動 close せず `stale_review_batch` または Phase 2 の通常評価に残す。
 
@@ -147,17 +148,23 @@ python tools\build_shared_reads_mixed_duplicate_queue.py
 Phase 4a で mixed duplicate を handoff する時は、この queue の上位から最大 5 件を見て、同じ `title_key` の candidate を複数同時に `stale_review_batch` へ入れない。`recommended_representative` を基本に選び、`priority_reason` / `status_counts` / `terminal_paths` / `open_paths` を staging に根拠として残す。terminal group は従来通り `memory/shared_reads_title_canonical_index.jsonl` 側で扱う。
 ## stale triage queue (2026-07-06)
 
-Phase 4c で `memory/shared_reads_stale_triage_queue.jsonl` を導入した。2026-07-21 Phase 4c 以降、Phase 4a が `stale_review_batch` を作る時は、まず次の順で再生成する。
+Phase 4c で `memory/shared_reads_stale_triage_queue.jsonl` を導入した。2026-07-25 Phase 4c 以降、Phase 4a が `stale_review_batch` を作る時は、group handoff を先に確定し、その live lease を反映して stale triage を再生成してから candidate handoff を enqueue する。
 
 ```powershell
 python tools\build_shared_reads_open_duplicate_group_queue.py
 python tools\build_shared_reads_stale_triage_queue.py --today <YYYY-MM-DD>
 python tools\build_shared_reads_group_action_queue.py
+python tools\shared_reads_group_handoff.py enqueue --source-cycle-id "<staging header cycle id>" --limit <group_handoff_budget>
+python tools\build_shared_reads_stale_triage_queue.py --today <YYYY-MM-DD>
+python tools\shared_reads_candidate_handoff.py enqueue --source-cycle-id "<staging header cycle id>" --limit 5
+python tools\shared_reads_candidate_handoff.py audit
 ```
 
-`shared_reads_stale_triage_queue.jsonl` は `path` / `title` / `status` / `stale_after` / `age_days` / `duplicate_group_key` / `game_transfer_value` / `recommended_review_action` / `reason` だけを持つ再生成可能 sidecar である。`duplicate_group_key` は mixed / all-open の双方に付け、同じ group は queue 上位選定で1回だけ扱う。Phase 4a の `stale_review_batch` はこの queue の上位 5 件を引用するが、group-action handoff に含めた sibling は重ねて入れない。candidate 本体は Phase 2 の評価結果が出るまで変更しない。
+`shared_reads_stale_triage_queue.jsonl` は `path` / `title` / `status` / `stale_after` / `age_days` / `duplicate_group_key` / `game_transfer_value` / `recommended_review_action` / `reason` だけを持つ再生成可能 sidecar である。`duplicate_group_key` は mixed / all-open の双方に付け、同じ group は queue 上位選定で1回だけ扱う。candidate handoff inbox の pending、または `retry_after` 前の deferred と同じ `path + status + stale_after` は queue から除外する。candidate の状態または `stale_after` が変われば fail-open で再提示する。
 
-2026-07-22 Phase 4c 以降、stale triage builder は `memory/shared_reads_group_handoff_inbox.jsonl` の live lease を生成時に合成する。pending group と、`retry_after` 前かつ membership fingerprint が一致する deferred group は queue へ再挿入しない。期限到来、open/terminal sibling の構成・状態変化、無関係な group は抑止せず fail-open で再提示する。再現時刻を固定する監査では `--as-of <ISO 8601>` を指定できる。staging の `stale_review_batch` は「live lease 適用済み queue の上位」であり、group defer を candidate 単位で迂回しない。
+`shared_reads_candidate_handoff.py enqueue` はこの queue の上位 5 件を active な同一 candidate state に対して冪等に enqueue する。出力の `id` と選定内容を staging の `stale_review_batch` に引用するが、candidate 本体は Phase 2 の評価結果が出るまで変更しない。staging 初期化後も未処理判定は inbox から復元する。
+
+stale triage builder は `memory/shared_reads_group_handoff_inbox.jsonl` の live lease も生成時に合成する。pending group と、`retry_after` 前かつ membership fingerprint が一致する deferred group は queue へ再挿入しない。期限到来、open/terminal sibling の構成・状態変化、無関係な group は抑止せず fail-open で再提示する。再現時刻を固定する監査では `--as-of <ISO 8601>` を指定できる。
 
 ## candidate lifecycle audit の現在状態優先規則 (2026-07-22 Phase 4c)
 
@@ -191,4 +198,4 @@ staging の `group_action_handoff` は当該 cycle の選定表示に限定す�
 
 handoff に含めた group の `representative` と `open_siblings` は candidate 単位の `stale_review_batch` に重ねて入れない。この重複排除は複数 group を渡す場合も全 group に適用する。元 candidate、stale triage queue、mixed duplicate queue は変更しない。
 
-staging の `stale_backlog` には最低限 `overdue_open_total` / `stale_triage_queue_rows` / `open_duplicate_group_count` / `mixed_group_count` / `all_open_group_count` / `actionable_group_count` / `backlog_high_water` / `group_handoff_budget` / `handed_off_group_count` を残す。title 一致だけでは自動 close / skip せず、`source_url_evidence` を読んで既存の `close_siblings` / `keep_distinct` / `defer` へ渡す。1 cycle 後は Phase 2 の `group_actions` を参照し、processed groups、判断できた open siblings、通常 candidate 分析への時間影響を確認して、budget 3 を継続するか判定する。
+staging の `stale_backlog` には最低限 `overdue_open_total` / `stale_triage_queue_rows` / `open_duplicate_group_count` / `mixed_group_count` / `all_open_group_count` / `actionable_group_count` / `backlog_high_water` / `group_handoff_budget` / `handed_off_group_count` / `candidate_handoff_pending_count` / `candidate_handoff_ids` を残す。title 一致だけでは自動 close / skip せず、`source_url_evidence` を読んで既存の `close_siblings` / `keep_distinct` / `defer` へ渡す。1 cycle 後は Phase 2 の `group_actions` を参照し、processed groups、判断できた open siblings、通常 candidate 分析への時間影響を確認して、budget 3 を継続するか判定する。

@@ -3,7 +3,7 @@ phase: 2
 name: 分析
 focus: candidate の品質判定 + ゲーム制作への適用性評価
 estimated_time: 15-30 min
-inputs: [Phase 1 staging, Phase 4a stale_review_batch, shared_reads_candidates/]
+inputs: [Phase 1 staging, memory/shared_reads_candidate_handoff_inbox.jsonl, shared_reads_candidates/]
 outputs: [各 candidate に evaluation frontmatter, staging Phase 2 セクション]
 ---
 
@@ -13,11 +13,21 @@ outputs: [各 candidate に evaluation frontmatter, staging Phase 2 セクショ
 
 Phase 2 開始時と candidate frontmatter 更新後の次回 preflight 前に、posted-source / title canonical / open duplicate group の各 builder を再実行する。sidecar の自動補正は行わず、stale のままなら評価を進めない。
 
-## stale_review_batch 再評価契約 (2026-06-19)
+## stale candidate handoff 再評価契約 (2026-07-25 Phase 4c)
 
-Phase 4a が staging に `stale_review_batch` を残している場合、Phase 2 は通常の新規 candidate 評価より先にその batch を処理する。batch は最大 5 件を目安に、game production に直結する候補を優先する。`status: posted` / `status: failed` は再評価対象から外し、`postponed` / `needs_review` だけを扱う。
+stale candidate の跨 cycle 配送状態は staging ではなく `memory/shared_reads_candidate_handoff_inbox.jsonl` を正本とする。group handoff の oldest pending を処理した後、通常の新規 candidate より先に次を実行し、oldest pending を最大 5 件読む。
 
-再評価後は staging の `stale_reviewed` だけでなく、該当 candidate の frontmatter も閉じる。`pass` は `ready_to_post`、`fail` は `failed`、`postpone` は `postponed` に更新し、`last_reviewed_at` / `last_decision` / `evidence` / `next_action` / `stale_after` を合わせて更新する。永続 queue index は作らず、正本は per-file frontmatter と staging handoff に限定する。
+```powershell
+python tools\shared_reads_candidate_handoff.py pending --limit 5
+```
+
+新規に選ぶ lease は `selected_status` / `selected_stale_after` と現在の candidate frontmatter が一致するものに限る。未完了の pending は、Phase 2 が frontmatter 更新後・receipt 前に中断した場合の replay のため、状態が変わっていても再配送する。その場合は再評価を重ねず、既存更新を検証して resolve する。通常の再評価対象は `postponed` / `needs_review` とし、未選定の `posted` / `failed` は扱わない。再評価後は staging の `stale_reviewed` と candidate frontmatter の両方を先に更新する。`pass` は `ready_to_post`、`fail` は `failed`、`postpone` は `postponed` と新しい `stale_after` にし、`last_reviewed_at` / `last_decision` / `evidence` / `next_action` も閉じる。その後にだけ handoff を resolve する。
+
+```powershell
+python tools\shared_reads_candidate_handoff.py resolve --id <handoff_id> --decision <pass|fail|postpone> --reason "<根拠>" --staging-evidence "log/cycle_staging_log_cdx.md Phase 2 stale_reviewed:<handoff_id>"
+```
+
+frontmatter または staging evidence が不足すると `partial` で pending のまま残る。同じ ID を再実行して回復する。一次資料不足で再試行日が明確な場合だけ `--decision defer --retry-after <ISO>` を使い、期限前は triage と pending から外す。単なる未処理は defer せず pending のままにする。
 
 # Phase 2: 分析
 
@@ -29,8 +39,8 @@ Phase 1 で集めた candidate を読み、**Phase 3 で #shared-reads に投稿
 
 ## やること
 
-1. staging file の Phase 1 セクションを読み、収集された candidate を確認
-   - Phase 4a が `stale_review_batch` を残している場合は、通常の新規 candidate 評価の前に少数だけ再評価する。`status` が `posted` / `failed` のものは除外する。candidate 本体の frontmatter は、この Phase 2 の再評価結果が出るまで変更しない。
+1. candidate handoff inbox の oldest pending と staging file の Phase 1 セクションを読み、再評価対象と新規 candidate を確認
+   - stale handoff は最大 5 件を通常の新規 candidate より先に再評価する。staging の `stale_review_batch` は選定表示として参照できるが、未処理判定には使わない。candidate 本体の frontmatter は、この Phase 2 の再評価結果が出るまで変更しない。
 2. 各 candidate について以下を判定:
    - **手法の重要要素** (問題設定・着想・手法の中核・評価の中身・結論) が抽出できるか
    - **ゲーム制作の具体場面で適用できるか** (抽象すぎず、こじつけすぎず)
@@ -65,10 +75,18 @@ Phase 1 で集めた candidate を読み、**Phase 3 で #shared-reads に投稿
    fail: [{path: <path>, reason: <短く>}, ...]
    postpone: [{path: <path>, reason: <短く>}, ...]
    stale_reviewed:
-     - path: <path>
+     - handoff_id: <cha-...>
+       path: <path>
        previous_status: postponed | needs_review
        decision: pass | fail | postpone
        updated_stale_after: "YYYY-MM-DD"
+   candidate_handoff_audit:
+     pending_before: <件数>
+     read_ids: [<handoff_id>, ...]
+     resolved_ids: [<handoff_id>, ...]
+     deferred_ids: [<handoff_id>, ...]
+     partial_ids: [<handoff_id>, ...]
+     pending_after: <件数>
    ```
 
 ## やらないこと
@@ -94,24 +112,24 @@ Phase 1 で集めた candidate を読み、**Phase 3 で #shared-reads に投稿
 
 Phase 4c で `memory/shared_reads_title_canonical_index.jsonl` を追加した。これは candidate lifecycle の正本ではなく、同一 title group の全 sibling が `posted` / `failed` で閉じた時だけ、stale reevaluation queue から外すための軽量 sidecar である。
 
-Phase 2 で `stale_review_batch` や `memory/shared_reads_review_queue.jsonl` を扱う前に、対象 candidate の `title` を `tools/shared_reads_title_index.py` の `normalize_title_key()` と同じ規則で `title_key` 化し、index に terminal 判定があるものは再評価しない。必要に応じて人間が再オープンする場合は、index 行の `decision_note` / `source_url` / `duplicate_paths` を確認してから個別に扱う。
-## stale_review_batch / title canonical 運用確認 (2026-06-26)
+Phase 2 で candidate handoff や `memory/shared_reads_review_queue.jsonl` を扱う前に、対象 candidate の `title` を `tools/shared_reads_title_index.py` の `normalize_title_key()` と同じ規則で `title_key` 化し、index に terminal 判定があるものは再評価しない。必要に応じて人間が再オープンする場合は、index 行の `decision_note` / `source_url` / `duplicate_paths` を確認してから個別に扱う。
+## stale candidate handoff / title canonical 運用確認
 
-Phase 4a が `stale_review_batch` を staging に残している時は、Phase 2 は新規 candidate より先に最大 5 件を処理する。処理後は staging の `stale_reviewed` と、該当 candidate frontmatter の `status` / `candidate_status` / `last_reviewed_at` / `last_decision` / `evidence` / `next_action` / `stale_after` の両方を確認する。片方だけでは完了扱いにしない。
+Phase 2 は candidate handoff inbox の oldest pending を新規 candidate より先に最大 5 件処理する。`resolve` が staging の `stale_reviewed` evidence と、該当 candidate frontmatter の `status` / `candidate_status` / `last_reviewed_at` / `last_decision` / `evidence` / `next_action` / `stale_after` を検証して handled にする。片方だけでは完了扱いにしない。
 
 duplicate title group は、group 全体が `posted` / `failed` で閉じている terminal group だけを `memory/shared_reads_title_canonical_index.jsonl` で再評価除外する。`ready_to_post` / `postponed` / `needs_review` を含む mixed group は自動 close せず、Phase 2 の個別評価か Phase 4a の `stale_review_batch` に残す。
 
 ## mixed duplicate queue 運用 (2026-06-27)
 
-Phase 4c で `memory/shared_reads_mixed_duplicate_queue.jsonl` を導入した。Phase 2 が `stale_review_batch` を処理する時、同じ `title_key` の候補を複数同時に評価しない。Phase 4a から `recommended_representative` が渡っている場合は、その 1 件を group 代表として評価し、評価後に group 全体が terminal 化した場合だけ `memory/shared_reads_title_canonical_index.jsonl` の再生成候補にする。candidate 本体の status は評価した代表ファイルだけ更新し、queue は report / handoff 用 sidecar として再生成可能に保つ。
+Phase 4c で `memory/shared_reads_mixed_duplicate_queue.jsonl` を導入した。Phase 2 が candidate handoff を処理する時、同じ `title_key` の候補を複数同時に評価しない。Phase 4a から `recommended_representative` が渡っている場合は、その 1 件を group 代表として評価し、評価後に group 全体が terminal 化した場合だけ `memory/shared_reads_title_canonical_index.jsonl` の再生成候補にする。candidate 本体の status は評価した代表ファイルだけ更新し、queue は report / handoff 用 sidecar として再生成可能に保つ。
 
 ## 評価前 terminal-title preflight (2026-06-29)
 
-Phase 2 は、新規 candidate 評価および `stale_review_batch` 再評価の本文読解に入る前に、対象 candidate の `title` を `tools/shared_reads_title_index.py` の `normalize_title_key()` と同じ規則で `title_key` 化し、`memory/shared_reads_title_canonical_index.jsonl` と `memory/shared_reads_open_duplicate_group_queue.jsonl` を確認する。
+Phase 2 は、新規 candidate 評価および candidate handoff 再評価の本文読解に入る前に、対象 candidate の `title` を `tools/shared_reads_title_index.py` の `normalize_title_key()` と同じ規則で `title_key` 化し、`memory/shared_reads_title_canonical_index.jsonl` と `memory/shared_reads_open_duplicate_group_queue.jsonl` を確認する。
 
-Phase 4a が staging に `group_action_handoff` を残した場合、Phase 2 は記録された budget（通常 1 group、backlog 高水位時だけ最大 3 group）の各 `representative` を再評価する。同じ `group_key` は 1 回だけ扱い、handoff 対象 group の `representative` と `open_siblings` を candidate 単位の `stale_review_batch` と同時に評価しない。`terminal_siblings` と `latest_evidence` は判断根拠として読むが、candidate frontmatter を group 単位で自動一括更新しない。
+Phase 4a が staging に `group_action_handoff` を残した場合、Phase 2 は記録された budget（通常 1 group、backlog 高水位時だけ最大 3 group）の各 `representative` を再評価する。同じ `group_key` は 1 回だけ扱い、handoff 対象 group の `representative` と `open_siblings` を candidate handoff と同時に評価しない。`terminal_siblings` と `latest_evidence` は判断根拠として読むが、candidate frontmatter を group 単位で自動一括更新しない。
 
-2026-07-18 Phase 4c 以降、跨 cycle の正本は staging ではなく `memory/shared_reads_group_handoff_inbox.jsonl` とする。Phase 2 の開始時に次を実行し、新規 candidate と `stale_review_batch` より先に oldest pending を最大3件処理する。
+2026-07-18 Phase 4c 以降、group action の跨 cycle 正本は staging ではなく `memory/shared_reads_group_handoff_inbox.jsonl` とする。Phase 2 の開始時に次を実行し、candidate handoff と新規 candidate より先に oldest pending を最大3件処理する。
 
 ```powershell
 python tools\shared_reads_group_handoff.py pending --limit 3

@@ -13,6 +13,8 @@ from typing import Any
 
 from build_shared_reads_open_duplicate_group_queue import DEFAULT_OUTPUT as DEFAULT_OPEN_GROUP_QUEUE
 from build_shared_reads_open_duplicate_group_queue import build_queue as build_open_duplicate_group_queue
+from shared_reads_candidate_handoff import DEFAULT_INBOX as DEFAULT_CANDIDATE_HANDOFF_INBOX
+from shared_reads_candidate_handoff import lease_suppresses as candidate_lease_suppresses
 from shared_reads_group_handoff import DEFAULT_INBOX as DEFAULT_HANDOFF_INBOX
 from shared_reads_group_handoff import read_jsonl, resolution_suppresses
 from shared_reads_title_index import DEFAULT_CANDIDATES_DIR, normalize_title_key, read_frontmatter, rel_path
@@ -61,6 +63,11 @@ def parse_args() -> argparse.Namespace:
         default=DEFAULT_OPEN_GROUP_QUEUE,
     )
     parser.add_argument("--handoff-inbox", type=Path, default=DEFAULT_HANDOFF_INBOX)
+    parser.add_argument(
+        "--candidate-handoff-inbox",
+        type=Path,
+        default=DEFAULT_CANDIDATE_HANDOFF_INBOX,
+    )
     parser.add_argument(
         "--as-of",
         help="lease evaluation time in ISO 8601; defaults to the current local time",
@@ -168,12 +175,19 @@ def build_queue(
     handoff_inbox_path: Path | None = None,
     as_of: datetime | None = None,
     root: Path = ROOT,
+    candidate_handoff_inbox_path: Path | None = None,
 ) -> list[dict[str, Any]]:
     open_group_rows = load_open_group_rows(candidates_dir, open_group_queue_path)
     open_group_keys = {
         str(row.get("group_key") or "") for row in open_group_rows if row.get("group_key")
     }
     inbox_rows = read_jsonl(handoff_inbox_path) if handoff_inbox_path and handoff_inbox_path.exists() else []
+    candidate_handoff_rows = (
+        read_jsonl(candidate_handoff_inbox_path)
+        if candidate_handoff_inbox_path and candidate_handoff_inbox_path.exists()
+        else []
+    )
+    lease_as_of = as_of or datetime.now().astimezone()
     suppressed_groups = live_lease_group_keys(open_group_rows, inbox_rows, root, as_of or datetime.now().astimezone())
     records: list[dict[str, Any]] = []
     for path in sorted(candidates_dir.glob("*.md")):
@@ -186,6 +200,15 @@ def build_queue(
         stale_after = parse_iso_date(meta.get("stale_after", ""))
         if stale_after is None or stale_after > today:
             continue
+        relative = rel_path(path)
+        if candidate_lease_suppresses(
+            relative,
+            status,
+            stale_after.isoformat(),
+            candidate_handoff_rows,
+            lease_as_of,
+        ):
+            continue
         group_key = normalize_title_key(meta.get("title", ""))
         duplicate_group_key = group_key if group_key in open_group_keys else ""
         if duplicate_group_key in suppressed_groups:
@@ -194,7 +217,7 @@ def build_queue(
         transfer_value = game_transfer_value(meta)
         records.append(
             {
-                "path": rel_path(path),
+                "path": relative,
                 "title": meta.get("title", ""),
                 "status": status,
                 "stale_after": stale_after.isoformat(),
@@ -246,6 +269,8 @@ def main() -> int:
         args.limit,
         args.handoff_inbox,
         as_of,
+        ROOT,
+        args.candidate_handoff_inbox,
     )
     rendered = render_jsonl(records)
 
