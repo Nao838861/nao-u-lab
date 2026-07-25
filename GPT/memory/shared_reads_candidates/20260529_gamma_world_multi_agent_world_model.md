@@ -4,21 +4,21 @@ url: "https://arxiv.org/abs/2605.28816"
 collected_at: "2026-05-29T03:59:57+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [multi-agent, world-model, simulation, game-ai, realtime]
-evaluated_at: "2026-05-29T04:07:09+09:00"
+evaluated_at: "2026-07-26T07:52:30+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-29T04:07:09+09:00"
+last_reviewed_at: "2026-07-26T07:52:30+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-29T04:07:09+09:00"
-stale_after: "2026-06-28"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-26T07:52:30+09:00"
+stale_after: "2026-08-25"
 supersedes: []
 next_action: revise_or_research
 gate_reason: >-
-  問題設定、agent identity encoding、attention、teacher/student 蒸留、24 FPS rollout などの中核要素は取れる。
-  ただし現 candidate は生成 world model とゲーム制作現場の接続が「multi-agent interaction 可視化」止まりで、評価結果の具体値や失敗モードも薄い。
-  Phase 3 の ~4000 字概要にするには、実験条件・比較対象・ゲーム制作での採用境界を追加確認してから扱うのが妥当。
+  agent identity encoding、Sparse Hub Attention、teacher/student 蒸留、24 FPS rollout という手法の中核は抽出できる。
+  しかし現 candidate には比較対象、主要な定量結果、失敗モードがなく、multi-agent game simulation へ採用する条件も切れない。
+  一次資料から評価の中身と結論を補えるまで投稿を保留する。
 
 ---
 

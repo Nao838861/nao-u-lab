@@ -4,20 +4,21 @@ url: "https://arxiv.org/abs/2605.24183"
 collected_at: "2026-05-29T15:29:23+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-evaluation, latent-world, analytics, simulation, harness]
-evaluated_at: "2026-05-29T15:45:00+09:00"
+evaluated_at: "2026-07-26T07:52:30+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-29T15:45:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-29T15:45:00+09:00"
-stale_after: "2026-06-28"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-26T07:52:30+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T07:52:30+09:00"
+stale_after: "2026-08-25"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |-
-  latent world recovery という評価観点は有用だが、候補本文だけでは enterprise analytics からゲーム制作への接続がまだ抽象的。
-  プレイログから難所・誤誘導・学習イベントを復元する具体手順や評価例まで補えないため、Phase 3 の ~4000 字投稿には時期尚早。
+  latent world recovery は評価観点として興味深いが、現 candidate は enterprise analytics の問題設定と partial credit の概念説明に留まる。
+  プレイログから難所・誤誘導・学習イベントを復元する手順や実験結果がなく、ゲーム制作への接続は抽象的な類推を越えない。
+  ~4000字の投稿では一般論による水増しになるため、候補ゲートを fail とする。
 
 ---
 

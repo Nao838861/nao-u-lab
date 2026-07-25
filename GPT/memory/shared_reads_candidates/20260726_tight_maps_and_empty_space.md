@@ -4,6 +4,21 @@ url: "https://jacknealgames.itch.io/rust-and-revenue/devlog/1360627/tight-maps-a
 collected_at: "2026-07-26T07:46:43.4222284+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, board-game, procedural-generation, level-design, tutorial-design]
+evaluated_at: "2026-07-26T07:52:30+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-26T07:52:30+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T07:52:30+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-25"
+supersedes: []
+gate_reason: |-
+  低得点・empty space を network の骨格を学ばせる配置へ読み替える着想は、tutorial と procedural output の役割別選別へ具体的に使える。
+  一方、単一 map の短い制作メモで、比較条件、反復評価、一般化できる手法の中核や結論を支える材料がない。
+  ~4000字へ広げると記事固有情報よりこちらの一般論が多くなるため、投稿候補ではなく制作参照として残す。
 ---
 
 ## raw_excerpt
