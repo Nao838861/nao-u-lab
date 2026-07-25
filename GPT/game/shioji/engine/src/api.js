@@ -76,8 +76,9 @@ function controllerSnapshot(state, { includePhysical = false } = {}) {
   return includePhysical ? jsonClone(snapshot) : snapshot;
 }
 
-function viewSnapshot(state) {
+function viewSnapshot(state, { terrainAfterRevision = null } = {}) {
   const { economy, physical } = state;
+  const travelRevision = physical.travelRevision ?? 0;
   return {
     day: state.day,
     tick: state.tick,
@@ -128,8 +129,10 @@ function viewSnapshot(state) {
           call.status === "completed" || call.status === "cancelled"
         )).slice(-8)),
       roadWorksites: physical.roadWorksites,
+      roadRevision: physical.roadRevision ?? 0,
       roads: physical.roads,
-      terrain: physical.terrain,
+      terrain: terrainAfterRevision === travelRevision ? null : physical.terrain,
+      travelRevision,
       trails: physical.trails,
       width: physical.width,
     },
@@ -576,10 +579,12 @@ export function createEngineApi(
       assertSafeCount(days, "day count");
       return advanceTicks(days * 30);
     },
-    snapshot({ scope = "full" } = {}) {
+    snapshot({ scope = "full", terrainAfterRevision = null } = {}) {
       if (scope === "controller") return controllerSnapshot(world.state);
       if (scope === "placement") return controllerSnapshot(world.state, { includePhysical: true });
-      if (scope === "view") return jsonClone(viewSnapshot(world.state));
+      if (scope === "view") {
+        return jsonClone(viewSnapshot(world.state, { terrainAfterRevision }));
+      }
       if (scope !== "full") throw new Error(`unknown snapshot scope: ${scope}`);
       return jsonClone(world.state);
     },

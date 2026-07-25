@@ -1,4 +1,6 @@
-import { snapshotToViewModel } from './view_model.js?v=v004.26.0-living-yard';
+import {
+  snapshotToViewModel, terrainRevisionForModel,
+} from './view_model.js?v=v004.27.0-topology-cache';
 
 export function createViewController(api) {
   if (!api?.snapshot || !api?.advanceTicks || !api?.applyOperation) {
@@ -11,12 +13,17 @@ export function createViewController(api) {
     viewModelBuilds: 0,
     eventReads: 0,
   };
+  let previousModel = null;
   return Object.freeze({
     readModel() {
       counts.snapshotReads += 1;
-      const snapshot = api.snapshot({ scope: 'view' });
+      const snapshot = api.snapshot({
+        scope: 'view',
+        terrainAfterRevision: terrainRevisionForModel(previousModel),
+      });
       counts.viewModelBuilds += 1;
-      return snapshotToViewModel(snapshot);
+      previousModel = snapshotToViewModel(snapshot, { previousModel });
+      return previousModel;
     },
     advanceTicks(count = 1) {
       counts.advanceCalls += 1;

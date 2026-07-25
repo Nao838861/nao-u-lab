@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.26.0-living-yard';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.27.0-topology-cache';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({

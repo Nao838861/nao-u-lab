@@ -61,7 +61,7 @@ import {
   tutorialSpeedAfterObjectiveChange,
 } from '../src/ui_guidance.js';
 import { islandCalendar, islandHealthSummary, recentCompanySummary } from '../src/ui_summary.js';
-import { snapshotToViewModel } from '../src/view_model.js';
+import { snapshotToViewModel, terrainTopologyForModel } from '../src/view_model.js';
 import {
   EXACT_PILE_LIMIT, MAX_DISPLAY_CULTURE_LEVEL, MAX_PILE_SPRITES, MAX_YARD_GOODS,
   PILE_STAGE_LIMITS, buildingAppearance, buildingStructureLayout, displayCultureLevel,
@@ -2154,7 +2154,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.26.0-living-yard');
+  assert.equal(VERSION, 'v004.27.0-topology-cache');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2383,6 +2383,7 @@ test('段2: full snapshotを地形・建物・キャリア・棚の不変描画�
   assert.equal(Object.isFrozen(model.terrain[0][0]), true);
   assert.equal(Object.isFrozen(model.renderScene), true);
   assert.equal(Object.isFrozen(model.renderScene.staticDrawables), true);
+  assert.equal(Object.isFrozen(terrainTopologyForModel(model).naturalDrawables), true);
   assert.throws(() => { model.terrain[0][0].kind = 'coal'; }, TypeError);
 });
 
@@ -2392,6 +2393,8 @@ test('描画構造最適化: snapshot更新時に静的描画場面を一度だ�
   const scene = first.renderScene;
   assert.equal(scene.roadRows.length, first.roadKeys.length);
   assert.equal(scene.counts.roadTiles, first.roadKeys.length);
+  const topology = terrainTopologyForModel(first);
+  assert.ok(topology.naturalDrawables.length > 0);
   assert.ok(scene.staticDrawables.some(row => row.kind === 'building'));
   assert.equal(scene.staticDrawables.some(row => (
     row.kind === 'carrier' || row.kind === 'ship' || row.kind === 'handling'
@@ -2415,13 +2418,42 @@ test('描画構造最適化: snapshot更新時に静的描画場面を一度だ�
   const copied = snapshotToViewModel(structuredClone(api.snapshot({ scope: 'full' })));
   assert.equal(copied.renderScene.terrainKey, scene.terrainKey,
     '同じ地形ならsnapshotのcloneが変わってもcache keyを保つ');
+  const sameRevision = snapshotToViewModel(api.snapshot({ scope: 'full' }), {
+    previousModel: first,
+  });
+  assert.equal(sameRevision.terrain, first.terrain,
+    '同じrevisionなら凍結済み地形を複製し直さない');
+  assert.equal(sameRevision.roadConnection, first.roadConnection,
+    '同じrevisionなら道路接続の探索を繰り返さない');
+  assert.equal(sameRevision.renderScene.roadRows, scene.roadRows,
+    '同じrevisionなら道路描画行を再編成しない');
+  assert.equal(sameRevision.renderScene.roadSegments, scene.roadSegments);
+  assert.equal(
+    terrainTopologyForModel(sameRevision).naturalDrawables,
+    topology.naturalDrawables,
+    '同じrevisionなら自然物の描画資料を再走査しない');
+  const viewRevision = api.snapshot({ scope: 'view' }).physical.travelRevision;
+  assert.equal(
+    api.snapshot({ scope: 'view', terrainAfterRevision: viewRevision }).physical.terrain,
+    null,
+    '表示側が同じrevisionを持つ時だけAPIの地形複製を省く',
+  );
+  assert.ok(Array.isArray(
+    api.snapshot({ scope: 'view', terrainAfterRevision: viewRevision - 1 }).physical.terrain,
+  ), 'revisionが違えばAPIは完全な地形を返す');
   const changedSnapshot = structuredClone(api.snapshot({ scope: 'full' }));
   changedSnapshot.physical.terrain[0][0].kind = (
     changedSnapshot.physical.terrain[0][0].kind === 'water' ? 'grass' : 'water'
   );
-  const terrainChanged = snapshotToViewModel(changedSnapshot);
+  changedSnapshot.physical.travelRevision += 1;
+  const terrainChanged = snapshotToViewModel(changedSnapshot, { previousModel: first });
   assert.notEqual(terrainChanged.renderScene.terrainKey, scene.terrainKey,
     '伐採などで地形が変わればcache keyを更新する');
+  assert.notEqual(terrainChanged.terrain, first.terrain);
+  assert.notEqual(
+    terrainTopologyForModel(terrainChanged).naturalDrawables,
+    topology.naturalDrawables,
+  );
 
   api.advanceTicks(1);
   const second = snapshotToViewModel(api.snapshot({ scope: 'full' }));

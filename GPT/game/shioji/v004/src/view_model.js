@@ -1,14 +1,16 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.26.0-living-yard';
-import { perishableFreshness } from './food_readability.js?v=v004.26.0-living-yard';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.27.0-topology-cache';
+import { perishableFreshness } from './food_readability.js?v=v004.27.0-topology-cache';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.26.0-living-yard';
-import { analyzeRoadConnections } from './placement.js?v=v004.26.0-living-yard';
-import { compileRenderScene } from './render_scene.js?v=v004.26.0-living-yard';
+} from './engine_bridge.js?v=v004.27.0-topology-cache';
+import { analyzeRoadConnections } from './placement.js?v=v004.27.0-topology-cache';
+import {
+  compileRenderScene, renderSceneTopology,
+} from './render_scene.js?v=v004.27.0-topology-cache';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.26.0-living-yard';
+} from './visuals.js?v=v004.27.0-topology-cache';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
@@ -19,6 +21,16 @@ const CONVERSION_JOBS = Object.freeze({
   charburner: Object.freeze({ goods: 'char', inputGoods: 'log' }),
   saltworks: Object.freeze({ goods: 'salt', inputGoods: 'char' }),
 });
+
+const MODEL_TOPOLOGY_REVISIONS = new WeakMap();
+
+export function terrainRevisionForModel(model) {
+  return model ? MODEL_TOPOLOGY_REVISIONS.get(model)?.terrainRevision ?? null : null;
+}
+
+export function terrainTopologyForModel(model) {
+  return model ? renderSceneTopology(model.renderScene)?.terrainLayer ?? null : null;
+}
 
 function deepFreeze(value) {
   if (!value || typeof value !== 'object' || Object.isFrozen(value)) return value;
@@ -565,10 +577,29 @@ function portBerth(building, terrain, width, height) {
   };
 }
 
-export function snapshotToViewModel(snapshot) {
+export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
   if (!snapshot?.physical || !snapshot?.economy) {
     throw new TypeError('full engine snapshot is required');
   }
+  const terrainRevision = snapshot.physical.travelRevision ?? null;
+  const roadRevision = snapshot.physical.roadRevision ?? null;
+  const previousRevisions = previousModel
+    ? MODEL_TOPOLOGY_REVISIONS.get(previousModel) ?? null
+    : null;
+  const canReuseTerrain = previousModel
+    && terrainRevision !== null
+    && previousRevisions?.terrainRevision === terrainRevision
+    && previousModel.width === snapshot.physical.width
+    && previousModel.height === snapshot.physical.height;
+  const canReuseRoadTopology = canReuseTerrain
+    && roadRevision !== null
+    && previousRevisions?.roadRevision === roadRevision;
+  if (!canReuseTerrain && !Array.isArray(snapshot.physical.terrain)) {
+    throw new TypeError('terrain is required when its revision cannot be reused');
+  }
+  const terrain = canReuseTerrain
+    ? previousModel.terrain
+    : snapshot.physical.terrain.map(row => row.map(tile => ({ ...tile })));
   const householdById = new Map(snapshot.economy.households.map(household => [household.id, household]));
   const buildings = snapshot.physical.buildings.map(building => {
     const shelves = shelfRows(building);
@@ -763,7 +794,7 @@ export function snapshotToViewModel(snapshot) {
     population: households.reduce((total, household) => total + household.members, 0),
     width: snapshot.physical.width,
     height: snapshot.physical.height,
-    terrain: snapshot.physical.terrain.map(row => row.map(tile => ({ ...tile }))),
+    terrain,
     roadKeys: Object.keys(snapshot.physical.roads),
     trailRows,
     occupiedKeys: Object.keys(snapshot.physical.occupied),
@@ -782,7 +813,7 @@ export function snapshotToViewModel(snapshot) {
       + Object.values(snapshot.economy.stock).reduce((total, amount) => total + amount, 0),
     portCalls,
     portBerth: portBuilding
-      ? portBerth(portBuilding, snapshot.physical.terrain, snapshot.physical.width, snapshot.physical.height)
+      ? portBerth(portBuilding, terrain, snapshot.physical.width, snapshot.physical.height)
       : null,
     economyMarket: { ...snapshot.economy.market },
     zones: snapshot.economy.zones.map(zone => ({ ...zone })),
@@ -828,11 +859,22 @@ export function snapshotToViewModel(snapshot) {
     activeOrder: snapshot.economy.order ? { ...snapshot.economy.order } : null,
     marketLowest,
   };
-  const withRoadConnection = { ...base, roadConnection: analyzeRoadConnections(base) };
-  return deepFreeze({
+  const withRoadConnection = {
+    ...base,
+    roadConnection: canReuseRoadTopology
+      ? previousModel.roadConnection
+      : analyzeRoadConnections(base),
+  };
+  const model = deepFreeze({
     ...withRoadConnection,
-    renderScene: compileRenderScene(withRoadConnection),
+    renderScene: compileRenderScene(withRoadConnection, {
+      previousScene: canReuseTerrain ? previousModel.renderScene : null,
+      terrainRevision,
+      roadRevision,
+    }),
   });
+  MODEL_TOPOLOGY_REVISIONS.set(model, Object.freeze({ terrainRevision, roadRevision }));
+  return model;
 }
 
 export { INVENTORY_SECTIONS };

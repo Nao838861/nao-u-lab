@@ -3,6 +3,7 @@ import fs from 'node:fs';
 
 const CDP = process.env.CHARTER_CDP || 'http://127.0.0.1:9226';
 const GAME = process.env.CHARTER_URL || 'http://127.0.0.1:8420/game/shioji/v004/?mode=test';
+const WARMUP_FRAMES = 240;
 const FRAMES = 240;
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -72,7 +73,9 @@ assert.equal(await page.evaluate('Boolean(window.__SHIOJI_V004__?.renderer)'), t
 await page.evaluate(`window.__SHIOJI_V004__.advanceTicks(3600, { animate: false })`);
 const result = await page.evaluate(`(() => {
   const game = window.__SHIOJI_V004__;
-  for (let index = 0; index < 30; index += 1) game.renderer.render(game.displayModel, 1 / 60);
+  for (let index = 0; index < ${WARMUP_FRAMES}; index += 1) {
+    game.renderer.render(game.displayModel, 1 / 60);
+  }
   const samples = [];
   for (let run = 0; run < 5; run += 1) {
     const started = performance.now();
@@ -94,6 +97,7 @@ const result = await page.evaluate(`(() => {
   const restoredHit = game.renderer.lastFrameMetrics.terrainCacheHit;
   return {
     build: document.querySelector('#build-version')?.textContent,
+    warmupFrames: ${WARMUP_FRAMES},
     frames: ${FRAMES},
     buildings: game.displayModel.buildings.length,
     carriers: game.displayModel.carriers.length,

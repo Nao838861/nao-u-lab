@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.26.0-living-yard';
+import { SPEEDS } from './config.js?v=v004.27.0-topology-cache';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

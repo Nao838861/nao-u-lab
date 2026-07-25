@@ -13,6 +13,7 @@
     "test:browser-company": "node tests/browser_smoke.mjs --company-pointer-only",
     "test:transport-calibration": "node tests/individual_transport_calibration.mjs",
     "benchmark:render": "node tests/render_benchmark.mjs",
+    "benchmark:view": "node tests/view_pipeline_benchmark.mjs",
     "benchmark:long": "node --expose-gc tests/long_run_performance.mjs"
   }
 }

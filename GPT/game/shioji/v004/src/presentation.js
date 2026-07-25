@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.26.0-living-yard';
+import { pileVisual } from './visuals.js?v=v004.27.0-topology-cache';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));

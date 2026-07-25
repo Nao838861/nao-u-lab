@@ -2,13 +2,13 @@
 
 ## 現在地
 
-`STEPBOOK.md`の全18段、`TUTORIAL_STEPBOOK.md`の24/24、`UI_POLISH_STEPBOOK.md`の12/12を完了した。2026-07-23のClaude申し送りL〜ATと、`WORK_ORDER_20260724B.md`／`WORK_ORDER_20260724C.md`／`WORK_ORDER_20260725B.md`〜`WORK_ORDER_20260725E.md`を優先順に実行した。現在版は`v004.26.0-living-yard`。在庫ヤードを入口側の原料、仕事場脇の製品、奥の保管へ固定し、空いた置き場を詰めずに残す。1〜20荷は実個数、21〜60荷は小山、61〜180荷は中山、181荷以上は大山として、運搬補間と同期して同じ場所で切り替える。全18品目の独立需給と既定3グラフも維持している。
+`STEPBOOK.md`の全18段、`TUTORIAL_STEPBOOK.md`の24/24、`UI_POLISH_STEPBOOK.md`の12/12を完了した。2026-07-23のClaude申し送りL〜ATと、`WORK_ORDER_20260724B.md`／`WORK_ORDER_20260724C.md`／`WORK_ORDER_20260725B.md`〜`WORK_ORDER_20260725E.md`を優先順に実行した。現在版は`v004.27.0-topology-cache`。地形・道路の改訂番号を表示境界へ通し、変化していない地形配列、自然物、道路接続、道路描画列を前回の不変モデルから再利用する。公開モデル、描画順、現物数、経済規則、完全snapshotはv004.26.0と同一で、固定ヤード、在庫山、全18品目の独立需給と既定3グラフも維持している。
 
 **Nao_u 申し送り**: [PLAYTEST_FEEDBACK_20260723.md](PLAYTEST_FEEDBACK_20260723.md)。A〜AD、AF／AF-2、AH-3〜5、AL、AMは対応済み。画面の正典は地中海・大航海時代風、通貨はデナリとし、取引、統計、倉庫、市場へ出す、木製品、平易な職名へ統一した。建設は直接パレット一本、出来事は判断に使う直近24件だけで、日常売買・運搬・船便は表示しない。engine側も観測イベント128件、台帳・相場・運搬・港便を有限化し、1300日監査を完走した。詳細は [CANON_EVENT_PERFORMANCE_AUDIT_20260724.md](CANON_EVENT_PERFORMANCE_AUDIT_20260724.md)。AEは「ゲームの流れに必要な固定文だけ」を現在の正とし、猫、好感度、表情、分岐など凝った演出は将来枠のまま保持する。エレナはUI語を話さず、具体操作だけを計器が補う。専用に書かれた発話がない情報は、title／detail／イベント原文を流用せず沈黙させる。L〜Zの設計正本と受け入れ証拠は [PERFORMANCE_RENDERING_STEPBOOK.md](PERFORMANCE_RENDERING_STEPBOOK.md)、[EXPERIENCE_TUTORIAL_STEPBOOK.md](EXPERIENCE_TUTORIAL_STEPBOOK.md)、[completion_audit.md](completion_audit.md) にある。
 
 **次セッションの進め方**:
 
-1. v004.26.0の固定ヤード・空き置き場・在庫山3段階、v004.25.0の独立需給・不足時だけのHUD帯・既定3グラフ・必要量基準線、v004.24.0の個人タスク・運搬容量・緊急便・教程速度復帰、v004.23.0の食料HUD・冬越し予報・意思決定順の建物シート・ボタン所有分離、v004.22.0の建物Lv表示、v004.21.0の発話寿命を維持する。個人化は行動だけであり、財布・在庫・職・文化Lvを個人へ分解しない。内部Lvは保存・経済判定用の0始まり、表示Lvは1始まりであり、両者を混同しない。新しい目標・書状・助言を足す時は、その状況専用のエレナ文と開始章を同時に定める。書状として残すのは契約、危機、章の決算、比較資料だけとし、通常通知は一言へ下げる。一言と出来事には自動既読を持たせ、同じ発話を常駐させない。title／detail／イベント原文の機械連結、固定［案内］、復唱UIを戻さない。
+1. v004.27.0の改訂番号による地形・道路トポロジー再利用、v004.26.0の固定ヤード・空き置き場・在庫山3段階、v004.25.0の独立需給・不足時だけのHUD帯・既定3グラフ・必要量基準線、v004.24.0の個人タスク・運搬容量・緊急便・教程速度復帰、v004.23.0の食料HUD・冬越し予報・意思決定順の建物シート・ボタン所有分離、v004.22.0の建物Lv表示、v004.21.0の発話寿命を維持する。個人化は行動だけであり、財布・在庫・職・文化Lvを個人へ分解しない。内部Lvは保存・経済判定用の0始まり、表示Lvは1始まりであり、両者を混同しない。新しい目標・書状・助言を足す時は、その状況専用のエレナ文と開始章を同時に定める。書状として残すのは契約、危機、章の決算、比較資料だけとし、通常通知は一言へ下げる。一言と出来事には自動既読を持たせ、同じ発話を常駐させない。title／detail／イベント原文の機械連結、固定［案内］、復唱UIを戻さない。
 2. AHの正典と情報粒度を守る。新しい画面語彙は [CANON_EVENT_PERFORMANCE_AUDIT_20260724.md](CANON_EVENT_PERFORMANCE_AUDIT_20260724.md) の表へ合わせ、出来事を追加する前に統計・現物描画・エレナの一言で十分でないか確認する。
 3. 再現する不具合があれば [TESTING_POLICY.md](TESTING_POLICY.md) の変更範囲別テストで直す。UIだけなら実Chrome、教程ならfocused＋`test:tutorial-early`、軽微engineなら該当unit＋影響focusedまでとし、経済定数・保存則・長期帯を変えない限りfullを常用しない。
 4. 創発15教材は進行条件へ戻さない。必達へ追加する目標は、有限上限とプレイヤーが理解できる完了条件を同じdiffに記録する。
@@ -22,7 +22,7 @@
 
 - `src/engine_bridge.js`だけがエンジンの公開APIと基準都市生成器をimportする。
 - controllerは不変snapshotを描画モデルへ変換し、rendererへエンジンAPIやworldを渡さない。
-- `src/render_scene.js`はsnapshotごとに自然物、建物、実在庫、屋台、道路、獣道、警告をplain objectの不変描画場面へ一度だけ編成する。rendererは少数の人物・船・荷役だけを毎frameで安定mergeする。
+- `src/render_scene.js`は自然物、建物、実在庫、屋台、道路、獣道、警告をplain objectの不変描画場面へ編成する。地形・道路の改訂番号が同じ更新では、自然物と道路列を不透明な`WeakMap`キャッシュから再利用する。rendererへ渡す列挙可能なモデルと描画場面にはキャッシュ情報を混ぜず、少数の人物・船・荷役だけを毎frameで安定mergeする。
 - 変更操作は`place_building`、`remove_building`、`add_road`、`remove_road`、`set_stock_target`、`release_stock`、`accept_order`、`purchase_company_cart`の公開操作APIだけを使う。
 - 描画frameとエンジンtickは分離し、移動・接岸・荷役はsnapshotと観測イベント間を表示側で補間する。
 - 地形本体は地形fingerprint、季節、camera、viewportが同じ間だけoffscreen canvasを再利用する。水面の波、人物、船、荷役は再利用層へ焼き込まず、従来どおり毎frame動かす。
@@ -58,6 +58,7 @@
 
 ## 現在の検証
 
+- `v004.27.0-topology-cache`は表示snapshot対象unit 1件、v004関連8件、全章acceptance、PC 1440×900／スマホ390×844の実Chrome viewport smokeを通過した。v004.26.0とseed11・day120の公開view model／render sceneの列挙可能JSONが完全一致し、同じ条件のcontroller更新中央値は9.14ms/回から6.57ms/回へ約28%短縮した。地形変更時には完全地形を再送し、地形・自然物・道路接続・道路列を再編成することも確認した。経済定数、保存則、完全snapshot、rendererの描画処理は変更していないため、engine全件、8年監査、長期性能、600日ソークは省略した。詳細は[OPTIMIZATION_RESPONSE_20260725.md](OPTIMIZATION_RESPONSE_20260725.md)。
 - `v004.26.0-living-yard`は関連unit 11件、全章acceptance、PC 1440×900／スマホ390×844の実Chrome viewport smokeを通過した。固定3役割ゾーン、空き置き場、品目消滅後の非スライド、自家製品の定位置、1〜20荷の実個数、21荷以上の3段階、20→21荷の運搬補間中切替、山hoverの正確値、runtime error 0を確認した。engine・経済定数・保存則を変更していないため、engine全件、8年監査、長期性能、600日ソークは省略した。詳細は[PLAYTEST_RESPONSE_20260725E.md](PLAYTEST_RESPONSE_20260725E.md)。
 - `v004.25.0-supply-demand`は関連unit 11件、全章acceptance、PC 1440×900／スマホ390×844の実Chrome viewport smokeを通過した。全18品目の深刻順、3段階状態、全項目、外側スクロールなし、需給から個別相場への遷移、既定3グラフ、基準線、線端ラベル、runtime error 0を確認した。engine・経済定数・保存則を変更していないため、engine全件、8年監査、長期性能、600日ソークは省略した。詳細は[PLAYTEST_RESPONSE_20260725D.md](PLAYTEST_RESPONSE_20260725D.md)。
 - `v004.24.0-individual-logistics`はv004全90件、全章受け入れ、engine全118件、個人運搬720日×3seed、木荷車循環3seed、8年安定監査、1300日性能、PC／スマホ実Chrome全browser smoke、600日soakを通過した。荷車ゼロ都市は720日後も人口74／74／90・13世帯を維持し、背負い平均2.843／2.768／3.258荷、素手平均0.892／0.886／0.845荷。8年は人口・飢餓・9職・保存・会社の全帯を通過し、価格だけ魚下限0.15・丸太上限1.60へ3seed実測で較正した。1300日はday100 1,981.9ms、day1300 2,601.8ms、成熟後比0.84、heap増2.3MB。600日browser soakは3.71→4.21MB、runtime error 0。

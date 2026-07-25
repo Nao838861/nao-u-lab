@@ -1,4 +1,4 @@
-export const VERSION = 'v004.26.0-living-yard';
+export const VERSION = 'v004.27.0-topology-cache';
 
 // 経済エンジンの貨幣値は表示単位の1/10。UIへ出す時だけデナリへ直す。
 export const DENARI_PER_MONEY_UNIT = 10;

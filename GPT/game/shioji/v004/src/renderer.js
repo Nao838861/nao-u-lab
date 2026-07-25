@@ -1,11 +1,11 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.26.0-living-yard';
-import { islandCalendar } from './ui_summary.js?v=v004.26.0-living-yard';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.26.0-living-yard';
+} from './config.js?v=v004.27.0-topology-cache';
+import { islandCalendar } from './ui_summary.js?v=v004.27.0-topology-cache';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.27.0-topology-cache';
 import {
   buildingStructureLayout, pileVisual,
-} from './visuals.js?v=v004.26.0-living-yard';
+} from './visuals.js?v=v004.27.0-topology-cache';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 

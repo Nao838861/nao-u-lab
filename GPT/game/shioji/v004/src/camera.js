@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.26.0-living-yard';
+import { TILE } from './config.js?v=v004.27.0-topology-cache';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

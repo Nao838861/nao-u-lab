@@ -1,4 +1,4 @@
-import { BUILDING_SIZES } from './config.js?v=v004.26.0-living-yard';
+import { BUILDING_SIZES } from './config.js?v=v004.27.0-topology-cache';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

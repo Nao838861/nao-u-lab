@@ -3190,6 +3190,30 @@ test("段48: 操作APIは買上げ・注文受諾・道路操作をday/tick付�
   )), true);
 });
 
+test("表示snapshot: 同じ地形revisionの再送を省き、変更後は完全地形を返す", () => {
+  const world = buildBaseCity(11);
+  const api = createEngineApi(world);
+  const first = api.snapshot({ scope: "view" });
+  const revision = first.physical.travelRevision;
+  assert.ok(Array.isArray(first.physical.terrain));
+  assert.equal(
+    api.snapshot({ scope: "view", terrainAfterRevision: revision }).physical.terrain,
+    null,
+  );
+
+  const tile = world.state.physical.terrain[0][0];
+  if (typeof tile === "string") {
+    world.state.physical.terrain[0][0] = tile === "water" ? "grass" : "water";
+  } else {
+    tile.kind = tile.kind === "water" ? "grass" : "water";
+  }
+  world.state.physical.travelRevision += 1;
+  const changed = api.snapshot({ scope: "view", terrainAfterRevision: revision });
+  assert.equal(changed.physical.travelRevision, revision + 1);
+  assert.ok(Array.isArray(changed.physical.terrain));
+  assert.notDeepEqual(changed.physical.terrain[0][0], first.physical.terrain[0][0]);
+});
+
 test("完成後拡張: 港だけの世界は市場・倉庫を自動生成せず公開操作で実体化する", () => {
   const world = createPortOnlyTestWorld();
   const api = createEngineApi(world);
