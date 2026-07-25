@@ -1,40 +1,40 @@
-import { IsometricCamera } from './camera.js?v=v004.31.0-elena-punctuation';
-import { SimulationClock } from './clock.js?v=v004.31.0-elena-punctuation';
+import { IsometricCamera } from './camera.js?v=v004.32.0-seasonal-plots';
+import { SimulationClock } from './clock.js?v=v004.32.0-seasonal-plots';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.31.0-elena-punctuation';
+} from './config.js?v=v004.32.0-seasonal-plots';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.31.0-elena-punctuation';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.31.0-elena-punctuation';
-import { developmentMapView } from './development_map.js?v=v004.31.0-elena-punctuation';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.31.0-elena-punctuation';
-import { formatElenaSpeech } from './elena_text.js?v=v004.31.0-elena-punctuation';
+} from './display_batch.js?v=v004.32.0-seasonal-plots';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.32.0-seasonal-plots';
+import { developmentMapView } from './development_map.js?v=v004.32.0-seasonal-plots';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.32.0-seasonal-plots';
+import { formatElenaSpeech } from './elena_text.js?v=v004.32.0-seasonal-plots';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.31.0-elena-punctuation';
+} from './food_readability.js?v=v004.32.0-seasonal-plots';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.31.0-elena-punctuation';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.31.0-elena-punctuation';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.31.0-elena-punctuation';
-import { WorldPresentation } from './presentation.js?v=v004.31.0-elena-punctuation';
-import { Renderer } from './renderer.js?v=v004.31.0-elena-punctuation';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.31.0-elena-punctuation';
+} from './keyboard.js?v=v004.32.0-seasonal-plots';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.32.0-seasonal-plots';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.32.0-seasonal-plots';
+import { WorldPresentation } from './presentation.js?v=v004.32.0-seasonal-plots';
+import { Renderer } from './renderer.js?v=v004.32.0-seasonal-plots';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.32.0-seasonal-plots';
 import {
   GOODS_GLYPHS, shortageRows, supplyDemandRows,
-} from './supply_demand.js?v=v004.31.0-elena-punctuation';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.31.0-elena-punctuation';
+} from './supply_demand.js?v=v004.32.0-seasonal-plots';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.32.0-seasonal-plots';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.31.0-elena-punctuation';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.31.0-elena-punctuation';
+} from './ui_guidance.js?v=v004.32.0-seasonal-plots';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.32.0-seasonal-plots';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -982,7 +982,7 @@ function renderEventSheet() {
     $('#event-log').innerHTML = eventLog.length ? [...eventLog].reverse().map(row => `
       <button type="button" class="event-row ${row.tone}" data-event-sequence="${row.sequence}">
         <b><span>${row.title}</span><span>${row.day}日 / ${row.tick}刻</span></b>
-        <small>${row.details || `座標 ${formatQuantity(row.x)}, ${formatQuantity(row.y)}`}</small>
+        <small>${row.details || '島からの知らせ'}</small>
       </button>`).join('') : '<p class="sheet-note">まだ出来事はありません。</p>';
     uiMetrics.domWrites += 1;
   });
@@ -1100,7 +1100,7 @@ function secretaryFallback() {
       speech: `${JOB_LABELS[selected.type] ?? selected.type}を見ています。品がどこから届き、どこへ運ばれるのかを追えば、この建物の役目が分かります。`,
       kicker: '盤面の選択',
       title: JOB_LABELS[selected.type] ?? selected.type,
-      detail: `座標 ${selected.x}, ${selected.y}・建物情報を開きます`,
+      detail: `${JOB_LABELS[selected.type] ?? selected.type}の暮らしと在庫を開きます`,
     };
   }
   return {

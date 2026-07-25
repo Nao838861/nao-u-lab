@@ -1,4 +1,4 @@
-import { BUILDING_SIZES } from './config.js?v=v004.31.0-elena-punctuation';
+import { BUILDING_SIZES } from './config.js?v=v004.32.0-seasonal-plots';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

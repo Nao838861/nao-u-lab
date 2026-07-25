@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.31.0-elena-punctuation';
+import { pileVisual } from './visuals.js?v=v004.32.0-seasonal-plots';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));

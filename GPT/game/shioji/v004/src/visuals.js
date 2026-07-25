@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.31.0-elena-punctuation';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.32.0-seasonal-plots';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({
@@ -9,6 +9,44 @@ export const PILE_STAGE_LIMITS = Object.freeze({
 export const MAX_PILE_SPRITES = EXACT_PILE_LIMIT;
 export const MAX_YARD_GOODS = 10;
 export const MAX_DISPLAY_CULTURE_LEVEL = 4;
+
+const SEASONAL_PLOT_ART = Object.freeze({
+  '秋': Object.freeze({
+    farm: Object.freeze({
+      fills: Object.freeze(['#a38149', '#92713f']),
+      stroke: '#755b38',
+      furrow: '#6f5433',
+      state: 'dry',
+    }),
+    pasture: Object.freeze({
+      fills: Object.freeze(['#9b8654', '#897344']),
+      stroke: '#70613d',
+      furrow: '#75633d',
+      state: 'dry',
+    }),
+  }),
+  '冬': Object.freeze({
+    farm: Object.freeze({
+      fills: Object.freeze(['#e5ebe3', '#d3ddd7']),
+      stroke: '#a9b9b1',
+      furrow: '#aab9b0',
+      state: 'snow',
+    }),
+    pasture: Object.freeze({
+      fills: Object.freeze(['#e9eee8', '#d8e1dc']),
+      stroke: '#aebcb5',
+      furrow: '#b4c1ba',
+      state: 'snow',
+    }),
+  }),
+});
+
+export function seasonalPlotVisual(building, season) {
+  const archetype = building?.appearance?.archetype;
+  if (!['farm', 'pasture'].includes(archetype)) return null;
+  const art = SEASONAL_PLOT_ART[season]?.[archetype];
+  return art ? Object.freeze({ ...art, archetype, season }) : null;
+}
 
 const PRODUCTION_GOODS = Object.freeze({
   fisher: Object.freeze(['fish', 'pres']),

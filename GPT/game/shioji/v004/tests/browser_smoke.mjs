@@ -1024,6 +1024,60 @@ async function checkElenaLineBreaks(width, height, mobile) {
   await page.close();
 }
 
+async function checkSeasonalPlots(width, height, mobile) {
+  const page = await newPage(width, height, mobile);
+  const autumn = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.setSpeed(0);
+    const targetDay = 250;
+    if (game.model.day < targetDay) game.advanceTicks((targetDay - game.model.day) * 30, { animate: false });
+    const plots = game.model.buildings.filter(row => (
+      ['wheat', 'veg', 'shepherd', 'rapeseed'].includes(row.type)
+    ));
+    const focus = plots[0];
+    if (focus) game.camera.focus(focus.x + focus.width / 2, focus.y + focus.height / 2);
+    game.renderer.render(game.displayModel, 0);
+    return {
+      version: game.version,
+      day: game.model.day,
+      season: game.renderer.season,
+      plots: plots.map(row => row.type),
+      marketStalls: game.model.marketStalls.length,
+      marketReal: game.model.marketStalls.every(stall => stall.items.every(item => (
+        item.visual.amount === item.qty && item.visual.spriteCount > 0
+      ))),
+    };
+  })()`);
+  assert.equal(autumn.version, 'v004.32.0-seasonal-plots', JSON.stringify(autumn));
+  assert.equal(autumn.season, '秋', JSON.stringify(autumn));
+  assert.ok(autumn.plots.some(type => ['wheat', 'veg'].includes(type)), JSON.stringify(autumn));
+  assert.ok(autumn.plots.some(type => type === 'shepherd'), JSON.stringify(autumn));
+  assert.ok(autumn.marketStalls > 0, JSON.stringify(autumn));
+  assert.equal(autumn.marketReal, true, JSON.stringify(autumn));
+  await page.screenshot(`/tmp/shioji_v004_fields_autumn_${mobile ? 'mobile' : 'desktop'}.png`);
+
+  const winter = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    const targetDay = 331;
+    if (game.model.day < targetDay) game.advanceTicks((targetDay - game.model.day) * 30, { animate: false });
+    const focus = game.model.buildings.find(row => (
+      ['wheat', 'veg', 'shepherd', 'rapeseed'].includes(row.type)
+    ));
+    if (focus) game.camera.focus(focus.x + focus.width / 2, focus.y + focus.height / 2);
+    game.renderer.render(game.displayModel, 0);
+    return {
+      day: game.model.day,
+      season: game.renderer.season,
+      errors: window.__SHIOJI_BOOT_ERROR__ ?? null,
+    };
+  })()`);
+  assert.equal(winter.season, '冬', JSON.stringify(winter));
+  assert.equal(winter.errors, null, JSON.stringify(winter));
+  await page.screenshot(`/tmp/shioji_v004_fields_winter_${mobile ? 'mobile' : 'desktop'}.png`);
+  assert.deepEqual(page.errors, []);
+  await page.close();
+}
+
 async function checkPeopleVisuals(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   const result = await page.evaluate(`(() => {
@@ -1139,8 +1193,8 @@ async function checkPeopleVisuals(width, height, mobile) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.31.0-elena-punctuation');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.31.0-elena-punctuation');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.32.0-seasonal-plots');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.32.0-seasonal-plots');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -1957,6 +2011,10 @@ if (process.argv.includes('--company-pointer-only')) {
   await checkElenaLineBreaks(1440, 900, false);
   await checkElenaLineBreaks(390, 844, true);
   console.log('CHARTER ISLE v004 Elena line breaks smoke: PASS');
+} else if (process.argv.includes('--seasonal-plots-only')) {
+  await checkSeasonalPlots(1440, 900, false);
+  await checkSeasonalPlots(390, 844, true);
+  console.log('CHARTER ISLE v004 seasonal plots smoke: PASS');
 } else if (process.argv.includes('--viewport-only')) {
   await checkViewport(1440, 900, false);
   await checkViewport(390, 844, true);

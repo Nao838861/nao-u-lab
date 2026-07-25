@@ -1,12 +1,12 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.31.0-elena-punctuation';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.31.0-elena-punctuation';
-import { islandCalendar } from './ui_summary.js?v=v004.31.0-elena-punctuation';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.31.0-elena-punctuation';
+} from './config.js?v=v004.32.0-seasonal-plots';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.32.0-seasonal-plots';
+import { islandCalendar } from './ui_summary.js?v=v004.32.0-seasonal-plots';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.32.0-seasonal-plots';
 import {
-  buildingStructureLayout, pileVisual,
-} from './visuals.js?v=v004.31.0-elena-punctuation';
+  buildingStructureLayout, pileVisual, seasonalPlotVisual,
+} from './visuals.js?v=v004.32.0-seasonal-plots';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
@@ -313,6 +313,7 @@ export class Renderer {
         building.x, building.y, building.width, building.height,
         fill, '#455344', 0.9,
       );
+      this.drawSeasonalPlotGround(building);
       const structure = building.structure ?? buildingStructureLayout(building);
       if (structure.openYard) {
         const yardFill = building.type === 'port' ? '#aa9472'
@@ -340,6 +341,22 @@ export class Renderer {
         selected.x, selected.y, selected.width, selected.height,
         '#f2c45d', '#ffe39a', 0.34,
       );
+    }
+  }
+
+  drawSeasonalPlotGround(building) {
+    const visual = seasonalPlotVisual(building, this.season);
+    if (!visual) return;
+    const minX = Math.floor(building.x);
+    const minY = Math.floor(building.y);
+    const maxX = Math.ceil(building.x + building.width);
+    const maxY = Math.ceil(building.y + building.height);
+    for (let y = minY; y < maxY; y += 1) {
+      for (let x = minX; x < maxX; x += 1) {
+        const fill = visual.fills[Math.abs(x + y) % visual.fills.length];
+        // 農地だけを一枚の色面にせず、一筆の区画ごとに季節が読めるようにする。
+        this.diamond(x, y, fill, visual.stroke, 0.96);
+      }
     }
   }
 
@@ -805,8 +822,8 @@ export class Renderer {
       );
     }
     if (farm) {
-      ctx.strokeStyle = this.season === '冬' ? '#b9c9bd'
-        : this.season === '秋' ? '#927449' : appearance.accent;
+      const seasonalPlot = seasonalPlotVisual(building, this.season);
+      ctx.strokeStyle = seasonalPlot?.furrow ?? appearance.accent;
       ctx.lineWidth = Math.max(1, 1.2 * this.camera.zoom);
       const furrowCount = appearance.leveled
         ? Math.max(2, Math.min(5, appearance.tier + 1)) : 4;
@@ -818,17 +835,6 @@ export class Renderer {
         ctx.moveTo(from.x, from.y);
         ctx.lineTo(to.x, to.y);
         ctx.stroke();
-      }
-      if (this.season === '冬') {
-        this.footprint(
-          building.x + 0.18,
-          building.y + 0.18,
-          building.width - 0.36,
-          building.height - 0.36,
-          'rgba(224,235,226,.34)',
-          'rgba(230,241,235,.36)',
-          1,
-        );
       }
     }
     if (appearance.structureVisible) {
