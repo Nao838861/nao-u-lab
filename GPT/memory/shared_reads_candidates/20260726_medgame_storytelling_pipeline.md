@@ -7,12 +7,17 @@ genre_tags: [game-design, interactive-narrative, llm, procedural-content, evalua
 evaluated_at: "2026-07-26T01:21:06+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-26T01:21:06+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-26T01:21:06+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1784996924.554359"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784996924554359"
+  char_count: 3900
+  posted_at: "2026-07-26T01:29:20.9187279+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-26T01:29:20.9187279+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784996924554359"
+next_action: none
 stale_after: "2026-08-25"
 supersedes: []
 gate_reason: >-

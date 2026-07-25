@@ -91,7 +91,18 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260726_medgame_storytelling_pipeline.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784996924554359
+    char_count: 3900
+skipped: []
+review:
+  policy: pass
+  verification: "Slack保存後の本文を conversations.history で再取得し、文字化けなしを確認"
+  rationale: "二段階生成、依存DAG、三層/四層の構造検証、5,000症例 benchmark、人間評価、線形物語・小規模pilot・LLM judge依存という限界まで一次資料に基づいて記述できたため投稿"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
