@@ -585,9 +585,29 @@ export function stepMarketTrip(economy, physical, household, { day, random }) {
   throw new Error(`市場往復でない状態です: ${household.state}`);
 }
 
-export function decideHouseholdTrips(economy, physical) {
+export const HOUSEHOLD_DEPARTURE_WINDOW = Object.freeze({ start: 1, end: 7 });
+
+export function householdDepartureTime(household) {
+  const id = household?.id;
+  if (Number.isSafeInteger(id)) {
+    const width = HOUSEHOLD_DEPARTURE_WINDOW.end - HOUSEHOLD_DEPARTURE_WINDOW.start + 1;
+    return HOUSEHOLD_DEPARTURE_WINDOW.start + ((id % width) + width) % width;
+  }
+  const source = String(id ?? "");
+  let hash = 2166136261;
+  for (let index = 0; index < source.length; index += 1) {
+    hash ^= source.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  const width = HOUSEHOLD_DEPARTURE_WINDOW.end - HOUSEHOLD_DEPARTURE_WINDOW.start + 1;
+  return HOUSEHOLD_DEPARTURE_WINDOW.start + (hash >>> 0) % width;
+}
+
+export function decideHouseholdTrips(economy, physical, { timeOfDay = null } = {}) {
   if (!buildingById(physical, physical.roleBuildingIds?.market)) return;
   for (const household of economy.households) {
+    if (timeOfDay !== null && householdDepartureTime(household) !== timeOfDay) continue;
+    if (timeOfDay !== null && household.tookMarketTripToday) continue;
     if (household.state !== "home") continue;
     const needs = householdTripNeeds(economy, physical, household);
     const offers = sellOffers(economy, household);
@@ -684,7 +704,13 @@ export function createWorld({
             : 0;
         household.tookMarketTripToday = household.marketCarrier !== null;
       }
-      decideHouseholdTrips(economy, physical);
+    }
+
+    if (
+      timeOfDay >= HOUSEHOLD_DEPARTURE_WINDOW.start
+      && timeOfDay <= HOUSEHOLD_DEPARTURE_WINDOW.end
+    ) {
+      decideHouseholdTrips(economy, physical, { timeOfDay });
     }
 
     for (const household of economy.households) {

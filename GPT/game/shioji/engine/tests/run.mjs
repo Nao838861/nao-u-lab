@@ -121,11 +121,13 @@ import {
   workRoadWorksite,
 } from "../src/physical.js";
 import {
+  HOUSEHOLD_DEPARTURE_WINDOW,
   beginMarketTrip,
   createWorld,
   decideHouseholdTrips,
   ensureCompanyLogisticsSites,
   ensureHouseholdInputSites,
+  householdDepartureTime,
   stepMarketTrip,
 } from "../src/world.js";
 import {
@@ -2094,7 +2096,8 @@ test("25C: 道普請へは家族の一人だけを決定的に割り当て、残
   }
   assert.ok(worksite);
 
-  api.advanceTicks(1);
+  const phase = householdDepartureTime(household);
+  api.advanceTicks(phase);
   assert.equal(household.state, "toWork");
   assert.ok(household.workCarrier);
   assert.equal(household.workCarrier.people, 1);
@@ -2107,6 +2110,78 @@ test("25C: 道普請へは家族の一人だけを決定的に割り当て、残
     household.members.filter((member) => member.id === household.workCarrier.memberId).length,
     1,
   );
+});
+
+test("26B: 世帯ID由来の実出発を日の初めの7tickへ決定的に分散する", () => {
+  const createDepartureWorld = () => {
+    const fixture = createLogisticsTestFixture();
+    const home = addEconomicTestBuilding(fixture.physical, "logger", 7, 6, 7, 5);
+    const world = createWorld({
+      seed: 23,
+      physicalState: fixture.physical,
+      market: { ...fixture.economy.market },
+      warehouse: { ...fixture.economy.warehouse },
+      port: { ...fixture.economy.port },
+      logisticsSites: structuredClone(fixture.economy.logisticsSites),
+    });
+    for (let index = 0; index < 7; index += 1) {
+      const household = createHousehold(world.state.economy, {
+        job: "logger",
+        x: 7,
+        y: 5,
+      });
+      household.buildingId = home.id;
+      for (const goods of GOODS) household.pantry[goods] = 0;
+      for (const goods of [...FOODS, "tools", "salt", "char"]) household.pantry[goods] = 100;
+      for (const goods of FOODS) household.pantry[goods] = 0;
+      household.purse = 100;
+    }
+    return world;
+  };
+
+  const expectedPhases = Array.from({ length: 7 }, (_, id) => (
+    householdDepartureTime({ id })
+  ));
+  assert.deepEqual(expectedPhases, [1, 2, 3, 4, 5, 6, 7]);
+  assert.deepEqual(
+    expectedPhases,
+    Array.from({ length: 7 }, (_, id) => householdDepartureTime({ id })),
+    "同じIDは再実行しても同じ位相になる",
+  );
+  assert.deepEqual(HOUSEHOLD_DEPARTURE_WINDOW, { start: 1, end: 7 });
+
+  const observeDepartures = () => {
+    const world = createDepartureWorld();
+    const firstDeparture = new Map();
+    for (let tick = 1; tick <= HOUSEHOLD_DEPARTURE_WINDOW.end; tick += 1) {
+      world.tickOnce();
+      for (const household of world.state.economy.households) {
+        if (household.tookMarketTripToday && !firstDeparture.has(household.id)) {
+          firstDeparture.set(household.id, world.state.tick % 30);
+        }
+      }
+      if (tick < HOUSEHOLD_DEPARTURE_WINDOW.start) {
+        assert.equal(firstDeparture.size, 0, `${tick}時にはまだ出発しない`);
+      }
+    }
+    return {
+      phases: [...firstDeparture.entries()],
+      states: world.state.economy.households.map((household) => ({
+        id: household.id,
+        state: household.state,
+        tookMarketTripToday: household.tookMarketTripToday,
+      })),
+    };
+  };
+
+  const first = observeDepartures();
+  assert.deepEqual(
+    first.phases,
+    expectedPhases.map((phase, id) => [id, phase]),
+    "判定表示だけでなく各世帯の実marketCarrierが固有時刻に出る",
+  );
+  assert.equal(new Set(first.phases.map(([, phase]) => phase)).size, 7);
+  assert.deepEqual(observeDepartures(), first, "同一seedの実状態遷移も決定的");
 });
 
 test("段26: 市場往復tickが生産倍率を一意に決め30tick超は出発できない", () => {

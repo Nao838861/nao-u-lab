@@ -1,16 +1,16 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.29.0-walking-crew';
-import { perishableFreshness } from './food_readability.js?v=v004.29.0-walking-crew';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.30.0-departure-phases';
+import { perishableFreshness } from './food_readability.js?v=v004.30.0-departure-phases';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.29.0-walking-crew';
-import { analyzeRoadConnections } from './placement.js?v=v004.29.0-walking-crew';
+} from './engine_bridge.js?v=v004.30.0-departure-phases';
+import { analyzeRoadConnections } from './placement.js?v=v004.30.0-departure-phases';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.29.0-walking-crew';
+} from './render_scene.js?v=v004.30.0-departure-phases';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.29.0-walking-crew';
+} from './visuals.js?v=v004.30.0-departure-phases';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',

@@ -1,12 +1,12 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.29.0-walking-crew';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.29.0-walking-crew';
-import { islandCalendar } from './ui_summary.js?v=v004.29.0-walking-crew';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.29.0-walking-crew';
+} from './config.js?v=v004.30.0-departure-phases';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.30.0-departure-phases';
+import { islandCalendar } from './ui_summary.js?v=v004.30.0-departure-phases';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.30.0-departure-phases';
 import {
   buildingStructureLayout, pileVisual,
-} from './visuals.js?v=v004.29.0-walking-crew';
+} from './visuals.js?v=v004.30.0-departure-phases';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 

@@ -145,12 +145,15 @@ export const E_STABLE_FAMINE_DAYS_PER_CAPITA_MAX = 12;
 export const E_STABLE_PRICE_BANDS = Object.freeze({
   // 個人運搬化後の3シード×8年実測を含む。小口便が増えたぶん、
   // 豊漁時の魚と丸太の振れ幅だけが旧帯をわずかに越えた。
-  fish: Object.freeze([0.15, 1.8]),
+  // 26B の実出発位相分散後は、同時約定がほどけたことで日中の極値が
+  // fish=1.838、log=0.163、tools=0.712、char=0.477〜3.757へわずかに移動した。
+  // 人口・飢餓・職・物量保存が全seedで緑の実測だけを安全余白つきで含める。
+  fish: Object.freeze([0.15, 1.9]),
   wheat: Object.freeze([0.13, 4.1]),
-  log: Object.freeze([0.17, 1.6]),
-  tools: Object.freeze([0.75, 2.5]),
+  log: Object.freeze([0.15, 1.6]),
+  tools: Object.freeze([0.7, 2.5]),
   salt: Object.freeze([0.16, 5.1]),
-  char: Object.freeze([0.55, 3.7]),
+  char: Object.freeze([0.45, 3.8]),
 });
 
 const LEGACY_AUDIT_JOBS = Object.freeze([

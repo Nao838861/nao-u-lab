@@ -2183,7 +2183,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.29.0-walking-crew');
+  assert.equal(VERSION, 'v004.30.0-departure-phases');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);

@@ -9,7 +9,7 @@
 
 | 5 | [WORK_ORDER_20260726A.md](WORK_ORDER_20260726A.md) | 歩行のばらし（AV）＋幽霊人足の暫定表示修正（AW-b） | **完了**（v004.29.0、focused 5件・PC/スマホ実Chrome緑） |
 
-| 6 | [WORK_ORDER_20260726B.md](WORK_ORDER_20260726B.md) | 出発時刻の分散（AV-2、エンジン小変更・監査必須） | 未着手 |
+| 6 | [WORK_ORDER_20260726B.md](WORK_ORDER_20260726B.md) | 出発時刻の分散（AV-2、エンジン小変更・監査必須） | **完了**（v004.30.0、engine focused・8年×3seed全帯緑） |
 
 | 7 | [WORK_ORDER_20260726C.md](WORK_ORDER_20260726C.md) | エレナ文の読点改行（AL 残件、台帳監査で検出） | 未着手 |
 

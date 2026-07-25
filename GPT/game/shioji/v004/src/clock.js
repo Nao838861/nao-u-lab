@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.29.0-walking-crew';
+import { SPEEDS } from './config.js?v=v004.30.0-departure-phases';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

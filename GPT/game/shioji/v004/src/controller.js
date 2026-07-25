@@ -1,6 +1,6 @@
 import {
   snapshotToViewModel, terrainRevisionForModel,
-} from './view_model.js?v=v004.29.0-walking-crew';
+} from './view_model.js?v=v004.30.0-departure-phases';
 
 export function createViewController(api) {
   if (!api?.snapshot || !api?.advanceTicks || !api?.applyOperation) {
