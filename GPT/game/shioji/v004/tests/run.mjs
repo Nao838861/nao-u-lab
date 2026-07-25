@@ -22,6 +22,7 @@ import {
   EVENT_DISPLAY_POLICY, OBSERVED_EVENT_TYPES, hasEventPresentation, presentEvent,
   shouldPresentEvent,
 } from '../src/event_view.js';
+import { formatElenaSpeech } from '../src/elena_text.js';
 import {
   PLAYER_FACING_BANNED_TERMS, WINTER_RESERVE_PER_PERSON, executableFoodIntervention,
   foodHudSummary, islandFoodSummary, perishableFreshness, winterFoodForecast,
@@ -2183,7 +2184,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.30.0-departure-phases');
+  assert.equal(VERSION, 'v004.31.0-elena-punctuation');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -3796,6 +3797,28 @@ test('UI向上段9: 常駐エレナは強制書状を予告し、任意書状を
   assert.equal(guidanceReadingTimeMs('長文'.repeat(200)), 10000,
     '極端な長文でも自動切替を無制限には遅らせない');
 
+  const spoken = '食料が5荷傷みました。［需給］で魚と野菜の量を見て、余らせている品の買上げ目標を下げましょう。';
+  const formatted = formatElenaSpeech(spoken);
+  assert.deepEqual(formatted.split('\n'), [
+    '食料が5荷傷みました。',
+    '［需給］で魚と野菜の量を見て、',
+    '余らせている品の買上げ目標を下げましょう。',
+  ]);
+  assert.equal(formatted.replaceAll('\n', ''), spoken, '発話本文は改変しない');
+  assert.equal(formatted.split('\n').length, 3);
+  assert.equal(
+    formatElenaSpeech('詳しくは書状を見てください。数字を比べれば判断できます。', {
+      maxLines: 2,
+    }).split('\n').length,
+    2,
+    '操作ボタンがある時は二行へ収める',
+  );
+  assert.equal(
+    formatElenaSpeech('句読点のない固有名詞CharterIsle', { maxLines: 3 }),
+    '句読点のない固有名詞CharterIsle',
+    '句読点がなければ語の途中に改行を作らない',
+  );
+
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const css = fs.readFileSync(new URL('../style.css', import.meta.url), 'utf8');
   const mainSource = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
@@ -3808,6 +3831,9 @@ test('UI向上段9: 常駐エレナは強制書状を予告し、任意書状を
   assert.doesNotMatch(html, /id="secretary-(?:tier|kicker|title|detail)"/);
   assert.match(html, /id="tutorial-action"[^>]*>操作を始める/);
   assert.match(css, /\.secretary\.guidance-switching/);
+  assert.match(css, /\.secretary p\s*\{[^}]*white-space:\s*pre-line[^}]*overflow-wrap:\s*normal/s);
+  assert.doesNotMatch(css, /\.secretary p\s*\{[^}]*overflow-wrap:\s*anywhere/s);
+  assert.match(mainSource, /formatElenaSpeech\(speech,\s*\{\s*maxLines:\s*canFollowTarget \? 2 : 3/s);
   assert.match(css, /\.tutorial-objective\.guidance-entering/);
   assert.doesNotMatch(html, /id="tutorial-(?:system|detail)"/);
   assert.match(css, /\.observer\s*\{[^}]*z-index:\s*45[^}]*top:\s*var\(--elena-top\)[^}]*left:\s*max\(14px,[^}]*width:\s*min\(640px/s);

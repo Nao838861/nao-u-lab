@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.30.0-departure-phases';
+import { TILE } from './config.js?v=v004.31.0-elena-punctuation';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

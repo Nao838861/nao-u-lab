@@ -11,7 +11,7 @@
 
 | 6 | [WORK_ORDER_20260726B.md](WORK_ORDER_20260726B.md) | 出発時刻の分散（AV-2、エンジン小変更・監査必須） | **完了**（v004.30.0、engine focused・8年×3seed全帯緑） |
 
-| 7 | [WORK_ORDER_20260726C.md](WORK_ORDER_20260726C.md) | エレナ文の読点改行（AL 残件、台帳監査で検出） | 未着手 |
+| 7 | [WORK_ORDER_20260726C.md](WORK_ORDER_20260726C.md) | エレナ文の読点改行（AL 残件、台帳監査で検出） | **完了**（v004.31.0、focused・PC/スマホ実Chrome緑） |
 
 | 8 | [WORK_ORDER_20260726D.md](WORK_ORDER_20260726D.md) | 第2回監査検出（座標dev格下げ・畑の季節タイル・棚卸し表） | 未着手 |
 

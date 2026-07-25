@@ -1,4 +1,4 @@
-import { BUILDING_SIZES } from './config.js?v=v004.30.0-departure-phases';
+import { BUILDING_SIZES } from './config.js?v=v004.31.0-elena-punctuation';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

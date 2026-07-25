@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.30.0-departure-phases';
+import { pileVisual } from './visuals.js?v=v004.31.0-elena-punctuation';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));

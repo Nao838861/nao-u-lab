@@ -976,6 +976,54 @@ async function checkTutorialLetterDelivery() {
   await page.close();
 }
 
+async function checkElenaLineBreaks(width, height, mobile) {
+  const page = await newPage(width, height, mobile);
+  const result = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    const speech = document.querySelector('#secretary-speech');
+    const range = document.createRange();
+    range.selectNodeContents(speech);
+    const renderedLineTops = [...range.getClientRects()]
+      .map(rect => Math.round(rect.top * 2) / 2)
+      .filter((top, index, all) => all.indexOf(top) === index);
+    const style = getComputedStyle(speech);
+    const text = speech.textContent;
+    return {
+      source: game.secretaryRoute.speech,
+      text,
+      lines: text.split('\\n'),
+      renderedLineCount: renderedLineTops.length,
+      whiteSpace: style.whiteSpace,
+      overflowWrap: style.overflowWrap,
+      wordBreak: style.wordBreak,
+      fitsHeight: speech.scrollHeight <= speech.clientHeight + 1,
+      fitsWidth: speech.scrollWidth <= speech.clientWidth + 1,
+      box: (() => {
+        const rect = document.querySelector('#observer').getBoundingClientRect();
+        return { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom };
+      })(),
+    };
+  })()`);
+  assert.equal(result.text.replaceAll('\n', ''), result.source, JSON.stringify(result));
+  assert.ok(result.lines.length >= 2 && result.lines.length <= 3, JSON.stringify(result));
+  assert.equal(
+    result.lines.slice(0, -1).every(line => /[、。！？!?」』）】]$/.test(line)),
+    true,
+    JSON.stringify(result),
+  );
+  assert.ok(result.renderedLineCount <= 3, JSON.stringify(result));
+  assert.equal(result.whiteSpace, 'pre-line', JSON.stringify(result));
+  assert.equal(result.overflowWrap, 'normal', JSON.stringify(result));
+  assert.equal(result.wordBreak, 'normal', JSON.stringify(result));
+  assert.equal(result.fitsHeight, true, JSON.stringify(result));
+  assert.equal(result.fitsWidth, true, JSON.stringify(result));
+  assert.ok(result.box.left >= 0 && result.box.right <= width, JSON.stringify(result));
+  assert.ok(result.box.top >= 0 && result.box.bottom <= height, JSON.stringify(result));
+  await page.screenshot(`/tmp/shioji_v004_elena_lines_${mobile ? 'mobile' : 'desktop'}.png`);
+  assert.deepEqual(page.errors, []);
+  await page.close();
+}
+
 async function checkPeopleVisuals(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   const result = await page.evaluate(`(() => {
@@ -1091,8 +1139,8 @@ async function checkPeopleVisuals(width, height, mobile) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.30.0-departure-phases');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.30.0-departure-phases');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.31.0-elena-punctuation');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.31.0-elena-punctuation');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -1905,6 +1953,10 @@ if (process.argv.includes('--company-pointer-only')) {
   await checkPeopleVisuals(1440, 900, false);
   await checkPeopleVisuals(390, 844, true);
   console.log('CHARTER ISLE v004 people visuals smoke: PASS');
+} else if (process.argv.includes('--elena-lines-only')) {
+  await checkElenaLineBreaks(1440, 900, false);
+  await checkElenaLineBreaks(390, 844, true);
+  console.log('CHARTER ISLE v004 Elena line breaks smoke: PASS');
 } else if (process.argv.includes('--viewport-only')) {
   await checkViewport(1440, 900, false);
   await checkViewport(390, 844, true);

@@ -1,16 +1,16 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.30.0-departure-phases';
-import { perishableFreshness } from './food_readability.js?v=v004.30.0-departure-phases';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.31.0-elena-punctuation';
+import { perishableFreshness } from './food_readability.js?v=v004.31.0-elena-punctuation';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.30.0-departure-phases';
-import { analyzeRoadConnections } from './placement.js?v=v004.30.0-departure-phases';
+} from './engine_bridge.js?v=v004.31.0-elena-punctuation';
+import { analyzeRoadConnections } from './placement.js?v=v004.31.0-elena-punctuation';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.30.0-departure-phases';
+} from './render_scene.js?v=v004.31.0-elena-punctuation';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.30.0-departure-phases';
+} from './visuals.js?v=v004.31.0-elena-punctuation';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
