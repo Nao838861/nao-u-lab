@@ -158,7 +158,114 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-07-26 04:00 JST
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index ID 81件を per-file atom index と照合し、broken reference 0件を確認した。UTF-8 明示読みでは「記憶」24件、「ゲーム設計」8件、「敵パターン」1件を取得し、「評価軸」は現行生成 index に0件だったが、source file の文字化けや再生成を要する破損はなかった。"
+  - "memory/atoms.jsonl 2750件を監査し、duplicate id 0、atoms.jsonl / per-file / index の各2750件で missing・content conflict 0を確認した。既知の重複45群は canonical overlay と一致し、duplicate cluster index は fresh だった。"
+  - "memory/raw/ の30日超無更新ファイル95件・62979319 bytes（web_research 87、headless_eval 6、slack_archive 1、sync_state 1）を archive 候補として棚卸しした。raw provenance と既存 evidence pointer を壊す移動規約がないため、この phase では移動しなかった。"
+  - "shared-reads の canonical title index 69群、mixed duplicate queue 48群、open duplicate group queue 55群、stale triage queue 50件を再生成した。group action queue は0群で、candidate 本体の lifecycle は変更していない。"
+  - "期限到来 backlog から candidate handoff 5件を永続 inbox へ冪等 enqueue し、candidate handoff audit errors 0を確認した。group handoff は actionable group 0件のため投入なし、group handoff audit errors 0だった。"
+  - "slack_directives.jsonl 23件、slack_broadcasts.jsonl 21件を確認し、pending 0件だったため handled 更新はなかった。"
+  - "shared_reads_probe_lifecycle.jsonl を due-only limit 1 で確認し、期限到来 lease 0件、validate errors 0を確認した。"
+candidate_lifecycle:
+  total_files: 1101
+  status_counts:
+    posted: 484
+    ready_to_post: 10
+    postponed: 323
+    failed: 266
+    needs_review: 17
+    skipped_unreviewed: 1
+  missing_open_stale_after: 0
+  overdue_open_total: 173
+atom_audit:
+  rows: 2750
+  duplicate_ids: 0
+  raw_normalized_content_duplicate_groups: 40
+  canonical_overlay_duplicate_groups: 45
+  mirror_content_conflicts: 0
+issues:
+  - id: ISS-20260726-ATOM-MOJIBAKE
+    description: "継続確認: 1件の shared-reads atom で「エージェント」が「エ��ジェント」となっており、replacement character を含む原文由来の局所的な文字化けが残っている。memory_health が挙げた別の game-rights atom の「???」は本文上の意図的表記であり、文字化けではなかった。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl:492 and :1216; comparison: memory/atoms/2026-04/gr-1777083728-44d444ab7a.md"
+    source_file_status: "UTF-8 明示読みでも raw と per-atom .md の双方に U+FFFD 相当の「��」が存在し、source data 自体の局所破損を確認した。MEMORY.md は UTF-8 で正常。"
+    display_or_tooling_status: "none; PowerShell / rg の表示経路でも source と同じ文字列を再現した。"
+    why_blocks_game_memory: "当該1 atom の語句検索と可読性を局所的に落とすが、ID・source_ts・URL と他の game-memory entry point は健全で、次のゲーム制作への導線全体は遮断しない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "検出した問題は既存構造を変える必要のない局所データ品質問題である。重複・stale backlog は既設の bounded handoff が正常に配送しており、Phase 4b を起動する構造的根拠はない。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 173
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total 173 > queue rows 50 だが actionable group は0件で、3件以上の条件を満たさない。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_enqueued_this_cycle: 5
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-bb040e329d0533a9
+    - cha-2d5b672363f279a9
+    - cha-b244549d85fcf513
+    - cha-5667f6e4c95c374f
+    - cha-441524ec19afb0c7
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-bb040e329d0533a9
+    path: memory/shared_reads_candidates/20260528_mem0_graph_agent_memory.md
+    status: postponed
+    stale_after: "2026-06-27"
+    priority_reason: "extract/update/retrieve と graph memory は記憶階層の材料になるが、ゲーム制作の具体場面との接続と自環境との差分整理が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+    queue_recommended_action: keep_for_phase2
+  - handoff_id: cha-2d5b672363f279a9
+    path: memory/shared_reads_candidates/20260528_patricks_parabox_system_centric_puzzle_design.md
+    status: postponed
+    stale_after: "2026-06-27"
+    priority_reason: "system-centric design、mechanics 反復、level 作成、playtest 観察は有用だが、具体 heuristic・level construction strategy・観察結果が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+    queue_recommended_action: keep_for_phase2
+  - handoff_id: cha-b244549d85fcf513
+    path: memory/shared_reads_candidates/20260528_pedagogy_play_language_mapping.md
+    status: postponed
+    stale_after: "2026-06-27"
+    priority_reason: "体験目標を mechanics / feedback loop へ落とす中間表現として有用だが、評価設計・結果・実ツールの使用観察が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+    queue_recommended_action: keep_for_phase2
+  - handoff_id: cha-5667f6e4c95c374f
+    path: memory/shared_reads_candidates/20260528_robo_cortex_embodied_agent_memory.md
+    status: postponed
+    stale_after: "2026-06-27"
+    priority_reason: "ゲーム内 AI / headless bot の失敗ログ再利用へ接続できるが、実験設定・比較対象・定量結果が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+    queue_recommended_action: keep_for_phase2
+  - handoff_id: cha-441524ec19afb0c7
+    path: memory/shared_reads_candidates/20260528_to_agents_preference_guided_design_loop.md
+    status: postponed
+    stale_after: "2026-06-27"
+    priority_reason: "solver inputs、render、VLM critique、judge agent の流れは抽出できるが、product design からゲーム制作への写像がまだ抽象的である。"
+    recommended_review_action: reevaluate_in_phase2
+    queue_recommended_action: keep_for_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
