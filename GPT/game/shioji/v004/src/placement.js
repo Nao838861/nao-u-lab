@@ -1,4 +1,4 @@
-import { BUILDING_SIZES } from './config.js?v=v004.34.0-feedback-visibility';
+import { BUILDING_SIZES } from './config.js?v=v004.35.0-market-rhythm';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

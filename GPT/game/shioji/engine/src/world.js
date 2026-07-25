@@ -229,13 +229,55 @@ function householdTripNeeds(economy, physical, household) {
       && productionInputAmount(physical, household, "meal") < 1
       && economy.currentDay % 7 === 0
     );
+  const inputStopped = (household.job === "saltworks"
+    && productionInputAmount(physical, household, "char") < P.SALT_CHAR)
+    || (household.job === "woodshop"
+      && productionInputAmount(physical, household, "log") < P.LOG_TOOL)
+    || (household.job === "charburner"
+      && productionInputAmount(physical, household, "log") < P.LOG_CHAR)
+    || (household.job === "smelter" && (
+      productionInputAmount(physical, household, "ore") < P.SMELT_ORE
+      || productionInputAmount(physical, household, "char")
+        + productionInputAmount(physical, household, "coal") < P.SMELT_FUEL
+    ))
+    || (household.job === "smith" && (
+      productionInputAmount(physical, household, "bar") < P.SMITH_BAR
+      || productionInputAmount(physical, household, "char")
+        + productionInputAmount(physical, household, "coal") < P.SMITH_FUEL
+    ));
   const foodThreshold = ["fisher", "shepherd", "veg"].includes(household.job) ? 1.2 : 3;
   return {
     foodDays,
     foodUrgent: foodDays < foodThreshold,
     lowCultureGoods,
     inputLow,
+    inputStopped,
   };
+}
+
+function routineMarketStatus(economy, household, sellWeight) {
+  const day = Math.max(1, economy.currentDay ?? 1);
+  const id = Number.isSafeInteger(household.id) ? household.id : 0;
+  const scheduledToday = ((day + id) & 1) === 0;
+  if (sellWeight <= 1e-9) {
+    household.marketBatchWaitSinceDay = null;
+    return {
+      hasSale: false,
+      productionDays: 0,
+      scheduledToday,
+      sellReady: false,
+    };
+  }
+  if (!Number.isSafeInteger(household.marketBatchWaitSinceDay)) {
+    household.marketBatchWaitSinceDay = day;
+  }
+  const productionDays = Math.max(1, day - household.marketBatchWaitSinceDay + 1);
+  const sellReady = productionDays >= P.MARKET_BATCH_DAYS
+    && (
+      scheduledToday
+      || productionDays >= P.MARKET_BATCH_MAX_DAYS
+    );
+  return { hasSale: true, productionDays, scheduledToday, sellReady };
 }
 
 function urgentMarketDemandWeight(economy, physical, household) {
@@ -462,7 +504,12 @@ export function ensureHouseholdInputSites(economy, physical) {
   }
 }
 
-export function beginMarketTrip(economy, physical, household) {
+export function beginMarketTrip(
+  economy,
+  physical,
+  household,
+  { reason = "unscheduled" } = {},
+) {
   if (household.cargo || household.marketCarrier) {
     throw new Error(`世帯${household.id}は既に市場往復中です`);
   }
@@ -476,6 +523,7 @@ export function beginMarketTrip(economy, physical, household) {
     (total, [goods, qty]) => total + qty * goodsUnitWeight(goods),
     0,
   );
+  if (outboundWeight > 1e-9) household.marketBatchWaitSinceDay = null;
   const availablePlan = householdTransportPlan(household, { useCart });
   const intendedBuyWeight = urgentMarketDemandWeight(economy, physical, household);
   const requiredCapacity = Math.max(outboundWeight, intendedBuyWeight, 1);
@@ -524,10 +572,13 @@ export function beginMarketTrip(economy, physical, household) {
     cargo: household.cargo,
     tripDistance: cartPorter?.routeCost ?? 0,
     routeCost: 0,
+    reason,
   };
   household.px = start.x;
   household.py = start.y;
   household.marketCarrier = carrier;
+  household.lastMarketDepartureDay = Math.max(1, economy.currentDay ?? 1);
+  household.lastMarketTripReason = reason;
   household.marketTripTicks = tripTicks;
   const memberCount = Math.max(1, household.members.length);
   const travellerShare = plan.length / memberCount;
@@ -620,10 +671,19 @@ export function decideHouseholdTrips(economy, physical, { timeOfDay = null } = {
       (total, [goods, qty]) => total + qty * goodsUnitWeight(goods),
       0,
     );
-    const transportCapacity = householdTransportPlan(household)[0]?.capacity
-      ?? P.CART_HAND_CAPACITY;
-    const sellReady = sellWeight + 1e-9
-      >= transportCapacity * P.MARKET_DEPARTURE_LOAD_RATIO;
+    const routine = routineMarketStatus(economy, household, sellWeight);
+    const day = Math.max(1, economy.currentDay ?? 1);
+    const daysSinceMarket = Number.isSafeInteger(household.lastMarketDepartureDay)
+      ? Math.max(0, day - household.lastMarketDepartureDay)
+      : Infinity;
+    const cultureReady = needs.lowCultureGoods.length > 0
+      && household.purse > 15
+      && daysSinceMarket >= P.MARKET_CULTURE_INTERVAL_DAYS
+      && routine.scheduledToday;
+    const inputRestockReady = needs.inputLow
+      && household.purse > -20
+      && daysSinceMarket >= P.MARKET_BATCH_DAYS
+      && routine.scheduledToday;
     const work = assignNeedyWork(economy, physical, household);
     if (work) {
       beginAssignedWorkTrip(physical, household);
@@ -633,12 +693,20 @@ export function decideHouseholdTrips(economy, physical, { timeOfDay = null } = {
       );
       continue;
     }
-    if (
-      sellReady
-      || (needs.foodUrgent && household.purse > 2)
-      || (needs.lowCultureGoods.length > 0 && household.purse > 15)
-      || (needs.inputLow && household.purse > -20)
-    ) beginMarketTrip(economy, physical, household);
+    const reason = needs.foodUrgent && household.purse > 2
+      ? "food_urgent"
+      : needs.inputStopped && household.purse > -20
+        ? "input_urgent"
+        : routine.sellReady
+          ? "routine_batch"
+          : inputRestockReady
+            ? "input_restocks"
+            : cultureReady
+              ? "culture_restocks"
+              : null;
+    if (!reason) continue;
+    const trip = beginMarketTrip(economy, physical, household, { reason });
+    if (trip.started && routine.hasSale) household.marketBatchWaitSinceDay = null;
   }
 }
 
@@ -749,7 +817,9 @@ export function createWorld({
         || (household.state === "toHome" && household.marketCarrier)
       ) {
         if (!household.marketCarrier) {
-          const trip = beginMarketTrip(economy, physical, household);
+          const trip = beginMarketTrip(economy, physical, household, {
+            reason: "work_return",
+          });
           if (!trip.started && household.state !== "home") household.state = "toHome";
         }
         if (household.marketCarrier) {

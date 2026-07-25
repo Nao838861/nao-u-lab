@@ -1048,7 +1048,7 @@ async function checkSeasonalPlots(width, height, mobile) {
       ))),
     };
   })()`);
-  assert.equal(autumn.version, 'v004.34.0-feedback-visibility', JSON.stringify(autumn));
+  assert.equal(autumn.version, 'v004.35.0-market-rhythm', JSON.stringify(autumn));
   assert.equal(autumn.season, '秋', JSON.stringify(autumn));
   assert.ok(autumn.plots.some(type => ['wheat', 'veg'].includes(type)), JSON.stringify(autumn));
   assert.ok(autumn.plots.some(type => type === 'shepherd'), JSON.stringify(autumn));
@@ -1193,8 +1193,8 @@ async function checkPeopleVisuals(width, height, mobile) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.34.0-feedback-visibility');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.34.0-feedback-visibility');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.35.0-market-rhythm');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.35.0-market-rhythm');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -2102,6 +2102,44 @@ async function checkSaveDeliveryUi(width = 1440, height = 900, mobile = false) {
   await page.close();
 }
 
+async function checkMarketRhythmUi(width = 1440, height = 900, mobile = false) {
+  const page = await newPage(width, height, mobile, GAME);
+  const result = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.setSpeed(0);
+    game.advanceTicks(450, { animate: false });
+    let household = null;
+    for (let tick = 0; tick < 600 && !household; tick += 1) {
+      household = game.model.households.find(row => row.marketRhythm?.kind === 'batching') ?? null;
+      if (!household) game.advanceTicks(1, { animate: false });
+    }
+    if (!household) throw new Error('2日まとめ待ちの世帯を実状態で観測できません');
+    const building = game.model.buildings.find(row => row.id === household.buildingId);
+    game.selectBuilding(building);
+    const sheet = document.querySelector('#building-sheet');
+    const box = sheet.getBoundingClientRect();
+    return {
+      version: game.version,
+      day: game.model.day,
+      label: household.marketRhythm.label,
+      detail: household.marketRhythm.detail,
+      text: document.querySelector('#building-household').textContent,
+      box: { left: box.left, right: box.right, top: box.top, bottom: box.bottom },
+      hidden: sheet.hidden,
+    };
+  })()`);
+  assert.equal(result.version, 'v004.35.0-market-rhythm', JSON.stringify(result));
+  assert.equal(result.hidden, false, JSON.stringify(result));
+  assert.match(result.label, /出荷をまとめ中 1\/2日/, JSON.stringify(result));
+  assert.match(result.detail, /食料切れと生産停止は待ちません/, JSON.stringify(result));
+  assert.match(result.text, /出荷をまとめ中 1\/2日/, JSON.stringify(result));
+  assert.ok(result.box.left >= 0 && result.box.right <= width, JSON.stringify(result));
+  assert.ok(result.box.top >= 0 && result.box.bottom <= height, JSON.stringify(result));
+  await page.screenshot(`/tmp/shioji_v004_market_rhythm_${mobile ? 'mobile' : 'desktop'}.png`);
+  assert.deepEqual(page.errors, []);
+  await page.close();
+}
+
 if (process.argv.includes('--company-pointer-only')) {
   await checkTutorialCompanyPointerStability();
   console.log('CHARTER ISLE v004 company pointer smoke: PASS');
@@ -2139,6 +2177,10 @@ if (process.argv.includes('--company-pointer-only')) {
   await checkSaveDeliveryUi(1440, 900, false);
   await checkSaveDeliveryUi(390, 844, true);
   console.log('CHARTER ISLE v004 save/delivery smoke: PASS');
+} else if (process.argv.includes('--market-rhythm-only')) {
+  await checkMarketRhythmUi(1440, 900, false);
+  await checkMarketRhythmUi(390, 844, true);
+  console.log('CHARTER ISLE v004 market rhythm smoke: PASS');
 } else if (process.argv.includes('--viewport-only')) {
   await checkViewport(1440, 900, false);
   await checkViewport(390, 844, true);

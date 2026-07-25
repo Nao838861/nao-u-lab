@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.34.0-feedback-visibility';
+import { JOB_LABELS } from './config.js?v=v004.35.0-market-rhythm';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

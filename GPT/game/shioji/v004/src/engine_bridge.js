@@ -5,20 +5,20 @@ export {
   companyStockReleasePrice,
   householdClass,
   productionCost,
-} from '../../engine/src/econ.js?v=v004.34.0-feedback-visibility';
-import { P } from '../../engine/src/econ.js?v=v004.34.0-feedback-visibility';
-import { createEngineApi } from '../../engine/src/api.js?v=v004.34.0-feedback-visibility';
+} from '../../engine/src/econ.js?v=v004.35.0-market-rhythm';
+import { P } from '../../engine/src/econ.js?v=v004.35.0-market-rhythm';
+import { createEngineApi } from '../../engine/src/api.js?v=v004.35.0-market-rhythm';
 import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
   buildBaseCity,
   makeStableCityPlan,
-} from '../../engine/src/audit.js?v=v004.34.0-feedback-visibility';
-import { createPhysicalState, makeFlowIslandTerrain } from '../../engine/src/physical.js?v=v004.34.0-feedback-visibility';
-import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.34.0-feedback-visibility';
-import { createViewController } from './controller.js?v=v004.34.0-feedback-visibility';
-import { START_MODES } from './start_modes.js?v=v004.34.0-feedback-visibility';
+} from '../../engine/src/audit.js?v=v004.35.0-market-rhythm';
+import { createPhysicalState, makeFlowIslandTerrain } from '../../engine/src/physical.js?v=v004.35.0-market-rhythm';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.35.0-market-rhythm';
+import { createViewController } from './controller.js?v=v004.35.0-market-rhythm';
+import { START_MODES } from './start_modes.js?v=v004.35.0-market-rhythm';
 
 export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS };
 export const BUILD_COST_DENARI = P.BUILD_COST * 10;
