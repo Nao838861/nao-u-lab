@@ -37,6 +37,9 @@ import { mergeDrawables } from '../src/render_scene.js';
 import { Renderer } from '../src/renderer.js';
 import { START_MODES, parseStartMode, urlForStartMode } from '../src/start_modes.js';
 import {
+  SUPPLY_STATUS, shortageRows, supplyDemandRow, supplyDemandRows,
+} from '../src/supply_demand.js';
+import {
   CONVERSION_SURVIVAL_DAYS, FOOD_IMPORT_EMA_TARGET,
   LOGGER_TRIP_RECOVERY_TICKS, LOGGER_TRIP_WARNING_TICKS,
   ORDER_JUDGMENT_FALLBACK_OFFERS, SEASONAL_RESERVE_TARGET,
@@ -2150,7 +2153,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.24.0-individual-logistics');
+  assert.equal(VERSION, 'v004.25.0-supply-demand');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2724,8 +2727,8 @@ test('UI O〜R: 上部メニュー・非重複通知・自動適用在庫・時�
   const css = fs.readFileSync(new URL('../style.css', import.meta.url), 'utf8');
   const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
   assert.doesNotMatch(html, /エンジンの世界/);
-  assert.match(html, /id="top-menu"[\s\S]*id="open-company"[\s\S]*id="open-island"[\s\S]*id="open-building"[\s\S]*id="open-events"/);
-  for (const id of ['food-flow-chart', 'food-stock-chart', 'population-chart', 'finance-chart', 'price-chart']) {
+  assert.match(html, /id="top-menu"[\s\S]*id="open-company"[\s\S]*id="open-supply"[\s\S]*id="open-island"[\s\S]*id="open-building"[\s\S]*id="open-events"/);
+  for (const id of ['food-stock-chart', 'population-chart', 'finance-chart', 'price-chart']) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
   assert.match(html, /id="tutorial-goal"/);
@@ -3318,7 +3321,8 @@ test('UI向上段6: 教程の実目標だけが既存操作一つへ案内され
   assert.equal(objectiveActionFor({ id: 'request-first-aid' }, model([])).sheet, 'company-sheet');
   assert.equal(objectiveActionFor({ id: 'prepare-first-tools-stock' }, model([])).sheet, 'company-sheet');
   assert.equal(objectiveActionFor({ id: 'place-conversion-workshops' }, model(['woodshop'])).job, 'charburner');
-  assert.equal(objectiveActionFor({ id: 'observe-tools-price-rise' }, model([])).sheet, 'island-sheet');
+  assert.deepEqual(objectiveActionFor({ id: 'observe-tools-price-rise' }, model([])),
+    { kind: 'sheet', sheet: 'supply-sheet', goods: 'tools', label: '木製品の需給を見る' });
   assert.equal(objectiveActionFor(null, model([])), null, 'サンドボックスでは政策を推測しない');
 });
 
@@ -3356,7 +3360,35 @@ test('UI向上段7: 統計の現物は棚・食料庫・屋台を所在別に一
   assert.equal(Object.isFrozen(model.goodsManifest[0].locations), true);
 });
 
-test('UI向上段8: 統計は直近30日収支→市場→現物を固定順で表示する', () => {
+test('UI向上段8: 需給は純増減と残日数を3段階で判定し、深刻順に並べる', () => {
+  const model = {
+    population: 2,
+    goodsManifest: [
+      { goods: 'wheat', totalAmount: 0 },
+      { goods: 'tools', totalAmount: 10 },
+      { goods: 'log', totalAmount: 100 },
+    ],
+    flowEma: {
+      wheat: { prod: 0, imp: 0, cons: 1, exp: 0 },
+      tools: { prod: 0.8, imp: 0, cons: 1, exp: 0 },
+      log: { prod: 2, imp: 0, cons: 1, exp: 0 },
+    },
+    marketPrices: { wheat: 1, tools: 2, log: 3 },
+  };
+  const wheat = supplyDemandRow(model, 'wheat');
+  assert.equal(wheat.requiredStock, 2 * WINTER_RESERVE_PER_PERSON);
+  assert.equal(wheat.dailyNeed, 2 * WINTER_RESERVE_PER_PERSON / 90);
+  assert.equal(wheat.netPerDay, -1);
+  assert.equal(wheat.status, 'shortage');
+  assert.equal(supplyDemandRow(model, 'tools').status, 'tight');
+  assert.equal(supplyDemandRow(model, 'log').status, 'sufficient');
+  const rows = supplyDemandRows(model, [], ['log', 'tools', 'wheat']);
+  assert.deepEqual(rows.map(row => row.goods), ['wheat', 'tools', 'log']);
+  assert.deepEqual(shortageRows(rows).map(row => row.goods), ['wheat']);
+  assert.deepEqual(Object.values(SUPPLY_STATUS).map(row => row.label), ['足りてる', 'ギリギリ', '不足']);
+});
+
+test('UI向上段9: 需給を独立表示し、統計は収支と既定3グラフへ整理する', () => {
   const api = createEngineApi(buildBaseCity(13));
   api.advanceDays(30);
   const snapshot = api.snapshot();
@@ -3372,18 +3404,20 @@ test('UI向上段8: 統計は直近30日収支→市場→現物を固定順で�
   assert.equal(summary.net, summary.income - summary.expense);
   assert.equal(DENARI_PER_MONEY_UNIT, 10);
   assert.equal(toDenari(summary.funds), model.companyMoney * 10);
+  assert.equal(supplyDemandRows(model, [], Object.keys(GOODS_LABELS)).length, 18);
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
-  for (const id of ['island-sheet', 'island-finance', 'island-manifest', 'market-overview', 'open-island']) {
+  const supply = fs.readFileSync(new URL('../src/supply_demand.js', import.meta.url), 'utf8');
+  for (const id of ['supply-sheet', 'supply-grid', 'shortage-alerts', 'island-sheet', 'island-finance', 'open-supply', 'open-island']) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
-  assert.ok(html.indexOf('id="island-finance"') < html.indexOf('id="market-overview"'));
-  assert.ok(html.indexOf('id="market-overview"') < html.indexOf('id="island-manifest"'));
-  assert.match(html, /直近30日の平均（荷\/日）/);
-  assert.match(main, /flowCell\('imp'\).*flowCell\('prod'\).*flowCell\('cons'\)/s);
-  assert.match(main, /Number\.isFinite\(value\) \? formatQuantity\(value\) : '—'/);
-  assert.match(main, /会社の倉庫にある品/);
-  assert.match(main, /平均仕入/);
+  assert.doesNotMatch(html, /id="island-manifest"|id="market-overview"|id="food-flow-chart"|id="history-goods"/);
+  assert.equal((html.match(/<figure data-chart=/g) ?? []).length, 3);
+  assert.match(html, /id="price-chart-panel"[^>]*data-chart="price"[^>]*hidden/);
+  assert.match(supply, /right\.severity - left\.severity/);
+  assert.match(main, /chart-end-label/);
+  assert.match(main, /reference:\s*true/);
+  assert.match(main, /GOODS_ART\[goods\]\?\.color/);
   assert.match(main, /formatNumber\(toDenari\(model\.companyMoney\)\)/);
   assert.match(main, /formatQuantity\(toDenari\(row\.amount\)\)/);
 });

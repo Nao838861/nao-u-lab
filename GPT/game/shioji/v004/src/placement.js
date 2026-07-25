@@ -1,4 +1,4 @@
-import { BUILDING_SIZES } from './config.js?v=v004.24.0-individual-logistics';
+import { BUILDING_SIZES } from './config.js?v=v004.25.0-supply-demand';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

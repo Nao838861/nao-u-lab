@@ -979,8 +979,8 @@ async function checkTutorialLetterDelivery() {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.24.0-individual-logistics');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.24.0-individual-logistics');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.25.0-supply-demand');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.25.0-supply-demand');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -1237,20 +1237,48 @@ async function checkViewport(width, height, mobile) {
     assert.ok(worldVisuals.stock > 0, JSON.stringify(worldVisuals));
     assert.equal(worldVisuals.individualResidents, worldVisuals.population, JSON.stringify(worldVisuals));
 
-    const island = await page.evaluate(`(() => {
-      document.querySelector('#open-island').click();
-      const sheet = document.querySelector('#island-sheet');
+    const supply = await page.evaluate(`(() => {
+      document.querySelector('#open-supply').click();
+      const sheet = document.querySelector('#supply-sheet');
       const box = sheet.getBoundingClientRect();
+      const rows = [...document.querySelectorAll('[data-supply-goods]')];
+      const severities = rows.map(row => ({ shortage: 2, tight: 1, sufficient: 0 }[row.dataset.status]));
       return {
         hidden: sheet.hidden,
-        manifestRows: document.querySelectorAll('.manifest-row').length,
-        locationRows: document.querySelectorAll('[data-stock-location]').length,
-        companyLocations: [...document.querySelectorAll('[data-stock-location]')]
-          .filter(button => button.textContent.includes('会社の倉庫')).length,
-        companyStock: Object.values(window.__SHIOJI_V004__.model.companyStock)
-          .reduce((total, amount) => total + amount, 0),
-        marketRows: document.querySelectorAll('.market-flow-row').length,
-        marketText: document.querySelector('#market-overview').textContent,
+        rowCount: rows.length,
+        allNamed: rows.every(row => row.querySelector('.goods-icon') && row.querySelector('.supply-name b')),
+        allFields: rows.every(row => row.querySelectorAll('.supply-number').length === 4),
+        sorted: severities.every((value, index) => index === 0 || severities[index - 1] >= value),
+        fitsWithoutScroll: sheet.scrollHeight <= sheet.clientHeight + 1,
+        text: sheet.textContent,
+        box: { left: box.left, right: box.right, top: box.top, bottom: box.bottom },
+      };
+    })()`);
+    assert.equal(supply.hidden, false, JSON.stringify(supply));
+    assert.equal(supply.rowCount, 18, JSON.stringify(supply));
+    assert.equal(supply.allNamed, true, JSON.stringify(supply));
+    assert.equal(supply.allFields, true, JSON.stringify(supply));
+    assert.equal(supply.sorted, true, JSON.stringify(supply));
+    assert.equal(supply.fitsWithoutScroll, true, JSON.stringify(supply));
+    assert.match(supply.text, /足りてる|ギリギリ|不足/);
+    assert.ok(supply.box.left >= 0 && supply.box.right <= width, JSON.stringify(supply));
+    assert.ok(supply.box.top >= 0 && supply.box.bottom <= height, JSON.stringify(supply));
+    await page.screenshot('/tmp/shioji_v004_supply_sheet.png');
+
+    const island = await page.evaluate(`(() => {
+      document.querySelector('[data-supply-goods="tools"]').click();
+      const sheet = document.querySelector('#island-sheet');
+      const box = sheet.getBoundingClientRect();
+      const defaultCharts = [...document.querySelectorAll('#economy-charts > figure:not(#price-chart-panel)')];
+      return {
+        hidden: sheet.hidden,
+        supplyHidden: document.querySelector('#supply-sheet').hidden,
+        defaultCharts: defaultCharts.length,
+        priceVisible: !document.querySelector('#price-chart-panel').hidden,
+        priceTitle: document.querySelector('#price-chart-title').textContent,
+        endLabels: document.querySelectorAll('.chart-end-label').length,
+        referenceLines: document.querySelectorAll('.chart-line.reference').length,
+        legacyLocations: document.querySelectorAll('[data-stock-location]').length,
         financeText: document.querySelector('#island-finance').textContent,
         healthText: document.querySelector('#island-health').textContent,
         winterText: document.querySelector('#winter-forecast').textContent,
@@ -1258,10 +1286,12 @@ async function checkViewport(width, height, mobile) {
       };
     })()`);
     assert.equal(island.hidden, false, JSON.stringify(island));
-    assert.ok(island.manifestRows > 0 && island.locationRows > 0, JSON.stringify(island));
-    assert.equal(island.companyLocations > 0, island.companyStock > 0, JSON.stringify(island));
-    assert.ok(island.marketRows > 10, JSON.stringify(island));
-    assert.match(island.marketText, /品目.*相場.*現物.*仕入\/日.*生産\/日.*消費\/日/s);
+    assert.equal(island.supplyHidden, true, JSON.stringify(island));
+    assert.equal(island.defaultCharts, 3, JSON.stringify(island));
+    assert.equal(island.priceVisible, true, JSON.stringify(island));
+    assert.match(island.priceTitle, /木製品の相場/);
+    assert.ok(island.endLabels >= 8 && island.referenceLines >= 4, JSON.stringify(island));
+    assert.equal(island.legacyLocations, 0, JSON.stringify(island));
     assert.match(island.financeText, /現在資金.*入金.*支出.*差引/s);
     assert.match(island.healthText, /人口.*会社の30日差引/s);
     assert.match(island.winterText,
@@ -1269,18 +1299,6 @@ async function checkViewport(width, height, mobile) {
     assert.ok(island.box.left >= 0 && island.box.right <= width, JSON.stringify(island));
     assert.ok(island.box.top >= 0 && island.box.bottom <= height, JSON.stringify(island));
     await page.screenshot('/tmp/shioji_v004_island_sheet.png');
-    const locationFocus = await page.evaluate(`(() => {
-      const game = window.__SHIOJI_V004__;
-      const before = { x: game.camera.panX, y: game.camera.panY };
-      document.querySelector('[data-stock-location]').click();
-      return {
-        before,
-        after: { x: game.camera.panX, y: game.camera.panY },
-        hidden: document.querySelector('#island-sheet').hidden,
-      };
-    })()`);
-    assert.equal(locationFocus.hidden, true, JSON.stringify(locationFocus));
-    assert.notDeepEqual(locationFocus.after, locationFocus.before, JSON.stringify(locationFocus));
 
     const warehouseDetail = await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
@@ -1620,25 +1638,32 @@ async function checkViewport(width, height, mobile) {
       /Lv\d+.*(?:順調|⚠).*食料.*財布.*最近の収支.*次の暮らし.*仕事のいま.*在庫/s);
     assert.doesNotMatch(mobileBuilding.text, /状態.*道路|敷地|座標/);
     await page.screenshot('/tmp/shioji_v004_building_sheet_mobile.png');
-    const mobileIsland = await page.evaluate(`(() => {
+    const mobileSupply = await page.evaluate(`(() => {
       document.querySelector('#open-island-from-building').click();
-      const sheet = document.querySelector('#island-sheet');
+      const sheet = document.querySelector('#supply-sheet');
       const box = sheet.getBoundingClientRect();
       return {
         hidden: sheet.hidden,
-        locations: document.querySelectorAll('[data-stock-location]').length,
-        marketRows: document.querySelectorAll('.market-flow-row').length,
+        rows: document.querySelectorAll('[data-supply-goods]').length,
+        allFields: [...document.querySelectorAll('[data-supply-goods]')]
+          .every(row => row.querySelectorAll('.supply-number').length === 4),
+        fitsWithoutScroll: sheet.scrollHeight <= sheet.clientHeight + 1,
+        scrollHeight: sheet.scrollHeight,
+        clientHeight: sheet.clientHeight,
+        gridHeight: document.querySelector('#supply-grid').getBoundingClientRect().height,
         box: { left: box.left, right: box.right, top: box.top, bottom: box.bottom },
       };
     })()`);
-    assert.equal(mobileIsland.hidden, false, JSON.stringify(mobileIsland));
-    assert.ok(mobileIsland.locations > 0 && mobileIsland.marketRows > 10, JSON.stringify(mobileIsland));
-    assert.ok(mobileIsland.box.left >= 0 && mobileIsland.box.right <= width, JSON.stringify(mobileIsland));
-    assert.ok(mobileIsland.box.top >= 0 && mobileIsland.box.bottom <= height, JSON.stringify(mobileIsland));
-    await page.screenshot('/tmp/shioji_v004_island_sheet_mobile.png');
+    assert.equal(mobileSupply.hidden, false, JSON.stringify(mobileSupply));
+    assert.equal(mobileSupply.rows, 18, JSON.stringify(mobileSupply));
+    assert.equal(mobileSupply.allFields, true, JSON.stringify(mobileSupply));
+    assert.equal(mobileSupply.fitsWithoutScroll, true, JSON.stringify(mobileSupply));
+    assert.ok(mobileSupply.box.left >= 0 && mobileSupply.box.right <= width, JSON.stringify(mobileSupply));
+    assert.ok(mobileSupply.box.top >= 0 && mobileSupply.box.bottom <= height, JSON.stringify(mobileSupply));
+    await page.screenshot('/tmp/shioji_v004_supply_sheet_mobile.png');
     const mobileCompany = await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
-      document.querySelector('[data-close-sheet="island-sheet"]').click();
+      document.querySelector('[data-close-sheet="supply-sheet"]').click();
       game.selectBuilding(null);
       game.openSheet('company-sheet');
       const companyBox = document.querySelector('#company-sheet').getBoundingClientRect();
@@ -1700,6 +1725,13 @@ if (process.argv.includes('--company-pointer-only')) {
   await checkReadabilityUi();
   await checkReadabilityUi(390, 844, true);
   console.log('CHARTER ISLE v004 readability smoke: PASS');
+} else if (process.argv.includes('--viewport-only')) {
+  await checkViewport(1440, 900, false);
+  await checkViewport(390, 844, true);
+  console.log('CHARTER ISLE v004 viewport smoke: PASS');
+} else if (process.argv.includes('--mobile-viewport-only')) {
+  await checkViewport(390, 844, true);
+  console.log('CHARTER ISLE v004 mobile viewport smoke: PASS');
 } else {
   await checkBootFailureRecovery();
   await checkStartChoice(1440, 900, false, 'tutorial');

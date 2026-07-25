@@ -1,11 +1,11 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.24.0-individual-logistics';
-import { islandCalendar } from './ui_summary.js?v=v004.24.0-individual-logistics';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.24.0-individual-logistics';
+} from './config.js?v=v004.25.0-supply-demand';
+import { islandCalendar } from './ui_summary.js?v=v004.25.0-supply-demand';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.25.0-supply-demand';
 import {
   buildingStructureLayout, pileVisual,
-} from './visuals.js?v=v004.24.0-individual-logistics';
+} from './visuals.js?v=v004.25.0-supply-demand';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 

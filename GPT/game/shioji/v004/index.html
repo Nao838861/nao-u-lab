@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.24.0-individual-logistics">
+  <link rel="stylesheet" href="./style.css?v=v004.25.0-supply-demand">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -26,6 +26,7 @@
     <div class="hud-stat population-stat"><small>人口</small><b id="population-value">0人</b></div>
     <nav id="top-menu" class="top-menu" aria-label="情報ウインドウ">
       <button id="open-company" type="button">取引</button>
+      <button id="open-supply" type="button">需給</button>
       <button id="open-island" type="button">統計 <i id="island-signal" data-tone="steady">平穏</i></button>
       <button id="open-building" type="button" disabled>選択建物</button>
       <button id="open-events" type="button">出来事</button>
@@ -41,6 +42,8 @@
     </div>
     <button id="step-day" class="step-day" type="button" data-testid="step-day">1日進める</button>
   </header>
+
+  <div id="shortage-alerts" class="panel shortage-alerts" hidden aria-label="不足している品目"></div>
 
   <aside id="tutorial-objective" class="panel tutorial-objective" hidden tabindex="-1" data-testid="tutorial-objective">
     <div>
@@ -104,13 +107,23 @@
     <section id="building-conversion" class="building-detail"></section>
     <div class="building-sheet-actions">
       <button id="focus-selected-building" class="focus-building" type="button">この建物を画面中央へ</button>
-      <button id="open-island-from-building" class="focus-building" type="button">島全体の現物を見る</button>
+      <button id="open-island-from-building" class="focus-building" type="button">島の需給を見る</button>
     </div>
+  </aside>
+
+  <aside id="supply-sheet" class="panel sheet supply-sheet" hidden data-testid="supply-sheet">
+    <header>
+      <div><small>足りる品・足りない品</small><h2>島の需給</h2></div>
+      <button type="button" data-close-sheet="supply-sheet" aria-label="需給を閉じる">×</button>
+    </header>
+    <p class="sheet-note">不足が深刻な順です。行を押すと、その品の相場推移を統計で開きます。</p>
+    <div class="supply-column-head" aria-hidden="true"><span>品と状態</span><span>在庫</span><span>純増減</span><span>日数</span><span>相場</span></div>
+    <div id="supply-grid" class="supply-grid"></div>
   </aside>
 
   <aside id="island-sheet" class="panel sheet island-sheet" hidden data-testid="island-sheet">
     <header>
-      <div><small>取引収支・市場・現物</small><h2>島の統計</h2></div>
+      <div><small>収支・食料・人口・資金</small><h2>島の統計</h2></div>
       <button type="button" data-close-sheet="island-sheet" aria-label="統計を閉じる">×</button>
     </header>
     <section id="island-health" class="island-health" data-tone="steady">
@@ -134,28 +147,13 @@
     <section class="island-history-section">
       <div class="history-heading">
         <div><h3>島の変化</h3><p id="history-status" class="sheet-note">日が進むと線になります。</p></div>
-        <label>相場を見る品
-          <select id="history-goods" aria-label="相場グラフの品目"></select>
-        </label>
       </div>
       <div id="economy-charts" class="economy-charts">
-        <figure data-chart="food-flow"><figcaption>食料の流れ <small>荷/日</small></figcaption><svg id="food-flow-chart" viewBox="0 0 320 112" role="img" aria-label="食料の生産、消費、本土購入の推移"></svg></figure>
-        <figure data-chart="food-stock"><figcaption>食料と倉庫の備え <small>荷</small></figcaption><svg id="food-stock-chart" viewBox="0 0 320 112" role="img" aria-label="島内食料と会社の食料在庫の推移"></svg></figure>
+        <figure data-chart="food-stock"><figcaption>食料 <small>荷</small></figcaption><svg id="food-stock-chart" viewBox="0 0 320 112" role="img" aria-label="島内食料と冬の必要量の推移"></svg></figure>
         <figure data-chart="population"><figcaption>人口 <small>人</small></figcaption><svg id="population-chart" viewBox="0 0 320 112" role="img" aria-label="人口の推移"></svg></figure>
-        <figure data-chart="finance"><figcaption>資金と日々の差引 <small>デナリ</small></figcaption><svg id="finance-chart" viewBox="0 0 320 112" role="img" aria-label="資金と日々の差引の推移"></svg></figure>
-        <figure data-chart="price"><figcaption><span id="price-chart-title">市場相場</span> <small>デナリ/荷</small></figcaption><svg id="price-chart" viewBox="0 0 320 112" role="img" aria-label="選択した品目の市場相場の推移"></svg></figure>
+        <figure data-chart="finance"><figcaption>取引資金 <small>デナリ</small></figcaption><svg id="finance-chart" viewBox="0 0 320 112" role="img" aria-label="取引資金とゼロ基準の推移"></svg></figure>
+        <figure id="price-chart-panel" data-chart="price" hidden><figcaption><span id="price-chart-title">市場相場</span> <small>デナリ/荷</small></figcaption><svg id="price-chart" viewBox="0 0 320 112" role="img" aria-label="需給で選択した品目の市場相場の推移"></svg></figure>
       </div>
-      <div class="chart-legend" aria-label="グラフの色の説明"><span class="food-prod">島内生産</span><span class="food-cons">消費</span><span class="food-imp">本土購入</span><span class="reserve">会社の倉庫</span></div>
-    </section>
-    <section class="island-market-section">
-      <h3>市場相場と最近の流れ</h3>
-      <p class="sheet-note">相場はデナリ/荷、仕入・生産・消費は直近30日の平均（荷/日）です。</p>
-      <div id="market-overview" class="market-overview"></div>
-    </section>
-    <section class="island-manifest-section">
-      <h3>現物の所在</h3>
-      <p class="sheet-note">建物の棚、世帯の食料庫、市場の屋台を二重計上せず示します。所在を押すと地図へ移動します。</p>
-      <div id="island-manifest" class="island-manifest"></div>
     </section>
   </aside>
 
@@ -298,7 +296,7 @@
       });
     })();
   </script>
-  <script id="game-module" type="module" src="./src/main.js?v=v004.24.0-individual-logistics"
+  <script id="game-module" type="module" src="./src/main.js?v=v004.25.0-supply-demand"
     onerror="window.__SHIOJI_BOOT__?.failed()"></script>
 </body>
 </html>

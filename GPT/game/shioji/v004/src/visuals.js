@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.24.0-individual-logistics';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.25.0-supply-demand';
 
 export const MAX_PILE_SPRITES = 24;
 export const MAX_YARD_GOODS = 6;

@@ -1,14 +1,14 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.24.0-individual-logistics';
-import { perishableFreshness } from './food_readability.js?v=v004.24.0-individual-logistics';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.25.0-supply-demand';
+import { perishableFreshness } from './food_readability.js?v=v004.25.0-supply-demand';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.24.0-individual-logistics';
-import { analyzeRoadConnections } from './placement.js?v=v004.24.0-individual-logistics';
-import { compileRenderScene } from './render_scene.js?v=v004.24.0-individual-logistics';
+} from './engine_bridge.js?v=v004.25.0-supply-demand';
+import { analyzeRoadConnections } from './placement.js?v=v004.25.0-supply-demand';
+import { compileRenderScene } from './render_scene.js?v=v004.25.0-supply-demand';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardSlots, yardStockRows,
-} from './visuals.js?v=v004.24.0-individual-logistics';
+} from './visuals.js?v=v004.25.0-supply-demand';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',

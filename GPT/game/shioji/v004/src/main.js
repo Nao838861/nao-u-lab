@@ -1,35 +1,38 @@
-import { IsometricCamera } from './camera.js?v=v004.24.0-individual-logistics';
-import { SimulationClock } from './clock.js?v=v004.24.0-individual-logistics';
+import { IsometricCamera } from './camera.js?v=v004.25.0-supply-demand';
+import { SimulationClock } from './clock.js?v=v004.25.0-supply-demand';
 import {
-  BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
+  BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.24.0-individual-logistics';
+} from './config.js?v=v004.25.0-supply-demand';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.24.0-individual-logistics';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.24.0-individual-logistics';
-import { developmentMapView } from './development_map.js?v=v004.24.0-individual-logistics';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.24.0-individual-logistics';
+} from './display_batch.js?v=v004.25.0-supply-demand';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.25.0-supply-demand';
+import { developmentMapView } from './development_map.js?v=v004.25.0-supply-demand';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.25.0-supply-demand';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.24.0-individual-logistics';
+} from './food_readability.js?v=v004.25.0-supply-demand';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.24.0-individual-logistics';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.24.0-individual-logistics';
-import { WorldPresentation } from './presentation.js?v=v004.24.0-individual-logistics';
-import { Renderer } from './renderer.js?v=v004.24.0-individual-logistics';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.24.0-individual-logistics';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.24.0-individual-logistics';
+} from './keyboard.js?v=v004.25.0-supply-demand';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.25.0-supply-demand';
+import { WorldPresentation } from './presentation.js?v=v004.25.0-supply-demand';
+import { Renderer } from './renderer.js?v=v004.25.0-supply-demand';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.25.0-supply-demand';
+import {
+  GOODS_GLYPHS, shortageRows, supplyDemandRows,
+} from './supply_demand.js?v=v004.25.0-supply-demand';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.25.0-supply-demand';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.24.0-individual-logistics';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.24.0-individual-logistics';
+} from './ui_guidance.js?v=v004.25.0-supply-demand';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.25.0-supply-demand';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -60,6 +63,8 @@ let openTutorialLetterId = null;
 let speedBeforeLetter = null;
 let lastRunningSpeed = clock.speedIndex || 1;
 let currentSecretaryRoute = null;
+let selectedSupplyGoods = null;
+let focusedSupplyGoods = null;
 let lastTutorialObjective = tutorialDirector?.currentObjective() ?? null;
 let currentTutorialHandoff = null;
 let tutorialHandoffTimer = null;
@@ -83,7 +88,6 @@ const stockTargetFeedback = new Map();
 const stockReleaseDrafts = new Map();
 const renderSignatures = new Map();
 const economyHistory = [];
-const stockReleaseDays = [];
 const HISTORY_DAYS = 180;
 const TUTORIAL_HANDOFF_GAP_MS = 240;
 const GUIDANCE_ENTER_MS = 420;
@@ -155,6 +159,7 @@ function recordEconomyHistory(currentModel) {
     return totals;
   }, { imported: 0, produced: 0, consumed: 0 });
   const foodSummary = islandFoodSummary(currentModel);
+  const foodForecast = winterFoodForecast(currentModel);
   const row = {
     day: currentModel.day,
     foodImported: food.imported,
@@ -162,6 +167,7 @@ function recordEconomyHistory(currentModel) {
     foodConsumed: food.consumed,
     foodStock: foodSummary.available,
     companyFoodStock: foodSummary.companyReserve,
+    foodRequired: foodForecast.required,
     foodRunwayDays: foodSummary.runwayDays,
     population: currentModel.population,
     cash: toDenari(currentModel.companyMoney),
@@ -204,8 +210,72 @@ function chartMarkup(rows, series, { includeZero = true } = {}) {
   const max = Math.max(min + 1, ...values);
   const grid = '<path d="M28 7V94H313 M28 50.5H313" class="chart-grid"/>';
   const labels = `<text x="2" y="11" class="chart-axis-label">${formatQuantity(max)}</text><text x="2" y="94" class="chart-axis-label">${formatQuantity(min)}</text><text x="28" y="108" class="chart-axis-label">${rows[0].day}日</text><text x="313" y="108" text-anchor="end" class="chart-axis-label">${rows.at(-1).day}日</text>`;
-  const paths = series.map(row => `<path d="${linePath(rows, row.value, { minValue: min, maxValue: max })}" class="chart-line ${row.className}"/>`).join('');
-  return `${grid}${labels}${paths}`;
+  const paths = series.map(row => {
+    const classes = `chart-line ${row.reference ? 'reference' : ''} ${row.className ?? ''}`;
+    return `<path d="${linePath(rows, row.value, { minValue: min, maxValue: max })}" class="${classes}" style="stroke:${row.color}"/>`;
+  }).join('');
+  const endLabels = series.map((row, index) => {
+    const value = row.value(rows.at(-1));
+    const y = 94 - ((value - min) / Math.max(1e-9, max - min)) * 87;
+    const adjustedY = Math.max(9, Math.min(91, y + (index % 2 ? 5 : -2)));
+    return `<text x="309" y="${adjustedY.toFixed(1)}" text-anchor="end" class="chart-end-label" style="fill:${row.color}">${escapeHtml(row.label)}</text>`;
+  }).join('');
+  return `${grid}${labels}${paths}${endLabels}`;
+}
+
+function goodsIconMarkup(goods) {
+  const art = GOODS_ART[goods] ?? { color: '#a89d84', dark: '#5d574b' };
+  return `<i class="goods-icon" aria-hidden="true" style="--goods:${art.color};--goods-dark:${art.dark}">${escapeHtml(GOODS_GLYPHS[goods] ?? '品')}</i>`;
+}
+
+function currentSupplyRows() {
+  return supplyDemandRows(model, economyHistory, Object.keys(GOODS_LABELS));
+}
+
+function formatSupplyDays(days) {
+  if (!Number.isFinite(days)) return '—';
+  if (days >= 100) return '99+日';
+  return `${Math.max(0, Math.floor(days))}日`;
+}
+
+function renderShortageAlerts() {
+  const rows = shortageRows(currentSupplyRows());
+  const signature = rows.map(row => `${row.goods}:${row.daysRemaining.toFixed(2)}`).join('|');
+  renderIfChanged('shortage-alerts', signature, () => {
+    const alerts = $('#shortage-alerts');
+    alerts.innerHTML = rows.map(row => `
+      <button type="button" data-shortage-goods="${row.goods}"
+        title="${escapeHtml(GOODS_LABELS[row.goods])}が不足。押すと需給の該当行を開きます"
+        aria-label="${escapeHtml(GOODS_LABELS[row.goods])}が不足、残り${formatSupplyDays(row.daysRemaining)}">
+        ${goodsIconMarkup(row.goods)}
+      </button>`).join('');
+    setHiddenIfChanged(alerts, rows.length === 0);
+    document.body.classList.toggle('supply-alert-active', rows.length > 0);
+    uiMetrics.domWrites += 1;
+  });
+}
+
+function renderSupplySheet() {
+  const rows = currentSupplyRows();
+  const signature = JSON.stringify({ rows, focusedSupplyGoods });
+  renderIfChanged('supply-grid', signature, () => {
+    $('#supply-grid').innerHTML = rows.map(row => {
+      const net = `${row.netPerDay >= 0 ? '+' : '−'}${formatQuantity(Math.abs(row.netPerDay))}`;
+      const trendClass = row.priceTrend.direction === 'up' ? 'trend-up'
+        : row.priceTrend.direction === 'down' ? 'trend-down' : '';
+      return `<button type="button" class="supply-row"
+        data-supply-goods="${row.goods}" data-status="${row.status}"
+        data-focused="${String(row.goods === focusedSupplyGoods)}"
+        aria-label="${escapeHtml(GOODS_LABELS[row.goods])}、${row.statusLabel}、残り${formatSupplyDays(row.daysRemaining)}。相場グラフを開く">
+        <span class="supply-name">${goodsIconMarkup(row.goods)}<span><b>${escapeHtml(GOODS_LABELS[row.goods])}</b><small class="supply-badge">${row.statusLabel}</small></span></span>
+        <span class="supply-number"><small>在庫</small><b>${formatQuantity(row.stock)}荷</b></span>
+        <span class="supply-number"><small>純増減/日</small><b>${net}</b></span>
+        <span class="supply-number"><small>残り</small><b>${formatSupplyDays(row.daysRemaining)}</b></span>
+        <span class="supply-number ${trendClass}"><small>相場</small><b>${row.price === null ? '—' : `${formatQuantity(row.price)}D ${row.priceTrend.arrow}`}</b></span>
+      </button>`;
+    }).join('');
+    uiMetrics.domWrites += 1;
+  });
 }
 
 recordEconomyHistory(model);
@@ -293,6 +363,7 @@ function renderHud() {
     $('#open-island').title = `${health.label}。${health.reason}`;
     uiMetrics.domWrites += 1;
   });
+  renderShortageAlerts();
   const selected = selectedBuildingId !== null;
   if ($('#open-building').disabled === selected) {
     $('#open-building').disabled = !selected;
@@ -308,6 +379,7 @@ function renderHud() {
   if (!$('#company-sheet').hidden && !isEditableTarget(document.activeElement)) renderCompanySheet();
   if (!$('#building-sheet').hidden) renderBuildingSheet();
   if (!$('#island-sheet').hidden) renderIslandSheet();
+  if (!$('#supply-sheet').hidden) renderSupplySheet();
   if (!$('#development-sheet').hidden) renderDevelopmentMap();
   renderTutorial();
   renderSecretary();
@@ -399,17 +471,6 @@ function initializeBuildDock() {
   }
 }
 
-function initializeHistoryGoods() {
-  const select = $('#history-goods');
-  for (const [goods, label] of Object.entries(GOODS_LABELS)) {
-    const option = document.createElement('option');
-    option.value = goods;
-    option.textContent = label;
-    select.append(option);
-  }
-  select.value = 'tools';
-}
-
 function renderBuildDock() {
   const category = BUILD_CATEGORIES.find(row => row.id === activeBuildCategory) ?? BUILD_CATEGORIES[1];
   const signature = [category.id, activeTool, activeBuildingJob, recommendedBuildingJob].join('|');
@@ -458,7 +519,6 @@ function renderBuildDockContents(category) {
 }
 
 initializeBuildDock();
-initializeHistoryGoods();
 
 function worldTile(screenPoint) {
   const point = camera.unproject(screenPoint.x, screenPoint.y);
@@ -1163,7 +1223,10 @@ function performGuidanceAction(action) {
     renderer.markBuilding(building.id);
   }
   else if (action.kind === 'tool') activateGroundTool(action.tool);
-  else if (action.kind === 'sheet') openSheet(action.sheet);
+  else if (action.kind === 'sheet') {
+    if (action.sheet === 'supply-sheet') focusedSupplyGoods = action.goods ?? null;
+    openSheet(action.sheet);
+  }
   else if (action.kind === 'speed') {
     const speedIndex = action.speed ?? 3;
     setSpeed(speedIndex);
@@ -1405,46 +1468,62 @@ function renderDevelopmentMap() {
   });
 }
 
-function stockReleaseMarkerMarkup(rows) {
-  if (rows.length < 2) return '';
-  const first = rows[0].day;
-  const last = rows.at(-1).day;
-  return stockReleaseDays.filter(row => CHART_FOOD_GOODS.has(row.goods)
-    && row.day >= first && row.day <= last).map(row => {
-    const x = 28 + ((row.day - first) / Math.max(1, last - first)) * 285;
-    return `<path d="M${x.toFixed(1)} 7V94" class="chart-release-marker"><title>${row.day}日目 ${GOODS_LABELS[row.goods] ?? row.goods} ${row.qty}荷を市場へ出す</title></path>`;
-  }).join('');
-}
-
 function renderEconomyCharts() {
-  const selectedGoods = $('#history-goods').value || 'tools';
-  const signature = JSON.stringify({ history: economyHistory, selectedGoods, stockReleaseDays });
+  const signature = JSON.stringify({ history: economyHistory, selectedSupplyGoods });
   renderIfChanged('economy-charts', signature, () => {
     const rows = economyHistory;
     setTextIfChanged('#history-status', rows.length < 2
       ? '日が進むと線になります。'
       : `${rows[0].day}日目〜${rows.at(-1).day}日目（このプレイ中の記録）`);
-    $('#food-flow-chart').innerHTML = chartMarkup(rows, [
-      { value: row => row.foodProduced, className: 'line-food-prod' },
-      { value: row => row.foodConsumed, className: 'line-food-cons' },
-      { value: row => row.foodImported, className: 'line-food-imp' },
-    ]);
     $('#food-stock-chart').innerHTML = chartMarkup(rows, [
-      { value: row => row.foodStock, className: 'line-food-stock' },
-      { value: row => row.companyFoodStock, className: 'line-reserve' },
-    ]) + stockReleaseMarkerMarkup(rows);
+      {
+        value: row => row.foodStock + row.companyFoodStock,
+        label: '食料',
+        color: GOODS_ART.veg.color,
+      },
+      {
+        value: row => row.foodRequired,
+        label: '冬必要',
+        color: GOODS_ART.wheat.dark,
+        reference: true,
+      },
+    ], { includeZero: false });
+    const startingPopulation = rows[0]?.population ?? 0;
     $('#population-chart').innerHTML = chartMarkup(rows, [
-      { value: row => row.population, className: 'line-population' },
-    ]);
+      { value: row => row.population, label: '人口', color: '#9fcb76' },
+      {
+        value: () => startingPopulation,
+        label: '開始時',
+        color: '#696e67',
+        reference: true,
+      },
+    ], { includeZero: false });
     $('#finance-chart').innerHTML = chartMarkup(rows, [
-      { value: row => row.cash, className: 'line-cash' },
-      { value: row => row.net, className: 'line-net' },
+      { value: row => row.cash, label: '資金', color: '#e5b65b' },
+      { value: () => 0, label: '0', color: '#796e5a', reference: true },
     ]);
-    $('#price-chart').innerHTML = chartMarkup(rows, [
-      { value: row => row.prices[selectedGoods] ?? 0, className: 'line-price' },
-    ]);
-    setTextIfChanged('#price-chart-title', `${GOODS_LABELS[selectedGoods] ?? selectedGoods}の相場`);
-    uiMetrics.domWrites += 5;
+    const pricePanel = $('#price-chart-panel');
+    setHiddenIfChanged(pricePanel, !selectedSupplyGoods);
+    if (selectedSupplyGoods) {
+      const goods = selectedSupplyGoods;
+      const prices = rows.map(row => row.prices[goods]).filter(Number.isFinite);
+      const average = prices.length ? prices.reduce((total, value) => total + value, 0) / prices.length : 0;
+      $('#price-chart').innerHTML = chartMarkup(rows, [
+        {
+          value: row => row.prices[goods] ?? 0,
+          label: GOODS_GLYPHS[goods] ?? '品',
+          color: GOODS_ART[goods]?.color ?? '#e5b65b',
+        },
+        {
+          value: () => average,
+          label: '平均',
+          color: GOODS_ART[goods]?.dark ?? '#796e5a',
+          reference: true,
+        },
+      ], { includeZero: false });
+      setTextIfChanged('#price-chart-title', `${GOODS_LABELS[goods] ?? goods}の相場`);
+    }
+    uiMetrics.domWrites += selectedSupplyGoods ? 4 : 3;
   });
 }
 
@@ -1480,73 +1559,9 @@ function renderIslandFinance() {
   });
 }
 
-function renderIslandManifest() {
-  const signature = JSON.stringify(model.goodsManifest.map(row => [
-    row.goods, row.totalAmount, row.locations.map(location => [location.sourceLabel, location.amount, location.x, location.y]),
-  ]));
-  renderIfChanged('island-manifest', signature, () => {
-    const manifest = $('#island-manifest');
-    const scroll = manifest.scrollTop;
-    manifest.replaceChildren();
-    if (!model.goodsManifest.length) {
-      const empty = document.createElement('p');
-      empty.className = 'sheet-note';
-      empty.textContent = '島内で所在を確認できる現物はありません。';
-      manifest.append(empty);
-    }
-    for (const goodsRow of model.goodsManifest) {
-      const row = document.createElement('article');
-      row.className = 'manifest-row';
-      const heading = document.createElement('b');
-      const name = document.createElement('span');
-      name.textContent = GOODS_LABELS[goodsRow.goods] ?? goodsRow.goods;
-      const total = document.createElement('span');
-      total.textContent = `${formatQuantity(goodsRow.totalAmount)}荷`;
-      heading.append(name, total);
-      const locations = document.createElement('div');
-      locations.className = 'manifest-locations';
-      for (const location of goodsRow.locations) {
-        const locationIndex = model.stockLocations.indexOf(location);
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.dataset.stockLocation = String(locationIndex);
-        button.innerHTML = `<span>${escapeHtml(location.sourceLabel)}</span><b>${formatQuantity(location.amount)}荷</b>`;
-        locations.append(button);
-      }
-      row.append(heading, locations);
-      manifest.append(row);
-    }
-    manifest.scrollTop = scroll;
-    uiMetrics.domWrites += 1;
-  });
-}
-
-function renderIslandMarket() {
-  const signature = JSON.stringify(Object.keys(GOODS_LABELS).map(goods => [
-    goods, model.marketPrices[goods], model.goodsManifest.find(row => row.goods === goods)?.totalAmount ?? 0,
-    model.flowEma[goods]?.imp, model.flowEma[goods]?.prod, model.flowEma[goods]?.cons,
-  ]));
-  renderIfChanged('island-market', signature, () => {
-    const marketOverview = $('#market-overview');
-    const scroll = marketOverview.scrollTop;
-    const formatObserved = value => Number.isFinite(value) ? formatQuantity(value) : '—';
-    const rows = Object.keys(GOODS_LABELS).map(goods => {
-      const stock = model.goodsManifest.find(row => row.goods === goods)?.totalAmount ?? 0;
-      const flow = model.flowEma[goods] ?? null;
-      const flowCell = key => `<span${Number.isFinite(flow?.[key]) && flow[key] > 0.005 ? ' class="active-flow"' : ''}>${formatObserved(flow?.[key])}</span>`;
-      return `<div class="market-flow-row"><span>${escapeHtml(GOODS_LABELS[goods])}</span><span>${Number.isFinite(model.marketPrices[goods]) ? `${formatQuantity(toDenari(model.marketPrices[goods]))}D` : '—'}</span><span>${formatQuantity(stock)}</span>${flowCell('imp')}${flowCell('prod')}${flowCell('cons')}</div>`;
-    }).join('');
-    marketOverview.innerHTML = `<div class="market-flow-row header"><span>品目</span><span>相場</span><span>現物</span><span>仕入/日</span><span>生産/日</span><span>消費/日</span></div>${rows}`;
-    marketOverview.scrollTop = scroll;
-    uiMetrics.domWrites += 1;
-  });
-}
-
 function renderIslandSheet() {
   renderIslandFinance();
   renderEconomyCharts();
-  renderIslandMarket();
-  renderIslandManifest();
 }
 
 function openTutorialLetter(id) {
@@ -1608,6 +1623,7 @@ function openSheet(id) {
   document.querySelectorAll('#top-menu button').forEach(button => {
     const target = {
       'open-company': 'company-sheet', 'open-island': 'island-sheet',
+      'open-supply': 'supply-sheet',
       'open-building': 'building-sheet', 'open-events': 'event-sheet',
       'open-development': 'development-sheet',
       'open-tutorial-letters': 'tutorial-letter-sheet',
@@ -1620,6 +1636,7 @@ function openSheet(id) {
   if (id === 'development-sheet') renderDevelopmentMap();
   if (id === 'tutorial-letter-sheet') renderTutorialLetterSheet();
   if (id === 'island-sheet') renderIslandSheet();
+  if (id === 'supply-sheet') renderSupplySheet();
 }
 
 function closeSheet(id) {
@@ -1634,8 +1651,16 @@ function closeSheet(id) {
 }
 
 $('#open-company').addEventListener('click', () => openSheet('company-sheet'));
-$('#open-island').addEventListener('click', () => openSheet('island-sheet'));
+$('#open-supply').addEventListener('click', () => {
+  focusedSupplyGoods = null;
+  openSheet('supply-sheet');
+});
+$('#open-island').addEventListener('click', () => {
+  selectedSupplyGoods = null;
+  openSheet('island-sheet');
+});
 $('#food-runway').addEventListener('click', () => {
+  selectedSupplyGoods = null;
   openSheet('island-sheet');
   requestAnimationFrame(() => {
     $('[data-chart="food-stock"]')?.scrollIntoView({ block: 'center', behavior: 'smooth' });
@@ -1647,7 +1672,6 @@ $('#open-building').addEventListener('click', () => {
 $('#open-events').addEventListener('click', () => openSheet('event-sheet'));
 $('#open-development').addEventListener('click', () => openSheet('development-sheet'));
 $('#open-tutorial-letters').addEventListener('click', () => openSheet('tutorial-letter-sheet'));
-$('#history-goods').addEventListener('change', renderEconomyCharts);
 document.querySelectorAll('[data-close-sheet]').forEach(button => {
   button.addEventListener('click', () => closeSheet(button.dataset.closeSheet));
 });
@@ -1687,18 +1711,27 @@ $('#focus-selected-building').addEventListener('click', () => {
   $('#status span').textContent = `${JOB_LABELS[building.type] ?? building.type}を画面中央へ移しました`;
 });
 
-$('#open-island-from-building').addEventListener('click', () => openSheet('island-sheet'));
+$('#open-island-from-building').addEventListener('click', () => openSheet('supply-sheet'));
 $('#building-company-stock').addEventListener('click', event => {
   if (event.target.closest('[data-open-company-stock]')) openSheet('company-sheet');
 });
-$('#island-manifest').addEventListener('click', event => {
-  const button = event.target.closest('[data-stock-location]');
+$('#shortage-alerts').addEventListener('click', event => {
+  const button = event.target.closest('[data-shortage-goods]');
   if (!button) return;
-  const location = model.stockLocations[Number(button.dataset.stockLocation)];
-  if (!location) return;
-  camera.focus(location.x + 0.5, location.y + 0.5);
-  closeSheet('island-sheet');
-  $('#status span').textContent = `${location.sourceLabel}の場所へ移動しました`;
+  focusedSupplyGoods = button.dataset.shortageGoods;
+  openSheet('supply-sheet');
+  requestAnimationFrame(() => {
+    $(`[data-supply-goods="${focusedSupplyGoods}"]`)?.focus();
+  });
+});
+$('#supply-grid').addEventListener('click', event => {
+  const row = event.target.closest('[data-supply-goods]');
+  if (!row) return;
+  selectedSupplyGoods = row.dataset.supplyGoods;
+  openSheet('island-sheet');
+  requestAnimationFrame(() => {
+    $('[data-chart="price"]')?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  });
 });
 
 $('#tutorial-letter-list').addEventListener('click', event => {
@@ -1889,7 +1922,6 @@ companySheet.addEventListener('click', event => {
       `${GOODS_LABELS[goods]} ${qty}荷を倉庫から市場へ運びます`, '市場へ出せる在庫または経路がありません');
     if (result?.ok !== false) {
       stockReleaseDrafts.delete(goods);
-      stockReleaseDays.push({ day: model.day, goods, qty });
     }
   }
   renderCompanySheet();

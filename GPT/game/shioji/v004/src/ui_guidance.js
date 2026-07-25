@@ -105,6 +105,9 @@ export function objectiveActionFor(objective, model) {
   if (COMPANY_GOALS.has(objective.id)) {
     return { kind: 'sheet', sheet: 'company-sheet', label: '取引を開く' };
   }
+  if (objective.id === 'observe-tools-price-rise') {
+    return { kind: 'sheet', sheet: 'supply-sheet', goods: 'tools', label: '木製品の需給を見る' };
+  }
   if (ISLAND_GOALS.has(objective.id)) {
     return { kind: 'sheet', sheet: 'island-sheet', label: '統計を見る' };
   }

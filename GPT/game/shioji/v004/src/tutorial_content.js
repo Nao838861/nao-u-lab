@@ -2,15 +2,15 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.24.0-individual-logistics';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.24.0-individual-logistics';
-import { displayCultureLevel } from './visuals.js?v=v004.24.0-individual-logistics';
+} from './engine_bridge.js?v=v004.25.0-supply-demand';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.25.0-supply-demand';
+import { displayCultureLevel } from './visuals.js?v=v004.25.0-supply-demand';
 import {
   PLAYER_FACING_BANNED_TERMS,
   executableFoodIntervention,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.24.0-individual-logistics';
+} from './food_readability.js?v=v004.25.0-supply-demand';
 
 export { PLAYER_FACING_BANNED_TERMS };
 
@@ -557,7 +557,7 @@ const TUTORIAL_AUTHORED_LETTERS = Object.freeze({
     summary: '魚と野菜が市場へ届き、本土から買う食料を減らせるようになりました。',
     body: [
       '漁師と野菜畑が働き、島で作った食料が家族の食卓へ届き始めました。本土へ出ていくお金も、これから抑えやすくなります。',
-      'ご報告だけです。統計の食料の流れを見れば、島内生産、消費、本土購入の変化をいつでも確かめられます。',
+      'ご報告だけです。統計の食料グラフでは、島と会社が持つ食料を、冬越しに必要な量と見比べられます。',
     ].join('\n\n'),
   }),
   'chapter-three-close': ({ facts = {} }) => ({
@@ -656,8 +656,8 @@ export const TUTORIAL_SYSTEM_INSTRUCTIONS = Object.freeze({
   'complete-first-order': '［取引］で「納品済み／残り／あと何日」を確認しながら時間を進め、残りが0荷になるまで倉庫から港への運搬便を追う。',
   'close-first-chapter': '',
   'improve-logger-route': '木こりを押して市場までの往復を読み、［整備］の［道を敷く］で遠回りを短くする。',
-  'observe-island-food-change': '上の［統計］を開き、［食料の流れ］の三本の線を見ながら時間を進める。',
-  'reduce-food-imports': '漁師・野菜畑と市場への道を整え、［統計］で島内生産が増え本土購入が小さくなるまで観察する。',
+  'observe-island-food-change': '上の［統計］を開き、［食料］の線が時間とともに変わるのを確かめる。',
+  'reduce-food-imports': '漁師・野菜畑と市場への道を整え、［需給］で魚と野菜の純増減を見ながら本土購入が小さくなるまで観察する。',
   'close-second-chapter': '',
   'observe-seasonal-food-valley': '［統計］の［食料と倉庫の備え］を開いたまま時間を進め、食料在庫が細る時期を見る。',
   'set-seasonal-stock-target': '［取引］で古い木製品目標を0にし、案内された食料の買上げ目標へ16と入力してEnterを押す。',
@@ -671,7 +671,7 @@ export const TUTORIAL_SYSTEM_INSTRUCTIONS = Object.freeze({
   'observe-skippable-order': '次の注文状を［取引］で読み、支払が仕入より不利な注文は［拒否する］で見送る。',
   'let-skippable-order-expire': '見送った注文を受諾せず、期限を過ぎるまで時間を進める。',
   'close-fourth-chapter': '',
-  'observe-tools-price-rise': '［統計］の相場グラフで［木製品］を選び、値の上向きを見る。',
+  'observe-tools-price-rise': '［需給］の［木製品］を押し、統計に開く相場の上向きを見る。',
   'place-conversion-workshops': '下の［加工］から［木工房］［炭焼き小屋］［塩田］を、原料と市場へ続く道沿いに一棟ずつ置く。',
   'observe-conversion-cost-chain': '三棟を順に押し、原料棚と産出棚に品が入り、加工が始まるまで時間を進める。',
   'sustain-conversion-workshops': '三棟の道路と原料を保ち、90日間、働く世帯が途切れないよう観察する。',
@@ -2023,8 +2023,8 @@ export const TUTORIAL_ADVICE = Object.freeze([
         kicker: '食料の廃棄',
         title: `食料が${Math.floor(lost)}荷傷みました`,
         detail: '魚は約3日、野菜は約30日で傷みます。買い上げすぎず、売れる量を市場へ回す必要があります。',
-        speech: `食料が${Math.floor(lost)}荷傷みました。［統計］で魚と野菜の量を見て、余らせている品の買上げ目標を下げましょう。`,
-        target: { kind: 'sheet', sheet: 'island-sheet' },
+        speech: `食料が${Math.floor(lost)}荷傷みました。［需給］で魚と野菜の量を見て、余らせている品の買上げ目標を下げましょう。`,
+        target: { kind: 'sheet', sheet: 'supply-sheet' },
       };
     },
   }),

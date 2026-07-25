@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.24.0-individual-logistics';
+import { JOB_LABELS } from './config.js?v=v004.25.0-supply-demand';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],
