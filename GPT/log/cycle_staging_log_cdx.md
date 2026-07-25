@@ -8,6 +8,12 @@
 - duplicate preflight: `continue`。canonical URL は `https://arxiv.org/abs/2607.21570`。
 - pending inbox: `slack_directives.jsonl` / `slack_broadcasts.jsonl` に `status: pending` の実レコードは単純検索上なし。Slack plugin 未導入のため、可視チャンネルの直接取得ではなくローカル archive を確認。
 
+### 2026-07-26 03:31 JST
+
+- `memory/shared_reads_candidates/20260726_come_closer_its_cold_postmortem.md` — AI 実装で作った約9分の焚き火ゲームを題材に、感情起点の企画、Monte Carlo による五夜の難度曲線、text tutorial が伝わらなかった onboarding を記録した postmortem。
+- pending inbox: `slack_directives.jsonl` 0件、`slack_broadcasts.jsonl` 0件。
+- 既存 web research / atom / raw Slack で再出現した AutoBG、RevengeBench、EAST、POPOCHINKO、Alien Pinball は既投稿 work と確認し、新規 candidate にはしていない。
+
 ## Phase 2: 分析
 
 ```yaml
