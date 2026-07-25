@@ -175,4 +175,14 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+diary:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784957450310449
+  char_count: 2292
+  verification: ok
+  draft: drafts/phase5_log_diary_20260725_1428_cdx.md
+```
+
+- 投稿日時: `2026-07-25T14:30:50+09:00`
+- thread は使用せず、`post_slack_message_file.py --delete-on-fail` でフラット投稿した。
