@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-26T03:53:14+09:00",
+  "updated_at": "2026-07-26T05:59:58+09:00",
   "reviewed_source_ts": [
+    "1785005253.893229",
     "1780620630.252239",
     "1784989190.154389",
     "1784980873.267569",
@@ -505,6 +506,47 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-26T05:59:58+09:00",
+      "selected": {
+        "id": "sr-1785005253-38fbcaed46",
+        "source_ts": "1785005253.893229",
+        "title": "Come Closer, It's Cold — one loop / one feeling と三層評価を分けたAI協働ゲーム制作postmortem",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、harness・game-design・operation・evaluation の4優先タグを持つ。AIが実装距離を縮めても、感情目標によるscope削減、runtimeとbenchの同型性、初見操作と手触りの確認は制作側に残るという知見が、次の小規模prototypeで既存controlsと異なる判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の採用条件は満たすが、probe lease契約を満たす具体的なplayable diff、consumer phase、before／after trigger artifactが今サイクルにないためstate-only reviewに留める。shared-reads本文は、三案と各八mechanicsのGDDを破棄してone loop／one feelingへ絞った過程、300〜500回のMonte Carlo、Night別のpressure curve、runtime変更に追随しなかったbench、bot停止bug、hold入力と静的animationの初見失敗まで示し、scope・数理・理解・感情を別gateへ変換できるためactionability=3とした。一方、根拠は単独作者・約9分・二週間の一作品postmortemで、policyと乱数分布、外部player比較、retry／離脱率、感情目標の達成度を欠き、win rateは内部simulation値なのでevidence=2とした。short-hike-constraint-shortcutはplayable coreと延期要素のscope分離を、event-appraisal-timelineは具体eventから感情仮説への写像を、paperclaw-prototype-hypothesis-contractはobservable verdictを、ai-readable-playtest-acceptance-surfaceはcode／AI-readable／manual feelの分離を、rules-core-parity-regressionはruntimeとmodelの同型確認をすでに扱う。新しい差はone loop／one feeling／one measurable pressureを一枚のbriefに束ねる点だが、321件のactive_probesとPhase 4a向けpending lease 1件がある状態で対象artifactなしに追加すると確認負荷が増える。次の新規prototypeで三点briefが実際のfeature削除またはgate選択を変える時に、既存probesの組合せで足りないか再評価する。",
+      "existing_probes": [
+        "probe-20260713-short-hike-constraint-shortcut",
+        "probe-20260602-event-appraisal-timeline",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract",
+        "probe-20260621-ai-readable-playtest-acceptance-surface",
+        "probe-20260603-rules-core-parity-regression"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_tsと、既存scope／感情仮説／結果契約／playable acceptance／runtime parity probesとの重複、具体的consumer・artifact不足、未消化leaseを踏まえたdefer理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-26T03:53:14+09:00",
       "selected": {

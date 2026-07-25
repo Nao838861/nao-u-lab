@@ -91,7 +91,30 @@ posted:
 skipped: []
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+self_feedback:
+  selected:
+    id: sr-1785005253-38fbcaed46
+    source_ts: "1785005253.893229"
+    title: "Come Closer, It's Cold — one loop / one feeling と三層評価を分けたAI協働ゲーム制作postmortem"
+    reason: "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、harness・game-design・operation・evaluation の4優先タグを持つ。AIが実装距離を縮めても、感情目標によるscope削減、runtimeとbenchの同型性、初見操作と手触りの確認は制作側に残るという知見が、次の小規模prototypeで既存controlsと異なる判断差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "数値上の採用条件は満たすが、具体的なplayable diff、consumer phase、before／after trigger artifactがなくlease契約を満たせない。既存のscope・感情仮説・結果契約・playable acceptance・runtime parity probesが主要判断を既に覆い、321件のactive_probesとPhase 4a向けpending lease 1件があるため、今回はstate-only reviewに留める。次の新規prototypeでone loop／one feeling／one measurable pressure briefがfeature削除またはgate選択を実際に変える時に再評価する。"
+  change:
+    summary: "reviewed_source_tsとdefer理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files: [memory/shared_reads_self_feedback_state.json, log/cycle_staging_log_cdx.md]
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
