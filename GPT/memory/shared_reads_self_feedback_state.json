@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-25T12:10:55+09:00",
+  "updated_at": "2026-07-25T14:22:51+09:00",
   "reviewed_source_ts": [
+    "1780170954.779479",
     "1780598219.435869",
     "1784934693.631459",
     "1784919550.484869",
@@ -498,6 +499,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-25T14:22:51+09:00",
+      "selected": {
+        "id": "sr-1780170954-986332c76d",
+        "source_ts": "1780170954.779479",
+        "title": "Intentional Computational Level Design — 能力制限 agent で mechanic の必要性を検査する",
+        "reason": "未レビューの score 12 atom で、harness・game-design・agent・operation・evaluation の5優先タグを持つ。今サイクルで扱った dungeon puzzle の制約生成に対し、単なる到達可能性や mechanic 発火回数ではなく、通常 agent と能力制限 agent／逆 forward model の差で「その mechanic が解に必要か」を確認する知見が、次の level／encounter 評価へ既存 control と異なる判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で採用条件の必須閾値は満たす。shared-reads 本文は、Limited Agents／Punishing Model／Mechanics Dimensions の3手法、VGLC 由来14 slice、1000世代またはiteration、各設定5 run、A* agent、simplicity fitness、mechanic別の成功と抜け道まで具体化しており、通常 policy／能力制限 policy／mechanic 発火 trace の比較へ直接変換できるため evidence=3 とした。既存の headless-opponent-mechanic-matrix は no-op／通常／exploiter と core mechanic 使用を、mechanic-observation-channel-gate は観測 channel を、lmgamebench-ai-playtest-diagnostic-ablation は scaffold と failure attribution を、causalgame-outcome-explanation-split は outcome と mechanism／confounder の分離をすでに扱う。新しい差は「使ったか」ではなく、能力を除いた反実仮想で必要性と別解を検査する点なので non_redundancy=2 とした。ただし今サイクルの dungeon puzzle は調査候補で、比較可能な level generator／playable diff、実際に判断へ使う consumer phase、before／after trigger artifact がない。さらに active_probes は321件で Phase 4a 向け pending lease が1件あるため、対象 artifact なしに operational control を増やさない。次の level／encounter 作業で通常 policy と mechanic-disabled policy の差が採否を変え得る具体物が揃った時に再評価する。",
+      "existing_probes": [
+        "probe-20260712-headless-opponent-mechanic-matrix",
+        "probe-20260603-mechanic-observation-channel-gate",
+        "probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation",
+        "probe-20260708-causalgame-outcome-explanation-split"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、数値上は採用可能だが具体的な consumer／trigger artifact がないため defer した理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-25T12:10:55+09:00",
       "selected": {

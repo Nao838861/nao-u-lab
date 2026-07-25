@@ -55,7 +55,39 @@ skipped: []
 - Slack 保存後 review: 2件とも `post_slack_message_file.py` の履歴再取得で `verification: ok`。各 candidate を別々の `chat.postMessage` で投稿し、thread は使用していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780170954-986332c76d
+    source_ts: "1780170954.779479"
+    title: "Intentional Computational Level Design — 能力制限 agent で mechanic の必要性を検査する"
+    reason: "今サイクルの dungeon puzzle 制約生成に対し、到達可能性や発火回数だけでなく、通常 agent と能力制限 agent／逆 forward model の差で mechanic の必要性を検査する知見が、次の level／encounter 評価へ新しい判断差を作るか確認するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: defer
+  decision_reason: "数値上は採用条件を満たすが、今サイクルには通常 policy／mechanic-disabled policy を比較できる playable artifact と実際の consumer phase がない。321件の active probes と Phase 4a 向け pending lease がある状態で先に operational control を増やさず、次の具体的な level／encounter 作業で再評価する。"
+  existing_probes:
+    - probe-20260712-headless-opponent-mechanic-matrix
+    - probe-20260603-mechanic-observation-channel-gate
+    - probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation
+    - probe-20260708-causalgame-outcome-explanation-split
+  change:
+    summary: "reviewed_source_ts と defer 理由のみ更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
