@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.27.0-topology-cache';
+import { pileVisual } from './visuals.js?v=v004.28.0-goods-sprites';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));

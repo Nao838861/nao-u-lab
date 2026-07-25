@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.27.0-topology-cache';
+import { SPEEDS } from './config.js?v=v004.28.0-goods-sprites';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

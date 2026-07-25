@@ -1,11 +1,12 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.27.0-topology-cache';
-import { islandCalendar } from './ui_summary.js?v=v004.27.0-topology-cache';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.27.0-topology-cache';
+} from './config.js?v=v004.28.0-goods-sprites';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.28.0-goods-sprites';
+import { islandCalendar } from './ui_summary.js?v=v004.28.0-goods-sprites';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.28.0-goods-sprites';
 import {
   buildingStructureLayout, pileVisual,
-} from './visuals.js?v=v004.27.0-topology-cache';
+} from './visuals.js?v=v004.28.0-goods-sprites';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
@@ -14,8 +15,12 @@ function freshnessArt(visual) {
   const stage = visual?.freshness?.stage;
   if (!art || !['aging', 'spoiling'].includes(stage)) return art;
   return stage === 'spoiling'
-    ? { ...art, color: '#756b55', dark: '#443f35' }
-    : { ...art, color: '#9a8758', dark: '#665538' };
+    ? {
+      ...art, color: '#756b55', dark: '#443f35', light: '#9c9278', accent: '#625b48',
+    }
+    : {
+      ...art, color: '#9a8758', dark: '#665538', light: '#bca86f', accent: '#7d704d',
+    };
 }
 
 function carrierCargoSprites(carrier, limit) {
@@ -1183,7 +1188,7 @@ export class Renderer {
     const count = row.visual.spriteCount;
     const exact = row.visual.pileStage === 'exact';
     const columns = exact ? (count <= 6 ? 3 : count <= 12 ? 4 : 5) : 5;
-    const spriteScale = exact ? (count <= 6 ? 0.68 : count <= 12 ? 0.56 : 0.48) : 0.48;
+    const spriteScale = exact ? (count <= 6 ? 0.82 : count <= 12 ? 0.68 : 0.56) : 0.62;
     const footprintScale = row.visual.footprintScale ?? 1;
     const heightScale = row.visual.heightScale ?? 1;
     ctx.save();
@@ -1208,8 +1213,8 @@ export class Renderer {
       const column = index % columns;
       const layer = Math.floor(index / columns);
       positions.push({
-        x: point.x + (column - (columns - 1) / 2) * 4.6 * scale * footprintScale,
-        y: point.y - layer * 4.4 * scale * heightScale - (column % 2) * 1.1 * scale,
+        x: point.x + (column - (columns - 1) / 2) * 5.4 * scale * footprintScale,
+        y: point.y - layer * 4.9 * scale * heightScale - (column % 2) * 1.2 * scale,
       });
     }
     this.drawGoodsPileSprites(
@@ -1233,84 +1238,14 @@ export class Renderer {
 
   drawGoodsPileSprites(art, positions, scale, outlined) {
     if (!positions.length) return;
-    const ctx = this.ctx;
-    ctx.fillStyle = art.color;
-    ctx.strokeStyle = art.dark;
-    ctx.lineWidth = Math.max(1, scale);
-    ctx.beginPath();
     for (const { x, y } of positions) {
-      if (art.shape === 'round') {
-        ctx.moveTo(x + 6 * scale, y);
-        ctx.ellipse(x, y, 6 * scale, 2.7 * scale, -0.2, 0, Math.PI * 2);
-      } else if (art.shape === 'rock') {
-        ctx.moveTo(x - 5 * scale, y + 2 * scale);
-        ctx.lineTo(x - 2 * scale, y - 4 * scale);
-        ctx.lineTo(x + 4 * scale, y - 3 * scale);
-        ctx.lineTo(x + 6 * scale, y + 2 * scale);
-        ctx.closePath();
-      } else if (art.shape === 'sack') {
-        ctx.moveTo(x + 4.5 * scale, y);
-        ctx.ellipse(x, y, 4.5 * scale, 5 * scale, 0, 0, Math.PI * 2);
-      } else {
-        ctx.rect(
-          x - 5 * scale,
-          y - 4 * scale,
-          10 * scale,
-          art.shape === 'bar' ? 3 * scale : 8 * scale,
-        );
-      }
-    }
-    ctx.fill();
-    if (outlined) {
-      ctx.stroke();
-      if (art.shape === 'round') {
-        ctx.beginPath();
-        for (const { x, y } of positions) {
-          ctx.moveTo(x + 6 * scale, y - 0.8 * scale);
-          ctx.arc(x + 4.5 * scale, y - 0.8 * scale, 1.5 * scale, 0, Math.PI * 2);
-        }
-        ctx.stroke();
-      }
+      drawGoodsSpriteCanvas(this.ctx, art, x, y, 16 * scale, { outlined });
     }
   }
 
   drawGoodsSprite(art, x, y, scale, isolated = true, outlined = true) {
-    const ctx = this.ctx;
-    if (isolated) ctx.save();
-    ctx.fillStyle = art.color;
-    ctx.strokeStyle = art.dark;
-    ctx.lineWidth = Math.max(1, scale);
-    if (art.shape === 'round') {
-      ctx.beginPath();
-      ctx.ellipse(x, y, 6 * scale, 2.7 * scale, -0.2, 0, Math.PI * 2);
-      ctx.fill();
-      if (outlined) {
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(x + 4.5 * scale, y - 0.8 * scale, 1.5 * scale, 0, Math.PI * 2);
-        ctx.stroke();
-      }
-    } else if (art.shape === 'rock') {
-      ctx.beginPath();
-      ctx.moveTo(x - 5 * scale, y + 2 * scale);
-      ctx.lineTo(x - 2 * scale, y - 4 * scale);
-      ctx.lineTo(x + 4 * scale, y - 3 * scale);
-      ctx.lineTo(x + 6 * scale, y + 2 * scale);
-      ctx.closePath();
-      ctx.fill();
-      if (outlined) ctx.stroke();
-    } else if (art.shape === 'sack') {
-      ctx.beginPath();
-      ctx.ellipse(x, y, 4.5 * scale, 5 * scale, 0, 0, Math.PI * 2);
-      ctx.fill();
-      if (outlined) ctx.stroke();
-    } else {
-      ctx.fillRect(x - 5 * scale, y - 4 * scale, 10 * scale, art.shape === 'bar' ? 3 * scale : 8 * scale);
-      if (outlined) {
-        ctx.strokeRect(x - 5 * scale, y - 4 * scale, 10 * scale, art.shape === 'bar' ? 3 * scale : 8 * scale);
-      }
-    }
-    if (isolated) ctx.restore();
+    void isolated;
+    drawGoodsSpriteCanvas(this.ctx, art, x, y, 16 * scale, { outlined });
   }
 
   drawMarketStall(stall) {
@@ -1337,7 +1272,7 @@ export class Renderer {
           freshnessArt(primary.visual),
           point.x + (index - (count - 1) / 2) * 4.2 * scale,
           point.y - (index % 2) * 2 * scale,
-          scale * 0.48,
+          scale * 0.66,
         );
       }
     }
@@ -1501,7 +1436,7 @@ export class Renderer {
             art,
             point.x + (index - (cargoSprites.length - 1) / 2) * 4 * scale,
             point.y - 13 * scale - (index % 2) * 2 * scale,
-            scale * 0.52,
+            scale * 0.66,
             false,
           );
         }
@@ -1568,7 +1503,7 @@ export class Renderer {
             art,
             point.x + offsetX + 4 * scale,
             point.y - 5 * scale + offsetY + bob,
-            scale * 0.46,
+            scale * 0.6,
           );
         }
       }
@@ -1580,7 +1515,7 @@ export class Renderer {
             art,
             point.x - (7 + (index % 2) * 3) * scale,
             point.y - (13 + Math.floor(index / 2) * 4) * scale,
-            scale * 0.48,
+            scale * 0.58,
           );
         }
       }

@@ -1,4 +1,4 @@
-import { BUILDING_SIZES } from './config.js?v=v004.27.0-topology-cache';
+import { BUILDING_SIZES } from './config.js?v=v004.28.0-goods-sprites';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

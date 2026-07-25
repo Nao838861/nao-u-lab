@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.27.0-topology-cache';
+import { JOB_LABELS } from './config.js?v=v004.28.0-goods-sprites';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

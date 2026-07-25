@@ -1,6 +1,6 @@
 import {
   snapshotToViewModel, terrainRevisionForModel,
-} from './view_model.js?v=v004.27.0-topology-cache';
+} from './view_model.js?v=v004.28.0-goods-sprites';
 
 export function createViewController(api) {
   if (!api?.snapshot || !api?.advanceTicks || !api?.applyOperation) {

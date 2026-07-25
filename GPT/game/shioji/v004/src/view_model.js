@@ -1,16 +1,16 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.27.0-topology-cache';
-import { perishableFreshness } from './food_readability.js?v=v004.27.0-topology-cache';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.28.0-goods-sprites';
+import { perishableFreshness } from './food_readability.js?v=v004.28.0-goods-sprites';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.27.0-topology-cache';
-import { analyzeRoadConnections } from './placement.js?v=v004.27.0-topology-cache';
+} from './engine_bridge.js?v=v004.28.0-goods-sprites';
+import { analyzeRoadConnections } from './placement.js?v=v004.28.0-goods-sprites';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.27.0-topology-cache';
+} from './render_scene.js?v=v004.28.0-goods-sprites';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.27.0-topology-cache';
+} from './visuals.js?v=v004.28.0-goods-sprites';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',

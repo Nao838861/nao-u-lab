@@ -7,8 +7,8 @@ import { ECONOMIC_BUILDINGS } from '../../engine/src/physical.js';
 import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
 import {
-  BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, DENARI_PER_MONEY_UNIT, GOODS_LABELS,
-  JOB_ICONS, JOB_LABELS, PLACEMENT_JOBS, VERSION, toDenari,
+  BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, DENARI_PER_MONEY_UNIT, GOODS_ART,
+  GOODS_LABELS, JOB_ICONS, JOB_LABELS, PLACEMENT_JOBS, VERSION, toDenari,
 } from '../src/config.js';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
@@ -26,6 +26,10 @@ import {
   PLAYER_FACING_BANNED_TERMS, WINTER_RESERVE_PER_PERSON, executableFoodIntervention,
   foodHudSummary, islandFoodSummary, perishableFreshness, winterFoodForecast,
 } from '../src/food_readability.js';
+import {
+  GOODS_SPRITE_IDS, goodsSpriteDefinition, goodsSpriteGeometrySignature,
+  goodsSpriteSvgMarkup,
+} from '../src/goods_sprites.js';
 import { movementVector, panCameraFromKeys, shouldIgnoreShortcut } from '../src/keyboard.js';
 import {
   analyzeRoadConnections, previewBuildingPlacement, previewRoadPlacement,
@@ -89,6 +93,28 @@ function test(name, body) {
   passed += 1;
   console.log(`ok - ${name} (${(elapsedMs / 1000).toFixed(2)}s)`);
 }
+
+test('品目スプライト: 全18品を色なしの輪郭で区別し、CanvasとUIで同じ定義を使う', () => {
+  const goods = Object.keys(GOODS_LABELS);
+  assert.equal(goods.length, 18);
+  assert.deepEqual([...GOODS_SPRITE_IDS].sort(), [...goods].sort());
+  const signatures = goods.map(item => goodsSpriteGeometrySignature(item));
+  assert.equal(new Set(signatures).size, goods.length);
+  for (const item of goods) {
+    const art = GOODS_ART[item];
+    assert.equal(art.sprite, item);
+    assert.ok(goodsSpriteDefinition(item).length >= 3, `${item}に輪郭と内部特徴がある`);
+    assert.equal(new Set([art.color, art.dark, art.light, art.accent]).size, 4);
+    const markup = goodsSpriteSvgMarkup(item, art);
+    assert.match(markup, new RegExp(`data-goods-sprite="${item}"`));
+    assert.match(markup, /viewBox="0 0 16 16"/);
+    assert.doesNotMatch(markup, />[木鉱石銑鉄槌岩麦魚菜肉燻漬粉塩炭布油]</);
+  }
+  const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  const renderer = fs.readFileSync(new URL('../src/renderer.js', import.meta.url), 'utf8');
+  assert.match(main, /goodsSpriteSvgMarkup\(goods, art\)/);
+  assert.match(renderer, /drawGoodsSpriteCanvas\(this\.ctx, art/);
+});
 
 test('段1: createEngineApiで基準都市を起動し1日30tick進める', () => {
   const controller = createEngineController({ seed: 11 });
@@ -2154,7 +2180,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.27.0-topology-cache');
+  assert.equal(VERSION, 'v004.28.0-goods-sprites');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);

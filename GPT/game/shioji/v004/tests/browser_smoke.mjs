@@ -979,8 +979,8 @@ async function checkTutorialLetterDelivery() {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.27.0-topology-cache');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.27.0-topology-cache');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.28.0-goods-sprites');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.28.0-goods-sprites');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -1302,10 +1302,13 @@ async function checkViewport(width, height, mobile) {
       const box = sheet.getBoundingClientRect();
       const rows = [...document.querySelectorAll('[data-supply-goods]')];
       const severities = rows.map(row => ({ shortage: 2, tight: 1, sufficient: 0 }[row.dataset.status]));
+      const spriteIds = rows.map(row => row.querySelector('.goods-sprite')?.dataset.goodsSprite);
       return {
         hidden: sheet.hidden,
         rowCount: rows.length,
         allNamed: rows.every(row => row.querySelector('.goods-icon') && row.querySelector('.supply-name b')),
+        allSprites: spriteIds.every(Boolean),
+        uniqueSprites: new Set(spriteIds).size,
         allFields: rows.every(row => row.querySelectorAll('.supply-number').length === 4),
         sorted: severities.every((value, index) => index === 0 || severities[index - 1] >= value),
         fitsWithoutScroll: sheet.scrollHeight <= sheet.clientHeight + 1,
@@ -1316,6 +1319,8 @@ async function checkViewport(width, height, mobile) {
     assert.equal(supply.hidden, false, JSON.stringify(supply));
     assert.equal(supply.rowCount, 18, JSON.stringify(supply));
     assert.equal(supply.allNamed, true, JSON.stringify(supply));
+    assert.equal(supply.allSprites, true, JSON.stringify(supply));
+    assert.equal(supply.uniqueSprites, 18, JSON.stringify(supply));
     assert.equal(supply.allFields, true, JSON.stringify(supply));
     assert.equal(supply.sorted, true, JSON.stringify(supply));
     assert.equal(supply.fitsWithoutScroll, true, JSON.stringify(supply));
