@@ -128,7 +128,125 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の atom index 50件を atoms.jsonl と照合し、broken link 0件を確認"
+  - "atoms.jsonl 2748件の ID 重複 0件、per-file/index mirror の欠落・parse error・content conflict 0件を確認"
+  - "shared-reads title canonical / mixed / open-group / stale-triage / group-action sidecar を再生成"
+  - "期限超過 candidate 176件から group lease と重複しない5件を candidate handoff inbox へ冪等 enqueue"
+  - "Slack directive / broadcast の pending 0件を確認（handled 更新対象なし）"
+  - "30日超の raw 95件を監査し、一次資料・Slack archive の正本保持を優先して移動なし"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読みで有効。代表語「記憶」「ゲーム設計」「敵パターン」を取得。「評価軸」は現行 index 本文に完全一致語がないが、文字化け兆候ではない"
+  display_or_tooling_status: "none"
+atom_audit:
+  rows: 2748
+  duplicate_id_count: 0
+  raw_normalized_content_duplicate_groups: 40
+  recall_visible_normalized_content_duplicate_groups: 3
+  content_fold_status: "既存 normalized_content_hash fold が適用済み"
+  mirror_content_conflicts: 0
+  lifecycle_status_counts:
+    active: 2560
+    superseded: 188
+  note: "既存 title-quality sidecar が扱う repeated-title warning はあるが、新規の構造設計 issue にはしない"
+candidate_lifecycle_audit:
+  files: 1099
+  status_counts:
+    posted: 482
+    ready_to_post: 10
+    postponed: 330
+    failed: 259
+    needs_review: 17
+    skipped_unreviewed: 1
+  skipped_unreviewed_files: 25
+  no_frontmatter: 0
+  missing_stale_after: 4
+  missing_stale_after_open_candidate_count: 0
+  overdue_for_reassessment: 176
+  current_state_conflicts: 0
+raw_archive_audit:
+  older_than_30_days: 95
+  action: "hold_in_place"
+  reason: "memory/raw は一次資料の正本で、最古層も Slack archive・PDF・抽出 text が中心。Phase 4a での移動は検索導線を弱めるため見送った"
+title_duplicate_audit:
+  terminal_canonical_groups: 68
+  suppressible_siblings: 0
+  mixed_groups: 49
+  open_duplicate_groups: 56
+  all_open_groups: 7
+stale_backlog:
+  overdue_open_total: 176
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 56
+  mixed_group_count: 49
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total > queue rows だが actionable group が3件未満（0件）のため"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_enqueued_count: 5
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-6df20308349a54b1
+    - cha-e1325aa5c667bff9
+    - cha-d9f9926e64a0e43f
+    - cha-510a9b82a4883c83
+    - cha-b14b34231ab45641
+  remaining_overdue_backlog: 171
+group_action_handoff: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  next_pending_probe_id: probe-20260724-minimum-sufficient-scope-ladder
+  next_lease_due: "2026-07-31T00:23:59+09:00"
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+    merged: 0
+    retired: 0
+  validate_errors: 0
+stale_review_batch:
+  - handoff_id: cha-6df20308349a54b1
+    path: memory/shared_reads_candidates/20260527_ai_enhanced_mda_educational_game_design.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "AI×MDA は転用価値があるが、設計手順・評価対象・失敗条件を本文から補う必要がある"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-e1325aa5c667bff9
+    path: memory/shared_reads_candidates/20260527_capcom_ai_playtesting_debug_agents.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "routine check と director concept 照合 agent は有用だが、一次 interview で運用フローと発見例を確認する必要がある"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-d9f9926e64a0e43f
+    path: memory/shared_reads_candidates/20260527_death_howl_genre_blend_design.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "prototype と tester 反応から genre が立ち上がる設計観点は有用だが、探索・戦闘・死亡回収の具体を再読する必要がある"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-510a9b82a4883c83
+    path: memory/shared_reads_candidates/20260527_personified_llm_crowdsourced_gui_testing.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "persona 別 GUI 探索を game UI へ転用できるが、評価条件と bug 発見差の本文確認が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-b14b34231ab45641
+    path: memory/shared_reads_candidates/20260527_programming_smart_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "DSL / agent-based playtesting は headless regression に接続可能だが、DSL 構文・実験設計・比較結果が不足"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
