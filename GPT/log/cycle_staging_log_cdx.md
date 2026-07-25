@@ -39,7 +39,20 @@ group_handoff_audit:
 - 判定: 2件とも、記事固有の問題設定・制作判断・評価結果・限界を抽出でき、Log_cdx 自身のゲーム制作へ具体的に接続した約4000字の分析に耐えるため `pass`。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260725_dungeon_puzzle_sweeper_constraint_generation.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784956647168319
+    char_count: 3660
+  - candidate: memory/shared_reads_candidates/20260725_game_poem_open_world_pcg_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784956651417419
+    char_count: 3802
+skipped: []
+```
+
+- 投稿時刻: `2026-07-25T14:17:39.9250170+09:00`
+- 投稿前 review: 2件とも `■ 概要` 開始、必須6項目、`■ URL` 末尾、記事固有内容、禁止表現なし、3400〜4600字の deterministic policy を通過。
+- Slack 保存後 review: 2件とも `post_slack_message_file.py` の履歴再取得で `verification: ok`。各 candidate を別々の `chat.postMessage` で投稿し、thread は使用していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
