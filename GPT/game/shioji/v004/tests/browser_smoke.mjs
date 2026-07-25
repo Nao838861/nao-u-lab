@@ -1048,7 +1048,7 @@ async function checkSeasonalPlots(width, height, mobile) {
       ))),
     };
   })()`);
-  assert.equal(autumn.version, 'v004.33.0-save-delivery', JSON.stringify(autumn));
+  assert.equal(autumn.version, 'v004.34.0-feedback-visibility', JSON.stringify(autumn));
   assert.equal(autumn.season, '秋', JSON.stringify(autumn));
   assert.ok(autumn.plots.some(type => ['wheat', 'veg'].includes(type)), JSON.stringify(autumn));
   assert.ok(autumn.plots.some(type => type === 'shepherd'), JSON.stringify(autumn));
@@ -1193,8 +1193,8 @@ async function checkPeopleVisuals(width, height, mobile) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.33.0-save-delivery');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.33.0-save-delivery');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.34.0-feedback-visibility');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.34.0-feedback-visibility');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({

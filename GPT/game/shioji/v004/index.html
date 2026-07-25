@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.33.1-start-over">
+  <link rel="stylesheet" href="./style.css?v=v004.34.0-feedback-visibility">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -114,11 +114,10 @@
 
   <aside id="supply-sheet" class="panel sheet supply-sheet" hidden data-testid="supply-sheet">
     <header>
-      <div><small>足りる品・足りない品</small><h2>島の需給</h2></div>
+      <div><small>足りる品・足りない品 — 不足が深刻な順</small><h2>島の需給</h2></div>
       <button type="button" data-close-sheet="supply-sheet" aria-label="需給を閉じる">×</button>
     </header>
-    <p class="sheet-note">不足が深刻な順です。行を押すと、その品の相場推移を統計で開きます。</p>
-    <div class="supply-column-head" aria-hidden="true"><span>品と状態</span><span>在庫</span><span>純増減</span><span>日数</span><span>相場</span></div>
+    <div class="supply-legend" aria-hidden="true"><span class="seg-prod">生産</span><span class="seg-imp">仕入</span><span class="seg-cons">消費</span><span class="seg-need">冬支度に必要な分</span><em>棒は1日あたりの荷。市場が赤い品は、島にはあるのに市場に出ていません。押すと相場推移を開きます。</em></div>
     <div id="supply-grid" class="supply-grid"></div>
   </aside>
 
@@ -320,7 +319,7 @@
       });
     })();
   </script>
-  <script id="game-module" type="module" src="./src/main.js?v=v004.33.1-start-over"
+  <script id="game-module" type="module" src="./src/main.js?v=v004.34.0-feedback-visibility"
     onerror="window.__SHIOJI_BOOT__?.failed()"></script>
 </body>
 </html>

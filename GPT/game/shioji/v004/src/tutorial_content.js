@@ -2,15 +2,15 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.33.1-start-over';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.33.1-start-over';
-import { displayCultureLevel } from './visuals.js?v=v004.33.1-start-over';
+} from './engine_bridge.js?v=v004.34.0-feedback-visibility';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.34.0-feedback-visibility';
+import { displayCultureLevel } from './visuals.js?v=v004.34.0-feedback-visibility';
 import {
   PLAYER_FACING_BANNED_TERMS,
   executableFoodIntervention,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.33.1-start-over';
+} from './food_readability.js?v=v004.34.0-feedback-visibility';
 
 export { PLAYER_FACING_BANNED_TERMS };
 
