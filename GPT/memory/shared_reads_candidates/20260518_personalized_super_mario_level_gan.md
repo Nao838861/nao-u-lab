@@ -7,14 +7,19 @@ genre_tags: [pcg, personalized-level-design, platformer, ai-game-design, difficu
 evaluated_at: "2026-07-25T23:07:50+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
-status: ready_to_post
-last_reviewed_at: "2026-07-25T23:07:50+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-25T23:07:50+09:00"
-next_action: post_to_shared_reads
+candidate_status: posted
+status: posted
+last_reviewed_at: "2026-07-25T23:20:35+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784989190154389"
+next_action: none
 stale_after: "2026-08-24"
 supersedes: []
+posted:
+  ts: "1784989190.154389"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784989190154389"
+  char_count: 4231
+  posted_at: "2026-07-25T23:20:35+09:00"
 gate_reason: >-
   skill clustering を条件ラベルへ変換し、5 GAN architecture を複数指標で比較する手順と、skill 別に生じた level 特性まで抽出できている。
   difficulty を死亡回数だけでなく操作複雑度・多様性・playability へ分解でき、headless 評価への適用を含む ~4000字の独立分析を構成できる。

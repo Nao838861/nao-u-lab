@@ -80,7 +80,17 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260518_personalized_super_mario_level_gan.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784989190154389
+    char_count: 4231
+skipped:
+  - candidate: memory/shared_reads_candidates/20260725_dark_maze_custom_web_engine_postmortem.md
+    reason: "元記事に端末別測定、frame timing の実装値、公開前後比較、playtest 規模、失敗件数がなく、3500-4500字へ広げると一般論が原資料を上回る"
+    action: postpone
+reviewed_at: "2026-07-25T23:20:35+09:00"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

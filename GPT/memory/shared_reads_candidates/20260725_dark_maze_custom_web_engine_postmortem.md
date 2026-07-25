@@ -7,14 +7,18 @@ genre_tags: [game-design, horror, postmortem, web-game, custom-engine, javascrip
 evaluated_at: "2026-07-25T23:07:50+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-25T23:07:50+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-25T23:07:50+09:00"
-next_action: post_to_shared_reads
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-25T23:20:35+09:00"
+last_decision: postponed
+evidence: "Phase 3 final review: source lacks measurements, comparisons, and playtest evidence for a source-grounded 3500-4500 character analysis"
+next_action: revise_or_research
 stale_after: "2026-08-24"
 supersedes: []
+phase3_reason: >-
+  grid、視界制限、描画と physics の分離、audio autoplay、responsive scaling という判断は記事固有だが、
+  元記事には端末別測定、frame timing の実装値、公開前後比較、playtest 規模、失敗件数がない。
+  3500-4500字へ広げると Log_cdx 側の一般論が原資料を上回るため、追加資料または実装 probe が得られるまで投稿しない。
 gate_reason: >-
   緊張感という体験目標を grid・視界・逃走 loop へ絞り、描画/physics 分離、audio policy、responsive 配布まで制約駆動で設計した過程を具体的に追える。
   定量評価はないが、複数端末・portal 公開で露出した failure と次作への結論があり、小規模 web game の設計から運用までを ~4000字で独立分析できる。
