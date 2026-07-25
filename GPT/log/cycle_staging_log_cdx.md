@@ -7,6 +7,10 @@
 - `memory/shared_reads_candidates/20260725_phobos_down_postmortem.md` — 低反射速度でも計画できる twin-stick shooter を、制限入力・色分け・procedural mission・arcade cabinet での観察から振り返る postmortem。
 - preflight skip: `AI Gamestore: Scalable, Open-Ended Evaluation of Machine General Intelligence with Human Games` — posted-source の同一 work（arXiv:2602.17594）と一致したため保存せず。
 - preflight skip: `LieCraft: A Multi-Agent Framework for Evaluating Deceptive Capabilities in Language Models` — posted-source の同一 work（arXiv:2603.06874）と一致したため保存せず。
+- pending 確認: `slack_directives.jsonl` 0件 / `slack_broadcasts.jsonl` 0件。
+- 参照範囲: 直近の `memory/raw/web_research/results.jsonl`、最近の `memory/atoms.jsonl`、`memory/raw/slack_api/shared-reads.jsonl`、既存 candidate 群。
+- `memory/shared_reads_candidates/20260725_sakura_danmaku_ai_jagged_frontier.md` — 単一 HTML の弾幕ゲーム制作で、AI の局所生成・deterministic 回帰検査と、人間のルール相互作用・全体 coherence 判断を分けた一次 postmortem。
+- duplicate preflight: `continue`。canonical URL は `https://itch.io/devlog/1547545/ai-did-the-content-i-did-the-rules-a-bullet-hell-on-the-jagged-frontier.amp`。
 
 ## Phase 2: 分析
 
