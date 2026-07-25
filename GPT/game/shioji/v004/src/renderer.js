@@ -1,12 +1,12 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.32.0-seasonal-plots';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.32.0-seasonal-plots';
-import { islandCalendar } from './ui_summary.js?v=v004.32.0-seasonal-plots';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.32.0-seasonal-plots';
+} from './config.js?v=v004.33.0-save-delivery';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.33.0-save-delivery';
+import { islandCalendar } from './ui_summary.js?v=v004.33.0-save-delivery';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.33.0-save-delivery';
 import {
   buildingStructureLayout, pileVisual, seasonalPlotVisual,
-} from './visuals.js?v=v004.32.0-seasonal-plots';
+} from './visuals.js?v=v004.33.0-save-delivery';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
@@ -528,7 +528,11 @@ export class Renderer {
       );
       const critical = crisis.severity === 'critical';
       const icon = crisis.kind === 'hunger' ? '🍽'
-        : crisis.kind === 'demotion' ? '↓' : '!';
+        : crisis.kind === 'demotion' ? '↓'
+          : crisis.kind === 'delivery' ? '' : '!';
+      const missingGoods = (crisis.goods ?? []).filter(goods => GOODS_ART[goods]).slice(0, 2);
+      const badgeWidth = (86 + missingGoods.length * 17) * this.camera.zoom;
+      const badgeLeft = point.x - badgeWidth / 2;
       ctx.save();
       // 動く警告は死亡・離散間際だけ。中程度と降格間際は静止させる。
       if (critical) ctx.globalAlpha = 0.72 + Math.sin(this.pulse * 5.2) * 0.22;
@@ -537,20 +541,31 @@ export class Renderer {
       ctx.lineWidth = Math.max(1.5, 2 * this.camera.zoom);
       ctx.beginPath();
       ctx.roundRect(
-        point.x - 43 * this.camera.zoom,
+        badgeLeft,
         point.y - 13 * this.camera.zoom,
-        86 * this.camera.zoom,
+        badgeWidth,
         23 * this.camera.zoom,
         8 * this.camera.zoom,
       );
       ctx.fill();
       ctx.stroke();
+      const goodsStart = badgeLeft + 13 * this.camera.zoom;
+      missingGoods.forEach((goods, index) => {
+        drawGoodsSpriteCanvas(
+          ctx,
+          GOODS_ART[goods],
+          goodsStart + index * 16 * this.camera.zoom,
+          point.y - 1 * this.camera.zoom,
+          Math.max(11, 14 * this.camera.zoom),
+        );
+      });
       ctx.fillStyle = '#fff2cf';
       ctx.font = `800 ${Math.max(8, 9 * this.camera.zoom)}px "Yu Gothic", sans-serif`;
       ctx.textAlign = 'center';
+      const textOffset = missingGoods.length * 8 * this.camera.zoom;
       ctx.fillText(
-        `${icon} ${crisis.label}`,
-        point.x,
+        `${icon ? `${icon} ` : ''}${crisis.label}`,
+        point.x + textOffset,
         point.y + 3 * this.camera.zoom,
       );
       ctx.restore();

@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.32.0-seasonal-plots';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.33.0-save-delivery';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({

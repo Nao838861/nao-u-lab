@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.32.0-seasonal-plots';
+import { SPEEDS } from './config.js?v=v004.33.0-save-delivery';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

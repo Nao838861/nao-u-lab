@@ -5,20 +5,20 @@ export {
   companyStockReleasePrice,
   householdClass,
   productionCost,
-} from '../../engine/src/econ.js?v=v004.32.0-seasonal-plots';
-import { P } from '../../engine/src/econ.js?v=v004.32.0-seasonal-plots';
-import { createEngineApi } from '../../engine/src/api.js?v=v004.32.0-seasonal-plots';
+} from '../../engine/src/econ.js?v=v004.33.0-save-delivery';
+import { P } from '../../engine/src/econ.js?v=v004.33.0-save-delivery';
+import { createEngineApi } from '../../engine/src/api.js?v=v004.33.0-save-delivery';
 import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
   buildBaseCity,
   makeStableCityPlan,
-} from '../../engine/src/audit.js?v=v004.32.0-seasonal-plots';
-import { createPhysicalState, makeFlowIslandTerrain } from '../../engine/src/physical.js?v=v004.32.0-seasonal-plots';
-import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.32.0-seasonal-plots';
-import { createViewController } from './controller.js?v=v004.32.0-seasonal-plots';
-import { START_MODES } from './start_modes.js?v=v004.32.0-seasonal-plots';
+} from '../../engine/src/audit.js?v=v004.33.0-save-delivery';
+import { createPhysicalState, makeFlowIslandTerrain } from '../../engine/src/physical.js?v=v004.33.0-save-delivery';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.33.0-save-delivery';
+import { createViewController } from './controller.js?v=v004.33.0-save-delivery';
+import { START_MODES } from './start_modes.js?v=v004.33.0-save-delivery';
 
 export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS };
 export const BUILD_COST_DENARI = P.BUILD_COST * 10;
@@ -42,10 +42,14 @@ export function buildBlankCity(seed = 11) {
   return world;
 }
 
-export function createEngineController({ seed = 11, mode = 'test' } = {}) {
+export function createEngineController({
+  seed = 11, mode = 'test', stateSnapshot = null, inputJournal = [],
+} = {}) {
   const profile = START_MODES[mode];
   if (!profile) throw new RangeError(`unknown start mode: ${mode}`);
-  const world = profile.blank ? buildBlankCity(seed) : buildBaseCity(seed);
-  const api = createEngineApi(world);
+  const world = stateSnapshot
+    ? createWorld({ stateSnapshot })
+    : profile.blank ? buildBlankCity(seed) : buildBaseCity(seed);
+  const api = createEngineApi(world, { initialJournal: inputJournal });
   return createViewController(api);
 }

@@ -1167,9 +1167,9 @@ test("段17: buyTargets天井表・LADDER・固定買い順を正本どおり保
   assert.deepEqual(LADDER, FLOW_ISLAND_LADDER);
   assert.deepEqual(BUY_ORDER, [
     "ore", "bar", "log", "salt", "char", "coal", "tools", "cloth", "iron", "meal",
-    "stone", "oil", "fish", "veg", "wheat", "pres", "meat",
+    "stone", "oil", "fish", "veg", "wheat", "pres", "pick", "meat",
   ]);
-  assert.equal(BUY_ORDER.includes("pick"), false);
+  assert.equal(BUY_ORDER.includes("pick"), true);
 
   const economy = createEconomicState();
   const starving = createHousehold(economy, { job: "logger", x: 0, y: 0 });
@@ -1209,7 +1209,7 @@ test("段17: buyTargets天井表・LADDER・固定買い順を正本どおり保
   compareWithSource(farmer, 1);
 });
 
-test("段17: 固定買い順は生産入力logを食料wheatより先に約定する", () => {
+test("段17: 食料6日未満は生産入力logより食料wheatを先に約定する", () => {
   const economy = createEconomicState();
   const logSeller = createHousehold(economy, { job: "logger", x: 0, y: 0 });
   const wheatSeller = createHousehold(economy, { job: "wheat", x: 0, y: 0 });
@@ -1224,7 +1224,7 @@ test("段17: 固定買い順は生産入力logを食料wheatより先に約定�
   economy.stalls.wheat.push({ householdId: wheatSeller.id, qty: 30, price: 2, age: 0 });
 
   const result = buyAtMarket(economy, buyer, { day: 1 });
-  assert.equal(result.transactions[0].goods, "log");
+  assert.equal(result.transactions[0].goods, "wheat");
   assert.equal(result.transactions.some((transaction) => transaction.goods === "wheat"), true);
   assert.equal(assertMoneyConservation(economy), true);
 });
@@ -2184,7 +2184,7 @@ test("26B: 世帯ID由来の実出発を日の初めの7tickへ決定的に分�
   assert.deepEqual(observeDepartures(), first, "同一seedの実状態遷移も決定的");
 });
 
-test("段26: 市場往復tickが生産倍率を一意に決め30tick超は出発できない", () => {
+test("段26: 市場往復tickが生産倍率を一意に決め30tick超も複数日で往復する", () => {
   const terrain = [Array.from({ length: 20 }, () => ({ kind: "grass", variant: 0 }))];
   const physical = createPhysicalState({ width: 20, height: 1, terrain });
   const economy = createEconomicState();
@@ -2205,12 +2205,13 @@ test("段26: 市場往復tickが生産倍率を一意に決め30tick超は出発
   const farEconomy = createEconomicState();
   farEconomy.market = { x: 15, y: 0 };
   const far = createHousehold(farEconomy, { job: "logger", x: 0, y: 0 });
-  const pantryBefore = structuredClone(far.pantry);
   assert.equal(marketTripDuration(farEconomy, physical, far), 32);
-  assert.deepEqual(beginMarketTrip(farEconomy, physical, far), { started: false, tripTicks: 32 });
-  assert.equal(far.state, "home");
-  assert.equal(far.cargo, null);
-  assert.deepEqual(far.pantry, pantryBefore);
+  const farTrip = beginMarketTrip(farEconomy, physical, far);
+  assert.equal(farTrip.started, true);
+  assert.equal(farTrip.tripTicks, 32);
+  assert.equal(far.state, "toMarket");
+  assert.equal(far.cargo.direction, "outbound");
+  assert.ok(far.marketCarrier.porters.length > 0);
   assert.equal(productionMultiplierForTrip(30), 0);
   assert.equal(productionMultiplierForTrip(Infinity), 0);
   assert.equal("TRAVEL_RATE" in P || "ROAD_F" in P || "TRAVEL_MAX" in P, false);

@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.32.0-seasonal-plots">
+  <link rel="stylesheet" href="./style.css?v=v004.33.0-save-delivery">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -32,6 +32,7 @@
       <button id="open-events" type="button">出来事</button>
       <button id="open-development" type="button">発展図</button>
       <button id="open-tutorial-letters" type="button" hidden>書状 <b id="tutorial-unread" class="unread-badge" hidden>0</b></button>
+      <button id="open-save" class="top-menu-subtle" type="button">保存</button>
       <button id="choose-start" class="top-menu-subtle" type="button" title="開始方法を選び直す">最初から</button>
     </nav>
     <div id="speed-controls" class="speed" aria-label="時間速度" data-testid="speed-controls">
@@ -186,6 +187,21 @@
     <div id="event-log" class="event-log"></div>
   </aside>
 
+  <aside id="save-sheet" class="panel sheet save-sheet" hidden data-testid="save-sheet">
+    <header>
+      <div><small>島の記録を残す</small><h2>セーブ・ロード</h2></div>
+      <button type="button" data-close-sheet="save-sheet" aria-label="保存を閉じる">×</button>
+    </header>
+    <p id="save-summary" class="sheet-note">現在の島を保存できます。</p>
+    <div class="save-actions">
+      <button id="save-local" type="button"><b>この端末に保存</b><small>次回「つづきから」で再開</small></button>
+      <button id="save-download" type="button"><b>ファイルに書き出す</b><small>不具合調査用に共有できます</small></button>
+      <button id="save-import" type="button"><b>ファイルから読み込む</b><small>別の端末の島も再開</small></button>
+    </div>
+    <p id="save-feedback" class="save-feedback" role="status" aria-live="polite"></p>
+  </aside>
+  <input id="save-file-input" type="file" accept="application/json,.json" hidden>
+
   <aside id="development-sheet" class="panel sheet development-sheet" hidden data-testid="development-sheet">
     <header>
       <div><small>島でつながっていく仕事</small><h2>発展図</h2></div>
@@ -249,6 +265,10 @@
           <button id="retry-boot" type="button" hidden onclick="location.reload()">もう一度読み込む</button>
         </div>
         <div class="start-options">
+          <button id="start-resume" class="start-resume" type="button" data-save-action="resume" hidden>
+            <span><b>つづきから</b><em id="start-resume-day">保存あり</em></span>
+            <small id="start-resume-summary">この端末に保存した島を再開します。</small>
+          </button>
           <button class="start-primary" type="button" data-start-mode="tutorial">
             <span><b>エレナと開拓する</b><em>初めての方へ</em></span>
             <small>港だけの島から、道・食料・市場・本国注文まで順に進めます。</small>
@@ -260,6 +280,10 @@
           <button type="button" data-start-mode="test">
             <span><b>見本の町を眺める</b><em>すぐ観察</em></span>
             <small>人、荷車、産業がすでに動く町から、島の仕組みを眺めます。</small>
+          </button>
+          <button id="start-import" type="button" data-save-action="import">
+            <span><b>保存ファイルを読み込む</b><em>JSON</em></span>
+            <small>共有された島の状態を、そのまま確認できます。</small>
           </button>
         </div>
       </div>
@@ -296,7 +320,7 @@
       });
     })();
   </script>
-  <script id="game-module" type="module" src="./src/main.js?v=v004.32.0-seasonal-plots"
+  <script id="game-module" type="module" src="./src/main.js?v=v004.33.0-save-delivery"
     onerror="window.__SHIOJI_BOOT__?.failed()"></script>
 </body>
 </html>
