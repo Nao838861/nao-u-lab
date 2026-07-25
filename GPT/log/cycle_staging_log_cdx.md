@@ -83,7 +83,91 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示で読み、validate_memory_index.py で per-file atom index との対応を確認した。broken entry は 0 件。代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」も取得でき、source file は正常。"
+  - "memory/atoms.jsonl / per-file .md / index.jsonl は各 2745 件で一致し、parse error・missing file・content conflict は 0 件。raw normalized content duplicate は 40 group / 80 rows だが、既存 canonical overlay 45 group が fold しており、duplicate cluster check も正常。"
+  - "memory/raw/ の 30 日超未更新ファイルを監査し、95 件 / 62,979,319 bytes を archive 候補として確認した。slack_archive と論文原文を含む source of truth なので、この phase では移動・削除しなかった。"
+  - "candidate lifecycle 1096 件を dry-run 監査し、status/current-state conflict による変更対象は 0 件。open duplicate group / stale triage / group action の再生成可能 sidecar を 2026-07-25 基準で再生成した。"
+  - "Slack directives 23 件、broadcasts 21 件を確認し、pending は双方 0 件。handled 更新対象はなかった。"
+issues:
+  - id: ISS-4A-20260725-01
+    description: "active atom sr-1776127289-4d9239b255 の title / trigger / excerpt に「AIエ��ジェント」という replacement-character 由来の破損があり、raw Slack archive、atoms.jsonl、per-file atom、index.jsonl に同じ破損が伝播している。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/index.jsonl id=sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8 明示読みでも raw と全 mirror に U+FFFD 相当の破損が存在するため、表示経路ではなく source data の局所破損。別 atom gr-1777083728-44d444ab7a は UTF-8 source が正常で、health checker の false positive。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "「AIエージェント」の exact keyword 検索と title 表示の品質を1 atomだけ損なう。ただし recall 全体、mirror consistency、ゲーム task lens を妨げる規模ではない。"
+  - id: ISS-4A-20260725-02
+    description: "candidate 単位の stale_review_batch は staging だけを handoff 正本にしているが、codex_phases_cycle.py が各 cycle 冒頭で staging を初期化するため、Phase 4a から次 cycle の Phase 2 へ batch が届かない。前 cycle の5件は今回 Phase 2 で処理されず stale_reviewed が空のままだった。"
+    severity: high
+    evidence: "git show 0a5a58004:GPT/log/cycle_staging_log_cdx.md#Phase-4a の stale_review_batch 5件; tools/codex_phases_cycle.py:init_staging; log/cycle_staging_log_cdx.md#Phase-2 の stale_reviewed: []"
+    source_file_status: "candidate frontmatter、stale triage sidecar、前 cycle staging は UTF-8 で正常。破損ではなく跨 cycle handoff の寿命不一致。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "overdue open 191件のうち選定した少数が再評価 consumer へ到達せず、ゲーム制作へ転用価値のある候補が postponed のまま蓄積する。group handoff には永続 inbox があるが candidate batch には同等の経路がない。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260725-02
+candidate_lifecycle:
+  total_files: 1096
+  counts:
+    posted: 479
+    ready_to_post: 10
+    postponed: 332
+    failed: 256
+    needs_review: 18
+    skipped_unreviewed: 1
+  missing_stale_after: 4
+  overdue_open_total: 191
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 191
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 56
+  mixed_group_count: 49
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+group_action_handoff: []
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "41日 overdue。Zork を使った探索・計画限界は headless playtest に転用価値が高いが、評価条件・失敗分類・モデル比較の本文確認が必要。duplicate group なし。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "40日 overdue。検証可能な遷移モデルを持つ短い planning benchmark はゲーム制作へ移しやすいが、実験設計・比較対象・結果の補完が必要。duplicate group なし。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260516_inmind_social_deduction_reasoning_styles.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "40日 overdue。social deduction の個別推論スタイル追跡は有用だが、既存 Slack atom との重複関係と本文レベルの評価詳細を確認する必要がある。duplicate group なし。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260516_pangea_procedural_artificial_narrative.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "40日 overdue。memory / validation / REST / Unity demo の接続は具体的だが、empirical study・ablation・失敗例の本文確認が必要。duplicate group なし。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260517_access_profiles_game_accessibility.md"
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "39日 overdue。accessibility を player / developer / engine / launcher / retailer を結ぶ基盤として扱う転用価値が高く、Phase 2 で一次資料と評価内容を再確認する価値がある。duplicate group なし。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
