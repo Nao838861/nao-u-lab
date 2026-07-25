@@ -2394,6 +2394,15 @@ test('開始選択: URLのmodeは3種だけを受理し他のqueryを保つ', ()
   const selected = new URL(urlForStartMode('https://example.test/game/?seed=11', 'sandbox'));
   assert.equal(selected.searchParams.get('mode'), 'sandbox');
   assert.equal(selected.searchParams.get('seed'), '11');
+  for (const mode of Object.keys(START_MODES)) {
+    const restarted = new URL(urlForStartMode(
+      'https://example.test/game/?mode=test&resume=1&seed=11',
+      mode,
+    ));
+    assert.equal(restarted.searchParams.get('mode'), mode);
+    assert.equal(restarted.searchParams.get('resume'), null, '最初から選んだ時は保存再開指定を破棄する');
+    assert.equal(restarted.searchParams.get('seed'), '11');
+  }
 });
 
 test('段2: full snapshotを地形・建物・キャリア・棚の不変描画モデルへ変換する', () => {

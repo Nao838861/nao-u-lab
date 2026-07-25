@@ -1,18 +1,18 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.33.0-save-delivery';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.33.1-start-over';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.33.0-save-delivery';
+} from './food_readability.js?v=v004.33.1-start-over';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.33.0-save-delivery';
-import { analyzeRoadConnections } from './placement.js?v=v004.33.0-save-delivery';
+} from './engine_bridge.js?v=v004.33.1-start-over';
+import { analyzeRoadConnections } from './placement.js?v=v004.33.1-start-over';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.33.0-save-delivery';
+} from './render_scene.js?v=v004.33.1-start-over';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.33.0-save-delivery';
+} from './visuals.js?v=v004.33.1-start-over';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',

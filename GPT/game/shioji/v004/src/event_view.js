@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.33.0-save-delivery';
+import { JOB_LABELS } from './config.js?v=v004.33.1-start-over';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

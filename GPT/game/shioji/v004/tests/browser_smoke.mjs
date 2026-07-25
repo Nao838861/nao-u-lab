@@ -2061,6 +2061,43 @@ async function checkSaveDeliveryUi(width = 1440, height = 900, mobile = false) {
   assert.equal(restored.mode, 'test', JSON.stringify(restored));
   assert.equal(restored.hidden, true, JSON.stringify(restored));
   assert.match(restored.status, /保存から再開/);
+
+  await page.evaluate("document.querySelector('#choose-start').click()");
+  const tutorialChoice = await page.evaluate(`(() => {
+    const button = document.querySelector('[data-start-mode="tutorial"]');
+    return {
+      count: document.querySelectorAll('[data-start-mode="tutorial"]').length,
+      enabled: !button.disabled,
+      screenHidden: document.querySelector('#start-screen').hidden,
+    };
+  })()`);
+  assert.deepEqual(tutorialChoice, { count: 1, enabled: true, screenHidden: false });
+  await page.evaluate("document.querySelector('[data-start-mode=\"tutorial\"]').click()");
+  for (let attempt = 0; attempt < 80; attempt += 1) {
+    await wait(100);
+    const ready = await page.evaluate(`Boolean(window.__SHIOJI_V004__)
+      && window.__SHIOJI_V004__.startMode === 'tutorial'
+      && new URLSearchParams(location.search).get('mode') === 'tutorial'
+      && new URLSearchParams(location.search).get('resume') === null`);
+    if (ready) break;
+  }
+  const startedOver = await page.evaluate(`({
+    mode: window.__SHIOJI_V004__.startMode,
+    resume: new URLSearchParams(location.search).get('resume'),
+    screenHidden: document.querySelector('#start-screen').hidden,
+    buildings: window.__SHIOJI_V004__.model.buildings.map(building => building.type),
+    households: window.__SHIOJI_V004__.model.households.length,
+    roads: window.__SHIOJI_V004__.model.roadKeys.length,
+  })`);
+  assert.deepEqual(startedOver, {
+    mode: 'tutorial',
+    resume: null,
+    screenHidden: true,
+    buildings: ['port'],
+    households: 0,
+    roads: 0,
+  }, JSON.stringify(startedOver));
+  await page.screenshot(`/tmp/shioji_v004_start_over_${mobile ? 'mobile' : 'desktop'}.png`);
   assert.deepEqual(page.errors, []);
   await page.close();
 }

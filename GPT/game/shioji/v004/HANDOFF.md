@@ -2,7 +2,7 @@
 
 ## 現在地
 
-`STEPBOOK.md`の全18段、`TUTORIAL_STEPBOOK.md`の24/24、`UI_POLISH_STEPBOOK.md`の12/12を完了した。2026-07-23のClaude申し送りL〜ATと、`WORK_ORDER_20260724B.md`／`WORK_ORDER_20260724C.md`／`WORK_ORDER_20260725B.md`〜`WORK_ORDER_20260725E.md`、`WORK_ORDER_20260726A.md`〜`WORK_ORDER_20260726D.md`を優先順に実行した。現在版は`v004.33.0-save-delivery`。農地・牧草地は秋の枯れ色と冬の雪を区画の各タイルで示し、市場の荷姿は実在庫の増減と一致する。出来事とエレナのプレイヤー向け案内に開発用座標を出さず、建物名・島の方向へ置き換えた。エレナ発話の句読点改行、世帯ごとの実出発位相、決定的な歩速差・道路内レーン、固定6人＋順番待ちの会社徒歩輸送も維持している。
+`STEPBOOK.md`の全18段、`TUTORIAL_STEPBOOK.md`の24/24、`UI_POLISH_STEPBOOK.md`の12/12を完了した。2026-07-23のClaude申し送りL〜ATと、`WORK_ORDER_20260724B.md`／`WORK_ORDER_20260724C.md`／`WORK_ORDER_20260725B.md`〜`WORK_ORDER_20260725E.md`、`WORK_ORDER_20260726A.md`〜`WORK_ORDER_20260726D.md`を優先順に実行した。現在版は`v004.33.1-start-over`。農地・牧草地は秋の枯れ色と冬の雪を区画の各タイルで示し、市場の荷姿は実在庫の増減と一致する。出来事とエレナのプレイヤー向け案内に開発用座標を出さず、建物名・島の方向へ置き換えた。エレナ発話の句読点改行、世帯ごとの実出発位相、決定的な歩速差・道路内レーン、固定6人＋順番待ちの会社徒歩輸送も維持している。
 
 **Nao_u 申し送り**: [PLAYTEST_FEEDBACK_20260723.md](PLAYTEST_FEEDBACK_20260723.md)。A〜AD、AF／AF-2、AH-3〜5、AL、AMは対応済み。画面の正典は地中海・大航海時代風、通貨はデナリとし、取引、統計、倉庫、市場へ出す、木製品、平易な職名へ統一した。建設は直接パレット一本、出来事は判断に使う直近24件だけで、日常売買・運搬・船便は表示しない。engine側も観測イベント128件、台帳・相場・運搬・港便を有限化し、1300日監査を完走した。詳細は [CANON_EVENT_PERFORMANCE_AUDIT_20260724.md](CANON_EVENT_PERFORMANCE_AUDIT_20260724.md)。AEは「ゲームの流れに必要な固定文だけ」を現在の正とし、猫、好感度、表情、分岐など凝った演出は将来枠のまま保持する。エレナはUI語を話さず、具体操作だけを計器が補う。専用に書かれた発話がない情報は、title／detail／イベント原文を流用せず沈黙させる。L〜Zの設計正本と受け入れ証拠は [PERFORMANCE_RENDERING_STEPBOOK.md](PERFORMANCE_RENDERING_STEPBOOK.md)、[EXPERIENCE_TUTORIAL_STEPBOOK.md](EXPERIENCE_TUTORIAL_STEPBOOK.md)、[completion_audit.md](completion_audit.md) にある。
 
@@ -59,6 +59,7 @@
 
 ## 現在の検証
 
+- `v004.33.1-start-over`は、保存した見本の町を「つづきから」で開いた後に「最初から」→「エレナと開拓する」を選ぶ実Chrome経路で、URLの`resume=1`が消え、港1棟・人口0・道路0の新しい教程島へ移ることをPC／スマホで確認した。三つの開始modeすべてについて、保存再開指定を残さないURL契約もfocused testで確認した。
 - `v004.33.0-save-delivery`は食料先行購入、塩の非食料表示、家ごとの未到達理由、遠距離の複数日便、段階低下の不足品アイコン、Lv連続ゲージ、完全snapshot＋乱数＋journal＋教程＋統計履歴のJSON保存を確認した。専用focused、engine関連5件、v004関連5件に成功。実Chrome PC 1440×900／スマホ390×844で120日目の端末保存→続きから復元、画面内収まり、runtime error 0を確認した。詳細は[PLAYTEST_RESPONSE_20260726E.md](PLAYTEST_RESPONSE_20260726E.md)。
 - `v004.31.0-elena-punctuation`は代表文の本文不変・句読点位置・最大3行・参照ボタン時2行・句読点なしの語を人工分割しない契約をfocusedで確認した。実Chrome PC 1440×900／スマホ390×844で、3行すべてが読点・句点直後に切れ、横・縦のoverflow、runtime errorがない。詳細は[PLAYTEST_RESPONSE_20260726C.md](PLAYTEST_RESPONSE_20260726C.md)。
 - `v004.30.0-departure-phases`は世帯ID 0〜6が実際に1〜7tickで別々のmarketCarrierを生成すること、同一seedで同じ状態遷移になることをfocusedで確認した。8年×3seedは人口80〜134、飢餓最大7.091日/人、9職存続、全価格帯、物量保存、会社存続がすべて緑。詳細は[PLAYTEST_RESPONSE_20260726B.md](PLAYTEST_RESPONSE_20260726B.md)。
