@@ -1,4 +1,4 @@
-import { BUILDING_SIZES } from './config.js?v=v004.28.0-goods-sprites';
+import { BUILDING_SIZES } from './config.js?v=v004.29.0-walking-crew';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

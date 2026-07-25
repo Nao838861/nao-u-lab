@@ -1,16 +1,16 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.28.0-goods-sprites';
-import { perishableFreshness } from './food_readability.js?v=v004.28.0-goods-sprites';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.29.0-walking-crew';
+import { perishableFreshness } from './food_readability.js?v=v004.29.0-walking-crew';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.28.0-goods-sprites';
-import { analyzeRoadConnections } from './placement.js?v=v004.28.0-goods-sprites';
+} from './engine_bridge.js?v=v004.29.0-walking-crew';
+import { analyzeRoadConnections } from './placement.js?v=v004.29.0-walking-crew';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.28.0-goods-sprites';
+} from './render_scene.js?v=v004.29.0-walking-crew';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.28.0-goods-sprites';
+} from './visuals.js?v=v004.29.0-walking-crew';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
@@ -23,6 +23,26 @@ const CONVERSION_JOBS = Object.freeze({
 });
 
 const MODEL_TOPOLOGY_REVISIONS = new WeakMap();
+export const COMPANY_VISIBLE_PORTER_LIMIT = 6;
+
+function stableVisualHash(value) {
+  let hash = 2166136261;
+  for (const character of String(value)) {
+    hash ^= character.codePointAt(0);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+export function walkingVisualProfile(id, seed = 0) {
+  const hash = stableVisualHash(`${seed}:${id}`);
+  const lane = [-0.18, -0.09, 0.09, 0.18][hash & 3];
+  return {
+    pace: 0.9 + (((hash >>> 8) & 0xff) / 255) * 0.2,
+    lane,
+    stepPhase: ((hash >>> 16) & 0xffff) / 0xffff * Math.PI * 2,
+  };
+}
 
 export function terrainRevisionForModel(model) {
   return model ? MODEL_TOPOLOGY_REVISIONS.get(model)?.terrainRevision ?? null : null;
@@ -241,6 +261,94 @@ function positionAlongPath(path, progress) {
   return { ...path.at(-1) };
 }
 
+function progressAlongPath(path, position) {
+  if (!path?.length || path.length === 1 || !position) return 0;
+  const segments = path.slice(1).map((point, index) => {
+    const from = path[index];
+    const dx = point.x - from.x;
+    const dy = point.y - from.y;
+    return { from, to: point, dx, dy, length: Math.hypot(dx, dy) };
+  });
+  const total = segments.reduce((sum, segment) => sum + segment.length, 0);
+  if (total <= 1e-9) return 0;
+  let traversed = 0;
+  let best = { distance: Infinity, progress: 0 };
+  for (const segment of segments) {
+    const lengthSquared = segment.length * segment.length;
+    const projection = lengthSquared <= 1e-9 ? 0 : Math.max(0, Math.min(
+      1,
+      ((position.x - segment.from.x) * segment.dx
+        + (position.y - segment.from.y) * segment.dy) / lengthSquared,
+    ));
+    const x = segment.from.x + segment.dx * projection;
+    const y = segment.from.y + segment.dy * projection;
+    const distance = (position.x - x) ** 2 + (position.y - y) ** 2;
+    if (distance < best.distance) {
+      best = {
+        distance,
+        progress: (traversed + segment.length * projection) / total,
+      };
+    }
+    traversed += segment.length;
+  }
+  return best.progress;
+}
+
+function pathDirection(path, progress) {
+  if (!path?.length || path.length === 1) return { x: 1, y: 0 };
+  const segments = path.slice(1).map((point, index) => ({
+    from: path[index],
+    to: point,
+    length: Math.hypot(point.x - path[index].x, point.y - path[index].y),
+  }));
+  const total = segments.reduce((sum, segment) => sum + segment.length, 0);
+  let remaining = Math.max(0, Math.min(1, progress)) * total;
+  for (const segment of segments) {
+    if (remaining > segment.length && segment !== segments.at(-1)) {
+      remaining -= segment.length;
+      continue;
+    }
+    const length = Math.max(1e-9, segment.length);
+    return {
+      x: (segment.to.x - segment.from.x) / length,
+      y: (segment.to.y - segment.from.y) / length,
+    };
+  }
+  return { x: 1, y: 0 };
+}
+
+export function walkingVisualPosition({
+  id, seed = 0, path, position, progress = null,
+}) {
+  const profile = walkingVisualProfile(id, seed);
+  if (!path?.length || path.length < 2) {
+    return {
+      x: position?.x ?? path?.[0]?.x ?? 0,
+      y: position?.y ?? path?.[0]?.y ?? 0,
+      engineProgress: 0,
+      visualProgress: 0,
+      ...profile,
+    };
+  }
+  const engineProgress = Math.max(0, Math.min(
+    1,
+    Number.isFinite(progress) ? progress : progressAlongPath(path, position),
+  ));
+  const visualProgress = engineProgress <= 0 || engineProgress >= 1
+    ? engineProgress
+    : engineProgress ** (1 / profile.pace);
+  const point = positionAlongPath(path, visualProgress);
+  const direction = pathDirection(path, visualProgress);
+  const lane = profile.lane * Math.sin(Math.PI * engineProgress);
+  return {
+    x: point.x - direction.y * lane,
+    y: point.y + direction.x * lane,
+    engineProgress,
+    visualProgress,
+    ...profile,
+  };
+}
+
 function carrierRows(snapshot, buildings) {
   const buildingById = new Map(buildings.map(building => [building.id, building]));
   const marketBuilding = buildings.find(building => building.type === 'market');
@@ -251,42 +359,107 @@ function carrierRows(snapshot, buildings) {
       y: marketBuilding.entrance?.y ?? marketBuilding.y + marketBuilding.height / 2,
     }
     : { label: '市場', x: snapshot.economy.market.x, y: snapshot.economy.market.y };
+  let companyCrewUsed = 0;
   const hauls = snapshot.physical.haulJobs
     .filter(job => job.status !== 'completed' && job.carrier?.position)
     .flatMap(job => {
       const from = buildingEndpoint(buildingById, job.from);
       const to = buildingEndpoint(buildingById, job.to);
-      if (job.carrier.porters?.length) {
-        return job.carrier.porters.map((porter, index) => {
+      const companyWalk = job.carrier.companyTransport && job.carrier.mode === 'walk';
+      const sourcePorters = job.carrier.porters?.length
+        ? job.carrier.porters
+        : companyWalk
+          ? [{
+            id: `${job.id}:person1`,
+            mode: 'walk',
+            people: 1,
+            departureDelay: 0,
+            cargo: { goods: job.goods, qty: job.qty },
+          }]
+          : null;
+      if (sourcePorters?.length) {
+        const visibleCount = companyWalk
+          ? Math.min(sourcePorters.length, COMPANY_VISIBLE_PORTER_LIMIT - companyCrewUsed)
+          : sourcePorters.length;
+        const visiblePorters = sourcePorters.slice(0, visibleCount);
+        const firstCrewSlot = companyCrewUsed;
+        if (companyWalk) companyCrewUsed += visibleCount;
+        const rows = visiblePorters.map((porter, index) => {
           const progress = Math.max(0, Math.min(
             1,
             ((job.carrier.batchElapsed ?? 0) - porter.departureDelay)
               / Math.max(1e-9, job.carrier.batchTravelCost ?? job.carrier.routeCost ?? 1),
           ));
-          const position = positionAlongPath(job.carrier.path, progress);
+          const crewSlot = firstCrewSlot + index + 1;
+          const id = companyWalk ? `company-porter:${crewSlot}` : `haul:${job.id}:${porter.id ?? index}`;
+          const position = walkingVisualPosition({
+            id,
+            seed: snapshot.seed,
+            path: porter.path ?? job.carrier.path ?? [],
+            position: porter.position ?? job.carrier.position,
+            progress: job.carrier.porters?.length ? progress : null,
+          });
           return {
-          id: `haul:${job.id}:${porter.id ?? index}`,
-          haulJobId: job.id,
-          porterId: porter.id ?? `${job.id}:${index}`,
-          kind: 'walker',
-          mode: 'walk',
-          cartKind: null,
-          assetId: null,
-          x: position.x,
-          y: position.y,
-          goods: job.goods,
-          amount: porter.cargo?.qty ?? 0,
-          cargoRows: [{ goods: job.goods, amount: porter.cargo?.qty ?? 0 }],
-          people: 1,
-          members: 1,
-          peopleRows: [{ id: porter.id ?? `${job.id}:${index}`, name: '運び手' }],
-          departureDelay: porter.departureDelay ?? 0,
-          path: (porter.path ?? job.carrier.path ?? []).map(point => ({ ...point })),
-          from,
-          to,
+            id,
+            haulJobId: job.id,
+            porterId: porter.id ?? `${job.id}:${index}`,
+            companyCrewSlot: companyWalk ? crewSlot : null,
+            kind: 'walker',
+            mode: 'walk',
+            cartKind: null,
+            assetId: null,
+            x: position.x,
+            y: position.y,
+            visualPace: position.pace,
+            laneOffset: position.lane,
+            visualProgress: position.visualProgress,
+            goods: job.goods,
+            amount: porter.cargo?.qty ?? 0,
+            cargoRows: [{ goods: job.goods, amount: porter.cargo?.qty ?? 0 }],
+            people: 1,
+            members: 1,
+            peopleRows: [{
+              id: companyWalk ? `company-person${crewSlot}` : porter.id ?? `${job.id}:${index}`,
+              name: companyWalk ? `会社人足${crewSlot}` : '運び手',
+            }],
+            departureDelay: porter.departureDelay ?? 0,
+            path: (porter.path ?? job.carrier.path ?? []).map(point => ({ ...point })),
+            from,
+            to,
           };
         });
+        const queuedPorters = sourcePorters.slice(visibleCount);
+        if (queuedPorters.length) {
+          rows.push({
+            id: `company-queue:${job.id}`,
+            haulJobId: job.id,
+            kind: 'porter_queue',
+            mode: 'wait',
+            x: from?.x ?? job.carrier.path?.[0]?.x ?? job.carrier.position.x,
+            y: from?.y ?? job.carrier.path?.[0]?.y ?? job.carrier.position.y,
+            goods: job.goods,
+            amount: queuedPorters.reduce((total, porter) => total + (porter.cargo?.qty ?? 0), 0),
+            cargoRows: [],
+            people: 0,
+            members: 0,
+            peopleRows: [],
+            queuedPeople: queuedPorters.length,
+            selectable: false,
+            path: [],
+            from,
+            to,
+          });
+        }
+        return rows;
       }
+      const position = job.carrier.mode === 'walk'
+        ? walkingVisualPosition({
+          id: `haul:${job.id}`,
+          seed: snapshot.seed,
+          path: job.carrier.path ?? [],
+          position: job.carrier.position,
+        })
+        : { ...job.carrier.position, pace: 1, lane: 0, visualProgress: 0 };
       return [{
         id: `haul:${job.id}`,
         haulJobId: job.id,
@@ -294,8 +467,11 @@ function carrierRows(snapshot, buildings) {
         mode: job.carrier.mode,
         cartKind: job.carrier.cartKind ?? null,
         assetId: job.carrier.assetId ?? null,
-        x: job.carrier.position.x,
-        y: job.carrier.position.y,
+        x: position.x,
+        y: position.y,
+        visualPace: position.pace,
+        laneOffset: position.lane,
+        visualProgress: position.visualProgress,
         goods: job.goods,
         amount: job.qty,
         cargoRows: [{ goods: job.goods, amount: job.qty }],
@@ -333,10 +509,17 @@ function carrierRows(snapshot, buildings) {
         const member = (household.members ?? []).find(row => row.id === porter.memberId)
           ?? household.members?.[index]
           ?? null;
+        const personId = porter.memberId ?? `${household.id}:${index}`;
+        const visualPosition = walkingVisualPosition({
+          id: `person:${personId}`,
+          seed: snapshot.seed,
+          path: porter.path ?? [],
+          position: porter.position ?? { x: household.px ?? household.x, y: household.py ?? household.y },
+        });
         return {
-          id: `person:${porter.memberId ?? `${household.id}:${index}`}`,
+          id: `person:${personId}`,
           householdId: household.id,
-          personId: porter.memberId ?? `${household.id}:${index}`,
+          personId,
           personName: porter.memberName ?? member?.name ?? `住民${index + 1}`,
           kind: porter.mode === 'cart' ? 'cart'
             : porter.visualMode === 'backpack' ? 'backpack' : 'walker',
@@ -344,8 +527,11 @@ function carrierRows(snapshot, buildings) {
           transportTier: porter.tier ?? porter.visualMode ?? 'hand',
           cartKind: porter.cartKind ?? null,
           assetId: porter.assetId ?? null,
-          x: porter.position?.x ?? household.px ?? household.x,
-          y: porter.position?.y ?? household.py ?? household.y,
+          x: visualPosition.x,
+          y: visualPosition.y,
+          visualPace: visualPosition.pace,
+          laneOffset: visualPosition.lane,
+          visualProgress: visualPosition.visualProgress,
           state: household.state,
           job: household.job,
           members: 1,
@@ -407,6 +593,12 @@ function carrierRows(snapshot, buildings) {
         ?? household.members?.[0]
         ?? null;
       const travellingId = porter.memberId ?? worker?.id ?? `${household.id}:worker`;
+      const visualPosition = walkingVisualPosition({
+        id: `person:${travellingId}`,
+        seed: snapshot.seed,
+        path: porter.path ?? [],
+        position: porter.position ?? { x: household.px ?? household.x, y: household.py ?? household.y },
+      });
       const workerRow = {
         id: `person:${travellingId}`,
         householdId: household.id,
@@ -417,8 +609,11 @@ function carrierRows(snapshot, buildings) {
         transportTier: 'worker',
         cartKind: null,
         assetId: null,
-        x: porter.position?.x ?? household.px ?? household.x,
-        y: porter.position?.y ?? household.py ?? household.y,
+        x: visualPosition.x,
+        y: visualPosition.y,
+        visualPace: visualPosition.pace,
+        laneOffset: visualPosition.lane,
+        visualProgress: visualPosition.visualProgress,
         state: household.state,
         job: household.job,
         members: 1,

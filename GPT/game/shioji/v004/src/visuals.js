@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.28.0-goods-sprites';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.29.0-walking-crew';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({

@@ -65,7 +65,10 @@ import {
   tutorialSpeedAfterObjectiveChange,
 } from '../src/ui_guidance.js';
 import { islandCalendar, islandHealthSummary, recentCompanySummary } from '../src/ui_summary.js';
-import { snapshotToViewModel, terrainTopologyForModel } from '../src/view_model.js';
+import {
+  COMPANY_VISIBLE_PORTER_LIMIT, snapshotToViewModel, terrainTopologyForModel,
+  walkingVisualPosition, walkingVisualProfile,
+} from '../src/view_model.js';
 import {
   EXACT_PILE_LIMIT, MAX_DISPLAY_CULTURE_LEVEL, MAX_PILE_SPRITES, MAX_YARD_GOODS,
   PILE_STAGE_LIMITS, buildingAppearance, buildingStructureLayout, displayCultureLevel,
@@ -2180,7 +2183,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.28.0-goods-sprites');
+  assert.equal(VERSION, 'v004.29.0-walking-crew');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2577,6 +2580,65 @@ test('25C可視物流: 運び手ごとの経路・時差・実積み荷を個人
       .reduce((total, row) => total + row.productionMultiplier, 0)
       - household.productionMultiplier
   ) < 1e-9);
+});
+
+test('26A可視物流: 歩行の個体差と左右レーンを決定的に描き会社人足は固定6人に絞る', () => {
+  const snapshot = structuredClone(createEngineApi(buildBaseCity(11)).snapshot({ scope: 'full' }));
+  const [fromBuilding, toBuilding] = snapshot.physical.buildings.filter(row => row.entrance).slice(0, 2);
+  const path = [{ x: 2, y: 2 }, { x: 12, y: 2 }];
+  snapshot.physical.haulJobs = [{
+    id: 'company-large-haul',
+    status: 'in_transit',
+    from: { buildingId: fromBuilding.id, section: 'outbound' },
+    to: { buildingId: toBuilding.id, section: 'inbound' },
+    goods: 'wheat',
+    qty: 40,
+    carrier: {
+      mode: 'walk',
+      companyTransport: true,
+      people: 40,
+      position: { x: 7, y: 2 },
+      path,
+      routeCost: 10,
+      batchTravelCost: 10,
+      batchElapsed: 5,
+      porters: Array.from({ length: 40 }, (_, index) => ({
+        id: `ghost${index + 1}`,
+        people: 1,
+        mode: 'walk',
+        departureDelay: index * 0.12,
+        cargo: { goods: 'wheat', qty: 1 },
+      })),
+    },
+  }];
+  const before = structuredClone(snapshot);
+  const model = snapshotToViewModel(snapshot);
+  const crew = model.carriers.filter(row => row.companyCrewSlot !== null
+    && row.companyCrewSlot !== undefined);
+  const queue = model.carriers.find(row => row.kind === 'porter_queue');
+  assert.equal(crew.length, COMPANY_VISIBLE_PORTER_LIMIT);
+  assert.deepEqual(
+    crew.map(row => row.id),
+    Array.from({ length: COMPANY_VISIBLE_PORTER_LIMIT }, (_, index) => `company-porter:${index + 1}`),
+  );
+  assert.equal(queue.queuedPeople, 34);
+  assert.equal(queue.amount, 34);
+  assert.equal(queue.selectable, false);
+  assert.ok(new Set(crew.map(row => row.y.toFixed(3))).size >= 3,
+    '同じ横道でも左右レーンへ散る');
+  assert.ok(new Set(crew.map(row => row.visualPace.toFixed(3))).size >= 4,
+    '歩速の見え方が個人ごとに異なる');
+  assert.ok(crew.every(row => row.visualPace >= 0.9 && row.visualPace <= 1.1));
+  assert.deepEqual(snapshot, before, '表示のばらしはengine snapshotを変えない');
+
+  const same = walkingVisualPosition({
+    id: 'person:17', seed: 11, path, position: { x: 7, y: 2 },
+  });
+  assert.deepEqual(
+    walkingVisualPosition({ id: 'person:17', seed: 11, path, position: { x: 7, y: 2 } }),
+    same,
+  );
+  assert.notDeepEqual(walkingVisualProfile('person:17', 11), walkingVisualProfile('person:18', 11));
 });
 
 test('UI向上段2: 世帯の財布・家族・充足・空腹と加工棚を不変モデルで公開する', () => {

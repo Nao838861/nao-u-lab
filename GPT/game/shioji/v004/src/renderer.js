@@ -1,12 +1,12 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.28.0-goods-sprites';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.28.0-goods-sprites';
-import { islandCalendar } from './ui_summary.js?v=v004.28.0-goods-sprites';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.28.0-goods-sprites';
+} from './config.js?v=v004.29.0-walking-crew';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.29.0-walking-crew';
+import { islandCalendar } from './ui_summary.js?v=v004.29.0-walking-crew';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.29.0-walking-crew';
 import {
   buildingStructureLayout, pileVisual,
-} from './visuals.js?v=v004.28.0-goods-sprites';
+} from './visuals.js?v=v004.29.0-walking-crew';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
@@ -1388,6 +1388,30 @@ export class Renderer {
     const scale = this.camera.zoom;
     const ctx = this.ctx;
     ctx.save();
+    if (carrier.kind === 'porter_queue') {
+      const width = 42 * scale;
+      const height = 18 * scale;
+      ctx.fillStyle = 'rgba(49, 43, 32, .9)';
+      ctx.strokeStyle = '#d4b56e';
+      ctx.lineWidth = Math.max(1, 1.2 * scale);
+      ctx.fillRect(point.x - width / 2, point.y - 22 * scale, width, height);
+      ctx.strokeRect(point.x - width / 2, point.y - 22 * scale, width, height);
+      if (carrier.goods) {
+        this.drawGoodsSprite(
+          GOODS_ART[carrier.goods] ?? GOODS_ART.tools,
+          point.x - 14 * scale,
+          point.y - 13 * scale,
+          scale * 0.58,
+        );
+      }
+      ctx.fillStyle = '#f3dfaa';
+      ctx.font = `800 ${Math.max(7, 8 * scale)}px "Yu Gothic", sans-serif`;
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(`待ち ${carrier.queuedPeople}人`, point.x - 7 * scale, point.y - 13 * scale);
+      ctx.restore();
+      return;
+    }
     if (carrier.id === this.selectedCarrierId) {
       ctx.globalAlpha = 0.35 + Math.sin(this.pulse * 5) * 0.12;
       ctx.fillStyle = '#f6d76b';
@@ -1475,7 +1499,9 @@ export class Renderer {
         const radius = index === 0 ? 0 : (working ? 8 + (index % 4) * 3 : 4 + (index % 3) * 2);
         const offsetX = Math.cos(angle) * radius * scale;
         const offsetY = Math.sin(angle) * radius * (working ? 0.7 : 0.45) * scale;
-        const bob = moving ? Math.sin(this.pulse * 7 + carrier.x + index) * scale : 0;
+        const bob = moving
+          ? Math.sin(this.pulse * 7 * (carrier.visualPace ?? 1) + carrier.x + index) * scale
+          : 0;
         ctx.fillStyle = '#d6b087';
         ctx.beginPath();
         ctx.arc(point.x + offsetX, point.y - 13 * scale + offsetY + bob, 3.2 * scale, 0, Math.PI * 2);
@@ -1541,6 +1567,7 @@ export class Renderer {
     let selected = null;
     let nearest = Infinity;
     for (const carrier of model.carriers) {
+      if (carrier.selectable === false) continue;
       const point = this.camera.project(carrier.x + 0.5, carrier.y + 0.5, 4);
       const distance = Math.hypot(screenX - point.x, screenY - (point.y - 8 * this.camera.zoom));
       const radius = Math.max(12, 20 * this.camera.zoom);

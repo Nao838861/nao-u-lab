@@ -7,7 +7,7 @@
 | 3 | [WORK_ORDER_20260725D.md](WORK_ORDER_20260725D.md) | 需給と統計（第9章・9-5） | **完了**（v004.25.0、関連unit・全章acceptance・PC/スマホ実Chrome緑） |
 | 4 | [WORK_ORDER_20260725E.md](WORK_ORDER_20260725E.md) | 生きた庭（第11章・§2 在庫の山段階） | **完了**（v004.26.0、関連unit・全章acceptance・PC/スマホ実Chrome緑、有限容量はHANDOFFで裁可待ち） |
 
-| 5 | [WORK_ORDER_20260726A.md](WORK_ORDER_20260726A.md) | 歩行のばらし（AV）＋幽霊人足の暫定表示修正（AW-b） | 未着手 |
+| 5 | [WORK_ORDER_20260726A.md](WORK_ORDER_20260726A.md) | 歩行のばらし（AV）＋幽霊人足の暫定表示修正（AW-b） | **完了**（v004.29.0、focused 5件・PC/スマホ実Chrome緑） |
 
 | 6 | [WORK_ORDER_20260726B.md](WORK_ORDER_20260726B.md) | 出発時刻の分散（AV-2、エンジン小変更・監査必須） | 未着手 |
 

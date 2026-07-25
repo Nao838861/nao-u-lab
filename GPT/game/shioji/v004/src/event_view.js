@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.28.0-goods-sprites';
+import { JOB_LABELS } from './config.js?v=v004.29.0-walking-crew';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

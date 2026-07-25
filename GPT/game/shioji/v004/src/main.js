@@ -1,39 +1,39 @@
-import { IsometricCamera } from './camera.js?v=v004.28.0-goods-sprites';
-import { SimulationClock } from './clock.js?v=v004.28.0-goods-sprites';
+import { IsometricCamera } from './camera.js?v=v004.29.0-walking-crew';
+import { SimulationClock } from './clock.js?v=v004.29.0-walking-crew';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.28.0-goods-sprites';
+} from './config.js?v=v004.29.0-walking-crew';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.28.0-goods-sprites';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.28.0-goods-sprites';
-import { developmentMapView } from './development_map.js?v=v004.28.0-goods-sprites';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.28.0-goods-sprites';
+} from './display_batch.js?v=v004.29.0-walking-crew';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.29.0-walking-crew';
+import { developmentMapView } from './development_map.js?v=v004.29.0-walking-crew';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.29.0-walking-crew';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.28.0-goods-sprites';
+} from './food_readability.js?v=v004.29.0-walking-crew';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.28.0-goods-sprites';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.28.0-goods-sprites';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.28.0-goods-sprites';
-import { WorldPresentation } from './presentation.js?v=v004.28.0-goods-sprites';
-import { Renderer } from './renderer.js?v=v004.28.0-goods-sprites';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.28.0-goods-sprites';
+} from './keyboard.js?v=v004.29.0-walking-crew';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.29.0-walking-crew';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.29.0-walking-crew';
+import { WorldPresentation } from './presentation.js?v=v004.29.0-walking-crew';
+import { Renderer } from './renderer.js?v=v004.29.0-walking-crew';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.29.0-walking-crew';
 import {
   GOODS_GLYPHS, shortageRows, supplyDemandRows,
-} from './supply_demand.js?v=v004.28.0-goods-sprites';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.28.0-goods-sprites';
+} from './supply_demand.js?v=v004.29.0-walking-crew';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.29.0-walking-crew';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.28.0-goods-sprites';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.28.0-goods-sprites';
+} from './ui_guidance.js?v=v004.29.0-walking-crew';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.29.0-walking-crew';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');

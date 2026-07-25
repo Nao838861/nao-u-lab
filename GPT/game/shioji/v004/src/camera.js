@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.28.0-goods-sprites';
+import { TILE } from './config.js?v=v004.29.0-walking-crew';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

@@ -976,11 +976,123 @@ async function checkTutorialLetterDelivery() {
   await page.close();
 }
 
+async function checkPeopleVisuals(width, height, mobile) {
+  const page = await newPage(width, height, mobile);
+  const result = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.setSpeed(0);
+    let walking = null;
+    let best = [];
+    for (let guard = 0; guard < 1800 && !walking; guard += 1) {
+      game.advanceTicks(1, { animate: false });
+      const rows = game.model.carriers.filter(row => (
+        ['walker', 'backpack'].includes(row.kind)
+        && row.path?.length > 1
+        && row.visualProgress > 0.05
+        && row.visualProgress < 0.95
+      ));
+      if (rows.length > best.length) best = rows;
+      if (rows.length >= 3 && new Set(rows.map(row => row.laneOffset)).size >= 2) {
+        walking = rows;
+      }
+    }
+    walking ??= best;
+    if (walking.length < 3) return {
+      found: false,
+      bestCount: walking.length,
+      bestRows: walking.map(row => ({
+        id: row.id, kind: row.kind, state: row.state,
+        lane: row.laneOffset, pace: row.visualPace, progress: row.visualProgress,
+      })),
+    };
+    const focus = walking.reduce((point, row) => ({
+      x: point.x + row.x / walking.length,
+      y: point.y + row.y / walking.length,
+    }), { x: 0, y: 0 });
+    game.camera.focus(focus.x, focus.y);
+    game.renderer.render(game.displayModel, 0);
+    return {
+      found: true,
+      count: walking.length,
+      lanes: new Set(walking.map(row => row.laneOffset)).size,
+      paces: new Set(walking.map(row => row.visualPace.toFixed(3))).size,
+      yPositions: new Set(walking.map(row => row.y.toFixed(3))).size,
+      companyCrew: game.model.carriers.filter(row => row.companyCrewSlot).length,
+      companyQueue: game.model.carriers
+        .filter(row => row.kind === 'porter_queue')
+        .map(row => ({ people: row.queuedPeople, amount: row.amount })),
+      maxCompanySlot: Math.max(0, ...game.model.carriers
+        .map(row => row.companyCrewSlot ?? 0)),
+    };
+  })()`);
+  assert.equal(result.found, true, JSON.stringify(result));
+  assert.ok(result.count >= 3, JSON.stringify(result));
+  assert.ok(result.lanes >= 2, JSON.stringify(result));
+  assert.ok(result.paces >= 3, JSON.stringify(result));
+  assert.ok(result.yPositions >= 3, JSON.stringify(result));
+  assert.ok(result.companyCrew <= 6, JSON.stringify(result));
+  assert.ok(result.maxCompanySlot <= 6, JSON.stringify(result));
+  await page.screenshot(`/tmp/shioji_v004_people_${mobile ? 'mobile' : 'desktop'}.png`);
+  const companyQueue = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    const offered = new Map();
+    for (const stall of game.model.marketStalls) {
+      for (const item of stall.items) {
+        offered.set(item.goods, (offered.get(item.goods) ?? 0) + item.qty);
+      }
+    }
+    for (const [goods, qty] of [...offered.entries()]
+      .filter(([, qty]) => qty >= 8)
+      .sort((left, right) => right[1] - left[1])
+      .slice(0, 3)) {
+      game.controller.operate({ type: 'set_stock_target', goods, qty: Math.min(80, qty) });
+    }
+    for (const goods of ['fish', 'veg', 'wheat', 'log', 'tools']) {
+      game.controller.operate({ type: 'set_stock_target', goods, qty: 80 });
+    }
+    let candidate = null;
+    for (let guard = 0; guard < 12 && !candidate; guard += 1) {
+      candidate = Object.entries(game.model.companyStock)
+        .filter(([, qty]) => qty >= 8)
+        .sort((left, right) => right[1] - left[1])[0] ?? null;
+      if (!candidate) game.advanceTicks(30 * 30, { animate: false });
+    }
+    if (!candidate) return { found: false, day: game.model.day, stock: game.model.companyStock };
+    const [goods, stock] = candidate;
+    const qty = Math.min(40, Math.floor(stock));
+    const operation = game.controller.operate({ type: 'release_stock', goods, qty });
+    game.advanceTicks(1, { animate: false });
+    const queue = game.model.carriers.find(row => row.kind === 'porter_queue');
+    const crew = game.model.carriers.filter(row => row.companyCrewSlot);
+    if (queue) {
+      game.camera.focus(queue.x, queue.y);
+      game.renderer.render(game.displayModel, 0);
+    }
+    return {
+      found: Boolean(queue),
+      operationOk: Boolean(operation?.ok),
+      goods,
+      qty,
+      queuedPeople: queue?.queuedPeople ?? 0,
+      crew: crew.length,
+      slots: crew.map(row => row.companyCrewSlot),
+    };
+  })()`);
+  assert.equal(companyQueue.found, true, JSON.stringify(companyQueue));
+  assert.equal(companyQueue.operationOk, true, JSON.stringify(companyQueue));
+  assert.ok(companyQueue.queuedPeople > 0, JSON.stringify(companyQueue));
+  assert.ok(companyQueue.crew <= 6, JSON.stringify(companyQueue));
+  assert.ok(companyQueue.slots.every(slot => slot >= 1 && slot <= 6), JSON.stringify(companyQueue));
+  assert.deepEqual(page.errors, []);
+  await page.screenshot(`/tmp/shioji_v004_company_queue_${mobile ? 'mobile' : 'desktop'}.png`);
+  await page.close();
+}
+
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.28.0-goods-sprites');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.28.0-goods-sprites');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.29.0-walking-crew');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.29.0-walking-crew');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -1789,6 +1901,10 @@ if (process.argv.includes('--company-pointer-only')) {
   await checkReadabilityUi();
   await checkReadabilityUi(390, 844, true);
   console.log('CHARTER ISLE v004 readability smoke: PASS');
+} else if (process.argv.includes('--people-visuals-only')) {
+  await checkPeopleVisuals(1440, 900, false);
+  await checkPeopleVisuals(390, 844, true);
+  console.log('CHARTER ISLE v004 people visuals smoke: PASS');
 } else if (process.argv.includes('--viewport-only')) {
   await checkViewport(1440, 900, false);
   await checkViewport(390, 844, true);
