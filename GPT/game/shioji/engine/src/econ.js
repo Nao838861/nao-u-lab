@@ -1228,8 +1228,10 @@ export function unloadMarketBuyCargo(household, physical = null) {
 
 export const BUY_ORDER = deepFreeze([
   "ore", "bar", "log", "salt", "char", "coal", "tools", "cloth", "iron", "meal",
-  "stone", "oil", "fish", "veg", "wheat", "pres", "meat",
+  "stone", "oil", "fish", "veg", "wheat", "pres", "pick", "meat",
 ]);
+
+const FOOD_BUY_ORDER = deepFreeze(["wheat", "pres", "pick", "veg", "fish", "meat"]);
 
 export function buyTargets(
   economy,
@@ -1651,12 +1653,25 @@ export function buyAtMarket(
   }
   let capacity = capacityLimit ?? householdHaul(household);
   const targets = buyTargets(economy, household, { day, physical });
-  const preferredOrder = household.job === "cartwright"
+  const jobOrder = household.job === "cartwright"
     ? ["tools", "log", ...BUY_ORDER.filter((goods) => goods !== "tools" && goods !== "log")]
     : BUY_ORDER;
+  const foodDays = FOODS.reduce(
+    (total, goods) => total + (household.pantry[goods] ?? 0),
+    0,
+  ) / P.EAT;
+  // 暮らしの備えが6日を切った世帯は、加工原料より先に食料を積む。
+  // 原料の掛け買いで財布を空にしてから食料の棚へ向かう旧順序は、
+  // 市場に食料があっても加工世帯だけが飢える原因になっていた。
+  const preferredOrder = foodDays < P.PANTRY_FOOD_D
+    ? [...FOOD_BUY_ORDER, ...jobOrder.filter((goods) => !FOODS.includes(goods))]
+    : jobOrder;
   const order = preferredOrder.filter((goods) => targets[goods]);
   const transactions = [];
   const manifest = {};
+  const purchased = {};
+  const unmet = {};
+  const blockers = {};
   const processed = new Set();
 
   for (const orderedGoods of order) {
@@ -1717,6 +1732,14 @@ export function buyAtMarket(
       }
     }
     shelves.sort((a, b) => a.price - b.price);
+    const stockedShelves = shelves.filter((shelf) => (
+      (shelf.kind === "CO" || shelf.kind === "AID" || shelf.kind === "STOCK")
+        ? shelf.qty > 1e-9
+        : shelf.stall.qty > 1e-9
+    ));
+    const affordableShelves = stockedShelves.filter((shelf) => (
+      shelf.kind === "AID" || (shelf.price > 0 && shelf.price <= ceiling)
+    ));
 
     for (const shelf of shelves) {
       if (wanted < 1e-9) break;
@@ -1737,6 +1760,7 @@ export function buyAtMarket(
       household.purse -= payment;
       if (delivery === "pantry") household.pantry[goods] += qty;
       else manifest[goods] = (manifest[goods] ?? 0) + qty;
+      purchased[goods] = (purchased[goods] ?? 0) + qty;
       wanted -= qty;
       capacity -= qty * unitWeight;
 
@@ -1865,11 +1889,22 @@ export function buyAtMarket(
         });
       }
     }
+    if (wanted > 1e-9) {
+      unmet[orderedGoods] = wanted;
+      if (stockedShelves.length === 0) blockers[orderedGoods] = "no_stock";
+      else if (affordableShelves.length === 0) blockers[orderedGoods] = "too_expensive";
+      else if (capacity <= 1e-9) blockers[orderedGoods] = "no_capacity";
+      else if (household.purse <= 1e-9) blockers[orderedGoods] = "no_money";
+      else blockers[orderedGoods] = "partial";
+    }
   }
   return {
     targets,
     order,
     transactions,
+    purchased,
+    unmet,
+    blockers,
     remainingCapacity: capacity,
     cargo: delivery === "cargo" ? { direction: "inbound", manifest } : null,
   };
@@ -2045,6 +2080,14 @@ export function transactMarketCargo(economy, physical, household, { day, random 
   );
   bought.cargo.returnManifest = returnManifest;
   household.cargo = bought.cargo;
+  household.lastMarketVisit = {
+    day,
+    purchased: { ...bought.purchased },
+    unmet: { ...bought.unmet },
+    blockers: { ...bought.blockers },
+    remainingCapacity: bought.remainingCapacity,
+    purseAfter: household.purse,
+  };
   const cartPurchase = buyHouseholdWoodCart(economy, physical, household, { day });
   return { sold, bought, cartPurchase };
 }

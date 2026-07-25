@@ -19,8 +19,8 @@ import {
   buildBlankCity, createEngineController,
 } from '../src/engine_bridge.js';
 import {
-  EVENT_DISPLAY_POLICY, OBSERVED_EVENT_TYPES, hasEventPresentation, presentEvent,
-  shouldPresentEvent,
+  EVENT_DISPLAY_POLICY, OBSERVED_EVENT_TYPES, eventPlaceLabel, hasEventPresentation,
+  presentEvent, shouldPresentEvent,
 } from '../src/event_view.js';
 import { formatElenaSpeech } from '../src/elena_text.js';
 import {
@@ -73,7 +73,7 @@ import {
 import {
   EXACT_PILE_LIMIT, MAX_DISPLAY_CULTURE_LEVEL, MAX_PILE_SPRITES, MAX_YARD_GOODS,
   PILE_STAGE_LIMITS, buildingAppearance, buildingStructureLayout, displayCultureLevel,
-  pileVisual, trailVisual, yardLayout, yardSlots, yardStockRows,
+  pileVisual, seasonalPlotVisual, trailVisual, yardLayout, yardSlots, yardStockRows,
 } from '../src/visuals.js';
 
 let passed = 0;
@@ -2184,7 +2184,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.33.0-feedback-visibility');
+  assert.equal(VERSION, 'v004.34.0-feedback-visibility');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2394,6 +2394,15 @@ test('開始選択: URLのmodeは3種だけを受理し他のqueryを保つ', ()
   const selected = new URL(urlForStartMode('https://example.test/game/?seed=11', 'sandbox'));
   assert.equal(selected.searchParams.get('mode'), 'sandbox');
   assert.equal(selected.searchParams.get('seed'), '11');
+  for (const mode of Object.keys(START_MODES)) {
+    const restarted = new URL(urlForStartMode(
+      'https://example.test/game/?mode=test&resume=1&seed=11',
+      mode,
+    ));
+    assert.equal(restarted.searchParams.get('mode'), mode);
+    assert.equal(restarted.searchParams.get('resume'), null, '最初から選んだ時は保存再開指定を破棄する');
+    assert.equal(restarted.searchParams.get('seed'), '11');
+  }
 });
 
 test('段2: full snapshotを地形・建物・キャリア・棚の不変描画モデルへ変換する', () => {
@@ -3337,6 +3346,23 @@ test('ラン3 AO: 棚の最後の一荷は遷移中に連続して減り、論�
     { x: arriving.inventoryVisuals[0].x, y: arriving.inventoryVisuals[0].y },
     { x: 5.25, y: 7.5 },
   );
+
+  const marketModel = qty => ({
+    carriers: [], buildings: [], portCalls: [], portBerth: null,
+    marketStalls: qty > 0 ? [{
+      id: 'stall:7', householdId: 7, x: 4, y: 5, totalAmount: qty,
+      items: [{ householdId: 7, goods: 'wheat', qty, visual: pileVisual(qty, 'wheat') }],
+    }] : [],
+  });
+  const thinning = interpolateWorldModel(marketModel(5), marketModel(1), [], 0.5);
+  assert.equal(thinning.marketStallVisuals[0].items[0].qty, 3);
+  assert.equal(thinning.marketStallVisuals[0].items[0].visual.spriteCount, 3);
+  assert.equal(thinning.marketStallVisuals[0].totalAmount, 3);
+  assert.deepEqual(
+    interpolateWorldModel(marketModel(1), marketModel(0), [], 1).marketStallVisuals,
+    [],
+    '市場の棚は実在庫が尽きた時だけ消える',
+  );
 });
 
 test('ラン3 AO: 世帯人数ぶんの個人IDを保ち、在宅生産者を敷地内の作業場へ出す', () => {
@@ -3493,6 +3519,27 @@ test('UI向上段3/4: 建物sheet・クリック選択・地面先行の選択�
   assert.ok(selected.id !== null, '選択対象にはsnapshot由来のIDがある');
   assert.deepEqual(api.snapshot(), before, '表示上の選択はengine stateを変えない');
   assert.deepEqual(api.inputJournal(), journal, '表示上の選択はjournalを増やさない');
+});
+
+test('§6-2: 農地と牧草地の区画だけが秋は枯れ色、冬は雪へ変わる', () => {
+  const farm = { appearance: { archetype: 'farm' } };
+  const pasture = { appearance: { archetype: 'pasture' } };
+  const workshop = { appearance: { archetype: 'workshop' } };
+  assert.equal(seasonalPlotVisual(farm, '春'), null);
+  assert.equal(seasonalPlotVisual(workshop, '冬'), null);
+  assert.equal(seasonalPlotVisual(farm, '秋').state, 'dry');
+  assert.equal(seasonalPlotVisual(pasture, '秋').state, 'dry');
+  assert.equal(seasonalPlotVisual(farm, '冬').state, 'snow');
+  assert.equal(seasonalPlotVisual(pasture, '冬').state, 'snow');
+  assert.notDeepEqual(seasonalPlotVisual(farm, '秋').fills, seasonalPlotVisual(farm, '冬').fills);
+
+  const rendererSource = fs.readFileSync(new URL('../src/renderer.js', import.meta.url), 'utf8');
+  assert.match(rendererSource,
+    /drawBuildingGrounds\(model\)[\s\S]*drawSeasonalPlotGround\(building\)/,
+    '画面全体の色調ではなく建物区画の地面描画へ季節を適用する');
+  assert.match(rendererSource,
+    /drawSeasonalPlotGround\(building\)[\s\S]*this\.diamond\(x, y, fill, visual\.stroke/,
+    '4×4の一枚塗りではなく農地の各タイルを描く');
 });
 
 test('UI向上段5: 全建物を重複なく分類し費用・寸法付き直接パレットを備える', () => {
@@ -4141,6 +4188,15 @@ test('段16: 観測APIの全イベント種とnotice専用トースト・ログ�
     presentEvent({ type: 'blocked', message: '道が切れた', day: 1, tick: 1 }).elenaSpeech,
     /道が切れて.*つなぎ直しましょう/,
   );
+  const placeModel = {
+    width: 40,
+    height: 30,
+    buildings: [{ id: 8, type: 'market', x: 18, y: 12, width: 4, height: 4 }],
+    households: [{ id: 3, buildingId: 8, job: 'market' }],
+  };
+  assert.equal(eventPlaceLabel({ householdId: 3 }, placeModel), '市場の近く');
+  assert.equal(eventPlaceLabel({ x: 2, y: 27 }, placeModel), '島の南西側');
+  assert.equal(presentEvent({ type: 'blocked', buildingId: 8 }, placeModel).details, '市場の近く');
   assert.match(
     presentEvent({ type: 'death', message: '☠ 佐藤家は離散した', day: 1, tick: 1 }).elenaSpeech,
     /住民の佐藤家が島を離れました.*食料/,
@@ -4155,6 +4211,7 @@ test('段16: 観測APIの全イベント種とnotice専用トースト・ログ�
   assert.match(html, /id="toast-stack"/);
   assert.match(html, /id="event-log"/);
   assert.match(main, /appendEvents/);
+  assert.doesNotMatch(main, /座標/, 'プレイヤー向けの出来事・案内に座標を出さない');
   assert.match(main, /function focusEvent[\s\S]+camera\.focus\(/);
   assert.match(main, /renderer\.markBuilding/);
 });

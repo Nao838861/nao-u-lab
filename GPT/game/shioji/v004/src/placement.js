@@ -1,4 +1,4 @@
-import { BUILDING_SIZES } from './config.js?v=v004.33.0-feedback-visibility';
+import { BUILDING_SIZES } from './config.js?v=v004.34.0-feedback-visibility';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

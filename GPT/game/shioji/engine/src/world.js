@@ -244,7 +244,7 @@ function urgentMarketDemandWeight(economy, physical, household) {
     day: Math.max(1, Math.ceil((economy.currentTick ?? 1) / 30)),
     physical,
   });
-  return Object.entries(targets).reduce((total, [goods, [wanted, ceiling]]) => {
+  const purchasableWeight = Object.entries(targets).reduce((total, [goods, [wanted, ceiling]]) => {
     const urgent = (needs.foodUrgent && FOODS.includes(goods))
       || needs.lowCultureGoods.includes(goods)
       || (needs.inputLow && isProductionInput(household, goods));
@@ -261,6 +261,11 @@ function urgentMarketDemandWeight(economy, physical, household) {
     const purchasable = Math.min(wanted, stallQty + importQty + stockQty);
     return total + purchasable * goodsUnitWeight(goods);
   }, 0);
+  // 食料が尽きかけた往復では、一人ぶんの背負い籠だけで帰らない。
+  // 市場に買える食料がある限り、最低2日ぶんを運ぶ人数を割り当てる。
+  return needs.foodUrgent && purchasableWeight > 1e-9
+    ? Math.max(purchasableWeight, P.EAT * 2)
+    : purchasableWeight;
 }
 
 function finishMarketTrip(economy, physical, household, { day }) {
@@ -462,7 +467,7 @@ export function beginMarketTrip(economy, physical, household) {
     throw new Error(`世帯${household.id}は既に市場往復中です`);
   }
   const tripTicks = marketTripDuration(economy, physical, household);
-  if (tripTicks > 30) return { started: false, tripTicks };
+  if (!Number.isFinite(tripTicks)) return { started: false, tripTicks };
 
   const useCart = Boolean(household.cart)
     && Number.isFinite(marketPathLength(economy, physical, household, "cart"));
@@ -645,25 +650,35 @@ export function createWorld({
   warehouse = null,
   port = null,
   logisticsSites = null,
+  stateSnapshot = null,
 } = {}) {
-  const normalizedSeed = normalizeSeed(seed);
-  const physical = physicalState ?? createPhysicalState();
-  const economy = createEconomicState({ initialCompanyMoney });
-  const marketPosition = market ? { ...market } : { x: 8, y: 15 };
-  const warehousePosition = warehouse ? { ...warehouse } : { x: 10, y: 15 };
-  economy.market = marketPosition;
-  economy.warehouse = logisticsSites && !logisticsSites.warehouse && !warehouse
-    ? null
-    : warehousePosition;
-  if (port) economy.port = { ...port };
-  economy.logisticsSites = logisticsSites
-    ? structuredClone(logisticsSites)
-    : {
-      market: { entrance: { ...marketPosition } },
-      warehouse: { entrance: { ...warehousePosition } },
-      ...(port ? { port: { entrance: { ...port } } } : {}),
-    };
-  const state = {
+  const restored = stateSnapshot ? structuredClone(stateSnapshot) : null;
+  if (restored && (
+    !Number.isSafeInteger(restored.day)
+    || !Number.isSafeInteger(restored.tick)
+    || !restored.physical
+    || !restored.economy
+  )) throw new TypeError("保存された島の状態が不正です");
+  const normalizedSeed = normalizeSeed(restored?.seed ?? seed);
+  const physical = restored?.physical ?? physicalState ?? createPhysicalState();
+  const economy = restored?.economy ?? createEconomicState({ initialCompanyMoney });
+  if (!restored) {
+    const marketPosition = market ? { ...market } : { x: 8, y: 15 };
+    const warehousePosition = warehouse ? { ...warehouse } : { x: 10, y: 15 };
+    economy.market = marketPosition;
+    economy.warehouse = logisticsSites && !logisticsSites.warehouse && !warehouse
+      ? null
+      : warehousePosition;
+    if (port) economy.port = { ...port };
+    economy.logisticsSites = logisticsSites
+      ? structuredClone(logisticsSites)
+      : {
+        market: { entrance: { ...marketPosition } },
+        warehouse: { entrance: { ...warehousePosition } },
+        ...(port ? { port: { entrance: { ...port } } } : {}),
+      };
+  }
+  const state = restored ?? {
     day: 0,
     tick: 0,
     seed: normalizedSeed,
@@ -671,7 +686,9 @@ export function createWorld({
     physical,
     economy,
   };
-  initializeNaturalResources(economy, physical);
+  state.seed = normalizedSeed;
+  state.rngState = normalizeSeed(state.rngState ?? normalizedSeed);
+  if (!restored) initializeNaturalResources(economy, physical);
 
   function random() {
     const result = nextMulberry32(state.rngState);

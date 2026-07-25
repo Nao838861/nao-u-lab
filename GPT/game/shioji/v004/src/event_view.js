@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.33.0-feedback-visibility';
+import { JOB_LABELS } from './config.js?v=v004.34.0-feedback-visibility';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],
@@ -53,6 +53,23 @@ function householdSubject(event, model = null) {
   return familyName ? `${jobLabel}の${familyName}家` : `${jobLabel}の家族`;
 }
 
+export function eventPlaceLabel(event, model = null) {
+  const household = eventHousehold(event, model);
+  const buildingId = event?.buildingId ?? household?.buildingId;
+  const building = model?.buildings?.find(row => row.id === buildingId);
+  if (building) return `${JOB_LABELS[building.type] ?? building.type}の近く`;
+  if (!Number.isFinite(event?.x) || !Number.isFinite(event?.y)
+    || !Number.isFinite(model?.width) || !Number.isFinite(model?.height)) {
+    return '島からの知らせ';
+  }
+  const horizontal = event.x < model.width * 0.38 ? '西'
+    : event.x > model.width * 0.62 ? '東' : '';
+  const vertical = event.y < model.height * 0.38 ? '北'
+    : event.y > model.height * 0.62 ? '南' : '';
+  const direction = `${vertical}${horizontal}` || '中央';
+  return `島の${direction}${direction === '中央' ? '' : '側'}`;
+}
+
 function elenaSpeechFor(event, tone, model = null) {
   if (event.type === 'docking') {
     return '本国からの船が港に着きました。荷下ろしが始まります。';
@@ -91,7 +108,8 @@ export function presentEvent(event, model = null) {
   else if (event.type === 'job_move' && subject) title = `${subject}が転職・移住`;
   const details = subject && event.message ? `${subject} — ${event.message}` : event.message ?? (event.goods
     ? `${event.goods} ${Math.round((event.qty ?? 0) * 10) / 10}`
-    : event.op ? `${event.op.type}${event.ok === false ? '（失敗）' : ''}` : '');
+    : event.op ? `${event.op.type}${event.ok === false ? '（失敗）' : ''}`
+      : eventPlaceLabel(event, model));
   return {
     ...event,
     title,

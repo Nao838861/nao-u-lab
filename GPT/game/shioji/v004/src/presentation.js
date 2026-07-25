@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.33.0-feedback-visibility';
+import { pileVisual } from './visuals.js?v=v004.34.0-feedback-visibility';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));

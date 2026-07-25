@@ -1,12 +1,12 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.33.0-feedback-visibility';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.33.0-feedback-visibility';
-import { islandCalendar } from './ui_summary.js?v=v004.33.0-feedback-visibility';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.33.0-feedback-visibility';
+} from './config.js?v=v004.34.0-feedback-visibility';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.34.0-feedback-visibility';
+import { islandCalendar } from './ui_summary.js?v=v004.34.0-feedback-visibility';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.34.0-feedback-visibility';
 import {
-  buildingStructureLayout, pileVisual,
-} from './visuals.js?v=v004.33.0-feedback-visibility';
+  buildingStructureLayout, pileVisual, seasonalPlotVisual,
+} from './visuals.js?v=v004.34.0-feedback-visibility';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
@@ -313,6 +313,7 @@ export class Renderer {
         building.x, building.y, building.width, building.height,
         fill, '#455344', 0.9,
       );
+      this.drawSeasonalPlotGround(building);
       const structure = building.structure ?? buildingStructureLayout(building);
       if (structure.openYard) {
         const yardFill = building.type === 'port' ? '#aa9472'
@@ -340,6 +341,22 @@ export class Renderer {
         selected.x, selected.y, selected.width, selected.height,
         '#f2c45d', '#ffe39a', 0.34,
       );
+    }
+  }
+
+  drawSeasonalPlotGround(building) {
+    const visual = seasonalPlotVisual(building, this.season);
+    if (!visual) return;
+    const minX = Math.floor(building.x);
+    const minY = Math.floor(building.y);
+    const maxX = Math.ceil(building.x + building.width);
+    const maxY = Math.ceil(building.y + building.height);
+    for (let y = minY; y < maxY; y += 1) {
+      for (let x = minX; x < maxX; x += 1) {
+        const fill = visual.fills[Math.abs(x + y) % visual.fills.length];
+        // 農地だけを一枚の色面にせず、一筆の区画ごとに季節が読めるようにする。
+        this.diamond(x, y, fill, visual.stroke, 0.96);
+      }
     }
   }
 
@@ -511,47 +528,46 @@ export class Renderer {
       );
       const critical = crisis.severity === 'critical';
       const icon = crisis.kind === 'hunger' ? '🍽'
-        : crisis.kind === 'demotion' ? '↓' : '!';
-      const missingGoods = (crisis.missingGoods ?? []).slice(0, 3);
-      const zoom = this.camera.zoom;
-      // 不足品スプライトのぶんだけ札を右へ広げる。
-      const extraWidth = missingGoods.length ? (missingGoods.length * 13 + 6) * zoom : 0;
+        : crisis.kind === 'demotion' ? '↓'
+          : crisis.kind === 'delivery' ? '' : '!';
+      const missingGoods = (crisis.goods ?? []).filter(goods => GOODS_ART[goods]).slice(0, 2);
+      const badgeWidth = (86 + missingGoods.length * 17) * this.camera.zoom;
+      const badgeLeft = point.x - badgeWidth / 2;
       ctx.save();
       // 動く警告は死亡・離散間際だけ。中程度と降格間際は静止させる。
       if (critical) ctx.globalAlpha = 0.72 + Math.sin(this.pulse * 5.2) * 0.22;
       ctx.fillStyle = critical ? 'rgba(126,31,28,.94)' : 'rgba(114,73,28,.92)';
       ctx.strokeStyle = critical ? '#ff9b7c' : '#f3c66a';
-      ctx.lineWidth = Math.max(1.5, 2 * zoom);
+      ctx.lineWidth = Math.max(1.5, 2 * this.camera.zoom);
       ctx.beginPath();
       ctx.roundRect(
-        point.x - 43 * zoom,
-        point.y - 13 * zoom,
-        86 * zoom + extraWidth,
-        23 * zoom,
-        8 * zoom,
+        badgeLeft,
+        point.y - 13 * this.camera.zoom,
+        badgeWidth,
+        23 * this.camera.zoom,
+        8 * this.camera.zoom,
       );
       ctx.fill();
       ctx.stroke();
-      ctx.fillStyle = '#fff2cf';
-      ctx.font = `800 ${Math.max(8, 9 * zoom)}px "Yu Gothic", sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.fillText(
-        `${icon} ${crisis.label}`,
-        point.x,
-        point.y + 3 * zoom,
-      );
-      for (const [index, goods] of missingGoods.entries()) {
-        const art = GOODS_ART[goods];
-        if (!art) continue;
+      const goodsStart = badgeLeft + 13 * this.camera.zoom;
+      missingGoods.forEach((goods, index) => {
         drawGoodsSpriteCanvas(
           ctx,
-          art,
-          point.x + 46 * zoom + index * 13 * zoom,
-          point.y - 6 * zoom,
-          12 * zoom,
-          { outlined: true },
+          GOODS_ART[goods],
+          goodsStart + index * 16 * this.camera.zoom,
+          point.y - 1 * this.camera.zoom,
+          Math.max(11, 14 * this.camera.zoom),
         );
-      }
+      });
+      ctx.fillStyle = '#fff2cf';
+      ctx.font = `800 ${Math.max(8, 9 * this.camera.zoom)}px "Yu Gothic", sans-serif`;
+      ctx.textAlign = 'center';
+      const textOffset = missingGoods.length * 8 * this.camera.zoom;
+      ctx.fillText(
+        `${icon ? `${icon} ` : ''}${crisis.label}`,
+        point.x + textOffset,
+        point.y + 3 * this.camera.zoom,
+      );
       ctx.restore();
     }
   }
@@ -821,8 +837,8 @@ export class Renderer {
       );
     }
     if (farm) {
-      ctx.strokeStyle = this.season === '冬' ? '#b9c9bd'
-        : this.season === '秋' ? '#927449' : appearance.accent;
+      const seasonalPlot = seasonalPlotVisual(building, this.season);
+      ctx.strokeStyle = seasonalPlot?.furrow ?? appearance.accent;
       ctx.lineWidth = Math.max(1, 1.2 * this.camera.zoom);
       const furrowCount = appearance.leveled
         ? Math.max(2, Math.min(5, appearance.tier + 1)) : 4;
@@ -834,17 +850,6 @@ export class Renderer {
         ctx.moveTo(from.x, from.y);
         ctx.lineTo(to.x, to.y);
         ctx.stroke();
-      }
-      if (this.season === '冬') {
-        this.footprint(
-          building.x + 0.18,
-          building.y + 0.18,
-          building.width - 0.36,
-          building.height - 0.36,
-          'rgba(224,235,226,.34)',
-          'rgba(230,241,235,.36)',
-          1,
-        );
       }
     }
     if (appearance.structureVisible) {

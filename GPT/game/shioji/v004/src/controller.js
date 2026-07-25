@@ -1,6 +1,6 @@
 import {
   snapshotToViewModel, terrainRevisionForModel,
-} from './view_model.js?v=v004.33.0-feedback-visibility';
+} from './view_model.js?v=v004.34.0-feedback-visibility';
 
 export function createViewController(api) {
   if (!api?.snapshot || !api?.advanceTicks || !api?.applyOperation) {
@@ -42,6 +42,9 @@ export function createViewController(api) {
     },
     inputJournal() {
       return api.inputJournal();
+    },
+    saveState() {
+      return api.snapshot({ scope: 'full' });
     },
     metrics() {
       return Object.freeze({ ...counts });

@@ -1,16 +1,18 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.33.0-feedback-visibility';
-import { perishableFreshness } from './food_readability.js?v=v004.33.0-feedback-visibility';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.34.0-feedback-visibility';
+import {
+  FOOD_GOODS, perishableFreshness,
+} from './food_readability.js?v=v004.34.0-feedback-visibility';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.33.0-feedback-visibility';
-import { analyzeRoadConnections } from './placement.js?v=v004.33.0-feedback-visibility';
+} from './engine_bridge.js?v=v004.34.0-feedback-visibility';
+import { analyzeRoadConnections } from './placement.js?v=v004.34.0-feedback-visibility';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.33.0-feedback-visibility';
+} from './render_scene.js?v=v004.34.0-feedback-visibility';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.33.0-feedback-visibility';
+} from './visuals.js?v=v004.34.0-feedback-visibility';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
@@ -24,6 +26,19 @@ const CONVERSION_JOBS = Object.freeze({
 
 const MODEL_TOPOLOGY_REVISIONS = new WeakMap();
 export const COMPANY_VISIBLE_PORTER_LIMIT = 6;
+const FOOD_GOODS_SET = new Set(FOOD_GOODS);
+const REQUIREMENT_GOODS = Object.freeze({
+  food1: Object.freeze(['wheat']),
+  food2: Object.freeze(['fish', 'veg']),
+  food3: Object.freeze(['fish', 'veg', 'wheat']),
+  grain: Object.freeze(['wheat']),
+  saltchar: Object.freeze(['salt', 'char']),
+  tools: Object.freeze(['tools']),
+  salt: Object.freeze(['salt']),
+  char: Object.freeze(['char']),
+  cloth: Object.freeze(['cloth']),
+  iron: Object.freeze(['iron']),
+});
 
 function stableVisualHash(value) {
   let hash = 2166136261;
@@ -80,7 +95,8 @@ function shelfRows(building) {
 
 function pantryRows(household) {
   return Object.entries(household.pantry ?? {}).map(([goods, amount]) => ({
-    section: 'pantry', goods, amount, capacity: null, visual: pileVisual(amount, goods),
+    section: FOOD_GOODS_SET.has(goods) ? 'foodPantry' : 'householdGoods',
+    goods, amount, capacity: null, visual: pileVisual(amount, goods),
   }));
 }
 
@@ -109,6 +125,7 @@ function cultureProgress(household) {
   const satisfaction = household.satLast ?? {};
   const nextRequirement = requirements[level] ?? null;
   const requiredDays = nextRequirement ? P.UP_DAYS * (level + 1) : 0;
+  const missingForCurrent = requirements.slice(0, level).filter(key => !satisfaction[key]);
   return {
     level,
     displayLevel: displayCultureLevel(level),
@@ -118,34 +135,171 @@ function cultureProgress(household) {
     nextRequirement,
     nextSatisfied: nextRequirement ? Boolean(satisfaction[nextRequirement]) : true,
     achievedRequirement: level > 0 ? requirements[level - 1] ?? null : null,
-    missingForCurrent: requirements.slice(0, level).filter(key => !satisfaction[key]),
+    missingForCurrent,
+    missingGoodsForCurrent: [...new Set(missingForCurrent.flatMap(
+      requirement => REQUIREMENT_GOODS[requirement] ?? [],
+    ))],
     downDays: household.down ?? 0,
     downgradeDays: P.DOWN_DAYS,
   };
 }
 
-// 満足度キーを盤面に描ける品目へ写す。複数品や「食料n種」は代表品を並べる。
-const SATISFACTION_GOODS = Object.freeze({
-  tools: ['tools'], salt: ['salt'], char: ['char'], cloth: ['cloth'], iron: ['iron'],
-  grain: ['wheat'], saltchar: ['salt', 'char'],
-  food1: ['fish'], food2: ['fish', 'veg'], food3: ['fish', 'veg', 'meat'],
-});
-
-function missingSatisfactionGoods(household) {
-  const level = household?.lv ?? 0;
-  const requirements = LADDER[householdClass(household)] ?? [];
-  const satisfaction = household?.satLast ?? {};
-  const missing = requirements.slice(0, level).filter(key => !satisfaction[key]);
-  return [...new Set(missing.flatMap(key => SATISFACTION_GOODS[key] ?? []))];
+function householdFoodAmount(household) {
+  return FOOD_GOODS.reduce(
+    (total, goods) => total + (household?.pantry?.[goods] ?? 0),
+    0,
+  );
 }
 
-function householdStateSignals(household) {
+function cargoFoodRows(household) {
+  if (household?.cargo?.direction !== 'inbound') return [];
+  return Object.entries(household.cargo.manifest ?? {})
+    .filter(([goods, amount]) => FOOD_GOODS_SET.has(goods) && amount > 1e-9)
+    .map(([goods, amount]) => ({ goods, amount }));
+}
+
+function marketFoodRows(economy) {
+  return FOOD_GOODS.map(goods => ({
+    goods,
+    amount: (economy.stalls?.[goods] ?? []).reduce(
+      (total, stall) => total + (stall.qty ?? 0),
+      0,
+    ) + (economy.marketStock?.[goods] ?? 0),
+  })).filter(row => row.amount > 1e-9);
+}
+
+function foodDeliveryStatus(household, economy) {
+  if (!household) return null;
+  const foodDays = householdFoodAmount(household) / P.EAT;
+  const inbound = cargoFoodRows(household);
+  const inboundAmount = inbound.reduce((total, row) => total + row.amount, 0);
+  if (inboundAmount > 1e-9) {
+    return {
+      kind: 'returning',
+      tone: 'transit',
+      label: `食料${inboundAmount.toFixed(1)}荷を持ち帰り中`,
+      detail: '市場で買えています。家に着くと食料庫へ入ります。',
+      goods: inbound.map(row => row.goods).slice(0, 3),
+    };
+  }
+  if (foodDays >= 3) return null;
+  if (['arriving', 'building'].includes(household.state)) {
+    return {
+      kind: 'settling',
+      tone: 'transit',
+      label: '入居の普請中',
+      detail: '家が完成すると市場へ買い出しに出ます。',
+      goods: ['wheat'],
+    };
+  }
+  if (['toMarket', 'atMarket'].includes(household.state)) {
+    return {
+      kind: 'shopping',
+      tone: 'transit',
+      label: household.state === 'atMarket' ? '市場で食料を探しています' : '市場へ買い出し中',
+      detail: '食料はまだ家の食料庫へ届いていません。',
+      goods: ['wheat'],
+    };
+  }
+  if (!household.road) {
+    return {
+      kind: 'no_route',
+      tone: 'blocked',
+      label: '市場までの道が切れています',
+      detail: '建物の入口から市場まで道をつないでください。',
+      goods: ['wheat'],
+    };
+  }
+
+  const lastVisit = household.lastMarketVisit ?? null;
+  const boughtFood = Object.entries(lastVisit?.purchased ?? {})
+    .filter(([goods, amount]) => FOOD_GOODS_SET.has(goods) && amount > 1e-9);
+  if (lastVisit?.day === economy.currentDay && boughtFood.length > 0) {
+    const amount = boughtFood.reduce((total, [, qty]) => total + qty, 0);
+    return {
+      kind: 'consumed',
+      tone: 'warning',
+      label: `今日${amount.toFixed(1)}荷を買い、ほぼ食べ切りました`,
+      detail: '買っていないのではなく、家族一日分に届かない量でした。',
+      goods: boughtFood.map(([goods]) => goods).slice(0, 3),
+    };
+  }
+
+  const foodBlockers = Object.entries(lastVisit?.blockers ?? {})
+    .filter(([goods]) => FOOD_GOODS_SET.has(goods))
+    .map(([, reason]) => reason);
+  const available = marketFoodRows(economy);
+  const companyFood = FOOD_GOODS.reduce(
+    (total, goods) => total + (economy.stock?.[goods] ?? 0),
+    0,
+  );
+  const goods = available.map(row => row.goods).slice(0, 3);
+  if (foodBlockers.includes('no_money')) {
+    return {
+      kind: 'no_money',
+      tone: 'blocked',
+      label: '食費に対して財布が足りません',
+      detail: available.length
+        ? '市場に食料はありますが、必要な一日分を買える所持金がありません。'
+        : '前回の買い出しでは、必要な食料を買う所持金がありませんでした。',
+      goods: goods.length ? goods : ['wheat'],
+    };
+  }
+  if (foodBlockers.includes('no_capacity')) {
+    return {
+      kind: 'no_capacity',
+      tone: 'blocked',
+      label: '運べる量が足りません',
+      detail: '前回はほかの荷で運搬枠が埋まり、食料を積み切れませんでした。',
+      goods: goods.length ? goods : ['wheat'],
+    };
+  }
+  if (foodBlockers.includes('too_expensive')) {
+    return {
+      kind: 'too_expensive',
+      tone: 'blocked',
+      label: '食料の値段が折り合いません',
+      detail: '市場にはありますが、この家が払える価格を超えています。',
+      goods: goods.length ? goods : ['wheat'],
+    };
+  }
+  if (available.length > 0) {
+    return {
+      kind: 'waiting',
+      tone: 'warning',
+      label: '市場に食料あり・次の買い出し待ち',
+      detail: '各世帯は朝に順番で市場へ向かいます。移動中は食料庫へまだ反映されません。',
+      goods,
+    };
+  }
+  if (companyFood > 1e-9) {
+    return {
+      kind: 'not_released',
+      tone: 'blocked',
+      label: '島にはあるが、市場に届いていません',
+      detail: '会社倉庫の食料を「取引」から市場へ出すと、世帯が買えるようになります。',
+      goods: FOOD_GOODS.filter(goodsId => (economy.stock?.[goodsId] ?? 0) > 1e-9).slice(0, 3),
+    };
+  }
+  return {
+    kind: 'no_stock',
+    tone: 'blocked',
+    label: '市場の食料棚が空です',
+    detail: '生産や市場への搬入を待っています。',
+    goods: ['wheat'],
+  };
+}
+
+function householdStateSignals(household, economy) {
   const hungerDays = household?.hungerRun ?? 0;
   const insolvencyMonths = household?.insolvM ?? 0;
   const level = household?.lv ?? 0;
   const downDays = household?.down ?? 0;
   const upDays = household?.up ?? 0;
   const requiredDays = P.UP_DAYS * (level + 1);
+  const culture = household ? cultureProgress(household) : null;
+  const delivery = household ? foodDeliveryStatus(household, economy) : null;
+  const foodDays = household ? householdFoodAmount(household) / P.EAT : Infinity;
   const crises = [
     hungerDays >= 30 ? {
       kind: 'hunger',
@@ -162,7 +316,14 @@ function householdStateSignals(household) {
       // 降格間際は重要だが死亡・離散ではない。点滅させず静的な警告に留める。
       severity: 'warning',
       label: downDays >= P.DOWN_DAYS * 0.84 ? '段階低下間際' : '暮らしが後退',
-      missingGoods: missingSatisfactionGoods(household),
+      goods: culture?.missingGoodsForCurrent ?? [],
+    } : null,
+    foodDays < 0.5 && !['arriving', 'building'].includes(household?.state)
+      && delivery?.kind !== 'returning' ? {
+        kind: 'delivery',
+        severity: 'warning',
+        label: '食料が届かない',
+        goods: delivery?.goods?.slice(0, 2) ?? ['wheat'],
     } : null,
   ].filter(Boolean);
   const crisis = crises.sort((left, right) => (
@@ -171,7 +332,7 @@ function householdStateSignals(household) {
   const trend = level > 0 && downDays >= P.DOWN_DAYS * 0.25
     ? 'down'
     : requiredDays > 0 && upDays >= requiredDays * 0.45 ? 'up' : 'steady';
-  return { crisis, trend, level };
+  return { crisis, trend, level, delivery };
 }
 
 function stockManifest(
@@ -839,7 +1000,7 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
       vacant: !building.fixed && !companyLogistics && building.ownerHouseholdId === null,
       cultureLeveled: !building.fixed && !companyLogistics,
       cultureLevel: owner?.lv ?? 0,
-      stateSignals: householdStateSignals(owner),
+      stateSignals: householdStateSignals(owner, snapshot.economy),
       cartWork: owner?.cartWork ? { ...owner.cartWork } : null,
       cartStock: (owner?.cartStock ?? []).map(cart => ({ ...cart })),
       shelves,
@@ -890,6 +1051,7 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
       walkingDistance: household.walk ?? 0,
       roadConnected: Boolean(household.road),
       marketTransactionTicks: household.marketTransactionTicks ?? 0,
+      foodDelivery: foodDeliveryStatus(household, snapshot.economy),
       pantry,
       pantryStock: pantryGroups[0] ?? null,
     };

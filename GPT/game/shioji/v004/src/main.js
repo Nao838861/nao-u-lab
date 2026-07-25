@@ -1,51 +1,70 @@
-import { IsometricCamera } from './camera.js?v=v004.33.0-feedback-visibility';
-import { SimulationClock } from './clock.js?v=v004.33.0-feedback-visibility';
+import { IsometricCamera } from './camera.js?v=v004.34.0-feedback-visibility';
+import { SimulationClock } from './clock.js?v=v004.34.0-feedback-visibility';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.33.0-feedback-visibility';
+} from './config.js?v=v004.34.0-feedback-visibility';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.33.0-feedback-visibility';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.33.0-feedback-visibility';
-import { developmentMapView } from './development_map.js?v=v004.33.0-feedback-visibility';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.33.0-feedback-visibility';
-import { formatElenaSpeech } from './elena_text.js?v=v004.33.0-feedback-visibility';
+} from './display_batch.js?v=v004.34.0-feedback-visibility';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.34.0-feedback-visibility';
+import { developmentMapView } from './development_map.js?v=v004.34.0-feedback-visibility';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.34.0-feedback-visibility';
+import { formatElenaSpeech } from './elena_text.js?v=v004.34.0-feedback-visibility';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.33.0-feedback-visibility';
+} from './food_readability.js?v=v004.34.0-feedback-visibility';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.33.0-feedback-visibility';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.33.0-feedback-visibility';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.33.0-feedback-visibility';
-import { WorldPresentation } from './presentation.js?v=v004.33.0-feedback-visibility';
-import { Renderer } from './renderer.js?v=v004.33.0-feedback-visibility';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.33.0-feedback-visibility';
+} from './keyboard.js?v=v004.34.0-feedback-visibility';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.34.0-feedback-visibility';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.34.0-feedback-visibility';
+import { WorldPresentation } from './presentation.js?v=v004.34.0-feedback-visibility';
+import { Renderer } from './renderer.js?v=v004.34.0-feedback-visibility';
+import {
+  createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
+} from './save_game.js?v=v004.34.0-feedback-visibility';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.34.0-feedback-visibility';
 import {
   GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRows,
-} from './supply_demand.js?v=v004.33.0-feedback-visibility';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.33.0-feedback-visibility';
+} from './supply_demand.js?v=v004.34.0-feedback-visibility';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.34.0-feedback-visibility';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.33.0-feedback-visibility';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.33.0-feedback-visibility';
+} from './ui_guidance.js?v=v004.34.0-feedback-visibility';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.34.0-feedback-visibility';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
 const requestedStartMode = parseStartMode(location.search);
-const startMode = requestedStartMode ?? 'sandbox';
-const controller = createEngineController({ seed: 11, mode: startMode });
+const resumeRequested = new URLSearchParams(location.search).get('resume') === '1';
+let storedSave = null;
+let storedSaveError = null;
+try {
+  storedSave = readLocalSave(localStorage);
+} catch (error) {
+  storedSaveError = error;
+}
+const startupSave = resumeRequested ? storedSave : null;
+const startMode = startupSave?.mode ?? requestedStartMode ?? 'sandbox';
+const controller = createEngineController({
+  seed: 11,
+  mode: startMode,
+  stateSnapshot: startupSave?.engineState ?? null,
+  inputJournal: startupSave?.inputJournal ?? [],
+});
 const camera = new IsometricCamera();
 const renderer = new Renderer(canvas, camera);
-const clock = new SimulationClock({ speedIndex: requestedStartMode ? 1 : 0 });
+const clock = new SimulationClock({ speedIndex: requestedStartMode || startupSave ? 1 : 0 });
 let model = controller.readModel();
-const tutorialDirector = createTutorialDirectorForMode(startMode);
+const tutorialDirector = createTutorialDirectorForMode(startMode, {
+  state: startupSave?.tutorialState ?? null,
+});
 const guidanceDirector = tutorialDirector ?? createTutorialDirector({ goals: [], letters: [] });
 guidanceDirector.observe(model, []);
 const presentation = new WorldPresentation(model);
@@ -89,8 +108,9 @@ const stockTargetDrafts = new Map();
 const stockTargetFeedback = new Map();
 const stockReleaseDrafts = new Map();
 const renderSignatures = new Map();
-const economyHistory = [];
 const HISTORY_DAYS = 180;
+const economyHistory = (startupSave?.economyHistory ?? []).slice(-HISTORY_DAYS);
+let lastAutosaveDay = startupSave?.summary?.day ?? null;
 const TUTORIAL_HANDOFF_GAP_MS = 240;
 const GUIDANCE_ENTER_MS = 420;
 const FORCED_LETTER_MINIMUM_MS = 5200;
@@ -314,7 +334,7 @@ recordEconomyHistory(model);
 
 const HOUSEHOLD_STATE_LABELS = Object.freeze({
   home: '在宅', toMarket: '市場へ移動中', atMarket: '市場で取引中',
-  fromMarket: '帰宅中', working: '仕事中', toWork: '仕事場へ移動中',
+  fromMarket: '帰宅中', toHome: '帰宅中', working: '仕事中', toWork: '仕事場へ移動中',
   fromWork: '仕事から帰宅中',
 });
 
@@ -364,6 +384,9 @@ function refreshModel({ animate = false, baseSeconds = 0.12 } = {}) {
   model = nextModel;
   recordEconomyHistory(model);
   guidanceDirector.observe(model, events);
+  if (model.day > 0 && model.day % 5 === 0 && model.day !== lastAutosaveDay) {
+    persistCurrentSave();
+  }
   return events;
 }
 
@@ -1003,7 +1026,7 @@ function renderEventSheet() {
     $('#event-log').innerHTML = eventLog.length ? [...eventLog].reverse().map(row => `
       <button type="button" class="event-row ${row.tone}" data-event-sequence="${row.sequence}">
         <b><span>${row.title}</span><span>${row.day}日 / ${row.tick}刻</span></b>
-        <small>${row.details || `座標 ${formatQuantity(row.x)}, ${formatQuantity(row.y)}`}</small>
+        <small>${row.details || '島からの知らせ'}</small>
       </button>`).join('') : '<p class="sheet-note">まだ出来事はありません。</p>';
     uiMetrics.domWrites += 1;
   });
@@ -1121,7 +1144,7 @@ function secretaryFallback() {
       speech: `${JOB_LABELS[selected.type] ?? selected.type}を見ています。品がどこから届き、どこへ運ばれるのかを追えば、この建物の役目が分かります。`,
       kicker: '盤面の選択',
       title: JOB_LABELS[selected.type] ?? selected.type,
-      detail: `座標 ${selected.x}, ${selected.y}・建物情報を開きます`,
+      detail: `${JOB_LABELS[selected.type] ?? selected.type}の暮らしと在庫を開きます`,
     };
   }
   return {
@@ -1379,8 +1402,16 @@ function renderBuildingSheet() {
     ) ?? [];
     const growthRatio = growth?.requiredDays > 0 ? growth.upDays / growth.requiredDays : 1;
     const growthPercent = Math.max(0, Math.min(100, growthRatio * 100));
-    const headline = household.hungerRun >= 10 || foodDays < 7
-      ? `⚠ 食料があと${Math.max(0, Math.floor(foodDays))}日分`
+    const delivery = household.foodDelivery;
+    const deliveryGoods = delivery?.goods?.map(goodsIconMarkup).join('') ?? '';
+    const deliveryMarkup = delivery ? `
+      <div class="delivery-status" data-tone="${escapeHtml(delivery.tone)}">
+        <span>${deliveryGoods}<b>${escapeHtml(delivery.label)}</b></span>
+        <small>${escapeHtml(delivery.detail)}</small>
+      </div>` : '';
+    const missingGoodsMarkup = growth?.missingGoodsForCurrent?.map(goodsIconMarkup).join('') ?? '';
+    const headline = household.hungerRun >= 10 || foodDays < 3
+      ? `⚠ ${delivery?.label ?? `食料があと${Math.max(0, Math.floor(foodDays))}日分`}`
       : !household.roadConnected ? '⚠ 市場へ道がつながっていません'
         : household.insolvencyMonths >= 3 ? '⚠ 暮らしの資金が続いていません'
           : missingKeep.length ? `⚠ ${missingKeep[0]}が足りず、今の暮らしを保てません`
@@ -1405,14 +1436,21 @@ function renderBuildingSheet() {
         <span><small>財布</small><b>${purse}</b></span>
         <span><small>最近の収支</small><b>${income}</b></span>
       </div>
+      ${deliveryMarkup}
       <section class="next-living">
         <h3>次の暮らし</h3>
-        ${nextNeed ? `<div class="living-requirement ${growth.nextSatisfied ? 'met' : 'missing'}"
+        ${nextNeed ? `<div class="culture-growth ${growth.nextSatisfied ? 'met' : 'missing'}"
+          data-state="${missingKeep.length ? 'falling' : growth.nextSatisfied ? 'rising' : 'waiting'}"
           title="${growth.upDays}/${growth.requiredDays}日。必要な暮らしが続くとLv${growth.nextDisplayLevel}になります">
-          <b>${escapeHtml(nextNeed)}</b><span class="living-progress" role="img" aria-label="進み具合 ${growth.upDays}/${growth.requiredDays}日"><i style="width:${growthPercent.toFixed(1)}%"></i></span>
-          <small>${growth.nextSatisfied ? '今日は満たしています' : '不足しています'}・${growth.upDays}/${growth.requiredDays}日</small>
+          <b>Lv${growth.nextDisplayLevel}へ：${escapeHtml(nextNeed)}</b>
+          <span>${growth.nextSatisfied ? '今日は満たしています' : '今日は不足しています'}</span>
+          <i role="progressbar" aria-label="レベルアップの進み具合" aria-valuemin="0"
+            aria-valuemax="${growth.requiredDays}" aria-valuenow="${growth.upDays}">
+            <i style="width:${growthPercent.toFixed(1)}%"></i>
+          </i>
+          <small>あと${Math.max(0, growth.requiredDays - growth.upDays)}日（${growth.upDays}/${growth.requiredDays}日）</small>
         </div>` : '<p class="sheet-note">この家は最高の暮らしに達しています。</p>'}
-        ${missingKeep.length ? `<small class="living-danger">今のLvを保つには ${escapeHtml(missingKeep.join('・'))} が必要です。</small>` : ''}
+        ${missingKeep.length ? `<small class="living-danger"><span class="missing-goods-icons">${missingGoodsMarkup}</span>今のLvを保つには ${escapeHtml(missingKeep.join('・'))} が必要です。段階低下まであと${Math.max(0, growth.downgradeDays - growth.downDays)}日。</small>` : ''}
       </section>
       <section class="job-now">
         <h3>仕事のいま</h3>
@@ -1431,7 +1469,8 @@ function renderBuildingSheet() {
   const boundedCapacity = row => Number.isFinite(row.capacity)
     && row.capacity > 0 && row.capacity < Number.MAX_SAFE_INTEGER / 2;
   const sectionNames = {
-    pantry: '家の食料庫', input: '原料棚', output: '製品棚', storage: '保管棚',
+    foodPantry: '家の食料庫', householdGoods: '家の生活用品',
+    pantry: '家の保管物', input: '原料棚', output: '製品棚', storage: '保管棚',
     construction: '建築資材', inbound: '搬入待ち', outbound: '搬出待ち',
     pickup: '引取待ち', stall: '市場の屋台', companyStock: '会社の倉庫',
   };
@@ -1662,6 +1701,103 @@ function tutorialSave() {
   return tutorialDirector?.exportSave(controller.inputJournal()) ?? null;
 }
 
+function currentSavePayload() {
+  return createSavePayload({
+    gameVersion: VERSION,
+    mode: startMode,
+    engineState: controller.saveState(),
+    inputJournal: controller.inputJournal(),
+    tutorialState: tutorialDirector?.readState() ?? null,
+    economyHistory,
+  });
+}
+
+function setSaveFeedback(message, tone = 'ok') {
+  const feedback = $('#save-feedback');
+  if (!feedback) return;
+  feedback.textContent = message;
+  feedback.dataset.tone = tone;
+}
+
+function persistCurrentSave({ announce = false } = {}) {
+  try {
+    const payload = currentSavePayload();
+    storedSave = writeLocalSave(localStorage, payload);
+    storedSaveError = null;
+    lastAutosaveDay = model.day;
+    updateResumeOption();
+    if (announce) {
+      setSaveFeedback(`${model.day}日目をこの端末に保存しました。`);
+      $('#status span').textContent = `${model.day}日目を保存しました`;
+    }
+    return payload;
+  } catch (error) {
+    if (announce) setSaveFeedback(`保存できませんでした：${error.message}`, 'error');
+    return null;
+  }
+}
+
+function downloadCurrentSave() {
+  const payload = persistCurrentSave();
+  if (!payload) {
+    setSaveFeedback('書き出し用の保存データを作れませんでした。', 'error');
+    return false;
+  }
+  const blob = new Blob([`${JSON.stringify(payload, null, 2)}\n`], {
+    type: 'application/json',
+  });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = saveFileName(payload);
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 0);
+  setSaveFeedback(`${link.download} を書き出しました。調査時はこのファイルを共有してください。`);
+  return true;
+}
+
+function resumeSavedGame() {
+  if (!storedSave) return false;
+  const url = new URL(location.href);
+  url.searchParams.delete('mode');
+  url.searchParams.set('resume', '1');
+  location.assign(url.href);
+  return true;
+}
+
+function updateResumeOption() {
+  const button = $('#start-resume');
+  if (!button) return;
+  button.hidden = !storedSave;
+  if (storedSave) {
+    $('#start-resume-day').textContent = `${storedSave.summary.day}日目`;
+    const population = storedSave.summary.population;
+    $('#start-resume-summary').textContent = `${START_MODES[storedSave.mode].shortLabel}・人口${population}人・${new Date(storedSave.savedAt).toLocaleString('ja-JP')}の記録`;
+  } else if (storedSaveError) {
+    $('#boot-status span').textContent = `保存データを確認できません：${storedSaveError.message}`;
+  }
+}
+
+async function importSaveFile(file) {
+  if (!file) return false;
+  try {
+    const payload = parseSaveText(await file.text());
+    storedSave = writeLocalSave(localStorage, payload);
+    storedSaveError = null;
+    setSaveFeedback(`${payload.summary.day}日目を読み込みました。島を開き直します。`);
+    resumeSavedGame();
+    return true;
+  } catch (error) {
+    setSaveFeedback(`読み込めませんでした：${error.message}`, 'error');
+    $('#boot-status span').textContent = `保存ファイルを読み込めません：${error.message}`;
+    return false;
+  } finally {
+    $('#save-file-input').value = '';
+  }
+}
+
 function openSheet(id) {
   for (const sheet of document.querySelectorAll('.sheet')) sheet.hidden = sheet.id !== id;
   document.body.classList.add('sheet-open');
@@ -1672,6 +1808,7 @@ function openSheet(id) {
       'open-building': 'building-sheet', 'open-events': 'event-sheet',
       'open-development': 'development-sheet',
       'open-tutorial-letters': 'tutorial-letter-sheet',
+      'open-save': 'save-sheet',
     }[button.id];
     if (target) button.setAttribute('aria-pressed', String(target === id));
   });
@@ -1682,6 +1819,12 @@ function openSheet(id) {
   if (id === 'tutorial-letter-sheet') renderTutorialLetterSheet();
   if (id === 'island-sheet') renderIslandSheet();
   if (id === 'supply-sheet') renderSupplySheet();
+  if (id === 'save-sheet') {
+    $('#save-summary').textContent = `${model.day}日目・人口${model.population}人。ファイル保存なら、この島をそのまま調査用に共有できます。`;
+    setSaveFeedback(storedSave
+      ? `この端末には${storedSave.summary.day}日目の保存があります。`
+      : 'この端末にはまだ保存がありません。');
+  }
 }
 
 function closeSheet(id) {
@@ -1717,6 +1860,11 @@ $('#open-building').addEventListener('click', () => {
 $('#open-events').addEventListener('click', () => openSheet('event-sheet'));
 $('#open-development').addEventListener('click', () => openSheet('development-sheet'));
 $('#open-tutorial-letters').addEventListener('click', () => openSheet('tutorial-letter-sheet'));
+$('#open-save').addEventListener('click', () => openSheet('save-sheet'));
+$('#save-local').addEventListener('click', () => persistCurrentSave({ announce: true }));
+$('#save-download').addEventListener('click', downloadCurrentSave);
+$('#save-import').addEventListener('click', () => $('#save-file-input').click());
+$('#save-file-input').addEventListener('change', event => importSaveFile(event.target.files?.[0]));
 document.querySelectorAll('[data-close-sheet]').forEach(button => {
   button.addEventListener('click', () => closeSheet(button.dataset.closeSheet));
 });
@@ -2016,7 +2164,8 @@ function updateTracking(currentModel) {
 }
 
 const gameUiElements = [...document.body.children].filter(element => (
-  element.id !== 'start-screen' && !['SCRIPT', 'NOSCRIPT'].includes(element.tagName)
+  !['start-screen', 'save-file-input'].includes(element.id)
+  && !['SCRIPT', 'NOSCRIPT'].includes(element.tagName)
 ));
 
 function showStartScreen() {
@@ -2024,7 +2173,7 @@ function showStartScreen() {
   $('#start-screen').hidden = false;
   document.body.classList.add('choosing-start');
   for (const element of gameUiElements) element.inert = true;
-  $('#start-screen [data-start-mode="tutorial"]').focus();
+  ($('#start-resume:not([hidden])') ?? $('#start-screen [data-start-mode="tutorial"]')).focus();
 }
 
 function hideStartScreen() {
@@ -2038,6 +2187,15 @@ function chooseStartMode(mode) {
 }
 
 $('#start-screen').addEventListener('click', event => {
+  const saveAction = event.target.closest('[data-save-action]')?.dataset.saveAction;
+  if (saveAction === 'resume') {
+    resumeSavedGame();
+    return;
+  }
+  if (saveAction === 'import') {
+    $('#save-file-input').click();
+    return;
+  }
   const button = event.target.closest('[data-start-mode]');
   if (button) chooseStartMode(button.dataset.startMode);
 });
@@ -2119,6 +2277,10 @@ window.__SHIOJI_V004__ = Object.freeze({
   openTutorialLetter,
   closeTutorialLetter,
   tutorialSave,
+  currentSavePayload,
+  persistCurrentSave,
+  downloadCurrentSave,
+  importSaveFile,
   get tutorialState() { return tutorialDirector?.readState() ?? null; },
   chooseStartMode,
   previewBuilding(job, x, y) { return previewBuildingPlacement(model, job, { x, y }); },
@@ -2129,11 +2291,15 @@ renderHud();
 renderer.render(displayModel, 0);
 requestAnimationFrame(frame);
 
-if (requestedStartMode) {
+updateResumeOption();
+
+if (requestedStartMode || startupSave) {
   hideStartScreen();
-  $('#status span').textContent = startMode === 'tutorial'
-    ? 'エレナの案内で未開拓島から開始しました'
-    : `${START_MODES[startMode].shortLabel}で開始しました`;
+  $('#status span').textContent = startupSave
+    ? `${startupSave.summary.day}日目の保存から再開しました`
+    : startMode === 'tutorial'
+      ? 'エレナの案内で未開拓島から開始しました'
+      : `${START_MODES[startMode].shortLabel}で開始しました`;
 } else {
   showStartScreen();
 }

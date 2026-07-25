@@ -193,12 +193,13 @@ function createEventTracker(world) {
 
 export function createEngineApi(
   world,
-  { recordJournal = true, captureEventStream = true } = {},
+  { recordJournal = true, captureEventStream = true, initialJournal = [] } = {},
 ) {
   if (!world?.state || typeof world.tickOnce !== "function") {
     throw new TypeError("engine API requires a world with state and tickOnce");
   }
-  const journal = [];
+  if (!Array.isArray(initialJournal)) throw new TypeError("initial journal must be an array");
+  const journal = jsonClone(initialJournal);
   const stream = [];
   let nextSequence = 1;
   let tracker = createEventTracker(world);

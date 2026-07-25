@@ -1024,6 +1024,60 @@ async function checkElenaLineBreaks(width, height, mobile) {
   await page.close();
 }
 
+async function checkSeasonalPlots(width, height, mobile) {
+  const page = await newPage(width, height, mobile);
+  const autumn = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.setSpeed(0);
+    const targetDay = 250;
+    if (game.model.day < targetDay) game.advanceTicks((targetDay - game.model.day) * 30, { animate: false });
+    const plots = game.model.buildings.filter(row => (
+      ['wheat', 'veg', 'shepherd', 'rapeseed'].includes(row.type)
+    ));
+    const focus = plots[0];
+    if (focus) game.camera.focus(focus.x + focus.width / 2, focus.y + focus.height / 2);
+    game.renderer.render(game.displayModel, 0);
+    return {
+      version: game.version,
+      day: game.model.day,
+      season: game.renderer.season,
+      plots: plots.map(row => row.type),
+      marketStalls: game.model.marketStalls.length,
+      marketReal: game.model.marketStalls.every(stall => stall.items.every(item => (
+        item.visual.amount === item.qty && item.visual.spriteCount > 0
+      ))),
+    };
+  })()`);
+  assert.equal(autumn.version, 'v004.34.0-feedback-visibility', JSON.stringify(autumn));
+  assert.equal(autumn.season, '秋', JSON.stringify(autumn));
+  assert.ok(autumn.plots.some(type => ['wheat', 'veg'].includes(type)), JSON.stringify(autumn));
+  assert.ok(autumn.plots.some(type => type === 'shepherd'), JSON.stringify(autumn));
+  assert.ok(autumn.marketStalls > 0, JSON.stringify(autumn));
+  assert.equal(autumn.marketReal, true, JSON.stringify(autumn));
+  await page.screenshot(`/tmp/shioji_v004_fields_autumn_${mobile ? 'mobile' : 'desktop'}.png`);
+
+  const winter = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    const targetDay = 331;
+    if (game.model.day < targetDay) game.advanceTicks((targetDay - game.model.day) * 30, { animate: false });
+    const focus = game.model.buildings.find(row => (
+      ['wheat', 'veg', 'shepherd', 'rapeseed'].includes(row.type)
+    ));
+    if (focus) game.camera.focus(focus.x + focus.width / 2, focus.y + focus.height / 2);
+    game.renderer.render(game.displayModel, 0);
+    return {
+      day: game.model.day,
+      season: game.renderer.season,
+      errors: window.__SHIOJI_BOOT_ERROR__ ?? null,
+    };
+  })()`);
+  assert.equal(winter.season, '冬', JSON.stringify(winter));
+  assert.equal(winter.errors, null, JSON.stringify(winter));
+  await page.screenshot(`/tmp/shioji_v004_fields_winter_${mobile ? 'mobile' : 'desktop'}.png`);
+  assert.deepEqual(page.errors, []);
+  await page.close();
+}
+
 async function checkPeopleVisuals(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   const result = await page.evaluate(`(() => {
@@ -1139,8 +1193,8 @@ async function checkPeopleVisuals(width, height, mobile) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.33.0-feedback-visibility');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.33.0-feedback-visibility');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.34.0-feedback-visibility');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.34.0-feedback-visibility');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -1928,6 +1982,126 @@ async function checkViewport(width, height, mobile) {
   await page.close();
 }
 
+async function checkSaveDeliveryUi(width = 1440, height = 900, mobile = false) {
+  const page = await newPage(width, height, mobile, GAME);
+  await page.evaluate("localStorage.removeItem('shioji-v004-autosave')");
+  const saved = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.setSpeed(0);
+    game.advanceTicks(3600, { animate: false });
+    game.openSheet('save-sheet');
+    document.querySelector('#save-local').click();
+    const payload = JSON.parse(localStorage.getItem('shioji-v004-autosave'));
+    const home = game.model.buildings.find(building => building.ownerHouseholdId !== null);
+    game.selectBuilding(home);
+    const saveBox = document.querySelector('#save-sheet').getBoundingClientRect();
+    const progress = document.querySelector('.culture-growth [role="progressbar"]');
+    return {
+      day: game.model.day,
+      payloadDay: payload.summary.day,
+      schema: payload.schema,
+      saveHidden: document.querySelector('#save-sheet').hidden,
+      feedback: document.querySelector('#save-feedback').textContent,
+      saveBox: {
+        left: saveBox.left, right: saveBox.right, top: saveBox.top, bottom: saveBox.bottom,
+      },
+      progress: progress ? {
+        now: Number(progress.getAttribute('aria-valuenow')),
+        max: Number(progress.getAttribute('aria-valuemax')),
+        width: progress.firstElementChild.style.width,
+      } : null,
+      pantryHeadings: document.querySelector('#building-shelves').textContent,
+    };
+  })()`);
+  assert.equal(saved.schema, 'shioji-v004-save', JSON.stringify(saved));
+  assert.equal(saved.payloadDay, saved.day, JSON.stringify(saved));
+  assert.equal(saved.saveHidden, true, '建物を選ぶと保存シートから建物シートへ切り替わる');
+  assert.match(saved.feedback, /保存/);
+  assert.ok(saved.progress && saved.progress.max > 0, JSON.stringify(saved));
+  assert.match(saved.progress.width, /%$/);
+  assert.match(saved.pantryHeadings, /家の食料庫|家の生活用品/);
+  await page.screenshot(`/tmp/shioji_v004_delivery_building_${mobile ? 'mobile' : 'desktop'}.png`);
+
+  const resume = await page.evaluate(`(() => {
+    document.querySelector('#choose-start').click();
+    const button = document.querySelector('#start-resume');
+    const dialog = document.querySelector('.start-dialog').getBoundingClientRect();
+    return {
+      hidden: button.hidden,
+      text: button.textContent,
+      fileInputInert: document.querySelector('#save-file-input').inert,
+      dialog: { left: dialog.left, right: dialog.right, top: dialog.top, bottom: dialog.bottom },
+    };
+  })()`);
+  assert.equal(resume.hidden, false, JSON.stringify(resume));
+  assert.equal(resume.fileInputInert, false, JSON.stringify(resume));
+  assert.match(resume.text, new RegExp(`${saved.day}日目`));
+  assert.ok(resume.dialog.left >= 0 && resume.dialog.right <= width, JSON.stringify(resume));
+  assert.ok(resume.dialog.top >= 0 && resume.dialog.bottom <= height, JSON.stringify(resume));
+  await page.screenshot(`/tmp/shioji_v004_save_${mobile ? 'mobile' : 'desktop'}.png`);
+
+  await page.evaluate("document.querySelector('#start-resume').click()");
+  for (let attempt = 0; attempt < 80; attempt += 1) {
+    await wait(100);
+    const ready = await page.evaluate(`Boolean(window.__SHIOJI_V004__)
+      && new URLSearchParams(location.search).get('resume') === '1'
+      && document.querySelector('#start-screen').hidden`);
+    if (ready) break;
+  }
+  const restored = await page.evaluate(`({
+    day: window.__SHIOJI_V004__.model.day,
+    mode: window.__SHIOJI_V004__.startMode,
+    hidden: document.querySelector('#start-screen').hidden,
+    status: document.querySelector('#status span').textContent,
+  })`);
+  assert.ok(
+    restored.day >= saved.day && restored.day <= saved.day + 1,
+    `再開直後の通常速度で進んでも1日以内: ${JSON.stringify(restored)}`,
+  );
+  assert.equal(restored.mode, 'test', JSON.stringify(restored));
+  assert.equal(restored.hidden, true, JSON.stringify(restored));
+  assert.match(restored.status, /保存から再開/);
+
+  await page.evaluate("document.querySelector('#choose-start').click()");
+  const tutorialChoice = await page.evaluate(`(() => {
+    const button = document.querySelector('[data-start-mode="tutorial"]');
+    return {
+      count: document.querySelectorAll('[data-start-mode="tutorial"]').length,
+      enabled: !button.disabled,
+      screenHidden: document.querySelector('#start-screen').hidden,
+    };
+  })()`);
+  assert.deepEqual(tutorialChoice, { count: 1, enabled: true, screenHidden: false });
+  await page.evaluate("document.querySelector('[data-start-mode=\"tutorial\"]').click()");
+  for (let attempt = 0; attempt < 80; attempt += 1) {
+    await wait(100);
+    const ready = await page.evaluate(`Boolean(window.__SHIOJI_V004__)
+      && window.__SHIOJI_V004__.startMode === 'tutorial'
+      && new URLSearchParams(location.search).get('mode') === 'tutorial'
+      && new URLSearchParams(location.search).get('resume') === null`);
+    if (ready) break;
+  }
+  const startedOver = await page.evaluate(`({
+    mode: window.__SHIOJI_V004__.startMode,
+    resume: new URLSearchParams(location.search).get('resume'),
+    screenHidden: document.querySelector('#start-screen').hidden,
+    buildings: window.__SHIOJI_V004__.model.buildings.map(building => building.type),
+    households: window.__SHIOJI_V004__.model.households.length,
+    roads: window.__SHIOJI_V004__.model.roadKeys.length,
+  })`);
+  assert.deepEqual(startedOver, {
+    mode: 'tutorial',
+    resume: null,
+    screenHidden: true,
+    buildings: ['port'],
+    households: 0,
+    roads: 0,
+  }, JSON.stringify(startedOver));
+  await page.screenshot(`/tmp/shioji_v004_start_over_${mobile ? 'mobile' : 'desktop'}.png`);
+  assert.deepEqual(page.errors, []);
+  await page.close();
+}
+
 if (process.argv.includes('--company-pointer-only')) {
   await checkTutorialCompanyPointerStability();
   console.log('CHARTER ISLE v004 company pointer smoke: PASS');
@@ -1957,6 +2131,14 @@ if (process.argv.includes('--company-pointer-only')) {
   await checkElenaLineBreaks(1440, 900, false);
   await checkElenaLineBreaks(390, 844, true);
   console.log('CHARTER ISLE v004 Elena line breaks smoke: PASS');
+} else if (process.argv.includes('--seasonal-plots-only')) {
+  await checkSeasonalPlots(1440, 900, false);
+  await checkSeasonalPlots(390, 844, true);
+  console.log('CHARTER ISLE v004 seasonal plots smoke: PASS');
+} else if (process.argv.includes('--save-delivery-only')) {
+  await checkSaveDeliveryUi(1440, 900, false);
+  await checkSaveDeliveryUi(390, 844, true);
+  console.log('CHARTER ISLE v004 save/delivery smoke: PASS');
 } else if (process.argv.includes('--viewport-only')) {
   await checkViewport(1440, 900, false);
   await checkViewport(390, 844, true);
