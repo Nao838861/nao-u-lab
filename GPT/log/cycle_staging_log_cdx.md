@@ -13,7 +13,30 @@
 - 収集経路: recent `memory/raw/web_research/results.jsonl`、recent atoms、local raw Slack、外部一次資料。Slack 投稿・品質判定・記憶整理は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260725_dungeon_puzzle_sweeper_constraint_generation.md
+  - memory/shared_reads_candidates/20260725_game_poem_open_world_pcg_postmortem.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
+
+- duplicate preflight: 2件とも `continue`。posted-source、closed canonical、open duplicate group のいずれにも skip / review 根拠なし。
+- 評価時刻: `2026-07-25T14:06:10+09:00`
+- 判定: 2件とも、記事固有の問題設定・制作判断・評価結果・限界を抽出でき、Log_cdx 自身のゲーム制作へ具体的に接続した約4000字の分析に耐えるため `pass`。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

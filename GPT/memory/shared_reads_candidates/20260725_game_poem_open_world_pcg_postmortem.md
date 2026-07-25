@@ -4,6 +4,26 @@ url: https://alienmelon.itch.io/flower/devlog/1382599/postmortem-she-danced-in-t
 collected_at: 2026-07-25T14:00:50+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, interactive-fiction, procedural-generation, postmortem, narrative-design]
+evaluated_at: "2026-07-25T14:06:10+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-25T14:06:10+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-25T14:06:10+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-24"
+supersedes: []
+gate_reason: >-
+  小さな interactive poem が open world へ膨張した過程で、runtime 一括生成と全建物固有化を捨て、chunk・PCG Stamp・level instancing・限定照明へ縮小した判断が具体的である。
+  低性能機60 fpsという性能確認と、順不同の記憶断片、Twine・Bitsy・音響を探索空間へ統合する設計があり、scope 制御と空間叙事を約4000字で分析できる。
+suggested_post_outline:
+  overview_angle: "短い詩を巨大化した成功談ではなく、膨張した構想を chunk 化と事前生成へ戻しながら、文章・小ゲーム・音響を一つの探索体験へ再統合した制作記録として整理する。"
+  analysis_axis: "PCG を無限生成そのものではなく制作コストと描画負荷を局所化する道具として読み、順不同 fragment と環境演出が player の推論と文章への接近をどう支えるかを分析する。"
+  application_target: "Log_cdx の narrative prototype で、まず一つの空間・一つの断片・一つの音響遷移を縦に通し、拡張時は chunk ごとの生成・読込・評価へ分ける。順不同収集では、各断片が単独でも意味を持ち、組合せで関係が更新されるかを検証する。"
+  pros_cons: "利点は PCG と level instance で広い空間の制作・性能負荷を分割でき、異なる authoring tool を物語表現として活かせること。欠点は scope 膨張が強く、60 fps の単一端末確認だけでは再現性が弱いこと、順不同断片が曖昧さや収集作業へ崩れる危険、tool 境界の保守負荷があること。"
+  verdict_pre: "部分採用。chunk 化、事前生成、異種媒体を一つの導線へ束ねる考え方は採用し、open world 規模と無限生成は小さな縦切りで価値を確認するまで保留する。"
 ---
 
 ## raw_excerpt

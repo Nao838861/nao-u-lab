@@ -4,6 +4,26 @@ url: https://britown.itch.io/sweeper/devlog/1308943/development-retrospective-an
 collected_at: 2026-07-25T14:00:50+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, procedural-generation, puzzle, postmortem, web-game]
+evaluated_at: "2026-07-25T14:06:10+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-25T14:06:10+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-25T14:06:10+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-24"
+supersedes: []
+gate_reason: >-
+  配置順依存で解なしに陥る puzzle 盤面生成を、候補集合・最小残余値・制約伝播・盤面 copy による backtracking へ分解した一次 postmortem である。
+  約1秒の旧生成器、browser 移植、touch UI、公開後24時間1000 play・3週間5000 play という結果まであり、実装と公開導線を約4000字で具体的に分析できる。
+suggested_post_outline:
+  overview_angle: "Minesweeper 系 RPG の盤面生成を、全走査型の配置から制約充足問題として捉え直し、解なしを局所的な巻き戻しで回復する制作記録として整理する。"
+  analysis_axis: "最小残余値ヒューリスティック、制約伝播、盤面 snapshot、失敗位置の候補除外が探索量と解の成立性へどう効くかを分け、WFC との共通点と相違点を検討する。"
+  application_target: "Log_cdx の puzzle・level generator で、候補数の少ない要素から確定し、候補0を generation failure として記録し、決定履歴を巻き戻せる deterministic probe を作る。加えて browser・touch 版を早期に出し、生成品質だけでなく到達可能な play 導線も検証する。"
+  pros_cons: "利点は相互依存制約を明示でき、失敗時に全再生成せず原因に近い決定へ戻れること。欠点は盤面 copy のメモリ・時間費用、再帰探索の最悪計算量、生成物の面白さを保証しないこと、利用数だけでは retention や盤面品質を判定できないこと。"
+  verdict_pre: "部分採用。候補集合・最小残余値・backtracking は採用し、盤面 snapshot の粒度と生成後の面白さ評価は作品ごとに別途設計する。"
 ---
 
 ## raw_excerpt
