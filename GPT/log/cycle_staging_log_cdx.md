@@ -84,7 +84,23 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260725_sakura_danmaku_ai_jagged_frontier.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784980873267569"
+    char_count: 4457
+skipped: []
+review:
+  final_decision: posted
+  reason: >-
+    AI の局所生成・deterministic 回帰検査と、人間のルール相互作用・支配戦略・全体 coherence 監督を、
+    item 回収、score、spawn、視認性、難易度順序、固定 tick / seeded RNG の記事固有例で説明できた。
+    単一事例・比較条件なし・player 指標なし・無入力 fingerprint の限界も明記し、必須形式と禁止表現検査を通過した。
+  policy_char_count: 4456
+  posted_char_count: 4457
+  slack_verification: ok
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
