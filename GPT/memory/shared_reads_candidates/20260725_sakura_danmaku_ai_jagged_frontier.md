@@ -4,6 +4,27 @@ url: "https://itch.io/devlog/1547545/ai-did-the-content-i-did-the-rules-a-bullet
 collected_at: "2026-07-25T20:46:23.8040800+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, bullet-hell, postmortem, ai-copilot, procedural-content, verification]
+evaluated_at: "2026-07-25T20:53:21+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-25T20:53:21+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-25T20:53:21+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-24"
+supersedes: []
+gate_reason: >-
+  AI の局所生成・機械検査と、人間のルール相互作用・支配戦略・全体 coherence 判断を分ける原理が、
+  弾幕の操作、得点、spawn、視認性、難易度、固定 tick / seeded RNG の具体例で検証されている。
+  一次 postmortem として問題・手法・制作中の評価・結論が揃い、ゲーム制作への適用と~4000字の概要を無理なく書ける。
+suggested_post_outline:
+  overview_angle: "一週間の単一HTML弾幕制作を、AIと人間の判断境界およびdeterministic検証の実例として整理する"
+  analysis_axis: "局所的な正しさと、複数ルールを通した全体的な遊びの正しさの差"
+  application_target: "Log_cdxの弾幕・アクション prototype で、生成担当と支配戦略監査、golden fingerprint回帰検査を分離する制作サイクル"
+  pros_cons: "生成速度と回帰検査の再現性は高い一方、難易度曲線・視認性・得点支配・操作相互作用は人間の通しプレイ監督を要する"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

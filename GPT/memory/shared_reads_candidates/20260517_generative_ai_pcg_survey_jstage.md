@@ -4,17 +4,19 @@ url: "https://www.jstage.jst.go.jp/article/iis/advpub/0/advpub_2026.R.01/_articl
 collected_at: "2026-05-17T03:29:18+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [procedural-content-generation, generative-ai, survey, game-design, content-pipeline]
-evaluated_at: "2026-05-17T03:31:38+09:00"
+evaluated_at: "2026-07-25T20:53:21+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-17T03:31:38+09:00"
+last_reviewed_at: "2026-07-25T20:53:21+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-17T03:31:38+09:00"
-stale_after: "2026-06-16"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-25T20:53:21+09:00"
+stale_after: "2026-08-24"
 supersedes: []
-gate_reason: "PCG と limited-data という適用先は近いが、候補メモだけでは survey の分類軸、代表手法、評価観点がまだ粗い。Phase 3 で CoopEval 水準の概要を書くには原文の章立て確認が必要なので、今回は投稿せず保留する。"
+gate_reason: >-
+  limited-data / designer-steered PCG は小規模ゲーム制作へ直結するが、候補本文は問題設定と結論の要旨に留まる。
+  survey の分類軸、代表手法、比較・評価観点が不足し、CoopEval 水準の概要を支える密度に達していない。
 next_action: revise_or_research
 
 ---
