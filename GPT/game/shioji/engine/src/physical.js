@@ -960,7 +960,7 @@ export function createWalkCarrier(physical, { people = 1, id = null } = {}) {
     id: id ?? `walker${physical.nextCarrierId}`,
     mode: "walk",
     people,
-    capacity: people * 4,
+    capacity: people,
   };
   physical.nextCarrierId += 1;
   return carrier;
@@ -968,7 +968,7 @@ export function createWalkCarrier(physical, { people = 1, id = null } = {}) {
 
 export function createCartCarrier(
   physical,
-  { id = null, capacity = 16, cartKind = "wood", assetId = null } = {},
+  { id = null, capacity = 8, cartKind = "wood", assetId = null } = {},
 ) {
   requirePositiveQuantity(capacity, "cart carrier capacity");
   const carrier = {
@@ -1085,6 +1085,11 @@ export function completeHaulJob(physical, jobId) {
   depositInventory(target, job.to.section, job.goods, job.qty);
   job.carrier.cargo = null;
   job.carrier.active = false;
+  // 完了履歴は経済照合に親キャリアだけあればよい。個人列を残すと、
+  // 過去96件ぶんの表示snapshotへ不要な人物状態を複製し続けてしまう。
+  delete job.carrier.porters;
+  delete job.carrier.batchElapsed;
+  delete job.carrier.batchTravelCost;
   job.status = "completed";
   deactivateHaulJob(physical, job.id);
   return job;
@@ -1095,13 +1100,27 @@ function carrierSegmentCost(physical, from, to, mode) {
   return tileTravelCost(physical, to.x, to.y, mode) * (diagonal ? 1.4 : 1);
 }
 
-export function stepTravelCarrier(physical, carrier) {
-  if (!Array.isArray(carrier?.path)) throw new TypeError("travel carrier has no route");
+export function stepTravelCarrier(
+  physical,
+  carrier,
+  travelBudget = 1,
+  sharedPath = carrier?.path,
+) {
+  if (!Array.isArray(sharedPath)) throw new TypeError("travel carrier has no route");
+  if (!Number.isFinite(travelBudget) || travelBudget < 0) {
+    throw new TypeError("travel budget must be a finite non-negative number");
+  }
   if (!carrier.active) return true;
-  let budget = 1;
-  while (budget > 1e-9 && carrier.pathIndex < carrier.path.length - 1) {
-    const from = carrier.path[carrier.pathIndex];
-    const to = carrier.path[carrier.pathIndex + 1];
+  let budget = travelBudget;
+  if ((carrier.departureDelay ?? 0) > 0) {
+    const waiting = Math.min(budget, carrier.departureDelay);
+    carrier.departureDelay -= waiting;
+    budget -= waiting;
+    if (budget <= 1e-9) return false;
+  }
+  while (budget > 1e-9 && carrier.pathIndex < sharedPath.length - 1) {
+    const from = sharedPath[carrier.pathIndex];
+    const to = sharedPath[carrier.pathIndex + 1];
     const fullCost = carrierSegmentCost(physical, from, to, carrier.mode);
     const remaining = carrier.segmentRemaining ?? fullCost;
     if (budget + 1e-9 >= remaining) {
@@ -1121,7 +1140,7 @@ export function stepTravelCarrier(physical, carrier) {
     carrier.segmentRemaining = remaining - budget;
     budget = 0;
   }
-  if (carrier.pathIndex >= carrier.path.length - 1) {
+  if (carrier.pathIndex >= sharedPath.length - 1) {
     carrier.active = false;
     return true;
   }
@@ -1129,6 +1148,35 @@ export function stepTravelCarrier(physical, carrier) {
 }
 
 function moveCarrierOneTick(physical, job) {
+  if (job.carrier.porters?.length) {
+    const carrier = job.carrier;
+    carrier.batchTravelCost ??= carrier.path.slice(1).reduce((total, point, index) => (
+      total + carrierSegmentCost(physical, carrier.path[index], point, carrier.mode)
+    ), 0);
+    carrier.batchElapsed = (carrier.batchElapsed ?? 0) + 1;
+    let remaining = Math.min(carrier.batchElapsed, carrier.batchTravelCost);
+    for (let index = 1; index < carrier.path.length; index += 1) {
+      const from = carrier.path[index - 1];
+      const to = carrier.path[index];
+      const segment = carrierSegmentCost(physical, from, to, carrier.mode);
+      if (remaining + 1e-9 >= segment) {
+        remaining -= segment;
+        carrier.position = { x: to.x, y: to.y };
+        continue;
+      }
+      const progress = segment <= 1e-9 ? 1 : remaining / segment;
+      carrier.position = {
+        x: from.x + (to.x - from.x) * progress,
+        y: from.y + (to.y - from.y) * progress,
+      };
+      break;
+    }
+    const lastDelay = carrier.porters.at(-1)?.departureDelay ?? 0;
+    if (carrier.batchElapsed + 1e-9 >= carrier.batchTravelCost + lastDelay) {
+      completeHaulJob(physical, job.id);
+    }
+    return;
+  }
   if (stepTravelCarrier(physical, job.carrier)) completeHaulJob(physical, job.id);
 }
 
@@ -1140,6 +1188,21 @@ function assertActiveCarrierJobs(physical, jobs, { checkRoadPaths = true } = {})
     }
     if (!carrier.cargo || carrier.cargo.goods !== job.goods || carrier.cargo.qty !== job.qty) {
       throw new Error(`輸送中cargo不一致 ${job.id}`);
+    }
+    if (carrier.porters?.length) {
+      const porterQty = carrier.porters.reduce(
+        (total, porter) => total + (porter.cargo?.qty ?? 0),
+        0,
+      );
+      if (Math.abs(porterQty - job.qty) > 1e-7) {
+        throw new Error(`個人運搬cargo不一致 ${job.id}`);
+      }
+      if (carrier.porters.some((porter) => (
+        porter.people !== 1
+        || porter.cargo.qty > carrierGoodsCapacity(porter, job.goods) + 1e-9
+      ))) {
+        throw new Error(`個人運搬容量超過 ${job.id}`);
+      }
     }
     if (!Number.isFinite(carrier.position?.x) || !Number.isFinite(carrier.position?.y)) {
       throw new Error(`キャリア位置不正 ${job.id}`);

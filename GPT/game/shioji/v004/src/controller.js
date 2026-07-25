@@ -1,4 +1,4 @@
-import { snapshotToViewModel } from './view_model.js?v=v004.23.0-readability';
+import { snapshotToViewModel } from './view_model.js?v=v004.24.0-individual-logistics';
 
 export function createViewController(api) {
   if (!api?.snapshot || !api?.advanceTicks || !api?.applyOperation) {

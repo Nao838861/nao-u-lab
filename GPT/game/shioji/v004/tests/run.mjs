@@ -55,6 +55,7 @@ import {
 import {
   GUIDANCE_TIERS, guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute,
   secretaryRouteFor, secretaryEventsAfter, tutorialHandoffFor,
+  tutorialSpeedAfterObjectiveChange,
 } from '../src/ui_guidance.js';
 import { islandCalendar, islandHealthSummary, recentCompanySummary } from '../src/ui_summary.js';
 import { snapshotToViewModel } from '../src/view_model.js';
@@ -190,7 +191,10 @@ test('性能L: イベントcursorは全履歴filterと同じ順序・値を返�
   const all = api.events();
   assert.ok(all.length > 2);
   assert.ok(all.length <= 128, '観測イベントは小さなリングバッファだけを保持する');
-  assert.ok(all[0].sequence > 1, '古い観測イベントは切り詰められる');
+  assert.ok(
+    all.at(-1).sequence > all.length,
+    '頻出イベントは切り詰めつつ、古い重要イベントは保持できる',
+  );
   for (const cursor of [0, all[0].sequence, all[Math.floor(all.length / 2)].sequence, all.at(-1).sequence]) {
     assert.deepEqual(api.events({ afterSequence: cursor }), all.filter(event => event.sequence > cursor));
   }
@@ -1311,7 +1315,7 @@ test('チュートリアル段11: 第一章で置いた漁師と野菜畑の実�
   tutorialThroughPlay.foodBaseline = baseline;
 });
 
-test('チュートリアル段12: 3シード実測の食料輸入EMA 0.60未満を自給目標にする', () => {
+test('チュートリアル段12: 個人運搬後の3シード実測帯で食料輸入EMAを自給目標にする', () => {
   const { controller, director, observe, foodStartTick, foodBaseline } = tutorialThroughPlay;
   const deadline = controller.readModel().day + 70;
   while (!director.readState().completedGoals.includes('reduce-food-imports')
@@ -2146,7 +2150,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.23.0-readability');
+  assert.equal(VERSION, 'v004.24.0-individual-logistics');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2273,7 +2277,7 @@ function measureLoggerRoadRecovery(seed) {
       before = {
         day: controller.readModel().day,
         tripTicks: household.marketTripTicks,
-        multiplier: household.productionMultiplier,
+        multiplier: household.marketTripEfficiency,
       };
     }
   }
@@ -2298,7 +2302,7 @@ function measureLoggerRoadRecovery(seed) {
       after = {
         day: controller.readModel().day,
         tripTicks: household.marketTripTicks,
-        multiplier: household.productionMultiplier,
+        multiplier: household.marketTripEfficiency,
       };
     }
   }
@@ -2365,7 +2369,11 @@ test('段2: full snapshotを地形・建物・キャリア・棚の不変描画�
   assert.equal(model.terrain.length, snapshot.physical.height);
   assert.equal(model.terrain[0].length, snapshot.physical.width);
   assert.equal(model.buildings.length, snapshot.physical.buildings.length);
-  assert.equal(model.carriers.length, snapshot.economy.households.length);
+  assert.equal(
+    model.carriers.filter(carrier => carrier.householdId !== undefined).length,
+    snapshot.economy.households.reduce((total, household) => total + household.members.length, 0),
+  );
+  assert.ok(model.carriers.every(carrier => carrier.members === undefined || carrier.members === 1));
   assert.ok(model.buildings.every(building => Array.isArray(building.shelves)));
   assert.equal(Object.isFrozen(model), true);
   assert.equal(Object.isFrozen(model.terrain[0][0]), true);
@@ -2427,15 +2435,86 @@ test('可視物流AC: 家族列は実人数・実活動状態・実仕事先を�
   household.wx = household.x + 3;
   household.wy = household.y + 2;
   household.productionMultiplier = 0.75;
+  const worker = household.members[0];
+  household.workCarrier = {
+    memberId: worker.id,
+    memberName: worker.name,
+    position: { x: household.x + 1, y: household.y + 0.5 },
+    path: [
+      { x: household.x, y: household.y },
+      { x: household.wx, y: household.wy },
+    ],
+  };
   const model = snapshotToViewModel(snapshot);
-  const carrier = model.carriers.find(row => row.id === `household:${household.id}`);
-  assert.equal(carrier.state, 'toWork');
-  assert.equal(carrier.members, household.members.length);
-  assert.equal(carrier.productionMultiplier, 0.75);
+  const carriers = model.carriers.filter(row => row.householdId === household.id);
+  assert.equal(carriers.length, household.members.length);
+  assert.ok(carriers.every(carrier => carrier.members === 1 && carrier.peopleRows.length === 1));
+  const travelling = carriers.find(carrier => carrier.activity === 'working-away');
+  assert.equal(travelling.personId, worker.id);
   assert.deepEqual(
-    { x: carrier.to.x, y: carrier.to.y },
+    { x: travelling.to.x, y: travelling.to.y },
     { x: household.wx, y: household.wy },
   );
+  assert.equal(carriers.filter(carrier => carrier.activity === 'working').length,
+    household.members.length - 1);
+});
+
+test('25C可視物流: 運び手ごとの経路・時差・実積み荷を個人行へそのまま渡す', () => {
+  const api = createEngineApi(buildBaseCity(11));
+  api.advanceDays(30);
+  const snapshot = api.snapshot({ scope: 'full' });
+  const household = snapshot.economy.households[0];
+  const [first, second] = household.members;
+  household.state = 'toMarket';
+  household.productionMultiplier = 0.8;
+  household.marketCarrier = {
+    mode: 'walk',
+    porters: [
+      {
+        memberId: first.id,
+        memberName: first.name,
+        mode: 'walk',
+        tier: 'backpack',
+        visualMode: 'backpack',
+        capacity: 4,
+        position: { x: household.x + 1, y: household.y },
+        path: [{ x: household.x, y: household.y }, { x: snapshot.economy.market.x, y: snapshot.economy.market.y }],
+        departureDelay: 0,
+        cargo: { manifest: { log: 2, tools: 1 } },
+      },
+      {
+        memberId: second.id,
+        memberName: second.name,
+        mode: 'walk',
+        tier: 'hand',
+        visualMode: 'hand',
+        capacity: 1,
+        position: { x: household.x + 0.4, y: household.y },
+        path: [{ x: household.x, y: household.y }, { x: snapshot.economy.market.x, y: snapshot.economy.market.y }],
+        departureDelay: 0.22,
+        cargo: { manifest: { wheat: 1 } },
+      },
+    ],
+  };
+  const model = snapshotToViewModel(snapshot);
+  const firstRow = model.carriers.find(row => row.personId === first.id);
+  const secondRow = model.carriers.find(row => row.personId === second.id);
+  assert.equal(firstRow.kind, 'backpack');
+  assert.deepEqual(firstRow.cargoRows, [
+    { goods: 'log', amount: 2 },
+    { goods: 'tools', amount: 1 },
+  ]);
+  assert.equal(secondRow.kind, 'walker');
+  assert.deepEqual(secondRow.cargoRows, [{ goods: 'wheat', amount: 1 }]);
+  assert.equal(secondRow.departureDelay, 0.22);
+  assert.notDeepEqual({ x: firstRow.x, y: firstRow.y }, { x: secondRow.x, y: secondRow.y });
+  assert.ok(model.carriers.filter(row => row.householdId === household.id)
+    .every(row => row.peopleRows.length === 1));
+  assert.ok(Math.abs(
+    model.carriers.filter(row => row.householdId === household.id)
+      .reduce((total, row) => total + row.productionMultiplier, 0)
+      - household.productionMultiplier
+  ) < 1e-9);
 });
 
 test('UI向上段2: 世帯の財布・家族・充足・空腹と加工棚を不変モデルで公開する', () => {
@@ -3037,11 +3116,15 @@ test('ラン3 AO: 世帯人数ぶんの個人IDを保ち、在宅生産者を敷
   api.advanceDays(30);
   const model = snapshotToViewModel(api.snapshot({ scope: 'full' }));
   const householdCarriers = model.carriers.filter(carrier => carrier.householdId !== undefined);
-  assert.equal(householdCarriers.length, model.households.length);
+  assert.equal(
+    householdCarriers.length,
+    model.households.reduce((total, household) => total + household.members, 0),
+  );
   for (const carrier of householdCarriers) {
     const household = model.households.find(row => row.id === carrier.householdId);
-    assert.equal(carrier.peopleRows.length, household.members);
-    assert.equal(new Set(carrier.peopleRows.map(person => person.id)).size, household.members);
+    assert.equal(carrier.peopleRows.length, 1);
+    assert.equal(carrier.members, 1);
+    assert.ok(household.memberNames.includes(carrier.peopleRows[0].name));
   }
   const working = householdCarriers.find(carrier => carrier.activity === 'working');
   assert.ok(working, '在宅生産中の世帯が作業ヤードにいる');
@@ -3054,18 +3137,23 @@ test('ラン3 AO: 世帯人数ぶんの個人IDを保ち、在宅生産者を敷
 
 test('段10/11: 実港便の接岸・1荷/tick・出港をsnapshotとイベント差分へ同期する', () => {
   const api = createEngineApi(buildBaseCity(11));
-  api.advanceTicks(1292);
   let previousSnapshot = api.snapshot();
   let previousModel = snapshotToViewModel(previousSnapshot);
   let sequence = api.events().at(-1)?.sequence ?? 0;
-
-  api.advanceTicks(1);
-  let snapshot = api.snapshot();
-  let model = snapshotToViewModel(snapshot);
-  let events = api.events({ afterSequence: sequence });
-  sequence = events.at(-1)?.sequence ?? sequence;
-  assert.equal(model.tick, 1293);
+  let snapshot = previousSnapshot;
+  let model = previousModel;
+  let events = [];
+  for (let guard = 0; guard < 1800 && model.portCalls.length === 0; guard += 1) {
+    previousSnapshot = snapshot;
+    previousModel = model;
+    api.advanceTicks(1);
+    snapshot = api.snapshot();
+    model = snapshotToViewModel(snapshot);
+    events = api.events({ afterSequence: sequence });
+    sequence = events.at(-1)?.sequence ?? sequence;
+  }
   assert.equal(model.portCalls.length, 1);
+  assert.ok(model.tick <= 1800, '最初の本国便が60日以内に接岸する');
   assert.equal(events.some(event => event.type === 'docking'), true);
   const approaching = interpolateWorldModel(previousModel, model, events, 0.25);
   assert.equal(approaching.portVisuals[0].phase, 'approaching');
@@ -3108,9 +3196,13 @@ test('段10/11: 実港便の接岸・1荷/tick・出港をsnapshotとイベン�
 
 test('段12: 実キャリアは荷・出所・行き先・経路を追跡表示できるモデルを持つ', () => {
   const api = createEngineApi(buildBaseCity(11));
-  api.advanceTicks(1303);
-  const model = snapshotToViewModel(api.snapshot());
-  const carrier = model.carriers.find(row => row.haulJobId);
+  let model = snapshotToViewModel(api.snapshot());
+  let carrier = null;
+  for (let guard = 0; guard < 1800 && !carrier; guard += 1) {
+    api.advanceTicks(1);
+    model = snapshotToViewModel(api.snapshot());
+    carrier = model.carriers.find(row => row.haulJobId && row.goods === 'wheat');
+  }
   assert.ok(carrier, '最初の港荷を運ぶキャリアが存在する');
   assert.equal(carrier.kind, 'walker', '会社が荷車を買う前は有限の運び手が担う');
   assert.ok(carrier.people >= 1);
@@ -3411,11 +3503,23 @@ test('UI向上段9: 常駐エレナは強制書状を予告し、任意書状を
   assert.equal(optionalAfterHandoff.priority, 'goal-complete', '任意書状より達成の切替を先に伝える');
   assert.equal(tutorialHandoffFor(nextObjective, nextObjective), null, '同じ目標の再描画では達成を再発行しない');
   assert.deepEqual(objectiveActionFor({ id: 'first-settlers-arrive' }, { buildings: [] }), {
-    kind: 'speed', speed: 3, label: '一日毎秒にして入植を待つ',
+    kind: 'speed', speed: 3, label: '運び手を見ながら一日毎秒にする',
   });
   assert.deepEqual(objectiveActionFor({ id: 'accept-first-order' }, {
     buildings: [], orderOffer: null,
-  }), { kind: 'speed', speed: 3, label: '一日毎秒にして注文を待つ' });
+  }), { kind: 'speed', speed: 3, label: '物流を見ながら一日毎秒にする' });
+  assert.equal(tutorialSpeedAfterObjectiveChange({
+    previousObjective: { id: 'wait' },
+    objective: { id: 'build' },
+    previousAction: { kind: 'speed', speed: 3 },
+    speedIndex: 3,
+  }), 1);
+  assert.equal(tutorialSpeedAfterObjectiveChange({
+    previousObjective: { id: 'build-a' },
+    objective: { id: 'build-b' },
+    previousAction: { kind: 'building' },
+    speedIndex: 3,
+  }), 3);
   const important = secretaryRouteFor({
     letters: [], objective: { ...objective, complete: true },
     events: events.map(event => event.important

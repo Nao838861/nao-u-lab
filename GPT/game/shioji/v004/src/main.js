@@ -1,35 +1,35 @@
-import { IsometricCamera } from './camera.js?v=v004.23.0-readability';
-import { SimulationClock } from './clock.js?v=v004.23.0-readability';
+import { IsometricCamera } from './camera.js?v=v004.24.0-individual-logistics';
+import { SimulationClock } from './clock.js?v=v004.24.0-individual-logistics';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.23.0-readability';
+} from './config.js?v=v004.24.0-individual-logistics';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.23.0-readability';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.23.0-readability';
-import { developmentMapView } from './development_map.js?v=v004.23.0-readability';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.23.0-readability';
+} from './display_batch.js?v=v004.24.0-individual-logistics';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.24.0-individual-logistics';
+import { developmentMapView } from './development_map.js?v=v004.24.0-individual-logistics';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.24.0-individual-logistics';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.23.0-readability';
+} from './food_readability.js?v=v004.24.0-individual-logistics';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.23.0-readability';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.23.0-readability';
-import { WorldPresentation } from './presentation.js?v=v004.23.0-readability';
-import { Renderer } from './renderer.js?v=v004.23.0-readability';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.23.0-readability';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.23.0-readability';
+} from './keyboard.js?v=v004.24.0-individual-logistics';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.24.0-individual-logistics';
+import { WorldPresentation } from './presentation.js?v=v004.24.0-individual-logistics';
+import { Renderer } from './renderer.js?v=v004.24.0-individual-logistics';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.24.0-individual-logistics';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.24.0-individual-logistics';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
-  secretaryRouteFor, tutorialHandoffFor,
-} from './ui_guidance.js?v=v004.23.0-readability';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.23.0-readability';
+  secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
+} from './ui_guidance.js?v=v004.24.0-individual-logistics';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.24.0-individual-logistics';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -947,6 +947,13 @@ function renderTutorial() {
   const available = Boolean(tutorialDirector);
   const state = tutorialDirector?.readState() ?? null;
   const objective = tutorialDirector?.currentObjective() ?? null;
+  const nextSpeed = tutorialSpeedAfterObjectiveChange({
+    previousObjective: lastTutorialObjective,
+    objective,
+    previousAction: currentTutorialAction,
+    speedIndex: clock.speedIndex,
+  });
+  if (nextSpeed !== clock.speedIndex) setSpeed(nextSpeed);
   const handoff = tutorialHandoffFor(lastTutorialObjective, objective);
   if (handoff) holdTutorialHandoff(handoff);
   lastTutorialObjective = objective;

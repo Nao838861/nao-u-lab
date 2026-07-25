@@ -2,15 +2,15 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.23.0-readability';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.23.0-readability';
-import { displayCultureLevel } from './visuals.js?v=v004.23.0-readability';
+} from './engine_bridge.js?v=v004.24.0-individual-logistics';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.24.0-individual-logistics';
+import { displayCultureLevel } from './visuals.js?v=v004.24.0-individual-logistics';
 import {
   PLAYER_FACING_BANNED_TERMS,
   executableFoodIntervention,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.23.0-readability';
+} from './food_readability.js?v=v004.24.0-individual-logistics';
 
 export { PLAYER_FACING_BANNED_TERMS };
 
@@ -236,7 +236,7 @@ function farHouseholdFromMarket(model) {
 
 export const LOGGER_TRIP_WARNING_TICKS = 24;
 export const LOGGER_TRIP_RECOVERY_TICKS = 4;
-export const FOOD_IMPORT_EMA_TARGET = 0.6;
+export const FOOD_IMPORT_EMA_TARGET = 1.2;
 export const SEASONAL_SURPLUS_MIN = 8;
 export const SEASONAL_VALLEY_RATIO = 0.2;
 export const SEASONAL_RESERVE_TARGET = 16;
@@ -361,7 +361,7 @@ export const TUTORIAL_ELENA_MESSAGES = Object.freeze({
   'market-for-logs': '木こりが丸太を売れるよう、道沿いに市場を開きましょう。売れたお金で、家族は食料を買えるようになります。',
   'connect-market-to-port': '港と市場の入口を道でつなぎましょう。本土から届く食料も、島から出す荷も、この道を通ります。',
   'request-first-aid': '漁師と野菜畑が働き始めるまでの食料を、本国から一便だけ送ってもらいましょう。',
-  'first-settlers-arrive': '市場と当座の食料が整いました。時間を進め、最初の家族が島へ着くのを待ちましょう。',
+  'first-settlers-arrive': '市場と当座の食料が整いました。港から市場へ食料を運ぶ人を追いながら、最初の家族を迎えましょう。',
   'place-island-food': '最初の家族が着きました。水辺に漁師を、市場の近くに野菜畑を建て、島で食料を作り始めましょう。',
   'first-woodshop': '木工房を道沿いに建てましょう。木こりの丸太を木製品に変え、新しい売り物を作れます。',
   'warehouse-for-order': '市場と港へ道が通る場所に、倉庫を建てましょう。会社が買った品を、注文まで保管する場所です。',
@@ -1053,7 +1053,7 @@ function loggerTripObservation(model) {
   return {
     householdId: household.id,
     tripTicks: household.marketTripTicks,
-    multiplier: household.productionMultiplier,
+    multiplier: household.marketTripEfficiency,
   };
 }
 
@@ -1228,7 +1228,7 @@ export const TUTORIAL_GOALS = Object.freeze([
   Object.freeze({
     id: 'first-settlers-arrive',
     chapter: '第一章・最初の一荷',
-    title: '市場と食料便を整えて、最初の入植世帯を迎える',
+    title: '港から市場へ食料を運ぶ人を見ながら、最初の家族を迎える',
     evaluate({ model }) {
       const households = model.households.filter(household => household.job === 'logger').length;
       const daysToJudgment = 15 - (model.day % 15);
@@ -1237,7 +1237,7 @@ export const TUTORIAL_GOALS = Object.freeze([
         progress: { done: Number(households > 0), total: 1 },
         detail: households > 0
           ? `木こりの入植世帯 ${households}世帯 / 島の人口 ${model.population}人`
-          : `入植判定まで最大あと${daysToJudgment}日。市場と支援食料を整えたので、一日毎秒で進められます`,
+          : `入植判定まで最大あと${daysToJudgment}日。港から市場へ食料を運ぶ人を一人選び、積み荷が届くまで追ってみましょう`,
         evidence: { households, population: model.population },
       };
     },
@@ -1320,7 +1320,7 @@ export const TUTORIAL_GOALS = Object.freeze([
         ? `受諾済み: ${goodsLabel(model.activeOrder.g)} ${model.activeOrder.qty}荷`
         : offer
           ? `注文状が届いています: ${goodsLabel(offer.g)} ${offer.qty}荷(${offer.due}日目まで)`
-          : `倉庫の木製品 ${(model.companyStock?.tools ?? 0).toFixed(1)}荷 / 次の注文判定まで最大あと${daysToJudgment}日。一日毎秒で待てます`;
+          : `倉庫の木製品 ${(model.companyStock?.tools ?? 0).toFixed(1)}荷 / 次の注文判定まで最大あと${daysToJudgment}日。市場から倉庫へ続けざまに出る運び手を追ってみましょう`;
       return {
         complete: accepted,
         progress: { done: Number(accepted), total: 1 },

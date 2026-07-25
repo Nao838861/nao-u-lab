@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.23.0-readability';
+import { JOB_LABELS } from './config.js?v=v004.24.0-individual-logistics';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

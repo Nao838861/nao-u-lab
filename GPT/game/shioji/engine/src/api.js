@@ -116,7 +116,11 @@ function viewSnapshot(state) {
     },
     physical: {
       buildings: physical.buildings,
-      haulJobs: physical.haulJobs,
+      // 描画側は移動中の人だけを使う。完了履歴まで毎tick複製すると、
+      // 街が育つほど表示更新コストだけが増え続ける。
+      haulJobs: (physical.activeHaulJobIds ?? [])
+        .map((jobId) => haulJobById(physical, jobId))
+        .filter(Boolean),
       height: physical.height,
       occupied: physical.occupied,
       portCalls: physical.portCalls.filter((call) => call.status === "docked")
@@ -210,8 +214,16 @@ export function createEngineApi(
       ...detail,
     });
     nextSequence += 1;
-    if (stream.length > EVENT_STREAM_LIMIT) {
-      stream.splice(0, stream.length - EVENT_STREAM_LIMIT);
+    while (stream.length > EVENT_STREAM_LIMIT) {
+      const transientIndex = stream.findIndex((event) => (
+        event.type === "transaction"
+        || event.type === "handling"
+        || (
+          ["departure", "arrival"].includes(event.type)
+          && (event.haulJobId || event.fromState || event.toState)
+        )
+      ));
+      stream.splice(transientIndex >= 0 ? transientIndex : 0, 1);
     }
   };
 

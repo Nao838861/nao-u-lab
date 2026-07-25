@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.23.0-readability';
+import { TILE } from './config.js?v=v004.24.0-individual-logistics';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

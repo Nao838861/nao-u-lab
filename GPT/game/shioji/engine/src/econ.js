@@ -115,8 +115,10 @@ export const P = deepFreeze({
   CART_TOOLS: 0.5,
   CART_WORK_DAYS: 8,
   CART_HAND_CAPACITY: 1,
-  CART_WOOD_CAPACITY: 4,
-  CART_IRON_CAPACITY: 8,
+  CART_BACKPACK_CAPACITY: 4,
+  CART_WOOD_CAPACITY: 8,
+  CART_IRON_CAPACITY: 16,
+  MARKET_DEPARTURE_LOAD_RATIO: 0.8,
   CART_WOOD_DURABILITY: 360,
   CART_MARKUP: 1.7,
   CART_TIME_VALUE: 0.35,
@@ -260,9 +262,14 @@ export function recordEconomicMaterialFlow(
 
 function makeHouseholdRecord(economy, { job, x, y }) {
   if (!JOBCLS[job]) throw new Error(`unknown household job: ${job}`);
+  ensurePersonIds(economy);
   const id = economy.nextHouseholdId;
   economy.nextHouseholdId += 1;
   const family = generateFamily(id);
+  for (const member of family.members) {
+    member.id = `person${economy.nextPersonId}`;
+    economy.nextPersonId += 1;
+  }
   const household = {
     id,
     sur: family.sur,
@@ -295,6 +302,8 @@ function makeHouseholdRecord(economy, { job, x, y }) {
     buildingId: null,
     cargo: null,
     marketCarrier: null,
+    workCarrier: null,
+    workRotation: 0,
     cart: null,
     cartStock: [],
     cartWork: null,
@@ -312,6 +321,33 @@ function makeHouseholdRecord(economy, { job, x, y }) {
     wy: null,
   };
   return household;
+}
+
+function ensurePersonIds(economy) {
+  let nextId = Number.isInteger(economy.nextPersonId) && economy.nextPersonId > 0
+    ? economy.nextPersonId
+    : 1;
+  for (const household of economy.households ?? []) {
+    for (const member of household.members ?? []) {
+      if (typeof member.id !== "string") continue;
+      const match = /^person(\d+)$/.exec(member.id);
+      if (match) nextId = Math.max(nextId, Number(match[1]) + 1);
+    }
+  }
+  const claimed = new Set();
+  for (const household of economy.households ?? []) {
+    for (const member of household.members ?? []) {
+      if (typeof member.id === "string" && !claimed.has(member.id)) {
+        claimed.add(member.id);
+        continue;
+      }
+      while (claimed.has(`person${nextId}`)) nextId += 1;
+      member.id = `person${nextId}`;
+      claimed.add(member.id);
+      nextId += 1;
+    }
+  }
+  economy.nextPersonId = nextId;
 }
 
 export function createHousehold(economy, { job, x, y, origin = "immigrant" }) {
@@ -351,13 +387,38 @@ export function householdEat(household) {
 }
 
 export function householdHaul(household, { useCart = Boolean(household.cart) } = {}) {
-  // 世帯の一人分の手運び1単位は、従来互換の4重量として扱う。
-  // 荷車はこの基準に対して木4倍・鉄8倍になり、荷車ゼロ時の生活床を変えない。
-  const handWeightPerPerson = 4;
-  const ratio = useCart
-    ? household.cart?.kind === "iron" ? P.CART_IRON_CAPACITY : P.CART_WOOD_CAPACITY
-    : P.CART_HAND_CAPACITY;
-  return household.members.length * handWeightPerPerson * ratio;
+  return householdTransportPlan(household, { useCart })
+    .reduce((total, porter) => total + porter.capacity, 0);
+}
+
+export function householdTransportPlan(
+  household,
+  { useCart = Boolean(household.cart) } = {},
+) {
+  const canUseBackpack = (household.pantry?.tools ?? 0) > 1e-9;
+  return household.members.map((member, index) => {
+    if (index === 0 && useCart && household.cart) {
+      const iron = household.cart.kind === "iron";
+      return {
+        memberId: member.id ?? `${household.id}:${index}`,
+        memberName: member.name ?? `住民${index + 1}`,
+        tier: iron ? "iron_cart" : "wood_cart",
+        mode: "cart",
+        capacity: iron ? P.CART_IRON_CAPACITY : P.CART_WOOD_CAPACITY,
+        assetId: household.cart.id,
+        cartKind: household.cart.kind,
+      };
+    }
+    return {
+      memberId: member.id ?? `${household.id}:${index}`,
+      memberName: member.name ?? `住民${index + 1}`,
+      tier: canUseBackpack ? "backpack" : "hand",
+      mode: "walk",
+      capacity: canUseBackpack ? P.CART_BACKPACK_CAPACITY : P.CART_HAND_CAPACITY,
+      assetId: null,
+      cartKind: null,
+    };
+  });
 }
 
 export function householdInputBuilding(physical, household) {
@@ -1396,9 +1457,11 @@ export function householdCartPurchaseDecision(economy, physical, household, cart
   const cartOneWay = marketPathLength(economy, physical, household, "cart");
   if (!Number.isFinite(cartOneWay)) return { buy: false, reason: "no_cart_route" };
   const cartDuration = cartOneWay * 2 + 2;
+  const personalFloor = householdTransportPlan(household, { useCart: false })[0]?.capacity
+    ?? P.CART_HAND_CAPACITY;
   const capacityRatio = cart.kind === "iron"
-    ? P.CART_IRON_CAPACITY / P.CART_HAND_CAPACITY
-    : P.CART_WOOD_CAPACITY / P.CART_HAND_CAPACITY;
+    ? P.CART_IRON_CAPACITY / personalFloor
+    : P.CART_WOOD_CAPACITY / personalFloor;
   const timeSaved = Math.max(0, walkDuration * capacityRatio - cartDuration);
   const wearPerTrip = Math.max(1, cartOneWay * 2);
   const usefulTrips = cart.durability / wearPerTrip;
@@ -2650,7 +2713,36 @@ function availableCompanyTransport(economy, physical) {
 
 export function companyAvailableGoodsCapacity(economy, physical, goods) {
   const transport = availableCompanyTransport(economy, physical);
-  return transport ? transport.capacity / goodsUnitWeight(goods) : 0;
+  if (!transport) return 0;
+  return transport.capacity / goodsUnitWeight(goods);
+}
+
+function assignCompanyPorters(job) {
+  if (
+    job.carrier.mode !== "walk"
+    || !job.carrier.companyTransport
+    || job.carrier.people <= 1
+  ) return job;
+  let remaining = job.qty;
+  job.carrier.porters = Array.from({ length: job.carrier.people }, (_, index) => {
+    const qty = Math.min(
+      remaining,
+      P.CART_HAND_CAPACITY / goodsUnitWeight(job.goods),
+    );
+    remaining -= qty;
+    return {
+      id: `${job.id}:person${index + 1}`,
+      mode: "walk",
+      routeMode: job.carrier.routeMode,
+      people: 1,
+      capacity: P.CART_HAND_CAPACITY,
+      departureDelay: index * 0.12,
+      cargo: { goods: job.goods, qty },
+    };
+  });
+  if (remaining > 1e-7) throw new Error(`会社運び手の割当容量を超えました: ${remaining}`);
+  job.carrier.batchElapsed = 0;
+  return job;
 }
 
 function dispatchCompanyHaul(
@@ -2688,6 +2780,7 @@ function dispatchCompanyHaul(
     carrier,
   });
   if (transport.asset) transport.asset.busyJobId = job.id;
+  assignCompanyPorters(job);
   job.economicLogistics = { kind, day, ...metadata };
   job.economicReconciled = false;
   (physical.economicHaulJobIds ??= []).push(job.id);
@@ -3684,6 +3777,7 @@ const BIRTH_NAMES = deepFreeze([
 ]);
 
 export function runBirthPhase(economy, { day, random }) {
+  ensurePersonIds(economy);
   const births = [];
   if (day % 30 !== 0) return births;
   for (const household of economy.households) {
@@ -3698,10 +3792,12 @@ export function runBirthPhase(economy, { day, random }) {
       && random() < 0.12
     ) {
       const member = {
+        id: `person${economy.nextPersonId}`,
         name: BIRTH_NAMES[Math.floor(random() * BIRTH_NAMES.length)],
         sex: random() < 0.5 ? "♂" : "♀",
         age: 0,
       };
+      economy.nextPersonId += 1;
       household.members.push(member);
       births.push({ householdId: household.id, member });
       recordEconomyEvent(
@@ -4159,8 +4255,10 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
     company: createCompanyState(initialCompanyMoney),
     households: [],
     nextHouseholdId: 0,
+    nextPersonId: 1,
     nextCartAssetId: 1,
     companyCarts: [],
+    transportStats: {},
     cartStats: {
       produced: 0,
       householdPurchased: 0,

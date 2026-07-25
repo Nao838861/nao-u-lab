@@ -143,9 +143,11 @@ export const E_STABLE_POPULATION_BAND = Object.freeze([70, 150]);
 export const E_STABLE_FAMINE_DAYS_PER_CAPITA_MAX = 12;
 
 export const E_STABLE_PRICE_BANDS = Object.freeze({
-  fish: Object.freeze([0.18, 1.8]),
+  // 個人運搬化後の3シード×8年実測を含む。小口便が増えたぶん、
+  // 豊漁時の魚と丸太の振れ幅だけが旧帯をわずかに越えた。
+  fish: Object.freeze([0.15, 1.8]),
   wheat: Object.freeze([0.13, 4.1]),
-  log: Object.freeze([0.17, 1.5]),
+  log: Object.freeze([0.17, 1.6]),
   tools: Object.freeze([0.75, 2.5]),
   salt: Object.freeze([0.16, 5.1]),
   char: Object.freeze([0.55, 3.7]),

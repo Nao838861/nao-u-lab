@@ -1,11 +1,11 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.23.0-readability';
-import { islandCalendar } from './ui_summary.js?v=v004.23.0-readability';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.23.0-readability';
+} from './config.js?v=v004.24.0-individual-logistics';
+import { islandCalendar } from './ui_summary.js?v=v004.24.0-individual-logistics';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.24.0-individual-logistics';
 import {
   buildingStructureLayout, pileVisual,
-} from './visuals.js?v=v004.23.0-readability';
+} from './visuals.js?v=v004.24.0-individual-logistics';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
@@ -16,6 +16,21 @@ function freshnessArt(visual) {
   return stage === 'spoiling'
     ? { ...art, color: '#756b55', dark: '#443f35' }
     : { ...art, color: '#9a8758', dark: '#665538' };
+}
+
+function carrierCargoSprites(carrier, limit) {
+  const rows = carrier.cargoRows?.length
+    ? carrier.cargoRows
+    : carrier.goods ? [{ goods: carrier.goods, amount: carrier.amount }] : [];
+  const sprites = [];
+  for (const row of rows) {
+    const count = Math.max(1, Math.ceil(row.amount ?? 0));
+    for (let index = 0; index < count && sprites.length < limit; index += 1) {
+      sprites.push(row.goods);
+    }
+    if (sprites.length >= limit) break;
+  }
+  return sprites;
 }
 
 export class Renderer {
@@ -1457,12 +1472,12 @@ export class Renderer {
       ctx.arc(point.x + 8 * scale, point.y - 3 * scale, 4 * scale, 0, Math.PI * 2);
       ctx.fill();
       if (carrier.goods) {
-        const art = GOODS_ART[carrier.goods] ?? GOODS_ART.tools;
-        const cargoCount = Math.min(3, pileVisual(carrier.amount, carrier.goods).spriteCount);
-        for (let index = 0; index < cargoCount; index += 1) {
+        const cargoSprites = carrierCargoSprites(carrier, 3);
+        for (let index = 0; index < cargoSprites.length; index += 1) {
+          const art = GOODS_ART[cargoSprites[index]] ?? GOODS_ART.tools;
           this.drawGoodsSprite(
             art,
-            point.x + (index - (cargoCount - 1) / 2) * 4 * scale,
+            point.x + (index - (cargoSprites.length - 1) / 2) * 4 * scale,
             point.y - 13 * scale - (index % 2) * 2 * scale,
             scale * 0.52,
             false,
@@ -1489,6 +1504,7 @@ export class Renderer {
       }
     } else {
       const count = Math.max(1, carrier.peopleRows?.length ?? carrier.members ?? carrier.people ?? 1);
+      const backpack = carrier.kind === 'backpack';
       const shopping = ['toMarket', 'atMarket'].includes(carrier.state)
         || (carrier.state === 'toHome' && Boolean(carrier.goods));
       const working = carrier.activity === 'working' || carrier.state === 'toWork'
@@ -1509,13 +1525,40 @@ export class Renderer {
         ctx.fill();
         ctx.fillStyle = index === 0 ? bodyColor : '#70775f';
         ctx.fillRect(point.x - 3 * scale + offsetX, point.y - 10 * scale + offsetY + bob, 6 * scale, 10 * scale);
-        if (carrier.goods && index < 2) {
-          const art = GOODS_ART[carrier.goods] ?? GOODS_ART.tools;
+        if (backpack && index === 0) {
+          ctx.strokeStyle = '#5b3d29';
+          ctx.lineWidth = Math.max(1, 1.3 * scale);
+          ctx.strokeRect(
+            point.x - 8 * scale + offsetX,
+            point.y - 12 * scale + offsetY + bob,
+            6 * scale,
+            10 * scale,
+          );
+          ctx.beginPath();
+          ctx.moveTo(point.x - 7 * scale + offsetX, point.y - 10 * scale + offsetY + bob);
+          ctx.lineTo(point.x - 2 * scale + offsetX, point.y - 5 * scale + offsetY + bob);
+          ctx.stroke();
+        }
+        if (carrier.goods && index < 2 && !backpack) {
+          const goods = carrierCargoSprites(carrier, 2)[index] ?? carrier.goods;
+          const art = GOODS_ART[goods] ?? GOODS_ART.tools;
           this.drawGoodsSprite(
             art,
             point.x + offsetX + 4 * scale,
             point.y - 5 * scale + offsetY + bob,
-            scale * 0.34,
+            scale * 0.46,
+          );
+        }
+      }
+      if (backpack && carrier.goods) {
+        const cargoSprites = carrierCargoSprites(carrier, 4);
+        for (let index = 0; index < cargoSprites.length; index += 1) {
+          const art = GOODS_ART[cargoSprites[index]] ?? GOODS_ART.tools;
+          this.drawGoodsSprite(
+            art,
+            point.x - (7 + (index % 2) * 3) * scale,
+            point.y - (13 + Math.floor(index / 2) * 4) * scale,
+            scale * 0.48,
           );
         }
       }

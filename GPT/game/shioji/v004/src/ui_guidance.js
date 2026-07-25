@@ -86,13 +86,13 @@ export function objectiveActionFor(objective, model) {
     return { kind: 'building', job: 'veg', label: '野菜畑を選ぶ' };
   }
   if (objective.id === 'first-settlers-arrive') {
-    return { kind: 'speed', speed: 3, label: '一日毎秒にして入植を待つ' };
+    return { kind: 'speed', speed: 3, label: '運び手を見ながら一日毎秒にする' };
   }
   if (objective.id === 'accept-first-order' && !model.orderOffer) {
-    return { kind: 'speed', speed: 3, label: '一日毎秒にして注文を待つ' };
+    return { kind: 'speed', speed: 3, label: '物流を見ながら一日毎秒にする' };
   }
   if (['first-order-procurement', 'complete-first-order'].includes(objective.id)) {
-    return { kind: 'speed', speed: 3, label: '一日毎秒にして荷車を待つ' };
+    return { kind: 'speed', speed: 3, label: '積み荷を追いながら一日毎秒にする' };
   }
   if (objective.id === 'place-conversion-workshops') {
     for (const job of ['woodshop', 'charburner', 'saltworks']) {
@@ -131,6 +131,19 @@ export function secretaryActionForRoute(route) {
     });
   }
   return null;
+}
+
+export function tutorialSpeedAfterObjectiveChange({
+  previousObjective,
+  objective,
+  previousAction,
+  speedIndex,
+}) {
+  const changed = previousObjective?.id
+    && objective?.id
+    && previousObjective.id !== objective.id;
+  if (changed && previousAction?.kind === 'speed' && speedIndex === 3) return 1;
+  return speedIndex;
 }
 
 export function secretaryRouteFor({

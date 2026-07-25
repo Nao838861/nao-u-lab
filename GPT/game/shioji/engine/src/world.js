@@ -4,16 +4,17 @@ import {
   P,
   ageMarketStalls,
   assignNeedyWork,
+  buyTargets,
+  companyStockReleasePrice,
   completeAssignedWork,
   createEconomicState,
   fundCompanyBuilding,
   finishHouseholdCartTrip,
   initializeNaturalResources,
   isProductionInput,
-  householdHaul,
+  householdTransportPlan,
   householdMaterialAmount,
   loadMarketSellCargo,
-  marketTripCost,
   marketTripDuration,
   marketPathLength,
   producePrimaryTick,
@@ -39,6 +40,7 @@ import {
   createPhysicalState,
   depositInventory,
   findBuildingSiteForEntrance,
+  goodsUnitWeight,
   hasRoad,
   keyOf,
   routeTravelCarrier,
@@ -73,14 +75,197 @@ function tilePosition(position) {
   return { x: Math.round(position.x), y: Math.round(position.y) };
 }
 
+function activeHouseholdPorter(household) {
+  const porters = household.marketCarrier?.porters ?? [];
+  return porters.find((porter) => porter.active && porter.departureDelay <= 1e-9)
+    ?? porters.find((porter) => porter.departureDelay <= 1e-9)
+    ?? porters[0]
+    ?? null;
+}
+
 function syncHouseholdToCarrier(economy, household) {
-  household.px = household.marketCarrier.position.x;
-  household.py = household.marketCarrier.position.y;
+  const porter = activeHouseholdPorter(household);
+  if (!porter?.position) return;
+  household.px = porter.position.x;
+  household.py = porter.position.y;
   tread(economy, household.px, household.py);
+}
+
+function distributeManifestAcrossPorters(manifest, porters, direction) {
+  const remainingCapacity = new Map(porters.map((porter) => [porter.memberId, porter.capacity]));
+  for (const porter of porters) {
+    porter.cargo = { direction, manifest: {} };
+  }
+  for (const [goods, originalQty] of Object.entries(manifest ?? {})) {
+    let qty = originalQty;
+    const unitWeight = goodsUnitWeight(goods);
+    for (const porter of porters) {
+      if (qty <= 1e-9) break;
+      const room = remainingCapacity.get(porter.memberId) ?? 0;
+      const loaded = Math.min(qty, room / unitWeight);
+      if (loaded <= 1e-9) continue;
+      porter.cargo.manifest[goods] = loaded;
+      remainingCapacity.set(porter.memberId, room - loaded * unitWeight);
+      qty -= loaded;
+    }
+    if (qty > 1e-7) {
+      throw new Error(`世帯の個人運搬容量を超えました: ${goods} ${qty}`);
+    }
+  }
+  for (const porter of porters) {
+    const load = Object.entries(porter.cargo.manifest).reduce(
+      (total, [goods, qty]) => total + qty * goodsUnitWeight(goods),
+      0,
+    );
+    porter.peakLoad = Math.max(porter.peakLoad ?? 0, load);
+  }
+  return porters;
+}
+
+function routeHouseholdPorters(physical, porters, start, goal, { returning = false } = {}) {
+  for (let index = 0; index < porters.length; index += 1) {
+    const porter = porters[index];
+    routeTravelCarrier(physical, porter, start, goal);
+    // 同期した家族の塊にせず、同じ用事の人も短い間隔で続けざまに出す。
+    porter.departureDelay = index * 0.22;
+    porter.returning = returning;
+  }
+  return porters;
+}
+
+function stepHouseholdPorters(physical, porters) {
+  let allArrived = true;
+  for (const porter of porters) {
+    if (!porter.active) continue;
+    if (porter.departureDelay >= 1) {
+      porter.departureDelay -= 1;
+      allArrived = false;
+      continue;
+    }
+    const budget = Math.max(0, 1 - porter.departureDelay);
+    porter.departureDelay = 0;
+    if (!stepTravelCarrier(physical, porter, budget)) allArrived = false;
+  }
+  return allArrived;
+}
+
+function beginAssignedWorkTrip(physical, household) {
+  if (!household.members?.length || !Number.isFinite(household.wx) || !Number.isFinite(household.wy)) {
+    return null;
+  }
+  const index = (household.workRotation ?? 0) % household.members.length;
+  const member = household.members[index];
+  household.workRotation = (index + 1) % household.members.length;
+  const porter = createWalkCarrier(physical, { people: 1 });
+  porter.memberId = member.id ?? `${household.id}:${index}`;
+  porter.memberName = member.name ?? `住民${index + 1}`;
+  porter.tier = "worker";
+  porter.visualMode = "worker";
+  routeTravelCarrier(
+    physical,
+    porter,
+    householdEntrance(physical, household),
+    tilePosition({ x: household.wx, y: household.wy }),
+  );
+  household.workCarrier = porter;
+  return porter;
+}
+
+function stepAssignedWorkTrip(economy, physical, household) {
+  const porter = household.workCarrier ?? beginAssignedWorkTrip(physical, household);
+  if (!porter) return true;
+  const arrived = stepTravelCarrier(physical, porter);
+  household.px = porter.position.x;
+  household.py = porter.position.y;
+  tread(economy, household.px, household.py);
+  return arrived;
+}
+
+function recordHouseholdTransport(economy, household) {
+  economy.transportStats ??= {};
+  for (const porter of household.marketCarrier?.porters ?? []) {
+    const row = economy.transportStats[porter.tier] ??= {
+      trips: 0,
+      load: 0,
+      capacity: 0,
+      travelTicks: 0,
+    };
+    row.trips += 1;
+    row.load += porter.peakLoad ?? 0;
+    row.capacity += porter.capacity;
+    row.travelTicks += household.marketTripTicks;
+  }
+}
+
+function householdTripNeeds(economy, physical, household) {
+  const foodDays = FOODS.reduce(
+    (total, goods) => total + household.pantry[goods],
+    0,
+  ) / P.EAT;
+  const lowCultureGoods = ["tools", "salt", "char"].filter((goods, index) => (
+    householdMaterialAmount(physical, household, goods)
+      < [P.D_TOOL, P.D_SALT, P.D_CHAR][index] * 4
+  ));
+  const inputLow = (household.job === "saltworks"
+    && productionInputAmount(physical, household, "char") < 2)
+    || (household.job === "fisher"
+      && productionInputAmount(physical, household, "salt") < 1)
+    || (
+      (household.job === "woodshop" || household.job === "charburner")
+      && productionInputAmount(physical, household, "log") < 2
+    )
+    || (household.job === "smelter" && (
+      productionInputAmount(physical, household, "ore") < P.SMELT_ORE
+      || productionInputAmount(physical, household, "char")
+        + productionInputAmount(physical, household, "coal") < P.SMELT_FUEL
+    ))
+    || (household.job === "smith" && (
+      productionInputAmount(physical, household, "bar") < P.SMITH_BAR
+      || productionInputAmount(physical, household, "char")
+        + productionInputAmount(physical, household, "coal") < P.SMITH_FUEL
+    ))
+    || (
+      (household.job === "wheat" || household.job === "rapeseed")
+      && productionInputAmount(physical, household, "meal") < 1
+      && economy.currentDay % 7 === 0
+    );
+  const foodThreshold = ["fisher", "shepherd", "veg"].includes(household.job) ? 1.2 : 3;
+  return {
+    foodDays,
+    foodUrgent: foodDays < foodThreshold,
+    lowCultureGoods,
+    inputLow,
+  };
+}
+
+function urgentMarketDemandWeight(economy, physical, household) {
+  const needs = householdTripNeeds(economy, physical, household);
+  const targets = buyTargets(economy, household, {
+    day: Math.max(1, Math.ceil((economy.currentTick ?? 1) / 30)),
+    physical,
+  });
+  return Object.entries(targets).reduce((total, [goods, [wanted, ceiling]]) => {
+    const urgent = (needs.foodUrgent && FOODS.includes(goods))
+      || needs.lowCultureGoods.includes(goods)
+      || (needs.inputLow && isProductionInput(household, goods));
+    if (!urgent) return total;
+    const stallQty = (economy.stalls[goods] ?? [])
+      .filter((stall) => stall.price <= ceiling)
+      .reduce((sum, stall) => sum + stall.qty, 0);
+    const importQty = (P.IMP[goods] ?? Infinity) <= ceiling
+      ? (economy.importStock[goods] ?? 0) + (economy.aidStock?.[goods] ?? 0)
+      : economy.aidStock?.[goods] ?? 0;
+    const stockQty = companyStockReleasePrice(economy, goods, { market: true }) <= ceiling
+      ? economy.marketStock[goods] ?? 0
+      : 0;
+    const purchasable = Math.min(wanted, stallQty + importQty + stockQty);
+    return total + purchasable * goodsUnitWeight(goods);
+  }, 0);
 }
 
 function finishMarketTrip(economy, physical, household, { day }) {
   unloadMarketBuyCargo(household, physical);
+  recordHouseholdTransport(economy, household);
   finishHouseholdCartTrip(economy, household, {
     day,
     assetId: household.marketCarrier.assetId,
@@ -88,6 +273,7 @@ function finishMarketTrip(economy, physical, household, { day }) {
       + (household.marketCarrier.routeCost ?? 0),
   });
   household.marketCarrier.cargo = null;
+  for (const porter of household.marketCarrier.porters ?? []) porter.cargo = null;
   household.marketCarrier = null;
   household.marketTransactionTicks = 0;
   const home = householdEntrance(physical, household);
@@ -281,41 +467,76 @@ export function beginMarketTrip(economy, physical, household) {
   const useCart = Boolean(household.cart)
     && Number.isFinite(marketPathLength(economy, physical, household, "cart"));
   loadMarketSellCargo(economy, household, { useCart });
-  const carrier = useCart
-    ? createCartCarrier(physical, {
-      capacity: householdHaul(household, { useCart: true }),
-      cartKind: household.cart.kind,
-      assetId: household.cart.id,
-    })
-    : createWalkCarrier(physical, { people: household.members.length });
-  if (!useCart) carrier.capacity = householdHaul(household, { useCart: false });
-  carrier.cargo = household.cargo;
+  const outboundWeight = Object.entries(household.cargo.manifest).reduce(
+    (total, [goods, qty]) => total + qty * goodsUnitWeight(goods),
+    0,
+  );
+  const availablePlan = householdTransportPlan(household, { useCart });
+  const intendedBuyWeight = urgentMarketDemandWeight(economy, physical, household);
+  const requiredCapacity = Math.max(outboundWeight, intendedBuyWeight, 1);
+  const plan = [];
+  let assignedCapacity = 0;
+  for (const assignment of availablePlan) {
+    if (plan.length > 0 && assignedCapacity + 1e-9 >= requiredCapacity) break;
+    plan.push(assignment);
+    assignedCapacity += assignment.capacity;
+  }
+  const porters = plan.map((assignment) => {
+    const porter = assignment.mode === "cart"
+      ? createCartCarrier(physical, {
+        capacity: assignment.capacity,
+        cartKind: assignment.cartKind,
+        assetId: assignment.assetId,
+      })
+      : createWalkCarrier(physical, { people: 1 });
+    porter.capacity = assignment.capacity;
+    porter.people = 1;
+    porter.memberId = assignment.memberId;
+    porter.memberName = assignment.memberName;
+    porter.tier = assignment.tier;
+    porter.visualMode = assignment.tier;
+    return porter;
+  });
+  distributeManifestAcrossPorters(household.cargo.manifest, porters, "outbound");
   const start = household.state === "home"
     ? householdEntrance(physical, household)
     : Number.isFinite(household.wx) && Number.isFinite(household.wy)
       ? tilePosition({ x: household.wx, y: household.wy })
       : tilePosition({ x: household.px, y: household.py });
-  routeTravelCarrier(
+  routeHouseholdPorters(
     physical,
-    carrier,
+    porters,
     start,
     logisticsEntrance(physical, "market", economy.market),
   );
-  carrier.tripDistance = carrier.routeCost;
+  const cartPorter = porters.find((porter) => porter.mode === "cart") ?? null;
+  const carrier = {
+    mode: cartPorter ? "cart" : "walk",
+    capacity: porters.reduce((total, porter) => total + porter.capacity, 0),
+    assetId: cartPorter?.assetId ?? null,
+    cartKind: cartPorter?.cartKind ?? null,
+    porters,
+    cargo: household.cargo,
+    tripDistance: cartPorter?.routeCost ?? 0,
+    routeCost: 0,
+  };
   household.px = start.x;
   household.py = start.y;
   household.marketCarrier = carrier;
   household.marketTripTicks = tripTicks;
-  household.productionMultiplier = productionMultiplierForTrip(tripTicks);
+  const memberCount = Math.max(1, household.members.length);
+  const travellerShare = plan.length / memberCount;
+  household.productionMultiplier = (1 - travellerShare)
+    + travellerShare * productionMultiplierForTrip(tripTicks);
   household.tookMarketTripToday = true;
   household.marketTransactionTicks = 2;
-  household.state = carrier.routeCost === 0 ? "atMarket" : "toMarket";
+  household.state = porters.every((porter) => porter.routeCost === 0) ? "atMarket" : "toMarket";
   return { started: true, tripTicks, carrier };
 }
 
 export function stepMarketTrip(economy, physical, household, { day, random }) {
   if (household.state === "toMarket") {
-    if (stepTravelCarrier(physical, household.marketCarrier)) {
+    if (stepHouseholdPorters(physical, household.marketCarrier.porters)) {
       const market = logisticsEntrance(physical, "market", economy.market);
       household.px = market.x;
       household.py = market.y;
@@ -328,13 +549,25 @@ export function stepMarketTrip(economy, physical, household, { day, random }) {
     if (household.marketTransactionTicks > 0) return false;
     transactMarketCargo(economy, physical, household, { day, random });
     household.marketCarrier.cargo = household.cargo;
-    routeTravelCarrier(
+    const inboundManifest = { ...household.cargo.manifest };
+    for (const [goods, qty] of Object.entries(household.cargo.returnManifest ?? {})) {
+      inboundManifest[goods] = (inboundManifest[goods] ?? 0) + qty;
+    }
+    distributeManifestAcrossPorters(
+      inboundManifest,
+      household.marketCarrier.porters,
+      "inbound",
+    );
+    routeHouseholdPorters(
       physical,
-      household.marketCarrier,
+      household.marketCarrier.porters,
       logisticsEntrance(physical, "market", economy.market),
       householdEntrance(physical, household),
+      { returning: true },
     );
-    if (household.marketCarrier.routeCost === 0) {
+    const cartPorter = household.marketCarrier.porters.find((porter) => porter.mode === "cart");
+    household.marketCarrier.routeCost = cartPorter?.routeCost ?? 0;
+    if (household.marketCarrier.porters.every((porter) => porter.routeCost === 0)) {
       finishMarketTrip(economy, physical, household, { day });
       return true;
     }
@@ -342,7 +575,7 @@ export function stepMarketTrip(economy, physical, household, { day, random }) {
     return false;
   }
   if (household.state === "toHome") {
-    if (stepTravelCarrier(physical, household.marketCarrier)) {
+    if (stepHouseholdPorters(physical, household.marketCarrier.porters)) {
       finishMarketTrip(economy, physical, household, { day });
       return true;
     }
@@ -356,49 +589,30 @@ export function decideHouseholdTrips(economy, physical) {
   if (!buildingById(physical, physical.roleBuildingIds?.market)) return;
   for (const household of economy.households) {
     if (household.state !== "home") continue;
-    const foodDays = FOODS.reduce(
-      (total, goods) => total + household.pantry[goods],
-      0,
-    ) / P.EAT;
+    const needs = householdTripNeeds(economy, physical, household);
     const offers = sellOffers(economy, household);
-    const sellQuantity = Object.values(offers).reduce((total, qty) => total + qty, 0);
-    const lowCulture = ["tools", "salt", "char"].some((goods, index) => (
-      householdMaterialAmount(physical, household, goods)
-        < [P.D_TOOL, P.D_SALT, P.D_CHAR][index] * 4
-    ));
-    const inputLow = (household.job === "saltworks"
-      && productionInputAmount(physical, household, "char") < 2)
-      || (household.job === "fisher"
-        && productionInputAmount(physical, household, "salt") < 1)
-      || (
-        (household.job === "woodshop" || household.job === "charburner")
-        && productionInputAmount(physical, household, "log") < 2
-      )
-      || (household.job === "smelter" && (
-        productionInputAmount(physical, household, "ore") < P.SMELT_ORE
-        || productionInputAmount(physical, household, "char")
-          + productionInputAmount(physical, household, "coal") < P.SMELT_FUEL
-      ))
-      || (household.job === "smith" && (
-        productionInputAmount(physical, household, "bar") < P.SMITH_BAR
-        || productionInputAmount(physical, household, "char")
-          + productionInputAmount(physical, household, "coal") < P.SMITH_FUEL
-      ))
-      || (
-        (household.job === "wheat" || household.job === "rapeseed")
-        && productionInputAmount(physical, household, "meal") < 1
-        && economy.currentDay % 7 === 0
-      );
-    const foodThreshold = ["fisher", "shepherd", "veg"].includes(household.job) ? 1.2 : 3;
+    const sellWeight = Object.entries(offers).reduce(
+      (total, [goods, qty]) => total + qty * goodsUnitWeight(goods),
+      0,
+    );
+    const transportCapacity = householdTransportPlan(household)[0]?.capacity
+      ?? P.CART_HAND_CAPACITY;
+    const sellReady = sellWeight + 1e-9
+      >= transportCapacity * P.MARKET_DEPARTURE_LOAD_RATIO;
     const work = assignNeedyWork(economy, physical, household);
-    if (work) continue;
-    const tripCost = marketTripCost(economy, physical, household);
+    if (work) {
+      beginAssignedWorkTrip(physical, household);
+      household.productionMultiplier = Math.max(
+        0,
+        (household.members.length - 1) / Math.max(1, household.members.length),
+      );
+      continue;
+    }
     if (
-      (offers.fish ?? 0) > 0
-      || sellQuantity >= tripCost
-      || (foodDays < foodThreshold && household.purse > 2)
-      || (lowCulture && household.purse > 15)
-      || (inputLow && household.purse > -20)
+      sellReady
+      || (needs.foodUrgent && household.purse > 2)
+      || (needs.lowCultureGoods.length > 0 && household.purse > 15)
+      || (needs.inputLow && household.purse > -20)
     ) beginMarketTrip(economy, physical, household);
   }
 }
@@ -460,7 +674,14 @@ export function createWorld({
       ageMarketStalls(economy, { day: state.day, physical });
       runCompanyDayStart(economy, { day: state.day, random, physical });
       for (const household of economy.households) {
-        household.productionMultiplier = household.state === "home" ? 1 : 0;
+        const activePorters = (household.marketCarrier?.porters?.length ?? 0)
+          + Number(Boolean(household.workCarrier));
+        household.productionMultiplier = household.state === "home"
+          ? 1
+          : activePorters > 0
+            ? Math.max(0, (household.members.length - activePorters)
+              / Math.max(1, household.members.length))
+            : 0;
         household.tookMarketTripToday = household.marketCarrier !== null;
       }
       decideHouseholdTrips(economy, physical);
@@ -492,14 +713,19 @@ export function createWorld({
           stepMarketTrip(economy, physical, household, { day: state.day, random });
         }
       } else if (household.state === "toWork") {
-        if (stepTo(economy, physical, household, household.wx, household.wy)) {
+        if (stepAssignedWorkTrip(economy, physical, household)) {
+          household.workCarrier = null;
           completeAssignedWork(economy, physical, household, { day: state.day });
         }
       } else if (household.state === "toHome") {
         if (stepTo(economy, physical, household, household.x, household.y)) household.state = "home";
       }
 
-      if (household.state === "home" || household.tookMarketTripToday) {
+      if (
+        household.state === "home"
+        || household.tookMarketTripToday
+        || Boolean(household.workCarrier)
+      ) {
         producePrimaryTick(economy, physical, household, {
           day: state.day,
           fraction: (household.productionMultiplier ?? 1) / 30,

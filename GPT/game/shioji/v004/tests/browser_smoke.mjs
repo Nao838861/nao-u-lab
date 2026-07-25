@@ -465,7 +465,7 @@ async function checkSecretaryEventLifecycle() {
 
 async function checkBuildingLevelVisuals(width = 1440, height = 900, mobile = false) {
   const page = await newPage(width, height, mobile, GAME);
-  const checkpoints = [30, 90, 270, 360];
+  const checkpoints = [30, 90, 270, 720];
   const observations = [];
   for (const day of checkpoints) {
     const observation = await page.evaluate(`(() => {
@@ -531,14 +531,14 @@ async function checkBuildingLevelVisuals(width = 1440, height = 900, mobile = fa
   assert.ok(observations[1].levels.includes(1) && observations[1].levels.includes(2),
     JSON.stringify(observations[1]));
   assert.ok(observations[2].levels.includes(3), JSON.stringify(observations[2]));
-  assert.deepEqual(observations[3].levels, [1, 2, 3, 4], JSON.stringify(observations[3]));
-  assert.deepEqual(observations[3].stages[1].tools, [1]);
-  assert.deepEqual(observations[3].stages[2].tools, [2]);
-  assert.deepEqual(observations[3].stages[3].tools, [4]);
+  assert.ok(observations[3].levels.includes(4), JSON.stringify(observations[3]));
+  assert.deepEqual(observations[0].stages[1].tools, [1]);
+  assert.deepEqual(observations[1].stages[2].tools, [2]);
+  assert.deepEqual(observations[2].stages[3].tools, [4]);
   assert.deepEqual(observations[3].stages[4].tools, [6]);
-  assert.deepEqual(observations[3].stages[1].banners, [1]);
-  assert.deepEqual(observations[3].stages[2].banners, [2]);
-  assert.deepEqual(observations[3].stages[3].banners, [3]);
+  assert.deepEqual(observations[0].stages[1].banners, [1]);
+  assert.deepEqual(observations[1].stages[2].banners, [2]);
+  assert.deepEqual(observations[2].stages[3].banners, [3]);
   assert.deepEqual(observations[3].stages[4].banners, [4]);
   assert.deepEqual(observations[3].calls.slice(-2), ['world', 'overlay'],
     '危機・警告overlayを建物と人物より後に描く');
@@ -979,8 +979,8 @@ async function checkTutorialLetterDelivery() {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.23.0-readability');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.23.0-readability');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.24.0-individual-logistics');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.24.0-individual-logistics');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -1139,7 +1139,7 @@ async function checkViewport(width, height, mobile) {
   if (!mobile) {
     await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
-      game.advanceTicks(1292 - game.model.tick, { animate: false });
+      game.advanceTicks(1382 - game.model.tick, { animate: false });
       game.advanceTicks(1, { animate: true, baseSeconds: 2 });
     })()`);
     await wait(45);
@@ -1222,7 +1222,11 @@ async function checkViewport(width, height, mobile) {
         appearanceKeys: new Set(model.buildings.map(building => building.appearance.key)).size,
         stalls: model.marketStalls.length,
         stock: model.totalVisibleStock,
-        familyRows: model.carriers.filter(carrier => carrier.kind === 'household' && carrier.members > 1).length,
+        individualResidents: model.carriers.filter(carrier => (
+          carrier.householdId !== undefined && carrier.members === 1
+          && carrier.peopleRows?.length === 1
+        )).length,
+        population: model.population,
       };
     })()`);
     assert.ok(worldVisuals.trails > 100, JSON.stringify(worldVisuals));
@@ -1231,7 +1235,7 @@ async function checkViewport(width, height, mobile) {
     assert.ok(worldVisuals.appearanceKeys > 5, JSON.stringify(worldVisuals));
     assert.ok(worldVisuals.stalls > 0, JSON.stringify(worldVisuals));
     assert.ok(worldVisuals.stock > 0, JSON.stringify(worldVisuals));
-    assert.ok(worldVisuals.familyRows > 0, JSON.stringify(worldVisuals));
+    assert.equal(worldVisuals.individualResidents, worldVisuals.population, JSON.stringify(worldVisuals));
 
     const island = await page.evaluate(`(() => {
       document.querySelector('#open-island').click();
