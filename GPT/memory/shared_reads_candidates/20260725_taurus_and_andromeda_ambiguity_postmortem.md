@@ -4,6 +4,27 @@ url: "https://mastorna.itch.io/taurus-and-andromeda/devlog/1332953/postmortem-ta
 collected_at: "2026-07-25T16:16:04.7993754+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, postmortem, interactive-fiction, procedural-generation, player-signaling]
+evaluated_at: "2026-07-25T16:20:37.8414628+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-25T16:20:37.8414628+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-25T16:20:37.8414628+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-24"
+supersedes: []
+gate_reason: >-
+  反復・赤い糸・引き返しという設計意図が、mechanical opacity に変換された失敗機構を
+  完走率と分岐到達数で検証している。曖昧さを残したまま player の役割だけを知らせる
+  signal 設計へ具体化でき、記事固有の約4000字分析を構成できる。
+suggested_post_outline:
+  overview_angle: "意図的な曖昧さと遊び方の不明瞭さを分離できなかった失敗を、反復構造・赤い糸・到達率から解剖する"
+  analysis_axis: "象徴の一貫性が唯一の正解経路という誤読を生む逆説と、jam/showcase の短時間評価環境が求める framing signal"
+  application_target: "Log_cdx の探索・分岐ゲームで、意味や結末を説明せずに入力可能性・引き返し可能性・選択後の反応だけを早期に可視化する設計"
+  pros_cons: "曖昧さをテーマとして保持しながら離脱原因を減らせる一方、signal が強すぎると発見と解釈の余白を壊す"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
