@@ -141,7 +141,127 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index ID 87件を atoms.jsonl と照合し、broken reference 0件を確認した。UTF-8 明示読みでは「記憶」23件、「ゲーム設計」8件、「敵パターン」1件を取得し、「評価軸」は現行生成 index に0件だったが、文字化けや再生成を要する破損はなかった。"
+  - "memory/atoms.jsonl 2749件を監査し、JSON parse error 0、duplicate id 0、atoms.jsonl / per-file / index の各2749件で missing・content conflict 0を確認した。既知の重複45群は canonical overlay と一致し、duplicate cluster index は fresh だった。"
+  - "memory/raw/ の30日超無更新ファイル95件・62979319 bytes（web_research 87、headless_eval 6、slack_archive 1、sync_state 1）を archive 候補として棚卸しした。raw provenance と既存 evidence pointer を壊す移動規約がないため、この phase では移動しなかった。"
+  - "shared-reads の canonical title index 68群、mixed duplicate queue 49群、open duplicate group queue 56群、stale triage queue 50件を再生成した。group action queue は handoff 前2群、group lease 反映後1群、candidate lease まで反映した最終状態0群。candidate 本体の lifecycle は変更していない。"
+  - "期限到来 backlog から group handoff 1群と candidate handoff 5件を永続 inbox へ冪等 enqueue し、両 inbox の audit errors 0を確認した。"
+  - "slack_directives.jsonl 23件、slack_broadcasts.jsonl 21件を確認し、pending 0件だったため handled 更新はなかった。"
+  - "shared_reads_probe_lifecycle.jsonl を due-only limit 1 で確認し、期限到来 lease 0件、validate errors 0を確認した。"
+candidate_lifecycle:
+  total_files: 1100
+  status_counts:
+    posted: 483
+    ready_to_post: 10
+    postponed: 325
+    failed: 264
+    needs_review: 17
+    skipped_unreviewed: 1
+  missing_open_stale_after: 0
+  overdue_open_total: 179
+atom_audit:
+  rows: 2749
+  duplicate_ids: 0
+  raw_normalized_content_duplicate_groups: 40
+  canonical_overlay_duplicate_groups: 45
+  mirror_content_conflicts: 0
+issues:
+  - id: ISS-20260726-ATOM-MOJIBAKE
+    description: "1件の shared-reads atom で「エージェント」が「エ��ジェント」となっており、replacement character を含む原文由来の局所的な文字化けが残っている。memory_health が挙げた別の game-rights atom の「???」は本文上の意図的表記であり、文字化けではなかった。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl:492 and :1216; comparison: memory/atoms/2026-04/gr-1777083728-44d444ab7a.md"
+    source_file_status: "UTF-8 明示読みでも raw と per-atom .md の双方に U+FFFD 相当の「��」が存在し、source data 自体の局所破損を確認した。MEMORY.md は UTF-8 で正常。"
+    display_or_tooling_status: "none; PowerShell / rg の表示経路でも source と同じ文字列を再現した。"
+    why_blocks_game_memory: "当該1 atom の語句検索と可読性を局所的に落とすが、ID・source_ts・URL と他の game-memory entry point は健全で、次のゲーム制作への導線全体は遮断しない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "検出した問題は既存構造を変える必要のない局所データ品質問題である。重複・stale backlog は既設の bounded handoff が正常に配送しており、Phase 4b を起動する構造的根拠はない。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 179
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 56
+  mixed_group_count: 49
+  all_open_group_count: 7
+  actionable_group_count: 2
+  actionable_group_count_after_group_lease: 1
+  actionable_group_count_after_all_live_leases: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total 179 > queue rows 50 だが actionable group は2件で、3件以上の条件を満たさない。"
+  group_handoff_budget: 1
+  handed_off_group_count: 1
+  handoff_inbox_pending_count: 1
+  handoff_inbox_ids:
+    - gha-4c824932c698f6e4
+  candidate_handoff_enqueued_this_cycle: 5
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-f88e201d2e3bdac3
+    - cha-d18a811c52a150e3
+    - cha-60ba49d3f91263b6
+    - cha-8143fe1bacd44d7e
+    - cha-55bc305e06e64e34
+group_action_handoff:
+  - handoff_id: gha-4c824932c698f6e4
+    group_key: "beyond pre defined scripts player perceptions on generative non player character dialogues"
+    group_kind: mixed
+    representative: memory/shared_reads_candidates/20260626_beyond_predefined_scripts_generative_npc_dialogue.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260626_beyond_predefined_scripts_generative_npc_dialogue.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260621_llm_npc_dialogue_player_perceptions.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260626_beyond_predefined_scripts_generative_npc_dialogue.md
+      stale_after: "2026-07-26"
+      reason: "LLM NPC の入力自由度と副作用を評価する観点は有用だが、study design・参加者条件・比較対象・評価結果の粒度が不足しているため、同一 work の terminal sibling と合わせて Phase 2 で group 判断する。"
+stale_review_batch:
+  - handoff_id: cha-f88e201d2e3bdac3
+    path: memory/shared_reads_candidates/20260626_gdc2026_ai_design_stack_tencent.md
+    status: postponed
+    stale_after: "2026-07-26"
+    priority_reason: "open duplicate group を持ち、design agent と 3D generation の制作適用性は高いが、GDC 概要だけでは内部構造・評価・失敗条件が不足する。group budget 外なので candidate handoff で Phase 2 に送る。"
+    recommended_review_action: reevaluate_in_phase2
+    queue_recommended_action: merge_duplicate
+  - handoff_id: cha-d18a811c52a150e3
+    path: memory/shared_reads_candidates/20260527_strayspark_ai_level_design_gameslop.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "AI 土台生成・human-directed level design・補完最適化の分離は具体的だが、一次制作例・実測・失敗比較の補強が必要。"
+    recommended_review_action: reevaluate_in_phase2
+    queue_recommended_action: keep_for_phase2
+  - handoff_id: cha-60ba49d3f91263b6
+    path: memory/shared_reads_candidates/20260528_cutscene_agent_llm_3d_cutscene.md
+    status: postponed
+    stale_after: "2026-06-27"
+    priority_reason: "MCP と engine の双方向連携、Director / specialist agents、visual feedback loop は有用だが、CutsceneBench の評価・結果・失敗例が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+    queue_recommended_action: keep_for_phase2
+  - handoff_id: cha-8143fe1bacd44d7e
+    path: memory/shared_reads_candidates/20260528_fairgamer_llm_bias_game_balance.md
+    status: postponed
+    stale_after: "2026-06-27"
+    priority_reason: "LLM bias が game balance に与える影響は重要だが、6 tasks・metric・評価手順・結果の具体性が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+    queue_recommended_action: keep_for_phase2
+  - handoff_id: cha-55bc305e06e64e34
+    path: memory/shared_reads_candidates/20260528_latent_action_reparameterization_agent_inference.md
+    status: postponed
+    stale_after: "2026-06-27"
+    priority_reason: "操作ログ圧縮や macro 行動化への転用は有望だが、latent action の学習・統合方法と benchmark 差分が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+    queue_recommended_action: keep_for_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
