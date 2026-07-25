@@ -37,7 +37,18 @@ evaluated_at: "2026-07-25T12:06:41.1666887+09:00"
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260725_grappling_smooth_movement_indie_budget.md
+    reason: "Phase 2 が gate_decision: postpone。講演内の調整事例・評価内容・結論が不足し、3500-4500字の深い分析を根拠付きで完成できないため投稿対象外"
+    action: postpone
+eligible_pass_candidates: 0
+slack_posts_created: 0
+final_decision: no_eligible_pass_candidate
+reviewed_at: "2026-07-25T12:08:42.6662832+09:00"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
