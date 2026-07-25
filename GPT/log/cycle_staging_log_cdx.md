@@ -84,7 +84,11 @@ group_handoff_audit:
   pending_after: 0
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+posted:
+  - candidate: memory/shared_reads_candidates/20260726_electrocute_jam_retrospective.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785013005204159
+    char_count: 4332
+skipped: []
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
