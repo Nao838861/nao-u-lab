@@ -4,21 +4,21 @@ url: "https://arxiv.org/abs/2508.17825"
 collected_at: "2026-05-28T13:14:32+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, llm-npc, game-balance, benchmark, trustworthiness]
-evaluated_at: "2026-05-28T13:35:00+09:00"
+evaluated_at: "2026-07-26T03:39:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-28T13:35:00+09:00"
+last_reviewed_at: "2026-07-26T03:39:00+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-28T13:35:00+09:00"
-stale_after: "2026-06-27"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-26T03:39:00+09:00"
+stale_after: "2026-08-25"
 supersedes: []
 next_action: revise_or_research
 gate_reason: |-
   LLM NPC / opponent / scene generation の bias が game balance に与える影響という問題設定は重要で、ゲーム制作への適用性も高い。
-  ただし候補メモだけでは 6 tasks と新規 metric の具体定義、評価手順、結果の粒度が不足しており、CoopEval 水準の概要を書くには根拠が薄い。
-  Phase 3 に回す前に、benchmark のタスク構成とどの bias がどの balance degradation に接続したかを一次資料で補う必要がある。
+  ただし候補メモだけでは 6 tasks と新規 metric の定義、比較条件、結果の粒度が不足し、どの bias がどの balance degradation に接続したか説明できない。
+  benchmark 本文の具体値とタスク構成を確認できるまでは CoopEval 水準の概要に進めない。
 
 ---
 

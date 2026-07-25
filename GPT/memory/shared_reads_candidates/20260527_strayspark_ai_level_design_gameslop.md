@@ -4,20 +4,20 @@ url: "https://www.strayspark.studio/blog/ai-level-design-gameslop-to-production"
 collected_at: "2026-05-27T10:45:36+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [level-design, ai-assisted-development, pcg, production-workflow, player-experience]
-evaluated_at: "2026-05-27T11:22:00+09:00"
+evaluated_at: "2026-07-26T03:39:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-27T11:22:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-27T11:22:00+09:00"
-stale_after: "2026-06-26"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-26T03:39:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T03:39:00+09:00"
+stale_after: "2026-08-25"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |-
-  AI 生成物を土台生成、human-directed level design、補完・最適化に分ける枠組みはゲーム制作へ具体適用できる。
-  ただし記事単体では事例の検証量や失敗比較が薄く、4000字級で残すには一次制作例・実測・関連実装との補強が必要。
+  土台生成、人間による critical path 設計、AI 補完という三段階は具体的だが、記事の根拠は概念例に留まり、比較条件・実測・失敗分析がない。
+  30 日後の再評価でも CoopEval 水準の評価内容を構成できる新しい証拠がなく、投稿候補としては閉じて参照メモに留める。
 
 ---
 

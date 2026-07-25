@@ -4,6 +4,27 @@ url: "https://itch.io/blog/1561059/come-closer-its-cold-postmortem-my-first-game
 collected_at: "2026-07-26T03:31:27+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, postmortem, ai-assisted-development, balancing, onboarding, simulation]
+evaluated_at: "2026-07-26T03:43:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-26T03:43:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-26T03:43:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-25"
+supersedes: []
+gate_reason: |-
+  感情目標から scope を削る判断、parameter dashboard、条件あたり 300～500 回の Monte Carlo、五夜の難度曲線が具体的に接続されている。
+  text tutorial が hold 操作を伝えられなかった失敗と、数理 balance では補えない animation の不足もあり、方法・評価・限界・結論を記事固有の密度で展開できる。
+  AI 実装と人間の設計判断の境界を、短時間 prototype の実工程へ無理なく適用でき、約 4000 字の残すべき概要を構成できる。
+suggested_post_outline:
+  overview_angle: "初作品を二週間で完成させた過程を、感情起点の scope 制御、Monte Carlo balance、onboarding 失敗の三層で読む。"
+  analysis_axis: "mechanic 過多の GDD を捨てた判断、五夜の pressure curve を parameter simulation で作る方法、数理上の正しさと初見 UX・生命感のずれを分けて分析する。"
+  application_target: "短時間ゲーム prototype の one-loop 定義、headless simulation による難度 proxy、Night/Stage ごとの圧力曲線、操作を実行するまで進めない onboarding gate に適用する。"
+  pros_cons: "少ない実装で balance 仮説を大量試行できる一方、simulation は操作理解・感情・animation の手触りを測れず、実プレイ観察との二段評価が必要。"
+  verdict_pre: "部分採用。one loop / one feeling と Monte Carlo は採用し、tutorial と生命感は別の観察系で検証する。"
 ---
 
 ## raw_excerpt

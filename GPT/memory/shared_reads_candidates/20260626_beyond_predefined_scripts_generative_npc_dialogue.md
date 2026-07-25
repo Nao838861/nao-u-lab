@@ -7,17 +7,18 @@ genre_tags: [npc-dialogue, player-perception, llm, game-design, user-study]
 evaluated_at: "2026-06-26T22:14:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-26T22:14:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-26T22:14:00+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-26T03:37:26+09:00"
+last_decision: failed
+evidence: "group_handoff:gha-4c824932c698f6e4; terminal:memory/shared_reads_candidates/20260621_llm_npc_dialogue_player_perceptions.md: status=posted;permalink=https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782007714072199;doi=10.1145/3742413.3789221; reason:既投稿 sibling と DOI が完全一致し posted-source preflight も skip。同一 work の canonical URL と Slack permalink が揃ったため未投稿側だけを閉じる。"
+next_action: none
 stale_after: "2026-07-26"
 supersedes: []
 gate_reason: |-
   LLM NPC の自然さだけでなく入力自由度と望ましくない副作用を評価する観点は有用で、ゲーム制作への適用先も明確。
   ただし candidate 内では study design、参加者条件、比較対象、評価結果の粒度が不足しており、CoopEval 水準の概要を書くには原文確認が必要。
+duplicate_reason: failed_duplicate_of_terminal_sibling
 ---
 
 ## raw_excerpt

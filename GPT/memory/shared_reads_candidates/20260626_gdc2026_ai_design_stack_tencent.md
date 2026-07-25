@@ -4,20 +4,20 @@ url: "https://schedule.gdconf.com/session/the-ai-design-stack-agents-3d-generati
 collected_at: "2026-06-26T13:44:34+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, production-workflow, agentic-ai, 3d-generation, gdc2026]
-evaluated_at: "2026-06-26T13:49:44+09:00"
+evaluated_at: "2026-07-26T03:39:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-26T13:49:44+09:00"
+last_reviewed_at: "2026-07-26T03:39:00+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-26T13:49:44+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-26T03:39:00+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-26"
+stale_after: "2026-08-25"
 supersedes: []
 gate_reason: >-
-  design agent と 3D generation を lore / quest / economy / asset review に接続する観点は制作運用に近い。
-  ただし現状は GDC セッション概要ベースで、手法の内部構造、評価、失敗条件が薄く、CoopEval 水準の概要を単独で書くには材料不足。
+  同一 title の all-open duplicate group があり、代表を統合する根拠はまだ handoff されていないため、この candidate だけを維持する。
+  セッション概要から制作工程への適用先は読めるが、内部構造、評価結果、失敗条件は依然不足しており、CoopEval 水準の概要には録画・講演資料等の確認が必要。
 ---
 
 ## raw_excerpt
