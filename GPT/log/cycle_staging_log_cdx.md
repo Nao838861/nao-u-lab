@@ -117,7 +117,114 @@ self_feedback:
     conflict_checked: true
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+cleaned:
+  - "open duplicate group / stale triage / group action の再生成可能 sidecar を規定順で再生成した。actionable group は 0 件だったため group handoff は追加なし。"
+  - "stale triage 上位から postponed candidate 5 件を `memory/shared_reads_candidate_handoff_inbox.jsonl` へ冪等 enqueue した。candidate 本体は変更していない。"
+  - "Slack directive / broadcast inbox を監査し、pending 0 件を確認した。close 対象はなかった。"
+issues:
+  - id: ISS-4A-20260726-01
+    description: "旧 shared-reads 原文1件と派生 atom 1件の語中に Unicode replacement character が残り、`エージェント` が `エ��ジェント` になっている。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492,1216; memory/atoms.jsonl:317; atom sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8 明示読みで replacement character を再現。source file 自体に文字欠損がある。MEMORY.md は UTF-8 decode 正常で、代表語 `記憶` / `ゲーム設計` / `敵パターン` は取得でき、`評価軸` は本文に存在しない。"
+    display_or_tooling_status: "none。PowerShell 表示だけの mojibake ではない。"
+    why_blocks_game_memory: "該当1件の title / trigger で日本語の `エージェント` 検索が一致しにくくなるが、英語 tag `agent` と URL は残っており影響は限定的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+audit_summary:
+  memory_index:
+    indexed_atom_ids: 50
+    missing_atom_ids: 0
+    broken_path_refs: 0
+    utf8_decode: ok
+  atoms:
+    rows: 2752
+    invalid_json: 0
+    duplicate_id_groups: 0
+    lifecycle_status_conflicts: 0
+    mirror_drift_conflicts: 0
+    normalized_duplicate_groups: 40
+    duplicate_handling: "既存 canonical overlay / content fold の対象。矛盾は観測されなかった。"
+  raw_archive_candidates:
+    older_than_30d: 95
+    by_area:
+      web_research: 87
+      headless_eval: 6
+      slack_archive: 1
+      root: 1
+    action: "原文・一次資料の正本であり、既存 archive 契約なしのため移動・削除せず候補として記録のみ。"
+  candidate_lifecycle:
+    total_files: 1102
+    counts:
+      posted: 485
+      ready_to_post: 10
+      postponed: 321
+      failed: 268
+      needs_review: 17
+      skipped_unreviewed: 1
+    overdue_open_total: 168
+    open_missing_stale_after: 0
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 168
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  backlog_high_water_reason: "overdue_open_total > queue rows は満たすが、actionable group が 3 件以上という第2条件を満たさない。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-329a1f54fd938d72
+    - cha-4792a81b2ee3b6a5
+    - cha-7b8d4eb6ff69b5b5
+    - cha-4659deebf087d8c4
+    - cha-1439174232822f60
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-329a1f54fd938d72
+    path: memory/shared_reads_candidates/20260529_agent_escape_bench_escape_room_reasoning.md
+    status: postponed
+    stale_after: "2026-06-28"
+    priority_reason: "28日 overdue。escape-room、長距離依存、段階的情報開示、未知 tool-use はゲーム評価へ近いが、task 構成・採点・baseline・失敗分類が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-4792a81b2ee3b6a5
+    path: memory/shared_reads_candidates/20260529_avalanchebench_latent_world_recovery.md
+    status: postponed
+    stale_after: "2026-06-28"
+    priority_reason: "28日 overdue。latent world recovery は有用だが、プレイログから難所・誤誘導・学習イベントを復元する具体手順と評価例が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-7b8d4eb6ff69b5b5
+    path: memory/shared_reads_candidates/20260529_gamma_world_multi_agent_world_model.md
+    status: postponed
+    stale_after: "2026-06-28"
+    priority_reason: "28日 overdue。identity encoding、attention、蒸留、24 FPS rollout は取れるが、ゲーム制作への具体的な判断接続が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-4659deebf087d8c4
+    path: memory/shared_reads_candidates/20260529_ma2p_metacognitive_persuasion_agents.md
+    status: postponed
+    stale_after: "2026-06-28"
+    priority_reason: "28日 overdue。LLM NPC・交渉への適用軸は明確だが、構成要素・実験設定・比較対象・評価結果が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-1439174232822f60
+    path: memory/shared_reads_candidates/20260529_omniworld_4d_world_model_dataset.md
+    status: postponed
+    stale_after: "2026-06-28"
+    priority_reason: "28日 overdue。4D world modeling の問題設定は明確だが、dataset 構成・annotation・評価 task が不足。"
+    recommended_review_action: reevaluate_in_phase2
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
