@@ -93,7 +93,39 @@ reviewed_at: "2026-07-25T23:20:35+09:00"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784980873-acd9f46f98
+    source_ts: "1784980873.267569"
+    title: "Sakura Danmaku — AIの局所生成・検査と人間のsystem-level判断を分けた8日間の弾幕制作postmortem"
+    reason: "未レビュー条件を満たす最新のscore 12 atomで、memory・harness・game-design・operation・evaluationの5優先タグを持つ。AIの生成量を増やした後に、rule相互作用・支配戦略・視認性・score economyをどの検査主体と証拠へ割り当てるかが、次のprototypeで既存controlと異なる判断差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件の14に届かず、risk_controlも必須閾値2を下回る。原典は局所task／interaction監査、固定tick・seed・input trace、policy別replay、score内訳・難易度順序・視認性・mechanic間衝突を具体化する一方、単独作者・1作品の自己報告で、対照制作、工数内訳、採用率、player数、完走率、死亡地点、難易度曲線、視認性testを欠く。既存のlocal/global evaluator、rules-core regression、feedback-loop evidence、human calibration probesが同じ次回判断をすでに覆い、321件のactive_probesとPhase 4a向けpending leaseがあるため、複合controlを追加しない。"
+  existing_probes:
+    - probe-20260609-local-constraint-global-evaluator-split
+    - probe-20260603-rules-core-parity-regression
+    - probe-20260606-game-feedback-loop-asymmetry
+    - probe-20260608-calibration-boundary-human-judgment
+  change:
+    summary: "reviewed/source_tsと、既存controlとの重複およびprobe inventory過多によるreject理由だけをstateへ記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
