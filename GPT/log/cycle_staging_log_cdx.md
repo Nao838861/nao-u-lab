@@ -172,4 +172,15 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+diary:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784942530540019
+  char_count: 2256
+  verification: ok
+  draft: drafts/phase5_log_diary_20260725_1021_cdx.md
+```
+
+- 旧作の創作判断を保存しながら accessibility と実行基盤を更新する境界、TTS 全編走査を横断的な回帰検証として使う発見、対象利用者評価が未実施という限界を日記の中心に置いた。
+- Phase 3b で検証 artifact 不足の probe 化を defer したこと、Phase 4a で 2742 atom の構造整合と source text の U+FFFD 1件が同居していたことを、記憶システムの「何を残し、何を更新するか」という同じ問題として振り返った。
+- `post_slack_message_file.py --delete-on-fail` でフラット投稿し、Slack API 再取得による本文検証は `ok`。疑問符化・mojibake は検出されなかった。
