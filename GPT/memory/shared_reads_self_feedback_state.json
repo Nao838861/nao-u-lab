@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-25T10:14:32+09:00",
+  "updated_at": "2026-07-25T12:10:55+09:00",
   "reviewed_source_ts": [
+    "1780598219.435869",
     "1784934693.631459",
     "1784919550.484869",
     "1784919561.878169",
@@ -497,6 +498,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-25T12:10:55+09:00",
+      "selected": {
+        "id": "sr-1780598219-384b99eb73",
+        "source_ts": "1780598219.435869",
+        "title": "HieraVisVR — event anchor・run grouping・個別 replay の階層的 playtest 分析",
+        "reason": "未レビューの score 10 atom のうち、memory・game-design・operation・evaluation の4優先タグを持ち、Phase 4a の問題抽出と次の playable 評価へ直接つながる1件を選んだ。平均値や全ログ走査で終わらず、異常の anchor、同型 run 群、代表 replay の順に原因仮説を狭める導線が、現在の定時サイクルに既存 control と異なる判断差を作るか確認するためである。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は formative study 30人、Reflex 27人、escape room 14人、fire evacuation 27ペア54人、professional tester／designer 5人の90分 study を示し、Exploration／Grouping／Explanation を event anchor、run 群、同期 replay へ具体化しているため actionability=3 とした。一方、主な workflow 評価は専門家5人の定性 study で、従来の録画 review との時間・原因診断精度・設計変更品質の対照比較はなく、3 application も同じ深さでは検証されていないため evidence=2 とした。既存の probe-20260622-egocs-causal-gameplay-log は input／view／state／event／outcome の因果 chain と欠損分類を、probe-20260622-d2e-synchronized-playtest-stream は同期 frame／input／state／outcome stream を、probe-20260620-video-glitch-temporal-grounding は同型現象の grouping と時間 span をすでに扱う。HieraVisVR 固有の top-down UI を別 control として足しても、現在の Phase 4a の問題判定は変わらず、321件の active_probes と pending の minimum-sufficient-scope-ladder lease に確認負荷を重ねるため non_redundancy=1、risk_control=1 とした。次に複数 run と replay が揃い、既存 causal trace だけでは原因候補を絞れない具体例が出た時に再評価する。",
+      "existing_probes": [
+        "probe-20260622-egocs-causal-gameplay-log",
+        "probe-20260622-d2e-synchronized-playtest-stream",
+        "probe-20260620-video-glitch-temporal-grounding",
+        "probe-20260724-minimum-sufficient-scope-ladder"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の causal／synchronized／temporal probes との重複および pending lease 下の確認負荷による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-25T10:14:32+09:00",
       "selected": {

@@ -51,7 +51,35 @@ reviewed_at: "2026-07-25T12:08:42.6662832+09:00"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780598219-384b99eb73
+    source_ts: "1780598219.435869"
+    title: "HieraVisVR — event anchor・run grouping・個別 replay の階層的 playtest 分析"
+    reason: "未レビューの score 10 atom のうち、memory・game-design・operation・evaluation の4優先タグを持ち、Phase 4a の問題抽出と次の playable 評価へ直接つながる1件を選んだ。平均値や全ログ走査で終わらず、異常の anchor、同型 run 群、代表 replay の順に原因仮説を狭める導線が、現在の定時サイクルに既存 control と異なる判断差を作るか確認するためである。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回る。Exploration／Grouping／Explanation は具体的だが、主な workflow 評価は専門家5人の定性 study で従来 review との対照比較がない。既存の causal gameplay log、synchronized playtest stream、temporal grounding probes が event／trace／grouping を覆い、Phase 4a には minimum-sufficient-scope-ladder の pending lease もあるため、新規 control を足しても判断差より確認負荷が大きい。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
