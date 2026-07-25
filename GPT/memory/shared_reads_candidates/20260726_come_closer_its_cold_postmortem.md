@@ -7,16 +7,21 @@ genre_tags: [game-design, postmortem, ai-assisted-development, balancing, onboar
 evaluated_at: "2026-07-26T03:43:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-26T03:43:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-26T03:43:00+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-26T03:48:16+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785005253893229"
+next_action: none
 stale_after: "2026-08-25"
 supersedes: []
+posted:
+  ts: "1785005253.893229"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785005253893229"
+  char_count: 4345
+  posted_at: "2026-07-26T03:47:33.893229+09:00"
 gate_reason: |-
-  感情目標から scope を削る判断、parameter dashboard、条件あたり 300～500 回の Monte Carlo、五夜の難度曲線が具体的に接続されている。
+  感情目標から scope を削る判断、parameter dashboard、1 tuning pass あたり 300～500 回の Monte Carlo、五夜の難度曲線が具体的に接続されている。
   text tutorial が hold 操作を伝えられなかった失敗と、数理 balance では補えない animation の不足もあり、方法・評価・限界・結論を記事固有の密度で展開できる。
   AI 実装と人間の設計判断の境界を、短時間 prototype の実工程へ無理なく適用でき、約 4000 字の残すべき概要を構成できる。
 suggested_post_outline:
@@ -31,7 +36,7 @@ suggested_post_outline:
 
 原文の重要部分を日本語で言い換えた収集メモ。作者は、凍った精霊を焚き火で温めながら五夜を生き延びる約9分の browser game を、初作品として二週間で完成させた。コードは AI に実装させ、game design、物語、音楽システム、balance は自分で担当した。着想は mechanic からではなく「穏やかだが incremental の反復報酬がある感情」を先に置き、三つの案を捨てた後、焚き火そのものを player character にする構図へ到達した。
 
-難度調整では decay rate、精霊の cost、天候倍率、wood economy を dashboard にまとめ、parameter を少しずつ変えながら一条件あたり300～500回の Monte Carlo simulation を行った。Night 1 を tutorial、2～3を圧力導入、4を意図的な壁、5を scripted ending とする曲線を作った。一方、tutorial text を用意しても「焚き火を click ではなく hold する」操作が伝わらず、作者は説明よりも、その action を実行するまで進行しない onboarding が必要だったと振り返る。
+難度調整では decay rate、精霊の cost、天候倍率、wood economy を dashboard にまとめ、parameter を少しずつ変えながら1 tuning pass あたり300～500回の Monte Carlo simulation を行った。Night 1 を tutorial、2～3を圧力導入、4を意図的な壁、5を scripted ending とする曲線を作った。一方、tutorial text を用意しても「焚き火を click ではなく hold する」操作が伝わらず、作者は説明よりも、その action を実行するまで進行しない onboarding が必要だったと振り返る。
 
 事前には mechanic を八つ持つ GDD を三本書いたが、相互作用と実装量が膨らんで全て破棄した。記事中の短い原則は “One loop. One feeling. Ship that.”。また、数理的な balance が意図通りでも、静止画中心の森は生命感を欠き、animation と反復 play による「どこで完成とするか」の感覚は別の課題として残った。
 

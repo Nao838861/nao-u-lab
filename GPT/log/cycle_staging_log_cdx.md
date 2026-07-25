@@ -106,7 +106,23 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+### 2026-07-26 03:48 JST
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260726_come_closer_its_cold_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785005253893229
+    char_count: 4345
+skipped: []
+review:
+  source_checked:
+    - https://itch.io/blog/1561059/come-closer-its-cold-postmortem-my-first-game-in-2-weeks
+    - https://itch.io/blog/1562441/designing-come-closer-its-cold-what-we-burned-down-to-find-the-game
+  policy_result: pass
+  slack_verification: ok
+  correction: "Phase 2 の『一条件あたり 300～500 回』を、companion 記事に基づき『1 tuning pass あたり 300～500 回』へ修正した。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
