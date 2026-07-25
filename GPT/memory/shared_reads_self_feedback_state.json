@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-25T19:02:12+09:00",
+  "updated_at": "2026-07-25T21:06:00+09:00",
   "reviewed_source_ts": [
+    "1784973458.275029",
     "1784964388.279179",
     "1784956651.417419",
     "1780170954.779479",
@@ -501,6 +502,47 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-25T21:06:00+09:00",
+      "selected": {
+        "id": "sr-1784973458-aca142a679",
+        "source_ts": "1784973458.275029",
+        "title": "Phobos Down — 個人的な身体制約を observable な shooter 設計へ翻訳した postmortem",
+        "reason": "未レビュー条件を満たす最新の score 12 atom で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。低い反射速度でも先読みで勝てるという個人的な制約を、入力・色・生成条件・初見観察へ翻訳する知見が、次の prototype に既存 control と異なる判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、個人的な制約を「誰が、何を、速さではなく何で上達するか」という design contract にし、脅威予告時間・同時識別色数・同時入力数・計画可能局面・seed 別の到達性／初被弾／脅威密度／未使用 content・3〜5人の初見観察へ変換しており actionability=3 とした。一方、根拠は単独作者の postmortem で、session 数、継続時間、死亡地点、seed 別完走率、操作ミス、異なる身体特性の player 比較がなく、arcade と Steam も同一条件比較ではないため evidence=2 とした。player-intent-action-response は意図から observable response への接続を、plg-evaluation-claim-fit と behavior-trace-pcg-diversity は PCG の評価主張・seed・行動差を、skill-conditioned-playtest-route は player profile を一般化しない比較を、gamerastra-accessibility-mental-map は支援対象と観測 channel の分離を既に扱う。game_design_rules.md も予測可能な入力結果、focused 検証、headless 成立性と人間の納得感の分離を恒久ルールとして持つ。321件の active_probes と Phase 4a 向け pending lease がある状態で、入力・可読性・PCG・試遊導線を束ねた別 control を追加すると確認負荷と競合範囲を増やす。次の具体的 prototype では既存 probes を再利用し、個人的制約を測定可能な contract にできず判断を外した実例が出た場合だけ再検討する。",
+      "existing_probes": [
+        "probe-20260717-player-intent-action-response",
+        "probe-20260615-plg-evaluation-claim-fit",
+        "probe-20260616-behavior-trace-pcg-diversity",
+        "probe-20260604-skill-conditioned-playtest-route",
+        "probe-20260621-gamerastra-accessibility-mental-map"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存 intent／PCG／player-profile／accessibility probes および game_design_rules.md との重複、probe inventory 過多、未消化 lease を踏まえた reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-25T19:02:12+09:00",
       "selected": {

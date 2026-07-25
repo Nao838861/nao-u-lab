@@ -103,7 +103,51 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784973458-aca142a679
+    source_ts: "1784973458.275029"
+    title: "Phobos Down — 個人的な身体制約を observable な shooter 設計へ翻訳した postmortem"
+    reason: >-
+      未レビュー条件を満たす最新の score 12 atom で、memory・harness・game-design・operation・evaluation の
+      5優先タグを持つ。低い反射速度でも先読みで勝てるという個人的な制約を、入力・色・生成条件・
+      初見観察へ翻訳する知見が、次の prototype に既存 control と異なる判断差を作るか確認するため選んだ。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: >-
+    合計13で採用条件の14に届かず、risk_control も必須閾値2を下回る。
+    design contract を脅威予告時間・同時識別色数・同時入力数・計画可能局面・seed 別指標・
+    3〜5人の初見観察へ変える手順は具体的だが、根拠は比較条件と player telemetry を欠く単独作者の事例である。
+    intent→observable response、PCG の評価主張と seed 行動差、player profile、accessibility の観測 channel は
+    既存5 probes が扱い、game_design_rules.md にも focused 検証と headless／人間評価の分離がある。
+    active_probes 321件と Phase 4a 向け pending lease 1件がある状態で別 control を足すと確認負荷を増やすため、
+    次の具体的 prototype では既存 probes を再利用し、判断を外した実例が出た場合だけ再検討する。
+  existing_probes:
+    - probe-20260717-player-intent-action-response
+    - probe-20260615-plg-evaluation-claim-fit
+    - probe-20260616-behavior-trace-pcg-diversity
+    - probe-20260604-skill-conditioned-playtest-route
+    - probe-20260621-gamerastra-accessibility-mental-map
+  change:
+    summary: "reviewed_source_ts と重複・risk・見送り理由のみ更新。probe・metric・lease・directive・恒久ルールは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
