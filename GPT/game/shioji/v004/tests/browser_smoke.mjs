@@ -2054,7 +2054,10 @@ async function checkSaveDeliveryUi(width = 1440, height = 900, mobile = false) {
     hidden: document.querySelector('#start-screen').hidden,
     status: document.querySelector('#status span').textContent,
   })`);
-  assert.equal(restored.day, saved.day, JSON.stringify(restored));
+  assert.ok(
+    restored.day >= saved.day && restored.day <= saved.day + 1,
+    `再開直後の通常速度で進んでも1日以内: ${JSON.stringify(restored)}`,
+  );
   assert.equal(restored.mode, 'test', JSON.stringify(restored));
   assert.equal(restored.hidden, true, JSON.stringify(restored));
   assert.match(restored.status, /保存から再開/);
