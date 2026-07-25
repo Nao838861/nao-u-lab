@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-26T01:33:28+09:00",
+  "updated_at": "2026-07-26T03:53:14+09:00",
   "reviewed_source_ts": [
+    "1780620630.252239",
     "1784989190.154389",
     "1784980873.267569",
     "1784973458.275029",
@@ -504,6 +505,45 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-26T03:53:14+09:00",
+      "selected": {
+        "id": "sr-1780620630-1a9f3454bf",
+        "source_ts": "1780620630.252239",
+        "title": "Graph-based sports outcome prediction — vector 集約で消える局所関係を graph snapshot に残す",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす候補のうち source_ts が最新で、memory・harness・evaluation・agent・game-design の5優先タグを持つ。player／ball／goal の局所関係を graph state として保持する発想が、次の headless telemetry や失敗状態分析に既存 controls と異なる判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、American football と esports で test loss を9%／20%減らしたという結果、permutation invariance、player interaction weights、what-if analysis を示し、敵・弾・自機・障害物・資源を node、距離・衝突予測時間・射線・追跡・回収可能性を edge とする死亡直前／成功直前 snapshot へ変換しているため actionability=3 とした。一方、短い投稿と short paper の要旨に基づき、node／edge 定義別の ablation、可視化が修正判断を改善した比較、prototype telemetry での再現、GNN なしの graph logging 単独効果は確認できないため evidence=2 とした。既存の state-abstraction-action-loop は player／hazard／goal／timer／action の構造化 state と observe-action loop を、egocs-causal-gameplay-log は input／view／state／event／outcome の因果 chain を、local-editing-shared-proxy は local enemy density や recovery-point risk distance をすでに扱う。graph snapshot は関係を失わない表現として有用だが、具体的な telemetry artifact がない現状で別 control を足しても判断差を検証できない。321件の active_probes と Phase 4a 向け pending lease 1件があるため、確認負荷を増やさず、次の具体的な headless trace で既存 probes が局所配置関係を復元できず修正判断を外した場合だけ再検討する。",
+      "existing_probes": [
+        "probe-20260525-state-abstraction-action-loop",
+        "probe-20260622-egocs-causal-gameplay-log",
+        "probe-20260606-local-editing-shared-proxy"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の structured-state／causal-log／local-proxy probes との重複、具体的 artifact 不在、probe inventory 過多による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-26T01:33:28+09:00",
       "selected": {

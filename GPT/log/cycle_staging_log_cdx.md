@@ -125,7 +125,37 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+### 2026-07-26 03:53 JST
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780620630-1a9f3454bf
+    source_ts: "1780620630.252239"
+    title: "Graph-based sports outcome prediction — vector 集約で消える局所関係を graph snapshot に残す"
+    reason: "source=slack_api/shared-reads、score=11、未レビューの候補で source_ts が最新。memory・harness・evaluation・agent・game-design の5優先タグを持ち、headless telemetry で局所関係を失わない表現が既存 controls と異なる判断差を作るか確認するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "graph state logging は具体的だが、short paper 要旨中心で prototype telemetry 上の再現と graph logging 単独効果が未確認。既存の state-abstraction-action-loop、egocs-causal-gameplay-log、local-editing-shared-proxy が構造化 state、因果 chain、局所配置 proxy を扱う。active_probes=321、Phase 4a 向け pending lease=1 の状態で具体的 artifact なしに control を増やすと確認負荷だけが増えるため、既存 probes が局所配置関係を復元できず修正判断を外した実例が出た場合だけ再検討する。"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
