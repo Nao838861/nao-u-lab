@@ -82,7 +82,87 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の High Signal / Recent index を per-file atom index と照合し、broken link・重複 ID とも 0 件を確認"
+  - "memory/atoms.jsonl と per-file .md / index.jsonl の 2743 件 mirror が一致し、ID 重複・content conflict 0 件を確認。raw normalized-content 40 群は既存 overlay で fold 済み"
+  - "shared-reads の open duplicate / stale triage / group action / mixed duplicate / terminal canonical sidecar を再生成。terminal canonical は 68 群、actionable group は 0 群"
+  - "candidate lifecycle 1093 files を dry-run 監査し、status / candidate_status の修復対象 0 件を確認"
+  - "Slack inbox は directives 0 件 / broadcasts 0 件 pending のため handled 更新なし"
+issues:
+  - id: ISS-4A-20260725-01
+    description: "1 atom の原文と派生 atom に U+FFFD が残り、タイトル中の「AIエージェント」が「AIエ��ジェント」になっている。UTF-8 表示経路の誤認ではなく、raw source から存在する局所的な source data damage"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みで raw source と per-atom .md の双方に U+FFFD を確認。memory/MEMORY.md は「記憶」「ゲーム設計」「敵パターン」を UTF-8 で取得でき、index validation も pass。「評価軸」は現 index 本文に該当行なし"
+    display_or_tooling_status: "PowerShell Get-Content -Encoding UTF8 と rg は source bytes を一貫して表示。memory_health のもう1件 gr-1777083728-44d444ab7a は原文の意図的な「???」を拾った false positive"
+    why_blocks_game_memory: "該当 atom を正確な語「AIエージェント」で title/excerpt 検索する時だけ recall 漏れを起こし得るが、memory/agent tags と source_ts からは到達可能で影響は局所的"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+candidate_lifecycle:
+  status_counts:
+    posted: 476
+    ready_to_post: 10
+    postponed: 332
+    failed: 256
+    needs_review: 18
+    skipped_unreviewed: 1
+  overdue_open_total: 191
+  missing_stale_after: 4
+raw_archive_audit:
+  inactive_30d_count: 95
+  action: "archive なし"
+  reason: "対象は slack_archive 正本、sync state、Phase 3 の PDF / 抽出 text など evidence pointer の参照先。経過日数だけでは安全に移動できず、明示的な archive 契約もないため原文保持"
+stale_backlog:
+  overdue_open_total: 191
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 56
+  mixed_group_count: 49
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+group_action_handoff: []
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game_transfer_value high。Zork の探索・計画限界を headless playtest へ移す価値がある一方、評価条件・失敗分類・モデル比較の本文確認が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "game_transfer_value high。検証可能な遷移モデルを持つ planning benchmark だが、実験設計・比較対象・結果の補完が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_inmind_social_deduction_reasoning_styles.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "game_transfer_value high。個別推論スタイル追跡は social deduction 制作へ転用可能だが、既投稿断片との重複と評価詳細の確認が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_pangea_procedural_artificial_narrative.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "game_transfer_value high。LLM NPC の memory / validation / Unity 構成は具体的だが、empirical study・ablation・失敗例の根拠補完が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_access_profiles_game_accessibility.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "game_transfer_value high。accessibility を複数層の基盤として扱う適用先が明確で、player / developer study の評価詳細を再確認する価値が高い"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
