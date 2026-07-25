@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2603.24160"
 collected_at: "2026-05-27T14:59:35+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-testing, automated-testing, personas, llm-agents, gui-testing, evaluation]
-evaluated_at: "2026-05-27T15:05:10+09:00"
+evaluated_at: "2026-07-26T01:21:06+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-27T15:05:10+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-27T15:05:10+09:00"
-stale_after: "2026-06-26"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-26T01:21:06+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T01:21:06+09:00"
+stale_after: "2026-08-25"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: >-
-  testing mindset / exploration strategy / interaction habit で persona を切り、GUI 探索の多様性と bug 発見数で評価する骨格は明確で、ゲーム UI・tutorial・設定画面の自動探索に転用できる。
-  ただし対象は一般 GUI testing であり、今回同時に収集された game playtesting 直結候補と比べるとゲーム制作への適用説明が一段迂回する。Phase 3 投稿候補としては、ゲーム固有候補の後に再比較するのが妥当。
+  persona の三軸と多様性・bug 発見数による評価骨格は明確で、ゲーム UI の自動探索へ具体的に転用できる。
+  一方、現 candidate は abstract 要約だけで実験対象、baseline、失敗例が不足し、ゲーム固有の検証もない。4000字概要では外挿が過大になるため fail とする。
 
 ---
 

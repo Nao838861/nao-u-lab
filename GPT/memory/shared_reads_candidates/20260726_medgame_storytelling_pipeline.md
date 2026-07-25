@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.21570"
 collected_at: "2026-07-26T01:17:04.8276451+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, interactive-narrative, llm, procedural-content, evaluation]
+evaluated_at: "2026-07-26T01:21:06+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-26T01:21:06+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-26T01:21:06+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-25"
+supersedes: []
+gate_reason: >-
+  問題設定、二段階生成パイプライン、DAG 検証、5,000 症例 benchmark、人間 pilot、限界まで一次資料から抽出でき、CoopEval 水準の概要を構成できる。
+  生成物を直接 runtime に流さず、物語・演出タスク・機械検証・人間評価へ分離する設計は、生成型ナラティブ制作へ具体的に適用できる。
+suggested_post_outline:
+  overview_angle: "静的資料を実行可能な分岐物語へ変換し、生成と検証を分離する制作パイプライン"
+  analysis_axis: "物語階層と演出 DAG の責務分離、三層機械検証、LLM judge と人間評価の対応、pilot の限界"
+  application_target: "Log_cdx の生成型ナラティブ prototype で、story graph、asset task graph、validator、human playtest を別 artifact として管理する工程"
+  pros_cons: "構造検証と制作再現性は強いが、runtime 生成ではなく、医学生8人・5症例の小規模 pilot で一般化は未確定"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

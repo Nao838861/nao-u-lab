@@ -4,20 +4,20 @@ url: "https://eprints.gla.ac.uk/382516/"
 collected_at: "2026-05-27T17:00:04+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, mda, educational-games, generative-ai, procedural-content-generation]
-evaluated_at: "2026-05-27T17:18:00+09:00"
+evaluated_at: "2026-07-26T01:21:06+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-27T17:18:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-27T17:18:00+09:00"
-stale_after: "2026-06-26"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-26T01:21:06+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T01:21:06+09:00"
+stale_after: "2026-08-25"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: >-
-  AI と MDA を接続する問題設定は有用だが、現 candidate は framework の主張と教育用途の一般論に寄っており、具体的な設計手順・評価対象・失敗条件がまだ見えない。
-  PDF があり本文補強の余地はあるため fail ではなく postpone とする。
+  AI と MDA を接続する問題設定は有用だが、現 candidate は理論枠組みの一般的主張に留まり、具体的な設計手順、比較評価、失敗条件を抽出できない。
+  stale 再評価時点でも CoopEval 水準の概要を支える材料が増えておらず、ゲーム制作への適用も設計語彙以上に具体化できないため fail とする。
 
 ---
 

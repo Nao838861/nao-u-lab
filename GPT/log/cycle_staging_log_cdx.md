@@ -9,7 +9,86 @@
 - pending inbox: `slack_directives.jsonl` / `slack_broadcasts.jsonl` に `status: pending` の実レコードは単純検索上なし。Slack plugin 未導入のため、可視チャンネルの直接取得ではなくローカル archive を確認。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 6
+pass:
+  - memory/shared_reads_candidates/20260726_medgame_storytelling_pipeline.md
+fail:
+  - path: memory/shared_reads_candidates/20260527_ai_enhanced_mda_educational_game_design.md
+    reason: "理論枠組みの一般論に留まり、設計手順・比較評価・失敗条件が不足"
+  - path: memory/shared_reads_candidates/20260527_capcom_ai_playtesting_debug_agents.md
+    reason: "二次記事の短い紹介のみで、運用条件・効果測定・一次文脈が不足"
+  - path: memory/shared_reads_candidates/20260527_death_howl_genre_blend_design.md
+    reason: "設計観点は有用だが、短いメモだけで変遷と評価過程の証拠が不足"
+  - path: memory/shared_reads_candidates/20260527_personified_llm_crowdsourced_gui_testing.md
+    reason: "abstract 要約のみで実験詳細が薄く、ゲーム適用は外挿が過大"
+  - path: memory/shared_reads_candidates/20260527_programming_smart_playtesting.md
+    reason: "メタデータ中心で DSL・実験・比較結果・結論を抽出不能"
+postpone: []
+stale_reviewed:
+  - handoff_id: cha-6df20308349a54b1
+    path: memory/shared_reads_candidates/20260527_ai_enhanced_mda_educational_game_design.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-25"
+  - handoff_id: cha-e1325aa5c667bff9
+    path: memory/shared_reads_candidates/20260527_capcom_ai_playtesting_debug_agents.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-25"
+  - handoff_id: cha-d9f9926e64a0e43f
+    path: memory/shared_reads_candidates/20260527_death_howl_genre_blend_design.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-25"
+  - handoff_id: cha-510a9b82a4883c83
+    path: memory/shared_reads_candidates/20260527_personified_llm_crowdsourced_gui_testing.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-25"
+  - handoff_id: cha-b14b34231ab45641
+    path: memory/shared_reads_candidates/20260527_programming_smart_playtesting.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-25"
+candidate_handoff_audit:
+  pending_before: 5
+  read_ids:
+    - cha-6df20308349a54b1
+    - cha-e1325aa5c667bff9
+    - cha-d9f9926e64a0e43f
+    - cha-510a9b82a4883c83
+    - cha-b14b34231ab45641
+  resolved_ids:
+    - cha-6df20308349a54b1
+    - cha-e1325aa5c667bff9
+    - cha-d9f9926e64a0e43f
+    - cha-510a9b82a4883c83
+    - cha-b14b34231ab45641
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  posted_source_index: fresh
+  title_canonical_index: fresh
+  open_duplicate_group_queue: fresh
+  decisions:
+    continue: 6
+    review: 0
+    skip: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

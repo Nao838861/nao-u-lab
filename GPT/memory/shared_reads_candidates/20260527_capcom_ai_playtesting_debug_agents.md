@@ -4,20 +4,20 @@ url: "https://www.gamesradar.com/games/resident-evil/capcom-says-generative-ai-s
 collected_at: "2026-05-27T00:23:31+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [industry-practice, ai-playtesting, debug, game-production, human-sensibility]
-evaluated_at: "2026-05-27T00:28:04+09:00"
+evaluated_at: "2026-07-26T01:21:06+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-27T00:28:04+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-27T00:28:04+09:00"
-stale_after: "2026-06-26"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-26T01:21:06+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T01:21:06+09:00"
+stale_after: "2026-08-25"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: >-
-  routine checking と director concept 照合 agent という適用先は強いが、候補は二次記事であり、4000字の概要を書くには一次 interview 側の文脈確認が足りない。
-  Phase 3 投稿候補にするなら、4Gamer/Automaton 側の原文に当たり、運用フローと発言範囲を確認してから再評価する。
+  routine checking と director concept 照合 agent という着想は具体的だが、現 candidate は二次記事の短い紹介だけで、システム構成、運用条件、効果測定を確認できない。
+  stale 再評価でも一次 interview の根拠が補われておらず、4000字概要では推測が中心になるため fail とする。
 
 ---
 

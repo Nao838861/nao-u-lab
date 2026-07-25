@@ -4,20 +4,20 @@ url: "https://research.ou.nl/en/publications/programming-smart-playtesting/"
 collected_at: "2026-05-27T17:00:04+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-testing, automated-playtesting, agent-based-testing, dsl, software-engineering]
-evaluated_at: "2026-05-27T17:18:00+09:00"
+evaluated_at: "2026-07-26T01:21:06+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-27T17:18:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-27T17:18:00+09:00"
-stale_after: "2026-06-26"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-26T01:21:06+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T01:21:06+09:00"
+stale_after: "2026-08-25"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: >-
-  DSL / agent-based testing による playtesting の方向性は強いが、現 candidate はポータルのメタデータとキーワード中心で、DSL の構文、実験設計、比較結果がまだ薄い。
-  Nao_u 作品の headless regression へ接続できる可能性はあるため棄却せず、本文を読んで手法と評価を補えた時に再判定する。
+  DSL / agent-based testing による再現可能な playtesting は headless regression へ接続しやすい。
+  しかし現 candidate は論文メタデータとキーワードだけで、DSL の構文、実験設計、比較結果、結論を抽出できず、投稿品質を支えられないため fail とする。
 
 ---
 
