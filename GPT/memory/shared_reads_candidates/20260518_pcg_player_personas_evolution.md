@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2112.04406"
 collected_at: "2026-05-18T11:59:26+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, pcg, procedural-generation, player-modeling, evaluation]
-evaluated_at: "2026-05-18T12:06:49+09:00"
+evaluated_at: "2026-07-25T23:07:50+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-18T12:06:49+09:00"
+last_reviewed_at: "2026-07-25T23:07:50+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-18T12:06:49+09:00"
-stale_after: "2026-06-17"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-25T23:07:50+09:00"
+stale_after: "2026-08-24"
 supersedes: []
 next_action: revise_or_research
 gate_reason: >-
-  persona agents と experience metrics による PCG 評価枠は、headless 評価や難易度調整へ接続できるため題材は強い。
-  ただし現候補は abstract レベルで、4 personas / 3 metrics / evolutionary architecture の実験内容を十分に掘れておらず、Phase 3 投稿前に本文精読が必要。
+  4 persona agents と 3 experience metrics を組み合わせる発想は、単一 bot の平均挙動を避ける headless 評価へ具体的に接続できる。
+  ただし保持情報は abstract 相当のままで、persona・metric の定義、進化処理、比較結果が不足し、現時点では ~4000字の方法解説を支えられないため再調査まで保留する。
 
 ---
 

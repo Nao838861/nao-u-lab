@@ -4,18 +4,20 @@ url: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5353528"
 collected_at: "2026-05-26T15:36:50+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-content-generation, puzzles, narrative, open-world]
-evaluated_at: "2026-05-26T16:05:00+09:00"
+evaluated_at: "2026-07-25T23:07:50+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-26T16:05:00+09:00"
+last_reviewed_at: "2026-07-25T23:07:50+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-26T16:05:00+09:00"
-stale_after: "2026-06-25"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-25T23:07:50+09:00"
+stale_after: "2026-08-24"
 supersedes: []
-gate_reason: "問題設定と適用先は強いが、現 candidate は abstract 相当の情報に寄っており、SPHINX 2 の具体的な生成手順・heuristics・user study の測定設計がまだ薄い。Phase 3 の ~4000 字概要にするには本文から手法と評価を補う必要があるため保留。"
 next_action: revise_or_research
+gate_reason: >-
+  narrative puzzle と open-world 探索を接続する問題設定、miniPXI と thematic analysis を併用した評価、文脈・複雑度の改善点は具体的である。
+  ただし SPHINX 2 の puzzle heuristics、生成手順、study 規模が保持情報に欠け、~4000字の中核手法を推測なしで説明できないため本文再調査まで保留する。
 
 ---
 

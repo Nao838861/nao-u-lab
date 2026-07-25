@@ -4,20 +4,20 @@ url: "https://80.lv/articles/denis-dyack-interview-how-deadhaus-sonata-is-an-rpg
 collected_at: "2026-05-25T18:24:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, rpg, persistent-world, deterministic-systems, narrative-systems, simulation]
-evaluated_at: "2026-05-25T18:35:47+09:00"
+evaluated_at: "2026-07-25T23:07:50+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-25T18:35:47+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-25T18:35:47+09:00"
-stale_after: "2026-06-24"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-25T23:07:50+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-25T23:07:50+09:00"
+stale_after: "2026-08-24"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |-
-  persistent history / deterministic world state という方向性は有用だが、候補メモ上は長期運用構想と抽象語が中心で、具体的な実装単位や評価方法がまだ薄い。
-  小型ゲームへ落とすには、run 履歴が次回プレイをどう変えるかの実例か、deterministic loot/world state の一次資料を追加確認してから扱う方がよい。
+  persistent history という問題設定は面白いが、記事メモは発売前構想と標語が中心で、deterministic loot/world state の実装手順や検証結果を抽出できない。
+  小型ゲームへの適用も具体例ではなく類推に留まり、CoopEval 水準の方法・評価解説へ拡張すると推測が本文を上回るため不合格とする。
 
 ---
 

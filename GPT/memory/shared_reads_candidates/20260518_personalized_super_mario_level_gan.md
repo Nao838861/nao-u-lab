@@ -4,14 +4,26 @@ url: https://www.nature.com/articles/s41598-026-46199-1
 collected_at: 2026-05-18T05:59:17+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [pcg, personalized-level-design, platformer, ai-game-design, difficulty]
-candidate_status: needs_review
-status: needs_review
-last_reviewed_at: "2026-05-18T05:59:17+09:00"
-last_decision: needs_review
-evidence: "candidate_file:20260518_personalized_super_mario_level_gan.md; status:needs_review"
-next_action: evaluate_in_phase2
-stale_after: "2026-06-17"
+evaluated_at: "2026-07-25T23:07:50+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+status: ready_to_post
+last_reviewed_at: "2026-07-25T23:07:50+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-25T23:07:50+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-24"
 supersedes: []
+gate_reason: >-
+  skill clustering を条件ラベルへ変換し、5 GAN architecture を複数指標で比較する手順と、skill 別に生じた level 特性まで抽出できている。
+  difficulty を死亡回数だけでなく操作複雑度・多様性・playability へ分解でき、headless 評価への適用を含む ~4000字の独立分析を構成できる。
+suggested_post_outline:
+  overview_angle: "player 行動の skill cluster を条件付き level generation と多面的評価へ接続する一連の設計"
+  analysis_axis: "personalization の妥当性を生成品質・多様性・速度・実際の攻略挙動へ分解して読む"
+  application_target: "Log_cdx の platformer / action prototype における複数 bot policy 別の難易度生成と回帰評価"
+  pros_cons: "技能別の適応と評価軸の具体性が強み。Mario 固有 dataset と技能クラスタの固定化、GAN の説明可能性が弱み"
+  verdict_pre: "部分採用"
 
 ---
 

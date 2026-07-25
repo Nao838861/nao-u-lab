@@ -4,20 +4,20 @@ url: https://pure.itu.dk/en/publications/designing-game-feel-a-survey/
 collected_at: 2026-05-26T22:11:26+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, game-feel, controls, player-experience, survey]
-evaluated_at: "2026-05-26T22:17:14+09:00"
+evaluated_at: "2026-07-25T23:07:50+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-26T22:17:14+09:00"
+last_reviewed_at: "2026-07-25T23:07:50+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-26T22:17:14+09:00"
-stale_after: "2026-06-25"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-25T23:07:50+09:00"
+stale_after: "2026-08-24"
 supersedes: []
 next_action: revise_or_research
 gate_reason: >-
-  physicality / amplification / support と tuning / juicing / streamlining の分類はゲーム制作への適用性が高い。
-  ただし今回の candidate に残っている情報だけでは、survey の分類根拠・200 件超の文献整理・各 domain の具体例まで十分に復元できず、CoopEval 水準の概要を書くには追加読解が必要。
+  physicality / amplification / support と tuning / juicing / streamlining の対応は、操作感をエフェクト量だけで評価しない枠として適用性が高い。
+  一方、保持情報からは 200 件超をどう選別・統合したか、各 domain の境界と反例を復元できず、survey の評価内容を薄めず ~4000字にするには本文精読が必要なため保留する。
 
 ---
 
