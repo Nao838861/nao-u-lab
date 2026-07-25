@@ -52,7 +52,35 @@ skipped: []
 Slack 保存本文の文字化け検証はいずれも通過した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784956651-5a04e915bd
+    source_ts: "1784956651.417419"
+    title: "alienmelon『she danced in the wind like a holographic dream before the world died』postmortem"
+    reason: "未レビュー条件を満たす最新の score 11 atom。PCG の責任範囲を反復配置へ狭める scope 判断と、順不同 fragment の途中仮説更新が次の narrative prototype に行動差を作るか確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "数値上は採用可能だが、単独 postmortem で体系的 playtest と取得順別の理解 evidence がない。既存 probe が scope 分離、順序 trace、PCG の authored boundary を既に扱い、今サイクルには narrative playable diff、後続 consumer、before/after artifact がない。active_probes 321件と Phase 4a 向け pending lease 1件へ operational control を重ねず、順不同 fragment の具体物ができた時に再評価する。"
+  change:
+    summary: "reviewed/source_ts と defer 理由だけを state に記録。probe・metric・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

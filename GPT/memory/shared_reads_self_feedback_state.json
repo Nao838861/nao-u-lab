@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-25T14:22:51+09:00",
+  "updated_at": "2026-07-25T16:31:33+09:00",
   "reviewed_source_ts": [
+    "1784956651.417419",
     "1780170954.779479",
     "1780598219.435869",
     "1784934693.631459",
@@ -499,6 +500,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-25T16:31:33+09:00",
+      "selected": {
+        "id": "sr-1784956651-5a04e915bd",
+        "source_ts": "1784956651.417419",
+        "title": "■ 概要 alienmelon の『she danced in the wind like a holographic dream before the world died』は、滅亡後の地球に残った最後の花として brutalist ruins を歩き、殺された詩人の記憶を集め",
+        "reason": "未レビュー条件を満たす最新の score 11 atom で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。PCG を表現中心から反復配置へ狭める scope 判断と、順不同 fragment が途中仮説を更新するかを分けて測る知見が、次の narrative prototype へ既存 control と異なる判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の採用条件は満たす。shared-reads 本文は、無限 runtime generation から chunk／事前生成／固定配置への縮小、順不同 fragment の単体可読性と組合せ後の意味更新、1件目・3件目・全件取得時の途中仮説、媒体別 ablation、audio state machine まで具体化しており、actionability=3 とした。一方、根拠は単独作者の postmortem で、体系的 playtest、fragment 取得順別の理解、読了率、性能条件の詳細がなく、売上100ドル超も体験成立率を示さないため evidence=2 とした。既存の short-hike-constraint-shortcut は core／deferred の scope 分離を、temporal-predicate-as-mechanic は順序・履歴の deterministic trace を、snappable-layout-pcg-responsibility と cg-wfc-mission-layout-split は PCG の authored boundary と生成責任層をすでに扱う。新しい差は fragment ごとの『導入 entity／修正する仮説／残す ambiguity』と媒体ごとの意味増分だが、今サイクルには比較可能な narrative playable diff、実際に判断へ使う consumer phase、before／after trigger artifact がない。さらに active_probes は321件で Phase 4a 向け pending lease が1件あるため、対象 artifact なしに operational control を増やさない。順不同 fragment を持つ具体的 prototype ができた時に、1件目・3件目・全件取得時の仮説更新または媒体 ablation が修正判断を変えるか再評価する。",
+      "existing_probes": [
+        "probe-20260713-short-hike-constraint-shortcut",
+        "probe-20260711-temporal-predicate-as-mechanic",
+        "probe-20260618-snappable-layout-pcg-responsibility",
+        "probe-20260620-cg-wfc-mission-layout-split"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、数値上は採用可能だが具体的な consumer／trigger artifact がないため defer した理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-25T14:22:51+09:00",
       "selected": {
