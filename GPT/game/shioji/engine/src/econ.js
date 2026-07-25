@@ -38,6 +38,7 @@ export const FOOD_KIND = deepFreeze({
 export const P = deepFreeze({
   EAT: 9,
   PANTRY_FOOD_D: 6,
+  FOOD_FIRST_D: 3,
   CULT_D: 60,
   RATION: 0.15,
   Y_FISH: 20,
@@ -1660,10 +1661,11 @@ export function buyAtMarket(
     (total, goods) => total + (household.pantry[goods] ?? 0),
     0,
   ) / P.EAT;
-  // 暮らしの備えが6日を切った世帯は、加工原料より先に食料を積む。
-  // 原料の掛け買いで財布を空にしてから食料の棚へ向かう旧順序は、
-  // 市場に食料があっても加工世帯だけが飢える原因になっていた。
-  const preferredOrder = foodDays < P.PANTRY_FOOD_D
+  // 食料の備えが本当に危うい世帯だけ、加工原料より先に食料を積む。
+  // 旧順序(常に原料先)は市場に食料があっても加工世帯だけが飢える原因だったが、
+  // 6日分を切った時点で常に食料先行にすると、原料購入と生産が細って収入が消え、
+  // 島全体の財布が0へ張り付く貧困トラップを起こした(2026-07-26実測)。
+  const preferredOrder = foodDays < P.FOOD_FIRST_D
     ? [...FOOD_BUY_ORDER, ...jobOrder.filter((goods) => !FOODS.includes(goods))]
     : jobOrder;
   const order = preferredOrder.filter((goods) => targets[goods]);
@@ -1673,6 +1675,16 @@ export function buyAtMarket(
   const unmet = {};
   const blockers = {};
   const processed = new Set();
+  // 慢性的な食料買いで運搬枠が埋まり、原料を一切積めず生産と収入が同時に死ぬ
+  // 詰み(2026-07-26実測: 加工世帯のno_capacity固定化)を防ぐため、
+  // 原料の必要があるあいだは運搬枠の半分までを原料用に取り置く。
+  let inputReserve = 0;
+  for (const [goods, [wanted]] of Object.entries(targets)) {
+    if (isProductionInput(household, goods)) {
+      inputReserve += Math.max(0, wanted) * goodsUnitWeight(goods);
+    }
+  }
+  inputReserve = Math.min(capacity * 0.5, inputReserve);
 
   for (const orderedGoods of order) {
     if (processed.has(orderedGoods)) continue;
@@ -1753,8 +1765,10 @@ export function buyAtMarket(
       const affordable = shelf.kind === "AID"
         ? Infinity
         : (household.purse + (input ? 30 : 0)) / shelf.price;
-      const qty = Math.min(wanted, available, affordable, capacity / unitWeight);
+      const usableCapacity = input ? capacity : Math.max(0, capacity - inputReserve);
+      const qty = Math.min(wanted, available, affordable, usableCapacity / unitWeight);
       if (qty < 1e-9) continue;
+      if (input) inputReserve = Math.max(0, inputReserve - qty * unitWeight);
 
       const payment = qty * shelf.price;
       household.purse -= payment;
