@@ -4,20 +4,20 @@ url: https://arxiv.org/abs/2605.21622
 collected_at: 2026-05-28T03:30:43+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent, design-loop, preference, evaluation, game-design]
-evaluated_at: 2026-05-28T03:55:00+09:00
+evaluated_at: "2026-07-26T05:50:00+09:00"
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-28T03:55:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-28T03:55:00+09:00"
-stale_after: "2026-06-27"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-26T05:50:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T05:50:00+09:00"
+stale_after: "2026-08-25"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |-
-  qualitative intent を solver inputs、render、VLM critique、judge agent へ接続する流れは抽出できるが、対象は topology optimization でゲーム制作への写像がまだ抽象的。
-  phone-stand/product design 評価から、ゲームのレベル・ルール・操作感へ無理なく落とす具体例が不足しており、現状で CoopEval 水準の投稿にするとこじつけが混じる。
+  qualitative intent を solver inputs、render、VLM critique、judge agent へ接続する流れは抽出できるが、評価対象は topology optimization である。
+  phone-stand/product design からゲームの level・rule・操作感へ移す検証がなく、具体適用はこじつけになるため shared-reads 候補としては閉じる。
 
 ---
 

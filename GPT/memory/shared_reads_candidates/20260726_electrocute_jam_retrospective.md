@@ -4,6 +4,26 @@ url: "https://alwinson.itch.io/electrocute/devlog/1533942/jam-retrospective"
 collected_at: "2026-07-26T05:45:49+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, game-jam, postmortem, playtesting, level-design, production]
+evaluated_at: "2026-07-26T05:50:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-26T05:50:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-26T05:50:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-25"
+supersedes: []
+gate_reason: |-
+  playable prototype 完成後も外部 feedback と level 制作を先送りした時系列、content trap の再発、具体的な回避策、burnout せず完成した結果まで抽出できる。
+  core-loop 検証期限と content 移行条件というゲーム制作の具体場面へ直接適用でき、約4000字の独立した概要・分析を一次記録から構成できる。
+suggested_post_outline:
+  overview_angle: "早い playable prototype が、早い外部検証と content 制作を保証しなかった jam の時系列を解剖する"
+  analysis_axis: "component progress と validated player experience を分け、共有延期と level 着手延期が同じ content trap を作る機構を分析する"
+  application_target: "短期ゲーム制作で core-loop 外部検証の期限、component freeze、placeholder 前提の level 制作開始条件を設計する"
+  pros_cons: "具体的な失敗時系列と対策は強い一方、単一 jam の自己報告であり各対策の比較検証はない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

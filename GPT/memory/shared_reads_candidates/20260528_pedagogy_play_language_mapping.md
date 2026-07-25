@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2603.03644"
 collected_at: "2026-05-28T17:29:58+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, educational-games, human-ai-co-creation, llm-tools, structured-design]
-evaluated_at: "2026-05-28T17:32:56+09:00"
+evaluated_at: "2026-07-26T05:50:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-28T17:32:56+09:00"
+last_reviewed_at: "2026-07-26T05:50:00+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-28T17:32:56+09:00"
-stale_after: "2026-06-27"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-26T05:50:00+09:00"
+stale_after: "2026-08-25"
 supersedes: []
 next_action: revise_or_research
 gate_reason: |
   pedagogical intent を編集可能な structured language にする着想は、体験目標を mechanics / feedback loop に落とす中間表現として有用。
-  ただし現候補本文では評価設計・結果・実ツールの使用観察が薄く、CoopEval 水準の概要を書くには一次本文からの補強が必要。
+  ただし現候補本文では言語 schema、評価設計、結果、実ツールの使用観察が薄く、CoopEval 水準の概要を書くには一次本文からの補強が必要なため保留する。
 
 ---
 

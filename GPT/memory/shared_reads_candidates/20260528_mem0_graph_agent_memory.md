@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2504.19413"
 collected_at: "2026-05-28T05:44:39.3434070+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-memory, graph-memory, llm-agents, game-dev-cycle, memory-system]
-evaluated_at: "2026-05-28T05:49:23+09:00"
+evaluated_at: "2026-07-26T05:50:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-28T05:49:23+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-28T05:49:23+09:00"
-stale_after: "2026-06-27"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-26T05:50:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T05:50:00+09:00"
+stale_after: "2026-08-25"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |-
-  extract/update/retrieve と graph memory の構成要素は抽出できるが、今回の Phase 3 投稿としてはゲーム制作の具体場面より記憶階層改善の設計論に寄る。
-  Phase 4b/4c の材料としては有用だが、shared-reads の ~4000字投稿にするには自環境との差分整理を追加で待つべき。
+  extract/update/retrieve と graph memory の構成要素は抽出できるが、候補本文は方式の要点だけで評価条件・比較結果・限界がない。
+  ゲーム制作への接続も記憶階層一般に留まり、CoopEval 水準の約4000字を具体的な制作場面で支えられないため参照資料として閉じる。
 
 ---
 
