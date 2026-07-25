@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-25T23:25:46+09:00",
+  "updated_at": "2026-07-26T01:33:28+09:00",
   "reviewed_source_ts": [
+    "1784989190.154389",
     "1784980873.267569",
     "1784973458.275029",
     "1784964388.279179",
@@ -503,6 +504,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-26T01:33:28+09:00",
+      "selected": {
+        "id": "sr-1784989190-ceb5ef51a0",
+        "source_ts": "1784989190.154389",
+        "title": "Personalized Super Mario level design — 行動群・条件生成・複数proxyを分離する評価骨格",
+        "reason": "未レビュー条件を満たす最新のscore 13 atomで、memory・harness・evaluation・agent・operation・game-designの6優先タグをすべて持つ。player segmentationから条件付きlevel生成へ進む前に、既存のskill-conditioned／PCG／proxy controlsと異なる判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_controlも必須閾値2を下回るため、新規probe・metric・directiveは追加しない。shared-reads本文は、74人・11既存level・100超の行動特徴、5種のclusteringと5種のGAN、playability・tile entropy・pairwise Hamming distance・生成時間・死亡／時間／jump／coinの分離まで具体化しており、同一seedと複数bot policyでplayer typeとlevel typeを分ける手順へ変換できるためactionability=3とした。一方、clusterのSilhouette Scoreは約0.20で境界が弱く、人数・指標値の記述不一致、単一seed、conditionと訓練levelの対応根拠不足があり、生成levelを各技能群の人間が遊ぶ比較もない。示せるのは条件ごとにproxyが異なる出力までで、personalization・flow・fairnessの実証ではないためevidence=2とした。skill-conditioned-playtest-routeはrouteごとのplayer profileとcontrast evidenceを、plg-evaluation-claim-fitはplayability・difficulty・experience・diversity・controllabilityのclaim/evidence対応を、behavior-trace-pcg-diversityは行動軌跡とvisual diversityの分離を、proxy-signal-variance-gateはproxyと外部judgmentの変動およびhuman evidence境界をすでに扱う。321件のactive_probesとPhase 4a向けpending leaseがある状態で、clustering・conditioning・PCG・human calibrationを束ねた別controlを足すと確認負荷が増える。次のskill-conditioned level生成で既存4 probesを併用し、cluster stabilityまたはcondition responseの誤読を既存controlsが見逃した具体例が出た場合だけ再検討する。",
+      "existing_probes": [
+        "probe-20260604-skill-conditioned-playtest-route",
+        "probe-20260615-plg-evaluation-claim-fit",
+        "probe-20260616-behavior-trace-pcg-diversity",
+        "probe-20260601-proxy-signal-variance-gate"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_tsと、既存のskill-profile／PCG claim-fit／behavior-diversity／proxy-human境界probesとの重複、probe inventory過多、未消化leaseを踏まえたreject理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-25T23:25:46+09:00",
       "selected": {

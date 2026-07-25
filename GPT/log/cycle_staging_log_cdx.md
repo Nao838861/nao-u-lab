@@ -105,7 +105,40 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784989190-ceb5ef51a0
+    source_ts: "1784989190.154389"
+    title: "Personalized Super Mario level design — 行動群・条件生成・複数proxyを分離する評価骨格"
+    reason: "未レビュー条件を満たす最新のscore 13 atomで、memory・harness・evaluation・agent・operation・game-designの6優先タグをすべて持つ。player segmentationから条件付きlevel生成へ進む前に、既存controlと異なる判断差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "74人・11既存level・100超の行動特徴、5種のclustering／GAN、playability・diversity・生成時間・死亡／時間／jump／coinの分離は行動へ変換できる。一方、cluster境界は弱く、人数・指標値の不一致、単一seed、condition対応根拠不足、人間による生成level比較の欠如があり、personalization自体は未実証。既存のskill-conditioned-playtest-route、plg-evaluation-claim-fit、behavior-trace-pcg-diversity、proxy-signal-variance-gateが判断面をすでに覆う。321件のactive_probesとPhase 4a向けpending leaseがあるため、新規controlは重複と確認負荷を増やす。合計13かつrisk_control=1なので採用しない。"
+  existing_probes:
+    - probe-20260604-skill-conditioned-playtest-route
+    - probe-20260615-plg-evaluation-claim-fit
+    - probe-20260616-behavior-trace-pcg-diversity
+    - probe-20260601-proxy-signal-variance-gate
+  change:
+    summary: "reviewed_source_tsと重複・risk理由だけをstateへ記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
