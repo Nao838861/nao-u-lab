@@ -2015,12 +2015,12 @@ test("段25: 市場徒歩便は売り荷と買い荷をcargo経由でだけ確�
   });
 });
 
-test("25C: 個人運搬は素手1・背負い4・木荷車8・鉄荷車16を安定IDへ割り当てる", () => {
+test("25C: 個人運搬は素手2・背負い4・木荷車8・鉄荷車16を安定IDへ割り当てる", () => {
   const economy = createEconomicState();
   const household = createHousehold(economy, { job: "logger", x: 0, y: 0 });
   household.pantry.tools = 0;
   const hand = householdTransportPlan(household);
-  assert.ok(hand.every((porter) => porter.capacity === 1 && porter.tier === "hand"));
+  assert.ok(hand.every((porter) => porter.capacity === 2 && porter.tier === "hand"));
   assert.equal(new Set(hand.map((porter) => porter.memberId)).size, household.members.length);
 
   household.pantry.tools = 0.5;
@@ -2045,7 +2045,7 @@ test("25C: 個人運搬は素手1・背負い4・木荷車8・鉄荷車16を安�
   assert.ok(successor.members.every((member) => /^person\d+$/.test(member.id)));
 });
 
-test("25C: 売り便は一人分容量の8割で出発し、空腹時は積載量を待たない", () => {
+test("25C: 売り便は2日分をまとめて分散出発し、空腹時は待たない", () => {
   const createReadyHousehold = () => {
     const fixture = createLogisticsTestFixture();
     const household = createHousehold(fixture.economy, { job: "logger", x: 1, y: 1 });
@@ -2055,23 +2055,28 @@ test("25C: 売り便は一人分容量の8割で出発し、空腹時は積載�
     return { ...fixture, household };
   };
 
-  const below = createReadyHousehold();
-  below.household.pantry.log = 5;
-  decideHouseholdTrips(below.economy, below.physical);
-  assert.equal(below.household.state, "home", "背負い4荷の8割未満では売りだけの便を出さない");
-
   const ready = createReadyHousehold();
+  ready.economy.currentDay = 1;
   ready.household.pantry.log = 6;
   decideHouseholdTrips(ready.economy, ready.physical);
+  assert.equal(ready.household.state, "home", "1日分では売りだけの便を出さない");
+  assert.equal(ready.household.marketBatchWaitSinceDay, 1);
+
+  ready.economy.currentDay = 2;
+  decideHouseholdTrips(ready.economy, ready.physical);
   assert.equal(ready.household.state, "toMarket");
+  assert.equal(ready.household.marketCarrier.reason, "routine_batch");
   assert.equal(ready.household.marketCarrier.porters.length, 1);
   assert.equal(ready.household.marketCarrier.porters[0].capacity, 4);
+  assert.equal(ready.household.marketBatchWaitSinceDay, null);
 
   const emergency = createReadyHousehold();
+  emergency.economy.currentDay = 1;
   for (const goods of FOODS) emergency.household.pantry[goods] = 0;
   emergency.household.pantry.log = 2;
   decideHouseholdTrips(emergency.economy, emergency.physical);
   assert.equal(emergency.household.state, "toMarket", "空腹なら満載を待たず買い出しへ出る");
+  assert.equal(emergency.household.marketCarrier.reason, "food_urgent");
 });
 
 test("25C: 道普請へは家族の一人だけを決定的に割り当て、残る人の生産分を保つ", () => {
@@ -2431,7 +2436,7 @@ test("段42: 本国注文は港到着後も未決済で船への逐次荷役分�
   const start = runCompanyDayStart(economy, { day: 2, random: () => 1, physical });
   assert.equal(start.dispatched.length, 1);
   const orderJob = physical.haulJobs.find((job) => job.id === start.dispatched[0].jobId);
-  assert.equal(orderJob.carrier.porters.length, 8);
+  assert.equal(orderJob.carrier.porters.length, 4);
   assert.ok(orderJob.carrier.porters.every((porter) => porter.people === 1));
   assert.equal(economy.order.left, 8);
   assert.equal(economy.company.money, moneyBefore);
@@ -2702,13 +2707,13 @@ test("段31: 市場へ出す要求は有限の輸送人員で予約全量を順�
     .filter((job) => job.economicLogistics?.kind === "stock_release");
   assert.equal(first, initialJobs[0]);
   assert.deepEqual(initialJobs.map((job) => job.qty), [40]);
-  assert.equal(initialJobs[0].carrier.porters.length, 40);
+  assert.equal(initialJobs[0].carrier.porters.length, 20);
   assert.ok(initialJobs[0].carrier.porters.every((porter) => (
-    porter.cargo.qty === 1 && porter.people === 1 && porter.capacity === 1
+    porter.cargo.qty === 2 && porter.people === 1 && porter.capacity === 2
   )));
   assert.equal(
     new Set(initialJobs[0].carrier.porters.map((porter) => porter.departureDelay)).size,
-    40,
+    20,
   );
   stepHaulCarriers(physical, 1);
   assert.equal(initialJobs[0].carrier.batchElapsed, 1);
@@ -3392,7 +3397,7 @@ test("完成後拡張: 後置きの市場・倉庫が従来どおり道路限定
   const [purchase] = runCompanyProcurement(economy, { day: 1, physical });
   assert.equal(purchase.qty, 8);
   const purchaseJob = physical.haulJobs.find((job) => job.id === purchase.jobId);
-  assert.equal(purchaseJob.carrier.porters.length, 8);
+  assert.equal(purchaseJob.carrier.porters.length, 4);
   assert.equal(sectionAmount(market, "outbound", "log"), 0);
   assert.equal(api.applyOperation({ type: "remove_building", buildingId: market.id }).ok, false);
   assert.equal(api.applyOperation({ type: "remove_building", buildingId: warehouse.id }).ok, false);

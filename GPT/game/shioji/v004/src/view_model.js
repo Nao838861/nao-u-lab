@@ -1,18 +1,18 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.34.0-feedback-visibility';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.35.0-market-rhythm';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.34.0-feedback-visibility';
+} from './food_readability.js?v=v004.35.0-market-rhythm';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.34.0-feedback-visibility';
-import { analyzeRoadConnections } from './placement.js?v=v004.34.0-feedback-visibility';
+} from './engine_bridge.js?v=v004.35.0-market-rhythm';
+import { analyzeRoadConnections } from './placement.js?v=v004.35.0-market-rhythm';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.34.0-feedback-visibility';
+} from './render_scene.js?v=v004.35.0-market-rhythm';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.34.0-feedback-visibility';
+} from './visuals.js?v=v004.35.0-market-rhythm';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
@@ -287,6 +287,52 @@ function foodDeliveryStatus(household, economy) {
     label: '市場の食料棚が空です',
     detail: '生産や市場への搬入を待っています。',
     goods: ['wheat'],
+  };
+}
+
+function marketRhythmStatus(household, economy) {
+  const reason = household.marketCarrier?.reason ?? household.lastMarketTripReason ?? null;
+  if (household.marketCarrier) {
+    const copy = {
+      routine_batch: {
+        label: '2日分をまとめて市場へ運搬中',
+        detail: '毎日の小口出荷を避け、家族がまとめて運んでいます。',
+      },
+      food_urgent: {
+        label: '食料の緊急買い出し中',
+        detail: '食料切れは出荷日を待たず、すぐ市場へ向かいます。',
+      },
+      input_urgent: {
+        label: '止まった仕事の原料を調達中',
+        detail: '生産停止中の原料だけは、出荷日を待たず買いに行きます。',
+      },
+      input_restocks: {
+        label: '原料をまとめて補充中',
+        detail: '出荷と同じ間隔で、数日分の原料を運んでいます。',
+      },
+      culture_restocks: {
+        label: '暮らしの品をまとめて補充中',
+        detail: '日々の小口買いを避け、必要な品をまとめて運んでいます。',
+      },
+      work_return: {
+        label: '仕事帰りに市場へ立ち寄り中',
+        detail: '働きに出た一便で、売買もまとめて済ませています。',
+      },
+    }[reason] ?? {
+      label: '市場へ往復中',
+      detail: '売り荷と買い荷を同じ一便で運んでいます。',
+    };
+    return { kind: 'travelling', ...copy };
+  }
+  if (!Number.isSafeInteger(household.marketBatchWaitSinceDay)) return null;
+  const productionDays = Math.max(
+    1,
+    (economy.currentDay ?? 1) - household.marketBatchWaitSinceDay + 1,
+  );
+  return {
+    kind: 'batching',
+    label: `出荷をまとめ中 ${Math.min(P.MARKET_BATCH_DAYS, productionDays)}/${P.MARKET_BATCH_DAYS}日`,
+    detail: '2日分がまとまると市場へ運びます。食料切れと生産停止は待ちません。',
   };
 }
 
@@ -1051,6 +1097,7 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
       walkingDistance: household.walk ?? 0,
       roadConnected: Boolean(household.road),
       marketTransactionTicks: household.marketTransactionTicks ?? 0,
+      marketRhythm: marketRhythmStatus(household, snapshot.economy),
       foodDelivery: foodDeliveryStatus(household, snapshot.economy),
       pantry,
       pantryStock: pantryGroups[0] ?? null,

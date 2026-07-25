@@ -1,43 +1,43 @@
-import { IsometricCamera } from './camera.js?v=v004.34.0-feedback-visibility';
-import { SimulationClock } from './clock.js?v=v004.34.0-feedback-visibility';
+import { IsometricCamera } from './camera.js?v=v004.35.0-market-rhythm';
+import { SimulationClock } from './clock.js?v=v004.35.0-market-rhythm';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.34.0-feedback-visibility';
+} from './config.js?v=v004.35.0-market-rhythm';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.34.0-feedback-visibility';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.34.0-feedback-visibility';
-import { developmentMapView } from './development_map.js?v=v004.34.0-feedback-visibility';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.34.0-feedback-visibility';
-import { formatElenaSpeech } from './elena_text.js?v=v004.34.0-feedback-visibility';
+} from './display_batch.js?v=v004.35.0-market-rhythm';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.35.0-market-rhythm';
+import { developmentMapView } from './development_map.js?v=v004.35.0-market-rhythm';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.35.0-market-rhythm';
+import { formatElenaSpeech } from './elena_text.js?v=v004.35.0-market-rhythm';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.34.0-feedback-visibility';
+} from './food_readability.js?v=v004.35.0-market-rhythm';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.34.0-feedback-visibility';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.34.0-feedback-visibility';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.34.0-feedback-visibility';
-import { WorldPresentation } from './presentation.js?v=v004.34.0-feedback-visibility';
-import { Renderer } from './renderer.js?v=v004.34.0-feedback-visibility';
+} from './keyboard.js?v=v004.35.0-market-rhythm';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.35.0-market-rhythm';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.35.0-market-rhythm';
+import { WorldPresentation } from './presentation.js?v=v004.35.0-market-rhythm';
+import { Renderer } from './renderer.js?v=v004.35.0-market-rhythm';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.34.0-feedback-visibility';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.34.0-feedback-visibility';
+} from './save_game.js?v=v004.35.0-market-rhythm';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.35.0-market-rhythm';
 import {
   GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRows,
-} from './supply_demand.js?v=v004.34.0-feedback-visibility';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.34.0-feedback-visibility';
+} from './supply_demand.js?v=v004.35.0-market-rhythm';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.35.0-market-rhythm';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.34.0-feedback-visibility';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.34.0-feedback-visibility';
+} from './ui_guidance.js?v=v004.35.0-market-rhythm';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.35.0-market-rhythm';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -1409,6 +1409,10 @@ function renderBuildingSheet() {
         <span>${deliveryGoods}<b>${escapeHtml(delivery.label)}</b></span>
         <small>${escapeHtml(delivery.detail)}</small>
       </div>` : '';
+    const marketRhythm = household.marketRhythm;
+    const marketRhythmMarkup = marketRhythm ? `
+      <p class="sheet-note"><b>🧺 ${escapeHtml(marketRhythm.label)}</b><br>
+        ${escapeHtml(marketRhythm.detail)}</p>` : '';
     const missingGoodsMarkup = growth?.missingGoodsForCurrent?.map(goodsIconMarkup).join('') ?? '';
     const headline = household.hungerRun >= 10 || foodDays < 3
       ? `⚠ ${delivery?.label ?? `食料があと${Math.max(0, Math.floor(foodDays))}日分`}`
@@ -1455,6 +1459,7 @@ function renderBuildingSheet() {
       <section class="job-now">
         <h3>仕事のいま</h3>
         <p><b>${escapeHtml(HOUSEHOLD_STATE_LABELS[household.state] ?? household.state)}</b>・働きやすさ ${Math.round(household.productionMultiplier * 100)}%</p>
+        ${marketRhythmMarkup}
         <p class="goods-output-list">${outputNow}</p>
         ${building.type === 'cartwright' ? `<p>販売待ちの荷車 ${building.cartStock.length}台${building.cartWork ? `・製作 ${Math.floor(building.cartWork.progress)}/${building.cartWork.required}日` : ''}</p>` : ''}
         ${conversionMarkup}

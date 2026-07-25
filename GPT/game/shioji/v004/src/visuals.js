@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.34.0-feedback-visibility';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.35.0-market-rhythm';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({

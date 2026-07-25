@@ -2184,7 +2184,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.34.0-feedback-visibility');
+  assert.equal(VERSION, 'v004.35.0-market-rhythm');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2426,6 +2426,24 @@ test('段2: full snapshotを地形・建物・キャリア・棚の不変描画�
   assert.throws(() => { model.terrain[0][0].kind = 'coal'; }, TypeError);
 });
 
+test('市場往復: 建物シートへ2日まとめ待ちと緊急例外の実理由を渡す', () => {
+  const api = createEngineApi(buildBaseCity(11));
+  api.advanceDays(30);
+  const snapshot = api.snapshot({ scope: 'full' });
+  const household = snapshot.economy.households[0];
+  snapshot.economy.currentDay = 10;
+  household.marketBatchWaitSinceDay = 10;
+  let row = snapshotToViewModel(snapshot).households.find(({ id }) => id === household.id);
+  assert.equal(row.marketRhythm.kind, 'batching');
+  assert.match(row.marketRhythm.label, /1\/2日/);
+  assert.match(row.marketRhythm.detail, /食料切れと生産停止は待ちません/);
+
+  household.marketCarrier = { reason: 'food_urgent', porters: [] };
+  row = snapshotToViewModel(snapshot).households.find(({ id }) => id === household.id);
+  assert.equal(row.marketRhythm.kind, 'travelling');
+  assert.match(row.marketRhythm.label, /食料の緊急買い出し/);
+});
+
 test('描画構造最適化: snapshot更新時に静的描画場面を一度だけ編成し動的列と安定mergeする', () => {
   const api = createEngineApi(buildBaseCity(11));
   const first = snapshotToViewModel(api.snapshot({ scope: 'full' }));
@@ -2563,7 +2581,7 @@ test('25C可視物流: 運び手ごとの経路・時差・実積み荷を個人
         mode: 'walk',
         tier: 'hand',
         visualMode: 'hand',
-        capacity: 1,
+        capacity: 2,
         position: { x: household.x + 0.4, y: household.y },
         path: [{ x: household.x, y: household.y }, { x: snapshot.economy.market.x, y: snapshot.economy.market.y }],
         departureDelay: 0.22,

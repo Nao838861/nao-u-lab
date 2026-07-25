@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.34.0-feedback-visibility';
+import { TILE } from './config.js?v=v004.35.0-market-rhythm';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

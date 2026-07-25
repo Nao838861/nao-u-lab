@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.34.0-feedback-visibility';
+import { pileVisual } from './visuals.js?v=v004.35.0-market-rhythm';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));
