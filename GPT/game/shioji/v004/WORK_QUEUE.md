@@ -7,6 +7,8 @@
 | 3 | [WORK_ORDER_20260725D.md](WORK_ORDER_20260725D.md) | 需給と統計（第9章・9-5） | **完了**（v004.25.0、関連unit・全章acceptance・PC/スマホ実Chrome緑） |
 | 4 | [WORK_ORDER_20260725E.md](WORK_ORDER_20260725E.md) | 生きた庭（第11章・§2 在庫の山段階） | **完了**（v004.26.0、関連unit・全章acceptance・PC/スマホ実Chrome緑、有限容量はHANDOFFで裁可待ち） |
 
+| 5 | [WORK_ORDER_20260726A.md](WORK_ORDER_20260726A.md) | 歩行のばらし（AV）＋幽霊人足の暫定表示修正（AW-b） | 未着手 |
+
 ## 全指示書共通の規約（希釈防止）
 
 1. **指示書は索引である。実装の正は参照先（READABILITY_DESIGN_20260725.md の該当章・PLAYTEST_FEEDBACK の該当項）の全文**。着手前に参照先を全文読むこと。
