@@ -1,8 +1,32 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.25.0-supply-demand';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.26.0-living-yard';
 
-export const MAX_PILE_SPRITES = 24;
-export const MAX_YARD_GOODS = 6;
+export const EXACT_PILE_LIMIT = 20;
+export const PILE_STAGE_LIMITS = Object.freeze({
+  small: 60,
+  medium: 180,
+  large: 480,
+});
+export const MAX_PILE_SPRITES = EXACT_PILE_LIMIT;
+export const MAX_YARD_GOODS = 10;
 export const MAX_DISPLAY_CULTURE_LEVEL = 4;
+
+const PRODUCTION_GOODS = Object.freeze({
+  fisher: Object.freeze(['fish', 'pres']),
+  fisher2: Object.freeze(['meal']),
+  logger: Object.freeze(['log']),
+  woodshop: Object.freeze(['tools']),
+  charburner: Object.freeze(['char']),
+  saltworks: Object.freeze(['salt']),
+  quarryman: Object.freeze(['stone']),
+  miner: Object.freeze(['ore']),
+  collier: Object.freeze(['coal']),
+  smelter: Object.freeze(['bar']),
+  smith: Object.freeze(['iron']),
+  wheat: Object.freeze(['wheat']),
+  veg: Object.freeze(['veg', 'pick']),
+  shepherd: Object.freeze(['meat', 'cloth']),
+  rapeseed: Object.freeze(['cloth']),
+});
 
 const SECTION_ORDER = Object.freeze([
   'input', 'inbound', 'pickup', 'output', 'outbound',
@@ -21,26 +45,22 @@ export function amountLabel(value) {
 
 export function pileVisual(amount, goods) {
   const safeAmount = finiteAmount(amount);
-  let spriteCount = 0;
-  if (safeAmount > 1e-9) {
-    if (safeAmount <= 12) {
-      spriteCount = Math.ceil(safeAmount);
-    } else if (safeAmount <= 48) {
-      spriteCount = 12 + Math.ceil((safeAmount - 12) / 6);
-    } else if (safeAmount <= 240) {
-      spriteCount = 18 + Math.ceil((safeAmount - 48) / 48);
-    } else {
-      spriteCount = Math.min(
-        MAX_PILE_SPRITES,
-        22 + Math.ceil(Math.log2(safeAmount / 240)),
-      );
-    }
-  }
+  const pileStage = safeAmount <= 1e-9 ? 'empty'
+    : safeAmount <= EXACT_PILE_LIMIT ? 'exact'
+      : safeAmount <= PILE_STAGE_LIMITS.small ? 'small'
+        : safeAmount <= PILE_STAGE_LIMITS.medium ? 'medium' : 'large';
+  const spriteCount = pileStage === 'empty' ? 0
+    : pileStage === 'exact' ? Math.ceil(safeAmount) : MAX_PILE_SPRITES;
+  const stageLevel = { empty: 0, exact: 0, small: 1, medium: 2, large: 3 }[pileStage];
   return Object.freeze({
     amount: safeAmount,
     label: amountLabel(safeAmount),
     spriteCount,
-    clipped: spriteCount === MAX_PILE_SPRITES && safeAmount > 480,
+    pileStage,
+    stageLevel,
+    footprintScale: [1, 1.04, 1.2, 1.38][stageLevel],
+    heightScale: [1, 1.08, 1.35, 1.68][stageLevel],
+    clipped: safeAmount > PILE_STAGE_LIMITS.large,
     amountPerSprite: spriteCount ? safeAmount / spriteCount : 0,
     art: GOODS_ART[goods] ?? Object.freeze({ color: '#bd9a63', dark: '#6f593c', shape: 'crate' }),
   });
@@ -93,26 +113,126 @@ export function yardStockRows(building, pantryRows = []) {
     .sort((left, right) => (
       (sectionRank.get(left.section) ?? SECTION_ORDER.length)
       - (sectionRank.get(right.section) ?? SECTION_ORDER.length)
-      || right.visual.amount - left.visual.amount
       || String(left.goods).localeCompare(String(right.goods))
-    ))
-    .slice(0, MAX_YARD_GOODS);
+    ));
+}
+
+function yardZoneFor(building, row) {
+  if ((PRODUCTION_GOODS[building.type] ?? []).includes(row.goods)) return 'output';
+  if (['input', 'inbound', 'pickup', 'construction'].includes(row.section)) return 'input';
+  if (['output', 'outbound'].includes(row.section)) return 'output';
+  return 'storage';
+}
+
+function yardZoneCounts(building) {
+  if (building.type === 'warehouse') return Object.freeze({ input: 0, output: 0, storage: 8 });
+  if (building.type === 'market') return Object.freeze({ input: 3, output: 3, storage: 4 });
+  if (building.type === 'port') return Object.freeze({ input: 2, output: 2, storage: 2 });
+  if (Math.min(building.width, building.height) >= 4) {
+    return Object.freeze({ input: 2, output: 2, storage: 4 });
+  }
+  return Object.freeze({ input: 2, output: 2, storage: 2 });
+}
+
+function spread(count, width) {
+  if (count <= 1) return [0];
+  return Array.from({ length: count }, (_, index) => (
+    ((index / (count - 1)) - 0.5) * width
+  ));
+}
+
+function yardBasis(building) {
+  const center = {
+    x: building.x + building.width / 2,
+    y: building.y + building.height / 2,
+  };
+  const toward = {
+    x: (building.entrance?.x ?? center.x + 1) - center.x,
+    y: (building.entrance?.y ?? center.y + 1) - center.y,
+  };
+  const magnitude = Math.hypot(toward.x, toward.y) || 1;
+  const front = { x: toward.x / magnitude, y: toward.y / magnitude };
+  return { center, front, side: { x: -front.y, y: front.x } };
+}
+
+function yardPoint(building, basis, frontOffset, sideOffset) {
+  const margin = 0.34;
+  const x = basis.center.x + basis.front.x * frontOffset + basis.side.x * sideOffset;
+  const y = basis.center.y + basis.front.y * frontOffset + basis.side.y * sideOffset;
+  return {
+    x: Math.max(building.x + margin, Math.min(building.x + building.width - margin, x)),
+    y: Math.max(building.y + margin, Math.min(building.y + building.height - margin, y)),
+  };
+}
+
+function zonePlaces(building, zone, count) {
+  if (count === 0) return [];
+  const basis = yardBasis(building);
+  const size = Math.min(building.width, building.height);
+  if (zone === 'input') {
+    return spread(count, size * 0.44).map(sideOffset => (
+      yardPoint(building, basis, size * 0.31, sideOffset)
+    ));
+  }
+  if (zone === 'output') {
+    return spread(count, size * 0.36).map(frontOffset => (
+      yardPoint(building, basis, frontOffset, size * 0.31)
+    ));
+  }
+  const columns = Math.min(4, Math.ceil(count / 2));
+  return Array.from({ length: count }, (_, index) => {
+    const row = Math.floor(index / columns);
+    const column = index % columns;
+    const sideOffset = columns === 1 ? 0
+      : ((column / (columns - 1)) - 0.5) * size * 0.54;
+    const frontOffset = -size * (row === 0 ? 0.29 : 0.08);
+    return yardPoint(building, basis, frontOffset, sideOffset);
+  });
+}
+
+function stableSlotIndex(row, count) {
+  const identity = `${row.section}:${row.goods}`;
+  let hash = 2166136261;
+  for (const character of identity) {
+    hash = Math.imul(hash ^ character.codePointAt(0), 16777619);
+  }
+  return (hash >>> 0) % count;
+}
+
+export function yardLayout(building, rows) {
+  const counts = yardZoneCounts(building);
+  const places = Object.entries(counts).flatMap(([zone, count]) => (
+    zonePlaces(building, zone, count).map((point, zoneIndex) => ({
+      ...point,
+      zone,
+      zoneIndex,
+      row: null,
+    }))
+  ));
+  const byZone = new Map(['input', 'output', 'storage'].map(zone => [
+    zone, places.filter(place => place.zone === zone),
+  ]));
+  const productionGoods = PRODUCTION_GOODS[building.type] ?? [];
+  const candidates = [...rows].sort((left, right) => {
+    const leftProduct = productionGoods.indexOf(left.goods);
+    const rightProduct = productionGoods.indexOf(right.goods);
+    return (leftProduct < 0 ? 99 : leftProduct) - (rightProduct < 0 ? 99 : rightProduct)
+      || `${left.section}:${left.goods}`.localeCompare(`${right.section}:${right.goods}`);
+  });
+  for (const row of candidates) {
+    const zone = yardZoneFor(building, row);
+    const zonePlacesList = byZone.get(zone) ?? [];
+    if (!zonePlacesList.length) continue;
+    const productIndex = zone === 'output' ? productionGoods.indexOf(row.goods) : -1;
+    const slotIndex = productIndex >= 0 && productIndex < zonePlacesList.length
+      ? productIndex : stableSlotIndex(row, zonePlacesList.length);
+    if (!zonePlacesList[slotIndex].row) zonePlacesList[slotIndex].row = row;
+  }
+  return Object.freeze(places.map(place => Object.freeze(place)));
 }
 
 export function yardSlots(building, rows) {
-  const candidates = [
-    [0.78, 0.30],
-    [0.80, 0.55],
-    [0.78, 0.80],
-    [0.53, 0.80],
-    [0.28, 0.80],
-    [0.58, 0.62],
-  ];
-  return rows.slice(0, MAX_YARD_GOODS).map((row, index) => Object.freeze({
-    row,
-    x: building.x + building.width * candidates[index][0],
-    y: building.y + building.height * candidates[index][1],
-  }));
+  return Object.freeze(yardLayout(building, rows).filter(place => place.row));
 }
 
 export function trailVisual(tread) {

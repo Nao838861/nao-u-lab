@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.25.0-supply-demand';
+import { JOB_LABELS } from './config.js?v=v004.26.0-living-yard';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

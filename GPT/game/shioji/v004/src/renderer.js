@@ -1,11 +1,11 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.25.0-supply-demand';
-import { islandCalendar } from './ui_summary.js?v=v004.25.0-supply-demand';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.25.0-supply-demand';
+} from './config.js?v=v004.26.0-living-yard';
+import { islandCalendar } from './ui_summary.js?v=v004.26.0-living-yard';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.26.0-living-yard';
 import {
   buildingStructureLayout, pileVisual,
-} from './visuals.js?v=v004.25.0-supply-demand';
+} from './visuals.js?v=v004.26.0-living-yard';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
@@ -327,7 +327,7 @@ export class Renderer {
           yardFill, '#665943', 0.54,
         );
       }
-      for (const slot of building.yardSlots ?? []) this.drawYardMarker(slot);
+      for (const slot of building.yardPlaces ?? building.yardSlots ?? []) this.drawYardMarker(slot);
     }
     const selected = model.buildings.find(building => building.id === this.selectedBuildingId);
     if (selected && this.boundsVisible(selected)) {
@@ -338,14 +338,16 @@ export class Renderer {
     }
   }
 
-  drawYardMarker({ row, x, y }) {
+  drawYardMarker({ row, zone, x, y }) {
     const point = this.camera.project(x, y, 1);
     const scale = this.camera.zoom;
     const ctx = this.ctx;
-    const inward = ['input', 'inbound', 'pickup'].includes(row.section);
-    const outward = ['output', 'outbound'].includes(row.section);
+    const inward = zone === 'input'
+      || ['input', 'inbound', 'pickup', 'construction'].includes(row?.section);
+    const outward = zone === 'output'
+      || ['output', 'outbound'].includes(row?.section);
     ctx.save();
-    ctx.globalAlpha = 0.6;
+    ctx.globalAlpha = row ? 0.6 : 0.2;
     ctx.strokeStyle = inward ? '#b9d8c8' : outward ? '#f0bd61' : '#d6c58f';
     ctx.lineWidth = Math.max(1, 1.4 * scale);
     if (inward || outward) {
@@ -1179,24 +1181,44 @@ export class Renderer {
     const scale = this.camera.zoom;
     const ctx = this.ctx;
     const count = row.visual.spriteCount;
-    const columns = count <= 6 ? 3 : count <= 12 ? 4 : 6;
-    const spriteScale = count <= 6 ? 0.68 : count <= 12 ? 0.56 : 0.46;
+    const exact = row.visual.pileStage === 'exact';
+    const columns = exact ? (count <= 6 ? 3 : count <= 12 ? 4 : 5) : 5;
+    const spriteScale = exact ? (count <= 6 ? 0.68 : count <= 12 ? 0.56 : 0.48) : 0.48;
+    const footprintScale = row.visual.footprintScale ?? 1;
+    const heightScale = row.visual.heightScale ?? 1;
     ctx.save();
-    ctx.globalAlpha = 0.72;
-    ctx.fillStyle = '#5c432c';
-    ctx.fillRect(point.x - 10 * scale, point.y + 2 * scale, 20 * scale, 3 * scale);
+    ctx.globalAlpha = exact ? 0.72 : 0.84;
+    ctx.fillStyle = exact ? '#5c432c' : freshnessArt(row.visual).dark;
+    if (exact) {
+      ctx.fillRect(point.x - 10 * scale, point.y + 2 * scale, 20 * scale, 3 * scale);
+    } else {
+      ctx.beginPath();
+      ctx.ellipse(
+        point.x,
+        point.y + 2 * scale,
+        12 * scale * footprintScale,
+        4 * scale * Math.sqrt(footprintScale),
+        0, 0, Math.PI * 2,
+      );
+      ctx.fill();
+    }
     ctx.globalAlpha = 1;
     const positions = [];
     for (let index = 0; index < count; index += 1) {
       const column = index % columns;
       const layer = Math.floor(index / columns);
       positions.push({
-        x: point.x + (column - (columns - 1) / 2) * 4.6 * scale,
-        y: point.y - layer * 4.4 * scale - (column % 2) * 1.1 * scale,
+        x: point.x + (column - (columns - 1) / 2) * 4.6 * scale * footprintScale,
+        y: point.y - layer * 4.4 * scale * heightScale - (column % 2) * 1.1 * scale,
       });
     }
-    this.drawGoodsPileSprites(freshnessArt(row.visual), positions, scale * spriteScale, count <= 12);
-    if (scale >= 1.16 || ownerId === this.selectedBuildingId) {
+    this.drawGoodsPileSprites(
+      freshnessArt(row.visual),
+      positions,
+      scale * spriteScale * (exact ? 1 : Math.sqrt(footprintScale)),
+      exact,
+    );
+    if (ownerId === this.selectedBuildingId) {
       const text = `${GOODS_LABELS[row.goods] ?? row.goods} ${row.visual.label}荷`;
       ctx.font = `700 ${Math.max(7, 8 * scale)}px ui-sans-serif`;
       ctx.textAlign = 'center';
@@ -1589,6 +1611,24 @@ export class Renderer {
       const radius = Math.max(12, 20 * this.camera.zoom);
       if (distance <= radius && distance < nearest) {
         selected = carrier;
+        nearest = distance;
+      }
+    }
+    return selected;
+  }
+
+  hitTestInventory(model, screenX, screenY) {
+    const rows = model.inventoryVisuals ?? (model.buildings ?? []).flatMap(building => (
+      (building.yardSlots ?? []).map(slot => ({ ...slot, ownerId: building.id }))
+    ));
+    let selected = null;
+    let nearest = Infinity;
+    for (const slot of rows) {
+      const point = this.camera.project(slot.x, slot.y, 5);
+      const distance = Math.hypot(screenX - point.x, screenY - point.y);
+      const radius = Math.max(9, 15 * this.camera.zoom);
+      if (distance <= radius && distance < nearest) {
+        selected = slot;
         nearest = distance;
       }
     }

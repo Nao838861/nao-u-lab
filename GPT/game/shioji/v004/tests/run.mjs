@@ -63,8 +63,9 @@ import {
 import { islandCalendar, islandHealthSummary, recentCompanySummary } from '../src/ui_summary.js';
 import { snapshotToViewModel } from '../src/view_model.js';
 import {
-  MAX_DISPLAY_CULTURE_LEVEL, MAX_PILE_SPRITES, MAX_YARD_GOODS, buildingAppearance,
-  buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual, yardSlots, yardStockRows,
+  EXACT_PILE_LIMIT, MAX_DISPLAY_CULTURE_LEVEL, MAX_PILE_SPRITES, MAX_YARD_GOODS,
+  PILE_STAGE_LIMITS, buildingAppearance, buildingStructureLayout, displayCultureLevel,
+  pileVisual, trailVisual, yardLayout, yardSlots, yardStockRows,
 } from '../src/visuals.js';
 
 let passed = 0;
@@ -2153,7 +2154,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.25.0-supply-demand');
+  assert.equal(VERSION, 'v004.26.0-living-yard');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2876,7 +2877,7 @@ test('段7: Lvイベント後の世帯文化Lvが職建物の外観キーと段�
     'Lv2〜4で建屋規模が単調に増える');
 });
 
-test('可視物流AB: 少量は一荷ずつ、大量も単調に増える荷姿と正確な数字へ変換する', () => {
+test('生きた庭E1: 1〜20荷は実個数、21荷以上は小山・中山・大山へ変換する', () => {
   const zero = pileVisual(0, 'log');
   const fraction = pileVisual(0.55, 'fish');
   const large = pileVisual(500, 'iron');
@@ -2886,21 +2887,31 @@ test('可視物流AB: 少量は一荷ずつ、大量も単調に増える荷姿�
   assert.equal(large.spriteCount, MAX_PILE_SPRITES);
   assert.equal(large.clipped, true);
   assert.equal(large.label, '500');
-  const amounts = [0, 0.5, 1, 2, 6, 12, 13, 48, 49, 240, 241, 500, 2000];
+  assert.equal(EXACT_PILE_LIMIT, 20);
+  for (let amount = 1; amount <= EXACT_PILE_LIMIT; amount += 1) {
+    assert.equal(pileVisual(amount, 'log').spriteCount, amount);
+    assert.equal(pileVisual(amount, 'log').pileStage, 'exact');
+  }
+  assert.equal(pileVisual(21, 'log').pileStage, 'small');
+  assert.equal(pileVisual(PILE_STAGE_LIMITS.small + 1, 'log').pileStage, 'medium');
+  assert.equal(pileVisual(PILE_STAGE_LIMITS.medium + 1, 'log').pileStage, 'large');
+  const amounts = [0, 0.5, 1, 2, 6, 12, 20, 21, 60, 61, 180, 181, 500, 2000];
   const counts = amounts.map(amount => pileVisual(amount, 'log').spriteCount);
   assert.ok(counts.every((count, index) => index === 0 || count >= counts[index - 1]),
     `在庫が増えた時に荷姿が減らない: ${counts.join(',')}`);
-  assert.equal(pileVisual(12, 'log').spriteCount, 12, '12荷までは一荷一記号');
-  assert.ok(pileVisual(48, 'log').spriteCount > pileVisual(12, 'log').spriteCount);
+  assert.ok(pileVisual(181, 'log').footprintScale > pileVisual(61, 'log').footprintScale);
+  assert.ok(pileVisual(181, 'log').heightScale > pileVisual(21, 'log').heightScale);
 });
 
-test('可視物流AB: 3×3敷地の建屋を奥へ寄せ、各品目を最大6つのヤード内slotへ置く', () => {
+test('生きた庭E2: 役割ゾーンと空きスロットを固定し、品目消滅で他の山を動かさない', () => {
   const building = {
     id: 'yard-fixture',
+    type: 'woodshop',
     x: 10,
     y: 20,
     width: 3,
     height: 3,
+    entrance: { x: 11, y: 23 },
     appearance: { archetype: 'workshop', tier: 0 },
     shelfGroups: [{
       section: 'input',
@@ -2922,21 +2933,102 @@ test('可視物流AB: 3×3敷地の建屋を奥へ寄せ、各品目を最大6�
     { section: 'pantry', goods: 'veg', visual: pileVisual(7, 'veg') },
   ];
   const rows = yardStockRows(building, pantry);
-  assert.equal(rows.length, MAX_YARD_GOODS);
-  assert.deepEqual(rows.slice(0, 2).map(row => row.goods), ['log', 'coal']);
+  assert.equal(rows.length, 7);
+  assert.deepEqual(rows.slice(0, 2).map(row => row.goods), ['coal', 'log']);
   assert.ok(rows.some(row => row.goods === 'tools') && rows.some(row => row.goods === 'veg'),
     '代表一品へ潰さず施設棚とpantryの各品目を残す');
+  const layout = yardLayout(building, rows);
+  assert.equal(layout.length, 6);
+  assert.deepEqual(
+    layout.reduce((totals, slot) => ({ ...totals, [slot.zone]: (totals[slot.zone] ?? 0) + 1 }), {}),
+    { input: 2, output: 2, storage: 2 },
+  );
   const slots = yardSlots(building, rows);
-  assert.equal(slots.length, MAX_YARD_GOODS);
+  assert.ok(slots.length <= layout.length && slots.length > 0);
   assert.ok(slots.every(slot => (
     slot.x >= building.x && slot.x <= building.x + building.width
     && slot.y >= building.y && slot.y <= building.y + building.height
   )));
+  const toolsSlot = slots.find(slot => slot.row.goods === 'tools');
+  assert.equal(toolsSlot.zone, 'output');
+  assert.equal(toolsSlot.zoneIndex, 0, '同じ職の自家生産品は製品ゾーンの定位置');
+  assert.ok(slots.filter(slot => ['log', 'coal'].includes(slot.row.goods))
+    .every(slot => slot.zone === 'input'));
+  const withoutFish = yardLayout(building, rows.filter(row => row.goods !== 'fish'));
+  const beforeByIdentity = new Map(layout.filter(slot => slot.row)
+    .map(slot => [`${slot.row.section}:${slot.row.goods}`, slot]));
+  const afterByIdentity = new Map(withoutFish.filter(slot => slot.row)
+    .map(slot => [`${slot.row.section}:${slot.row.goods}`, slot]));
+  for (const [identity, before] of beforeByIdentity) {
+    if (!afterByIdentity.has(identity)) continue;
+    const after = afterByIdentity.get(identity);
+    assert.deepEqual([after.x, after.y], [before.x, before.y], `${identity}を動かさない`);
+  }
+  const sparseRows = rows.filter(row => ['log', 'tools', 'fish'].includes(row.goods));
+  const sparseFish = yardLayout(building, sparseRows).find(slot => slot.row?.goods === 'fish');
+  const sparseAfter = yardLayout(building, sparseRows.filter(row => row.goods !== 'fish'));
+  assert.equal(
+    sparseAfter.find(slot => slot.zone === sparseFish.zone
+      && slot.zoneIndex === sparseFish.zoneIndex).row,
+    null,
+    '品目が消えた位置は別の山で詰めず裸の置き場に戻す',
+  );
+  const secondWorkshop = {
+    ...building, id: 'yard-fixture-2', x: 30, y: 40, entrance: { x: 31, y: 43 },
+  };
+  const secondTools = yardSlots(secondWorkshop, rows).find(slot => slot.row.goods === 'tools');
+  assert.ok(
+    Math.abs((secondTools.x - secondWorkshop.x) - (toolsSlot.x - building.x)) < 1e-9
+      && Math.abs((secondTools.y - secondWorkshop.y) - (toolsSlot.y - building.y)) < 1e-9,
+    '同じ職の製品は敷地内の同じ相対位置',
+  );
+  const largeWarehouse = { ...building, type: 'warehouse', width: 4, height: 4 };
+  assert.equal(yardLayout(largeWarehouse, rows).length, 8);
+  assert.equal(MAX_YARD_GOODS, 10);
   const structure = buildingStructureLayout(building);
   assert.ok(structure.width <= building.width * 0.6);
   assert.ok(structure.height <= building.height * 0.6);
   assert.ok(structure.x + structure.width < building.x + building.width);
   assert.ok(structure.y + structure.height < building.y + building.height);
+});
+
+test('生きた庭E3: 山段階の切替は在庫到着・搬出の補間中に同じ定位置で起きる', () => {
+  const slot = amount => ({
+    x: 5.25,
+    y: 7.5,
+    row: { section: 'output', goods: 'tools', amount, visual: pileVisual(amount, 'tools') },
+  });
+  const from = {
+    carriers: [], portCalls: [], portBerth: null,
+    buildings: [{ id: 3, yardSlots: [slot(20)] }],
+  };
+  const to = {
+    ...from,
+    buildings: [{ id: 3, yardSlots: [slot(21)] }],
+  };
+  const start = interpolateWorldModel(from, to, [], 0);
+  const half = interpolateWorldModel(from, to, [], 0.5);
+  const end = interpolateWorldModel(from, to, [], 1);
+  assert.equal(start.inventoryVisuals[0].row.visual.pileStage, 'exact');
+  assert.equal(half.inventoryVisuals[0].row.amount, 20.5);
+  assert.equal(half.inventoryVisuals[0].row.visual.pileStage, 'small');
+  assert.equal(end.inventoryVisuals[0].row.visual.pileStage, 'small');
+  assert.deepEqual(
+    [start.inventoryVisuals[0].x, start.inventoryVisuals[0].y],
+    [end.inventoryVisuals[0].x, end.inventoryVisuals[0].y],
+  );
+  const camera = new IsometricCamera();
+  camera.resize(800, 600);
+  camera.setWorldSize(20, 20);
+  camera.focus(5.25, 7.5);
+  const renderer = Object.create(Renderer.prototype);
+  renderer.camera = camera;
+  const point = camera.project(5.25, 7.5, 5);
+  assert.equal(
+    renderer.hitTestInventory(to, point.x, point.y)?.row.visual.label,
+    '21',
+    '盤面の山へ触れると正確な数量を引ける',
+  );
 });
 
 test('ラン2 P4: 飢え・離散間際・段階低下を建物外の危機信号へまとめる', () => {

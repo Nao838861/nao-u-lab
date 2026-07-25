@@ -1,14 +1,14 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.25.0-supply-demand';
-import { perishableFreshness } from './food_readability.js?v=v004.25.0-supply-demand';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.26.0-living-yard';
+import { perishableFreshness } from './food_readability.js?v=v004.26.0-living-yard';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.25.0-supply-demand';
-import { analyzeRoadConnections } from './placement.js?v=v004.25.0-supply-demand';
-import { compileRenderScene } from './render_scene.js?v=v004.25.0-supply-demand';
+} from './engine_bridge.js?v=v004.26.0-living-yard';
+import { analyzeRoadConnections } from './placement.js?v=v004.26.0-living-yard';
+import { compileRenderScene } from './render_scene.js?v=v004.26.0-living-yard';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
-  yardSlots, yardStockRows,
-} from './visuals.js?v=v004.25.0-supply-demand';
+  yardLayout, yardStockRows,
+} from './visuals.js?v=v004.26.0-living-yard';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
@@ -658,7 +658,8 @@ export function snapshotToViewModel(snapshot) {
   for (const building of buildings) {
     building.structure = buildingStructureLayout(building);
     building.yardStock = yardStockRows(building, pantryByBuilding.get(building.id) ?? []);
-    building.yardSlots = yardSlots(building, building.yardStock);
+    building.yardPlaces = yardLayout(building, building.yardStock);
+    building.yardSlots = Object.freeze(building.yardPlaces.filter(place => place.row));
   }
   const stalls = Object.entries(snapshot.economy.stalls).flatMap(([goods, rows]) => (
     rows.map(stall => ({

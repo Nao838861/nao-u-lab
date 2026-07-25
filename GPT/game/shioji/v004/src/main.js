@@ -1,38 +1,38 @@
-import { IsometricCamera } from './camera.js?v=v004.25.0-supply-demand';
-import { SimulationClock } from './clock.js?v=v004.25.0-supply-demand';
+import { IsometricCamera } from './camera.js?v=v004.26.0-living-yard';
+import { SimulationClock } from './clock.js?v=v004.26.0-living-yard';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.25.0-supply-demand';
+} from './config.js?v=v004.26.0-living-yard';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.25.0-supply-demand';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.25.0-supply-demand';
-import { developmentMapView } from './development_map.js?v=v004.25.0-supply-demand';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.25.0-supply-demand';
+} from './display_batch.js?v=v004.26.0-living-yard';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.26.0-living-yard';
+import { developmentMapView } from './development_map.js?v=v004.26.0-living-yard';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.26.0-living-yard';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.25.0-supply-demand';
+} from './food_readability.js?v=v004.26.0-living-yard';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.25.0-supply-demand';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.25.0-supply-demand';
-import { WorldPresentation } from './presentation.js?v=v004.25.0-supply-demand';
-import { Renderer } from './renderer.js?v=v004.25.0-supply-demand';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.25.0-supply-demand';
+} from './keyboard.js?v=v004.26.0-living-yard';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.26.0-living-yard';
+import { WorldPresentation } from './presentation.js?v=v004.26.0-living-yard';
+import { Renderer } from './renderer.js?v=v004.26.0-living-yard';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.26.0-living-yard';
 import {
   GOODS_GLYPHS, shortageRows, supplyDemandRows,
-} from './supply_demand.js?v=v004.25.0-supply-demand';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.25.0-supply-demand';
+} from './supply_demand.js?v=v004.26.0-living-yard';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.26.0-living-yard';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.25.0-supply-demand';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.25.0-supply-demand';
+} from './ui_guidance.js?v=v004.26.0-living-yard';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.26.0-living-yard';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -725,7 +725,13 @@ canvas.addEventListener('pointermove', event => {
     updateToolPreview(worldTile(point));
     return;
   }
-  if (!pointers.has(event.pointerId)) return;
+  if (!pointers.has(event.pointerId)) {
+    const slot = renderer.hitTestInventory(displayModel, point.x, point.y);
+    setToolHint(slot
+      ? `${GOODS_LABELS[slot.row.goods] ?? slot.row.goods} ${formatQuantity(slot.row.amount)}荷`
+      : null);
+    return;
+  }
   pointers.set(event.pointerId, point);
   if (tapStart) tapDistance = Math.max(tapDistance, Math.hypot(point.x - tapStart.x, point.y - tapStart.y));
   if (activeTool) {
@@ -742,6 +748,9 @@ canvas.addEventListener('pointermove', event => {
   }
   if (panLast) camera.pan(point.x - panLast.x, point.y - panLast.y);
   panLast = point;
+});
+canvas.addEventListener('pointerleave', () => {
+  if (!activeTool && pointers.size === 0) setToolHint(null);
 });
 
 function endPointer(event) {

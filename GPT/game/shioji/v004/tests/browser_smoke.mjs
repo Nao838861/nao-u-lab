@@ -979,8 +979,8 @@ async function checkTutorialLetterDelivery() {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.25.0-supply-demand');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.25.0-supply-demand');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.26.0-living-yard');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.26.0-living-yard');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -1227,6 +1227,21 @@ async function checkViewport(width, height, mobile) {
           && carrier.peopleRows?.length === 1
         )).length,
         population: model.population,
+        yardStages: [...new Set(model.buildings.flatMap(building => (
+          building.yardSlots.map(slot => slot.row.visual.pileStage)
+        )))],
+        exactPilesHonest: model.buildings.flatMap(building => building.yardSlots)
+          .filter(slot => slot.row.amount <= 20)
+          .every(slot => slot.row.visual.spriteCount === Math.ceil(slot.row.amount)),
+        yardZonesFixed: model.buildings.every(building => (
+          building.yardPlaces.every(place => (
+            ['input', 'output', 'storage'].includes(place.zone)
+            && place.x >= building.x && place.x <= building.x + building.width
+            && place.y >= building.y && place.y <= building.y + building.height
+          ))
+        )),
+        emptyYardPlaces: model.buildings.flatMap(building => building.yardPlaces)
+          .filter(place => !place.row).length,
       };
     })()`);
     assert.ok(worldVisuals.trails > 100, JSON.stringify(worldVisuals));
@@ -1236,6 +1251,50 @@ async function checkViewport(width, height, mobile) {
     assert.ok(worldVisuals.stalls > 0, JSON.stringify(worldVisuals));
     assert.ok(worldVisuals.stock > 0, JSON.stringify(worldVisuals));
     assert.equal(worldVisuals.individualResidents, worldVisuals.population, JSON.stringify(worldVisuals));
+    assert.equal(worldVisuals.exactPilesHonest, true, JSON.stringify(worldVisuals));
+    assert.equal(worldVisuals.yardZonesFixed, true, JSON.stringify(worldVisuals));
+    assert.ok(worldVisuals.emptyYardPlaces > 0, JSON.stringify(worldVisuals));
+    assert.ok(['exact', 'small', 'medium', 'large']
+      .every(stage => worldVisuals.yardStages.includes(stage)), JSON.stringify(worldVisuals));
+    if (!mobile) {
+      const yardView = await page.evaluate(`(() => {
+        const game = window.__SHIOJI_V004__;
+        const before = { zoom: game.camera.zoom, panX: game.camera.panX, panY: game.camera.panY };
+        const building = game.model.buildings.find(row => (
+          row.yardSlots.some(slot => slot.row.visual.pileStage === 'large')
+        ));
+        const slot = building.yardSlots.find(row => row.row.visual.pileStage === 'large');
+        game.camera.zoom = 1.4;
+        game.camera.focus(building.x + building.width / 2, building.y + building.height / 2);
+        game.renderer.render(game.displayModel, 0);
+        return {
+          before,
+          pilePoint: game.camera.project(slot.x, slot.y, 5),
+          amount: slot.row.amount,
+        };
+      })()`);
+      await page.screenshot('/tmp/shioji_v004_living_yard.png');
+      await page.send('Input.dispatchMouseEvent', {
+        type: 'mouseMoved', x: yardView.pilePoint.x, y: yardView.pilePoint.y,
+      });
+      await wait(40);
+      const pileHint = await page.evaluate(`({
+        hidden: document.querySelector('#tool-hint').hidden,
+        text: document.querySelector('#tool-hint').textContent,
+      })`);
+      assert.equal(pileHint.hidden, false, JSON.stringify(pileHint));
+      assert.match(pileHint.text, new RegExp(
+        `${(Math.round(yardView.amount * 10) / 10).toLocaleString('ja-JP')}荷`,
+      ));
+      await page.evaluate(`(() => {
+        const game = window.__SHIOJI_V004__;
+        const before = ${JSON.stringify(yardView.before)};
+        game.camera.zoom = before.zoom;
+        game.camera.panX = before.panX;
+        game.camera.panY = before.panY;
+        game.renderer.render(game.displayModel, 0);
+      })()`);
+    }
 
     const supply = await page.evaluate(`(() => {
       document.querySelector('#open-supply').click();
@@ -1732,6 +1791,9 @@ if (process.argv.includes('--company-pointer-only')) {
 } else if (process.argv.includes('--mobile-viewport-only')) {
   await checkViewport(390, 844, true);
   console.log('CHARTER ISLE v004 mobile viewport smoke: PASS');
+} else if (process.argv.includes('--desktop-viewport-only')) {
+  await checkViewport(1440, 900, false);
+  console.log('CHARTER ISLE v004 desktop viewport smoke: PASS');
 } else {
   await checkBootFailureRecovery();
   await checkStartChoice(1440, 900, false, 'tutorial');
