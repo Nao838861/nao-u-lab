@@ -170,7 +170,55 @@ stale_review_batch:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+```yaml
+- issue_id: ISS-4A-20260725-02
+  problem_restatement: "Phase 4a が選ぶ candidate 単位の stale 再評価対象は、次 cycle の Phase 2 が受領する前に staging 初期化で消える。candidate frontmatter は候補の現在状態を表す正本であって未処理 handoff の receipt ではないため、選定済みか・受領済みかを跨 cycle で判定できない。"
+  alternatives:
+    - name: "案A: candidate 専用の永続 handoff inbox"
+      sketch: "memory/shared_reads_candidate_handoff_inbox.jsonl を candidate 単位の operational ledger とし、Phase 4a は stale_review_batch の選定時に active な同一 path を冪等 enqueue する。Phase 2 は oldest pending を上限付きで先に読み、candidate frontmatter 更新と staging stale_reviewed 記録が揃った時だけ handled にする。postpone は新しい stale_after を伴って handled とし、再期限到来時は別 lease として再選定できる。"
+      pros:
+        - "staging 初期化と独立して、未処理・処理済み・延期の receipt を保持できる。"
+        - "既存 group handoff の pending / handled / deferred、冪等 enqueue、bounded consume という運用知見を再利用できる。"
+        - "candidate frontmatter を lifecycle の正本、inbox を配送状態の正本として責務分離できる。"
+      cons:
+        - "inbox schema、enqueue / pending / resolve / audit、Phase 2 の受領監査という小さな運用面が増える。"
+        - "stale triage 再生成時に live candidate lease を合成しないと、同じ path が毎 cycle 再選定される。"
+        - "group handoff と candidate handoff の二系統を監査する必要がある。"
+      migration_cost: medium
+    - name: "案B: 既存 group handoff inbox を汎用 work inbox に拡張"
+      sketch: "shared_reads_group_handoff_inbox.jsonl に work_type: group | candidate を加え、単一 ledger で双方を配送する。consumer は work_type ごとに payload 検証と完了条件を分岐し、既存 group row は schema migration または group default として読む。"
+      pros:
+        - "跨 cycle queue と audit の入口を一つにできる。"
+        - "pending / handled / deferred と source_cycle_id の既存契約を共有できる。"
+        - "将来の handoff 種別追加に共通基盤を使える。"
+      cons:
+        - "group membership fingerprint と candidate 再評価 receipt は意味が異なり、resolve 分岐と schema が複雑になる。"
+        - "稼働済み group handoff の回帰範囲が広がり、今回の局所問題に対して失敗時コストが大きい。"
+        - "汎用化の需要が candidate 以外に確認できず、早すぎる抽象化になる。"
+      migration_cost: high
+    - name: "案C: 前 cycle staging の stale_review_batch を初期化時に持ち越す"
+      sketch: "codex_phases_cycle.py が staging を初期化する前に前回 Phase 4a batch を抽出し、新しい staging header または Phase 2 入力へコピーする。処理済み判定は current candidate status / stale_after と Phase 2 出力から推測する。"
+      pros:
+        - "追加 ledger を持たず、現行 stale_review_batch の形をほぼ維持できる。"
+        - "変更箇所と初期導入コストが小さい。"
+        - "今回消えた5件を次 cycle へ渡すだけなら最短距離である。"
+      cons:
+        - "表示用 staging を永続 queue として兼用し、acknowledgment と replay の正本が曖昧なまま残る。"
+        - "cycle 中断、複数回初期化、部分処理で loss または重複再送が起きやすい。"
+        - "handled / deferred の明示 receipt がなく、同じ障害を検出しにくい。"
+      migration_cost: low
+  recommended: "案A: candidate 専用の永続 handoff inbox"
+  recommended_reason: "高 severity の原因は設計不足ではなく staging と handoff 寿命の不一致として特定済みで、group handoff には永続 inbox の成功例がある。案Aはその最小契約だけを candidate 単位へ移し、既存 group resolver の回帰リスクを避けられる。案Cより導入手間は増えるが、失敗時に pending row が残って再実行でき、選定 loss を再発させない。案Bの汎用化は現状からの距離と移行リスクが大きい。"
+  decision: introduce
+  decision_reason: "前 cycle で実際に5件が消失し、今回も同じ batch が再選定されているため、観測待ちでは自然解消しない。payload、正本の境界、冪等性、bounded consume、完了条件まで設計できており、Phase 4c へ渡せる。"
+  outline_for_4c:
+    - "candidate handoff inbox の schema を定義する。最低限 id、candidate_path、selected status / stale_after、priority_reason、recommended_review_action、source_cycle_id、selected_at、status、retry_after、handled evidence を持たせ、candidate frontmatter は lifecycle 正本のままにする。"
+    - "Phase 4a の stale_review_batch 上位選定を、active な同一 candidate_path の冪等 enqueue と staging 表示の両方へ接続する。"
+    - "stale triage queue の再生成時に pending と期限前 deferred の candidate lease を除外し、candidate 状態または stale_after が変わった時は fail-open で再提示する。"
+    - "Phase 2 が oldest pending を最大5件、新規 candidate より先に処理し、stale_reviewed と candidate frontmatter 更新を検証後に handled とする契約へ置換する。未完了は pending、一次資料不足で再試行日が明確な場合だけ deferred にする。"
+    - "既存の staging-only 契約文を置換し、前 cycle から消失した5件を初期 seed として重複なく enqueue する。"
+    - "enqueue 冪等性、staging 初期化後の pending 保持、部分失敗 replay、handled 後の再配送抑止、stale_after 到来後の再 lease を固定時刻で検証する。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
