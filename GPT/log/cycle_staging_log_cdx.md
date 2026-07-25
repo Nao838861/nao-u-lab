@@ -36,7 +36,20 @@ mechanical opacity に変わった原因、framing signal という結論を抽�
 設計へ直接適用でき、CoopEval 水準の固有分析へ展開可能なため `pass`。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260725_taurus_and_andromeda_ambiguity_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784964388279179
+    char_count: 3719
+skipped: []
+```
+
+最終判定: 投稿。物語上の曖昧さと player の役割の不明瞭さを分離し、記事固有の
+反復構造、赤い糸、引き返し条件、約200 play 中 ending 到達20・positive ending 5
+という観測を保持した。単独 postmortem のため因果証明とは扱わず、framing signal
+強度を変える小規模 probe と event funnel に落とした。投稿前 policy check と
+Slack 保存本文の文字化け検証はいずれも通過した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
