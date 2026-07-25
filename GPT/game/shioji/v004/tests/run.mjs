@@ -2184,7 +2184,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.32.0-supply-readability');
+  assert.equal(VERSION, 'v004.33.0-feedback-visibility');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2978,7 +2978,7 @@ test('段7: Lvイベント後の世帯文化Lvが職建物の外観キーと段�
   assert.ok(raised.elevation > third.elevation && raised.stoneBase);
   assert.ok(raised.bannerCount > third.bannerCount, 'Lv4は大きな小屋と装飾で豪華になる');
   assert.equal(vacant.abandoned, true);
-  assert.equal(vacant.structureVisible, true);
+  assert.equal(vacant.structureVisible, false, '無人の職場は建屋を描かず空き地＋道具＋無札だけで示す');
   assert.equal(vacant.level, 1, '再入居時に始まる表示段階はLv1');
   assert.equal(fixed.level, null, '港など会社施設へ文化Lvを付けない');
   assert.equal(fixed.structureVisible, true);
@@ -3166,6 +3166,18 @@ test('ラン2 P4: 飢え・離散間際・段階低下を建物外の危機信�
   assert.equal(building.stateSignals.crisis.kind, 'hunger');
   assert.equal(building.stateSignals.crisis.severity, 'critical');
   assert.equal(building.stateSignals.trend, 'down');
+  household.hungerRun = 0;
+  household.insolvM = 0;
+  household.lv = Math.max(2, household.lv ?? 0);
+  household.satLast = {};
+  const demotionModel = snapshotToViewModel(api.snapshot({ scope: 'full' }));
+  const demotionBuilding = demotionModel.buildings.find(row => row.ownerHouseholdId === household.id);
+  assert.equal(demotionBuilding.stateSignals.crisis.kind, 'demotion');
+  const missingGoods = demotionBuilding.stateSignals.crisis.missingGoods;
+  assert.ok(Array.isArray(missingGoods) && missingGoods.length > 0,
+    '段階低下の危機札には、何が不足かの品目を添える');
+  assert.ok(missingGoods.every(goods => Boolean(GOODS_LABELS[goods])),
+    '不足品は盤面スプライトを持つ品目IDへ写す');
   assert.equal(model.renderScene.crisisBuildings.some(row => row.id === building.id), true);
   const death = presentEvent({
     type: 'death', householdId: household.id, buildingId: building.id,

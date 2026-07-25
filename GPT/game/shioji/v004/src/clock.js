@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.32.0-supply-readability';
+import { SPEEDS } from './config.js?v=v004.33.0-feedback-visibility';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

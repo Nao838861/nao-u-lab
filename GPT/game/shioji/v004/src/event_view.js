@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.32.0-supply-readability';
+import { JOB_LABELS } from './config.js?v=v004.33.0-feedback-visibility';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

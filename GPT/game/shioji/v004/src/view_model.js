@@ -1,16 +1,16 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.32.0-supply-readability';
-import { perishableFreshness } from './food_readability.js?v=v004.32.0-supply-readability';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.33.0-feedback-visibility';
+import { perishableFreshness } from './food_readability.js?v=v004.33.0-feedback-visibility';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.32.0-supply-readability';
-import { analyzeRoadConnections } from './placement.js?v=v004.32.0-supply-readability';
+} from './engine_bridge.js?v=v004.33.0-feedback-visibility';
+import { analyzeRoadConnections } from './placement.js?v=v004.33.0-feedback-visibility';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.32.0-supply-readability';
+} from './render_scene.js?v=v004.33.0-feedback-visibility';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.32.0-supply-readability';
+} from './visuals.js?v=v004.33.0-feedback-visibility';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
@@ -124,6 +124,21 @@ function cultureProgress(household) {
   };
 }
 
+// 満足度キーを盤面に描ける品目へ写す。複数品や「食料n種」は代表品を並べる。
+const SATISFACTION_GOODS = Object.freeze({
+  tools: ['tools'], salt: ['salt'], char: ['char'], cloth: ['cloth'], iron: ['iron'],
+  grain: ['wheat'], saltchar: ['salt', 'char'],
+  food1: ['fish'], food2: ['fish', 'veg'], food3: ['fish', 'veg', 'meat'],
+});
+
+function missingSatisfactionGoods(household) {
+  const level = household?.lv ?? 0;
+  const requirements = LADDER[householdClass(household)] ?? [];
+  const satisfaction = household?.satLast ?? {};
+  const missing = requirements.slice(0, level).filter(key => !satisfaction[key]);
+  return [...new Set(missing.flatMap(key => SATISFACTION_GOODS[key] ?? []))];
+}
+
 function householdStateSignals(household) {
   const hungerDays = household?.hungerRun ?? 0;
   const insolvencyMonths = household?.insolvM ?? 0;
@@ -147,6 +162,7 @@ function householdStateSignals(household) {
       // 降格間際は重要だが死亡・離散ではない。点滅させず静的な警告に留める。
       severity: 'warning',
       label: downDays >= P.DOWN_DAYS * 0.84 ? '段階低下間際' : '暮らしが後退',
+      missingGoods: missingSatisfactionGoods(household),
     } : null,
   ].filter(Boolean);
   const crisis = crises.sort((left, right) => (

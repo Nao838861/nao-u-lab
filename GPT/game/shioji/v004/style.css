@@ -484,7 +484,9 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .next-living h3, .job-now h3 { margin-bottom: 6px; }
 .living-requirement { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 3px 8px; align-items: center; padding: 9px 10px; border: 1px solid rgba(229,182,91,.3); border-radius: 7px; background: rgba(229,182,91,.06); }
 .living-requirement b { color: var(--gold); font-size: 13px; }
-.living-requirement > span { color: var(--gold); letter-spacing: .12em; font-size: 15px; }
+.living-requirement > .living-progress { width: 96px; height: 6px; overflow: hidden; border-radius: 999px; background: rgba(255,255,255,.08); }
+.living-requirement > .living-progress > i { display: block; height: 100%; border-radius: inherit; background: var(--green); }
+.living-requirement.missing > .living-progress > i { background: var(--gold); }
 .living-requirement small { grid-column: 1 / -1; color: var(--muted); font-size: 9px; }
 .living-requirement.missing { border-color: rgba(239,140,119,.42); }
 .living-requirement.missing b, .living-requirement.missing small { color: #ffb09a; }
@@ -588,6 +590,7 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .supply-row[data-status="tight"] .supply-days b { color: var(--gold); }
 .supply-row .trend-up { color: #ffb09a; }
 .supply-row .trend-down { color: var(--green); }
+.supply-row .supply-number.undelivered small, .supply-row .supply-number.undelivered b { color: #ffb09a; }
 .island-health { display: grid; gap: 3px; margin-top: 12px; padding: 9px 10px; border: 1px solid rgba(159,203,118,.28); border-radius: 7px; background: rgba(159,203,118,.07); }
 .island-health b { color: var(--green); font-size: 12px; }
 .island-health span { color: var(--muted); font-size: 10px; line-height: 1.45; }

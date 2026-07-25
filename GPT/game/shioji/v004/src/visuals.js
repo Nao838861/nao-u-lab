@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.32.0-supply-readability';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.33.0-feedback-visibility';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({
@@ -272,7 +272,8 @@ export function buildingAppearance(building) {
     level,
     tier,
     leveled,
-    structureVisible: !leveled || building.vacant || tier >= 2,
+    // 無人の職場は建屋を描かない。空き地＋雑草＋道具1つ＋「無」札だけで示す。
+    structureVisible: !leveled || (!building.vacant && tier >= 2),
     structureScale,
     archetype: art.archetype,
     roof: art.roof,

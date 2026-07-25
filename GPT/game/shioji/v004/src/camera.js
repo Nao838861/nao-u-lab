@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.32.0-supply-readability';
+import { TILE } from './config.js?v=v004.33.0-feedback-visibility';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

@@ -1,7 +1,7 @@
 import {
   FOOD_GOODS, WINTER_RESERVE_PER_PERSON,
-} from './food_readability.js?v=v004.32.0-supply-readability';
-import { toDenari } from './config.js?v=v004.32.0-supply-readability';
+} from './food_readability.js?v=v004.33.0-feedback-visibility';
+import { toDenari } from './config.js?v=v004.33.0-feedback-visibility';
 
 export const SUPPLY_STATUS = Object.freeze({
   sufficient: Object.freeze({ severity: 0, label: '足りてる' }),
@@ -25,6 +25,22 @@ function finite(value) {
 
 function manifestAmount(model, goods) {
   return finite(model?.goodsManifest?.find(row => row.goods === goods)?.totalAmount);
+}
+
+function marketAmount(model, goods) {
+  const locations = model?.goodsManifest?.find(row => row.goods === goods)?.locations ?? [];
+  return locations.reduce(
+    (total, location) => total + (location.section === 'stall' ? finite(location.amount) : 0),
+    0,
+  );
+}
+
+export function stockWhereabouts(model, goods, limit = 3) {
+  const locations = model?.goodsManifest?.find(row => row.goods === goods)?.locations ?? [];
+  return [...locations]
+    .sort((left, right) => finite(right.amount) - finite(left.amount))
+    .slice(0, limit)
+    .map(location => ({ label: location.sourceLabel, amount: finite(location.amount) }));
 }
 
 function priceTrend(goods, currentPrice, history) {
@@ -67,8 +83,12 @@ export function supplyDemandRow(model, goods, history = []) {
     ? Math.max(observedDemand, finite(model?.population) * WINTER_RESERVE_PER_PERSON / FOOD_WINDOW_DAYS)
     : observedDemand;
   const stock = manifestAmount(model, goods);
+  const marketStock = marketAmount(model, goods);
   const daysRemaining = dailyNeed > 0.005 ? stock / dailyNeed : Infinity;
   const status = classify({ dailyNeed, daysRemaining, netPerDay });
+  // 島全体には現物があるのに市場へ届いていない状態を、不足の一種として名指しする。
+  const undelivered = status !== 'sufficient'
+    && marketStock < 0.5 && stock - marketStock > 0.5;
   const requiredStock = food
     ? finite(model?.population) * WINTER_RESERVE_PER_PERSON
     : dailyNeed * GENERAL_TARGET_DAYS;
@@ -78,6 +98,8 @@ export function supplyDemandRow(model, goods, history = []) {
     goods,
     food,
     stock,
+    marketStock,
+    undelivered,
     produced,
     imported,
     consumed,

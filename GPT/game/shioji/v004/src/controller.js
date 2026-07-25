@@ -1,6 +1,6 @@
 import {
   snapshotToViewModel, terrainRevisionForModel,
-} from './view_model.js?v=v004.32.0-supply-readability';
+} from './view_model.js?v=v004.33.0-feedback-visibility';
 
 export function createViewController(api) {
   if (!api?.snapshot || !api?.advanceTicks || !api?.applyOperation) {

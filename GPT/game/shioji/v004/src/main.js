@@ -1,40 +1,40 @@
-import { IsometricCamera } from './camera.js?v=v004.32.0-supply-readability';
-import { SimulationClock } from './clock.js?v=v004.32.0-supply-readability';
+import { IsometricCamera } from './camera.js?v=v004.33.0-feedback-visibility';
+import { SimulationClock } from './clock.js?v=v004.33.0-feedback-visibility';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.32.0-supply-readability';
+} from './config.js?v=v004.33.0-feedback-visibility';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.32.0-supply-readability';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.32.0-supply-readability';
-import { developmentMapView } from './development_map.js?v=v004.32.0-supply-readability';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.32.0-supply-readability';
-import { formatElenaSpeech } from './elena_text.js?v=v004.32.0-supply-readability';
+} from './display_batch.js?v=v004.33.0-feedback-visibility';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.33.0-feedback-visibility';
+import { developmentMapView } from './development_map.js?v=v004.33.0-feedback-visibility';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.33.0-feedback-visibility';
+import { formatElenaSpeech } from './elena_text.js?v=v004.33.0-feedback-visibility';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.32.0-supply-readability';
+} from './food_readability.js?v=v004.33.0-feedback-visibility';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.32.0-supply-readability';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.32.0-supply-readability';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.32.0-supply-readability';
-import { WorldPresentation } from './presentation.js?v=v004.32.0-supply-readability';
-import { Renderer } from './renderer.js?v=v004.32.0-supply-readability';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.32.0-supply-readability';
+} from './keyboard.js?v=v004.33.0-feedback-visibility';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.33.0-feedback-visibility';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.33.0-feedback-visibility';
+import { WorldPresentation } from './presentation.js?v=v004.33.0-feedback-visibility';
+import { Renderer } from './renderer.js?v=v004.33.0-feedback-visibility';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.33.0-feedback-visibility';
 import {
-  GOODS_GLYPHS, shortageRows, supplyDemandRows,
-} from './supply_demand.js?v=v004.32.0-supply-readability';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.32.0-supply-readability';
+  GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRows,
+} from './supply_demand.js?v=v004.33.0-feedback-visibility';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.33.0-feedback-visibility';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.32.0-supply-readability';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.32.0-supply-readability';
+} from './ui_guidance.js?v=v004.33.0-feedback-visibility';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.33.0-feedback-visibility';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -276,12 +276,14 @@ function renderSupplySheet() {
       const winterExtra = Math.max(0, row.dailyNeed - demandObserved);
       const scale = Math.max(supplyTotal, row.dailyNeed, demandObserved, 0.02);
       const pct = value => `${Math.min(100, (value / scale) * 100).toFixed(1)}%`;
-      const net = `${row.netPerDay >= 0 ? '+' : '−'}${formatQuantity(Math.abs(row.netPerDay))}`;
       const trendClass = row.priceTrend.direction === 'up' ? 'trend-up'
         : row.priceTrend.direction === 'down' ? 'trend-down' : '';
+      const whereabouts = stockWhereabouts(model, row.goods)
+        .map(place => `${place.label} ${formatQuantity(place.amount)}荷`).join('・');
       const breakdown = `1日あたり 生産${formatQuantity(row.produced)}・仕入${formatQuantity(row.imported)}・消費${formatQuantity(row.consumed)}荷`
         + `${row.exported > 0.005 ? `・輸出${formatQuantity(row.exported)}荷` : ''}`
-        + `${winterExtra > 0.005 ? `。冬支度も入れて${formatQuantity(row.dailyNeed)}荷が要る` : ''}`;
+        + `${winterExtra > 0.005 ? `。冬支度も入れて${formatQuantity(row.dailyNeed)}荷が要る` : ''}`
+        + `${whereabouts ? `。所在: ${whereabouts}` : ''}`;
       return `<button type="button" class="supply-row"
         data-supply-goods="${row.goods}" data-status="${row.status}"
         data-focused="${String(row.goods === focusedSupplyGoods)}"
@@ -298,8 +300,8 @@ function renderSupplySheet() {
           <span class="supply-bar"><small>消費</small><span class="bar-track"><i class="seg-cons" style="width:${pct(demandObserved)}"></i><i class="seg-need" style="width:${pct(winterExtra)}"></i></span><b>${formatQuantity(demandObserved)}</b></span>
         </span>
         <span class="supply-foot">
-          <span class="supply-number"><small>在庫</small><b>${formatQuantity(row.stock)}荷</b></span>
-          <span class="supply-number"><small>差引</small><b>${net}</b></span>
+          <span class="supply-number${row.undelivered ? ' undelivered' : ''}"><small>市場</small><b>${formatQuantity(row.marketStock)}荷</b></span>
+          <span class="supply-number"><small>島に</small><b>${formatQuantity(row.stock)}荷</b></span>
           <span class="supply-number ${trendClass}"><small>相場</small><b>${row.price === null ? '—' : `${formatQuantity(row.price)}D ${row.priceTrend.arrow}`}</b></span>
         </span>
       </button>`;
@@ -1376,8 +1378,7 @@ function renderBuildingSheet() {
       key => SATISFACTION_LABELS[key] ?? key,
     ) ?? [];
     const growthRatio = growth?.requiredDays > 0 ? growth.upDays / growth.requiredDays : 1;
-    const filledMarks = nextNeed ? Math.max(0, Math.min(3, Math.floor(growthRatio * 3))) : 3;
-    const marks = `${'◆'.repeat(filledMarks)}${'◇'.repeat(3 - filledMarks)}`;
+    const growthPercent = Math.max(0, Math.min(100, growthRatio * 100));
     const headline = household.hungerRun >= 10 || foodDays < 7
       ? `⚠ 食料があと${Math.max(0, Math.floor(foodDays))}日分`
       : !household.roadConnected ? '⚠ 市場へ道がつながっていません'
@@ -1408,8 +1409,8 @@ function renderBuildingSheet() {
         <h3>次の暮らし</h3>
         ${nextNeed ? `<div class="living-requirement ${growth.nextSatisfied ? 'met' : 'missing'}"
           title="${growth.upDays}/${growth.requiredDays}日。必要な暮らしが続くとLv${growth.nextDisplayLevel}になります">
-          <b>${escapeHtml(nextNeed)}</b><span aria-label="進み具合 ${growth.upDays}/${growth.requiredDays}日">${marks}</span>
-          <small>${growth.nextSatisfied ? '今日は満たしています' : '不足しています'}</small>
+          <b>${escapeHtml(nextNeed)}</b><span class="living-progress" role="img" aria-label="進み具合 ${growth.upDays}/${growth.requiredDays}日"><i style="width:${growthPercent.toFixed(1)}%"></i></span>
+          <small>${growth.nextSatisfied ? '今日は満たしています' : '不足しています'}・${growth.upDays}/${growth.requiredDays}日</small>
         </div>` : '<p class="sheet-note">この家は最高の暮らしに達しています。</p>'}
         ${missingKeep.length ? `<small class="living-danger">今のLvを保つには ${escapeHtml(missingKeep.join('・'))} が必要です。</small>` : ''}
       </section>
