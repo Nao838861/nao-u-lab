@@ -109,7 +109,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784964388-2e34cba06d
+    source_ts: "1784964388.279179"
+    title: "Taurus and Andromeda — narrative ambiguity と mechanical opacity を分離する postmortem"
+    reason: "未レビュー条件を満たす最新の score 11 atom で、memory・harness・game-design・evaluation の4優先タグを持つ。意味を説明せずに反抗可能性と選択への反応だけを可読化する知見が、次の探索・分岐 prototype に既存 control と異なる判断差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "約200 play／ending 20／positive ending 5、複合遷移、signal 強度 A/B/C、event funnel まで具体的だが、unique player・離脱地点・選択分布・更新版比較がなく signal 不足の因果は未分離。既存の discovery-path、hypothesis-trace、observation-channel、feedback-amplitude probes が同じ判断面を覆い、321件の active probe と pending lease 1件へ確認負荷を加える。risk_control < 2 かつ合計 < 14 のため採用しない。"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。新規 probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
