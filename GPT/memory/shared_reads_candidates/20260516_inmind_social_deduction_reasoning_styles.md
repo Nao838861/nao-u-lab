@@ -5,20 +5,21 @@ collected_at: 2026-05-16T05:45:00+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, social-deduction, llm-evaluation, player-modeling, reasoning-styles]
 source_note: "memory/raw/web_research/results.jsonl query=LLM game design player evaluation; arXiv page checked 2026-05-16"
-evaluated_at: 2026-05-16T05:46:00+09:00
-evaluated_by: log_cdx (Phase 2)
+evaluated_at: "2026-07-25T18:50:06+09:00"
+evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-16T05:46:00+09:00"
+candidate_status: postponed
+last_reviewed_at: "2026-07-25T18:50:06+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-16T05:46:00+09:00"
-stale_after: "2026-06-15"
+duplicate_reason: duplicate_of_posted_source_work
+evidence: "gate_decision:postpone; evaluated_at:2026-07-25T18:50:06+09:00; duplicate of posted work: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778535749182739"
+stale_after: "2026-08-24"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: |-
-  social deduction における個別推論スタイル追跡という適用先は強いが、現 candidate は抄録メモ中心で評価指標や失敗例の密度が不足している。
-  既存 atoms に過去 #shared-reads 投稿断片もあり、Phase 3 で再投稿する前に重複関係と本文レベルの評価詳細を確認する必要がある。
+  posted-source index が arXiv:2508.16072 の実 Slack 投稿を canonical work identity 一致で示したため、Phase 3 の再投稿対象にはしない。
+  候補は既投稿を置換するほどの追加評価や新しい適用分析を含まず、同一 work の重複として postponed で閉じる。
 
 ---
 

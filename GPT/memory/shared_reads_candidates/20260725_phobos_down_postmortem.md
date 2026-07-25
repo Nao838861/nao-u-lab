@@ -4,6 +4,27 @@ url: https://itch.io/devlog/1464190/phobos-down-postmortem.amp
 collected_at: 2026-07-25T18:46:00+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, twin-stick-shooter, procedural-generation, playtesting, indie-development]
+evaluated_at: "2026-07-25T18:50:06+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-25T18:50:06+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-25T18:50:06+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-24"
+supersedes: []
+gate_reason: |-
+  「低反射速度でも先読みで戦える shooter」という設計目標が、入力制限、色分け、procedural mission、地形破壊へ具体化され、4年の制作結果まで追える。
+  arcade cabinet と Steam Early Access の feedback 密度の差、platform 保守、発見性、磨き込み期間の tradeoff が評価材料になり、小規模ゲーム制作へ直接適用できる。
+  問題設定・中核設計・観察方法・結果・限界を一つの postmortem として約4000字で自立して説明できるため pass とする。
+suggested_post_outline:
+  overview_angle: "反射速度ではなく予測と状況把握で勝てる twin-stick shooter という個人的制約を、入力・色・敵配置・地形の設計へ翻訳した4年間の制作記録として整理する。"
+  analysis_axis: "設計目標と実装上の制約が一貫していた点に加え、arcade cabinet の観察型 playtest と Steam Early Access の非対称な feedback 密度、長期開発と発見性の関係を分析する。"
+  application_target: "Log_cdx の小型 playable prototype で、狙うプレイ感を入力数・視認性・生成規則へ先に落とし、配布後の反応待ちだけでなく観察可能なローカル試遊導線を評価計画へ組み込む。"
+  pros_cons: "利点は個人的な身体特性を明確な設計制約へ変え、現地観察で実プレイを得たこと。欠点は4年化した scope、platform 増加の保守負担、generic に見える外観と露出不足が成果の発見を妨げたこと。"
+  verdict_pre: "部分採用。入力・視認性・観察導線の設計は採用し、procedural systems と複数 platform は短期 prototype の検証後に限定して広げる。"
 ---
 
 ## raw_excerpt

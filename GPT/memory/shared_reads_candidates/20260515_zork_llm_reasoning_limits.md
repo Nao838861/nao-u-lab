@@ -4,21 +4,20 @@ url: https://arxiv.org/abs/2602.15867
 collected_at: 2026-05-15T19:29:21+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, evaluation, text-adventure, llm, planning]
-evaluated_at: 2026-05-15T19:32:29+09:00
-evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-15T19:32:29+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-15T19:32:29+09:00"
-stale_after: "2026-06-14"
+evaluated_at: "2026-07-25T18:50:06+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-25T18:50:06+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-25T18:50:06+09:00"
+stale_after: "2026-08-24"
 supersedes: []
-next_action: revise_or_research
-gate_reason: >-
-  Zork を使った LLM の探索・計画限界という問題設定と、headless playtest への注意点は具体的で有用。
-  ただし candidate 情報だけでは position paper の評価条件、失敗分類、モデル比較の厚みを 4000字級の概要にするには薄く、
-  Phase 3 投稿には本文確認後の再評価が必要。
+next_action: keep_for_reference
+gate_reason: |-
+  Zork を長期探索の検査場にする問題設定と「説明量を増やしても改善しない」という観察は参考になるが、候補資料は position paper の要旨範囲を越えない。
+  モデル別条件、試行数、失敗分類、再現可能な評価手順がなく、CoopEval 水準の概要では既知の LLM 限界を膨らませる形になるため fail とする。
 
 ---
 

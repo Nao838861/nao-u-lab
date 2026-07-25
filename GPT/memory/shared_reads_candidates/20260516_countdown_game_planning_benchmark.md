@@ -5,20 +5,21 @@ collected_at: 2026-05-16T05:45:00+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, planning, llm-evaluation, puzzle, benchmark]
 source_note: "memory/raw/web_research/results.jsonl query=LLM game design player evaluation; arXiv page checked 2026-05-16"
-evaluated_at: 2026-05-16T05:46:00+09:00
-evaluated_by: log_cdx (Phase 2)
+evaluated_at: "2026-07-25T18:50:06+09:00"
+evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-16T05:46:00+09:00"
+candidate_status: postponed
+last_reviewed_at: "2026-07-25T18:50:06+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-16T05:46:00+09:00"
-stale_after: "2026-06-15"
+duplicate_reason: duplicate_of_posted_source_work
+evidence: "gate_decision:postpone; evaluated_at:2026-07-25T18:50:06+09:00; duplicate of posted work: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778541945005179"
+stale_after: "2026-08-24"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: |-
-  検証可能な遷移モデルを持つ短いパズル benchmark という着想はゲーム制作に使いやすい。
-  ただし現 candidate だけでは実験設計、比較対象、結果の中身が薄く、CoopEval 水準の概要を書くには本文確認後に評価詳細を補う必要がある。
+  posted-source index が arXiv:2508.02900 の実 Slack 投稿を canonical work identity 一致で示したため、Phase 3 の再投稿対象にはしない。
+  title だけでなく source work が一致しており、新しい独立分析として扱う追加材料もないため postponed で閉じる。
 
 ---
 

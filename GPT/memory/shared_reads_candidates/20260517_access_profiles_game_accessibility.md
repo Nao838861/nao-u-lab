@@ -5,27 +5,20 @@ collected_at: "2026-05-17T01:29:32+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, accessibility, player-experience, infrastructure]
 candidate_status: postponed
-evaluated_at: "2026-05-17T01:32:24+09:00"
-stale_after: "2026-06-16"
+evaluated_at: "2026-07-25T18:50:06+09:00"
+stale_after: "2026-08-24"
 supersedes: []
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
-last_reviewed_at: "2026-05-17T01:32:24+09:00"
+last_reviewed_at: "2026-07-25T18:50:06+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-17T01:32:24+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-25T18:50:06+09:00; full method and evaluation evidence unavailable in candidate snapshot"
 next_action: revise_or_research
 gate_reason: |-
   accessibility feature を個別オプションではなく、player/developer/engine/launcher/retailer を結ぶ Access Profiles という基盤として扱う問題設定と着想が明確。
-  ゲーム制作では、初回設定、入力補助、難度・字幕・発見可能性をプロトタイプ段階から検査項目に落とせるため、具体適用がある。
-  質的研究としての評価対象と ecosystem 側の制約もあり、CoopEval 水準の概要を組み立てる材料が足りる。
-suggested_post_outline:
-  overview_angle: "Access Profiles を、障害のあるプレイヤーの設定負荷を減らすだけでなく、開発・配布・起動環境をまたぐ accessibility infrastructure として説明する。"
-  analysis_axis: "個別機能の有無ではなく、必要条件の表現、実装・文書化、発見・設定支援がどこで途切れるかを分析する。"
-  application_target: "Nao_u_BOT の小型ゲーム制作で、標準入力前提の playable 判定を拡張し、初回起動時の設定保存・入力代替・視認性確認をチェックリスト化する。"
-  pros_cons: "メリットは後付けでない accessibility 設計にできる点。デメリットは小規模プロトタイプでは engine/launcher 連携まで実装しにくく、まずは局所 probe に縮約する必要がある点。"
-  verdict_pre: "部分採用"
-phase3_postpone_reason: "Phase 3 で原文を確認したところ、Frontiers 公開ページは 2026-05-17 時点で abstract と書誌情報中心で、最終 formatted version は未公開。candidate memo だけでは 3500-4500 字の原文準拠概要を作るには評価・方法の細部が不足するため延期。"
+  ただし candidate snapshot は abstract と書誌情報中心で、参加者、調査手順、分析過程、結果の細部がなく、原文準拠の約4000字概要にはまだ不足する。
+  formatted version など一次資料の方法・評価部分を確認できる時点まで postpone とする。
 
 ---
 
