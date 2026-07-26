@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.14896"
 collected_at: "2026-07-26T21:47:17+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [llm-agents, executable-evaluation, traceability, workflow-testing, game-development]
+evaluated_at: "2026-07-26T21:52:28+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-26T21:52:28+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-26T21:52:28+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-25"
+supersedes: []
+gate_reason: |-
+  流暢な最終回答ではなく相互依存する artifact chain を assertion で検証する問題設定、workbench 構成、150 scenario・10 configuration・成功率差・残存失敗まで揃う。
+  playable build、設計条件、playtest trace、テスト結果、変更記録の整合性を一 run で判定するゲーム制作 harness へ具体的に写像でき、4000 字級で限界も含めて分析できる。
+suggested_post_outline:
+  overview_angle: "agent 評価の単位を最終回答から、requirements から report まで実行可能で追跡可能な artifact chain へ移した点を軸にする"
+  analysis_axis: "artifact-level と execution-level の全 assertion 合格を success とする厳格さが、56.8% から 88.6% の差と残存失敗をどう可視化したか"
+  application_target: "ゲーム制作 cycle の設計条件・playable build・headless playtest trace・テスト・変更記録を共有 state として検査する completion gate"
+  pros_cons: "内部矛盾と実行不能を発見できるのが利点。構造工学 fixture 依存、全 assertion 成功の硬さ、遊びの質を直接測らない点が制約"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

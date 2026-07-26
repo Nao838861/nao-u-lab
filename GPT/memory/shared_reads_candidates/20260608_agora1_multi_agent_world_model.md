@@ -4,18 +4,20 @@ url: "https://odyssey.ml/introducing-agora-1"
 collected_at: "2026-06-08T02:14:51+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, world-models, multi-agent, simulation, reinforcement-learning]
-evaluated_at: "2026-06-08T02:20:56+09:00"
+evaluated_at: "2026-07-26T21:52:28+09:00"
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-08T02:20:56+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-08T02:20:56+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-08"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-26T21:52:28+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T21:52:28+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-25"
 supersedes: []
-gate_reason: "simulation と rendering の分離、複数 participant が同じ generated world を共有する設計は重要だが、現時点の候補本文だけでは評価条件、限界、再現可能な技術詳細が薄い。ゲーム制作への示唆はあるものの、Phase 3 の 4000字水準にするには一次技術情報や評価結果の補強が必要。"
+gate_reason: |-
+  simulation と rendering の分離、複数 participant が同じ generated world を共有する着想は抽出できるが、research preview の紹介だけで評価条件・結果・限界がない。
+  現有資料から 4000 字級へ広げると製品側の将来構想とゲーム制作への推測が中心になるため、投稿候補としては閉じ、設計着想の参照資料に留める。
 ---
 
 ## raw_excerpt

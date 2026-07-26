@@ -4,21 +4,20 @@ url: "https://www.sciencedirect.com/science/article/pii/S1875952125001211"
 collected_at: "2026-06-09T01:35:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, dynamic-difficulty, player-experience, adaptive-systems, survey]
-evaluated_at: "2026-06-09T01:40:00+09:00"
+evaluated_at: "2026-07-26T21:52:28+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-09T01:40:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-09T01:40:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-09"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-26T21:52:28+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T21:52:28+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-25"
 supersedes: []
 gate_reason: |
-  DDA の問題設定、547 件から 34 件を選んだ SLR であること、AI / heuristic / parameter manipulation と汎用・柔軟・モジュール化の方向性は抽出できる。
-  ただし候補本文に分類表、評価基準、選別後 34 件の内訳、実験・比較の中身が不足しており、CoopEval 水準の 4000 字概要をこの材料だけで書くとレビュー論文の一般論に寄りすぎる。
-  ゲーム制作への適用は有望だが、Phase 3 投稿前に SLR の分類軸と具体的な実装パターンを補う必要がある。
+  547 件から 34 件を選ぶ SLR の問題設定と大分類は分かるが、選別基準、34 件の内訳、各方式の評価指標・比較結果・適用条件が候補本文にない。
+  現有資料から 4000 字級へ展開すると DDA の一般論に寄り、レビュー固有の知見を再現できないため、投稿候補としては閉じ、文献探索の入口に留める。
 ---
 
 ## raw_excerpt

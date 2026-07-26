@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.16617"
 collected_at: "2026-07-26T21:46:48+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [llm-agents, procedural-generation, tool-pipeline, editable-artifacts, evaluation]
+evaluated_at: "2026-07-26T21:52:28+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-26T21:52:28+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-26T21:52:28+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-25"
+supersedes: []
+gate_reason: |-
+  NL2Pipeline gap、型付き incremental mutation、Skills/MCP/WebUI の役割分担、12 task の pass rate・cost・latency 比較まで揃い、問題・手法・評価・結論を記事固有に説明できる。
+  level・quest・dialogue 生成工程を差分編集可能な DAG として残す適用先も具体的で、効果と platform 固着・benchmark 規模の限界を含む 4000 字級の分析が成立する。
+suggested_post_outline:
+  overview_angle: "自然言語から使い捨て script を作る問題を、型付き mutation で永続・編集可能な DAG を組む問題へ置き換えた点を軸にする"
+  analysis_axis: "grounded state と procedural skill が pass rate を保ちながら cost/latency を下げた因果、および 12 task 評価の射程を分けて読む"
+  application_target: "level・quest・dialogue・asset metadata の生成 pipeline を会話と visual graph の双方から差分編集できる mixed-initiative 制作基盤"
+  pros_cons: "再編集性・監査性・中間状態共有が利点。platform-native operator への依存、data engineering からゲーム制作への外挿、少数 task 評価が制約"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
