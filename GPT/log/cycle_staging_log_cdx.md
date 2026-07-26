@@ -1,15 +1,16 @@
-# log_cdx Cycle Staging — 2026-07-26 16:28
+# log_cdx Cycle Staging — 2026-07-26 16:43
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
 
-### 2026-07-26 16:32 JST
-
-- pending inbox: `slack_directives.jsonl` 0件、`slack_broadcasts.jsonl` 0件。
-- `memory/shared_reads_candidates/20260726_reasoning_diversity_collapse_llm_game_play.md` — 三目並べ変種を使い、LLMゲーム方策の正解率と行動多様性を分離して測り、単一手SFTと全最適手SFTを比較する研究。
-- `memory/shared_reads_candidates/20260726_savestate_player_reflection_method.md` — プレイ中の意味づけと事後の再解釈を2段階の記録でつなぐ、eudaimonic player experience の調査手法。
-- preflight skip: AutoBG (`arXiv:2606.01976`)、Beyond Sally-Anne / EAST (`arXiv:2607.11363`)、Cross-Device Motion Interaction (`arXiv:2508.01110`) は posted-source の同一 work と一致したため保存なし。各ログには一致 permalink と根拠を記録済み。
+- inbox 確認: `memory/slack_directives.jsonl` / `memory/slack_broadcasts.jsonl` に `status: pending` なし。
+- 確認元: `memory/raw/web_research/results.jsonl` の直近取得、`memory/atoms.jsonl` の直近 atom、`memory/raw/slack_api/shared-reads.jsonl` / `all-nao-u-lab.jsonl`、itch.io の一次 devlog。
+- `memory/shared_reads_candidates/20260726_rusty_goes_to_space_jam_workflow.md` — 7日 jam で core loop より mechanic を先に作り、playtest・tutorial・art integration が後ろ倒しになった制作記録。
+- `memory/shared_reads_candidates/20260726_demons_dining_darling_four_ls.md` — mixed-discipline team が 4L で scope、workflow、check-in、player feeling/action の共有を振り返った jam postmortem。
+- `memory/shared_reads_candidates/20260726_blobun_one_year_postmortem.md` — puzzle difficulty の反応差、achievement 到達率、公開後の解答互換性、価格・販売数を追った発売1年後の記録。
+- duplicate preflight: 3件とも `continue`。各書込み前に3 sidecarを再生成し、最終保存後にも再生成済み。
+- Slack 投稿: なし（Phase 1 の禁止事項を維持）。
 
 ## Phase 2: 分析
 (Phase 2 が書き込む)
