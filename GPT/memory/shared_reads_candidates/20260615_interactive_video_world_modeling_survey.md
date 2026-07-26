@@ -4,21 +4,20 @@ url: "https://arxiv.org/abs/2606.01164"
 collected_at: "2026-06-15T14:15:41+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [world-model, game-engine, interactive-video, benchmarks, embodied-ai]
-evaluated_at: "2026-06-15T14:20:06+09:00"
+evaluated_at: "2026-07-27T07:07:54+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-15T14:20:06+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-15T14:20:06+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-15"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-27T07:07:54+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-27T07:07:54+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |-
-  game engine向けの評価軸として action-conditioned controllability、long-horizon memory、real-time responsiveness は有用だが、candidate本文だけでは benchmark/metric の具体中身と survey の結論が薄い。
-  範囲が open-world exploration、embodied AI、autonomous driving、robotics まで広く、ゲーム制作への適用を書くには追加読解でゲーム領域に絞った証拠が必要。
-  現状では4000字級の概要を書くと一般論に寄るため、Phase 3投稿は保留が妥当。
+  controllability・long-horizon memory・real-time responsiveness は game engine の評価軸に使えるが、候補本文は survey の目次相当の整理に留まる。
+  benchmark・metric・比較結果・survey の結論をゲーム領域へ絞って示せず、4000字級では一般論になるため参照用として閉じる。
 ---
 
 ## raw_excerpt

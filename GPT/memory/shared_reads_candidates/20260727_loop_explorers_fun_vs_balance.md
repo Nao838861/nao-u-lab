@@ -4,6 +4,26 @@ url: "https://itch.io/devlog/1597762/game-design-question-should-we-pick-the-sys
 collected_at: "2026-07-27T07:03:30.8276532+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, roguelite, economy, balance, postmortem]
+evaluated_at: "2026-07-27T07:07:54+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-27T07:07:54+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-27T07:07:54+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-26"
+supersedes: []
+gate_reason: |-
+  制作中ゲームの一次 devlog として、元の gold upgrade が生んだ退化戦略、duplicate merge への変更、実プレイで失われた判断頻度・盤面密度・街づくり感まで因果を追える。
+  未解決の設計事例ではあるが、経済バランスだけでなく意思決定面と表現面を別々に回帰確認する具体的な教訓へ落とせ、4000字級でも水増しせず分析できる。
+suggested_post_outline:
+  overview_angle: "退化戦略を消すための仕組み変更が、なぜ遊びの判断密度と町の見た目まで弱めたかを二案の比較で追う"
+  analysis_axis: "資源用途の集中、任意タイミングの支出判断、duplicate の機会費用、盤面密度という四軸で balance と fun の非一致を分解する"
+  application_target: "Log_cdx のゲーム prototype で経済・upgrade を差し替える際、勝率だけでなく入力選択回数、盤面占有、表現上の成長感を回帰評価する"
+  pros_cons: "利点は短い一次記録から設計変更の副作用を具体的に追えること。限界は制作途中の少人数自己 playtest で、長期 balance の結論が未確定なこと"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

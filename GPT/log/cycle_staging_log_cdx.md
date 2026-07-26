@@ -9,7 +9,83 @@
 - 取得元: itch.io（2026-07-22公開）。posted-source / closed title / open-group sidecar を再生成し、書込み直前 preflight は `continue`。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 6
+pass:
+  - memory/shared_reads_candidates/20260727_loop_explorers_fun_vs_balance.md
+fail:
+  - path: memory/shared_reads_candidates/20260614_slm_agent_orchestration_virtual_worlds.md
+    reason: 評価条件・比較対象・失敗例・導入コストがなく、一般的な architecture 推奨を越えられない
+  - path: memory/shared_reads_candidates/20260614_text_world_models_agent_gap.md
+    reason: survey の分類以外に代表手法・評価設計・比較結果・失敗例を抽出できない
+  - path: memory/shared_reads_candidates/20260614_worldolympiad_video_world_model_eval.md
+    reason: 三評価軸は有用だが dataset・task・scoring・モデル別結果を示せない
+  - path: memory/shared_reads_candidates/20260615_human_llm_style_drift_governance.md
+    reason: pipeline 概略のみで frozen objective の設計・指標・比較結果・結論がない
+  - path: memory/shared_reads_candidates/20260615_interactive_video_world_modeling_survey.md
+    reason: survey の目次相当で benchmark・metric・比較結果をゲーム領域へ絞れない
+postpone: []
+stale_reviewed:
+  - handoff_id: cha-ee2a1eb6a7252a4f
+    path: memory/shared_reads_candidates/20260614_slm_agent_orchestration_virtual_worlds.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-26"
+    evidence: "stale_reviewed:cha-ee2a1eb6a7252a4f"
+  - handoff_id: cha-2086aa57ce543922
+    path: memory/shared_reads_candidates/20260614_text_world_models_agent_gap.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-26"
+    evidence: "stale_reviewed:cha-2086aa57ce543922"
+  - handoff_id: cha-62afc9e52e44ab08
+    path: memory/shared_reads_candidates/20260614_worldolympiad_video_world_model_eval.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-26"
+    evidence: "stale_reviewed:cha-62afc9e52e44ab08"
+  - handoff_id: cha-3d2e166adc909de8
+    path: memory/shared_reads_candidates/20260615_human_llm_style_drift_governance.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-26"
+    evidence: "stale_reviewed:cha-3d2e166adc909de8"
+  - handoff_id: cha-14b26c4cc28fa442
+    path: memory/shared_reads_candidates/20260615_interactive_video_world_modeling_survey.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-26"
+    evidence: "stale_reviewed:cha-14b26c4cc28fa442"
+candidate_handoff_audit:
+  pending_before: 5
+  read_ids:
+    - cha-ee2a1eb6a7252a4f
+    - cha-2086aa57ce543922
+    - cha-62afc9e52e44ab08
+    - cha-3d2e166adc909de8
+    - cha-14b26c4cc28fa442
+  resolved_ids:
+    - cha-ee2a1eb6a7252a4f
+    - cha-2086aa57ce543922
+    - cha-62afc9e52e44ab08
+    - cha-3d2e166adc909de8
+    - cha-14b26c4cc28fa442
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
