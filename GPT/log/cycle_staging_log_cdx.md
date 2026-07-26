@@ -139,7 +139,98 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+audited_at: "2026-07-27T05:12:00+09:00"
+scope:
+  initial:
+    - memory/MEMORY.md の entry section と UTF-8 代表語
+    - memory/atoms.jsonl と per-file/index mirror の health summary
+    - 30日超の memory/raw 原文
+    - candidate lifecycle と stale/group sidecar
+    - Slack inbox と due probe lease
+  expanded_because:
+    - "memory_health が source 上の replacement character を1 atomで検出したため、その per-file atom だけを UTF-8 明示読みした"
+cleaned:
+  - "memory/MEMORY.md: High Signal / Recent / Game Task Entry Points / Tag Entry Points の atom ID、per-file path、重複を検証し broken entry 0件。代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」は UTF-8 読みで取得できた。"
+  - "atoms: 2758件。atoms.jsonl / per-file .md / index.jsonl は各2758件で missing・parse error・content conflict 0件。normalized content duplicate 40群80行は既存 fold で recall-visible 3群6行まで抑止され、矛盾は検出しなかった。"
+  - "memory/raw/: 30日以上更新のない原文を96件確認。Slack archive、論文PDF・抽出txtなど provenance 原文のため、この phase では移動・削除せず archive 候補として観測のみ。"
+  - "candidate lifecycle dry-run: 1118 files、status/candidate_status の修復対象0件。内訳 posted 491 / ready_to_post 10 / postponed 282 / failed 322 / needs_review 10 / skipped_unreviewed 3。"
+  - "duplicate sidecar を再生成: terminal canonical 72群、mixed 45群、open duplicate 52群（mixed 45 / all_open 7）。stale group action は0群で、group handoff は発生しなかった。"
+  - "stale triage を group live lease 反映後に再生成し50行を収載。重複 group に属さない上位5件を candidate handoff inbox へ冪等 enqueue した。"
+  - "Slack directives 23行 / broadcasts 21行を監査し pending 0件。受領だけを根拠に handled 化した行はない。"
+issues:
+  - id: ISS-UTF8-ATOM-001
+    description: "atom sr-1776127289-4d9239b255 の title / Use when / Excerpt に U+FFFD が残り、「AIエージェント」が「AIエ��ジェント」になっている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md:3"
+    source_file_status: "UTF-8 明示読みでも U+FFFD を再現。source file 自体の局所破損。別の mojibake suspect gr-1777083728-44d444ab7a は UTF-8 本文が正常で tooling regex の false positive。"
+    display_or_tooling_status: "per-file atom、atoms index、related candidate 表示へ同じ破損 title が伝播。PowerShell 表示だけの mojibake ではない。MEMORY.md 本文と entry sections は正常。"
+    why_blocks_game_memory: "「AIエージェント」の exact keyword 検索と関連候補表示でこの1件を取りこぼし得るが、mirror 整合・recall smoke・他の game-memory 導線は正常で影響は局所的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 118
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 52
+  mixed_group_count: 45
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_evidence: "overdue_open_total > queue rows は成立するが、actionable group 3件以上を満たさない"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-ee2a1eb6a7252a4f
+    - cha-2086aa57ce543922
+    - cha-62afc9e52e44ab08
+    - cha-3d2e166adc909de8
+    - cha-14b26c4cc28fa442
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-ee2a1eb6a7252a4f
+    path: memory/shared_reads_candidates/20260614_slm_agent_orchestration_virtual_worlds.md
+    status: postponed
+    stale_after: "2026-07-14"
+    priority_reason: "game AI backend の router / service registry 分離は有用だが、評価設定・比較・失敗条件・導入コストの一次情報が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-2086aa57ce543922
+    path: memory/shared_reads_candidates/20260614_text_world_models_agent_gap.md
+    status: postponed
+    stale_after: "2026-07-14"
+    priority_reason: "agent-world gap と transition model は text game / headless planning に接続できるが、survey の分類・代表手法・失敗例が浅い。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-62afc9e52e44ab08
+    path: memory/shared_reads_candidates/20260614_worldolympiad_video_world_model_eval.md
+    status: postponed
+    stale_after: "2026-07-14"
+    priority_reason: "world model の3評価軸は有用だが、各 track の dataset / task / scoring / 比較結果を一次資料で補う必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-3d2e166adc909de8
+    path: memory/shared_reads_candidates/20260615_human_llm_style_drift_governance.md
+    status: postponed
+    stale_after: "2026-07-15"
+    priority_reason: "NPC会話・AI GM の style drift を deterministic replay で測る観点は有用だが、objective 設計・比較結果・結論が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-14b26c4cc28fa442
+    path: memory/shared_reads_candidates/20260615_interactive_video_world_modeling_survey.md
+    status: postponed
+    stale_after: "2026-07-15"
+    priority_reason: "controllability / long-horizon memory / real-time responsiveness は game engine 評価に有用だが、benchmark と metric の具体が不足。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
