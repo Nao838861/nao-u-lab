@@ -97,7 +97,35 @@ reason: "Phase 2 の pass が 0 件のため、#shared-reads への投稿およ�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780560557-9d5840ae75
+    source_ts: "1780560557.147809"
+    title: "Temporal Game Design — プレイヤー時間を有限資源として扱う4 heuristics"
+    reason: "未レビューの score 12 atom のうち最新で、memory・game-design・operation・evaluation の優先タグを持つ。session 長、時間期待、exit／re-entry、生活時間との競合が、次の playable diff や定時サイクルに既存 probe と異なる判断差を作るか確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "20名の国際的な開発者への質的 interview から、プレイヤー時間を有限資源として扱う、時間期待を明示する、exit／re-entry を設計する、main／secondary title の時間要求を区別する、という4 heuristics へ変換できる。一方、導入前後の離脱・満足・再開率、session 長や復帰導線の数値閾値、小規模 prototype への転用検証はない。既存の player-time-scarcity-session-boundary が expected session length、短時間価値、retention pressure、voluntary return reason、clean exit point を直接扱い、timescale-tempo-audit も waiting と recovery timing を扱うため non_redundancy=0 とした。active_probes 321件と Phase 4a 向け pending lease 1件がある状態で別 control を増やしても次回判断は変わらず、合計13で採用条件14に届かない。"
+  change:
+    summary: "reviewed_source_ts と重複による reject 理由だけを更新した。新規 probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-26T12:29:56+09:00",
+  "updated_at": "2026-07-26T14:28:56+09:00",
   "reviewed_source_ts": [
+    "1780560557.147809",
     "1780567815.289119",
     "1780577715.745279",
     "1785013005.204159",
@@ -509,6 +510,44 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-26T14:28:56+09:00",
+      "selected": {
+        "id": "sr-1780560557-9d5840ae75",
+        "source_ts": "1780560557.147809",
+        "title": "Temporal Game Design — プレイヤー時間を有限資源として扱う4 heuristics",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、memory・game-design・operation・evaluation の4優先タグを持つ。session 長、時間期待、exit／re-entry、生活時間との競合を、次の playable diff や定時サイクルへ既存 probe と異なる判断差として移せるか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かないため、新規 probe・metric・directive は追加しない。shared-reads 本文は、AAA・Indie・Mobile・Live-service の開発者20名への半構造化 interview から、プレイヤー時間を有限資源として扱う、時間期待を明示する、exit／re-entry を設計する、main／secondary title の時間要求を区別する、という4 heuristics を具体化しており actionability=3 とした。一方、質的 interview 研究のため、session 長、time-to-first-input、checkpoint、復帰導線の数値閾値や、heuristic 導入前後の離脱・満足・再開率の比較はなく、小規模 prototype への転用も未検証なので evidence=2 とした。既存の probe-20260604-player-time-scarcity-session-boundary は expected session length、短時間で得る価値、retention pressure、voluntary return reason、clean exit point をすでに直接扱い、probe-20260625-timescale-tempo-audit は waiting、recovery timing、real-time pressure を扱う。論文固有の user-centered／data-centered temporal design という語彙を別 control にしても次回判断は増えず、321件の active_probes と Phase 4a 向け pending lease 1件がある状態では確認負荷だけが増える。本 atom は既存 player-time probe の根拠例として保持し、新規運用には反映しない。",
+      "existing_probes": [
+        "probe-20260604-player-time-scarcity-session-boundary",
+        "probe-20260625-timescale-tempo-audit"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の session／retention／exit／tempo probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-26T10:03:32+09:00",
       "selected": {
