@@ -4,18 +4,20 @@ url: "https://arxiv.org/abs/2603.06679"
 collected_at: "2026-05-31T04:44:12+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, world-models, level-design, multiplayer, generative-ai]
-evaluated_at: "2026-05-31T04:50:25+09:00"
+evaluated_at: "2026-07-26T12:21:31+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-31T04:50:25+09:00"
+last_reviewed_at: "2026-07-26T12:21:31+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-31T04:50:25+09:00"
-stale_after: "2026-06-30"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-26T12:21:31+09:00"
+stale_after: "2026-08-25"
 supersedes: []
-gate_reason: "Memory / Observation / Dynamics で diffusion game engine の editable multiplayer world を分解する視点は重要。ただし現メモは arXiv abstract 由来で、評価設定・実験の中身・既存手法との差分が薄く、CoopEval 水準の概要に必要な根拠が不足している。Phase 3 に回す前に本文精読で評価方法と制約を補う。"
 next_action: revise_or_research
+gate_reason: |-
+  Memory / Observation / Dynamics の分解は、生成世界の永続状態、編集可能性、複数視点の整合を実装単位へ落とす設計語彙として具体性がある。
+  ただし保存済みメモは abstract 由来で、level-edit 手順、multiplayer 同期、比較対象、評価指標、失敗条件がなく、実証内容と制約を説明できるまで保留する。
 
 ---
 

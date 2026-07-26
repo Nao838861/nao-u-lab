@@ -4,20 +4,20 @@ url: "https://portal.findresearcher.sdu.dk/en/publications/quest-of-aivengarde-c
 collected_at: "2026-05-30T04:29:22+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, npc-dialogue, llm, player-experience, rpg]
-evaluated_at: "2026-05-30T04:32:00+09:00"
+evaluated_at: "2026-07-26T12:21:31+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-30T04:32:00+09:00"
+last_reviewed_at: "2026-07-26T12:21:31+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-30T04:32:00+09:00"
-stale_after: "2026-06-29"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-26T12:21:31+09:00"
+stale_after: "2026-08-25"
 supersedes: []
 next_action: revise_or_research
 gate_reason: |-
-  問題設定、比較条件、64 participants の mixed-methods 評価という骨格はあり、NPC 対話設計には明確に関係する。
-  ただし現候補メモだけでは survey/log の具体指標、variant 間の差分、narrative control 側の失敗例が薄く、CoopEval 水準の概要を書くには追加読解が必要。
+  static control と生成自由度の異なる 3 variant、64 participants の mixed-methods 比較は、NPC 対話の自由度と物語制御を測る設計へ直接適用できる。
+  ただし保存済みメモには survey/log の具体指標、variant 別の効果量、casual player 判定、narrative control の失敗例がなく、結論を検証可能な密度にするには本文精読が必要。
 
 ---
 

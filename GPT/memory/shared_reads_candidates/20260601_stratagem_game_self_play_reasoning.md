@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2604.17696"
 collected_at: "2026-06-01T03:45:15+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, self-play, llm-agents, reasoning, evaluation]
-evaluated_at: "2026-06-01T03:48:00+09:00"
+evaluated_at: "2026-07-26T12:21:31+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-01T03:48:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-01T03:48:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-01"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-26T12:21:31+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T12:21:31+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-25"
 supersedes: []
 gate_reason: |-
-  transferability coefficient と evolution reward は興味深く、self-play ログを勝敗以外で読む観点として使える。
-  ただし評価先が数学・一般推論・コード生成に寄っており、ゲーム制作の具体場面へ落とすには full paper で trajectory 選別方法と ablation の中身を確認する必要がある。
+  trajectory を勝敗以外の transferability と evolution で選ぶ着想は self-play ログ分析の参考にはなる。
+  一方、主目的と評価先は LLM の数学・一般推論・コード生成であり、ゲームのルール、難度、体験、制作サイクルへの効果は評価されていない。適用が類推に留まり共有投稿の軸として弱い。
 ---
 
 ## raw_excerpt

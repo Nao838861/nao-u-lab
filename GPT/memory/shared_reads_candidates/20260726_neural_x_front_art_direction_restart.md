@@ -4,6 +4,20 @@ url: "https://neural-x-front.itch.io/neuralxfront/devlog/1529042/i-fucked-up-bac
 collected_at: "2026-07-26T12:18:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, postmortem, art-direction, architecture, cancellation, tower-defense]
+evaluated_at: "2026-07-26T12:21:31+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-26T12:21:31+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T12:21:31+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-25"
+supersedes: []
+gate_reason: |-
+  art direction を後工程の装飾ではなく、resolution、UI、asset 仕様、code architecture を拘束する初期設計入力として扱う教訓は具体的である。
+  ただし単一開発者の短い中止報告で、比較条件、再出発後の検証、再現可能な手順、成果評価がない。約4000字の共有投稿を支える証拠密度には届かない。
 ---
 
 ## raw_excerpt
