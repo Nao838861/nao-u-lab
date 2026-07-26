@@ -301,5 +301,34 @@ designs:
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
+```yaml
+implemented:
+  - issue_id: ISS-RECALL-SUPERSEDED-DELEGATION
+    files_changed:
+      - path: memory/atoms.jsonl
+        change: modified
+      - path: memory/atoms/2026-05/sr-1778948778-e0c9fde779.md
+        change: modified
+      - path: memory/atoms/2026-07/local-20260726-self-judgment-ownership.md
+        change: created
+      - path: memory/atoms/index.jsonl
+        change: modified
+      - path: memory/MEMORY.md
+        change: modified
+      - path: memory/directive_shared_reads_log_cdx_standalone_20260626.md
+        change: modified
+    summary: "旧い Mir/Ash 合否判定依頼 atom を superseded にし、Log_cdx が既存評価軸と実装証拠を使って合否まで完了する local prescription atom を canonical representative として追加した。"
+    partial: false
+migrations:
+  - what: "self-judgment-ownership lifecycle group を新設し、旧 atom の canonical_id / superseded_by と新 atom の supersedes を相互接続した。"
+    affected: "sr-1778948778-e0c9fde779 と local-20260726-self-judgment-ownership、および atoms.jsonl / per-file .md / index.jsonl / MEMORY.md の mirror・派生表示"
+verification:
+  - "python tools/audit_atom_mirror_drift.py: atoms.jsonl / per-file .md / index.jsonl は各 2757 件、欠落・parse error・content conflict 0。"
+  - "lifecycle link assertion: 旧 status=superseded、新 status=active、group_id / canonical_id / superseded_by / supersedes の相互整合 OK。"
+  - "python tools/memory_recall.py --no-log --limit 10 \"ゲーム自己判定 合否 評価軸 証拠\": 新 atom が score=35.0 の代表として返り、旧 atom は folded_ids にのみ残った。"
+  - "MEMORY.md を render_index の派生 view と照合し、generated timestamp を除いて一致。"
+  - "python tools/memory_health.py --compact: warning のみ。mirror drift はなく、warning は既存の raw title debt 564 行 / 342 群と mojibake suspect atom 2 件。"
+```
+
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

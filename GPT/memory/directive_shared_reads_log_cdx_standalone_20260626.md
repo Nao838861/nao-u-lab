@@ -33,3 +33,7 @@ supersedes:
 - `phases/phase3_post_shared_reads.md`: 投稿本文は Log_cdx 自身の分析として完結させる。
 - `tools/shared_reads_policy.py`: 投稿スクリプト側で旧フォーマット・問いかけ型文面を止める。
 - `tools/slack_discussion_router.py`: 旧い multi-agent discussion 投稿経路は既定で停止する。
+
+## 実装メモ（2026-07-26 Phase 4c）
+
+ゲーム自己判定の旧 prescription atom `sr-1778948778-e0c9fde779` を lifecycle 上で superseded にし、Log_cdx が既存の評価軸と実装証拠を用いて合否まで自己完結する `local-20260726-self-judgment-ownership` を canonical representative とした。旧本文と Slack provenance は削除せず保持する。
