@@ -102,7 +102,40 @@ reason: "Phase 2 の gate_decision: pass 候補が 0 件のため、投稿前レ
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785070961-575e57957e
+    source_ts: "1785070961.347809"
+    title: "DataFlow-Harness — platform-native DAG を型付き mutation で構築する agent harness"
+    reason: "score 12 の未レビュー最新候補で、memory・harness・evaluation・agent・operation・game-design の6優先タグを持つ。直前の投稿が現在の Phase 4a と次の game production pipeline に既存 probe と異なる判断差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件の14に届かない。共有 artifact と typed contract は worker-bus-contract-observer、inspectable state・mutation・verifier feedback は checkable-intermediate-state、構造妥当性と意味品質の分離は structural-semantic-verifier-boundary、commit 前の対象・rollback 証拠は destructive-external-state-checkpoint が既に扱う。単一 model family・限定 operator 空間の評価で、persistence、reuse、provenance、人間との同時編集、障害回復、この環境での再現も未検証である。active_probes 321件と Phase 4a 向け pending lease 1件があるため、同義 control を追加せず state-only review とした。"
+  existing_probes:
+    - probe-20260530-worker-bus-contract-observer
+    - probe-20260612-checkable-intermediate-state
+    - probe-20260610-structural-semantic-verifier-boundary
+    - probe-20260527-destructive-external-state-checkpoint
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
