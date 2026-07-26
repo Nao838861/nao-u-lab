@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-26T14:28:56+09:00",
+  "updated_at": "2026-07-26T17:09:52+09:00",
   "reviewed_source_ts": [
+    "1780525485.663859",
     "1780560557.147809",
     "1780567815.289119",
     "1780577715.745279",
@@ -510,6 +511,48 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-26T17:09:52+09:00",
+      "selected": {
+        "id": "sr-1780525485-0a86ed3e95",
+        "source_ts": "1780525485.663859",
+        "title": "MORTAR — LLM 駆動 quality-diversity の最初の video game 生成適用 (arxiv 2601.00105, 2026-01) と log_autonomous_game v003 β proxy 設計改修との同型構造分析",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補だったため選んだ。game-design・operation の2優先タグを持ち、LLM mutation、behavioral dimension、MAP-Elites archive を次のゲーム生成・評価行動へ移せるか、同じ投稿系列の既存 review と照合するため読んだ。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かないため、新規 probe・metric・directive は追加しない。shared-reads 本文は、コード空間での LLM mutation、behavioral dimension による MAP-Elites のセル分割、archive からの選択という実行案を持つので actionability=2 とした。一方、Phase 1 の一次サマリだけを根拠にし、原典 URL・実験設定・比較結果がなく、使用モデルも「おそらく GPT-4 系列」と推定しているため evidence=1 とした。さらに同じ3投稿系列の統合 atom 1780525490.693179 は既に review 済みで、future-idea-handoff-gate を採用している。open-world-behavior-oracle は複数 route／seed の behavior distribution と selective exploration を、behavior-signature-distribution-shift は設計変更前後の行動分布を既に扱う。MORTAR 固有の2D cell／archive metric を加えても、現在321件ある active_probes と Phase 4a 向け pending lease 1件の確認負荷を増やす一方、次回判断は既存3経路で再現できる。本 atom は同系列の初期説明として保持し、運用には反映しない。",
+      "existing_reviews": [
+        "1780525490.693179"
+      ],
+      "existing_probes": [
+        "probe-20260605-future-idea-handoff-gate",
+        "probe-20260604-open-world-behavior-oracle",
+        "probe-20260619-behavior-signature-distribution-shift"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、同じ MORTAR 投稿系列の review 済み sibling および既存の idea handoff・行動分布 probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-26T14:28:56+09:00",
       "selected": {

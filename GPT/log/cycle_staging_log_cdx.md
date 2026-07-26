@@ -109,7 +109,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780525485-0a86ed3e95
+    source_ts: "1780525485.663859"
+    title: "MORTAR — LLM 駆動 quality-diversity の最初の video game 生成適用 (arxiv 2601.00105, 2026-01) と log_autonomous_game v003 β proxy 設計改修との同型構造分析"
+    reason: "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補だったため選んだ。game-design・operation の2優先タグを持ち、LLM mutation、behavioral dimension、MAP-Elites archive を次のゲーム生成・評価行動へ移せるか、同じ投稿系列の既存 review と照合するため読んだ。"
+  scores:
+    relevance: 2
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "合計10で採用条件の14に届かない。本文は2D cell／archive の実行案を持つが、Phase 1 の一次サマリだけで原典 URL・実験設定・比較結果がなく、使用モデルも推定なので evidence=1。同じ投稿系列の統合 atom 1780525490.693179 は review 済みで future-idea-handoff-gate を採用済み。open-world-behavior-oracle と behavior-signature-distribution-shift も行動分布・選択探索を扱うため、新規 probe は次回判断を増やさず確認負荷だけを増やす。"
+  change:
+    summary: "reviewed_source_ts と、同系列の review 済み sibling・既存 probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
