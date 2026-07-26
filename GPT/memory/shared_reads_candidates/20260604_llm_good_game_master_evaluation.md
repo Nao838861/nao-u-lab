@@ -4,20 +4,20 @@ url: https://openreview.net/forum?id=1vYoKS5LSn
 collected_at: 2026-06-04T02:29:48+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, llm, game-master, evaluation, multi-agent]
-evaluated_at: 2026-06-04T02:33:29+09:00
+evaluated_at: 2026-07-26T14:20:50.2021246+09:00
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: 2026-06-04T02:33:29+09:00
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-04T02:33:29+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-04"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: 2026-07-26T14:20:50.2021246+09:00
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T14:20:50.2021246+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-25"
 supersedes: []
-gate_reason: |
-  Game Master paradigm、18 game types、critical evaluator archetypes、approval 13.0% など重要要素は見えているが、OpenReview 投稿の評価設計と失敗分類を本文からもう一段確認しないと4000字概要が薄くなる。
-  LLM進行役の fairness / consistency 検査には適用可能だが、Phase 3 投稿前に評価 rubric と approval 判定の具体条件を補う必要がある。
+gate_reason: |-
+  Game Master paradigm、18 game types、critical evaluator、category 別 approval は見えるが、approval rubric と判定手順、失敗分類が不足する。
+  LLM 進行役の fairness 検査には使えるものの、前回 postpone 時の中核不足が残るため、結果数値を安全に解釈できる共有候補ではない。
 ---
 
 ## raw_excerpt

@@ -4,20 +4,20 @@ url: https://agentodyssey.github.io/paper.pdf
 collected_at: 2026-06-04T12:44:52.9748217+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, procedural-generation, llm-agent, program-synthesis, evaluation]
-evaluated_at: 2026-06-04T12:50:19.9966919+09:00
+evaluated_at: 2026-07-26T14:20:50.2021246+09:00
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: 2026-06-04T12:50:19.9966919+09:00
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-04T12:50:19.9966919+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-04"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: 2026-07-26T14:20:50.2021246+09:00
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T14:20:50.2021246+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-25"
 supersedes: []
 gate_reason: |-
-  entity / rule / quest generator と runtime validation の接続は自動ゲーム生成の素材として有望。
-  ただし候補本文だけでは評価設計と実験結果の中身が薄く、CoopEval 水準の概要を書くには paper 全体の追加確認が必要。
+  entity / rule / quest generator と runtime validation の接続は自動生成 pipeline の設計語彙として有用である。
+  しかし生成品質、実行成功率、比較条件、人手評価の結果がなく、前回 postpone 時の評価不足も解消されていないため、共有記事の核にはできない。
 ---
 
 ## raw_excerpt

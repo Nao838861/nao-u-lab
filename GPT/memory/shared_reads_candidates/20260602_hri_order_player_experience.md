@@ -4,20 +4,20 @@ url: "https://www.sciencedirect.com/science/article/pii/S1875952126000273"
 collected_at: "2026-06-02T05:59:42+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, player-experience, interaction-design, human-robot-interaction, playtesting]
-evaluated_at: "2026-06-02T06:05:14+09:00"
+evaluated_at: "2026-07-26T14:20:50.2021246+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-02T06:05:14+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-02T06:05:14+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-02"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-26T14:20:50.2021246+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T14:20:50.2021246+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-25"
 supersedes: []
 gate_reason: |-
-  協力/競争の順序が player experience を変えるという適用先は明確で、初回体験や AI 相手の提示順序に使える。
-  ただし candidate 抜粋だけでは被験者条件、測定設計、効果の範囲、順序効果の再現性が不足し、CoopEval 水準の概要にするには追加精読が必要。
+  協力/競争の提示順を初回体験設計へ使う着想は具体的だが、被験者条件、測定尺度、効果量、順序効果の範囲が候補本文にない。
+  前回 postpone 時の不足が解消されておらず、~4000字へ展開すると抄録以上の根拠を持たない一般論になるため、投稿候補としては閉じる。
 ---
 
 ## raw_excerpt

@@ -4,21 +4,20 @@ url: "https://www.sciencedirect.com/science/article/pii/S107158192600011X"
 collected_at: "2026-06-04T17:00:23.9604978+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, embodied-interaction, player-experience, game-feel, hci]
-evaluated_at: "2026-06-04T17:05:41.9560609+09:00"
+evaluated_at: "2026-07-26T14:20:50.2021246+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-04T17:05:41.9560609+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-04T17:05:41.9560609+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-04"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-26T14:20:50.2021246+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T14:20:50.2021246+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-25"
 supersedes: []
 gate_reason: |-
-  movement を player-avatar relationship と embodied player experience の基礎として扱う着想は有用だが、現時点の候補本文では 4 dynamics の中身や評価の具体例が薄い。
-  アクションゲームや game feel 評価への接続は可能だが、Phase 3 で読者が再利用できる 4000 字概要にするには、本文から movement sequence の分類とゲーム例を追加確認する必要がある。
-  面白い理論枠ではあるため fail ではなく postpone とし、原文精読後に再判定する。
+  movement sequence を操作の身体化として観察する理論軸は有用だが、中心成果である 4 dynamics の定義と 7作品での分析例が欠けている。
+  前回 postpone 時に必要とした分類・具体例が補われず、game feel への適用が抽象論に留まるため、共有候補としては閉じる。
 ---
 
 ## raw_excerpt
