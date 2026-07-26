@@ -232,7 +232,54 @@ stale_review_batch:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+```yaml
+designs:
+  - issue_id: ISS-ATOM-TITLE-RETRIEVAL
+    problem_restatement: "raw atom の title に「■ 概要」などの見出し型文字列が残ること自体と、recall 結果で候補を識別できないことが同じ指標で数えられている。現行 recall は title_cluster_index の semantic_alias と display_disambiguator がある atom を既に非破壊で補助する一方、sidecar が未更新・欠落した atom では generic title のままになり得る。また group_id は title 表示補助専用ではないため、未付与数をそのまま表示未解消数と見なせない。"
+    alternatives:
+      - name: "案A: recall 時の非破壊 semantic alias fallback"
+        sketch: "raw title と per-file atom は変更せず、generic / repeated title に対して既存 title_cluster_index の semantic_alias を優先する。sidecar に該当 atom がない時だけ、既存の決定的 semantic_alias 抽出を recall 時に適用し、alias が得られない場合に限って現在の date / source / domain / keyword 補助へ戻る。監査は raw_title_debt と effective_display_unresolved を分離する。"
+        pros:
+          - "既存の recall 表示経路と semantic_alias 抽出規則を再利用でき、現状からの距離が小さい。"
+          - "sidecar の鮮度に依存せず、新規 atom も次の再生成を待たず識別可能になる。"
+          - "raw provenance と dual-write mirror を一括更新しないため、失敗時に表示経路だけ戻せる。"
+        cons:
+          - "recall 時に少量の決定的抽出処理が増える。"
+          - "本文から良い alias を抽出できない atom では secondary key 表示が残る。"
+          - "監査側も effective display を評価するよう定義を揃える必要がある。"
+        migration_cost: low
+      - name: "案B: title sidecar の鮮度ゲートと定時再生成"
+        sketch: "title_cluster_index に入力 atom 集合の fingerprint または生成基準時刻を持たせ、recall / health で stale を検出する。stale の場合は定時 phase で sidecar を再生成し、recall は再生成済みの表示情報だけを使う。"
+        pros:
+          - "表示情報を事前計算へ集約でき、recall の実行時処理を増やさない。"
+          - "sidecar の stale 状態を明示的に観測できる。"
+          - "同じ入力に対する表示を一括監査しやすい。"
+        cons:
+          - "再生成までの間、新規 atom の識別性が改善しない。"
+          - "scheduler 成否と recall 品質が結合する。"
+          - "fingerprint、stale 判定、再生成責務が増え、今回の medium issue に対して仕組みが重い。"
+        migration_cost: medium
+      - name: "案C: raw atom title の一括 retitle"
+        sketch: "title_quality_audit の retitle 推奨行を人手または一括処理で semantic title に置換し、atoms.jsonl、per-file md、index.jsonl の title を同期する。以後の ingest 時にも見出し型 title を拒否する。"
+        pros:
+          - "すべての reader が補助 sidecar なしで意味のある title を取得できる。"
+          - "raw title debt の件数そのものを減らせる。"
+          - "Obsidian 上の見出しも直接改善する。"
+        cons:
+          - "数百 atom の dual-write mirror を変更し、provenance と git diff が大きくなる。"
+          - "自動生成 title の誤りを raw 正本へ固定し、復旧や再レビューのコストが高い。"
+          - "表示上の問題に対して source data の大量 migration を要求する。"
+        migration_cost: high
+    recommended: "案A: recall 時の非破壊 semantic alias fallback"
+    recommended_reason: "現行の title_cluster_index、semantic_alias、display_disambiguator はすでに問題の大半を非破壊で扱っており、欠けているのは sidecar miss 時の同等 fallback と、raw debt / 表示未解消を区別する観測である。案Aは既存設計を一般化するだけなので移行が小さく、alias 品質が悪い場合も raw atom を汚さず従来の secondary key へ戻せる。案Bは再生成遅延と scheduler 依存を残し、案Cは失敗時の復旧範囲が大きすぎる。"
+    decision: introduce
+    decision_reason: "表示補助の主要部は既に存在し、追加すべき境界条件と監査定義が明確である。raw atom の一括変更を避けたまま、新規・sidecar 未収録 atom の検索判別性を直ちに改善できるため、Phase 4c に渡せる設計粒度に達している。"
+    outline_for_4c:
+      - "memory_recall の表示注釈で、title_cluster_index の semantic_alias を最優先し、generic / repeated title かつ sidecar miss の時だけ既存の決定的 semantic_alias 抽出を適用する。"
+      - "semantic alias を得られない場合は、現在の display_secondary_key fallback を維持する。raw atom、atoms.jsonl、per-file md の title は変更しない。"
+      - "title quality 監査と memory health の集計を raw_title_debt と effective_display_unresolved に分け、group_id 未付与を表示未解消の直接根拠にしない。"
+      - "sidecar が current / stale / absent の各条件で同じ atom の表示が識別可能であり、canonical fold と exact-reference recall を壊さないことを固定 fixture で確認する。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
