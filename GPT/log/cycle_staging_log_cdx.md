@@ -99,7 +99,39 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785070978-7ab9147a72
+    source_ts: "1785070978.821379"
+    title: "StructureClaw — 最終回答ではなく artifact chain と実行証拠を検査する agent benchmark"
+    reason: "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ。現在の staging、probe receipt、game artifact の完了判定に既存 probe と異なる判断差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件の14に届かない。StructureClaw は requirements から final report までの artifact chain、artifact-level／execution-level assertion の全件通過、150 scenario・10 configuration・Success Rate 56.8%→88.6%を示し、完了判定へ直接変換できる。一方、根拠は投稿本文と arXiv abstract の再構成で、assertion 別失敗分布・cost・fixture 詳細・この環境での再現結果はない。既存の checkable-intermediate-state、worker-bus-contract-observer、gamecraft-artifact-completeness-replay が inspectable state、段階間 contract、runtime completeness と replayable evidence をすでに覆うため、新規 umbrella probe は次回判断を変えず、321件ある active probes と既存 pending lease の確認負荷だけを増やす。"
+  existing_probes:
+    - probe-20260612-checkable-intermediate-state
+    - probe-20260530-worker-bus-contract-observer
+    - probe-20260618-gamecraft-artifact-completeness-replay
+  change:
+    summary: "reviewed_source_ts と重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
