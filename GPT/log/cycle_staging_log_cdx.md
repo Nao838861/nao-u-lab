@@ -249,6 +249,55 @@ stale_review_batch:
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
+```yaml
+designs:
+  - issue_id: ISS-RECALL-SUPERSEDED-DELEGATION
+    problem_restatement: "ゲーム自己判定を扱う旧 prescription atom が、停止済みの Mir/Ash への合否判定依頼を現行手順として recall に出している。履歴としての評価記録は残す必要がある一方、利用不能な外部 evaluator を完了条件にする部分は現行の自己完結方針へ明示的に置換されなければならない。"
+    alternatives:
+      - name: "案A: 明示的 lifecycle bridge atom"
+        sketch: "現行 directive を根拠に、Log_cdx が証拠と評価軸を記録し、自身で合否判定まで完了する短い local prescription atom を1件作る。旧 atom と同一 lifecycle group に置き、旧側を status=superseded / superseded_by=<新atom>、新側を status=active / supersedes=[旧atom] / canonical_id=<新atom> として recall 代表を置換する。"
+        pros:
+          - "既存の lifecycle fold をそのまま使え、memory_recall の新しい判定ロジックが不要。"
+          - "旧 atom の評価軸と provenance は raw 履歴として保持しつつ、現行手順だけを recall-visible にできる。"
+          - "対象 atom を明示するため、Mir/Ash に言及する無関係な観察記録を誤って隠さない。"
+        cons:
+          - "directive から atom への投影文を人手で簡潔かつ正確に作る必要がある。"
+          - "atoms.jsonl / per-file .md / index.jsonl の mirror 整合を同時に保つ必要がある。"
+          - "同種の旧 prescription が今後見つかれば、個別に lifecycle 接続する必要がある。"
+        migration_cost: low
+      - name: "案B: policy supersession sidecar"
+        sketch: "atom 本体を変更せず、旧 atom ID・上書き元 directive・理由・有効期間を記録する sidecar index を新設する。memory_recall と MEMORY.md 生成時に sidecar を適用し、対象 atom を非表示または directive 参照へ差し替える。"
+        pros:
+          - "取り込み済み atom を immutable な raw 記録として維持できる。"
+          - "atom 以外の directive を上書き元として直接参照できる。"
+          - "将来、複数 atom へ同じ policy override を適用しやすい。"
+        cons:
+          - "既存の lifecycle metadata と役割が重複し、優先順位を二系統で解決する必要が生じる。"
+          - "memory_recall だけでなく MEMORY.md 生成や health check など全 consumer の sidecar 対応が必要。"
+          - "sidecar の stale・欠落・循環参照を検証する新しい保守負担が増える。"
+        migration_cost: high
+      - name: "案C: inactive evaluator の動的フィルタ"
+        sketch: "agent availability registry を設け、inactive な Mir/Ash への依頼表現を含む prescription を recall 時に降格または除外する。availability が変われば atom を編集せず表示を切り替える。"
+        pros:
+          - "外部 evaluator の稼働状態変更を一か所で管理できる。"
+          - "同じ依存先を持つ複数 prescription に一括適用できる。"
+          - "一時停止と復帰を可逆に扱える。"
+        cons:
+          - "自然言語から依頼・歴史記録・単なる言及を区別する必要があり、誤検出しやすい。"
+          - "現在の issue 1件に対して registry と recall policy の導入は過剰。"
+          - "稼働していても完了ゲートにすべきでない、という ownership の問題を availability だけでは表現できない。"
+        migration_cost: high
+    recommended: "案A: 明示的 lifecycle bridge atom"
+    recommended_reason: "問題の本体は1件の旧 prescription と現行方針の未接続であり、既存 schema と fold 動作だけで正確に解決できる。失敗範囲は対象 lifecycle group に閉じ、旧 atom も削除しないため復旧が容易である。案B/Cは将来の大量事例には拡張性があるが、現時点では consumer 改修・stale 管理・誤検出のコストが利益を上回る。"
+    decision: introduce
+    decision_reason: "対象 atom が実際に auto recall へ露出し、ゲーム制作の完了を利用不能な evaluator 待ちにしうるため、次の制作サイクル前に recall 代表を置換する価値がある。既存 lifecycle mechanism の局所適用で設計が完結しており、追加検討を待つ理由がない。"
+    outline_for_4c:
+      - "現行 directive を provenance とする self-judgment ownership の local prescription atom を1件追加する。内容は、既存の評価軸・証拠記録を利用しつつ、Log_cdx 自身が合否判定まで完了し、Mir/Ash への依頼を完了ゲートにしない範囲に限定する。"
+      - "新旧 atom に共通の lifecycle group を設定し、新 atom を canonical_id にする。旧 atom は status=superseded と superseded_by、新 atom は status=active と supersedes を相互整合させる。"
+      - "既存の dual-write/sync 経路を用いて atoms.jsonl、per-file atom、index.jsonl を同一内容へ同期し、旧本文や raw Slack provenance は削除しない。"
+      - "mirror drift と lifecycle link の整合を検証し、ゲーム自己判定の recall probe で旧 atom が表示されず、新 atom が代表として返ることを確認する。"
+```
+
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
