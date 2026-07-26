@@ -4,21 +4,20 @@ url: "https://arxiv.org/abs/2507.02941"
 collected_at: "2026-06-13T19:59:24+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-content-generation, visual-assets, dataset, tiles, vision-language]
-evaluated_at: "2026-06-13T20:12:00+09:00"
+evaluated_at: "2026-07-27T02:45:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-13T20:12:00+09:00"
+last_reviewed_at: "2026-07-27T02:45:00+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-13T20:12:00+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T02:45:00+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-13"
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |-
-  2D / tile-based PCG と asset review への適用先は具体的で、semantic / connectivity / object classification という軸も有用。
-  ただし candidate 本文は arXiv 要旨メモ中心で、dataset 規模、annotation schema、object detection baseline、評価結果の中身が不足している。
-  Phase 3 の ~4000 字概要に進む前に、本文または追加メモで評価設計と限界を補う必要がある。
+  semantic・connectivity・object classification は tile asset review へ具体的に適用できるが、dataset 規模、annotation schema、baseline、定量結果がない。
+  手法の評価と限界を説明できず約4000字の概要に届かないため、本文情報を補うまで postpone とする。
 ---
 
 ## raw_excerpt

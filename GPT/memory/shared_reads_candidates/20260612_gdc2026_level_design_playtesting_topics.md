@@ -4,18 +4,20 @@ url: "https://gdcvault.com/browse/gdc-26/"
 collected_at: "2026-06-12T09:52:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, level-design, playtesting, production, gdc]
-evaluated_at: "2026-06-12T10:05:00+09:00"
+evaluated_at: "2026-07-27T02:45:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-12T10:05:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-12T10:05:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-12"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-27T02:45:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-27T02:45:00+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-26"
 supersedes: []
-gate_reason: "これは個別記事・講演の分析ではなく、GDC 2026 の設計系トピック集合への入口メモ。手法の中核・評価・結論を candidate 単体から抽出できないため、Phase 3 投稿にはまだ早い。個別セッションを 1 件ずつ分解してから再評価する。"
+gate_reason: |-
+  個別記事・講演ではなく GDC 2026 のトピック一覧であり、単一の問題設定・手法・評価・結論を抽出できない。
+  約4000字の1 candidate 投稿へ育てる単位ではないため fail とし、個別セッション収集時の入口だけに残す。
 ---
 
 ## raw_excerpt

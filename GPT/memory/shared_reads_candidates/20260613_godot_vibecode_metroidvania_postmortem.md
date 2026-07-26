@@ -4,18 +4,20 @@ url: "https://forum.godotengine.org/t/post-mortem-of-my-failed-attempt-to-vibe-c
 collected_at: "2026-06-13T01:59:28+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-dev, postmortem, metroidvania, ai-coding, production-risk]
-evaluated_at: "2026-06-13T02:02:21+09:00"
+evaluated_at: "2026-07-27T02:45:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-13T02:02:21+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-13T02:02:21+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-13"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-27T02:45:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-27T02:45:00+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-26"
 supersedes: []
-gate_reason: "AI agent で複雑ジャンルを作る危険性という論点は有用だが、候補本文だけでは実装内訳、失敗箇所、再現可能な判断軸が薄い。原文を深掘りすれば production-risk 投稿に育つ可能性はあるが、現時点では単独で 4000 字級の概要に届かない。"
+gate_reason: |-
+  複雑ジャンルを prompt-to-game で作る危険は有用だが、候補本文は単一開発者の総括で、実装内訳・失敗箇所・比較条件・再現可能な評価がない。
+  約4000字の分析を支える検証材料が不足するため fail とし、production-risk の参考例としてのみ残す。
 ---
 
 ## raw_excerpt

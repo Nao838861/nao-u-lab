@@ -4,20 +4,20 @@ url: "https://openreview.net/forum?id=SeQ8l8xo1r"
 collected_at: "2026-06-13T17:59:33+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, benchmark, human-in-the-loop, reasoning, evaluation]
-evaluated_at: "2026-06-13T18:02:23+09:00"
+evaluated_at: "2026-07-27T02:45:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-13T18:02:23+09:00"
+last_reviewed_at: "2026-07-27T02:45:00+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-13T18:02:23+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T02:45:00+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-13"
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |-
-  live computer games で LLM reasoning data を集める問題設定と大枠は有用だが、候補本文だけでは 3 種類の game、reasoning capability の割り当て、scoring / retrospective analysis の具体が薄い。
-  このまま Phase 3 に送ると「参加型評価は面白い」という概念紹介に寄り、CoopEval 水準の概要には追加読解が必要。
+  live game で reasoning data を集める設計と2000超 session・100人 study は有用だが、3ゲームの規則、能力割当、scoring、モデル別結果が不足している。
+  現状では参加型評価の概念紹介に留まるため、評価手順と結果表を補うまで postpone とする。
 ---
 
 ## raw_excerpt

@@ -4,17 +4,18 @@ url: "https://arxiv.org/abs/2606.26094v1"
 collected_at: "2026-06-27T13:47:41+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, evaluation, opponent-modeling, agent-playtest, interpretability]
-status: needs_review
+status: failed
 lifecycle_backfill_reason: "missing_status_defaulted_to_needs_review"
 lifecycle_backfilled_at: "2026-07-12"
-candidate_status: needs_review
+candidate_status: failed
 stale_after: "2026-07-27"
 supersedes: []
-last_reviewed_at: "2026-06-27T13:47:41+09:00"
-last_decision: needs_review
-evidence: "candidate_file:20260627_revengebench_policy_reverse_engineering.md; status:needs_review"
-next_action: evaluate_in_phase2
+last_reviewed_at: "2026-07-27T02:39:41+09:00"
+last_decision: failed
+evidence: "group_handoff:gha-3bcd5b7a2c22b421; terminal:memory/shared_reads_candidates/20260626_revengebench_behavioral_policy_recovery.md: status:posted;https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782430090951209; reason:same arXiv work 2606.26094 as posted canonical sibling; no distinct source or work identity"
+next_action: none
 
+duplicate_reason: failed_duplicate_of_terminal_sibling
 ---
 
 ## raw_excerpt

@@ -4,17 +4,18 @@ url: "https://arxiv.org/abs/2605.29653v1"
 collected_at: "2026-06-27T13:47:41+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, strategy-game, benchmark, harness, self-evolution]
-status: needs_review
+status: failed
 lifecycle_backfill_reason: "missing_status_defaulted_to_needs_review"
 lifecycle_backfilled_at: "2026-07-12"
-candidate_status: needs_review
+candidate_status: failed
 stale_after: "2026-07-27"
 supersedes: []
-last_reviewed_at: "2026-06-27T13:47:41+09:00"
-last_decision: needs_review
-evidence: "candidate_file:20260627_ptcg_bench_harness_aware_agents.md; status:needs_review"
-next_action: evaluate_in_phase2
+last_reviewed_at: "2026-07-27T02:39:33+09:00"
+last_decision: failed
+evidence: "group_handoff:gha-0ff8c395ef1f8f05; terminal:memory/shared_reads_candidates/20260530_ptcg_bench_self_evolving_game_agents.md: status:posted;https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780075916989739; reason:same arXiv work 2605.29653 as posted canonical sibling; no distinct source or work identity"
+next_action: none
 
+duplicate_reason: failed_duplicate_of_terminal_sibling
 ---
 
 ## raw_excerpt

@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2601.16690"
 collected_at: "2026-06-13T04:10:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-memory, evaluation, game-benchmark, vlm, interactive-games]
-evaluated_at: "2026-06-13T04:05:39+09:00"
+evaluated_at: "2026-07-27T02:45:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-13T04:05:39+09:00"
+last_reviewed_at: "2026-07-27T02:45:00+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-13T04:05:39+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T02:45:00+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-13"
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |-
-  trajectory から episodic memory 評価質問を作る着想は、Nao_u_BOT の playtest trace や記憶評価にかなり接続しやすい。
-  ただし候補本文には質問生成手順、環境構成、評価指標、主要結果、失敗例がなく、CoopEval 水準の概要には届かない。原文を読んで評価設計を補うまで保留。
+  trajectory 由来の記憶質問は playtest trace 評価へ具体的に接続できるが、候補本文に質問生成手順・環境・指標・主要結果・失敗例がない。
+  問題設定と着想だけでは CoopEval 水準の概要を構成できないため、原文の評価設計を補うまで postpone とする。
 ---
 
 ## raw_excerpt

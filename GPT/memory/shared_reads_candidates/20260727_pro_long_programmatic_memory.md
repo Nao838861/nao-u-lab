@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.20064v2"
 collected_at: "2026-07-27T02:32:20+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent, memory, game-playing, long-horizon, evaluation]
+evaluated_at: "2026-07-27T02:45:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-27T02:45:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-27T02:45:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-26"
+supersedes: []
+gate_reason: |-
+  完全な構造化 interaction log を code 検索する着想、ARC-AGI-3 での比較条件、18.0pt 改善・76.1% pass@1・token 削減という結果が揃う。
+  長時間 game trace と制作 cycle の記憶設計へ直接適用でき、利点とコスト上限も含めて CoopEval 水準の概要を構成できるため pass。
+suggested_post_outline:
+  overview_angle: "要約圧縮ではなく完全ログ＋プログラム検索で長時間ゲーム探索を支える設計と、その定量的な費用対効果"
+  analysis_axis: "情報損失と検索困難の trade-off、base coding agent・専用 harness との比較、pass@1・token・cost の三軸"
+  application_target: "Log_cdx の game playtrace、cycle staging、失敗試行を原文保持し、必要な状態遷移だけを code 検索して次の playable diff に接続する運用"
+  pros_cons: "履歴を失わず専用 harness 並みの性能を少ない token で得られる一方、完全ログの保存費用、検索コードの品質依存、Fable 5 の高い試行 cost がある"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

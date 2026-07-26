@@ -7,11 +7,11 @@ genre_tags: [game-ai, evaluation, opponent-modeling, behavioral-probes, llm-agen
 evaluated_at: "2026-07-08T13:48:27+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postponed
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-08T13:51:28+09:00"
-last_decision: postponed
-evidence: "duplicate of posted candidate https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782430090951209"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-27T02:39:41+09:00"
+last_decision: failed
+evidence: "group_handoff:gha-3bcd5b7a2c22b421; terminal:memory/shared_reads_candidates/20260626_revengebench_behavioral_policy_recovery.md: status:posted;https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782430090951209; reason:same arXiv work 2606.26094 as posted canonical sibling; no distinct source or work identity"
 next_action: none
 stale_after: "2026-08-07"
 duplicate_of:
@@ -30,6 +30,7 @@ suggested_post_outline:
   application_target: "ヘッドレス評価で敵 AI や自動プレイヤーの癖を可視化し、単純な勝率では見えない方策差分を検査する probe 設計"
   pros_cons: "メリットは行動品質の理由を probe とコード仮説に落とせる点。デメリットは小規模ゲームでも probe 設計と距離指標の実装負荷が高い点"
   verdict_pre: "部分採用。shared-reads では評価思想を採用し、実装は小型ゲームのログ分析 probe から試す"
+duplicate_reason: failed_duplicate_of_terminal_sibling
 ---
 
 ## raw_excerpt

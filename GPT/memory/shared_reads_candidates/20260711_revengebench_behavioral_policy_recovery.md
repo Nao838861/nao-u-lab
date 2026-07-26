@@ -7,12 +7,12 @@ genre_tags: [game-ai, player-modeling, evaluation, behavioral-probes, opponent-m
 evaluated_at: "2026-07-11T13:25:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-11T13:25:00+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260626_revengebench_behavioral_policy_recovery.md; permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782430090951209"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-27T02:39:41+09:00"
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-3bcd5b7a2c22b421; terminal:memory/shared_reads_candidates/20260626_revengebench_behavioral_policy_recovery.md: status:posted;https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782430090951209; reason:same arXiv work 2606.26094 as posted canonical sibling; no distinct source or work identity"
 next_action: none
 stale_after: "2026-08-10"
 supersedes: []

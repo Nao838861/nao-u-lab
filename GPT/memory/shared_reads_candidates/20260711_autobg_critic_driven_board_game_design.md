@@ -7,12 +7,12 @@ genre_tags: [game-design, board-game, llm, playtesting, iterative-design]
 evaluated_at: "2026-07-11T13:25:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-11T13:25:00+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260606_autobg_board_game_design_assistant.md; canonical posted siblings include 20260616/20260618/20260620"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-27T02:39:24+09:00"
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-7842e8b5b34687f1; terminal:memory/shared_reads_candidates/20260606_autobg_board_game_design_assistant.md: status:posted;https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780414844668019; reason:same arXiv work 2606.01976 as posted canonical sibling; no distinct source or work identity"
 next_action: none
 stale_after: "2026-08-10"
 supersedes: []
