@@ -139,7 +139,95 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示で読み、代表語「記憶」「ゲーム設計」「敵パターン」を確認した。「評価軸」は現行 index 本文に出現しないが、文字化けではなく内容上の不在。validate_memory_index.py は entry section と per-file atom index の一致を確認した。"
+  - "memory/atoms.jsonl 2,752件を memory_health.py で監査した。atoms.jsonl / per-file md / index.jsonl は各2,752件で一致し、content conflict 0。raw normalized-content duplicate 40群は lifecycle/content fold 済みで、effective display の未解決重複は0群。"
+  - "memory/raw/ の mtime 30日超を監査した。96件中、固定参照の slack_archive 1件と root control file 1件を除く web_research / headless_eval 94件を archive 候補として識別した。既存の archive 契約がないため移動はしていない。"
+  - "shared-reads candidate 1,111件の lifecycle を監査した。posted 486 / ready_to_post 10 / postponed 306 / failed 293 / needs_review 13 / status 未分類 3。期限到来 open candidate は143件。terminal は再評価 queue へ入れていない。"
+  - "title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再生成した。open duplicate 55群のうち mixed 48 / all_open 7、今回 actionable group は0群。"
+  - "Slack inbox lifecycle を監査し、slack_directives / slack_broadcasts とも pending 0件を確認した。handled へ更新すべき行はなかった。"
+  - "永続 candidate handoff inbox へ、group handoff と重ならない stale candidate 5件を source_cycle_id 2026-07-26 16:43 で冪等 enqueue した。audit は errors 0、pending 5件。"
+issues:
+  - id: ISS-MOJIBAKE-001
+    description: "atom sr-1776127289-4d9239b255 の「AIエージェント」が「AIエ��ジェント」として source raw から atom mirror まで保存されている。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みでも U+FFFD が2文字あり、source raw 自体の破損。memory/MEMORY.md 本文は UTF-8 正常。"
+    display_or_tooling_status: "none; shell 表示だけの mojibake ではない。"
+    why_blocks_game_memory: "「AIエージェント」を自然語で探す時の title / trigger 一致を弱める。ただし agent tag が残るため影響は限定的。"
+  - id: ISS-STALE-BACKLOG-001
+    description: "postponed / needs_review の期限到来 open candidate が143件あり、stale triage sidecar の50行上限を超えている。"
+    severity: medium
+    evidence: "backfill_shared_reads_candidate_status.py --today 2026-07-26: overdue_for_reassessment=143; memory/shared_reads_stale_triage_queue.jsonl: 50 rows"
+    source_file_status: "candidate frontmatter audit は conflict 修復対象0件。現在状態は正規 status / last_decision / evidence から読めている。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "有用なゲーム制作知見の再評価が複数 cycle 待ちになり、次の制作で使える情報が ready / posted 層へ上がるまで遅れる。既存の bounded handoff 経路は正常に動作している。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 143
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  backlog_high_water_reason: "overdue_open_total > queue rows は満たすが、actionable group 3件以上を満たさない。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-1edd3e1b5563ef7c
+    - cha-f87f624935eb40b3
+    - cha-c999b1dfb3c4ae9e
+    - cha-53b189a0d5c86b58
+    - cha-b6a71aaa78c59d53
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-1edd3e1b5563ef7c
+    path: memory/shared_reads_candidates/20260605_synthetic_user_generation_games.md
+    status: postponed
+    stale_after: "2026-07-05"
+    priority_reason: "実プレイヤー行動の transformer + diffusion 複製は有用だが、モデル設計・比較・評価指標と既投稿との差分を再確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-f87f624935eb40b3
+    path: memory/shared_reads_candidates/20260606_zero_shot_3d_map_llm_agents.md
+    status: postponed
+    stale_after: "2026-07-06"
+    priority_reason: "Actor/Critic 分割と baseline 比較を含みゲーム制作へ転用しやすいが、CoopEval 水準へ届く定量結果と失敗条件を再確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-c999b1dfb3c4ae9e
+    path: memory/shared_reads_candidates/20260607_game_qa_reporting_natural_language_captions.md
+    status: postponed
+    stale_after: "2026-07-07"
+    priority_reason: "gameplay video から自然言語 QA report を作る手法は具体的だが、評価結果・失敗例・既存 QA との差分が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-53b189a0d5c86b58
+    path: memory/shared_reads_candidates/20260607_llm_skirmish_in_context_rts.md
+    status: postponed
+    stale_after: "2026-07-07"
+    priority_reason: "反復 tournament と strategy update は自己改善評価へ転用できるが、benchmark 設定・比較結果・失敗条件の一次根拠が薄い。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-b6a71aaa78c59d53
+    path: memory/shared_reads_candidates/20260607_mirrormoon_ep_true_scifi_postmortem.md
+    status: postponed
+    stale_after: "2026-07-07"
+    priority_reason: "SF theme を gameplay と curiosity へ翻訳する軸は有用だが、現候補が見出し中心で固有手法と評価 evidence を再確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
