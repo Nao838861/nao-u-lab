@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-26T07:59:10+09:00",
+  "updated_at": "2026-07-26T10:03:32+09:00",
   "reviewed_source_ts": [
+    "1780577715.745279",
     "1785013005.204159",
     "1785005253.893229",
     "1780620630.252239",
@@ -507,6 +508,45 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-26T10:03:32+09:00",
+      "selected": {
+        "id": "sr-1780577715-ed242ccef1",
+        "source_ts": "1780577715.745279",
+        "title": "MemForest: An Efficient Agent Memory System with Hierarchical Temporal Indexing",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす最新候補で、memory・game-design・agent・operation・evaluation の5優先タグを持つ。wrong-time retrieval と全体書き直しを、時系列ツリーと局所更新へ変換する知見が、現在の per-atom file／index 運用に既存 probe と異なる判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かないため、新規 probe・metric・directive は追加しない。shared-reads 本文は、並列チャンク抽出、影響 path だけを更新する MemTree、LongMemEval-S 正答率79.8%、MemoryOS比13.7倍、時系列推論79.7%対52.5%、SoTA比約6倍という具体的な機構と数値を持つ一方、論文の実験条件や token／accuracy trade-off をこの workspace で追試しておらず、会話QAからコード・設計文書・game logへの転用も未検証なので evidence=2 とした。さらに同一 work の後続詳細 atom 1780802949.440169 は既に review 済みで、MemForest を SkillOpt・RAISE と統合した atom 1780835360.327889 から external-state-validation-gate が採用されている。memory-governance-gate-separation は検索変更前の temporal／staleness evidence を、egostream-episodic-recall-failure-split は temporal-window mismatch と source_ts lookup を既に扱うため non_redundancy=0 とした。現在の per-atom file＋index＋dual-read は全体書き直しを避ける局所更新経路を既に持ち、ここから MemTree や retrieval ranking を追加すると 321件の active_probes と Phase 4a 向け pending lease 1件がある状態で責務と検証負荷を増やす。本 atom は初期の高品質説明として保持し、既存 probe と現行 index を再利用する。",
+      "existing_probes": [
+        "probe-20260608-external-state-validation-gate",
+        "probe-20260602-memory-governance-gate-separation",
+        "probe-20260613-egostream-episodic-recall-failure-split"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、同一 MemForest work の review 済み sibling および既存 temporal／validation probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-26T07:59:10+09:00",
       "selected": {

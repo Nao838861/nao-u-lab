@@ -109,7 +109,34 @@ candidate_files_updated: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780577715-ed242ccef1
+    source_ts: "1780577715.745279"
+    title: "MemForest: An Efficient Agent Memory System with Hierarchical Temporal Indexing"
+    reason: "source が slack_api/shared-reads、score 11、未レビューという条件を満たす最新候補で、memory・game-design・agent・operation・evaluation の5優先タグを持つ。wrong-time retrieval と全体書き直しを、時系列ツリーと局所更新へ変換する知見が、現在の per-atom file／index 運用に既存 probe と異なる判断差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "合計12で採用条件の14に届かない。本文は並列チャンク抽出、MemTree、LongMemEval-S 79.8%、MemoryOS比13.7倍、時系列推論79.7%対52.5%、SoTA比約6倍を示すが、この workspace での追試と異種 artifact への転用根拠がない。同一 work の後続詳細 atom 1780802949.440169 は review 済みで、統合 atom 1780835360.327889 由来の external-state-validation-gate、memory-governance-gate-separation、egostream-episodic-recall-failure-split が validation、temporal／staleness evidence、temporal-window mismatch を既に扱う。現行 per-atom file＋index＋dual-read も局所更新経路を持つため、新規 probe や MemTree 導入は重複と確認負荷を増やす。"
+  change:
+    summary: "reviewed_source_ts と、同一 MemForest work の review 済み sibling および既存 temporal／validation probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
