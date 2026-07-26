@@ -137,7 +137,88 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、index/per-file atom 対応と記載パスを監査。broken link 0件、代表語（記憶 / ゲーム設計 / 敵パターン / 評価軸）は取得可能"
+  - "memory/atoms.jsonl と per-file/index 各2753件の mirror を監査。content conflict 0件。duplicate cluster 45群（normalized_content_hash 40群、title_excerpt_exact 5群）は既存 overlay で折り畳み済み"
+  - "memory/raw/ の30日超未更新ファイル96件を抽出。88件は web_research、6件は headless_eval、1件は既存 slack_archive、1件は sync_state（内訳は階層重複なし）。参照元を壊す一括移動は行わず、archive 候補として監査記録のみ残した"
+  - "candidate lifecycle 1112件を監査し、status/candidate_status の真の不一致 0件。posted 487 / ready_to_post 10 / postponed 302 / failed 297 / needs_review 13 / skipped_unreviewed 3"
+  - "slack_directives.jsonl 23件、slack_broadcasts.jsonl 21件を監査。pending 0件のため handled 更新なし"
+  - "title canonical index を69群へ再生成し、期限到来 candidate 5件を Phase 2 handoff inbox へ冪等 enqueue"
+issues:
+  - id: ISS-ENC-001
+    description: "shared-reads 由来 atom 1件の「AIエージェント」が「AIエ��ジェント」として source から破損している"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl#ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みでも replacement characters を確認。raw archive、atoms.jsonl、per-file atom、index に同じ破損が伝播しており source data 側の局所破損"
+    display_or_tooling_status: "none。PowerShell の既定 encoding では stale triage 表示が一時 mojibake したが、-Encoding utf8 で valid JSON と日本語本文を確認済み。別 atom gr-1777083728-44d444ab7a の ??? は原文どおりで破損ではない"
+    why_blocks_game_memory: "当該1件だけ「AIエージェント」の完全一致検索から漏れる可能性があるが、他のタグ・trigger と URL から到達でき、記憶階層全体は阻害しない"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 138
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-7633d55effe85a8d
+    - cha-0563adf87c05fd4c
+    - cha-6ba894b4aca72106
+    - cha-74dd6775a1512fdb
+    - cha-bac7fc076b5b28c1
+  handed_off_candidate_count: 5
+  overdue_open_unleased_estimate: 133
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-7633d55effe85a8d
+    path: memory/shared_reads_candidates/20260608_agora1_multi_agent_world_model.md
+    status: postponed
+    stale_after: "2026-07-08"
+    priority_reason: "simulation と rendering の分離、複数 participant が同じ generated world を共有する設計は重要だが、評価条件・限界・再現可能な技術詳細が薄い"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-0563adf87c05fd4c
+    path: memory/shared_reads_candidates/20260608_chatpcg_llm_reward_design_pcg.md
+    status: postponed
+    stale_after: "2026-07-08"
+    priority_reason: "LLM reward design と PCG/RL の接続は headless 評価設計に近いが、比較対象・評価条件・失敗例が不足する"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-6ba894b4aca72106
+    path: memory/shared_reads_candidates/20260608_forking_garden_narrative_arc_gameplay_planning.md
+    status: postponed
+    stale_after: "2026-07-08"
+    priority_reason: "物語アークで dungeon graph を制約する着想は転用しやすいが、評価方法・比較対象・失敗条件の本文確認が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-74dd6775a1512fdb
+    path: memory/shared_reads_candidates/20260609_ai_disclosure_player_reaction_reddit.md
+    status: postponed
+    stale_after: "2026-07-09"
+    priority_reason: "AI disclosure と離脱の論点は具体的だが、Reddit 単一事例と検索断片中心で投稿根拠が薄い"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-bac7fc076b5b28c1
+    path: memory/shared_reads_candidates/20260609_dda_systematic_review.md
+    status: postponed
+    stale_after: "2026-07-09"
+    priority_reason: "547件から34件を選んだ DDA SLR だが、分類表・評価基準・34件の内訳・比較結果が候補本文に不足する"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
