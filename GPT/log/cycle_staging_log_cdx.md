@@ -4,10 +4,13 @@
 
 ## Phase 1: 情報収集
 
-- pending 確認: `slack_directives.jsonl` 0件 / `slack_broadcasts.jsonl` 0件
-- 既存入力確認: `memory/raw/web_research/results.jsonl`、`memory/atoms.jsonl`、raw Slack の直近取得分を確認。
-- `memory/shared_reads_candidates/20260727_balanced_game_design_mip.md` — 非対称な二人零和ゲームの balance を、Nash 均衡上の選択確率と近似 MIP による attribute 調整として定式化する working paper。
-- duplicate preflight: `continue`（canonical URL: `https://ssrn.com/abstract=7001878`）。保存後にも 3 sidecar を再生成済み。
+- 実行時刻: 2026-07-27 02:33 JST
+- inbox: `slack_directives.jsonl` / `slack_broadcasts.jsonl` ともに pending 0件。
+- 確認範囲: 直前 cycle 後の `memory/raw/web_research/results.jsonl`、最近の `memory/atoms.jsonl`、`memory/raw/slack_api/shared-reads.jsonl`。
+- `memory/shared_reads_candidates/20260727_operational_hallucination_safety_drift.md` — 長時間の tool-using agent で起きる安全意図の drift と、同じ tool call を反復する livelock を収集。
+- `memory/shared_reads_candidates/20260727_pro_long_programmatic_memory.md` — ARC-AGI-3 の長時間ゲーム探索で、完全な構造化 interaction log を code 検索する programmatic memory を収集。
+- duplicate preflight: 上記2件はいずれも `continue`。AutoBG / RevengeBench は posted-source index で既投稿 work を確認したため、新規 candidate は作成していない。
+- Slack 投稿なし。品質判定・4000字概要・記憶階層変更は未実施。
 
 ## Phase 2: 分析
 
