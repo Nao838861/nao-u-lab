@@ -1,12 +1,12 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.35.0-market-rhythm';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.35.0-market-rhythm';
-import { islandCalendar } from './ui_summary.js?v=v004.35.0-market-rhythm';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.35.0-market-rhythm';
+} from './config.js?v=v004.36.0-spatial-productivity';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.36.0-spatial-productivity';
+import { islandCalendar } from './ui_summary.js?v=v004.36.0-spatial-productivity';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.36.0-spatial-productivity';
 import {
   buildingStructureLayout, pileVisual, seasonalPlotVisual,
-} from './visuals.js?v=v004.35.0-market-rhythm';
+} from './visuals.js?v=v004.36.0-spatial-productivity';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
@@ -481,6 +481,7 @@ export class Renderer {
       ctx.stroke();
       ctx.restore();
     }
+    this.drawSelectedProductivityRoute(model);
     this.drawTrackedRoute(model);
     this.drawOperationPreview();
   }
@@ -626,6 +627,26 @@ export class Renderer {
       ctx.stroke();
       ctx.restore();
     }
+    if (preview.ok && preview.entrance && preview.productivity?.target) {
+      const from = this.camera.project(
+        preview.entrance.x + 0.5, preview.entrance.y + 0.5, 4,
+      );
+      const to = this.camera.project(
+        preview.productivity.target.x + 0.5,
+        preview.productivity.target.y + 0.5,
+        4,
+      );
+      const ctx = this.ctx;
+      ctx.save();
+      ctx.strokeStyle = 'rgba(117,189,209,.92)';
+      ctx.lineWidth = Math.max(1.5, 2.2 * this.camera.zoom);
+      ctx.setLineDash([3 * this.camera.zoom, 5 * this.camera.zoom]);
+      ctx.beginPath();
+      ctx.moveTo(from.x, from.y);
+      ctx.lineTo(to.x, to.y);
+      ctx.stroke();
+      ctx.restore();
+    }
   }
 
   drawTrackedRoute(model) {
@@ -639,6 +660,25 @@ export class Renderer {
     ctx.beginPath();
     carrier.path.forEach((point, index) => {
       const projected = this.camera.project(point.x + 0.5, point.y + 0.5, 2);
+      if (index) ctx.lineTo(projected.x, projected.y);
+      else ctx.moveTo(projected.x, projected.y);
+    });
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  drawSelectedProductivityRoute(model) {
+    const building = model.buildings.find(row => row.id === this.selectedBuildingId);
+    const path = building?.productivity?.resourceWork?.path;
+    if (!path?.length || path.length < 2) return;
+    const ctx = this.ctx;
+    ctx.save();
+    ctx.strokeStyle = 'rgba(117,189,209,.9)';
+    ctx.lineWidth = Math.max(1.5, 2.4 * this.camera.zoom);
+    ctx.setLineDash([3 * this.camera.zoom, 5 * this.camera.zoom]);
+    ctx.beginPath();
+    path.forEach((point, index) => {
+      const projected = this.camera.project(point.x + 0.5, point.y + 0.5, 3);
       if (index) ctx.lineTo(projected.x, projected.y);
       else ctx.moveTo(projected.x, projected.y);
     });
@@ -1507,11 +1547,15 @@ export class Renderer {
     } else {
       const count = Math.max(1, carrier.peopleRows?.length ?? carrier.members ?? carrier.people ?? 1);
       const backpack = carrier.kind === 'backpack';
-      const shopping = ['toMarket', 'atMarket'].includes(carrier.state)
+      const shopping = ['toMarket', 'atMarket', 'toSupplier', 'atSupplier'].includes(carrier.state)
         || (carrier.state === 'toHome' && Boolean(carrier.goods));
-      const working = carrier.activity === 'working' || carrier.state === 'toWork'
+      const working = ['working', 'working-away'].includes(carrier.activity)
+        || ['toWork', 'atResource'].includes(carrier.state)
         || (carrier.state === 'home' && carrier.productionMultiplier > 0);
-      const moving = ['arriving', 'toMarket', 'toHome', 'toWork'].includes(carrier.state);
+      const moving = [
+        'arriving', 'toMarket', 'toSupplier', 'toHome', 'toWork',
+        'toResource', 'fromResource',
+      ].includes(carrier.state);
       const bodyColor = shopping ? '#b78349'
         : working ? '#4f746d'
           : carrier.state === 'building' ? '#9a6b43' : '#6a7660';

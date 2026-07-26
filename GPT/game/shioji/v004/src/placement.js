@@ -1,4 +1,4 @@
-import { BUILDING_SIZES } from './config.js?v=v004.35.0-market-rhythm';
+import { BUILDING_SIZES } from './config.js?v=v004.36.0-spatial-productivity';
 
 export const tileKey = (x, y) => `${x},${y}`;
 
@@ -6,6 +6,215 @@ function terrainAt(model, x, y) {
   return x >= 0 && y >= 0 && x < model.width && y < model.height
     ? model.terrain[y][x]?.kind ?? null
     : null;
+}
+
+const WALK_DIRS = Object.freeze([
+  [1, 0], [-1, 0], [0, 1], [0, -1],
+  [1, 1], [1, -1], [-1, 1], [-1, -1],
+]);
+const RESOURCE_FIELD_CACHE = new WeakMap();
+
+function walkTileCost(
+  model,
+  x,
+  y,
+  { allowOccupiedGoal = false, goal = null, roads, occupied, trails } = {},
+) {
+  const kind = terrainAt(model, x, y);
+  if (!kind || kind === 'water') return Infinity;
+  if (
+    (occupied ?? new Set(model.occupiedKeys)).has(tileKey(x, y))
+    && !(allowOccupiedGoal && goal?.x === x && goal?.y === y)
+  ) return Infinity;
+  if ((roads ?? new Set(model.roadKeys)).has(tileKey(x, y))) return 0.6;
+  if ((trails ?? new Set((model.trailRows ?? []).map(row => row.key))).has(tileKey(x, y))) return 0.85;
+  return kind === 'forest' ? 1.4 : 1;
+}
+
+function nearestWalkTarget(model, start, predicate, goal = null) {
+  const roads = new Set(model.roadKeys);
+  const occupied = new Set(model.occupiedKeys);
+  const trails = new Set((model.trailRows ?? []).map(row => row.key));
+  const costOptions = { roads, occupied, trails };
+  const indexOf = (x, y) => y * model.width + x;
+  const distances = new Float64Array(model.width * model.height);
+  distances.fill(Infinity);
+  if (!Number.isFinite(walkTileCost(model, start.x, start.y, costOptions))) return null;
+  distances[indexOf(start.x, start.y)] = 0;
+  const open = [{ ...start, cost: 0 }];
+  while (open.length) {
+    open.sort((left, right) => left.cost - right.cost || left.y - right.y || left.x - right.x);
+    const current = open.shift();
+    if (current.cost > distances[indexOf(current.x, current.y)] + 1e-9) continue;
+    if (predicate(current.x, current.y)) return current;
+    for (const [dx, dy] of WALK_DIRS) {
+      const x = current.x + dx;
+      const y = current.y + dy;
+      const cost = walkTileCost(model, x, y, {
+        ...costOptions, allowOccupiedGoal: true, goal,
+      });
+      if (!Number.isFinite(cost)) continue;
+      const next = current.cost + cost * (dx && dy ? 1.4 : 1);
+      const index = indexOf(x, y);
+      if (next >= distances[index] - 1e-9) continue;
+      distances[index] = next;
+      open.push({ x, y, cost: next });
+    }
+  }
+  return null;
+}
+
+export function estimateWalkCost(model, start, goal) {
+  return nearestWalkTarget(
+    model,
+    start,
+    (x, y) => x === goal.x && y === goal.y,
+    goal,
+  )?.cost ?? Infinity;
+}
+
+function resourceDistanceField(model, job) {
+  let cached = RESOURCE_FIELD_CACHE.get(model);
+  if (!cached) {
+    cached = {};
+    RESOURCE_FIELD_CACHE.set(model, cached);
+  }
+  if (cached[job]) return cached[job];
+  const roads = new Set(model.roadKeys);
+  const occupied = new Set(model.occupiedKeys);
+  const trails = new Set((model.trailRows ?? []).map(row => row.key));
+  const costOptions = { roads, occupied, trails };
+  const indexOf = (x, y) => y * model.width + x;
+  const distances = new Float64Array(model.width * model.height);
+  distances.fill(Infinity);
+  const targets = Array(model.width * model.height).fill(null);
+  const open = [];
+  const predicate = job === 'logger'
+    ? (x, y) => terrainAt(model, x, y) === 'forest'
+    : (x, y) => WALK_DIRS.slice(0, 4).some(
+      ([dx, dy]) => terrainAt(model, x + dx, y + dy) === 'water',
+    );
+  for (let y = 0; y < model.height; y += 1) {
+    for (let x = 0; x < model.width; x += 1) {
+      if (!predicate(x, y) || !Number.isFinite(walkTileCost(model, x, y, costOptions))) continue;
+      const index = indexOf(x, y);
+      distances[index] = 0;
+      targets[index] = { x, y };
+      open.push({ x, y, cost: 0 });
+    }
+  }
+  while (open.length) {
+    open.sort((left, right) => left.cost - right.cost || left.y - right.y || left.x - right.x);
+    const current = open.shift();
+    const currentIndex = indexOf(current.x, current.y);
+    if (current.cost > distances[currentIndex] + 1e-9) continue;
+    const currentTileCost = walkTileCost(
+      model,
+      current.x,
+      current.y,
+      costOptions,
+    );
+    for (const [dx, dy] of WALK_DIRS) {
+      const x = current.x + dx;
+      const y = current.y + dy;
+      if (!Number.isFinite(walkTileCost(model, x, y, costOptions))) continue;
+      const nextCost = current.cost + currentTileCost * (dx && dy ? 1.4 : 1);
+      const nextIndex = indexOf(x, y);
+      const currentTarget = targets[currentIndex];
+      const nextTarget = targets[nextIndex];
+      const betterTie = Math.abs(nextCost - distances[nextIndex]) <= 1e-9
+        && currentTarget
+        && (
+          !nextTarget
+          || currentTarget.y < nextTarget.y
+          || (currentTarget.y === nextTarget.y && currentTarget.x < nextTarget.x)
+        );
+      if (nextCost > distances[nextIndex] + 1e-9 || (
+        nextCost >= distances[nextIndex] - 1e-9 && !betterTie
+      )) continue;
+      distances[nextIndex] = nextCost;
+      targets[nextIndex] = currentTarget;
+      open.push({ x, y, cost: nextCost });
+    }
+  }
+  cached[job] = { distances, targets };
+  return cached[job];
+}
+
+export function resourcePlacementEstimate(model, job, entrance) {
+  if (!['logger', 'fisher'].includes(job)) return null;
+  const field = resourceDistanceField(model, job);
+  const index = entrance.y * model.width + entrance.x;
+  const target = field.targets[index] ?? null;
+  const oneWayTicks = field.distances[index] ?? Infinity;
+  if (!target || !Number.isFinite(oneWayTicks)) {
+    return {
+      kind: job === 'logger' ? 'forest' : 'shore',
+      target: null,
+      oneWayTicks: Infinity,
+      workTicks: 0,
+      efficiency: 0,
+      dailyOutput: 0,
+    };
+  }
+  const lostTicks = Number.isFinite(oneWayTicks)
+    ? Math.max(0, (oneWayTicks - 2) * 2)
+    : 30;
+  const efficiency = Math.max(0.1, 1 - lostTicks / 24);
+  const month = (Math.floor((Math.max(1, model.day ?? 1) - 1) / 30) % 12) + 1;
+  const baseOutput = job === 'logger' ? 12 : month >= 10 ? 15 / 4 : 15;
+  return {
+    kind: job === 'logger' ? 'forest' : 'shore',
+    target: target ? { ...target } : null,
+    oneWayTicks,
+    workTicks: Math.max(3, 30 - lostTicks),
+    efficiency,
+    dailyOutput: baseOutput * efficiency,
+  };
+}
+
+const INPUT_PRODUCERS = Object.freeze({
+  woodshop: Object.freeze(['logger']),
+  charburner: Object.freeze(['logger']),
+  saltworks: Object.freeze(['charburner']),
+  smelter: Object.freeze(['miner', 'charburner', 'collier']),
+  smith: Object.freeze(['smelter', 'charburner', 'collier']),
+  cartwright: Object.freeze(['logger', 'woodshop']),
+  wheat: Object.freeze(['fisher2']),
+  rapeseed: Object.freeze(['fisher2']),
+});
+
+export function supplierPlacementEstimate(model, job, entrance) {
+  const supplierJobs = INPUT_PRODUCERS[job];
+  if (!supplierJobs) return null;
+  const suppliers = model.households
+    .filter(household => supplierJobs.includes(household.job))
+    .map(household => {
+      const building = model.buildings.find(row => row.id === household.buildingId);
+      const distance = building?.entrance
+        ? estimateWalkCost(model, entrance, building.entrance)
+        : Infinity;
+      return { householdId: household.id, job: household.job, distance };
+    })
+    .filter(row => Number.isFinite(row.distance))
+    .sort((left, right) => left.distance - right.distance || left.householdId - right.householdId);
+  const market = model.buildings.find(building => building.roles?.includes('market'));
+  const marketDistance = market?.entrance
+    ? estimateWalkCost(model, entrance, market.entrance)
+    : Infinity;
+  const supplier = suppliers[0] ?? null;
+  return {
+    supplier,
+    marketDistance,
+    savedTicks: supplier && Number.isFinite(marketDistance)
+      ? Math.max(0, (marketDistance - supplier.distance) * 2 + 1)
+      : 0,
+    directEligible: Boolean(
+      supplier
+      && Number.isFinite(marketDistance)
+      && supplier.distance * 2 + 1 <= (marketDistance * 2 + 2) * 0.8,
+    ),
+  };
 }
 
 function nearTerrain(model, x, y, kind, radius = 2) {
@@ -93,9 +302,8 @@ function rejection(model, job, entrance) {
   }
   if (terrain === 'forest') return '森そのものではなく森の際へ配置してください';
   if (terrain === 'rock') return '岩場そのものではなく岩場の際へ配置してください';
-  const required = job === 'fisher' || job === 'fisher2' ? ['water', '漁師は水際にしか置けません']
-    : job === 'logger' ? ['forest', '木こりは森の際に置いてください']
-      : job === 'quarryman' ? ['rock', '採石場は岩場の際に置いてください']
+  const required = job === 'fisher2' ? ['water', '魚粉小屋は水際にしか置けません']
+    : job === 'quarryman' ? ['rock', '採石場は岩場の際に置いてください']
         : job === 'miner' ? ['ore', '鉱山は鉄鉱床の2区画以内に置いてください']
           : job === 'collier' ? ['coal', '炭鉱は炭層の2区画以内に置いてください']
             : null;
@@ -141,6 +349,8 @@ export function previewBuildingPlacement(model, job, point) {
     width: definition.width, height: definition.height,
     cells: footprintCells(site.x, site.y, definition.width, definition.height),
     ok: true, reason: '',
+    productivity: resourcePlacementEstimate(model, job, entrance)
+      ?? supplierPlacementEstimate(model, job, entrance),
   };
 }
 

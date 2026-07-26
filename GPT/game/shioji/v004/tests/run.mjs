@@ -34,6 +34,7 @@ import {
 import { movementVector, panCameraFromKeys, shouldIgnoreShortcut } from '../src/keyboard.js';
 import {
   analyzeRoadConnections, previewBuildingPlacement, previewRoadPlacement,
+  resourcePlacementEstimate, supplierPlacementEstimate,
 } from '../src/placement.js';
 import {
   WorldPresentation, interpolateWorldModel, transitionDuration,
@@ -2184,7 +2185,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.35.0-market-rhythm');
+  assert.equal(VERSION, 'v004.36.0-spatial-productivity');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -4091,6 +4092,84 @@ test('段13: 入口カーソルからエンジンと同じ実寸敷地を選び�
   });
   assert.equal(controller.operate({ type: 'remove_building', buildingId: placed.id }).ok, true);
   assert.equal(controller.readModel().buildings.some(building => building.id === placed.id), false);
+});
+
+test('空間生産性UI: 木こりと漁師は資源から遠くても配置でき、実働と予測日産を返す', () => {
+  const model = createEngineController({ seed: 11, mode: 'sandbox' }).readModel();
+  const nearKind = (point, kind, radius = 2) => {
+    for (let dy = -radius; dy <= radius; dy += 1) {
+      for (let dx = -radius; dx <= radius; dx += 1) {
+        if (model.terrain[point.y + dy]?.[point.x + dx]?.kind === kind) return true;
+      }
+    }
+    return false;
+  };
+  let logger = null;
+  let fisher = null;
+  for (let y = 0; y < model.height; y += 1) {
+    for (let x = 0; x < model.width; x += 1) {
+      const point = { x, y };
+      if (!logger && !nearKind(point, 'forest')) {
+        const preview = previewBuildingPlacement(model, 'logger', point);
+        if (preview.ok && preview.productivity?.target) logger = preview;
+      }
+      if (!fisher && !nearKind(point, 'water')) {
+        const preview = previewBuildingPlacement(model, 'fisher', point);
+        if (preview.ok && preview.productivity?.target) fisher = preview;
+      }
+    }
+  }
+  assert.ok(logger, '森の隣でない空き地にも木こりを置ける');
+  assert.ok(fisher, '水際でない空き地にも漁師を置ける');
+  for (const preview of [logger, fisher]) {
+    assert.ok(preview.productivity.oneWayTicks > 2);
+    assert.ok(preview.productivity.workTicks < 30);
+    assert.ok(preview.productivity.dailyOutput > 0);
+    assert.ok(preview.productivity.efficiency < 1);
+  }
+  assert.deepEqual(
+    resourcePlacementEstimate(model, 'logger', logger.entrance),
+    logger.productivity,
+  );
+});
+
+test('空間生産性UI: 生産者が近い加工配置は市場経由との差を具体的に予告する', () => {
+  const controller = createEngineController({ seed: 11, mode: 'test' });
+  controller.advanceTicks(2_400);
+  const model = controller.readModel();
+  const logger = model.households.find(household => household.job === 'logger');
+  assert.ok(logger);
+  const loggerBuilding = model.buildings.find(building => building.id === logger.buildingId);
+  const estimates = [
+    { x: loggerBuilding.entrance.x + 1, y: loggerBuilding.entrance.y },
+    { x: loggerBuilding.entrance.x - 1, y: loggerBuilding.entrance.y },
+    { x: loggerBuilding.entrance.x, y: loggerBuilding.entrance.y + 1 },
+    { x: loggerBuilding.entrance.x, y: loggerBuilding.entrance.y - 1 },
+  ].map(point => supplierPlacementEstimate(model, 'woodshop', point))
+    .filter(estimate => estimate?.supplier);
+  assert.ok(estimates.length > 0);
+  assert.ok(estimates.every(estimate => Number.isFinite(estimate.supplier.distance)));
+});
+
+test('空間生産性UI: 建物・市場圏・島全体へ同じ30日実測を公開する', () => {
+  const controller = createEngineController({ seed: 11, mode: 'test' });
+  controller.advanceTicks(2_400);
+  const model = controller.readModel();
+  const productive = model.households.filter(household => household.productivity.ideal > 0);
+  assert.ok(productive.length > 0);
+  assert.ok(productive.some(household => household.productivity.days > 0));
+  assert.ok(model.productivity.ideal > 0);
+  assert.ok(Number.isFinite(model.productivity.efficiency));
+  assert.equal(model.marketProductivity.radiusTicks, 14);
+  assert.ok(model.buildings.some(building => building.productivity?.ideal > 0));
+  const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const css = fs.readFileSync(new URL('../style.css', import.meta.url), 'utf8');
+  for (const id of [
+    'island-productivity', 'island-productivity-rate', 'island-productivity-output',
+    'island-productivity-direct', 'productivity-chart',
+  ]) assert.match(html, new RegExp(`id="${id}"`));
+  assert.match(css, /\.productivity-card/);
+  assert.match(css, /\.market-productivity/);
 });
 
 test('段14: 道路プレビュー・操作journal・市場接続色と警告座標を保持する', () => {

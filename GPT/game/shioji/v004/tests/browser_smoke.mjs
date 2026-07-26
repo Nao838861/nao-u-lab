@@ -355,7 +355,7 @@ async function checkTutorialGoalHandoff(width = 1000, height = 760, mobile = fal
   assert.match(loggerObjective.speech, /今度は.*木こりを建てましょう/s);
   assert.equal(loggerObjective.objectiveHidden, false);
   assert.match(loggerObjective.memoChapter, /第一章/);
-  assert.equal(loggerObjective.memoTitle, '森と道の両方に接する場所へ木こりを建てる');
+  assert.match(loggerObjective.memoTitle, /配置予測の日産が高い森近く/);
   assert.equal(loggerObjective.action, '木こりを選ぶ');
   if (switching.pending) {
     assert.equal(loggerObjective.secretaryEntering, true, JSON.stringify(loggerObjective));
@@ -1048,7 +1048,7 @@ async function checkSeasonalPlots(width, height, mobile) {
       ))),
     };
   })()`);
-  assert.equal(autumn.version, 'v004.35.0-market-rhythm', JSON.stringify(autumn));
+  assert.equal(autumn.version, 'v004.36.0-spatial-productivity', JSON.stringify(autumn));
   assert.equal(autumn.season, '秋', JSON.stringify(autumn));
   assert.ok(autumn.plots.some(type => ['wheat', 'veg'].includes(type)), JSON.stringify(autumn));
   assert.ok(autumn.plots.some(type => type === 'shepherd'), JSON.stringify(autumn));
@@ -1193,8 +1193,8 @@ async function checkPeopleVisuals(width, height, mobile) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.35.0-market-rhythm');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.35.0-market-rhythm');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.36.0-spatial-productivity');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.36.0-spatial-productivity');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -1982,6 +1982,87 @@ async function checkViewport(width, height, mobile) {
   await page.close();
 }
 
+async function checkSpatialProductivity(width = 1440, height = 900, mobile = false) {
+  const page = await newPage(width, height, mobile, GAME);
+  const building = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.setSpeed(0);
+    game.advanceTicks(Math.max(0, 240 * 30 - game.model.tick), { animate: false });
+    const household = game.model.households.find(row =>
+      row.productivity?.resourceWork && row.productivity.days > 0);
+    if (!household) return {
+      missing: true,
+      day: game.model.day,
+      households: game.model.households.map(row => ({
+        job: row.job,
+        days: row.productivity?.days,
+        resource: Boolean(row.productivity?.resourceWork),
+      })),
+    };
+    game.selectBuilding(game.model.buildings.find(row => row.id === household.buildingId));
+    game.openSheet('building-sheet');
+    const sheet = document.querySelector('#building-sheet');
+    const rect = sheet.getBoundingClientRect();
+    return {
+      version: game.version,
+      householdId: household.id,
+      efficiency: household.productivity.efficiency,
+      resourceEfficiency: household.productivity.resourceWork.efficiency,
+      selectedBuildingId: game.selectedBuildingId,
+      text: sheet.textContent,
+      withinViewport: rect.left >= 0 && rect.right <= innerWidth
+        && rect.top >= 0 && rect.bottom <= innerHeight,
+      routeVisible: household.productivity.resourceWork.path.length > 1,
+    };
+  })()`);
+  assert.ok(building && !building.missing,
+    `資源職の30日実測を建物画面へ表示できる: ${JSON.stringify(building)}`);
+  assert.equal(building.version, 'v004.36.0-spatial-productivity');
+  assert.ok(Number.isFinite(building.efficiency), JSON.stringify(building));
+  assert.ok(Number.isFinite(building.resourceEfficiency), JSON.stringify(building));
+  assert.equal(building.withinViewport, true, JSON.stringify(building));
+  assert.equal(building.routeVisible, true, JSON.stringify(building));
+  assert.match(building.text, /30日平均の日産/);
+  assert.match(building.text, /生産性/);
+  assert.match(building.text, /まで片道/);
+  await page.screenshot(`/tmp/shioji_v004_spatial_building_${mobile ? 'mobile' : 'desktop'}.png`);
+
+  const island = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.openSheet('island-sheet');
+    const sheet = document.querySelector('#island-sheet');
+    const rect = sheet.getBoundingClientRect();
+    const chart = document.querySelector('#productivity-chart');
+    return {
+      text: document.querySelector('#island-productivity').textContent,
+      rate: document.querySelector('#island-productivity-rate').textContent,
+      chartDrawn: chart.childElementCount > 0,
+      withinViewport: rect.left >= 0 && rect.right <= innerWidth
+        && rect.top >= 0 && rect.bottom <= innerHeight,
+      horizontalOverflow: document.documentElement.scrollWidth > innerWidth,
+    };
+  })()`);
+  assert.match(island.text, /島の生産性/);
+  assert.match(island.text, /近隣直接取引/);
+  assert.match(island.rate, /%/);
+  assert.equal(island.chartDrawn, true, JSON.stringify(island));
+  assert.equal(island.withinViewport, true, JSON.stringify(island));
+  assert.equal(island.horizontalOverflow, false, JSON.stringify(island));
+  await page.screenshot(`/tmp/shioji_v004_spatial_island_${mobile ? 'mobile' : 'desktop'}.png`);
+
+  const market = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    const selected = game.model.buildings.find(row => row.roles.includes('market'));
+    game.selectBuilding(selected);
+    game.openSheet('building-sheet');
+    return document.querySelector('#building-sheet').textContent;
+  })()`);
+  assert.match(market, /市場圏14刻/);
+  assert.match(market, /近隣直接取引/);
+  assert.deepEqual(page.errors, []);
+  await page.close();
+}
+
 async function checkSaveDeliveryUi(width = 1440, height = 900, mobile = false) {
   const page = await newPage(width, height, mobile, GAME);
   await page.evaluate("localStorage.removeItem('shioji-v004-autosave')");
@@ -2128,7 +2209,7 @@ async function checkMarketRhythmUi(width = 1440, height = 900, mobile = false) {
       hidden: sheet.hidden,
     };
   })()`);
-  assert.equal(result.version, 'v004.35.0-market-rhythm', JSON.stringify(result));
+  assert.equal(result.version, 'v004.36.0-spatial-productivity', JSON.stringify(result));
   assert.equal(result.hidden, false, JSON.stringify(result));
   assert.match(result.label, /出荷をまとめ中 1\/2日/, JSON.stringify(result));
   assert.match(result.detail, /食料切れと生産停止は待ちません/, JSON.stringify(result));
@@ -2181,6 +2262,10 @@ if (process.argv.includes('--company-pointer-only')) {
   await checkMarketRhythmUi(1440, 900, false);
   await checkMarketRhythmUi(390, 844, true);
   console.log('CHARTER ISLE v004 market rhythm smoke: PASS');
+} else if (process.argv.includes('--spatial-productivity-only')) {
+  await checkSpatialProductivity(1440, 900, false);
+  await checkSpatialProductivity(390, 844, true);
+  console.log('CHARTER ISLE v004 spatial productivity smoke: PASS');
 } else if (process.argv.includes('--viewport-only')) {
   await checkViewport(1440, 900, false);
   await checkViewport(390, 844, true);

@@ -28,6 +28,7 @@ import {
   createCompanyState,
   economicMaterialSnapshot,
   fillSettlementZones,
+  finalizeHouseholdProductionDay,
   fundSettlementZone,
   householdClass,
   householdEat,
@@ -35,6 +36,7 @@ import {
   householdHaul,
   householdTransportPlan,
   householdMult,
+  householdProductionSummary,
   initializeNaturalResources,
   isNeedyHousehold,
   jobSelectionWeights,
@@ -63,6 +65,7 @@ import {
   runPrimaryProductionDay,
   runPopulationDynamicsPhase,
   runWheatHarvest,
+  resourceWorkEfficiency,
   sellAtMarket,
   sellOffers,
   setCompanyStockTarget,
@@ -122,11 +125,13 @@ import {
 } from "../src/physical.js";
 import {
   HOUSEHOLD_DEPARTURE_WINDOW,
+  beginDirectSupplyTrip,
   beginMarketTrip,
   createWorld,
   decideHouseholdTrips,
   ensureCompanyLogisticsSites,
   ensureHouseholdInputSites,
+  findDirectSupplier,
   householdDepartureTime,
   stepMarketTrip,
 } from "../src/world.js";
@@ -991,6 +996,131 @@ test("段14: 木こりは択伐し不足時だけ皆伐して禿山を作る", (
   assert.equal(economy.natural.wood["2,2"], 0);
   assert.equal(physical.terrain[2][2].kind, "bald");
   assert.match(economy.events.at(-1)[1], /森が禿げた/);
+});
+
+test("空間生産性: 木こりは遠い森ほど実働と日産が落ち、道で回復する", () => {
+  const makeLogger = ({ forestX, road = false }) => {
+    const terrain = Array.from({ length: 3 }, () => (
+      Array.from({ length: 15 }, () => ({ kind: "grass", variant: 0 }))
+    ));
+    terrain[1][forestX].kind = "forest";
+    const physical = createPhysicalState({ width: 15, height: 3, terrain });
+    if (road) addRoadLine(physical, { x: 1, y: 1 }, { x: forestX, y: 1 });
+    const economy = createEconomicState();
+    initializeNaturalResources(economy, physical);
+    const household = createHousehold(economy, { job: "logger", x: 1, y: 1 });
+    producePrimaryTick(economy, physical, household, { day: 61, fraction: 1 });
+    return { household, economy };
+  };
+  const close = makeLogger({ forestX: 2 });
+  const far = makeLogger({ forestX: 12 });
+  const pavedRoute = makeLogger({ forestX: 12, road: true });
+  assert.equal(close.household.resourceWork.efficiency, 1);
+  assert.ok(far.household.resourceWork.efficiency < close.household.resourceWork.efficiency);
+  assert.ok(pavedRoute.household.resourceWork.efficiency > far.household.resourceWork.efficiency);
+  assert.ok(close.household.pantry.log > pavedRoute.household.pantry.log);
+  assert.ok(pavedRoute.household.pantry.log > far.household.pantry.log);
+  assert.equal(
+    far.household.resourceWork.efficiency,
+    resourceWorkEfficiency(far.household.resourceWork.oneWayTicks),
+  );
+
+  const noWaterPhysical = createPhysicalState({
+    width: 5,
+    height: 5,
+    terrain: Array.from({ length: 5 }, () => (
+      Array.from({ length: 5 }, () => ({ kind: "grass", variant: 0 }))
+    )),
+  });
+  const noWaterEconomy = createEconomicState();
+  initializeNaturalResources(noWaterEconomy, noWaterPhysical);
+  const strandedFisher = createHousehold(
+    noWaterEconomy,
+    { job: "fisher", x: 2, y: 2 },
+  );
+  producePrimaryTick(
+    noWaterEconomy,
+    noWaterPhysical,
+    strandedFisher,
+    { day: 61, fraction: 1 },
+  );
+  assert.equal(strandedFisher.pantry.fish, 0, "漁場そのものが無い時は10%床で漁獲しない");
+  assert.equal(strandedFisher.resourceWork.efficiency, 0);
+});
+
+test("空間生産性: 30日実測は建物の日産・理想日産・距離効率を同じ根拠から返す", () => {
+  const terrain = Array.from({ length: 3 }, () => (
+    Array.from({ length: 8 }, () => ({ kind: "grass", variant: 0 }))
+  ));
+  terrain[1][5].kind = "forest";
+  const physical = createPhysicalState({ width: 8, height: 3, terrain });
+  const economy = createEconomicState();
+  initializeNaturalResources(economy, physical);
+  const logger = createHousehold(economy, { job: "logger", x: 1, y: 1 });
+  producePrimaryTick(economy, physical, logger, { day: 61, fraction: 1 });
+  finalizeHouseholdProductionDay(economy, { day: 61 });
+  const summary = householdProductionSummary(economy, logger, { day: 61 });
+  assert.equal(summary.days, 1);
+  assert.ok(summary.actual > 0 && summary.actual < summary.ideal);
+  assert.deepEqual(
+    logger.productionHistory[0].ideal,
+    summary.idealByGoods,
+    "実績と同じ日の理想値を履歴へ固定する",
+  );
+  assert.equal(summary.resourceWork.efficiency, logger.resourceWork.efficiency);
+});
+
+test("空間生産性: 工房は十分近い木こりへ直接買付し市場往復時間と貨幣を保存する", () => {
+  const physical = createEconomicTestPhysical(32, 12);
+  const economy = createEconomicState();
+  const buyer = createHousehold(economy, { job: "woodshop", x: 5, y: 3 });
+  const seller = createHousehold(economy, { job: "logger", x: 7, y: 3 });
+  const buyerBuilding = addEconomicTestBuilding(physical, "woodshop", 2, 2, 5, 3, buyer.id);
+  const sellerBuilding = addEconomicTestBuilding(physical, "logger", 8, 2, 7, 3, seller.id);
+  buyer.buildingId = buyerBuilding.id;
+  seller.buildingId = sellerBuilding.id;
+  const market = addBuilding(physical, "market", 24, 2, {
+    definitions: ECONOMIC_BUILDINGS,
+    entrance: { x: 23, y: 4 },
+    requireRoad: false,
+    fixed: true,
+    role: "market",
+    roles: ["market"],
+  }).building;
+  economy.market = { ...market.entrance };
+  seller.pantry.log = 30;
+  seller.lv = 1;
+  buyer.purse = 100;
+  const beforeMoney = buyer.purse + seller.purse;
+  const [wanted, ceiling] = buyTargets(economy, buyer, { day: 61, physical }).log;
+  const offer = findDirectSupplier(
+    economy,
+    physical,
+    buyer,
+    { goods: "log", wanted, ceiling, day: 61 },
+  );
+  assert.ok(offer, JSON.stringify({
+    wanted,
+    ceiling,
+    sellerOffers: sellOffers(economy, seller, { capacityLimit: Infinity }),
+    sellerCost: productionCost(economy, physical, seller, "log", { day: 61 }),
+    directPath: pathLen(physical, buyerBuilding.entrance, sellerBuilding.entrance),
+    marketPath: pathLen(physical, buyerBuilding.entrance, market.entrance),
+  }));
+  assert.equal(offer.sellerId, seller.id);
+  assert.ok(offer.directTicks <= offer.marketTicks * P.DIRECT_TRADE_MAX_MARKET_RATIO);
+  assert.equal(beginDirectSupplyTrip(economy, physical, buyer, offer).started, true);
+  let ticks = 0;
+  while (buyer.state !== "home" && ticks < 100) {
+    stepMarketTrip(economy, physical, buyer, { day: 61, random: () => 0 });
+    ticks += 1;
+  }
+  assert.ok(ticks < 100);
+  assert.ok(productionInputAmount(physical, buyer, "log") > 0);
+  assert.ok(seller.purse > 30);
+  assert.ok(buyer.lastDirectTrade.savedTicks > 0);
+  assert.equal(economy.directTrades.length, 1);
+  assert.ok(Math.abs(buyer.purse + seller.purse - beforeMoney) < 1e-9);
 });
 
 test("段14: 森は5日ごとに成長し隣接する森から禿山へ再生する", () => {
@@ -3274,9 +3404,15 @@ test("段48: 操作APIは買上げ・注文受諾・道路操作をday/tick付�
 test("表示snapshot: 同じ地形revisionの再送を省き、変更後は完全地形を返す", () => {
   const world = buildBaseCity(11);
   const api = createEngineApi(world);
+  api.advanceDays(1);
   const first = api.snapshot({ scope: "view" });
   const revision = first.physical.travelRevision;
   assert.ok(Array.isArray(first.physical.terrain));
+  assert.equal(first.economy.households.every((household) => (
+    household.productionHistory === undefined
+    && household.productionToday === undefined
+    && household.productionSummary
+  )), true);
   assert.equal(
     api.snapshot({ scope: "view", terrainAfterRevision: revision }).physical.terrain,
     null,

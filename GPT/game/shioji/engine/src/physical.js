@@ -403,6 +403,54 @@ export function pathLen(physical, start, goal, mode = "walk") {
   return findTravelPath(physical, start, goal, mode)?.cost ?? Infinity;
 }
 
+export function findNearestTravelTarget(physical, start, predicate, mode = "walk") {
+  if (typeof predicate !== "function") throw new TypeError("travel target predicate must be a function");
+  if (!inside(physical, start?.x, start?.y)) return null;
+  const startCost = tileTravelCost(physical, start.x, start.y, mode);
+  if (!Number.isFinite(startCost)) return null;
+  const distances = new Float64Array(physical.width * physical.height);
+  distances.fill(Infinity);
+  const indexOf = (x, y) => y * physical.width + x;
+  distances[indexOf(start.x, start.y)] = 0;
+  const open = [{ x: start.x, y: start.y, cost: 0 }];
+  const came = {};
+
+  while (open.length > 0) {
+    open.sort((left, right) => left.cost - right.cost || left.y - right.y || left.x - right.x);
+    const current = open.shift();
+    if (current.cost > distances[indexOf(current.x, current.y)] + 1e-9) continue;
+    if (predicate(current.x, current.y)) {
+      const path = [];
+      let cursor = keyOf(current.x, current.y);
+      while (cursor) {
+        const [x, y] = parseKey(cursor);
+        path.push({ x, y });
+        cursor = came[cursor];
+      }
+      return {
+        x: current.x,
+        y: current.y,
+        cost: current.cost,
+        path: path.reverse(),
+      };
+    }
+    for (const [dirX, dirY] of DIRS) {
+      const x = current.x + dirX;
+      const y = current.y + dirY;
+      const tileCost = tileTravelCost(physical, x, y, mode);
+      if (!Number.isFinite(tileCost)) continue;
+      const diagonal = dirX !== 0 && dirY !== 0;
+      const nextCost = current.cost + tileCost * (diagonal ? 1.4 : 1);
+      const nextIndex = indexOf(x, y);
+      if (nextCost >= distances[nextIndex] - 1e-9) continue;
+      distances[nextIndex] = nextCost;
+      came[keyOf(x, y)] = keyOf(current.x, current.y);
+      open.push({ x, y, cost: nextCost });
+    }
+  }
+  return null;
+}
+
 export function connectedRoads(roadsOrPhysical, origin) {
   const roads = roadsOf(roadsOrPhysical);
   const originKey = keyOf(origin.x, origin.y);

@@ -1,43 +1,43 @@
-import { IsometricCamera } from './camera.js?v=v004.35.0-market-rhythm';
-import { SimulationClock } from './clock.js?v=v004.35.0-market-rhythm';
+import { IsometricCamera } from './camera.js?v=v004.36.0-spatial-productivity';
+import { SimulationClock } from './clock.js?v=v004.36.0-spatial-productivity';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.35.0-market-rhythm';
+} from './config.js?v=v004.36.0-spatial-productivity';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.35.0-market-rhythm';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.35.0-market-rhythm';
-import { developmentMapView } from './development_map.js?v=v004.35.0-market-rhythm';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.35.0-market-rhythm';
-import { formatElenaSpeech } from './elena_text.js?v=v004.35.0-market-rhythm';
+} from './display_batch.js?v=v004.36.0-spatial-productivity';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.36.0-spatial-productivity';
+import { developmentMapView } from './development_map.js?v=v004.36.0-spatial-productivity';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.36.0-spatial-productivity';
+import { formatElenaSpeech } from './elena_text.js?v=v004.36.0-spatial-productivity';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.35.0-market-rhythm';
+} from './food_readability.js?v=v004.36.0-spatial-productivity';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.35.0-market-rhythm';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.35.0-market-rhythm';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.35.0-market-rhythm';
-import { WorldPresentation } from './presentation.js?v=v004.35.0-market-rhythm';
-import { Renderer } from './renderer.js?v=v004.35.0-market-rhythm';
+} from './keyboard.js?v=v004.36.0-spatial-productivity';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.36.0-spatial-productivity';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.36.0-spatial-productivity';
+import { WorldPresentation } from './presentation.js?v=v004.36.0-spatial-productivity';
+import { Renderer } from './renderer.js?v=v004.36.0-spatial-productivity';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.35.0-market-rhythm';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.35.0-market-rhythm';
+} from './save_game.js?v=v004.36.0-spatial-productivity';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.36.0-spatial-productivity';
 import {
   GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRows,
-} from './supply_demand.js?v=v004.35.0-market-rhythm';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.35.0-market-rhythm';
+} from './supply_demand.js?v=v004.36.0-spatial-productivity';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.36.0-spatial-productivity';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.35.0-market-rhythm';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.35.0-market-rhythm';
+} from './ui_guidance.js?v=v004.36.0-spatial-productivity';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.36.0-spatial-productivity';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -201,6 +201,10 @@ function recordEconomyHistory(currentModel) {
     foodRequired: foodForecast.required,
     foodRunwayDays: foodSummary.runwayDays,
     population: currentModel.population,
+    productivity: Number.isFinite(currentModel.productivity?.efficiency)
+      ? currentModel.productivity.efficiency * 100 : null,
+    productivityActual: currentModel.productivity?.actual ?? 0,
+    productivityIdeal: currentModel.productivity?.ideal ?? 0,
     cash: toDenari(currentModel.companyMoney),
     net: toDenari(
       currentModel.companyDailyLedger?.find(entry => entry.day === currentModel.day)?.net
@@ -334,6 +338,7 @@ recordEconomyHistory(model);
 
 const HOUSEHOLD_STATE_LABELS = Object.freeze({
   home: '在宅', toMarket: '市場へ移動中', atMarket: '市場で取引中',
+  toSupplier: '近所へ買付中', atSupplier: '生産者から買付中',
   fromMarket: '帰宅中', toHome: '帰宅中', working: '仕事中', toWork: '仕事場へ移動中',
   fromWork: '仕事から帰宅中',
 });
@@ -634,7 +639,17 @@ function updateToolPreview(tile, start = toolDragStart) {
   } else if (activeTool === 'remove-building') preview = removalPreview(tile);
   else preview = roadRemovalPreview(tile);
   renderer.operationPreview = preview;
-  setToolHint(preview.ok ? activeTool === 'road' ? 'この線へ道路を敷設します' : 'この位置で確定できます'
+  const productivityHint = preview.productivity?.kind
+    ? preview.productivity.target
+      ? `資源まで片道${preview.productivity.oneWayTicks.toFixed(1)}刻・実働${Math.round(preview.productivity.workTicks)}/30刻・予測日産${preview.productivity.dailyOutput.toFixed(1)}荷（${Math.round(preview.productivity.efficiency * 100)}%）`
+      : '資源へ歩いて行けないため、予測日産はほぼ0です'
+    : preview.productivity?.supplier
+      ? preview.productivity.directEligible
+        ? `近所の${JOB_LABELS[preview.productivity.supplier.job] ?? preview.productivity.supplier.job}が仕入候補・市場往復より約${preview.productivity.savedTicks.toFixed(1)}刻短縮`
+        : `最寄り原料元まで片道${preview.productivity.supplier.distance.toFixed(1)}刻（市場経由の方が近い配置です）`
+      : preview.productivity ? '近所に原料の生産者はいません。市場から調達します' : null;
+  setToolHint(preview.ok
+    ? productivityHint ?? (activeTool === 'road' ? 'この線へ道路を敷設します' : 'この位置で確定できます')
     : preview.reason, preview.ok ? 'good' : 'bad');
   return preview;
 }
@@ -1413,6 +1428,17 @@ function renderBuildingSheet() {
     const marketRhythmMarkup = marketRhythm ? `
       <p class="sheet-note"><b>🧺 ${escapeHtml(marketRhythm.label)}</b><br>
         ${escapeHtml(marketRhythm.detail)}</p>` : '';
+    const productivity = household.productivity;
+    const productivityPercent = Number.isFinite(productivity?.efficiency)
+      ? Math.round(productivity.efficiency * 100) : null;
+    const productivityMarkup = productivity?.ideal > 1e-9 ? `
+      <div class="productivity-card" data-tone="${productivityPercent !== null && productivityPercent >= 80 ? 'good' : productivityPercent !== null && productivityPercent >= 50 ? 'warning' : 'danger'}">
+        <span><small>30日平均の日産</small><b>${productivity.days > 0 ? `${formatQuantity(productivity.actual)} / ${formatQuantity(productivity.ideal)}荷` : '観測中'}</b></span>
+        <span><small>生産性</small><b>${productivityPercent === null ? '—' : `${productivityPercent}%`}</b></span>
+      </div>
+      ${productivity.resourceWork ? `<p class="productivity-cause"><b>${productivity.resourceWork.kind === 'forest' ? '森' : '漁場'}まで片道 ${Number.isFinite(productivity.resourceWork.oneWayTicks) ? productivity.resourceWork.oneWayTicks.toFixed(1) : '到達不能'}刻</b>・実働 ${Math.round(productivity.resourceWork.workTicks)}/30刻・距離効率 ${Math.round(productivity.resourceWork.efficiency * 100)}%</p>` : ''}
+      ${productivity.lastDirectTrade ? `<p class="productivity-cause"><b>${goodsIconMarkup(productivity.lastDirectTrade.goods)}近隣から直接 ${formatQuantity(productivity.lastDirectTrade.qty)}荷</b>・市場往復より ${formatQuantity(productivity.lastDirectTrade.savedTicks)}刻短縮</p>` : ''}
+      <small class="productivity-level-note">配置はLv条件へ直接加点しません。増えた生産・収入・供給が、今の暮らしと次のLvを支えます。</small>` : '';
     const missingGoodsMarkup = growth?.missingGoodsForCurrent?.map(goodsIconMarkup).join('') ?? '';
     const headline = household.hungerRun >= 10 || foodDays < 3
       ? `⚠ ${delivery?.label ?? `食料があと${Math.max(0, Math.floor(foodDays))}日分`}`
@@ -1459,6 +1485,7 @@ function renderBuildingSheet() {
       <section class="job-now">
         <h3>仕事のいま</h3>
         <p><b>${escapeHtml(HOUSEHOLD_STATE_LABELS[household.state] ?? household.state)}</b>・働きやすさ ${Math.round(household.productionMultiplier * 100)}%</p>
+        ${productivityMarkup}
         ${marketRhythmMarkup}
         <p class="goods-output-list">${outputNow}</p>
         ${building.type === 'cartwright' ? `<p>販売待ちの荷車 ${building.cartStock.length}台${building.cartWork ? `・製作 ${Math.floor(building.cartWork.progress)}/${building.cartWork.required}日` : ''}</p>` : ''}
@@ -1466,8 +1493,16 @@ function renderBuildingSheet() {
       </section>`;
   } else {
     const headline = building.vacant ? '⚠ 働く家族がいません' : '順調';
+    const marketProductivity = building.marketProductivity;
+    const marketMarkup = marketProductivity ? `
+      <div class="market-productivity">
+        <b>市場圏14刻：${marketProductivity.buildings}/${marketProductivity.totalBuildings}棟</b>
+        <span>平均生産性 ${Number.isFinite(marketProductivity.efficiency) ? `${Math.round(marketProductivity.efficiency * 100)}%` : '観測中'}・実生産 ${formatQuantity(marketProductivity.actual)} / 理想 ${formatQuantity(marketProductivity.ideal)}荷/日</span>
+        <span>近隣直接取引 ${marketProductivity.directTrade.trades}回・${formatQuantity(marketProductivity.directTrade.quantity)}荷・移動 ${formatQuantity(marketProductivity.directTrade.savedTicks)}刻短縮</span>
+      </div>` : '';
     $('#building-summary').innerHTML = `
-      <div class="building-health" data-tone="${building.vacant ? 'warning' : 'good'}">${headline}</div>`;
+      <div class="building-health" data-tone="${building.vacant ? 'warning' : 'good'}">${headline}</div>
+      ${marketMarkup}`;
   }
 
   const shelfPanel = $('#building-shelves');
@@ -1588,6 +1623,10 @@ function renderEconomyCharts() {
       { value: row => row.cash, label: '資金', color: '#e5b65b' },
       { value: () => 0, label: '0', color: '#796e5a', reference: true },
     ]);
+    $('#productivity-chart').innerHTML = chartMarkup(rows, [
+      { value: row => row.productivity, label: '生産性', color: '#75bdd1' },
+      { value: () => 100, label: '理想', color: '#696e67', reference: true },
+    ], { includeZero: false });
     const pricePanel = $('#price-chart-panel');
     setHiddenIfChanged(pricePanel, !selectedSupplyGoods);
     if (selectedSupplyGoods) {
@@ -1645,6 +1684,28 @@ function renderIslandFinance() {
       ? '足りています' : `← 不足 ${formatNumber(Math.ceil(forecast.shortage))}荷`);
     $('#winter-forecast').dataset.tone = forecast.sufficient ? 'steady' : 'danger';
     uiMetrics.domWrites += 1;
+  });
+  const productivity = model.productivity;
+  const currentPercent = Number.isFinite(productivity?.efficiency)
+    ? productivity.efficiency * 100 : null;
+  const previous = [...economyHistory].reverse().find(
+    row => row.day <= model.day - 30 && Number.isFinite(row.productivity),
+  );
+  const delta = currentPercent !== null && previous
+    ? currentPercent - previous.productivity : null;
+  renderIfChanged('island-productivity', JSON.stringify({
+    productivity, currentPercent, delta,
+  }), () => {
+    setTextIfChanged('#island-productivity-rate', currentPercent === null
+      ? '観測中' : `${Math.round(currentPercent)}%`);
+    setTextIfChanged('#island-productivity-output',
+      `${formatQuantity(productivity?.actual ?? 0)} / ${formatQuantity(productivity?.ideal ?? 0)}荷/日`);
+    setTextIfChanged('#island-productivity-loss',
+      `資源への遠さで約${formatQuantity(productivity?.resourceDistanceLoss ?? 0)}荷/日を失っています`);
+    setTextIfChanged('#island-productivity-direct',
+      `近隣直接取引 ${productivity?.directTrade?.trades ?? 0}回・${formatQuantity(productivity?.directTrade?.quantity ?? 0)}荷・${formatQuantity(productivity?.directTrade?.savedTicks ?? 0)}刻短縮`);
+    setTextIfChanged('#island-productivity-delta', delta === null
+      ? '30日差：観測中' : `30日差：${delta >= 0 ? '+' : ''}${delta.toFixed(1)}pt`);
   });
 }
 
