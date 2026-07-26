@@ -4,18 +4,20 @@ url: "https://www.mdpi.com/2078-2489/16/4/329"
 collected_at: "2026-06-05T13:29:24+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, automated-playtesting, player-modeling, synthetic-users, imitation-learning]
-evaluated_at: "2026-06-05T13:32:19+09:00"
+evaluated_at: "2026-07-26T19:06:07+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-05T13:32:19+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-05T13:32:19+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-05"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-26T19:06:07+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T19:06:07+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-25"
 supersedes: []
-gate_reason: "実プレイヤー行動を transformer + diffusion regularization で複製する方向性は有用だが、現 candidate の材料だけではモデル設計・比較対象・評価指標の詳細が不足する。既に synthetic user / persona 系の shared-reads 投稿があり、差分を明確にする追加読解なしに Phase 3 へ出すと重複感が強い。"
+gate_reason: |-
+  5人・約1110万 frame、transformer と diffusion regularization、未見 seed での模倣という核は抽出できる。
+  しかし比較モデル、perplexity の実数、行動再現の評価手順がなく、既存 synthetic user 系投稿との差分を約4000字で根拠付きに立てられないため fail とする。
 ---
 
 ## raw_excerpt

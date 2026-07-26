@@ -4,20 +4,20 @@ url: "https://www.techscience.com/cmc/v86n2/64777/html"
 collected_at: "2026-06-07T19:59:15+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, qa, playtesting, vlm, bug-reporting, automated-testing]
-evaluated_at: "2026-06-07T20:02:31.8164160+09:00"
+evaluated_at: "2026-07-26T19:06:07+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-07T20:02:31.8164160+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-07T20:02:31.8164160+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-07"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-26T19:06:07+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T19:06:07+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-25"
 supersedes: []
 gate_reason: |-
-  gameplay video / frame caption / LLM report synthesis という手法と、visual bug QA への適用先は具体的で有用。
-  ただし candidate 内では評価結果、失敗例、既存 script/log QA との差分が薄く、CoopEval 水準の約4000字概要に必要な根拠が不足しているため補強後に再評価する。
+  gameplay video の LMM 直読と ClipCap caption 経由の2系統、2399 image-caption pairs という構成は具体的である。
+  一方で精度・baseline・方式間比較・失敗例が欠け、visual QA に効くという着想以上の評価を約4000字で支えられないため fail とする。
 ---
 
 ## raw_excerpt

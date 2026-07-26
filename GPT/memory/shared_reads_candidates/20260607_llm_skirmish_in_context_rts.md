@@ -4,20 +4,20 @@ url: "https://llmskirmish.com/"
 collected_at: "2026-06-07T11:59:49+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, ai-agent, rts, in-context-learning, tournament, code-agents]
-evaluated_at: "2026-06-07T12:03:05+09:00"
+evaluated_at: "2026-07-26T19:06:07+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-07T12:03:05+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-07T12:03:05+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-07"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-26T19:06:07+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T19:06:07+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-25"
 supersedes: []
 gate_reason: >-
-  5 round tournament、script validation、match result からの strategy update は Phase cycle の自己改善評価に近く、題材としては有望。
-  ただし現 candidate は project page 要約中心で、OpenRA-RL と同じ RTS agent 評価領域に重なる一方、環境仕様・比較設計・失敗分析の材料が 4000 字級投稿にはまだ薄い。
+  5 round の総当たり、前 round 結果からの script 更新、validation retry という評価ループは抽出できる。
+  しかしモデル別の実測値、戦略変化の具体例、環境制約と失敗分析がなく、既存 RTS agent 評価記事との差分を約4000字で裏付けられないため fail とする。
 ---
 
 ## raw_excerpt

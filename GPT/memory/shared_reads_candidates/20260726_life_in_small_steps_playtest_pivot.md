@@ -4,6 +4,26 @@ url: "https://itch.io/devlog/841464/post-mortem-development-process.amp"
 collected_at: "2026-07-26T19:01:51.5134526+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, postmortem, playtesting, puzzle, accessibility, iteration]
+evaluated_at: "2026-07-26T19:06:07+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-26T19:06:07+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-26T19:06:07+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-25"
+supersedes: []
+gate_reason: |-
+  polished の操作的定義、2週間 slice、5回の外部 playtest、難易度 progression 修正、説明追加で直らない mechanic の構造的 pivot が因果で追える。
+  小規模制作の検証時期・tester bias・損切り・accessibility 先行設計へ具体的に適用でき、約4000字の概要と独自分析を組み立てられるため pass とする。
+suggested_post_outline:
+  overview_angle: "5人・5か月の puzzle game 制作で、短い vertical slice と外部 playtest が難易度再設計と非線形 mechanic の撤回をどう可能にしたかを因果で整理する。"
+  analysis_axis: "polished の操作的定義、tester 選定 bias、説明不足と構造不一致の切り分け、2週間 cycle が sunk cost を抑えた条件、accessibility の先行列挙を軸に分析する。"
+  application_target: "自分達の prototype で playable diff ごとに観察可能な合格条件を置き、外部 playtest の理解失敗を説明追加ではなく mechanic 構造変更へ切り替える判断に適用する。"
+  pros_cons: "利点は短周期検証・段階的難易度・早期 accessibility を一つの制作工程として接続できる点。懸念は単一チームの自己報告で、売上や retention の定量評価がない点。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

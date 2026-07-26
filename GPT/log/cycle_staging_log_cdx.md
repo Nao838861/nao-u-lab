@@ -9,7 +9,88 @@
 - inbox: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0件。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 6
+pass:
+  - memory/shared_reads_candidates/20260726_life_in_small_steps_playtest_pivot.md
+fail:
+  - path: memory/shared_reads_candidates/20260605_synthetic_user_generation_games.md
+    reason: "比較モデル・評価実数・行動再現手順が不足し、既存 synthetic user 系との差分を根拠付きで展開できない"
+  - path: memory/shared_reads_candidates/20260607_game_qa_reporting_natural_language_captions.md
+    reason: "2系統の構成は具体的だが、精度・baseline・方式間比較・失敗例がない"
+  - path: memory/shared_reads_candidates/20260607_llm_skirmish_in_context_rts.md
+    reason: "大会設計は有用だが、モデル別実測・戦略変化・失敗分析が不足する"
+  - path: memory/shared_reads_candidates/20260607_mirrormoon_ep_true_scifi_postmortem.md
+    reason: "講演概要と着眼だけで、設計手順・検証・結果を抽出できない"
+postpone:
+  - path: memory/shared_reads_candidates/20260606_zero_shot_3d_map_llm_agents.md
+    reason: "raw Slack の同一 arXiv URL 実投稿済み。posted-source index 抽出漏れを横断照合で検出したため再投稿しない"
+stale_reviewed:
+  - handoff_id: cha-1edd3e1b5563ef7c
+    path: memory/shared_reads_candidates/20260605_synthetic_user_generation_games.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-25"
+  - handoff_id: cha-f87f624935eb40b3
+    path: memory/shared_reads_candidates/20260606_zero_shot_3d_map_llm_agents.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-25"
+  - handoff_id: cha-c999b1dfb3c4ae9e
+    path: memory/shared_reads_candidates/20260607_game_qa_reporting_natural_language_captions.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-25"
+  - handoff_id: cha-53b189a0d5c86b58
+    path: memory/shared_reads_candidates/20260607_llm_skirmish_in_context_rts.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-25"
+  - handoff_id: cha-b6a71aaa78c59d53
+    path: memory/shared_reads_candidates/20260607_mirrormoon_ep_true_scifi_postmortem.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-25"
+candidate_handoff_audit:
+  pending_before: 5
+  read_ids:
+    - cha-1edd3e1b5563ef7c
+    - cha-f87f624935eb40b3
+    - cha-c999b1dfb3c4ae9e
+    - cha-53b189a0d5c86b58
+    - cha-b6a71aaa78c59d53
+  resolved_ids:
+    - cha-1edd3e1b5563ef7c
+    - cha-f87f624935eb40b3
+    - cha-c999b1dfb3c4ae9e
+    - cha-53b189a0d5c86b58
+    - cha-b6a71aaa78c59d53
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  sidecars_rebuilt: true
+  sidecars_check: healthy
+  results:
+    continue: 6
+    review: 0
+    skip: 0
+  raw_slack_safety_net:
+    - path: memory/shared_reads_candidates/20260606_zero_shot_3d_map_llm_agents.md
+      result: "posted source found at shared-reads ts=1780708885.257199; candidate postponed"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
