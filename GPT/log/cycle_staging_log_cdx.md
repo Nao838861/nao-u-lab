@@ -139,7 +139,97 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、atom 参照 50 件を memory/atoms.jsonl と照合した。missing 0 件、Markdown link 行 0 件で broken link はなかった。代表語 probe は「記憶」「ゲーム設計」「敵パターン」を取得でき、source file の文字化けは認めなかった。「評価軸」は現行 index 本文に完全一致語がないため、欠損根拠には使っていない。"
+  - "memory/atoms.jsonl と per-file md / index.jsonl を監査し、各 2752 件、片側のみ 0、parse error 0、content conflict 0 を確認した。normalized-content duplicate は raw 40 群 80 行、canonical overlay で 40 行 fold 済み、recall-visible duplicate は 3 群 6 行だった。atom 本文は変更していない。"
+  - "memory/raw/ の 2026-06-26 より前に更新が止まった原文を監査し、95 files / 62979319 bytes（web_research 87、headless_eval 6、slack_archive 1、その他 1）を確認した。candidate や atom の evidence pointer を壊し得る一次資料なので、この cycle では移動・削除せず保持した。"
+  - "shared-reads candidate 1104 件の lifecycle を dry-run 監査し、現在状態 conflict 0、missing status 0 を確認した。title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再生成した。"
+  - "Slack inbox lifecycle を監査し、slack_directives pending 0、slack_broadcasts pending 0 を確認した。完了根拠のない handled 更新は行っていない。"
+  - "group handoff を先に limit 1 で確認したが actionable group 0 のため投入 0。その live lease を反映した stale triage 50 行から candidate handoff 5 件を cycle id 2026-07-26 09:43 で冪等 enqueue し、audit errors 0 を確認した。"
+issues:
+  - id: ISS-ATOM-TITLE-RETRIEVAL
+    description: "exact-content fold 後も recall-visible repeated title group が 15 群あり、そのうち 14 群は duplicate group 未付与である。title quality audit 621 行のうち retitle 推奨 387 行が残り、「■ 概要」など本文見出し由来の title が検索結果で内容を区別しにくくしている。"
+    severity: medium
+    evidence: "python tools/memory_health.py --json; memory/atoms/title_quality_audit.jsonl; memory/atoms/duplicate_clusters.jsonl"
+    source_file_status: "memory/MEMORY.md は UTF-8 明示読みで正常。atoms.jsonl / per-file md / index.jsonl は各 2752 件で content conflict 0。source file 破損ではない。"
+    display_or_tooling_status: "normalized-content fold は recall-visible duplicate を 3 群まで抑止するが、意味のない反復 title と未 group title は検索表示に残る。"
+    why_blocks_game_memory: "次のゲーム制作で敵パターン、評価、記憶運用などの手法を探す際、同じ見出し型 title が候補の識別を妨げ、開くべき事例と一般化ノウハウを選びにくくする。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-ATOM-TITLE-RETRIEVAL
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+candidate_lifecycle:
+  files: 1104
+  counts:
+    posted: 485
+    ready_to_post: 10
+    postponed: 316
+    failed: 277
+    needs_review: 15
+    skipped_unreviewed: 1
+  missing_stale_after: 4
+  overdue_open_total: 158
+stale_backlog:
+  overdue_open_total: 158
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-279befd57350fdc8
+    - cha-c8bd336640de0417
+    - cha-6880ed6ecfc0c363
+    - cha-f83577649fd79108
+    - cha-14b0d4c79eca16d1
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-279befd57350fdc8
+    path: memory/shared_reads_candidates/20260530_label_free_px_lets_play_videos.md
+    status: needs_review
+    stale_after: "2026-06-29"
+    priority_reason: "age_days=27; no open duplicate group; candidate lifecycle が needs_review のまま期限超過。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-c8bd336640de0417
+    path: memory/shared_reads_candidates/20260530_quest_of_aivengarde_llm_dialogue_player_experience.md
+    status: postponed
+    stale_after: "2026-06-29"
+    priority_reason: "age_days=27; no open duplicate group; 64 participants の mixed-methods 評価は NPC 対話設計へ移せるが、指標・variant 差・失敗例の根拠が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-6880ed6ecfc0c363
+    path: memory/shared_reads_candidates/20260531_multigen_editable_multiplayer_worlds.md
+    status: postponed
+    stale_after: "2026-06-30"
+    priority_reason: "age_days=26; no open duplicate group; editable multiplayer world の分解は有用だが、現メモは abstract 中心で評価設定と既存手法との差分が薄い。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-f83577649fd79108
+    path: memory/shared_reads_candidates/20260601_stratagem_game_self_play_reasoning.md
+    status: postponed
+    stale_after: "2026-07-01"
+    priority_reason: "age_days=25; no open duplicate group; self-play log を勝敗以外で読む観点は有用だが、ゲーム制作への転用には trajectory 選別方法の再確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-14b0d4c79eca16d1
+    path: memory/shared_reads_candidates/20260601_snapdragon_on_device_game_ai.md
+    status: needs_review
+    stale_after: "2026-07-02"
+    priority_reason: "age_days=24; no open duplicate group; lifecycle backfill 後も具体的な Phase 2 品質判定が未完了。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
