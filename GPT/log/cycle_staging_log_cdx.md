@@ -4,6 +4,10 @@
 
 ## Phase 1: 情報収集
 
+- pending: `slack_directives.jsonl` 0件 / `slack_broadcasts.jsonl` 0件。
+- `memory/shared_reads_candidates/20260726_tenshis_otome_jam_postmortem.md` — Otome Jam の複数チームで editor・CG・producer・writer・pixel artist を横断し、20人超の制作管理、layer 分離、担当者離脱時の代替制作を記録した postmortem。
+- duplicate preflight: `continue`（title / URL とも既存 sidecar に同一 work なし）。
+
 - pending directive / broadcast: なし。
 - 直前 cycle 開始（2026-07-26 07:43 JST）以降の `memory/raw/web_research/results.jsonl`、`memory/atoms.jsonl`、Slack raw に新規入力なし。
 - `memory/shared_reads_candidates/20260726_tight_maps_and_empty_space.md` — procedural map の低得点・empty space を、network の基礎を見せる導入用 learning space として読み替えた制作メモ。
