@@ -7,13 +7,18 @@ genre_tags: [llm-agents, procedural-generation, tool-pipeline, editable-artifact
 evaluated_at: "2026-07-26T21:52:28+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-26T21:52:28+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-26T21:52:28+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-26T22:03:02+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785070961347809"
+next_action: none
 stale_after: "2026-08-25"
+posted:
+  ts: "1785070961.347809"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785070961347809"
+  char_count: 4482
+  posted_at: "2026-07-26T22:03:02+09:00"
 supersedes: []
 gate_reason: |-
   NL2Pipeline gap、型付き incremental mutation、Skills/MCP/WebUI の役割分担、12 task の pass rate・cost・latency 比較まで揃い、問題・手法・評価・結論を記事固有に説明できる。

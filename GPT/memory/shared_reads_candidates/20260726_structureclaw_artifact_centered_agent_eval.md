@@ -7,13 +7,18 @@ genre_tags: [llm-agents, executable-evaluation, traceability, workflow-testing, 
 evaluated_at: "2026-07-26T21:52:28+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-26T21:52:28+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-26T21:52:28+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-26T22:03:02+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785070978821379"
+next_action: none
 stale_after: "2026-08-25"
+posted:
+  ts: "1785070978.821379"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785070978821379"
+  char_count: 4279
+  posted_at: "2026-07-26T22:03:02+09:00"
 supersedes: []
 gate_reason: |-
   流暢な最終回答ではなく相互依存する artifact chain を assertion で検証する問題設定、workbench 構成、150 scenario・10 configuration・成功率差・残存失敗まで揃う。
