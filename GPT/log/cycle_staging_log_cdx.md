@@ -108,7 +108,35 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785088125-4ce3009485
+    source_ts: "1785088125.950309"
+    title: "PRO-LONG — append-only observation ledger and programmatic memory"
+    reason: "score 14の最新未レビュー候補で、memory・harness・evaluation・agent・operation・game-designの6優先タグをすべて持つ。summary／grep／Python analysisの差を同一traceで測る観点が、現在のmemory階層と次のgame playtraceに判断差を作るか確認するため選定。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: defer
+  decision_reason: "採用閾値は満たすが、現サイクルには同一seed／action budgetでA=summary、B=raw+grep、C=raw+Pythonを比較できるheadless prototypeとplaytraceがない。consumer phase、before／after trigger artifact、期待判断差をlease契約どおり指定できず、Phase 4aには別probeのpending leaseも1件あるためstate-only reviewとした。compiled-memory-boundary、d2e-synchronized-playtest-stream、bdd-route-contract-regression、retrieval-delivery-loop-checkとの重複も確認済み。"
+  change:
+    summary: "reviewed_source_tsとdefer理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-27T02:53:25+09:00",
+  "updated_at": "2026-07-27T05:05:53+09:00",
   "reviewed_source_ts": [
+    "1785088125.950309",
     "1780514208.775089",
     "1785070961.347809",
     "1785070978.821379",
@@ -515,6 +516,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-27T05:05:53+09:00",
+      "selected": {
+        "id": "sr-1785088125-4ce3009485",
+        "source_ts": "1785088125.950309",
+        "title": "PRO-LONG — append-only observation ledger and programmatic memory",
+        "reason": "source が slack_api/shared-reads、score 14、未レビューという条件を満たす最新候補で、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ。現在の memory 階層と次の game playtrace に対し、保存量ではなく summary／grep／Python analysis の差を同一 trace で測る観点が既存 probe と異なる判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件を満たす。shared-reads 本文は、ARC-AGI-3 public 25 game、最大500 action、全 interaction の構造化 append-only log、read／grep／regex／Python／write-edit の tool ladder、全モデルで pass@1 が15.7〜21.0 points改善、workspace 消去 ablation、同一履歴から自作 world model と実盤面を照合する事例まで示すため relevance・actionability・evidence を3とした。既存の compiled-memory-boundary は raw／要約層と query-time use を、d2e-synchronized-playtest-stream は frame／input／state／outcome schema を、bdd-route-contract-regression は replayable trace を、retrieval-delivery-loop-check は grep 自体を verdict にしない境界をすでに扱う。一方、同一 seed／action budget で A=summary、B=raw+grep、C=raw+Python を比較し、失敗原因同定率・再実行成功率・token・検索時間・保存量を見る点は既存 probe にないため non_redundancy=2 とした。ただし現サイクルには比較可能な headless prototype、playtrace、同一 seed 群がなく、consumer phase、before／after trigger artifact、期待する判断差を lease 契約どおり指定できない。さらに Phase 4a には別 probe の pending lease が1件ある。対象のないまま322件目の active probe を増やさず、次の具体的な headless prototype で A/B/C fixture が作れる時だけ adopt_metric を再検討する。",
+      "existing_probes": [
+        "probe-20260621-compiled-memory-boundary",
+        "probe-20260622-d2e-synchronized-playtest-stream",
+        "probe-20260608-bdd-route-contract-regression",
+        "probe-20260517-retrieval-delivery-loop-check"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と defer 理由だけを更新した。比較可能な prototype／trace がないため、probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-27T02:53:25+09:00",
       "selected": {
