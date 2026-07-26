@@ -134,7 +134,117 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、validate_memory_index.py で per-file atom index との entry 整合を確認した。Markdown link はなく、atom ID/index entry の欠落は 0 件。"
+  - "memory/atoms.jsonl / per-file .md / memory/atoms/index.jsonl は各 2756 件で mirror drift・parse error・content conflict 0 件。duplicate cluster 45 群と overlay 45 群は最新で、effective display の未解決重複は 0 件。"
+  - "shared-reads の title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を規定順で再生成した。terminal canonical は 69 群、open duplicate は 55 群、actionable group は 0 群。"
+  - "期限到来 candidate のうち group handoff と重ならない上位 5 件を memory/shared_reads_candidate_handoff_inbox.jsonl へ冪等 enqueue した。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件で、handled 更新対象はなかった。"
+  - "due-only probe lease は 0 件だったため receipt と lifecycle status は変更していない。"
+memory_index_audit:
+  source_file_status: "UTF-8 読み正常。代表語は 記憶 / ゲーム設計 / 敵パターン を取得できた。評価軸 の完全一致は本文に存在しないが、文字化けではなく現行 generated index の語彙差。"
+  display_or_tooling_status: "Get-Content -Encoding UTF8 と rg の表示は正常。"
+atom_audit:
+  atoms_jsonl: 2756
+  per_file_md: 2756
+  index_jsonl: 2756
+  raw_normalized_content_duplicate_groups: 40
+  canonical_overlay_duplicate_groups: 45
+  mirror_content_conflicts: 0
+  effective_display_unresolved_groups: 0
+  note: "memory_health warning は raw title debt 564 行 / 342 群と mojibake suspect atom 2 件。既存 display title / lifecycle fold 後の recall 表示未解決は 0 のため、この cycle では再編しない。"
+raw_audit:
+  files_older_than_30_days: 95
+  archived_count: 0
+  decision: "slack_archive と web_research の原文・PDF・抽出 text は provenance/evidence pointer の参照先で、mtime だけでは移動しない。archive/slack ingest state は 2026-07-26 に更新済み。"
+candidate_lifecycle:
+  total_files: 1114
+  counts:
+    posted: 489
+    ready_to_post: 10
+    postponed: 297
+    failed: 302
+    needs_review: 13
+    skipped_unreviewed: 3
+  missing_stale_after: 6
+  overdue_open_total: 133
+stale_backlog:
+  overdue_open_total: 133
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total 133 > queue 50 だが、actionable group 0 で 3 件以上条件を満たさない。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-761cea30f77659b7
+    - cha-bb98345cfa8a9394
+    - cha-a4c1e47b38a41c21
+    - cha-74053bacd2db3e53
+    - cha-bbefcc1fad413afc
+group_action_handoff: []
+issues:
+  - id: ISS-RECALL-SUPERSEDED-DELEGATION
+    description: "停止済みの Mir/Ash 依存を含む prescription atom が active / recall-visible のままで、現在の auto recall がゲーム自己判定の手順として返している。後続 directive は Mir/Ash が機能していないため問いかけ・役割分担を停止しているが、旧 atom へ superseded 接続がない。"
+    severity: medium
+    evidence: "memory/atoms/2026-05/sr-1778948778-e0c9fde779.md status=active; memory/session_context.md Recalled Atoms sr-1778948778-e0c9fde779; memory/directive_shared_reads_log_cdx_standalone_20260626.md:18 and :25"
+    source_file_status: "3 ファイルとも UTF-8 読み正常。旧 atom は status: active、新 directive は status: active で、source file 自体の破損ではない。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "次のゲーム制作で自己判定を想起した際、利用不能な evaluator への依頼を現行手順と誤認し、判定を待ち状態にして playable diff の完了を遅らせうる。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-RECALL-SUPERSEDED-DELEGATION
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_review_batch:
+  - handoff_id: cha-761cea30f77659b7
+    path: memory/shared_reads_candidates/20260609_evodrive_pareto_scenario_evolution.md
+    status: postponed
+    stale_after: "2026-07-09"
+    priority_reason: "事故例生成 harness に近い Pareto evolution だが、agent loop・selection・評価結果が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-bb98345cfa8a9394
+    path: memory/shared_reads_candidates/20260609_openenv_agentic_execution_environments.md
+    status: postponed
+    stale_after: "2026-07-09"
+    priority_reason: "headless playtest harness に接続できるが、評価結果・失敗例・結論が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-a4c1e47b38a41c21
+    path: memory/shared_reads_candidates/20260610_player_centric_pcpcg_human_testing.md
+    status: postponed
+    stale_after: "2026-07-10"
+    priority_reason: "PCPCG の実験要素は具体的だが、有意差なしの解釈・失敗要因・制作条件を再確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-74053bacd2db3e53
+    path: memory/shared_reads_candidates/20260611_llm_based_game_agents_survey.md
+    status: postponed
+    stale_after: "2026-07-11"
+    priority_reason: "survey の範囲が広いため、genre 別 agent requirement の該当節へ分析軸を絞り直す必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-bbefcc1fad413afc
+    path: memory/shared_reads_candidates/20260611_simworld_open_ended_agent_simulator.md
+    status: postponed
+    stale_after: "2026-07-11"
+    priority_reason: "長期 multi-agent task の評価題材として有用だが、scenario・action interface・評価指標の具体が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
