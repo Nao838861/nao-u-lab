@@ -242,4 +242,15 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted: true
+channel: "#log"
+channel_id: "C0ALRK28Y1H"
+ts: "1785044767.003749"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785044767003749"
+char_count: 2139
+verification: ok
+draft: "drafts/phase5_log_diary_20260726_1413_cdx.md"
+note: "chat.getPermalink は invalid_arguments のため、検証済み channel_id と ts から Slack 標準形式の permalink を記録"
+```
