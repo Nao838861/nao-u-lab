@@ -4,18 +4,21 @@ url: "https://arxiv.org/abs/2404.02039"
 collected_at: "2026-06-11T14:35:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, llm-agent, survey, architecture, evaluation, game-genre]
-evaluated_at: "2026-06-11T14:24:23+09:00"
+evaluated_at: "2026-07-27T00:25:23+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-11T14:24:23+09:00"
+last_reviewed_at: "2026-07-27T00:25:23+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-11T14:24:23+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T00:25:23+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-11"
+stale_after: "2026-08-26"
 supersedes: []
-gate_reason: "survey としての範囲が広く、candidate 現状では具体的な章立て・代表表・ゲーム制作への単一の適用軸が足りない。genre ごとの agent requirement という軸は有用なので、Phase 1 相当で該当節を絞り直せば投稿候補に戻せる。"
+gate_reason: |
+  memory・reasoning・perception-action と genre 別 requirement の対応は、ゲームごとに agent harness を分ける設計軸として有用である。
+  ただし候補は survey 全体の索引に留まり、代表研究の比較、taxonomy の根拠、challenge 節の具体がなく、単一の適用軸で 4000 字を支えられない。
+  action / sandbox 等の一節へ範囲を絞り、比較表と限界を抽出できるまで保留する。
 ---
 
 ## raw_excerpt

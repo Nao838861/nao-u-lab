@@ -4,18 +4,20 @@ url: "https://huggingface.co/docs/openenv/index"
 collected_at: "2026-06-09T19:15:36+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent, harness, automated-playtesting, game-ai, evaluation]
-evaluated_at: "2026-06-09T19:22:36.8057745+09:00"
+evaluated_at: "2026-07-27T00:25:23+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-09T19:22:36.8057745+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-09T19:22:36.8057745+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-09"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-27T00:25:23+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-27T00:25:23+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-26"
 supersedes: []
-gate_reason: "Gymnasium-style API、container-first、HTTP-native、MCP tool boundary は headless playtest harness の設計材料として有用。ただし現候補はドキュメント紹介が中心で、評価結果・失敗例・結論が薄く、CoopEval 水準の概要に必要な問題設定から検証までの厚みが不足している。Phase 3 で投稿するには OpenEnv の実例、game playing env、MCP-backed boundary の制約を追加確認する必要がある。"
+gate_reason: |
+  Gymnasium-style API と container / MCP 境界は実装リファレンスとして有用だが、資料は製品ドキュメントの機能紹介であり、比較評価・失敗分析・検証された結論を持たない。
+  30 日超の再評価でも投稿に必要な実証の厚みは増えておらず、CoopEval 水準の独立記事にはできないため候補を閉じ、参照資料としてのみ残す。
 ---
 
 ## raw_excerpt

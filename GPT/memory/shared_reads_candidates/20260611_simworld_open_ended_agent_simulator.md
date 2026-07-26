@@ -4,18 +4,20 @@ url: "https://arxiv.org/abs/2512.01078"
 collected_at: "2026-06-11T20:14:21+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, agent-evaluation, simulation, unreal-engine, procedural-generation]
-evaluated_at: "2026-06-11T20:18:55+09:00"
+evaluated_at: "2026-07-27T00:25:23+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-11T20:18:55+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-11T20:18:55+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-11"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-27T00:25:23+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-27T00:25:23+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-26"
 supersedes: []
-gate_reason: "open-ended simulator として、物理・社会ルール・長期 multi-agent task を agent 評価へ持ち込む問題設定は有用。ただし現 candidate は abstract 相当で、scenario 生成、open-vocabulary action interface、評価指標、失敗分析の具体が薄い。ゲーム制作への転用は scenario catalog という一般論に寄りやすく、CoopEval 水準の概要を書くには一次資料の補強が必要。"
+gate_reason: |
+  物理・社会ルールと長期 multi-agent task を同時に扱う問題設定は興味深いが、候補は抄録相当で、生成手法・action interface・評価指標・比較結果を抽出できない。
+  30 日超の再評価でもゲーム制作への適用は scenario catalog という一般論を越えず、CoopEval 水準を支えないため候補を閉じる。
 ---
 
 ## raw_excerpt

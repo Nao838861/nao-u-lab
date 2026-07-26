@@ -4,6 +4,21 @@ url: "https://ssrn.com/abstract=7001878"
 collected_at: "2026-07-27T00:17:37.3285429+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, game-balance, asymmetric-games, optimization, mixed-integer-programming]
+evaluated_at: "2026-07-27T00:25:23+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-27T00:25:23+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T00:25:23+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-26"
+supersedes: []
+gate_reason: |
+  balance を matchup の一律 50% ではなく Nash 均衡上の選択分布として定義し、attribute 調整を近似 MIP に落とす着想は対戦 prototype の調整に具体的に効く。
+  ただし現候補は要旨中心で、近似目的関数、solver augmentation、case study の規模・baseline・改善量を確認できず、評価の中身を含む 4000 字概要には不足する。
+  working paper の定式化と計算実験を補強してから投稿可否を再判定する。
 ---
 
 ## raw_excerpt
