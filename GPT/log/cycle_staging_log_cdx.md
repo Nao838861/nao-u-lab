@@ -143,7 +143,112 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "shared_reads の open duplicate group / stale triage / group action sidecar を現行 candidate lifecycle と live lease から再生成・監査した。"
+  - "期限到来した単独 candidate 5件を source_cycle_id=2026-07-26 12:13 で candidate handoff inbox へ冪等 enqueue した。"
+  - "Slack inbox は directives / broadcasts とも pending 0件で、handled 更新対象はなかった。"
+audits:
+  memory_index:
+    markdown_link_count: 0
+    broken_local_link_count: 0
+    source_file_status: "UTF-8 明示読みは正常。代表語は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false（本文に当該語がない）。source の文字化け兆候なし。"
+    display_or_tooling_status: none
+  atoms:
+    rows: 2752
+    duplicate_ids: 0
+    duplicate_clusters: 45
+    duplicate_members_beyond_canonical: 45
+    mirror_counts:
+      atoms_jsonl: 2752
+      per_file_md: 2752
+      index_jsonl: 2752
+    mirror_drift: 0
+    content_conflicts: 0
+    note: "既知の45 cluster は canonical overlay 済みで、raw atom は保持されている。新規矛盾なし。"
+  raw_archive_candidates:
+    older_than_30_days: 95
+    total_bytes: 62979319
+    action: "参照元 raw のためこの phase では移動しない。archive 候補として識別のみ。"
+  candidate_lifecycle:
+    files: 1105
+    status_counts:
+      posted: 485
+      ready_to_post: 10
+      postponed: 316
+      failed: 280
+      needs_review: 13
+      skipped_unreviewed: 1
+    missing_stale_after: 4
+    overdue_open_total: 153
+    lifecycle_state_conflicts: 0
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+  validation_errors: 0
+stale_backlog:
+  overdue_open_total: 153
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total > stale_triage_queue_rows は真だが、actionable group が3件以上という条件は偽。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-7455cb7e78d2f4e0
+    - cha-ce5f0896be7d89d0
+    - cha-13682da5f44b9804
+    - cha-f4b0a2a0c6e5f7f2
+    - cha-82c35458fe81212b
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-7455cb7e78d2f4e0
+    path: memory/shared_reads_candidates/20260602_hri_order_player_experience.md
+    status: postponed
+    stale_after: "2026-07-02"
+    priority_reason: "協力/競争の提示順が player experience を変える適用先は明確だが、被験者条件・測定設計・効果範囲・再現性の追加精読が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-ce5f0896be7d89d0
+    path: memory/shared_reads_candidates/20260602_indiedev_397_playtest_mistakes.md
+    status: postponed
+    stale_after: "2026-07-02"
+    priority_reason: "初見詰まりの実用 checklist だが、Reddit 単独投稿では集計方法・sample bias・transcript 分析手順が薄い。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-13682da5f44b9804
+    path: memory/shared_reads_candidates/20260604_agent_odyssey_program_synthesis_game_generation.md
+    status: postponed
+    stale_after: "2026-07-04"
+    priority_reason: "entity / rule / quest generator と runtime validation の接続は有望だが、評価設計と実験結果を paper 本文で補う必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-f4b0a2a0c6e5f7f2
+    path: memory/shared_reads_candidates/20260604_llm_good_game_master_evaluation.md
+    status: postponed
+    stale_after: "2026-07-04"
+    priority_reason: "18 game types・critical evaluator archetypes・approval 13.0% の骨格はあるが、評価設計と失敗分類の本文確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-82c35458fe81212b
+    path: memory/shared_reads_candidates/20260604_movement_embodied_player_experience.md
+    status: postponed
+    stale_after: "2026-07-04"
+    priority_reason: "movement と embodied player experience の接続は有用だが、4 dynamics と評価例の本文情報が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
