@@ -112,7 +112,35 @@ pending_inbox:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780567815-d6e54cb479
+    source_ts: "1780567815.289119"
+    title: "Synchronising times — シミュレーション型ブラウザゲームの関係的メカニズムとしての待機"
+    reason: "未レビュー条件を満たす最新の score 10 atom で、memory・game-design・agent・operation・evaluation の5優先タグを持つ。待機を空白ではなく次手・生活時間・他者／環境の同期として診断する知見が、ゲーム設計または定時 gate に新しい行動差を作るか確認するため選んだ。"
+  scores:
+    relevance: 2
+    actionability: 2
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "数値上の採用条件は満たすが、今サイクルには比較可能な非同期／クールダウン付き playable diff、実際に使う consumer phase、before／after trigger artifact がない。単一ゲーム・著者2名・6週間の質的参加観察であり、継続率・楽しさ・離脱や短時間アクションへの転用も未検証。既存の player-time-scarcity-session-boundary、designer-question-agent-playtest、timescale-tempo-audit が session、cooldown rhythm、empty waiting を覆い、active_probes 321件と Phase 4a 向け pending lease 1件があるため、対象 artifact なしに確認負荷を増やさない。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを state に記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
