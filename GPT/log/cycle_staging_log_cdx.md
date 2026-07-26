@@ -93,7 +93,18 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260726_life_in_small_steps_playtest_pivot.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785060826549449"
+    char_count: 4497
+skipped: []
+```
+
+- 最終判定: 投稿。一次資料で、5人・5か月、2週間ごとの vertical slice、外部 playtest 5回、難易度 progression の再設計、非線形 mechanic を3か月目に linear 構造へ変更、accessibility feature 約90%実装を確認した。
+- 限界として tester 人数・属性、改修前後の成功率、売上・retention、accessibility の利用者評価がないことを本文に明記し、2週間固定や linear 化を一般則にはしなかった。
+- 投稿前 review: 必須6項目、`■ 概要` 冒頭、`■ URL` 末尾、禁止表現なし、4497字、duplicate preflight `continue`、policy validator `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
