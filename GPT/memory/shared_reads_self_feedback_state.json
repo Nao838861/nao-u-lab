@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-26T17:09:52+09:00",
+  "updated_at": "2026-07-26T19:19:51+09:00",
   "reviewed_source_ts": [
+    "1785052956.135639",
     "1780525485.663859",
     "1780560557.147809",
     "1780567815.289119",
@@ -511,6 +512,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-26T19:19:51+09:00",
+      "selected": {
+        "id": "sr-1785052956-72f0f613f9",
+        "source_ts": "1785052956.135639",
+        "title": "One Year of Blobun — 必須進行・任意難問・更新互換性・継続可能性を分ける発売1年後 postmortem",
+        "reason": "source が slack_api/shared-reads、score 13、未レビューという条件を満たす最新候補で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。必須完了・任意完遂・終盤到達を分ける評価、旧 solution trace を使う更新互換性、好評と追加投資余力を分ける停止判断が、次の小型 game prototype に既存 probe と異なる判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の採用条件は満たすが、probe lease 契約に必要な具体的な playable diff、consumer phase、before／after を比較できる trigger artifact が現サイクルにないため state-only review に留める。shared-reads 本文は、本編クリア29.2%、全問制覇21.7%、ワールド7到達約3分の1、販売1,691本、概算収益11,700ドル超に加え、公開後の盤面変更で攻略情報を壊さない保守判断まで示し、event schema、solution trace 回帰、継続判断へ直接変換できるため actionability=3 とした。一方、単一作者・単一作品の自己報告で、cohort、問題別離脱、価格変更前後の比較、更新費用、根本原因を確認する回帰 test がないため evidence=2 とした。既存の replayability-budget-core-depth は run-1 core と optional depth を、dependency-progress-blocked-node は到達 node と詰まり層を、bdd-route-contract-regression と update-aware-regression-tags は replayable trace と更新影響に応じた回帰選定をすでに扱う。新しい差は player 到達・互換性・事業継続の三面を同じ停止判断へ並べることだが、active_probes 321件と Phase 4a 向け pending lease 1件がある状態で対象 artifact なしに追加すると確認負荷だけが増える。次に小型 puzzle prototype の patch または継続判断 artifact が具体化した時、既存 probes を束ねても判断が不足する場合だけ再評価する。",
+      "existing_probes": [
+        "probe-20260709-replayability-budget-core-depth",
+        "probe-20260614-dependency-progress-blocked-node",
+        "probe-20260608-bdd-route-contract-regression",
+        "probe-20260516-update-aware-regression-tags"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の必須／任意深度・進行詰まり・更新回帰 probes を再利用して新規 lease を見送る defer 理由だけを更新した。probe・metric・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-26T17:09:52+09:00",
       "selected": {

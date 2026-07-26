@@ -107,7 +107,34 @@ skipped: []
 - 投稿前 review: 必須6項目、`■ 概要` 冒頭、`■ URL` 末尾、禁止表現なし、4497字、duplicate preflight `continue`、policy validator `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785052956-72f0f613f9
+    source_ts: "1785052956.135639"
+    title: "One Year of Blobun — 必須進行・任意難問・更新互換性・継続可能性を分ける発売1年後 postmortem"
+    reason: "未レビュー中の最新候補で score 13、memory・harness・game-design・operation・evaluation の5優先タグを持ち、小型 game prototype の評価・回帰・停止判断へ移せるか確認するため"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  change:
+    summary: "数値上の採用条件は満たすが、具体的な playable diff と比較可能な trigger artifact がなく lease を指定できないため state-only review に留めた。既存の run-1／optional depth、進行詰まり、BDD route trace、更新影響 regression probes を再利用し、新規 probe・metric・directive・恒久ルールは追加していない"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
