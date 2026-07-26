@@ -193,7 +193,105 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+- 実行: 2026-07-27 02:56-02:58 JST
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を per-file atom index と照合し、entry section の broken reference 0件を確認した。UTF-8 明示読みでは「記憶」「ゲーム設計」「敵パターン」を正常取得し、「評価軸」は本文中に完全一致語がないだけで decode error はなかった。"
+  - "memory/atoms.jsonl 2757件を監査し、atom id 重複0件、atoms.jsonl / per-file md / index.jsonl の欠落・parse error・content conflict 0件を確認した。normalized content 重複40群80行は canonical overlay の既知fold対象で、recall-visible 3群6行も lifecycle/content fold が適用されている。矛盾として追加処理する未解決行は0件。"
+  - "memory/raw/ は245ファイル中96ファイルが30日超だった。内訳の大半は web_research の一次資料88件、headless_eval 6件、slack_archive 1件、raw直下1件で、immutable provenance / 既存archiveとして参照されるため移動0件とした。"
+  - "shared-reads lifecycle dry-run: posted 490 / ready_to_post 10 / postponed 284 / failed 320 / needs_review 10。frontmatter write 0件、status conflict 0件。"
+  - "title canonical index 72群、mixed duplicate queue 45群、open duplicate group queue 52群、stale triage queue 50件を再生成した。group-action queue は0群。candidate本体のstatusは変更していない。"
+  - "Slack inbox は directives 23行 / broadcasts 21行を監査し、pendingはいずれも0件。根拠なしのhandled更新は行っていない。"
+  - "期限到来 probe lease は0件。consumer artifactを観測して閉じる対象がないためreceipt追加0件。"
+issues:
+  - id: ISS-ENC-001
+    description: "shared-reads raw原文1件の「AIエージェント」が「AIエ��ジェント」として保存され、派生atomのtitle / trigger / excerptにも同じU+FFFDが伝播している。局所的なsource破損であり、表示経路だけのmojibakeではない。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492,1216; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8として正常にdecodeできるが、raw source自体にreplacement character U+FFFDが2文字含まれる。atom mirror 3系統はこの破損内容で相互一致している。memory_healthが併記したgr-1777083728-44d444ab7aは本文中の意図的な「???」を拾ったfalse positiveで、UTF-8 source破損はない。"
+    display_or_tooling_status: "Get-Content -Encoding UTF8 / rg / JSON parserの全経路で同じ文字列を取得。shell表示やstagingレンダリング起因ではない。"
+    why_blocks_game_memory: "「AIエージェント」の完全一致検索とtitle可読性をこの1 atomだけ損なうが、他のgame-memory entry pointやrecall全体は阻害しない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "broken index・unfolded duplicate・mirror conflict・未配送group actionはなく、ISS-ENC-001は将来の局所的なsource補修で足りるため、Phase 4bの構造設計を起動しない。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+    merged: 0
+    retired: 0
+candidate_lifecycle:
+  files: 1117
+  counts:
+    posted: 490
+    ready_to_post: 10
+    postponed: 284
+    failed: 320
+    needs_review: 10
+  skipped_unreviewed_status_rows: 3
+  dry_run_skipped_without_phase_evidence: 23
+  missing_stale_after: 6
+  overdue_open_total: 123
+stale_backlog:
+  overdue_open_total: 123
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 52
+  mixed_group_count: 45
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "123 > 50 だが actionable group が0で、必要条件の3群以上を満たさない。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-aafa940493a6f388
+    - cha-bf57e70205735065
+    - cha-199a6f38225ae81c
+    - cha-1d0ba0e9cf3c1189
+    - cha-1e7782317c237315
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-aafa940493a6f388
+    path: memory/shared_reads_candidates/20260613_nitrogen_generalist_gaming_agents.md
+    status: postponed
+    stale_after: "2026-07-13"
+    priority_reason: "14日超過。open duplicate group外。評価環境・比較条件・成功率改善・限界と、playable diff検証への橋渡しが不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-bf57e70205735065
+    path: memory/shared_reads_candidates/20260613_skillgenbench_skill_generation_pipelines.md
+    status: postponed
+    stale_after: "2026-07-13"
+    priority_reason: "14日超過。ゲーム制作手順の抽出・再利用に近いが、benchmark task構成・評価指標・比較結果・失敗傾向が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-199a6f38225ae81c
+    path: memory/shared_reads_candidates/20260613_smartplay_llm_agents_games.md
+    status: postponed
+    stale_after: "2026-07-13"
+    priority_reason: "14日超過。ゲーム別の能力宣言は有用だが、評価結果と具体的な失敗傾向が薄く、原論文またはGitHubでの補強が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-1d0ba0e9cf3c1189
+    path: memory/shared_reads_candidates/20260613_shibboleth_multilingual_wargame_skew.md
+    status: postponed
+    stale_after: "2026-07-14"
+    priority_reason: "13日超過。実験軸は明確だが、言語差をゲーム制作上の具体テストへ接続する分析が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-1e7782317c237315
+    path: memory/shared_reads_candidates/20260614_future_fair_play_ai_multiplayer.md
+    status: postponed
+    stale_after: "2026-07-14"
+    priority_reason: "13日超過。AI参加multiplayerの信頼設計は有用だが、検出設計・誤検知・UX両立策の具体性が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
