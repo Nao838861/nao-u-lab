@@ -134,7 +134,7 @@ cluster key は `normalized_title`、`tags`、`kind`、`source` の組み合わ�
 python tools/build_atom_title_cluster_index.py
 ```
 
-`tools/memory_recall.py` は cluster size が 2 以上の atom だけ、title の後ろに `display_disambiguator` を補助ラベルとして表示する。
+`tools/memory_recall.py` は sidecar の `semantic_alias` を検索・表示で優先する。generic / repeated title が sidecar に未収録の時は、同じ deterministic な alias 抽出を recall 時にだけ適用する。意味のある alias が得られない時は `display_secondary_key` を使う。raw atom、`atoms.jsonl`、per-file `.md` の title は変更しない。
 
 ## related_candidates.jsonl 仕様
 

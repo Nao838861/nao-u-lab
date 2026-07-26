@@ -14,8 +14,11 @@
 - `sample_hint`: 本文から取った短い識別ヒント
 - `semantic_alias` / `alias_source`: generic title に対する検索・表示用の別名と抽出根拠
 - `semantic_alias_covered` / `semantic_alias_fallback`: 本文由来 alias と deterministic fallback の監査フラグ
+- `raw_title_debt`: raw title 自体が generic または repeated であること
+- `effective_display_label` / `effective_display_resolution`: sidecar、runtime alias、secondary key を反映した実効表示
+- `effective_display_unresolved`: recall 対象なのに実効表示が raw title のままで識別不能なこと
 
-`title_cluster_index.jsonl` は repeated title に加えて singleton の generic title も収録する。`memory_recall.py` は `semantic_alias` を検索対象と表示ラベルに加えるが、atom 本体の `title` は変更しない。
+`title_cluster_index.jsonl` は repeated title に加えて singleton の generic title も収録する。`memory_recall.py` は `semantic_alias` を検索対象と表示ラベルに加え、sidecar miss 時だけ同じ抽出を runtime fallback として使うが、atom 本体の `title` は変更しない。`group_id` 未付与は raw metadata の監査情報であり、それだけで `effective_display_unresolved` とは判定しない。
 
 再生成:
 

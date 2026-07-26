@@ -282,7 +282,43 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+```yaml
+implemented:
+  - issue_id: ISS-ATOM-TITLE-RETRIEVAL
+    files_changed:
+      - path: tools/memory_recall.py
+        change: modified
+      - path: tools/build_atom_title_quality_audit.py
+        change: modified
+      - path: tools/memory_health.py
+        change: modified
+      - path: tools/test_memory_recall_title_fallback.py
+        change: created
+      - path: memory/atoms/title_quality_audit.jsonl
+        change: modified
+      - path: memory/atoms/README.md
+        change: modified
+      - path: memory/atoms/title_quality_audit_README.md
+        change: modified
+      - path: memory/directive_recall_fold_group_metadata_20260529.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "title_cluster_index の semantic_alias を優先しつつ、generic / repeated title の sidecar miss 時だけ同じ deterministic 抽出を runtime 適用した。監査と health は raw_title_debt / effective_display_unresolved を分離し、group_id 欠落を表示未解消の根拠から外した。"
+    partial: false
+migrations:
+  - what: "title_quality_audit sidecar の既存行へ raw_title_debt、effective_display_label、effective_display_resolution、effective_display_unresolved を付与して再生成した。"
+    affected: "commit 基準の 595 audit rows。raw atom、atoms.jsonl、per-file md の title は変更なし。"
+verification:
+  - "python -m py_compile: memory_recall / title quality audit / memory_health / fixture test が成功。"
+  - "python tools/test_atom_title_clusters.py: 4 tests passed。"
+  - "python tools/test_memory_recall_title_fallback.py: current / stale / absent sidecar、secondary key、監査集計、canonical fold、exact-reference の 5 tests passed。"
+  - "実データ exact-reference recall: sr-1781671356-862a3d22ed が semantic alias と補助キー付きで取得できた。"
+  - "一時 audit 再生成: 676 rows、raw_title_debt=645、effective_display_unresolved=0。"
+  - "python tools/memory_health.py --compact: exit 0（warning のみ、title 表示未解消は 0）。"
+  - "commit 基準 atoms から再計算した title_quality_audit と committed sidecar の一致を確認。"
+  - "git diff --check: whitespace error なし。"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

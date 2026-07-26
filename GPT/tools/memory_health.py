@@ -58,6 +58,39 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
 def title_quality_audit_summary() -> dict[str, Any]:
     rows = load_jsonl(TITLE_QUALITY_AUDIT_PATH)
     groups = {str(row.get("title_group_id")) for row in rows if row.get("title_group_id")}
+
+    def has_raw_title_debt(row: dict[str, Any]) -> bool:
+        legacy_value = bool(row.get("generic_title") or int(row.get("raw_title_count") or 0) > 1)
+        return bool(row.get("raw_title_debt", legacy_value))
+
+    def has_unresolved_display(row: dict[str, Any]) -> bool:
+        legacy_value = bool(
+            row.get("recall_visible")
+            and has_raw_title_debt(row)
+            and not row.get("semantic_alias_covered")
+            and not row.get("source_ts")
+            and not row.get("sample_hint")
+        )
+        return bool(row.get("effective_display_unresolved", legacy_value))
+
+    raw_title_debt_rows = [
+        row
+        for row in rows
+        if has_raw_title_debt(row)
+    ]
+    effective_display_unresolved_rows = [
+        row
+        for row in rows
+        if has_unresolved_display(row)
+    ]
+    raw_title_debt_groups = {
+        str(row.get("title_group_id")) for row in raw_title_debt_rows if row.get("title_group_id")
+    }
+    unresolved_groups = {
+        str(row.get("title_group_id"))
+        for row in effective_display_unresolved_rows
+        if row.get("title_group_id")
+    }
     action_counts = Counter(str(row.get("recommended_action") or "unknown") for row in rows)
     reason_counts = Counter(str(reason) for row in rows for reason in row.get("detection_reasons", []))
     generated_at = str(rows[0].get("generated_at") or "") if rows else ""
@@ -66,6 +99,10 @@ def title_quality_audit_summary() -> dict[str, Any]:
         "exists": TITLE_QUALITY_AUDIT_PATH.exists(),
         "rows": len(rows),
         "title_groups": len(groups),
+        "raw_title_debt_rows": len(raw_title_debt_rows),
+        "raw_title_debt_groups": len(raw_title_debt_groups),
+        "effective_display_unresolved_rows": len(effective_display_unresolved_rows),
+        "effective_display_unresolved_groups": len(unresolved_groups),
         "recommended_action_counts": action_counts.most_common(),
         "detection_reason_counts": reason_counts.most_common(),
         "generated_at": generated_at,
@@ -193,11 +230,17 @@ def build_health() -> dict[str, Any]:
         warnings.append(f"Slack ingest が古い: {slack_state.get('last_run')}")
     if int(stats.get("queries", 0)) == 0:
         warnings.append("recall 使用実績がまだない")
-    if ungrouped_repeated_titles:
-        top = ", ".join(f"{title[:40]}={count}" for title, count in sorted(ungrouped_repeated_titles, key=lambda x: -x[1])[:3])
-        warnings.append(f"repeated title group 未付与 {len(ungrouped_repeated_titles)}種: {top}")
-    if ungrouped_repeated_titles and title_quality["exists"]:
-        warnings.append(f"title quality audit available: {title_quality['path']} rows={title_quality['rows']}")
+    if title_quality["raw_title_debt_rows"]:
+        warnings.append(
+            "raw title debt "
+            f"{title_quality['raw_title_debt_rows']} rows / {title_quality['raw_title_debt_groups']} groups"
+        )
+    if title_quality["effective_display_unresolved_rows"]:
+        warnings.append(
+            "effective display unresolved "
+            f"{title_quality['effective_display_unresolved_rows']} rows / "
+            f"{title_quality['effective_display_unresolved_groups']} groups"
+        )
     if mojibake_suspects:
         top = ", ".join(str(row.get("id")) for row in mojibake_suspects[:5])
         warnings.append(f"mojibake suspect atoms {len(mojibake_suspects)}件: {top}")
@@ -239,6 +282,10 @@ def build_health() -> dict[str, Any]:
         "repeated_title_groups": len(repeated_titles),
         "recall_visible_repeated_title_groups": len(visible_repeated_titles),
         "ungrouped_repeated_title_groups": len(ungrouped_repeated_titles),
+        "raw_title_debt_rows": title_quality["raw_title_debt_rows"],
+        "raw_title_debt_groups": title_quality["raw_title_debt_groups"],
+        "effective_display_unresolved_rows": title_quality["effective_display_unresolved_rows"],
+        "effective_display_unresolved_groups": title_quality["effective_display_unresolved_groups"],
         "raw_normalized_content_duplicate_groups": raw_content_duplicates["groups"],
         "raw_normalized_content_duplicate_atom_rows": raw_content_duplicates["atom_rows"],
         "raw_content_fold_applied_extra_rows": raw_content_duplicates["folded_extra_rows"],
@@ -290,7 +337,8 @@ def render_text(health: dict[str, Any], compact: bool) -> str:
         f"- display_atoms_after_lifecycle_fold: {health.get('display_atoms_after_lifecycle_fold')}",
         f"- recall_visible_after_lifecycle_fold: {health.get('recall_visible_after_lifecycle_fold')}",
         f"- lifecycle_status_counts: {health.get('lifecycle_status_counts')}",
-        f"- repeated_title_groups: raw={health.get('repeated_title_groups')} recall_visible={health.get('recall_visible_repeated_title_groups')} ungrouped={health.get('ungrouped_repeated_title_groups')}",
+        f"- repeated_title_groups: raw={health.get('repeated_title_groups')} recall_visible={health.get('recall_visible_repeated_title_groups')} ungrouped_metadata={health.get('ungrouped_repeated_title_groups')}",
+        f"- title_display_debt: raw_rows={health.get('raw_title_debt_rows')} raw_groups={health.get('raw_title_debt_groups')} effective_unresolved_rows={health.get('effective_display_unresolved_rows')} effective_unresolved_groups={health.get('effective_display_unresolved_groups')}",
         f"- normalized_content_duplicate_groups: raw={health.get('raw_normalized_content_duplicate_groups')} rows={health.get('raw_normalized_content_duplicate_atom_rows')} fold_extra={health.get('raw_content_fold_applied_extra_rows')} recall_visible={health.get('recall_visible_normalized_content_duplicate_groups')} rows={health.get('recall_visible_normalized_content_duplicate_atom_rows')} fold_extra={health.get('recall_visible_content_fold_applied_extra_rows')}",
         f"- canonical_overlay_duplicate_groups: total={health.get('canonical_overlay_duplicate_groups')} reasons={health.get('canonical_overlay_reason_counts')} fold_extra_by_reason={health.get('canonical_overlay_folded_extra_rows_by_reason')}",
         f"- raw_shared_reads_rows: {health.get('raw_shared_reads_rows')}",

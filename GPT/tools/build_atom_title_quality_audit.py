@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any
 
 import memory_recall
-from atom_title_clusters import is_generic_title, semantic_alias
+from atom_title_clusters import is_generic_title, load_title_cluster_map, semantic_alias
 from atoms_fileformat import load_atoms_from_per_file
 
 
@@ -115,10 +115,15 @@ def sample_hint(atom: dict[str, Any], limit: int = 96) -> str:
     return text[: limit - 1].rstrip() + "…"
 
 
-def build_audit_rows(atoms: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def build_audit_rows(
+    atoms: list[dict[str, Any]],
+    title_cluster_map: dict[str, dict[str, Any]] | None = None,
+) -> list[dict[str, Any]]:
     title_counts = Counter(normalized_title(atom) for atom in atoms if normalized_title(atom))
     visible_atoms = [atom for atom in atoms if not memory_recall.is_default_excluded(atom)]
     visible_title_counts = Counter(normalized_title(atom) for atom in visible_atoms if normalized_title(atom))
+    if title_cluster_map is None:
+        title_cluster_map = load_title_cluster_map()
 
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for atom in atoms:
@@ -142,6 +147,18 @@ def build_audit_rows(atoms: list[dict[str, Any]]) -> list[dict[str, Any]]:
             recall_visible = not memory_recall.is_default_excluded(atom)
             alias, alias_source = semantic_alias(atom)
             generic = is_generic_title(title)
+            raw_title_debt = bool(generic or raw_count > 1)
+            annotated = memory_recall.annotate_display_labels(
+                [(0.0, atom)],
+                title_cluster_map,
+                visible_title_counts,
+            )[0][1]
+            effective_display_label = memory_recall.result_title(annotated)
+            effective_display_unresolved = bool(
+                recall_visible
+                and raw_title_debt
+                and effective_display_label == title
+            )
             rows.append(
                 {
                     "audit_id": f"{group_id}:{atom.get('id')}",
@@ -161,6 +178,20 @@ def build_audit_rows(atoms: list[dict[str, Any]]) -> list[dict[str, Any]]:
                     "alias_source": alias_source if generic else "",
                     "semantic_alias_covered": bool(generic and alias_source != "deterministic_fallback"),
                     "semantic_alias_fallback": bool(generic and alias_source == "deterministic_fallback"),
+                    "raw_title_debt": raw_title_debt,
+                    "effective_display_label": effective_display_label,
+                    "effective_display_unresolved": effective_display_unresolved,
+                    "effective_display_resolution": (
+                        "semantic_alias"
+                        if annotated.get("semantic_alias")
+                        else "display_disambiguator"
+                        if annotated.get("display_disambiguator")
+                        else "display_secondary_key"
+                        if annotated.get("display_secondary_key")
+                        else "unresolved"
+                        if effective_display_unresolved
+                        else "raw_title"
+                    ),
                     "generated_at": generated_at,
                 }
             )
@@ -230,8 +261,11 @@ def main() -> int:
     generic_rows = [row for row in rows if row.get("generic_title") and row.get("recall_visible")]
     covered = sum(bool(row.get("semantic_alias_covered")) for row in generic_rows)
     fallback = sum(bool(row.get("semantic_alias_fallback")) for row in generic_rows)
+    raw_title_debt = sum(bool(row.get("raw_title_debt")) for row in rows)
+    unresolved = sum(bool(row.get("effective_display_unresolved")) for row in rows)
     print(
         f"wrote {len(rows)} title quality audit rows / {groups} title groups to {args.output}; "
+        f"raw_title_debt={raw_title_debt} effective_display_unresolved={unresolved}; "
         f"recall-visible generic={len(generic_rows)} alias_covered={covered} fallback={fallback}"
     )
     return 0

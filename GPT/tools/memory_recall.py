@@ -19,7 +19,7 @@ from typing import Any
 from urllib.parse import urlparse
 
 import memory_lifecycle
-from atom_title_clusters import is_generic_title, load_title_cluster_map
+from atom_title_clusters import is_generic_title, load_title_cluster_map, semantic_alias
 from atoms_fileformat import load_atoms_from_per_file, load_atoms_with_view
 
 
@@ -217,6 +217,50 @@ def should_add_secondary_key(atom: dict[str, Any], counts: Counter[str]) -> bool
     return bool(title and (counts.get(title, 0) > 1 or is_generic_title(title)))
 
 
+def effective_semantic_alias(
+    atom: dict[str, Any],
+    title_cluster_map: dict[str, dict[str, Any]],
+    counts: Counter[str],
+) -> tuple[str, str, str]:
+    """Resolve a meaningful alias without changing the raw atom title.
+
+    The derived sidecar is authoritative when it contains the atom.  A
+    deterministic runtime extraction is used only for generic or repeated
+    titles missing from the sidecar.  ``deterministic_fallback`` is not a
+    semantic alias; callers continue to the secondary display key instead.
+    """
+    atom_key = str(atom.get("id") or "")
+    cluster = title_cluster_map.get(atom_key)
+    if cluster is not None:
+        alias = str(cluster.get("semantic_alias") or "").strip()
+        alias_source = str(cluster.get("alias_source") or "").strip()
+        if alias and alias_source != "deterministic_fallback":
+            return alias, alias_source, "title_cluster_index"
+        return "", alias_source, "title_cluster_index"
+
+    if not should_add_secondary_key(atom, counts):
+        return "", "", ""
+    alias, alias_source = semantic_alias(atom)
+    if alias and alias_source != "deterministic_fallback":
+        return alias, alias_source, "runtime_fallback"
+    return "", alias_source, "runtime_fallback"
+
+
+def add_search_aliases(
+    atoms: list[dict[str, Any]],
+    title_cluster_map: dict[str, dict[str, Any]],
+    counts: Counter[str],
+) -> None:
+    """Add effective aliases to in-memory search rows only."""
+    for atom in atoms:
+        alias, alias_source, alias_origin = effective_semantic_alias(atom, title_cluster_map, counts)
+        if not alias:
+            continue
+        atom["semantic_alias"] = alias
+        atom["alias_source"] = alias_source
+        atom["semantic_alias_origin"] = alias_origin
+
+
 def annotate_display_labels(
     results: list[tuple[float, dict[str, Any]]],
     title_cluster_map: dict[str, dict[str, Any]],
@@ -227,20 +271,19 @@ def annotate_display_labels(
         row = dict(atom)
         cluster = title_cluster_map.get(str(row.get("id") or ""))
         label = normalized_title(row)
+        alias, alias_source, alias_origin = effective_semantic_alias(row, title_cluster_map, fallback_counts)
+        if alias:
+            row["semantic_alias"] = alias
+            row["alias_source"] = alias_source
+            row["semantic_alias_origin"] = alias_origin
+            label = alias
         if cluster:
-            alias = str(cluster.get("semantic_alias") or "").strip()
-            if alias:
-                row["semantic_alias"] = alias
-                row["alias_source"] = cluster.get("alias_source")
-                label = alias
             disambiguator = str(cluster.get("display_disambiguator") or "").strip()
             if disambiguator:
                 row["display_disambiguator"] = disambiguator
                 row["title_cluster_id"] = cluster.get("cluster_id")
                 row["title_cluster_size"] = cluster.get("cluster_size")
                 label = f"{label} | {disambiguator}"
-        elif not title_cluster_map:
-            label = fallback_display_label(row, fallback_counts)
         if should_add_secondary_key(row, fallback_counts):
             secondary_key = display_secondary_key(row)
             if secondary_key:
@@ -256,25 +299,19 @@ def annotate_display_labels(
 def search(query: str, limit: int, include_operational: bool = False) -> list[tuple[float, dict[str, Any]]]:
     raw_atoms = load_atoms()
     title_cluster_map = load_title_cluster_map()
-    for atom in raw_atoms:
-        overlay = title_cluster_map.get(str(atom.get("id") or ""), {})
-        if overlay.get("semantic_alias"):
-            atom["semantic_alias"] = overlay["semantic_alias"]
+    raw_title_counts = title_counts(raw_atoms)
+    add_search_aliases(raw_atoms, title_cluster_map, raw_title_counts)
     exact_matches = exact_reference_matches(raw_atoms, query)
     if exact_matches:
-        duplicate_title_counts = title_counts(raw_atoms)
-        return annotate_display_labels(exact_matches[:limit], title_cluster_map, duplicate_title_counts)
+        return annotate_display_labels(exact_matches[:limit], title_cluster_map, raw_title_counts)
     if looks_like_reference_query(query):
         return []
 
     atoms = load_atoms_for_recall()
-    for atom in atoms:
-        overlay = title_cluster_map.get(str(atom.get("id") or ""), {})
-        if overlay.get("semantic_alias"):
-            atom["semantic_alias"] = overlay["semantic_alias"]
     if not include_operational:
         atoms = [atom for atom in atoms if not is_default_excluded(atom)]
     duplicate_title_counts = title_counts(atoms)
+    add_search_aliases(atoms, title_cluster_map, duplicate_title_counts)
 
     terms = tokenize(query)
     if not terms:
