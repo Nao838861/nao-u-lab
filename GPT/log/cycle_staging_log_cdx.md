@@ -104,7 +104,34 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785096049-72d6ed0a08
+    source_ts: "1785096049.977699"
+    title: "The Shibboleth Effect — 言語だけを変えた継続 interaction の方策差監査"
+    reason: "未レビューの最新 score 11 atom。harness・game-design・agent・operation・evaluation の5優先タグを持ち、locale-only arm が次の多言語 NPC／play-agent 評価に行動差を作るか確認するため選んだ。"
+  scores:
+    relevance: 2
+    actionability: 2
+    evidence: 3
+    non_redundancy: 3
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: defer
+  change:
+    summary: "reviewed_source_ts と state-only review を更新した。具体的な多言語 artifact／consumer がないため probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
