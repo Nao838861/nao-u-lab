@@ -4,14 +4,20 @@ url: "https://arxiv.org/abs/2207.02100"
 collected_at: "2026-05-30T20:44:28+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-generation, player-archetypes, level-design, automated-playtesting]
-status: needs_review
-candidate_status: needs_review
-stale_after: "2026-06-29"
+evaluated_at: "2026-07-26T09:56:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+stale_after: "2026-08-25"
 supersedes: []
-last_reviewed_at: "2026-05-30T20:44:28+09:00"
-last_decision: needs_review
-evidence: "candidate_file:20260530_diverse_behaviour_engagement_levels.md; status:needs_review"
-next_action: evaluate_in_phase2
+last_reviewed_at: "2026-07-26T09:56:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T09:56:00+09:00"
+next_action: keep_for_reference
+gate_reason: |-
+  同じ metric でも tester persona により生成 level が変わる着想は、複数 policy の headless 評価へ直接適用できる。
+  ただし snapshot は abstract の主張に留まり、framework の metric、persona 構成、生成法、比較条件、結果値が不足しているため、単独で約4000字の重要要素と限界を支えられない。
 
 ---
 

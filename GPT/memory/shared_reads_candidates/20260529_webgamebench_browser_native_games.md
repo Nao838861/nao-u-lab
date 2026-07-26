@@ -4,20 +4,20 @@ url: https://arxiv.org/abs/2605.17637
 collected_at: 2026-05-29T12:30:22+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, coding-agents, browser-games, evaluation, requirements]
-evaluated_at: 2026-05-29T12:37:16+09:00
+evaluated_at: "2026-07-26T09:56:00+09:00"
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-29T12:37:16+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-29T12:37:16+09:00"
-stale_after: "2026-06-28"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-26T09:56:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T09:56:00+09:00"
+stale_after: "2026-08-25"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |-
-  requirement-to-application 評価という問題設定と、ブラウザゲームを使う理由は明確で、Nao_u_BOT のチェックリスト化にも接続できる。
-  ただし候補メモ内では benchmark assets、rubric の粒度、既存 GameDevBench / PlaytestArena との差分が未確認で、Phase 3 の単独投稿としては裏取りと比較軸が不足している。
+  requirement-to-application 評価とブラウザゲームを総合テストに使う問題設定は具体的だが、現 snapshot は題名からの推測が中心で、benchmark assets・rubric・baseline・定量結果を抽出できない。
+  2か月近く補強されず、約4000字の概要では既存 GameDevBench / PlaytestArena との差を根拠付きで説明できないため、投稿候補としては閉じて参照用に残す。
 
 ---
 

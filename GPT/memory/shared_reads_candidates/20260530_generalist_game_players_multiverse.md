@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2605.09965"
 collected_at: "2026-05-30T08:30:05+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, generalist-agents, benchmark, harness, survey]
-evaluated_at: "2026-05-30T08:55:00+09:00"
+evaluated_at: "2026-07-26T09:56:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-30T08:55:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-30T08:55:00+09:00"
-stale_after: "2026-06-29"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-26T09:56:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T09:56:00+09:00"
+stale_after: "2026-08-25"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |-
-  Dataset / Model / Harness / Benchmark の 4 層整理は有用だが、現 candidate の内容はサーベイの地図に寄っており、個別手法・評価結果・失敗知見の密度が不足している。
-  ゲーム制作への適用は分類軸としては使える一方、CoopEval 水準の約4000字概要を書くには本文精読と具体例の補強が必要。
+  Dataset / Model / Harness / Benchmark の4層と5段階ロードマップは、Log_cdx の評価系を分類する索引として有用である。
+  しかし現 snapshot は51ページのサーベイ全体を粗く要約した地図に留まり、代表研究の比較、評価結果、trade-off の具体例が無いため、約4000字の投稿では広く浅い紹介にしかならない。
 
 ---
 
