@@ -134,7 +134,99 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 で読み、High Signal / Recent / entry point の atom ID と per-file index の対応を検証した。broken link・重複 index 行は 0 件。"
+  - "memory/atoms.jsonl と per-file .md / index.jsonl の 2,759 件が一致し、ID 重複・content conflict は 0 件。normalized content 重複 40 群は既存 fold で吸収済み、duplicate cluster index 45 群も current。"
+  - "memory/raw/ の 30 日超無更新ファイル 96 件（合計 63,095,789 bytes）を監査した。原文 provenance として参照される immutable source のため、この phase では移動・削除していない。"
+  - "shared-reads candidate 1,119 件の lifecycle を dry-run 監査し、status/candidate_status の巻き戻し・不一致は 0 件。terminal candidate は再評価 queue から除外した。"
+  - "title canonical index 72 群、mixed duplicate queue 45 群、open duplicate group queue 52 群を再監査した。actionable group は 0 群で、group handoff の新規投入は 0 件。"
+  - "slack directives 23 行 / broadcasts 21 行を監査し、pending は双方 0 件。handled へ更新すべき行はなかった。"
+issues:
+  - id: ISS-ENC-ATOM-001
+    description: "shared-reads 原文由来の atom 1 件で「AIエ��ジェント」という置換文字が title / trigger / excerpt に残り、agent 概念の完全一致検索を弱める。もう1件の mojibake suspect は本文中の意図的な「???」であり false positive。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; tools/memory_health.py --json"
+    source_file_status: "UTF-8 明示読みでも raw source と mirrored atom の双方に U+FFFD 相当の置換文字が存在するため、source file 自体の既存破損。MEMORY.md は「記憶」「ゲーム設計」「敵パターン」「評価軸」を UTF-8 読みで取得でき、source は正常。"
+    display_or_tooling_status: "Get-Content -Encoding UTF8 と rg の双方で同じ置換文字を再現。shell / staging 表示だけの mojibake ではない。"
+    why_blocks_game_memory: "「AIエージェント」で過去の context-engineering lesson を検索した時に、この atom の lexical recall が弱くなる。ただし他タグとリンクが残るため影響は限定的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+candidate_lifecycle:
+  total_files: 1119
+  status_counts:
+    posted: 492
+    ready_to_post: 10
+    postponed: 277
+    failed: 327
+    needs_review: 10
+    skipped_unreviewed: 3
+  missing_stale_after: 6
+  overdue_open_total: 113
+  lifecycle_conflicts: 0
+stale_backlog:
+  overdue_open_total: 113
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 52
+  mixed_group_count: 45
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total > stale_triage_queue_rows は成立するが、actionable group が 3 件以上という第2条件は不成立。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-c6153fa93333e0ca
+    - cha-d99042f294f5c2ab
+    - cha-09144b70f47e1b7b
+    - cha-16f86b635d8d295e
+    - cha-804b77d140ede02c
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-c6153fa93333e0ca
+    path: memory/shared_reads_candidates/20260615_representational_similarity_multi_agent_interaction.md
+    status: postponed
+    stale_after: "2026-07-15"
+    priority_reason: "協力性能と novelty / creativity の tradeoff はゲーム AI チーム設計へ接続できるが、task 指標・CKA 解釈・layer 別結果が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-d99042f294f5c2ab
+    path: memory/shared_reads_candidates/20260615_review_arcade_llm_review_gameability.md
+    status: postponed
+    stale_after: "2026-07-15"
+    priority_reason: "LLM judge の Goodhart 化は重要だが、gameability 測定と human alignment 比較の一次 evidence が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-09144b70f47e1b7b
+    path: memory/shared_reads_candidates/20260615_virtualenv_embodied_ai_game_mechanics.md
+    status: postponed
+    stale_after: "2026-07-15"
+    priority_reason: "UE5 embodied AI と procedural environment のゲーム接続は具体的だが、評価結果と結論を保存済み raw から確認できない。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-16f86b635d8d295e
+    path: memory/shared_reads_candidates/20260616_ai_lod_distance_aware_npc_animation.md
+    status: postponed
+    stale_after: "2026-07-16"
+    priority_reason: "AI LOD は NPC animation の runtime cost と知覚品質の分離に効くが、評価条件・品質劣化指標・実装制約が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-804b77d140ede02c
+    path: memory/shared_reads_candidates/20260617_gaia_game_ai_assistant_accessibility.md
+    status: postponed
+    stale_after: "2026-07-17"
+    priority_reason: "accessibility / autonomy / ethics の設計軸は有用だが、提案原則・調査設計・評価 evidence が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
