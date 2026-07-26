@@ -138,7 +138,144 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示で読み、代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」を確認した。index 内の atom ID は全件 memory/atoms/index.jsonl に存在し、memory/atoms.jsonl と memory/raw/ の参照先も存在した。"
+  - "memory/atoms.jsonl 2,757件を memory_health.py で監査した。atoms.jsonl / per-file md / index.jsonl は各2,757件で一致し、content conflict・parse error・missing file は0。raw normalized-content duplicate 40群は lifecycle/content fold 済みで、effective display の未解決重複は0群。"
+  - "memory/raw/ の mtime 30日超を監査した。96件中、固定参照の slack_archive 1件と root control file 1件を除く web_research / headless_eval 94件を archive 候補として識別した。既存の archive 契約がないため移動はしていない。"
+  - "shared-reads candidate 1,115件の lifecycle を監査した。posted 489 / ready_to_post 10 / postponed 296 / failed 304 / needs_review 13 / status 未分類 3。期限到来 open candidate は131件。terminal は再評価 queue へ入れていない。"
+  - "title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再生成した。open duplicate 55群のうち mixed 48 / all_open 7、今回 actionable group は3群。"
+  - "Slack inbox lifecycle を監査し、slack_directives / slack_broadcasts とも pending 0件を確認した。handled へ更新すべき行はなかった。"
+  - "永続 group handoff inbox へ actionable group 3群、candidate handoff inbox へ group と重ならない stale candidate 5件を source_cycle_id 2026-07-27 00:13 で冪等 enqueue した。両 audit は errors 0。"
+issues:
+  - id: ISS-MOJIBAKE-001
+    description: "atom sr-1776127289-4d9239b255 の「AIエージェント」が「AIエ��ジェント」として source raw から atom mirror まで保存されている。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492,1216; memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みでも U+FFFD が2文字あり、source raw 自体の破損。memory/MEMORY.md 本文は UTF-8 正常。"
+    display_or_tooling_status: "none; shell 表示だけの mojibake ではない。"
+    why_blocks_game_memory: "「AIエージェント」を自然語で探す時の title / trigger 一致を弱める。ただし agent tag が残るため影響は限定的。"
+  - id: ISS-STALE-BACKLOG-001
+    description: "postponed / needs_review の期限到来 open candidate が131件あり、stale triage sidecar の50行上限を超えている。"
+    severity: medium
+    evidence: "backfill_shared_reads_candidate_status.py --today 2026-07-27: overdue_for_reassessment=131; memory/shared_reads_stale_triage_queue.jsonl: 50 rows"
+    source_file_status: "candidate frontmatter audit は conflict 修復対象0件。現在状態は正規 status / last_decision / evidence から読めている。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "有用なゲーム制作知見の再評価が複数 cycle 待ちになり、次の制作で使える情報が ready / posted 層へ上がるまで遅れる。既存の bounded handoff 経路は正常に動作している。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 131
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 3
+  backlog_high_water: true
+  backlog_high_water_reason: "overdue_open_total > queue rows と actionable group 3件以上の両方を満たす。"
+  group_handoff_budget: 3
+  handed_off_group_count: 3
+  handoff_inbox_pending_count: 3
+  handoff_inbox_ids:
+    - gha-7842e8b5b34687f1
+    - gha-0ff8c395ef1f8f05
+    - gha-3bcd5b7a2c22b421
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-d9957bf3617d7cd7
+    - cha-d6db38f0840f5f16
+    - cha-a33adf3bc1488244
+    - cha-5016f980c3ce8acc
+    - cha-eb03dbb3a72f054b
+group_action_handoff:
+  - handoff_id: gha-7842e8b5b34687f1
+    group_key: "autobg a board game design assistant with interactive ideation iterative rulebook generation and individualized feedback"
+    group_kind: mixed
+    representative: memory/shared_reads_candidates/20260627_autobg_board_game_design_assistant.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260627_autobg_board_game_design_assistant.md
+      - memory/shared_reads_candidates/20260708_autobg_board_game_design_assistant.md
+      - memory/shared_reads_candidates/20260709_autobg_board_game_design_assistant.md
+      - memory/shared_reads_candidates/20260710_autobg_board_game_design_assistant.md
+      - memory/shared_reads_candidates/20260711_autobg_critic_driven_board_game_design.md
+      - memory/shared_reads_candidates/20260712_autobg_board_game_design_assistant.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260606_autobg_board_game_design_assistant.md
+      - memory/shared_reads_candidates/20260609_autobg_board_game_design_assistant.md
+      - memory/shared_reads_candidates/20260616_autobg_board_game_design_assistant.md
+      - memory/shared_reads_candidates/20260618_autobg_board_game_design_assistant.md
+      - memory/shared_reads_candidates/20260620_autobg_board_game_design_assistant.md
+      - memory/shared_reads_candidates/20260625_autobg_board_game_design_assistant.md
+      - memory/shared_reads_candidates/20260626_autobg_board_game_design_assistant.md
+    latest_evidence: "memory/shared_reads_candidates/20260627_autobg_board_game_design_assistant.md; status=needs_review; stale_after=2026-07-27"
+  - handoff_id: gha-0ff8c395ef1f8f05
+    group_key: "ptcg bench can llm agents master pokemon trading card game"
+    group_kind: mixed
+    representative: memory/shared_reads_candidates/20260627_ptcg_bench_harness_aware_agents.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260627_ptcg_bench_harness_aware_agents.md
+      - memory/shared_reads_candidates/20260708_ptcg_bench_llm_tcg_agents.md
+      - memory/shared_reads_candidates/20260709_ptcg_bench_self_evolving_agents.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260530_ptcg_bench_self_evolving_game_agents.md
+      - memory/shared_reads_candidates/20260608_ptcg_bench_self_evolving_game_agents.md
+      - memory/shared_reads_candidates/20260618_ptcg_bench_self_evolving_card_game_agents.md
+    latest_evidence: "memory/shared_reads_candidates/20260627_ptcg_bench_harness_aware_agents.md; status=needs_review; stale_after=2026-07-27"
+  - handoff_id: gha-3bcd5b7a2c22b421
+    group_key: "revengebench reverse engineering code space policies from behavioral experiments"
+    group_kind: mixed
+    representative: memory/shared_reads_candidates/20260627_revengebench_policy_reverse_engineering.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260627_revengebench_policy_reverse_engineering.md
+      - memory/shared_reads_candidates/20260708_revengebench_behavioral_policy_recovery.md
+      - memory/shared_reads_candidates/20260709_revengebench_policy_reverse_engineering.md
+      - memory/shared_reads_candidates/20260711_revengebench_behavioral_policy_recovery.md
+      - memory/shared_reads_candidates/20260712_revengebench_behavioral_policy_recovery.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260626_revengebench_behavioral_policy_recovery.md
+    latest_evidence: "memory/shared_reads_candidates/20260627_revengebench_policy_reverse_engineering.md; status=needs_review; stale_after=2026-07-27"
+stale_review_batch:
+  - handoff_id: cha-d9957bf3617d7cd7
+    path: memory/shared_reads_candidates/20260612_gdc2026_level_design_playtesting_topics.md
+    status: postponed
+    stale_after: "2026-07-12"
+    priority_reason: "GDC 2026 の設計系トピック集合への入口メモであり、個別セッションへ分解して手法・評価・結論を再確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-d6db38f0840f5f16
+    path: memory/shared_reads_candidates/20260613_emembench_interactive_agent_memory.md
+    status: postponed
+    stale_after: "2026-07-13"
+    priority_reason: "episodic memory 評価を playtest trace に接続できるが、質問生成手順・環境・評価指標・主要結果を原文で補う必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-a33adf3bc1488244
+    path: memory/shared_reads_candidates/20260613_gamearena_live_computer_games.md
+    status: postponed
+    stale_after: "2026-07-13"
+    priority_reason: "live game で reasoning data を集める枠組みは有用だが、game 内訳・capability 割当・scoring と分析結果を再確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-5016f980c3ce8acc
+    path: memory/shared_reads_candidates/20260613_gametilenet_low_resolution_game_art.md
+    status: postponed
+    stale_after: "2026-07-13"
+    priority_reason: "2D tile-based PCG と asset review の評価軸は具体的だが、dataset 規模・annotation・比較結果を原文で補う必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-eb03dbb3a72f054b
+    path: memory/shared_reads_candidates/20260613_godot_vibecode_metroidvania_postmortem.md
+    status: postponed
+    stale_after: "2026-07-13"
+    priority_reason: "AI agent で複雑ジャンルを作る production risk は有用だが、実装内訳・失敗箇所・再現可能な判断軸を再確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
