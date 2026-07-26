@@ -162,7 +162,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780514208-382e49068c
+    source_ts: "1780514208.775089"
+    title: "AgeMem 投稿 continuation — Share 軸非対応と過去訂正の再訂正"
+    reason: "score 11 の最新未レビュー atom で、memory・agent・operation・evaluation の4優先タグを持つ。同じ AgeMem 投稿の主 block と現在の memory cleanup に対し、continuation 固有の Share 軸・訂正履歴が異なる次回行動を作るか確認した。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "合計12で採用条件の14に届かない。同じ Slack 投稿の主 block 1780514208.751289 は review 済みで、probe-20260604-memory-discard-operation-gate が訂正時の update／discard-retire／superseded 明示をすでに扱う。Log/Mir/Ash 共有を前提にした直接転用も 2026-06-26 の active directive で失効しており、continuation 固有の probe を加えても判断差を作らない。"
+  change:
+    summary: "reviewed_source_ts と、既存 review・probe・後続 directive との重複／矛盾による state-only reject 理由だけを更新した。新規 probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

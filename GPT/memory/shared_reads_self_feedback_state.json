@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-27T00:38:06+09:00",
+  "updated_at": "2026-07-27T02:53:25+09:00",
   "reviewed_source_ts": [
+    "1780514208.775089",
     "1785070961.347809",
     "1785070978.821379",
     "1785052956.135639",
@@ -514,6 +515,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-27T02:53:25+09:00",
+      "selected": {
+        "id": "sr-1780514208-382e49068c",
+        "source_ts": "1780514208.775089",
+        "title": "AgeMem 投稿 continuation — Share 軸非対応と過去訂正の再訂正",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす最新候補で、memory・agent・operation・evaluation の4優先タグを持つ。主 block の AgeMem review、現在の memory cleanup、後続 directive に対して、この continuation 固有の Share 軸と訂正履歴が別の次回行動を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かないため、新規 probe・metric・directive は追加しない。continuation は、AgeMem に multi-agent 間 Share 軸がないこと、過去の「AgeMem は架空」という訂正自体を再訂正すべきこと、外部ノートと memory redesign を更新する候補を示すため actionability=2 とした。一方、「名称が潜在記憶から混入した可能性」は推測で、訂正前後の artifact や再現検証を伴わないため evidence=2 とした。同じ Slack 投稿の主 block `1780514208.751289` はすでに review 済みで、`probe-20260604-memory-discard-operation-gate` が store／retrieve／update／summarize／discard-retire の分類と obsolete／superseded の明示を要求している。さらに Log/Mir/Ash 共有を前提にした直接転用は、2026-06-26 の active directive `directive_shared_reads_log_cdx_standalone_20260626.md` により現在の運用前提ではない。continuation 固有の probe を加えても次回判断を変えず、321件の active_probes と pending lease 1件へ重複確認を増やすため non_redundancy=0 とした。本文は履歴・訂正 provenance として保持し、運用には追加しない。",
+      "existing_reviews": [
+        "1780514208.751289"
+      ],
+      "existing_probes": [
+        "probe-20260604-memory-discard-operation-gate"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、同じ AgeMem 投稿の review 済み主 block、既存 discard/retire probe、後続 directive による stale premise との重複・矛盾による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-27T00:38:06+09:00",
       "selected": {
