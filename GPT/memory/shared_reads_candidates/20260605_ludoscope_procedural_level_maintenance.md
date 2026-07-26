@@ -4,18 +4,20 @@ url: "https://www.pcgworkshop.com/database.php"
 collected_at: "2026-06-05T23:50:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, pcg, level-design, maintenance, dsl, roguelike]
-evaluated_at: "2026-06-05T23:55:00+09:00"
+evaluated_at: "2026-07-26T16:53:28+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-05T23:55:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-05T23:55:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-05"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-26T16:53:28+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T16:53:28+09:00; preflight:posted-source URL collision with distinct title"
+next_action: keep_for_reference
+stale_after: "2026-08-25"
 supersedes: []
-gate_reason: "PCG ??? DSL ????????????Nao_u_BOT ? generator/template ??????????????????? Ludoscope ? bottom-up analysis ? level blueprints DSL ?????????4000??????????????????????????????"
+gate_reason: |-
+  候補本文が文字化けしており、Ludoscope の保守手法、評価、結論を検証可能な形で抽出できない。
+  URL は PCG Workshop の汎用 database ページで別題材の posted-source と衝突し、work identity も確定できないため投稿候補から外す。
 ---
 
 ## raw_excerpt

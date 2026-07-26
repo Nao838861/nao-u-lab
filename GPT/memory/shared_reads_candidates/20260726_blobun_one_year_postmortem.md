@@ -4,6 +4,26 @@ url: "https://cyansorcery.itch.io/blobun/devlog/1455287/one-year-of-blobun"
 collected_at: "2026-07-26T16:48:23.3967710+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, puzzle, postmortem, difficulty, progression, launch, player-feedback]
+evaluated_at: "2026-07-26T16:53:28+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-26T16:53:28+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-26T16:53:28+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-25"
+supersedes: []
+gate_reason: |-
+  難易度の相反反応を achievement 到達率と optional puzzle の設計に結び、公開後の解答互換性、価格改定、販売実績まで同一作品で追えている。
+  puzzle progression、telemetry、live maintenance、継続制作判断へ具体的に適用でき、固有の数値と判断過程を保った約4000字概要を構成できる。
+suggested_post_outline:
+  overview_angle: "発売後1年の定量値と作者判断をつなぎ、難易度設計・互換性・価格・次作判断を一つの運用記録として読む"
+  analysis_axis: "相反する主観 feedback を achievement と optional challenge で分解した点、解答互換性を保つ保守、実測時間に応じた価格改定"
+  application_target: "小型 puzzle prototype の必須導線と任意難問の分離、到達率 telemetry、公開後 patch の互換性 gate、継続制作の停止条件"
+  pros_cons: "具体値と意思決定が揃う一方、単一作品の自己報告で因果比較や cohort 分析はない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

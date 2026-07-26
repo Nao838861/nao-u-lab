@@ -4,20 +4,20 @@ url: "https://schedule.gdconf.com/session/ai-augmented-playtesting-test-smarter-
 collected_at: "2026-06-05T21:44:25+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-testing, playtesting, qa, ai-agent, gdc2026]
-evaluated_at: "2026-06-05T21:48:11+09:00"
+evaluated_at: "2026-07-26T16:53:28+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-05T21:48:11+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-05T21:48:11+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-05"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-26T16:53:28+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T16:53:28+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-25"
 supersedes: []
 gate_reason: >-
-  人間 tester と AI execution / regression / outcome tracking の分担は実用的だが、現状は GDC セッション概要の範囲に留まる。
-  FRIDA の具体手順、評価例、失敗例が不足しており、この材料だけで 4000 字の残すべき概要を書くと推測が混ざる。
+  人間 tester と AI execution / regression / outcome tracking の分担は実用的だが、材料は GDC セッション概要の範囲に留まる。
+  FRIDA の具体手順、評価例、比較結果、失敗例を欠き、約4000字の概要では推測が中心になるため投稿候補から外す。
 ---
 
 ## raw_excerpt

@@ -4,6 +4,20 @@ url: "https://aliencowstudios.itch.io/demons-dining-darling-proto/devlog/1452742
 collected_at: "2026-07-26T16:47:52.8473536+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, game-jam, postmortem, teamwork, production, playtesting]
+evaluated_at: "2026-07-26T16:53:28+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-26T16:53:28+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T16:53:28+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-25"
+supersedes: []
+gate_reason: |-
+  4L と player feeling / action の共有は制作運用に接続できるが、内容はチームの所感と次回方針が中心で、成果の評価がない。
+  discipline 間依存や check-in の固有手順も薄く、約4000字では一般的なチーム運営論へ流れるため投稿候補から外す。
 ---
 
 ## raw_excerpt

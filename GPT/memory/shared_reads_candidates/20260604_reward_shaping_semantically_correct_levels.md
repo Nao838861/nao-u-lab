@@ -4,21 +4,20 @@ url: "https://openreview.net/forum?id=qJxHSdTiZR"
 collected_at: "2026-06-04T23:18:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, pcg, pcgrl, reward-shaping, level-design, zelda-gym]
-evaluated_at: "2026-06-04T23:20:00+09:00"
+evaluated_at: "2026-07-26T16:53:28+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-04T23:20:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-04T23:20:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-04"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-26T16:53:28+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T16:53:28+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-25"
 supersedes: []
 gate_reason: |-
-  問題設定、reward shaping という中核アイデア、Zelda Gym で semantic correctness を狙う方向性は抽出できる。
-  一方で、現メモだけでは shaping function の具体設計、比較条件、評価指標、結果の厚みが不足しており、CoopEval 水準の 4000 字概要に直行すると推測の比率が高くなる。
-  Nao_u_BOT の wave / stage 生成への適用軸はあるため、一次情報を読み足してから再評価する候補として残す。
+  問題設定と reward shaping の着想は有用だが、候補本文には shaping function、比較条件、評価指標、定量結果がない。
+  前回保留後も Phase 3 の約4000字概要を一次資料に沿って書ける密度へ達しておらず、適用も一般論を越えないため投稿候補から外す。
 ---
 
 ## raw_excerpt

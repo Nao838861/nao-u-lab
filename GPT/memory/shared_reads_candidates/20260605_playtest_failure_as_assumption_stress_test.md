@@ -4,21 +4,20 @@ url: "https://www.reddit.com/r/IndieDev/comments/1t70n3q/after_managing_50_playt
 collected_at: "2026-06-05T03:29:39.2998661+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, playtesting, indie-dev, prototype, player-observation]
-evaluated_at: "2026-06-05T03:32:40.3047037+09:00"
+evaluated_at: "2026-07-26T16:53:28+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-05T03:32:40.3047037+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-05T03:32:40.3047037+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-05"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-26T16:53:28+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-26T16:53:28+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-25"
 supersedes: []
 gate_reason: |
-  「playtest は好評確認ではなく仮説の stress-test」という軸はゲーム制作に直接使える。
-  ただし Reddit の単独実践メモで、評価設計・失敗例・再現条件の裏付けが薄く、現状の raw_excerpt だけでは CoopEval 水準の ~4000 字概要に必要な密度が足りない。
-  投稿候補にするなら、既存 playtest 研究または自環境の playtest 記録と突き合わせて、手法としての境界条件を補強する必要がある。
+  「playtest は好評確認ではなく仮説の stress-test」という軸は直接使えるが、単独の実践談で評価設計、失敗例、再現条件の裏付けが薄い。
+  前回保留後も約4000字の残すべき概要に必要な固有情報が増えておらず、一般的な playtest 助言を越えないため投稿候補から外す。
 ---
 
 ## raw_excerpt
