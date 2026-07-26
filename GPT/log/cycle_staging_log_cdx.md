@@ -128,7 +128,112 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査し、index/per-file atom の不整合とローカル Markdown broken link が 0 件であることを確認した。"
+  - "memory/atoms.jsonl 2752件を監査し、raw normalized-content 重複40群は canonical/lifecycle fold 済み、effective display の未解決重複・mirror content conflict・parse error は各0件と確認した。"
+  - "memory/raw/ の最終更新30日超は95件。slack archive と論文原文は atom/candidate の一次 evidence なので自動移動せず、explicit keep とした。"
+  - "candidate lifecycle 1106件を現在状態優先で監査した。terminal posted/failed は再評価対象外とし、open 期限超過148件を stale/group queue の入力にした。"
+  - "title canonical index、mixed/open duplicate queue、stale triage queue、group action queue を再生成した。actionable group 0件のため group handoff は0件、group外candidate 5件だけを Phase 2 handoff inboxへ冪等enqueueした。"
+  - "Slack directive/broadcast の pending は各0件で、handled 更新対象はなかった。"
+  - "memory_health の mojibake suspect 2件をUTF-8原文まで照合した。sr-1776127289-4d9239b255 は raw Slack source 自体に replacement character があり、gr-1777083728-44d444ab7a は原文中の意図的な `???` による tooling false positive。大規模修復は行わなかった。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+encoding_audit:
+  memory_md:
+    source_file_status: "UTF-8 intact; 代表語 `記憶` / `ゲーム設計` / `敵パターン` / `評価軸` を取得可能"
+    display_or_tooling_status: none
+  isolated_atom_source:
+    source_file_status: "sr-1776127289-4d9239b255 は raw Slack archive の時点で `エ��ジェント` と欠損"
+    display_or_tooling_status: "MEMORY.md や PowerShell 表示経路で新たに生じた mojibake ではない"
+candidate_lifecycle:
+  files: 1106
+  status_counts:
+    posted: 485
+    ready_to_post: 10
+    postponed: 311
+    failed: 286
+    needs_review: 13
+    skipped_unreviewed: 1
+  missing_stale_after: 4
+  missing_stale_after_disposition: "posted 3件はterminalのため除外。新規未評価1件は次Phase 2の通常評価対象。"
+  overdue_open_total: 148
+  anomaly_counts:
+    stale_after_differs_from_30d_default: 17
+  anomaly_disposition: "明示 stale_after を正本として保持。status/candidate_status mismatch と evidence 欠落は0件。"
+raw_archive_audit:
+  cutoff: "2026-06-26"
+  inactive_over_30d_count: 95
+  archived_count: 0
+  disposition: "一次 evidence への参照を壊さないため explicit_keep"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+  next_due:
+    probe_id: probe-20260724-minimum-sufficient-scope-ladder
+    lease_due: "2026-07-31T00:23:59+09:00"
+stale_backlog:
+  overdue_open_total: 148
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_evidence: "148 > 50 は満たすが actionable group 0 < 3 のため"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_enqueued_count: 5
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-dd8699287c5ca833
+    - cha-0029e1bfd545d8a6
+    - cha-83daa38a2ee6b5d5
+    - cha-4aaf510d9045e308
+    - cha-657ffe62856b215e
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-dd8699287c5ca833
+    path: memory/shared_reads_candidates/20260604_reward_shaping_semantically_correct_levels.md
+    status: postponed
+    stale_after: "2026-07-04"
+    priority_reason: "22日超過。reward shaping と Zelda Gym の接続は有望だが、shaping function・比較条件・評価指標が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-0029e1bfd545d8a6
+    path: memory/shared_reads_candidates/20260605_adversarial_taboo_self_play.md
+    status: postponed
+    stale_after: "2026-07-05"
+    priority_reason: "21日超過。adversarial self-play の問題設定は明確だが、RL手順・benchmark内訳・失敗条件が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-83daa38a2ee6b5d5
+    path: memory/shared_reads_candidates/20260605_ai_augmented_playtesting_gdc2026.md
+    status: postponed
+    stale_after: "2026-07-05"
+    priority_reason: "21日超過。人間testerとAI executionの分担は有用だが、GDC概要だけでFRIDAの手順・評価・失敗例が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-4aaf510d9045e308
+    path: memory/shared_reads_candidates/20260605_ludoscope_procedural_level_maintenance.md
+    status: postponed
+    stale_after: "2026-07-05"
+    priority_reason: "21日超過。UTF-8表示経路ではなくsource file自体の日本語が`?`へ欠損しており、原典再取得またはfail判断が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-657ffe62856b215e
+    path: memory/shared_reads_candidates/20260605_playtest_failure_as_assumption_stress_test.md
+    status: postponed
+    stale_after: "2026-07-05"
+    priority_reason: "21日超過。playtestを仮説stress-testと見る軸は有用だが、単独実践メモで評価設計・再現条件が薄い。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
