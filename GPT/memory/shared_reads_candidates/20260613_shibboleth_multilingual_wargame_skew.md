@@ -7,12 +7,17 @@ genre_tags: [multi-agent, wargame, localization, agent-evaluation, llm-agents, s
 evaluated_at: "2026-07-27T04:52:35+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-27T04:52:35+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-27T04:52:35+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-27T05:00:49+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785096049977699"
+next_action: none
+posted:
+  ts: "1785096049.977699"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785096049977699"
+  char_count: 4457
+  posted_at: "2026-07-27T05:00:49+09:00"
 stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |-

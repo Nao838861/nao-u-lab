@@ -94,7 +94,18 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+reviewed_at: "2026-07-27T05:01:39+09:00"
+posted:
+  - candidate: memory/shared_reads_candidates/20260613_shibboleth_multilingual_wargame_skew.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785096049977699"
+    char_count: 4457
+skipped:
+  - candidate: memory/shared_reads_candidates/20260727_ggea_gan_guided_dungeon_generation.md
+    reason: "一次情報の公開範囲では数値表、学習データ、baseline 条件、ablation、fitness 重みを確認できず、記事固有の評価と失敗条件を3500-4500字で支えられない"
+    action: candidate_revise
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

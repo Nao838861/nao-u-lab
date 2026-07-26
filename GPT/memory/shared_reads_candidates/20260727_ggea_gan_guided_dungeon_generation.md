@@ -7,14 +7,17 @@ genre_tags: [game-design, procedural-generation, dungeon-generation, evolutionar
 evaluated_at: "2026-07-27T04:52:35+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-27T04:52:35+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-27T04:52:35+09:00"
-next_action: post_to_shared_reads
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-27T05:01:39+09:00"
+last_decision: postponed
+evidence: "Phase 3 final review: public primary source exposes the abstract and section snippets, but not the quantitative tables, training data, ablation details, or fitness weights needed for a standalone 3500-4500 character analysis."
+next_action: collect_full_text_or_author_manuscript
 stale_after: "2026-08-26"
 supersedes: []
+phase3_reason: |-
+  GAN prior、skeleton encoding、FI-2Pop の責務分離は有望だが、公開範囲では exact sample size、dataset、baseline settings、数値結果、ablation、composite fitness の重みを検証できない。
+  abstract の主張を一般的な PCG 解説で水増しすると candidate 固有の評価内容と失敗条件を欠くため、全文または著者 manuscript を得るまで投稿しない。
 gate_reason: |-
   GAN prior、進行 skeleton、FI-2Pop による実行可能性回復という役割分離が明確で、比較対象、収束、外部評価、expressive range まで結論を追える。
   生成レベルを大域形状・進行保証・局所探索に分ける実装 probe と、playability／多様性の評価軸へ直接落とせるため、4000 字級の分析に耐える。
