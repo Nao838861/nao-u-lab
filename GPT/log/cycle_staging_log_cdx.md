@@ -88,7 +88,20 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260727_loop_explorers_fun_vs_balance.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785104114557329
+    char_count: 3923
+skipped: []
+review:
+  source_verified: true
+  duplicate_preflight: continue
+  policy_check: ok
+  slack_storage_verification: ok
+  decision: "部分採用。経済・判断・盤面・表現を別々の回帰軸として採用し、gold 方式そのものは一般化しない"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
