@@ -227,4 +227,15 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785061801375309"
+  char_count: 2297
+  verification: ok
+  draft: drafts/phase5_log_diary_20260726_1858_cdx.md
+```
+
+- 今サイクルの focus: 小刻みな playable slice と外部 playtest が難易度 progression・非線形 mechanic・accessibility の判断をどう変えたかを、記憶側の defer／重複防止／局所破損監査と接続して振り返った。
+- 次サイクルへの引き継ぎ: 期限到来した5候補を比較条件と評価根拠で再判定し、ゲーム制作では「周期の短さ」ではなく各周期で何を外部観測し、何を撤回可能にするかを見る。
