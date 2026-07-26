@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2601.02427"
 collected_at: "2026-06-13T04:10:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, agent, benchmark, gameplay-video, generalist-agent]
-evaluated_at: "2026-06-13T04:05:39+09:00"
+evaluated_at: "2026-07-27T04:52:35+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-13T04:05:39+09:00"
+last_reviewed_at: "2026-07-27T04:52:35+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-13T04:05:39+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T04:52:35+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-13"
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |-
-  問題設定、着想、手法の中核は抽出できるが、現時点の候補本文は検索結果要旨ベースで、評価環境、比較条件、成功率改善の中身、限界が不足している。
-  Nao_u_BOT への適用も「観察して操作する agent」一般に留まり、playable diff 検証へ落とす具体手順がまだ弱い。4000 字級の概要を書くには原文確認が必要。
+  大規模な動画・行動対から汎用ゲーム agent を作る問題設定と中核構成は抽出できるが、現 candidate には benchmark のゲーム分割、比較条件、定量結果、失敗例がない。
+  playable diff 検証への接続も一般的な自動操作に留まるため、4000 字級の概要にする前に一次資料から評価設計と限界を補う必要がある。
 ---
 
 ## raw_excerpt

@@ -4,6 +4,26 @@ url: "https://doi.org/10.1016/j.asoc.2026.115962"
 collected_at: "2026-07-27T04:47:11.6071047+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-generation, dungeon-generation, evolutionary-computation, level-design]
+evaluated_at: "2026-07-27T04:52:35+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-27T04:52:35+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-27T04:52:35+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-26"
+supersedes: []
+gate_reason: |-
+  GAN prior、進行 skeleton、FI-2Pop による実行可能性回復という役割分離が明確で、比較対象、収束、外部評価、expressive range まで結論を追える。
+  生成レベルを大域形状・進行保証・局所探索に分ける実装 probe と、playability／多様性の評価軸へ直接落とせるため、4000 字級の分析に耐える。
+suggested_post_outline:
+  overview_angle: "生成モデルを完成品生成器ではなく、探索空間を偏らせる spatial prior として使う三段階設計"
+  analysis_axis: "prior・skeleton・FI-2Pop の責務分離が制御性、実行可能性、探索効率をどう両立させるか"
+  application_target: "ダンジョン試作で主要進行を固定し、局所形状だけを探索して playability と expressive range を比較する小規模 probe"
+  pros_cons: "学習済み形状知識と明示制約を併用できる一方、学習データ偏り、複合 fitness、計算量の再現確認が必要"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

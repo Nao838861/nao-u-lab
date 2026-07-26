@@ -4,18 +4,26 @@ url: "https://arxiv.org/abs/2606.11082"
 collected_at: "2026-06-13T23:59:29+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [multi-agent, wargame, localization, agent-evaluation, llm-agents, simulation]
-evaluated_at: "2026-06-14T00:03:38+09:00"
-evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-14T00:03:38+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-14T00:03:38+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-14"
+evaluated_at: "2026-07-27T04:52:35+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-27T04:52:35+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-27T04:52:35+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-26"
 supersedes: []
-gate_reason: "問題設定・実験条件・測定軸は明確で、ゲーム内外交やローカライズ評価との接続もある。ただし現 candidate は要旨ベースで、言語差がゲーム制作上の具体的なテスト設計へどう落ちるかの橋渡しがまだ薄く、Phase 3 の ~4000字投稿には追加の読み込みが必要。"
+gate_reason: |-
+  言語だけを変える統制実験、6モデル・各10ゲーム・5ラウンド、586発言、2評価軸、モデル別の方向差まで揃い、問題設定から結論まで再構成できる。
+  同一シナリオを日本語／英語で反実仮想テストする NPC・交渉 agent の評価手順へ具体化でき、4000 字級の分析を支える密度がある。
+suggested_post_outline:
+  overview_angle: "言語を翻訳層ではなく agent 行動を変える実験変数として扱う監査設計"
+  analysis_axis: "language-only の統制、発言分類、モデル間の異質性から因果主張の範囲と限界を読む"
+  application_target: "ゲーム内外交・NPC会話の同一状態を日本語／英語で反復し、譲歩率と威圧表現の差を回帰テストする"
+  pros_cons: "低コストな多言語行動監査へ転用できる一方、単一シナリオと自動分類器の妥当性に依存する"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

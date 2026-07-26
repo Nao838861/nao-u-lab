@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2605.18693"
 collected_at: "2026-06-13T05:59:47+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-skill, benchmark, workflow, game-production]
-evaluated_at: "2026-06-13T06:16:00+09:00"
+evaluated_at: "2026-07-27T04:52:35+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-13T06:16:00+09:00"
+last_reviewed_at: "2026-07-27T04:52:35+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-13T06:16:00+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T04:52:35+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-13"
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |
-  agent skill を corpora から生成し固定 harness で実行評価する問題設定は、ゲーム制作サイクルの手順抽出・再利用にかなり近い。
-  ただし candidate 本文は abstract excerpt 中心で、benchmark の task 構成、評価指標、比較結果、失敗傾向が不足しており、CoopEval 水準の概要を書くには原文精読が必要。
+  corpora から skill を生成し固定 harness で実行評価する着想は、制作手順の再利用と回帰検証へ具体的に接続できる。
+  一方、現 candidate は abstract 抜粋だけで、task 構成、採点指標、pipeline 間の比較結果、失敗傾向がなく、CoopEval 水準の概要には一次資料の補強が必要。
 ---
 
 ## raw_excerpt

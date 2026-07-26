@@ -4,21 +4,20 @@ url: "https://gdcvault.com/play/1035633/The-Future-of-Fair-Play"
 collected_at: "2026-06-14T18:00:02+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, multiplayer, ai, anti-cheat, player-trust, gdc2026]
-evaluated_at: "2026-06-14T18:02:19+09:00"
+evaluated_at: "2026-07-27T04:52:35+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-14T18:02:19+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-14T18:02:19+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-14"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-27T04:52:35+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-27T04:52:35+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |-
-  AI agent が参加する multiplayer の信頼設計という観点は、自作ゲームの評価環境にも応用余地がある。
-  一方で candidate は threat / detection / trust の大枠だけで、検出設計、誤検知、UX との両立策の具体性が足りない。
-  Phase 3 投稿には実運用上の設計原則や事例の根拠が必要なので、現段階では保留。
+  AI cheat と AI-driven detection の対立構図は重要だが、現 candidate はセッション紹介文だけで、検出手法、誤検知、運用事例、player trust とのトレードオフを検証できない。
+  4000 字級の概要に必要な手法と評価の中身がなく、ゲーム制作への適用も一般論を越えないため、投稿候補から外して参照用に留める。
 ---
 
 ## raw_excerpt
