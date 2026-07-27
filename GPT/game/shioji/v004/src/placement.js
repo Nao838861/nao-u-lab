@@ -1,4 +1,4 @@
-import { BUILDING_SIZES } from './config.js?v=v004.36.0-spatial-productivity';
+import { BUILDING_SIZES } from './config.js?v=v004.37.0-multi-market';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

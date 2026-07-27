@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.36.0-spatial-productivity';
+import { SPEEDS } from './config.js?v=v004.37.0-multi-market';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

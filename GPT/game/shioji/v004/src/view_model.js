@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.36.0-spatial-productivity';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.37.0-multi-market';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.36.0-spatial-productivity';
+} from './food_readability.js?v=v004.37.0-multi-market';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.36.0-spatial-productivity';
-import { analyzeRoadConnections } from './placement.js?v=v004.36.0-spatial-productivity';
+} from './engine_bridge.js?v=v004.37.0-multi-market';
+import { analyzeRoadConnections } from './placement.js?v=v004.37.0-multi-market';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.36.0-spatial-productivity';
+} from './render_scene.js?v=v004.37.0-multi-market';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.36.0-spatial-productivity';
+} from './visuals.js?v=v004.37.0-multi-market';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
@@ -1426,6 +1426,13 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
       ? portBerth(portBuilding, terrain, snapshot.physical.width, snapshot.physical.height)
       : null,
     economyMarket: { ...snapshot.economy.market },
+    marketNetwork: snapshot.economy.marketNetwork
+      ? {
+        markets: (snapshot.economy.marketNetwork.markets ?? []).map(market => ({ ...market })),
+        summary: (snapshot.economy.marketNetwork.summary ?? []).map(row => ({ ...row })),
+        tradeReceipts: (snapshot.economy.marketNetwork.tradeReceipts ?? []).map(receipt => ({ ...receipt })),
+      }
+      : null,
     zones: snapshot.economy.zones.map(zone => ({ ...zone })),
     reservedBuildingSites: (snapshot.economy.reservedBuildingSites ?? []).map(site => ({ ...site })),
     roadWorksites: snapshot.physical.roadWorksites.map(site => ({ ...site })),

@@ -53,6 +53,7 @@ import {
   stepPortHandling,
 } from "./physical.js";
 import { nextMulberry32, normalizeSeed } from "./prng.js";
+import { createMarketNetwork, marketNetworkSummary } from "./market_network.js";
 
 function tread(economy, x, y) {
   const key = keyOf(Math.round(x), Math.round(y));
@@ -963,6 +964,7 @@ export function createWorld({
   port = null,
   logisticsSites = null,
   stateSnapshot = null,
+  marketNetwork = null,
 } = {}) {
   const restored = stateSnapshot ? structuredClone(stateSnapshot) : null;
   if (restored && (
@@ -997,7 +999,14 @@ export function createWorld({
     rngState: normalizedSeed,
     physical,
     economy,
+    marketNetwork: createMarketNetwork({
+      markets: marketNetwork?.markets ?? [{ id: "main", name: "本市場", entrance: economy.market }],
+      hysteresis: marketNetwork?.hysteresis,
+    }),
   };
+  state.marketNetwork ??= createMarketNetwork({
+    markets: [{ id: "main", name: "本市場", entrance: economy.market }],
+  });
   state.seed = normalizedSeed;
   state.rngState = normalizeSeed(state.rngState ?? normalizedSeed);
   if (!restored) initializeNaturalResources(economy, physical);
@@ -1020,6 +1029,9 @@ export function createWorld({
       );
       ensureCompanyLogisticsSites(economy, physical);
       ensureHouseholdInputSites(economy, physical);
+      if ((state.marketNetwork.markets?.length ?? 0) > 1) {
+        state.marketNetwork = marketNetworkSummary(physical, economy, state.marketNetwork);
+      }
       ageMarketStalls(economy, { day: state.day, physical });
       runCompanyDayStart(economy, { day: state.day, random, physical });
       for (const household of economy.households) {

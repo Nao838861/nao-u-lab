@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.36.0-spatial-productivity';
+import { TILE } from './config.js?v=v004.37.0-multi-market';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

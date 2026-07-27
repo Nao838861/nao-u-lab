@@ -6,25 +6,26 @@ export {
   householdClass,
   householdProductionSummary,
   productionCost,
-} from '../../engine/src/econ.js?v=v004.36.0-spatial-productivity';
-import { P } from '../../engine/src/econ.js?v=v004.36.0-spatial-productivity';
-import { createEngineApi } from '../../engine/src/api.js?v=v004.36.0-spatial-productivity';
+} from '../../engine/src/econ.js?v=v004.37.0-multi-market';
+import { P } from '../../engine/src/econ.js?v=v004.37.0-multi-market';
+import { createEngineApi } from '../../engine/src/api.js?v=v004.37.0-multi-market';
 import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
   buildBaseCity,
   makeStableCityPlan,
-} from '../../engine/src/audit.js?v=v004.36.0-spatial-productivity';
-import { createPhysicalState, makeFlowIslandTerrain } from '../../engine/src/physical.js?v=v004.36.0-spatial-productivity';
-import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.36.0-spatial-productivity';
-import { createViewController } from './controller.js?v=v004.36.0-spatial-productivity';
-import { START_MODES } from './start_modes.js?v=v004.36.0-spatial-productivity';
+} from '../../engine/src/audit.js?v=v004.37.0-multi-market';
+import { createPhysicalState, makeFlowIslandTerrain, makeMultiMarketTerrain } from '../../engine/src/physical.js?v=v004.37.0-multi-market';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.37.0-multi-market';
+import { createViewController } from './controller.js?v=v004.37.0-multi-market';
+import { START_MODES } from './start_modes.js?v=v004.37.0-multi-market';
 
 export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS };
+export { makeMultiMarketTerrain };
 export const BUILD_COST_DENARI = P.BUILD_COST * 10;
 
-export function buildBlankCity(seed = 11) {
+export function buildBlankCity(seed = 11, marketNetwork = null) {
   const plan = makeStableCityPlan();
   const portSite = plan.logisticsSites.port;
   const physical = createPhysicalState({
@@ -38,19 +39,20 @@ export function buildBlankCity(seed = 11) {
     market: { ...portSite.entrance },
     port: { ...portSite.entrance },
     logisticsSites: { port: portSite },
+    marketNetwork,
   });
   ensureCompanyLogisticsSites(world.state.economy, physical);
   return world;
 }
 
 export function createEngineController({
-  seed = 11, mode = 'test', stateSnapshot = null, inputJournal = [],
+  seed = 11, mode = 'test', stateSnapshot = null, inputJournal = [], marketNetwork = null,
 } = {}) {
   const profile = START_MODES[mode];
   if (!profile) throw new RangeError(`unknown start mode: ${mode}`);
   const world = stateSnapshot
     ? createWorld({ stateSnapshot })
-    : profile.blank ? buildBlankCity(seed) : buildBaseCity(seed);
+    : profile.blank ? buildBlankCity(seed, marketNetwork) : buildBaseCity(seed);
   const api = createEngineApi(world, { initialJournal: inputJournal });
   return createViewController(api);
 }
