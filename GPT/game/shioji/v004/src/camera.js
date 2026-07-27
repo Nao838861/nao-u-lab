@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.35.0-market-rhythm';
+import { TILE } from './config.js?v=v004.36.0-spatial-productivity';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

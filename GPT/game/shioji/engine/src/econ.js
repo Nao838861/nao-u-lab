@@ -9,6 +9,7 @@ import {
   createWalkCarrier,
   depositInventory,
   dockVessel,
+  findNearestTravelTarget,
   goodsUnitWeight,
   haulJobById,
   isConnected,
@@ -122,6 +123,11 @@ export const P = deepFreeze({
   MARKET_BATCH_DAYS: 2,
   MARKET_BATCH_MAX_DAYS: 3,
   MARKET_CULTURE_INTERVAL_DAYS: 4,
+  RESOURCE_DAY_TICKS: 30,
+  RESOURCE_FREE_ONE_WAY: 2,
+  RESOURCE_PRODUCTIVE_TICKS: 24,
+  RESOURCE_MIN_EFFICIENCY: 0.1,
+  DIRECT_TRADE_MAX_MARKET_RATIO: 0.8,
   CART_WOOD_DURABILITY: 360,
   CART_MARKUP: 1.7,
   CART_TIME_VALUE: 0.35,
@@ -318,6 +324,10 @@ function makeHouseholdRecord(economy, { job, x, y }) {
     marketTransactionTicks: 0,
     marketTripTicks: 0,
     productionMultiplier: 1,
+    resourceWork: null,
+    productionToday: {},
+    productionHistory: [],
+    lastDirectTrade: null,
     buildDays: 0,
     boost: null,
     employerId: null,
@@ -932,9 +942,84 @@ export function initializeNaturalResources(economy, physical) {
 
 const WOOD_NEIGHBORHOOD_CACHE = new WeakMap();
 
-function woodNeighborhood(household) {
-  const centerX = Math.round(household.x);
-  const centerY = Math.round(household.y);
+function resourceTargetValid(economy, physical, household, target) {
+  if (!physical?.terrain || !target) return false;
+  if (household.job === "logger") {
+    return terrainKindAt(physical, target.x, target.y) === "forest"
+      && (economy.natural.wood[`${target.x},${target.y}`] ?? 0) > 0.5;
+  }
+  if (household.job === "fisher") {
+    return [
+      [1, 0], [-1, 0], [0, 1], [0, -1],
+    ].some(([offsetX, offsetY]) => (
+      terrainKindAt(physical, target.x + offsetX, target.y + offsetY) === "water"
+    ));
+  }
+  return false;
+}
+
+export function resourceWorkEfficiency(oneWayTicks) {
+  if (!Number.isFinite(oneWayTicks)) return 0;
+  const lostTicks = Math.max(
+    0,
+    (oneWayTicks - P.RESOURCE_FREE_ONE_WAY) * 2,
+  );
+  return Math.max(
+    P.RESOURCE_MIN_EFFICIENCY,
+    1 - lostTicks / P.RESOURCE_PRODUCTIVE_TICKS,
+  );
+}
+
+export function ensureResourceWorkPlan(economy, physical, household) {
+  if (!["logger", "fisher"].includes(household.job)) return null;
+  if (!physical?.terrain) {
+    household.resourceWork = {
+      kind: household.job === "logger" ? "forest" : "shore",
+      target: { x: Math.round(household.x), y: Math.round(household.y) },
+      path: [{ x: Math.round(household.x), y: Math.round(household.y) }],
+      oneWayTicks: 0,
+      roundTripTicks: 0,
+      workTicks: P.RESOURCE_DAY_TICKS,
+      efficiency: 1,
+      revision: "legacy",
+    };
+    return household.resourceWork;
+  }
+  const revision = `${physical.roadRevision ?? 0}:${physical.travelRevision ?? 0}`;
+  const cached = household.resourceWork;
+  if (
+    cached?.revision === revision
+    && resourceTargetValid(economy, physical, household, cached.target)
+  ) return cached;
+
+  const result = findNearestTravelTarget(
+    physical,
+    householdEntrance(physical, household),
+    (x, y) => resourceTargetValid(economy, physical, household, { x, y }),
+  );
+  const oneWayTicks = result?.cost ?? Infinity;
+  const efficiency = resourceWorkEfficiency(oneWayTicks);
+  const lostTicks = Number.isFinite(oneWayTicks)
+    ? Math.max(0, (oneWayTicks - P.RESOURCE_FREE_ONE_WAY) * 2)
+    : P.RESOURCE_DAY_TICKS;
+  household.resourceWork = {
+    kind: household.job === "logger" ? "forest" : "shore",
+    target: result ? { x: result.x, y: result.y } : null,
+    path: result?.path ?? [],
+    oneWayTicks,
+    roundTripTicks: Number.isFinite(oneWayTicks) ? oneWayTicks * 2 : Infinity,
+    workTicks: Number.isFinite(oneWayTicks)
+      ? Math.max(3, P.RESOURCE_DAY_TICKS - lostTicks)
+      : 0,
+    efficiency,
+    revision,
+  };
+  return household.resourceWork;
+}
+
+function woodNeighborhood(household, center = household) {
+  const centerX = Math.round(center.x);
+  const centerY = Math.round(center.y);
   const cached = WOOD_NEIGHBORHOOD_CACHE.get(household);
   if (cached?.centerX === centerX && cached?.centerY === centerY) return cached;
   const localKeys = [];
@@ -960,8 +1045,10 @@ function woodNeighborhood(household) {
 
 export function chopWood(economy, physical, household, amount) {
   if (!physical?.terrain) return amount;
+  const workPlan = ensureResourceWorkPlan(economy, physical, household);
+  if (!workPlan?.target) return 0;
   let gathered = 0;
-  const { chopCells } = woodNeighborhood(household);
+  const { chopCells } = woodNeighborhood(household, workPlan.target);
   const seedFloor = P.WOOD0 * 0.15;
   for (let pass = 0; pass < 2 && gathered < amount; pass += 1) {
     for (const { x, y, key } of chopCells) {
@@ -984,8 +1071,12 @@ export function chopWood(economy, physical, household, amount) {
 
 export function localWood(economy, physical, household) {
   if (!physical?.terrain) return 1;
+  const workPlan = ensureResourceWorkPlan(economy, physical, household);
+  if (!workPlan?.target) return 0;
   let stock = 0;
-  for (const key of woodNeighborhood(household).localKeys) stock += economy.natural.wood[key] ?? 0;
+  for (const key of woodNeighborhood(household, workPlan.target).localKeys) {
+    stock += economy.natural.wood[key] ?? 0;
+  }
   return Math.min(1, stock / (P.WOOD0 * 8));
 }
 
@@ -1130,7 +1221,11 @@ export function productionCost(economy, physical, household, goods, { day = econ
   return labor + input;
 }
 
-export function sellOffers(economy, household) {
+export function sellOffers(
+  economy,
+  household,
+  { capacityLimit = householdHaul(household) } = {},
+) {
   const offers = {};
   const goods = {
     fisher: "fish",
@@ -1151,7 +1246,9 @@ export function sellOffers(economy, household) {
   }[household.job];
 
   if (goods === "meal") {
-    if (household.pantry.meal >= 15) return { meal: Math.min(household.pantry.meal, P.HAUL) };
+    if (household.pantry.meal >= 15) {
+      return { meal: Math.min(household.pantry.meal, capacityLimit) };
+    }
     return {};
   }
   if (goods === "fish") {
@@ -1160,7 +1257,7 @@ export function sellOffers(economy, household) {
     if ((economy.px.fish ?? 2) > alternative * 1.5) keep = householdEat(household) * 0.4;
     keep += Math.min(household.pantry.salt / P.PRES_SALT, 12);
     const surplus = Math.max(0, household.pantry.fish - keep);
-    if (surplus > 1e-9) offers.fish = Math.min(surplus, householdHaul(household));
+    if (surplus > 1e-9) offers.fish = Math.min(surplus, capacityLimit);
   } else {
     let keep = FOODS.includes(goods) ? householdEat(household) * 2 : 2;
     let rate = 0.5;
@@ -1174,21 +1271,21 @@ export function sellOffers(economy, household) {
       offers[goods] = Math.min(
         surplus * rate + 2,
         surplus,
-        goods === "log" ? householdHaul(household) / 2 : householdHaul(household),
+        goods === "log" ? capacityLimit / 2 : capacityLimit,
       );
     }
   }
   if (household.job === "fisher" && household.pantry.pres > P.EAT * P.PANTRY_FOOD_D) {
     offers.pres = Math.min(
       household.pantry.pres - P.EAT * P.PANTRY_FOOD_D,
-      householdHaul(household),
+      capacityLimit,
     );
   }
   if (household.job === "veg" && household.pantry.pick > 10) {
-    offers.pick = Math.min(household.pantry.pick - 5, householdHaul(household));
+    offers.pick = Math.min(household.pantry.pick - 5, capacityLimit);
   }
   if (household.job === "shepherd" && household.pantry.cloth > 2) {
-    offers.cloth = Math.min(household.pantry.cloth - 1, householdHaul(household));
+    offers.cloth = Math.min(household.pantry.cloth - 1, capacityLimit);
   }
   return offers;
 }
@@ -2242,6 +2339,8 @@ export function runWheatHarvest(economy, { day }) {
       * Math.min(1, household.wheatWork / 300)
       * (1 + P.FERT_BOOST * fill);
     household.pantry.wheat += qty;
+    household.productionToday ??= {};
+    household.productionToday.wheat = (household.productionToday.wheat ?? 0) + qty;
     economy.led.prod.wheat = (economy.led.prod.wheat ?? 0) + qty;
     recordEconomicMaterialFlow(economy, "wheat", "prod", qty, `世帯${household.id}の麦収穫`);
     economy.harvestLog.push([day, qty]);
@@ -2289,6 +2388,8 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
   if (hasHouseholdStall(economy, household)) {
     effectiveFraction *= (household.members.length - 1) / household.members.length;
   }
+  const resourceWork = ensureResourceWorkPlan(economy, physical, household);
+  if (resourceWork) effectiveFraction *= resourceWork.efficiency;
   if (shouldPauseProduction(economy, household)) return {};
   const work = effectiveFraction * householdMult(household);
   const produced = {};
@@ -2513,7 +2614,89 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     if (fuel > 0) recordEconomicMaterialFlow(economy, "char", "cons", fuel, `世帯${household.id}の製塩`);
     produced.salt = qty;
   }
+  household.productionToday ??= {};
+  for (const [goods, qty] of Object.entries(produced)) {
+    if (!Number.isFinite(qty) || qty <= 0 || goods === "cartWork") continue;
+    household.productionToday[goods] = (household.productionToday[goods] ?? 0) + qty;
+  }
   return produced;
+}
+
+export function householdIdealDailyOutput(economy, household, { day = economy.currentDay } = {}) {
+  const month = (Math.floor((Math.max(1, day) - 1) / 30) % 12) + 1;
+  const winter = month >= 10;
+  const mult = householdMult(household);
+  const outputs = {};
+  const add = (goods, qty) => {
+    if (qty > 1e-9) outputs[goods] = qty;
+  };
+  if (household.job === "fisher") {
+    add("fish", (winter ? P.Y_FISH_W : P.Y_FISH) * mult
+      * Math.max(0, economy.natural.bay / P.BAY0));
+  } else if (household.job === "fisher2" && !winter) {
+    add("meal", P.Y_FISH * mult * Math.max(0, economy.natural.bay2 / P.BAY0) / P.MEAL_FISH);
+  } else if (household.job === "veg" && month >= 3 && month <= 10) {
+    add("veg", P.Y_VEG * mult);
+  } else if (household.job === "shepherd") {
+    add("meat", P.Y_MEAT * mult);
+    add("cloth", P.Y_CLOTH * mult);
+  } else if (household.job === "logger") add("log", P.Y_LOG * mult);
+  else if (household.job === "woodshop") add("tools", P.Y_TOOLS * mult);
+  else if (household.job === "charburner") add("char", P.Y_CHAR * mult);
+  else if (household.job === "saltworks") add("salt", P.Y_SALT * mult);
+  else if (household.job === "quarryman") add("stone", P.Y_STONE * mult);
+  else if (household.job === "miner") add("ore", P.Y_ORE * mult);
+  else if (household.job === "collier") add("coal", P.Y_COAL * mult);
+  else if (household.job === "smelter") add("bar", P.Y_SMELT * mult);
+  else if (household.job === "smith") add("iron", P.Y_SMITH * mult);
+  else if (household.job === "rapeseed" && month >= 3 && month <= 8) {
+    add("cloth", P.Y_COTTON_CLOTH * mult);
+  }
+  return outputs;
+}
+
+export function finalizeHouseholdProductionDay(economy, { day = economy.currentDay } = {}) {
+  for (const household of economy.households) {
+    household.productionHistory ??= [];
+    household.productionHistory.push({
+      day,
+      goods: { ...(household.productionToday ?? {}) },
+      ideal: householdIdealDailyOutput(economy, household, { day }),
+    });
+    if (household.productionHistory.length > 30) household.productionHistory.shift();
+    household.productionToday = {};
+  }
+}
+
+export function householdProductionSummary(economy, household, { day = economy.currentDay } = {}) {
+  const history = household.productionHistory ?? [];
+  const actualByGoods = {};
+  const idealByGoods = {};
+  const currentIdeal = householdIdealDailyOutput(economy, household, { day });
+  for (const row of history) {
+    for (const [goods, qty] of Object.entries(row.goods ?? {})) {
+      actualByGoods[goods] = (actualByGoods[goods] ?? 0) + qty;
+    }
+    for (const [goods, qty] of Object.entries(row.ideal ?? currentIdeal)) {
+      idealByGoods[goods] = (idealByGoods[goods] ?? 0) + qty;
+    }
+  }
+  const days = Math.max(1, history.length);
+  for (const goods of Object.keys(actualByGoods)) actualByGoods[goods] /= days;
+  if (history.length === 0) Object.assign(idealByGoods, currentIdeal);
+  else for (const goods of Object.keys(idealByGoods)) idealByGoods[goods] /= days;
+  const actual = Object.values(actualByGoods).reduce((total, qty) => total + qty, 0);
+  const ideal = Object.values(idealByGoods).reduce((total, qty) => total + qty, 0);
+  return {
+    days: history.length,
+    actual,
+    ideal,
+    efficiency: ideal > 1e-9 ? actual / ideal : null,
+    actualByGoods,
+    idealByGoods,
+    resourceWork: household.resourceWork ?? null,
+    lastDirectTrade: household.lastDirectTrade ?? null,
+  };
 }
 
 export function runPrimaryProductionDay(economy, physical, { day }) {
@@ -4321,6 +4504,7 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
     nextCartAssetId: 1,
     companyCarts: [],
     transportStats: {},
+    directTrades: [],
     cartStats: {
       produced: 0,
       householdPurchased: 0,

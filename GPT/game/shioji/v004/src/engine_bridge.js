@@ -4,21 +4,22 @@ export {
   P,
   companyStockReleasePrice,
   householdClass,
+  householdProductionSummary,
   productionCost,
-} from '../../engine/src/econ.js?v=v004.35.0-market-rhythm';
-import { P } from '../../engine/src/econ.js?v=v004.35.0-market-rhythm';
-import { createEngineApi } from '../../engine/src/api.js?v=v004.35.0-market-rhythm';
+} from '../../engine/src/econ.js?v=v004.36.0-spatial-productivity';
+import { P } from '../../engine/src/econ.js?v=v004.36.0-spatial-productivity';
+import { createEngineApi } from '../../engine/src/api.js?v=v004.36.0-spatial-productivity';
 import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
   buildBaseCity,
   makeStableCityPlan,
-} from '../../engine/src/audit.js?v=v004.35.0-market-rhythm';
-import { createPhysicalState, makeFlowIslandTerrain } from '../../engine/src/physical.js?v=v004.35.0-market-rhythm';
-import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.35.0-market-rhythm';
-import { createViewController } from './controller.js?v=v004.35.0-market-rhythm';
-import { START_MODES } from './start_modes.js?v=v004.35.0-market-rhythm';
+} from '../../engine/src/audit.js?v=v004.36.0-spatial-productivity';
+import { createPhysicalState, makeFlowIslandTerrain } from '../../engine/src/physical.js?v=v004.36.0-spatial-productivity';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.36.0-spatial-productivity';
+import { createViewController } from './controller.js?v=v004.36.0-spatial-productivity';
+import { START_MODES } from './start_modes.js?v=v004.36.0-spatial-productivity';
 
 export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS };
 export const BUILD_COST_DENARI = P.BUILD_COST * 10;

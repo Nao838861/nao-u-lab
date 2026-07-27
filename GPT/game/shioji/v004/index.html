@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.35.0-market-rhythm">
+  <link rel="stylesheet" href="./style.css?v=v004.36.0-spatial-productivity">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -130,6 +130,15 @@
       <b id="island-health-title">島は落ち着いています</b>
       <span id="island-health-detail">人口・食料・資金の変化をまとめます。</span>
     </section>
+    <section id="island-productivity" class="island-productivity">
+      <div>
+        <small>島の生産性（30日平均）</small>
+        <b id="island-productivity-rate">観測中</b>
+        <em id="island-productivity-delta">30日差：観測中</em>
+      </div>
+      <p><strong id="island-productivity-output">— / —荷/日</strong><span id="island-productivity-loss">資源距離を集計中</span></p>
+      <p><span id="island-productivity-direct">近隣直接取引を集計中</span></p>
+    </section>
     <section class="island-finance-section">
       <h3>直近30日の取引収支</h3>
       <div id="island-finance" class="island-finance" aria-label="直近30日の取引収支">
@@ -152,6 +161,7 @@
         <figure data-chart="food-stock"><figcaption>食料 <small>荷</small></figcaption><svg id="food-stock-chart" viewBox="0 0 320 112" role="img" aria-label="島内食料と冬の必要量の推移"></svg></figure>
         <figure data-chart="population"><figcaption>人口 <small>人</small></figcaption><svg id="population-chart" viewBox="0 0 320 112" role="img" aria-label="人口の推移"></svg></figure>
         <figure data-chart="finance"><figcaption>取引資金 <small>デナリ</small></figcaption><svg id="finance-chart" viewBox="0 0 320 112" role="img" aria-label="取引資金とゼロ基準の推移"></svg></figure>
+        <figure data-chart="productivity"><figcaption>生産性 <small>%</small></figcaption><svg id="productivity-chart" viewBox="0 0 320 112" role="img" aria-label="島の実生産と理想生産の比率"></svg></figure>
         <figure id="price-chart-panel" data-chart="price" hidden><figcaption><span id="price-chart-title">市場相場</span> <small>デナリ/荷</small></figcaption><svg id="price-chart" viewBox="0 0 320 112" role="img" aria-label="需給で選択した品目の市場相場の推移"></svg></figure>
       </div>
     </section>
@@ -319,7 +329,7 @@
       });
     })();
   </script>
-  <script id="game-module" type="module" src="./src/main.js?v=v004.35.0-market-rhythm"
+  <script id="game-module" type="module" src="./src/main.js?v=v004.36.0-spatial-productivity"
     onerror="window.__SHIOJI_BOOT__?.failed()"></script>
 </body>
 </html>

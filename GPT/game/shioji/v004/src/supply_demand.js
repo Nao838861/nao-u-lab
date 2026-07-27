@@ -1,7 +1,7 @@
 import {
   FOOD_GOODS, WINTER_RESERVE_PER_PERSON,
-} from './food_readability.js?v=v004.35.0-market-rhythm';
-import { toDenari } from './config.js?v=v004.35.0-market-rhythm';
+} from './food_readability.js?v=v004.36.0-spatial-productivity';
+import { toDenari } from './config.js?v=v004.36.0-spatial-productivity';
 
 export const SUPPLY_STATUS = Object.freeze({
   sufficient: Object.freeze({ severity: 0, label: '足りてる' }),

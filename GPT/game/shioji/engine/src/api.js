@@ -1,6 +1,7 @@
 import {
   COMPANY_ORDER_GOODS,
   acceptCompanyOrder,
+  householdProductionSummary,
   purchaseCompanyWoodCart,
   requestCompanyStockRelease,
   requestMainlandAid,
@@ -91,7 +92,24 @@ function viewSnapshot(state, { terrainAfterRevision = null } = {}) {
         ledgerByReason: { ...(economy.company.ledgerByReason ?? {}) },
       },
       currentDay: economy.currentDay,
-      households: economy.households,
+      directTrades: economy.directTrades ?? [],
+      households: economy.households.map((household) => {
+        const {
+          productionHistory: _productionHistory,
+          productionToday: _productionToday,
+          resourceWork: _resourceWork,
+          lastDirectTrade: _lastDirectTrade,
+          ...viewHousehold
+        } = household;
+        return {
+          ...viewHousehold,
+          productionSummary: householdProductionSummary(
+            economy,
+            household,
+            { day: state.day },
+          ),
+        };
+      }),
       market: economy.market,
       f30: economy.f30,
       goDay: economy.goDay,

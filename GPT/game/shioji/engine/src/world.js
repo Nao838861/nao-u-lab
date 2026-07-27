@@ -8,6 +8,7 @@ import {
   companyStockReleasePrice,
   completeAssignedWork,
   createEconomicState,
+  finalizeHouseholdProductionDay,
   fundCompanyBuilding,
   finishHouseholdCartTrip,
   initializeNaturalResources,
@@ -19,6 +20,7 @@ import {
   marketPathLength,
   producePrimaryTick,
   productionInputAmount,
+  productionCost,
   productionMultiplierForTrip,
   pruneEconomyHistory,
   recordEconomyEvent,
@@ -43,6 +45,7 @@ import {
   goodsUnitWeight,
   hasRoad,
   keyOf,
+  pathLen,
   routeTravelCarrier,
   prunePhysicalHistory,
   stepTravelCarrier,
@@ -329,6 +332,194 @@ function finishMarketTrip(economy, physical, household, { day }) {
   household.state = "home";
 }
 
+export function findDirectSupplier(economy, physical, buyer, {
+  goods,
+  wanted,
+  ceiling,
+  day = economy.currentDay,
+} = {}) {
+  if (
+    !isProductionInput(buyer, goods)
+    || !(wanted > 1e-9)
+    || !(ceiling > 0)
+  ) return null;
+  const start = householdEntrance(physical, buyer);
+  const marketTicks = marketTripDuration(economy, physical, buyer);
+  const useCart = Boolean(buyer.cart);
+  const candidates = [];
+  for (const seller of economy.households) {
+    if (seller === buyer || seller.state !== "home") continue;
+    const available = sellOffers(economy, seller, { capacityLimit: Infinity })[goods] ?? 0;
+    if (available <= 1e-9) continue;
+    const goal = householdEntrance(physical, seller);
+    const cartDistance = useCart ? pathLen(physical, start, goal, "cart") : Infinity;
+    const mode = Number.isFinite(cartDistance) ? "cart" : "walk";
+    const oneWayTicks = mode === "cart" ? cartDistance : pathLen(physical, start, goal, "walk");
+    if (!Number.isFinite(oneWayTicks)) continue;
+    const directTicks = oneWayTicks * 2 + 1;
+    if (
+      Number.isFinite(marketTicks)
+      && directTicks > marketTicks * P.DIRECT_TRADE_MAX_MARKET_RATIO + 1e-9
+    ) continue;
+    const price = Math.max(
+      productionCost(economy, physical, seller, goods, { day }) * 1.05,
+      (economy.px[goods] ?? ceiling) * 0.95,
+    );
+    if (!Number.isFinite(price) || price > ceiling + 1e-9) continue;
+    const affordable = Math.max(0, (buyer.purse + 30) / price);
+    const qty = Math.min(wanted, available, affordable);
+    if (qty <= 1e-9) continue;
+    candidates.push({
+      sellerId: seller.id,
+      goods,
+      qty,
+      price,
+      mode,
+      oneWayTicks,
+      directTicks,
+      marketTicks,
+      savedTicks: Number.isFinite(marketTicks) ? Math.max(0, marketTicks - directTicks) : 0,
+    });
+  }
+  candidates.sort((left, right) => (
+    left.directTicks - right.directTicks
+    || left.price - right.price
+    || left.sellerId - right.sellerId
+  ));
+  return candidates[0] ?? null;
+}
+
+function directSupplierForTrip(economy, physical, household, day) {
+  const targets = buyTargets(economy, household, { day, physical });
+  const candidates = Object.entries(targets)
+    .filter(([goods]) => isProductionInput(household, goods))
+    .map(([goods, [wanted, ceiling]]) => findDirectSupplier(
+      economy,
+      physical,
+      household,
+      { goods, wanted, ceiling, day },
+    ))
+    .filter(Boolean);
+  candidates.sort((left, right) => (
+    left.directTicks - right.directTicks
+    || left.price - right.price
+    || left.sellerId - right.sellerId
+    || left.goods.localeCompare(right.goods)
+  ));
+  return candidates[0] ?? null;
+}
+
+export function beginDirectSupplyTrip(economy, physical, household, offer) {
+  if (household.cargo || household.marketCarrier) {
+    throw new Error(`世帯${household.id}は既に物流往復中です`);
+  }
+  const seller = economy.households.find(({ id }) => id === offer?.sellerId);
+  if (!seller) return { started: false, reason: "supplier_missing" };
+  const useCart = offer.mode === "cart";
+  const availablePlan = householdTransportPlan(household, { useCart });
+  const requiredCapacity = Math.max(1, offer.qty * goodsUnitWeight(offer.goods));
+  const plan = [];
+  let assignedCapacity = 0;
+  for (const assignment of availablePlan) {
+    if (plan.length > 0 && assignedCapacity + 1e-9 >= requiredCapacity) break;
+    plan.push(assignment);
+    assignedCapacity += assignment.capacity;
+  }
+  if (plan.length === 0) return { started: false, reason: "no_porter" };
+  const porters = plan.map((assignment) => {
+    const porter = assignment.mode === "cart"
+      ? createCartCarrier(physical, {
+        capacity: assignment.capacity,
+        cartKind: assignment.cartKind,
+        assetId: assignment.assetId,
+      })
+      : createWalkCarrier(physical, { people: 1 });
+    porter.capacity = assignment.capacity;
+    porter.people = 1;
+    porter.memberId = assignment.memberId;
+    porter.memberName = assignment.memberName;
+    porter.tier = assignment.tier;
+    porter.visualMode = assignment.tier;
+    return porter;
+  });
+  distributeManifestAcrossPorters({}, porters, "outbound");
+  const start = householdEntrance(physical, household);
+  routeHouseholdPorters(
+    physical,
+    porters,
+    start,
+    householdEntrance(physical, seller),
+  );
+  const cartPorter = porters.find((porter) => porter.mode === "cart") ?? null;
+  household.cargo = { direction: "outbound", manifest: {} };
+  household.marketCarrier = {
+    mode: cartPorter ? "cart" : "walk",
+    capacity: porters.reduce((total, porter) => total + porter.capacity, 0),
+    assetId: cartPorter?.assetId ?? null,
+    cartKind: cartPorter?.cartKind ?? null,
+    porters,
+    cargo: household.cargo,
+    tripDistance: cartPorter?.routeCost ?? 0,
+    routeCost: 0,
+    reason: "direct_input",
+    destinationKind: "supplier",
+    directOffer: { ...offer },
+  };
+  household.px = start.x;
+  household.py = start.y;
+  household.lastMarketTripReason = "direct_input";
+  household.marketTripTicks = offer.directTicks;
+  household.productionMultiplier = (1 - plan.length / Math.max(1, household.members.length))
+    + plan.length / Math.max(1, household.members.length)
+      * productionMultiplierForTrip(offer.directTicks);
+  household.tookMarketTripToday = true;
+  household.marketTransactionTicks = 1;
+  household.state = porters.every((porter) => porter.routeCost === 0)
+    ? "atSupplier"
+    : "toSupplier";
+  return { started: true, offer, carrier: household.marketCarrier };
+}
+
+function transactDirectSupply(economy, physical, household, { day }) {
+  const offer = household.marketCarrier.directOffer;
+  const seller = economy.households.find(({ id }) => id === offer.sellerId);
+  const available = seller
+    ? sellOffers(economy, seller, { capacityLimit: Infinity })[offer.goods] ?? 0
+    : 0;
+  const capacity = household.marketCarrier.capacity / goodsUnitWeight(offer.goods);
+  const affordable = Math.max(0, (household.purse + 30) / offer.price);
+  const qty = Math.min(offer.qty, available, capacity, affordable);
+  const payment = qty * offer.price;
+  if (qty > 1e-9) {
+    seller.pantry[offer.goods] -= qty;
+    seller.purse += payment;
+    seller.income30 += payment;
+    household.purse -= payment;
+  }
+  household.cargo = {
+    direction: "inbound",
+    manifest: qty > 1e-9 ? { [offer.goods]: qty } : {},
+  };
+  const row = {
+    day,
+    buyerHouseholdId: household.id,
+    sellerHouseholdId: offer.sellerId,
+    goods: offer.goods,
+    qty,
+    price: offer.price,
+    directTicks: offer.directTicks,
+    marketTicks: offer.marketTicks,
+    savedTicks: offer.savedTicks,
+  };
+  if (qty > 1e-9) {
+    household.lastDirectTrade = row;
+    economy.directTrades ??= [];
+    economy.directTrades.push(row);
+    if (economy.directTrades.length > 128) economy.directTrades.shift();
+  }
+  return row;
+}
+
 const ECONOMIC_BUILDING_CAPACITY = Number.MAX_SAFE_INTEGER;
 
 function buildingCaps(...sections) {
@@ -591,6 +782,52 @@ export function beginMarketTrip(
 }
 
 export function stepMarketTrip(economy, physical, household, { day, random }) {
+  if (household.state === "toSupplier") {
+    if (stepHouseholdPorters(physical, household.marketCarrier.porters)) {
+      const seller = economy.households.find(
+        ({ id }) => id === household.marketCarrier.directOffer.sellerId,
+      );
+      const destination = seller
+        ? householdEntrance(physical, seller)
+        : householdEntrance(physical, household);
+      household.px = destination.x;
+      household.py = destination.y;
+      household.state = "atSupplier";
+    } else syncHouseholdToCarrier(economy, household);
+    return false;
+  }
+  if (household.state === "atSupplier") {
+    household.marketTransactionTicks -= 1;
+    if (household.marketTransactionTicks > 0) return false;
+    const seller = economy.households.find(
+      ({ id }) => id === household.marketCarrier.directOffer.sellerId,
+    );
+    const supplierEntrance = seller
+      ? householdEntrance(physical, seller)
+      : tilePosition({ x: household.px, y: household.py });
+    transactDirectSupply(economy, physical, household, { day });
+    household.marketCarrier.cargo = household.cargo;
+    distributeManifestAcrossPorters(
+      household.cargo.manifest,
+      household.marketCarrier.porters,
+      "inbound",
+    );
+    routeHouseholdPorters(
+      physical,
+      household.marketCarrier.porters,
+      supplierEntrance,
+      householdEntrance(physical, household),
+      { returning: true },
+    );
+    const cartPorter = household.marketCarrier.porters.find((porter) => porter.mode === "cart");
+    household.marketCarrier.routeCost = cartPorter?.routeCost ?? 0;
+    if (household.marketCarrier.porters.every((porter) => porter.routeCost === 0)) {
+      finishMarketTrip(economy, physical, household, { day });
+      return true;
+    }
+    household.state = "toHome";
+    return false;
+  }
   if (household.state === "toMarket") {
     if (stepHouseholdPorters(physical, household.marketCarrier.porters)) {
       const market = logisticsEntrance(physical, "market", economy.market);
@@ -705,6 +942,13 @@ export function decideHouseholdTrips(economy, physical, { timeOfDay = null } = {
               ? "culture_restocks"
               : null;
     if (!reason) continue;
+    if (reason === "input_urgent" || reason === "input_restocks") {
+      const directSupplier = directSupplierForTrip(economy, physical, household, day);
+      if (directSupplier) {
+        const trip = beginDirectSupplyTrip(economy, physical, household, directSupplier);
+        if (trip.started) continue;
+      }
+    }
     const trip = beginMarketTrip(economy, physical, household, { reason });
     if (trip.started && routine.hasSale) household.marketBatchWaitSinceDay = null;
   }
@@ -779,6 +1023,8 @@ export function createWorld({
       ageMarketStalls(economy, { day: state.day, physical });
       runCompanyDayStart(economy, { day: state.day, random, physical });
       for (const household of economy.households) {
+        household.productionToday = {};
+        household.marketOneWayTicks = marketPathLength(economy, physical, household);
         const activePorters = (household.marketCarrier?.porters?.length ?? 0)
           + Number(Boolean(household.workCarrier));
         household.productionMultiplier = household.state === "home"
@@ -814,6 +1060,8 @@ export function createWorld({
       } else if (
         household.state === "toMarket"
         || household.state === "atMarket"
+        || household.state === "toSupplier"
+        || household.state === "atSupplier"
         || (household.state === "toHome" && household.marketCarrier)
       ) {
         if (!household.marketCarrier) {
@@ -849,6 +1097,7 @@ export function createWorld({
 
     if (timeOfDay === 29) {
       runDayEnd(economy, physical, { day: state.day, random });
+      finalizeHouseholdProductionDay(economy, { day: state.day });
     }
     stepHaulCarriers(state.physical, 1);
     settleCompanyLogistics(state.economy, state.physical, { day: state.day });

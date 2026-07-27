@@ -479,6 +479,17 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .building-fact b { display: block; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; }
 .focus-building { width: 100%; margin-top: 8px; border: 1px solid rgba(229,182,91,.4); border-radius: 6px; background: rgba(229,182,91,.08); padding: 7px; cursor: pointer; font-size: 9px; }
 .building-sheet-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+.productivity-card { display: grid; grid-template-columns: 1.4fr .8fr; gap: 6px; margin: 7px 0 5px; }
+.productivity-card span { display: grid; gap: 2px; padding: 7px 8px; border: 1px solid rgba(117,189,209,.34); border-radius: 6px; background: rgba(117,189,209,.07); }
+.productivity-card small, .productivity-level-note { color: var(--muted); font-size: 9px; line-height: 1.45; }
+.productivity-card b { color: #a9dcea; font: 700 13px Georgia,serif; }
+.productivity-card[data-tone="warning"] span { border-color: rgba(229,182,91,.35); background: rgba(229,182,91,.07); }
+.productivity-card[data-tone="danger"] span { border-color: rgba(239,140,119,.42); background: rgba(239,140,119,.08); }
+.productivity-cause { margin: 4px 0; color: var(--muted); font-size: 10px; line-height: 1.45; }
+.productivity-cause b { color: var(--text); }
+.market-productivity { display: grid; gap: 4px; margin-top: 7px; padding: 8px 9px; border: 1px solid rgba(117,189,209,.3); border-radius: 7px; background: rgba(117,189,209,.07); }
+.market-productivity b { color: #a9dcea; }
+.market-productivity span { color: var(--muted); font-size: 10px; line-height: 1.4; }
 .building-detail { margin-top: 12px; }
 .building-detail[hidden] { display: none; }
 .building-detail h3 { margin: 0 0 6px; }
@@ -615,6 +626,13 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .island-health[data-tone="warning"] b { color: var(--gold); }
 .island-health[data-tone="danger"] { border-color: rgba(239,140,119,.55); background: rgba(239,140,119,.09); }
 .island-health[data-tone="danger"] b { color: #ef8c77; }
+.island-productivity { display: grid; gap: 7px; margin-top: 8px; padding: 10px; border: 1px solid rgba(117,189,209,.34); border-radius: 7px; background: linear-gradient(135deg,rgba(117,189,209,.1),rgba(117,189,209,.035)); }
+.island-productivity > div { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 3px 10px; }
+.island-productivity small { color: var(--muted); font-size: 9px; }
+.island-productivity b { color: #a9dcea; font: 700 22px Georgia,serif; grid-row: 1 / 3; grid-column: 2; }
+.island-productivity em { color: #75bdd1; font-size: 10px; font-style: normal; }
+.island-productivity p { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 3px 8px; margin: 0; color: var(--muted); font-size: 10px; line-height: 1.4; }
+.island-productivity strong { color: var(--text); }
 .winter-forecast { margin-top: 12px; padding: 10px; border: 1px solid rgba(126,183,189,.32); border-radius: 7px; background: rgba(126,183,189,.06); }
 .winter-forecast h3 { margin: 0 0 7px; }
 .winter-forecast p { display: flex; flex-wrap: wrap; gap: 5px; align-items: baseline; margin: 0; }

@@ -2,15 +2,15 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.35.0-market-rhythm';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.35.0-market-rhythm';
-import { displayCultureLevel } from './visuals.js?v=v004.35.0-market-rhythm';
+} from './engine_bridge.js?v=v004.36.0-spatial-productivity';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.36.0-spatial-productivity';
+import { displayCultureLevel } from './visuals.js?v=v004.36.0-spatial-productivity';
 import {
   PLAYER_FACING_BANNED_TERMS,
   executableFoodIntervention,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.35.0-market-rhythm';
+} from './food_readability.js?v=v004.36.0-spatial-productivity';
 
 export { PLAYER_FACING_BANNED_TERMS };
 
@@ -357,13 +357,13 @@ export const TUTORIAL_PLAYER_TITLES = Object.freeze({
 // ボタン名・入力手順は TUTORIAL_SYSTEM_INSTRUCTIONS が備忘録として補う。
 export const TUTORIAL_ELENA_MESSAGES = Object.freeze({
   'first-road-and-logger': 'まずは、港から森のそばまで道を敷きましょう。あとで木こりを建て、切った丸太を運ぶ道になります。',
-  'first-logger': '今度は、道沿いの森のそばに木こりを建てましょう。木こりは森から丸太を切り出します。',
+  'first-logger': '今度は、道沿いの森のそばに木こりを建てましょう。どこにも置けますが、森が遠いほど歩く時間が増え、丸太の日産が落ちます。',
   'market-for-logs': '木こりが丸太を売れるよう、道沿いに市場を開きましょう。売れたお金で、家族は食料を買えるようになります。',
   'connect-market-to-port': '港と市場の入口を道でつなぎましょう。本土から届く食料も、島から出す荷も、この道を通ります。',
   'request-first-aid': '漁師と野菜畑が働き始めるまでの食料を、本国から一便だけ送ってもらいましょう。',
   'first-settlers-arrive': '市場と当座の食料が整いました。港から市場へ食料を運ぶ人を追いながら、最初の家族を迎えましょう。',
-  'place-island-food': '最初の家族が着きました。水辺に漁師を、市場の近くに野菜畑を建て、島で食料を作り始めましょう。',
-  'first-woodshop': '木工房を道沿いに建てましょう。木こりの丸太を木製品に変え、新しい売り物を作れます。',
+  'place-island-food': '最初の家族が着きました。漁師は漁場へ近い水辺に、野菜畑は市場の近くに建て、島で食料を作り始めましょう。漁師も水辺から遠ければ、その分だけ日産が落ちます。',
+  'first-woodshop': '木工房を木こりへ近い道沿いに建てましょう。近ければ市場を経ずに丸太を買い、短くなった時間で木製品を増やせます。',
   'warehouse-for-order': '市場と港へ道が通る場所に、倉庫を建てましょう。会社が買った品を、注文まで保管する場所です。',
   'prepare-first-tools-stock': '注文が来る前に、木製品を80荷、倉庫に買い集めておきましょう。先に備えれば、期限に追われずに済みます。',
   'accept-first-order': '本国から注文が届いたら、品の量と期限を確かめて引き受けましょう。倉庫の木製品が、最初の取引に使われます。',
@@ -388,7 +388,7 @@ export const TUTORIAL_ELENA_MESSAGES = Object.freeze({
   'let-skippable-order-expire': 'この注文は引き受けず、期限が過ぎるまで待ちましょう。見送れば、品もお金も使わずに済みます。',
   'close-fourth-chapter': '引き受けた注文と、見送った注文を、書状で比べましょう。どちらも会社を守るための判断です。',
   'observe-tools-price-rise': '木製品の値段が上がり始めました。町で何が木製品を求めているのか、仕事と相場を見比べましょう。',
-  'place-conversion-workshops': '木工房、炭焼き小屋、塩田を道沿いに一棟ずつ建てましょう。丸太から木製品と木炭を、木炭から塩を作れます。',
+  'place-conversion-workshops': '木工房と炭焼き小屋は木こりの近くへ、塩田は炭焼き小屋の近くへ、一棟ずつ建てましょう。近い原料元から直接買えれば、仕事の連鎖が速くなります。',
   'observe-conversion-cost-chain': '三つの仕事場へ原料が届くのを待ちましょう。原料の値段が、作った品の原価にどう残るか確かめます。',
   'sustain-conversion-workshops': '三つの仕事場へ、家族と原料が届く状態を90日保ちましょう。道が切れたり原料が尽きたりしていないか見守ります。',
   'observe-household-level-up': '食料や暮らしの品が毎日届く家を見守りましょう。満たされた日が続くと、家と仕事場が一段育ちます。',
@@ -398,13 +398,13 @@ export const TUTORIAL_ELENA_MESSAGES = Object.freeze({
 
 export const TUTORIAL_ELENA_COMPLETIONS = Object.freeze({
   'first-road-and-logger': '森まで道が届きました。次は、その道沿いの森のそばに木こりを建てましょう。',
-  'first-logger': '木こりが建ちました。丸太を切り出せますが、まだ売る場所がありません。',
+  'first-logger': '木こりが建ちました。建物を押すと、森までの片道と日産を確かめられます。まだ丸太を売る場所はありません。',
   'market-for-logs': '市場が開きました。木こりの丸太を売り、家族が食料を買える場所ができました。',
   'connect-market-to-port': '港と市場が道でつながりました。本国の食料を、市場まで運べるようになりました。',
   'request-first-aid': '本国へ食料支援を頼みました。この一便が届く間に、島で食料を作る支度を進められます。',
   'first-settlers-arrive': '最初の家族が島へ着きました。まずは、毎日食べる魚と野菜を島で作れるようにしましょう。',
   'place-island-food': '漁師と野菜畑が建ちました。家族が働き始めれば、魚と野菜が市場へ届きます。',
-  'first-woodshop': '木工房が建ちました。木こりの丸太を、注文にも使える木製品へ変えられます。',
+  'first-woodshop': '木工房が建ちました。近い木こりに丸太があれば直接買いに行き、注文にも使える木製品へ変えます。',
   'warehouse-for-order': '倉庫が道につながりました。これで、買い付けた品を運び込めます。',
   'prepare-first-tools-stock': '木製品の買上げ目標を80荷に定めました。市場に木製品が並べば、会社の運び手が倉庫へ運びます。',
   'accept-first-order': '最初の注文を引き受けました。受けただけでは品は集まらないので、買い付ける量を注文数に合わせましょう。',
@@ -641,13 +641,13 @@ export function authorTutorialLetter(id, rendered) {
 
 export const TUTORIAL_SYSTEM_INSTRUCTIONS = Object.freeze({
   'first-road-and-logger': '港から森の隣まで道を引く',
-  'first-logger': '森と道の両方に接する場所へ木こりを建てる',
+  'first-logger': '下の［資源］で［木こり］を選び、配置予測の日産が高い森近くの道沿いへ建てる。',
   'market-for-logs': '下の［流通］から［市場］を選び、木こりへ続く道の隣に置く。',
   'connect-market-to-port': '［整備］の［道を敷く］で、港の入口と市場の入口をつなぐ。',
   'request-first-aid': '上の［取引］を開き、［支援を要請する］を1回押す。',
   'first-settlers-arrive': '時間を進め、市場の近くに最初の家族が現れるまで盤面を見る。',
-  'place-island-food': '下の［食料］から［漁師］を水際の道沿いへ、［野菜畑］を市場に近い道沿いへ置く。',
-  'first-woodshop': '下の［加工］から［木工房］を選び、木こりと市場へ続く道沿いに置く。',
+  'place-island-food': '下の［食料］から［漁師］を選び、配置予測の日産が高い水際の道沿いへ置く。［野菜畑］は市場に近い道沿いへ置く。',
+  'first-woodshop': '下の［加工］から［木工房］を選び、配置予測で木こりが近隣仕入の候補になる道沿いへ置く。',
   'warehouse-for-order': '下の［流通］から［倉庫］を置き、［道を敷く］で市場と港へつなぐ。',
   'prepare-first-tools-stock': '上の［取引］を開き、木製品の買上げ目標へ80と入力してEnterを押す。',
   'accept-first-order': '注文状が届いたら上の［取引］を開き、注文カードの［受諾する］を押す。',

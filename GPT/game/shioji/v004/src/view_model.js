@@ -1,18 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.35.0-market-rhythm';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.36.0-spatial-productivity';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.35.0-market-rhythm';
+} from './food_readability.js?v=v004.36.0-spatial-productivity';
 import {
-  LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.35.0-market-rhythm';
-import { analyzeRoadConnections } from './placement.js?v=v004.35.0-market-rhythm';
+  LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
+  householdProductionSummary, productionCost,
+} from './engine_bridge.js?v=v004.36.0-spatial-productivity';
+import { analyzeRoadConnections } from './placement.js?v=v004.36.0-spatial-productivity';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.35.0-market-rhythm';
+} from './render_scene.js?v=v004.36.0-spatial-productivity';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.35.0-market-rhythm';
+} from './visuals.js?v=v004.36.0-spatial-productivity';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
@@ -309,6 +310,10 @@ function marketRhythmStatus(household, economy) {
       input_restocks: {
         label: '原料をまとめて補充中',
         detail: '出荷と同じ間隔で、数日分の原料を運んでいます。',
+      },
+      direct_input: {
+        label: '近所の生産者へ原料を買付中',
+        detail: '市場を経由せず、近い生産者から直接持ち帰ります。',
       },
       culture_restocks: {
         label: '暮らしの品をまとめて補充中',
@@ -714,11 +719,26 @@ function carrierRows(snapshot, buildings) {
     const work = Number.isFinite(household.wx) && Number.isFinite(household.wy)
       ? { label: '仕事場', x: household.wx, y: household.wy }
       : home;
+    const supplierHousehold = household.marketCarrier?.directOffer
+      ? snapshot.economy.households.find(
+        row => row.id === household.marketCarrier.directOffer.sellerId,
+      )
+      : null;
+    const supplierBuilding = supplierHousehold
+      ? buildingById.get(supplierHousehold.buildingId)
+      : null;
+    const tradeEndpoint = supplierBuilding ? {
+      label: `${JOB_LABELS[supplierHousehold.job] ?? supplierHousehold.job}の家`,
+      x: supplierBuilding.entrance?.x ?? supplierHousehold.x,
+      y: supplierBuilding.entrance?.y ?? supplierHousehold.y,
+    } : marketEndpoint;
     const from = household.state === 'toHome'
-      ? (household.marketCarrier ? marketEndpoint : work)
+      ? (household.marketCarrier ? tradeEndpoint : work)
       : home;
     const to = ['toMarket', 'atMarket'].includes(household.state)
       ? marketEndpoint
+      : ['toSupplier', 'atSupplier'].includes(household.state)
+        ? tradeEndpoint
       : household.state === 'toWork' ? work : home;
     const workingAtYard = household.state === 'home'
       && (household.productionMultiplier ?? 0) > 0
@@ -762,7 +782,8 @@ function carrierRows(snapshot, buildings) {
             id: porter.memberId ?? `${household.id}:${index}`,
             name: porter.memberName ?? member?.name ?? `住民${index + 1}`,
           }],
-          activity: household.state === 'atMarket' ? 'shopping' : 'carrying',
+          activity: ['atMarket', 'atSupplier'].includes(household.state)
+            ? 'shopping' : 'carrying',
           productionMultiplier: Math.max(
             0,
             (household.productionMultiplier ?? 0)
@@ -883,6 +904,98 @@ function carrierRows(snapshot, buildings) {
         }));
       return [workerRow, ...stayed];
     }
+    const resourceWork = household.productionSummary?.resourceWork ?? household.resourceWork;
+    if (
+      household.state === 'home'
+      && Number.isFinite(resourceWork?.oneWayTicks)
+      && resourceWork.path?.length > 1
+      && household.members?.length
+    ) {
+      const member = household.members[0];
+      const personId = member.id ?? `${household.id}:resource`;
+      const oneWay = Math.max(0.5, resourceWork.oneWayTicks);
+      const workTicks = Math.max(3, resourceWork.workTicks ?? 3);
+      const schedule = oneWay * 2 + workTicks;
+      const phase = (snapshot.tick % 30) / 30 * schedule;
+      const outbound = phase < oneWay;
+      const returning = phase >= oneWay + workTicks;
+      const path = returning ? [...resourceWork.path].reverse() : resourceWork.path;
+      const progress = outbound
+        ? phase / oneWay
+        : returning ? (phase - oneWay - workTicks) / oneWay : 1;
+      const visualPosition = walkingVisualPosition({
+        id: `person:${personId}`,
+        seed: snapshot.seed,
+        path,
+        position: resourceWork.target,
+        progress,
+      });
+      const resource = {
+        label: household.job === 'logger' ? '伐採する森' : '漁場',
+        x: resourceWork.target.x,
+        y: resourceWork.target.y,
+      };
+      const worker = {
+        id: `person:${personId}`,
+        householdId: household.id,
+        personId,
+        personName: member.name ?? '住民',
+        kind: 'walker',
+        mode: 'walk',
+        transportTier: 'worker',
+        cartKind: null,
+        assetId: null,
+        x: visualPosition.x,
+        y: visualPosition.y,
+        visualPace: visualPosition.pace,
+        laneOffset: visualPosition.lane,
+        visualProgress: visualPosition.visualProgress,
+        state: outbound ? 'toResource' : returning ? 'fromResource' : 'atResource',
+        job: household.job,
+        members: 1,
+        peopleRows: [{ id: personId, name: member.name ?? '住民' }],
+        activity: 'working-away',
+        productionMultiplier: (resourceWork.efficiency ?? 1)
+          / Math.max(1, household.members.length),
+        goods: null,
+        amount: 0,
+        cargoRows: [],
+        path: path.map(point => ({ ...point })),
+        from: returning ? resource : home,
+        to: returning ? home : resource,
+      };
+      const stayed = household.members.slice(1).map((stayedMember, index) => ({
+        id: `person:${stayedMember.id ?? `${household.id}:home:${index}`}`,
+        householdId: household.id,
+        personId: stayedMember.id ?? `${household.id}:home:${index}`,
+        personName: stayedMember.name ?? `住民${index + 2}`,
+        kind: 'household',
+        mode: 'walk',
+        transportTier: 'worker',
+        cartKind: null,
+        assetId: null,
+        x: homeBuilding
+          ? homeBuilding.x + homeBuilding.width * 0.55 + (index % 3) * 0.22
+          : household.x + (index % 3) * 0.12,
+        y: homeBuilding
+          ? homeBuilding.y + homeBuilding.height * 0.58 + Math.floor(index / 3) * 0.18
+          : household.y + Math.floor(index / 3) * 0.12,
+        state: 'home',
+        job: household.job,
+        members: 1,
+        peopleRows: [{ id: stayedMember.id, name: stayedMember.name ?? `住民${index + 2}` }],
+        activity: 'working',
+        productionMultiplier: (resourceWork.efficiency ?? 1)
+          / Math.max(1, household.members.length),
+        goods: null,
+        amount: 0,
+        cargoRows: [],
+        path: [],
+        from: home,
+        to: home,
+      }));
+      return [worker, ...stayed];
+    }
     return (household.members ?? []).map((member, index) => {
       const column = index % 3;
       const row = Math.floor(index / 3);
@@ -995,6 +1108,58 @@ function portBerth(building, terrain, width, height) {
   };
 }
 
+function aggregateProductivity(rows) {
+  const observed = rows.filter(row => row.productivity?.days > 0 && row.productivity.ideal > 1e-9);
+  const actual = observed.reduce((total, row) => total + row.productivity.actual, 0);
+  const ideal = observed.reduce((total, row) => total + row.productivity.ideal, 0);
+  return {
+    buildings: observed.length,
+    actual,
+    ideal,
+    efficiency: ideal > 1e-9 ? actual / ideal : null,
+  };
+}
+
+function productivityOverview({ snapshot, buildings, households }) {
+  const market = buildings.find(building => building.roles?.includes('market'));
+  const marketRows = market?.entrance
+    ? households.filter(household => (
+      Number.isFinite(household.marketOneWayTicks) && household.marketOneWayTicks <= 14
+    ))
+    : [];
+  const dayFloor = Math.max(0, snapshot.day - 29);
+  const recentDirectTrades = (snapshot.economy.directTrades ?? [])
+    .filter(row => row.day >= dayFloor && row.qty > 1e-9)
+    .map(row => ({ ...row }));
+  const summarizeDirectTrades = rows => ({
+    trades: rows.length,
+    quantity: rows.reduce((total, row) => total + row.qty, 0),
+    savedTicks: rows.reduce((total, row) => total + row.savedTicks, 0),
+    rows,
+  });
+  const directSummary = summarizeDirectTrades(recentDirectTrades);
+  const island = aggregateProductivity(households);
+  island.resourceDistanceLoss = households.reduce((total, household) => {
+    const productivity = household.productivity;
+    const spatial = productivity?.resourceWork?.efficiency;
+    return total + (
+      Number.isFinite(spatial) && productivity.ideal > 0
+        ? productivity.ideal * Math.max(0, 1 - spatial)
+        : 0
+    );
+  }, 0);
+  island.directTrade = directSummary;
+  const neighborhood = {
+    ...aggregateProductivity(marketRows),
+    totalBuildings: households.filter(row => row.productivity?.ideal > 1e-9).length,
+    directTrade: summarizeDirectTrades(recentDirectTrades.filter(row => (
+      marketRows.some(household => household.id === row.buyerHouseholdId)
+    ))),
+    radiusTicks: 14,
+  };
+  return { island, neighborhood };
+}
+
 export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
   if (!snapshot?.physical || !snapshot?.economy) {
     throw new TypeError('full engine snapshot is required');
@@ -1060,6 +1225,11 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
     const pantryGroups = groupedStock(pantry);
     const hungerHistory = [...(household.hungerHist ?? [])];
     const satisfaction = household.satLast ? { ...household.satLast } : null;
+    const production = household.productionSummary ?? householdProductionSummary(
+      snapshot.economy,
+      household,
+      { day: snapshot.day },
+    );
     return {
       id: household.id,
       familyName: household.sur ?? '',
@@ -1082,6 +1252,17 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
       cartStock: (household.cartStock ?? []).map(cart => ({ ...cart })),
       cartWork: household.cartWork ? { ...household.cartWork } : null,
       productionMultiplier: household.productionMultiplier ?? 1,
+      productivity: {
+        ...production,
+        actualByGoods: { ...production.actualByGoods },
+        idealByGoods: { ...production.idealByGoods },
+        resourceWork: production.resourceWork ? {
+          ...production.resourceWork,
+          target: production.resourceWork.target ? { ...production.resourceWork.target } : null,
+          path: (production.resourceWork.path ?? []).map(point => ({ ...point })),
+        } : null,
+        lastDirectTrade: production.lastDirectTrade ? { ...production.lastDirectTrade } : null,
+      },
       tookMarketTripToday: Boolean(household.tookMarketTripToday),
       purse: Number.isFinite(household.purse) ? household.purse : null,
       recentIncome: Number.isFinite(household.incomeLog?.at(-1))
@@ -1095,6 +1276,7 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
       hungerRun: household.hungerRun ?? 0,
       insolvencyMonths: household.insolvM ?? 0,
       walkingDistance: household.walk ?? 0,
+      marketOneWayTicks: household.marketOneWayTicks ?? null,
       roadConnected: Boolean(household.road),
       marketTransactionTicks: household.marketTransactionTicks ?? 0,
       marketRhythm: marketRhythmStatus(household, snapshot.economy),
@@ -1107,6 +1289,9 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
     household.buildingId, household.pantry,
   ]));
   for (const building of buildings) {
+    building.productivity = households.find(
+      household => household.buildingId === building.id,
+    )?.productivity ?? null;
     building.structure = buildingStructureLayout(building);
     building.yardStock = yardStockRows(building, pantryByBuilding.get(building.id) ?? []);
     building.yardPlaces = yardLayout(building, building.yardStock);
@@ -1148,6 +1333,8 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
   const trailRows = [...traffic.entries()]
     .map(([key, tread]) => ({ key, ...trailVisual(tread) }))
     .filter(row => row.stage > 0);
+  const productivity = productivityOverview({ snapshot, buildings, households });
+  if (marketBuilding) marketBuilding.marketProductivity = productivity.neighborhood;
   const portCalls = snapshot.physical.portCalls.map(call => {
     const port = snapshot.physical.buildings.find(building => building.id === call.portBuildingId);
     const section = call.direction === 'export' ? 'outbound' : 'inbound';
@@ -1210,6 +1397,9 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
     tick: snapshot.tick,
     seed: snapshot.seed,
     companyMoney: snapshot.economy.company.money,
+    productivity: productivity.island,
+    marketProductivity: productivity.neighborhood,
+    directTrades: productivity.island.directTrade.rows,
     companyBankruptcyDay: snapshot.economy.goDay ?? null,
     population: households.reduce((total, household) => total + household.members, 0),
     width: snapshot.physical.width,
