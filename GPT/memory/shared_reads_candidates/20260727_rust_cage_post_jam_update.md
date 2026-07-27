@@ -4,6 +4,20 @@ url: "https://itch.io/devlog/1603232/update-on-the-post-jam-update"
 collected_at: "2026-07-27T14:15:57+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, postmortem, game-jam, playtesting, tutorial-design, feedback]
+evaluated_at: "2026-07-27T14:22:16+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-27T14:22:16+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-27T14:22:16+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-26"
+supersedes: []
+gate_reason: |-
+  playthroughの混乱をtutorial、affordance、resource loop、音、UIへ対応付ける点は明快だが、修正後の再評価や効果量が示されていない。
+  有用なチェックリストにはなるものの、変更列挙を超える手法・評価・結論がなく、CoopEval水準の概要には届かない。
 ---
 
 ## raw_excerpt

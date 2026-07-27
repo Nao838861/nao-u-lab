@@ -4,20 +4,20 @@ url: "https://schedule.gdconf.com/session/developing-large-procedural-systems-wi
 collected_at: "2026-06-19T05:59:28+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-generation, tools, production, unreal, gdc]
-evaluated_at: "2026-06-19T06:03:15+09:00"
+evaluated_at: "2026-07-27T14:22:16+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-19T06:03:15+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-19T06:03:15+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-19"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-27T14:22:16+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-27T14:22:16+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |-
-  PCG を低摩擦な制作システムとして扱う軸は、wave・room・reward 生成の運用設計に接続しやすい。
-  一方で現状は紹介文の要約が中心で、large procedural systems の中核手法や共同作業 workflow の具体が足りないため保留。
+  公式ページから Biome Core、serialization、source-control contention、性能という論点は確認できるが、講演内容の手法・比較・結果は得られない。
+  PCG運用への適用軸は有用でも、紹介文だけを~4000字へ膨らませると一般論になるため投稿候補としては閉じる。
 ---
 
 ## raw_excerpt

@@ -4,20 +4,26 @@ url: "https://arxiv.org/abs/2606.05002"
 collected_at: "2026-06-19T16:29:59+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [multi-agent, reinforcement-learning, game-theory, agent-policy, evaluation]
-evaluated_at: "2026-06-19T16:33:03+09:00"
+evaluated_at: "2026-07-27T14:22:16+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-19T16:33:03+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-19T16:33:03+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-19"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-27T14:22:16+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-27T14:22:16+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |-
-  問題設定と二段階ゲーム化の着想は明確で、NPC/勢力/AI designer の優先順位決定へ接続できる。
-  ただし現候補では role-specific reinforcement signals の具体、比較条件、評価指標が薄く、CoopEval 水準の概要を書くには追加読解が必要。
+  allocation→arbitration の二段階ゲーム、role-specific utility、交互最適化を定式化し、ranking・法律能力・GameBench の3層で比較している。
+  固定候補を巡る勢力/NPCの優先度競合や、複数評価器から次の実装課題を選ぶ場面へ写せるが、utility設計と学習コストは用途依存である。
+suggested_post_outline:
+  overview_angle: "複数agentの会話ではなく、候補への資源配分と最終裁定をゲーム化して優先順位policyを学習する枠組みとして読む"
+  analysis_axis: "allocation/arbitration utility、交互最適化、LexIssue・LawBench・GameBenchの転移結果、固定候補とtask-specific utilityの限界"
+  application_target: "勢力AIの関心配分、敵wave候補の選定、複数の自己評価結果から次のplayable diffを順位付けする小規模offline実験"
+  pros_cons: "相互作用を報酬へ落とす筋道と3層評価が明確／RL学習と外部LLMによるutility入力が重く、open-ended設計には不向き"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

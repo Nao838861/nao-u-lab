@@ -4,6 +4,20 @@ url: "https://itch.io/devlog/1603115/cities-of-sin-1st-devlog-from-idea-to-proto
 collected_at: "2026-07-27T14:16:22+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, prototyping, city-builder, scope, indie-development, godot]
+evaluated_at: "2026-07-27T14:22:16+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-27T14:22:16+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-27T14:22:16+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-26"
+supersedes: []
+gate_reason: |-
+  1か月制約からgenre・engine・art・core loop・延期機能を逆算した具体例だが、prototypeのplaytest結果や判断の有効性は検証されていない。
+  scope設計の一事例としては残せるものの、一般化可能な手法と評価の中身が薄く、~4000字投稿では過剰解釈になる。
 ---
 
 ## raw_excerpt

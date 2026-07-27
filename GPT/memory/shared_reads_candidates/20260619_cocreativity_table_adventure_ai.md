@@ -4,20 +4,26 @@ url: "https://arxiv.org/abs/2606.18010"
 collected_at: "2026-06-19T02:04:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, ttrpg, narrative, human-ai-collaboration, llm]
-evaluated_at: "2026-06-19T02:04:15+09:00"
+evaluated_at: "2026-07-27T14:22:16+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-19T02:04:15+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-19T02:04:15+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-19"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-27T14:22:16+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-27T14:22:16+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |-
-  LLM を DM そのものではなく準備・描写・選択肢拡張へ置く観点は有用で、ゲーム制作への適用可能性もある。
-  ただし候補メモだけでは、3 seasons の分析手順・失敗分類・シーズン間変化の具体例が薄く、CoopEval 水準の概要を書くには本文確認が必要。
+  3 seasons を同じ template analysis で符号化し、人間/AI の役割、agency・整合性・balance の失敗、時系列変化まで具体例と件数で示している。
+  LLM を生成役に限定し、game state・裁定・物語の凝集性・対人調整を人間へ残す設計として、会話 NPC や narrative 支援へ具体的に適用できる。
+suggested_post_outline:
+  overview_angle: "実プレイ3 seasons の役割分解から、LLMをDMの代替ではなく制約付き共同制作者として配置する条件を読む"
+  analysis_axis: "template analysis の妥当性、AIの成功領域とagency・整合性・balance失敗、model更新と運用改善の切り分け"
+  application_target: "会話NPC・物語生成prototypeで、生成と選択肢提示をLLMへ、world state・裁定・伏線・player agency監視をdeterministic層へ分離する"
+  pros_cons: "役割境界と失敗例が具体的／単一podcastの自己評価中心で一般化とmodel更新効果の分離には限界"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

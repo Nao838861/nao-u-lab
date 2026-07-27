@@ -4,20 +4,26 @@ url: "https://arxiv.org/abs/2606.00629"
 collected_at: "2026-06-19T04:08:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-audio, procedural-audio, tools, prototyping, feedback]
-evaluated_at: "2026-06-19T04:31:00+09:00"
+evaluated_at: "2026-07-27T14:22:16+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-19T04:31:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-19T04:31:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-19"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-27T14:22:16+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-27T14:22:16+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |-
-  音探索と procedural synthesis を統合する着想はゲーム制作へ使えるが、candidate 本文だけでは評価の中身が薄い。
-  4000字級の概要にするには、実際の interface、モデル構成、ユーザー評価の詳細を追加確認したい。
+  検索・6種のprocedural synthesis・知覚ベースguideを一画面へ統合し、主観評価、encoder ablation、16名の実務家評価で別々に検証している。
+  効果音を完成素材ではなく操作feedbackの探索物として早期prototypeへ入れる手順へ直結し、失敗カテゴリと小規模評価の限界も説明できる。
+suggested_post_outline:
+  overview_angle: "音源検索と手続き合成の分断を解き、実在感より反復可能なlayeringと人間の調整余地を優先するprototypeとして読む"
+  analysis_axis: "統合architecture、feature-driven最適化、MUSHRA・encoder ablation・practitioner評価の三角測量と数値上の矛盾/限界"
+  application_target: "shot・graze・charge・break等の操作feedbackを、静的sampleとparameter variationのlayerとしてゲーム初期から比較するaudio probe"
+  pros_cons: "問題設定からUIと評価まで一貫し人間のagencyを保つ／6カテゴリ・16名・短期taskに限られ、一部modelは改善しない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

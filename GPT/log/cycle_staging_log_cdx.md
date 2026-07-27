@@ -13,7 +13,80 @@
 - preflight: 3 件とも sidecar 再生成後に `continue`。各保存後と収集終了時にも sidecar を再生成済み。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 8
+pass:
+  - memory/shared_reads_candidates/20260619_cocreativity_table_adventure_ai.md
+  - memory/shared_reads_candidates/20260619_garl_game_theoretic_multi_agent_rl.md
+  - memory/shared_reads_candidates/20260619_quality_audio_prototyping_procedural_sound.md
+fail:
+  - path: memory/shared_reads_candidates/20260619_gdc2026_large_procedural_systems_low_friction.md
+    reason: "公式紹介には論点しかなく、講演の手法・比較・結果を抽出できない"
+  - path: memory/shared_reads_candidates/20260619_llm_integrated_game_writing_practices.md
+    reason: "広い総説だが独自の分析手順・事例比較・評価結果が薄い"
+  - path: memory/shared_reads_candidates/20260727_leslie_2025_postmortem.md
+    reason: "制作判断は具体的だが、単作回顧で評価方法と結果検証がない"
+  - path: memory/shared_reads_candidates/20260727_rust_cage_post_jam_update.md
+    reason: "修正項目は明快だが、修正後の再評価がなく変更列挙に留まる"
+  - path: memory/shared_reads_candidates/20260727_cities_of_sin_idea_to_prototype.md
+    reason: "scope設計例として有用だが、playtest結果と判断の検証がない"
+postpone: []
+stale_reviewed:
+  - handoff_id: cha-8cbe36620ed7b7e8
+    path: memory/shared_reads_candidates/20260619_cocreativity_table_adventure_ai.md
+    previous_status: postponed
+    decision: pass
+    updated_stale_after: "2026-08-26"
+  - handoff_id: cha-5900a2c375da8ac0
+    path: memory/shared_reads_candidates/20260619_garl_game_theoretic_multi_agent_rl.md
+    previous_status: postponed
+    decision: pass
+    updated_stale_after: "2026-08-26"
+  - handoff_id: cha-352675088d00017d
+    path: memory/shared_reads_candidates/20260619_gdc2026_large_procedural_systems_low_friction.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-26"
+  - handoff_id: cha-5c357e7177bd48f3
+    path: memory/shared_reads_candidates/20260619_llm_integrated_game_writing_practices.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-26"
+  - handoff_id: cha-2cef54cb15a17a8a
+    path: memory/shared_reads_candidates/20260619_quality_audio_prototyping_procedural_sound.md
+    previous_status: postponed
+    decision: pass
+    updated_stale_after: "2026-08-26"
+candidate_handoff_audit:
+  pending_before: 5
+  read_ids:
+    - cha-8cbe36620ed7b7e8
+    - cha-5900a2c375da8ac0
+    - cha-352675088d00017d
+    - cha-5c357e7177bd48f3
+    - cha-2cef54cb15a17a8a
+  resolved_ids:
+    - cha-8cbe36620ed7b7e8
+    - cha-5900a2c375da8ac0
+    - cha-352675088d00017d
+    - cha-5c357e7177bd48f3
+    - cha-2cef54cb15a17a8a
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
