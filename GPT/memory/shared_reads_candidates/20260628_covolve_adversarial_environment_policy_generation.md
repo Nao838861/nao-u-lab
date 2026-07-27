@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2603.28386"
 collected_at: "2026-06-28T22:36:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, pcg, agent-evaluation, curriculum, llm, reinforcement-learning]
-evaluated_at: "2026-06-28T22:33:12+09:00"
+evaluated_at: "2026-07-28T03:21:03+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-28T22:33:12+09:00"
+last_reviewed_at: "2026-07-28T03:21:03+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-28T22:33:12+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-28T03:21:03+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-28"
+stale_after: "2026-08-27"
 supersedes: []
 gate_reason: |-
-  adversarial environment / policy co-evolution は AI playtest と curriculum 作成に強く接続するが、candidate だけでは実験条件と限界の解像度が足りない。
-  Phase 3 に回す前に、対象環境、mixed-strategy meta-policy、評価結果の具体差分を確認したい。
+  environment / policy の共進化、mixed-strategy meta-policy、3 評価領域は抽出でき、敵・level の adversarial playtest へ直接接続できる。
+  ただし baseline 別の改善幅、生成環境の妥当性検査、破綻例が不足し、4000 字概要の評価節を支えられないため追加読解まで postpone とする。
 ---
 
 ## raw_excerpt

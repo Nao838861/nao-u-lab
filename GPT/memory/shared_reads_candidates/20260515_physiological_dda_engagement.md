@@ -4,20 +4,20 @@ url: "https://scholar.gist.ac.kr/handle/local/33897"
 collected_at: "2026-05-15T10:59:25+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, dynamic-difficulty, ux, player-state, engagement, accessibility]
-evaluated_at: "2026-05-15T11:01:51+09:00"
+evaluated_at: "2026-07-28T03:21:03+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-15T11:01:51+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-15T11:01:51+09:00"
-stale_after: "2026-06-14"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-28T03:21:03+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T03:21:03+09:00"
+stale_after: "2026-08-27"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |
-  performance metrics ではなく player-state を観測して DDA に使う軸は有用だが、N=10 かつセンサー前提で、~4000 字の残すべき概要にするには外部検証が薄い。
-  ゲーム制作への転用は proxy 設計として可能だが、現時点では「面白い設計ヒント」を超えるには追加論文や実装 probe と組み合わせたい。
+  player-state を観測する DDA、hybrid LSTM、4 条件比較は抽出できるが、N=10 で効果量・予測精度・個人差が候補本文にない。
+  入力密度などを proxy にする転用は研究結果から一段離れた推測であり、単独で残すべき 4000 字概要には証拠が薄いため fail とする。
 
 ---
 

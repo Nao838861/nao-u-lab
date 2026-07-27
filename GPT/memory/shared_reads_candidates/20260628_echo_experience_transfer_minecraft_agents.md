@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2604.05533"
 collected_at: "2026-06-28T22:36:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, agent-memory, minecraft, multimodal-agents, llm, transfer]
-evaluated_at: "2026-06-28T22:33:12+09:00"
+evaluated_at: "2026-07-28T03:21:03+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-28T22:33:12+09:00"
+last_reviewed_at: "2026-07-28T03:21:03+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-28T22:33:12+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-28T03:21:03+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-28"
+stale_after: "2026-08-27"
 supersedes: []
 gate_reason: |-
-  transferable knowledge を structure / attribute / process / function / interaction に分ける着想は、playtester memory に応用できる。
-  ただし Minecraft object-unlocking に寄った成果なので、ゲーム制作サイクルへ移すには転用例と失敗条件の追加確認が必要。
+  5 次元の知識分解、analogy retrieval、Minecraft object-unlocking と 1.3–1.7 倍の speed-up は抽出でき、playtester memory に接続できる。
+  一方で baseline、task 数、転移失敗や誤検索の条件がなく、Minecraft 外への適用限界を評価できないため追加読解まで postpone とする。
 ---
 
 ## raw_excerpt

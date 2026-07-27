@@ -7,12 +7,12 @@ genre_tags: [game-design, tcg, procedural-content-generation, llm, diffusion, pe
 evaluated_at: "2026-05-26T03:11:06+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-07-12T10:15:54+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260516_llm_tcg_procedural_relatedness.md"
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-28T03:20:21+09:00"
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-8149cb865350b946; terminal:memory/shared_reads_candidates/20260516_llm_tcg_procedural_relatedness.md: status:posted; permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778870429034319; memory/shared_reads_candidates/20260527_llm_tcg_procedural_relatedness.md: status:failed; same arXiv work; reason:既投稿 candidate と同じ arXiv:2604.27972 で題材・資料・work identity の差がない"
 stale_after: "2026-08-11"
 supersedes: []
 next_action: none

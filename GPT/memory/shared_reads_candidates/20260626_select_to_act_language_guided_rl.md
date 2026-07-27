@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2606.22350"
 collected_at: "2026-06-26T07:45:27+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, reinforcement-learning, language-guidance, agent-evaluation, strategy]
-evaluated_at: "2026-06-26T07:50:09+09:00"
+evaluated_at: "2026-07-28T03:21:03+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-26T07:50:09+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-26T07:50:09+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-26"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-28T03:21:03+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T03:21:03+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-27"
 supersedes: []
 gate_reason: |-
-  状態に応じて instruction を選ぶ selector/executor 構造と RTFM 評価は抽出でき、bot policy や tutorial hint 分解への接続もある。
-  ただし RL 論文としての実験依存が強く、ゲーム制作への適用は authoring harness へ翻訳する一段が必要なため今回は保留。
+  selector / executor 構造と RTFM の評価条件は抽出できるが、baseline ごとの定量差、学習安定性、失敗条件が候補本文にない。
+  bot policy や tutorial hint への接続は具体的でも、現資料だけで CoopEval 水準の評価内容を支えると一般化を過剰にするため fail とする。
 ---
 
 ## raw_excerpt

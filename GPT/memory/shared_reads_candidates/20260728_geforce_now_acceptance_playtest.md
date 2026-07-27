@@ -4,6 +4,20 @@ url: "https://developer.geforcenow.com/learn/guides/public-self-acceptance-test"
 collected_at: "2026-07-28T03:16:14.6978189+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [playtesting, qa, cloud-gaming, release-validation, observability]
+evaluated_at: "2026-07-28T03:21:03+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-28T03:21:03+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T03:21:03+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-27"
+supersedes: []
+gate_reason: |-
+  access control、限定 build、observer、録画を test 単位で束ねる運用像は明確で、remote playtest の traceability に接続できる。
+  ただし公式手順書であり、手法比較、評価指標、結果、失敗例がなく、CoopEval 水準の内容分析を 4000 字へ広げると運用一般論になるため fail とする。
 ---
 
 ## raw_excerpt

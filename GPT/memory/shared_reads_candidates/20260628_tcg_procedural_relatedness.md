@@ -4,17 +4,18 @@ url: "https://arxiv.org/abs/2604.27972"
 collected_at: "2026-06-28T09:59:24+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-content-generation, card-game, personalization, co-creation]
-status: needs_review
+status: failed
 lifecycle_backfill_reason: "missing_status_defaulted_to_needs_review"
 lifecycle_backfilled_at: "2026-07-12"
-candidate_status: needs_review
+candidate_status: failed
 stale_after: "2026-07-28"
 supersedes: []
-last_reviewed_at: "2026-06-28T09:59:24+09:00"
-last_decision: needs_review
-evidence: "candidate_file:20260628_tcg_procedural_relatedness.md; status:needs_review"
-next_action: evaluate_in_phase2
+last_reviewed_at: "2026-07-28T03:20:21+09:00"
+last_decision: failed
+evidence: "group_handoff:gha-8149cb865350b946; terminal:memory/shared_reads_candidates/20260516_llm_tcg_procedural_relatedness.md: status:posted; permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778870429034319; memory/shared_reads_candidates/20260527_llm_tcg_procedural_relatedness.md: status:failed; same arXiv work; reason:既投稿 candidate と同じ arXiv:2604.27972 で題材・資料・work identity の差がない"
+next_action: none
 
+duplicate_reason: failed_duplicate_of_terminal_sibling
 ---
 
 ## raw_excerpt

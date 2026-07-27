@@ -4,24 +4,20 @@ url: https://arxiv.org/abs/2602.19160
 collected_at: 2026-05-15T12:59:38+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-playing, formal-rules, llm-evaluation, general-game-playing]
-evaluated_at: 2026-05-15T13:02:59+09:00
+evaluated_at: "2026-07-28T03:21:03+09:00"
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-15T13:02:59+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-15T13:02:59+09:00"
-stale_after: "2026-06-14"
-stale_review_state: reevaluate_in_phase2
-stale_review_reason: "Phase 4a stale_review_batch: LLM の General Game Playing 能力は game-design / agent evaluation に直結するため、Phase 2 で fail か再評価かを早めに決める価値がある。"
-last_stale_reviewed_at: "2026-06-21T08:30:00+09:00"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-28T03:21:03+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T03:21:03+09:00"
+stale_after: "2026-08-27"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |-
-  next state / legal action / multi-step state formulation と構造特徴分析は重要で、ゲームルールを LLM に扱わせる失敗条件の整理に使える。
-  ただし現候補メモだけでは、40 構造特徴の内訳や結果の定量差が薄く、CoopEval 水準の「概要」を書くには追加読解が必要。
-  Phase 3 へ即時投稿せず、raw か本文確認後に再評価する。
+  next state / legal action / multi-step state formulation と 40 構造特徴の分析枠は重要で、rule-driven bot の評価に接続できる。
+  しかし 40 特徴の内訳、model 別成績、obfuscation と horizon の効果量がない状態が再評価時にも変わらず、4000 字概要を支えられないため fail とする。
 
 ---
 
