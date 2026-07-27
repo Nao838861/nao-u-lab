@@ -241,4 +241,15 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+executed_at: "2026-07-27T21:24:59+09:00"
+channel: "#log"
+threaded: false
+draft: "drafts/phase5_log_diary_20260727_2124_cdx.md"
+char_count: 1808
+slack_ts: "1785155099.784359"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785155099784359"
+verification: ok
+mojibake_replacement_count: 0
+```
