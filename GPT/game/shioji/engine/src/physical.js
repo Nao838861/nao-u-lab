@@ -5,6 +5,56 @@ const DIRS = [
 
 const travelPathCaches = new WeakMap();
 
+// Dijkstra の open 集合。sort()+shift() は探索セル数が増えるほど重くなるため、
+// 最小ヒープへ置き換える。同コスト時は投入順(seq)を使い決定性を保つ。
+class MinHeap {
+  constructor(compare) { this.items = []; this.compare = compare; }
+  get length() { return this.items.length; }
+  push(value) {
+    const items = this.items;
+    items.push(value);
+    let index = items.length - 1;
+    while (index > 0) {
+      const parent = (index - 1) >> 1;
+      if (this.compare(items[parent], value) <= 0) break;
+      items[index] = items[parent];
+      index = parent;
+    }
+    items[index] = value;
+  }
+  pop() {
+    const items = this.items;
+    if (items.length === 0) return undefined;
+    const first = items[0];
+    const last = items.pop();
+    if (items.length === 0) return first;
+    let index = 0;
+    while (true) {
+      const left = index * 2 + 1;
+      if (left >= items.length) break;
+      const right = left + 1;
+      const child = right < items.length && this.compare(items[right], items[left]) < 0
+        ? right
+        : left;
+      if (this.compare(last, items[child]) <= 0) break;
+      items[index] = items[child];
+      index = child;
+    }
+    items[index] = last;
+    return first;
+  }
+}
+
+function travelQueue() {
+  let sequence = 0;
+  const heap = new MinHeap((left, right) => left.cost - right.cost || left.seq - right.seq);
+  return {
+    get length() { return heap.length; },
+    push(item) { heap.push({ ...item, seq: sequence++ }); },
+    pop() { return heap.pop(); },
+  };
+}
+
 export const GOODS_UNIT_WEIGHT = Object.freeze({ ore: 2, bar: 2 });
 
 export function goodsUnitWeight(goods) {
@@ -124,6 +174,34 @@ export function makeFlowIslandTerrain(width = 48, height = 40) {
       if (x >= 8 && x <= 13 && y >= 20 && y <= 24 && ((x * 5 + y * 3) % 4 < 2)) kind = "ore";
       if (x >= 3 && x <= 7 && y >= 26 && y <= 30 && ((x * 7 + y * 5) % 4 < 2)) kind = "coal";
       row.push({ kind, variant: 0 });
+    }
+    terrain.push(row);
+  }
+  return terrain;
+}
+
+// Phase 1 の市場圏試作地形。既存の48×40標準島は変更せず、96×64以上の
+// 拡張マップで「西の港湾・中央の大森林・東の鉱床」を再現する。
+export function makeMultiMarketTerrain(width = 96, height = 64) {
+  const terrain = [];
+  const coast = Math.max(4, Math.floor(height * 0.08));
+  const forestBand = Math.max(10, Math.floor(width * 0.18));
+  for (let y = 0; y < height; y += 1) {
+    const row = [];
+    for (let x = 0; x < width; x += 1) {
+      let kind = y >= height - coast ? "water" : "grass";
+      if (kind === "grass" && y >= height - coast - 4) kind = "sand";
+      const westForest = x >= 12 && x < 12 + forestBand && y >= 8 && y < height - 14;
+      const centralForest = x >= Math.floor(width * 0.43) && x < Math.floor(width * 0.62)
+        && y >= 12 && y < height - 16;
+      const easternOre = x >= Math.floor(width * 0.78) && y >= 16 && y < height - 18;
+      const easternCoal = x >= Math.floor(width * 0.68) && x < Math.floor(width * 0.76)
+        && y >= 28 && y < height - 12;
+      if (kind === "grass" && (westForest || centralForest)
+        && ((x * 7 + y * 13) % 5 < 3)) kind = "forest";
+      if (kind === "grass" && easternOre && ((x * 5 + y * 3) % 4 < 2)) kind = "ore";
+      if (kind === "grass" && easternCoal && ((x * 11 + y * 7) % 5 < 2)) kind = "coal";
+      row.push({ kind, variant: (x * 17 + y * 31) % 4 });
     }
     terrain.push(row);
   }
@@ -331,6 +409,8 @@ export function tileTravelCost(physical, x, y, mode = "walk") {
 }
 
 export function findTravelPath(physical, start, goal, mode = "walk") {
+  // trails は旧セーブや監査テストから直接復元されるため、専用revisionだけに
+  // 依存せず内容を含める。高コストなのは経路探索本体なので、キュー改善を優先する。
   const trailSignature = Object.entries(physical.trails ?? {})
     .filter(([, active]) => active === true)
     .map(([key]) => key)
@@ -360,12 +440,12 @@ export function findTravelPath(physical, start, goal, mode = "walk") {
   distances.fill(Infinity);
   const indexOf = (x, y) => y * physical.width + x;
   distances[indexOf(start.x, start.y)] = 0;
-  const open = [{ x: start.x, y: start.y, cost: 0 }];
+  const open = travelQueue();
+  open.push({ x: start.x, y: start.y, cost: 0 });
   const came = {};
 
   while (open.length > 0) {
-    open.sort((a, b) => a.cost - b.cost);
-    const current = open.shift();
+    const current = open.pop();
     const currentIndex = indexOf(current.x, current.y);
     if (current.cost > distances[currentIndex] + 1e-9) continue;
     if (current.x === goal.x && current.y === goal.y) {
@@ -412,12 +492,12 @@ export function findNearestTravelTarget(physical, start, predicate, mode = "walk
   distances.fill(Infinity);
   const indexOf = (x, y) => y * physical.width + x;
   distances[indexOf(start.x, start.y)] = 0;
-  const open = [{ x: start.x, y: start.y, cost: 0 }];
+  const open = travelQueue();
+  open.push({ x: start.x, y: start.y, cost: 0 });
   const came = {};
 
   while (open.length > 0) {
-    open.sort((left, right) => left.cost - right.cost || left.y - right.y || left.x - right.x);
-    const current = open.shift();
+    const current = open.pop();
     if (current.cost > distances[indexOf(current.x, current.y)] + 1e-9) continue;
     if (predicate(current.x, current.y)) {
       const path = [];

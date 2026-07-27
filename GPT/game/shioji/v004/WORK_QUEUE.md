@@ -15,6 +15,8 @@
 
 | 8 | [WORK_ORDER_20260726D.md](WORK_ORDER_20260726D.md) | 第2回監査検出（座標dev格下げ・畑の季節タイル・棚卸し表） | **完了**（v004.32.0、関連4件・PC/スマホ実Chrome緑） |
 
+| 9 | [WORK_ORDER_20260727_MULTI_MARKET.md](WORK_ORDER_20260727_MULTI_MARKET.md) | 多市場経済圏（帰属・市場別状態・交易・拡張地形） | **Phase 1完了**（v004.37.0、既存単一市場互換。Phase 2/3は次段階） |
+
 ## 全指示書共通の規約（希釈防止）
 
 0. **完了報告の前に [ACCEPTANCE_LEDGER.md](ACCEPTANCE_LEDGER.md) 全体を照合**し、担当範囲外も含め退行・脱落があれば報告に明記する（台帳の状態更新も行う）。

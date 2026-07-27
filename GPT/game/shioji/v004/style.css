@@ -561,6 +561,26 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .supply-legend .seg-cons::before { background: #e5b65b; }
 .supply-legend .seg-need::before { background: rgba(229,182,91,.35); }
 .supply-legend em { margin-left: auto; font-style: normal; }
+.market-network-summary {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  margin: 7px 2px 0;
+  padding: 6px 8px;
+  border: 1px solid rgba(229,182,91,.22);
+  border-radius: 6px;
+  background: rgba(229,182,91,.06);
+  color: var(--muted);
+  font-size: 9px;
+}
+.market-network-summary > b { color: var(--gold); margin-right: 2px; }
+.market-network-chip { display: inline-flex; gap: 5px; align-items: baseline; padding: 3px 6px; border-radius: 999px; background: rgba(255,255,255,.06); }
+.market-network-chip strong { color: var(--cream); }
+.market-network-chip em { color: var(--gold); font-style: normal; }
+.market-network-note { flex-basis: 100%; color: var(--muted); }
+.market-trade-receipts { flex-basis: 100%; color: var(--gold); }
 .supply-grid {
   flex: 1;
   min-height: 0;

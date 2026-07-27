@@ -1048,7 +1048,7 @@ async function checkSeasonalPlots(width, height, mobile) {
       ))),
     };
   })()`);
-  assert.equal(autumn.version, 'v004.36.0-spatial-productivity', JSON.stringify(autumn));
+  assert.equal(autumn.version, 'v004.37.0-multi-market', JSON.stringify(autumn));
   assert.equal(autumn.season, '秋', JSON.stringify(autumn));
   assert.ok(autumn.plots.some(type => ['wheat', 'veg'].includes(type)), JSON.stringify(autumn));
   assert.ok(autumn.plots.some(type => type === 'shepherd'), JSON.stringify(autumn));
@@ -1193,8 +1193,8 @@ async function checkPeopleVisuals(width, height, mobile) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.36.0-spatial-productivity');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.36.0-spatial-productivity');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.37.0-multi-market');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.37.0-multi-market');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -2017,7 +2017,7 @@ async function checkSpatialProductivity(width = 1440, height = 900, mobile = fal
   })()`);
   assert.ok(building && !building.missing,
     `資源職の30日実測を建物画面へ表示できる: ${JSON.stringify(building)}`);
-  assert.equal(building.version, 'v004.36.0-spatial-productivity');
+  assert.equal(building.version, 'v004.37.0-multi-market');
   assert.ok(Number.isFinite(building.efficiency), JSON.stringify(building));
   assert.ok(Number.isFinite(building.resourceEfficiency), JSON.stringify(building));
   assert.equal(building.withinViewport, true, JSON.stringify(building));
@@ -2209,7 +2209,7 @@ async function checkMarketRhythmUi(width = 1440, height = 900, mobile = false) {
       hidden: sheet.hidden,
     };
   })()`);
-  assert.equal(result.version, 'v004.36.0-spatial-productivity', JSON.stringify(result));
+  assert.equal(result.version, 'v004.37.0-multi-market', JSON.stringify(result));
   assert.equal(result.hidden, false, JSON.stringify(result));
   assert.match(result.label, /出荷をまとめ中 1\/2日/, JSON.stringify(result));
   assert.match(result.detail, /食料切れと生産停止は待ちません/, JSON.stringify(result));

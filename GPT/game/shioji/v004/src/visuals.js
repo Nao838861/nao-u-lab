@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.36.0-spatial-productivity';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.37.0-multi-market';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({

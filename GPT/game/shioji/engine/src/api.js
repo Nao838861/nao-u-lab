@@ -20,6 +20,7 @@ import {
   forgetCompanyLogisticsBuilding,
   placeCompanyLogisticsBuilding,
 } from "./world.js";
+import { executeMarketTrade, quoteMarketTrade } from "./market_network.js";
 
 function jsonClone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -132,6 +133,13 @@ function viewSnapshot(state, { terrainAfterRevision = null } = {}) {
       ) => total + Number(amount ?? 0), 0),
       traffic: economy.traffic,
       zones: economy.zones,
+      marketNetwork: state.marketNetwork?.markets?.length > 1
+        ? {
+          markets: state.marketNetwork.markets,
+          summary: state.marketNetwork.summary ?? [],
+          tradeReceipts: (state.marketNetwork.tradeReceipts ?? []).slice(-16),
+        }
+        : null,
     },
     physical: {
       buildings: physical.buildings,
@@ -561,6 +569,16 @@ export function createEngineApi(
           : world.state.day;
         const cart = purchaseCompanyWoodCart(economy, { day: actionDay });
         return { ok: Boolean(cart), cart };
+      }
+      case "market_trade": {
+        const network = world.state.marketNetwork;
+        if (!network?.markets?.some(market => market.id === op.fromMarketId)
+          || !network.markets.some(market => market.id === op.toMarketId)) {
+          return { ok: false, reason: "market_not_found" };
+        }
+        const quote = quoteMarketTrade(network, op);
+        if (!quote.ok) return quote;
+        return executeMarketTrade(network, quote, { day: world.state.day });
       }
       default:
         throw new Error(`unknown engine operation: ${op.type}`);

@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.36.0-spatial-productivity';
+import { pileVisual } from './visuals.js?v=v004.37.0-multi-market';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));

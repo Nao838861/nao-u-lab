@@ -1,43 +1,43 @@
-import { IsometricCamera } from './camera.js?v=v004.36.0-spatial-productivity';
-import { SimulationClock } from './clock.js?v=v004.36.0-spatial-productivity';
+import { IsometricCamera } from './camera.js?v=v004.37.0-multi-market';
+import { SimulationClock } from './clock.js?v=v004.37.0-multi-market';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.36.0-spatial-productivity';
+} from './config.js?v=v004.37.0-multi-market';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.36.0-spatial-productivity';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.36.0-spatial-productivity';
-import { developmentMapView } from './development_map.js?v=v004.36.0-spatial-productivity';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.36.0-spatial-productivity';
-import { formatElenaSpeech } from './elena_text.js?v=v004.36.0-spatial-productivity';
+} from './display_batch.js?v=v004.37.0-multi-market';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.37.0-multi-market';
+import { developmentMapView } from './development_map.js?v=v004.37.0-multi-market';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.37.0-multi-market';
+import { formatElenaSpeech } from './elena_text.js?v=v004.37.0-multi-market';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.36.0-spatial-productivity';
+} from './food_readability.js?v=v004.37.0-multi-market';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.36.0-spatial-productivity';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.36.0-spatial-productivity';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.36.0-spatial-productivity';
-import { WorldPresentation } from './presentation.js?v=v004.36.0-spatial-productivity';
-import { Renderer } from './renderer.js?v=v004.36.0-spatial-productivity';
+} from './keyboard.js?v=v004.37.0-multi-market';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.37.0-multi-market';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.37.0-multi-market';
+import { WorldPresentation } from './presentation.js?v=v004.37.0-multi-market';
+import { Renderer } from './renderer.js?v=v004.37.0-multi-market';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.36.0-spatial-productivity';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.36.0-spatial-productivity';
+} from './save_game.js?v=v004.37.0-multi-market';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.37.0-multi-market';
 import {
   GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRows,
-} from './supply_demand.js?v=v004.36.0-spatial-productivity';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.36.0-spatial-productivity';
+} from './supply_demand.js?v=v004.37.0-multi-market';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.37.0-multi-market';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.36.0-spatial-productivity';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.36.0-spatial-productivity';
+} from './ui_guidance.js?v=v004.37.0-multi-market';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.37.0-multi-market';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -292,7 +292,28 @@ function renderShortageAlerts() {
 
 function renderSupplySheet() {
   const rows = currentSupplyRows();
-  const signature = JSON.stringify({ rows, focusedSupplyGoods });
+  const network = model.marketNetwork;
+  const networkNode = $('#market-network-summary');
+  const networkSignature = JSON.stringify({
+    summary: network?.summary ?? [],
+    receipts: (network?.tradeReceipts ?? []).slice(-3),
+  });
+  renderIfChanged('market-network-summary', networkSignature, () => {
+    if (!network?.summary?.length || network.summary.length < 2) {
+      networkNode.hidden = true;
+      networkNode.innerHTML = '';
+      return;
+    }
+    networkNode.hidden = false;
+    const receipts = (network.tradeReceipts ?? []).slice(-3);
+    const receiptText = receipts.length
+      ? `<small class="market-trade-receipts">直近交易: ${receipts.map(receipt => `${escapeHtml(receipt.goods)} ${formatQuantity(receipt.quantity)}荷 / ${receipt.profit >= 0 ? '+' : ''}${formatQuantity(receipt.profit)}D`).join('・')}</small>`
+      : '';
+    networkNode.innerHTML = `<b>市場圏</b>${network.summary.map(row => `
+      <span class="market-network-chip"><strong>${escapeHtml(row.name)}</strong><small>${row.households}世帯・${row.buildings}建物</small><em>平均${formatQuantity(row.averageDistance)}歩</em></span>
+    `).join('')}<small class="market-network-note">所属は実道の最短市場。道を整えると圏が変わり、相場と不足が市場ごとに分かれます。</small>${receiptText}`;
+  });
+  const signature = JSON.stringify({ rows, focusedSupplyGoods, networkSignature });
   renderIfChanged('supply-grid', signature, () => {
     $('#supply-grid').innerHTML = rows.map(row => {
       const supplyTotal = row.produced + row.imported;
