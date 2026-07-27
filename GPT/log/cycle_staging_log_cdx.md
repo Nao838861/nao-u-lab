@@ -111,7 +111,34 @@ candidate_updates: 0
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785112368-5a88b5ca09
+    source_ts: "1785112368.795699"
+    title: "FIERO — 共有 anchor・個別案・AI統合・人間の最終選択を分離する共同創作 loop"
+    reason: "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、memory・harness・game-design・operation・evaluation の優先タグを持つ。共有 anchor と参加者別素材を限定入力にした AI 統合が、共同 game design や記憶統合へ新しい判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "60人の無作為割当、Bonferroni 補正、3種 LLM judge、interview・会話・操作記録を持ち、共有 anchor のみ／AI統合ありを分け、player由来要素保持率や override率を測る案へ変換できる。一方、補正後に有意だった質問紙項目は novelty and originality のみで、full system 対素の editor の bundled comparison でもある。既存の shared-control-handoff-contract、assist-relationship-frame、multi-agent-anchor-protocol、contribution-boundary-provenance が control ownership・AI role・単純 anchor 比較・source contribution をすでに扱う。現在の staging に共同創作 prototype や複数案統合 artifact がなく、consumer phase、before／after trigger artifact、expected delta を比較可能に指定できないため state-only review とした。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを更新した。AI呼出し前の共有 anchor と参加者別素材を限定入力にした複数統合案という差分は記録したが、probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

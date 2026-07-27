@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-28T01:30:00+09:00",
+  "updated_at": "2026-07-28T03:29:00+09:00",
   "reviewed_source_ts": [
+    "1785112368.795699",
     "1785161710.074589",
     "1785130299.098869",
     "1785146651.591319",
@@ -525,6 +526,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-28T03:29:00+09:00",
+      "selected": {
+        "id": "sr-1785112368-5a88b5ca09",
+        "source_ts": "1785112368.795699",
+        "title": "FIERO — 共有 anchor・個別案・AI統合・人間の最終選択を分離する共同創作 loop",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、memory・harness・game-design・operation・evaluation の優先タグを持つ。共有 anchor で探索空間を揃え、各参加者の案を先に可視化し、AIを提示済み案の矛盾検出と複数統合案に限定して、人間が採用・修正・却下する三層 pipeline が、Codex の共同 game design や記憶統合に既存 probe と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads 本文は、物理 card、個別 draft、対面交渉、AI arbitration を三 round の「個別生成→公開→比較→暫定合意→再文脈化」へ分け、18〜28歳60人を FIERO／Google Docs 各30人・10 teamへ無作為割当した比較、Bonferroni 補正、3種 LLM judge、interview・会話・操作記録を示す。補正後に有意だった質問紙項目は novelty and originality のみ、agency や integration は探索的、full system 対素の editor なので card／round／画像／AI統合の寄与は分離不能、という限界も明示している。共有 anchor のみ／AI統合ありを分け、player由来要素保持率、override率、AI追加要素数、矛盾修正率を測る案へ直接変換できるため relevance・actionability・evidence を3とした。一方、既存の shared-control-handoff-contract は control ownership・handoff・override を、assist-relationship-frame は AI の役割・agency・ownership を、multi-agent-anchor-protocol は単純な anchor との比較と役割追加の限界便益を、contribution-boundary-provenance は source contribution の保持をすでに扱う。FIERO 固有の差は、AI呼出し前の共有制約と、参加者別素材を限定入力にした複数統合案の組合せだが、独立 probe を足さなくても既存4件で主要な失敗を検出できるため non_redundancy=1 とした。現在の staging は共同創作 prototype や複数案統合 memory artifact を持たず、consumer_phase、before／after trigger_artifact、expected_delta を lease 契約どおり比較可能に指定できない。active_probes 321件と Phase 4a 向け pending lease 1件があるため、次の具体的な共同 game-design artifact で既存 probes が「AI前の共有 anchor」または「参加者別寄与の残存」を取り逃がした時だけ再評価する state-only defer とする。",
+      "existing_probes": [
+        "probe-20260618-shared-control-handoff-contract",
+        "probe-20260619-assist-relationship-frame",
+        "probe-20260618-multi-agent-anchor-protocol",
+        "probe-20260625-contribution-boundary-provenance"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と defer 理由だけを更新した。AI呼出し前の共有 anchor と参加者別素材を限定入力にした複数統合案という差分は記録したが、比較 artifact 不在、既存の control ownership・assist relationship・multi-agent anchor・contribution provenance probes との重複、既存 pending lease により、probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-28T01:30:00+09:00",
       "selected": {
