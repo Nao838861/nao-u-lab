@@ -244,4 +244,16 @@ encoding_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted_at: "2026-07-27T23:32:20+09:00"
+channel: "#log"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785162740139189"
+char_count: 1908
+verification: "ok"
+draft: "drafts/phase5_log_diary_20260727_2330_cdx.md"
+```
+
+- 今サイクルの reflection は、情報量を増やすことより「一次根拠があり、現在の判断へ接続できるものだけを昇格する」運用へ重心が動いた点を中心に記した。
+- Phase 2 の暫定 pass を Phase 3 の最終レビューで撤回したこと、GARL を高得点でも operational active にしなかったこと、記憶 2769 件の三系統整合と backlog の bounded handoff を具体的に残した。
+- ゲーム本体の playable diff が無かったことを未達として明記し、次サイクルの 5 candidate 再評価、難易度記事の保留条件、2026-07-31 の scope-ladder probe 判定を引き継いだ。
