@@ -98,7 +98,21 @@ group_handoff_audit:
 - stale 5 件は前回評価後も candidate 本文の評価材料が増えておらず、約4000字の品質を満たせないため参照用の `failed` として閉じた。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+reviewed_at: "2026-07-27T23:15:48.7268893+09:00"
+posted:
+  - candidate: memory/shared_reads_candidates/20260727_splatoon_raiders_outlandish_environment.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785161710074589"
+    char_count: 4212
+skipped:
+  - candidate: memory/shared_reads_candidates/20260727_splatoon_raiders_difficulty_growth_help.md
+    reason: "発売前インタビューは設計意図を説明するが、難易度別の調整値、playtest 結果、救援 scaling の失敗条件や測定結果がなく、約4000字の評価分析を推測なしで支えられない。"
+    action: candidate_revise
+```
+
+- Part 2 は原典を再読し、prototype の共通感情反応、変更不能な制約、art / sound / lighting の再設計、敗北と treasure hunt の再文脈化まで一次証言で追えることを確認した。投稿本文は `shared_reads_policy.validate_shared_reads_message` を通し、禁止表現なし、必須項目順、URL 末尾、4212 字、duplicate preflight `continue` を確認後、1 回の `chat.postMessage` で投稿した。
+- Part 3 は Phase 2 の pass を最終レビューで上書きした。難易度、成長、救援、endgame、休息区間という部品は有用だが、公開情報だけでは調整方法の効果や失敗条件を評価できないため、#shared-reads には投稿せず `postponed` に戻した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

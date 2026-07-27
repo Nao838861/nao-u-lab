@@ -6,19 +6,23 @@ collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, difficulty, progression, cooperative-play, pacing]
 evaluated_at: "2026-07-27T23:07:18.8696942+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-27T23:07:18.8696942+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-27T23:07:18.8696942+09:00"
-next_action: post_to_shared_reads
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-27T23:15:48.7268893+09:00"
+last_decision: postponed
+evidence: "phase3:postponed; reviewed_at:2026-07-27T23:15:48.7268893+09:00"
+postponed:
+  at: "2026-07-27T23:15:48.7268893+09:00"
+  reason: "発売前インタビューは設計意図を説明するが、難易度別の調整値、playtest 結果、救援 scaling の失敗条件や測定結果がなく、約4000字の評価分析を推測なしで支えられない。"
+next_action: candidate_revise
 stale_after: "2026-08-26"
 supersedes: []
 gate_reason: >-
-  三段階の難易度で「忙しさ」と「成長感」を保存し、成長、救援時 scaling、上級者用 dungeon、
-  hub の minigame を組み合わせる設計が一次資料で具体化されている。
-  核体験を弱めず間口と天井を分離する手法、適用場面、利点と副作用を約4000字で展開できる。
+  三段階の難易度で「忙しさ」と「成長感」を保存する意図、level growth、救援時 scaling、
+  上級者用 dungeon、hub の minigame という設計レバーは一次資料で具体化されている。
+  ただし発売前インタビューには難易度別の調整値、playtest 結果、救援 scaling の失敗条件や
+  測定結果がなく、Phase 3 の約4000字で評価の中身まで説明すると推測が増えるため保留する。
 suggested_post_outline:
   overview_angle: "難易度を単なる数値緩和にせず、全設定で核となる忙しさと成長感を保存する progression / pacing 設計"
   analysis_axis: "core experience の不変条件、level growth、協力救援の scaling、optional endgame、休息区間を別レバーとして組み合わせる方法"
