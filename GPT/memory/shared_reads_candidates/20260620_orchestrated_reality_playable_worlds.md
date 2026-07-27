@@ -4,21 +4,21 @@ url: "https://arxiv.org/abs/2606.16014"
 collected_at: "2026-06-20T08:44:40+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, world-simulation, llm-agents, npc, narrative, sandbox]
-evaluated_at: "2026-06-20T08:49:07+09:00"
+evaluated_at: "2026-07-27T16:36:13+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-20T08:49:07+09:00"
+last_reviewed_at: "2026-07-27T16:36:13+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-20T08:49:07+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T16:36:13+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-20"
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |-
-  LLM の narrative response を検証済み state mutation に接続する設計は、NPC 記憶・クエスト進行・durable world state に直結する。
-  ただし現時点では work in progress で、player study は planned、PA-POMDP としての成立も model family をまたいだ検証が未完了。
-  Phase 3 の CoopEval 水準では評価の中身が薄くなるため、追加実験または artifact 確認後に再評価する。
+  prose と structured mutation を分け、検証済み transition kernel だけを durable state に反映する中核は具体的で、
+  NPC 記憶やクエスト進行への適用も明確。しかし work in progress で player study は未実施、model 横断検証もない。
+  評価の中身を伴う CoopEval 水準には未達のため、追加実験または artifact の実証結果が出るまで postponed とする。
 ---
 
 ## raw_excerpt

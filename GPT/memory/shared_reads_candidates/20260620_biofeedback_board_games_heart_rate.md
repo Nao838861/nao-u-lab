@@ -4,21 +4,21 @@ url: "https://doi.org/10.1145/3706598.3713543"
 collected_at: "2026-06-20T04:44:40+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, tabletop, biofeedback, player-experience, mechanics, prototyping]
-evaluated_at: "2026-06-20T05:05:00+09:00"
+evaluated_at: "2026-07-27T16:36:13+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-20T05:05:00+09:00"
+last_reviewed_at: "2026-07-27T16:36:13+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-20T05:05:00+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T16:36:13+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-20"
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |-
-  Heart rate を tabletop mechanics に変換する着想は、緊張・待機・協力・リスク判断をゲーム内状態へ接続する資料として有望。
-  ただし現候補は abstract と repository 情報中心で、workshop で得た具体的 trade-off、prototype mechanics、評価結果の中身が不足している。
-  CoopEval 水準の約4000字概要を書くには、paper 本文または公開PDFから設計実装と知見を追加確認する必要がある。
+  Research through Design の参加規模と One Pulse 試作までは分かるが、heart rate を mechanics に変換した具体則、
+  workshop で判明した trade-off、prototype の評価結果が候補本文にない。現状で約4000字にすると着想の反復になる。
+  公開論文本文から実装と観察結果を補えるまで postponed とし、抽象的な適用だけで pass にしない。
 ---
 
 ## raw_excerpt
