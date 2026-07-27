@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-27T19:08:52+09:00",
+  "updated_at": "2026-07-27T21:15:39+09:00",
   "reviewed_source_ts": [
+    "1785146651.591319",
     "1785138356.096039",
     "1785130293.952519",
     "1785120387.288489",
@@ -522,6 +523,47 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-27T21:15:39+09:00",
+      "selected": {
+        "id": "sr-1785146651-74664cfe33",
+        "source_ts": "1785146651.591319",
+        "title": "Adventure DX — 実機制約下の AI-assisted plugin 制作を evidence loop にする",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、memory・skills・harness・game-design・agent・operation・evaluation の優先タグを持つ。一次資料の版固定、一版一機能、build／ROM test／PROJECT.md checkpoint、実作業からの tool・SKILL 抽出が、次の小型 prototype で既存 probe と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の採用条件は満たす。shared-reads 本文は、GB Studio 4.2／GBDK の docs・develop source・既存 plugin を local snapshot として固定し、v0.1 の scene 登録から v0.4 の projectile まで一版一機能で build と ROM test を通し、fixed-point 上の斜め速度正規化が integer pixel 描画では stutter になる制約を Smooth／Vanilla／Intermediate の三 trade-off として表面化した過程を示す。74 frame の反復編集を .gbsres tool へ変え、実 file と six gotchas／seven event schemas から三 SKILL を後抽出した点も次回行動へ変換しやすいため relevance・actionability を3とした。一方、単一作者・単一 plugin の postmortem で、AI なしとの比較、所要時間、生成 code 修正率、test 数、回帰 defect 数、三移動 mode の比較 playtest がなく、外部 tester の具体例はあるが工程の因果効果は定量化されていないため evidence=2 とした。既存の ai-readable-playtest-acceptance-surface は code／AI-readable／manual feel の oracle 分離を、gameenginebench-runtime-integration-gate は build と runtime integration の分離を、commonroad-human-operation-regression-fixture は build・route・input の再現 fixture を、short-hike-constraint-shortcut は core と deferred の scope 分離を、promotion-boundary は実行証拠なしの tool／SKILL 昇格抑制をすでに扱う。新しい差は参照資料の revision／freshness manifest と一版一機能 checkpoint の組合せだが、現在の staging には対象となる playable diff、source manifest、版間の before／after artifact がない。active_probes は321件で Phase 4a 向け minimum-sufficient-scope-ladder の pending lease も1件あるため、consumer_phase、trigger_artifact、expected_delta を lease 契約どおり比較可能に指定できない。次の実機・制約系 prototype で参照版の混線または複数 feature 同時変更が原因範囲を広げ、既存 probes が判断を変えられなかった時だけ再評価する state-only defer とする。",
+      "existing_probes": [
+        "probe-20260621-ai-readable-playtest-acceptance-surface",
+        "probe-20260709-gameenginebench-runtime-integration-gate",
+        "probe-20260708-commonroad-human-operation-regression-fixture",
+        "probe-20260713-short-hike-constraint-shortcut",
+        "probe-20260515-promotion-boundary"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と defer 理由だけを更新した。revision／freshness manifest と一版一機能 checkpoint の差分は記録したが、比較 artifact 不在、既存 game／promotion probes との重複、既存 pending lease により、probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-27T19:08:52+09:00",
       "selected": {

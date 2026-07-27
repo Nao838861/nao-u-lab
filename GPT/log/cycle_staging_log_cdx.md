@@ -106,7 +106,35 @@ reason: "Phase 2 の pass が空のため、投稿対象なし。Slack 投稿と
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785146651-74664cfe33
+    source_ts: "1785146651.591319"
+    title: "Adventure DX — 実機制約下の AI-assisted plugin 制作を evidence loop にする"
+    reason: "score 10 の未レビュー最新候補で、一次資料の版固定、一版一機能、ROM test、検証済み checkpoint、実作業からの tool・SKILL 抽出が次の小型 prototype に判断差を作るか確認するため。Nao_u の明示評価はなし"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "数値上の採用条件は満たすが、単一 project の postmortem で工程の因果比較がなく、既存の acceptance／runtime integration／manual regression／scope／promotion probes と重なる。現在は比較可能な playable diff・source manifest・版間 artifact がなく、active_probes 321件と Phase 4a 向け pending lease 1件があるため、新しい operational lease を作らず state-only review とした"
+  change:
+    summary: "reviewed_source_ts と defer 理由のみ更新。probe・metric・lease・directive・恒久ルールは追加していない"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
