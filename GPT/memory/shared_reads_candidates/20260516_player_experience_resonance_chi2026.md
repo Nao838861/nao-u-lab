@@ -4,20 +4,20 @@ url: "https://research.aalto.fi/fi/publications/an-experience-that-could-not-be-
 collected_at: "2026-05-16T13:29:22+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, player-experience, emotional-design, chi2026, research]
-evaluated_at: "2026-05-16T13:45:00+09:00"
+evaluated_at: "2026-07-28T05:21:25+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-16T13:45:00+09:00"
+last_reviewed_at: "2026-07-28T05:21:25+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-16T13:45:00+09:00"
-stale_after: "2026-06-15"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-28T05:21:25+09:00"
+stale_after: "2026-08-27"
 supersedes: []
 next_action: revise_or_research
 gate_reason: |-
-  resonance を長期的な感情・認知への残り方として扱う問題設定は強く、ゲーム制作の評価語彙としての適用性も高い。
-  ただし現候補は研究ポータルの公開概要ベースで、qualitative survey の設問・分析手順・評価結果の粒度が足りず、CoopEval 水準の約4000字概要を根拠付きで書くには本文確認が必要。
+  resonance を長期的な感情・認知への残り方として扱う問題設定と、ゲーム評価語彙への適用性は強い。
+  ただし公開概要だけでは n=110 調査の設問、質的分析手順、抽出カテゴリ、反証例が分からず、約4000字の概要で評価の中身を根拠付きで説明できないため、本文確認まで保留する。
 
 ---
 

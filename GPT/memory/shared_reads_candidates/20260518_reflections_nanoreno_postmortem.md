@@ -4,21 +4,20 @@ url: "https://softheartsstudio.itch.io/reflections-beyond/devlog/1494034/reflect
 collected_at: "2026-05-18T01:18:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, postmortem, jam, narrative-design, scope-control, workflow]
-evaluated_at: "2026-05-18T01:24:00+09:00"
+evaluated_at: "2026-07-28T05:21:25+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-18T01:24:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-18T01:24:00+09:00"
-stale_after: "2026-06-17"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-28T05:21:25+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T05:21:25+09:00"
+stale_after: "2026-08-27"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |-
-  最小提出物と optional scope の分離、Ren'Py script 直書きによる変換コスト削減は具体的で、制作サイクルへの適用性はある。
-  ただし内容の中心は一般的な jam スコープ管理で、手法の中核や評価の中身を CoopEval 水準の概要へ広げるには材料が薄い。
-  narrative prototype の運用メモとしては残すが、Phase 3 の #shared-reads 投稿候補にはまだしない。
+  最小提出物と optional scope の分離、Ren'Py script 直書きは制作メモとして具体的だが、一般的な jam スコープ管理の範囲に留まる。
+  単一制作者の回顧で比較・測定・再現可能な評価がなく、約4000字へ広げると記事外の一般論が中心になるため、投稿候補から外して参照用に残す。
 
 ---
 

@@ -4,21 +4,26 @@ url: https://games.jmir.org/2026/1/e86290/
 collected_at: 2026-05-17T16:59:44+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [haptics, accessibility, serious-games, dpe-framework, ux-study]
-evaluated_at: 2026-05-17T17:02:23+09:00
+evaluated_at: "2026-07-28T05:21:25+09:00"
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-17T17:02:23+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-17T17:02:23+09:00"
-stale_after: "2026-06-16"
+gate_decision: pass
+candidate_status: ready_to_post
+status: ready_to_post
+last_reviewed_at: "2026-07-28T05:21:25+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-28T05:21:25+09:00"
+stale_after: "2026-08-27"
 supersedes: []
-next_action: revise_or_research
+next_action: post_to_shared_reads
 gate_reason: |-
-  DPE framework、触覚記号、動的難度、SUS/インタビュー評価という重要要素は揃っている。
-  ただし serious game と高齢者/弱視支援に寄っており、Nao_u_BOT の通常ゲーム制作へは抽象化が必要。
-  視覚負荷を下げる UI/feedback 設計の候補として保持し、類似事例と束ねてから投稿判断する。
+  視覚依存という問題、DPE に沿った触覚記号・動的難度・感情関与の設計、n=10 の SUS と質的評価まで重要要素が揃う。
+  小規模スマホゲームで状態通知を触覚へ分担し、画面密度と眼精疲労を下げる具体場面へ適用でき、限界を含めて約4000字の分析を構成できる。
+suggested_post_outline:
+  overview_angle: "視覚情報を追加するのでなく、DPE の design/play/experience 全層で触覚を代替チャネルとして設計した事例"
+  analysis_axis: "触覚記号、動的難度、感情関与の接続と、SUS 89.5・インタビュー3テーマを n=10 の予備評価としてどう読むか"
+  application_target: "Log_cdx のスマホ向け小型プロトタイプで、状態通知の視覚負荷予算を決め、振動パターンの識別性と難度調整を playtest する工程"
+  pros_cons: "利点は低視覚負荷と市販端末での実装可能性。弱点は少人数・自己申告対象・短期評価で、認知刺激や長期定着は未検証"
+  verdict_pre: "部分採用"
 
 ---
 

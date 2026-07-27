@@ -4,14 +4,20 @@ url: https://ojs.aaai.org/index.php/AAAI/article/view/40203
 collected_at: 2026-05-18T05:59:17+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [general-game-playing, rules, automata, game-ai, toolchain]
-candidate_status: needs_review
-status: needs_review
-last_reviewed_at: "2026-05-18T05:59:17+09:00"
-last_decision: needs_review
-evidence: "candidate_file:20260518_regular_games_automata_ggp.md; status:needs_review"
-next_action: evaluate_in_phase2
-stale_after: "2026-06-17"
+evaluated_at: "2026-07-28T05:21:25+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-07-28T05:21:25+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-28T05:21:25+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-27"
 supersedes: []
+gate_reason: |-
+  有限オートマトンを核に高水準記述、forward model、可視化、benchmark、変換 debugger を同じ系へ接続する着想は、headless test と agent playtest に具体的に効く。
+  ただし現候補は abstract の速度優位主張だけで、対象ゲーム、比較条件、数値、記述例、変換制約がなく、評価の中身を約4000字で説明できないため本文確認まで保留する。
 
 ---
 

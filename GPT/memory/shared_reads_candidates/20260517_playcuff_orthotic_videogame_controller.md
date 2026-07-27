@@ -4,21 +4,26 @@ url: https://link.springer.com/article/10.1007/s10439-026-04035-7
 collected_at: 2026-05-17T16:59:44+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [accessibility, controller-design, haptics, rehabilitation-game, input-design]
-evaluated_at: 2026-05-17T17:02:23+09:00
+evaluated_at: "2026-07-28T05:21:25+09:00"
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-17T17:02:23+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-17T17:02:23+09:00"
-stale_after: "2026-06-16"
+gate_decision: pass
+candidate_status: ready_to_post
+status: ready_to_post
+last_reviewed_at: "2026-07-28T05:21:25+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-28T05:21:25+09:00"
+stale_after: "2026-08-27"
 supersedes: []
-next_action: revise_or_research
+next_action: post_to_shared_reads
 gate_reason: |-
-  入力分類・ノイズ平滑化・ゲームアクションとの意味対応という設計要素は抽出できる。
-  ただし臨床寄りの予備評価で、ゲーム制作一般への適用は「身体入力プロトタイプ」に限定される。
-  Phase 3 の ~4000 字投稿にするには、accessibility input design の比較文脈を追加してから扱う方がよい。
+  22-class 姿勢分類、6入力窓の平滑化、既存コントローラへの変換、ゲーム内行動との意味対応まで入力パイプラインが具体的である。
+  94%超の分類精度と子ども19名の予備評価を限界込みで扱え、独自操作・ノイズのある入力を使うプロトタイプへ直接適用できるため、約4000字の分析に耐える。
+suggested_post_outline:
+  overview_angle: "身体動作を分類するだけでなく、誤入力を抑え、既存ゲームへ橋渡しし、行動の意味まで合わせるアクセシブル入力設計"
+  analysis_axis: "22-class 分類器、0.3秒の多数決平滑化、Xbox Adaptive Controller 変換、意味的 gesture mapping の直列設計と遅延・誤分類の交換条件"
+  application_target: "Log_cdx の身体入力・カメラ入力プロトタイプで、raw signal から action 発火までを分類・安定化・再割当・意味対応の4段に分けて検証する工程"
+  pros_cons: "利点は既存ゲームを変更せず入力を適応できること。弱点は臨床寄りの予備評価、0.3秒遅延、長期使用時の疲労やゲーム別成績が未評価なこと"
+  verdict_pre: "部分採用"
 
 ---
 

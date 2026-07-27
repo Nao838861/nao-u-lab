@@ -18,7 +18,74 @@
 - Slack 投稿: なし。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 5
+pass:
+  - memory/shared_reads_candidates/20260517_haptic_serious_game_dpe_older_adults.md
+  - memory/shared_reads_candidates/20260517_playcuff_orthotic_videogame_controller.md
+fail:
+  - path: memory/shared_reads_candidates/20260518_reflections_nanoreno_postmortem.md
+    reason: "一般的な jam スコープ管理の回顧で、比較・測定がなく約4000字の固有分析に耐えない"
+postpone:
+  - path: memory/shared_reads_candidates/20260516_player_experience_resonance_chi2026.md
+    reason: "n=110 質的調査の設問・分析手順・結果カテゴリが公開概要から得られず、本文確認が必要"
+  - path: memory/shared_reads_candidates/20260518_regular_games_automata_ggp.md
+    reason: "速度比較の条件・数値、記述例、変換制約が abstract に不足し、本文確認が必要"
+stale_reviewed:
+  - handoff_id: cha-d6dbfd7126125e3c
+    path: memory/shared_reads_candidates/20260516_player_experience_resonance_chi2026.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-27"
+  - handoff_id: cha-c3aec3effceccd50
+    path: memory/shared_reads_candidates/20260517_haptic_serious_game_dpe_older_adults.md
+    previous_status: postponed
+    decision: pass
+    updated_stale_after: "2026-08-27"
+  - handoff_id: cha-18dadbbee6014062
+    path: memory/shared_reads_candidates/20260517_playcuff_orthotic_videogame_controller.md
+    previous_status: postponed
+    decision: pass
+    updated_stale_after: "2026-08-27"
+  - handoff_id: cha-12d91222b766d5c7
+    path: memory/shared_reads_candidates/20260518_reflections_nanoreno_postmortem.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-27"
+  - handoff_id: cha-571522dc121337b5
+    path: memory/shared_reads_candidates/20260518_regular_games_automata_ggp.md
+    previous_status: needs_review
+    decision: postpone
+    updated_stale_after: "2026-08-27"
+candidate_handoff_audit:
+  pending_before: 5
+  read_ids:
+    - cha-d6dbfd7126125e3c
+    - cha-c3aec3effceccd50
+    - cha-18dadbbee6014062
+    - cha-12d91222b766d5c7
+    - cha-571522dc121337b5
+  resolved_ids:
+    - cha-d6dbfd7126125e3c
+    - cha-c3aec3effceccd50
+    - cha-18dadbbee6014062
+    - cha-12d91222b766d5c7
+    - cha-571522dc121337b5
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
