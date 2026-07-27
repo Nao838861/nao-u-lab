@@ -146,7 +146,91 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+executed_at: "2026-07-27T14:43:29+09:00"
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」はすべて取得でき、per-file atom index との不一致・broken index reference は 0 件。"
+  - "memory/atoms.jsonl を監査。2763 rows、JSON parse / duplicate id / mirror conflict は 0。normalized content duplicate 40 group は canonical overlay に収載済みで、effective display unresolved group は 0。"
+  - "memory/raw/ で 30 日以上更新のない 96 files を確認。raw Slack 原文、PDF、抽出 text、既存 archive は provenance の正本であり、参照切れ確認なしに移動すべき対象はないため保持。"
+  - "shared_reads candidate lifecycle を監査。posted 498、ready_to_post 10、postponed 271、failed 332、needs_review 10。stale_after 欠損 6 件は current lifecycle を巻き戻す根拠がないため変更なし。"
+  - "title canonical / mixed duplicate sidecar は current。open duplicate group / stale triage / group action sidecar を所定順で確認・再生成。actionable group 0 件のため group handoff はなし。期限到来 candidate 5 件を Phase 2 inbox へ冪等 enqueue。"
+  - "Slack inbox は directives 0 pending / broadcasts 0 pending。完了根拠を伴わず handled に変更した行は 0 件。"
+  - "probe lifecycle を validate。due lease は 0 件のため receipt 追加なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+candidate_lifecycle:
+  total_files: 1124
+  counts:
+    posted: 498
+    ready_to_post: 10
+    postponed: 271
+    failed: 332
+    needs_review: 10
+    skipped_unreviewed: 3
+  missing_stale_after: 6
+  overdue_open_total: 98
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 98
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 52
+  mixed_group_count: 45
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-38abfa40fe1fdd77
+    - cha-cdf1c499a6a9ece4
+    - cha-15145161f977e2e2
+    - cha-dc652d675809a60a
+    - cha-3c2f7109bfbb8282
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-38abfa40fe1fdd77
+    path: memory/shared_reads_candidates/20260619_synthetic_human_like_video_game_testing.md
+    status: postponed
+    stale_after: "2026-07-19"
+    priority_reason: "synthetic / human-like tester agent は bug finding と自動評価に関係する。本文密度と既存 playtesting 候補との重複を Phase 2 で確認する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-cdf1c499a6a9ece4
+    path: memory/shared_reads_candidates/20260620_biofeedback_board_games_heart_rate.md
+    status: postponed
+    stale_after: "2026-07-20"
+    priority_reason: "心拍を tabletop mechanics に変換する着想は有望だが、現候補は abstract と repository 情報中心で、workshop の trade-off、prototype mechanics、評価結果が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-15145161f977e2e2
+    path: memory/shared_reads_candidates/20260620_orchestrated_reality_playable_worlds.md
+    status: postponed
+    stale_after: "2026-07-20"
+    priority_reason: "narrative response を検証済み state mutation に接続する設計は NPC 記憶と durable world state に直結するが、work in progress で player study と評価結果が未確定。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-dc652d675809a60a
+    path: memory/shared_reads_candidates/20260620_pubg_ally_ai_teammate.md
+    status: postponed
+    stale_after: "2026-07-20"
+    priority_reason: "behavior tree と SLM の責務境界、音声頻度、local inference 負荷は具体的だが、材料が product announcement 寄りで beta の実プレイヤー feedback が薄い。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-3c2f7109bfbb8282
+    path: memory/shared_reads_candidates/20260620_rtsgamebench_strategic_reasoning_vlm.md
+    status: postponed
+    stale_after: "2026-07-20"
+    priority_reason: "strategic competency を mini-game へ分解する設計は有用だが、投稿判定には生成 framework、RTSGameAgent 実装、評価結果の追加確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
