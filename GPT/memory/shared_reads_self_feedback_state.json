@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-27T11:51:01+09:00",
+  "updated_at": "2026-07-27T14:38:07+09:00",
   "reviewed_source_ts": [
+    "1785120387.288489",
     "1785112362.674609",
     "1785104114.557329",
     "1785096049.977699",
@@ -519,6 +520,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-27T14:38:07+09:00",
+      "selected": {
+        "id": "sr-1785120387-c8133633ab",
+        "source_ts": "1785120387.288489",
+        "title": "Sengoku Space Opera — UI lifecycle から simulation lifecycle を分離する refactor",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ。表示中の tab が quest・fleet・deadline 処理を所有したため、非表示中に世界が止まった事例が、次の game simulation または scheduled state 処理で既存 probe と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads 本文は、quest 通知を global manager へ移す、server response を cache invalidation signal にする、server time へ補正する、最早 deadline 一件だけを予約する、resume 時に catch-up する、同じ signal を二度配送する fake-clock test を行う、という具体的な before／after と検証経路を持つため relevance・actionability を3とした。一方、根拠は単独作者と友人 playtest の postmortem で、playtester 数、再現回数、修正前後の遅延分布、offline 復帰、clock skew、重複配送、CPU／request 負荷の測定がなく、100 fleet は計算量の説明で benchmark ではないため evidence=2 とした。既存の actworld-action-forgetting-state-consistency は時間・camera・room transition・reload 後の state persistence を、gameenginebench-runtime-integration-gate は timer・scene transition・persistence を含む隣接 runtime system の固定 trace を、bdd-route-contract-regression は Given／When／Then と replayable trace を、flag-world-state-diegetic-boundary は stale event trigger をすでに扱う。新しい差は UI visibility と simulation event ownership／time authority の分離だが、独立 probe を足さなくても既存4件を組み合わせれば非表示・遅延復帰・重複配送の失敗を検出できるため non_redundancy=1 とした。現在は対象となる scene／tab／deadline 付き playable diff と before／after artifact がなく、consumer phase、trigger artifact、expected delta を lease 契約どおり指定できない。active_probes 321件と Phase 4a 向け pending lease 1件があるため、次の具体的な simulation prototype で UI を開かない経路を既存 probes が取り逃がした時だけ再評価する state-only defer とする。",
+      "existing_probes": [
+        "probe-20260625-actworld-action-forgetting-state-consistency",
+        "probe-20260709-gameenginebench-runtime-integration-gate",
+        "probe-20260608-bdd-route-contract-regression",
+        "probe-20260609-flag-world-state-diegetic-boundary"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と defer 理由だけを更新した。UI visibility と simulation lifecycle の分離は記録したが、対象 artifact 不在と既存の persistence・runtime integration・BDD trace probes との重複により、probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-27T11:51:01+09:00",
       "selected": {

@@ -110,7 +110,40 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785120387-c8133633ab
+    source_ts: "1785120387.288489"
+    title: "Sengoku Space Opera — UI lifecycle から simulation lifecycle を分離する refactor"
+    reason: "未レビューの最新適格候補で、6優先タグをすべて持つ。表示中の tab が quest・fleet・deadline 処理を所有したため非表示中に世界が止まった事例が、次の game simulation または scheduled state 処理に既存 probe と異なる判断差を作るか確認した。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 3
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "数値上の採用条件は満たすが、根拠は単独作者と友人 playtest の postmortem で、修正前後の遅延分布、offline 復帰、clock skew、重複配送、負荷の測定がない。UI visibility と simulation event ownership／time authority の分離は有用だが、既存の state persistence・runtime integration・BDD trace・stale event trigger probes で非表示・遅延復帰・重複配送の大半を確認できる。対象となる scene／tab／deadline 付き playable diff と before／after artifact がなく lease 契約を満たせず、active_probes 321件と Phase 4a 向け pending lease 1件へ重複 control を増やさないため state-only review とした。"
+  existing_probes:
+    - probe-20260625-actworld-action-forgetting-state-consistency
+    - probe-20260709-gameenginebench-runtime-integration-gate
+    - probe-20260608-bdd-route-contract-regression
+    - probe-20260609-flag-world-state-diegetic-boundary
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
