@@ -5,6 +5,11 @@
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
 
+### 2026-07-28 03:16 JST
+
+- `memory/shared_reads_candidates/20260728_geforce_now_acceptance_playtest.md` — GeForce NOW Developer Portal が、公開前 build を指定 tester に限定し、coordinator / observer の役割、live observation、録画を含めて acceptance test する流れを説明した公式資料。
+- pending directive / broadcast: 0 件。
+
 - `memory/shared_reads_candidates/20260728_placeholder_art_playtest_signal.md` — greybox／programmer art が外部 playtest の可読性・game feel 評価へ混入し得るという Unity の prototype 記事を収集（preflight: continue、品質判定は Phase 2）。
 - pending 確認: `slack_directives.jsonl` 0 件、`slack_broadcasts.jsonl` 0 件。直前サイクル以降のローカル Slack 取り込みに新規外部 URL はなし。
 
