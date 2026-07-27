@@ -148,7 +148,90 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+- 実行時刻: 2026-07-27 19:10-19:22 JST
+- due probe lease: 期限到来なし。receipt の新規作成なし。
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の High Signal / Recent / Game Task Entry Points / Tag Entry Points を per-file atom index と照合し、broken entry 0 件を確認した。代表語 記憶 / ゲーム設計 / 敵パターン / 評価軸 は UTF-8 明示読みで取得できた。"
+  - "atoms.jsonl / per-file .md / index.jsonl は各 2767 件で一致し、mirror content conflict 0 件。既知の duplicate overlay 45 群は canonical fold 済みで、未管理の内容矛盾は検出しなかった。"
+  - "memory/raw/ の mtime 30日超を監査し、archive 候補 94 件（web_research 88、headless_eval 6）を識別した。slack_archive/shared-reads.jsonl と sync_state.txt は古いが参照・同期 anchor のため候補から除外し、原文は移動・削除していない。"
+  - "shared-reads candidate 1128 件の lifecycle 内訳を確認した（posted 501 / ready_to_post 10 / postponed 266 / failed 338 / needs_review 10 / skipped_unreviewed 3）。overdue open 88 件から lease と重複群を合成して stale triage 50 件を再生成した。"
+  - "title canonical index 72 群、mixed duplicate queue 45 群、open duplicate group 53 群（mixed 45 / all_open 8）を再生成した。今回 actionable group は 0 群で、自動 close は行っていない。"
+  - "stale triage 上位 5 件を candidate handoff inbox に冪等 enqueue し、audit errors 0 / pending 5 / stale pending 0 を確認した。"
+  - "Slack directives 23 行、broadcasts 21 行を監査し、pending は双方 0 件。完了根拠のない status 変更は行っていない。"
+issues:
+  - id: ISS-ATOM-UFFFD-001
+    description: "active atom sr-1776127289-4d9239b255 の title / trigger / excerpt に U+FFFD が残り、「AIエージェント」が「AIエ��ジェント」になっている。単独の source data integrity issue であり、表示経路の mojibake ではない。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; tools/memory_health.py --json"
+    source_file_status: "UTF-8 明示読みは成功するが、source file 自体に literal U+FFFD が2文字存在する。"
+    display_or_tooling_status: "none。PowerShell UTF-8 表示と memory/MEMORY.md の代表語 probe は正常。gr-1777083728-44d444ab7a の警告は本文中の意図的な ??? を atom_quality が拾った false positive。"
+    why_blocks_game_memory: "「AIエージェント」完全一致検索と title 読解の精度を局所的に落とすが、atom mirror と recall smoke は通っており、次ゲームへの導線全体は塞いでいない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 88
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 53
+  mixed_group_count: 45
+  all_open_group_count: 8
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-a77c926a9b9eb2bb
+    - cha-d1d8123b8d863e4e
+    - cha-37ffac9932fe61fd
+    - cha-183086d784dbe2aa
+    - cha-005fc15ad079c7b0
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-a77c926a9b9eb2bb
+    path: memory/shared_reads_candidates/20260621_llms_and_games_survey_roadmap.md
+    status: postponed
+    stale_after: "2026-07-21"
+    priority_reason: "LLM の役割分類と roadmap は有用だが、NPC / GM / 生成器 / 評価器のどの一軸を直近制作へ移すかが粗く、候補本文だけでは適用焦点が定まらない。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-d1d8123b8d863e4e
+    path: memory/shared_reads_candidates/20260622_clbench_continual_learning_stateful_envs.md
+    status: postponed
+    stale_after: "2026-07-22"
+    priority_reason: "continual learning / memory 評価として重要だが、stateful game-playing domain の具体 task・評価設計・gain の根拠を一次資料で補う必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-37ffac9932fe61fd
+    path: memory/shared_reads_candidates/20260622_digital_red_queen_core_war_llm_evolution.md
+    status: postponed
+    stale_after: "2026-07-22"
+    priority_reason: "adversarial self-play は敵 AI / ルール探索へ接続できるが、現候補は abstract 相当で評価条件と限界が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-183086d784dbe2aa
+    path: memory/shared_reads_candidates/20260622_effinav_object_goal_navigation.md
+    status: postponed
+    stale_after: "2026-07-22"
+    priority_reason: "探索効率は NPC 経路評価へ使える一方、EffiNav 固有の depth / VLM 融合とゲーム制作 task の接続が薄く、一般論化を避ける再読が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-005fc15ad079c7b0
+    path: memory/shared_reads_candidates/20260625_compact_social_intelligence_agents.md
+    status: postponed
+    stale_after: "2026-07-25"
+    priority_reason: "発話・予測・行動 trace の分離は有用だが、arena 設計・評価指標・主要結果の粒度が候補本文に不足する。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
