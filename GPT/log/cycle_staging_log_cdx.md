@@ -135,7 +135,98 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+executed_at: "2026-07-27T11:57:23+09:00"
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」はすべて取得でき、per-file atom index との不一致・broken index reference は 0 件。"
+  - "memory/atoms.jsonl を監査。2762 rows、JSON parse / duplicate id / mirror conflict は 0。normalized content duplicate 40 group は canonical overlay に収載済みで、effective display unresolved group は 0。"
+  - "memory/raw/ で 30 日以上更新のない 96 files を確認。raw 原文・PDF・抽出 text は provenance の正本または既存 archive であり、参照切れ確認なしに移動すべき対象はないため保持。"
+  - "shared_reads candidate lifecycle を監査。posted 495、ready_to_post 10、postponed 276、failed 327、needs_review 10。stale_after 欠損 6 件は open lifecycle の配送漏れとして扱う根拠なし。"
+  - "open duplicate group / stale triage / group action sidecar を所定順で再生成。actionable group 0 件のため group handoff はなし。期限到来 candidate 5 件を Phase 2 inbox へ冪等 enqueue。"
+  - "Slack inbox は directives 0 pending / broadcasts 0 pending。完了根拠を伴わず handled に変更した行は 0 件。"
+  - "probe lifecycle を validate。due lease は 0 件のため receipt 追加なし。"
+issues:
+  - id: ISS-UTF8-001
+    description: "単一 atom sr-1776127289-4d9239b255 の「エージェント」に相当する箇所が U+FFFD 2文字になっている。raw archive にも同じ欠損があり、派生 atom だけの破損ではない。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みは成功。raw archive・atoms.jsonl・per-file atom の同位置に U+FFFD が存在する局所 source 欠損。MEMORY.md の代表語 probe と index validation は正常。"
+    display_or_tooling_status: "shell/staging 表示だけの mojibake ではない。なお memory_health が併記する gr-1777083728-44d444ab7a は原文中の意図的な「???」を検出した false positive で、U+FFFD は 0。"
+    why_blocks_game_memory: "対象 atom の主題・URL・trigger は検索可能で、ゲーム制作知の横断想起を妨げる構造問題ではない。固有語の可読性だけが局所的に低下する。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+candidate_lifecycle:
+  total_files: 1121
+  counts:
+    posted: 495
+    ready_to_post: 10
+    postponed: 276
+    failed: 327
+    needs_review: 10
+    skipped_unreviewed: 3
+  missing_stale_after: 6
+  overdue_open_total: 103
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 103
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 52
+  mixed_group_count: 45
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-8cbe36620ed7b7e8
+    - cha-5900a2c375da8ac0
+    - cha-352675088d00017d
+    - cha-5c357e7177bd48f3
+    - cha-2cef54cb15a17a8a
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-8cbe36620ed7b7e8
+    path: memory/shared_reads_candidates/20260619_cocreativity_table_adventure_ai.md
+    status: postponed
+    stale_after: "2026-07-19"
+    priority_reason: "LLM を DM 本体ではなく準備・描写・選択肢拡張へ置く観点は有用だが、3 seasons の分析手順・失敗分類・変化の具体例が候補内では不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-5900a2c375da8ac0
+    path: memory/shared_reads_candidates/20260619_garl_game_theoretic_multi_agent_rl.md
+    status: postponed
+    stale_after: "2026-07-19"
+    priority_reason: "二段階ゲーム化は NPC・勢力・AI designer の優先順位決定へ接続できるが、role-specific reinforcement signals・比較条件・評価指標が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-352675088d00017d
+    path: memory/shared_reads_candidates/20260619_gdc2026_large_procedural_systems_low_friction.md
+    status: postponed
+    stale_after: "2026-07-19"
+    priority_reason: "PCG を低摩擦な制作 system として扱う軸は有用だが、large procedural systems の中核手法と共同作業 workflow の具体が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-5c357e7177bd48f3
+    path: memory/shared_reads_candidates/20260619_llm_integrated_game_writing_practices.md
+    status: postponed
+    stale_after: "2026-07-19"
+    priority_reason: "game writing の creative workflow・professional role・style control は有用だが、本文の実践分類・手法・評価の中身が候補内では不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-2cef54cb15a17a8a
+    path: memory/shared_reads_candidates/20260619_quality_audio_prototyping_procedural_sound.md
+    status: postponed
+    stale_after: "2026-07-19"
+    priority_reason: "音探索と procedural synthesis の統合はゲーム制作へ使えるが、interface・model 構成・user evaluation の詳細が不足。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
