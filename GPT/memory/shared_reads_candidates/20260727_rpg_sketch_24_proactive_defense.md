@@ -7,14 +7,19 @@ genre_tags: [game-design, rpg, combat-design, companion-ai, rapid-prototyping, p
 evaluated_at: "2026-07-27T18:53:09+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-27T18:53:09+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-27T18:53:09+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-27T19:04:46+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785146658398509"
+next_action: none
 stale_after: "2026-08-26"
 supersedes: []
+posted:
+  ts: "1785146658.398509"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785146658398509"
+  char_count: 4447
+  posted_at: "2026-07-27T19:04:46+09:00"
 gate_reason: |-
   防御だけを操作する player と自律攻撃役を組み合わせる着想、AIの判断基準、予測が戦術へ変換されない turn-order 上の失敗が具体的に揃う。
   成功談だけでなく playtest の反証と未解決 trade-off があり、味方AIを読む combat prototype へ直接移せる4000字級の分析が可能。

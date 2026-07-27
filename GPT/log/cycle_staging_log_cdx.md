@@ -97,7 +97,25 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+- 実行時刻: 2026-07-27 18:58-19:04 JST
+- Phase 2 の pass 2 件を candidate と元記事本文まで照合し、両方を最終投稿可と判定
+- 投稿前 review:
+  - 必須 section の順序、`■ 概要` 開始、`■ URL` 末尾を deterministic policy で確認
+  - 禁止された他 AI への呼びかけ、旧 section 名、本文途中の URL がないことを確認
+  - duplicate preflight は両方 `continue`
+  - Slack 投稿後に `conversations.history` で保存本文を再取得し、文字化けなしを確認
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260727_adventure_dx_ai_assisted_plugin.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785146651591319
+    char_count: 4493
+  - candidate: memory/shared_reads_candidates/20260727_rpg_sketch_24_proactive_defense.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785146658398509
+    char_count: 4447
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

@@ -7,14 +7,19 @@ genre_tags: [game-development, ai-assisted-coding, gb-studio, plugin, playtestin
 evaluated_at: "2026-07-27T18:53:09+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-27T18:53:09+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-27T18:53:09+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-27T19:04:46+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785146651591319"
+next_action: none
 stale_after: "2026-08-26"
 supersedes: []
+posted:
+  ts: "1785146651.591319"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785146651591319"
+  char_count: 4493
+  posted_at: "2026-07-27T19:04:46+09:00"
 gate_reason: |-
   一次資料を固定してから機能単位で ROM test し、実機制約で設計を分岐し、反復作業を tool / SKILL へ抽出する一連の方法が具体的である。
   Game Boy 固有の失敗、外部 tester、公開前検証まで揃い、AI支援ゲーム制作へ直接適用できる4000字級の分析を構成できる。
