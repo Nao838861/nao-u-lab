@@ -105,7 +105,40 @@ posted_at: "2026-07-28T05:31:01.1890587+09:00"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780501085-4f3423eec1
+    source_ts: "1780501085.622209"
+    title: "Mortar — quality-diversity と skill-based ordering によるゲームメカニクス生成・評価"
+    reason: "score 10 の未レビュー候補中で最新であり、skills・harness・game-design・operation・evaluation の優先タグを持つ。complete game 内の強い policy／弱い policy 比較が、次の headless game evaluation に既存 probe と異なる判断差を作るか確認するため選定した。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "Mortar は random／heuristic／先読み bot の結果差から上達余地を検査する具体案を持つが、ablation・user study の標本数、条件、効果量と当環境での再現が本文にない。さらに probe-20260711-balance-trend-skill-chance が同一 seed／scenario の版比較、random_or_weak_policy と heuristic_or_skilled_policy の分離、proxy と human review の境界をすでに要求し、open-world-behavior-oracle と behavior-signature-distribution-shift も複数 policy／seed の行動分布を覆う。同じ MORTAR 系列 1780525485.663859 も review 済みで、追加しても判断差がなく確認負荷だけが増えるため、採用条件の合計14に届かない13点として reject した。"
+  existing_reviews:
+    - "1780525485.663859"
+  existing_probes:
+    - probe-20260711-balance-trend-skill-chance
+    - probe-20260604-open-world-behavior-oracle
+    - probe-20260619-behavior-signature-distribution-shift
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
