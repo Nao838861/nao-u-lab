@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-27T21:15:39+09:00",
+  "updated_at": "2026-07-27T23:21:05+09:00",
   "reviewed_source_ts": [
+    "1785130299.098869",
     "1785146651.591319",
     "1785138356.096039",
     "1785130293.952519",
@@ -14419,6 +14420,46 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、具体的な多言語 consumer／artifact 不足による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-27T23:21:05+09:00",
+      "selected": {
+        "id": "sr-1785130299-c36148601e",
+        "source_ts": "1785130299.098869",
+        "title": "GARL — 資源配分と裁定を分離する role-specific ranking",
+        "reason": "未レビュー条件を満たす最新の score 10 atom で、memory・game-design・agent・operation・evaluation の5優先タグを持つ。候補への有限 budget 配分と、domain criteria による最終裁定を分ける知見が、Codex の次実装課題選定や faction AI に新しい判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たすが、probe lease 契約に必要な具体的な候補選定 artifact、実際に判断へ使う consumer phase、before／after を比較できる trigger artifact が今サイクルにないため state-only review に留める。shared-reads 本文は Agenda Allocation Game と Arbitration Game、role 別 utility、KL divergence による交互更新、Qwen3-4B／8B・600 steps、LexIssue の263 training casesと350 out-of-domain cases、mAP、LawBench、GameBench、one-shot 干渉まで示し、有限 budget の配分と裁定基準を deterministic baseline へ落とせるため evidence=3 とした。一方、utility の意味と重みは domain 固有で、party 勝率と judicial adequacy を Qwen3.5-122B が事前採点し、in-domain case 重複、seed 間分散の薄さ、fixed candidate set、均衡未証明が残る。既存の priority-ranking-component-diagnosis は候補 component の事前順位と事後検証を、pluralistic-leaderboard-candidate-diversity は preference cluster 別候補を、scoreable-games-benchmark-claim-decomposition は単一 score への圧縮防止を、llm-bounded-replanning-decision-layer は deterministic authority と heuristic baseline をすでに扱う。新しい差は有限 resource allocation と上位基準による arbitration の二段 trace だが、active_probes 321件と Phase 4a 向け pending lease 1件がある状態で対象 artifact なしに追加すると、role 演技と採点 overhead だけが増える。次に5件前後の具体的な playable diff 候補または faction action 候補が置かれ、単一 priority score と二段 ranking の勝者差を実測できる時だけ再評価する。",
+      "existing_probes": [
+        "probe-20260618-priority-ranking-component-diagnosis",
+        "probe-20260614-pluralistic-leaderboard-candidate-diversity",
+        "probe-20260710-scoreable-games-benchmark-claim-decomposition",
+        "probe-20260710-llm-bounded-replanning-decision-layer"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存 ranking probes との重複および具体的な consumer／artifact 不足による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

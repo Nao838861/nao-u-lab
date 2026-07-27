@@ -115,7 +115,35 @@ skipped:
 - Part 3 は Phase 2 の pass を最終レビューで上書きした。難易度、成長、救援、endgame、休息区間という部品は有用だが、公開情報だけでは調整方法の効果や失敗条件を評価できないため、#shared-reads には投稿せず `postponed` に戻した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785130299-c36148601e
+    source_ts: "1785130299.098869"
+    title: "GARL — 資源配分と裁定を分離する role-specific ranking"
+    reason: "未レビュー条件を満たす最新の score 10 atom で、memory・game-design・agent・operation・evaluation の5優先タグを持つ。候補への有限 budget 配分と、domain criteria による最終裁定を分ける知見が、Codex の次実装課題選定や faction AI に新しい判断差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "数値上の採用条件は満たすが、具体的な候補選定 artifact、実際に判断へ使う consumer phase、before／after を比較できる trigger artifact が今サイクルにない。既存の priority-ranking／pluralistic-candidate／single-score 分解／deterministic authority probes と重なるうえ、active_probes 321件と Phase 4a 向け pending lease 1件があるため、二段 ranking の追加は operational active にしない。次に5件前後の playable diff 候補または faction action 候補が具体化し、単一 priority score と allocation–arbitration の勝者差を実測できる時だけ再評価する。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを state に記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
