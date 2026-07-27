@@ -4,20 +4,20 @@ url: "https://80.lv/articles/how-kixeye-survived-the-rise-and-fall-of-facebook-s
 collected_at: "2026-05-25T22:52:29+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, live-ops, strategy, onboarding, retention, monetization]
-evaluated_at: "2026-05-25T23:10:00+09:00"
+evaluated_at: "2026-07-28T07:38:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-25T23:10:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-25T23:10:00+09:00"
-stale_after: "2026-06-24"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-28T07:38:04+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T07:38:04+09:00"
+stale_after: "2026-08-27"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |-
-  weekly updates、new/veteran onboarding、linear power gain 回避など有用な論点はあるが、会社史・F2P 運用寄りで手法の中核が散っている。
-  Phase 3 で投稿するには、長期運用設計としての具体例とゲーム制作サイクルへの対応付けを追加確認したい。
+  weekly updates、新旧プレイヤーの onboarding、線形 power gain 回避は有用だが、会社史と方針表明に分散し、検証可能な手法になっていない。
+  施策ごとの結果や比較がなく小規模制作への適用も一般論に留まるため、参照用に閉じる。
 
 ---
 

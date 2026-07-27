@@ -4,20 +4,26 @@ url: "https://80.lv/articles/crescent-moon-games-founder-on-creating-a-game-that
 collected_at: "2026-05-25T16:08:57+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, puzzle-platformer, dimension-switching, prototyping, level-editor]
-evaluated_at: "2026-05-25T16:13:12+09:00"
+evaluated_at: "2026-07-28T07:38:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-25T16:13:12+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-25T16:13:12+09:00"
-stale_after: "2026-06-24"
+gate_decision: pass
+candidate_status: ready_to_post
+status: ready_to_post
+last_reviewed_at: "2026-07-28T07:38:04+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-28T07:38:04+09:00"
+stale_after: "2026-08-27"
 supersedes: []
-next_action: revise_or_research
+next_action: post_to_shared_reads
 gate_reason: |-
-  2D/3D 間の rule consistency、editor-first、trigger 対応表という適用先は具体的で、ゲーム制作への接続も自然。
-  ただし候補本文だけでは評価・失敗例・比較対象が不足し、4000字級の投稿にするには追加の一次情報確認が必要。
+  2D level editor を正本に 3D を生成する制作判断、両世界の rule consistency、連動 trigger の具体例が一続きで抽出できる。
+  単純 prototype と観察反応で実験的 mechanic を選別する結論まであり、複数表現を同期する制作へ具体適用できる。
+suggested_post_outline:
+  overview_angle: "2D/3D の二世界を、見た目の仕掛けではなく一つの rule system と制作 pipeline に統合した事例"
+  analysis_axis: "editor-first の正本化、両世界の挙動対応表、prototype 反応による mechanic 選別"
+  application_target: "過去/未来や複数表示を同期するプロトタイプで、状態・trigger・authoring source を一対一で検証する工程"
+  pros_cons: "整合性と量産性を高める一方、片側固有の表現や例外処理を狭め、対応ルールの設計負荷が先行する"
+  verdict_pre: "部分採用"
 
 ---
 

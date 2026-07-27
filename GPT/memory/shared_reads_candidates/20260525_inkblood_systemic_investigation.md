@@ -4,20 +4,20 @@ url: https://80.lv/articles/inkblood-dev-diary-explores-building-a-cozy-occult-d
 collected_at: 2026-05-25T13:53:30+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, mystery, investigation, systemic-design, puzzle, narrative-design]
-evaluated_at: 2026-05-25T13:57:24+09:00
+evaluated_at: 2026-07-28T07:38:04+09:00
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-25T13:57:24+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-25T13:57:24+09:00"
-stale_after: "2026-06-24"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-28T07:38:04+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T07:38:04+09:00"
+stale_after: "2026-08-27"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |
-  clue / case file / past-view tool / hub を組み合わせる構造は、推理ゲーム制作への適用先が具体的で有望。
-  ただし candidate 本文だけでは各 case の評価やプレイヤーが迷う箇所への処方が不足し、現時点で 4000 字の「概要」にすると既存作への類比が中心になりそう。
+  調査道具を組み合わせる構造は具体的だが、二次的な紹介記事の要旨に留まり、case 設計の検証、迷い方、改善結果がない。
+  既存作品との類比を越える分析材料が足りず、~4000字概要には耐えないため参照用に閉じる。
 
 ---
 

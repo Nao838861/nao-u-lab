@@ -4,6 +4,26 @@ url: "https://itch.io/devlog/1597409/a-dreamcast-era-game-planner-came-back-afte
 collected_at: "2026-07-28T07:32:16.3459978+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-development, postmortem, ai-assisted-development, rts, prototyping]
+evaluated_at: "2026-07-28T07:38:04+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-28T07:38:04+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-28T07:38:04+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-27"
+supersedes: []
+gate_reason: |-
+  planner の仕様言語化を AI 実装へ移し、画面観察と短い修正指示を2週間反復して公開版へ至る工程と結果が具体的である。
+  RTS の規則削減と playable build 中心の確認を同じ制作判断として分析でき、小規模 AI 制作への適用先も明確である。
+suggested_post_outline:
+  overview_angle: "ゲームプランナーの言語化技能を、AI と playable build を往復する実装工程へ移植した2週間の制作記録"
+  analysis_axis: "規則の削減、単一 HTML の早期 prototype、screenshot と違和感の言語化による短い修正 loop"
+  application_target: "小規模ゲームで、仕様書を膨らませず playable diff と画面観察を一単位にして AI 実装を収束させるサイクル"
+  pros_cons: "実装速度と検証回数を増やせる一方、作者自身の観察眼と言語化能力に依存し、品質保証を AI に委ねられない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
