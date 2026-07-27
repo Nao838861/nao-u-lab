@@ -136,7 +136,102 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の High Signal / Recent / Game Task Entry Points / Tag Entry Points を per-file atom index と照合し、broken link 0件を確認"
+  - "memory/atoms.jsonl 2773件を監査し、atom ID 重複エラー 0件、normalized-content duplicate 40群/80行は既存 overlay 45群で fold 済みと確認"
+  - "memory/raw/ 245ファイル中、mtime 30日超は96件。一次資料と provenance を保持するため、この cycle では移動せず archive 候補として監査のみ実施"
+  - "shared-reads candidate 1135件の lifecycle 内訳を確認し、open duplicate / stale triage / group-action sidecar を再生成"
+  - "Slack directives 23行、broadcasts 21行を監査し、pending は双方0件。handled への新規更新なし"
+  - "期限到来 probe lease を limit 1 で確認し、due 0件。ledger validate は errors 0件"
+  - "group handoff budget 1 を確認して対象0群、stale candidate 5件を次 Phase 2 向け inbox へ冪等 enqueue"
+issues:
+  - id: ISS-UTF8-001
+    description: "atom sr-1776127289-4d9239b255 の title / trigger / excerpt に「エ��ジェント」という U+FFFD 置換文字が残る"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; python tools/memory_recall.py sr-1776127289-4d9239b255 --limit 1"
+    source_file_status: "UTF-8 明示読みは成功したが、source file 自体に U+FFFD が存在する。MEMORY.md は代表語「記憶」「ゲーム設計」「敵パターン」を取得でき、全体破損ではない。「評価軸」の完全一致は現行本文になし"
+    display_or_tooling_status: "memory_recall でも同じ U+FFFD を再現するため、shell/staging だけの mojibake ではない"
+    why_blocks_game_memory: "「エージェント」の完全一致検索と title の可読性を1 atomだけ損なうが、tags・links・他語による recall は可能"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+candidate_lifecycle:
+  total_files: 1135
+  status_counts:
+    posted: 505
+    ready_to_post: 10
+    postponed: 253
+    failed: 356
+    needs_review: 8
+    skipped_unreviewed: 3
+  missing_stale_after: 6
+  overdue_open_total: 60
+raw_archive_audit:
+  total_files: 245
+  older_than_30_days: 96
+  action: "retain_in_place"
+  reason: "raw 一次資料と provenance を消さず、明示的な archive 移動契約がないため"
+stale_backlog:
+  overdue_open_total: 60
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 52
+  mixed_group_count: 44
+  all_open_group_count: 8
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-186645f78e836b9e
+    - cha-23f089b3ee82a370
+    - cha-bfbf8251f583ed7e
+    - cha-e829147046c7da5c
+    - cha-5db50785d9aa2db9
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-186645f78e836b9e
+    path: memory/shared_reads_candidates/20260526_monolith_bullet_hell_roguelike.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "bullet hell と roguelike の部屋単位安全網・敵行動差・回復設計は転用価値があるが、評価と結論の一次根拠が薄い"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-23f089b3ee82a370
+    path: memory/shared_reads_candidates/20260526_visual_complexity_information_game_ux.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "visual richness と information visibility の均衡は UI 評価に使えるが、case study と評価手順が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-bfbf8251f583ed7e
+    path: memory/shared_reads_candidates/20260527_rules_of_game_2026_microtalks.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "各 designer が提示した rule の本文が未取得で、現状ではセッション説明の水増しになる"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-e829147046c7da5c
+    path: memory/shared_reads_candidates/20260527_yuki_gamedev_speed_tempo_diagnostic.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "倍速をテンポ診断器にする観点は強いが、Slack excerpt 以外の一次文脈と実装例が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-5db50785d9aa2db9
+    path: memory/shared_reads_candidates/20260528_wanderstop_discomfort_design.md
+    status: postponed
+    stale_after: "2026-06-27"
+    priority_reason: "cozy convention と discomfort の衝突は有用だが、mechanics breakdown と判断根拠が不足"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
