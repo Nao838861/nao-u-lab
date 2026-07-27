@@ -93,7 +93,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785130293-a29a3f6090
+    source_ts: "1785130293.952519"
+    title: "Adventure AI — LLM共同制作の役割境界と採用・裁定責任"
+    reason: "score 12 の未レビュー候補で、memory・harness・game-design・operation・evaluation を横断する。LLM生成と人間／deterministic層の採用・裁定責任を分ける観点が、次の narrative prototype で既存 probe と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 3
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "数値上の採用条件は満たすが、単一 podcast・単一 coder の質的研究で、model 世代、context window、prompt skill、DM の編集習熟、state の返却運用が交絡している。既存の narrative graph、playthrough evidence、rhetorical rule gate、world-state boundary が state・agency・mechanical validity の主要部分を覆う。今回固有の『生成の帰属と採用・裁定責任を分ける』差を比較できる narrative playable diff と、consumer phase／before-after artifact／期待する判断差が今サイクルにないため、lease なしの state-only review とした。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

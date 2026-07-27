@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-27T14:38:07+09:00",
+  "updated_at": "2026-07-27T16:49:55+09:00",
   "reviewed_source_ts": [
+    "1785130293.952519",
     "1785120387.288489",
     "1785112362.674609",
     "1785104114.557329",
@@ -520,6 +521,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-27T16:49:55+09:00",
+      "selected": {
+        "id": "sr-1785130293-a29a3f6090",
+        "source_ts": "1785130293.952519",
+        "title": "Adventure AI — LLM共同制作の役割境界と採用・裁定責任",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補群のうち、memory・harness・game-design・operation・evaluation を含む9タグを持つ。LLMを Author／Actor／Storyteller として使いながら、canonical state、mechanics、fairness、player agency、採用責任を Game Designer／Referee／Curator 側に残す役割分解が、次の narrative prototype で既存 probe と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads 本文は、Adventure AI の Season 1・5・12を共通の役割 template で coding し、AIを Author／Director／Actor／Storyteller、人間を Curator／Game Designer／Referee として分解したうえで、missing context 9→4→1件、agency concern 15→8→0件という時系列、state snapshot と許可 delta、agency checklist を用いるA/B/C比較まで具体化しているため relevance・actionabilityを3とした。一方、単一の低視聴 podcast、第一著者による coding、出演者自身の recap に依存し、model 世代、context window、prompt skill、DM の編集習熟、同一 chat への情報返却が同時に変わっている。season 間の改善を役割分解や model 能力の因果効果とは読めず、この環境での比較実測もないため evidence=2 とした。既存の guiding-not-railroading-narrative-graph は causal state と agency、narrative-playthrough-evidence は文章案と playable turn／state change の分離、seduced-narrative-rhetorical-rule-gate は fluent prose と mechanical validity、flag-world-state-diegetic-boundary は durable world state と表示責任をすでに扱う。新しい差は生成の帰属と採用・裁定責任を分離する点だが、独立 probe を足さなくても既存4件と現行の自己判定責任で主要な失敗を検出できるため non_redundancy=1 とした。現在は同一場面の一発採用／canonical state 返却／agency validator 付き条件を比較できる narrative playable diff がなく、consumer phase、trigger artifact、expected delta を lease 契約どおり指定できない。active_probes 321件と Phase 4a 向け pending lease 1件があるため、次の具体的な LLM GM／NPC prototype で『誰が生成したか』と『誰が state delta を採用したか』の混同を既存 probes が取り逃がした時だけ再評価する state-only defer とする。",
+      "existing_probes": [
+        "probe-20260619-guiding-not-railroading-narrative-graph",
+        "probe-20260610-narrative-playthrough-evidence",
+        "probe-20260708-seduced-narrative-rhetorical-rule-gate",
+        "probe-20260609-flag-world-state-diegetic-boundary"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と defer 理由だけを更新した。生成の帰属と採用・裁定責任の分離は記録したが、対象 artifact 不在と既存の narrative graph・playthrough・mechanical rule・world-state probes との重複により、probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-27T14:38:07+09:00",
       "selected": {
