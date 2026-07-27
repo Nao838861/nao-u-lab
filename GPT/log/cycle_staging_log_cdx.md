@@ -92,7 +92,38 @@ reason: Phase 2 の pass が空のため、#shared-reads への投稿対象な�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785161710-162c75af29
+    source_ts: "1785161710.074589"
+    title: "Splatoon Raiders — mechanic を変えず presentation で player role を再文脈化する"
+    reason: "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、harness・game-design・evaluation・principle の優先タグを持つ。内部 playtest の「Salmonid がかわいそう」という反応を action・target・reward・context の不一致へ分解し、固定された戦闘・地形・敵編成を残したまま art と sound の機能要件を揃えた事例が、headless 指標では捉えにくい行為の意味を次の prototype で検査する既存 probe と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "数値上の採用条件は満たすが、q0-five-second-legibility、event-appraisal-timeline、commonroad-human-operation-regression-fixture が役割・theme/mechanic 不一致、event から感情仮説への写像、manual reaction の再現 fixture を既に扱う。新しい差は action・target・reward・context の coherence 表と同一 mechanic の presentation A/B だが、今サイクルには比較できる playable build と before／after reaction artifact がない。active_probes 321件に加え Phase 4a 向け pending lease が1件あるため、新規 control は加えず、既存3 probes が具体的 prototype の意味不一致を取り逃がした時だけ再評価する。"
+  existing_probes:
+    - probe-20260621-q0-five-second-legibility
+    - probe-20260602-event-appraisal-timeline
+    - probe-20260708-commonroad-human-operation-regression-fixture
+  change:
+    summary: "reviewed_source_ts と state-only defer 理由を更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
