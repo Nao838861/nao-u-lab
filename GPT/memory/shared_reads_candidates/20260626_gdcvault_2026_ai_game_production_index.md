@@ -4,18 +4,18 @@ url: "https://gdcvault.com/free/gdc-26/"
 collected_at: "2026-06-26T17:45:24+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-production, ai-tools, liveops, player-research, anti-cheat, gdc]
-evaluated_at: "2026-06-26T18:02:00+09:00"
+evaluated_at: "2026-07-28T01:22:09+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-26T18:02:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-26T18:02:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-26"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-28T01:22:09+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T01:22:09+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-27"
 supersedes: []
-gate_reason: "GDC Vault 2026 の AI / liveops / anti-cheat 講演入口としては有用だが、個別候補ではなく index なので、問題設定・手法の中核・評価・結論を単体から抽出できない。Phase 3 投稿には、講演単位で分解して本文・録画・スライドの内容を確認してから再評価する必要がある。"
+gate_reason: "GDC Vault 2026 の探索入口としては有用だが、複数講演を列挙した index であり、単一の問題設定、手法、評価、結論を持たない。4000 字概要の対象単位にならないため candidate としては fail とし、個別講演を別途確認する際の参照先としてのみ残す。"
 ---
 
 ## raw_excerpt

@@ -4,18 +4,18 @@ url: "https://arxiv.org/abs/2606.13722"
 collected_at: "2026-06-25T09:29:34+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent, social-sandbox, narrative-world, game-design, tools]
-evaluated_at: "2026-06-25T09:32:00+09:00"
+evaluated_at: "2026-07-28T01:22:09+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-25T09:32:00+09:00"
+last_reviewed_at: "2026-07-28T01:22:09+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-25T09:32:00+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-28T01:22:09+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-25"
+stale_after: "2026-08-27"
 supersedes: []
-gate_reason: "agent、scene、dialogue、world を単位にする設計語彙はゲーム制作に使えるが、現 candidate だけでは評価の中身や実装上の制約が薄い。#shared-reads の 4000 字概要を書くと、social sandbox / agent-native application の抽象説明に寄りやすい。デモ、実装、比較、失敗例の追加確認ができるまで保留。"
+gate_reason: "agent、scene、dialogue、world を単位にする設計語彙はゲーム制作に使えるが、今回の再評価でも評価結果、実装制約、比較対象、失敗例が不足している。現状から 4000 字概要を書くと social sandbox / agent-native application の抽象説明に寄るため、一次資料の追加確認まで保留する。"
 ---
 
 ## raw_excerpt
