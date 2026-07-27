@@ -124,7 +124,122 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index atom 50件を atoms.jsonl と照合し、missing 0件を確認した。Markdown link は0件で broken link も0件。"
+  - "memory/atoms.jsonl 2766件を監査し、parse error 0件、duplicate id 0件、3面 mirror の欠落・content conflict 0件を確認した。normalized content の raw duplicate 40群は既存 canonical overlay / display fold の対象で、effective display unresolved は0件。"
+  - "memory/raw/ の2026-06-27以前更新ファイル96件を監査した。Slack archive、論文PDF・抽出txt等の provenance で、既に raw / slack_archive 配下にあるため、このcycleでは移動・削除対象なし。"
+  - "shared-reads candidate lifecycle 1125 files を dry-run 監査し、現在状態の修復対象0件を確認した。"
+  - "slack_directives.jsonl 23件、slack_broadcasts.jsonl 21件を確認し、pending 0件のため handled 更新なし。"
+  - "open duplicate group / stale triage / group action queue を現行 frontmatter と live lease から再生成し、candidate handoff 5件を冪等 enqueue した。"
+atom_audit:
+  rows: 2766
+  parse_errors: 0
+  duplicate_ids: 0
+  raw_normalized_content_duplicate_groups: 40
+  recall_visible_normalized_content_duplicate_groups: 3
+  effective_display_unresolved_groups: 0
+  mirror_counts:
+    atoms_jsonl: 2766
+    per_file_md: 2766
+    index_jsonl: 2766
+  mirror_conflicts: 0
+candidate_lifecycle:
+  files: 1125
+  status_counts:
+    posted: 499
+    ready_to_post: 10
+    postponed: 269
+    failed: 334
+    needs_review: 10
+    skipped_unreviewed: 3
+  missing_stale_after: 6
+  open_status_missing_stale_after: 0
+  overdue_open_total: 93
+  repair_candidates: 0
+raw_archive_audit:
+  cutoff: "2026-06-27"
+  older_than_30_days: 96
+  archived_or_removed: 0
+  decision: "既に raw provenance / slack_archive として保管される一次資料であり、重複派生物と断定できないため明示保持。"
+encoding_audit:
+  memory_md:
+    source_file_status: "UTF-8明示読みで「記憶」「ゲーム設計」「敵パターン」「評価軸」を取得。source破損なし。"
+    display_or_tooling_status: "none"
+  atom_suspects:
+    - id: sr-1776127289-4d9239b255
+      source_file_status: "atoms.jsonl / per-file md / raw slack_archive の全てに U+FFFD を含む「エ��ジェント」があり、source provenance 側からの局所破損。"
+      display_or_tooling_status: "UTF-8明示読みでも同一のため display-only ではない。"
+      disposition: "単一atomの内容修復候補。構造設計issueにはせず、このphaseでは原文・mirrorを変更しない。"
+    - id: gr-1777083728-44d444ab7a
+      source_file_status: "UTF-8明示読みで正常。本文中の literal「???」を detector が拾った false positive。"
+      display_or_tooling_status: "none"
+      disposition: "対応不要。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 93
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 52
+  mixed_group_count: 45
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_handoff_inbox_pending_count: 0
+  group_handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-e205dd62009695d6
+    - cha-da26cfea52dcf2c9
+    - cha-fa0d302f005fd652
+    - cha-e97ea61eb0440b96
+    - cha-076a273f1e14864d
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-e205dd62009695d6
+    path: memory/shared_reads_candidates/20260621_aimbot_honeytoken_patches.md
+    status: postponed
+    stale_after: "2026-07-21"
+    priority_reason: "visual aimbotへのadversarial patchをanti-gaming probeへ転用できる可能性がある一方、現候補はanti-cheat寄りでゲーム制作一般への適用根拠が薄い。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-da26cfea52dcf2c9
+    path: memory/shared_reads_candidates/20260621_ea_gdc_designer_first_rl.md
+    status: postponed
+    stale_after: "2026-07-21"
+    priority_reason: "designer-centered RLは制作に直結するが、告知記事由来で手法・評価・失敗条件が投稿品質に足りない。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-fa0d302f005fd652
+    path: memory/shared_reads_candidates/20260621_fog_of_love_affinity_rl.md
+    status: postponed
+    stale_after: "2026-07-21"
+    priority_reason: "競争目的と協調目的の併存はNPC・teammate評価に使えるが、比較対象と結果の固有性を本文で再確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-e97ea61eb0440b96
+    path: memory/shared_reads_candidates/20260621_game_ai_automated_testing_wetest.md
+    status: postponed
+    stale_after: "2026-07-21"
+    priority_reason: "headless playtest・回帰・balance検証の地図として有用だが、vendor blog単独では一次的な手法・評価根拠が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-076a273f1e14864d
+    path: memory/shared_reads_candidates/20260621_google_cloud_games_agent_platform_capcom_squareenix.md
+    status: postponed
+    stale_after: "2026-07-21"
+    priority_reason: "Capcomのplaytesting agentとSQUARE ENIXのcompanion事例は適用先が明確だが、業界ハイライトだけでは手法と評価を抽出しにくい。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
