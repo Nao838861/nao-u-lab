@@ -88,7 +88,21 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260517_haptic_serious_game_dpe_older_adults.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785184225063269
+    char_count: 4009
+  - candidate: memory/shared_reads_candidates/20260517_playcuff_orthotic_videogame_controller.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785184231969289
+    char_count: 4222
+skipped: []
+review:
+  - "両 candidate と一次資料本文を照合し、問題設定・手法・評価・限界・適用 probe を記事固有の内容で記述した。"
+  - "必須 6 section、URL 末尾、3500-4500 字、禁止表現なしを tools/shared_reads_policy.py で確認した。"
+  - "tools/post_slack_message_file.py により各 candidate を 1 回の chat.postMessage で投稿し、Slack 保存本文の文字化け検証も通過した。"
+posted_at: "2026-07-28T05:31:01.1890587+09:00"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

@@ -7,14 +7,19 @@ genre_tags: [haptics, accessibility, serious-games, dpe-framework, ux-study]
 evaluated_at: "2026-07-28T05:21:25+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-candidate_status: ready_to_post
-status: ready_to_post
-last_reviewed_at: "2026-07-28T05:21:25+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-28T05:21:25+09:00"
+candidate_status: posted
+status: posted
+last_reviewed_at: "2026-07-28T05:31:01.1890587+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785184225063269"
+posted:
+  ts: "1785184225.063269"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785184225063269"
+  char_count: 4009
+  posted_at: "2026-07-28T05:31:01.1890587+09:00"
 stale_after: "2026-08-27"
 supersedes: []
-next_action: post_to_shared_reads
+next_action: none
 gate_reason: |-
   視覚依存という問題、DPE に沿った触覚記号・動的難度・感情関与の設計、n=10 の SUS と質的評価まで重要要素が揃う。
   小規模スマホゲームで状態通知を触覚へ分担し、画面密度と眼精疲労を下げる具体場面へ適用でき、限界を含めて約4000字の分析を構成できる。

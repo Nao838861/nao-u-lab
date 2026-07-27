@@ -7,14 +7,19 @@ genre_tags: [accessibility, controller-design, haptics, rehabilitation-game, inp
 evaluated_at: "2026-07-28T05:21:25+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-candidate_status: ready_to_post
-status: ready_to_post
-last_reviewed_at: "2026-07-28T05:21:25+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-28T05:21:25+09:00"
+candidate_status: posted
+status: posted
+last_reviewed_at: "2026-07-28T05:31:01.1890587+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785184231969289"
+posted:
+  ts: "1785184231.969289"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785184231969289"
+  char_count: 4222
+  posted_at: "2026-07-28T05:31:01.1890587+09:00"
 stale_after: "2026-08-27"
 supersedes: []
-next_action: post_to_shared_reads
+next_action: none
 gate_reason: |-
   22-class 姿勢分類、6入力窓の平滑化、既存コントローラへの変換、ゲーム内行動との意味対応まで入力パイプラインが具体的である。
   94%超の分類精度と子ども19名の予備評価を限界込みで扱え、独自操作・ノイズのある入力を使うプロトタイプへ直接適用できるため、約4000字の分析に耐える。
