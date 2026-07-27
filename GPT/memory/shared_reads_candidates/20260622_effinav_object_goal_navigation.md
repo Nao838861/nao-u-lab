@@ -4,21 +4,21 @@ url: "https://arxiv.org/abs/2606.18634"
 collected_at: "2026-06-22T06:59:23+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [navigation, embodied-agent, spatial-reasoning, level-design, evaluation]
-evaluated_at: "2026-06-22T07:03:15+09:00"
+evaluated_at: "2026-07-27T21:07:26+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-22T07:03:15+09:00"
+last_reviewed_at: "2026-07-27T21:07:26+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-22T07:03:15+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T21:07:26+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-22"
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |
-  Object Goal Navigation の成功率だけでなく探索効率や冗長移動を見る観点は、探索型ゲームや NPC 経路評価に使える。
-  ただし現メモだけでは EffiNav 固有の深度/VLM 融合手法とゲーム制作の具体タスクの接続が薄く、~4000字の投稿にすると一般的な「探索効率が大事」に寄りやすい。
-  Habitat / GOAT-BENCH 側の評価詳細か、既存ゲーム AI 経路評価への具体写像を追加してから再判定する。
+  到達率に加えて無駄な往復や既探索領域への固着を測る観点は、探索型ゲームの NPC 評価に使える。
+  ただし深度/VLM 融合の中核、比較 baseline、Habitat / GOAT-BENCH の数値結果が候補本文にない。
+  現状では一般論へ寄るため、ゲーム内経路ログへの具体写像と一次評価の補完まで保留する。
 ---
 
 ## raw_excerpt

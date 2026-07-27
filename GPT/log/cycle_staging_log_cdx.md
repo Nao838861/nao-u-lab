@@ -14,7 +14,85 @@
 - Slack 投稿: なし
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+executed_at: "2026-07-27T21:07:26+09:00"
+duplicate_preflight:
+  sidecars_fresh: true
+  continue_count: 6
+  skip_count: 0
+  review_count: 0
+total_candidates: 6
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260621_llms_and_games_survey_roadmap.md
+    reason: "役割別 survey は広すぎ、個別評価結果と制作上の一軸が不足"
+  - path: memory/shared_reads_candidates/20260622_clbench_continual_learning_stateful_envs.md
+    reason: "strategic game-playing の具体タスク・比較条件・数値結果が不足"
+  - path: memory/shared_reads_candidates/20260622_digital_red_queen_core_war_llm_evolution.md
+    reason: "held-out 評価条件と diversity 低下の範囲が要旨だけでは不足"
+  - path: memory/shared_reads_candidates/20260622_effinav_object_goal_navigation.md
+    reason: "融合手法・baseline・評価数値がなく、探索効率の一般論へ寄る"
+  - path: memory/shared_reads_candidates/20260625_compact_social_intelligence_agents.md
+    reason: "arena ルール・測定手順・モデル別結果が不足"
+  - path: memory/shared_reads_candidates/20260727_30_exit_post_playtest_metrics.md
+    reason: "観測値と改善意図は具体的だが、patch 前後の効果検証が未掲載"
+stale_reviewed:
+  - handoff_id: cha-a77c926a9b9eb2bb
+    path: memory/shared_reads_candidates/20260621_llms_and_games_survey_roadmap.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-26"
+  - handoff_id: cha-d1d8123b8d863e4e
+    path: memory/shared_reads_candidates/20260622_clbench_continual_learning_stateful_envs.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-26"
+  - handoff_id: cha-37ffac9932fe61fd
+    path: memory/shared_reads_candidates/20260622_digital_red_queen_core_war_llm_evolution.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-26"
+  - handoff_id: cha-183086d784dbe2aa
+    path: memory/shared_reads_candidates/20260622_effinav_object_goal_navigation.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-26"
+  - handoff_id: cha-005fc15ad079c7b0
+    path: memory/shared_reads_candidates/20260625_compact_social_intelligence_agents.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-26"
+candidate_handoff_audit:
+  pending_before: 5
+  read_ids:
+    - cha-a77c926a9b9eb2bb
+    - cha-d1d8123b8d863e4e
+    - cha-37ffac9932fe61fd
+    - cha-183086d784dbe2aa
+    - cha-005fc15ad079c7b0
+  resolved_ids:
+    - cha-a77c926a9b9eb2bb
+    - cha-d1d8123b8d863e4e
+    - cha-37ffac9932fe61fd
+    - cha-183086d784dbe2aa
+    - cha-005fc15ad079c7b0
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

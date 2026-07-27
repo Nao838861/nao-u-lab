@@ -4,18 +4,21 @@ url: "https://arxiv.org/abs/2402.18659"
 collected_at: "2026-06-21T12:59:37+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, llm, survey, roadmap, npc, pcg, evaluation]
-evaluated_at: "2026-06-21T13:02:28+09:00"
+evaluated_at: "2026-07-27T21:07:26+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-21T13:02:28+09:00"
+last_reviewed_at: "2026-07-27T21:07:26+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-21T13:02:28+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T21:07:26+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-21"
+stale_after: "2026-08-26"
 supersedes: []
-gate_reason: "LLM の役割分類と roadmap は有用だが、範囲が広く、この候補メモだけではゲーム制作の具体場面へ落とす焦点がまだ粗い。投稿候補にするなら、NPC / GM / 生成器 / 評価器のうち Nao_u_BOT の直近制作に効く一軸へ絞り直す必要がある。"
+gate_reason: >-
+  LLM の役割分類は索引として有用だが、候補本文は survey 全体の列挙とリスク例に留まり、
+  個別手法の評価条件・結果がない。NPC / GM / 生成器 / 評価器の一軸へ絞る追加読解なしでは、
+  ゲーム制作への適用と CoopEval 水準の概要を根拠付きで書けないため保留する。
 ---
 
 ## raw_excerpt

@@ -4,6 +4,21 @@ url: "https://itch.io/devlog/1577387/devlog-1-post-playtest-release-and-moving-f
 collected_at: "2026-07-27T21:02:40+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, playtest, telemetry, balance, roguelike, boss-design]
+evaluated_at: "2026-07-27T21:07:26+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-27T21:07:26+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T21:07:26+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-26"
+supersedes: []
+gate_reason: >-
+  268 run の到達・選択率と boss telegraph、randomization、日次 patch を同じ改善ループで扱う点は
+  制作現場へ具体的に適用できる。ただし公開2日目の観測値と今後の意図までで、変更前後の比較や
+  成否の結論がない。後続 devlog で patch 効果を検証できるまで投稿候補として保留する。
 ---
 
 ## raw_excerpt
