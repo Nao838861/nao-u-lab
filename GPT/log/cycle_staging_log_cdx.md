@@ -141,7 +141,92 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、index entry と per-file atom index の整合を検証した。broken link / duplicate entry は 0 件。代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」も取得でき、source file は正常。"
+  - "memory/atoms.jsonl と per-file .md / index.jsonl の 2770 atom を監査した。ID・mirror content conflict は 0 件。normalized content の raw 重複 40 group / 80 rows は既存 canonical overlay で fold 済みで、recall-visible 重複は 3 group / 6 rows。"
+  - "memory/raw/ の 30 日超ファイルを 96 件 / 63,095,789 bytes 棚卸しした（web_research 88、headless_eval 6、slack_archive 1、sync_state 1）。一次資料・評価証跡・ingest provenance として参照されるため、この cycle の移動は 0 件。"
+  - "shared-reads candidate 1133 件の lifecycle を監査した。posted 502、ready_to_post 10、postponed 258、failed 351、needs_review 9、skipped_unreviewed 3。status / candidate_status conflict は 0 件。"
+  - "stale duplicate group queue を先に再生成し、actionable group 0 件を確認した後、期限超過 candidate から 5 件を candidate handoff inbox へ冪等 enqueue した。candidate 本体は変更していない。"
+  - "slack_directives.jsonl 23 行、slack_broadcasts.jsonl 21 行を監査した。pending は双方 0 件で、handled 更新は 0 件。"
+  - "due probe lease を上限 1 件で確認した。2026-07-28 時点の due は 0 件で、receipt 更新は 0 件。"
+issues:
+  - id: ISS-ENC-001
+    description: "active atom sr-1776127289-4d9239b255 の title / trigger / excerpt に置換文字を含む「AIエ��ジェント」が保存されている。memory_health のもう 1 件 gr-1777083728-44d444ab7a は原文中の「???」に反応した false positive。"
+    severity: low
+    evidence: "memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/index.jsonl:317"
+    source_file_status: "UTF-8 明示読みでも U+FFFD 相当の置換文字が source に残るため、sr-1776127289-4d9239b255 は実データ破損。memory/MEMORY.md と gr-1777083728-44d444ab7a の source は正常。"
+    display_or_tooling_status: "rg / memory_health の双方で同じ文字列を再現し、表示経路だけの mojibake ではない。"
+    why_blocks_game_memory: "正しい語「AIエージェント」で検索した時にこの 1 atom の title / trigger hit が弱くなり、context engineering の既存事例へ到達しにくい。局所データ修復で足り、構造設計は不要。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+    merged: 0
+    retired: 0
+  next_pending:
+    probe_id: probe-20260724-minimum-sufficient-scope-ladder
+    lease_due: "2026-07-31T00:23:59+09:00"
+stale_backlog:
+  overdue_open_total: 70
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 52
+  mixed_group_count: 44
+  all_open_group_count: 8
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-d6dbfd7126125e3c
+    - cha-c3aec3effceccd50
+    - cha-18dadbbee6014062
+    - cha-12d91222b766d5c7
+    - cha-571522dc121337b5
+  remaining_overdue_not_handed_off: 65
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-d6dbfd7126125e3c
+    path: memory/shared_reads_candidates/20260516_player_experience_resonance_chi2026.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=43。resonance を長期的な感情・認知への残り方として扱う評価語彙はゲーム制作へ移しやすいが、survey の設問・分析手順・結果を本文で再確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-c3aec3effceccd50
+    path: memory/shared_reads_candidates/20260517_haptic_serious_game_dpe_older_adults.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "age_days=42。DPE framework、触覚記号、動的難度、SUS / interview は具体的だが、通常ゲーム制作へ移す抽象化と比較事例が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-18dadbbee6014062
+    path: memory/shared_reads_candidates/20260517_playcuff_orthotic_videogame_controller.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "age_days=42。入力分類・noise smoothing・action 対応は身体入力 prototype に使えるが、臨床予備評価から一般化できる範囲の再確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-12d91222b766d5c7
+    path: memory/shared_reads_candidates/20260518_reflections_nanoreno_postmortem.md
+    status: postponed
+    stale_after: "2026-06-17"
+    priority_reason: "age_days=41。最小提出物と optional scope の分離は制作 cycle に使えるが、一般的な jam scope 管理を超える固有 evidence が薄い。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-571522dc121337b5
+    path: memory/shared_reads_candidates/20260518_regular_games_automata_ggp.md
+    status: needs_review
+    stale_after: "2026-06-17"
+    priority_reason: "age_days=41。未レビューの automata-based GGP language として、ゲーム規則表現から次制作へ移せる具体的知見があるか Phase 2 で判定する。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
