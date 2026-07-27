@@ -89,7 +89,21 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260728_neon_galaxy_ai_partner_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785192350414439
+    char_count: 4087
+skipped:
+  - candidate: memory/shared_reads_candidates/20260525_screenbound_2d_3d_linked_worlds.md
+    reason: "元記事に比較評価、プレイテスト結果、具体的な失敗修正がなく、3500-4500字へ拡張すると記事固有の証拠より推論が大きくなる"
+    action: candidate_revise
+review:
+  - "NEON GALAXY は初日 artifact、2週間の反復、公開版の範囲、記事が報告しない品質指標を分離して分析した。"
+  - "必須6 section、URL末尾、4087字、禁止表現なしを tools/shared_reads_policy.py で確認した。"
+  - "tools/post_slack_message_file.py により1回の chat.postMessage で投稿し、Slack保存本文の文字化け検証も通過した。"
+posted_at: "2026-07-28T07:46:16+09:00"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

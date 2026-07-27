@@ -7,14 +7,17 @@ genre_tags: [game-design, puzzle-platformer, dimension-switching, prototyping, l
 evaluated_at: "2026-07-28T07:38:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
-status: ready_to_post
-last_reviewed_at: "2026-07-28T07:38:04+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-28T07:38:04+09:00"
+candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-07-28T07:46:16+09:00"
+last_decision: postponed
+evidence: "Phase 3 final review: source lacks comparison results, concrete playtest findings, and failure-to-fix evidence for a 3500-4500 character article-specific analysis"
 stale_after: "2026-08-27"
 supersedes: []
-next_action: post_to_shared_reads
+next_action: candidate_revise
+phase3_reason: |-
+  editor-first と次元間 trigger の着想は有用だが、元記事は比較評価、プレイテスト結果、具体的な失敗修正を提示していない。
+  約4000字へ拡張すると記事固有の証拠より推論が大きくなるため、追加の一次資料が得られるまで投稿しない。
 gate_reason: |-
   2D level editor を正本に 3D を生成する制作判断、両世界の rule consistency、連動 trigger の具体例が一続きで抽出できる。
   単純 prototype と観察反応で実験的 mechanic を選別する結論まであり、複数表現を同期する制作へ具体適用できる。

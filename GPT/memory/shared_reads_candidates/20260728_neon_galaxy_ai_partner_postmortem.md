@@ -7,12 +7,17 @@ genre_tags: [game-development, postmortem, ai-assisted-development, rts, prototy
 evaluated_at: "2026-07-28T07:38:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-28T07:38:04+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-28T07:38:04+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1785192350.414439"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785192350414439"
+  char_count: 4087
+  posted_at: "2026-07-28T07:46:16+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-28T07:46:16+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785192350414439"
+next_action: none
 stale_after: "2026-08-27"
 supersedes: []
 gate_reason: |-
