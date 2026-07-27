@@ -118,7 +118,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785138356-6557c3267f
+    source_ts: "1785138356.096039"
+    title: "Automated Game Testing with Human-like Agents — interaction state と一 run 一 mutation"
+    reason: "最新の未レビュー score 12 候補で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。攻略成功では消える no-op interaction の検査履歴と一 run 一 mutation が、次の小型 prototype の headless QA に新しい判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "通常 state と interaction state の分離、12層 grid、正常 route への一つだけの modification、15人・427 trajectory、GVG-AI 3 game・各4 level・45 seeded fault の比較があり、functional defect 用 headless QA へ変換できる。一方、既存の role diagnostics・BDD perturbation・QA trace・dynamic stress・exploit diversity が主要部分を既に扱う。固有差は blocked／rejected no-op の coverage ledger と mutation masking 回避だが、現 staging に比較可能な playable diff／正常 route／before-after artifact がなく、active_probes 321件と Phase 4a 向け pending lease 1件があるため lease の consumer・artifact・判断差を指定できない。次の具体的 headless QA で既存 probes が no-op 未検査を取り逃がした時だけ再評価する。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-27T16:49:55+09:00",
+  "updated_at": "2026-07-27T19:08:52+09:00",
   "reviewed_source_ts": [
+    "1785138356.096039",
     "1785130293.952519",
     "1785120387.288489",
     "1785112362.674609",
@@ -521,6 +522,47 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-27T19:08:52+09:00",
+      "selected": {
+        "id": "sr-1785138356-6557c3267f",
+        "source_ts": "1785138356.096039",
+        "title": "Automated Game Testing with Human-like Agents — interaction state と一 run 一 mutation",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、memory・harness・game-design・agent・operation・evaluation の6優先タグをすべて持つ。攻略 agent の成功率では消える no-op interaction を検査履歴として残し、正常 route に想定外操作を一つだけ挿す考えが、次の小型 prototype の headless QA で既存 probe と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads 本文は、通常 state と interaction state の分離、対象×操作×方向×avatar state×反復回数の12層 grid、scenario graph の正常 route に一つだけ modification を挿す synthetic agent、15人・427 trajectory から test goal を抽出する MGP-IRL、GVG-AI 3 game・各4 level・45 fault-seeded bug の比較まで具体化しており、functional defect 用の小型 headless QA へ直接変換できるため relevance・actionability・evidence を3とした。一方、既存の playtest-agent-role-diagnostics は攻略・stress・manual 等の診断役割分離を、bdd-route-contract-regression は固定 route と軽い perturbation を、titan-headless-qa-trace は abstract state・action trace・失敗診断を、fixed-test-vs-dynamic-stress と raid-exploit-diversity-regression は happy path 外の stress と別 exploit family をすでに扱う。新しい差は state が変わらない blocked／rejected interaction の coverage ledger と一 run 一 mutation による masking 回避だが、現在の staging には対象となる playable diff、正常 route、mutation 前後の before／after artifact がない。さらに active_probes は321件で、Phase 4a 向け minimum-sufficient-scope-ladder の pending lease が1件あるため、consumer_phase、trigger_artifact、expected_delta を lease 契約どおり比較可能に指定できない。次の具体的な headless QA で正常 route が通る一方、no-op／invalid interaction の未検査を既存 probes が取り逃がした時だけ再評価する state-only defer とする。",
+      "existing_probes": [
+        "probe-20260602-playtest-agent-role-diagnostics",
+        "probe-20260608-bdd-route-contract-regression",
+        "probe-20260602-titan-headless-qa-trace",
+        "probe-20260527-fixed-test-vs-dynamic-stress",
+        "probe-20260710-raid-exploit-diversity-regression"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と defer 理由だけを更新した。no-op interaction coverage と一 run 一 mutation の差分は記録したが、比較 artifact 不在、既存 QA probes との重複、既存 pending lease により、probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-27T16:49:55+09:00",
       "selected": {
