@@ -4,19 +4,20 @@ url: "https://arxiv.org/abs/2211.17188"
 collected_at: "2026-06-19T21:25:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, automated-playtesting, player-modeling, reinforcement-learning, balancing]
+evaluated_at: "2026-07-27T11:37:50+09:00"
+evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-06-21T05:25:00+09:00"
-last_decision: postponed
-lifecycle_backfill_reason: postpone_lifecycle_backfill
-evidence: "Phase 4c lifecycle backfill from ISS-4A-20260621-001"
-next_action: evaluate_in_phase2
-stale_after: "2026-07-19"
+candidate_status: postponed
+last_reviewed_at: "2026-07-27T11:37:50+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T11:37:50+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-26"
 supersedes: []
-gate_reason: |
-  Phase 4c では lifecycle 欠損の補完だけを行う。CARMI / human-like play-style は headless playtest と player-modeling に関係するため、
-  投稿可否は次の Phase 2 で本文密度と既存 posted 候補との重複を確認して判定する。
+gate_reason: |-
+  summary data と少量の human data から play-style を再現する着想は、headless playtest に直接適用できる。
+  ただし環境、style 定義、学習法、比較 baseline、再現精度が候補本文にないため、評価の中身を備えた約4000字概要には不足し保留する。
 
 ---
 

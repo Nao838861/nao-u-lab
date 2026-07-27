@@ -4,6 +4,26 @@ url: "https://changhyup.itch.io/sengokuopera/devlog/1497346/briefing-quest-syste
 collected_at: "2026-07-27T11:32:25.4627472+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-development, playtesting, simulation, quest-system, client-server]
+evaluated_at: "2026-07-27T11:37:50+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-27T11:37:50+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-27T11:37:50+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-26"
+supersedes: []
+gate_reason: |-
+  非表示 UI に simulation 更新を結び付けた共通原因から、global manager、server signal、clock 補正、最早一件だけの予約へ直す因果が具体的である。
+  友人 playtest の意外な tab 遷移という発見経路と検証限界も明示でき、複数画面 game の設計・再現テストへ無理なく適用できるため、約4000字の深い分析を支えられる。
+suggested_post_outline:
+  overview_angle: "三つの別症状を UI lifecycle と simulation clock の誤結合という一つの原因へ束ね、画面外でも進む event 基盤へ直した playtest 起点の refactor"
+  analysis_axis: "event ownership、server-authoritative time、signal と state fetch の分離、最早 deadline 一件だけを予約する timer 設計、非 happy path の観察"
+  application_target: "複数 scene / tab を持つ Nao_u_BOT の simulation prototype で、表示状態に依存しない quest・enemy・resource event と deterministic な画面外遷移テストを作る"
+  pros_cons: "pros は症状横断の単一原因化と feature 間結合の削減。cons は playtest が少数で、timer drift、offline 復帰、重複 signal、server failure の定量検証が未提示"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

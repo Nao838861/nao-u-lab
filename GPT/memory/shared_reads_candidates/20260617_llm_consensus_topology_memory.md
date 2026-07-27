@@ -4,21 +4,20 @@ url: "https://arxiv.org/abs/2606.04197"
 collected_at: "2026-06-17T15:29:20.8446899+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [multi-agent, agent-memory, social-simulation, game-ai, coordination]
-evaluated_at: "2026-06-17T15:36:28+09:00"
+evaluated_at: "2026-07-27T11:37:50+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-17T15:36:28+09:00"
+last_reviewed_at: "2026-07-27T11:37:50+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-17T15:36:28+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T11:37:50+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-17"
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |-
-  memory depth と communication topology の相互作用は重要で、NPC 集団や噂・派閥シミュレーションへの示唆もある。
-  ただし候補本文だけでは Naming Game のタスク設計、評価指標、ゲーム制作への落とし込みがやや抽象的で、4000字投稿では推測が増えやすい。
-  PDF 本文から topology 条件・memory 条件・失敗例を補強してから再評価するのが妥当。
+  16 agent・8 topology・432 run と主要結果は把握できるが、各 topology / memory 条件、指標定義、失敗例の比較が候補本文にはない。
+  NPC の噂・派閥 simulation への適用は有望でも、約4000字の概要に必要な評価の中身を推測で補うことになるため、一次資料の補強まで保留する。
 ---
 
 ## raw_excerpt

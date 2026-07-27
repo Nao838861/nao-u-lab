@@ -4,18 +4,20 @@ url: "https://arxiv.org/abs/2604.24156"
 collected_at: "2026-06-18T01:44:13+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-theory, llm-agents, economy-design, repeated-games, simulation]
-evaluated_at: "2026-06-18T02:04:00+09:00"
+evaluated_at: "2026-07-27T11:37:50+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-18T02:04:00+09:00"
+last_reviewed_at: "2026-07-27T11:37:50+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-18T02:04:00+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T11:37:50+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-18"
+stale_after: "2026-08-26"
 supersedes: []
-gate_reason: "repeated auction、budget constraint、VCG benchmark、LLM-guided bidding という骨格はゲーム内経済や NPC 競争の評価に使える。ただし候補本文は均衡回復と adaptive equilibria の結論が要約中心で、実験条件、比較戦略、失敗ケース、ゲーム制作での検証単位が不足しているため、現時点では投稿品質に届かない。"
+gate_reason: |-
+  repeated auction、budget constraint、VCG benchmark はゲーム内経済の検証へ具体的に接続できる。
+  一方で実験条件、比較戦略、定量結果、失敗ケースが候補本文にないため、均衡回復という結論を検証可能な約4000字概要へ展開できず保留する。
 ---
 
 ## raw_excerpt
