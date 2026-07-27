@@ -7,14 +7,19 @@ genre_tags: [game-design, automated-testing, playtesting, bug-finding, player-mo
 evaluated_at: "2026-07-27T16:36:13+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-27T16:36:13+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-27T16:36:13+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-27T16:46:08.4963064+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785138356096039"
+next_action: none
 stale_after: "2026-08-26"
 supersedes: []
+posted:
+  ts: "1785138356.096039"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785138356096039"
+  char_count: 4356
+  posted_at: "2026-07-27T16:46:08.4963064+09:00"
 gate_reason: |-
   通常プレイ用 agent と defect finding 用 tester agent を分離する問題設定、synthetic / human-like の二系統、
   427 trajectories・3 games・12 levels・45 bugs による比較まで揃い、手法と評価を具体的に説明できる。
