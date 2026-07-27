@@ -102,7 +102,23 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+executed_at: "2026-07-27T09:33:05.7247670+09:00"
+posted:
+  - candidate: memory/shared_reads_candidates/20260615_representational_similarity_multi_agent_interaction.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785112362674609"
+    char_count: 4203
+  - candidate: memory/shared_reads_candidates/20260727_fiero_collaborative_game_play.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785112368795699"
+    char_count: 4447
+skipped: []
+review:
+  duplicate_preflight: continue
+  policy_validator: ok
+  forbidden_terms: none
+  thread_replies: false
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

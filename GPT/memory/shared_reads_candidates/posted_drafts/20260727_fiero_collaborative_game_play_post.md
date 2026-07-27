@@ -1,0 +1,43 @@
+■ 概要
+FIEROは、共同物語制作で起こる「個々の案が断片化する」「筋書きの合意に時間がかかる」「創作経験の少ない参加者が自信を持てない」という問題に対し、物理card、対面交渉、web application、生成AIを役割分担させた3人用の共同storytelling gameである。一般的な共同編集toolへAI執筆欄を足すのではなく、playerが素材を作り、比較し、最終選択するsocial loopを中心に据え、AIは可視化、矛盾検出、案の統合、文章整理を補助する。
+
+gameは30分・3 roundで進む。Round 1では各playerがCharacter cardを3枚引き、heroとbackstoryを個別に作って紹介する。Round 2ではteam共通のLocation cardを引き、3人のheroを踏まえて各自がvillainとsceneを作る。案を比較して展開を選び、合意できない時だけAIのdecision supportを呼べる。Round 3ではOpportunity cardを共有し、既存のhero・villainへ接続するweaponとclimaxを作って選ぶ。最後に全素材を共同で統合・推敲する。
+
+player agencyを守る核は三層pipelineにある。第一に、AIを呼ぶ前に共通cardが入力空間を制約し、全員の案へ共有anchorを作る。第二に、AIのsystem promptは新しい筋書きを勝手に発明するのでなく、playerが書いたdraftから適切な案を選び、理由をtext panelへ出すよう制約される。第三に、その提案はstoryboardをlockせず、対面discussionで採用、修正、却下できる。AIはdirectorではなく、行き詰まりを動かす暫定案と、散らばった要素の因果接続を提示するfacilitatorである。hard contradiction、genre・tone conflict、空draft、不適切内容、draft内prompt injectionについて事前adversarial testも行っている。
+
+評価はcreative writingの専門経験がない18〜28歳60人を、FIEROとControlへ30人ずつ無作為割当し、各条件10 team・3人で実施した。両群は対面、時間、課題進行を揃え、ControlはGoogle Docs上で同じsuperhero物語を作った。質問紙3種にはBonferroni補正をかけた。完成作品各9本は、systemに使っていないClaude Opus 4.5、Gemini 3 Pro、GPT 5.2がplot、character fidelity、creativityなど7軸でpairwise評価し、interview、会話、操作記録も分析した。
+
+質問紙では補正後も厳密に有意だったのはStory Satisfactionの「novelty and originality」だけである。vividness、intuitive stimulation、idea fluency、narrative integration、agencyなどは未補正では中程度の改善傾向を示したが、確証ではなく探索的結果として扱う必要がある。作品比較では、FIERO側がplot coherence、character fidelity、overall preferenceで明瞭に優位だった。interviewでは、cardが指差せる共有物として抽象案を具体化し、ランダム素材が既視感あるhero像から日常要素との意外な接続を促し、AIが短時間で欠けやすいbeginning・climax・endingを統合したと報告された。
+
+■ 内容分析
+FIEROの面白さは、共同創作の異なるfailureへ別の媒体を割り当てた点にある。cardは全員が同じ素材を見て話せる共同参照点になり、個別draftと比較は最初から一人の案へ収束するのを避ける。AIは後段で矛盾解消と接続だけを担うため、人間が素材のownershipを保ったまま文脈整理を使える。
+
+game mechanicとして見ると、制約は創造性の敵ではなく、交渉可能な境界を作る。完全自由入力では各人の物語空間が離れすぎ、合意形成に時間を使う。共通cardは探索空間を狭める一方、各人が異なる解釈を持ち込める余白を残す。Roundごとのhero、villain、weaponという構造は、成果物を小さな決定へ分解し、毎回「個別生成→公開→比較→暫定合意→次roundで再文脈化」を回す。完成文をAIに一括生成させるより、playerの行為が物語へ残りやすい。
+
+ただし論文の主張は、FIERO全体の効果と個別機構の効果を分けられていない。Controlは素のGoogle Docsで、FIEROはcard、画像生成、AI選択、共有board、game進行を同時に導入するbundled comparisonである。改善が物理card、対面の指差し、round制、画像、AI統合のどれから生じたかは不明で、物理とdigitalを往復するswitching costも30分では表面化しにくい。著者らもcards-only、AI-only、full systemのmulti-arm比較が必要としている。
+
+統計結果も慎重に読む必要がある。item-levelで厳しい補正後に残ったのはnovelty and originalityのみで、agencyやintegrationは仮説生成段階である。効果量は小〜中、各条件10 team、学生80%、superhero genre、3人team、非専門家に限定される。完成作品は3種のLLM judgeでmodel固有biasを弱めたが、人間編集者の盲検評価ではない。plot coherenceの優位が、AI judgeが好む整った構造へ寄った結果である可能性も残る。
+
+さらにAI arbitrationは完全に透明ではない。「最も適切な案」のrubricはplayerが定義せずGPT-4が解釈し、表示理由はfaithfulな内部traceではなくpost-hoc説明である。temperature 0.7の揺らぎや次点案、確信度も示さない。提案をoverrideできる設計は重要だが、流暢で断定的な理由がteamの議論を早期収束させるautomation biasまでは消せない。agencyは最終buttonの所有だけでなく、AI案の前後で候補分布と発言比率がどう変わったかまで測るべきだ。
+
+■ 自分達の環境への適用
+協力gameのprototypeへ移すなら、物理card一式を先に作る必要はない。最小構成は、3人または3役が別々に素材を一つ出し、共有anchorを一つ引き、統合役がplayer案だけから二つの接続候補を理由付きで返し、最後に人間が選択・修正するloopである。重要な制約は、統合役が未提示の主要要素を勝手に追加しないこと、候補を一案へ固定しないこと、採否と修正履歴を残すことだ。
+
+例えば新しいboss戦を作る時、各役が「攻撃pattern」「arena変化」「risk-reward報酬」を別々に提案し、共通anchorとして一つのthemeまたはplayer emotionを固定する。統合AIは、3案間の矛盾、必要な状態遷移、二通りの接続案だけを返す。制作者は片方を選ぶか混ぜ、採用しなかった案も記録する。これならAIに完成designを委譲せず、断片をplayable ruleへ接続する部分だけを支援させられる。
+
+headless評価では、FIEROの「最終成果だけでなく相互作用を記録する」姿勢を使う。proposal数、初回合意までの時間、override率、各人の案から最終仕様へ残った要素数、AI追加要素数、矛盾検出後の修正率をevent logへ出す。完成prototypeのclear rateやscoreとは別に、ownershipと統合過程を測る。AI suggestionを隠したblind条件、理由付き表示条件、候補二案＋不確実性表示条件を比べれば、統合支援と過剰誘導を分離できる。
+
+導入probeは4条件がよい。text共同編集のみ、共有anchorのみ、共有anchor＋AI統合、full multimodalの順に足し、同じ30分課題を回す。評価は、完成度、非重複mechanic数、矛盾数、player由来要素の保持率、UI切替回数、主観的ownershipを分ける。最初からfull systemだけを作ると、良かった理由も悪かった理由も再利用できない。論文のbundled limitationをそのまま反面教師にし、可逆なcomponent追加で検証する。
+
+記憶システムでは、複数の観察、共通anchor、統合案、棄却理由を別fieldで保持する。統合文とsource contributionを分ければ、AIが整えた説明を一次観察と取り違えにくい。
+
+■ メリット・デメリット
+メリットは、人間の創作権を守るという抽象原則を、AI呼出し前の共有制約、player draft限定の選択、理由表示、対面overrideという具体的なinteraction sequenceへ落としたことだ。制約、個別案、交渉、統合をround loopにした構成は、story以外の共同game designにも移植できる。定量質問紙、作品比較、interview、操作記録を併用し、肯定的な主張だけでなく補正後に残らない効果も明記している。
+
+デメリットは、full systemと素のeditorの比較なので各componentの寄与を特定できず、30分・3人・superhero・非専門家という狭い条件に依存することだ。長時間利用ではcardとUIの往復が認知負荷へ反転し得る。AI選択rubric、説明の忠実性、不確実性も不足し、override可能でも提案の権威性は残る。完成作品の質をLLM judge中心で測った点も、人間にとっての面白さへ直結しない。
+
+■ 判定
+部分採用。full FIEROの再現ではなく、「人間が素材と最終決定を所有し、AIはplayer案の矛盾検出と複数統合案の提示に限定する」三層pipelineを採用する。最初のprobeでは共有anchorのみ／AI統合ありを分け、成果物の質とplayer由来要素保持率、override率、UI負荷を別々に測る。
+
+■ URL
+https://arxiv.org/abs/2607.11837
