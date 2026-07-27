@@ -4,21 +4,21 @@ url: "https://schedule.gdconf.com/session/intelliscene-multi-agent-for-reasoning
 collected_at: "2026-06-25T23:44:23+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, ai-tools, multi-agent, scene-layout, production, gdc]
-evaluated_at: "2026-06-25T23:48:54+09:00"
+evaluated_at: "2026-07-27T23:07:18.8696942+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-25T23:48:54+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-25T23:48:54+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-25"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-27T23:07:18.8696942+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-27T23:07:18.8696942+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: >-
-  要求解析、scene graph、geometric solver、visual guidance、asset retrieval へ分解する production tool としての着眼は強く、
-  小規模ゲームの配置支援にも具体的に転用できる。ただし現候補は GDC セッション紹介の断片が中心で、
-  評価の中身、導入結果、失敗条件が不足しており、CoopEval 水準の概要を書くには追加資料が必要。
+  要求解析と幾何制約を分ける production tool の着眼は有用だが、候補内の材料は GDC セッション紹介に留まる。
+  scene graph、solver、visual guidance の評価条件・導入結果・失敗例がなく、手法の中核と評価を
+  CoopEval 水準の約4000字で説明できないため、現 candidate は参照用として閉じる。
 ---
 
 ## raw_excerpt

@@ -4,18 +4,21 @@ url: "https://gdcvault.com/play/1035803/Creating-a-Culture-of-Sustainability"
 collected_at: "2026-06-25T17:30:18+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [tabletop, sustainability, production, distribution, game-design, culture]
-evaluated_at: "2026-06-25T17:32:56+09:00"
+evaluated_at: "2026-07-27T23:07:18.8696942+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-25T17:32:56+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-25T17:32:56+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-25"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-27T23:07:18.8696942+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-27T23:07:18.8696942+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-26"
 supersedes: []
-gate_reason: "production / distribution / player culture を design problem として扱う視点は有用だが、現候補本文では tabletop 固有の具体手法と評価材料が薄い。デジタル prototype や物理プロトタイプへの適用は可能だが、Phase 3 の ~4000 字投稿にするには追加一次情報が必要。"
+gate_reason: >-
+  production、distribution、player culture を design problem として扱う視点は有用だが、
+  候補内にあるのは講演紹介だけで、tabletop 固有の具体手法、比較対象、実施結果がない。
+  ゲーム制作への適用が一般論を超えず、約4000字投稿の根拠密度に達しないため参照用として閉じる。
 ---
 
 ## raw_excerpt

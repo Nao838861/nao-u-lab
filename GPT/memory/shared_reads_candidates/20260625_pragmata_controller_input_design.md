@@ -4,18 +4,21 @@ url: "https://www.gamesradar.com/games/third-person-shooter/there-are-only-so-ma
 collected_at: "2026-06-25T11:30:34+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [controls, action-game, playtesting, onboarding, input-design]
-evaluated_at: "2026-06-25T11:33:00+09:00"
+evaluated_at: "2026-07-27T23:07:18.8696942+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-25T11:33:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-25T11:33:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-25"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-27T23:07:18.8696942+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-27T23:07:18.8696942+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-26"
 supersedes: []
-gate_reason: "複合操作、敵密度、速度、入力方式比較という実制作向けの論点は強いが、候補内の情報はインタビュー要約と関連 URL の断片に留まる。CoopEval 水準の概要を書くには、demo の具体操作、設計者の比較意図、難度曲線の実例をもう少し補強したい。"
+gate_reason: >-
+  複合操作を敵密度と速度で段階導入する論点は実制作に使えるが、候補内の情報は短いインタビュー要約に留まる。
+  demo の具体操作、入力方式ごとの比較、playtest 結果や難度曲線の実例が不足し、
+  CoopEval 水準の約4000字概要を支えられないため、現 candidate は参照用として閉じる。
 ---
 
 ## raw_excerpt

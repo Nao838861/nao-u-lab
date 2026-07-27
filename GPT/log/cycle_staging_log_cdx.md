@@ -13,7 +13,89 @@
 - `memory/shared_reads_candidates/20260727_splatoon_raiders_difficulty_growth_help.md` — 3 難易度すべてで「忙しさ」と「成長感」を保ち、救援時の power scaling、上級者向け dungeon、合間の minigame を組み合わせた設計を説明する開発者インタビュー。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+evaluated_at: "2026-07-27T23:07:18.8696942+09:00"
+total_candidates: 7
+pass:
+  - memory/shared_reads_candidates/20260727_splatoon_raiders_outlandish_environment.md
+  - memory/shared_reads_candidates/20260727_splatoon_raiders_difficulty_growth_help.md
+fail:
+  - path: memory/shared_reads_candidates/20260625_gdc2026_intelliscene_multi_agent_scene_layout.md
+    reason: "GDC 紹介断片のみで評価条件・導入結果・失敗例がなく、約4000字概要を支えられない"
+  - path: memory/shared_reads_candidates/20260625_genai_content_game_architecture_oop_ecs.md
+    reason: "公式要旨のみで prototype 構成・測定指標・具体値がなく、評価の中身を検証可能に説明できない"
+  - path: memory/shared_reads_candidates/20260625_pragmata_controller_input_design.md
+    reason: "短いインタビュー要約のみで具体操作・入力比較・playtest 結果が不足"
+  - path: memory/shared_reads_candidates/20260625_reward_hacking_spec_gaming_agents.md
+    reason: "2論文の差分・task 構成・モデル別結果・mitigation 効果量が欠ける"
+  - path: memory/shared_reads_candidates/20260625_tabletop_sustainability_design_culture.md
+    reason: "講演紹介のみで具体手法・比較対象・実施結果がなく、適用が一般論を超えない"
+postpone: []
+stale_reviewed:
+  - handoff_id: cha-28a813f60f151a30
+    evidence: "stale_reviewed:cha-28a813f60f151a30"
+    path: memory/shared_reads_candidates/20260625_gdc2026_intelliscene_multi_agent_scene_layout.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-26"
+  - handoff_id: cha-b14e87b026bc6c04
+    evidence: "stale_reviewed:cha-b14e87b026bc6c04"
+    path: memory/shared_reads_candidates/20260625_genai_content_game_architecture_oop_ecs.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-26"
+  - handoff_id: cha-97a50b5cdb986204
+    evidence: "stale_reviewed:cha-97a50b5cdb986204"
+    path: memory/shared_reads_candidates/20260625_pragmata_controller_input_design.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-26"
+  - handoff_id: cha-7c85bd0cfc14a82f
+    evidence: "stale_reviewed:cha-7c85bd0cfc14a82f"
+    path: memory/shared_reads_candidates/20260625_reward_hacking_spec_gaming_agents.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-26"
+  - handoff_id: cha-3ce399d24dc04fde
+    evidence: "stale_reviewed:cha-3ce399d24dc04fde"
+    path: memory/shared_reads_candidates/20260625_tabletop_sustainability_design_culture.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-26"
+candidate_handoff_audit:
+  pending_before: 5
+  read_ids:
+    - cha-28a813f60f151a30
+    - cha-b14e87b026bc6c04
+    - cha-97a50b5cdb986204
+    - cha-7c85bd0cfc14a82f
+    - cha-3ce399d24dc04fde
+  resolved_ids:
+    - cha-28a813f60f151a30
+    - cha-b14e87b026bc6c04
+    - cha-97a50b5cdb986204
+    - cha-7c85bd0cfc14a82f
+    - cha-3ce399d24dc04fde
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
+
+- duplicate preflight: 3 sidecar を開始時に再生成・`--check` 済み。7 件すべて `continue`。
+- pass 2 件は Nintendo の一次インタビューに、問題設定、変更制約、具体手段、結果、Log_cdx の prototype への適用先が揃う。
+- stale 5 件は前回評価後も candidate 本文の評価材料が増えておらず、約4000字の品質を満たせないため参照用の `failed` として閉じた。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

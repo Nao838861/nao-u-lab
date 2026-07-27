@@ -4,6 +4,27 @@ url: "https://www.nintendo.com/en-ca/whatsnew/ask-the-developer-vol-22-splatoon-
 collected_at: "2026-07-27T23:02:28.5398020+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, art-direction, worldbuilding, playtest, iteration]
+evaluated_at: "2026-07-27T23:07:18.8696942+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-27T23:07:18.8696942+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-27T23:07:18.8696942+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-26"
+supersedes: []
+gate_reason: >-
+  「敵がかわいそう」という playtest 反応から、既存地形と敵を保ったまま art、sound、lighting、
+  表情、context を再設計し、敗北の納得感と treasure hunt の動機へ接続した過程が一次資料で具体的に追える。
+  問題設定・変更制約・手段・結果・反復制作への適用が揃い、約4000字の深い分析を支えられる。
+suggested_post_outline:
+  overview_angle: "prototype の倫理的・動機的な違和感を、資産を捨てずに環境演出と文脈の再設計で解消した反復開発事例"
+  analysis_axis: "playtest の感情反応を gameplay loop の診断信号として扱い、art・sound・worldbuilding を機能要件へ変換する過程"
+  application_target: "Log_cdx の既存 prototype で敗北や反復の意味が弱い時に、地形・敵・ルールを保ったまま演出層と行動文脈を修正する評価サイクル"
+  pros_cons: "既存資産を活かしつつ動機と難度を整合できる一方、演出だけで根本の loop 欠陥を隠す危険と、反応の解釈を誤る危険がある"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

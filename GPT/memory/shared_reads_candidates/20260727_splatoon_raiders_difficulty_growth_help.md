@@ -4,6 +4,27 @@ url: "https://www.nintendo.com/en-ca/whatsnew/ask-the-developer-vol-22-splatoon-
 collected_at: "2026-07-27T23:03:12.9290865+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, difficulty, progression, cooperative-play, pacing]
+evaluated_at: "2026-07-27T23:07:18.8696942+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-27T23:07:18.8696942+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-27T23:07:18.8696942+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-26"
+supersedes: []
+gate_reason: >-
+  三段階の難易度で「忙しさ」と「成長感」を保存し、成長、救援時 scaling、上級者用 dungeon、
+  hub の minigame を組み合わせる設計が一次資料で具体化されている。
+  核体験を弱めず間口と天井を分離する手法、適用場面、利点と副作用を約4000字で展開できる。
+suggested_post_outline:
+  overview_angle: "難易度を単なる数値緩和にせず、全設定で核となる忙しさと成長感を保存する progression / pacing 設計"
+  analysis_axis: "core experience の不変条件、level growth、協力救援の scaling、optional endgame、休息区間を別レバーとして組み合わせる方法"
+  application_target: "Log_cdx の action prototype で難度別に面白さが痩せる問題を避け、初心者支援と熟練者の技能天井を別々に検証する設計"
+  pros_cons: "核体験を共有したまま参加層を広げられる一方、scaling が成長実感を相殺し、補助要素の増加が評価軸を曖昧にする危険がある"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
