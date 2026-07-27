@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-28T05:35:08+09:00",
+  "updated_at": "2026-07-28T07:50:55+09:00",
   "reviewed_source_ts": [
+    "1785184231.969289",
     "1780501085.622209",
     "1785112368.795699",
     "1785161710.074589",
@@ -527,6 +528,45 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-28T07:50:55+09:00",
+      "selected": {
+        "id": "sr-1785184231-5a66756b39",
+        "source_ts": "1785184231.969289",
+        "title": "PlayCuff — noisy body input を認識・安定化・標準入力変換・意味 mapping に分離する wearable controller",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、memory・harness・game-design・operation・evaluation の優先タグを持つ。身体入力、camera gesture、音声、LLM command のような揺らぐ input を raw event→classified intent→acceptance state→game action に分け、同じ replay signal で filter と latency を比較する案が、次の game input prototype に既存 probe と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の採用条件は満たす。shared-reads 本文は、二つの IMU、20 Hz の two-tier Fine Tree、0.3秒の多数決 window、離散 action の1秒 lockout、XAC への標準入力変換という pipeline を示し、offline accuracy 最大ではなく演算速度・memory・battery を含む system constraint で model を選んでいる。健常成人4名・約4万 time instant の学習、前腕94%・手首99.5%、脳性麻痺の子ども19名による短期 usability test も示す一方、target child の online confusion matrix、action 成功率、比較 controller、長期疲労や rehabilitation outcome は未測定と明記しているため evidence=3 とした。raw event／classified intent／acceptance state／game action を別 log にし、同一 noisy signal へ即時発火・多数決・confidence／hysteresis を適用して false trigger、miss、latency を比べる案へ直接変換できるため actionability=3 である。ただし現在の staging に身体入力・camera gesture・音声・LLM command の replay artifact はなく relevance=2 に留まる。既存の player-intent-action-response は intent・action mapping・world response を、interactive-agent-failure-layer-split は failure layer と最小識別 run を、harnessfix-failure-anchor-repair-scope は failed step・expected/observed effect・repair scope をすでに扱う。PlayCuff 固有の差は acceptance filter 前後を分けた noisy-input action stream 比較だが、具体的な consumer_phase、before／after trigger_artifact、expected_delta を lease 契約どおり指定できない。active_probes 321件と Phase 4a 向け pending lease 1件もあるため、次に実際の noisy input prototype または保存済み signal replay が生じ、既存3 probe が filter 起因の false trigger／miss／latency を切り分けられない時だけ再評価する state-only defer とする。",
+      "existing_probes": [
+        "probe-20260717-player-intent-action-response",
+        "probe-20260612-interactive-agent-failure-layer-split",
+        "probe-20260708-harnessfix-failure-anchor-repair-scope"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と defer 理由だけを更新した。acceptance filter 前後を分けた noisy-input action stream 比較という差分は記録したが、比較 artifact 不在、既存の input-to-response・failure-layer・HarnessFix probes との重複、既存 pending lease により、probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-28T05:35:08+09:00",
       "selected": {

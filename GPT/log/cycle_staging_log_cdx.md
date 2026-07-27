@@ -106,7 +106,34 @@ posted_at: "2026-07-28T07:46:16+09:00"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785184231-5a66756b39
+    source_ts: "1785184231.969289"
+    title: "PlayCuff — noisy body input を認識・安定化・標準入力変換・意味 mapping に分離する wearable controller"
+    reason: "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、memory・harness・game-design・operation・evaluation の優先タグを持つ。身体入力、camera gesture、音声、LLM command のような揺らぐ input を raw event→classified intent→acceptance state→game action に分け、同じ replay signal で filter と latency を比較する案が、次の game input prototype に既存 probe と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "数値上の採用条件は満たす。raw event／classified intent／acceptance state／game action の分離と、同じ noisy signal へ複数 filter を当てる比較は実行可能である。一方、現在の staging に noisy input prototype または signal replay artifact がなく、consumer_phase・before/after artifact・expected_delta を具体化できない。player-intent-action-response、interactive-agent-failure-layer-split、harnessfix-failure-anchor-repair-scope で mapping・failure layer・repair scope の大半も既に覆うため、次に既存 probes では filter 起因の false trigger／miss／latency を切り分けられない具体例が出るまで state-only defer とした。"
+  change:
+    summary: "reviewed/source_ts と defer 理由だけを state に記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
