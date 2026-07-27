@@ -137,7 +137,102 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+executed_at: "2026-07-27T21:20:00+09:00"
+cleaned:
+  - "memory/MEMORY.md の High Signal / Recent / Game Task Entry Points / Tag Entry Points を per-file atom index と照合し、unknown id・欠損 atom file・重複 entry・index section の mojibake が 0 件であることを確認"
+  - "atoms.jsonl / per-file .md / atoms/index.jsonl の 2769 件が一致し、parse error・content conflict・mirror drift 0 件、duplicate overlay 45 group が current であることを確認"
+  - "shared-reads open duplicate / stale triage / group-action sidecar を現状態から再生成し、group live lease を先に反映した後、期限到来 candidate 5 件を Phase 2 handoff inbox へ冪等 enqueue"
+  - "slack_directives.jsonl 23 行、slack_broadcasts.jsonl 21 行を監査し、pending 0 件のため status 更新なし"
+  - "memory/raw/ の 30 日超 96 ファイル（63,095,789 bytes）を確認。Slack archive と論文一次資料で provenance を保持するため、mtime のみを根拠に移動せず明示保持"
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の title / Use when / excerpt に U+FFFD が残り、candidate 20260605_one_billion_spells_simulator_possibility_space.md の gate_reason / raw_excerpt / why_relevant_to_games は疑問符へ置換済み"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/shared_reads_candidates/20260605_one_billion_spells_simulator_possibility_space.md; memory/shared_reads_stale_triage_queue.jsonl"
+    source_file_status: "UTF-8 明示読みは成功したが、2 source file 本文に replacement character / 疑問符列が実在。MEMORY.md の代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」はすべて正常取得"
+    display_or_tooling_status: "none; shell 表示経路だけの mojibake ではない"
+    why_blocks_game_memory: "当該 atom の「エージェント」完全一致検索を弱め、1 candidate は本文根拠を失って再評価不能だが、canonical overlay 後の unresolved display group は 0 で、ゲーム制作記憶全体の検索経路は阻害していない"
+recommendation:
+  needs_design: false
+  priority_issues: []
+candidate_lifecycle:
+  files: 1129
+  status_counts:
+    posted: 501
+    ready_to_post: 10
+    postponed: 267
+    failed: 338
+    needs_review: 10
+    skipped_unreviewed: 3
+  current_state_conflicts: 0
+  overdue_open_total: 83
+  missing_stale_after_open_total: 0
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+    merged: 0
+    retired: 0
+  receipt: "python tools/shared_reads_probe_lifecycle.py pending --due-only --limit 1 returned items=[]; no due consumer artifact, so lifecycle row was not changed"
+stale_backlog:
+  overdue_open_total: 83
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 53
+  mixed_group_count: 45
+  all_open_group_count: 8
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total > queue rows だが actionable group が 3 件未満（0 件）のため"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-28a813f60f151a30
+    - cha-b14e87b026bc6c04
+    - cha-97a50b5cdb986204
+    - cha-7c85bd0cfc14a82f
+    - cha-3ce399d24dc04fde
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-28a813f60f151a30
+    path: memory/shared_reads_candidates/20260625_gdc2026_intelliscene_multi_agent_scene_layout.md
+    status: postponed
+    stale_after: "2026-07-25"
+    priority_reason: "要求解析・scene graph・geometric solver・visual guidance・asset retrieval の分解は制作へ転用しやすいが、現候補は評価内容と導入限界が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-b14e87b026bc6c04
+    path: memory/shared_reads_candidates/20260625_genai_content_game_architecture_oop_ecs.md
+    status: postponed
+    stale_after: "2026-07-25"
+    priority_reason: "Unity OOP/ECS と runtime LLM content 負荷は制作に直結するが、controlled prototype・測定指標・負荷条件・結果値が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-97a50b5cdb986204
+    path: memory/shared_reads_candidates/20260625_pragmata_controller_input_design.md
+    status: postponed
+    stale_after: "2026-07-25"
+    priority_reason: "複合操作・敵密度・速度・入力方式比較は実制作向けだが、demo の具体操作と設計者の比較意図を一次資料で補強する必要がある"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-7c85bd0cfc14a82f
+    path: memory/shared_reads_candidates/20260625_reward_hacking_spec_gaming_agents.md
+    status: postponed
+    stale_after: "2026-07-25"
+    priority_reason: "仕様抜け・評価関数干渉・検証省略は headless game evaluation に使えるが、2 論文の差分・評価 task・ゲーム制作への具体適用が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-3ce399d24dc04fde
+    path: memory/shared_reads_candidates/20260625_tabletop_sustainability_design_culture.md
+    status: postponed
+    stale_after: "2026-07-25"
+    priority_reason: "production・distribution・player culture を design problem とする視点は有用だが、tabletop 固有の具体手法と評価材料が不足"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
