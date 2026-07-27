@@ -4,20 +4,20 @@ url: "https://cloud.google.com/transform/next-26-building-the-agentic-enterprise
 collected_at: "2026-06-21T17:00:30+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-production, ai-playtesting, game-ai, agents, live-ops]
-evaluated_at: "2026-06-21T17:16:00+09:00"
+evaluated_at: "2026-07-27T18:53:09+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-21T17:16:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-21T17:16:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-21"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-27T18:53:09+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-27T18:53:09+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-26"
 supersedes: []
-gate_reason: >-
-  Capcom の playtesting / predictive agents と SQUARE ENIX の Gemini-based companions はゲーム制作への適用場面が明確だが、Google Cloud の業界ハイライトは事例紹介が短く、手法の中核や評価方法を単独では抽出しにくい。
-  CoopEval 水準の概要にするには、Capcom 側の一次 interview / Google customer roundup / 既存 postponed 候補を突き合わせ、運用フローと検証根拠を補う必要がある。
+gate_reason: |-
+  Capcom の playtesting agents と SQUARE ENIX の companion は適用場面を示すが、業界ハイライトは成果宣伝で、構成・比較・失敗条件を抽出できない。
+  一か月後も運用フローと検証根拠が candidate に補われておらず、数値主張を深い分析へ展開できないため不採用。
 ---
 
 ## raw_excerpt

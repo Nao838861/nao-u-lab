@@ -4,6 +4,26 @@ url: "https://tunditur-unda.itch.io/rpg24/devlog/1564293/authors-notes"
 collected_at: "2026-07-27T18:47:02+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, rpg, combat-design, companion-ai, rapid-prototyping, postmortem]
+evaluated_at: "2026-07-27T18:53:09+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-27T18:53:09+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-27T18:53:09+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-26"
+supersedes: []
+gate_reason: |-
+  防御だけを操作する player と自律攻撃役を組み合わせる着想、AIの判断基準、予測が戦術へ変換されない turn-order 上の失敗が具体的に揃う。
+  成功談だけでなく playtest の反証と未解決 trade-off があり、味方AIを読む combat prototype へ直接移せる4000字級の分析が可能。
+suggested_post_outline:
+  overview_angle: "味方AIを人格として読むための非対称役割分担と、その予測を意思決定価値へ変える条件を成功・失敗の両面から解説する"
+  analysis_axis: "AIの不完全最適化、行動速度、敵 threat、player の防御 toolset が予測可能性と戦術性をどう結ぶか"
+  application_target: "Nao_u_BOT の短時間 combat prototype で、味方AIの癖を観察して間接操作する設計と、予測が次の一手を変えたかを測る playtest に適用する"
+  pros_cons: "少ない操作で協調感と人格を生みやすい一方、速度順や敵構成を誤ると予測が結果へ間に合わず、単なる被害受容になる"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt

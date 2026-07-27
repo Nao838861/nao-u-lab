@@ -4,6 +4,21 @@ url: "https://itch.io/devlog/1564458/i-finished-your-turn-in-a-week-and-then-i-r
 collected_at: "2026-07-27T18:47:38+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, horror, narrative-design, postmortem, scope, iteration]
+evaluated_at: "2026-07-27T18:53:09+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-27T18:53:09+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T18:53:09+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-26"
+supersedes: []
+gate_reason: |-
+  選択後の顔再認、監視組織、複数 ending により単発判断を consequence のある世界へ組み替える着想と制作差分は具体的である。
+  ただし player test や初版との比較結果がなく、各追加要素が判断体験を改善した証拠を抽出できない。既存 all-open sibling との同一 work 判定も必要なため保留する。
+duplicate_reason: open_duplicate_group_review
 ---
 
 ## raw_excerpt

@@ -16,7 +16,85 @@
 - Slack 投稿: なし
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+- 実行時刻: 2026-07-27 18:49-18:57 JST
+- duplicate sidecar: posted-source / title canonical / open duplicate group の3 builderを再実行し、`--check` で stale なし
+- duplicate preflight: 評価前は8件とも `continue`。frontmatter 更新後の再生成で `20260727_your_turn_extended_cut_rework.md` が既存 all-open sibling と同じ title group に入り、再確認は `review`。posted sibling ではないため自動 close せず保留。
+
+```yaml
+total_candidates: 8
+pass:
+  - memory/shared_reads_candidates/20260727_adventure_dx_ai_assisted_plugin.md
+  - memory/shared_reads_candidates/20260727_rpg_sketch_24_proactive_defense.md
+fail:
+  - path: memory/shared_reads_candidates/20260621_aimbot_honeytoken_patches.md
+    reason: "手法と評価値はあるが、制作への適用が anti-cheat / bot 検査への類推に留まり、4000字級の適用分析をこじつけずに成立させられない。"
+  - path: memory/shared_reads_candidates/20260621_ea_gdc_designer_first_rl.md
+    reason: "登壇告知のため pipeline の構成、比較条件、結果がなく、CoopEval 水準の概要材料がない。"
+  - path: memory/shared_reads_candidates/20260621_game_ai_automated_testing_wetest.md
+    reason: "vendor の市場分類と製品列挙が中心で、記事固有の手法・評価・結論を抽出できない。"
+  - path: memory/shared_reads_candidates/20260621_google_cloud_games_agent_platform_capcom_squareenix.md
+    reason: "業界ハイライトの成果宣伝に留まり、agent の構成・比較・失敗条件を説明できない。"
+postpone:
+  - path: memory/shared_reads_candidates/20260621_fog_of_love_affinity_rl.md
+    reason: "制作への接続は具体的だが、要旨中心で affinity regularization の定式化、baseline、ablation、結果量が不足する。"
+  - path: memory/shared_reads_candidates/20260727_your_turn_extended_cut_rework.md
+    reason: "制作差分は具体的だが player test や初版比較がなく、追加要素の評価根拠がない。既存 all-open sibling との同一 work 判定も必要。"
+stale_reviewed:
+  - handoff_id: cha-e205dd62009695d6
+    path: memory/shared_reads_candidates/20260621_aimbot_honeytoken_patches.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-26"
+  - handoff_id: cha-da26cfea52dcf2c9
+    path: memory/shared_reads_candidates/20260621_ea_gdc_designer_first_rl.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-26"
+  - handoff_id: cha-fa0d302f005fd652
+    path: memory/shared_reads_candidates/20260621_fog_of_love_affinity_rl.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-26"
+  - handoff_id: cha-e97ea61eb0440b96
+    path: memory/shared_reads_candidates/20260621_game_ai_automated_testing_wetest.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-26"
+  - handoff_id: cha-076a273f1e14864d
+    path: memory/shared_reads_candidates/20260621_google_cloud_games_agent_platform_capcom_squareenix.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-08-26"
+candidate_handoff_audit:
+  pending_before: 5
+  read_ids:
+    - cha-e205dd62009695d6
+    - cha-da26cfea52dcf2c9
+    - cha-fa0d302f005fd652
+    - cha-e97ea61eb0440b96
+    - cha-076a273f1e14864d
+  resolved_ids:
+    - cha-e205dd62009695d6
+    - cha-da26cfea52dcf2c9
+    - cha-fa0d302f005fd652
+    - cha-e97ea61eb0440b96
+    - cha-076a273f1e14864d
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

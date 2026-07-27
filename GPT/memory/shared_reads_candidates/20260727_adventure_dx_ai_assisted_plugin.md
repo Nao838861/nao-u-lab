@@ -4,6 +4,26 @@ url: "https://gumpyfunction.itch.io/adventure-dx-plugin/devlog/1520917/the-makin
 collected_at: "2026-07-27T18:46:13+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-development, ai-assisted-coding, gb-studio, plugin, playtesting, skills]
+evaluated_at: "2026-07-27T18:53:09+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-27T18:53:09+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-27T18:53:09+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-26"
+supersedes: []
+gate_reason: |-
+  一次資料を固定してから機能単位で ROM test し、実機制約で設計を分岐し、反復作業を tool / SKILL へ抽出する一連の方法が具体的である。
+  Game Boy 固有の失敗、外部 tester、公開前検証まで揃い、AI支援ゲーム制作へ直接適用できる4000字級の分析を構成できる。
+suggested_post_outline:
+  overview_angle: "AIに実装を任せる事例ではなく、一次資料・小刻みな実機検証・制約発見・再利用資産化を一本の制作ループとして解説する"
+  analysis_axis: "斜め移動の整数描画問題と sprite mode 移行を、AIの推測を現物テストで矯正する evidence-driven workflow として分析する"
+  application_target: "Nao_u_BOT の小型ゲーム制作で、参照資料の固定、playable diff ごとの検証、反復作業の補助 tool 化、SKILL 昇格を同じ cycle に接続する"
+  pros_cons: "再現性と制約発見に強い一方、資料準備・version 別 ROM test・外部 tester のコストがあり、AI生成物を一括採用できない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

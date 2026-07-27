@@ -4,21 +4,20 @@ url: "https://www.wetest.net/blog/game-ai-automated-testing-technology-evolution
 collected_at: "2026-06-21T18:59:49+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-testing, qa, ai-agents, playtesting, regression, market-map]
-evaluated_at: "2026-06-21T19:02:31+09:00"
+evaluated_at: "2026-07-27T18:53:09+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-21T19:02:31+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-21T19:02:31+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-21"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-27T18:53:09+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-27T18:53:09+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |-
-  headless playtest、回帰、バランス検証を分類する地図としてゲーム制作への適用性は高い。
-  ただし vendor blog の市場概観であり、手法の中核や評価設計を CoopEval 水準で説明するには一次論文や実装例の補強が必要。
-  WeTest だけで投稿せず、SIMA、ML-Agents、Gauntlet、agent QA 事例との比較候補として保留する。
+  機能・性能・バランス・コンテンツ検証の分類は参照用の地図になるが、vendor blog は製品列挙が中心で固有手法と評価結果を提示しない。
+  一か月後も一次資料を統合した比較記事には育っておらず、この資料単体では残すべき4000字級分析にならないため不採用。
 ---
 
 ## raw_excerpt

@@ -4,18 +4,20 @@ url: "https://arxiv.org/abs/2606.04750"
 collected_at: "2026-06-21T00:44:26+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, multi-agent, reinforcement-learning, board-game, npc-behavior, evaluation]
-evaluated_at: "2026-06-21T01:02:00+09:00"
+evaluated_at: "2026-07-27T18:53:09+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-21T01:02:00+09:00"
+last_reviewed_at: "2026-07-27T18:53:09+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-21T01:02:00+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T18:53:09+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-21"
+stale_after: "2026-08-26"
 supersedes: []
-gate_reason: "Fog of Love ベースで競争目的と協調目的を同時に扱う点は、NPC / teammate の価値観・関係性評価に直結する。ただし現 candidate の材料は abstract と Phase 1 解釈が中心で、CoopEval 水準の概要に必要な評価条件、比較対象、結果の固有性がまだ薄い。本文から affinity regularization の定式化と実験結果を補ってから再判定する。"
+gate_reason: |-
+  競争と協調を同時に扱う affinity regularization は、NPC の価値観と行動理由を設計する用途へ具体的に接続できる。
+  ただし candidate は要旨中心で、定式化、baseline、ablation、結果量がなく4000字級の評価説明はまだ書けない。本文の実験表まで補って再判定する。
 ---
 
 ## raw_excerpt

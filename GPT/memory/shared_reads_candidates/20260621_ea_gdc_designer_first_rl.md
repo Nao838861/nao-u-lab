@@ -4,20 +4,20 @@ url: "https://www.ea.com/news/ea-gdc-2026"
 collected_at: "2026-06-21T02:29:42+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, production, reinforcement-learning, designer-tools, playtesting]
-evaluated_at: "2026-06-21T02:48:00+09:00"
+evaluated_at: "2026-07-27T18:53:09+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-21T02:48:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-21T02:48:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-21"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-27T18:53:09+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-27T18:53:09+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |-
-  designer-centered RL、robust testing、designer feedback loop を production pipeline として扱う軸はゲーム制作に直結する。
-  ただし現 candidate は EA の告知記事由来で、手法の中核・評価設計・失敗条件がまだ薄く、CoopEval 水準の概要に必要な材料が不足している。
+  designer-first RL と feedback loop の方向性は制作に直結するが、資料は登壇告知であり pipeline の構成、比較条件、結果を説明していない。
+  一か月後も candidate 内の根拠が告知文のままで、記事単体から CoopEval 水準の概要を作れないため不採用。
 ---
 
 ## raw_excerpt
