@@ -89,7 +89,25 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260619_cocreativity_table_adventure_ai.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785130293952519
+    char_count: 3728
+  - candidate: memory/shared_reads_candidates/20260619_garl_game_theoretic_multi_agent_rl.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785130299098869
+    char_count: 4183
+  - candidate: memory/shared_reads_candidates/20260619_quality_audio_prototyping_procedural_sound.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785130305858829
+    char_count: 4407
+skipped: []
+review:
+  format: pass
+  forbidden_phrases: pass
+  slack_text_verification: pass
+  note: "3件とも原論文本文を再確認し、記事固有の手法・評価値・失敗条件・自分達への適用を独立した本文へ反映した。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
