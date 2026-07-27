@@ -105,7 +105,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785112362-1997678ee9
+    source_ts: "1785112362.674609"
+    title: "LLM pair の表現類似度が協力と創造性へ与える条件付き効果"
+    reason: "未レビュー最新2件のうち、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ。収束時の共有 grounding と探索時の差異化が、既存 probe と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 3
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "23 model・276 pair・8課題と統制分析は工程別の切替仮説へ変換できるが、相関研究であり、closed model 中心の当環境では CKA と behavioral proxy を未検証。既存の context-diversity-pruning、algorithmic-collusion shared-prior、EAST knowledge-action probes が安定性／多様性、見かけの独立収束、same-model controlled contrast をすでに覆う。次の具体的な multi-agent artifact と期待判断差を指定できず、Phase 4a には別の pending lease があるため operational active にしない。"
+  change:
+    summary: "reviewed_source_ts と state-only defer 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
