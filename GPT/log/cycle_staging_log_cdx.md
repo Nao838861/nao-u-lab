@@ -146,7 +146,96 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+audited_at: "2026-07-27T23:26:19+09:00"
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、validate_memory_index.py で index-visible entry と per-file atom index の一致を確認。代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」はすべて取得でき、broken link / source mojibake は 0 件。"
+  - "atoms.jsonl / per-file md / index.jsonl は各 2769 件で一致。missing / parse error / content conflict は各 0 件、duplicate cluster index は 45 cluster / 45 overlay group で fresh。exact-content duplicate 40 group は既存 lifecycle/content fold で処理済み。"
+  - "memory/raw/ の mtime 30 日超は 96 file。いずれも原文正本として指定された raw 配下（slack_archive / web_research / headless_eval）に既に収容されており、別 archive への移動対象は 0 件。"
+  - "candidate lifecycle を現在状態優先規則で dry-run audit。status / candidate_status conflict は 0 件。posted 502、ready_to_post 10、postponed 263、failed 343、needs_review 10、skipped_unreviewed 3。"
+  - "open duplicate group / stale triage / group action sidecar を規定順で再生成。open group 53（mixed 45 / all_open 8）、actionable group 0。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件のため、handled 更新は 0 件。"
+  - "group handoff は actionable group 0 のため 0 件。stale candidate 上位 5 件を persistent candidate handoff inbox へ enqueue し、audit error 0 を確認。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+  note: "due-only では対象なし。pending の probe-20260724-minimum-sufficient-scope-ladder は lease_due=2026-07-31T00:23:59+09:00 のため receipt を作らず未変更。"
+stale_backlog:
+  overdue_open_total: 78
+  stale_triage_queue_rows: 50
+  remaining_overdue_open_total: 78
+  open_duplicate_group_count: 53
+  mixed_group_count: 45
+  all_open_group_count: 8
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total > queue rows は成立するが、actionable group が 3 件未満（0 件）のため。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-1700da34a9d5e8a8
+    - cha-5a8306e402d63f6e
+    - cha-98d6df5a67863dfb
+    - cha-025a27fe44e937ce
+    - cha-3f81fdfb35fe37f8
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-1700da34a9d5e8a8
+    path: memory/shared_reads_candidates/20260625_yeasieragent_agentic_social_sandbox.md
+    status: postponed
+    stale_after: "2026-07-25"
+    priority_reason: "agent / scene / dialogue / world の設計語彙は転用可能だが、現 candidate は評価条件と実装制約が薄い。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-5a8306e402d63f6e
+    path: memory/shared_reads_candidates/20260626_dynamic_feedback_self_regulation_vr_pointing.md
+    status: postponed
+    stale_after: "2026-07-26"
+    priority_reason: "feedback metric と提示 timing は有用だが、実験条件・個人差・逆効果の根拠が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-98d6df5a67863dfb
+    path: memory/shared_reads_candidates/20260626_gdcvault_2026_ai_game_production_index.md
+    status: postponed
+    stale_after: "2026-07-26"
+    priority_reason: "講演入口としては有用だが index 単体では手法と評価を抽出できず、講演単位の再確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-025a27fe44e937ce
+    path: memory/shared_reads_candidates/20260626_hierarchical_llm_rl_multi_agent_games.md
+    status: postponed
+    stale_after: "2026-07-26"
+    priority_reason: "LLM planning と RL execution の分離は転用性が高いが、比較勝率と失敗例が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-3f81fdfb35fe37f8
+    path: memory/shared_reads_candidates/20260626_mmskills_multimodal_visual_agent_skills.md
+    status: postponed
+    stale_after: "2026-07-26"
+    priority_reason: "visual skill の再利用は GUI / game test に接続できるが、benchmark と評価結果の根拠が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+encoding_audit:
+  memory_source_file_status: "UTF-8 読み正常。代表語 4/4 を取得。"
+  display_or_tooling_status: "none"
+  atom_mojibake_suspects:
+    - id: sr-1776127289-4d9239b255
+      source_file_status: "raw Slack 原文の時点で replacement character を含む legacy source-level corruption。単独行で、index / recall の構造破損はなし。"
+      display_or_tooling_status: "UTF-8 表示経路は正常。"
+    - id: gr-1777083728-44d444ab7a
+      source_file_status: "原文中の literal `???` を detector が拾った false positive。source corruption なし。"
+      display_or_tooling_status: "UTF-8 表示経路は正常。"
+```
+
+- 判定: 新規の構造 issue は 0 件。既知の exact duplicate / title debt は overlay と fold で recall 上解消され、candidate backlog は bounded handoff が機能しているため、Phase 4b / 4c は起動しない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
