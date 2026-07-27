@@ -121,7 +121,34 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785104114-0c03c3eda0
+    source_ts: "1785104114.557329"
+    title: "Loop Explorers — gold upgrade から duplicate merge への変更で失われた判断密度と盤面密度"
+    reason: "未レビューの最新適格 atom で、5つの優先タグを持つ。退化戦略を消す修正が判断時刻・盤面密度・成長表現を同時に壊した事例が、次の経済・upgrade 改修に既存 probe と異なる判断差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 3
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "数値上の採用条件は満たすが、原 devlog の証拠は3人チームの自己 playtest で、run 数・外部参加者・固定 seed 比較・decision event・board occupancy の実測がない。既存の balance trend、persona divergence、exploit diversity、behavior distribution、asymmetric balance、outcome/mechanism probes が、同一条件比較・退化戦略・行動分布・局所修正と体験全体の分離をすでに扱う。三つの体験軸には少し固有性があるものの、現在は比較可能な経済・upgrade prototype と before/after artifact がなく lease を具体化できず、Phase 4a にも pending lease が1件あるため state-only review に留めた。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

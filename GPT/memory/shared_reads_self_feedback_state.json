@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-27T07:20:07+09:00",
+  "updated_at": "2026-07-27T09:38:11+09:00",
   "reviewed_source_ts": [
+    "1785104114.557329",
     "1785096049.977699",
     "1785088125.950309",
     "1780514208.775089",
@@ -517,6 +518,48 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-27T09:38:11+09:00",
+      "selected": {
+        "id": "sr-1785104114-0c03c3eda0",
+        "source_ts": "1785104114.557329",
+        "title": "Loop Explorers — gold upgrade から duplicate merge への変更で失われた判断密度と盤面密度",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。退化戦略を消す局所修正が、意味ある選択の時刻、盤面に残る成長の痕跡、建設の手触りを同時に壊した事例が、次の経済・upgrade 改修に既存 probe と異なる判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件を満たす。原 devlog と shared-reads 本文は、gold 生産へ収束する退化戦略、duplicate merge 導入後の任意支出判断の消失、配置 tile 約50%減、重要 duplicate は常に merge という選択の自明化を具体的な before／after として示すため relevance・actionability を3とした。一方、証拠は3人チームの自己 playtest で、run 数、外部参加者、固定 seed 比較、decision event や board occupancy の実測がないため evidence=2 とした。既存の balance-trend-skill-chance、procedural-persona-divergence、raid-exploit-diversity-regression、behavior-signature-distribution-shift、asymmetric-balance-evidence、causalgame-outcome-explanation-split は、同一条件比較、退化戦略、行動分布、局所修正と体験全体の分離をすでに要求する。『修正前に守る体験軸として判断時刻・盤面密度・成長表現を明記する』点は少し固有だが、独立 probe を増やすほどの差ではないため non_redundancy=1 とした。現在は比較対象となる経済・upgrade prototype と before／after artifact がなく、consumer phase、trigger artifact、expected delta を lease 契約どおり指定できない。さらに Phase 4a には別 probe の pending lease が1件あるため、次の具体的な経済・upgrade 改修で既存 probe だけではこの三軸を取り逃がす証拠が出るまで state-only defer とする。",
+      "existing_probes": [
+        "probe-20260711-balance-trend-skill-chance",
+        "probe-20260710-procedural-persona-divergence",
+        "probe-20260710-raid-exploit-diversity-regression",
+        "probe-20260619-behavior-signature-distribution-shift",
+        "probe-20260528-asymmetric-balance-evidence",
+        "probe-20260708-causalgame-outcome-explanation-split"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と defer 理由だけを更新した。比較可能な経済・upgrade prototype がなく、既存の balance・degenerate-strategy・behavior-distribution probes と大きく重なるため、probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-27T05:05:53+09:00",
       "selected": {
