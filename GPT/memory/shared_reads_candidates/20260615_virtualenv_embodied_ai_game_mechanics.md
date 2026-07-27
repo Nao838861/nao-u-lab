@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2601.07553"
 collected_at: "2026-06-15T12:14:17+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, embodied-agent, simulation, procedural-generation, evaluation]
-evaluated_at: "2026-06-15T12:19:31+09:00"
+evaluated_at: "2026-07-27T09:22:54+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-15T12:19:31+09:00"
+last_reviewed_at: "2026-07-27T09:22:54+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-15T12:19:31+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T09:22:54+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-15"
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |-
-  UE5 embodied AI platform、escape room、procedural environment、multi-agent collaboration というゲーム制作への接続は具体的。
-  ただし保存済み raw では評価結果・結論の中身を確認できず、現状の材料だけでは CoopEval 水準の概要が評価抜きの紹介文に寄りすぎる。
+  UE5、escape room、procedural environment、multi-agent collaboration の接続は具体的だが、保存内容は要旨レベルに留まる。
+  benchmark の課題条件、比較モデル、指標、結果と失敗例を確認できず、約4000字の概要が platform 紹介だけになるため postpone を維持する。
 ---
 
 ## raw_excerpt

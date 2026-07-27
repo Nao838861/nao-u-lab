@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2606.06565"
 collected_at: "2026-06-16T00:15:45+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-tech, npc-animation, runtime-performance, ml-inference, siggraph]
-evaluated_at: "2026-06-16T00:20:10+09:00"
+evaluated_at: "2026-07-27T09:22:54+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-16T00:20:10+09:00"
+last_reviewed_at: "2026-07-27T09:22:54+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-16T00:20:10+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T09:22:54+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-16"
+stale_after: "2026-08-26"
 supersedes: []
 gate_reason: |-
-  距離に応じて ML inference precision を切り替える AI LOD という着想は、NPC animation の runtime cost と知覚品質の切り分けに直接つながる。
-  ただし現メモだけでは評価条件・品質劣化の測り方・ゲーム実装上の制約が薄く、CoopEval 水準の約4000字投稿にするには論文本体の確認が必要。
+  FP32 / FP16 / INT8 を距離で切り替える AI LOD は、NPC animation の runtime cost と知覚品質を分ける具体的な着想である。
+  一方で速度改善値、距離 tier、品質指標、切替 overhead が保存内容に無く、実装判断に耐える約4000字の概要には不足するため postpone を維持する。
 ---
 
 ## raw_excerpt

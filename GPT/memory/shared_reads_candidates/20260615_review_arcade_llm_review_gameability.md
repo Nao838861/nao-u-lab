@@ -4,18 +4,20 @@ url: "https://arxiv.org/abs/2605.28897"
 collected_at: "2026-06-15T22:45:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [evaluation, llm-judge, goodhart, agent-workflow, game-design]
-evaluated_at: "2026-06-15T22:18:36+09:00"
+evaluated_at: "2026-07-27T09:22:54+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-15T22:18:36+09:00"
+last_reviewed_at: "2026-07-27T09:22:54+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-15T22:18:36+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-27T09:22:54+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-15"
+stale_after: "2026-08-26"
 supersedes: []
-gate_reason: "LLM judge の Goodhart 化という適用先は重要だが、現メモは検索結果要旨に依存しており、実験設計・gameability 測定・human alignment 比較の細部が不足している。Phase 3 で約4000字の残すべき概要を書くには、本文確認後に評価手法と限界を補う必要がある。"
+gate_reason: |-
+  LLM judge の Goodhart 化をゲーム制作の評価 loop へ移す問題設定は重要だが、保存内容は検索結果要旨に依存している。
+  反復改稿、gameability 測定、human review との alignment 比較の手順と条件が不足し、現状では約4000字の概要が推測に寄るため postpone を維持する。
 ---
 
 ## raw_excerpt
