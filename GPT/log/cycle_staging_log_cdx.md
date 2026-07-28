@@ -121,7 +121,120 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "open duplicate group / stale triage / group action の再生成可能 sidecar を現 candidate frontmatter と live lease から再生成した"
+  - "stale candidate 5件を source_cycle_id=2026-07-28 21:28 で candidate handoff inbox へ冪等 enqueue した"
+  - "Slack directive / broadcast は pending 0件のため close 対象なし。期限到来 probe も0件のため lifecycle ledger は変更しなかった"
+memory_index_audit:
+  validator: "python tools/validate_memory_index.py: OK"
+  markdown_broken_links: 0
+  atom_index_reference_status: "MEMORY.md の entry sections は per-file atom index と一致"
+  source_file_status: "UTF-8 明示読みは正常。代表語は 記憶 / ゲーム設計 / 敵パターン を取得し、評価軸は現本文に語として存在しない。source mojibake ではない"
+  display_or_tooling_status: none
+atom_audit:
+  rows: 2778
+  parse_errors: 0
+  duplicate_ids: 0
+  mirror_counts:
+    atoms_jsonl: 2778
+    per_file_md: 2778
+    index_jsonl: 2778
+  mirror_content_conflicts: 0
+  raw_normalized_content_duplicate_groups: 40
+  raw_normalized_content_duplicate_rows: 80
+  recall_visible_duplicate_groups_after_fold: 3
+  recall_visible_duplicate_rows_after_fold: 6
+  effective_display_unresolved_groups: 0
+  contradiction_status: "lifecycle / canonical fold 後の未解決 conflict は0件"
+  encoding_note: "memory_health の suspect 2件中、sr-1776127289-4d9239b255 は raw Slack archive から U+FFFD を含む原文由来、gr-1777083728-44d444ab7a は意図的な文字列 '???' の false positive。いずれも MEMORY.md の表示経路破損ではない"
+raw_archive_audit:
+  cutoff: "2026-06-28"
+  files_older_than_30_days: 96
+  disposition: "原文・PDF/text pair・headless evaluation evidence・Slack archive であり、raw source 保持原則の対象。可逆な archive lifecycle がないため移動せず保持"
+candidate_lifecycle:
+  total_files: 1142
+  counts:
+    posted: 511
+    ready_to_post: 9
+    postponed: 236
+    failed: 380
+    needs_review: 3
+    skipped_unreviewed: 3
+  missing_stale_after: 6
+  overdue_open_total: 29
+slack_inbox:
+  directives_pending: 0
+  broadcasts_pending: 0
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  next_pending_probe_id: probe-20260724-minimum-sufficient-scope-ladder
+  next_lease_due: "2026-07-31T00:23:59+09:00"
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 29
+  stale_triage_queue_rows: 28
+  open_duplicate_group_count: 51
+  mixed_group_count: 44
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total > stale_triage_queue_rows は成立するが、actionable group が3件以上ではない"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-4e7a11cbe0bcaac8
+    - cha-4c496912791cdd44
+    - cha-f39fade80b881eed
+    - cha-9596f66be29fb66d
+    - cha-5f2492ffa85e4851
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-4e7a11cbe0bcaac8
+    path: memory/shared_reads_candidates/20260609_candy_crush_soda_invisible_layer.md
+    status: postponed
+    stale_after: "2026-07-09"
+    priority_reason: "live game の feature sprawl / UX・navigation debt を invisible layer として切り出す価値は高いが、現材料は GDC セッション概要に近く、手法詳細と評価指標が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-4c496912791cdd44
+    path: memory/shared_reads_candidates/20260609_qa_strongest_design_ally.md
+    status: postponed
+    stale_after: "2026-07-09"
+    priority_reason: "QA を設計サイクルの SME とする観点は制作適用しやすいが、WoW 事例の介入内容・評価軸・成果が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-f39fade80b881eed
+    path: memory/shared_reads_candidates/20260609_replaced_wingman_lore_ui.md
+    status: postponed
+    stale_after: "2026-07-09"
+    priority_reason: "scope bloat を UI fiction に畳む例として有用だが、Wingman の実装判断と評価結果が薄く、本文追加確認か比較が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-9596f66be29fb66d
+    path: memory/shared_reads_candidates/20260609_tmnt_tactical_takedown_18_months.md
+    status: postponed
+    stale_after: "2026-07-09"
+    priority_reason: "小規模制作への適用余地はあるが、GDC Vault 概要段階で developer-first production の具体手法と成果が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-5f2492ffa85e4851
+    path: memory/shared_reads_candidates/20260609_yamii_game_pacing_cooldowns_resources.md
+    status: postponed
+    stale_after: "2026-07-09"
+    priority_reason: "cooldown / resource / feedback は pacing 調整に効くが、現候補は checklist に留まり、記事固有の評価と比較根拠が不足"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
