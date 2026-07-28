@@ -7,12 +7,17 @@ genre_tags: [game-design, level-design, physics, arcade-driving, playtesting, po
 evaluated_at: "2026-07-28T21:36:03+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-28T21:36:03+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-28T21:36:03+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1785242582.070969"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785242582070969"
+  char_count: 4266
+  posted_at: "2026-07-28T21:43:26.0158531+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-28T21:43:26.0158531+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785242582070969"
+next_action: none
 stale_after: "2026-08-27"
 supersedes: []
 gate_reason: |-
