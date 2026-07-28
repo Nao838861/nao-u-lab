@@ -7,14 +7,19 @@ genre_tags: [game-production, prototyping, studio-strategy, ai-tools, multiplaye
 evaluated_at: "2026-07-29T01:51:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-29T01:51:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-29T01:51:00+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-29T02:04:10.6076571+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785258239383719"
+next_action: none
 stale_after: "2026-08-28"
 supersedes: []
+posted:
+  ts: "1785258239.383719"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785258239383719"
+  char_count: 4417
+  posted_at: "2026-07-29T02:04:10.6076571+09:00"
 gate_reason: |-
   300 人調査と約 500 万 developer の利用データを背景に、project 規模、prototype 期間、AI/MCP、multiplayer、販路の傾向を具体的な比率で説明できる。
   vendor report で因果推論には使えない限界を明示しつつ、制作計画を外部ベースラインと比較する材料として具体的に適用でき、4000 字級の批判的概要を構成できる。

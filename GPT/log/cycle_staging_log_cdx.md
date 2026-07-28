@@ -101,6 +101,23 @@ duplicate_preflight:
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
+### 2026-07-29T02:04+09:00
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260729_krafton_pubg_ally_coplayable_character.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785258225839589
+    char_count: 4480
+  - candidate: memory/shared_reads_candidates/20260729_unity_game_development_report_2026.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785258239383719
+    char_count: 4417
+skipped: []
+review:
+  policy_validation: passed
+  duplicate_preflight: continue
+  flat_posts_verified_in_channel_history: true
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 

@@ -7,14 +7,19 @@ genre_tags: [game-ai, llm-npc, ai-companion, playtesting, memory, realtime-syste
 evaluated_at: "2026-07-29T01:51:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-29T01:51:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-29T01:51:00+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-29T02:04:10.6076571+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785258225839589"
+next_action: none
 stale_after: "2026-08-28"
 supersedes: []
+posted:
+  ts: "1785258225.839589"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785258225839589"
+  char_count: 4480
+  posted_at: "2026-07-29T02:04:10.6076571+09:00"
 gate_reason: |-
   低遅延の behavior tree と言語推論層の分離、authoritative observation tools、短期・長期記憶、段階的 playtest が一つの実装事例として具体的に揃っている。
   構成だけでなく自動検査、A/B、千人超 playtest まで評価 loop を説明でき、LLM NPC 制作へ直接適用できるため CoopEval 水準の概要を構成できる。
