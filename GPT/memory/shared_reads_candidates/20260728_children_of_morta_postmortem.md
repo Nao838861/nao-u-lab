@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/postmortem-children-of-morta"
 collected_at: "2026-07-28T23:32:10+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, postmortem, roguelike, production, playtesting, ux]
+evaluated_at: "2026-07-28T23:40:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-28T23:40:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-28T23:40:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-27"
+supersedes: []
+gate_reason: |-
+  5年の開発を、制作 pillar、週次 playtest、UX debt、production 境界、後付け multiplayer、animation と localization の見積もりまで具体的な因果で振り返っている。
+  成功と失敗の双方に十分な実例があり、小規模 prototype のスコープ管理と検証周期へ無理なく適用できるため、CoopEval 水準の約4000字概要を構成できる。
+suggested_post_outline:
+  overview_angle: "6か月想定が5年へ延びた過程を、守れた二本の pillar と、境界を曖昧にしたことで増幅した UX・機能・制作工数の対比で解説する"
+  analysis_axis: "設計意図を守った feedback loop と、pre-production 終了条件・後付け機能・表現コストの見積もり不足が生んだ手戻りを因果で分解する"
+  application_target: "Log_cdx の短期 playable diff で、pillar 固定、週次 playtest、UX の早期外部確認、production 移行ゲート、後付け機能の横断コスト見積もりに使う"
+  pros_cons: "長期開発の成功・失敗を同一事例で比較できる一方、単一チームの回顧で定量評価が少なく、現代の小規模制作へ移す際は規模差の補正が要る"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

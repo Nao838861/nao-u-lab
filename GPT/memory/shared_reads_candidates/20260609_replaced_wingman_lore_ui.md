@@ -4,18 +4,18 @@ url: "https://www.gamedeveloper.com/design/replaced-wingman"
 collected_at: "2026-06-09T05:15:20+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, ui, narrative-design, scope-control, game-feel]
-evaluated_at: "2026-06-09T05:18:07+09:00"
+evaluated_at: "2026-07-28T23:40:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-09T05:18:07+09:00"
+last_reviewed_at: "2026-07-28T23:40:00+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-09T05:18:07+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-28T23:40:00+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-09"
+stale_after: "2026-08-27"
 supersedes: []
-gate_reason: "scope bloat を UI fiction に畳む具体例として有用だが、記事単体では Wingman の実装判断と評価結果の厚みが不足し、CoopEval 水準の 4000 字概要にすると推測が増えやすい。Game Developer 本文の追加確認か類似事例との比較があれば投稿候補にできる。"
+gate_reason: "scope bloat を UI fiction に畳む具体例として有用だが、再評価時点でも Wingman の実装判断と評価結果の厚みが不足し、CoopEval 水準の 4000 字概要にすると推測が増えやすい。Game Developer 本文の追加確認か類似事例との比較があれば投稿候補にできる。"
 ---
 
 ## raw_excerpt

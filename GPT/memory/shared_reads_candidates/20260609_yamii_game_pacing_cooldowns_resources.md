@@ -4,18 +4,18 @@ url: "https://www.yamii.shop/2026/04/04/game-pacing-cooldowns/"
 collected_at: "2026-06-09T21:29:46+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, pacing, cooldowns, resources, combat-design, balancing]
-evaluated_at: "2026-06-09T21:40:00+09:00"
+evaluated_at: "2026-07-28T23:40:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-09T21:40:00+09:00"
+last_reviewed_at: "2026-07-28T23:40:00+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-09T21:40:00+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-28T23:40:00+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-09"
+stale_after: "2026-08-27"
 supersedes: []
-gate_reason: "cooldown / resource / feedback の観点はアクションプロトタイプの pacing 調整に具体的に効く。ただし現候補は checklist としては十分でも、記事固有の中核や評価の厚みが不足しており、このまま 4000 字の残すべき投稿にすると一般論へ流れやすい。比較対象や自作 prototype の適用例を足して再評価する。"
+gate_reason: "cooldown / resource / feedback の観点はアクションプロトタイプの pacing 調整に具体的に効く。ただし再評価時点でも checklist としては十分な一方、記事固有の中核や評価の厚みが不足しており、このまま 4000 字の残すべき投稿にすると一般論へ流れやすい。比較対象や自作 prototype の適用例を足して再評価する。"
 ---
 
 ## raw_excerpt

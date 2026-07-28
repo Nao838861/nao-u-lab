@@ -4,18 +4,18 @@ url: "https://gdcvault.com/play/1035784/Building-a-Critically-Acclaimed-Licensed
 collected_at: "2026-06-09T07:25:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-production, indie-development, licensed-game, constraints, gdc]
-evaluated_at: "2026-06-09T07:31:00+09:00"
+evaluated_at: "2026-07-28T23:40:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-09T07:31:00+09:00"
+last_reviewed_at: "2026-07-28T23:40:00+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-09T07:31:00+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-28T23:40:00+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-09"
+stale_after: "2026-08-27"
 supersedes: []
-gate_reason: "問題設定とキーワードは有用だが、現状メモは GDC Vault 概要レベルで、developer-first production や holistic process development が具体的に何を変えたかの手法要素が薄い。小規模制作への適用可能性はあるものの、4000字の残すべき概要にするには実例、制約判断、成果の根拠を追加確認したい。"
+gate_reason: "問題設定とキーワードは有用だが、再評価時点でも GDC Vault 概要レベルで、developer-first production や holistic process development が具体的に何を変えたかの手法要素が薄い。小規模制作への適用可能性はあるものの、4000字の残すべき概要にするには実例、制約判断、成果の根拠を追加確認したい。"
 ---
 
 ## raw_excerpt
