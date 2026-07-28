@@ -153,7 +153,87 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の High Signal / Recent / Game Task Entry Points / Tag Entry Points を per-file atom index と照合し、unknown ID・重複 ID・missing markdown path・index section の mojibake residue は 0 件だった。"
+  - "memory/MEMORY.md を UTF-8 明示で読み、代表語は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false。評価軸は本文に文字列自体がないためで、UTF-8 decode error や shell 表示だけの mojibake は認めなかった。"
+  - "memory/atoms.jsonl 2776 行を監査し、atom ID 重複 0、atoms.jsonl / per-file .md / index.jsonl の各 2776 行は mirror drift・parse error・content conflict 0。normalized content duplicate 40 群 80 行は canonical overlay の 40 群で既に fold 対象、recall-visible 3 群 6 行も表示時 fold 済みだった。"
+  - "memory/raw/ の mtime 30 日超を棚卸しし、96 files / 63095789 bytes を確認した。slack_archive、headless 評価証拠、論文本文が混在し参照元でもあるため、この cycle では移動・削除せず archive 候補として記録だけした。"
+  - "shared-reads candidate 1139 files の lifecycle は failed=367 / needs_review=5 / posted=508 / postponed=247 / ready_to_post=9 / skipped_unreviewed=3。status conflict は 0、stale_after 到来の open candidate は 44 件だった。"
+  - "Slack inbox lifecycle は directives pending=0 / broadcasts pending=0。完了根拠のない handled 更新は行わなかった。"
+  - "open duplicate group / stale triage / group action queue を現 candidate state から再生成し、group handoff 0 件、candidate handoff 5 件を source_cycle_id=2026-07-28 14:13 で冪等 enqueue した。candidate/group inbox audit は errors=0。"
+  - "probe lifecycle の due-only limit 1 は該当 0 件。receipt を捏造せず、全 4 rows の lifecycle validate errors=0 を確認した。"
+issues:
+  - id: ISS-4A-20260728-01
+    description: "atom sr-1776127289-4d9239b255 の「AIエージェント」が「AIエ��ジェント」として raw source、atoms.jsonl、per-file atom、index に残っている。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492,1216; memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md:3,16,20,24; memory/atoms/index.jsonl:317"
+    source_file_status: "UTF-8 明示読みでも U+FFFD が2文字存在し、raw source から派生 view まで同じ。source file 自体の既存破損であり decode error ではない。"
+    display_or_tooling_status: "rg / Get-Content -Encoding utf8 の双方で同じ置換文字を再現。console・staging だけの mojibake ではない。memory_health のもう1件 gr-1777083728-44d444ab7a は原文中の意図的な '???' による false positive で、UTF-8 source は正常。"
+    why_blocks_game_memory: "「AIエージェント」の完全一致検索と生成 index の題名品質を局所的に弱め、破損文字を後続 view へ再帰的に伝播させる。単一 atom で recall 全体は止めない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 44
+  stale_triage_queue_rows: 43
+  open_duplicate_group_count: 51
+  mixed_group_count: 44
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-ba41fc2fddd09571
+    - cha-a883b4541c578dda
+    - cha-a76da1751c9314db
+    - cha-5e49178701867c08
+    - cha-db41c4456a351706
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-ba41fc2fddd09571
+    path: memory/shared_reads_candidates/20260531_player_experience_design_engineering_process.md
+    status: postponed
+    stale_after: "2026-06-30"
+    priority_reason: "PX を primary concern にして as-is / as-should-be の差分で設計する軸は有用だが、具体手順・評価設計・結論の材料が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-a883b4541c578dda
+    path: memory/shared_reads_candidates/20260601_derelict_star_movement_focus.md
+    status: postponed
+    stale_after: "2026-07-01"
+    priority_reason: "movement-subtlety の論点は有用だが二次記事中心であり、一次発言または実プレイ分析の補完が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-a76da1751c9314db
+    path: memory/shared_reads_candidates/20260601_scrambled_ships_accessibility_postmortem.md
+    status: postponed
+    stale_after: "2026-07-01"
+    priority_reason: "reduce motion・contrast・hover 数値表示・shop 情報設計は具体的だが、約4000字概要へ伸ばす一次情報の厚みが不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-5e49178701867c08
+    path: memory/shared_reads_candidates/20260601_antihero_live_service_small_team.md
+    status: needs_review
+    stale_after: "2026-07-02"
+    priority_reason: "lifecycle backfill 由来の needs_review のまま期限到来しており、現在の品質判断が未記録。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-db41c4456a351706
+    path: memory/shared_reads_candidates/20260601_dark_ascent_platformer_postmortem.md
+    status: needs_review
+    stale_after: "2026-07-02"
+    priority_reason: "lifecycle backfill 由来の needs_review のまま期限到来しており、現在の品質判断が未記録。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
