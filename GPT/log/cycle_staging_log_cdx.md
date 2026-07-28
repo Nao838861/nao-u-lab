@@ -180,7 +180,89 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-07-28 12:29 JST
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の entry section を per-file atom index と照合し、broken atom reference 0 件を確認。Markdown link は 0 件。UTF-8 明示読みで「記憶」「ゲーム設計」「敵パターン」は取得でき、「評価軸」は完全一致語として現行 index にないが、source file の decode error / replacement character はなかった。"
+  - "memory/atoms.jsonl 2774 rows、per-file .md 2774、atoms/index.jsonl 2774 を照合し、parse error 0、missing 0、content conflict 0 を確認。normalized content duplicate 40 groups / 80 rows は canonical overlay で fold 済みで、effective display unresolved は 0。"
+  - "shared-reads candidate 1138 files の lifecycle を dry-run 監査し、現在状態の書換え候補 0。内訳は posted 508 / ready_to_post 9 / postponed 246 / failed 367 / needs_review 5 / skipped_unreviewed 3。"
+  - "title canonical index 74 groups、mixed duplicate 44 groups、open duplicate 51 groups、stale triage 48 rows、group action 0 rowsを再生成・監査した。"
+  - "stale candidate 5件を source_cycle_id 2026-07-28 11:58 で candidate handoff inbox へ冪等 enqueue。candidate 本体は変更していない。"
+  - "memory/raw の 2026-06-28 より前の 96 files / 63095789 bytes を棚卸し。内訳は web_research 88 / headless_eval 6 / slack_archive 1 / sync_state 1。原文・評価 evidence のため、この phase では移動・削除していない。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件で、handled 更新対象なし。"
+issues:
+  - id: ISS-20260728-4A-ATOM-SOURCE-MOJIBAKE
+    description: "1 atom の「AIエージェント」が raw Slack archive 段階から「AIエ��ジェント」になっており、title / trigger / excerpt と per-file mirror に伝播している。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みでも raw source 自体に U+FFFD replacement character が2文字あり、source-level corruption。gr-1777083728-44d444ab7a の検知は原文の意図的な『???』であり corruption ではない。"
+    display_or_tooling_status: "PowerShell Get-Content -Encoding UTF8 と rg は source の文字列をそのまま表示しており、display/tooling-only mojibake ではない。"
+    why_blocks_game_memory: "当該1件で正しい『AIエージェント』完全一致検索の recall が弱くなるが、memory / agent tags と周辺語検索は残るため影響は局所的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 49
+  stale_triage_queue_rows: 48
+  open_duplicate_group_count: 51
+  mixed_group_count: 44
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-e9caf7e2168727eb
+    - cha-39c4c802de077eac
+    - cha-ac180f95338c590c
+    - cha-700d5925da01cbfe
+    - cha-857ec1736482c6a7
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-e9caf7e2168727eb
+    path: memory/shared_reads_candidates/20260530_confusion_affective_states_play.md
+    status: postponed
+    stale_after: "2026-06-29"
+    priority_reason: "混乱を学習・flow・PX の接続点として扱う価値はあるが、現候補は abstract 相当で実験条件・測定・限界が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-39c4c802de077eac
+    path: memory/shared_reads_candidates/20260531_aaa_game_ux_preproduction_practice.md
+    status: postponed
+    stale_after: "2026-06-30"
+    priority_reason: "理論翻訳・経験の codification・直感の3経路は有用だが、具体例と組織構造との対応が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-ac180f95338c590c
+    path: memory/shared_reads_candidates/20260531_atari_games_challenge_px.md
+    status: postponed
+    stale_after: "2026-06-30"
+    priority_reason: "multimodal PX assessment は有用だが、19名 pilot の結果と各 modality の寄与が未抽出。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-700d5925da01cbfe
+    path: memory/shared_reads_candidates/20260531_computational_thinking_design_patterns_games.md
+    status: postponed
+    stale_after: "2026-06-30"
+    priority_reason: "ゲーム制作への接続可能性はあるが、個別 design pattern と skill の対応・評価・結論が abstract 水準。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-857ec1736482c6a7
+    path: memory/shared_reads_candidates/20260531_haptics_gaming_sdk_survey_2025.md
+    status: postponed
+    stale_after: "2026-06-30"
+    priority_reason: "haptics 語彙整理には使えるが、直近 prototype の game feel 改善へつなぐ具体場面が弱い。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
