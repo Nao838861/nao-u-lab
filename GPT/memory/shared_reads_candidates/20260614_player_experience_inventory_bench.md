@@ -4,18 +4,21 @@ url: "https://playerexperienceinventory.org/pub"
 collected_at: "2026-06-14T08:23:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, player-experience, ux-research, evaluation, metrics]
-evaluated_at: "2026-06-14T08:31:00+09:00"
+evaluated_at: "2026-07-29T04:08:11+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-14T08:31:00+09:00"
+last_reviewed_at: "2026-07-29T04:08:11+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-14T08:31:00+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-29T04:08:11+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-14"
+stale_after: "2026-08-28"
 supersedes: []
-gate_reason: "PXI / MiniPXI / PXI Bench はプレイヤー体験評価の実務資料として有用だが、現候補は publication hub の列挙に近く、尺度開発・検証・Bench の使い方を投稿品質まで説明する材料が不足している。人間レビュー語彙への適用可能性は高いため、元論文と user guide の追加読解後に再判定する。"
+gate_reason: |-
+  PXI / MiniPXI / PXI Bench は人間レビューの観察軸を整理する用途へ具体的に適用できる。
+  ただし現候補は publication hub の列挙に近く、尺度開発・検証・Bench の読み方を説明する証拠が増えていない。
+  元論文と user guide の追加読解なしでは CoopEval 水準へ届かないため、今回は postpone を維持する。
 ---
 
 ## raw_excerpt

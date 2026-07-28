@@ -4,21 +4,21 @@ url: "https://gdcvault.com/play/1035732/-Pacific-Drive-Under-the"
 collected_at: "2026-06-14T18:00:02+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, systems-design, survival, gdc2026, postmortem]
-evaluated_at: "2026-06-14T18:02:19+09:00"
+evaluated_at: "2026-07-29T04:08:11+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-14T18:02:19+09:00"
+last_reviewed_at: "2026-07-29T04:08:11+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-14T18:02:19+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-29T04:08:11+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-14"
+stale_after: "2026-08-28"
 supersedes: []
 gate_reason: |-
-  survival fundamentals と player fantasy から mechanics を組み直す軸はゲーム制作に直結する。
-  ただし現 candidate は GDC Vault の概要要約に留まり、taxonomy の中身、設計判断の具体例、評価・検証の詳細が不足している。
-  Phase 3 の ~4000 字概要へ進めるには、talk 本文または信頼できる詳細メモの追加確認が必要。
+  survival fundamentals と player fantasy から mechanics を組み直す軸はゲーム制作へ具体的に接続できる。
+  しかし再確認しても材料は GDC Vault の概要要約に留まり、taxonomy の中身、設計判断の具体例、評価・検証が不足する。
+  CoopEval 水準の概要を書くには talk 本文または信頼できる詳細メモが必要なため、今回は postpone を維持する。
 ---
 
 ## raw_excerpt
