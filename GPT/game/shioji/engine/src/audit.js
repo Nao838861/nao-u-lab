@@ -8,6 +8,7 @@ import {
   economicMaterialSnapshot,
   fundSettlementZone,
   localWood,
+  recordEconomicMaterialFlow,
 } from "./econ.js";
 import {
   ECONOMIC_BUILDINGS,
@@ -18,6 +19,7 @@ import {
   buildingById,
   canPlaceBuilding,
   createPhysicalState,
+  depositInventory,
   findBuildingSiteForEntrance,
   hasRoad,
   makeFlowIslandTerrain,
@@ -479,6 +481,34 @@ function ensureMatureAuditHouseholds(world) {
     zone.filled = true;
     const building = buildingById(physical, zone.buildingId);
     if (building) building.ownerHouseholdId = household.id;
+  }
+}
+
+// 鉄連鎖監査の需要fixture。通常経済へ補正を漏らさず、day721に作る4世帯へ
+// 360日分の生活・文化財を「監査用の外部投入」として記帳する。これにより
+// Lv4を初期条件にしたまま、食料先行の変更で60日後に降格するだけの空条件を
+// 避け、鉄需要と鉄職の成立を測れる。
+function seedIronDemandSupport(economy, physical, households, horizon = 360) {
+  for (const household of households) {
+    const eat = household.members.length * P.EAT;
+    for (const goods of ["wheat", "pres", "pick", "meat", "fish", "veg"]) {
+      const qty = eat * 80;
+      household.pantry[goods] += qty;
+      recordEconomicMaterialFlow(economy, goods, "imp", qty, `鉄監査fixtureの生活在庫:世帯${household.id}`);
+    }
+    const building = buildingById(physical, household.buildingId);
+    if (!building) continue;
+    const cultural = {
+      tools: P.D_TOOL * Math.pow(P.CMULT, IRON_DEMAND_LEVEL) * horizon * 1.25,
+      salt: P.D_SALT * Math.pow(P.CMULT, IRON_DEMAND_LEVEL) * horizon * 1.25,
+      char: P.D_CHAR * Math.pow(P.CMULT, IRON_DEMAND_LEVEL) * horizon * 1.25,
+      cloth: P.D_CLOTH * Math.pow(P.CMULT, IRON_DEMAND_LEVEL) * horizon * 1.25,
+      iron: P.D_IRON * Math.pow(P.CMULT, IRON_DEMAND_LEVEL) * horizon * 1.25,
+    };
+    for (const [goods, qty] of Object.entries(cultural)) {
+      depositInventory(building, "input", goods, qty);
+      recordEconomicMaterialFlow(economy, goods, "imp", qty, `鉄監査fixtureの文化財:世帯${household.id}`);
+    }
   }
 }
 
@@ -1181,6 +1211,7 @@ export function runIronChainScenario({ seed, depositRoads, days = 2160 }) {
         household.down = 0;
         matureHouseholdIds.push(household.id);
       }
+      seedIronDemandSupport(economy, physical, matureHouseholds);
       placeIronAuditHouseholds(world);
     }
     world.step();
