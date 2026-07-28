@@ -153,7 +153,88 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-07-29T02:14+09:00
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index と per-file atom index を照合し、broken entry 0 件を確認。UTF-8 代表語 probe（記憶 / ゲーム設計 / 敵パターン / 評価軸）も通過した。"
+  - "memory/atoms.jsonl / per-file .md / atoms/index.jsonl は各 2780 件で、missing・parse error・content conflict 0 件。raw normalized-content duplicate 40 group は既存 lifecycle/content fold で表示上解消済み。"
+  - "memory/raw/ の mtime 30 日超は 96 件。slack archive・論文 PDF/TXT など immutable provenance のため、この cycle では移動せず保持した。"
+  - "shared-reads candidate 1145 件を dry-run audit。status 内訳は posted 514 / ready_to_post 9 / postponed 231 / failed 385 / needs_review 3 / skipped_unreviewed 3。stale_after 到来 19 件を確認した。"
+  - "Slack inbox は directives 23 行・broadcasts 21 行とも pending 0 件。受領だけを根拠に handled 化した行はない。"
+  - "open duplicate group / stale triage / group-action sidecar を規定順で再生成し、group lease 反映後に candidate handoff 5 件を冪等 enqueue した。candidate 本体は変更していない。"
+issues:
+  - id: ISS-ENC-001
+    description: "1 atom の原文に replacement character が残り、「AIエージェント」が「AIエ��ジェント」になっている。単発の機械的データ品質問題で、階層設計の問題ではない。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みでも raw と atom の双方に U+FFFD があり、source data 自体が破損。memory/MEMORY.md は UTF-8 正常。"
+    display_or_tooling_status: "none; shell 表示経路だけの mojibake ではない。gr-1777083728-44d444ab7a の『???』は本文上の意図された記号であり false positive。"
+    why_blocks_game_memory: "当該 atom を『エージェント』で検索する recall 精度を局所的に下げるが、他 2779 atom や game-memory 導線は阻害しない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 19
+  stale_triage_queue_rows: 18
+  open_duplicate_group_count: 51
+  mixed_group_count: 44
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-68867f66d68c6526
+    - cha-66a42c3c4ec59872
+    - cha-ae27a16027bcd14e
+    - cha-7d4a0d90fec82296
+    - cha-adae23c076c9b2a5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-68867f66d68c6526
+    path: memory/shared_reads_candidates/20260614_pacific_drive_survival_taxonomy.md
+    status: postponed
+    stale_after: "2026-07-14"
+    priority_reason: "survival fundamentals と player fantasy から mechanics を組み直す軸は制作に直結するが、taxonomy・具体例・評価詳細が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-66a42c3c4ec59872
+    path: memory/shared_reads_candidates/20260614_player_experience_inventory_bench.md
+    status: postponed
+    stale_after: "2026-07-14"
+    priority_reason: "PXI 系尺度は体験評価に有用だが、尺度開発・検証・Bench の使用法が未抽出。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-ae27a16027bcd14e
+    path: memory/shared_reads_candidates/20260616_frustration_buddy_online_games.md
+    status: postponed
+    stale_after: "2026-07-16"
+    priority_reason: "設計要件・評価結果・限界が不足し、現制作サイクルへの接続に追加読解が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-7d4a0d90fec82296
+    path: memory/shared_reads_candidates/20260616_xr_games_child_safety_design_risks.md
+    status: postponed
+    stale_after: "2026-07-16"
+    priority_reason: "有害な XR design pattern と interview/forum 由来の証拠が未抽出。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-adae23c076c9b2a5
+    path: memory/shared_reads_candidates/20260518_ai_graphical_asset_generation_heuristics.md
+    status: postponed
+    stale_after: "2026-07-17"
+    priority_reason: "16名調査の適用先は具体的だが、heuristic 一覧・調査設計・推奨優先度が不足。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
