@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-28T12:24:22+09:00",
+  "updated_at": "2026-07-28T14:35:50+09:00",
   "reviewed_source_ts": [
+    "1785184225.063269",
     "1785192350.414439",
     "1785200763.028829",
     "1785184231.969289",
@@ -530,6 +531,45 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-28T14:35:50+09:00",
+      "selected": {
+        "id": "sr-1785184225-9b8f282521",
+        "source_ts": "1785184225.063269",
+        "title": "Old Friends — haptic substitution を event・pattern・backup・識別性へ分解する serious game",
+        "reason": "source が slack_api/shared-reads、score 13、未レビューという条件を満たす最新候補で、harness・game-design・operation・evaluation を含む複数の優先タグを持つ。触覚を装飾でなく状態伝達 channel とし、event→pattern→視覚 backup の対応、cue の衝突・cooldown・priority、pattern confusion を、次の game prototype で既存 probe と異なる判断差へ変換できるか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件は満たす。shared-reads 本文は、7枚に簡略化した Doudizhu 系 prototype で、card number・deal・difficulty change・win/loss・unlock を duration／frequency／repeat count の異なる振動 pattern に対応させ、large font・high contrast と併用した設計を示す。60–71歳の軽度視覚障害を自己申告する10名による単群 mixed-methods pilot、SUS 89.5、半構造化 interview の三 theme とともに、臨床的な認知改善、通常 UI との比較、長期 engagement、触覚学習曲線は未検証だと分けているため evidence=3 とした。event・pattern・最短間隔・同時発火 priority・視覚／音声 backup の表、同一 mechanics の視覚のみ／multimodal 二条件比較、pattern confusion matrix、headless の cue 発火／重複抑制 log と短い実機試験の分業へ直接変換できるため actionability=3 である。既存の gamerastra-accessibility-mental-map は support target・state representation・cue timing を、mechanic-observation-channel-gate は channel ごとの証明範囲を、player-intent-action-response は input から observable response までをすでに扱う。一方、本 atom の event-pattern lexicon、同時 cue の衝突、habituation、pattern 単位の識別誤りは既存3 probe にないため non_redundancy=2 とした。ただし現在の staging に振動対応 playable、実機 cue table、A/B playtest、pattern confusion artifact がなく、具体的な consumer_phase、before／after trigger_artifact、expected_delta、lease_due を lease 契約どおり指定できない。active_probes 321件と Phase 4a 向け pending lease 1件もあるため、次に実際の haptic／audio／multimodal cue prototype が生じ、既存 probes だけでは cue collision または pattern confusion を切り分けられない時だけ再評価する state-only defer とする。",
+      "existing_probes": [
+        "probe-20260621-gamerastra-accessibility-mental-map",
+        "probe-20260603-mechanic-observation-channel-gate",
+        "probe-20260717-player-intent-action-response"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と defer 理由だけを更新した。event-pattern-backup 対応、cue collision、pattern confusion という差分は記録したが、比較 artifact と実機 consumer がないため、probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-28T12:24:22+09:00",
       "selected": {

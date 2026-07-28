@@ -104,7 +104,53 @@ candidate_updates: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785184225-9b8f282521
+    source_ts: "1785184225.063269"
+    title: "Old Friends — haptic substitution を event・pattern・backup・識別性へ分解する serious game"
+    reason: >-
+      source が slack_api/shared-reads、score 13、未レビューという条件を満たす最新候補で、
+      harness・game-design・operation・evaluation を含む複数の優先タグを持つ。
+      触覚を装飾でなく状態伝達 channel とし、event→pattern→視覚 backup の対応、
+      cue の衝突・cooldown・priority、pattern confusion を、次の game prototype で
+      既存 probe と異なる判断差へ変換できるか確認するため選んだ。
+      Nao_u の明示評価は付いていない。
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: defer
+  decision_reason: >-
+    数値上の採用条件は満たす。本文は、game event と振動 pattern の対応表、
+    視覚のみ／multimodal の二条件比較、pattern confusion matrix、
+    headless の cue 発火・重複抑制 log と短い実機試験の分業へ直接変換できる。
+    また n=10 の単群 pilot と SUS 89.5 は初期 usability の根拠に留まり、
+    認知改善、通常 UI との比較、長期 engagement は未検証だと分けている。
+    既存の accessibility-mental-map、mechanic-observation-channel、
+    player-intent-action-response probes は対象・channel・response を覆うが、
+    event-pattern lexicon、同時 cue の衝突、habituation、pattern 単位の識別誤りは覆わない。
+    ただし今サイクルには振動対応 playable、実機 cue table、A/B playtest、
+    pattern confusion artifact がなく、consumer phase と before／after の判断差を
+    lease 契約どおり指定できないため state-only defer とした。
+  change:
+    summary: >-
+      reviewed_source_ts と defer 理由だけを更新した。
+      probe・metric・lease・directive・恒久ルールは追加していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
