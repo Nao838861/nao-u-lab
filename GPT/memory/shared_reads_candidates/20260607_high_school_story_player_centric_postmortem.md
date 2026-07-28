@@ -4,18 +4,20 @@ url: "https://gdcvault.com/play/1020513/Player-Centric-Design-A-High"
 collected_at: "2026-06-07T00:15:01+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, postmortem, player-experience, f2p, retention]
-evaluated_at: "2026-06-07T00:17:09+09:00"
+evaluated_at: "2026-07-28T21:36:03+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-07T00:17:09+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-07T00:17:09+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-07"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-28T21:36:03+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T21:36:03+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-27"
 supersedes: []
-gate_reason: "player happiness を中心に F2P 設計を組み直す軸は有用。ただし現候補メモでは 3 つの player-friendly strategies の中身と成功評価が未抽出で、CoopEval 水準の概要に必要な具体要素が不足している。"
+gate_reason: |-
+  player happiness を中心に据える問題設定は有用だが、3つの戦略の中身も成功評価も候補本文にない。
+  stale 再評価時点でも手法・評価・結論を約4000字で説明できる根拠がなく、掲載品質へ育つ見込みを確認できない。
 ---
 
 ## raw_excerpt

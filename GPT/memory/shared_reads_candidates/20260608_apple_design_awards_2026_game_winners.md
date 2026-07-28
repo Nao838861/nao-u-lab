@@ -4,21 +4,20 @@ url: "https://www.apple.com/newsroom/2026/06/apple-reveals-winners-of-the-2026-a
 collected_at: "2026-06-08T14:44:46.6752268+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, ux, accessibility, interaction-design, social-impact]
-evaluated_at: "2026-06-08T15:02:00+09:00"
+evaluated_at: "2026-07-28T21:36:03+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-08T15:02:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-08T15:02:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-08"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-28T21:36:03+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T21:36:03+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-27"
 supersedes: []
 gate_reason: |-
-  Apple Design Awards のゲーム受賞作リストとして、UX・アクセシビリティ・interaction・visual fidelity の観察入口にはなる。
-  ただし Newsroom 本文だけでは、各作品の手法の中核や評価の具体が薄く、CoopEval 水準の約4000字概要を単独で書くと列挙かこじつけになりやすい。
-  Phase 3 投稿に回す前に、各受賞作の一次情報・実プレイ観察・開発者資料を足して design criterion として再構成する必要がある。
+  受賞作ごとの評価語は観察入口になるが、単一手法の問題設定・中核・比較評価・結論を持つ資料ではない。
+  保存内容だけで約4000字へ伸ばすと受賞作の列挙か一般論になり、ゲーム制作への適用も各作品の実証から切り離されたこじつけになる。
 ---
 
 ## raw_excerpt

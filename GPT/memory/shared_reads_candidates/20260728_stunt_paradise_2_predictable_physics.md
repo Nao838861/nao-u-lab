@@ -4,6 +4,26 @@ url: "https://80.lv/articles/how-an-indie-studio-created-a-sequel-of-a-driving-p
 collected_at: "2026-07-28T21:31:21.4411315+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, level-design, physics, arcade-driving, playtesting, postmortem]
+evaluated_at: "2026-07-28T21:36:03+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-28T21:36:03+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-28T21:36:03+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-27"
+supersedes: []
+gate_reason: |-
+  予測可能な物理を軸に、車両差の制約、失敗の娯楽化、コースの緩急、blockout、初見 playtest が一貫した制作工程として抽出できる。
+  定量比較はないが、開発者 postmortem として判断理由と観察結果が具体的で、ゲーム制作への適用をこじつけず約4000字で分析できる。
+suggested_post_outline:
+  overview_angle: "物理アクションの楽しさを写実性ではなく、予測・失敗・再挑戦の設計として組み立てた小規模続編の制作事例として読む。"
+  analysis_axis: "予測可能性と車種差のトレードオフ、ハザードと静かな区間のリズム、ragdoll による失敗感情の変換、blockout と公開 playtest の検証順を軸にする。"
+  application_target: "Log_cdx の物理アクション prototype で、共通挙動を先に固定し、blockout の成功率・失敗後の理解・再挑戦速度を観察する評価サイクルへ適用する。"
+  pros_cons: "利点は authored challenge の再現性と即時リトライを両立できる点。制約は車種ごとの機能差を弱めるため、収集・選択の遊びを外見以外で補う必要がある点。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

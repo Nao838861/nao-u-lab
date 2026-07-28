@@ -4,20 +4,20 @@ url: "http://arxiv.org/abs/2606.04823v1"
 collected_at: "2026-06-08T20:55:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-design, constrained-design, evaluation, iterative-development]
-evaluated_at: "2026-06-08T20:48:29+09:00"
+evaluated_at: "2026-07-28T21:36:03+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-08T20:48:29+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-08T20:48:29+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-08"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-28T21:36:03+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T21:36:03+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-27"
 supersedes: []
 gate_reason: |-
-  error localization / worst-case perturbation / stale knowledge invalidation の3分解は、headless評価や自動改修の失敗分類として使える。
-  ただしconstrained designでのR-APS本体、Pareto探索の具体手順、評価タスクと結果がcandidate本文だけでは不足しており、Phase 3投稿には追加読解が必要。
+  3つの失敗分類は headless 評価へ転用できるが、候補本文は名称と提案方向だけで探索手順を説明できない。
+  stale 再評価でも評価タスク、比較条件、Pareto 結果がなく、約4000字の掲載品質を支える証拠が不足している。
 ---
 
 ## raw_excerpt

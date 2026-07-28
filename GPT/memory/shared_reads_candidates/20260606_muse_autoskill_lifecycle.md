@@ -4,25 +4,21 @@ url: "https://arxiv.org/abs/2605.27366"
 collected_at: "2026-06-06T11:59:30+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent, skills, memory, evaluation, workflow]
-evaluated_at: "2026-06-06T12:07:14+09:00"
+evaluated_at: "2026-07-28T21:36:03+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: pass
+gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-06T12:12:02+09:00"
-last_decision: postponed
-evidence: "duplicate_existing_shared_reads_posts:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780577644122259;https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780644277510099"
+last_reviewed_at: "2026-07-28T21:36:03+09:00"
+last_decision: postpone
+duplicate_reason: duplicate_of_posted_source
+evidence: "duplicate of posted source: memory/raw/slack_api/shared-reads.jsonl ts=1780577644.122259; ts=1780644277.510099; canonical_url=https://arxiv.org/abs/2605.27366"
 next_action: none
-postpone_reason: "Phase 3 duplicate guard: MUSE-Autoskill は 2026-06-04 に単独投稿、2026-06-05 に SkillOpt 併読投稿が #shared-reads 済みのため再投稿しない。"
-stale_after: "2026-07-06"
+stale_after: "2026-08-27"
 supersedes: []
-gate_reason: "skill を isolated/static artifact ではなく creation / memory / management / evaluation / refinement の lifecycle asset と見る問題設定が明確。SkillsBench で success, efficiency, reuse, transfer を評価しており、ゲーム制作サイクルの記憶・評価設計へ具体的に接続できる。"
-suggested_post_outline:
-  overview_angle: "LLM agent の skill を一回限りの生成物ではなく、保存・選択・評価・改良される制作資産として扱う論文として読む。"
-  analysis_axis: "skill creation、skill memory、organization/selection、unit tests と runtime feedback、cross-agent transfer の評価設計を軸にする。"
-  application_target: "headless 評価、wave 設計、Slack 反応、memory recall を reusable skill として管理する Phase 4 の設計材料にする。"
-  pros_cons: "利点は agent 作業を長期改善可能な単位に分解できる点。懸念は benchmark 上の skill とゲーム制作の曖昧な評価との差を埋める追加設計が必要な点。"
-  verdict_pre: "部分採用"
+gate_reason: |-
+  canonical URL が一致する MUSE-Autoskill の単独記事と SkillOpt 併読記事が、実 Slack 原文で既に確認できる。
+  内容自体は基準を満たすが、同一 work の再投稿になるため Phase 3 対象にはしない。
 ---
 
 ## raw_excerpt
