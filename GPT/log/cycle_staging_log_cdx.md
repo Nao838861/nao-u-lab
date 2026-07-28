@@ -127,7 +127,88 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」を確認。validate_memory_index.py は broken link / index mismatch なし。"
+  - "memory/atoms.jsonl 2776件を監査。JSON/per-file/index の欠落・parse error・content conflict は0、raw normalized duplicate 40群は canonical overlay で fold 済み、effective display unresolved は0。"
+  - "memory/raw/ の30日超未更新ファイル96件を archive 候補として確認。一次資料・評価 trace の参照を保つため移動は行わなかった。"
+  - "candidate lifecycle 1140件を dry-run 監査。posted=509、ready_to_post=9、postponed=245、failed=371、needs_review=3、lifecycle 未確定=3。自動修復対象は0。"
+  - "open duplicate / stale triage / group-action sidecar を再生成し、candidate handoff 5件を source_cycle_id=2026-07-28 16:28 で冪等 enqueue。candidate/group inbox audit error は0。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending はともに0件。handled 更新対象なし。"
+issues:
+  - id: ISS-P4A-20260728-01
+    description: "stale handoff 対象の 1 Billion Spells candidate は、gate_reason と raw_excerpt が実データ上 `?` へ置換されており、現状のままでは Phase 2 が内容を再評価できない。"
+    severity: low
+    evidence: "memory/shared_reads_candidates/20260605_one_billion_spells_simulator_possibility_space.md#gate_reason"
+    source_file_status: "UTF-8 明示読みでも frontmatter と本文に連続した `?` を確認。source file 側の情報欠損。"
+    display_or_tooling_status: "none; PowerShell UTF-8 読みと candidate handoff JSONL の双方で同じ欠損を確認。"
+    why_blocks_game_memory: "spell simulator を制作時の可能性空間探索へ転用できるか判断する根拠が失われ、再評価 queue に載っても検索・比較材料として機能しない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 39
+  stale_triage_queue_rows: 38
+  suppressed_by_live_group_lease_count: 1
+  open_duplicate_group_count: 51
+  mixed_group_count: 44
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_handoff_inbox_pending_count: 0
+  group_handoff_inbox_ids: []
+  candidate_handoff_enqueued_count: 5
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-d518bfb2f8f83eb4
+    - cha-2ce5c44d2006a0ed
+    - cha-77a8ea86183910b7
+    - cha-d2687ea4d4674b11
+    - cha-8ef7b853e9d13a76
+  remaining_unleased_queue_rows: 33
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-d518bfb2f8f83eb4
+    path: memory/shared_reads_candidates/20260602_indie_design_problems_production_discipline.md
+    status: postponed
+    stale_after: "2026-07-02"
+    priority_reason: "26日超過。production problem と design problem の分離は制作レビューに使えるが、reddit 一般論中心で一次例・反例が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-2ce5c44d2006a0ed
+    path: memory/shared_reads_candidates/20260602_procedural_music_generation_games.md
+    status: postponed
+    stale_after: "2026-07-02"
+    priority_reason: "26日超過。状態連動音楽への転用軸はあるが、taxonomy の具体項目・評価方法・ゲーム統合例を本文で補う必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-77a8ea86183910b7
+    path: memory/shared_reads_candidates/20260605_narrative_usability_user_research.md
+    status: postponed
+    stale_after: "2026-07-05"
+    priority_reason: "23日超過。narrative usability の適用先は明確だが、調査設計・質問項目・評価結果が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-d2687ea4d4674b11
+    path: memory/shared_reads_candidates/20260605_one_billion_spells_simulator_possibility_space.md
+    status: postponed
+    stale_after: "2026-07-05"
+    priority_reason: "23日超過。source 本文が `?` 置換で欠損しているため、raw を回復できなければ Phase 2 で fail 判定する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-8ef7b853e9d13a76
+    path: memory/shared_reads_candidates/20260605_root_usability_postmortem.md
+    status: postponed
+    stale_after: "2026-07-05"
+    priority_reason: "23日超過。非対称ゲームの usability 軸は強いが、Root 固有の成功・失敗例と UX research 手順が不足。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
