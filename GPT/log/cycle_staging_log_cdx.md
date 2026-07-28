@@ -93,7 +93,38 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780495046-e6e524af85
+    source_ts: "1780495046.004439"
+    title: "NVIDIA Agent Skills — skill-card・評価・署名を伴う再利用可能スキルカタログ"
+    reason: "未レビュー条件を満たす最新の score 11 atom で、skills・game-design・agent・operation・evaluation の5優先タグを持つ。skill-card、評価 dataset、benchmark、署名が次回 skill 判断を変えるか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回る。本文は skill を supply-chain として扱う構成を具体化するが、110超 skill・24製品と少数の高次判断 skill という規模・性質差があり、当方での比較実測もない。既存の skill-lifecycle-promotion-gate、skillopt-skill-doc-validation、skillopt-instruction-edit-validation-gate と現行 skill 手順が昇格境界、最小 validation、held-out、退役、trigger／fallback をすでに覆う。active_probes 321件と Phase 4a 向け pending lease 1件があるため、新しい schema・署名・評価文書を追加せず state-only review とした。"
+  existing_probes:
+    - probe-20260604-skill-lifecycle-promotion-gate
+    - probe-20260620-skillopt-skill-doc-validation
+    - probe-20260626-skillopt-instruction-edit-validation-gate
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

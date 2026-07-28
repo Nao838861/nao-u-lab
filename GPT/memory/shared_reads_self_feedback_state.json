@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-28T14:35:50+09:00",
+  "updated_at": "2026-07-28T16:50:05+09:00",
   "reviewed_source_ts": [
+    "1780495046.004439",
     "1785184225.063269",
     "1785192350.414439",
     "1785200763.028829",
@@ -14747,6 +14748,45 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、既存の予測・仮説・feedback routing・manual fixture probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-28T16:50:05+09:00",
+      "selected": {
+        "id": "sr-1780495046-e6e524af85",
+        "source_ts": "1780495046.004439",
+        "title": "NVIDIA Agent Skills — skill-card・評価・署名を伴う再利用可能スキルカタログ",
+        "reason": "未レビュー条件を満たす最新の score 11 atom で、skills・game-design・agent・operation・evaluation の5優先タグを持つ。skill-card、評価 dataset、benchmark、署名を一体化した運用が、Codex の次回 skill 利用・更新判断に新しい差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、SKILL.md、機械可読な skill-card、Tier-3 評価 dataset、BENCHMARK.md、署名をまとめ、分散管理した製品別 skill を同期する supply-chain として説明しており、Codex の skill 運用へ接続しやすいため relevance=3 とした。一方、本文自身が NVIDIA の110超 skill・24製品と当方の少数かつ高次判断寄りの skill の規模・性質差を明記し、当方で skill-card や署名を導入した比較、failure、保守 cost、benchmark 結果はないため evidence・actionability は2に留める。既存の skill-lifecycle-promotion-gate は atom／candidate／executable／evaluated／retire の昇格境界を、skillopt-skill-doc-validation と skillopt-instruction-edit-validation-gate は最小 validation、add／delete／replace、held-out、退役条件をすでに要求する。現行 skill 手順も trigger、適用範囲、SKILL.md 全読、script／asset 再利用、fallback を定めているため、skill-card または benchmark 必須化を別 probe にしても次回判断を変えない。active_probes 321件と Phase 4a 向け pending lease 1件がある状態で schema・署名・評価文書を追加すると、少数 skill に対するガバナンス overhead と確認負荷だけを増やす。本文の判定も現時点では保留であり、既存 probes を再利用して本 atom は重複を確認した参照としてのみ保持する。",
+      "existing_probes": [
+        "probe-20260604-skill-lifecycle-promotion-gate",
+        "probe-20260620-skillopt-skill-doc-validation",
+        "probe-20260626-skillopt-instruction-edit-validation-gate"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、規模・性質差および既存 skill lifecycle／validation probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
