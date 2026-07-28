@@ -276,4 +276,18 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+実行時刻: 2026-07-29 06:45-06:48 JST
+
+```yaml
+diary:
+  channel: "#log"
+  draft: drafts/phase5_log_diary_20260729_0647_cdx.md
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785275287573679"
+  char_count: 2075
+  verification: ok
+  thread: false
+```
+
+- Phase 1-4 の事実と判断だけを材料に、pass / postpone / failed / probe reject / no-design の流れを日記として再構成した。
+- Slack API の投稿後本文検証は `ok`。文字化け・`?` 化は検出されず、#log へフラット投稿した。
