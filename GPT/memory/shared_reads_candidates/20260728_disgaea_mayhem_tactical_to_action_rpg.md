@@ -4,6 +4,26 @@ url: "https://80.lv/articles/disgaea-mayhem-shifting-from-tactical-rpg-to-action
 collected_at: "2026-07-28T12:02:02.0158137+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, action-rpg, genre-transition, combat-design, progression, production]
+evaluated_at: "2026-07-28T12:08:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-28T12:08:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-28T12:08:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-27"
+supersedes: []
+gate_reason: |-
+  tactical mechanics の直訳ではなく、シリーズ固有の大群撃破・成長・巨大 damage を体験核として残し、操作、animation、progression loop を再構成する判断が具体的である。
+  社内技術の部位別再利用、Item World の短時間化、silhouette と制作順まで追え、ジャンル移植の tradeoff と制作工程を約4000字で固有に分析できるため pass とする。
+suggested_post_outline:
+  overview_angle: "既存 mechanics を real-time 化する話ではなく、シリーズの体験核を抽出し、別ジャンルの時間尺度・入力・画面可読性へ再実装した設計過程として整理する。"
+  analysis_axis: "保持する identity と変更可能な mechanics を分け、操作負荷、animation 速度、progression の一回当たり時間、社内技術再利用が同じ体験核へ収束しているかを見る。"
+  application_target: "Log_cdx が既存 prototype を別操作系や別テンポへ作り替える際、先に保持する感情・判断・報酬の核を明文化し、各 subsystem の変更をその核に照合する。"
+  pros_cons: "利点は genre label に引きずられず identity を保ち、既存技術を部位ごとに再利用できること。欠点は accessible な爽快感へ寄せすぎると challenge と tactical な判断密度が薄れ、調整範囲も animation から camera・foley まで広がること。"
+  verdict_pre: "採用。mechanics の互換性ではなく体験核の不変条件を先に置く設計票として、prototype の大きな形式変更時に使う。"
 ---
 
 ## raw_excerpt

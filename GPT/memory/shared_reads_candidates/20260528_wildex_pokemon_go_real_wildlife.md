@@ -4,21 +4,20 @@ url: "https://news.ycombinator.com/item?id=47040390"
 collected_at: "2026-05-28T19:29:46+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, location-based-game, ethics, gamification, player-safety]
-evaluated_at: "2026-05-28T19:32:31+09:00"
+evaluated_at: "2026-07-28T12:08:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-28T19:32:31+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-28T19:32:31+09:00"
-stale_after: "2026-06-27"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-28T12:08:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T12:08:00+09:00"
+stale_after: "2026-08-27"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |
-  rarity、points、leaderboard が現実の動植物・場所へ圧力を作る論点は有用で、報酬設計の危険側を考える材料になる。
-  一方で現 candidate は HN コメント論点の要約に留まり、アプリ設計の具体、作者側の対策、結果や運用知見が薄い。
-  Phase 3 投稿には、位置情報共有・安全設計・競争報酬の設計判断をもう少し原文から確認したい。
+  現実の動植物へ rarity・points・leaderboard が圧力を作る問題設定は有用だが、現候補は HN コメントの論点整理に留まる。
+  アプリ側の安全設計、位置情報の扱い、運用結果や対策評価がなく、CoopEval 水準の概要では推測が中心になるため fail とする。
 
 ---
 

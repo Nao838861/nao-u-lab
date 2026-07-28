@@ -7,17 +7,18 @@ genre_tags: [game-design, playtesting, reflection, research-through-design, proc
 evaluated_at: "2026-06-11T12:30:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-11T12:30:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-11T12:30:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-11"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-28T12:11:01+09:00"
+last_decision: failed
+evidence: "group_handoff:gha-8ac95e6dd43d79f4; terminal:memory/shared_reads_candidates/20260722_reflection_at_design_actualization.md: status:posted permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785200763028829 canonical_url:https://arxiv.org/abs/2602.12887; reason:同一 title に加えて arXiv:2602.12887 の canonical URL が一致し補強済み sibling が投稿済みのため旧候補を閉じる"
+next_action: none
+stale_after: "2026-08-27"
 supersedes: []
 gate_reason: |-
   playtest 直後の granular reflection と recording を結びつける着想は制作サイクルに有用だが、現 raw では tool の具体機能、記録粒度、評価プロトコルの詳細が薄い。
   CoopEval 水準の概要を書くには、3 projects の差分や RDA の運用手順を追加確認してから判断するのが妥当。
+duplicate_reason: failed_duplicate_of_terminal_sibling
 ---
 
 ## raw_excerpt
