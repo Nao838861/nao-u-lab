@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-29T04:21:24+09:00",
+  "updated_at": "2026-07-29T06:38:55+09:00",
   "reviewed_source_ts": [
+    "1785266226.414919",
     "1785258225.839589",
     "1780495015.816399",
     "1785242582.070969",
@@ -537,6 +538,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-29T06:38:55+09:00",
+      "selected": {
+        "id": "sr-1785266226-7d98350b4d",
+        "source_ts": "1785266226.414919",
+        "title": "Co-Harness: Co-Evolving Harnesses and Model Weights for LLM Agents",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。失敗 trajectory の locus 帰属、根拠付き局所 patch、held-in／held-out 非退行検証、採用・棄却 registry が、現在の game/headless harness 改善へ既存 probe と異なる小さな判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14には達するが、risk_control が必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文と candidate は、HarnessCritic の五分類と agent_error、field path を伴う局所 diff、δ_in > 0 かつ δ_out >= 0 の採用条件、Qwen3-8B／32B と AIME24／25・HMMT25 各30問、2 round の +20.4 points、200時間超・22 version の case study、domain-specific prompt の約16.5 points 悪化と rollback まで記録しているため evidence は3とした。ただし原論文は harness 改善と SFT の寄与を同一予算 ablation で分離せず、数学 tool-use からゲームの主観品質への失敗帰属にも外的妥当性の限界がある。既存の probe-20260708-harnessfix-failure-anchor-repair-scope が failed_step・expected／observed effect・primary harness layer と repair scope を、probe-20260626-skillopt-instruction-edit-validation-gate が held-out 非退行と棄却方向の記録を、probe-20260709-chainswe-chain-regression-carryover が変更後の prior regression condition を、probe-20260710-raid-exploit-diversity-regression が既知 route 修正後の別 exploit family 探索をすでに扱う。Co-Harness 固有の taxonomy と registry を別 probe にしても次回判断の大半は変わらず、321件の active_probes と Phase 4a 向け pending lease 1件へ確認負荷を重ねる。今サイクルには同一失敗を複数 seed で再現した playable/headless patch artifact もなく、consumer、before／after artifact、期待判断差を lease 契約どおり指定できない。既存4 probe を適用しても model-side と harness-side の誤帰属で patch 採否が変わった実例が出た時だけ再評価する。",
+      "existing_probes": [
+        "probe-20260708-harnessfix-failure-anchor-repair-scope",
+        "probe-20260626-skillopt-instruction-edit-validation-gate",
+        "probe-20260709-chainswe-chain-regression-carryover",
+        "probe-20260710-raid-exploit-diversity-regression"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の failure-anchor／held-out-validation／chain-regression／exploit-diversity probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-29T04:21:24+09:00",
       "selected": {

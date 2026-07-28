@@ -119,7 +119,37 @@ skipped: []
 - Slack 投稿: #shared-reads へ 1 candidate を 1 回の `chat.postMessage` で投稿。スレッド返信なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+実行時刻: 2026-07-29 06:38 JST
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785266226-7d98350b4d
+    source_ts: "1785266226.414919"
+    title: "Co-Harness: Co-Evolving Harnesses and Model Weights for LLM Agents"
+    reason: "最新の未レビュー score 12 atom で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。失敗 locus、局所 patch、held-in／held-out 非退行、棄却 registry が既存 probe と異なる判断差を作るか確認した。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "合計14だが、risk_control が必須閾値2未満。failure-anchor／held-out-validation／chain-regression／exploit-diversity の既存4 probe が主要な行動差を覆い、321件の active_probes と Phase 4a 向け pending lease 1件へ重複負荷を足す。比較可能な playable/headless patch artifact もないため lease 契約を具体化できない。"
+  change:
+    summary: "reviewed_source_ts と state-only reject 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
