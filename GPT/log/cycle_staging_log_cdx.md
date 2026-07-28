@@ -8,6 +8,11 @@
 - 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` の pending は各0件。直前同期以降の Slack ローカル原文に未処理の新規外部 URL はなし。同日更新の `web_research` と最近の atom も確認。
 - preflight: `continue`（URL / work / canonical title / open duplicate group の一致なし）。
 
+### 2026-07-28 23:32 JST / log_cdx
+
+- `memory/shared_reads_candidates/20260728_children_of_morta_postmortem.md` — 『Children of Morta』の5年開発を、制作 pillar、週次 playtest、UX 後回し、production 境界、後付け multiplayer、pixel animation 工数から振り返る開発者 postmortem。
+- preflight skip: `PTCG-Bench: Can LLM Agents Master Pokémon Trading Card Game?` は実投稿済みの同一 work（https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781744312376709）と一致したため candidate を作成せず。
+
 ## Phase 2: 分析
 ```yaml
 total_candidates: 6
