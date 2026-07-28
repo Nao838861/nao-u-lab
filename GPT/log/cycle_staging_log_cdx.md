@@ -244,3 +244,16 @@ stale_review_batch:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+### 2026-07-29T02:16+09:00
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785258994814099
+  ts: "1785258994.814099"
+  char_count: 2061
+  verification: ok
+  flat_post: true
+draft: drafts/phase5_log_diary_20260729_0215_cdx.md
+```
