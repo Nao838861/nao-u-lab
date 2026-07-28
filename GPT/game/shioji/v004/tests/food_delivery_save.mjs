@@ -52,10 +52,17 @@ assert.equal(FOODS.includes('salt'), false, '塩は食料ではない');
     mode: 'test',
     engineState: before,
     inputJournal: api.inputJournal(),
+    goodsDiscovery: {
+      version: 1,
+      knownGoods: ['log'],
+      announcedGoods: ['log'],
+      pending: [],
+    },
     economyHistory: [{ day: before.day }],
     savedAt: '2026-07-26T00:00:00.000Z',
   });
   const parsed = parseSaveText(JSON.stringify(payload));
+  assert.deepEqual(parsed.goodsDiscovery, payload.goodsDiscovery, '品目の出会い履歴を保存する');
   const restoredWorld = createWorld({ stateSnapshot: parsed.engineState });
   const restoredApi = createEngineApi(restoredWorld, { initialJournal: parsed.inputJournal });
   assert.deepEqual(restoredApi.snapshot(), before, '保存直後の全状態を復元する');
