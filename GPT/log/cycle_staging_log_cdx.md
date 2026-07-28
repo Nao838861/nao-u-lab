@@ -112,7 +112,39 @@ skipped: []
 - 投稿前 policy、禁止表現、必須節順序、URL 末尾、既投稿 URL 重複を検証し、Slack 保存後の UTF-8 本文も verification `ok` を確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+self_feedback:
+  selected:
+    id: sr-1785258225-bd3baccc14
+    source_ts: "1785258225.839589"
+    title: "PUBG Ally — 実時間 AI teammate の時間・authority・記憶境界"
+    reason: "最新の未レビュー score 10 候補で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。時間・authority・記憶の三境界が既存 probe と異なる次回判断を作るか確認するため選んだ。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: >-
+    合計13で採用条件の14に届かず、risk_control も必須閾値2を下回る。
+    vendor Q&A のため latency 分布・比較条件・失敗率・stale observation 再検証・
+    永続記憶の訂正／削除／privacy 指標が非公開である。
+    action schema と observable response、shared-control の authority と fail-soft、
+    voice latency と stale candidate、agent 出力と authoritative verifier evidence の分離は、
+    既存4 probe が主要判断をすでに覆う。Phase 4a には別 probe の pending lease もあり、
+    今サイクルには比較可能な AI companion playable diff がないため、重複 probe は追加しない。
+  change:
+    summary: "reviewed_source_ts と重複による reject 理由だけを state に記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

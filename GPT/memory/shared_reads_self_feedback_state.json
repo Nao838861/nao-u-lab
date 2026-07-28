@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-29T02:10:00+09:00",
+  "updated_at": "2026-07-29T04:21:24+09:00",
   "reviewed_source_ts": [
+    "1785258225.839589",
     "1780495015.816399",
     "1785242582.070969",
     "1785234603.586449",
@@ -536,6 +537,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-29T04:21:24+09:00",
+      "selected": {
+        "id": "sr-1785258225-bd3baccc14",
+        "source_ts": "1785258225.839589",
+        "title": "PUBG Ally — 実時間 AI teammate の時間・authority・記憶境界",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。即時行動と生成推論、engine observation と model memory、match 内記憶と継続 profile を分ける production architecture が、次の playable prototype や agent evaluation に既存 probe と異なる小さな判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、2B on-device model、固定 context と KV cache、System 1 behavior tree／System 2 SLM、authoritative observation tool、short／long-term memory、automated protocol test→live playtest→千人超評価という具体的な境界と適用案を示すため relevance と actionability は3とした。一方、根拠は NVIDIA の vendor Q&A で、latency 分布、比較条件、失敗率、stale observation の再検証、永続記憶の誤記憶・修正・削除・privacy 指標が非公開なので evidence は2に留める。既存の probe-20260717-player-intent-action-response は有限 action schema・precondition・observable response を、probe-20260618-shared-control-handoff-contract は制御所有・競合・latency 時の fail-soft を、probe-20260621-voice-bark-latency-budget は state snapshot・生成・queue・stale candidate の時間分解を、probe-20260711-benchjack-trust-boundary-preflight は agent-controlled 出力と authoritative verifier evidence の分離をすでに扱う。PUBG Ally 固有の三境界を別 probe にしても次回判断の大半は変わらず、321件の active_probes と Phase 4a 向け pending lease 1件へ確認負荷を重ねる。今サイクルには比較可能な AI companion playable diff もないため、consumer、before／after artifact、期待判断差を lease 契約どおり指定できない。対象 prototype が生じ、既存4 probe では生成 timeout 中の core loop 継続または stale observation 棄却を判定できない実例が出た時だけ再評価する。",
+      "existing_probes": [
+        "probe-20260717-player-intent-action-response",
+        "probe-20260618-shared-control-handoff-contract",
+        "probe-20260621-voice-bark-latency-budget",
+        "probe-20260711-benchjack-trust-boundary-preflight"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の action-schema／shared-control／voice-latency／authoritative-verifier probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-29T02:10:00+09:00",
       "selected": {
