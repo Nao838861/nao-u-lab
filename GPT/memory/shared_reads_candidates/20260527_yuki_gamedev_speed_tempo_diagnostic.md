@@ -4,20 +4,20 @@ url: "https://x.com/Yuki_GameDev_/status/2059193129790746976"
 collected_at: "2026-05-27T02:55:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, tempo, prototype-evaluation, slack-derived, speed-control]
-evaluated_at: "2026-05-27T03:05:00+09:00"
+evaluated_at: "2026-07-28T09:54:16+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-27T03:05:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-27T03:05:00+09:00"
-stale_after: "2026-06-26"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-28T09:54:16+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T09:54:16+09:00"
+stale_after: "2026-08-27"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |-
-  速度変更を QoL ではなく診断器として使う観点は制作サイクルに強く効くが、現状は Slack excerpt と短文由来のメモで、一次情報と文脈が不足している。
-  4000字程度の「概要」を書くには、原文確認や実装例、既存 prototype での検査ログが必要なので Phase 3 には送らない。
+  速度変更をテンポ診断器として使う着想は小さな probe に有用だが、根拠は短い X 投稿の Slack excerpt と派生解釈だけである。
+  手法・評価・限界を4000字で説明できる資料ではなく、前回から一次情報も増えていないため投稿候補として閉じる。
 
 ---
 

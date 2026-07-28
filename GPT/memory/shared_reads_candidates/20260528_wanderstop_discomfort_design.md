@@ -4,20 +4,20 @@ url: "https://gdcvault.com/play/1035709/The-Tension-Designing-for-Discomfort"
 collected_at: "2026-05-28T17:29:58+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, mechanics, narrative-design, postmortem, player-emotion]
-evaluated_at: "2026-05-28T17:32:56+09:00"
+evaluated_at: "2026-07-28T09:54:16+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-28T17:32:56+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-28T17:32:56+09:00"
-stale_after: "2026-06-27"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-28T09:54:16+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T09:54:16+09:00"
+stale_after: "2026-08-27"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |
-  cozy convention と discomfort を衝突させる設計論は、快適さ一辺倒でない体験設計にかなり有用。
-  ただし現候補は GDC セッション概要レベルで、複数 mechanics の breakdown や設計判断の具体例が不足しており、投稿品質には視聴/詳細メモが必要。
+  cozy convention と discomfort の衝突は有用な論点だが、候補本文は GDC セッション概要の予告に留まり、mechanics の breakdown や設計判断の実例がない。
+  前回から評価可能な材料が増えておらず、4000字化すると作品テーマの一般論になるため投稿候補として閉じる。
 
 ---
 

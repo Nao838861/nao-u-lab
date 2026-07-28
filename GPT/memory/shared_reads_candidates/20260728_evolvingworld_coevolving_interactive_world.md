@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2607.17250"
 collected_at: "2026-07-28T09:48:58.2988163+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, interactive-narrative, role-play-agent, world-model, long-horizon-simulation]
+evaluated_at: "2026-07-28T09:54:16+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-28T09:54:16+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-28T09:54:16+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-27"
+supersedes: []
+gate_reason: |-
+  Character Agent と World Model、7 task、trajectory-level 評価という骨格は具体的で、長期 narrative の状態管理へ接続できる。
+  ただし候補本文は abstract 相当で、state update の形式、baseline、20 metric の実測差、破綻例がなく、CoopEval 水準の概要には一次資料の追加読解が必要。
 ---
 
 ## raw_excerpt

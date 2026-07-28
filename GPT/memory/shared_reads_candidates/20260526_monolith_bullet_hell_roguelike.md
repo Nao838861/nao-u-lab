@@ -4,20 +4,20 @@ url: https://www.gamedeveloper.com/design/mixing-bullet-hell-shmup-with-roguelik
 collected_at: 2026-05-26T13:21:25+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, shmup, roguelike, procedural-generation, difficulty]
-evaluated_at: 2026-05-26T13:23:58+09:00
+evaluated_at: "2026-07-28T09:54:16+09:00"
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-26T13:23:58+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-26T13:23:58+09:00"
-stale_after: "2026-06-25"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-28T09:54:16+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T09:54:16+09:00"
+stale_after: "2026-08-27"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |-
-  bullet hell と roguelike を混ぜる時の部屋単位の安全網、敵行動差、回復設計は具体的に使える。
-  ただし候補本文だけでは問題設定から評価・結論までを CoopEval 水準の概要に伸ばす根拠が薄く、Phase 3 投稿には追加確認が必要。
+  手作り部屋の再結合、安全網、敵行動差は具体的だが、候補本文は設計者の説明を整理した範囲に留まり、比較・検証・失敗条件がない。
+  前回評価後の根拠追加もなく、4000字へ伸ばすと一般的な roguelike 設計論の水増しになるため、投稿候補としては閉じて参照用に残す。
 
 ---
 
