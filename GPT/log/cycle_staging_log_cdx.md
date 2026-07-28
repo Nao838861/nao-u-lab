@@ -154,7 +154,101 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-07-29 00:00 JST / log_cdx
+
+```yaml
+cleaned:
+  - "python tools/validate_memory_index.py で MEMORY.md の entry section と per-file atom index の一致を確認した（broken link 0件）。"
+  - "memory_health と duplicate cluster check で atoms.jsonl / per-file / index 各2779件、欠落・parse error・content conflict 0件、重複45 group は canonical overlay で fold 済み、effective display unresolved 0件を確認した。"
+  - "shared-reads の title canonical index 74件、mixed duplicate queue 44件、open duplicate group queue 51件（mixed 44 / all_open 7）を check し、group-action queue は actionable 0件だった。"
+  - "stale triage を live lease 反映順で再生成し、candidate handoff 5件を Phase 2 向けに冪等 enqueue した。candidate 本体は変更していない。"
+  - "Slack directives / broadcasts は pending 0件で、handled へ更新すべき行はなかった。"
+candidate_lifecycle:
+  posted: 512
+  ready_to_post: 9
+  postponed: 236
+  failed: 380
+  needs_review: 3
+  audit_excluded_unreviewed: 3
+  overdue_open_total: 24
+raw_archive_audit:
+  older_than_30_days: 96
+  action: none
+  reason: "slack_archive 原本と web research の一次資料が中心で、参照関係を壊さず archive できる証拠がないため、この cycle では移動しない。"
+issues:
+  - id: ISS-UTF8-001
+    description: "shared-reads atom 1件の title / trigger / excerpt に U+FFFD が保存され、「AIエージェント」が「AIエ��ジェント」になっている。game-rights atom の別の1件は原文の意図的な `???` を detector が拾った false positive で、source corruption ではない。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みで raw Slack archive、atoms.jsonl、per-file atom の全てに U+FFFD を確認。memory/MEMORY.md は代表語 `記憶` / `ゲーム設計` / `敵パターン` / `評価軸` を UTF-8 で取得でき、本文破損なし。"
+    display_or_tooling_status: "PowerShell Get-Content -Encoding UTF8 と rg の双方で同じ文字列を取得したため、表示経路だけの mojibake ではない。"
+    why_blocks_game_memory: "file-system memory / context engineering の atom を正しい日本語 title で検索する recall を1件だけ弱める。影響は局所的で、現在の index 全体やゲーム task entry point は壊していない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 24
+  stale_triage_queue_rows: 18
+  open_duplicate_group_count: 51
+  mixed_group_count: 44
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  deferred_live_group_lease_count: 1
+  candidate_handoff_enqueued_count: 5
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-fab1ca89bac368bf
+    - cha-461b454a8e50d7a6
+    - cha-32ebaaadb272241b
+    - cha-6f8a03dee911b3aa
+    - cha-6c01d5bc54f5257f
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-fab1ca89bac368bf
+    path: memory/shared_reads_candidates/20260612_commercial_videogames_hci_cogsci.md
+    status: postponed
+    stale_after: "2026-07-12"
+    priority_reason: "HCI / cognitive science の観察 toolkit は有用だが、affordance-cognition mapping と評価手順の本文補強が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-461b454a8e50d7a6
+    path: memory/shared_reads_candidates/20260612_containment_gap_agentic_frameworks.md
+    status: postponed
+    stale_after: "2026-07-12"
+    priority_reason: "ゲーム制作 cycle の containment gate に接続できるが、six containment principles の具体が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-32ebaaadb272241b
+    path: memory/shared_reads_candidates/20260612_genai_game_development_qual_synthesis.md
+    status: postponed
+    stale_after: "2026-07-12"
+    priority_reason: "synthesis 手順と production 接続は重要だが、10件の eligible studies と theme の具体的な読解が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-6f8a03dee911b3aa
+    path: memory/shared_reads_candidates/20260612_radical_gender_neutrality_games.md
+    status: postponed
+    stale_after: "2026-07-12"
+    priority_reason: "対象は重要だが empirically-grounded criteria の中身が未抽出で、現状は abstract 相当。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-6c01d5bc54f5257f
+    path: memory/shared_reads_candidates/20260614_flavors_of_challenge_difficulty_taxonomy.md
+    status: postponed
+    stale_after: "2026-07-14"
+    priority_reason: "difficulty を複数 flavor に分ける軸は実用的だが、8分類の名称・定義・組合せ例が未抽出。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
