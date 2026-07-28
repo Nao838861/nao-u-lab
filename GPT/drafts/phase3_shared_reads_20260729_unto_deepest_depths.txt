@@ -1,0 +1,39 @@
+■ 概要
+『Unto Deepest Depths』は、個人開発者 Jason McCollum が、成立しなかった strategy game を中止し、短期間で検証できる小規模 tactics へ転換して完成させた過程のポストモーテムである。出発点は、「安全な定位置を見つけ、敵が射程へ来るまで籠もる」最適解を一つの制約で壊すことだった。“All units must move and attack on their turn.”、つまり全 unit は毎 turn 必ず移動と攻撃を行う。これにより安全地帯へ固定できず、味方の射線、friendly fire、次 turn の退路まで考える配置 puzzle が生まれる。
+
+著者は約1か月の part-time 開発で25の固定 level、最終版の約半数の unit、5 biome の初期版を作り、面白さと一人で制作可能な規模を確認した。当初は固定問題を解く puzzle game の予定だったが、副次要素の battle generator に発展性を感じ、主軸を roguelite へ転換した。固定 level は製品版から消えたが、ルールと実装を検証する fixture となり、level 駆動コードは tutorial に再利用された。
+
+roguelite 化で必要になったのが、run の進行に応じて戦闘を生成する共通尺度である。boss 以外の戦闘は point-buy 方式で、各 enemy に相対的な強さを表す cost を付け、world ごとに出現候補と抽選確率を持たせる。player の累積獲得 XP を関数へ入力して battle budget を算出し、generator は候補を引いて budget を使い切るまで enemy を追加する。これにより「budget 20 の区間は易しすぎる」「budget 40 は難しすぎる」のように、異なる敵編成を一つの軸で比較できた。ただし enemy cost、world pool、depth や background の modifier は testing と手調整を必要とし、budget は強さを自動発見する仕組みではない。
+
+もう一つの転機は、小さい数値を守るための再スケーリングだった。health 1〜4、enemy damage 1〜2という設計は、一撃や HP +1 の意味を明瞭にする反面、唯一の通貨である XP の cost を1動かすだけで upgrade の価値が激変し、難度が「易しすぎる／難しすぎる」の間を往復した。公開 demo の反応を受け、著者は全 XP 値を2倍にして刻み幅を増やした。さらに、player は XP を得ても二戦以上使えない状態を一様に不満としたため、upgrade を world 単位で値付けする考えを捨て、「何 battle で届くか」へ尺度を変えた。最終的には常に一戦以内に何らかの upgrade へ届き、各戦闘が目標への可視的な前進になるよう設計した。
+
+評価は統制実験ではなく段階的な実制作の観察である。固定面の proof of concept、Steam demo の Form と SNS・Discord の反応、近しい人の test、Discord volunteer による約1か月の full-game playtest が使われた。外部 test で random 初期配置、状態の読みにくさ、行動不能 unit の攻撃予告、event の弱さが問題化し、手動配置、status icon、潜在攻撃の UI、event の刷新が入った。著者はこの期間に製品の最終形ができたと結論している。
+
+■ 内容分析
+この事例の価値は、完成した roguelite の個別 mechanic よりも、未知の面白さをどの順番で確かめたかにある。最初から procedural generation、meta progression、多数の content を同時に作らず、まず固定 level で「強い一文のルールが局所的な意思決定を繰り返し生むか」を検証した。その後、成立した戦闘を複数回つなぐ段階で初めて budget と progression を導入している。製品形式は puzzle から roguelite へ変わっても、最初の検証対象である move-and-attack 制約は残った。これは prototype の成功を「当初企画を守れたか」ではなく、「後続判断に使える証拠を得たか」で測る好例である。
+
+battle budget も、生成品質の万能解ではなく、調整会話の座標系として読むべきだ。編成が違っても同じ budget 上で比較できるので、難度報告を再現可能な区間へ結び付けられる。一方、cost は unit 間の相互作用、map、抽選確率、player build によって非線形に変わる。特定の組合せが budget の加算仮定を破る可能性もある。記事は testing が多く必要だったと述べるが、勝率、run 到達率、編成別の分散は提示していない。従って得られるのは「budget が調整を可能にした」という制作知見であり、「この式で公平な戦闘を保証できる」という一般則ではない。
+
+map を完全生成せず、手作り pool と一部 trap の random 化に留めた判断も重要である。罰の重いゲームでは、生成器の失敗が player 自身の失敗として読まれると信頼を壊す。著者は多様性より公平性を優先したが、その代償として制作量と map の反復感を引き受けた。つまり procedural 化の境界は技術力ではなく、「失敗した生成を一回の run が許容できるか」で決めている。
+
+demo は検証に役立った一方、著者自身が一か月ほど早すぎ、粗い visual と brutal な balance が第一印象を弱めたと評価している。外部観測を始める最小品質と、後から回収できない第一印象は別の制約である。外部 playtest が決定的だったのは、悪い build のまま時間を浪費させず、短い修正 loop を回したからだと読める。
+
+■ 自分達の環境への適用
+小規模 tactics prototype では、最初の playable diff を「一つの強制ルール＋10〜20個の固定 encounter」に絞る。各 encounter は勝てるかだけでなく、同じ安全行動の反復を崩した回数、friendly fire や位置交換など狙った dilemma が発生した回数、初見で結果を予測できたかを headless log と画面確認の両方で記録する。ここで成立しなければ content や meta progression を増やさず core rule を変える。成立した固定 encounter は、後で tutorial、regression test、generator の基準ケースとして残す。
+
+procedural encounter を導入する時は、enemy ごとの暫定 cost、出現 pool、進行値から得る budget を明示し、生成 seed とともに保存する。headless 評価では budget 帯ごとの勝率だけでなく、turn 数、被 damage、行動不能、再現不能な詰み、同一 enemy 組合せの偏りを見る。特に実測難度が予測 budget から大きく外れた編成を「相互作用残差」として集め、cost の単純加算で扱えない組合せを blacklist や synergy modifier に戻す。これなら budget を真実として固定せず、誤差を発見する仮説として使える。
+
+数値設計では、表示値の小ささと内部調整単位を分けて考える。cost を1動かしただけで選択順位が反転するなら、先に全体系を2倍または4倍へ再スケールし、調整可能な中間点を作る。reward は総量だけでなく「次の意味ある支出までの battle 数」で観測し、各戦闘後に少なくとも一つ選択可能な変化があるかを記録する。ただし常時購入可能にすること自体を規則化せず、長期目標を待つ楽しさを狙う作品では、待機が退屈なのか期待なのかを別に測る。
+
+外部 playtest では、友人 test の後に開発文脈を知らない少人数へ同じ build を渡す。報告項目は balance だけでなく、初期配置を制御したかった場面、状態 icon の見落とし、攻撃対象の誤認、報酬を得ても前進を感じない場面に分ける。各 build で仮説を残し、次 build で同じ摩擦が減ったかを見る。制作記録には「どの観測が判断を変えたか」を保存する。
+
+■ メリット・デメリット
+メリットは、固定 encounter を使うことで core rule、content、生成器、progression の失敗を分離できること、budget により異なる編成を共通尺度で比較できること、再スケーリングにより小さい表示値の手触りを保ったまま調整解像度を増やせること、外部 playtest を UI と control の具体的変更へ接続していることである。捨てた固定面も tutorial と regression 資産に変わるため、方向転換の損失が小さい。
+
+デメリットは、enemy cost と modifier が依然として人手の推定で、相性や map による非線形性を隠しやすいこと、手作り map pool が公平性と引き換えに制作負荷と反復感を増すこと、記事に比較群や telemetry の数値がなく改善量を再計算できないこと、Discord volunteer の詳細な feedback と高頻度修正を再現できるとは限らないことである。公開 demo の早さも、学習量を増やす一方で第一印象を損ねうる。
+
+■ 判定
+部分採用。固定 encounter を core rule の検証資産として残す順序、battle budget を難度仮説とログの共通座標にする方法、値を丸ごと再スケールして調整幅を作る判断、報酬を「支出までの戦闘数」で見る観点は、そのまま小規模 tactics 制作へ移せる。一方、point-buy の加算モデル、手作り map pool、常に一戦以内の upgrade は作品固有の仮定であり、headless の実測分布と画面上の予測可能性を併用して採否を決める。
+
+■ URL
+https://shaggydev.com/2026/02/12/udd-postmortem/
