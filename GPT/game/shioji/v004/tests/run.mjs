@@ -31,6 +31,9 @@ import {
   GOODS_SPRITE_IDS, goodsSpriteDefinition, goodsSpriteGeometrySignature,
   goodsSpriteSvgMarkup,
 } from '../src/goods_sprites.js';
+import {
+  GOODS_DISCOVERY_SCRIPTS, createGoodsDiscovery,
+} from '../src/goods_discovery.js';
 import { movementVector, panCameraFromKeys, shouldIgnoreShortcut } from '../src/keyboard.js';
 import {
   analyzeRoadConnections, previewBuildingPlacement, previewRoadPlacement,
@@ -41,6 +44,7 @@ import {
 } from '../src/presentation.js';
 import { mergeDrawables } from '../src/render_scene.js';
 import { Renderer } from '../src/renderer.js';
+import { createSavePayload, parseSaveText } from '../src/save_game.js';
 import {
   SPRING_START_CALENDAR_OFFSET_DAYS, START_MODES, parseStartMode, urlForStartMode,
 } from '../src/start_modes.js';
@@ -2209,7 +2213,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.38.0-winter-visuals');
+  assert.equal(VERSION, 'v004.39.0-goods-discovery');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -3761,7 +3765,10 @@ test('UI向上段9: 需給を独立表示し、統計は収支と既定3グラ�
   assert.equal(summary.net, summary.income - summary.expense);
   assert.equal(DENARI_PER_MONEY_UNIT, 10);
   assert.equal(toDenari(summary.funds), model.companyMoney * 10);
-  assert.equal(supplyDemandRows(model, [], Object.keys(GOODS_LABELS)).length, 18);
+  const matureDiscovery = createGoodsDiscovery({
+    goodsIds: Object.keys(GOODS_LABELS), mode: 'test', model,
+  });
+  assert.equal(supplyDemandRows(model, [], matureDiscovery.knownGoods()).length, 18);
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
   const supply = fs.readFileSync(new URL('../src/supply_demand.js', import.meta.url), 'utf8');
@@ -3777,6 +3784,96 @@ test('UI向上段9: 需給を独立表示し、統計は収支と既定3グラ�
   assert.match(main, /GOODS_ART\[goods\]\?\.color/);
   assert.match(main, /formatNumber\(toDenari\(model\.companyMoney\)\)/);
   assert.match(main, /formatQuantity\(toDenari\(row\.amount\)\)/);
+});
+
+test('品目の出会い開示: 未開拓は空、見本の町は18品、保有履歴は再消費後も残る', () => {
+  const goodsIds = Object.keys(GOODS_LABELS);
+  const blank = createGoodsDiscovery({
+    goodsIds,
+    mode: 'sandbox',
+    model: { day: 0, goodsManifest: [] },
+  });
+  assert.deepEqual(blank.knownGoods(), []);
+  assert.equal(blank.currentMessage(), null);
+
+  const first = blank.observe({
+    day: 12,
+    goodsManifest: [
+      { goods: 'log', totalAmount: 3 },
+      { goods: 'stone', totalAmount: 2 },
+    ],
+  });
+  assert.deepEqual(first.discovered, ['log', 'stone']);
+  assert.deepEqual(blank.knownGoods(), ['log', 'stone']);
+  assert.equal(first.message.speech, GOODS_DISCOVERY_SCRIPTS.log);
+
+  const sameDay = blank.observe({
+    day: 12,
+    goodsManifest: [
+      { goods: 'log', totalAmount: 3 },
+      { goods: 'stone', totalAmount: 2 },
+      { goods: 'fish', totalAmount: 1 },
+    ],
+  });
+  assert.deepEqual(sameDay.discovered, ['fish']);
+  assert.deepEqual(blank.currentMessage().goods, ['log', 'fish']);
+  assert.equal(
+    blank.currentMessage().speech,
+    `${GOODS_DISCOVERY_SCRIPTS.log}${GOODS_DISCOVERY_SCRIPTS.fish}`,
+    '同日の複数品は1件のエレナ発話にまとめる',
+  );
+  assert.equal(blank.markAnnounced(blank.currentMessage().id), true);
+  blank.observe({ day: 13, goodsManifest: [] });
+  blank.observe({ day: 14, goodsManifest: [{ goods: 'log', totalAmount: 1 }] });
+  assert.equal(blank.currentMessage(), null, '消費後に再保有しても再び発話しない');
+
+  const restored = createGoodsDiscovery({
+    goodsIds, mode: 'sandbox', state: blank.readState(),
+  });
+  assert.deepEqual(restored.knownGoods(), blank.knownGoods());
+  assert.equal(restored.currentMessage(), null);
+  const saveController = createEngineController({ seed: 11, mode: 'sandbox' });
+  const savePayload = createSavePayload({
+    gameVersion: VERSION,
+    mode: 'sandbox',
+    engineState: saveController.saveState(),
+    inputJournal: saveController.inputJournal(),
+    goodsDiscovery: restored.readState(),
+  });
+  assert.deepEqual(
+    parseSaveText(JSON.stringify(savePayload)).goodsDiscovery,
+    restored.readState(),
+    '既知集合と発話済み集合を通常セーブで往復する',
+  );
+
+  const mature = createGoodsDiscovery({
+    goodsIds, mode: 'test', model: { day: 0, goodsManifest: [] },
+  });
+  assert.deepEqual(mature.knownGoods(), goodsIds);
+  assert.equal(mature.currentMessage(), null);
+});
+
+test('品目の出会い台本: 8品だけに専用文を持ち、数字・名詞・平易語で性質を示す', () => {
+  assert.deepEqual(
+    Object.keys(GOODS_DISCOVERY_SCRIPTS),
+    ['salt', 'char', 'pres', 'pick', 'wheat', 'fish', 'log', 'tools'],
+  );
+  for (const speech of Object.values(GOODS_DISCOVERY_SCRIPTS)) {
+    assert.match(speech, /ました。.+。$/);
+    assert.doesNotMatch(speech, /細る|息づく|恵み|気配|豊か/);
+  }
+  const route = secretaryRouteFor({
+    discovery: {
+      id: 'goods-discovery-12-log',
+      day: 12,
+      goods: ['log'],
+      speech: GOODS_DISCOVERY_SCRIPTS.log,
+    },
+    fallback: { priority: 'fallback', speech: '待機中です。' },
+  });
+  assert.equal(route.priority, 'goods-discovery');
+  assert.equal(route.target.kind, 'goods-discovery');
+  assert.equal(route.speech, GOODS_DISCOVERY_SCRIPTS.log);
 });
 
 test('通貨表示: engine内部値はfactsを変えず10倍のデナリで示す', () => {

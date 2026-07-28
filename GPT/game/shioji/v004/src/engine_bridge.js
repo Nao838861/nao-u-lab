@@ -6,23 +6,23 @@ export {
   householdClass,
   householdProductionSummary,
   productionCost,
-} from '../../engine/src/econ.js?v=v004.38.0-winter-visuals';
-import { P } from '../../engine/src/econ.js?v=v004.38.0-winter-visuals';
-import { createEngineApi } from '../../engine/src/api.js?v=v004.38.0-winter-visuals';
+} from '../../engine/src/econ.js?v=v004.39.0-goods-discovery';
+import { P } from '../../engine/src/econ.js?v=v004.39.0-goods-discovery';
+import { createEngineApi } from '../../engine/src/api.js?v=v004.39.0-goods-discovery';
 import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
   buildBaseCity,
   makeStableCityPlan,
-} from '../../engine/src/audit.js?v=v004.38.0-winter-visuals';
-import { createPhysicalState, makeFlowIslandTerrain, makeMultiMarketTerrain } from '../../engine/src/physical.js?v=v004.38.0-winter-visuals';
-import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.38.0-winter-visuals';
-import { createViewController } from './controller.js?v=v004.38.0-winter-visuals';
+} from '../../engine/src/audit.js?v=v004.39.0-goods-discovery';
+import { createPhysicalState, makeFlowIslandTerrain, makeMultiMarketTerrain } from '../../engine/src/physical.js?v=v004.39.0-goods-discovery';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.39.0-goods-discovery';
+import { createViewController } from './controller.js?v=v004.39.0-goods-discovery';
 import {
   SPRING_START_CALENDAR_OFFSET_DAYS,
   START_MODES,
-} from './start_modes.js?v=v004.38.0-winter-visuals';
+} from './start_modes.js?v=v004.39.0-goods-discovery';
 
 export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS };
 export { makeMultiMarketTerrain };

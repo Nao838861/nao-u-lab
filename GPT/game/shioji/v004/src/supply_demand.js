@@ -1,7 +1,7 @@
 import {
   FOOD_GOODS, WINTER_RESERVE_PER_PERSON,
-} from './food_readability.js?v=v004.38.0-winter-visuals';
-import { toDenari } from './config.js?v=v004.38.0-winter-visuals';
+} from './food_readability.js?v=v004.39.0-goods-discovery';
+import { toDenari } from './config.js?v=v004.39.0-goods-discovery';
 
 export const SUPPLY_STATUS = Object.freeze({
   sufficient: Object.freeze({ severity: 0, label: '足りてる' }),

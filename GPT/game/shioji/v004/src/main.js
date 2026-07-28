@@ -1,43 +1,44 @@
-import { IsometricCamera } from './camera.js?v=v004.38.0-winter-visuals';
-import { SimulationClock } from './clock.js?v=v004.38.0-winter-visuals';
+import { IsometricCamera } from './camera.js?v=v004.39.0-goods-discovery';
+import { SimulationClock } from './clock.js?v=v004.39.0-goods-discovery';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.38.0-winter-visuals';
+} from './config.js?v=v004.39.0-goods-discovery';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.38.0-winter-visuals';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.38.0-winter-visuals';
-import { developmentMapView } from './development_map.js?v=v004.38.0-winter-visuals';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.38.0-winter-visuals';
-import { formatElenaSpeech } from './elena_text.js?v=v004.38.0-winter-visuals';
+} from './display_batch.js?v=v004.39.0-goods-discovery';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.39.0-goods-discovery';
+import { developmentMapView } from './development_map.js?v=v004.39.0-goods-discovery';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.39.0-goods-discovery';
+import { formatElenaSpeech } from './elena_text.js?v=v004.39.0-goods-discovery';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.38.0-winter-visuals';
+} from './food_readability.js?v=v004.39.0-goods-discovery';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.38.0-winter-visuals';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.38.0-winter-visuals';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.38.0-winter-visuals';
-import { WorldPresentation } from './presentation.js?v=v004.38.0-winter-visuals';
-import { Renderer } from './renderer.js?v=v004.38.0-winter-visuals';
+} from './keyboard.js?v=v004.39.0-goods-discovery';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.39.0-goods-discovery';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.39.0-goods-discovery';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.39.0-goods-discovery';
+import { WorldPresentation } from './presentation.js?v=v004.39.0-goods-discovery';
+import { Renderer } from './renderer.js?v=v004.39.0-goods-discovery';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.38.0-winter-visuals';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.38.0-winter-visuals';
+} from './save_game.js?v=v004.39.0-goods-discovery';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.39.0-goods-discovery';
 import {
   GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRows,
-} from './supply_demand.js?v=v004.38.0-winter-visuals';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.38.0-winter-visuals';
+} from './supply_demand.js?v=v004.39.0-goods-discovery';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.39.0-goods-discovery';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.38.0-winter-visuals';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.38.0-winter-visuals';
+} from './ui_guidance.js?v=v004.39.0-goods-discovery';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.39.0-goods-discovery';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -62,6 +63,13 @@ const camera = new IsometricCamera();
 const renderer = new Renderer(canvas, camera);
 const clock = new SimulationClock({ speedIndex: requestedStartMode || startupSave ? 1 : 0 });
 let model = controller.readModel();
+const goodsDiscovery = createGoodsDiscovery({
+  goodsIds: Object.keys(GOODS_LABELS),
+  mode: startMode,
+  model,
+  state: startupSave?.goodsDiscovery ?? null,
+  suppressInitialAnnouncements: Boolean(startupSave && !startupSave.goodsDiscovery),
+});
 const tutorialDirector = createTutorialDirectorForMode(startMode, {
   state: startupSave?.tutorialState ?? null,
 });
@@ -264,7 +272,7 @@ function goodsIconMarkup(goods) {
 }
 
 function currentSupplyRows() {
-  return supplyDemandRows(model, economyHistory, Object.keys(GOODS_LABELS));
+  return supplyDemandRows(model, economyHistory, goodsDiscovery.knownGoods());
 }
 
 function formatSupplyDays(days) {
@@ -315,7 +323,7 @@ function renderSupplySheet() {
   });
   const signature = JSON.stringify({ rows, focusedSupplyGoods, networkSignature });
   renderIfChanged('supply-grid', signature, () => {
-    $('#supply-grid').innerHTML = rows.map(row => {
+    $('#supply-grid').innerHTML = rows.length ? rows.map(row => {
       const supplyTotal = row.produced + row.imported;
       const demandObserved = row.consumed + row.exported;
       const winterExtra = Math.max(0, row.dailyNeed - demandObserved);
@@ -350,7 +358,7 @@ function renderSupplySheet() {
           <span class="supply-number ${trendClass}"><small>相場</small><b>${row.price === null ? '—' : `${formatQuantity(row.price)}D ${row.priceTrend.arrow}`}</b></span>
         </span>
       </button>`;
-    }).join('');
+    }).join('') : '<p class="sheet-note goods-empty">まだ島に品がありません</p>';
     uiMetrics.domWrites += 1;
   });
 }
@@ -408,6 +416,7 @@ function refreshModel({ animate = false, baseSeconds = 0.12 } = {}) {
   if (animate) presentation.enqueue(nextModel, events, baseSeconds);
   else displayModel = presentation.reset(nextModel);
   model = nextModel;
+  goodsDiscovery.observe(model);
   recordEconomyHistory(model);
   guidanceDirector.observe(model, events);
   if (model.day > 0 && model.day % 5 === 0 && model.day !== lastAutosaveDay) {
@@ -1005,7 +1014,8 @@ function renderCompanyOrder() {
 }
 
 function renderCompanyGoods() {
-  const signature = JSON.stringify(Object.keys(GOODS_LABELS).map(goods => [
+  const visibleGoods = goodsDiscovery.knownGoods();
+  const signature = JSON.stringify(visibleGoods.map(goods => [
     goods,
     model.companyStock[goods] ?? 0,
     model.stockTargets[goods] ?? 0,
@@ -1016,7 +1026,7 @@ function renderCompanyGoods() {
     stockTargetFeedback.get(goods) ?? null,
   ]));
   renderIfChanged('company-goods', signature, () => {
-    $('#company-goods').innerHTML = Object.keys(GOODS_LABELS).map(goods => {
+    $('#company-goods').innerHTML = visibleGoods.length ? visibleGoods.map(goods => {
       const stock = model.companyStock[goods] ?? 0;
       const target = Math.round(model.stockTargets[goods] ?? 0);
       const targetValue = stockTargetDrafts.has(goods) ? stockTargetDrafts.get(goods) : target;
@@ -1034,7 +1044,7 @@ function renderCompanyGoods() {
           <label class="release-editor"><span>市場へ出す量</span><input data-release-qty type="number" min="1" max="${Math.max(1, Math.floor(stock))}" step="1" value="${escapeHtml(releaseValue)}" aria-label="${GOODS_LABELS[goods]}を市場へ出す量"><small>荷</small></label>
           <button type="button" data-company-action="release-stock" data-goods="${goods}" ${stock < 1 ? 'disabled' : ''}>市場へ出す</button>
         </div>`;
-    }).join('');
+    }).join('') : '<p class="sheet-note goods-empty">まだ島に品がありません</p>';
     uiMetrics.domWrites += 1;
   });
 }
@@ -1203,6 +1213,7 @@ function renderSecretary() {
     handoff: currentTutorialHandoff,
     objective: tutorialDirector?.isComplete() ? null : objective,
     objectiveAction: currentTutorialAction,
+    discovery: goodsDiscovery.currentMessage(),
     events: secretaryEventsAfter(eventLog, lastDeliveredSecretaryEventSequence),
     fallback: secretaryFallback(),
   });
@@ -1246,6 +1257,8 @@ function scheduleSecretaryDelivery(route) {
       ? guidanceReadingTimeMs(route.speech, { minimumMs: OPTIONAL_LETTER_MINIMUM_MS })
       : delivery === 'message'
         ? guidanceReadingTimeMs(route.speech, { minimumMs: TUTORIAL_MESSAGE_MINIMUM_MS })
+        : delivery === 'goods-discovery'
+          ? guidanceReadingTimeMs(route.speech, { minimumMs: TUTORIAL_MESSAGE_MINIMUM_MS })
         : transientAdvice
           ? guidanceReadingTimeMs(route.speech, { minimumMs: INFO_ADVICE_MINIMUM_MS })
         : delivery === 'event'
@@ -1277,6 +1290,7 @@ function scheduleSecretaryDelivery(route) {
     }
     if (delivery === 'letter') tutorialDirector?.markLetterAnnounced(target.id);
     else if (delivery === 'message') tutorialDirector?.markLetterRead(target.id);
+    else if (delivery === 'goods-discovery') goodsDiscovery.markAnnounced(target.id);
     else if (transientAdvice) guidanceDirector.markAdviceRead(target.id);
     else if (delivery === 'event') {
       lastDeliveredSecretaryEventSequence = Math.max(
@@ -1795,6 +1809,7 @@ function currentSavePayload() {
     engineState: controller.saveState(),
     inputJournal: controller.inputJournal(),
     tutorialState: tutorialDirector?.readState() ?? null,
+    goodsDiscovery: goodsDiscovery.readState(),
     economyHistory,
   });
 }
@@ -2348,6 +2363,8 @@ window.__SHIOJI_V004__ = Object.freeze({
   get pressedMovementKeys() { return [...pressedMovementKeys]; },
   get eventLog() { return eventLog.map(row => ({ ...row })); },
   get economyHistory() { return structuredClone(economyHistory); },
+  get discoveredGoods() { return goodsDiscovery.knownGoods(); },
+  get goodsDiscoveryState() { return goodsDiscovery.readState(); },
   presentation,
   performanceMetrics,
   resetPerformanceMetrics,

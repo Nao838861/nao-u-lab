@@ -14,6 +14,7 @@ export function createSavePayload({
   engineState,
   inputJournal = [],
   tutorialState = null,
+  goodsDiscovery = null,
   economyHistory = [],
   savedAt = new Date().toISOString(),
 }) {
@@ -41,6 +42,7 @@ export function createSavePayload({
     engineState,
     inputJournal,
     tutorialState,
+    goodsDiscovery,
     economyHistory,
   });
 }
@@ -60,6 +62,10 @@ export function validateSavePayload(value) {
   }
   if (!Array.isArray(value.inputJournal) || !Array.isArray(value.economyHistory)) {
     throw new Error('操作記録または統計記録が壊れています');
+  }
+  if (value.goodsDiscovery !== undefined && value.goodsDiscovery !== null
+    && typeof value.goodsDiscovery !== 'object') {
+    throw new Error('品目の出会い記録が壊れています');
   }
   return clone(value);
 }

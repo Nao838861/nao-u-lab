@@ -151,7 +151,7 @@ export function tutorialSpeedAfterObjectiveChange({
 
 export function secretaryRouteFor({
   letters = [], messages = [], advice = [], handoff = null, objective = null, objectiveAction = null,
-  events = [], fallback = null,
+  discovery = null, events = [], fallback = null,
 } = {}) {
   const deliveryOf = letter => letter.delivery
     ?? (letter.attention === 'critical' ? 'forced' : 'letter');
@@ -183,6 +183,17 @@ export function secretaryRouteFor({
       kicker: actionAdvice.kicker,
       title: actionAdvice.title,
       detail: actionAdvice.detail,
+    };
+  }
+  if (discovery && String(discovery.speech ?? '').trim()) {
+    return {
+      priority: 'goods-discovery',
+      tier: 'notice',
+      target: { kind: 'goods-discovery', id: discovery.id },
+      speech: discovery.speech,
+      kicker: '新しい品',
+      title: discovery.goods.join('・'),
+      detail: `${discovery.day}日目に島で初めて保有`,
     };
   }
   if (handoff) {

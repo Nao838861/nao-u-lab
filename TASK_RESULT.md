@@ -1,44 +1,51 @@
-# 全面積雪と季節の絵の実装結果
+# 品目の出会い開示と出会いの一言の実装結果
 
 ## 実装
 
-- buildを`v004.38.0-winter-visuals`へ更新した。
-- 冬（実効暦12〜2月）は、水面を除く草地・砂地・森林・岩場・鉱床・炭田を雪色へ切り替える。
-- 季節を地形cache keyへ含め、季節境界でだけ地形cacheを焼き直す。全面積雪の毎フレームoverlayは追加していない。
-- 冬の針葉樹を雪色の樹冠へ切り替え、岩・鉱石・石炭の自然物上面へ冠雪を描く。
-- 冬の畑・牧草地は白い雪畝と一部だけ見える暗い畝で、雪に埋もれて春まで休む状態を文章なしで示す。
-- `calendarOffsetDays`を渡した`islandCalendar`の季節を描画へ使い、春開始の実効暦へ追従させた。経過271日目で冬、361日目で春へ戻る。
-- エンジン挙動、エレナの台本、`market_network`関連は変更していない。
+- buildを`v004.39.0-goods-discovery`へ更新した。
+- 需給と取引（買上げ目標・蔵出し）の品目一覧を、島が一度でも扱った品だけに絞った。
+- エレナ開拓とゼロから開拓は0枚で始まり、両一覧に「まだ島に品がありません」だけを表示する。
+- 見本の町は成熟経済として従来どおり18品を表示する。
+- 初保有を表示層で記録し、在庫が0になった後もカードを残す。記録はセーブデータへ保存し、再開後も維持する。
+- 移民の私有食料庫へ自動付与される開拓キットだけでは先行開示せず、島内生産・通常輸入・市場／会社／建物で実際に扱われた時点で開示する。これにより新規開拓の最初の丸太は1枚だけで登場する。
+- 専用台本対象が同日に複数登場した場合は1件のエレナ発話へまとめ、各品の発話済み状態もセーブする。
+- 専用台本のない品は無言でカードだけを追加する。
+- エンジン挙動、常設説明文、`market_network`、エレナの既存機械連結文は変更していない。
 
-## 実Chromeでの四季確認
+## 出会いの一言（全文）
 
-Google Chromeの隔離プロファイルと現在worktree専用のローカルサーバーを使い、`tests/browser_smoke.mjs --seasonal-plots-only`をdesktop（1440×900）とmobile（390×844）で実行した。
+1. 塩: 「塩が採れました。魚を保存食に、野菜を漬物に変えられます。」
+2. 木炭: 「木炭ができました。塩と保存食を作るために使います。」
+3. 保存食: 「保存食ができました。魚より長く保存できます。」
+4. 漬物: 「漬物ができました。野菜より長く保存できます。」
+5. 麦: 「麦が採れました。収穫は9月の年1回です。」
+6. 魚: 「魚が獲れました。3日で腐りますが、塩があれば保存食に変えられます。」
+7. 丸太: 「丸太が採れました。木製品と木炭に加工できます。」
+8. 木製品: 「木製品ができました。家の発展と木の荷車に使います。」
 
-- 結果: `CHARTER ISLE v004 seasonal plots smoke: PASS`
-- 春（経過361日・実効暦3月）: 緑の地形と通常色の樹木へ戻り、冬cacheからの焼き直しも確認した。
-- 夏（経過91日・実効暦6月）: 緑の地形・通常色の自然物を確認した。
-- 秋（経過181日・実効暦9月）: 畑・牧草地の枯れ色と秋色の樹木を確認した。
-- 冬（経過271日・実効暦12月）: 水面以外の地形全体が白く、針葉樹と岩の冠雪、畑・牧草地の埋もれた雪畝を確認した。
-- 保存先: `GPT/game/shioji/v004/tests/artifacts/winter-visuals/`（四季×desktop/mobileの8枚）
+## 実Chrome検証
 
-## 描画性能実測
+Google Chromeの隔離プロファイル、現在worktree専用のローカルサーバー、既設CDPスモークを使い、desktop（1440×900）とmobile（390×844）を確認した。
 
-変更前HEAD `v004.37.0-multi-market` と変更後 `v004.38.0-winter-visuals` を別ポートで配信し、同一の実Google Chrome、test world、1440×900、経過271日目（冬）、warmup 240 frames、240 frames×5 samplesの条件で`render_benchmark.mjs`を交互に3回ずつ実行した。
-
-| build | 各runのmedian frame | 3 run中央値 |
-|---|---:|---:|
-| 変更前 | 11.743 / 12.417 / 11.837 ms | 11.837 ms |
-| 変更後 | 12.919 / 11.785 / 12.171 ms | 12.171 ms |
-
-- 増加率: **+2.82%**（完了条件の+20%以内）
-- 3回すべてで`steadyHit`、pan時のinvalidate、cache canvas再利用、pan復帰後のhitが成立した。
-- 比較時のworld規模は両buildとも建物16、carrier 71、地形候補1920、静的描画350で一致した。
+- 実行: `SHIOJI_URL=http://localhost:8437/game/shioji/v004/ node tests/browser_smoke.mjs --goods-discovery-only`
+- 結果: `CHARTER ISLE v004 goods discovery smoke: PASS`
+- エレナ開拓の新規開始: 需給0枚、「まだ島に品がありません」を確認。
+- ゼロから開拓の新規開始: 需給0枚・取引0行、同じ空表示を確認。
+- 見本の町の新規開始: 需給18枚・取引18行を確認。
+- エレナ開拓で道と木こりを実配置し、25日目に丸太を初生産した時点で、需給が丸太1枚だけになり、エレナが「丸太が採れました。木製品と木炭に加工できます。」と発話することを確認。
+- スクリーンショット: `GPT/game/shioji/v004/tests/artifacts/goods_discovery_first_log.png`（1440×900、SHA-256 `9dd918cf7918cf07ddbaed70e36858050ebbdcae80d7ee245698e8fc9687af60`）
 
 ## テスト
 
-- `node tests/run.mjs --match '季節描画|暦オフセット'`: PASS（2件）
-- `node tests/run.mjs --match '季節描画|描画構造最適化|可視world|アイソメカメラ|レスポンシブHUD'`: PASS（5件）
-- `node tests/browser_smoke.mjs --seasonal-plots-only`: PASS（desktop/mobile）
-- `render_benchmark.mjs`: PASS（変更前・変更後とも各3回、全cache assert green）
+- `node tests/run.mjs --match '品目の出会い'`: PASS（2件）
+- `node tests/acceptance.mjs`: PASS（全章受け入れ、UI全8操作150日後とjournal再生が一致）
+- `node tests/browser_smoke.mjs --goods-discovery-only`: PASS（新規開始3モード + 初丸太の実Chrome確認）
+- `node tests/run.mjs`: 今回の新規テストを含む箇所まで実行し、既知のmaster不整合で停止。
+- `npm run test:unit`: 既知のmaster不整合で先頭停止。
+- `node tests/browser_smoke.mjs`: 品目開示に関係する新規開始・初丸太・需給・取引を通過後、既知の教程進行不整合で停止。
 
-全`node tests/run.mjs`も実行し、今回の季節描画テストを含む後半まで失敗なしで通過した。既知のmaster不整合`UI向上段9: 需給を独立表示し、統計は収支と既定3グラフへ整理する`（期待する`data-chart` 3件に対して実HTMLは4件）で停止した。この不整合は開始時の`TASK_RESULT.md`にも既存失敗として記録されており、今回の差分外である。
+既知のmaster不整合:
+
+- `tests/food_delivery_save.mjs`: 食料優先購入の期待6荷に対して現行エンジン実測3荷。
+- `tests/run.mjs`の`UI向上段9`: 既定グラフ期待3件に対して現行HTMLは4件。
+- `tests/browser_smoke.mjs`の教程書状進行: 83日目に注文完了を期待する箇所で、現行実測は木製品注文が32.1荷残って進行中。

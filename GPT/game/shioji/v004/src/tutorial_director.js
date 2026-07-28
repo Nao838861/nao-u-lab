@@ -3,7 +3,7 @@ import {
   TUTORIAL_ELENA_COMPLETIONS, TUTORIAL_ELENA_MESSAGES, TUTORIAL_LETTER_MESSAGES,
   TUTORIAL_PLAYER_TITLES, TUTORIAL_SYSTEM_INSTRUCTIONS,
   authorTutorialLetter, isRequiredTutorialGoal, isTutorialGoalUnlocked, tutorialLetterDelivery,
-} from './tutorial_content.js?v=v004.38.0-winter-visuals';
+} from './tutorial_content.js?v=v004.39.0-goods-discovery';
 
 const SAVE_VERSION = 1;
 
