@@ -30,8 +30,9 @@ export function recentCompanySummary(model, days = 30) {
   });
 }
 
-export function islandCalendar(day) {
-  const normalized = Math.max(1, Math.floor(Number(day) || 1));
+export function islandCalendar(day, calendarOffsetDays = 0) {
+  const offset = Number.isSafeInteger(calendarOffsetDays) ? calendarOffsetDays : 0;
+  const normalized = Math.max(1, Math.floor(Number(day) || 1)) + offset;
   const month = (Math.floor((normalized - 1) / 30) % 12) + 1;
   const dayOfMonth = ((normalized - 1) % 30) + 1;
   const year = Math.floor((normalized - 1) / 360) + 1;

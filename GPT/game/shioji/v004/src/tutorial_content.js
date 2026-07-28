@@ -11,6 +11,7 @@ import {
   islandFoodSummary,
   winterFoodForecast,
 } from './food_readability.js?v=v004.37.0-multi-market';
+import { islandCalendar } from './ui_summary.js?v=v004.37.0-multi-market';
 
 export { PLAYER_FACING_BANNED_TERMS };
 
@@ -1985,9 +1986,8 @@ export const TUTORIAL_ADVICE = Object.freeze([
     channel: 'message',
     repeatAfterDays: 300,
     evaluate({ model, previous = {} }) {
-      const day = Math.max(1, Math.floor(model.day ?? 1));
-      const month = (Math.floor((day - 1) / 30) % 12) + 1;
-      const year = Math.floor((day - 1) / 360) + 1;
+      const calendar = islandCalendar(model.day, model.calendarOffsetDays);
+      const { month, year } = calendar;
       const active = month === 9 && previous.announcedYear !== year;
       const food = islandFoodSummary(model);
       const forecast = winterFoodForecast(model);

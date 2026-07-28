@@ -1,3 +1,5 @@
+import { islandCalendar } from './ui_summary.js?v=v004.37.0-multi-market';
+
 export const FOOD_GOODS = Object.freeze([
   'fish', 'veg', 'wheat', 'pres', 'pick', 'meat',
 ]);
@@ -64,7 +66,7 @@ export function foodHudSummary(model, history = []) {
   )) ?? history[0] ?? null;
   const delta = baseline ? food.runwayDays - baseline.foodRunwayDays : 0;
   const arrow = delta <= -3 ? '↘↘' : delta <= -0.8 ? '↘' : '→';
-  const month = ((Math.max(1, Math.floor(model?.day ?? 1)) - 1) / 30 | 0) % 12 + 1;
+  const month = islandCalendar(model?.day, model?.calendarOffsetDays).month;
   const flow = FOOD_GOODS.reduce((totals, goods) => {
     const row = model?.flowEma?.[goods] ?? {};
     totals.produced += finiteAmount(row.prod);

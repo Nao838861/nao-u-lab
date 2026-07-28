@@ -1395,6 +1395,7 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
   const base = {
     day: snapshot.day,
     tick: snapshot.tick,
+    calendarOffsetDays: snapshot.calendarOffsetDays ?? 0,
     seed: snapshot.seed,
     companyMoney: snapshot.economy.company.money,
     productivity: productivity.island,

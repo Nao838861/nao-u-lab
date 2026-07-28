@@ -1,3 +1,5 @@
+export const SPRING_START_CALENDAR_OFFSET_DAYS = 60;
+
 export const START_MODES = Object.freeze({
   tutorial: Object.freeze({
     id: 'tutorial',
