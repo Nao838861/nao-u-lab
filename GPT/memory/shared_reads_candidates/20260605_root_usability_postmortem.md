@@ -4,20 +4,20 @@ url: "https://www.gdcvault.com/play/1027411/Board-Game-Design-Summit-Root"
 collected_at: "2026-06-05T21:44:25+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, usability, board-game, cognitive-load, postmortem]
-evaluated_at: "2026-06-05T21:48:11+09:00"
+evaluated_at: "2026-07-28T19:21:32+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-05T21:48:11+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-05T21:48:11+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-05"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-28T19:21:32+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T19:21:32+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-27"
 supersedes: []
 gate_reason: >-
-  複雑な非対称ゲームの usability、rules writing、component design、UX research という適用軸は強い。
-  ただし現候補は Vault 概要のみで、Root 固有の成功例・失敗例・研究手順が不足し、CoopEval 水準の概要には一次内容の追加確認が必要。
+  非対称ゲームの rules writing、component design、UX research という適用軸は強いが、候補内には Root 固有の成功例・失敗例・研究手順がない。
+  前回 postpone 後も Vault の紹介文以上の evidence が増えておらず、CoopEval 水準の postmortem 概要にできないため fail とする。
 ---
 
 ## raw_excerpt

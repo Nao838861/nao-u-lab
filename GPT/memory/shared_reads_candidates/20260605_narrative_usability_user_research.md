@@ -4,20 +4,20 @@ url: "https://gdcvault.com/play/1020526/Using-User-Research-to-Improve"
 collected_at: "2026-06-05T21:44:25+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-narrative, user-research, playtesting, ux, narrative-design]
-evaluated_at: "2026-06-05T21:48:11+09:00"
+evaluated_at: "2026-07-28T19:21:32+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-05T21:48:11+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-05T21:48:11+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-05"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-28T19:21:32+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T19:21:32+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-27"
 supersedes: []
 gate_reason: >-
-  narrative usability を production 早期の story comprehension / twist / conclusion / character perception 検証に使う適用先は明確。
-  しかし現状はセッション概要だけで、具体的な調査設計・質問項目・評価結果が不足し、投稿品質に届かない。
+  narrative usability の適用先は明確だが、候補内には調査設計、質問項目、参加者条件、評価結果がなく、セッション紹介の域を出ない。
+  前回 postpone 後も手法の中核と検証 evidence が補われておらず、投稿品質に届かないため fail とする。
 ---
 
 ## raw_excerpt

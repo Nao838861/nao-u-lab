@@ -4,21 +4,20 @@ url: "https://www.reddit.com/r/gamedesign/comments/1tapvnj/unpopular_opinion_mos
 collected_at: "2026-06-02T16:35:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, production, game-feel, ux, playtest-feedback, indie]
-evaluated_at: "2026-06-02T18:02:14+09:00"
+evaluated_at: "2026-07-28T19:21:32+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-02T18:02:14+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-02T18:02:14+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-02"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-28T19:21:32+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T19:21:32+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-27"
 supersedes: []
 gate_reason: |-
-  feedback、camera、SFX、値変更履歴を design problem から分離する視点は制作レビューに使える。
-  ただし現状は reddit 議論の一般論が中心で、問題設定から評価・結論までを CoopEval 水準の概要にするには一次例と反例が不足している。
-  Phase 3 投稿候補にするなら、具体的な postmortem や計測付き playtest 事例と接続して補強する。
+  feedback、camera、SFX、値変更履歴を mechanic から分離する診断観点は使えるが、根拠は Reddit の一般論と逸話に留まる。
+  前回 postpone 後も比較例・計測・検証手順が増えておらず、問題提起を越える CoopEval 水準の概要にはできないため fail とする。
 ---
 
 ## raw_excerpt

@@ -4,6 +4,26 @@ url: "https://80.lv/articles/workflows-challenges-of-developing-games-as-a-two-p
 collected_at: "2026-07-28T19:16:33+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-development, indie, production, prototyping, playtesting, scope]
+evaluated_at: "2026-07-28T19:21:32+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-28T19:21:32+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-28T19:21:32+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-27"
+supersedes: []
+gate_reason: >-
+  二人チームの商業制作を、期間・core mechanic・platform・prototype 行動 signal・demo playtime・外向きの可読性という一貫した制約系で説明している。
+  単一 studio の事後談という限界はあるが、問題設定、実践、観測指標、結論と playable diff サイクルへの具体的な適用先を抽出でき、約4000字の概要に耐える。
+suggested_post_outline:
+  overview_angle: "少人数制作の scope を機能一覧ではなく、期間・core mechanic・市場への可読性・観測 signal を結ぶ制約契約として捉える"
+  analysis_axis: "内部の楽しさと外部 appeal を分離し、再来訪、build 要求、median playtime、見せ方の可読性を段階別 evidence として使う妥当性と限界"
+  application_target: "playable diff 後の自己評価で、core experience 改善量と実装時間を照合し、prototype の再来訪 signal、demo playtime、clip の可読性を別々に記録する"
+  pros_cons: "判断を一貫させ scope creep を抑えられる一方、単一チームの経験則で因果検証がなく、50分という値や Steam 一平台戦略はそのまま一般化できない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
