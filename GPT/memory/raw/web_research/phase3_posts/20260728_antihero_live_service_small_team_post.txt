@@ -1,0 +1,35 @@
+■ 概要
+Metaplay の 2026 年 3 月の case study は、12 人の Antihero Studios が multiplayer extraction game『Misfitz』を live service として成立させるため、何を自作しないかを扱う。Misfitz は進行中の session へ途中参加する設計を持つ。記事時点では pre-alpha だが 70,000 件の sign-up があり、1週間から10日間の live-service 条件で複数回 playtest を実施している。
+
+出発点は、毎日戻るプレイヤーを運用するなら何が日常業務になるか、という要件定義である。config update、player segmentation、economy tooling、engineer への ticket なしに designer が使える dashboard、player 単位の障害追跡が必要になる。CTO は、mature な製品がある領域は作らず、既存解が足りない部分だけ custom build する方針を置いた。その結果、Unity、real-time simulation の Photon Quantum、profile、authentication、config、LiveOps の Metaplay へ責務を分け、Photon lobby 参加時の token validation を接点にした。
+
+最初に使っていた Nakama から Metaplay へ実 feature を 1〜2週間で branch migration し、合わなければ捨てる試験を行った。決め手は広告上の feature 数より、config と environment 管理の operational depth だった。約1年の日常利用では、player profile の同期・rollback、数千行×約20列の config spreadsheet で誤りを cell 単位に示す validation、Quantum lobby の custom dashboard、player 単位の exception history、構築済み Grafana dashboard が価値として挙げられる。managed cloud により専任 DevOps engineer を置かずに済んだ、というのが結論である。
+
+■ 内容分析
+中核は「小規模 team は BaaS を買うべき」という一般論ではなく、feature checklist を operational workflow へ翻訳して make-or-buy を決めた点にある。dashboard の有無でなく、designer が ticket なしで config を変えられるか、壊れた cell や特定 player の incident へ降りられるかを見る。更新と障害対応を毎日繰り返す摩擦が選定基準である。
+
+1〜2週間の branch migration では、実 feature を移して integration seam、data model、tooling の癖を触り、捨てられる時間上限を先に決めた。大規模負荷は Merge Mansion での実績を reference point としたが、これは検証を省略した部分でもある。既存例は Misfitz 固有の session、economy、障害分布、費用曲線を保証しない。authentication 境界、profile 整合性、config rollback、provider 障害は別に試す必要がある。
+
+Photon は real-time simulation、Metaplay はそれ以外、と分け、接続点を token validation に狭めたことで責任所在を置ける。一方「Metaplay for everything else」は結合範囲も広い。full source access や自前 hosting が可能でも、12人 team が fork を維持して安全に退出できるとは限らない。schema、運用手順、staff skill、過去データの移行費用は残る。
+
+証拠は複数の7〜10日 playtest、約1年の日常利用、実際の config 規模、専任 DevOps 不在である。しかし cost、concurrent player 数、uptime、recovery time、Nakama との同条件比較、移行人日は示されない。販売元自身の customer story で、pre-alpha から本番 launch と長期 economy 運用を越えた結論でもない。製品優位の証明ではなく、選定プロセスの事例として読むべきである。
+
+■ 自分達の環境への適用
+自分達のゲーム制作で直接採るべきなのは Metaplay 導入ではなく、「核となる遊び以外を作る前に、必要な運用行為と失敗時の観測を列挙し、短い real-feature probe で境界を試す」手順である。小規模 prototype では live-service stack 自体が過剰になりやすい。まず playable diff、面白さ、入力応答、replay 可能性を優先し、保存、remote config、player segmentation、dashboard が実際の反復を塞ぎ始めた時だけ基盤選定へ進む。
+
+make-or-buy メモには、運用行為、data ownership と同期境界、失敗時の log・rollback・復旧、自作・既製品・延期の判断を残す。製品比較の前に、その操作を何回行い何分失っているか測り、必要性が仮説のままなら導入しない。
+
+候補は1〜2日の branch probeへ縮める。固定 seed の小ゲームで save/load、config 更新、version mismatch、再接続、誤 config の拒否と rollback、player 単位の incident lookup を通す。headless 側では、同じ入力列から同じ state に戻るか、重複 request が二重付与を起こさないか、invalid config が本番相当環境へ届かないかを assertion にする。判断と捨てた理由も残す。
+
+記憶システムでも、新しい index を増やす前に、どの phase が書き、何が正本で、どの evidence から復旧するかを決める。candidate は再実行判断、staging は phase 間 receipt、Slack permalink は投稿証拠と責務を分ける。probe では dual-write の不一致、idempotency、古い state からの復元を検査し、維持負担が大きければ捨てる。
+
+■ メリット・デメリット
+メリットは、少人数 team の希少な時間を game 固有の体験へ戻せること、非 engineer が安全に反復できること、障害を global log ではなく player・config・environment 単位で追えること、短い migration probe により architecture 選定を可逆にできることである。責務境界と接続点を明記すれば、既製品を使っても headless test と復旧手順を自分達で所有できる。
+
+デメリットは、運用基盤が便利なほど game design より先に live-service の器を作りたくなること、複数 vendor 間の障害切り分け、schema と workflow の lock-in、利用量増加時の費用、provider 停止や仕様変更、full source を引き取った後の保守負担である。さらに本事例は vendor 発信で、pre-alpha の成功例一件に留まり、定量比較がない。70,000 sign-ups は関心の指標であって backend の production scale 証明ではない。小規模な自分達の prototype へ製品構成まで移植すると、解いていない運用問題のために制作速度を落とす危険が大きい。
+
+■ 判定
+部分採用。採るのは特定 backend ではなく、運用行為から要件を作ること、game 固有領域と commoditized infrastructure の境界を明記すること、実 feature を短期 branch migration して破棄可能に評価すること、障害観測と rollback を feature と同格に扱うことである。live-service 基盤の導入は、実際の反復負荷が観測されてからに限定し、vendor の scale 実績とは別に自分達の data contract と failure path を headless probe で検証する。
+
+■ URL
+https://www.metaplay.io/case-studies/antihero-studios
