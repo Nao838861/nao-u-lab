@@ -5,9 +5,8 @@
 ## Phase 1: 情報収集
 
 - inbox 確認: `memory/slack_directives.jsonl` / `memory/slack_broadcasts.jsonl` に `status: pending` なし。
-- `memory/shared_reads_candidates/20260728_ghost_of_yotei_evolving_combat.md` — 『Ghost of Yōtei』で前作の combat feel を残しつつ、disarm・複数武器・enemy variety・boss へ新規 mechanics を展開した GDC 2026 講演。
 - `memory/shared_reads_candidates/20260728_batman_arkham_shadow_vr_combat.md` — 『Batman: Arkham』の freeflow combat、locomotion、gadgets を “Authentic Arkham” を保ちながら VR へ翻訳した GDC 2026 講演。
-- duplicate preflight: 既投稿同一 work のため 5 件を `skip`（World-Gen to Quest-Line、Goal Playable Patterns、Reasoning Effort、GUI Agents for Continual Game Generation、Towards LLM-Based Automatic Playtest）。open duplicate group 一致のため 2 件を `review` とし自動保存せず（Harness-Induced Belief Divergence、Overwatch Stadium）。
+- duplicate preflight: 既投稿同一 work のため 5 件を `skip`（World-Gen to Quest-Line、Goal Playable Patterns、Reasoning Effort、GUI Agents for Continual Game Generation、Towards LLM-Based Automatic Playtest）。open duplicate group 一致のため 2 件を `review` とし自動保存せず（Harness-Induced Belief Divergence、Overwatch Stadium）。Ghost of Yōtei 講演は preflight が別 URL を `continue` とした後、posted-source index の同一タイトル・実投稿 permalink・GDC schedule URL を照合して同一 work と確認し、保存を撤回。
 - 情報源: 直前 cycle 後に更新された `memory/raw/web_research/results.jsonl`、最近の `memory/atoms.jsonl` / Slack ingest、arXiv 一次ページ、GDC Vault 公開 overview。品質判定・Slack 投稿は未実施。
 
 ## Phase 2: 分析
