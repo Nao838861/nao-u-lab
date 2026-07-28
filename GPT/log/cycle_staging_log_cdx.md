@@ -152,7 +152,102 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の entry index を per-file atom index と照合し、broken link / unknown atom / duplicate entry が 0 件であることを確認した"
+  - "memory/atoms.jsonl と per-file atom 2,777 件の mirror を照合し、ID・index・content conflict が 0 件であることを確認した。normalized content duplicate 40群は既存 lifecycle fold で表示時に畳まれている"
+  - "memory/raw/ の30日超未更新ファイル96件を archive 候補として確認した。Slack 原文・論文本文・headless evidence を含む provenance 原文のため、この phase では移動・削除していない"
+  - "shared-reads candidate lifecycle を監査し、posted 510 / ready_to_post 9 / postponed 240 / failed 376 / needs_review 3 を確認した"
+  - "open duplicate / stale triage / group-action sidecar を再生成した。open duplicate は51群、stale triage は33件、期限到来 group-action は0群"
+  - "slack_directives / slack_broadcasts は pending 0 件で、受領だけを根拠に close した行はない"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+encoding_audit:
+  path: memory/MEMORY.md
+  source_file_status: "UTF-8 明示読み成功。代表語は 記憶=true / ゲーム設計=true / 敵パターン=true。評価軸は本文に完全一致語がないが、validator の mojibake residue は0件で source 破損の証拠なし"
+  display_or_tooling_status: none
+atom_audit:
+  total_atoms: 2777
+  mirror_conflicts: 0
+  raw_normalized_content_duplicate_groups: 40
+  recall_visible_duplicate_groups: 3
+  effective_display_unresolved_title_groups: 0
+candidate_lifecycle:
+  total_files: 1141
+  status_counts:
+    posted: 510
+    ready_to_post: 9
+    postponed: 240
+    failed: 376
+    needs_review: 3
+    skipped_unreviewed: 3
+  overdue_open_total: 34
+  missing_stale_after: 6
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 34
+  stale_triage_queue_rows: 33
+  open_duplicate_group_count: 51
+  mixed_group_count: 44
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  backlog_high_water_reason: "overdue_open_total > queue rows だが actionable group が3件未満"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_enqueued_count: 5
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-c30ce46e4396ce41
+    - cha-dbf9087fc518ab79
+    - cha-0ebe0e07d55fd0d5
+    - cha-445fbb193f0485b9
+    - cha-2607dfedc253b8cc
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-c30ce46e4396ce41
+    path: memory/shared_reads_candidates/20260606_muse_autoskill_lifecycle.md
+    status: postponed
+    stale_after: "2026-07-06"
+    priority_reason: "22日超過。skill lifecycle の問題設定と評価軸はゲーム制作の反復資産管理へ移せるが、本文由来の具体結果が候補内で不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-dbf9087fc518ab79
+    path: memory/shared_reads_candidates/20260607_high_school_story_player_centric_postmortem.md
+    status: postponed
+    stale_after: "2026-07-07"
+    priority_reason: "21日超過。player happiness 中心の F2P 再設計は有用だが、3つの strategy と成功評価の具体が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-0ebe0e07d55fd0d5
+    path: memory/shared_reads_candidates/20260608_apple_design_awards_2026_game_winners.md
+    status: postponed
+    stale_after: "2026-07-08"
+    priority_reason: "20日超過。UX・accessibility の観察入口になる一方、受賞作列挙を超える作品別の手法・評価 evidence が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-445fbb193f0485b9
+    path: memory/shared_reads_candidates/20260608_beyond_similarity_trustworthy_memory_search.md
+    status: postponed
+    stale_after: "2026-07-08"
+    priority_reason: "20日超過。制作記憶の trust boundary に直結するが、framework 比較設定と結果の具体が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-2607dfedc253b8cc
+    path: memory/shared_reads_candidates/20260608_raps_reflective_adversarial_pareto_search.md
+    status: postponed
+    stale_after: "2026-07-08"
+    priority_reason: "20日超過。headless 評価へ移せる3分解はあるが、Pareto 探索手順と評価結果の具体が不足"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
