@@ -147,7 +147,37 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+### 2026-07-28 12:24 JST
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785192350-4f824b7f2f
+    source_ts: "1785192350.414439"
+    title: "NEON GALAXY — AIとの2週間制作で playable diff を積む planner loop"
+    reason: "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。AIとの短い指示→実装→観察→修正 loop、初日版と公開版の before／after、体験の核を残す規則削減を、次のゲーム制作で既存 probe と異なる判断差へ変換できるか確認するため選んだ。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回る。小さな planner loop、初日 museum artifact、instruction と受け入れ証拠の対は直接実行可能だが、単独作者の postmortem で外部 playtest・automated test・手戻り・保守 cost の比較がない。game-scope-brief-cut-gate、core-density-before-expansion、short-hike-constraint-shortcut、paperclaw-prototype-hypothesis-contract、ai-readable-playtest-acceptance-surface が first playable、core／deferred、observable verdict、code／AI-readable／manual feel の証拠分離をすでに覆い、この知見を足しても判断が変わらない。対象 playable artifact はなく、Phase 4a 向け pending lease も1件あるため state-only review とする。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

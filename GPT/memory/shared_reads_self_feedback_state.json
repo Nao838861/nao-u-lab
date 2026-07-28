@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-28T10:14:12+09:00",
+  "updated_at": "2026-07-28T12:24:22+09:00",
   "reviewed_source_ts": [
+    "1785192350.414439",
     "1785200763.028829",
     "1785184231.969289",
     "1780501085.622209",
@@ -529,6 +530,47 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-28T12:24:22+09:00",
+      "selected": {
+        "id": "sr-1785192350-4f824b7f2f",
+        "source_ts": "1785192350.414439",
+        "title": "NEON GALAXY — AIとの2週間制作で playable diff を積む planner loop",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。AIとの短い指示→実装→観察→修正 loop、初日版と公開版の before／after、体験の核を残す規則削減を、次のゲーム制作で既存 probe と異なる判断差へ変換できるか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、円→周回点→三角形→移動→占領を一変更ずつ browser で検証し、初日単一HTMLと2週間後の公開版を残した before／after、unit type・upgrade を削って「無防備な星を見つけて送る」判断へ核を絞った設計、instruction と受け入れ証拠を対にする運用を示し、次の playable diff へ直接変換できるため relevance・actionability は3とした。一方、根拠は単独作者の postmortem と公開 artifact であり、prompt 回数、bug・手戻り時間、automated test、外部 playtest、retention、balance、保守 cost の比較がなく、25年の web 制作・game planner 経験の寄与も分離できないため evidence=2 とした。game-scope-brief-cut-gate は first playable done condition と最小 risk test、core-density-before-expansion は追加要素が core を深めるか、short-hike-constraint-shortcut は core／deferred 分離、paperclaw-prototype-hypothesis-contract は事前の observable verdict と test path、ai-readable-playtest-acceptance-surface は code／AI-readable／manual feel の受け入れ証拠分離をすでに扱う。NEON GALAXY 固有に見える小さな planner loop と初日 museum artifact も、この5件を組み合わせた時の判断を変えないため non_redundancy=0 とした。現在の staging には対象 playable diff、初日版と拡張版の比較 artifact、実際に使う consumer phase がなく、Phase 4a 向け pending lease も1件ある。321件の active_probes へ同義 control を追加すると確認負荷だけが増えるため、本 atom は既存 probes の具体例としてのみ保持する。",
+      "existing_probes": [
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260528-core-density-before-expansion",
+        "probe-20260713-short-hike-constraint-shortcut",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract",
+        "probe-20260621-ai-readable-playtest-acceptance-surface"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と reject 理由だけを更新した。小さな planner loop、初日 museum artifact、instruction と受け入れ証拠の対は既存5 probes が覆い、対象 playable artifact もないため、probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-28T07:50:55+09:00",
       "selected": {
