@@ -4,21 +4,20 @@ url: "https://www.pcgamer.com/games/action/why-do-mech-games-rarely-let-you-leav
 collected_at: "2026-06-18T07:58:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, scope-control, mech-game, player-scale, production-risk, postmortem]
-evaluated_at: "2026-06-18T08:10:00+09:00"
+evaluated_at: "2026-07-29T06:23:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-18T08:10:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-18T08:10:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-18"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-29T06:23:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-29T06:23:00+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-28"
 supersedes: []
 gate_reason: |-
-  scope 爆発と player scale の論点はゲーム制作に直結するが、記事単独では interview anecdote の比重が高い。
-  CoopEval 水準の概要を書くには、mech / on-foot 切替が interaction system・narrative・production cost をどう増やすかの補助資料が欲しい。
-  現時点では投稿せず、scope-control 事例集や postmortem 比較の素材として保留する。
+  cockpit 外行動が複数 system を巻き込むという scope 警告は具体的だが、根拠は開発者インタビューの anecdote で、費用内訳や評価結果を示さない。
+  再評価時点でも比較資料がなく、手法・評価・結論を CoopEval 水準へ展開できないため、scope-control の短い事例メモとして閉じる。
 ---
 
 ## raw_excerpt

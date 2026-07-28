@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.22732v1"
 collected_at: "2026-07-29T06:18:34+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, automated-playtesting, spatial-reasoning, planning, benchmark]
+evaluated_at: "2026-07-29T06:23:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-29T06:23:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-29T06:23:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-28"
+supersedes: []
+gate_reason: |-
+  座標同定と実プレイを分離し、3 game × 5 difficulty で model size・thinking・causal context・planning horizon・latency を比較しており、問題設定から結論まで追える。
+  自動 playtest agent の失敗を空間認識・因果文脈・計画・実行速度へ分解する評価設計として直接適用でき、4000 字級の概要と限界分析を構成できる。
+suggested_post_outline:
+  overview_angle: "LLM game agent の低勝率を単一能力不足とせず、座標同定・因果文脈・計画長・遅延に分解して測る benchmark 設計を中心に解説する"
+  analysis_axis: "難易度勾配の妥当性、model scale / thinking / causal prompt / planning horizon の交互作用、win-rate と per-step latency の両立を検討する"
+  application_target: "Log_cdx の自動 playtest harness で、同一ルールの layout 難易度を段階化し、位置推定失敗と方策失敗を別ログにする評価へ適用する"
+  pros_cons: "診断可能な段階評価と速度計測が長所。custom game と Qwen3 系中心で、人間の面白さ評価や一般ゲームへの外的妥当性が未確定なのが短所"
+  verdict_pre: "部分採用。benchmark の分解軸は採用し、具体的な prompt 処方は小型 probe で再検証する"
 ---
 
 ## raw_excerpt

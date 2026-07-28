@@ -4,20 +4,20 @@ url: "https://www.creativebloq.com/3d/video-game-design/demon-tides-90s-retro-de
 collected_at: "2026-06-17T05:16:01+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, platformer, movement, production, indie, visual-design]
-evaluated_at: "2026-06-17T05:36:00+09:00"
+evaluated_at: "2026-07-29T06:23:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-17T05:36:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-17T05:36:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-17"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-29T06:23:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-29T06:23:00+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-28"
 supersedes: []
 gate_reason: |-
-  movement 自己表現と小規模制作体制の観点は有用だが、現状メモはインタビュー記事由来で、評価・検証・再現可能な手法の厚みが足りない。
-  Phase 3 投稿水準にするには、Demon Turf / Demon Tides の実プレイ分析や Fabraz Framework 周辺の一次情報を補ってから再評価したい。
+  movement の自己表現と制約由来の美術判断は参考になるが、記事はインタビュー上の設計意図が中心で、比較評価や再現可能な設計手順を示さない。
+  30 日後の再評価でも手法・評価・結論を 4000 字級に支える証拠は増えておらず、#shared-reads 候補としては閉じ、制作時の参照メモに留める。
 ---
 
 ## raw_excerpt

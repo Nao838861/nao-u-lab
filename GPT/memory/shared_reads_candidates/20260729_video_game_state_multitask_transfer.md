@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2607.21290v1"
 collected_at: "2026-07-29T06:17:45+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-analytics, player-modeling, multi-task-learning, transfer-learning, telemetry]
+evaluated_at: "2026-07-29T06:23:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-29T06:23:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-29T06:23:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-28"
+supersedes: []
+gate_reason: |-
+  rasterized state・global context・unit attention を共有し、mixed loss と map transfer を比較する設計は具体的で、telemetry 評価器への適用先もある。
+  ただし候補本文には主要な定量結果と最終結論がなく、何が single-task より改善したかを説明できないため、一次論文の結果表を確認するまで保留する。
 ---
 
 ## raw_excerpt

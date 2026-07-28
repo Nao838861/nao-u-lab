@@ -4,18 +4,20 @@ url: "https://www.pcgamer.com/games/life-sim/spore-devs-say-the-evolution-games-
 collected_at: "2026-06-17T01:01:08+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [postmortem, expectation-management, procedural-generation, scope, communication]
-evaluated_at: "2026-06-17T01:10:47+09:00"
+evaluated_at: "2026-07-29T06:23:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-17T01:10:47+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-17T01:10:47+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-17"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-29T06:23:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-29T06:23:00+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-28"
 supersedes: []
-gate_reason: "期待値管理の論点はゲーム制作に直結するが、現状の候補は PC Gamer の二次記事要約が中心で、Design Room 本編や開発者発言の文脈確認が不足している。手法というより広報・デモの反省材料なので、4000 字投稿にするには一次ソース確認と、procedural/emergent ゲームの見せ方チェックリスト化が必要。"
+gate_reason: |-
+  期待値管理の失敗例は制作に直結するが、候補は PC Gamer の二次記事要約に留まり、Design Room 本編の文脈や比較可能な検証を欠く。
+  30 日後にも一次資料と具体的な運用手法が補われておらず、4000 字級の独立した分析を支えないため、参照用 postmortem として閉じる。
 ---
 
 ## raw_excerpt
