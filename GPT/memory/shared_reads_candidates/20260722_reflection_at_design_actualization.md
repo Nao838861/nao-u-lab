@@ -7,14 +7,20 @@ genre_tags: [game-design, research-through-design, playtesting, design-journal, 
 evaluated_at: "2026-07-22T13:22:06+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-22T13:22:06+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-22T13:22:06+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1785200763.028829"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785200763028829"
+  char_count: 4442
+  posted_at: "2026-07-28T10:06:03.028829+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-28T10:06:03.028829+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785200763028829"
+next_action: none
 stale_after: "2026-08-21"
-supersedes: []
+supersedes:
+  - "memory/shared_reads_candidates/20260611_reflection_design_actualization.md"
 gate_reason: |-
   playtest 前後の意図・期待・実測映像・差分を結ぶ RDA loop が具体的で、version control から落ちる設計判断と tacit knowledge を残す問題設定に直接答えている。
   3 designer-researcher・2〜4か月の自己使用から workflow friction、persona 切替、mirror effect と限界まで抽出でき、AI との反復ゲーム制作へ無理なく適用できる。
