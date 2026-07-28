@@ -147,7 +147,120 @@ self_feedback:
     conflict_checked: true
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-07-29T04:30+09:00
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の entry index を validate_memory_index.py で検証し、参照 atom / per-file path の broken link・重複 ID・未知 ID が 0 件であることを確認した。"
+  - "atoms.jsonl / per-file md / atoms/index.jsonl は各 2782 件で mirror conflict 0 件。normalized content 重複 40 group は canonical overlay、recall-visible 3 group は lifecycle/content fold 済みで、effective display の未解決重複は 0 件だった。"
+  - "memory/raw/ で 2026-06-29 より前から更新のない原文を 96 件識別した。主な内訳は web_research 38、phase3_pdfs 13、phase3_sources 8、phase3_20260515b 8、headless_eval 6。参照関係を未確認のため移動はしていない。"
+  - "shared-reads candidate lifecycle と title duplicate sidecar を監査し、期限超過 open candidate 14 件から group lease と既存 handoff を合成した stale triage 13 件を確定した。"
+  - "Slack inbox は directives / broadcasts とも pending 0 件で、受領だけを根拠に close した行はない。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+encoding_audit:
+  path: memory/MEMORY.md
+  source_file_status: "UTF-8 明示読み成功。記憶・ゲーム設計・敵パターンは取得できた。評価軸という完全一致語は本文になく、validate_memory_index.py は成功したため source corruption とは判定しない。"
+  display_or_tooling_status: none
+atom_audit:
+  atoms: 2782
+  mirror_content_conflicts: 0
+  raw_normalized_content_duplicate_groups: 40
+  recall_visible_normalized_content_duplicate_groups: 3
+  effective_display_unresolved_groups: 0
+  lifecycle_counts:
+    active: 2593
+    superseded: 189
+  note: "topology の stale_bridge 1 件は local-20260726-self-judgment-ownership が旧自己判定 atom を supersede する既知の lifecycle edge であり、新規構造 issue にはしない。"
+raw_archive_candidates:
+  cutoff: "2026-06-29"
+  total: 96
+  action: "identified_only"
+candidate_lifecycle:
+  files: 1146
+  counts:
+    posted: 515
+    ready_to_post: 9
+    postponed: 231
+    failed: 385
+    needs_review: 3
+    skipped_unreviewed: 3
+  missing_stale_after: 6
+  missing_open_stale_after: 0
+  overdue_open_total: 14
+title_duplicate_audit:
+  open_duplicate_group_count: 51
+  mixed_group_count: 44
+  all_open_group_count: 7
+  actionable_group_count: 0
+  unindexed_terminal_or_mixed_note: "unindexed-only audit の上位は open status を含む mixed group。terminal-only として自動 canonical close せず、通常の Phase 2 review に残した。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+  pending_due: "2026-07-31T00:23:59+09:00"
+stale_backlog:
+  overdue_open_total: 14
+  stale_triage_queue_rows: 13
+  remaining_overdue_after_candidate_handoff: 9
+  open_duplicate_group_count: 51
+  mixed_group_count: 44
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-ee22481344c95f0a
+    - cha-3f215a7b9760e9fe
+    - cha-0094b1664ab1ec7d
+    - cha-76480b3f7c705c7c
+    - cha-d11ffa30cc4d1f26
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-ee22481344c95f0a
+    path: memory/shared_reads_candidates/20260617_demon_tides_expressive_platforming_framework.md
+    status: postponed
+    stale_after: "2026-07-17"
+    priority_reason: "movement 自己表現と小規模制作体制は有用だが、実プレイ分析・評価・再現可能な framework の一次情報が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-3f215a7b9760e9fe
+    path: memory/shared_reads_candidates/20260617_spore_expectation_gap_postmortem.md
+    status: postponed
+    stale_after: "2026-07-17"
+    priority_reason: "期待値管理は制作へ直結するが、二次記事中心で Design Room 本編と開発者発言の文脈確認が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-0094b1664ab1ec7d
+    path: memory/shared_reads_candidates/20260618_brigador_killers_scope_scale_on_foot_mech.md
+    status: postponed
+    stale_after: "2026-07-18"
+    priority_reason: "scope 爆発と player scale は有用だが、interview anecdote から interaction system・narrative・production cost の判断へ進む証拠が薄い。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-76480b3f7c705c7c
+    path: memory/shared_reads_candidates/20260618_gamegrammar_board_game_design.md
+    status: postponed
+    stale_after: "2026-07-18"
+    priority_reason: "mechanics / components / scoring / critique の分解は有用だが、既投稿 AutoBG との差分と GameGrammar 固有の評価が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-d11ffa30cc4d1f26
+    path: memory/shared_reads_candidates/20260618_videoweaver_agentic_long_video_generation.md
+    status: postponed
+    stale_after: "2026-07-18"
+    priority_reason: "skill evolution の評価指標が薄く、ゲーム制作への接続も playable diff より trailer / cutscene 生成に寄っている。"
+    recommended_review_action: reevaluate_in_phase2
+```
+
+- Phase 4b は起動しない。今回の警告は既存 lifecycle / queue で閉じており、新しい仕組みの設計を要する構造問題ではない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
