@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-28T21:49:00+09:00",
+  "updated_at": "2026-07-28T23:54:00+09:00",
   "reviewed_source_ts": [
+    "1785242582.070969",
     "1785234603.586449",
     "1785224756.154339",
     "1780495046.004439",
@@ -534,6 +535,47 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-28T23:54:00+09:00",
+      "selected": {
+        "id": "sr-1785242582-86ec962640",
+        "source_ts": "1785242582.070969",
+        "title": "Stunt Paradise 2 — 再現性・失敗理解・次試行・復帰時間を一つの retry loop として測る",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす最新候補で、memory・harness・game-design・evaluation の4優先タグを持つ。同一 snapshot／input trace の軌道許容帯、初見の失敗原因理解、次試行での入力変更、restart から再操作までの時間を一つの retry loop として扱う観点が、既存の regression／route／feedback-loop probes より具体的な次回判断を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の採用条件は満たす。shared-reads 本文は、代表 jump の landing position／rotation／到達時刻の許容帯、hazard ごとの視認距離、失敗直後の原因選択、次 retry での入力変更、restart から再操作までの秒数を同じ評価単位へまとめ、共通物理が authored challenge の公平さを守るかを見る小型 probe へ直接変換できるため relevance・actionability は3とした。一方、根拠は一 studio の開発者インタビューで、被験者数、成功率、retry 回数、車両間比較、前作方式や spline 導入前後の A/B、演出が frustration を下げた比較がなく、効果主張は自己報告に留まるため evidence=2 とした。rules-core-parity-regression は固定 seed／scenario／input trace を、bdd-route-contract-regression は期待挙動と replayable trace を、game-feedback-loop-asymmetry は headless evidence と human play feel の境界を、meta-horizon-friction-layer-triage は retry／drop-off cue の同一 layer への routing を、paperclaw-prototype-hypothesis-contract は observable verdict と test path をすでに扱う。本 atom 固有の差は再現性・原因理解・次試行の変化・復帰時間を一巡で結ぶ点だが、現 staging には代表 jump、hazard、before／after build、初見 playtest trace がなく、consumer_phase、trigger_artifact、expected_delta、lease_due を lease 契約どおり比較可能に指定できない。active_probes 321件と Phase 4a 向け pending lease 1件もあるため、operational probe を増やさない。次の具体的な physics／stunt／precision traversal playable diff で、固定 trace は通るのに player が同じ失敗を理由不明のまま反復する、または失敗演出が復帰を遅らせる事例が出た時に再評価する。",
+      "existing_probes": [
+        "probe-20260603-rules-core-parity-regression",
+        "probe-20260608-bdd-route-contract-regression",
+        "probe-20260606-game-feedback-loop-asymmetry",
+        "probe-20260626-meta-horizon-friction-layer-triage",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、retry loop の評価軸、既存 probes との重複、比較可能な physics playable artifact 不在による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-28T21:49:00+09:00",
       "selected": {

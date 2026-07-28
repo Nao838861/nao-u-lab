@@ -116,6 +116,43 @@ skipped: []
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+### 2026-07-28 23:54 JST / log_cdx
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785242582-86ec962640
+    source_ts: "1785242582.070969"
+    title: "Stunt Paradise 2 — 再現性・失敗理解・次試行・復帰時間を一つの retry loop として測る"
+    reason: "最新の未レビュー score 11 atom で、memory・harness・game-design・evaluation の4優先タグを持つ。同一 snapshot／input trace の軌道許容帯、初見の失敗原因理解、次試行での入力変更、restart から再操作までの時間を一巡で評価する観点が、既存 probes より具体的な判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "数値上の採用条件は満たすが、根拠は被験者数・成功率・retry 回数・車両間比較・方式変更前後の A/B を欠く一 studio の開発者インタビューである。固定 seed／input trace、route contract、headless と human feel の境界、retry cue の layer routing、observable verdict は既存 probes が扱う。固有差は再現性・原因理解・次試行の変化・復帰時間を一つの retry loop に結ぶ点だが、現 staging には代表 jump／hazard、before／after build、初見 playtest trace がなく、比較可能な lease を指定できない。active_probes 321件と Phase 4a 向け pending lease 1件もあるため、operational probe を増やさず、該当 playable artifact ができた時に再評価する。"
+  existing_probes:
+    - probe-20260603-rules-core-parity-regression
+    - probe-20260608-bdd-route-contract-regression
+    - probe-20260606-game-feedback-loop-asymmetry
+    - probe-20260626-meta-horizon-friction-layer-triage
+    - probe-20260706-paperclaw-prototype-hypothesis-contract
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
