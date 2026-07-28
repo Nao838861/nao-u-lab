@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.37.0-multi-market';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.38.0-winter-visuals';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.37.0-multi-market';
+} from './food_readability.js?v=v004.38.0-winter-visuals';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.37.0-multi-market';
-import { analyzeRoadConnections } from './placement.js?v=v004.37.0-multi-market';
+} from './engine_bridge.js?v=v004.38.0-winter-visuals';
+import { analyzeRoadConnections } from './placement.js?v=v004.38.0-winter-visuals';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.37.0-multi-market';
+} from './render_scene.js?v=v004.38.0-winter-visuals';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.37.0-multi-market';
+} from './visuals.js?v=v004.38.0-winter-visuals';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',

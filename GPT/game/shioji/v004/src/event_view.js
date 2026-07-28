@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.37.0-multi-market';
+import { JOB_LABELS } from './config.js?v=v004.38.0-winter-visuals';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

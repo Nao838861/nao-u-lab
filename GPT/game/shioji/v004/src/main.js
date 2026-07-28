@@ -1,43 +1,43 @@
-import { IsometricCamera } from './camera.js?v=v004.37.0-multi-market';
-import { SimulationClock } from './clock.js?v=v004.37.0-multi-market';
+import { IsometricCamera } from './camera.js?v=v004.38.0-winter-visuals';
+import { SimulationClock } from './clock.js?v=v004.38.0-winter-visuals';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.37.0-multi-market';
+} from './config.js?v=v004.38.0-winter-visuals';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.37.0-multi-market';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.37.0-multi-market';
-import { developmentMapView } from './development_map.js?v=v004.37.0-multi-market';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.37.0-multi-market';
-import { formatElenaSpeech } from './elena_text.js?v=v004.37.0-multi-market';
+} from './display_batch.js?v=v004.38.0-winter-visuals';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.38.0-winter-visuals';
+import { developmentMapView } from './development_map.js?v=v004.38.0-winter-visuals';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.38.0-winter-visuals';
+import { formatElenaSpeech } from './elena_text.js?v=v004.38.0-winter-visuals';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.37.0-multi-market';
+} from './food_readability.js?v=v004.38.0-winter-visuals';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.37.0-multi-market';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.37.0-multi-market';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.37.0-multi-market';
-import { WorldPresentation } from './presentation.js?v=v004.37.0-multi-market';
-import { Renderer } from './renderer.js?v=v004.37.0-multi-market';
+} from './keyboard.js?v=v004.38.0-winter-visuals';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.38.0-winter-visuals';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.38.0-winter-visuals';
+import { WorldPresentation } from './presentation.js?v=v004.38.0-winter-visuals';
+import { Renderer } from './renderer.js?v=v004.38.0-winter-visuals';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.37.0-multi-market';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.37.0-multi-market';
+} from './save_game.js?v=v004.38.0-winter-visuals';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.38.0-winter-visuals';
 import {
   GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRows,
-} from './supply_demand.js?v=v004.37.0-multi-market';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.37.0-multi-market';
+} from './supply_demand.js?v=v004.38.0-winter-visuals';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.38.0-winter-visuals';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.37.0-multi-market';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.37.0-multi-market';
+} from './ui_guidance.js?v=v004.38.0-winter-visuals';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.38.0-winter-visuals';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');

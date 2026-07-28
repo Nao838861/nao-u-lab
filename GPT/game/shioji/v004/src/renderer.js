@@ -1,12 +1,13 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.37.0-multi-market';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.37.0-multi-market';
-import { islandCalendar } from './ui_summary.js?v=v004.37.0-multi-market';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.37.0-multi-market';
+} from './config.js?v=v004.38.0-winter-visuals';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.38.0-winter-visuals';
+import { islandCalendar } from './ui_summary.js?v=v004.38.0-winter-visuals';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.38.0-winter-visuals';
 import {
-  buildingStructureLayout, pileVisual, seasonalPlotVisual,
-} from './visuals.js?v=v004.37.0-multi-market';
+  buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
+  seasonalTerrainVisual,
+} from './visuals.js?v=v004.38.0-winter-visuals';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
@@ -262,7 +263,7 @@ export class Renderer {
       '春': 'rgba(214,221,151,.045)',
       '夏': 'rgba(238,202,99,.035)',
       '秋': 'rgba(190,107,61,.055)',
-      '冬': 'rgba(204,226,218,.07)',
+      '冬': null,
     }[this.season];
     const bounds = this.frameBounds ?? {
       minX: 0, maxX: model.width - 1, minY: 0, maxY: model.height - 1,
@@ -273,9 +274,12 @@ export class Renderer {
         if (x < bounds.minX || x > bounds.maxX) continue;
         const tile = model.terrain[y][x];
         const palette = TERRAIN_COLORS[tile.kind] ?? TERRAIN_COLORS.grass;
-        const fill = palette[(tile.variant ?? 0) % palette.length];
-        this.diamond(x, y, fill, tile.kind === 'water' ? '#1b626a' : '#4f6942');
-        if (tile.kind !== 'water') this.diamond(x, y, seasonWash);
+        const winter = seasonalTerrainVisual(tile.kind, this.season);
+        const fills = winter?.fills ?? palette;
+        const fill = fills[(tile.variant ?? 0) % fills.length];
+        const stroke = winter?.stroke ?? (tile.kind === 'water' ? '#1b626a' : '#4f6942');
+        this.diamond(x, y, fill, stroke);
+        if (tile.kind !== 'water' && seasonWash) this.diamond(x, y, seasonWash);
       }
     }
   }
@@ -797,10 +801,11 @@ export class Renderer {
     ctx.globalAlpha = 1;
     ctx.fillStyle = '#4b3022';
     ctx.fillRect(base.x - 2 * scale, base.y - 21 * scale, 4 * scale, 22 * scale);
+    const winter = seasonalNaturalVisual('tree', this.season);
     const seasonal = this.season === '秋'
       ? ['#5a5230', '#71613a', '#8a7443']
-      : this.season === '冬'
-        ? ['#28493e', '#35594a', '#466957']
+      : winter
+        ? winter.fills
         : ['#254f3c', '#2f6144', '#3d714b'];
     if (variant % 4 === 3) {
       for (const crown of [
@@ -851,6 +856,20 @@ export class Renderer {
     ctx.fill();
     ctx.strokeStyle = '#535b55';
     ctx.stroke();
+    const winter = seasonalNaturalVisual('rock', this.season);
+    if (winter) {
+      ctx.beginPath();
+      ctx.moveTo(point.x - scale * 0.4, point.y - scale);
+      ctx.lineTo(point.x + scale * 0.55, point.y - scale * 0.7);
+      ctx.lineTo(point.x + scale * 0.72, point.y - scale * 0.28);
+      ctx.lineTo(point.x + scale * 0.08, point.y - scale * 0.42);
+      ctx.lineTo(point.x - scale * 0.58, point.y - scale * 0.34);
+      ctx.closePath();
+      ctx.fillStyle = winter.snow;
+      ctx.fill();
+      ctx.strokeStyle = winter.outline;
+      ctx.stroke();
+    }
     ctx.restore();
   }
 
@@ -878,14 +897,37 @@ export class Renderer {
     }
     if (farm) {
       const seasonalPlot = seasonalPlotVisual(building, this.season);
-      ctx.strokeStyle = seasonalPlot?.furrow ?? appearance.accent;
-      ctx.lineWidth = Math.max(1, 1.2 * this.camera.zoom);
       const furrowCount = appearance.leveled
         ? Math.max(2, Math.min(5, appearance.tier + 1)) : 4;
       for (let row = 1; row <= furrowCount; row += 1) {
         const rowY = building.y + 0.25 + row * ((building.height - 0.5) / (furrowCount + 1));
         const from = this.camera.project(building.x + 0.3, rowY, 2);
         const to = this.camera.project(building.x + building.width - 0.3, rowY, 2);
+        if (seasonalPlot?.furrowState === 'buried') {
+          ctx.strokeStyle = seasonalPlot.snowShadow;
+          ctx.lineWidth = Math.max(2, 3.2 * this.camera.zoom);
+          ctx.beginPath();
+          ctx.moveTo(from.x, from.y + 1.6 * this.camera.zoom);
+          ctx.lineTo(to.x, to.y + 1.6 * this.camera.zoom);
+          ctx.stroke();
+          ctx.strokeStyle = seasonalPlot.snowRidge;
+          ctx.lineWidth = Math.max(1.5, 2.5 * this.camera.zoom);
+          ctx.beginPath();
+          ctx.moveTo(from.x, from.y);
+          ctx.lineTo(to.x, to.y);
+          ctx.stroke();
+          if (row % 2 === 0) {
+            ctx.strokeStyle = seasonalPlot.furrow;
+            ctx.lineWidth = Math.max(0.8, 0.9 * this.camera.zoom);
+            ctx.beginPath();
+            ctx.moveTo(from.x + (to.x - from.x) * 0.44, from.y + (to.y - from.y) * 0.44);
+            ctx.lineTo(from.x + (to.x - from.x) * 0.58, from.y + (to.y - from.y) * 0.58);
+            ctx.stroke();
+          }
+          continue;
+        }
+        ctx.strokeStyle = seasonalPlot?.furrow ?? appearance.accent;
+        ctx.lineWidth = Math.max(1, 1.2 * this.camera.zoom);
         ctx.beginPath();
         ctx.moveTo(from.x, from.y);
         ctx.lineTo(to.x, to.y);

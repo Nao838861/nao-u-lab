@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.37.0-multi-market';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.38.0-winter-visuals';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({
@@ -9,6 +9,65 @@ export const PILE_STAGE_LIMITS = Object.freeze({
 export const MAX_PILE_SPRITES = EXACT_PILE_LIMIT;
 export const MAX_YARD_GOODS = 10;
 export const MAX_DISPLAY_CULTURE_LEVEL = 4;
+
+const WINTER_TERRAIN_ART = Object.freeze({
+  grass: Object.freeze({
+    fills: Object.freeze(['#e5eee9', '#dce8e3', '#e9f1ed', '#d8e4df']),
+    stroke: '#b7c8c1',
+    state: 'snow',
+  }),
+  sand: Object.freeze({
+    fills: Object.freeze(['#e8ece5', '#dfe6df', '#edf0e9', '#dbe3dc']),
+    stroke: '#bdc9c0',
+    state: 'snow',
+  }),
+  forest: Object.freeze({
+    fills: Object.freeze(['#dce9e3', '#e5eee9', '#d5e4dd', '#e8f0ec']),
+    stroke: '#afc2ba',
+    state: 'snow',
+  }),
+  rock: Object.freeze({
+    fills: Object.freeze(['#d8e1de', '#e1e8e5', '#d3ddda', '#e6ece9']),
+    stroke: '#abbab5',
+    state: 'snow',
+  }),
+  ore: Object.freeze({
+    fills: Object.freeze(['#d9e0dd', '#e2e7e4', '#d2dbd8', '#e6ebe8']),
+    stroke: '#adb9b5',
+    state: 'snow',
+  }),
+  coal: Object.freeze({
+    fills: Object.freeze(['#d1dbd8', '#dbe3e0', '#cad5d2', '#e0e7e4']),
+    stroke: '#a8b6b2',
+    state: 'snow',
+  }),
+});
+
+const WINTER_NATURAL_ART = Object.freeze({
+  tree: Object.freeze({
+    fills: Object.freeze(['#f2f6f3', '#d5e1dc', '#466957']),
+    snow: '#f2f6f3',
+    snowShadow: '#d5e1dc',
+    outline: '#9eb4ac',
+    state: 'snow-capped',
+  }),
+  rock: Object.freeze({
+    snow: '#f0f4f1',
+    snowShadow: '#cddad5',
+    outline: '#a8b7b2',
+    state: 'snow-capped',
+  }),
+});
+
+export function seasonalTerrainVisual(kind, season) {
+  if (season !== '冬' || kind === 'water') return null;
+  return WINTER_TERRAIN_ART[kind] ?? WINTER_TERRAIN_ART.grass;
+}
+
+export function seasonalNaturalVisual(kind, season) {
+  if (season !== '冬') return null;
+  return WINTER_NATURAL_ART[kind] ?? null;
+}
 
 const SEASONAL_PLOT_ART = Object.freeze({
   '秋': Object.freeze({
@@ -30,12 +89,18 @@ const SEASONAL_PLOT_ART = Object.freeze({
       fills: Object.freeze(['#e5ebe3', '#d3ddd7']),
       stroke: '#a9b9b1',
       furrow: '#aab9b0',
+      furrowState: 'buried',
+      snowRidge: '#f6f9f7',
+      snowShadow: '#c0cec8',
       state: 'snow',
     }),
     pasture: Object.freeze({
       fills: Object.freeze(['#e9eee8', '#d8e1dc']),
       stroke: '#aebcb5',
       furrow: '#b4c1ba',
+      furrowState: 'buried',
+      snowRidge: '#f7faf8',
+      snowShadow: '#c4d1cc',
       state: 'snow',
     }),
   }),

@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.37.0-multi-market';
+import { TILE } from './config.js?v=v004.38.0-winter-visuals';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));
