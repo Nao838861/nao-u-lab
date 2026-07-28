@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-28T23:54:00+09:00",
+  "updated_at": "2026-07-29T02:10:00+09:00",
   "reviewed_source_ts": [
+    "1780495015.816399",
     "1785242582.070969",
     "1785234603.586449",
     "1785224756.154339",
@@ -535,6 +536,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-29T02:10:00+09:00",
+      "selected": {
+        "id": "sr-1780495015-9b794b456b",
+        "source_ts": "1780495015.816399",
+        "title": "LayerX: AIエージェントに1年分のニュースを読ませて4,552件の長期記憶を作ったら何が起きる？",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、memory・agent・operation・evaluation の4優先タグを持つ。4,552件の運用で起きた catalog の context 爆発、related link の未成長、LLM 自身による format 崩壊、忘却戦略不在が、現在の per-atom／index／lifecycle 運用へ未反映の小さな行動差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。投稿は60号、607 session、4,552 memory、catalog が200k context の228%、related field 保有11.3%という規模と破綻点を示し、Markdown/frontmatter、BM25、vector、catalog 遅延読込、related graph、20 session ごとの Dreaming まで記載しているため evidence=3 とした。しかし同じ LayerX 実験を掘り下げた sr-1780720149-fb5590e97f を既に review し、probe-20260607-memory-hub-link-coverage が peer-to-peer related-link coverage と hub reachability の分離を直接扱う。忘却判断は probe-20260607-forget-usage-signal-gate、catalog／context bloat と検索経路の選択は probe-20260605-rag-recall-search-space-gate が覆う。原投稿自身も当方の3層階層を既存回答とし、直接導入を不要と判定している。ここから同義 probe を足すと、321件の active_probes と Phase 4a 向け pending lease 1件へ重複確認を増やすだけなので state-only review に留める。",
+      "existing_review": "sr-1780720149-fb5590e97f / source_ts 1780720149.689109",
+      "existing_probes": [
+        "probe-20260607-memory-hub-link-coverage",
+        "probe-20260607-forget-usage-signal-gate",
+        "probe-20260605-rag-recall-search-space-gate"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、同一 LayerX 実験の後続 review および既存の link coverage／forget usage／recall search-space probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-28T23:54:00+09:00",
       "selected": {

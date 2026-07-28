@@ -121,6 +121,37 @@ review:
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+### 2026-07-29T02:10+09:00
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780495015-9b794b456b
+    source_ts: "1780495015.816399"
+    title: "LayerX: AIエージェントに1年分のニュースを読ませて4,552件の長期記憶を作ったら何が起きる？"
+    reason: "未レビュー適格候補のうち最新で、memory・agent・operation・evaluation を持つ。同一実験の後続分析と既存 probes を照合し、新しい行動差が残るか確認するため選んだ。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "60号・607 session・4,552 memory、catalog 228%、related link 11.3%という根拠は強いが、同じ LayerX 実験の後続 atom sr-1780720149-fb5590e97f は review 済みで、memory-hub-link-coverage probe へ反映済み。忘却は forget-usage-signal、catalog/context bloat は rag-recall-search-space が覆うため、追加は重複と確認負荷を増やす。"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
