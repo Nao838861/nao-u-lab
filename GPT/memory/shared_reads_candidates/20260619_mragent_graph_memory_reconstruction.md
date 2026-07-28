@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2606.06036"
 collected_at: "2026-06-19T18:29:35+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-memory, graph-memory, long-horizon-agents, evaluation, memory-system]
-evaluated_at: "2026-06-19T18:37:00+09:00"
+evaluated_at: "2026-07-29T08:37:17+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-19T18:37:00+09:00"
+last_reviewed_at: "2026-07-29T08:37:17+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-19T18:37:00+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-29T08:37:17+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-19"
+stale_after: "2026-08-28"
 supersedes: []
 gate_reason: >-
-  Cue-Tag-Content graph と active reconstruction は記憶システム改善には有用だが、現候補は LoCoMo / LongMemEval 中心で、ゲーム制作の具体場面への接続がまだ薄い。
-  Phase 3 に出す前に、playable diff / feedback / headless 評価を cue-tag-content 化する小さな適用例が必要。
+  Cue-Tag-Content graph と active reconstruction の中核・評価結果は抽出でき、制作履歴の探索にも応用可能である。
+  ただし評価は会話記憶 benchmark に閉じ、playable diff・feedback・headless 評価を結ぶ具体例がないため、ゲーム制作への適用がまだ推測に寄る。
 ---
 
 ## raw_excerpt

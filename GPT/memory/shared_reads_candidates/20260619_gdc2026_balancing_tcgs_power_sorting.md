@@ -4,20 +4,20 @@ url: "https://schedule.gdconf.com/session/balancing-tcgs-with-power-sorting/9155
 collected_at: "2026-06-19T05:59:28+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, balancing, card-game, tabletop, systems-design, gdc]
-evaluated_at: "2026-06-19T06:03:15+09:00"
+evaluated_at: "2026-07-29T08:37:17+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-19T06:03:15+09:00"
+last_reviewed_at: "2026-07-29T08:37:17+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-19T06:03:15+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-29T08:37:17+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-19"
+stale_after: "2026-08-28"
 supersedes: []
 gate_reason: |-
-  多数選択肢の相対 power を並べる発想はゲーム制作への適用性が高い。
-  ただし候補本文自身が「詳細は未取得」と明記しており、power sorting の手順・評価・失敗条件を抽出できないため投稿は保留。
+  多数選択肢の相対 power を並べる発想は、カード・武器・報酬の比較に適用できる。
+  ただし再評価時点でもセッション本文がなく、sorting の手順・評価結果・失敗条件を抽出できないため、CoopEval 水準の概要には不足する。
 ---
 
 ## raw_excerpt

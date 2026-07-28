@@ -4,6 +4,26 @@ url: "https://shaggydev.com/2026/02/12/udd-postmortem/"
 collected_at: "2026-07-29T08:32:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, tactics, roguelite, procedural-generation, balance, playtesting, godot]
+evaluated_at: "2026-07-29T08:37:17+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-29T08:37:17+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-29T08:37:17+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-28"
+supersedes: []
+gate_reason: |-
+  core rule の固定問題検証、roguelite への転換、battle budget、数値再スケール、外部 playtest まで因果関係を追える一次資料である。
+  各判断を自分達の小規模 tactics 制作へ具体的に写せ、評価と限界を含む CoopEval 水準の概要を約4000字で構成できる。
+suggested_post_outline:
+  overview_angle: "固定 level を捨てても検証資産は残る、という core rule 検証から roguelite 製品化までの意思決定連鎖"
+  analysis_axis: "制約ルール、固定問題、point-buy battle budget、小数値の再スケール、外部 playtest が設計変更へ接続した因果"
+  application_target: "小規模 tactics prototype の最初の playable diff、procedural encounter の難度尺度、報酬間隔、外部 playtest の観測項目"
+  pros_cons: "検証順と共通 budget は再利用しやすい一方、手作り map pool と Discord volunteer に依存し、完全自動生成や定量比較の一般解ではない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

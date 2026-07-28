@@ -4,20 +4,20 @@ url: "https://schedule.gdconf.com/search/narrative"
 collected_at: "2026-06-19T05:59:28+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, narrative-design, production, communication, gdc]
-evaluated_at: "2026-06-19T06:03:15+09:00"
+evaluated_at: "2026-07-29T08:37:17+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-19T06:03:15+09:00"
+last_reviewed_at: "2026-07-29T08:37:17+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-19T06:03:15+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-29T08:37:17+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-19"
+stale_after: "2026-08-28"
 supersedes: []
 gate_reason: |-
-  問題設定と適用先は明確だが、現状は GDC schedule のセッション紹介と Phase 1 の解釈に留まる。
-  narrative handoff の具体手法、他職種への変換単位、評価・事例が不足しており、CoopEval 水準の概要はまだ書けない。
+  読まれない設計意図を production handoff に変える問題設定は、playable diff への接続に具体性がある。
+  ただし再評価時点でも紹介文だけで、変換単位・運用手順・評価事例がなく、記事固有の手法を約4000字で説明できない。
 ---
 
 ## raw_excerpt
