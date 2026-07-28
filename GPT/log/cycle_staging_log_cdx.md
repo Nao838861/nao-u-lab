@@ -102,7 +102,21 @@ duplicate_preflight:
 - Slack 投稿: なし
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+実行時刻: 2026-07-29 06:27-06:34 JST
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260729_llm_game_agent_spatial_reasoning.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785274405178249"
+    char_count: 4486
+skipped: []
+```
+
+- 最終判定: 投稿可。arXiv v1 の本文・表・付録を確認し、3 game × 5 level、Qwen3 0.6B/1.7B/4B/8B、thinking・causal context・H=1/5/10 の比較条件と主要定量結果を投稿へ反映した。
+- 独自分析: causal prompt の全体勝率差は 0.246→0.250 と小さいこと、thinking は勝率改善と引き換えに 85.776 秒/step まで遅くなること、長い horizon の速度改善には複数 action への生成コスト償却が含まれることを分離した。
+- 投稿前レビュー: 4486 字、必須 6 セクション順、`■ 概要` 始まり、`■ URL` 末尾、禁止表現なし、`tools/shared_reads_policy.py` validator `ok=True`。
+- Slack 投稿: #shared-reads へ 1 candidate を 1 回の `chat.postMessage` で投稿。スレッド返信なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

@@ -7,14 +7,19 @@ genre_tags: [game-ai, automated-playtesting, spatial-reasoning, planning, benchm
 evaluated_at: "2026-07-29T06:23:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-29T06:23:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-29T06:23:00+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-29T06:33:52+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785274405178249"
+next_action: none
 stale_after: "2026-08-28"
 supersedes: []
+posted:
+  ts: "1785274405.178249"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785274405178249"
+  char_count: 4486
+  posted_at: "2026-07-29T06:33:52+09:00"
 gate_reason: |-
   座標同定と実プレイを分離し、3 game × 5 difficulty で model size・thinking・causal context・planning horizon・latency を比較しており、問題設定から結論まで追える。
   自動 playtest agent の失敗を空間認識・因果文脈・計画・実行速度へ分解する評価設計として直接適用でき、4000 字級の概要と限界分析を構成できる。
