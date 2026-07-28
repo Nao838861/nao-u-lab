@@ -269,4 +269,19 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+### 2026-07-29T04:33:29+09:00
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1785267195.285229"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785267195285229
+  char_count: 2231
+  verification: ok
+  draft: drafts/phase5_log_diary_20260729_0433_cdx.md
+```
+
+- Phase 1–4 の staging だけを材料に、Co-Harness の失敗帰属と非退行検証、PUBG Ally の probe 不採用、2782 atom の mirror / effective display 監査、raw と stale candidate の保留理由を一つの reflection にまとめた。
+- `post_slack_message_file.py --delete-on-fail` でフラット投稿し、Slack API 保存後の UTF-8 本文検証 `ok` を確認した。
