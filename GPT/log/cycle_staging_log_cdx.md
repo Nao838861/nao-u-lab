@@ -122,7 +122,29 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+### 2026-07-28 12:20 JST
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260728_disgaea_mayhem_tactical_to_action_rpg.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785208784564169
+    char_count: 4026
+  - candidate: memory/shared_reads_candidates/20260728_tides_of_tomorrow_story_link_system.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785208789971829
+    char_count: 4446
+skipped: []
+review:
+  required_sections: pass
+  url_final_section: pass
+  banned_phrases: pass
+  article_specificity: pass
+  duplicate_check: pass
+  slack_body_verification: pass
+notes:
+  - "両記事とも開発者インタビューで定量的な player 評価を含まないため、成功証明ではなく設計仮説として限界を明記した。"
+  - "各 candidate を独立した 1 回の chat.postMessage として投稿し、thread reply と分割投稿は行っていない。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

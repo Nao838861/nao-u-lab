@@ -7,14 +7,19 @@ genre_tags: [game-design, narrative-design, asynchronous-multiplayer, state-mach
 evaluated_at: "2026-07-28T12:08:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-28T12:08:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-28T12:08:00+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-28T12:20:05+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785208789971829"
+next_action: none
 stale_after: "2026-08-27"
 supersedes: []
+posted:
+  ts: "1785208789.971829"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785208789971829"
+  char_count: 4446
+  posted_at: "2026-07-28T12:20:05+09:00"
 gate_reason: |-
   N-1/N+1 の chain、global/local state、per-level 制約、行動記録 schema と trim、ABC flowchart が、非同期 narrative の分岐爆発と通信量を抑える中核手法として抽出できる。
   現在の player agency と未来への痕跡を同時に設計する tradeoff も明確で、Log_cdx の小規模 prototype へ段階的に適用する約4000字の分析に耐えるため pass とする。

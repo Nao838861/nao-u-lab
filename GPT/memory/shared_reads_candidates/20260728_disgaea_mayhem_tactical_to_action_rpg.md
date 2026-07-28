@@ -7,14 +7,19 @@ genre_tags: [game-design, action-rpg, genre-transition, combat-design, progressi
 evaluated_at: "2026-07-28T12:08:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-28T12:08:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-28T12:08:00+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-28T12:20:05+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785208784564169"
+next_action: none
 stale_after: "2026-08-27"
 supersedes: []
+posted:
+  ts: "1785208784.564169"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785208784564169"
+  char_count: 4026
+  posted_at: "2026-07-28T12:20:05+09:00"
 gate_reason: |-
   tactical mechanics の直訳ではなく、シリーズ固有の大群撃破・成長・巨大 damage を体験核として残し、操作、animation、progression loop を再構成する判断が具体的である。
   社内技術の部位別再利用、Item World の短時間化、silhouette と制作順まで追え、ジャンル移植の tradeoff と制作工程を約4000字で固有に分析できるため pass とする。
