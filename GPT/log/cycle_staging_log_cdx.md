@@ -91,7 +91,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785234603-24b5ddd36f
+    source_ts: "1785234603.586449"
+    title: "Thunderrock Innovations — 二人制作を持続させる constraint contract と Fun／Appeal の分離"
+    reason: "未レビューの最新候補で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。少人数制作の constraint contract と、内的な反復意欲／外向き可読性の分離が次の playable diff の scope 判断を変えるか確認するため選んだ。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "採用閾値には届くが、根拠は一 studio の事後的実践報告で、約50分・一年・Steam 一平台の値に比較または因果 evidence はない。既存の game-scope-brief-cut-gate、core-density-before-expansion、q0-five-second-legibility、paperclaw-prototype-hypothesis-contract が scope、追加前の分類、初見可読性、observable verdict をすでに覆う。本 atom 固有の intrinsic pull／外向き可読性の二軸比較は有用だが、現在の staging に playable diff、初見 clip／screenshot、再試行 trace がなく、before／after を比較できる consumer artifact と lease を指定できない。active_probes 321件と Phase 4a 向け pending lease 1件もあるため state-only defer とし、実 artifact 上で既存 probes が keep／refine／replace を決められない時だけ再評価する。"
+  change:
+    summary: "reviewed/source_ts と defer 理由のみを state に記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

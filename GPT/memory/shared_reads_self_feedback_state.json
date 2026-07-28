@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-28T19:34:16+09:00",
+  "updated_at": "2026-07-28T21:49:00+09:00",
   "reviewed_source_ts": [
+    "1785234603.586449",
     "1785224756.154339",
     "1780495046.004439",
     "1785184225.063269",
@@ -533,6 +534,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-28T21:49:00+09:00",
+      "selected": {
+        "id": "sr-1785234603-24b5ddd36f",
+        "source_ts": "1785234603.586449",
+        "title": "Thunderrock Innovations — 二人制作を持続させる constraint contract と Fun／Appeal の分離",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。少人数制作で core experience、投入時間、変更範囲を先に固定し、内的な反復意欲と外向きの理解可能性を別 evidence にする提案が、次の playable diff の scope 判断を既存 probes より具体的に変えるか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の採用条件は満たす。shared-reads 本文は、一作約一年・単一 core mechanic・Steam 一平台という制約から、prototype の再訪／次 build 要求、demo の session 分布、screenshot／clip の初見理解を別 signal にし、追加より refinement／replacement を選ぶ二人 studio の運用を示す。次の3 playable diff で core 改善仮説、投入時間、内部 signal、外向き可読性、keep／refine／replace を比較する案へ直接変換できるため relevance・actionability は3とした。一方、根拠は一 studio の事後的な実践報告で、約50分や一年という値に売上・retention との対応、sample 数、genre 比較、工程変更前後の同条件比較がなく、友人の再訪や clip 反応にも既存関係、流入、visual polish の交絡があるため evidence=2 とした。既存の game-scope-brief-cut-gate は scope promise・Must／Should／Cut・最小 risk test、core-density-before-expansion は追加を deepening／support／expansion／interference に分ける判断、q0-five-second-legibility は最初の役割・verb・target・feedback の可読性、paperclaw-prototype-hypothesis-contract は observable verdict と test path をすでに扱う。本 atom 固有の差は intrinsic pull と外向き可読性を同じ build で混同せず、片方だけ弱い時に追加ではなく refine／replace を選ぶ二軸比較だが、現在の staging には対象 playable diff、初見 clip／screenshot、再試行 trace、比較可能な before／after artifact がなく、consumer_phase、trigger_artifact、expected_delta、lease_due を lease 契約どおり具体化できない。active_probes 321件と Phase 4a 向け pending lease 1件があるため、今は operational probe を増やさない。次の具体的な playable diff で『触ると反復されるが見ただけでは誤読される』またはその逆が観測され、既存4 probes だけでは keep／refine／replace が決まらない時に再評価する。",
+      "existing_probes": [
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260528-core-density-before-expansion",
+        "probe-20260621-q0-five-second-legibility",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の scope／core-density／Q0-legibility／hypothesis-contract probes との重複、および比較可能な playable artifact 不在による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-28T19:34:16+09:00",
       "selected": {
