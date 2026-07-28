@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-29T06:38:55+09:00",
+  "updated_at": "2026-07-29T08:48:39+09:00",
   "reviewed_source_ts": [
+    "1785274405.178249",
     "1785266226.414919",
     "1785258225.839589",
     "1780495015.816399",
@@ -538,6 +539,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-29T08:48:39+09:00",
+      "selected": {
+        "id": "sr-1785274405-230a5b82cf",
+        "source_ts": "1785274405.178249",
+        "title": "LLM Game Agents in Spatial Worlds — 勝率を自己位置・前提管理・計画長・実行遅延へ分解する",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。直前の Phase 3 投稿が示す自己位置、rule prerequisite、planning horizon、action contract、step latency の分解が、次の headless／game-agent 評価へ既存 probe と異なる小さな判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14には達するが、risk_control が必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、3 game × 5 level × 10配置の self-localization、Qwen3 0.6B／1.7B／4B／8B、thinking on/off、因果情報 on/off、planning horizon H=1／5／10、各条件2 trial を用い、勝率・completion・平均応答時間を分けている。因果情報の全体勝率差が0.246→0.250に留まること、thinking が勝率0.078→0.433と引き換えに completion 0.986→0.597・時間0.544→85.776秒/stepへ悪化すること、H=10の速度改善に action 償却と静的盤面の交絡があることまで明記するため evidence=3 とした。一方、probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation は評価入力・scaffold variance・perception／state-representation／memory／prompt failure の分離を、probe-20260707-partial-observation-state-representation は観測と推定状態および uncertainty を、probe-20260708-causalgame-outcome-explanation-split は勝率などの結果と機構・交絡を、probe-20260710-llm-bounded-replanning-decision-layer は deterministic authority・bounded decision schema・heuristic baseline・latency／replan cost をすでに扱う。本 atom 固有の五分類を別 probe にしても、既存4 probeを同じ run へ適用した時の判断をほぼ変えず、321件の active_probes と Phase 4a 向け pending lease 1件へ確認負荷を追加する。今サイクルには H=1／H=5 を同一 layout で比較できる headless artifact もないため、consumer、before／after artifact、期待判断差を lease 契約どおり指定できない。次に既存4 probeを適用しても自己位置・prerequisite・plan horizon・action contract・latency のどこを直すか決められない実例が出た時だけ再評価する。",
+      "existing_probes": [
+        "probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation",
+        "probe-20260707-partial-observation-state-representation",
+        "probe-20260708-causalgame-outcome-explanation-split",
+        "probe-20260710-llm-bounded-replanning-decision-layer"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の playtest diagnostic／partial observation／causal outcome／bounded replanning probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-29T06:38:55+09:00",
       "selected": {

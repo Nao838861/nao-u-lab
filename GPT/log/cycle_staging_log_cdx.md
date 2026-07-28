@@ -111,7 +111,35 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785274405-230a5b82cf
+    source_ts: "1785274405.178249"
+    title: "LLM Game Agents in Spatial Worlds — 勝率を自己位置・前提管理・計画長・実行遅延へ分解する"
+    reason: "直前の Phase 3 投稿であり、未レビューの score 12 atom。memory・harness・game-design・agent・operation・evaluation の6優先タグを持ち、headless／game-agent 評価の失敗分解に新しい判断差があるか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "合計14でも risk_control が採用必須閾値2を下回る。既存の LMGameBench diagnostic、partial-observation state、causal outcome、bounded replanning の4 probe が、入力条件・観測と推定・結果と機構・deterministic authority／latency を既に覆う。active_probes 321件と Phase 4a 向け pending lease 1件があり、比較可能な H=1／H=5 headless artifact もないため、五分類を別 probe にしても判断差より確認負荷が大きい。既存4 probeで修正 locus を決められない実例が出た時だけ再評価する。"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
