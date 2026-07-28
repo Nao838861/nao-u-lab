@@ -5,6 +5,12 @@
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
 
+### 2026-07-29T04:01+09:00
+
+- `memory/shared_reads_candidates/20260729_co_harness_model_harness_coevolution.md` — 失敗 trajectory を prompt / tool / skill / middleware / memory へ帰属し、非退行検証した局所 harness patch と model update を交互に回す Co-Harness の一次資料。
+- pending inbox: `slack_directives.jsonl` 0件、`slack_broadcasts.jsonl` 0件。
+- duplicate preflight: `continue`（canonical URL `https://arxiv.org/abs/2607.22688`）。
+
 ### 2026-07-29T01:47+09:00
 
 - Slack inbox: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
