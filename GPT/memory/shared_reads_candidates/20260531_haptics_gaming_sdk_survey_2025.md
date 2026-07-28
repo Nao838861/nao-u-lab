@@ -4,18 +4,21 @@ url: "https://hapticsif.org/wp-content/uploads/2025/07/haptics-gaming-sdk-survey
 collected_at: "2026-05-31T15:29:46+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-feel, haptics, controller-feedback, sdk, interaction-design]
-evaluated_at: "2026-05-31T15:32:41+09:00"
+evaluated_at: "2026-07-28T14:28:31+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-05-31T15:32:41+09:00"
+last_reviewed_at: "2026-07-28T14:28:31+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-31T15:32:41+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-28T14:28:31+09:00"
 next_action: revise_or_research
-stale_after: "2026-06-30"
+stale_after: "2026-08-27"
 supersedes: []
-gate_reason: "haptics の語彙整理としては有用だが、現時点の candidate は SDK 市場 survey の要約に寄っており、ゲーム制作で直近に適用する具体場面が弱い。4000 字の投稿にするには、ブラウザゲームや既存 prototype の game feel 改善へ落とす追加整理が必要。"
+gate_reason: >-
+  haptics の語彙整理としては有用だが、再確認しても SDK 市場 survey の列挙が中心で、
+  ブラウザゲームや既存 prototype に直近適用できる実装・評価場面が弱い。
+  ~4000 字の投稿へ育てるには game feel 改善との対応整理が必要なため保留を継続する。
 ---
 
 ## raw_excerpt

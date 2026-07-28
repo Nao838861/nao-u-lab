@@ -4,21 +4,21 @@ url: "https://arxiv.org/abs/2605.27261"
 collected_at: "2026-05-31T02:45:33+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [player-experience, telemetry, biometrics, difficulty, game-balancing, dynamic-difficulty]
-evaluated_at: "2026-05-31T02:48:56+09:00"
+evaluated_at: "2026-07-28T14:28:31+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-31T02:48:56+09:00"
+last_reviewed_at: "2026-07-28T14:28:31+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-31T02:48:56+09:00"
-stale_after: "2026-06-30"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-28T14:28:31+09:00"
+stale_after: "2026-08-27"
 supersedes: []
 next_action: revise_or_research
 gate_reason: |
   telemetry / survey / biometrics / C-RTA を同時に取る設計は、難易度調整とPX観察ログの設計に具体的に使える。
-  ただし候補メモは abstract 抜粋中心で、19名 pilot の評価結果や各モダリティの寄与まで Phase 3 水準で説明する材料が不足している。
-  full paper か dataset/protocol の詳細を確認してから投稿判定する。
+  再確認しても 19 名 pilot の評価結果や各モダリティの寄与は未抽出で、Phase 3 水準の説明材料が不足する。
+  full paper または dataset/protocol の詳細が揃うまで保留を継続する。
 
 ---
 
