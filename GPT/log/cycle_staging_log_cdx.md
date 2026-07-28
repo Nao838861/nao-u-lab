@@ -94,7 +94,14 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped: []
+decision: no_pass_candidates
+reason: Phase 2 の pass が 0 件のため、投稿対象なし。postpone 6 件は品質ゲートを満たすまでローカル候補として維持する
+slack_posted: false
+candidate_updates: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
