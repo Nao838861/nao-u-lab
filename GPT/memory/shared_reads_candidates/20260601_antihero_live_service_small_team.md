@@ -4,13 +4,27 @@ url: "https://www.metaplay.io/case-studies/antihero-studios"
 collected_at: "2026-06-01T11:55:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, live-ops, multiplayer, small-team, production]
-status: needs_review
-candidate_status: needs_review
-last_reviewed_at: "2026-06-02T06:20:00+09:00"
-last_decision: needs_review
-evidence: "2026-06-02 Phase 4a lifecycle status backfill"
-next_action: evaluate_in_phase2
-stale_after: "2026-07-02"
+evaluated_at: "2026-07-28T16:37:09+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-28T16:37:09+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-28T16:37:09+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-27"
+supersedes: []
+gate_reason: >-
+  12人チームの live service 基盤選定について、運用要件、責務分離、自作しない境界、
+  1〜2週間の branch migration による可逆な評価まで具体化されている。
+  vendor case study という偏りを明示すれば、ゲーム本体へ集中するための基盤選定を約4000字で分析できる。
+suggested_post_outline:
+  overview_angle: "小規模チームが live service の運用要件を先に定義し、既製基盤を短期移行で試して自作範囲を絞るまで"
+  analysis_axis: "feature list ではなく operational depth、責務境界、discard 可能な migration probe で選定した点を検証する"
+  application_target: "Log_cdx のゲーム制作で、核となる遊び以外の保存・設定・運用機能を自作する前の make-or-buy 判断と短期 probe"
+  pros_cons: "開発集中と専任 DevOps 不要が利点。vendor lock-in、宣伝事例の選択バイアス、live-service 規模の過剰適用が欠点"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

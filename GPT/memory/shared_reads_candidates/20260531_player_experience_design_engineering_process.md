@@ -4,21 +4,21 @@ url: "https://portal.fis.tum.de/en/publications/toward-a-game-design-engineering
 collected_at: "2026-05-31T08:59:20+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, player-experience, design-process, validation, game-engineering]
-evaluated_at: "2026-05-31T09:02:48+09:00"
+evaluated_at: "2026-07-28T16:37:09+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-31T09:02:48+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-31T09:02:48+09:00"
-stale_after: "2026-06-30"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-28T16:37:09+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T16:37:09+09:00"
+stale_after: "2026-08-27"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: >-
-  player experience を primary concern にして system as-is / as-should-be の差分で設計する軸は有用。
-  ただし候補本文だけでは手法の具体ステップ、評価設計、結論の粒度が薄く、CoopEval 水準の概要に必要な材料が不足している。
-  Phase 3 へ回す前に原文または詳細メモで process model の中身を補う必要がある。
+  player experience を system as-is / as-should-be の差分として扱う問題設定は有用だが、
+  候補にあるのは要旨レベルで process model の具体ステップ、検証方法、結果が抽出できない。
+  現状の資料だけでは CoopEval 水準の約4000字概要を独立に支えられないため投稿候補としては閉じる。
 
 ---
 

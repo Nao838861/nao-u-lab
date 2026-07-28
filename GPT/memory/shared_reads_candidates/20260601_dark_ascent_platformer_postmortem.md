@@ -4,13 +4,21 @@ url: "https://itch.io/devlog/1511711/dark-ascent-postmortem.amp"
 collected_at: "2026-06-01T11:55:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, postmortem, platformer, playtesting, scope-control]
-status: needs_review
-candidate_status: needs_review
-last_reviewed_at: "2026-06-02T06:20:00+09:00"
-last_decision: needs_review
-evidence: "2026-06-02 Phase 4a lifecycle status backfill"
-next_action: evaluate_in_phase2
-stale_after: "2026-07-02"
+evaluated_at: "2026-07-28T16:37:09+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-28T16:37:09+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-28T16:37:09+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-27"
+supersedes: []
+gate_reason: >-
+  full playthrough 時間の確保、共有可能な engine、art doc、scope 制御という失敗点は制作工程へ直接適用できる。
+  ただし記述は一般的な回顧に留まり、各判断と不具合の因果、評価方法、改善後の結果を抽出できない。
+  ローカルのチェック項目としては残すが CoopEval 水準の独立記事には不足するため投稿候補として閉じる。
 ---
 
 ## raw_excerpt

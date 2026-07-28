@@ -4,6 +4,21 @@ url: "https://gdcvault.com/play/1035681/Punching-Across-the-Room-in"
 collected_at: "2026-07-28T16:32:30.2501645+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, combat-design, vr, adaptation, mechanics]
+evaluated_at: "2026-07-28T16:37:09+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-28T16:37:09+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-28T16:37:09+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-27"
+supersedes: []
+gate_reason: >-
+  freeflow combat、locomotion、gadgets を一体として別の入力・視点・身体性へ翻訳する問題は、ゲーム制作への適用性が高い。
+  ただし候補本文は GDC の公開 overview の範囲に留まり、具体的な変換規則、失敗案、評価内容、結論がまだ抽出されていない。
+  講演本編の一次資料を候補へ反映できるまで Phase 3 には進めない。
 ---
 
 ## raw_excerpt
