@@ -4,18 +4,20 @@ url: "https://arxiv.org/abs/2603.09753"
 collected_at: "2026-06-12T04:44:38+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-research, hci, cognitive-science, player-observation, evaluation]
-evaluated_at: "2026-06-12T04:46:50+09:00"
+evaluated_at: "2026-07-29T01:51:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-12T04:46:50+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-12T04:46:50+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-12"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-29T01:51:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-29T01:51:00+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-28"
 supersedes: []
-gate_reason: "商用ゲームを HCI と cognitive science の交差点に置く問題設定と、screen recording、eye tracking、behavioral timing による観察 toolkit は有用。ただし Phase 1 抜粋だけでは affordance-cognition mapping framework の具体手順、評価例、結論の粒度が不足しており、CoopEval 水準の概要にすると抽象論が多くなる。本文から観察設計の具体例を追加確認してから判定したい。"
+gate_reason: |-
+  商用ゲームを生態学的妥当性の高い認知研究環境として扱う問題設定は有用だが、affordance-cognition mapping の具体手順、適用例、評価結果が候補内にない。
+  初回延期後も根拠が増えておらず、現状から CoopEval 水準の概要を書くと観察 toolkit の一般論に留まるため、投稿候補としては閉じる。
 ---
 
 ## raw_excerpt

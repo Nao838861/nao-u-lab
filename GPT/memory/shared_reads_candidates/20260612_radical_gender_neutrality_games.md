@@ -4,18 +4,20 @@ url: "https://arxiv.org/abs/2604.15337"
 collected_at: "2026-06-12T08:57:03+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, player-experience, inclusion, hci, identity]
-evaluated_at: "2026-06-12T10:05:00+09:00"
+evaluated_at: "2026-07-29T01:51:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-12T10:05:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-12T10:05:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-12"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-29T01:51:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-29T01:51:00+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-28"
 supersedes: []
-gate_reason: "問題設定と対象は重要だが、現 candidate は abstract 相当で、論文が提示する empirically-grounded criteria の中身がまだ抜けている。このままでは CoopEval 水準の概要で手法・評価・結論を十分に説明できない。キャラ作成や UI 文言への適用性はあるため、本文精読後に再評価する。"
+gate_reason: |-
+  142 名への critical incident technique と agender euphoria という問題設定は重要だが、得られた criteria、体験を生む条件・妨げる条件、分析結果が候補内にない。
+  初回延期後も abstract 相当の情報量のままで、キャラ作成や UI 文言への適用を研究結果から具体化できないため、投稿候補としては閉じる。
 ---
 
 ## raw_excerpt

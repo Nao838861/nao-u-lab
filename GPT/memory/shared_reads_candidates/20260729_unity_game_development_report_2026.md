@@ -4,6 +4,26 @@ url: "https://unity.com/blog/2026-unity-game-development-report-trends"
 collected_at: "2026-07-29T01:47:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-production, prototyping, studio-strategy, ai-tools, multiplayer, market-research]
+evaluated_at: "2026-07-29T01:51:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-29T01:51:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-29T01:51:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-28"
+supersedes: []
+gate_reason: |-
+  300 人調査と約 500 万 developer の利用データを背景に、project 規模、prototype 期間、AI/MCP、multiplayer、販路の傾向を具体的な比率で説明できる。
+  vendor report で因果推論には使えない限界を明示しつつ、制作計画を外部ベースラインと比較する材料として具体的に適用でき、4000 字級の批判的概要を構成できる。
+suggested_post_outline:
+  overview_angle: "不確実な市場で studio が project を小さく速く検証し、AI/MCP を back-end、multiplayer を小規模 session、販路を複線化する五つの risk reduction として整理する"
+  analysis_axis: "個々の流行を列挙せず、制作リスクを prototype・運用・市場の各段階でどう早期に減らすかという共通軸と、調査母集団・vendor bias を分析する"
+  application_target: "ゲーム制作 cycle の playable diff までの期間、MCP の接続先、少人数 multiplayer の採否、公開経路を決める際の比較ベースラインに使う"
+  pros_cons: "定量的な外部基準を得られる一方、Unity ecosystem 偏重、自己申告調査、development time 指標の定義不足があり、目標値や因果関係としては扱えない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

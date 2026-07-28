@@ -4,6 +4,26 @@ url: "https://developer.nvidia.com/blog/how-krafton-built-pubg-ally-a-co-playabl
 collected_at: "2026-07-29T01:45:44+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, llm-npc, ai-companion, playtesting, memory, realtime-systems]
+evaluated_at: "2026-07-29T01:51:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-29T01:51:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-29T01:51:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-28"
+supersedes: []
+gate_reason: |-
+  低遅延の behavior tree と言語推論層の分離、authoritative observation tools、短期・長期記憶、段階的 playtest が一つの実装事例として具体的に揃っている。
+  構成だけでなく自動検査、A/B、千人超 playtest まで評価 loop を説明でき、LLM NPC 制作へ直接適用できるため CoopEval 水準の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "real-time AI teammate を反射・熟考・観測・記憶・評価の五層へ分け、生成待ちを gameplay latency に持ち込まない設計として説明する"
+  analysis_axis: "language model の能力より、時間尺度と authority boundary を分けた system design、および自動検査から大規模 playtest へ進む評価設計を分析する"
+  application_target: "小規模 playable prototype の AI companion 実装で、即時行動層と発話層を分離し、engine state tool と短期・長期記憶を限定導入する設計判断に使う"
+  pros_cons: "反応速度と自然な協調を両立しやすい一方、対象 map・item taxonomy の限定、vendor Q&A 由来の評価詳細不足、複数 subsystem の運用コストがある"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
