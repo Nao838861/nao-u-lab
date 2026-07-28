@@ -142,7 +142,96 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 strict で読み、entry validator OK、local Markdown link 0件 / broken 0件を確認した。代表語は 記憶・ゲーム設計・敵パターンが取得でき、評価軸は完全一致語なしだが evaluation tag entry は存在する。source の再生成・手修復はしていない。"
+  - "memory/atoms.jsonl 2784件を監査し、bad JSON 0、missing id 0、duplicate id 0、duplicate source_ts 0を確認した。per-file / index / atoms.jsonl は各2784件で mirror drift・content conflict 0。raw normalized duplicate 40群は既存 overlay で fold 済み。"
+  - "shared-reads の open duplicate / stale triage / group action queue を再生成した。open group 51群、candidate enqueue 前の stale triage 3件、actionable group 0群。enqueue 後は live candidate lease を反映して stale triage 0件へ再生成した。"
+  - "期限到来 candidate のうち live group lease に含まれない3件を Phase 2 handoff inbox へ冪等 enqueue し、candidate handoff audit errors 0を確認した。"
+  - "Slack directive / broadcast は pending 0件のため lifecycle 更新なし。"
+issues:
+  - id: ISS-CAND-STATUS-001
+    description: "shared_reads_candidates root の3件に top-level status / candidate_status がなく、通常の lifecycle breakdown と stale_after handoff から外れている。"
+    severity: low
+    evidence: "memory/shared_reads_candidates/20260721_big_lizard_ai_copilot_postmortem.md; memory/shared_reads_candidates/20260726_reasoning_diversity_collapse_llm_game_play.md; memory/shared_reads_candidates/20260726_savestate_player_reflection_method.md; backfill_shared_reads_candidate_status.py dry-run changed=3"
+    source_file_status: "3件とも UTF-8 で読めるが lifecycle status が欠落。20260721_big_lizard_ai_copilot_postmortem.md は開始時から untracked のため本 cycle では一括 backfill していない。"
+    display_or_tooling_status: "既存 backfill dry-run は3件を needs_review と推定でき、tooling failure はない。"
+    why_blocks_game_memory: "未評価候補が stale queue に現れず、ゲーム制作へ転用可能な知見の再評価時期を復元できない。"
+  - id: ISS-ATOM-MOJIBAKE-001
+    description: "atom sr-1776127289-4d9239b255 の title / trigger / excerpt に U+FFFD が実在し、「AIエージェント」が破損している。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/raw/slack_archive/shared-reads.jsonl source_ts=1776127289.990919"
+    source_file_status: "3経路とも UTF-8 strict decode は成功するが、per-file atom に U+FFFD 8文字があり raw source 自体にも同じ破損がある。source content の破損。"
+    display_or_tooling_status: "memory_health.py が mojibake suspect として正しく検出。PowerShell / staging 表示だけの mojibake ではない。gr-1777083728-44d444ab7a は UTF-8 valid・U+FFFD 0で detector false positive。"
+    why_blocks_game_memory: "title と trigger の主要検索語が欠け、agent memory / filesystem context の既存知見を語句検索で取りこぼす可能性がある。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+candidate_lifecycle:
+  total: 1149
+  counts:
+    posted: 517
+    ready_to_post: 9
+    postponed: 227
+    failed: 390
+    needs_review: 3
+    status_missing: 3
+  overdue_open_total: 4
+  missing_stale_after: 6
+raw_archive_audit:
+  older_than_30_days: 96
+  action: "移動なし。slack archive、PDF/text 原文、sync state を含み provenance pointer の確認なしに動かせないため、archive 候補として件数のみ記録。"
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 3
+  stale_triage_queue_rows_after_candidate_enqueue: 0
+  open_duplicate_group_count: 51
+  mixed_group_count: 44
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 3
+  candidate_handoff_ids:
+    - cha-b7642a5818a45edb
+    - cha-5a36082c7890e106
+    - cha-83214b116ad8ca6d
+  suppressed_overdue:
+    - path: memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+      reason: "同一 work の live deferred group lease gha-e6d4d4b5a37a0808 が retry_after 2026-08-20 まで有効。"
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-b7642a5818a45edb
+    path: memory/shared_reads_candidates/20260621_ai_literacy_game_artifacts_review.md
+    status: postponed
+    stale_after: "2026-07-21"
+    priority_reason: "48 artifact と nine design suggestions の具体内容を補い、AI literacy をゲーム制作へ移す価値を再評価する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-5a36082c7890e106
+    path: memory/shared_reads_candidates/20260621_game_devs_gen_ai_resistance.md
+    status: postponed
+    stale_after: "2026-07-21"
+    priority_reason: "創作意図・provenance・junior pipeline・品質・player trust の対立軸を一次資料の具体発言で補えるか再評価する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-83214b116ad8ca6d
+    path: memory/shared_reads_candidates/20260626_promptmn_game_spec_directives.md
+    status: postponed
+    stale_after: "2026-07-26"
+    priority_reason: "機能要求・非機能要求・検証・trace の分解が既存仕様整理より固有の判断差を持つか再評価する。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
