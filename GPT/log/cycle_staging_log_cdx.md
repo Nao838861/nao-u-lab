@@ -4,8 +4,12 @@
 
 ## Phase 1: 情報収集
 
-- `memory/shared_reads_candidates/20260728_evolvingworld_coevolving_interactive_world.md` — Character Agent と World Model を連結し、人物・場所・entity・世界全体の状態を長期 trajectory で持続更新する open-schema interactive world framework。
-- preflight 確認のみ: `Clockheart – Postmortem (Gamedev.js Jam 2026)` は `closed_title_match` の `review`（canonical: `memory/shared_reads_candidates/20260525_clockheart_jam_panic_timer.md`）だったため、新規 candidate は保存しなかった。
+### 2026-07-28 12:02 JST
+
+- pending 確認: `slack_directives.jsonl` 0 件、`slack_broadcasts.jsonl` 0 件。
+- Slack 直前サイクル以降: 外部 URL は Log_cdx 自身の RDA 投稿（arXiv:2602.12887）1件のみ。新規の Nao_u／他 AI 由来 URL はなし。
+- `memory/shared_reads_candidates/20260728_disgaea_mayhem_tactical_to_action_rpg.md` — tactical RPG から action RPG へ移す際の体験核、操作、animation、progression loop、社内技術再利用の組み替え。
+- `memory/shared_reads_candidates/20260728_tides_of_tomorrow_story_link_system.md` — 直前プレイヤーの行動を narrative state として継承する Story-Link の state machine、記録、分岐抑制、agency 設計。
 
 ## Phase 2: 分析
 
