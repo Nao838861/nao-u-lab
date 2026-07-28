@@ -19,6 +19,7 @@ import {
   assertMoneyConservation,
   buyAtMarket,
   buyTargets,
+  calendarMonth,
   companyCreditLimit,
   companyLogisticsSite,
   companyStockReleasePrice,
@@ -971,6 +972,21 @@ test("段14: 漁は冬1/4・野菜畑は月3〜10のみ・牧畜は肉と布を�
   producePrimaryTick(shepherd.economy, shepherd.physical, shepherd.household, { day: 1, fraction: 1 });
   assert.equal(shepherd.household.pantry.meat, P.Y_MEAT);
   assert.equal(shepherd.household.pantry.cloth, P.Y_CLOTH);
+});
+
+test("暦オフセット: 経過1日目を春3月として季節生産へ反映する", () => {
+  const physical = createPhysicalState({
+    width: 48,
+    height: 40,
+    terrain: makeFlowIslandTerrain(),
+  });
+  const economy = createEconomicState();
+  economy.calendarOffsetDays = 60;
+  initializeNaturalResources(economy, physical);
+  const gardener = createHousehold(economy, { job: "veg", x: 25, y: 32 });
+  assert.equal(calendarMonth(economy, 1), 3);
+  producePrimaryTick(economy, physical, gardener, { day: 1, fraction: 1 });
+  assert.equal(gardener.pantry.veg, P.Y_VEG);
 });
 
 test("段14: 木こりは択伐し不足時だけ皆伐して禿山を作る", () => {

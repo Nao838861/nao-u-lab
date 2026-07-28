@@ -185,7 +185,7 @@ export class Renderer {
 
   render(model, elapsedSeconds = 0) {
     this.pulse += elapsedSeconds;
-    this.season = islandCalendar(model.day).season;
+    this.season = islandCalendar(model.day, model.calendarOffsetDays).season;
     this.frameBounds = this.camera.visibleWorldBounds(4);
     this.lastFrameMetrics = {};
     const ctx = this.ctx;

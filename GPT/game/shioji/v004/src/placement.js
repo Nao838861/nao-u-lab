@@ -1,4 +1,5 @@
 import { BUILDING_SIZES } from './config.js?v=v004.37.0-multi-market';
+import { islandCalendar } from './ui_summary.js?v=v004.37.0-multi-market';
 
 export const tileKey = (x, y) => `${x},${y}`;
 
@@ -161,7 +162,7 @@ export function resourcePlacementEstimate(model, job, entrance) {
     ? Math.max(0, (oneWayTicks - 2) * 2)
     : 30;
   const efficiency = Math.max(0.1, 1 - lostTicks / 24);
-  const month = (Math.floor((Math.max(1, model.day ?? 1) - 1) / 30) % 12) + 1;
+  const month = islandCalendar(model.day, model.calendarOffsetDays).month;
   const baseOutput = job === 'logger' ? 12 : month >= 10 ? 15 / 4 : 15;
   return {
     kind: job === 'logger' ? 'forest' : 'shore',

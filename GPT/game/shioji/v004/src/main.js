@@ -423,7 +423,7 @@ function renderHud() {
   setTextIfChanged('#start-mode-label', START_MODES[startMode].shortLabel);
   setTextIfChanged('#funds-value', formatNumber(toDenari(model.companyMoney)));
   setTextIfChanged('#day-value', `${model.day}日目`);
-  const calendar = islandCalendar(model.day);
+  const calendar = islandCalendar(model.day, model.calendarOffsetDays);
   setTextIfChanged('#season-value', calendar.label);
   setTextIfChanged('#population-value', `${formatNumber(model.population)}人`);
   const foodHud = foodHudSummary(model, economyHistory);

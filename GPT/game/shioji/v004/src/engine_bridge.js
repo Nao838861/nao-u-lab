@@ -19,11 +19,21 @@ import {
 import { createPhysicalState, makeFlowIslandTerrain, makeMultiMarketTerrain } from '../../engine/src/physical.js?v=v004.37.0-multi-market';
 import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.37.0-multi-market';
 import { createViewController } from './controller.js?v=v004.37.0-multi-market';
-import { START_MODES } from './start_modes.js?v=v004.37.0-multi-market';
+import {
+  SPRING_START_CALENDAR_OFFSET_DAYS,
+  START_MODES,
+} from './start_modes.js?v=v004.37.0-multi-market';
 
 export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS };
 export { makeMultiMarketTerrain };
 export const BUILD_COST_DENARI = P.BUILD_COST * 10;
+
+export function applySpringStartCalendar(world) {
+  if (!world?.state?.economy) throw new TypeError('world state is required');
+  world.state.calendarOffsetDays = SPRING_START_CALENDAR_OFFSET_DAYS;
+  world.state.economy.calendarOffsetDays = SPRING_START_CALENDAR_OFFSET_DAYS;
+  return world;
+}
 
 export function buildBlankCity(seed = 11, marketNetwork = null) {
   const plan = makeStableCityPlan();
@@ -53,6 +63,7 @@ export function createEngineController({
   const world = stateSnapshot
     ? createWorld({ stateSnapshot })
     : profile.blank ? buildBlankCity(seed, marketNetwork) : buildBaseCity(seed);
+  if (!stateSnapshot) applySpringStartCalendar(world);
   const api = createEngineApi(world, { initialJournal: inputJournal });
   return createViewController(api);
 }

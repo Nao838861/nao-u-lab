@@ -84,6 +84,7 @@ function viewSnapshot(state, { terrainAfterRevision = null } = {}) {
   return {
     day: state.day,
     tick: state.tick,
+    calendarOffsetDays: state.calendarOffsetDays ?? 0,
     seed: state.seed,
     economy: {
       company: {

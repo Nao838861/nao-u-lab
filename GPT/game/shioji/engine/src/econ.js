@@ -36,6 +36,18 @@ export const FOOD_KIND = deepFreeze({
   fish: "fish", veg: "veg", wheat: "wheat", pres: "fish", pick: "veg", meat: "meat",
 });
 
+export function calendarDay(economy, day = economy?.currentDay) {
+  const elapsedDay = Math.max(1, Math.floor(Number(day) || 1));
+  const offset = Number.isSafeInteger(economy?.calendarOffsetDays)
+    ? economy.calendarOffsetDays
+    : 0;
+  return elapsedDay + offset;
+}
+
+export function calendarMonth(economy, day = economy?.currentDay) {
+  return (Math.floor((calendarDay(economy, day) - 1) / 30) % 12) + 1;
+}
+
 export const P = deepFreeze({
   EAT: 9,
   PANTRY_FOOD_D: 6,
@@ -757,7 +769,7 @@ function consumeCultureGoods(economy, physical, household, goods, dailyNeed, sat
 
 function runHouseholdCultureAndLadder(economy, physical, household, day, markPhase = () => {}) {
   markPhase("culture");
-  const month = ((Math.floor((day - 1) / 30)) % 12) + 1;
+  const month = calendarMonth(economy, day);
   const charcoalMultiplier = month >= 10 || month <= 2 ? 2 : 0.6;
   const satisfied = {};
   for (const [goods, baseNeed] of [
@@ -1175,7 +1187,7 @@ export function staplePrice(economy) {
 }
 
 export function productionCost(economy, physical, household, goods, { day = economy.currentDay } = {}) {
-  const month = (Math.floor((Math.max(1, day) - 1) / 30) % 12) + 1;
+  const month = calendarMonth(economy, day);
   const winter = month >= 10 || month <= 2;
   const dailyYield = {
     fish: winter ? P.Y_FISH_W : P.Y_FISH,
@@ -1346,7 +1358,7 @@ export function buyTargets(
   const foodDays = FOODS.reduce((total, goods) => total + household.pantry[goods], 0) / P.EAT;
   const { px } = economy;
   const cheapest = Math.min(px.veg ?? 9, px.wheat ?? 9, px.pres ?? 9);
-  const month = (Math.floor((day - 1) / 30) % 12) + 1;
+  const month = calendarMonth(economy, day);
   const autumn = month >= 7 && month <= 9;
   let targetDays = autumn ? 10 : P.PANTRY_FOOD_D;
   targetDays = Math.max(
@@ -2328,8 +2340,9 @@ export function ageMarketStalls(economy, { day, physical = null }) {
 }
 
 export function runWheatHarvest(economy, { day }) {
-  const month = (Math.floor((day - 1) / 30) % 12) + 1;
-  if (month !== 9 || day % 30 !== 15) return [];
+  const effectiveDay = calendarDay(economy, day);
+  const month = calendarMonth(economy, day);
+  if (month !== 9 || effectiveDay % 30 !== 15) return [];
   const harvested = [];
   for (const household of economy.households) {
     if (household.job !== "wheat") continue;
@@ -2378,7 +2391,7 @@ function withdrawProductionFuel(economy, physical, household, qty) {
 
 export function producePrimaryTick(economy, physical, household, { day, fraction, endOfDay = false }) {
   if (!Number.isFinite(fraction) || fraction < 0) throw new TypeError("production fraction must be non-negative and finite");
-  const month = (Math.floor((day - 1) / 30) % 12) + 1;
+  const month = calendarMonth(economy, day);
   const winter = month >= 10;
   let effectiveFraction = fraction;
   if (household.boost) {
@@ -2623,7 +2636,7 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
 }
 
 export function householdIdealDailyOutput(economy, household, { day = economy.currentDay } = {}) {
-  const month = (Math.floor((Math.max(1, day) - 1) / 30) % 12) + 1;
+  const month = calendarMonth(economy, day);
   const winter = month >= 10;
   const mult = householdMult(household);
   const outputs = {};

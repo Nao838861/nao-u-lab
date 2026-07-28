@@ -672,6 +672,11 @@ async function checkStartChoice(width, height, mobile, mode) {
   }
   const started = await page.evaluate(`({
     mode: window.__SHIOJI_V004__.startMode,
+    day: window.__SHIOJI_V004__.model.day,
+    calendarOffsetDays: window.__SHIOJI_V004__.model.calendarOffsetDays,
+    effectiveCalendarDay: Math.max(1, window.__SHIOJI_V004__.model.day)
+      + window.__SHIOJI_V004__.model.calendarOffsetDays,
+    season: document.querySelector('#season-value').textContent,
     screenHidden: document.querySelector('#start-screen').hidden,
     buildings: window.__SHIOJI_V004__.model.buildings.length,
     households: window.__SHIOJI_V004__.model.households.length,
@@ -695,6 +700,10 @@ async function checkStartChoice(width, height, mobile, mode) {
     errors: document.querySelector('#status').textContent,
   })`);
   assert.equal(started.mode, mode, JSON.stringify(started));
+  assert.equal(started.day, 0, JSON.stringify(started));
+  assert.equal(started.calendarOffsetDays, 60, JSON.stringify(started));
+  assert.equal(started.effectiveCalendarDay, 61, JSON.stringify(started));
+  assert.equal(started.season, '春・3月', JSON.stringify(started));
   assert.equal(started.screenHidden, true, JSON.stringify(started));
   if (mode === 'test') {
     assert.ok(started.buildings > 3, JSON.stringify(started));
@@ -2221,7 +2230,12 @@ async function checkMarketRhythmUi(width = 1440, height = 900, mobile = false) {
   await page.close();
 }
 
-if (process.argv.includes('--company-pointer-only')) {
+if (process.argv.includes('--start-choice-only')) {
+  await checkStartChoice(1440, 900, false, 'tutorial');
+  await checkStartChoice(390, 844, true, 'sandbox');
+  await checkStartChoice(800, 700, false, 'test');
+  console.log('CHARTER ISLE v004 spring start choices smoke: PASS');
+} else if (process.argv.includes('--company-pointer-only')) {
   await checkTutorialCompanyPointerStability();
   console.log('CHARTER ISLE v004 company pointer smoke: PASS');
 } else if (process.argv.includes('--tutorial-handoff-only')) {
