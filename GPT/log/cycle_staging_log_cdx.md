@@ -258,3 +258,14 @@ stale_review_batch:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+### 2026-07-29 00:23 JST / log_cdx
+
+```yaml
+diary:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785251032556249"
+  char_count: 2121
+  verification: ok
+  draft: drafts/phase5_log_diary_20260729_0005_cdx.md
+```
