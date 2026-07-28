@@ -98,7 +98,58 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785224756-03dfb92c83
+    source_ts: "1785224756.154339"
+    title: "Misfitz — operational workflow から決める live-service 基盤の make-or-buy"
+    reason: >-
+      source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、
+      memory・harness・game-design・operation・evaluation の5優先タグを持つ。
+      小規模 team が game 固有の体験と既製基盤の責務境界をどこに置き、
+      短い real-feature migration で採否を決めるかという観点を、
+      現在の playable-first 運用や memory infrastructure 改善へ重複なく変換できるか確認するため選んだ。
+      Nao_u の明示評価は付いていない。
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: >-
+    12人 team の daily operation を config update、segmentation、designer dashboard、
+    player-level incident lookup へ分解し、実 feature を1〜2週間の branch migration で試した点は
+    次の行動へ変換しやすい。一方、vendor 自身の pre-alpha customer story であり、cost、
+    concurrent player、uptime、recovery time、Nakama との同条件比較、移行人日、長期 economy 運用がない。
+    また既存の game-scope-brief-cut-gate、short-hike-constraint-shortcut、
+    meta-horizon-friction-layer-triage、mcp-responsibility-boundary-check が、
+    playable core 前の cut、再利用と非自作境界、operations friction、provider 責務と fallback を既に扱う。
+    現在の staging に live-service stack、外部基盤選定、比較 branch artifact がなく、
+    active_probes 321件と Phase 4a 向け pending lease 1件もあるため、新規 control は判断差より確認負荷を増やす。
+    合計13で採用条件の14に届かず、state-only reject とした。
+  existing_probes:
+    - probe-20260602-game-scope-brief-cut-gate
+    - probe-20260713-short-hike-constraint-shortcut
+    - probe-20260626-meta-horizon-friction-layer-triage
+    - probe-20260708-mcp-responsibility-boundary-check
+  change:
+    summary: >-
+      reviewed_source_ts と reject 理由だけを更新した。
+      probe・metric・lease・directive・恒久ルールは追加していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

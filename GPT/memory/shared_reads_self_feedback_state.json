@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-28T16:50:05+09:00",
+  "updated_at": "2026-07-28T19:34:16+09:00",
   "reviewed_source_ts": [
+    "1785224756.154339",
     "1780495046.004439",
     "1785184225.063269",
     "1785192350.414439",
@@ -532,6 +533,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-28T19:34:16+09:00",
+      "selected": {
+        "id": "sr-1785224756-03dfb92c83",
+        "source_ts": "1785224756.154339",
+        "title": "Misfitz — operational workflow から決める live-service 基盤の make-or-buy",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。小規模 team が game 固有の体験と既製基盤の責務境界をどこに置き、短い real-feature migration で採否を決めるかという観点を、現在の playable-first 運用や memory infrastructure 改善へ重複なく変換できるか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かないため、新規 probe・metric・directive は追加しない。shared-reads 本文は、12人 team が daily operation を config update、segmentation、designer dashboard、player-level incident lookup へ分解し、実 feature を1〜2週間の branch migration で試し、Unity／Photon Quantum／Metaplay の責務境界を token validation に置いた事例を示す。約1年の日常利用、数千行×約20列の config validation、player profile rollback、exception history、構築済み Grafana という具体例があり actionability=3 とした。一方、vendor 自身の pre-alpha customer story で、cost、concurrent player、uptime、recovery time、Nakama との同条件比較、移行人日、長期 economy 運用が示されず、70,000 sign-up も production backend の scale 証拠ではないため evidence=2 とした。game-scope-brief-cut-gate は playable core 前の Must／Should／Cut と最小 risk test、short-hike-constraint-shortcut は再利用と新規制作しない境界、meta-horizon-friction-layer-triage は operations／content pipeline の観測 friction、mcp-responsibility-boundary-check は provider と local client の責務・fallback を既に扱う。本 atom 固有の operational-act list と short branch migration は有用な事例だが、現在の staging に live-service stack、外部基盤選定、比較 branch artifact がなく、既存4 probe と別の次回判断を作る consumer もないため non_redundancy=1。active_probes 321件と Phase 4a 向け pending lease 1件がある状態で make-or-buy control を足すと、基盤が不要な prototype にまで運用要件を先回りさせる危険がある。本 atom は参照事例として保持し、実測された operations friction と外部基盤候補が同時に生じた時だけ既存 probes を組み合わせて使う。",
+      "existing_probes": [
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260713-short-hike-constraint-shortcut",
+        "probe-20260626-meta-horizon-friction-layer-triage",
+        "probe-20260708-mcp-responsibility-boundary-check"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の scope／reuse／friction／responsibility-boundary probes との重複および現行 consumer 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-28T14:35:50+09:00",
       "selected": {
