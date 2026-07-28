@@ -142,7 +142,103 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の High Signal / Recent / task・tag entry point を per-file atom index と照合し、broken entry 0件を確認した"
+  - "atoms.jsonl / per-file md / index.jsonl は各2774件で、ID欠落・parse error・content conflict は0件だった"
+  - "normalized content 重複40群80行と title/excerpt exact 重複5群は canonical overlay 45群で全件 fold 済み、raw atom は削除しなかった"
+  - "memory/raw/ の最終更新30日超は96件。raw provenance と参照先を保つため mtime だけでは移動せず、archive候補として件数のみ確認した"
+  - "shared-reads candidate lifecycle を監査し、failed 361 / needs_review 8 / posted 506 / postponed 249 / ready_to_post 9 / skipped_unreviewed 3、overdue open 55件を確認した"
+  - "postponed / needs_review で stale_after 欠損は0件だった"
+  - "Slack directives 23行・broadcasts 21行を確認し、pending は双方0件だったため handled 更新はなかった"
+  - "open duplicate group / stale triage / group action queue を規定順で再生成し、group 1件と candidate 5件を永続 inbox へ冪等 enqueue した"
+issues: []
+encoding_audit:
+  - target: memory/MEMORY.md
+    source_file_status: "UTF-8明示読みは正常。代表語 hit は 記憶=21 / ゲーム設計=8 / 敵パターン=1 / 評価軸=0 で、日本語本文の破損は認めなかった"
+    display_or_tooling_status: "none"
+  - target: memory/atoms/2026-04/sr-1776127289-4d9239b255.md
+    source_file_status: "UTF-8明示読みでも『AIエ��ジェント』の U+FFFD が残り、atoms.jsonl と raw/slack_archive/shared-reads.jsonl の source row にも同じ欠損がある。表示経路ではなく原取得データ由来の局所欠損"
+    display_or_tooling_status: "none; PowerShell表示のみのmojibakeではない"
+  - target: memory/atoms/2026-04/gr-1777083728-44d444ab7a.md
+    source_file_status: "UTF-8明示読みで日本語本文は正常。health audit が拾った『???』は Nao_u 原文中のリテラルで、raw Slack row と一致する"
+    display_or_tooling_status: "false positive; encoding破損ではない"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 55
+  stale_triage_queue_rows: 50
+  stale_triage_queue_rows_after_live_leases: 48
+  open_duplicate_group_count: 52
+  mixed_group_count: 45
+  all_open_group_count: 7
+  actionable_group_count: 1
+  actionable_group_count_after_live_leases: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total 55 > queue rows 50 だが、actionable group は1件で3件未満"
+  group_handoff_budget: 1
+  handed_off_group_count: 1
+  handoff_inbox_pending_count: 1
+  handoff_inbox_ids: [gha-8ac95e6dd43d79f4]
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-0f2dd1d3a9b46e1a
+    - cha-dacce04ff3b6a88f
+    - cha-3cb50eb3316388e0
+    - cha-ac0c95cd2f42bc07
+    - cha-e13bcde33472ed68
+group_action_handoff:
+  - handoff_id: gha-8ac95e6dd43d79f4
+    group_key: "reflection at design actualization rda a tool and process for research through game design"
+    group_kind: mixed
+    representative: memory/shared_reads_candidates/20260611_reflection_design_actualization.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260611_reflection_design_actualization.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260722_reflection_at_design_actualization.md
+    latest_evidence: "open sibling stale_after=2026-07-11; terminal sibling was posted in this cycle's Phase 3"
+stale_review_batch:
+  - handoff_id: cha-0f2dd1d3a9b46e1a
+    path: memory/shared_reads_candidates/20260528_wildex_pokemon_go_real_wildlife.md
+    status: postponed
+    stale_after: "2026-06-27"
+    priority_reason: "age_days=31。現実の動植物・場所へ競争報酬が作る圧力は有用だが、安全設計・作者側対策・運用結果が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-dacce04ff3b6a88f
+    path: memory/shared_reads_candidates/20260529_godot_30day_narrative_prototype.md
+    status: needs_review
+    stale_after: "2026-06-28"
+    priority_reason: "age_days=30。未評価 candidate のため Phase 2 で本文根拠とゲーム制作への転用価値を判定する"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-3cb50eb3316388e0
+    path: memory/shared_reads_candidates/20260529_one_sentence_one_drama_multi_agent.md
+    status: postponed
+    stale_after: "2026-06-28"
+    priority_reason: "age_days=30。narrative pacing / spatial consistency の分解は有用だが、agent役割・評価・失敗例が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-ac0c95cd2f42bc07
+    path: memory/shared_reads_candidates/20260529_stealth_lighting_readability.md
+    status: needs_review
+    stale_after: "2026-06-28"
+    priority_reason: "age_days=30。未評価 candidate のため可読性設計の具体 evidence を Phase 2 で確認する"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-e13bcde33472ed68
+    path: memory/shared_reads_candidates/20260529_text_animation_player_attention.md
+    status: needs_review
+    stale_after: "2026-06-28"
+    priority_reason: "age_days=30。未評価 candidate のため text animation の手法・比較・限界を Phase 2 で確認する"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
