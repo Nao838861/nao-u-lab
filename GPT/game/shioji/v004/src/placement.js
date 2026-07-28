@@ -1,5 +1,5 @@
-import { BUILDING_SIZES } from './config.js?v=v004.37.0-multi-market';
-import { islandCalendar } from './ui_summary.js?v=v004.37.0-multi-market';
+import { BUILDING_SIZES } from './config.js?v=v004.38.0-winter-visuals';
+import { islandCalendar } from './ui_summary.js?v=v004.38.0-winter-visuals';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

@@ -76,7 +76,8 @@ import {
 import {
   EXACT_PILE_LIMIT, MAX_DISPLAY_CULTURE_LEVEL, MAX_PILE_SPRITES, MAX_YARD_GOODS,
   PILE_STAGE_LIMITS, buildingAppearance, buildingStructureLayout, displayCultureLevel,
-  pileVisual, seasonalPlotVisual, trailVisual, yardLayout, yardSlots, yardStockRows,
+  pileVisual, seasonalNaturalVisual, seasonalPlotVisual, seasonalTerrainVisual,
+  trailVisual, yardLayout, yardSlots, yardStockRows,
 } from '../src/visuals.js';
 
 let passed = 0;
@@ -2208,7 +2209,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.37.0-multi-market');
+  assert.equal(VERSION, 'v004.38.0-winter-visuals');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -3585,7 +3586,7 @@ test('UI向上段3/4: 建物sheet・クリック選択・地面先行の選択�
   assert.deepEqual(api.inputJournal(), journal, '表示上の選択はjournalを増やさない');
 });
 
-test('§6-2: 農地と牧草地の区画だけが秋は枯れ色、冬は雪へ変わる', () => {
+test('季節描画: 冬は全地形・自然物・農地が雪へ変わり、春開始の実効暦へ追従する', () => {
   const farm = { appearance: { archetype: 'farm' } };
   const pasture = { appearance: { archetype: 'pasture' } };
   const workshop = { appearance: { archetype: 'workshop' } };
@@ -3595,7 +3596,19 @@ test('§6-2: 農地と牧草地の区画だけが秋は枯れ色、冬は雪へ�
   assert.equal(seasonalPlotVisual(pasture, '秋').state, 'dry');
   assert.equal(seasonalPlotVisual(farm, '冬').state, 'snow');
   assert.equal(seasonalPlotVisual(pasture, '冬').state, 'snow');
+  assert.equal(seasonalPlotVisual(farm, '冬').furrowState, 'buried');
   assert.notDeepEqual(seasonalPlotVisual(farm, '秋').fills, seasonalPlotVisual(farm, '冬').fills);
+  for (const kind of ['grass', 'sand', 'forest', 'rock', 'ore', 'coal']) {
+    assert.equal(seasonalTerrainVisual(kind, '冬').state, 'snow', `${kind}も積雪する`);
+    assert.equal(seasonalTerrainVisual(kind, '春'), null, `${kind}は春に元へ戻る`);
+  }
+  assert.equal(seasonalTerrainVisual('water', '冬'), null, '水面は凍雪色へ置換しない');
+  assert.equal(seasonalNaturalVisual('tree', '冬').state, 'snow-capped');
+  assert.equal(seasonalNaturalVisual('rock', '冬').state, 'snow-capped');
+  assert.equal(seasonalNaturalVisual('tree', '春'), null);
+  assert.equal(islandCalendar(0, SPRING_START_CALENDAR_OFFSET_DAYS).season, '春');
+  assert.equal(islandCalendar(271, SPRING_START_CALENDAR_OFFSET_DAYS).season, '冬');
+  assert.equal(islandCalendar(361, SPRING_START_CALENDAR_OFFSET_DAYS).season, '春');
 
   const rendererSource = fs.readFileSync(new URL('../src/renderer.js', import.meta.url), 'utf8');
   assert.match(rendererSource,
@@ -3604,6 +3617,14 @@ test('§6-2: 農地と牧草地の区画だけが秋は枯れ色、冬は雪へ�
   assert.match(rendererSource,
     /drawSeasonalPlotGround\(building\)[\s\S]*this\.diamond\(x, y, fill, visual\.stroke/,
     '4×4の一枚塗りではなく農地の各タイルを描く');
+  assert.match(rendererSource,
+    /scene\.terrainKey, this\.season,[\s\S]*rebuildTerrainCache\(model, cacheKey\)/,
+    '季節をcache keyに含め、季節境界だけ地形cacheを焼き直す');
+  assert.match(rendererSource,
+    /drawTerrainBase\(model\)[\s\S]*seasonalTerrainVisual\(tile\.kind, this\.season\)/,
+    '毎フレームの全面overlayではなく地形cache本体へ冬色を焼く');
+  assert.match(rendererSource, /furrowState === 'buried'/,
+    '畑と牧草地は雪に埋もれた畝で休耕を示す');
 });
 
 test('UI向上段5: 全建物を重複なく分類し費用・寸法付き直接パレットを備える', () => {
