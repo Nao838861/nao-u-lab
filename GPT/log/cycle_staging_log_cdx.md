@@ -111,7 +111,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785200763-7dd5d3e586
+    source_ts: "1785200763.028829"
+    title: "Reflection at Design Actualization（RDA）— playable diff 前後の予測・実測記録"
+    reason: "未レビュー条件を満たす最新の score 11 atom で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。今サイクルの Phase 3 で投稿した知見を、次の playable diff の判断経路へ追加すべきか、既存 probe との重複を含めて直ちに確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "RDA は playtest 前後へ intent・expectation・evidence・discrepancy・next を結ぶ具体性を持つが、3人の著者による長期自己使用で、対照群・外部 user study・制作速度や design quality の比較はない。さらに既存の agentic-world-modeling-preaction-prediction-law、paperclaw-prototype-hypothesis-contract、critical-stage-feedback-routing、commonroad-human-operation-regression-fixture が事前期待、testable hypothesis、証拠後の verdict、次手、manual fixture をすでに覆う。新規 probe は次回判断を変えず、321件の active probe 群と pending lease 1件へ確認負荷だけを増やすため採用しない。"
+  change:
+    summary: "reviewed_source_ts と既存 probes との重複による reject 理由だけを state に記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

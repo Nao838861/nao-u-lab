@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-28T07:50:55+09:00",
+  "updated_at": "2026-07-28T10:14:12+09:00",
   "reviewed_source_ts": [
+    "1785200763.028829",
     "1785184231.969289",
     "1780501085.622209",
     "1785112368.795699",
@@ -14624,6 +14625,46 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、既存 ranking probes との重複および具体的な consumer／artifact 不足による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-28T10:14:12+09:00",
+      "selected": {
+        "id": "sr-1785200763-7dd5d3e586",
+        "source_ts": "1785200763.028829",
+        "title": "Reflection at Design Actualization（RDA）— playable diff 前後の予測・実測記録",
+        "reason": "未レビュー条件を満たす最新の score 11 atom で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。今サイクルの Phase 3 で投稿した知見を、次の playable diff の判断経路へ追加すべきか、既存 probe との重複を含めて直ちに確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、playtest 前後へ intent・expectation・evidence・discrepancy・next を結び、対象 event を意味のある playable diff に限定する小さな運用へ直接変換できるため relevance・actionability を3とした。一方、根拠は3人の designer-researcher による23／25／35 session、186／190／1110 reflections の長期 autobiographical design と具体的な離脱・負荷記録を持つが、全員が著者で、対照群、外部 user study、制作速度・design quality の比較がないため evidence=2 とした。既存の agentic-world-modeling-preaction-prediction-law は変更前の observable expectation と証拠後の prediction hit／miss を、paperclaw-prototype-hypothesis-contract は playable diff 前の testable hypothesis と support／reject／inconclusive verdict を、critical-stage-feedback-routing は evidence 付き keep／change／question と next action を、commonroad-human-operation-regression-fixture は manual playtest の再現 fixture と oracle をすでに要求している。RDA の五項目を独立 probe にしても次回判断を変えず、active_probes 321件と Phase 4a 向け pending lease 1件へ重複確認を増やす。専用 UI、常時録画、固定 tag、全 test 記録も導入しない。本文は既存 probe 群を一つの playable-diff reflection loop として読む根拠例に留める。",
+      "existing_probes": [
+        "probe-20260626-agentic-world-modeling-preaction-prediction-law",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract",
+        "probe-20260709-critical-stage-feedback-routing",
+        "probe-20260708-commonroad-human-operation-regression-fixture"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の予測・仮説・feedback routing・manual fixture probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
