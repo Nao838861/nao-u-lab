@@ -7,14 +7,19 @@ genre_tags: [game-dev, ai-agent, playtesting, harness, evaluation]
 evaluated_at: "2026-07-29T04:08:11+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-29T04:08:11+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-29T04:08:11+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-29T04:17:59.0305477+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785266226414919"
+next_action: none
 stale_after: "2026-08-28"
 supersedes: []
+posted:
+  ts: "1785266226.414919"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785266226414919"
+  char_count: 4339
+  posted_at: "2026-07-29T04:17:59.0305477+09:00"
 gate_reason: |-
   固定 harness と model update の不整合、失敗帰属、局所 patch、held-out 非退行検証、交互最適化という重要要素が揃っている。
   headless playtest の失敗を game logic / bot policy / tool / context / memory へ分解する具体的な制作運用へ接続できる。

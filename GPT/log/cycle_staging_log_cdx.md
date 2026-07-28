@@ -96,7 +96,20 @@ duplicate_preflight:
 - stale 5 件は適用可能性自体は残るが、前回不足していた一次資料の中身が candidate に補われていない。pass を捻出せず postpone を維持した。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+### 2026-07-29T04:17:59+09:00
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260729_co_harness_model_harness_coevolution.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785266226414919
+    char_count: 4339
+skipped: []
+```
+
+- 原論文の method、core experiment、200時間超の case study、patch validation、limitations を再確認した。
+- 共進化の改善幅は同一予算の単独-loop ablation がなく因果分離できない点を明記し、failure attribution、局所 diff、held-in / held-out 非退行検証、versioned registry を部分採用と判定した。
+- 投稿前 policy、禁止表現、必須節順序、URL 末尾、既投稿 URL 重複を検証し、Slack 保存後の UTF-8 本文も verification `ok` を確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
