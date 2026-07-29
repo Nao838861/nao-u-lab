@@ -34,8 +34,8 @@ Google Chrome本体を隔離プロファイル、CDPポート9226、1440×900と
 - 両方で詳細面・ページの横overflowなし、runtime error 0、戻る後の元行フォーカスを確認した。
 - 2枚を原寸で目視し、絵・文・式・グラフの欠け、見出しや閉じるボタンの重なり、建築欄との衝突がないことを確認した。
 - 証拠画像:
-  - `GPT/game/shioji/v004/tests/artifacts/goods_detail_pc_tools.png`（1440×900、SHA-256 `778f13766f5f16059877940c8b5bcb0e542c5d9badfdddf939cda4c9b9fabf92`）
-  - `GPT/game/shioji/v004/tests/artifacts/goods_detail_mobile_fish.png`（780×1688、端末CSS幅390×844・device scale factor 2、SHA-256 `0f300b1457748c8ef2b899f36f083fb53cbf1b5eb02625c4ee8615dda11b75ac`）
+  - `GPT/game/shioji/v004/tests/artifacts/goods_detail_pc_tools.png`（1440×900、SHA-256 `9126c84a50776d0615c0e004294322884eae3a6190776dd1d28d478e3015ac75`）
+  - `GPT/game/shioji/v004/tests/artifacts/goods_detail_mobile_fish.png`（780×1688、端末CSS幅390×844・device scale factor 2、SHA-256 `074e4f5908a87b95c198bd5d9477b964eea773410ff5959da0227f5cc155d424`）
 
 ## テスト
 
@@ -47,3 +47,10 @@ Google Chrome本体を隔離プロファイル、CDPポート9226、1440×900と
 - `node tests/food_delivery_save.mjs`: 既知不整合「運搬枠をまず食料に使う」で停止（期待6荷、現行実測3荷）。前タスクと同じ先頭不整合で、今回変更していないengineの購入・運搬挙動に属する。
 
 今回変更した表示層とv004全106件、受け入れ、関連engine snapshotはすべてgreenである。
+
+## 指定ブランチでの再検証
+
+`codex/boundary-voices`で2026-07-29に再検証した。関連4件、v004全106件、
+全章受け入れ、engine表示snapshotはすべてPASSした。実Chrome/CDPのPC・スマホ検証も
+`CHARTER ISLE v004 goods detail smoke: PASS`となり、再取得した上記2画像を原寸で目視した。
+既知不整合`food_delivery_save.mjs`は再実行でも期待6荷・実測3荷で同じ箇所だけが停止した。
