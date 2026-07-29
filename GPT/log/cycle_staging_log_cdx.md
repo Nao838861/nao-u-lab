@@ -44,7 +44,20 @@ group_handoff_audit:
 - sidecar freshness: candidate frontmatter 更新前後に posted-source / title canonical / open duplicate group builder を順番に再実行し、各 `--check` 成功。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260730_vlm_geometry_clipping_qa.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785366835325639
+    char_count: 4116
+  - candidate: memory/shared_reads_candidates/20260730_cast_solver_turn_level_teacher.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785366849407569
+    char_count: 4354
+skipped: []
+```
+
+- 2件とも一次資料の全文を再確認し、問題設定・手法・評価・限界・自分達への適用を記事固有の内容で記述した。
+- 投稿前 review: 必須6項目の順序、`■ 概要` 始まり、末尾 `■ URL`、3500–4500字、禁止表現なしを deterministic check で確認した。
+- Slack 投稿: `tools/slack_client.py` を利用する file poster で、thread を使わず1 candidate 1回の `chat.postMessage` として送信し、投稿後の本文一致検証に成功した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

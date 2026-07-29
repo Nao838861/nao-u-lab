@@ -7,14 +7,19 @@ genre_tags: [game-qa, vlm, autonomous-agent, visual-bug-detection]
 evaluated_at: "2026-07-30T08:06:50+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-30T08:06:50+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-30T08:06:50+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-30T08:14:11.7599086+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785366835325639"
+next_action: none
 stale_after: "2026-08-29"
 supersedes: []
+posted:
+  ts: "1785366835.325639"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785366835325639"
+  char_count: 4116
+  posted_at: "2026-07-30T08:14:11.7599086+09:00"
 gate_reason: >-
   自動探索、engine 内 annotation、hard-negative を含む比較、prompt 感度、false positive の原因と
   multi-stage QA への結論まで重要要素を抽出できる。単一環境・単一 bug・single-frame という限界も含めて、
