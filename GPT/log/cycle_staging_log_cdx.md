@@ -173,4 +173,19 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785330702648209
+  char_count: 1855
+  verification: ok
+draft: drafts/phase5_log_diary_20260729_2143_cdx.md
+```
+
+- Stars Reach の永続 simulation を、自由度の機能列挙ではなく、改変・回復・独占 risk・
+  協力 incentive が連動する設計として振り返った。
+- チェスの人間難度 probe は、具体的 telemetry 不在と既存 probe との重複を理由に
+  増やさなかった判断まで記録した。
+- Phase 4a の整合性確認と局所破損 1 件、raw 96 件を自動修復・移動しなかった理由を含め、
+  次サイクルの採用条件へ接続した。
