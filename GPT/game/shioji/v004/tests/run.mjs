@@ -7,6 +7,10 @@ import { ECONOMIC_BUILDINGS } from '../../engine/src/physical.js';
 import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
 import {
+  FOOD_RUNWAY_THRESHOLD_DAYS, FOOD_WARNING_COOLDOWN_DAYS, PRESERVATION_STOP_SCRIPTS,
+  createBoundaryEvents, foodBoundarySpeech,
+} from '../src/boundary_events.js';
+import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, DENARI_PER_MONEY_UNIT, GOODS_ART,
   GOODS_LABELS, JOB_ICONS, JOB_LABELS, PLACEMENT_JOBS, VERSION, toDenari,
 } from '../src/config.js';
@@ -4051,6 +4055,107 @@ test('季節事件: 旧セーブへ履歴を足す時は過去の季節と腐敗
   });
   assert.equal(events.currentMessage().type, 'fishSpoilage',
     '導入後に新しく増えた腐敗は旧セーブでも初回として知らせる');
+});
+
+function boundaryModel({
+  day = 1,
+  food = 150,
+  population = 10,
+  fish = 4,
+  salt = 2,
+  char = 2,
+} = {}) {
+  return {
+    day,
+    calendarOffsetDays: SPRING_START_CALENDAR_OFFSET_DAYS,
+    population,
+    households: [{
+      members: Array.from({ length: population }, (_, index) => ({ id: index + 1 })),
+      pantry: [{ goods: 'wheat', amount: food }],
+    }],
+    stalls: [],
+    companyMarketStock: {},
+    companyStock: {},
+    flowEma: {
+      wheat: { prod: 2, imp: 0.5, cons: 4 },
+    },
+    goodsManifest: [
+      { goods: 'fish', totalAmount: fish },
+      { goods: 'salt', totalAmount: salt },
+      { goods: 'char', totalAmount: char },
+    ],
+  };
+}
+
+test('境界の声: 食料14日割れの跨ぎだけを拾い、同一境界は7日空ける', () => {
+  assert.equal(FOOD_RUNWAY_THRESHOLD_DAYS, 14);
+  assert.equal(FOOD_WARNING_COOLDOWN_DAYS, 7);
+  const events = createBoundaryEvents({ model: boundaryModel({ day: 1, food: 150 }) });
+  assert.equal(events.currentMessage(), null);
+  events.observe(boundaryModel({ day: 2, food: 139 }));
+  assert.equal(events.currentMessage().type, 'food');
+  assert.match(events.currentMessage().speech, /14日分を下回りました。残り13日分/);
+  assert.match(events.currentMessage().speech, /1日の生産と仕入は2\.5荷、消費は4\.0荷/);
+  assert.match(events.currentMessage().speech, /畑や漁師を建てれば間に合います/);
+  events.markAnnounced(events.currentMessage().id);
+
+  events.observe(boundaryModel({ day: 3, food: 150 }));
+  events.observe(boundaryModel({ day: 4, food: 139 }));
+  assert.equal(events.currentMessage(), null, '再び跨いでも7日未満では話さない');
+  events.observe(boundaryModel({ day: 10, food: 150 }));
+  events.observe(boundaryModel({ day: 11, food: 139 }));
+  assert.equal(events.currentMessage().type, 'food', '7日以上後の跨ぎは再び話す');
+});
+
+test('境界の声: 食料処方は3〜6月だけ建設、秋冬は蔵出し・本土輸入に固定する', () => {
+  const spring = foodBoundarySpeech(boundaryModel({ day: 1, food: 139 }));
+  const earlySummer = foodBoundarySpeech(boundaryModel({ day: 91, food: 139 }));
+  const autumn = foodBoundarySpeech(boundaryModel({ day: 181, food: 139 }));
+  const winter = foodBoundarySpeech(boundaryModel({ day: 271, food: 139 }));
+  assert.match(spring, /畑や漁師を建てれば間に合います/);
+  assert.match(earlySummer, /畑や漁師を建てれば間に合います/);
+  for (const speech of [autumn, winter]) {
+    assert.match(speech, /会社の倉庫から食料を出すか、本土から輸入/);
+    assert.doesNotMatch(speech, /畑や漁師|建て/);
+  }
+  assert.match(winter, /冬で畑の生産が止まっています/);
+});
+
+test('境界の声: 魚がある時の塩・木炭の正→0だけを別々の一言にする', () => {
+  const events = createBoundaryEvents({ model: boundaryModel() });
+  events.observe(boundaryModel({ day: 2, salt: 0 }));
+  assert.equal(events.currentMessage().type, 'salt');
+  assert.equal(events.currentMessage().speech, PRESERVATION_STOP_SCRIPTS.salt);
+  events.markAnnounced(events.currentMessage().id);
+
+  events.observe(boundaryModel({ day: 3, salt: 2 }));
+  events.observe(boundaryModel({ day: 4, salt: 0 }));
+  assert.equal(events.currentMessage().type, 'salt', '塩を補充後に再び尽きればもう一度話す');
+  events.markAnnounced(events.currentMessage().id);
+
+  events.observe(boundaryModel({ day: 5, salt: 0, char: 0 }));
+  assert.equal(events.currentMessage().type, 'char');
+  assert.equal(events.currentMessage().speech, PRESERVATION_STOP_SCRIPTS.char);
+  events.markAnnounced(events.currentMessage().id);
+
+  events.observe(boundaryModel({ day: 6, fish: 0, salt: 2, char: 2 }));
+  events.observe(boundaryModel({ day: 7, fish: 0, salt: 0, char: 0 }));
+  assert.equal(events.currentMessage(), null, '魚がない時の資材切れは保存停止として話さない');
+});
+
+test('境界の声: 待機中の声・跨ぎ基準・7日間隔を保存して再開する', () => {
+  const events = createBoundaryEvents({ model: boundaryModel({ day: 1, food: 150 }) });
+  events.observe(boundaryModel({ day: 2, food: 139, salt: 0 }));
+  const state = events.readState();
+  const restored = createBoundaryEvents({ state });
+  assert.deepEqual(restored.readState(), state);
+  assert.equal(restored.currentMessage().type, 'food');
+  restored.markAnnounced(restored.currentMessage().id);
+  assert.equal(restored.currentMessage().type, 'salt');
+  restored.markAnnounced(restored.currentMessage().id);
+  restored.observe(boundaryModel({ day: 3, food: 150, salt: 2 }));
+  restored.observe(boundaryModel({ day: 4, food: 139, salt: 2 }));
+  assert.equal(restored.currentMessage(), null, 'ロード後も食料警告の7日間隔を保つ');
 });
 
 test('通貨表示: engine内部値はfactsを変えず10倍のデナリで示す', () => {
