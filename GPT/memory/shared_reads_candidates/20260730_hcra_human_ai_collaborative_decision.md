@@ -7,12 +7,17 @@ genre_tags: [human-ai-collaboration, reflective-agent, reinforcement-learning, p
 evaluated_at: "2026-07-30T02:04:53.2201857+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-30T02:04:53.2201857+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-30T02:04:53.2201857+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1785345085.461859"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785345085461859"
+  char_count: 4409
+  posted_at: "2026-07-30T02:11:45.0055225+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-30T02:11:45.0055225+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785345085461859"
+next_action: none
 stale_after: "2026-08-29"
 supersedes: []
 gate_reason: >-

@@ -47,7 +47,21 @@ group_handoff_audit:
   AI 提案の精度・制約適合・confidence・設計者の採否理由を分離する評価ループへ具体化できるため pass。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260730_hcra_human_ai_collaborative_decision.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785345085461859
+    char_count: 4409
+skipped: []
+```
+
+- 投稿前に arXiv 本文を再確認し、stochastic game の目的関数、五要素 architecture、
+  8,404 件の balanced acceptance dataset、320 trial の観光推薦評価、ablation、
+  有限終了と成功保証の違いまで照合した。
+- `tools.shared_reads_policy.validate_shared_reads_message` は `ok=True`。
+  必須 section 順序、冒頭 `■ 概要`、末尾 `■ URL`、禁止表現なしを確認した。
+- #shared-reads へ単一 `chat.postMessage` で投稿した。ts: `1785345085.461859`。
+- draft: `memory/shared_reads_candidates/posted_drafts/20260730_hcra_human_ai_collaborative_decision_post.md`
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
