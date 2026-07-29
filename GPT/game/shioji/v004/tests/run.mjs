@@ -3975,6 +3975,46 @@ test('季節事件: 初腐敗と発話待ちを通常セーブで往復する', 
     parseSaveText(JSON.stringify(payload)).seasonalEvents,
     seasonalEvents.readState(),
   );
+  const restored = createSeasonalEvents({
+    state: parseSaveText(JSON.stringify(payload)).seasonalEvents,
+  });
+  assert.equal(restored.currentMessage().type, 'fishSpoilage',
+    '表示前に保存した初腐敗は再開後も一言として残す');
+  restored.markAnnounced(restored.currentMessage().id);
+  restored.observe({
+    day: 12,
+    calendarOffsetDays: SPRING_START_CALENDAR_OFFSET_DAYS,
+    spoilByGoods: { fish: 0.8, veg: 0 },
+  });
+  assert.equal(restored.currentMessage(), null,
+    '再開後に読み終えた初腐敗は同じ島で繰り返さない');
+});
+
+test('季節事件: 旧セーブへ履歴を足す時は過去の季節と腐敗を誤報しない', () => {
+  const legacyModel = {
+    day: 400,
+    calendarOffsetDays: SPRING_START_CALENDAR_OFFSET_DAYS,
+    spoilByGoods: { fish: 12, veg: 4 },
+  };
+  const events = createSeasonalEvents({
+    model: legacyModel,
+    suppressInitialAnnouncements: true,
+  });
+  assert.equal(events.currentMessage(), null);
+  events.observe({
+    ...legacyModel,
+    day: 401,
+    spoilByGoods: { fish: 12, veg: 4 },
+  });
+  assert.equal(events.currentMessage(), null,
+    '導入前に起きた季節の節目と腐敗はロード直後に並べない');
+  events.observe({
+    ...legacyModel,
+    day: 402,
+    spoilByGoods: { fish: 12.1, veg: 4 },
+  });
+  assert.equal(events.currentMessage().type, 'fishSpoilage',
+    '導入後に新しく増えた腐敗は旧セーブでも初回として知らせる');
 });
 
 test('通貨表示: engine内部値はfactsを変えず10倍のデナリで示す', () => {
