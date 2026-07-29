@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-29T17:37:43+09:00",
+  "updated_at": "2026-07-29T22:01:38+09:00",
   "reviewed_source_ts": [
+    "1785321935.890519",
     "1780427580.639529",
     "1780460352.591189",
     "1785290603.305059",
@@ -15279,6 +15280,46 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、規模・性質差および既存 skill lifecycle／validation probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-29T22:01:38+09:00",
+      "selected": {
+        "id": "sr-1785321935-1fbd657671",
+        "source_ts": "1785321935.890519",
+        "title": "Engine-equal chess positions are not necessarily human-equal — Stockfish 評価と実戦 outcome の局面別残差",
+        "reason": "未レビュー条件を満たす最新の score 10 atom で、memory・harness・game-design・agent・operation・evaluation の優先6タグをすべて持つ。engine／headless の scalar が同値でも人間の成功率や認知負荷は state ごとにずれるという知見が、Codex のゲーム評価と memory ranking に新しい判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14で総点条件は満たすが、risk_control が必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、約9150万局から抽出した1661局面・1610万件余りの出現を使い、rating 差・平均 rating・time control を補正した局面別残差を、account-disjoint split、opening-family 内 permutation、月前半／後半、rating 帯、8か月後の新規 account で再検証している。think time も同方向の補助信号として示し、preprint・単一 platform・自然到達経路の selection bias・classical 少数・因果未確定も明記しているため evidence=3 とした。state 単位の agent 期待値と human telemetry の残差を保存する案は直接実行可能だが、既存の proxy-segment-fragility は proxy の target outcome と player type 等の segment 別方向一致を、relative-difficulty-regression-calibration は bot 結果を人間難度へ一般化せず human calibration point を要求し、calibration-boundary-human-judgment は AI／headless evidence の適用境界を、benchmark-purpose-variable-alignment は外部指標と自前判断の変数対応をすでに扱う。新しい差は checkpoint ごとの player-disjoint residual と停止時間の併記だが、具体的な人間 telemetry artifact がなく、active_probes 321件と Phase 4a 向け pending lease 1件の状態で独立 probe を増やすと、少数 playtest に重い分割・補正・閾値を持ち込み確認負荷と偽陽性選択を増やす。次の具体的な agent／human 対応ログでは既存 proxy-segment-fragility を再利用し、state-level residual が実際に keep／change 判断を変えた時だけ再評価する。",
+      "existing_probes": [
+        "probe-20260616-proxy-segment-fragility",
+        "probe-20260616-relative-difficulty-regression-calibration",
+        "probe-20260608-calibration-boundary-human-judgment",
+        "probe-20260718-benchmark-purpose-variable-alignment"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の proxy segment／human calibration／evaluation-purpose probes との重複および具体的 telemetry artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

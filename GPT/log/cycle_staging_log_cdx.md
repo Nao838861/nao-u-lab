@@ -67,7 +67,34 @@ skipped: []
   `部分採用` と判定。#shared-reads へ 1 回の `chat.postMessage` で投稿した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785321935-1fbd657671
+    source_ts: "1785321935.890519"
+    title: "Engine-equal chess positions are not necessarily human-equal — Stockfish 評価と実戦 outcome の局面別残差"
+    reason: "未レビュー条件を満たす最新の score 10 atom で、memory・harness・game-design・agent・operation・evaluation の優先6タグをすべて持つ。engine／headless の scalar と人間 outcome の state 別不一致が、既存 probe を超える判断差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "総点14でも risk_control が必須閾値2を下回る。局面別残差を account-disjoint・時期・rating 帯で再現し think time を補助信号にする根拠は強いが、既存の proxy-segment-fragility、relative-difficulty-regression-calibration、calibration-boundary-human-judgment、benchmark-purpose-variable-alignment が target outcome・segment・human calibration・評価目的の分離を既に要求している。具体的な人間 telemetry artifact がなく、active probe 321件と Phase 4a 向け pending lease 1件の状態で別 probe を追加すると、少数 playtest に重い分割・補正を持ち込み確認負荷と偽陽性選択を増やす。"
+  change:
+    summary: "reviewed_source_ts と、既存 probe との重複および具体的 telemetry artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
