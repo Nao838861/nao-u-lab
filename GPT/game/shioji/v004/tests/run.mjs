@@ -35,6 +35,9 @@ import {
   GOODS_DISCOVERY_SCRIPTS, createGoodsDiscovery,
 } from '../src/goods_discovery.js';
 import {
+  GOODS_DETAIL_FACTS, GOODS_RECIPES, GOODS_SHELF_LIFE_DAYS, goodsDetail,
+} from '../src/goods_detail.js';
+import {
   SEASONAL_EVENT_SCRIPTS, createSeasonalEvents,
 } from '../src/seasonal_events.js';
 import { movementVector, panCameraFromKeys, shouldIgnoreShortcut } from '../src/keyboard.js';
@@ -3879,6 +3882,32 @@ test('品目の出会い台本: 8品だけに専用文を持ち、数字・名�
   assert.equal(route.priority, 'goods-discovery');
   assert.equal(route.target.kind, 'goods-discovery');
   assert.equal(route.speech, GOODS_DISCOVERY_SCRIPTS.log);
+});
+
+test('品目詳細: 18品すべてに性質・日持ち・製法の表示契約を持つ', () => {
+  const goodsIds = Object.keys(GOODS_LABELS);
+  assert.deepEqual(Object.keys(GOODS_DETAIL_FACTS), goodsIds);
+  assert.deepEqual(Object.keys(GOODS_RECIPES), goodsIds);
+  assert.deepEqual(GOODS_SHELF_LIFE_DAYS, { fish: 3, veg: 30 });
+  for (const goods of goodsIds) {
+    const detail = goodsDetail(goods);
+    assert.equal(detail.goods, goods);
+    assert.match(detail.fact, /。$/);
+    assert.equal(detail.recipe.output, goods);
+    assert.ok(detail.recipe.makers.length >= 1);
+    assert.equal(Object.isFrozen(detail), true);
+    assert.equal(Object.isFrozen(detail.recipe), true);
+  }
+  for (const goods of Object.keys(GOODS_DISCOVERY_SCRIPTS)) {
+    assert.equal(goodsDetail(goods).fact, GOODS_DISCOVERY_SCRIPTS[goods],
+      `${goods}は出会いの一言を品目詳細へそのまま再掲する`);
+  }
+  assert.equal(goodsDetail('fish').shelfLifeDays, 3);
+  assert.equal(goodsDetail('veg').shelfLifeDays, 30);
+  assert.equal(goodsDetail('wheat').shelfLifeDays, null);
+  assert.deepEqual(goodsDetail('pick').recipe.inputs, ['veg', 'salt']);
+  assert.deepEqual(goodsDetail('bar').recipe.alternatives, [['coal', 'char']]);
+  assert.throws(() => goodsDetail('unknown'), /不明な品目/);
 });
 
 test('季節事件: 初雪と雪解けを毎年一言にし、魚と野菜の初腐敗は島史で一度にする', () => {
