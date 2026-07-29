@@ -1,46 +1,47 @@
-import { IsometricCamera } from './camera.js?v=v004.41.0-goods-detail';
-import { SimulationClock } from './clock.js?v=v004.41.0-goods-detail';
+import { IsometricCamera } from './camera.js?v=v004.42.0-boundary-voices';
+import { SimulationClock } from './clock.js?v=v004.42.0-boundary-voices';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.42.0-boundary-voices';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.41.0-goods-detail';
+} from './config.js?v=v004.42.0-boundary-voices';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.41.0-goods-detail';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.41.0-goods-detail';
-import { developmentMapView } from './development_map.js?v=v004.41.0-goods-detail';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.41.0-goods-detail';
-import { formatElenaSpeech } from './elena_text.js?v=v004.41.0-goods-detail';
+} from './display_batch.js?v=v004.42.0-boundary-voices';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.42.0-boundary-voices';
+import { developmentMapView } from './development_map.js?v=v004.42.0-boundary-voices';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.42.0-boundary-voices';
+import { formatElenaSpeech } from './elena_text.js?v=v004.42.0-boundary-voices';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.41.0-goods-detail';
+} from './food_readability.js?v=v004.42.0-boundary-voices';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.41.0-goods-detail';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.41.0-goods-detail';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.41.0-goods-detail';
-import { goodsDetail } from './goods_detail.js?v=v004.41.0-goods-detail';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.41.0-goods-detail';
-import { WorldPresentation } from './presentation.js?v=v004.41.0-goods-detail';
-import { Renderer } from './renderer.js?v=v004.41.0-goods-detail';
+} from './keyboard.js?v=v004.42.0-boundary-voices';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.42.0-boundary-voices';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.42.0-boundary-voices';
+import { goodsDetail } from './goods_detail.js?v=v004.42.0-boundary-voices';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.42.0-boundary-voices';
+import { WorldPresentation } from './presentation.js?v=v004.42.0-boundary-voices';
+import { Renderer } from './renderer.js?v=v004.42.0-boundary-voices';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.41.0-goods-detail';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.41.0-goods-detail';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.41.0-goods-detail';
+} from './save_game.js?v=v004.42.0-boundary-voices';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.42.0-boundary-voices';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.42.0-boundary-voices';
 import {
   GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRows,
-} from './supply_demand.js?v=v004.41.0-goods-detail';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.41.0-goods-detail';
+} from './supply_demand.js?v=v004.42.0-boundary-voices';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.42.0-boundary-voices';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.41.0-goods-detail';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.41.0-goods-detail';
+} from './ui_guidance.js?v=v004.42.0-boundary-voices';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.42.0-boundary-voices';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -76,6 +77,10 @@ const seasonalEvents = createSeasonalEvents({
   model,
   state: startupSave?.seasonalEvents ?? null,
   suppressInitialAnnouncements: Boolean(startupSave && !startupSave.seasonalEvents),
+});
+const boundaryEvents = createBoundaryEvents({
+  model,
+  state: startupSave?.boundaryEvents ?? null,
 });
 const tutorialDirector = createTutorialDirectorForMode(startMode, {
   state: startupSave?.tutorialState ?? null,
@@ -480,6 +485,7 @@ function refreshModel({ animate = false, baseSeconds = 0.12 } = {}) {
   model = nextModel;
   goodsDiscovery.observe(model);
   seasonalEvents.observe(model);
+  boundaryEvents.observe(model);
   recordEconomyHistory(model);
   guidanceDirector.observe(model, events);
   if (model.day > 0 && model.day % 5 === 0 && model.day !== lastAutosaveDay) {
@@ -1278,6 +1284,7 @@ function renderSecretary() {
     objective: tutorialDirector?.isComplete() ? null : objective,
     objectiveAction: currentTutorialAction,
     incident: seasonalEvents.currentMessage(),
+    boundary: boundaryEvents.currentMessage(),
     discovery: goodsDiscovery.currentMessage(),
     events: secretaryEventsAfter(eventLog, lastDeliveredSecretaryEventSequence),
     fallback: secretaryFallback(),
@@ -1326,6 +1333,8 @@ function scheduleSecretaryDelivery(route) {
           ? guidanceReadingTimeMs(route.speech, { minimumMs: TUTORIAL_MESSAGE_MINIMUM_MS })
         : delivery === 'seasonal-event'
           ? guidanceReadingTimeMs(route.speech, { minimumMs: TUTORIAL_MESSAGE_MINIMUM_MS })
+        : delivery === 'boundary-event'
+          ? guidanceReadingTimeMs(route.speech, { minimumMs: TUTORIAL_MESSAGE_MINIMUM_MS })
         : transientAdvice
           ? guidanceReadingTimeMs(route.speech, { minimumMs: INFO_ADVICE_MINIMUM_MS })
         : delivery === 'event'
@@ -1359,6 +1368,7 @@ function scheduleSecretaryDelivery(route) {
     else if (delivery === 'message') tutorialDirector?.markLetterRead(target.id);
     else if (delivery === 'goods-discovery') goodsDiscovery.markAnnounced(target.id);
     else if (delivery === 'seasonal-event') seasonalEvents.markAnnounced(target.id);
+    else if (delivery === 'boundary-event') boundaryEvents.markAnnounced(target.id);
     else if (transientAdvice) guidanceDirector.markAdviceRead(target.id);
     else if (delivery === 'event') {
       lastDeliveredSecretaryEventSequence = Math.max(
@@ -1898,6 +1908,7 @@ function currentSavePayload() {
     tutorialState: tutorialDirector?.readState() ?? null,
     goodsDiscovery: goodsDiscovery.readState(),
     seasonalEvents: seasonalEvents.readState(),
+    boundaryEvents: boundaryEvents.readState(),
     economyHistory,
   });
 }
@@ -2457,6 +2468,7 @@ window.__SHIOJI_V004__ = Object.freeze({
   get discoveredGoods() { return goodsDiscovery.knownGoods(); },
   get goodsDiscoveryState() { return goodsDiscovery.readState(); },
   get seasonalEventState() { return seasonalEvents.readState(); },
+  get boundaryEventState() { return boundaryEvents.readState(); },
   presentation,
   performanceMetrics,
   resetPerformanceMetrics,

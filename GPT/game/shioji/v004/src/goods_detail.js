@@ -1,4 +1,4 @@
-import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.41.0-goods-detail';
+import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.42.0-boundary-voices';
 
 export const GOODS_SHELF_LIFE_DAYS = Object.freeze({
   fish: 3,

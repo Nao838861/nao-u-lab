@@ -1,4 +1,4 @@
-import { islandCalendar } from './ui_summary.js?v=v004.41.0-goods-detail';
+import { islandCalendar } from './ui_summary.js?v=v004.42.0-boundary-voices';
 
 export const FOOD_GOODS = Object.freeze([
   'fish', 'veg', 'wheat', 'pres', 'pick', 'meat',

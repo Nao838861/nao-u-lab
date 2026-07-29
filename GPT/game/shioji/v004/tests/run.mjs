@@ -2225,7 +2225,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.41.0-goods-detail');
+  assert.equal(VERSION, 'v004.42.0-boundary-voices');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -4147,6 +4147,19 @@ test('境界の声: 待機中の声・跨ぎ基準・7日間隔を保存して�
   const events = createBoundaryEvents({ model: boundaryModel({ day: 1, food: 150 }) });
   events.observe(boundaryModel({ day: 2, food: 139, salt: 0 }));
   const state = events.readState();
+  const saveController = createEngineController({ seed: 11, mode: 'sandbox' });
+  const payload = createSavePayload({
+    gameVersion: VERSION,
+    mode: 'sandbox',
+    engineState: saveController.saveState(),
+    inputJournal: saveController.inputJournal(),
+    boundaryEvents: state,
+  });
+  assert.deepEqual(
+    parseSaveText(JSON.stringify(payload)).boundaryEvents,
+    state,
+    '境界の基準値と待機中の声を通常セーブで往復する',
+  );
   const restored = createBoundaryEvents({ state });
   assert.deepEqual(restored.readState(), state);
   assert.equal(restored.currentMessage().type, 'food');
@@ -4156,6 +4169,31 @@ test('境界の声: 待機中の声・跨ぎ基準・7日間隔を保存して�
   restored.observe(boundaryModel({ day: 3, food: 150, salt: 2 }));
   restored.observe(boundaryModel({ day: 4, food: 139, salt: 2 }));
   assert.equal(restored.currentMessage(), null, 'ロード後も食料警告の7日間隔を保つ');
+});
+
+test('境界の声: 一言の器で書状にせず自動既読の対象にする', () => {
+  const boundary = {
+    id: 'boundary-food-2-1',
+    day: 2,
+    type: 'food',
+    speech: foodBoundarySpeech(boundaryModel({ day: 2, food: 139 })),
+  };
+  const route = secretaryRouteFor({
+    boundary,
+    advice: [{
+      id: 'blocked-advice',
+      unread: true,
+      completed: false,
+      priority: 'action',
+      speech: '別の対応です。',
+    }],
+    fallback: { priority: 'fallback', speech: '待機中です。' },
+  });
+  assert.equal(route.priority, 'food-boundary');
+  assert.equal(route.tier, 'notice');
+  assert.equal(route.target.kind, 'boundary-event');
+  assert.equal(route.speech, boundary.speech);
+  assert.equal(route.target.delivery, undefined, '書状の配達経路へ載せない');
 });
 
 test('通貨表示: engine内部値はfactsを変えず10倍のデナリで示す', () => {

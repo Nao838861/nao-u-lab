@@ -151,7 +151,7 @@ export function tutorialSpeedAfterObjectiveChange({
 
 export function secretaryRouteFor({
   letters = [], messages = [], advice = [], handoff = null, objective = null, objectiveAction = null,
-  discovery = null, incident = null, events = [], fallback = null,
+  discovery = null, incident = null, boundary = null, events = [], fallback = null,
 } = {}) {
   const deliveryOf = letter => letter.delivery
     ?? (letter.attention === 'critical' ? 'forced' : 'letter');
@@ -168,6 +168,18 @@ export function secretaryRouteFor({
       kicker: '重要書状',
       title: forcedLetter.title,
       detail: forcedLetter.summary,
+    };
+  }
+  if (boundary && String(boundary.speech ?? '').trim()) {
+    const food = boundary.type === 'food';
+    return {
+      priority: food ? 'food-boundary' : 'preservation-stop',
+      tier: 'notice',
+      target: { kind: 'boundary-event', id: boundary.id },
+      speech: boundary.speech,
+      kicker: food ? '島の食料' : '保存が停止',
+      title: boundary.type,
+      detail: `${boundary.day}日目`,
     };
   }
   const actionAdvice = [...advice].reverse().find(row => (
