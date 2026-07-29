@@ -1,13 +1,13 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.39.0-goods-discovery';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.39.0-goods-discovery';
-import { islandCalendar } from './ui_summary.js?v=v004.39.0-goods-discovery';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.39.0-goods-discovery';
+} from './config.js?v=v004.40.0-season-events';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.40.0-season-events';
+import { islandCalendar } from './ui_summary.js?v=v004.40.0-season-events';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.40.0-season-events';
 import {
   buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
   seasonalTerrainVisual,
-} from './visuals.js?v=v004.39.0-goods-discovery';
+} from './visuals.js?v=v004.40.0-season-events';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 

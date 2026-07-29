@@ -151,7 +151,7 @@ export function tutorialSpeedAfterObjectiveChange({
 
 export function secretaryRouteFor({
   letters = [], messages = [], advice = [], handoff = null, objective = null, objectiveAction = null,
-  discovery = null, events = [], fallback = null,
+  discovery = null, incident = null, events = [], fallback = null,
 } = {}) {
   const deliveryOf = letter => letter.delivery
     ?? (letter.attention === 'critical' ? 'forced' : 'letter');
@@ -183,6 +183,18 @@ export function secretaryRouteFor({
       kicker: actionAdvice.kicker,
       title: actionAdvice.title,
       detail: actionAdvice.detail,
+    };
+  }
+  if (incident && String(incident.speech ?? '').trim()) {
+    const spoilage = Boolean(incident.goods);
+    return {
+      priority: spoilage ? 'first-spoilage' : 'season-event',
+      tier: 'notice',
+      target: { kind: 'seasonal-event', id: incident.id },
+      speech: incident.speech,
+      kicker: spoilage ? '初めての腐敗' : '季節の節目',
+      title: spoilage ? incident.goods : incident.type,
+      detail: `${incident.day}日目`,
     };
   }
   if (discovery && String(discovery.speech ?? '').trim()) {

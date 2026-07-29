@@ -132,6 +132,7 @@ function viewSnapshot(state, { terrainAfterRevision = null } = {}) {
       spoil: Object.values(economy.led?.spoil ?? {}).reduce((
         total, amount,
       ) => total + Number(amount ?? 0), 0),
+      spoilByGoods: { ...(economy.led?.spoil ?? {}) },
       traffic: economy.traffic,
       zones: economy.zones,
       marketNetwork: state.marketNetwork?.markets?.length > 1

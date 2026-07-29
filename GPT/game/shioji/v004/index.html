@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.39.0-goods-discovery">
+  <link rel="stylesheet" href="./style.css?v=v004.40.0-season-events">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -162,7 +162,6 @@
         <figure data-chart="food-stock"><figcaption>食料 <small>荷</small></figcaption><svg id="food-stock-chart" viewBox="0 0 320 112" role="img" aria-label="島内食料と冬の必要量の推移"></svg></figure>
         <figure data-chart="population"><figcaption>人口 <small>人</small></figcaption><svg id="population-chart" viewBox="0 0 320 112" role="img" aria-label="人口の推移"></svg></figure>
         <figure data-chart="finance"><figcaption>取引資金 <small>デナリ</small></figcaption><svg id="finance-chart" viewBox="0 0 320 112" role="img" aria-label="取引資金とゼロ基準の推移"></svg></figure>
-        <figure data-chart="productivity"><figcaption>生産性 <small>%</small></figcaption><svg id="productivity-chart" viewBox="0 0 320 112" role="img" aria-label="島の実生産と理想生産の比率"></svg></figure>
         <figure id="price-chart-panel" data-chart="price" hidden><figcaption><span id="price-chart-title">市場相場</span> <small>デナリ/荷</small></figcaption><svg id="price-chart" viewBox="0 0 320 112" role="img" aria-label="需給で選択した品目の市場相場の推移"></svg></figure>
       </div>
     </section>
@@ -330,7 +329,7 @@
       });
     })();
   </script>
-  <script id="game-module" type="module" src="./src/main.js?v=v004.39.0-goods-discovery"
+  <script id="game-module" type="module" src="./src/main.js?v=v004.40.0-season-events"
     onerror="window.__SHIOJI_BOOT__?.failed()"></script>
 </body>
 </html>

@@ -135,6 +135,20 @@ async function newPage(width, height, mobile, url = GAME) {
   throw new Error(`v004 did not load: ${page.errors.join(' | ') || 'no runtime error reported'}`);
 }
 
+async function waitForBrowserValue(page, expression, {
+  timeoutMs = 60_000,
+  intervalMs = 100,
+  description = 'browser condition',
+} = {}) {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    const value = await page.evaluate(expression);
+    if (value) return value;
+    await wait(intervalMs);
+  }
+  throw new Error(`${description} did not become ready within ${timeoutMs}ms`);
+}
+
 async function pressKey(page, key, code, modifiers = 0) {
   await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key, code, modifiers });
   await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key, code, modifiers });
@@ -1130,7 +1144,7 @@ async function checkSeasonalPlots(width, height, mobile) {
       plots: plots.map(row => row.type),
     };
   })()`);
-  assert.equal(springStart.version, 'v004.39.0-goods-discovery', JSON.stringify(springStart));
+  assert.equal(springStart.version, 'v004.40.0-season-events', JSON.stringify(springStart));
   assert.equal(springStart.season, '春', JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => ['wheat', 'veg'].includes(type)), JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => type === 'shepherd'), JSON.stringify(springStart));
@@ -1204,6 +1218,85 @@ async function checkSeasonalPlots(width, height, mobile) {
   ));
   assert.deepEqual(page.errors, []);
   await page.close();
+}
+
+async function checkSeasonalEvents(width = 1440, height = 900, mobile = false) {
+  fs.mkdirSync(SEASON_SCREENSHOT_DIR, { recursive: true });
+  const page = await newPage(width, height, mobile);
+  await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.setSpeed(0);
+    const targetDay = 271;
+    game.advanceTicks(Math.max(0, targetDay * 30 - game.model.tick), { animate: false });
+    game.renderer.render(game.displayModel, 0);
+    return game.model.day;
+  })()`);
+  const firstSnow = await waitForBrowserValue(page, `(() => {
+    const game = window.__SHIOJI_V004__;
+    const speech = document.querySelector('#secretary-speech').textContent;
+    if (!speech.includes('初雪です。')) return null;
+    return {
+      day: game.model.day,
+      season: game.renderer.season,
+      speech,
+      route: game.secretaryRoute,
+      seasonHud: document.querySelector('#season-value').textContent,
+      defaultGraphs: [...document.querySelectorAll('#economy-charts > figure:not([hidden])')]
+        .map(figure => figure.dataset.chart),
+    };
+  })()`, { description: 'first-snow speech' });
+  assert.equal(firstSnow.day, 271, JSON.stringify(firstSnow));
+  assert.equal(firstSnow.season, '冬', JSON.stringify(firstSnow));
+  assert.match(firstSnow.seasonHud, /冬・12月/, JSON.stringify(firstSnow));
+  assert.equal(firstSnow.route.target.kind, 'seasonal-event', JSON.stringify(firstSnow));
+  assert.match(firstSnow.speech, /魚は1日20荷から5荷/, JSON.stringify(firstSnow));
+  assert.deepEqual(firstSnow.defaultGraphs, ['food-stock', 'population', 'finance'],
+    JSON.stringify(firstSnow));
+  await page.screenshot(seasonScreenshotPath('season_event_first_snow.png'));
+
+  const firstSpoilage = await waitForBrowserValue(page, `(() => {
+    const game = window.__SHIOJI_V004__;
+    const state = game.seasonalEventState;
+    return state.announcedSpoilage.includes('fish')
+      && state.announcedSpoilage.includes('veg')
+      ? {
+        announcedSpoilage: state.announcedSpoilage,
+        spoilByGoods: game.model.spoilByGoods,
+      }
+      : null;
+  })()`, { timeoutMs: 90_000, description: 'first-spoilage speeches' });
+  assert.ok(firstSpoilage.spoilByGoods.fish > 0, JSON.stringify(firstSpoilage));
+  assert.ok(firstSpoilage.spoilByGoods.veg > 0, JSON.stringify(firstSpoilage));
+
+  await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    const targetDay = 361;
+    game.advanceTicks(Math.max(0, targetDay * 30 - game.model.tick), { animate: false });
+    game.renderer.render(game.displayModel, 0);
+    return game.model.day;
+  })()`);
+  const thaw = await waitForBrowserValue(page, `(() => {
+    const game = window.__SHIOJI_V004__;
+    const speech = document.querySelector('#secretary-speech').textContent;
+    if (!speech.includes('雪が解けました。')) return null;
+    return {
+      day: game.model.day,
+      season: game.renderer.season,
+      speech,
+      route: game.secretaryRoute,
+      seasonHud: document.querySelector('#season-value').textContent,
+    };
+  })()`, { description: 'thaw speech' });
+  assert.equal(thaw.day, 361, JSON.stringify(thaw));
+  assert.equal(thaw.season, '春', JSON.stringify(thaw));
+  assert.match(thaw.seasonHud, /春・3月/, JSON.stringify(thaw));
+  assert.equal(thaw.route.target.kind, 'seasonal-event', JSON.stringify(thaw));
+  assert.match(thaw.speech, /畑が動き始めます/, JSON.stringify(thaw));
+  await page.screenshot(seasonScreenshotPath('season_event_thaw.png'));
+
+  assert.deepEqual(page.errors, []);
+  await page.close();
+  return { firstSnow, thaw, firstSpoilage };
 }
 
 async function checkPeopleVisuals(width, height, mobile) {
@@ -1321,8 +1414,8 @@ async function checkPeopleVisuals(width, height, mobile) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.39.0-goods-discovery');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.39.0-goods-discovery');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.40.0-season-events');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.40.0-season-events');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -2145,7 +2238,7 @@ async function checkSpatialProductivity(width = 1440, height = 900, mobile = fal
   })()`);
   assert.ok(building && !building.missing,
     `資源職の30日実測を建物画面へ表示できる: ${JSON.stringify(building)}`);
-  assert.equal(building.version, 'v004.39.0-goods-discovery');
+  assert.equal(building.version, 'v004.40.0-season-events');
   assert.ok(Number.isFinite(building.efficiency), JSON.stringify(building));
   assert.ok(Number.isFinite(building.resourceEfficiency), JSON.stringify(building));
   assert.equal(building.withinViewport, true, JSON.stringify(building));
@@ -2337,7 +2430,7 @@ async function checkMarketRhythmUi(width = 1440, height = 900, mobile = false) {
       hidden: sheet.hidden,
     };
   })()`);
-  assert.equal(result.version, 'v004.39.0-goods-discovery', JSON.stringify(result));
+  assert.equal(result.version, 'v004.40.0-season-events', JSON.stringify(result));
   assert.equal(result.hidden, false, JSON.stringify(result));
   assert.match(result.label, /出荷をまとめ中 1\/2日/, JSON.stringify(result));
   assert.match(result.detail, /食料切れと生産停止は待ちません/, JSON.stringify(result));
@@ -2387,6 +2480,9 @@ if (process.argv.includes('--start-choice-only')) {
   await checkSeasonalPlots(1440, 900, false);
   await checkSeasonalPlots(390, 844, true);
   console.log('CHARTER ISLE v004 seasonal plots smoke: PASS');
+} else if (process.argv.includes('--seasonal-events-only')) {
+  const result = await checkSeasonalEvents();
+  console.log(`CHARTER ISLE v004 seasonal events smoke: PASS ${JSON.stringify(result)}`);
 } else if (process.argv.includes('--goods-discovery-only')) {
   await checkStartChoice(1440, 900, false, 'tutorial');
   await checkStartChoice(390, 844, true, 'sandbox');
