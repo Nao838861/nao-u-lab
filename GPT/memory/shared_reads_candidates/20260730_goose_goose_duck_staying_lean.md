@@ -4,6 +4,27 @@ url: "https://80.lv/articles/staying-lean-how-we-built-the-world-s-biggest-socia
 collected_at: "2026-07-30T04:02:17+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, social-game, postmortem, live-ops, community-design, monetization]
+evaluated_at: "2026-07-30T04:05:58+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-30T04:05:58+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-30T04:05:58+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-29"
+supersedes: []
+gate_reason: >-
+  参加時の外部ツール依存を起点に、無料化・cosmetics 限定課金・友人グループ中心の retention・
+  小規模チームの可逆な試作判断までが一つの因果として読める。年間最大 50 回の更新と約 30 人の
+  組織規模もあり、具体的なゲーム制作へ接続した CoopEval 水準の分析を構成できる。
+suggested_post_outline:
+  overview_angle: "個人単位の継続率ではなく、友人グループ全体の参加摩擦を除くことを core loop・課金・運営・組織設計へ貫いた事例として解説する"
+  analysis_axis: "voice chat 内製、無料化、cosmetics 限定、community 起点の獲得、短期試作の中止判断が同じ social graph の維持へ収束する因果を検証する"
+  application_target: "Log_cdx の協力・対戦プロトタイプで、起動から同室参加までの摩擦、反復ごとの逸話生成、継続/中止ゲートを同じ評価票で測る"
+  pros_cons: "長所は設計・事業・組織の判断基準が一貫する点。短所は単一タイトルの回顧であり、retention や施策効果の定量比較が限定的な点"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

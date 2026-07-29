@@ -9,7 +9,37 @@
 - 重複確認: 3 sidecar を再生成し、candidate preflight は `continue`。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260730_goose_goose_duck_staying_lean.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  path: memory/shared_reads_candidates/20260730_goose_goose_duck_staying_lean.md
+  decision: continue
+  canonical_url: https://80.lv/articles/staying-lean-how-we-built-the-world-s-biggest-social-deduction-game
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
