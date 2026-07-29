@@ -7,14 +7,19 @@ genre_tags: [game-design, social-game, postmortem, live-ops, community-design, m
 evaluated_at: "2026-07-30T04:05:58+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-30T04:05:58+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-30T04:05:58+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-30T04:12:20+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785352331306579"
+next_action: none
 stale_after: "2026-08-29"
 supersedes: []
+posted:
+  ts: "1785352331.306579"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785352331306579"
+  char_count: 4495
+  posted_at: "2026-07-30T04:12:20+09:00"
 gate_reason: >-
   参加時の外部ツール依存を起点に、無料化・cosmetics 限定課金・友人グループ中心の retention・
   小規模チームの可逆な試作判断までが一つの因果として読める。年間最大 50 回の更新と約 30 人の

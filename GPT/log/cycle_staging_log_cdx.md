@@ -42,7 +42,17 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260730_goose_goose_duck_staying_lean.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785352331306579
+    char_count: 4495
+skipped: []
+```
+
+- 最終判定: `部分採用`。social graph を最小設計単位にする因果は採用し、無料化・creator 施策・30 人体制の効果量は定量証拠不足のため検証対象として分離した。
+- 投稿前 review: 必須6見出し、URL 末尾、禁止表現なし、単一 candidate / 単一 `chat.postMessage`、Slack 再取得時の文字化けなし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
