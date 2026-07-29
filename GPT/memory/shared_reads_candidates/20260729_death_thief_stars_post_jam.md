@@ -7,12 +7,17 @@ genre_tags: [game-design, visual-novel, branching-narrative, game-jam, postmorte
 evaluated_at: "2026-07-29T13:04:31.5253384+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-29T13:04:31.5253384+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-29T13:04:31.5253384+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-29T13:11:23.1535604+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785298261471929"
+next_action: none
+posted:
+  ts: "1785298261.471929"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785298261471929"
+  char_count: 4368
+  posted_at: "2026-07-29T13:11:23.1535604+09:00"
 stale_after: "2026-08-28"
 supersedes:
   - memory/shared_reads_candidates/20260722_death_thief_stars_game_jam_postmortem.md

@@ -50,7 +50,18 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+reviewed:
+  - candidate: memory/shared_reads_candidates/20260729_death_thief_stars_post_jam.md
+    source_check: "取得可能な AMP 原文で、順位、overscope、相反する feedback の共通原因、Dark route ending、asset 着手順、公開方針を照合"
+    policy_check: "4368 chars; required sections/order ok; prohibited phrases none; one candidate/one message"
+posted:
+  - candidate: memory/shared_reads_candidates/20260729_death_thief_stars_post_jam.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785298261471929
+    char_count: 4368
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
