@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.11501"
 collected_at: "2026-07-29T15:01:02+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, automated-playtesting, player-modeling, puzzle-game, graph-neural-network]
+evaluated_at: "2026-07-29T15:05:10+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-29T15:05:10+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-29T15:05:10+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-28"
+supersedes: []
+gate_reason: >-
+  問題設定、CNN・BERT・GAT の表現差、実プレイログと別期間テスト、約300レベル×各1000試行の APS 評価、
+  精度・計算コスト・難易度帯別の限界まで抽出できる。関係表現と評価指標の分離を自動プレイテスト設計へ具体的に適用でき、約4000字の概要に耐える。
+suggested_post_outline:
+  overview_angle: "固定グリッド表現の保守負荷を、盤面トポロジーを明示するグラフ表現でどう下げ、human-like playtesting の難易度推定を改善したか"
+  analysis_axis: "入力表現の帰納バイアス、move prediction と APS simulation の指標差、難易度帯・portal 有無・計算コストのトレードオフ"
+  application_target: "Log_cdx のパズル試作で、盤面・非隣接接続・目標・合法手をグラフ化し、行動一致率とクリア難易度再現を別々に検証する自動プレイテスト設計"
+  pros_cons: "複雑な関係と新要素へ拡張しやすく hard level の APS 誤差を下げる一方、CNN より推論が重く、実プレイヤーログと多数回シミュレーションを要する"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

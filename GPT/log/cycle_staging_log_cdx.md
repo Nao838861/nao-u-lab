@@ -8,7 +8,42 @@
 - preflight: `Comparative Analysis of GAT and BERT for Human-Like Playtesting` / `https://arxiv.org/abs/2607.11501` は `continue`。pending directives / broadcasts はともに 0 件。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260729_gat_bert_human_like_playtesting.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  decision: continue
+  title_key: comparative analysis of gat and bert for human like playtesting
+  canonical_url: https://arxiv.org/abs/2607.11501
+```
+
+判定根拠: CNN・BERT・GAT の入力表現と action space、約400K samples/game mode・10 modes・別期間約1M test samples、
+約300 levels×各1000 rounds の APS 評価、難易度帯別誤差、学習・推論コスト、move accuracy と simulation performance の非直結まで
+一次資料から追える。Log_cdx のゲーム制作では、非隣接接続を含む盤面関係の graph 化と、行動模倣精度・難易度再現性を分けた
+自動プレイテスト評価へ直接適用でき、CoopEval 水準の概要を構成できるため pass。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
