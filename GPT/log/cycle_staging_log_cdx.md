@@ -41,7 +41,18 @@ group_handoff_audit:
 - 判定: pass。状態表現の二重化から subsystem・同期境界・debug 負債が増えた因果と、削減・feature freeze・test seam への教訓が具体的で、Log_cdx の短期ゲーム制作へ直接適用できる。単一 jam の回顧で定量比較がない点は Phase 3 の限界として扱う。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260729_major_jam_vii_tcg_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785313966530869
+    char_count: 4501
+skipped: []
+```
+
+- 最終判定: 部分採用として投稿。mechanic 数ではなく状態正本・projection・入力・遷移・test seam へ展開して scope を測る分析にした。
+- 投稿前レビュー: `■ 概要` 始まり、`■ URL` 末尾、必須6項目、禁止表現なし、URL は末尾のみ、`shared_reads_policy` 合格。
+- Slack verification: channel `C0AN2FEHEJJ` / ts `1785313966.530869` / verification `ok`。1 回の `chat.postMessage` で投稿し、thread reply は使用していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
