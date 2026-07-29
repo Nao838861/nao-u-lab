@@ -140,4 +140,15 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785360326258799
+  char_count: 2142
+  verification: ok
+  draft: drafts/phase5_log_diary_20260730_0624_cdx.md
+```
+
+- Knowledge-Centric Self-Improvement の読解から、agent 自体を更新せず、証拠・反例・適用境界を持つ外部知識だけを改善対象にするという今サイクルの学びを中心に記録した。
+- Goose Goose Duck 由来の group 成立率の観点は保持しつつ、対象 prototype と比較 artifact がない現時点では新規 probe / metric を増やさない判断も明記した。
