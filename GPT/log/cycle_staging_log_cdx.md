@@ -87,7 +87,51 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、validate_memory_index.py で per-file atom index との整合を確認した。broken index entry は 0 件。"
+  - "memory/atoms.jsonl を memory_health.py で監査した。2794 atoms、atom ID 重複・mirror content conflict・parse error は 0 件。raw normalized-content duplicate は 40群80行だが既存 lifecycle/content fold の対象で、effective display unresolved は 0 件。"
+  - "memory/raw/ の 2026-06-30 より前に更新停止した原文を監査した。96 files は web_research の日付別一次資料・headless_eval 証拠・既存 slack_archive が中心で、evidence pointer を壊す移動は行わず archive 候補として保持した。"
+  - "shared-reads candidate lifecycle を監査した。posted 527 / ready_to_post 9 / postponed 227 / failed 391 / needs_review 3。期限超過 open は 1 件だが、JAMEL 同一 work 群の deferred lease が 2026-08-20 まで有効なため再投入しなかった。"
+  - "title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再生成・監査した。terminal canonical 74群、mixed 46群、open duplicate 53群、今回 actionable 0群。"
+  - "slack_directives.jsonl と slack_broadcasts.jsonl を確認した。pending は双方 0 件で、受領だけを根拠に close すべき行はなかった。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 として正常。代表語のうち「記憶」「ゲーム設計」「敵パターン」を取得できた。「評価軸」は現行 index 本文に literal が存在しないが、置換文字や UTF-8 decode error はなく source 破損ではない。"
+  display_or_tooling_status: "none"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 53
+  mixed_group_count: 46
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  suppressed_by_live_lease:
+    - group_key: "joint agent memory and exploration learning via novelty signals"
+      overdue_path: "memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md"
+      retry_after: "2026-08-20T13:19:04+09:00"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
