@@ -113,7 +113,40 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780465172-adecb688cc
+    source_ts: "1780465172.284149"
+    title: "GameFactory — visual quality と action controllability を分離する生成映像 world model"
+    reason: "source=slack_api/shared-reads、score=12 の未レビュー最新候補で、harness・game-design・operation・evaluation の4優先タグを持つ。生成映像の見た目と入力追従を分ける評価が、既存 probe と異なる判断差を作るか確認した。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "合計14には達するが risk_control が必須閾値2を下回る。70時間の GF-Minecraft、keyboard／mouse の制御分離、action grouping と sliding window、autoregressive continuity、domain adapter、Cam／Flow MSE・CLIP・FID・FVD、比較実験と ablation は十分な根拠を持つ。一方、player-intent-action-response、egocs-causal-gameplay-log、matrix-game-long-horizon-memory-latency、gameenginebench-runtime-integration-gate が、observable response、input／view／state／event／outcome の因果列、長期一貫性、固定 trace と隣接 system をすでに覆う。321件の active_probes と pending lease 1件があり、比較可能な生成映像 world-model artifact もないため、新規 probe は判断を変えず確認負荷だけを増やす。"
+  existing_probes:
+    - probe-20260717-player-intent-action-response
+    - probe-20260622-egocs-causal-gameplay-log
+    - probe-20260626-matrix-game-long-horizon-memory-latency
+    - probe-20260709-gameenginebench-runtime-integration-gate
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
