@@ -110,7 +110,131 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - memory/atoms/title_cluster_index.jsonl を現行 2,791 atom snapshot から再生成し、595 cluster / 745 member で current を確認した。
+  - open duplicate group / stale triage / group action の各 sidecar を順に再生成し、52 group / 0 row / 0 row で整合を確認した。
+  - group handoff と candidate handoff を cycle_id 2026-07-29 23:43 で冪等 enqueue し、いずれも新規 0 件・pending 0 件を確認した。
+  - Slack directives / broadcasts は pending 0 件だったため status 更新は行わなかった。
+issues:
+  - id: ISS-4A-20260730-01
+    description: >-
+      candidate root 3件に top-level status がなく、現 lifecycle audit では
+      skipped_unreviewed として allowed status 内訳および stale triage から外れる。
+    severity: medium
+    evidence: >-
+      memory/shared_reads_candidates/20260721_big_lizard_ai_copilot_postmortem.md;
+      memory/shared_reads_candidates/20260726_reasoning_diversity_collapse_llm_game_play.md;
+      memory/shared_reads_candidates/20260726_savestate_player_reflection_method.md;
+      tools/backfill_shared_reads_candidate_status.py --today 2026-07-30
+    source_file_status: UTF-8 読みは正常。3件とも frontmatter は存在するが status / candidate_status / stale_after がない。
+    display_or_tooling_status: none
+    why_blocks_game_memory: >-
+      AI共同制作、方策多様性、player reflection の候補が lifecycle queue に乗らず、
+      次のゲーム制作で再評価されないまま孤立する。
+  - id: ISS-4A-20260730-02
+    description: >-
+      active atom sr-1776127289-4d9239b255 の「AIエージェント」が U+FFFD を含む
+      「AIエ��ジェント」として raw、per-file atom、index、related candidate に伝播している。
+    severity: low
+    evidence: >-
+      memory/raw/slack_archive/shared-reads.jsonl#ts=1776127289.990919;
+      memory/atoms/2026-04/sr-1776127289-4d9239b255.md;
+      memory/atoms/index.jsonl#id=sr-1776127289-4d9239b255
+    source_file_status: UTF-8 明示読みでも raw source 自体に U+FFFD が2文字あり、source-level corruption。
+    display_or_tooling_status: PowerShell UTF-8 表示は source と一致しており、display-only mojibake ではない。
+    why_blocks_game_memory: >-
+      当該 atom の語句検索と related-candidate 表示を局所的に劣化させるが、
+      tags と残りの本文から recall は可能で、構造設計を止める規模ではない。
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: >-
+    2件とも既存 lifecycle の Phase 2 再評価または局所的な source correction で扱える
+    mechanical data-quality issue であり、新しい仕組みの設計は不要。
+memory_index_audit:
+  referenced_atom_ids: 50
+  broken_links: 0
+  source_file_status: >-
+    memory/MEMORY.md は UTF-8 読みで「記憶」「ゲーム設計」「敵パターン」を取得。
+    「評価軸」は本文に未出現だが文字化け兆候はなく、本文の再生成・手修復対象にしない。
+  display_or_tooling_status: none
+atom_audit:
+  total_atoms: 2791
+  mirror_counts:
+    atoms_jsonl: 2791
+    per_file_md: 2791
+    index_jsonl: 2791
+  mirror_errors: 0
+  content_conflicts: 0
+  duplicate_clusters: 45
+  duplicate_overlay_status: current
+  contradiction_result: lifecycle / mirror 上の新規矛盾なし
+raw_archive_audit:
+  total_files: 247
+  inactive_over_30_days: 96
+  action: retained
+  reason: >-
+    memory/raw は原文保持用の archive-of-record であり、mtime だけで移動すると provenance pointer を損なう。
+    容量・参照切れ・重複の具体的な失敗は観測されなかったため今回は移動しない。
+candidate_lifecycle:
+  total_files: 1157
+  counts:
+    posted: 524
+    ready_to_post: 9
+    postponed: 227
+    failed: 391
+    needs_review: 3
+    skipped_unreviewed: 3
+  overdue_open_total: 1
+  overdue_path: memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+  overdue_disposition: explicit_keep
+  disposition_evidence: >-
+    same-work all_open group の live deferred lease gha-e6d4d4b5a37a0808 が
+    retry_after 2026-08-20T13:19:04+09:00 まで再投入を抑止している。
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 52
+  mixed_group_count: 45
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  due_check_date: "2026-07-30"
+  next_pending_probe_id: probe-20260724-minimum-sufficient-scope-ladder
+  next_lease_due: "2026-07-31T00:23:59+09:00"
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_review_batch: []
+inbox_audit:
+  slack_directives_pending: 0
+  slack_broadcasts_pending: 0
+validation:
+  - python tools/shared_reads_probe_lifecycle.py validate: rows=4, errors=0
+  - python tools/shared_reads_group_handoff.py audit: rows=71, pending=0, errors=0
+  - python tools/shared_reads_candidate_handoff.py audit: rows=198, pending=0, stale_pending=0, errors=0
+  - python tools/build_shared_reads_title_canonical_index.py --check: rows=74, current
+  - python tools/build_shared_reads_mixed_duplicate_queue.py --check: rows=45, current
+  - python tools/build_shared_reads_open_duplicate_group_queue.py --check: rows=52, current
+  - python tools/build_shared_reads_stale_triage_queue.py --today 2026-07-30 --check: rows=0, current
+  - python tools/build_shared_reads_group_action_queue.py --check: rows=0, current
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
