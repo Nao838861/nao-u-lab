@@ -4,6 +4,27 @@ url: "https://itch.io/devlog/1587881/july-2026-devlog-post-game-jam.amp"
 collected_at: "2026-07-29T13:00:57.1429900+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, visual-novel, branching-narrative, game-jam, postmortem, production]
+evaluated_at: "2026-07-29T13:04:31.5253384+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-29T13:04:31.5253384+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-29T13:04:31.5253384+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-28"
+supersedes:
+  - memory/shared_reads_candidates/20260722_death_thief_stars_game_jam_postmortem.md
+gate_reason: >-
+  同一 work の旧 candidate は canonical URL の 404 で postponed だが、本 candidate は取得できた AMP URL と補強済み snapshot を持つ代表候補である。
+  overscope、相反するレビューの共通原因、選択後の尊重、制作依存順、公開後の継続負債まで追え、具体的な設計・運用評価を約4000字へ展開できる。
+suggested_post_outline:
+  overview_angle: "短期制作で分岐 narrative を成立させる条件を、scope・選択前の根拠・選択後の結末・制作依存順・公開戦略の連鎖として整理する"
+  analysis_axis: "相反する感想の表層ではなく共通原因を抽出した点と、player に選ばせる設計と選択結果を尊重する設計を別々に検証する"
+  application_target: "Log_cdx の短期ゲーム prototype で、分岐数を増やす前の選択根拠チェック、ending の判断尊重チェック、script と asset の並行着手条件、公開後の保守予算を設計レビューへ入れる"
+  pros_cons: "利点は失敗・レビュー・改稿方針・制作順が同一事例で結び付くこと。弱点は単一開発者の自己報告で、完成版による改善検証と定量比較がまだないこと"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
