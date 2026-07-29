@@ -473,6 +473,12 @@ function appendEvents(events, { allowToasts = true, currentModel = model } = {})
   if (!$('#event-sheet').hidden) renderEventSheet();
 }
 
+function observeQueuedSignals(observedModel) {
+  goodsDiscovery.observe(observedModel);
+  seasonalEvents.observe(observedModel);
+  boundaryEvents.observe(observedModel);
+}
+
 function refreshModel({ animate = false, baseSeconds = 0.12 } = {}) {
   const nextModel = controller.readModel();
   const events = controller.events(lastEventSequence);
@@ -483,9 +489,7 @@ function refreshModel({ animate = false, baseSeconds = 0.12 } = {}) {
   if (animate) presentation.enqueue(nextModel, events, baseSeconds);
   else displayModel = presentation.reset(nextModel);
   model = nextModel;
-  goodsDiscovery.observe(model);
-  seasonalEvents.observe(model);
-  boundaryEvents.observe(model);
+  observeQueuedSignals(model);
   recordEconomyHistory(model);
   guidanceDirector.observe(model, events);
   if (model.day > 0 && model.day % 5 === 0 && model.day !== lastAutosaveDay) {
@@ -568,7 +572,18 @@ function advanceTicks(count, {
 } = {}) {
   if (!Number.isSafeInteger(count) || count < 0) throw new TypeError('tick count must be non-negative');
   if (!animate) {
-    controller.advanceTicks(count);
+    if (count === 0) {
+      controller.advanceTicks(0);
+    } else {
+      // 早送りでも途中の境界跨ぎを捨てない。描画は末尾だけだが、日ごとの状態を
+      // 発話キューへ観測し、閾値割れ→回復や一時的な品切れも順に残す。
+      advanceInBatches(controller, count, {
+        batchSize: 30,
+        afterBatch(ticks, advanced) {
+          if (advanced < count) observeQueuedSignals(controller.readModel());
+        },
+      });
+    }
     refreshModel({ animate: false });
     renderHud();
     return model;

@@ -4219,6 +4219,53 @@ test('境界の声: 一言の器で書状にせず自動既読の対象にする
   assert.equal(route.target.delivery, undefined, '書状の配達経路へ載せない');
 });
 
+test('発話キュー: 早送りで溜まった季節・境界・品目の一言を日付順に取り出す', () => {
+  const fallback = { priority: 'fallback', speech: '待機中です。' };
+  const advice = [{
+    id: 'action-advice',
+    unread: true,
+    completed: false,
+    priority: 'action',
+    speech: '操作案内です。',
+  }];
+  const discovery = {
+    id: 'goods-discovery-120-log',
+    day: 120,
+    goods: ['log'],
+    speech: GOODS_DISCOVERY_SCRIPTS.log,
+  };
+  const incident = {
+    id: 'season-firstSnow-1',
+    day: 271,
+    type: 'firstSnow',
+    speech: SEASONAL_EVENT_SCRIPTS.firstSnow,
+  };
+  const boundary = {
+    id: 'boundary-food-300-1',
+    day: 300,
+    type: 'food',
+    speech: '食料の境界です。',
+  };
+  assert.equal(
+    secretaryRouteFor({ discovery, incident, boundary, advice, fallback }).target.id,
+    discovery.id,
+    '操作案内で待機列を塞がず、最も古い一言から出す',
+  );
+  assert.equal(
+    secretaryRouteFor({ incident, boundary, advice, fallback }).target.id,
+    incident.id,
+  );
+  assert.equal(
+    secretaryRouteFor({ boundary, advice, fallback }).target.id,
+    boundary.id,
+  );
+  assert.equal(
+    secretaryRouteFor({ advice, fallback }).target.id,
+    advice[0].id,
+    '待機中の事件を消化した後に通常の操作案内へ戻る',
+  );
+});
+
 test('通貨表示: engine内部値はfactsを変えず10倍のデナリで示す', () => {
   const foodLetter = TUTORIAL_LETTERS.find(row => row.id === 'food-dependence-report').render({
     model: {

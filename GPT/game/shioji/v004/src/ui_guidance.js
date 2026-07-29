@@ -170,7 +170,19 @@ export function secretaryRouteFor({
       detail: forcedLetter.summary,
     };
   }
-  if (boundary && String(boundary.speech ?? '').trim()) {
+  const queuedNotice = [
+    boundary && String(boundary.speech ?? '').trim()
+      ? { kind: 'boundary', row: boundary, order: 0 } : null,
+    incident && String(incident.speech ?? '').trim()
+      ? { kind: 'incident', row: incident, order: 1 } : null,
+    discovery && String(discovery.speech ?? '').trim()
+      ? { kind: 'discovery', row: discovery, order: 2 } : null,
+  ].filter(Boolean).sort((left, right) => (
+    Number(left.row.day ?? 0) - Number(right.row.day ?? 0)
+    || left.order - right.order
+  ))[0] ?? null;
+  if (queuedNotice?.kind === 'boundary') {
+    const boundary = queuedNotice.row;
     const food = boundary.type === 'food';
     return {
       priority: food ? 'food-boundary' : 'preservation-stop',
@@ -180,6 +192,31 @@ export function secretaryRouteFor({
       kicker: food ? '島の食料' : '保存が停止',
       title: boundary.type,
       detail: `${boundary.day}日目`,
+    };
+  }
+  if (queuedNotice?.kind === 'incident') {
+    const incident = queuedNotice.row;
+    const spoilage = Boolean(incident.goods);
+    return {
+      priority: spoilage ? 'first-spoilage' : 'season-event',
+      tier: 'notice',
+      target: { kind: 'seasonal-event', id: incident.id },
+      speech: incident.speech,
+      kicker: spoilage ? '初めての腐敗' : '季節の節目',
+      title: spoilage ? incident.goods : incident.type,
+      detail: `${incident.day}日目`,
+    };
+  }
+  if (queuedNotice?.kind === 'discovery') {
+    const discovery = queuedNotice.row;
+    return {
+      priority: 'goods-discovery',
+      tier: 'notice',
+      target: { kind: 'goods-discovery', id: discovery.id },
+      speech: discovery.speech,
+      kicker: '新しい品',
+      title: discovery.goods.join('・'),
+      detail: `${discovery.day}日目に島で初めて保有`,
     };
   }
   const actionAdvice = [...advice].reverse().find(row => (
@@ -195,29 +232,6 @@ export function secretaryRouteFor({
       kicker: actionAdvice.kicker,
       title: actionAdvice.title,
       detail: actionAdvice.detail,
-    };
-  }
-  if (incident && String(incident.speech ?? '').trim()) {
-    const spoilage = Boolean(incident.goods);
-    return {
-      priority: spoilage ? 'first-spoilage' : 'season-event',
-      tier: 'notice',
-      target: { kind: 'seasonal-event', id: incident.id },
-      speech: incident.speech,
-      kicker: spoilage ? '初めての腐敗' : '季節の節目',
-      title: spoilage ? incident.goods : incident.type,
-      detail: `${incident.day}日目`,
-    };
-  }
-  if (discovery && String(discovery.speech ?? '').trim()) {
-    return {
-      priority: 'goods-discovery',
-      tier: 'notice',
-      target: { kind: 'goods-discovery', id: discovery.id },
-      speech: discovery.speech,
-      kicker: '新しい品',
-      title: discovery.goods.join('・'),
-      detail: `${discovery.day}日目に島で初めて保有`,
     };
   }
   if (handoff) {

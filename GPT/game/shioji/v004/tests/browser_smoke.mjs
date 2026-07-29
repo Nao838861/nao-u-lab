@@ -1303,6 +1303,58 @@ async function checkSeasonalEvents(width = 1440, height = 900, mobile = false) {
   return { firstSnow, thaw, firstSpoilage };
 }
 
+async function checkFastForwardVoices(width = 1440, height = 900, mobile = false) {
+  const page = await newPage(width, height, mobile);
+  const result = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.setSpeed(0);
+    game.resetPerformanceMetrics();
+    const startedAt = performance.now();
+    const targetDay = 361;
+    game.advanceTicks(Math.max(0, targetDay * 30 - game.model.tick), { animate: false });
+    const elapsedMs = performance.now() - startedAt;
+    const seasonal = game.seasonalEventState.pending.map(row => ({
+      id: row.id, day: row.day, type: row.type, kind: 'seasonal-event', order: 1,
+    }));
+    const boundary = game.boundaryEventState.pending.map(row => ({
+      id: row.id, day: row.day, type: row.type, kind: 'boundary-event', order: 0,
+    }));
+    const discovery = game.goodsDiscoveryState.pending.map(row => ({
+      id: row.id, day: row.day, type: row.goods.join('+'), kind: 'goods-discovery', order: 2,
+    }));
+    const chronological = [...seasonal, ...boundary, ...discovery]
+      .sort((left, right) => left.day - right.day || left.order - right.order);
+    return {
+      day: game.model.day,
+      elapsedMs,
+      metrics: game.performanceMetrics(),
+      seasonal,
+      boundary,
+      discovery,
+      chronological,
+      route: game.secretaryRoute,
+      speech: document.querySelector('#secretary-speech').textContent,
+    };
+  })()`);
+  assert.equal(result.day, 361, JSON.stringify(result));
+  assert.ok(result.metrics.advanceCalls >= 361, JSON.stringify(result));
+  assert.ok(result.metrics.snapshotReads >= 361, JSON.stringify(result));
+  assert.deepEqual(
+    result.seasonal.filter(row => ['firstSnow', 'thaw'].includes(row.type))
+      .map(row => ({ day: row.day, type: row.type })),
+    [{ day: 271, type: 'firstSnow' }, { day: 361, type: 'thaw' }],
+    `1年一括早送りでも季節の一言を発生日つきで保持する: ${JSON.stringify(result)}`,
+  );
+  assert.ok(result.chronological.length >= 2, JSON.stringify(result));
+  assert.equal(result.route.target.id, result.chronological[0].id,
+    `早送り後は最古の一言から表示する: ${JSON.stringify(result)}`);
+  assert.equal(result.route.target.kind, result.chronological[0].kind, JSON.stringify(result));
+  assert.equal(result.speech.length > 0, true, JSON.stringify(result));
+  assert.deepEqual(page.errors, []);
+  await page.close();
+  return result;
+}
+
 async function checkBoundaryVoices(width = 1440, height = 900, mobile = false) {
   fs.mkdirSync(BOUNDARY_SCREENSHOT_DIR, { recursive: true });
   const page = await newPage(width, height, mobile, GAME);
@@ -2720,6 +2772,15 @@ if (process.argv.includes('--start-choice-only')) {
 } else if (process.argv.includes('--seasonal-events-only')) {
   const result = await checkSeasonalEvents();
   console.log(`CHARTER ISLE v004 seasonal events smoke: PASS ${JSON.stringify(result)}`);
+} else if (process.argv.includes('--fast-forward-voices-only')) {
+  const result = await checkFastForwardVoices();
+  console.log(`CHARTER ISLE v004 fast-forward voices smoke: PASS ${JSON.stringify({
+    day: result.day,
+    elapsedMs: Number(result.elapsedMs.toFixed(1)),
+    metrics: result.metrics,
+    queue: result.chronological.map(row => `${row.day}:${row.type}`),
+    firstRoute: `${result.route.target.kind}:${result.route.target.id}`,
+  })}`);
 } else if (process.argv.includes('--boundary-voices-only')) {
   const result = await checkBoundaryVoices();
   console.log(`CHARTER ISLE v004 boundary voices smoke: PASS ${JSON.stringify(result)}`);
