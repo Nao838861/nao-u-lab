@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-29T22:01:38+09:00",
+  "updated_at": "2026-07-30T00:00:44+09:00",
   "reviewed_source_ts": [
+    "1785329864.178069",
     "1785321935.890519",
     "1780427580.639529",
     "1780460352.591189",
@@ -545,6 +546,46 @@
     "1785313966.530869"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-30T00:00:44+09:00",
+      "selected": {
+        "id": "sr-1785329864-b5b5a72702",
+        "source_ts": "1785329864.178069",
+        "title": "Stars Reach — 永続する自由と recovery path の対設計",
+        "reason": "選定時点の atoms.jsonl snapshot で、source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補であり、harness・game-design・agent・operation・evaluation の5優先タグを持つ。永続する地形改変を単体 feature とせず、回復、後発到達性、資源集中、間接加害の provenance と対で測る知見が、次の persistent-world／small-world prototype に新しい判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の採用条件は満たすが、probe lease 契約を満たす具体的な consumer artifact が今サイクルにないため state-only review に留める。shared-reads 本文は、永続する地形改変と自然回復を対で作り、後発 agent の到達可能領域、資源集中、主要 route の復旧 tick、間接 damage の短期 provenance を deterministic に測る小型 prototype へ変換しており、relevance と actionability は3とした。一方、根拠は開発者インタビューで、retention、富の分布、復旧時間、griefing の誤検出率、規模 penalty の比較実験、人口増加後の自然保護 guild の持続性が示されず、百万倍高速化にも benchmark 条件がないため evidence は2に留める。既存の asymmetric-balance-evidence は支配／死に戦略の非対称 trace、egocs-causal-gameplay-log は input・state・event・outcome の因果 chain、matrix-game-long-horizon-memory-latency は durable world state の長期 anchor、flag-world-state-diegetic-boundary は durable state と player-facing feedback の分離をすでに扱う。本 atom 固有の差は、自由な永続改変を recovery latency と newcomer reachability に直接結ぶ点だが、現在の staging には永続地形、複数 run を跨ぐ state、改変前後の route／resource artifact がない。consumer phase、before／after trigger artifact、期待判断差を lease 契約どおり指定できず、active_probes 321件と Phase 4a 向け pending lease 1件へ確認負荷を追加すべきでない。次に persistent-world／small-world prototype が具体化し、既存4 probe だけでは改変の面白さと被害からの復帰可能性を分けて判定できない時、復旧 tick と後発到達性の一時 metric として再評価する。",
+      "existing_probes": [
+        "probe-20260528-asymmetric-balance-evidence",
+        "probe-20260622-egocs-causal-gameplay-log",
+        "probe-20260626-matrix-game-long-horizon-memory-latency",
+        "probe-20260609-flag-world-state-diegetic-boundary"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と defer 理由だけを更新した。永続改変と recovery latency／後発到達性の対は記録したが、比較可能な prototype artifact 不在と既存 controls との重複により、probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-29T19:50:36+09:00",
       "selected": {

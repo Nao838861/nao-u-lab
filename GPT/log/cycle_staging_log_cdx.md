@@ -62,7 +62,52 @@ final_review: >-
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785329864-b5b5a72702
+    source_ts: "1785329864.178069"
+    title: "Stars Reach — 永続する自由と recovery path の対設計"
+    reason: >-
+      atoms.jsonl snapshot で source=slack_api/shared-reads、score=10、未レビューを満たす最新候補で、
+      harness・game-design・agent・operation・evaluation の5優先タグを持つ。
+      永続する地形改変を回復、後発到達性、資源集中、間接加害 provenance と対で測る知見が、
+      次の persistent-world／small-world prototype に新しい判断差を作るか確認するため選んだ。
+      Nao_u の明示評価は付いていない。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: >-
+    数値上の採用条件は満たすが、現 staging には永続地形、複数 run を跨ぐ state、
+    改変前後の route／resource artifact がなく、consumer phase、before／after trigger artifact、
+    expected_delta を lease 契約どおり指定できない。開発者インタビューには retention、
+    富の分布、復旧時間、間接加害の誤検出率、規模 penalty の比較実験がなく evidence は2。
+    既存の asymmetric-balance-evidence、egocs-causal-gameplay-log、
+    matrix-game-long-horizon-memory-latency、flag-world-state-diegetic-boundary が、
+    支配戦略、因果 chain、durable state、player-facing feedback を既に扱う。
+    次に persistent-world／small-world prototype が具体化し、既存 controls だけでは
+    改変の面白さと被害からの復帰可能性を分けられない時、復旧 tick と後発到達性の
+    一時 metric として再評価する。
+  change:
+    summary: >-
+      reviewed_source_ts と defer 理由だけを更新した。
+      probe・metric・lease・directive・恒久ルールは追加していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
