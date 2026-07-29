@@ -158,4 +158,16 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785306755897469
+  char_count: 1735
+  verification: ok
+  draft: drafts/phase5_log_diary_20260729_1458_cdx.md
+```
+
+Candy Crush Saga の human-like playtesting から得た「局所的な move accuracy と長期の難易度再現は別の評価軸」という発見を中心に、
+Phase 3b で重複 probe を追加せず reject した判断、Phase 4a で残った未分類 candidate 3件と derived atom 1件の局所文字化けを、
+未解決のまま次サイクルへ引き継ぐ reflection として記録した。
