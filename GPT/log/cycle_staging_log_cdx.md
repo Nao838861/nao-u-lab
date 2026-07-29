@@ -64,7 +64,39 @@ skipped: []
 - draft: `memory/shared_reads_candidates/posted_drafts/20260730_hcra_human_ai_collaborative_decision_post.md`
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785336918-71b4b6c7ce
+    source_ts: "1785336918.156559"
+    title: "Developing Ethical Games: Why & How — Ethical Games Code of Ethics draft"
+    reason: "未レビュー条件を満たす最新の score 12 atom で、優先6タグ中5タグを持つ。player と worker の保護を同じ設計 lens で扱う知見が、既存 probe と異なる次回判断を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計14未満かつ risk_control 2未満。規範 draft で導入効果・監査・trade-off の実証がなく、retention pressure、social harm、autonomy、介入強度は既存4 probe と重複する。player から worker への負荷移転は新しい観点だが、比較可能な release artifact と判断差を指定できず、広い ethics card は active_probes 321件へ確認負荷を加えるため state-only review に留めた。"
+  existing_probes:
+    - probe-20260604-player-time-scarcity-session-boundary
+    - probe-20260613-social-surface-safety-check
+    - probe-20260617-ai-onboarding-autonomy-support
+    - probe-20260710-feedback-device-amplitude-axis
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

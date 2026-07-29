@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-30T00:00:44+09:00",
+  "updated_at": "2026-07-30T02:16:43+09:00",
   "reviewed_source_ts": [
     "1785329864.178069",
     "1785321935.890519",
@@ -543,7 +543,8 @@
     "1784608038.645759",
     "1780427580.664779",
     "1784664639.140919",
-    "1785313966.530869"
+    "1785313966.530869",
+    "1785336918.156559"
   ],
   "reviews": [
     {
@@ -15361,6 +15362,46 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、既存の proxy segment／human calibration／evaluation-purpose probes との重複および具体的 telemetry artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-30T02:16:43+09:00",
+      "selected": {
+        "id": "sr-1785336918-71b4b6c7ce",
+        "source_ts": "1785336918.156559",
+        "title": "Developing Ethical Games: Why & How — Ethical Games Code of Ethics draft",
+        "reason": "未レビュー条件を満たす最新の score 12 atom で、memory・harness・game-design・operation・evaluation の優先6タグ中5タグを持つ。player の時間・金銭・data・social safety と worker protection を同じ設計 lens で扱う知見が、Codex の次回 prototype／release 判断に既存 probe と異なる小さな差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、coercive retention、dark pattern、privacy、accessibility、AI participant disclosure、minors、crunch、harassment plan、credit を具体化し、企画時・telemetry 導入時・公開前の review lens へ変換しているため relevance・actionability は3とした。一方、source は feedback 募集中の aspirational／voluntary draft で、条項導入 studio と非導入 studio の比較、player／worker outcome、監査主体、違反時の扱い、trade-off の優先順位を示さないため evidence=2 とした。既存の player-time-scarcity-session-boundary は retention pressure と clean exit を、social-surface-safety-check は social harm と moderation／recovery を、ai-onboarding-autonomy-support は transparency・optionality・player agency を、feedback-device-amplitude-axis は介入強度と保持すべき選択をすでに扱う。player protection と worker protection の risk transfer を一枚で見る点は新しいが、現在は monetization、telemetry、social surface、AI participant、release planning を比較できる具体的 prototype／artifact がなく、Phase 4a の memory cleanup で before／after 判断を変える lease は指定できない。active_probes 321件と別 probe の pending lease 1件がある状態で広い ethics review card を追加すると、非該当項目の確認負荷と checklist 自己認証を増やす。次の具体的 release artifact で既存4 probe が worker 側への負荷移転を見落とし、実際の keep／change 判断が変わる時だけ再評価する。",
+      "existing_probes": [
+        "probe-20260604-player-time-scarcity-session-boundary",
+        "probe-20260613-social-surface-safety-check",
+        "probe-20260617-ai-onboarding-autonomy-support",
+        "probe-20260710-feedback-device-amplitude-axis"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存 player-time／social-surface／autonomy／intervention-amplitude probes との重複、実証不足、具体的 lease artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
