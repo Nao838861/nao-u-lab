@@ -99,7 +99,63 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、index と per-file atom index の一致を検証した。broken entry なし。"
+  - "memory/atoms.jsonl と per-file .md / index.jsonl の 2792 件ミラーを監査した。欠損・parse error・content conflict は 0 件、既知の duplicate cluster 45 群は canonical overlay 済み。"
+  - "memory/raw/ の最終更新30日超 226 ファイルを監査した。slack_archive と日付別 web_research 原文は provenance 正本のため移動せず、archive 対象追加は 0 件。"
+  - "shared-reads candidate lifecycle 1158 件と title duplicate sidecar を再監査し、当 cycle の HCRA status 遷移を mixed/open duplicate queue に反映した。"
+  - "Slack directives / broadcasts の pending はともに 0 件。handled への更新対象なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 として正常。代表語は 記憶 / ゲーム設計 / 敵パターン の3語を取得し、評価軸は本文に存在しない。source corruption evidence なし。"
+  display_or_tooling_status: "Get-Content -Encoding utf8 と rg の表示は正常。mojibake なし。"
+atom_audit:
+  atoms: 2792
+  mirror_content_conflicts: 0
+  duplicate_clusters: 45
+  effective_display_unresolved_groups: 0
+candidate_lifecycle:
+  counts:
+    posted: 525
+    ready_to_post: 9
+    postponed: 227
+    failed: 391
+    needs_review: 3
+    skipped_unreviewed: 3
+  missing_stale_after: 6
+  overdue_open_total: 1
+  overdue_paths:
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+  overdue_disposition: "同一 work の all_open group が retry_after 2026-08-20 まで deferred。live lease により stale triage から抑止し、二重 enqueue しない。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 53
+  mixed_group_count: 46
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
