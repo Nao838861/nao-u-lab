@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-30T04:16:00+09:00",
+  "updated_at": "2026-07-30T06:17:00+09:00",
   "reviewed_source_ts": [
+    "1785352331.306579",
     "1785345085.461859",
     "1785329864.178069",
     "1785321935.890519",
@@ -548,6 +549,46 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-30T06:17:00+09:00",
+      "selected": {
+        "id": "sr-1785352331-d5b35afe5a",
+        "source_ts": "1785352331.306579",
+        "title": "Goose Goose Duck — friend group を最小単位にする参加摩擦設計",
+        "reason": "選定時点の atoms.jsonl snapshot で、source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補であり、harness・game-design・agent・operation・evaluation の5優先タグを持つ。個人平均ではなく、最遅参加者、全員成立率、一人の脱落による session 停止を測る知見が、次の multiplayer／co-op prototype に既存 probe と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14には達するが、risk_control が必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、内蔵 voice、無料化、content 非課金化、小規模 creator community、短期試作の撤退可能性を、個人 conversion ではなく friend group の session 成立という共通変数へ結び、最遅 agent の準備時間、全員成立率、一体脱落後の継続可否、同一 seed／異なる policy の因果的な逸話数へ直接変換しているため relevance と actionability は3とした。一方、根拠は成功企業 CEO の回顧記事で、施策前後の支払率、継続率、獲得費用、community 別定着率、失敗 probe、約30人／年間最大50更新の負荷比較がなく、無料化・cosmetics・small streamer・lean team の因果効果を分離できないため evidence は2に留める。既存の probe-20260613-social-surface-safety-check は social interaction と moderation／recovery を、probe-20260715-team-scenario-mode-diversity は team-level scenario と個体軌道を、probe-20260622-egocs-causal-gameplay-log は input・state・event・outcome の因果 chain を、probe-20260724-minimum-sufficient-scope-ladder は局所 scope と拡張条件をすでに扱う。本 atom 固有の差は、group の最弱 link と同時参加成立率を個人平均から分離する点だが、現在の staging には multiplayer room、join trace、役割配布、複数 agent の before／after artifact がなく、Phase 4a の memory cleanup を consumer にしても判断差を作らない。active_probes 321件と期限内 pending lease 1件へ対象不在の確認負荷を加える risk が高い。次に multiplayer／co-op prototype が具体化し、既存4 probe だけでは個体成功と group session 成立を分けられない実例が出た時、最遅参加時間・全員成立率・一体脱落後継続率の一時 metric として再評価する。",
+      "existing_probes": [
+        "probe-20260613-social-surface-safety-check",
+        "probe-20260715-team-scenario-mode-diversity",
+        "probe-20260622-egocs-causal-gameplay-log",
+        "probe-20260724-minimum-sufficient-scope-ladder"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、group 最弱 link の固有差、既存 social／team／causal／scope probes との重複、比較可能な multiplayer artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-30T00:00:44+09:00",
       "selected": {

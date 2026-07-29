@@ -56,7 +56,35 @@ skipped: []
 - 投稿前レビュー: 4,255字、必須項目順、`■ 概要` 始まり、`■ URL` 末尾、禁止表現なし。duplicate preflight は `continue`。`tools/slack_client.py` の `post_message` で単一 `chat.postMessage` として投稿した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785352331-d5b35afe5a
+    source_ts: "1785352331.306579"
+    title: "Goose Goose Duck — friend group を最小単位にする参加摩擦設計"
+    reason: "未レビュー・score 12 の最新候補で、harness・game-design・agent・operation・evaluation の5優先タグを持つ。個人平均ではなく、最遅参加者・全員成立率・一人の脱落による session 停止を測る知見が次の multiplayer／co-op prototype に固有の判断差を作るか確認した。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "group の最弱 link と同時参加成立率を個人平均から分離する点は有用だが、根拠は成功企業 CEO の回顧で施策別の比較値がなく、現 staging に multiplayer room／join trace／複数 agent の比較 artifact もない。既存 social-surface、team-scenario、causal-log、minimum-scope probes と active_probes 321件、pending lease 1件があるため、対象不在の新規 control は確認負荷を増やす。次の具体的 multiplayer／co-op prototype で既存 controls が個体成功と group 成立を分けられない時だけ再評価する。"
+  change:
+    summary: "reviewed_source_ts と state-only reject 理由を更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
