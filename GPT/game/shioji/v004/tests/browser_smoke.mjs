@@ -16,6 +16,8 @@ const SEASON_SCREENSHOT_DIR = process.env.SHIOJI_SEASON_SCREENSHOT_DIR ?? '/tmp'
 const seasonScreenshotPath = filename => path.join(SEASON_SCREENSHOT_DIR, filename);
 const GOODS_DETAIL_SCREENSHOT_DIR = process.env.SHIOJI_GOODS_DETAIL_SCREENSHOT_DIR ?? '/tmp';
 const goodsDetailScreenshotPath = filename => path.join(GOODS_DETAIL_SCREENSHOT_DIR, filename);
+const BOUNDARY_SCREENSHOT_DIR = process.env.SHIOJI_BOUNDARY_SCREENSHOT_DIR ?? '/tmp';
+const boundaryScreenshotPath = filename => path.join(BOUNDARY_SCREENSHOT_DIR, filename);
 const wait = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
 
 class Page {
@@ -1299,6 +1301,122 @@ async function checkSeasonalEvents(width = 1440, height = 900, mobile = false) {
   assert.deepEqual(page.errors, []);
   await page.close();
   return { firstSnow, thaw, firstSpoilage };
+}
+
+async function checkBoundaryVoices(width = 1440, height = 900, mobile = false) {
+  fs.mkdirSync(BOUNDARY_SCREENSHOT_DIR, { recursive: true });
+  const page = await newPage(width, height, mobile, GAME);
+  const setup = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    const observation = ({ day, food, fish = 4, salt = 2, char = 2 }) => ({
+      day,
+      calendarOffsetDays: 60,
+      population: 10,
+      households: [{
+        members: Array.from({ length: 10 }, (_, index) => ({ id: index + 1 })),
+        pantry: [{ goods: 'wheat', amount: food }],
+      }],
+      stalls: [],
+      companyMarketStock: {},
+      companyStock: {},
+      flowEma: { wheat: { prod: 2, imp: 0.5, cons: 4 } },
+      goodsManifest: [
+        { goods: 'fish', totalAmount: fish },
+        { goods: 'salt', totalAmount: salt },
+        { goods: 'char', totalAmount: char },
+      ],
+    });
+    window.__boundaryObservation = observation;
+    game.setSpeed(0);
+    game.boundaryEvents.observe(observation({ day: 1, food: 150 }));
+    game.boundaryEvents.observe(observation({ day: 2, food: 139 }));
+    game.setSpeed(0);
+    return {
+      speech: document.querySelector('#secretary-speech').textContent,
+      route: game.secretaryRoute,
+      pending: game.boundaryEventState.pending.map(row => row.type),
+      letterHidden: document.querySelector('#secretary-letter-action').hidden,
+      modalHidden: document.querySelector('#tutorial-letter-modal').hidden,
+    };
+  })()`);
+  assert.equal(setup.route.priority, 'food-boundary', JSON.stringify(setup));
+  assert.equal(setup.route.target.kind, 'boundary-event', JSON.stringify(setup));
+  assert.match(setup.speech, /14日分を下回りました.*残り13日分/s, JSON.stringify(setup));
+  assert.match(setup.speech, /畑や漁師を建てれば間に合います/s, JSON.stringify(setup));
+  assert.equal(setup.letterHidden, true, JSON.stringify(setup));
+  assert.equal(setup.modalHidden, true, JSON.stringify(setup));
+  await waitForBrowserValue(page, `(() => {
+    const panel = document.querySelector('#secretary');
+    return !panel.classList.contains('guidance-entering')
+      && !panel.classList.contains('guidance-switching')
+      && Number.parseFloat(getComputedStyle(panel).opacity) >= 0.99;
+  })()`, { timeoutMs: 2_000, description: 'food boundary speech fully visible' });
+  await page.screenshot(boundaryScreenshotPath('boundary_voice_food_spring.png'));
+
+  await waitForBrowserValue(page, `(() => (
+    !window.__SHIOJI_V004__.boundaryEventState.pending.some(row => row.type === 'food')
+  ))()`, { timeoutMs: 15_000, description: 'food boundary auto-read' });
+  const salt = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.boundaryEvents.observe(window.__boundaryObservation({
+      day: 3, food: 139, salt: 0, char: 2,
+    }));
+    game.setSpeed(0);
+    return {
+      speech: document.querySelector('#secretary-speech').textContent,
+      route: game.secretaryRoute,
+      pending: game.boundaryEventState.pending.map(row => row.type),
+      letterHidden: document.querySelector('#secretary-letter-action').hidden,
+      modalHidden: document.querySelector('#tutorial-letter-modal').hidden,
+    };
+  })()`);
+  assert.equal(salt.route.priority, 'preservation-stop', JSON.stringify(salt));
+  assert.match(salt.speech, /塩がなくなりました.*魚を保存食にできず.*3日で腐ります/s,
+    JSON.stringify(salt));
+  assert.equal(salt.letterHidden, true, JSON.stringify(salt));
+  assert.equal(salt.modalHidden, true, JSON.stringify(salt));
+  await waitForBrowserValue(page, `(() => {
+    const panel = document.querySelector('#secretary');
+    return !panel.classList.contains('guidance-entering')
+      && Number.parseFloat(getComputedStyle(panel).opacity) >= 0.99;
+  })()`, { timeoutMs: 2_000, description: 'salt boundary speech fully visible' });
+  await page.screenshot(boundaryScreenshotPath('boundary_voice_salt.png'));
+
+  await waitForBrowserValue(page, `(() => (
+    !window.__SHIOJI_V004__.boundaryEventState.pending.some(row => row.type === 'salt')
+  ))()`, { timeoutMs: 15_000, description: 'salt boundary auto-read' });
+  const charcoal = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.boundaryEvents.observe(window.__boundaryObservation({
+      day: 4, food: 139, salt: 0, char: 0,
+    }));
+    game.setSpeed(0);
+    return {
+      speech: document.querySelector('#secretary-speech').textContent,
+      route: game.secretaryRoute,
+      pending: game.boundaryEventState.pending.map(row => row.type),
+      letterHidden: document.querySelector('#secretary-letter-action').hidden,
+      modalHidden: document.querySelector('#tutorial-letter-modal').hidden,
+    };
+  })()`);
+  assert.equal(charcoal.route.priority, 'preservation-stop', JSON.stringify(charcoal));
+  assert.match(charcoal.speech, /木炭がなくなりました.*魚を燻製にできず.*3日で腐ります/s,
+    JSON.stringify(charcoal));
+  assert.equal(charcoal.letterHidden, true, JSON.stringify(charcoal));
+  assert.equal(charcoal.modalHidden, true, JSON.stringify(charcoal));
+  await waitForBrowserValue(page, `(() => {
+    const panel = document.querySelector('#secretary');
+    return !panel.classList.contains('guidance-entering')
+      && Number.parseFloat(getComputedStyle(panel).opacity) >= 0.99;
+  })()`, { timeoutMs: 2_000, description: 'charcoal boundary speech fully visible' });
+  await page.screenshot(boundaryScreenshotPath('boundary_voice_charcoal.png'));
+  await waitForBrowserValue(page, `(() => (
+    !window.__SHIOJI_V004__.boundaryEventState.pending.some(row => row.type === 'char')
+  ))()`, { timeoutMs: 15_000, description: 'charcoal boundary auto-read' });
+
+  assert.deepEqual(page.errors, []);
+  await page.close();
+  return { food: setup.speech, salt: salt.speech, charcoal: charcoal.speech };
 }
 
 async function checkPeopleVisuals(width, height, mobile) {
@@ -2602,6 +2720,9 @@ if (process.argv.includes('--start-choice-only')) {
 } else if (process.argv.includes('--seasonal-events-only')) {
   const result = await checkSeasonalEvents();
   console.log(`CHARTER ISLE v004 seasonal events smoke: PASS ${JSON.stringify(result)}`);
+} else if (process.argv.includes('--boundary-voices-only')) {
+  const result = await checkBoundaryVoices();
+  console.log(`CHARTER ISLE v004 boundary voices smoke: PASS ${JSON.stringify(result)}`);
 } else if (process.argv.includes('--goods-discovery-only')) {
   await checkStartChoice(1440, 900, false, 'tutorial');
   await checkStartChoice(390, 844, true, 'sandbox');

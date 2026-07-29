@@ -4107,18 +4107,27 @@ test('境界の声: 食料14日割れの跨ぎだけを拾い、同一境界は7
   assert.equal(events.currentMessage().type, 'food', '7日以上後の跨ぎは再び話す');
 });
 
-test('境界の声: 食料処方は3〜6月だけ建設、秋冬は蔵出し・本土輸入に固定する', () => {
-  const spring = foodBoundarySpeech(boundaryModel({ day: 1, food: 139 }));
-  const earlySummer = foodBoundarySpeech(boundaryModel({ day: 91, food: 139 }));
-  const autumn = foodBoundarySpeech(boundaryModel({ day: 181, food: 139 }));
-  const winter = foodBoundarySpeech(boundaryModel({ day: 271, food: 139 }));
-  assert.match(spring, /畑や漁師を建てれば間に合います/);
-  assert.match(earlySummer, /畑や漁師を建てれば間に合います/);
-  for (const speech of [autumn, winter]) {
-    assert.match(speech, /会社の倉庫から食料を出すか、本土から輸入/);
-    assert.doesNotMatch(speech, /畑や漁師|建て/);
+test('境界の声: 食料処方は3〜6月だけ建設、7〜2月は蔵出し・本土輸入に固定する', () => {
+  const rows = Array.from({ length: 12 }, (_, index) => {
+    const month = ((index + 2) % 12) + 1;
+    const day = index * 30 + 1;
+    return {
+      month,
+      speech: foodBoundarySpeech(boundaryModel({ day, food: 139 })),
+    };
+  });
+  for (const { month, speech } of rows) {
+    if ([3, 4, 5, 6].includes(month)) {
+      assert.match(speech, /畑や漁師を建てれば間に合います/, `${month}月`);
+      assert.doesNotMatch(speech, /会社の倉庫|本土から輸入/, `${month}月`);
+    } else {
+      assert.match(speech, /会社の倉庫から食料を出すか、本土から輸入/, `${month}月`);
+      assert.doesNotMatch(speech, /畑や漁師|建て/, `${month}月`);
+    }
+    if ([12, 1, 2].includes(month)) {
+      assert.match(speech, /冬で畑の生産が止まっています/, `${month}月`);
+    }
   }
-  assert.match(winter, /冬で畑の生産が止まっています/);
 });
 
 test('境界の声: 魚がある時の塩・木炭の正→0だけを別々の一言にする', () => {

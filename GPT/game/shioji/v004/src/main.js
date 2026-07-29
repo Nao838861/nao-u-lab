@@ -2469,6 +2469,7 @@ window.__SHIOJI_V004__ = Object.freeze({
   get goodsDiscoveryState() { return goodsDiscovery.readState(); },
   get seasonalEventState() { return seasonalEvents.readState(); },
   get boundaryEventState() { return boundaryEvents.readState(); },
+  boundaryEvents,
   presentation,
   performanceMetrics,
   resetPerformanceMetrics,
