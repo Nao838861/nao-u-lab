@@ -92,7 +92,64 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md: UTF-8 明示読みで代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」を取得。validate_memory_index.py で High Signal / Recent / Game Task Entry Points / Tag Entry Points の atom pointer と per-file index を照合し、broken link 0 件。"
+  - "memory/atoms.jsonl: 2787 rows。atoms.jsonl / per-file .md / index.jsonl の parse error・index error・content conflict は各 0 件。既知の duplicate は canonical overlay 45 groups に収容され、normalized-content raw duplicate 40 groups / 80 rows、recall-visible 3 groups / 6 rowsはいずれも lifecycle/content fold 済み。新しい矛盾は検出しなかった。"
+  - "memory/raw/: 2026-06-29 より前に更新が止まった 96 files を archive 候補として確認。Slack archive・評価証拠・論文原文を含む provenance 正本であり、参照関係を壊す一括移動は行わなかった。"
+  - "shared-reads candidate lifecycle dry-run: 1152 files。posted 520 / ready_to_post 9 / postponed 226 / failed 391 / needs_review 3 / lifecycle 未分類 3。posted / failed は再評価 queue から除外。期限到来 open candidate は 1 件だが、同一 JAMEL group の deferred lease が retry_after まで有効なため再投入しなかった。"
+  - "open duplicate / stale triage / group action sidecar を指定順で再生成。52 groups (mixed 45 / all_open 7)、stale triage 0 rows、group action 0 rowsで、candidate frontmatter と handoff inbox に差分なし。"
+  - "slack_directives.jsonl 23 rows / slack_broadcasts.jsonl 21 rowsを監査。pending は双方 0 件で、handled 更新対象なし。"
+  - "probe lifecycle を due-only limit 1 で確認し、期限到来 lease 0 件。validate は ledger 4 rows、invariant error 0 件で、receipt 追記なし。"
+issues:
+  - id: ISS-CAND-LIFECYCLE-001
+    description: "open candidate 3 件に top-level status と stale_after がなく、通常の lifecycle audit では skipped_unreviewed となる。include-unreviewed dry-run では needs_review へ分類可能だが、Phase 2 の明示評価 evidence はまだない。"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/20260721_big_lizard_ai_copilot_postmortem.md; memory/shared_reads_candidates/20260726_reasoning_diversity_collapse_llm_game_play.md; memory/shared_reads_candidates/20260726_savestate_player_reflection_method.md"
+    source_file_status: "3 files は UTF-8 として正常に読めるが、frontmatter の status / candidate_status / last_decision / stale_after が欠落。"
+    display_or_tooling_status: "backfill_shared_reads_candidate_status.py の既定 dry-run は3件を skipped_unreviewed と表示し、--include-unreviewed では needs_review 候補として検出する。mojibake はなし。"
+    why_blocks_game_memory: "候補の現在状態と再評価時点が正本化されず、Phase 2 handoff queue から見えないため、ゲーム制作へ転送できる知見かどうかの判定が進まない。"
+  - id: ISS-ATOM-ENC-001
+    description: "1 atom の「AIエージェント」が derived atom 側で replacement character を含む「AIエ��ジェント」になっている。raw Slack archive は正常で、表示経路ではなく派生データの局所破損。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492 (source_ts 1776127289.990919); memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/index.jsonl"
+    source_file_status: "raw Slack source は UTF-8 で「AIエージェント」を取得。per-file atom / atoms.jsonl / index.jsonl は UTF-8 読みでも replacement character を保持しており、derived source file が破損。gr-1777083728-44d444ab7a の「???」は原文どおりで false positive。"
+    display_or_tooling_status: "none; PowerShell・staging 表示だけの mojibake ではなく、UTF-8 source comparison で差を確認。memory/MEMORY.md 本文は代表語 probe と index validation が通っている。"
+    why_blocks_game_memory: "「AIエージェント」の exact recall と関連候補表示を1 atom分だけ汚し、破損表記が related candidate index に伝播している。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 52
+  mixed_group_count: 45
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  suppressed_overdue:
+    - group_key: "joint agent memory and exploration learning via novelty signals"
+      handoff_id: gha-e6d4d4b5a37a0808
+      status: deferred
+      retry_after: "2026-08-20T13:19:04+09:00"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
