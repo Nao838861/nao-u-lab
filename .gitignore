@@ -19,3 +19,7 @@ GPT/log/codex_phase_*_last.stderr.txt
 .tmp_signal_lessons_push2/
 .tmp_signal_shepherd_push/
 .worktrees/
+
+# Per-task handoff/result files are local working notes
+/TASK_BRIEF.md
+/TASK_RESULT.md
