@@ -42,7 +42,18 @@ group_handoff_audit:
 - 判定根拠: 問題設定、forum 二層、型付き distillation、task-conditioned adapter、4 benchmark・10 generation・held-out / cross-family transfer が揃い、ゲーム制作の試行証拠を次の fresh agent へ渡す工程へ具体的に接続できる。主観的な面白さへの外挿限界も含めて約4000字で分析可能。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260730_knowledge_centric_self_improvement.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785359529445089
+    char_count: 4255
+skipped: []
+```
+
+- 最終判定: `部分採用`。agent を固定し、証拠・反例・適用境界を持つ外部知識だけを改善対象にする原理を採用候補とした。二層 forum の常設は見送り、既存 atom / game task lens 上の 3 prototype probe として検証する。
+- 原論文照合: Phase 2 の「4 benchmark」を、ARC-AGI-1 / 2、Polyglot、SWE-bench Pro、Terminal-Bench 2 の 5 benchmark へ修正。baseline の seed 差、held-out 20件の選定条件、主観的ゲーム品質への外挿限界も本文へ追加した。
+- 投稿前レビュー: 4,255字、必須項目順、`■ 概要` 始まり、`■ URL` 末尾、禁止表現なし。duplicate preflight は `continue`。`tools/slack_client.py` の `post_message` で単一 `chat.postMessage` として投稿した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
