@@ -94,7 +94,64 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md: UTF-8 明示読みで「記憶」「ゲーム設計」「敵パターン」「評価軸」を確認し、validate_memory_index.py で High Signal / Recent / Game Task Entry Points の atom pointer が per-file index と一致することを確認。broken link 0件。"
+  - "memory/atoms.jsonl: 2786 rows。atom id 重複・mirror parse error・index error・content conflict は0件。normalized content 重複は raw 40 groups / 80 rows、recall-visible 3 groups / 6 rowsだが、既存 lifecycle/content fold が40 extra rowsを畳んでおり、effective display unresolved は0件。"
+  - "memory/raw/: 2026-06-29 より前に更新が止まった96 filesを監査。内訳は web_research 88、headless_eval 6、slack_archive 1、sync_state 1。95 data filesはいずれも既存のraw provenance／日付付き収集bundle／既設archiveで、evidence pointerを壊す移動は行わなかった。"
+  - "shared-reads candidate lifecycle dry-run: 1151 files、posted 519 / ready_to_post 9 / postponed 226 / failed 391 / needs_review 6。posted / failed は再評価queueから除外。期限到来は1 candidateだが、既存group deferred leaseがretry_afterまで抑止している。"
+  - "open duplicate sidecarを現在のcandidate frontmatterから再生成し、52 groups（mixed 45 / all_open 7）へ同期。Phase 3でpostedになった July 2026 Devlog group の現在状態を反映した。stale triage 0 rows / group action 0 rows。"
+  - "slack_directives.jsonl 23 rows / slack_broadcasts.jsonl 21 rowsを監査し、pendingはいずれも0件。handled更新は不要。"
+  - "probe lifecycleをvalidate。due-only limit 1は0件のためreceiptなし。ledger invariant error 0件。"
+issues:
+  - id: ISS-CAND-LIFECYCLE-001
+    description: "candidate 3件が top-level status と stale_after を持たず、既存auditでは needs_review と推定されるが、frontmatter正本上はlifecycle queueの対象外になっている。Phase 4aでは内容判断や状態付与を行わず、欠損を記録した。"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/20260721_big_lizard_ai_copilot_postmortem.md; memory/shared_reads_candidates/20260726_reasoning_diversity_collapse_llm_game_play.md; memory/shared_reads_candidates/20260726_savestate_player_reflection_method.md"
+    source_file_status: "3 filesともUTF-8本文は正常。frontmatterのstatus / candidate_status / last_decision / stale_afterが未記録。"
+    display_or_tooling_status: "backfill_shared_reads_candidate_status.py --include-unreviewed のdry-runでは needs_review として可視化されるが、正本frontmatterは未変更。"
+    why_blocks_game_memory: "候補が期限到来してもstale triageへ入らず、ゲーム制作へ移せる知見の再評価導線から漏れる。既存Phase 2/backfill運用で扱えるため新設計は不要。"
+  - id: ISS-ATOM-ENC-001
+    description: "1 atom の「AIエージェント」が raw Slack archiveの時点から replacement character を含み、per-file atomとindexへ同じ破損が伝播している。表示経路だけのmojibakeではない。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492 (source_ts 1776127289.990919); memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8明示読みでも「AIエ��ジェント」。raw sourceとderived atomの双方に同じreplacement characterあり。MEMORY.md本体と gr-1777083728-44d444ab7a はUTF-8正常。"
+    display_or_tooling_status: "none; PowerShell表示経路の問題ではなくsource dataの局所破損。"
+    why_blocks_game_memory: "正しい語「AIエージェント」によるexact recallをこの1 atomだけ取りこぼし得る。局所データ修復の範囲で、新しい階層設計は不要。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 52
+  mixed_group_count: 45
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  suppressed_overdue:
+    - group_key: "joint agent memory and exploration learning via novelty signals"
+      handoff_id: gha-e6d4d4b5a37a0808
+      status: deferred
+      retry_after: "2026-08-20T13:19:04+09:00"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
