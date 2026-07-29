@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-29T15:21:14+09:00",
+  "updated_at": "2026-07-29T17:37:43+09:00",
   "reviewed_source_ts": [
+    "1780427580.639529",
     "1780460352.591189",
     "1785290603.305059",
     "1780465172.284149",
@@ -542,6 +543,47 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-29T17:37:43+09:00",
+      "selected": {
+        "id": "sr-1780427580-a8baf5a4f7",
+        "source_ts": "1780427580.639529",
+        "title": "Best AI Agent Memory Frameworks in 2026: Compared and Ranked",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、memory・agent・operation・evaluation の4優先タグを持つ。8 memory framework の retention／lifecycle 分布、Zep の validity window、Supermemory の expiration が、現在の per-atom lifecycle と次の memory cleanup に新しい判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は8 framework を representational substrate と control policy で比較し、Zep の validity window／invalidate-without-discard、Supermemory の明示 expiration、市場実装に learned control がないという差を整理しているため relevance=3、具体的な lifecycle 選択へ変換できる点で actionability=2 とした。一方、Atlan の enterprise context layer を補完解として置く商業比較記事であり、LongMemEval の Zep 63.8%対Mem0 49.0%は第三者記事由来、Zep P95は自己申告で、同一条件の独立再検証や validity window 単独の ablation がない。15-point差を invalidation方式の因果効果とみなせないため evidence=2 とした。同一Slack投稿の後半 atom sr-1780427580-967d3f2c17 は2026-07-21にすでに review 済みで、append-only contamination、supersedes、probationary、benchmark適用を直接検討した上で reject 済みである。per-atom migration は status／supersedesによるfoldを既に採用し、memory-discard-operation、forget-usage-signal、memory-poisoning-ingest、AMV-L retention/utility probes が同じ lifecycle 判断を覆う。ここで市場比較を別 probe にすると321件の active_probes と期限内pending lease 1件へ重複確認を増やすだけなので、前半 atom の reviewed_source_ts と重複根拠だけを残す。",
+      "existing_review": "sr-1780427580-967d3f2c17 / source_ts 1780427580.664779",
+      "existing_probes": [
+        "probe-20260604-memory-discard-operation-gate",
+        "probe-20260607-forget-usage-signal-gate",
+        "probe-20260517-memory-poisoning-ingest-check",
+        "probe-20260625-amvl-retention-utility-lifecycle"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "同一投稿の前半 atom を reviewed にし、後半 atom の既存 review、per-atom lifecycle、既存4 probe との重複により reject した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-29T15:21:14+09:00",
       "selected": {

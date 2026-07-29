@@ -55,7 +55,35 @@ skipped: []
 - Slack verification: channel `C0AN2FEHEJJ` / ts `1785313966.530869` / verification `ok`。1 回の `chat.postMessage` で投稿し、thread reply は使用していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780427580-a8baf5a4f7
+    source_ts: "1780427580.639529"
+    title: "Best AI Agent Memory Frameworks in 2026: Compared and Ranked"
+    reason: "未レビューの最新 score 10 atom で、memory・agent・operation・evaluation の4優先タグを持つ。8 memory framework の lifecycle 比較が現在の per-atom 記憶へ新しい判断差を作るか確認した。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "合計11で採用条件に届かず、risk_control も必須閾値未満。同一 Slack 投稿の後半 atom はすでに review 済みで、直接適用案も per-atom status／supersedes と既存の discard／forget／poisoning／retention-utility probes が覆う。商業比較記事の第三者 benchmark と自己申告 latency から validity window の因果効果も特定できないため、新規 probe は判断差より確認負荷を増やす。"
+  change:
+    summary: "reviewed_source_ts と、同一投稿後半の既存 review および既存 lifecycle probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
