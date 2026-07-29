@@ -540,9 +540,50 @@
     "1784600238.488659",
     "1784608038.645759",
     "1780427580.664779",
-    "1784664639.140919"
+    "1784664639.140919",
+    "1785313966.530869"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-29T19:50:36+09:00",
+      "selected": {
+        "id": "sr-1785313966-c616bc4b92",
+        "source_ts": "1785313966.530869",
+        "title": "Major Jam VII Postmortem — mechanic-to-subsystem fan-out と二重状態",
+        "reason": "選定時点の atoms.jsonl snapshot で、source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補であり、memory・harness・game-design・operation・evaluation の5優先タグを持つ。短期 prototype の scope を feature 数ではなく、状態正本・projection・入力・遷移・AI・test seam へ展開して見積もる知見が、Codex の次回 playable diff に新しい判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、一週間の game jam で一つの card mechanic が party zone、2D hand、3D board、dice、表裏反転、移動、戦闘、combat stack、animation へ膨張し、巨大 coroutine と複数状態表現が同期不良を招いた経緯を具体化している。締切後に dice を card 表示へ統合し、検索 UI や cut-in phase を削り、安価な draft を残した差分もあるため、mechanic-to-subsystem map、単一正本、局所 test seam、退化戦略 probe へ直接変換でき、relevance と actionability は3とした。一方、根拠は単一作者・一作品の事後回顧で、日別工数、不具合数、paper test／feature freeze／状態統合の前後比較、playtest 指標がなく、148作中4位も各変更の因果効果を示さないため evidence は2に留める。既存の game-scope-brief-cut-gate は scope promise・Must／Should／Cut・最小 risk test を、core-density-before-expansion は追加要素の深掘り／拡張／干渉分類を、feature-integration-depth-gate は crossed runtime contracts と gameplay path を、mechanic-observation-channel-gate は mechanic ごとの観測 channel を既に扱う。本 atom 固有の subsystem fan-out と状態正本表も、既存4 control を同じ playable diff に適用した時の判断を大きく変えず、active_probes 321件と Phase 4a 向け pending lease 1件へ確認負荷を追加する。現 staging には比較可能な prototype brief、mechanic-to-subsystem map、before／after playable artifact がなく、consumer、trigger artifact、期待判断差を lease 契約どおり指定できない。次に短期 prototype で、既存4 control を使っても一 mechanic の hidden subsystem または二重正本を見落とした実例が出た時だけ再評価する。",
+      "existing_probes": [
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260528-core-density-before-expansion",
+        "probe-20260625-feature-integration-depth-gate",
+        "probe-20260603-mechanic-observation-channel-gate"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の scope／core-density／runtime-contract／observation controls との重複および比較可能な playable artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-29T17:37:43+09:00",
       "selected": {

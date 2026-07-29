@@ -60,7 +60,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785313966-c616bc4b92
+    source_ts: "1785313966.530869"
+    title: "Major Jam VII Postmortem — mechanic-to-subsystem fan-out と二重状態"
+    reason: "選定時点の atoms.jsonl snapshot にある未レビューの score 10 候補では最新で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。短期 prototype の scope を feature 数ではなく、状態正本・projection・入力・遷移・AI・test seam へ展開して見積もる知見が、次回 playable diff に新しい判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "単一作品の詳細な postmortem から mechanic-to-subsystem map、単一正本、局所 test seam、退化戦略 probe へ直接変換できる一方、工数・不具合数・変更前後の playtest 比較がなく、変更の因果効果は未検証。既存の game-scope-brief-cut-gate、core-density-before-expansion、feature-integration-depth-gate、mechanic-observation-channel-gate が scope、追加分類、runtime contract、観測 channel を既に覆う。active_probes 321件と Phase 4a 向け pending lease 1件があり、比較可能な prototype brief／subsystem map／before-after playable artifact もないため、同義 control と lease を増やさない。次に既存4 control でも hidden subsystem または二重正本を見落とした実例が出た時だけ再評価する。"
+  change:
+    summary: "reviewed_source_ts と、既存 controls との重複および比較 artifact 不在による reject 理由だけを state に記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
