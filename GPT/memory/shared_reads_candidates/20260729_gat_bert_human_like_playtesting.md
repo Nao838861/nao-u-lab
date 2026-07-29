@@ -7,12 +7,17 @@ genre_tags: [game-ai, automated-playtesting, player-modeling, puzzle-game, graph
 evaluated_at: "2026-07-29T15:05:10+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-29T15:05:10+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-29T15:05:10+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-29T15:15:42.0179344+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785305726753119"
+next_action: none
+posted:
+  ts: "1785305726.753119"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785305726753119"
+  char_count: 4361
+  posted_at: "2026-07-29T15:15:42.0179344+09:00"
 stale_after: "2026-08-28"
 supersedes: []
 gate_reason: >-

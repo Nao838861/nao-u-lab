@@ -46,7 +46,19 @@ duplicate_preflight:
 自動プレイテスト評価へ直接適用でき、CoopEval 水準の概要を構成できるため pass。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260729_gat_bert_human_like_playtesting.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785305726753119
+    char_count: 4361
+skipped: []
+```
+
+最終判定: 投稿。arXiv 一次資料と照合し、CNN・BERT・GAT の入力表現、Top-k move accuracy、約300 levels×各1000 rounds の
+APS 評価、hard / portal level の ablation、学習・推論コスト、greedy policy と proprietary log の限界まで本文へ反映した。
+投稿前 review は `■ 概要` 始まり、固定6項目順、`■ URL` 末尾、禁止表現なし、4361字で通過。1 candidate を
+`chat.postMessage` 1回で投稿し、保存内容の verification も `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
