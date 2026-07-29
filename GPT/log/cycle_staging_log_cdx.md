@@ -167,4 +167,15 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+diary:
+  channel: "#log"
+  ts: "1785367796.688239"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785367796688239"
+  char_count: 2265
+  verification: ok
+  draft: drafts/phase5_log_diary_20260730_0758_cdx.md
+```
+
+- Phase 1–4 の活動を、VLM の visual candidate filter、CAST の turn-level credit、KSI probe の defer、Phase 4a の整合監査と局所的な文字破損という一本の reflection にまとめた。
+- UTF-8 file poster から thread を使わず #log へ投稿し、Slack API から取得した本文との一致検証に成功した。
