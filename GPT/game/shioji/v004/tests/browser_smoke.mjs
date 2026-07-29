@@ -2471,9 +2471,15 @@ async function checkGoodsDetail(width, height, mobile, goods) {
     assert.match(detail.life, /約3日/);
     assert.match(detail.lifeAria, /約3日で傷む/);
   }
+  if (goods === 'veg') {
+    assert.match(detail.fact, /30日ほど持ち/);
+    assert.match(detail.life, /約30日/);
+    assert.match(detail.lifeAria, /約30日で傷む/);
+  }
   fs.mkdirSync(GOODS_DETAIL_SCREENSHOT_DIR, { recursive: true });
   await page.screenshot(goodsDetailScreenshotPath(
-    mobile ? 'goods_detail_mobile_fish.png' : 'goods_detail_pc_tools.png',
+    goods === 'veg' ? 'goods_detail_pc_veg.png'
+      : mobile ? 'goods_detail_mobile_fish.png' : 'goods_detail_pc_tools.png',
   ));
   await page.evaluate("document.querySelector('#goods-detail-back').click()");
   await wait(50);
@@ -2796,6 +2802,14 @@ if (process.argv.includes('--start-choice-only')) {
   console.log(`CHARTER ISLE v004 goods detail smoke: PASS ${JSON.stringify({
     pc: { goods: pc.goods, elements: pc.elements, pricePaths: pc.pricePaths },
     mobile: { goods: mobile.goods, elements: mobile.elements, pricePaths: mobile.pricePaths },
+  })}`);
+} else if (process.argv.includes('--vegetable-detail-only')) {
+  const vegetable = await checkGoodsDetail(1440, 900, false, 'veg');
+  console.log(`CHARTER ISLE v004 vegetable detail smoke: PASS ${JSON.stringify({
+    goods: vegetable.goods,
+    life: vegetable.life.trim(),
+    lifeAria: vegetable.lifeAria,
+    pricePaths: vegetable.pricePaths,
   })}`);
 } else if (process.argv.includes('--save-delivery-only')) {
   await checkSaveDeliveryUi(1440, 900, false);
