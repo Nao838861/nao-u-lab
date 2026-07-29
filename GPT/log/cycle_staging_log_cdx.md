@@ -97,7 +97,74 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index と per-file atom index を照合し、broken link / 欠落 0 件を確認"
+  - "atoms.jsonl / per-file .md / index.jsonl 各 2790 件を照合し、欠落・parse error・content conflict 0 件、duplicate overlay 45 group が最新であることを確認"
+  - "shared-reads の title canonical / mixed / open-group / stale-triage / group-action sidecar を再生成し、terminal group と open group の分離を更新"
+  - "Slack directive / broadcast inbox を監査し、pending 0 件のため status 更新なし"
+issues:
+  - id: ISS-ENC-001
+    description: "active atom 1 件の title / trigger / excerpt に U+FFFD が残り、「AIエージェント」が「AIエ��ジェント」になっている"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory_health mojibake_suspect_atoms"
+    source_file_status: "UTF-8 明示読みでも U+FFFD を確認。gr-1777083728-44d444ab7a は UTF-8 source が正常で health heuristic の false positive"
+    display_or_tooling_status: "none; shell 表示経路ではなく source atom 自体の局所破損"
+    why_blocks_game_memory: "「AIエージェント」での title / excerpt 検索をこの atom に限って弱めるが、1件に限定され、記憶階層の設計変更は不要"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+candidate_lifecycle:
+  total_files: 1156
+  counts:
+    posted: 523
+    ready_to_post: 9
+    postponed: 227
+    failed: 391
+    needs_review: 3
+    skipped_unreviewed: 3
+  missing_stale_after: 6
+  overdue_open_total: 1
+raw_archive_audit:
+  older_than_30_days: 96
+  action: "keep_in_place"
+  reason: "raw provenance として参照される原文であり、今回の監査では重複 archive や安全な移動先を確定できないため自動移動しない"
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 52
+  mixed_group_count: 45
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  suppression_evidence: "JAMEL all-open group は gha-e6d4d4b5a37a0808 の deferred lease が 2026-08-20T13:19:04+09:00 まで有効"
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- `memory/MEMORY.md` は UTF-8 明示読みで `記憶` / `ゲーム設計` / `敵パターン` を取得。
+  `評価軸` の literal match は 0 件だが、他の日本語代表語は正常であり encoding 破損ではない。
+  index 整合性検証も通っているため、source index の再生成・手修復は不要。
+- raw の 30 日超 96 件は、38 件が `memory/raw/web_research/` 直下、13 件が
+  `phase3_pdfs/`、残りも過去の一次資料・評価原文である。Phase 4a では削除・移動しない。
+- candidate dry-run audit は current state の conflict 0 件。`stale_after` が 30 日既定値と
+  異なる 23 件は、後続 decision evidence による明示延長・遷移であり anomaly として
+  巻き戻さない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
