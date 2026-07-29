@@ -47,7 +47,19 @@ evaluation_note: >-
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260729_developing_ethical_games_code.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785336918156559
+    char_count: 4485
+skipped: []
+final_review: >-
+  GDC 2026 の26枚の一次資料を再確認し、player / worker protection の具体条項、
+  voluntary draft で実証評価・監査・trade-off 解決手順が未整備という限界、
+  prototype・telemetry・headless detector・release review への小規模適用を独立分析に含めた。
+  必須項目順、禁止表現、3500-4500字程度、URL末尾を機械検査し、Slack保存本文の文字化け検証も通過した。
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

@@ -7,12 +7,12 @@ genre_tags: [game-design, player-safety, ethics, monetization, accessibility, pr
 evaluated_at: "2026-07-29T23:49:24+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-29T23:49:24+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-29T23:49:24+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-29T23:55:43+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785336918156559"
+next_action: none
 stale_after: "2026-08-28"
 supersedes: []
 gate_reason: >-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Log_cdx の prototype 設計、headless 評価、telemetry 導入、AI participant 表示、release 前 review を横断する倫理チェックリスト"
   pros_cons: "design・運用・組織を同じ地図に置ける点が強み。任意規範で測定基準・trade-off 解決・導入効果の検証がまだない点が弱み"
   verdict_pre: "部分採用"
+posted:
+  ts: "1785336918.156559"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785336918156559"
+  char_count: 4485
+  posted_at: "2026-07-29T23:55:43+09:00"
 ---
 
 ## raw_excerpt
