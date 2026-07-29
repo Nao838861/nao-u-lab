@@ -50,7 +50,21 @@ duplicate_preflight:
   対応が示されており、ゲーム制作への適用を支配戦略・盤面状態・協力 incentive の評価軸まで落とせる。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260729_stars_reach_sandbox_mmo_design.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785329864178069
+    char_count: 4246
+skipped: []
+```
+
+- 80 Level の元記事を再確認し、永続 simulation、回復経路、間接 griefing、
+  規模拡大 risk、classless skill track、soft grouping、段階導入を記事固有の内容として照合した。
+- 最終稿は `■ 概要` から開始し、必須 6 項目の順序、末尾 `■ URL`、禁止表現なし、
+  URL 散在なしを確認。`tools/shared_reads_policy.py` は `ok=True`。
+- 開発者インタビューで定量比較を欠く限界を明示し、完成済み解法ではなく設計仮説として
+  `部分採用` と判定。#shared-reads へ 1 回の `chat.postMessage` で投稿した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
