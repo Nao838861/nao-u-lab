@@ -4,6 +4,26 @@ url: "https://www.pcgamer.com/games/strategy/the-challenges-of-developing-the-co
 collected_at: "2026-07-29T10:48:37+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, simulation, colony-sim, procedural-generation, ai-director, information-design]
+evaluated_at: "2026-07-29T10:54:43+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-29T10:54:43+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-29T10:54:43+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-28"
+supersedes: []
+gate_reason: |-
+  Dwarf Fortress、RimWorld、Maia の開発者証言から、player の権限、Storyteller の監視と incident 生成、complexity budget、内部状態の伝達を一つの設計連鎖として抽出できる。
+  多数の自律 entity を持つ試作で、simulation を増やす前に「読める因果」と pacing を設計する具体的な評価軸へ落とせ、事例差と限界を含む約4000字の概要が成立する。
+suggested_post_outline:
+  overview_angle: "colony sim の深さを subsystem 数ではなく、player の立場、出来事を選ぶ director、複雑性の導入条件、内部状態の伝達という四つの接続で説明する。"
+  analysis_axis: "Dwarf Fortress の命令と自律の境界、RimWorld の story watcher / incident generator、Maia の need 可視化を、simulation が player に読める物語へ変わる条件として比較する。"
+  application_target: "Log_cdx の多数 entity・連鎖 system を持つ prototype で、agency contract、pacing curve、mechanic 導入 gate、状態可視化を設計・自己評価する際に使う。"
+  pros_cons: "利点は複雑性、agency、pacing、information design を別々の小技でなく因果の一本鎖として扱えること。欠点は開発者証言中心で定量比較がなく、三作品の成功条件を別ジャンルへ移す際に規模と UI の差を補正する必要があること。"
+  verdict_pre: "部分採用。simulation の厚みを増やす前に、player が介入できる範囲と内部状態の伝達経路を定義し、director は出来事の生成器ではなく pacing の調整器として限定導入する。"
 ---
 
 ## raw_excerpt

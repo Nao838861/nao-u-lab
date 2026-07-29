@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2606.17164"
 collected_at: "2026-06-26T07:45:27+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, prompting, specification, agent-workflow, requirements]
-evaluated_at: "2026-06-26T07:50:09+09:00"
+evaluated_at: "2026-07-29T10:54:43+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-26T07:50:09+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-26T07:50:09+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-26"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-29T10:54:43+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-29T10:54:43+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-28"
 supersedes: []
 gate_reason: |-
-  ゲーム仕様を機能要求・非機能要求・検証・trace に分ける用途は具体的で、制作プロンプトの整理には使える。
-  ただし候補メモだけでは手法の独自性と評価の中身が薄く、CoopEval 水準の投稿にするには本文確認と比較軸の補強が必要。
+  typed directive で機能要求、非機能要求、検証、trace を分けるゲーム例は具体的だが、既存の要求仕様や構造化 prompt に対する固有の改善を示す比較評価がない。
+  手法の有効性、失敗条件、実測結果を抽出できず、ゲーム appendix の紹介だけでは CoopEval 水準の「残すべき」分析にならないため候補として閉じる。
 ---
 
 ## raw_excerpt
