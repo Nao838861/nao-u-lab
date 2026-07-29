@@ -1,51 +1,71 @@
-# 品目の出会い開示と出会いの一言の実装結果
+# TASK 6 境界の声2種 実装・検証結果
 
 ## 実装
 
-- buildを`v004.39.0-goods-discovery`へ更新した。
-- 需給と取引（買上げ目標・蔵出し）の品目一覧を、島が一度でも扱った品だけに絞った。
-- エレナ開拓とゼロから開拓は0枚で始まり、両一覧に「まだ島に品がありません」だけを表示する。
-- 見本の町は成熟経済として従来どおり18品を表示する。
-- 初保有を表示層で記録し、在庫が0になった後もカードを残す。記録はセーブデータへ保存し、再開後も維持する。
-- 移民の私有食料庫へ自動付与される開拓キットだけでは先行開示せず、島内生産・通常輸入・市場／会社／建物で実際に扱われた時点で開示する。これにより新規開拓の最初の丸太は1枚だけで登場する。
-- 専用台本対象が同日に複数登場した場合は1件のエレナ発話へまとめ、各品の発話済み状態もセーブする。
-- 専用台本のない品は無言でカードだけを追加する。
-- エンジン挙動、常設説明文、`market_network`、エレナの既存機械連結文は変更していない。
+- `4759c7b73 game: add boundary voice state machine`
+  - 食料残日数が14日以上から14日未満へ跨いだ時だけ声1を生成する。
+  - 同じ食料境界の再発話は7日以上空け、待機中の声・跨ぎ基準・最終発話日を通常セーブで往復する。
+  - 魚在庫がある時の塩または木炭の正量から0への跨ぎを別々に検出し、声2を生成する。
+- `5036db4ac game: integrate boundary voices into Elena guidance`
+  - buildを`v004.42.0-boundary-voices`へ更新した。
+  - engine snapshotの観測だけで境界を検出し、経済挙動と`market_network`は変更していない。
+  - 声1・声2をエレナの一言へ優先配信し、書状へは載せず、既存の読了時間後に自動既読とする。
+  - 境界状態を通常セーブへ含め、旧セーブでは現在値を基準に初期化して過去の境界を誤報しない。
 
-## 出会いの一言（全文）
+声1の文面は「状況、残量、原因、間に合う手」の順にした。3〜6月だけ「畑や漁師を建てれば間に合います」とし、7〜2月は建設を提案せず「会社の倉庫から食料を出すか、本土から輸入してください」とする。12〜2月は原因も「冬で畑の生産が止まっています」とする。
 
-1. 塩: 「塩が採れました。魚を保存食に、野菜を漬物に変えられます。」
-2. 木炭: 「木炭ができました。塩と保存食を作るために使います。」
-3. 保存食: 「保存食ができました。魚より長く保存できます。」
-4. 漬物: 「漬物ができました。野菜より長く保存できます。」
-5. 麦: 「麦が採れました。収穫は9月の年1回です。」
-6. 魚: 「魚が獲れました。3日で腐りますが、塩があれば保存食に変えられます。」
-7. 丸太: 「丸太が採れました。木製品と木炭に加工できます。」
-8. 木製品: 「木製品ができました。家の発展と木の荷車に使います。」
+声2は次の固定文面で、塩と木炭を別々に知らせる。
+
+- 塩: 「塩がなくなりました。魚を保存食にできず、獲れた魚は3日で腐ります。」
+- 木炭: 「木炭がなくなりました。魚を燻製にできず、獲れた魚は3日で腐ります。」
+
+## 季節処方のテスト固定
+
+`tests/run.mjs`で春開始の実効暦12か月をすべて検査する。3・4・5・6月は建設処方だけ、7月から翌2月は蔵出し・本土輸入処方だけが現れ、相手側の語が混ざらないことを固定した。12・1・2月は冬の生産停止原因も検査する。
+
+境界関連5件では、14日境界の跨ぎ、7日間隔、全12か月の処方、塩・木炭の別発火、魚なし時の抑止、セーブ往復、一言の器と自動既読対象を検査している。
 
 ## 実Chrome検証
 
-Google Chromeの隔離プロファイル、現在worktree専用のローカルサーバー、既設CDPスモークを使い、desktop（1440×900）とmobile（390×844）を確認した。
+2026-07-29、Google Chrome 150.0.7871.125本体をCDPポート9226、1440×900で操作し、作業ツリーを`http://127.0.0.1:8438/GPT/game/shioji/v004/`から読み込んだ。
 
-- 実行: `SHIOJI_URL=http://localhost:8437/game/shioji/v004/ node tests/browser_smoke.mjs --goods-discovery-only`
-- 結果: `CHARTER ISLE v004 goods discovery smoke: PASS`
-- エレナ開拓の新規開始: 需給0枚、「まだ島に品がありません」を確認。
-- ゼロから開拓の新規開始: 需給0枚・取引0行、同じ空表示を確認。
-- 見本の町の新規開始: 需給18枚・取引18行を確認。
-- エレナ開拓で道と木こりを実配置し、25日目に丸太を初生産した時点で、需給が丸太1枚だけになり、エレナが「丸太が採れました。木製品と木炭に加工できます。」と発話することを確認。
-- スクリーンショット: `GPT/game/shioji/v004/tests/artifacts/goods_discovery_first_log.png`（1440×900、SHA-256 `9dd918cf7918cf07ddbaed70e36858050ebbdcae80d7ee245698e8fc9687af60`）
+実行:
+
+```bash
+SHIOJI_CDP=http://127.0.0.1:9226 \
+SHIOJI_URL=http://127.0.0.1:8438/GPT/game/shioji/v004/ \
+SHIOJI_BOUNDARY_SCREENSHOT_DIR=tests/artifacts \
+node tests/browser_smoke.mjs --boundary-voices-only
+```
+
+結果:
+
+```text
+CHARTER ISLE v004 boundary voices smoke: PASS
+```
+
+実Chrome内で次を再現・確認した。
+
+- 声1: 食料150荷・人口10人から139荷へ下げ、14日分以上から13日分への跨ぎで一度だけ発火した。春・3月の処方は「畑や漁師を建てれば間に合います」となった。
+- 声2（塩）: 魚4荷がある状態で塩2荷から0荷へ跨がせ、保存食不能と3日腐敗の一言を発火した。
+- 声2（木炭）: 魚4荷がある状態で木炭2荷から0荷へ跨がせ、燻製不能と3日腐敗の一言を発火した。
+- 3件とも書状ボタンを表示せず、書状modalを開かず、一言の読了時間後に待機列から自動で消えた。
+- runtime errorは0件だった。
+- 表示アニメーション完了と不透明度1を待ってから画像を保存し、3枚を原寸で目視して文面の欠け・重なりがないことを確認した。
+
+証拠画像:
+
+- `GPT/game/shioji/v004/tests/artifacts/boundary_voice_food_spring.png`（1440×900、SHA-256 `82388b749a70a01aa2e2b044fc8c35ad768726dc5a298c1692a28a20f8fd5adb`）
+- `GPT/game/shioji/v004/tests/artifacts/boundary_voice_salt.png`（1440×900、SHA-256 `17d828620eb1274afe876b51e098f6d381d682ab99ef8f6daf8e805c0d41e29f`）
+- `GPT/game/shioji/v004/tests/artifacts/boundary_voice_charcoal.png`（1440×900、SHA-256 `90d10905bcdeeadc3d0bda675c6f991bf3f7977032fc196ced9010b9cf31b748`）
 
 ## テスト
 
-- `node tests/run.mjs --match '品目の出会い'`: PASS（2件）
-- `node tests/acceptance.mjs`: PASS（全章受け入れ、UI全8操作150日後とjournal再生が一致）
-- `node tests/browser_smoke.mjs --goods-discovery-only`: PASS（新規開始3モード + 初丸太の実Chrome確認）
-- `node tests/run.mjs`: 今回の新規テストを含む箇所まで実行し、既知のmaster不整合で停止。
-- `npm run test:unit`: 既知のmaster不整合で先頭停止。
-- `node tests/browser_smoke.mjs`: 品目開示に関係する新規開始・初丸太・需給・取引を通過後、既知の教程進行不整合で停止。
+- `node tests/run.mjs --match '境界の声'`: PASS（5件）
+- `node tests/browser_smoke.mjs --boundary-voices-only`: PASS（実Chrome、声1・塩・木炭、自動既読、runtime error 0）
+- `node tests/acceptance.mjs`: PASS（全章受け入れ、UI全8操作150日後とjournal再生が完全一致）
+- `npm run test:focused -- '表示snapshot'`（engine）: PASS（1件）
+- `node tests/run.mjs`: PASS（全111件、366.81秒）
+- `node tests/food_delivery_save.mjs`: 既知不整合「運搬枠をまず食料に使う」で停止（期待6荷、現行実測3荷）。TASK 5時点と同じ先頭不整合で、TASK 6が変更していないengineの購入・運搬挙動に属する。
 
-既知のmaster不整合:
-
-- `tests/food_delivery_save.mjs`: 食料優先購入の期待6荷に対して現行エンジン実測3荷。
-- `tests/run.mjs`の`UI向上段9`: 既定グラフ期待3件に対して現行HTMLは4件。
-- `tests/browser_smoke.mjs`の教程書状進行: 83日目に注文完了を期待する箇所で、現行実測は木製品注文が32.1荷残って進行中。
+開始時から存在した`Claude/memory_backup/mir/.backup_info`と`memory_backup/mir/.backup_info`の差分は、本タスクのコミットへ含めない。

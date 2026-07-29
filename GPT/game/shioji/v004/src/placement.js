@@ -1,5 +1,5 @@
-import { BUILDING_SIZES } from './config.js?v=v004.39.0-goods-discovery';
-import { islandCalendar } from './ui_summary.js?v=v004.39.0-goods-discovery';
+import { BUILDING_SIZES } from './config.js?v=v004.42.0-boundary-voices';
+import { islandCalendar } from './ui_summary.js?v=v004.42.0-boundary-voices';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

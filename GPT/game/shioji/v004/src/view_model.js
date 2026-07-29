@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.39.0-goods-discovery';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.42.0-boundary-voices';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.39.0-goods-discovery';
+} from './food_readability.js?v=v004.42.0-boundary-voices';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.39.0-goods-discovery';
-import { analyzeRoadConnections } from './placement.js?v=v004.39.0-goods-discovery';
+} from './engine_bridge.js?v=v004.42.0-boundary-voices';
+import { analyzeRoadConnections } from './placement.js?v=v004.42.0-boundary-voices';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.39.0-goods-discovery';
+} from './render_scene.js?v=v004.42.0-boundary-voices';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.39.0-goods-discovery';
+} from './visuals.js?v=v004.42.0-boundary-voices';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
@@ -1465,6 +1465,7 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
     companyReleasePrices,
     companyStockReleaseQuotes,
     spoilTotal: snapshot.economy.spoil ?? 0,
+    spoilByGoods: { ...(snapshot.economy.spoilByGoods ?? {}) },
     conversionEconomics,
     stockTargets: { ...snapshot.economy.stockTgt },
     mainlandAid: (() => {

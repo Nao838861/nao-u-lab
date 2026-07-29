@@ -15,6 +15,8 @@ export function createSavePayload({
   inputJournal = [],
   tutorialState = null,
   goodsDiscovery = null,
+  seasonalEvents = null,
+  boundaryEvents = null,
   economyHistory = [],
   savedAt = new Date().toISOString(),
 }) {
@@ -43,6 +45,8 @@ export function createSavePayload({
     inputJournal,
     tutorialState,
     goodsDiscovery,
+    seasonalEvents,
+    boundaryEvents,
     economyHistory,
   });
 }
@@ -66,6 +70,14 @@ export function validateSavePayload(value) {
   if (value.goodsDiscovery !== undefined && value.goodsDiscovery !== null
     && typeof value.goodsDiscovery !== 'object') {
     throw new Error('品目の出会い記録が壊れています');
+  }
+  if (value.seasonalEvents !== undefined && value.seasonalEvents !== null
+    && typeof value.seasonalEvents !== 'object') {
+    throw new Error('季節事件記録が壊れています');
+  }
+  if (value.boundaryEvents !== undefined && value.boundaryEvents !== null
+    && typeof value.boundaryEvents !== 'object') {
+    throw new Error('境界事件記録が壊れています');
   }
   return clone(value);
 }

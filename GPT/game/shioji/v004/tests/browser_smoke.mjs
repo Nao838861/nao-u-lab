@@ -14,6 +14,10 @@ const gameForMode = mode => {
 const GAME = gameForMode('test');
 const SEASON_SCREENSHOT_DIR = process.env.SHIOJI_SEASON_SCREENSHOT_DIR ?? '/tmp';
 const seasonScreenshotPath = filename => path.join(SEASON_SCREENSHOT_DIR, filename);
+const GOODS_DETAIL_SCREENSHOT_DIR = process.env.SHIOJI_GOODS_DETAIL_SCREENSHOT_DIR ?? '/tmp';
+const goodsDetailScreenshotPath = filename => path.join(GOODS_DETAIL_SCREENSHOT_DIR, filename);
+const BOUNDARY_SCREENSHOT_DIR = process.env.SHIOJI_BOUNDARY_SCREENSHOT_DIR ?? '/tmp';
+const boundaryScreenshotPath = filename => path.join(BOUNDARY_SCREENSHOT_DIR, filename);
 const wait = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
 
 class Page {
@@ -133,6 +137,20 @@ async function newPage(width, height, mobile, url = GAME) {
     }
   }
   throw new Error(`v004 did not load: ${page.errors.join(' | ') || 'no runtime error reported'}`);
+}
+
+async function waitForBrowserValue(page, expression, {
+  timeoutMs = 60_000,
+  intervalMs = 100,
+  description = 'browser condition',
+} = {}) {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    const value = await page.evaluate(expression);
+    if (value) return value;
+    await wait(intervalMs);
+  }
+  throw new Error(`${description} did not become ready within ${timeoutMs}ms`);
 }
 
 async function pressKey(page, key, code, modifiers = 0) {
@@ -1130,7 +1148,7 @@ async function checkSeasonalPlots(width, height, mobile) {
       plots: plots.map(row => row.type),
     };
   })()`);
-  assert.equal(springStart.version, 'v004.39.0-goods-discovery', JSON.stringify(springStart));
+  assert.equal(springStart.version, 'v004.42.0-boundary-voices', JSON.stringify(springStart));
   assert.equal(springStart.season, '春', JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => ['wheat', 'veg'].includes(type)), JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => type === 'shepherd'), JSON.stringify(springStart));
@@ -1204,6 +1222,201 @@ async function checkSeasonalPlots(width, height, mobile) {
   ));
   assert.deepEqual(page.errors, []);
   await page.close();
+}
+
+async function checkSeasonalEvents(width = 1440, height = 900, mobile = false) {
+  fs.mkdirSync(SEASON_SCREENSHOT_DIR, { recursive: true });
+  const page = await newPage(width, height, mobile);
+  await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.setSpeed(0);
+    const targetDay = 271;
+    game.advanceTicks(Math.max(0, targetDay * 30 - game.model.tick), { animate: false });
+    game.renderer.render(game.displayModel, 0);
+    return game.model.day;
+  })()`);
+  const firstSnow = await waitForBrowserValue(page, `(() => {
+    const game = window.__SHIOJI_V004__;
+    const speech = document.querySelector('#secretary-speech').textContent;
+    if (!speech.includes('初雪です。')) return null;
+    return {
+      day: game.model.day,
+      season: game.renderer.season,
+      speech,
+      route: game.secretaryRoute,
+      seasonHud: document.querySelector('#season-value').textContent,
+      defaultGraphs: [...document.querySelectorAll('#economy-charts > figure:not([hidden])')]
+        .map(figure => figure.dataset.chart),
+    };
+  })()`, { description: 'first-snow speech' });
+  assert.equal(firstSnow.day, 271, JSON.stringify(firstSnow));
+  assert.equal(firstSnow.season, '冬', JSON.stringify(firstSnow));
+  assert.match(firstSnow.seasonHud, /冬・12月/, JSON.stringify(firstSnow));
+  assert.equal(firstSnow.route.target.kind, 'seasonal-event', JSON.stringify(firstSnow));
+  assert.match(firstSnow.speech, /魚は1日20荷から5荷/, JSON.stringify(firstSnow));
+  assert.deepEqual(firstSnow.defaultGraphs, ['food-stock', 'population', 'finance'],
+    JSON.stringify(firstSnow));
+  await page.screenshot(seasonScreenshotPath('season_event_first_snow.png'));
+
+  const firstSpoilage = await waitForBrowserValue(page, `(() => {
+    const game = window.__SHIOJI_V004__;
+    const state = game.seasonalEventState;
+    return state.announcedSpoilage.includes('fish')
+      && state.announcedSpoilage.includes('veg')
+      ? {
+        announcedSpoilage: state.announcedSpoilage,
+        spoilByGoods: game.model.spoilByGoods,
+      }
+      : null;
+  })()`, { timeoutMs: 90_000, description: 'first-spoilage speeches' });
+  assert.ok(firstSpoilage.spoilByGoods.fish > 0, JSON.stringify(firstSpoilage));
+  assert.ok(firstSpoilage.spoilByGoods.veg > 0, JSON.stringify(firstSpoilage));
+
+  await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    const targetDay = 361;
+    game.advanceTicks(Math.max(0, targetDay * 30 - game.model.tick), { animate: false });
+    game.renderer.render(game.displayModel, 0);
+    return game.model.day;
+  })()`);
+  const thaw = await waitForBrowserValue(page, `(() => {
+    const game = window.__SHIOJI_V004__;
+    const speech = document.querySelector('#secretary-speech').textContent;
+    if (!speech.includes('雪が解けました。')) return null;
+    return {
+      day: game.model.day,
+      season: game.renderer.season,
+      speech,
+      route: game.secretaryRoute,
+      seasonHud: document.querySelector('#season-value').textContent,
+    };
+  })()`, { description: 'thaw speech' });
+  assert.equal(thaw.day, 361, JSON.stringify(thaw));
+  assert.equal(thaw.season, '春', JSON.stringify(thaw));
+  assert.match(thaw.seasonHud, /春・3月/, JSON.stringify(thaw));
+  assert.equal(thaw.route.target.kind, 'seasonal-event', JSON.stringify(thaw));
+  assert.match(thaw.speech, /畑が動き始めます/, JSON.stringify(thaw));
+  await page.screenshot(seasonScreenshotPath('season_event_thaw.png'));
+
+  assert.deepEqual(page.errors, []);
+  await page.close();
+  return { firstSnow, thaw, firstSpoilage };
+}
+
+async function checkBoundaryVoices(width = 1440, height = 900, mobile = false) {
+  fs.mkdirSync(BOUNDARY_SCREENSHOT_DIR, { recursive: true });
+  const page = await newPage(width, height, mobile, GAME);
+  const setup = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    const observation = ({ day, food, fish = 4, salt = 2, char = 2 }) => ({
+      day,
+      calendarOffsetDays: 60,
+      population: 10,
+      households: [{
+        members: Array.from({ length: 10 }, (_, index) => ({ id: index + 1 })),
+        pantry: [{ goods: 'wheat', amount: food }],
+      }],
+      stalls: [],
+      companyMarketStock: {},
+      companyStock: {},
+      flowEma: { wheat: { prod: 2, imp: 0.5, cons: 4 } },
+      goodsManifest: [
+        { goods: 'fish', totalAmount: fish },
+        { goods: 'salt', totalAmount: salt },
+        { goods: 'char', totalAmount: char },
+      ],
+    });
+    window.__boundaryObservation = observation;
+    game.setSpeed(0);
+    game.boundaryEvents.observe(observation({ day: 1, food: 150 }));
+    game.boundaryEvents.observe(observation({ day: 2, food: 139 }));
+    game.setSpeed(0);
+    return {
+      speech: document.querySelector('#secretary-speech').textContent,
+      route: game.secretaryRoute,
+      pending: game.boundaryEventState.pending.map(row => row.type),
+      letterHidden: document.querySelector('#secretary-letter-action').hidden,
+      modalHidden: document.querySelector('#tutorial-letter-modal').hidden,
+    };
+  })()`);
+  assert.equal(setup.route.priority, 'food-boundary', JSON.stringify(setup));
+  assert.equal(setup.route.target.kind, 'boundary-event', JSON.stringify(setup));
+  assert.match(setup.speech, /14日分を下回りました.*残り13日分/s, JSON.stringify(setup));
+  assert.match(setup.speech, /畑や漁師を建てれば間に合います/s, JSON.stringify(setup));
+  assert.equal(setup.letterHidden, true, JSON.stringify(setup));
+  assert.equal(setup.modalHidden, true, JSON.stringify(setup));
+  await waitForBrowserValue(page, `(() => {
+    const panel = document.querySelector('#secretary');
+    return !panel.classList.contains('guidance-entering')
+      && !panel.classList.contains('guidance-switching')
+      && Number.parseFloat(getComputedStyle(panel).opacity) >= 0.99;
+  })()`, { timeoutMs: 2_000, description: 'food boundary speech fully visible' });
+  await page.screenshot(boundaryScreenshotPath('boundary_voice_food_spring.png'));
+
+  await waitForBrowserValue(page, `(() => (
+    !window.__SHIOJI_V004__.boundaryEventState.pending.some(row => row.type === 'food')
+  ))()`, { timeoutMs: 15_000, description: 'food boundary auto-read' });
+  const salt = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.boundaryEvents.observe(window.__boundaryObservation({
+      day: 3, food: 139, salt: 0, char: 2,
+    }));
+    game.setSpeed(0);
+    return {
+      speech: document.querySelector('#secretary-speech').textContent,
+      route: game.secretaryRoute,
+      pending: game.boundaryEventState.pending.map(row => row.type),
+      letterHidden: document.querySelector('#secretary-letter-action').hidden,
+      modalHidden: document.querySelector('#tutorial-letter-modal').hidden,
+    };
+  })()`);
+  assert.equal(salt.route.priority, 'preservation-stop', JSON.stringify(salt));
+  assert.match(salt.speech, /塩がなくなりました.*魚を保存食にできず.*3日で腐ります/s,
+    JSON.stringify(salt));
+  assert.equal(salt.letterHidden, true, JSON.stringify(salt));
+  assert.equal(salt.modalHidden, true, JSON.stringify(salt));
+  await waitForBrowserValue(page, `(() => {
+    const panel = document.querySelector('#secretary');
+    return !panel.classList.contains('guidance-entering')
+      && Number.parseFloat(getComputedStyle(panel).opacity) >= 0.99;
+  })()`, { timeoutMs: 2_000, description: 'salt boundary speech fully visible' });
+  await page.screenshot(boundaryScreenshotPath('boundary_voice_salt.png'));
+
+  await waitForBrowserValue(page, `(() => (
+    !window.__SHIOJI_V004__.boundaryEventState.pending.some(row => row.type === 'salt')
+  ))()`, { timeoutMs: 15_000, description: 'salt boundary auto-read' });
+  const charcoal = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.boundaryEvents.observe(window.__boundaryObservation({
+      day: 4, food: 139, salt: 0, char: 0,
+    }));
+    game.setSpeed(0);
+    return {
+      speech: document.querySelector('#secretary-speech').textContent,
+      route: game.secretaryRoute,
+      pending: game.boundaryEventState.pending.map(row => row.type),
+      letterHidden: document.querySelector('#secretary-letter-action').hidden,
+      modalHidden: document.querySelector('#tutorial-letter-modal').hidden,
+    };
+  })()`);
+  assert.equal(charcoal.route.priority, 'preservation-stop', JSON.stringify(charcoal));
+  assert.match(charcoal.speech, /木炭がなくなりました.*魚を燻製にできず.*3日で腐ります/s,
+    JSON.stringify(charcoal));
+  assert.equal(charcoal.letterHidden, true, JSON.stringify(charcoal));
+  assert.equal(charcoal.modalHidden, true, JSON.stringify(charcoal));
+  await waitForBrowserValue(page, `(() => {
+    const panel = document.querySelector('#secretary');
+    return !panel.classList.contains('guidance-entering')
+      && Number.parseFloat(getComputedStyle(panel).opacity) >= 0.99;
+  })()`, { timeoutMs: 2_000, description: 'charcoal boundary speech fully visible' });
+  await page.screenshot(boundaryScreenshotPath('boundary_voice_charcoal.png'));
+  await waitForBrowserValue(page, `(() => (
+    !window.__SHIOJI_V004__.boundaryEventState.pending.some(row => row.type === 'char')
+  ))()`, { timeoutMs: 15_000, description: 'charcoal boundary auto-read' });
+
+  assert.deepEqual(page.errors, []);
+  await page.close();
+  return { food: setup.speech, salt: salt.speech, charcoal: charcoal.speech };
 }
 
 async function checkPeopleVisuals(width, height, mobile) {
@@ -1321,8 +1534,8 @@ async function checkPeopleVisuals(width, height, mobile) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.39.0-goods-discovery');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.39.0-goods-discovery');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.42.0-boundary-voices');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.42.0-boundary-voices');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -1671,19 +1884,48 @@ async function checkViewport(width, height, mobile) {
     assert.ok(supply.box.top >= 0 && supply.box.bottom <= height, JSON.stringify(supply));
     await page.screenshot('/tmp/shioji_v004_supply_sheet.png');
 
-    const island = await page.evaluate(`(() => {
+    const detail = await page.evaluate(`(() => {
       document.querySelector('[data-supply-goods="tools"]').click();
-      const sheet = document.querySelector('#island-sheet');
+      const sheet = document.querySelector('#goods-detail-sheet');
       const box = sheet.getBoundingClientRect();
-      const defaultCharts = [...document.querySelectorAll('#economy-charts > figure:not(#price-chart-panel)')];
       return {
         hidden: sheet.hidden,
         supplyHidden: document.querySelector('#supply-sheet').hidden,
-        defaultCharts: defaultCharts.length,
-        priceVisible: !document.querySelector('#price-chart-panel').hidden,
-        priceTitle: document.querySelector('#price-chart-title').textContent,
-        endLabels: document.querySelectorAll('.chart-end-label').length,
-        referenceLines: document.querySelectorAll('.chart-line.reference').length,
+        title: document.querySelector('#goods-detail-title').textContent,
+        elements: document.querySelectorAll('#goods-detail-content [data-detail-element]').length,
+        artGoods: document.querySelector('.goods-detail-art [data-goods-sprite]')?.dataset.goodsSprite,
+        factText: document.querySelector('[data-detail-element="fact"]').textContent,
+        shelfText: document.querySelector('[data-detail-element="shelf-life"]').textContent,
+        recipeText: document.querySelector('[data-detail-element="recipe"]').textContent,
+        priceChart: Boolean(document.querySelector('[data-detail-element="price-chart"] #price-chart')),
+        endLabels: document.querySelectorAll('#goods-detail-sheet .chart-end-label').length,
+        referenceLines: document.querySelectorAll('#goods-detail-sheet .chart-line.reference').length,
+        overflowsX: sheet.scrollWidth > sheet.clientWidth + 1,
+        box: { left: box.left, right: box.right, top: box.top, bottom: box.bottom },
+      };
+    })()`);
+    assert.equal(detail.hidden, false, JSON.stringify(detail));
+    assert.equal(detail.supplyHidden, true, JSON.stringify(detail));
+    assert.equal(detail.title, '木製品', JSON.stringify(detail));
+    assert.equal(detail.elements, 5, JSON.stringify(detail));
+    assert.equal(detail.artGoods, 'tools', JSON.stringify(detail));
+    assert.match(detail.factText, /家の発展と木の荷車/);
+    assert.match(detail.shelfText, /腐りません/);
+    assert.match(detail.recipeText, /丸太.*木製品/s);
+    assert.equal(detail.priceChart, true, JSON.stringify(detail));
+    assert.ok(detail.endLabels >= 2 && detail.referenceLines >= 1, JSON.stringify(detail));
+    assert.equal(detail.overflowsX, false, JSON.stringify(detail));
+    assert.ok(detail.box.left >= 0 && detail.box.right <= width, JSON.stringify(detail));
+    assert.ok(detail.box.top >= 0 && detail.box.bottom <= height, JSON.stringify(detail));
+    await page.screenshot('/tmp/shioji_v004_goods_detail.png');
+
+    const island = await page.evaluate(`(() => {
+      document.querySelector('#open-island').click();
+      const sheet = document.querySelector('#island-sheet');
+      const box = sheet.getBoundingClientRect();
+      return {
+        hidden: sheet.hidden,
+        defaultCharts: document.querySelectorAll('#economy-charts > figure').length,
         legacyLocations: document.querySelectorAll('[data-stock-location]').length,
         financeText: document.querySelector('#island-finance').textContent,
         healthText: document.querySelector('#island-health').textContent,
@@ -1692,11 +1934,7 @@ async function checkViewport(width, height, mobile) {
       };
     })()`);
     assert.equal(island.hidden, false, JSON.stringify(island));
-    assert.equal(island.supplyHidden, true, JSON.stringify(island));
     assert.equal(island.defaultCharts, 3, JSON.stringify(island));
-    assert.equal(island.priceVisible, true, JSON.stringify(island));
-    assert.match(island.priceTitle, /木製品の相場/);
-    assert.ok(island.endLabels >= 8 && island.referenceLines >= 4, JSON.stringify(island));
     assert.equal(island.legacyLocations, 0, JSON.stringify(island));
     assert.match(island.financeText, /現在資金.*入金.*支出.*差引/s);
     assert.match(island.healthText, /人口.*会社の30日差引/s);
@@ -2110,6 +2348,98 @@ async function checkViewport(width, height, mobile) {
   await page.close();
 }
 
+async function checkGoodsDetail(width, height, mobile, goods) {
+  const page = await newPage(width, height, mobile);
+  await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.setSpeed(0);
+    for (let day = 0; day < 30; day += 1) game.advanceTicks(30, { animate: false });
+    document.querySelector('#open-supply').click();
+  })()`);
+  const rowPoint = await page.evaluate(`(() => {
+    const row = document.querySelector(${JSON.stringify(`[data-supply-goods="${goods}"]`)});
+    const box = row.getBoundingClientRect();
+    return {
+      x: box.left + box.width / 2,
+      y: box.top + box.height / 2,
+      tag: row.tagName,
+      directButtons: row.querySelectorAll('button').length,
+    };
+  })()`);
+  assert.equal(rowPoint.tag, 'BUTTON', JSON.stringify(rowPoint));
+  assert.equal(rowPoint.directButtons, 0, '品目行の中に押し分けボタンを置かない');
+  await page.send('Input.dispatchMouseEvent', {
+    type: 'mousePressed', x: rowPoint.x, y: rowPoint.y,
+    button: 'left', buttons: 1, clickCount: 1,
+  });
+  await page.send('Input.dispatchMouseEvent', {
+    type: 'mouseReleased', x: rowPoint.x, y: rowPoint.y,
+    button: 'left', buttons: 0, clickCount: 1,
+  });
+  const detail = await page.evaluate(`(() => {
+    const sheet = document.querySelector('#goods-detail-sheet');
+    const box = sheet.getBoundingClientRect();
+    const content = document.querySelector('#goods-detail-content');
+    return {
+      hidden: sheet.hidden,
+      supplyHidden: document.querySelector('#supply-sheet').hidden,
+      goods: content.dataset.goods,
+      elements: content.querySelectorAll('[data-detail-element]').length,
+      art: content.querySelector('.goods-detail-art [data-goods-sprite]')?.dataset.goodsSprite,
+      fact: content.querySelector('[data-detail-element="fact"]').textContent,
+      life: content.querySelector('[data-detail-element="shelf-life"]').textContent,
+      lifeAria: content.querySelector('.shelf-life-art').getAttribute('aria-label'),
+      recipe: content.querySelector('[data-detail-element="recipe"]').textContent,
+      recipeAria: content.querySelector('.goods-formula').getAttribute('aria-label'),
+      priceChart: Boolean(content.querySelector('[data-detail-element="price-chart"] #price-chart')),
+      pricePaths: content.querySelectorAll('#price-chart .chart-line').length,
+      horizontalOverflow: sheet.scrollWidth > sheet.clientWidth + 1,
+      pageHorizontalOverflow: document.documentElement.scrollWidth > innerWidth,
+      box: { left: box.left, right: box.right, top: box.top, bottom: box.bottom },
+    };
+  })()`);
+  assert.equal(detail.hidden, false, JSON.stringify(detail));
+  assert.equal(detail.supplyHidden, true, JSON.stringify(detail));
+  assert.equal(detail.goods, goods, JSON.stringify(detail));
+  assert.equal(detail.elements, 5, JSON.stringify(detail));
+  assert.equal(detail.art, goods, JSON.stringify(detail));
+  assert.equal(detail.priceChart, true, JSON.stringify(detail));
+  assert.ok(detail.pricePaths >= 2, JSON.stringify(detail));
+  assert.equal(detail.horizontalOverflow, false, JSON.stringify(detail));
+  assert.equal(detail.pageHorizontalOverflow, false, JSON.stringify(detail));
+  assert.ok(detail.box.left >= 0 && detail.box.right <= width, JSON.stringify(detail));
+  assert.ok(detail.box.top >= 0 && detail.box.bottom <= height, JSON.stringify(detail));
+  if (goods === 'tools') {
+    assert.match(detail.fact, /家の発展と木の荷車/);
+    assert.match(detail.life, /腐りません/);
+    assert.match(detail.recipeAria, /丸太.*木工房.*木製品/);
+  }
+  if (goods === 'fish') {
+    assert.match(detail.fact, /3日で腐ります/);
+    assert.match(detail.life, /約3日/);
+    assert.match(detail.lifeAria, /約3日で傷む/);
+  }
+  fs.mkdirSync(GOODS_DETAIL_SCREENSHOT_DIR, { recursive: true });
+  await page.screenshot(goodsDetailScreenshotPath(
+    mobile ? 'goods_detail_mobile_fish.png' : 'goods_detail_pc_tools.png',
+  ));
+  await page.evaluate("document.querySelector('#goods-detail-back').click()");
+  await wait(50);
+  const returned = await page.evaluate(`({
+    supplyVisible: !document.querySelector('#supply-sheet').hidden,
+    detailHidden: document.querySelector('#goods-detail-sheet').hidden,
+    focusedGoods: document.activeElement?.dataset?.supplyGoods ?? null,
+  })`);
+  assert.deepEqual(returned, {
+    supplyVisible: true,
+    detailHidden: true,
+    focusedGoods: goods,
+  });
+  assert.deepEqual(page.errors, []);
+  await page.close();
+  return detail;
+}
+
 async function checkSpatialProductivity(width = 1440, height = 900, mobile = false) {
   const page = await newPage(width, height, mobile, GAME);
   const building = await page.evaluate(`(() => {
@@ -2145,7 +2475,7 @@ async function checkSpatialProductivity(width = 1440, height = 900, mobile = fal
   })()`);
   assert.ok(building && !building.missing,
     `資源職の30日実測を建物画面へ表示できる: ${JSON.stringify(building)}`);
-  assert.equal(building.version, 'v004.39.0-goods-discovery');
+  assert.equal(building.version, 'v004.42.0-boundary-voices');
   assert.ok(Number.isFinite(building.efficiency), JSON.stringify(building));
   assert.ok(Number.isFinite(building.resourceEfficiency), JSON.stringify(building));
   assert.equal(building.withinViewport, true, JSON.stringify(building));
@@ -2337,7 +2667,7 @@ async function checkMarketRhythmUi(width = 1440, height = 900, mobile = false) {
       hidden: sheet.hidden,
     };
   })()`);
-  assert.equal(result.version, 'v004.39.0-goods-discovery', JSON.stringify(result));
+  assert.equal(result.version, 'v004.42.0-boundary-voices', JSON.stringify(result));
   assert.equal(result.hidden, false, JSON.stringify(result));
   assert.match(result.label, /出荷をまとめ中 1\/2日/, JSON.stringify(result));
   assert.match(result.detail, /食料切れと生産停止は待ちません/, JSON.stringify(result));
@@ -2387,12 +2717,25 @@ if (process.argv.includes('--start-choice-only')) {
   await checkSeasonalPlots(1440, 900, false);
   await checkSeasonalPlots(390, 844, true);
   console.log('CHARTER ISLE v004 seasonal plots smoke: PASS');
+} else if (process.argv.includes('--seasonal-events-only')) {
+  const result = await checkSeasonalEvents();
+  console.log(`CHARTER ISLE v004 seasonal events smoke: PASS ${JSON.stringify(result)}`);
+} else if (process.argv.includes('--boundary-voices-only')) {
+  const result = await checkBoundaryVoices();
+  console.log(`CHARTER ISLE v004 boundary voices smoke: PASS ${JSON.stringify(result)}`);
 } else if (process.argv.includes('--goods-discovery-only')) {
   await checkStartChoice(1440, 900, false, 'tutorial');
   await checkStartChoice(390, 844, true, 'sandbox');
   await checkStartChoice(800, 700, false, 'test');
   await checkGoodsDiscovery();
   console.log('CHARTER ISLE v004 goods discovery smoke: PASS');
+} else if (process.argv.includes('--goods-detail-only')) {
+  const pc = await checkGoodsDetail(1440, 900, false, 'tools');
+  const mobile = await checkGoodsDetail(390, 844, true, 'fish');
+  console.log(`CHARTER ISLE v004 goods detail smoke: PASS ${JSON.stringify({
+    pc: { goods: pc.goods, elements: pc.elements, pricePaths: pc.pricePaths },
+    mobile: { goods: mobile.goods, elements: mobile.elements, pricePaths: mobile.pricePaths },
+  })}`);
 } else if (process.argv.includes('--save-delivery-only')) {
   await checkSaveDeliveryUi(1440, 900, false);
   await checkSaveDeliveryUi(390, 844, true);

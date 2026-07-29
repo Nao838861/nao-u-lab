@@ -151,7 +151,7 @@ export function tutorialSpeedAfterObjectiveChange({
 
 export function secretaryRouteFor({
   letters = [], messages = [], advice = [], handoff = null, objective = null, objectiveAction = null,
-  discovery = null, events = [], fallback = null,
+  discovery = null, incident = null, boundary = null, events = [], fallback = null,
 } = {}) {
   const deliveryOf = letter => letter.delivery
     ?? (letter.attention === 'critical' ? 'forced' : 'letter');
@@ -170,6 +170,18 @@ export function secretaryRouteFor({
       detail: forcedLetter.summary,
     };
   }
+  if (boundary && String(boundary.speech ?? '').trim()) {
+    const food = boundary.type === 'food';
+    return {
+      priority: food ? 'food-boundary' : 'preservation-stop',
+      tier: 'notice',
+      target: { kind: 'boundary-event', id: boundary.id },
+      speech: boundary.speech,
+      kicker: food ? '島の食料' : '保存が停止',
+      title: boundary.type,
+      detail: `${boundary.day}日目`,
+    };
+  }
   const actionAdvice = [...advice].reverse().find(row => (
     row.unread && !row.completed && row.priority === 'action'
       && String(row.speech ?? '').trim()
@@ -183,6 +195,18 @@ export function secretaryRouteFor({
       kicker: actionAdvice.kicker,
       title: actionAdvice.title,
       detail: actionAdvice.detail,
+    };
+  }
+  if (incident && String(incident.speech ?? '').trim()) {
+    const spoilage = Boolean(incident.goods);
+    return {
+      priority: spoilage ? 'first-spoilage' : 'season-event',
+      tier: 'notice',
+      target: { kind: 'seasonal-event', id: incident.id },
+      speech: incident.speech,
+      kicker: spoilage ? '初めての腐敗' : '季節の節目',
+      title: spoilage ? incident.goods : incident.type,
+      detail: `${incident.day}日目`,
     };
   }
   if (discovery && String(discovery.speech ?? '').trim()) {

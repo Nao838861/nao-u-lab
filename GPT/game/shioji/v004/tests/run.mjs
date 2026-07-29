@@ -7,6 +7,10 @@ import { ECONOMIC_BUILDINGS } from '../../engine/src/physical.js';
 import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
 import {
+  FOOD_RUNWAY_THRESHOLD_DAYS, FOOD_WARNING_COOLDOWN_DAYS, PRESERVATION_STOP_SCRIPTS,
+  createBoundaryEvents, foodBoundarySpeech,
+} from '../src/boundary_events.js';
+import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, DENARI_PER_MONEY_UNIT, GOODS_ART,
   GOODS_LABELS, JOB_ICONS, JOB_LABELS, PLACEMENT_JOBS, VERSION, toDenari,
 } from '../src/config.js';
@@ -34,6 +38,12 @@ import {
 import {
   GOODS_DISCOVERY_SCRIPTS, createGoodsDiscovery,
 } from '../src/goods_discovery.js';
+import {
+  GOODS_DETAIL_FACTS, GOODS_RECIPES, GOODS_SHELF_LIFE_DAYS, goodsDetail,
+} from '../src/goods_detail.js';
+import {
+  SEASONAL_EVENT_SCRIPTS, createSeasonalEvents,
+} from '../src/seasonal_events.js';
 import { movementVector, panCameraFromKeys, shouldIgnoreShortcut } from '../src/keyboard.js';
 import {
   analyzeRoadConnections, previewBuildingPlacement, previewRoadPlacement,
@@ -445,7 +455,9 @@ test('可読性B: 食料日数・冬予報・鮮度・実行可能な打ち手�
   assert.equal(
     view.spoilTotal,
     Object.values(full.economy.led.spoil).reduce((total, amount) => total + amount, 0),
-    '表示snapshotへ腐敗累計だけを加え、経済状態は読み取り専用に保つ');
+    '表示snapshotへ腐敗累計を加え、経済状態は読み取り専用に保つ');
+  assert.deepEqual(view.spoilByGoods, full.economy.led.spoil,
+    '初腐敗の品目判定に必要な累計だけを品目別に公開する');
 });
 
 test('可読性B: エレナの秋予告は暦オフセットへ追従し毎年一度だけ出す', () => {
@@ -2213,7 +2225,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.39.0-goods-discovery');
+  assert.equal(VERSION, 'v004.42.0-boundary-voices');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2927,9 +2939,10 @@ test('UI O〜R: 上部メニュー・非重複通知・自動適用在庫・時�
   const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
   assert.doesNotMatch(html, /エンジンの世界/);
   assert.match(html, /id="top-menu"[\s\S]*id="open-company"[\s\S]*id="open-supply"[\s\S]*id="open-island"[\s\S]*id="open-building"[\s\S]*id="open-events"/);
-  for (const id of ['food-stock-chart', 'population-chart', 'finance-chart', 'price-chart']) {
+  for (const id of ['food-stock-chart', 'population-chart', 'finance-chart']) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
+  assert.match(main, /id="price-chart"/);
   assert.match(html, /id="tutorial-goal"/);
   assert.match(html, /id="tutorial-action"[^>]*>操作を始める/);
   assert.match(main, /setTextIfChanged\(actionButton, currentTutorialAction\?\.label/);
@@ -3777,11 +3790,16 @@ test('UI向上段9: 需給を独立表示し、統計は収支と既定3グラ�
   }
   assert.doesNotMatch(html, /id="island-manifest"|id="market-overview"|id="food-flow-chart"|id="history-goods"/);
   assert.equal((html.match(/<figure data-chart=/g) ?? []).length, 3);
-  assert.match(html, /id="price-chart-panel"[^>]*data-chart="price"[^>]*hidden/);
+  assert.match(html, /id="goods-detail-sheet"[^>]*data-testid="goods-detail-sheet"/);
+  assert.match(html, /id="goods-detail-content"/);
+  assert.doesNotMatch(html, /id="price-chart-panel"|data-chart="price"/);
+  assert.equal((main.match(/data-detail-element=/g) ?? []).length, 5);
+  assert.match(main, /openSheet\('goods-detail-sheet'\)/);
+  assert.match(main, /goods-detail-back[\s\S]*openSheet\('supply-sheet'\)/);
   assert.match(supply, /right\.severity - left\.severity/);
   assert.match(main, /chart-end-label/);
   assert.match(main, /reference:\s*true/);
-  assert.match(main, /GOODS_ART\[goods\]\?\.color/);
+  assert.match(main, /GOODS_ART\[detail\.goods\]\?\.color/);
   assert.match(main, /formatNumber\(toDenari\(model\.companyMoney\)\)/);
   assert.match(main, /formatQuantity\(toDenari\(row\.amount\)\)/);
 });
@@ -3874,6 +3892,317 @@ test('品目の出会い台本: 8品だけに専用文を持ち、数字・名�
   assert.equal(route.priority, 'goods-discovery');
   assert.equal(route.target.kind, 'goods-discovery');
   assert.equal(route.speech, GOODS_DISCOVERY_SCRIPTS.log);
+});
+
+test('品目詳細: 18品すべてに性質・日持ち・製法の表示契約を持つ', () => {
+  const goodsIds = Object.keys(GOODS_LABELS);
+  assert.deepEqual(Object.keys(GOODS_DETAIL_FACTS), goodsIds);
+  assert.deepEqual(Object.keys(GOODS_RECIPES), goodsIds);
+  assert.deepEqual(GOODS_SHELF_LIFE_DAYS, { fish: 3, veg: 30 });
+  for (const goods of goodsIds) {
+    const detail = goodsDetail(goods);
+    assert.equal(detail.goods, goods);
+    assert.match(detail.fact, /。$/);
+    assert.equal(detail.recipe.output, goods);
+    assert.ok(detail.recipe.makers.length >= 1);
+    assert.equal(Object.isFrozen(detail), true);
+    assert.equal(Object.isFrozen(detail.recipe), true);
+  }
+  for (const goods of Object.keys(GOODS_DISCOVERY_SCRIPTS)) {
+    assert.equal(goodsDetail(goods).fact, GOODS_DISCOVERY_SCRIPTS[goods],
+      `${goods}は出会いの一言を品目詳細へそのまま再掲する`);
+  }
+  assert.equal(goodsDetail('fish').shelfLifeDays, 3);
+  assert.equal(goodsDetail('veg').shelfLifeDays, 30);
+  assert.equal(goodsDetail('wheat').shelfLifeDays, null);
+  assert.deepEqual(goodsDetail('pick').recipe.inputs, ['veg', 'salt']);
+  assert.deepEqual(goodsDetail('pres').recipe.optional, ['char']);
+  assert.deepEqual(goodsDetail('bar').recipe.alternatives, [['coal', 'char']]);
+  assert.throws(() => goodsDetail('unknown'), /不明な品目/);
+});
+
+test('季節事件: 初雪と雪解けを毎年一言にし、魚と野菜の初腐敗は島史で一度にする', () => {
+  const base = {
+    day: 269,
+    calendarOffsetDays: SPRING_START_CALENDAR_OFFSET_DAYS,
+    spoilByGoods: { fish: 0, veg: 0 },
+  };
+  const events = createSeasonalEvents({ model: base });
+  assert.equal(events.currentMessage(), null);
+
+  events.observe({ ...base, day: 270 });
+  assert.equal(events.currentMessage(), null, '11月30日には初雪を出さない');
+  events.observe({ ...base, day: 271 });
+  assert.equal(events.currentMessage().type, 'firstSnow');
+  assert.equal(events.currentMessage().speech, SEASONAL_EVENT_SCRIPTS.firstSnow);
+  events.markAnnounced(events.currentMessage().id);
+
+  events.observe({ ...base, day: 361 });
+  assert.equal(events.currentMessage().type, 'thaw');
+  assert.equal(events.currentMessage().speech, SEASONAL_EVENT_SCRIPTS.thaw);
+  events.markAnnounced(events.currentMessage().id);
+
+  events.observe({ ...base, day: 631 });
+  assert.equal(events.currentMessage().type, 'firstSnow',
+    '翌年の初雪も同じ一言を出す');
+  events.markAnnounced(events.currentMessage().id);
+
+  events.observe({ ...base, day: 632, spoilByGoods: { fish: 0.25, veg: 0 } });
+  assert.equal(events.currentMessage().type, 'fishSpoilage');
+  assert.equal(events.currentMessage().speech, SEASONAL_EVENT_SCRIPTS.fishSpoilage);
+  events.observe({ ...base, day: 633, spoilByGoods: { fish: 0.5, veg: 0 } });
+  assert.equal(events.readState().pending.length, 1, '魚の腐敗が続いても一言を重ねない');
+  events.markAnnounced(events.currentMessage().id);
+
+  events.observe({ ...base, day: 634, spoilByGoods: { fish: 0.75, veg: 0.1 } });
+  assert.equal(events.currentMessage().type, 'vegSpoilage');
+  assert.equal(events.currentMessage().speech, SEASONAL_EVENT_SCRIPTS.vegSpoilage);
+  events.markAnnounced(events.currentMessage().id);
+  events.observe({ ...base, day: 635, spoilByGoods: { fish: 1, veg: 0.2 } });
+  assert.equal(events.currentMessage(), null, '発話済みの魚と野菜は再び出さない');
+
+  const restored = createSeasonalEvents({ state: events.readState() });
+  restored.observe({ ...base, day: 636, spoilByGoods: { fish: 2, veg: 1 } });
+  assert.equal(restored.currentMessage(), null, '初腐敗の発話済み状態をセーブ後も保持する');
+});
+
+test('季節事件: 春開始日の雪解けを出し、一言の器で自動既読できる', () => {
+  const events = createSeasonalEvents({
+    model: {
+      day: 0,
+      calendarOffsetDays: SPRING_START_CALENDAR_OFFSET_DAYS,
+      spoilByGoods: {},
+    },
+  });
+  const thaw = events.currentMessage();
+  assert.equal(thaw.type, 'thaw');
+  const route = secretaryRouteFor({
+    incident: thaw,
+    fallback: { priority: 'fallback', speech: '待機中です。' },
+  });
+  assert.equal(route.priority, 'season-event');
+  assert.equal(route.target.kind, 'seasonal-event');
+  assert.equal(events.markAnnounced(route.target.id), true);
+  assert.equal(events.currentMessage(), null);
+
+  for (const speech of Object.values(SEASONAL_EVENT_SCRIPTS)) {
+    assert.doesNotMatch(speech, /細る|息づく|恵み|気配|豊か/);
+  }
+});
+
+test('季節事件: 初腐敗と発話待ちを通常セーブで往復する', () => {
+  const seasonalEvents = createSeasonalEvents({
+    model: {
+      day: 10,
+      calendarOffsetDays: SPRING_START_CALENDAR_OFFSET_DAYS,
+      spoilByGoods: { fish: 0, veg: 0 },
+    },
+  });
+  seasonalEvents.observe({
+    day: 11,
+    calendarOffsetDays: SPRING_START_CALENDAR_OFFSET_DAYS,
+    spoilByGoods: { fish: 0.4, veg: 0 },
+  });
+  const saveController = createEngineController({ seed: 11, mode: 'sandbox' });
+  const payload = createSavePayload({
+    gameVersion: VERSION,
+    mode: 'sandbox',
+    engineState: saveController.saveState(),
+    inputJournal: saveController.inputJournal(),
+    seasonalEvents: seasonalEvents.readState(),
+  });
+  assert.deepEqual(
+    parseSaveText(JSON.stringify(payload)).seasonalEvents,
+    seasonalEvents.readState(),
+  );
+  const restored = createSeasonalEvents({
+    state: parseSaveText(JSON.stringify(payload)).seasonalEvents,
+  });
+  assert.equal(restored.currentMessage().type, 'fishSpoilage',
+    '表示前に保存した初腐敗は再開後も一言として残す');
+  restored.markAnnounced(restored.currentMessage().id);
+  restored.observe({
+    day: 12,
+    calendarOffsetDays: SPRING_START_CALENDAR_OFFSET_DAYS,
+    spoilByGoods: { fish: 0.8, veg: 0 },
+  });
+  assert.equal(restored.currentMessage(), null,
+    '再開後に読み終えた初腐敗は同じ島で繰り返さない');
+});
+
+test('季節事件: 旧セーブへ履歴を足す時は過去の季節と腐敗を誤報しない', () => {
+  const legacyModel = {
+    day: 400,
+    calendarOffsetDays: SPRING_START_CALENDAR_OFFSET_DAYS,
+    spoilByGoods: { fish: 12, veg: 4 },
+  };
+  const events = createSeasonalEvents({
+    model: legacyModel,
+    suppressInitialAnnouncements: true,
+  });
+  assert.equal(events.currentMessage(), null);
+  events.observe({
+    ...legacyModel,
+    day: 401,
+    spoilByGoods: { fish: 12, veg: 4 },
+  });
+  assert.equal(events.currentMessage(), null,
+    '導入前に起きた季節の節目と腐敗はロード直後に並べない');
+  events.observe({
+    ...legacyModel,
+    day: 402,
+    spoilByGoods: { fish: 12.1, veg: 4 },
+  });
+  assert.equal(events.currentMessage().type, 'fishSpoilage',
+    '導入後に新しく増えた腐敗は旧セーブでも初回として知らせる');
+});
+
+function boundaryModel({
+  day = 1,
+  food = 150,
+  population = 10,
+  fish = 4,
+  salt = 2,
+  char = 2,
+} = {}) {
+  return {
+    day,
+    calendarOffsetDays: SPRING_START_CALENDAR_OFFSET_DAYS,
+    population,
+    households: [{
+      members: Array.from({ length: population }, (_, index) => ({ id: index + 1 })),
+      pantry: [{ goods: 'wheat', amount: food }],
+    }],
+    stalls: [],
+    companyMarketStock: {},
+    companyStock: {},
+    flowEma: {
+      wheat: { prod: 2, imp: 0.5, cons: 4 },
+    },
+    goodsManifest: [
+      { goods: 'fish', totalAmount: fish },
+      { goods: 'salt', totalAmount: salt },
+      { goods: 'char', totalAmount: char },
+    ],
+  };
+}
+
+test('境界の声: 食料14日割れの跨ぎだけを拾い、同一境界は7日空ける', () => {
+  assert.equal(FOOD_RUNWAY_THRESHOLD_DAYS, 14);
+  assert.equal(FOOD_WARNING_COOLDOWN_DAYS, 7);
+  const events = createBoundaryEvents({ model: boundaryModel({ day: 1, food: 150 }) });
+  assert.equal(events.currentMessage(), null);
+  events.observe(boundaryModel({ day: 2, food: 139 }));
+  assert.equal(events.currentMessage().type, 'food');
+  assert.match(events.currentMessage().speech, /14日分を下回りました。残り13日分/);
+  assert.match(events.currentMessage().speech, /1日の生産と仕入は2\.5荷、消費は4\.0荷/);
+  assert.match(events.currentMessage().speech, /畑や漁師を建てれば間に合います/);
+  events.markAnnounced(events.currentMessage().id);
+
+  events.observe(boundaryModel({ day: 3, food: 150 }));
+  events.observe(boundaryModel({ day: 4, food: 139 }));
+  assert.equal(events.currentMessage(), null, '再び跨いでも7日未満では話さない');
+  events.observe(boundaryModel({ day: 10, food: 150 }));
+  events.observe(boundaryModel({ day: 11, food: 139 }));
+  assert.equal(events.currentMessage().type, 'food', '7日以上後の跨ぎは再び話す');
+});
+
+test('境界の声: 食料処方は3〜6月だけ建設、7〜2月は蔵出し・本土輸入に固定する', () => {
+  const rows = Array.from({ length: 12 }, (_, index) => {
+    const month = ((index + 2) % 12) + 1;
+    const day = index * 30 + 1;
+    return {
+      month,
+      speech: foodBoundarySpeech(boundaryModel({ day, food: 139 })),
+    };
+  });
+  for (const { month, speech } of rows) {
+    if ([3, 4, 5, 6].includes(month)) {
+      assert.match(speech, /畑や漁師を建てれば間に合います/, `${month}月`);
+      assert.doesNotMatch(speech, /会社の倉庫|本土から輸入/, `${month}月`);
+    } else {
+      assert.match(speech, /会社の倉庫から食料を出すか、本土から輸入/, `${month}月`);
+      assert.doesNotMatch(speech, /畑や漁師|建て/, `${month}月`);
+    }
+    if ([12, 1, 2].includes(month)) {
+      assert.match(speech, /冬で畑の生産が止まっています/, `${month}月`);
+    }
+  }
+});
+
+test('境界の声: 魚がある時の塩・木炭の正→0だけを別々の一言にする', () => {
+  const events = createBoundaryEvents({ model: boundaryModel() });
+  events.observe(boundaryModel({ day: 2, salt: 0 }));
+  assert.equal(events.currentMessage().type, 'salt');
+  assert.equal(events.currentMessage().speech, PRESERVATION_STOP_SCRIPTS.salt);
+  events.markAnnounced(events.currentMessage().id);
+
+  events.observe(boundaryModel({ day: 3, salt: 2 }));
+  events.observe(boundaryModel({ day: 4, salt: 0 }));
+  assert.equal(events.currentMessage().type, 'salt', '塩を補充後に再び尽きればもう一度話す');
+  events.markAnnounced(events.currentMessage().id);
+
+  events.observe(boundaryModel({ day: 5, salt: 0, char: 0 }));
+  assert.equal(events.currentMessage().type, 'char');
+  assert.equal(events.currentMessage().speech, PRESERVATION_STOP_SCRIPTS.char);
+  events.markAnnounced(events.currentMessage().id);
+
+  events.observe(boundaryModel({ day: 6, fish: 0, salt: 2, char: 2 }));
+  events.observe(boundaryModel({ day: 7, fish: 0, salt: 0, char: 0 }));
+  assert.equal(events.currentMessage(), null, '魚がない時の資材切れは保存停止として話さない');
+});
+
+test('境界の声: 待機中の声・跨ぎ基準・7日間隔を保存して再開する', () => {
+  const events = createBoundaryEvents({ model: boundaryModel({ day: 1, food: 150 }) });
+  events.observe(boundaryModel({ day: 2, food: 139, salt: 0 }));
+  const state = events.readState();
+  const saveController = createEngineController({ seed: 11, mode: 'sandbox' });
+  const payload = createSavePayload({
+    gameVersion: VERSION,
+    mode: 'sandbox',
+    engineState: saveController.saveState(),
+    inputJournal: saveController.inputJournal(),
+    boundaryEvents: state,
+  });
+  assert.deepEqual(
+    parseSaveText(JSON.stringify(payload)).boundaryEvents,
+    state,
+    '境界の基準値と待機中の声を通常セーブで往復する',
+  );
+  const restored = createBoundaryEvents({ state });
+  assert.deepEqual(restored.readState(), state);
+  assert.equal(restored.currentMessage().type, 'food');
+  restored.markAnnounced(restored.currentMessage().id);
+  assert.equal(restored.currentMessage().type, 'salt');
+  restored.markAnnounced(restored.currentMessage().id);
+  restored.observe(boundaryModel({ day: 3, food: 150, salt: 2 }));
+  restored.observe(boundaryModel({ day: 4, food: 139, salt: 2 }));
+  assert.equal(restored.currentMessage(), null, 'ロード後も食料警告の7日間隔を保つ');
+});
+
+test('境界の声: 一言の器で書状にせず自動既読の対象にする', () => {
+  const boundary = {
+    id: 'boundary-food-2-1',
+    day: 2,
+    type: 'food',
+    speech: foodBoundarySpeech(boundaryModel({ day: 2, food: 139 })),
+  };
+  const route = secretaryRouteFor({
+    boundary,
+    advice: [{
+      id: 'blocked-advice',
+      unread: true,
+      completed: false,
+      priority: 'action',
+      speech: '別の対応です。',
+    }],
+    fallback: { priority: 'fallback', speech: '待機中です。' },
+  });
+  assert.equal(route.priority, 'food-boundary');
+  assert.equal(route.tier, 'notice');
+  assert.equal(route.target.kind, 'boundary-event');
+  assert.equal(route.speech, boundary.speech);
+  assert.equal(route.target.delivery, undefined, '書状の配達経路へ載せない');
 });
 
 test('通貨表示: engine内部値はfactsを変えず10倍のデナリで示す', () => {
@@ -4329,8 +4658,10 @@ test('空間生産性UI: 建物・市場圏・島全体へ同じ30日実測を�
   const css = fs.readFileSync(new URL('../style.css', import.meta.url), 'utf8');
   for (const id of [
     'island-productivity', 'island-productivity-rate', 'island-productivity-output',
-    'island-productivity-direct', 'productivity-chart',
+    'island-productivity-direct',
   ]) assert.match(html, new RegExp(`id="${id}"`));
+  assert.doesNotMatch(html, /id="productivity-chart"/,
+    '空間生産性は島の診断カードに残し、既定3グラフへは重ねない');
   assert.match(css, /\.productivity-card/);
   assert.match(css, /\.market-productivity/);
 });
