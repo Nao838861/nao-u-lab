@@ -7,14 +7,19 @@ genre_tags: [game-design, simulation, colony-sim, procedural-generation, ai-dire
 evaluated_at: "2026-07-29T10:54:43+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-29T10:54:43+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-29T10:54:43+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-29T11:03:38+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785290603305059"
+next_action: none
 stale_after: "2026-08-28"
 supersedes: []
+posted:
+  ts: "1785290603.305059"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785290603305059"
+  char_count: 4453
+  posted_at: "2026-07-29T11:03:38+09:00"
 gate_reason: |-
   Dwarf Fortress、RimWorld、Maia の開発者証言から、player の権限、Storyteller の監視と incident 生成、complexity budget、内部状態の伝達を一つの設計連鎖として抽出できる。
   多数の自律 entity を持つ試作で、simulation を増やす前に「読める因果」と pacing を設計する具体的な評価軸へ落とせ、事例差と限界を含む約4000字の概要が成立する。

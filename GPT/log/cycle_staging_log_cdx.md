@@ -98,7 +98,19 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260729_colony_sim_storyteller_complexity.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785290603305059
+    char_count: 4453
+skipped: []
+review:
+  source_checked: "PC Gamer 本文を再確認。Dwarf Fortress の player identity、RimWorld の watcher / incident generator と pacing curve、complexity budget、Maia の約50 needs と二層伝達を照合"
+  limitations_kept: "2017年記事の再掲、開発者証言中心、定量比較なしを本文に明記"
+  policy_check: "ok（必須6セクション、3400-4600字、禁止表現なし、URL末尾）"
+  slack_verification: ok
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
