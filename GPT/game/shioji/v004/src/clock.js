@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.40.0-season-events';
+import { SPEEDS } from './config.js?v=v004.41.0-goods-detail';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

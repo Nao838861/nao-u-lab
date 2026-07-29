@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.40.0-season-events';
+import { pileVisual } from './visuals.js?v=v004.41.0-goods-detail';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));

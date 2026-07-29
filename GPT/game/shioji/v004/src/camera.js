@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.40.0-season-events';
+import { TILE } from './config.js?v=v004.41.0-goods-detail';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

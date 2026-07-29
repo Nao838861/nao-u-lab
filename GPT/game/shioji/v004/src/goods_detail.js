@@ -1,4 +1,4 @@
-import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.40.0-season-events';
+import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.41.0-goods-detail';
 
 export const GOODS_SHELF_LIFE_DAYS = Object.freeze({
   fish: 3,
@@ -39,10 +39,13 @@ export const GOODS_DETAIL_FACTS = Object.freeze({
   oil: GOODS_DETAIL_FALLBACK_FACTS.oil,
 });
 
-const recipe = ({ makers, inputs = [], alternatives = [], output }) => Object.freeze({
+const recipe = ({
+  makers, inputs = [], alternatives = [], optional = [], output,
+}) => Object.freeze({
   makers: Object.freeze(makers),
   inputs: Object.freeze(inputs),
   alternatives: Object.freeze(alternatives.map(group => Object.freeze(group))),
+  optional: Object.freeze(optional),
   output,
 });
 
@@ -63,7 +66,7 @@ export const GOODS_RECIPES = Object.freeze({
   veg: recipe({ makers: ['veg'], output: 'veg' }),
   meat: recipe({ makers: ['shepherd'], output: 'meat' }),
   pres: recipe({
-    makers: ['fisher'], inputs: ['fish', 'salt'], alternatives: [['char']], output: 'pres',
+    makers: ['fisher'], inputs: ['fish', 'salt'], optional: ['char'], output: 'pres',
   }),
   pick: recipe({ makers: ['veg'], inputs: ['veg', 'salt'], output: 'pick' }),
   meal: recipe({ makers: ['fisher2'], output: 'meal' }),

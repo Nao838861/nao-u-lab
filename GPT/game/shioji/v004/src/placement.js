@@ -1,5 +1,5 @@
-import { BUILDING_SIZES } from './config.js?v=v004.40.0-season-events';
-import { islandCalendar } from './ui_summary.js?v=v004.40.0-season-events';
+import { BUILDING_SIZES } from './config.js?v=v004.41.0-goods-detail';
+import { islandCalendar } from './ui_summary.js?v=v004.41.0-goods-detail';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

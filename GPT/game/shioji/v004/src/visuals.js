@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.40.0-season-events';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.41.0-goods-detail';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({

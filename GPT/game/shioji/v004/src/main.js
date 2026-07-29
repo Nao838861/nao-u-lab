@@ -1,45 +1,46 @@
-import { IsometricCamera } from './camera.js?v=v004.40.0-season-events';
-import { SimulationClock } from './clock.js?v=v004.40.0-season-events';
+import { IsometricCamera } from './camera.js?v=v004.41.0-goods-detail';
+import { SimulationClock } from './clock.js?v=v004.41.0-goods-detail';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.40.0-season-events';
+} from './config.js?v=v004.41.0-goods-detail';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.40.0-season-events';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.40.0-season-events';
-import { developmentMapView } from './development_map.js?v=v004.40.0-season-events';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.40.0-season-events';
-import { formatElenaSpeech } from './elena_text.js?v=v004.40.0-season-events';
+} from './display_batch.js?v=v004.41.0-goods-detail';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.41.0-goods-detail';
+import { developmentMapView } from './development_map.js?v=v004.41.0-goods-detail';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.41.0-goods-detail';
+import { formatElenaSpeech } from './elena_text.js?v=v004.41.0-goods-detail';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.40.0-season-events';
+} from './food_readability.js?v=v004.41.0-goods-detail';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.40.0-season-events';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.40.0-season-events';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.40.0-season-events';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.40.0-season-events';
-import { WorldPresentation } from './presentation.js?v=v004.40.0-season-events';
-import { Renderer } from './renderer.js?v=v004.40.0-season-events';
+} from './keyboard.js?v=v004.41.0-goods-detail';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.41.0-goods-detail';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.41.0-goods-detail';
+import { goodsDetail } from './goods_detail.js?v=v004.41.0-goods-detail';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.41.0-goods-detail';
+import { WorldPresentation } from './presentation.js?v=v004.41.0-goods-detail';
+import { Renderer } from './renderer.js?v=v004.41.0-goods-detail';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.40.0-season-events';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.40.0-season-events';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.40.0-season-events';
+} from './save_game.js?v=v004.41.0-goods-detail';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.41.0-goods-detail';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.41.0-goods-detail';
 import {
   GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRows,
-} from './supply_demand.js?v=v004.40.0-season-events';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.40.0-season-events';
+} from './supply_demand.js?v=v004.41.0-goods-detail';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.41.0-goods-detail';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.40.0-season-events';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.40.0-season-events';
+} from './ui_guidance.js?v=v004.41.0-goods-detail';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.41.0-goods-detail';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -277,6 +278,61 @@ function goodsIconMarkup(goods) {
   return `<i class="goods-icon" aria-hidden="true">${goodsSpriteSvgMarkup(goods, art)}</i>`;
 }
 
+function makerIconMarkup(job) {
+  return `<span class="maker-icon" title="${escapeHtml(JOB_LABELS[job] ?? job)}"
+    aria-label="${escapeHtml(JOB_LABELS[job] ?? job)}">
+    <i aria-hidden="true">${escapeHtml(JOB_ICONS[job] ?? '作')}</i>
+    <small>${escapeHtml(JOB_LABELS[job] ?? job)}</small>
+  </span>`;
+}
+
+function goodsFormulaPart(goods) {
+  return `<span class="goods-formula-item">${goodsIconMarkup(goods)}<small>${escapeHtml(GOODS_LABELS[goods] ?? goods)}</small></span>`;
+}
+
+function goodsRecipeMarkup(detail) {
+  const { recipe } = detail;
+  const terms = recipe.inputs.map(goodsFormulaPart);
+  for (const alternatives of recipe.alternatives) {
+    terms.push(`<span class="goods-formula-choice">${alternatives.map(goodsFormulaPart).join('<b aria-hidden="true">/</b>')}</span>`);
+  }
+  for (const goods of recipe.optional) {
+    terms.push(`<span class="goods-formula-optional" title="加えると歩留まりが上がります">(${goodsFormulaPart(goods)})</span>`);
+  }
+  const inputs = terms.length
+    ? terms.join('<b class="goods-formula-plus" aria-hidden="true">＋</b>')
+    : recipe.makers.map(makerIconMarkup).join('<b class="goods-formula-plus" aria-hidden="true">/</b>');
+  const inputLabels = [
+    ...recipe.inputs.map(goods => GOODS_LABELS[goods] ?? goods),
+    ...recipe.alternatives.map(group => group.map(goods => GOODS_LABELS[goods] ?? goods).join('または')),
+    ...recipe.optional.map(goods => `任意の${GOODS_LABELS[goods] ?? goods}`),
+  ];
+  const makerLabels = recipe.makers.map(job => JOB_LABELS[job] ?? job).join('または');
+  const formulaLabel = `${inputLabels.length ? `${inputLabels.join('と')}を` : ''}${makerLabels}が${GOODS_LABELS[recipe.output] ?? recipe.output}にする`;
+  return `<div class="goods-formula" role="img" aria-label="${escapeHtml(formulaLabel)}">
+    <div class="goods-formula-equation">${inputs}<b class="goods-formula-arrow" aria-hidden="true">→</b>${goodsFormulaPart(recipe.output)}</div>
+    ${recipe.inputs.length || recipe.alternatives.length || recipe.optional.length
+    ? `<div class="goods-formula-makers">${recipe.makers.map(makerIconMarkup).join('')}</div>`
+    : ''}
+  </div>`;
+}
+
+function shelfLifeMarkup(detail) {
+  if (detail.shelfLifeDays === null) {
+    return `<div class="shelf-life-art stable" role="img" aria-label="${escapeHtml(GOODS_LABELS[detail.goods])}は腐らない品">
+      <span>${goodsIconMarkup(detail.goods)}</span><b aria-hidden="true">∞</b>
+    </div><p><small>日持ち</small><strong>腐りません</strong></p>`;
+  }
+  return `<div class="shelf-life-art perishable" role="img"
+      aria-label="${escapeHtml(GOODS_LABELS[detail.goods])}は約${detail.shelfLifeDays}日で傷む">
+    <span class="fresh">${goodsIconMarkup(detail.goods)}</span>
+    <i aria-hidden="true"></i>
+    <span class="aging">${goodsIconMarkup(detail.goods)}</span>
+    <i aria-hidden="true"></i>
+    <span class="spoiled">${goodsIconMarkup(detail.goods)}</span>
+  </div><p><small>傷むまで</small><strong>約${detail.shelfLifeDays}日</strong></p>`;
+}
+
 function currentSupplyRows() {
   return supplyDemandRows(model, economyHistory, goodsDiscovery.knownGoods());
 }
@@ -347,7 +403,7 @@ function renderSupplySheet() {
         data-supply-goods="${row.goods}" data-status="${row.status}"
         data-focused="${String(row.goods === focusedSupplyGoods)}"
         title="${escapeHtml(breakdown)}"
-        aria-label="${escapeHtml(GOODS_LABELS[row.goods])}、${row.statusLabel}、1日あたり生産と仕入${formatQuantity(supplyTotal)}荷・消費${formatQuantity(demandObserved)}荷、在庫であと${formatSupplyDays(row.daysRemaining)}。相場グラフを開く">
+        aria-label="${escapeHtml(GOODS_LABELS[row.goods])}、${row.statusLabel}、1日あたり生産と仕入${formatQuantity(supplyTotal)}荷・消費${formatQuantity(demandObserved)}荷、在庫であと${formatSupplyDays(row.daysRemaining)}。品目詳細を開く">
         <span class="supply-head">
           ${goodsIconMarkup(row.goods)}
           <span class="supply-name"><b>${escapeHtml(GOODS_LABELS[row.goods])}</b></span>
@@ -477,6 +533,7 @@ function renderHud() {
   if (!$('#building-sheet').hidden) renderBuildingSheet();
   if (!$('#island-sheet').hidden) renderIslandSheet();
   if (!$('#supply-sheet').hidden) renderSupplySheet();
+  if (!$('#goods-detail-sheet').hidden) renderGoodsDetailSheet();
   if (!$('#development-sheet').hidden) renderDevelopmentMap();
   renderTutorial();
   renderSecretary();
@@ -1636,7 +1693,7 @@ function renderDevelopmentMap() {
 }
 
 function renderEconomyCharts() {
-  const signature = JSON.stringify({ history: economyHistory, selectedSupplyGoods });
+  const signature = JSON.stringify({ history: economyHistory });
   renderIfChanged('economy-charts', signature, () => {
     const rows = economyHistory;
     setTextIfChanged('#history-status', rows.length < 2
@@ -1669,31 +1726,54 @@ function renderEconomyCharts() {
       { value: row => row.cash, label: '資金', color: '#e5b65b' },
       { value: () => 0, label: '0', color: '#796e5a', reference: true },
     ]);
-    const pricePanel = $('#price-chart-panel');
-    setHiddenIfChanged(pricePanel, !selectedSupplyGoods);
-    if (selectedSupplyGoods) {
-      const goods = selectedSupplyGoods;
-      const prices = rows.map(row => row.prices[goods]).filter(Number.isFinite);
-      const average = prices.length ? prices.reduce((total, value) => total + value, 0) / prices.length : 0;
-      $('#price-chart').innerHTML = chartMarkup(rows, [
-        {
-          value: row => row.prices[goods] ?? 0,
-          label: GOODS_GLYPHS[goods] ?? '品',
-          color: GOODS_ART[goods]?.color ?? '#e5b65b',
-        },
-        {
-          value: () => average,
-          label: '平均',
-          color: GOODS_ART[goods]?.dark ?? '#796e5a',
-          reference: true,
-        },
-      ], { includeZero: false });
-      setHtmlIfChanged(
-        '#price-chart-title',
-        `${goodsIconMarkup(goods)}<span>${escapeHtml(GOODS_LABELS[goods] ?? goods)}の相場</span>`,
-      );
-    }
-    uiMetrics.domWrites += selectedSupplyGoods ? 4 : 3;
+    uiMetrics.domWrites += 3;
+  });
+}
+
+function renderGoodsDetailSheet() {
+  if (!selectedSupplyGoods) return;
+  const detail = goodsDetail(selectedSupplyGoods);
+  const rows = economyHistory;
+  const prices = rows.map(row => row.prices[detail.goods]).filter(Number.isFinite);
+  const average = prices.length
+    ? prices.reduce((total, value) => total + value, 0) / prices.length
+    : 0;
+  const priceMarkup = chartMarkup(rows, [
+    {
+      value: row => row.prices[detail.goods] ?? 0,
+      label: GOODS_GLYPHS[detail.goods] ?? '品',
+      color: GOODS_ART[detail.goods]?.color ?? '#e5b65b',
+    },
+    {
+      value: () => average,
+      label: '平均',
+      color: GOODS_ART[detail.goods]?.dark ?? '#796e5a',
+      reference: true,
+    },
+  ], { includeZero: false });
+  const signature = JSON.stringify({ detail, rows });
+  renderIfChanged('goods-detail-content', signature, () => {
+    $('#goods-detail-title').textContent = GOODS_LABELS[detail.goods] ?? detail.goods;
+    $('#goods-detail-content').dataset.goods = detail.goods;
+    $('#goods-detail-content').innerHTML = `
+      <section class="goods-detail-hero" data-detail-element="art">
+        <div class="goods-detail-art">${goodsIconMarkup(detail.goods)}</div>
+        <p data-detail-element="fact">${escapeHtml(detail.fact)}</p>
+      </section>
+      <section class="goods-detail-life" data-detail-element="shelf-life">
+        <h3>日持ち</h3>
+        ${shelfLifeMarkup(detail)}
+      </section>
+      <section class="goods-detail-recipe" data-detail-element="recipe">
+        <h3>作り方</h3>
+        ${goodsRecipeMarkup(detail)}
+      </section>
+      <figure class="goods-detail-chart" data-detail-element="price-chart">
+        <figcaption>相場 <small>デナリ/荷</small></figcaption>
+        <svg id="price-chart" viewBox="0 0 320 112" role="img"
+          aria-label="${escapeHtml(GOODS_LABELS[detail.goods])}の市場相場の推移">${priceMarkup}</svg>
+      </figure>`;
+    uiMetrics.domWrites += 1;
   });
 }
 
@@ -1929,6 +2009,7 @@ function openSheet(id) {
   if (id === 'tutorial-letter-sheet') renderTutorialLetterSheet();
   if (id === 'island-sheet') renderIslandSheet();
   if (id === 'supply-sheet') renderSupplySheet();
+  if (id === 'goods-detail-sheet') renderGoodsDetailSheet();
   if (id === 'save-sheet') {
     $('#save-summary').textContent = `${model.day}日目・人口${model.population}人。ファイル保存なら、この島をそのまま調査用に共有できます。`;
     setSaveFeedback(storedSave
@@ -1954,11 +2035,9 @@ $('#open-supply').addEventListener('click', () => {
   openSheet('supply-sheet');
 });
 $('#open-island').addEventListener('click', () => {
-  selectedSupplyGoods = null;
   openSheet('island-sheet');
 });
 $('#food-runway').addEventListener('click', () => {
-  selectedSupplyGoods = null;
   openSheet('island-sheet');
   requestAnimationFrame(() => {
     $('[data-chart="food-stock"]')?.scrollIntoView({ block: 'center', behavior: 'smooth' });
@@ -2031,9 +2110,13 @@ $('#supply-grid').addEventListener('click', event => {
   const row = event.target.closest('[data-supply-goods]');
   if (!row) return;
   selectedSupplyGoods = row.dataset.supplyGoods;
-  openSheet('island-sheet');
+  openSheet('goods-detail-sheet');
+});
+$('#goods-detail-back').addEventListener('click', () => {
+  focusedSupplyGoods = selectedSupplyGoods;
+  openSheet('supply-sheet');
   requestAnimationFrame(() => {
-    $('[data-chart="price"]')?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    $(`[data-supply-goods="${focusedSupplyGoods}"]`)?.focus();
   });
 });
 

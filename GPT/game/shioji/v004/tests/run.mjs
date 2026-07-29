@@ -2221,7 +2221,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.40.0-season-events');
+  assert.equal(VERSION, 'v004.41.0-goods-detail');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2935,9 +2935,10 @@ test('UI O〜R: 上部メニュー・非重複通知・自動適用在庫・時�
   const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
   assert.doesNotMatch(html, /エンジンの世界/);
   assert.match(html, /id="top-menu"[\s\S]*id="open-company"[\s\S]*id="open-supply"[\s\S]*id="open-island"[\s\S]*id="open-building"[\s\S]*id="open-events"/);
-  for (const id of ['food-stock-chart', 'population-chart', 'finance-chart', 'price-chart']) {
+  for (const id of ['food-stock-chart', 'population-chart', 'finance-chart']) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
+  assert.match(main, /id="price-chart"/);
   assert.match(html, /id="tutorial-goal"/);
   assert.match(html, /id="tutorial-action"[^>]*>操作を始める/);
   assert.match(main, /setTextIfChanged\(actionButton, currentTutorialAction\?\.label/);
@@ -3785,11 +3786,16 @@ test('UI向上段9: 需給を独立表示し、統計は収支と既定3グラ�
   }
   assert.doesNotMatch(html, /id="island-manifest"|id="market-overview"|id="food-flow-chart"|id="history-goods"/);
   assert.equal((html.match(/<figure data-chart=/g) ?? []).length, 3);
-  assert.match(html, /id="price-chart-panel"[^>]*data-chart="price"[^>]*hidden/);
+  assert.match(html, /id="goods-detail-sheet"[^>]*data-testid="goods-detail-sheet"/);
+  assert.match(html, /id="goods-detail-content"/);
+  assert.doesNotMatch(html, /id="price-chart-panel"|data-chart="price"/);
+  assert.equal((main.match(/data-detail-element=/g) ?? []).length, 5);
+  assert.match(main, /openSheet\('goods-detail-sheet'\)/);
+  assert.match(main, /goods-detail-back[\s\S]*openSheet\('supply-sheet'\)/);
   assert.match(supply, /right\.severity - left\.severity/);
   assert.match(main, /chart-end-label/);
   assert.match(main, /reference:\s*true/);
-  assert.match(main, /GOODS_ART\[goods\]\?\.color/);
+  assert.match(main, /GOODS_ART\[detail\.goods\]\?\.color/);
   assert.match(main, /formatNumber\(toDenari\(model\.companyMoney\)\)/);
   assert.match(main, /formatQuantity\(toDenari\(row\.amount\)\)/);
 });
@@ -3906,6 +3912,7 @@ test('品目詳細: 18品すべてに性質・日持ち・製法の表示契約�
   assert.equal(goodsDetail('veg').shelfLifeDays, 30);
   assert.equal(goodsDetail('wheat').shelfLifeDays, null);
   assert.deepEqual(goodsDetail('pick').recipe.inputs, ['veg', 'salt']);
+  assert.deepEqual(goodsDetail('pres').recipe.optional, ['char']);
   assert.deepEqual(goodsDetail('bar').recipe.alternatives, [['coal', 'char']]);
   assert.throws(() => goodsDetail('unknown'), /不明な品目/);
 });

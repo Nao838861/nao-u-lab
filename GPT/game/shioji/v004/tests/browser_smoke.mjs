@@ -1144,7 +1144,7 @@ async function checkSeasonalPlots(width, height, mobile) {
       plots: plots.map(row => row.type),
     };
   })()`);
-  assert.equal(springStart.version, 'v004.40.0-season-events', JSON.stringify(springStart));
+  assert.equal(springStart.version, 'v004.41.0-goods-detail', JSON.stringify(springStart));
   assert.equal(springStart.season, '春', JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => ['wheat', 'veg'].includes(type)), JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => type === 'shepherd'), JSON.stringify(springStart));
@@ -1414,8 +1414,8 @@ async function checkPeopleVisuals(width, height, mobile) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.40.0-season-events');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.40.0-season-events');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.41.0-goods-detail');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.41.0-goods-detail');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -1764,19 +1764,48 @@ async function checkViewport(width, height, mobile) {
     assert.ok(supply.box.top >= 0 && supply.box.bottom <= height, JSON.stringify(supply));
     await page.screenshot('/tmp/shioji_v004_supply_sheet.png');
 
-    const island = await page.evaluate(`(() => {
+    const detail = await page.evaluate(`(() => {
       document.querySelector('[data-supply-goods="tools"]').click();
-      const sheet = document.querySelector('#island-sheet');
+      const sheet = document.querySelector('#goods-detail-sheet');
       const box = sheet.getBoundingClientRect();
-      const defaultCharts = [...document.querySelectorAll('#economy-charts > figure:not(#price-chart-panel)')];
       return {
         hidden: sheet.hidden,
         supplyHidden: document.querySelector('#supply-sheet').hidden,
-        defaultCharts: defaultCharts.length,
-        priceVisible: !document.querySelector('#price-chart-panel').hidden,
-        priceTitle: document.querySelector('#price-chart-title').textContent,
-        endLabels: document.querySelectorAll('.chart-end-label').length,
-        referenceLines: document.querySelectorAll('.chart-line.reference').length,
+        title: document.querySelector('#goods-detail-title').textContent,
+        elements: document.querySelectorAll('#goods-detail-content [data-detail-element]').length,
+        artGoods: document.querySelector('.goods-detail-art [data-goods-sprite]')?.dataset.goodsSprite,
+        factText: document.querySelector('[data-detail-element="fact"]').textContent,
+        shelfText: document.querySelector('[data-detail-element="shelf-life"]').textContent,
+        recipeText: document.querySelector('[data-detail-element="recipe"]').textContent,
+        priceChart: Boolean(document.querySelector('[data-detail-element="price-chart"] #price-chart')),
+        endLabels: document.querySelectorAll('#goods-detail-sheet .chart-end-label').length,
+        referenceLines: document.querySelectorAll('#goods-detail-sheet .chart-line.reference').length,
+        overflowsX: sheet.scrollWidth > sheet.clientWidth + 1,
+        box: { left: box.left, right: box.right, top: box.top, bottom: box.bottom },
+      };
+    })()`);
+    assert.equal(detail.hidden, false, JSON.stringify(detail));
+    assert.equal(detail.supplyHidden, true, JSON.stringify(detail));
+    assert.equal(detail.title, '木製品', JSON.stringify(detail));
+    assert.equal(detail.elements, 5, JSON.stringify(detail));
+    assert.equal(detail.artGoods, 'tools', JSON.stringify(detail));
+    assert.match(detail.factText, /家の発展と木の荷車/);
+    assert.match(detail.shelfText, /腐りません/);
+    assert.match(detail.recipeText, /丸太.*木製品/s);
+    assert.equal(detail.priceChart, true, JSON.stringify(detail));
+    assert.ok(detail.endLabels >= 2 && detail.referenceLines >= 1, JSON.stringify(detail));
+    assert.equal(detail.overflowsX, false, JSON.stringify(detail));
+    assert.ok(detail.box.left >= 0 && detail.box.right <= width, JSON.stringify(detail));
+    assert.ok(detail.box.top >= 0 && detail.box.bottom <= height, JSON.stringify(detail));
+    await page.screenshot('/tmp/shioji_v004_goods_detail.png');
+
+    const island = await page.evaluate(`(() => {
+      document.querySelector('#open-island').click();
+      const sheet = document.querySelector('#island-sheet');
+      const box = sheet.getBoundingClientRect();
+      return {
+        hidden: sheet.hidden,
+        defaultCharts: document.querySelectorAll('#economy-charts > figure').length,
         legacyLocations: document.querySelectorAll('[data-stock-location]').length,
         financeText: document.querySelector('#island-finance').textContent,
         healthText: document.querySelector('#island-health').textContent,
@@ -1785,11 +1814,7 @@ async function checkViewport(width, height, mobile) {
       };
     })()`);
     assert.equal(island.hidden, false, JSON.stringify(island));
-    assert.equal(island.supplyHidden, true, JSON.stringify(island));
     assert.equal(island.defaultCharts, 3, JSON.stringify(island));
-    assert.equal(island.priceVisible, true, JSON.stringify(island));
-    assert.match(island.priceTitle, /木製品の相場/);
-    assert.ok(island.endLabels >= 8 && island.referenceLines >= 4, JSON.stringify(island));
     assert.equal(island.legacyLocations, 0, JSON.stringify(island));
     assert.match(island.financeText, /現在資金.*入金.*支出.*差引/s);
     assert.match(island.healthText, /人口.*会社の30日差引/s);
@@ -2238,7 +2263,7 @@ async function checkSpatialProductivity(width = 1440, height = 900, mobile = fal
   })()`);
   assert.ok(building && !building.missing,
     `資源職の30日実測を建物画面へ表示できる: ${JSON.stringify(building)}`);
-  assert.equal(building.version, 'v004.40.0-season-events');
+  assert.equal(building.version, 'v004.41.0-goods-detail');
   assert.ok(Number.isFinite(building.efficiency), JSON.stringify(building));
   assert.ok(Number.isFinite(building.resourceEfficiency), JSON.stringify(building));
   assert.equal(building.withinViewport, true, JSON.stringify(building));
@@ -2430,7 +2455,7 @@ async function checkMarketRhythmUi(width = 1440, height = 900, mobile = false) {
       hidden: sheet.hidden,
     };
   })()`);
-  assert.equal(result.version, 'v004.40.0-season-events', JSON.stringify(result));
+  assert.equal(result.version, 'v004.41.0-goods-detail', JSON.stringify(result));
   assert.equal(result.hidden, false, JSON.stringify(result));
   assert.match(result.label, /出荷をまとめ中 1\/2日/, JSON.stringify(result));
   assert.match(result.detail, /食料切れと生産停止は待ちません/, JSON.stringify(result));

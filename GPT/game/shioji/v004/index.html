@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.40.0-season-events">
+  <link rel="stylesheet" href="./style.css?v=v004.41.0-goods-detail">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -117,9 +117,20 @@
       <div><small>足りる品・足りない品 — 不足が深刻な順</small><h2>島の需給</h2></div>
       <button type="button" data-close-sheet="supply-sheet" aria-label="需給を閉じる">×</button>
     </header>
-    <div class="supply-legend" aria-hidden="true"><span class="seg-prod">生産</span><span class="seg-imp">仕入</span><span class="seg-cons">消費</span><span class="seg-need">冬支度に必要な分</span><em>棒は1日あたりの荷。市場が赤い品は、島にはあるのに市場に出ていません。押すと相場推移を開きます。</em></div>
+    <div class="supply-legend" aria-hidden="true"><span class="seg-prod">生産</span><span class="seg-imp">仕入</span><span class="seg-cons">消費</span><span class="seg-need">冬支度に必要な分</span><em>棒は1日あたりの荷。市場が赤い品は、島にはあるのに市場に出ていません。押すと品目詳細を開きます。</em></div>
     <div id="market-network-summary" class="market-network-summary" hidden></div>
     <div id="supply-grid" class="supply-grid"></div>
+  </aside>
+
+  <aside id="goods-detail-sheet" class="panel sheet goods-detail-sheet" hidden data-testid="goods-detail-sheet">
+    <header>
+      <div><small>性質・日持ち・作り方・相場</small><h2 id="goods-detail-title">品目詳細</h2></div>
+      <div class="sheet-header-actions">
+        <button id="goods-detail-back" type="button">需給へ戻る</button>
+        <button type="button" data-close-sheet="goods-detail-sheet" aria-label="品目詳細を閉じる">×</button>
+      </div>
+    </header>
+    <div id="goods-detail-content" class="goods-detail-content"></div>
   </aside>
 
   <aside id="island-sheet" class="panel sheet island-sheet" hidden data-testid="island-sheet">
@@ -162,7 +173,6 @@
         <figure data-chart="food-stock"><figcaption>食料 <small>荷</small></figcaption><svg id="food-stock-chart" viewBox="0 0 320 112" role="img" aria-label="島内食料と冬の必要量の推移"></svg></figure>
         <figure data-chart="population"><figcaption>人口 <small>人</small></figcaption><svg id="population-chart" viewBox="0 0 320 112" role="img" aria-label="人口の推移"></svg></figure>
         <figure data-chart="finance"><figcaption>取引資金 <small>デナリ</small></figcaption><svg id="finance-chart" viewBox="0 0 320 112" role="img" aria-label="取引資金とゼロ基準の推移"></svg></figure>
-        <figure id="price-chart-panel" data-chart="price" hidden><figcaption><span id="price-chart-title">市場相場</span> <small>デナリ/荷</small></figcaption><svg id="price-chart" viewBox="0 0 320 112" role="img" aria-label="需給で選択した品目の市場相場の推移"></svg></figure>
       </div>
     </section>
   </aside>
@@ -329,7 +339,7 @@
       });
     })();
   </script>
-  <script id="game-module" type="module" src="./src/main.js?v=v004.40.0-season-events"
+  <script id="game-module" type="module" src="./src/main.js?v=v004.41.0-goods-detail"
     onerror="window.__SHIOJI_BOOT__?.failed()"></script>
 </body>
 </html>
