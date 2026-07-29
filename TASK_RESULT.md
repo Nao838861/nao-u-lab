@@ -31,18 +31,21 @@
 
 Google Chrome本体の隔離プロファイル、現在worktree専用のローカルサーバー、CDPスモークを使い、1440×900で確認した。
 
-- 実行: `SHIOJI_CDP=http://127.0.0.1:9227 SHIOJI_URL=http://localhost:8437/game/shioji/v004/ SHIOJI_SEASON_SCREENSHOT_DIR=tests/artifacts node tests/browser_smoke.mjs --seasonal-events-only`
+- 2026-07-29にcheckpoint commit後、Google Chrome本体を新しい隔離プロファイルで起動して再検証した。
+- 実行: `SHIOJI_CDP=http://127.0.0.1:9227 SHIOJI_URL=http://localhost:8437/GPT/game/shioji/v004/ SHIOJI_SEASON_SCREENSHOT_DIR=tests/artifacts node tests/browser_smoke.mjs --seasonal-events-only`
 - 結果: `CHARTER ISLE v004 seasonal events smoke: PASS`
 - 初雪: 271日目、HUD「冬・12月」、雪に覆われた地形・冠雪、初雪台本を確認。
 - 雪解け: 361日目、HUD「春・3月」、緑へ戻った地形・樹木、雪解け台本を確認。
 - 初腐敗: 同じ実プレイで魚・野菜とも腐敗累計が増え、`announcedSpoilage=["fish","veg"]`になったことを確認。各一言は自動既読され、季節事件の前後で常駐しない。
+- 2枚を原寸で目視し、一言の欠け、HUDの重なり、季節表現の取り残しがないことを確認した。
 - 画像:
-  - `GPT/game/shioji/v004/tests/artifacts/season_event_first_snow.png`（1440×900、SHA-256 `fd8f921db591ea0a5e80413f7b9fd803b65bcf07f352d0fc3ef17fe4653cf2fd`）
-  - `GPT/game/shioji/v004/tests/artifacts/season_event_thaw.png`（1440×900、SHA-256 `b9d10d31f64412f2a3425191495982af548445c6c7ffaf88ed746550bb85ee3d`）
+  - `GPT/game/shioji/v004/tests/artifacts/season_event_first_snow.png`（1440×900、SHA-256 `31b8f68584393a8d1ab27b084f98210994205c4a7812e52b6f97e1a2f1e9eaa1`）
+  - `GPT/game/shioji/v004/tests/artifacts/season_event_thaw.png`（1440×900、SHA-256 `13a2809497bc27422a22ac4930a2e8e230afc0629670066c2a9f5ef574763544`）
 
 ## テスト
 
 - `node tests/run.mjs --match '季節事件|UI向上段9: 需給|空間生産性UI: 建物・市場圏'`: PASS（5件）
+- `node tests/run.mjs`: PASS（全104件、411.04秒）
 - `npm run test:focused -- '表示snapshot'`（engine）: PASS（1件）
 - `node tests/acceptance.mjs`: PASS（全章受け入れ、UI全8操作150日後とjournal再生が一致）
 - `node tests/browser_smoke.mjs --seasonal-events-only`: PASS（初雪・初腐敗・雪解け、画像2枚）
