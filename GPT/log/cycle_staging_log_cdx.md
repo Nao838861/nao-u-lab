@@ -9,7 +9,42 @@
 - 参照範囲: ローカル同期済み Slack raw、`memory/raw/web_research/results.jsonl`、最近の `memory/atoms.jsonl`、arXiv 一次資料。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260730_hcra_human_ai_collaborative_decision.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
+
+- 評価前 duplicate preflight の機械判定は `continue`。ただし同一 arXiv ID・同一 title の
+  `memory/shared_reads_candidates/20260708_human_centric_reflective_architecture.md`
+  を手動確認し、open duplicate として `review` に倒した。実 Slack 投稿の canonical work
+  一致ではないため skip せず、今回は新規 candidate だけを代表として評価し、旧 sibling は更新していない。
+  frontmatter 更新後の sidecar 再生成では `all_open` group が生成され、preflight が
+  `review: open_duplicate_title_match` になることを確認した。
+- 判定根拠: 五要素 architecture、human-centric objective、短長期 memory、
+  simulated human を用いた観光推薦評価とその限界まで抽出できる。ゲーム制作では
+  AI 提案の精度・制約適合・confidence・設計者の採否理由を分離する評価ループへ具体化できるため pass。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
