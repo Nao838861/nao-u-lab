@@ -149,7 +149,61 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index を検証。per-file atom index と一致し、broken link / duplicate id は 0 件。UTF-8 明示読みで代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」を確認した。"
+  - "memory/atoms.jsonl / per-file .md / atoms/index.jsonl は各 2786 件で一致。欠損・parse error・index error・mirror content conflict は 0 件。raw normalized-content duplicate 40 群は既存 fold 対象で、recall-visible には 3 群だけ残るが同じく fold 済み。"
+  - "memory/raw/ の 30 日以上未更新ファイル 96 件を確認。web_research 原文・PDF、headless_eval、既存 slack_archive など provenance 保持対象で、重複 working copy と断定できるものがないため移動 0 件。"
+  - "shared-reads candidate 1150 件を dry-run 監査。posted 518 / ready_to_post 9 / postponed 226 / failed 391 / needs_review 3 / lifecycle 未確定 3。現在状態の conflict は 0 件。"
+  - "open duplicate group / stale triage / group action の sidecar を順に再生成。51 group（mixed 44 / all_open 7）、stale triage 0 件、actionable group 0 件。"
+  - "Slack inbox は directives 23 行 / broadcasts 21 行を確認し、pending 0 件。完了根拠なしの status 変更は行っていない。"
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の「AIエージェント」が raw Slack archive の時点から「AIエ��ジェント」になっており、title / trigger / excerpt と両 mirror に伝播している。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みで raw source と atom mirrors のすべてに U+FFFD を確認。memory/MEMORY.md 自体は代表語 probe と index validator が正常。gr-1777083728-44d444ab7a は本文中の literal '???' による detector false positive で source 破損なし。"
+    display_or_tooling_status: "PowerShell / rg は source の U+FFFD を忠実に表示しており、表示経路だけの mojibake ではない。"
+    why_blocks_game_memory: "この 1 atom は正しい「エージェント」語での title / trigger 一致を失い、記憶・agent architecture の検索で取りこぼす可能性がある。ただし他の entry point と recall smoke は正常で、影響は局所的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+    merged: 0
+    retired: 0
+  note: "due-only limit 1 は空。期限未到来 pending lease は変更せず、receipt も追加していない。validate errors 0。"
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 51
+  mixed_group_count: 44
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  suppressed_by_live_group_lease:
+    - handoff_id: gha-e6d4d4b5a37a0808
+      group_key: "joint agent memory and exploration learning via novelty signals"
+      representative: memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+      stale_after: "2026-07-16"
+      decision: explicit_keep
+      evidence: "status: deferred; retry_after: 2026-08-20T13:19:04+09:00; membership fingerprint unchanged"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
