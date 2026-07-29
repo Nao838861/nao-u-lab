@@ -9,7 +9,36 @@
 - 参照範囲: 直近の `memory/raw/web_research/results.jsonl`、最近の atom、ローカル取り込み済み Slack ログ、外部検索。既投稿 work の再混入（PTCG-Bench、MemoPilot、AutoBG など）は sidecar / preflight 参照で新規保存しなかった。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260729_major_jam_vii_tcg_postmortem.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
+
+- duplicate preflight: `Major Jam VII Postmortem` / canonical URL は `continue`。posted-source、closed canonical、open duplicate group の一致なし。
+- 判定: pass。状態表現の二重化から subsystem・同期境界・debug 負債が増えた因果と、削減・feature freeze・test seam への教訓が具体的で、Log_cdx の短期ゲーム制作へ直接適用できる。単一 jam の回顧で定量比較がない点は Phase 3 の限界として扱う。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
