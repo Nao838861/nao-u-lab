@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-29T13:15:37+09:00",
+  "updated_at": "2026-07-29T15:21:14+09:00",
   "reviewed_source_ts": [
+    "1780460352.591189",
     "1785290603.305059",
     "1780465172.284149",
     "1785274405.178249",
@@ -541,6 +542,44 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-29T15:21:14+09:00",
+      "selected": {
+        "id": "sr-1780460352-0d473f08e8",
+        "source_ts": "1780460352.591189",
+        "title": "retention は宣言、utility は観測（AMV-L 投稿の観察ブロック）",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす最新候補で、memory・agent・operation の3優先タグを持つため選んだ。同じ Slack 投稿から分割された直前 atom sr-1780460352-2633af803d（source_ts 1780460352.566409）との関係と、既存 AMV-L probe の運用 receipt を照合し、新しい行動差が残っているか確認した。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 1,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、actionability も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。選択 atom の retention は人間宣言、utility は機械観測という直交軸と、両者が不一致なら reversible lifecycle action を選ぶ含意は、同一 Slack 投稿の直前 atom から 2026-06-25 に probe-20260625-amvl-retention-utility-lifecycle として採用済みである。さらに 2026-07-21 の Phase 4a lease は retention 宣言と観測 utility を分離して再判定しても archive・fail・handoff・issue・needs_design の判断が変わらず changed=false で resolved になっている。probe-20260604-memory-discard-operation-gate も store／retrieve／update／summarize／discard の操作分類と、退役対象を名指しできない時の state-only 化を既に扱う。したがって本 atom を追加採用しても次回判断を変える新規差分がなく、321件の active_probes と期限内 pending lease 1件へ確認負荷だけを増やす。今回は分割 atom の reviewed_source_ts と重複・receipt 根拠だけを残し、既存 AMV-L probe の再 lease もしない。",
+      "existing_probes": [
+        "probe-20260625-amvl-retention-utility-lifecycle",
+        "probe-20260604-memory-discard-operation-gate"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "同一 AMV-L 投稿から分割された観察 atom を reviewed にし、既存 probe と changed=false の resolved receipt により reject した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-29T13:15:37+09:00",
       "selected": {

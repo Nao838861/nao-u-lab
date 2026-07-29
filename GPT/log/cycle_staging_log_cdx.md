@@ -61,7 +61,35 @@ APS 評価、hard / portal level の ablation、学習・推論コスト、greed
 `chat.postMessage` 1回で投稿し、保存内容の verification も `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780460352-0d473f08e8
+    source_ts: "1780460352.591189"
+    title: "retention は宣言、utility は観測（AMV-L 投稿の観察ブロック）"
+    reason: "score 11 の未レビュー最新候補で memory・agent・operation の3優先タグを持つ。同一 Slack 投稿の直前 atom と既存 AMV-L probe receipt を照合し、新しい行動差が残るか確認した。Nao_u の明示評価はなし。"
+  scores:
+    relevance: 3
+    actionability: 1
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "同一投稿の sr-1780460352-2633af803d は既に probe-20260625-amvl-retention-utility-lifecycle として採用済み。2026-07-21 の Phase 4a lease でも retention と utility を分離した再判定は changed=false で resolved している。discard-operation gate も退役対象を名指しできない更新の state-only 化を扱うため、本 atom から新しい判断差を作れない。"
+  change:
+    summary: "reviewed_source_ts と重複・receipt 根拠だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
