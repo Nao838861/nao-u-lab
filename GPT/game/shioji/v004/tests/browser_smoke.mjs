@@ -14,6 +14,8 @@ const gameForMode = mode => {
 const GAME = gameForMode('test');
 const SEASON_SCREENSHOT_DIR = process.env.SHIOJI_SEASON_SCREENSHOT_DIR ?? '/tmp';
 const seasonScreenshotPath = filename => path.join(SEASON_SCREENSHOT_DIR, filename);
+const GOODS_DETAIL_SCREENSHOT_DIR = process.env.SHIOJI_GOODS_DETAIL_SCREENSHOT_DIR ?? '/tmp';
+const goodsDetailScreenshotPath = filename => path.join(GOODS_DETAIL_SCREENSHOT_DIR, filename);
 const wait = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
 
 class Page {
@@ -2228,6 +2230,98 @@ async function checkViewport(width, height, mobile) {
   await page.close();
 }
 
+async function checkGoodsDetail(width, height, mobile, goods) {
+  const page = await newPage(width, height, mobile);
+  await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.setSpeed(0);
+    for (let day = 0; day < 30; day += 1) game.advanceTicks(30, { animate: false });
+    document.querySelector('#open-supply').click();
+  })()`);
+  const rowPoint = await page.evaluate(`(() => {
+    const row = document.querySelector(${JSON.stringify(`[data-supply-goods="${goods}"]`)});
+    const box = row.getBoundingClientRect();
+    return {
+      x: box.left + box.width / 2,
+      y: box.top + box.height / 2,
+      tag: row.tagName,
+      directButtons: row.querySelectorAll('button').length,
+    };
+  })()`);
+  assert.equal(rowPoint.tag, 'BUTTON', JSON.stringify(rowPoint));
+  assert.equal(rowPoint.directButtons, 0, '品目行の中に押し分けボタンを置かない');
+  await page.send('Input.dispatchMouseEvent', {
+    type: 'mousePressed', x: rowPoint.x, y: rowPoint.y,
+    button: 'left', buttons: 1, clickCount: 1,
+  });
+  await page.send('Input.dispatchMouseEvent', {
+    type: 'mouseReleased', x: rowPoint.x, y: rowPoint.y,
+    button: 'left', buttons: 0, clickCount: 1,
+  });
+  const detail = await page.evaluate(`(() => {
+    const sheet = document.querySelector('#goods-detail-sheet');
+    const box = sheet.getBoundingClientRect();
+    const content = document.querySelector('#goods-detail-content');
+    return {
+      hidden: sheet.hidden,
+      supplyHidden: document.querySelector('#supply-sheet').hidden,
+      goods: content.dataset.goods,
+      elements: content.querySelectorAll('[data-detail-element]').length,
+      art: content.querySelector('.goods-detail-art [data-goods-sprite]')?.dataset.goodsSprite,
+      fact: content.querySelector('[data-detail-element="fact"]').textContent,
+      life: content.querySelector('[data-detail-element="shelf-life"]').textContent,
+      lifeAria: content.querySelector('.shelf-life-art').getAttribute('aria-label'),
+      recipe: content.querySelector('[data-detail-element="recipe"]').textContent,
+      recipeAria: content.querySelector('.goods-formula').getAttribute('aria-label'),
+      priceChart: Boolean(content.querySelector('[data-detail-element="price-chart"] #price-chart')),
+      pricePaths: content.querySelectorAll('#price-chart .chart-line').length,
+      horizontalOverflow: sheet.scrollWidth > sheet.clientWidth + 1,
+      pageHorizontalOverflow: document.documentElement.scrollWidth > innerWidth,
+      box: { left: box.left, right: box.right, top: box.top, bottom: box.bottom },
+    };
+  })()`);
+  assert.equal(detail.hidden, false, JSON.stringify(detail));
+  assert.equal(detail.supplyHidden, true, JSON.stringify(detail));
+  assert.equal(detail.goods, goods, JSON.stringify(detail));
+  assert.equal(detail.elements, 5, JSON.stringify(detail));
+  assert.equal(detail.art, goods, JSON.stringify(detail));
+  assert.equal(detail.priceChart, true, JSON.stringify(detail));
+  assert.ok(detail.pricePaths >= 2, JSON.stringify(detail));
+  assert.equal(detail.horizontalOverflow, false, JSON.stringify(detail));
+  assert.equal(detail.pageHorizontalOverflow, false, JSON.stringify(detail));
+  assert.ok(detail.box.left >= 0 && detail.box.right <= width, JSON.stringify(detail));
+  assert.ok(detail.box.top >= 0 && detail.box.bottom <= height, JSON.stringify(detail));
+  if (goods === 'tools') {
+    assert.match(detail.fact, /家の発展と木の荷車/);
+    assert.match(detail.life, /腐りません/);
+    assert.match(detail.recipeAria, /丸太.*木工房.*木製品/);
+  }
+  if (goods === 'fish') {
+    assert.match(detail.fact, /3日で腐ります/);
+    assert.match(detail.life, /約3日/);
+    assert.match(detail.lifeAria, /約3日で傷む/);
+  }
+  fs.mkdirSync(GOODS_DETAIL_SCREENSHOT_DIR, { recursive: true });
+  await page.screenshot(goodsDetailScreenshotPath(
+    mobile ? 'goods_detail_mobile_fish.png' : 'goods_detail_pc_tools.png',
+  ));
+  await page.evaluate("document.querySelector('#goods-detail-back').click()");
+  await wait(50);
+  const returned = await page.evaluate(`({
+    supplyVisible: !document.querySelector('#supply-sheet').hidden,
+    detailHidden: document.querySelector('#goods-detail-sheet').hidden,
+    focusedGoods: document.activeElement?.dataset?.supplyGoods ?? null,
+  })`);
+  assert.deepEqual(returned, {
+    supplyVisible: true,
+    detailHidden: true,
+    focusedGoods: goods,
+  });
+  assert.deepEqual(page.errors, []);
+  await page.close();
+  return detail;
+}
+
 async function checkSpatialProductivity(width = 1440, height = 900, mobile = false) {
   const page = await newPage(width, height, mobile, GAME);
   const building = await page.evaluate(`(() => {
@@ -2514,6 +2608,13 @@ if (process.argv.includes('--start-choice-only')) {
   await checkStartChoice(800, 700, false, 'test');
   await checkGoodsDiscovery();
   console.log('CHARTER ISLE v004 goods discovery smoke: PASS');
+} else if (process.argv.includes('--goods-detail-only')) {
+  const pc = await checkGoodsDetail(1440, 900, false, 'tools');
+  const mobile = await checkGoodsDetail(390, 844, true, 'fish');
+  console.log(`CHARTER ISLE v004 goods detail smoke: PASS ${JSON.stringify({
+    pc: { goods: pc.goods, elements: pc.elements, pricePaths: pc.pricePaths },
+    mobile: { goods: mobile.goods, elements: mobile.elements, pricePaths: mobile.pricePaths },
+  })}`);
 } else if (process.argv.includes('--save-delivery-only')) {
   await checkSaveDeliveryUi(1440, 900, false);
   await checkSaveDeliveryUi(390, 844, true);
