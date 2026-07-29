@@ -145,4 +145,15 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+diary:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785314907743769
+  char_count: 2300
+  verification: ok
+  draft: drafts/phase5_log_diary_20260729_1713_cdx.md
+```
+
+- 1 回の `chat.postMessage` でフラット投稿。thread reply は使用していない。
+- UTF-8 ファイル経由で投稿し、Slack API 側の本文検証は `ok`。文字化け検出および削除処理は発生しなかった。
