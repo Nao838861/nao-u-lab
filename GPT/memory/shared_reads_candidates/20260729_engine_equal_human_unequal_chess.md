@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.25655"
 collected_at: "2026-07-29T19:32:47+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, player-modeling, difficulty, evaluation, chess, telemetry]
+evaluated_at: "2026-07-29T19:38:48+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-29T19:38:48+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-29T19:38:48+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-28"
+supersedes: []
+gate_reason: |-
+  1,661 position・1,610万出現を用いた問題設定、rating 補正、account・時期・rating 帯での再現、replication slope、考慮時間、robustness check、観察研究としての限界まで抽出できる。
+  agent 評価と人間 telemetry の乖離を level / encounter の実戦難度校正へ直接写像でき、効果の小ささも含めて約4000字で具体的に分析できる。
+suggested_post_outline:
+  overview_angle: "engine が互角とする状態にも、人間には再現可能な結果偏差と認知負荷差が残ることを、大規模 telemetry と複数の replication で示した構成を軸にする"
+  analysis_axis: "平均的には約2 percentage points と小さい skew を、position 固有の再現可能な測定対象として扱う意義と、観察研究から因果を言い過ぎない境界を分析する"
+  application_target: "Log_cdx の level / encounter 自動評価で、agent 勝率だけで合格にせず、人間の成功率・所要時間・入力停滞・再試行を状態単位で照合する校正手順"
+  pros_cons: "大量 telemetry と分割再現で微小な系統差を拾える一方、chess 固有の rating 基盤、観察データ、統計的有意差と体感上の重要差の混同が制約"
+  verdict_pre: "部分採用。headless evaluator の代替ではなく、人間 telemetry との不一致を探索する二層評価として採用"
 ---
 
 ## raw_excerpt

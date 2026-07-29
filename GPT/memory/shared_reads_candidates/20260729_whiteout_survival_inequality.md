@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2607.25574"
 collected_at: "2026-07-29T19:32:47+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, live-service, social-systems, fairness, player-research, simulation]
+evaluated_at: "2026-07-29T19:38:48+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-29T19:38:48+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-29T19:38:48+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-28"
+supersedes: []
+gate_reason: |-
+  相対的地位と social capital によって公平感が反転する問題設定は、ranking・resource・guild 設計へ具体的に適用できる。
+  ただし現候補は参加者数・募集条件・think-aloud 手順・coding/分析過程・反例・限界を欠き、約4000字の概要を推測や一般論で埋めずに書けないため、一次資料の方法・結果節を確認するまで保留する。
 ---
 
 ## raw_excerpt

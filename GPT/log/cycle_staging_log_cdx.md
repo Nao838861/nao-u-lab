@@ -12,7 +12,42 @@
 - Phase 1 の範囲として品質判定・4000字概要・Slack投稿・記憶階層整理は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260729_engine_equal_human_unequal_chess.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260729_whiteout_survival_inequality.md
+    reason: "ゲーム制作への適用性は高いが、現候補には参加者・分析手順・反例・限界がなく、推測なしで約4000字の概要を書けない"
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  - path: memory/shared_reads_candidates/20260729_engine_equal_human_unequal_chess.md
+    decision: continue
+    canonical_url: "https://arxiv.org/abs/2607.25655"
+  - path: memory/shared_reads_candidates/20260729_whiteout_survival_inequality.md
+    decision: continue
+    canonical_url: "https://arxiv.org/abs/2607.25574"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
