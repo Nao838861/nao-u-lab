@@ -86,7 +86,57 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、validate_memory_index.py で per-file atom index との対応を確認した。broken index entry は 0 件。代表語（記憶 / ゲーム設計 / 敵パターン / 評価軸）も source file から取得できた。"
+  - "memory/atoms.jsonl 2788 件を監査した。atoms.jsonl / per-file .md / index.jsonl は全件一致し、content conflict は 0 件。duplicate cluster index は 45 group で最新、recall-visible normalized duplicate 3 group は既存 fold が適用済み。"
+  - "memory/raw/ の最終更新30日超を 96 件抽出した（web_research 88 / headless_eval 6 / slack_archive 1 / raw root 1）。一次資料・評価trace・provenance のため自動移動せず、archive 候補として記録のみ行った。"
+  - "shared-reads candidate 1153 件の lifecycle を dry-run 監査した。failed 391 / needs_review 3 / posted 521 / postponed 226 / ready_to_post 9 / skipped_unreviewed 3。現在状態の conflict は 0 件。"
+  - "open duplicate group / stale triage / group action sidecar を再生成した。open group は 52（mixed 45 / all_open 7）、stale triage と actionable group は 0 件。"
+  - "Slack directive / broadcast inbox を確認した。pending はともに 0 件で、handled への更新対象はなかった。"
+issues:
+  - id: ISS-UTF8-001
+    description: "atom sr-1776127289-4d9239b255 の title / trigger / excerpt に「AIエ��ジェント」という replacement character 由来の文字化けが残っている。gr-1777083728-44d444ab7a は UTF-8 明示読みで本文が正常なため health check の false positive。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory_health.py --json mojibake_suspect_atoms"
+    source_file_status: "UTF-8 明示読みでも per-file .md と atoms.jsonl の双方に U+FFFD があり、source data 自体の局所破損を確認。MEMORY.md と gr-1777083728-44d444ab7a は正常。"
+    display_or_tooling_status: "none。PowerShell / staging の表示経路ではなく source file に同じ文字列が保存されている。"
+    why_blocks_game_memory: "「エージェント」を含む正規語検索と trigger 読解でこの1 atom が欠落・劣化する。ただし局所データ修復で扱えるため Phase 4b の構造設計は不要。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+candidate_lifecycle:
+  overdue_open_total: 1
+  missing_stale_after: 6
+  state_conflicts: 0
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 52
+  mixed_group_count: 45
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  suppressed_by_live_lease_count: 1
+  suppression_evidence: "JAMEL all-open group gha-e6d4d4b5a37a0808 は membership fingerprint 一致の deferred lease。retry_after=2026-08-20T13:19:04+09:00。"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
