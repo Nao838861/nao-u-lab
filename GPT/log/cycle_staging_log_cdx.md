@@ -91,7 +91,57 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、validate_memory_index.py で per-file atom index との対応を確認した。broken index entry は 0 件、Markdown link は 0 件。代表語 probe は「記憶」「ゲーム設計」「敵パターン」を source file から取得でき、「評価軸」は MEMORY.md 本文にはないが memory_recall.py で 3 件取得できたため、encoding / 検索経路の破損ではない。"
+  - "memory/atoms.jsonl 2790 件を監査した。atoms.jsonl / per-file .md / index.jsonl は全件一致し、content conflict は 0 件。normalized content duplicate は 40 group / 80 rows で全件に既存 fold が適用され、recall-visible 3 group / 6 rows も fold 済み。"
+  - "memory/raw/ の最終更新30日超を 96 件・63,095,789 bytes 抽出した（web_research 88 / headless_eval 6 / slack_archive 1 / raw root 1）。一次資料・評価 trace・provenance のため自動移動せず、archive 候補として記録のみ行った。"
+  - "shared-reads candidate 1155 件の lifecycle を dry-run 監査した。failed 391 / needs_review 3 / posted 522 / postponed 227 / ready_to_post 9 / skipped_unreviewed 3。現在状態の自動修復対象は 0 件。"
+  - "terminal title canonical index / mixed duplicate queue / open duplicate group / stale triage / group action sidecar を再生成・監査した。terminal canonical group は 74、mixed group は 45、open group は 52（mixed 45 / all_open 7）、stale triage と actionable group は 0 件。canonical 未登録の duplicate title は open status を含むため、契約どおり mixed/open queue 側に保持されている。"
+  - "Slack directive / broadcast inbox を確認した。pending はともに 0 件で、handled への更新対象はなかった。"
+issues:
+  - id: ISS-UTF8-001
+    description: "atom sr-1776127289-4d9239b255 の title / trigger / excerpt に「AIエ��ジェント」という replacement character 由来の局所文字化けが残っている。gr-1777083728-44d444ab7a は UTF-8 明示読みで本文が正常なため health check の false positive。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory_health.py --json mojibake_suspect_atoms"
+    source_file_status: "UTF-8 明示読みでも per-file .md、atoms.jsonl、raw Slack archive の3経路に U+FFFD があり、source data 自体の局所破損を確認。MEMORY.md は UTF-8 として正常で、gr-1777083728-44d444ab7a の source file も正常。"
+    display_or_tooling_status: "none。PowerShell / staging の表示経路だけの mojibake ではない。"
+    why_blocks_game_memory: "「エージェント」を含む正規語検索と trigger 読解でこの1 atom が欠落・劣化する。ただし局所データ修復で扱えるため Phase 4b の構造設計は不要。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+candidate_lifecycle:
+  overdue_open_total: 1
+  missing_stale_after: 6
+  state_conflicts: 0
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 52
+  mixed_group_count: 45
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  suppressed_by_live_lease_count: 1
+  suppression_evidence: "JAMEL all-open group gha-e6d4d4b5a37a0808 は membership fingerprint 一致の deferred lease。retry_after=2026-08-20T13:19:04+09:00。"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
