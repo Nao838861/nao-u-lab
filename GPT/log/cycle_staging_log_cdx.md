@@ -10,7 +10,36 @@
 - 重複確認: candidate 収集開始時に 3 sidecar を再生成し、書込み直前の duplicate preflight は `continue`。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260730_knowledge_centric_self_improvement.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
+
+- duplicate preflight: `Knowledge-Centric Self-Improvement` / `https://arxiv.org/abs/2607.19592` は `continue`。
+- 判定根拠: 問題設定、forum 二層、型付き distillation、task-conditioned adapter、4 benchmark・10 generation・held-out / cross-family transfer が揃い、ゲーム制作の試行証拠を次の fresh agent へ渡す工程へ具体的に接続できる。主観的な面白さへの外挿限界も含めて約4000字で分析可能。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
