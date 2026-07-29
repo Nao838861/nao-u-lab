@@ -2225,7 +2225,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.42.0-boundary-voices');
+  assert.equal(VERSION, 'v004.42.1-polish');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -3966,13 +3966,27 @@ test('季節事件: 初雪と雪解けを毎年一言にし、魚と野菜の初
   assert.equal(restored.currentMessage(), null, '初腐敗の発話済み状態をセーブ後も保持する');
 });
 
-test('季節事件: 春開始日の雪解けを出し、一言の器で自動既読できる', () => {
+test('季節事件: 新規春開始では雪解けを出さず、冬を経た春だけ一言にする', () => {
   const events = createSeasonalEvents({
     model: {
       day: 0,
       calendarOffsetDays: SPRING_START_CALENDAR_OFFSET_DAYS,
       spoilByGoods: {},
     },
+  });
+  assert.equal(events.currentMessage(), null, '冬を経ていない最初の春に雪解けを出さない');
+  events.observe({
+    day: 271,
+    calendarOffsetDays: SPRING_START_CALENDAR_OFFSET_DAYS,
+    spoilByGoods: {},
+  });
+  const firstSnow = events.currentMessage();
+  assert.equal(firstSnow.type, 'firstSnow');
+  events.markAnnounced(firstSnow.id);
+  events.observe({
+    day: 361,
+    calendarOffsetDays: SPRING_START_CALENDAR_OFFSET_DAYS,
+    spoilByGoods: {},
   });
   const thaw = events.currentMessage();
   assert.equal(thaw.type, 'thaw');

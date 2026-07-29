@@ -55,6 +55,9 @@ function restoredState(state) {
   return {
     lastCalendarSerial: Number.isSafeInteger(state.lastCalendarSerial)
       ? state.lastCalendarSerial : null,
+    winterOccurredSinceLastThaw: typeof state.winterOccurredSinceLastThaw === 'boolean'
+      ? state.winterOccurredSinceLastThaw
+      : pending.some(row => row.type === 'firstSnow'),
     spoilTotals: Object.fromEntries(PERISHABLE_GOODS.map(goods => [
       goods,
       Math.max(0, Number(state.spoilTotals?.[goods] ?? 0)),
@@ -73,6 +76,7 @@ export class SeasonalEvents {
     const restored = restoredState(state);
     if (restored) {
       this.lastCalendarSerial = restored.lastCalendarSerial;
+      this.winterOccurredSinceLastThaw = restored.winterOccurredSinceLastThaw;
       this.lastSpoilTotals = restored.spoilTotals;
       this.announcedSpoilage = new Set(restored.announcedSpoilage);
       this.pending = restored.pending;
@@ -80,6 +84,7 @@ export class SeasonalEvents {
     }
     const serial = calendarSerial(model);
     this.lastCalendarSerial = suppressInitialAnnouncements ? serial : serial - 1;
+    this.winterOccurredSinceLastThaw = false;
     this.lastSpoilTotals = spoilTotals(model);
     this.announcedSpoilage = new Set();
     this.pending = [];
@@ -109,6 +114,8 @@ export class SeasonalEvents {
       const type = date.month === 12 && date.dayOfMonth === 1 ? 'firstSnow'
         : date.month === 3 && date.dayOfMonth === 1 ? 'thaw' : null;
       if (!type) continue;
+      if (type === 'firstSnow') this.winterOccurredSinceLastThaw = true;
+      if (type === 'thaw' && !this.winterOccurredSinceLastThaw) continue;
       const message = this.enqueue({
         id: `season-${type}-${date.year}`,
         day: serial === currentSerial && Number.isSafeInteger(model?.day)
@@ -117,6 +124,7 @@ export class SeasonalEvents {
         goods: null,
       });
       if (message) messages.push(message);
+      if (type === 'thaw') this.winterOccurredSinceLastThaw = false;
     }
     this.lastCalendarSerial = currentSerial;
     return messages;
@@ -174,6 +182,7 @@ export class SeasonalEvents {
     return clone({
       version: SEASONAL_EVENT_STATE_VERSION,
       lastCalendarSerial: this.lastCalendarSerial,
+      winterOccurredSinceLastThaw: this.winterOccurredSinceLastThaw,
       spoilTotals: this.lastSpoilTotals,
       announcedSpoilage: PERISHABLE_GOODS.filter(goods => this.announcedSpoilage.has(goods)),
       pending: this.pending,

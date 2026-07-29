@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.42.0-boundary-voices';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.42.1-polish';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.42.0-boundary-voices';
+} from './food_readability.js?v=v004.42.1-polish';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.42.0-boundary-voices';
-import { analyzeRoadConnections } from './placement.js?v=v004.42.0-boundary-voices';
+} from './engine_bridge.js?v=v004.42.1-polish';
+import { analyzeRoadConnections } from './placement.js?v=v004.42.1-polish';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.42.0-boundary-voices';
+} from './render_scene.js?v=v004.42.1-polish';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.42.0-boundary-voices';
+} from './visuals.js?v=v004.42.1-polish';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',

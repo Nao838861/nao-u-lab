@@ -1,47 +1,47 @@
-import { IsometricCamera } from './camera.js?v=v004.42.0-boundary-voices';
-import { SimulationClock } from './clock.js?v=v004.42.0-boundary-voices';
-import { createBoundaryEvents } from './boundary_events.js?v=v004.42.0-boundary-voices';
+import { IsometricCamera } from './camera.js?v=v004.42.1-polish';
+import { SimulationClock } from './clock.js?v=v004.42.1-polish';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.42.1-polish';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.42.0-boundary-voices';
+} from './config.js?v=v004.42.1-polish';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.42.0-boundary-voices';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.42.0-boundary-voices';
-import { developmentMapView } from './development_map.js?v=v004.42.0-boundary-voices';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.42.0-boundary-voices';
-import { formatElenaSpeech } from './elena_text.js?v=v004.42.0-boundary-voices';
+} from './display_batch.js?v=v004.42.1-polish';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.42.1-polish';
+import { developmentMapView } from './development_map.js?v=v004.42.1-polish';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.42.1-polish';
+import { formatElenaSpeech } from './elena_text.js?v=v004.42.1-polish';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.42.0-boundary-voices';
+} from './food_readability.js?v=v004.42.1-polish';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.42.0-boundary-voices';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.42.0-boundary-voices';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.42.0-boundary-voices';
-import { goodsDetail } from './goods_detail.js?v=v004.42.0-boundary-voices';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.42.0-boundary-voices';
-import { WorldPresentation } from './presentation.js?v=v004.42.0-boundary-voices';
-import { Renderer } from './renderer.js?v=v004.42.0-boundary-voices';
+} from './keyboard.js?v=v004.42.1-polish';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.42.1-polish';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.42.1-polish';
+import { goodsDetail } from './goods_detail.js?v=v004.42.1-polish';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.42.1-polish';
+import { WorldPresentation } from './presentation.js?v=v004.42.1-polish';
+import { Renderer } from './renderer.js?v=v004.42.1-polish';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.42.0-boundary-voices';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.42.0-boundary-voices';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.42.0-boundary-voices';
+} from './save_game.js?v=v004.42.1-polish';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.42.1-polish';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.42.1-polish';
 import {
   GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRows,
-} from './supply_demand.js?v=v004.42.0-boundary-voices';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.42.0-boundary-voices';
+} from './supply_demand.js?v=v004.42.1-polish';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.42.1-polish';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.42.0-boundary-voices';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.42.0-boundary-voices';
+} from './ui_guidance.js?v=v004.42.1-polish';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.42.1-polish';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');

@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.42.0-boundary-voices';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.42.1-polish';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({

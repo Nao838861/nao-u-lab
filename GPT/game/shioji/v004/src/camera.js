@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.42.0-boundary-voices';
+import { TILE } from './config.js?v=v004.42.1-polish';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));
