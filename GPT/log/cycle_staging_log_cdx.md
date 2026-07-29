@@ -60,7 +60,34 @@ skipped: []
 - Slack 投稿: `tools/slack_client.py` を利用する file poster で、thread を使わず1 candidate 1回の `chat.postMessage` として送信し、投稿後の本文一致検証に成功した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785359529-a948723c4b
+    source_ts: "1785359529.445089"
+    title: "Knowledge-Centric Self-Improvement（KSI）— disposable agent と条件付き外部知識による改善 transfer"
+    reason: "未レビュー条件を満たす最新の score 12 atom で、memory・harness・game-design・agent・operation・evaluation を含む9タグを持つ。外部知識の evidence・反例・適用境界・cross-task 再利用が次のゲーム試作に新しい判断差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "採用点は満たすが、今サイクルには比較可能な playable diff、知識あり／なしの割当、cross-task 再利用結果がなく、具体的な consumer phase と before／after trigger artifact を指定できない。既存 probes が改善軸、事前仮説と反証、baseline／held-out transfer、外部 benchmark との非同型差をすでに扱い、active_probes 321件と Phase 4a 向け pending lease 1件もあるため、対象 artifact なしに3 prototype probeを増やさず state-only review とした。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

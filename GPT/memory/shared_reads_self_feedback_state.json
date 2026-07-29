@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-30T06:17:00+09:00",
+  "updated_at": "2026-07-30T08:19:49+09:00",
   "reviewed_source_ts": [
+    "1785359529.445089",
     "1785352331.306579",
     "1785345085.461859",
     "1785329864.178069",
@@ -15485,6 +15486,47 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、実人間を介さない acceptance proxy、同一 model 系 evaluator、既存 calibration／prediction／feedback probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-30T08:19:49+09:00",
+      "selected": {
+        "id": "sr-1785359529-a948723c4b",
+        "source_ts": "1785359529.445089",
+        "title": "Knowledge-Centric Self-Improvement（KSI）— disposable agent と条件付き外部知識による改善 transfer",
+        "reason": "未レビュー条件を満たす最新の score 12 atom で、memory・harness・game-design・agent・operation・evaluation を含む9タグを持つ。agent 自体を複雑化せず、evidence・反例・適用境界を持つ外部知識だけを別 task へ渡す知見が、Codex の game task lens と prototype 学習に新しい判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たすが、今サイクルには比較可能な playable diff、次のゲーム試作、知識あり／なしの割当、または cross-task 再利用結果がなく、probe lease 契約を満たす具体的な consumer phase と before／after trigger artifact を指定できないため state-only review に留める。shared-reads 本文は5 benchmark、各50 task・10 generations・3 seeds、同一／cross-family transfer、held-out 20 task、forum／distillation 費用を示し、rejected hypotheses と does_not_apply_when を正常な出力にするため evidence=3 とした。一方、held-out 選抜と no-knowledge 評価は完全独立でなく、transfer は Polyglot と ARC-AGI-1 に限られ、長期制作・誤 evidence・人間の面白さ評価は未検証である。既存の self-improvement-axis-goodhart は改善軸と fixed verifier を、hypothesis-evidence-spec-gate と paperclaw-prototype-hypothesis-contract は事前仮説・反証・測定 verdict を、omni-game-arena-improvement-transfer は baseline／same-condition／held-out transfer を、modular-memory-nonisomorphic-transfer は外部 benchmark と当方運用の非同型差をすでに扱う。KSI 固有の applies_when／does_not_apply_when と cross-task support は有望だが、active_probes 321件と Phase 4a 向け pending lease 1件がある状態で対象 artifact なしに3 prototype probe を追加すると確認負荷だけが増える。次の具体的なゲーム試作で同じ claim を別 prototype へ渡し、既存 probes だけでは誤 transfer を分類できない時に再評価する。",
+      "existing_probes": [
+        "probe-20260530-self-improvement-axis-goodhart",
+        "probe-20260603-hypothesis-evidence-spec-gate",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract",
+        "probe-20260619-omni-game-arena-improvement-transfer",
+        "probe-20260626-modular-memory-nonisomorphic-transfer"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の自己改善軸・仮説／反証・held-out transfer・非同型 transfer probes との重複、および具体的 lease artifact 不在による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
