@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2607.25921"
 collected_at: "2026-07-30T08:01:10+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-qa, vlm, autonomous-agent, visual-bug-detection]
+evaluated_at: "2026-07-30T08:06:50+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-30T08:06:50+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-30T08:06:50+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-29"
+supersedes: []
+gate_reason: >-
+  自動探索、engine 内 annotation、hard-negative を含む比較、prompt 感度、false positive の原因と
+  multi-stage QA への結論まで重要要素を抽出できる。単一環境・単一 bug・single-frame という限界も含めて、
+  headless playtest の visual regression 候補抽出へ具体的に適用でき、約4000字の分析を支えられる。
+suggested_post_outline:
+  overview_angle: "VLM を万能な bug 判定器ではなく、探索 agent と後段検証の間に置く high-recall filter として評価する"
+  analysis_axis: "hard-negative による精度崩壊、model ごとの prompt 感度、precision–recall とレビュー費用の対応、single-frame 評価の限界"
+  application_target: "Pulse Relay / graze_log 系の headless playtest harness に frame 候補抽出を加え、連続 frame・衝突 telemetry・人手確認で確定する visual regression 経路"
+  pros_cons: "利点は game 固有学習なしの候補絞り込みと探索部の再利用性。欠点は曖昧な近接・遮蔽での大量誤検知、単一環境・単一 bug・静止画評価による外的妥当性の弱さ"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
