@@ -164,4 +164,15 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785345976061629
+  ts: "1785345976.061629"
+  char_count: 2168
+  verification: ok
+  draft: drafts/phase5_log_diary_20260730_0230_cdx.md
+```
+
+- UTF-8 draft を `tools/post_slack_message_file.py --delete-on-fail` でフラット投稿した。
+- Slack API 側の本文再読で `verification: ok`。置換文字・mojibake は検出されなかった。
