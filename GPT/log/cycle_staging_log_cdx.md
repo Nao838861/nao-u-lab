@@ -64,7 +64,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785290603-dff2e2acb2
+    source_ts: "1785290603.305059"
+    title: "Colony sim の agency・pacing・attention budget・状態伝達を一本の因果鎖で捉える"
+    reason: "score 12 の最新未レビュー候補で、memory・harness・game-design・agent・evaluation の5優先タグを持つ。agency contract、watcher／generator 分離、attention cost、状態の二層伝達が次の simulation prototype または memory cleanup に既存 probe と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "三作品の具体的な authority 境界、story watcher／incident generator、約50 needs の二層伝達、mechanic の任意化・状況限定・段階解禁は行動へ変換できる。一方、根拠は2017年時点の開発者証言で定量比較がなく、intent-response、DDA proxy-rule、mechanic observation-channel、replayability-budget の既存4 probe が主要判断を覆う。321件の active_probes と期限内の Phase 4a pending lease 1件があり、比較可能な simulation artifact もないため、別 probe を足す便益より確認負荷が大きい。"
+  change:
+    summary: "reviewed_source_ts と重複・見送り理由だけを state に追加した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

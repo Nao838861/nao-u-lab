@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-29T11:08:46+09:00",
+  "updated_at": "2026-07-29T13:15:37+09:00",
   "reviewed_source_ts": [
+    "1785290603.305059",
     "1780465172.284149",
     "1785274405.178249",
     "1785266226.414919",
@@ -540,6 +541,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-29T13:15:37+09:00",
+      "selected": {
+        "id": "sr-1785290603-dff2e2acb2",
+        "source_ts": "1785290603.305059",
+        "title": "Colony sim の agency・pacing・attention budget・状態伝達を一本の因果鎖で捉える",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、memory・harness・game-design・agent・evaluation の5優先タグを持つ。Dwarf Fortress／RimWorld／Maia の開発者証言から、agency contract、watcher／generator 分離、mechanic の attention cost、内部状態の二層伝達を、次の simulation prototype または memory cleanup の小さな判断差へ変換できるか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、Dwarf Fortress の player を砦の official will とする authority 境界、RimWorld の story watcher／incident generator 分離、Maia の約50 needs を animation と procedural email へ圧縮する二層伝達、mechanic 追加時の任意化・状況限定・段階解禁を一つの設計因果として示し、agency contract、watcher-only log、同 seed 比較、attention cost、内部 state／外部 signal 対応表へ直接変換できるため relevance と actionability は3とした。一方、根拠は2017年時点の三作品の開発者証言と作品間比較で、control group、player 理解度、事件分布、retention、attention cost の定量値や現在仕様との比較がないため evidence は2に留める。既存の probe-20260717-player-intent-action-response は intent・precondition・observable world response を、probe-20260609-dda-proxy-rule-trace は観測 proxy・推定 player state・介入 rule・expected trace を、probe-20260603-mechanic-observation-channel-gate は mechanic ごとの観測 channel と各 channel の証明限界を、probe-20260709-replayability-budget-core-depth は run-1 core と追加複雑性の到達予算をすでに扱う。本 atom 固有の四要素を一つの probe に束ねても次回判断の大半は変わらず、321件の active_probes と期限内の Phase 4a pending lease 1件へ確認負荷を追加する。現在の staging には比較可能な colony／simulation prototype、agency contract の before／after、watcher-only trace、state-to-signal table がなく、consumer、before／after artifact、期待判断差を lease 契約どおり指定できない。次に多数 entity の simulation prototype が生じ、既存4 probe を適用しても命令拒否の可読性、director 介入の因果、内部状態の外部伝達のいずれかを判定できない実例が出た時だけ再評価する。",
+      "existing_probes": [
+        "probe-20260717-player-intent-action-response",
+        "probe-20260609-dda-proxy-rule-trace",
+        "probe-20260603-mechanic-observation-channel-gate",
+        "probe-20260709-replayability-budget-core-depth"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の intent-response／DDA proxy-rule／observation-channel／replayability-budget probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-29T11:08:46+09:00",
       "selected": {
