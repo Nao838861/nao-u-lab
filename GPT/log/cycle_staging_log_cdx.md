@@ -55,7 +55,34 @@ skipped: []
 - 投稿前 review: 必須6見出し、URL 末尾、禁止表現なし、単一 candidate / 単一 `chat.postMessage`、Slack 再取得時の文字化けなし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785345085-a4efe5a7d7
+    source_ts: "1785345085.461859"
+    title: "Human-Centric Reflective Architecture (HCRA) — correctness・constraint agreement・acceptance の分離 loop"
+    reason: "未レビュー条件を満たす最新の score 12 atom で、memory・harness・game-design・agent・operation・evaluation の優先6タグをすべて持つ。提案・正しさ・制約適合・confidence・採否・後続実測の分離が既存 probe と異なる判断差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新した。実人間を介さない acceptance proxy、同一 model 系 evaluator、既存 calibration／prediction／feedback probes との重複を確認し、probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

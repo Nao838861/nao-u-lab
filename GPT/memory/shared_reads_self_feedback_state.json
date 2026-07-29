@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-30T02:16:43+09:00",
+  "updated_at": "2026-07-30T04:16:00+09:00",
   "reviewed_source_ts": [
+    "1785345085.461859",
     "1785329864.178069",
     "1785321935.890519",
     "1780427580.639529",
@@ -15402,6 +15403,47 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、既存 player-time／social-surface／autonomy／intervention-amplitude probes との重複、実証不足、具体的 lease artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-30T04:16:00+09:00",
+      "selected": {
+        "id": "sr-1785345085-a4efe5a7d7",
+        "source_ts": "1785345085.461859",
+        "title": "Human-Centric Reflective Architecture (HCRA) — correctness・constraint agreement・acceptance の分離 loop",
+        "reason": "未レビュー条件を満たす最新の score 12 atom で、memory・harness・game-design・agent・operation・evaluation の優先6タグをすべて持つ。提案、正しさ、制約適合、confidence、採否、後続実測を分離する知見が、Codex の playable diff、自己判定、memory 昇格に既存 probe と異なる小さな判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は actor、factual correctness、自然言語制約への agreement、calibrated confidence、acceptance probability、短期／長期 memory、self-reflection を分離し、観光推薦32問×10 run の320 trial、temperature 比較、calibration ablation、evaluator noise 対照、correctness-only baseline を示すため relevance・actionability は3とした。一方、実人間が反復中に参加せず、acceptance model は別 domain の二値判断を人工的に均衡化した dataset から観光推薦へ移され、actor・evaluator・reflection を同じ DeepSeek-V3-0324 が担う。追加10問の75%も同一質問集合の memory on／off ablation ではなく、calibration 差の confidence interval もないため、evidence は2に留める。既存の calibration-boundary-human-judgment は AI evidence と人間判断の境界を、proxy-segment-fragility は代理指標の target と segment 差を、agentic-world-modeling-preaction-prediction-law と paperclaw-prototype-hypothesis-contract は事前期待と後続実測を、quality-workflow-feedback-route は evidence を次の修正へ結ぶ経路をすでに扱う。本 atom 固有の六 field を新規 schema または probe にしても、既存 controls を同じ playable diff に適用した時の判断を大きく変えず、active_probes 321件と Phase 4a 向け pending lease 1件へ確認負荷を追加する。現在の staging に比較可能な playable diff、採否ログ、後続 playtest artifact もないため、次に既存 controls では correctness／constraint agreement／human adoption のどこで失敗したか分類できない実例が出た時だけ再評価する。",
+      "existing_probes": [
+        "probe-20260608-calibration-boundary-human-judgment",
+        "probe-20260616-proxy-segment-fragility",
+        "probe-20260626-agentic-world-modeling-preaction-prediction-law",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract",
+        "probe-20260625-quality-workflow-feedback-route"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、実人間を介さない acceptance proxy、同一 model 系 evaluator、既存 calibration／prediction／feedback probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
