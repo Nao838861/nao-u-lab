@@ -90,7 +90,75 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、index entry と per-file atom index の整合を検証した。broken entry 0件、Markdown link 0件。代表語 probe は 記憶・ゲーム設計・敵パターンを取得し、評価軸は本文に exact match がないが UTF-8 decode error はなかった。"
+  - "memory/atoms.jsonl / per-file .md / index.jsonl を監査した。2797件で三者一致、atom id 重複・parse error・index error・content conflict は各0件。normalized content の raw 重複40群80行は全40群が canonical overlay の fold 対象で、recall-visible の重複3群6行も表示時 fold 済み。"
+  - "memory/raw/ で 2026-06-30 より前に更新が止まった原文96件を archive 候補として確認した。内訳は web_research 系88件、headless_eval 6件、slack_archive 1件、sync_state 1件。raw source 保持方針と既存の可逆 archive 手順不在のため移動・削除は行わなかった。"
+  - "candidate lifecycle 1162件を dry-run 監査し、status/candidate_status conflict 0件、現在状態の書き換え0件を確認した。terminal candidate は再評価 queue に入れていない。"
+  - "title canonical / mixed duplicate index の freshness を確認し、open duplicate group / stale triage / group-action sidecar を現状態から再生成した。group handoff と candidate handoff はともに新規 enqueue 0件、各 inbox audit error 0件。"
+  - "slack_directives.jsonl 23行、slack_broadcasts.jsonl 21行を確認し、pending は双方0件だったため status 更新は行わなかった。"
+candidate_lifecycle:
+  files: 1162
+  status_counts:
+    posted: 529
+    ready_to_post: 9
+    postponed: 227
+    failed: 391
+    needs_review: 3
+    skipped_unreviewed: 3
+  audit_skipped_without_phase_evidence: 17
+  missing_stale_after: 6
+  open_status_missing_stale_after: 0
+  overdue_open_total: 1
+  overdue_paths:
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+issues:
+  - id: ISS-4A-MOJ-001
+    description: "高スコア atom sr-1776127289-4d9239b255 の「AIエージェント」が「AIエ��ジェント」として source raw から派生 view まで残っている。単発の source data quality 問題であり、新しい構造設計ではなく局所修復候補。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492,1216; memory/atoms/2026-04/sr-1776127289-4d9239b255.md:3,16,20,24; memory_health.py --json mojibake_suspect_atoms"
+    source_file_status: "UTF-8 明示読みで U+FFFD が source raw と per-file atom の双方に実在する。memory/MEMORY.md 自体は UTF-8 decode error なし。"
+    display_or_tooling_status: "none。shell 表示だけの mojibake ではなく source 由来。もう1件の suspect gr-1777083728-44d444ab7a は本文中の「???」による検出で、UTF-8 source 破損は観測しなかった。"
+    why_blocks_game_memory: "「AIエージェント」の完全一致検索で当該 atom 1件を取りこぼし得るが、mirror 整合・recall smoke・他の agent tag 導線は正常で、ゲーム記憶全体を塞ぐ影響は小さい。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+    merged: 0
+    retired: 0
+  next_pending:
+    probe_id: probe-20260724-minimum-sufficient-scope-ladder
+    lease_due: "2026-07-31T00:23:59+09:00"
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 53
+  mixed_group_count: 46
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  suppressed_overdue:
+    group_handoff_id: gha-e6d4d4b5a37a0808
+    group_key: joint agent memory and exploration learning via novelty signals
+    status: deferred
+    retry_after: "2026-08-20T13:19:04+09:00"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
