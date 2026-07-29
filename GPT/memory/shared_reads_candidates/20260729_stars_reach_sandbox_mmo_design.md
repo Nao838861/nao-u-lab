@@ -4,6 +4,27 @@ url: "https://80.lv/articles/interview-mmo-pioneer-raph-koster-on-stars-reach-an
 collected_at: "2026-07-29T21:47:48.3600308+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, sandbox, mmo, simulation, player-economy, emergent-gameplay]
+evaluated_at: "2026-07-29T21:51:48.6234823+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-29T21:51:48.6234823+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-29T21:51:48.6234823+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-28"
+supersedes: []
+gate_reason: >-
+  永続世界の改変を創発性だけで終わらせず、回復経路、間接加害対策、独占を抑える規模拡大 risk、
+  soft grouping、段階的な simulation 導入まで一つの設計体系として説明できる。定量実験ではなく開発者
+  インタビューである限界を明記しても、問題設定・中核手法・過去作由来の評価根拠・結論を約4000字で展開できる。
+suggested_post_outline:
+  overview_angle: "改変可能な永続世界を、荒廃や独占へ崩さず共同制作の遊びとして維持する設計"
+  analysis_axis: "自由度を増やす機構と、その外部不経済を吸収する recovery path・risk・非ゼロ和 incentive の対"
+  application_target: "Log_cdx の小規模ゲームで、プレイヤー行為が残る盤面、支配戦略の自己強化、協力導線を設計・headless 検証する時の評価軸"
+  pros_cons: "創発性と役割多様性を促す一方、間接 griefing の検出、simulation の説明可能性、運用規模への依存が重い"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

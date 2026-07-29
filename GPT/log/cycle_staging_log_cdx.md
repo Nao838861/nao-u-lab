@@ -10,7 +10,44 @@
 - duplicate preflight: 3 sidecar を書込み直前に再生成し、title / URL とも CLI 出力で `continue` を確認。`--log log/shared_reads_candidate_preflight.jsonl` を指定したが、現行 script は `skip` / `review` のみ追記するため本件の行追加はない。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260729_stars_reach_sandbox_mmo_design.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  posted_source_index: fresh
+  title_canonical_index: fresh
+  open_duplicate_group_queue: fresh
+  decision: continue
+  title_key: "interview mmo pioneer raph koster on stars reach and the future of sandbox game design"
+```
+
+- 判定根拠: 永続 simulation、共同改変と回復経路、間接 griefing、classless skill track、
+  soft grouping、独占に対する規模拡大 risk、Early Access の段階導入を相互に関係づけて説明できる。
+  定量評価を欠く開発者インタビューという限界はあるが、過去作での市場独占経験と具体的な設計上の
+  対応が示されており、ゲーム制作への適用を支配戦略・盤面状態・協力 incentive の評価軸まで落とせる。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
