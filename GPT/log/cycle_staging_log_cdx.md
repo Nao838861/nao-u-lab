@@ -51,7 +51,23 @@ group_handoff_audit:
 - 留保: agentic matching は提案段階であり、実運用の因果効果と独立開発者への利益配分は未検証。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260730_ai_wave_game_discovery.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785399325570909
+    char_count: 4452
+skipped: []
+```
+
+- 最終判定: `部分採用` として投稿。Steam 供給量・注意集中・1983 年比較・配信モデル・
+  cold-start pilot・payout simulation を分離して説明した。
+- 重要な留保: pilot の実体は心理 profile / LLM agent ではなくジャンル重み付き cosine
+  matching、AI と供給増の因果および matching から収益への因果は未実証と明記した。
+- 適用先: playable diff 前の `discovery brief`、deterministic な intent-to-build matching、
+  recall ranking と canonical 保存判断を分ける記憶評価。
+- 投稿前レビュー: 4452 字。`■ 概要` 開始、`■ URL` 末尾、必須 6 項目、禁止表現なし。
+  `tools/shared_reads_policy.py` の validation は `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
