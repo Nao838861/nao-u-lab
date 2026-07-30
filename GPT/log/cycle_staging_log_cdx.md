@@ -109,7 +109,50 @@ self_feedback:
   - `probe-20260625-amvl-retention-utility-lifecycle`
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語 probe を確認。記憶 / ゲーム設計 / 敵パターンは完全一致、評価軸は現行の選抜行に複合語として無いが、評価・軸は正常表示され、memory/atoms/index.jsonl では評価軸を取得できる。U+FFFD は 0 件、索引内 atom ID と per-file index の broken link は 0 件。"
+  - "memory/atoms.jsonl / per-file md / index.jsonl は各 2799 件で mirror conflict 0 件。duplicate cluster sidecar は 45 群で current、effective display unresolved group は 0 件。"
+  - "memory/raw/ の 30 日超無更新ファイルは 96 件・63095789 bytes（web_research 88 / headless_eval 6 / slack_archive 1 / sync_state 1）。raw provenance と現行同期状態を壊さないため、この cycle では移動せず archive 候補として監査のみ実施。"
+  - "shared-reads candidate lifecycle 1166 件を監査（posted 532 / ready_to_post 9 / postponed 228 / failed 391 / needs_review 3 / lifecycle 未付与の unreviewed 3）。status conflict と書込み対象は 0 件。"
+  - "title canonical / mixed duplicate / open duplicate group / stale triage / group-action sidecar を再生成。期限到来 open candidate は 1 件あるが、同一 JAMEL group の deferred lease が 2026-08-20 まで有効なため再投入せず、stale triage と group-action は 0 件。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件。handled へ更新すべき行はなし。"
+issues:
+  - id: ISS-ENC-001
+    description: "active atom sr-1776127289-4d9239b255 の「AIエージェント」が「AIエ��ジェント」として raw source から atom mirror・index まで伝播している。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms/2026-04/sr-1776127289-4d9239b255.md:3; memory/atoms.jsonl:317"
+    source_file_status: "UTF-8 明示読みでも replacement characters が再現し、raw source 自体に同じ破損がある。memory/MEMORY.md は UTF-8 として正常で、U+FFFD は無く、本文再生成の対象ではない。"
+    display_or_tooling_status: "PowerShell / rg の表示経路だけの mojibake ではない。gr-1777083728-44d444ab7a の health warning は本文中の意図的な「???」に反応した false positive で、UTF-8 source は正常。"
+    why_blocks_game_memory: "active・score 11 の想起語で replacement characters が残り、「AIエージェント」の完全一致検索とタイトル可読性を局所的に弱める。単一 atom の provenance repair で閉じられるため Phase 4b 設計は不要。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 53
+  mixed_group_count: 46
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
