@@ -49,7 +49,20 @@ evaluation_summary:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260730_memlens_value_aware_memory_management.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785415451593849
+    char_count: 4352
+skipped: []
+review:
+  policy_check: pass
+  source_check: >-
+    4-page demo paper と公開 repository を照合。frontend の比較 radar は mock 値、
+    既定 sampling_count は 5、backend retrieval に MS-value rerank は未実装であるため、
+    性能実証ではなく provenance・限界寄与・cost 可視化の設計を部分採用する分析へ修正した。
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
