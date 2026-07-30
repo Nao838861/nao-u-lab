@@ -1,7 +1,8 @@
 {
-  "updated_at": "2026-07-31T00:06:37+09:00",
+  "updated_at": "2026-07-31T02:19:25+09:00",
   "reviewed_source_ts": [
     "1780341253.389959",
+    "1785423705.686359",
     "1785415451.593849",
     "1785399325.570909",
     "1780249598.635859",
@@ -15816,6 +15817,46 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、既存の anti-template／preference-cluster／proxy-segment／priority-ranking probes との重複および具体的 playable artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-31T02:19:25+09:00",
+      "selected": {
+        "id": "sr-1785423705-5a00e3d4ba",
+        "source_ts": "1785423705.686359",
+        "title": "AlayaWorld — bounded visual memory と長期 world drift の故障分離",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす最新候補で、memory・harness・game-design・operation・evaluation の優先タグを横断する。四つの bounded visual context、loop closure、自己 roll-out 誤差の replay、visual cache と authoritative game state の分離が、次の生成世界／長期 game-state 評価へ既存 probe と異なる小さな判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は sink／temporal／nearby／spatial memory の役割、Helios corruption と自己 roll-out error bank、4-step 蒸留、iWorld-Bench の brightness・sharpness・trajectory・memory 指標を分け、生成映像を renderer／proposal、engine state を正本とする適用境界まで具体化しているため relevance・actionability は3とした。一方、各 memory、Helios、error bank、next forcing、distillation の ablation がなく、wall-clock latency・GPU・VRAM・初回 frame 時間、物理因果・object state・long-term task の評価もないため evidence=2 とした。既存の probe-20260626-matrix-game-long-horizon-memory-latency は長期 anchor・過去 frame／route の再確認・latency を、probe-20260625-actworld-action-forgetting-state-consistency は event／object token と遅延後の再訪を、probe-20260711-benchjack-trust-boundary-preflight は agent 出力と authoritative verifier の境界を、probe-20260708-toolbenchx-recoverable-hazard-card は fault type と recovery path をすでに扱う。AlayaWorld 固有の四 memory と failure replay を別 probe にしても次回判断をほぼ変えず、active_probes 321件と期限到来済みの Phase 4a pending lease 1件へ確認負荷を追加する。現在の staging には比較可能な生成世界 clip、固定 trajectory、engine-state trace、corruption 前後 artifact がないため、consumer・before／after artifact・期待判断差も lease 契約どおり指定できない。次に生成世界 prototype で既存4 probe を適用しても局所連続性、遠距離再訪、authoritative state、回復経路のどこを直すか決められない実例が出た時だけ再評価する。",
+      "existing_probes": [
+        "probe-20260626-matrix-game-long-horizon-memory-latency",
+        "probe-20260625-actworld-action-forgetting-state-consistency",
+        "probe-20260711-benchjack-trust-boundary-preflight",
+        "probe-20260708-toolbenchx-recoverable-hazard-card"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の long-horizon／action-forgetting／authoritative-verifier／recoverable-hazard probes との重複、比較可能な生成世界 artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

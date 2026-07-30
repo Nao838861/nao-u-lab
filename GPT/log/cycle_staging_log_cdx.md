@@ -64,7 +64,39 @@ skipped: []
 - 判定: 部分採用。有限 action interface、milestone memory、境界重点 sampling、plan／execution／transition の失敗分解を一作品の小規模比較へ落とす。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785423705-5a00e3d4ba
+    source_ts: "1785423705.686359"
+    title: "AlayaWorld — bounded visual memory と長期 world drift の故障分離"
+    reason: "source が slack_api/shared-reads、score 11、未レビューという条件を満たす最新候補で、memory・harness・game-design・operation・evaluation の優先タグを横断する。四つの bounded visual context、loop closure、自己 roll-out 誤差の replay、visual cache と authoritative game state の分離が、次の生成世界／長期 game-state 評価へ既存 probe と異なる小さな判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回る。AlayaWorld は memory の役割分離、loop closure、自己 roll-out 誤差の replay、visual cache と authoritative state の境界を具体化するが、構成要素別 ablation、実測 latency、物理因果・object state・long-term task の評価がない。既存の long-horizon memory、action-forgetting、authoritative verifier、recoverable hazard probes が同じ判断を覆い、比較可能な生成世界 clip／固定 trajectory／engine-state trace／corruption 前後 artifact もないため、新規 operational lease は判断差より確認負荷を増やす。"
+  existing_probes:
+    - probe-20260626-matrix-game-long-horizon-memory-latency
+    - probe-20260625-actworld-action-forgetting-state-consistency
+    - probe-20260711-benchjack-trust-boundary-preflight
+    - probe-20260708-toolbenchx-recoverable-hazard-card
+  change:
+    summary: "reviewed_source_ts、採点、既存 probe との重複、比較 artifact 不在による reject 理由だけを state に記録した。新規 probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
