@@ -4,6 +4,26 @@ url: "https://80.lv/articles/indie-game-publishing-the-21k-game-problem"
 collected_at: "2026-07-30T12:32:22.7753748+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-production, indie-dev, publishing, playtesting, marketing]
+evaluated_at: "2026-07-30T12:38:19.8829299+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-30T12:38:19.8829299+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-30T12:38:19.8829299+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-29"
+supersedes: []
+gate_reason: >-
+  core loop の stress-test、Steam Playtest と demo の役割分離、launch 指標、platform・localization 準備を、制作から発売までの一つの検証系列として抽出できる。
+  具体的なゲーム制作へ適用でき、約4000字の概要・分析を構成できる。ただし数値閾値は publisher / Xsolla 側の経験則を含むため、普遍則ではなく計測開始点として扱う。
+suggested_post_outline:
+  overview_angle: "年間2.1万本という競争量への反応を、制作速度ではなく core loop・発見性・発売準備を連結した検証設計へ置き換える"
+  analysis_axis: "Playtest→demo→launch の情報価値の違い、review・wishlist・followers・同時接続の指標階層、経験則に基づく数値閾値の限界"
+  application_target: "Log_cdx の小規模ゲーム制作で、内部の playable diff、外部 playtest、公開 demo、配布判断を同じ evidence ledger 上に接続する"
+  pros_cons: "利点は過剰 polish と無観客リリースを同時に避けられること。欠点は商業発売前提が強く、提示閾値の出典・ジャンル依存性・小規模試作への過大適用に注意が要ること"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

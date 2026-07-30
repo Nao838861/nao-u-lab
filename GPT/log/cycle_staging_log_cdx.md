@@ -12,7 +12,44 @@
 - 参照範囲: `memory/raw/web_research/results.jsonl` の 2026-07-30T12:21:04 取得分、`memory/atoms.jsonl` の直近 atom、Slack raw / recent ingest、80 Level の 2026-07-10 記事本文。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+evaluated_at: "2026-07-30T12:38:19.8829299+09:00"
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260730_indie_game_publishing_21k_problem.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  path: memory/shared_reads_candidates/20260730_indie_game_publishing_21k_problem.md
+  decision: continue
+  title_key: indie game publishing the 21k game problem
+  canonical_url: https://80.lv/articles/indie-game-publishing-the-21k-game-problem
+decision_note: >-
+  core loop の stress-test、Steam Playtest と demo の役割分離、launch 指標、
+  platform・localization 準備を制作から発売までの検証系列として抽出できるため pass。
+  記事中の数値閾値は publisher / Xsolla 側の経験則を含むため、
+  Phase 3 では普遍則ではなく部分採用する計測開始点として扱う。
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
