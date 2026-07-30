@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-30T10:35:01+09:00",
+  "updated_at": "2026-07-30T12:49:12+09:00",
   "reviewed_source_ts": [
+    "1785374894.474439",
     "1785366835.325639",
     "1785359529.445089",
     "1785352331.306579",
@@ -551,6 +552,47 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-30T12:49:12+09:00",
+      "selected": {
+        "id": "sr-1785374894-0cae5f55a1",
+        "source_ts": "1785374894.474439",
+        "title": "Sky: Children of the Light の環境設計 — wayfinding・感情曲線・人物尺度・描画予算の統合",
+        "reason": "未レビュー条件を満たす最新の score 11 atom で、memory・harness・game-design・evaluation の4優先タグを持つ。遠・中・近距離 cue、compression-release、player-sized detail、visibility budget を一つの playable-space 判断へ結ぶ知見が、Codex の次回 level／room prototype に既存 probe と異なる小さな判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、遠・中・近距離 cue、grayscale の value contrast、compression-release、人物尺度、layout 起点の visibility budget を、一室の A/B と初見3〜5人の注視・経路・感情語・frame cost へ変換しており relevance と actionability は3とした。一方、根拠は担当 artist の制作事例で、迷走率、注視、frame time、滞在時間、人数別評価、変更前後の比較がなく、Sky 固有の浮遊移動、third-person camera、social space、stylized rendering から一般化できる範囲も未検証なので evidence は2に留める。既存の q0-five-second-legibility は最初の viewport の可読性を、event-appraisal-timeline は具体 event と感情仮説の分離を、visual-exploration-evidence-split は視点・位置・navigation evidence を、draw2think-inspectable-intermediate-state は route・sightline の検査を、gamerastra-accessibility-mental-map は mental map の構造をすでに扱う。本 atom 固有の差は、macro／mid／micro cue と描画 budget を同じ scene 比較に置く点だが、現在の staging には level、room、camera route、A/B scene、初見 playtest の before／after artifact がなく、Phase 4a の memory cleanup を consumer にしても判断差を作らない。active_probes 321件と期限内 pending lease 1件がある状態で広い environment intention sheet を追加すると確認負荷が先行する。次に空間 prototype が具体化し、既存5 probe だけでは視認性・探索余白・感情系列・frame cost の交換条件を判定できない実例が出た時だけ、scene-local metric として再評価する。",
+      "existing_probes": [
+        "probe-20260621-q0-five-second-legibility",
+        "probe-20260602-event-appraisal-timeline",
+        "probe-20260602-visual-exploration-evidence-split",
+        "probe-20260619-draw2think-inspectable-intermediate-state",
+        "probe-20260621-gamerastra-accessibility-mental-map"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の first-viewport／appraisal／visual evidence／sightline／mental-map probes との重複、比較可能な spatial prototype 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-30T10:35:01+09:00",
       "selected": {

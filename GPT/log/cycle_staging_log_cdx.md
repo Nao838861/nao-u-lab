@@ -72,7 +72,46 @@ verification:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785374894-0cae5f55a1
+    source_ts: "1785374894.474439"
+    title: "Sky: Children of the Light の環境設計 — wayfinding・感情曲線・人物尺度・描画予算の統合"
+    reason: >-
+      未レビュー条件を満たす最新の score 11 atom で、memory・harness・game-design・evaluation の
+      4優先タグを持つ。遠・中・近距離 cue、compression-release、player-sized detail、
+      visibility budget を一つの playable-space 判断へ結ぶ知見が、次回 level／room prototype に
+      既存 probe と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: >-
+    制作事例を一室の A/B と初見 playtest へ変換できる一方、迷走率・注視・frame time・
+    変更前後比較はなく、Sky 固有条件からの一般化も未検証。既存の first-viewport、
+    event-appraisal、visual evidence、sightline、mental-map probes が主要判断を既に覆う。
+    現 staging に比較可能な spatial prototype はなく、active_probes 321件と期限内 pending lease
+    1件へ確認負荷を足すため、採用条件の合計14と risk_control 2を満たさない。
+  change:
+    summary: >-
+      reviewed_source_ts と、既存5 probe との重複、比較可能な spatial prototype 不在による
+      reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
