@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2607.26598"
 collected_at: "2026-07-31T04:16:15+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent, harness, memory, evaluation, playtesting]
+evaluated_at: "2026-07-31T04:20:50+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-31T04:20:50+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-31T04:20:50+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-30"
+supersedes: []
+gate_reason: >-
+  評価済み trajectory から trigger・failure・repair と state transition を抽出し、固定境界を保ったまま
+  episode 間の手続き修復へ変換する中核手法、commit gate、ablation、限界まで一次資料から説明できる。
+  headless playtest の反復失敗を action/state 条件付き repair として再利用する具体場面があり、約4000字の独立分析に耐える。
+suggested_post_outline:
+  overview_angle: "一回の反省を、次のプレイで実行可能な手続き修復へ変換する二層 harness と bounded update"
+  analysis_axis: "episodic memory と state graph の相補性、Evolution-SOP の commit gate、score-before-update、ablation と非単調改善"
+  application_target: "headless playtest の trajectory/evaluator 出力を、失敗条件・復帰 action・状態遷移の再利用可能な repair に変換する評価 harness"
+  pros_cons: "同型失敗の再発防止と model 非依存の再利用が利点。evaluator 誤りの永続化、rollback/回帰試験不足、state 膨張、domain SOP の手作業が欠点"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
