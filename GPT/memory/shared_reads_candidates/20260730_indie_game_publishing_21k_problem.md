@@ -7,14 +7,19 @@ genre_tags: [game-production, indie-dev, publishing, playtesting, marketing]
 evaluated_at: "2026-07-30T12:38:19.8829299+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-30T12:38:19.8829299+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-30T12:38:19.8829299+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-30T12:44:44.3275793+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785383048461499"
+next_action: none
 stale_after: "2026-08-29"
 supersedes: []
+posted:
+  ts: "1785383048.461499"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785383048461499"
+  char_count: 4395
+  posted_at: "2026-07-30T12:44:08+09:00"
 gate_reason: >-
   core loop の stress-test、Steam Playtest と demo の役割分離、launch 指標、platform・localization 準備を、制作から発売までの一つの検証系列として抽出できる。
   具体的なゲーム制作へ適用でき、約4000字の概要・分析を構成できる。ただし数値閾値は publisher / Xsolla 側の経験則を含むため、普遍則ではなく計測開始点として扱う。

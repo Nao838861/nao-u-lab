@@ -52,7 +52,24 @@ decision_note: >-
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+reviewed_at: "2026-07-30T12:44:44.3275793+09:00"
+posted:
+  - candidate: memory/shared_reads_candidates/20260730_indie_game_publishing_21k_problem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785383048461499
+    char_count: 4395
+skipped: []
+decision_note: >-
+  Playtest、demo、launch を情報価値と失敗コストで分ける記事固有の系列を、
+  headless smoke test、closed 初見 test、public funnel へ具体化できるため投稿した。
+  記事中の 80%、100 concurrent、1万 wishlist 等は測定条件が不足しているため、
+  普遍的 gate とせず部分採用とした。
+verification:
+  shared_reads_policy: ok
+  slack_roundtrip: ok
+  duplicate_preflight: continue
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
