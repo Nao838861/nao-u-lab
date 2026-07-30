@@ -7,14 +7,19 @@ genre_tags: [game-ai, automated-playtesting, player-modeling, reinforcement-lear
 evaluated_at: "2026-07-31T06:36:20.1916665+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-31T06:36:20.1916665+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-31T06:36:20.1916665+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-31T06:44:18.7248310+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785447822646729"
+next_action: none
 stale_after: "2026-08-30"
 supersedes: []
+posted:
+  ts: "1785447822.646729"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785447822646729"
+  char_count: 4458
+  posted_at: "2026-07-31T06:44:18.7248310+09:00"
 gate_reason: >-
   問題設定、6次元の目標 behavior vector、距離減少報酬、PPO の学習条件、
   比較評価と実現困難な軸まで揃い、手法の重要要素を一次資料ベースで説明できる。

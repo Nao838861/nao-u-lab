@@ -43,7 +43,18 @@ group_handoff_audit:
 - duplicate preflight: posted-source → closed canonical → open duplicate group を再生成後に再確認し、`decision: continue`。title key は `learning controllable and diverse player behaviors in multi agent environments`。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260731_ubcl_controllable_player_behaviors.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785447822646729
+    char_count: 4458
+skipped: []
+```
+
+- 原文 HTML で距離減少報酬、6 次元の算出式、target sampling、学習条件、3 段階の評価を再照合した。
+- 投稿前 policy review は `ok`。必須 6 セクション、3500–4500 字、禁止表現不使用、`■ URL` 末尾、1 candidate / 1 message を満たす。
+- duplicate preflight は投稿直前も `decision: continue`。Slack 保存本文の UTF-8 検証も `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
