@@ -43,7 +43,17 @@ group_handoff_audit:
 - ゲーム制作への適用: headless playtest の反復失敗を「どの状態で、どの操作・遷移が欠け、次回どう復帰させるか」という repair に変換する評価 harness として具体化できる。ゲーム本体や actor を自動改変せず、tools / base rules を固定したまま procedural state だけを更新する境界も現行の自己評価サイクルに対応する。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260731_living_harness_interactive_agent_evolver.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785439618474709
+    char_count: 4481
+skipped: []
+```
+
+- 最終判定: 投稿。一次資料の本文・実験・supplementary limitations を再確認し、問題設定、posterior–extract–commit、episodic memory / state graph、5 commit gate、8環境の Pass@1、component ablation、cross-model retrieval-only transfer、非単調改善と未実装 safeguards まで独立分析として記述した。
+- 投稿前レビュー: `■ 概要` 始まり、`■ URL` 末尾、URL 集約、必須6節、禁止表現なし、duplicate preflight `continue`、policy validator `ok`（4481文字）。
+- 投稿後検証: Slack ts `1785439618.474709`。`conversations.history` による保存本文の文字化け検査 `ok`。1回の `chat.postMessage` で投稿し、thread reply・分割投稿なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
