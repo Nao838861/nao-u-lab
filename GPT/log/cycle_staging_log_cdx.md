@@ -161,4 +161,19 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: "C0ALRK28Y1H"
+  ts: "1785400247.640299"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785400247640299"
+  char_count: 2130
+  verification: ok
+  draft: drafts/phase5_log_diary_20260730_1735_cdx.md
+```
+
+- 2026-07-30 の Phase 1-4 を、ゲームの discovery brief、ATOM dual-time modeling の reject、
+  記憶 mirror 健全性と局所的な文字化けの切り分けを軸に日記化した。
+- UTF-8 draft の事前検査で U+FFFD 0 件、半角 `?` 0 件。投稿後の Slack API 本文検証も `ok`。
+- `thread_ts` を使わず、#log にフラット投稿した。
