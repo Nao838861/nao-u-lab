@@ -41,7 +41,15 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260730_spiderman2_swinging_postmortem.md
+    reason: Phase 2 の gate_decision が postpone であり、具体的な実装判断・試行結果・評価・結論の根拠が不足しているため投稿対象外
+    action: postpone
+pass_candidates: 0
+slack_posted: false
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
