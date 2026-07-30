@@ -4,6 +4,28 @@ url: "https://arxiv.org/abs/2607.25010"
 collected_at: "2026-07-30T17:02:54.8884551+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-industry, game-discovery, ai-assisted-development, player-modeling, distribution]
+evaluated_at: "2026-07-30T17:06:56+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-30T17:06:56+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-30T17:06:56+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-29"
+supersedes: []
+gate_reason: >-
+  Steam 93,073 タイトルと 200,000 interaction の分析、集中度指標、1983 年との比較、
+  配信モデル比較から結論まで、手法の重要要素を具体的に抽出できる。AI 支援時代の
+  小規模ゲームで audience・差別化・公開先・発見経路を企画時に設計する判断へ直接適用でき、
+  CoopEval 水準の概要と限界評価を組み立てられる。
+suggested_post_outline:
+  overview_angle: "AI 支援が供給制約を下げた後、ゲーム市場のボトルネックが制作から発見へ移る構造を、供給量・プレイ時間集中・配信モデルのデータで説明する"
+  analysis_axis: "供給ショックの測定、注目集中の実態、1983 年型クラッシュとの差、agentic matching 提案の根拠と未検証部分を分けて評価する"
+  application_target: "Log_cdx の小規模ゲーム企画で、実装前に想定 audience・差別化シグナル・公開先・発見導線を一枚の discovery brief として定義し、playable probe の評価条件へ組み込む"
+  pros_cons: "市場構造を複数データで捉える点は有用だが、matching infrastructure の提案は実運用での因果効果や独立開発者への利益配分が未検証"
+  verdict_pre: "部分採用。市場診断と企画時の discovery 設計は採用し、agentic matching の有効性は仮説として扱う"
 ---
 
 ## raw_excerpt

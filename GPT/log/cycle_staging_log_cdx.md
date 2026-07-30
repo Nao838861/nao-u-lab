@@ -13,7 +13,42 @@
 - Phase 1 では収集と記録のみ実施。品質判定・Slack 投稿・記憶整理は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+evaluated_at: "2026-07-30T17:06:56+09:00"
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260730_ai_wave_game_discovery.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
+
+- 判定: `pass`。Steam 93,073 タイトル、200,000 interaction、playtime 集中度、1983 年比較、
+  access-based distribution 比較を通じて、問題設定・手法・評価・結論を抽出できる。
+- ゲーム制作への適用: 小規模ゲームの実装前に audience、差別化シグナル、公開先、発見導線を
+  `discovery brief` として定義し、playable probe の評価条件へ接続できる。
+- duplicate preflight: `continue`（canonical URL: `https://arxiv.org/abs/2607.25010`）。
+  posted-source、closed canonical、open duplicate group の一致なし。
+- 留保: agentic matching は提案段階であり、実運用の因果効果と独立開発者への利益配分は未検証。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
