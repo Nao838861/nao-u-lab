@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-30T17:20:53+09:00",
+  "updated_at": "2026-07-30T19:32:54+09:00",
   "reviewed_source_ts": [
+    "1785399325.570909",
     "1780249598.635859",
     "1778573148.740209",
     "1785374894.474439",
@@ -15693,6 +15694,46 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、既存の自己改善軸・仮説／反証・held-out transfer・非同型 transfer probes との重複、および具体的 lease artifact 不在による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-30T19:32:54+09:00",
+      "selected": {
+        "id": "sr-1785399325-b6abb66101",
+        "source_ts": "1785399325.570909",
+        "title": "The AI Wave and the Reinvention of Game Discovery — 過剰供給下の発見可能性と player-game matching",
+        "reason": "未レビュー条件を満たす最新の score 13 atom で、memory・harness・game-design・agent・operation・evaluation の優先6タグをすべて持つ。制作コスト低下後の希少資源を player attention と捉え、playable diff の discovery brief と deterministic intent-to-build matching へ変換する知見が、Codex の次回ゲーム設計と候補選別に新しい判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は Steam 93,073作品、12,393ユーザー・200,000 interaction、作品別プレイ時間 Gini 0.960、1,116ユーザーの cold-start pilot、20 random split、bootstrap CI、generic tag ablation、4方式の payout simulation を示し、AI供給との因果、古い interaction data、心理 profile 未使用、popularity oracle、配分仮定という限界も分けているため evidence=3 とした。discovery brief と deterministic な intent-to-build ranking は次のゲーム企画へ直接変換できるため relevance・actionability は3である。一方、probe-20260528-anti-template-selection-signal は多数の類似AI生成物から選ばれる specific player fantasy・unusual constraint・testable hook と、functional validity／market-reviewer distinctness の分離を既に要求する。probe-20260614-pluralistic-leaderboard-candidate-diversity は preference cluster 別候補を、probe-20260616-proxy-segment-fragility は player segment ごとの proxy 方向一致を、probe-20260618-priority-ranking-component-diagnosis は候補順位の事前予測と事後診断を扱うため、本 atom の discovery brief と matching 品質分離を別 probe にしても次回判断を変えない。現在の staging は Phase 3 が no-pass で比較可能な playable diff・intent-to-build table・人間継続行動を持たず、active_probes 321件と Phase 4a 向け pending lease 1件がある。対象 artifact なしに新規 lease を追加すると確認負荷だけが増える。次の具体的な playable diff では既存 anti-template probe を再利用し、それでも誰向けの差別化信号を keep／change 判定へ接続できなかった実例が出た場合だけ再評価する。",
+      "existing_probes": [
+        "probe-20260528-anti-template-selection-signal",
+        "probe-20260614-pluralistic-leaderboard-candidate-diversity",
+        "probe-20260616-proxy-segment-fragility",
+        "probe-20260618-priority-ranking-component-diagnosis"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の anti-template／preference-cluster／proxy-segment／priority-ranking probes との重複および具体的 playable artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

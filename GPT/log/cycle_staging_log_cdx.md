@@ -59,7 +59,42 @@ reason: "Phase 2 の pass が空のため、最終レビューおよび #shared-
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+### 2026-07-30 19:32 JST
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785399325-b6abb66101
+    source_ts: "1785399325.570909"
+    title: "The AI Wave and the Reinvention of Game Discovery — 過剰供給下の発見可能性と player-game matching"
+    reason: "未レビュー条件を満たす最新の score 13 atom で、memory・harness・game-design・agent・operation・evaluation の優先6タグをすべて持つ。制作コスト低下後の希少資源を player attention と捉え、discovery brief と deterministic intent-to-build matching が次回判断を変えるか確認するため選んだ。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "本文は Steam 93,073作品、12,393ユーザー・200,000 interaction、cold-start pilot、20 split、bootstrap、tag ablation、payout simulation と限界を示し、discovery brief へ直接変換できる。一方、anti-template-selection-signal が選別可能な player fantasy／constraint／hook と functional validity／market distinctness の分離を既に要求し、preference-cluster・proxy-segment・priority-ranking probes も matching と順位診断を覆う。Phase 3 は no-pass で比較可能な playable artifact がなく、active_probes 321件と Phase 4a 向け pending lease 1件の状態で別 probe を増やしても判断差より確認負荷が大きい。"
+  existing_probes:
+    - probe-20260528-anti-template-selection-signal
+    - probe-20260614-pluralistic-leaderboard-candidate-diversity
+    - probe-20260616-proxy-segment-fragility
+    - probe-20260618-priority-ranking-component-diagnosis
+  change:
+    summary: "reviewed_source_ts と重複・artifact 不在による reject 理由だけを state に記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
