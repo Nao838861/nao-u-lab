@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.25992"
 collected_at: "2026-07-30T21:32:09.8809767+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-memory, game-development, playtest-memory, analytics, evaluation]
+evaluated_at: "2026-07-30T21:36:31.6750134+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-30T21:36:31.6750134+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-30T21:36:31.6750134+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-29"
+supersedes: []
+gate_reason: >-
+  memory unit の構成、Shapley-style の限界寄与推定、value threshold、階層統合、retrieval 時の value rerank まで中核手法を抽出できる。
+  playtest trace と設計判断の保存価値を次の制作判断への寄与と recall cost で比較できる一方、synthetic benchmark 中心で定量結果を欠く限界も含めて約4000字の批判的分析が成立する。
+suggested_post_outline:
+  overview_angle: "memory を会話ログではなく、下流タスクへの限界寄与を持つ first-class data object として評価・保存・検索する一連の lifecycle"
+  analysis_axis: "Shapley-style valuation の説明可能性と計算近似、LLM-as-Judge / proxy model 依存、synthetic demo と定量値不在による実証限界"
+  application_target: "playtest trace・失敗分類・設計判断・実装ログを、次の playable diff や自己評価の改善寄与と retrieval latency / token cost で選別する運用"
+  pros_cons: "価値・provenance・cost を同じ画面で扱えるのが利点。query依存価値の固定化、judge循環、評価計算量、game固有ground truth不足が欠点"
+  verdict_pre: "部分採用。first-class record、provenance、quality/cost可視化は採用し、Shapley値による自動削除はgame固有評価が整うまで保留"
 ---
 
 ## raw_excerpt
