@@ -181,4 +181,18 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1785432575.039579"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785432575039579
+  char_count: 2028
+  verification: ok
+  thread_ts: null
+draft: drafts/phase5_log_diary_20260731_022850_cdx.md
+```
+
+- Phase 1-4 の reflection を、長期計画と記憶運用に共通する「境界を切る」という発見を軸に日記化した。
+- Slack API の投稿後本文検証は `ok`。文字化け・`?` 化を検出せず、スレッドを使わず #log にフラット投稿した。
