@@ -1,20 +1,21 @@
-# log_cdx Cycle Staging — 2026-07-31 04:13
+# log_cdx Cycle Staging — 2026-07-31 06:28
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
 
-- `memory/shared_reads_candidates/20260731_living_harness_interactive_agent_evolver.md` — 完了 trajectory と evaluator signal から episodic memory / state graph を更新し、同型失敗の procedural repair を episode 間で再利用する self-evolving agent harness。
-- 収集元確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` に `status: pending` なし。`memory/raw/web_research/results.jsonl` と最近の atom / Slack raw URL を確認。
-- duplicate preflight: `Living-Harness Is an Interactive-Agent Evolver` / `https://arxiv.org/abs/2607.26598` は `continue`。保存前と保存後に posted-source / canonical-title / open-duplicate sidecar を再生成。
-- Phase 1 では品質判定・4000字概要・Slack 投稿・記憶階層変更を実施していない。
+- inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` ともに pending 0 件。
+- 収集元確認: `memory/raw/slack_api/shared-reads.jsonl`、`memory/raw/slack_api/all-nao-u-lab.jsonl`、`memory/raw/web_research/results.jsonl`、`memory/atoms.jsonl` の直近分を確認。
+- candidate:
+  - `memory/shared_reads_candidates/20260731_ubcl_controllable_player_behaviors.md` — 6次元の目標 behavior vector と現在値の距離変化を報酬にし、単一 PPO policy から連続的な player behavior を生成する UBCL の一次資料メモ。
+- duplicate preflight: title=`Learning Controllable and Diverse Player Behaviors in Multi-Agent Environments` / URL=`https://arxiv.org/abs/2512.10835` は `continue`。
 
 ## Phase 2: 分析
 
 ```yaml
 total_candidates: 1
 pass:
-  - memory/shared_reads_candidates/20260731_living_harness_interactive_agent_evolver.md
+  - memory/shared_reads_candidates/20260731_ubcl_controllable_player_behaviors.md
 fail: []
 postpone: []
 stale_reviewed: []
@@ -38,140 +39,17 @@ group_handoff_audit:
   pending_after: 0
 ```
 
-- duplicate preflight: posted-source / title canonical / open duplicate group の3 sidecarを再生成後、`Living-Harness Is an Interactive-Agent Evolver` / `https://arxiv.org/abs/2607.26598` は `continue`。
-- 判定根拠: completed trajectory と evaluator signal を、trigger / failure / recovery を持つ episodic memory と state-conditioned repair edge に変換し、schema / scope / evidence / constraint / merge gate を通して episode 間で蓄積する手法を説明できる。Evolution-SOP 除去が最大低下となる ablation、2 benchmark・8 environment、cross-model retrieval-only transfer、rollback・stale removal・regression test 不在という限界まで一次資料に揃う。
-- ゲーム制作への適用: headless playtest の反復失敗を「どの状態で、どの操作・遷移が欠け、次回どう復帰させるか」という repair に変換する評価 harness として具体化できる。ゲーム本体や actor を自動改変せず、tools / base rules を固定したまま procedural state だけを更新する境界も現行の自己評価サイクルに対応する。
+- `20260731_ubcl_controllable_player_behaviors.md`: **pass**。問題設定、6次元の目標 behavior vector、距離減少報酬、学習条件、比較評価、失敗軸まで抽出済み。固定 archetype の列挙ではなく、連続 player style で headless playtest の破綻領域を探索する手法として具体的に適用でき、約4000字の概要・分析に耐える。
+- duplicate preflight: posted-source → closed canonical → open duplicate group を再生成後に再確認し、`decision: continue`。title key は `learning controllable and diverse player behaviors in multi agent environments`。
 
 ## Phase 3: Shared-reads 投稿
-```yaml
-posted:
-  - candidate: memory/shared_reads_candidates/20260731_living_harness_interactive_agent_evolver.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785439618474709
-    char_count: 4481
-skipped: []
-```
-
-- 最終判定: 投稿。一次資料の本文・実験・supplementary limitations を再確認し、問題設定、posterior–extract–commit、episodic memory / state graph、5 commit gate、8環境の Pass@1、component ablation、cross-model retrieval-only transfer、非単調改善と未実装 safeguards まで独立分析として記述した。
-- 投稿前レビュー: `■ 概要` 始まり、`■ URL` 末尾、URL 集約、必須6節、禁止表現なし、duplicate preflight `continue`、policy validator `ok`（4481文字）。
-- 投稿後検証: Slack ts `1785439618.474709`。`conversations.history` による保存本文の文字化け検査 `ok`。1回の `chat.postMessage` で投稿し、thread reply・分割投稿なし。
+(Phase 3 が書き込む)
 
 ## Phase 3b: Shared-reads 自己フィードバック
-
-```yaml
-self_feedback:
-  selected:
-    id: sr-1785431717-60f14937eb
-    source_ts: "1785431717.380019"
-    title: "Cortex — canonical skill・milestone memory・transition guard による長期タスクの責任分解"
-    reason: "最新の未レビュー score 11 atom で、memory・skills・harness・game-design・agent・operation・evaluation を含む9タグを横断する。有限 action、milestone memory、境界重点 sampling、plan／execution／transition の故障分解が既存 probe と異なる判断差を作るか確認するため選定。Nao_u の明示評価はなし。"
-  scores:
-    relevance: 3
-    actionability: 3
-    evidence: 3
-    non_redundancy: 0
-    risk_control: 1
-    reversibility: 3
-    total: 13
-  decision: reject
-  decision_reason: "有限 action interface と三種の故障分解は直接実行可能で、公開動画4,000時間超・simulation 30時間超・14.2M sample・複数 benchmark・実機評価・境界 sampling ablation がある。一方、既存の milestone observation、state-transition taxonomy、rule-bearing boundary trace、action-surface／verifier probes と重複する。現在の staging に flat／階層 headless trace や境界 sample 前後を比較できる artifact がなく lease を具体化できないため、確認負荷を増やす新規 probe は採用しない。"
-  change:
-    summary: "reviewed_source_ts と重複・artifact 不在による reject 理由だけを state に記録。probe・metric・lease・directive・恒久ルールは追加していない。"
-    files:
-      - memory/shared_reads_self_feedback_state.json
-      - log/cycle_staging_log_cdx.md
-  lease: null
-  anti_bloat_check:
-    adds_permanent_rule: false
-    replaces_or_simplifies_existing: false
-    conflict_checked: true
-```
+(Phase 3b が書き込む)
 
 ## Phase 4a: 整理 + 問題抽出
-
-```yaml
-cleaned:
-  - "memory/MEMORY.md の index と per-file atom index を照合し、broken reference 0 件を確認した。本文は変更していない。"
-  - "open duplicate group / stale triage / group action の sidecar を現行 candidate state と live lease から再生成した。生成結果は既存内容と同一で差分なし。"
-  - "Slack inbox、candidate/group handoff inbox、probe lifecycle を監査した。pending / due がなく、status 変更や新規 handoff は0件。"
-audits:
-  memory_index:
-    utf8_representative_terms:
-      記憶: true
-      ゲーム設計: true
-      敵パターン: true
-      評価軸: true
-    broken_references: 0
-    source_file_status: "UTF-8 明示読みで正常。validate_memory_index.py も OK。"
-    display_or_tooling_status: none
-  atoms:
-    rows: 2803
-    parse_errors: 0
-    duplicate_ids: 0
-    mirror_content_conflicts: 0
-    raw_normalized_content_duplicate_groups: 40
-    raw_duplicate_rows: 80
-    fold_applied_extra_rows: 40
-    effective_display_unresolved_groups: 0
-  raw:
-    inactive_30d_files: 226
-    archive_candidates: 0
-    action: none
-    reason: "30日超の内訳は raw provenance、headless/game evaluation packet、旧 Slack/API 原文、論文 PDF/TXT と運用中の sync marker。年齢だけを根拠に移動せず、原文保持を優先した。"
-  candidate_lifecycle:
-    files: 1171
-    status_counts:
-      posted: 536
-      ready_to_post: 9
-      postponed: 229
-      failed: 391
-      needs_review: 3
-      unreviewed_without_current_status: 3
-    skipped_unreviewed_files: 17
-    current_state_changes: 0
-    open_missing_stale_after: 0
-    overdue_open_total: 1
-    overdue_paths:
-      - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
-    lease_observation: "同一 arXiv work の all-open duplicate group gha-e6d4d4b5a37a0808 が 2026-08-20 まで deferred。membership fingerprint 一致の live lease により再投入を抑止。"
-  duplicate_titles:
-    open_duplicate_group_count: 53
-    mixed_group_count: 46
-    all_open_group_count: 7
-    actionable_group_count: 0
-  slack_inbox:
-    directives_pending: 0
-    broadcasts_pending: 0
-issues: []
-recommendation:
-  needs_design: false
-  priority_issues: []
-probe_lifecycle:
-  inspected_due_count: 0
-  inspected_probe_id: null
-  outcome: none
-  counts:
-    pending: 0
-    resolved: 2
-    dormant: 1
-stale_backlog:
-  overdue_open_total: 1
-  stale_triage_queue_rows: 0
-  open_duplicate_group_count: 53
-  mixed_group_count: 46
-  all_open_group_count: 7
-  actionable_group_count: 0
-  backlog_high_water: false
-  group_handoff_budget: 1
-  handed_off_group_count: 0
-  handoff_inbox_pending_count: 0
-  handoff_inbox_ids: []
-  candidate_handoff_pending_count: 0
-  candidate_handoff_ids: []
-group_action_handoff: []
-stale_review_batch: []
-```
-
-- 判定: 既存の fold、duplicate group lease、stale handoff が観測された重複と期限到来候補を処理できている。新しい構造問題は立てず、Phase 4b / 4c は起動しない。
+(Phase 4a が書き込む)
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
@@ -180,17 +58,4 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-
-```yaml
-posted:
-  channel: "#log"
-  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785440586018299
-  ts: "1785440586.018299"
-  char_count: 2226
-  verification: ok
-  thread_reply: false
-  draft: drafts/phase5_log_diary_20260731_0413_cdx.md
-```
-
-- Phase 1–4 の活動を、Living-Harness の state-conditioned repair、Cortex probe を追加しなかった判断、既存 fold / lease / handoff が機能していた監査結果を軸に日記化した。
-- `python tools/post_slack_message_file.py --channel "#log" --file drafts/phase5_log_diary_20260731_0413_cdx.md --delete-on-fail` で1回だけフラット投稿し、Slack API 側の保存本文検証は `ok`。文字化け・`?` 化なし。
+(Phase 5 が書き込む)

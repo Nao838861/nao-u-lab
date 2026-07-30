@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2512.10835"
 collected_at: "2026-07-31T06:32:01.8053562+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, automated-playtesting, player-modeling, reinforcement-learning, multi-agent]
+evaluated_at: "2026-07-31T06:36:20.1916665+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-31T06:36:20.1916665+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-31T06:36:20.1916665+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-30"
+supersedes: []
+gate_reason: >-
+  問題設定、6次元の目標 behavior vector、距離減少報酬、PPO の学習条件、
+  比較評価と実現困難な軸まで揃い、手法の重要要素を一次資料ベースで説明できる。
+  連続 player style による headless playtest の探索へ具体的に接続でき、約4000字の分析に耐える。
+suggested_post_outline:
+  overview_angle: "固定 archetype を増やさず、単一 policy を連続な行動統計で条件付ける設計と、その到達可能性の限界を解説する"
+  analysis_axis: "distance-progress 報酬が多様性と制御性をどう両立し、相互依存する指標や実現不能な目標でなぜ崩れるか"
+  application_target: "headless playtest bot の攻撃性・協調性・移動性を連続走査し、build ごとの破綻領域と未被覆領域を可視化する評価サイクル"
+  pros_cons: "少数の固定 bot より行動空間を広く覆える一方、指標設計と到達可能領域の校正に依存し、学習コストも大きい"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
