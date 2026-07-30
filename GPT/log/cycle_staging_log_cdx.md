@@ -114,7 +114,114 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+audited_at: "2026-07-30T12:54:33+09:00"
+cleaned:
+  - "MEMORY index、atom 3面 mirror、candidate lifecycle、raw 30日監査、Slack inboxを機械監査した。"
+  - "title canonical / mixed duplicate / open duplicate / stale triage / group-action sidecarを再生成した。"
+  - "group handoffを先に確定してからstale triageを再生成し、candidate handoffを冪等enqueueした。新規handoffは0件だった。"
+memory_index_audit:
+  validator: ok
+  broken_index_references: 0
+  source_file_status: >-
+    UTF-8明示読みは成功。「記憶」「ゲーム設計」「敵パターン」は取得できた。
+    「評価軸」は現行生成indexに字句として存在しないが、decode errorや置換文字による欠落ではない。
+  display_or_tooling_status: none
+atom_audit:
+  atoms_jsonl: 2799
+  per_file_md: 2799
+  index_jsonl: 2799
+  parse_errors: 0
+  duplicate_ids: 0
+  mirror_missing: 0
+  content_conflicts: 0
+  normalized_content_duplicate_groups_raw: 40
+  normalized_content_duplicate_rows_raw: 80
+  recall_visible_duplicate_groups_after_fold: 3
+  note: >-
+    raw duplicateはcanonical overlay / lifecycle-content foldの対象であり、
+    recall表示層の未解決行・未解決groupはいずれも0。矛盾として扱う根拠はなかった。
+raw_archive_audit:
+  inactive_over_30_days: 96
+  archived_now: 0
+  note: >-
+    旧PDF・抽出本文・Slack archive・headless評価原文で、raw provenanceとして保持されている。
+    memory/raw/sync_state.txt は現行sync_reference_raw.pyの更新先であり、
+    mtimeだけを根拠に移動すべき対象はなかった。
+candidate_lifecycle:
+  files: 1164
+  status_counts:
+    posted: 531
+    ready_to_post: 9
+    postponed: 227
+    failed: 391
+    needs_review: 3
+    skipped_unreviewed: 3
+  missing_stale_after: 6
+  overdue_open_total: 1
+  overdue_paths:
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+  overdue_disposition: >-
+    同一URLのall-open groupが既存のdeferred lease
+    gha-e6d4d4b5a37a0808（retry_after 2026-08-20T13:19:04+09:00）
+    に包含されるため、明示保持した。期限前の再投入は行わない。
+slack_inbox:
+  directives_pending: 0
+  broadcasts_pending: 0
+  handled_updates: 0
+issues:
+  - id: ISS-4A-20260730-001
+    description: >-
+      atom sr-1776127289-4d9239b255 の「AIエージェント」が
+      「AIエ��ジェント」になっており、title・trigger・excerptとraw Slack archiveの
+      同一箇所にU+FFFDが残っている。
+    severity: low
+    evidence: >-
+      memory/raw/slack_archive/shared-reads.jsonl#ts=1776127289.990919;
+      memory/atoms.jsonl#id=sr-1776127289-4d9239b255;
+      memory/atoms/2026-04/sr-1776127289-4d9239b255.md
+    source_file_status: >-
+      UTF-8明示読みでもrawと派生atomの双方に置換文字が存在し、source側の局所破損を確認した。
+      gr-1777083728-44d444ab7a の「???」は原文上の意図的表記でfalse positiveだった。
+    display_or_tooling_status: none
+    why_blocks_game_memory: >-
+      「AIエージェント」の完全一致検索でこのcontext-engineering atomを拾えず、
+      記憶・想起設計を調べる際の検索性を1件だけ弱める。
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: >-
+    検出経路は既に機能しており、破損は1 atomに局在する。
+    新しい構造設計ではなく、信頼できる原文を取得できた時の局所修復対象である。
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+  merged: 0
+  retired: 0
+  receipt: "due-only --limit 1 はitems=[]。consumer artifactの判断対象なし。"
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 53
+  mixed_group_count: 46
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
