@@ -97,7 +97,69 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-07-30 19:37 JST
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index 50 atom 参照を UTF-8 で照合し、broken link 0件を確認"
+  - "memory/atoms.jsonl 2800件を監査し、ID重複0件・mirror conflict 0件を確認。normalized content 重複40群は既存 fold/overlay で表示上解消済み"
+  - "memory/raw/ の30日超未更新ファイル96件（web_research 88 / headless_eval 6 / slack_archive 1 / sync_state 1）を識別。一次証拠なので自動移動・削除は行わず保持"
+  - "candidate lifecycle 1167件を dry-run 監査し、現在状態の書換え0件を確認"
+  - "slack_directives / slack_broadcasts の pending は各0件。handled 更新対象なし"
+  - "open duplicate / stale triage / group action / mixed duplicate sidecar を再生成し、group/candidate handoff inbox を監査"
+candidate_lifecycle:
+  counts:
+    posted: 532
+    ready_to_post: 9
+    postponed: 229
+    failed: 391
+    needs_review: 3
+    skipped_unreviewed: 3
+  missing_stale_after: 6
+  overdue_open_total: 1
+  overdue_note: "memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md は stale_after=2026-07-16 だが、同一JAMEL groupの deferred lease gha-e6d4d4b5a37a0808 が retry_after=2026-08-20T13:19:04+09:00 まで有効なため、今回queueから契約どおり抑止"
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の「AIエージェント」が「AIエ��ジェント」として保存され、title / trigger / excerpt の検索語が部分破損している"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919"
+    source_file_status: "UTF-8 明示読みでも per-atom / atoms.jsonl / raw Slack archive の全経路に U+FFFD があり、source側の既存破損。gr-1777083728-44d444ab7a は本文中の意図的な「???」を detector が拾った false positive"
+    display_or_tooling_status: "none; shell表示だけのmojibakeではない"
+    why_blocks_game_memory: "「AIエージェント」で検索する際に当該atomのtitle/trigger一致が弱まり、記憶・context engineering の既存事例を取りこぼし得る。ただし1件だけで recall smoke は通るため影響は限定的"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 53
+  mixed_group_count: 46
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+stale_review_batch: []
+audit_notes:
+  encoding:
+    source_file_status: "memory/MEMORY.md は UTF-8 明示読みで代表語 記憶 / ゲーム設計 / 敵パターン / 評価軸 を取得でき、source破損なし。atom 1件の既存source破損は ISS-ENC-001 に分離"
+    display_or_tooling_status: "none"
+  title_duplicates: "unindexed duplicate title group は監査上20件表示されたが、open duplicate sidecar 53群（mixed 46 / all_open 7）に収載済み。今回 actionable 0件のため自動closeせず、既存leaseと将来のPhase 2判断を維持"
+  atom_duplicates: "recall-visible exact duplicate 3群6件は canonical_overlay.jsonl に登録済みで、fold後の検索表示は2536件。新たな矛盾・孤児・時系列断絶として扱う根拠なし"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
