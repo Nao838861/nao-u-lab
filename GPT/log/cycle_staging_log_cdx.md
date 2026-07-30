@@ -58,7 +58,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780341253-9a30e5514d
+    source_ts: "1780341253.389959"
+    title: "Multi-Layered Memory Architectures for LLM Agents — working／episodic／semantic の3層と retention gating"
+    reason: "未レビューの score 12 atom。記憶階層と retention-aware retrieval が現在の記憶肥大化へ新しい判断差を作るか確認した。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "合計10かつ risk_control 1で採用条件未達。本文自身が gating 関数・regularization 項・ablation の具体値を未確認とし、同一 Slack 投稿後半 source_ts=1780341253.417639 から probe-20260602-memory-retention-gate が既に作成済み。固定 rank weight や3×3 schemaを追加すると同一知見の二重運用になる。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

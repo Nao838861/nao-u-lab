@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-30T21:52:07+09:00",
+  "updated_at": "2026-07-31T00:06:37+09:00",
   "reviewed_source_ts": [
+    "1780341253.389959",
     "1785415451.593849",
     "1785399325.570909",
     "1780249598.635859",
@@ -556,6 +557,46 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-31T00:06:37+09:00",
+      "selected": {
+        "id": "sr-1780341253-9a30e5514d",
+        "source_ts": "1780341253.389959",
+        "title": "Multi-Layered Memory Architectures for LLM Agents — working／episodic／semantic の3層と retention gating",
+        "reason": "未レビュー条件を満たす score 12 atom で、memory・agent・operation・evaluation の優先タグを持つ。記憶階層と retention-aware retrieval が現在の記憶肥大化へ新しい判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。投稿は working／episodic／semantic の3層、adaptive retrieval gating、retention regularization を当方の retention 軸へ接続しており、記憶整理への relevance は3、rank weighting や false-positive audit へ変換できるため actionability は2とした。一方、本文自身が abstract レベルで gating 関数・regularization 項・ablation の具体値を未確認と明記し、LOCOMO／LOCCO／LoCoMo の区別や当方 rule-based 運用との同型性も検証していないため evidence は1に留める。さらに同一 Slack 投稿の後半 atom source_ts=1780341253.417639 は既に reviewed_source_ts にあり、その知見から probe-20260602-memory-retention-gate が作成済みである。retention signal、観測 evidence、弱い根拠なら state-only／probationary に留めるという判断はこの既存 probe が担い、amvl-retention-utility-lifecycle と forget-usage-signal-gate も retention と実利用・退役を分離している。根拠未確認の固定 rank weight や3×3 schema を別 probe にすると同一投稿を二重運用し、321件の active_probes と pending lease 1件へ確認負荷だけを加えるため reject とする。",
+      "existing_probes": [
+        "probe-20260602-memory-retention-gate",
+        "probe-20260625-amvl-retention-utility-lifecycle",
+        "probe-20260607-forget-usage-signal-gate",
+        "probe-20260602-memory-governance-gate-separation"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、同一 Slack 投稿後半から既に作られた memory-retention-gate との重複、abstract-only evidence、固定 weighting／3×3 schema の過剰導入リスクによる reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-30T21:52:07+09:00",
       "selected": {
