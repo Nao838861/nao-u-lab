@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-30T08:19:49+09:00",
+  "updated_at": "2026-07-30T10:35:01+09:00",
   "reviewed_source_ts": [
+    "1785366835.325639",
     "1785359529.445089",
     "1785352331.306579",
     "1785345085.461859",
@@ -550,6 +551,46 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-30T10:35:01+09:00",
+      "selected": {
+        "id": "sr-1785366835-3a0c7ae7be",
+        "source_ts": "1785366835.325639",
+        "title": "探索 agent と zero-shot VLM による geometry clipping 検出 — hard-negative と high-recall filter",
+        "reason": "未レビュー条件を満たす最新の score 10 atom で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。自動探索後の大量 frame を最終 bug 判定へ直結せず、hard-negative を含む誤警報評価と後段 telemetry 検証へ渡す high-recall filter として扱う知見が、Codex の headless QA に既存 probe と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件は満たすが、今サイクルには VLM filter の有無、同一 seed、固定 prompt、hard-negative 集合、前後 frame と engine telemetry を比較できる playable artifact がなく、probe lease 契約を満たす consumer phase と before／after trigger artifact を指定できないため state-only review に留める。shared-reads 本文は、同じ bug 500枚に easy／hard／random の正常画像各500枚を組み合わせ、6 model・4 prompt を比較し、hard split で precision が Gemini 87.2%から57.5%、Llama 91.2%から54.6%へ低下する一方で recall は同じ bug frame により固定される controlled な根拠を示すため evidence=3 とした。ただし単一 Godot demo、単一 bug class、合成 clipping、single-frame、balanced set の結果であり、実運用の希少 bug 分布、動画文脈、他 visual style、人間 performance は未検証である。既存の video-glitch-temporal-grounding は defect の時間範囲と正常説明、titan-headless-qa-trace は abstract state と QA trace、d2e-synchronized-playtest-stream は frame・input・state の同期、structural-semantic-verifier-boundary は verifier の層分離をすでに扱う。本 atom 固有の差は、VLM を確定 oracle ではなく high-recall candidate filter とし、hard-negative、alert/hour、一真陽性あたりの確認候補数で reviewer 負担を測る点である。しかし active_probes 321件と Phase 4a 向け pending lease 1件がある状態で対象 artifact なしに追加すると確認負荷が先行する。次に visual regression を持つ prototype が具体化し、既存4 probe だけでは false positive 負担を判定できない時、固定 seed／prompt の hard-negative 回帰集合と alert/hour の一時 metric として再評価する。",
+      "existing_probes": [
+        "probe-20260620-video-glitch-temporal-grounding",
+        "probe-20260602-titan-headless-qa-trace",
+        "probe-20260622-d2e-synchronized-playtest-stream",
+        "probe-20260610-structural-semantic-verifier-boundary"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の temporal／QA trace／synchronized stream／verifier-boundary probes との重複、および比較可能な visual-regression artifact 不在による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-30T06:17:00+09:00",
       "selected": {
