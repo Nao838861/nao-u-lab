@@ -56,7 +56,35 @@ skipped: []
 - 投稿後検証: Slack ts `1785439618.474709`。`conversations.history` による保存本文の文字化け検査 `ok`。1回の `chat.postMessage` で投稿し、thread reply・分割投稿なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785431717-60f14937eb
+    source_ts: "1785431717.380019"
+    title: "Cortex — canonical skill・milestone memory・transition guard による長期タスクの責任分解"
+    reason: "最新の未レビュー score 11 atom で、memory・skills・harness・game-design・agent・operation・evaluation を含む9タグを横断する。有限 action、milestone memory、境界重点 sampling、plan／execution／transition の故障分解が既存 probe と異なる判断差を作るか確認するため選定。Nao_u の明示評価はなし。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "有限 action interface と三種の故障分解は直接実行可能で、公開動画4,000時間超・simulation 30時間超・14.2M sample・複数 benchmark・実機評価・境界 sampling ablation がある。一方、既存の milestone observation、state-transition taxonomy、rule-bearing boundary trace、action-surface／verifier probes と重複する。現在の staging に flat／階層 headless trace や境界 sample 前後を比較できる artifact がなく lease を具体化できないため、確認負荷を増やす新規 probe は採用しない。"
+  change:
+    summary: "reviewed_source_ts と重複・artifact 不在による reject 理由だけを state に記録。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

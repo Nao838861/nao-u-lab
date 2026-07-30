@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-31T02:19:25+09:00",
+  "updated_at": "2026-07-31T04:32:13+09:00",
   "reviewed_source_ts": [
+    "1785431717.380019",
     "1780341253.389959",
     "1785423705.686359",
     "1785415451.593849",
@@ -15857,6 +15858,46 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、既存の long-horizon／action-forgetting／authoritative-verifier／recoverable-hazard probes との重複、比較可能な生成世界 artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-31T04:32:13+09:00",
+      "selected": {
+        "id": "sr-1785431717-60f14937eb",
+        "source_ts": "1785431717.380019",
+        "title": "Cortex — canonical skill・milestone memory・transition guard による長期タスクの責任分解",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす最新候補で、memory・skills・harness・game-design・agent・operation・evaluation を含む9タグを横断する。有限 action interface、検証可能 milestone、境界重点 sampling、plan／execution／transition の故障分解が、現在の headless 評価と phase handoff に既存 probe と異なる小さな判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は4,000時間超の公開動画と30時間超の simulation data、14.2M sample、open-loop／LIBERO-Long／RoboTwin／実機14工程の評価、event-balanced sampling の ablation を示し、local scheduler が正解工程に近い情報を持つこと、Qwen judge、人手 reset、計算量、text memory の位置・同一個体追跡欠落という限界も分けているため evidence=3 とした。有限 action、milestone memory、transition guard、plan／execution／transition error の分離は直接実行可能なので relevance・actionability も3である。一方、probe-20260516-milestone-observation-log は milestone・観測制限・停止／復帰を、probe-20260712-boardwalk-rule-contract-taxonomy は state transition と failure taxonomy を、probe-20260626-mindstudio-executable-branch-preview は rule-bearing event／boundary trace を、probe-20260710-phoneharness-mixed-action-side-effect-trace は action surface・side effect・verifier・failure family をすでに扱う。Cortex 固有の三分解と境界 sampling を独立 probe にしても次回判断をほぼ変えず、active_probes 321件へ確認負荷を追加する。さらに現在の staging には同一作品の flat／階層 headless trace、境界 sample 前後、誤遷移・反復・復帰率を比較できる artifact がなく、consumer・before／after artifact・期待判断差を lease 契約どおり指定できない。次に具体的な長期 headless playtest で既存4 probe を適用しても planner／executor／transition のどこを直すか決められない実例が出た時だけ再評価する。",
+      "existing_probes": [
+        "probe-20260516-milestone-observation-log",
+        "probe-20260712-boardwalk-rule-contract-taxonomy",
+        "probe-20260626-mindstudio-executable-branch-preview",
+        "probe-20260710-phoneharness-mixed-action-side-effect-trace"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の milestone／state-transition taxonomy／boundary trace／verifier probes との重複、比較可能な長期 headless artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
