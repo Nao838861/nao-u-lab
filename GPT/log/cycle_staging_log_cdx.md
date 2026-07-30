@@ -57,7 +57,37 @@ skipped: []
 - duplicate preflight は投稿直前も `decision: continue`。Slack 保存本文の UTF-8 検証も `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785439618-39ebd2c0f0
+    source_ts: "1785439618.474709"
+    title: "Living-Harness Is an Interactive-Agent Evolver — 評価済み失敗を永続的な手続き修復へ変換"
+    reason: "未レビューの最新 score 12 atom で、memory・harness・game-design・agent・operation・evaluation を含む8タグを持つ。評価済み trajectory を条件付き recovery action へ変換する提案が、既存 probe と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録した。既存の contrastive procedural memory、promotion boundary、memory action evidence、search-before-write probes と Phase 3b lease/receipt 契約で同じ判断を担えるため、新規 probe・metric・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採否理由: 合計13で14点に届かず、`risk_control=1` も必須閾値を下回る。原典は score-before-update、二層の procedural state、5 commit gate、8環境の Pass@1 と ablation を示す一方、full rollback・stale 除去・既解決 task の regression test を持たない。現在の staging に反復 failure、repair あり／なしの replay、旧成功 task の比較 artifact がないため、Phase 4a に lease しても before／after の判断差を測れない。
+- 重複確認: `probe-20260710-npm-contrastive-procedural-memory`、`probe-20260515-promotion-boundary`、`probe-20260604-memory-action-loop-evidence`、`probe-20260710-automem-memory-action-audit` と同型。321件の active probe に追加せず、次の具体的な反復失敗では既存4件を再利用する。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

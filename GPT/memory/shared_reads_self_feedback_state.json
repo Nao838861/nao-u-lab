@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-31T04:32:13+09:00",
+  "updated_at": "2026-07-31T06:48:48+09:00",
   "reviewed_source_ts": [
+    "1785439618.474709",
     "1785431717.380019",
     "1780341253.389959",
     "1785423705.686359",
@@ -15898,6 +15899,46 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、既存の milestone／state-transition taxonomy／boundary trace／verifier probes との重複、比較可能な長期 headless artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-31T06:48:48+09:00",
+      "selected": {
+        "id": "sr-1785439618-39ebd2c0f0",
+        "source_ts": "1785439618.474709",
+        "title": "Living-Harness Is an Interactive-Agent Evolver — 評価済み失敗を永続的な手続き修復へ変換",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、memory・harness・game-design・agent・operation・evaluation を含む8タグを横断する。評価済み trajectory を条件付き recovery action へ変換する提案が、現在の headless playtest と記憶昇格に既存 probe と異なる小さな判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文と原典は、固定した tools・base context の外側で、評価済み trajectory から trigger・failure pattern・recovery action を持つ episodic memory と state-conditioned repair edge を作り、score-before-update と schema・scope・evidence・constraint・merge の5 gate を通す構成を具体化している。8環境の Pass@1、Evolution-SOP／memory／state graph の ablation、cross-model retrieval-only transfer、非単調な cycle 推移、rollback・stale 除去・regression test 不在まで確認できるため relevance・actionability・evidence は3とした。一方、probe-20260710-npm-contrastive-procedural-memory は failed trace の effective／degenerate step と同条件での workflow patch 検証を、probe-20260515-promotion-boundary は反復した実行証拠による procedure 昇格を、probe-20260604-memory-action-loop-evidence は記憶が次の action を変えた evidence pointer を、probe-20260710-automem-memory-action-audit は search-before-write と最小の可逆操作をすでに要求する。さらに Phase 3b の lease／receipt 契約自体が consumer artifact と before／after 判断差を要求しており、Living-Harness の posterior–extract–commit 境界と同型である。現在の staging には反復 failure trajectory、既存 repair あり／なしの replay、旧成功 task の regression set がなく、Phase 4a の memory cleanup を consumer にしても判断差を測れない。原典も full rollback と regression testing の欠如を認めているため、321件の active_probes に同型 probe を追加すると確認負荷と誤 repair 永続化リスクが便益を上回る。次に具体的な反復失敗が出た時は既存4 probe を組み合わせ、なお trigger／recovery／postcondition を決められない実例が出た場合だけ再評価する。",
+      "existing_probes": [
+        "probe-20260710-npm-contrastive-procedural-memory",
+        "probe-20260515-promotion-boundary",
+        "probe-20260604-memory-action-loop-evidence",
+        "probe-20260710-automem-memory-action-audit"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の contrastive trace／promotion boundary／action-return evidence／memory action probes との重複、比較可能な反復 failure artifact 不在、rollback／regression 不足による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
