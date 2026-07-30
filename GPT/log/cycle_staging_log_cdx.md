@@ -101,7 +101,91 @@ self_feedback:
   `alert/hour` の一時 metric として再評価する。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、High Signal / Recent / Game Task Entry Points / Tag Entry Points の atom pointer を per-file index と照合した。validate_memory_index.py は broken entry 0 件で完了した。"
+  - "memory/atoms.jsonl / per-file .md / index.jsonl の各 2797 件を照合し、parse error・index error・mirror content conflict は 0 件だった。normalized-content raw duplicate 40群 / 80行は content fold 済み、canonical overlay 45群、effective display unresolved 0群を確認した。"
+  - "memory/raw/ の30日超無更新ファイル 96 件を確認した。いずれも raw web research、headless evaluation、Slack provenance として現行参照経路に置かれ、slack_archive は既に archive 扱いのため、この cycle の移動は 0 件とした。"
+  - "shared-reads candidate 1163件の lifecycle を dry-run 監査し、open duplicate / stale triage / group action sidecar を規定順に再生成した。live lease を反映した結果、group / candidate handoff の enqueue はともに 0 件だった。"
+  - "slack_directives.jsonl 23行 / slack_broadcasts.jsonl 21行を確認し、pending は双方 0 件、handled 更新は 0 件だった。"
+issues:
+  - id: ISS-CAND-LIFECYCLE-001
+    description: "candidate 3件で top-level status がなく、計6件で candidate_status がない。既存 backfill の include-unreviewed dry-run は6件を変更対象として検出するが、開始時からの未commit candidate を含むため、この cycle では書き換えなかった。"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/20260721_big_lizard_ai_copilot_postmortem.md; memory/shared_reads_candidates/20260726_reasoning_diversity_collapse_llm_game_play.md; memory/shared_reads_candidates/20260726_savestate_player_reflection_method.md; memory/shared_reads_candidates/20260612_playtest_gamified_test_generator_post.md; memory/shared_reads_candidates/20260612_resp_visual_glitch_detection_post.md; memory/shared_reads_candidates/20260612_tempglitch_temporal_glitch_detection_post.md"
+    source_file_status: "6 files は UTF-8 で読めて frontmatter も parse 可能。先頭3件は status / candidate_status がともに欠損し、後半3件は status: posted と posted block はあるが candidate_status が欠損している。"
+    display_or_tooling_status: "backfill_shared_reads_candidate_status.py --today 2026-07-30 --include-unreviewed の dry-run は changed 6 / skipped_unreviewed 0。表示経路の mojibake はない。"
+    why_blocks_game_memory: "現在状態を一意に読めない candidate は stale_after と Phase 2 handoff の選定から漏れ、ゲーム制作へ転用可能な記事の再評価順を不安定にする。既存 backfill と個別 review で扱えるため新規設計は不要。"
+  - id: ISS-ATOM-ENC-001
+    description: "1 atom の原文・派生 atom に replacement character が残り、「AIエージェント」が「AIエ��ジェント」になっている。memory_health が挙げるもう1件の疑いは、Nao_u 原文中の意図的な「???」を検知した false positive だった。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/raw/slack_archive/shared-reads.jsonl:1216; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/2026-04/gr-1777083728-44d444ab7a.md; memory/raw/slack_api/game-rights.jsonl:143"
+    source_file_status: "sr-1776127289 の raw Slack archive と per-file atom は UTF-8 として読めるが、source 自体に replacement character が保存されている。gr-1777083728 の source は正常で、「???」は原文内容であり破損ではない。"
+    display_or_tooling_status: "Get-Content -Encoding utf8 と rg の双方で同じ文字列を取得したため、PowerShell / staging 表示由来の mojibake ではない。memory_health の2件目だけ heuristic false positive。"
+    why_blocks_game_memory: "該当語の exact recall を1 atomで弱めるが、URL・周辺語・本文は保持され、現行 game-memory routing 全体は遮断しない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読みで「記憶」「ゲーム設計」「敵パターン」を取得できた。「評価軸」は現行本文に存在しないが、UTF-8 decode・index validator・他の日本語 probe は正常で、source corruption evidence はない。"
+  display_or_tooling_status: "Get-Content -Encoding utf8 と validate_memory_index.py の表示は正常。"
+atom_audit:
+  atoms: 2797
+  mirror_content_conflicts: 0
+  raw_normalized_content_duplicate_groups: 40
+  raw_normalized_content_duplicate_rows: 80
+  canonical_overlay_groups: 45
+  effective_display_unresolved_groups: 0
+  raw_title_debt_rows: 564
+  raw_title_debt_groups: 342
+candidate_lifecycle:
+  counts:
+    posted: 530
+    ready_to_post: 9
+    postponed: 227
+    failed: 391
+    needs_review: 6
+  counts_note: "needs_review は include-unreviewed dry-run が status 欠損3件を fail-open で含めた監査上の現在状態。"
+  missing_top_level_status: 3
+  missing_candidate_status: 6
+  missing_stale_after: 5
+  dry_run_changes: 6
+  overdue_open_total: 1
+  overdue_paths:
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+  overdue_disposition: "同一 work の all_open JAMEL group は gha-e6d4d4b5a37a0808 で 2026-08-20T13:19:04+09:00 まで deferred。live group lease が stale triage への再挿入を抑止したため candidate handoff は行わない。"
+raw_archive_audit:
+  inactive_30d_files: 96
+  archived_this_cycle: 0
+  reason: "raw 原文・評価入力・Slack provenance の保持先であり、参照を切らずに移動できる対象を機械的に確定できなかった。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 1
+    dormant: 1
+  next_pending:
+    probe_id: probe-20260724-minimum-sufficient-scope-ladder
+    lease_due: "2026-07-31T00:23:59+09:00"
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 53
+  mixed_group_count: 46
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
