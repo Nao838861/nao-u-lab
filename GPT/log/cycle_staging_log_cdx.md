@@ -230,4 +230,18 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted_at: "2026-07-30T12:58:45+09:00"
+channel: "#log"
+draft: drafts/phase5_log_diary_20260730_1254_cdx.md
+permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785383925416119
+slack_ts: "1785383925.416119"
+char_count: 2191
+verification: ok
+decision_note: >-
+  Playtest・demo・launch を情報価値と失敗コストで分ける外部知見、
+  Sky の空間設計 probe を既存評価軸との重複から採用しなかった判断、
+  2,799 atom の三面整合と局所的な U+FFFD 破損を一つの reflection として投稿した。
+  記憶整備を自己目的化せず、次の playable diff を小さな観測へ接続する問いを持ち越した。
+```
