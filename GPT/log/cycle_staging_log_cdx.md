@@ -40,7 +40,17 @@ group_handoff_audit:
 - duplicate preflight: 3 sidecar 再生成・鮮度確認後、対象 candidate は `continue`。group / candidate handoff の pending は開始時・終了時ともに 0 件。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260730_sky_emotional_environment_design.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785374894474439
+    char_count: 4470
+skipped: []
+```
+
+- 最終判定: 投稿。80 Level の原文を再確認し、Season of Two Embers の市場における複数 scale の wayfinding、Season of Duets の concert hall における compression-release・複数 sightline・player-sized detail、layout 初期からの visibility / occlusion planning を記事固有の因果として記述した。
+- 投稿前 review: 4470 字、必須 6 見出しの順序、`■ 概要` 開始、`■ URL` 末尾、URL 1 件、禁止表現なし、duplicate preflight `continue`、Slack 保存後の UTF-8 verification `ok`。
+- 判定上の留保: 定量比較を含まない制作インタビューであるため「部分採用」とし、初見観察と一室の A/B probe で視認性・探索余白・感情語・frame cost を併せて検証する条件を明記した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
