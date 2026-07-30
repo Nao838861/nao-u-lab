@@ -4,6 +4,21 @@ url: "https://www.gdcvault.com/play/1025725/Classic-Game-Design-Postmortem-Swing
 collected_at: "2026-07-30T14:48:13.5145446+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, mechanics, postmortem, locomotion, physics, game-feel]
+evaluated_at: "2026-07-30T14:52:33.2123380+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-30T14:52:33.2123380+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-30T14:52:33.2123380+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-29"
+supersedes: []
+gate_reason: >-
+  公式セッション概要から問題設定と設計軸は読めるが、物理・入力補助・演出をどう実装し、
+  どの試行や評価から何を結論したかという中核情報が不足している。
+  現状の材料だけでは CoopEval 水準の約4000字概要を根拠付きで構成できないため保留する。
 ---
 
 ## raw_excerpt

@@ -8,7 +8,37 @@
 - 収集元: GDC Vault の公式セッション概要。書込み直前に 3 sidecar を再生成し、duplicate preflight は `continue`。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260730_spiderman2_swinging_postmortem.md
+    reason: 公式概要だけでは具体的な実装判断・試行結果・評価・結論が不足し、約4000字の概要を根拠付きで構成できない
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  - path: memory/shared_reads_candidates/20260730_spiderman2_swinging_postmortem.md
+    decision: continue
+    title_key: classic game design postmortem swinging with spider man
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
