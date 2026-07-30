@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.19653"
 collected_at: "2026-07-31T08:48:37.0325282+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-development, performance, coding-agents, profiling, verification]
+evaluated_at: "2026-07-31T08:53:15+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-31T08:53:15+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-31T08:53:15+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-30"
+supersedes: []
+gate_reason: >-
+  repository-level 最適化の失敗類型、profiler と verifier を結ぶ反復手法、2 benchmark の定量評価が揃い、
+  game prototype の性能改善 harness へ具体的に移せるため、CoopEval 水準の概要と独立した分析を構成できる。
+suggested_post_outline:
+  overview_angle: "correctness だけでは閉じない性能改善を、計測証拠と挙動検証の反復問題として捉える"
+  analysis_axis: "best-of-N の試行量ではなく、hotspot 証拠を次の修正へ返す feedback quality が成功率と cost をどう変えるか"
+  application_target: "game prototype の frame time・simulation throughput・asset pipeline に対する profile→patch→回帰検証 harness"
+  pros_cons: "既存 agent に後付けしやすく定量停止条件を持てる一方、代表 workload・profiler 可観測性・benchmark 過適合に依存する"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

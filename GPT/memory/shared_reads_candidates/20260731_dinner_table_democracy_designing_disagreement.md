@@ -4,6 +4,20 @@ url: "https://gdcvault.com/play/1035817/Dinner-Table-Democracy-Designing"
 collected_at: "2026-07-31T08:48:01.9801904+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, social-play, conflict-design, role-play, serious-games]
+evaluated_at: "2026-07-31T08:53:15+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-31T08:53:15+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-31T08:53:15+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-30"
+supersedes: []
+gate_reason: >-
+  structured friction・role-based empathy・comedic realism という着想と実演形式は具体的だが、
+  現状はセッション紹介の範囲で、各技法の実施条件・評価内容・得られた結論が不足し、CoopEval 水準の概要を支えられない。
 ---
 
 ## raw_excerpt
