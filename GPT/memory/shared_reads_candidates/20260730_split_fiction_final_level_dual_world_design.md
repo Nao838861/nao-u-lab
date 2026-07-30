@@ -4,6 +4,21 @@ url: "https://www.gamedeveloper.com/design/split-fiction-s-final-level-concept-w
 collected_at: "2026-07-30T19:16:42.0676563+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, level-design, co-op, puzzle-design, postmortem]
+evaluated_at: "2026-07-30T19:22:02.8067565+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-30T19:22:02.8067565+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-30T19:22:02.8067565+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-29"
+supersedes: []
+gate_reason: >-
+  リンク先記事は、全編案を prototype 後に最終面へ圧縮した理由と、制作費・共同注意・終盤効果の判断までは裏づける。
+  一方、raw_excerpt の情報/実行/同期の分解、camera、reveal、playtest の詳細は記事本文から追跡できず、3分記事単独では約4000字の独立した概要を支える評価材料が不足する。
+  講演動画・transcript・詳細ノートの provenance を追加してから再評価する。
 ---
 
 ## raw_excerpt
