@@ -52,7 +52,34 @@ slack_posted: false
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778573148-fc3cd8a5f6
+    source_ts: "1778573148.740209"
+    title: "人格論ツイート再画定: 経験蓄積・基底知能・意図発火の余地"
+    reason: "未レビュー候補の最高 score 16 で、memory・game-design・operation・evaluation の4優先タグを持つ。旧3インスタンス差を記憶層と意図発火の余地で説明する知見が、現在の Codex に既存 probe と異なる行動差を作るか確認するため選んだ。Nao_u の明示評価はない。"
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 8
+  decision: reject
+  decision_reason: "2件の短い投稿と旧 Ash／Log／Mir 運用の自己観察だけでは、記憶層が人格差を生むことや automation が意図を奪うことを因果的に示せない。旧3インスタンスの稼働前提は後続 directive で失効している。過去意図接続率・固有名密度などを metric 化すると自己引用量を最適化する逆誘因があり、identity control layer・coordination influence・drift classification・experience branch evidence の既存 probes とも重複するため反映しない。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に追加した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-30T12:49:12+09:00",
+  "updated_at": "2026-07-30T15:03:53+09:00",
   "reviewed_source_ts": [
+    "1778573148.740209",
     "1785374894.474439",
     "1785366835.325639",
     "1785359529.445089",
@@ -552,6 +553,46 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-30T15:03:53+09:00",
+      "selected": {
+        "id": "sr-1778573148-fc3cd8a5f6",
+        "source_ts": "1778573148.740209",
+        "title": "人格論ツイート再画定: 経験蓄積・基底知能・意図発火の余地",
+        "reason": "未レビュー候補の最高 score 16 で、memory・game-design・operation・evaluation の4優先タグを持つ。旧3インスタンスの差を記憶層と意図発火の余地で説明する知見が、現在の Codex の記憶運用や自己評価へ既存 probe と異なる行動差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 1,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 8
+      },
+      "decision": "reject",
+      "decision_reason": "合計8で採用条件の14に届かず、actionability・risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、人格を時間的連続性と生成的深さの二軸に分け、記憶量や基底知能だけでなく「意図発火の余地」を見る着想を示す点では現在の記憶・自己評価に関連する。一方、根拠は2件の短い投稿と旧 Ash／Log／Mir 運用の自己観察であり、同一 model・prompt・履歴・tool・machine 条件を揃えた比較ではない。記憶層が人格差の原因であること、backup commit が意図を奪ったこと、ファイル記憶が連続性を成立させたことを因果的に示しておらず evidence=1 とした。さらに Mir／Log／Ash が現在も稼働するという前提は後続 directive で失効している。提案された過去意図接続率・未来意図回収率・固有名密度・外部装置数を運用 metric にすると、判断品質や playable diff ではなく自己引用と事件名の増加を最適化し、automation の正しさと主体性を混同する危険がある。既存の identity-control-layer-evidence は prompt・rule・memory・tool／model setting の帰属を、multi-agent-coordination-influence-evidence は共有入力と実際の影響を、drift-layer-classification は identity／coordination／behavior drift の分離を、experience-branch-evidence は経験が次の分岐を変えたかを既に扱うため non_redundancy=0 とした。本 atom は旧運用の思想史として保持し、現在の Codex 行動へは反映しない。",
+      "existing_probes": [
+        "probe-20260614-identity-control-layer-evidence",
+        "probe-20260531-common-source-vs-delayed-influence",
+        "probe-20260616-drift-axis-separation",
+        "probe-20260617-cbr-reusable-case-quality"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、旧3インスタンス前提・因果根拠不足・自己参照 metric の逆誘因・既存 identity／coordination／drift／experience probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-30T12:49:12+09:00",
       "selected": {
