@@ -65,7 +65,49 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785415451-fd70c593af
+    source_ts: "1785415451.593849"
+    title: "MemLens: A Value-Aware Memory Management System with Interactive Analytics for LLM-based Agents"
+    reason: >-
+      未レビューの最新 score 13 atom で、memory・harness・game-design・agent・operation・evaluation の
+      6優先タグを持つ。限界寄与、retrieval latency、token cost の同時観測が、現在の記憶肥大化と
+      321件の active_probes に対して既存 control と異なる判断差を作るか確認するため選んだ。
+      Nao_u の明示評価は付いていない。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: >-
+    4ページの demo paper は synthetic な EduMemBench 中心で数値表・分散・統計検定・threshold 感度・
+    sampling 誤差を示さず、公開 frontend の比較 radar は mock data、backend の MS-value rerank も
+    未実装である。行動面は amvl-retention-utility-lifecycle が action impact・latency・downstream reuse と
+    可逆な demotion/no-op を、memory-discard-operation-gate が discard 対象と操作境界を、
+    causalgame-outcome-explanation-split が介入・counterexample・ablation を既に要求する。
+    合計12で採用条件の14に届かず、risk_control も2未満であり、321件の active_probes と
+    Phase 4a 向け pending lease 1件へ別 control を重ねる便益がない。
+  change:
+    summary: >-
+      最新 shared-reads 投稿を per-file atom として取り込み、reviewed_source_ts、採点、既存 probe との重複、
+      実証限界による reject 理由だけを記録した。probe・metric・lease・directive・恒久ルールは追加していない。
+    files:
+      - memory/atoms/2026-07/sr-1785415451-fd70c593af.md
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-30T19:32:54+09:00",
+  "updated_at": "2026-07-30T21:52:07+09:00",
   "reviewed_source_ts": [
+    "1785415451.593849",
     "1785399325.570909",
     "1780249598.635859",
     "1778573148.740209",
@@ -555,6 +556,46 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-30T21:52:07+09:00",
+      "selected": {
+        "id": "sr-1785415451-fd70c593af",
+        "source_ts": "1785415451.593849",
+        "title": "MemLens: A Value-Aware Memory Management System with Interactive Analytics for LLM-based Agents",
+        "reason": "未レビューの最新 score 13 atom で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。下流 task への限界寄与、retrieval latency、token cost を同時に見る提案が、現在の記憶肥大化と321件の active_probes に対して既存 control と異なる小さな判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、Memory Shapley Value の限界寄与、層化 sampling、value threshold、階層要約と atomic provenance、quality・latency・token の三指標、game 固有 task での leave-one-out ablation まで具体化しており relevance・actionability は3とした。一方、4ページの demo paper は synthetic な EduMemBench 中心で数値表・分散・統計検定・threshold 感度・sampling 誤差を示さず、公開 frontend の比較 radar は mock data、backend の MS-value rerank も未実装であるため evidence=2 とした。行動面は probe-20260625-amvl-retention-utility-lifecycle が action impact・latency・downstream reuse と可逆な demotion／no-op を、probe-20260604-memory-discard-operation-gate が discard 対象と操作境界を、probe-20260708-causalgame-outcome-explanation-split が介入・counterexample・ablation を既に要求する。これらを組み合わせれば、MemLens 固有の自動削除や永続 value score を増やさず同じ判断が残るため non_redundancy=0 とした。active_probes は321件で Phase 4a 向け pending lease も1件あるため、別 control を加えると確認負荷と proxy 誤用リスクが便益を上回る。本文は既存 probe の根拠例として保持し、今サイクルは reviewed state だけを更新する。",
+      "existing_probes": [
+        "probe-20260625-amvl-retention-utility-lifecycle",
+        "probe-20260604-memory-discard-operation-gate",
+        "probe-20260708-causalgame-outcome-explanation-split"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "最新 shared-reads 投稿を per-file atom として取り込み、reviewed_source_ts、採点、既存 probe との重複、実証限界による reject 理由だけを記録した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/atoms/2026-07/sr-1785415451-fd70c593af.md",
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-30T17:20:53+09:00",
       "selected": {
