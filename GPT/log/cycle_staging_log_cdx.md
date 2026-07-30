@@ -90,7 +90,51 @@ self_feedback:
 - 重複確認: `probe-20260710-npm-contrastive-procedural-memory`、`probe-20260515-promotion-boundary`、`probe-20260604-memory-action-loop-evidence`、`probe-20260710-automem-memory-action-audit` と同型。321件の active probe に追加せず、次の具体的な反復失敗では既存4件を再利用する。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、per-file atom index との整合を検証した。index entry の missing / duplicate / broken reference は 0 件。代表語 probe は 記憶=22行、ゲーム設計=8行、敵パターン=1行、評価軸=0行で、末尾は現行 index に語がないためであり source mojibake ではない。"
+  - "memory/atoms.jsonl 2804行を監査した。parse / duplicate id / jsonl・per-file・index 間 content conflict は 0 件。normalized content duplicate は raw 40群80行だが canonical overlay で40行を fold 済み、recall-visible は3群6行で3行を fold 済み。"
+  - "memory/raw/ を 2026-07-01 より前の mtime で走査し、30日以上更新のない archive 候補を226件確認した。raw provenance を失わないよう本 phase では移動せず、内訳上位は web_research 119件、phase3_sources 17件、headless_eval 16件、phase3_pdfs 13件。"
+  - "shared_reads_candidates 1172件の現在 lifecycle を監査した。posted=537、ready_to_post=9、postponed=229、failed=391、needs_review=3、unreviewed=3。postponed / needs_review の期限超過は1件だが、同一 JAMEL group の membership 一致 deferred lease が 2026-08-20 まで有効なため再投入しなかった。"
+  - "title canonical / mixed / open duplicate sidecar を再生成・監査した。terminal canonical=74群、mixed=46群、all_open=7群。stale group action queue は0件で、title 一致だけによる close は行っていない。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0件で、handled 更新対象なし。candidate / group handoff inbox も pending 0件。"
+issues:
+  - id: ISS-ENC-001
+    description: "legacy shared-reads atom sr-1776127289-4d9239b255 の「AIエージェント」が literal U+FFFD を含む「AIエ��ジェント」として raw archive、atoms.jsonl、per-file atom、index に残っている。memory_health が同時に挙げた gr-1777083728-44d444ab7a の疑いは Nao_u 原文の意図的な「???」であり文字化けではない。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; ../Claude/memory/beliefs.md:78"
+    source_file_status: "UTF-8 明示読みは成功するが、sr-1776127289-4d9239b255 は raw source 自体に U+FFFD が2文字あり source-level corruption。gr-1777083728-44d444ab7a は UTF-8 source 正常。memory/MEMORY.md は UTF-8 source 正常。"
+    display_or_tooling_status: "none; 同じ置換文字が raw / jsonl / per-file / index の全経路で再現し、shell 表示だけの mojibake ではない。"
+    why_blocks_game_memory: "「エージェント」で検索した時にこの memory-architecture atom を落とすため検索性を局所的に弱める。ただし tags と他の title 語では到達でき、構造設計を起動する規模ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 53
+  mixed_group_count: 46
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
