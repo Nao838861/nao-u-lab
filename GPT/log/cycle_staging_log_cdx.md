@@ -9,7 +9,35 @@
 - preflight: 3 sidecar を再生成後、上記 candidate は `continue`（title / URL とも既存一致なし）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260730_sky_emotional_environment_design.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
+
+- 判定根拠: 遠・中・近距離の wayfinding、compression-release と人物尺度による感情設計、layout 初期からの performance planning を、Sky の市場・concert hall の具体例から説明できる。小規模 prototype の初見導線・感情語・detail budget を同じ playtest checklist で検証する適用先も具体的で、CoopEval 水準の長文分析へ展開可能。
+- duplicate preflight: 3 sidecar 再生成・鮮度確認後、対象 candidate は `continue`。group / candidate handoff の pending は開始時・終了時ともに 0 件。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
