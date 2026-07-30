@@ -70,7 +70,43 @@ skipped: []
   `tools/shared_reads_policy.py` の validation は `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780249598-ac69e2d859
+    source_ts: "1780249598.635859"
+    title: "ATOM: AdapTive and OptiMized dynamic temporal knowledge graph construction using LLMs"
+    reason: "未レビューの score 13 atom で memory・operation・evaluation の3優先タグを持つ。原典 URL・手法・評価を含む親投稿1件だけを選び、dual-time modeling が現行の記憶整理へ既存 probe と異なる行動差を作るか確認した。Nao_u の明示評価はなし。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "原典 v2 では observation time と fact に内在する validity start/end を分け、2020-COVID-NYT 1,076記事の human-verified 5-tuplesで評価している。しかし投稿が提案した全 atom への validity_until、期限超過 atom の default recall 除外、belief の検証期限との同一視は評価対象外。現在の atom は複数の事実・提案・歴史的文脈を含む投稿単位なので、単一 expiry は事実 validity・review deadline・retention を混同して有効な履歴まで隠し得る。原典も未知 validity を許し、temporal resolution の定量評価を future work とし、時刻誤付与・hallucination・誤 merge を limitation に挙げる。既存5 probe が stale premise・temporal scope・current/historical role・retention/utility 分離を既に扱うため、合計11かつ risk_control 1として反映しない。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 原典確認: `https://arxiv.org/html/2510.22590v2`
+- 重複確認:
+  - `probe-20260531-stale-presupposition-check`
+  - `probe-20260605-memory-staleness-current-evidence`
+  - `probe-20260611-memory-three-axis-description`
+  - `probe-20260709-atma-state-role-ghost-memory-check`
+  - `probe-20260625-amvl-retention-utility-lifecycle`
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

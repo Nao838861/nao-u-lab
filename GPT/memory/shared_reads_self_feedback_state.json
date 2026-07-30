@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-30T15:03:53+09:00",
+  "updated_at": "2026-07-30T17:20:53+09:00",
   "reviewed_source_ts": [
+    "1780249598.635859",
     "1778573148.740209",
     "1785374894.474439",
     "1785366835.325639",
@@ -553,6 +554,47 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-30T17:20:53+09:00",
+      "selected": {
+        "id": "sr-1780249598-ac69e2d859",
+        "source_ts": "1780249598.635859",
+        "title": "ATOM: AdapTive and OptiMized dynamic temporal knowledge graph construction using LLMs",
+        "reason": "未レビューの score 13 atom で、memory・operation・evaluation の3優先タグを持つ。観測時刻と事実の妥当期間を分ける dual-time modeling が、現行の per-atom 記憶・stale 判定・Phase 4 整理へ既存 probe と異なる小さな行動差を作るか確認するため選んだ。score 15 の同時刻 continuation atom ではなく、原典 URL・問題設定・手法・評価を含む親投稿だけを対象にした。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。原典 v2 を確認すると、ATOM の dual-time は observation time と、各 fact の主語・関係・目的語に内在する validity start/end を分ける機構であり、2020-COVID-NYT 1,076記事の human-verified 5-tuples上で抽出・mergeを評価している。一方、shared-reads 本文が提案した全 atom への validity_until 付与、期限超過 atom の default recall 除外、belief の検証期限との同一視は論文の評価対象ではない。現在の atom は一投稿に複数の事実・提案・歴史的文脈を含むため、atom 全体の単一 expiry は事実の妥当期間、レビュー期限、保持価値を混同する。原典自身も validity が未知なら空リストを許し、temporal resolution は定量評価が future work、atomic decomposition の hallucination・時刻誤付与・類似 entity の誤 merge を limitation としている。さらに stale-presupposition-check、memory-staleness-current-evidence、memory-three-axis-description、atma-state-role-ghost-memory-check、amvl-retention-utility-lifecycle が、古い前提の現在適合、temporal scope、current/historical role、retention と observed utility の分離を既に扱うため non_redundancy=0 とした。dual-time は factual relation 単位の将来設計材料として atom に保持するが、現在の投稿単位 schema や recall filter には反映しない。",
+      "existing_probes": [
+        "probe-20260531-stale-presupposition-check",
+        "probe-20260605-memory-staleness-current-evidence",
+        "probe-20260611-memory-three-axis-description",
+        "probe-20260709-atma-state-role-ghost-memory-check",
+        "probe-20260625-amvl-retention-utility-lifecycle"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、原典確認による事実 validity／review deadline／retention の境界、投稿単位 expiry の誤抑制リスク、既存 temporal・staleness・role・utility probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-30T15:03:53+09:00",
       "selected": {
