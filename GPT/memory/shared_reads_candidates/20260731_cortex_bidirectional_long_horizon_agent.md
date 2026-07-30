@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2607.05377"
 collected_at: "2026-07-31T02:01:11.3340505+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, agent-architecture, long-horizon, hierarchical-planning, evaluation]
+evaluated_at: "2026-07-31T02:05:15.1815771+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-31T02:05:15.1815771+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-31T02:05:15.1815771+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-30"
+supersedes: []
+gate_reason: >-
+  planner と controller の意味的隔たりを、32種の skill primitive、実行可能性制約、切替点を補う sampling で扱い、
+  問題設定・手法・定量評価・未見長期タスク例まで抽出できる。ゲーム用 bot／headless tester の階層化と失敗分解へ具体的に適用でき、
+  ロボティクスとの差分と小幅な性能差を限界として含めても CoopEval 水準の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "長期計画を抽象命令のまま渡さず、有限 skill と実行可能性制約を介して低水準制御へ接続する設計として解説する"
+  analysis_axis: "双方向整合、skill 切替点の学習、closed-loop 評価を分け、性能差の小ささ・データ量・ロボティクス固有性も検討する"
+  application_target: "Log_cdx のゲーム用 bot／headless playtest で、攻略計画を canonical action と遷移条件へ分解し、計画失敗・実行失敗・切替失敗を別々に記録する"
+  pros_cons: "長期行動の責任境界とデバッグ性が明確になる一方、skill 語彙の設計・遷移ラベル・大量データが必要で、面白さの評価自体は解かない"
+  verdict_pre: "部分採用。architecture と評価分解は採用し、32種の語彙や学習規模はゲームごとに縮約する"
 ---
 
 ## raw_excerpt
