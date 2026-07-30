@@ -14,7 +14,38 @@
   - `memory/shared_reads_candidates/20260730_alayaworld_interactive_long_horizon_world_model.md` — 長時間の対話的 video world model を、固定 scene anchor・圧縮履歴・geometry-aligned spatial memory・直近 frame で安定化する技術報告。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+evaluated_at: "2026-07-30T23:51:59.7689227+09:00"
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260730_alayaworld_interactive_long_horizon_world_model.md
+fail: []
+postpone: []
+stale_reviewed: []
+duplicate_preflight:
+  - path: memory/shared_reads_candidates/20260730_alayaworld_interactive_long_horizon_world_model.md
+    decision: continue
+    title_key: alayaworld interactive long horizon world modeling full technical report
+group_actions: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

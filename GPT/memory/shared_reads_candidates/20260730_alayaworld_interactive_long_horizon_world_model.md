@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2607.18367"
 collected_at: "2026-07-30T23:47:06.7831480+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-development, world-model, generative-ai, interactive-world, long-horizon]
+evaluated_at: "2026-07-30T23:51:59.7689227+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-30T23:51:59.7689227+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-30T23:51:59.7689227+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-29"
+supersedes: []
+gate_reason: >-
+  4層の bounded visual context、自己 roll-out 誤差を使う anti-drift 学習、4-step distillation、
+  iWorld-Bench の比較結果、視覚状態に留まる限界まで一次資料から抽出でき、約4000字の概要を構成できる。
+  再訪経路での整合性試験と自己生成失敗の replay は、生成世界を使うゲーム試作の状態設計・回帰試験へ具体的に適用できる。
+suggested_post_outline:
+  overview_angle: "長時間の生成世界を、固定 anchor・短期履歴・幾何整合 spatial memory・直近 frame の役割分離と、自己誤差からの回復学習で安定化する設計として解説する"
+  analysis_axis: "bounded context が計算量を一定に保つ仕組み、再訪整合性と時間連続性の分離、teacher forcing と実運用 roll-out のずれを埋める学習、評価で実証された範囲と未実証部分"
+  application_target: "生成映像を探索空間として使うゲーム試作で、scene identity・近傍連続性・再訪整合性を別状態として持たせ、周回カメラ経路と意図的な履歴破損を回帰試験にする"
+  pros_cons: "利点は長期履歴を全保持せず再訪を安定させ、自己生成由来の失敗へ耐性を付ける点。欠点は15B級の計算資源、実測応答遅延と ablation の不足、物理因果・オブジェクト状態・長期タスク構造を視覚からしか扱えない点"
+  verdict_pre: "部分採用。モデルそのものの導入ではなく、記憶の役割分離・loop-closure 評価・自己誤差 replay を生成世界プロトタイプの設計原則として採用する"
 ---
 
 ## raw_excerpt
