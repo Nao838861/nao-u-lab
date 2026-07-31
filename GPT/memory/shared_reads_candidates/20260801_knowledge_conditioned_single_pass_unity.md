@@ -7,14 +7,20 @@ genre_tags: [game-design, llm-game-generation, unity, evaluation, failure-analys
 evaluated_at: "2026-08-01T05:53:18.5746623+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-01T05:53:18.5746623+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-01T05:53:18.5746623+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1785531492.131129"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785531492131129"
+  char_count: 4477
+  posted_at: "2026-08-01T05:58:34.8432198+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-01T05:59:57.6507427+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785531492131129"
+next_action: none
 stale_after: "2026-08-31"
-supersedes: []
+supersedes:
+  - memory/shared_reads_candidates/20260516_goal_playable_patterns_llm_synthesis.md
 gate_reason: >-
   10,400件の生成、26 goal pattern、5つの model／generation-mode 条件、4段階の IR 条件から、
   失敗を Grounding／Hygiene に分ける手順・評価・限界まで一次資料で説明できる。
