@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-01T00:00:09+09:00",
+  "updated_at": "2026-08-01T01:54:59+09:00",
   "reviewed_source_ts": [
+    "1785509757.493939",
     "1780238641.289669",
     "1785495446.163289",
     "1778227488.450599",
@@ -567,6 +568,48 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-01T01:54:59+09:00",
+      "selected": {
+        "id": "sr-1785509757-5a58cfdda6",
+        "source_ts": "1785509757.493939",
+        "title": "StatePlay — visible success と mechanics success を分離する state-aware game world model",
+        "reason": "未レビューの最新 score 11 atom で、memory・harness・game-design・operation・evaluation を含む9タグを持つ。見た目や action control の成功と、health・meter・timer・終端規則の成立を分け、rare terminal／resource boundary／複合 event を厚く検査する観点が、次の game/headless 評価に既存 probe と異なる判断差を作れるか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads 本文は、対戦格闘ゲームの10,000 clip、希少な勝敗・super art 成功／meter 不足失敗を40%まで増やす state-critical sampling、5B visual branch と0.76B state branch、100 sample の四軸評価、state alignment 0.947、stateless baseline に対する mechanics fidelity 18.6ポイント差、さらに単一 game・5秒 clip・既知 state・視覚 model judge・parameter 数差という限界まで記録しているため evidence=3 とした。headless harness の state_before／action／state_after／emitted_event／visible_result／terminal_reason と、通常／資源閾値／終端／複合 event bucket へ直接変換できるため relevance・actionability は3である。一方、probe-20260602-titan-headless-qa-trace は abstract state・action trace・診断を、probe-20260622-d2e-synchronized-playtest-stream と probe-20260622-egocs-causal-gameplay-log は frame／input／state／event／outcome の同期と因果 chain を、probe-20260610-structural-semantic-verifier-boundary は見た目や構造の pass と semantic game-rule validity の分離を、probe-20260603-rules-core-parity-regression と probe-20260606-game-feedback-loop-asymmetry は deterministic fixture と headless／visual／human evidence の境界を既に扱う。本 atom 固有の差は rare-state bucket を通常分布と分けて厚くする点だが、現 staging には対応する playable diff、state trace、before／after build がなく、後続 Phase 4a は memory cleanup であるため consumer、trigger artifact、期待判断差を lease 契約どおり比較可能に指定できない。active_probes 322件と Phase 4a 向け pending lease 1件もあるため、新規 probe・metric・lease・directive・恒久ルールは追加しない。次に state-transition-heavy prototype と通常／境界 bucket の fixture が揃い、既存6 probeだけでは希少終端・資源閾値・複合 event の取り逃しを判定できない時に再評価する state-only defer とする。",
+      "existing_probes": [
+        "probe-20260602-titan-headless-qa-trace",
+        "probe-20260622-d2e-synchronized-playtest-stream",
+        "probe-20260622-egocs-causal-gameplay-log",
+        "probe-20260610-structural-semantic-verifier-boundary",
+        "probe-20260603-rules-core-parity-regression",
+        "probe-20260606-game-feedback-loop-asymmetry"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の state／causal trace・verifier boundary・rules parity・feedback-loop probes との重複、比較可能な game artifact 不在による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-31T21:55:44+09:00",
       "selected": {

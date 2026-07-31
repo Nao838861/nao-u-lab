@@ -55,7 +55,34 @@ reason: Phase 2 の gate_decision が pass の candidate は 0 件。postpone �
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785509757-5a58cfdda6
+    source_ts: "1785509757.493939"
+    title: "StatePlay — visible success と mechanics success を分離する state-aware game world model"
+    reason: "未レビューの最新 score 11 atom で、game-design・harness・evaluation・operation を含む9タグを持つ。見た目や action control と内部 state／mechanics の成功を分離し、rare terminal・resource boundary・複合 event の検査が既存 probe と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "採用閾値は満たすが、state／action／event／visible result の同期、structural／semantic verifier、deterministic fixture、headless／visual／human evidence の境界は既存6 probeが大きく覆う。固有差は rare-state bucket を通常分布と分ける点だが、現 staging に比較可能な playable diff・state trace・before／after buildはなく、Phase 4aはmemory cleanupである。consumer・trigger artifact・期待判断差をlease契約どおり指定できず、active_probes 322件とPhase 4a向けpending lease 1件もあるためstate-only deferとした。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
