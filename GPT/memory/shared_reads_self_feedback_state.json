@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-31T20:01:38+09:00",
+  "updated_at": "2026-07-31T21:55:44+09:00",
   "reviewed_source_ts": [
+    "1785495446.163289",
     "1778227488.450599",
     "1780292834.435979",
     "1780303781.237769",
@@ -565,6 +566,45 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-31T21:55:44+09:00",
+      "selected": {
+        "id": "sr-1785495446-c816b13eb1",
+        "source_ts": "1785495446.163289",
+        "title": "ChronoMem — LLM agent memory の version control と semantic rollback",
+        "reason": "未レビューの最新 score 11 atom で、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ。未来情報へ一度 exposure した後も過去版の read view を復元できるか、version selection と deterministic restore を分離して測る観点が、現行の atom／index／lifecycle 運用とゲーム build 回帰へ新しい判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件は満たす。shared-reads 本文は immutable event・snapshot・HEAD・semantic descriptor、BM25／dense retrieval／RRF／cross-encoder による version selection、ID 指定の transaction restore、LoCoMo／MemoryAgentBench の post-exposure protocol と QA／future leakage 評価を具体化し、本文と表の Recall 値不一致、snapshot 容量・write latency・index 再構築時間の未報告、best-effort index 同期、外部副作用非復元、線形 truncate という限界も照合しているため evidence=3 とした。既存の memory-governance-gate-separation は consistency／staleness／access-control、evaluation-version-boundary は rubric 版境界、destructive-external-state-checkpoint は rollback checkpoint、writeback-authority-drift は durable default の rollback／expiry を扱うが、未来情報への exposure 後に過去 read view だけを固定し、version 誤選択と正しい ID の復元漏れを別判定する試験は直接要求しないため non_redundancy=2 とした。一方、現 cycle には versioned manifest、過去 read view、同一質問または seed の before／after artifact がなく、consumer、trigger artifact、期待判断差を lease 契約どおり比較可能に指定できない。Phase 4a 向けには既存の pending lease も1件あるため、active probe・metric・lease・directive・恒久ルールは追加しない。manifest 型 snapshot または build A／B の post-exposure fixture が実際に生じた時だけ再評価する state-only defer とする。",
+      "existing_probes": [
+        "probe-20260602-memory-governance-gate-separation",
+        "probe-20260711-evaluation-version-boundary",
+        "probe-20260527-destructive-external-state-checkpoint",
+        "probe-20260613-writeback-authority-drift"
+      ],
+      "change": {
+        "summary": "reviewed_source_ts と defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-31T20:01:38+09:00",
       "selected": {
