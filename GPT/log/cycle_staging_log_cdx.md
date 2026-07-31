@@ -67,7 +67,35 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785447822-ead4d8311b
+    source_ts: "1785447822.646729"
+    title: "Uniform Behavior Conditioned Learning（UBCL）— behavior vector による単一 policy の連続プレイスタイル制御"
+    reason: "最新の未レビュー score 12 atom で、memory・harness・game-design・agent・evaluation を含む8タグを持つ。勝率だけでなく target／actual behavior vector と到達可能領域で headless playtest を診断する提案が、次のゲーム評価に小さな判断差を作れるか確認するため選んだ。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "数値上の採用条件は満たすが、現 staging には同一 target set を比較できる playable diff、parameterized bot、before／after trace がなく、consumer phase・trigger artifact・expected delta を lease 契約どおり指定できない。既存の fixed-persona／behavior-distribution／profile-specific probes とも一部重なり、active_probes 321件へ対象 artifact なしに追加すると確認負荷が先行するため state-only review に留めた。次の具体的な headless game evaluation で2〜3軸の target／actual log と比較 build が揃い、既存3 probeだけでは到達不能領域を判定できない時に再評価する。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを state に追加した。新規 probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
