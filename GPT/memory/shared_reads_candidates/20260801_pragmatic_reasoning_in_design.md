@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2607.26322"
 collected_at: "2026-08-01T01:45:51+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, affordance, tutorial-design, human-computer-interaction, player-modeling]
+evaluated_at: "2026-08-01T01:49:26+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-01T01:49:26+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-01T01:49:26+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-31"
+supersedes: []
+gate_reason: |-
+  design choice を因果構造の伝達信号として逆推論する枠組みは、説明文に頼らない tutorial level と affordance 配置へ直接適用できる。
+  ただし候補メモは abstract 相当で、design game の条件、参加者、literal baseline の仕様、効果量がなく、約4000字の高密度概要を支えられないため postpone とする。
 ---
 
 ## raw_excerpt

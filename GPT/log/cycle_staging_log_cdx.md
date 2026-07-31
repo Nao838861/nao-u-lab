@@ -9,7 +9,42 @@
 - duplicate preflight: 両候補とも3 sidecar 再生成後に `continue`（終了コード 0）。Slack 投稿・品質判定は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 2
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260801_theory_of_mind_social_learning.md
+    reason: abstract 相当のみで task 条件・比較モデル・定量結果が不足し、約4000字概要の評価部分を支えられない
+  - path: memory/shared_reads_candidates/20260801_pragmatic_reasoning_in_design.md
+    reason: abstract 相当のみで design game 条件・baseline 仕様・効果量が不足し、約4000字概要の評価部分を支えられない
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  sidecars_rebuilt: [posted-source, title-canonical, open-duplicate-group]
+  results:
+    - path: memory/shared_reads_candidates/20260801_theory_of_mind_social_learning.md
+      decision: continue
+    - path: memory/shared_reads_candidates/20260801_pragmatic_reasoning_in_design.md
+      decision: continue
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
