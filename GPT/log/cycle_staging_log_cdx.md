@@ -85,7 +85,53 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語（記憶・ゲーム設計・評価軸）を取得できることと、validate_memory_index.py で per-file atom index との不整合が 0 件であることを確認した。broken index entry は 0 件。"
+  - "memory/atoms.jsonl 2810件を監査し、atoms.jsonl / per-file .md / index.jsonl の各件数が一致、content conflict・mirror 欠損・duplicate cluster index の不整合はいずれも 0 件だった。raw normalized-content duplicate 40群80件と canonical overlay 45群は既存 fold で解決済み。"
+  - "memory/raw/ の30日超ファイル226件（web_research 203、headless_eval 16、slack_api 4、その他3）を確認した。一次資料・評価証拠・Slack provenance であり、参照切れを生む移動根拠がないため今回は archive せず保持した。"
+  - "shared-reads candidate lifecycle 1187件を dry-run 監査し、posted 542 / ready_to_post 9 / postponed 236 / failed 391 / needs_review 3 / skipped_unreviewed 6、修正対象 0 件を確認した。期限到来は1件だが、同一 all-open group の deferred lease が retry_after 2026-08-20 まで有効なため再投入しなかった。"
+  - "open duplicate group queue 53群（mixed 46 / all_open 7）、mixed duplicate queue 46群、stale triage queue 0件、group action queue 0件を再生成した。group / candidate handoff enqueue は各0件、両 inbox audit の error は0件だった。"
+  - "Slack directives / broadcasts は pending 各0件で、完了根拠なしに handled へ変更した行はない。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 53
+  mixed_group_count: 46
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  suppressed_overdue:
+    path: memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+    group_key: joint agent memory and exploration learning via novelty signals
+    reason: "同一 membership の group handoff gha-e6d4d4b5a37a0808 が retry_after 2026-08-20T13:19:04+09:00 まで deferred のため、stale triage と candidate handoff への重複投入を抑止した。"
+group_action_handoff: []
+stale_review_batch: []
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読みで正常。memory atom sr-1776127289-4d9239b255 の置換文字は per-file と raw Slack provenance の双方に存在する既存 source corruption。gr-1777083728-44d444ab7a は本文が正常で、疑いは文字列『???』による detector false positive。"
+  display_or_tooling_status: none
+```
+
+- `memory_health.py` の topology warning `stale_bridge: 1` は、旧 prescription `sr-1778948778-e0c9fde779` から現 canonical `local-20260726-self-judgment-ownership` への明示済み supersedes edge であり、孤児や接続欠落ではない。
+- due-only probe は 0 件。pending の `probe-20260731-rlm-one-hop-query-rewrite` は lease_due 2026-08-07T23:59:59+09:00 のため、期限前 receipt は作成していない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
