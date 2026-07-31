@@ -4,6 +4,21 @@ url: https://talks.godotengine.org/godotcon-boston-2026/talk/KS9XRD/
 collected_at: 2026-07-31T14:02:17.4071618+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, pacing, postmortem, indie]
+evaluated_at: 2026-07-31T14:09:05.6536432+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: 2026-07-31T14:09:05.6536432+09:00
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-31T14:09:05.6536432+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-30"
+supersedes: []
+gate_reason: >-
+  公式概要から問題設定と pacing / anticipation / novelty / clarity / payoff の五要素は確認できるが、
+  各要素を実装へ落とす手順、作品内の具体例、評価結果が未取得である。講演動画または transcript なしでは
+  CoopEval 水準の概要を推測で補うことになるため、一次資料を取得できるまで保留する。
 ---
 
 ## raw_excerpt

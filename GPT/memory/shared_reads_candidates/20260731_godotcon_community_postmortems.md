@@ -4,6 +4,21 @@ url: https://talks.godotengine.org/godotcon-boston-2026/talk/E8KRGB/
 collected_at: 2026-07-31T14:03:15.5526049+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-dev, postmortem, prototyping, scope-control]
+evaluated_at: 2026-07-31T14:09:05.6536432+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: 2026-07-31T14:09:05.6536432+09:00
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-31T14:09:05.6536432+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-30"
+supersedes: []
+gate_reason: >-
+  公式概要は三つの制作事例と scope control / early validation / core pillars の論点を示すが、
+  各 postmortem の工程、失敗、比較可能な評価証拠がなく、複数講演を一つの手法として説明できない。
+  動画または transcript で事例固有の因果を確認できるまで保留する。
 ---
 
 ## raw_excerpt

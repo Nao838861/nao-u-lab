@@ -10,7 +10,42 @@
 - 直近の `memory/raw/web_research/results.jsonl`、`memory/atoms.jsonl`、raw Slack を確認。`From World-Gen to Quest-Line`、`Grounding Machine Creativity...`、`Automated Playtesting with Procedural Personas...` は posted-source の同一 work と一致したため、preflight の `skip` と Slack permalink を `log/shared_reads_candidate_preflight.jsonl` に記録し、candidate は作成しなかった。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260731_making_gameplay_moments_stick.md
+    reason: 公式概要だけでは五要素の実装手順・具体例・評価結果を抽出できず、動画または transcript が必要
+  - path: memory/shared_reads_candidates/20260731_godotcon_community_postmortems.md
+    reason: 三つの事例の工程・失敗・比較証拠が未取得で、複数 postmortem を推測なしに統合できない
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  - path: memory/shared_reads_candidates/20260731_making_gameplay_moments_stick.md
+    decision: continue
+  - path: memory/shared_reads_candidates/20260731_godotcon_community_postmortems.md
+    decision: continue
+evaluated_at: 2026-07-31T14:09:05.6536432+09:00
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
