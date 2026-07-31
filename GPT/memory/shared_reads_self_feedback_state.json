@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-01T01:54:59+09:00",
+  "updated_at": "2026-08-01T03:58:20+09:00",
   "reviewed_source_ts": [
+    "1780406202.165989",
     "1785509757.493939",
     "1780238641.289669",
     "1785495446.163289",
@@ -568,6 +569,46 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-01T03:58:20+09:00",
+      "selected": {
+        "id": "sr-1780406202-ed10de8166",
+        "source_ts": "1780406202.165989",
+        "title": "本能 vs 逆算フレームの学術的語彙化 — game feel 2本と experience-driven adaptation 1本の対極読み",
+        "reason": "reviewed_source_ts にない score 10 以上のうち最新 cluster の先頭で、game-design・operation・evaluation の複数優先タグを持つ。Pichlmair の3 domain、Lin の19要素、Lopes の sense-model-adapt loop を、今サイクルの game feel／移動設計や次回 playable diff に小さな判断差として使えるか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、200件超の game feel 文献から Physicality／Amplification／Support を整理した survey、Steam review 由来の impact feel 19要素、17実証研究の sense-model-adapt SLR を並べ、入力応答、feedback channel、感情 proxy の点検へ変換できるため relevance=3、actionability=2 とした。一方、3研究を本能未確立期／過渡期／確立後へ割り当てる位相対応は投稿独自の合成で、3論文間の階層関係や位相転移を比較実験で示しておらず、Lin の19要素を現行4 proxyへ拡張した local baseline もないため evidence=2 に留める。experience_verb_observability_chain metric は cue／選択／意図入力／結果／回復を、game-feedback-loop-asymmetry は観測している feedback loop と証拠境界を、feedback-device-amplitude-axis は介入強度と保持すべき選択を、bullet-identity-channel-ladder は feedback channel と可読性をすでに扱うため non_redundancy=0 とした。4→19軸化や game lesson 全体の3 domain再分類は確認面を増やし、Mir frame を運用前提にする部分も現行 standalone directive と合わない。現在の staging には比較可能な playable diff／before-after proxy artifact がなく、後続 Phase 4a には別 probe の pending lease も1件あるため risk_control=1 とし、state-only review で閉じる。",
+      "existing_controls": [
+        "experience_verb_observability_chain",
+        "probe-20260606-game-feedback-loop-asymmetry",
+        "probe-20260710-feedback-device-amplitude-axis",
+        "probe-20260626-bullet-identity-channel-ladder"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、根拠の限界・既存 control との重複・軸拡張リスクによる reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-01T01:54:59+09:00",
       "selected": {
