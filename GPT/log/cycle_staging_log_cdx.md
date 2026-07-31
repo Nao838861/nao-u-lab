@@ -94,7 +94,52 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md と per-file atom index の整合を validate_memory_index.py で確認。broken index entry は 0 件。UTF-8 明示読みで『記憶』『ゲーム設計』『敵パターン』を取得でき、『評価軸』の完全一致は現 index に存在しなかったが、source の文字化けは認めなかった。"
+  - "memory/atoms.jsonl 2809件を監査。normalized content duplicate は raw 40群80件だが canonical overlay 45群で fold 済み、effective unresolved title debt は 0 群。矛盾を示す duplicate id / index 不整合は 0 件。"
+  - "memory/raw/ の最終更新30日超は226件。主に web_research 119件、phase3 source/PDF、headless_eval と immutable provenance であり、参照根拠を失う一括移動は行わず archive 候補として棚卸しのみ実施。"
+  - "shared-reads candidate lifecycle 1185件を dry-run audit。posted 542 / ready_to_post 9 / postponed 234 / failed 391 / needs_review 3 / skipped_unreviewed 6、現在状態の修正対象 0 件。stale_after 到来は1件だが deferred group lease 中。"
+  - "open duplicate group queue 53群（mixed 46 / all_open 7）、stale triage queue 0件、group action queue 0件へ規定順で再生成。group/candidate handoff enqueue は新規 0 件、両 inbox audit error 0 件。"
+  - "Slack directives / broadcasts の pending は各0件。handled へ変更すべき行はなかった。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 53
+  mixed_group_count: 46
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  suppressed_overdue:
+    path: memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+    group_key: joint agent memory and exploration learning via novelty signals
+    reason: "同一 membership の group handoff gha-e6d4d4b5a37a0808 が retry_after 2026-08-20T13:19:04+09:00 まで deferred のため、stale triage への重複投入を抑止。"
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- `memory_health.py` の `stale_bridge` 1件は、`local-20260726-self-judgment-ownership` が旧 prescription atom `sr-1778948778-e0c9fde779` を明示的に supersede した lifecycle edge。旧 atom の自動削除・退役は行わない。
+- `source_file_status`: `memory/MEMORY.md` は UTF-8 として正常に読め、index validator も OK。source file 破損なし。
+- `display_or_tooling_status`: PowerShell の長行折返しはあったが、UTF-8 明示読みでは mojibake なし。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
