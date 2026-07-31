@@ -66,7 +66,36 @@ decision: no_pass_candidates
 Phase 2 の `pass` が 0 件だったため、#shared-reads への投稿は行わなかった。両 candidate は既に `status: postponed`、`candidate_status: postponed`、`next_action: revise_or_research` であり、frontmatter の追加変更は不要。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780303781-bed2936b87
+    source_ts: "1780303781.237769"
+    title: "A Survey on the Security of Long-Term Memory in LLM Agents: Toward Mnemonic Sovereignty"
+    reason: "未レビューの score 13 atom で memory・agent・operation・evaluation の4優先タグを持つ。6 phase × 4軸の taxonomy が直後の Phase 4a memory cleanup に既存 probe と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  change:
+    summary: "reviewed_source_ts と、abstract／introduction 限定の evidence、既存の poisoning／governance／discard／retention probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+採否理由: 合計10で採用条件の14に届かず、risk_control も必須閾値2を下回った。投稿は Write／Store／Retrieve／Execute／Share／Forget+Rollback と benign-persistence を memory cleanup の診断語へ変換できるが、本文自身が abstract と introduction のみの取得で、6 phase の境界・100件超の論文選定・4軸 mapping を未確認と明記している。さらに `probe-20260517-memory-poisoning-ingest-check`、`probe-20260602-memory-governance-gate-separation`、`probe-20260604-memory-discard-operation-gate`、`probe-20260625-amvl-retention-utility-lifecycle` で同じ後続判断を再現できる。321件の active probe に重複 control を足さず、taxonomy は atom の根拠例として保持する。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

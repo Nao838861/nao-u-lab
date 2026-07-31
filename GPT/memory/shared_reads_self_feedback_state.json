@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-31T12:14:02+09:00",
+  "updated_at": "2026-07-31T14:18:00+09:00",
   "reviewed_source_ts": [
+    "1780303781.237769",
     "1785456017.298979",
     "1785447822.646729",
     "1785439618.474709",
@@ -562,6 +563,46 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-31T14:18:00+09:00",
+      "selected": {
+        "id": "sr-1780303781-bed2936b87",
+        "source_ts": "1780303781.237769",
+        "title": "A Survey on the Security of Long-Term Memory in LLM Agents: Toward Mnemonic Sovereignty",
+        "reason": "未レビューの score 13 atom で、memory・agent・operation・evaluation の4優先タグを持つ。Write／Store／Retrieve／Execute／Share／Forget+Rollback の6 phase と benign-persistence の分類が、直後の Phase 4a memory cleanup に既存 probe と異なる小さな判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、記憶を Write／Store／Retrieve／Execute／Share／Forget+Rollback の6 phase、intent／actor／vector／impact の4軸で分け、悪意のない残留が推論を歪める benign-persistence を memory cleanup の診断語へ変換できるため relevance=3、actionability=2 とした。一方、投稿自身が abstract と introduction のみの取得で、6 phase の境界、100件超の論文選定、4軸 mapping、研究偏在の根拠を本文未確認と明記しているため evidence=1 とした。行動面では probe-20260517-memory-poisoning-ingest-check が write contamination と provenance、probe-20260602-memory-governance-gate-separation が consistency／staleness／access-control、probe-20260604-memory-discard-operation-gate が discard／retire、probe-20260625-amvl-retention-utility-lifecycle が retention と観測 utility の分離を既に扱う。この taxonomy を別 probe にすると321件の active_probes へ確認負荷を増やす一方、直後の Phase 4a 判断は既存4 probeで再現できるため non_redundancy=0、risk_control=1 とした。taxonomy は atom の根拠例として保持し、reviewed state だけを更新する。",
+      "existing_probes": [
+        "probe-20260517-memory-poisoning-ingest-check",
+        "probe-20260602-memory-governance-gate-separation",
+        "probe-20260604-memory-discard-operation-gate",
+        "probe-20260625-amvl-retention-utility-lifecycle"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、abstract／introduction 限定の evidence、既存の poisoning／governance／discard／retention probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-31T12:14:02+09:00",
       "selected": {
