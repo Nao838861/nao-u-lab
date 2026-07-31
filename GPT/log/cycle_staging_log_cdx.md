@@ -45,7 +45,17 @@ group_handoff_audit:
 - 判定根拠: StatePlay は、映像生成 world model が内部 state に基づく rule を破る問題、state/visual 二枝と joint attention、state-critical な学習・評価配分、四軸評価、mechanics fidelity の改善までを一続きに説明できる。ゲーム制作では生成映像の自然さと engine state trace の整合性を別々に合否判定する設計へ具体的に適用でき、CoopEval 水準の独立分析を構成可能なため `pass` とした。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260731_stateplay_mechanics_consistent_world_model.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785509757493939
+    char_count: 4460
+skipped: []
+```
+
+- 最終判定: 投稿。一次資料本文と candidate を再照合し、100 sample・単一格闘ゲーム・5秒 clip・既知 state schema・視覚 judge 依存、action accuracy の小幅低下、UI と内部 state の不一致、複合 mechanic の failure case を本文へ明記した。
+- 投稿前 review: 必須 6 セクション順、`■ 概要` 始まり、末尾 `■ URL`、禁止表現 0 件、duplicate preflight `continue`、deterministic policy `ok`。1 回の `chat.postMessage` で投稿した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
