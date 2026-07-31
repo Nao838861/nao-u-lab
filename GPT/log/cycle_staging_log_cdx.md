@@ -53,7 +53,39 @@ final_review: >-
   必須6項目、冒頭と末尾、禁止表現、URL集約、文字数を自動検査し、1回のchat.postMessageで投稿後のUTF-8本文も照合済み。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+self_feedback:
+  selected:
+    id: sr-1780223981-37d231e9fc
+    source_ts: "1780223981.841189"
+    title: "ExInCOACH — state-aware tutoring を RL Critic と LLM explanation に分ける onboarding framework"
+    reason: >-
+      source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ。
+      今サイクルの Absolum 投稿も戦闘 cue・環境探索・段階的 hint を同じ注意技能へ接続しており、固定 tutorial と state-triggered hint の比較が既存 onboarding controls と異なる次回判断を作るか確認するため選んだ。Nao_u の明示評価は付いていない。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: >-
+    合計14には達するが、risk_control が必須閾値2を下回るため採用しない。
+    本文は RL Critic と LLM explanation の分業、2 game への適用、ablation、human outcome、NASA-TLX を持ち、固定 tutorial と state-triggered hint の比較へ変換できる。
+    一方、既存の ai-onboarding-autonomy-support、internal-ignition-vs-explanation、tutorial-order-controller-sensitivity が agency、説明依存、順序比較をすでに扱う。
+    現 staging には before／after build、同一 state fixture、human playtest がなく、後続 Phase 4a は memory cleanup である。
+    322件の active_probes と Phase 4a 向け pending lease 1件へ対象不在の確認面を追加すると、hint 過多で発見と agency を削るリスクと確認負荷が便益を上回るため state-only review とした。
+  change:
+    summary: "reviewed_source_ts と重複・artifact不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-01T06:03:10+09:00",
+  "updated_at": "2026-08-01T08:00:36+09:00",
   "reviewed_source_ts": [
+    "1780223981.841189",
     "1785524068.318899",
     "1780406202.165989",
     "1785509757.493939",
@@ -570,6 +571,45 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-01T08:00:36+09:00",
+      "selected": {
+        "id": "sr-1780223981-37d231e9fc",
+        "source_ts": "1780223981.841189",
+        "title": "ExInCOACH — state-aware tutoring を RL Critic と LLM explanation に分ける onboarding framework",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たし、memory・harness・game-design・operation・evaluation の5優先タグを持つ。今サイクルの Absolum 投稿も戦闘 cue・環境探索・段階的 hint を同じ注意技能へ接続しており、固定 tutorial と state-triggered hint の比較が次回行動に新しい判断差を作るか、既存 onboarding controls と照合するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14には達するが、risk_control が必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は、RL Critic が state・legal action・Q-value を出し、LLM が rule と戦略の説明へ変換する分業、Dou Di Zhu と StarCraft II への適用、RL-only／LLM-only ablation、20戦中14勝、NASA-TLX、2v2での66.7%／100%勝率まで具体化しており、固定 tutorial と state-triggered hint の比較へ直接変換できるため relevance・actionability・evidence は3とした。一方、既存の probe-20260617-ai-onboarding-autonomy-support は friction reduction と agency／active learning、support の optionality・強度・理由を、probe-20260518-internal-ignition-vs-explanation は説明を読まずに最初の行動が起動するかを、probe-20260720-tutorial-order-controller-sensitivity は segment 内容を固定した順序比較と controller sensitivity をすでに扱う。本 atom 固有の差は state evaluator と explanation generator の分離だが、現 staging には固定 tutorial／state-triggered hint の before／after build、同一 state fixture、human playtest がなく、後続 Phase 4a は memory cleanup である。322件の active_probes と Phase 4a 向け pending lease 1件がある状態で対象不在の確認面を加えると、hint の出し過ぎで発見と agency を削るリスクと確認負荷が便益を上回るため、state-only review で閉じる。",
+      "existing_controls": [
+        "probe-20260617-ai-onboarding-autonomy-support",
+        "probe-20260518-internal-ignition-vs-explanation",
+        "probe-20260720-tutorial-order-controller-sensitivity"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存 onboarding／説明依存／tutorial順序 controls との重複、比較可能な game artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-01T06:03:10+09:00",
       "selected": {
