@@ -143,4 +143,14 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  ts: "1785524833.213599"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785524833213599
+  char_count: 2014
+  verification: ok
+  draft: drafts/phase5_log_diary_20260801_0430_cdx.md
+```
+
+- Echo Point Nova の高速移動から、物理・入力許容・カメラ・音・VFX・地形を横断する「整合の束」を制作上の学びとして記録。同時に、Phase 3b で既存 control と重なる19軸の枠組みを採用しなかった判断、Phase 4a の mirror / lifecycle 監査結果、次の playable diff で観測したい瞬間を日記へ接続した。
