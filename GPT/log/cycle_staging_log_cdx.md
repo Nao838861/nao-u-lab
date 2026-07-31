@@ -88,7 +88,92 @@ self_feedback:
     conflict_checked: true
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - >-
+    memory/MEMORY.md を UTF-8 明示読みし、validate_memory_index.py で index-visible entry と
+    per-file atom index の対応を検証した。missing / broken entry は 0 件だった。
+  - >-
+    atoms.jsonl / per-file .md / atoms/index.jsonl を監査した。各 2811 件で、ID 欠落、parse error、
+    index error、3面間 content conflict はすべて 0 件。normalized content 重複は raw 40群80件、
+    recall-visible 3群6件だが既存 fold が適用済みで、削除や再編は行っていない。
+  - >-
+    shared-reads の canonical / mixed / open-group / stale-triage / group-action sidecar を再生成した。
+    terminal canonical 74群、mixed 46群、open duplicate 53群（mixed 46 / all_open 7）、
+    stale triage 0件、actionable group 0件だった。
+  - >-
+    Slack inbox を監査した。directives 23行、broadcasts 21行で pending はともに0件のため、
+    handled 更新はなかった。
+  - >-
+    memory/raw/ の 30日超無更新ファイルを監査した。226件あるが、raw は原文・評価証拠の
+    指定アーカイブであり、参照関係を確認せず二重 archive へ移動しない明示保持とした。
+issues:
+  - id: ISS-4A-20260801-01
+    description: >-
+      atom sr-1776127289-4d9239b255 の「AIエージェント」が、「エ」の直後に U+FFFD が2文字入った形で
+      raw Slack archive、atoms.jsonl、per-file atom の全てに残る。memory_health のもう1件の
+      suspect gr-1777083728-44d444ab7a は原文中のリテラル「???」による false positive だった。
+    severity: low
+    evidence: >-
+      memory/raw/slack_archive/shared-reads.jsonl source_ts=1776127289.990919;
+      memory/atoms/2026-04/sr-1776127289-4d9239b255.md;
+      memory/atoms.jsonl id=sr-1776127289-4d9239b255
+    source_file_status: >-
+      UTF-8 明示読みで raw source 自体に U+FFFD 2文字を確認。MEMORY.md は「記憶」23件、
+      「ゲーム設計」8件、「敵パターン」1件を正常取得し、「評価軸」は0件だったが、
+      代表的な日本語本文は正常で source 全体の encoding 破損ではない。
+    display_or_tooling_status: none
+    why_blocks_game_memory: >-
+      1 atom に限定されるため影響は小さいが、正しい「エージェント」での完全一致検索と
+      title-based recall を取りこぼす可能性がある。
+recommendation:
+  needs_design: false
+  priority_issues: []
+candidate_lifecycle:
+  total: 1190
+  counts:
+    posted: 545
+    ready_to_post: 9
+    postponed: 236
+    failed: 391
+    needs_review: 3
+    skipped_unreviewed: 6
+  metadata_write_candidates_dry_run: 0
+  missing_stale_after: 9
+  overdue_open_total: 1
+  overdue_note: >-
+    memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md は期限到来済みだが、
+    同一 work group の deferred lease gha-e6d4d4b5a37a0808 が membership 一致かつ
+    retry_after=2026-08-20T13:19:04+09:00 のため stale triage から正しく抑止された。
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  next_due_probe_id: probe-20260731-rlm-one-hop-query-rewrite
+  next_due_at: "2026-08-07T23:59:59+09:00"
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 53
+  mixed_group_count: 46
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
