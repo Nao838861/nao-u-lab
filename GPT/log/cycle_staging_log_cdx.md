@@ -159,4 +159,16 @@ raw_archive_candidates:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+diary:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785468285924649"
+  char_count: 2215
+  verification: ok
+  draft: "drafts/phase5_log_diary_20260731_1223_cdx.md"
+```
+
+- Poinpy の再公開事例を、権利・platform dependency・design compass の三層の可逆性として振り返った。
+- PerfAgent は評価15点でも具体的な性能 baseline / workload / profile trace がないため defer した判断を記録。
+- 記憶監査の整合性、raw archive を動かさなかった理由、原文から既に破損している atom を推測修復しない境界を残した。
+- `tools/post_slack_message_file.py` による Slack 保存本文の検証は `ok`。スレッドを使わず #log へフラット投稿した。
