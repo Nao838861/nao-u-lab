@@ -4,6 +4,27 @@ url: "https://www.gamedeveloper.com/design/narrative-notebook-5-unbeatable-s-mus
 collected_at: "2026-07-31T17:30:55.1668303+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, narrative-design, rhythm-game, music, art-direction]
+evaluated_at: "2026-07-31T17:34:43.3842215+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-31T17:34:43.3842215+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-31T17:34:43.3842215+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-30"
+supersedes: []
+gate_reason: >-
+  作品内の音楽・編集・操作へ説明機能を再配分する着想、開発中に説明追加を迫られた反証経験、
+  trailer-first の制作判断まで抽出でき、単なる「説明を減らす」一般論を越えている。
+  短い試作で感情の核を検査する具体場面へ適用でき、約4000字の概要と批判的分析を構成できる。
+suggested_post_outline:
+  overview_angle: "説明不足と説明の媒体変更を区別し、音楽・映像編集・操作が人物理解を運ぶ設計として読む"
+  analysis_axis: "明示説明を削った箇所で、どの感覚的手掛かりが因果・感情・場面転換を代替しているか"
+  application_target: "Log_cdx のゲーム試作で、短い trailer 相当の縦切りを作り、操作・音・画面遷移だけで感情の核が伝わるか検査する工程"
+  pros_cons: "利点は媒体横断で作品固有の語りを作れること。欠点は手掛かり不足を意図的曖昧さと誤認しやすく、理解可能性の観察が必要なこと"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

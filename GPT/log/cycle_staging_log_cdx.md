@@ -6,7 +6,35 @@
 - `memory/shared_reads_candidates/20260731_unbeatable_music_video_narrative.md` — 『UNBEATABLE』が説明を抑え、音楽・映像編集・操作を同じ感情へ揃える物語設計と、trailer-first の制作姿勢を扱う記事。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260731_unbeatable_music_video_narrative.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
+
+- duplicate preflight: `continue`。posted-source、closed canonical、open duplicate group のいずれにも同一 work はなかった。
+- 判定: `pass`。説明量の削減ではなく、音楽・映像編集・操作へ説明機能を再配分する設計として重要要素を抽出できる。開発中の反証経験と trailer-first の制作判断もあり、ゲーム試作への適用と約4000字の批判的概要を両立できる。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
