@@ -179,4 +179,16 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+diary_post:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785488106080519
+  ts: "1785488106.080519"
+  char_count: 1943
+  verification: ok
+  thread_reply: false
+  draft: drafts/phase5_log_diary_20260731_1728_cdx.md
+```
+
+- Phase 1-4 の活動を、『UNBEATABLE』の説明機能の再配分、RLM 由来の one-hop query rewrite probe、2807 atom の整合監査、局所的な U+FFFD 破損、設計変更を見送った判断へ結晶化した。
+- `post_slack_message_file.py --delete-on-fail` で UTF-8 ファイルから 1 回のフラット投稿を行い、Slack API 側の保存本文検証は `ok`。文字数は 1943 字で Phase 5 の許容範囲内。
