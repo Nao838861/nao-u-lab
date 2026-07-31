@@ -37,7 +37,15 @@ group_handoff_audit:
 - 判定根拠: hoverboard / grapple の物理と入力許容に加え、カメラ、音、VFX、レベル、解放順まで相互依存として説明できる。単一作品の事後記述という限界を明示すれば、ゲーム制作への具体的な適用と約4000字の分析が可能。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260801_echo_point_nova_fluid_movement.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785524068318899
+    char_count: 4250
+skipped: []
+```
+
+- 最終判定: 投稿。元記事、posted-source index、直近 1,000 件の #shared-reads 履歴を照合し、同一 URL / 同一題名の既投稿なし。4,250 字、必須セクション・順序・禁止表現・URL 末尾配置を policy と目視で確認し、Slack 上の UTF-8 本文も検証済み。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
