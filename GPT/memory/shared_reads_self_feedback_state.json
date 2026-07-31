@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-31T17:46:00+09:00",
+  "updated_at": "2026-07-31T20:01:38+09:00",
   "reviewed_source_ts": [
+    "1778227488.450599",
     "1780292834.435979",
     "1780303781.237769",
     "1785456017.298979",
@@ -564,6 +565,43 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-31T20:01:38+09:00",
+      "selected": {
+        "id": "sr-1778227488-4d582d862f",
+        "source_ts": "1778227488.450599",
+        "title": "AgentSpec — LLMエージェントへの runtime enforcement DSL",
+        "reason": "未レビューの score 13 atom で、memory・agent・operation・evaluation の複数優先タグを持つ。現在の Phase 運用と決定論的 gate に近い一方、同テーマの後続詳細版がすでに probe 化されているため、重複確認と anti-bloat 判定を行う対象として選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、新規 probe・metric・directive は追加しない。選定 atom は、Triggering event・Predicates・Enforcement mechanism という runtime enforcement の形を Phase gate へ写せるため relevance と actionability は各2とした。しかし投稿自身が『本文未精読・サーチ結果サマリ経由』と明記しており、DSL の表現力と評価 benchmark を未確認なので evidence=1 とした。さらに source_ts 1778404188.110159 の後続詳細版は原典確認後に同じ3-tupleを採点済みで、既存の AgentSpec probe が決定論的 check と open-ended judgment の境界、失敗時の recovery action まで扱うため non_redundancy=0 とした。既存 probe の言い換えを増やさず state-only で閉じる。現在 Phase 4a 向け pending lease も1件あるため ledger は変更しない。",
+      "existing_review": {
+        "source_ts": "1778404188.110159",
+        "probe": "AgentSpec 3-tuple runtime enforcement probe"
+      },
+      "change": {
+        "summary": "none。reviewed state と staging の採否記録だけを更新した。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-31T17:46:00+09:00",
       "selected": {

@@ -57,7 +57,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778227488-4d582d862f
+    source_ts: "1778227488.450599"
+    title: "AgentSpec — LLMエージェントへの runtime enforcement DSL"
+    reason: "未レビューの score 13 atom で memory・agent・operation・evaluation の複数優先タグを持つ。後続詳細版との重複を確認し、anti-bloat を判断するため今読む。Nao_u の明示評価はなし。"
+  scores:
+    relevance: 2
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "元投稿自身が本文未精読と明記しており、後続の source_ts 1778404188.110159 は原典確認後に同じ3-tupleをすでに probe 化済み。既存 probe は決定論的 check と open-ended judgment の境界、失敗時 recovery まで含むため、新規反映は判断差を作らず確認負荷だけを増やす。"
+  change:
+    summary: "none。reviewed state と staging の採否記録だけを更新した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
