@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2607.10187"
 collected_at: "2026-08-01T05:46:43+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, llm-game-generation, unity, evaluation, failure-analysis]
+evaluated_at: "2026-08-01T05:53:18.5746623+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-01T05:53:18.5746623+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-01T05:53:18.5746623+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-31"
+supersedes: []
+gate_reason: >-
+  10,400件の生成、26 goal pattern、5つの model／generation-mode 条件、4段階の IR 条件から、
+  失敗を Grounding／Hygiene に分ける手順・評価・限界まで一次資料で説明できる。
+  first-pass failure census をゲーム生成 harness の介入選択へ移せ、約4000字の固有分析を構成できる。
+suggested_post_outline:
+  overview_angle: "repair loop を外した single-pass 条件で、成功率0の結果を捨てずに compiler error の構成から engine knowledge 境界を測る手法を解説する"
+  analysis_axis: "IR schema が成功を作らず Hygiene から Grounding へ失敗層を移す点と、compiler 到達例だけを数える selection の限界を対にして読む"
+  application_target: "Log_cdx のゲーム prototype 生成 harness で first draft の compile／runtime failure を一般構文・構造の Hygiene と engine／framework API の Grounding に分け、mechanic ごとに repair・retrieval・手書きの介入を選ぶ"
+  pros_cons: "長所は客観的な compiler diagnostics と goal-pattern 別の failure profile、短所は単一 Unity instantiation・open-weight 7B〜30B・compiler 到達例への選択・実運用の repair loop を測らない点"
+  verdict_pre: "部分採用 — repair loop を廃止する結論ではなく、修復前の first-pass census と介入選択の診断軸を採る"
 ---
 
 ## raw_excerpt

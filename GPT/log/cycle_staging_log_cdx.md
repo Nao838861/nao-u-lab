@@ -9,7 +9,39 @@
 - duplicate preflight: 3 sidecar を収集前および書込み直前に再生成。上記候補は `continue`（posted-source URL/work、closed canonical title、open duplicate group の一致なし）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260801_knowledge_conditioned_single_pass_unity.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  posted_source_index: fresh
+  title_canonical_index: fresh
+  open_duplicate_group_queue: fresh
+  decision: continue
+  canonical_url: https://arxiv.org/abs/2607.10187
+  title_key: knowledge conditioned single pass llm synthesis of executable unity game scenes a compiler error census across 26 goal playable concepts
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
