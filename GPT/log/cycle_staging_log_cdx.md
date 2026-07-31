@@ -79,7 +79,95 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - memory/MEMORY.md を UTF-8 明示読みし、per-file atom index との対応を検証した。broken link / index mismatch は 0 件。
+  - atoms.jsonl / per-file .md / atoms/index.jsonl の 2809 件を監査した。parse error、ID 重複、mirror conflict は 0 件で、既知の内容重複は lifecycle / canonical overlay により fold 済み。
+  - shared-reads の title canonical / mixed duplicate / open duplicate group / stale triage / group action sidecar を再生成・検証した。live lease を合成後の新規 handoff は 0 件。
+  - memory/raw/ の30日超ファイル226件を棚卸しした。原文 provenance と evidence pointer を保つため移動せず保持した。
+  - Slack directive / broadcast inbox を確認した。pending は各 0 件で、handled 更新対象はなかった。
+index_audit:
+  broken_links: 0
+  index_mismatches: 0
+  representative_utf8_terms:
+    記憶: found
+    ゲーム設計: found
+    敵パターン: found
+    評価軸: absent_as_literal_but_utf8_decode_ok
+atom_audit:
+  atoms_jsonl: 2809
+  per_file_md: 2809
+  index_jsonl: 2809
+  duplicate_clusters: 45
+  normalized_content_duplicate_groups_raw: 40
+  recall_visible_duplicate_groups_after_fold: 3
+  content_conflicts: 0
+  mirror_errors: 0
+candidate_lifecycle:
+  files: 1184
+  counts:
+    posted: 541
+    ready_to_post: 9
+    postponed: 234
+    failed: 391
+    needs_review: 3
+    unclassified_or_skipped: 6
+  terminal_canonical_groups: 74
+  mixed_duplicate_groups: 46
+  overdue_open_total: 1
+  overdue_paths:
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+  lifecycle_note: 同一 arXiv work の all-open group に retry_after 2026-08-20 の deferred lease があり、stale triage への再投入は正常に抑止された。
+raw_archive_audit:
+  older_than_30_days: 226
+  by_area:
+    web_research: 203
+    headless_eval: 16
+    slack_api: 4
+    game_eval: 1
+    slack_archive: 1
+    raw_root: 1
+  action: retained
+  reason: raw provenance と既存 evidence pointer を壊さないため。bounded archive の明示計画なしに移動しない。
+issues:
+  - id: ISS-UTF8-ATOM-001
+    description: atom sr-1776127289-4d9239b255 の「AIエージェント」に UTF-8 replacement character が2文字混入し、title / trigger / excerpt の検索語を局所的に損なっている。
+    severity: low
+    evidence: memory/atoms/2026-04/sr-1776127289-4d9239b255.md lines 3,16,20,24; memory/atoms.jsonl id=sr-1776127289-4d9239b255
+    source_file_status: UTF-8 明示読みで U+FFFD を再現し、表示経路ではなく source file 自体の局所破損と確認した。gr-1777083728-44d444ab7a の「???」は原文どおりで heuristic false positive。
+    display_or_tooling_status: PowerShell の一部 git show 経路では日本語表示が mojibake したが、Get-Content -Encoding UTF8 と rg では正常表示。MEMORY.md の source 破損はない。
+    why_blocks_game_memory: 「AIエージェント」の完全一致検索ではこの旧 atom を取りこぼし得るが、1 atom に限定され、現行 overlay・他 atom・tag 導線があるため影響は小さい。
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 53
+  mixed_group_count: 46
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- due probe lease は 0 件。pending 1 件は `probe-20260731-rlm-one-hop-query-rewrite`（lease_due 2026-08-07）で期限未到来のため、receipt 作成・resolve / dormant 遷移を行っていない。
+- `memory_health.py` の warning は raw title debt 564 rows / 342 groups と mojibake suspect atom 2 件。effective display unresolved は 0 件であり、重複・title debt は既存 lifecycle / overlay で検索表示上解決済みのため、新規の構造 issue にはしない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
