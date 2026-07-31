@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/what-happens-when-story-serves-art-di
 collected_at: "2026-08-01T07:46:00.7571722+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, narrative-design, combat-design, environmental-storytelling, roguelite]
+evaluated_at: "2026-08-01T07:50:14+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-01T07:50:14+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-01T07:50:14+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-31"
+supersedes: []
+gate_reason: >-
+  戦闘の予備動作を読む視線を、背景探索・短い台詞・環境パズルへ再利用する設計原理が、複数の具体場面と開発者説明から抽出できる。
+  形式的な実験ではないが、問題設定、実装上の調整、観察できる効果と限界が揃い、action game の tutorial・秘密・反復緩和へ具体的に適用できるため、約4000字の分析を支えられる。
+suggested_post_outline:
+  overview_angle: "物語を説明の追加物ではなく、art direction が要求する『周囲を見る』行動を育てる導線として設計する"
+  analysis_axis: "戦闘telegraphから探索への技能転移、短いlayers and hints、navigation markerを使わない環境誘導、見落としに対する兎hintの調整"
+  application_target: "action prototype のparry予備動作、背景の秘密、環境パズルを同じ注意技能で読ませ、反復runの単調さを減らす設計とplaytest観察"
+  pros_cons: "操作を止めずに世界理解と発見を促せる一方、視認性やhint強度を誤ると秘密が未発見のままになり、戦闘中の認知負荷も増える"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
