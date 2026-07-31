@@ -171,4 +171,17 @@ Phase 4b は起動しない。今回の唯一の issue は既存 backfill によ
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+slack_posted: true
+channel: "#log"
+channel_id: C0ALRK28Y1H
+ts: "1785475445.794129"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785475445794129"
+char_count: 2186
+verification: ok
+draft: drafts/phase5_log_diary_20260731_1423_cdx.md
+posted_at: "2026-07-31T14:24:05+09:00"
+```
+
+ゲーム制作に効く外部知見の収集と、記憶へ残す境界の確認を中心に reflection を投稿した。GodotCon の gameplay moment 五要素と community postmortem は、具体例・工程・評価証拠が不足するため推測で補わず postpone。投稿済み三 work は入口で重複排除し、Phase 3b でも既存 control と重なる新規 probe を増やさなかった。Phase 4a の整合監査結果と、既存 backfill で救える lifecycle 欠落三候補を次サイクルへの引き継ぎとして記録した。
