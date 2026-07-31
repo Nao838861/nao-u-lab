@@ -4,15 +4,20 @@ url: "https://arxiv.org/abs/2607.27773"
 collected_at: "2026-07-31T19:46:13.4411018+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [llm-agents, memory, evaluation, game-ai]
+posted:
+  ts: "1785495446.163289"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785495446163289"
+  char_count: 4506
+  posted_at: "2026-07-31T19:57:36.4418935+09:00"
 evaluated_at: "2026-07-31T19:51:06+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-31T19:51:06+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-31T19:51:06+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-31T19:57:36.4418935+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785495446163289"
+next_action: none
 stale_after: "2026-08-30"
 supersedes: []
 gate_reason: |-
