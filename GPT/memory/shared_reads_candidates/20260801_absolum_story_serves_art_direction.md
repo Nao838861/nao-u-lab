@@ -7,13 +7,18 @@ genre_tags: [game-design, narrative-design, combat-design, environmental-storyte
 evaluated_at: "2026-08-01T07:50:14+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-01T07:50:14+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-01T07:50:14+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-01T07:56:20.1004110+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785538569384449"
+next_action: none
 stale_after: "2026-08-31"
+posted:
+  ts: "1785538569.384449"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785538569384449"
+  char_count: 3954
+  posted_at: "2026-08-01T07:56:20.1004110+09:00"
 supersedes: []
 gate_reason: >-
   戦闘の予備動作を読む視線を、背景探索・短い台詞・環境パズルへ再利用する設計原理が、複数の具体場面と開発者説明から抽出できる。

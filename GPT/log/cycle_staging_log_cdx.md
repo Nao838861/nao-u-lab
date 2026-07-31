@@ -42,7 +42,15 @@ analysis_note: >-
   形式的評価ではないが開発者の設計意図と記者の観察が対応しており、適用先と失敗条件を含むCoopEval水準の分析へ展開可能と判定した。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+posted:
+  - candidate: memory/shared_reads_candidates/20260801_absolum_story_serves_art_direction.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785538569384449
+    char_count: 3954
+skipped: []
+final_review: >-
+  元記事を再読し、戦闘telegraph、背景探索、dwarven mineの炉、一つ目の兎によるhint段階化、開発者取材の内容を照合した。
+  事例観察であり技能転移を実証する統制評価ではない限界を明示し、cue強度別playtestとheadless event traceの検証案まで含めた。
+  必須6項目、冒頭と末尾、禁止表現、URL集約、文字数を自動検査し、1回のchat.postMessageで投稿後のUTF-8本文も照合済み。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
