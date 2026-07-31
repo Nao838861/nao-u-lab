@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-31T21:55:44+09:00",
+  "updated_at": "2026-08-01T00:00:09+09:00",
   "reviewed_source_ts": [
+    "1780238641.289669",
     "1785495446.163289",
     "1778227488.450599",
     "1780292834.435979",
@@ -16187,6 +16188,46 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、既存の contrastive trace／promotion boundary／action-return evidence／memory action probes との重複、比較可能な反復 failure artifact 不在、rollback／regression 不足による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-01T00:00:09+09:00",
+      "selected": {
+        "id": "sr-1780238641-e67b974a3b",
+        "source_ts": "1780238641.289669",
+        "title": "GAAMA: Graph Augmented Associative Memory for Agents を当方 memory_redesign に接続する分析",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たし、memory・harness・agent・operation・evaluation の5優先タグを持つ。atomic facts、4 node types、kNN と edge-type-aware PPR、post-retrieval repair を、現在の recall と Phase 4a memory cleanup に既存 control と異なる小さな判断差へ変換できるか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は Episode／Fact／Reflection／Concept の4 node types、cosine kNN と edge-type-aware PPR の additive scoring、GRAFT という post-retrieval repair を示し、当方の raw／atom／belief／concept と recall 改善候補へ写せるため relevance=3、actionability=2 とした。一方、投稿自身が abstract と公開情報のみで、5 edge types、edge-type 別重み、GRAFT の repair 条件、full-paper の節3-4、当方 corpus での比較を未確認と明記しているため evidence=1 とした。行動面では probe-20260731-rlm-one-hop-query-rewrite が初回 hit 由来の1回の read-only rewrite と before／after 判断差を、probe-20260516-read-lanes-before-memory-write が semantic／full-text／graph 等の lane 比較を、probe-20260601-memory-link-llm-roi-gate が deterministic 1-hop と LLM fallback の境界を、probe-20260607-memory-hub-link-coverage が graph reachability をすでに扱う。GAAMA 固有の PPR と GRAFT を別 probe にしても直後の Phase 4a 判断をほぼ変えず、322件の active_probes と既存 pending lease 1件へ未検証の infra 前提と確認負荷を追加するため non_redundancy=0、risk_control=1 とした。本文は既存 probe 群の根拠例として保持し、reviewed state だけを更新する。",
+      "existing_probes": [
+        "probe-20260731-rlm-one-hop-query-rewrite",
+        "probe-20260516-read-lanes-before-memory-write",
+        "probe-20260601-memory-link-llm-roi-gate",
+        "probe-20260607-memory-hub-link-coverage"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、根拠不足・既存 recall／graph probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

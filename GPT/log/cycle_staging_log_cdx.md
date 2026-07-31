@@ -58,7 +58,40 @@ skipped: []
 - 投稿前 review: 必須 6 セクション順、`■ 概要` 始まり、末尾 `■ URL`、禁止表現 0 件、duplicate preflight `continue`、deterministic policy `ok`。1 回の `chat.postMessage` で投稿した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780238641-e67b974a3b
+    source_ts: "1780238641.289669"
+    title: "GAAMA: Graph Augmented Associative Memory for Agents を当方 memory_redesign に接続する分析"
+    reason: "未レビューの score 12 atom で memory・harness・agent・operation・evaluation の5優先タグを持つ。4 node types、kNN＋edge-type-aware PPR、GRAFT が現在の recall と Phase 4a memory cleanup に既存 control と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "投稿は4 node types、kNN＋edge-type-aware PPR、post-retrieval repair を recall 改善へ写せるが、abstract＋公開情報のみで edge types、重み、GRAFT 条件、当方 corpus 比較を未確認。既存の one-hop query rewrite、read-lane 比較、LLM link ROI、hub-link coverage が同じ判断面を覆い、active_probes 322件と pending lease 1件へ確認負荷を加えるため採用しない。"
+  existing_probes:
+    - probe-20260731-rlm-one-hop-query-rewrite
+    - probe-20260516-read-lanes-before-memory-write
+    - probe-20260601-memory-link-llm-roi-gate
+    - probe-20260607-memory-hub-link-coverage
+  change:
+    summary: "reviewed state と staging の採点・reject 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
