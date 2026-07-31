@@ -87,7 +87,90 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - memory/MEMORY.md を UTF-8 明示読みし、索引と per-file atom index の整合を検証した。broken link / index mismatch は 0 件。
+  - atoms.jsonl / per-file .md / atoms/index.jsonl の 2807 件を監査した。mirror conflict は 0 件、既知の duplicate cluster 45 群は canonical overlay で折り畳み済み。
+  - shared-reads の open duplicate group、stale triage、group action sidecar を現行入力から再生成した。いずれも既存内容と一致し、candidate 本体の状態変更は 0 件。
+  - Slack directive / broadcast inbox を監査した。pending は双方 0 件で、handled への更新対象はなかった。
+index_audit:
+  broken_links: 0
+  index_mismatches: 0
+  representative_utf8_terms:
+    記憶: found
+    ゲーム設計: found
+    敵パターン: found
+    評価軸: found
+atom_audit:
+  atoms_jsonl: 2807
+  per_file_md: 2807
+  index_jsonl: 2807
+  duplicate_clusters: 45
+  content_conflicts: 0
+  mirror_errors: 0
+candidate_lifecycle:
+  files: 1181
+  counts:
+    posted: 540
+    ready_to_post: 9
+    postponed: 232
+    failed: 391
+    needs_review: 3
+    unclassified_or_skipped: 6
+  overdue_open_total: 1
+  overdue_paths:
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+  lifecycle_note: 同一 work の group handoff が retry_after 2026-08-20 まで deferred のため、live lease が stale triage への再投入を正しく抑止した。
+raw_archive_audit:
+  older_than_30_days: 226
+  by_area:
+    web_research: 203
+    headless_eval: 16
+    slack_api: 4
+    game_eval: 1
+    slack_archive: 1
+    raw_root: 1
+  action: retained
+  reason: raw provenance、既存 evidence pointer、再評価用一次資料を含むため、参照単位を確認せず一括移動しない。web_research 203 件を将来の bounded archive 候補として識別した。
+issues:
+  - id: ISS-UTF8-ATOM-001
+    description: atom sr-1776127289-4d9239b255 の「AIエージェント」に UTF-8 replacement character が2文字残り、title / trigger / excerpt と三重ミラーへ伝播している。
+    severity: low
+    evidence: memory/atoms/2026-04/sr-1776127289-4d9239b255.md lines 3,16,20,24; memory/atoms.jsonl id=sr-1776127289-4d9239b255
+    source_file_status: UTF-8 明示読みでも U+FFFD が再現するため source file 自体の局所破損。gr-1777083728-44d444ab7a は UTF-8 source に U+FFFD がなく、文字化けではなく heuristic false positive。
+    display_or_tooling_status: none
+    why_blocks_game_memory: 「AIエージェント」の完全一致検索と関連語抽出を1 atomだけ弱める。局所データ修復で足り、記憶階層の再設計を要する規模ではない。
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 53
+  mixed_group_count: 46
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- due probe lease は 0 件。`probe-20260731-rlm-one-hop-query-rewrite` は lease_due 2026-08-07 のため、この cycle では resolve / dormant 化していない。
+- `memory_health.py` の raw title debt は 564 rows / 342 groups だが、effective display unresolved は 0 件で、現行 lifecycle / overlay が検索表示を折り畳めているため新規の構造 issue にはしなかった。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
