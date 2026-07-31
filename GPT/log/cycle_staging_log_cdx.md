@@ -8,7 +8,41 @@
 - duplicate preflight: `continue`（posted-source URL/work、closed canonical title、open duplicate group の一致なし）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260731_poinpy_resurrection_rights_design.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  decision: continue
+  title_key: "the truth behind the resurrection of poinpy"
+  reason: "fresh posted-source / closed canonical / open duplicate group sidecars に URL・work・title group の一致なし"
+```
+
+- 判定: `pass`。時限独占の終了から再公開までの権利経路、Netflix 外で動かすための依存機能切離し、
+  変化する試作を同じ感触へ戻す title-based design compass を、ゲーム制作の契約・実装・設計判断へ具体的に接続できる。
+- 限界: 単一の当事者取材で、契約条項、移植工数、再公開後の収益・利用者指標は示されない。
+  Phase 3 では成功一般則として扱わず、再公開可能性を残す設計・契約チェックリストへの部分採用として論じる。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

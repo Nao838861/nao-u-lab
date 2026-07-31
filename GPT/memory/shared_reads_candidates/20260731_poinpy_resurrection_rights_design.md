@@ -4,6 +4,27 @@ url: "https://www.gamedeveloper.com/business/the-truth-behind-the-resurrection-o
 collected_at: "2026-07-31T12:02:15.3637193+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-development, publishing, preservation, mobile-games, design-process]
+evaluated_at: "2026-07-31T12:06:18.0844829+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-31T12:06:18.0844829+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-31T12:06:18.0844829+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-30"
+supersedes: []
+gate_reason: >-
+  時限独占の終了、配信停止、再公開権、サービス依存機能の切離しを一つの事例で因果的に追え、
+  title-based design compass まで制作判断へ具体化できる。単一事例で契約条項・成果指標がない限界を
+  明示すれば、CoopEval 水準の概要・分析・適用・利害比較を約4000字で構成できる。
+suggested_post_outline:
+  overview_angle: "消えた作品を戻せた契約条件と、変化する試作を同じ感触へ戻した短い design compass を一つの制作ライフサイクルとして説明する"
+  analysis_axis: "時限独占を資金・到達範囲・将来の再公開権の交換として読み、プラットフォーム依存の分離可能性と作品アイデンティティの維持を分けて検討する"
+  application_target: "小規模ゲームの契約前チェック、外部 leaderboard 等の adapter 境界、試作反復時に仕様ではなく感触を判定する一文の design compass"
+  pros_cons: "初期資金と新規利用者への到達、再公開自由度、無料再配布の選択肢が利点。契約文面・移植費・収益・利用者維持の数値がなく一般化に限界がある"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
