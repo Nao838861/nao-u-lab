@@ -60,7 +60,34 @@ skipped: []
   文字数 3955 を確認。`tools/post_slack_message_file.py` による Slack 保存本文の検証も `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785456017-9b0da3f72f
+    source_ts: "1785456017.298979"
+    title: "PerfAgent: Profiler-Guided Iterative Refinement for Repository-Level Code Optimization"
+    reason: "最新の未レビュー score 11 atom。profile・selective test・再計測・best-correct-patch 保持が、次の性能最適化で既存 probe と異なる判断差を作れるか確認するため選んだ。Nao_u の明示評価はなし。"
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "数値上の採用条件は満たすが、現 staging には比較可能な性能 baseline、固定 workload、profile trace、最適化対象の before／after artifact がなく、consumer phase・trigger artifact・expected delta を lease 契約どおり指定できない。attempt-branch-ledger、update-aware-regression-tags、fixed-test-vs-dynamic-stress、benchmark-purpose-variable-alignment が試行枝・選択的回帰・固定 verifier 外・metric 目的を既に扱うため、対象 artifact なしに operational control を増やさない。次の具体的な性能最適化で hotspot 移動または最終 patch 退化を既存 controls が判定できない時に再評価する。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを state に記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
