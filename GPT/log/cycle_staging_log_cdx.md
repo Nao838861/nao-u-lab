@@ -98,7 +98,77 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の High Signal / Recent / Game Task Entry Points / Tag Entry Points を per-file atom index と照合し、unknown ID・欠落 per-file path・重複 entry が 0 件であることを確認した"
+  - "memory/atoms.jsonl 2806 件を監査し、atom ID・mirror・content conflict は 0 件、normalized-content 重複 40 群は既存 fold で表示上 40 行を抑止、recall-visible の未解決 title debt は 0 群であることを確認した"
+  - "memory/raw/ の 30 日超ファイル 226 件を棚卸しした。raw source 保持 directive と可逆 archive 計画未確定のため移動は 0 件とした"
+  - "shared-reads の canonical / mixed / open-duplicate / stale-triage / group-action sidecar を再生成し、group lease を先に合成して handoff inbox を監査した"
+  - "Slack directives 23 行・broadcasts 21 行を監査し、pending は双方 0 件だったため handled 更新は 0 件とした"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+encoding_audit:
+  memory_md_utf8: ok
+  representative_terms:
+    記憶: found
+    ゲーム設計: found
+    敵パターン: found
+    評価軸: not_present_in_current_index
+  source_file_status: "memory/MEMORY.md は UTF-8 として正常に読め、index 検証も通過。memory_health の mojibake suspect 2 件は、1 件が raw Slack 原文から存在する単発の置換文字、1 件が日本語に対する detector の false positive だった"
+  display_or_tooling_status: none
+atom_audit:
+  atoms: 2806
+  mirror_counts:
+    atoms_jsonl: 2806
+    per_file_md: 2806
+    index_jsonl: 2806
+  duplicate_atom_ids: 0
+  content_conflicts: 0
+  raw_normalized_content_duplicate_groups: 40
+  recall_visible_normalized_content_duplicate_groups: 3
+  effective_display_unresolved_groups: 0
+candidate_lifecycle:
+  files: 1174
+  counts:
+    posted: 538
+    ready_to_post: 9
+    postponed: 230
+    failed: 391
+    needs_review: 3
+    skipped_unreviewed: 3
+  skipped_without_phase_evidence: 17
+  missing_stale_after: 6
+  overdue_open_total: 1
+  overdue_suppressed_by_live_group_lease: 1
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 53
+  mixed_group_count: 46
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  suppression_evidence: "JAMEL all-open group gha-e6d4d4b5a37a0808 は membership fingerprint 一致の deferred lease が 2026-08-20T13:19:04+09:00 まで有効"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
