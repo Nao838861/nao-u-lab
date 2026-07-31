@@ -50,7 +50,41 @@ skipped: []
 - Slack verification: `ts=1785487195.632389`、保存内容の文字化け検査 `ok`。1 回の `chat.postMessage` で投稿し、thread reply は使用していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780292834-073d3464e7
+    source_ts: "1780292834.435979"
+    title: Recursive Language Models
+    reason: 未レビューの score 13 atom で memory・agent・operation・evaluation を含む9タグを持ち、初回 hit 内容から検索語を1回作り直す適応が直後の Phase 4a で既存 scope／load／read-only probes と異なる判断差を作るか確認できるため。Nao_u の明示評価はない。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  decision_reason: arXiv v3 本文で prompt の外部環境化、実行結果に基づく反復、4 task と各 baseline 比較、sub-call cost／runtime の長い裾と guardrail 未成熟を確認した。既存 probes は scope、load、read-only lane を扱うが、初回 hit から query を1回だけ適応させ before／after 判断差を取る点は直接扱わない。全面的な RLM、sub-agent、ranking 変更は採用しない。
+  change:
+    summary: 曖昧な初回検索に限り hit 内容から検索語を1回だけ作り直し、初回判断との差を記録する probe を追加した。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - memory/shared_reads_probe_lifecycle.jsonl
+      - log/cycle_staging_log_cdx.md
+  lease:
+    probe_id: probe-20260731-rlm-one-hop-query-rewrite
+    consumer_phase: Phase 4a
+    trigger_artifact: log/cycle_staging_log_cdx.md#Phase-4a
+    expected_delta: 初回の表層検索だけでは役割または接続が曖昧な対象について、hit 内容由来の1回の query rewrite が archive／handoff／issue／needs_design の判断を変えるかを明示する。
+    lease_due: "2026-08-07T23:59:59+09:00"
+    enqueue_result: enqueued
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

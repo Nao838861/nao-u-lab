@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-31T14:18:00+09:00",
+  "updated_at": "2026-07-31T17:46:00+09:00",
   "reviewed_source_ts": [
+    "1780292834.435979",
     "1780303781.237769",
     "1785456017.298979",
     "1785447822.646729",
@@ -563,6 +564,53 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-31T17:46:00+09:00",
+      "selected": {
+        "id": "sr-1780292834-073d3464e7",
+        "source_ts": "1780292834.435979",
+        "title": "Recursive Language Models",
+        "reason": "未レビューの score 13 atom で、memory・agent・operation・evaluation を含む9タグを持つ。初回検索の hit 内容から検索語を作り直す1段の適応が、直後の Phase 4a memory cleanup で既存の scope／load／read-only probes と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "adopt_probe",
+      "decision_reason": "合計16で全必須閾値を満たす。shared-reads 本文に加えて arXiv v3 本文を確認し、prompt を REPL の外部変数へ置くこと、root model が実行結果を見て分割・検索・sub-call を反復すること、BrowseComp+／OOLONG／OOLONG-Pairs／CodeQA と compaction・CodeAct・coding agent 比較、sub-call cost と runtime の長い裾、guardrail 未成熟という限界を確認したため evidence=3 とした。既存の minimum-sufficient-scope-ladder は読む範囲の段階拡張、load-strategy-progressive-disclosure は読込方式、read-lanes-before-memory-write は read-only lane と provenance を扱うが、初回 hit の内容から次の query を生成し、初回判断との差を比較する適応は直接扱わないため non_redundancy=2 とした。ただし全面的な RLM、sub-agent 委任、検索 ranking 変更は cost と複雑性を増やすため採用しない。Phase 4a で初回検索が曖昧な1対象に限り、seed hit を保持したまま内容由来の query rewrite を1回だけ行い、before／after 判断差を記録する可逆 probe とする。",
+      "existing_probes": [
+        "probe-20260724-minimum-sufficient-scope-ladder",
+        "probe-20260626-load-strategy-progressive-disclosure",
+        "probe-20260516-read-lanes-before-memory-write"
+      ],
+      "change": {
+        "type": "probe_and_lease",
+        "summary": "曖昧な初回検索に限り、hit 内容から検索語を1回だけ作り直し、初回判断との差を記録する probe を追加した。全面的な RLM、sub-agent、ranking、directive、恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "memory/shared_reads_probe_lifecycle.jsonl",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": {
+        "probe_id": "probe-20260731-rlm-one-hop-query-rewrite",
+        "consumer_phase": "Phase 4a",
+        "trigger_artifact": "log/cycle_staging_log_cdx.md#Phase-4a",
+        "expected_delta": "初回の表層検索だけでは役割または接続が曖昧な対象について、hit 内容由来の1回の query rewrite が archive／handoff／issue／needs_design の判断を変えるかを明示する。",
+        "lease_due": "2026-08-07T23:59:59+09:00",
+        "enqueue_result": "enqueued"
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-31T14:18:00+09:00",
       "selected": {
@@ -16075,6 +16123,19 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260731-rlm-one-hop-query-rewrite",
+      "created_at": "2026-07-31T17:46:00+09:00",
+      "source_ts": "1780292834.435979",
+      "scope": "next Phase 4a memory cleanup where one concrete target remains ambiguous after the initial full-text, tag, link, lifecycle, or state lookup; use at most one content-derived query rewrite and do not invoke sub-agents or change persistent search ranking",
+      "questions": [
+        "初回検索の seed query、hit、仮判断を保持し、役割・接続・staleness のいずれが曖昧かを1行で特定してから、hit 本文由来の別語を使う read-only query rewrite を1回だけ行ったか。",
+        "rewrite 後の evidence pointer と after 判断を初回の before 判断と比較し、archive・handoff・issue・needs_design のどれが変わったか、または no_change を記録したか。",
+        "直接 verifier で解ける場合や rewrite が判断を変えない場合はそこで止め、全面的な RLM、sub-agent 委任、複数 hop、永続 ranking／schema／directive 変更へ広げなかったか。"
+      ],
+      "expires_after": "2026-08-07T23:59:59+09:00 までの次の該当 Phase 4a 1回で解決する。初回検索が曖昧でない、1回の rewrite が判断差を作らない、または既存3 probeだけで同じ判断が残る場合は退役する。",
+      "withdrawal_condition": "query rewrite の追加読込や記録負荷が判断差を上回る、直接 verifier より遅い、または false connection を増やす場合は恒久化せず1回で退役する。"
+    },
     {
       "id": "probe-20260724-minimum-sufficient-scope-ladder",
       "created_at": "2026-07-24T00:23:59+09:00",
