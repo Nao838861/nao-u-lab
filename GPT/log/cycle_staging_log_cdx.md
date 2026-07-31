@@ -45,7 +45,19 @@ duplicate_preflight:
   Phase 3 では成功一般則として扱わず、再公開可能性を残す設計・契約チェックリストへの部分採用として論じる。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260731_poinpy_resurrection_rights_design.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785467403922069"
+    char_count: 3955
+skipped: []
+```
+
+- 最終判定: `posted`。時限独占終了後の再公開権、platform dependency の切離し、
+  title-based design compass を三層の可逆性として分析し、単一事例で契約文面・移植工数・
+  再公開後指標がない限界を明示した。
+- 投稿前 review: 必須6項目・順序・冒頭 `■ 概要`・末尾 `■ URL`・禁止表現・
+  文字数 3955 を確認。`tools/post_slack_message_file.py` による Slack 保存本文の検証も `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
