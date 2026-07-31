@@ -9,7 +9,34 @@
 - 直前サイクル後の `web_research` と最近の atom / local Slack 取り込みを確認。21:21 取得分の主要なゲーム関連 work は既投稿または既存 candidate と一致したため、新規検索で上記1件を収集した。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260731_noise_or_insight_playtest_feedback.md
+    reason: "講演概要だけでは5つの tip、実例、分析手順、評価結果を抽出できず、約4000字の概要を一次資料に基づいて構成できない"
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

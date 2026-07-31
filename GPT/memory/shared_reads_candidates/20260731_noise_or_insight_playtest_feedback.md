@@ -4,6 +4,20 @@ url: "https://gdcvault.com/play/1035410/Tencent-Games-Developer-Summit-Noise"
 collected_at: "2026-07-31T21:46:44.5628335+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, playtesting, player-feedback, user-research, iteration]
+evaluated_at: "2026-07-31T21:49:42.6918128+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-31T21:49:42.6918128+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-31T21:49:42.6918128+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-30"
+supersedes: []
+gate_reason: >-
+  playtest の発言と体験反応を分ける問題設定はゲーム制作へ具体的に適用できるが、公開概要だけでは5つの tip、誤誘導事例、分析手順、評価結果が確認できない。
+  現状から約4000字の概要を作ると講演固有の手法と結論を推測で補うことになるため、セッション本編または詳細資料の確認まで保留する。
 ---
 
 ## raw_excerpt
