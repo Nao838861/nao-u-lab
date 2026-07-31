@@ -37,7 +37,17 @@ group_handoff_audit:
 - 判定: `pass`。説明量の削減ではなく、音楽・映像編集・操作へ説明機能を再配分する設計として重要要素を抽出できる。開発中の反証経験と trailer-first の制作判断もあり、ゲーム試作への適用と約4000字の批判的概要を両立できる。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260731_unbeatable_music_video_narrative.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785487195632389
+    char_count: 3794
+skipped: []
+```
+
+- 最終判定: 投稿。元記事を再確認し、筆者のプレイ経験と RJ Lake への取材に基づく case study であり、比較実験や player study ではない限界を明記した。
+- 投稿前 review: `■ 概要` 開始、固定 6 項目順、`■ URL` 末尾、禁止表現なし、記事固有内容、3794 字を確認した。
+- Slack verification: `ts=1785487195.632389`、保存内容の文字化け検査 `ok`。1 回の `chat.postMessage` で投稿し、thread reply は使用していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
