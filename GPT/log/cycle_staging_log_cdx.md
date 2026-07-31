@@ -48,7 +48,22 @@ evaluated_at: 2026-07-31T14:09:05.6536432+09:00
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260731_making_gameplay_moments_stick.md
+    reason: Phase 2 の gate_decision が postpone。公式概要だけでは五要素の実装手順・具体例・評価結果が不足し、講演動画または transcript の確認が必要
+    action: candidate_revise
+  - candidate: memory/shared_reads_candidates/20260731_godotcon_community_postmortems.md
+    reason: Phase 2 の gate_decision が postpone。三事例の工程・失敗・比較証拠が未取得で、推測なしに統合できない
+    action: candidate_revise
+reviewed_at: 2026-07-31T14:12:38.7180480+09:00
+slack_posted: false
+decision: no_pass_candidates
+```
+
+Phase 2 の `pass` が 0 件だったため、#shared-reads への投稿は行わなかった。両 candidate は既に `status: postponed`、`candidate_status: postponed`、`next_action: revise_or_research` であり、frontmatter の追加変更は不要。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
