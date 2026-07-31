@@ -78,7 +78,63 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の atom index 50 件を per-file index と照合し、broken link 0 件を確認。"
+  - "memory/atoms.jsonl・per-file .md・index.jsonl 各 2810 件の mirror 一致、ID 重複・content conflict 0 件を確認。正規化内容重複 40 群は canonical overlay で fold 済み、recall 表示の未解決群は 0 件。"
+  - "shared-reads の canonical 74 群、mixed duplicate 46 群、open duplicate 53 群を再監査し、stale triage / group action queue を規定順で再生成。"
+  - "Slack directives 23 行・broadcasts 21 行を確認し、pending 0 件のため handled 更新なし。"
+  - "candidate / group handoff inbox を監査し、schema error 0 件、pending 0 件を確認。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+candidate_lifecycle:
+  files: 1188
+  counts:
+    posted: 543
+    ready_to_post: 9
+    postponed: 236
+    failed: 391
+    needs_review: 3
+    skipped_unreviewed: 6
+  overdue_open_total: 1
+  missing_stale_after: 9
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読みで『記憶』『ゲーム設計』『敵パターン』『評価軸』を取得でき、本文破損なし。health 警告 2 atom のうち sr-1776127289-4d9239b255 は source に局所的な既存 mojibake、gr-1777083728-44d444ab7a は UTF-8 source が正常で tooling 側の false positive。いずれも今回の構造 issue には昇格しない。"
+  display_or_tooling_status: "PowerShell UTF-8 表示は正常。memory_health.py の mojibake detector に false positive 1 件あり。"
+raw_archive_audit:
+  older_than_30_days: 226
+  archived: 0
+  decision: "一次資料・評価 trace・Slack provenance として参照される raw であり、mtime だけでは安全に archive 対象を確定できないため明示保持。archive_last_run は 2026-08-01T02:36:18。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 53
+  mixed_group_count: 46
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  suppression_note: "期限到来 1 件は JAMEL all-open group の既存 deferred lease（retry_after 2026-08-20、membership fingerprint 一致）により抑止。"
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- 判定: 新規の構造的問題はなし。既存の重複は lifecycle / overlay / deferred lease で検索・再評価経路上の未解決表示を抑止できており、Phase 4b / 4c は起動しない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
