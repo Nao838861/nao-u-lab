@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.27773"
 collected_at: "2026-07-31T19:46:13.4411018+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [llm-agents, memory, evaluation, game-ai]
+evaluated_at: "2026-07-31T19:51:06+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-31T19:51:06+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-31T19:51:06+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-30"
+supersedes: []
+gate_reason: |-
+  全体 snapshot、自然言語 undo の version 選択、後続情報への露出後も旧状態として答えられるかを測る post-exposure protocol まで、問題・手法・評価の骨格が揃う。
+  NPC／playtest agent の記憶を build・scenario 単位で巻き戻す回帰検証へ直接適用でき、保存費用や外部副作用を含む限界まで約4000字で分析できる。
+suggested_post_outline:
+  overview_angle: "agent memory の rollback を古い情報の再検索ではなく、後続情報の混入を排した状態復元として定義し直す設計"
+  analysis_axis: "write ごとの全体 snapshot、自然言語 intent からの version 選択、post-exposure QA・履歴要約・version selection の三評価を、保存費用と誤選択リスク込みで読む"
+  application_target: "Log_cdx の長期運用 NPC／playtest agent で、game build・scenario ごとの memory snapshot を固定し、未来の攻略知識を混ぜずに旧版の挙動を回帰評価する工程"
+  pros_cons: "利点は再現可能な巻き戻しと監査履歴。弱点は全体 snapshot の保存費用、自然言語による版選択の曖昧さ、memory 外の世界状態や副作用までは戻せないこと"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

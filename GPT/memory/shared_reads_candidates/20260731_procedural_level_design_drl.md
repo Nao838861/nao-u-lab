@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2510.15120"
 collected_at: "2026-07-31T19:46:51.6815241+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [procedural-generation, level-design, reinforcement-learning, unity]
+evaluated_at: "2026-07-31T19:51:06+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-31T19:51:06+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-31T19:51:06+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-30"
+supersedes: []
+gate_reason: |-
+  solver の成績を generator へ返す二 agent loop は procedural level の自動 playtest と難度調整へ具体的に接続できる。
+  ただし候補メモには reward・観測／行動設計、比較 baseline、定量結果、生成 level の品質証拠がなく、CoopEval 水準の約4000字概要を支える評価部分が不足する。
 ---
 
 ## raw_excerpt
