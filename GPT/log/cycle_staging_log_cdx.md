@@ -64,7 +64,47 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785524068-77a861d40a
+    source_ts: "1785524068.318899"
+    title: "Echo Point Nova 高速移動 deep dive — 運動・入力許容・感覚 feedback の整合"
+    reason: >-
+      source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、
+      harness・game-design・operation・evaluation の優先タグを持つ。
+      hoverboard／grapple の速度を短い target memory、velocity interpolation、camera・音・VFX、
+      level course と一緒に検証する観点が、既存 control と異なる判断差を作れるか確認した。
+      Nao_u の明示評価は付いていない。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: >-
+    開発記録は運動・入力許容・感覚 feedback の4条件 ablationへ具体化できるが、
+    単一作品の成功後説明で、parameter、要素別比較、酔い・accessibility の user study がない。
+    experience_verb_observability_chain、player-intent-action-response、egocs-causal-gameplay-log、
+    game-feedback-loop-asymmetry、feedback-device-amplitude-axis が主要な判断を既に覆い、
+    直前の game feel 3研究レビューとも重複する。高速移動 prototype／比較 course／before-after build がなく、
+    Phase 4a には別 pending lease が1件あるため、新しい operational control は追加しない。
+  change:
+    summary: >-
+      reviewed_source_ts と重複・証拠限界・artifact 不在による reject 理由だけを更新した。
+      probe・metric・lease・directive・恒久ルールは追加していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

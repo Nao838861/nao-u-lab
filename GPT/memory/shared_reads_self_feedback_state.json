@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-01T03:58:20+09:00",
+  "updated_at": "2026-08-01T06:03:10+09:00",
   "reviewed_source_ts": [
+    "1785524068.318899",
     "1780406202.165989",
     "1785509757.493939",
     "1780238641.289669",
@@ -569,6 +570,47 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-01T06:03:10+09:00",
+      "selected": {
+        "id": "sr-1785524068-77a861d40a",
+        "source_ts": "1785524068.318899",
+        "title": "Echo Point Nova 高速移動 deep dive — 運動・入力許容・感覚 feedback の整合",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、harness・game-design・operation・evaluation の優先タグを持つ。hoverboard／grapple の速度を、短い target memory、velocity interpolation、camera・音・VFX、level course と一緒に検証する観点が、次回 playable diff に既存 control と異なる判断差を作れるか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、hoverboard の加速・斜面離陸・Z velocity、grapple の短時間 target memory・約1秒の velocity interpolation・解除条件、速度連動の FOV・camera tilt・sound pitch・debris を一つの入力→運動→感覚因果として説明し、baseline／物理のみ／物理＋入力許容／物理＋許容＋感覚 feedback の4条件を同一 course で比較する案まで示すため relevance・actionability は3とした。一方、根拠は単一作品の開発者による成功後の制作記録で、target 記憶幅、加速度、FOV curve、slope 閾値などの値、要素別 ablation、酔い・accessibility の user study がなく、99% positive も作品全体の Steam review なので evidence=2 に留める。experience_verb_observability_chain metric は cue・代替選択・意図入力・結果・回復を、player-intent-action-response は intent・action schema・observable world response を、egocs-causal-gameplay-log は input・camera・state・event・outcome の因果 chain を、game-feedback-loop-asymmetry は headless／visual／human evidence の境界を、feedback-device-amplitude-axis は介入強度と保持すべき player choice をすでに扱う。直前レビューの game feel 3研究も入力応答・feedback channel・感情 proxy の同型拡張を重複として reject 済みであり、本 atom の4条件 ablation を別 control にしても次回判断を変えないため non_redundancy=0 とした。現在の staging には高速移動 prototype、比較 course、baseline／after build がなく、後続 Phase 4a は memory cleanup で別 probe の pending lease が1件ある。active_probes 322件へ対象不在の確認面を加える risk が高いため state-only review で閉じる。",
+      "existing_controls": [
+        "experience_verb_observability_chain",
+        "probe-20260717-player-intent-action-response",
+        "probe-20260622-egocs-causal-gameplay-log",
+        "probe-20260606-game-feedback-loop-asymmetry",
+        "probe-20260710-feedback-device-amplitude-axis"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の intent-response／causal-log／feedback-loop／intervention-amplitude controls との重複、比較可能な高速移動 artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-01T03:58:20+09:00",
       "selected": {
