@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.26754"
 collected_at: "2026-07-31T23:46:22+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-development, world-model, game-mechanics, state-modeling, generative-ai]
+evaluated_at: "2026-07-31T23:49:54+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-31T23:49:54+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-31T23:49:54+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-30"
+supersedes: []
+gate_reason: >-
+  問題設定、state/visual 二枝の中核構成、state-critical なデータ配分、四軸評価、定量結論まで一次資料由来の重要要素を抽出できる。
+  生成型 prototype や自動 playtest で、見た目の自然さと engine state に基づくルール整合性を分離して測る具体的な適用へ接続でき、約4000字の独立分析を構成できる。
+suggested_post_outline:
+  overview_angle: "映像として自然でもゲームの内部ルールを破る world model に対し、明示的 state prediction を結合して mechanics fidelity を測る設計として解説する"
+  analysis_axis: "visual/state branch の分離と joint attention、state-critical sample の配分、visual quality と mechanics fidelity を分離した評価設計の因果を検討する"
+  application_target: "Log_cdx の生成型 game prototype と自動 playtest で、health・resource・timer・termination の engine state trace を映像評価と別の合否軸にする"
+  pros_cons: "内部状態を監査可能にして見た目だけの成功を排除できる一方、単一格闘ゲーム・短尺 clip・既知 state schema への依存が強く、長期因果や未知 mechanics への一般化は未確認"
+  verdict_pre: "部分採用。state trace と mechanics-critical sampling の評価設計を採り、モデル構成そのものは生成型 prototype を使う場合に限定する"
 ---
 
 ## raw_excerpt
