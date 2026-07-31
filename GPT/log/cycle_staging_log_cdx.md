@@ -90,7 +90,67 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index atom 参照 87件を監査し、missing 0件を確認。Markdown link は 0件。"
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」が取得できることを確認。"
+  - "memory/atoms.jsonl 2806件を監査し、atom ID 重複 0件、mirror drift 0件、lifecycle/topology error 0件を確認。normalized content 重複 40群は既存 overlay/fold の管理下で、recall-visible の残り3群も runtime fold 対象。"
+  - "memory/raw/ の30日超ファイルを棚卸し。226件中203件は memory/raw/web_research 系の一次資料で archive 候補。参照破損を避けるため本 Phase では移動していない。"
+  - "shared-reads candidate 1175件の lifecycle を監査し、status/candidate_status の不一致 0件を確認。open duplicate group / stale triage / group action sidecar を契約順で再生成した。"
+  - "Slack inbox は directives 0件、broadcasts 0件で、close 対象なし。"
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の「AIエージェント」が「AIエ��ジェント」として保存されている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/raw/slack_archive/shared-reads.jsonl source_ts=1776127289.990919"
+    source_file_status: "UTF-8 明示読みで per-atom、atoms.jsonl、raw source 2行のすべてに同じ置換文字を確認。source data 自体の破損。gr-1777083728-44d444ab7a の health 警告は本文中の正規文字列「???」による false positive。"
+    display_or_tooling_status: "none。PowerShell UTF-8 読みと rg の双方で同一内容を表示し、表示経路だけの mojibake ではない。"
+    why_blocks_game_memory: "「AIエージェント」の完全一致検索と表示品質を1 atom で損なうが、agent/memory tags とリンクは保持されており recall 全体への影響は限定的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+candidate_lifecycle_audit:
+  files: 1175
+  status_counts:
+    posted: 539
+    ready_to_post: 9
+    postponed: 230
+    failed: 391
+    needs_review: 3
+    skipped_unreviewed: 3
+  missing_stale_after: 6
+  overdue_open_total: 1
+  overdue_note: "20260616_jamel_memory_exploration_novelty.md は同一 work の all-open group handoff gha-e6d4d4b5a37a0808 が retry_after 2026-08-20 まで deferred のため、live lease 合成後の stale triage から正しく除外。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 53
+  mixed_group_count: 46
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+stale_review_batch: []
+raw_archive_candidates:
+  older_than_30d_total: 226
+  web_research_rows: 203
+  action: "candidate_only_no_move"
+  reason: "raw 原文保持と既存参照の安全性を優先し、archive 先・参照契約の設計を Phase 4a で行わない。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
