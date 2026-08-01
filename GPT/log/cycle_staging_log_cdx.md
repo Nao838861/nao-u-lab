@@ -55,7 +55,35 @@ skipped: []
 - 投稿前レビュー: 4,483字、必須項目順・禁止表現・末尾 URL・UTF-8 を検証済み。duplicate preflight は `continue`、Slack 投稿後の本文 verification は `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785603364-8247908177
+    source_ts: "1785603364.132359"
+    title: "MuseBench — audiovisual arts の creative intent を観測可能な evidence で測る benchmark"
+    reason: "source=slack_api/shared-reads、score=11、未レビューという条件を満たす最新 atom で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。画面上の事実、設計意図の仮説、実プレイ上の効果を分ける評価が既存 control と異なる判断差を作れるか確認するため選んだ。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "合計14だが risk_control が必須閾値2を下回る。4,016問・全件人手確認・Gwet AC2 0.855・28 MLLM・人間87.18%対首位48.29%という evidence と、事実認識／意図仮説／体験効果、precision／recall／exact match、選択肢順反転への変換可能性は強い。一方、ground truth は video essay 由来の専門的解釈で、短い clip は操作因果・長期学習・agency・面白さを測らない。既存の observation-channel、headless／visual／human evidence、calibration boundary、intent／perception 分離 controls と重なり、比較可能な playable scene・variants・人手正解・telemetry がない。Phase 4a には別 probe の pending lease もあり、322件の active_probes に追加する確認負荷と解釈誤昇格 risk が便益を上回るため state-only review とする。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
