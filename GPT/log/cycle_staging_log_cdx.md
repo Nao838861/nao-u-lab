@@ -100,7 +100,71 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+audited_at: "2026-08-01T17:36:22+09:00"
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語4件（記憶／ゲーム設計／敵パターン／評価軸）と per-file atom index の整合を確認。broken link は 0 件。"
+  - "atoms 2813件の mirror を監査し、atoms.jsonl／per-file .md／index.jsonl は各2813件、content conflict は 0 件。raw content duplicate 40群80件は既存 fold 後に recall-visible 3群6件へ抑止されているため、原文は変更しなかった。"
+  - "candidate lifecycle 1196件を dry-run 監査し、status/candidate_status の不一致は 0 件、postponed／needs_review の stale_after 欠損は 0 件だった。"
+  - "closed canonical／mixed duplicate／open duplicate／stale triage／group action の sidecar を規定順で再生成した。"
+  - "Slack directive 23件・broadcast 21件を監査し、pending は双方 0 件。handled 更新対象はなかった。"
+  - "memory/raw/ の30日超ファイル226件を確認。一次資料・Slack archive が中心で、参照切れや一時物と断定できないため移動しなかった。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  receipt: null
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+encoding_audit:
+  memory_md_source_file_status: "UTF-8 明示読みで代表語4件をすべて取得。source file 破損なし。"
+  memory_md_display_or_tooling_status: none
+  atom_mojibake_review:
+    - "sr-1776127289-4d9239b255 は derived atom の title/trigger/excerpt に置換文字が残る一方、raw Slack 原文は正常で memory_recall の display overlay も『AIエージェント』を正常表示する。現行検索を阻害しないため issue 化せず、Phase 4aでは修復しない。"
+    - "gr-1777083728-44d444ab7a は原文中の意図的な『???がヘッダに出る』を検出した false positive。source/display とも正常。"
+candidate_lifecycle:
+  total_files: 1196
+  status_counts:
+    posted: 546
+    ready_to_post: 9
+    postponed: 239
+    failed: 391
+    needs_review: 3
+    skipped_unreviewed: 8
+  overdue_open_total: 1
+  overdue_suppressed_by_live_group_lease: 1
+  overdue_path: "memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md"
+  suppressing_group_handoff_id: "gha-e6d4d4b5a37a0808"
+  retry_after: "2026-08-20T13:19:04+09:00"
+duplicate_title_audit:
+  terminal_canonical_groups: 74
+  open_duplicate_group_count: 54
+  mixed_group_count: 47
+  all_open_group_count: 7
+  actionable_group_count: 0
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 54
+  mixed_group_count: 47
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
