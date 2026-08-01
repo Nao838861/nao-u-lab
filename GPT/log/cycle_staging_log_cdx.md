@@ -47,7 +47,14 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+eligible_pass_candidates: 0
+posted: []
+skipped: []
+result: no_pass_candidates
+reason: "Phase 2 の pass が空であり、唯一の candidate は一次資料不足により fail 判定済みのため、Phase 3 の投稿対象なし"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
