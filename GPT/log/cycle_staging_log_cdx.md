@@ -90,7 +90,64 @@ self_feedback:
 - ledger: enqueue なし。`memory/shared_reads_probe_lifecycle.jsonl` は変更していない。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の atom index を per-file index と照合し、broken entry 0件を確認。代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」も UTF-8 明示読みで取得できた。"
+  - "memory/atoms.jsonl は 2,819件、atom id 重複 0件、mirror content conflict 0件。normalized content 重複40群80件は recall fold と canonical overlay（45群）で管理済み、duplicate cluster index も整合していた。"
+  - "30日以上更新のない memory/raw/ 226件を機械抽出した。raw は原文 provenance の保持先で、参照を壊さず移せる対象をこの audit だけでは確定できないため、今回は移動なし。"
+  - "shared-reads title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再生成した。overdue open 1件は JAMEL duplicate group の live deferred lease（gha-e6d4d4b5a37a0808、retry_after 2026-08-20）で抑止され、二重 handoff は発生しなかった。"
+  - "Slack inbox は directives 0件、broadcasts 0件で、handled 更新対象なし。"
+issues:
+  - id: ISS-UTF8-001
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』が raw Slack archive の時点から『AIエ��ジェント』になっており、atom mirror と index に伝播している。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8 明示読みでも raw source、atoms.jsonl、per-file atom の全てに U+FFFD 置換文字が存在し、source data 自体の破損と確認。memory_health のもう1件 gr-1777083728-44d444ab7a は本文中の意図的な『???』を拾った false positive。"
+    display_or_tooling_status: "none。Get-Content -Encoding UTF8 と rg の両経路で同じ結果。memory/MEMORY.md の代表語 probe は正常。"
+    why_blocks_game_memory: "低影響だが、『AIエージェント』の完全一致検索から当該 atom が漏れ、原文 fidelity も失われる。単一 atom の局所データ品質問題であり、記憶階層の再設計は不要。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+candidate_lifecycle:
+  total_files: 1205
+  counts:
+    posted: 553
+    ready_to_post: 9
+    postponed: 240
+    failed: 392
+    needs_review: 5
+    skipped_unreviewed: 6
+  overdue_open_total: 1
+  missing_stale_after: 9
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 54
+  mixed_group_count: 47
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+stale_review_batch: []
+```
+
+- 判定: `needs_design: false`。既存の fold / overlay、duplicate-group lease、candidate handoff が意図どおり機能しており、Phase 4b/4c を起動する構造的問題はない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
