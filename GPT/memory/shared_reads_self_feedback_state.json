@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-01T21:43:45+09:00",
+  "updated_at": "2026-08-01T23:51:06+09:00",
   "reviewed_source_ts": [
+    "1780325102.776839",
     "1780395234.305499",
     "1780406202.191929",
     "1780406204.700939",
@@ -577,6 +578,47 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-01T23:51:06+09:00",
+      "selected": {
+        "id": "sr-1780325102-6e8f2deda0",
+        "source_ts": "1780325102.776839",
+        "title": "Wayline『The Juice Problem: How Exaggerated Feedback Is Harming Game Design』",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たし、game-design・operation・evaluation の優先タグを持つ。1行動に複数の強い feedback を重ねると action-feedback link と competence 感が隠れるという診断が、直近の deterministic playtest／game feel 評価に既存 control と異なる判断差を作れるか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、過剰 juice を単なる派手さではなく『1行動 N feedback により因果が隠れる』問題として、castLock 状態別の effect 数、100ms 窓の追加入力、同一 mechanics の feedback ablation へ変換しているため relevance・actionability は3とした。一方、中心根拠は批評記事と paywall 越しの CHI 2024 abstract、単一 prototype への自己適用であり、effect 数と competence／満足度の因果をこの投稿内で再検証した比較 artifact はないため evidence=2 に留める。experience_verb_observability_chain は cue・意図入力・結果・回復を、probe-20260717-player-intent-action-response は intent・action schema・observable response を、probe-20260622-egocs-causal-gameplay-log は input・state・event・outcome の因果列を、probe-20260606-game-feedback-loop-asymmetry は headless／visual／human evidence の境界を、probe-20260710-feedback-device-amplitude-axis は介入強度と保持すべき choice をすでに扱う。直近には game feel／juicing の同型レビューもあり、本 atom の『1行動1強 feedback』を別 control にしても次回判断を変えないため non_redundancy=0 とした。現在の staging には比較可能な playable diff、before／after event trace、人間 playtest がなく、後続 Phase 4a には別 probe の pending lease が1件ある。322件の active_probes へ同型診断を足す確認負荷と、N=1 を普遍化して必要な multimodal cue まで削る risk が便益を上回るため state-only review で閉じる。",
+      "existing_controls": [
+        "experience_verb_observability_chain",
+        "probe-20260717-player-intent-action-response",
+        "probe-20260622-egocs-causal-gameplay-log",
+        "probe-20260606-game-feedback-loop-asymmetry",
+        "probe-20260710-feedback-device-amplitude-axis"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の observability／intent-response／causal-log／feedback-loop／intervention-amplitude controls との重複、比較可能な playable artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-01T15:20:02+09:00",
       "selected": {

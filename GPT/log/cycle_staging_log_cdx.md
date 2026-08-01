@@ -60,7 +60,34 @@ skipped: []
 - Beckett: Lite/Full の境界、frame-exact replay の決定性範囲、作者報告中心の限界を明記し、同一環境10回再生の小型 regression suite への部分採用とした。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780325102-6e8f2deda0
+    source_ts: "1780325102.776839"
+    title: "Wayline『The Juice Problem: How Exaggerated Feedback Is Harming Game Design』"
+    reason: "score 12 の未レビュー shared-reads atom。1行動 N feedback が action-feedback link を隠す診断が、直近の deterministic playtest／game feel 評価に既存 control と異なる判断差を作れるか確認した。Nao_u の明示評価はなし。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "合計14未満かつ risk_control 2未満。批評記事＋CHI abstract と単一 prototype への自己適用で比較証拠が弱く、既存の observability／intent-response／causal-log／feedback-loop／intervention-amplitude controls と重複する。比較可能な playable diff もなく、active_probes 322件と Phase 4a 向け pending lease 1件へ同型 control を追加すると確認負荷と過剰抑制 risk が便益を上回る。"
+  change:
+    summary: "reviewed_source_ts と state-only reject 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
