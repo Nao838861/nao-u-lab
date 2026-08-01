@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-01T10:05:40+09:00",
+  "updated_at": "2026-08-01T12:14:59+09:00",
   "reviewed_source_ts": [
+    "1785546082.307349",
     "1785538569.384449",
     "1780223981.841189",
     "1785524068.318899",
@@ -572,6 +573,46 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-01T12:14:59+09:00",
+      "selected": {
+        "id": "sr-1785546082-6e43de0059",
+        "source_ts": "1785546082.307349",
+        "title": "Designing Game Feel. A Survey — physicality / amplification / support taxonomy",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、memory・harness・game-design・agent・operation・evaluation の6優先タグをすべて持つ。physicality／amplification／support による原因分解、rule-feedback coherence、短い ablation、false assist 記録が、次回 playable diff に既存 control と異なる判断差を作れるか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、200件超の資料を physicality／amplification／support と tuning／juicing／streamlining に整理し、狙う affect、予想結果、rule 上の結果、画面・音の結果を比較する診断、基準版／tuning／feedback／support／統合版の ablation、fixed input の軌跡・cue frame・false assist・人間の予測誤差まで次回 playable diff へ変換しているため relevance・actionability は3とした。一方、論文は検索式、採択・除外条件、coder 間一致を備えた systematic review ではなく、三分類そのものの比較実験もない。medium／high juice の利点は引用先研究であり taxonomy 全体の妥当性を示さず、2D movement と visual／haptic に偏るため evidence=2 に留める。同じ arXiv:2011.09201 を含む sr-1780406202-ed10de8166 は本サイクル直前に review 済みで、experience_verb_observability_chain は cue・意図入力・結果・回復を、probe-20260606-game-feedback-loop-asymmetry は headless／visual／human evidence の境界を、probe-20260710-feedback-device-amplitude-axis は介入強度と保持すべき choice を、probe-20260717-player-intent-action-response は intent・action schema・observable response をすでに扱う。本 atom の taxonomy を別 control にしても次回判断を変えず、non_redundancy=0 とした。現在の staging には比較可能な movement prototype、三層 ablation、before／after event trace、人間 playtest がなく、後続 Phase 4a には別 probe の pending lease が1件ある。322件の active_probes へ同型診断を足す確認負荷と、分類表を処方箋化して effect や支援を過剰投入する risk が便益を上回るため state-only review で閉じる。",
+      "existing_controls": [
+        "experience_verb_observability_chain",
+        "probe-20260606-game-feedback-loop-asymmetry",
+        "probe-20260710-feedback-device-amplitude-axis",
+        "probe-20260717-player-intent-action-response"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、同一原典のレビュー済み evidence、既存 observability／feedback-loop／intervention-amplitude／intent-response controls との重複、比較可能な playable artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-01T10:05:40+09:00",
       "selected": {
