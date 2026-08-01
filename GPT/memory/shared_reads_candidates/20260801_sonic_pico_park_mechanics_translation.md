@@ -6,18 +6,20 @@ collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, mechanics, co-op, puzzle, franchise, collaboration]
 evaluated_at: "2026-08-01T15:10:58.4148892+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-01T15:10:58.4148892+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-01T15:10:58.4148892+09:00"
-next_action: post_to_shared_reads
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-01T15:15:28.8080388+09:00"
+last_decision: postponed
+evidence: "Phase 3 source review: 80 Level 本文は能力名と再解釈方針のみで、能力ごとの実装、パズル例、プレイテスト、失敗条件、調整結果を示さない"
+next_action: candidate_revise
 stale_after: "2026-08-31"
 supersedes: []
 gate_reason: >-
-  Sonic の固有能力をそのまま移植せず、PICO PARK の協力パズルで機能する行動へ翻訳する判断が具体的である。
-  外見・挙動・受け入れ先の core loop という複数の制約から、長寿 IP の同一性を保つプロトタイプ評価へ適用でき、約4000字の概要と分析を支えられる。
+  Sonic を PICO PARK 世界への guest として扱い、外見と能力を受け入れ先の core loop に合わせる方針自体は有用である。
+  ただし元記事は Spin Dash、Tails の飛行、Knuckles の glide を協力パズル向けに再解釈したと述べるだけで、
+  各能力がどの操作・役割・パズルへ変わったか、何をプレイテストし、どの案が失敗し、どう調整したかを説明していない。
+  この材料から約4000字へ広げると記事固有の分析ではなく一般的な IP 翻訳論で水増しするため、Phase 3 で postponed とした。
 suggested_post_outline:
   overview_angle: "キャラクターの見た目を借りるコラボから、移植先の協力行動へ能力を翻訳する設計への転換"
   analysis_axis: "Sonic 側の識別可能な核と PICO PARK 側の core loop を同時に満たす二重制約として、外見・能力・プレイヤー間相互作用を分けて評価する"

@@ -45,7 +45,19 @@ decision_summary: >-
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260801_sonic_pico_park_mechanics_translation.md
+    reason: >-
+      元記事は Sonic を PICO PARK 世界への guest として扱う視覚方針と、Spin Dash、Tails の飛行、
+      Knuckles の glide を協力パズル向けに再解釈した事実までは示す。しかし能力ごとの操作・役割・
+      パズル例、プレイテスト指標、失敗案、調整結果がなく、記事固有の問題設定・手法・評価・限界を
+      3500-4500字で説明できない。投稿すると一般的な IP 翻訳論による水増しになるため撤退した。
+    action: candidate_revise
+reviewed_at: "2026-08-01T15:15:28.8080388+09:00"
+slack_posted: false
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
