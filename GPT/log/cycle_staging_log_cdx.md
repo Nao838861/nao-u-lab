@@ -42,7 +42,18 @@ group_handoff_audit:
 - duplicate preflight: 3 sidecar を Phase 2 開始時に再生成・`--check` 済み。対象 title / URL は `continue`。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260802_lottery_sprint_arcade_play_driven_editing.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785618572231639
+    char_count: 4274
+skipped: []
+```
+
+- 最終判定: 投稿。構造化された plan/action、atomic patch、validation、reset/log と、21人・105 trial・715 command の評価を、意味的成功と schema 通過率を混同せず説明できる密度に仕上げた。
+- 投稿前レビュー: 必須6項目、`■ 概要` 始まり、末尾 `■ URL`、禁止表現なし、URL 1 箇所、4,274字を確認。duplicate preflight は `continue`。
+- 適用判断: 自然言語→安全な差分→schema/headless/人間の三層検証は部分採用。編集カテゴリと体験の関連は信頼区間がゼロをまたぐため仮説として扱う。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

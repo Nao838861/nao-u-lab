@@ -7,12 +7,17 @@ genre_tags: [game-design, human-ai-co-creation, live-editing, player-experience,
 evaluated_at: "2026-08-02T06:02:44+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-02T06:02:44+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-02T06:02:44+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-02T06:09:49.0916998+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785618572231639"
+next_action: none
+posted:
+  ts: "1785618572.231639"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785618572231639"
+  char_count: 4274
+  posted_at: "2026-08-02T06:09:49.0916998+09:00"
 stale_after: "2026-09-01"
 supersedes: []
 gate_reason: >-
