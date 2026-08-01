@@ -76,7 +76,34 @@ quality_review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780406202-6963b73b0a
+    source_ts: "1780406202.191929"
+    title: "proxy 軸拡張 4→19 と game feel 3 domain 再分類案"
+    reason: "score 10 の未レビュー最新候補で、memory・game-design・operation・evaluation の4優先タグを持つ。同一投稿・同一原典の既レビュー atom と比べ、独立した判断差があるか確認するため選定。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "19 proxy と3 domain は次回 playable diff へ接続可能だが、atom は同一投稿の途中で切れた派生断片で、軸定義・対応表・比較実測がない。同一投稿の2 atom と同一原典の後続投稿は review 済みで、既存の observability／feedback-loop／intervention-amplitude／intent-response controls が判断を再現する。19軸化と game_lessons_log 全体の再分類は確認負荷を増やし、比較可能な playable artifact もないため採用しない。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に追加。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

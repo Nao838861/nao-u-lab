@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-01T17:30:12+09:00",
+  "updated_at": "2026-08-01T19:30:43+09:00",
   "reviewed_source_ts": [
+    "1780406202.191929",
     "1780406204.700939",
     "1779995805.066329",
     "1785546082.307349",
@@ -16557,6 +16558,49 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、同一投稿のレビュー済み主 atom・既存 feedback controls との重複、proxy 軸増殖、現行 standalone directive との不一致による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-01T19:30:43+09:00",
+      "selected": {
+        "id": "sr-1780406202-6963b73b0a",
+        "source_ts": "1780406202.191929",
+        "title": "proxy 軸拡張 4→19 と game feel 3 domain 再分類案",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、memory・game-design・operation・evaluation の4優先タグを持つ。ただし同一 Slack 投稿の主 atom とメリット・デメリット atom、同じ原典を詳しく扱った後続投稿がすでに review 済みであり、19 proxy 化と3 domain 再分類が次回行動へ独立した判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。選択 atom は hit stop／sound coherence／camera control、Physicality／Amplification／Support、感情軸を playable diff の診断へ接続する方向を示すため relevance=3、actionability=2 とした。一方、本文は同一投稿の途中で切れた派生断片であり、19要素の定義、4軸からの対応、再分類前後の比較、playable artifact の実測を持たないため evidence=1 とした。同一投稿の主 atom sr-1780406202-ed10de8166 と後半 atom sr-1780406204-0bc9f92fc0、さらに同じ arXiv:2011.09201 を詳しく扱った sr-1785546082-6e43de0059 はいずれも review 済みで、experience_verb_observability_chain、probe-20260606-game-feedback-loop-asymmetry、probe-20260710-feedback-device-amplitude-axis、probe-20260717-player-intent-action-response が入力・結果・feedback・支援の診断をすでに担う。4軸を19軸へ増やす案と game_lessons_log 全体の3 domain再分類は確認負荷を増やし、現在の staging には before／after playable diff や event trace がなく、Phase 4a 向け pending lease も1件あるため non_redundancy=0、risk_control=1 とした。未レビュー source_ts を state-only で閉じる。",
+      "existing_controls": [
+        "sr-1780406202-ed10de8166",
+        "sr-1780406204-0bc9f92fc0",
+        "sr-1785546082-6e43de0059",
+        "experience_verb_observability_chain",
+        "probe-20260606-game-feedback-loop-asymmetry",
+        "probe-20260710-feedback-device-amplitude-axis",
+        "probe-20260717-player-intent-action-response"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、同一投稿・同一原典のレビュー済み atom および既存 feedback controls との重複、proxy 軸増殖、比較 artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
