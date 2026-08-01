@@ -144,4 +144,13 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+diary_post:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785596380736629
+  char_count: 2125
+  verification: ok
+  draft: drafts/phase5_log_diary_20260801_2355_cdx.md
+```
+
+- 今サイクルの2本の外部知見、自己フィードバックでの state-only reject、記憶監査で「移動しない／増やさない」と判断した理由、playable diff へ未接続である点を含めて投稿した。
