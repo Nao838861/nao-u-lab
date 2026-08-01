@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-01T08:00:36+09:00",
+  "updated_at": "2026-08-01T10:05:40+09:00",
   "reviewed_source_ts": [
+    "1785538569.384449",
     "1780223981.841189",
     "1785524068.318899",
     "1780406202.165989",
@@ -571,6 +572,46 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-01T10:05:40+09:00",
+      "selected": {
+        "id": "sr-1785538569-d802cda0be",
+        "source_ts": "1785538569.384449",
+        "title": "Absolum — combat・探索・物語を同一の観察技能へ束ねる attention contract",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、memory・harness・game-design・agent・operation・evaluation の6優先タグをすべて持つ。戦闘 telegraph、背景 cue、環境 puzzle、短い物語を同じ『細部を見る』技能へ接続し、段階的 hint と注意競合を測る提案が、次回 playable diff に既存 control と異なる小さな判断差を作れるか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、parry telegraph、背景の一つ目の兎、敵を炉へ投げる環境 puzzle、短い会話を『細部を見る』という共通知覚動詞へ束ね、cue 強度 A／B／C、初回発見時間、誤接触、探索中の被弾、parry 成功率、二周目 route 選択率、fixed-seed event trace まで playable room の評価へ変換しているため relevance・actionability は3とした。一方、根拠は記者の play experience と開発者取材による単一作品の事例で、戦闘の観察技能が背景発見へ転移した telemetry、cue 強度の比較、秘密発見率、反復 run 後の効果、accessibility 評価がないため evidence=2 に留める。probe-20260515-insight-design-discovery-path は説明前の観察対象・行動変化・最小 hint を、probe-20260710-feedback-device-amplitude-axis は介入強度と保持すべき player choice を、probe-20260603-mechanic-observation-channel-gate は core mechanic に必要な screen／input／audio／timing／player observation を、probe-20260621-gamerastra-accessibility-mental-map は cue wording・state representation・支援 profile・timing をすでに扱う。これらを組み合わせれば、本 atom の段階的 diegetic cue と注意競合の判定を再現できる。現在の staging には比較可能な playable room、cue A／B／C build、人間 playtest がなく、後続 Phase 4a は memory cleanup で別 probe の pending lease が1件ある。322件の active_probes に同型 control を追加すると、確認負荷と過剰な hint 設計のリスクが便益を上回るため state-only review で閉じる。",
+      "existing_controls": [
+        "probe-20260515-insight-design-discovery-path",
+        "probe-20260710-feedback-device-amplitude-axis",
+        "probe-20260603-mechanic-observation-channel-gate",
+        "probe-20260621-gamerastra-accessibility-mental-map"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、単一作品事例という evidence 限界、既存 discovery／hint amplitude／observation channel／accessibility controls との重複、比較可能な playable artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-01T08:00:36+09:00",
       "selected": {

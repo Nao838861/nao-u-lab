@@ -56,7 +56,37 @@ skipped: []
 - Slack 検証: `tools/post_slack_message_file.py` の読み戻し検査 `ok`。単一 `chat.postMessage`、thread なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785538569-d802cda0be
+    source_ts: "1785538569.384449"
+    title: "Absolum — combat・探索・物語を同一の観察技能へ束ねる attention contract"
+    reason: "最新の未レビュー score 10 atom で、6優先タグをすべて持つ。戦闘 telegraph、背景 cue、環境 puzzle、短い物語を同じ観察技能へ接続する提案が、次回 playable diff に既存 control と異なる判断差を作るか確認した。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  change:
+    summary: "reviewed_source_ts と、単一作品事例という evidence 限界、既存 discovery／hint amplitude／observation channel／accessibility controls との重複、比較可能な playable artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採否理由: 合計12で採用条件の14に届かず、`risk_control` も必須閾値2未満。事例は cue 強度 A／B／C、初回発見時間、探索中の被弾、parry 成功率、二周目 route 選択率まで実装へ変換できるが、技能転移・cue 比較・accessibility の実測はない。既存の `probe-20260515-insight-design-discovery-path`、`probe-20260710-feedback-device-amplitude-axis`、`probe-20260603-mechanic-observation-channel-gate`、`probe-20260621-gamerastra-accessibility-mental-map` で同じ判断を再現できる。
+- lease: enqueue なし。後続 Phase 4a は memory cleanup で、比較可能な playable room／cue A・B・C build／human playtest がなく、ledger には別 probe の pending lease が1件ある。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
