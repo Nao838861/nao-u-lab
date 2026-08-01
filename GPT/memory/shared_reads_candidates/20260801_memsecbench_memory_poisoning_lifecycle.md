@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2607.27080"
 collected_at: "2026-08-01T23:31:03+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [ai-agent, memory, security, evaluation, game-development-workflow]
+evaluated_at: "2026-08-01T23:35:46+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-01T23:35:46+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-01T23:35:46+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-31"
+supersedes: []
+gate_reason: >
+  記憶汚染の問題設定、Write--Execute--Forget の7 checkpoint、310 case・24構成の比較、
+  攻撃成立率と selective repair の結果まで抽出でき、CoopEval 水準の概要を組める。
+  制作 agent の記憶を保存件数ではなく実装影響と選択的修復まで通して検証する場面へ具体適用できる。
+suggested_post_outline:
+  overview_angle: "agent memory security を保存時の検査ではなく、Write--Execute--Forget を貫く lifecycle 評価として説明する"
+  analysis_axis: "7 checkpoint の分解、deterministic check・judge model・programmatic gate の役割、24構成で表れた persistence と consequence と repair の非対称性"
+  application_target: "Log_cdx のゲーム制作記憶で、外部記事や playtest lesson の ingest、後続実装への影響、正しい記憶を残す選択的修復を一続きに検証する probe"
+  pros_cons: "メリットは記憶 backend 単体でなく harness・LLM を含む end-to-end の弱点を測れる点。デメリットは game domain の直接評価ではなく、judge-model 依存と新規 preprint の再現性確認が残る点。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

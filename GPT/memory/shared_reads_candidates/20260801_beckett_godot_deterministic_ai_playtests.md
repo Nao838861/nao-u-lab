@@ -4,6 +4,27 @@ url: "https://forum.godotengine.org/t/beckett-zero-sidecar-mcp-server-for-godot-
 collected_at: "2026-08-01T23:31:28+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [godot, ai-agent, playtesting, deterministic-testing, game-development-tools]
+evaluated_at: "2026-08-01T23:35:46+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-01T23:35:46+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-01T23:35:46+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-31"
+supersedes: []
+gate_reason: >
+  Godot 内観測、frame-exact replay、複数層の assertion、performance baseline、render probe まで
+  問題と実装の対応が具体的で、作者報告という限界を区別すれば投稿水準の概要を構成できる。
+  playable diff を再現可能な regression test に変える場面へ直接適用でき、抽象的な AI playtest 論に留まらない。
+suggested_post_outline:
+  overview_angle: "AI がゲーム画面を見るだけの playtest から、frame・state・UI・performance・render pipeline を再実行可能に検査する仕組みへの拡張として説明する"
+  analysis_axis: "EditorPlugin 内の inspect-author-run-observe loop、frame-exact input replay、異種 assertion、症状推測を段階診断へ変えた render probe"
+  application_target: "Log_cdx の Godot prototype で、操作系列と physics frame を固定し、state/UI 到達性/performance/render の回帰を playable diff ごとに再検証する test harness"
+  pros_cons: "メリットは editor 内で制作と観測を閉じ、失敗を再現可能な層別証拠へ変える点。デメリットは作者の機能説明と単一 postmortem が中心で、独立した性能比較や他 engine への一般化は未検証な点。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

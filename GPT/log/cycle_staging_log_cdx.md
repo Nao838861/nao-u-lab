@@ -11,7 +11,37 @@
 - pending inbox: `slack_directives.jsonl` 0件、`slack_broadcasts.jsonl` 0件。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260801_memsecbench_memory_poisoning_lifecycle.md
+  - memory/shared_reads_candidates/20260801_beckett_godot_deterministic_ai_playtests.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
+
+- duplicate preflight: 3 sidecar を開始時に再生成して freshness check 済み。2 candidate とも `continue`。
+- MemSecBench: lifecycle 全体の benchmark 設計・構成比較・定量結果があり、制作記憶の ingest→実装影響→選択的修復へ具体接続できるため pass。
+- Beckett: frame-exact replay と state/UI/performance/render の層別診断が制作中の regression test に直結するため pass。独立評価ではなく作者報告である限界を Phase 3 で明示する。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
