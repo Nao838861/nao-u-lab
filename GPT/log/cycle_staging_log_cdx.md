@@ -56,7 +56,35 @@ skipped: []
 - 適用判断: 自然言語→安全な差分→schema/headless/人間の三層検証は部分採用。編集カテゴリと体験の関連は信頼区間がゼロをまたぐため仮説として扱う。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785610824-0c36b6ec7e
+    source_ts: "1785610824.818329"
+    title: "Showgunners — asset を保った pivot と新しい player promise の接続"
+    reason: "未レビューの最新 score 12 atom で、6個の優先タグを持つ。既存 asset を新しい fiction／system へ接続する pivot が、次回 prototype の方向転換に既存 control と異なる判断差を作れるか確認した。Nao_u の明示評価はなし。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "単一責任者の事後インタビューで pivot 前後の比較値がなく、既存の player-fantasy／scope-cut／prototype-hypothesis／theme-slot controls と大きく重なる。比較可能な pivot 前後 artifact がない状態で322件の active_probesへ checklist を足すと、確認負荷と sunk cost 正当化の risk が便益を上回る。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

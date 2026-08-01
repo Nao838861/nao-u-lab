@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-02T04:04:10+09:00",
+  "updated_at": "2026-08-02T06:14:01+09:00",
   "reviewed_source_ts": [
+    "1785610824.818329",
     "1785603364.132359",
     "1785595542.402169",
     "1780325102.776839",
@@ -580,6 +581,46 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-02T06:14:01+09:00",
+      "selected": {
+        "id": "sr-1785610824-0c36b6ec7e",
+        "source_ts": "1785610824.818329",
+        "title": "Showgunners — asset を保った pivot と新しい player promise の接続",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新 atom で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。既存 asset を fiction と system の新しい接合へ変え、旧 genre DNA をどこまで犠牲にしたかで pivot を判定する観点が、次回の prototype 方向転換に既存 control と異なる判断差を作れるか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、保存必須 asset、捨てる前提、新しい player promise、fiction と既存物の対応、旧 system から犠牲にするものを pivot packet にし、stage ごとの premise／新判断／pressure／複数解、cover の semantic mask、敵 turn 時間、peak の counterfactual run まで具体化しているため relevance・actionability は3とした。一方、根拠は単一責任者の事後インタビューで、pivot 前後の playtest、継続率、販売比較、encounter telemetry、tool 投資の比較値がなく、因果効果は検証されていないため evidence=2 に留める。probe-20260621-q0-five-second-legibility は player fantasy と theme-mechanics mismatch を、probe-20260602-game-scope-brief-cut-gate は pitch／scope promise／Cut first／最小 risk test を、probe-20260706-paperclaw-prototype-hypothesis-contract は継続条件と測定 verdict を、probe-20260620-crawllm-theme-slot-contract は固定 gameplay contract と theme slot の分離をすでに扱う。本 atom 固有の pivot packet を別 control にしても、既存4 control を組み合わせた次回判断をほぼ変えないため non_redundancy=1 とした。現在の staging には pivot 前後の playable build、保存 asset list、新旧 promise の比較 trace がなく、後続 Phase 4a には別 probe の pending lease も1件ある。322件の active_probes へ対象不在の checklist を足す確認負荷と、sunk cost を正当化して旧 system を残しすぎる risk が便益を上回るため、state-only review で閉じる。",
+      "existing_controls": [
+        "probe-20260621-q0-five-second-legibility",
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract",
+        "probe-20260620-crawllm-theme-slot-contract"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、単一 postmortem という evidence 限界、既存の player-fantasy／scope-cut／prototype-hypothesis／theme-slot controls との重複、比較可能な pivot artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-02T04:04:10+09:00",
       "selected": {
