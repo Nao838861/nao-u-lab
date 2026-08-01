@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-01T15:20:02+09:00",
+  "updated_at": "2026-08-01T17:30:12+09:00",
   "reviewed_source_ts": [
+    "1780406204.700939",
     "1779995805.066329",
     "1785546082.307349",
     "1785538569.384449",
@@ -16515,6 +16516,47 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、根拠不足・既存 recall／graph probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-01T17:30:12+09:00",
+      "selected": {
+        "id": "sr-1780406204-0bc9f92fc0",
+        "source_ts": "1780406204.700939",
+        "title": "本能 vs 逆算フレーム3研究読みのメリット・デメリット",
+        "reason": "source が slack_api/shared-reads、score 15、未レビューという条件を満たす最新候補で、memory・game-design・operation・evaluation の4優先タグを持つ。ただし直前にレビュー済みの sr-1780406202-ed10de8166 と同じ Slack 投稿の続きであり、Lin の19 proxy、Pichlmair の3 domain、Lopes の感情軸を次回行動へ別 control として追加する価値があるか、重複と現行 standalone directive への適合を確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。選択 atom は3研究の読みから、impact feel の19要素、Physicality／Amplification／Support、stress／anxiety の見落としを playable diff の評価軸へ接続する利点と、proxy 増加による計測コスト、位相対応の未検証、触覚・音・camera の自動評価困難を記録しており relevance=3、actionability=2、evidence=2 とした。一方、同一投稿の主 atom sr-1780406202-ed10de8166 は既に同じ11点で reject 済みであり、experience_verb_observability_chain、probe-20260606-game-feedback-loop-asymmetry、probe-20260710-feedback-device-amplitude-axis、probe-20260626-bullet-identity-channel-ladder が cue／入力／結果／回復、証拠境界、介入強度、feedback channel の可読性を扱う。4軸を19軸へ増やす案や game lesson 全体の再分類は確認負荷を増やし、Mir／Ash との共有を利点とする記述は現行 standalone directive とも一致しない。現在の staging に比較可能な playable diff や before／after proxy artifact はなく、Phase 4a には別 probe の pending lease 1件があるため、別 control を加えても次回判断を変えず、non_redundancy=0、risk_control=1 とした。未レビュー source_ts を state-only で閉じる。",
+      "existing_controls": [
+        "sr-1780406202-ed10de8166",
+        "experience_verb_observability_chain",
+        "probe-20260606-game-feedback-loop-asymmetry",
+        "probe-20260710-feedback-device-amplitude-axis",
+        "probe-20260626-bullet-identity-channel-ladder"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、同一投稿のレビュー済み主 atom・既存 feedback controls との重複、proxy 軸増殖、現行 standalone directive との不一致による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

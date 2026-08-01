@@ -64,7 +64,40 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780406204-0bc9f92fc0
+    source_ts: "1780406204.700939"
+    title: "本能 vs 逆算フレーム3研究読みのメリット・デメリット"
+    reason: "未レビュー中で最新の score 15 atom。memory・game-design・operation・evaluation を横断するが、レビュー済みの同一 Slack 投稿の続きであり、別 control にする価値があるか重複と現行 directive への適合を確認した。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "合計11で採用条件の14に届かず、risk_control も必須閾値2未満。同一投稿の主 atom sr-1780406202-ed10de8166 は同じ論点で review 済みで、既存 controls が cue／入力／結果／回復、feedback loop の証拠境界、介入強度、channel 可読性を覆う。4→19 proxy 軸化は確認負荷を増やし、Mir／Ash 共有を利点とする部分は現行 standalone directive と一致しない。比較可能な playable diff もなく、Phase 4a には別 pending lease があるため state-only で閉じた。"
+  existing_controls:
+    - sr-1780406202-ed10de8166
+    - experience_verb_observability_chain
+    - probe-20260606-game-feedback-loop-asymmetry
+    - probe-20260710-feedback-device-amplitude-axis
+    - probe-20260626-bullet-identity-channel-ladder
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
