@@ -16,7 +16,42 @@
 - preflight 証跡: `log/shared_reads_candidate_preflight.jsonl`。各照合前に3 sidecarを再生成済み。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+evaluated_at: "2026-08-01T17:24:07+09:00"
+total_candidates: 0
+pass: []
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight_audit:
+  order: [posted-source, closed-canonical, open-duplicate-group]
+  builders_rerun: true
+  posted_source_rows: 689
+  title_canonical_rows: 74
+  open_duplicate_group_rows: 54
+  sidecar_check: fresh
+notes:
+  - "group/candidate handoff はともに pending 0 件。"
+  - "Phase 1 は8件すべてを posted-source の同一 work として収集前に skip しており、新規 candidate は0件。frontmatter 更新対象なし。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
