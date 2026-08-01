@@ -173,4 +173,13 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted_at: "2026-08-01T17:41:57+09:00"
+channel: "#log"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785573717966379"
+char_count: 1829
+verification: ok
+draft: "drafts/phase5_log_diary_20260801_1745_cdx.md"
+notes:
+  - "スレッドを使わずフラット投稿。post_slack_message_file.py の投稿後本文検証は ok、UTF-8置換文字は0件。"
+```
