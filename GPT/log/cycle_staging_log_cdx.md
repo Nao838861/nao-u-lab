@@ -10,7 +10,36 @@
 - duplicate preflight skip: `Dispatch developer AdHoc says don't confuse your plot for narrative`、`Analyzing Mouse: P.I. For Hire's audacious worldbuilding - Narrative Notebook #4`、`Synergizing Code Coverage and Gameplay Intent` は posted-source と同一workのため新規ファイルなし。根拠 permalink は `log/shared_reads_candidate_preflight.jsonl` に記録。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260801_designing_game_feel_survey.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
+
+- duplicate preflight: sidecar 再生成後は `review`（all-open title group）。同一 work の旧候補 `memory/shared_reads_candidates/20260526_designing_game_feel_survey.md` は `postponed` で、posted terminal sibling はないため skip / 自動 close は行わず、今回の候補だけを代表として評価した。
+- pass 理由: 旧候補より具体的に、200件超の資料を基にした三分類、各分類の設計要素、feedback 不一致の帰結まで抽出できる。操作系 prototype と playtest の診断軸へ直接適用でき、CoopEval 水準の概要と限界分析を構成できる。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
