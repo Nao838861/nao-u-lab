@@ -42,7 +42,17 @@ group_handoff_audit:
 - duplicate preflight: posted-source / closed canonical / open duplicate group を再生成後、candidate の正しい title / URL で `continue` を確認。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260802_showgunners_design_pivot_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785610824818329
+    char_count: 4483
+skipped: []
+```
+
+- 最終判定: 投稿。原文照合で、既存 asset を保持する設定 pivot、encounter ごとの premise、cover の affordance、enemy turn の時間 budget、tool が設計空間を狭める危険、peak experience からの逆算を確認した。
+- 投稿前レビュー: 4,483字、必須項目順・禁止表現・末尾 URL・UTF-8 を検証済み。duplicate preflight は `continue`、Slack 投稿後の本文 verification は `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
