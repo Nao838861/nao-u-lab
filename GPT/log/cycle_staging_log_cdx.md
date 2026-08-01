@@ -62,7 +62,36 @@ skipped: []
 - 投稿後に `conversations.history` で ts `1785603364.132359` を取得し、`■ 概要` 始まり、`■ URL` 末尾、15 blocks、置換文字 0 を確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785595542-ffb88826f1
+    source_ts: "1785595542.402169"
+    title: "MemSecBench — Write・Execute・Forget を分岐して測る長期記憶安全性 benchmark"
+    reason: "最新の未レビュー score 10 atom で、memory・harness・agent・operation・evaluation の5優先タグを持つ。memory lifecycle の各段階を分ける知見が既存 control と異なる次回行動を作れるか確認した。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  change:
+    summary: "既存の WhisperBench metric と poisoning／stage／authority／forget controls が同じ判断経路をほぼ覆い、隔離 synthetic case・before/after snapshot・後続行動 artifact がないため、reviewed state と reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 合計は14だが `risk_control=1` で必須閾値を満たさない。MemSecBench 固有の Execute／Forget 分岐と F1/F2 選択的修復は、比較可能な隔離 snapshot を用意できる時の再検討材料として atom に残し、今サイクルでは operational active にしない。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
