@@ -87,7 +87,70 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "MEMORY.md の index 参照 87 ID を atoms/index.jsonl と照合し、broken link 0 件を確認した。"
+  - "atoms.jsonl / per-atom md / atoms/index.jsonl の 2,818 件 mirror を監査し、欠落・parse error・content conflict は 0 件だった。normalized content の raw 重複 40 group は既存 fold で表示上 3 group に縮約されていることを確認した。"
+  - "shared-reads の canonical / mixed / open-group / stale-triage / group-action sidecar を再生成した。canonical 74 group、mixed 47 group、open duplicate 54 group、stale-triage 0 行、group-action 0 行。"
+  - "Slack directives 23 行と broadcasts 21 行を監査し、pending 0 件のため status 更新は行わなかった。"
+  - "memory/raw/ の 30 日超 226 ファイルを確認した。一次資料・投稿原稿・評価 fixture の provenance を mtime だけで切らないため、この cycle では移動せず archive action は 0 件とした。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+encoding_audit:
+  source_file_status: "memory/MEMORY.md を UTF-8 明示読みし、記憶 / ゲーム設計 / 敵パターン は取得、評価軸の literal は index 本文に不在だった。UTF-8 decode error や日本語全般の欠損はなく、memory_recall の評価軸 query は 3 hit したため source file の破損ではない。"
+  display_or_tooling_status: "評価軸の MEMORY.md literal probe は false だが、recall 経路は正常。mojibake として扱わない。"
+atom_audit:
+  atoms_jsonl: 2818
+  per_file_md: 2818
+  index_jsonl: 2818
+  missing_or_conflicting_mirror_rows: 0
+  raw_normalized_content_duplicate_groups: 40
+  recall_visible_normalized_content_duplicate_groups: 3
+  canonical_overlay_duplicate_groups: 45
+candidate_lifecycle:
+  total_files: 1203
+  counts:
+    posted: 552
+    ready_to_post: 9
+    postponed: 239
+    failed: 392
+    needs_review: 5
+    missing_current_status: 6
+  skipped_without_phase2_or_phase3_evidence: 22
+  missing_stale_after: 9
+  overdue_open_total: 1
+  overdue_suppression_evidence: "JAMEL all-open duplicate group gha-e6d4d4b5a37a0808 は retry_after 2026-08-20T13:19:04+09:00 まで deferred。live group lease により stale triage へ再投入しなかった。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 54
+  mixed_group_count: 47
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- 問題抽出: recall-visible の内容重複は既存 fold、duplicate candidate は既存 group lease、raw 原文は provenance 保持契約でそれぞれ扱えている。次のゲーム制作への導線を新たに塞ぐ具体的な検索・階層・接続・時系列の破綻は観測しなかった。
+- Phase 4b gate: `needs_design: false`。Phase 4c も起動しない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
