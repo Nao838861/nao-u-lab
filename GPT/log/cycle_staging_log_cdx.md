@@ -90,7 +90,52 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、validate_memory_index.py で index entry と per-file atom index の整合を確認した（broken link / unknown atom id / duplicate id は 0）。代表語は 記憶・ゲーム設計・敵パターンを取得し、評価軸の完全一致は本文になかったが、評価・軸を含む行と日本語本文は正常に取得できた。"
+  - "memory/atoms.jsonl 2816件を memory_health.py と topology_audit.py で監査した。atoms.jsonl / per-file md / index.jsonl は各2816件で parse error・content conflict・mirror欠落 0。raw normalized-content duplicate 40群80行は既存 canonical overlay で fold 済み、effective display unresolved group は 0。"
+  - "memory/raw/ の30日超無更新を棚卸しした（226 files / 66,759,988 bytes: web_research 203、headless_eval 16、slack_api 4、slack_archive 1、game_eval 1、sync_state 1）。原文 provenance の正本であり recall 対象外なので、このcycleでは移動せず archive candidate inventory として記録した。"
+  - "shared-reads candidate lifecycle 1200件を dry-run 監査した（posted 549、ready_to_post 9、postponed 239、failed 392、needs_review 3、skipped_unreviewed 8）。current-state conflict による変更は 0。"
+  - "open duplicate group / stale triage / group action sidecar を再生成した。open group 54（mixed 47 / all_open 7）、stale triage 0、actionable group 0。期限到来 open candidate 1件は JAMEL group の retry_after=2026-08-20T13:19:04+09:00 と一致する live deferred lease により抑止された。"
+  - "group handoff（budget 1）と candidate handoff（limit 5）を冪等 enqueue したが選定 0。両 inbox は pending 0、audit error 0。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0件で、handled へ変更すべき行はなかった。"
+  - "shared-reads probe lifecycle を validate し、due-only limit 1 を確認した。期限到来 lease は 0件のため receipt 更新なし。"
+issues:
+  - id: ISS-ENC-001
+    description: "active atom sr-1776127289-4d9239b255 の『AIエージェント』部分に置換文字が2文字残り、完全一致検索の語形が欠けている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl:492 (同一 source_ts 1776127289.990919)"
+    source_file_status: "UTF-8明示読みで per-file atom と raw Slack archive の双方が literal『AIエ��ジェント』。表示経路ではなく保存済み原文側の単発破損。memory_health のもう1件 gr-1777083728-44d444ab7a は原文中の意図的な『???』による false positive で、日本語破損なし。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "『AIエージェント』完全一致でこの1件を取りこぼす可能性がある。ただし memory/agent tags、URL、本文の他語から到達でき、現行 recall smoke も通るため影響は限定的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 54
+  mixed_group_count: 47
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
