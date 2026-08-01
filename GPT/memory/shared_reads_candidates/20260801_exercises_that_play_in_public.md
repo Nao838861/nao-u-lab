@@ -4,6 +4,21 @@ url: "https://gdcvault.com/play/1035829/Exercises-that-Play-in-Public"
 collected_at: "2026-08-01T12:03:04.2610321+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, collaboration, education, modular-design, game-jam]
+evaluated_at: "2026-08-01T12:09:05.2884782+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-01T12:09:05.2884782+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-01T12:09:05.2884782+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-31"
+supersedes: []
+gate_reason: >-
+  問題設定、module 化、技能差の受容、短期統合、public-facing な完成物という着想は抽出でき、
+  小規模ゲーム制作にも具体的に適用できる。一方、現状は講演紹介の要約に留まり、実施手順、
+  公開後の観察、評価の中身と結論を約4000字の概要として裏付ける一次情報が不足している。
 ---
 
 ## raw_excerpt
