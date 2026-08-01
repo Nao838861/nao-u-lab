@@ -8,6 +8,11 @@
 - pending inbox: `slack_directives.jsonl` 0件 / `slack_broadcasts.jsonl` 0件。
 - duplicate preflight: `continue`。posted-source / closed canonical / open duplicate group に一致なし。
 
+- `memory/shared_reads_candidates/20260801_invinode_annoyance_to_application.md` — Ren'Py 制作中の flow 可視化の不便から個人用 editor を作り、他作品での import と友人の試用を経て製品・共同開発へ変えた postmortem。
+- inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
+- duplicate preflight: 上記 InViNode candidate は `continue`。posted-source / closed canonical / open duplicate group に一致なし。
+- preflight skip: `From LLM-Driven Trading Card Generation to Procedural Relatedness: A Pokémon Case Study` は既投稿 work 一致（permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778870429034319）のため candidate を作成せず。
+
 ## Phase 2: 分析
 ```yaml
 evaluated_at: "2026-08-01T19:19:19+09:00"
