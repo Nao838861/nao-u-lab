@@ -8,6 +8,9 @@
 - ローカルSlack取得分: 直前サイクル後の新規外部URLなし。
 - `memory/shared_reads_candidates/20260801_designing_game_feel_survey.md` — game feel の設計要素を physicality / amplification / support と、対応する tuning / juicing / streamlining に分類した200件超の資料に基づく survey。
 - duplicate preflight skip: `Dispatch developer AdHoc says don't confuse your plot for narrative`、`Analyzing Mouse: P.I. For Hire's audacious worldbuilding - Narrative Notebook #4`、`Synergizing Code Coverage and Gameplay Intent` は posted-source と同一workのため新規ファイルなし。根拠 permalink は `log/shared_reads_candidate_preflight.jsonl` に記録。
+- 実行: 2026-08-01T12:03:04+09:00 / pending directives: 0 / pending broadcasts: 0
+- `memory/shared_reads_candidates/20260801_exercises_that_play_in_public.md` — 技能差のある参加者の成果を modular な Pong variation として束ね、短期間で一般公開できる共同ゲームへ統合する GDC 2026 講演。
+- 既存 raw / atom / Slack / sidecar を照合。AutoBG、RevengeBench、EAST、Play2Code、直近 Game Developer / 80 Level 記事は既投稿 work と確認し、新規保存しなかった。
 
 ## Phase 2: 分析
 
