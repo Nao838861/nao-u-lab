@@ -9,7 +9,37 @@
 - 既存 `web_research` / recent atoms確認: AI Gamestore、LieCraft、GameDevBench、GameCraft-Bench、Orak、GDC 2026 ultra-small-team playtesting、CBT serious-game framework、Beyond Personas は既存candidateまたは投稿済みと照合。Showgunners 記事は sidecar再生成後の duplicate preflight で `continue`。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260802_showgunners_design_pivot_postmortem.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
+
+- 判定根拠: 問題設定（社会状況を受けた警察ゲームからの転換）、着想（既存 asset を保持できる残酷な TV show）、手法（encounter ごとの premise、cover 可読性、待ち時間管理、peak からの逆算）、制作上の trade-off（tool の過不足）を記事固有の流れで抽出できる。
+- ゲーム制作への適用: 小規模 prototype の pivot、stage 差別化、視認性・テンポ検査、tool 投資判断へ直接落とせる。定量的な playtest 比較がない限界は明示し、個別数値を一般化しない。
+- duplicate preflight: posted-source / closed canonical / open duplicate group を再生成後、candidate の正しい title / URL で `continue` を確認。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
