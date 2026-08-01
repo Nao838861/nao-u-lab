@@ -86,7 +86,77 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みと validate_memory_index.py で監査。per-file atom index との broken entry / unknown atom id / duplicate id は 0、U+FFFD は 0。代表語は 記憶 / ゲーム設計 / 敵パターン を取得し、評価軸の完全一致は現行本文になかったが日本語 source の破損とは判定しなかった。"
+  - "memory/atoms.jsonl 2,817件を memory_health.py / topology_audit.py で監査。atoms.jsonl / per-file md / index.jsonl は各2,817件で parse / index / mirror content conflict 0。raw normalized-content duplicate 40群80行は既存 canonical overlay で fold 済み、effective display unresolved group は 0。"
+  - "memory/raw/ の mtime 30日超を棚卸し: 226 files / 66,759,988 bytes（web_research 203、headless_eval 16、slack_api 4、slack_archive 1、game_eval 1、sync_state 1）。原文 provenance / 再現入力を置く既存 archival layer なので、mtime だけでは移動せず archive 0件。"
+  - "Git 管理済みで開始時 clean だった candidate 2件（20260726_reasoning_diversity_collapse_llm_game_play.md / 20260726_savestate_player_reflection_method.md）へ既存 backfill 契約の needs_review lifecycle と stale_after=2026-08-25 を補完した。"
+  - "candidate lifecycle 1,202件を監査。current counts は posted 551 / ready_to_post 9 / postponed 239 / failed 392 / needs_review 5 / missing current status 6。terminal canonical 74 groups、mixed 47 groups、open duplicate 54 groups（mixed 47 / all_open 7）、stale triage 0 rows、group action 0 rows。"
+  - "group handoff（budget 1）を確定後、stale triage を再生成し、candidate handoff（limit 5）を冪等 enqueue。選定はいずれも0、両 inbox pending 0、audit error 0。"
+  - "Slack inbox lifecycle を監査。slack_directives.jsonl / slack_broadcasts.jsonl は pending 0件で、handled 更新対象なし。"
+  - "shared-reads probe lifecycle を validate し、due-only limit 1 を確認。期限到来 lease は0件のため receipt 更新なし。"
+issues:
+  - id: ISS-CANDIDATE-STATUS-GAP
+    description: "candidate root 1,202件中6件に lifecycle の status がなく、通常 audit / stale triage では現在状態を持つ候補として扱えない。"
+    severity: medium
+    evidence: "tools/backfill_shared_reads_candidate_status.py --include-unreviewed --missing-status-only --today 2026-08-02 => changed 6。memory/shared_reads_candidates/20260721_big_lizard_ai_copilot_postmortem.md、20260731_arbigraph_context_management_task_graphs.md、20260731_icae_bench_interactive_project_builders.md、20260731_workbuddy_contamination_resistant_tasks.md、20260801_pegote_dominant_strategy_rework.md、20260801_wastoid_playtest_campaign_overview.md。6件とも開始時点から untracked の既存差分なので、この phase では書き換えなかった。"
+    source_file_status: "6 candidate の UTF-8 本文/frontmatter は読めるが、status / candidate_status / stale_after の current lifecycle fields がない。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "status のない候補は stale triage と Phase 2 handoff の現在状態集合から外れ、ゲーム制作へ転用できる未評価資料が再評価されない。"
+  - id: ISS-ATOM-UFFFD-001
+    description: "active atom sr-1776127289-4d9239b255 の『AIエージェント』部分に置換文字が残り、完全一致検索の語形が欠けている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md title/trigger/excerpt（U+FFFD 8文字）、memory/atoms.jsonl id=sr-1776127289-4d9239b255、memory/raw/slack_archive/shared-reads.jsonl source_ts=1776127289.990919。"
+    source_file_status: "UTF-8 decode は成功するが、raw Slack / atoms.jsonl / per-file atom に literal『AIエ��ジェント』が実在する source corruption。"
+    display_or_tooling_status: "none; shell または staging 表示だけの mojibake ではない。"
+    why_blocks_game_memory: "『AIエージェント』完全一致でこの1件を取りこぼす可能性がある。ただし memory / agent tags と source ID からは到達できるため影響は限定的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  reason: "残る2件は既存 backfill または限定的 source repair で扱える bounded cleanup であり、新しい記憶構造の設計を要しない。"
+candidate_lifecycle:
+  total_files: 1202
+  counts:
+    posted: 551
+    ready_to_post: 9
+    postponed: 239
+    failed: 392
+    needs_review: 5
+    missing_current_status: 6
+  overdue_open_total: 1
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 54
+  mixed_group_count: 47
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  suppression_evidence: "overdue candidate memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md は同一 JAMEL all-open group の deferred lease gha-e6d4d4b5a37a0808（retry_after 2026-08-20T13:19:04+09:00、membership fingerprint 一致）により再投入を抑止。"
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- due-only probe は0件だったため receipt は作成していない。ledger validate は rows 5 / errors 0。
+- title canonical index 74行、mixed duplicate queue 47行は `--check` 合格。unindexed duplicate は open status を含む group で、terminal-only canonical index へ自動登録しなかった。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
