@@ -42,7 +42,18 @@ group_handoff_audit:
 - pass 理由: 旧候補より具体的に、200件超の資料を基にした三分類、各分類の設計要素、feedback 不一致の帰結まで抽出できる。操作系 prototype と playtest の診断軸へ直接適用でき、CoopEval 水準の概要と限界分析を構成できる。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260801_designing_game_feel_survey.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785546082307349
+    char_count: 4372
+skipped: []
+```
+
+- 最終判定: 投稿。原論文26ページを確認し、三領域の設計目的、具体技法、論文内で参照された評価、survey 自体の非実験性と再現手順不足、2D・視覚／触覚寄りの限界まで本文へ反映した。
+- 投稿前レビュー: 4,371字（ファイル本文の trim 後。Slack 保存値は末尾改行を含む4,372字）、必須見出し順、`■ 概要` 始まり、`■ URL` 末尾、URL 散在なし、禁止表現なし。`tools/shared_reads_policy.py` は `ok`。
+- Slack 検証: `tools/post_slack_message_file.py` の読み戻し検査 `ok`。単一 `chat.postMessage`、thread なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
