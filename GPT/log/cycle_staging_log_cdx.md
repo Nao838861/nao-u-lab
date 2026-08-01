@@ -58,7 +58,22 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+reviewed_at: "2026-08-01T19:26:54.4139372+09:00"
+posted:
+  - candidate: memory/shared_reads_candidates/20260801_dimensional_double_shift_hand_tracking.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785579999938269"
+    char_count: 4475
+skipped: []
+final_decision: "部分採用。連続 signal による intent 推定、代替操作、誤差回復、利用 analytics は採用し、VR 固有 threshold の直接移植はしない。"
+quality_review:
+  format: pass
+  forbidden_phrases: pass
+  source_specificity: pass
+  evidence_limit_disclosed: true
+  single_chat_post_message: true
+  thread_reply: false
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

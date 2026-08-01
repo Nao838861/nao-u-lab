@@ -7,14 +7,19 @@ genre_tags: [game-design, vr, interaction-design, accessibility, playtesting, in
 evaluated_at: "2026-08-01T19:19:19+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-01T19:19:19+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-01T19:19:19+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-01T19:26:54.4139372+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785579999938269"
+next_action: none
 stale_after: "2026-08-31"
 supersedes: []
+posted:
+  ts: "1785579999.938269"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785579999938269"
+  char_count: 4475
+  posted_at: "2026-08-01T19:26:54.4139372+09:00"
 gate_reason: >-
   実手との寸法差、platform gesture との衝突、binary grab、触覚欠如、tracking loss という複数の制約を、実装変更と playtest / analytics の結果まで含めて追える。
   VR に限らず、曖昧な入力を連続値・代替操作・自動回復で mechanic と accessibility の両面から設計する具体例として、CoopEval 水準の概要と独立した適用分析を構成できる。
