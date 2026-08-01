@@ -92,7 +92,53 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+audited_at: "2026-08-01T12:27:00+09:00"
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。代表語4件を取得でき、索引内の atom-like 参照82件は全件 atoms.jsonl に存在（broken 0）。"
+  - "atoms 2813件を監査。atoms.jsonl / per-file .md / index.jsonl は各2813件で欠落・parse error・content conflict 0。duplicate cluster 45群は canonical overlay と lifecycle/content fold で解決済み。"
+  - "memory/raw/ の30日超未更新226件（66,759,988 bytes）を分類。203件は web_research、16件は headless_eval、4件は slack_api、残りは既存 archive・game_eval・state。いずれも一次資料・評価証跡・状態ファイルで、移動対象は0件。"
+  - "shared-reads candidate 1192件を lifecycle dry audit。現在状態の補正対象0件、posted 546 / ready_to_post 9 / postponed 237 / failed 391 / needs_review 3。"
+  - "open duplicate group / stale triage / group action sidecar を規定順で再生成。54 group（mixed 47 / all_open 7）、stale triage 0、actionable group 0。"
+  - "Slack inbox を監査。directives 23行・broadcasts 21行はいずれも pending 0で、handled 更新対象なし。"
+  - "probe lifecycle を検証。期限到来 lease は0件のため receipt 更新なし。"
+issues:
+  - id: ISS-001
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』部分に U+FFFD が2文字残り、raw archive から per-file atom / index まで同じ局所破損が伝播している。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8 明示読みで raw source 自体に『AIエ��ジェント』を確認。memory/MEMORY.md の代表語 probe は正常で、全体破損ではない。"
+    display_or_tooling_status: "none。PowerShell / rg / per-file 表示の全経路で同じ U+FFFD を再現。gr-1777083728-44d444ab7a の『???』は原文どおりで heuristic false positive。"
+    why_blocks_game_memory: "『AIエージェント』の完全一致検索を1件だけ弱めるが、他の語とタグでは到達でき、次のゲーム制作全体を塞ぐ規模ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  overdue_suppression_reason: "JAMEL 同一work group gha-e6d4d4b5a37a0808 が membership fingerprint 一致の deferred lease（retry_after 2026-08-20T13:19:04+09:00）中。"
+  open_duplicate_group_count: 54
+  mixed_group_count: 47
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
