@@ -44,7 +44,17 @@ group_handoff_audit:
 - 品質判定: Hozy は問題設定・触覚的 feedback・環境 R&D・player 反応による変更・制作上の棄却判断が揃うため pass。Dungeon は具体的な検証 evidence の補強まで postpone。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260802_hozy_curated_tactile_sandbox.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785626062095909
+    char_count: 4388
+skipped: []
+```
+
+- 最終判定: 投稿。元記事で mop・家具の反応設計、beauty points の撤回、player の所有感と衝突した environmental story の修正、窓外環境の制作棄却、hidden content 接触率30〜40%を再確認した。比較実験ではない限界を明記し、低緊張度を多層 feedback・予測可能な配置制約・ownership 保護として分析した。
+- 投稿前レビュー: 4,388字。必須6項目・順序・末尾URL・禁止表現・単一 candidate／単一 `chat.postMessage`・duplicate preflight `continue` を確認。Slack保存本文の文字化け検証も `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
