@@ -4,6 +4,26 @@ url: "https://80.lv/articles/interview-the-past-and-future-of-sonic-according-to
 collected_at: "2026-08-01T15:01:33.7905372+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, mechanics, co-op, puzzle, franchise, collaboration]
+evaluated_at: "2026-08-01T15:10:58.4148892+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-01T15:10:58.4148892+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-01T15:10:58.4148892+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-31"
+supersedes: []
+gate_reason: >-
+  Sonic の固有能力をそのまま移植せず、PICO PARK の協力パズルで機能する行動へ翻訳する判断が具体的である。
+  外見・挙動・受け入れ先の core loop という複数の制約から、長寿 IP の同一性を保つプロトタイプ評価へ適用でき、約4000字の概要と分析を支えられる。
+suggested_post_outline:
+  overview_angle: "キャラクターの見た目を借りるコラボから、移植先の協力行動へ能力を翻訳する設計への転換"
+  analysis_axis: "Sonic 側の識別可能な核と PICO PARK 側の core loop を同時に満たす二重制約として、外見・能力・プレイヤー間相互作用を分けて評価する"
+  application_target: "既存キャラクターや既存メカニクスを別ジャンルの試作へ移す際の、能力翻訳表と短時間プレイテストの評価軸"
+  pros_cons: "利点は IP の固有性と受け入れ先の遊びを両立する判断基準が得られること。弱点は開発者インタビュー中心で、個別能力の数値調整やプレイテスト結果が詳述されないこと"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
