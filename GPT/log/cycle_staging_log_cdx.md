@@ -89,7 +89,63 @@ self_feedback:
 - lease: enqueue なし。後続 Phase 4a は memory cleanup で、比較可能な playable room／cue A・B・C build／human playtest がなく、ledger には別 probe の pending lease が1件ある。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。atom 参照 50 件は全件存在し、Markdown link は 0 件のため broken link は 0 件。代表語は 記憶 / ゲーム設計 / 敵パターン を取得でき、評価軸は本文に存在しない語であって文字化けではない。"
+  - "memory/atoms.jsonl 2812 行を memory_health で監査。atom id 重複・source_ts 重複は 0 件。normalized-content 重複 40 群 80 行は既存 lifecycle/content fold、canonical overlay 45 群で表示時に吸収済み。"
+  - "memory/raw/ の mtime 30 日超ファイル 226 件を確認。raw は provenance の正本で、現行 archive ingest は 2026-08-01T09:51:17 に正常更新されているため、この cycle では移動 0 件。"
+  - "shared-reads candidate 1191 件を dry-run audit。明示 status は posted 546 / ready_to_post 9 / postponed 236 / failed 391 / needs_review 3、未評価で status 欠損は 6 件。status と candidate_status の不一致は 0 件。"
+  - "terminal title canonical index 74 群、mixed duplicate queue 47 群、open duplicate group queue 54 群を再生成。期限到来 open candidate は 1 件だが、同一 JAMEL group に 2026-08-20 までの live deferred lease があるため stale triage / group action / candidate handoff は 0 件。"
+  - "Slack inbox は directives 0 件 / broadcasts 0 件で、handled 更新対象なし。group handoff inbox と candidate handoff inbox はともに pending 0 件、audit error 0 件。"
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の title / trigger / excerpt に U+FFFD が残り、『AIエージェント』が『AIエ��ジェント』になっている。raw Slack archive から既に破損しており、per-file atom と index に伝播している。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/index.jsonl:317"
+    source_file_status: "UTF-8 明示読みでも U+FFFD を確認したため source data 自体の破損。memory_health が併記した gr-1777083728-44d444ab7a は原文中の literal '???' による false positive で、文字化けではない。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "『AIエージェント』の完全一致検索と title recall をこの 1 atom で弱めるが、関連タグとリンクは保持されており影響は局所的。"
+  - id: ISS-LIFECYCLE-001
+    description: "top-level status を持たない unreviewed candidate が 6 件あり、現行5状態の lifecycle 内訳に入らない。"
+    severity: low
+    evidence: "memory/shared_reads_candidates/20260721_big_lizard_ai_copilot_postmortem.md; memory/shared_reads_candidates/20260726_reasoning_diversity_collapse_llm_game_play.md; memory/shared_reads_candidates/20260726_savestate_player_reflection_method.md; memory/shared_reads_candidates/20260731_arbigraph_context_management_task_graphs.md; memory/shared_reads_candidates/20260731_icae_bench_interactive_project_builders.md; memory/shared_reads_candidates/20260731_workbuddy_contamination_resistant_tasks.md"
+    source_file_status: "UTF-8 正常。frontmatter は存在するが status / candidate_status が欠損。--include-unreviewed dry-run では needs_review と推定される。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "status を前提にする stale lifecycle と再評価 queue から漏れる可能性がある。ただし既存 backfill tool で機械的に補完可能で、新設計は不要。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 54
+  mixed_group_count: 47
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- probe receipt: due lease 0 件。`shared_reads_probe_lifecycle.py validate` は 5 行、error 0 件。consumer artifact の判断対象がないため receipt 追加なし。
+- stale 抑止根拠: `memory/shared_reads_group_handoff_inbox.jsonl` の `gha-e6d4d4b5a37a0808` は JAMEL 同一 work を `defer`、`retry_after: 2026-08-20T13:19:04+09:00` として保持し、membership fingerprint も現状態と一致する。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
