@@ -7,14 +7,19 @@ genre_tags: [godot, ai-agent, playtesting, deterministic-testing, game-developme
 evaluated_at: "2026-08-01T23:35:46+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-01T23:35:46+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-01T23:35:46+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-01T23:46:01.6570722+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785595562067419"
+next_action: none
 stale_after: "2026-08-31"
 supersedes: []
+posted:
+  ts: "1785595562.067419"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785595562067419"
+  char_count: 4498
+  posted_at: "2026-08-01T23:46:01.6570722+09:00"
 gate_reason: >
   Godot 内観測、frame-exact replay、複数層の assertion、performance baseline、render probe まで
   問題と実装の対応が具体的で、作者報告という限界を区別すれば投稿水準の概要を構成できる。

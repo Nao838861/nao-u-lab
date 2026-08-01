@@ -7,14 +7,19 @@ genre_tags: [ai-agent, memory, security, evaluation, game-development-workflow]
 evaluated_at: "2026-08-01T23:35:46+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-01T23:35:46+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-01T23:35:46+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-01T23:46:01.6570722+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785595542402169"
+next_action: none
 stale_after: "2026-08-31"
 supersedes: []
+posted:
+  ts: "1785595542.402169"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785595542402169"
+  char_count: 3696
+  posted_at: "2026-08-01T23:46:01.6570722+09:00"
 gate_reason: >
   記憶汚染の問題設定、Write--Execute--Forget の7 checkpoint、310 case・24構成の比較、
   攻撃成立率と selective repair の結果まで抽出でき、CoopEval 水準の概要を組める。

@@ -44,7 +44,20 @@ group_handoff_audit:
 - Beckett: frame-exact replay と state/UI/performance/render の層別診断が制作中の regression test に直結するため pass。独立評価ではなく作者報告である限界を Phase 3 で明示する。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260801_memsecbench_memory_poisoning_lifecycle.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785595542402169
+    char_count: 3696
+  - candidate: memory/shared_reads_candidates/20260801_beckett_godot_deterministic_ai_playtests.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785595562067419
+    char_count: 4498
+skipped: []
+```
+
+- final review: 2件とも必須見出し6項目の順序、`■ 概要` 開始、`■ URL` 末尾、禁止表現なしを機械検査した。
+- MemSecBench: 7 checkpoint、4指標の分母差、単回記述比較、judge/backend 条件の限界を明記し、記憶系の小型 lifecycle probe への部分採用とした。
+- Beckett: Lite/Full の境界、frame-exact replay の決定性範囲、作者報告中心の限界を明記し、同一環境10回再生の小型 regression suite への部分採用とした。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
