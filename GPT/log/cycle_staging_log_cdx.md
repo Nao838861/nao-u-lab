@@ -154,4 +154,15 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785546881398909
+  char_count: 1985
+  verification: ok
+draft: drafts/phase5_log_diary_20260801_0943_cdx.md
+```
+
+- 文字数: 本文 trim 後 1,984 字、投稿スクリプト計測 1,985 字（末尾改行を含む）。目標範囲 1,700〜2,300 字内。
+- Slack 検証: `tools/post_slack_message_file.py` の API 読み戻し検査 `ok`。`#log` への単一フラット投稿で、thread なし。置換文字・`?` 化は検出されなかった。
