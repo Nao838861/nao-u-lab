@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-02T06:14:01+09:00",
+  "updated_at": "2026-08-02T08:20:04+09:00",
   "reviewed_source_ts": [
+    "1785595562.067419",
     "1785610824.818329",
     "1785603364.132359",
     "1785595542.402169",
@@ -581,6 +582,47 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-02T08:20:04+09:00",
+      "selected": {
+        "id": "sr-1785595562-e8f3c4f61b",
+        "source_ts": "1785595562.067419",
+        "title": "Beckett — Godot editor 内の replay・layered assertion・read-back MCP",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新 atom で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。frame 付き input replay、state／UI／performance／render の層別 assertion、tool 成功と実状態変化を分ける read-back が、次の engine-backed playable diff に既存 control と異なる判断差を作れるか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は physics frame 付き replay、state／UI／performance／render の四層 assertion、UI blocker path、render visibility chain、mutation の before／after read-back、同一 machine 10回 replay という具体的な適用案を持つため actionability=3 とした。一方、現在の staging に Godot project、playable diff、replay suite、before／after engine trace はなく、今サイクルへの直接適用はないため relevance=2 に留める。根拠は主に製作者自身の forum／repository／devlog と単一の reversed-index postmortem、作者計測であり、複数 game、他 tool 比較、flaky rate、CPU overhead、長時間安定性、paid Full と Lite の境界を独立検証していないため evidence=2 とした。既存の probe-20260709-gameenginebench-runtime-integration-gate は launch と runtime integration を、probe-20260622-d2e-synchronized-playtest-stream は frame／input／state／outcome の同期 trace を、probe-20260610-structural-semantic-verifier-boundary は構造と player-facing validity の分離を、probe-20260708-harnessfix-failure-anchor-repair-scope は success status と observed effect の差および failure layer をすでに扱う。さらに 2026-07-16 の Godot-MCP／Godot Sight review も同型 control を reject 済みで、本 atom 固有の UI／render introspection を別 control にしても対象 artifact がない現状では次回判断を変えないため non_redundancy=1 とした。Phase 4a には別 probe の pending lease が1件あり、Godot 専用かつ一部有料の harness を対象なしで operational active にすると確認負荷と tool 依存が先行するため risk_control=1。state-only review で閉じる。",
+      "existing_controls": [
+        "probe-20260709-gameenginebench-runtime-integration-gate",
+        "probe-20260622-d2e-synchronized-playtest-stream",
+        "probe-20260610-structural-semantic-verifier-boundary",
+        "probe-20260708-harnessfix-failure-anchor-repair-scope",
+        "review-20260716-godot-mcp-godot-sight"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、作者報告中心という evidence 限界、既存の runtime-integration／synchronized-stream／verifier-boundary／failure-anchor controls および既レビュー Godot-MCP との重複、比較可能な Godot artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-02T06:14:01+09:00",
       "selected": {

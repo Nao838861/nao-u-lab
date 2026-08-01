@@ -57,7 +57,37 @@ skipped: []
 - 投稿前レビュー: 4,388字。必須6項目・順序・末尾URL・禁止表現・単一 candidate／単一 `chat.postMessage`・duplicate preflight `continue` を確認。Slack保存本文の文字化け検証も `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785595562-e8f3c4f61b
+    source_ts: "1785595562.067419"
+    title: "Beckett — Godot editor 内の replay・layered assertion・read-back MCP"
+    reason: "未レビューの score 12 atom のうち最新で、frame 付き input replay、state／UI／performance／render の層別 assertion、mutation の read-back が既存 control と異なる次回判断を作れるか確認するため選定した。Nao_u の明示評価はない。"
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録した。現在の staging に Godot artifact がなく、既存の runtime integration、同期 playtest stream、structural／semantic verifier、failure anchor と重複するため、probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採否理由: Beckett は操作再生と層別観測を具体化するが、根拠は製作者自身の単一事例・作者計測が中心で、複数 game、他 tool 比較、flaky rate、overhead は未検証。2026-07-16 の Godot-MCP／Godot Sight review と既存4 probe が同じ検証境界をすでに扱い、Phase 4a には別の pending lease も1件あるため、対象 artifact なしの operational control 追加は判断差より確認負荷が大きい。
+- ledger: enqueue なし。`memory/shared_reads_probe_lifecycle.jsonl` は変更していない。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
