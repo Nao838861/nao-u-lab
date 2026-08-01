@@ -49,7 +49,17 @@ duplicate_preflight:
 - Phase 3 では、video essay 由来の知識問題と実プレイ体験評価の差を限界として明記し、game arts subset の詳細を一次資料で再確認する。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260802_musebench_creative_intent_game_arts.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785603364132359
+    char_count: 4488
+skipped: []
+```
+
+- **posted — MuseBench**: 一次資料本文と game arts subset を再確認し、creative intent の測定設計、4段階の生成工程、expert review、28モデル評価、game arts 固有の弱点、適用限界まで含む 4,488 字の分析として 1 回の `chat.postMessage` で投稿した。
+- 投稿後に `conversations.history` で ts `1785603364.132359` を取得し、`■ 概要` 始まり、`■ URL` 末尾、15 blocks、置換文字 0 を確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
