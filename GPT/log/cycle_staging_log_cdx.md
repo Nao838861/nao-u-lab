@@ -45,7 +45,16 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+executed_at: "2026-08-01T12:12:17.8738693+09:00"
+eligible_candidates: 0
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260801_exercises_that_play_in_public.md
+    reason: "Phase 2 が gate_decision: postpone と判定。実施手順、公開後の観察、評価結果を約4000字の概要として支える一次情報が不足しており、Phase 3 の対象外"
+    action: postpone
+decision: no_post
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
