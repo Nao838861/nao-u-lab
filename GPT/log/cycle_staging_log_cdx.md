@@ -10,7 +10,36 @@
 - 重複 preflight: 3 sidecar を収集開始前と保存直前に再生成。`Lottery and Sprint Arcade: Enabling Player-Driven Game Editing with Generative AI` / `https://arxiv.org/abs/2607.10711` は `continue`（exit 0）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260802_lottery_sprint_arcade_play_driven_editing.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
+
+- 判定根拠: 問題設定、plan/action と validation/reset を含む実装、21人・105 trial・715 command の評価、結論と統計上の限界を一続きに説明できる。Log_cdx のプロトタイプでは、プレイ直後の感覚的指示を追跡可能な atomic patch と前後ログへ落とす調整ループに直接適用できる。
+- duplicate preflight: 3 sidecar を Phase 2 開始時に再生成・`--check` 済み。対象 title / URL は `continue`。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

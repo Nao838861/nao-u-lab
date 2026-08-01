@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2607.10711"
 collected_at: "2026-08-02T06:00:32+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, human-ai-co-creation, live-editing, player-experience, llm]
+evaluated_at: "2026-08-02T06:02:44+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-02T06:02:44+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-02T06:02:44+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-01"
+supersedes: []
+gate_reason: >-
+  play–edit–feedback cycle の問題設定から、音声を約100項目の安全な atomic patch へ変換する実装、
+  21人・105 trial・715 command の評価と統計上の限界まで抽出でき、CoopEval 水準の概要を構成できる。
+  感覚的なプレイ指示を検証可能な設定差分へ落とす設計は、Log_cdx のプロトタイプ調整へ具体的に適用できる。
+suggested_post_outline:
+  overview_angle: "完成ゲームの一括生成ではなく、遊ぶ→指示する→安全な差分を適用する→遊び直す反復編集系として解説する"
+  analysis_axis: "plan/action 分離、schema validation、reset による因果帰属と、知覚しやすい編集・深い gameplay 編集の役割差を評価する"
+  application_target: "Log_cdx のゲームプロトタイプで、プレイ直後の自然言語フィードバックを設定 path・変更理由・予想効果・atomic patch・前後ログへ変換する短周期調整に使う"
+  pros_cons: "非専門家でも安全に探索でき変更履歴を比較しやすい一方、単一ゲーム・短期試行であり enjoyment/usability との関連は信頼区間がゼロをまたぐ"
+  verdict_pre: "部分採用—構造化差分と reset/log は採用し、編集カテゴリと体験指標の相関は仮説として再検証する"
 ---
 
 ## raw_excerpt
