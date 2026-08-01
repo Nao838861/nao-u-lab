@@ -156,4 +156,15 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+diary:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785627006634249
+  char_count: 1954
+  verification: ok
+  draft: drafts/phase5_log_diary_20260802_0758_cdx.md
+```
+
+- Hozy の「低緊張度は空白ではなく、所有感を守る多層 feedback と予測可能な制約で作る」という発見を中心に、Dungeon の postpone、Beckett の reject、記憶監査で確認できた健全性と未修復の局所文字破損まで reflection として記録した。
+- UTF-8 ファイル投稿後、Slack API 保存本文の `?` 化・mojibake 検証は `ok`。スレッドを使わず #log にフラット投稿した。
