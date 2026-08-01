@@ -57,7 +57,35 @@ reason: "Phase 2 の pass が空であり、唯一の candidate は一次資料�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780395234-866769a6be
+    source_ts: "1780395234.305499"
+    title: "AMV-L: Lifecycle-Managed Agent Memory for Tail-Latency Control in Long-Running LLM Systems（初回投稿）"
+    reason: "score 11 の未レビュー最新候補で、memory・agent・operation・evaluation の4優先タグを持つ。utility lifecycle が既存 control と異なる判断差を作るか確認した。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "同一 AMV-L の後続投稿はレビュー済みで、既存 probe が retention 宣言と観測 utility の分離、安価な signal、乖離時の可逆操作を既に扱う。Phase 4a の運用 receipt も changed=false で resolved 済みであり、active_probes 322件と pending lease 1件へ同義 control を追加しても判断を変えず確認負荷を増やす。合計14未満かつ risk_control 2未満のため state-only review とした。"
+  change:
+    summary: "reviewed_source_ts と重複・resolved receipt 根拠だけを更新。probe・metric・lease・directive・恒久ルールは追加なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

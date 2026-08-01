@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-01T19:30:43+09:00",
+  "updated_at": "2026-08-01T21:43:45+09:00",
   "reviewed_source_ts": [
+    "1780395234.305499",
     "1780406202.191929",
     "1780406204.700939",
     "1779995805.066329",
@@ -16601,6 +16602,46 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、同一投稿・同一原典のレビュー済み atom および既存 feedback controls との重複、proxy 軸増殖、比較 artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-01T21:43:45+09:00",
+      "selected": {
+        "id": "sr-1780395234-866769a6be",
+        "source_ts": "1780395234.305499",
+        "title": "AMV-L: Lifecycle-Managed Agent Memory for Tail-Latency Control in Long-Running LLM Systems（初回投稿）",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす最新候補で、memory・agent・operation・evaluation の4優先タグを持つ。utility score、promotion／demotion／eviction、tier-aware retrieval が現在の memory cleanup に既存 control と異なる小さな判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。選択 atom は論文 abstract を一次確認し、TTL が寿命を制御しても request path の候補集合を制御しないこと、継続更新 utility、value-driven lifecycle、2秒超過率13.8%から0.007%への改善を記録しているため relevance=3、evidence=2 とした。utility 近似 proxy の read-only 表示や reversible lifecycle へ変換できるため actionability=2 だが、同じ AMV-L の後続投稿 sr-1780460352-2633af803d は既に review 済みで、probe-20260625-amvl-retention-utility-lifecycle が retention 宣言と観測 utility の分離、安価な既存 signal、乖離時の可逆操作をそのまま扱う。2026-07-21 の Phase 4a receipt でも同 probe による再判定は changed=false で resolved している。さらに probe-20260604-memory-discard-operation-gate も退役対象を名指しできない時の state-only 化を扱い、現在は別 probe の pending lease が1件ある。322件の active_probes に同義 control を追加しても次回判断を変えず、確認負荷だけを増やすため non_redundancy=0、risk_control=1 とした。",
+      "existing_controls": [
+        "sr-1780460352-2633af803d",
+        "probe-20260625-amvl-retention-utility-lifecycle",
+        "probe-20260604-memory-discard-operation-gate",
+        "memory/shared_reads_probe_lifecycle.jsonl#resolved-AMV-L-receipt"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、同一論文の後続 review・既存 AMV-L probe・changed=false の resolved receipt との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
