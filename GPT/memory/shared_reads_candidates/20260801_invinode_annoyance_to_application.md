@@ -4,6 +4,20 @@ url: "https://drawfleshgames.itch.io/invinode/devlog/1579245/from-annoyance-to-a
 collected_at: "2026-08-01T21:32:05+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-development, visual-novel, tooling, workflow, postmortem, renpy]
+evaluated_at: "2026-08-01T21:37:35.8269182+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-01T21:37:35.8269182+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-01T21:37:35.8269182+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-31"
+supersedes: []
+gate_reason: >-
+  個人の反復的不便から自用 tool、別作品 import、友人試用、共同開発、製品化へ進む経路と、tool 開発がゲーム本体を圧迫する逆転は具体的で、内製 editor の境界を考える参照価値がある。
+  ただし評価は単発の import 成功と友人の要望という事例記述に留まり、設計手法、比較条件、失敗の分析が薄い。CoopEval 水準の約4000字にすると一次資料を越えた補作が必要になるため投稿候補としては閉じる。
 ---
 
 ## raw_excerpt
