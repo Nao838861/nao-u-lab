@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-01T12:14:59+09:00",
+  "updated_at": "2026-08-01T15:20:02+09:00",
   "reviewed_source_ts": [
+    "1779995805.066329",
     "1785546082.307349",
     "1785538569.384449",
     "1780223981.841189",
@@ -573,6 +574,44 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-01T15:20:02+09:00",
+      "selected": {
+        "id": "sr-1779995805-bc71464db2",
+        "source_ts": "1779995805.066329",
+        "title": "Mazocarta — seeded procedural deckbuilder を検査可能な rules core にする",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たし、memory・harness・game-design・operation・evaluation の5優先タグを持つ。deterministic seed、browser／headless の shared rules core、save/load fixture、自動勝率を delta signal に限定する処方が、既存 control と異なる次回行動を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、browser play、native simulation、E2E、save/load、local multiplayer を同じ production rules core に接続し、1,000 deterministic seeds の single-player 36.1%／two-player 34.9% を最終的な面白さではなく repeatable delta signal として扱うため relevance・actionability・evidence は3とした。一方、同じ Mazocarta 記事は source_ts 1779979852.965569 の sr-1779979852-82635b32a8 として既に review 済みで、probe-20260603-rules-core-parity-regression が browser／headless の core parity、seed／fixture／input trace／save-load roundtrip、autoplay 指標と human／GUI evidence の境界を同じ三問で active_probes に保持している。今回の atom は URL、主要数値、適用、限界が既存 review と実質同一であり、別 probe を足しても次回判断を変えないため non_redundancy=0 とした。322件の active_probes へ同義 control を追加すると確認負荷だけを増やすので risk_control=1 とし、未レビュー source_ts を state-only で閉じる。",
+      "existing_controls": [
+        "sr-1779979852-82635b32a8",
+        "probe-20260603-rules-core-parity-regression"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、同一 Mazocarta 記事の既存 review／active probe との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-01T12:14:59+09:00",
       "selected": {

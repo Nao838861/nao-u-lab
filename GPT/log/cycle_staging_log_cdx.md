@@ -60,7 +60,34 @@ slack_posted: false
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779995805-bc71464db2
+    source_ts: "1779995805.066329"
+    title: "Mazocarta — seeded procedural deckbuilder を検査可能な rules core にする"
+    reason: "score 11 の未レビュー atom で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。deterministic seed、shared rules core、save/load fixture、自動勝率の delta signal 化が既存 control と異なる次回行動を作るか確認するため選んだ。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "同じ Mazocarta 記事は sr-1779979852-82635b32a8 として既に review 済みで、probe-20260603-rules-core-parity-regression が browser／headless の core parity、deterministic seed／fixture／input trace／save-load roundtrip、autoplay 指標と human／GUI evidence の境界を active_probes に保持している。今回の atom は URL、主要数値、適用、限界まで実質同一で、別 control は判断差を作らず確認負荷を増やす。合計13かつ risk_control 1 のため採用条件を満たさない。"
+  change:
+    summary: "reviewed_source_ts と重複による reject 理由だけを state に記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
