@@ -41,7 +41,15 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+eligible_from_phase2: 0
+posted: []
+skipped: []
+decision: no_eligible_candidate
+reason: "Phase 2 の pass が空。postpone 済み候補は Phase 3 の対象外のため、#shared-reads への投稿なし"
+slack_posted: false
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
