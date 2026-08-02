@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.28287"
 collected_at: "2026-08-02T16:47:22+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, agent-playtesting, world-model, rule-discovery, arc-agi-3]
+evaluated_at: "2026-08-02T16:51:31+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-02T16:51:31+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-02T16:51:31+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-01"
+supersedes: []
+gate_reason: >-
+  問題設定、実行可能 world model の構築・検査・修復、複数 orchestration 方針の比較、183 level と RHAE による評価、active abstraction という結論まで抽出できている。
+  自作ゲームの AI playtest でモデル精度と行動効率を分離し、モデルを作る／直す／使わず行動する判断を計測する具体的な適用へ落とせ、既投稿の ARC-AGI-3 紹介とも焦点が重ならない。
+suggested_post_outline:
+  overview_angle: "正確な world model を常時作る競争ではなく、限られた行動予算の中で抽象化へ投資する時機を選ぶ active abstraction として解説する"
+  analysis_axis: "モデル再現精度と goal discovery・action efficiency の非一致、および actor 主導の selective delegation が自動修復を上回る理由を比較する"
+  application_target: "Nao_u_BOT の未知ルール型ゲームに対する AI playtest で、仮説モデルの fidelity、理解までの操作数、修復コスト、direct action への切替を別々に記録する評価 harness"
+  pros_cons: "長所は探索・モデル化・計画の費用対効果を実測できること。短所は deterministic な小規模世界への形式化が強く、面白さ、game feel、確率的挙動を直接評価しないこと"
+  verdict_pre: "部分採用。総合的な面白さ判定ではなく、未知 mechanics の理解効率とモデル運用判断を測る probe として採用する"
 ---
 
 ## raw_excerpt

@@ -9,7 +9,40 @@
 - duplicate preflight: `continue`（canonical URL `https://arxiv.org/abs/2607.28287`）。sidecar 3 種は書込み直前に再生成済み。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260802_tycho_active_abstraction_world_models.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  decision: continue
+  canonical_url: "https://arxiv.org/abs/2607.28287"
+  sidecars_rebuilt_before_evaluation: true
+evaluation_summary: >-
+  Tycho は ARC-AGI-3 の紹介そのものではなく、world model の構築・修復・利用・迂回を行動予算に応じて選ぶ active abstraction を比較実験で示す。
+  手法の重要要素とゲーム制作への具体的適用が揃い、CoopEval 水準の概要へ展開できるため pass。
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
