@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-02T14:56:37+09:00",
+  "updated_at": "2026-08-02T17:04:22+09:00",
   "reviewed_source_ts": [
+    "1779993714.039019",
     "1780373599.795789",
     "1780314554.893779",
     "1785626062.095909",
@@ -585,6 +586,47 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-02T17:04:22+09:00",
+      "selected": {
+        "id": "sr-1779993714-ca1eb14ed7",
+        "source_ts": "1779993714.039019",
+        "title": "Nao_uが #nao-u で共有: RAGのコスト問題を1/15に削る「毎回検索しない」アーキテクチャ",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たし、Nao_u が共有したことを明記する atom で、memory・operation・evaluation の3優先タグを持つため選んだ。意味単位の想定質問 index と段階的 retrieval が、現在の recall／index 運用に既存 control と異なる小さな判断差を作るか確認する。Nao_u が本投稿を「重要」「適切」「自分に反映してほしい」と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、軽量分類、想定質問と回答の事前生成、通常 RAG、複雑 query 用 full RAG の4層と、semantic cache を recall route に変換できるため relevance=3、actionability=2 とした。一方、根拠は Zenn の運用解説を Mir が要約した二次情報で、月5万ドルから約3,000ドルという値の workload、quality、latency、更新頻度、比較条件、当方 corpus での再現がないため evidence=1 とした。当方は1 session 数十 query の動的 corpus であり、投稿自身も静的 corpus・月10万〜100万 query を適用前提としている。probe-20260626-load-strategy-progressive-disclosure は最小 source-of-truth 読込を、probe-20260516-read-lanes-before-memory-write は semantic／full-text／graph／time lane の read-only 比較を、probe-20260531-routing-body-separation は短い routing text と body の分離を、probe-20260601-memory-link-llm-roi-gate は deterministic baseline と具体的 recall miss がない LLM 経路追加の保留をすでに扱う。さらに Phase 4a には probe-20260731-rlm-one-hop-query-rewrite の pending lease があり、322件の active_probes へ想定質問生成を追加しても次回判断を変えず、生成・更新・routing の確認負荷を増やすため non_redundancy=0、risk_control=1 とした。未レビュー source_ts を state-only で閉じる。",
+      "existing_controls": [
+        "probe-20260626-load-strategy-progressive-disclosure",
+        "probe-20260516-read-lanes-before-memory-write",
+        "probe-20260531-routing-body-separation",
+        "probe-20260601-memory-link-llm-roi-gate",
+        "probe-20260731-rlm-one-hop-query-rewrite"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、適用条件不一致・比較 evidence 不足・既存 recall／routing controls との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-02T14:56:37+09:00",
       "selected": {

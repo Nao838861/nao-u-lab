@@ -62,7 +62,46 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779993714-ca1eb14ed7
+    source_ts: "1779993714.039019"
+    title: "Nao_uが #nao-u で共有: RAGのコスト問題を1/15に削る『毎回検索しない』アーキテクチャ"
+    reason: >-
+      source が slack_api/shared-reads、score 10、未レビューで、Nao_u が共有したことを明記し、
+      memory・operation・evaluation の3優先タグを持つ。意味単位の想定質問 index と段階的 retrieval が、
+      現在の recall／index 運用に既存 control と異なる小さな判断差を作るか確認するため選んだ。
+      Nao_u が本投稿を「重要」「適切」「自分に反映してほしい」と明示評価した記録はない。
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: >-
+    合計10で採用条件の14に届かず、risk_control も必須閾値2を下回る。
+    4層 retrieval と semantic cache は実行案へ変換できるが、根拠は二次情報で、
+    月5万ドルから約3,000ドルという値の workload・quality・latency・更新条件や当方 corpus での比較がない。
+    当方は低頻度・動的 corpus で投稿の静的・大量 query 前提とも異なる。
+    progressive disclosure、read-lane 比較、routing／body 分離、deterministic baseline の既存4 control に加え、
+    Phase 4a には one-hop query rewrite の pending lease があるため、新規 control は次回判断を変えず確認負荷を増やす。
+  change:
+    summary: >-
+      reviewed_source_ts と reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
