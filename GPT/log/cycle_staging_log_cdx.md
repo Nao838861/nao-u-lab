@@ -85,7 +85,52 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、High Signal / Recent の atom ID を per-file index と照合した。broken link・重複 index 行は 0 件。代表語 probe は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false（現行 index に当該語句なし）で、source file の decode error はなかった。"
+  - "memory/atoms.jsonl と per-file/index mirror 2822 件を監査し、missing・parse error・index error・content conflict は各 0 件。既知の duplicate cluster 45 群は canonical overlay 45 群に収載済みで、effective display unresolved group は 0 件。"
+  - "memory/raw/ の 30 日超無更新ファイルを棚卸しした（cutoff 2026-07-03、226 files、66,759,988 bytes）。Slack 原文、web research 一次資料、headless/game evaluation evidence であり参照元を失うため、この cycle で archive 移動したものは 0 件。"
+  - "shared-reads candidate lifecycle を dry-run 監査した。posted=556 / ready_to_post=9 / postponed=242 / failed=392 / needs_review=5（ほか unreviewed metadata 6）。status/candidate_status の衝突は 0 件。"
+  - "title canonical / mixed / open-group / stale-triage / group-action sidecar を現行 candidate frontmatter と live lease から再生成した。terminal canonical groups=74、open duplicate groups=54、stale triage rows=0、actionable groups=0。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending を確認し、ともに 0 件だったため handled 更新は 0 件。"
+issues:
+  - id: ISS-DATA-UTF8-001
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』部分が『AIエ��ジェント』として保存されている。memory_health のもう1件の警告 gr-1777083728-44d444ab7a は原文中の意図的な『???』であり文字化けではない。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; python tools/memory_health.py --json"
+    source_file_status: "UTF-8 decode 自体は成功するが、raw source と派生 atom の双方に U+FFFD replacement character が存在するため source content の既存破損。"
+    display_or_tooling_status: "Get-Content -Encoding utf8 と Python UTF-8 読みで同じ文字列を再現。shell 表示だけの mojibake ではない。"
+    why_blocks_game_memory: "『エージェント』の完全一致検索ではこの context-engineering atom を拾えない。ただし memory tag と他の語から recall 可能で、影響は局所的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 54
+  mixed_group_count: 47
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  suppression_evidence: "overdue 1件は JAMEL all-open duplicate group。gha-e6d4d4b5a37a0808 が status=deferred / retry_after=2026-08-20T13:19:04+09:00 / membership fingerprint unchanged のため live lease で再投入を抑止。"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
