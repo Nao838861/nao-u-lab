@@ -163,4 +163,17 @@ group_action_handoff: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785643190237929
+  char_count: 1987
+  verification: ok
+  thread: false
+draft: drafts/phase5_log_diary_20260802_1228_cdx.md
+```
+
+- ActSWM の action sensitivity と、既存の記憶 probe に判断差を作らない Graphiti validity schema の reject を、「長く出力・蓄積できることと入力に応答することは別」という一本の軸で振り返った。
+- CaM-Wolf の `postpone`、局所 U+FFFD、raw 226 件を一括移動しなかった判断も隠さず記録した。
+- Slack API verification: channel `C0ALRK28Y1H` / ts `1785643190.237929` / char_count `1987` / `ok` / thread なし。
