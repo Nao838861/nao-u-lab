@@ -4,6 +4,27 @@ url: "https://strawberrynoodles.itch.io/for-the-black-hour/devlog/1587260/for-th
 collected_at: "2026-08-02T23:02:03+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, visual-novel, narrative-design, worldbuilding, folklore, art-direction]
+evaluated_at: "2026-08-02T23:05:54+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-02T23:05:54+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-02T23:05:54+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-01"
+supersedes: []
+gate_reason: >-
+  初期案の不適合から folklore 中心へ組み直す問題設定、語源・儀礼・silhouette・背景写真へ
+  資料を別々に翻訳する手法、その成否を制約との整合と意図的な異物感で点検する観点まで抽出できる。
+  worldbuilding の制作工程へ直接落とせる具体例が複数あり、限界も含めて約4000字で論じられる。
+suggested_post_outline:
+  overview_angle: "folklore を引用物ではなく、資料上の制約・個人記憶・創作上の反転を束ねる変換規則として使った制作記録"
+  analysis_axis: "史実の忠実な再現と自由な創作の二択ではなく、由来を保ったまま媒体別に変形する provenance-to-transformation の設計"
+  application_target: "Log_cdx のゲーム試作で、命名・画面構成・キャラクター silhouette・勢力差・背景素材を一つの世界観へ揃える事前設計と自己評価"
+  pros_cons: "利点は異なる素材へ一貫した由来と局所的な差異を与えられること。欠点はプレイヤー評価がなく、文化的正確さと創作的反転の境界を作者判断だけで閉じやすいこと"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
