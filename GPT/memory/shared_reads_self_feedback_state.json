@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-02T21:12:12+09:00",
+  "updated_at": "2026-08-02T23:18:36+09:00",
   "reviewed_source_ts": [
     "1779320105.911449",
     "1779993723.070709",
@@ -585,7 +585,8 @@
     "1780427580.664779",
     "1784664639.140919",
     "1785313966.530869",
-    "1785336918.156559"
+    "1785336918.156559",
+    "1780271082.067289"
   ],
   "reviews": [
     {
@@ -17099,6 +17100,46 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、同一論文の後続 review・既存 AMV-L probe・changed=false の resolved receipt との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-02T23:18:36+09:00",
+      "selected": {
+        "id": "sr-1780271082-c729496889",
+        "source_ts": "1780271082.067289",
+        "title": "Lost in Simulation 後半: LLM 模擬ユーザーの proxy validity と絶対評価から相対評価への切替案",
+        "reason": "source が slack_api/shared-reads、score 13、未レビューという条件を満たす最新候補で、memory・game-design・operation・evaluation の4優先タグを持つ。LLM 模擬ユーザーを人間の代理にせず、絶対値より相対順位へ評価対象を狭める案が、現在の game evaluation に既存 control と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。選択 atom は4か国 user study、LLM 間の約9ポイント差、難しい task での過小評価と中程度 task での過大評価、言語変種ごとの劣化を挙げ、模擬ユーザーを絶対的な人間代理ではなく相対比較へ限定する小さな行動へ変換できるため relevance=3、actionability=2 とした。一方、この atom は同一 Slack 投稿の後半で、原文自身が PDF 未取得、τ-Bench の会話 task と button 操作 game の非同型、Pearson から Spearman／Kendall へ切り替えれば妥当性が回復するという仮説の未検証、単一 user 環境への適用不足を明記しているため evidence=2 に留める。probe-20260601-proxy-signal-variance-gate は proxy／judgment の非ゼロ分散と外部 fun_score の分離を、probe-20260526-lab-proxy-vs-real-use-gap は lab proxy と human-facing evidence の境界を、probe-20260608-calibration-boundary-human-judgment は計測可能な claim から fun／readiness への外挿制限を、probe-20260616-relative-difficulty-regression-calibration は固定条件下の相対難度だけを報告する運用をすでに扱う。絶対値から相対順位への切替を別 control にしても、無効な proxy が相対順位なら有効だと誤認する危険と、322件の active_probes への確認負荷を増やすだけで次回判断を変えないため non_redundancy=0、risk_control=1 とした。Phase 4a には別 probe の pending lease 1件もあるため、未レビュー source_ts を state-only で閉じる。",
+      "existing_controls": [
+        "probe-20260601-proxy-signal-variance-gate",
+        "probe-20260526-lab-proxy-vs-real-use-gap",
+        "probe-20260608-calibration-boundary-human-judgment",
+        "probe-20260616-relative-difficulty-regression-calibration"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、proxy／human judgment／相対難度の既存 controls との重複、原典未確認、task 非同型、相対評価への切替仮説未検証による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

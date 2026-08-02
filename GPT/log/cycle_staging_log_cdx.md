@@ -57,7 +57,38 @@ skipped: []
 - Slack API: `chat.postMessage` 1回で成功（ts `1785679972.385069`）。`chat.getPermalink` は JSON 引数を認識せず `invalid_arguments` だったため、workspace・channel・ts から正規 permalink を記録した。再投稿なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780271082-c729496889
+    source_ts: "1780271082.067289"
+    title: "Lost in Simulation 後半: LLM 模擬ユーザーの proxy validity と絶対評価から相対評価への切替案"
+    reason: "score 13 の未レビュー最新候補で、memory・game-design・operation・evaluation の4優先タグを持つ。相対評価への限定が既存 control と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "PDF 未取得、会話 task と button 操作 game の非同型、絶対評価から Spearman／Kendall の相対評価へ切り替えれば妥当性が回復するという仮説の未検証を source 自身が認める。既存の proxy-signal-variance、lab-proxy-vs-real-use、calibration-boundary、relative-difficulty controls が同じ境界をすでに扱い、新規 control は次回判断を変えず確認負荷と proxy 誤認 risk を増やす。"
+  change:
+    summary: "state-only review。reviewed_source_ts と reject 理由だけを更新し、probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 既存 control: `probe-20260601-proxy-signal-variance-gate` / `probe-20260526-lab-proxy-vs-real-use-gap` / `probe-20260608-calibration-boundary-human-judgment` / `probe-20260616-relative-difficulty-regression-calibration`。
+- lifecycle: ledger の既存 pending lease は `probe-20260731-rlm-one-hop-query-rewrite` 1件のまま。今回の enqueue は 0 件。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
