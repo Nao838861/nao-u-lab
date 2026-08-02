@@ -54,7 +54,35 @@ result: "Phase 2 の pass candidate が 0 件のため、#shared-reads への投
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779993723-bad455f4dc
+    source_ts: "1779993723.070709"
+    title: "Nao_uが #nao-u で共有: 中間記法パターン(MNP) — GUI×LLM共同編集のための独自DSL設計"
+    reason: "未レビュー・score 10・Nao_u共有由来で、memory／game-design／operation／evaluation の4優先タグを持つ。専用DSLをLLM向けSSoTにする案が、現行code-first制作と既存の検査可能な中間状態controlsに新しい判断差を作るか確認した。Nao_uの明示的な重要評価は付いていない。"
+  scores:
+    relevance: 2
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "投稿自身が現行HTML／JavaScript直接編集とmarkdown／JSONL memoryには導入不要とし、今サイクルにもGUI editor、level-data schema、DSL parser、code／DSL比較artifactがない。grounded-playable-spec、checkable-intermediate-state、draw2think-inspectable-intermediate-state、code-as-harness-one-executable-check が薄い中間仕様・検査可能状態・最小checkを既に扱う。322件のactive_probesへ専用DSL controlを足すとparser／同期境界／schema driftと確認負荷を増やすため、state-only reviewで閉じた。"
+  change:
+    summary: "reviewed_source_tsとreject理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-02T17:04:22+09:00",
+  "updated_at": "2026-08-02T19:13:51+09:00",
   "reviewed_source_ts": [
+    "1779993723.070709",
     "1779993714.039019",
     "1780373599.795789",
     "1780314554.893779",
@@ -586,6 +587,46 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-02T19:13:51+09:00",
+      "selected": {
+        "id": "sr-1779993723-bad455f4dc",
+        "source_ts": "1779993723.070709",
+        "title": "Nao_uが #nao-u で共有: 中間記法パターン(MNP) — GUI×LLM共同編集のための独自DSL設計",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たし、Nao_u が共有したことを明記する atom で、memory・game-design・operation・evaluation の4優先タグを持つため選んだ。GUI／level data／memory artifact の中間表現を LLM 向け SSoT にする発想が、現在の code-first 制作と既存の検査可能な中間状態 controls に新しい判断差を作るか確認する。Nao_u が本投稿を「重要」「適切」「自分に反映してほしい」と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、人間が GUI、LLM が domain-specific DSL を介して同じ SSoT を編集する構成、JSON／YAML より短い表現、parser／serializer／仕様違反という費用を明示しており、具体的な設計観点へ変換できるため actionability=2、evidence=2 とした。一方、投稿自身が現在の HTML／JavaScript 直接編集と markdown／JSONL memory をすでに十分な中間表現と評価し、導入不要と結論づけている。今サイクルにも GUI editor、level-data schema、DSL parser、同一変更の code／DSL 比較、token・error・round-trip fidelity の artifact がないため relevance=2 に留めた。probe-20260516-grounded-playable-spec は実装前の薄い intermediate spec を、probe-20260612-checkable-intermediate-state は JSON／graph／log／staging の検査可能な状態を、probe-20260619-draw2think-inspectable-intermediate-state は level／map／UI flow の構築忠実度と測定忠実度を、probe-20260529-code-as-harness-one-executable-check は最小の inspectable check をすでに扱う。本 atom の固有差は専用 DSL と GUI renderer を同一 SSoT に置く点だが、対象 artifact がない現状で別 control にしても次回判断を変えず non_redundancy=0。322件の active_probes へ追加すると、既存 code／markdown／JSONL の外に parser と同期境界を増やし、SSoT を改善する前に確認負荷と schema drift risk を増やすため risk_control=1 とした。未レビュー source_ts を state-only で閉じる。",
+      "existing_controls": [
+        "probe-20260516-grounded-playable-spec",
+        "probe-20260612-checkable-intermediate-state",
+        "probe-20260619-draw2think-inspectable-intermediate-state",
+        "probe-20260529-code-as-harness-one-executable-check"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、現行 code-first／markdown／JSONL SSoT への適用条件不一致、比較 artifact 不在、既存 intermediate-state controls との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-02T17:04:22+09:00",
       "selected": {
