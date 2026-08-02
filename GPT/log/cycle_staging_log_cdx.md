@@ -10,7 +10,45 @@
 - pending inbox: `slack_directives.jsonl` / `slack_broadcasts.jsonl` ともに `status: pending` なし。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail:
+  - path: memory/shared_reads_candidates/20260803_playtrace_reconstructive_partitioning.md
+    reason: "同一 title・同一 arXiv URL の旧 postponed candidate と証拠が重複し、PRP の手順・baseline・指標・数値・失敗条件も不足するため、約4000字の概要を構成できない"
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  initial_decision: continue
+  post_update_decision: review
+  post_update_reason: open_duplicate_title_match
+  canonical_url: "https://arxiv.org/abs/2607.12097"
+  title_key: "representing and generating levels over time through playtrace reconstructive partitioning"
+  representative_paths:
+    - memory/shared_reads_candidates/20260724_playtrace_reconstructive_partitioning.md
+  review_evidence:
+    - "memory/shared_reads_candidates/20260724_playtrace_reconstructive_partitioning.md は同一 work で status: postponed"
+    - "新規 candidate に追加の一次証拠なし"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
