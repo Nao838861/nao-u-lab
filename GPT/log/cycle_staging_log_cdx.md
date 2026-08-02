@@ -45,7 +45,21 @@ evaluation_summary: >-
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260802_tycho_active_abstraction_world_models.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785657519159189"
+    char_count: 3907
+skipped: []
+review:
+  format: pass
+  source_fidelity: pass
+  duplicate_preflight: continue
+  note: >-
+    必須 6 セクション、禁止表現、文字数、原文の比較条件・主要数値・限界を再確認した。
+    1 回の chat.postMessage で投稿し、送信後の表示確認で検出した 1 箇所の文字化けは同一メッセージの chat.update で「修復閾値」に修正済み。
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
