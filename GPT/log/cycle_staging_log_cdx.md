@@ -48,7 +48,25 @@ evaluation_summary: >-
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260802_texturepp_3d_asset_texture_super_resolution.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785634204912009
+    char_count: 4293
+skipped: []
+final_decision: 部分採用
+review:
+  duplicate_preflight: continue
+  shared_reads_policy: ok
+  slack_verification: ok
+  source_checked: https://arxiv.org/html/2607.21504
+  cautions:
+    - 「単調改善」は知覚品質ではなく幾何学的 quality map に基づく
+    - 評価 LR は Gaussian blur と 4× bicubic downsampling による合成劣化
+    - 公開済み専用 texture SR との直接比較なし
+    - 複雑な自己遮蔽と PBR material は未対応
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
