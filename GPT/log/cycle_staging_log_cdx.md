@@ -92,7 +92,79 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の明示 index path 4件を確認し、broken link 0件。atom mirror も atoms.jsonl / per-file / index が各2822件で欠落・parse error・content conflict 0件だった"
+  - "atom 重複監査は normalized_content_hash 40群80行、canonical overlay 45群。全40 extra row は recall fold 済みで duplicate cluster index check も正常、未解決の矛盾は検出しなかった"
+  - "memory/raw/ の mtime 30日超は226件・66759988 bytes。Slack原文や Phase 3 根拠を含むため、この cycle では archive 移動0件として保持した"
+  - "candidate lifecycle 1211件を dry-run 監査し、posted 556 / ready_to_post 9 / postponed 243 / failed 392 / needs_review 5 / lifecycle未付与 6。status と candidate_status の conflict は0件だった"
+  - "open duplicate group / stale triage / group action queue を再生成し、group/candidate handoff を冪等 enqueue・audit。live handoff は0件で、candidate本体は変更していない"
+  - "Slack directives / broadcasts は pending 0件のため close 更新なし。due probe lease も0件のため receipt 更新なし"
+issues:
+  - id: ISS-ENC-001
+    description: "shared-reads raw 原文1件と派生 atom に文字化けが実在する"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl source_ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みは成功したが、raw 原文の時点で『AIエ��ジェント』という U+FFFD 2文字を含み、atom の title / trigger / excerpt に継承されている。memory/MEMORY.md は UTF-8 読み成功、代表語は 記憶 / ゲーム設計 / 敵パターン が取得でき、評価軸は単に本文中に存在しなかった"
+    display_or_tooling_status: "none。PowerShell表示だけの mojibake ではなく source content 自体の局所破損"
+    why_blocks_game_memory: "『AIエージェント』をキーにした記憶・skill routing の検索精度をこの1件で落とし、原文と派生atomのどちらを開いても正しい語へ到達できない"
+  - id: ISS-AUDIT-001
+    description: "memory_health の mojibake detector がゲーム本文中の意図的な『???』を文字化け候補として数える"
+    severity: low
+    evidence: "memory/raw/slack_api/game-rights.jsonl source_ts=1777083728.907429; memory/atoms/2026-04/gr-1777083728-44d444ab7a.md; python tools/memory_health.py --json --compact"
+    source_file_status: "raw と atom はともに UTF-8 明示読みで正常。『突然「???がヘッダに出る」』は Nao_u 原文どおりで U+FFFD を含まない"
+    display_or_tooling_status: "memory_health 側の false positive。2件の警告のうち実破損は ISS-ENC-001 の1件だけ"
+    why_blocks_game_memory: "監査ノイズが実在する破損と正常なゲーム表現を同列にし、将来の破損 triage の信頼度を下げる"
+  - id: ISS-LC-001
+    description: "candidate トップレベル6件に status / candidate_status / stale_after がなく lifecycle audit と stale queue から外れている"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/20260721_big_lizard_ai_copilot_postmortem.md; 20260731_arbigraph_context_management_task_graphs.md; 20260731_icae_bench_interactive_project_builders.md; 20260731_workbuddy_contamination_resistant_tasks.md; 20260801_pegote_dominant_strategy_rework.md; 20260801_wastoid_playtest_campaign_overview.md"
+    source_file_status: "6ファイルとも UTF-8 で読めるが lifecycle frontmatter が未付与。既存の未追跡差分だったため、この cycle では内容判断や一括 backfill を行わなかった"
+    display_or_tooling_status: "candidate audit では skipped_unreviewed として現れ、正規5 status の集計・stale_after queue には入らない"
+    why_blocks_game_memory: "特に20260721 Big Lizard候補は再評価期限そのものを持てず、ゲーム制作postmortemの学びが Phase 2 の通常導線へ接続されない"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+candidate_lifecycle:
+  files_total: 1211
+  counts:
+    posted: 556
+    ready_to_post: 9
+    postponed: 243
+    failed: 392
+    needs_review: 5
+    unreviewed_without_lifecycle: 6
+  missing_stale_after: 9
+  status_conflicts: 0
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 54
+  mixed_group_count: 47
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  suppression_note: "唯一の overdue candidate は JAMEL all-open group の期限前 deferred lease（retry_after 2026-08-20T13:19:04+09:00）に含まれるため、stale triage へ重複投入しなかった"
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- `needs_design: false`。3件とも局所的なデータ品質・監査・既存ファイルの lifecycle 欠落であり、新しい記憶構造を設計する根拠にはしない。Phase 4b / 4c は起動しない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
