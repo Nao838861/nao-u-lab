@@ -57,7 +57,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780238641-6893c1131a
+    source_ts: "1780238641.322869"
+    title: "GAAMA 投稿の continuation: GRAFT と recall 自己検査 kaizen の適用候補"
+    reason: "score 13 の未レビュー最新 atom で、memory・game-design・agent・operation・evaluation の5優先タグを持つ。ただしレビュー済み主投稿の後半断片なので、GRAFT／recall 自己検査に独立した判断差があるかを確認した。"
+  scores:
+    relevance: 3
+    actionability: 1
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 9
+  decision: reject
+  decision_reason: "GRAFT の発火条件・失敗分類・repair 手順・before/after がなく、主投稿 sr-1780238641-e67b974a3b は既に reject 済み。既存の query-rewrite、read-lane、LLM ROI、hub coverage probes が同じ判断面を覆い、active_probes 322件と Phase 4a 向け pending lease 1件へ重複 control を足す便益がない。"
+  change:
+    summary: "reviewed_source_ts と重複による reject 理由だけを state に記録。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-03T05:26:43+09:00",
+  "updated_at": "2026-08-03T07:32:00+09:00",
   "reviewed_source_ts": [
+    "1780238641.322869",
     "1780249598.660899",
     "1780195765.483449",
     "1785679972.385069",
@@ -592,6 +593,47 @@
     "1780271082.067289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-03T07:32:00+09:00",
+      "selected": {
+        "id": "sr-1780238641-6893c1131a",
+        "source_ts": "1780238641.322869",
+        "title": "GAAMA 投稿の continuation: GRAFT と recall 自己検査 kaizen の適用候補",
+        "reason": "source が slack_api/shared-reads、score 13、未レビューという条件を満たす最新 atom で、memory・game-design・agent・operation・evaluation の5優先タグを持つため選んだ。ただし、これは既にレビュー済みの主投稿 sr-1780238641-e67b974a3b の後半断片であり、GRAFT と recall 自己検査の記述が既存 review や active probe と異なる次回判断を作るかを確認した。Nao_u が本 continuation を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 1,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 9
+      },
+      "decision": "reject",
+      "decision_reason": "合計9で採用条件の14に届かず、actionability と risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。この continuation は GRAFT を post-retrieval repair と位置づけ、recall_atom.py の1-hop出力を自己検査する tools/verify_recall_coherence.py の kaizen 起票候補を示すため relevance=3 とした。一方、GRAFT の発火条件、失敗分類、repair 手順、before／after、当方 corpus での比較はなく、投稿自身も abstract と公開情報のみで edge types と重みが不明とする主投稿に依存するため evidence=1、actionability=1 とした。主投稿 sr-1780238641-e67b974a3b は既に state-only reject 済みで、probe-20260731-rlm-one-hop-query-rewrite が検索後の1回の修復探索と判断差、probe-20260516-read-lanes-before-memory-write が検索 lane 比較、probe-20260601-memory-link-llm-roi-gate が deterministic baseline と LLM fallback 境界、probe-20260607-memory-hub-link-coverage が graph reachability を扱うため non_redundancy=0。active_probes が322件、Phase 4a 向け pending lease が1件ある状態で、同じ分割投稿から recall 自己検査 probe を足すと確認負荷だけを増やすため risk_control=1 とした。未レビュー source_ts を state-only で閉じる。",
+      "existing_review": "sr-1780238641-e67b974a3b / source_ts 1780238641.289669",
+      "existing_probes": [
+        "probe-20260731-rlm-one-hop-query-rewrite",
+        "probe-20260516-read-lanes-before-memory-write",
+        "probe-20260601-memory-link-llm-roi-gate",
+        "probe-20260607-memory-hub-link-coverage"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、主投稿 review・既存 recall／graph probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-03T05:26:43+09:00",
       "selected": {
