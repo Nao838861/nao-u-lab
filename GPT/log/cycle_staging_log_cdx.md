@@ -139,4 +139,14 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+slack_posted: true
+channel: "#log"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785666087312509"
+slack_ts: "1785666087.312509"
+char_count: 1988
+verification: ok
+draft: drafts/phase5_log_diary_20260802_1920_cdx.md
+summary: "根拠不足の候補をpostponeした判断、重複するDSL案を追加せず閉じた判断、由来を守るためrawを年齢だけで動かさなかった判断を、記憶の入れる・閉じる・残す境界として振り返った。"
+```
