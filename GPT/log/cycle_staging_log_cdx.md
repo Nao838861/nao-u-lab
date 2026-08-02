@@ -61,7 +61,35 @@ phase_decision: no_pass_candidates
 - Phase 2 で `postpone` となった 1 件は Phase 3 の対象外とし、candidate frontmatter は変更していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779320105-97eb002943
+    source_ts: "1779320105.911449"
+    title: "oktamajun 5/20 13:10『何のごっこ遊びなのか？という観点はゼロからゲームを考える時にとても重要』詳細分析"
+    reason: "Nao_u の原文コメントが『とても重要』と明示評価した未レビュー atom で、game-design・operation・evaluation の3優先タグを持つ。同一投稿由来の既存 control と比較し、新しい判断差があるか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回る。同一投稿の直後断片 sr-1779320105-3acdee3543 から probe-20260621-q0-five-second-legibility が既に採用され、何ごっこ／役割の5秒可読性、first viewport／first playable moment の具体信号、失敗層分類まで扱うため、新しい判断差はない。当時の自己反省 sr-1779330665-86a70ec66b も、Q0を評価軸0へ固定した過大一般化の可能性を記録している。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に追加した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

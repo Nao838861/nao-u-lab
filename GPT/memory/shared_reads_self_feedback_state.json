@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-02T19:13:51+09:00",
+  "updated_at": "2026-08-02T21:12:12+09:00",
   "reviewed_source_ts": [
+    "1779320105.911449",
     "1779993723.070709",
     "1779993714.039019",
     "1780373599.795789",
@@ -587,6 +588,45 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-02T21:12:12+09:00",
+      "selected": {
+        "id": "sr-1779320105-97eb002943",
+        "source_ts": "1779320105.911449",
+        "title": "oktamajun 5/20 13:10『何のごっこ遊びなのか？という観点はゼロからゲームを考える時にとても重要』詳細分析",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たし、Nao_u の原文コメントが『何のごっこ遊びなのか？という観点はゼロからゲームを考える時にとても重要』と明示評価しているため選んだ。game-design・operation・evaluation の3優先タグを持ち、次の新規ゲームや大幅改修で player fantasy を短時間に読める形へ変換できるか、同一投稿由来の既存 control と比較する。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。Nao_u の明示評価と shared-reads 本文は、設計初期に player fantasy を一文へ落とし、最初の viewport・verb・target・feedback で伝わるかを確認する具体的な行動へ変換できるため relevance=3、actionability=3 とした。一方、外部根拠は短いツイートであり、カイヨワ分類、ミミクリが他3分類の宿主になるという説明、5秒テスト、graze 系列への適用は shared-reads 側の推論で、比較 playtest や定量評価を伴わないため evidence=2 に留める。同じ Slack 投稿の直後断片 sr-1779320105-3acdee3543 は既にレビュー済みで、probe-20260621-q0-five-second-legibility が『何ごっこ／役割を5秒で読めるか』『first viewport／first playable moment の具体信号』『fantasy premise・player verb・objective・feedback timing・affordance・theme-mechanics mismatch の失敗分類』を完全に扱うため non_redundancy=0。さらに当時の自己反省 sr-1779330665-86a70ec66b は、新しいQ0軸を評価軸0へ固定して全てを説明しようとした過大一般化の可能性を記録している。322件の active_probes と Phase 4a 向け pending lease 1件がある状態で同型 control を追加すると、確認負荷とQ0の過剰優先を増やすため risk_control=1 とした。未レビュー source_ts を state-only で閉じる。",
+      "existing_controls": [
+        "sr-1779320105-3acdee3543",
+        "probe-20260621-q0-five-second-legibility",
+        "sr-1779330665-86a70ec66b"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、同一投稿由来の既存 Q0 probe との完全重複および過大一般化リスクによる reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-02T19:13:51+09:00",
       "selected": {
