@@ -53,7 +53,18 @@ duplicate_preflight:
 - CaM-Wolf はゲーム制作への適用先は明確だが、現 snapshot だけでは評価の中身が薄いため `postpone`。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260802_actswm_action_sensitive_world_models.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785642356349389
+    char_count: 4454
+skipped: []
+```
+
+- ActSWM は原論文本文・appendix・実験表まで再確認し、問題設定、二つの構造制約、三段階評価、失敗条件、我々の headless probe への適用を 1 投稿で説明できるため投稿した。
+- 投稿前 review: duplicate preflight `continue`、shared-reads policy `ok`、禁止表現 0 件、必須項目・順序・文字数を確認済み。
+- Slack verification: channel `C0AN2FEHEJJ` / ts `1785642356.349389` / 1 回の `chat.postMessage` / thread なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
