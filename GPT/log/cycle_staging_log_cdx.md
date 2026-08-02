@@ -104,7 +104,70 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+- 実行時刻: 2026-08-02 17:06 JST
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index を validate_memory_index.py で監査し、per-file atom index との不整合・broken atom 参照 0 件を確認した。"
+  - "atoms 2822 件の atoms.jsonl / per-file md / index.jsonl を監査し、parse error・missing・content conflict はすべて 0 件。duplicate cluster 45 群は canonical overlay 45 群で fold 済み、effective display の未解決重複は 0 件だった。"
+  - "memory/raw/ の 30 日超ファイル 226 件を監査した。すべて raw evidence / provenance 保持層の既存資料で、前 cycle から対象も判断も不変のため移動しなかった。"
+  - "candidate lifecycle 1209 件を dry-run 監査し、status / candidate_status の要修正は 0 件。open の期限超過 1 件は JAMEL 同一 work で、group lease gha-e6d4d4b5a37a0808 の retry_after=2026-08-20T13:19:04+09:00 まで deferred のため再投入を抑止した。"
+  - "open duplicate group / stale triage / group action sidecar を現行契約の順で再生成し、group/candidate handoff を冪等 enqueue した。actionable 0 件で新規 enqueue はなく、両 inbox の pending も 0 件だった。"
+  - "Slack directives 23 行、broadcasts 21 行を監査し、pending はどちらも 0 件。close 対象がないため status 更新は行わなかった。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+encoding_audit:
+  memory_md:
+    source_file_status: "UTF-8 明示読みに成功。代表語 probe は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false。U+FFFD はなく、source file 破損を示す証拠なし。"
+    display_or_tooling_status: "Get-Content -Encoding UTF8 と rg で日本語を正常表示し、mojibake なし。"
+  suspects:
+    - atom_id: sr-1776127289-4d9239b255
+      source_file_status: "UTF-8 読みで raw slack_archive と atom の双方に『AIエ��ジェント』が存在。取込先ではなく raw source 由来の既知の局所的欠損。"
+      display_or_tooling_status: "UTF-8 経路で同一に再現し、tooling の文字化けではない。新たな構造的 issue にはしない。"
+    - atom_id: gr-1777083728-44d444ab7a
+      source_file_status: "UTF-8 読みで本文は正常。memory_health の suspect は heuristic false positive。"
+      display_or_tooling_status: "表示異常なし。"
+candidate_lifecycle:
+  counts:
+    posted: 556
+    ready_to_post: 9
+    postponed: 241
+    failed: 392
+    needs_review: 5
+    skipped_unreviewed: 6
+  missing_stale_after: 9
+  overdue_open_total: 1
+  overdue_suppressed_by_live_group_lease: 1
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 54
+  mixed_group_count: 47
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
