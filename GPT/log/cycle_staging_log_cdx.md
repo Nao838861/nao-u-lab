@@ -69,7 +69,53 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785626062-b1f7686d2e
+    source_ts: "1785626062.095909"
+    title: "Hozy — 反復 micro-action の多層 feedback と ownership を守る curated sandbox"
+    reason: >-
+      source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新 atom で、
+      memory・harness・game-design・operation・evaluation の5優先タグを持つ。
+      次の playable diff に既存 control と異なる判断差を作れるか確認するため、1件だけ選んだ。
+      Nao_u の明示評価は付いていない。
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: >-
+    mop の方向・速度・傾き・濡れ跡・変形・音、家具配置の補助制約、残したい object の
+    強制破棄回避は具体的な比較 trace へ変換できる。一方、根拠は単一 studio の制作インタビューで、
+    player 数、変更前後比較、hidden content 30〜40% の計測法、retention・満足度・制作工数が不明である。
+    現 staging には比較可能な掃除／配置 prototype や人間 playtest trace がない。
+    player-intent-action-response、game-feedback-loop-asymmetry、quality-workflow-feedback-route、
+    feedback-device-amplitude-axis が intent、証拠境界、局所修正、介入強度と player choice を既に扱う。
+    active_probes 322件と Phase 4a 向け pending lease 1件があるため、対象不在の同型 control は追加しない。
+  existing_controls:
+    - probe-20260717-player-intent-action-response
+    - probe-20260606-game-feedback-loop-asymmetry
+    - probe-20260625-quality-workflow-feedback-route
+    - probe-20260710-feedback-device-amplitude-axis
+  change:
+    summary: >-
+      reviewed_source_ts と reject 理由だけを state に記録した。
+      probe・metric・lease・directive・恒久ルールは追加していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
