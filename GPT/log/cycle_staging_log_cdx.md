@@ -88,7 +88,52 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index atom ID 50件を照合し、broken reference 0件を確認した。"
+  - "memory/atoms.jsonl 2823件と per-file 2823件 / index 2823件を照合し、欠落・parse error・content conflict 0件を確認した。normalized content duplicate 40群80行は既存 canonical overlay で40行fold済み。"
+  - "memory/raw/ 247ファイル中、mtime 30日超は226件。slack_archive と web research一次資料で、raw原文保持方針によりこのcycleでは移動しなかった。"
+  - "shared-reads candidate lifecycle 1217件を監査した。posted 558 / ready_to_post 9 / postponed 244 / failed 395 / needs_review 5 / skipped_unreviewed 6、現在状態の修復対象0件。"
+  - "slack_directives 23行 / slack_broadcasts 21行を確認し、pending 0件のため handled 更新はなかった。"
+  - "open duplicate group / stale triage / group action sidecar を再生成し、group/candidate handoff を監査した。新規enqueue 0件、schema error 0件。"
+issues:
+  - id: ISS-ENC-001
+    description: "active atom sr-1776127289-4d9239b255 の『AIエージェント』部分が source 3系統で『AIエ��ジェント』となっている局所的な文字破損。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/atoms/index.jsonl id=sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8明示読みでも replacement character 2文字を確認。per-file / atoms.jsonl / index.jsonl が同じ破損値で一致しており、source data自体の局所破損。memory/MEMORY.md は UTF-8で『記憶』『ゲーム設計』『敵パターン』を取得でき、U+FFFDなし。『評価軸』は現index本文にliteral不在。"
+    display_or_tooling_status: "PowerShell UTF-8表示でも同じ文字列を再現したため、表示経路だけのmojibakeではない。"
+    why_blocks_game_memory: "当該atomを『AIエージェント』の正しい表記で全文検索する経路だけが弱くなる。単一atomの局所問題で、現行のゲーム記憶全体は遮断しない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_handoff_inbox_pending_count: 0
+  group_handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  suppression_note: "overdue 1件は JAMEL all-open group の deferred lease gha-e6d4d4b5a37a0808（retry_after 2026-08-20、membership fingerprint一致）に包含され、stale triageへの再投入を抑止。"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
