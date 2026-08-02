@@ -4,6 +4,20 @@ url: "https://www.gamedeveloper.com/production/-i-have-been-hunted-down-by-hr-re
 collected_at: "2026-08-03T03:16:55+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-production, developer-rights, indie-development, contracts, intellectual-property]
+evaluated_at: "2026-08-03T03:20:43.4127281+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-03T03:20:43.4127281+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-03T03:20:43.4127281+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-02"
+supersedes: []
+gate_reason: >-
+  side work 条項が収入だけでなく個人制作、学習、講演まで止める複数事例と、既存作品・競合範囲・使用機材・勤務時間・書面例外を分離する実務上の着眼は具体的である。
+  ただし取材対象の選定、地域法ごとの境界、交渉前後の結果を体系的に比較した評価はなく、約4000字へ広げると記事固有の知見より一般的な法務助言が中心になるため投稿候補としては閉じる。
 ---
 
 ## raw_excerpt
