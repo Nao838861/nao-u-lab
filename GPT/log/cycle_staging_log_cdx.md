@@ -98,7 +98,63 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、validate_memory_index.py で index entry と per-file atom index の一致を確認。broken link は 0 件。代表語 probe は 記憶 / ゲーム設計 / 敵パターン が取得でき、評価軸は本文に存在しなかったが、置換文字や表示経路 mojibake はない。"
+  - "atoms.jsonl / per-file .md / atoms/index.jsonl は各 2822 件で一致し、parse error / index error / content conflict は 0 件。duplicate 45 群は canonical overlay に収載済みで、recall-visible normalized-content duplicate 3 群も fold 済み。"
+  - "memory/raw/ は 2026-07-03 より前に更新が止まったファイルを 226 件確認（web_research 系 203 件、headless_eval 16 件ほか）。provenance 参照の確認なしに一括移動せず、archive candidate として記録のみ。"
+  - "shared-reads candidate lifecycle を dry-run 監査。posted 555 / ready_to_post 9 / postponed 241 / failed 392 / needs_review 5、変更 0、現在状態 conflict 0。"
+  - "open duplicate group / stale triage / group action sidecar を指定順で再生成し、group/candidate handoff を冪等 enqueue。新規 handoff はともに 0 件、両 inbox の pending は 0 件。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending はともに 0 件。受領だけを根拠に close した行はない。"
+issues:
+  - id: ISS-UTF8-001
+    description: "active atom sr-1776127289-4d9239b255 の『AIエージェント』部分が『AIエ��ジェント』として保存され、title / trigger / excerpt に U+FFFD が残っている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/atoms/index.jsonl id=sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8 明示読みでも同じ U+FFFD を確認。atoms.jsonl / per-file .md / index.jsonl の三面に同じ値があり、source data 自体の局所破損。memory_health のもう1件 gr-1777083728-44d444ab7a は UTF-8 本文に置換文字がなく false positive。"
+    display_or_tooling_status: "PowerShell Get-Content -Encoding UTF8 と rg の双方で同じ値を再現。shell/staging 表示だけの mojibake ではない。"
+    why_blocks_game_memory: "『AIエージェント』の完全一致検索と title-based recall をこの1件だけ弱める。既存の他 atom・canonical overlay・ゲーム制作導線全体は遮断しない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+stale_review_batch: []
+candidate_lifecycle:
+  status_counts:
+    posted: 555
+    ready_to_post: 9
+    postponed: 241
+    failed: 392
+    needs_review: 5
+  overdue_open_total: 1
+  overdue_path: "memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md"
+  overdue_disposition: "explicit_keep: 同一 arXiv work の all-open group handoff gha-e6d4d4b5a37a0808 が 2026-08-20T13:19:04+09:00 まで deferred。membership fingerprint 一致の live lease により当 cycle の candidate queue へ重複投入しない。"
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 54
+  mixed_group_count: 47
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+```
+
+- 判定: 局所的な source corruption は今後の mechanical repair 候補だが、新しい仕組みの設計は不要。Phase 4b / 4c は起動しない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
