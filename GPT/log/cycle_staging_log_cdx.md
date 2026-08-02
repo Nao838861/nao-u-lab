@@ -39,7 +39,19 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+eligible_pass_candidates: 0
+posted: []
+skipped: []
+not_eligible:
+  - candidate: memory/shared_reads_candidates/20260802_let_npcs_fight_attack_reach_data.md
+    phase2_decision: postpone
+    reason: "一次 URL が 404 で、評価手順・定量結果・結論を復元できず、投稿品質基準を満たす根拠が不足している"
+    action: candidate_revise
+slack_posted: false
+result: "Phase 2 の pass candidate が 0 件のため、#shared-reads への投稿なし"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
