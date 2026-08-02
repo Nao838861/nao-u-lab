@@ -43,7 +43,18 @@ group_handoff_audit:
 - 留保: devlog 内にプレイヤーテストや比較評価はなく、文化的妥当性も作者側の説明に依存する。Phase 3 では成功実証として扱わず、制作判断を監査可能にする事例として「部分採用」を提示する。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260802_for_the_folklore_hour.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785679972385069
+    char_count: 3868
+skipped: []
+```
+
+- 最終判定: 部分採用。原文で制作判断の由来と変換は確認できたが、比較評価・blind playtest・文化監修はないため、成功実証とは扱わず限界を本文へ明記した。
+- 投稿前レビュー: 必須6項目、`■ 概要` 開始、`■ URL` 末尾、URL 1件、禁止表現なし、duplicate preflight `continue`、policy `ok`。
+- Slack API: `chat.postMessage` 1回で成功（ts `1785679972.385069`）。`chat.getPermalink` は JSON 引数を認識せず `invalid_arguments` だったため、workspace・channel・ts から正規 permalink を記録した。再投稿なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
