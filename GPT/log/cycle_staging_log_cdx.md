@@ -13,7 +13,38 @@
 - duplicate preflight skip: AI GameStore（既投稿 permalink `p1779793589433579`）、LieCraft（既投稿 permalink `p1779972051823869`）。同一 work のため candidate は新規作成せず。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260803_seta_scaling_terminal_agent_environments.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  initial_decision: continue
+  post_update_decision: continue
+  canonical_url: "https://arxiv.org/abs/2607.10891"
+  title_key: "seta scaling environments for terminal agents"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
