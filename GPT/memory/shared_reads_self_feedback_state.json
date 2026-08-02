@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-03T03:25:26+09:00",
+  "updated_at": "2026-08-03T05:26:43+09:00",
   "reviewed_source_ts": [
+    "1780249598.660899",
     "1780195765.483449",
     "1785679972.385069",
     "1779320105.911449",
@@ -591,6 +592,46 @@
     "1780271082.067289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-03T05:26:43+09:00",
+      "selected": {
+        "id": "sr-1780249598-9bc5f0de8d",
+        "source_ts": "1780249598.660899",
+        "title": "ATOM dual-time modeling 投稿の continuation: WebFetch abstract 経由の浅い分析と適用保留",
+        "reason": "source が slack_api/shared-reads、score 15、未レビューという条件を満たす最新 atom で、memory・agent・operation・evaluation の4優先タグを持つため選んだ。ただし、これは既にレビュー済みの親投稿 sr-1780249598-ac69e2d859 を分割した continuation であり、単独の知見として次回行動を変える差分があるかを確認した。Nao_u が本 continuation を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 1,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 8
+      },
+      "decision": "reject",
+      "decision_reason": "合計8で採用条件の14に届かず、actionability と risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。この atom は親投稿の続きとして、PDF 未取得、validity period の終端判定・parallel merge の競合解決・矛盾処理が abstract では不明、当時1386 atoms規模では parallel merge の即時 ROI なし、few-shot extraction は既存運用と独立到達済み、と適用限界を明示している点は有用である。一方、原典 URL・手法・評価は親投稿側にあり、continuation 単独では一次証拠へ到達できない。親投稿は2026-07-30に原典 v2 まで確認して state-only reject 済みで、事実 validity・review deadline・retention を分ける既存 probes との重複も判定済みである。さらに probe-20260602-source-type-and-abstract-inference-gate が abstract/snippet 由来の推論を tentative に保つ判断を既に要求するため、この continuation から別 probe を作っても次回判断は変わらない。現行の1 candidate 1投稿ゲートにも反する過去の分割断片なので、親 atom との統合や恒久ルール化はせず reviewed state だけを残す。",
+      "existing_review": "sr-1780249598-ac69e2d859 / source_ts 1780249598.635859",
+      "existing_probes": [
+        "probe-20260602-source-type-and-abstract-inference-gate",
+        "probe-20260531-stale-presupposition-check",
+        "probe-20260625-amvl-retention-utility-lifecycle"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、親投稿レビュー・abstract evidence gate・現行の単一投稿ゲートとの重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-03T03:25:26+09:00",
       "selected": {

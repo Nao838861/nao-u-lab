@@ -59,7 +59,35 @@ slack_post_attempted: false
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780249598-9bc5f0de8d
+    source_ts: "1780249598.660899"
+    title: "ATOM dual-time modeling 投稿の continuation: WebFetch abstract 経由の浅い分析と適用保留"
+    reason: "score 15 の最新未レビュー対象で memory・agent・operation・evaluation の4優先タグを持つため選んだ。ただし、既にレビュー済みの親投稿 sr-1780249598-ac69e2d859 の分割 continuation なので、単独で次回行動を変える差分があるかを確認した。Nao_u の明示評価記録はない。"
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 8
+  decision: reject
+  decision_reason: "合計8で採用条件の14に届かず、actionability と risk_control も必須閾値2未満。本文自身が abstract 経由・PDF 未取得と限定し、原典 URL・手法・評価は親投稿側にしかない。親投稿は原典 v2 確認後に reject 済みで、probe-20260602-source-type-and-abstract-inference-gate も同じ判断境界を持つ。過去の分割断片から別 probe を作っても判断差がなく、現行の1 candidate 1投稿ゲートとも重複するため state-only review とした。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
