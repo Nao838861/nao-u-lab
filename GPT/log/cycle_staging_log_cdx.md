@@ -90,7 +90,73 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 で監査。Markdown link 0 件、broken link 0 件。代表語は 記憶 / ゲーム設計 / 敵パターン を取得でき、評価軸は現行本文に存在しない語だったため source 破損とは判定しなかった"
+  - "memory/atoms.jsonl 2823 行を監査。JSON parse error 0、duplicate id 0、superseded pointer 矛盾 0。atoms.jsonl / per-file md / index.jsonl は各 2823 件で mirror conflict 0"
+  - "raw normalized-content duplicate は 40 group / 80 rows あるが、canonical overlay 45 group で非破壊 fold 済み、effective display unresolved は 0 group。atom 本体は変更しなかった"
+  - "memory/raw/ の 30 日超無更新は 226 files / 66,759,988 bytes（web_research 203、headless_eval 16、slack_api 4、その他 3）。一次証拠と評価 provenance を含むため、年齢だけでは移動せず archive 候補として記録した"
+  - "shared-reads candidate 1216 files の lifecycle を dry-run audit。posted 557、ready_to_post 9、postponed 244、failed 395、needs_review 5、skipped_unreviewed 6。frontmatter の書換えは 0 件"
+  - "open duplicate title group sidecar を再生成確認。55 group（mixed 48 / all_open 7）、actionable group 0。terminal/open title 一致だけで candidate を close しなかった"
+  - "Slack inbox は directives / broadcasts とも pending 0。受領だけを根拠に handled へ変えた行はない"
+  - "memory health の mojibake suspect 2 件を UTF-8 で切り分け。sr-1776127289-4d9239b255 は raw slack_archive と atom の双方に U+FFFD 2文字がある単発 source anomaly、gr-1777083728-44d444ab7a は Nao_u 原文中の意図的な ??? で false positive。設計 issue には昇格しなかった"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 decode 成功。日本語代表語 3 件を取得し、U+FFFD による本文破損は観測しなかった"
+  display_or_tooling_status: "PowerShell here-string から python stdin へ渡した最初の日本語 literal が ? 表示になったが、Unicode escape を使った再 probe では正しい語を取得。source file 破損ではなく表示/tooling 経路の事象"
+atom_health:
+  rows: 2823
+  parse_errors: 0
+  duplicate_ids: 0
+  raw_normalized_content_duplicate_groups: 40
+  raw_normalized_content_duplicate_atom_rows: 80
+  canonical_overlay_duplicate_groups: 45
+  effective_display_unresolved_groups: 0
+  mirror_content_conflicts: 0
+candidate_lifecycle:
+  total_files: 1216
+  status_counts:
+    posted: 557
+    ready_to_post: 9
+    postponed: 244
+    failed: 395
+    needs_review: 5
+    skipped_unreviewed: 6
+  missing_stale_after: 9
+  overdue_open_total: 1
+  overdue_paths:
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+  overdue_disposition: "同一 arXiv work の all-open duplicate group に 2026-08-20T13:19:04+09:00 までの deferred live lease があるため、この cycle では再投入せず explicit_keep"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  receipt: null
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
