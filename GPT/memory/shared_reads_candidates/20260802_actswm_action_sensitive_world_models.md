@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.26712"
 collected_at: "2026-08-02T12:34:54+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, world-model, planning, minecraft, action-modeling]
+evaluated_at: "2026-08-02T12:39:35+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-02T12:39:35+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-02T12:39:35+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-01"
+supersedes: []
+gate_reason: >-
+  Context Collapse という明確な失敗様式、transition-separation と action recovery という手法の中核、
+  長期 rollout・Minecraft closed-loop planning・複数ゲームでの検証が揃い、約4000字で評価まで説明できる。
+suggested_post_outline:
+  overview_angle: "見た目の予測精度では見逃す、入力差が未来から消える world model の失敗とその防止"
+  analysis_axis: "action sensitivity を補助予測ではなく長期 rollout の構造制約として扱う点と、step drift・planning 成功率・action recovery の対応"
+  application_target: "Log_cdx のゲーム AI・自動テスト probe で、分岐入力後の state 差が horizon を越えて保持されるかを測る評価軸"
+  pros_cons: "長期計画の因果的な入力感度を直接測れる一方、latent 制約の導入コストと対象ゲーム間の action/state 定義差がある"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

@@ -12,7 +12,45 @@
 - 品質判定・Slack 投稿・記憶整理は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260802_actswm_action_sensitive_world_models.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260802_cam_wolf_multimodal_social_deduction_agent.md
+    reason: "比較 baseline・評価指標・user study 規模・効果量が snapshot に不足"
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  sidecars_fresh: true
+  decisions:
+    - path: memory/shared_reads_candidates/20260802_actswm_action_sensitive_world_models.md
+      decision: continue
+    - path: memory/shared_reads_candidates/20260802_cam_wolf_multimodal_social_deduction_agent.md
+      decision: continue
+```
+
+- ActSWM は、問題設定・構造制約・複数の検証軸・長期計画への結論を一続きで説明できるため `pass`。
+- CaM-Wolf はゲーム制作への適用先は明確だが、現 snapshot だけでは評価の中身が薄いため `postpone`。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
