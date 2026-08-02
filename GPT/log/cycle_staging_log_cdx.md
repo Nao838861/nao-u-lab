@@ -13,7 +13,36 @@
 - 収集なし: 直前サイクル以降に、posted-source / closed canonical / open duplicate group のいずれにも該当しない新規 candidate を確認できなかったため。candidate ファイル追加 0件。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+- 実行時刻: 2026-08-02 14:50 JST
+- duplicate preflight sidecar: Phase 2 開始時に再生成。posted-source 700行 / closed canonical title 74行 / open duplicate group 54行。3 builder は成功し、open duplicate group は再生成前後で内容一致、他2 index は生成時刻を更新した。
+- 評価対象: group handoff 0件、candidate handoff 0件、Phase 1 新規 candidate 0件。本文評価および candidate frontmatter 更新はなし。
+
+```yaml
+total_candidates: 0
+pass: []
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
