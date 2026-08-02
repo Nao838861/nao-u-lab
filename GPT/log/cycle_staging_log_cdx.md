@@ -92,7 +92,52 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index を検証。per-file atom index と一致し、broken reference は 0 件。UTF-8 明示読みで代表語『記憶』『ゲーム設計』『敵パターン』『評価軸』を取得できた"
+  - "memory/atoms.jsonl を監査。2823 atom の atoms.jsonl / per-file md / index.jsonl mirror は一致し、ID 重複・parse error・content conflict は 0 件。normalized-content 重複 40 組は既存 canonical overlay 45 組と recall fold で吸収済みで、新しい矛盾は確認しなかった"
+  - "memory/raw/ の 30 日超無更新を監査。slack_archive を除く 225 file を archive 候補として識別したが、raw 原文保持と既存 archive 契約不在のため移動は 0 件"
+  - "shared-reads candidate lifecycle dry-run は changed 0。内訳は posted 557 / ready_to_post 9 / postponed 244 / failed 393 / needs_review 5（ほか skipped_unreviewed 6）"
+  - "title canonical / mixed / open-duplicate / stale-triage / group-action sidecar を冪等再生成。terminal canonical 74 group、open duplicate 54 group（mixed 47 / all_open 7）"
+  - "Slack inbox を監査。directives 23 row / broadcasts 21 row とも pending 0 のため handled 更新は 0 件"
+issues:
+  - id: ISS-ENC-001
+    description: "shared-reads atom sr-1776127289-4d9239b255 の『AIエージェント』部分が『AIエ��ジェント』として raw Slack archive から atom mirror まで残っている局所的な source corruption"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl source_ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8 明示読みでも raw source と atom の双方に U+FFFD が存在する。memory/MEMORY.md 自体は代表語 probe 成功で破損なし"
+    display_or_tooling_status: "none; shell 表示だけの mojibake ではなく source data に同じ replacement character がある。memory_health のもう1件 gr-1777083728-44d444ab7a は UTF-8 raw/atom とも正常で false positive"
+    why_blocks_game_memory: "『AIエージェント』の完全一致検索を1件だけ取りこぼす可能性がある。ただし agent tag と source_ts 導線があり、ゲーム制作記憶全体を阻害する規模ではない"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 54
+  mixed_group_count: 47
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  note: "期限超過 1 件は group gha-e6d4d4b5a37a0808 の membership fingerprint 一致かつ retry_after=2026-08-20T13:19:04+09:00 の deferred lease により正しく抑止"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
