@@ -57,7 +57,44 @@ no_action_reason: "Phase 2 pass candidate が 0 件"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+- 実行時刻: 2026-08-02 14:56 JST
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780373599-bdf3eb4abd
+    source_ts: "1780373599.795789"
+    title: "continual consolidation の open challenge と当方の位置"
+    reason: "score 11 の未レビュー現行候補のうち最新で、memory・operation・evaluation の3優先タグを持つ。同一投稿のレビュー済み主 atom、既存 consolidation probes、後続の standalone directive と比較して独立した判断差があるか確認するため選んだ。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "survey abstract と当方運用の自己対応づけが中心で、実装アルゴリズム・数値 benchmark・外部受容が未確認。同一投稿の主 atomから source-type gate が既に採用済みで、consolidation drift・semantic boundary・trigger class の既存 probes も同じ判断面を覆う。3 instance を現行実装解とする前提は standalone directive 後の運用とも一致せず、同型 control の追加は古い前提と確認負荷を増やす。"
+  existing_controls:
+    - sr-1780373599-596c38e196
+    - probe-20260602-source-type-and-abstract-inference-gate
+    - probe-20260527-memory-consolidation-drift
+    - probe-20260528-semantic-boundary-before-consolidation
+    - probe-20260608-trigger-class-conflict-proxy
+    - memory/directive_shared_reads_log_cdx_standalone_20260626.md
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

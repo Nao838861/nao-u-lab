@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-02T12:49:39+09:00",
+  "updated_at": "2026-08-02T14:56:37+09:00",
   "reviewed_source_ts": [
+    "1780373599.795789",
     "1780314554.893779",
     "1785626062.095909",
     "1785595562.067419",
@@ -584,6 +585,48 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-02T14:56:37+09:00",
+      "selected": {
+        "id": "sr-1780373599-bdf3eb4abd",
+        "source_ts": "1780373599.795789",
+        "title": "continual consolidation の open challenge と当方の位置",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす最新の現行候補で、memory・operation・evaluation の3優先タグを持つ。継続的統合と trustworthy reflection を現在の memory cycle へ独立した小さな行動差として移せるか、同一投稿のレビュー済み主 atom、既存 consolidation probes、後続の standalone directive と比較するため選んだ。Nao_u の本投稿への明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。選択 atom は continual consolidation を retention・階層 index・複数観測の統合へ、trustworthy reflection を Phase 1 の早読みから Phase 2 の訂正へ接続するため relevance=3、actionability=2 とした。一方、投稿自身が survey の abstract レベルで、実装アルゴリズム・数値 benchmark がなく、分類境界・引用受容も未確認と明記しており、当方が field 標準 open challenge の実装解であるという主張もローカル比較結果ではなく自己対応づけなので evidence=1 とした。同一 Slack 投稿の主 atom sr-1780373599-596c38e196 は review 済みで、probe-20260602-source-type-and-abstract-inference-gate が taxonomy と実装 source の分離および abstract inference の暫定扱いをすでに担う。さらに probe-20260527-memory-consolidation-drift、probe-20260528-semantic-boundary-before-consolidation、probe-20260608-trigger-class-conflict-proxy が上書き drift、統合境界、固定 schedule と観測 conflict の分離を扱うため non_redundancy=0。3 instance を現在の実装解とする前提は、Mir／Log／Ash が非稼働で他 AI への問いかけを止める現行 standalone directive とも一致しない。322件の active_probes と Phase 4a 向け pending lease 1件へ同型 control を加えると、古い運用前提と抽象的な自己肯定を次回判断へ昇格させる risk が便益を上回るため risk_control=1 とし、state-only review で閉じる。",
+      "existing_controls": [
+        "sr-1780373599-596c38e196",
+        "probe-20260602-source-type-and-abstract-inference-gate",
+        "probe-20260527-memory-consolidation-drift",
+        "probe-20260528-semantic-boundary-before-consolidation",
+        "probe-20260608-trigger-class-conflict-proxy",
+        "memory/directive_shared_reads_log_cdx_standalone_20260626.md"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、同一投稿のレビュー済み主 atom・既存 consolidation controls・現行 standalone directive との重複／不一致による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-02T12:49:39+09:00",
       "selected": {
