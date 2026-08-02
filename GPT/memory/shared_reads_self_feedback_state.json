@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-03T01:28:05+09:00",
+  "updated_at": "2026-08-03T03:25:26+09:00",
   "reviewed_source_ts": [
+    "1780195765.483449",
     "1785679972.385069",
     "1779320105.911449",
     "1779993723.070709",
@@ -590,6 +591,45 @@
     "1780271082.067289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-03T03:25:26+09:00",
+      "selected": {
+        "id": "sr-1780195765-92e6295dd5",
+        "source_ts": "1780195765.483449",
+        "title": "Auditing Cascading Risks in Multi-Agent Systems via Semantic-Geometric Co-evolution",
+        "reason": "source が slack_api/shared-reads、score 15、未レビューという条件を満たし、game-design・agent・operation・evaluation の4優先タグを持つため選んだ。Phase 2 の整合的だが未検証な判断を Phase 3 がそのまま参照する連鎖盲点へ直接接続されており、現行 cycle の phase handoff で semantic な記述だけでなく依存構造も確認する新しい判断差が残るかを評価した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。原論文は12〜15 agent、約2,000 normal／2,000 risk trajectory、semantic-only・structural GNN・ORC-only との比較、coupling ablation を持ち、joint consistency が AUROC 0.88（attack）／0.83（natural）、DLT 10.2／3.4 interaction rounds と報告しているため evidence=3 とした。一方、評価は synthetic benchmark で、論文自身も simulation-to-reality gap と local ORC が global transition を見逃す限界を認める。ORC-only は benign high-curvature collaboration で FPR 0.32 であり、現在の5 phase のほぼ線形な artifact 依存を12〜15 agent の動的 semantic graph と同型に扱う根拠がないため actionability=2、risk_control=1 とした。既存の ChainSWE probe は carried assumptions と prior regression condition、observability probe は local threshold と cross-signal、algorithmic-collusion probe は shared prior と independent signal を既に要求する。新たな ORC／graph metric を足しても現在の phase handoff 判断の大半は変わらず non_redundancy=1 である。active_probes が322件、Phase 4a 向け pending lease が1件あるため、既存3 probe を再利用し本 atom は state-only reject とする。",
+      "existing_probes": [
+        "probe-20260709-chainswe-chain-regression-carryover",
+        "probe-20260708-observability-layer-cross-signal-check",
+        "probe-20260708-algorithmic-collusion-shared-prior-check"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の chain-regression／cross-signal／shared-prior probes との重複および ORC 転用の scale mismatch による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-03T01:28:05+09:00",
       "selected": {

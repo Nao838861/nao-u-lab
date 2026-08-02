@@ -53,7 +53,34 @@ reason: "Phase 2 の pass が 0 件のため、投稿対象なし"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780195765-92e6295dd5
+    source_ts: "1780195765.483449"
+    title: "Auditing Cascading Risks in Multi-Agent Systems via Semantic-Geometric Co-evolution"
+    reason: "score 15・未レビューで、game-design／agent／operation／evaluation の4優先タグを持ち、Phase 2→3 の連鎖盲点へ直接接続されるため選んだ。Nao_u の明示評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "原論文は約4,000 trajectory、semantic／structural／ORC baseline、coupling ablation を持つが、synthetic な12〜15 agent MAS を現行のほぼ線形な5 phase artifact 依存へ移す根拠がない。ORC-only の benign collaboration に対する FPR 0.32 と graph/schema・baseline calibration 負荷があり、既存の chain-regression／cross-signal／shared-prior probes が carried assumption・独立 evidence・信号層の判断を既に覆う。active_probes 322件、Phase 4a pending lease 1件のため追加 control は採用しない。"
+  change:
+    summary: "reviewed_source_ts と state-only reject 理由だけを更新し、probe・metric・lease・directive・恒久ルールは追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
