@@ -4,6 +4,20 @@ url: "https://itch.io/devlog/1580112/moros-flux-spr1617-update.amp"
 collected_at: "2026-08-03T01:17:06+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, playtesting, onboarding, accessibility, combat-feedback, ui]
+evaluated_at: "2026-08-03T01:21:20+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-03T01:21:20+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-03T01:21:20+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-02"
+supersedes: []
+gate_reason: >-
+  playtest feedback を視認性、telegraph、onboarding、accessibility、ゲーム内参照へ分解した改修内容は具体的で、ゲーム制作への適用先も明確である。
+  ただし改修後の再 playtest 結果や比較指標、何が改善し何が残ったかという結論がなく、現資料だけでは CoopEval 水準の評価節を支えられないため追跡待ちとする。
 ---
 
 ## raw_excerpt

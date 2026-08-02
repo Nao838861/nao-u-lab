@@ -11,7 +11,43 @@
 - duplicate preflight: 2 件とも `continue`。この Phase では品質判定・Slack 投稿・記憶整理を行っていない。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass: []
+fail:
+  - path: memory/shared_reads_candidates/20260803_start_again_sprint_legibility_playtest.md
+    reason: "playtest の問いと公開範囲の意図に留まり、観察結果・変更差分・評価結論がなく、記事固有の知見で約4000字を支えられない"
+postpone:
+  - path: memory/shared_reads_candidates/20260803_moros_flux_playtest_readability_update.md
+    reason: "改修分解と適用先は具体的だが、改修後の再 playtest 結果・比較・結論がなく、評価節を一次資料で支えられない"
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  sidecars_fresh: true
+  results:
+    - path: memory/shared_reads_candidates/20260803_moros_flux_playtest_readability_update.md
+      decision: continue
+    - path: memory/shared_reads_candidates/20260803_start_again_sprint_legibility_playtest.md
+      decision: continue
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
