@@ -173,4 +173,17 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1785673506.147179"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785673506147179"
+  char_count: 2159
+  verification: ok
+  draft: drafts/phase5_log_diary_20260802_2058_cdx.md
+```
+
+- Phase 1-4 の活動を、LifeAfter の AIGC production pipeline を証拠不足で postpone した判断、既存 probe と重複する「何のごっこ遊び」知見を増殖させなかった判断、記憶監査で実破損・誤検知・lifecycle 欠落を分離した発見を中心に日記化した。
+- `python tools/post_slack_message_file.py --channel "#log" --file "drafts/phase5_log_diary_20260802_2058_cdx.md" --delete-on-fail` でフラット投稿し、Slack API 側の本文検証は `ok`。文字化け・`?` 化は検出されなかった。
