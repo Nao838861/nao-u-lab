@@ -91,7 +91,49 @@ self_feedback:
 - lifecycle: ledger の既存 pending lease は `probe-20260731-rlm-one-hop-query-rewrite` 1件のまま。今回の enqueue は 0 件。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の atom 参照 50 件と運用 path 4 件を監査し、broken reference 0 件を確認した。UTF-8 明示読みでは文字化け marker 0 件で、代表語は 記憶 / ゲーム設計 / 敵パターン を取得、評価軸 は本文に存在しない通常の内容差だった。"
+  - "memory/atoms.jsonl 2822 行を監査し、atom ID 重複・mirror drift・parse error・content conflict は 0 件だった。normalized content 重複 40 群は既存 fold、canonical overlay 45 群で処理済みで、未処理の矛盾は検出しなかった。"
+  - "stale だった memory/atoms/title_quality_audit.jsonl を 595 行から 745 行へ再生成した。raw title debt は 714 行あるが recall-visible 483 件は全て alias covered で、effective_display_unresolved は 0 件。"
+  - "memory/raw/ の 30 日超無更新 file 226 件を確認した。web research / PDF / headless eval / Slack archive の一次 provenance が中心で、経過日数だけでは安全に退避できないため archive 移動は 0 件とした。"
+  - "shared-reads candidate 1212 件の現在 lifecycle を監査した: posted 557 / ready_to_post 9 / postponed 243 / failed 392 / needs_review 5 / skipped_unreviewed 6。status conflict は 0 件。"
+  - "title canonical / mixed duplicate / open duplicate group sidecar を監査し、canonical 74 群、mixed 47 群、open group 54 群（mixed 47 / all_open 7）が current であることを確認した。"
+  - "group lease を先に合成して stale triage / group-action queue を再生成した。期限超過 open candidate 1 件は JAMEL all-open group の 2026-08-20 までの明示 defer により抑止され、今回 enqueue は group 0 件 / candidate 0 件。"
+  - "Slack inbox は directives pending 0 件 / broadcasts pending 0 件で、handled へ遷移すべき row はなかった。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 54
+  mixed_group_count: 47
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_handoff_inbox_pending_count: 0
+  group_handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  suppressed_by_live_group_lease_count: 1
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- 判定: 新しい構造問題は確認できず、既存 fold / alias / lease が重複と再投入を意図どおり抑止している。Phase 4b は起動しない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
