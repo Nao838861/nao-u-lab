@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-02T23:18:36+09:00",
+  "updated_at": "2026-08-03T01:28:05+09:00",
   "reviewed_source_ts": [
+    "1785679972.385069",
     "1779320105.911449",
     "1779993723.070709",
     "1779993714.039019",
@@ -589,6 +590,45 @@
     "1780271082.067289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-03T01:28:05+09:00",
+      "selected": {
+        "id": "sr-1785679972-ed40effc57",
+        "source_ts": "1785679972.385069",
+        "title": "■ 概要 『For the Folklore Hour』は、visual novel『For The Black Hour』の作者が、当初の聖書モチーフ中心の暗い企画を捨て、Polish / Slavic folkloreを核に世界設定を組み直した過程を説明するdevlogである",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新 atom で、memory・harness・game-design・operation・evaluation の5優先タグを持つため選んだ。出典を設定の正解集ではなく変換前の制約として扱い、主要 asset ごとに保存する制約・意図的な反転・player に読ませる推論・game 内証拠・validation を分ける手順が、既存の theme coherence と初見可読性 controls に新しい判断差を作るか確認する。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で採用閾値は満たす。shared-reads 本文は title screen、衣装、神像、外部勢力の silhouette について source／preserved constraint／deliberate inversion／intended player inference／in-game evidence／validation へ落とす具体的な手順を示すため actionability=3 とした。一方、根拠は作者1名の事後 devlog で、比較版、blind playtest、理解度、文化監修者の評価がなく、由来を説明できることと作品内で伝わることを分離できていないため evidence=2。probe-20260620-crawllm-theme-slot-contract は theme manifest と slot completeness、probe-20260621-q0-five-second-legibility は first viewport の役割可読性、probe-20260706-paperclaw-prototype-hypothesis-contract は測定 verdict を既に扱うが、何を出典から保存し、何を機能のため反転したかという asset provenance は直接扱わないため non_redundancy=2 とした。主要 asset だけへ限定し、文化的妥当性と game 内可読性を別評価にすれば risk は制御できるが、全 asset へ重い由来台帳を強制する危険と322件の active_probes の確認負荷があるため risk_control=2。現在の後続 Phase 4a は記憶整理で、before／after を比較できる game asset が staging に存在せず、consumer_phase・trigger_artifact・expected_delta を具体化した operational lease を置けない。さらに Phase 4a 向け pending lease が既に1件あるため、contract に従い probe・metric を追加せず state-only defer とする。",
+      "existing_controls": [
+        "probe-20260620-crawllm-theme-slot-contract",
+        "probe-20260621-q0-five-second-legibility",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、採用閾値を満たすが具体的な game artifact／consumer を指定できないため operational lease を置かない defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-02T21:12:12+09:00",
       "selected": {
