@@ -67,7 +67,35 @@ skipped: []
 - Slack verification: channel `C0AN2FEHEJJ` / ts `1785642356.349389` / 1 回の `chat.postMessage` / thread なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780314554-0c649a0c77
+    source_ts: "1780314554.893779"
+    title: "Graphiti (Zep) — episodic memory + validity windows"
+    reason: "未レビュー score 11 で memory・agent・operation・evaluation の4優先タグを持ち、単独で問題・機構・適用案・限界が読めるため。valid_at／invalid_at と supersedes が現行 per-atom lifecycle に既存 control と異なる判断差を作るか確認した。Nao_u の本投稿への明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "投稿自身が原典未精読を明記し、63.8% の評価条件や validity window 単独寄与を確認していない。stale premise／current evidence／current-historical role／retention-utility の既存 probes と ATOM dual-time review が同じ判断面を既に覆い、全 memory への投稿単位 validity schema は事実の有効期間・review deadline・保持価値を混同するため採用条件を満たさない。"
+  change:
+    summary: "reviewed_source_ts と state-only reject の根拠だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

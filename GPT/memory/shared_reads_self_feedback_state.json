@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-02T10:33:45+09:00",
+  "updated_at": "2026-08-02T12:49:39+09:00",
   "reviewed_source_ts": [
+    "1780314554.893779",
     "1785626062.095909",
     "1785595562.067419",
     "1785610824.818329",
@@ -583,6 +584,47 @@
     "1785336918.156559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-02T12:49:39+09:00",
+      "selected": {
+        "id": "sr-1780314554-0c649a0c77",
+        "source_ts": "1780314554.893779",
+        "title": "Graphiti (Zep) — episodic memory + validity windows",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たし、memory・agent・operation・evaluation の4優先タグを持つ。未レビュー上位には投稿断片由来の atom もあるため、単独で問題・機構・適用案・限界が読める本 atom を選び、valid_at／invalid_at と supersedes が現在の per-atom lifecycle に既存 control と異なる判断差を作るか確認した。Nao_u の本投稿への明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は valid_at／invalid_at、過去 fact を削除せず superseded にする考え、frontmatter と chain audit への転用案を示すため relevance=3、actionability=2 とした。一方、投稿自身が出典記事を精読しておらず概念レベルに限定したと明記し、LongMemEval 63.8% の評価条件、baseline、validity window 単独の寄与、Graphiti 側の chain 圧縮を確認していないため evidence=1 とした。行動面では probe-20260531-stale-presupposition-check が古い前提の現在適合を、probe-20260605-memory-staleness-current-evidence が高関連だが現在根拠を失った記憶を、probe-20260709-atma-state-role-ghost-memory-check が current／historical role を、probe-20260625-amvl-retention-utility-lifecycle が保持宣言と観測 utility の分離をすでに扱う。さらに 2026-07-30 の ATOM dual-time review では、事実 validity、review deadline、retention を投稿単位の expiry に畳む危険を原典確認付きで reject 済みである。現行 per-file atom は status／supersedes による fold も持つため non_redundancy=0。ここで全 memory frontmatter への valid_at／invalid_at を別 control として足すと、複合 atom 内の事実ごとの有効期間を表せず、既存 temporal controls と Phase 4a 向け pending lease 1件へ確認負荷を重ねるため risk_control=1 とした。state-only review で閉じる。",
+      "existing_controls": [
+        "probe-20260531-stale-presupposition-check",
+        "probe-20260605-memory-staleness-current-evidence",
+        "probe-20260709-atma-state-role-ghost-memory-check",
+        "probe-20260625-amvl-retention-utility-lifecycle",
+        "sr-1780249598-ac69e2d859"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、原典未精読による evidence 限界、既存 temporal／staleness／role／retention controls および ATOM dual-time review との重複、投稿単位 validity schema の誤抑制リスクによる reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-02T10:33:45+09:00",
       "selected": {
