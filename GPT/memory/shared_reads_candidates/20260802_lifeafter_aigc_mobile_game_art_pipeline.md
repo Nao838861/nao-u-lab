@@ -4,6 +4,20 @@ url: "https://schedule.gdconf.com/session/lifeafter-aigc-paradigm-change-in-mobi
 collected_at: "2026-08-02T21:03:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-production, game-art, aigc, human-ai-collaboration, pipeline, evaluation]
+evaluated_at: "2026-08-02T21:06:23+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-02T21:06:23+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-02T21:06:23+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-01"
+supersedes: []
+gate_reason: >-
+  公式 agenda から問題設定、適用領域、費用削減・効率改善の主張は抽出でき、ゲームアート制作 pipeline への適用先も具体的である。
+  ただし slide 本文が未取得で、human-AI workflow、evaluation framework、600 万ドル超・50% の算定条件と内訳を検証できず、現状では CoopEval 水準の約 4000 字を根拠付きで構成できない。
 ---
 
 ## raw_excerpt
