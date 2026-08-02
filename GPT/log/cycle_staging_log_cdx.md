@@ -1,12 +1,12 @@
-# log_cdx Cycle Staging — 2026-08-02 16:43
+# log_cdx Cycle Staging — 2026-08-02 18:58
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
 
-- `memory/shared_reads_candidates/20260802_tycho_active_abstraction_world_models.md` — 未知ゲームのルール・隠れ状態・目標を少ない操作で推定し、実行可能な world model を作る／修復する／使わず迂回する判断まで評価する Tycho（arXiv:2607.28287）を収集。
-- 直前サイクル（2026-08-02 14:43）以降の確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` の pending は 0 件。raw Slack の #shared-reads / #all-nao-u-lab に新規 URL はなし。16:21 追加の `web_research` 13 件は確認し、ゲーム関連の既収集 work は candidate 化しなかった。
-- duplicate preflight: `continue`（canonical URL `https://arxiv.org/abs/2607.28287`）。sidecar 3 種は書込み直前に再生成済み。
+- `memory/shared_reads_candidates/20260802_let_npcs_fight_attack_reach_data.md` — Assassin's Creed の NPC 攻撃リーチを、制御環境で収集した実 gameplay animation と解釈可能な data science で測定し、大量 asset の一貫性・regression を継続監視する講演資料。
+- pending inbox: `slack_directives.jsonl` 0 件 / `slack_broadcasts.jsonl` 0 件。
+- 収集経路: 直近 `web_research`・recent atom・Slack URL を確認後、未登録の一次資料を追加検索。sidecar 3種を再生成し、duplicate preflight `continue` を確認して保存した。品質判定と Slack 投稿は未実施。
 
 ## Phase 2: 分析
 
