@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.21504"
 collected_at: "2026-08-02T10:17:47+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-art, 3d-assets, texture, asset-pipeline, generative-ai]
+evaluated_at: "2026-08-02T10:23:04+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-02T10:23:04+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-02T10:23:04+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-01"
+supersedes: []
+gate_reason: >-
+  UV seam を 2D texture map 上の問題ではなく、3D 表面を複数視点から観測して局所更新する問題へ変換する着想と、quality map・quadtree mask・領域条件付き diffusion という中核が具体的である。
+  比較指標・計算資源・限界を含めて約4000字の概要へ展開でき、旧 asset や prototype asset の再利用工程における 2D upscaler との比較検証へ直接適用できる。
+suggested_post_outline:
+  overview_angle: "UV seam で分断された 2D texture を直接拡大せず、3D view space の連続面として局所超解像する設計を中心に解説する"
+  analysis_axis: "canonical/seam view の選択、quality map による更新領域制御、quadtree mask、領域条件付き diffusion、直接投影が品質と計算量へ与える効果を分解する"
+  application_target: "Log_cdx のゲーム制作で、旧 3D model・prototype asset・外部 asset pack を現行表示へ再利用する際の asset pipeline と、2D upscaler 対 3D-aware 処理の小規模比較 probe"
+  pros_cons: "長所は seam coherence と元 texture の保持を両立しやすいこと。短所は multi-view rendering と GPU 資源を要し、生成 detail の意匠忠実性を個別検証する必要があること"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

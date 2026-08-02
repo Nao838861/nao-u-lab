@@ -11,7 +11,41 @@
 - 品質判定・Slack 投稿・記憶整理は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260802_texturepp_3d_asset_texture_super_resolution.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  path: memory/shared_reads_candidates/20260802_texturepp_3d_asset_texture_super_resolution.md
+  decision: continue
+  canonical_url: https://arxiv.org/abs/2607.21504
+  title_key: texture elevating 3d asset texture resolution with a region aware diffusion model
+evaluation_summary: >-
+  Texture++ は、UV seam を跨ぐ 3D 表面の連続性を view-space 処理で回復し、quality map と quadtree mask で局所 diffusion の更新範囲を制御する手法である。
+  問題設定・中核手法・比較評価・計算資源・結論を抽出でき、ゲーム制作では旧 asset や外部 asset pack の再利用工程に具体的な比較 probe を設計できるため pass とした。
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
