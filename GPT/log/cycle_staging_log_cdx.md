@@ -93,7 +93,34 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780195765-bfbc6dabc8
+    source_ts: "1780195765.509889"
+    title: "C172 Phase 2→3 連鎖盲点事案の ORC 再分析と PID／effective rank／ORC 3軸対応"
+    reason: "source=slack_api/shared-reads、score=12、未レビューで、memory・harness・operation・evaluation の4優先タグを持つ。ただし raw Slack では26 ms前の既レビュー atom sr-1780195765-92e6295dd5 と同じ投稿を blocks 分割した continuation であり、独立した行動差がないかを確認するため1件だけ選んだ。Nao_u の明示評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 1
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "採用条件の合計14に届かず、actionability と risk_control も2未満。同じ ORC 投稿本体は2026-08-03T03:25:26+09:00に、cycle への scale mismatch と既存 chain-regression／cross-signal／shared-prior probes との重複を根拠に reject 済み。本 continuation は3軸対応と『即着手しない』結論の追記で、原典 URL・追加評価・独立 action がない。同一 work の block 分割ごとに probe を増やさない。"
+  change:
+    summary: "reviewed_source_ts と同一 work の既レビュー参照だけを state に追加。probe・metric・lease・directive・恒久ルールは追加なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

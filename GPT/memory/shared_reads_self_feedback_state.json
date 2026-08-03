@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-03T20:40:17+09:00",
+  "updated_at": "2026-08-03T23:07:23+09:00",
   "reviewed_source_ts": [
+    "1780195765.509889",
     "1785750176.783739",
     "1785741899.888319",
     "1779917404.015279",
@@ -599,6 +600,45 @@
     "1780271082.067289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-03T23:07:23+09:00",
+      "selected": {
+        "id": "sr-1780195765-bfbc6dabc8",
+        "source_ts": "1780195765.509889",
+        "title": "C172 Phase 2→3 連鎖盲点事案の ORC 再分析と PID／effective rank／ORC 3軸対応",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、memory・harness・operation・evaluation の4優先タグを持つため選んだ。ただし raw Slack では26 ms前の sr-1780195765-92e6295dd5 と同じ投稿を blocks 分割した続きであり、その本体はすでにレビュー済みである。未レビュー backlog を同一 work 単位で閉じ、重複 probe を作らない判断を確認するため1件だけ選んだ。Nao_u が本 continuation を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 1,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、actionability と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。この atom は ORC 最小プロトタイプを即着手せず、PID／effective rank／ORC を情報理論／線形代数／微分幾何の3軸として既存 projects 履歴へ残すという continuation である。原論文、評価値、限界、Phase 2→3 連鎖盲点への適用は直前 atom sr-1780195765-92e6295dd5 にあり、2026-08-03T03:25:26+09:00 の review で ORC の synthetic-to-cycle scale mismatch、既存 chain-regression／cross-signal／shared-prior probes との重複、pending lease 1件を根拠に reject 済みである。本 continuation 単独には原典 URL や追加評価がなく、既レビュー判断を変える独立 evidence／action がないため evidence=2、actionability=1、non_redundancy=0とした。同一 work の block 分割ごとに probe を増やすと active_probes の確認負荷だけが増えるため risk_control=1とし、reviewed state だけを更新する。",
+      "existing_review": {
+        "id": "sr-1780195765-92e6295dd5",
+        "source_ts": "1780195765.483449",
+        "decision": "reject"
+      },
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、同一 ORC 投稿本体が既レビューであることによる reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-03T20:40:17+09:00",
       "selected": {
