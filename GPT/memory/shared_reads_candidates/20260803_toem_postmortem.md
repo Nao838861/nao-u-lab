@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/production/postmortem-toem"
 collected_at: "2026-08-03T11:46:34+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, postmortem, prototyping, photography-game, indie-development]
+evaluated_at: "2026-08-04T01:05:06+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-04T01:05:06+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-04T01:05:06+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-03"
+supersedes: []
+gate_reason: >-
+  四度の方向転換と中断を経て、「何をするゲームか」を説明できるcamera操作へ核を置き直し、mechanicと白黒aestheticが一致するまでの検証過程が具体的である。
+  prototype、custom tool、制作体制と資金面まで評価材料があり、制作サイクルへの適用を含む約4000字の概要を無理なく構成できる。
+suggested_post_outline:
+  overview_angle: "説明不能だったadventure prototypeが、写真を撮る動詞を核にmechanicとaestheticを一致させるまでの五版の変遷を整理する"
+  analysis_axis: "見た目や設定ではなく、playerが繰り返す行為でconceptを検証し、専用toolで小さな反応を量産可能にした制作判断"
+  application_target: "新規game prototypeの早期評価で、中心動詞を一文で説明できるか、操作が狙う観察速度を自然に生むかをbuildごとに確認する"
+  pros_cons: "大幅な捨て直しがmechanicとaestheticの整合を生む一方、長い探索期間と資金・外部協力への依存を許容する条件整理が必要"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt

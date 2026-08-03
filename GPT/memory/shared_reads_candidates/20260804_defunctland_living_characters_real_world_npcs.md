@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/three-design-lessons-from-defunctland
 collected_at: "2026-08-04T01:01:19+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, npc, interaction-design, immersive-experience, player-psychology]
+evaluated_at: "2026-08-04T01:05:06+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-04T01:05:06+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-04T01:05:06+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-03"
+supersedes: []
+gate_reason: >-
+  キャラクター選択、自律性、同時参加人数、群衆化、演者介入という設計変数を、複数の実運用事例の成否から比較できる。
+  会話NPCや自律agentの評価を「自律度」から「期待管理と運用を含む体験設計」へ広げる具体性があり、約4000字の概要と適用分析を構成できる。
+suggested_post_outline:
+  overview_angle: "DisneyのLiving Characters各事例から、生命感を生む条件を自律性・人格・観客規模・運用の組合せとして整理する"
+  analysis_axis: "技術的自律度ではなく、キャラクターへの期待、interactionの人数、human performerの裁量が没入感をどう変えるか"
+  application_target: "会話NPCや自律agentのprototypeで、人格制約、同時参加人数、群衆化、human-in-the-loopを独立した評価軸として試す"
+  pros_cons: "少ない自律性でも強い生命感を作れる一方、実空間の運用事例を画面内ゲームへ移す際は観客構造の差を補正する必要がある"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

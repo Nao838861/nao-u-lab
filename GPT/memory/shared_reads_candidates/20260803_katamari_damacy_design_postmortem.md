@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/postmortem-the-singular-design-of-nam
 collected_at: "2026-08-03T11:48:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, mechanics, postmortem, prototyping, interaction-design]
+evaluated_at: "2026-08-04T01:05:06+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-04T01:05:06+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-04T01:05:06+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-03"
+supersedes: []
+gate_reason: >-
+  単一の成長動詞を守るためにpower-upや別目的を退け、配置、音、振動、camera、memory制約をprototypeで調整した判断と未解決点が揃っている。
+  成功談だけでなくscale感の消失や物理・時間制限の妥協も評価でき、操作感設計と制作判断を約4000字で立体的に分析できる。
+suggested_post_outline:
+  overview_angle: "『転がして大きくする』一動詞を中心に、入力、配置、感覚feedback、scale、技術制約を統合した設計を分解する"
+  analysis_axis: "追加要素の多さではなく、中心動詞を目的のまま保つ棄却判断と、scale変化を身体感覚へ伝える複数channelの役割"
+  application_target: "一動詞型prototypeで、別目標が中心動詞を手段化していないか、音・振動・camera・配置が同じ感触を補強するかを検証する"
+  pros_cons: "明快な操作核と豊かなscale感を両立する一方、camera、物理、memory制約が体験の連続性を損なう限界もある"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt
