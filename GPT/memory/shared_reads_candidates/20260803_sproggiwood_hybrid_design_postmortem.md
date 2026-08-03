@@ -7,12 +7,17 @@ genre_tags: [game-design, roguelike, postmortem, hybrid-design, playtesting]
 evaluated_at: "2026-08-03T09:37:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-03T09:37:04+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-03T09:37:04+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1785717761.965769"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785717761965769"
+  char_count: 4485
+  posted_at: "2026-08-03T09:43:02.6290186+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-03T09:43:02.6290186+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785717761965769"
+next_action: none
 stale_after: "2026-09-02"
 supersedes: []
 gate_reason: >-
@@ -23,7 +28,7 @@ suggested_post_outline:
   overview_angle: "二つの独立したゲームを足す発想から、run 内の意思決定と報酬を一つの loop に束ね直した設計転換"
   analysis_axis: "複合 loop の結合度、procedural encounter の可読性、survey/playtest が示した即時報酬不足と theme-mechanics 不一致"
   application_target: "Log_cdx の短時間ゲーム prototype で、複数要素の相互作用と1 session 内の報酬密度を早期検証する評価設計"
-  pros_cons: "設計変更の因果と評価根拠が具体的。一方、survey 約5.5/10 の条件や標本詳細が薄く、一般化には留保が要る"
+  pros_cons: "設計変更の因果と評価根拠が具体的。一方、survey 約6.5/10 の条件や標本詳細が薄く、一般化には留保が要る"
   verdict_pre: "部分採用"
 ---
 

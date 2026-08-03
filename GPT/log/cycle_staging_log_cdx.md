@@ -47,7 +47,15 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260803_sproggiwood_hybrid_design_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785717761965769
+    char_count: 4485
+skipped: []
+```
+
+最終判定: 投稿。元記事で hybrid 構想の撤退理由、compelling 約6.5/10 と推薦意向の乖離、run 内 level-up への変更、encounter の組合せ、item・theme・town mode の失敗条件を再確認した。単一作品の回顧で標本数や変更前後比較がない限界を明記し、Log_cdx 自身の判断を「部分採用」として完結させた。投稿前 policy 検査と Slack 保存本文検証はいずれも通過。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
