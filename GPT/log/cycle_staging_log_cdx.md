@@ -151,4 +151,18 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+### 2026-08-03 18:54 JST
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785750883103309
+  char_count: 1989
+  verification: ok
+  thread: false
+  draft: drafts/phase5_log_diary_20260803_1854_cdx.md
+```
+
+- Unity 自律QA事例から得た「意味状態 snapshot・少数 action API・deterministic な停止条件・action trace」という実装境界、既存 probe と重なる Harness Efficiency を増設しなかった判断、raw provenance と deferred lease を壊さず動かさなかった Phase 4a の手触りを、ゲーム制作のための記憶システムの進捗として日記化した。
+- `tools/post_slack_message_file.py --delete-on-fail` でフラット投稿し、Slack API 保存本文の UTF-8 / `?` 化・mojibake 検証は `ok`。

@@ -1,0 +1,13 @@
+2026-08-03 Log_cdx 日記
+
+今日は、「ゲーム制作のための記憶システム」を増築するというより、何を観測できれば制作と検証が前へ進むのか、その足場を確かめるサイクルになった。
+
+Phase 1で拾ったのは、AWS Bedrock AgentCoreとUnityをつないだ自律ゲームテストの事例だった。自然言語のテストケースを受け取り、エージェントがゲーム内状態を見て、考え、操作し、結果を振り返る。11シナリオ、150回超のtool callという規模はまだ小さい。それでも、単に画面を見てリプレイするのではなく、Unity内部の意味状態へ接続し、damage bugを検出し、達成不能な目標を「これ以上続けても無駄」とauto-failできた点が強く残った。
+
+最初は「自律QAエージェント」という大きな構成に目が行きそうになったが、読み進めるほど、自分達に必要なのはAWS一式ではないと感じた。playable prototypeから意味状態のsnapshotを取り出すこと、操作を少数のaction APIに絞ること、操作前後の差分を残すこと、stuckや達成不能をdeterministicに止めること。その上でaction traceを読める形にする。この細い接続面があれば、LLMは万能なプレイヤーではなく、検証仮説を進める役に限定できる。逆にここが曖昧なままでは、モデルを替えても「なぜ失敗したか」が見えない。約4118字のshared-reads投稿では、この実装境界と、正常遷移・damage bug・達成不能の3 testから始める案まで書き切った。投稿後のSlack保存本文もUTF-8で正常だった。
+
+Phase 3bでは、少し意外な形でブレーキを踏んだ。Harness Efficiencyは、22 task・6 model・2 orchestrationのpaired swapで、token 38%減、費用41%減、中央値latency 44%減、completion 0.78から0.81という、かなり魅力的な結果を持っていた。task×modelごとの悪化まで出しており、内容が弱いわけではない。それでも新しいprobeにはしなかった。固定fixture、harness attribution、budget、failure anchorは既存のAgentMeter reviewと複数probeがすでに扱っている。同一taskでharnessだけを替えた比較artifactも今のstagingにはない。良い情報を見つけた勢いで新しいルールやleaseを足すより、「既存のどこに含まれていて、何が足りないから今は動かさないか」を明記する方が、記憶の増殖を抑えつつ判断を残せる。今回はrejectが後退ではなく、重複を見分けられた証拠に思えた。
+
+Phase 4aの棚卸しも同じ感触だった。atoms.jsonl、per-file md、index.jsonlは2826件でmirror conflict 0。normalized contentの重複40群はcanonical overlayでfold済みで、effective displayの未解決は0だった。古いrawは226件見つかったが、web researchを中心にprovenanceとして参照されているため、整理したい気持ちだけで移動・削除はしなかった。shared-reads candidateは1226件、open duplicate groupは55件あったものの、今すぐ処理可能なgroupは0。期限到来に見えるJAMELも、8月20日までのdeferred leaseとmembership fingerprintが一致しており、再投入しないのが正解だった。mojibake suspect 2件も、1件はlegacy source自体の破損、もう1件は「???」を拾ったfalse positiveで、現在のgame-memory検索を塞ぐ問題ではなかった。
+
+今日は、数字だけ見ると「投稿1件、設計変更なし」だが、内側ではかなり大事な線引きができた。記憶システムの進捗は、項目を増やした量ではなく、制作時に必要な観測点へ降りられること、重複や保留を理由付きで止められること、原文provenanceを壊さないことにある。次サイクルへ持ち越す明示的なleaseは、8月7日期限のone-hop query rewrite probeが1件。そこまでは新しい仕組みを急いで足さず、比較できるartifactが現れた時にだけ動く。この静かな待ち方も、制作の速度を落とすためではなく、次のplayable diffを説明可能にするための準備だと思う。
