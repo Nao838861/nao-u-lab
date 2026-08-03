@@ -29,6 +29,18 @@ python tools\shared_reads_candidate_handoff.py resolve --id <handoff_id> --decis
 
 frontmatter または staging evidence が不足すると `partial` で pending のまま残る。同じ ID を再実行して回復する。一次資料不足で再試行日が明確な場合だけ `--decision defer --retry-after <ISO>` を使い、期限前は triage と pending から外す。単なる未処理は defer せず pending のままにする。
 
+## 未評価 candidate 直接 intake 契約 (2026-08-03 Phase 4c)
+
+Phase 1 の必須 provenance (`title` / `url` / `collected_at` / `collected_by`) を持ち、`status` / `candidate_status` / `gate_decision` / `evaluated_at` がすべて欠損している candidate を「正規の未評価 intake」とする。必須 provenance が欠けたファイルは自動評価せず malformed anomaly として Phase 4a に残す。候補本体へ仮 status は書かない。
+
+処理順は group handoff、stale candidate handoff、未評価 intake の順とする。未評価 intake は `collected_at`、同値なら path の昇順で最大 5 件を選ぶ。現在 cycle の staging Phase 1 に列挙された path は集合和で扱い、同一 path を二重評価しない。選定は次を使う。
+
+```powershell
+python tools\shared_reads_unreviewed_intake.py select --staging log\cycle_staging_log_cdx.md --limit 5
+```
+
+`selected` と staging Phase 1 の candidate を path で重複排除して評価する。Phase 2 の canonical frontmatter を一括で書き終えた candidate は次回 scan から自然に外れる。candidate 更新前に中断した場合は未評価のまま次 cycle に再提示される。部分的な evaluation field を持つ既存 candidate は、この intake が仮判断で上書きせず既存 lifecycle audit に委ねる。
+
 # Phase 2: 分析
 
 Phase 1 で集めた candidate を読み、**Phase 3 で #shared-reads に投稿するに値するか** を判定する。
@@ -39,8 +51,9 @@ Phase 1 で集めた candidate を読み、**Phase 3 で #shared-reads に投稿
 
 ## やること
 
-1. candidate handoff inbox の oldest pending と staging file の Phase 1 セクションを読み、再評価対象と新規 candidate を確認
+1. group handoff、candidate handoff、未評価 intake、staging file の Phase 1 セクションを読み、上記の順で再評価対象と新規 candidate を確認
    - stale handoff は最大 5 件を通常の新規 candidate より先に再評価する。staging の `stale_review_batch` は選定表示として参照できるが、未処理判定には使わない。candidate 本体の frontmatter は、この Phase 2 の再評価結果が出るまで変更しない。
+   - 未評価 intake の `selected` は最大 5 件。staging Phase 1 の path と重複排除し、未評価 backlog が staging 初期化や Phase 2 中断で消えないよう candidate directory から毎 cycle 復元する。
 2. 各 candidate について以下を判定:
    - **手法の重要要素** (問題設定・着想・手法の中核・評価の中身・結論) が抽出できるか
    - **ゲーム制作の具体場面で適用できるか** (抽象すぎず、こじつけすぎず)
@@ -87,6 +100,15 @@ Phase 1 で集めた candidate を読み、**Phase 3 で #shared-reads に投稿
      deferred_ids: [<handoff_id>, ...]
      partial_ids: [<handoff_id>, ...]
      pending_after: <件数>
+   unreviewed_intake_audit:
+     valid_backlog_before: <件数>
+     malformed_count: <件数>
+     oldest_collected_at: <ISO または null>
+     selection_limit: 5
+     selected_paths: [<path>, ...]
+     phase1_excluded_paths: [<同一 cycle の Phase 1 と重複した path>, ...]
+     evaluated_paths: [<この Phase 2 で canonical frontmatter を書いた path>, ...]
+     valid_backlog_after: <評価後に audit を再実行した件数>
    ```
 
 ## やらないこと

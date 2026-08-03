@@ -213,7 +213,33 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+
+```yaml
+implemented:
+  - issue_id: ISS-CANDIDATE-LIFECYCLE-GAP
+    files_changed:
+      - path: tools/shared_reads_unreviewed_intake.py
+        change: created
+      - path: tools/test_shared_reads_unreviewed_intake.py
+        change: created
+      - path: phases/phase2_analyze.md
+        change: modified
+      - path: phases/phase4a_cleanup.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: >-
+      Phase 1 provenance が揃い evaluation field が全欠損の candidate を、collected_at と path 順で
+      最大 5 件ずつ再提示する read-only intake を導入した。Phase 2 の処理順・重複排除・監査記録と、
+      Phase 4a の valid backlog / malformed 分離を既存 lifecycle に接続した。
+    partial: false
+migrations: []
+verification:
+  - "実データ audit: valid_unreviewed_count 8、malformed_count 0、最古 collected_at 2026-07-21T20:15:35+09:00、上位 5 件を決定的順序で選定"
+  - "新規 intake 単体テスト 3 件: predicate、collected_at/path 順、Phase 1 path 重複排除、malformed 分離が成功"
+  - "既存 lifecycle / candidate handoff / group handoff / stale triage テスト計 21 件が成功"
+  - "python tools/memory_recall.py \"ゲーム設計\" が成功し、既存 atom 読取を確認"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

@@ -172,6 +172,16 @@ stale triage builder は `memory/shared_reads_group_handoff_inbox.jsonl` の liv
 
 `last_decision` は `posted` / `pass` / `ready_to_post` / `postpone` / `postponed` / `fail` / `failed` / `needs_review` の閉じた状態語彙だけを使う。重複や移行の原因は `duplicate_reason` などの専用 reason field、根拠は `evidence` に分離する。たとえば `gate_decision: postpone` から `last_decision: failed` と evidence 付きで進んだ行は正常な lifecycle transition である。真の anomaly は `status` / `candidate_status` の不一致、または historical gate と異なる現在状態に対応する正規 `last_decision` / `evidence` がない場合として報告する。`--fix-conflicts` は posted/phase3 block または decision evidence で一意に決まる時だけ修復し、曖昧な行や整合済み terminal 状態を historical gate へ戻さない。
 
+## 未評価 candidate intake 監査 (2026-08-03 Phase 4c)
+
+Phase 1 provenance を持つが evaluation field がすべて欠損した candidate と、provenance 自体が欠けた malformed candidate を次で分けて監査する。
+
+```powershell
+python tools\shared_reads_unreviewed_intake.py audit --limit 5
+```
+
+`valid_unreviewed_count` / `oldest_collected_at` / `malformed_count` / `selection_limit` を staging の `stale_backlog` に記録する。正規の未評価 candidate は lifecycle status 欠損 anomaly として二重計上しない。malformed は自動評価せず issue の evidence に分離する。既存 8 件を含む正規 backlog へ仮 status を一括付与せず、Phase 2 の通常品質 gate で順に閉じる。
+
 ## bounded group-action handoff (2026-07-16 Phase 4c)
 
 open duplicate group の stale 候補は、open-group sidecar と stale triage を再生成した後に group-action queue を生成する。
@@ -198,4 +208,4 @@ staging の `group_action_handoff` は当該 cycle の選定表示に限定す�
 
 handoff に含めた group の `representative` と `open_siblings` は candidate 単位の `stale_review_batch` に重ねて入れない。この重複排除は複数 group を渡す場合も全 group に適用する。元 candidate、stale triage queue、mixed duplicate queue は変更しない。
 
-staging の `stale_backlog` には最低限 `overdue_open_total` / `stale_triage_queue_rows` / `open_duplicate_group_count` / `mixed_group_count` / `all_open_group_count` / `actionable_group_count` / `backlog_high_water` / `group_handoff_budget` / `handed_off_group_count` / `candidate_handoff_pending_count` / `candidate_handoff_ids` を残す。title 一致だけでは自動 close / skip せず、`source_url_evidence` を読んで既存の `close_siblings` / `keep_distinct` / `defer` へ渡す。1 cycle 後は Phase 2 の `group_actions` を参照し、processed groups、判断できた open siblings、通常 candidate 分析への時間影響を確認して、budget 3 を継続するか判定する。
+staging の `stale_backlog` には最低限 `overdue_open_total` / `stale_triage_queue_rows` / `open_duplicate_group_count` / `mixed_group_count` / `all_open_group_count` / `actionable_group_count` / `backlog_high_water` / `group_handoff_budget` / `handed_off_group_count` / `candidate_handoff_pending_count` / `candidate_handoff_ids` / `valid_unreviewed_count` / `oldest_unreviewed_collected_at` / `malformed_candidate_count` / `phase2_unreviewed_limit` を残す。title 一致だけでは自動 close / skip せず、`source_url_evidence` を読んで既存の `close_siblings` / `keep_distinct` / `defer` へ渡す。1 cycle 後は Phase 2 の `group_actions` を参照し、processed groups、判断できた open siblings、通常 candidate 分析への時間影響を確認して、budget 3 を継続するか判定する。
