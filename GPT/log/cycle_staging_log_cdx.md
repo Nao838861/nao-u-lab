@@ -90,7 +90,58 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、tools/validate_memory_index.py で per-file atom index との参照整合を確認した。broken entry は 0 件。代表語は `記憶` / `ゲーム設計` / `敵パターン` を取得でき、`評価軸` は exact match が現行生成 index にないが、日本語本文の decode と validator は正常。"
+  - "memory/atoms.jsonl / per-file md / index.jsonl は 2827 件で mirror conflict 0。duplicate cluster 45 群は既存 canonical overlay と一致し、normalized content の raw 重複 40 群は fold 済み、effective display unresolved は 0。新しい矛盾はなかった。"
+  - "memory/raw/ の 2026-07-04 より前かつ 30 日以上更新のない原文を 226 件確認した。web_research 119 件を中心に provenance として参照されるため、この phase では移動・削除せず archive 候補の識別だけに留めた。"
+  - "shared-reads candidate 1227 件を dry-run 監査し、posted 561 / ready_to_post 9 / postponed 246 / failed 398 / needs_review 5 / lifecycle status 欠落 8。status/candidate_status の新規 conflict は 0、期限到来 open candidate は JAMEL 1 件。"
+  - "title canonical / mixed duplicate / open duplicate group / stale triage / group action sidecar を順に再生成した。closed canonical 74 群、open group 55 件（mixed 48 / all_open 7）。JAMEL group は retry_after 2026-08-20 の既存 deferred lease と membership fingerprint 一致により再投入を抑止し、stale triage と group action は 0 件。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件。完了根拠のない status 更新は行わなかった。"
+  - "probe lifecycle を validate し、due lease 0 件のため receipt 更新なし。pending 1 件は probe-20260731-rlm-one-hop-query-rewrite で lease_due 2026-08-07。"
+issues:
+  - id: ISS-CANDIDATE-LIFECYCLE-GAP
+    description: "top-level candidate 8 件が lifecycle status を持たず、status / stale_after を入力にする stale triage と永続 handoff から不可視になっている。2026-07-21 から 2026-08-03 まで複数 cycle の生成物に再発しており、単発の未評価ではなく producer-to-Phase-2 導線の欠落が疑われる。"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/20260721_big_lizard_ai_copilot_postmortem.md; memory/shared_reads_candidates/20260731_arbigraph_context_management_task_graphs.md; memory/shared_reads_candidates/20260731_icae_bench_interactive_project_builders.md; memory/shared_reads_candidates/20260731_workbuddy_contamination_resistant_tasks.md; memory/shared_reads_candidates/20260801_pegote_dominant_strategy_rework.md; memory/shared_reads_candidates/20260801_wastoid_playtest_campaign_overview.md; memory/shared_reads_candidates/20260803_katamari_damacy_design_postmortem.md; memory/shared_reads_candidates/20260803_toem_postmortem.md; tools/backfill_shared_reads_candidate_status.py --today 2026-08-03 => skipped_unreviewed status count 8"
+    source_file_status: "8 ファイルとも UTF-8 本文は読めるが、許可された lifecycle status / candidate_status / stale_after が欠落。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "候補内の game-design / playtesting 知見が Phase 2 の再評価 queue に載らず、次の制作で検索・評価されないまま孤児化する。"
+non_blocking_observations:
+  - "memory_health の mojibake suspect は 2 件。sr-1776127289-4d9239b255 は UTF-8 source 自体に `エ��ジェント` がある legacy source corruption、gr-1777083728-44d444ab7a は UTF-8 source が正常で `???` を detector が拾った false positive。source_file_status と display_or_tooling_status を切り分け済みで、現時点では game-memory の導線を塞ぐ構造問題ではない。"
+  - "unindexed duplicate title group は mixed / all-open sidecar に保持されており、terminal canonical への誤登録はない。title 一致だけの自動 close は行っていない。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-CANDIDATE-LIFECYCLE-GAP
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
