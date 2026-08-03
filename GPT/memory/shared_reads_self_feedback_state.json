@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-03T14:24:31+09:00",
+  "updated_at": "2026-08-03T16:29:23+09:00",
   "reviewed_source_ts": [
+    "1779917404.015279",
     "1780195579.727069",
     "1785717761.965769",
     "1785709560.255349",
@@ -596,6 +597,44 @@
     "1780271082.067289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-03T16:29:23+09:00",
+      "selected": {
+        "id": "sr-1779917404-6ebf7cd92a",
+        "source_ts": "1779917404.015279",
+        "title": "It's Not the Capability: Harness Sensitivity Is Non-Monotone Across LLM Agent Tiers",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たし、memory・harness・agent・operation・evaluation の5優先タグを持つ。今サイクルの Phase 3 が model を固定した harness 差し替え評価を扱っているため、strictness と model tier の非単調な相互作用が次回の harness 変更へ未反映の判断差を作るか確認するため選んだ。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は24 task、6 model、light／balanced／strict の432 run、VTSR、latency、wrong_file と format_violation の failure taxonomy まで示し、harness 変更前に task・model role・失敗型・比較 signal を置く具体的な行動へ変換できるため relevance・actionability・evidence は3とした。一方、同じ研究を扱う後続 atom sr-1782072522-b324194df9 は2026-06-22に review 済みで、probe-20260622-harness-fit-nonmonotone が failure type、task／model role、success・latency・correction count・file-target accuracy・output-format accuracy などの比較 signal をすでに直接要求している。選択 atom の固有差を別 control にしても次回判断を変えず non_redundancy は0である。active_probes 322件と Phase 4a 向け pending lease 1件がある状態で同義 probe を追加すると確認負荷だけを増やすため risk_control は1とし、未レビュー source_ts を state-only reject で閉じる。",
+      "existing_controls": [
+        "sr-1782072522-b324194df9",
+        "probe-20260622-harness-fit-nonmonotone"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、同一研究の後続 review・既存 harness-fit probe との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-03T14:24:31+09:00",
       "selected": {
