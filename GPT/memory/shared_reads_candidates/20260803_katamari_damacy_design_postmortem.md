@@ -7,12 +7,17 @@ genre_tags: [game-design, mechanics, postmortem, prototyping, interaction-design
 evaluated_at: "2026-08-04T01:05:06+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-04T01:05:06+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-04T01:05:06+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-04T01:14:27.564479+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785773667564479"
+next_action: none
+posted:
+  ts: "1785773667.564479"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785773667564479"
+  char_count: 4055
+  posted_at: "2026-08-04T01:14:27.564479+09:00"
 stale_after: "2026-09-03"
 supersedes: []
 gate_reason: >-

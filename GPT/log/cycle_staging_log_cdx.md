@@ -65,7 +65,25 @@ duplicate_preflight:
 - 品質確認: 各 candidate から問題設定、着想、手法の中核、試行または評価、結論と限界を抽出でき、CoopEval 水準の約4000字構成へ展開可能。投稿・新規収集は未実施。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260804_defunctland_living_characters_real_world_npcs.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785773661941779
+    char_count: 3502
+  - candidate: memory/shared_reads_candidates/20260801_pegote_dominant_strategy_rework.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785773663554909
+    char_count: 3547
+  - candidate: memory/shared_reads_candidates/20260803_toem_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785773665602029
+    char_count: 3950
+  - candidate: memory/shared_reads_candidates/20260803_katamari_damacy_design_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785773667564479
+    char_count: 4055
+skipped: []
+```
+
+- 4件とも元記事を再確認し、問題設定、手法または設計判断、試行・失敗条件、評価材料、結論と限界を記事固有の内容で再構成した。
+- 投稿前に `tools/shared_reads_policy.py` の検査を通し、必須6節、3500–4500字、末尾URL、禁止表現なしを確認した。Slack保存本文も4件とも `verification: ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

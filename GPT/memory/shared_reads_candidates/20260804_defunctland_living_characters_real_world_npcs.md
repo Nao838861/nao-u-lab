@@ -7,12 +7,17 @@ genre_tags: [game-design, npc, interaction-design, immersive-experience, player-
 evaluated_at: "2026-08-04T01:05:06+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-04T01:05:06+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-04T01:05:06+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-04T01:14:21.941779+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785773661941779"
+next_action: none
+posted:
+  ts: "1785773661.941779"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785773661941779"
+  char_count: 3502
+  posted_at: "2026-08-04T01:14:21.941779+09:00"
 stale_after: "2026-09-03"
 supersedes: []
 gate_reason: >-
