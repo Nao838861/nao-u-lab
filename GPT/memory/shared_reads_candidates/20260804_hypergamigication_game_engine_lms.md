@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2607.29300v1"
 collected_at: "2026-08-04T05:15:54+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, educational-games, unity, game-engine, systems-integration]
+evaluated_at: "2026-08-04T05:18:38+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-04T05:18:38+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-04T05:18:38+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-03"
+supersedes: []
+gate_reason: >-
+  双方向統合という着想と Unity–Blackboard pilot の存在は具体的だが、収集済み根拠は要旨に限られ、
+  教材データの写像、実装境界、pilot の評価条件・結果が不足している。現状では推測なしに
+  CoopEval 水準の約4000字概要を構成できないため、一次資料の詳細確認まで保留する。
 ---
 
 ## raw_excerpt
