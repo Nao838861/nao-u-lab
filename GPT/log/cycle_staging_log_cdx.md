@@ -11,7 +11,38 @@
 - Slack 投稿は行っていない。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail:
+  - path: memory/shared_reads_candidates/20260803_dunebound_external_playtest_extraction.md
+    reason: "extraction の弱さを発見して修正へつないだ制作事例は具体的だが、観察条件・再評価・結果指標がなく、約4000字を記事固有の証拠で支えられない"
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  path: memory/shared_reads_candidates/20260803_dunebound_external_playtest_extraction.md
+  decision: continue
+  title_key: devlog 9 final polish tutorials bug fixing and release preparation
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

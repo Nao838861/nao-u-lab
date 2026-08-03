@@ -4,6 +4,20 @@ url: "https://itch.io/devlog/1536929/devlog9-final-polish-tutorials-bug-fixing-a
 collected_at: "2026-08-03T14:15:30+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, playtesting, extraction-shooter, tutorial, feedback]
+evaluated_at: "2026-08-03T14:19:13.8045166+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-03T14:19:13.8045166+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-03T14:19:13.8045166+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-02"
+supersedes: []
+gate_reason: >-
+  一回の run に全行動を詰める player 行動から extraction の意味の弱さを発見し、修正優先度、combat feedback、tutorial の説明範囲へ接続した流れは具体的である。
+  ただし playtester 数、観察手順、変更前後の再評価、結果指標がなく、約4000字へ広げると記事固有の証拠より一般的な playtest 助言の補作が中心になるため投稿候補としては閉じる。
 ---
 
 ## raw_excerpt
