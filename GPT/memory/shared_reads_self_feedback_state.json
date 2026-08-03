@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-03T18:47:02+09:00",
+  "updated_at": "2026-08-03T20:40:17+09:00",
   "reviewed_source_ts": [
+    "1785750176.783739",
     "1785741899.888319",
     "1779917404.015279",
     "1780195579.727069",
@@ -598,6 +599,47 @@
     "1780271082.067289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-03T20:40:17+09:00",
+      "selected": {
+        "id": "sr-1785750176-f05ad94356",
+        "source_ts": "1785750176.783739",
+        "title": "Building an AI Game Testing Agent with Amazon Bedrock",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新 atom で、memory・harness・game-design・agent・operation・evaluation を含む8タグを横断する。実行中 build の意味状態、少数の parameterized tool、before／after diff、deterministic な stuck 判定、再現 trace という構成が、現在の game/headless QA controls と異なる次回判断を作るか確認するため選んだ。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は instrumented Unity build、約1400 object から約42 object への filter、13 tool、perceive／reason／act／reflect loop、同一 call または no-change 3回での戦略変更、stuck 3回での auto-fail、11 scenario・150超 tool call、damage bug と達成不能 objective の検出、費用と適用限界まで示す。自分達への適用も semantic snapshot、少数 tool、seed、before／after diff、同一 seed 10反復、script baseline、deterministic pass oracle と人間の feel 判定の分離まで具体化しているため relevance・actionability・evidence は3とした。一方、probe-20260525-state-abstraction-action-loop は意味状態と observe／act loop、probe-20260602-titan-headless-qa-trace は abstract state・action trace・停止診断、probe-20260610-structural-semantic-verifier-boundary は structural／semantic validity、probe-20260621-ai-readable-playtest-acceptance-surface は machine-readable playtest surface と manual feel 分離、probe-20260515-external-harness-minimum は deterministic evidence をすでに要求する。本 atom 固有の AWS／AltTester 構成を除く行動差は既存 controls に含まれ、non_redundancy=0である。現在の staging には比較可能な playable diff、semantic test harness 導入前後、固定 seed replay、誤 pass／fail artifact がなく、Phase 4a 向け pending lease も1件あるため consumer・trigger artifact・期待判断差を operational lease として指定できない。322件の active_probes に同義 control を足す確認負荷が便益を上回るため risk_control=1とし、reviewed state だけを更新する。",
+      "existing_controls": [
+        "probe-20260515-external-harness-minimum",
+        "probe-20260525-state-abstraction-action-loop",
+        "probe-20260602-titan-headless-qa-trace",
+        "probe-20260610-structural-semantic-verifier-boundary",
+        "probe-20260621-ai-readable-playtest-acceptance-surface"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存 game/headless QA probes との重複、比較 artifact 不在、既存 pending lease による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-03T18:47:02+09:00",
       "selected": {

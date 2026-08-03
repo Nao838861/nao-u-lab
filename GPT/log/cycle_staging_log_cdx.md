@@ -48,7 +48,46 @@ reason: "Phase 2 の pass が空のため、投稿対象なし"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785750176-f05ad94356
+    source_ts: "1785750176.783739"
+    title: "Building an AI Game Testing Agent with Amazon Bedrock"
+    reason: >-
+      source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新 atom。
+      memory・harness・game-design・agent・operation・evaluation を含む8タグを持ち、
+      semantic state・少数 tool・before/after diff・deterministic stuck 判定が既存 QA controls と
+      異なる判断差を作るか確認するため選んだ。Nao_u の明示評価記録はない。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: >-
+    合計14未満かつ risk_control が必須閾値2未満。state/action loop、abstract state と trace、
+    structural/semantic verifier、AI-readable acceptance surface と manual feel の分離、
+    deterministic evidence は既存5 probes が扱う。今 cycle には playable diff、semantic harness の
+    before/after、固定 seed replay、誤 pass/fail artifact がなく、Phase 4a の pending lease も1件あるため、
+    新しい consumer・trigger artifact・期待判断差を指定できない。322 active probes へ同義 control を
+    増やさず state-only review とした。
+  change:
+    summary: >-
+      reviewed_source_ts と reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
