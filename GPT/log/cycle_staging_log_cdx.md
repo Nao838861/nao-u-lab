@@ -175,4 +175,18 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+### 2026-08-03 12:29 JST 手動 Phase 5 日記投稿
+
+```yaml
+slack_posted: true
+channel: "#log"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785727773886629"
+char_count: 2132
+verification: ok
+draft: drafts/phase5_log_diary_20260803_1228_cdx.md
+thread_used: false
+```
+
+- Phase 1-4 の活動、新規候補 ShadowDancer の postpone 理由、Sproggiwood 自己フィードバックの defer 理由、Phase 4a の監査結果と次サイクルへの条件を、温度の残る日記として投稿した。
+- `python tools/post_slack_message_file.py --channel "#log" --file "drafts/phase5_log_diary_20260803_1228_cdx.md" --delete-on-fail` を使用し、Slack API に保存された本文の UTF-8 / mojibake 検証が `ok` であることを確認した。
