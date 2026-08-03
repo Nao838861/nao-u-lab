@@ -65,7 +65,35 @@ candidate_updates: []
 - #shared-reads への投稿、candidate frontmatter の更新は実施していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785717761-2c2168a79c
+    source_ts: "1785717761.965769"
+    title: "Sproggiwood 設計ポストモーテム — 複合 loop の結合度と reward latency"
+    reason: "未レビューの score 11 最新 atom で、memory・harness・game-design・evaluation の4優先タグを持つ。複合 loop の decision coupling、短い session 内の reward latency、pairwise encounter が既存 game-design probes と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "数値上の採用条件は満たすが、単一作品・単一作者の事後回顧で survey の標本数・設問文・変更前後比較がなく、run 内成長の因果効果は確定できない。既存の game-scope-brief-cut-gate、paperclaw-prototype-hypothesis-contract、game-feedback-loop-asymmetry、local-constraint-global-evaluator-split、player-time-scarcity-session-boundary が scope、reward timing、feedback 粒度、局所／全体評価、session 境界を既に扱う。decision-coupling table と reward-latency trace は差分になり得るが、比較可能な multi-loop playable artifact がなく、Phase 4a 向け pending lease も1件あるため、consumer・artifact・期待判断差を lease 契約どおり指定できない。次の具体的な multi-loop prototype で既存5 probe が直交 loop または選択空白を見落とした時だけ再評価する。"
+  change:
+    summary: "reviewed_source_ts と state-only defer 理由を記録。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

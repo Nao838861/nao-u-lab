@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-03T09:48:14+09:00",
+  "updated_at": "2026-08-03T12:25:00+09:00",
   "reviewed_source_ts": [
+    "1785717761.965769",
     "1785709560.255349",
     "1780238641.322869",
     "1780249598.660899",
@@ -594,6 +595,47 @@
     "1780271082.067289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-03T12:25:00+09:00",
+      "selected": {
+        "id": "sr-1785717761-2c2168a79c",
+        "source_ts": "1785717761.965769",
+        "title": "Sproggiwood 設計ポストモーテム — 複合 loop の結合度と reward latency",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす最新 atom で、memory・harness・game-design・evaluation の4優先タグを持つ。town と dungeon の通貨接続を decision の相互作用から区別し、短い session 内の reward latency と pairwise encounter を測る提案が、次の playable prototype で既存 probe と異なる判断差を作るか確認するため選んだ。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の採用条件は満たす。投稿は、複合 loop の結合を資源移動ではなく片方の判断が他方の選択空間・risk・解法を変えるかで判定する、意味のある選択→可視結果→次の選択までの turn 数を reward latency とする、二つの mechanic が同じ盤面変数へ作用する pairwise encounter を固定 seed で調べる、という具体的な次回行動へ変換できるため relevance と actionability を3とした。一方、根拠は単一作品・単一作者の事後回顧で、survey の標本数・設問文・分散、変更前後の A/B、継続率や売上がなく、約6.5/10 という compelling 評価と run 内成長移行後の改善を因果として確定できないため evidence は2に留める。probe-20260602-game-scope-brief-cut-gate は scope promise と Cut、probe-20260706-paperclaw-prototype-hypothesis-contract は reward timing を含む事前仮説、probe-20260606-game-feedback-loop-asymmetry は feedback の即時性・粒度、probe-20260609-local-constraint-global-evaluator-split は局所 mechanic と全体 evaluator の分離、probe-20260604-player-time-scarcity-session-boundary は session 長と短時間価値を既に扱う。本 atom 固有の decision-coupling table と reward-latency trace は差分になり得るが、active_probes は322件で Phase 4a 向け pending lease も1件あり、現在の staging には複数 loop を持つ playable diff、既存 probe 適用前後、固定 seed の before／after artifact がない。consumer_phase、trigger_artifact、expected_delta を比較可能に指定できないため新規 probe／metric は lease せず、次の具体的な multi-loop prototype で既存5 probe を適用しても通貨接続だけの直交 loop または session 内の選択空白を見落とした実例が出た時だけ再評価する state-only defer とする。",
+      "existing_probes": [
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract",
+        "probe-20260606-game-feedback-loop-asymmetry",
+        "probe-20260609-local-constraint-global-evaluator-split",
+        "probe-20260604-player-time-scarcity-session-boundary"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と defer 理由だけを更新した。decision-coupling table と reward-latency trace の差分は記録したが、比較 artifact 不在、既存 game-design probes との重複、既存 pending lease により、probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-03T09:48:14+09:00",
       "selected": {
