@@ -58,7 +58,40 @@ reason: "Phase 2 の pass が 0 件のため、投稿対象なし。Slack 投稿
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780163604-ddab44860d
+    source_ts: "1780163604.831419"
+    title: "OPSAI — Open Player Modeling をプレイヤーの次行動へ返す分離アーキテクチャ"
+    reason: "score 11 の未レビュー候補では最新で、memory・game-design・agent・evaluation の4優先タグを持つ。telemetry 分離、raw replay／軽量 index、one recommendation が既存 controls と異なる判断差を作るか確認するため1件だけ選んだ。Nao_u の明示評価記録はない"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "architecture demonstration としての具体性はあるが、player の次行動や学習効果の対照比較はない。後続の同テーマ review sr-1784344254-f5af46ba40 と probe-20260718-open-player-model-correction-boundary が、model_output／evidence_trace／human_correction の分離と次 run の比較まで既に扱う。synchronized playtest stream と quality feedback route も trace から次 action への接続を扱い、新規判断差がない。active probe 322件、Phase 4a 向け pending lease 1件、比較可能な player-facing recommendation artifact 不在のため state-only reject とした"
+  existing_controls:
+    - sr-1784344254-f5af46ba40
+    - probe-20260718-open-player-model-correction-boundary
+    - probe-20260622-d2e-synchronized-playtest-stream
+    - probe-20260625-quality-workflow-feedback-route
+  change:
+    summary: "reviewed/source_ts と reject 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

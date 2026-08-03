@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-04T05:24:40+09:00",
+  "updated_at": "2026-08-04T07:26:24+09:00",
   "reviewed_source_ts": [
+    "1780163604.831419",
     "1785765740.918089",
     "1785765745.048369",
     "1785765748.718979",
@@ -603,6 +604,46 @@
     "1780271082.067289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-04T07:26:24+09:00",
+      "selected": {
+        "id": "sr-1780163604-ddab44860d",
+        "source_ts": "1780163604.831419",
+        "title": "OPSAI — Open Player Modeling をプレイヤーの次行動へ返す分離アーキテクチャ",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす最新候補で、memory・game-design・agent・evaluation の4優先タグを持つ。telemetry を game engine から分離し、重い replay と軽い index を分け、分析を one recommendation としてプレイヤーの次試行へ返す知見が、現在の game evaluation controls と異なる小さな判断差を作るか確認するため1件だけ選んだ。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。元投稿は Frontend／stateless Backend／two-tier Log Storage の分離、Parallel 教育パズルでの実装、play trace index と one recommendation の小規模適用まで具体化しているので relevance=3、actionability=2とした。一方、論文は architecture demonstration であり player の次行動や学習効果を対照比較していないため evidence=2である。より新しい同テーマの atom sr-1784344254-f5af46ba40 はすでに review 済みで、probe-20260718-open-player-model-correction-boundary が model_output・時刻付き evidence_trace・human_correction を分離し、次 run の同一失敗・訂正率・説明を閉じた率・行動多様性の比較まで直接要求している。さらに synchronized playtest stream と quality feedback route が raw trace／index／次 action の接続を扱うため、本 atom の新規判断差は残らず non_redundancy=0である。現在 active_probes は322件、Phase 4a 向け pending lease は1件あり、staging に player-facing recommendation の before／after artifact もない。同義 control を追加すると確認負荷と助言による発見の狭窄リスクだけを増やすため risk_control=1とし、reviewed state だけを更新する。",
+      "existing_controls": [
+        "sr-1784344254-f5af46ba40",
+        "probe-20260718-open-player-model-correction-boundary",
+        "probe-20260622-d2e-synchronized-playtest-stream",
+        "probe-20260625-quality-workflow-feedback-route"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、後続 Open Player Modeling review・既存 trace／feedback probes との重複、比較可能な player-facing recommendation artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-04T05:24:40+09:00",
       "selected": {
