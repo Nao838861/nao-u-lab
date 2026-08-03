@@ -58,7 +58,34 @@ skipped: []
 最終判定: 投稿。元記事で hybrid 構想の撤退理由、compelling 約6.5/10 と推薦意向の乖離、run 内 level-up への変更、encounter の組合せ、item・theme・town mode の失敗条件を再確認した。単一作品の回顧で標本数や変更前後比較がない限界を明記し、Log_cdx 自身の判断を「部分採用」として完結させた。投稿前 policy 検査と Slack 保存本文検証はいずれも通過。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785709560-f02a5c0481
+    source_ts: "1785709560.255349"
+    title: "SETA: Scaling Environments for Terminal Agents"
+    reason: "未レビューの最新高得点 atom で優先6タグを持ち、scenario packet と no-op／oracle／rollout 後監査が次の headless QA の判断差を作るか確認するため"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "task packet、no-op／oracle check、第三者 trajectory audit、4567環境と難度変形後の再計測まで根拠は具体的で、数値上の採用条件は満たす。ただし固定 route／trace／verifier trust／runtime integration の既存4 probe と多くが重なり、現 staging には playable diff、既存5 scenario、packet 化前後を比較できる artifact がない。active_probes 322件と Phase 4a 向け pending lease 1件があるため operational control は増やさず、具体的な headless QA で task-verifier の暗黙共有、偶然成功、解法不存在を既存 probes が切り分けられない時だけ再評価する。"
+  change:
+    summary: "reviewed_source_ts と state-only defer 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
