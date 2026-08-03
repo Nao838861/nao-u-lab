@@ -170,7 +170,51 @@ encoding_audit:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+
+```yaml
+designs:
+  - issue_id: ISS-20260804-INTAKE-TS-PRECISION
+    problem_restatement: "candidate の正本は ISO 8601 timestamp を保持しているが、Phase 1 の出力契約が精度を指定せず、Phase 2 intake は実行中の Python が直接解釈できる精度だけを正規入力とみなす。このため内容と provenance が揃った candidate が、意味上では有効な7桁小数秒だけを理由に品質 gate へ到達できない"
+    alternatives:
+      - name: "案A: producer を秒精度へ固定"
+        sketch: "Phase 1 の candidate template を `YYYY-MM-DDTHH:MM:SS+09:00` に固定し、今後の生成時に小数秒を出さない。consumer の parse 条件と既存 candidate は変更しない"
+        pros:
+          - "正本の表記が lifecycle README の例と一致し、人間が比較しやすい"
+          - "consumer に追加の正規化処理を持ち込まない"
+        cons:
+          - "今回の7桁 candidate は malformed のまま残る"
+          - "LLM が直接 frontmatter を書く経路では template 指示だけで再発を完全には防げない"
+        migration_cost: low
+      - name: "案B: consumer だけを精度許容にする"
+        sketch: "intake の並び替え用 parse 境界で、秒の小数部が7桁以上なら6桁へ切り詰めてから解釈する。candidate 本文の `collected_at` は変更せず、そのまま report に返す"
+        pros:
+          - "今回の candidate をデータ修復なしで通常の Phase 2 gate へ戻せる"
+          - "変更範囲を read-only intake とその test に閉じられる"
+          - "失われるのは並び替えに不要な1マイクロ秒未満の精度だけ"
+        cons:
+          - "producer の表記揺れは今後も残る"
+          - "別の consumer が同じ timestamp を読む時に同種の不一致が再発し得る"
+        migration_cost: low
+      - name: "案C: canonical 出力 + intake 互換境界"
+        sketch: "新規 candidate は timezone 付き秒精度を canonical format として明示する。一方 intake は、小数部以外が既存 ISO 契約を満たす場合に限り、7桁以上の小数秒を6桁へ切り詰めた値で sort し、正本文字列は保存・表示とも変更しない"
+        pros:
+          - "新規データを収束させつつ、今回と既存の高精度 timestamp を自動回復できる"
+          - "既存 candidate の一括書換えや lifecycle status の仮付与が不要"
+          - "互換処理を intake 境界だけに限定し、無関係な不正日時は従来どおり malformed にできる"
+        cons:
+          - "Phase 1 契約、intake、test の3箇所を同期して保つ必要がある"
+          - "共通 datetime parser にはせず局所対応とするため、別 consumer の問題は実例が出た時に再検討が必要"
+        migration_cost: low
+    recommended: "案C: canonical 出力 + intake 互換境界"
+    recommended_reason: "producer-only では現在の詰まりを解消できず、consumer-only では生成規約が収束しない。案Cは既存 frontmatter を移行せずに通常 intake へ戻せ、失敗しても影響は未評価 candidate の選定時刻に限定される。共通 parser の全体導入まで広げないため現状からの距離も小さい"
+    decision: introduce
+    decision_reason: "malformed 1 件が実在し、ゲーム制作へ再利用できる playtest 知見の Phase 2 到達を現に遮断している。受理対象を『ISO datetime の秒小数部が7桁以上』へ限定し、正本を変更しない設計まで固まっているため、次の Phase 4c で小さく導入できる"
+    outline_for_4c:
+      - "Phase 1 の `collected_at` template を timezone 付き秒精度の canonical format として明記する"
+      - "`tools/shared_reads_unreviewed_intake.py` の sort-time parse 境界に、7桁以上の秒小数部だけを6桁へ切り詰める互換正規化を追加する。candidate の raw `collected_at` は書き換えない"
+      - "7桁 timestamp の受理と raw 値保持、通常の秒精度、無効日時の拒否、同時刻時の path tie-break を unit test で固定する"
+      - "intake audit を再実行し、対象 candidate が malformed から正規未評価 intake へ移り、他の malformed 判定が緩んでいないことを確認する"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
