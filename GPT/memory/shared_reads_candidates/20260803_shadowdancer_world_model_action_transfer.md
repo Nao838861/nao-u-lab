@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2607.28362"
 collected_at: "2026-08-03T12:05:30+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, world-model, action-control, video-generation, evaluation]
+evaluated_at: "2026-08-03T12:15:47+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-03T12:15:47+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-03T12:15:47+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-02"
+supersedes: []
+gate_reason: >-
+  appearance と dynamics を分離する着想、cross-shadow prediction の中核、ゲーム映像から別 scene へ action を移す適用先は明確である。
+  ただし保存済み材料は abstract 相当までで、比較条件・評価内訳・失敗例・制約が不足し、CoopEval 水準の約4000字を現時点で裏付けられないため、一次資料を補強するまで保留する。
 ---
 
 ## raw_excerpt

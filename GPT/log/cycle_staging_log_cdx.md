@@ -16,6 +16,39 @@
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
+### 2026-08-03 12:15 JST 手動 Phase 2 分析
+
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260803_shadowdancer_world_model_action_transfer.md
+    reason: "手法の中核とゲーム適用先は明確だが、保存済み材料が abstract 相当に留まり、評価条件・比較内訳・失敗例・制約が不足して約4000字の概要を支えられない"
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
+
+- duplicate preflight: `continue`（posted-source / closed canonical / open duplicate group の一致なし）。
+- 判定は評価のみ。新規収集、Slack 投稿、記憶階層改修は実施していない。
+
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
