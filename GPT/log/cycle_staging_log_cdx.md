@@ -217,7 +217,28 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+
+```yaml
+implemented:
+  - issue_id: ISS-20260804-INTAKE-TS-PRECISION
+    files_changed:
+      - path: phases/phase1_collect.md
+        change: modified
+      - path: tools/shared_reads_unreviewed_intake.py
+        change: modified
+      - path: tools/test_shared_reads_unreviewed_intake.py
+        change: modified
+    summary: "Phase 1 の collected_at を timezone 付き秒精度の canonical 表記へ固定し、intake の sort-time 境界では7桁以上の小数秒だけを6桁へ切り詰める互換処理を追加した。candidate の raw 値は変更しない"
+    partial: false
+migrations:
+  - what: "既存 candidate は書き換えず、read-only intake の互換処理で復帰"
+    affected: "20260804_flesh_navy_pacing_tempo_dominant_strategy.md を含む、7桁以上の秒小数部を持つ未評価 candidate"
+verification:
+  - "python -m unittest tools.test_shared_reads_unreviewed_intake: 4 tests OK。7桁値の受理と raw 保持、通常秒精度、無効日時拒否、同時刻 path tie-break を確認"
+  - "python -m py_compile tools/shared_reads_unreviewed_intake.py tools/test_shared_reads_unreviewed_intake.py: 成功"
+  - "python tools/shared_reads_unreviewed_intake.py audit --limit 5: valid_unreviewed_count=1 / malformed_count=0。対象 candidate の raw collected_at=2026-08-04T07:16:45.8418958+09:00 を保持して selected に復帰"
+  - "python tools/memory_recall.py shared-reads candidate intake timestamp: 正常終了し、既存 recall 経路が壊れていないことを確認"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

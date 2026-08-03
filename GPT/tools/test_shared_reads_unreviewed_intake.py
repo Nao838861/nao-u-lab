@@ -89,6 +89,23 @@ class UnreviewedIntakeTest(unittest.TestCase):
             ["memory/shared_reads_candidates/a.md"],
         )
 
+    def test_accepts_excess_fractional_precision_and_preserves_raw_value(self):
+        raw_collected_at = "2026-08-04T07:16:45.8418958+09:00"
+        write_candidate(
+            self.candidates / "high_precision.md",
+            provenance("High Precision", raw_collected_at),
+        )
+
+        valid, malformed, _ = inspect_candidates(self.candidates, self.root)
+
+        self.assertEqual(malformed, [])
+        self.assertEqual(len(valid), 1)
+        self.assertEqual(valid[0].collected_at, raw_collected_at)
+        self.assertEqual(
+            valid[0].sort_time.isoformat(),
+            "2026-08-03T22:16:45.841895+00:00",
+        )
+
     def test_invalid_collected_at_is_malformed(self):
         write_candidate(
             self.candidates / "bad_date.md",

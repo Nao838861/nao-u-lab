@@ -30,6 +30,10 @@ CANDIDATE_PATH_RE = re.compile(
     r"memory[\\/]shared_reads_candidates[\\/][^\s\]\[(){}<>]+?\.md",
     re.IGNORECASE,
 )
+EXCESS_FRACTIONAL_SECONDS_RE = re.compile(
+    r"^(?P<prefix>.+[T ]\d{2}:\d{2}:\d{2}\.)(?P<microseconds>\d{6})\d+"
+    r"(?P<suffix>Z|[+-]\d{2}(?::?\d{2})?)?$"
+)
 
 
 @dataclass(frozen=True)
@@ -59,8 +63,18 @@ def workspace_relative(path: Path, workspace_root: Path) -> str:
 
 
 def parse_sort_time(value: str) -> datetime | None:
+    normalized = value.strip().strip('"').strip("'")
+    excess_precision = EXCESS_FRACTIONAL_SECONDS_RE.fullmatch(normalized)
+    if excess_precision:
+        normalized = "".join(
+            (
+                excess_precision.group("prefix"),
+                excess_precision.group("microseconds"),
+                excess_precision.group("suffix") or "",
+            )
+        )
     try:
-        parsed = datetime.fromisoformat(value.strip().strip('"').strip("'"))
+        parsed = datetime.fromisoformat(normalized)
     except ValueError:
         return None
     if parsed.tzinfo is None:

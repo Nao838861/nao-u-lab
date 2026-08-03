@@ -46,7 +46,7 @@ python tools\shared_reads_duplicate_preflight.py --title "<title>" --url "<url>"
    ---
    title: <記事/論文タイトル>
    url: <url>
-   collected_at: <ISO datetime>
+   collected_at: "YYYY-MM-DDTHH:MM:SS+09:00"  # timezone 付き秒精度を canonical とする
    collected_by: log_cdx (Phase 1)
    genre_tags: [game-design, mechanics, postmortem, ...]
    ---
