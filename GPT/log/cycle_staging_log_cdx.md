@@ -9,7 +9,34 @@
 - duplicate preflight skip: AutoBG (`arxiv:2606.01976`)、PTCG-Bench (`arxiv:2605.29653`)、StatePlay (`arxiv:2607.26754`) は posted-source の同一 work と一致したため保存なし。各 Slack permalink と一致根拠は `log/shared_reads_candidate_preflight.jsonl` に記録済み。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail:
+  - path: memory/shared_reads_candidates/20260803_parliamentbench_social_deduction_deception.md
+    reason: "Secret Hitler と3評価指標の中核・ゲーム制作への適用が既投稿 arXiv:2605.22826 と重なり、規模差だけでは独立した約4000字の新規価値を支えられない"
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

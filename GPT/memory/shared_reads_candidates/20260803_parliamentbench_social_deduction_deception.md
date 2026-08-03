@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2607.28146"
 collected_at: "2026-08-03T20:30:50+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, social-deduction, deception, multi-agent, evaluation]
+evaluated_at: "2026-08-03T20:35:30+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-03T20:35:30+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-03T20:35:30+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-02"
+supersedes: []
+gate_reason: >-
+  Secret Hitler、Role Identification Accuracy、Deception Retention Rate、Game-State Impact Rate を軸にした問題設定とゲーム制作への適用は、2026-07-09 に投稿済みの別 work（arXiv:2605.22826）と大きく重なる。
+  16 model・約1,600試合・25,000 human game という規模差はあるが、現 candidate には既投稿を更新する固有の比較結果や失敗分析が不足し、重複せず約4000字を支える新規価値を抽出できない。
 ---
 
 ## raw_excerpt
