@@ -96,7 +96,77 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-08-03 12:26 JST 手動 Phase 4a 監査
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。Markdown link は 0 本で broken link 0。代表語の 記憶 / ゲーム設計 / 敵パターン は取得でき、評価軸は現行本文に文字列として存在しないため、source file の文字化けとは判定しない。"
+  - "atoms 2825 件を memory_health で監査。atoms.jsonl / per-file md / index.jsonl は各 2825 件、欠落・parse error・content conflict は 0。raw normalized-content duplicate は 40 群 80 行だが lifecycle/content fold 後の unresolved は 0。"
+  - "memory/raw/ の 30 日超無更新ファイルを監査。226 件（web_research 203 / headless_eval 16 / game_eval 1 / その他 6）を archive 検討対象として把握したが、raw source 保持 directive と参照切れ防止のため移動・削除はしていない。"
+  - "shared_reads candidate lifecycle 1222 件を dry-run 監査。frontmatter parse error 0、現在状態の自動修正 0。status 未確定の unreviewed 8 件は Phase 2 判断前なので backfill しない。"
+  - "open duplicate group / stale triage / group action sidecar を順に再生成。55 group（mixed 48 / all_open 7）、stale triage 0 行、actionable group 0 件。既存 live lease を尊重し candidate 本体は変更していない。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件。完了根拠のない status 更新はしていない。"
+  - "group / candidate handoff を cycle 2026-08-03 11:58 として冪等 enqueue・audit。新規 handoff 0、両 inbox pending 0、schema error 0。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 として正常。memory_health の mojibake suspect 2 件のうち sr-1776127289-4d9239b255 は raw source 自体に置換文字があり、gr-1777083728-44d444ab7a は UTF-8 本文が正常な false positive。単発 source debt で recall 経路は維持されており、構造 issue には昇格しない。"
+  display_or_tooling_status: none
+atom_audit:
+  duplicate_id_count: 0
+  raw_normalized_content_duplicate_groups: 40
+  raw_normalized_content_duplicate_rows: 80
+  recall_visible_duplicate_groups_before_fold: 3
+  effective_display_unresolved_groups: 0
+  content_conflicts: 0
+candidate_lifecycle:
+  total_audited: 1222
+  counts:
+    posted: 559
+    ready_to_post: 9
+    postponed: 245
+    failed: 396
+    needs_review: 5
+  skipped_unreviewed_without_current_status: 8
+  missing_stale_after_open_or_terminal: 11
+  overdue_open_total: 1
+  overdue_suppressed_by_live_group_lease:
+    - path: memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+      group_handoff_id: gha-e6d4d4b5a37a0808
+      group_status: deferred
+      retry_after: "2026-08-20T13:19:04+09:00"
+raw_archive_audit:
+  inactive_over_30d_total: 226
+  moved_or_deleted: 0
+  note: "原文保持と既存 pointer の保全を優先。archive の新設計・移動は Phase 4a では行わない。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
