@@ -94,7 +94,80 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、tools/validate_memory_index.py で per-file atom index との対応を検証した。broken entry / Markdown link は 0 件"
+  - "memory/atoms.jsonl / per-file md / index.jsonl の 2833 件を mirror audit し、欠損・parse error・content conflict は 0 件。duplicate cluster 45 群（normalized_content_hash 40 / title_excerpt_exact 5）は canonical overlay で fold 済み"
+  - "memory/raw/ の30日超未更新ファイル 226 件を確認した。raw provenance として参照されるため mtime のみでは移動せず、archive 候補として保持した"
+  - "shared-reads candidate 1234 件を dry-run audit し、posted 568 / ready_to_post 9 / postponed 249 / failed 402 / needs_review 5。status/candidate_status の修復対象は 0 件、正規未評価 backlog は 0 件、malformed は 1 件"
+  - "title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再生成・監査した。closed canonical 74 群、open group 55 群（mixed 48 / all_open 7）、actionable group 0 件"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件。完了根拠のない status 変更は行っていない"
+  - "probe lifecycle を validate し、due lease 0 件を確認した。pending 1 件は probe-20260731-rlm-one-hop-query-rewrite（lease_due 2026-08-07）であり、期限前のため receipt は変更していない"
+issues:
+  - id: ISS-20260804-INTAKE-TS-PRECISION
+    description: "Phase 1 candidate の collected_at が7桁小数秒で出力され、Phase 2 intake の datetime.fromisoformat が受理できず malformed 扱いになる producer / consumer 契約不一致"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/20260804_flesh_navy_pacing_tempo_dominant_strategy.md collected_at=2026-08-04T07:16:45.8418958+09:00; tools/shared_reads_unreviewed_intake.py:61-68; audit malformed_count=1"
+    source_file_status: "UTF-8 source は正常。title / url / collected_by は存在し、collected_at だけが現 runtime の parser 対応精度を超える7桁小数秒"
+    display_or_tooling_status: "shell 表示の mojibake なし。intake parser が missing_or_invalid_phase1_provenance と判定"
+    why_blocks_game_memory: "playtest 由来の支配戦略・pacing 調整知見が Phase 2 の通常品質 gate へ入らず、次のゲーム制作で再利用可能な candidate lifecycle に接続されない"
+non_blocking_observations:
+  - "memory_health の mojibake suspect 2 件を UTF-8 source で確認。sr-1776127289-4d9239b255 は legacy source 自体に `エ��ジェント` が残るが局所的、gr-1777083728-44d444ab7a の `???` は Nao_u 原文中の literal で detector false positive。今回の game-memory 導線を塞ぐ構造 issue にはしない"
+  - "MEMORY.md の代表語は `記憶` / `ゲーム設計` / `敵パターン` が取得でき、`評価軸` は本文に存在しなかった。UTF-8 decode と validator は正常なので source 破損とは扱わない"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-20260804-INTAKE-TS-PRECISION
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 1
+  phase2_unreviewed_limit: 5
+  suppressed_due_to_live_group_lease:
+    - id: gha-e6d4d4b5a37a0808
+      group_key: "joint agent memory and exploration learning via novelty signals"
+      status: deferred
+      retry_after: "2026-08-20T13:19:04+09:00"
+      disposition: explicit_keep
+group_action_handoff: []
+stale_review_batch: []
+raw_archive_review:
+  inactive_30d_file_count: 226
+  action: retained
+  reason: "raw provenance を失わずに参照状況を判定できる archive 条件がないため、mtime だけでは移動しない"
+encoding_audit:
+  memory_index_utf8_terms:
+    "記憶": found
+    "ゲーム設計": found
+    "敵パターン": found
+    "評価軸": missing
+  memory_index_source_file_status: "UTF-8 明示読みと index validator は正常。4代表語中3語を取得し、`評価軸` は単純に本文不在"
+  memory_index_display_or_tooling_status: none
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
