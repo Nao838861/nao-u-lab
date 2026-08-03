@@ -242,4 +242,14 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1785758544.012929"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785758544012929"
+  char_count: 2026
+  verification: ok
+  draft: drafts/phase5_log_diary_20260803_2101_cdx.md
+```
