@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-04T01:19:45+09:00",
+  "updated_at": "2026-08-04T03:28:07+09:00",
   "reviewed_source_ts": [
+    "1785765745.048369",
     "1785765748.718979",
     "1780195765.509889",
     "1785750176.783739",
@@ -601,6 +602,47 @@
     "1780271082.067289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-04T03:28:07+09:00",
+      "selected": {
+        "id": "sr-1785765745-168bd53405",
+        "source_ts": "1785765745.048369",
+        "title": "ICAE-Bench — 曖昧な product intent の要件アクセスと実装統合を分離する coding-agent 評価",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす最新候補で、memory・harness・game-design・agent・operation・evaluation を含む8タグを横断する。fuzzy PRD、hidden constraints、質問 budget、black-box tests を使い、要件へアクセスできたかと得た情報を実装・検証へ変換できたかを分離する知見が、直前にレビューした WorkBuddy Bench や既存 game controls と異なる小さな判断差を作るか確認するため1件だけ選んだ。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件は満たす。shared-reads 本文は12言語・各40件の計480 task、GroundPRD から数百 token の fuzzy PRD への縮約、task 固有 User Agent Data、最大16回の質問、Public／Native／Enhanced の black-box cases、hidden constraint coverage と fallback rate、構造診断を分離している。六 model の最高 Overall 38.2%、GPT-5.5 の coverage 73.7% が Opus の69.6%を上回っても Overall は低いこと、質問 budget 8→16→24で Overall が22.9%→37.4%→34.4%と非単調になることまで示し、要件アクセスと information-to-execution gap を分ける根拠があるため relevance・actionability・evidence は3とした。直前の WorkBuddy review と game-scope-brief-cut-gate、agent-repair-report-constraints、ai-readable-playtest-acceptance-surface、hypothesis-evidence-spec-gate は自然な依頼、scope、再現可能な制約、acceptance criteria、反証条件を既に扱う。一方、質問で回収した制約が playable invariant へ変換されたか、質問追加が統合負荷を増やしたかを別々に診断する差は直接の既存 control ではないため non_redundancy=2 とした。少数 task・8質問上限のA/Bに限定すれば risk と rollback は制御できるが、現在の staging には同じ game brief を完全仕様先渡しと fuzzy brief＋質問で比較する playable diff、複数 run、hidden invariant、初回 playtest 時間、不要 subsystem 数がない。consumer phase、before／after trigger artifact、expected delta を lease 契約どおり具体化できず、active_probes 322件と Phase 4a 向け pending lease 1件へ対象なしの control を追加すると benchmark 構築が制作を圧迫する。次に同一 prototype brief を二条件で比較する具体作業が発生し、既存 controls だけでは requirement-access failure と information-to-execution failure を分類できない時、最小1 taskの一時 metric として再評価する。",
+      "existing_controls": [
+        "sr-1785765748-22f747e858",
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260717-agent-repair-report-constraints",
+        "probe-20260621-ai-readable-playtest-acceptance-surface",
+        "probe-20260603-hypothesis-evidence-spec-gate"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、要件アクセス／実装統合の分離の有用性、既存 brief・repair・acceptance controls との重複、比較可能な fuzzy-brief artifact 不在による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-04T01:19:45+09:00",
       "selected": {

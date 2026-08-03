@@ -81,7 +81,35 @@ reviewed_at: "2026-08-04T03:24:00+09:00"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785765745-168bd53405
+    source_ts: "1785765745.048369"
+    title: "ICAE-Bench — 曖昧な product intent の要件アクセスと実装統合を分離する coding-agent 評価"
+    reason: "slack_api/shared-reads、score 11、未レビューで、memory・harness・game-design・agent・operation・evaluation を含む8タグを持つ。fuzzy PRD と hidden constraints により、要件アクセスと information-to-execution gap を分ける知見が既存 control と異なる判断差を作るか確認するため1件だけ選んだ。Nao_u の明示的な重要評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: defer
+  decision_reason: "採用閾値は満たす。12言語480 task、GroundPRD→fuzzy PRD、task固有 User Agent Data、最大16質問、Public／Native／Enhanced tests、constraint coverage と functional pass の分離、質問 budget 8→16→24で Overall 22.9%→37.4%→34.4%という非単調性があり、質問量ではなく回収制約を testable contract へ変換できるかを見る行動へ落とせる。一方、直前の WorkBuddy review と game-scope-brief、agent-repair-report、AI-readable acceptance、hypothesis-evidence controls が隣接領域を既に扱う。現在の staging には完全仕様先渡し対 fuzzy brief＋質問を比較できる playable artifact、複数run、hidden invariant、初回playtest時間、不要subsystem数がなく、consumer・before/after artifact・expected delta を lease 契約どおり指定できない。active_probes 322件と既存 pending lease 1件へ対象なしの control を増やさず、次の具体的な同一brief比較で既存controlsだけでは requirement-access failure と information-to-execution failure を分類できない時に再評価する。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを state 更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
