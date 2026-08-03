@@ -4,7 +4,9 @@
 
 ## Phase 1: 情報収集
 
-- `memory/shared_reads_candidates/20260804_hypergamigication_game_engine_lms.md` — LMS の教材情報から Unity game environment を生成し、gameplay 状態を LMS 側へ戻す双方向統合と “hypergamification” を扱う arXiv 論文。
+- `memory/shared_reads_candidates/20260804_flesh_navy_pacing_tempo_dominant_strategy.md` — 回避だけが支配戦略になったシューティングを、敵耐久・ヒット反応・wave の重なり・脅威優先順位の調整で攻撃志向へ寄せた初週 playtest devlog。
+- inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` ともに pending 0 件。
+- duplicate preflight: 外部研究から再確認した 5 件は posted-source の同一 work と一致したため `skip`（Goal Playable Patterns LLM synthesis / Procedural Personas / Snappable Meshes / Foveated Haptic Gaze / GUI Agents for Continual Game Generation）。
 
 ## Phase 2: 分析
 
