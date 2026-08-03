@@ -65,7 +65,39 @@ skipped: []
 - 投稿前レビュー: `■ 概要` 始まり、必須6項目の順序、`■ URL` 末尾、4118字、禁止表現なしを `tools/shared_reads_policy.py` で確認。`tools/post_slack_message_file.py` により1回の `chat.postMessage` で投稿し、Slack 保存本文の UTF-8 検証も `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+### 2026-08-03 18:47 JST
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785741899-88c260b696
+    source_ts: "1785741899.888319"
+    title: "Harness Efficiency: Reducing Token Maxing in Agentic Systems"
+    reason: "未レビューの最新 score 10 atom で、memory・harness・game-design・agent・operation・evaluation を含む9タグを横断する。固定 task・model のまま harness だけを替える評価が、現在の定時 cycle と game/headless loop に既存 control と異なる判断差を作るか確認するため選んだ。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "reviewed_source_ts と、AgentMeter review・既存 harness evaluation probes との重複、比較 artifact 不在、既存 pending lease による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採否理由: 22 task・6 model・2 orchestration の paired swap、token 38%減、費用41%減、中央値 latency 44%減、completion 0.78→0.81、task×model別の悪化まで含むため、関連性・実行可能性・根拠は強い。一方、`sr-1784236763-e12c0a86f6` の AgentMeter review と、`probe-20260605-agent-eval-attribution-split`、`probe-20260622-poweragentbench-simulation-workflow-budget`、`probe-20260622-harness-fit-nonmonotone`、`probe-20260708-harnessfix-failure-anchor-repair-scope` が、固定 fixture、harness attribution、budget、failure anchor をすでに扱う。
+- lease 判定: 同一 task の harness A/B artifact が staging に存在せず、Phase 4a には `probe-20260731-rlm-one-hop-query-rewrite` の pending lease が1件ある。consumer・trigger artifact・expected delta を比較可能に指定できないため enqueue は行わない。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

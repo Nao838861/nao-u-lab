@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-03T16:29:23+09:00",
+  "updated_at": "2026-08-03T18:47:02+09:00",
   "reviewed_source_ts": [
+    "1785741899.888319",
     "1779917404.015279",
     "1780195579.727069",
     "1785717761.965769",
@@ -597,6 +598,47 @@
     "1780271082.067289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-03T18:47:02+09:00",
+      "selected": {
+        "id": "sr-1785741899-88c260b696",
+        "source_ts": "1785741899.888319",
+        "title": "Harness Efficiency: Reducing Token Maxing in Agentic Systems",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新 atom で、memory・harness・game-design・agent・operation・evaluation を含む9タグを横断する。固定 task・model のまま orchestration harness だけを替え、token・費用・latency と task 品質を同時に測る提案が、現在の定時 cycle と game/headless loop に既存 control と異なる判断差を作るか確認するため選んだ。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は22 task、6 model、2 orchestration の paired swap で task・model・judge・価格表を固定し、token 38%減、費用41%減、中央値 latency 44%減、completion 0.78→0.81を報告する。stable／volatile context 分離、compaction、offload、zero-token wait、failure-spend governance を機構別に示し、能力×model cell の悪化7件や multi-step research の品質0.80→0.60も開示しているため relevance・actionability・evidence は3とした。一方、sr-1784236763-e12c0a86f6 の AgentMeter review は model + observation + tool schema + context/replay + timeout/停止条件を評価単位にし、trajectory cost と expensive failure を残す同じ判断をすでに扱う。agent-eval-attribution-split、PowerAgentBench simulation workflow budget、harness-fit-nonmonotone、HarnessFix failure anchor も固定 fixture、token／tool-call budget、task・model別の比較、失敗箇所と repair scope を要求している。新規 control はこれらの言い換えとなり non_redundancy=0である。現在の staging には同一 prototype／task を現行 harness と整理後 harness で複数回比較した artifact がなく、Phase 4a 向け pending lease も1件あるため、consumer・trigger artifact・期待判断差を operational lease として指定できない。322件の active_probes に同義 control を足す確認負荷が便益を上回るため risk_control=1とし、reviewed state だけを更新する。",
+      "existing_controls": [
+        "sr-1784236763-e12c0a86f6",
+        "probe-20260605-agent-eval-attribution-split",
+        "probe-20260622-poweragentbench-simulation-workflow-budget",
+        "probe-20260622-harness-fit-nonmonotone",
+        "probe-20260708-harnessfix-failure-anchor-repair-scope"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、AgentMeter review・既存 harness evaluation probes との重複、比較 artifact 不在、既存 pending lease による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-03T16:29:23+09:00",
       "selected": {
