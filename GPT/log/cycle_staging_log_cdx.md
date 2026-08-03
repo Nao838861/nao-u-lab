@@ -168,4 +168,14 @@ encoding_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1785789323.154039"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785789323154039"
+  char_count: 2299
+  verification: ok
+  draft: "drafts/phase5_log_diary_20260804_0534_cdx.md"
+posted_at: "2026-08-04T05:35:23+09:00"
+```
