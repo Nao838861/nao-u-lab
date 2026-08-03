@@ -55,7 +55,35 @@ slack_posted: false
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780195579-609b8da5b1
+    source_ts: "1780195579.727069"
+    title: "Representational Collapse in Multi-Agent LLM Committees: Measurement and Diversity-Aware Consensus"
+    reason: "source=slack_api/shared-reads、score=15、未レビューで、agent・operation・evaluation の3優先タグを持つ。役割 prompt だけでは committee の表現多様性を保証しないという指摘が、現在の agent 出力評価へ未反映の判断差を作るか確認するため選んだ。Nao_u の明示的な重要評価は確認できなかった。"
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 9
+  decision: reject
+  decision_reason: "effective-rank 測定は ../Claude/tools/effective_rank_probe.py と instance_divergence_observability project にすでに実装済み。共通 source／prompt による非独立な収束も既存2 probes が扱い、現行 directive は Mir／Log／Ash への問いかけ・役割分担を停止している。今サイクルには同一 task の複数 agent 出力や比較 artifact がなく、新規 metric を足しても判断差を作らない。合計9で採用条件未達、actionability と risk_control も必須閾値未達のため state-only で閉じる。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

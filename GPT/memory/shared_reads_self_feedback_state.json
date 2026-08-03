@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-03T12:25:00+09:00",
+  "updated_at": "2026-08-03T14:24:31+09:00",
   "reviewed_source_ts": [
+    "1780195579.727069",
     "1785717761.965769",
     "1785709560.255349",
     "1780238641.322869",
@@ -595,6 +596,46 @@
     "1780271082.067289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-03T14:24:31+09:00",
+      "selected": {
+        "id": "sr-1780195579-609b8da5b1",
+        "source_ts": "1780195579.727069",
+        "title": "Representational Collapse in Multi-Agent LLM Committees: Measurement and Diversity-Aware Consensus",
+        "reason": "source が slack_api/shared-reads、score 15、未レビューという条件を満たし、agent・operation・evaluation の3優先タグを持つ。役割 prompt だけでは committee の表現多様性を保証しないという指摘が、現在の Codex の agent 出力評価へ未反映の判断差を作るか確認するため選んだ。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 1,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 9
+      },
+      "decision": "reject",
+      "decision_reason": "合計9で採用条件の14に届かず、actionability と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、同一モデルへ役割 prompt を与えた3 agent の rationale が平均 cosine 0.888、effective rank 2.17/3.0 へ縮退し、DALC が GSM8K accuracy 87%対84%、token cost 26%削減と報告した内容を、当方の出力多様性測定へ変換しているため evidence は2、relevance は2とした。一方、この測定案はすでに Claude/tools/effective_rank_probe.py と Claude/projects/instance_divergence_observability.md §1 に実装・記録されている。さらに probe-20260531-common-source-vs-delayed-influence は共通入力による見かけの収束を、probe-20260708-algorithmic-collusion-shared-prior-check は共有 prompt・memory・source による非独立な合意を既に扱うため non_redundancy は0である。現行 directive は Mir／Log／Ash への問いかけと役割分担を停止しており、今サイクルにも同一 task の複数 agent 出力や metric 適用前後の比較 artifact がない。active_probes 322件、Phase 4a 向け pending lease 1件へ既実装 metric の言い換えを追加しても判断を変えず、確認負荷だけを増やすため state-only reject とする。",
+      "existing_controls": [
+        "../Claude/tools/effective_rank_probe.py",
+        "../Claude/projects/instance_divergence_observability.md",
+        "probe-20260531-common-source-vs-delayed-influence",
+        "probe-20260708-algorithmic-collusion-shared-prior-check"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既実装 metric・既存 multi-agent probes・現行運用との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-03T12:25:00+09:00",
       "selected": {
