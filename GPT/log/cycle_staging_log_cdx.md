@@ -10,7 +10,41 @@
 確認メモ: `slack_directives.jsonl` / `slack_broadcasts.jsonl` の pending は各0件。直近 `web_research` / atom と raw `#shared-reads` を照合し、既投稿 work は candidate 化しなかった。上記2件は sidecar 再生成後の duplicate preflight で `continue` を確認済み。Slack 投稿・品質判定は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260803_sproggiwood_hybrid_design_postmortem.md
+fail:
+  - path: memory/shared_reads_candidates/20260803_midas_eight_hour_jam_postmortem.md
+    reason: "制作時系列は具体的だが、比較評価・プレイヤー反応がなく約4000字を支える分析材料が不足"
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  sidecars_fresh: true
+  decisions:
+    - path: memory/shared_reads_candidates/20260803_sproggiwood_hybrid_design_postmortem.md
+      decision: continue
+    - path: memory/shared_reads_candidates/20260803_midas_eight_hour_jam_postmortem.md
+      decision: continue
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

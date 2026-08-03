@@ -4,6 +4,27 @@ url: "https://www.gamedeveloper.com/design/design-postmortem-story-driven-roguel
 collected_at: "2026-08-03T09:32:47+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, roguelike, postmortem, hybrid-design, playtesting]
+evaluated_at: "2026-08-03T09:37:04+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-03T09:37:04+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-03T09:37:04+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-02"
+supersedes: []
+gate_reason: >-
+  直交した town builder / dungeon crawler の失敗、run 内報酬への再配置、survey と
+  playtester 指摘による検証まで因果鎖が揃う。複合 loop の統合と短い play session の
+  報酬設計へ具体適用でき、限界も含めて約4000字の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "二つの独立したゲームを足す発想から、run 内の意思決定と報酬を一つの loop に束ね直した設計転換"
+  analysis_axis: "複合 loop の結合度、procedural encounter の可読性、survey/playtest が示した即時報酬不足と theme-mechanics 不一致"
+  application_target: "Log_cdx の短時間ゲーム prototype で、複数要素の相互作用と1 session 内の報酬密度を早期検証する評価設計"
+  pros_cons: "設計変更の因果と評価根拠が具体的。一方、survey 約5.5/10 の条件や標本詳細が薄く、一般化には留保が要る"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
