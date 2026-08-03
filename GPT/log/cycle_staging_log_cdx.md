@@ -95,7 +95,49 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語（記憶・ゲーム設計・敵パターン・評価軸）と index entry を検証。tools/validate_memory_index.py は OK で broken entry なし。"
+  - "memory/atoms.jsonl / per-file md / index.jsonl は各 2825 件で mirror conflict 0。normalized content 重複 40 組は既存 overlay で fold 済み、effective display unresolved は 0。"
+  - "memory/raw/ の 2026-07-04 より前のファイルを監査（226 件）。slack_archive と web_research 原文は atom provenance から参照されるため、この cycle では移動なし。"
+  - "shared-reads candidate 1224 件を dry-run 監査。現在状態は posted 560 / ready_to_post 9 / postponed 245 / failed 397 / needs_review 5 / skipped_unreviewed 8。status conflict による修復対象は 0。"
+  - "open duplicate group / stale triage / group action sidecar を再生成。期限到来 open は 1 件だが、JAMEL group の deferred lease（retry_after 2026-08-20）が membership 一致で有効なため再投入なし。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件。完了根拠のない handled 更新なし。"
+  - "probe lifecycle を validate。due lease は 0 件のため receipt 追加なし。"
+issues: []
+non_blocking_observations:
+  - "memory_health の mojibake suspect 2 件を UTF-8 で切り分けた。sr-1776127289-4d9239b255 は raw slack_archive 自体に置換文字がある孤立した legacy source corruption、gr-1777083728-44d444ab7a は raw / atom 本文が正常で検出上の false positive。いずれも今回の game-memory 導線を塞ぐ構造問題ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
