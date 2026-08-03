@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2607.29167"
 collected_at: "2026-08-03T18:17:19.2025538+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [ai-agent, memory, security, game-development, playtesting]
+evaluated_at: "2026-08-03T18:21:02.3498710+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-03T18:21:02.3498710+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-03T18:21:02.3498710+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-02"
+supersedes: []
+gate_reason: >-
+  問題設定、PPMF の着想、要旨上の主要結果、ゲーム制作への適用先は具体的である。
+  ただし候補内の一次資料は要旨相当だけで、形式化、schema、評価条件、baseline、失敗条件、限界を抽出できず、CoopEval 水準の約4000字を根拠付きで構成できないため保留する。
 ---
 
 ## raw_excerpt
