@@ -116,7 +116,71 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語と entry index を監査。validate_memory_index.py は OK、Markdown local link は0件だったため broken link なし。"
+  - "atoms 2830件の mirror audit は content conflict 0、duplicate cluster index は45群で最新。stale だった title quality audit を745行から753行へ機械的に再生成し、effective_display_unresolved は0件を維持。"
+  - "shared-reads candidate 1229件の lifecycle を監査し、open duplicate / stale triage / group action sidecar を再生成。live lease を反映した handoff は group 0件、candidate 0件。"
+  - "Slack inbox は directives 0件、broadcasts 0件で、handled 更新対象なし。"
+  - "memory/raw/ の30日超・226ファイルを確認。Slack provenance、headless evaluation、web research 原文として参照可能であり、この cycle では移動・削除せず保持。"
+candidate_lifecycle:
+  total: 1229
+  counts:
+    posted: 568
+    ready_to_post: 9
+    postponed: 248
+    failed: 399
+    needs_review: 5
+  overdue_for_reassessment: 1
+  missing_stale_after: 3
+issues:
+  - id: ISS-UTF8-001
+    description: "atom sr-1776127289-4d9239b255 の title / trigger / excerpt に U+FFFD が保存され、『AIエージェント』が『AIエ��ジェント』になっている。raw Slack archive にも同じ文字列が2行残る。memory_health のもう1件 gr-1777083728-44d444ab7a は本文の意図的な『???』を拾った誤検知で、U+FFFD は0文字。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl:317; memory/atoms/index.jsonl:317; memory/raw/slack_archive/shared-reads.jsonl:492; memory/raw/slack_archive/shared-reads.jsonl:1216"
+    source_file_status: "UTF-8 明示読みは成功するが、atom と raw provenance の双方に literal U+FFFD が保存された局所的 source defect。memory/MEMORY.md は UTF-8 で『記憶』『ゲーム設計』『敵パターン』を取得でき、『評価軸』は現本文に存在しないだけで文字化けではない。"
+    display_or_tooling_status: "PowerShell Get-Content -Encoding UTF8 と rg は source の U+FFFD をそのまま表示しており、表示経路だけの mojibake ではない。"
+    why_blocks_game_memory: "日本語の『エージェント』完全一致でこの atom を探す導線が弱くなる。ただし agent tag と source_ts が残るため影響は限定的で、構造設計を要する問題ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "検出したのは既存 raw 由来の局所的文字欠損1件だけで、mirror・duplicate fold・index・handoff lifecycle に構造的不整合はない。ISS-UTF8-001 は将来の mechanical repair 対象であり Phase 4b を起動しない。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+    merged: 0
+    retired: 0
+  note: "pending probe probe-20260731-rlm-one-hop-query-rewrite の lease_due は 2026-08-07T23:59:59+09:00 のため、receipt は作成しなかった。"
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  deferred_overdue:
+    path: memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+    group_handoff_id: gha-e6d4d4b5a37a0808
+    retry_after: "2026-08-20T13:19:04+09:00"
+    reason: "同一 all-open title group の membership fingerprint が一致する live deferred lease のため、stale triage builder が期限前の再投入を抑止。明示保持。"
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
