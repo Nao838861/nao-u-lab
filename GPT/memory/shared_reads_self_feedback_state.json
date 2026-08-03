@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-03T23:07:23+09:00",
+  "updated_at": "2026-08-04T01:19:45+09:00",
   "reviewed_source_ts": [
+    "1785765748.718979",
     "1780195765.509889",
     "1785750176.783739",
     "1785741899.888319",
@@ -600,6 +601,47 @@
     "1780271082.067289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-04T01:19:45+09:00",
+      "selected": {
+        "id": "sr-1785765748-22f747e858",
+        "source_ts": "1785765748.718979",
+        "title": "Tencent WorkBuddy Bench — 完成差分から逆構成する汚染耐性付き coding-agent task",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、memory・harness・game-design・agent・operation・evaluation を含む9タグを横断する。完成済み commit から自然な依頼、変更前 repository、layered verifier、reference patch を逆構成し、baseline と reference の admission gate を置く知見が、次の game-development agent 評価へ既存 control と異なる小さな判断差を作るか確認するため1件だけ選んだ。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件は満たす。shared-reads 本文は Code 80・Web 70・Office 50・Security 60 の計260 task、実 OSS snapshot／clean-room／synthetic workspace の構成、baseline 30%以下・gold 100%の admission、二 harness 各3 run、domain ごとに異なる verifier、公開後の versioning／retirement、role-play rewrite が semantic contamination を消さない限界まで示しており evidence=3 とした。完成済み game commit から player-facing problem と自然な依頼を逆構成し、変更前 repository、deterministic invariant、固定 seed trace、人間 feel rubric、reference patch を一つの task packet にする行動は具体的なので relevance・actionability も3である。benchmark-purpose-variable-alignment、semantics-preserving-surface-variant、evaluation-version-boundary、benchjack-trust-boundary-preflight は目的適合、表層 variant、version 境界、verifier の null／random／malicious case を既に扱い、SETA の review も instruction／environment／verifier packet と no-op／oracle check を検討済みである。一方、実 commit provenance から依頼を逆構成し、baseline が通りすぎず reference が満点になる task だけを admission する組合せは直接の既存 control ではないため non_redundancy=2 とした。3〜5 task に限定すれば可逆だが、現在の staging には変更前後 commit、playable artifact、playtest note、task packet、baseline／reference run を比較できる artifact がなく、後続 Phase 4a で実際に判断へ使う consumer、before／after trigger artifact、expected delta を lease 契約どおり指定できない。さらに Phase 4a 向け pending lease が1件あり、active_probes 322件へ対象なしの control を追加すると benchmark 構築が制作を圧迫する。次に完成済み prototype diff から game-agent 回帰 task を作る具体作業が発生し、既存 controls だけでは task 自体の易しすぎ／verifier 不成立を admission 前に検出できない時、最小1 task の一時 metric として再評価する。",
+      "existing_controls": [
+        "probe-20260718-benchmark-purpose-variable-alignment",
+        "probe-20260614-semantics-preserving-surface-variant",
+        "probe-20260711-evaluation-version-boundary",
+        "probe-20260711-benchjack-trust-boundary-preflight",
+        "sr-1785709560-f02a5c0481"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、完成差分からの task 逆構成・baseline／reference admission の有用性、既存 benchmark controls との重複、比較可能な game task artifact 不在による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-03T23:07:23+09:00",
       "selected": {
