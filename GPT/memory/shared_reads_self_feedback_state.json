@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-04T03:28:07+09:00",
+  "updated_at": "2026-08-04T05:24:40+09:00",
   "reviewed_source_ts": [
+    "1785765740.918089",
     "1785765745.048369",
     "1785765748.718979",
     "1780195765.509889",
@@ -602,6 +603,48 @@
     "1780271082.067289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-04T05:24:40+09:00",
+      "selected": {
+        "id": "sr-1785765740-8e7f22f857",
+        "source_ts": "1785765740.918089",
+        "title": "BIG LIZARD postmortem — emergent design の逐次合意、oracle 分離、subtractive fix",
+        "reason": "source が slack_api/shared-reads、score 13、未レビューという条件を満たす最新候補で、memory・harness・game-design・operation・evaluation を含む8タグを横断する。propose→agree→build→validate の逐次合意、人間の feel 判定と trap-state soak test の oracle 分離、外部 harness と実 cart の parity、例外 logic を足す前に競合状態を消す subtractive fix が、既存 game controls と異なる小さな判断差を作るか確認するため1件だけ選んだ。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件は満たす。shared-reads 本文は約160 build、合意前着工・記憶からの誤回答・token 見積もり誤差という工程失敗、数十万 randomized situation の trap-state soak、wave 単位から turn 単位への乱数粒度変更、flame height 制限による競合状態の除去、panic-roll mechanic の撤回、bonus ram の spawn 側変更まで、採用と廃棄の両方を具体化しているため relevance・actionability・evidence は3とした。paperclaw-prototype-hypothesis-contract は観測可能な事前仮説と verdict、game-scope-brief-cut-gate は scope と触らない範囲、ai-readable-playtest-acceptance-surface と game-feedback-loop-asymmetry は code／headless／human feel の証拠分離、external-harness-minimum と rules-core-parity-regression は deterministic probe と実 build の parity をすでに扱う。一方、例外 branch を足す案と競合状態そのものを除去する案を同じ player-facing invariant で比較する subtractive fix は直接の既存 control ではないため non_redundancy=2 とした。一変更に限定すれば risk と rollback は制御できるが、現在の staging には衝突や例外分岐を持つ比較可能な playable diff、before／after build、同一 seed trace、人間 feel note がない。後続 Phase 4a は memory cleanup で本知見を実際の判断へ使う consumer ではなく、trigger artifact と expected delta を lease 契約どおり指定できない。active_probes 322件と Phase 4a 向け pending lease 1件へ対象なしの control を追加する確認負荷も避ける。次に具体的な game repair で『例外 logic を足す』案が出て、既存 controls だけでは問題状態の除去案との比較を要求できない時、1 mechanic・1 comparison の一時 probe として再評価する。",
+      "existing_controls": [
+        "probe-20260706-paperclaw-prototype-hypothesis-contract",
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260621-ai-readable-playtest-acceptance-surface",
+        "probe-20260606-game-feedback-loop-asymmetry",
+        "probe-20260515-external-harness-minimum",
+        "probe-20260603-rules-core-parity-regression"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、subtractive fix の固有差、既存 game workflow／oracle／harness controls との重複、比較可能な playable artifact 不在による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-04T03:28:07+09:00",
       "selected": {

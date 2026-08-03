@@ -57,7 +57,41 @@ reviewed_at: "2026-08-04T05:20:50+09:00"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785765740-8e7f22f857
+    source_ts: "1785765740.918089"
+    title: "BIG LIZARD postmortem — emergent design の逐次合意、oracle 分離、subtractive fix"
+    reason: "source=slack_api/shared-reads、score=13、未レビューの最新候補で、memory・harness・game-design・operation・evaluation を含む8タグを横断する。逐次合意、human/headless oracle 分離、harness parity、subtractive fix が既存 control と異なる小さな判断差を作るか確認するため1件だけ選んだ。Nao_u の明示的な重要評価は確認できない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: defer
+  decision_reason: "数値上は採用条件を満たす。約160 build、工程違反、trap-state soak、乱数粒度変更、競合状態の除去、未実在問題への mechanic 撤回など、採用・廃棄双方の具体例がある。一方、事前仮説、scope、code/headless/human feel の証拠分離、deterministic probe、rules-core parity は既存6 controls が覆う。固有差は例外 branch と問題状態除去を比較する subtractive fix だが、現 staging に対象 playable diff、before/after build、同一 seed trace、human feel note がなく、後続 Phase 4a も実 consumer ではないため lease の consumer・artifact・判断差を具体化できない。次の該当 game repair で既存 controls がこの比較を作れない時に限り再評価する。"
+  existing_controls:
+    - probe-20260706-paperclaw-prototype-hypothesis-contract
+    - probe-20260602-game-scope-brief-cut-gate
+    - probe-20260621-ai-readable-playtest-acceptance-surface
+    - probe-20260606-game-feedback-loop-asymmetry
+    - probe-20260515-external-harness-minimum
+    - probe-20260603-rules-core-parity-regression
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを state に追加した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
