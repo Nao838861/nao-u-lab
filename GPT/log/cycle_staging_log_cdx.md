@@ -71,7 +71,26 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+reviewed_at: "2026-08-03T23:02:47+09:00"
+posted:
+  - candidate: memory/shared_reads_candidates/20260721_big_lizard_ai_copilot_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785765740918089
+    char_count: 3909
+  - candidate: memory/shared_reads_candidates/20260731_icae_bench_interactive_project_builders.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785765745048369
+    char_count: 4500
+  - candidate: memory/shared_reads_candidates/20260731_workbuddy_contamination_resistant_tasks.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785765748718979
+    char_count: 4297
+skipped:
+  - candidate: memory/shared_reads_candidates/20260801_wastoid_playtest_campaign_overview.md
+    reason: "21 session の概況は確認できるが、rule 変更の比較結果・失敗条件・観測記録が約4000字の固有分析を支える密度に達しない"
+    action: candidate_revise
+  - candidate: memory/shared_reads_candidates/20260803_animalis_real_world_species_generation.md
+    reason: "公開約1か月・約20 player の自己報告で、種判定精度・生成一貫性・位置情報安全性・費用 scale の評価がなく、現状では結論を一次資料から支えられない"
+    action: candidate_revise
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

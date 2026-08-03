@@ -7,12 +7,12 @@ genre_tags: [game-design, playtesting, tabletop-rpg, iteration, player-agency]
 evaluated_at: "2026-08-03T22:51:02+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-03T22:51:02+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-03T22:51:02+09:00"
-next_action: post_to_shared_reads
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-03T23:02:47+09:00"
+last_decision: postponed
+evidence: "Phase 3 final review: 一次記事は21 sessionの概況に留まり、rule変更の比較結果・失敗条件・観測記録が約4000字の固有分析を支える密度に達しない"
+next_action: candidate_revise
 stale_after: "2026-09-02"
 supersedes: []
 gate_reason: >-

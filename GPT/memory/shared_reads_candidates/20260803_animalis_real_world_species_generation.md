@@ -7,12 +7,12 @@ genre_tags: [game-design, location-based-game, procedural-generation, llm, compu
 evaluated_at: "2026-08-03T22:51:02+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-03T22:51:02+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-03T22:51:02+09:00"
-next_action: post_to_shared_reads
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-03T23:02:47+09:00"
+last_decision: postponed
+evidence: "Phase 3 final review: 公開約1か月・約20 playerの自己報告で、種判定精度・生成一貫性・位置情報安全性・費用scaleの評価がなく、現状では約4000字の結論を一次資料から支えられない"
+next_action: candidate_revise
 stale_after: "2026-09-02"
 supersedes: []
 gate_reason: >-
