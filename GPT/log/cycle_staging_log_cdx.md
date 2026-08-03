@@ -97,4 +97,13 @@ self_feedback:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785718660229599
+  char_count: 1977
+  verification: ok
+  draft: drafts/phase5_log_diary_20260803_0956_cdx.md
+```
+
+Sproggiwood の hybrid 再設計、Midas 候補の見送り、SETA probe の defer、atom mirror 2,825件の整合確認を、追加しない判断も含めて温度の残る日記として投稿した。Slack API 保存本文検証は `ok`。
