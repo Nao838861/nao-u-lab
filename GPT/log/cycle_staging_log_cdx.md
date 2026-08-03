@@ -10,7 +10,42 @@
 - 既出照合: AI GameStore、LieCraft、AutoBG、RevengeBench、SETA は posted-source / canonical index 上で実投稿済みのため新規 candidate 化せず。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260803_harness_effect_orchestration_token_economics.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  path: memory/shared_reads_candidates/20260803_harness_effect_orchestration_token_economics.md
+  canonical_url: "https://arxiv.org/abs/2607.06906"
+  decision: continue
+  title_key: "the harness effect how orchestration design sets the token economics of enterprise agentic ai"
+sidecar_checks:
+  posted_source: ok
+  title_canonical: ok
+  open_duplicate_group: ok
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

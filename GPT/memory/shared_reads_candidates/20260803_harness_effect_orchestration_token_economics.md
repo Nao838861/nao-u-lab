@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2607.06906"
 collected_at: "2026-08-03T16:15:23+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-harness, evaluation, game-production, automation, observability]
+evaluated_at: "2026-08-03T16:18:44+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-03T16:18:44+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-03T16:18:44+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-02"
+supersedes: []
+gate_reason: >-
+  token maxing という問題設定、model を固定した harness 差し替え、22 task・6 model の比較、
+  cost・wall-clock・token・quality の結論まで抽出できる。固定 game task 上で context、tool、
+  cache、失敗継続条件だけを変える比較へ具体適用でき、限界も含め約4000字の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "model 能力と orchestration 能力を分離し、harness が品質を保ったまま token economics を変える仕組みと実測を整理する"
+  analysis_axis: "固定 model の対照比較としての強みと、22 task の代表性・quality 指標・開発元による評価という外的妥当性の限界を分けて検討する"
+  application_target: "Log_cdx の反復実装と headless playtest で固定 game task を用意し、context 編成、tool 公開、cache shape、失敗打切りだけを差し替えて tokens/task・wall-clock・成功率を測る"
+  pros_cons: "利点は model 交換以外の改善レバーを計測可能にすること。欠点は enterprise task の改善率をゲーム制作へ数値のまま外挿できず、品質差の統計的確度も確認が必要なこと"
+  verdict_pre: "部分採用 — harness 単位の A/B 比較と failure-spend 計測を採り、報告された削減率は仮説として再検証する"
 ---
 
 ## raw_excerpt
