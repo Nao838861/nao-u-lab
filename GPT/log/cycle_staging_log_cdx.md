@@ -50,7 +50,19 @@ duplicate_preflight:
 - ゲーム制作への適用: AWS 全体構成の導入ではなく、playable prototype に対する意味状態 snapshot、少数 action API、前後差分、deterministic な停止条件、action trace を段階導入する題材として有用。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+### 2026-08-03 18:43 JST
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260803_aws_bedrock_unity_game_testing_agent.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785750176783739
+    char_count: 4118
+skipped: []
+```
+
+- 最終判定: 投稿。AWS 全体構成の紹介ではなく、Unity build の意味状態を直接観測し、game-agnostic tools と deterministic な停止条件で LLM の役割を限定する設計として、問題設定・手法・評価・限界・自分達向けの3 test 検証案まで自立して説明できる。
+- 投稿前レビュー: `■ 概要` 始まり、必須6項目の順序、`■ URL` 末尾、4118字、禁止表現なしを `tools/shared_reads_policy.py` で確認。`tools/post_slack_message_file.py` により1回の `chat.postMessage` で投稿し、Slack 保存本文の UTF-8 検証も `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
