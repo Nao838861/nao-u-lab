@@ -144,7 +144,73 @@ stale_review_batch: []
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+
+```yaml
+designs:
+  - issue_id: ISS-CANDIDATE-LIFECYCLE-GAP
+    problem_restatement: >-
+      Phase 1 candidate の永続実体は残る一方、未評価状態を Phase 2 へ渡す経路が当該 cycle の staging list にしかない。
+      Phase 2 が中断する、または後続 cycle の staging に置き換わると、frontmatter に評価済み lifecycle がない candidate を
+      stale triage も handoff inbox も選べず、内容ではなく配送失敗によって孤児化する。
+    alternatives:
+      - name: 案A Phase 2 の未評価 candidate 直接収束
+        sketch: >-
+          Phase 1 テンプレートの必須 provenance を持ち、かつ status / candidate_status / gate_decision / evaluated_at を持たない
+          candidate を「未評価 intake」と定義する。Phase 2 は既存 handoff を先に処理した後、この集合を collected_at と path で
+          決定論的に選び、評価 frontmatter が確定するまで毎 cycle 再提示する。staging は当該 cycle の表示に留める。
+        pros:
+          - candidate 本体を正本にでき、staging の消失や Phase 間中断から自然に回復する
+          - 新しい永続 sidecar を増やさず、評価完了後は既存 lifecycle と stale handoff にそのまま合流できる
+          - 8 件へ根拠のない仮 decision を backfill せず、通常の Phase 2 品質判定を通せる
+        cons:
+          - 正規の未評価 candidate と frontmatter 破損を区別する厳密な intake predicate が必要
+          - backlog が増えた場合の順序と件数上限を明示しないと、新規候補または古い候補が飢餓になる
+          - Phase 2 の入力が staging だけではなく candidate directory の bounded scan に広がる
+        migration_cost: low
+      - name: 案B Phase 1 で needs_review 仮状態を付与
+        sketch: >-
+          candidate 作成時に status / candidate_status を needs_review とし、stale_after を収集日へ設定する。
+          評価漏れは既存 stale triage と candidate handoff に即時合流させ、Phase 2 の再評価契約で閉じる。
+        pros:
+          - 既存の open-status sidecar と lease 機構を再利用できる
+          - status 欠損 candidate を今後生成しない単純な producer contract になる
+          - Phase 4a の既存 lifecycle 集計へそのまま現れる
+        cons:
+          - stale_after の「評価後の再評価期限」という意味を「初回評価待ち」にも過負荷する
+          - 未評価なのに needs_review という判断済み状態を付け、last_decision / evidence 契約との意味差が生じる
+          - Phase 1 が lifecycle と queue 都合を知るため、収集と評価の責務境界が狭まる
+        migration_cost: medium
+      - name: 案C 初回評価専用 collection inbox
+        sketch: >-
+          Phase 1 が candidate 作成と同時に path / collected_at / content fingerprint を永続 inbox へ enqueue する。
+          Phase 2 は oldest pending を評価し、candidate frontmatter と staging receipt の検証後に resolve する。
+        pros:
+          - 初回評価の配送状態と candidate の評価状態を明確に分離できる
+          - retry / partial / handled の履歴を明示的に保持できる
+          - 将来 producer が増えても同じ enqueue contract に統一できる
+        cons:
+          - candidate 本体とは別の正本候補が増え、enqueue 漏れや path / fingerprint drift を新たに扱う必要がある
+          - 既存 stale candidate handoff と似た lifecycle を二重保守することになる
+          - 現在 8 件の回収に対して仕組みと移行範囲が大きい
+        migration_cost: high
+    recommended: 案A Phase 2 の未評価 candidate 直接収束
+    recommended_reason: >-
+      孤児 8 件は本文と provenance が健全で、失われたのは評価結果ではなく一時的な配送だけである。
+      そのため candidate directory から未評価集合を再構成するのが最短で、誤選定時も評価前ならファイルを変えず、
+      中断時は次 cycle に再提示される。案Bの状態語彙と stale_after の意味変更、案Cの新しい永続状態と同期コストを避けつつ、
+      評価後の既存 lifecycle / handoff 契約は変更しない。intake predicate を Phase 1 provenance 必須かつ評価 field 全欠損に限定し、
+      破損ファイルは別 anomaly として fail-closed にすれば、誤配送の範囲も抑えられる。
+    decision: introduce
+    decision_reason: >-
+      2026-07-21 以降の複数 cycle で再発し、現に 8 件が検索・再評価導線から外れているため、自然解消は期待できない。
+      既存 candidate 本体を正本にする小さい設計変更で回収と再発防止を同時に行え、Phase 4c に渡せる境界条件も固まった。
+    outline_for_4c:
+      - "正規の未評価 intake predicate を定義する: Phase 1 provenance（title / url / collected_at / collected_by）を持ち、status / candidate_status / gate_decision / evaluated_at がすべて欠損していること。必須 provenance 欠損は自動評価せず malformed anomaly に分離する。"
+      - "Phase 2 の入力順を、既存 group handoff、既存 stale candidate handoff、未評価 intake の順にする。未評価 intake は collected_at、次いで path の昇順で bounded に選び、staging の Phase 1 list とは集合和を取り path で重複排除する。"
+      - "Phase 2 が pass / fail / postpone の canonical frontmatter を書き終えるまで intake 対象から外さない。評価後は既存 ready_to_post / failed / postponed lifecycle へ合流させ、新しい terminal 状態は増やさない。"
+      - "Phase 4a の集計を valid unreviewed backlog と malformed candidate に分け、件数・最古 collected_at・Phase 2 の処理上限超過を観測する。valid unreviewed を status 欠損 anomaly と二重計上しない。"
+      - "既存 8 件は一括で仮 status を付けず、通常の Phase 2 intake と同じ順序・品質 gate で処理する。中断、部分 frontmatter、同一 path の staging 重複を含む回帰条件を確認する。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
