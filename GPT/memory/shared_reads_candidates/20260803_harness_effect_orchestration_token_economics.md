@@ -7,14 +7,19 @@ genre_tags: [agent-harness, evaluation, game-production, automation, observabili
 evaluated_at: "2026-08-03T16:18:44+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-03T16:18:44+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-03T16:18:44+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-03T16:25:15+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785741899888319"
+next_action: none
 stale_after: "2026-09-02"
 supersedes: []
+posted:
+  ts: "1785741899.888319"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785741899888319"
+  char_count: 4459
+  posted_at: "2026-08-03T16:25:15+09:00"
 gate_reason: >-
   token maxing という問題設定、model を固定した harness 差し替え、22 task・6 model の比較、
   cost・wall-clock・token・quality の結論まで抽出できる。固定 game task 上で context、tool、

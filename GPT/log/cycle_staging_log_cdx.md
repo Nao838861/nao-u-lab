@@ -48,7 +48,20 @@ sidecar_checks:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260803_harness_effect_orchestration_token_economics.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785741899888319"
+    char_count: 4459
+skipped: []
+review:
+  policy_check: pass
+  duplicate_preflight: continue
+  final_decision: "部分採用"
+  source_checked: "arXiv abstract + full HTML paper"
+  caveats: "n=22、baseline 単回、LLM judge、同一企業内の一組比較、game workload ではないため、報告削減率は仮説として再検証する"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
