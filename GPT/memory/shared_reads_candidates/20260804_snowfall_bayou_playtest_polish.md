@@ -4,6 +4,20 @@ url: "https://itch.io/devlog/1514808/designer-devlog-6.amp"
 collected_at: "2026-08-04T03:16:37+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, playtesting, onboarding, game-feel, survival]
+evaluated_at: "2026-08-04T03:21:54+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-04T03:21:54+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-04T03:21:54+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-03"
+supersedes: []
+gate_reason: >-
+  playtest で露出した問題と個別の修正案は具体的だが、観察方法、変更前後の比較、修正後の再検証が示されていない。
+  一次資料の範囲では手法の中核と評価の中身を約4000字の概要に展開できず、投稿すると一般的な改善項目の列挙になる。
 ---
 
 ## raw_excerpt
