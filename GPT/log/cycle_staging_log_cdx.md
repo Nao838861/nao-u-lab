@@ -48,7 +48,13 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped: []
+no_op_reason: "Phase 2 の gate_decision: pass candidate が 0 件のため、投稿対象なし"
+reviewed_at: "2026-08-04T05:20:50+09:00"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
