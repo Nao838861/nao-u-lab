@@ -4,6 +4,20 @@ url: "https://schedule.gdconf.com/session/designing-the-final-level-of-split-fic
 collected_at: "2026-08-04T14:32:10+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, level-design, co-op, communication, production]
+evaluated_at: "2026-08-04T14:38:10+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-04T14:38:10+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-04T14:38:10+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-03"
+supersedes: []
+gate_reason: >-
+  公式セッション概要から協力者間の会話を誘発する設計、終盤への高コスト案の集中、単純化という論点は抽出できる。
+  ただし puzzle の具体構造、反復で棄却・採用した案、評価結果がなく、CoopEval 水準の概要を根拠付きで構成するには一次資料が不足する。
 ---
 
 ## raw_excerpt

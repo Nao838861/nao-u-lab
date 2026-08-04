@@ -4,6 +4,20 @@ url: "https://schedule.gdconf.com/session/clair-obscur-expedition-33-delivering-
 collected_at: "2026-08-04T14:32:46+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-production, tools, unreal-engine, small-team, content-pipeline]
+evaluated_at: "2026-08-04T14:38:10+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-04T14:38:10+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-04T14:38:10+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-03"
+supersedes: []
+gate_reason: >-
+  designer authoring、組合せ可能な gameplay element、vanilla-first という適用性の高い軸は明確である。
+  しかし system の境界、実例、失敗と trade-off、制作量への効果が概要にはなく、少人数制作へ移植できる具体度と約4000字の根拠が足りない。
 ---
 
 ## raw_excerpt
