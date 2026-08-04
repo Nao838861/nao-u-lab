@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-04T07:26:24+09:00",
+  "updated_at": "2026-08-04T09:30:07+09:00",
   "reviewed_source_ts": [
+    "1780080302.984789",
     "1780163604.831419",
     "1785765740.918089",
     "1785765745.048369",
@@ -604,6 +605,47 @@
     "1780271082.067289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-04T09:30:07+09:00",
+      "selected": {
+        "id": "sr-1780080302-47f5943a6a",
+        "source_ts": "1780080302.984789",
+        "title": "ByteRover: Agent-Native Memory Through LLM-Curated Hierarchical Context",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす候補のうち、同一投稿の断片ではない最新の自己完結 atom で、memory・agent・operation・evaluation を含む7タグを持つ。LLM 自身による curation、階層 Markdown、provenance、段階 retrieval が、per-atom Markdown 移行中の現在の記憶運用へ既存 control と異なる小さな判断差を作るか確認するため1件だけ選んだ。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。原典は Domain→Topic→Subtopic→Entry の Context Tree、relations・provenance・lifecycle metadata、ADD／UPDATE／UPSERT／MERGE／DELETE の reason 付き操作、操作ごとの成功・失敗 receipt、5-tier retrieval と OOD gate を具体化している。LoCoMo 1,982問、LongMemEval-S 500問、23,867 docs での latency、query-time ablation、write cost・novel query latency・backbone 依存・大規模 file store・sequential write queue の限界まで示すため relevance・actionability・evidence は3とした。一方、現在の per-atom Markdown＋index、probe-20260517-hierarchical-memory-recall-ladder、probe-20260517-retrieval-delivery-loop-check、probe-20260517-memory-poisoning-ingest-check、probe-20260625-amvl-retention-utility-lifecycle が、階層順序、検索後の evidence 接続、provenance、retention／utility を既に扱う。ByteRover 固有の5 tierや操作名を別 control にしても次回判断を変えず non_redundancy=0である。active_probes は322件で、Phase 4a には probe-20260731-rlm-one-hop-query-rewrite の pending lease が1件あり、現在の staging に retrieval tier 導入前後の同一 query、latency、hit quality、branch change を比較できる artifact もない。新規 control は確認負荷を増やすため risk_control=1とし、reviewed state だけを更新する。",
+      "existing_probes": [
+        "probe-20260517-hierarchical-memory-recall-ladder",
+        "probe-20260517-retrieval-delivery-loop-check",
+        "probe-20260517-memory-poisoning-ingest-check",
+        "probe-20260625-amvl-retention-utility-lifecycle",
+        "probe-20260731-rlm-one-hop-query-rewrite"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の階層 recall・evidence delivery・provenance・retention utility controls、比較 artifact 不在、pending lease との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-04T07:26:24+09:00",
       "selected": {

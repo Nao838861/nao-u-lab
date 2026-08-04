@@ -76,7 +76,37 @@ reason: "Phase 2 の pass が 0 件のため、投稿対象なし。postpone 済
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+### 2026-08-04T09:30:07+09:00 log_cdx
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780080302-47f5943a6a
+    source_ts: "1780080302.984789"
+    title: "ByteRover: Agent-Native Memory Through LLM-Curated Hierarchical Context"
+    reason: "未レビュー候補のうち同一投稿の断片ではない最新の自己完結 atom で、memory・agent・operation・evaluation を含む7タグを持つ。LLM 自身による curation、階層 Markdown、provenance、段階 retrieval が、per-atom Markdown 移行中の現在の記憶運用へ既存 control と異なる判断差を作るか確認するため1件だけ選んだ。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回る。原典は Context Tree、reason 付き atomic operations、per-operation receipt、5-tier retrieval、OOD gate、LoCoMo 1,982問・LongMemEval-S 500問・23,867 docs の評価と限界を示す。一方、per-atom Markdown＋index と既存の hierarchical recall／retrieval delivery／provenance／retention utility controls が同じ判断を既に扱う。active_probes 322件に同義 control を足しても次回判断を変えず、Phase 4a には one-hop query rewrite の pending lease が1件ある。staging に同一 query の before／after artifact もないため、state-only review とする。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
