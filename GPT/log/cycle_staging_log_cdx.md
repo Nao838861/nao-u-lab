@@ -113,7 +113,75 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "MEMORY index と atom mirror を監査。2,833 atom で broken index / duplicate id / parse error / content conflict は 0 件"
+  - "shared-reads の canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再生成。terminal canonical 74 群、mixed 48 群、open duplicate 55 群、actionable 0 群"
+  - "Slack directives / broadcasts を監査。pending は両方 0 件のため status 更新なし"
+  - "30 日超の raw 226 件を棚卸し。raw source 保持 directive に従い移動なし（web_research 203、headless_eval 16、slack_api 4、その他 3）"
+issues:
+  - id: ISS-4A-20260804-01
+    description: "1 atom の title / excerpt に U+FFFD が残り、『エージェント』が『エ��ジェント』になっている"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md:3; memory/atoms.jsonl id=sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8 明示読みでも U+FFFD を確認。source atom 自体の局所破損"
+    display_or_tooling_status: "none。PowerShell / staging の表示経路だけの mojibake ではない"
+    why_blocks_game_memory: "『エージェント』での完全一致検索と引用再利用を局所的に損なう。ただし対象は 1 atom で、recall 全体や次ゲーム制作を直ちに遮断しない"
+recommendation:
+  needs_design: false
+  priority_issues: []
+index_audit:
+  memory_index_valid: true
+  atom_count: 2833
+  duplicate_id_count: 0
+  normalized_content_duplicate_groups_raw: 40
+  normalized_content_duplicate_groups_recall_visible: 3
+  unresolved_content_conflicts: 0
+  note: "同文群は normalized_content_hash / canonical overlay で fold 済み。新しい構造問題として扱わない"
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 として読取成功。代表語は 記憶 / ゲーム設計 / 敵パターン を取得し、評価軸は本文に存在しない。MEMORY.md 自体には replacement character を検出せず"
+  display_or_tooling_status: "none。atom 1 件の U+FFFD は source file 側の局所破損として issue に分離"
+candidate_lifecycle:
+  counts:
+    posted: 568
+    ready_to_post: 9
+    postponed: 254
+    failed: 402
+    needs_review: 5
+  missing_stale_after: 3
+  overdue_for_reassessment: 1
+  overdue_path: memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+  overdue_disposition: "同一 title group の deferred lease gha-e6d4d4b5a37a0808 が retry_after 2026-08-20 まで有効。fail 降格・明示保持・再 enqueue はせず、既存の Phase 2 再評価判断を保持"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
