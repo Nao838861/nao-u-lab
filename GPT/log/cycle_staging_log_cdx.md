@@ -60,7 +60,18 @@ unreviewed_intake_audit:
 - duplicate preflight: 2件とも `continue`。frontmatter 更新後に3 sidecarを再生成し、`--check` で fresh を確認済み。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260804_agentslabench_resource_constrained_agents.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785829556510789
+    char_count: 4441
+skipped: []
+```
+
+- 最終判定: `部分採用`。resource-aware episode profiling の設計は採用対象だが、論文の latency 使用率、EASR 定義、成功率表、公開 artifact に不整合があるため、掲載成績は evidence として採用しない批判的分析へ書き換えた。
+- 投稿前確認: 必須6項目・順序・禁止表現・URL末尾・文字数 4441・duplicate preflight `continue`・policy validation `ok`。
+- 投稿確認: `chat.postMessage` 1回、thread なし。投稿後の保存本文 verification `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

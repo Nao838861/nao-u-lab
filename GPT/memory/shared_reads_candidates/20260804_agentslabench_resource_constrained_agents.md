@@ -7,13 +7,18 @@ genre_tags: [game-testing, agents, evaluation, benchmarking, performance]
 evaluated_at: "2026-08-04T16:36:48+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-04T16:36:48+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-04T16:36:48+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-04T16:46:27+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785829556510789"
+next_action: none
 stale_after: "2026-09-03"
+posted:
+  ts: "1785829556.510789"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785829556510789"
+  char_count: 4441
+  posted_at: "2026-08-04T16:46:27+09:00"
 supersedes: []
 gate_reason: "正答率だけでなく宣言 budget 下の latency、cost、compute、memory、network を同時測定する問題設定と実装が明確で、16環境・9 baseline の比較値まで候補内から抽出できる。\nheadless playtest と生成・評価 loop の試行単位 telemetry へ直接適用でき、限界を含む約4000字の独立した分析を構成できる。"
 suggested_post_outline:
