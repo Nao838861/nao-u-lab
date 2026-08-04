@@ -109,7 +109,58 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-08-04T09:38:00+09:00 log_cdx
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語（記憶・ゲーム設計・敵パターン・評価軸）を確認。validate_memory_index は OK で index entry の broken link なし"
+  - "atoms.jsonl / per-file Markdown / index.jsonl を監査。各 2833 件で欠落・parse error・content conflict は 0 件。raw normalized-content duplicate は 40 group / 80 atom だが overlay fold 済み"
+  - "memory/raw/ の mtime 30日超を監査。226件（web_research 203、headless_eval 16、slack_api 4、その他 3）は原文 provenance のため自動移動せず保持"
+  - "candidate lifecycle を dry-run 監査。posted 568、ready_to_post 9、postponed 250、failed 402、needs_review 5。現在状態 conflict は 0 件"
+  - "title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再生成。open group 55（mixed 48、all_open 7）、actionable group 0"
+  - "Slack directive / broadcast inbox を監査。pending 0 件のため handled 更新なし"
+issues:
+  - id: ISS-RAW-MOJIBAKE-001
+    description: "shared-reads raw archive の1投稿に U+FFFD が2文字残り、atom title / trigger / excerpt へ『エ��ジェント』として伝播している"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みでも raw archive と派生 atom の双方に U+FFFD が存在。source data の局所破損"
+    display_or_tooling_status: "none。PowerShell 表示だけの mojibake ではない。なお gr-1777083728-44d444ab7a は UTF-8 原文が正常で、literal '???' による suspect false positive"
+    why_blocks_game_memory: "agent-memory の索引語が壊れ、この atom のタイトル検索と関連候補検索の recall を局所的に弱める"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  backlog_high_water_evidence: "overdue_open_total > queue rows は成立するが actionable group が3件未満。JAMEL group は retry_after=2026-08-20 の live deferred lease により抑止"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
