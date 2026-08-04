@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-04T09:30:07+09:00",
+  "updated_at": "2026-08-04T12:40:55+09:00",
   "reviewed_source_ts": [
+    "1779971910.677459",
     "1780080302.984789",
     "1780163604.831419",
     "1785765740.918089",
@@ -605,6 +606,46 @@
     "1780271082.067289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-04T12:40:55+09:00",
+      "selected": {
+        "id": "sr-1779971910-32da040841",
+        "source_ts": "1779971910.677459",
+        "title": "Agentick: A Unified Benchmark for General Sequential Decision-Making Agents",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たし、memory・harness・game-design・agent・evaluation の5優先タグを横断する自己完結 atom である。37 task、6 capability category、4 difficulty、5 observation modality、oracle reference policy を同一 interface で比較する知見が、次の headless game evaluation に既存 controls と異なる小さな判断差を作るか確認するため1件だけ選んだ。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14だが、risk_control が必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は37個の procedurally generated task、6 capability category、4段階 difficulty、5 observation modality、Gymnasium-compatible interface、oracle reference policy、27 configuration・90,000 episode超を示し、task_family／required_capability／observation_modality／oracle_or_reference_behavior／failure_bucket へ直接変換できるため relevance・actionability・evidence は3とした。一方、probe-20260602-titan-headless-qa-trace は abstract state・action trace・失敗診断を、probe-20260603-mechanic-observation-channel-gate は mechanic ごとの観測 channel と証明限界を、probe-20260604-open-world-behavior-oracle は binary／statistical／interpretive oracle と複数 seed／route の分布を、probe-20260712-headless-opponent-mechanic-matrix は no-op／通常／exploiter policy と mechanic 使用を既に扱う。Agentick 固有の capability taxonomy を常設 schema にしても現時点の次回判断の大半は変わらず non_redundancy=1である。active_probes は322件で Phase 4a には別 probe の pending lease が1件あり、現在の staging には比較可能な playable diff、task family、複数 modality、oracle policy の before／after artifact もない。対象なしに5フィールドを追加すると benchmark 管理が制作を圧迫するため risk_control=1とし、既存 controls を再利用する state-only review に留める。",
+      "existing_probes": [
+        "probe-20260602-titan-headless-qa-trace",
+        "probe-20260603-mechanic-observation-channel-gate",
+        "probe-20260604-open-world-behavior-oracle",
+        "probe-20260712-headless-opponent-mechanic-matrix"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の headless trace・observation channel・oracle・policy controls との重複、比較可能な playable artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-04T09:30:07+09:00",
       "selected": {

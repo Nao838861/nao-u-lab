@@ -65,7 +65,35 @@ slack_posted: false
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779971910-32da040841
+    source_ts: "1779971910.677459"
+    title: "Agentick: A Unified Benchmark for General Sequential Decision-Making Agents"
+    reason: "score 10 の未レビュー自己完結 atom で、memory・harness・game-design・agent・evaluation を横断する。37 task、6 capability category、4 difficulty、5 observation modality、oracle policy の分解が既存 headless evaluation controls と異なる判断差を作るか確認するため1件だけ選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "合計14だが risk_control が必須閾値2未満。既存の titan-headless-qa-trace、mechanic-observation-channel-gate、open-world-behavior-oracle、headless-opponent-mechanic-matrix が state/action trace、観測 channel、oracle 種別、複数 policy を既に扱う。active_probes 322件、Phase 4a の pending lease 1件、比較可能な playable artifact 不在の状態で task_family 等5フィールドを常設すると判断差より管理負荷が大きいため state-only review とした。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
