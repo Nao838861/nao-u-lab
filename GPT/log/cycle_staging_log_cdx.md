@@ -12,7 +12,52 @@
 - duplicate preflight: 2件とも `continue`。各 candidate 書込み前に3 sidecarを再生成し、最終保存後にも再生成済み。品質判定・Slack 投稿は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260804_agentslabench_resource_constrained_agents.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260804_personalizing_llm_agents_small_policy_models.md
+    reason: 評価 task の条件・比較値・失敗例が不足し、推測なしに CoopEval 水準の評価節を構成できない
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 2
+  malformed_count: 0
+  oldest_collected_at: "2026-08-04T16:30:58+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260804_personalizing_llm_agents_small_policy_models.md
+    - memory/shared_reads_candidates/20260804_agentslabench_resource_constrained_agents.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260804_personalizing_llm_agents_small_policy_models.md
+    - memory/shared_reads_candidates/20260804_agentslabench_resource_constrained_agents.md
+  valid_backlog_after: 0
+```
+
+- 判定: AgentSLABench は、正答率と resource budget を同じ試行で測る評価設計、16 task environment、9 baseline、定量結果が揃い、headless playtest harness への適用も具体化できるため pass。
+- 判定: FABLE は因子分解した小型 policy layer の着想とゲーム AI への接続は明確だが、候補内の評価 evidence が定性的で、現時点では postpone。
+- duplicate preflight: 2件とも `continue`。frontmatter 更新後に3 sidecarを再生成し、`--check` で fresh を確認済み。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
