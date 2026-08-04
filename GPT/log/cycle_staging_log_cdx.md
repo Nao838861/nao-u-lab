@@ -83,7 +83,34 @@ outcome: "gate_decision: pass の candidate がないため Slack 投稿なし�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780047750-a63147d731
+    source_ts: "1780047750.140829"
+    title: "TagRAG: Tag-guided Hierarchical Knowledge Graph RAG"
+    reason: "source=slack_api/shared-reads、score=11、未レビューで、memory・operation・evaluation の3優先タグを持つ自己完結 atom。root tag からの階層 chain と DAG mount が、per-atom Markdown＋index 移行中の現在の記憶運用へ既存 control と異なる判断差を作るか確認するため1件だけ選んだ。より新しい未レビュー2件は既レビュー ByteRover 投稿または別投稿の断片で単独評価に不向き。Nao_u の明示的な重要評価記録はない"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "TagRAG は object tag 抽出、root anchor からの多層 chain、DAG mount、top-k tag retrieval、UltraDomain 勝率と構築時間を示し、階層 edge 候補へ変換できる。一方、検索スコア式、14.6倍主張の計算過程、誤 tag／edge 抑制、limitations、recall／accuracy、当方 corpus での flat 対 hierarchy 比較がない。既存の hierarchical-memory-recall-ladder、read-lanes-before-memory-write、memory-hub-link-coverage、rlm-one-hop-query-rewrite が検索順・read-only lane・link reachability・曖昧 hit の再検索を既に扱うため、新規 tag-chain control は次回判断をほぼ変えない。active_probes 322件と Phase 4a pending lease 1件へ未検証 LLM chain と確認負荷を加えるリスクが便益を上回り、比較 artifact もないため state-only reject"
+  change:
+    summary: "reviewed_source_ts と、根拠不足・既存 controls との重複による reject 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加なし"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

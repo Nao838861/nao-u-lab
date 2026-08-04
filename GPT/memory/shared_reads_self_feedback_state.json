@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-04T12:40:55+09:00",
+  "updated_at": "2026-08-04T14:42:20+09:00",
   "reviewed_source_ts": [
+    "1780047750.140829",
     "1779971910.677459",
     "1780080302.984789",
     "1780163604.831419",
@@ -606,6 +607,46 @@
     "1780271082.067289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-04T14:42:20+09:00",
+      "selected": {
+        "id": "sr-1780047750-a63147d731",
+        "source_ts": "1780047750.140829",
+        "title": "TagRAG: Tag-guided Hierarchical Knowledge Graph RAG",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす自己完結 atom で、memory・operation・evaluation の3優先タグを持つ。predefined root domain tag から階層 chain を作り DAG mount する知見が、per-atom Markdown＋index 移行中の現在の記憶運用へ既存 control と異なる小さな判断差を作るか確認するため1件だけ選んだ。より新しい未レビュー候補2件は、直前レビュー済み ByteRover 投稿の断片と別投稿の Q3 断片で単独評価に不向きだった。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は object tag 抽出、root anchor からの多層 chain 生成、DAG mount、cosine top-k=3 と上位 chain 統合、UltraDomain での勝率、GraphRAG との構築時間比較を示し、人手 frontmatter を正本として chain edge を派生する候補へ変換できるため relevance=3、actionability=2 とした。一方、投稿自身が検索スコア式、14.6倍主張の計算過程、誤 tag／edge の抑制、limitations、recall／accuracy を欠くと指摘し、当方 corpus での flat tag と hierarchy tag の同一 query 比較もないため evidence=2に留める。probe-20260517-hierarchical-memory-recall-ladder は上位目標→中粒度→atom の検索順と直 grep との差を、probe-20260516-read-lanes-before-memory-write は semantic／full-text／graph／time lane の read-only 比較を、probe-20260607-memory-hub-link-coverage は peer link と hub reachability の分離を、probe-20260731-rlm-one-hop-query-rewrite は曖昧な初回 hit から1回だけ検索語を作り直した判断差をすでに扱う。TagRAG 固有の tag chain schema を322件の active_probes に追加しても直後の判断をほぼ変えず、未検証 LLM chain と確認負荷を増やすため non_redundancy=0、risk_control=1 とした。Phase 4a には既存 pending lease 1件があり、現在の staging に同一 query／corpus の flat tag 対 hierarchy tag、hit quality、false edge、判断差を比較できる artifact もないため state-only review に留める。",
+      "existing_probes": [
+        "probe-20260517-hierarchical-memory-recall-ladder",
+        "probe-20260516-read-lanes-before-memory-write",
+        "probe-20260607-memory-hub-link-coverage",
+        "probe-20260731-rlm-one-hop-query-rewrite"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、根拠不足・既存の階層 recall／read lane／link coverage／one-hop rewrite controls との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-04T12:40:55+09:00",
       "selected": {
