@@ -105,7 +105,79 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "MEMORY index と atom mirror を監査し、2,833 atom で broken index / duplicate id / parse error / content conflict が 0 件であることを確認した。"
+  - "stale だった atom title cluster sidecar を機械的に再生成し、637 cluster の current 状態へ揃えた。"
+  - "shared-reads の canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再監査した（terminal canonical 74、mixed 48、open duplicate 55、actionable 0）。"
+  - "Slack directives / broadcasts の pending がともに 0 件であることを確認し、status 変更は行わなかった。"
+  - "30 日超の raw 226 件を分類した（web_research 203、headless_eval 16、slack_api 4、ほか 3）。raw provenance と active directive の根拠なので移動しなかった。"
+issues:
+  - id: ISS-4A-20260804-01
+    description: "1 atom の title / trigger / excerpt に literal U+FFFD が残り、『AIエージェント』の検索語が壊れている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/raw/slack_archive/shared-reads.jsonl source_ts=1776127289.990919"
+    source_file_status: "UTF-8 明示読みで per-file atom・atoms.jsonl・raw Slack archive の三者に literal U+FFFD を確認したため、表示経路ではなく source data の局所破損。memory_health のもう1件 gr-1777083728-44d444ab7a は原文中の意図的な '???' による false positive。"
+    display_or_tooling_status: "none。PowerShell UTF-8 読みと rg の双方で同じ文字列を確認した。"
+    why_blocks_game_memory: "該当 atom だけは『AIエージェント』完全一致検索から漏れ得るが、リンク・tags・他の発火語は残っており影響は局所的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+index_audit:
+  memory_index_valid: true
+  atom_count: 2833
+  duplicate_id_count: 0
+  normalized_content_duplicate_groups_raw: 40
+  normalized_content_duplicate_groups_recall_visible: 3
+  canonical_overlay_duplicate_groups: 45
+  unresolved_content_conflicts: 0
+  note: "既知の normalized_content_hash / canonical overlay による fold は機能しており、raw atom は削除していない。"
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 として読め、replacement character は 0。代表語は『記憶』『ゲーム設計』『敵パターン』を取得でき、『評価軸』は現 index 本文に文字列自体が存在しなかった。本文破損の兆候はない。"
+  display_or_tooling_status: "none。日本語表示は正常。"
+candidate_lifecycle:
+  counts:
+    posted: 569
+    ready_to_post: 9
+    postponed: 255
+    failed: 402
+    needs_review: 5
+  missing_stale_after: 3
+  overdue_for_reassessment: 1
+  overdue_path: memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+  overdue_disposition: "explicit_keep。duplicate group の deferred lease gha-e6d4d4b5a37a0808 が retry_after 2026-08-20T13:19:04+09:00 まで有効で、同一 work の本文補強後に再審査する判断が残っているため、fail 降格や candidate 単位 enqueue は行わなかった。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
