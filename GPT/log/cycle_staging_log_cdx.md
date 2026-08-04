@@ -96,7 +96,58 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-08-04T12:48:17+09:00 log_cdx
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、validate_memory_index を実行。index 内 atom 参照 87 件は全件実在し、broken link は 0 件。代表語は『記憶』『ゲーム設計』『敵パターン』を取得でき、『評価軸』は現行 index に語として存在しないが、source parse と表示は正常"
+  - "atoms.jsonl / per-file Markdown / index.jsonl は各 2833 件で一致し、parse error・欠損・content conflict は 0 件。raw normalized-content duplicate 40 group / 80 atom は既存 overlay で fold 済み"
+  - "memory/raw/ の mtime 30 日超 226 件（web_research 203、headless_eval 16、slack_api 4、slack_archive 1、game_eval 1、sync_state.txt 1）を確認。いずれも原文 provenance または評価証拠として raw 階層に既に隔離されており、今回は移動なし"
+  - "candidate lifecycle を dry-run 監査。posted 568、ready_to_post 9、postponed 251、failed 402、needs_review 5。現在状態 conflict は 0 件"
+  - "title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再生成・監査。canonical 74、mixed 48、open group 55（mixed 48 / all_open 7）、actionable group 0"
+  - "Slack directive / broadcast inbox を監査。pending 0 件のため handled 更新なし"
+issues:
+  - id: ISS-RAW-MOJIBAKE-001
+    description: "shared-reads raw archive の 1 投稿に U+FFFD が 2 文字あり、対応 atom の title / trigger / excerpt に伝播している"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みで raw archive と atom の双方に U+FFFD を確認。source data 自体の局所破損"
+    display_or_tooling_status: "none。PowerShell 表示由来の mojibake ではない。gr-1777083728-44d444ab7a は UTF-8 source が正常で、literal '???' による suspect false positive"
+    why_blocks_game_memory: "agent-memory 関連の 1 atom で日本語語彙検索の再現率をわずかに落とすが、tags・URL・残余本文は保持されており影響は局所的"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 2
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 1
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 55
+  mixed_group_count: 48
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  backlog_high_water_evidence: "overdue_open_total > queue rows だが actionable group が 3 件未満。JAMEL group は retry_after=2026-08-20 の live deferred lease により正しく抑止"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
