@@ -4,6 +4,18 @@ url: https://itch.io/devlog/1486901/playtest-update-02-pacing-tempo
 collected_at: 2026-08-04T07:16:45.8418958+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, playtest, dominant-strategy, pacing, shooter, feedback]
+evaluated_at: "2026-08-04T09:23:38+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-04T09:23:38+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-04T09:23:38+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-03"
+supersedes: []
+gate_reason: "回避偏重を崩すという問題設定、敵耐久・hit reaction・line 降下条件・編成を連動させる変更、Nao_u 側の短尺 shooter で dominant strategy を調整する適用先は具体的。\nただし本文は変更投入までの devlog で、変更後に回避偏重・脅威優先・breathing window がどう変わったかという比較 playtest 結果がなく、現状では CoopEval 水準の約4000字概要を原文の証拠だけで支えられない。"
 ---
 
 ## raw_excerpt
