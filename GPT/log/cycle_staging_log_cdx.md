@@ -11,7 +11,49 @@
 - Slack 投稿: なし（Phase 1 のためローカル収集のみ）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260804_non_narrative_game_writing.md
+    reason: podcast 紹介ページだけでは具体例・設計判断・評価・結論が不足し、約4000字概要を根拠付きで構成できない
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-08-04T12:32:34+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260804_non_narrative_game_writing.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260804_non_narrative_game_writing.md
+  valid_backlog_after: 0
+duplicate_preflight:
+  path: memory/shared_reads_candidates/20260804_non_narrative_game_writing.md
+  decision: continue
+  sidecars_fresh: true
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

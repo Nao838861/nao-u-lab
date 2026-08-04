@@ -4,6 +4,21 @@ url: "https://www.gamedeveloper.com/design/the-art-of-game-writing-in-non-narrat
 collected_at: "2026-08-04T12:32:34+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, narrative-design, systems-design, puzzle, multiplayer, arpg]
+evaluated_at: "2026-08-04T12:35:19+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-04T12:35:19+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-04T12:35:19+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-03"
+supersedes: []
+gate_reason: >-
+  story-first ではないゲームで小さな narrative が複雑な gameplay system を補完するという問題設定と、
+  システム主導の試作へ適用する方向は具体的。ただし収集済み本文は podcast の紹介に留まり、
+  本編の具体例・設計判断・評価・結論がなく、現状では CoopEval 水準の約4000字概要を根拠付きで構成できない。
 ---
 
 ## raw_excerpt
