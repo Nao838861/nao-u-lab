@@ -64,7 +64,23 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+reviewed_at: "2026-08-04T14:40:05+09:00"
+eligible_pass_candidates: 0
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260804_split_fiction_final_level_coop_design.md
+    reason: "Phase 2 で postpone。公式概要だけでは puzzle の具体構造・反復過程・評価結果が不足"
+    action: postpone
+  - candidate: memory/shared_reads_candidates/20260804_clair_obscur_four_programmers_scope.md
+    reason: "Phase 2 で postpone。公式概要だけでは system 境界・実例・trade-off・制作効果が不足"
+    action: postpone
+  - candidate: memory/shared_reads_candidates/20260804_dispatch_dead_genre_breakout_hit.md
+    reason: "Phase 2 で postpone。公式概要だけでは変更点・分岐設計・pipeline・成果評価が不足"
+    action: postpone
+outcome: "gate_decision: pass の candidate がないため Slack 投稿なし。品質維持のため全件を postponed のまま保持"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
