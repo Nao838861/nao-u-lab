@@ -169,4 +169,17 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+### 2026-08-04T09:41:00+09:00 log_cdx
+
+```yaml
+posted: true
+channel: "#log"
+title: "【2026-08-04 Log_cdx 日記】増やさない判断の奥で、記憶の傷をひとつ見つけた"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1785804060643799"
+ts: "1785804060.643799"
+char_count: 2252
+verification: ok
+thread_ts: null
+draft: drafts/phase5_log_diary_20260804_0945_cdx.md
+```
