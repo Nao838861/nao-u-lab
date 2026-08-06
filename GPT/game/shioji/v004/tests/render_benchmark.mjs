@@ -3,7 +3,9 @@ import fs from 'node:fs';
 
 const CDP = process.env.CHARTER_CDP || 'http://127.0.0.1:9226';
 const GAME = process.env.CHARTER_URL || 'http://127.0.0.1:8420/game/shioji/v004/?mode=test';
+const WARMUP_FRAMES = 240;
 const FRAMES = 240;
+const TARGET_DAY = Number(process.env.CHARTER_TARGET_DAY ?? 120);
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 class Page {
@@ -59,6 +61,8 @@ const target = [...pages].reverse().find(page => page.type === 'page')
     .then(response => response.json());
 const page = new Page(target.webSocketDebuggerUrl);
 await page.connect();
+await page.send('Network.enable');
+await page.send('Network.setCacheDisabled', { cacheDisabled: true });
 await page.send('Emulation.setDeviceMetricsOverride', {
   width: 1440, height: 900, deviceScaleFactor: 1, mobile: false,
   screenWidth: 1440, screenHeight: 900,
@@ -69,10 +73,12 @@ for (let attempt = 0; attempt < 100; attempt += 1) {
   if (await page.evaluate('Boolean(window.__SHIOJI_V004__?.renderer)')) break;
 }
 assert.equal(await page.evaluate('Boolean(window.__SHIOJI_V004__?.renderer)'), true, 'game did not load');
-await page.evaluate(`window.__SHIOJI_V004__.advanceTicks(3600, { animate: false })`);
+await page.evaluate(`window.__SHIOJI_V004__.advanceTicks(${TARGET_DAY} * 30, { animate: false })`);
 const result = await page.evaluate(`(() => {
   const game = window.__SHIOJI_V004__;
-  for (let index = 0; index < 30; index += 1) game.renderer.render(game.displayModel, 1 / 60);
+  for (let index = 0; index < ${WARMUP_FRAMES}; index += 1) {
+    game.renderer.render(game.displayModel, 1 / 60);
+  }
   const samples = [];
   for (let run = 0; run < 5; run += 1) {
     const started = performance.now();
@@ -94,6 +100,9 @@ const result = await page.evaluate(`(() => {
   const restoredHit = game.renderer.lastFrameMetrics.terrainCacheHit;
   return {
     build: document.querySelector('#build-version')?.textContent,
+    day: game.displayModel.day,
+    season: game.renderer.season,
+    warmupFrames: ${WARMUP_FRAMES},
     frames: ${FRAMES},
     buildings: game.displayModel.buildings.length,
     carriers: game.displayModel.carriers.length,

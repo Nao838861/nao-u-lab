@@ -2,9 +2,18 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.22.0-building-levels';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.22.0-building-levels';
-import { displayCultureLevel } from './visuals.js?v=v004.22.0-building-levels';
+} from './engine_bridge.js?v=v004.42.0-boundary-voices';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.42.0-boundary-voices';
+import { displayCultureLevel } from './visuals.js?v=v004.42.0-boundary-voices';
+import {
+  PLAYER_FACING_BANNED_TERMS,
+  executableFoodIntervention,
+  islandFoodSummary,
+  winterFoodForecast,
+} from './food_readability.js?v=v004.42.0-boundary-voices';
+import { islandCalendar } from './ui_summary.js?v=v004.42.0-boundary-voices';
+
+export { PLAYER_FACING_BANNED_TERMS };
 
 const LIVING_REQUIREMENT_LABELS = Object.freeze({
   food1: '食料1種', food2: '食料2種', food3: '食料3種', grain: '穀物',
@@ -211,14 +220,7 @@ export function estimateWalkLen(model, from, to) {
 }
 
 export function islandFoodRunwayDays(model) {
-  const pantryFood = model.households.reduce((total, household) => total
-    + (household.pantry ?? []).filter(row => FOOD_GOODS.includes(row.goods))
-      .reduce((sum, row) => sum + row.amount, 0), 0);
-  const stallFood = model.stalls
-    .filter(stall => FOOD_GOODS.includes(stall.goods))
-    .reduce((total, stall) => total + (stall.qty ?? 0), 0);
-  const total = pantryFood + stallFood + marketFoodShelfAmount(model);
-  return total / Math.max(1, model.population);
+  return islandFoodSummary(model).runwayDays;
 }
 
 function farHouseholdFromMarket(model) {
@@ -235,7 +237,7 @@ function farHouseholdFromMarket(model) {
 
 export const LOGGER_TRIP_WARNING_TICKS = 24;
 export const LOGGER_TRIP_RECOVERY_TICKS = 4;
-export const FOOD_IMPORT_EMA_TARGET = 0.6;
+export const FOOD_IMPORT_EMA_TARGET = 1.2;
 export const SEASONAL_SURPLUS_MIN = 8;
 export const SEASONAL_VALLEY_RATIO = 0.2;
 export const SEASONAL_RESERVE_TARGET = 16;
@@ -356,13 +358,13 @@ export const TUTORIAL_PLAYER_TITLES = Object.freeze({
 // ボタン名・入力手順は TUTORIAL_SYSTEM_INSTRUCTIONS が備忘録として補う。
 export const TUTORIAL_ELENA_MESSAGES = Object.freeze({
   'first-road-and-logger': 'まずは、港から森のそばまで道を敷きましょう。あとで木こりを建て、切った丸太を運ぶ道になります。',
-  'first-logger': '今度は、道沿いの森のそばに木こりを建てましょう。木こりは森から丸太を切り出します。',
+  'first-logger': '今度は、道沿いの森のそばに木こりを建てましょう。どこにも置けますが、森が遠いほど歩く時間が増え、丸太の日産が落ちます。',
   'market-for-logs': '木こりが丸太を売れるよう、道沿いに市場を開きましょう。売れたお金で、家族は食料を買えるようになります。',
   'connect-market-to-port': '港と市場の入口を道でつなぎましょう。本土から届く食料も、島から出す荷も、この道を通ります。',
   'request-first-aid': '漁師と野菜畑が働き始めるまでの食料を、本国から一便だけ送ってもらいましょう。',
-  'first-settlers-arrive': '市場と当座の食料が整いました。時間を進め、最初の家族が島へ着くのを待ちましょう。',
-  'place-island-food': '最初の家族が着きました。水辺に漁師を、市場の近くに野菜畑を建て、島で食料を作り始めましょう。',
-  'first-woodshop': '木工房を道沿いに建てましょう。木こりの丸太を木製品に変え、新しい売り物を作れます。',
+  'first-settlers-arrive': '市場と当座の食料が整いました。港から市場へ食料を運ぶ人を追いながら、最初の家族を迎えましょう。',
+  'place-island-food': '最初の家族が着きました。漁師は漁場へ近い水辺に、野菜畑は市場の近くに建て、島で食料を作り始めましょう。漁師も水辺から遠ければ、その分だけ日産が落ちます。',
+  'first-woodshop': '木工房を木こりへ近い道沿いに建てましょう。近ければ市場を経ずに丸太を買い、短くなった時間で木製品を増やせます。',
   'warehouse-for-order': '市場と港へ道が通る場所に、倉庫を建てましょう。会社が買った品を、注文まで保管する場所です。',
   'prepare-first-tools-stock': '注文が来る前に、木製品を80荷、倉庫に買い集めておきましょう。先に備えれば、期限に追われずに済みます。',
   'accept-first-order': '本国から注文が届いたら、品の量と期限を確かめて引き受けましょう。倉庫の木製品が、最初の取引に使われます。',
@@ -375,8 +377,8 @@ export const TUTORIAL_ELENA_MESSAGES = Object.freeze({
   'reduce-food-imports': '魚と野菜を作る家が働き続ければ、本国から買う食料は減っていきます。市場への道と食料の量を見守りましょう。',
   'close-second-chapter': '島で食料を作った結果を、書状で確かめましょう。本国へ払うお金がどう変わったかもまとめています。',
   'observe-seasonal-food-valley': '食料の量は季節で変わります。市場の食料が多い時と少ない時を見比べ、備える時期を覚えましょう。',
-  'set-seasonal-stock-target': '食料が多い季節のうちに、16荷を倉庫へ買い集めましょう。品薄になる季節へ残す備えです。',
-  'fill-seasonal-reserve': '買い上げた食料を、荷車が倉庫へ運びます。16荷が実際に積まれるまで見届けましょう。',
+  'set-seasonal-stock-target': '食料が多い季節のうちに、まず16荷を倉庫へ買い集めましょう。これは備蓄操作を覚える最初の一便です。冬全体の必要量は［統計］の予報で確かめられます。',
+  'fill-seasonal-reserve': '買い上げた食料を、荷車が倉庫へ運びます。最初の備え16荷が実際に積まれるまで見届けましょう。',
   'release-seasonal-reserve': '市場の食料が少なくなりました。倉庫に備えた16荷を市場へ戻し、家族が買えるようにしましょう。',
   'close-third-chapter': '倉庫へ備えた食料が、品薄の時にどう役立ったか、書状で振り返りましょう。',
   'assess-profitable-order': '本国が払う一荷あたりの代金と、市場で買う値段を比べましょう。差が残る注文だけを引き受けます。',
@@ -387,7 +389,7 @@ export const TUTORIAL_ELENA_MESSAGES = Object.freeze({
   'let-skippable-order-expire': 'この注文は引き受けず、期限が過ぎるまで待ちましょう。見送れば、品もお金も使わずに済みます。',
   'close-fourth-chapter': '引き受けた注文と、見送った注文を、書状で比べましょう。どちらも会社を守るための判断です。',
   'observe-tools-price-rise': '木製品の値段が上がり始めました。町で何が木製品を求めているのか、仕事と相場を見比べましょう。',
-  'place-conversion-workshops': '木工房、炭焼き小屋、塩田を道沿いに一棟ずつ建てましょう。丸太から木製品と木炭を、木炭から塩を作れます。',
+  'place-conversion-workshops': '木工房と炭焼き小屋は木こりの近くへ、塩田は炭焼き小屋の近くへ、一棟ずつ建てましょう。近い原料元から直接買えれば、仕事の連鎖が速くなります。',
   'observe-conversion-cost-chain': '三つの仕事場へ原料が届くのを待ちましょう。原料の値段が、作った品の原価にどう残るか確かめます。',
   'sustain-conversion-workshops': '三つの仕事場へ、家族と原料が届く状態を90日保ちましょう。道が切れたり原料が尽きたりしていないか見守ります。',
   'observe-household-level-up': '食料や暮らしの品が毎日届く家を見守りましょう。満たされた日が続くと、家と仕事場が一段育ちます。',
@@ -397,13 +399,13 @@ export const TUTORIAL_ELENA_MESSAGES = Object.freeze({
 
 export const TUTORIAL_ELENA_COMPLETIONS = Object.freeze({
   'first-road-and-logger': '森まで道が届きました。次は、その道沿いの森のそばに木こりを建てましょう。',
-  'first-logger': '木こりが建ちました。丸太を切り出せますが、まだ売る場所がありません。',
+  'first-logger': '木こりが建ちました。建物を押すと、森までの片道と日産を確かめられます。まだ丸太を売る場所はありません。',
   'market-for-logs': '市場が開きました。木こりの丸太を売り、家族が食料を買える場所ができました。',
   'connect-market-to-port': '港と市場が道でつながりました。本国の食料を、市場まで運べるようになりました。',
   'request-first-aid': '本国へ食料支援を頼みました。この一便が届く間に、島で食料を作る支度を進められます。',
   'first-settlers-arrive': '最初の家族が島へ着きました。まずは、毎日食べる魚と野菜を島で作れるようにしましょう。',
   'place-island-food': '漁師と野菜畑が建ちました。家族が働き始めれば、魚と野菜が市場へ届きます。',
-  'first-woodshop': '木工房が建ちました。木こりの丸太を、注文にも使える木製品へ変えられます。',
+  'first-woodshop': '木工房が建ちました。近い木こりに丸太があれば直接買いに行き、注文にも使える木製品へ変えます。',
   'warehouse-for-order': '倉庫が道につながりました。これで、買い付けた品を運び込めます。',
   'prepare-first-tools-stock': '木製品の買上げ目標を80荷に定めました。市場に木製品が並べば、会社の運び手が倉庫へ運びます。',
   'accept-first-order': '最初の注文を引き受けました。受けただけでは品は集まらないので、買い付ける量を注文数に合わせましょう。',
@@ -556,7 +558,7 @@ const TUTORIAL_AUTHORED_LETTERS = Object.freeze({
     summary: '魚と野菜が市場へ届き、本土から買う食料を減らせるようになりました。',
     body: [
       '漁師と野菜畑が働き、島で作った食料が家族の食卓へ届き始めました。本土へ出ていくお金も、これから抑えやすくなります。',
-      'ご報告だけです。統計の食料の流れを見れば、島内生産、消費、本土購入の変化をいつでも確かめられます。',
+      'ご報告だけです。統計の食料グラフでは、島と会社が持つ食料を、冬越しに必要な量と見比べられます。',
     ].join('\n\n'),
   }),
   'chapter-three-close': ({ facts = {} }) => ({
@@ -640,13 +642,13 @@ export function authorTutorialLetter(id, rendered) {
 
 export const TUTORIAL_SYSTEM_INSTRUCTIONS = Object.freeze({
   'first-road-and-logger': '港から森の隣まで道を引く',
-  'first-logger': '森と道の両方に接する場所へ木こりを建てる',
+  'first-logger': '下の［資源］で［木こり］を選び、配置予測の日産が高い森近くの道沿いへ建てる。',
   'market-for-logs': '下の［流通］から［市場］を選び、木こりへ続く道の隣に置く。',
   'connect-market-to-port': '［整備］の［道を敷く］で、港の入口と市場の入口をつなぐ。',
   'request-first-aid': '上の［取引］を開き、［支援を要請する］を1回押す。',
   'first-settlers-arrive': '時間を進め、市場の近くに最初の家族が現れるまで盤面を見る。',
-  'place-island-food': '下の［食料］から［漁師］を水際の道沿いへ、［野菜畑］を市場に近い道沿いへ置く。',
-  'first-woodshop': '下の［加工］から［木工房］を選び、木こりと市場へ続く道沿いに置く。',
+  'place-island-food': '下の［食料］から［漁師］を選び、配置予測の日産が高い水際の道沿いへ置く。［野菜畑］は市場に近い道沿いへ置く。',
+  'first-woodshop': '下の［加工］から［木工房］を選び、配置予測で木こりが近隣仕入の候補になる道沿いへ置く。',
   'warehouse-for-order': '下の［流通］から［倉庫］を置き、［道を敷く］で市場と港へつなぐ。',
   'prepare-first-tools-stock': '上の［取引］を開き、木製品の買上げ目標へ80と入力してEnterを押す。',
   'accept-first-order': '注文状が届いたら上の［取引］を開き、注文カードの［受諾する］を押す。',
@@ -655,8 +657,8 @@ export const TUTORIAL_SYSTEM_INSTRUCTIONS = Object.freeze({
   'complete-first-order': '［取引］で「納品済み／残り／あと何日」を確認しながら時間を進め、残りが0荷になるまで倉庫から港への運搬便を追う。',
   'close-first-chapter': '',
   'improve-logger-route': '木こりを押して市場までの往復を読み、［整備］の［道を敷く］で遠回りを短くする。',
-  'observe-island-food-change': '上の［統計］を開き、［食料の流れ］の三本の線を見ながら時間を進める。',
-  'reduce-food-imports': '漁師・野菜畑と市場への道を整え、［統計］で島内生産が増え本土購入が小さくなるまで観察する。',
+  'observe-island-food-change': '上の［統計］を開き、［食料］の線が時間とともに変わるのを確かめる。',
+  'reduce-food-imports': '漁師・野菜畑と市場への道を整え、［需給］で魚と野菜の純増減を見ながら本土購入が小さくなるまで観察する。',
   'close-second-chapter': '',
   'observe-seasonal-food-valley': '［統計］の［食料と倉庫の備え］を開いたまま時間を進め、食料在庫が細る時期を見る。',
   'set-seasonal-stock-target': '［取引］で古い木製品目標を0にし、案内された食料の買上げ目標へ16と入力してEnterを押す。',
@@ -670,7 +672,7 @@ export const TUTORIAL_SYSTEM_INSTRUCTIONS = Object.freeze({
   'observe-skippable-order': '次の注文状を［取引］で読み、支払が仕入より不利な注文は［拒否する］で見送る。',
   'let-skippable-order-expire': '見送った注文を受諾せず、期限を過ぎるまで時間を進める。',
   'close-fourth-chapter': '',
-  'observe-tools-price-rise': '［統計］の相場グラフで［木製品］を選び、値の上向きを見る。',
+  'observe-tools-price-rise': '［需給］の［木製品］を押し、統計に開く相場の上向きを見る。',
   'place-conversion-workshops': '下の［加工］から［木工房］［炭焼き小屋］［塩田］を、原料と市場へ続く道沿いに一棟ずつ置く。',
   'observe-conversion-cost-chain': '三棟を順に押し、原料棚と産出棚に品が入り、加工が始まるまで時間を進める。',
   'sustain-conversion-workshops': '三棟の道路と原料を保ち、90日間、働く世帯が途切れないよう観察する。',
@@ -1052,7 +1054,7 @@ function loggerTripObservation(model) {
   return {
     householdId: household.id,
     tripTicks: household.marketTripTicks,
-    multiplier: household.productionMultiplier,
+    multiplier: household.marketTripEfficiency,
   };
 }
 
@@ -1227,7 +1229,7 @@ export const TUTORIAL_GOALS = Object.freeze([
   Object.freeze({
     id: 'first-settlers-arrive',
     chapter: '第一章・最初の一荷',
-    title: '市場と食料便を整えて、最初の入植世帯を迎える',
+    title: '港から市場へ食料を運ぶ人を見ながら、最初の家族を迎える',
     evaluate({ model }) {
       const households = model.households.filter(household => household.job === 'logger').length;
       const daysToJudgment = 15 - (model.day % 15);
@@ -1236,7 +1238,7 @@ export const TUTORIAL_GOALS = Object.freeze([
         progress: { done: Number(households > 0), total: 1 },
         detail: households > 0
           ? `木こりの入植世帯 ${households}世帯 / 島の人口 ${model.population}人`
-          : `入植判定まで最大あと${daysToJudgment}日。市場と支援食料を整えたので、一日毎秒で進められます`,
+          : `入植判定まで最大あと${daysToJudgment}日。港から市場へ食料を運ぶ人を一人選び、積み荷が届くまで追ってみましょう`,
         evidence: { households, population: model.population },
       };
     },
@@ -1319,7 +1321,7 @@ export const TUTORIAL_GOALS = Object.freeze([
         ? `受諾済み: ${goodsLabel(model.activeOrder.g)} ${model.activeOrder.qty}荷`
         : offer
           ? `注文状が届いています: ${goodsLabel(offer.g)} ${offer.qty}荷(${offer.due}日目まで)`
-          : `倉庫の木製品 ${(model.companyStock?.tools ?? 0).toFixed(1)}荷 / 次の注文判定まで最大あと${daysToJudgment}日。一日毎秒で待てます`;
+          : `倉庫の木製品 ${(model.companyStock?.tools ?? 0).toFixed(1)}荷 / 次の注文判定まで最大あと${daysToJudgment}日。市場から倉庫へ続けざまに出る運び手を追ってみましょう`;
       return {
         complete: accepted,
         progress: { done: Number(accepted), total: 1 },
@@ -1370,7 +1372,7 @@ export const TUTORIAL_GOALS = Object.freeze([
           .includes(letter.id)
       )) ?? null;
       // 一日をまとめて進めると、倉庫へ着いた品が同じ観測内で港へ出て
-      // 在庫が再び0になる。瞬間在庫だけを条件にすると教程が永久停止するため、
+      // 在庫が再び0になる。瞬間在庫だけを条件にすると案内が永久停止するため、
       // 後続の船積み・完了記録も「調達を見届けた」確実な証拠として扱う。
       const finishedBetweenObservations = Boolean(facts) && !order
         && state?.completedGoals?.includes('order-procurement-target');
@@ -1924,7 +1926,7 @@ export const TUTORIAL_GOALS = Object.freeze([
   }),
 ]);
 
-// 創発を待つ観察課題は教程の進行を止めない。条件が実際に起きた時だけ
+// 創発を待つ観察課題は案内の進行を止めない。条件が実際に起きた時だけ
 // エレナの報告・助言として回収し、建設や設定など直接操作できる課題を背骨にする。
 export const TUTORIAL_OPTIONAL_GOAL_IDS = Object.freeze([
   'observe-island-food-change',
@@ -1949,7 +1951,7 @@ export function isRequiredTutorialGoal(goal) {
 }
 
 // 非必須の観察課題も、対応する章へ入るまでは評価しない。
-// 必須/任意と開始時期を分離し、未来章の出来事が教程を先回りするのを防ぐ。
+// 必須/任意と開始時期を分離し、未来章の出来事が案内を先回りするのを防ぐ。
 export const TUTORIAL_GOAL_START_AFTER = Object.freeze({
   'observe-island-food-change': 'close-first-chapter',
   'reduce-food-imports': 'close-first-chapter',
@@ -1979,6 +1981,53 @@ function adviceEventSequence(event) {
 }
 
 export const TUTORIAL_ADVICE = Object.freeze([
+  Object.freeze({
+    id: 'annual-autumn-food-forecast',
+    channel: 'message',
+    repeatAfterDays: 300,
+    evaluate({ model, previous = {} }) {
+      const calendar = islandCalendar(model.day, model.calendarOffsetDays);
+      const { month, year } = calendar;
+      const active = month === 9 && previous.announcedYear !== year;
+      const food = islandFoodSummary(model);
+      const forecast = winterFoodForecast(model);
+      const intervention = executableFoodIntervention(model);
+      return {
+        active,
+        completed: false,
+        evidence: active ? { announcedYear: year } : previous,
+        priority: 'info',
+        kicker: '秋の冬支度',
+        title: `冬までにあと${Math.ceil(forecast.shortage)}荷`,
+        detail: `いまの食料は約${Math.floor(food.runwayDays)}日分。冬越しの目安は${forecast.required}荷、島と会社の備えは${Math.floor(forecast.reserve)}荷です。`,
+        speech: forecast.sufficient
+          ? `冬が来ます。畑は休み、魚と蓄えで越します。いま食べられる分は約${Math.floor(food.runwayDays)}日分、冬越しの備えは足りています。`
+          : `冬が来ます。畑は休み、魚と蓄えで越します。いま食べられる分は約${Math.floor(food.runwayDays)}日分、冬越しにはあと${Math.ceil(forecast.shortage)}荷必要です。${intervention.speech}`,
+        target: null,
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'large-food-spoilage',
+    channel: 'message',
+    repeatAfterDays: 20,
+    evaluate({ model, previous = {} }) {
+      const current = Number(model.spoilTotal ?? 0);
+      const before = Number(previous.spoilTotal);
+      const lost = Number.isFinite(before) ? Math.max(0, current - before) : 0;
+      return {
+        active: lost >= 5,
+        completed: false,
+        evidence: { spoilTotal: current },
+        priority: 'info',
+        kicker: '食料の廃棄',
+        title: `食料が${Math.floor(lost)}荷傷みました`,
+        detail: '魚は約3日、野菜は約30日で傷みます。買い上げすぎず、売れる量を市場へ回す必要があります。',
+        speech: `食料が${Math.floor(lost)}荷傷みました。［需給］で魚と野菜の量を見て、余らせている品の買上げ目標を下げましょう。`,
+        target: { kind: 'sheet', sheet: 'supply-sheet' },
+      };
+    },
+  }),
   Object.freeze({
     id: 'seasonal-release-opportunity',
     channel: 'advice',
@@ -2021,6 +2070,7 @@ export const TUTORIAL_ADVICE = Object.freeze([
       const family = household?.familyName ? `${household.familyName}家` : `世帯#${household?.id ?? '—'}`;
       const job = JOB_LABELS[household?.job] ?? household?.job ?? '住民';
       const subject = `${job}の${family}`;
+      const intervention = executableFoodIntervention(model);
       return {
         active: hungerRun >= 30,
         completed: false,
@@ -2028,8 +2078,8 @@ export const TUTORIAL_ADVICE = Object.freeze([
         priority: 'action',
         kicker: 'エレナの早期警告',
         title: `${subject}の食料が危険です`,
-        detail: `必要な食料を${hungerRun}日連続で食べられていません。60日に達すると家族が亡くなります。家の食料庫、市場への道、漁師・野菜畑を確認してください。`,
-        speech: `${subject}は食べ物を得られない日が続いています。食料庫と市場への道、漁師と野菜畑を確かめましょう。`,
+        detail: `必要な食料を${hungerRun}日連続で食べられていません。60日に達すると家族が亡くなります。${intervention.speech}`,
+        speech: `${subject}は食べ物を得られない日が続いています。${intervention.speech}`,
         target: building ? { kind: 'building-detail', buildingId: building.id } : { kind: 'sheet', sheet: 'island-sheet' },
       };
     },
@@ -2077,6 +2127,7 @@ export const TUTORIAL_ADVICE = Object.freeze([
       const happened = death?.message?.includes('離散')
         ? `${subject}が、島を出ていきました。`
         : `${subject}で、食べ物を得られず亡くなった方がいます。`;
+      const intervention = executableFoodIntervention(model);
       return {
         active: fresh,
         completed: false,
@@ -2088,7 +2139,7 @@ export const TUTORIAL_ADVICE = Object.freeze([
           ? `${death.message}。必要な食料を60日連続で食べられなかったためです。家の食料庫、市場への道、漁師・野菜畑を確認すると次の死を防げます。`
           : `${model.day}日目の人口変化です。統計で食料と暮らしを確認できます。`,
         speech: death
-          ? `${happened}食料が足りていません。市場に食べ物が届くよう、漁師か野菜畑を増やしましょう。`
+          ? `${happened}${intervention.speech}`
           : '',
         target: death?.sequence ? { kind: 'event', sequence: death.sequence } : null,
       };

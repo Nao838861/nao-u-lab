@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.22.0-building-levels">
+  <link rel="stylesheet" href="./style.css?v=v004.42.0-boundary-voices">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -20,14 +20,19 @@
       <small>資金</small><b id="funds-value">—</b>
     </div>
     <div class="hud-stat calendar-stat"><small>日付</small><b id="day-value">0日目</b><em id="season-value">冬・1月</em></div>
+    <button id="food-runway" class="hud-stat food-runway" type="button" data-tone="steady">
+      <small>島の食料</small><b id="food-days-value">あと—日分 →</b><em id="food-reason">集計中</em>
+    </button>
     <div class="hud-stat population-stat"><small>人口</small><b id="population-value">0人</b></div>
     <nav id="top-menu" class="top-menu" aria-label="情報ウインドウ">
       <button id="open-company" type="button">取引</button>
+      <button id="open-supply" type="button">需給</button>
       <button id="open-island" type="button">統計 <i id="island-signal" data-tone="steady">平穏</i></button>
       <button id="open-building" type="button" disabled>選択建物</button>
       <button id="open-events" type="button">出来事</button>
       <button id="open-development" type="button">発展図</button>
       <button id="open-tutorial-letters" type="button" hidden>書状 <b id="tutorial-unread" class="unread-badge" hidden>0</b></button>
+      <button id="open-save" class="top-menu-subtle" type="button">保存</button>
       <button id="choose-start" class="top-menu-subtle" type="button" title="開始方法を選び直す">最初から</button>
     </nav>
     <div id="speed-controls" class="speed" aria-label="時間速度" data-testid="speed-controls">
@@ -38,6 +43,8 @@
     </div>
     <button id="step-day" class="step-day" type="button" data-testid="step-day">1日進める</button>
   </header>
+
+  <div id="shortage-alerts" class="panel shortage-alerts" hidden aria-label="不足している品目"></div>
 
   <aside id="tutorial-objective" class="panel tutorial-objective" hidden tabindex="-1" data-testid="tutorial-objective">
     <div>
@@ -95,24 +102,54 @@
       <button type="button" data-close-sheet="building-sheet" aria-label="建物情報を閉じる">×</button>
     </header>
     <div id="building-summary" class="building-summary"></div>
-    <div class="building-sheet-actions">
-      <button id="focus-selected-building" class="focus-building" type="button">この建物を画面中央へ</button>
-      <button id="open-island-from-building" class="focus-building" type="button">島全体の現物を見る</button>
-    </div>
     <section id="building-household" class="building-detail"></section>
     <section id="building-shelves" class="building-detail"></section>
     <section id="building-company-stock" class="building-detail company-stock-detail" hidden></section>
     <section id="building-conversion" class="building-detail"></section>
+    <div class="building-sheet-actions">
+      <button id="focus-selected-building" class="focus-building" type="button">この建物を画面中央へ</button>
+      <button id="open-island-from-building" class="focus-building" type="button">島の需給を見る</button>
+    </div>
+  </aside>
+
+  <aside id="supply-sheet" class="panel sheet supply-sheet" hidden data-testid="supply-sheet">
+    <header>
+      <div><small>足りる品・足りない品 — 不足が深刻な順</small><h2>島の需給</h2></div>
+      <button type="button" data-close-sheet="supply-sheet" aria-label="需給を閉じる">×</button>
+    </header>
+    <div class="supply-legend" aria-hidden="true"><span class="seg-prod">生産</span><span class="seg-imp">仕入</span><span class="seg-cons">消費</span><span class="seg-need">冬支度に必要な分</span><em>棒は1日あたりの荷。市場が赤い品は、島にはあるのに市場に出ていません。押すと品目詳細を開きます。</em></div>
+    <div id="market-network-summary" class="market-network-summary" hidden></div>
+    <div id="supply-grid" class="supply-grid"></div>
+  </aside>
+
+  <aside id="goods-detail-sheet" class="panel sheet goods-detail-sheet" hidden data-testid="goods-detail-sheet">
+    <header>
+      <div><small>性質・日持ち・作り方・相場</small><h2 id="goods-detail-title">品目詳細</h2></div>
+      <div class="sheet-header-actions">
+        <button id="goods-detail-back" type="button">需給へ戻る</button>
+        <button type="button" data-close-sheet="goods-detail-sheet" aria-label="品目詳細を閉じる">×</button>
+      </div>
+    </header>
+    <div id="goods-detail-content" class="goods-detail-content"></div>
   </aside>
 
   <aside id="island-sheet" class="panel sheet island-sheet" hidden data-testid="island-sheet">
     <header>
-      <div><small>取引収支・市場・現物</small><h2>島の統計</h2></div>
+      <div><small>収支・食料・人口・資金</small><h2>島の統計</h2></div>
       <button type="button" data-close-sheet="island-sheet" aria-label="統計を閉じる">×</button>
     </header>
     <section id="island-health" class="island-health" data-tone="steady">
       <b id="island-health-title">島は落ち着いています</b>
       <span id="island-health-detail">人口・食料・資金の変化をまとめます。</span>
+    </section>
+    <section id="island-productivity" class="island-productivity">
+      <div>
+        <small>島の生産性（30日平均）</small>
+        <b id="island-productivity-rate">観測中</b>
+        <em id="island-productivity-delta">30日差：観測中</em>
+      </div>
+      <p><strong id="island-productivity-output">— / —荷/日</strong><span id="island-productivity-loss">資源距離を集計中</span></p>
+      <p><span id="island-productivity-direct">近隣直接取引を集計中</span></p>
     </section>
     <section class="island-finance-section">
       <h3>直近30日の取引収支</h3>
@@ -123,31 +160,20 @@
         <span><small>差引</small><b id="island-net">—</b></span>
       </div>
     </section>
+    <section id="winter-forecast" class="winter-forecast" data-tone="steady">
+      <h3>冬越しの見積もり</h3>
+      <p><b id="winter-required">必要 約—荷</b><span>／</span><b id="winter-reserve">備え —荷</b><strong id="winter-shortage">集計中</strong></p>
+      <small>3シードの実測から、冬の取り崩しを人口1人あたり約46荷で見積もります。</small>
+    </section>
     <section class="island-history-section">
       <div class="history-heading">
         <div><h3>島の変化</h3><p id="history-status" class="sheet-note">日が進むと線になります。</p></div>
-        <label>相場を見る品
-          <select id="history-goods" aria-label="相場グラフの品目"></select>
-        </label>
       </div>
       <div id="economy-charts" class="economy-charts">
-        <figure data-chart="food-flow"><figcaption>食料の流れ <small>荷/日</small></figcaption><svg id="food-flow-chart" viewBox="0 0 320 112" role="img" aria-label="食料の生産、消費、本土購入の推移"></svg></figure>
-        <figure data-chart="food-stock"><figcaption>食料と倉庫の備え <small>荷</small></figcaption><svg id="food-stock-chart" viewBox="0 0 320 112" role="img" aria-label="島内食料と会社の食料在庫の推移"></svg></figure>
+        <figure data-chart="food-stock"><figcaption>食料 <small>荷</small></figcaption><svg id="food-stock-chart" viewBox="0 0 320 112" role="img" aria-label="島内食料と冬の必要量の推移"></svg></figure>
         <figure data-chart="population"><figcaption>人口 <small>人</small></figcaption><svg id="population-chart" viewBox="0 0 320 112" role="img" aria-label="人口の推移"></svg></figure>
-        <figure data-chart="finance"><figcaption>資金と日々の差引 <small>デナリ</small></figcaption><svg id="finance-chart" viewBox="0 0 320 112" role="img" aria-label="資金と日々の差引の推移"></svg></figure>
-        <figure data-chart="price"><figcaption><span id="price-chart-title">市場相場</span> <small>デナリ/荷</small></figcaption><svg id="price-chart" viewBox="0 0 320 112" role="img" aria-label="選択した品目の市場相場の推移"></svg></figure>
+        <figure data-chart="finance"><figcaption>取引資金 <small>デナリ</small></figcaption><svg id="finance-chart" viewBox="0 0 320 112" role="img" aria-label="取引資金とゼロ基準の推移"></svg></figure>
       </div>
-      <div class="chart-legend" aria-label="グラフの色の説明"><span class="food-prod">島内生産</span><span class="food-cons">消費</span><span class="food-imp">本土購入</span><span class="reserve">会社の倉庫</span></div>
-    </section>
-    <section class="island-market-section">
-      <h3>市場相場と最近の流れ</h3>
-      <p class="sheet-note">相場はデナリ/荷、仕入・生産・消費は直近30日の平均（荷/日）です。</p>
-      <div id="market-overview" class="market-overview"></div>
-    </section>
-    <section class="island-manifest-section">
-      <h3>現物の所在</h3>
-      <p class="sheet-note">建物の棚、世帯の食料庫、市場の屋台を二重計上せず示します。所在を押すと地図へ移動します。</p>
-      <div id="island-manifest" class="island-manifest"></div>
     </section>
   </aside>
 
@@ -179,6 +205,21 @@
     <p class="sheet-note">直近24件だけを表示します。押すと、その場所へ移動します。</p>
     <div id="event-log" class="event-log"></div>
   </aside>
+
+  <aside id="save-sheet" class="panel sheet save-sheet" hidden data-testid="save-sheet">
+    <header>
+      <div><small>島の記録を残す</small><h2>セーブ・ロード</h2></div>
+      <button type="button" data-close-sheet="save-sheet" aria-label="保存を閉じる">×</button>
+    </header>
+    <p id="save-summary" class="sheet-note">現在の島を保存できます。</p>
+    <div class="save-actions">
+      <button id="save-local" type="button"><b>この端末に保存</b><small>次回「つづきから」で再開</small></button>
+      <button id="save-download" type="button"><b>ファイルに書き出す</b><small>不具合調査用に共有できます</small></button>
+      <button id="save-import" type="button"><b>ファイルから読み込む</b><small>別の端末の島も再開</small></button>
+    </div>
+    <p id="save-feedback" class="save-feedback" role="status" aria-live="polite"></p>
+  </aside>
+  <input id="save-file-input" type="file" accept="application/json,.json" hidden>
 
   <aside id="development-sheet" class="panel sheet development-sheet" hidden data-testid="development-sheet">
     <header>
@@ -243,6 +284,10 @@
           <button id="retry-boot" type="button" hidden onclick="location.reload()">もう一度読み込む</button>
         </div>
         <div class="start-options">
+          <button id="start-resume" class="start-resume" type="button" data-save-action="resume" hidden>
+            <span><b>つづきから</b><em id="start-resume-day">保存あり</em></span>
+            <small id="start-resume-summary">この端末に保存した島を再開します。</small>
+          </button>
           <button class="start-primary" type="button" data-start-mode="tutorial">
             <span><b>エレナと開拓する</b><em>初めての方へ</em></span>
             <small>港だけの島から、道・食料・市場・本国注文まで順に進めます。</small>
@@ -254,6 +299,10 @@
           <button type="button" data-start-mode="test">
             <span><b>見本の町を眺める</b><em>すぐ観察</em></span>
             <small>人、荷車、産業がすでに動く町から、島の仕組みを眺めます。</small>
+          </button>
+          <button id="start-import" type="button" data-save-action="import">
+            <span><b>保存ファイルを読み込む</b><em>JSON</em></span>
+            <small>共有された島の状態を、そのまま確認できます。</small>
           </button>
         </div>
       </div>
@@ -290,7 +339,7 @@
       });
     })();
   </script>
-  <script id="game-module" type="module" src="./src/main.js?v=v004.22.0-building-levels"
+  <script id="game-module" type="module" src="./src/main.js?v=v004.42.0-boundary-voices"
     onerror="window.__SHIOJI_BOOT__?.failed()"></script>
 </body>
 </html>

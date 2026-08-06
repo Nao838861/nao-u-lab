@@ -39,7 +39,8 @@ const BRANCHES = Object.freeze([
       Object.freeze({ id: 'quarryman', label: '採石場', detail: '石材を切り出す' }),
       Object.freeze({ id: 'charburner', label: '炭焼き小屋', detail: '丸太から木炭を作る' }),
       Object.freeze({ id: 'future-mine', label: '鉱山開発', detail: '将来案：鉄鉱石と石炭を掘る', state: 'future' }),
-      Object.freeze({ id: 'future-iron-cart', label: '鉄製荷車', detail: '将来案：鉄材で輸送力を高める', state: 'future' }),
+      Object.freeze({ id: 'future-iron-cart', label: '鉄製荷車', detail: '将来案：鉄材で16荷を運ぶ', state: 'future' }),
+      Object.freeze({ id: 'future-horse-cart', label: '馬車', detail: '将来案：32荷を速く運ぶ', state: 'future' }),
     ]),
   }),
 ]);

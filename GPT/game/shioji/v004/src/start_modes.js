@@ -1,3 +1,5 @@
+export const SPRING_START_CALENDAR_OFFSET_DAYS = 60;
+
 export const START_MODES = Object.freeze({
   tutorial: Object.freeze({
     id: 'tutorial',
@@ -30,6 +32,7 @@ export function parseStartMode(search = '') {
 export function urlForStartMode(currentUrl, mode) {
   if (!Object.hasOwn(START_MODES, mode)) throw new RangeError(`unknown start mode: ${mode}`);
   const url = new URL(currentUrl);
+  url.searchParams.delete('resume');
   url.searchParams.set('mode', mode);
   return url.href;
 }

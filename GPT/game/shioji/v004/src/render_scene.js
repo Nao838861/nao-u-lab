@@ -6,37 +6,31 @@ function parseTileKey(key) {
   };
 }
 
-function terrainKey(model) {
+const SCENE_TOPOLOGIES = new WeakMap();
+
+function compileTerrainLayer(model, occupied) {
   let primary = 2166136261;
   let secondary = 0x9e3779b9;
-  for (const row of model.terrain) {
-    for (const tile of row) {
+  const naturalDrawables = [];
+  for (let y = 0; y < model.height; y += 1) {
+    for (let x = 0; x < model.width; x += 1) {
+      const tile = model.terrain[y][x];
       const value = `${tile.kind}:${tile.variant ?? 0};`;
       for (let index = 0; index < value.length; index += 1) {
         const code = value.charCodeAt(index);
         primary = Math.imul(primary ^ code, 16777619);
         secondary = Math.imul(secondary ^ code, 2246822519) + 3266489917;
       }
-    }
-  }
-  return `${model.width}x${model.height}:${primary >>> 0}:${secondary >>> 0}`;
-}
-
-function staticDrawables(model, occupied) {
-  const rows = [];
-  for (let y = 0; y < model.height; y += 1) {
-    for (let x = 0; x < model.width; x += 1) {
       if (occupied.has(`${x},${y}`)) continue;
-      const tile = model.terrain[y][x];
       if (tile.kind === 'forest') {
-        rows.push({
+        naturalDrawables.push({
           kind: 'tree',
           data: { x, y, variant: tile.variant },
           depth: x + y + 1,
           bounds: { x, y, width: 1, height: 1 },
         });
       } else if (['rock', 'ore', 'coal'].includes(tile.kind) && (x + y) % 2 === 0) {
-        rows.push({
+        naturalDrawables.push({
           kind: 'rock',
           data: { x, y, type: tile.kind },
           depth: x + y + 1,
@@ -45,7 +39,14 @@ function staticDrawables(model, occupied) {
       }
     }
   }
+  return Object.freeze({
+    key: `${model.width}x${model.height}:${primary >>> 0}:${secondary >>> 0}`,
+    naturalDrawables: Object.freeze(naturalDrawables),
+  });
+}
 
+function staticDrawables(model, naturalDrawables) {
+  const rows = [...naturalDrawables];
   for (const building of model.buildings) {
     const buildingDepth = building.x + building.width + building.y + building.height;
     rows.push({
@@ -121,9 +122,32 @@ export function mergeDrawables(staticRows, dynamicRows) {
   return rows;
 }
 
-export function compileRenderScene(model) {
+export function renderSceneTopology(scene) {
+  return SCENE_TOPOLOGIES.get(scene) ?? null;
+}
+
+export function compileRenderScene(
+  model,
+  {
+    previousScene = null,
+    terrainRevision = null,
+    roadRevision = null,
+  } = {},
+) {
   const occupied = new Set(model.occupiedKeys);
-  const roads = roadScene(model);
+  const previousTopology = previousScene ? SCENE_TOPOLOGIES.get(previousScene) : null;
+  const sameTerrain = previousTopology
+    && previousTopology.terrainRevision === terrainRevision
+    && previousTopology.width === model.width
+    && previousTopology.height === model.height;
+  const terrainLayer = sameTerrain
+    ? previousTopology.terrainLayer
+    : compileTerrainLayer(model, occupied);
+  const sameRoadTopology = sameTerrain
+    && previousTopology.roadRevision === roadRevision;
+  const roads = sameRoadTopology
+    ? previousTopology.roadLayer
+    : roadScene(model);
   const trails = model.trailRows
     .filter(row => !roads.roadSet.has(row.key))
     .map(row => ({ ...row, ...parseTileKey(row.key) }));
@@ -137,9 +161,9 @@ export function compileRenderScene(model) {
     building.stateSignals?.crisis
   ));
   const port = model.buildings.find(building => building.type === 'port');
-  const staticRows = staticDrawables(model, occupied);
-  return {
-    terrainKey: terrainKey(model),
+  const staticRows = staticDrawables(model, terrainLayer.naturalDrawables);
+  const scene = {
+    terrainKey: terrainLayer.key,
     staticDrawables: staticRows,
     roadRows: roads.rows,
     roadSegments: roads.segments,
@@ -158,4 +182,13 @@ export function compileRenderScene(model) {
       crises: crisisBuildings.length,
     },
   };
+  SCENE_TOPOLOGIES.set(scene, Object.freeze({
+    terrainRevision,
+    roadRevision,
+    width: model.width,
+    height: model.height,
+    terrainLayer,
+    roadLayer: roads,
+  }));
+  return scene;
 }

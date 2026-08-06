@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.22.0-building-levels';
+import { pileVisual } from './visuals.js?v=v004.42.0-boundary-voices';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));
@@ -36,8 +36,52 @@ function interpolateInventory(from, to, alpha) {
       row: {
         ...target.row,
         amount,
-        visual: pileVisual(amount, goods),
+        visual: {
+          ...pileVisual(amount, goods),
+          freshness: target.row.visual?.freshness,
+        },
       },
+    });
+  }
+  return rows;
+}
+
+function interpolateMarketStalls(from, to, alpha) {
+  const beforeById = new Map((from.marketStalls ?? []).map(row => [row.id, row]));
+  const afterById = new Map((to.marketStalls ?? []).map(row => [row.id, row]));
+  const rows = [];
+  for (const id of new Set([...beforeById.keys(), ...afterById.keys()])) {
+    const before = beforeById.get(id);
+    const after = afterById.get(id);
+    const source = before ?? after;
+    const target = after ?? before;
+    const beforeItems = new Map((before?.items ?? []).map(row => [row.goods, row]));
+    const afterItems = new Map((after?.items ?? []).map(row => [row.goods, row]));
+    const items = [];
+    for (const goods of new Set([...beforeItems.keys(), ...afterItems.keys()])) {
+      const beforeItem = beforeItems.get(goods);
+      const afterItem = afterItems.get(goods);
+      const template = afterItem ?? beforeItem;
+      const qty = (beforeItem?.qty ?? 0)
+        + ((afterItem?.qty ?? 0) - (beforeItem?.qty ?? 0)) * alpha;
+      if (qty <= 1e-9) continue;
+      items.push({
+        ...template,
+        qty,
+        visual: {
+          ...pileVisual(qty, goods),
+          freshness: (afterItem ?? beforeItem)?.visual?.freshness,
+        },
+      });
+    }
+    const totalAmount = items.reduce((total, item) => total + item.qty, 0);
+    if (totalAmount <= 1e-9) continue;
+    rows.push({
+      ...target,
+      x: source.x + (target.x - source.x) * alpha,
+      y: source.y + (target.y - source.y) * alpha,
+      items,
+      totalAmount,
     });
   }
   return rows;
@@ -160,6 +204,7 @@ export function interpolateWorldModel(from, to, events = [], alpha = 1) {
     ...to,
     carriers: interpolateCarriers(from.carriers ?? [], to.carriers ?? [], events, progress),
     inventoryVisuals: interpolateInventory(from, to, progress),
+    marketStallVisuals: interpolateMarketStalls(from, to, progress),
     portVisuals: portVisualRows(from, to, events, progress),
     handlingVisuals: handlingRows(from, to, events, progress),
     presentationProgress: progress,
@@ -172,6 +217,7 @@ function stableWorldModel(model) {
     portVisuals: portVisualRows(model, model, [], 1),
     handlingVisuals: [],
     inventoryVisuals: null,
+    marketStallVisuals: null,
     presentationProgress: 1,
   };
 }

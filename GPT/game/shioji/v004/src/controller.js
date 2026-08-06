@@ -1,4 +1,6 @@
-import { snapshotToViewModel } from './view_model.js?v=v004.22.0-building-levels';
+import {
+  snapshotToViewModel, terrainRevisionForModel,
+} from './view_model.js?v=v004.42.0-boundary-voices';
 
 export function createViewController(api) {
   if (!api?.snapshot || !api?.advanceTicks || !api?.applyOperation) {
@@ -11,12 +13,17 @@ export function createViewController(api) {
     viewModelBuilds: 0,
     eventReads: 0,
   };
+  let previousModel = null;
   return Object.freeze({
     readModel() {
       counts.snapshotReads += 1;
-      const snapshot = api.snapshot({ scope: 'view' });
+      const snapshot = api.snapshot({
+        scope: 'view',
+        terrainAfterRevision: terrainRevisionForModel(previousModel),
+      });
       counts.viewModelBuilds += 1;
-      return snapshotToViewModel(snapshot);
+      previousModel = snapshotToViewModel(snapshot, { previousModel });
+      return previousModel;
     },
     advanceTicks(count = 1) {
       counts.advanceCalls += 1;
@@ -35,6 +42,9 @@ export function createViewController(api) {
     },
     inputJournal() {
       return api.inputJournal();
+    },
+    saveState() {
+      return api.snapshot({ scope: 'full' });
     },
     metrics() {
       return Object.freeze({ ...counts });

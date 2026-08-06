@@ -1,4 +1,4 @@
-export const VERSION = 'v004.22.0-building-levels';
+export const VERSION = 'v004.42.0-boundary-voices';
 
 // 経済エンジンの貨幣値は表示単位の1/10。UIへ出す時だけデナリへ直す。
 export const DENARI_PER_MONEY_UNIT = 10;
@@ -114,25 +114,29 @@ export const BUILD_CATEGORIES = Object.freeze([
   }),
 ]);
 
+const goodsArt = (sprite, color, dark, light, accent) => Object.freeze({
+  sprite, color, dark, light, accent,
+});
+
 export const GOODS_ART = Object.freeze({
-  log: Object.freeze({ color: '#9b5f32', dark: '#5b3422', shape: 'round' }),
-  ore: Object.freeze({ color: '#9b715e', dark: '#594a42', shape: 'rock' }),
-  coal: Object.freeze({ color: '#4d5350', dark: '#282d2c', shape: 'rock' }),
-  bar: Object.freeze({ color: '#8d8177', dark: '#4f4b48', shape: 'bar' }),
-  iron: Object.freeze({ color: '#aab2b0', dark: '#596160', shape: 'bar' }),
-  tools: Object.freeze({ color: '#aab8bd', dark: '#59666f', shape: 'crate' }),
-  stone: Object.freeze({ color: '#b7b2a5', dark: '#6d6a67', shape: 'rock' }),
-  wheat: Object.freeze({ color: '#c9aa4d', dark: '#7f682f', shape: 'sack' }),
-  fish: Object.freeze({ color: '#6da5ad', dark: '#3c626b', shape: 'sack' }),
-  veg: Object.freeze({ color: '#779d55', dark: '#47633b', shape: 'sack' }),
-  meat: Object.freeze({ color: '#b66b5c', dark: '#6d4039', shape: 'sack' }),
-  pres: Object.freeze({ color: '#8b6a52', dark: '#564437', shape: 'crate' }),
-  pick: Object.freeze({ color: '#788b53', dark: '#4b5b39', shape: 'crate' }),
-  meal: Object.freeze({ color: '#c49a59', dark: '#755d39', shape: 'sack' }),
-  salt: Object.freeze({ color: '#d8d5c4', dark: '#84847b', shape: 'sack' }),
-  char: Object.freeze({ color: '#5f625c', dark: '#303330', shape: 'sack' }),
-  cloth: Object.freeze({ color: '#b78c9a', dark: '#6c5660', shape: 'crate' }),
-  oil: Object.freeze({ color: '#9d7b3f', dark: '#5f4c2d', shape: 'crate' }),
+  log: goodsArt('log', '#9b5f32', '#4b2d1d', '#d7a266', '#6f4327'),
+  ore: goodsArt('ore', '#9b715e', '#4f3c36', '#d2a083', '#e0c4a5'),
+  coal: goodsArt('coal', '#454b49', '#1e2322', '#777d78', '#b08355'),
+  bar: goodsArt('bar', '#8d8177', '#423d39', '#c9c0b7', '#68615b'),
+  iron: goodsArt('iron', '#aab2b0', '#4f5b5a', '#e3e7e4', '#738d8b'),
+  tools: goodsArt('tools', '#bd7d43', '#51311f', '#edbc72', '#86512e'),
+  stone: goodsArt('stone', '#a9aaa3', '#555955', '#d7d6ce', '#858980'),
+  wheat: goodsArt('wheat', '#c9a447', '#725923', '#ead074', '#9a7530'),
+  fish: goodsArt('fish', '#5798a2', '#294f58', '#b8d8d5', '#376f7a'),
+  veg: goodsArt('veg', '#6f984f', '#36562f', '#9dc56d', '#4c7e3e'),
+  meat: goodsArt('meat', '#b75f52', '#66362f', '#efd7c2', '#d68a68'),
+  pres: goodsArt('pres', '#8b6247', '#4f372b', '#c39b72', '#5c9193'),
+  pick: goodsArt('pick', '#788b53', '#485238', '#adad78', '#4f773e'),
+  meal: goodsArt('meal', '#c7a261', '#6b5534', '#ead9a4', '#9e7b43'),
+  salt: goodsArt('salt', '#eee9d8', '#777a74', '#fffdf1', '#91aab0'),
+  char: goodsArt('char', '#505653', '#222726', '#7c817a', '#b37648'),
+  cloth: goodsArt('cloth', '#ae748a', '#5d4050', '#dcb1bf', '#7d5065'),
+  oil: goodsArt('oil', '#a77a35', '#5c431f', '#d8ad54', '#7c5928'),
 });
 
 export const GOODS_LABELS = Object.freeze({

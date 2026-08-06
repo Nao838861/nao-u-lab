@@ -86,13 +86,13 @@ export function objectiveActionFor(objective, model) {
     return { kind: 'building', job: 'veg', label: '野菜畑を選ぶ' };
   }
   if (objective.id === 'first-settlers-arrive') {
-    return { kind: 'speed', speed: 3, label: '一日毎秒にして入植を待つ' };
+    return { kind: 'speed', speed: 3, label: '運び手を見ながら一日毎秒にする' };
   }
   if (objective.id === 'accept-first-order' && !model.orderOffer) {
-    return { kind: 'speed', speed: 3, label: '一日毎秒にして注文を待つ' };
+    return { kind: 'speed', speed: 3, label: '物流を見ながら一日毎秒にする' };
   }
   if (['first-order-procurement', 'complete-first-order'].includes(objective.id)) {
-    return { kind: 'speed', speed: 3, label: '一日毎秒にして荷車を待つ' };
+    return { kind: 'speed', speed: 3, label: '積み荷を追いながら一日毎秒にする' };
   }
   if (objective.id === 'place-conversion-workshops') {
     for (const job of ['woodshop', 'charburner', 'saltworks']) {
@@ -105,6 +105,9 @@ export function objectiveActionFor(objective, model) {
   if (COMPANY_GOALS.has(objective.id)) {
     return { kind: 'sheet', sheet: 'company-sheet', label: '取引を開く' };
   }
+  if (objective.id === 'observe-tools-price-rise') {
+    return { kind: 'sheet', sheet: 'supply-sheet', goods: 'tools', label: '木製品の需給を見る' };
+  }
   if (ISLAND_GOALS.has(objective.id)) {
     return { kind: 'sheet', sheet: 'island-sheet', label: '統計を見る' };
   }
@@ -114,9 +117,41 @@ export function objectiveActionFor(objective, model) {
   return null;
 }
 
+export function secretaryActionForRoute(route) {
+  const target = route?.target ?? null;
+  if (target?.kind === 'letter' && target.delivery === 'letter') {
+    return Object.freeze({ kind: 'letter', id: target.id, label: route.action ?? '書状を開く' });
+  }
+  if (target?.kind === 'event') {
+    return Object.freeze({ kind: 'event', sequence: target.sequence, label: 'この家を見る' });
+  }
+  if (target?.kind === 'advice' && target.route?.kind === 'building-detail') {
+    return Object.freeze({
+      kind: 'advice-building',
+      adviceId: target.id,
+      target: target.route,
+      label: route.action ?? 'この家を見る',
+    });
+  }
+  return null;
+}
+
+export function tutorialSpeedAfterObjectiveChange({
+  previousObjective,
+  objective,
+  previousAction,
+  speedIndex,
+}) {
+  const changed = previousObjective?.id
+    && objective?.id
+    && previousObjective.id !== objective.id;
+  if (changed && previousAction?.kind === 'speed' && speedIndex === 3) return 1;
+  return speedIndex;
+}
+
 export function secretaryRouteFor({
   letters = [], messages = [], advice = [], handoff = null, objective = null, objectiveAction = null,
-  events = [], fallback = null,
+  discovery = null, incident = null, boundary = null, events = [], fallback = null,
 } = {}) {
   const deliveryOf = letter => letter.delivery
     ?? (letter.attention === 'critical' ? 'forced' : 'letter');
@@ -135,6 +170,18 @@ export function secretaryRouteFor({
       detail: forcedLetter.summary,
     };
   }
+  if (boundary && String(boundary.speech ?? '').trim()) {
+    const food = boundary.type === 'food';
+    return {
+      priority: food ? 'food-boundary' : 'preservation-stop',
+      tier: 'notice',
+      target: { kind: 'boundary-event', id: boundary.id },
+      speech: boundary.speech,
+      kicker: food ? '島の食料' : '保存が停止',
+      title: boundary.type,
+      detail: `${boundary.day}日目`,
+    };
+  }
   const actionAdvice = [...advice].reverse().find(row => (
     row.unread && !row.completed && row.priority === 'action'
       && String(row.speech ?? '').trim()
@@ -148,6 +195,29 @@ export function secretaryRouteFor({
       kicker: actionAdvice.kicker,
       title: actionAdvice.title,
       detail: actionAdvice.detail,
+    };
+  }
+  if (incident && String(incident.speech ?? '').trim()) {
+    const spoilage = Boolean(incident.goods);
+    return {
+      priority: spoilage ? 'first-spoilage' : 'season-event',
+      tier: 'notice',
+      target: { kind: 'seasonal-event', id: incident.id },
+      speech: incident.speech,
+      kicker: spoilage ? '初めての腐敗' : '季節の節目',
+      title: spoilage ? incident.goods : incident.type,
+      detail: `${incident.day}日目`,
+    };
+  }
+  if (discovery && String(discovery.speech ?? '').trim()) {
+    return {
+      priority: 'goods-discovery',
+      tier: 'notice',
+      target: { kind: 'goods-discovery', id: discovery.id },
+      speech: discovery.speech,
+      kicker: '新しい品',
+      title: discovery.goods.join('・'),
+      detail: `${discovery.day}日目に島で初めて保有`,
     };
   }
   if (handoff) {

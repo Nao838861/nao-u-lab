@@ -5,6 +5,56 @@ const DIRS = [
 
 const travelPathCaches = new WeakMap();
 
+// Dijkstra の open 集合。sort()+shift() は探索セル数が増えるほど重くなるため、
+// 最小ヒープへ置き換える。同コスト時は投入順(seq)を使い決定性を保つ。
+class MinHeap {
+  constructor(compare) { this.items = []; this.compare = compare; }
+  get length() { return this.items.length; }
+  push(value) {
+    const items = this.items;
+    items.push(value);
+    let index = items.length - 1;
+    while (index > 0) {
+      const parent = (index - 1) >> 1;
+      if (this.compare(items[parent], value) <= 0) break;
+      items[index] = items[parent];
+      index = parent;
+    }
+    items[index] = value;
+  }
+  pop() {
+    const items = this.items;
+    if (items.length === 0) return undefined;
+    const first = items[0];
+    const last = items.pop();
+    if (items.length === 0) return first;
+    let index = 0;
+    while (true) {
+      const left = index * 2 + 1;
+      if (left >= items.length) break;
+      const right = left + 1;
+      const child = right < items.length && this.compare(items[right], items[left]) < 0
+        ? right
+        : left;
+      if (this.compare(last, items[child]) <= 0) break;
+      items[index] = items[child];
+      index = child;
+    }
+    items[index] = last;
+    return first;
+  }
+}
+
+function travelQueue() {
+  let sequence = 0;
+  const heap = new MinHeap((left, right) => left.cost - right.cost || left.seq - right.seq);
+  return {
+    get length() { return heap.length; },
+    push(item) { heap.push({ ...item, seq: sequence++ }); },
+    pop() { return heap.pop(); },
+  };
+}
+
 export const GOODS_UNIT_WEIGHT = Object.freeze({ ore: 2, bar: 2 });
 
 export function goodsUnitWeight(goods) {
@@ -124,6 +174,34 @@ export function makeFlowIslandTerrain(width = 48, height = 40) {
       if (x >= 8 && x <= 13 && y >= 20 && y <= 24 && ((x * 5 + y * 3) % 4 < 2)) kind = "ore";
       if (x >= 3 && x <= 7 && y >= 26 && y <= 30 && ((x * 7 + y * 5) % 4 < 2)) kind = "coal";
       row.push({ kind, variant: 0 });
+    }
+    terrain.push(row);
+  }
+  return terrain;
+}
+
+// Phase 1 の市場圏試作地形。既存の48×40標準島は変更せず、96×64以上の
+// 拡張マップで「西の港湾・中央の大森林・東の鉱床」を再現する。
+export function makeMultiMarketTerrain(width = 96, height = 64) {
+  const terrain = [];
+  const coast = Math.max(4, Math.floor(height * 0.08));
+  const forestBand = Math.max(10, Math.floor(width * 0.18));
+  for (let y = 0; y < height; y += 1) {
+    const row = [];
+    for (let x = 0; x < width; x += 1) {
+      let kind = y >= height - coast ? "water" : "grass";
+      if (kind === "grass" && y >= height - coast - 4) kind = "sand";
+      const westForest = x >= 12 && x < 12 + forestBand && y >= 8 && y < height - 14;
+      const centralForest = x >= Math.floor(width * 0.43) && x < Math.floor(width * 0.62)
+        && y >= 12 && y < height - 16;
+      const easternOre = x >= Math.floor(width * 0.78) && y >= 16 && y < height - 18;
+      const easternCoal = x >= Math.floor(width * 0.68) && x < Math.floor(width * 0.76)
+        && y >= 28 && y < height - 12;
+      if (kind === "grass" && (westForest || centralForest)
+        && ((x * 7 + y * 13) % 5 < 3)) kind = "forest";
+      if (kind === "grass" && easternOre && ((x * 5 + y * 3) % 4 < 2)) kind = "ore";
+      if (kind === "grass" && easternCoal && ((x * 11 + y * 7) % 5 < 2)) kind = "coal";
+      row.push({ kind, variant: (x * 17 + y * 31) % 4 });
     }
     terrain.push(row);
   }
@@ -331,6 +409,8 @@ export function tileTravelCost(physical, x, y, mode = "walk") {
 }
 
 export function findTravelPath(physical, start, goal, mode = "walk") {
+  // trails は旧セーブや監査テストから直接復元されるため、専用revisionだけに
+  // 依存せず内容を含める。高コストなのは経路探索本体なので、キュー改善を優先する。
   const trailSignature = Object.entries(physical.trails ?? {})
     .filter(([, active]) => active === true)
     .map(([key]) => key)
@@ -360,12 +440,12 @@ export function findTravelPath(physical, start, goal, mode = "walk") {
   distances.fill(Infinity);
   const indexOf = (x, y) => y * physical.width + x;
   distances[indexOf(start.x, start.y)] = 0;
-  const open = [{ x: start.x, y: start.y, cost: 0 }];
+  const open = travelQueue();
+  open.push({ x: start.x, y: start.y, cost: 0 });
   const came = {};
 
   while (open.length > 0) {
-    open.sort((a, b) => a.cost - b.cost);
-    const current = open.shift();
+    const current = open.pop();
     const currentIndex = indexOf(current.x, current.y);
     if (current.cost > distances[currentIndex] + 1e-9) continue;
     if (current.x === goal.x && current.y === goal.y) {
@@ -401,6 +481,54 @@ export function findTravelPath(physical, start, goal, mode = "walk") {
 
 export function pathLen(physical, start, goal, mode = "walk") {
   return findTravelPath(physical, start, goal, mode)?.cost ?? Infinity;
+}
+
+export function findNearestTravelTarget(physical, start, predicate, mode = "walk") {
+  if (typeof predicate !== "function") throw new TypeError("travel target predicate must be a function");
+  if (!inside(physical, start?.x, start?.y)) return null;
+  const startCost = tileTravelCost(physical, start.x, start.y, mode);
+  if (!Number.isFinite(startCost)) return null;
+  const distances = new Float64Array(physical.width * physical.height);
+  distances.fill(Infinity);
+  const indexOf = (x, y) => y * physical.width + x;
+  distances[indexOf(start.x, start.y)] = 0;
+  const open = travelQueue();
+  open.push({ x: start.x, y: start.y, cost: 0 });
+  const came = {};
+
+  while (open.length > 0) {
+    const current = open.pop();
+    if (current.cost > distances[indexOf(current.x, current.y)] + 1e-9) continue;
+    if (predicate(current.x, current.y)) {
+      const path = [];
+      let cursor = keyOf(current.x, current.y);
+      while (cursor) {
+        const [x, y] = parseKey(cursor);
+        path.push({ x, y });
+        cursor = came[cursor];
+      }
+      return {
+        x: current.x,
+        y: current.y,
+        cost: current.cost,
+        path: path.reverse(),
+      };
+    }
+    for (const [dirX, dirY] of DIRS) {
+      const x = current.x + dirX;
+      const y = current.y + dirY;
+      const tileCost = tileTravelCost(physical, x, y, mode);
+      if (!Number.isFinite(tileCost)) continue;
+      const diagonal = dirX !== 0 && dirY !== 0;
+      const nextCost = current.cost + tileCost * (diagonal ? 1.4 : 1);
+      const nextIndex = indexOf(x, y);
+      if (nextCost >= distances[nextIndex] - 1e-9) continue;
+      distances[nextIndex] = nextCost;
+      came[keyOf(x, y)] = keyOf(current.x, current.y);
+      open.push({ x, y, cost: nextCost });
+    }
+  }
+  return null;
 }
 
 export function connectedRoads(roadsOrPhysical, origin) {
@@ -960,7 +1088,7 @@ export function createWalkCarrier(physical, { people = 1, id = null } = {}) {
     id: id ?? `walker${physical.nextCarrierId}`,
     mode: "walk",
     people,
-    capacity: people * 4,
+    capacity: people,
   };
   physical.nextCarrierId += 1;
   return carrier;
@@ -968,7 +1096,7 @@ export function createWalkCarrier(physical, { people = 1, id = null } = {}) {
 
 export function createCartCarrier(
   physical,
-  { id = null, capacity = 16, cartKind = "wood", assetId = null } = {},
+  { id = null, capacity = 8, cartKind = "wood", assetId = null } = {},
 ) {
   requirePositiveQuantity(capacity, "cart carrier capacity");
   const carrier = {
@@ -1085,6 +1213,11 @@ export function completeHaulJob(physical, jobId) {
   depositInventory(target, job.to.section, job.goods, job.qty);
   job.carrier.cargo = null;
   job.carrier.active = false;
+  // 完了履歴は経済照合に親キャリアだけあればよい。個人列を残すと、
+  // 過去96件ぶんの表示snapshotへ不要な人物状態を複製し続けてしまう。
+  delete job.carrier.porters;
+  delete job.carrier.batchElapsed;
+  delete job.carrier.batchTravelCost;
   job.status = "completed";
   deactivateHaulJob(physical, job.id);
   return job;
@@ -1095,13 +1228,27 @@ function carrierSegmentCost(physical, from, to, mode) {
   return tileTravelCost(physical, to.x, to.y, mode) * (diagonal ? 1.4 : 1);
 }
 
-export function stepTravelCarrier(physical, carrier) {
-  if (!Array.isArray(carrier?.path)) throw new TypeError("travel carrier has no route");
+export function stepTravelCarrier(
+  physical,
+  carrier,
+  travelBudget = 1,
+  sharedPath = carrier?.path,
+) {
+  if (!Array.isArray(sharedPath)) throw new TypeError("travel carrier has no route");
+  if (!Number.isFinite(travelBudget) || travelBudget < 0) {
+    throw new TypeError("travel budget must be a finite non-negative number");
+  }
   if (!carrier.active) return true;
-  let budget = 1;
-  while (budget > 1e-9 && carrier.pathIndex < carrier.path.length - 1) {
-    const from = carrier.path[carrier.pathIndex];
-    const to = carrier.path[carrier.pathIndex + 1];
+  let budget = travelBudget;
+  if ((carrier.departureDelay ?? 0) > 0) {
+    const waiting = Math.min(budget, carrier.departureDelay);
+    carrier.departureDelay -= waiting;
+    budget -= waiting;
+    if (budget <= 1e-9) return false;
+  }
+  while (budget > 1e-9 && carrier.pathIndex < sharedPath.length - 1) {
+    const from = sharedPath[carrier.pathIndex];
+    const to = sharedPath[carrier.pathIndex + 1];
     const fullCost = carrierSegmentCost(physical, from, to, carrier.mode);
     const remaining = carrier.segmentRemaining ?? fullCost;
     if (budget + 1e-9 >= remaining) {
@@ -1121,7 +1268,7 @@ export function stepTravelCarrier(physical, carrier) {
     carrier.segmentRemaining = remaining - budget;
     budget = 0;
   }
-  if (carrier.pathIndex >= carrier.path.length - 1) {
+  if (carrier.pathIndex >= sharedPath.length - 1) {
     carrier.active = false;
     return true;
   }
@@ -1129,6 +1276,35 @@ export function stepTravelCarrier(physical, carrier) {
 }
 
 function moveCarrierOneTick(physical, job) {
+  if (job.carrier.porters?.length) {
+    const carrier = job.carrier;
+    carrier.batchTravelCost ??= carrier.path.slice(1).reduce((total, point, index) => (
+      total + carrierSegmentCost(physical, carrier.path[index], point, carrier.mode)
+    ), 0);
+    carrier.batchElapsed = (carrier.batchElapsed ?? 0) + 1;
+    let remaining = Math.min(carrier.batchElapsed, carrier.batchTravelCost);
+    for (let index = 1; index < carrier.path.length; index += 1) {
+      const from = carrier.path[index - 1];
+      const to = carrier.path[index];
+      const segment = carrierSegmentCost(physical, from, to, carrier.mode);
+      if (remaining + 1e-9 >= segment) {
+        remaining -= segment;
+        carrier.position = { x: to.x, y: to.y };
+        continue;
+      }
+      const progress = segment <= 1e-9 ? 1 : remaining / segment;
+      carrier.position = {
+        x: from.x + (to.x - from.x) * progress,
+        y: from.y + (to.y - from.y) * progress,
+      };
+      break;
+    }
+    const lastDelay = carrier.porters.at(-1)?.departureDelay ?? 0;
+    if (carrier.batchElapsed + 1e-9 >= carrier.batchTravelCost + lastDelay) {
+      completeHaulJob(physical, job.id);
+    }
+    return;
+  }
   if (stepTravelCarrier(physical, job.carrier)) completeHaulJob(physical, job.id);
 }
 
@@ -1140,6 +1316,21 @@ function assertActiveCarrierJobs(physical, jobs, { checkRoadPaths = true } = {})
     }
     if (!carrier.cargo || carrier.cargo.goods !== job.goods || carrier.cargo.qty !== job.qty) {
       throw new Error(`輸送中cargo不一致 ${job.id}`);
+    }
+    if (carrier.porters?.length) {
+      const porterQty = carrier.porters.reduce(
+        (total, porter) => total + (porter.cargo?.qty ?? 0),
+        0,
+      );
+      if (Math.abs(porterQty - job.qty) > 1e-7) {
+        throw new Error(`個人運搬cargo不一致 ${job.id}`);
+      }
+      if (carrier.porters.some((porter) => (
+        porter.people !== 1
+        || porter.cargo.qty > carrierGoodsCapacity(porter, job.goods) + 1e-9
+      ))) {
+        throw new Error(`個人運搬容量超過 ${job.id}`);
+      }
     }
     if (!Number.isFinite(carrier.position?.x) || !Number.isFinite(carrier.position?.y)) {
       throw new Error(`キャリア位置不正 ${job.id}`);

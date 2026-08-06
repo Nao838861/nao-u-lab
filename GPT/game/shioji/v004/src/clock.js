@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.22.0-building-levels';
+import { SPEEDS } from './config.js?v=v004.42.0-boundary-voices';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

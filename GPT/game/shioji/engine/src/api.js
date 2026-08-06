@@ -1,6 +1,7 @@
 import {
   COMPANY_ORDER_GOODS,
   acceptCompanyOrder,
+  householdProductionSummary,
   purchaseCompanyWoodCart,
   requestCompanyStockRelease,
   requestMainlandAid,
@@ -19,6 +20,7 @@ import {
   forgetCompanyLogisticsBuilding,
   placeCompanyLogisticsBuilding,
 } from "./world.js";
+import { executeMarketTrade, quoteMarketTrade } from "./market_network.js";
 
 function jsonClone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -76,11 +78,13 @@ function controllerSnapshot(state, { includePhysical = false } = {}) {
   return includePhysical ? jsonClone(snapshot) : snapshot;
 }
 
-function viewSnapshot(state) {
+function viewSnapshot(state, { terrainAfterRevision = null } = {}) {
   const { economy, physical } = state;
+  const travelRevision = physical.travelRevision ?? 0;
   return {
     day: state.day,
     tick: state.tick,
+    calendarOffsetDays: state.calendarOffsetDays ?? 0,
     seed: state.seed,
     economy: {
       company: {
@@ -90,7 +94,24 @@ function viewSnapshot(state) {
         ledgerByReason: { ...(economy.company.ledgerByReason ?? {}) },
       },
       currentDay: economy.currentDay,
-      households: economy.households,
+      directTrades: economy.directTrades ?? [],
+      households: economy.households.map((household) => {
+        const {
+          productionHistory: _productionHistory,
+          productionToday: _productionToday,
+          resourceWork: _resourceWork,
+          lastDirectTrade: _lastDirectTrade,
+          ...viewHousehold
+        } = household;
+        return {
+          ...viewHousehold,
+          productionSummary: householdProductionSummary(
+            economy,
+            household,
+            { day: state.day },
+          ),
+        };
+      }),
       market: economy.market,
       f30: economy.f30,
       goDay: economy.goDay,
@@ -108,12 +129,27 @@ function viewSnapshot(state) {
       stock: economy.stock,
       stockCost: economy.stockCost,
       stockTgt: economy.stockTgt,
+      spoil: Object.values(economy.led?.spoil ?? {}).reduce((
+        total, amount,
+      ) => total + Number(amount ?? 0), 0),
+      spoilByGoods: { ...(economy.led?.spoil ?? {}) },
       traffic: economy.traffic,
       zones: economy.zones,
+      marketNetwork: state.marketNetwork?.markets?.length > 1
+        ? {
+          markets: state.marketNetwork.markets,
+          summary: state.marketNetwork.summary ?? [],
+          tradeReceipts: (state.marketNetwork.tradeReceipts ?? []).slice(-16),
+        }
+        : null,
     },
     physical: {
       buildings: physical.buildings,
-      haulJobs: physical.haulJobs,
+      // 描画側は移動中の人だけを使う。完了履歴まで毎tick複製すると、
+      // 街が育つほど表示更新コストだけが増え続ける。
+      haulJobs: (physical.activeHaulJobIds ?? [])
+        .map((jobId) => haulJobById(physical, jobId))
+        .filter(Boolean),
       height: physical.height,
       occupied: physical.occupied,
       portCalls: physical.portCalls.filter((call) => call.status === "docked")
@@ -121,8 +157,10 @@ function viewSnapshot(state) {
           call.status === "completed" || call.status === "cancelled"
         )).slice(-8)),
       roadWorksites: physical.roadWorksites,
+      roadRevision: physical.roadRevision ?? 0,
       roads: physical.roads,
-      terrain: physical.terrain,
+      terrain: terrainAfterRevision === travelRevision ? null : physical.terrain,
+      travelRevision,
       trails: physical.trails,
       width: physical.width,
     },
@@ -183,12 +221,13 @@ function createEventTracker(world) {
 
 export function createEngineApi(
   world,
-  { recordJournal = true, captureEventStream = true } = {},
+  { recordJournal = true, captureEventStream = true, initialJournal = [] } = {},
 ) {
   if (!world?.state || typeof world.tickOnce !== "function") {
     throw new TypeError("engine API requires a world with state and tickOnce");
   }
-  const journal = [];
+  if (!Array.isArray(initialJournal)) throw new TypeError("initial journal must be an array");
+  const journal = jsonClone(initialJournal);
   const stream = [];
   let nextSequence = 1;
   let tracker = createEventTracker(world);
@@ -207,8 +246,16 @@ export function createEngineApi(
       ...detail,
     });
     nextSequence += 1;
-    if (stream.length > EVENT_STREAM_LIMIT) {
-      stream.splice(0, stream.length - EVENT_STREAM_LIMIT);
+    while (stream.length > EVENT_STREAM_LIMIT) {
+      const transientIndex = stream.findIndex((event) => (
+        event.type === "transaction"
+        || event.type === "handling"
+        || (
+          ["departure", "arrival"].includes(event.type)
+          && (event.haulJobId || event.fromState || event.toState)
+        )
+      ));
+      stream.splice(transientIndex >= 0 ? transientIndex : 0, 1);
     }
   };
 
@@ -525,6 +572,16 @@ export function createEngineApi(
         const cart = purchaseCompanyWoodCart(economy, { day: actionDay });
         return { ok: Boolean(cart), cart };
       }
+      case "market_trade": {
+        const network = world.state.marketNetwork;
+        if (!network?.markets?.some(market => market.id === op.fromMarketId)
+          || !network.markets.some(market => market.id === op.toMarketId)) {
+          return { ok: false, reason: "market_not_found" };
+        }
+        const quote = quoteMarketTrade(network, op);
+        if (!quote.ok) return quote;
+        return executeMarketTrade(network, quote, { day: world.state.day });
+      }
       default:
         throw new Error(`unknown engine operation: ${op.type}`);
     }
@@ -561,10 +618,12 @@ export function createEngineApi(
       assertSafeCount(days, "day count");
       return advanceTicks(days * 30);
     },
-    snapshot({ scope = "full" } = {}) {
+    snapshot({ scope = "full", terrainAfterRevision = null } = {}) {
       if (scope === "controller") return controllerSnapshot(world.state);
       if (scope === "placement") return controllerSnapshot(world.state, { includePhysical: true });
-      if (scope === "view") return jsonClone(viewSnapshot(world.state));
+      if (scope === "view") {
+        return jsonClone(viewSnapshot(world.state, { terrainAfterRevision }));
+      }
       if (scope !== "full") throw new Error(`unknown snapshot scope: ${scope}`);
       return jsonClone(world.state);
     },

@@ -1,13 +1,43 @@
 import {
-  BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, SECTION_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.22.0-building-levels';
-import { islandCalendar } from './ui_summary.js?v=v004.22.0-building-levels';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.22.0-building-levels';
+  BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
+} from './config.js?v=v004.42.0-boundary-voices';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.42.0-boundary-voices';
+import { islandCalendar } from './ui_summary.js?v=v004.42.0-boundary-voices';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.42.0-boundary-voices';
 import {
-  buildingStructureLayout, pileVisual,
-} from './visuals.js?v=v004.22.0-building-levels';
+  buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
+  seasonalTerrainVisual,
+} from './visuals.js?v=v004.42.0-boundary-voices';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
+
+function freshnessArt(visual) {
+  const art = visual?.art;
+  const stage = visual?.freshness?.stage;
+  if (!art || !['aging', 'spoiling'].includes(stage)) return art;
+  return stage === 'spoiling'
+    ? {
+      ...art, color: '#756b55', dark: '#443f35', light: '#9c9278', accent: '#625b48',
+    }
+    : {
+      ...art, color: '#9a8758', dark: '#665538', light: '#bca86f', accent: '#7d704d',
+    };
+}
+
+function carrierCargoSprites(carrier, limit) {
+  const rows = carrier.cargoRows?.length
+    ? carrier.cargoRows
+    : carrier.goods ? [{ goods: carrier.goods, amount: carrier.amount }] : [];
+  const sprites = [];
+  for (const row of rows) {
+    const count = Math.max(1, Math.ceil(row.amount ?? 0));
+    for (let index = 0; index < count && sprites.length < limit; index += 1) {
+      sprites.push(row.goods);
+    }
+    if (sprites.length >= limit) break;
+  }
+  return sprites;
+}
 
 export class Renderer {
   constructor(canvas, camera) {
@@ -156,7 +186,7 @@ export class Renderer {
 
   render(model, elapsedSeconds = 0) {
     this.pulse += elapsedSeconds;
-    this.season = islandCalendar(model.day).season;
+    this.season = islandCalendar(model.day, model.calendarOffsetDays).season;
     this.frameBounds = this.camera.visibleWorldBounds(4);
     this.lastFrameMetrics = {};
     const ctx = this.ctx;
@@ -233,7 +263,7 @@ export class Renderer {
       '春': 'rgba(214,221,151,.045)',
       '夏': 'rgba(238,202,99,.035)',
       '秋': 'rgba(190,107,61,.055)',
-      '冬': 'rgba(204,226,218,.07)',
+      '冬': null,
     }[this.season];
     const bounds = this.frameBounds ?? {
       minX: 0, maxX: model.width - 1, minY: 0, maxY: model.height - 1,
@@ -244,9 +274,12 @@ export class Renderer {
         if (x < bounds.minX || x > bounds.maxX) continue;
         const tile = model.terrain[y][x];
         const palette = TERRAIN_COLORS[tile.kind] ?? TERRAIN_COLORS.grass;
-        const fill = palette[(tile.variant ?? 0) % palette.length];
-        this.diamond(x, y, fill, tile.kind === 'water' ? '#1b626a' : '#4f6942');
-        if (tile.kind !== 'water') this.diamond(x, y, seasonWash);
+        const winter = seasonalTerrainVisual(tile.kind, this.season);
+        const fills = winter?.fills ?? palette;
+        const fill = fills[(tile.variant ?? 0) % fills.length];
+        const stroke = winter?.stroke ?? (tile.kind === 'water' ? '#1b626a' : '#4f6942');
+        this.diamond(x, y, fill, stroke);
+        if (tile.kind !== 'water' && seasonWash) this.diamond(x, y, seasonWash);
       }
     }
   }
@@ -284,6 +317,7 @@ export class Renderer {
         building.x, building.y, building.width, building.height,
         fill, '#455344', 0.9,
       );
+      this.drawSeasonalPlotGround(building);
       const structure = building.structure ?? buildingStructureLayout(building);
       if (structure.openYard) {
         const yardFill = building.type === 'port' ? '#aa9472'
@@ -303,7 +337,7 @@ export class Renderer {
           yardFill, '#665943', 0.54,
         );
       }
-      for (const slot of building.yardSlots ?? []) this.drawYardMarker(slot);
+      for (const slot of building.yardPlaces ?? building.yardSlots ?? []) this.drawYardMarker(slot);
     }
     const selected = model.buildings.find(building => building.id === this.selectedBuildingId);
     if (selected && this.boundsVisible(selected)) {
@@ -314,14 +348,32 @@ export class Renderer {
     }
   }
 
-  drawYardMarker({ row, x, y }) {
+  drawSeasonalPlotGround(building) {
+    const visual = seasonalPlotVisual(building, this.season);
+    if (!visual) return;
+    const minX = Math.floor(building.x);
+    const minY = Math.floor(building.y);
+    const maxX = Math.ceil(building.x + building.width);
+    const maxY = Math.ceil(building.y + building.height);
+    for (let y = minY; y < maxY; y += 1) {
+      for (let x = minX; x < maxX; x += 1) {
+        const fill = visual.fills[Math.abs(x + y) % visual.fills.length];
+        // 農地だけを一枚の色面にせず、一筆の区画ごとに季節が読めるようにする。
+        this.diamond(x, y, fill, visual.stroke, 0.96);
+      }
+    }
+  }
+
+  drawYardMarker({ row, zone, x, y }) {
     const point = this.camera.project(x, y, 1);
     const scale = this.camera.zoom;
     const ctx = this.ctx;
-    const inward = ['input', 'inbound', 'pickup'].includes(row.section);
-    const outward = ['output', 'outbound'].includes(row.section);
+    const inward = zone === 'input'
+      || ['input', 'inbound', 'pickup', 'construction'].includes(row?.section);
+    const outward = zone === 'output'
+      || ['output', 'outbound'].includes(row?.section);
     ctx.save();
-    ctx.globalAlpha = 0.6;
+    ctx.globalAlpha = row ? 0.6 : 0.2;
     ctx.strokeStyle = inward ? '#b9d8c8' : outward ? '#f0bd61' : '#d6c58f';
     ctx.lineWidth = Math.max(1, 1.4 * scale);
     if (inward || outward) {
@@ -433,6 +485,7 @@ export class Renderer {
       ctx.stroke();
       ctx.restore();
     }
+    this.drawSelectedProductivityRoute(model);
     this.drawTrackedRoute(model);
     this.drawOperationPreview();
   }
@@ -474,33 +527,50 @@ export class Renderer {
       if (!this.boundsVisible(building)) continue;
       const crisis = building.stateSignals.crisis;
       const point = this.camera.project(
-        building.x + building.width * 0.5,
-        building.y + building.height * 0.12,
+        building.x + building.width * 0.92,
+        building.y + building.height * 0.08,
         28,
       );
       const critical = crisis.severity === 'critical';
       const icon = crisis.kind === 'hunger' ? '🍽'
-        : crisis.kind === 'demotion' ? '↓' : '!';
+        : crisis.kind === 'demotion' ? '↓'
+          : crisis.kind === 'delivery' ? '' : '!';
+      const missingGoods = (crisis.goods ?? []).filter(goods => GOODS_ART[goods]).slice(0, 2);
+      const badgeWidth = (86 + missingGoods.length * 17) * this.camera.zoom;
+      const badgeLeft = point.x - badgeWidth / 2;
       ctx.save();
+      // 動く警告は死亡・離散間際だけ。中程度と降格間際は静止させる。
+      if (critical) ctx.globalAlpha = 0.72 + Math.sin(this.pulse * 5.2) * 0.22;
       ctx.fillStyle = critical ? 'rgba(126,31,28,.94)' : 'rgba(114,73,28,.92)';
       ctx.strokeStyle = critical ? '#ff9b7c' : '#f3c66a';
       ctx.lineWidth = Math.max(1.5, 2 * this.camera.zoom);
       ctx.beginPath();
       ctx.roundRect(
-        point.x - 43 * this.camera.zoom,
+        badgeLeft,
         point.y - 13 * this.camera.zoom,
-        86 * this.camera.zoom,
+        badgeWidth,
         23 * this.camera.zoom,
         8 * this.camera.zoom,
       );
       ctx.fill();
       ctx.stroke();
+      const goodsStart = badgeLeft + 13 * this.camera.zoom;
+      missingGoods.forEach((goods, index) => {
+        drawGoodsSpriteCanvas(
+          ctx,
+          GOODS_ART[goods],
+          goodsStart + index * 16 * this.camera.zoom,
+          point.y - 1 * this.camera.zoom,
+          Math.max(11, 14 * this.camera.zoom),
+        );
+      });
       ctx.fillStyle = '#fff2cf';
       ctx.font = `800 ${Math.max(8, 9 * this.camera.zoom)}px "Yu Gothic", sans-serif`;
       ctx.textAlign = 'center';
+      const textOffset = missingGoods.length * 8 * this.camera.zoom;
       ctx.fillText(
-        `${icon} ${crisis.label}`,
-        point.x,
+        `${icon ? `${icon} ` : ''}${crisis.label}`,
+        point.x + textOffset,
         point.y + 3 * this.camera.zoom,
       );
       ctx.restore();
@@ -561,6 +631,26 @@ export class Renderer {
       ctx.stroke();
       ctx.restore();
     }
+    if (preview.ok && preview.entrance && preview.productivity?.target) {
+      const from = this.camera.project(
+        preview.entrance.x + 0.5, preview.entrance.y + 0.5, 4,
+      );
+      const to = this.camera.project(
+        preview.productivity.target.x + 0.5,
+        preview.productivity.target.y + 0.5,
+        4,
+      );
+      const ctx = this.ctx;
+      ctx.save();
+      ctx.strokeStyle = 'rgba(117,189,209,.92)';
+      ctx.lineWidth = Math.max(1.5, 2.2 * this.camera.zoom);
+      ctx.setLineDash([3 * this.camera.zoom, 5 * this.camera.zoom]);
+      ctx.beginPath();
+      ctx.moveTo(from.x, from.y);
+      ctx.lineTo(to.x, to.y);
+      ctx.stroke();
+      ctx.restore();
+    }
   }
 
   drawTrackedRoute(model) {
@@ -581,6 +671,25 @@ export class Renderer {
     ctx.restore();
   }
 
+  drawSelectedProductivityRoute(model) {
+    const building = model.buildings.find(row => row.id === this.selectedBuildingId);
+    const path = building?.productivity?.resourceWork?.path;
+    if (!path?.length || path.length < 2) return;
+    const ctx = this.ctx;
+    ctx.save();
+    ctx.strokeStyle = 'rgba(117,189,209,.9)';
+    ctx.lineWidth = Math.max(1.5, 2.4 * this.camera.zoom);
+    ctx.setLineDash([3 * this.camera.zoom, 5 * this.camera.zoom]);
+    ctx.beginPath();
+    path.forEach((point, index) => {
+      const projected = this.camera.project(point.x + 0.5, point.y + 0.5, 3);
+      if (index) ctx.lineTo(projected.x, projected.y);
+      else ctx.moveTo(projected.x, projected.y);
+    });
+    ctx.stroke();
+    ctx.restore();
+  }
+
   collectDynamicDrawables(model, scene) {
     const drawables = [];
     for (const inventory of model.inventoryVisuals ?? []) {
@@ -589,6 +698,15 @@ export class Renderer {
         data: inventory,
         depth: inventory.x + inventory.y + 1.1,
         bounds: { x: inventory.x - 0.5, y: inventory.y - 0.5, width: 1, height: 1 },
+        dynamic: true,
+      });
+    }
+    for (const stall of model.marketStallVisuals ?? []) {
+      drawables.push({
+        kind: 'stall',
+        data: stall,
+        depth: stall.x + stall.y + 1.1,
+        bounds: { x: stall.x - 0.5, y: stall.y - 0.5, width: 1, height: 1 },
         dynamic: true,
       });
     }
@@ -643,6 +761,7 @@ export class Renderer {
       if (!drawable.dynamic && !this.boundsVisible(drawable.bounds)) continue;
       if (drawable.dynamic && drawable.bounds && !this.boundsVisible(drawable.bounds)) continue;
       if (!drawable.dynamic && drawable.kind === 'inventory' && model.inventoryVisuals) continue;
+      if (!drawable.dynamic && drawable.kind === 'stall' && model.marketStallVisuals) continue;
       if (drawable.dynamic) dynamicDrawn += 1;
       else staticDrawn += 1;
       if (drawable.kind === 'tree') this.drawTree(drawable.data);
@@ -682,10 +801,11 @@ export class Renderer {
     ctx.globalAlpha = 1;
     ctx.fillStyle = '#4b3022';
     ctx.fillRect(base.x - 2 * scale, base.y - 21 * scale, 4 * scale, 22 * scale);
+    const winter = seasonalNaturalVisual('tree', this.season);
     const seasonal = this.season === '秋'
       ? ['#5a5230', '#71613a', '#8a7443']
-      : this.season === '冬'
-        ? ['#28493e', '#35594a', '#466957']
+      : winter
+        ? winter.fills
         : ['#254f3c', '#2f6144', '#3d714b'];
     if (variant % 4 === 3) {
       for (const crown of [
@@ -736,6 +856,20 @@ export class Renderer {
     ctx.fill();
     ctx.strokeStyle = '#535b55';
     ctx.stroke();
+    const winter = seasonalNaturalVisual('rock', this.season);
+    if (winter) {
+      ctx.beginPath();
+      ctx.moveTo(point.x - scale * 0.4, point.y - scale);
+      ctx.lineTo(point.x + scale * 0.55, point.y - scale * 0.7);
+      ctx.lineTo(point.x + scale * 0.72, point.y - scale * 0.28);
+      ctx.lineTo(point.x + scale * 0.08, point.y - scale * 0.42);
+      ctx.lineTo(point.x - scale * 0.58, point.y - scale * 0.34);
+      ctx.closePath();
+      ctx.fillStyle = winter.snow;
+      ctx.fill();
+      ctx.strokeStyle = winter.outline;
+      ctx.stroke();
+    }
     ctx.restore();
   }
 
@@ -762,14 +896,38 @@ export class Renderer {
       );
     }
     if (farm) {
-      ctx.strokeStyle = appearance.accent;
-      ctx.lineWidth = Math.max(1, 1.2 * this.camera.zoom);
+      const seasonalPlot = seasonalPlotVisual(building, this.season);
       const furrowCount = appearance.leveled
         ? Math.max(2, Math.min(5, appearance.tier + 1)) : 4;
       for (let row = 1; row <= furrowCount; row += 1) {
         const rowY = building.y + 0.25 + row * ((building.height - 0.5) / (furrowCount + 1));
         const from = this.camera.project(building.x + 0.3, rowY, 2);
         const to = this.camera.project(building.x + building.width - 0.3, rowY, 2);
+        if (seasonalPlot?.furrowState === 'buried') {
+          ctx.strokeStyle = seasonalPlot.snowShadow;
+          ctx.lineWidth = Math.max(2, 3.2 * this.camera.zoom);
+          ctx.beginPath();
+          ctx.moveTo(from.x, from.y + 1.6 * this.camera.zoom);
+          ctx.lineTo(to.x, to.y + 1.6 * this.camera.zoom);
+          ctx.stroke();
+          ctx.strokeStyle = seasonalPlot.snowRidge;
+          ctx.lineWidth = Math.max(1.5, 2.5 * this.camera.zoom);
+          ctx.beginPath();
+          ctx.moveTo(from.x, from.y);
+          ctx.lineTo(to.x, to.y);
+          ctx.stroke();
+          if (row % 2 === 0) {
+            ctx.strokeStyle = seasonalPlot.furrow;
+            ctx.lineWidth = Math.max(0.8, 0.9 * this.camera.zoom);
+            ctx.beginPath();
+            ctx.moveTo(from.x + (to.x - from.x) * 0.44, from.y + (to.y - from.y) * 0.44);
+            ctx.lineTo(from.x + (to.x - from.x) * 0.58, from.y + (to.y - from.y) * 0.58);
+            ctx.stroke();
+          }
+          continue;
+        }
+        ctx.strokeStyle = seasonalPlot?.furrow ?? appearance.accent;
+        ctx.lineWidth = Math.max(1, 1.2 * this.camera.zoom);
         ctx.beginPath();
         ctx.moveTo(from.x, from.y);
         ctx.lineTo(to.x, to.y);
@@ -919,11 +1077,11 @@ export class Renderer {
     }
     for (let index = 0; index < appearance.bannerCount; index += 1) {
       const anchor = this.camera.project(
-        structure.x + structure.width * (0.22 + index * 0.5),
-        structure.y + structure.height * 0.18,
-        appearance.elevation + 7,
+        building.x + building.width * 0.13 + index * 0.14,
+        building.y + building.height * 0.22,
+        Math.max(10, appearance.elevation + 4),
       );
-      const poleHeight = (15 + appearance.tier * 2) * scale;
+      const poleHeight = (12 + appearance.tier) * scale;
       ctx.strokeStyle = '#4d3826';
       ctx.lineWidth = Math.max(1, 1.2 * scale);
       ctx.beginPath();
@@ -933,8 +1091,8 @@ export class Renderer {
       ctx.fillStyle = index % 2 ? '#e0b85a' : appearance.accent;
       ctx.beginPath();
       ctx.moveTo(anchor.x, anchor.y - poleHeight);
-      ctx.lineTo(anchor.x + 10 * scale, anchor.y - poleHeight + 4 * scale);
-      ctx.lineTo(anchor.x, anchor.y - poleHeight + 8 * scale);
+      ctx.lineTo(anchor.x + 7 * scale, anchor.y - poleHeight + 3 * scale);
+      ctx.lineTo(anchor.x, anchor.y - poleHeight + 6 * scale);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
@@ -1131,25 +1289,45 @@ export class Renderer {
     const scale = this.camera.zoom;
     const ctx = this.ctx;
     const count = row.visual.spriteCount;
-    const columns = count <= 6 ? 3 : count <= 12 ? 4 : 6;
-    const spriteScale = count <= 6 ? 0.68 : count <= 12 ? 0.56 : 0.46;
+    const exact = row.visual.pileStage === 'exact';
+    const columns = exact ? (count <= 6 ? 3 : count <= 12 ? 4 : 5) : 5;
+    const spriteScale = exact ? (count <= 6 ? 0.82 : count <= 12 ? 0.68 : 0.56) : 0.62;
+    const footprintScale = row.visual.footprintScale ?? 1;
+    const heightScale = row.visual.heightScale ?? 1;
     ctx.save();
-    ctx.globalAlpha = 0.72;
-    ctx.fillStyle = '#5c432c';
-    ctx.fillRect(point.x - 10 * scale, point.y + 2 * scale, 20 * scale, 3 * scale);
+    ctx.globalAlpha = exact ? 0.72 : 0.84;
+    ctx.fillStyle = exact ? '#5c432c' : freshnessArt(row.visual).dark;
+    if (exact) {
+      ctx.fillRect(point.x - 10 * scale, point.y + 2 * scale, 20 * scale, 3 * scale);
+    } else {
+      ctx.beginPath();
+      ctx.ellipse(
+        point.x,
+        point.y + 2 * scale,
+        12 * scale * footprintScale,
+        4 * scale * Math.sqrt(footprintScale),
+        0, 0, Math.PI * 2,
+      );
+      ctx.fill();
+    }
     ctx.globalAlpha = 1;
     const positions = [];
     for (let index = 0; index < count; index += 1) {
       const column = index % columns;
       const layer = Math.floor(index / columns);
       positions.push({
-        x: point.x + (column - (columns - 1) / 2) * 4.6 * scale,
-        y: point.y - layer * 4.4 * scale - (column % 2) * 1.1 * scale,
+        x: point.x + (column - (columns - 1) / 2) * 5.4 * scale * footprintScale,
+        y: point.y - layer * 4.9 * scale * heightScale - (column % 2) * 1.2 * scale,
       });
     }
-    this.drawGoodsPileSprites(row.visual.art, positions, scale * spriteScale, count <= 12);
-    if (scale >= 1.16 || ownerId === this.selectedBuildingId) {
-      const text = `${SECTION_LABELS[row.section] ?? row.section}${row.visual.label}`;
+    this.drawGoodsPileSprites(
+      freshnessArt(row.visual),
+      positions,
+      scale * spriteScale * (exact ? 1 : Math.sqrt(footprintScale)),
+      exact,
+    );
+    if (ownerId === this.selectedBuildingId) {
+      const text = `${GOODS_LABELS[row.goods] ?? row.goods} ${row.visual.label}荷`;
       ctx.font = `700 ${Math.max(7, 8 * scale)}px ui-sans-serif`;
       ctx.textAlign = 'center';
       ctx.lineWidth = 3;
@@ -1163,84 +1341,14 @@ export class Renderer {
 
   drawGoodsPileSprites(art, positions, scale, outlined) {
     if (!positions.length) return;
-    const ctx = this.ctx;
-    ctx.fillStyle = art.color;
-    ctx.strokeStyle = art.dark;
-    ctx.lineWidth = Math.max(1, scale);
-    ctx.beginPath();
     for (const { x, y } of positions) {
-      if (art.shape === 'round') {
-        ctx.moveTo(x + 6 * scale, y);
-        ctx.ellipse(x, y, 6 * scale, 2.7 * scale, -0.2, 0, Math.PI * 2);
-      } else if (art.shape === 'rock') {
-        ctx.moveTo(x - 5 * scale, y + 2 * scale);
-        ctx.lineTo(x - 2 * scale, y - 4 * scale);
-        ctx.lineTo(x + 4 * scale, y - 3 * scale);
-        ctx.lineTo(x + 6 * scale, y + 2 * scale);
-        ctx.closePath();
-      } else if (art.shape === 'sack') {
-        ctx.moveTo(x + 4.5 * scale, y);
-        ctx.ellipse(x, y, 4.5 * scale, 5 * scale, 0, 0, Math.PI * 2);
-      } else {
-        ctx.rect(
-          x - 5 * scale,
-          y - 4 * scale,
-          10 * scale,
-          art.shape === 'bar' ? 3 * scale : 8 * scale,
-        );
-      }
-    }
-    ctx.fill();
-    if (outlined) {
-      ctx.stroke();
-      if (art.shape === 'round') {
-        ctx.beginPath();
-        for (const { x, y } of positions) {
-          ctx.moveTo(x + 6 * scale, y - 0.8 * scale);
-          ctx.arc(x + 4.5 * scale, y - 0.8 * scale, 1.5 * scale, 0, Math.PI * 2);
-        }
-        ctx.stroke();
-      }
+      drawGoodsSpriteCanvas(this.ctx, art, x, y, 16 * scale, { outlined });
     }
   }
 
   drawGoodsSprite(art, x, y, scale, isolated = true, outlined = true) {
-    const ctx = this.ctx;
-    if (isolated) ctx.save();
-    ctx.fillStyle = art.color;
-    ctx.strokeStyle = art.dark;
-    ctx.lineWidth = Math.max(1, scale);
-    if (art.shape === 'round') {
-      ctx.beginPath();
-      ctx.ellipse(x, y, 6 * scale, 2.7 * scale, -0.2, 0, Math.PI * 2);
-      ctx.fill();
-      if (outlined) {
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(x + 4.5 * scale, y - 0.8 * scale, 1.5 * scale, 0, Math.PI * 2);
-        ctx.stroke();
-      }
-    } else if (art.shape === 'rock') {
-      ctx.beginPath();
-      ctx.moveTo(x - 5 * scale, y + 2 * scale);
-      ctx.lineTo(x - 2 * scale, y - 4 * scale);
-      ctx.lineTo(x + 4 * scale, y - 3 * scale);
-      ctx.lineTo(x + 6 * scale, y + 2 * scale);
-      ctx.closePath();
-      ctx.fill();
-      if (outlined) ctx.stroke();
-    } else if (art.shape === 'sack') {
-      ctx.beginPath();
-      ctx.ellipse(x, y, 4.5 * scale, 5 * scale, 0, 0, Math.PI * 2);
-      ctx.fill();
-      if (outlined) ctx.stroke();
-    } else {
-      ctx.fillRect(x - 5 * scale, y - 4 * scale, 10 * scale, art.shape === 'bar' ? 3 * scale : 8 * scale);
-      if (outlined) {
-        ctx.strokeRect(x - 5 * scale, y - 4 * scale, 10 * scale, art.shape === 'bar' ? 3 * scale : 8 * scale);
-      }
-    }
-    if (isolated) ctx.restore();
+    void isolated;
+    drawGoodsSpriteCanvas(this.ctx, art, x, y, 16 * scale, { outlined });
   }
 
   drawMarketStall(stall) {
@@ -1260,14 +1368,26 @@ export class Renderer {
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
-    if (primary) this.drawGoodsSprite(primary.visual.art, point.x, point.y, scale * 0.65);
+    if (primary) {
+      const count = Math.max(1, Math.min(5, primary.visual.spriteCount));
+      for (let index = 0; index < count; index += 1) {
+        this.drawGoodsSprite(
+          freshnessArt(primary.visual),
+          point.x + (index - (count - 1) / 2) * 4.2 * scale,
+          point.y - (index % 2) * 2 * scale,
+          scale * 0.66,
+        );
+      }
+    }
     if (scale >= 1.02 || this.selectedBuildingId !== null) {
       ctx.font = `700 ${Math.max(8, 8.5 * scale)}px ui-sans-serif`;
       ctx.textAlign = 'center';
       ctx.lineWidth = 3;
       ctx.strokeStyle = '#253331';
       ctx.fillStyle = '#f1e4c2';
-      const label = `#${stall.householdId} ${Math.round(stall.totalAmount * 10) / 10}`;
+      const label = primary
+        ? `${GOODS_LABELS[primary.goods] ?? primary.goods} ${Math.round(stall.totalAmount * 10) / 10}荷`
+        : '品切れ';
       ctx.strokeText(label, point.x, point.y + 11 * scale);
       ctx.fillText(label, point.x, point.y + 11 * scale);
     }
@@ -1371,6 +1491,30 @@ export class Renderer {
     const scale = this.camera.zoom;
     const ctx = this.ctx;
     ctx.save();
+    if (carrier.kind === 'porter_queue') {
+      const width = 42 * scale;
+      const height = 18 * scale;
+      ctx.fillStyle = 'rgba(49, 43, 32, .9)';
+      ctx.strokeStyle = '#d4b56e';
+      ctx.lineWidth = Math.max(1, 1.2 * scale);
+      ctx.fillRect(point.x - width / 2, point.y - 22 * scale, width, height);
+      ctx.strokeRect(point.x - width / 2, point.y - 22 * scale, width, height);
+      if (carrier.goods) {
+        this.drawGoodsSprite(
+          GOODS_ART[carrier.goods] ?? GOODS_ART.tools,
+          point.x - 14 * scale,
+          point.y - 13 * scale,
+          scale * 0.58,
+        );
+      }
+      ctx.fillStyle = '#f3dfaa';
+      ctx.font = `800 ${Math.max(7, 8 * scale)}px "Yu Gothic", sans-serif`;
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(`待ち ${carrier.queuedPeople}人`, point.x - 7 * scale, point.y - 13 * scale);
+      ctx.restore();
+      return;
+    }
     if (carrier.id === this.selectedCarrierId) {
       ctx.globalAlpha = 0.35 + Math.sin(this.pulse * 5) * 0.12;
       ctx.fillStyle = '#f6d76b';
@@ -1412,14 +1556,14 @@ export class Renderer {
       ctx.arc(point.x + 8 * scale, point.y - 3 * scale, 4 * scale, 0, Math.PI * 2);
       ctx.fill();
       if (carrier.goods) {
-        const art = GOODS_ART[carrier.goods] ?? GOODS_ART.tools;
-        const cargoCount = Math.min(3, pileVisual(carrier.amount, carrier.goods).spriteCount);
-        for (let index = 0; index < cargoCount; index += 1) {
+        const cargoSprites = carrierCargoSprites(carrier, 3);
+        for (let index = 0; index < cargoSprites.length; index += 1) {
+          const art = GOODS_ART[cargoSprites[index]] ?? GOODS_ART.tools;
           this.drawGoodsSprite(
             art,
-            point.x + (index - (cargoCount - 1) / 2) * 4 * scale,
+            point.x + (index - (cargoSprites.length - 1) / 2) * 4 * scale,
             point.y - 13 * scale - (index % 2) * 2 * scale,
-            scale * 0.52,
+            scale * 0.66,
             false,
           );
         }
@@ -1444,11 +1588,16 @@ export class Renderer {
       }
     } else {
       const count = Math.max(1, carrier.peopleRows?.length ?? carrier.members ?? carrier.people ?? 1);
-      const shopping = ['toMarket', 'atMarket'].includes(carrier.state)
+      const backpack = carrier.kind === 'backpack';
+      const shopping = ['toMarket', 'atMarket', 'toSupplier', 'atSupplier'].includes(carrier.state)
         || (carrier.state === 'toHome' && Boolean(carrier.goods));
-      const working = carrier.activity === 'working' || carrier.state === 'toWork'
+      const working = ['working', 'working-away'].includes(carrier.activity)
+        || ['toWork', 'atResource'].includes(carrier.state)
         || (carrier.state === 'home' && carrier.productionMultiplier > 0);
-      const moving = ['arriving', 'toMarket', 'toHome', 'toWork'].includes(carrier.state);
+      const moving = [
+        'arriving', 'toMarket', 'toSupplier', 'toHome', 'toWork',
+        'toResource', 'fromResource',
+      ].includes(carrier.state);
       const bodyColor = shopping ? '#b78349'
         : working ? '#4f746d'
           : carrier.state === 'building' ? '#9a6b43' : '#6a7660';
@@ -1457,20 +1606,49 @@ export class Renderer {
         const radius = index === 0 ? 0 : (working ? 8 + (index % 4) * 3 : 4 + (index % 3) * 2);
         const offsetX = Math.cos(angle) * radius * scale;
         const offsetY = Math.sin(angle) * radius * (working ? 0.7 : 0.45) * scale;
-        const bob = moving ? Math.sin(this.pulse * 7 + carrier.x + index) * scale : 0;
+        const bob = moving
+          ? Math.sin(this.pulse * 7 * (carrier.visualPace ?? 1) + carrier.x + index) * scale
+          : 0;
         ctx.fillStyle = '#d6b087';
         ctx.beginPath();
         ctx.arc(point.x + offsetX, point.y - 13 * scale + offsetY + bob, 3.2 * scale, 0, Math.PI * 2);
         ctx.fill();
         ctx.fillStyle = index === 0 ? bodyColor : '#70775f';
         ctx.fillRect(point.x - 3 * scale + offsetX, point.y - 10 * scale + offsetY + bob, 6 * scale, 10 * scale);
-        if (carrier.goods && index < 2) {
-          const art = GOODS_ART[carrier.goods] ?? GOODS_ART.tools;
+        if (backpack && index === 0) {
+          ctx.strokeStyle = '#5b3d29';
+          ctx.lineWidth = Math.max(1, 1.3 * scale);
+          ctx.strokeRect(
+            point.x - 8 * scale + offsetX,
+            point.y - 12 * scale + offsetY + bob,
+            6 * scale,
+            10 * scale,
+          );
+          ctx.beginPath();
+          ctx.moveTo(point.x - 7 * scale + offsetX, point.y - 10 * scale + offsetY + bob);
+          ctx.lineTo(point.x - 2 * scale + offsetX, point.y - 5 * scale + offsetY + bob);
+          ctx.stroke();
+        }
+        if (carrier.goods && index < 2 && !backpack) {
+          const goods = carrierCargoSprites(carrier, 2)[index] ?? carrier.goods;
+          const art = GOODS_ART[goods] ?? GOODS_ART.tools;
           this.drawGoodsSprite(
             art,
             point.x + offsetX + 4 * scale,
             point.y - 5 * scale + offsetY + bob,
-            scale * 0.34,
+            scale * 0.6,
+          );
+        }
+      }
+      if (backpack && carrier.goods) {
+        const cargoSprites = carrierCargoSprites(carrier, 4);
+        for (let index = 0; index < cargoSprites.length; index += 1) {
+          const art = GOODS_ART[cargoSprites[index]] ?? GOODS_ART.tools;
+          this.drawGoodsSprite(
+            art,
+            point.x - (7 + (index % 2) * 3) * scale,
+            point.y - (13 + Math.floor(index / 2) * 4) * scale,
+            scale * 0.58,
           );
         }
       }
@@ -1496,11 +1674,30 @@ export class Renderer {
     let selected = null;
     let nearest = Infinity;
     for (const carrier of model.carriers) {
+      if (carrier.selectable === false) continue;
       const point = this.camera.project(carrier.x + 0.5, carrier.y + 0.5, 4);
       const distance = Math.hypot(screenX - point.x, screenY - (point.y - 8 * this.camera.zoom));
       const radius = Math.max(12, 20 * this.camera.zoom);
       if (distance <= radius && distance < nearest) {
         selected = carrier;
+        nearest = distance;
+      }
+    }
+    return selected;
+  }
+
+  hitTestInventory(model, screenX, screenY) {
+    const rows = model.inventoryVisuals ?? (model.buildings ?? []).flatMap(building => (
+      (building.yardSlots ?? []).map(slot => ({ ...slot, ownerId: building.id }))
+    ));
+    let selected = null;
+    let nearest = Infinity;
+    for (const slot of rows) {
+      const point = this.camera.project(slot.x, slot.y, 5);
+      const distance = Math.hypot(screenX - point.x, screenY - point.y);
+      const radius = Math.max(9, 15 * this.camera.zoom);
+      if (distance <= radius && distance < nearest) {
+        selected = slot;
         nearest = distance;
       }
     }
