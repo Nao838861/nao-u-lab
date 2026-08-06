@@ -202,12 +202,14 @@ function foodDeliveryStatus(household, economy) {
       goods: ['wheat'],
     };
   }
-  if (!household.road) {
+  // household.roadは未使用の初期化フィールドで常にfalse。到達可否は
+  // 経路長(未到達はInfinity→snapshotのJSON化でnull)で判定する。
+  if (household.marketOneWayTicks == null) {
     return {
       kind: 'no_route',
       tone: 'blocked',
-      label: '市場までの道が切れています',
-      detail: '建物の入口から市場まで道をつないでください。',
+      label: '市場までの経路がありません',
+      detail: '建物の入口から市場まで通れる道をつないでください。',
       goods: ['wheat'],
     };
   }
@@ -1277,7 +1279,6 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
       insolvencyMonths: household.insolvM ?? 0,
       walkingDistance: household.walk ?? 0,
       marketOneWayTicks: household.marketOneWayTicks ?? null,
-      roadConnected: Boolean(household.road),
       marketTransactionTicks: household.marketTransactionTicks ?? 0,
       marketRhythm: marketRhythmStatus(household, snapshot.economy),
       foodDelivery: foodDeliveryStatus(household, snapshot.economy),

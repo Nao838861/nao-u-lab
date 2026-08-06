@@ -1493,9 +1493,12 @@ function renderBuildingSheet() {
   if (!building) return false;
   const household = model.households.find(row => row.id === building.ownerHouseholdId) ?? null;
   const selectedConversion = model.conversionEconomics.find(row => row.buildingId === building.id) ?? null;
+  const roadConnected = model.roadConnection?.buildings
+    ?.find(row => row.id === building.id)?.connected ?? true;
   const signature = JSON.stringify({
     building,
     household,
+    roadConnected,
     conversion: selectedConversion,
     companyStock: building.roles?.includes('warehouse') ? model.companyStock : null,
     companyCosts: building.roles?.includes('warehouse') ? model.companyStockAverageCosts : null,
@@ -1531,31 +1534,14 @@ function renderBuildingSheet() {
     const growthRatio = growth?.requiredDays > 0 ? growth.upDays / growth.requiredDays : 1;
     const growthPercent = Math.max(0, Math.min(100, growthRatio * 100));
     const delivery = household.foodDelivery;
-    const deliveryGoods = delivery?.goods?.map(goodsIconMarkup).join('') ?? '';
-    const deliveryMarkup = delivery ? `
-      <div class="delivery-status" data-tone="${escapeHtml(delivery.tone)}">
-        <span>${deliveryGoods}<b>${escapeHtml(delivery.label)}</b></span>
-        <small>${escapeHtml(delivery.detail)}</small>
-      </div>` : '';
     const marketRhythm = household.marketRhythm;
-    const marketRhythmMarkup = marketRhythm ? `
-      <p class="sheet-note"><b>🧺 ${escapeHtml(marketRhythm.label)}</b><br>
-        ${escapeHtml(marketRhythm.detail)}</p>` : '';
     const productivity = household.productivity;
     const productivityPercent = Number.isFinite(productivity?.efficiency)
       ? Math.round(productivity.efficiency * 100) : null;
-    const productivityMarkup = productivity?.ideal > 1e-9 ? `
-      <div class="productivity-card" data-tone="${productivityPercent !== null && productivityPercent >= 80 ? 'good' : productivityPercent !== null && productivityPercent >= 50 ? 'warning' : 'danger'}">
-        <span><small>30日平均の日産</small><b>${productivity.days > 0 ? `${formatQuantity(productivity.actual)} / ${formatQuantity(productivity.ideal)}荷` : '観測中'}</b></span>
-        <span><small>生産性</small><b>${productivityPercent === null ? '—' : `${productivityPercent}%`}</b></span>
-      </div>
-      ${productivity.resourceWork ? `<p class="productivity-cause"><b>${productivity.resourceWork.kind === 'forest' ? '森' : '漁場'}まで片道 ${Number.isFinite(productivity.resourceWork.oneWayTicks) ? productivity.resourceWork.oneWayTicks.toFixed(1) : '到達不能'}刻</b>・実働 ${Math.round(productivity.resourceWork.workTicks)}/30刻・距離効率 ${Math.round(productivity.resourceWork.efficiency * 100)}%</p>` : ''}
-      ${productivity.lastDirectTrade ? `<p class="productivity-cause"><b>${goodsIconMarkup(productivity.lastDirectTrade.goods)}近隣から直接 ${formatQuantity(productivity.lastDirectTrade.qty)}荷</b>・市場往復より ${formatQuantity(productivity.lastDirectTrade.savedTicks)}刻短縮</p>` : ''}
-      <small class="productivity-level-note">配置はLv条件へ直接加点しません。増えた生産・収入・供給が、今の暮らしと次のLvを支えます。</small>` : '';
     const missingGoodsMarkup = growth?.missingGoodsForCurrent?.map(goodsIconMarkup).join('') ?? '';
     const headline = household.hungerRun >= 10 || foodDays < 3
       ? `⚠ ${delivery?.label ?? `食料があと${Math.max(0, Math.floor(foodDays))}日分`}`
-      : !household.roadConnected ? '⚠ 市場へ道がつながっていません'
+      : !roadConnected ? '⚠ 市場へ道がつながっていません'
         : household.insolvencyMonths >= 3 ? '⚠ 暮らしの資金が続いていません'
           : missingKeep.length ? `⚠ ${missingKeep[0]}が足りず、今の暮らしを保てません`
             : '順調';
@@ -1573,13 +1559,41 @@ function renderBuildingSheet() {
         <span><small>製品棚</small><b class="goods-inline">${goodsIconMarkup(selectedConversion.goods)}<span>${escapeHtml(GOODS_LABELS[selectedConversion.goods] ?? selectedConversion.goods)} ${formatQuantity(selectedConversion.outputAmount)}荷</span></b></span>
       </div>
       <small>1日あたり（30日ならし）${formatQuantity(selectedConversion.productionEma)}荷・実原価 ${formatQuantity(selectedConversion.cost * 10)}デナリ/荷</small>` : '';
+    // 出たり消えたりする札を作らない。行数固定のスロットに文面だけ入れ替える。
+    const stateLabel = HOUSEHOLD_STATE_LABELS[household.state] ?? household.state;
+    const rhythmShort = marketRhythm
+      ? (marketRhythm.kind === 'travelling' ? '往復中' : escapeHtml(marketRhythm.label.replace('出荷をまとめ中 ', 'まとめ中 ')))
+      : '今日は出ない';
+    const flow = delivery
+      ? { tone: delivery.tone === 'blocked' ? 'warning' : delivery.tone, icons: delivery.goods ?? [], text: `${delivery.label}——${delivery.detail}` }
+      : marketRhythm
+        ? { tone: 'plain', icons: [], text: `${marketRhythm.label}——${marketRhythm.detail}` }
+        : { tone: 'plain', icons: [], text: '今日は市場の便を出さず、家で仕事をしています。' };
+    const idealActive = productivity?.ideal > 1e-9;
+    const productionNow = idealActive && productivity.days > 0
+      ? `${formatQuantity(productivity.actual)}荷/日` : idealActive ? '観測中' : '—';
+    const productionIdeal = idealActive ? `${formatQuantity(productivity.ideal)}荷/日` : '—';
+    const productionRate = idealActive && productivityPercent !== null ? `${productivityPercent}%` : '—';
+    const productionTone = !idealActive || productivityPercent === null ? 'good'
+      : productivityPercent >= 80 ? 'good' : productivityPercent >= 50 ? 'warning' : 'danger';
+    const cause = !idealActive
+      ? (building.type === 'wheat' ? '麦は9月の収穫でまとめて実ります。'
+        : ['veg', 'rapeseed', 'fisher2'].includes(building.type) ? '今の季節にする仕事はありません。'
+          : '日々の生産で数える仕事ではありません。')
+      : productivity.resourceWork
+        ? `${productivity.resourceWork.kind === 'forest' ? '森' : '漁場'}まで片道 ${Number.isFinite(productivity.resourceWork.oneWayTicks) ? productivity.resourceWork.oneWayTicks.toFixed(1) : '到達不能'}刻——通いの時間が実働 ${Math.round(productivity.resourceWork.workTicks)}/30刻を決めています。`
+        : productivity.lastDirectTrade
+          ? `近所から${GOODS_LABELS[productivity.lastDirectTrade.goods] ?? productivity.lastDirectTrade.goods}を直接 ${formatQuantity(productivity.lastDirectTrade.qty)}荷仕入れ、市場往復より ${formatQuantity(productivity.lastDirectTrade.savedTicks)}刻の節約。`
+          : '生産を妨げるものは見えていません。';
     householdPanel.innerHTML = `
       <div class="household-vitals" aria-label="家の数字">
         <span><small>食料</small><b>あと${Math.max(0, Math.floor(foodDays))}日分</b></span>
         <span><small>財布</small><b>${purse}</b></span>
         <span><small>最近の収支</small><b>${income}</b></span>
+        <span><small>いま</small><b>${escapeHtml(stateLabel)}</b></span>
+        <span><small>市場の便</small><b>${rhythmShort}</b></span>
+        <span><small>空腹</small><b>${household.hungerWindow ? `${household.hungerDays}/${household.hungerWindow}日` : '記録なし'}</b></span>
       </div>
-      ${deliveryMarkup}
       <section class="next-living">
         <h3>次の暮らし</h3>
         ${nextNeed ? `<div class="culture-growth ${growth.nextSatisfied ? 'met' : 'missing'}"
@@ -1593,13 +1607,20 @@ function renderBuildingSheet() {
           </i>
           <small>あと${Math.max(0, growth.requiredDays - growth.upDays)}日（${growth.upDays}/${growth.requiredDays}日）</small>
         </div>` : '<p class="sheet-note">この家は最高の暮らしに達しています。</p>'}
-        ${missingKeep.length ? `<small class="living-danger"><span class="missing-goods-icons">${missingGoodsMarkup}</span>今のLvを保つには ${escapeHtml(missingKeep.join('・'))} が必要です。段階低下まであと${Math.max(0, growth.downgradeDays - growth.downDays)}日。</small>` : ''}
+        ${missingKeep.length
+    ? `<small class="living-danger"><span class="missing-goods-icons">${missingGoodsMarkup}</span>今のLvを保つには ${escapeHtml(missingKeep.join('・'))} が必要です。段階低下まであと${Math.max(0, growth.downgradeDays - growth.downDays)}日。</small>`
+    : '<small class="living-keep">今の暮らしに必要な品は足りています。</small>'}
       </section>
       <section class="job-now">
         <h3>仕事のいま</h3>
-        <p><b>${escapeHtml(HOUSEHOLD_STATE_LABELS[household.state] ?? household.state)}</b>・働きやすさ ${Math.round(household.productionMultiplier * 100)}%</p>
-        ${productivityMarkup}
-        ${marketRhythmMarkup}
+        <p class="household-flow" data-tone="${escapeHtml(flow.tone)}">${flow.icons.map(goodsIconMarkup).join('')}${escapeHtml(flow.text)}</p>
+        <div class="productivity-card" data-tone="${productionTone}">
+          <span><small>30日平均の生産</small><b>${productionNow}</b></span>
+          <span><small>順調な日の生産</small><b>${productionIdeal}</b></span>
+          <span><small>達成率</small><b>${productionRate}</b></span>
+        </div>
+        <p class="productivity-cause">${cause}</p>
+        <small class="productivity-level-note">達成率は「順調な日」——移動・品切れ・空腹で手が止まらない日の生産量——を100%とした30日平均です。配置はLv条件へ直接加点せず、増えた生産・収入・供給が暮らしと次のLvを支えます。</small>
         <p class="goods-output-list">${outputNow}</p>
         ${building.type === 'cartwright' ? `<p>販売待ちの荷車 ${building.cartStock.length}台${building.cartWork ? `・製作 ${Math.floor(building.cartWork.progress)}/${building.cartWork.required}日` : ''}</p>` : ''}
         ${conversionMarkup}

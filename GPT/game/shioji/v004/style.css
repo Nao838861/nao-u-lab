@@ -479,13 +479,18 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .building-fact b { display: block; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; }
 .focus-building { width: 100%; margin-top: 8px; border: 1px solid rgba(229,182,91,.4); border-radius: 6px; background: rgba(229,182,91,.08); padding: 7px; cursor: pointer; font-size: 9px; }
 .building-sheet-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
-.productivity-card { display: grid; grid-template-columns: 1.4fr .8fr; gap: 6px; margin: 7px 0 5px; }
+.productivity-card { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 6px; margin: 7px 0 5px; }
 .productivity-card span { display: grid; gap: 2px; padding: 7px 8px; border: 1px solid rgba(117,189,209,.34); border-radius: 6px; background: rgba(117,189,209,.07); }
 .productivity-card small, .productivity-level-note { color: var(--muted); font-size: 9px; line-height: 1.45; }
 .productivity-card b { color: #a9dcea; font: 700 13px Georgia,serif; }
 .productivity-card[data-tone="warning"] span { border-color: rgba(229,182,91,.35); background: rgba(229,182,91,.07); }
 .productivity-card[data-tone="danger"] span { border-color: rgba(239,140,119,.42); background: rgba(239,140,119,.08); }
-.productivity-cause { margin: 4px 0; color: var(--muted); font-size: 10px; line-height: 1.45; }
+.productivity-cause { margin: 4px 0; min-height: 15px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+.household-flow { margin: 6px 0 4px; min-height: 15px; color: var(--muted); font-size: 10px; line-height: 1.5; }
+.household-flow[data-tone="warning"], .household-flow[data-tone="blocked"] { color: #ffb09a; }
+.household-flow[data-tone="transit"] { color: #a9dcea; }
+.household-flow .goods-icon { margin-right: 3px; }
+.living-keep { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; line-height: 1.45; }
 .productivity-cause b { color: var(--text); }
 .market-productivity { display: grid; gap: 4px; margin-top: 7px; padding: 8px 9px; border: 1px solid rgba(117,189,209,.3); border-radius: 7px; background: rgba(117,189,209,.07); }
 .market-productivity b { color: #a9dcea; }
