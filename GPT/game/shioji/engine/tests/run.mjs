@@ -1942,13 +1942,14 @@ test("段23: 月次出生は非飢餓・食料2日超・11人未満の世帯だ�
   assert.equal(assertMoneyConservation(economy), true);
 });
 
-test("段23: 家督分家は人数・財布・全pantryを頭数比で移し何も印刷しない", () => {
+test("段23: 家督分家の持ち出しは財布の頭数比と開拓キット水準の食料だけで何も印刷しない", () => {
   const economy = createEconomicState();
   const donor = createHousehold(economy, { job: "veg", x: 2, y: 3 });
   donor.members = Array.from({ length: 10 }, (_, index) => ({
     name: `家族${index}`, sex: index % 2 ? "♀" : "♂", age: 20 + index,
   }));
   for (const [index, goods] of GOODS.entries()) donor.pantry[goods] = (index + 1) * 10;
+  donor.pantry.wheat = 3000;
   postCompanyLedger(economy.company, { day: 14, amount: -60, reason: "分家試験の家産移転" });
   donor.purse += 60;
   economy.port = { x: 0, y: 0 };
@@ -1970,6 +1971,13 @@ test("段23: 家督分家は人数・財布・全pantryを頭数比で移し何�
   assert.equal(donor.purse, 60);
   assert.equal(successor.members.length + donor.members.length, beforeMembers);
   assert.equal(successor.purse + donor.purse + economy.company.money, beforeMoney);
+  const foodCarry = 240;
+  assert.equal(successor.pantry.wheat, foodCarry, "食料は移民の開拓キット同水準を上限に持ち出す");
+  assert.equal(donor.pantry.wheat, 3000 - foodCarry);
+  for (const goods of GOODS) {
+    if (FOODS.includes(goods)) continue;
+    assert.equal(successor.pantry[goods], 0, `非食料${goods}は親元に残る`);
+  }
   assert.deepEqual(economicMaterialSnapshot(economy), beforeMaterials);
   assert.equal(assertMoneyConservation(economy), true);
 });

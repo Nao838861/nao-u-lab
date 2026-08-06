@@ -228,9 +228,11 @@ function emptyPantry() {
   return Object.fromEntries(GOODS.map((goods) => [goods, 0]));
 }
 
+const SETTLER_FOOD_KIT = 240;
+
 function applyImmigrantKit(household) {
   household.pantry.tools = 5;
-  household.pantry.wheat = 240;
+  household.pantry.wheat = SETTLER_FOOD_KIT;
   if (household.job === "saltworks") household.pantry.char = 15;
   if (household.job === "woodshop" || household.job === "charburner") household.pantry.log = 20;
   if (household.job === "cartwright") {
@@ -3741,9 +3743,17 @@ function createSuccessorHousehold(economy, donor, zone, physical = null) {
   const share = movedCount / (movedCount + donor.members.length);
   household.sur = donor.sur;
   household.members = moved;
-  for (const goods of GOODS) {
-    household.pantry[goods] = donor.pantry[goods] * share;
-    donor.pantry[goods] *= 1 - share;
+  // 持ち出しは旅の財布(頭数比)と食料だけ。食料は移民の開拓キットと同水準を
+  // 上限に、親の食料の頭数比取り分を超えない。全pantryの頭数比相続は、収穫直後の
+  // 麦畑から分かれた世帯が売り先のない麦数千荷を抱え込む原因だった。
+  const donorFood = FOODS.reduce((total, goods) => total + donor.pantry[goods], 0);
+  let foodCarry = Math.min(SETTLER_FOOD_KIT, donorFood * share);
+  for (const goods of FOOD_BUY_ORDER) {
+    if (foodCarry <= 1e-9) break;
+    const carried = Math.min(donor.pantry[goods], foodCarry);
+    household.pantry[goods] = carried;
+    donor.pantry[goods] -= carried;
+    foodCarry -= carried;
   }
   household.purse = donor.purse * share;
   donor.purse *= 1 - share;
