@@ -1,47 +1,47 @@
-import { IsometricCamera } from './camera.js?v=v004.42.0-boundary-voices';
-import { SimulationClock } from './clock.js?v=v004.42.0-boundary-voices';
-import { createBoundaryEvents } from './boundary_events.js?v=v004.42.0-boundary-voices';
+import { IsometricCamera } from './camera.js?v=v004.43.0-supply-demand';
+import { SimulationClock } from './clock.js?v=v004.43.0-supply-demand';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.43.0-supply-demand';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.42.0-boundary-voices';
+} from './config.js?v=v004.43.0-supply-demand';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.42.0-boundary-voices';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.42.0-boundary-voices';
-import { developmentMapView } from './development_map.js?v=v004.42.0-boundary-voices';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.42.0-boundary-voices';
-import { formatElenaSpeech } from './elena_text.js?v=v004.42.0-boundary-voices';
+} from './display_batch.js?v=v004.43.0-supply-demand';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.43.0-supply-demand';
+import { developmentMapView } from './development_map.js?v=v004.43.0-supply-demand';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.43.0-supply-demand';
+import { formatElenaSpeech } from './elena_text.js?v=v004.43.0-supply-demand';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.42.0-boundary-voices';
+} from './food_readability.js?v=v004.43.0-supply-demand';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.42.0-boundary-voices';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.42.0-boundary-voices';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.42.0-boundary-voices';
-import { goodsDetail } from './goods_detail.js?v=v004.42.0-boundary-voices';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.42.0-boundary-voices';
-import { WorldPresentation } from './presentation.js?v=v004.42.0-boundary-voices';
-import { Renderer } from './renderer.js?v=v004.42.0-boundary-voices';
+} from './keyboard.js?v=v004.43.0-supply-demand';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.43.0-supply-demand';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.43.0-supply-demand';
+import { goodsDetail } from './goods_detail.js?v=v004.43.0-supply-demand';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.43.0-supply-demand';
+import { WorldPresentation } from './presentation.js?v=v004.43.0-supply-demand';
+import { Renderer } from './renderer.js?v=v004.43.0-supply-demand';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.42.0-boundary-voices';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.42.0-boundary-voices';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.42.0-boundary-voices';
+} from './save_game.js?v=v004.43.0-supply-demand';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.43.0-supply-demand';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.43.0-supply-demand';
 import {
-  GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRows,
-} from './supply_demand.js?v=v004.42.0-boundary-voices';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.42.0-boundary-voices';
+  GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRow, supplyDemandRows,
+} from './supply_demand.js?v=v004.43.0-supply-demand';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.43.0-supply-demand';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.42.0-boundary-voices';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.42.0-boundary-voices';
+} from './ui_guidance.js?v=v004.43.0-supply-demand';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.43.0-supply-demand';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -348,15 +348,23 @@ function formatSupplyDays(days) {
   return `${Math.max(0, Math.floor(days))}日`;
 }
 
+const SUPPLY_SOURCE_LABELS = Object.freeze({
+  households: '暮らし', order: '本国注文', winter: '冬支度', other: 'その他の利用',
+});
+
+function supplySourceLabel(source) {
+  return SUPPLY_SOURCE_LABELS[source] ?? JOB_LABELS[source] ?? source;
+}
+
 function renderShortageAlerts() {
   const rows = shortageRows(currentSupplyRows());
-  const signature = rows.map(row => `${row.goods}:${row.daysRemaining.toFixed(2)}`).join('|');
+  const signature = rows.map(row => `${row.goods}:${row.shortage.toFixed(2)}`).join('|');
   renderIfChanged('shortage-alerts', signature, () => {
     const alerts = $('#shortage-alerts');
     alerts.innerHTML = rows.map(row => `
       <button type="button" data-shortage-goods="${row.goods}"
-        title="${escapeHtml(GOODS_LABELS[row.goods])}が不足。押すと需給の該当行を開きます"
-        aria-label="${escapeHtml(GOODS_LABELS[row.goods])}が不足、残り${formatSupplyDays(row.daysRemaining)}">
+        title="${escapeHtml(GOODS_LABELS[row.goods])}が1日${formatQuantity(row.shortage)}荷不足。押すと需給の該当行を開きます"
+        aria-label="${escapeHtml(GOODS_LABELS[row.goods])}、1日${formatQuantity(row.shortage)}荷不足">
         ${goodsIconMarkup(row.goods)}
       </button>`).join('');
     setHiddenIfChanged(alerts, rows.length === 0);
@@ -382,46 +390,46 @@ function renderSupplySheet() {
     networkNode.hidden = false;
     const receipts = (network.tradeReceipts ?? []).slice(-3);
     const receiptText = receipts.length
-      ? `<small class="market-trade-receipts">直近交易: ${receipts.map(receipt => `${escapeHtml(receipt.goods)} ${formatQuantity(receipt.quantity)}荷 / ${receipt.profit >= 0 ? '+' : ''}${formatQuantity(receipt.profit)}D`).join('・')}</small>`
+      ? `<small class="market-trade-receipts">最近の交易: ${receipts.map(receipt => `${escapeHtml(receipt.goods)} ${formatQuantity(receipt.quantity)}荷 / ${receipt.profit >= 0 ? '+' : ''}${formatQuantity(receipt.profit)}D`).join('・')}</small>`
       : '';
     networkNode.innerHTML = `<b>市場圏</b>${network.summary.map(row => `
       <span class="market-network-chip"><strong>${escapeHtml(row.name)}</strong><small>${row.households}世帯・${row.buildings}建物</small><em>平均${formatQuantity(row.averageDistance)}歩</em></span>
-    `).join('')}<small class="market-network-note">所属は実道の最短市場。道を整えると圏が変わり、相場と不足が市場ごとに分かれます。</small>${receiptText}`;
+    `).join('')}<small class="market-network-note">各世帯は、実際の道のりが最も短い市場に属します。道を整えると市場圏が変わり、相場と不足も市場ごとに変わります。</small>${receiptText}`;
   });
   const signature = JSON.stringify({ rows, focusedSupplyGoods, networkSignature });
   renderIfChanged('supply-grid', signature, () => {
     $('#supply-grid').innerHTML = rows.length ? rows.map(row => {
-      const supplyTotal = row.produced + row.imported;
-      const demandObserved = row.consumed + row.exported;
-      const winterExtra = Math.max(0, row.dailyNeed - demandObserved);
-      const scale = Math.max(supplyTotal, row.dailyNeed, demandObserved, 0.02);
+      const supplyTotal = row.supply;
+      const consumedTotal = row.consumed + row.exported;
+      const scale = Math.max(supplyTotal, row.demand, 0.02);
       const pct = value => `${Math.min(100, (value / scale) * 100).toFixed(1)}%`;
       const trendClass = row.priceTrend.direction === 'up' ? 'trend-up'
         : row.priceTrend.direction === 'down' ? 'trend-down' : '';
       const whereabouts = stockWhereabouts(model, row.goods)
         .map(place => `${place.label} ${formatQuantity(place.amount)}荷`).join('・');
-      const breakdown = `1日あたり 生産${formatQuantity(row.produced)}・仕入${formatQuantity(row.imported)}・消費${formatQuantity(row.consumed)}荷`
-        + `${row.exported > 0.005 ? `・輸出${formatQuantity(row.exported)}荷` : ''}`
-        + `${winterExtra > 0.005 ? `。冬支度も入れて${formatQuantity(row.dailyNeed)}荷が要る` : ''}`
-        + `${whereabouts ? `。所在: ${whereabouts}` : ''}`;
+      const breakdown = `1日あたりの供給は${formatQuantity(supplyTotal)}荷（生産${formatQuantity(row.produced)}、仕入${formatQuantity(row.imported)}）。`
+        + `需要は${formatQuantity(row.demand)}荷（消費${formatQuantity(consumedTotal)}、不足${formatQuantity(row.shortage)}）です。`
+        + `${whereabouts ? `所在は${whereabouts}です。` : ''}`;
       return `<button type="button" class="supply-row"
         data-supply-goods="${row.goods}" data-status="${row.status}"
         data-focused="${String(row.goods === focusedSupplyGoods)}"
         title="${escapeHtml(breakdown)}"
-        aria-label="${escapeHtml(GOODS_LABELS[row.goods])}、${row.statusLabel}、1日あたり生産と仕入${formatQuantity(supplyTotal)}荷・消費${formatQuantity(demandObserved)}荷、在庫であと${formatSupplyDays(row.daysRemaining)}。品目詳細を開く">
+        aria-label="${escapeHtml(GOODS_LABELS[row.goods])}、${row.statusLabel}。1日あたり供給${formatQuantity(supplyTotal)}荷、需要${formatQuantity(row.demand)}荷、消費${formatQuantity(consumedTotal)}荷、不足${formatQuantity(row.shortage)}荷。品目詳細を開く">
         <span class="supply-head">
           ${goodsIconMarkup(row.goods)}
           <span class="supply-name"><b>${escapeHtml(GOODS_LABELS[row.goods])}</b></span>
           <small class="supply-badge">${row.statusLabel}</small>
-          <span class="supply-number supply-days"><small>あと</small><b>${formatSupplyDays(row.daysRemaining)}</b></span>
+          <span class="supply-number supply-days"><small>${row.status === 'no_demand' ? '' : '在庫'}</small><b>${row.status === 'no_demand' ? '需要なし' : `${formatSupplyDays(row.daysRemaining)}分`}</b></span>
         </span>
         <span class="supply-bars" aria-hidden="true">
-          <span class="supply-bar"><small>生産+仕入</small><span class="bar-track"><i class="seg-prod" style="width:${pct(row.produced)}"></i><i class="seg-imp" style="width:${pct(row.imported)}"></i></span><b>${formatQuantity(supplyTotal)}</b></span>
-          <span class="supply-bar"><small>消費</small><span class="bar-track"><i class="seg-cons" style="width:${pct(demandObserved)}"></i><i class="seg-need" style="width:${pct(winterExtra)}"></i></span><b>${formatQuantity(demandObserved)}</b></span>
+          <span class="supply-bar"><small>供給</small><span class="bar-track"><i class="seg-prod" style="width:${pct(row.produced)}"></i><i class="seg-imp" style="width:${pct(row.imported)}"></i></span><b>${formatQuantity(supplyTotal)}</b></span>
+          <span class="supply-breakdown"><small>生産 ${formatQuantity(row.produced)}</small><small>仕入 ${formatQuantity(row.imported)}</small></span>
+          <span class="supply-bar"><small>需要</small><span class="bar-track"><i class="seg-cons" style="width:${pct(consumedTotal)}"></i><i class="seg-shortage" style="width:${pct(row.shortage)}"></i></span><b>${formatQuantity(row.demand)}</b></span>
+          <span class="supply-breakdown demand-breakdown"><small>消費 ${formatQuantity(consumedTotal)}</small><small>不足 ${formatQuantity(row.shortage)}</small></span>
         </span>
         <span class="supply-foot">
           <span class="supply-number${row.undelivered ? ' undelivered' : ''}"><small>市場</small><b>${formatQuantity(row.marketStock)}荷</b></span>
-          <span class="supply-number"><small>島に</small><b>${formatQuantity(row.stock)}荷</b></span>
+          <span class="supply-number"><small>島全体</small><b>${formatQuantity(row.stock)}荷</b></span>
           <span class="supply-number ${trendClass}"><small>相場</small><b>${row.price === null ? '—' : `${formatQuantity(row.price)}D ${row.priceTrend.arrow}`}</b></span>
         </span>
       </button>`;
@@ -1543,7 +1551,7 @@ function renderBuildingSheet() {
       ? `⚠ ${delivery?.label ?? `食料があと${Math.max(0, Math.floor(foodDays))}日分`}`
       : !roadConnected ? '⚠ 市場へ道がつながっていません'
         : household.insolvencyMonths >= 3 ? '⚠ 暮らしの資金が続いていません'
-          : missingKeep.length ? `⚠ ${missingKeep[0]}が足りず、今の暮らしを保てません`
+          : missingKeep.length ? `⚠ ${missingKeep[0]}が不足し、今の暮らしを保てません`
             : '順調';
     const headlineTone = headline.startsWith('⚠') ? 'warning' : 'good';
     $('#building-summary').innerHTML = `
@@ -1764,6 +1772,7 @@ function renderEconomyCharts() {
 function renderGoodsDetailSheet() {
   if (!selectedSupplyGoods) return;
   const detail = goodsDetail(selectedSupplyGoods);
+  const supply = supplyDemandRow(model, selectedSupplyGoods, economyHistory);
   const rows = economyHistory;
   const prices = rows.map(row => row.prices[detail.goods]).filter(Number.isFinite);
   const average = prices.length
@@ -1782,7 +1791,19 @@ function renderGoodsDetailSheet() {
       reference: true,
     },
   ], { includeZero: false });
-  const signature = JSON.stringify({ detail, rows });
+  const sourceMarkup = supply.demandSources.length
+    ? supply.demandSources.map(source => `<li><span>${escapeHtml(supplySourceLabel(source.source))}</span><b>需要 ${formatQuantity(source.demand)}</b><small>消費 ${formatQuantity(source.consumed)}　不足 ${formatQuantity(source.shortage)}</small></li>`).join('')
+    : '<li class="goods-demand-empty">いま必要としている建物はありません。</li>';
+  const supplyReason = supply.status === 'undelivered'
+    ? '島にはありますが、使う場所へ届いていません。道路と市場への出荷を確認してください。'
+    : supply.status === 'shortage'
+      ? '島全体の在庫が足りません。生産を増やすか、本土から仕入れてください。'
+      : supply.status === 'inventory'
+        ? 'いまは在庫で補っています。このままでは在庫が減るため、供給を増やしてください。'
+        : supply.status === 'no_demand'
+          ? 'いま、この品を必要としている建物はありません。'
+          : '現在の供給で需要を満たしています。';
+  const signature = JSON.stringify({ detail, rows, supply });
   renderIfChanged('goods-detail-content', signature, () => {
     $('#goods-detail-title').textContent = GOODS_LABELS[detail.goods] ?? detail.goods;
     $('#goods-detail-content').dataset.goods = detail.goods;
@@ -1790,6 +1811,16 @@ function renderGoodsDetailSheet() {
       <section class="goods-detail-hero" data-detail-element="art">
         <div class="goods-detail-art">${goodsIconMarkup(detail.goods)}</div>
         <p data-detail-element="fact">${escapeHtml(detail.fact)}</p>
+      </section>
+      <section class="goods-detail-demand" data-detail-element="supply-demand">
+        <h3>需給の内訳 <small>1日あたり</small></h3>
+        <div class="goods-demand-totals">
+          <span><small>供給</small><b>${formatQuantity(supply.supply)}荷</b></span>
+          <span><small>需要</small><b>${formatQuantity(supply.demand)}荷</b></span>
+          <span data-shortage="${String(supply.shortage > 0.005)}"><small>不足</small><b>${formatQuantity(supply.shortage)}荷</b></span>
+        </div>
+        <p class="goods-demand-reason" data-status="${supply.status}"><b>${supply.statusLabel}</b>${escapeHtml(supplyReason)}</p>
+        <ul class="goods-demand-sources">${sourceMarkup}</ul>
       </section>
       <section class="goods-detail-life" data-detail-element="shelf-life">
         <h3>日持ち</h3>

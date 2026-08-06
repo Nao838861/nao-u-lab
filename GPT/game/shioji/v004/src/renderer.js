@@ -1,13 +1,13 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.42.0-boundary-voices';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.42.0-boundary-voices';
-import { islandCalendar } from './ui_summary.js?v=v004.42.0-boundary-voices';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.42.0-boundary-voices';
+} from './config.js?v=v004.43.0-supply-demand';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.43.0-supply-demand';
+import { islandCalendar } from './ui_summary.js?v=v004.43.0-supply-demand';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.43.0-supply-demand';
 import {
   buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
   seasonalTerrainVisual,
-} from './visuals.js?v=v004.42.0-boundary-voices';
+} from './visuals.js?v=v004.43.0-supply-demand';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 

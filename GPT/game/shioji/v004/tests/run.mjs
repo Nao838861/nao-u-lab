@@ -2225,7 +2225,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.42.0-boundary-voices');
+  assert.equal(VERSION, 'v004.43.0-supply-demand');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -3734,32 +3734,58 @@ test('UI向上段7: 統計の現物は棚・食料庫・屋台を所在別に一
   assert.equal(Object.isFrozen(model.goodsManifest[0].locations), true);
 });
 
-test('UI向上段8: 需給は純増減と残日数を3段階で判定し、深刻順に並べる', () => {
-  const model = {
-    population: 2,
+test('UI向上段8: 需給は需要=消費+不足を保ち、原因別の5状態で深刻順に並べる', () => {
+  const makeModel = ({ supply = 2, consumed = 2, demand = 2, stock = 20, marketStock = stock } = {}) => ({
+    population: 0,
+    goodsManifest: [{
+      goods: 'log', totalAmount: stock,
+      locations: marketStock > 0 ? [{ section: 'stall', sourceLabel: '市場', amount: marketStock }]
+        : stock > 0 ? [{ section: 'input', sourceLabel: '木工房', amount: stock }] : [],
+    }],
+    flowEma: { log: { prod: supply, imp: 0, cons: consumed, exp: 0 } },
+    demandEma: {
+      log: { demand, consumed: Math.min(demand, consumed), sources: {
+        woodshop: { demand, consumed: Math.min(demand, consumed) },
+      } },
+    },
+    marketPrices: { log: 3 },
+  });
+  const enough = supplyDemandRow(makeModel(), 'log');
+  assert.equal(enough.status, 'sufficient');
+  assert.equal(enough.demand, enough.consumed + enough.exported + enough.shortage);
+  assert.equal(supplyDemandRow(makeModel({ supply: 1 }), 'log').status, 'inventory');
+  const undelivered = supplyDemandRow(
+    makeModel({ supply: 0, consumed: 0, demand: 2, stock: 10, marketStock: 0 }), 'log',
+  );
+  assert.equal(undelivered.status, 'undelivered');
+  assert.equal(undelivered.shortage, 2);
+  assert.deepEqual(undelivered.demandSources, [
+    { source: 'woodshop', demand: 2, consumed: 0, shortage: 2 },
+  ]);
+  const lacking = supplyDemandRow(
+    makeModel({ supply: 0, consumed: 0, demand: 2, stock: 0, marketStock: 0 }), 'log',
+  );
+  assert.equal(lacking.status, 'shortage');
+  const idle = supplyDemandRow(makeModel({ supply: 0, consumed: 0, demand: 0 }), 'log');
+  assert.equal(idle.status, 'no_demand');
+  const rows = supplyDemandRows({
+    ...makeModel(),
     goodsManifest: [
-      { goods: 'wheat', totalAmount: 0 },
-      { goods: 'tools', totalAmount: 10 },
-      { goods: 'log', totalAmount: 100 },
+      { goods: 'log', totalAmount: 20, locations: [{ section: 'stall', amount: 20 }] },
+      { goods: 'tools', totalAmount: 0, locations: [] },
     ],
     flowEma: {
-      wheat: { prod: 0, imp: 0, cons: 1, exp: 0 },
-      tools: { prod: 0.8, imp: 0, cons: 1, exp: 0 },
-      log: { prod: 2, imp: 0, cons: 1, exp: 0 },
+      log: { prod: 2, cons: 2 }, tools: { prod: 0, cons: 0 },
     },
-    marketPrices: { wheat: 1, tools: 2, log: 3 },
-  };
-  const wheat = supplyDemandRow(model, 'wheat');
-  assert.equal(wheat.requiredStock, 2 * WINTER_RESERVE_PER_PERSON);
-  assert.equal(wheat.dailyNeed, 2 * WINTER_RESERVE_PER_PERSON / 90);
-  assert.equal(wheat.netPerDay, -1);
-  assert.equal(wheat.status, 'shortage');
-  assert.equal(supplyDemandRow(model, 'tools').status, 'tight');
-  assert.equal(supplyDemandRow(model, 'log').status, 'sufficient');
-  const rows = supplyDemandRows(model, [], ['log', 'tools', 'wheat']);
-  assert.deepEqual(rows.map(row => row.goods), ['wheat', 'tools', 'log']);
-  assert.deepEqual(shortageRows(rows).map(row => row.goods), ['wheat']);
-  assert.deepEqual(Object.values(SUPPLY_STATUS).map(row => row.label), ['足りてる', 'ギリギリ', '不足']);
+    demandEma: {
+      log: { demand: 2, consumed: 2 }, tools: { demand: 1, consumed: 0 },
+    },
+  }, [], ['log', 'tools']);
+  assert.deepEqual(rows.map(row => row.goods), ['tools', 'log']);
+  assert.deepEqual(shortageRows(rows).map(row => row.goods), ['tools']);
+  assert.deepEqual(Object.values(SUPPLY_STATUS).map(row => row.label), [
+    '需要なし', '足りている', '在庫で補給中', '届いていない', '不足',
+  ]);
 });
 
 test('UI向上段9: 需給を独立表示し、統計は収支と既定3グラフへ整理する', () => {
@@ -3769,6 +3795,7 @@ test('UI向上段9: 需給を独立表示し、統計は収支と既定3グラ�
   const model = snapshotToViewModel(snapshot);
   assert.deepEqual(model.marketPrices, snapshot.economy.px);
   assert.deepEqual(model.flowEma, snapshot.economy.f30);
+  assert.deepEqual(model.demandEma, snapshot.economy.demand30);
   const summary = recentCompanySummary(model);
   const recent = model.companyLedger.filter(row => row.day >= model.day - 29);
   assert.equal(summary.income, recent.filter(row => row.amount > 0)
@@ -3793,7 +3820,7 @@ test('UI向上段9: 需給を独立表示し、統計は収支と既定3グラ�
   assert.match(html, /id="goods-detail-sheet"[^>]*data-testid="goods-detail-sheet"/);
   assert.match(html, /id="goods-detail-content"/);
   assert.doesNotMatch(html, /id="price-chart-panel"|data-chart="price"/);
-  assert.equal((main.match(/data-detail-element=/g) ?? []).length, 5);
+  assert.equal((main.match(/data-detail-element=/g) ?? []).length, 6);
   assert.match(main, /openSheet\('goods-detail-sheet'\)/);
   assert.match(main, /goods-detail-back[\s\S]*openSheet\('supply-sheet'\)/);
   assert.match(supply, /right\.severity - left\.severity/);
@@ -3802,6 +3829,11 @@ test('UI向上段9: 需給を独立表示し、統計は収支と既定3グラ�
   assert.match(main, /GOODS_ART\[detail\.goods\]\?\.color/);
   assert.match(main, /formatNumber\(toDenari\(model\.companyMoney\)\)/);
   assert.match(main, /formatQuantity\(toDenari\(row\.amount\)\)/);
+  for (const source of [html, main]) {
+    assert.doesNotMatch(source, /足りず|潜在需要|未達量|ギリギリ|足りてる/);
+  }
+  assert.match(main, /消費 \$\{formatQuantity\(consumedTotal\)\}/);
+  assert.match(main, /不足 \$\{formatQuantity\(row\.shortage\)\}/);
 });
 
 test('品目の出会い開示: 未開拓は空、見本の町は18品、保有履歴は再消費後も残る', () => {

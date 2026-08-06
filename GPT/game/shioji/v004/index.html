@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.42.0-boundary-voices">
+  <link rel="stylesheet" href="./style.css?v=v004.43.0-supply-demand">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -114,17 +114,17 @@
 
   <aside id="supply-sheet" class="panel sheet supply-sheet" hidden data-testid="supply-sheet">
     <header>
-      <div><small>足りる品・足りない品 — 不足が深刻な順</small><h2>島の需給</h2></div>
+      <div><small>何が、どれだけ足りないか — 不足が深刻な順</small><h2>島の需給</h2></div>
       <button type="button" data-close-sheet="supply-sheet" aria-label="需給を閉じる">×</button>
     </header>
-    <div class="supply-legend" aria-hidden="true"><span class="seg-prod">生産</span><span class="seg-imp">仕入</span><span class="seg-cons">消費</span><span class="seg-need">冬支度に必要な分</span><em>棒は1日あたりの荷。市場が赤い品は、島にはあるのに市場に出ていません。押すと品目詳細を開きます。</em></div>
+    <div class="supply-legend" aria-hidden="true"><span class="seg-prod">生産</span><span class="seg-imp">仕入</span><span class="seg-cons">消費</span><span class="seg-shortage">不足</span><em>棒は1日あたりの荷。需要は消費と不足の合計です。押すと、必要としている場所と不足の理由を確認できます。</em></div>
     <div id="market-network-summary" class="market-network-summary" hidden></div>
     <div id="supply-grid" class="supply-grid"></div>
   </aside>
 
   <aside id="goods-detail-sheet" class="panel sheet goods-detail-sheet" hidden data-testid="goods-detail-sheet">
     <header>
-      <div><small>性質・日持ち・作り方・相場</small><h2 id="goods-detail-title">品目詳細</h2></div>
+      <div><small>需給・性質・作り方・相場</small><h2 id="goods-detail-title">品目詳細</h2></div>
       <div class="sheet-header-actions">
         <button id="goods-detail-back" type="button">需給へ戻る</button>
         <button type="button" data-close-sheet="goods-detail-sheet" aria-label="品目詳細を閉じる">×</button>
@@ -339,7 +339,7 @@
       });
     })();
   </script>
-  <script id="game-module" type="module" src="./src/main.js?v=v004.42.0-boundary-voices"
+  <script id="game-module" type="module" src="./src/main.js?v=v004.43.0-supply-demand"
     onerror="window.__SHIOJI_BOOT__?.failed()"></script>
 </body>
 </html>
