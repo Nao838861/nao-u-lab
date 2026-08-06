@@ -281,6 +281,33 @@ export function recordEconomicMaterialFlow(
   }
 }
 
+// 物量台帳は「実際に動いた量」だけを記録するため、使いたかったが
+// 使えなかった量は別の観測台帳に残す。経済状態は変えず、需給表示にだけ使う。
+export function recordEconomicDemand(economy, goods, demand, consumed, source) {
+  if (!Number.isFinite(demand) || demand < -1e-9
+    || !Number.isFinite(consumed) || consumed < -1e-9) {
+    throw new TypeError(`demand must be non-negative and finite: ${goods}=${demand}/${consumed}`);
+  }
+  const normalizedDemand = Math.max(0, demand);
+  const normalizedConsumed = Math.max(0, consumed);
+  if (normalizedConsumed > normalizedDemand + 1e-9) {
+    throw new RangeError(`consumed demand cannot exceed demand: ${goods}=${demand}/${consumed}`);
+  }
+  if (typeof source !== "string" || source.length === 0) {
+    throw new TypeError("demand source must be a non-empty string");
+  }
+  economy.dailyDemandFlows ??= {};
+  const row = economy.dailyDemandFlows[goods] ?? { demand: 0, consumed: 0, sources: {} };
+  row.demand += normalizedDemand;
+  row.consumed += normalizedConsumed;
+  const sourceRow = row.sources[source] ?? { demand: 0, consumed: 0 };
+  sourceRow.demand += normalizedDemand;
+  sourceRow.consumed += normalizedConsumed;
+  row.sources[source] = sourceRow;
+  economy.dailyDemandFlows[goods] = row;
+  return row;
+}
+
 function makeHouseholdRecord(economy, { job, x, y }) {
   if (!JOBCLS[job]) throw new Error(`unknown household job: ${job}`);
   ensurePersonIds(economy);
@@ -762,6 +789,7 @@ function consumeCultureGoods(economy, physical, household, goods, dailyNeed, sat
   const used = Math.min(householdMaterialAmount(physical, household, goods), dailyNeed);
   withdrawHouseholdMaterial(physical, household, goods, used);
   satisfied[goods] = used >= dailyNeed * 0.95;
+  recordEconomicDemand(economy, goods, dailyNeed, used, "households");
   if (used > 1e-9) {
     recordEconomicMaterialFlow(economy, goods, "cons", used, `世帯${household.id}の文化消費`);
   }
@@ -2282,6 +2310,7 @@ export function ageMarketStalls(economy, { day, physical = null }) {
   economy.currentDay = day;
   economy.deskUsed = {};
   economy.dailyMaterialFlows = {};
+  economy.dailyDemandFlows = {};
   for (const lot of economy.marketReturns) {
     const spoiled = spoilMarketQuantity(
       economy,
@@ -2509,10 +2538,11 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     recordEconomicMaterialFlow(economy, "coal", "prod", qty, `世帯${household.id}の採炭`);
     produced.coal = qty;
   } else if (household.job === "smelter") {
+    const desiredQty = P.Y_SMELT * work;
     const fuelAvailable = productionInputAmount(physical, household, "char")
       + productionInputAmount(physical, household, "coal");
     const qty = Math.max(0, Math.min(
-      P.Y_SMELT * work,
+      desiredQty,
       productionInputAmount(physical, household, "ore") / P.SMELT_ORE,
       fuelAvailable / P.SMELT_FUEL,
     ));
@@ -2523,6 +2553,9 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     household.pantry.bar += qty;
     if (qty > 0) recordEconomicMaterialFlow(economy, "bar", "prod", qty, `世帯${household.id}の製鉄`);
     if (ore > 0) recordEconomicMaterialFlow(economy, "ore", "cons", ore, `世帯${household.id}の製鉄`);
+    recordEconomicDemand(
+      economy, "ore", desiredQty * P.SMELT_ORE, ore, "smelter",
+    );
     for (const goods of ["char", "coal"]) {
       if (usedFuel[goods] > 0) {
         recordEconomicMaterialFlow(economy, goods, "cons", usedFuel[goods], `世帯${household.id}の製鉄`);
@@ -2530,10 +2563,11 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     }
     produced.bar = qty;
   } else if (household.job === "smith") {
+    const desiredQty = P.Y_SMITH * work;
     const fuelAvailable = productionInputAmount(physical, household, "char")
       + productionInputAmount(physical, household, "coal");
     const qty = Math.max(0, Math.min(
-      P.Y_SMITH * work,
+      desiredQty,
       productionInputAmount(physical, household, "bar") / P.SMITH_BAR,
       fuelAvailable / P.SMITH_FUEL,
     ));
@@ -2544,6 +2578,9 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     household.pantry.iron += qty;
     if (qty > 0) recordEconomicMaterialFlow(economy, "iron", "prod", qty, `世帯${household.id}の鍛冶`);
     if (bar > 0) recordEconomicMaterialFlow(economy, "bar", "cons", bar, `世帯${household.id}の鍛冶`);
+    recordEconomicDemand(
+      economy, "bar", desiredQty * P.SMITH_BAR, bar, "smith",
+    );
     for (const goods of ["char", "coal"]) {
       if (usedFuel[goods] > 0) {
         recordEconomicMaterialFlow(economy, goods, "cons", usedFuel[goods], `世帯${household.id}の鍛冶`);
@@ -2567,6 +2604,8 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
       recordEconomicMaterialFlow(
         economy, "tools", "cons", P.CART_TOOLS, `世帯${household.id}の木の荷車製作`,
       );
+      recordEconomicDemand(economy, "log", P.CART_LOG, P.CART_LOG, "cartwright");
+      recordEconomicDemand(economy, "tools", P.CART_TOOLS, P.CART_TOOLS, "cartwright");
       household.cartWork = {
         kind: "wood",
         progress: 0,
@@ -2574,6 +2613,10 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
         materialCost: P.CART_LOG * (economy.px.log ?? P.BELIEF0.log)
           + P.CART_TOOLS * (economy.px.tools ?? P.BELIEF0.tools),
       };
+    }
+    if (!household.cartWork && household.cartStock.length < 3 && endOfDay) {
+      recordEconomicDemand(economy, "log", P.CART_LOG, 0, "cartwright");
+      recordEconomicDemand(economy, "tools", P.CART_TOOLS, 0, "cartwright");
     }
     if (household.cartWork) {
       household.cartWork.progress += work;
@@ -2596,35 +2639,45 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
       }
     }
   } else if (household.job === "woodshop") {
+    const desiredQty = P.Y_TOOLS * work;
     const qty = Math.max(
       0,
-      Math.min(P.Y_TOOLS * work, productionInputAmount(physical, household, "log") / P.LOG_TOOL),
+      Math.min(desiredQty, productionInputAmount(physical, household, "log") / P.LOG_TOOL),
     );
     withdrawProductionInput(physical, household, "log", qty * P.LOG_TOOL);
     household.pantry.tools += qty;
     recordEconomicMaterialFlow(economy, "tools", "prod", qty, `世帯${household.id}の木工`);
     recordEconomicMaterialFlow(economy, "log", "cons", qty * P.LOG_TOOL, `世帯${household.id}の木工`);
+    recordEconomicDemand(
+      economy, "log", desiredQty * P.LOG_TOOL, qty * P.LOG_TOOL, "woodshop",
+    );
     produced.tools = qty;
   } else if (household.job === "charburner") {
+    const desiredQty = P.Y_CHAR * work;
     const qty = Math.max(
       0,
-      Math.min(P.Y_CHAR * work, productionInputAmount(physical, household, "log") / P.LOG_CHAR),
+      Math.min(desiredQty, productionInputAmount(physical, household, "log") / P.LOG_CHAR),
     );
     withdrawProductionInput(physical, household, "log", qty * P.LOG_CHAR);
     household.pantry.char += qty;
     recordEconomicMaterialFlow(economy, "char", "prod", qty, `世帯${household.id}の炭焼き小屋`);
     recordEconomicMaterialFlow(economy, "log", "cons", qty * P.LOG_CHAR, `世帯${household.id}の炭焼き小屋`);
+    recordEconomicDemand(
+      economy, "log", desiredQty * P.LOG_CHAR, qty * P.LOG_CHAR, "charburner",
+    );
     produced.char = qty;
   } else if (household.job === "saltworks") {
+    const desiredFuel = P.SALT_CHAR * effectiveFraction;
     const fuel = Math.max(
       0,
-      Math.min(P.SALT_CHAR * effectiveFraction, productionInputAmount(physical, household, "char")),
+      Math.min(desiredFuel, productionInputAmount(physical, household, "char")),
     );
     const qty = P.Y_SALT * householdMult(household) * fuel / P.SALT_CHAR;
     withdrawProductionInput(physical, household, "char", fuel);
     household.pantry.salt += qty;
     if (qty > 0) recordEconomicMaterialFlow(economy, "salt", "prod", qty, `世帯${household.id}の製塩`);
     if (fuel > 0) recordEconomicMaterialFlow(economy, "char", "cons", fuel, `世帯${household.id}の製塩`);
+    recordEconomicDemand(economy, "char", desiredFuel, fuel, "saltworks");
     produced.salt = qty;
   }
   household.productionToday ??= {};
@@ -4002,6 +4055,7 @@ export function runCompanyFinance(economy, { day }) {
 }
 
 export function updateFlowEma(economy) {
+  economy.demand30 ??= {};
   for (const goods of GOODS) {
     const today = economy.dailyMaterialFlows[goods] ?? { prod: 0, cons: 0, imp: 0, exp: 0 };
     const flow = economy.f30[goods] ?? { prod: 0, cons: 0, imp: 0, exp: 0 };
@@ -4009,6 +4063,25 @@ export function updateFlowEma(economy) {
       flow[kind] = flow[kind] * 0.95 + today[kind] * 0.05;
     }
     economy.f30[goods] = flow;
+    const todayDemand = economy.dailyDemandFlows?.[goods]
+      ?? { demand: 0, consumed: 0, sources: {} };
+    const demandFlow = economy.demand30[goods]
+      ?? { demand: 0, consumed: 0, sources: {} };
+    demandFlow.demand = demandFlow.demand * 0.95 + todayDemand.demand * 0.05;
+    demandFlow.consumed = demandFlow.consumed * 0.95 + todayDemand.consumed * 0.05;
+    const sourceIds = new Set([
+      ...Object.keys(demandFlow.sources ?? {}),
+      ...Object.keys(todayDemand.sources ?? {}),
+    ]);
+    demandFlow.sources ??= {};
+    for (const source of sourceIds) {
+      const todaySource = todayDemand.sources?.[source] ?? { demand: 0, consumed: 0 };
+      const sourceFlow = demandFlow.sources[source] ?? { demand: 0, consumed: 0 };
+      sourceFlow.demand = sourceFlow.demand * 0.95 + todaySource.demand * 0.05;
+      sourceFlow.consumed = sourceFlow.consumed * 0.95 + todaySource.consumed * 0.05;
+      demandFlow.sources[source] = sourceFlow;
+    }
+    economy.demand30[goods] = demandFlow;
   }
   return economy.f30;
 }
@@ -4529,7 +4602,9 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
     },
     materialFlows: {},
     dailyMaterialFlows: {},
+    dailyDemandFlows: {},
     f30: {},
+    demand30: {},
     materialLedger: [],
     led: { prod: {}, eat: {}, spoil: {}, need: 0 },
     hungryN: 0,

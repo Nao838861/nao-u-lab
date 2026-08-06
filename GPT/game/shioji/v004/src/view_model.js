@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.42.0-boundary-voices';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.43.0-supply-demand';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.42.0-boundary-voices';
+} from './food_readability.js?v=v004.43.0-supply-demand';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.42.0-boundary-voices';
-import { analyzeRoadConnections } from './placement.js?v=v004.42.0-boundary-voices';
+} from './engine_bridge.js?v=v004.43.0-supply-demand';
+import { analyzeRoadConnections } from './placement.js?v=v004.43.0-supply-demand';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.42.0-boundary-voices';
+} from './render_scene.js?v=v004.43.0-supply-demand';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.42.0-boundary-voices';
+} from './visuals.js?v=v004.43.0-supply-demand';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
@@ -1455,6 +1455,14 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
     marketPrices: { ...snapshot.economy.px },
     flowEma: Object.fromEntries(Object.entries(snapshot.economy.f30 ?? {}).map(([goods, flow]) => [
       goods, { ...flow },
+    ])),
+    demandEma: Object.fromEntries(Object.entries(snapshot.economy.demand30 ?? {}).map(([goods, flow]) => [
+      goods, {
+        ...flow,
+        sources: Object.fromEntries(Object.entries(flow.sources ?? {}).map(([source, values]) => [
+          source, { ...values },
+        ])),
+      },
     ])),
     imported: { ...snapshot.economy.imported },
     moneyOutBy: { ...snapshot.economy.outBy },
