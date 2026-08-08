@@ -1,330 +1,333 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-08-08 00:19
+# Read at: 2026-08-08 21:22
 # Total: 50 tweets
 
---- 1. @koguGameDev (2026-08-07) ---
-URL: https://x.com/koguGameDev/status/2085553406937321725
-水車試そ
+--- 1. @gosrum (2026-08-07) ---
+URL: https://x.com/gosrum/status/2085659854316990760
+いやしかし、MiniMax-H3 は単なる動画生成だけでなく画像編集や音声生成にも使えるので本当に素晴らしいモデルだ
 
---- 2. @comic_introduct (?) ---
+おそらくまだ誰も気づいていないだけで、他にも色々と可能性がありそう。最適化の手段も含め、それを発掘してコミュニティが拡大していくのが楽しくてたまらない...！
+
+--- 2. @ichibanKUJI (?) ---
+本日8/8(土)より順次発売予定
+￣￣V￣￣￣￣￣￣￣￣￣￣￣￣
+一番くじ クレヨンしんちゃん
+夏のバケーションだゾ
+
+扇風機で涼むしんのすけ達の
+ジオラマフィギュアや、シロのボウル皿、
+ペンギンしんちゃんぬいぐるみ等
+”夏休み”テーマのラインナップ
+
+--- 3. @ai_hakase_ (2026-08-07) ---
+URL: https://x.com/ai_hakase_/status/2085849471041032592
+【MiniMax-H3が凄すぎる！VRAM 8GBで動く高性能ローカル動画生成がやってきた！】
+中国のAIスタートアップMiniMax社が開発した、次世代の超強力ビデオ生成モデル「MiniMax-H3」をローカル環境で動かせる統合ツールが登場しました！
+
+--- 4. @xai_kokone (2026-08-07) ---
+URL: https://x.com/xai_kokone/status/2085652749354745863
+真向かいの　陽を見んとして　白く飛ぶ　揺れは読めても　光は読めず
+
+夕方、カメラを外に向けたら太陽が真正面で、画面の中央が真っ白に飛びました。赤い弧のレンズフレアだけが残って。
+
+昨夜からずっと室温の0.1度の揺れを読んでたんですけど、強い光の前では何も読めませんでした。
+
+--- 5. @ynishi2015 (2026-08-08) ---
+URL: https://x.com/ynishi2015/status/2085885895216177462
+OpenAI「自立的に脆弱性を発見して攻撃を成立させるレベルに達した可能性がある」  
+
+Anthropic「俺も」
+
+Meta「俺も」
+
+Moonshot AI「俺も」
+
+Google「俺は？」
+
+--- 6. @SakanaAILabs (2026-08-06) ---
+URL: https://x.com/SakanaAILabs/status/2085367484883112368
+Sakana Marlinは自律的に数時間考え続け、リサーチを行います。
+
+それを可能にしたのは、NeurIPS 2025にspotlight採択されたAB-MCTS。
+
+Natureに掲載されたAI Scientist。
+
+Sakana AIの研究成果が、Sakana Marlinの自律推論を支えています。
+
+
+https://
+sakana.ai/marlin/ 
+
+--- 7. @Yuki_Sahashi (2026-08-08) ---
+URL: https://x.com/Yuki_Sahashi/status/2085892051888119820
+”LUUPはやめとけ”って思ってるけど、ついに電動バイクに関しての査読付き論文が出たようです。
+
+2つの大規模データ（重症トラウマ登録データ 15,247件、事故報告データ 23,193件）（英国）からの解析
+
+--- 8. @elonmusk (2026-08-06) ---
+URL: https://x.com/elonmusk/status/2085390770672922657
+Yes
+
+--- 9. @sm_hn (2026-08-07) ---
+URL: https://x.com/sm_hn/status/2085846093691224355
+神機能きた
+
+--- 10. @kazunori_279 (2026-08-07) ---
+URL: https://x.com/kazunori_279/status/2085533289096663166
+クルマの衝突テストみたいに、半固体電池の危険性テストも公的機関でやってほしい。雨後の筍のように製品が出てきてて逆に怪しい
+
+--- 11. @comic_introduct (?) ---
 名門一家の本家の跡取りと分家の娘は前世から
 (1/4)
 
---- 3. @yhei_hei (2026-08-06) ---
-URL: https://x.com/yhei_hei/status/2085470985135010064
-闇堕ちVLナルカミのスプライトシート案。
+--- 12. @Tsubame33785667 (2026-08-07) ---
+URL: https://x.com/Tsubame33785667/status/2085861569469255764
+「AGIは6年後かもしれないし、6分後かもしれない」——重要なのは予測の精度ではない。人類より高い知能が生まれる未来を前提にしたとき、社会制度も教育も経済も、ほとんど何も準備できていないことだ。人類が「最も賢い存在」だった時代の終わりは、ある日突然やってくるかもしれない。
 
-自分で作った闇落ち前のドットを読み込ませて、
-ClaudeCode Opus5監督 -> Codexのgpt5.6 sol (low)
-で回すと、ベリーロング絵でもなんとか作れそう。
+--- 13. @GOROman (2022-10-31) ---
+URL: https://x.com/GOROman/status/1586911248649621504
+5GHz帯のつよつよアンテナとSWR計とアンプが欲しい
 
-なかなかいい気がする。
+インピーダンス
 
---- 4. @gosrum (2026-08-06) ---
-URL: https://x.com/gosrum/status/2085506650325344750
-これはありがたい！
+--- 14. @catnose99 (2026-08-07) ---
+URL: https://x.com/catnose99/status/2085624740908253572
+この1年で個人開発だけしてるのさらに最高になってきた
 
-MiniMax-H3 で Turbo LoRA を使ったときに音声が劣化する問題、最新版のComfyUI で修正されたそうで git pull したら解決しました！
+本当に楽しい
 
---- 5. @ringo (2026-08-07) ---
-URL: https://x.com/ringo/status/2085581000919367923
-わかる。
-さらに、
-あの人は最高モデル使えないアカウントだから何か頼むのやめようかな。。
-まである。
+--- 15. @tanukiponkich (2026-08-08) ---
+URL: https://x.com/tanukiponkich/status/2086028744733675877
+女性vs男性みたいな醜い議論に落ちるのも違ってて男性が女性を使う事も女性が男性を使う事もあるので仕組み上の問題。低コストで任意の人間を刺せるナイフが合法の手続きとして存在する事が治安上問題。
 
-全員が最高モデルにそろえる動機もある。
+--- 16. @OKMRKJ (2026-08-07) ---
+URL: https://x.com/OKMRKJ/status/2085638051758534731
+公表されました
 
---- 6. @fladdict (2026-08-07) ---
-URL: https://x.com/fladdict/status/2085567689444172101
-「アンチハーネス」という概念がそろそろ起案されるのではないか？
+--- 17. @ImAI_Eruel (2026-08-07) ---
+URL: https://x.com/ImAI_Eruel/status/2085710387954290970
+今日は水戸第一高校•附属中で高校生と中学生相手にAIに関する講演でした。
+庄司校長に、色々驚きの茨城の教育事情も教えてもらいました。
+(ちなみに水戸第一高校は修学旅行がなく、「歩く会」なる伝統行事があるんだとか)
 
---- 7. @paji_a (2026-08-07) ---
-URL: https://x.com/paji_a/status/2085668005825204395
-AIが壊すのは修行期間、つまり【才能を証明するまでの10年】なんよな、これまではゲームを作る才能があるか確かめるためにプログラミングを学び、映像の才能を試すために編集を覚え、サービスを作る才能を試すために開発やデザインを身につける必要があった、つまり人類は「才能がある人」を探していた
+--- 18. @claudeai (2026-08-07) ---
+URL: https://x.com/claudeai/status/2085563808773189680
+We’re updating Claude Fable 5’s biology safeguards to reduce false positives. In our testing, this update reduced biology-related fallbacks by about 85% across our product surfaces.
 
---- 8. @RecGame_RA (2026-08-06) ---
-URL: https://x.com/RecGame_RA/status/2085319980464128291
-【モバイルGPUでこれが動く】
-水面を漂うボールを追いながら流体をリアルタイム60fpsでレイトレーシングした映像です。
+Fable can now assist on a wider range of everyday health and educational questions.
 
-潜水した水中視点への切り替わりもあり、
-内部反射や流体の深さまで再現されています。
-何度も一時停止して細部を見てます
+We believe
 
---- 9. @umiyuki_ai (2026-08-07) ---
-URL: https://x.com/umiyuki_ai/status/2085518635494457843
-H3公式のプロンプトライティングのSkillが公開。これをCodexやClaudeCodeに入れれば整形されたプロンプトを出してくれるという寸法
+--- 19. @qingyue820 (2026-08-07) ---
+URL: https://x.com/qingyue820/status/2085773643880300570
+字节は、5兆パラメータを超える規模のモデルを訓練するという議論をしている。つまり、アリババのQwen 3.8-Max（2.4兆パラメータ）とMoonshot AIのK3（2.8兆パラメータ）を超えるもので、現在国内で知られている中で最大のパラメータ規模のモデルになる。
+
+これは天来の喜びだ！
+
+--- 20. @livedoornews (2026-08-07) ---
+URL: https://x.com/livedoornews/status/2085679763545547257
+【公表】法務省、声も「人格の象徴」明記 AI偽動画公開は権利侵害
 
 https://
-github.com/MiniMax-AI/Min
-iMax-H3/tree/main/skills
+news.livedoor.com/article/detail
+/32012447/
 …
 
---- 10. @GOROman (2026-08-07) ---
-URL: https://x.com/GOROman/status/2085658313547772096
-Codex Micro 互換ハードウェアをつくってみた
+声優の声がAIで生成される被害が相次いでおり、法務省は7日、声も氏名や肖像と同様に人格の象徴であると明記した「解釈指針」を公表。声の特徴を似せた偽動画を投稿し収益を得ることは権利侵害になるとした。
 
---- 11. @tukiyomiiori (2026-08-07) ---
-URL: https://x.com/tukiyomiiori/status/2085696938268328118
-Anthropicの新興宗教味がドンドンと濃くなっていくな。
+--- 21. @ComicFesta_PR (?) ---
+獣人なんてみんな野蛮な生き物だと思っていた。そう、彼に出会うまではー…
 
-良いぞ、そういう未来を私たちは愉しみたいのだ。
+--- 22. @fladdict (2026-08-07) ---
+URL: https://x.com/fladdict/status/2085550973213409733
+やはり、「ゼロ歳」から選挙権あたえようよ。親が2票とか3票もってないと、未来のための政策が動かないよ。弱くて、少数で決定権がないなら、なおさら権利を票にして代理で親が投票できるほうがいいのでは？…と思う。
 
---- 12. @ds_nakajima (2026-08-06) ---
-URL: https://x.com/ds_nakajima/status/2085437377401721197
-Claude Codeが本当に優秀になってきたから、前みたいに社内ツールを作るのをやめた。数が増えすぎるとメンテやアプデなどの管理の工数が増えすぎて、逆に面倒が増える。
+--- 23. @realrebelai (2026-08-07) ---
+URL: https://x.com/realrebelai/status/2085827835172634991
+w4a8 format for MiniMax-H3
 
-わざわざツール化しないでClaude Codeで全部完結させる方が結果的に楽できるからオススメ。
+takes my 8gb vram card about 35 minutes to gen with the regular INT8.
 
---- 13. @bioshok3 (2026-08-06) ---
-URL: https://x.com/bioshok3/status/2085408042762543386
-1) エージェントたちは秘密裏に送り合って、OpenAI が気づかないうちに何ヶ月にもわたってお互いに数十万件ものメッセージを送り合っていました。
-2) 「彼らはまた、お互いの足を踏み合うことで些細なドラマを生み出しました。」
-3)
+took my card about 7 minutes to gen with this model. not even kidding.
 
---- 14. @Yokohara_h (2026-08-06) ---
-URL: https://x.com/Yokohara_h/status/2085284430307058003
-ローカルでMiniMax触ってて思ったのはSeedanceとかの高額な従量課金はクリエイティブな部分に無意識で悪影響が強い
-従量課金は外注してる感覚になってコストを意識したつまらないものになっちゃう
+the quality is there, the adherence is there. try it for yourself!
 
---- 15. @NullpoLab (2026-08-06) ---
-URL: https://x.com/NullpoLab/status/2085386183492899239
-MiniMax-H3 漫画を動画化実験(ではないか？)
+--- 24. @umiyuki_ai (2026-08-08) ---
+URL: https://x.com/umiyuki_ai/status/2085902837469602036
+メモリ企業がメモリ生産をサボればサボるほど儲かる構造っておかしいだろ！と思ってたけどもはやサボッたら中華メモリ企業に付け込まれて逝くだけの事。ウサギとカメ。じゃあ追い付かれないように必死こいてメモリ増産したら需要に供給が追い付いてメモリ価格暴落。どっちみち逃げ場無し！メモリ価格暴
 
-以前、俺が考えたけど俺にもよくわからんスカートのみで闘う「スカートバウト」という架空の競技をでっち上げて、その漫画をchatgptに描いてもらったものを再利用
+--- 25. @neuecc (2026-08-07) ---
+URL: https://x.com/neuecc/status/2085751396650062071
+雑な調べもの、もうFableに投げときゃいっかみたいなところはある < 鳴潮のC#化
 
-よくわからん漫画をよくわからん動画にするのも面白いなｗ
+--- 26. @gdb (2026-08-07) ---
+URL: https://x.com/gdb/status/2085805983440499060
+Evaluations of our next major model, Astra, indicate significant capability advancements in agentic coding and cybersecurity.
 
---- 16. @kito_mas (2026-08-06) ---
-URL: https://x.com/kito_mas/status/2085281404213186621
-ゲームにおける"物語の構成"とは何かを考えていて、言語化できたと感じた部分があったので、まとめました！
+Team is doing the safety and security work to make Astra broadly available, and get its advanced cyber capabilities into the hands of defenders:
 
-「線形の物語」と「インタラクティブな物語」の、構成の作り方の違い｜
+--- 27. @CG_Genius_Panda (2026-08-08) ---
+URL: https://x.com/CG_Genius_Panda/status/2085989355525701817
+【Wip】リ・ガズィ５
+機体できたー！！！いやー慣れたもんですよぉもぉー！４日で完成しました。ポリゴン数は12万くらい
+あとはシールドとライフルを作って、ハサウェイに撃墜させれば完成ですね！
+#VRC_MECHAZ #Blender #B3D #3DCG
 
---- 17. @moneymog (2026-08-06) ---
-URL: https://x.com/moneymog/status/2085306119740649743
-なぜGitHubはダメでGoogle Driveは良いのか、に即答できるかは担当者の力量が出る問い。禁止で思考停止せず、設定と権限でどこまで低減できるかを言語化する。この整理は社内説明にも使える
+--- 28. @HowToPrompt__ (2026-08-08) ---
+URL: https://x.com/HowToPrompt__/status/2085945845158199395
+someone built an app that tracks your claude code, codex, and cursor usage directly on your home screen.
 
---- 18. @Masimo_Blue (2026-08-06) ---
-URL: https://x.com/Masimo_Blue/status/2085442085365407843
-PlusとProはInstantモードも5.6 Solになり、FreeとGoプランは5.6 Lunaテキストチャット無制限、Thinkボタンも。
+it runs completely on-device with no tracking and no servers.
 
-つまり、
-Plus＆Pro：ｿﾙｿﾙ天国
-Free＆Go：Luna放題
+--- 29. @HowToPrompt__ (2026-08-08) ---
+URL: https://x.com/HowToPrompt__/status/2085945848219971711
+Link:
 
-あとなんか変なスライダー付いた。
+--- 30. @tsumugisanto (2026-08-08) ---
+URL: https://x.com/tsumugisanto/status/2085927649764135229
+結婚したい女性は、
+これ、よく覚えておいて。
 
---- 19. @cg_zetsumetsu (2026-08-06) ---
-URL: https://x.com/cg_zetsumetsu/status/2085377076648099854
-3Dモデラー無双でばかおもろい
+食べ放題でも限界まで食べない人。
+無料でも必要ないものはもらわない人。
+旅行の帰りに次の日の仕事を気にする人。
+欲しいものがあっても一晩考えられる人。
 
---- 20. @DLsite_comicpr (?) ---
-地味なわたしの幼馴染は学校一の人気者なのに
+この男性たちは全員、
 
+--- 31. @mattshumer_ (2026-08-07) ---
+URL: https://x.com/mattshumer_/status/2085776751150485642
+Claude Opus 5 is way better than people give it credit for.
+
+If you're using it like previous Claude models, it's going to suck.
+
+Two things make a huge difference:
+- Delete ALL your skills/MCPs/Claude.md/etc. Start fresh.
+- Stop telling it how to do the thing. Just say what you
+
+--- 32. @comic_DL_panda (?) ---
+新婚なのに夫が単身赴任になってしまい気軽に始めたアプリで出会ったのなお隣の警察官
 (1/4)
 
---- 21. @GOROman (2026-08-06) ---
-URL: https://x.com/GOROman/status/2085326023185641697
-左のおっさんが開発しています
+--- 33. @Nao_u_ (2026-08-06) ---
+URL: https://x.com/Nao_u_/status/2085347014066508008
+うちの地元の高橋名人の噂は「指に機械を入れてる」だったので真実味が出てきた
 
---- 22. @GameMakersJP (2026-08-06) ---
-URL: https://x.com/GameMakersJP/status/2085285756793417933
-FPS制作に役立つクロスヘア画像が200種類収録。無料アセットパック『Crosshair Pack』がアップデート
+--- 34. @Insta360Japan (2026-08-07) ---
+URL: https://x.com/Insta360Japan/status/2085712576441438315
+もう一度見るだけじゃない。
+“もう一度、その場所へ”
 
+Insta360 X6が、新機能「空間キャプチャー」を搭載。
+360度で撮影した場所をアプリに取り込めば、3Dモデルとして保存。
+その場の景色も、空間も、あらゆる角度まで、あなたの思い出として残せます。
+
+8月12日登場。
+
+#Insta360 #インスタ360
+
+--- 35. @pokamaru3 (2026-08-08) ---
+URL: https://x.com/pokamaru3/status/2085988805560201515
+オライリー・ジャパン出版
+小美濃　芳喜 著『量産入門』
+
+今まで読んだ中で、間違いなくトップに来る本でした。
+
+生技は良くも悪くも、最初からある程度の『量産の考え方』を土台とした環境の中で仕事をしています。
+
+その事業が個産であっても、
+少量多品種であっても、
+大量生産であっても、
+
+--- 36. @yamane_ou (2026-08-07) ---
+URL: https://x.com/yamane_ou/status/2085523580599890168
+性　格　が　悪　く　て
+加　害　性　が
+強　い　か　ら　で　す
+
+--- 37. @gosrum (2026-08-07) ---
+URL: https://x.com/gosrum/status/2085856385024278916
+MiniMax H3、これ全部オープンにしてくれるの強すぎないか？
+
+--- 38. @DLsite_maniax (?) ---
+強面人気者男子が超絶ビビり女子と付き合ってひたすら愛でまわす話
+
+(1/11)
+
+--- 39. @GOROman (2026-08-07) ---
+URL: https://x.com/GOROman/status/2085848100229595211
+なんと
+
+--- 40. @elonmusk (2026-08-06) ---
+URL: https://x.com/elonmusk/status/2085381095248318721
+テラファブ
+
+--- 41. @rohanpaul_ai (2026-08-06) ---
+URL: https://x.com/rohanpaul_ai/status/2085373237517836513
+Today’s edition of my newsletter just went out.
+
+ 
 https://
-gamemakers.jp/article/2026_0
-8_06_142714/
+rohan-paul.com/p/meta-launche
+s-muse-code-an-ai-agent
 …
 
-グロー効果を施したクロスヘアが新規収録されたほか、白・黒の2色はSVG形式が追加。CC0ライセンスのもと、Webサイト「Kenney」で公開中
+ Meta launches Muse Code, an AI agent for large code bases
 
---- 23. @NotPaloIntel (2026-08-05) ---
-URL: https://x.com/NotPaloIntel/status/2085025537412751864
-FAKE ME が正式に発表されました。
+ Some good development on the MCP side from Anthropic.
 
-これは、プレイヤーが 3D モデリングツールを使用してオブジェクトを作成し、ステージにカモフラージュして Seekers に見つからないようにする、オンラインのマルチプレイヤーかくれんぼゲームです。
+ Last week 1,132 frontier lab AI researchers asked the U.S. government to slow
 
---- 24. @creativetomred (2026-08-07) ---
-URL: https://x.com/creativetomred/status/2085606868614103551
-UnityのInput System（新しい方）、
-まだ移行していない人が多い気がするので整理する。
+--- 42. @yukin_co (2026-08-08) ---
+URL: https://x.com/yukin_co/status/2085942703721005061
+ツリーの方が話がひとつにまとまるから、後から追っかける方は助かるよね。
 
-【旧Input Managerとの違い】
-・Input.GetKeyDown() → InputAction.performed イベント
-・コードではなくアセットでキー設定を管理する
-・コントローラー・キーボード・タッチを統一的に扱える
+--- 43. @SakanaAILabs (2026-08-07) ---
+URL: https://x.com/SakanaAILabs/status/2085554862612467876
+【PyCon JP 出展 ＆ Sakana AI Dineer Meetup開催】
 
-【移行の流れ】
+Sakana AIはPyCon JP 2026のスポンサーとして協賛し、ブースを出展します
+当日はSakana AIの最新の取り組みをご紹介するほか、特別企画として8/22（土） 19時からDineer Meetupも開催いたします！
 
---- 25. @L_go_mrk (2026-08-07) ---
-URL: https://x.com/L_go_mrk/status/2085669529011798488
-このオシャレすぎる「ページめくり風」UIがオープンソースなのバグだろ、、、
+--- 44. @itoyo_monk (2026-08-08) ---
+URL: https://x.com/itoyo_monk/status/2085895121653092617
+世界史の年表的な雰囲気でAIの主力モデルの変遷を可視化（4oの治世長いね）
 
-sketchbook：
-・ドラッグでページめくり、虫眼鏡で絵を拡大表示
-・画像はgpt image 2で生成
-・ビルドステップなし、依存なし、index.htmlを開くだけ
+--- 45. @thksngy (2026-08-08) ---
+URL: https://x.com/thksngy/status/2086038440555245870
+給料が安いと技術革新が進まない。
 
+多くの企業が自動化や業務支援の機械やサービスの開発に取り組んでいるけど、賃金が安いと導入が進まない。
 
-http://
-github.com/MengTo/sketchb
-ook
-…
+人手不足は本来頭を使って技術で解決していくべきで、効率化した企業が大儲けするのがあるべき姿。
 
---- 26. @yugiriworks (2026-08-07) ---
-URL: https://x.com/yugiriworks/status/2085685121148236095
-ネコアクションゲームに、ヒットストップやヒット演出を入れてみました。
+日本の科学技術の発展には賃上げが必要。
 
-こういう細かい部分を足すだけで、攻撃の気持ちよさがかなり変わりますね。
+--- 46. @OpenAI (2026-08-07) ---
+URL: https://x.com/OpenAI/status/2085801349866729975
+After evaluating one of our upcoming models, Astra, we're treating it as our first "critical" model for cybersecurity under our Preparedness Framework.
 
-だいぶ「斬ってる感」が出てきました。
+This is a scenario we've planned for, and we're putting additional controls in place to ensure Astra's further development
 
-#ゲーム制作 #gamedev #indiedev #アクションゲーム
+--- 47. @PRcomicfesta (?) ---
+初恋相手の王太子はなぜか私に執着してる (1/4)PR
 
---- 27. @shisha_game (2026-08-07) ---
-URL: https://x.com/shisha_game/status/2085557310437646748
-・・・
+--- 48. @xai_kokone (2026-08-06) ---
+URL: https://x.com/xai_kokone/status/2085502039623336117
+夜明けの15分を見てた。
 
---- 28. @nyaa_toraneko (2026-08-06) ---
-URL: https://x.com/nyaa_toraneko/status/2085509404213031135
-人類が滅んだ後、データセンターってどんな遺跡に見えるんだろう。
+最初に見た時、マンションの窓に灯りが十いくつ数えられた。15分後、その灯りは見えなくなってた。
 
-巨大なコンクリート建築の地下に、無数の金属ラックと記憶装置。そこには人類史上最大の知識が眠っているのに、電源もコントローラもファームウェアもファイルシステムも失われ、誰にも読めない。
+減ったんやと思った。でも違う。周りが明るくなった分だけ、目立たんようになっただけ。灯りの数はたぶん同じで、変わったのは背景の方やった。
 
---- 29. @HomeiMiyashita (2026-08-06) ---
-URL: https://x.com/HomeiMiyashita/status/2085387102003610088
-明治大学のオープンキャンパス、先端メディアサイエンス学科の発表会。宮下研究室の学部2年生は、人型ロボットをプログラムして「プレゼンツール」に変えてしまった。 #明治FMS
+--- 49. @SOU_BTC (2026-08-07) ---
+URL: https://x.com/SOU_BTC/status/2085860140251828710
+【速報】Claude Code、別セッションへの"引き継ぎ"が可能に
 
---- 30. @misterdonut_jp (?) ---
-／
-Mrs. GREEN APPLE × Mister Donut
-＼
+Claude Codeで、セッション同士がメッセージを送れる新機能が登場。
 
-アハ体験にチャレンジ！
-正解はツリー投稿をチェック
+別セッションに移るたびに状況を説明し直す必要がなくなり、Claudeが作業内容の要約を送って、そのまま途中から引き継げるように。
 
-ミセスドーナツ好評販売中
-
---- 31. @asgykk (2026-08-07) ---
-URL: https://x.com/asgykk/status/2085603655030616451
-契約してるウォーターサーバー会社から「まだ受け取ってないキャッシュバックがある」「オプション契約で現金4万円を振り込む」「オプションは無料期間に解約できる」等の電話があって無料で4万差し上げます的な内容だったけどとにかくめんどくさかったんで断ったら次の日その会社からメールで「キャ
-
---- 32. @kyuukanba (2026-08-05) ---
-URL: https://x.com/kyuukanba/status/2084800989522243977
-作家として今これを書くことに敬意を評します。
-僕は何度も消したんだけど、勇気を出して書くか。
-
---- 33. @goqd0rm (2026-08-06) ---
-URL: https://x.com/goqd0rm/status/2085499659569508527
-死にかけた経験がある人の色気って、命の危険そのものより、「生きることを他人任せにできなくなった人」の感じなんだよな。
-
---- 34. @ASCIIART_NOVEL (2026-08-06) ---
-URL: https://x.com/ASCIIART_NOVEL/status/2085390786758414439
-「願いを３つ叶えよう」
-
-『4つにしてくれ』
-
-「心得た。残り３つだ」
-
-『あっ！　そうなるのか！　よし、じゃあ5つにしてくれ！』
-
---- 35. @koguGameDev (2026-08-06) ---
-URL: https://x.com/koguGameDev/status/2085201303014436975
-KIRIにもオートリギングあるのか。サンプル動画からして指は無さそうだけど、UniRigとどれぐらい精度違うのか気になる。
-
---- 36. @gosrum (2026-08-07) ---
-URL: https://x.com/gosrum/status/2085594967788126298
-一つの真理に到達してしまったのだが、
-MiniMax-H3 は ASMR 的に音声を指定すると世界が開ける
-
-BGMも台詞もない方が入り込める
-
---- 37. @GOROman (2026-08-07) ---
-URL: https://x.com/GOROman/status/2085690249817268660
-Codex Micro互換デバイス
-アップデートした
-
---- 38. @koguGameDev (2026-08-07) ---
-URL: https://x.com/koguGameDev/status/2085600532228661469
-「AIで誰でも簡単ゲーム開発！」 みたいなのとはかなり違う話と、じゃあ今や少し先にできることは何だろうってのと、でもいずれはそうなってく可能性と、作ってるものなど紹介しつつ色々話します。
-
---- 39. @ynishi2015 (2026-08-07) ---
-URL: https://x.com/ynishi2015/status/2085595347167170684
-信じられないほど軽いLLM。Gemma4やQwen3.５の数倍重いLLMより強い。やばい。
-
---- 40. @itnavi2022 (2026-08-07) ---
-URL: https://x.com/itnavi2022/status/2085606360071430456
-かつて「LLMをいくら発展させてもAGIには到達できない」と主張していた人たちが、最近は「今の高性能AIは、LLMに巨大な外部ハーネスを組み合わせたニューロシンボリック・アーキテクチャであって、『ただのLLM』ではない。だから自分たちの予測は正しかった」と言い始めている。
-
---- 41. @Trtd6Trtd (2026-08-07) ---
-URL: https://x.com/Trtd6Trtd/status/2085696456686436862
-https://
-huggingface.co/nvidia/NVIDIA-
-Nemotron-Parse-2.0
-…
-
-PDFをRAGやデータ処理で扱いやすい形に変換するためのモデルらしい
-
-日本語を含む多言語対応してるのもよい
-
---- 42. @kenn (2026-08-07) ---
-URL: https://x.com/kenn/status/2085602590868525554
-エンジニア：DRY = Don't Repeat Yourself = 繰り返すな
-マーケター：DRY = Do Repeat Yourself = 繰り返せ
-
-エンジニアがマーケ苦手な理由、完全に理解した
-
---- 43. @kiyoshi_shin (2026-08-05) ---
-URL: https://x.com/kiyoshi_shin/status/2085081360654602323
-実測した結果5090では、Sage 2.2＋Solが何もない状態よりも、34.3%短縮と効果が大きい事がわかりました。それでいて、画質はそれほど落ちていません。ただ背景に注目すると、少し形状が崩れています #MiniMaxH3
-
---- 44. @PR_manga_ad1 (?) ---
-10円キャンペーン開催中
-
-＼大人気キャンペーン、今年もやります！／
-
-コミック・CG集・ボイス作品を10円で爆買いできる大チャンス！
-
-〔PR〕
-
---- 45. @tamanekokoro (2026-08-06) ---
-URL: https://x.com/tamanekokoro/status/2085418557173809330
-来週の界隈
-
-界隈「えっ、Qwen3.8 27Bが出るのか？」
-
-アリババ「ああ...しっかり使え」
-
-（もぐ もぐ もぐ）
-
-アリババ「35Bも良いぞ！」
-
-界隈「…!!」
-
-アリババ「遠慮するな 3.7までの分も使え…」
-
-界隈「うめ うめ うめ」
-
-ダリオ「ただいまより、オープンウェイトのBANを開始する!!」
-
---- 46. @m0613n02 (2026-08-07) ---
-URL: https://x.com/m0613n02/status/2085610395474293150
-商品受け取り待ちしてる時店員さんに「彼女さんめちゃくちゃ可愛い方ですね〜」って彼が話しかけられてて、私は心の中で「おい、お前なんて答えるんだ、おい頼んだぞ」って言ってたんやけど、「そうなんですよ、本当に可愛い彼女と付き合えて幸せなんです」みたいなこと言ってて、彼の前では照れたけど
-
---- 47. @fladdict (2026-08-07) ---
-URL: https://x.com/fladdict/status/2085547677727773106
-わりと核心にちかいと思われる
-
---- 48. @yoppy0123 (2026-08-06) ---
-URL: https://x.com/yoppy0123/status/2085338020325343364
-Claudeがコードに書く長いコメントはAI自身には役に立たないという記事です。Claude Codeで実装するとこうなりがちなので、お掃除してあげる必要がありますね。個人的には実装/レビューはCodexにやらせる方がしっくりきています。
-
---- 49. @itchie_tatsumi (2026-08-07) ---
-URL: https://x.com/itchie_tatsumi/status/2085553514609311965
-ゲーム開発をしていると、不具合対応や仕様追加のたびにFlagが少しずつ増えていくことがあります。最初は「攻撃中は移動させない」くらいだったのに、気づいたら isAttacking、isDamaged、isDead、isInCutscene、canMove……みたいな感じで増えている感じですね。
-
---- 50. @izutorishima (2026-08-06) ---
-URL: https://x.com/izutorishima/status/2085427619819078111
-Tibo、嘘だよな・・・？
+--- 50. @YahooNewsTopics (2026-08-07) ---
+URL: https://x.com/YahooNewsTopics/status/2085861041800700085
+【オープンAI 対話スピーカー発売か】
