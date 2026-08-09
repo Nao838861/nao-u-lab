@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-09T20:14:35+09:00",
+  "updated_at": "2026-08-09T22:34:30+09:00",
   "reviewed_source_ts": [
+    "1785829556.510789",
     "1780080303.009249",
     "1780047750.140829",
     "1779971910.677459",
@@ -609,6 +610,46 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-09T22:34:30+09:00",
+      "selected": {
+        "id": "sr-1785829556-ad5bc49621",
+        "source_ts": "1785829556.510789",
+        "title": "AgentSLABench: resource-aware profiling と公開 artifact の整合性監査",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす最新の自己完結 atom で、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ。episode 単位の correctness と wall time・cost・peak RSS・network・timeout を同じ run_id へ結ぶ知見が、次の headless 評価に既存 control と異なる小さな判断差を作るか確認するため1件だけ選んだ。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads 本文は episode profile、隔離実行、sealed test、複数 seed、budget violation を具体化し、run_id・build hash・scenario・seed・clear・failure reason・wall time・step count・peak RSS・LLM request・token・cost・tool call・network bytes・timeout を同居させる小さな行動へ変換できるため relevance・actionability は3とした。さらに論文表の latency 使用率に約100倍の単位ずれがあること、EASR の式と zero-gate 説明が矛盾すること、N=3 の区間が広いこと、公開 repository に cost・peak memory・CPU・network・EASR・general baseline 比較の artifact がないことまで照合し、設計案と実証主張を分離しているため evidence=3 とした。一方、probe-20260622-poweragentbench-simulation-workflow-budget は run／seed／step／time／token／tool budget、observation/action contract、deterministic evidence／variance／harness failure を、probe-20260709-clqt-diagnostic-decision-trail は outcome と cost／constraint／process axis／seed reliability の分離を、probe-20260604-open-world-behavior-oracle は binary／statistical／interpretive oracle と複数 run の分布を、probe-20260711-benchjack-trust-boundary-preflight は benchmark 出力と authoritative verifier／artifact の信頼境界をすでに扱う。AgentSLABench 固有の raw resource envelope は残るが、独立 control としての差は小さいため non_redundancy=1 とした。5〜8 field・1 runner・raw JSONL・単一 EASR 不採用に限定すれば risk_control=2、撤回も容易である。しかし現在の staging は shared-reads candidate の分析と投稿だけで、同一 build／scenario の resource profile 前後、budget gate、performance regression を比較できる playable/headless artifact がない。後続 Phase 4a は memory cleanup で本 metric を実際の判断へ使う consumer ではなく、consumer_phase・trigger_artifact・expected_delta・lease_due を lease 契約どおり具体化できない。322件の active_probes に対象なしの metric を加えず、次に具体的な headless runner の性能退行を診断し、既存4 control だけでは wall time／RSS／cost／network のどれが判断を変えたか分離できない実例が出た時、1 runner・1 before/after の一時 metric として再評価する。",
+      "existing_probes": [
+        "probe-20260622-poweragentbench-simulation-workflow-budget",
+        "probe-20260709-clqt-diagnostic-decision-trail",
+        "probe-20260604-open-world-behavior-oracle",
+        "probe-20260711-benchjack-trust-boundary-preflight"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、resource envelope の固有差、既存 budget／decision-trail／oracle／trust-boundary controls との重複、比較可能な headless artifact 不在による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-04T14:42:20+09:00",
       "selected": {

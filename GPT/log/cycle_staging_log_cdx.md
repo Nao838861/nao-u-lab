@@ -142,7 +142,35 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1785829556-ad5bc49621
+    source_ts: "1785829556.510789"
+    title: "AgentSLABench: resource-aware profiling と公開 artifact の整合性監査"
+    reason: "score 11・未レビューの最新自己完結 atom で、memory / harness / evaluation / agent / operation / game-design の6優先タグをすべて持つ。episode 単位の correctness と resource envelope を同じ run_id へ結ぶ知見が、次の headless 評価に既存 control と異なる判断差を作るか確認するため1件だけ選んだ。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "episode profile と raw resource telemetry は実行可能で、論文表・式・公開 repository の不整合まで監査されている。一方、既存の simulation budget、decision trail、open-world oracle、benchmark trust-boundary probes が主要判断をすでに覆う。現在の staging に同一 build / scenario の before-after headless artifact がなく、lease の consumer・artifact・expected delta・due を具体化できないため state-only review とした。次に既存 controls だけでは wall time / RSS / cost / network の原因分離ができない実例が出た時、1 runner・1比較の一時 metric として再評価する。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
