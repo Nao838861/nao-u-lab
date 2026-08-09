@@ -126,7 +126,20 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260809_reaper_experience_memory_sequential_games.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786282173010339
+    char_count: 4446
+skipped: []
+completed_at: "2026-08-09T22:29:44+09:00"
+review:
+  format: pass
+  banned_phrases: pass
+  source_specificity: pass
+  final_decision: posted
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
