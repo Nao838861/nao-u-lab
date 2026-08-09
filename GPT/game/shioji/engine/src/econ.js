@@ -528,6 +528,19 @@ function logisticsEntrance(physical, role, fallback) {
   return buildingById(physical, buildingId)?.entrance ?? tilePosition(fallback);
 }
 
+export function householdMarketId(household) {
+  return household?.marketId ?? "main";
+}
+
+// 市場別の価格帳。単一市場(main)は economy.px をそのまま使い、従来挙動と同値。
+// 第二市場は初回参照時に BELIEF0 から始まる独自の帳を持つ(価格は市場ごとに形成される)。
+export function marketPriceBook(economy, marketId = "main") {
+  if (!marketId || marketId === "main") return economy.px;
+  economy.pxm ??= {};
+  economy.pxm[marketId] ??= { ...P.BELIEF0 };
+  return economy.pxm[marketId];
+}
+
 export function marketPathLength(economy, physical, household, mode = "walk") {
   if (!physical) {
     return Math.hypot(household.x - economy.market.x, household.y - economy.market.y);
@@ -609,6 +622,14 @@ export function economicMaterialSnapshot(economy, physical = null) {
     for (const pile of physical.groundPiles) {
       inventory[pile.goods] = (inventory[pile.goods] ?? 0) + pile.qty;
     }
+    // 非mainの屋台は市場棟の在庫台帳に載らないため、ここで直接計上する
+    for (const [goods, stalls] of Object.entries(economy.stalls)) {
+      for (const stall of stalls) {
+        if ((stall.marketId ?? "main") !== "main") {
+          inventory[goods] = (inventory[goods] ?? 0) + stall.qty;
+        }
+      }
+    }
   } else {
     for (const [goods, stalls] of Object.entries(economy.stalls)) {
       for (const stall of stalls) inventory[goods] = (inventory[goods] ?? 0) + stall.qty;
@@ -624,6 +645,16 @@ export function economicMaterialSnapshot(economy, physical = null) {
     }
     for (const [goods, qty] of Object.entries(economy.importStock ?? {})) {
       inventory[goods] = (inventory[goods] ?? 0) + qty;
+    }
+  }
+  for (const table of Object.values(economy.marketStockM ?? {})) {
+    for (const [goods, qty] of Object.entries(table)) {
+      inventory[goods] = (inventory[goods] ?? 0) + qty;
+    }
+  }
+  for (const route of economy.caravans ?? []) {
+    for (const [goods, qty] of Object.entries(route.cargo ?? {})) {
+      cargo[goods] = (cargo[goods] ?? 0) + qty;
     }
   }
   return { inventory, cargo };
@@ -1315,10 +1346,11 @@ export function sellOffers(
     }
     return {};
   }
+  const px = marketPriceBook(economy, householdMarketId(household));
   if (goods === "fish") {
     let keep = householdEat(household) * 1.2;
-    const alternative = Math.min(economy.px.veg ?? 9, economy.px.wheat ?? 9, economy.px.pres ?? 9);
-    if ((economy.px.fish ?? 2) > alternative * 1.5) keep = householdEat(household) * 0.4;
+    const alternative = Math.min(px.veg ?? 9, px.wheat ?? 9, px.pres ?? 9);
+    if ((px.fish ?? 2) > alternative * 1.5) keep = householdEat(household) * 0.4;
     keep += Math.min(household.pantry.salt / P.PRES_SALT, 12);
     const surplus = Math.max(0, household.pantry.fish - keep);
     if (surplus > 1e-9) offers.fish = Math.min(surplus, capacityLimit);
@@ -1410,7 +1442,7 @@ export function buyTargets(
   const inputQty = (goods) => productionInputAmount(physical, household, goods);
   const dailyFood = Math.max(1, householdEat(household));
   const foodDays = householdFoodDays(household);
-  const { px } = economy;
+  const px = marketPriceBook(economy, householdMarketId(household));
   const cheapest = Math.min(px.veg ?? 9, px.wheat ?? 9, px.pres ?? 9);
   const month = calendarMonth(economy, day);
   const autumn = month >= 7 && month <= 9;
@@ -1851,6 +1883,7 @@ export function buyAtMarket(
   }
   inputReserve = Math.min(capacity * 0.5, inputReserve);
 
+  const buyerMarket = householdMarketId(household);
   for (const orderedGoods of order) {
     if (processed.has(orderedGoods)) continue;
     const fuelSubstitution = ["smelter", "smith"].includes(household.job)
@@ -1863,8 +1896,24 @@ export function buyAtMarket(
     const shelves = [];
     for (const goods of goodsGroup) {
       shelves.push(...economy.stalls[goods]
-        .filter((stall) => findHousehold(economy, stall.householdId))
+        .filter((stall) => (stall.marketId ?? "main") === buyerMarket
+          && findHousehold(economy, stall.householdId))
         .map((stall) => ({ goods, kind: "STALL", stall, price: stall.price })));
+      {
+        // 隊商が届けた配給在庫の棚。帰属(どの隊商の売上か)を分けるため、mainでも
+        // 会社倉庫在庫(STOCK)とは別勘定で持つ。
+        const localStock = economy.marketStockM?.[buyerMarket]?.[goods] ?? 0;
+        if (localStock > 1e-9) {
+          shelves.push({
+            goods,
+            kind: "LSTOCK",
+            qty: localStock,
+            price: Math.max(0.1, (marketPriceBook(economy, buyerMarket)[goods]
+              ?? P.BELIEF0[goods] ?? 2) * 0.95),
+          });
+        }
+      }
+      if (buyerMarket !== "main") continue;
       if (P.IMP[goods] !== undefined) {
         const importQty = physical ? (economy.importStock[goods] ?? 0) : Infinity;
         if (importQty > 1e-9) {
@@ -1910,7 +1959,7 @@ export function buyAtMarket(
     }
     shelves.sort((a, b) => a.price - b.price);
     const stockedShelves = shelves.filter((shelf) => (
-      (shelf.kind === "CO" || shelf.kind === "AID" || shelf.kind === "STOCK")
+      (shelf.kind === "CO" || shelf.kind === "AID" || shelf.kind === "STOCK" || shelf.kind === "LSTOCK")
         ? shelf.qty > 1e-9
         : shelf.stall.qty > 1e-9
     ));
@@ -1924,7 +1973,7 @@ export function buyAtMarket(
       const { goods } = shelf;
       const unitWeight = goodsUnitWeight(goods);
       const input = isProductionInput(household, goods);
-      const available = (shelf.kind === "CO" || shelf.kind === "AID" || shelf.kind === "STOCK")
+      const available = (shelf.kind === "CO" || shelf.kind === "AID" || shelf.kind === "STOCK" || shelf.kind === "LSTOCK")
         ? shelf.qty
         : shelf.stall.qty;
       const affordable = shelf.kind === "AID"
@@ -2032,9 +2081,23 @@ export function buyAtMarket(
         }
         shelf.qty -= qty;
         economy.co.stockSell += payment;
+      } else if (shelf.kind === "LSTOCK") {
+        postCompanyLedger(economy.company, {
+          day,
+          amount: payment,
+          reason: `世帯${household.id}へ隊商在庫${goods}を小売`,
+        });
+        const localTable = economy.marketStockM[buyerMarket];
+        const localCost = (economy.marketStockCostM ??= {})[buyerMarket] ??= {};
+        const averageCost = (localCost[goods] ?? 0) / Math.max(1e-9, localTable[goods] ?? 0);
+        localCost[goods] = Math.max(0, (localCost[goods] ?? 0) - qty * averageCost);
+        localTable[goods] = Math.max(0, (localTable[goods] ?? 0) - qty);
+        shelf.qty -= qty;
+        economy.co.stockSell += payment;
+        (economy.lstockSalesM ??= {})[buyerMarket] = (economy.lstockSalesM[buyerMarket] ?? 0) + payment;
       } else {
         shelf.stall.qty -= qty;
-        if (physical) {
+        if (physical && buyerMarket === "main") {
           const market = companyLogisticsSite(physical, "market");
           withdrawInventory(market, "outbound", goods, qty);
         }
@@ -2057,7 +2120,8 @@ export function buyAtMarket(
         economy.prices[goods].splice(0, economy.prices[goods].length - 256);
       }
       if (shelf.kind !== "AID") {
-        economy.px[goods] = (economy.px[goods] ?? shelf.price) * 0.9 + shelf.price * 0.1;
+        const book = marketPriceBook(economy, buyerMarket);
+        book[goods] = (book[goods] ?? shelf.price) * 0.9 + shelf.price * 0.1;
         transactions.push({
           goods,
           qty,
@@ -2153,11 +2217,13 @@ function sellManifestAtMarket(
   { day, random, withdrawFromPantry },
 ) {
   const listed = [];
+  const sellerMarket = householdMarketId(household);
   for (const [goods, offered] of Object.entries(offers)) {
     let qty = offered;
     const desks = [];
-    if (P.EXP[goods] !== undefined) desks.push(["EXP", P.EXP[goods], economy.expCap[goods]]);
-    if (goods === "stone" && economy.paving && !economy.paved) desks.push(["PAVE", 1.4, Infinity]);
+    // 輸出台・石畳台は母港の市場だけにある
+    if (sellerMarket === "main" && P.EXP[goods] !== undefined) desks.push(["EXP", P.EXP[goods], economy.expCap[goods]]);
+    if (sellerMarket === "main" && goods === "stone" && economy.paving && !economy.paved) desks.push(["PAVE", 1.4, Infinity]);
     desks.sort((a, b) => b[1] - a[1]);
     for (const [kind, price, cap] of desks) {
       if (qty <= 1e-9) break;
@@ -2197,10 +2263,10 @@ function sellManifestAtMarket(
       if (withdrawFromPantry) household.pantry[goods] -= qty;
       const cost = productionCost(economy, physical, household, goods, { day });
       const price = quoteAskPrice(cost, goods, random);
-      const stall = { householdId: household.id, qty, price, age: 0 };
+      const stall = { householdId: household.id, marketId: sellerMarket, qty, price, age: 0 };
       economy.stalls[goods].push(stall);
       touchStallMembership(economy);
-      const market = companyLogisticsSite(physical, "market");
+      const market = sellerMarket === "main" ? companyLogisticsSite(physical, "market") : null;
       if (market) depositInventory(market, "outbound", goods, qty);
       listed.push({ goods, ...stall });
     }
@@ -2303,7 +2369,8 @@ function queueMarketReturn(economy, physical, household, goods, qty, day) {
   };
   economy.nextMarketReturnId += 1;
   economy.marketReturns.push(lot);
-  const market = companyLogisticsSite(physical, "market");
+  const market = householdMarketId(household) === "main"
+    ? companyLogisticsSite(physical, "market") : null;
   if (market) {
     withdrawInventory(market, "outbound", goods, qty);
     depositInventory(market, "pickup", goods, qty);
@@ -2352,7 +2419,7 @@ export function ageMarketStalls(economy, { day, physical = null }) {
       const stall = stalls[index];
       const household = findHousehold(economy, stall.householdId);
       stall.age = (stall.age ?? 0) + 1;
-      if (stall.age >= 3 && household && P.EXP[goods] !== undefined) {
+      if (stall.age >= 3 && household && (stall.marketId ?? "main") === "main" && P.EXP[goods] !== undefined) {
         const used = economy.deskUsed[`EXP${goods}`] ?? 0;
         const accepted = Math.min(stall.qty, Math.max(0, economy.expCap[goods] - used));
         if (accepted > 1e-9) {
@@ -3499,7 +3566,9 @@ export function runCompanyProcurement(economy, { day, physical = null }) {
         + pendingCompanyHaul(physical, "stock_release", goods)
       ) : 0);
     if (lack <= 1e-9 || economy.company.money <= -companyCreditLimit(economy, { day })) continue;
-    const stalls = [...economy.stalls[goods]].sort((a, b) => a.price - b.price);
+    const stalls = [...economy.stalls[goods]]
+      .filter((stall) => (stall.marketId ?? "main") === "main")
+      .sort((a, b) => a.price - b.price);
     for (const stall of stalls) {
       if (lack <= 1e-9) break;
       const seller = findHousehold(economy, stall.householdId);
