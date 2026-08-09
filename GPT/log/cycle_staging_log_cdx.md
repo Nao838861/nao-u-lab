@@ -1,92 +1,61 @@
-# log_cdx Cycle Staging — 2026-08-10 05:13
+# log_cdx Cycle Staging — 2026-08-10 06:43
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
 
-- `memory/shared_reads_candidates/20260810_scrambletoolbench_hidden_tool_discovery.md` — 意味的手掛かりのない未知 tool を試行錯誤で同定し、mapping drift 後に仮説を更新できるかを測る agent benchmark。
+- `memory/shared_reads_candidates/20260810_adversarial_stress_testing_roleplaying_agents.md` — 3-agent 構成で role-playing agent に 6 種の adversarial strategy を 10 turn 継続し、persona drift・倫理逸脱・矛盾を測る評価 platform。
+- 収集時確認: pending directive / broadcast は 0 件。posted-source / closed title / open duplicate group sidecar を収集開始前と書込み直前に再生成し、arXiv:2608.03166v1 は preflight `continue`。Slack 投稿・品質判定は未実施。
 
 ## Phase 2: 分析
 
 ```yaml
 total_candidates: 6
 pass:
-  - memory/shared_reads_candidates/20260708_arc_agi3_speed_depth_tradeoff.md
-  - memory/shared_reads_candidates/20260810_scrambletoolbench_hidden_tool_discovery.md
+  - memory/shared_reads_candidates/20260810_adversarial_stress_testing_roleplaying_agents.md
 fail:
-  - path: memory/shared_reads_candidates/20260708_llms_future_virtual_reality_review.md
-    reason: "用途分類の列挙に留まり、個別手法・比較条件・効果量を結ぶ評価と具体的なゲーム制作適用を抽出できない"
+  - path: memory/shared_reads_candidates/20260709_agent_native_immune_system.md
+    reason: 実証評価と失敗例がなく、ゲーム適用も抽象的
+  - path: memory/shared_reads_candidates/20260709_agentic_model_discovery_word_games.md
+    reason: 比較結果がなく、制作現場への翻訳が大きすぎる
+  - path: memory/shared_reads_candidates/20260709_gdc2025_ai_games_wont_work_like_expected.md
+    reason: 講演紹介だけで手法・実測・設計判断が不足
+  - path: memory/shared_reads_candidates/20260709_llm_gamelab_board_game_eval.md
+    reason: demo 機能紹介に留まり、モデル比較結果と拡張実証がない
 postpone:
-  - path: memory/shared_reads_candidates/20260706_conversational_pcg_generators.md
-    reason: "会話型 PCG の論点は有用だが、生成表現・UI・利用者評価の本文根拠が不足"
-  - path: memory/shared_reads_candidates/20260706_grammar_based_game_description_generation.md
-    reason: "posted-source が arXiv:2407.17404 の実 Slack 投稿済み work identity 一致を確認したため再投稿しない"
-  - path: memory/shared_reads_candidates/20260708_korgym_dynamic_game_reasoning.md
-    reason: "評価 platform の構成は明確だが、定量 ablation と既存 gameplay-agent 評価との差分が不足"
+  - path: memory/shared_reads_candidates/20260709_coachable_agents_interactive_gameplay.md
+    reason: "posted duplicate title sibling: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783399097181689"
 stale_reviewed:
-  - handoff_id: cha-5b893c5660281ea4
-    receipt: "stale_reviewed:cha-5b893c5660281ea4"
-    path: memory/shared_reads_candidates/20260706_conversational_pcg_generators.md
-    previous_status: needs_review
-    decision: postpone
-    updated_stale_after: "2026-09-09"
-  - handoff_id: cha-e2bbd0df903c1bc9
-    receipt: "stale_reviewed:cha-e2bbd0df903c1bc9"
-    path: memory/shared_reads_candidates/20260706_grammar_based_game_description_generation.md
-    previous_status: needs_review
-    decision: postpone
-    updated_stale_after: "2026-09-09"
-  - handoff_id: cha-0846a831ce48688f
-    receipt: "stale_reviewed:cha-0846a831ce48688f"
-    path: memory/shared_reads_candidates/20260708_arc_agi3_speed_depth_tradeoff.md
-    previous_status: postponed
-    decision: pass
-    updated_stale_after: "2026-09-09"
-  - handoff_id: cha-2b5bf411a4a379b2
-    receipt: "stale_reviewed:cha-2b5bf411a4a379b2"
-    path: memory/shared_reads_candidates/20260708_korgym_dynamic_game_reasoning.md
-    previous_status: postponed
-    decision: postpone
-    updated_stale_after: "2026-09-09"
-  - handoff_id: cha-787f20cb81694128
-    receipt: "stale_reviewed:cha-787f20cb81694128"
-    path: memory/shared_reads_candidates/20260708_llms_future_virtual_reality_review.md
+  - handoff_id: cha-47bd112991d30935
+    receipt: stale_reviewed:cha-47bd112991d30935
+    path: memory/shared_reads_candidates/20260709_agent_native_immune_system.md
     previous_status: postponed
     decision: fail
     updated_stale_after: "2026-09-09"
-candidate_handoff_audit:
-  pending_before: 5
-  read_ids:
-    - cha-5b893c5660281ea4
-    - cha-e2bbd0df903c1bc9
-    - cha-0846a831ce48688f
-    - cha-2b5bf411a4a379b2
-    - cha-787f20cb81694128
-  resolved_ids:
-    - cha-5b893c5660281ea4
-    - cha-e2bbd0df903c1bc9
-    - cha-0846a831ce48688f
-    - cha-2b5bf411a4a379b2
-    - cha-787f20cb81694128
-  deferred_ids: []
-  partial_ids: []
-  pending_after: 0
-unreviewed_intake_audit:
-  valid_backlog_before: 1
-  malformed_count: 0
-  oldest_collected_at: "2026-08-10T05:17:30+09:00"
-  selection_limit: 5
-  selected_paths: []
-  phase1_excluded_paths:
-    - memory/shared_reads_candidates/20260810_scrambletoolbench_hidden_tool_discovery.md
-  evaluated_paths:
-    - memory/shared_reads_candidates/20260706_conversational_pcg_generators.md
-    - memory/shared_reads_candidates/20260706_grammar_based_game_description_generation.md
-    - memory/shared_reads_candidates/20260708_arc_agi3_speed_depth_tradeoff.md
-    - memory/shared_reads_candidates/20260708_korgym_dynamic_game_reasoning.md
-    - memory/shared_reads_candidates/20260708_llms_future_virtual_reality_review.md
-    - memory/shared_reads_candidates/20260810_scrambletoolbench_hidden_tool_discovery.md
-  valid_backlog_after: 0
+  - handoff_id: cha-43ea7eacbac0c918
+    receipt: stale_reviewed:cha-43ea7eacbac0c918
+    path: memory/shared_reads_candidates/20260709_agentic_model_discovery_word_games.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-09-09"
+  - handoff_id: cha-214387589c455bda
+    receipt: stale_reviewed:cha-214387589c455bda
+    path: memory/shared_reads_candidates/20260709_coachable_agents_interactive_gameplay.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-09-09"
+  - handoff_id: cha-c5c71a92dc682f6f
+    receipt: stale_reviewed:cha-c5c71a92dc682f6f
+    path: memory/shared_reads_candidates/20260709_gdc2025_ai_games_wont_work_like_expected.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-09-09"
+  - handoff_id: cha-f4d25bb7997cc817
+    receipt: stale_reviewed:cha-f4d25bb7997cc817
+    path: memory/shared_reads_candidates/20260709_llm_gamelab_board_game_eval.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-09-09"
 group_actions: []
 group_handoff_audit:
   pending_before: 0
@@ -98,158 +67,55 @@ group_handoff_audit:
     candidates_updated: 0
     already_terminal: 0
   pending_after: 0
-duplicate_preflight_audit:
-  skipped_posted_source:
-    - path: memory/shared_reads_candidates/20260706_grammar_based_game_description_generation.md
-      work_identity: "arxiv:2407.17404"
-      permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783330189970809"
-  continued_paths:
-    - memory/shared_reads_candidates/20260706_conversational_pcg_generators.md
-    - memory/shared_reads_candidates/20260708_arc_agi3_speed_depth_tradeoff.md
-    - memory/shared_reads_candidates/20260708_korgym_dynamic_game_reasoning.md
-    - memory/shared_reads_candidates/20260708_llms_future_virtual_reality_review.md
-    - memory/shared_reads_candidates/20260810_scrambletoolbench_hidden_tool_discovery.md
-```
-
-## Phase 3: Shared-reads 投稿
-
-```yaml
-posted:
-  - candidate: memory/shared_reads_candidates/20260708_arc_agi3_speed_depth_tradeoff.md
-    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786307674143409"
-    char_count: 4034
-  - candidate: memory/shared_reads_candidates/20260810_scrambletoolbench_hidden_tool_discovery.md
-    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786307680102929"
-    char_count: 4475
-skipped: []
-reviewed_at: "2026-08-10T05:34:56.1270296+09:00"
-```
-
-## Phase 3b: Shared-reads 自己フィードバック
-
-```yaml
-self_feedback:
-  selected:
-    id: sr-1786307674-b8e49e7c6d
-    source_ts: "1786307674.143409"
-    title: "Explore Before You Solve: The Speed--Depth Trade-off in Epistemic Agents for ARC-AGI-3"
-    reason: "未レビューの score 12 最新候補で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。公開25 gameの盲目的反復・probe後反復・多様探索・wrapper exploitを分ける監査が、未知ルール系 game/headless 評価に既存 control と異なる判断差を作るか確認した。Nao_u の明示評価は付いていない。"
-  scores:
-    relevance: 3
-    actionability: 3
-    evidence: 3
-    non_redundancy: 1
-    risk_control: 1
-    reversibility: 3
-    total: 14
-  decision: reject
-  decision_reason: "合計14だが risk_control が必須閾値2未満。盲目的反復・情報取得行動・仮説検証・wrapper exploitを同一budgetで分ける観点は有用だが、既存の interactive-agent failure-layer、simulation budget、exploit diversity、outcome/explanation、benchmark trust-boundary controlsで大半を再現できる。active_probes 322件、Phase 4a向けpending lease 1件、比較可能な未知ルールgame／固定budget trace／exploit baseline artifact不在のため、新規controlは確認負荷を増やす。"
-  existing_controls:
-    - probe-20260612-interactive-agent-failure-layer-split
-    - probe-20260622-poweragentbench-simulation-workflow-budget
-    - probe-20260710-raid-exploit-diversity-regression
-    - probe-20260708-causalgame-outcome-explanation-split
-    - probe-20260711-benchjack-trust-boundary-preflight
-  change:
-    summary: "reviewed_source_ts と state-only reject 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
-    files:
-      - memory/shared_reads_self_feedback_state.json
-      - log/cycle_staging_log_cdx.md
-  lease: null
-  anti_bloat_check:
-    adds_permanent_rule: false
-    replaces_or_simplifies_existing: false
-    conflict_checked: true
-reviewed_at: "2026-08-10T05:39:09+09:00"
-```
-
-## Phase 4a: 整理 + 問題抽出
-
-```yaml
-cleaned:
-  - "memory/MEMORY.md の entry index を validate_memory_index.py で照合し、broken reference 0 件を確認。UTF-8 明示読みで代表語『記憶』『ゲーム設計』『敵パターン』『評価軸』を取得できた"
-  - "atoms.jsonl / per-file atom / atoms/index.jsonl は各 2838 件で mirror drift 0 件。normalized-content 重複 40 群 80 行は既存 canonical overlay 45 群で fold 管理され、duplicate cluster index も current"
-  - "stale だった memory/atoms/title_quality_audit.jsonl を 761 行 / 539 title group へ再生成。raw title debt 730 行のうち recall-visible generic 499 行は alias で全件 covered、effective unresolved 0"
-  - "shared-reads terminal title canonical index を現 frontmatter から 83 group に再生成。mixed 40 group、open duplicate 46 group、actionable group 0 を確認"
-  - "candidate lifecycle dry-run は書換え 0。status 内訳は failed 416 / needs_review 3 / posted 573 / postponed 244 / ready_to_post 9。期限超過 open 25 件を確認"
-  - "memory/raw/ の30日超ファイル 238 件 / 67769699 bytes を archive 候補として棚卸し。一次 evidence と参照 path を壊す既存 archive 契約がないため移動は行わなかった"
-  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件のため close 更新なし"
-  - "group handoff 0 件、candidate handoff 5 件を source cycle 2026-08-10 05:13 で冪等 enqueue"
-issues:
-  - id: ISS-4A-20260810-01
-    description: "shared-reads 由来 atom sr-1776127289-4d9239b255 の title / trigger / excerpt に replacement character が保存され、『エージェント』が『エ��ジェント』になっている。game-rights atom gr-1777083728-44d444ab7a は本文中の意図的な literal『???』を heuristic が拾った false positive"
-    severity: low
-    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492 and :1216; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/2026-04/gr-1777083728-44d444ab7a.md; python -X faulthandler tools/memory_health.py --compact"
-    source_file_status: "UTF-8 decode は正常。sr-1776127289-4d9239b255 は raw source row 自体に U+FFFD が2文字保存された source-level corruption。gr-1777083728-44d444ab7a は source 健全で、文字列『???』を含むだけ"
-    display_or_tooling_status: "PowerShell / staging の表示 mojibake ではない。memory_health の2件表示のうち1件だけ真陽性"
-    why_blocks_game_memory: "破損 atom は『エージェント』の exact-term 検索と title-based cluster を弱めるが、対象は1件で links・source_ts・alias 導線は残るため影響は限定的"
-recommendation:
-  needs_design: false
-  priority_issues: []
-probe_lifecycle:
-  inspected_due_count: 0
-  inspected_probe_id: null
-  outcome: none
-  counts:
-    pending: 1
-    resolved: 3
-    dormant: 1
-stale_backlog:
-  overdue_open_total: 25
-  stale_triage_queue_rows: 23
-  open_duplicate_group_count: 46
-  mixed_group_count: 40
-  all_open_group_count: 6
-  actionable_group_count: 0
-  backlog_high_water: false
-  group_handoff_budget: 1
-  handed_off_group_count: 0
-  handoff_inbox_pending_count: 0
-  handoff_inbox_ids: []
-  candidate_handoff_pending_count: 5
-  candidate_handoff_ids:
+candidate_handoff_audit:
+  pending_before: 5
+  read_ids:
     - cha-47bd112991d30935
     - cha-43ea7eacbac0c918
     - cha-214387589c455bda
     - cha-c5c71a92dc682f6f
     - cha-f4d25bb7997cc817
-  valid_unreviewed_count: 0
-  oldest_unreviewed_collected_at: null
-  malformed_candidate_count: 0
-  phase2_unreviewed_limit: 5
-group_action_handoff: []
-stale_review_batch:
-  - handoff_id: cha-47bd112991d30935
-    path: memory/shared_reads_candidates/20260709_agent_native_immune_system.md
-    status: postponed
-    stale_after: "2026-08-08"
-    priority_reason: "runtime hijacking / memory poisoning はゲーム agent に近く、Phase 2 で本文根拠を再評価する価値が高い"
-    recommended_review_action: reevaluate_in_phase2
-  - handoff_id: cha-43ea7eacbac0c918
-    path: memory/shared_reads_candidates/20260709_agentic_model_discovery_word_games.md
-    status: postponed
-    stale_after: "2026-08-08"
-    priority_reason: "model-discovery operator と factorial design は評価 harness に有用だが、制作場面への翻訳を Phase 2 で再確認する必要がある"
-    recommended_review_action: reevaluate_in_phase2
-  - handoff_id: cha-214387589c455bda
-    path: memory/shared_reads_candidates/20260709_coachable_agents_interactive_gameplay.md
-    status: postponed
-    stale_after: "2026-08-08"
-    priority_reason: "複数ゲームでの評価と QA・NPC・accessibility 適用が揃い、成功率と style adherence の trade-off を再評価できる"
-    recommended_review_action: reevaluate_in_phase2
-  - handoff_id: cha-c5c71a92dc682f6f
-    path: memory/shared_reads_candidates/20260709_gdc2025_ai_games_wont_work_like_expected.md
-    status: postponed
-    stale_after: "2026-08-08"
-    priority_reason: "latency・cost・reliability・on-device 制約は重要だが、実測値と設計判断の追加根拠が必要"
-    recommended_review_action: reevaluate_in_phase2
-  - handoff_id: cha-f4d25bb7997cc817
-    path: memory/shared_reads_candidates/20260709_llm_gamelab_board_game_eval.md
-    status: postponed
-    stale_after: "2026-08-08"
-    priority_reason: "合法手・勝敗・応答時間の統合 harness は有用だが、小規模 game 以外への拡張性と実験結果を再確認する必要がある"
-    recommended_review_action: reevaluate_in_phase2
+  resolved_ids:
+    - cha-47bd112991d30935
+    - cha-43ea7eacbac0c918
+    - cha-214387589c455bda
+    - cha-c5c71a92dc682f6f
+    - cha-f4d25bb7997cc817
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-08-10T06:48:42+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260810_adversarial_stress_testing_roleplaying_agents.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260810_adversarial_stress_testing_roleplaying_agents.md
+  valid_backlog_after: 0
+duplicate_preflight:
+  sidecars_fresh: true
+  posted_source_skips:
+    - path: memory/shared_reads_candidates/20260709_coachable_agents_interactive_gameplay.md
+      permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783399097181689
+  continue_paths:
+    - memory/shared_reads_candidates/20260709_agent_native_immune_system.md
+    - memory/shared_reads_candidates/20260709_agentic_model_discovery_word_games.md
+    - memory/shared_reads_candidates/20260709_gdc2025_ai_games_wont_work_like_expected.md
+    - memory/shared_reads_candidates/20260709_llm_gamelab_board_game_eval.md
+    - memory/shared_reads_candidates/20260810_adversarial_stress_testing_roleplaying_agents.md
 ```
+
+## Phase 3: Shared-reads 投稿
+(Phase 3 が書き込む)
+
+## Phase 3b: Shared-reads 自己フィードバック
+(Phase 3b が書き込む)
+
+## Phase 4a: 整理 + 問題抽出
+(Phase 4a が書き込む)
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)

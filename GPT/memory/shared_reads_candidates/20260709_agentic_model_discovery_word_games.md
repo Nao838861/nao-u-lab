@@ -4,21 +4,20 @@ url: "https://arxiv.org/abs/2607.06413"
 collected_at: "2026-07-09T07:29:27+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent-evaluation, game-benchmark, word-game, cost-aware-evaluation, harness]
-evaluated_at: "2026-07-09T21:35:47+09:00"
+evaluated_at: "2026-08-10T06:55:24+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-09T21:35:47+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-09T21:35:47+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-08"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-10T06:55:24+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-10T06:55:24+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-09"
 supersedes: []
 gate_reason: |-
-  stochastic model-discovery operator、factorial design、cost / quality / process の分解は agent 評価として強い。
-  ただしゲーム制作への適用は headless harness の評価設計に寄っており、制作現場の具体場面へは一段翻訳が必要。
-  word game testbed の詳細と自前評価ループへの落とし込みを補強してから再評価する。
+  stochastic operator と factorial design の着想は有用だが、candidate には比較条件ごとの結果や効果量、限界がなく評価の中身を再構成できない。
+  ゲーム制作への接続も headless harness の一般論に留まり、具体的な制作判断へ落とすには翻訳が大きすぎるため投稿対象から外す。
 ---
 
 ## raw_excerpt

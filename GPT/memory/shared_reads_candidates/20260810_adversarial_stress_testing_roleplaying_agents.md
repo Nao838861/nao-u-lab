@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2608.03166v1"
 collected_at: "2026-08-10T06:48:42+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, npc, role-playing-agent, llm-evaluation, adversarial-testing]
+evaluated_at: "2026-08-10T06:55:24+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-10T06:55:24+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-10T06:55:24+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-09"
+supersedes: []
+gate_reason: >-
+  問題設定、段階的な 6 adversarial strategy、3-agent 分離、3 persona × 3 model の比較、人手検証まで揃い、重要要素を抽出できる。
+  会話 NPC の persona drift を長期対話で検出する playtest harness へ直接適用でき、定量結果と限界を含む CoopEval 水準の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "会話 NPC の品質を平常時の数問ではなく、誘導・矛盾・感情圧力が累積する 10 turn の adversarial playtest で測る方法として整理する。"
+  analysis_axis: "Target / Interrogator / Judge の責務分離、6 戦略の段階化、Role Fidelity・Drift・Ethical Deviation・Consistency と人手検証の妥当性を分析する。"
+  application_target: "Nao_u_BOT の会話 NPC / AI companion 評価で、persona 制約、攻撃的 player policy、全履歴 judge を分離した再現可能な headless 会話 harness に適用する。"
+  pros_cons: "長期的な崩れを比較可能にできる一方、LLM judge の偏り、10 turn の短さ、非ゲーム persona 中心である点は補助的な人手確認とゲーム固有シナリオで補う必要がある。"
+  verdict_pre: "部分採用。3-agent 分離と段階的 adversarial script を採用し、指標と persona は作品ごとに絞る。"
 ---
 
 ## raw_excerpt

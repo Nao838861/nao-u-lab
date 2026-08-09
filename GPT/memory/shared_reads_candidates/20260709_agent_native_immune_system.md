@@ -4,21 +4,20 @@ url: "https://arxiv.org/abs/2606.28270"
 collected_at: "2026-07-09T11:44:34+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent-security, harness, multi-agent, runtime-safety, game-ai]
-evaluated_at: "2026-07-09T11:46:54+09:00"
+evaluated_at: "2026-08-10T06:55:24+09:00"
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-09T11:46:54+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-09T11:46:54+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-08"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-10T06:55:24+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-10T06:55:24+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-09"
 supersedes: []
 gate_reason: >-
-  persistent memory/tool-use/multi-agent agent の runtime hijacking と memory poisoning を扱う問題設定はゲーム agent に近い。
-  ただし candidate 本文は Immune Tower、virus/vaccine taxonomy、Harness Triad などの概念整理が中心で、実証評価の中身や限界が薄い。
-  #shared-reads の概要水準にするには、評価設定・比較対象・失敗例を追加確認してから再判定する。
+  runtime hijacking や memory poisoning を扱う問題設定はゲーム agent に近いが、candidate の材料は Immune Tower や taxonomy の概念整理に偏る。
+  比較対象、実験設定、測定結果、失敗例がなく、ゲーム制作への適用も安全装置の配置という抽象案に留まるため、CoopEval 水準の概要にはできない。
 ---
 
 ## raw_excerpt
