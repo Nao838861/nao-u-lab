@@ -164,7 +164,92 @@ reviewed_at: "2026-08-10T05:39:09+09:00"
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の entry index を validate_memory_index.py で照合し、broken reference 0 件を確認。UTF-8 明示読みで代表語『記憶』『ゲーム設計』『敵パターン』『評価軸』を取得できた"
+  - "atoms.jsonl / per-file atom / atoms/index.jsonl は各 2838 件で mirror drift 0 件。normalized-content 重複 40 群 80 行は既存 canonical overlay 45 群で fold 管理され、duplicate cluster index も current"
+  - "stale だった memory/atoms/title_quality_audit.jsonl を 761 行 / 539 title group へ再生成。raw title debt 730 行のうち recall-visible generic 499 行は alias で全件 covered、effective unresolved 0"
+  - "shared-reads terminal title canonical index を現 frontmatter から 83 group に再生成。mixed 40 group、open duplicate 46 group、actionable group 0 を確認"
+  - "candidate lifecycle dry-run は書換え 0。status 内訳は failed 416 / needs_review 3 / posted 573 / postponed 244 / ready_to_post 9。期限超過 open 25 件を確認"
+  - "memory/raw/ の30日超ファイル 238 件 / 67769699 bytes を archive 候補として棚卸し。一次 evidence と参照 path を壊す既存 archive 契約がないため移動は行わなかった"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件のため close 更新なし"
+  - "group handoff 0 件、candidate handoff 5 件を source cycle 2026-08-10 05:13 で冪等 enqueue"
+issues:
+  - id: ISS-4A-20260810-01
+    description: "shared-reads 由来 atom sr-1776127289-4d9239b255 の title / trigger / excerpt に replacement character が保存され、『エージェント』が『エ��ジェント』になっている。game-rights atom gr-1777083728-44d444ab7a は本文中の意図的な literal『???』を heuristic が拾った false positive"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492 and :1216; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/2026-04/gr-1777083728-44d444ab7a.md; python -X faulthandler tools/memory_health.py --compact"
+    source_file_status: "UTF-8 decode は正常。sr-1776127289-4d9239b255 は raw source row 自体に U+FFFD が2文字保存された source-level corruption。gr-1777083728-44d444ab7a は source 健全で、文字列『???』を含むだけ"
+    display_or_tooling_status: "PowerShell / staging の表示 mojibake ではない。memory_health の2件表示のうち1件だけ真陽性"
+    why_blocks_game_memory: "破損 atom は『エージェント』の exact-term 検索と title-based cluster を弱めるが、対象は1件で links・source_ts・alias 導線は残るため影響は限定的"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 3
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 25
+  stale_triage_queue_rows: 23
+  open_duplicate_group_count: 46
+  mixed_group_count: 40
+  all_open_group_count: 6
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-47bd112991d30935
+    - cha-43ea7eacbac0c918
+    - cha-214387589c455bda
+    - cha-c5c71a92dc682f6f
+    - cha-f4d25bb7997cc817
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-47bd112991d30935
+    path: memory/shared_reads_candidates/20260709_agent_native_immune_system.md
+    status: postponed
+    stale_after: "2026-08-08"
+    priority_reason: "runtime hijacking / memory poisoning はゲーム agent に近く、Phase 2 で本文根拠を再評価する価値が高い"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-43ea7eacbac0c918
+    path: memory/shared_reads_candidates/20260709_agentic_model_discovery_word_games.md
+    status: postponed
+    stale_after: "2026-08-08"
+    priority_reason: "model-discovery operator と factorial design は評価 harness に有用だが、制作場面への翻訳を Phase 2 で再確認する必要がある"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-214387589c455bda
+    path: memory/shared_reads_candidates/20260709_coachable_agents_interactive_gameplay.md
+    status: postponed
+    stale_after: "2026-08-08"
+    priority_reason: "複数ゲームでの評価と QA・NPC・accessibility 適用が揃い、成功率と style adherence の trade-off を再評価できる"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-c5c71a92dc682f6f
+    path: memory/shared_reads_candidates/20260709_gdc2025_ai_games_wont_work_like_expected.md
+    status: postponed
+    stale_after: "2026-08-08"
+    priority_reason: "latency・cost・reliability・on-device 制約は重要だが、実測値と設計判断の追加根拠が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-f4d25bb7997cc817
+    path: memory/shared_reads_candidates/20260709_llm_gamelab_board_game_eval.md
+    status: postponed
+    stale_after: "2026-08-08"
+    priority_reason: "合法手・勝敗・応答時間の統合 harness は有用だが、小規模 game 以外への拡張性と実験結果を再確認する必要がある"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
