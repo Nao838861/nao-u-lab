@@ -4,6 +4,20 @@ url: "https://openreview.net/forum?id=gR2XgV07V2"
 collected_at: "2026-08-09T20:03:32+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, player-modeling, strategy-game, multi-agent, reinforcement-learning]
+evaluated_at: "2026-08-09T20:08:16+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-09T20:08:16+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-09T20:08:16+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-08"
+supersedes: []
+gate_reason: >
+  四つの style 定義、game reward と style reward の併用、GRPO、勝率比較、Chivalrous agent の事例までは具体的で、協力・裏切りを含む NPC や自動 playtester の設計へ接続できる。
+  ただし現候補にはデータ規模、比較条件、style 遵守の定量評価、ablation がなく、OpenReview 本文もアクセス制限中のため、CoopEval 水準の約4000字を検証可能に書くには一次資料が不足する。
 ---
 
 ## raw_excerpt
