@@ -38,7 +38,7 @@ assert.equal(FOODS.includes('salt'), false, '塩は食料ではない');
     capacityLimit: 6,
   });
   assert.equal(result.order[0], 'wheat', '食料備蓄不足時は食料を最初に買う');
-  assert.equal(result.purchased.wheat, 6, '運搬枠をまず食料に使う');
+  assert.equal(result.purchased.wheat, 3, '原料用の半枠を除いた運搬枠をまず食料に使う');
   assert.equal(result.purchased.log ?? 0, 0, '食料不足時に加工原料が運搬枠を先取りしない');
 }
 
@@ -101,6 +101,41 @@ assert.equal(FOODS.includes('salt'), false, '塩は食料ではない');
       .reduce((total, item) => total + item.amount, 0),
     0,
     '塩だけでは食料在庫にならない',
+  );
+}
+
+{
+  const world = buildBaseCity(11);
+  const api = createEngineApi(world);
+  api.advanceDays(120);
+  const household = world.state.economy.households[0];
+  household.members = household.members.slice(0, 4);
+  for (const goods of FOODS) household.pantry[goods] = 0;
+  household.pantry.wheat = 4;
+  household.state = 'home';
+  household.hungerRun = 0;
+  household.insolvM = 0;
+  household.lastMarketVisit = null;
+
+  const oneDayModel = snapshotToViewModel(api.snapshot({ scope: 'view' }));
+  const oneDayRow = oneDayModel.households.find(candidate => candidate.id === household.id);
+  const oneDayBuilding = oneDayModel.buildings.find(
+    candidate => candidate.ownerHouseholdId === household.id,
+  );
+  assert.equal(oneDayRow.members, 4);
+  assert.notEqual(
+    oneDayBuilding.stateSignals.crisis?.kind,
+    'food',
+    '4荷は4人家族の1日分なので固定9人換算の食料危機を出さない',
+  );
+
+  household.pantry.wheat = 12;
+  const threeDayModel = snapshotToViewModel(api.snapshot({ scope: 'view' }));
+  const threeDayRow = threeDayModel.households.find(candidate => candidate.id === household.id);
+  assert.equal(
+    threeDayRow.foodDelivery?.kind ?? null,
+    null,
+    '12荷は4人家族の3日分なので物流警告を出さない',
   );
 }
 

@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.44.2-food-alerts';
+import { JOB_LABELS } from './config.js?v=v004.44.3-family-food';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

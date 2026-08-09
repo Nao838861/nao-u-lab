@@ -205,7 +205,8 @@ export class World{
   limit(){const m=Math.floor((this.day-1)/30)+1;
     return Math.min(P.LIMIT0+P.LIMIT_G*Math.min(m,P.LIMIT_FREEZE),Math.max(6000,this.hhs.length*9*P.LIMIT_PC));}
   buyTargets(h){const t={};
-    const foodDays=FOODS.reduce((s,g)=>s+h.pantry[g],0)/P.EAT;
+    const dailyFood=Math.max(1,h.eat());
+    const foodDays=FOODS.reduce((s,g)=>s+h.pantry[g],0)/dailyFood;
     const px=this.px;const cheapest=Math.min(px.veg??9,px.wheat??9,px.pres??9);
     const mmT=(Math.floor((this.day-1)/30))%12+1;
     const autumn=mmT>=7&&mmT<=9;   // 秋=冬支度(正典ルール3「備えを保つ」の季節スケール)。配給は無い——備えは自分で持つ
@@ -213,14 +214,14 @@ export class World{
     tgtD=Math.max(tgtD,Math.min(12,this.dist(h)*0.9)); // 遠い家ほど大きな貯蔵(まとめ買いで通いを減らす)
     if(foodDays<tgtD){const starving=foodDays<1.5;
       for(const g of['veg','wheat','pres','pick'])
-        t[g]=[(tgtD-foodDays)*P.EAT/4,starving?99:Math.min((px[g]??9)*1.5,cheapest*2.2)];}
-    if(h.job!=='fisher')t.fish=[P.EAT*0.5,Math.min((px.fish??9)*1.5,cheapest*2.5)]; // 飢えても魚に99は払わない(主食が隣の棚にある)
-    if(h.job!=='wheat'&&h.pantry.wheat<P.EAT*P.RATION*10&&!t.wheat)
-      t.wheat=[P.EAT*P.RATION*15-h.pantry.wheat,(px.wheat??3)*1.3];
-    if(h.job!=='veg'&&h.pantry.veg<P.EAT*P.RATION*6&&!t.veg)
-      t.veg=[P.EAT*P.RATION*10-h.pantry.veg,(px.veg??3)*1.3];
-    if(h.job!=='shepherd'&&h.pantry.meat<P.EAT*P.RATION*4&&!t.meat)
-      t.meat=[P.EAT*P.RATION*8-h.pantry.meat,Math.min((px.meat??3)*1.4,cheapest*2.2)];
+        t[g]=[(tgtD-foodDays)*dailyFood/4,starving?99:Math.min((px[g]??9)*1.5,cheapest*2.2)];}
+    if(h.job!=='fisher')t.fish=[dailyFood*0.5,Math.min((px.fish??9)*1.5,cheapest*2.5)]; // 飢えても魚に99は払わない(主食が隣の棚にある)
+    if(h.job!=='wheat'&&h.pantry.wheat<dailyFood*P.RATION*10&&!t.wheat)
+      t.wheat=[dailyFood*P.RATION*15-h.pantry.wheat,(px.wheat??3)*1.3];
+    if(h.job!=='veg'&&h.pantry.veg<dailyFood*P.RATION*6&&!t.veg)
+      t.veg=[dailyFood*P.RATION*10-h.pantry.veg,(px.veg??3)*1.3];
+    if(h.job!=='shepherd'&&h.pantry.meat<dailyFood*P.RATION*4&&!t.meat)
+      t.meat=[dailyFood*P.RATION*8-h.pantry.meat,Math.min((px.meat??3)*1.4,cheapest*2.2)];
     if((h.job==='wheat'||h.job==='rapeseed')&&h.pantry.meal<P.FERT_NEED*10){
       const mmn=(Math.floor((this.day-1)/30))%12+1;
       if(mmn>=3&&mmn<=8){const bv=(h.job==='wheat'?P.Y_WHEAT*h.mult():P.Y_OIL*h.mult()*540)*P.FERT_BOOST*(h.job==='wheat'?(px.wheat??2):(px.oil??3))/(P.FERT_NEED*180);
@@ -265,8 +266,8 @@ export class World{
       if(my==='wheat'){rate=0.1;keep=h.eat()*P.RATION*10;}
       if(my==='veg')keep=h.eat()*P.RATION*10;
       const s=Math.max(0,h.pantry[my]-keep);if(s>1e-9)out[my]=Math.min(s*rate+2,s,my==='log'?h.haul()/2:h.haul());} // 丸太は重い(運搬2枠)
-    if(h.job==='fisher'&&h.pantry.pres>P.EAT*P.PANTRY_FOOD_D)
-      out.pres=Math.min(h.pantry.pres-P.EAT*P.PANTRY_FOOD_D,h.haul());
+    if(h.job==='fisher'&&h.pantry.pres>h.eat()*P.PANTRY_FOOD_D)
+      out.pres=Math.min(h.pantry.pres-h.eat()*P.PANTRY_FOOD_D,h.haul());
     if(h.job==='veg'&&h.pantry.pick>10)out.pick=Math.min(h.pantry.pick-5,h.haul());
     if(h.job==='shepherd'&&h.pantry.cloth>2)out.cloth=Math.min(h.pantry.cloth-1,h.haul());
     return out;}
@@ -292,7 +293,7 @@ export class World{
       else if(h.state==='toHome'){if(this.stepTo(h,h.x,h.y))h.state='home';}
       else if(h.state==='home'){this.produceTick(h,1/30);}}
     if(tod===16)for(const h of this.hhs){if(h.state!=='home')continue;
-      const fd=FOODS.reduce((s,g)=>s+h.pantry[g],0)/P.EAT;
+      const fd=FOODS.reduce((s,g)=>s+h.pantry[g],0)/Math.max(1,h.eat());
       const offers=this.sellOffers(h);const sellSum=Object.values(offers).reduce((a,b)=>a+b,0);
       const lowCult=['tools','salt','char'].some(g=>h.pantry[g]<[P.D_TOOL,P.D_SALT,P.D_CHAR][['tools','salt','char'].indexOf(g)]*4);
       const inputLow=(h.job==='saltworks'&&h.pantry.char<2)||(h.job==='fisher'&&h.pantry.salt<1)||((h.job==='woodshop'||h.job==='charburner')&&h.pantry.log<2)||((h.job==='wheat'||h.job==='rapeseed')&&h.pantry.meal<1&&this.day%7===0);
@@ -556,7 +557,7 @@ export class World{
       this.log('★石畳完成——全ての道が格上げ(0.6→0.45・永続)');}
     // 出生(月次): 飢えていない家族は増える——余剰人口の源泉。人口の受け皿(区画)はプレイヤーが用意する
     if(d%30===0)for(const h of this.hhs){
-      if(h.members.length<11&&h.hungerRun===0&&FOODS.reduce((s,g)=>s+h.pantry[g],0)/P.EAT>2&&this.rng()<0.12){
+      if(h.members.length<11&&h.hungerRun===0&&FOODS.reduce((s,g)=>s+h.pantry[g],0)/Math.max(1,h.eat())>2&&this.rng()<0.12){
         const FIRSTN=['ハンス','グレタ','ヤン','マリア','ピム','ロッテ','カレル','アンナ','ブラム','エルス'];
         h.members.push({name:FIRSTN[Math.floor(this.rng()*FIRSTN.length)],sex:this.rng()<0.5?'♂':'♀',age:0});
         this.log(`${h.sur}家に子が生まれた(家族${h.members.length}人)`);}}

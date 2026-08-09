@@ -13,6 +13,8 @@ import {
   finishHouseholdCartTrip,
   initializeNaturalResources,
   isProductionInput,
+  householdEat,
+  householdFoodDays,
   householdTransportPlan,
   householdMaterialAmount,
   loadMarketSellCargo,
@@ -202,10 +204,7 @@ function recordHouseholdTransport(economy, household) {
 }
 
 function householdTripNeeds(economy, physical, household) {
-  const foodDays = FOODS.reduce(
-    (total, goods) => total + household.pantry[goods],
-    0,
-  ) / P.EAT;
+  const foodDays = householdFoodDays(household);
   const lowCultureGoods = ["tools", "salt", "char"].filter((goods, index) => (
     householdMaterialAmount(physical, household, goods)
       < [P.D_TOOL, P.D_SALT, P.D_CHAR][index] * 4
@@ -310,7 +309,7 @@ function urgentMarketDemandWeight(economy, physical, household) {
   // 食料が尽きかけた往復では、一人ぶんの背負い籠だけで帰らない。
   // 市場に買える食料がある限り、最低2日ぶんを運ぶ人数を割り当てる。
   return needs.foodUrgent && purchasableWeight > 1e-9
-    ? Math.max(purchasableWeight, P.EAT * 2)
+    ? Math.max(purchasableWeight, householdEat(household) * 2)
     : purchasableWeight;
 }
 

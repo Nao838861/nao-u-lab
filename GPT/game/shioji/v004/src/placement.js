@@ -1,5 +1,5 @@
-import { BUILDING_SIZES } from './config.js?v=v004.44.2-food-alerts';
-import { islandCalendar } from './ui_summary.js?v=v004.44.2-food-alerts';
+import { BUILDING_SIZES } from './config.js?v=v004.44.3-family-food';
+import { islandCalendar } from './ui_summary.js?v=v004.44.3-family-food';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

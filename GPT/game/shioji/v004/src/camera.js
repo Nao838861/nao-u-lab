@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.44.2-food-alerts';
+import { TILE } from './config.js?v=v004.44.3-family-food';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

@@ -6,23 +6,23 @@ export {
   householdClass,
   householdProductionSummary,
   productionCost,
-} from '../../engine/src/econ.js?v=v004.44.2-food-alerts';
-import { P } from '../../engine/src/econ.js?v=v004.44.2-food-alerts';
-import { createEngineApi } from '../../engine/src/api.js?v=v004.44.2-food-alerts';
+} from '../../engine/src/econ.js?v=v004.44.3-family-food';
+import { P } from '../../engine/src/econ.js?v=v004.44.3-family-food';
+import { createEngineApi } from '../../engine/src/api.js?v=v004.44.3-family-food';
 import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
   buildBaseCity,
   makeStableCityPlan,
-} from '../../engine/src/audit.js?v=v004.44.2-food-alerts';
-import { createPhysicalState, makeFlowIslandTerrain, makeMultiMarketTerrain } from '../../engine/src/physical.js?v=v004.44.2-food-alerts';
-import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.44.2-food-alerts';
-import { createViewController } from './controller.js?v=v004.44.2-food-alerts';
+} from '../../engine/src/audit.js?v=v004.44.3-family-food';
+import { createPhysicalState, makeFlowIslandTerrain, makeMultiMarketTerrain } from '../../engine/src/physical.js?v=v004.44.3-family-food';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.44.3-family-food';
+import { createViewController } from './controller.js?v=v004.44.3-family-food';
 import {
   SPRING_START_CALENDAR_OFFSET_DAYS,
   START_MODES,
-} from './start_modes.js?v=v004.44.2-food-alerts';
+} from './start_modes.js?v=v004.44.3-family-food';
 
 export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS };
 export { makeMultiMarketTerrain };

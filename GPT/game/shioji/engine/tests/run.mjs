@@ -1383,7 +1383,10 @@ test("段17: buyTargets天井表・LADDER・固定買い順を正本どおり保
   for (const goods of FOODS) starving.pantry[goods] = 0;
   const starvingTargets = buyTargets(economy, starving, { day: 1 });
   for (const goods of ["veg", "wheat", "pres", "pick"]) {
-    assert.deepEqual(starvingTargets[goods], [P.PANTRY_FOOD_D * P.EAT / 4, 99]);
+    assert.deepEqual(
+      starvingTargets[goods],
+      [P.PANTRY_FOOD_D * householdEat(starving) / 4, 99],
+    );
   }
   assert.ok(starvingTargets.fish[1] < 99);
 
@@ -1405,6 +1408,7 @@ test("段17: buyTargets天井表・LADDER・固定買い順を正本どおり保
     sourceWorld.px = { ...economy.px };
     const sourceHousehold = new FlowIslandHousehold(household.job, household.x, household.y);
     sourceHousehold.pantry = structuredClone(household.pantry);
+    sourceHousehold.members = structuredClone(household.members);
     sourceHousehold.lv = household.lv;
     assert.deepEqual(
       buyTargets(economy, household, { day }),
@@ -1414,6 +1418,30 @@ test("段17: buyTargets天井表・LADDER・固定買い順を正本どおり保
   compareWithSource(starving, 1);
   compareWithSource(woodshop, 1);
   compareWithSource(farmer, 1);
+});
+
+test("段17: 食料日数と購入量は固定9人でなく実際の家族人数を使う", () => {
+  const economy = createEconomicState();
+  for (const familySize of [4, 9, 11]) {
+    const household = createHousehold(economy, { job: "logger", x: 0, y: 0 });
+    household.members = Array.from({ length: familySize }, (_, index) => ({
+      id: `test-${familySize}-${index}`,
+      name: `家族${index}`,
+      sex: index % 2 ? "♀" : "♂",
+      age: 20,
+    }));
+    for (const goods of FOODS) household.pantry[goods] = 0;
+    household.pantry.wheat = familySize * 3;
+    assert.equal(householdFoodDays(household), 3, `${familySize}人家族の3日分`);
+
+    household.pantry.wheat = 0;
+    const targets = buyTargets(economy, household, { day: 1 });
+    assert.equal(
+      targets.wheat[0],
+      P.PANTRY_FOOD_D * familySize / 4,
+      `${familySize}人家族の買い置き量`,
+    );
+  }
 });
 
 test("段17: 食料6日未満は生産入力logより食料wheatを先に約定する", () => {
@@ -1451,7 +1479,7 @@ test("段17: 屋台約定はpxをEMA更新し売り手から4%手数料を会社
   const transaction = result.transactions.find((entry) => entry.goods === "wheat");
   const payment = transaction.qty * transaction.price;
   const fee = payment * P.FEE;
-  assert.equal(transaction.qty, P.PANTRY_FOOD_D * P.EAT / 4);
+  assert.equal(transaction.qty, P.PANTRY_FOOD_D * householdEat(buyer) / 4);
   assert.equal(buyer.purse, buyerPurse - payment);
   assert.equal(seller.purse, sellerPurse + payment - fee);
   assert.equal(economy.co.fee, fee);
@@ -1496,12 +1524,12 @@ test("段17: CO輸入棚は生産入力だけ財布-30まで信用買いでき�
 });
 
 test("段18: 飢えた世帯だけが高値の主食を買い食料pxを上げる", () => {
-  const run = (foodQty) => {
+  const run = (foodDays) => {
     const economy = createEconomicState();
     const seller = createHousehold(economy, { job: "wheat", x: 0, y: 0 });
     const buyer = createHousehold(economy, { job: "logger", x: 0, y: 0 });
     for (const goods of FOODS) buyer.pantry[goods] = 0;
-    buyer.pantry.veg = foodQty;
+    buyer.pantry.veg = householdEat(buyer) * foodDays;
     seller.pantry.wheat -= 30;
     economy.stalls.wheat.push({ householdId: seller.id, qty: 30, price: 2, age: 0 });
     const before = economy.px.wheat;
@@ -1510,7 +1538,7 @@ test("段18: 飢えた世帯だけが高値の主食を買い食料pxを上げ�
   };
 
   const starving = run(0);
-  const merelyLow = run(P.EAT * 2);
+  const merelyLow = run(2);
   assert.ok(starving.economy.px.wheat > starving.before);
   assert.equal(merelyLow.economy.px.wheat, merelyLow.before);
   assert.equal(starving.result.transactions.some((transaction) => transaction.goods === "wheat"), true);
@@ -1659,7 +1687,7 @@ test("段20: needyは財布が人数×0.8未満かつ食料4日未満で賃金�
   household.purse = householdEat(household) * 0.8;
   assert.equal(isNeedyHousehold(household), false);
   household.purse = 0;
-  household.pantry.wheat = P.EAT * 4;
+  household.pantry.wheat = householdEat(household) * 4;
   assert.equal(isNeedyHousehold(household), false);
 
   economy.px.wheat = 2;
@@ -1989,7 +2017,7 @@ test("段23: 月次出生は非飢餓・食料2日超・11人未満の世帯だ�
     household.members.push({ name: `家族${household.members.length}`, sex: "♀", age: 10 });
   }
   household.hungerRun = 0;
-  household.pantry.wheat = P.EAT * 3;
+  household.pantry.wheat = householdEat(household) * 3;
   const births = runBirthPhase(economy, { day: 30, random: () => 0 });
 
   assert.equal(births.length, 1);
@@ -2457,7 +2485,7 @@ test("段27: tripCostと貯倉庫目標は直線でなく徒歩pathLenを使う"
   const targetDays = Math.max(P.PANTRY_FOOD_D, Math.min(12, distance * 0.9));
   assert.equal(
     buyTargets(economy, household, { day: 1, physical }).wheat[0],
-    targetDays * P.EAT / 4,
+    targetDays * householdEat(household) / 4,
   );
 });
 

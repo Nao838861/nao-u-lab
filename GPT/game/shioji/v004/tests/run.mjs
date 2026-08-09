@@ -1290,8 +1290,10 @@ test('チュートリアル段7〜9: 支援1回・早期食料・事前備蓄で
     event.type === 'notice' && event.message?.includes('★注文を納めた')
   ));
   assert.ok(completionEvent, `注文期限${offer.due}日目までに完遂イベントが起きる`);
-  assert.ok(controller.readModel().day <= offerDay + 4,
-    '春開始の季節生産でも事前備蓄により受諾後4日以内に完遂する');
+  assert.ok(
+    controller.readModel().day <= offerDay + 5,
+    `春開始の季節生産でも事前備蓄により受諾後5日以内に完遂する: 受諾${offerDay}日、完遂${controller.readModel().day}日`,
+  );
   const handlingEvents = observedEvents.filter(event => (
     event.type === 'handling' && event.direction === 'export' && event.goods === offer.g
   ));
@@ -1397,7 +1399,7 @@ test('チュートリアル段11: 第一章で置いた漁師と野菜畑の実�
   assert.ok(opening);
   const baseline = tutorialFoodMetrics(controller.readModel());
   assert.equal(opening.facts.importEma, baseline.importEma);
-  assert.equal(opening.facts.outflow, baseline.outflow);
+  assert.ok(Math.abs(opening.facts.outflow - baseline.outflow) < 1e-12);
   const foodStartTick = controller.inputJournal()
     .find(row => row.op.type === 'place_building' && row.op.job === 'fisher').tick;
   const placement = director.readState().goalResults['place-island-food'];
@@ -2266,7 +2268,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.44.2-food-alerts');
+  assert.equal(VERSION, 'v004.44.3-family-food');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);

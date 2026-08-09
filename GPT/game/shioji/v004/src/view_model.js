@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.44.2-food-alerts';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.44.3-family-food';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.44.2-food-alerts';
+} from './food_readability.js?v=v004.44.3-family-food';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.44.2-food-alerts';
-import { analyzeRoadConnections } from './placement.js?v=v004.44.2-food-alerts';
+} from './engine_bridge.js?v=v004.44.3-family-food';
+import { analyzeRoadConnections } from './placement.js?v=v004.44.3-family-food';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.44.2-food-alerts';
+} from './render_scene.js?v=v004.44.3-family-food';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.44.2-food-alerts';
+} from './visuals.js?v=v004.44.3-family-food';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
@@ -167,6 +167,11 @@ function householdFoodAmount(household) {
   );
 }
 
+function rawHouseholdFoodDays(household) {
+  const familySize = Math.max(1, household?.members?.length ?? 0);
+  return householdFoodAmount(household) / familySize;
+}
+
 function cargoFoodRows(household) {
   if (household?.cargo?.direction !== 'inbound') return [];
   return Object.entries(household.cargo.manifest ?? {})
@@ -186,7 +191,7 @@ function marketFoodRows(economy) {
 
 function foodDeliveryStatus(household, economy) {
   if (!household) return null;
-  const foodDays = householdFoodAmount(household) / P.EAT;
+  const foodDays = rawHouseholdFoodDays(household);
   const inbound = cargoFoodRows(household);
   const inboundAmount = inbound.reduce((total, row) => total + row.amount, 0);
   if (inboundAmount > 1e-9) {
@@ -367,7 +372,7 @@ function householdStateSignals(household, economy) {
   const requiredDays = P.UP_DAYS * (level + 1);
   const culture = household ? cultureProgress(household) : null;
   const delivery = household ? foodDeliveryStatus(household, economy) : null;
-  const foodDays = household ? householdFoodAmount(household) / P.EAT : Infinity;
+  const foodDays = household ? rawHouseholdFoodDays(household) : Infinity;
   const crises = [
     hungerDays >= 30 ? {
       kind: 'hunger',

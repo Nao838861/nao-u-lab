@@ -1337,9 +1337,10 @@ export function sellOffers(
       );
     }
   }
-  if (household.job === "fisher" && household.pantry.pres > P.EAT * P.PANTRY_FOOD_D) {
+  const dailyFood = Math.max(1, householdEat(household));
+  if (household.job === "fisher" && household.pantry.pres > dailyFood * P.PANTRY_FOOD_D) {
     offers.pres = Math.min(
-      household.pantry.pres - P.EAT * P.PANTRY_FOOD_D,
+      household.pantry.pres - dailyFood * P.PANTRY_FOOD_D,
       capacityLimit,
     );
   }
@@ -1405,7 +1406,8 @@ export function buyTargets(
 ) {
   const targets = {};
   const inputQty = (goods) => productionInputAmount(physical, household, goods);
-  const foodDays = FOODS.reduce((total, goods) => total + household.pantry[goods], 0) / P.EAT;
+  const dailyFood = Math.max(1, householdEat(household));
+  const foodDays = householdFoodDays(household);
   const { px } = economy;
   const cheapest = Math.min(px.veg ?? 9, px.wheat ?? 9, px.pres ?? 9);
   const month = calendarMonth(economy, day);
@@ -1420,29 +1422,29 @@ export function buyTargets(
     const starving = foodDays < 1.5;
     for (const goods of ["veg", "wheat", "pres", "pick"]) {
       targets[goods] = [
-        (targetDays - foodDays) * P.EAT / 4,
+        (targetDays - foodDays) * dailyFood / 4,
         starving ? 99 : Math.min((px[goods] ?? 9) * 1.5, cheapest * 2.2),
       ];
     }
   }
   if (household.job !== "fisher") {
-    targets.fish = [P.EAT * 0.5, Math.min((px.fish ?? 9) * 1.5, cheapest * 2.5)];
+    targets.fish = [dailyFood * 0.5, Math.min((px.fish ?? 9) * 1.5, cheapest * 2.5)];
   }
-  if (household.job !== "wheat" && household.pantry.wheat < P.EAT * P.RATION * 10 && !targets.wheat) {
+  if (household.job !== "wheat" && household.pantry.wheat < dailyFood * P.RATION * 10 && !targets.wheat) {
     targets.wheat = [
-      P.EAT * P.RATION * 15 - household.pantry.wheat,
+      dailyFood * P.RATION * 15 - household.pantry.wheat,
       (px.wheat ?? 3) * 1.3,
     ];
   }
-  if (household.job !== "veg" && household.pantry.veg < P.EAT * P.RATION * 6 && !targets.veg) {
+  if (household.job !== "veg" && household.pantry.veg < dailyFood * P.RATION * 6 && !targets.veg) {
     targets.veg = [
-      P.EAT * P.RATION * 10 - household.pantry.veg,
+      dailyFood * P.RATION * 10 - household.pantry.veg,
       (px.veg ?? 3) * 1.3,
     ];
   }
-  if (household.job !== "shepherd" && household.pantry.meat < P.EAT * P.RATION * 4 && !targets.meat) {
+  if (household.job !== "shepherd" && household.pantry.meat < dailyFood * P.RATION * 4 && !targets.meat) {
     targets.meat = [
-      P.EAT * P.RATION * 8 - household.pantry.meat,
+      dailyFood * P.RATION * 8 - household.pantry.meat,
       Math.min((px.meat ?? 3) * 1.4, cheapest * 2.2),
     ];
   }
@@ -1821,10 +1823,7 @@ export function buyAtMarket(
   const jobOrder = household.job === "cartwright"
     ? ["tools", "log", ...BUY_ORDER.filter((goods) => goods !== "tools" && goods !== "log")]
     : BUY_ORDER;
-  const foodDays = FOODS.reduce(
-    (total, goods) => total + (household.pantry[goods] ?? 0),
-    0,
-  ) / P.EAT;
+  const foodDays = householdFoodDays(household);
   // 食料の備えが本当に危うい世帯だけ、加工原料より先に食料を積む。
   // 旧順序(常に原料先)は市場に食料があっても加工世帯だけが飢える原因だったが、
   // 6日分を切った時点で常に食料先行にすると、原料購入と生産が細って収入が消え、
@@ -2803,7 +2802,10 @@ export function runPrimaryProductionDay(economy, physical, { day }) {
 }
 
 export function householdFoodDays(household) {
-  return FOODS.reduce((total, goods) => total + household.pantry[goods], 0) / P.EAT;
+  return FOODS.reduce(
+    (total, goods) => total + (household.pantry[goods] ?? 0),
+    0,
+  ) / Math.max(1, householdEat(household));
 }
 
 export function isNeedyHousehold(household) {
@@ -4172,10 +4174,7 @@ export function runBirthPhase(economy, { day, random }) {
   const births = [];
   if (day % 30 !== 0) return births;
   for (const household of economy.households) {
-    const foodDays = FOODS.reduce(
-      (total, goods) => total + household.pantry[goods],
-      0,
-    ) / P.EAT;
+    const foodDays = householdFoodDays(household);
     if (
       household.members.length < 11
       && household.hungerRun === 0
