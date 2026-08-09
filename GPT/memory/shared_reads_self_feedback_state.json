@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-09T22:34:30+09:00",
+  "updated_at": "2026-08-10T00:59:56+09:00",
   "reviewed_source_ts": [
+    "1786282173.010339",
     "1785829556.510789",
     "1780080303.009249",
     "1780047750.140829",
@@ -610,6 +611,54 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-10T00:59:56+09:00",
+      "selected": {
+        "id": "sr-1786282173-b9f6c11740",
+        "source_ts": "1786282173.010339",
+        "title": "REAPER / PlyBench: 局所妥当性と終端寄与を分離する経験 memory",
+        "reason": "source が slack_api/shared-reads、score 14、未レビューという条件を満たす最新の自己完結 atom で、memory・harness・game-design・agent・operation・evaluation の6優先タグを横断する。勝敗を全手へ複写せず局所妥当性と終端寄与を分ける知見が、直後の Phase 4a で過去ログを再利用する際の帰属判断を小さく変えられるため1件だけ選んだ。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "adopt_probe",
+      "decision_reason": "合計15で採用条件を満たす。shared-reads 本文は PlyBench の完全観測・決定論的 game、REAPER の local quality／outcome contribution 二軸、case／rule 二層、重複除去、memory freeze 評価、10独立 run の統計と三目並べに限る外的妥当性を具体化しており、最終勝敗だけで過去 trajectory 全体を良否判定しない行動へ直接変換できるため relevance・actionability・evidence は3とした。一方、probe-20260516-attributed-trajectory-tip は決定・状態遷移の成功／失敗寄与を1件だけ帰属して Strategy／Recovery／Optimization tip へ圧縮する点をすでに扱い、probe-20260709-clqt-diagnostic-decision-trail は final outcome と process axis を分離し、probe-20260618-ptcgbench-anchor-harness-split は memory 改善と harness 要因を分け、probe-20260709-bayesian-agent-feature-conditioned-update は反例付き trajectory なしの一般化を止める。REAPER 固有の新規 control は重複が大きいため non_redundancy=1 とし、active_probes を増やさず既存 attributed-trajectory probe を1回だけ再 lease する。Phase 4a の過去ログ再利用で、最終 status ではなく1件の決定／状態遷移へ寄与を帰属できる具体的 consumer と artifact があり、deterministic または観測可能な evidence に限定し、生 trajectory や恒久 rule を追加しないため risk_control=2、lease 解決後に撤回可能なので reversibility=3とした。",
+      "existing_probes": [
+        "probe-20260516-attributed-trajectory-tip",
+        "probe-20260709-clqt-diagnostic-decision-trail",
+        "probe-20260618-ptcgbench-anchor-harness-split",
+        "probe-20260709-bayesian-agent-feature-conditioned-update"
+      ],
+      "change": {
+        "type": "reuse_existing_probe",
+        "summary": "新規 probe は追加せず、既存の attributed-trajectory probe を直後の Phase 4a に1回だけ lease した。過去ログから最終 status だけでなく、成功／失敗へ寄与した決定・状態遷移を1件帰属し、短い tip へ圧縮する。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "memory/shared_reads_probe_lifecycle.jsonl",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": {
+        "probe_id": "probe-20260516-attributed-trajectory-tip",
+        "consumer_phase": "Phase 4a",
+        "trigger_artifact": "log/cycle_staging_log_cdx.md#Phase 4a",
+        "expected_delta": "過去ログの最終 status だけで cleanup 判断せず、成功または失敗へ寄与した決定・状態遷移を1件帰属し、Strategy／Recovery／Optimization の短い tip へ圧縮する。",
+        "lease_due": "2026-08-10T23:59:59+09:00",
+        "enqueue_result": "enqueued"
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-09T22:34:30+09:00",
       "selected": {

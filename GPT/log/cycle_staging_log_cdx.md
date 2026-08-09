@@ -147,7 +147,47 @@ reviewed_at: "2026-08-10T00:48:18+09:00"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786282173-b9f6c11740
+    source_ts: "1786282173.010339"
+    title: "REAPER / PlyBench: 局所妥当性と終端寄与を分離する経験 memory"
+    reason: "最新の未レビューかつ score 14 の自己完結 atom で、memory・harness・game-design・agent・operation・evaluation を横断する。直後の Phase 4a で過去ログを再利用する際、最終 status ではなく決定・状態遷移へ寄与を帰属する小さな判断差を作れるため1件だけ選んだ。Nao_u の明示的な重要評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: adopt_probe
+  decision_reason: "PlyBench／REAPER は local quality と outcome contribution、case と rule、learning と memory-freeze evaluation を分離し、終端結果を全 decision へ複写しない行動へ変換できる。一方、attributed-trajectory-tip、diagnostic-decision-trail、anchor-harness-split、feature-conditioned-update が主要部分を既に扱うため新規 probe は増やさない。既存 attributed-trajectory probe を Phase 4a に1回だけ再 lease し、deterministic または観測可能な evidence に基づく1件の帰属へ限定する。"
+  existing_probes:
+    - probe-20260516-attributed-trajectory-tip
+    - probe-20260709-clqt-diagnostic-decision-trail
+    - probe-20260618-ptcgbench-anchor-harness-split
+    - probe-20260709-bayesian-agent-feature-conditioned-update
+  change:
+    summary: "新規 probe は追加せず、既存 attributed-trajectory probe を再利用した。過去ログから成功／失敗へ寄与した決定・状態遷移を1件帰属し、Strategy／Recovery／Optimization の短い tip へ圧縮する。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - memory/shared_reads_probe_lifecycle.jsonl
+      - log/cycle_staging_log_cdx.md
+  lease:
+    probe_id: probe-20260516-attributed-trajectory-tip
+    consumer_phase: Phase 4a
+    trigger_artifact: "log/cycle_staging_log_cdx.md#Phase 4a"
+    expected_delta: "過去ログの最終 status だけで cleanup 判断せず、成功または失敗へ寄与した決定・状態遷移を1件帰属し、Strategy／Recovery／Optimization の短い tip へ圧縮する。"
+    lease_due: "2026-08-10T23:59:59+09:00"
+    enqueue_result: enqueued
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
