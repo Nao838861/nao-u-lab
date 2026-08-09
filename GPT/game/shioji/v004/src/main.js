@@ -1,47 +1,47 @@
-import { IsometricCamera } from './camera.js?v=v004.44.1-supply-layout';
-import { SimulationClock } from './clock.js?v=v004.44.1-supply-layout';
-import { createBoundaryEvents } from './boundary_events.js?v=v004.44.1-supply-layout';
+import { IsometricCamera } from './camera.js?v=v004.44.2-food-alerts';
+import { SimulationClock } from './clock.js?v=v004.44.2-food-alerts';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.44.2-food-alerts';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.44.1-supply-layout';
+} from './config.js?v=v004.44.2-food-alerts';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.44.1-supply-layout';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.44.1-supply-layout';
-import { developmentMapView } from './development_map.js?v=v004.44.1-supply-layout';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.44.1-supply-layout';
-import { formatElenaSpeech } from './elena_text.js?v=v004.44.1-supply-layout';
+} from './display_batch.js?v=v004.44.2-food-alerts';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.44.2-food-alerts';
+import { developmentMapView } from './development_map.js?v=v004.44.2-food-alerts';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.44.2-food-alerts';
+import { formatElenaSpeech } from './elena_text.js?v=v004.44.2-food-alerts';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.44.1-supply-layout';
+} from './food_readability.js?v=v004.44.2-food-alerts';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.44.1-supply-layout';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.44.1-supply-layout';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.44.1-supply-layout';
-import { goodsDetail } from './goods_detail.js?v=v004.44.1-supply-layout';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.44.1-supply-layout';
-import { WorldPresentation } from './presentation.js?v=v004.44.1-supply-layout';
-import { Renderer } from './renderer.js?v=v004.44.1-supply-layout';
+} from './keyboard.js?v=v004.44.2-food-alerts';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.44.2-food-alerts';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.44.2-food-alerts';
+import { goodsDetail } from './goods_detail.js?v=v004.44.2-food-alerts';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.44.2-food-alerts';
+import { WorldPresentation } from './presentation.js?v=v004.44.2-food-alerts';
+import { Renderer } from './renderer.js?v=v004.44.2-food-alerts';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.44.1-supply-layout';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.44.1-supply-layout';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.44.1-supply-layout';
+} from './save_game.js?v=v004.44.2-food-alerts';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.44.2-food-alerts';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.44.2-food-alerts';
 import {
   GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRow, supplyDemandRows,
-} from './supply_demand.js?v=v004.44.1-supply-layout';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.44.1-supply-layout';
+} from './supply_demand.js?v=v004.44.2-food-alerts';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.44.2-food-alerts';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.44.1-supply-layout';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.44.1-supply-layout';
+} from './ui_guidance.js?v=v004.44.2-food-alerts';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.44.2-food-alerts';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');

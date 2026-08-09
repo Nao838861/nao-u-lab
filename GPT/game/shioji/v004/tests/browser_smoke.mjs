@@ -1148,7 +1148,7 @@ async function checkSeasonalPlots(width, height, mobile) {
       plots: plots.map(row => row.type),
     };
   })()`);
-  assert.equal(springStart.version, 'v004.44.1-supply-layout', JSON.stringify(springStart));
+  assert.equal(springStart.version, 'v004.44.2-food-alerts', JSON.stringify(springStart));
   assert.equal(springStart.season, '春', JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => ['wheat', 'veg'].includes(type)), JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => type === 'shepherd'), JSON.stringify(springStart));
@@ -1534,8 +1534,8 @@ async function checkPeopleVisuals(width, height, mobile) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.44.1-supply-layout');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.44.1-supply-layout');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.44.2-food-alerts');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.44.2-food-alerts');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -2503,8 +2503,75 @@ async function checkSupplyDemand(width, height, mobile) {
   assert.equal(result.pageHorizontalOverflow, false, JSON.stringify(result));
   assert.equal(result.supplyBreakdownVisible, !mobile, JSON.stringify(result));
   assert.equal(result.demandBreakdownVisible, true, JSON.stringify(result));
-  assert.equal(result.runtimeVersion, 'v004.44.1-supply-layout', JSON.stringify(result));
+  assert.equal(result.runtimeVersion, 'v004.44.2-food-alerts', JSON.stringify(result));
   await page.screenshot(`/tmp/shioji_v004_supply_demand_${mobile ? 'mobile' : 'pc'}_${width}x${height}.png`);
+  await page.close();
+  return result;
+}
+
+async function checkFoodAlerts(width, height, mobile) {
+  const page = await newPage(width, height, mobile);
+  const result = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.setSpeed(0);
+    for (let day = 0; day < 180; day += 1) game.advanceTicks(30, { animate: false });
+    const labels = [
+      'お金がなく買えない', '高くて買えない', '荷が多く運べない',
+      '市場への道がない', '市場に食料なし', '市場に出ていない',
+      '買い出し中', '次の買い出し待ち', '今日分を食べ切った',
+    ];
+    const rendered = [];
+    const widths = {};
+    const context = game.renderer.ctx;
+    const originalFillText = context.fillText;
+    const originalRoundRect = context.roundRect;
+    const originalFrameBounds = game.renderer.frameBounds;
+    let activeLabel = null;
+    try {
+      game.renderer.frameBounds = null;
+      context.fillText = function fillFoodAlert(text, ...args) {
+        if (activeLabel && String(text).includes(activeLabel)) rendered.push(activeLabel);
+        return originalFillText.call(this, text, ...args);
+      };
+      context.roundRect = function measureFoodAlert(x, y, widthValue, ...args) {
+        if (activeLabel) widths[activeLabel] = Math.max(widths[activeLabel] ?? 0, widthValue);
+        return originalRoundRect.call(this, x, y, widthValue, ...args);
+      };
+      for (const label of labels) {
+        activeLabel = label;
+        const model = structuredClone(game.model);
+        delete model.renderScene;
+        for (const building of model.buildings.filter(row => row.ownerHouseholdId !== null)) {
+          building.stateSignals = {
+            ...(building.stateSignals ?? {}),
+            crisis: { kind: 'delivery', severity: 'warning', label, goods: ['wheat'] },
+          };
+        }
+        game.renderer.drawCrisisSignals(model);
+      }
+    } finally {
+      game.renderer.frameBounds = originalFrameBounds;
+      context.fillText = originalFillText;
+      context.roundRect = originalRoundRect;
+    }
+    return {
+      labels,
+      rendered: [...new Set(rendered)],
+      widths,
+      zoom: game.camera.zoom,
+      runtimeVersion: game.version,
+    };
+  })()`);
+  assert.deepEqual(result.rendered, result.labels, JSON.stringify(result));
+  for (const label of result.labels) {
+    assert.ok(
+      result.widths[label] >= Math.max(86, [...label].length * 9 + 18) * result.zoom,
+      JSON.stringify(result),
+    );
+  }
+  assert.equal(result.runtimeVersion, 'v004.44.2-food-alerts', JSON.stringify(result));
+  assert.deepEqual(page.errors, []);
+  await page.screenshot(`/tmp/shioji_v004_food_alerts_${mobile ? 'mobile' : 'pc'}.png`);
   await page.close();
   return result;
 }
@@ -2544,7 +2611,7 @@ async function checkSpatialProductivity(width = 1440, height = 900, mobile = fal
   })()`);
   assert.ok(building && !building.missing,
     `資源職の30日実測を建物画面へ表示できる: ${JSON.stringify(building)}`);
-  assert.equal(building.version, 'v004.44.1-supply-layout');
+  assert.equal(building.version, 'v004.44.2-food-alerts');
   assert.ok(Number.isFinite(building.efficiency), JSON.stringify(building));
   assert.ok(Number.isFinite(building.resourceEfficiency), JSON.stringify(building));
   assert.equal(building.withinViewport, true, JSON.stringify(building));
@@ -2736,7 +2803,7 @@ async function checkMarketRhythmUi(width = 1440, height = 900, mobile = false) {
       hidden: sheet.hidden,
     };
   })()`);
-  assert.equal(result.version, 'v004.44.1-supply-layout', JSON.stringify(result));
+  assert.equal(result.version, 'v004.44.2-food-alerts', JSON.stringify(result));
   assert.equal(result.hidden, false, JSON.stringify(result));
   assert.match(result.label, /出荷をまとめ中 1\/2日/, JSON.stringify(result));
   assert.match(result.detail, /食料切れと生産停止は待ちません/, JSON.stringify(result));
@@ -2885,6 +2952,12 @@ if (process.argv.includes('--start-choice-only')) {
     compactPc: compactPc.statusCounts,
     mobile: mobile.statusCounts,
     compactMobile: compactMobile.statusCounts,
+  })}`);
+} else if (process.argv.includes('--food-alert-only')) {
+  const pc = await checkFoodAlerts(1440, 900, false);
+  const mobile = await checkFoodAlerts(390, 844, true);
+  console.log(`CHARTER ISLE v004 food alert smoke: PASS ${JSON.stringify({
+    pc: pc.rendered, mobile: mobile.rendered,
   })}`);
 } else if (process.argv.includes('--save-delivery-only')) {
   await checkSaveDeliveryUi(1440, 900, false);

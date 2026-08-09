@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { createEngineApi, replayInputJournal } from '../../engine/src/api.js';
 import { buildBaseCity, findAuditSpot } from '../../engine/src/audit.js';
-import { runPopulationDynamicsPhase } from '../../engine/src/econ.js';
+import { FOODS, runPopulationDynamicsPhase } from '../../engine/src/econ.js';
 import { ECONOMIC_BUILDINGS } from '../../engine/src/physical.js';
 import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
@@ -84,7 +84,8 @@ import {
 } from '../src/ui_guidance.js';
 import { islandCalendar, islandHealthSummary, recentCompanySummary } from '../src/ui_summary.js';
 import {
-  COMPANY_VISIBLE_PORTER_LIMIT, snapshotToViewModel, terrainTopologyForModel,
+  COMPANY_VISIBLE_PORTER_LIMIT, FOOD_DELIVERY_ALERT_LABELS, foodDeliveryAlertLabel,
+  snapshotToViewModel, terrainTopologyForModel,
   walkingVisualPosition, walkingVisualProfile,
 } from '../src/view_model.js';
 import {
@@ -118,6 +119,45 @@ function test(name, body) {
   passed += 1;
   console.log(`ok - ${name} (${(elapsedMs / 1000).toFixed(2)}s)`);
 }
+
+test('食料警告: 盤面でも購買力・在庫・経路・移動の原因を区別する', () => {
+  assert.deepEqual(FOOD_DELIVERY_ALERT_LABELS, {
+    no_money: 'お金がなく買えない',
+    too_expensive: '高くて買えない',
+    no_capacity: '荷が多く運べない',
+    no_route: '市場への道がない',
+    no_stock: '市場に食料なし',
+    not_released: '市場に出ていない',
+    shopping: '買い出し中',
+    waiting: '次の買い出し待ち',
+    consumed: '今日分を食べ切った',
+  });
+  assert.equal(foodDeliveryAlertLabel({ kind: 'unknown' }), '食料不足');
+
+  const world = buildBaseCity(11);
+  const api = createEngineApi(world);
+  api.advanceDays(120);
+  const household = world.state.economy.households[0];
+  for (const goods of FOODS) household.pantry[goods] = 0;
+  household.state = 'home';
+  household.lastMarketVisit = {
+    day: world.state.economy.currentDay,
+    purchased: {},
+    blockers: { wheat: 'no_money' },
+  };
+  world.state.economy.stalls.wheat = [{
+    householdId: world.state.economy.households[1].id,
+    goods: 'wheat',
+    qty: 20,
+    price: 1,
+  }];
+  const model = snapshotToViewModel(api.snapshot({ scope: 'view' }));
+  const row = model.households.find(candidate => candidate.id === household.id);
+  const building = model.buildings.find(candidate => candidate.ownerHouseholdId === household.id);
+  assert.equal(row.foodDelivery.kind, 'no_money');
+  assert.equal(row.foodDelivery.label, '食料を買うお金が足りません');
+  assert.equal(building.stateSignals.crisis.label, 'お金がなく買えない');
+});
 
 test('品目スプライト: 全18品を色なしの輪郭で区別し、CanvasとUIで同じ定義を使う', () => {
   const goods = Object.keys(GOODS_LABELS);
@@ -2226,7 +2266,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.44.1-supply-layout');
+  assert.equal(VERSION, 'v004.44.2-food-alerts');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);

@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.44.1-supply-layout';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.44.2-food-alerts';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.44.1-supply-layout';
+} from './food_readability.js?v=v004.44.2-food-alerts';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.44.1-supply-layout';
-import { analyzeRoadConnections } from './placement.js?v=v004.44.1-supply-layout';
+} from './engine_bridge.js?v=v004.44.2-food-alerts';
+import { analyzeRoadConnections } from './placement.js?v=v004.44.2-food-alerts';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.44.1-supply-layout';
+} from './render_scene.js?v=v004.44.2-food-alerts';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.44.1-supply-layout';
+} from './visuals.js?v=v004.44.2-food-alerts';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
@@ -28,6 +28,17 @@ const CONVERSION_JOBS = Object.freeze({
 const MODEL_TOPOLOGY_REVISIONS = new WeakMap();
 export const COMPANY_VISIBLE_PORTER_LIMIT = 6;
 const FOOD_GOODS_SET = new Set(FOOD_GOODS);
+export const FOOD_DELIVERY_ALERT_LABELS = Object.freeze({
+  no_money: 'お金がなく買えない',
+  too_expensive: '高くて買えない',
+  no_capacity: '荷が多く運べない',
+  no_route: '市場への道がない',
+  no_stock: '市場に食料なし',
+  not_released: '市場に出ていない',
+  shopping: '買い出し中',
+  waiting: '次の買い出し待ち',
+  consumed: '今日分を食べ切った',
+});
 const REQUIREMENT_GOODS = Object.freeze({
   food1: Object.freeze(['wheat']),
   food2: Object.freeze(['fish', 'veg']),
@@ -40,6 +51,10 @@ const REQUIREMENT_GOODS = Object.freeze({
   cloth: Object.freeze(['cloth']),
   iron: Object.freeze(['iron']),
 });
+
+export function foodDeliveryAlertLabel(delivery) {
+  return FOOD_DELIVERY_ALERT_LABELS[delivery?.kind] ?? '食料不足';
+}
 
 function stableVisualHash(value) {
   let hash = 2166136261;
@@ -241,7 +256,7 @@ function foodDeliveryStatus(household, economy) {
     return {
       kind: 'no_money',
       tone: 'blocked',
-      label: '食費に対して財布が足りません',
+      label: '食料を買うお金が足りません',
       detail: available.length
         ? '市場に食料はありますが、必要な一日分を買える所持金がありません。'
         : '前回の買い出しでは、必要な食料を買う所持金がありませんでした。',
@@ -375,7 +390,7 @@ function householdStateSignals(household, economy) {
       && delivery?.kind !== 'returning' ? {
         kind: 'delivery',
         severity: 'warning',
-        label: '食料が届かない',
+        label: foodDeliveryAlertLabel(delivery),
         goods: delivery?.goods?.slice(0, 2) ?? ['wheat'],
     } : null,
   ].filter(Boolean);

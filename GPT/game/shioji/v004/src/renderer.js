@@ -1,15 +1,15 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.44.1-supply-layout';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.44.1-supply-layout';
-import { islandCalendar } from './ui_summary.js?v=v004.44.1-supply-layout';
+} from './config.js?v=v004.44.2-food-alerts';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.44.2-food-alerts';
+import { islandCalendar } from './ui_summary.js?v=v004.44.2-food-alerts';
 import {
   compileRenderScene, inventoryLayerDepth, marketStallLayerDepth, mergeDrawables,
-} from './render_scene.js?v=v004.44.1-supply-layout';
+} from './render_scene.js?v=v004.44.2-food-alerts';
 import {
   buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
   seasonalTerrainVisual,
-} from './visuals.js?v=v004.44.1-supply-layout';
+} from './visuals.js?v=v004.44.2-food-alerts';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
@@ -538,7 +538,8 @@ export class Renderer {
         : crisis.kind === 'demotion' ? '↓'
           : crisis.kind === 'delivery' ? '' : '!';
       const missingGoods = (crisis.goods ?? []).filter(goods => GOODS_ART[goods]).slice(0, 2);
-      const badgeWidth = (86 + missingGoods.length * 17) * this.camera.zoom;
+      const labelWidth = Math.max(86, [...crisis.label].length * 9 + 18);
+      const badgeWidth = (labelWidth + missingGoods.length * 17) * this.camera.zoom;
       const badgeLeft = point.x - badgeWidth / 2;
       ctx.save();
       // 動く警告は死亡・離散間際だけ。中程度と降格間際は静止させる。

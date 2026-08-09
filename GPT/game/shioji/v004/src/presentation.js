@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.44.1-supply-layout';
+import { pileVisual } from './visuals.js?v=v004.44.2-food-alerts';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));

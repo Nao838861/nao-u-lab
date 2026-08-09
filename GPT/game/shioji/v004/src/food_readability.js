@@ -1,4 +1,4 @@
-import { islandCalendar } from './ui_summary.js?v=v004.44.1-supply-layout';
+import { islandCalendar } from './ui_summary.js?v=v004.44.2-food-alerts';
 
 export const FOOD_GOODS = Object.freeze([
   'fish', 'veg', 'wheat', 'pres', 'pick', 'meat',

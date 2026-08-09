@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.44.1-supply-layout';
+import { TILE } from './config.js?v=v004.44.2-food-alerts';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));
