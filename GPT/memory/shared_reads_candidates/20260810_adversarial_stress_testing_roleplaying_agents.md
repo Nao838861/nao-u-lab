@@ -7,14 +7,19 @@ genre_tags: [game-design, npc, role-playing-agent, llm-evaluation, adversarial-t
 evaluated_at: "2026-08-10T06:55:24+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-10T06:55:24+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-10T06:55:24+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-10T07:05:33+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786313116669499"
+next_action: none
 stale_after: "2026-09-09"
 supersedes: []
+posted:
+  ts: "1786313116.669499"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786313116669499"
+  char_count: 4366
+  posted_at: "2026-08-10T07:05:33+09:00"
 gate_reason: >-
   問題設定、段階的な 6 adversarial strategy、3-agent 分離、3 persona × 3 model の比較、人手検証まで揃い、重要要素を抽出できる。
   会話 NPC の persona drift を長期対話で検出する playtest harness へ直接適用でき、定量結果と限界を含む CoopEval 水準の概要を構成できる。

@@ -109,7 +109,19 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260810_adversarial_stress_testing_roleplaying_agents.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786313116669499
+    char_count: 4366
+skipped: []
+review:
+  policy: pass
+  duplicate_check: no_existing_post
+  source_review: arXiv_pdf_full_text_and_tables
+  final_decision: partial_adoption
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
