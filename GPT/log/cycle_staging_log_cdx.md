@@ -155,7 +155,110 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語4種と per-file atom index 参照を検証。broken link / entry mismatch は0件。"
+  - "atoms 2838件を health audit。atom id重複・mirror conflict・parse errorは0件。normalized content重複40群は既存overlayでfold済み。"
+  - "shared-reads の title canonical / mixed duplicate / open duplicate / stale triage / group action sidecarを再生成。"
+  - "期限到来した postponed / needs_review のうち、duplicate group handoffと重ならない5件をPhase 2 candidate handoff inboxへ冪等enqueue。"
+  - "Slack directives 23行・broadcasts 21行を確認。pendingはともに0件で、handled更新は不要。"
+  - "memory/raw/ の30日超未更新ファイル238件を確認（web_research 214、headless_eval 16、slack_api 5、game_eval 1、slack_archive 1、sync_state 1）。原文provenanceとして参照中のため、このcycleでは移動なし。"
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』部分が replacement character を含む状態で、raw Slack archiveから atoms.jsonl / per-file / indexへ伝播している。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/index.jsonl"
+    source_file_status: "UTF-8明示読みでも raw source と派生3層に『AIエ��ジェント』が存在し、source data自体の局所破損。MEMORY.md本体は代表語4種を正常取得。"
+    display_or_tooling_status: "PowerShell / rg の双方で同一 replacement character を再現。表示経路だけのmojibakeではない。なお gr-1777083728-44d444ab7a の health warning は本文中の意図的な『???』によるfalse positive。"
+    why_blocks_game_memory: "当該1 atomの日本語検索語が欠損し、agent memory構造の過去知見を語句検索した時の再現率をわずかに落とす。game task entry pointやmirror整合性全体は阻害していない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 3
+    dormant: 1
+stale_review_batch:
+  - handoff_id: cha-9d396b94aff6ed9a
+    path: memory/shared_reads_candidates/20260709_static_level_k_llm_behavioural_games.md
+    status: postponed
+    stale_after: "2026-08-08"
+    priority_reason: "static level-k / belief updating欠落はAI playtester評価に有用だが、実験設定と結果の粒度を再確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-036bdce71dd32db7
+    path: memory/shared_reads_candidates/20260710_gdc2026_outer_worlds2_poi_design.md
+    status: postponed
+    stale_after: "2026-08-09"
+    priority_reason: "POIをworldbuilding・gameplay systems・progressionの交点として読む軸を、一次資料の具体例まで再評価する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-f97e8a6d84fe2faa
+    path: memory/shared_reads_candidates/20260710_llm_telephone_game_cultural_attractors.md
+    status: postponed
+    stale_after: "2026-08-09"
+    priority_reason: "反復伝達のbias / attractorをNPC会話や世界状態圧縮へ移す前に、実験設計と結果を補強する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-23377eb5ea21868b
+    path: memory/shared_reads_candidates/20260710_multiplayer_world_models_rocket_league.md
+    status: postponed
+    stale_after: "2026-08-09"
+    priority_reason: "multiplayer action stream conditioningの制作転用可能性と、world-model技術報告としての距離を再判定する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-cdcd6e5eb8537828
+    path: memory/shared_reads_candidates/20260710_open_source_games_llm_strategy_eval.md
+    status: postponed
+    stale_after: "2026-08-09"
+    priority_reason: "program strategy提出型評価について、game set・protocol・metric・代表結果の不足をPhase 2で確認する。"
+    recommended_review_action: reevaluate_in_phase2
+candidate_lifecycle:
+  counts:
+    posted: 574
+    ready_to_post: 9
+    postponed: 240
+    failed: 420
+    needs_review: 3
+  overdue_for_reassessment: 20
+  missing_stale_after: 3
+stale_backlog:
+  overdue_open_total: 20
+  stale_triage_queue_rows: 18
+  remaining_overdue_not_enqueued: 15
+  candidate_enqueued_count: 5
+  open_duplicate_group_count: 46
+  mixed_group_count: 40
+  all_open_group_count: 6
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-9d396b94aff6ed9a
+    - cha-036bdce71dd32db7
+    - cha-f97e8a6d84fe2faa
+    - cha-23377eb5ea21868b
+    - cha-cdcd6e5eb8537828
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+audit_summary:
+  memory_health_status: warning
+  memory_health_errors: 0
+  raw_normalized_content_duplicate_groups: 40
+  recall_visible_duplicate_groups_folded: 3
+  effective_duplicate_blockers: 0
+  atom_mirror_conflicts: 0
+  title_canonical_rows: 83
+  mixed_duplicate_rows: 40
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
