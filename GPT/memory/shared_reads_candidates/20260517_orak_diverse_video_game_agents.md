@@ -4,22 +4,21 @@ url: "https://openreview.net/forum?id=H1ncX6O6Yh"
 collected_at: "2026-05-17T09:44:24+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, ai-agent, benchmark, mcp, evaluation, fine-tuning]
-evaluated_at: "2026-07-09T21:35:47+09:00"
+evaluated_at: "2026-08-10T00:40:07+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-07-09T21:35:47+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260618_orak_diverse_video_game_agents.md"
-stale_after: "2026-08-08"
+last_reviewed_at: "2026-08-10T00:40:07+09:00"
+last_decision: postpone
+duplicate_reason: duplicate_title_requires_provenance_review
+evidence: "gate_decision:postpone; evaluated_at:2026-08-10T00:40:07+09:00; preflight:open_duplicate_title_match"
+stale_after: "2026-09-09"
 supersedes: []
-next_action: none
+next_action: revise_or_research
 gate_reason: >-
-  posted duplicate title sibling があるため Phase 3 投稿対象から外す。
-  terminal sibling: memory/shared_reads_candidates/20260618_orak_diverse_video_game_agents.md。
-  本文再評価は行わず、代表 candidate だけ lifecycle を postponed_duplicate として閉じる。
+  OpenReview と既投稿 arXiv は title・手法記述が一致するが、fresh preflight は URL / work identity
+  の同一性を確定できず review となった。title 一致だけでは閉じず、provenance 対応を確認するまで投稿を保留する。
 
 ---
 

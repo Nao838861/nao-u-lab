@@ -4,21 +4,21 @@ url: "https://arxiv.org/abs/2606.09826"
 collected_at: "2026-07-09T13:44:25+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, agent-evaluation, vlm-agent, ue5, playtesting, harness]
-evaluated_at: "2026-07-09T13:47:38+09:00"
+evaluated_at: "2026-08-10T00:40:07+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-09T13:47:38+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260611_omnigamearena_vlm_game_agents.md"
+last_reviewed_at: "2026-08-10T00:40:07+09:00"
+last_decision: postpone
+duplicate_reason: duplicate_of_terminal_sibling
+evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260611_omnigamearena_vlm_game_agents.md; permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781162534005769; work arxiv:2606.09826"
 next_action: none
-stale_after: "2026-08-08"
+stale_after: "2026-09-09"
 supersedes: []
 gate_reason: >-
-  mixed duplicate queue に同一 title_key の posted sibling があり、Phase 3 投稿対象にしない。
-  IDC と held-out variant の論点は有用だが、既に posted draft があるため今回候補は重複として保留する。
+  posted-source preflight が canonical URL / arXiv work identity の一致と実投稿 permalink を確認した。
+  IDC と held-out variant を含む同一 work は既投稿済みのため Phase 3 対象から外す。
 ---
 
 ## raw_excerpt

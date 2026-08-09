@@ -4,22 +4,21 @@ url: "https://github.blog/ai-and-ml/github-copilot/dungeons-desktops-building-a-
 collected_at: "2026-05-19T23:20:24+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [procedural-generation, roguelike, ai-assisted-development, tooling, terminal-game]
-evaluated_at: "2026-05-19T23:23:11+09:00"
+evaluated_at: "2026-08-10T00:40:07+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-07-10T01:35:18+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260527_copilot_cli_roguelike_design_flow.md"
-stale_after: "2026-08-09"
+last_reviewed_at: "2026-08-10T00:40:07+09:00"
+last_decision: postpone
+duplicate_reason: duplicate_of_terminal_sibling
+evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260527_copilot_cli_roguelike_design_flow.md; permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779854697895229; canonical URL match"
+stale_after: "2026-09-09"
 supersedes: []
 next_action: none
 gate_reason: |
-  mixed duplicate queue で同一 title_key の posted sibling
-  memory/shared_reads_candidates/20260527_copilot_cli_roguelike_design_flow.md を確認した。
-  deterministic PCG の論点は既投稿側で扱うため、本候補は Phase 3 投稿対象にしない。
+  posted-source preflight が canonical URL の一致と実投稿 permalink を確認した。
+  deterministic PCG の論点を含む同一記事は既投稿済みのため Phase 3 対象から外す。
 
 ---
 

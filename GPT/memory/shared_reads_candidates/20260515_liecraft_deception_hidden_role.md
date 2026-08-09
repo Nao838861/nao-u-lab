@@ -4,22 +4,21 @@ url: https://arxiv.org/abs/2603.06874
 collected_at: 2026-05-15T12:59:38+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [hidden-role-game, multi-agent, llm-evaluation, deception]
-evaluated_at: 2026-07-09T21:35:47+09:00
+evaluated_at: "2026-08-10T00:38:41+09:00"
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-07-09T21:35:47+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260605_liecraft_hidden_role_llm_eval.md"
-stale_after: "2026-08-08"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-08-10T00:38:41+09:00"
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-77b0ff4b135a4b06; terminal:memory/shared_reads_candidates/20260528_liecraft_deception_game_benchmark.md: status:posted;permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779972051823869;work:arxiv:2603.06874; reason:all open siblings match the posted candidate canonical URL and arXiv work identity"
+stale_after: "2026-09-09"
 supersedes: []
 next_action: none
 gate_reason: |-
-  posted duplicate title sibling があるため Phase 3 投稿対象から外す。
-  terminal sibling: memory/shared_reads_candidates/20260605_liecraft_hidden_role_llm_eval.md。
-  本文再評価は行わず、代表 candidate だけ lifecycle を postponed_duplicate として閉じる。
+  posted-source preflight が canonical URL / arXiv work identity の一致と実投稿 permalink を確認した。
+  同一 work の既投稿重複であり別 candidate として残す差分がないため、duplicate lifecycle を failed で閉じる。
 
 ---
 

@@ -4,21 +4,21 @@ url: "https://arxiv.org/abs/2607.04470v1"
 collected_at: "2026-07-09T17:29:02+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, reinforcement-learning, reward-design, multi-agent, evaluation]
-evaluated_at: "2026-07-09T17:32:45+09:00"
+evaluated_at: "2026-08-10T00:40:07+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-09T17:32:45+09:00"
+last_reviewed_at: "2026-08-10T00:40:07+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-09T17:32:45+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-08"
+duplicate_reason: duplicate_of_terminal_sibling
+evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260708_regime_conditional_llm_marl_stabilisation.md; permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783442502010979; work arxiv:2607.04470"
+next_action: none
+stale_after: "2026-09-09"
 supersedes: []
 gate_reason: >-
-  LLM 生成 reward の drift と stationarity 破壊という論点は有用だが、中心は
-  cooperative MARL training の安定化で、現在の Log_cdx の playable diff / headless
-  evaluator へは一段抽象化が必要。関連候補と束ねて reward-freeze 運用として再評価する。
+  posted-source preflight が canonical URL / arXiv work identity の一致と実投稿 permalink を確認した。
+  同一 work は既投稿済みのため本文評価を積み増さず、Phase 3 対象から外す。
 ---
 
 ## raw_excerpt

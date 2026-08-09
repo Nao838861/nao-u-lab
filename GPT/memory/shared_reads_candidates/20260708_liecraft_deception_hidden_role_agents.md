@@ -4,21 +4,21 @@ url: "https://arxiv.org/abs/2603.06874"
 collected_at: "2026-07-08T15:55:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, hidden-role, multi-agent, evaluation, safety]
-evaluated_at: "2026-08-09T22:10:33+09:00"
+evaluated_at: "2026-08-10T00:38:41+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-08-09T22:10:33+09:00"
-last_decision: postpone
-duplicate_reason: duplicate_of_terminal_sibling
-evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260528_liecraft_deception_game_benchmark.md; permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779972051823869; work arxiv:2603.06874"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-10T00:38:41+09:00"
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-77b0ff4b135a4b06; terminal:memory/shared_reads_candidates/20260528_liecraft_deception_game_benchmark.md: status:posted;permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779972051823869;work:arxiv:2603.06874; reason:all open siblings match the posted candidate canonical URL and arXiv work identity"
 next_action: none
-stale_after: "2026-09-08"
+stale_after: "2026-09-09"
 supersedes: []
 gate_reason: >-
-  posted-source index で arXiv:2603.06874 の実投稿と一致したため、Phase 3 投稿対象にしない。
-  hidden-role deception sandbox の評価軸は有用だが、既投稿内容との差分がないため duplicate として postponed を維持する。
+  posted-source preflight が arXiv:2603.06874 の canonical work と実投稿 permalink の一致を確認した。
+  既投稿内容との差分がないため、duplicate lifecycle を failed で閉じる。
 ---
 
 ## raw_excerpt

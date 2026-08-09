@@ -4,6 +4,20 @@ url: "https://schedule.gdconf.com/session/marvel-rivals-putting-the-super-into-h
 collected_at: "2026-08-10T00:32:44+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, hero-shooter, character-design, balancing, live-service, gdc]
+evaluated_at: "2026-08-10T00:41:41+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-10T00:41:41+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-10T00:41:41+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-09"
+supersedes: []
+gate_reason: >-
+  公式 session 概要から問題設定・着想・takeaway は取れるが、hero essence の抽出手順、kit への翻訳、
+  long-term balance の具体的方法と評価結果がない。~4000字概要を一次根拠で支えられる講演資料が得られるまで保留する。
 ---
 
 ## raw_excerpt
