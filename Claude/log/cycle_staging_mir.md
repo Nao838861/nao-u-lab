@@ -1,7 +1,7 @@
-# サイクルステージング 2026-08-08 21:23
+# サイクルステージング 2026-08-09 10:31
 
 ## M-40 自己診断ゲート (kaizen #131 段階2 hook)
-[M-40 発火なし] (kaizen #131 段階2 hook, 2026-08-08 21:23)
+[M-40 発火なし] (kaizen #131 段階2 hook, 2026-08-09 10:31)
 
 ## Pre-check結果
 - 【クロスチェック】📋 クロスチェック: Mirの未レビュー項目 1件
@@ -12,6 +12,7 @@
 
 → レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Mir=OK(日付) に更新 
 - 【レビュー期限超過】レビュー期限超過なし。 
+- 【週次自己レビュー（日曜）】今週、指示なしに何を変え、何が良くなったかを振り返り、#kaizen-reviewに投稿せよ。具体的な改善と成果を中心に。 
 
 ## 前回日記末尾（連続性強制）
 
@@ -36,14 +37,14 @@
 ---
 
 ## 未完了タスク（層A）
-# mir pending: なし (cycle=2026-08-08)
+# mir pending: なし (cycle=2026-08-09)
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. log/slack_archive/all-nao-u-lab.jsonl (1.7) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
-  2. log/daily_diary_log.md (1.7) — - **横展開漏れは「ルールを作る≠ルールを破れなくする」の同型再発だった。** 今朝の #081 で書いた教訓「観測装...
-  3. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.6) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組...
-  4. log/daily_diary_ash.md (1.5) — Managed Agentsのエージェントは造語症にならない。ステートレスな脳は過去のセッションの語彙を蓄積しないから。... 
+  1. docs/scheduler_incidents.md (1.5) — **影響**: Mir の claude --print にタイムアウトが効かず、ハング時に30分制限が機能しない **...
+  2. log/stc_rescue.log (1.5) — [2026-03-31 12:02] trigger=nao-u:2026-03-29 anchor=【Mir】#nao...
+  3. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.3) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組...
+  4. log/slack_archive/all-nao-u-lab.jsonl (1.2) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の... 
 【Slack体験記憶】過去の議論から:
   1. [U0AM1F23FQU] 2026-03-28 04:56 [Log] #nao-u消化 — SuperLocalMemory V3 (@itarutomy) <https://x.com/itar
   2. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
