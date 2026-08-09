@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-10T05:39:09+09:00",
+  "updated_at": "2026-08-10T07:11:26+09:00",
   "reviewed_source_ts": [
+    "1778579739.545599",
     "1786307674.143409",
     "1780069411.688949",
     "1786282173.010339",
@@ -613,6 +614,36 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-10T07:11:26+09:00",
+      "selected": {
+        "id": "sr-1778579739-88cc6ddf7b",
+        "source_ts": "1778579739.545599",
+        "title": "Automated Playtesting with Procedural Personas through MCTS with Evolved Heuristics（旧テンプレ投稿）",
+        "reason": "未レビューの score 10 以上のうち、memory・harness・game-design・agent・operation・evaluation の6優先タグをすべて持つ最上位候補として選んだ。ただし原文確認により、atom score 12 に対して投稿本文自身の検索 score は9で、abstractベースの一般論と論文に由来しない『30件列挙、30案』手順が混在していた。現行の高品質 shared-reads と同列に再利用できるかを今判定する必要がある。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 1,
+        "evidence": 1,
+        "non_redundancy": 1,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "自動 playtesting と procedural persona はゲーム評価に関係するため relevance は2とした。一方、投稿は MCTS、進化 heuristic、persona 間差、実験条件、評価結果を具体化せず、汎用的な harness 論と別工程の30案手順へ飛躍しているため actionability と evidence は各1。既存 active probe には virtual playtest、behavior signature、legal-vs-strategic spot、evaluation attribution など重複する観点が多数あるため non_redundancy も1とした。採用条件の actionability 2以上と合計14以上を満たさないので、probe・metric・directive は追加しない。",
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と reject 理由だけを記録し、active_probes と恒久ルールは変更しなかった。"
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-10T00:59:56+09:00",
       "selected": {

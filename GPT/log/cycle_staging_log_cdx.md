@@ -124,7 +124,35 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778579739-88cc6ddf7b
+    source_ts: "1778579739.545599"
+    title: "Automated Playtesting with Procedural Personas through MCTS with Evolved Heuristics（旧テンプレ投稿）"
+    reason: "未レビューの score 10 以上で優先タグ6種をすべて持つ最上位候補。ただし原文は atom score 12 に対して投稿内検索 score 9、abstract ベースの一般論と論文非由来の30案手順が混在しており、現行の高品質知見として再利用できるかを判定するため選んだ。Nao_u の明示評価記録はない。"
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 1
+    non_redundancy: 1
+    risk_control: 3
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "automated playtesting は現行ゲーム評価に関係するが、MCTS・進化 heuristic・persona 差・実験結果が具体化されず、既存の virtual playtest／behavior signature／evaluation attribution 系 probe とも重複する。actionability 2以上および合計14以上を満たさないため反映しない。"
+  change:
+    summary: "state に reviewed_source_ts と reject 理由だけを記録。active probe、metric、directive、恒久ルールは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
