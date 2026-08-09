@@ -112,7 +112,18 @@ duplicate_preflight_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260708_arc_agi3_speed_depth_tradeoff.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786307674143409"
+    char_count: 4034
+  - candidate: memory/shared_reads_candidates/20260810_scrambletoolbench_hidden_tool_discovery.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786307680102929"
+    char_count: 4475
+skipped: []
+reviewed_at: "2026-08-10T05:34:56.1270296+09:00"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
