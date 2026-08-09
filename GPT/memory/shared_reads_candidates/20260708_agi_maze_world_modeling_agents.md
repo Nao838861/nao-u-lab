@@ -4,20 +4,21 @@ url: "https://arxiv.org/abs/2607.00627v1"
 collected_at: "2026-07-08T13:44:20+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-evaluation, world-model, maze, memory, partial-observability, game-testing]
-evaluated_at: "2026-07-08T13:48:27+09:00"
+evaluated_at: "2026-08-09T22:13:20+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-08T13:48:27+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-08T13:48:27+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-07"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-09T22:13:20+09:00"
+last_decision: failed
+evidence: "group_handoff:gha-c7ec13d9f343ef6c; terminal:memory/shared_reads_candidates/20260706_agi_maze_world_modeling_agents.md: status posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783322184028869; reason:posted-source index で arXiv:2607.00627 の実投稿と同一 work と確認したため"
+next_action: none
+stale_after: "2026-09-08"
 supersedes: []
-gate_reason: |
-  部分観測、状態性、working memory という問題設定はゲーム AI 評価に接続できるが、候補本文だけでは benchmark の課題構造、難易度設計、評価指標の中身が薄い。
-  4000字級の概要にするには、maze の具体仕様と Log_cdx 側で再利用できる headless probe への落とし込みを追加確認する必要がある。
+gate_reason: >-
+  posted-source index で arXiv:2607.00627 の実投稿と一致したため、同一 work の open sibling を terminal 化する。
+  部分観測 maze の知見自体は有用だが、既投稿内容との差分がないため duplicate として failed にする。
+duplicate_reason: failed_duplicate_of_terminal_sibling
 ---
 
 ## raw_excerpt

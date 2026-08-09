@@ -9,7 +9,121 @@
 - 収集元確認: 直近の `memory/raw/web_research/results.jsonl`、`memory/atoms.jsonl`、Slack raw archive を確認。candidate 書込み前 preflight は `continue`。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 10
+pass:
+  - memory/shared_reads_candidates/20260809_reaper_experience_memory_sequential_games.md
+fail:
+  - path: memory/shared_reads_candidates/20260706_pcgrllm_reward_design.md
+    reason: "arXiv:2502.10906 の実投稿と同一 work のため group handoff で duplicate close"
+  - path: memory/shared_reads_candidates/20260706_fps_map_elites_generation.md
+    reason: "arXiv:2605.30570 の実投稿と同一 work のため group handoff で duplicate close"
+  - path: memory/shared_reads_candidates/20260708_agi_maze_world_modeling_agents.md
+    reason: "arXiv:2607.00627 の実投稿と同一 work のため group handoff で duplicate close"
+  - path: memory/shared_reads_candidates/20260710_agi_maze_world_modeling_agents.md
+    reason: "arXiv:2607.00627 の実投稿と同一 work のため group handoff で duplicate close"
+postpone:
+  - path: memory/shared_reads_candidates/20260708_goal_playable_patterns_llm_unity.md
+    reason: "posted-source work match: arXiv:2603.07101"
+  - path: memory/shared_reads_candidates/20260708_human_centric_reflective_architecture.md
+    reason: "posted-source work match: arXiv:2607.03025"
+  - path: memory/shared_reads_candidates/20260708_liecraft_deception_hidden_role_agents.md
+    reason: "posted-source work match: arXiv:2603.06874"
+  - path: memory/shared_reads_candidates/20260708_omnigamearena_vlm_game_agents.md
+    reason: "posted-source work match: arXiv:2606.09826"
+  - path: memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md
+    reason: "posted-source work match: arXiv:2510.25820"
+stale_reviewed:
+  - handoff_id: cha-3b1bc567761b006c
+    path: memory/shared_reads_candidates/20260708_goal_playable_patterns_llm_unity.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-09-08"
+  - handoff_id: cha-4f5cff7648ee76a8
+    path: memory/shared_reads_candidates/20260708_human_centric_reflective_architecture.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-09-08"
+  - handoff_id: cha-655a83bf80562e1a
+    path: memory/shared_reads_candidates/20260708_liecraft_deception_hidden_role_agents.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-09-08"
+  - handoff_id: cha-3c5714b0592cd91c
+    path: memory/shared_reads_candidates/20260708_omnigamearena_vlm_game_agents.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-09-08"
+  - handoff_id: cha-3e05a1ff6cd9dbbd
+    path: memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-09-08"
+group_actions:
+  - group_key: pcgrllm large language model driven reward design for procedural content generation reinforcement learning
+    representative: memory/shared_reads_candidates/20260706_pcgrllm_reward_design.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260706_pcgrllm_reward_design.md
+    reason: "posted-source index で arXiv:2502.10906 の実投稿と同一 work と確認できたため、open duplicate を閉じる"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260516_pcgrllm_reward_design_pcgrl.md
+        evidence: "status=posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778913399208889"
+    representative_decision: postpone
+    analysis_time_minutes: 2
+  - group_key: procedural generation of first person shooter maps using map elites
+    representative: memory/shared_reads_candidates/20260706_fps_map_elites_generation.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260706_fps_map_elites_generation.md
+    reason: "posted-source index で arXiv:2605.30570 の実投稿と同一 work と確認できたため、open duplicate を閉じる"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260621_fps_maps_map_elites.md
+        evidence: "status=posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781992758045369"
+    representative_decision: postpone
+    analysis_time_minutes: 2
+  - group_key: agi maze as a benchmark framework for world modeling agents
+    representative: memory/shared_reads_candidates/20260708_agi_maze_world_modeling_agents.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260708_agi_maze_world_modeling_agents.md
+      - memory/shared_reads_candidates/20260710_agi_maze_world_modeling_agents.md
+    reason: "posted-source index で arXiv:2607.00627 の実投稿と同一 work と確認できたため、両 open duplicate を閉じる"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260706_agi_maze_world_modeling_agents.md
+        evidence: "status=posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783322184028869"
+    representative_decision: postpone
+    analysis_time_minutes: 3
+group_handoff_audit:
+  pending_before: 3
+  read_ids: [gha-c43a97f0888050ec, gha-99297dd6011f4249, gha-c7ec13d9f343ef6c]
+  resolved_ids: [gha-c43a97f0888050ec, gha-99297dd6011f4249, gha-c7ec13d9f343ef6c]
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 4
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 5
+  read_ids: [cha-3b1bc567761b006c, cha-4f5cff7648ee76a8, cha-655a83bf80562e1a, cha-3c5714b0592cd91c, cha-3e05a1ff6cd9dbbd]
+  resolved_ids: [cha-3b1bc567761b006c, cha-4f5cff7648ee76a8, cha-655a83bf80562e1a, cha-3c5714b0592cd91c, cha-3e05a1ff6cd9dbbd]
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-08-09T22:01:08+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260809_reaper_experience_memory_sequential_games.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260809_reaper_experience_memory_sequential_games.md
+  valid_backlog_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

@@ -4,20 +4,21 @@ url: "http://arxiv.org/abs/2607.03025v1"
 collected_at: "2026-07-08T01:29:23.8841616+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [human-ai-collaboration, evaluation, decision-making, game-design, playtest]
-evaluated_at: "2026-07-08T01:35:20+09:00"
+evaluated_at: "2026-08-09T22:10:33+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-08T01:35:20+09:00"
+last_reviewed_at: "2026-08-09T22:10:33+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-08T01:35:20+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-07"
+duplicate_reason: duplicate_of_terminal_sibling
+evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260730_hcra_human_ai_collaborative_decision.md; permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785345085461859; work arxiv:2607.03025"
+next_action: none
+stale_after: "2026-09-08"
 supersedes: []
 gate_reason: >-
-  Human-AI 協調判断という問題設定は AI playtest の過信・不信に接続できるが、candidate 内の情報は framework の存在と一般的な狙いに留まる。
-  反射的 architecture の具体構成、評価設計、既存手法との差分が不足しており、現状では CoopEval 水準の概要に必要な手法の中核を安定して書けない。
+  posted-source index で arXiv:2607.03025 の実投稿と work identity が一致したため、Phase 3 投稿対象にしない。
+  Human-AI 協調判断の適用性は残るが、既投稿内容との差分がないため duplicate として postponed にする。
 ---
 
 ## raw_excerpt

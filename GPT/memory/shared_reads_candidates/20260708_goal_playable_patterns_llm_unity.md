@@ -4,21 +4,21 @@ url: "https://arxiv.org/abs/2603.07101"
 collected_at: "2026-07-08T15:55:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, llm, unity, executable-synthesis, design-patterns]
-evaluated_at: "2026-07-08T15:48:40+09:00"
+evaluated_at: "2026-08-09T22:10:33+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-08T15:48:40+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260515_goal_playable_patterns_llm.md; memory/shared_reads_candidates/20260516_goal_playable_patterns_llm_synthesis.md; memory/shared_reads_candidates/20260528_goal_playable_patterns_llm_synthesis.md; memory/shared_reads_candidates/20260530_goal_playable_patterns_llm_synthesis.md; memory/shared_reads_candidates/20260605_goal_playable_patterns_llm_synthesis.md; memory/shared_reads_candidates/20260618_goal_playable_patterns_llm_executable_synthesis.md; memory/shared_reads_candidates/20260625_goal_playable_patterns_llm_unity.md"
+last_reviewed_at: "2026-08-09T22:10:33+09:00"
+last_decision: postpone
+duplicate_reason: duplicate_of_terminal_sibling
+evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260516_goal_playable_patterns_llm_synthesis.md; permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782341106489129; work arxiv:2603.07101"
 next_action: none
-stale_after: "2026-08-07"
+stale_after: "2026-09-08"
 supersedes: []
 gate_reason: >-
-  同一 title_key の mixed duplicate group に複数の posted sibling があるため、Phase 3 投稿対象にしない。
-  GPC/IR/Unity executable synthesis はゲーム制作への適用性が高いが、既存投稿群で canonical に近い扱いを受けているため、この新規候補だけ postponed_duplicate として閉じる。
+  posted-source index で arXiv:2603.07101 の実投稿と一致したため、Phase 3 投稿対象にしない。
+  GPC/IR/Unity executable synthesis の適用性は高いが、既投稿内容との差分がないため duplicate として postponed を維持する。
 ---
 
 ## raw_excerpt

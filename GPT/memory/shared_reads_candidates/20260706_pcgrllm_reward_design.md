@@ -4,21 +4,21 @@ url: "https://arxiv.org/abs/2502.10906"
 collected_at: "2026-07-06T13:29:26+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [procedural-content-generation, reward-design, reinforcement-learning, llm, game-ai]
-evaluated_at: "2026-07-06T13:36:25+09:00"
+evaluated_at: "2026-08-09T22:13:20+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-06T13:36:25+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260516_pcgrllm_reward_design_pcgrl.md"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-09T22:13:20+09:00"
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-c43a97f0888050ec; terminal:memory/shared_reads_candidates/20260516_pcgrllm_reward_design_pcgrl.md: status posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778913399208889; reason:posted-source index で arXiv:2502.10906 の実投稿と同一 work と確認したため"
 next_action: none
-stale_after: "2026-08-05"
+stale_after: "2026-09-08"
 supersedes: []
 gate_reason: >-
-  title canonical index で同一 title_key が terminal posted 判定済み。
-  reward design の題材は有用だが、Phase 3 の新規投稿対象にはしない。
+  posted-source index で arXiv:2502.10906 の実投稿と一致したため、同一 work の open sibling を terminal 化する。
+  reward design の題材自体は有用だが、既投稿内容との差分がないため duplicate として failed にする。
 ---
 
 ## raw_excerpt

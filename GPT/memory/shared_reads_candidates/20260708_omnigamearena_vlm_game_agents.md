@@ -4,21 +4,21 @@ url: "https://arxiv.org/abs/2606.09826"
 collected_at: "2026-07-08T03:29:25+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, game-ai, vlm-agent, benchmark, playtest, reflection-loop]
-evaluated_at: "2026-07-08T03:52:00+09:00"
+evaluated_at: "2026-08-09T22:10:33+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-08T03:52:00+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260611_omnigamearena_vlm_game_agents.md; permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781162534005769"
+last_reviewed_at: "2026-08-09T22:10:33+09:00"
+last_decision: postpone
+duplicate_reason: duplicate_of_terminal_sibling
+evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260611_omnigamearena_vlm_game_agents.md; permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781162534005769; work arxiv:2606.09826"
 next_action: none
-stale_after: "2026-08-07"
+stale_after: "2026-09-08"
 supersedes: []
 gate_reason: |-
-  同一 title / URL の 20260611 候補が既に posted で閉じており、Slack permalink も frontmatter に残っている。
-  内容自体はゲーム評価に強く使えるが、Phase 3 に再投稿する対象ではないため、今回は duplicate として postponed に戻す。
+  posted-source index で arXiv:2606.09826 の実投稿と一致したため、Phase 3 投稿対象にしない。
+  Improvement Dynamics Curve はゲーム評価に使えるが、既投稿内容との差分がないため duplicate として postponed を維持する。
 ---
 
 ## raw_excerpt
