@@ -19,6 +19,7 @@ import {
   assertMoneyConservation,
   buyAtMarket,
   buyTargets,
+  chopWood,
   calendarMonth,
   companyCreditLimit,
   companyLogisticsSite,
@@ -745,7 +746,8 @@ test("段11: P・GOODS・FOODS・PERISHが意図した移動係数以外flow_isl
   delete sourceConstants.TRAVEL_RATE;
   delete sourceConstants.ROAD_F;
   delete sourceConstants.TRAVEL_MAX;
-  for (const changed of ["IMP", "IMP_COST", "EXP", "EXP_CAP", "EXP_ML", "Y_OIL"]) {
+  // WOOD_R: 空間パズル較正(2026-08-09)。回復が伐採と釣り合い前線が止まるのを防ぐ意図的な差分
+  for (const changed of ["IMP", "IMP_COST", "EXP", "EXP_CAP", "EXP_ML", "Y_OIL", "WOOD_R", "WOOD0"]) {
     delete sourceConstants[changed];
   }
   const actualConstants = Object.fromEntries(
@@ -1153,9 +1155,44 @@ test("段14: 森は5日ごとに成長し隣接する森から禿山へ再生す
 
   regenerateForest(economy, physical, { day: 5, random: () => 1 });
   assert.equal(economy.natural.wood["0,1"], 100 + P.WOOD_R * 5);
+  // 再播種の条件(隣接森の蓄積>30%)を較正値と独立に満たす
+  economy.natural.wood["0,1"] = P.WOOD0;
   regenerateForest(economy, physical, { day: 30, random: () => 0 });
   assert.equal(physical.terrain[1][1].kind, "forest");
   assert.equal(economy.natural.wood["1,1"], P.WOOD0 * 0.25);
+});
+
+test("段14b: 伐採は木段階を地形へ同期し、木こりへ薄化を一度だけ予告する", () => {
+  const terrain = Array.from({ length: 3 }, () => (
+    Array.from({ length: 3 }, () => ({ kind: "forest", variant: 0 }))
+  ));
+  const physical = createPhysicalState({ width: 3, height: 3, terrain });
+  const economy = createEconomicState();
+  initializeNaturalResources(economy, physical);
+  assert.equal(physical.terrain[1][1].wood, 3);
+
+  const logger = createHousehold(economy, { job: "logger", x: 1, y: 1 });
+  const revisionBefore = physical.travelRevision ?? 0;
+  chopWood(economy, physical, logger, P.WOOD0 * 0.5);
+  assert.equal(physical.terrain[1][1].wood, 2, "半分伐ると薄い森");
+  assert.ok((physical.travelRevision ?? 0) > revisionBefore, "段階変化はrevisionを進める");
+  chopWood(economy, physical, logger, P.WOOD0 * 0.25);
+  assert.equal(physical.terrain[1][1].wood, 1, "さらに伐ると疎らな森");
+
+  for (const key of Object.keys(economy.natural.wood)) economy.natural.wood[key] = 60;
+  const eventsBefore = economy.events.length;
+  regenerateForest(economy, physical, { day: 5, random: () => 1 });
+  const warnings = economy.events.slice(eventsBefore).filter(([, text]) => text.includes("薄くなってきた"));
+  assert.equal(warnings.length, 1, "薄化の予告は一度だけ");
+  regenerateForest(economy, physical, { day: 10, random: () => 1 });
+  assert.equal(
+    economy.events.filter(([, text]) => text.includes("薄くなってきた")).length,
+    1,
+    "同じ伐り場に予告を重ねない",
+  );
+  for (const key of Object.keys(economy.natural.wood)) economy.natural.wood[key] = P.WOOD0 - 2;
+  regenerateForest(economy, physical, { day: 15, random: () => 1 });
+  assert.equal(logger.woodThinWarned, false, "森が戻れば予告は再武装される");
 });
 
 test("段15: 麦はd255に年1回だけwheatWorkと施肥率から収穫する", () => {

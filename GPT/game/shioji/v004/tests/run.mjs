@@ -2506,6 +2506,26 @@ test('市場往復: 建物シートへ2日まとめ待ちと緊急例外の実�
   assert.match(row.marketRhythm.label, /食料の緊急買い出し/);
 });
 
+test('森の段階: 木の残量段階がtree描画へ流れ、段階変化で地形cache keyが変わる', () => {
+  const api = createEngineApi(buildBaseCity(11));
+  const snapshot = api.snapshot({ scope: 'full' });
+  const first = snapshotToViewModel(snapshot);
+  const trees = terrainTopologyForModel(first).naturalDrawables.filter(row => row.kind === 'tree');
+  assert.ok(trees.length > 0);
+  assert.ok(trees.every(row => row.data.stage === 3), '初期の森は深い森(段階3)');
+
+  const changed = structuredClone(api.snapshot({ scope: 'full' }));
+  const target = trees[0].data;
+  changed.physical.terrain[target.y][target.x].wood = 1;
+  changed.physical.travelRevision += 1;
+  const thinned = snapshotToViewModel(changed, { previousModel: first });
+  assert.notEqual(thinned.renderScene.terrainKey, first.renderScene.terrainKey,
+    '段階が変われば地形cache keyが変わる');
+  const thinnedTree = terrainTopologyForModel(thinned).naturalDrawables
+    .find(row => row.kind === 'tree' && row.data.x === target.x && row.data.y === target.y);
+  assert.equal(thinnedTree.data.stage, 1, '疎らな森(段階1)が描画資料へ届く');
+});
+
 test('描画構造最適化: snapshot更新時に静的描画場面を一度だけ編成し動的列と安定mergeする', () => {
   const api = createEngineApi(buildBaseCity(11));
   const first = snapshotToViewModel(api.snapshot({ scope: 'full' }));

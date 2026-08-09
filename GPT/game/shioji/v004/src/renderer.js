@@ -788,11 +788,28 @@ export class Renderer {
     };
   }
 
-  drawTree({ x, y, variant = 0 }) {
+  drawStump(base, variant = 0) {
+    const z = this.camera.zoom * 0.84;
+    const ctx = this.ctx;
+    const sx = base.x + (variant % 2 ? 10 : -11) * z;
+    const sy = base.y + 3 * z;
+    ctx.fillStyle = '#4b3022';
+    ctx.fillRect(sx - 2.5 * z, sy - 4 * z, 5 * z, 4 * z);
+    ctx.fillStyle = '#a8845c';
+    ctx.beginPath();
+    ctx.ellipse(sx, sy - 4 * z, 2.6 * z, 1.4 * z, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#5d4a33';
+    ctx.stroke();
+  }
+
+  drawTree({ x, y, variant = 0, stage = 3 }) {
     const base = this.camera.project(x + 0.5, y + 0.5);
-    const scale = this.camera.zoom * (0.84 + variant * 0.04);
+    const grown = stage >= 3 ? 1 : stage === 2 ? 0.8 : 0.52;
+    const scale = this.camera.zoom * (0.84 + variant * 0.04) * grown;
     const ctx = this.ctx;
     ctx.save();
+    if (stage <= 2) this.drawStump(base, variant);
     ctx.globalAlpha = 0.2;
     ctx.fillStyle = '#172d2a';
     ctx.beginPath();

@@ -122,8 +122,8 @@ export const P = deepFreeze({
   FERT_NEED: 3,
   FERT_BOOST: 0.15,
   Y_STONE: 8,
-  WOOD0: 350,
-  WOOD_R: 0.7,
+  WOOD0: 150,
+  WOOD_R: 0.25,
   ROAD_WORK: 3,
   CART_LOG: 4,
   CART_TOOLS: 0.5,
@@ -940,6 +940,22 @@ function setTerrainKind(physical, x, y, kind) {
   physical.travelRevision = (physical.travelRevision ?? 0) + 1;
 }
 
+export function woodStage(stock) {
+  if (!(stock > 0)) return 0;
+  if (stock > P.WOOD0 * 0.65) return 3;
+  if (stock > P.WOOD0 * 0.3) return 2;
+  return 1;
+}
+
+function syncWoodStageTile(physical, x, y, stock) {
+  const tile = physical?.terrain?.[y]?.[x];
+  if (!tile || typeof tile !== "object" || tile.kind !== "forest") return;
+  const stage = woodStage(stock);
+  if (tile.wood === stage) return;
+  tile.wood = stage;
+  physical.travelRevision = (physical.travelRevision ?? 0) + 1;
+}
+
 export function initializeNaturalResources(economy, physical) {
   economy.natural.bay = P.BAY0;
   economy.natural.bay2 = P.BAY0;
@@ -948,6 +964,8 @@ export function initializeNaturalResources(economy, physical) {
     for (let x = 0; x < physical.width; x += 1) {
       if (terrainKindAt(physical, x, y) === "forest") {
         economy.natural.wood[`${x},${y}`] = P.WOOD0;
+        const tile = physical.terrain[y][x];
+        if (tile && typeof tile === "object") tile.wood = 3;
       }
     }
   }
@@ -1077,6 +1095,8 @@ export function chopWood(economy, physical, household, amount) {
         economy.natural.wood[key] = 0;
         setTerrainKind(physical, x, y, "bald");
         recordEconomyEvent(economy, economy.currentDay, "森が禿げた——伐り尽くされた丘");
+      } else {
+        syncWoodStageTile(physical, x, y, economy.natural.wood[key]);
       }
     }
   }
@@ -2832,6 +2852,35 @@ export function regenerateForest(economy, physical, { day, random }) {
   for (const [key, stock] of Object.entries(economy.natural.wood)) {
     if (stock > 0 && stock < P.WOOD0) {
       economy.natural.wood[key] = Math.min(P.WOOD0, stock + P.WOOD_R * 5);
+      const separator = key.indexOf(",");
+      syncWoodStageTile(
+        physical,
+        Number(key.slice(0, separator)),
+        Number(key.slice(separator + 1)),
+        economy.natural.wood[key],
+      );
+    }
+  }
+  for (const household of economy.households) {
+    if (household.job !== "logger") continue;
+    const homeX = Math.round(household.x);
+    const homeY = Math.round(household.y);
+    let homeStock = 0;
+    for (let offsetY = -5; offsetY <= 5; offsetY += 1) {
+      for (let offsetX = -5; offsetX <= 5; offsetX += 1) {
+        homeStock += economy.natural.wood[`${homeX + offsetX},${homeY + offsetY}`] ?? 0;
+      }
+    }
+    const ratio = homeStock / (P.WOOD0 * 8);
+    if (ratio < 0.6 && !household.woodThinWarned) {
+      household.woodThinWarned = true;
+      recordEconomyEvent(
+        economy,
+        day,
+        `${household.sur}家の伐り場の森が薄くなってきた——次の伐り場を考える頃合い`,
+      );
+    } else if (ratio > 0.8 && household.woodThinWarned) {
+      household.woodThinWarned = false;
     }
   }
   if (day % 30 !== 0) return;
@@ -2852,6 +2901,7 @@ export function regenerateForest(economy, physical, { day, random }) {
       if (adjacent >= 2 && random() < 0.06) {
         setTerrainKind(physical, x, y, "forest");
         economy.natural.wood[`${x},${y}`] = P.WOOD0 * 0.25;
+        syncWoodStageTile(physical, x, y, P.WOOD0 * 0.25);
       }
     }
   }
