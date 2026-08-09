@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2608.02358v1"
 collected_at: "2026-08-10T05:17:30+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, agent-evaluation, exploration, hidden-mechanics, memory]
+evaluated_at: "2026-08-10T05:25:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-10T05:25:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-10T05:25:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-09"
+supersedes: []
+gate_reason: >-
+  semantic cue 除去、連続 curriculum、mapping drift、確率的 failure、時間窓という評価操作と、全探索・古い belief・persistent memory の限界という結論が一つの因果線で説明できる。
+  未知 mechanic の発見と rule 変更後の仮説更新を分けて測る headless playtest へ具体的に移植でき、単なる攻略率より診断力の高い評価軸になる。
+suggested_post_outline:
+  overview_angle: "意味ラベルを隠した tool interaction によって、発見済み対応表の記憶ではなく未知挙動の同定と構造変化への再推論を測る benchmark として説明する"
+  analysis_axis: "mapping drift 後に局所的な cycle tracing をせず brute-force search へ戻る失敗と、test-time reasoning・persistent memory が解決する範囲を分離する"
+  application_target: "tutorial なしの headless prototype で mechanic 発見、belief log、rule mutation、再同定コストを記録する自動 playtest harness"
+  pros_cons: "探索と適応を切り分けられる一方、tool mapping 課題から視覚・操作感を含むゲーム理解へ移す際は observation 設計が必要"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

@@ -4,20 +4,26 @@ url: "https://arxiv.org/abs/2605.25931"
 collected_at: "2026-07-08T21:44:31+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, agent-evaluation, exploration, benchmark, harness]
-evaluated_at: "2026-07-08T21:48:17+09:00"
+evaluated_at: "2026-08-10T05:25:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-08T21:48:17+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-08T21:48:17+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-07"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-10T05:25:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-10T05:25:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-09"
 supersedes: []
 gate_reason: >-
-  benchmark validity critique と EXPLORE / VERIFY / PLAN の速度深度 trade-off はゲーム評価 harness に有用だが、候補本文だけでは主張の検証材料が薄い。
-  ARC-AGI-3 public set の bypass 論点を投稿水準の概要へ上げるには、具体例と評価指標の確認が必要。
+  public 25 games の非知的攻略内訳、18 game の null-coordinate bypass、AERA の三段階構成と RHAE / solved 数が揃い、問題設定・手法・評価・結論を具体的に説明できる。
+  ゲーム評価で「理解」と反復・exploit を分離し、探索予算と検証行動を設計する実用的な監査軸へ直接接続できる。
+suggested_post_outline:
+  overview_angle: "ARC-AGI-3 の公開ゲームを攻略成績ではなく benchmark validity から分解し、探索の深さと行動効率を同時に測る必要を説明する"
+  analysis_axis: "blind repetition・probing・null-coordinate bypass と EXPLORE / VERIFY / PLAN を対比し、solve 判定が理解を保証しない構造を分析する"
+  application_target: "headless playtest で exploit baseline、情報獲得行動、仮説検証、action budget を別メトリクスとして記録する評価 harness"
+  pros_cons: "攻略率の偽陽性を発見できる一方、public set 固有の脆弱性と小規模 agent 結果を一般化しすぎる危険がある"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

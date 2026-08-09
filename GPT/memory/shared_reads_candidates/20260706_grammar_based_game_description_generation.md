@@ -4,16 +4,23 @@ url: "https://arxiv.org/abs/2407.17404"
 collected_at: "2026-07-06T18:16:15+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [automated-game-design, game-description-language, grammar, llm, ludii]
-status: needs_review
+evaluated_at: "2026-08-10T05:25:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
 lifecycle_backfill_reason: "missing_status_defaulted_to_needs_review"
 lifecycle_backfilled_at: "2026-07-12"
-candidate_status: needs_review
-stale_after: "2026-08-05"
+candidate_status: postponed
+stale_after: "2026-09-09"
 supersedes: []
-last_reviewed_at: "2026-07-06T18:16:15+09:00"
-last_decision: needs_review
-evidence: "candidate_file:20260706_grammar_based_game_description_generation.md; status:needs_review"
-next_action: evaluate_in_phase2
+last_reviewed_at: "2026-08-10T05:25:00+09:00"
+last_decision: postpone
+duplicate_reason: duplicate_of_terminal_sibling
+evidence: "duplicate of posted candidates: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783330189970809; work_identity:arxiv:2407.17404"
+next_action: none
+gate_reason: >-
+  posted-source preflight が arXiv:2407.17404 の同一 work identity と実 Slack 投稿 permalink の一致を確認した。
+  本文品質とは独立に再投稿対象から外し、既存投稿を canonical として扱う。
 
 ---
 

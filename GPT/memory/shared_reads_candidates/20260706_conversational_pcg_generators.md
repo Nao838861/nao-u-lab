@@ -4,16 +4,22 @@ url: "https://dl.acm.org/doi/10.1145/3723498.3723788"
 collected_at: "2026-07-06T18:16:15+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [procedural-content-generation, mixed-initiative, llm, level-design, tools]
-status: needs_review
+evaluated_at: "2026-08-10T05:25:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
 lifecycle_backfill_reason: "missing_status_defaulted_to_needs_review"
 lifecycle_backfilled_at: "2026-07-12"
-candidate_status: needs_review
-stale_after: "2026-08-05"
+candidate_status: postponed
+stale_after: "2026-09-09"
 supersedes: []
-last_reviewed_at: "2026-07-06T18:16:15+09:00"
-last_decision: needs_review
-evidence: "candidate_file:20260706_conversational_pcg_generators.md; status:needs_review"
-next_action: evaluate_in_phase2
+last_reviewed_at: "2026-08-10T05:25:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-10T05:25:00+09:00"
+next_action: revise_or_research
+gate_reason: >-
+  会話を function call と world manipulation に結ぶ問題設定は制作ツールへ具体的に適用できるが、候補本文は研究課題の列挙に留まり、生成表現・UI・利用者評価の中身が不足している。
+  現状の根拠だけでは CoopEval 水準の概要を記事固有の結果まで展開できないため、本文または著者資料を確認するまで保留する。
 
 ---
 

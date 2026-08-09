@@ -4,21 +4,20 @@ url: "https://arxiv.org/abs/2508.00737"
 collected_at: "2026-07-08T19:44:40+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, vr, npc, adaptive-systems, accessibility, survey]
-evaluated_at: "2026-07-08T19:47:06+09:00"
+evaluated_at: "2026-08-10T05:25:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-08T19:47:06+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-08T19:47:06+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-07"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-10T05:25:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-10T05:25:00+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-09"
 supersedes: []
 gate_reason: >-
-  LLM x VR の用途地図としては有用だが、62 件レビューの列挙に寄っており、
-  Phase 3 の単独投稿に必要な手法の中核や評価の中身をこの candidate だけでは十分に抽出しにくい。
-  ゲーム制作への適用も現状は探索 map 止まりで、具体実装や評価軸にするには追加の代表論文選定が必要。
+  62 件の用途と課題を俯瞰する入口にはなるが、個別手法・比較条件・効果量を結ぶ評価が候補本文から抽出できず、単独記事としての中核が列挙に留まる。
+  ゲーム制作への適用も NPC、GM、適応難度などの一般的分類を越えないため、Phase 3 の4000字投稿では密度を保てない。
 ---
 
 ## raw_excerpt
