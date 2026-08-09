@@ -126,7 +126,42 @@ reviewed_at: "2026-08-10T05:34:56.1270296+09:00"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786307674-b8e49e7c6d
+    source_ts: "1786307674.143409"
+    title: "Explore Before You Solve: The Speed--Depth Trade-off in Epistemic Agents for ARC-AGI-3"
+    reason: "未レビューの score 12 最新候補で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。公開25 gameの盲目的反復・probe後反復・多様探索・wrapper exploitを分ける監査が、未知ルール系 game/headless 評価に既存 control と異なる判断差を作るか確認した。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "合計14だが risk_control が必須閾値2未満。盲目的反復・情報取得行動・仮説検証・wrapper exploitを同一budgetで分ける観点は有用だが、既存の interactive-agent failure-layer、simulation budget、exploit diversity、outcome/explanation、benchmark trust-boundary controlsで大半を再現できる。active_probes 322件、Phase 4a向けpending lease 1件、比較可能な未知ルールgame／固定budget trace／exploit baseline artifact不在のため、新規controlは確認負荷を増やす。"
+  existing_controls:
+    - probe-20260612-interactive-agent-failure-layer-split
+    - probe-20260622-poweragentbench-simulation-workflow-budget
+    - probe-20260710-raid-exploit-diversity-regression
+    - probe-20260708-causalgame-outcome-explanation-split
+    - probe-20260711-benchjack-trust-boundary-preflight
+  change:
+    summary: "reviewed_source_ts と state-only reject 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+reviewed_at: "2026-08-10T05:39:09+09:00"
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

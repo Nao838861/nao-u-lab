@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-10T03:27:45+09:00",
+  "updated_at": "2026-08-10T05:39:09+09:00",
   "reviewed_source_ts": [
+    "1786307674.143409",
     "1780069411.688949",
     "1786282173.010339",
     "1785829556.510789",
@@ -18093,6 +18094,47 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、同一 Slack 投稿のレビュー済み主 atom、既存 worker-bus probe、比較 artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-10T05:39:09+09:00",
+      "selected": {
+        "id": "sr-1786307674-b8e49e7c6d",
+        "source_ts": "1786307674.143409",
+        "title": "Explore Before You Solve: The Speed--Depth Trade-off in Epistemic Agents for ARC-AGI-3",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つため1件だけ選んだ。公開25 gameの盲目的反復・probe後反復・多様探索・wrapper exploitを分ける監査が、今後の未知ルール系 game/headless 評価に既存 control と異なる判断差を作るか確認した。Nao_u の明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14には達するが、risk_control が必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文と candidate は、公開25 gameを盲目的な初手10件、1 probe後のACTION6反復5件、ACTION1反復1件、多様探索1件、単一行動反復で到達可能な残り8件へ分解し、arc_agi v0.9.8 の null-coordinate 例外を wrapper が WIN と誤分類して18/25 gameを1 stepで迂回できる library-level vulnerability、EXPLORE／VERIFY／PLAN、ERA の RHAE 0.2116・5/25 solved まで示す。successと理解を分け、固定 action budget 下で blind repetition、information-gain probe、仮説検証、exploit baselineを比較する行動へ直結するため relevance・actionability・evidenceは3とした。一方、probe-20260612-interactive-agent-failure-layer-split は Exploration／Modeling／Goal-Setting／Execution／Observation の失敗層を、probe-20260622-poweragentbench-simulation-workflow-budget は step・seed・retry budgetと中間判断を、probe-20260710-raid-exploit-diversity-regression は既知 exploit と別 family 探索を、probe-20260708-causalgame-outcome-explanation-split はclear結果と理解機構・confounderを、probe-20260711-benchjack-trust-boundary-preflight は生成statusとauthoritative verifierの境界を既に扱う。ERA固有の三段階名を別 control にしても次回判断の大半は変わらず non_redundancy=1である。active_probesは322件でPhase 4a向けpending leaseも1件あり、現在のstagingには比較可能な未知ルールgame、固定budget trace、exploit baselineのbefore／after artifactがない。同型controlを追加すると確認負荷とbenchmark向け評価の過剰一般化を増やすためrisk_control=1とし、未レビューsource_tsをstate-onlyで閉じる。",
+      "existing_controls": [
+        "probe-20260612-interactive-agent-failure-layer-split",
+        "probe-20260622-poweragentbench-simulation-workflow-budget",
+        "probe-20260710-raid-exploit-diversity-regression",
+        "probe-20260708-causalgame-outcome-explanation-split",
+        "probe-20260711-benchjack-trust-boundary-preflight"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、success／理解／exploit／budget／verifier 境界を扱う既存5 controlsとの重複、比較artifact不在によるreject理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
