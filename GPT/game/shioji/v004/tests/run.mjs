@@ -52,7 +52,7 @@ import {
 import {
   WorldPresentation, interpolateWorldModel, transitionDuration,
 } from '../src/presentation.js';
-import { mergeDrawables } from '../src/render_scene.js';
+import { buildingLayerDepth, mergeDrawables } from '../src/render_scene.js';
 import { Renderer } from '../src/renderer.js';
 import { createSavePayload, parseSaveText } from '../src/save_game.js';
 import {
@@ -89,7 +89,8 @@ import {
 } from '../src/view_model.js';
 import {
   EXACT_PILE_LIMIT, MAX_DISPLAY_CULTURE_LEVEL, MAX_PILE_SPRITES, MAX_YARD_GOODS,
-  PILE_STAGE_LIMITS, buildingAppearance, buildingStructureLayout, displayCultureLevel,
+  PILE_STAGE_LIMITS, YARD_STRUCTURE_CLEARANCE,
+  buildingAppearance, buildingStructureLayout, displayCultureLevel,
   pileVisual, seasonalNaturalVisual, seasonalPlotVisual, seasonalTerrainVisual,
   trailVisual, yardLayout, yardSlots, yardStockRows,
 } from '../src/visuals.js';
@@ -2225,7 +2226,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.43.0-supply-demand');
+  assert.equal(VERSION, 'v004.44.0-stable-yards');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2578,6 +2579,31 @@ test('描画構造最適化: snapshot更新時に静的描画場面を一度だ�
   const second = snapshotToViewModel(api.snapshot({ scope: 'full' }));
   assert.notEqual(second.renderScene, scene, '新しいsnapshotでは場面を再編成する');
   assert.equal(second.renderScene.counts.staticDrawables, second.renderScene.staticDrawables.length);
+
+  const owner = second.buildings[0];
+  const yardRow = {
+    section: 'storage', goods: 'fish', amount: 1, visual: pileVisual(1, 'fish'),
+  };
+  const yardPoint = yardSlots(owner, [yardRow])[0];
+  const transition = {
+    ...interpolateWorldModel(first, second, [], 0.5),
+    inventoryVisuals: [{ ...yardPoint, ownerId: owner.id }],
+  };
+  const renderer = Object.create(Renderer.prototype);
+  const merged = renderer.collectWorldDrawables(transition);
+  const buildingIndex = new Map(merged
+    .map((row, index) => [row, index])
+    .filter(([row]) => row.kind === 'building')
+    .map(([row, index]) => [row.data.id, index]));
+  const movingInventory = merged.filter(row => row.dynamic && row.kind === 'inventory');
+  assert.ok(movingInventory.length > 0, '補間中の在庫を回帰対象に含める');
+  for (const inventory of movingInventory) {
+    const inventoryOwner = transition.buildings.find(building => building.id === inventory.data.ownerId);
+    assert.ok(inventory.depth > buildingLayerDepth(inventoryOwner),
+      `${inventory.data.ownerId}の在庫は補間中も建屋より手前の同じ層に置く`);
+    assert.ok(merged.indexOf(inventory) > buildingIndex.get(inventory.data.ownerId),
+      `${inventory.data.ownerId}の在庫はtick境界で建屋の裏へ潜らない`);
+  }
 });
 
 test('可視物流AC: 家族列は実人数・実活動状態・実仕事先を描画モデルへ渡す', () => {
@@ -3201,6 +3227,26 @@ test('生きた庭E2: 役割ゾーンと空きスロットを固定し、品目�
   assert.ok(structure.height <= building.height * 0.6);
   assert.ok(structure.x + structure.width < building.x + building.width);
   assert.ok(structure.y + structure.height < building.y + building.height);
+  assert.ok(layout.every(slot => (
+    slot.x < structure.x - YARD_STRUCTURE_CLEARANCE
+    || slot.x > structure.x + structure.width + YARD_STRUCTURE_CLEARANCE
+    || slot.y < structure.y - YARD_STRUCTURE_CLEARANCE
+    || slot.y > structure.y + structure.height + YARD_STRUCTURE_CLEARANCE
+  )), '魚・丸太など全置き場は建屋の占有範囲と余白を空ける');
+
+  const matureWorkshop = {
+    ...building,
+    appearance: buildingAppearance({ type: 'woodshop', cultureLevel: 3, vacant: false }),
+  };
+  matureWorkshop.structure = buildingStructureLayout(matureWorkshop);
+  const matureLayout = yardLayout(matureWorkshop, rows);
+  assert.equal(matureLayout.length, 6);
+  assert.ok(matureLayout.every(slot => (
+    slot.x < matureWorkshop.structure.x - YARD_STRUCTURE_CLEARANCE
+    || slot.x > matureWorkshop.structure.x + matureWorkshop.structure.width + YARD_STRUCTURE_CLEARANCE
+    || slot.y < matureWorkshop.structure.y - YARD_STRUCTURE_CLEARANCE
+    || slot.y > matureWorkshop.structure.y + matureWorkshop.structure.height + YARD_STRUCTURE_CLEARANCE
+  )), '最大Lvの建屋でも庭の荷姿を家へ重ねない');
 });
 
 test('生きた庭E3: 山段階の切替は在庫到着・搬出の補間中に同じ定位置で起きる', () => {

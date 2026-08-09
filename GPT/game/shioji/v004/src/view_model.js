@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.43.0-supply-demand';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.44.0-stable-yards';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.43.0-supply-demand';
+} from './food_readability.js?v=v004.44.0-stable-yards';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.43.0-supply-demand';
-import { analyzeRoadConnections } from './placement.js?v=v004.43.0-supply-demand';
+} from './engine_bridge.js?v=v004.44.0-stable-yards';
+import { analyzeRoadConnections } from './placement.js?v=v004.44.0-stable-yards';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.43.0-supply-demand';
+} from './render_scene.js?v=v004.44.0-stable-yards';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.43.0-supply-demand';
+} from './visuals.js?v=v004.44.0-stable-yards';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',

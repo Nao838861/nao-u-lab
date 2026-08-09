@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.43.0-supply-demand';
+import { TILE } from './config.js?v=v004.44.0-stable-yards';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

@@ -1,8 +1,8 @@
 import {
   FOOD_GOODS,
   islandFoodSummary,
-} from './food_readability.js?v=v004.43.0-supply-demand';
-import { islandCalendar } from './ui_summary.js?v=v004.43.0-supply-demand';
+} from './food_readability.js?v=v004.44.0-stable-yards';
+import { islandCalendar } from './ui_summary.js?v=v004.44.0-stable-yards';
 
 export const BOUNDARY_EVENT_STATE_VERSION = 1;
 export const FOOD_RUNWAY_THRESHOLD_DAYS = 14;
