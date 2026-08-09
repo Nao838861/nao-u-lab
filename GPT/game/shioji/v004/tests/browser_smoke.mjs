@@ -1148,7 +1148,7 @@ async function checkSeasonalPlots(width, height, mobile) {
       plots: plots.map(row => row.type),
     };
   })()`);
-  assert.equal(springStart.version, 'v004.44.0-stable-yards', JSON.stringify(springStart));
+  assert.equal(springStart.version, 'v004.44.1-supply-layout', JSON.stringify(springStart));
   assert.equal(springStart.season, '春', JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => ['wheat', 'veg'].includes(type)), JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => type === 'shepherd'), JSON.stringify(springStart));
@@ -1534,8 +1534,8 @@ async function checkPeopleVisuals(width, height, mobile) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.44.0-stable-yards');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.44.0-stable-yards');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.44.1-supply-layout');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.44.1-supply-layout');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -2458,6 +2458,7 @@ async function checkSupplyDemand(width, height, mobile) {
   })()`);
   const result = await page.evaluate(`(() => {
     const sheet = document.querySelector('#supply-sheet');
+    const grid = document.querySelector('#supply-grid');
     const rows = [...document.querySelectorAll('[data-supply-goods]')];
     const allowed = new Set(['no_demand', 'sufficient', 'inventory', 'undelivered', 'shortage']);
     const statusCounts = Object.fromEntries([...allowed].map(status => [
@@ -2473,6 +2474,11 @@ async function checkSupplyDemand(width, height, mobile) {
       }),
       hasConsumptionAndShortage: /消費/.test(sheet.textContent) && /不足/.test(sheet.textContent),
       forbiddenWording: /足りず|潜在需要|未達量|ギリギリ|足りてる/.test(sheet.textContent),
+      clippedRows: rows.filter(row => row.scrollHeight > row.clientHeight + 1).length,
+      rowHeights: rows.map(row => ({ client: row.clientHeight, scroll: row.scrollHeight })),
+      gridHeight: { client: grid.clientHeight, scroll: grid.scrollHeight },
+      gridVerticalOverflow: grid.scrollHeight > grid.clientHeight + 1,
+      gridOverflowY: getComputedStyle(grid).overflowY,
       verticalOverflow: sheet.scrollHeight > sheet.clientHeight + 1,
       horizontalOverflow: sheet.scrollWidth > sheet.clientWidth + 1,
       pageHorizontalOverflow: document.documentElement.scrollWidth > innerWidth,
@@ -2486,15 +2492,19 @@ async function checkSupplyDemand(width, height, mobile) {
   assert.equal(result.allHaveSupplyAndDemand, true, JSON.stringify(result));
   assert.equal(result.hasConsumptionAndShortage, true, JSON.stringify(result));
   assert.equal(result.forbiddenWording, false, JSON.stringify(result));
+  assert.equal(result.clippedRows, 0, JSON.stringify(result));
+  assert.equal(
+    result.gridVerticalOverflow && result.gridOverflowY !== 'auto',
+    false,
+    JSON.stringify(result),
+  );
   assert.equal(result.verticalOverflow, false, JSON.stringify(result));
   assert.equal(result.horizontalOverflow, false, JSON.stringify(result));
   assert.equal(result.pageHorizontalOverflow, false, JSON.stringify(result));
   assert.equal(result.supplyBreakdownVisible, !mobile, JSON.stringify(result));
   assert.equal(result.demandBreakdownVisible, true, JSON.stringify(result));
-  assert.equal(result.runtimeVersion, 'v004.44.0-stable-yards', JSON.stringify(result));
-  await page.screenshot(mobile
-    ? '/tmp/shioji_v004_supply_demand_mobile.png'
-    : '/tmp/shioji_v004_supply_demand_pc.png');
+  assert.equal(result.runtimeVersion, 'v004.44.1-supply-layout', JSON.stringify(result));
+  await page.screenshot(`/tmp/shioji_v004_supply_demand_${mobile ? 'mobile' : 'pc'}_${width}x${height}.png`);
   await page.close();
   return result;
 }
@@ -2534,7 +2544,7 @@ async function checkSpatialProductivity(width = 1440, height = 900, mobile = fal
   })()`);
   assert.ok(building && !building.missing,
     `資源職の30日実測を建物画面へ表示できる: ${JSON.stringify(building)}`);
-  assert.equal(building.version, 'v004.44.0-stable-yards');
+  assert.equal(building.version, 'v004.44.1-supply-layout');
   assert.ok(Number.isFinite(building.efficiency), JSON.stringify(building));
   assert.ok(Number.isFinite(building.resourceEfficiency), JSON.stringify(building));
   assert.equal(building.withinViewport, true, JSON.stringify(building));
@@ -2726,7 +2736,7 @@ async function checkMarketRhythmUi(width = 1440, height = 900, mobile = false) {
       hidden: sheet.hidden,
     };
   })()`);
-  assert.equal(result.version, 'v004.44.0-stable-yards', JSON.stringify(result));
+  assert.equal(result.version, 'v004.44.1-supply-layout', JSON.stringify(result));
   assert.equal(result.hidden, false, JSON.stringify(result));
   assert.match(result.label, /出荷をまとめ中 1\/2日/, JSON.stringify(result));
   assert.match(result.detail, /食料切れと生産停止は待ちません/, JSON.stringify(result));
@@ -2867,9 +2877,14 @@ if (process.argv.includes('--start-choice-only')) {
   })}`);
 } else if (process.argv.includes('--supply-demand-only')) {
   const pc = await checkSupplyDemand(1440, 900, false);
+  const compactPc = await checkSupplyDemand(1280, 720, false);
   const mobile = await checkSupplyDemand(390, 844, true);
+  const compactMobile = await checkSupplyDemand(390, 667, true);
   console.log(`CHARTER ISLE v004 supply demand smoke: PASS ${JSON.stringify({
-    pc: pc.statusCounts, mobile: mobile.statusCounts,
+    pc: pc.statusCounts,
+    compactPc: compactPc.statusCounts,
+    mobile: mobile.statusCounts,
+    compactMobile: compactMobile.statusCounts,
   })}`);
 } else if (process.argv.includes('--save-delivery-only')) {
   await checkSaveDeliveryUi(1440, 900, false);
