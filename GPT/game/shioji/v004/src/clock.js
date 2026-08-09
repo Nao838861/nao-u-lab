@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.44.3-family-food';
+import { SPEEDS } from './config.js?v=v004.44.4-export-balance';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.44.3-family-food';
+import { pileVisual } from './visuals.js?v=v004.44.4-export-balance';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));

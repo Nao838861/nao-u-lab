@@ -788,11 +788,31 @@ test("段11: P・GOODS・FOODS・PERISHが意図した移動係数以外flow_isl
   assert.equal("ROAD_F" in P, false);
   assert.equal("TRAVEL_MAX" in P, false);
   assert.deepEqual(P.IMP, { wheat: 4, tools: 6, salt: 5, iron: 4.5, oil: 3 });
-  assert.deepEqual(P.EXP, { pres: 0.6, pick: 0.55, cloth: 2.4 });
+  assert.deepEqual(P.EXP, { pres: 0.6, pick: 0.55, cloth: 2 });
   assert.deepEqual(GOODS.slice(0, FLOW_ISLAND_GOODS.length), FLOW_ISLAND_GOODS);
   assert.deepEqual(FOODS, FLOW_ISLAND_FOODS);
   assert.deepEqual(PERISH, FLOW_ISLAND_PERISH);
   assert.equal(createWorld({ seed: 11 }).state.economy.company.money, P.TREASURY0);
+});
+
+test("段11: 布輸出は最大家族の基礎原価を下限にし過剰利幅を持たない", () => {
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "rapeseed", x: 0, y: 0 });
+  household.members = Array.from({ length: 11 }, (_, index) => ({
+    id: `cloth-cost-${index}`,
+    name: `家族${index}`,
+    sex: index % 2 ? "♀" : "♂",
+    age: 20,
+  }));
+  household.lv = 0;
+  economy.px.wheat = 1;
+  economy.px.veg = 1;
+  economy.px.pres = 1.2;
+  assert.equal(P.Y_COTTON_CLOTH, 5.5);
+  assert.equal(P.Y_CLOTH, 0.05);
+  assert.equal(productionCost(economy, null, household, "cloth", { day: 61 }), 2);
+  assert.equal(P.EXP.cloth, 2);
+  assert.equal(P.EXP_ML.cloth, 2.2);
 });
 
 test("段11: 定数は入れ子を含め実行時に変更できない", () => {

@@ -6,17 +6,17 @@ export const FOODS = ['fish','veg','wheat','pres','pick','meat'];
 const KIND = {fish:'fish',veg:'veg',wheat:'wheat',pres:'fish',pick:'veg',meat:'meat'};
 export const P = {
   EAT:9, PANTRY_FOOD_D:6, CULT_D:60, RATION:0.15,
-  Y_FISH:20, Y_FISH_W:5, FISH_LIFE:3, VEG_LIFE:30, PICK_SALT:0.1, PR_PICK:0.85, Y_VEG:16, Y_WHEAT:6000, /* 配給なき島の再較正: 麦=冬を越す貯蔵食の柱。摩擦(腐敗・分配)込みで自給が立つ余裕 */ Y_LOG:16, LOG_TOOL:1.5, LOG_CHAR:1.0, Y_TOOLS:8, Y_CHAR:8, Y_SALT:12, Y_MEAT:16, Y_CLOTH:0.35, D_CLOTH:0.03, D_IRON:0.03,
+  Y_FISH:20, Y_FISH_W:5, FISH_LIFE:3, VEG_LIFE:30, PICK_SALT:0.1, PR_PICK:0.85, Y_VEG:16, Y_WHEAT:6000, /* 配給なき島の再較正: 麦=冬を越す貯蔵食の柱。摩擦(腐敗・分配)込みで自給が立つ余裕 */ Y_LOG:16, LOG_TOOL:1.5, LOG_CHAR:1.0, Y_TOOLS:8, Y_CHAR:8, Y_SALT:12, Y_MEAT:16, Y_CLOTH:0.05, /* 肉生産に付随する布は島内需要相当へ抑える */ D_CLOTH:0.03, D_IRON:0.03,
   SALT_CHAR:1, PR_SALT:0.6, PR_SMOKE:0.95, SMOKE_CHAR:0.1, PRES_SALT:0.125,
   CMULT:1.35, D_TOOL:0.2, D_SALT:0.06, D_CHAR:0.4, LV_MULT:1.585, UP_DAYS:45, DOWN_DAYS:60,
   TRAVEL_RATE:0.012, ROAD_F:0.55, TRAVEL_MAX:0.45, HAUL:40,
   IMP:{wheat:4.0,tools:6.0,salt:5.0,iron:4.5}, IMP_COST:{wheat:2.4,tools:4.2,salt:3.5,iron:3.2},  // 懲罰価格=持続不可能な緊急措置  // 麦2.6=輸入パリティが島の麦を殺す幼稚産業問題の修正
-  EXP:{pres:0.6,pick:0.55,oil:2.4}, /* 特産のみ。他財の輸出台は対症療法だったので撤去 */ EXP_CAP:{pres:25,pick:15,oil:12}, EXP_ML:{pres:0.66,pick:0.6,oil:2.64},
+  EXP:{pres:0.6,pick:0.55,oil:2.0}, /* 特産のみ。他財の輸出台は対症療法だったので撤去 */ EXP_CAP:{pres:25,pick:15,oil:12}, EXP_ML:{pres:0.66,pick:0.6,oil:2.2},
   FREE_M:42, IRATE:0.012, LIMIT0:20000, LIMIT_G:1500, LIMIT_FREEZE:24, LIMIT_PC:250,
   TREASURY0:5500, PURSE0:60, PASSAGE:60, BUILD_COST:250, FEE:0.04,
   SHIP_COST:8000, SHIP_CAP:2, SHIP_PRICE:1.2,
   BAY0:600000, BAY_R:0.00175, RESEED:0.3, GROVE0:60000, GROVE_R:0.0006,
-  MEAL_FISH:8, FERT_NEED:3, FERT_BOOST:0.15, Y_STONE:8, Y_OIL:6,
+  MEAL_FISH:8, FERT_NEED:3, FERT_BOOST:0.15, Y_STONE:8, Y_OIL:5.5, /* 最大11人世帯でも輸出原価2.0に収まる */
   WOOD0:350, WOOD_R:0.7, ROAD_WORK:3, PAVE_STONE:200, PAVE_ROAD_F:0.45, DISTRESS:40, COOLDOWN:360,
   BELIEF0:{fish:1,veg:1,wheat:1.2,pres:1.2,pick:1.3,tools:2,salt:2,char:1.5,meat:1.3,meal:1,stone:1,oil:3,iron:3.5,cloth:2.5},
 };
