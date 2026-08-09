@@ -147,7 +147,37 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780069411-308374410f
+    source_ts: "1780069411.688949"
+    title: "worker model はゲーム制作側にも適用できるか（同一 shared-bus 投稿の Q3 断片）"
+    reason: "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、memory・game-design・operation・evaluation の4優先タグを持つため1件だけ選んだ。Nao_u が元リンクを共有した経緯はあるが、本 fragment 自体への明示評価はない。同一時刻のレビュー済み主 atom と既存 worker-bus probe に対し、新しい判断差を持つか確認した。"
+  scores:
+    relevance: 2
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 9
+  decision: reject
+  decision_reason: "同じ Slack 投稿の主 atom sr-1780069411-98b659d448 は2026-05-30に17点で review 済みで、probe-20260530-worker-bus-contract-observer が shared bus artifact、contract、observer cost を既に扱う。この fragment は game/log_autonomous_game を役割別 worker に分けるQ3末尾だけで、原文404、現行 game の実測 failure、単一 workerとの before/after、実験速度や設計核保持を測る artifact がない。対象なしの worker 分割は設計核・file ownership・評価責任を散らし、322件の active_probes の確認負荷も増やす。Phase 4a には別 probe の pending lease 1件もあるため state-only で閉じる。"
+  existing_controls:
+    - sr-1780069411-98b659d448
+    - probe-20260530-worker-bus-contract-observer
+  change:
+    summary: "reviewed_source_ts と、同一 Slack 投稿のレビュー済み主 atom、既存 worker-bus probe、比較 artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
