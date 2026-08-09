@@ -6,23 +6,23 @@ export {
   householdClass,
   householdProductionSummary,
   productionCost,
-} from '../../engine/src/econ.js?v=v004.42.0-boundary-voices';
-import { P } from '../../engine/src/econ.js?v=v004.42.0-boundary-voices';
-import { createEngineApi } from '../../engine/src/api.js?v=v004.42.0-boundary-voices';
+} from '../../engine/src/econ.js?v=v004.44.0-stable-yards';
+import { P } from '../../engine/src/econ.js?v=v004.44.0-stable-yards';
+import { createEngineApi } from '../../engine/src/api.js?v=v004.44.0-stable-yards';
 import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
   buildBaseCity,
   makeStableCityPlan,
-} from '../../engine/src/audit.js?v=v004.42.0-boundary-voices';
-import { createPhysicalState, makeFlowIslandTerrain, makeMultiMarketTerrain } from '../../engine/src/physical.js?v=v004.42.0-boundary-voices';
-import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.42.0-boundary-voices';
-import { createViewController } from './controller.js?v=v004.42.0-boundary-voices';
+} from '../../engine/src/audit.js?v=v004.44.0-stable-yards';
+import { createPhysicalState, makeFlowIslandTerrain, makeMultiMarketTerrain } from '../../engine/src/physical.js?v=v004.44.0-stable-yards';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.44.0-stable-yards';
+import { createViewController } from './controller.js?v=v004.44.0-stable-yards';
 import {
   SPRING_START_CALENDAR_OFFSET_DAYS,
   START_MODES,
-} from './start_modes.js?v=v004.42.0-boundary-voices';
+} from './start_modes.js?v=v004.44.0-stable-yards';
 
 export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS };
 export { makeMultiMarketTerrain };

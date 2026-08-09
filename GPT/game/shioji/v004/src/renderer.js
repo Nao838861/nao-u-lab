@@ -1,13 +1,15 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.42.0-boundary-voices';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.42.0-boundary-voices';
-import { islandCalendar } from './ui_summary.js?v=v004.42.0-boundary-voices';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.42.0-boundary-voices';
+} from './config.js?v=v004.44.0-stable-yards';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.44.0-stable-yards';
+import { islandCalendar } from './ui_summary.js?v=v004.44.0-stable-yards';
+import {
+  compileRenderScene, inventoryLayerDepth, marketStallLayerDepth, mergeDrawables,
+} from './render_scene.js?v=v004.44.0-stable-yards';
 import {
   buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
   seasonalTerrainVisual,
-} from './visuals.js?v=v004.42.0-boundary-voices';
+} from './visuals.js?v=v004.44.0-stable-yards';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
@@ -692,20 +694,25 @@ export class Renderer {
 
   collectDynamicDrawables(model, scene) {
     const drawables = [];
-    for (const inventory of model.inventoryVisuals ?? []) {
+    const buildingById = new Map(model.buildings.map(building => [building.id, building]));
+    for (const [index, inventory] of (model.inventoryVisuals ?? []).entries()) {
+      const owner = buildingById.get(inventory.ownerId);
       drawables.push({
         kind: 'inventory',
         data: inventory,
-        depth: inventory.x + inventory.y + 1.1,
+        // 補間の有無で建物との前後関係を変えない。動的在庫も静的在庫と同じ
+        // owner基準の層へ置き、tick境界で建屋の裏へ潜る点滅を防ぐ。
+        depth: owner ? inventoryLayerDepth(owner, index) : inventory.x + inventory.y + 1.1,
         bounds: { x: inventory.x - 0.5, y: inventory.y - 0.5, width: 1, height: 1 },
         dynamic: true,
       });
     }
-    for (const stall of model.marketStallVisuals ?? []) {
+    const market = model.buildings.find(building => building.type === 'market');
+    for (const [index, stall] of (model.marketStallVisuals ?? []).entries()) {
       drawables.push({
         kind: 'stall',
         data: stall,
-        depth: stall.x + stall.y + 1.1,
+        depth: market ? marketStallLayerDepth(market, index) : stall.x + stall.y + 1.1,
         bounds: { x: stall.x - 0.5, y: stall.y - 0.5, width: 1, height: 1 },
         dynamic: true,
       });

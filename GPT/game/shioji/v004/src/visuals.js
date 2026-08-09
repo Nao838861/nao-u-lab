@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.42.0-boundary-voices';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.44.0-stable-yards';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({
@@ -9,6 +9,7 @@ export const PILE_STAGE_LIMITS = Object.freeze({
 export const MAX_PILE_SPRITES = EXACT_PILE_LIMIT;
 export const MAX_YARD_GOODS = 10;
 export const MAX_DISPLAY_CULTURE_LEVEL = 4;
+export const YARD_STRUCTURE_CLEARANCE = 0.22;
 
 const WINTER_TERRAIN_ART = Object.freeze({
   grass: Object.freeze({
@@ -237,13 +238,6 @@ function yardZoneCounts(building) {
   return Object.freeze({ input: 2, output: 2, storage: 2 });
 }
 
-function spread(count, width) {
-  if (count <= 1) return [0];
-  return Array.from({ length: count }, (_, index) => (
-    ((index / (count - 1)) - 0.5) * width
-  ));
-}
-
 function yardBasis(building) {
   const center = {
     x: building.x + building.width / 2,
@@ -258,39 +252,54 @@ function yardBasis(building) {
   return { center, front, side: { x: -front.y, y: front.x } };
 }
 
-function yardPoint(building, basis, frontOffset, sideOffset) {
+function yardCandidatePoints(building) {
   const margin = 0.34;
-  const x = basis.center.x + basis.front.x * frontOffset + basis.side.x * sideOffset;
-  const y = basis.center.y + basis.front.y * frontOffset + basis.side.y * sideOffset;
-  return {
-    x: Math.max(building.x + margin, Math.min(building.x + building.width - margin, x)),
-    y: Math.max(building.y + margin, Math.min(building.y + building.height - margin, y)),
-  };
+  const structure = building.structure ?? buildingStructureLayout(building);
+  const columns = Math.max(3, Math.ceil((building.width - margin * 2) / 0.72) + 1);
+  const rows = Math.max(3, Math.ceil((building.height - margin * 2) / 0.72) + 1);
+  const points = [];
+  for (let row = 0; row < rows; row += 1) {
+    const y = building.y + margin
+      + (building.height - margin * 2) * (rows === 1 ? 0 : row / (rows - 1));
+    for (let column = 0; column < columns; column += 1) {
+      const x = building.x + margin
+        + (building.width - margin * 2) * (columns === 1 ? 0 : column / (columns - 1));
+      const clearOfStructure = x < structure.x - YARD_STRUCTURE_CLEARANCE
+        || x > structure.x + structure.width + YARD_STRUCTURE_CLEARANCE
+        || y < structure.y - YARD_STRUCTURE_CLEARANCE
+        || y > structure.y + structure.height + YARD_STRUCTURE_CLEARANCE;
+      if (clearOfStructure) points.push({ x, y });
+    }
+  }
+  return points;
 }
 
-function zonePlaces(building, zone, count) {
-  if (count === 0) return [];
+function zoneScore(zone, point, basis) {
+  const dx = point.x - basis.center.x;
+  const dy = point.y - basis.center.y;
+  const front = dx * basis.front.x + dy * basis.front.y;
+  const side = dx * basis.side.x + dy * basis.side.y;
+  if (zone === 'input') return -front * 4 + Math.abs(side);
+  if (zone === 'output') return -side * 3 + Math.abs(front) * 0.35;
+  return front * 3 - Math.abs(side) * 0.25;
+}
+
+function allocateZonePlaces(building, counts) {
   const basis = yardBasis(building);
-  const size = Math.min(building.width, building.height);
-  if (zone === 'input') {
-    return spread(count, size * 0.44).map(sideOffset => (
-      yardPoint(building, basis, size * 0.31, sideOffset)
+  const remaining = yardCandidatePoints(building);
+  const places = [];
+  for (const zone of ['input', 'output', 'storage']) {
+    remaining.sort((left, right) => (
+      zoneScore(zone, left, basis) - zoneScore(zone, right, basis)
+      || left.y - right.y
+      || left.x - right.x
     ));
+    const selected = remaining.splice(0, counts[zone] ?? 0);
+    selected.forEach((point, zoneIndex) => places.push({
+      ...point, zone, zoneIndex, row: null,
+    }));
   }
-  if (zone === 'output') {
-    return spread(count, size * 0.36).map(frontOffset => (
-      yardPoint(building, basis, frontOffset, size * 0.31)
-    ));
-  }
-  const columns = Math.min(4, Math.ceil(count / 2));
-  return Array.from({ length: count }, (_, index) => {
-    const row = Math.floor(index / columns);
-    const column = index % columns;
-    const sideOffset = columns === 1 ? 0
-      : ((column / (columns - 1)) - 0.5) * size * 0.54;
-    const frontOffset = -size * (row === 0 ? 0.29 : 0.08);
-    return yardPoint(building, basis, frontOffset, sideOffset);
-  });
+  return places;
 }
 
 function stableSlotIndex(row, count) {
@@ -304,14 +313,7 @@ function stableSlotIndex(row, count) {
 
 export function yardLayout(building, rows) {
   const counts = yardZoneCounts(building);
-  const places = Object.entries(counts).flatMap(([zone, count]) => (
-    zonePlaces(building, zone, count).map((point, zoneIndex) => ({
-      ...point,
-      zone,
-      zoneIndex,
-      row: null,
-    }))
-  ));
+  const places = allocateZonePlaces(building, counts);
   const byZone = new Map(['input', 'output', 'storage'].map(zone => [
     zone, places.filter(place => place.zone === zone),
   ]));

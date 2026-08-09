@@ -114,6 +114,7 @@ function viewSnapshot(state, { terrainAfterRevision = null } = {}) {
       }),
       market: economy.market,
       f30: economy.f30,
+      demand30: economy.demand30 ?? {},
       goDay: economy.goDay,
       imported: economy.imported,
       mainlandAid: economy.mainlandAid,

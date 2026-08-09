@@ -48,6 +48,7 @@ import {
   marketTripCost,
   marketTripDuration,
   postCompanyLedger,
+  recordEconomicDemand,
   recordEconomyEvent,
   productionCost,
   productionMultiplierForTrip,
@@ -77,6 +78,7 @@ import {
   staplePrice,
   transactMarketCargo,
   unloadMarketBuyCargo,
+  updateFlowEma,
 } from "../src/econ.js";
 import {
   FOODS as FLOW_ISLAND_FOODS,
@@ -305,6 +307,28 @@ test("mulberry32は同じシードから同じ列を返す", () => {
   const sequenceA = Array.from({ length: 16 }, () => a());
   const sequenceB = Array.from({ length: 16 }, () => b());
   assert.deepEqual(sequenceA, sequenceB);
+});
+
+test("需給観測: 原料がなく止まった木工房も丸太の需要と不足を残す", () => {
+  const economy = createEconomicState();
+  const physical = createPhysicalState();
+  const woodshop = createHousehold(economy, { job: "woodshop", x: 4, y: 4 });
+  woodshop.pantry.log = 0;
+  producePrimaryTick(economy, physical, woodshop, { day: 1, fraction: 1 });
+  const row = economy.dailyDemandFlows.log;
+  assert.equal(row.demand, P.Y_TOOLS * P.LOG_TOOL);
+  assert.equal(row.consumed, 0);
+  assert.deepEqual(row.sources.woodshop, { demand: row.demand, consumed: 0 });
+  updateFlowEma(economy);
+  assert.equal(economy.demand30.log.demand, row.demand * 0.05);
+  assert.equal(economy.demand30.log.consumed, 0);
+});
+
+test("需給観測: 需要台帳は消費超過と不正値を拒否する", () => {
+  const economy = createEconomicState();
+  assert.throws(() => recordEconomicDemand(economy, "log", 1, 2, "woodshop"), /exceed/);
+  assert.throws(() => recordEconomicDemand(economy, "log", -1, 0, "woodshop"), /non-negative/);
+  assert.throws(() => recordEconomicDemand(economy, "log", 1, 0, ""), /source/);
 });
 
 test("worldは同じシードと操作から同じJSON状態になる", () => {
