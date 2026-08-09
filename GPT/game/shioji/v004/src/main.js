@@ -1,47 +1,47 @@
-import { IsometricCamera } from './camera.js?v=v004.43.0-supply-demand';
-import { SimulationClock } from './clock.js?v=v004.43.0-supply-demand';
-import { createBoundaryEvents } from './boundary_events.js?v=v004.43.0-supply-demand';
+import { IsometricCamera } from './camera.js?v=v004.44.0-stable-yards';
+import { SimulationClock } from './clock.js?v=v004.44.0-stable-yards';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.44.0-stable-yards';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.43.0-supply-demand';
+} from './config.js?v=v004.44.0-stable-yards';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.43.0-supply-demand';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.43.0-supply-demand';
-import { developmentMapView } from './development_map.js?v=v004.43.0-supply-demand';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.43.0-supply-demand';
-import { formatElenaSpeech } from './elena_text.js?v=v004.43.0-supply-demand';
+} from './display_batch.js?v=v004.44.0-stable-yards';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.44.0-stable-yards';
+import { developmentMapView } from './development_map.js?v=v004.44.0-stable-yards';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.44.0-stable-yards';
+import { formatElenaSpeech } from './elena_text.js?v=v004.44.0-stable-yards';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.43.0-supply-demand';
+} from './food_readability.js?v=v004.44.0-stable-yards';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.43.0-supply-demand';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.43.0-supply-demand';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.43.0-supply-demand';
-import { goodsDetail } from './goods_detail.js?v=v004.43.0-supply-demand';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.43.0-supply-demand';
-import { WorldPresentation } from './presentation.js?v=v004.43.0-supply-demand';
-import { Renderer } from './renderer.js?v=v004.43.0-supply-demand';
+} from './keyboard.js?v=v004.44.0-stable-yards';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.44.0-stable-yards';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.44.0-stable-yards';
+import { goodsDetail } from './goods_detail.js?v=v004.44.0-stable-yards';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.44.0-stable-yards';
+import { WorldPresentation } from './presentation.js?v=v004.44.0-stable-yards';
+import { Renderer } from './renderer.js?v=v004.44.0-stable-yards';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.43.0-supply-demand';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.43.0-supply-demand';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.43.0-supply-demand';
+} from './save_game.js?v=v004.44.0-stable-yards';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.44.0-stable-yards';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.44.0-stable-yards';
 import {
   GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRow, supplyDemandRows,
-} from './supply_demand.js?v=v004.43.0-supply-demand';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.43.0-supply-demand';
+} from './supply_demand.js?v=v004.44.0-stable-yards';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.44.0-stable-yards';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.43.0-supply-demand';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.43.0-supply-demand';
+} from './ui_guidance.js?v=v004.44.0-stable-yards';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.44.0-stable-yards';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');

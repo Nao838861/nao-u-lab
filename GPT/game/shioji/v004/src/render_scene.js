@@ -8,6 +8,18 @@ function parseTileKey(key) {
 
 const SCENE_TOPOLOGIES = new WeakMap();
 
+export function buildingLayerDepth(building) {
+  return building.x + building.width + building.y + building.height;
+}
+
+export function inventoryLayerDepth(building, index = 0) {
+  return buildingLayerDepth(building) + 0.1 + index * 0.001;
+}
+
+export function marketStallLayerDepth(market, index = 0) {
+  return buildingLayerDepth(market) + 0.4 + index * 0.001;
+}
+
 function compileTerrainLayer(model, occupied) {
   let primary = 2166136261;
   let secondary = 0x9e3779b9;
@@ -48,7 +60,7 @@ function compileTerrainLayer(model, occupied) {
 function staticDrawables(model, naturalDrawables) {
   const rows = [...naturalDrawables];
   for (const building of model.buildings) {
-    const buildingDepth = building.x + building.width + building.y + building.height;
+    const buildingDepth = buildingLayerDepth(building);
     rows.push({
       kind: 'building',
       data: building,
@@ -62,20 +74,17 @@ function staticDrawables(model, naturalDrawables) {
       rows.push({
         kind: 'inventory',
         data: { row, ownerId: building.id, x, y },
-        depth: buildingDepth + 0.1 + index * 0.001,
+        depth: inventoryLayerDepth(building, index),
         bounds: { x: x - 0.5, y: y - 0.5, width: 1, height: 1 },
       });
     });
   }
 
   const market = model.buildings.find(building => building.type === 'market');
-  const marketDepth = market
-    ? market.x + market.width + market.y + market.height
-    : 0;
   model.marketStalls.forEach((stall, index) => rows.push({
     kind: 'stall',
     data: stall,
-    depth: marketDepth + 0.4 + index * 0.001,
+    depth: market ? marketStallLayerDepth(market, index) : stall.x + stall.y + 1.1,
     bounds: { x: stall.x - 0.5, y: stall.y - 0.5, width: 1, height: 1 },
   }));
 
