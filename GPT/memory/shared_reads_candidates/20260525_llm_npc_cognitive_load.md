@@ -4,16 +4,16 @@ url: https://arxiv.org/abs/2604.10107
 collected_at: 2026-05-25T11:41:36+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, llm-npc, player-experience, cognitive-load, usability]
-evaluated_at: 2026-05-25T11:45:31+09:00
+evaluated_at: "2026-08-10T03:16:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-07-10T01:35:18+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260515_llm_npc_cognitive_load_double_edged.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778826411891459"
-stale_after: "2026-08-09"
+last_reviewed_at: "2026-08-10T03:16:00+09:00"
+last_decision: postpone
+duplicate_reason: duplicate_of_terminal_sibling
+evidence: "gate_decision:postpone; evaluated_at:2026-08-10T03:16:00+09:00; duplicate of posted candidates: memory/shared_reads_candidates/20260515_llm_npc_cognitive_load_double_edged.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778826411891459"
+stale_after: "2026-09-09"
 supersedes: []
 phase3_skip:
   reason: "duplicate_url_already_posted"
@@ -21,8 +21,8 @@ phase3_skip:
   skipped_at: "2026-05-25T11:53:05+09:00"
 next_action: none
 gate_reason: |-
-  同一 title_key の posted sibling と既投稿 permalink を確認したため、本文評価としては有用でも
-  Phase 3 の新規投稿候補にはしない。LLM-NPC の認知負荷論点は既投稿側を canonical とする。
+  duplicate preflight が同一 arXiv work の実 Slack 投稿を URL 一致で確認した。
+  LLM-NPC の認知負荷論点は既投稿側を canonical とし、本候補は Phase 3 の再投稿対象にしない。
 
 ---
 

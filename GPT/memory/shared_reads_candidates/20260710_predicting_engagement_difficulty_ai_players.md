@@ -7,12 +7,12 @@ genre_tags: [game-design, automated-playtesting, difficulty, engagement, ai-play
 evaluated_at: "2026-07-10T22:17:52+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-10T22:17:52+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260710_ai_players_engagement_difficulty.md https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783660317348439"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-10T03:14:12+09:00"
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-58a8578b84ef1ed5; terminal:memory/shared_reads_candidates/20260710_ai_players_engagement_difficulty.md: status:posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783660317348439; reason:posted-source preflight が arxiv:2107.12061 の実 Slack 投稿を URL 一致で確認した"
 next_action: none
 stale_after: "2026-08-09"
 supersedes: []

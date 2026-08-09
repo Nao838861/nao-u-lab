@@ -4,22 +4,21 @@ url: https://www.reddit.com/r/gamedesign/comments/1tke106/the_more_unique_or_com
 collected_at: 2026-05-25T07:06:02+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, controls, onboarding, playtest]
-evaluated_at: 2026-05-25T07:07:52+09:00
+evaluated_at: "2026-08-10T03:16:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-07-10T01:35:18+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260602_unique_mechanics_onboarding_barrier.md"
-stale_after: "2026-08-09"
+last_reviewed_at: "2026-08-10T03:16:00+09:00"
+last_decision: postpone
+duplicate_reason: duplicate_of_terminal_sibling
+evidence: "gate_decision:postpone; evaluated_at:2026-08-10T03:16:00+09:00; duplicate of posted candidates: memory/shared_reads_candidates/20260602_unique_mechanics_onboarding_barrier.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780391517665109"
+stale_after: "2026-09-09"
 supersedes: []
 next_action: none
 gate_reason: |-
-  mixed duplicate queue で同一 title_key の posted sibling
-  memory/shared_reads_candidates/20260602_unique_mechanics_onboarding_barrier.md を確認した。
-  camera/UI/tutorial/genre expectation の論点は既投稿側で扱うため、本候補は Phase 3 投稿対象にしない。
+  duplicate preflight が同一 Reddit URL の実 Slack 投稿を確認した。
+  camera / UI / tutorial / genre expectation の論点は既投稿側で扱い、本候補は Phase 3 の再投稿対象にしない。
 
 ---
 

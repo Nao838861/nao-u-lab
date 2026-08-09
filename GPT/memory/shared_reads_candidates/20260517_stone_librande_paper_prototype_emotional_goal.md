@@ -5,21 +5,20 @@ collected_at: "2026-05-17T01:29:32+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, prototyping, player-experience, mechanics]
 candidate_status: postponed
-evaluated_at: "2026-07-09T21:35:47+09:00"
-stale_after: "2026-08-08"
+evaluated_at: "2026-08-10T03:16:00+09:00"
+stale_after: "2026-09-09"
 supersedes: []
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
-last_reviewed_at: "2026-07-09T21:35:47+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260606_gdc2026_stone_librande_game_design_workshop.md"
+last_reviewed_at: "2026-08-10T03:16:00+09:00"
+last_decision: postpone
+duplicate_reason: duplicate_of_terminal_sibling
+evidence: "gate_decision:postpone; evaluated_at:2026-08-10T03:16:00+09:00; duplicate of posted candidates: memory/shared_reads_candidates/20260606_gdc2026_stone_librande_game_design_workshop.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780679407929099"
 next_action: none
 gate_reason: |-
-  posted duplicate title sibling があるため Phase 3 投稿対象から外す。
-  terminal sibling: memory/shared_reads_candidates/20260606_gdc2026_stone_librande_game_design_workshop.md。
-  本文再評価は行わず、代表 candidate だけ lifecycle を postponed_duplicate として閉じる。
+  duplicate preflight が同一記事 URL の実 Slack 投稿を確認した。
+  紙 prototype と emotional north star の論点は既投稿側を canonical とし、本候補は Phase 3 の再投稿対象にしない。
 
 ---
 

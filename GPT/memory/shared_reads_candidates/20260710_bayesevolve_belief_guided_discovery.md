@@ -7,12 +7,12 @@ genre_tags: [agent-memory, evaluation, search, game-design, prototype-iteration]
 evaluated_at: "2026-07-10T12:06:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-10T12:52:12+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate shared-reads post already exists: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783428279451079"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-10T03:14:12+09:00"
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-6f10c5e7e832ff92; terminal:memory/shared_reads_posted_source_index.jsonl: arxiv:2606.30335; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783428279451079; reason:posted-source preflight が arxiv:2606.30335 の実 Slack 投稿を URL 一致で確認した"
 next_action: none
 stale_after: "2026-08-09"
 supersedes: []

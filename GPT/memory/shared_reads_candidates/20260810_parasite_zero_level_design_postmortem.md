@@ -4,6 +4,26 @@ url: "https://itch.io/devlog/1137764/postmortem-level-design"
 collected_at: "2026-08-10T03:04:18+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, level-design, postmortem, mechanics, playtesting]
+evaluated_at: "2026-08-10T03:16:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-10T03:16:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-10T03:16:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-09"
+supersedes: []
+gate_reason: |-
+  open-ended level を linear game へ転用した前提不一致から、移動能力・誘導・sound-lure puzzle が相互に弱め合う原因連鎖と playtest 結果を抽出できる。
+  一 encounter の小 level で game identity を確定してから拡張する改善策は、Log_cdx の小型ゲーム試作へ直接移せ、約4000字の分析に耐える。
+suggested_post_outline:
+  overview_angle: "level の広さ・移動能力・誘導・core mechanic を別々に決めた結果、遊びが迂回可能になった失敗の因果連鎖を読む"
+  analysis_axis: "open-ended から linear への前提変更、sprint / grapple と sound-lure puzzle の競合、boss level で誘導が改善した対照を軸にする"
+  application_target: "Log_cdx のゲーム試作で、一 encounter の小 level に core mechanic・移動速度・player leading を同居させ、拡張前に迂回可能性を検証する"
+  pros_cons: "制作判断と具体的な失敗が結び付く点が利点。単一チームの postmortem で定量比較がなく、一般化には小さな再現 probe が必要"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
