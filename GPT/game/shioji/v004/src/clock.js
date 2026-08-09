@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.44.0-stable-yards';
+import { SPEEDS } from './config.js?v=v004.44.1-supply-layout';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

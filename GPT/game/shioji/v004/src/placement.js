@@ -1,5 +1,5 @@
-import { BUILDING_SIZES } from './config.js?v=v004.44.0-stable-yards';
-import { islandCalendar } from './ui_summary.js?v=v004.44.0-stable-yards';
+import { BUILDING_SIZES } from './config.js?v=v004.44.1-supply-layout';
+import { islandCalendar } from './ui_summary.js?v=v004.44.1-supply-layout';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

@@ -2,16 +2,16 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.44.0-stable-yards';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.44.0-stable-yards';
-import { displayCultureLevel } from './visuals.js?v=v004.44.0-stable-yards';
+} from './engine_bridge.js?v=v004.44.1-supply-layout';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.44.1-supply-layout';
+import { displayCultureLevel } from './visuals.js?v=v004.44.1-supply-layout';
 import {
   PLAYER_FACING_BANNED_TERMS,
   executableFoodIntervention,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.44.0-stable-yards';
-import { islandCalendar } from './ui_summary.js?v=v004.44.0-stable-yards';
+} from './food_readability.js?v=v004.44.1-supply-layout';
+import { islandCalendar } from './ui_summary.js?v=v004.44.1-supply-layout';
 
 export { PLAYER_FACING_BANNED_TERMS };
 
