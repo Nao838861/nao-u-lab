@@ -60,7 +60,35 @@ no_eligible_candidates:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779373720-6cef9bf6ba
+    source_ts: "1779373720.446819"
+    title: "『ごっこ遊び』ラベルの先行が実装を欺瞞する構造（oktamajun 観点 × Log mimicry_log v01 失敗）"
+    reason: "Nao_u が『何のごっこ遊びなのか？という観点はゼロからゲームを考える時にとても重要』と明示評価した未レビュー atom で、game-design・operation・evaluation の3優先タグを持ち、現在の Diplomacy play-style 候補にも近いため1件だけ選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "player fantasy のラベルと最初の viewport・verb・target・feedback の一致を見る行動には直結するが、根拠は短いツイートと単一の内部失敗分析に限られる。同一URL・同一主張の sr-1779320105-97eb002943 は既レビューで、probe-20260621-q0-five-second-legibility が5秒で読める役割、first playable moment の具体信号、theme-mechanics mismatch まで完全に扱う。Q0の過大一般化リスク、322件の active_probes、期限超過の Phase 4a pending lease 1件を踏まえると、新規 control は判断を変えず確認負荷だけを増やす。"
+  change:
+    summary: "reviewed_source_ts と重複・見送り理由だけを state に記録。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

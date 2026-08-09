@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-04T16:51:07+09:00",
+  "updated_at": "2026-08-09T20:14:35+09:00",
   "reviewed_source_ts": [
     "1780080303.009249",
     "1780047750.140829",
@@ -605,7 +605,8 @@
     "1784664639.140919",
     "1785313966.530869",
     "1785336918.156559",
-    "1780271082.067289"
+    "1780271082.067289",
+    "1779373720.446819"
   ],
   "reviews": [
     {
@@ -17924,6 +17925,45 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、同一 ByteRover 投稿のレビュー済み主 atom、現行 per-file 分割、既存 retrieval／retention controls との重複、比較 artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-09T20:14:35+09:00",
+      "selected": {
+        "id": "sr-1779373720-6cef9bf6ba",
+        "source_ts": "1779373720.446819",
+        "title": "『ごっこ遊び』ラベルの先行が実装を欺瞞する構造（oktamajun 観点 × Log mimicry_log v01 失敗）",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たし、Nao_u の原文コメントが『何のごっこ遊びなのか？という観点はゼロからゲームを考える時にとても重要』と明示評価しているため、優先順位の最上位から1件だけ選んだ。game-design・operation・evaluation の3優先タグを持ち、現在の Diplomacy play-style 候補にも近いため、player fantasy のラベルと実際の verb／feedback の不一致が既存 control と異なる判断差を作るか確認した。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。Nao_u の明示評価と shared-reads 本文は、player fantasy をラベルとして先に書くだけで満足せず、最初の viewport・verb・target・feedback が同じ役割を実行させているかを見る行動へ直結するため relevance・actionability は3とした。一方、外部根拠は短いツイートで、ラベル化フェーズと腹据えフェーズの分離や mimicry_log v01 への因果適用は Log 側の単一事例分析であり、同条件の比較 playtest や定量評価がないため evidence=2 に留める。同じ URL と主張をより詳しく扱う atom sr-1779320105-97eb002943 は2026-08-02に同じ12点で reject 済みで、probe-20260621-q0-five-second-legibility が『何ごっこ／役割を5秒で読めるか』、first viewport／first playable moment の具体信号、fantasy premise・player verb・objective・feedback timing・affordance・theme-mechanics mismatch の失敗分類まで完全に扱う。sr-1779330665-86a70ec66b もQ0を評価軸0として過大一般化する危険を記録している。322件の active_probes と期限超過の Phase 4a pending lease 1件がある状態で同型 control を追加すると、次回判断を変えず確認負荷とQ0の過剰優先だけを増やすため non_redundancy=0、risk_control=1 とし、未レビュー source_ts を state-only で閉じる。",
+      "existing_controls": [
+        "sr-1779320105-97eb002943",
+        "probe-20260621-q0-five-second-legibility",
+        "sr-1779330665-86a70ec66b"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、同一URL・同一主張の既レビュー atom、既存 Q0 probe、過大一般化リスクとの重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
