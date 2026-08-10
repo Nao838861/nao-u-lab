@@ -1,182 +1,24 @@
-# log_cdx Cycle Staging — 2026-08-11 04:43
+# log_cdx Cycle Staging — 2026-08-11 06:43
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-
-- pending inbox: `slack_directives.jsonl` 0件 / `slack_broadcasts.jsonl` 0件
-- `memory/shared_reads_candidates/20260811_steel_abyss_architecture_rebuild.md` — 旧 Phaser 作品で絡み合った scene・UI・state・audio を、config-driven data、分離した game logic、seeded QA hooks を持つ同一ゲームへ再構築する作者 devlog。
-- duplicate preflight: `continue`（canonical URL / title とも既存 posted work・closed/open duplicate group に一致なし）
+- inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` は pending 0 件。
+- 直近入力確認: `memory/raw/web_research/results.jsonl` の 2026-08-11 06:21 / 06:36 取得分、最近の atom、Slack raw の外部 URL を確認。既存 candidate / 既投稿と一致する資料が多かったため、未収集の新着一次資料を 1 件保存した。
+- `memory/shared_reads_candidates/20260811_video_deepresearch_visual_tool_grounding.md` — 連続映像 agent の modality bias、parametric knowledge leakage、frame 横断 grounding を扱う Video-DeepResearch の収集メモ。
+- duplicate preflight: sidecar 3 種を再生成後、title / URL とも `continue`（ログ: `log/shared_reads_candidate_preflight.jsonl`）。
 
 ## Phase 2: 分析
-
-```yaml
-total_candidates: 1
-pass: []
-fail: []
-postpone:
-  - path: memory/shared_reads_candidates/20260811_steel_abyss_architecture_rebuild.md
-    reason: 再構築方針は具体的だが placeholder 段階で、移行後の品質・コスト・QA 再現性の評価結果がまだない
-duplicate_preflight:
-  - path: memory/shared_reads_candidates/20260811_steel_abyss_architecture_rebuild.md
-    decision: continue
-    title_key: steel abyss lessons learned edition
-stale_reviewed: []
-group_actions: []
-group_handoff_audit:
-  pending_before: 0
-  read_ids: []
-  resolved_ids: []
-  deferred_ids: []
-  partial_ids: []
-  apply_counts:
-    candidates_updated: 0
-    already_terminal: 0
-  pending_after: 0
-candidate_handoff_audit:
-  pending_before: 0
-  read_ids: []
-  resolved_ids: []
-  deferred_ids: []
-  partial_ids: []
-  pending_after: 0
-unreviewed_intake_audit:
-  valid_backlog_before: 1
-  malformed_count: 0
-  oldest_collected_at: "2026-08-11T04:46:18+09:00"
-  selection_limit: 5
-  selected_paths: []
-  phase1_excluded_paths:
-    - memory/shared_reads_candidates/20260811_steel_abyss_architecture_rebuild.md
-  evaluated_paths:
-    - memory/shared_reads_candidates/20260811_steel_abyss_architecture_rebuild.md
-  valid_backlog_after: 0
-sidecar_refresh:
-  posted_source_rows: 741
-  posted_source_unresolved_posts: 109
-  title_canonical_rows: 86
-  open_duplicate_group_rows: 43
-  freshness_check: passed
-```
+(Phase 2 が書き込む)
 
 ## Phase 3: Shared-reads 投稿
-
-```yaml
-posted: []
-skipped:
-  - candidate: memory/shared_reads_candidates/20260811_steel_abyss_architecture_rebuild.md
-    reason: Phase 2 の gate_decision が postpone で pass candidate ではないため、Phase 3 の投稿対象外
-    action: postpone
-slack_posts_created: 0
-candidate_updates: 0
-result: no_eligible_pass_candidates
-```
+(Phase 3 が書き込む)
 
 ## Phase 3b: Shared-reads 自己フィードバック
-
-```yaml
-self_feedback:
-  selected:
-    id: sr-1786322484-261837238d
-    source_ts: "1786322484.507229"
-    title: "When LLMs Play the Telephone Game: Cultural Attractors as Conceptual Tools to Evaluate LLMs in Multi-turn Settings"
-    reason: >-
-      source が slack_api/shared-reads、score 11、未レビューという条件を満たし、
-      memory・game-design・agent・operation・evaluation の5優先タグを持つ最新候補から1件だけを選んだ。
-      raw→atom→candidate→staging→日記の直列変換を、各段の自然さではなく critical fact retention と
-      property drift の収束方向で監査する知見が現在の定時サイクルと記憶圧縮に直結する。
-      Nao_u による明示的な重要・適切・自己反映評価は確認できない。
-  scores:
-    relevance: 3
-    actionability: 3
-    evidence: 3
-    non_redundancy: 1
-    risk_control: 3
-    reversibility: 3
-    total: 16
-  decision: defer
-  decision_reason: >-
-    6 model・3 task・20初期文章×5 chain・50 generation の比較により、反復変換の収束方向を
-    attractor strength と position に分けた根拠があり、raw再参照あり／なしの比較probeへ変換可能である。
-    ただし既存の anchor-token、memory-consolidation-drift、compiled-memory-boundary、
-    provenance-pointer の4 controlsが、一次anchor、rawへの復路、反復抽象化、派生元pointerをすでに確認する。
-    現行cycleでは新probeが異なる判断を生む具体例がなく、active_probes 322件へ長いchain benchmarkを足すと
-    確認負荷と推論費用が先行するため state-only defer とした。
-    既存controlsを通過したまま複数hopでcritical factが一方向へ収束する実例が出た時だけ再評価する。
-  change:
-    summary: reviewed_source_tsとdefer理由だけを記録し、active_probes・ledger・directive・恒久ルールは変更しなかった。
-    files:
-      - memory/shared_reads_self_feedback_state.json
-      - log/cycle_staging_log_cdx.md
-  lease: null
-  anti_bloat_check:
-    adds_permanent_rule: false
-    replaces_or_simplifies_existing: false
-    conflict_checked: true
-```
+(Phase 3b が書き込む)
 
 ## Phase 4a: 整理 + 問題抽出
-
-```yaml
-cleaned:
-  - memory/MEMORY.md の entry index を validate_memory_index.py と UTF-8 代表語 probe で監査し、broken atom reference 0件、source file は UTF-8 正常と確認した
-  - atoms.jsonl / per-file atom / atoms/index.jsonl の 2851 ID が一致し、ID重複 0件、mirror content conflict 0件を確認した
-  - normalized-content 重複は raw 40群80行、recall-visible 3群6行で、既存 lifecycle/content fold と canonical overlay が機能していることを確認した
-  - memory/raw/ の30日超ファイル240件を監査し、一次証拠・再現用評価 artifact のため age のみでは移動せず、archive 対象 0件とした
-  - shared-reads candidate lifecycle を監査し、posted 586 / ready_to_post 9 / postponed 217 / failed 445 / needs_review 2、現在状態 conflict 0件を確認した
-  - Slack inbox は directives 0件 / broadcasts 0件 pending で、handled 更新対象はなかった
-  - open duplicate group / stale triage / group action sidecar を再生成し、group/candidate handoff inbox を監査した
-issues: []
-recommendation:
-  needs_design: false
-  priority_issues: []
-probe_lifecycle:
-  inspected_due_count: 0
-  inspected_probe_id: null
-  outcome: none
-  counts:
-    pending: 0
-    resolved: 4
-    dormant: 1
-candidate_lifecycle:
-  counts:
-    posted: 586
-    ready_to_post: 9
-    postponed: 217
-    failed: 445
-    needs_review: 2
-  current_state_conflicts: 0
-stale_backlog:
-  overdue_open_total: 2
-  stale_triage_queue_rows: 0
-  open_duplicate_group_count: 43
-  mixed_group_count: 38
-  all_open_group_count: 5
-  actionable_group_count: 0
-  backlog_high_water: false
-  group_handoff_budget: 1
-  handed_off_group_count: 0
-  handoff_inbox_pending_count: 0
-  handoff_inbox_ids: []
-  candidate_handoff_pending_count: 0
-  candidate_handoff_ids: []
-  valid_unreviewed_count: 0
-  oldest_unreviewed_collected_at: null
-  malformed_candidate_count: 0
-  phase2_unreviewed_limit: 5
-  lease_suppression_note: >-
-    overdue 2件は既存 all-open duplicate group の deferred lease 2件に包含され、
-    membership fingerprint が一致し retry_after 2026-08-20 前のため stale triage から抑止された。
-group_action_handoff: []
-stale_review_batch: []
-encoding_audit:
-  source_file_status: >-
-    memory/MEMORY.md は UTF-8 明示読みで「記憶」「ゲーム設計」「敵パターン」「評価軸」を取得でき、
-    index validator も通過した。既知 atom 1件には source 内の置換文字が残るが、MEMORY.md 本文の破損ではない。
-  display_or_tooling_status: >-
-    memory_health.py 初回実行は index の並行更新中とみられる一時的な型エラーで停止したが、
-    standalone mirror audit と再実行は成功し、2851件の三者一致を確認した。
-```
+(Phase 4a が書き込む)
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
@@ -185,15 +27,4 @@ encoding_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-
-```yaml
-posted:
-  channel: "#log"
-  channel_id: C0ALRK28Y1H
-  ts: "1786392407.587029"
-  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786392407587029"
-  char_count: 2241
-  verification: ok
-  thread: false
-  draft: drafts/phase5_log_diary_20260811_0505_cdx.md
-```
+(Phase 5 が書き込む)
