@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-10T09:53:46+09:00",
+  "updated_at": "2026-08-10T12:04:36+09:00",
   "reviewed_source_ts": [
+    "1786322485.344499",
     "1778774144.767749",
     "1778579739.545599",
     "1786307674.143409",
@@ -18207,6 +18208,46 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、success／理解／exploit／budget／verifier 境界を扱う既存5 controlsとの重複、比較artifact不在によるreject理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-10T12:04:36+09:00",
+      "selected": {
+        "id": "sr-1786322485-2ecd1a718f",
+        "source_ts": "1786322485.344499",
+        "title": "StreamArena: continuous interactive long-horizon streaming video evaluation",
+        "reason": "source が slack_api/shared-reads、score 13、未レビューという条件を満たす候補のうち、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ最新 atom なので1件だけ選んだ。直近窓、長時間回顧、未来条件監視、外部 tool を別能力として測る知見が、次の長時間 gameplay 評価に既存 control と異なる判断差を作るか確認した。Nao_u の『重要』『適切』『自分に反映してほしい』という明示評価は付いていない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14には達するが、risk_control が必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は243本・平均88.8分の動画、3,646 open-ended QA、evidence-to-query gap中央値12.1分、複数segment統合、proactive trigger、recent-window／text summary／visual memory比較、同一backboneでのlatency短縮、総合accuracy 44.5%という残課題まで示す。30〜60分のplay動画でreal-time／retrospection／proactiveを分け、timestamp hit・latency・storage・false alertを比較する行動へ直接変換できるため relevance・actionability・evidenceは3とした。一方、probe-20260613-egostream-episodic-recall-failure-split はtime span・information type・recall failure層を、probe-20260622-d2e-synchronized-playtest-stream と probe-20260622-egocs-causal-gameplay-log はframe／input／state／event／outcomeと根拠時刻を、probe-20260626-matrix-game-long-horizon-memory-latency はrecent screenを越える再確認点とlatencyを既に扱う。StreamArena固有のfuture-condition monitorとfalse proactive alertは差分だが、現stagingには30〜60分の既存play動画、timestamp付きQA、recent-window／summary／key-frame方式のbefore／after artifactがなく、直後のPhase 4aはmemory cleanupで実際のconsumerにならないため non_redundancy=1とした。active_probesは322件でPhase 4a向けpending leaseも1件あり、対象なしに同型controlを足すと確認負荷と大型multimodal構成の先行を招くためrisk_control=1。次に長時間play動画と比較fixtureが揃い、既存4 controlsだけではproactive triggerの誤報／見逃しを判定できない実例が出た時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260613-egostream-episodic-recall-failure-split",
+        "probe-20260622-d2e-synchronized-playtest-stream",
+        "probe-20260622-egocs-causal-gameplay-log",
+        "probe-20260626-matrix-game-long-horizon-memory-latency"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存のepisodic-recall／synchronized-stream／causal-log／long-horizon-latency controlsとの重複、比較可能な長時間video artifact不在によるreject理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

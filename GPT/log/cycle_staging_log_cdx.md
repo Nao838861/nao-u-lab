@@ -112,7 +112,40 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786322485-2ecd1a718f
+    source_ts: "1786322485.344499"
+    title: "StreamArena: continuous interactive long-horizon streaming video evaluation"
+    reason: "未レビューの score 13 候補で、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ最新 atom。長時間回顧と未来条件監視が既存 control にない判断差を作るか確認するため1件だけ選んだ。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "合計14には達するが risk_control が必須閾値2を下回る。EGOSTREAM の recall failure split、同期 playtest stream、causal gameplay log、long-horizon anchor／latency probe が time span、timestamp evidence、frame／input／state／event／outcome、recent windowを越える再確認を既に扱う。StreamArena固有のfuture-condition monitorとfalse proactive alertは差分だが、30〜60分のplay動画、timestamp付きQA、recent-window／summary／key-frame比較artifactが現stagingになく、直後のPhase 4aも実consumerではない。active_probes 322件とpending lease 1件へ対象なしのcontrolを重ねない。"
+  existing_controls:
+    - probe-20260613-egostream-episodic-recall-failure-split
+    - probe-20260622-d2e-synchronized-playtest-stream
+    - probe-20260622-egocs-causal-gameplay-log
+    - probe-20260626-matrix-game-long-horizon-memory-latency
+  change:
+    summary: "reviewed_source_ts と重複・artifact不在によるreject理由だけをstateへ記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
