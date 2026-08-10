@@ -7,12 +7,17 @@ genre_tags: [ai-agent, long-horizon, autonomous-research, workflow-design, game-
 evaluated_at: "2026-08-10T14:22:27+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-10T14:22:27+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-10T14:22:27+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1786339994.922609"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786339994922609"
+  char_count: 4365
+  posted_at: "2026-08-10T14:33:26+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-10T14:33:26+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786339994922609"
+next_action: none
 stale_after: "2026-09-09"
 supersedes: []
 gate_reason: |-
