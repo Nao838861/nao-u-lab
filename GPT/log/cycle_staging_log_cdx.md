@@ -12,7 +12,53 @@
 - duplicate preflight: 2 件とも 3 sidecar 再生成後に `continue`。Slack 投稿は実施していない。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260810_cross_benchmark_long_horizon_agents.md
+fail:
+  - path: memory/shared_reads_candidates/20260810_games_about_games_microtalks.md
+    reason: "公式説明だけでは個別手法・事例評価・結論を抽出できず、約4000字概要の根拠密度に届かない"
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 2
+  malformed_count: 0
+  oldest_collected_at: "2026-08-10T22:31:39+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260810_games_about_games_microtalks.md
+    - memory/shared_reads_candidates/20260810_cross_benchmark_long_horizon_agents.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260810_games_about_games_microtalks.md
+    - memory/shared_reads_candidates/20260810_cross_benchmark_long_horizon_agents.md
+  valid_backlog_after: 0
+duplicate_preflight:
+  - path: memory/shared_reads_candidates/20260810_games_about_games_microtalks.md
+    decision: continue
+  - path: memory/shared_reads_candidates/20260810_cross_benchmark_long_horizon_agents.md
+    decision: continue
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
