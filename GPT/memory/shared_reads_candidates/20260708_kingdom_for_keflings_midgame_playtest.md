@@ -4,20 +4,20 @@ url: "https://www.gamedeveloper.com/audio/postmortem-ninjabee-s-a-kingdom-for-ke
 collected_at: "2026-07-08T23:56:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, postmortem, playtesting, midgame, balance, sandbox, production]
-evaluated_at: "2026-07-08T23:48:58+09:00"
+evaluated_at: "2026-08-10T14:22:27+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-08T23:48:58+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-08T23:48:58+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-07"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-10T14:22:27+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-10T14:22:27+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-09"
 supersedes: []
 gate_reason: |-
-  mid-game / end-game playtesting 不足、late-to-mid-game grind、crash 発見遅れなどゲーム制作への適用点はある。
-  ただし現 candidate の excerpt だけでは、creation-focused design と中盤以降検証不足を4000字級の残すべき分析へ束ねる材料が薄く、Phase 3 投稿には追加整理が必要。
+  中盤・終盤まで通す playtest の必要性は直接適用できるが、候補本文は失敗項目の列挙に留まり、検証手順・観測値・改善後の結果がない。
+  一か月の保留後も材料が増えておらず、CoopEval 水準の概要を根拠付きで構成できないため、参照用として閉じる。
 ---
 
 ## raw_excerpt

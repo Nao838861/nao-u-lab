@@ -4,20 +4,20 @@ url: "https://paolos.blog/2026-game-design-manifesto/"
 collected_at: "2026-07-09T23:48:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, industry, liveops, player-experience, craft]
-evaluated_at: "2026-07-09T23:52:00+09:00"
+evaluated_at: "2026-08-10T14:22:27+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-09T23:52:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-09T23:52:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-08"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-10T14:22:27+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-10T14:22:27+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-09"
 supersedes: []
-gate_reason: >-
-  KPI / UA funnel 批判と制作過程の可視化という方向性は有用だが、現候補本文だけでは論点が宣言的で、手法・評価・結論を CoopEval 水準の概要へ展開する根拠が薄い。
-  ゲーム制作への適用も現状は「制作過程を見せる」一般論に留まり、投稿前に原文読解で具体 action points と限界を補う必要がある。
+gate_reason: |-
+  KPI 中心主義への批判と制作労働の可視化は論点として読めるが、主張は宣言的で、手法・評価・因果を検証する材料がない。
+  ゲーム制作への適用も一般的な方針以上に具体化できず、一か月の保留後も投稿品質へ進展していないため参照用として閉じる。
 ---
 
 ## raw_excerpt

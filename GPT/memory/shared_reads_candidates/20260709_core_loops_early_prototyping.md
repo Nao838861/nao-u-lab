@@ -4,18 +4,20 @@ url: "https://www.gamedeveloper.com/design/how-supporting-core-loops-and-early-p
 collected_at: "2026-07-09T01:58:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, core-loop, prototyping, ux]
-evaluated_at: "2026-07-09T01:48:19+09:00"
+evaluated_at: "2026-08-10T14:22:27+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-09T01:48:19+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-09T01:48:19+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-08"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-10T14:22:27+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-10T14:22:27+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-09"
 supersedes: []
-gate_reason: "core loop と early prototyping の接続は Nao_u_BOT の playable diff 評価に適用しやすいが、現 candidate は紹介記事の要約に留まり、独自の問題設定・評価結果・設計手順の厚みが不足している。Phase 3 投稿には、core loop 分解を実際の制作ログへどう落とすかの材料を追加してから再評価する。"
+gate_reason: |-
+  core loop と early prototype の対応付けは playable diff の焦点確認に使えるが、内容は既知の設計原則と prototype 種別の紹介に留まる。
+  独自の評価結果や適用事例がなく、4000字級に伸ばすと一般論の水増しになるため、一か月の保留を経て参照用として閉じる。
 ---
 
 ## raw_excerpt

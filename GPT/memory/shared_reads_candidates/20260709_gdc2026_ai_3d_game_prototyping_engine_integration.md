@@ -4,21 +4,20 @@ url: "https://schedule.gdconf.com/session/ai-driven-3d-game-prototyping-with-eng
 collected_at: "2026-07-09T21:30:13+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [ai-game-development, prototyping, engine-integration, unreal-engine, test-driven-development]
-evaluated_at: "2026-07-09T21:35:47+09:00"
+evaluated_at: "2026-08-10T14:22:27+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-09T21:35:47+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-09T21:35:47+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-08"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-10T14:22:27+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-10T14:22:27+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-09"
 supersedes: []
 gate_reason: |-
-  test-driven logic と token-friendly adapter は制作環境へ適用しやすい。
-  ただし現 candidate は講演 agenda と紹介記事メモが中心で、実装詳細・評価・失敗例が不足している。
-  4000字級の概要にするには、講演資料または具体ワークフローの追加確認が必要。
+  test-driven logic と token-friendly adapter は制作環境へ適用可能だが、材料は講演 agenda と補助記事の構成紹介だけである。
+  実装詳細・比較評価・失敗例がなく、一か月の保留後も4000字級の分析を支えられないため参照用として閉じる。
 ---
 
 ## raw_excerpt

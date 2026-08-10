@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2608.01995"
 collected_at: "2026-08-10T14:17:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [ai-agent, long-horizon, autonomous-research, workflow-design, game-development]
+evaluated_at: "2026-08-10T14:22:27+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-10T14:22:27+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-10T14:22:27+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-09"
+supersedes: []
+gate_reason: |-
+  約10週間・約100仮説の行動記録から、commit-or-discard が局所改善と探索飽和を生む過程、action surface 拡張後の回復、単一事例という限界まで抽出できる。
+  playable diff の反復を exploitation branch と moonshot branch に分ける具体的な制作判断へ接続でき、CoopEval 水準の概要を根拠付きで構成できる。
+suggested_post_outline:
+  overview_angle: "長期自律 agent の成功談ではなく、greedy な改善規則が探索を狭めるまでを可観測にした行動ケーススタディとして整理する"
+  analysis_axis: "commit-or-discard と構造化 memory の利点を保ちつつ、飽和・risk aversion・文献 anchoring・action surface の狭さを分離して読む"
+  application_target: "playable diff 制作で通常改善 branch と大胆な mechanic fork の予算を分け、飽和検知後に action surface を広げて再評価する運用"
+  pros_cons: "再現可能な履歴と失敗隔離が強み。一方、単一 agent・単一課題・単一 run で一般化はできず、ゲームの楽しさ評価へ直接転用もできない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
