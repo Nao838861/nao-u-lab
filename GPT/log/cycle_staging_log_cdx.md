@@ -164,7 +164,59 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+executed_at: "2026-08-11T02:59:47+09:00"
+cleaned:
+  - "memory/MEMORY.md の entry index を per-file atom index と照合し broken entry 0 件。UTF-8 明示読みで 記憶 / ゲーム設計 / 敵パターン と 評価 の本文を取得し、U+FFFD は 0 件。代表語 評価軸 の完全一致は現生成本文にないが、source encoding 破損ではない。"
+  - "memory/atoms.jsonl は 2851 行、JSON parse error 0、duplicate id 0、duplicate source_ts 0。atom mirror は jsonl / per-file / index 各 2851 件で drift 0、content conflict 0。normalized-content duplicate 40 group / 80 row と canonical overlay 45 group は既存 fold で収束し、duplicate cluster index check も OK。"
+  - "memory/raw/ の 30 日超 mtime は 240 件（web_research 215 / headless_eval 16 / slack_api 6 / slack_archive 1 / game_eval 1 / sync_state 1）。raw provenance と game/headless evaluation evidence として保持対象を確認し、今回の archive 移動 0 件。"
+  - "shared-reads candidate 1258 件の lifecycle 内訳は failed 445 / needs_review 2 / posted 586 / postponed 216 / ready_to_post 9。status / candidate_status 修正対象 0、正規未評価 0、malformed 0。"
+  - "title canonical 86 group / mixed duplicate 38 group / open duplicate 43 group（mixed 38 / all_open 5）を再生成。overdue open 2 件は retry_after=2026-08-20 の live deferred group lease 2 件により抑止され、stale triage / group action / candidate handoff は各 0 件。"
+  - "slack_directives.jsonl と slack_broadcasts.jsonl は pending 0 件。status 更新対象なし。"
+issues:
+  - id: ISS-UTF8-ATOM-001
+    description: "agent memory architecture を扱う shared-reads atom 1 件の title / trigger / excerpt に U+FFFD が残る。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl source_ts=1776127289.990919; python tools/memory_health.py --json"
+    source_file_status: "UTF-8 明示読みで per-file atom と raw Slack の双方に同じ U+FFFD を確認。atoms.jsonl / per-file / index の mirror は整合しており、source data 由来の局所劣化。"
+    display_or_tooling_status: "PowerShell UTF-8 表示は正常。gr-1777083728-44d444ab7a の ??? は Nao_u 原文中の意図的表記であり mojibake false positive。"
+    why_blocks_game_memory: "該当 atom 単体の検索語精度を弱めるが、MEMORY.md entry、recall smoke、canonical/lifecycle fold は正常で、次のゲーム制作全体を遮断しない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 4
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  overdue_suppressed_by_live_group_lease: 2
+  open_duplicate_group_count: 43
+  mixed_group_count: 38
+  all_open_group_count: 5
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
