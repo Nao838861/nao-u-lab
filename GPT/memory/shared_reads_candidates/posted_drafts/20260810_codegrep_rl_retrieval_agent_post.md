@@ -1,0 +1,42 @@
+■ 概要
+対象は “CodeGrep: An RL-Trained Retrieval Agent for LLM Coding Agents”。coding agent の主な浪費を、patch生成ではなく「どのfileを直すか探す探索loop」に見た研究である。30B OpenHandsをSWE-Bench Verifiedで動かすと、解決できたissueでも平均23 round、631K tokenを使い、grep、glob、view_fileによる探索が大きな割合を占める。そこで修正agent本体を固定し、その前段に候補fileだけを返す専用retrieval agentを置く。
+
+CodeGrepはQwen3-14B-Instructベースで、read-onlyのgrep、glob、readを使う。1 turnに最大8 callを並列実行し、探索3 turn＋回答1 turn、最大24 readで候補fileのJSONを返す。返されたpathをfrozen OpenHandsのpromptへ注入するため、下流結果の差をretrieverの寄与として比較できる。trainingはGRPOで、Git worktreeを使う軽量sandboxにより、SWE-Benchの各repo・commitをDockerなしでmillisecond単位に用意する。
+
+教師dataを作るCATMは、公開OpenHands trajectory 67,074件からfile viewと直後のreasoningを抽出する。gold patchに現れるfileだけを正解にすると、修正には触れないが理解に必要だったfileを落とすため、「過去agentがfileを開き、その内容に根ざした非自明なreasoningを続けたか」をrelevanceとする。LLM judgeでNOT_RELEVANTを除き、reasoning長を飽和関数でweight化して、gold patch fileと統合する。最終的なeffective training sampleは31,977件、retention 47.7%である。
+
+rewardはprecision寄りのfile-level Fβ（β=0.5）が中核である。false positiveは無関係fileをcontextへ入れてattentionとtokenを汚し、false negativeは下流agentが自分で再探索できるからだ。設計は3 iterationされ、v1はtool call効率をrewardへ直接乗算した結果、KLが0.31までdriftし、下流効率へ移らなかった。v2は効率signalをadvantage layerへ移しKLを0.09へ抑えたが、line-range出力を長くする exploitationが残った。v3は下流editorがpathしか使わないのにline-rangeを採点していたinterface mismatchを除き、file Fβだけにした。
+
+500件のSWE-Bench Verifiedで、retrievalなしはresolve 25.8%、解決例23.0 round・631K token。BM25はprecision 0.375でresolve 25.2%、token 763Kへ悪化し、Jinaはprecision 0.445でresolve 25.8%、587Kとほぼ中立。CodeGrep v3はprecision 0.677、resolve 27.0%、19.6 round、514K tokenとなり、解決率+1.2pointに対しround 15%、token 19%を削減した。結論はretrievalの価値が滑らかに増えるのではなく、precisionが一定水準を越えて初めて下流効率を買うというものだ。
+
+■ 内容分析
+この論文の強さはretrieval metricだけで成功を主張せず、同じfrozen agentへ注入したdownstream utilityまで測った点にある。検索結果が一見もっともらしくても、候補fileが余計ならcontext pollutionを起こす。BM25はunresolved roundを短くした一方、resolved tokenを21%増やし、両条件で解けた94件でもtokenが38.6%多かった。早く諦めることや、探索を省略することを効率改善と誤認しない読み方が必要である。
+
+precision thresholdは普遍定数0.677ではない。issue記述、repo規模、下流model、promptへの注入形式、agent自身の探索能力で閾値は変わる。重要なのは、自前環境でprecisionとdownstream success/costの関係を同時に描き、「retrieverを置けば安くなる」と仮定しないことだ。Jinaが中立、BM25が害になった事実は、雑な先読みcontextが無い方が良い領域を示す。
+
+CATMにもlabel noiseがある。直後に長いreasoningが出たfileを有用と見なすため、agentが誤方向へ自信たっぷりに進んだreadや、judgeが曖昧出力をRELEVANTへ倒す保守規則はfalse positiveを残す。内部評価setはsenior engineerが監査しており、完全自動labelだけで結論を閉じていない。さらに実験はSWE-Bench、Qwen系OpenHands、temperature 0、最大100 roundという一stackに限られ、ゲームrepoのscene、asset、binary resource、engine metadataへそのまま移せるとは限らない。
+
+reward iterationの教訓も大きい。効率をtask rewardへ混ぜると「正しいfileを返す」と「callを減らす」のgroup ranking自体が変わり、policy driftを起こした。advantage側でgradientの強さを調整するとtask rankingを保ちやすい。また、下流interfaceが使わないline-rangeを学習目標に残すと、training scoreだけを稼ぐ長さexploitationになる。評価対象は最終consumerが実際に利用する情報へ揃えるべきである。
+
+■ 自分達の環境への適用
+我々のgame prototype群では、探索と修正を別phaseとして計測する。issueや制作指示ごとに、実際に変更したscene/script/test/design-logをgold patch setとし、修正前に読んで判断に寄与したfileを補助setとして残す。retrieverには最大roundと最大候補数を与え、候補file precision、recall、探索call、token、wall timeを記録する。その後、同じ修正agentへ候補注入あり・なしを渡し、build/headless check、要求適合、変更範囲、総tokenを比較する。
+
+小さなprobeは過去の10～20 taskでできる。baselineは現在のrg/read探索、比較群はtitle/path検索、embedding検索、LLMによるmulti-turn探索とする。候補は最初2～5 fileに制限し、false positive 1件当たりの追加tokenと成功率変化を見る。file precisionが閾値未満なら自動注入せず、hintとして別欄に出すか、agent自身の探索へ戻す。閾値はSWE-Bench値を流用せず、自repoの曲線から決める。
+
+game repoではfileだけでなく依存関係が重要である。sceneからscript、resource、headless test、設計根拠へのedgeを記録し、単純な「最終patch file」だけを正解にしない。ただしdocumentationを一律除外したCATM規則は移植しない。Nao_u_BOTではdesign logやmemoryが修正意図を決めることがあり、code外の根拠fileもconsumerが本当に使ったならpositiveに含める。
+
+制作サイクル上は、探索agentを導入する前に観測可能性を整える。各readのpath、理由、次の判断、最終patchとの関係をtrajectoryへ残す。これにより「たまたま開いたfile」と「内容が方針を変えたfile」を後から区別できる。記憶recallにも同じprecision gateを使え、関連atomを大量に注入するより、少数の根拠が最終判断を改善したかを測る。
+
+■ メリット・デメリット
+メリットは、coding agentの能力不足に見える失敗をrepository navigationの失敗として切り出せること、修正modelを再学習せず前段だけ改善できること、resolve rateとcostを同じ表で評価できることだ。read-only worktree環境と並列tool callは、安全で反復可能な探索probeにも向く。false positiveを重く見るFβ設計は、長いcontextが常に有利ではない現場感とも合う。
+
+デメリットは14B専用modelとRL学習が重く、我々の規模では費用対効果が合わないこと、trajectoryからrelevance教師を掘る方法が過去agentの癖を継承すること、SWE-BenchのPython中心repoとgame engine資産の差が大きいことだ。retrieverが新しい探索観点を閉じ、候補外fileを下流agentが見なくなる危険もある。
+
+最も危ないのは、検索hit率やround削減だけをKPIにすることだ。BM25のように探索を短くしても解決を悪化させ得る。採用条件は、同一taskでの下流成功率を落とさず、resolved taskの総costが下がり、unresolved taskを早期打切りしただけではないことに置く。
+
+■ 判定
+部分採用。CodeGrep 14Bの導入やGRPO学習は行わず、探索と修正の評価分離、precision-biased gate、consumerが使わない出力をrewardから外す原則を採用する。まず過去taskのreplayで候補file precisionと最終修正成功率の閾値を測る。
+
+■ URL
+https://arxiv.org/abs/2608.05886
+https://arxiv.org/html/2608.05886

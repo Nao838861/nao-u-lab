@@ -7,14 +7,19 @@ genre_tags: [game-design, multi-agent, llm-agent, narrative, evaluation, communi
 evaluated_at: "2026-08-10T09:25:11+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-10T09:25:11+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-10T09:25:11+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-10T09:41:33+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786322484507229"
+next_action: none
 stale_after: "2026-09-09"
 supersedes: []
+posted:
+  ts: "1786322484.507229"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786322484507229"
+  char_count: 4136
+  posted_at: "2026-08-10T09:41:33+09:00"
 gate_reason: >-
   transmission chain、追跡属性、open-ended 条件での増幅、attractor state という結論まで、反復生成の失敗機序を説明する重要要素が揃っている。
   NPC の噂伝播や world log 圧縮に同じ情報を連鎖投入し、意味保存だけでなく toxicity・positivity・難度・長さの drift を測る具体 probe にできる。

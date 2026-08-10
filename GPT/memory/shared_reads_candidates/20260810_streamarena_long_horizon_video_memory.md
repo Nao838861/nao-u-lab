@@ -7,14 +7,19 @@ genre_tags: [game-playtesting, multimodal-agent, video-understanding, long-horiz
 evaluated_at: "2026-08-10T09:25:11+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-10T09:25:11+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-10T09:25:11+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-10T09:41:33+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786322485344499"
+next_action: none
 stale_after: "2026-09-09"
 supersedes: []
+posted:
+  ts: "1786322485.344499"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786322485344499"
+  char_count: 4599
+  posted_at: "2026-08-10T09:41:33+09:00"
 gate_reason: >-
   短尺 benchmark の欠陥、243 本・3,646 QA・4 能力の評価、既存 memory 方式の三つの失敗、非同期二層 architecture、latency 結果まで重要要素が揃う。
   長時間 gameplay の死亡原因・UI 誤読・演出見落としを frame 根拠付きで遡る playtest agent に、直近監視と過去検索を分ける設計として具体的に適用できる。

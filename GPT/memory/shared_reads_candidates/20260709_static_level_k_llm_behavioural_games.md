@@ -7,14 +7,19 @@ genre_tags: [game-theory, llm-agents, behavioural-games, strategy, evaluation]
 evaluated_at: "2026-08-10T09:25:11+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-10T09:25:11+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-10T09:25:11+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-10T09:41:33+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786322449253679"
+next_action: none
 stale_after: "2026-09-09"
 supersedes: []
+posted:
+  ts: "1786322449.253679"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786322449253679"
+  char_count: 4401
+  posted_at: "2026-08-10T09:41:33+09:00"
 gate_reason: >-
   2 種の behavioural game、360-cell factorial、人間の choice distribution との比較、static level-k という結論まで重要要素が一続きに抽出できる。
   AI playtester や NPC を人間の代理にする際、単発の分布一致と複数 round の belief updating を別々に検証する具体的な制作 probe に直結する。

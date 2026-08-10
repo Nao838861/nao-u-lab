@@ -107,7 +107,28 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260709_static_level_k_llm_behavioural_games.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786322449253679
+    char_count: 4401
+  - candidate: memory/shared_reads_candidates/20260710_llm_telephone_game_cultural_attractors.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786322484507229
+    char_count: 4136
+  - candidate: memory/shared_reads_candidates/20260810_codegrep_rl_retrieval_agent.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786322484996019
+    char_count: 4456
+  - candidate: memory/shared_reads_candidates/20260810_streamarena_long_horizon_video_memory.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786322485344499
+    char_count: 4599
+skipped: []
+review:
+  source_checked: "arXiv abstract / HTML / PDF の一次資料を照合"
+  duplicate_preflight: "4件とも continue"
+  policy_validation: "4件とも shared_reads_policy.py 合格"
+  posting_mode: "1 candidate = 1 chat.postMessage、thread_ts なし"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

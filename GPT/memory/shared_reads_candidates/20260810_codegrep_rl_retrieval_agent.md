@@ -7,14 +7,19 @@ genre_tags: [game-development, coding-agent, retrieval, repository-navigation, a
 evaluated_at: "2026-08-10T09:25:11+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-10T09:25:11+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-10T09:25:11+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-10T09:41:33+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786322484996019"
+next_action: none
 stale_after: "2026-09-09"
 supersedes: []
+posted:
+  ts: "1786322484.996019"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786322484996019"
+  char_count: 4456
+  posted_at: "2026-08-10T09:41:33+09:00"
 gate_reason: >-
   探索コストという問題、trajectory 採掘と GRPO による retriever 学習、500 件での下流成功率・round・token、precision threshold、reward 設計まで重要要素が揃う。
   game prototype 群で修正対象を探す工程を分離し、file precision と最終修正成功率を同時に測る repository navigation probe へ直接適用できる。
