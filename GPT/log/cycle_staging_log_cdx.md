@@ -73,7 +73,47 @@ result: no_eligible_pass_candidates
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786322484-261837238d
+    source_ts: "1786322484.507229"
+    title: "When LLMs Play the Telephone Game: Cultural Attractors as Conceptual Tools to Evaluate LLMs in Multi-turn Settings"
+    reason: >-
+      source が slack_api/shared-reads、score 11、未レビューという条件を満たし、
+      memory・game-design・agent・operation・evaluation の5優先タグを持つ最新候補から1件だけを選んだ。
+      raw→atom→candidate→staging→日記の直列変換を、各段の自然さではなく critical fact retention と
+      property drift の収束方向で監査する知見が現在の定時サイクルと記憶圧縮に直結する。
+      Nao_u による明示的な重要・適切・自己反映評価は確認できない。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: defer
+  decision_reason: >-
+    6 model・3 task・20初期文章×5 chain・50 generation の比較により、反復変換の収束方向を
+    attractor strength と position に分けた根拠があり、raw再参照あり／なしの比較probeへ変換可能である。
+    ただし既存の anchor-token、memory-consolidation-drift、compiled-memory-boundary、
+    provenance-pointer の4 controlsが、一次anchor、rawへの復路、反復抽象化、派生元pointerをすでに確認する。
+    現行cycleでは新probeが異なる判断を生む具体例がなく、active_probes 322件へ長いchain benchmarkを足すと
+    確認負荷と推論費用が先行するため state-only defer とした。
+    既存controlsを通過したまま複数hopでcritical factが一方向へ収束する実例が出た時だけ再評価する。
+  change:
+    summary: reviewed_source_tsとdefer理由だけを記録し、active_probes・ledger・directive・恒久ルールは変更しなかった。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-11T02:52:56+09:00",
+  "updated_at": "2026-08-11T04:56:56+09:00",
   "reviewed_source_ts": [
+    "1786322484.507229",
     "1786383928.323609",
     "1786369462.101059",
     "1786322484.996019",
@@ -622,6 +623,46 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-11T04:56:56+09:00",
+      "selected": {
+        "id": "sr-1786322484-261837238d",
+        "source_ts": "1786322484.507229",
+        "title": "When LLMs Play the Telephone Game: Cultural Attractors as Conceptual Tools to Evaluate LLMs in Multi-turn Settings",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たし、memory・game-design・agent・operation・evaluation の5優先タグを持つ最新候補から1件だけを選んだ。raw→atom→candidate→staging→日記の直列変換を、各段の自然さではなく critical fact retention と property drift の収束方向で監査する知見が、現在の定時サイクルと記憶圧縮に直接つながる。Nao_uが本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件は満たす。shared-reads本文は6 model、3 task、20初期文章×5 chain、50 generationを用い、初期値への依存度をattractor strength、収束先をattractor positionとして分け、単発の自然さでは見えない反復変換のbiasを測っているため、relevance・actionability・evidenceは3とした。raw再参照あり／なしでURL、数値、否定、留保、失敗条件の保持を比較する最小probeへ変換もしやすい。一方、既存のanchor-token-before-compression-trustは一次anchorとrawへの復路を、memory-consolidation-driftは反復抽象化と新証拠の分離を、compiled-memory-boundaryは圧縮層とquery-time判断の分離を、hmem-provenance-pointer-before-abstractionは派生元pointerをすでに要求する。新しい差は複数hopでattractorの位置と強さを定量化する点だが、現行cycleの判断には既存4 controlsで主要な欠落を検出でき、独立probeを足しても次回判断がほぼ変わらないためnon_redundancyは1とした。active_probesが322件ある状態で長いchain benchmarkを新設すると確認負荷と推論費用が先行する。次に同じrawから作った複数hopの派生物で、既存controlsを通過したままcritical factが一方向へ収束する具体例が出た時だけ、raw再参照あり／なしの比較fixtureとして再評価する。",
+      "existing_controls": [
+        "probe-20260517-anchor-token-before-compression-trust",
+        "probe-20260527-memory-consolidation-drift",
+        "probe-20260621-compiled-memory-boundary",
+        "probe-20260621-hmem-provenance-pointer-before-abstraction"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsとdefer理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-11T02:52:56+09:00",
       "selected": {
