@@ -131,7 +131,34 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778774144-8dd96ef859
+    source_ts: "1778774144.767749"
+    title: "BioResearcher: Scenario-Guided Multi-Agent for Translational Medicine（旧日記前検索投稿）"
+    reason: "未レビューの score 10 以上のうち、6優先タグをすべて持つ最高 score 12 の最新候補。atom は superseded・quality=routine、投稿本文の検索 score も7であり、原文と一次資料の対応を確認して現行 shared-reads と同列に再利用できるか判定するため1件だけ選んだ。Nao_u の明示的な重要・適切・反映評価はない。"
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 1
+    non_redundancy: 1
+    risk_control: 3
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "論文固有の versioned playbook、30超の tool／ML endpoint、sandboxed analysis、claim-level reconciliation、3段階の定量評価を投稿が説明せず、論文から確認できない権限逸脱・atom失効・ゲーム制作30案へ一般化している。actionability 2以上と合計14以上を満たさず、権限・副作用 trace・provenance・playbook 粒度も既存4 probe と重複するため採用しない。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを記録。active_probes・lease・directive・恒久ルールの変更は none。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
