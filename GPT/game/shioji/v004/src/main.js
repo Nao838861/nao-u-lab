@@ -351,7 +351,7 @@ function formatSupplyDays(days) {
 const SUPPLY_SOURCE_LABELS = Object.freeze({
   households: '暮らし', order: '本国注文', winter: '冬支度',
   local_construction: '現地建設', building_repair: '建物修繕', road_paving: '石畳工事',
-  work_tools: '作業道具', fisher2: '魚粉加工', other: 'その他の利用',
+  work_tools: '作業道具', fishing_gear: '木舟・漁網・帆', fisher2: '魚粉加工', other: 'その他の利用',
 });
 
 function supplySourceLabel(source) {
@@ -1554,6 +1554,12 @@ function renderBuildingSheet() {
       : workTool.kind === 'wood'
         ? `木の道具（残り${Math.max(0, Math.ceil(workTool.durability))}日・生産100%）`
         : '素手（生産75%）';
+    const fishingRig = household.fishingRig;
+    const fishingRigLabel = fishingRig?.kind === 'sail'
+      ? `帆走漁具（残り${Math.max(0, Math.ceil(fishingRig.durability))}日・漁獲115%）`
+      : fishingRig?.kind === 'coastal'
+        ? `木舟と漁網（残り${Math.max(0, Math.ceil(fishingRig.durability))}日・漁獲100%）`
+        : '岸漁（漁獲90%・木舟と漁網を修繕待ち）';
     const missingGoodsMarkup = growth?.missingGoodsForCurrent?.map(goodsIconMarkup).join('') ?? '';
     const repairNotice = building.conditionStatus === 'needs_repair'
       ? `要修繕（状態 ${Math.round(building.condition)}%）`
@@ -1642,6 +1648,7 @@ function renderBuildingSheet() {
           <span><small>達成率</small><b>${productionRate}</b></span>
         </div>
         <p class="productivity-tool"><b>作業道具</b>　${escapeHtml(workToolLabel)}</p>
+        ${building.type === 'fisher' ? `<p class="productivity-tool"><b>漁の設備</b>　${escapeHtml(fishingRigLabel)}</p>` : ''}
         <p class="productivity-cause">${cause}</p>
         <small class="productivity-level-note">達成率は「順調な日」——移動・品切れ・空腹で手が止まらない日の生産量——を100%とした30日平均です。配置はLv条件へ直接加点せず、増えた生産・収入・供給が暮らしと次のLvを支えます。</small>
         <p class="goods-output-list">${outputNow}</p>

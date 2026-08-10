@@ -37,6 +37,8 @@ import {
   householdClass,
   householdEat,
   householdFoodDays,
+  householdFishingRigMultiplier,
+  householdFishingRigNeed,
   householdHaul,
   householdTransportPlan,
   householdWorkToolMultiplier,
@@ -1324,6 +1326,98 @@ test("需要網3: 摩耗時は手元の木製品で交換し、在庫がなけ�
   producePrimaryTick(emptyEconomy, null, empty, { day: 2, fraction: 1, endOfDay: true });
   assert.equal(empty.workTool, null);
   assert.equal(emptyEconomy.events.some(([, message]) => message.includes("素手で作業")), true);
+});
+
+test("需要網6: 漁師は丸太・木製品・布から木舟と漁網を組み、実働で均等に摩耗する", () => {
+  const economy = createEconomicState();
+  const fisher = createHousehold(economy, { job: "fisher", x: 0, y: 0 });
+  fisher.workTool = { kind: "wood", durability: 100, maxDurability: 100, acquiredDay: 1 };
+  fisher.fishingRig = null;
+  fisher.pantry.log = P.FISHING_RIG_LOG;
+  fisher.pantry.tools = P.FISHING_RIG_TOOLS;
+  fisher.pantry.cloth = P.FISHING_RIG_CLOTH;
+
+  const result = producePrimaryTick(economy, null, fisher, {
+    day: 1,
+    fraction: 1,
+    endOfDay: true,
+  });
+
+  assert.equal(result.fish, P.Y_FISH);
+  assert.equal(fisher.fishingRig.kind, "coastal");
+  assert.equal(fisher.fishingRig.durability, P.FISHING_RIG_COASTAL_DAYS - 1);
+  assert.equal(fisher.pantry.log, 0);
+  assert.equal(fisher.pantry.tools, 0);
+  assert.equal(fisher.pantry.cloth, 0);
+  assert.equal(economy.materialFlows.log.cons, P.FISHING_RIG_LOG / P.FISHING_RIG_COASTAL_DAYS);
+  assert.deepEqual(economy.dailyDemandFlows.cloth.sources.fishing_gear, {
+    demand: P.FISHING_RIG_CLOTH / P.FISHING_RIG_COASTAL_DAYS,
+    consumed: P.FISHING_RIG_CLOTH / P.FISHING_RIG_COASTAL_DAYS,
+  });
+});
+
+test("需要網6: 漁具を買えなくても岸漁90%を残し、資材ごとの不足需要を示す", () => {
+  const economy = createEconomicState();
+  const fisher = createHousehold(economy, { job: "fisher", x: 0, y: 0 });
+  fisher.workTool = { kind: "wood", durability: 100, maxDurability: 100, acquiredDay: 1 };
+  fisher.fishingRig = null;
+  fisher.pantry.log = 0;
+  fisher.pantry.tools = 0;
+  fisher.pantry.cloth = 0;
+
+  const targets = buyTargets(economy, fisher, { day: 1 });
+  assert.equal(targets.log[0], P.FISHING_RIG_LOG);
+  assert.equal(targets.tools[0], P.FISHING_RIG_TOOLS);
+  assert.equal(targets.cloth[0], P.FISHING_RIG_CLOTH);
+  const result = producePrimaryTick(economy, null, fisher, {
+    day: 1,
+    fraction: 1,
+    endOfDay: true,
+  });
+  assert.equal(result.fish, P.Y_FISH * P.FISHING_RIG_SHORE_MULT);
+  assert.equal(householdFishingRigMultiplier(fisher), P.FISHING_RIG_SHORE_MULT);
+  assert.deepEqual(householdFishingRigNeed(fisher), {
+    kind: "coastal",
+    days: P.FISHING_RIG_COASTAL_DAYS,
+    materials: {
+      log: P.FISHING_RIG_LOG,
+      tools: P.FISHING_RIG_TOOLS,
+      cloth: P.FISHING_RIG_CLOTH,
+    },
+  });
+  assert.deepEqual(economy.dailyDemandFlows.log.sources.fishing_gear, {
+    demand: P.FISHING_RIG_LOG / P.FISHING_RIG_COASTAL_DAYS,
+    consumed: 0,
+  });
+});
+
+test("需要網6: Lv2漁師は鉄材を使う帆走漁具へ更新し漁獲115%になる", () => {
+  const economy = createEconomicState();
+  const fisher = createHousehold(economy, { job: "fisher", x: 0, y: 0 });
+  fisher.lv = 2;
+  fisher.workTool = { kind: "iron", durability: 100, maxDurability: 100, acquiredDay: 1 };
+  fisher.fishingRig = null;
+  fisher.pantry.log = P.FISHING_RIG_SAIL_LOG;
+  fisher.pantry.tools = P.FISHING_RIG_SAIL_TOOLS;
+  fisher.pantry.cloth = P.FISHING_RIG_SAIL_CLOTH;
+  fisher.pantry.iron = P.FISHING_RIG_IRON;
+
+  const result = producePrimaryTick(economy, null, fisher, {
+    day: 1,
+    fraction: 1,
+    endOfDay: true,
+  });
+  assert.equal(
+    result.fish,
+    P.Y_FISH * householdMult(fisher) * P.WORK_TOOL_IRON_MULT * P.FISHING_RIG_SAIL_MULT,
+  );
+  assert.equal(fisher.fishingRig.kind, "sail");
+  assert.equal(fisher.fishingRig.durability, P.FISHING_RIG_SAIL_DAYS - 1);
+  assert.equal(fisher.pantry.iron, 0);
+  assert.deepEqual(economy.dailyDemandFlows.iron.sources.fishing_gear, {
+    demand: P.FISHING_RIG_IRON / P.FISHING_RIG_SAIL_DAYS,
+    consumed: P.FISHING_RIG_IRON / P.FISHING_RIG_SAIL_DAYS,
+  });
 });
 
 test("暦オフセット: 経過1日目を春3月として季節生産へ反映する", () => {

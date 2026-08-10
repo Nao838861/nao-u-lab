@@ -2520,6 +2520,10 @@ test('段2: full snapshotを地形・建物・キャリア・棚の不変描画�
   snapshot.economy.households[0].workTool = {
     kind: 'iron', durability: 47.5, maxDurability: 90, acquiredDay: 10,
   };
+  snapshot.economy.households[0].job = 'fisher';
+  snapshot.economy.households[0].fishingRig = {
+    kind: 'sail', durability: 88.5, maxDurability: 120, acquiredDay: 10,
+  };
   snapshot.physical.buildings[0].condition = 30;
   snapshot.physical.buildings[0].conditionStatus = 'needs_repair';
   snapshot.physical.buildings[0].repairPlan = {
@@ -2536,6 +2540,9 @@ test('段2: full snapshotを地形・建物・キャリア・棚の不変描画�
   assert.equal(model.renderScene.roadRows.find(row => row.key === pavedRoadKey).paved, true);
   assert.deepEqual(model.households[0].workTool, {
     kind: 'iron', durability: 47.5, maxDurability: 90, acquiredDay: 10,
+  });
+  assert.deepEqual(model.households[0].fishingRig, {
+    kind: 'sail', durability: 88.5, maxDurability: 120, acquiredDay: 10,
   });
   assert.equal(
     model.carriers.filter(carrier => carrier.householdId !== undefined).length,
@@ -3717,6 +3724,7 @@ test('UI向上段3/4: 建物sheet・クリック選択・地面先行の選択�
   assert.match(main, /hitTestCarrier[\s\S]*hitTestBuilding[\s\S]*selectBuilding/);
   assert.match(main, /function renderBuildingSheet/);
   assert.match(main, /作業道具[\s\S]*鉄の道具[\s\S]*木の道具[\s\S]*素手/);
+  assert.match(main, /帆走漁具[\s\S]*木舟と漁網[\s\S]*岸漁[\s\S]*漁の設備/);
   assert.match(main, /camera\.focus\(building\.x \+ building\.width \/ 2/);
   assert.match(renderer, /selectedBuildingId/);
   assert.match(renderer, /islandCalendar\(model\.day, model\.calendarOffsetDays\)\.season/);

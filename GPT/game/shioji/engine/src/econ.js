@@ -166,6 +166,18 @@ export const P = deepFreeze({
   WORK_TOOL_BARE_MULT: 0.75,
   WORK_TOOL_WOOD_MULT: 1,
   WORK_TOOL_IRON_MULT: 1.2,
+  FISHING_RIG_LOG: 3,
+  FISHING_RIG_TOOLS: 1,
+  FISHING_RIG_CLOTH: 1,
+  FISHING_RIG_SAIL_LOG: 5,
+  FISHING_RIG_SAIL_TOOLS: 2,
+  FISHING_RIG_SAIL_CLOTH: 2,
+  FISHING_RIG_IRON: 1,
+  FISHING_RIG_COASTAL_DAYS: 90,
+  FISHING_RIG_SAIL_DAYS: 120,
+  FISHING_RIG_SHORE_MULT: 0.9,
+  FISHING_RIG_COASTAL_MULT: 1,
+  FISHING_RIG_SAIL_MULT: 1.15,
   DISTRESS: 40,
   COOLDOWN: 360,
   BELIEF0: {
@@ -380,6 +392,9 @@ function makeHouseholdRecord(economy, { job, x, y }) {
     workTool: null,
     workToolsAcquired: { wood: 0, iron: 0 },
     workToolsBroken: 0,
+    fishingRig: null,
+    fishingRigsAcquired: { coastal: 0, sail: 0 },
+    fishingRigsBroken: 0,
     cartsPurchased: 0,
     cartsBroken: 0,
     marketTransactionTicks: 0,
@@ -431,6 +446,17 @@ export function createHousehold(economy, { job, x, y, origin = "immigrant" }) {
   if (origin !== "immigrant") throw new Error(`unsupported household origin: ${origin}`);
   const household = makeHouseholdRecord(economy, { job, x, y });
   applyImmigrantKit(household);
+  // 本土から来る漁家だけは使い込んだ小舟と網を持参する。島内分家は資産を
+  // 複製せず岸漁から始め、必要なら市場の実資材で新調する。
+  if (job === "fisher") {
+    household.fishingRig = {
+      kind: "coastal",
+      durability: 30,
+      maxDurability: P.FISHING_RIG_COASTAL_DAYS,
+      acquiredDay: 0,
+      origin: "passage",
+    };
+  }
   economy.households.push(household);
   recordExternalMoneyFlow(economy, {
     amount: household.purse,
@@ -444,6 +470,20 @@ export function createHousehold(economy, { job, x, y, origin = "immigrant" }) {
         "imp",
         qty,
         `移民${household.id}の開拓キット`,
+        { includeInDaily: false },
+      );
+    }
+  }
+  if (household.fishingRig) {
+    const recipe = fishingRigRecipe(household.fishingRig.kind);
+    const remaining = household.fishingRig.durability / household.fishingRig.maxDurability;
+    for (const [goods, qty] of Object.entries(recipe.materials)) {
+      recordEconomicMaterialFlow(
+        economy,
+        goods,
+        "imp",
+        qty * remaining,
+        `移民${household.id}の開拓キット（持参漁具）`,
         { includeInDaily: false },
       );
     }
@@ -539,6 +579,101 @@ export function householdWorkToolMultiplier(household) {
   return tool.kind === "iron" ? P.WORK_TOOL_IRON_MULT : P.WORK_TOOL_WOOD_MULT;
 }
 
+function fishingRigRecipe(kind) {
+  const sail = kind === "sail";
+  return {
+    kind: sail ? "sail" : "coastal",
+    days: sail ? P.FISHING_RIG_SAIL_DAYS : P.FISHING_RIG_COASTAL_DAYS,
+    materials: {
+      log: sail ? P.FISHING_RIG_SAIL_LOG : P.FISHING_RIG_LOG,
+      tools: sail ? P.FISHING_RIG_SAIL_TOOLS : P.FISHING_RIG_TOOLS,
+      cloth: sail ? P.FISHING_RIG_SAIL_CLOTH : P.FISHING_RIG_CLOTH,
+      ...(sail ? { iron: P.FISHING_RIG_IRON } : {}),
+    },
+  };
+}
+
+export function householdFishingRigNeed(household) {
+  if (household?.job !== "fisher") return null;
+  const active = household.fishingRig;
+  if (
+    active
+    && ["coastal", "sail"].includes(active.kind)
+    && Number.isFinite(active.durability)
+    && active.durability > 1e-9
+  ) return null;
+  return fishingRigRecipe((household.lv ?? 0) >= 2 ? "sail" : "coastal");
+}
+
+export function householdFishingRigMultiplier(household) {
+  if (household?.job !== "fisher") return 1;
+  const rig = household.fishingRig;
+  if (!rig || !(rig.durability > 1e-9)) return P.FISHING_RIG_SHORE_MULT;
+  return rig.kind === "sail" ? P.FISHING_RIG_SAIL_MULT : P.FISHING_RIG_COASTAL_MULT;
+}
+
+function acquireHouseholdFishingRig(economy, physical, household, { day }) {
+  const need = householdFishingRigNeed(household);
+  if (!need) return false;
+  const ready = Object.entries(need.materials).every(([goods, qty]) => (
+    householdMaterialAmount(physical, household, goods) >= qty - 1e-9
+  ));
+  if (!ready) return false;
+  for (const [goods, qty] of Object.entries(need.materials)) {
+    withdrawHouseholdMaterial(physical, household, goods, qty);
+  }
+  household.fishingRig = {
+    kind: need.kind,
+    durability: need.days,
+    maxDurability: need.days,
+    acquiredDay: day,
+    origin: "local",
+  };
+  household.fishingRigsAcquired ??= { coastal: 0, sail: 0 };
+  household.fishingRigsAcquired[need.kind] = (
+    household.fishingRigsAcquired[need.kind] ?? 0
+  ) + 1;
+  recordEconomyEvent(
+    economy,
+    day,
+    `fisher#${household.id} ${need.kind === "sail" ? "帆走漁具" : "木舟と漁網"}を更新`,
+  );
+  return true;
+}
+
+function recordFishingRigWear(economy, household, effort) {
+  if (household?.job !== "fisher" || !(effort > 1e-9)) return;
+  const active = household.fishingRig;
+  const recipe = fishingRigRecipe(
+    active?.kind === "sail" || (!active && (household.lv ?? 0) >= 2) ? "sail" : "coastal",
+  );
+  for (const [goods, qty] of Object.entries(recipe.materials)) {
+    const dailyWear = qty / recipe.days * effort;
+    if (active?.durability > 1e-9) {
+      recordEconomicMaterialFlow(
+        economy,
+        goods,
+        "cons",
+        dailyWear,
+        `世帯${household.id}の${active.kind === "sail" ? "帆走漁具" : "木舟と漁網"}の摩耗`,
+      );
+      recordEconomicDemand(economy, goods, dailyWear, dailyWear, "fishing_gear");
+    } else {
+      recordEconomicDemand(economy, goods, dailyWear, 0, "fishing_gear");
+    }
+  }
+}
+
+function wearHouseholdFishingRig(household, effort) {
+  if (household?.job !== "fisher" || !(effort > 1e-9) || !household.fishingRig) return false;
+  household.fishingRig.durability = Math.max(0, household.fishingRig.durability - effort);
+  if (household.fishingRig.durability > 1e-9) return false;
+  const kind = household.fishingRig.kind;
+  household.fishingRig = null;
+  household.fishingRigsBroken = (household.fishingRigsBroken ?? 0) + 1;
+  return kind;
+}
+
 function acquireHouseholdWorkTool(economy, physical, household, { day }) {
   if (!householdWorkToolNeed(household)) return false;
   const preferred = (household.lv ?? 0) >= 2
@@ -593,12 +728,14 @@ function recordMissingWorkToolDemand(economy, household) {
 export function isHouseholdCapitalNeed(physical, household, goods) {
   const needs = householdBuildingNeeds(physical, household);
   const toolNeed = householdWorkToolNeed(household);
+  const fishingRigNeed = householdFishingRigNeed(household);
   return (needs.construction[goods] ?? 0) > 1e-9
     || (needs.repair[goods] ?? 0) > 1e-9
     || (
       toolNeed?.goods === goods
       && householdMaterialAmount(physical, household, goods) < toolNeed.qty - 1e-9
-    );
+    )
+    || (fishingRigNeed?.materials[goods] ?? 0) > 1e-9;
 }
 
 export function buildingConditionMultiplier(physical, household) {
@@ -763,6 +900,16 @@ export function economicMaterialSnapshot(economy, physical = null) {
         for (const [goods, qty] of Object.entries(manifest)) {
           cargo[goods] = (cargo[goods] ?? 0) + qty;
         }
+      }
+    }
+    if (household.fishingRig?.durability > 1e-9) {
+      const recipe = fishingRigRecipe(household.fishingRig.kind);
+      const remaining = Math.min(
+        1,
+        household.fishingRig.durability / Math.max(1e-9, household.fishingRig.maxDurability),
+      );
+      for (const [goods, qty] of Object.entries(recipe.materials)) {
+        inventory[goods] = (inventory[goods] ?? 0) + qty * remaining;
       }
     }
   }
@@ -953,6 +1100,17 @@ function disperseHousehold(economy, household, day, physical = null) {
   }
   household.cargo = null;
   household.marketCarrier = null;
+  if (household.fishingRig?.durability > 1e-9) {
+    const recipe = fishingRigRecipe(household.fishingRig.kind);
+    const remaining = Math.min(
+      1,
+      household.fishingRig.durability / Math.max(1e-9, household.fishingRig.maxDurability),
+    );
+    for (const [goods, qty] of Object.entries(recipe.materials)) {
+      inventory[goods] += qty * remaining;
+    }
+    household.fishingRig = null;
+  }
   const market = companyLogisticsSite(physical, "market");
   for (const [goods, stalls] of Object.entries(economy.stalls)) {
     for (let index = stalls.length - 1; index >= 0; index -= 1) {
@@ -1950,11 +2108,13 @@ export function buyTargets(
     }
   }
   const toolNeed = householdWorkToolNeed(household);
+  const toolMissingByGoods = {};
   if (toolNeed) {
     const missing = Math.max(
       0,
       toolNeed.qty - householdMaterialAmount(physical, household, toolNeed.goods),
     );
+    toolMissingByGoods[toolNeed.goods] = missing;
     if (missing > 1e-9) {
       const ceiling = Math.max(
         (px[toolNeed.goods] ?? P.BELIEF0[toolNeed.goods]) * 1.5,
@@ -1968,6 +2128,23 @@ export function buyTargets(
       } else targets[toolNeed.goods] = [missing, ceiling];
     }
   }
+  const fishingRigNeed = householdFishingRigNeed(household);
+  for (const [goods, qty] of Object.entries(fishingRigNeed?.materials ?? {})) {
+    const reservedForTool = toolNeed?.goods === goods ? toolNeed.qty : 0;
+    const combinedMissing = Math.max(
+      0,
+      qty + reservedForTool - householdMaterialAmount(physical, household, goods),
+    );
+    const missing = Math.max(0, combinedMissing - (toolMissingByGoods[goods] ?? 0));
+    if (missing <= 1e-9) continue;
+    const ceiling = Math.max(
+      (px[goods] ?? P.BELIEF0[goods] ?? 2) * 1.6,
+      (P.IMP[goods] ?? 0) * 1.05,
+    );
+    if (targets[goods]) {
+      targets[goods] = [targets[goods][0] + missing, Math.max(targets[goods][1], ceiling)];
+    } else targets[goods] = [missing, ceiling];
+  }
   return targets;
 }
 
@@ -1975,7 +2152,7 @@ export function isProductionInput(household, goods) {
   return (household.job === "saltworks" && goods === "char")
     || (household.job === "fisher2" && goods === "fish")
     || (household.job === "shepherd" && (goods === "wheat" || goods === "veg"))
-    || (household.job === "fisher" && (goods === "salt" || goods === "char"))
+    || (household.job === "fisher" && ["salt", "char", "log", "tools", "cloth", "iron"].includes(goods))
     || (household.job === "veg" && goods === "salt")
     || ((household.job === "wheat" || household.job === "rapeseed") && goods === "meal")
     || (household.job === "smelter" && ["ore", "char", "coal"].includes(goods))
@@ -2904,6 +3081,7 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
   const resourceWork = ensureResourceWorkPlan(economy, physical, household);
   if (resourceWork) effectiveFraction *= resourceWork.efficiency;
   acquireHouseholdWorkTool(economy, physical, household, { day });
+  acquireHouseholdFishingRig(economy, physical, household, { day });
   const productiveEffort = effectiveFraction;
   if (shouldPauseProduction(economy, household)) {
     if (endOfDay) recordMissingWorkToolDemand(economy, household);
@@ -2911,6 +3089,7 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
   }
   effectiveFraction *= buildingConditionMultiplier(physical, household);
   effectiveFraction *= householdWorkToolMultiplier(household);
+  effectiveFraction *= householdFishingRigMultiplier(household);
   const workBuilding = physical
     ? ensureBuildingShelves(buildingById(physical, household.buildingId))
     : null;
@@ -3204,6 +3383,18 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     workBuilding.operationWear = (workBuilding.operationWear ?? 0) + effectiveFraction;
   }
   if (didProductiveWork) {
+    recordFishingRigWear(economy, household, productiveEffort);
+    const brokenRig = wearHouseholdFishingRig(household, productiveEffort);
+    if (
+      brokenRig
+      && !acquireHouseholdFishingRig(economy, physical, household, { day })
+    ) {
+      recordEconomyEvent(
+        economy,
+        day,
+        `fisher#${household.id} ${brokenRig === "sail" ? "帆走漁具" : "木舟と漁網"}が摩耗し、岸漁へ移行`,
+      );
+    }
     const brokenKind = wearHouseholdWorkTool(household, productiveEffort);
     if (
       brokenKind

@@ -1286,6 +1286,11 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
       workTool: household.workTool && household.workTool.durability > 1e-9
         ? { ...household.workTool }
         : { kind: 'bare', durability: 0, maxDurability: 0 },
+      fishingRig: household.job === 'fisher' && household.fishingRig?.durability > 1e-9
+        ? { ...household.fishingRig }
+        : household.job === 'fisher'
+          ? { kind: 'shore', durability: 0, maxDurability: 0 }
+          : null,
       productionMultiplier: household.productionMultiplier ?? 1,
       productivity: {
         ...production,
