@@ -101,7 +101,59 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の atom entry 50件を memory/atoms/index.jsonl と照合し、broken reference 0件を確認した。"
+  - "atoms 2847件の mirror audit を確認し、atoms.jsonl / per-file md / index.jsonl の欠損・parse error・content conflict は各0件だった。raw normalized content duplicate 40群80行は既存 fold で表示上40行に畳まれ、recall-visible duplicate は3群6行だった。"
+  - "memory/raw/ の30日超 inactive 238件を確認した。内訳は web_research 214、headless_eval 16、slack_api 5、slack_archive 1、game_eval 1、sync_state.txt 1。一次資料・評価証拠が中心で mtime のみでは archive 根拠にならないため、今回は移動0件とした。"
+  - "shared-reads candidate lifecycle 1252件を dry-run audit し、failed 436 / needs_review 2 / posted 582 / postponed 223 / ready_to_post 9、現在状態の自動修復対象0件を確認した。"
+  - "title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再生成し、group/candidate handoff を冪等 audit した。新規 enqueue は各0件だった。"
+  - "slack directives 23行、broadcasts 21行を確認し、pending は各0件だったため handled 更新はなかった。"
+issues: []
+non_blocking_findings:
+  - "memory_health は source atom 2件（sr-1776127289-4d9239b255 / gr-1777083728-44d444ab7a）を mojibake suspect として継続検出した。2847件中の孤立した source-level finding で、mirror conflict や recall smoke failure はなく、構造設計 issue には昇格しなかった。原文照合なしの自動修復は行っていない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 3
+    dormant: 1
+stale_review_batch: []
+stale_backlog:
+  overdue_open_total: 2
+  overdue_paths:
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+    - memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+  stale_triage_queue_rows: 0
+  suppression_evidence:
+    - "JAMEL group は gha-e6d4d4b5a37a0808 で 2026-08-20 まで deferred。"
+    - "collision morphology group は gha-2313a247c62a9028 で 2026-08-20 まで deferred。"
+  open_duplicate_group_count: 46
+  mixed_group_count: 40
+  all_open_group_count: 6
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_action_handoff: []
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読みで日本語表示に成功。代表語は 記憶 / ゲーム設計 / 敵パターン を取得し、評価軸 は現行生成 index に文字列自体が存在しなかった。atom mirror の parse error 0件であり source 破損とは判定しない。"
+  display_or_tooling_status: none
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
