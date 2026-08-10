@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-10T18:03:00+09:00",
+  "updated_at": "2026-08-10T20:35:23+09:00",
   "reviewed_source_ts": [
+    "1786352183.698429",
     "1786330770.045909",
     "1786339994.922609",
     "1786322485.344499",
@@ -618,6 +619,50 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-10T20:35:23+09:00",
+      "selected": {
+        "id": "sr-1786352183-d8a5cb2926",
+        "source_ts": "1786352183.698429",
+        "title": "ReASearch — reasoning-driven agentic search を controller-light な探索 loop として読む",
+        "reason": "未レビューの score 10 以上260件のうち、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ最新候補として1件だけ選んだ。評価履歴から次の実験、原因切り分け、祖先への復帰、終了を決める探索方針と、毎 turn の状態再提示は、定時サイクルや限定 game loop の改善を単発の局所編集で終わらせない観点として現在のCodexに直結する。Nao_uが本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads本文は、3領域14 task・各設定3回、比較対象と評価予算を揃えた結果、memory／Python tool ablation、Terminal-Bench・IMG-100・MuJoCoでの原因診断と祖先復帰、NanoGPTでは同等という負例、強い自動reward・高い評価予算・3回だけの探索分散という限界まで示しているため、relevance・actionability・evidenceは3とした。新しい差は、現在best、直近試行、親子関係、残予算、停滞回数、既知の失敗理由を毎turn再提示するstate packetだが、attempt-branch-ledgerは失敗枝とprune理由、untracked-frontierは未訪問分岐、info-gain-question-groundingは仮説集合と切り分け質問、prototype-hypothesis-contractは事前仮説と判定、rlm-one-hop-query-rewriteは初回hit後の一段探索をすでに扱う。直前にレビューしたLong-Horizon Autonomous Architecture Researchも停滞時の探索幅拡張をstate-only deferとしているためnon_redundancyは1。現在のstagingには同一seed・同一予算で固定探索／state再提示なしagent／ReASearch型agentを比べる限定game loopがなく、Phase 4aには別atomのpending leaseが1件ある。consumer、before／after artifact、判断差を比較可能に固定できない状態で322件のactive_probesへ追加すると、state packet自体が新しいouter-loop負荷になるためrisk_controlは2とし、active probe・metric・lease・directive・恒久ルールは追加しない。次に限定sceneの探索artifactが置かれ、既存probeでは重複試行率・未見seed・祖先復帰の採否差を表せない時だけ再評価する。",
+      "existing_reviews": [
+        "1786339994.922609"
+      ],
+      "existing_probes": [
+        "probe-20260613-attempt-branch-ledger",
+        "probe-20260526-untracked-frontier-before-policy-lock",
+        "probe-20260620-info-gain-question-grounding",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract",
+        "probe-20260731-rlm-one-hop-query-rewrite"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsとdefer理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-10T18:03:00+09:00",
       "selected": {
