@@ -60,7 +60,17 @@ sidecar_refresh:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260811_steel_abyss_architecture_rebuild.md
+    reason: Phase 2 の gate_decision が postpone で pass candidate ではないため、Phase 3 の投稿対象外
+    action: postpone
+slack_posts_created: 0
+candidate_updates: 0
+result: no_eligible_pass_candidates
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
