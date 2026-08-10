@@ -2451,6 +2451,24 @@ export function requestCompanyImport(economy, physical, goods, { day, qty, aid =
   return request;
 }
 
+function recordCaravanRetailSale(economy, routeId, { day, amount, tripNumber = null }) {
+  const route = (economy.caravans ?? []).find((candidate) => candidate.id === routeId);
+  if (!route) {
+    (economy.caravanSalesPending ??= {})[routeId] = (
+      economy.caravanSalesPending[routeId] ?? 0
+    ) + amount;
+    return;
+  }
+  const month = Math.floor(Math.max(0, day - 1) / 30);
+  route.monthly ??= {};
+  route.monthly[month] ??= { sales: 0, procurement: 0, wages: 0, cartCosts: 0 };
+  route.monthly[month].sales += amount;
+  const trip = route.currentTrip?.tripNumber === tripNumber
+    ? route.currentTrip
+    : route.recentTrips?.find((candidate) => candidate.tripNumber === tripNumber);
+  if (trip) trip.retailSales = (trip.retailSales ?? 0) + amount;
+}
+
 export function buyAtMarket(
   economy,
   household,
@@ -2728,9 +2746,11 @@ export function buyAtMarket(
           const lot = lots[0];
           const sold = Math.min(remainingSale, lot.qty);
           const attributed = payment * sold / qty;
-          (economy.caravanSalesPending ??= {})[lot.routeId] = (
-            economy.caravanSalesPending[lot.routeId] ?? 0
-          ) + attributed;
+          recordCaravanRetailSale(economy, lot.routeId, {
+            day,
+            amount: attributed,
+            tripNumber: lot.tripNumber ?? null,
+          });
           lot.qty -= sold;
           remainingSale -= sold;
           if (lot.qty <= 1e-9) lots.shift();

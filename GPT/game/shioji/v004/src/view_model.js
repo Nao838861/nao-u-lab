@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.45.2-caravan-routes';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.45.3-caravan-accounting';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.45.2-caravan-routes';
+} from './food_readability.js?v=v004.45.3-caravan-accounting';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.45.2-caravan-routes';
-import { analyzeRoadConnections } from './placement.js?v=v004.45.2-caravan-routes';
+} from './engine_bridge.js?v=v004.45.3-caravan-accounting';
+import { analyzeRoadConnections } from './placement.js?v=v004.45.3-caravan-accounting';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.45.2-caravan-routes';
+} from './render_scene.js?v=v004.45.3-caravan-accounting';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.45.2-caravan-routes';
+} from './visuals.js?v=v004.45.3-caravan-accounting';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',
@@ -40,6 +40,52 @@ export const FOOD_DELIVERY_ALERT_LABELS = Object.freeze({
   waiting: '次の買い出し待ち',
   consumed: '今日分を食べ切った',
 });
+
+export function caravanStatePresentation(route) {
+  if (route.fundingShortfall || route.lastFundingShortfall) {
+    return { key: 'funds', label: route.currentTrip ? '運行中・資金不足' : '資金不足' };
+  }
+  if (route.state === 'outbound') return { key: 'running', label: '往路を運行中' };
+  if (route.state === 'returning') return { key: 'running', label: '帰路を運行中' };
+  if (route.state === 'waiting_crew') return { key: 'crew', label: '御者待ち' };
+  if (['waiting_cart', 'waiting_cart_return'].includes(route.state)) {
+    return { key: 'cart', label: '荷車待ち' };
+  }
+  if (['waiting_road', 'waiting_road_return'].includes(route.state)) {
+    return { key: 'road', label: '道路待ち' };
+  }
+  return { key: 'idle', label: '待機中' };
+}
+
+export function caravanAccountingPresentation(route, day) {
+  const rows = Object.entries(route.monthly ?? {}).map(([month, source]) => {
+    const sales = source.sales ?? 0;
+    const procurement = source.procurement ?? 0;
+    const wages = source.wages ?? 0;
+    const cartCosts = source.cartCosts ?? source.wear ?? 0;
+    return {
+      month: Number(month),
+      sales,
+      procurement,
+      wages,
+      cartCosts,
+      profit: sales - procurement - wages - cartCosts,
+    };
+  }).sort((left, right) => left.month - right.month);
+  const currentMonth = Math.floor(Math.max(0, day - 1) / 30);
+  const current = rows.find(row => row.month === currentMonth) ?? {
+    month: currentMonth, sales: 0, procurement: 0, wages: 0, cartCosts: 0, profit: 0,
+  };
+  const fiscalStartMonth = Math.floor(currentMonth / 12) * 12;
+  return {
+    currentMonth,
+    current,
+    fiscalProfit: rows.filter(row => (
+      row.month >= fiscalStartMonth && row.month <= currentMonth
+    )).reduce((total, row) => total + row.profit, 0),
+    rows: rows.slice(-12),
+  };
+}
 const REQUIREMENT_GOODS = Object.freeze({
   food1: Object.freeze(['wheat']),
   food2: Object.freeze(['fish', 'veg']),
@@ -602,6 +648,9 @@ export function walkingVisualPosition({
 
 function carrierRows(snapshot, buildings) {
   const buildingById = new Map(buildings.map(building => [building.id, building]));
+  const marketNames = new Map(
+    (snapshot.economy.marketNetwork?.markets ?? []).map(market => [market.id, market.name]),
+  );
   const marketBuilding = buildings.find(building => building.type === 'market');
   const marketEndpoint = marketBuilding
     ? {
@@ -1102,6 +1151,9 @@ function carrierRows(snapshot, buildings) {
         const cargoRows = Object.entries(carrier.manifest ?? {})
           .filter(([, amount]) => amount > 1e-9)
           .map(([goods, amount]) => ({ goods, amount }));
+        const outbound = route.state === 'outbound';
+        const start = carrier.path?.[0] ?? carrier.position;
+        const end = carrier.path?.at(-1) ?? carrier.position;
         return {
           id: `caravan:${route.id}:${carrier.id}`,
           caravanRouteId: route.id,
@@ -1119,8 +1171,20 @@ function carrierRows(snapshot, buildings) {
           peopleRows: [{ id: `${route.id}:driver:${carrier.assetId}`, name: '隊商の御者' }],
           activity: 'carrying',
           path: (carrier.path ?? []).map(point => ({ ...point })),
-          from: null,
-          to: null,
+          from: {
+            label: outbound
+              ? marketNames.get(route.baseMarketId) ?? route.baseMarketId
+              : marketNames.get(route.destMarketId) ?? route.destMarketId,
+            x: start.x,
+            y: start.y,
+          },
+          to: {
+            label: outbound
+              ? marketNames.get(route.destMarketId) ?? route.destMarketId
+              : marketNames.get(route.baseMarketId) ?? route.baseMarketId,
+            x: end.x,
+            y: end.y,
+          },
         };
       })
   ));
@@ -1532,14 +1596,24 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
         .reduce((total, row) => total - row.amount, 0),
     companyLedgerByReason: { ...(snapshot.economy.company.ledgerByReason ?? {}) },
     companyDailyLedger: (snapshot.economy.company.ledgerDaily ?? []).map(row => ({ ...row })),
-    caravans: (snapshot.economy.caravans ?? []).map(route => ({
-      ...route,
-      goodsOut: [...(route.goodsOut ?? [])],
-      goodsBack: [...(route.goodsBack ?? [])],
-      cartAssetIds: [...(route.cartAssetIds ?? [])],
-      recentTrips: (route.recentTrips ?? []).map(trip => ({ ...trip })),
-      monthly: { ...(route.monthly ?? {}) },
-    })),
+    caravans: (snapshot.economy.caravans ?? []).map(route => {
+      const marketNames = new Map(
+        (snapshot.economy.marketNetwork?.markets ?? []).map(market => [market.id, market.name]),
+      );
+      return {
+        ...route,
+        baseMarketName: marketNames.get(route.baseMarketId) ?? route.baseMarketId,
+        destMarketName: marketNames.get(route.destMarketId) ?? route.destMarketId,
+        goodsOut: [...(route.goodsOut ?? [])],
+        goodsBack: [...(route.goodsBack ?? [])],
+        cartAssetIds: [...(route.cartAssetIds ?? [])],
+        recentTrips: (route.recentTrips ?? []).map(trip => ({ ...trip })),
+        monthly: { ...(route.monthly ?? {}) },
+        status: caravanStatePresentation(route),
+        accounting: caravanAccountingPresentation(route, snapshot.day),
+        daysUntilDeparture: Math.max(0, (route.nextDepartDay ?? snapshot.day) - snapshot.day),
+      };
+    }),
     companyCarts: (snapshot.economy.companyCarts ?? []).map(cart => ({ ...cart })),
     cartStats: { ...(snapshot.economy.cartStats ?? {}) },
     marketPrices: { ...snapshot.economy.px },

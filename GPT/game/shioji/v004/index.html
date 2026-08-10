@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.45.2-caravan-routes">
+  <link rel="stylesheet" href="./style.css?v=v004.45.3-caravan-accounting">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -26,6 +26,7 @@
     <div class="hud-stat population-stat"><small>人口</small><b id="population-value">0人</b></div>
     <nav id="top-menu" class="top-menu" aria-label="情報ウインドウ">
       <button id="open-company" type="button">取引</button>
+      <button id="open-caravans" type="button">隊商</button>
       <button id="open-supply" type="button">需給</button>
       <button id="open-island" type="button">統計 <i id="island-signal" data-tone="steady">平穏</i></button>
       <button id="open-building" type="button" disabled>選択建物</button>
@@ -103,6 +104,7 @@
     </header>
     <div id="building-summary" class="building-summary"></div>
     <section id="building-caravan-employment" class="building-detail" hidden></section>
+    <section id="building-caravan-route" class="building-detail" hidden></section>
     <section id="building-household" class="building-detail"></section>
     <section id="building-shelves" class="building-detail"></section>
     <section id="building-company-stock" class="building-detail company-stock-detail" hidden></section>
@@ -196,6 +198,14 @@
       <h3>取引台帳</h3>
       <div id="company-ledger" class="company-ledger"></div>
     </section>
+  </aside>
+
+  <aside id="caravan-sheet" class="panel sheet caravan-sheet" hidden data-testid="caravan-sheet">
+    <header>
+      <div><small>路線ごとの運行と採算</small><h2>隊商</h2></div>
+      <button type="button" data-close-sheet="caravan-sheet" aria-label="隊商を閉じる">×</button>
+    </header>
+    <section id="caravan-panel" class="caravan-panel"></section>
   </aside>
 
   <aside id="event-sheet" class="panel sheet" hidden data-testid="event-sheet">
@@ -344,7 +354,7 @@
       });
     })();
   </script>
-  <script id="game-module" type="module" src="./src/main.js?v=v004.45.2-caravan-routes"
+  <script id="game-module" type="module" src="./src/main.js?v=v004.45.3-caravan-accounting"
     onerror="window.__SHIOJI_BOOT__?.failed()"></script>
 </body>
 </html>

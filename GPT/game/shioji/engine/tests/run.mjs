@@ -4882,8 +4882,6 @@ test("隊商S4: 実在庫を一往復させ、荷車・仕入・小売を含む�
   assert.ok((bought.purchased.wheat ?? 0) > 0, JSON.stringify(bought));
   assert.ok(fisheryBuyer.pantry.wheat > pantryBefore);
   assert.ok(sectionAmount(fisheryMarket, "inbound", "wheat") < 8);
-  assert.ok((economy.caravanSalesPending[route.id] ?? 0) > 0);
-  stepCaravanDay(economy, physical, { day: 2 });
   assert.ok(caravanMonthlyLedger(route)[0].sales > 0);
 
   const moneyAfter = economy.company.money
@@ -4949,6 +4947,22 @@ test("隊商S4: 公開APIの路線設定は入力journalから同じ状態を再
   const expected = api.snapshot();
   const replay = replayInputJournal(create, api.inputJournal(), { untilTick: 0 });
   assert.deepEqual(replay.api.snapshot(), expected);
+});
+
+test("隊商S5: 3か月連続赤字へ入った境界だけを一度の出来事にする", () => {
+  const fixture = createCaravanRouteFixture();
+  const { economy, physical } = fixture.world.state;
+  fixture.route.nextDepartDay = 999;
+  fixture.route.monthly = {
+    0: { sales: 2, procurement: 3, wages: 4, cartCosts: 0 },
+    1: { sales: 3, procurement: 4, wages: 4, cartCosts: 0 },
+    2: { sales: 1, procurement: 2, wages: 4, cartCosts: 0 },
+  };
+  stepCaravanDay(economy, physical, { day: 91 });
+  stepCaravanDay(economy, physical, { day: 92 });
+  assert.equal(economy.events.filter(([, message]) => (
+    message.includes("3か月続けて赤字")
+  )).length, 1);
 });
 
 test("段44: 離散した世帯の建物は同じbuildingIdの空き家として再入居できる", () => {

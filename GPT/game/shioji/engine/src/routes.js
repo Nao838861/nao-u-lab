@@ -238,6 +238,7 @@ function caravanBuyAtMarket(economy, physical, route, marketId, goodsList, capac
   let spent = 0;
   const bought = {};
   const costByGoods = {};
+  let fundingShortfall = false;
   const market = marketBuildingForId(physical, marketId);
   for (const goods of goodsList) {
     if (remainingWeight <= 1e-9) break;
@@ -252,8 +253,15 @@ function caravanBuyAtMarket(economy, physical, route, marketId, goodsList, capac
       if (!seller) continue;
       const physicalQty = market ? sectionAmount(market, "outbound", goods) : stall.qty;
       const affordableQty = economy.company.money / Math.max(1e-9, stall.price);
-      const qty = Math.min(stall.qty, physicalQty, remainingWeight / unitWeight, affordableQty);
-      if (qty <= 1e-9) continue;
+      const availableQty = Math.min(stall.qty, physicalQty, remainingWeight / unitWeight);
+      const qty = Math.min(availableQty, affordableQty);
+      if (qty + 1e-9 < availableQty) fundingShortfall = true;
+      if (qty <= 1e-9) {
+        if (stall.qty > 1e-9 && physicalQty > 1e-9 && affordableQty <= 1e-9) {
+          fundingShortfall = true;
+        }
+        continue;
+      }
       const payment = qty * stall.price;
       stall.qty -= qty;
       if (market) withdrawInventory(market, "outbound", goods, qty);
@@ -271,7 +279,7 @@ function caravanBuyAtMarket(economy, physical, route, marketId, goodsList, capac
       remainingWeight -= qty * unitWeight;
     }
   }
-  return { bought, costByGoods, spent };
+  return { bought, costByGoods, spent, fundingShortfall };
 }
 
 function cargoSummary(cargo) {
@@ -291,7 +299,12 @@ function unloadToMarket(economy, physical, route, marketId, { day }) {
     const cost = route.cargoCostByGoods[goods] ?? 0;
     table[goods] = (table[goods] ?? 0) + qty;
     costTable[goods] = (costTable[goods] ?? 0) + cost;
-    (lotTable[goods] ??= []).push({ routeId: route.id, qty, cost });
+    (lotTable[goods] ??= []).push({
+      routeId: route.id,
+      tripNumber: route.currentTrip?.tripNumber ?? null,
+      qty,
+      cost,
+    });
     if (market) depositInventory(market, "inbound", goods, qty);
   }
   const summary = cargoSummary(route.cargo);
@@ -340,6 +353,7 @@ function startLeg(physical, route, assets, from, to) {
     });
     carrier.people = 1;
     carrier.routeId = route.id;
+    carrier.departureDelay = index * 0.35;
     return routeTravelCarrier(physical, carrier, from, to);
   });
   assignCarrierManifests(route);
@@ -367,6 +381,7 @@ function startOutboundTrip(economy, physical, route, assets, { day, purchases = 
   );
   route.cargo = purchase.bought;
   route.cargoCostByGoods = purchase.costByGoods;
+  route.fundingShortfall = purchase.fundingShortfall;
   route.state = "outbound";
   route.currentTrip = {
     tripNumber: (route.completedTrips ?? 0) + 1,
@@ -374,10 +389,12 @@ function startOutboundTrip(economy, physical, route, assets, { day, purchases = 
     crew: assets.length,
     cartAssetIds: assets.map((asset) => asset.id),
     procurement: purchase.spent,
+    retailSales: 0,
     wages: 0,
     cartCosts: purchases.reduce((total, purchase) => total + purchase.price, 0),
     outbound: { ...purchase.bought },
     returning: {},
+    fundingShortfall: purchase.fundingShortfall,
     outboundTicks: null,
     returnTicks: null,
     distance: 0,
@@ -436,12 +453,28 @@ function waiting(economy, route, day, state, message) {
   }
 }
 
+function updateLossBoundary(economy, route, day) {
+  if (day <= 1 || (day - 1) % 30 !== 0) return;
+  const completedMonth = Math.floor((day - 2) / 30);
+  const recent = [completedMonth - 2, completedMonth - 1, completedMonth]
+    .map((month) => route.monthly?.[month] ?? null);
+  const threeMonthLoss = recent.every((row) => row && (
+    (row.sales ?? 0) - (row.procurement ?? 0) - (row.wages ?? 0)
+      - (row.cartCosts ?? row.wear ?? 0) < -1e-9
+  ));
+  if (threeMonthLoss && !route.lossBoundaryActive) {
+    route.lossBoundaryActive = true;
+    recordEconomyEvent(economy, day, `${route.name}は3か月続けて赤字になった`);
+  } else if (!threeMonthLoss) route.lossBoundaryActive = false;
+}
+
 // 一日一回、固定給と実売上を路線へ帰属させ、予定日にだけ出発する。
 export function stepCaravanDay(economy, physical, { day }) {
   const results = [];
   for (const route of economy.caravans ?? []) {
     if (route.state === "disbanded") continue;
     collectRouteAccruals(economy, route, day);
+    updateLossBoundary(economy, route, day);
     if (["waiting_road_return", "waiting_cart_return"].includes(route.state)) {
       const resumed = resumeReturnTrip(economy, physical, route, { day });
       results.push({ routeId: route.id, departed: false, returning: resumed });
@@ -531,7 +564,11 @@ export function stepCaravanTick(economy, physical, { day }) {
       );
       route.cargo = purchase.bought;
       route.cargoCostByGoods = purchase.costByGoods;
+      route.fundingShortfall = route.fundingShortfall || purchase.fundingShortfall;
       route.currentTrip.returning = { ...purchase.bought };
+      route.currentTrip.fundingShortfall = (
+        route.currentTrip.fundingShortfall || purchase.fundingShortfall
+      );
       route.currentTrip.procurement += purchase.spent;
       monthlyRow(route, day).procurement += purchase.spent;
       if (!resumeReturnTrip(economy, physical, route, { day })) continue;
@@ -545,6 +582,7 @@ export function stepCaravanTick(economy, physical, { day }) {
         returnedDay: day,
         brokenCartIds,
       };
+      route.lastFundingShortfall = Boolean(trip.fundingShortfall);
       route.recentTrips.push(trip);
       if (route.recentTrips.length > 12) route.recentTrips.shift();
       route.completedTrips = (route.completedTrips ?? 0) + 1;

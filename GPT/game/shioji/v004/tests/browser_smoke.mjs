@@ -1148,7 +1148,7 @@ async function checkSeasonalPlots(width, height, mobile) {
       plots: plots.map(row => row.type),
     };
   })()`);
-  assert.equal(springStart.version, 'v004.45.2-caravan-routes', JSON.stringify(springStart));
+  assert.equal(springStart.version, 'v004.45.3-caravan-accounting', JSON.stringify(springStart));
   assert.equal(springStart.season, '春', JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => ['wheat', 'veg'].includes(type)), JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => type === 'shepherd'), JSON.stringify(springStart));
@@ -1534,8 +1534,8 @@ async function checkPeopleVisuals(width, height, mobile) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.45.2-caravan-routes');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.45.2-caravan-routes');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.45.3-caravan-accounting');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.45.3-caravan-accounting');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -2371,7 +2371,7 @@ async function checkOrderCostUi(width, height, mobile) {
       viewport: { width: innerWidth, height: innerHeight },
     };
   })()`);
-  assert.equal(result.version, 'v004.45.2-caravan-routes');
+  assert.equal(result.version, 'v004.45.3-caravan-accounting');
   assert.ok(result.offer, JSON.stringify(result));
   assert.match(result.text, /完遂決済単価/);
   assert.match(result.text, /全量仕入原価/);
@@ -2535,7 +2535,7 @@ async function checkSupplyDemand(width, height, mobile) {
   assert.equal(result.pageHorizontalOverflow, false, JSON.stringify(result));
   assert.equal(result.supplyBreakdownVisible, !mobile, JSON.stringify(result));
   assert.equal(result.demandBreakdownVisible, true, JSON.stringify(result));
-  assert.equal(result.runtimeVersion, 'v004.45.2-caravan-routes', JSON.stringify(result));
+  assert.equal(result.runtimeVersion, 'v004.45.3-caravan-accounting', JSON.stringify(result));
   await page.screenshot(`/tmp/shioji_v004_supply_demand_${mobile ? 'mobile' : 'pc'}_${width}x${height}.png`);
   await page.close();
   return result;
@@ -2601,7 +2601,7 @@ async function checkFoodAlerts(width, height, mobile) {
       JSON.stringify(result),
     );
   }
-  assert.equal(result.runtimeVersion, 'v004.45.2-caravan-routes', JSON.stringify(result));
+  assert.equal(result.runtimeVersion, 'v004.45.3-caravan-accounting', JSON.stringify(result));
   assert.deepEqual(page.errors, []);
   await page.screenshot(`/tmp/shioji_v004_food_alerts_${mobile ? 'mobile' : 'pc'}.png`);
   await page.close();
@@ -2643,7 +2643,7 @@ async function checkSpatialProductivity(width = 1440, height = 900, mobile = fal
   })()`);
   assert.ok(building && !building.missing,
     `資源職の30日実測を建物画面へ表示できる: ${JSON.stringify(building)}`);
-  assert.equal(building.version, 'v004.45.2-caravan-routes');
+  assert.equal(building.version, 'v004.45.3-caravan-accounting');
   assert.ok(Number.isFinite(building.efficiency), JSON.stringify(building));
   assert.ok(Number.isFinite(building.resourceEfficiency), JSON.stringify(building));
   assert.equal(building.withinViewport, true, JSON.stringify(building));
@@ -2835,7 +2835,7 @@ async function checkMarketRhythmUi(width = 1440, height = 900, mobile = false) {
       hidden: sheet.hidden,
     };
   })()`);
-  assert.equal(result.version, 'v004.45.2-caravan-routes', JSON.stringify(result));
+  assert.equal(result.version, 'v004.45.3-caravan-accounting', JSON.stringify(result));
   assert.equal(result.hidden, false, JSON.stringify(result));
   assert.match(result.label, /出荷をまとめ中 1\/2日/, JSON.stringify(result));
   assert.match(result.detail, /食料切れと生産停止は待ちません/, JSON.stringify(result));
@@ -2944,7 +2944,7 @@ async function checkCaravanEmployment(width = 1440, height = 900, mobile = false
       applicantsUi: /応募者|応募一覧/.test(sheet.textContent),
     };
   })()`);
-  assert.equal(result.version, 'v004.45.2-caravan-routes', JSON.stringify(result));
+  assert.equal(result.version, 'v004.45.3-caravan-accounting', JSON.stringify(result));
   assert.deepEqual(result.employment, { recruitment: 3, wage: 6.5 });
   assert.equal(result.crew, 3, JSON.stringify(result));
   assert.match(result.text, /隊商の雇用/);
@@ -2957,6 +2957,119 @@ async function checkCaravanEmployment(width = 1440, height = 900, mobile = false
   await page.screenshot(mobile
     ? '/tmp/shioji_v004_caravan_employment_mobile.png'
     : '/tmp/shioji_v004_caravan_employment_desktop.png');
+  await page.close();
+  return result;
+}
+
+async function checkCaravanAccounting(width = 1440, height = 900, mobile = false) {
+  const page = await newPage(width, height, mobile, gameForMode('caravan'));
+  const setup = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.setSpeed(0);
+    const inn = game.model.buildings.find(building => building.type === 'carter');
+    game.selectBuilding(inn);
+    const destination = document.querySelector('[data-caravan-destination]');
+    const outbound = document.querySelector('[data-caravan-goods-out]');
+    const returning = document.querySelector('[data-caravan-goods-back]');
+    const interval = document.querySelector('[data-caravan-interval]');
+    destination.value = 'fishery';
+    outbound.value = 'wheat';
+    returning.value = 'fish';
+    interval.value = '3';
+    const sheet = document.querySelector('#building-sheet');
+    const panel = document.querySelector('#building-caravan-route');
+    return {
+      text: panel.textContent,
+      values: [destination.value, outbound.value, returning.value, interval.value],
+      withinViewport: (() => {
+        const rect = sheet.getBoundingClientRect();
+        return rect.left >= 0 && rect.right <= innerWidth && rect.top >= 0 && rect.bottom <= innerHeight;
+      })(),
+      horizontalOverflow: panel.scrollWidth > panel.clientWidth + 1,
+    };
+  })()`);
+  assert.deepEqual(setup.values, ['fishery', 'wheat', 'fish', '3']);
+  assert.match(setup.text, /目的地/);
+  assert.match(setup.text, /行き荷/);
+  assert.match(setup.text, /帰り荷/);
+  assert.match(setup.text, /運行間隔/);
+  assert.equal(setup.withinViewport, true, JSON.stringify(setup));
+  assert.equal(setup.horizontalOverflow, false, JSON.stringify(setup));
+  await page.screenshot(mobile
+    ? '/tmp/shioji_v004_caravan_route_mobile.png'
+    : '/tmp/shioji_v004_caravan_route_desktop.png');
+  const result = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    document.querySelector('[data-caravan-route-save]').click();
+    const configured = game.controller.inputJournal().at(-1)?.op;
+    game.advanceTicks(30 * 30);
+    game.openSheet('caravan-sheet');
+    const panel = document.querySelector('#caravan-panel');
+    const sheet = document.querySelector('#caravan-sheet');
+    const route = game.model.caravans[0];
+    const routeCarrier = game.model.carriers.find(carrier => carrier.caravanRouteId === route.id);
+    return {
+      version: game.version,
+      configured,
+      route: {
+        state: route.state,
+        completedTrips: route.completedTrips,
+        currentSales: route.accounting.current.sales,
+        currentProfit: route.accounting.current.profit,
+        fiscalProfit: route.accounting.fiscalProfit,
+        recentRetailSales: route.recentTrips.at(-1)?.retailSales ?? 0,
+      },
+      routeCarrier: routeCarrier ? {
+        kind: routeCarrier.kind,
+        assetId: routeCarrier.assetId,
+        goods: routeCarrier.goods,
+        amount: routeCarrier.amount,
+      } : null,
+      text: panel.textContent,
+      dedicatedButtonPressed: document.querySelector('#open-caravans').getAttribute('aria-pressed'),
+      companyContainsCaravanPanel: Boolean(document.querySelector('#company-sheet #caravan-panel')),
+      monthlyRows: panel.querySelectorAll('.caravan-ledger-row').length,
+      tripVisible: Boolean(panel.querySelector('.caravan-trip-heading')),
+      withinViewport: (() => {
+        const rect = sheet.getBoundingClientRect();
+        return rect.left >= 0 && rect.right <= innerWidth && rect.top >= 0 && rect.bottom <= innerHeight;
+      })(),
+      horizontalOverflow: panel.scrollWidth > panel.clientWidth + 1,
+    };
+  })()`);
+  assert.equal(result.version, 'v004.45.3-caravan-accounting', JSON.stringify(result));
+  assert.deepEqual(result.configured, {
+    type: 'set_caravan_route',
+    baseBuildingId: result.configured.baseBuildingId,
+    destMarketId: 'fishery',
+    goodsOut: ['wheat'],
+    goodsBack: ['fish'],
+    intervalDays: 3,
+  });
+  assert.ok(result.route.completedTrips >= 1, JSON.stringify(result));
+  assert.ok(result.route.currentSales > 0, JSON.stringify(result));
+  assert.ok(result.route.recentRetailSales > 0, JSON.stringify(result));
+  assert.equal(result.dedicatedButtonPressed, 'true', JSON.stringify(result));
+  assert.equal(result.companyContainsCaravanPanel, false, JSON.stringify(result));
+  assert.equal(result.routeCarrier?.kind, 'cart', JSON.stringify(result));
+  assert.ok(result.routeCarrier?.assetId, JSON.stringify(result));
+  assert.match(result.text, /隊商の収支/);
+  assert.match(result.text, /今月/);
+  assert.match(result.text, /今期/);
+  assert.match(result.text, /月ごとの収支/);
+  assert.match(result.text, /売上（現在まで）/);
+  assert.match(result.text, /仕入/);
+  assert.match(result.text, /固定給/);
+  assert.match(result.text, /荷車/);
+  assert.match(result.text, /差引（現在まで）/);
+  assert.ok(result.monthlyRows >= 1, JSON.stringify(result));
+  assert.equal(result.tripVisible, true, JSON.stringify(result));
+  assert.equal(result.withinViewport, true, JSON.stringify(result));
+  assert.equal(result.horizontalOverflow, false, JSON.stringify(result));
+  assert.deepEqual(page.errors, []);
+  await page.screenshot(mobile
+    ? '/tmp/shioji_v004_caravan_accounting_mobile.png'
+    : '/tmp/shioji_v004_caravan_accounting_desktop.png');
   await page.close();
   return result;
 }
@@ -3051,6 +3164,12 @@ if (process.argv.includes('--start-choice-only')) {
   await checkCaravanEmployment(1440, 900, false);
   await checkCaravanEmployment(390, 844, true);
   console.log('CHARTER ISLE v004 caravan employment smoke: PASS');
+} else if (process.argv.includes('--caravan-accounting-only')) {
+  const pc = await checkCaravanAccounting(1440, 900, false);
+  const mobile = await checkCaravanAccounting(390, 844, true);
+  console.log(`CHARTER ISLE v004 caravan accounting smoke: PASS ${JSON.stringify({
+    pc: pc.route, mobile: mobile.route,
+  })}`);
 } else if (process.argv.includes('--spatial-productivity-only')) {
   await checkSpatialProductivity(1440, 900, false);
   await checkSpatialProductivity(390, 844, true);

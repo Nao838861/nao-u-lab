@@ -6,9 +6,9 @@ export {
   householdClass,
   householdProductionSummary,
   productionCost,
-} from '../../engine/src/econ.js?v=v004.45.2-caravan-routes';
-import { P } from '../../engine/src/econ.js?v=v004.45.2-caravan-routes';
-import { createEngineApi } from '../../engine/src/api.js?v=v004.45.2-caravan-routes';
+} from '../../engine/src/econ.js?v=v004.45.3-caravan-accounting';
+import { P } from '../../engine/src/econ.js?v=v004.45.3-caravan-accounting';
+import { createEngineApi } from '../../engine/src/api.js?v=v004.45.3-caravan-accounting';
 import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
@@ -16,14 +16,14 @@ import {
   buildCaravanSliceWorld,
   buildBaseCity,
   makeStableCityPlan,
-} from '../../engine/src/audit.js?v=v004.45.2-caravan-routes';
-import { createPhysicalState, makeFlowIslandTerrain, makeMultiMarketTerrain } from '../../engine/src/physical.js?v=v004.45.2-caravan-routes';
-import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.45.2-caravan-routes';
-import { createViewController } from './controller.js?v=v004.45.2-caravan-routes';
+} from '../../engine/src/audit.js?v=v004.45.3-caravan-accounting';
+import { createPhysicalState, makeFlowIslandTerrain, makeMultiMarketTerrain } from '../../engine/src/physical.js?v=v004.45.3-caravan-accounting';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.45.3-caravan-accounting';
+import { createViewController } from './controller.js?v=v004.45.3-caravan-accounting';
 import {
   SPRING_START_CALENDAR_OFFSET_DAYS,
   START_MODES,
-} from './start_modes.js?v=v004.45.2-caravan-routes';
+} from './start_modes.js?v=v004.45.3-caravan-accounting';
 
 export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS };
 export { makeMultiMarketTerrain };

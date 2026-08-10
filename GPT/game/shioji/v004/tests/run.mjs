@@ -87,7 +87,8 @@ import {
 } from '../src/ui_guidance.js';
 import { islandCalendar, islandHealthSummary, recentCompanySummary } from '../src/ui_summary.js';
 import {
-  COMPANY_VISIBLE_PORTER_LIMIT, FOOD_DELIVERY_ALERT_LABELS, foodDeliveryAlertLabel,
+  COMPANY_VISIBLE_PORTER_LIMIT, FOOD_DELIVERY_ALERT_LABELS,
+  caravanAccountingPresentation, caravanStatePresentation, foodDeliveryAlertLabel,
   snapshotToViewModel, terrainTopologyForModel,
   walkingVisualPosition, walkingVisualProfile,
 } from '../src/view_model.js';
@@ -2304,7 +2305,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.45.2-caravan-routes');
+  assert.equal(VERSION, 'v004.45.3-caravan-accounting');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2666,6 +2667,56 @@ test('隊商S4: 二市場開始モードの路線は実荷車で往復し表示�
   assert.ok(route.completedTrips >= 1, JSON.stringify(route));
   assert.ok(model.carriers.some(carrier => carrier.caravanRouteId === route.id));
   assert.ok(model.companyCarts.some(cart => cart.caravanRouteId === route.id));
+});
+
+test('隊商S5: 状態語は運行・待機・御者・荷車・道路・資金の原因を区別する', () => {
+  assert.deepEqual(caravanStatePresentation({ state: 'outbound' }), {
+    key: 'running', label: '往路を運行中',
+  });
+  assert.deepEqual(caravanStatePresentation({ state: 'returning' }), {
+    key: 'running', label: '帰路を運行中',
+  });
+  assert.equal(caravanStatePresentation({ state: 'idle' }).label, '待機中');
+  assert.equal(caravanStatePresentation({ state: 'waiting_crew' }).label, '御者待ち');
+  assert.equal(caravanStatePresentation({ state: 'waiting_cart' }).label, '荷車待ち');
+  assert.equal(caravanStatePresentation({ state: 'waiting_road_return' }).label, '道路待ち');
+  assert.equal(caravanStatePresentation({ state: 'idle', fundingShortfall: true }).label, '資金不足');
+});
+
+test('隊商S5: 月次表は実売上から仕入・固定給・荷車を引き今月と今期を同じ式で示す', () => {
+  const accounting = caravanAccountingPresentation({
+    monthly: {
+      11: { sales: 20, procurement: 4, wages: 6, cartCosts: 2 },
+      12: { sales: 30, procurement: 8, wages: 10, cartCosts: 3 },
+      13: { sales: 12, procurement: 5, wages: 4, cartCosts: 1 },
+    },
+  }, 391);
+  assert.equal(accounting.currentMonth, 13);
+  assert.equal(accounting.current.profit, 2);
+  assert.equal(accounting.fiscalProfit, 11);
+  assert.deepEqual(accounting.rows.map(row => row.profit), [8, 9, 2]);
+});
+
+test('隊商S5: 実世界の小売売上は翌日待ちにせず月次表と便内訳へ計上する', () => {
+  const controller = createEngineController({ seed: 11, mode: 'caravan' });
+  const initial = controller.saveState();
+  controller.operate({
+    type: 'set_caravan_route',
+    baseBuildingId: initial.caravanSlice.innBuildingId,
+    destMarketId: initial.caravanSlice.fisheryMarketId,
+    goodsOut: ['wheat'],
+    goodsBack: ['fish'],
+    intervalDays: 3,
+  });
+  controller.advanceTicks(30 * 30);
+  const route = controller.readModel().caravans[0];
+  assert.ok(route.accounting.current.sales > 0, JSON.stringify(route.accounting));
+  assert.equal(
+    route.accounting.current.profit,
+    route.accounting.current.sales - route.accounting.current.procurement
+      - route.accounting.current.wages - route.accounting.current.cartCosts,
+  );
+  assert.ok(route.recentTrips.some(trip => (trip.retailSales ?? 0) > 0));
 });
 
 test('段2: full snapshotを地形・建物・キャリア・棚の不変描画モデルへ変換する', () => {
