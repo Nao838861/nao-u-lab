@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-11T04:56:56+09:00",
+  "updated_at": "2026-08-11T07:03:52+09:00",
   "reviewed_source_ts": [
+    "1786322449.253679",
     "1786322484.507229",
     "1786383928.323609",
     "1786369462.101059",
@@ -623,6 +624,47 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-11T07:03:52+09:00",
+      "selected": {
+        "id": "sr-1786322449-a8db93f659",
+        "source_ts": "1786322449.253679",
+        "title": "LLM Agents as Static Level-k Players in Behavioural Games",
+        "reason": "source が slack_api/shared-reads、score 13、未レビューという条件を満たし、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ最新候補から1件だけを選んだ。LLM playtester の初手分布が人間へ近いことと、履歴・相手方策・残りラウンドを受けて方策を更新できることを分離する知見が、headless 評価の過剰一般化を防ぐ課題に直結する。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件は満たす。shared-reads本文はQwen 2.5の6 scale、5 temperature、quantisation、base/instruct、3 framingを釣り合わせた360 cell、p-beauty contestと10 round public-goods game、分布距離、response slope、round trend、finite／indefinite／explicit-last-round probeを接続し、cold-start分布とwithin-run adaptationを分離しているためrelevance・actionability・evidenceは3とした。一方、open-world-behavior-oracleはseed／route間の行動分布と選択的探索を、fixed-test-vs-dynamic-stressは相手route等を変えた動的条件を、behavior-signature-distribution-shiftは変更前後の行動分布を、synthetic-user-drift-checkはprompt labelとpopulation同一性の混同を、game-agent-attribution-boundaryは集計値ではなくturn-level traceと原因分離をすでに要求する。本atom固有の差は初手分布、継続適応、horizon感度、最終局面を一つの4列metricにまとめる点だが、既存5 controlsを同じ評価へ適用すれば主要な誤読は検出でき、新規controlを足しても次回判断がほぼ変わらないためnon_redundancyは1とした。active_probesが322件あり、現在のstagingには同一opponentを複数round走らせ、途中で方策や終了条件を反転したbefore／after playtest artifactがない。consumer、trigger artifact、判断差を具体化せずleaseする条件を満たさないためstate-onlyでdeferする。次の反復型LLM／bot playtestで、初手分布は近いのに既存controlsを通過したまま履歴・horizonへの追従欠落を制作判断へ混入させた具体例が出た時だけ、4列metricとして再評価する。",
+      "existing_controls": [
+        "probe-20260604-open-world-behavior-oracle",
+        "probe-20260527-fixed-test-vs-dynamic-stress",
+        "probe-20260619-behavior-signature-distribution-shift",
+        "probe-20260526-synthetic-user-drift-check",
+        "probe-20260530-game-agent-attribution-boundary"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsとdefer理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-11T04:56:56+09:00",
       "selected": {

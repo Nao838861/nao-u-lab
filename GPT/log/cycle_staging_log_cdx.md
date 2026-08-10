@@ -65,7 +65,35 @@ skipped: []
 - 投稿前レビュー: 4115字（投稿 script 集計4116字）、`shared_reads_policy` pass、重複 preflight `continue`、必須項目順・末尾 URL・禁止表現なしを確認。`post_slack_message_file.py --delete-on-fail` による Slack 本文照合も `verification: ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786322449-a8db93f659
+    source_ts: "1786322449.253679"
+    title: "LLM Agents as Static Level-k Players in Behavioural Games"
+    reason: "score 13、未レビュー、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ最新候補。初手分布の人間類似性と履歴・相手方策・horizonへの適応を分離する知見がheadless評価の過剰一般化へ直結する。Nao_uの明示評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: defer
+  change:
+    summary: "採用条件の総点は満たすが、既存5 controlsが主要部分を覆い、比較可能な反復playtest artifactもないためstate-only reviewとした。active_probes、ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採否理由: 初手分布、継続適応、horizon 感度、最終局面を分ける4列 metric は実行可能だが、`open-world-behavior-oracle`、`fixed-test-vs-dynamic-stress`、`behavior-signature-distribution-shift`、`synthetic-user-drift-check`、`game-agent-attribution-boundary` の組合せで主要な誤読を検出できる。322件の active probe に独立 control を足さず、次の反復型 playtest で既存 controls が適応欠落を見逃した実例が出た時だけ再評価する。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
