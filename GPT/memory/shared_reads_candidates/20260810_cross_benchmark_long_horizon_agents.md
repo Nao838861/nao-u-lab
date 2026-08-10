@@ -7,13 +7,17 @@ genre_tags: [ai-agents, evaluation, long-horizon, tool-use, automated-playtestin
 evaluated_at: "2026-08-10T22:37:19+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-10T22:37:19+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-10T22:37:19+09:00"
-next_action: post_to_shared_reads
-stale_after: "2026-09-09"
+posted:
+  ts: "1786369462.101059"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786369462101059"
+  char_count: 4499
+  posted_at: "2026-08-10T22:44:22+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-10T22:44:22+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786369462101059"
+next_action: none
 supersedes: []
 gate_reason: >-
   環境固有 shortcut と転移可能な技能を分ける問題設定、外部 benchmark を選択に使わない実験条件、5 benchmark の定量結果、paired trajectory の行動差まで抽出できる。
