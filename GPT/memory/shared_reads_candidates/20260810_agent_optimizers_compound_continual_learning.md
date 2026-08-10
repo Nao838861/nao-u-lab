@@ -7,14 +7,19 @@ genre_tags: [ai-agent, continual-learning, evaluation, regression-control, game-
 evaluated_at: "2026-08-10T11:49:09+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-10T11:49:09+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-10T11:49:09+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-10T12:00:14+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786330770045909"
+next_action: none
 stale_after: "2026-09-09"
 supersedes: []
+posted:
+  ts: "1786330770.045909"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786330770045909"
+  char_count: 4012
+  posted_at: "2026-08-10T12:00:14+09:00"
 gate_reason: >-
   二段階の課題導入、同一予算での三手法比較、lifelong average pass rate、失敗した転移様式、regression control という因果仮説まで抽出できる。
   playable diff を反復する制作 agent の回帰検証へ具体的に移せ、研究結果と適用上の限界を分けた CoopEval 水準の概要を構成できる。
