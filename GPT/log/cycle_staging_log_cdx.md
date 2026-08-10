@@ -52,7 +52,17 @@ unreviewed_intake_audit:
 - duplicate preflight: sidecar 3 種を開始時に再生成して `--check` 済み。対象 title / URL は `continue`。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260811_video_deepresearch_visual_tool_grounding.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786399090469959
+    char_count: 4116
+skipped: []
+```
+
+- 最終判定: `部分採用`。perception-first の段階的 tool 解放、tool-free leakage 検査、回答と観察 trace の対応付けは有用。一方、offline VQA と interactive gameplay の差、同系列 judge、成功 trajectory の選択バイアス、H800 cluster と人手確認の cost を明記した。
+- 原稿監査: abstract / conclusion と動画長表は200件だが実験本文は100件、表3の35B版 VideoDR-Bench Overall は60.0%だが本文は65.4%とする不整合を PDF 原表で確認し、数値を benchmark 単独精度として誤読しないよう投稿へ反映した。
+- 投稿前レビュー: 4115字（投稿 script 集計4116字）、`shared_reads_policy` pass、重複 preflight `continue`、必須項目順・末尾 URL・禁止表現なしを確認。`post_slack_message_file.py --delete-on-fail` による Slack 本文照合も `verification: ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
