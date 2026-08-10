@@ -25,6 +25,7 @@ import {
 
 export const CARAVAN_CART_CAPACITY = P.CART_WOOD_CAPACITY;
 export const CARAVAN_INTERVAL_LIMITS = Object.freeze({ min: 1, max: 30 });
+export const CARAVAN_DEFAULT_INTERVAL_DAYS = 20;
 
 function calendarMonthIndex(day) {
   return Math.floor(Math.max(0, day - 1) / 30);
@@ -78,7 +79,7 @@ export function createCaravanRoute(economy, physical, {
   destMarketId,
   goodsOut = [],
   goodsBack = [],
-  intervalDays = 3,
+  intervalDays = CARAVAN_DEFAULT_INTERVAL_DAYS,
   day = economy.currentDay ?? 0,
 } = {}) {
   const inn = buildingById(physical, baseBuildingId);
@@ -240,20 +241,25 @@ function caravanBuyAtMarket(economy, physical, route, marketId, goodsList, capac
   const costByGoods = {};
   let fundingShortfall = false;
   const market = marketBuildingForId(physical, marketId);
-  for (const goods of goodsList) {
-    if (remainingWeight <= 1e-9) break;
+  const buyGoods = (goods, weightLimit) => {
+    let goodsWeight = Math.min(remainingWeight, weightLimit);
     const unitWeight = goodsUnitWeight(goods);
     const stalls = economy.stalls[goods]
       .filter((stall) => (stall.marketId ?? "main") === marketId && stall.qty > 1e-9)
       .sort((left, right) => left.price - right.price
         || left.householdId - right.householdId);
     for (const stall of stalls) {
-      if (remainingWeight <= 1e-9) break;
+      if (remainingWeight <= 1e-9 || goodsWeight <= 1e-9) break;
       const seller = economy.households.find((candidate) => candidate.id === stall.householdId);
       if (!seller) continue;
       const physicalQty = market ? sectionAmount(market, "outbound", goods) : stall.qty;
       const affordableQty = economy.company.money / Math.max(1e-9, stall.price);
-      const availableQty = Math.min(stall.qty, physicalQty, remainingWeight / unitWeight);
+      const availableQty = Math.min(
+        stall.qty,
+        physicalQty,
+        remainingWeight / unitWeight,
+        goodsWeight / unitWeight,
+      );
       const qty = Math.min(availableQty, affordableQty);
       if (qty + 1e-9 < availableQty) fundingShortfall = true;
       if (qty <= 1e-9) {
@@ -277,7 +283,16 @@ function caravanBuyAtMarket(economy, physical, route, marketId, goodsList, capac
       bought[goods] = (bought[goods] ?? 0) + qty;
       costByGoods[goods] = (costByGoods[goods] ?? 0) + payment;
       remainingWeight -= qty * unitWeight;
+      goodsWeight -= qty * unitWeight;
     }
+  };
+  // 複数品目を指定したのに先頭の一品だけで満載になると、チェックした後続品が
+  // 一度も運ばれない。第一巡は積載重量を等分し、余った空きだけ第二巡で埋める。
+  const share = goodsList.length > 0 ? capacity / goodsList.length : 0;
+  for (const goods of goodsList) buyGoods(goods, share);
+  for (const goods of goodsList) {
+    if (remainingWeight <= 1e-9) break;
+    buyGoods(goods, remainingWeight);
   }
   return { bought, costByGoods, spent, fundingShortfall };
 }
@@ -490,7 +505,7 @@ export function stepCaravanDay(economy, physical, { day }) {
       continue;
     }
     const provision = provisionRouteCarts(economy, route, crew, { day });
-    if (provision.assigned.length <= 0) {
+    if (provision.assigned.length < crew) {
       waiting(economy, route, day, "waiting_cart", `${route.name}は荷車を待っている`);
       results.push({ routeId: route.id, departed: false, reason: "cart" });
       continue;
@@ -541,7 +556,12 @@ export function stepCaravanTick(economy, physical, { day }) {
   const arrivals = [];
   for (const route of economy.caravans ?? []) {
     if (!["outbound", "returning"].includes(route.state)) continue;
-    const arrived = route.carriers.every((carrier) => stepTravelCarrier(physical, carrier, 1));
+    // Array.everyの短絡評価を使うと、先頭が到着するまで後続車が一歩も進まず、
+    // 2台編成の所要時間が2倍になる。全車を同じtickで必ず一度ずつ進める。
+    let arrived = true;
+    for (const carrier of route.carriers) {
+      if (!stepTravelCarrier(physical, carrier, 1)) arrived = false;
+    }
     route.progressTicks += 1;
     if (!arrived) continue;
     if (route.state === "outbound") {

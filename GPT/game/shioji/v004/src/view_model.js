@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.45.3-caravan-accounting';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.45.4-caravan-audit';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.45.3-caravan-accounting';
+} from './food_readability.js?v=v004.45.4-caravan-audit';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.45.3-caravan-accounting';
-import { analyzeRoadConnections } from './placement.js?v=v004.45.3-caravan-accounting';
+} from './engine_bridge.js?v=v004.45.4-caravan-audit';
+import { analyzeRoadConnections } from './placement.js?v=v004.45.4-caravan-audit';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.45.3-caravan-accounting';
+} from './render_scene.js?v=v004.45.4-caravan-audit';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.45.3-caravan-accounting';
+} from './visuals.js?v=v004.45.4-caravan-audit';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',

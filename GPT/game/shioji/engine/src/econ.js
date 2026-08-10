@@ -2291,9 +2291,18 @@ export function householdCartPurchaseDecision(economy, physical, household, cart
 
 export function buyHouseholdWoodCart(economy, physical, household, { day }) {
   ensureCartEconomy(economy);
+  const buyerMarketId = householdMarketId(household);
+  const caravanNeedsCart = companyCaravanCartOrderPending(
+    economy,
+    physical,
+    buyerMarketId,
+  );
+  // 荷車待ちの定期路線は既に注文を出している。完成日の午後に来た住民が
+  // 先に買い切らず、翌朝の会社買付まで現物を荷車工房へ残す。
+  if (caravanNeedsCart) return null;
   const offer = offeredWoodCarts(economy, {
     excludingHouseholdId: household.id,
-    marketId: householdMarketId(household),
+    marketId: buyerMarketId,
   })[0];
   if (!offer) return null;
   const decision = householdCartPurchaseDecision(economy, physical, household, offer.cart);
@@ -2318,6 +2327,20 @@ export function buyHouseholdWoodCart(economy, physical, household, { day }) {
     `荷車購入: ${household.job}#${household.id}がcartwright#${offer.household.id}から木の荷車${cart.id}`,
   );
   return { cart: household.cart, sellerHouseholdId: offer.household.id, decision };
+}
+
+function companyCaravanCartOrderPending(economy, physical, marketId) {
+  return (economy.caravans ?? []).some((route) => {
+    if (route.state === "disbanded" || route.baseMarketId !== marketId) return false;
+    const inn = buildingById(physical, route.baseBuildingId);
+    const required = caravanCrewCount(economy, inn);
+    const assigned = (route.cartAssetIds ?? []).filter((assetId) => (
+      economy.companyCarts.some((asset) => asset.id === assetId && asset.durability > 1e-9)
+    )).length;
+    // 運行に必要な台数だけを注文済みとする。予備車まで先買いすると初月費用を
+    // 不自然に前倒しし、全損時に荷車待ちになる出来事も消してしまう。
+    return assigned < required;
+  });
 }
 
 export function finishHouseholdCartTrip(economy, household, { day, assetId, distance }) {
@@ -2536,8 +2559,8 @@ export function buyAtMarket(
             goods,
             kind: "LSTOCK",
             qty: localStock,
-            price: Math.max(0.1, (marketPriceBook(economy, buyerMarket)[goods]
-              ?? P.BELIEF0[goods] ?? 2) * 0.95),
+            price: Math.max(0.1, marketPriceBook(economy, buyerMarket)[goods]
+              ?? P.BELIEF0[goods] ?? 2),
           });
         }
       }

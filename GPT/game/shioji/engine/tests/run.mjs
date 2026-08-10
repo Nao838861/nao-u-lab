@@ -4829,7 +4829,7 @@ test("隊商S3: 二市場世界は種付き隊商宿1軒を持ち雇用操作を
   const inn = world.state.physical.buildings.find((building) => building.type === "carter");
   assert.ok(inn);
   assert.notEqual(inn.ownerHouseholdId, null);
-  assert.deepEqual(inn.caravanEmployment, { recruitment: 2, wage: 5 });
+  assert.deepEqual(inn.caravanEmployment, { recruitment: 2, wage: 0.75 });
 
   assert.equal(api.applyOperation({
     type: "set_caravan_employment",
@@ -4894,6 +4894,29 @@ test("隊商S4: 実在庫を一往復させ、荷車・仕入・小売を含む�
       - (materialBefore.inventory[goods] ?? 0) - (materialBefore.cargo[goods] ?? 0),
     ) < 1e-7, `${goods}の物量がずれた`);
   }
+});
+
+test("隊商S6: 複数品目を指定すると先頭品だけで満載にせず全品目を積む", () => {
+  const fixture = createCaravanRouteFixture();
+  const { economy, physical } = fixture.world.state;
+  const toolsSeller = createHousehold(economy, { job: "woodshop", x: 8, y: 6 });
+  toolsSeller.marketId = "main";
+  economy.stalls.tools.push({
+    householdId: toolsSeller.id, marketId: "main", qty: 8, price: 2, age: 0,
+  });
+  depositInventory(fixture.mainMarket, "outbound", "tools", 8);
+  const configured = configureCaravanRoute(economy, physical, {
+    baseBuildingId: fixture.inn.id,
+    goodsOut: ["wheat", "tools"],
+  });
+  assert.equal(configured.ok, true, configured.reason);
+
+  runCaravanUntilReturned(economy, physical, fixture.route, 1);
+
+  assert.deepEqual(fixture.route.recentTrips[0].outbound, { wheat: 4, tools: 4 });
+  assert.equal(fixture.mainSeller.purse, P.PURSE0 + 8);
+  assert.equal(toolsSeller.purse, P.PURSE0 + 8);
+  assert.equal(assertMoneyConservation(economy), true);
 });
 
 test("隊商S4: 道路の近道は抽象日数でなく実際の往復tickを短くする", () => {

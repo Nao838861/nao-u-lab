@@ -1,48 +1,48 @@
-import { IsometricCamera } from './camera.js?v=v004.45.3-caravan-accounting';
-import { SimulationClock } from './clock.js?v=v004.45.3-caravan-accounting';
-import { createBoundaryEvents } from './boundary_events.js?v=v004.45.3-caravan-accounting';
+import { IsometricCamera } from './camera.js?v=v004.45.4-caravan-audit';
+import { SimulationClock } from './clock.js?v=v004.45.4-caravan-audit';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.45.4-caravan-audit';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.45.3-caravan-accounting';
+} from './config.js?v=v004.45.4-caravan-audit';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.45.3-caravan-accounting';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.45.3-caravan-accounting';
-import { developmentMapView } from './development_map.js?v=v004.45.3-caravan-accounting';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.45.3-caravan-accounting';
-import { formatElenaSpeech } from './elena_text.js?v=v004.45.3-caravan-accounting';
+} from './display_batch.js?v=v004.45.4-caravan-audit';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.45.4-caravan-audit';
+import { developmentMapView } from './development_map.js?v=v004.45.4-caravan-audit';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.45.4-caravan-audit';
+import { formatElenaSpeech } from './elena_text.js?v=v004.45.4-caravan-audit';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.45.3-caravan-accounting';
+} from './food_readability.js?v=v004.45.4-caravan-audit';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.45.3-caravan-accounting';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.45.3-caravan-accounting';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.45.3-caravan-accounting';
-import { goodsDetail } from './goods_detail.js?v=v004.45.3-caravan-accounting';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.45.3-caravan-accounting';
-import { WorldPresentation } from './presentation.js?v=v004.45.3-caravan-accounting';
-import { Renderer } from './renderer.js?v=v004.45.3-caravan-accounting';
+} from './keyboard.js?v=v004.45.4-caravan-audit';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.45.4-caravan-audit';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.45.4-caravan-audit';
+import { goodsDetail } from './goods_detail.js?v=v004.45.4-caravan-audit';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.45.4-caravan-audit';
+import { WorldPresentation } from './presentation.js?v=v004.45.4-caravan-audit';
+import { Renderer } from './renderer.js?v=v004.45.4-caravan-audit';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.45.3-caravan-accounting';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.45.3-caravan-accounting';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.45.3-caravan-accounting';
+} from './save_game.js?v=v004.45.4-caravan-audit';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.45.4-caravan-audit';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.45.4-caravan-audit';
 import {
   GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRow, supplyDemandRows,
-} from './supply_demand.js?v=v004.45.3-caravan-accounting';
-import { orderQuote } from './tutorial_content.js?v=v004.45.3-caravan-accounting';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.45.3-caravan-accounting';
+} from './supply_demand.js?v=v004.45.4-caravan-audit';
+import { orderQuote } from './tutorial_content.js?v=v004.45.4-caravan-audit';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.45.4-caravan-audit';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.45.3-caravan-accounting';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.45.3-caravan-accounting';
+} from './ui_guidance.js?v=v004.45.4-caravan-audit';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.45.4-caravan-audit';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -1662,7 +1662,8 @@ function renderBuildingSheet() {
     const selectedDestination = caravanRoute?.destMarketId ?? markets[0]?.id ?? '';
     const selectedOut = caravanRoute?.goodsOut?.[0] ?? '';
     const selectedBack = caravanRoute?.goodsBack?.[0] ?? '';
-    const interval = caravanRoute?.intervalDays ?? 3;
+    // 二市場の初年度実測では3日便は麦を積み上げ、20日便なら実需を追いやすい。
+    const interval = caravanRoute?.intervalDays ?? 20;
     const locked = Boolean(caravanRoute?.currentTrip);
     const goodsOptions = (selected, emptyLabel) => [
       `<option value="">${emptyLabel}</option>`,
@@ -2378,7 +2379,7 @@ $('#building-caravan-route').addEventListener('click', event => {
   const destMarketId = $('[data-caravan-destination]')?.value ?? '';
   const goodsOut = $('[data-caravan-goods-out]')?.value ?? '';
   const goodsBack = $('[data-caravan-goods-back]')?.value ?? '';
-  const intervalDays = Number($('[data-caravan-interval]')?.value ?? 3);
+  const intervalDays = Number($('[data-caravan-interval]')?.value ?? 20);
   if (!destMarketId) {
     $('#status span').textContent = '目的地にできる別の市場がありません';
     return;
