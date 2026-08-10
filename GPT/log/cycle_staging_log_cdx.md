@@ -116,7 +116,21 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+executed_at: "2026-08-11T02:45:48+09:00"
+posted:
+  - candidate: memory/shared_reads_candidates/20260811_nowhere_prophet_three_lessons_next_game.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786383928323609"
+    char_count: 4432
+skipped: []
+review:
+  source_verified: true
+  duplicate_preflight: continue
+  policy_check: ok
+  slack_text_verification: ok
+  final_decision: posted
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
