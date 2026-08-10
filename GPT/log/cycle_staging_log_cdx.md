@@ -116,7 +116,67 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - memory/MEMORY.md の entry index を validate_memory_index.py と UTF-8 代表語 probe で監査し、broken atom reference 0件、source file は UTF-8 正常と確認した
+  - atoms.jsonl / per-file atom / atoms/index.jsonl の 2851 ID が一致し、ID重複 0件、mirror content conflict 0件を確認した
+  - normalized-content 重複は raw 40群80行、recall-visible 3群6行で、既存 lifecycle/content fold と canonical overlay が機能していることを確認した
+  - memory/raw/ の30日超ファイル240件を監査し、一次証拠・再現用評価 artifact のため age のみでは移動せず、archive 対象 0件とした
+  - shared-reads candidate lifecycle を監査し、posted 586 / ready_to_post 9 / postponed 217 / failed 445 / needs_review 2、現在状態 conflict 0件を確認した
+  - Slack inbox は directives 0件 / broadcasts 0件 pending で、handled 更新対象はなかった
+  - open duplicate group / stale triage / group action sidecar を再生成し、group/candidate handoff inbox を監査した
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 4
+    dormant: 1
+candidate_lifecycle:
+  counts:
+    posted: 586
+    ready_to_post: 9
+    postponed: 217
+    failed: 445
+    needs_review: 2
+  current_state_conflicts: 0
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 43
+  mixed_group_count: 38
+  all_open_group_count: 5
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  lease_suppression_note: >-
+    overdue 2件は既存 all-open duplicate group の deferred lease 2件に包含され、
+    membership fingerprint が一致し retry_after 2026-08-20 前のため stale triage から抑止された。
+group_action_handoff: []
+stale_review_batch: []
+encoding_audit:
+  source_file_status: >-
+    memory/MEMORY.md は UTF-8 明示読みで「記憶」「ゲーム設計」「敵パターン」「評価軸」を取得でき、
+    index validator も通過した。既知 atom 1件には source 内の置換文字が残るが、MEMORY.md 本文の破損ではない。
+  display_or_tooling_status: >-
+    memory_health.py 初回実行は index の並行更新中とみられる一時的な型エラーで停止したが、
+    standalone mirror audit と再実行は成功し、2851件の三者一致を確認した。
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
