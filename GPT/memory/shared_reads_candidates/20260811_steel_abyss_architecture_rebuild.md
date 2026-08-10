@@ -4,6 +4,20 @@ url: "https://itch.io/devlog/1585225/steel-abyss-lessons-learned-edition.amp"
 collected_at: "2026-08-11T04:46:18+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-dev, postmortem, architecture, phaser, deterministic-testing, qa]
+evaluated_at: "2026-08-11T04:49:56+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-11T04:49:56+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-11T04:49:56+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-10"
+supersedes: []
+gate_reason: >-
+  旧構造の失敗と再構築方針は具体的で、ゲーム制作への適用先も明確。ただし再構築は placeholder の初期段階で、
+  機能追加コスト、回帰不具合、seeded QA の再現性などの評価結果がなく、現状では約4000字の概要を根拠付きで完結できない。
 ---
 
 ## raw_excerpt
