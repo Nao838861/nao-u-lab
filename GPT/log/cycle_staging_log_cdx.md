@@ -71,7 +71,47 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786322484-a254a8e0cb
+    source_ts: "1786322484.996019"
+    title: "CodeGrep: an RL-trained retrieval agent for coding agents"
+    reason: >-
+      source が slack_api/shared-reads、score 11、未レビューという条件を満たし、
+      memory・harness・evaluation・agent・operation・game-design の6優先タグを
+      すべて持つ最新候補のうち1件だけを選んだ。探索と修正を分離し、検索精度だけでなく
+      frozen downstream agent の解決率・round・tokenまで比較する点を現在のCodexへ照合した。
+      Nao_uによる明示的な重要評価はない。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: >-
+    数値上の採用条件は満たすが、既存のretrieval-delivery-loop、rag-recall-search-space、
+    rlm-one-hop-query-rewrite、attributed-trajectory-tipが検索根拠、distractor、baseline、
+    cost、判断差、trajectory帰属を既に扱う。CodeGrep固有のprecision閾値とdownstream
+    success/costを同一taskで比較できるartifactが現在のstagingになく、後続Phase 4aの
+    consumer・before/after・expected deltaを重複なく固定できない。active_probes 322件と
+    Phase 4a向けpending lease 1件へ同型controlを追加せず、具体的なrepo修正replayが
+    できた時だけ再評価する。
+  change:
+    summary: "reviewed_source_tsとdefer理由のみ更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

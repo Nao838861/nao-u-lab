@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-10T20:35:23+09:00",
+  "updated_at": "2026-08-10T22:50:00+09:00",
   "reviewed_source_ts": [
+    "1786322484.996019",
     "1786352183.698429",
     "1786330770.045909",
     "1786339994.922609",
@@ -619,6 +620,46 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-10T22:50:00+09:00",
+      "selected": {
+        "id": "sr-1786322484-a254a8e0cb",
+        "source_ts": "1786322484.996019",
+        "title": "CodeGrep: an RL-trained retrieval agent for coding agents",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たし、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ最新候補のうち1件だけを選んだ。探索agentを修正agentから分離し、候補file precisionだけでなくfrozen downstream agentの解決率・round・tokenまで比較する知見が、Codexのrepo探索やmemory recallを検索hit数だけで評価しない観点として現在の作業に直結する。Nao_uが本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads本文は、frozen OpenHandsの前段にread-only retrieverを置く比較、CATMによる31,977件の教師sample、Fβ precision gate、reward設計v1〜v3の失敗、SWE-Bench Verified 500件でのresolve・round・token、BM25が探索を短くしてもtokenと解決を悪化させた負例、game repoへの転用限界まで示すため、relevance・actionability・evidenceは3とした。一方、probe-20260517-retrieval-delivery-loop-checkは検索結果をevidenceへ接続しdistractor contaminationを分類し、probe-20260605-rag-recall-search-space-gateはsearch space・cost budget・baseline・observable deltaを要求し、probe-20260731-rlm-one-hop-query-rewriteは初回hitと一段探索後の判断差を記録する。pending中のprobe-20260516-attributed-trajectory-tipも、read後のどの決定が結果へ寄与したかを1件だけ帰属する。CodeGrep固有の差は、retrieval precisionが一定水準を越えてdownstream success／costを改善した時だけ候補注入を採る点だが、現在のstagingには同一task・同一修正agentで候補注入あり／なしを比較するartifactがなく、後続Phase 4aのcleanup判断を変えるconsumer、before／after、expected deltaを重複なく固定できない。active_probes 322件とPhase 4a向けpending lease 1件へ同型controlを追加すると確認負荷が増えるためnon_redundancyは1、risk_controlは2とし、active probe・metric・lease・directive・恒久ルールは追加しない。次に具体的なrepo修正replayができ、既存controlsでは候補file precisionとdownstream成功／総costの採否差を表せない時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260517-retrieval-delivery-loop-check",
+        "probe-20260605-rag-recall-search-space-gate",
+        "probe-20260731-rlm-one-hop-query-rewrite",
+        "probe-20260516-attributed-trajectory-tip"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsとdefer理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-10T20:35:23+09:00",
       "selected": {
