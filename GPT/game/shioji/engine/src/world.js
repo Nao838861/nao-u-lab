@@ -19,10 +19,13 @@ import {
   householdFoodDays,
   householdTransportPlan,
   householdMaterialAmount,
+  householdMarketEntrance,
+  householdMarketId,
   householdWorkToolNeed,
   loadMarketSellCargo,
   marketTripDuration,
   marketPathLength,
+  marketPriceBook,
   producePrimaryTick,
   productionInputAmount,
   productionCost,
@@ -321,6 +324,7 @@ function urgentMarketDemandWeight(economy, physical, household) {
     day: Math.max(1, Math.ceil((economy.currentTick ?? 1) / 30)),
     physical,
   });
+  const marketId = householdMarketId(household);
   const purchasableWeight = Object.entries(targets).reduce((total, [goods, [wanted, ceiling]]) => {
     const urgent = (needs.foodUrgent && FOODS.includes(goods))
       || needs.lowCultureGoods.includes(goods)
@@ -328,15 +332,28 @@ function urgentMarketDemandWeight(economy, physical, household) {
       || needs.capitalGoods.has(goods);
     if (!urgent) return total;
     const stallQty = (economy.stalls[goods] ?? [])
-      .filter((stall) => stall.price <= ceiling)
+      .filter((stall) => (stall.marketId ?? "main") === marketId && stall.price <= ceiling)
       .reduce((sum, stall) => sum + stall.qty, 0);
-    const importQty = (P.IMP[goods] ?? Infinity) <= ceiling
-      ? (economy.importStock[goods] ?? 0) + (economy.aidStock?.[goods] ?? 0)
-      : economy.aidStock?.[goods] ?? 0;
-    const stockQty = companyStockReleasePrice(economy, goods, { market: true }) <= ceiling
+    const importQty = marketId === "main"
+      ? ((P.IMP[goods] ?? Infinity) <= ceiling
+        ? (economy.importStock[goods] ?? 0) + (economy.aidStock?.[goods] ?? 0)
+        : economy.aidStock?.[goods] ?? 0)
+      : 0;
+    const stockPrice = companyStockReleasePrice(economy, goods, { market: true });
+    const stockQty = marketId === "main" && stockPrice !== null && stockPrice <= ceiling
       ? economy.marketStock[goods] ?? 0
       : 0;
-    const purchasable = Math.min(wanted, stallQty + importQty + stockQty);
+    const localStockPrice = Math.max(
+      0.1,
+      (marketPriceBook(economy, marketId)[goods] ?? P.BELIEF0[goods] ?? 2) * 0.95,
+    );
+    const localStockQty = localStockPrice <= ceiling
+      ? economy.marketStockM?.[marketId]?.[goods] ?? 0
+      : 0;
+    const purchasable = Math.min(
+      wanted,
+      stallQty + importQty + stockQty + localStockQty,
+    );
     return total + purchasable * goodsUnitWeight(goods);
   }, 0);
   // 食料が尽きかけた往復では、一人ぶんの背負い籠だけで帰らない。
@@ -380,9 +397,14 @@ export function findDirectSupplier(economy, physical, buyer, {
   const start = householdEntrance(physical, buyer);
   const marketTicks = marketTripDuration(economy, physical, buyer);
   const useCart = Boolean(buyer.cart);
+  const buyerMarket = householdMarketId(buyer);
   const candidates = [];
   for (const seller of economy.households) {
-    if (seller === buyer || seller.state !== "home") continue;
+    if (
+      seller === buyer
+      || seller.state !== "home"
+      || householdMarketId(seller) !== buyerMarket
+    ) continue;
     const available = sellOffers(economy, seller, { capacityLimit: Infinity })[goods] ?? 0;
     if (available <= 1e-9) continue;
     const goal = householdEntrance(physical, seller);
@@ -397,7 +419,7 @@ export function findDirectSupplier(economy, physical, buyer, {
     ) continue;
     const price = Math.max(
       productionCost(economy, physical, seller, goods, { day }) * 1.05,
-      (economy.px[goods] ?? ceiling) * 0.95,
+      (marketPriceBook(economy, buyerMarket)[goods] ?? ceiling) * 0.95,
     );
     if (!Number.isFinite(price) || price > ceiling + 1e-9) continue;
     const affordable = Math.max(0, (buyer.purse + 30) / price);
@@ -788,11 +810,12 @@ export function beginMarketTrip(
     : Number.isFinite(household.wx) && Number.isFinite(household.wy)
       ? tilePosition({ x: household.wx, y: household.wy })
       : tilePosition({ x: household.px, y: household.py });
+  const marketEntrance = householdMarketEntrance(economy, physical, household);
   routeHouseholdPorters(
     physical,
     porters,
     start,
-    logisticsEntrance(physical, "market", economy.market),
+    marketEntrance,
   );
   const cartPorter = porters.find((porter) => porter.mode === "cart") ?? null;
   const carrier = {
@@ -804,6 +827,8 @@ export function beginMarketTrip(
     cargo: household.cargo,
     tripDistance: cartPorter?.routeCost ?? 0,
     routeCost: 0,
+    marketId: householdMarketId(household),
+    marketEntrance: { ...marketEntrance },
     reason,
     returnState: household.state,
   };
@@ -872,7 +897,8 @@ export function stepMarketTrip(economy, physical, household, { day, random }) {
   }
   if (household.state === "toMarket") {
     if (stepHouseholdPorters(physical, household.marketCarrier.porters)) {
-      const market = logisticsEntrance(physical, "market", economy.market);
+      const market = household.marketCarrier.marketEntrance
+        ?? householdMarketEntrance(economy, physical, household);
       household.px = market.x;
       household.py = market.y;
       household.state = "atMarket";
@@ -896,7 +922,8 @@ export function stepMarketTrip(economy, physical, household, { day, random }) {
     routeHouseholdPorters(
       physical,
       household.marketCarrier.porters,
-      logisticsEntrance(physical, "market", economy.market),
+      household.marketCarrier.marketEntrance
+        ?? householdMarketEntrance(economy, physical, household),
       householdEntrance(physical, household),
       { returning: true },
     );

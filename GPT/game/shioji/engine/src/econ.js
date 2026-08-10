@@ -843,6 +843,34 @@ export function householdMarketId(household) {
   return household?.marketId ?? "main";
 }
 
+export function marketBuildingForId(physical, marketId = "main") {
+  if (!physical) return null;
+  const normalizedId = marketId ?? "main";
+  if (normalizedId === "main") return companyLogisticsSite(physical, "market");
+  return (physical.buildings ?? []).find((building) => (
+    building.type === "market"
+    && (
+      building.marketId === normalizedId
+      || building.roles?.includes(`market:${normalizedId}`)
+    )
+  )) ?? null;
+}
+
+export function householdMarketEntrance(economy, physical, household) {
+  const marketId = householdMarketId(household);
+  const recorded = physical
+    ? buildingById(physical, household?.marketBuildingId)
+    : null;
+  if (recorded?.type === "market" && recorded.entrance) return recorded.entrance;
+  const market = marketBuildingForId(physical, marketId);
+  if (market?.entrance) return market.entrance;
+  if (
+    Number.isFinite(household?.marketEntrance?.x)
+    && Number.isFinite(household?.marketEntrance?.y)
+  ) return household.marketEntrance;
+  return marketId === "main" ? economy?.market ?? null : null;
+}
+
 // 市場別の価格帳。単一市場(main)は economy.px をそのまま使い、従来挙動と同値。
 // 第二市場は初回参照時に BELIEF0 から始まる独自の帳を持つ(価格は市場ごとに形成される)。
 export function marketPriceBook(economy, marketId = "main") {
@@ -853,13 +881,15 @@ export function marketPriceBook(economy, marketId = "main") {
 }
 
 export function marketPathLength(economy, physical, household, mode = "walk") {
+  const marketEntrance = householdMarketEntrance(economy, physical, household);
+  if (!marketEntrance) return Infinity;
   if (!physical) {
-    return Math.hypot(household.x - economy.market.x, household.y - economy.market.y);
+    return Math.hypot(household.x - marketEntrance.x, household.y - marketEntrance.y);
   }
   return pathLen(
     physical,
     householdEntrance(physical, household),
-    logisticsEntrance(physical, "market", economy.market),
+    marketEntrance,
     mode,
   );
 }
@@ -943,12 +973,18 @@ export function economicMaterialSnapshot(economy, physical = null) {
     for (const pile of physical.groundPiles) {
       inventory[pile.goods] = (inventory[pile.goods] ?? 0) + pile.qty;
     }
-    // 非mainの屋台は市場棟の在庫台帳に載らないため、ここで直接計上する
+    // 旧状態や市場棟未配置の市場だけは、屋台・返品を直接計上する。
+    // 市場棟がある場合は棚在庫ですでに数えているため重複させない。
     for (const [goods, stalls] of Object.entries(economy.stalls)) {
       for (const stall of stalls) {
-        if ((stall.marketId ?? "main") !== "main") {
+        if (!marketBuildingForId(physical, stall.marketId ?? "main")) {
           inventory[goods] = (inventory[goods] ?? 0) + stall.qty;
         }
+      }
+    }
+    for (const lot of economy.marketReturns ?? []) {
+      if (!marketBuildingForId(physical, lot.marketId ?? "main")) {
+        inventory[lot.goods] = (inventory[lot.goods] ?? 0) + lot.qty;
       }
     }
   } else {
@@ -2198,9 +2234,15 @@ function ensureCartEconomy(economy) {
   return economy.cartStats;
 }
 
-function offeredWoodCarts(economy, { excludingHouseholdId = null } = {}) {
+function offeredWoodCarts(
+  economy,
+  { excludingHouseholdId = null, marketId = null } = {},
+) {
   return economy.households
-    .filter((household) => household.id !== excludingHouseholdId)
+    .filter((household) => (
+      household.id !== excludingHouseholdId
+      && (marketId === null || householdMarketId(household) === marketId)
+    ))
     .flatMap((household) => (household.cartStock ?? []).map((cart) => ({
       household,
       cart,
@@ -2246,7 +2288,10 @@ export function householdCartPurchaseDecision(economy, physical, household, cart
 
 export function buyHouseholdWoodCart(economy, physical, household, { day }) {
   ensureCartEconomy(economy);
-  const offer = offeredWoodCarts(economy, { excludingHouseholdId: household.id })[0];
+  const offer = offeredWoodCarts(economy, {
+    excludingHouseholdId: household.id,
+    marketId: householdMarketId(household),
+  })[0];
   if (!offer) return null;
   const decision = householdCartPurchaseDecision(economy, physical, household, offer.cart);
   if (!decision.buy) return null;
@@ -2295,7 +2340,7 @@ export function finishHouseholdCartTrip(economy, household, { day, assetId, dist
 
 export function purchaseCompanyWoodCart(economy, { day }) {
   ensureCartEconomy(economy);
-  const offer = offeredWoodCarts(economy)[0];
+  const offer = offeredWoodCarts(economy, { marketId: "main" })[0];
   if (!offer) return null;
   if (economy.company.money < offer.cart.price) return null;
   const index = offer.household.cartStock.findIndex((cart) => cart.id === offer.cart.id);
@@ -2675,10 +2720,8 @@ export function buyAtMarket(
         (economy.lstockSalesM ??= {})[buyerMarket] = (economy.lstockSalesM[buyerMarket] ?? 0) + payment;
       } else {
         shelf.stall.qty -= qty;
-        if (physical && buyerMarket === "main") {
-          const market = companyLogisticsSite(physical, "market");
-          withdrawInventory(market, "outbound", goods, qty);
-        }
+        const market = marketBuildingForId(physical, buyerMarket);
+        if (market) withdrawInventory(market, "outbound", goods, qty);
         const seller = findHousehold(economy, shelf.stall.householdId);
         const fee = payment * P.FEE;
         seller.purse += payment - fee;
@@ -2848,7 +2891,7 @@ function sellManifestAtMarket(
       const stall = { householdId: household.id, marketId: sellerMarket, qty, price, age: 0 };
       economy.stalls[goods].push(stall);
       touchStallMembership(economy);
-      const market = sellerMarket === "main" ? companyLogisticsSite(physical, "market") : null;
+      const market = marketBuildingForId(physical, sellerMarket);
       if (market) depositInventory(market, "outbound", goods, qty);
       listed.push({ goods, ...stall });
     }
@@ -2925,9 +2968,15 @@ export function loadMarketReturns(economy, physical, household, availableCapacit
   }
   let capacity = Math.max(0, availableCapacity);
   const manifest = {};
-  const market = companyLogisticsSite(physical, "market");
+  const householdMarket = householdMarketId(household);
+  const market = marketBuildingForId(physical, householdMarket);
   for (const lot of economy.marketReturns) {
-    if (lot.householdId !== household.id || lot.qty <= 1e-9 || capacity <= 1e-9) continue;
+    if (
+      lot.householdId !== household.id
+      || (lot.marketId ?? "main") !== householdMarket
+      || lot.qty <= 1e-9
+      || capacity <= 1e-9
+    ) continue;
     const unitWeight = goodsUnitWeight(lot.goods);
     const qty = Math.min(lot.qty, capacity / unitWeight);
     if (qty <= 1e-9) continue;
@@ -2942,6 +2991,7 @@ export function loadMarketReturns(economy, physical, household, availableCapacit
 
 function queueMarketReturn(economy, physical, household, goods, qty, day) {
   if (qty <= 1e-9) return null;
+  const marketId = householdMarketId(household);
   const lot = {
     id: `ret${economy.nextMarketReturnId}`,
     householdId: household.id,
@@ -2949,10 +2999,10 @@ function queueMarketReturn(economy, physical, household, goods, qty, day) {
     qty,
     queuedDay: day,
   };
+  if (marketId !== "main") lot.marketId = marketId;
   economy.nextMarketReturnId += 1;
   economy.marketReturns.push(lot);
-  const market = householdMarketId(household) === "main"
-    ? companyLogisticsSite(physical, "market") : null;
+  const market = marketBuildingForId(physical, marketId);
   if (market) {
     withdrawInventory(market, "outbound", goods, qty);
     depositInventory(market, "pickup", goods, qty);
@@ -2960,11 +3010,11 @@ function queueMarketReturn(economy, physical, household, goods, qty, day) {
   return lot;
 }
 
-function spoilMarketQuantity(economy, physical, section, goods, qty, reason) {
+function spoilMarketQuantity(economy, physical, section, goods, qty, reason, marketId = "main") {
   const life = goods === "fish" ? P.FISH_LIFE : goods === "veg" ? P.VEG_LIFE : null;
   if (!life || qty <= 1e-9) return 0;
   const spoiled = qty / life;
-  const market = companyLogisticsSite(physical, "market");
+  const market = marketBuildingForId(physical, marketId);
   if (market) withdrawInventory(market, section, goods, spoiled);
   economy.led.spoil[goods] = (economy.led.spoil[goods] ?? 0) + spoiled;
   recordEconomicMaterialFlow(
@@ -2991,6 +3041,7 @@ export function ageMarketStalls(economy, { day, physical = null }) {
       lot.goods,
       lot.qty,
       `引き取り待ち${lot.goods}の腐敗`,
+      lot.marketId ?? "main",
     );
     lot.qty -= spoiled;
   }
@@ -3026,6 +3077,7 @@ export function ageMarketStalls(economy, { day, physical = null }) {
         goods,
         stall.qty,
         `屋台の${goods}の腐敗`,
+        stall.marketId ?? "main",
       );
       stall.qty -= spoiled;
       if (stall.age >= 6 && household) {

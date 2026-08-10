@@ -246,6 +246,73 @@ function createEconomicTestPhysical(width = 24, height = 16) {
   });
 }
 
+function createTwoMarketTestWorld(seed = 23) {
+  const physical = createEconomicTestPhysical(40, 16);
+  const shelf = Object.fromEntries(GOODS.map((goods) => [goods, Number.MAX_SAFE_INTEGER]));
+  const marketCaps = { inbound: shelf, outbound: shelf, pickup: shelf };
+  const mainMarket = addBuilding(physical, "market", 1, 1, {
+    definitions: ECONOMIC_BUILDINGS,
+    entrance: { x: 6, y: 4 },
+    requireRoad: false,
+    fixed: true,
+    role: "market",
+    roles: ["market"],
+    marketId: "main",
+    caps: marketCaps,
+  }).building;
+  const fisheryMarket = addBuilding(physical, "market", 30, 1, {
+    definitions: ECONOMIC_BUILDINGS,
+    entrance: { x: 29, y: 4 },
+    requireRoad: false,
+    fixed: true,
+    marketId: "fishery",
+    caps: marketCaps,
+  }).building;
+  addRoadLine(physical, mainMarket.entrance, fisheryMarket.entrance);
+  addRoadLine(physical, mainMarket.entrance, { x: 6, y: 6 });
+  addRoadLine(physical, fisheryMarket.entrance, { x: 29, y: 8 });
+  addRoadLine(physical, { x: 27, y: 8 }, { x: 30, y: 8 });
+  const world = createWorld({
+    seed,
+    physicalState: physical,
+    market: { ...mainMarket.entrance },
+    logisticsSites: {
+      market: { x: mainMarket.x, y: mainMarket.y, entrance: { ...mainMarket.entrance } },
+    },
+    marketNetwork: {
+      markets: [
+        { id: "main", name: "本市場", entrance: { ...mainMarket.entrance }, buildingId: mainMarket.id },
+        { id: "fishery", name: "漁郷市場", entrance: { ...fisheryMarket.entrance }, buildingId: fisheryMarket.id },
+      ],
+    },
+  });
+  const { economy } = world.state;
+  const mainBuyer = createHousehold(economy, { job: "woodshop", x: 6, y: 6 });
+  const fisherySeller = createHousehold(economy, { job: "logger", x: 27, y: 8 });
+  const fisheryBuyer = createHousehold(economy, { job: "woodshop", x: 30, y: 8 });
+  const mainHome = addEconomicTestBuilding(
+    physical, "woodshop", 5, 7, 6, 6, mainBuyer.id,
+  );
+  const fisherySellerHome = addEconomicTestBuilding(
+    physical, "logger", 24, 7, 27, 8, fisherySeller.id,
+  );
+  const fisheryBuyerHome = addEconomicTestBuilding(
+    physical, "woodshop", 31, 7, 30, 8, fisheryBuyer.id,
+  );
+  mainBuyer.buildingId = mainHome.id;
+  fisherySeller.buildingId = fisherySellerHome.id;
+  fisheryBuyer.buildingId = fisheryBuyerHome.id;
+  world.tickOnce();
+  return {
+    world,
+    mainMarket,
+    fisheryMarket,
+    mainBuyer,
+    fisherySeller,
+    fisheryBuyer,
+  };
+}
+
 function addEconomicTestBuilding(
   physical,
   type,
@@ -1636,6 +1703,133 @@ test("空間生産性: 工房は十分近い木こりへ直接買付し市場往
   assert.ok(buyer.lastDirectTrade.savedTicks > 0);
   assert.equal(economy.directTrades.length, 1);
   assert.ok(Math.abs(buyer.purse + seller.purse - beforeMoney) < 1e-9);
+});
+
+test("隊商S1: 世帯は帰属市場へ実移動し、屋台・返品・直接仕入れを市場内に限る", () => {
+  const fixture = createTwoMarketTestWorld();
+  const {
+    world,
+    mainMarket,
+    fisheryMarket,
+    mainBuyer,
+    fisherySeller,
+    fisheryBuyer,
+  } = fixture;
+  const { economy, physical } = world.state;
+  assert.equal(mainBuyer.marketId, "main");
+  assert.equal(fisherySeller.marketId, "fishery");
+  assert.equal(fisheryBuyer.marketId, "fishery");
+  assert.equal(fisherySeller.marketBuildingId, fisheryMarket.id);
+  assert.deepEqual(fisherySeller.marketEntrance, fisheryMarket.entrance);
+
+  for (const household of [mainBuyer, fisherySeller, fisheryBuyer]) {
+    for (const goods of [...FOODS, "tools", "salt", "char"]) household.pantry[goods] = 100;
+  }
+  fisherySeller.pantry.log = 80;
+  for (const buyer of [mainBuyer, fisheryBuyer]) {
+    const building = physical.buildings.find((row) => row.id === buyer.buildingId);
+    const stocked = sectionAmount(building, "input", "log");
+    if (stocked <= 1e-9) continue;
+    withdrawInventory(building, "input", "log", stocked);
+    fisherySeller.pantry.log += stocked;
+  }
+  economy.px.tools = 10;
+  economy.pxm ??= {};
+  economy.pxm.fishery = { ...P.BELIEF0, tools: 10 };
+
+  assert.equal(findDirectSupplier(
+    economy,
+    physical,
+    mainBuyer,
+    { goods: "log", wanted: 8, ceiling: 20, day: 1 },
+  ), null, "近隣直接仕入れでも市場境界を跨がない");
+  assert.equal(
+    findDirectSupplier(
+      economy,
+      physical,
+      fisheryBuyer,
+      { goods: "log", wanted: 8, ceiling: 20, day: 1 },
+    )?.sellerId,
+    fisherySeller.id,
+  );
+
+  const materialBefore = economicMaterialSnapshot(economy, physical);
+  const sale = sellAtMarket(economy, physical, fisherySeller, { day: 1, random: () => 0 });
+  assert.ok(sale.listed.some((row) => row.goods === "log"));
+  const stall = economy.stalls.log.find((row) => (
+    row.householdId === fisherySeller.id && row.marketId === "fishery"
+  ));
+  assert.ok(stall?.qty > 1);
+  stall.price = 0.5;
+  assert.equal(stall.marketId, "fishery");
+  assert.equal(sectionAmount(mainMarket, "outbound", "log"), 0);
+  assert.equal(sectionAmount(fisheryMarket, "outbound", "log"), stall.qty);
+
+  const beforeMainAttempt = stall.qty;
+  const mainPurchase = buyAtMarket(economy, mainBuyer, {
+    day: 1,
+    physical,
+    capacityLimit: 1,
+  });
+  assert.equal(mainPurchase.purchased.log ?? 0, 0);
+  assert.equal(stall.qty, beforeMainAttempt);
+  const fisheryPurchase = buyAtMarket(economy, fisheryBuyer, {
+    day: 1,
+    physical,
+    capacityLimit: 1,
+  });
+  assert.ok((fisheryPurchase.purchased.log ?? 0) > 0);
+  assert.equal(
+    sectionAmount(fisheryMarket, "outbound", "log"),
+    stall.qty,
+  );
+
+  for (let day = 2; day <= 7; day += 1) ageMarketStalls(economy, { day, physical });
+  const returned = economy.marketReturns.find((lot) => lot.householdId === fisherySeller.id);
+  assert.equal(returned?.marketId, "fishery");
+  assert.ok(sectionAmount(fisheryMarket, "pickup", "log") > 0);
+  assert.equal(sectionAmount(mainMarket, "pickup", "log"), 0);
+
+  const trip = beginMarketTrip(economy, physical, fisherySeller, { reason: "s1_market" });
+  assert.equal(trip.started, true);
+  assert.equal(trip.carrier.marketId, "fishery");
+  assert.deepEqual(trip.carrier.porters[0].path.at(-1), fisheryMarket.entrance);
+  assert.notDeepEqual(trip.carrier.porters[0].path.at(-1), mainMarket.entrance);
+
+  assertMoneyConservation(economy);
+  assertMaterialBalance({
+    before: materialBefore,
+    after: economicMaterialSnapshot(economy, physical),
+    flows: {},
+  });
+});
+
+test("隊商S1: 二市場を8年駆動して貨幣・物量保存を守る", () => {
+  const { world } = createTwoMarketTestWorld(29);
+  const { economy, physical } = world.state;
+  const before = economicMaterialSnapshot(economy, physical);
+  const flowBefore = structuredClone(economy.materialFlows);
+  for (let index = 1; index < 2880; index += 1) {
+    world.step();
+    if (world.state.day % 360 === 0) assertMoneyConservation(economy);
+  }
+  assert.equal(world.state.day, 2880);
+  const flowDelta = Object.fromEntries(GOODS.map((goods) => [
+    goods,
+    Object.fromEntries(["prod", "imp", "cons", "exp"].map((kind) => [
+      kind,
+      (economy.materialFlows[goods]?.[kind] ?? 0) - (flowBefore[goods]?.[kind] ?? 0),
+    ])),
+  ]));
+  assertMaterialBalance({
+    before,
+    after: economicMaterialSnapshot(economy, physical),
+    flows: flowDelta,
+  });
+  assert.deepEqual(
+    world.state.marketNetwork.markets.map((market) => market.id),
+    ["main", "fishery"],
+  );
 });
 
 test("段14: 森は5日ごとに成長し隣接する森から禿山へ再生する", () => {

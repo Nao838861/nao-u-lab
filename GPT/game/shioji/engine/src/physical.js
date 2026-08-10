@@ -823,6 +823,7 @@ export function addBuilding(physical, type, x, y, options = {}) {
     entrance: options.entrance ?? check.entrance ?? null,
     role: options.role ?? null,
     roles: [...new Set(options.roles ?? (options.role ? [options.role] : []))],
+    marketId: options.marketId ?? null,
     ownerHouseholdId: options.ownerHouseholdId ?? null,
     fixed: Boolean(options.fixed),
     grade: options.grade ?? 0,
