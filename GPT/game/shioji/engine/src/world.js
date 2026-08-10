@@ -63,6 +63,7 @@ import {
 } from "./physical.js";
 import { nextMulberry32, normalizeSeed } from "./prng.js";
 import { createMarketNetwork, marketNetworkSummary } from "./market_network.js";
+import { stepCaravanDay, stepCaravanTick } from "./routes.js";
 
 function tread(economy, x, y) {
   const key = keyOf(Math.round(x), Math.round(y));
@@ -1117,6 +1118,7 @@ export function createWorld({
       }
       ageMarketStalls(economy, { day: state.day, physical });
       runCompanyDayStart(economy, { day: state.day, random, physical });
+      stepCaravanDay(economy, physical, { day: state.day });
       for (const household of economy.households) {
         household.productionToday = {};
         household.marketOneWayTicks = marketPathLength(economy, physical, household);
@@ -1131,6 +1133,9 @@ export function createWorld({
         household.tookMarketTripToday = household.marketCarrier !== null;
       }
     }
+
+    // 隊商は同じ道路上を実際に進む。到着在庫はこのtickの住民取引から買える。
+    stepCaravanTick(economy, physical, { day: state.day });
 
     if (
       timeOfDay >= HOUSEHOLD_DEPARTURE_WINDOW.start

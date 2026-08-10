@@ -2304,7 +2304,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.45.1-caravan-employment');
+  assert.equal(VERSION, 'v004.45.2-caravan-routes');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2644,6 +2644,28 @@ test('隊商S3: 隊商宿の募集人数と給料を表示モデルから公開�
     recruitment: 3,
     wage: 6.5,
   });
+});
+
+test('隊商S4: 二市場開始モードの路線は実荷車で往復し表示モデルへ公開される', () => {
+  const controller = createEngineController({ seed: 11, mode: 'caravan' });
+  const initial = controller.saveState();
+  const result = controller.operate({
+    type: 'set_caravan_route',
+    baseBuildingId: initial.caravanSlice.innBuildingId,
+    destMarketId: initial.caravanSlice.fisheryMarketId,
+    goodsOut: ['wheat'],
+    goodsBack: ['fish'],
+    intervalDays: 3,
+  });
+  assert.equal(result.ok, true, result.reason);
+  controller.advanceTicks(30 * 30);
+  const model = controller.readModel();
+  const route = model.caravans[0];
+  assert.equal(route.baseMarketId, 'main');
+  assert.equal(route.destMarketId, 'fishery');
+  assert.ok(route.completedTrips >= 1, JSON.stringify(route));
+  assert.ok(model.carriers.some(carrier => carrier.caravanRouteId === route.id));
+  assert.ok(model.companyCarts.some(cart => cart.caravanRouteId === route.id));
 });
 
 test('段2: full snapshotを地形・建物・キャリア・棚の不変描画モデルへ変換する', () => {

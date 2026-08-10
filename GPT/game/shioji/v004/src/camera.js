@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.45.1-caravan-employment';
+import { TILE } from './config.js?v=v004.45.2-caravan-routes';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

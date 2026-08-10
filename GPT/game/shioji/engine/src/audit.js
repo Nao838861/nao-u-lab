@@ -383,6 +383,7 @@ export function buildBaseCity(seed, { marketEntrance = E_STABLE_MARKET_ANCHOR } 
 
 export const CARAVAN_SLICE_SIZE = Object.freeze({ width: 96, height: 64 });
 export const CARAVAN_SLICE_PROVISION_DAYS = 300;
+export const CARAVAN_SLICE_CARTWRIGHT_PROVISION_DAYS = 420;
 export const CARAVAN_SLICE_SALTWORKS_CHARCOAL = 360;
 export const CARAVAN_SLICE_INN_EMPLOYMENT = Object.freeze({ recruitment: 2, wage: 5 });
 export const CARAVAN_SLICE_MARKETS = Object.freeze({
@@ -398,6 +399,7 @@ const CARAVAN_FISHERY_LAYOUT = Object.freeze([
 ]);
 
 const CARAVAN_INN_LAYOUT = Object.freeze(["carter", 42, 44, 42, 41]);
+const CARAVAN_CARTWRIGHT_LAYOUT = Object.freeze(["cartwright", 45, 42, 46, 41]);
 
 const CARAVAN_FISHERY_MARKET_SITE = Object.freeze({ x: 76, y: 52 });
 const CARAVAN_ROAD_POLYLINES = Object.freeze([
@@ -406,7 +408,7 @@ const CARAVAN_ROAD_POLYLINES = Object.freeze([
   Object.freeze([[71, 58], [69, 58]]),
   Object.freeze([[85, 58], [82, 58], [82, 51], [78, 51]]),
   Object.freeze([[78, 51], [87, 51]]),
-  Object.freeze([[38, 44], [42, 44]]),
+  Object.freeze([[38, 44], [42, 44], [45, 44], [45, 42]]),
 ]);
 
 function clearCaravanRectangle(terrain, x, y, width, height) {
@@ -435,6 +437,13 @@ function makeCaravanSliceTerrain(mainPlan) {
     CARAVAN_INN_LAYOUT[4],
     ECONOMIC_BUILDINGS.carter.w,
     ECONOMIC_BUILDINGS.carter.h,
+  );
+  clearCaravanRectangle(
+    terrain,
+    CARAVAN_CARTWRIGHT_LAYOUT[3],
+    CARAVAN_CARTWRIGHT_LAYOUT[4],
+    ECONOMIC_BUILDINGS.cartwright.w,
+    ECONOMIC_BUILDINGS.cartwright.h,
   );
   clearCaravanRectangle(
     terrain,
@@ -499,7 +508,7 @@ export function buildCaravanSliceWorld(seed) {
   const world = createWorld({
     seed,
     initialCompanyMoney: P.TREASURY0
-      + P.BUILD_COST * (CARAVAN_FISHERY_LAYOUT.length + 1),
+      + P.BUILD_COST * (CARAVAN_FISHERY_LAYOUT.length + 2),
     physicalState: physical,
     market: { ...mainPlan.logisticsSites.market.entrance },
     warehouse: { ...mainPlan.logisticsSites.warehouse.entrance },
@@ -523,6 +532,11 @@ export function buildCaravanSliceWorld(seed) {
   }
   if (!addAuditZone(world, ...CARAVAN_INN_LAYOUT)) {
     throw new Error(`母港圏の隊商宿配置不可: ${CARAVAN_INN_LAYOUT[1]},${CARAVAN_INN_LAYOUT[2]}`);
+  }
+  if (!addAuditZone(world, ...CARAVAN_CARTWRIGHT_LAYOUT)) {
+    throw new Error(
+      `母港圏の荷車工房配置不可: ${CARAVAN_CARTWRIGHT_LAYOUT[1]},${CARAVAN_CARTWRIGHT_LAYOUT[2]}`,
+    );
   }
 
   const unlimited = Object.fromEntries(GOODS.map((goods) => [goods, Number.MAX_SAFE_INTEGER]));
@@ -578,8 +592,25 @@ export function buildCaravanSliceWorld(seed) {
     ...CARAVAN_SLICE_INN_EMPLOYMENT,
   });
   if (!employment.ok) throw new Error(`隊商宿の雇用設定不可: ${employment.reason}`);
+  const cartwrightHousehold = mainHouseholds.find((household) => household.job === "cartwright");
+  const cartwrightBuilding = buildingById(physical, cartwrightHousehold?.buildingId);
+  if (!cartwrightBuilding) throw new Error("母港圏の荷車工房世帯が見つかりません");
+  for (const [goods, qty] of [["log", P.CART_LOG], ["tools", P.CART_TOOLS]]) {
+    depositInventory(cartwrightBuilding, "input", goods, qty);
+    recordEconomicMaterialFlow(
+      economy,
+      goods,
+      "imp",
+      qty,
+      `母港荷車工房の入植時${goods}`,
+      { includeInDaily: false },
+    );
+  }
   for (const household of mainHouseholds) {
-    const provision = household.members.length * CARAVAN_SLICE_PROVISION_DAYS;
+    const provisionDays = household.job === "cartwright"
+      ? CARAVAN_SLICE_CARTWRIGHT_PROVISION_DAYS
+      : CARAVAN_SLICE_PROVISION_DAYS;
+    const provision = household.members.length * provisionDays;
     household.pantry.wheat += provision;
     recordEconomicMaterialFlow(
       economy,
@@ -625,6 +656,7 @@ export function buildCaravanSliceWorld(seed) {
   economy.jobSelectionPool = [...new Set([
     ...E_STABLE_JOBS,
     "carter",
+    "cartwright",
     ...CARAVAN_FISHERY_LAYOUT.map(([job]) => job),
   ])];
   world.state.caravanSlice = {

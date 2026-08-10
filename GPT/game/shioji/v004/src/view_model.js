@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.45.1-caravan-employment';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.45.2-caravan-routes';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.45.1-caravan-employment';
+} from './food_readability.js?v=v004.45.2-caravan-routes';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.45.1-caravan-employment';
-import { analyzeRoadConnections } from './placement.js?v=v004.45.1-caravan-employment';
+} from './engine_bridge.js?v=v004.45.2-caravan-routes';
+import { analyzeRoadConnections } from './placement.js?v=v004.45.2-caravan-routes';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.45.1-caravan-employment';
+} from './render_scene.js?v=v004.45.2-caravan-routes';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.45.1-caravan-employment';
+} from './visuals.js?v=v004.45.2-caravan-routes';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',
@@ -1095,7 +1095,42 @@ function carrierRows(snapshot, buildings) {
       durability: cart.durability,
       maxDurability: cart.maxDurability,
     }));
-  return [...hauls, ...households, ...idleHouseholdCarts, ...idleCompanyCarts];
+  const caravanCarriers = (snapshot.economy.caravans ?? []).flatMap(route => (
+    (route.carriers ?? [])
+      .filter(carrier => carrier.active && carrier.position)
+      .map(carrier => {
+        const cargoRows = Object.entries(carrier.manifest ?? {})
+          .filter(([, amount]) => amount > 1e-9)
+          .map(([goods, amount]) => ({ goods, amount }));
+        return {
+          id: `caravan:${route.id}:${carrier.id}`,
+          caravanRouteId: route.id,
+          kind: 'cart',
+          mode: 'cart',
+          cartKind: carrier.cartKind ?? 'wood',
+          assetId: carrier.assetId ?? null,
+          x: carrier.position.x,
+          y: carrier.position.y,
+          goods: cargoRows[0]?.goods ?? null,
+          amount: cargoRows.reduce((total, row) => total + row.amount, 0),
+          cargoRows,
+          people: 1,
+          members: 1,
+          peopleRows: [{ id: `${route.id}:driver:${carrier.assetId}`, name: '隊商の御者' }],
+          activity: 'carrying',
+          path: (carrier.path ?? []).map(point => ({ ...point })),
+          from: null,
+          to: null,
+        };
+      })
+  ));
+  return [
+    ...hauls,
+    ...caravanCarriers,
+    ...households,
+    ...idleHouseholdCarts,
+    ...idleCompanyCarts,
+  ];
 }
 
 function portBerth(building, terrain, width, height) {
@@ -1497,6 +1532,14 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
         .reduce((total, row) => total - row.amount, 0),
     companyLedgerByReason: { ...(snapshot.economy.company.ledgerByReason ?? {}) },
     companyDailyLedger: (snapshot.economy.company.ledgerDaily ?? []).map(row => ({ ...row })),
+    caravans: (snapshot.economy.caravans ?? []).map(route => ({
+      ...route,
+      goodsOut: [...(route.goodsOut ?? [])],
+      goodsBack: [...(route.goodsBack ?? [])],
+      cartAssetIds: [...(route.cartAssetIds ?? [])],
+      recentTrips: (route.recentTrips ?? []).map(trip => ({ ...trip })),
+      monthly: { ...(route.monthly ?? {}) },
+    })),
     companyCarts: (snapshot.economy.companyCarts ?? []).map(cart => ({ ...cart })),
     cartStats: { ...(snapshot.economy.cartStats ?? {}) },
     marketPrices: { ...snapshot.economy.px },

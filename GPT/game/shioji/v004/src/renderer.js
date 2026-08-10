@@ -1,15 +1,15 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.45.1-caravan-employment';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.45.1-caravan-employment';
-import { islandCalendar } from './ui_summary.js?v=v004.45.1-caravan-employment';
+} from './config.js?v=v004.45.2-caravan-routes';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.45.2-caravan-routes';
+import { islandCalendar } from './ui_summary.js?v=v004.45.2-caravan-routes';
 import {
   compileRenderScene, inventoryLayerDepth, marketStallLayerDepth, mergeDrawables,
-} from './render_scene.js?v=v004.45.1-caravan-employment';
+} from './render_scene.js?v=v004.45.2-caravan-routes';
 import {
   buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
   seasonalTerrainVisual,
-} from './visuals.js?v=v004.45.1-caravan-employment';
+} from './visuals.js?v=v004.45.2-caravan-routes';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 

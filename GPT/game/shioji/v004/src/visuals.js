@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.45.1-caravan-employment';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.45.2-caravan-routes';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({

@@ -186,6 +186,12 @@ import {
   mimicPlayerThroughApi,
   replayInputJournal,
 } from "../src/api.js";
+import {
+  caravanMonthlyLedger,
+  configureCaravanRoute,
+  stepCaravanDay,
+  stepCaravanTick,
+} from "../src/routes.js";
 
 const tests = [];
 const matchIndex = process.argv.indexOf('--match');
@@ -335,6 +341,64 @@ function addEconomicTestBuilding(
   });
   assert.equal(placed.ok, true, `${type}: ${placed.reason ?? "配置不可"}`);
   return placed.building;
+}
+
+function createCaravanRouteFixture({ cartDurability = P.CART_WOOD_DURABILITY } = {}) {
+  const fixture = createTwoMarketTestWorld(29);
+  const { world, mainMarket, fisheryMarket, fisheryBuyer, fisherySeller } = fixture;
+  const { economy, physical } = world.state;
+  const carter = createHousehold(economy, { job: "carter", x: 10, y: 6 });
+  carter.marketId = "main";
+  const inn = addEconomicTestBuilding(physical, "carter", 10, 7, 10, 6, carter.id);
+  carter.buildingId = inn.id;
+  setCaravanEmployment(physical, { buildingId: inn.id, recruitment: 1, wage: 5 });
+  addRoadLine(physical, mainMarket.entrance, inn.entrance);
+
+  const cartwright = createHousehold(economy, { job: "cartwright", x: 13, y: 6 });
+  cartwright.marketId = "main";
+  cartwright.cartStock.push({
+    id: "wood-cart-test",
+    kind: "wood",
+    price: 10,
+    durability: cartDurability,
+    maxDurability: P.CART_WOOD_DURABILITY,
+  });
+
+  const mainSeller = createHousehold(economy, { job: "wheat", x: 8, y: 6 });
+  mainSeller.marketId = "main";
+  fisherySeller.marketId = "fishery";
+  fisheryBuyer.marketId = "fishery";
+  economy.stalls.wheat.push({
+    householdId: mainSeller.id, marketId: "main", qty: 8, price: 2, age: 0,
+  });
+  economy.stalls.fish.push({
+    householdId: fisherySeller.id, marketId: "fishery", qty: 8, price: 3, age: 0,
+  });
+  depositInventory(mainMarket, "outbound", "wheat", 8);
+  depositInventory(fisheryMarket, "outbound", "fish", 8);
+  const configured = configureCaravanRoute(economy, physical, {
+    baseBuildingId: inn.id,
+    destMarketId: "fishery",
+    goodsOut: ["wheat"],
+    goodsBack: ["fish"],
+    intervalDays: 1,
+    day: world.state.day,
+  });
+  assert.equal(configured.ok, true, configured.reason);
+  return { ...fixture, carter, inn, cartwright, mainSeller, route: configured.route };
+}
+
+function runCaravanUntilReturned(economy, physical, route, day = 1) {
+  const departureDay = Math.max(day, route.nextDepartDay ?? day);
+  const departure = stepCaravanDay(economy, physical, { day: departureDay });
+  assert.equal(departure[0]?.departed, true, JSON.stringify(departure));
+  let ticks = 0;
+  while (route.completedTrips !== 1 && ticks < 500) {
+    stepCaravanTick(economy, physical, { day: departureDay });
+    ticks += 1;
+  }
+  assert.equal(route.completedTrips, 1, `往復が完了しない: ${JSON.stringify(route)}`);
+  return ticks;
 }
 
 function test(name, run) {
@@ -4773,6 +4837,115 @@ test("隊商S3: 二市場世界は種付き隊商宿1軒を持ち雇用操作を
     recruitment: 3,
     wage: 6.5,
   }).ok, true);
+  const expected = api.snapshot();
+  const replay = replayInputJournal(create, api.inputJournal(), { untilTick: 0 });
+  assert.deepEqual(replay.api.snapshot(), expected);
+});
+
+test("隊商S4: 実在庫を一往復させ、荷車・仕入・小売を含む貨幣物量を保存する", () => {
+  const fixture = createCaravanRouteFixture();
+  const { world, route, mainMarket, fisheryMarket, mainSeller, fisherySeller, fisheryBuyer } = fixture;
+  const { economy, physical } = world.state;
+  for (const goods of GOODS) fisheryBuyer.pantry[goods] = goods === "wheat" ? 0 : 100;
+  const moneyBefore = economy.company.money
+    + economy.households.reduce((total, household) => total + household.purse, 0);
+  const materialBefore = economicMaterialSnapshot(economy, physical);
+  const mainSellerPurseBefore = mainSeller.purse;
+  const fisherySellerPurseBefore = fisherySeller.purse;
+
+  const ticks = runCaravanUntilReturned(economy, physical, route, 1);
+
+  assert.ok(ticks > 0);
+  assert.equal(sectionAmount(mainMarket, "outbound", "wheat"), 0);
+  assert.equal(sectionAmount(fisheryMarket, "outbound", "fish"), 0);
+  assert.equal(sectionAmount(fisheryMarket, "inbound", "wheat"), 8);
+  assert.equal(sectionAmount(mainMarket, "inbound", "fish"), 8);
+  assert.equal(economy.marketStockM.fishery.wheat, 8);
+  assert.equal(economy.marketStockM.main.fish, 8);
+  assert.equal(mainSeller.purse - mainSellerPurseBefore, 16);
+  assert.equal(fisherySeller.purse - fisherySellerPurseBefore, 24);
+  assert.deepEqual(route.recentTrips[0].outbound, { wheat: 8 });
+  assert.deepEqual(route.recentTrips[0].returning, { fish: 8 });
+  assert.equal(route.recentTrips[0].procurement, 40);
+  assert.equal(route.recentTrips[0].cartCosts, 10);
+  assert.deepEqual(caravanMonthlyLedger(route), [{
+    month: 0,
+    sales: 0,
+    procurement: 40,
+    wages: 0,
+    cartCosts: 10,
+    profit: -50,
+  }]);
+
+  const pantryBefore = fisheryBuyer.pantry.wheat;
+  const bought = buyAtMarket(economy, fisheryBuyer, { day: 2, physical, capacityLimit: 8 });
+  assert.ok((bought.purchased.wheat ?? 0) > 0, JSON.stringify(bought));
+  assert.ok(fisheryBuyer.pantry.wheat > pantryBefore);
+  assert.ok(sectionAmount(fisheryMarket, "inbound", "wheat") < 8);
+  assert.ok((economy.caravanSalesPending[route.id] ?? 0) > 0);
+  stepCaravanDay(economy, physical, { day: 2 });
+  assert.ok(caravanMonthlyLedger(route)[0].sales > 0);
+
+  const moneyAfter = economy.company.money
+    + economy.households.reduce((total, household) => total + household.purse, 0);
+  assert.equal(moneyAfter, moneyBefore);
+  const materialAfter = economicMaterialSnapshot(economy, physical);
+  for (const goods of GOODS) {
+    assert.ok(Math.abs(
+      (materialAfter.inventory[goods] ?? 0) + (materialAfter.cargo[goods] ?? 0)
+      - (materialBefore.inventory[goods] ?? 0) - (materialBefore.cargo[goods] ?? 0),
+    ) < 1e-7, `${goods}の物量がずれた`);
+  }
+});
+
+test("隊商S4: 道路の近道は抽象日数でなく実際の往復tickを短くする", () => {
+  const run = (shortcut) => {
+    const fixture = createCaravanRouteFixture();
+    const { economy, physical } = fixture.world.state;
+    for (let x = 15; x <= 20; x += 1) removeRoadTile(physical, x, 4);
+    addRoadLine(physical, { x: 14, y: 4 }, { x: 14, y: 12 });
+    addRoadLine(physical, { x: 14, y: 12 }, { x: 21, y: 12 });
+    addRoadLine(physical, { x: 21, y: 12 }, { x: 21, y: 4 });
+    if (shortcut) addRoadLine(physical, { x: 14, y: 4 }, { x: 21, y: 4 });
+    const result = configureCaravanRoute(economy, physical, {
+      baseBuildingId: fixture.inn.id,
+      destMarketId: "fishery",
+      goodsOut: ["wheat"],
+      goodsBack: ["fish"],
+      intervalDays: 1,
+    });
+    assert.equal(result.ok, true, result.reason);
+    return runCaravanUntilReturned(economy, physical, fixture.route, 1);
+  };
+  assert.ok(run(true) < run(false));
+});
+
+test("隊商S4: 荷車が全損し供給が切れると次便は止まり、理由を出来事に残す", () => {
+  const fixture = createCaravanRouteFixture({ cartDurability: 1 });
+  const { economy, physical } = fixture.world.state;
+  runCaravanUntilReturned(economy, physical, fixture.route, 1);
+  assert.equal(economy.companyCarts.length, 0);
+  assert.equal(fixture.route.cartAssetIds.length, 0);
+  const next = stepCaravanDay(economy, physical, { day: fixture.route.nextDepartDay });
+  assert.deepEqual(next, [{ routeId: fixture.route.id, departed: false, reason: "cart" }]);
+  assert.equal(fixture.route.state, "waiting_cart");
+  assert.ok(economy.events.some(([, message]) => message.includes("荷車を待っている")));
+  assert.ok(economy.events.some(([, message]) => message.includes("新しい荷車が要る")));
+});
+
+test("隊商S4: 公開APIの路線設定は入力journalから同じ状態を再生する", () => {
+  const create = () => buildCaravanSliceWorld(11);
+  const world = create();
+  const api = createEngineApi(world);
+  const result = api.applyOperation({
+    type: "set_caravan_route",
+    baseBuildingId: world.state.caravanSlice.innBuildingId,
+    destMarketId: world.state.caravanSlice.fisheryMarketId,
+    goodsOut: ["wheat"],
+    goodsBack: ["fish"],
+    intervalDays: 3,
+  });
+  assert.equal(result.ok, true, result.reason);
   const expected = api.snapshot();
   const replay = replayInputJournal(create, api.inputJournal(), { untilTick: 0 });
   assert.deepEqual(replay.api.snapshot(), expected);

@@ -1006,7 +1006,8 @@ export function economicMaterialSnapshot(economy, physical = null) {
       inventory[goods] = (inventory[goods] ?? 0) + qty;
     }
   }
-  for (const table of Object.values(economy.marketStockM ?? {})) {
+  for (const [marketId, table] of Object.entries(economy.marketStockM ?? {})) {
+    if (physical && marketBuildingForId(physical, marketId)) continue;
     for (const [goods, qty] of Object.entries(table)) {
       inventory[goods] = (inventory[goods] ?? 0) + qty;
     }
@@ -2340,9 +2341,9 @@ export function finishHouseholdCartTrip(economy, household, { day, assetId, dist
   return null;
 }
 
-export function purchaseCompanyWoodCart(economy, { day }) {
+export function purchaseCompanyWoodCart(economy, { day, marketId = "main" }) {
   ensureCartEconomy(economy);
-  const offer = offeredWoodCarts(economy, { marketId: "main" })[0];
+  const offer = offeredWoodCarts(economy, { marketId })[0];
   if (!offer) return null;
   if (economy.company.money < offer.cart.price) return null;
   const index = offer.household.cartStock.findIndex((cart) => cart.id === offer.cart.id);
@@ -2717,6 +2718,23 @@ export function buyAtMarket(
         const averageCost = (localCost[goods] ?? 0) / Math.max(1e-9, localTable[goods] ?? 0);
         localCost[goods] = Math.max(0, (localCost[goods] ?? 0) - qty * averageCost);
         localTable[goods] = Math.max(0, (localTable[goods] ?? 0) - qty);
+        if (physical) {
+          const market = marketBuildingForId(physical, buyerMarket);
+          if (market) withdrawInventory(market, "inbound", goods, qty);
+        }
+        let remainingSale = qty;
+        const lots = ((economy.marketStockLotsM ??= {})[buyerMarket] ??= {})[goods] ??= [];
+        while (remainingSale > 1e-9 && lots.length > 0) {
+          const lot = lots[0];
+          const sold = Math.min(remainingSale, lot.qty);
+          const attributed = payment * sold / qty;
+          (economy.caravanSalesPending ??= {})[lot.routeId] = (
+            economy.caravanSalesPending[lot.routeId] ?? 0
+          ) + attributed;
+          lot.qty -= sold;
+          remainingSale -= sold;
+          if (lot.qty <= 1e-9) lots.shift();
+        }
         shelf.qty -= qty;
         economy.co.stockSell += payment;
         (economy.lstockSalesM ??= {})[buyerMarket] = (economy.lstockSalesM[buyerMarket] ?? 0) + payment;
@@ -2751,7 +2769,9 @@ export function buyAtMarket(
           price: shelf.price,
           source: shelf.kind === "CO"
             ? "CO"
-            : shelf.kind === "STOCK" ? "STOCK" : shelf.stall.householdId,
+            : ["STOCK", "LSTOCK"].includes(shelf.kind)
+              ? shelf.kind
+              : shelf.stall.householdId,
         });
       }
     }
@@ -4792,6 +4812,9 @@ export function payCaravanFixedWages(economy, physical, { day }) {
       reason: `隊商宿${building.id}の固定給`,
     });
     economy.co.carterWages = (economy.co.carterWages ?? 0) + amount;
+    (economy.caravanWagesPending ??= {})[building.id] = (
+      economy.caravanWagesPending[building.id] ?? 0
+    ) + amount;
     payments.push({ buildingId: building.id, householdId: household.id, crew, wage, amount });
   }
   return payments;
@@ -5744,6 +5767,14 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
     nextPersonId: 1,
     nextCartAssetId: 1,
     companyCarts: [],
+    caravans: [],
+    nextCaravanId: 1,
+    marketStockM: {},
+    marketStockCostM: {},
+    marketStockLotsM: {},
+    caravanWagesPending: {},
+    caravanSalesPending: {},
+    lstockSalesM: {},
     transportStats: {},
     directTrades: [],
     cartStats: {

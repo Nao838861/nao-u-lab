@@ -22,6 +22,7 @@ import {
   placeCompanyLogisticsBuilding,
 } from "./world.js";
 import { executeMarketTrade, quoteMarketTrade } from "./market_network.js";
+import { configureCaravanRoute } from "./routes.js";
 
 function jsonClone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -97,6 +98,10 @@ function viewSnapshot(state, { terrainAfterRevision = null } = {}) {
       },
       currentDay: economy.currentDay,
       directTrades: economy.directTrades ?? [],
+      caravans: economy.caravans ?? [],
+      caravanSalesPending: economy.caravanSalesPending ?? {},
+      companyCarts: economy.companyCarts ?? [],
+      cartStats: economy.cartStats ?? {},
       households: economy.households.map((household) => {
         const {
           productionHistory: _productionHistory,
@@ -122,6 +127,8 @@ function viewSnapshot(state, { terrainAfterRevision = null } = {}) {
       mainlandAid: economy.mainlandAid,
       marketStock: economy.marketStock,
       marketStockCost: economy.marketStockCost,
+      marketStockM: economy.marketStockM ?? {},
+      marketStockCostM: economy.marketStockCostM ?? {},
       natural: economy.natural,
       order: economy.order,
       orderOffer: economy.orderOffer,
@@ -553,6 +560,19 @@ export function createEngineApi(
           recruitment: op.recruitment,
           wage: op.wage,
         });
+      case "set_caravan_route": {
+        const actionDay = world.state.tick % 30 === 0
+          ? world.state.day + 1
+          : world.state.day;
+        return configureCaravanRoute(economy, physical, {
+          baseBuildingId: op.baseBuildingId,
+          destMarketId: op.destMarketId,
+          goodsOut: op.goodsOut,
+          goodsBack: op.goodsBack,
+          intervalDays: op.intervalDays,
+          day: actionDay,
+        });
+      }
       case "release_stock": {
         const job = requestCompanyStockRelease(economy, physical, op.goods, {
           day: world.state.day,
