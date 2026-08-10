@@ -96,7 +96,67 @@ self_feedback:
 - 採否理由: 初手分布、継続適応、horizon 感度、最終局面を分ける4列 metric は実行可能だが、`open-world-behavior-oracle`、`fixed-test-vs-dynamic-stress`、`behavior-signature-distribution-shift`、`synthetic-user-drift-check`、`game-agent-attribution-boundary` の組合せで主要な誤読を検出できる。322件の active probe に独立 control を足さず、次の反復型 playtest で既存 controls が適応欠落を見逃した実例が出た時だけ再評価する。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - memory/MEMORY.md の entry index を validate_memory_index.py と per-file atom index に照合し、broken atom reference 0 件を確認した。
+  - atoms.jsonl / per-file atom / atoms/index.jsonl は各 2851 件で一致し、JSON・index parse error、duplicate ID、mirror content conflict は各 0 件だった。
+  - normalized-content 重複は raw 40 group / 80 rows、recall-visible 3 group / 6 rowsだが、duplicate cluster / canonical overlay は current で、表示時 fold の範囲内だった。
+  - memory/raw/ の30日超ファイル 240件を確認した。215件は web_research の一次資料、残りも headless_eval・Slack raw・同期 state 等の provenance / operational artifact であり、参照切れを作る移動は行わず archive 対象 0 件とした。
+  - shared-reads candidate lifecycle は posted 587 / ready_to_post 9 / postponed 217 / failed 445 / needs_review 2。open status の stale_after 欠損と current-state conflict は各 0 件だった。
+  - Slack inbox は directives 0件 / broadcasts 0件 pending で、handled 更新対象はなかった。
+  - mixed duplicate / open duplicate / stale triage / group action sidecar を再生成し、group/candidate handoff inbox を監査した。生成物は既存内容と一致した。
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 4
+    dormant: 1
+candidate_lifecycle:
+  counts:
+    posted: 587
+    ready_to_post: 9
+    postponed: 217
+    failed: 445
+    needs_review: 2
+  current_state_conflicts: 0
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 43
+  mixed_group_count: 38
+  all_open_group_count: 5
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  lease_suppression_note: >-
+    overdue 2件は all-open duplicate group の deferred lease 2件に包含され、
+    membership fingerprint は一致し retry_after 2026-08-20 前のため stale triage から正しく抑止された。
+group_action_handoff: []
+stale_review_batch: []
+encoding_audit:
+  source_file_status: >-
+    memory/MEMORY.md は UTF-8 明示読みで replacement character 0。
+    代表語は「記憶」「ゲーム設計」「敵パターン」を取得し、「評価軸」の完全一致はないが「評価」は取得した。
+    index validator も正常で、source file 破損の evidence はない。
+  display_or_tooling_status: >-
+    今回の UTF-8 読み・validator・mirror audit の表示は正常。表示経路だけの mojibake も観測しなかった。
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
