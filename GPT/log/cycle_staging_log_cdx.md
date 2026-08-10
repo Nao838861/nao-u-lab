@@ -62,7 +62,23 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260811_lisien_time_travel_state_history.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786376625189829
+    char_count: 4393
+  - candidate: memory/shared_reads_candidates/20260811_procedural_city_controlled_variation.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786376634601199
+    char_count: 4385
+skipped: []
+review:
+  required_sections: pass
+  starts_with_overview: pass
+  url_final: pass
+  banned_phrases: pass
+  duplicate_url_check: pass
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
