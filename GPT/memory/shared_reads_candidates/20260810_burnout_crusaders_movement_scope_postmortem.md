@@ -3,6 +3,26 @@ title: "(Devlog) Event Build(s) Postmortem"
 url: "https://itch.io/devlog/1510484/devlog-event-builds-postmortem"
 collected_at: "2026-08-10T20:16:06+09:00"
 collected_by: log_cdx (Phase 1)
+evaluated_at: "2026-08-10T20:18:58+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-10T20:18:58+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-10T20:18:58+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-09"
+supersedes: []
+gate_reason: >-
+  企画の縮小、roll への移動・cancel・combo 継続の統合、冗長能力の削除、実装負債、初心者 playtest までを一次資料から具体的に追える。
+  定量評価は弱いが、その限界を明示した上で小規模 action prototype の scope・操作・難度設計へ適用でき、約4000字の独立した分析を構成できる。
+suggested_post_outline:
+  overview_angle: "締切下の単純化を、単なる機能削減ではなく中心動詞 roll への機能集約として読む"
+  analysis_axis: "scope 縮小、操作の多機能化、冗長能力の削除、敵 collision・pathfinding・level layout が作る難度、初心者観察の証拠強度"
+  application_target: "Log_cdx の小規模 action prototype で、中心操作を早期固定し、削除候補・実装負債・初心者観察を同じ playtest 記録で検証する工程"
+  pros_cons: "少数の具体的な設計判断と失敗が再利用しやすい一方、playtest は少人数の逸話で比較条件や定量指標がない"
+  verdict_pre: "部分採用"
 genre_tags: [game-design, mechanics, postmortem, prototyping, playtesting, scope]
 ---
 
