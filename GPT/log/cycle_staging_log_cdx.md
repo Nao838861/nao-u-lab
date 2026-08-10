@@ -114,7 +114,59 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の atom entry を per-file index と照合し、参照先欠落 0 件を確認。明示 UTF-8 読みでは『記憶』『ゲーム設計』『敵パターン』を取得でき、『評価軸』は本文に存在しなかったが文字化けは観測しなかった"
+  - "memory/atoms.jsonl 2847 件を監査し、atom ID 重複 0、mirror 欠落 0、content conflict 0 を確認。normalized content 完全重複 40 群は既存 canonical overlay 45 群に含まれ、表示時 fold 済み"
+  - "memory/raw/ の最終更新 30 日超ファイル 238 件を確認。raw 原文保持の正本であり、経過日数だけを根拠に移動すべき個別ファイルはなかったため archive 変更なし"
+  - "shared-reads candidate lifecycle 1254 件を監査し、failed 437 / needs_review 2 / posted 583 / postponed 223 / ready_to_post 9。期限超過 open 2 件は既存 group defer lease の retry_after 2026-08-20 より前なので再投入を抑止"
+  - "open duplicate / stale triage / group action sidecar を順に再生成し、group handoff と candidate handoff を cycle 2026-08-10 22:28 で冪等 enqueue。新規 handoff は 0 件"
+  - "slack_directives.jsonl と slack_broadcasts.jsonl は pending 0 件で、handled への更新対象なし"
+issues:
+  - id: ISS-UTF8-ATOM-001
+    description: "agent memory architecture を扱う atom 1 件の title / trigger / excerpt に U+FFFD 相当の置換文字が残っている"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; tools/memory_health.py --json"
+    source_file_status: "UTF-8 を明示して読んでも『AIエ��ジェント』となり、per-file と atoms.jsonl の双方に同じ置換文字がある。source data 側の局所破損"
+    display_or_tooling_status: "PowerShell UTF-8 表示でも同じ文字列を再現。display 経路だけの mojibake ではない。もう1件の suspect gr-1777083728-44d444ab7a は UTF-8 原文が正常で issue 対象外"
+    why_blocks_game_memory: "記憶・agent architecture の検索語が局所的に壊れ、次のゲーム制作で関連する運用知見を語一致検索する際の recall を弱めうる。ただし atom 1 件のみで、現行 fold・recall smoke は正常"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  note: "pending 1 件の lease_due は 2026-08-10T23:59:59+09:00 で、監査時点では未到来"
+  counts:
+    pending: 1
+    resolved: 3
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  overdue_suppressed_by_live_group_lease: 2
+  open_duplicate_group_count: 46
+  mixed_group_count: 40
+  all_open_group_count: 6
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
