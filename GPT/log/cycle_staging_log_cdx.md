@@ -15,7 +15,51 @@
 - Slack 投稿: なし（Phase 1 のためローカル収集のみ）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260811_lisien_time_travel_state_history.md
+  - memory/shared_reads_candidates/20260811_procedural_city_controlled_variation.md
+fail:
+  - path: memory/shared_reads_candidates/20260811_isometric_idiosyncrasies_coordinate_cost.md
+    reason: "単一制作の定性的な経験列挙が中心で比較・検証が薄く、~4000字では原文以上の一般化が必要"
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 3
+  malformed_count: 0
+  oldest_collected_at: "2026-08-11T00:32:31+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260811_lisien_time_travel_state_history.md
+    - memory/shared_reads_candidates/20260811_procedural_city_controlled_variation.md
+    - memory/shared_reads_candidates/20260811_isometric_idiosyncrasies_coordinate_cost.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260811_lisien_time_travel_state_history.md
+    - memory/shared_reads_candidates/20260811_procedural_city_controlled_variation.md
+    - memory/shared_reads_candidates/20260811_isometric_idiosyncrasies_coordinate_cost.md
+  valid_backlog_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
