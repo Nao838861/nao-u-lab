@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-10T12:04:36+09:00",
+  "updated_at": "2026-08-10T14:38:13+09:00",
   "reviewed_source_ts": [
+    "1786339994.922609",
     "1786322485.344499",
     "1778774144.767749",
     "1778579739.545599",
@@ -616,6 +617,46 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-10T14:38:13+09:00",
+      "selected": {
+        "id": "sr-1786339994-fd7570ba3b",
+        "source_ts": "1786339994.922609",
+        "title": "Long-Horizon Autonomous Architecture Research with a Language-Model Agent: A Behavioural Case Study",
+        "reason": "未レビューの score 10 以上261件のうち、score 13で memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ最新候補として1件だけ選んだ。約10週間・約100仮説の単一agent研究loopは、定時サイクルやplayable diff反復で局所改善を追う現在のCodexが、停滞を能力不足だけでなくworkflowが作る探索幅の狭さとして診断できるかに直結する。Nao_uが本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads本文と原論文は、約100のsingle-variable experiment、commit-or-discard、初期急伸・数十仮説の飽和・action surface拡張後の回復、初期1仮説へのCIFAR-10改善約80%の集中、moonshot budget・明示fork・regime-aware re-validationという検証可能な候補を示すため、relevance・actionability・evidenceは3とした。一方、証拠は単一agent・単一問題・単一runで、phase遷移時にliterature access、code editing、brief変更が同時に入り、workflow効果のcontrolled ablationではない。さらに、既存のattempt-branch-ledgerは失敗枝とprune reason、exploration-vs-utilization-failureは探索不足と利用不足、evolutionary-design-operatorはゲーム案の変異・交叉・削除、core-density-before-expansionは同一軸深化と別軸拡張を既に扱うためnon_redundancyは1。直後のPhase 4aには別atomからのpending leaseが既に1件あり、現在のstagingには停滞前後を比較できるplayable diff、候補branch、固定評価artifactがない。consumer phase・before／after artifact・期待判断差をlease契約どおり具体化できないため、新規probe・metric・lease・directive・恒久ルールは追加しない。次に同一ゲームloopまたはphase改善で局所diffが連続して判断を変えず、既存4 probeだけではchampion継続・過去branch再訪・moonshot forkのどれを選ぶか決められない具体例が出た時に再評価する。",
+      "existing_probes": [
+        "probe-20260613-attempt-branch-ledger",
+        "probe-20260525-exploration-vs-utilization-failure",
+        "probe-20260516-evolutionary-design-operator",
+        "probe-20260528-core-density-before-expansion"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsとdefer理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-10T09:53:46+09:00",
       "selected": {

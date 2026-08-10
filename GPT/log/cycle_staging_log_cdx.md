@@ -105,7 +105,56 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786339994-fd7570ba3b
+    source_ts: "1786339994.922609"
+    title: "Long-Horizon Autonomous Architecture Research with a Language-Model Agent: A Behavioural Case Study"
+    reason: >-
+      未レビューの score 10 以上261件のうち、score 13で
+      memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ
+      最新候補として1件だけ選んだ。約10週間・約100仮説の単一agent研究loopは、
+      定時サイクルやplayable diff反復で局所改善を追う現在のCodexが、停滞を能力不足だけでなく
+      workflowが作る探索幅の狭さとして診断できるかに直結する。
+      Nao_uが本投稿を「重要」「適切」「自分に反映してほしい」と明示評価した記録はない。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: >-
+    数値上の採用条件は満たすが、原論文は単一agent・単一問題・単一runのcase studyで、
+    literature access・code editing・brief変更が同時に入ったphase遷移もcontrolled ablationではない。
+    固有の示唆であるcommit-or-discard由来の飽和とaction surface拡張は、既存の
+    attempt-branch-ledger、exploration-vs-utilization-failure、evolutionary-design-operator、
+    core-density-before-expansionと大きく重なる。直後のPhase 4aには別atomのpending leaseが1件あり、
+    現stagingには停滞前後を比較できるplayable diff、候補branch、固定評価artifactがないため、
+    consumer・before/after artifact・期待判断差を具体化できない。新規probeを稼働させず、
+    同一loopで局所diffが連続して判断を変えず、既存4 probeだけではchampion継続・過去branch再訪・
+    moonshot forkの選択を決められない具体例が出た時に再評価する。
+  existing_probes:
+    - probe-20260613-attempt-branch-ledger
+    - probe-20260525-exploration-vs-utilization-failure
+    - probe-20260516-evolutionary-design-operator
+    - probe-20260528-core-density-before-expansion
+  change:
+    summary: >-
+      reviewed_source_tsとdefer理由だけを更新した。
+      active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
