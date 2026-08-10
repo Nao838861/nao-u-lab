@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-10T14:38:13+09:00",
+  "updated_at": "2026-08-10T18:03:00+09:00",
   "reviewed_source_ts": [
+    "1786330770.045909",
     "1786339994.922609",
     "1786322485.344499",
     "1778774144.767749",
@@ -617,6 +618,46 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-10T18:03:00+09:00",
+      "selected": {
+        "id": "sr-1786330770-5e7e928935",
+        "source_ts": "1786330770.045909",
+        "title": "Do Agent Optimizers Compound? A Continual-Learning Evaluation on Terminal-Bench 2.0",
+        "reason": "未レビューの score 10 以上260件のうち、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ最新候補として1件だけ選んだ。agent harnessやplayable diffの改善を一回の成功率ではなく、新規改善・未知課題への転移・既存能力の保持に分ける主張は、現在の定時サイクルの候補採択と回帰確認に直結する。Nao_uが本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads本文は、Phase 1・未知taskへのTransfer・Phase 2後Finalを分け、RELAI-VCLだけが正の転移と追加改善を両立した結果、GEPAのtask別instruction肥大化、Meta Harnessの既存能力低下、22 task各2試行・複数seedなし・探索空間不一致という限界まで記録しているため、relevance・actionability・evidenceは3とした。一方、既存のupdate-aware-regression-tagsは変更範囲から回帰checkを選び、fixed-test-vs-dynamic-stressは固定testと未知条件を分け、omni-game-arena-improvement-transferはbaseline・同条件再試行・held-out transferを分け、evaluation-version-boundaryは評価定義変更時の比較可能性を扱う。新規性は候補採択loop内で保持集合をhard gateにする点へほぼ限定されるためnon_redundancyは1。さらにPhase 4aには別atomのpending leaseが1件あり、同一consumerへ新規leaseを重ねられない。保持集合を増やしすぎる費用と仕様変更を拒むriskもあるため、active probe・metric・lease・directive・恒久ルールは追加しない。次に具体的なplayable diff列A0／A1／A2と保持集合ができ、既存probeでは『新規改善を採るか、既存能力保持を優先して棄却するか』の判断差を表せない時に再評価する。",
+      "existing_probes": [
+        "probe-20260516-update-aware-regression-tags",
+        "probe-20260527-fixed-test-vs-dynamic-stress",
+        "probe-20260619-omni-game-arena-improvement-transfer",
+        "probe-20260711-evaluation-version-boundary"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsとdefer理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-10T14:38:13+09:00",
       "selected": {

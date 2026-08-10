@@ -88,7 +88,34 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786330770-5e7e928935
+    source_ts: "1786330770.045909"
+    title: "Do Agent Optimizers Compound? A Continual-Learning Evaluation on Terminal-Bench 2.0"
+    reason: "未レビューのscore 10以上260件のうち、6優先タグをすべて持つ最新候補。単発scoreではなく新規改善・未知課題への転移・既存能力保持を分ける観点が、agent harnessとplayable diffの候補採択に直結するため。Nao_uの明示的な重要評価は未確認。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "採用閾値は満たすが、update-aware regression、fixed-vs-dynamic stress、baseline／held-out transfer、evaluation versionの既存probeと重複が大きい。Phase 4aには別probeのpending leaseが1件あり、A0／A1／A2と保持集合の具体artifactもまだないため、consumer・before/after・期待判断差を満たす新規leaseを作らない。"
+  change:
+    summary: "reviewed_source_tsとdefer理由だけをstateへ記録。active_probes、probe lifecycle ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
