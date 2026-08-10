@@ -148,7 +148,94 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index と per-file atom index を照合し、broken entry 0 件を確認した。UTF-8 明示読みでは代表語『記憶』『ゲーム設計』『敵パターン』『評価軸』を取得でき、source file の文字化けはなかった。"
+  - "atoms 2844 件の jsonl / per-file md / index mirror を監査し、parse error、index error、content conflict は各 0 件だった。raw normalized-content 重複 40 group / 80 rows は既存 overlay で 40 extra rows を fold 済み、recall-visible 重複 3 group / 6 rows も 3 extra rows を fold 済みで、同一 ID 矛盾はなかった。"
+  - "memory/raw の30日超未更新 238 files を確認した。214 files は web_research の原文・PDF・抽出 text で、残りも Slack / headless evaluation 等の provenance であるため、この cycle では移動せず保持した。"
+  - "candidate lifecycle 1249 files を監査し、posted 579 / ready_to_post 9 / postponed 231 / failed 428 / needs_review 2 を確認した。期限到来 open 10 件のうち live lease 合成後の stale triage 8 件から、重複群外の先頭 5 件を candidate handoff inbox へ enqueue した。"
+  - "title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再生成した。open duplicate は 46 groups（mixed 40 / all_open 6）、actionable group は 0 件で、group handoff は 0 件だった。"
+  - "slack_directives.jsonl と slack_broadcasts.jsonl は pending 各 0 件で、close 対象はなかった。"
+issues:
+  - id: ISS-MOJIBAKE-001
+    description: "active atom sr-1776127289-4d9239b255 の『AIエージェント』部分に U+FFFD が2文字あり、title / trigger / excerpt に残っている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; python tools/memory_health.py --json"
+    source_file_status: "UTF-8 明示読みで per-atom と raw source の双方に同じ U+FFFD を確認したため source-level corruption。もう1件の suspect gr-1777083728-44d444ab7a は raw source でも意図的な literal '???' であり encoding 破損ではない。"
+    display_or_tooling_status: "none。PowerShell UTF-8 読み、Get-Content、rg の表示は一致した。"
+    why_blocks_game_memory: "agent filesystem / progressive disclosure を扱う active atom の検索語を局所的に損なうが、game-design 教訓の主要導線や URL evidence は維持されているため影響は限定的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 3
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 10
+  stale_triage_queue_rows: 8
+  remaining_stale_triage_rows_after_selection: 3
+  open_duplicate_group_count: 46
+  mixed_group_count: 40
+  all_open_group_count: 6
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_enqueued_count: 5
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-906353ba01593395
+    - cha-d2137a6e46e0ac01
+    - cha-e5216b59183794f9
+    - cha-ec2d7fdea970aea0
+    - cha-cb202f0f7ee14bf2
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-906353ba01593395
+    path: memory/shared_reads_candidates/20260708_kingdom_for_keflings_midgame_playtest.md
+    status: postponed
+    stale_after: "2026-08-07"
+    priority_reason: "mid-game / end-game playtest 不足と late-game grind の失敗知見を、次の playable diff の時間帯別評価へ移せるか再評価する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-d2137a6e46e0ac01
+    path: memory/shared_reads_candidates/20260709_2026_game_design_manifesto.md
+    status: postponed
+    stale_after: "2026-08-08"
+    priority_reason: "KPI 批判と制作過程の可視化を一般論で終わらせず、具体 action と評価根拠まで抽出できるか再評価する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-e5216b59183794f9
+    path: memory/shared_reads_candidates/20260709_core_loops_early_prototyping.md
+    status: postponed
+    stale_after: "2026-08-08"
+    priority_reason: "core loop 分解を実際の playable diff 評価へ接続できるか、手順と評価結果の不足を含めて再評価する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-ec2d7fdea970aea0
+    path: memory/shared_reads_candidates/20260709_finding_fun_hypothesis_prototype.md
+    status: postponed
+    stale_after: "2026-08-08"
+    priority_reason: "prototype-as-hypothesis を制作 lesson に移せるか、逸話から検証手順へ具体化できるか再評価する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-cb202f0f7ee14bf2
+    path: memory/shared_reads_candidates/20260709_gdc2026_ai_3d_game_prototyping_engine_integration.md
+    status: postponed
+    stale_after: "2026-08-08"
+    priority_reason: "test-driven logic と token-friendly adapter の実装詳細・評価・失敗条件を補えるか再評価する。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
