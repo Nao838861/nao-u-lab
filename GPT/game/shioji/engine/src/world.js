@@ -221,6 +221,10 @@ function householdTripNeeds(economy, physical, household) {
     && productionInputAmount(physical, household, "char") < 2)
     || (household.job === "fisher2"
       && productionInputAmount(physical, household, "fish") < P.Y_FISH * householdMult(household))
+    || (household.job === "shepherd"
+      && productionInputAmount(physical, household, "wheat")
+        + productionInputAmount(physical, household, "veg")
+        < P.Y_MEAT * P.FEED_MEAT * householdMult(household))
     || (household.job === "fisher"
       && productionInputAmount(physical, household, "salt") < 1)
     || (
@@ -246,6 +250,10 @@ function householdTripNeeds(economy, physical, household) {
     && productionInputAmount(physical, household, "char") < P.SALT_CHAR)
     || (household.job === "fisher2"
       && productionInputAmount(physical, household, "fish") < P.Y_FISH / 30)
+    || (household.job === "shepherd"
+      && productionInputAmount(physical, household, "wheat")
+        + productionInputAmount(physical, household, "veg")
+        < P.Y_MEAT * P.FEED_MEAT / 30)
     || (household.job === "woodshop"
       && productionInputAmount(physical, household, "log") < P.LOG_TOOL)
     || (household.job === "charburner"

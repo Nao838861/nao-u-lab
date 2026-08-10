@@ -4085,6 +4085,7 @@ test('品目詳細: 18品すべてに性質・日持ち・製法の表示契約�
   assert.equal(goodsDetail('wheat').shelfLifeDays, null);
   assert.deepEqual(goodsDetail('pick').recipe.inputs, ['veg', 'salt']);
   assert.deepEqual(goodsDetail('meal').recipe.inputs, ['fish']);
+  assert.deepEqual(goodsDetail('meat').recipe.alternatives, [['wheat', 'veg']]);
   assert.deepEqual(goodsDetail('pres').recipe.optional, ['char']);
   assert.deepEqual(goodsDetail('bar').recipe.alternatives, [['coal', 'char']]);
   assert.throws(() => goodsDetail('unknown'), /不明な品目/);
@@ -4823,6 +4824,16 @@ test('空間生産性UI: 生産者が近い加工配置は市場経由との差�
     .filter(estimate => estimate?.supplier);
   assert.ok(fishmealEstimates.length > 0);
   assert.ok(fishmealEstimates.every(estimate => estimate.supplier.job === 'fisher'));
+
+  const pastureEstimates = [
+    { x: loggerBuilding.entrance.x + 1, y: loggerBuilding.entrance.y },
+    { x: loggerBuilding.entrance.x - 1, y: loggerBuilding.entrance.y },
+    { x: loggerBuilding.entrance.x, y: loggerBuilding.entrance.y + 1 },
+    { x: loggerBuilding.entrance.x, y: loggerBuilding.entrance.y - 1 },
+  ].map(point => supplierPlacementEstimate(model, 'shepherd', point))
+    .filter(estimate => estimate?.supplier);
+  assert.ok(pastureEstimates.length > 0);
+  assert.ok(pastureEstimates.every(estimate => ['wheat', 'veg'].includes(estimate.supplier.job)));
 });
 
 test('需要網4 UI: 魚粉屋は水際でなく漁師との仕入れ距離を見て配置できる', () => {

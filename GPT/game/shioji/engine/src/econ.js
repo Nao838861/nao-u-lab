@@ -80,6 +80,8 @@ export const P = deepFreeze({
   Y_CHAR: 8,
   Y_SALT: 12,
   Y_MEAT: 16,
+  // 麦・野菜を同じ飼料荷として扱う暫定比率。全需要接続後の需要網7で再較正する。
+  FEED_MEAT: 1,
   // 牧畜の布は肉生産の副産物。島内需要を大きく超えて積み上がらない量に留める。
   Y_CLOTH: 0.05,
   // 綿花農家の布は最大11人世帯でも輸出原価2.0を下回らない生産量。
@@ -1579,6 +1581,10 @@ export function productionCost(economy, physical, household, goods, { day = econ
     pres: P.PRES_SALT * (economy.px.salt ?? 2) / P.PR_SALT,
     pick: P.PICK_SALT * (economy.px.salt ?? 2) / P.PR_PICK,
     meal: P.MEAL_FISH * (economy.px.fish ?? P.BELIEF0.fish),
+    meat: P.FEED_MEAT * Math.min(
+      economy.px.wheat ?? P.BELIEF0.wheat,
+      economy.px.veg ?? P.BELIEF0.veg,
+    ),
     bar: P.SMELT_ORE * (economy.px.ore ?? P.BELIEF0.ore)
       + P.SMELT_FUEL * fuelPrice,
     iron: P.SMITH_BAR * (economy.px.bar ?? P.BELIEF0.bar)
@@ -1745,7 +1751,10 @@ export function buyTargets(
 
   if (foodDays < targetDays) {
     const starving = foodDays < 1.5;
-    for (const goods of ["veg", "wheat", "pres", "pick"]) {
+    const staples = household.job === "shepherd"
+      ? ["pres", "pick"]
+      : ["veg", "wheat", "pres", "pick"];
+    for (const goods of staples) {
       targets[goods] = [
         (targetDays - foodDays) * dailyFood / 4,
         starving ? 99 : Math.min((px[goods] ?? 9) * 1.5, cheapest * 2.2),
@@ -1755,13 +1764,23 @@ export function buyTargets(
   if (household.job !== "fisher" && household.job !== "fisher2") {
     targets.fish = [dailyFood * 0.5, Math.min((px.fish ?? 9) * 1.5, cheapest * 2.5)];
   }
-  if (household.job !== "wheat" && household.pantry.wheat < dailyFood * P.RATION * 10 && !targets.wheat) {
+  if (
+    household.job !== "wheat"
+    && household.job !== "shepherd"
+    && household.pantry.wheat < dailyFood * P.RATION * 10
+    && !targets.wheat
+  ) {
     targets.wheat = [
       dailyFood * P.RATION * 15 - household.pantry.wheat,
       (px.wheat ?? 3) * 1.3,
     ];
   }
-  if (household.job !== "veg" && household.pantry.veg < dailyFood * P.RATION * 6 && !targets.veg) {
+  if (
+    household.job !== "veg"
+    && household.job !== "shepherd"
+    && household.pantry.veg < dailyFood * P.RATION * 6
+    && !targets.veg
+  ) {
     targets.veg = [
       dailyFood * P.RATION * 10 - household.pantry.veg,
       (px.veg ?? 3) * 1.3,
@@ -1869,6 +1888,25 @@ export function buyTargets(
       ];
     }
   }
+  if (household.job === "shepherd") {
+    const dailyFeed = P.Y_MEAT * P.FEED_MEAT * householdMult(household);
+    const currentFeed = inputQty("wheat") + inputQty("veg");
+    if (currentFeed < dailyFeed) {
+      const wantedEach = (dailyFeed * 2 - currentFeed) / 2;
+      const ceiling = Math.max(
+        0.9,
+        (px.meat ?? P.BELIEF0.meat) / P.FEED_MEAT * 0.65,
+      );
+      for (const goods of ["wheat", "veg"]) {
+        if (targets[goods]) {
+          targets[goods] = [
+            Math.max(targets[goods][0], wantedEach),
+            Math.max(targets[goods][1], ceiling),
+          ];
+        } else targets[goods] = [wantedEach, ceiling];
+      }
+    }
+  }
 
   const buildingNeeds = householdBuildingNeeds(physical, household);
   for (const needs of [buildingNeeds.construction, buildingNeeds.repair]) {
@@ -1936,6 +1974,7 @@ export function buyTargets(
 export function isProductionInput(household, goods) {
   return (household.job === "saltworks" && goods === "char")
     || (household.job === "fisher2" && goods === "fish")
+    || (household.job === "shepherd" && (goods === "wheat" || goods === "veg"))
     || (household.job === "fisher" && (goods === "salt" || goods === "char"))
     || (household.job === "veg" && goods === "salt")
     || ((household.job === "wheat" || household.job === "rapeseed") && goods === "meal")
@@ -2195,8 +2234,11 @@ export function buyAtMarket(
   // 旧順序(常に原料先)は市場に食料があっても加工世帯だけが飢える原因だったが、
   // 6日分を切った時点で常に食料先行にすると、原料購入と生産が細って収入が消え、
   // 島全体の財布が0へ張り付く貧困トラップを起こした(2026-07-26実測)。
+  const householdFoodOrder = household.job === "shepherd"
+    ? ["veg", "wheat", "fish", "pres", "pick", "meat"]
+    : FOOD_BUY_ORDER;
   const preferredOrder = foodDays < P.FOOD_FIRST_D
-    ? [...FOOD_BUY_ORDER, ...jobOrder.filter((goods) => !FOODS.includes(goods))]
+    ? [...householdFoodOrder, ...jobOrder.filter((goods) => !FOODS.includes(goods))]
     : jobOrder;
   const order = preferredOrder.filter((goods) => targets[goods]);
   const transactions = [];
@@ -2936,15 +2978,40 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     recordEconomicMaterialFlow(economy, "veg", "prod", qty, `世帯${household.id}の野菜畑`);
     produced.veg = qty;
   } else if (household.job === "shepherd") {
-    const meat = P.Y_MEAT * work;
-    const cloth = P.Y_CLOTH * work;
-    household.pantry.meat += meat;
-    household.pantry.cloth += cloth;
-    economy.led.prod.meat = (economy.led.prod.meat ?? 0) + meat;
-    recordEconomicMaterialFlow(economy, "meat", "prod", meat, `世帯${household.id}の牧畜`);
-    recordEconomicMaterialFlow(economy, "cloth", "prod", cloth, `世帯${household.id}の牧畜`);
-    produced.meat = meat;
-    produced.cloth = cloth;
+    const desiredMeat = P.Y_MEAT * work;
+    const desiredFeed = desiredMeat * P.FEED_MEAT;
+    const veg = Math.min(
+      desiredFeed,
+      productionInputAmount(physical, household, "veg"),
+    );
+    const wheatNeed = desiredFeed - veg;
+    const wheat = Math.min(
+      wheatNeed,
+      productionInputAmount(physical, household, "wheat"),
+    );
+    withdrawProductionInput(physical, household, "veg", veg);
+    withdrawProductionInput(physical, household, "wheat", wheat);
+    const feed = veg + wheat;
+    const fill = desiredFeed > 1e-9 ? feed / desiredFeed : 0;
+    const meat = desiredMeat * fill;
+    const cloth = P.Y_CLOTH * work * fill;
+    if (feed > 1e-9) {
+      household.pantry.meat += meat;
+      household.pantry.cloth += cloth;
+      if (veg > 1e-9) {
+        recordEconomicMaterialFlow(economy, "veg", "cons", veg, `世帯${household.id}の家畜飼料`);
+      }
+      if (wheat > 1e-9) {
+        recordEconomicMaterialFlow(economy, "wheat", "cons", wheat, `世帯${household.id}の家畜飼料`);
+      }
+      recordEconomicMaterialFlow(economy, "meat", "prod", meat, `世帯${household.id}の牧畜`);
+      recordEconomicMaterialFlow(economy, "cloth", "prod", cloth, `世帯${household.id}の牧畜`);
+      economy.led.prod.meat = (economy.led.prod.meat ?? 0) + meat;
+      produced.meat = meat;
+      produced.cloth = cloth;
+    }
+    if (veg > 1e-9) recordEconomicDemand(economy, "veg", veg, veg, "shepherd");
+    if (wheatNeed > 1e-9) recordEconomicDemand(economy, "wheat", wheatNeed, wheat, "shepherd");
   } else if (household.job === "wheat") {
     if (household.pantry.wheat > P.Y_WHEAT * householdMult(household) * 0.8) {
       if (endOfDay) recordMissingWorkToolDemand(economy, household);

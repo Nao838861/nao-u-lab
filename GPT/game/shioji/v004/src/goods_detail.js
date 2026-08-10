@@ -12,7 +12,7 @@ const GOODS_DETAIL_FALLBACK_FACTS = Object.freeze({
   iron: '鉄材は、家の発展に使います。',
   stone: '石材は、道を舗装する材料です。',
   veg: '野菜は30日ほど持ち、塩があれば畑の家で漬物になります。',
-  meat: '肉は牧場で作る食料です。',
+  meat: '肉は牧場が麦か野菜を飼料にして作る食料です。',
   meal: '魚粉は魚粉屋が魚を加工して作り、麦畑と綿花畑の肥料に使います。',
   cloth: '布は牧場と綿花畑で作り、家の発展に使います。',
   oil: '油は本土から仕入れ、家の発展に使います。',
@@ -64,7 +64,7 @@ export const GOODS_RECIPES = Object.freeze({
   wheat: recipe({ makers: ['wheat'], output: 'wheat' }),
   fish: recipe({ makers: ['fisher'], output: 'fish' }),
   veg: recipe({ makers: ['veg'], output: 'veg' }),
-  meat: recipe({ makers: ['shepherd'], output: 'meat' }),
+  meat: recipe({ makers: ['shepherd'], alternatives: [['wheat', 'veg']], output: 'meat' }),
   pres: recipe({
     makers: ['fisher'], inputs: ['fish', 'salt'], optional: ['char'], output: 'pres',
   }),

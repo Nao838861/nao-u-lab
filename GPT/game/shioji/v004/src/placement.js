@@ -180,6 +180,7 @@ export function resourcePlacementEstimate(model, job, entrance) {
 
 const INPUT_PRODUCERS = Object.freeze({
   fisher2: Object.freeze(['fisher']),
+  shepherd: Object.freeze(['wheat', 'veg']),
   woodshop: Object.freeze(['logger']),
   charburner: Object.freeze(['logger']),
   saltworks: Object.freeze(['charburner']),

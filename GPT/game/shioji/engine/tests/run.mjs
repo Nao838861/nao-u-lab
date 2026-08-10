@@ -1130,7 +1130,7 @@ test("段14: flow_island標準地形を同値生成し森をタイル資源化�
   assert.equal(Object.values(economy.natural.wood).every((stock) => stock === P.WOOD0), true);
 });
 
-test("段14: 漁は冬1/4・野菜畑は月3〜10のみ・牧畜は肉と布を生産する", () => {
+test("段14: 漁は冬1/4・野菜畑は月3〜10のみ・牧場は飼料から肉と布を生産する", () => {
   const makeProducer = (job) => {
     const physical = createPhysicalState({
       width: 48,
@@ -1167,9 +1167,62 @@ test("段14: 漁は冬1/4・野菜畑は月3〜10のみ・牧畜は肉と布を�
   assert.equal(gardener.household.pantry.veg, P.Y_VEG);
 
   const shepherd = makeProducer("shepherd");
+  const feedBefore = shepherd.household.pantry.wheat;
   producePrimaryTick(shepherd.economy, shepherd.physical, shepherd.household, { day: 1, fraction: 1 });
   assert.equal(shepherd.household.pantry.meat, P.Y_MEAT);
   assert.equal(shepherd.household.pantry.cloth, P.Y_CLOTH);
+  assert.equal(shepherd.household.pantry.wheat, feedBefore - P.Y_MEAT * P.FEED_MEAT);
+});
+
+test("需要網5: 牧場は野菜を先に麦で補う実飼料だけを肉と布へ変換する", () => {
+  const physical = createEconomicTestPhysical(12, 12);
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "shepherd", x: 6, y: 6 });
+  household.workTool = {
+    kind: "wood", durability: 100, maxDurability: 100, acquiredDay: 1,
+  };
+  ensureHouseholdInputSites(economy, physical);
+  const building = physical.buildings.find(({ id }) => id === household.buildingId);
+  withdrawInventory(
+    building,
+    "input",
+    "wheat",
+    sectionAmount(building, "input", "wheat"),
+  );
+  depositInventory(building, "input", "wheat", 5);
+  depositInventory(building, "input", "veg", 3);
+  household.pantry.meat = 0;
+  household.pantry.cloth = 0;
+
+  const result = producePrimaryTick(economy, physical, household, { day: 1, fraction: 1 });
+  assert.equal(result.meat, 8);
+  assert.equal(result.cloth, P.Y_CLOTH * 0.5);
+  assert.equal(sectionAmount(building, "input", "wheat"), 0);
+  assert.equal(sectionAmount(building, "input", "veg"), 0);
+  assert.deepEqual(economy.dailyDemandFlows.veg.sources.shepherd, {
+    demand: 3,
+    consumed: 3,
+  });
+  assert.deepEqual(economy.dailyDemandFlows.wheat.sources.shepherd, {
+    demand: P.Y_MEAT * P.FEED_MEAT - 3,
+    consumed: 5,
+  });
+});
+
+test("需要網5: 牧場は麦・野菜を二日分だけ仕入れ対象にし飼料原価を肉へ載せる", () => {
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "shepherd", x: 0, y: 0 });
+  household.pantry.wheat = 0;
+  household.pantry.veg = 0;
+  const targets = buyTargets(economy, household, { day: 1 });
+  assert.equal(targets.wheat[0], P.Y_MEAT * P.FEED_MEAT);
+  assert.equal(targets.veg[0], P.Y_MEAT * P.FEED_MEAT);
+  const labor = householdEat(household) * staplePrice(economy)
+    / (P.Y_MEAT * householdMult(household));
+  assert.equal(
+    productionCost(economy, null, household, "meat", { day: 1 }),
+    labor + P.FEED_MEAT * Math.min(economy.px.wheat, economy.px.veg),
+  );
 });
 
 test("需要網3: 全職は素手でも働け、木の作業道具を1荷から組んで実働日だけ摩耗する", () => {
