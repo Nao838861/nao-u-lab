@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.45.0-caravan-slice';
+import { TILE } from './config.js?v=v004.45.1-caravan-employment';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

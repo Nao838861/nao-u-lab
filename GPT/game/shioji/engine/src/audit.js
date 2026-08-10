@@ -10,6 +10,7 @@ import {
   fundSettlementZone,
   localWood,
   recordEconomicMaterialFlow,
+  setCaravanEmployment,
 } from "./econ.js";
 import {
   ECONOMIC_BUILDINGS,
@@ -383,6 +384,7 @@ export function buildBaseCity(seed, { marketEntrance = E_STABLE_MARKET_ANCHOR } 
 export const CARAVAN_SLICE_SIZE = Object.freeze({ width: 96, height: 64 });
 export const CARAVAN_SLICE_PROVISION_DAYS = 300;
 export const CARAVAN_SLICE_SALTWORKS_CHARCOAL = 360;
+export const CARAVAN_SLICE_INN_EMPLOYMENT = Object.freeze({ recruitment: 2, wage: 5 });
 export const CARAVAN_SLICE_MARKETS = Object.freeze({
   main: Object.freeze({ id: "main", name: "母港市場", entrance: Object.freeze({ x: 31, y: 51 }) }),
   fishery: Object.freeze({ id: "fishery", name: "漁郷市場", entrance: Object.freeze({ x: 78, y: 51 }) }),
@@ -395,6 +397,8 @@ const CARAVAN_FISHERY_LAYOUT = Object.freeze([
   Object.freeze(["saltworks", 87, 51, 88, 50]),
 ]);
 
+const CARAVAN_INN_LAYOUT = Object.freeze(["carter", 42, 44, 42, 41]);
+
 const CARAVAN_FISHERY_MARKET_SITE = Object.freeze({ x: 76, y: 52 });
 const CARAVAN_ROAD_POLYLINES = Object.freeze([
   Object.freeze([[31, 51], [52, 51], [52, 40], [61, 40], [67, 51], [78, 51]]),
@@ -402,6 +406,7 @@ const CARAVAN_ROAD_POLYLINES = Object.freeze([
   Object.freeze([[71, 58], [69, 58]]),
   Object.freeze([[85, 58], [82, 58], [82, 51], [78, 51]]),
   Object.freeze([[78, 51], [87, 51]]),
+  Object.freeze([[38, 44], [42, 44]]),
 ]);
 
 function clearCaravanRectangle(terrain, x, y, width, height) {
@@ -424,6 +429,13 @@ function makeCaravanSliceTerrain(mainPlan) {
     const definition = ECONOMIC_BUILDINGS[job];
     clearCaravanRectangle(terrain, buildingX, buildingY, definition.w, definition.h);
   }
+  clearCaravanRectangle(
+    terrain,
+    CARAVAN_INN_LAYOUT[3],
+    CARAVAN_INN_LAYOUT[4],
+    ECONOMIC_BUILDINGS.carter.w,
+    ECONOMIC_BUILDINGS.carter.h,
+  );
   clearCaravanRectangle(
     terrain,
     CARAVAN_FISHERY_MARKET_SITE.x,
@@ -486,7 +498,8 @@ export function buildCaravanSliceWorld(seed) {
   });
   const world = createWorld({
     seed,
-    initialCompanyMoney: P.TREASURY0 + P.BUILD_COST * CARAVAN_FISHERY_LAYOUT.length,
+    initialCompanyMoney: P.TREASURY0
+      + P.BUILD_COST * (CARAVAN_FISHERY_LAYOUT.length + 1),
     physicalState: physical,
     market: { ...mainPlan.logisticsSites.market.entrance },
     warehouse: { ...mainPlan.logisticsSites.warehouse.entrance },
@@ -507,6 +520,9 @@ export function buildCaravanSliceWorld(seed) {
     if (!addAuditZone(world, job, x, y, buildingX, buildingY)) {
       throw new Error(`母港圏の配置不可: ${job}@${x},${y}`);
     }
+  }
+  if (!addAuditZone(world, ...CARAVAN_INN_LAYOUT)) {
+    throw new Error(`母港圏の隊商宿配置不可: ${CARAVAN_INN_LAYOUT[1]},${CARAVAN_INN_LAYOUT[2]}`);
   }
 
   const unlimited = Object.fromEntries(GOODS.map((goods) => [goods, Number.MAX_SAFE_INTEGER]));
@@ -555,6 +571,13 @@ export function buildCaravanSliceWorld(seed) {
     (zone) => occupyScenarioZone(world, zone, CARAVAN_SLICE_MARKETS.fishery.id),
   );
   const motherProvision = mainHouseholds[0];
+  const caravanInnZone = mainZones.find((zone) => zone.job === "carter");
+  const caravanInn = buildingById(physical, caravanInnZone?.buildingId);
+  const employment = setCaravanEmployment(physical, {
+    buildingId: caravanInn?.id,
+    ...CARAVAN_SLICE_INN_EMPLOYMENT,
+  });
+  if (!employment.ok) throw new Error(`隊商宿の雇用設定不可: ${employment.reason}`);
   for (const household of mainHouseholds) {
     const provision = household.members.length * CARAVAN_SLICE_PROVISION_DAYS;
     household.pantry.wheat += provision;
@@ -601,12 +624,14 @@ export function buildCaravanSliceWorld(seed) {
   }
   economy.jobSelectionPool = [...new Set([
     ...E_STABLE_JOBS,
+    "carter",
     ...CARAVAN_FISHERY_LAYOUT.map(([job]) => job),
   ])];
   world.state.caravanSlice = {
     id: "two-markets",
     mainMarketId: CARAVAN_SLICE_MARKETS.main.id,
     fisheryMarketId: CARAVAN_SLICE_MARKETS.fishery.id,
+    innBuildingId: caravanInn.id,
   };
   return world;
 }

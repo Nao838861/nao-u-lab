@@ -104,6 +104,7 @@ const ECONOMIC_JOB_BUILDINGS = Object.freeze({
   cartwright: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
   charburner: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
   saltworks: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
+  carter: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
   quarryman: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
   miner: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
   collier: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
@@ -831,6 +832,9 @@ export function addBuilding(physical, type, x, y, options = {}) {
     conditionStatus: options.conditionStatus ?? "good",
     repairPlan: options.repairPlan ? structuredClone(options.repairPlan) : null,
     constructionRequired: structuredClone(options.constructionRequired ?? {}),
+    caravanEmployment: type === "carter"
+      ? structuredClone(options.caravanEmployment ?? { recruitment: 1, wage: 1 })
+      : null,
     inventory: createSectionInventory(),
     caps: structuredClone(options.caps ?? definition.caps ?? {}),
   };

@@ -1148,7 +1148,7 @@ async function checkSeasonalPlots(width, height, mobile) {
       plots: plots.map(row => row.type),
     };
   })()`);
-  assert.equal(springStart.version, 'v004.45.0-caravan-slice', JSON.stringify(springStart));
+  assert.equal(springStart.version, 'v004.45.1-caravan-employment', JSON.stringify(springStart));
   assert.equal(springStart.season, '春', JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => ['wheat', 'veg'].includes(type)), JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => type === 'shepherd'), JSON.stringify(springStart));
@@ -1534,8 +1534,8 @@ async function checkPeopleVisuals(width, height, mobile) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.45.0-caravan-slice');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.45.0-caravan-slice');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.45.1-caravan-employment');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.45.1-caravan-employment');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -2371,7 +2371,7 @@ async function checkOrderCostUi(width, height, mobile) {
       viewport: { width: innerWidth, height: innerHeight },
     };
   })()`);
-  assert.equal(result.version, 'v004.45.0-caravan-slice');
+  assert.equal(result.version, 'v004.45.1-caravan-employment');
   assert.ok(result.offer, JSON.stringify(result));
   assert.match(result.text, /完遂決済単価/);
   assert.match(result.text, /全量仕入原価/);
@@ -2535,7 +2535,7 @@ async function checkSupplyDemand(width, height, mobile) {
   assert.equal(result.pageHorizontalOverflow, false, JSON.stringify(result));
   assert.equal(result.supplyBreakdownVisible, !mobile, JSON.stringify(result));
   assert.equal(result.demandBreakdownVisible, true, JSON.stringify(result));
-  assert.equal(result.runtimeVersion, 'v004.45.0-caravan-slice', JSON.stringify(result));
+  assert.equal(result.runtimeVersion, 'v004.45.1-caravan-employment', JSON.stringify(result));
   await page.screenshot(`/tmp/shioji_v004_supply_demand_${mobile ? 'mobile' : 'pc'}_${width}x${height}.png`);
   await page.close();
   return result;
@@ -2601,7 +2601,7 @@ async function checkFoodAlerts(width, height, mobile) {
       JSON.stringify(result),
     );
   }
-  assert.equal(result.runtimeVersion, 'v004.45.0-caravan-slice', JSON.stringify(result));
+  assert.equal(result.runtimeVersion, 'v004.45.1-caravan-employment', JSON.stringify(result));
   assert.deepEqual(page.errors, []);
   await page.screenshot(`/tmp/shioji_v004_food_alerts_${mobile ? 'mobile' : 'pc'}.png`);
   await page.close();
@@ -2643,7 +2643,7 @@ async function checkSpatialProductivity(width = 1440, height = 900, mobile = fal
   })()`);
   assert.ok(building && !building.missing,
     `資源職の30日実測を建物画面へ表示できる: ${JSON.stringify(building)}`);
-  assert.equal(building.version, 'v004.45.0-caravan-slice');
+  assert.equal(building.version, 'v004.45.1-caravan-employment');
   assert.ok(Number.isFinite(building.efficiency), JSON.stringify(building));
   assert.ok(Number.isFinite(building.resourceEfficiency), JSON.stringify(building));
   assert.equal(building.withinViewport, true, JSON.stringify(building));
@@ -2835,7 +2835,7 @@ async function checkMarketRhythmUi(width = 1440, height = 900, mobile = false) {
       hidden: sheet.hidden,
     };
   })()`);
-  assert.equal(result.version, 'v004.45.0-caravan-slice', JSON.stringify(result));
+  assert.equal(result.version, 'v004.45.1-caravan-employment', JSON.stringify(result));
   assert.equal(result.hidden, false, JSON.stringify(result));
   assert.match(result.label, /出荷をまとめ中 1\/2日/, JSON.stringify(result));
   assert.match(result.detail, /食料切れと生産停止は待ちません/, JSON.stringify(result));
@@ -2915,6 +2915,50 @@ async function checkYardStability(width, height, mobile) {
   assert.deepEqual(page.errors, []);
   await page.close();
   return { ...setup, transitionSamples };
+}
+
+async function checkCaravanEmployment(width = 1440, height = 900, mobile = false) {
+  const page = await newPage(width, height, mobile, gameForMode('caravan'));
+  const result = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.setSpeed(0);
+    const inn = game.model.buildings.find(building => building.type === 'carter');
+    game.selectBuilding(inn);
+    game.openSheet('building-sheet');
+    const recruitment = document.querySelector('[data-caravan-recruitment]');
+    const wage = document.querySelector('[data-caravan-wage]');
+    recruitment.value = '3';
+    wage.value = '65';
+    recruitment.dispatchEvent(new Event('change', { bubbles: true }));
+    const changed = game.model.buildings.find(building => building.id === inn.id);
+    const sheet = document.querySelector('#building-sheet');
+    const rect = sheet.getBoundingClientRect();
+    return {
+      version: game.version,
+      text: sheet.textContent,
+      employment: changed.caravanEmployment,
+      crew: changed.caravanCrew,
+      withinViewport: rect.left >= 0 && rect.right <= innerWidth
+        && rect.top >= 0 && rect.bottom <= innerHeight,
+      horizontalOverflow: document.documentElement.scrollWidth > innerWidth,
+      applicantsUi: /応募者|応募一覧/.test(sheet.textContent),
+    };
+  })()`);
+  assert.equal(result.version, 'v004.45.1-caravan-employment', JSON.stringify(result));
+  assert.deepEqual(result.employment, { recruitment: 3, wage: 6.5 });
+  assert.equal(result.crew, 3, JSON.stringify(result));
+  assert.match(result.text, /隊商の雇用/);
+  assert.match(result.text, /募集3人・充足3人・固定費195デナリ\/日/);
+  assert.match(result.text, /便が止まっている日も/);
+  assert.equal(result.applicantsUi, false);
+  assert.equal(result.withinViewport, true, JSON.stringify(result));
+  assert.equal(result.horizontalOverflow, false, JSON.stringify(result));
+  assert.deepEqual(page.errors, []);
+  await page.screenshot(mobile
+    ? '/tmp/shioji_v004_caravan_employment_mobile.png'
+    : '/tmp/shioji_v004_caravan_employment_desktop.png');
+  await page.close();
+  return result;
 }
 
 if (process.argv.includes('--start-choice-only')) {
@@ -3003,6 +3047,10 @@ if (process.argv.includes('--start-choice-only')) {
   const pc = await checkYardStability(1440, 900, false);
   const mobile = await checkYardStability(390, 844, true);
   console.log(`CHARTER ISLE v004 yard stability smoke: PASS ${JSON.stringify({ pc, mobile })}`);
+} else if (process.argv.includes('--caravan-employment-only')) {
+  await checkCaravanEmployment(1440, 900, false);
+  await checkCaravanEmployment(390, 844, true);
+  console.log('CHARTER ISLE v004 caravan employment smoke: PASS');
 } else if (process.argv.includes('--spatial-productivity-only')) {
   await checkSpatialProductivity(1440, 900, false);
   await checkSpatialProductivity(390, 844, true);

@@ -1,4 +1,4 @@
-import { islandCalendar } from './ui_summary.js?v=v004.45.0-caravan-slice';
+import { islandCalendar } from './ui_summary.js?v=v004.45.1-caravan-employment';
 
 export const FOOD_GOODS = Object.freeze([
   'fish', 'veg', 'wheat', 'pres', 'pick', 'meat',

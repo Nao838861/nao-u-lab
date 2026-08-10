@@ -212,6 +212,7 @@ export const JOBCLS = deepFreeze({
   smelter: "lumber",
   smith: "lumber",
   saltworks: "artisan",
+  carter: "artisan",
 });
 
 export const JOBS = deepFreeze(Object.keys(JOBCLS));
@@ -524,6 +525,7 @@ const CONSTRUCTION_MATERIALS = deepFreeze({
   cartwright: { log: 8, tools: 6, stone: 3 },
   charburner: { log: 6, tools: 4, stone: 3 },
   saltworks: { log: 6, tools: 4, stone: 4 },
+  carter: { log: 8, tools: 5, stone: 4, cloth: 1 },
 });
 
 export function constructionMaterialsFor(type) {
@@ -4720,6 +4722,81 @@ export function fillSettlementZones(economy, { day, physical = null }) {
   return settlements;
 }
 
+export const CARAVAN_EMPLOYMENT_LIMITS = deepFreeze({
+  recruitment: { min: 0, max: 12 },
+  wage: { min: 0, max: 20 },
+});
+
+function normalizedCaravanEmployment(building) {
+  const offer = building?.caravanEmployment ?? {};
+  return {
+    recruitment: Number.isSafeInteger(offer.recruitment) ? offer.recruitment : 1,
+    wage: Number.isFinite(offer.wage) ? offer.wage : 1,
+  };
+}
+
+export function setCaravanEmployment(
+  physical,
+  { buildingId, recruitment, wage },
+) {
+  const building = buildingById(physical, buildingId);
+  if (!building || building.type !== "carter") {
+    return { ok: false, reason: "caravan_inn_not_found" };
+  }
+  if (
+    !Number.isSafeInteger(recruitment)
+    || recruitment < CARAVAN_EMPLOYMENT_LIMITS.recruitment.min
+    || recruitment > CARAVAN_EMPLOYMENT_LIMITS.recruitment.max
+  ) return { ok: false, reason: "invalid_recruitment" };
+  if (
+    !Number.isFinite(wage)
+    || wage < CARAVAN_EMPLOYMENT_LIMITS.wage.min
+    || wage > CARAVAN_EMPLOYMENT_LIMITS.wage.max
+  ) return { ok: false, reason: "invalid_wage" };
+  building.caravanEmployment = { recruitment, wage };
+  return { ok: true, employment: structuredClone(building.caravanEmployment) };
+}
+
+export function caravanCrewCount(economy, building) {
+  if (!building || building.type !== "carter" || building.ownerHouseholdId === null) return 0;
+  const household = economy.households.find(
+    (candidate) => candidate.id === building.ownerHouseholdId,
+  );
+  if (!household) return 0;
+  return Math.min(normalizedCaravanEmployment(building).recruitment, household.members.length);
+}
+
+export function caravanExpectedAnnualIncome(building, household = null) {
+  if (!building || building.type !== "carter") return 0;
+  const offer = normalizedCaravanEmployment(building);
+  const availableWorkers = household?.members?.length ?? offer.recruitment;
+  return offer.wage * Math.min(offer.recruitment, availableWorkers) * 360;
+}
+
+export function payCaravanFixedWages(economy, physical, { day }) {
+  const payments = [];
+  for (const building of physical.buildings) {
+    if (building.type !== "carter") continue;
+    const household = economy.households.find(
+      (candidate) => candidate.id === building.ownerHouseholdId,
+    );
+    const crew = caravanCrewCount(economy, building);
+    const wage = normalizedCaravanEmployment(building).wage;
+    const amount = crew * wage;
+    if (!household || amount <= 1e-9) continue;
+    household.purse += amount;
+    household.income30 += amount;
+    postCompanyLedger(economy.company, {
+      day,
+      amount: -amount,
+      reason: `隊商宿${building.id}の固定給`,
+    });
+    economy.co.carterWages = (economy.co.carterWages ?? 0) + amount;
+    payments.push({ buildingId: building.id, householdId: household.id, crew, wage, amount });
+  }
+  return payments;
+}
+
 export function runCompanyDayStart(economy, { day, random, physical = null }) {
   if (typeof random !== "function") throw new TypeError("company day-start random must be a function");
   const result = {
@@ -4731,7 +4808,9 @@ export function runCompanyDayStart(economy, { day, random, physical = null }) {
     dispatched: [],
     settlements: [],
     buildingsCompleted: [],
+    fixedWages: [],
   };
+  if (physical) result.fixedWages = payCaravanFixedWages(economy, physical, { day });
   const orderRoll = !economy.order && !economy.orderOffer && day > 60 && day % 15 === 0
     ? random()
     : null;
@@ -5065,16 +5144,40 @@ export function jobSelectionWeights(economy, physical, { exclude, household = nu
   const jobPool = economy.jobSelectionPool ?? JOBS;
   for (const job of jobPool) {
     if (job === exclude) continue;
-    if (physical && vacantJobBuildings(economy, physical, job, { household }).length === 0) {
+    const vacancies = physical
+      ? vacantJobBuildings(economy, physical, job, { household })
+      : [];
+    if (physical && vacancies.length === 0) {
       continue;
     }
     const values = incomes[job];
-    const weight = values?.length
-      ? Math.max(0, values.reduce((total, value) => total + value, 0) / values.length)
-      : median;
+    const weight = job === "carter" && vacancies.length > 0
+      ? Math.max(...vacancies.map((building) => (
+        caravanExpectedAnnualIncome(building, household)
+      )))
+      : values?.length
+        ? Math.max(0, values.reduce((total, value) => total + value, 0) / values.length)
+        : median;
     if (weight > 0) weights.push([job, weight]);
   }
   return weights;
+}
+
+function householdAnnualIncome(household) {
+  return household.incMonths.reduce((total, income) => total + income, 0) + household.incM;
+}
+
+function stayIncomeWeight(economy, household) {
+  const byJob = {};
+  for (const candidate of economy.households) (byJob[candidate.job] ??= []).push(candidate);
+  const jobAverages = Object.values(byJob).map((rows) => (
+    rows.reduce((total, candidate) => total + householdAnnualIncome(candidate), 0)
+      / rows.length
+  )).filter((value) => value > 0).sort((left, right) => left - right);
+  const median = jobAverages.length > 0
+    ? jobAverages[Math.floor(jobAverages.length / 2)]
+    : 1;
+  return Math.max(1, householdAnnualIncome(household), median);
 }
 
 function moveHouseholdBuildingInventory(household, fromBuilding, toBuilding, nextJob) {
@@ -5144,13 +5247,20 @@ export function pickHouseholdJob(economy, physical, {
 }) {
   const candidates = jobSelectionWeights(economy, physical, { exclude, household });
   if (candidates.length === 0) return null;
-  const total = candidates.reduce((sum, [, weight]) => sum + weight * weight, 0);
+  // 従来職どうしの転職確率は変えない。固定給の隊商宿が候補にある時だけ、
+  // 現職年収も同じ二乗抽選へ入れ、安すぎる募集を見送れるようにする。
+  const comparesCaravanOffer = candidates.some(([job]) => job === "carter");
+  const stayWeight = household && comparesCaravanOffer
+    ? stayIncomeWeight(economy, household)
+    : 0;
+  const total = candidates.reduce((sum, [, weight]) => sum + weight * weight, 0)
+    + stayWeight * stayWeight;
   let choice = random() * total;
   for (const [job, weight] of candidates) {
     choice -= weight * weight;
     if (choice <= 0) return job;
   }
-  return candidates[candidates.length - 1][0];
+  return comparesCaravanOffer ? exclude : candidates[candidates.length - 1][0];
 }
 
 export function runPopulationDynamicsPhase(economy, physical, { day, random }) {
@@ -5191,12 +5301,19 @@ export function runPopulationDynamicsPhase(economy, physical, { day, random }) {
         random,
       }) : null;
       if (nextJob && nextJob !== previousJob) {
-        const targetBuilding = vacantJobBuildings(
+        const targetBuildings = vacantJobBuildings(
           economy,
           physical,
           nextJob,
           { household },
-        )[0];
+        );
+        if (nextJob === "carter") {
+          targetBuildings.sort((left, right) => (
+            caravanExpectedAnnualIncome(right, household)
+              - caravanExpectedAnnualIncome(left, household)
+          ));
+        }
+        const targetBuilding = targetBuildings[0];
         if (!targetBuilding) {
           recordEconomyEvent(
             economy,
@@ -5228,6 +5345,12 @@ export function runPopulationDynamicsPhase(economy, physical, { day, random }) {
           from: previousJob,
           to: nextJob,
         });
+      } else if (nextJob === previousJob) {
+        recordEconomyEvent(
+          economy,
+          day,
+          `転職見送り: ${previousJob}#${household.id}——提示された収入では今の仕事を離れない`,
+        );
       } else {
         recordEconomyEvent(
           economy,
@@ -5252,6 +5375,7 @@ const REPAIR_MATERIALS_BY_JOB = deepFreeze({
   cartwright: ["tools", "stone", "iron"],
   charburner: ["tools", "stone"],
   saltworks: ["tools", "stone"],
+  carter: ["log", "tools", "stone", "cloth", "iron"],
   quarryman: ["tools", "stone", "iron"],
   miner: ["tools", "stone", "iron"],
   collier: ["tools", "stone", "iron"],
@@ -5664,6 +5788,7 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
       impMargin: 0,
       fee: 0,
       pub: 0,
+      carterWages: 0,
       procBuy: 0,
       stockSell: 0,
       ordSell: 0,

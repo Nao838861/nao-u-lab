@@ -19,6 +19,7 @@ import {
   assertMoneyConservation,
   buyAtMarket,
   buyTargets,
+  caravanCrewCount,
   chopWood,
   calendarMonth,
   companyCreditLimit,
@@ -82,6 +83,7 @@ import {
   sellAtMarket,
   sellOffers,
   setCompanyStockTarget,
+  setCaravanEmployment,
   settleCompanyLogistics,
   settlePortTransfers,
   shouldPauseProduction,
@@ -167,6 +169,7 @@ import {
   IRON_DEMAND_HOUSEHOLDS,
   IRON_DEMAND_LEVEL,
   buildBaseCity,
+  buildCaravanSliceWorld,
   buildBadCity,
   canPlaceSettlement,
   createAuditWorld,
@@ -4682,6 +4685,97 @@ test("段44: 空き職建物がなければ転職せず理由をイベントに�
   assert.equal(household.job, "logger");
   assert.equal(household.buildingId, home.id);
   assert.match(economy.events.at(-1)[1], /空いている他職の建物がありません/);
+});
+
+test("隊商S3: 隊商宿は運休中も募集人数分の固定給を会社から世帯へ移す", () => {
+  const physical = createEconomicTestPhysical();
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "carter", x: 5, y: 3 });
+  const inn = addEconomicTestBuilding(physical, "carter", 2, 2, 5, 3, household.id);
+  household.buildingId = inn.id;
+  assert.deepEqual(setCaravanEmployment(physical, {
+    buildingId: inn.id,
+    recruitment: 2,
+    wage: 5,
+  }), { ok: true, employment: { recruitment: 2, wage: 5 } });
+  const companyBefore = economy.company.money;
+  const purseBefore = household.purse;
+
+  const result = runCompanyDayStart(economy, { day: 1, random: () => 1, physical });
+
+  assert.equal(caravanCrewCount(economy, inn), 2);
+  assert.deepEqual(result.fixedWages, [{
+    buildingId: inn.id,
+    householdId: household.id,
+    crew: 2,
+    wage: 5,
+    amount: 10,
+  }]);
+  assert.equal(economy.company.money, companyBefore - 10);
+  assert.equal(household.purse, purseBefore + 10);
+  assert.equal(household.income30, 10);
+  assert.equal(economy.co.carterWages, 10);
+  assert.match(economy.company.ledger.at(-1).reason, /固定給/);
+  assert.equal(assertMoneyConservation(economy), true);
+});
+
+test("隊商S3: 同じ困窮世帯は高給なら隊商宿へ移り、低給なら現職に留まる", () => {
+  const createFixture = (wage) => {
+    const physical = createEconomicTestPhysical();
+    const economy = createEconomicState();
+    const household = createHousehold(economy, { job: "logger", x: 5, y: 3 });
+    const home = addEconomicTestBuilding(physical, "logger", 2, 2, 5, 3, household.id);
+    const inn = addEconomicTestBuilding(physical, "carter", 10, 2, 9, 3);
+    household.buildingId = home.id;
+    household.incMonths = Array(12).fill(100);
+    household.hungerHist = Array(P.DISTRESS).fill(1);
+    household.jobCycleDone = true;
+    economy.jobSelectionPool = ["carter"];
+    setCaravanEmployment(physical, { buildingId: inn.id, recruitment: 2, wage });
+    const rolls = [0, 0.6];
+    const changes = runPopulationDynamicsPhase(economy, physical, {
+      day: 360,
+      random: () => rolls.shift() ?? 0.6,
+    });
+    return { economy, household, home, inn, changes };
+  };
+
+  const low = createFixture(0.1);
+  assert.equal(low.household.job, "logger");
+  assert.equal(low.inn.ownerHouseholdId, null);
+  assert.deepEqual(low.changes, []);
+  assert.match(low.economy.events.at(-1)[1], /提示された収入/);
+
+  const high = createFixture(10);
+  assert.equal(high.household.job, "carter");
+  assert.equal(high.home.ownerHouseholdId, null);
+  assert.equal(high.inn.ownerHouseholdId, high.household.id);
+  assert.deepEqual(high.changes.at(-1), {
+    kind: "job_switch",
+    householdId: high.household.id,
+    from: "logger",
+    to: "carter",
+  });
+});
+
+test("隊商S3: 二市場世界は種付き隊商宿1軒を持ち雇用操作をjournal再生できる", () => {
+  const create = () => buildCaravanSliceWorld(11);
+  const world = create();
+  const api = createEngineApi(world);
+  const inn = world.state.physical.buildings.find((building) => building.type === "carter");
+  assert.ok(inn);
+  assert.notEqual(inn.ownerHouseholdId, null);
+  assert.deepEqual(inn.caravanEmployment, { recruitment: 2, wage: 5 });
+
+  assert.equal(api.applyOperation({
+    type: "set_caravan_employment",
+    buildingId: inn.id,
+    recruitment: 3,
+    wage: 6.5,
+  }).ok, true);
+  const expected = api.snapshot();
+  const replay = replayInputJournal(create, api.inputJournal(), { untilTick: 0 });
+  assert.deepEqual(replay.api.snapshot(), expected);
 });
 
 test("段44: 離散した世帯の建物は同じbuildingIdの空き家として再入居できる", () => {

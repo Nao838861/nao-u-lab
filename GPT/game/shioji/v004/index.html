@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.45.0-caravan-slice">
+  <link rel="stylesheet" href="./style.css?v=v004.45.1-caravan-employment">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -102,6 +102,7 @@
       <button type="button" data-close-sheet="building-sheet" aria-label="建物情報を閉じる">×</button>
     </header>
     <div id="building-summary" class="building-summary"></div>
+    <section id="building-caravan-employment" class="building-detail" hidden></section>
     <section id="building-household" class="building-detail"></section>
     <section id="building-shelves" class="building-detail"></section>
     <section id="building-company-stock" class="building-detail company-stock-detail" hidden></section>
@@ -343,7 +344,7 @@
       });
     })();
   </script>
-  <script id="game-module" type="module" src="./src/main.js?v=v004.45.0-caravan-slice"
+  <script id="game-module" type="module" src="./src/main.js?v=v004.45.1-caravan-employment"
     onerror="window.__SHIOJI_BOOT__?.failed()"></script>
 </body>
 </html>

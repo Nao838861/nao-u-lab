@@ -1,48 +1,48 @@
-import { IsometricCamera } from './camera.js?v=v004.45.0-caravan-slice';
-import { SimulationClock } from './clock.js?v=v004.45.0-caravan-slice';
-import { createBoundaryEvents } from './boundary_events.js?v=v004.45.0-caravan-slice';
+import { IsometricCamera } from './camera.js?v=v004.45.1-caravan-employment';
+import { SimulationClock } from './clock.js?v=v004.45.1-caravan-employment';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.45.1-caravan-employment';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.45.0-caravan-slice';
+} from './config.js?v=v004.45.1-caravan-employment';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.45.0-caravan-slice';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.45.0-caravan-slice';
-import { developmentMapView } from './development_map.js?v=v004.45.0-caravan-slice';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.45.0-caravan-slice';
-import { formatElenaSpeech } from './elena_text.js?v=v004.45.0-caravan-slice';
+} from './display_batch.js?v=v004.45.1-caravan-employment';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.45.1-caravan-employment';
+import { developmentMapView } from './development_map.js?v=v004.45.1-caravan-employment';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.45.1-caravan-employment';
+import { formatElenaSpeech } from './elena_text.js?v=v004.45.1-caravan-employment';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.45.0-caravan-slice';
+} from './food_readability.js?v=v004.45.1-caravan-employment';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.45.0-caravan-slice';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.45.0-caravan-slice';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.45.0-caravan-slice';
-import { goodsDetail } from './goods_detail.js?v=v004.45.0-caravan-slice';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.45.0-caravan-slice';
-import { WorldPresentation } from './presentation.js?v=v004.45.0-caravan-slice';
-import { Renderer } from './renderer.js?v=v004.45.0-caravan-slice';
+} from './keyboard.js?v=v004.45.1-caravan-employment';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.45.1-caravan-employment';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.45.1-caravan-employment';
+import { goodsDetail } from './goods_detail.js?v=v004.45.1-caravan-employment';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.45.1-caravan-employment';
+import { WorldPresentation } from './presentation.js?v=v004.45.1-caravan-employment';
+import { Renderer } from './renderer.js?v=v004.45.1-caravan-employment';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.45.0-caravan-slice';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.45.0-caravan-slice';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.45.0-caravan-slice';
+} from './save_game.js?v=v004.45.1-caravan-employment';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.45.1-caravan-employment';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.45.1-caravan-employment';
 import {
   GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRow, supplyDemandRows,
-} from './supply_demand.js?v=v004.45.0-caravan-slice';
-import { orderQuote } from './tutorial_content.js?v=v004.45.0-caravan-slice';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.45.0-caravan-slice';
+} from './supply_demand.js?v=v004.45.1-caravan-employment';
+import { orderQuote } from './tutorial_content.js?v=v004.45.1-caravan-employment';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.45.1-caravan-employment';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.45.0-caravan-slice';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.45.0-caravan-slice';
+} from './ui_guidance.js?v=v004.45.1-caravan-employment';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.45.1-caravan-employment';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -1525,6 +1525,23 @@ function renderBuildingSheet() {
   uiMetrics.componentRenders += 1;
   const jobLabel = JOB_LABELS[building.type] ?? building.type;
   const family = household?.familyName ? `${household.familyName}家` : household ? `世帯${household.id}` : null;
+  const employmentPanel = $('#building-caravan-employment');
+  employmentPanel.hidden = building.type !== 'carter';
+  if (building.type === 'carter') {
+    const employment = building.caravanEmployment ?? { recruitment: 1, wage: 1 };
+    const wageDenari = employment.wage * 10;
+    const crew = building.caravanCrew ?? 0;
+    employmentPanel.innerHTML = `
+      <h3>隊商の雇用</h3>
+      <p>この宿に暮らす家族から御者を募ります。便が止まっている日も、充足人数分の固定給を会社が支払います。</p>
+      <div class="caravan-employment-dials">
+        <label><span><b>募集人数</b><output data-caravan-recruitment-output>${employment.recruitment}人</output></span>
+          <input type="range" min="0" max="12" step="1" value="${employment.recruitment}" data-caravan-recruitment aria-label="隊商の募集人数"></label>
+        <label><span><b>1人1日の給料</b><output data-caravan-wage-output>${formatQuantity(wageDenari)}デナリ</output></span>
+          <input type="range" min="0" max="200" step="5" value="${wageDenari}" data-caravan-wage aria-label="隊商の1人1日の給料"></label>
+      </div>
+      <small class="caravan-employment-status" data-caravan-employment-status>募集${employment.recruitment}人・充足${crew}人・固定費${formatQuantity(crew * wageDenari)}デナリ/日</small>`;
+  }
   $('#building-sheet-kicker').textContent = household
     ? `${family}・${household.members}人`
     : building.roles?.includes('port') ? '港湾物流'
@@ -1609,7 +1626,8 @@ function renderBuildingSheet() {
     const productionTone = !idealActive || productivityPercent === null ? 'good'
       : productivityPercent >= 80 ? 'good' : productivityPercent >= 50 ? 'warning' : 'danger';
     const cause = !idealActive
-      ? (building.type === 'wheat' ? '麦は9月の収穫でまとめて実ります。'
+      ? (building.type === 'carter' ? '隊商の運行有無にかかわらず、会社から固定給を受け取ります。'
+        : building.type === 'wheat' ? '麦は9月の収穫でまとめて実ります。'
         : ['veg', 'rapeseed'].includes(building.type) ? '今の季節にする仕事はありません。'
           : '日々の生産で数える仕事ではありません。')
       : productivity.resourceWork
@@ -1651,7 +1669,7 @@ function renderBuildingSheet() {
           <span><small>順調な日の生産</small><b>${productionIdeal}</b></span>
           <span><small>達成率</small><b>${productionRate}</b></span>
         </div>
-        <p class="productivity-tool"><b>作業道具</b>　${escapeHtml(workToolLabel)}</p>
+        ${building.type === 'carter' ? '' : `<p class="productivity-tool"><b>作業道具</b>　${escapeHtml(workToolLabel)}</p>`}
         ${building.type === 'fisher' ? `<p class="productivity-tool"><b>漁の設備</b>　${escapeHtml(fishingRigLabel)}</p>` : ''}
         <p class="productivity-cause">${cause}</p>
         <small class="productivity-level-note">達成率は「順調な日」——移動・品切れ・空腹で手が止まらない日の生産量——を100%とした30日平均です。配置はLv条件へ直接加点せず、増えた生産・収入・供給が暮らしと次のLvを支えます。</small>
@@ -2185,6 +2203,29 @@ $('#focus-selected-building').addEventListener('click', () => {
 $('#open-island-from-building').addEventListener('click', () => openSheet('supply-sheet'));
 $('#building-company-stock').addEventListener('click', event => {
   if (event.target.closest('[data-open-company-stock]')) openSheet('company-sheet');
+});
+$('#building-caravan-employment').addEventListener('input', () => {
+  const recruitment = Number($('[data-caravan-recruitment]')?.value ?? 0);
+  const wageDenari = Number($('[data-caravan-wage]')?.value ?? 0);
+  const building = model.buildings.find(row => row.id === selectedBuildingId);
+  const crew = building?.ownerHouseholdId === null
+    ? 0
+    : Math.min(recruitment, model.households.find(
+      household => household.id === building?.ownerHouseholdId,
+    )?.members ?? 0);
+  $('[data-caravan-recruitment-output]').textContent = `${recruitment}人`;
+  $('[data-caravan-wage-output]').textContent = `${formatQuantity(wageDenari)}デナリ`;
+  $('[data-caravan-employment-status]').textContent = `募集${recruitment}人・充足${crew}人・固定費${formatQuantity(crew * wageDenari)}デナリ/日`;
+});
+$('#building-caravan-employment').addEventListener('change', () => {
+  const recruitment = Number($('[data-caravan-recruitment]')?.value ?? 0);
+  const wage = Number($('[data-caravan-wage]')?.value ?? 0) / 10;
+  applyEngineOperation({
+    type: 'set_caravan_employment',
+    buildingId: selectedBuildingId,
+    recruitment,
+    wage,
+  }, `募集${recruitment}人・給料${formatQuantity(wage * 10)}デナリ/日に変更しました`, '隊商の雇用条件を変更できません');
 });
 $('#shortage-alerts').addEventListener('click', event => {
   const button = event.target.closest('[data-shortage-goods]');

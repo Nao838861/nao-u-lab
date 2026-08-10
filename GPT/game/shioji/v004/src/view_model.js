@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.45.0-caravan-slice';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.45.1-caravan-employment';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.45.0-caravan-slice';
+} from './food_readability.js?v=v004.45.1-caravan-employment';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.45.0-caravan-slice';
-import { analyzeRoadConnections } from './placement.js?v=v004.45.0-caravan-slice';
+} from './engine_bridge.js?v=v004.45.1-caravan-employment';
+import { analyzeRoadConnections } from './placement.js?v=v004.45.1-caravan-employment';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.45.0-caravan-slice';
+} from './render_scene.js?v=v004.45.1-caravan-employment';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.45.0-caravan-slice';
+} from './visuals.js?v=v004.45.1-caravan-employment';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',
@@ -1237,6 +1237,13 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
       } : null,
       constructionRequired: { ...(building.constructionRequired ?? {}) },
       constructionConsumed: Boolean(building.constructionConsumed),
+      caravanEmployment: building.type === 'carter' ? {
+        recruitment: building.caravanEmployment?.recruitment ?? 1,
+        wage: building.caravanEmployment?.wage ?? 1,
+      } : null,
+      caravanCrew: building.type === 'carter' && owner
+        ? Math.min(building.caravanEmployment?.recruitment ?? 1, owner.members.length)
+        : 0,
       fixed: Boolean(building.fixed),
       ownerHouseholdId: building.ownerHouseholdId,
       occupied: building.ownerHouseholdId !== null,

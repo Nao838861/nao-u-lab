@@ -1,4 +1,4 @@
-export const VERSION = 'v004.45.0-caravan-slice';
+export const VERSION = 'v004.45.1-caravan-employment';
 
 // 経済エンジンの貨幣値は表示単位の1/10。UIへ出す時だけデナリへ直す。
 export const DENARI_PER_MONEY_UNIT = 10;
@@ -30,6 +30,7 @@ export const JOB_LABELS = Object.freeze({
   market: '市場', warehouse: '倉庫', port: '港',
   fisher: '漁師', fisher2: '魚粉屋', logger: '木こり', woodshop: '木工房',
   cartwright: '荷車工房', charburner: '炭焼き小屋', saltworks: '塩田', quarryman: '採石場',
+  carter: '隊商宿',
   miner: '鉱山', collier: '炭鉱', smelter: '製鉄所', smith: '鍛冶屋',
   wheat: '麦畑', veg: '野菜畑', shepherd: '牧場', rapeseed: '綿花畑',
 });
@@ -38,6 +39,7 @@ export const JOB_ICONS = Object.freeze({
   market: '市', warehouse: '倉', port: '港',
   fisher: '魚', fisher2: '粉', logger: '木', woodshop: '工',
   cartwright: '車', charburner: '炭', saltworks: '塩', quarryman: '石',
+  carter: '宿',
   miner: '鉱', collier: '煤', smelter: '炉', smith: '鍛',
   wheat: '麦', veg: '菜', shepherd: '羊', rapeseed: '綿',
 });
@@ -60,6 +62,7 @@ export const BUILDING_ART = Object.freeze({
   logger: art('workshop', '#6f563d', '#8b724f', '#b87539'),
   woodshop: art('workshop', '#754e31', '#a17b4f', '#e0a653'),
   cartwright: art('workshop', '#65462f', '#97734e', '#d8a34f'),
+  carter: art('market', '#8b4f39', '#9a7955', '#d9b65f'),
   charburner: art('kiln', '#454b45', '#705a43', '#373d39'),
   saltworks: art('works', '#d1c6a3', '#8b7b5f', '#dfe9df'),
   quarryman: art('pit', '#75766d', '#746653', '#aaa79b'),
@@ -79,6 +82,7 @@ export const BUILDING_SIZES = Object.freeze({
   logger: Object.freeze({ width: 3, height: 3 }),
   woodshop: Object.freeze({ width: 3, height: 3 }),
   cartwright: Object.freeze({ width: 3, height: 3 }),
+  carter: Object.freeze({ width: 3, height: 3 }),
   charburner: Object.freeze({ width: 3, height: 3 }),
   saltworks: Object.freeze({ width: 3, height: 3 }),
   quarryman: Object.freeze({ width: 3, height: 3 }),
@@ -96,14 +100,14 @@ export const BUILDING_SIZES = Object.freeze({
 });
 
 export const PLACEMENT_JOBS = Object.freeze([
-  'market', 'warehouse',
+  'market', 'warehouse', 'carter',
   'fisher', 'fisher2', 'logger', 'woodshop', 'cartwright', 'charburner', 'saltworks', 'quarryman',
   'miner', 'collier', 'smelter', 'smith', 'wheat', 'veg', 'shepherd', 'rapeseed',
 ]);
 
 export const BUILD_CATEGORIES = Object.freeze([
   Object.freeze({ id: 'infrastructure', label: '整備', jobs: Object.freeze([]) }),
-  Object.freeze({ id: 'logistics', label: '流通', jobs: Object.freeze(['market', 'warehouse']) }),
+  Object.freeze({ id: 'logistics', label: '流通', jobs: Object.freeze(['market', 'warehouse', 'carter']) }),
   Object.freeze({ id: 'food', label: '食料', jobs: Object.freeze(['fisher', 'wheat', 'veg', 'shepherd']) }),
   Object.freeze({ id: 'gathering', label: '採取', jobs: Object.freeze(['logger', 'quarryman', 'miner', 'collier']) }),
   Object.freeze({

@@ -5,6 +5,7 @@ import {
   purchaseCompanyWoodCart,
   requestCompanyStockRelease,
   requestMainlandAid,
+  setCaravanEmployment,
   setCompanyStockTarget,
 } from "./econ.js";
 import {
@@ -546,6 +547,12 @@ export function createEngineApi(
         return { ok: removeRoadTile(physical, op.x, op.y) };
       case "set_stock_target":
         return { ok: true, qty: setCompanyStockTarget(economy, op.goods, op.qty) };
+      case "set_caravan_employment":
+        return setCaravanEmployment(physical, {
+          buildingId: op.buildingId,
+          recruitment: op.recruitment,
+          wage: op.wage,
+        });
       case "release_stock": {
         const job = requestCompanyStockRelease(economy, physical, op.goods, {
           day: world.state.day,

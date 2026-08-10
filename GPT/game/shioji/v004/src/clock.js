@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.45.0-caravan-slice';
+import { SPEEDS } from './config.js?v=v004.45.1-caravan-employment';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

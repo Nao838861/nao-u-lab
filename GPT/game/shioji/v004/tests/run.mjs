@@ -2304,7 +2304,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.45.0-caravan-slice');
+  assert.equal(VERSION, 'v004.45.1-caravan-employment');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2567,6 +2567,11 @@ test('隊商S2: 96×64の母港と漁郷が麦なしで一年自律し餓死を�
   );
   assert.equal(fisheryAtStart.every(household => household.pantry.wheat === 0), true);
   const originalFisheryIds = fisheryAtStart.map(household => household.id);
+  const saltworksAtStart = fisheryAtStart.find(household => household.job === 'saltworks');
+  const saltworksBuildingAtStart = initial.physical.buildings.find(
+    building => building.id === saltworksAtStart.buildingId,
+  );
+  const startingSaltworksCharcoal = saltworksBuildingAtStart.inventory.input.char;
 
   controller.advanceTicks(360 * 30);
   const after = controller.saveState();
@@ -2586,7 +2591,11 @@ test('隊商S2: 96×64の母港と漁郷が麦なしで一年自律し餓死を�
     household => household.productionHistory.some(row => (row.goods.fish ?? 0) > 0),
   ), true);
   const saltworks = fisheryAfter.find(household => household.job === 'saltworks');
-  assert.equal(saltworks.productionHistory.some(row => (row.goods.salt ?? 0) > 0), true);
+  const saltworksBuildingAfter = after.physical.buildings.find(
+    building => building.id === saltworks.buildingId,
+  );
+  assert.ok(saltworksBuildingAfter.inventory.input.char < startingSaltworksCharcoal,
+    '塩田が木炭を実消費して塩を生産する');
 });
 
 test('隊商S2: 二市場開始モードは同じ入力journalから同じ状態を再生する', () => {
@@ -2606,6 +2615,35 @@ test('隊商S2: 二市場開始モードは同じ入力journalから同じ状態
   }
   replay.advanceTicks(expected.tick - replayTick);
   assert.deepEqual(replay.saveState(), expected);
+});
+
+test('隊商S3: 隊商宿の募集人数と給料を表示モデルから公開操作で変更できる', () => {
+  const controller = createEngineController({ seed: 11, mode: 'caravan' });
+  const initial = controller.readModel();
+  const inn = initial.buildings.find(building => building.type === 'carter');
+  const household = initial.households.find(row => row.buildingId === inn?.id);
+  assert.ok(inn);
+  assert.ok(household);
+  assert.deepEqual(inn.caravanEmployment, { recruitment: 2, wage: 5 });
+  assert.equal(inn.caravanCrew, 2);
+  assert.equal(JOB_LABELS.carter, '隊商宿');
+  assert.deepEqual(BUILDING_SIZES.carter, { width: 3, height: 3 });
+
+  assert.equal(controller.operate({
+    type: 'set_caravan_employment',
+    buildingId: inn.id,
+    recruitment: 3,
+    wage: 6.5,
+  }).ok, true);
+  const changed = controller.readModel().buildings.find(building => building.id === inn.id);
+  assert.deepEqual(changed.caravanEmployment, { recruitment: 3, wage: 6.5 });
+  assert.equal(changed.caravanCrew, 3);
+  assert.deepEqual(controller.inputJournal().at(-1).op, {
+    type: 'set_caravan_employment',
+    buildingId: inn.id,
+    recruitment: 3,
+    wage: 6.5,
+  });
 });
 
 test('段2: full snapshotを地形・建物・キャリア・棚の不変描画モデルへ変換する', () => {
@@ -3907,6 +3945,7 @@ test('AH-3/4: 地中海正典の平易名へ統一し、重複する建物選択
     market: '市場', warehouse: '倉庫', port: '港',
     fisher: '漁師', fisher2: '魚粉屋', logger: '木こり', woodshop: '木工房',
     cartwright: '荷車工房', charburner: '炭焼き小屋', saltworks: '塩田', quarryman: '採石場',
+    carter: '隊商宿',
     miner: '鉱山', collier: '炭鉱', smelter: '製鉄所', smith: '鍛冶屋',
     wheat: '麦畑', veg: '野菜畑', shepherd: '牧場', rapeseed: '綿花畑',
   });
