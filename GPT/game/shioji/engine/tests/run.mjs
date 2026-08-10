@@ -39,6 +39,8 @@ import {
   householdFoodDays,
   householdHaul,
   householdTransportPlan,
+  householdWorkToolMultiplier,
+  householdWorkToolNeed,
   householdMult,
   householdProductionSummary,
   initializeNaturalResources,
@@ -1170,6 +1172,107 @@ test("段14: 漁は冬1/4・野菜畑は月3〜10のみ・牧畜は肉と布を�
   assert.equal(shepherd.household.pantry.cloth, P.Y_CLOTH);
 });
 
+test("需要網3: 全職は素手でも働け、木の作業道具を1荷から組んで実働日だけ摩耗する", () => {
+  const economy = createEconomicState();
+  const quarryman = createHousehold(economy, { job: "quarryman", x: 0, y: 0 });
+  quarryman.pantry.tools = 1;
+  const result = producePrimaryTick(economy, null, quarryman, {
+    day: 1,
+    fraction: 1,
+    endOfDay: true,
+  });
+
+  assert.equal(result.stone, P.Y_STONE);
+  assert.equal(quarryman.pantry.tools, 0);
+  assert.deepEqual(quarryman.workTool, {
+    kind: "wood",
+    durability: P.WORK_TOOL_WOOD_DAYS - 1,
+    maxDurability: P.WORK_TOOL_WOOD_DAYS,
+    acquiredDay: 1,
+  });
+  assert.deepEqual(quarryman.workToolsAcquired, { wood: 1, iron: 0 });
+  assert.equal(economy.materialFlows.tools.cons, P.WORK_TOOL_WOOD_COST);
+  assert.deepEqual(economy.dailyDemandFlows.tools.sources.work_tools, {
+    demand: P.WORK_TOOL_WOOD_COST,
+    consumed: P.WORK_TOOL_WOOD_COST,
+  });
+
+  quarryman.pantry.stone = P.Y_STONE * 20;
+  const durability = quarryman.workTool.durability;
+  assert.deepEqual(producePrimaryTick(economy, null, quarryman, {
+    day: 2,
+    fraction: 1,
+    endOfDay: true,
+  }), {});
+  assert.equal(quarryman.workTool.durability, durability, "在庫過多で休んだ日は道具を摩耗しない");
+});
+
+test("需要網3: 道具が尽きても停止せず素手75%へ戻り、不足需要を残す", () => {
+  const economy = createEconomicState();
+  const quarryman = createHousehold(economy, { job: "quarryman", x: 0, y: 0 });
+  quarryman.pantry.tools = 0;
+  quarryman.workTool = null;
+  assert.equal(buyTargets(economy, quarryman, { day: 1 }).tools[0], 1);
+
+  const result = producePrimaryTick(economy, null, quarryman, {
+    day: 1,
+    fraction: 1,
+    endOfDay: true,
+  });
+  assert.equal(result.stone, P.Y_STONE * P.WORK_TOOL_BARE_MULT);
+  assert.equal(householdWorkToolMultiplier(quarryman), P.WORK_TOOL_BARE_MULT);
+  assert.deepEqual(householdWorkToolNeed(quarryman), { kind: "wood", goods: "tools", qty: 1 });
+  assert.deepEqual(economy.dailyDemandFlows.tools.sources.work_tools, {
+    demand: 1,
+    consumed: 0,
+  });
+});
+
+test("需要網3: Lv2世帯は鉄の作業道具を選び、木より長寿命で生産120%になる", () => {
+  const economy = createEconomicState();
+  const quarryman = createHousehold(economy, { job: "quarryman", x: 0, y: 0 });
+  quarryman.lv = 2;
+  quarryman.pantry.tools = 0;
+  quarryman.pantry.iron = 0;
+  assert.equal(buyTargets(economy, quarryman, { day: 1 }).iron[0], 1);
+  quarryman.pantry.iron = 1;
+
+  const result = producePrimaryTick(economy, null, quarryman, {
+    day: 1,
+    fraction: 1,
+    endOfDay: true,
+  });
+  assert.equal(
+    result.stone,
+    P.Y_STONE * householdMult(quarryman) * P.WORK_TOOL_IRON_MULT,
+  );
+  assert.equal(quarryman.workTool.kind, "iron");
+  assert.equal(quarryman.workTool.durability, P.WORK_TOOL_IRON_DAYS - 1);
+  assert.equal(quarryman.pantry.iron, 0);
+  assert.equal(economy.materialFlows.iron.cons, 1);
+});
+
+test("需要網3: 摩耗時は手元の木製品で交換し、在庫がなければ素手へ戻る", () => {
+  const stockedEconomy = createEconomicState();
+  const stocked = createHousehold(stockedEconomy, { job: "quarryman", x: 0, y: 0 });
+  stocked.pantry.tools = 1;
+  stocked.workTool = { kind: "wood", durability: 0.5, maxDurability: 30, acquiredDay: 1 };
+  producePrimaryTick(stockedEconomy, null, stocked, { day: 2, fraction: 1, endOfDay: true });
+  assert.equal(stocked.workToolsBroken, 1);
+  assert.equal(stocked.workTool.kind, "wood");
+  assert.equal(stocked.workTool.durability, P.WORK_TOOL_WOOD_DAYS);
+  assert.equal(stocked.pantry.tools, 0);
+  assert.equal(stockedEconomy.events.some(([, message]) => message.includes("素手で作業")), false);
+
+  const emptyEconomy = createEconomicState();
+  const empty = createHousehold(emptyEconomy, { job: "quarryman", x: 0, y: 0 });
+  empty.pantry.tools = 0;
+  empty.workTool = { kind: "wood", durability: 0.5, maxDurability: 30, acquiredDay: 1 };
+  producePrimaryTick(emptyEconomy, null, empty, { day: 2, fraction: 1, endOfDay: true });
+  assert.equal(empty.workTool, null);
+  assert.equal(emptyEconomy.events.some(([, message]) => message.includes("素手で作業")), true);
+});
+
 test("暦オフセット: 経過1日目を春3月として季節生産へ反映する", () => {
   const physical = createPhysicalState({
     width: 48,
@@ -1393,6 +1496,9 @@ test("段15: 麦はd255に年1回だけwheatWorkと施肥率から収穫する",
   const physical = createPhysicalState();
   const economy = createEconomicState();
   const farmer = createHousehold(economy, { job: "wheat", x: 4, y: 4 });
+  farmer.workTool = {
+    kind: "wood", durability: 1_000, maxDurability: 1_000, acquiredDay: 1,
+  };
   farmer.pantry.meal = P.FERT_NEED * 180;
   const wheatBefore = farmer.pantry.wheat;
 
@@ -1584,6 +1690,9 @@ test("段17: buyTargets天井表・LADDER・固定買い順を正本どおり保
   const farmer = createHousehold(economy, { job: "wheat", x: 0, y: 0 });
   farmer.lv = 4;
   assert.equal(buyTargets(economy, farmer, { day: 1 }).iron[1], 5);
+  farmer.workTool = {
+    kind: "iron", durability: 90, maxDurability: 90, acquiredDay: 1,
+  };
 
   const compareWithSource = (household, day) => {
     const sourceWorld = new FlowIslandWorld(11);
@@ -1775,6 +1884,9 @@ test("段19: 木工・炭焼き小屋・製塩・綿花・採石・魚粉を正�
   const make = (job) => {
     const economy = createEconomicState();
     const household = createHousehold(economy, { job, x: 0, y: 0 });
+    household.workTool = {
+      kind: "wood", durability: 100, maxDurability: 100, acquiredDay: 1,
+    };
     return { economy, household };
   };
 
@@ -2744,6 +2856,9 @@ test("段28: 工房はpantryでなく自建物のinput棚だけから原料を�
   const physical = createPhysicalState({ width: 7, height: 7, terrain });
   const economy = createEconomicState();
   const woodshop = createHousehold(economy, { job: "woodshop", x: 3, y: 3 });
+  woodshop.workTool = {
+    kind: "wood", durability: 100, maxDurability: 100, acquiredDay: 1,
+  };
   ensureHouseholdInputSites(economy, physical);
   const building = physical.buildings.find((candidate) => candidate.id === woodshop.buildingId);
   assert.deepEqual({ w: building.w, h: building.h, point: building.point }, {

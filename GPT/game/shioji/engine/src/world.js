@@ -18,6 +18,7 @@ import {
   householdFoodDays,
   householdTransportPlan,
   householdMaterialAmount,
+  householdWorkToolNeed,
   loadMarketSellCargo,
   marketTripDuration,
   marketPathLength,
@@ -259,6 +260,11 @@ function householdTripNeeds(economy, physical, household) {
     ...Object.keys(buildingNeeds.construction),
     ...Object.keys(buildingNeeds.repair),
   ]);
+  const toolNeed = householdWorkToolNeed(household);
+  if (
+    toolNeed
+    && householdMaterialAmount(physical, household, toolNeed.goods) < toolNeed.qty - 1e-9
+  ) capitalGoods.add(toolNeed.goods);
   const foodThreshold = ["fisher", "shepherd", "veg"].includes(household.job) ? 1.2 : 3;
   return {
     foodDays,

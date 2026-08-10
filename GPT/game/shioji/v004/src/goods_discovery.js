@@ -8,7 +8,7 @@ export const GOODS_DISCOVERY_SCRIPTS = Object.freeze({
   wheat: '麦が採れました。収穫は9月の年1回です。',
   fish: '魚が獲れました。3日で腐りますが、塩があれば保存食に変えられます。',
   log: '丸太が採れました。木製品と木炭に加工できます。',
-  tools: '木製品ができました。家の発展と木の荷車に使います。',
+  tools: '木製品ができました。作業道具、家の発展、木の荷車に使います。',
 });
 
 const MINIMUM_AMOUNT = 1e-9;

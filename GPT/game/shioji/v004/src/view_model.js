@@ -1282,6 +1282,9 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
       cart: household.cart ? { ...household.cart } : null,
       cartStock: (household.cartStock ?? []).map(cart => ({ ...cart })),
       cartWork: household.cartWork ? { ...household.cartWork } : null,
+      workTool: household.workTool && household.workTool.durability > 1e-9
+        ? { ...household.workTool }
+        : { kind: 'bare', durability: 0, maxDurability: 0 },
       productionMultiplier: household.productionMultiplier ?? 1,
       productivity: {
         ...production,

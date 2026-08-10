@@ -157,6 +157,13 @@ export const P = deepFreeze({
   PAVE_PORT_TILE_STONE: 8,
   PAVE_DAILY_STONE: 16,
   PAVE_ROAD_F: 0.45,
+  WORK_TOOL_WOOD_COST: 1,
+  WORK_TOOL_WOOD_DAYS: 30,
+  WORK_TOOL_IRON_COST: 1,
+  WORK_TOOL_IRON_DAYS: 90,
+  WORK_TOOL_BARE_MULT: 0.75,
+  WORK_TOOL_WOOD_MULT: 1,
+  WORK_TOOL_IRON_MULT: 1.2,
   DISTRESS: 40,
   COOLDOWN: 360,
   BELIEF0: {
@@ -369,6 +376,9 @@ function makeHouseholdRecord(economy, { job, x, y }) {
     cart: null,
     cartStock: [],
     cartWork: null,
+    workTool: null,
+    workToolsAcquired: { wood: 0, iron: 0 },
+    workToolsBroken: 0,
     cartsPurchased: 0,
     cartsBroken: 0,
     marketTransactionTicks: 0,
@@ -509,9 +519,85 @@ export function householdBuildingNeeds(physical, household) {
   return { construction, repair };
 }
 
+export function householdWorkToolNeed(household) {
+  const active = household?.workTool;
+  if (
+    active
+    && ["wood", "iron"].includes(active.kind)
+    && Number.isFinite(active.durability)
+    && active.durability > 1e-9
+  ) return null;
+  return (household?.lv ?? 0) >= 2
+    ? { kind: "iron", goods: "iron", qty: P.WORK_TOOL_IRON_COST }
+    : { kind: "wood", goods: "tools", qty: P.WORK_TOOL_WOOD_COST };
+}
+
+export function householdWorkToolMultiplier(household) {
+  const tool = household?.workTool;
+  if (!tool || !(tool.durability > 1e-9)) return P.WORK_TOOL_BARE_MULT;
+  return tool.kind === "iron" ? P.WORK_TOOL_IRON_MULT : P.WORK_TOOL_WOOD_MULT;
+}
+
+function acquireHouseholdWorkTool(economy, physical, household, { day }) {
+  if (!householdWorkToolNeed(household)) return false;
+  const preferred = (household.lv ?? 0) >= 2
+    ? [
+      { kind: "iron", goods: "iron", cost: P.WORK_TOOL_IRON_COST, days: P.WORK_TOOL_IRON_DAYS },
+      { kind: "wood", goods: "tools", cost: P.WORK_TOOL_WOOD_COST, days: P.WORK_TOOL_WOOD_DAYS },
+    ]
+    : [
+      { kind: "wood", goods: "tools", cost: P.WORK_TOOL_WOOD_COST, days: P.WORK_TOOL_WOOD_DAYS },
+    ];
+  const chosen = preferred.find(({ goods, cost }) => (
+    householdMaterialAmount(physical, household, goods) >= cost - 1e-9
+  ));
+  if (!chosen) return false;
+  withdrawHouseholdMaterial(physical, household, chosen.goods, chosen.cost);
+  recordEconomicMaterialFlow(
+    economy,
+    chosen.goods,
+    "cons",
+    chosen.cost,
+    `世帯${household.id}の${chosen.kind === "iron" ? "鉄" : "木"}の作業道具`,
+  );
+  recordEconomicDemand(economy, chosen.goods, chosen.cost, chosen.cost, "work_tools");
+  household.workTool = {
+    kind: chosen.kind,
+    durability: chosen.days,
+    maxDurability: chosen.days,
+    acquiredDay: day,
+  };
+  household.workToolsAcquired ??= { wood: 0, iron: 0 };
+  household.workToolsAcquired[chosen.kind] = (
+    household.workToolsAcquired[chosen.kind] ?? 0
+  ) + 1;
+  return true;
+}
+
+function wearHouseholdWorkTool(household, effort) {
+  if (!(effort > 1e-9) || !household.workTool) return false;
+  household.workTool.durability = Math.max(0, household.workTool.durability - effort);
+  if (household.workTool.durability > 1e-9) return false;
+  const kind = household.workTool.kind;
+  household.workTool = null;
+  household.workToolsBroken = (household.workToolsBroken ?? 0) + 1;
+  return kind;
+}
+
+function recordMissingWorkToolDemand(economy, household) {
+  const need = householdWorkToolNeed(household);
+  if (need) recordEconomicDemand(economy, need.goods, need.qty, 0, "work_tools");
+}
+
 export function isHouseholdCapitalNeed(physical, household, goods) {
   const needs = householdBuildingNeeds(physical, household);
-  return (needs.construction[goods] ?? 0) > 1e-9 || (needs.repair[goods] ?? 0) > 1e-9;
+  const toolNeed = householdWorkToolNeed(household);
+  return (needs.construction[goods] ?? 0) > 1e-9
+    || (needs.repair[goods] ?? 0) > 1e-9
+    || (
+      toolNeed?.goods === goods
+      && householdMaterialAmount(physical, household, goods) < toolNeed.qty - 1e-9
+    );
 }
 
 export function buildingConditionMultiplier(physical, household) {
@@ -1795,6 +1881,25 @@ export function buyTargets(
       targets[goods] = [target - current, ceiling];
     }
   }
+  const toolNeed = householdWorkToolNeed(household);
+  if (toolNeed) {
+    const missing = Math.max(
+      0,
+      toolNeed.qty - householdMaterialAmount(physical, household, toolNeed.goods),
+    );
+    if (missing > 1e-9) {
+      const ceiling = Math.max(
+        (px[toolNeed.goods] ?? P.BELIEF0[toolNeed.goods]) * 1.5,
+        (P.IMP[toolNeed.goods] ?? 0) * 1.05,
+      );
+      if (targets[toolNeed.goods]) {
+        targets[toolNeed.goods] = [
+          targets[toolNeed.goods][0] + missing,
+          targets[toolNeed.goods][1],
+        ];
+      } else targets[toolNeed.goods] = [missing, ceiling];
+    }
+  }
   return targets;
 }
 
@@ -2725,8 +2830,14 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
   }
   const resourceWork = ensureResourceWorkPlan(economy, physical, household);
   if (resourceWork) effectiveFraction *= resourceWork.efficiency;
-  if (shouldPauseProduction(economy, household)) return {};
+  acquireHouseholdWorkTool(economy, physical, household, { day });
+  const productiveEffort = effectiveFraction;
+  if (shouldPauseProduction(economy, household)) {
+    if (endOfDay) recordMissingWorkToolDemand(economy, household);
+    return {};
+  }
   effectiveFraction *= buildingConditionMultiplier(physical, household);
+  effectiveFraction *= householdWorkToolMultiplier(household);
   const workBuilding = physical
     ? ensureBuildingShelves(buildingById(physical, household.buildingId))
     : null;
@@ -2806,7 +2917,10 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     produced.meat = meat;
     produced.cloth = cloth;
   } else if (household.job === "wheat") {
-    if (household.pantry.wheat > P.Y_WHEAT * householdMult(household) * 0.8) return produced;
+    if (household.pantry.wheat > P.Y_WHEAT * householdMult(household) * 0.8) {
+      if (endOfDay) recordMissingWorkToolDemand(economy, household);
+      return produced;
+    }
     household.wheatWork += effectiveFraction;
     if (month >= 3 && month <= 8) {
       const used = Math.max(
@@ -2982,6 +3096,9 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     if (!Number.isFinite(qty) || qty <= 0 || goods === "cartWork") continue;
     household.productionToday[goods] = (household.productionToday[goods] ?? 0) + qty;
   }
+  const didProductiveWork = household.job === "wheat" || Object.entries(produced).some(
+    ([goods, qty]) => goods !== "cart" && qty > 1e-9,
+  );
   if (
     workBuilding
     && (household.job === "wheat" || Object.entries(produced).some(
@@ -2990,6 +3107,20 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
   ) {
     workBuilding.operationWear = (workBuilding.operationWear ?? 0) + effectiveFraction;
   }
+  if (didProductiveWork) {
+    const brokenKind = wearHouseholdWorkTool(household, productiveEffort);
+    if (
+      brokenKind
+      && !acquireHouseholdWorkTool(economy, physical, household, { day })
+    ) {
+      recordEconomyEvent(
+        economy,
+        day,
+        `${household.job}#${household.id} ${brokenKind === "iron" ? "鉄" : "木"}の作業道具が摩耗し、素手で作業`,
+      );
+    }
+  }
+  if (endOfDay) recordMissingWorkToolDemand(economy, household);
   return produced;
 }
 
