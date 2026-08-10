@@ -4,20 +4,20 @@ url: https://arxiv.org/abs/2606.12780
 collected_at: 2026-07-11T11:29:13+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, agent, world-model, planning, memory, evaluation]
-evaluated_at: 2026-07-11T11:30:33+09:00
+evaluated_at: 2026-08-10T11:49:09+09:00
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: 2026-07-11T11:30:33+09:00
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-11T11:30:33+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-10"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: 2026-08-10T11:49:09+09:00
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-10T11:49:09+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-09"
 supersedes: []
 gate_reason: >-
-  procedure graph、reliability record、実行前予行、実行後更新という手法の骨格とゲーム制作への接続先は明確だが、
-  benchmark 名、比較条件、評価指標、定量結果、失敗条件が候補本文に不足し、CoopEval 水準の概要を根拠付きで構成できない。
+  procedure graph、reliability record、実行前予行、実行後更新という骨格は明確だが、30 日後も benchmark 名、比較条件、評価指標、定量結果、失敗条件が不足している。
+  ゲーム test-play への接続だけを膨らませると原研究の評価を越えるため、CoopEval 水準の投稿候補としては閉じる。
 ---
 
 ## raw_excerpt
