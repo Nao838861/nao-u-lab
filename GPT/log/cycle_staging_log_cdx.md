@@ -118,7 +118,62 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の entry index を検証し、per-file atom index との broken link / duplicate id は 0 件だった。"
+  - "atoms 2845 件の mirror を監査し、atoms.jsonl / per-file .md / index.jsonl の欠落・parse error・content conflict はすべて 0 件、duplicate cluster 45 群は canonical overlay と整合していた。"
+  - "shared-reads candidate 1251 件の lifecycle 内訳を監査した: posted 581 / ready_to_post 9 / postponed 223 / failed 436 / needs_review 2。"
+  - "open duplicate group / stale triage / group action queue を順に再生成し、Phase 2 で処理済みの stale triage 3 行を除去した。"
+  - "30 日以上更新のない memory/raw 配下 238 ファイルを確認した。Slack 原文・web research 一次資料と evidence pointer を保持する raw 正本であり、参照切れを避けるため今 cycle の移動は 0 件とした。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件で、handled 更新対象はなかった。"
+issues:
+  - id: ISS-UTF8-RAW-001
+    description: "active atom sr-1776127289-4d9239b255 の『AIエージェント』部分が U+FFFD 2 文字を含む状態で raw Slack archive から atoms.jsonl / per-file / index へ伝播している。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492,1216; memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/index.jsonl:317"
+    source_file_status: "UTF-8 明示読みでも置換文字が残り、表示経路ではなく source raw 自体が既に破損している。memory/MEMORY.md は UTF-8 で正常に読め、代表語は 記憶 / ゲーム設計 / 敵パターン が取得可能、評価軸は本文に存在しない。"
+    display_or_tooling_status: "PowerShell UTF-8 読み・rg・memory_health のすべてで同じ U+FFFD を確認した。"
+    why_blocks_game_memory: "『AIエージェント』の完全一致検索と、個人OS型 memory architecture の atom 発見性を局所的に落とす。"
+  - id: ISS-MOJIBAKE-FP-001
+    description: "memory_health の mojibake heuristic が、Nao_u のゲーム feedback に含まれる正当な UI 表記『???』を破損として数えている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/gr-1777083728-44d444ab7a.md; tools/atom_quality.py:38; tools/memory_health.py:199"
+    source_file_status: "UTF-8 source は正常で、excerpt の『突然「???がヘッダに出る」』は原文上の意図的なゲーム UI 表記である。"
+    display_or_tooling_status: "atom_quality.mojibake_score の run_count 条件による false positive。"
+    why_blocks_game_memory: "監査 warning の精度を下げ、実際の文字破損 1 件を routine noise に埋もれさせる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 3
+    dormant: 1
+stale_review_batch: []
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 46
+  mixed_group_count: 40
+  all_open_group_count: 6
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_note: "期限到来 2 件は all-open duplicate group の deferred lease 2 件（retry_after 2026-08-20、membership fingerprint 一致）に含まれるため再投入しなかった。"
+group_action_handoff: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
