@@ -268,7 +268,6 @@ function applyImmigrantKit(household) {
     household.pantry.char = 2;
   }
   if (household.job === "veg") household.pantry.salt = 3;
-  if (household.job === "fisher2") household.pantry.salt = 2;
 }
 
 export function recordEconomicMaterialFlow(
@@ -462,7 +461,7 @@ const CONSTRUCTION_MATERIALS = deepFreeze({
   // 最初の採取職だけは開拓キットの木製品で建てられる。丸太生産前に丸太を
   // 要求する循環を作らず、以後の畑・工房から現地材の連鎖を始める。
   fisher: { tools: 4 },
-  fisher2: { tools: 5 },
+  fisher2: { log: 6, tools: 4, cloth: 0.5 },
   wheat: { log: 6, tools: 3, cloth: 0.5 },
   veg: { log: 6, tools: 3, cloth: 0.5 },
   shepherd: { log: 8, tools: 3, cloth: 1 },
@@ -1224,6 +1223,27 @@ function runHouseholdDayEnd(economy, physical, { day, markPhase = () => {} }) {
     runHouseholdFoodAndDeath(economy, household, day, markPhase, physical);
     runHouseholdCultureAndLadder(economy, physical, household, day, markPhase);
   }
+  if (physical) {
+    for (const household of economy.households) {
+      const building = ensureBuildingShelves(buildingById(physical, household.buildingId));
+      if (!building) continue;
+      for (const [goods, life] of [["fish", P.FISH_LIFE], ["veg", P.VEG_LIFE]]) {
+        const qty = sectionAmount(building, "input", goods);
+        if (qty <= 1e-9) continue;
+        const spoiled = qty / life;
+        withdrawInventory(building, "input", goods, spoiled);
+        economy.led.spoil[goods] = (economy.led.spoil[goods] ?? 0) + spoiled;
+        recordEconomicMaterialFlow(
+          economy,
+          goods,
+          "cons",
+          spoiled,
+          `世帯${household.id}の原料棚での${goods === "fish" ? "魚" : "野菜"}の腐敗`,
+          { includeInDaily: false },
+        );
+      }
+    }
+  }
   for (const phase of ["food", "death", "culture", "ladder"]) markPhase(phase);
   return { hungry: economy.hungryN, famine: economy.famine };
 }
@@ -1558,6 +1578,7 @@ export function productionCost(economy, physical, household, goods, { day = econ
     char: P.LOG_CHAR * (economy.px.log ?? 1),
     pres: P.PRES_SALT * (economy.px.salt ?? 2) / P.PR_SALT,
     pick: P.PICK_SALT * (economy.px.salt ?? 2) / P.PR_PICK,
+    meal: P.MEAL_FISH * (economy.px.fish ?? P.BELIEF0.fish),
     bar: P.SMELT_ORE * (economy.px.ore ?? P.BELIEF0.ore)
       + P.SMELT_FUEL * fuelPrice,
     iron: P.SMITH_BAR * (economy.px.bar ?? P.BELIEF0.bar)
@@ -1731,7 +1752,7 @@ export function buyTargets(
       ];
     }
   }
-  if (household.job !== "fisher") {
+  if (household.job !== "fisher" && household.job !== "fisher2") {
     targets.fish = [dailyFood * 0.5, Math.min((px.fish ?? 9) * 1.5, cheapest * 2.5)];
   }
   if (household.job !== "wheat" && household.pantry.wheat < dailyFood * P.RATION * 10 && !targets.wheat) {
@@ -1839,6 +1860,15 @@ export function buyTargets(
       ];
     }
   }
+  if (household.job === "fisher2") {
+    const dailyFish = P.Y_FISH * householdMult(household);
+    if (inputQty("fish") < dailyFish) {
+      targets.fish = [
+        dailyFish * 2 - inputQty("fish"),
+        Math.max(0.9, (px.fish ?? P.BELIEF0.fish) * 1.25),
+      ];
+    }
+  }
 
   const buildingNeeds = householdBuildingNeeds(physical, household);
   for (const needs of [buildingNeeds.construction, buildingNeeds.repair]) {
@@ -1905,6 +1935,7 @@ export function buyTargets(
 
 export function isProductionInput(household, goods) {
   return (household.job === "saltworks" && goods === "char")
+    || (household.job === "fisher2" && goods === "fish")
     || (household.job === "fisher" && (goods === "salt" || goods === "char"))
     || (household.job === "veg" && goods === "salt")
     || ((household.job === "wheat" || household.job === "rapeseed") && goods === "meal")
@@ -2845,22 +2876,20 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
   const produced = {};
 
   if (household.job === "fisher2") {
-    const depletion = economy.natural.bay2 / P.BAY0;
-    if (!winter) {
-      const fish = P.Y_FISH * work * depletion;
-      economy.natural.bay2 = Math.min(
-        P.BAY0,
-        economy.natural.bay2 - fish
-          + effectiveFraction * (
-            P.BAY_R * economy.natural.bay2 * (1 - depletion)
-            + P.RESEED * (1 - depletion)
-          ),
-      );
-      const qty = fish / P.MEAL_FISH;
+    const desiredFish = P.Y_FISH * work;
+    const fish = Math.min(
+      desiredFish,
+      productionInputAmount(physical, household, "fish"),
+    );
+    withdrawProductionInput(physical, household, "fish", fish);
+    const qty = fish / P.MEAL_FISH;
+    if (fish > 1e-9) {
       household.pantry.meal += qty;
+      recordEconomicMaterialFlow(economy, "fish", "cons", fish, `世帯${household.id}の魚粉加工`);
       recordEconomicMaterialFlow(economy, "meal", "prod", qty, `世帯${household.id}の魚粉生産`);
       produced.meal = qty;
     }
+    recordEconomicDemand(economy, "fish", desiredFish, fish, "fisher2");
   } else if (household.job === "quarryman") {
     const qty = P.Y_STONE * work;
     household.pantry.stone += qty;
@@ -3135,8 +3164,8 @@ export function householdIdealDailyOutput(economy, household, { day = economy.cu
   if (household.job === "fisher") {
     add("fish", (winter ? P.Y_FISH_W : P.Y_FISH) * mult
       * Math.max(0, economy.natural.bay / P.BAY0));
-  } else if (household.job === "fisher2" && !winter) {
-    add("meal", P.Y_FISH * mult * Math.max(0, economy.natural.bay2 / P.BAY0) / P.MEAL_FISH);
+  } else if (household.job === "fisher2") {
+    add("meal", P.Y_FISH * mult / P.MEAL_FISH);
   } else if (household.job === "veg" && month >= 3 && month <= 10) {
     add("veg", P.Y_VEG * mult);
   } else if (household.job === "shepherd") {

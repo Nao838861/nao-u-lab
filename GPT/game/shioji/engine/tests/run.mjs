@@ -1021,7 +1021,7 @@ test("段12: 職業別開拓キットを移民持参として物資出納へ記�
     woodshop: { tools: 5, wheat: 240, log: 20 },
     fisher: { tools: 5, wheat: 240, salt: 4, char: 2 },
     veg: { tools: 5, wheat: 240, salt: 3 },
-    fisher2: { tools: 5, wheat: 240, salt: 2 },
+    fisher2: { tools: 5, wheat: 240 },
   };
 
   for (const [job, expectedKit] of Object.entries(cases)) {
@@ -1930,13 +1930,71 @@ test("段19: 木工・炭焼き小屋・製塩・綿花・採石・魚粉を正�
   assert.equal(quarryman.household.pantry.stone, P.Y_STONE);
 
   const fishmeal = make("fisher2");
+  fishmeal.household.pantry.fish = P.Y_FISH;
   fishmeal.household.pantry.meal = 0;
   producePrimaryTick(fishmeal.economy, null, fishmeal.household, { day: 61, fraction: 1 });
   assert.equal(fishmeal.household.pantry.meal, P.Y_FISH / P.MEAL_FISH);
+  assert.equal(fishmeal.household.pantry.fish, 0);
+  assert.equal(fishmeal.economy.dailyDemandFlows.fish.sources.fisher2.demand, P.Y_FISH);
+  assert.equal(fishmeal.economy.dailyDemandFlows.fish.sources.fisher2.consumed, P.Y_FISH);
+  const emptyFishmeal = make("fisher2");
+  emptyFishmeal.household.pantry.fish = 0;
+  emptyFishmeal.household.pantry.meal = 0;
+  producePrimaryTick(emptyFishmeal.economy, null, emptyFishmeal.household, { day: 61, fraction: 1 });
+  assert.equal(emptyFishmeal.household.pantry.meal, 0);
+  assert.equal(emptyFishmeal.economy.dailyDemandFlows.fish.sources.fisher2.consumed, 0);
   const winterMeal = make("fisher2");
+  winterMeal.household.pantry.fish = P.Y_FISH;
   winterMeal.household.pantry.meal = 0;
   producePrimaryTick(winterMeal.economy, null, winterMeal.household, { day: 271, fraction: 1 });
-  assert.equal(winterMeal.household.pantry.meal, 0);
+  assert.equal(winterMeal.household.pantry.meal, P.Y_FISH / P.MEAL_FISH);
+});
+
+test("需要網4: 魚粉屋は実在する魚を原料棚から加工し、不足需要と冬季稼働を記録する", () => {
+  const physical = createEconomicTestPhysical(12, 12);
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "fisher2", x: 6, y: 6 });
+  household.workTool = {
+    kind: "wood", durability: 100, maxDurability: 100, acquiredDay: 1,
+  };
+  ensureHouseholdInputSites(economy, physical);
+  const building = physical.buildings.find(({ id }) => id === household.buildingId);
+  depositInventory(building, "input", "fish", P.Y_FISH);
+
+  const result = producePrimaryTick(economy, physical, household, {
+    day: 271,
+    fraction: 1,
+  });
+  assert.equal(result.meal, P.Y_FISH / P.MEAL_FISH);
+  assert.equal(sectionAmount(building, "input", "fish"), 0);
+  assert.equal(economy.dailyMaterialFlows.fish.cons, P.Y_FISH);
+  assert.deepEqual(economy.dailyDemandFlows.fish.sources.fisher2, {
+    demand: P.Y_FISH,
+    consumed: P.Y_FISH,
+  });
+
+  producePrimaryTick(economy, physical, household, { day: 272, fraction: 1 });
+  assert.deepEqual(economy.dailyDemandFlows.fish.sources.fisher2, {
+    demand: P.Y_FISH * 2,
+    consumed: P.Y_FISH,
+  });
+  const [wanted, ceiling] = buyTargets(economy, household, { day: 272, physical }).fish;
+  assert.equal(wanted, P.Y_FISH * 2);
+  assert.equal(ceiling, economy.px.fish * 1.25);
+});
+
+test("需要網4: 魚粉屋の原料棚でも生鮮魚は家庭・屋台と同じ寿命で腐敗する", () => {
+  const physical = createEconomicTestPhysical(12, 12);
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "fisher2", x: 6, y: 6 });
+  household.pantry.wheat = 10_000;
+  ensureHouseholdInputSites(economy, physical);
+  const building = physical.buildings.find(({ id }) => id === household.buildingId);
+  depositInventory(building, "input", "fish", 30);
+
+  runDayEnd(economy, physical, { day: 1 });
+  assert.equal(sectionAmount(building, "input", "fish"), 20);
+  assert.equal(economy.led.spoil.fish, 10);
 });
 
 test("段19: 各変換職のcostは生計費と正本の原料pxを連鎖する", () => {
@@ -1949,7 +2007,10 @@ test("段19: 各変換職のcostは生計費と正本の原料pxを連鎖する"
       input: () => 0, sourceEquivalent: false,
     },
     { job: "quarryman", goods: "stone", day: 1, yield: P.Y_STONE, input: () => 0 },
-    { job: "fisher2", goods: "meal", day: 61, yield: P.Y_FISH / P.MEAL_FISH, input: () => 0 },
+    {
+      job: "fisher2", goods: "meal", day: 61, yield: P.Y_FISH / P.MEAL_FISH,
+      input: (px) => P.MEAL_FISH * px.fish, sourceEquivalent: false,
+    },
   ];
 
   for (const entry of cases) {

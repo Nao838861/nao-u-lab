@@ -239,7 +239,7 @@ export function canPlaceSettlement(economy, physical, job, x, y) {
   if (terrain === "forest") return [false, "森を切り開く仕組みはまだありません——森の際に"];
   if (terrain === "rock") return [false, "岩場の上には建てられません——際に"];
   if (
-    (job === "fisher" || job === "fisher2")
+    job === "fisher"
     && !nearTerrain(physical, x, y, "water", 2)
   ) return [false, "漁師は水際にしか住めません"];
   if (job === "logger" && !nearTerrain(physical, x, y, "forest", 2)) {

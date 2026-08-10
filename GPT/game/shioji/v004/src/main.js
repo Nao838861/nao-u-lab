@@ -351,7 +351,7 @@ function formatSupplyDays(days) {
 const SUPPLY_SOURCE_LABELS = Object.freeze({
   households: '暮らし', order: '本国注文', winter: '冬支度',
   local_construction: '現地建設', building_repair: '建物修繕', road_paving: '石畳工事',
-  work_tools: '作業道具', other: 'その他の利用',
+  work_tools: '作業道具', fisher2: '魚粉加工', other: 'その他の利用',
 });
 
 function supplySourceLabel(source) {
@@ -1600,7 +1600,7 @@ function renderBuildingSheet() {
       : productivityPercent >= 80 ? 'good' : productivityPercent >= 50 ? 'warning' : 'danger';
     const cause = !idealActive
       ? (building.type === 'wheat' ? '麦は9月の収穫でまとめて実ります。'
-        : ['veg', 'rapeseed', 'fisher2'].includes(building.type) ? '今の季節にする仕事はありません。'
+        : ['veg', 'rapeseed'].includes(building.type) ? '今の季節にする仕事はありません。'
           : '日々の生産で数える仕事ではありません。')
       : productivity.resourceWork
         ? `${productivity.resourceWork.kind === 'forest' ? '森' : '漁場'}まで片道 ${Number.isFinite(productivity.resourceWork.oneWayTicks) ? productivity.resourceWork.oneWayTicks.toFixed(1) : '到達不能'}刻——通いの時間が実働 ${Math.round(productivity.resourceWork.workTicks)}/30刻を決めています。`

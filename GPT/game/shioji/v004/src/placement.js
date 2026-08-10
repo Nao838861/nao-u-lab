@@ -179,6 +179,7 @@ export function resourcePlacementEstimate(model, job, entrance) {
 }
 
 const INPUT_PRODUCERS = Object.freeze({
+  fisher2: Object.freeze(['fisher']),
   woodshop: Object.freeze(['logger']),
   charburner: Object.freeze(['logger']),
   saltworks: Object.freeze(['charburner']),
@@ -307,8 +308,7 @@ function rejection(model, job, entrance) {
   }
   if (terrain === 'forest') return '森そのものではなく森の際へ配置してください';
   if (terrain === 'rock') return '岩場そのものではなく岩場の際へ配置してください';
-  const required = job === 'fisher2' ? ['water', '魚粉小屋は水際にしか置けません']
-    : job === 'quarryman' ? ['rock', '採石場は岩場の際に置いてください']
+  const required = job === 'quarryman' ? ['rock', '採石場は岩場の際に置いてください']
         : job === 'miner' ? ['ore', '鉱山は鉄鉱床の2区画以内に置いてください']
           : job === 'collier' ? ['coal', '炭鉱は炭層の2区画以内に置いてください']
             : null;

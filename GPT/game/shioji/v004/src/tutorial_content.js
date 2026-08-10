@@ -1114,7 +1114,7 @@ function foodDependenceFacts(state) {
 
 function foodBuildingStatus(model) {
   const market = marketBuilding(model);
-  const fisher = model.buildings.find(building => ['fisher', 'fisher2'].includes(building.type));
+  const fisher = model.buildings.find(building => building.type === 'fisher');
   const veg = model.buildings.find(building => building.type === 'veg');
   const fisherWalk = market && fisher ? estimateWalkLen(model, fisher.entrance, market.entrance) : Infinity;
   const vegWalk = market && veg ? estimateWalkLen(model, veg.entrance, market.entrance) : Infinity;

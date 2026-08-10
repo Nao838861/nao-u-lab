@@ -20,6 +20,7 @@ const INVENTORY_SECTIONS = Object.freeze([
 ]);
 
 const CONVERSION_JOBS = Object.freeze({
+  fisher2: Object.freeze({ goods: 'meal', inputGoods: 'fish' }),
   woodshop: Object.freeze({ goods: 'tools', inputGoods: 'log' }),
   charburner: Object.freeze({ goods: 'char', inputGoods: 'log' }),
   saltworks: Object.freeze({ goods: 'salt', inputGoods: 'char' }),

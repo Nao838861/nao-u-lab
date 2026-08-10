@@ -14,6 +14,7 @@ import {
   initializeNaturalResources,
   isProductionInput,
   householdEat,
+  householdMult,
   householdBuildingNeeds,
   householdFoodDays,
   householdTransportPlan,
@@ -218,6 +219,8 @@ function householdTripNeeds(economy, physical, household) {
   ));
   const inputLow = (household.job === "saltworks"
     && productionInputAmount(physical, household, "char") < 2)
+    || (household.job === "fisher2"
+      && productionInputAmount(physical, household, "fish") < P.Y_FISH * householdMult(household))
     || (household.job === "fisher"
       && productionInputAmount(physical, household, "salt") < 1)
     || (
@@ -241,6 +244,8 @@ function householdTripNeeds(economy, physical, household) {
     );
   const inputStopped = (household.job === "saltworks"
     && productionInputAmount(physical, household, "char") < P.SALT_CHAR)
+    || (household.job === "fisher2"
+      && productionInputAmount(physical, household, "fish") < P.Y_FISH / 30)
     || (household.job === "woodshop"
       && productionInputAmount(physical, household, "log") < P.LOG_TOOL)
     || (household.job === "charburner"

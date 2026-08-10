@@ -4084,6 +4084,7 @@ test('品目詳細: 18品すべてに性質・日持ち・製法の表示契約�
   assert.equal(goodsDetail('veg').shelfLifeDays, 30);
   assert.equal(goodsDetail('wheat').shelfLifeDays, null);
   assert.deepEqual(goodsDetail('pick').recipe.inputs, ['veg', 'salt']);
+  assert.deepEqual(goodsDetail('meal').recipe.inputs, ['fish']);
   assert.deepEqual(goodsDetail('pres').recipe.optional, ['char']);
   assert.deepEqual(goodsDetail('bar').recipe.alternatives, [['coal', 'char']]);
   assert.throws(() => goodsDetail('unknown'), /不明な品目/);
@@ -4809,6 +4810,43 @@ test('空間生産性UI: 生産者が近い加工配置は市場経由との差�
     .filter(estimate => estimate?.supplier);
   assert.ok(estimates.length > 0);
   assert.ok(estimates.every(estimate => Number.isFinite(estimate.supplier.distance)));
+
+  const fisher = model.households.find(household => household.job === 'fisher');
+  assert.ok(fisher);
+  const fisherBuilding = model.buildings.find(building => building.id === fisher.buildingId);
+  const fishmealEstimates = [
+    { x: fisherBuilding.entrance.x + 1, y: fisherBuilding.entrance.y },
+    { x: fisherBuilding.entrance.x - 1, y: fisherBuilding.entrance.y },
+    { x: fisherBuilding.entrance.x, y: fisherBuilding.entrance.y + 1 },
+    { x: fisherBuilding.entrance.x, y: fisherBuilding.entrance.y - 1 },
+  ].map(point => supplierPlacementEstimate(model, 'fisher2', point))
+    .filter(estimate => estimate?.supplier);
+  assert.ok(fishmealEstimates.length > 0);
+  assert.ok(fishmealEstimates.every(estimate => estimate.supplier.job === 'fisher'));
+});
+
+test('需要網4 UI: 魚粉屋は水際でなく漁師との仕入れ距離を見て配置できる', () => {
+  const controller = createEngineController({ seed: 11, mode: 'test' });
+  controller.advanceTicks(2_400);
+  const model = controller.readModel();
+  const farFromWater = (point) => {
+    for (let dy = -2; dy <= 2; dy += 1) {
+      for (let dx = -2; dx <= 2; dx += 1) {
+        if (model.terrain[point.y + dy]?.[point.x + dx]?.kind === 'water') return false;
+      }
+    }
+    return true;
+  };
+  let preview = null;
+  for (let y = 0; y < model.height && !preview; y += 1) {
+    for (let x = 0; x < model.width && !preview; x += 1) {
+      if (!farFromWater({ x, y })) continue;
+      const candidate = previewBuildingPlacement(model, 'fisher2', { x, y });
+      if (candidate.ok && candidate.productivity?.supplier) preview = candidate;
+    }
+  }
+  assert.ok(preview, '魚粉屋は水際以外の空き地にも配置できる');
+  assert.equal(preview.productivity?.supplier?.job, 'fisher');
 });
 
 test('空間生産性UI: 建物・市場圏・島全体へ同じ30日実測を公開する', () => {
