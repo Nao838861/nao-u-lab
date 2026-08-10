@@ -157,7 +157,117 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - memory/MEMORY.md を UTF-8 明示読みし、markdown link 0件・broken link 0件を確認した
+  - memory/atoms.jsonl 2845行を監査し、JSON/id error 0件、normalized content 重複40群80行は40群すべて canonical overlay で fold 済み、未処理矛盾0件を確認した
+  - shared-reads の title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再生成した
+  - stale candidate 3件を Phase 2 handoff inbox へ冪等 enqueue した
+  - Slack directive / broadcast の pending がともに0件で、handled 更新対象がないことを確認した
+  - due probe lease が0件だったため、resolve / dormant receipt は作成しなかった
+issues:
+  - id: DATA-UTF8-001
+    description: >-
+      2845 atom 中1件で「AIエ��ジェント」という U+FFFD を含む文字列が raw source と
+      per-atom file の双方に残っている。memory_health が挙げたもう1件は原文の「???」による誤検知だった。
+    severity: low
+    evidence: >-
+      memory/raw/slack_archive/shared-reads.jsonl:492;
+      memory/atoms/2026-04/sr-1776127289-4d9239b255.md;
+      memory/atoms/2026-04/gr-1777083728-44d444ab7a.md
+    source_file_status: >-
+      UTF-8 decode 自体は成功するが、source ts=1776127289.990919 の raw text に U+FFFD が既に存在し、
+      派生 atom も同じ文字列を保持する。gr-1777083728-44d444ab7a は UTF-8 正常で source corruption ではない。
+    display_or_tooling_status: none; PowerShell 表示だけの mojibake ではないことを UTF-8 明示読みで確認した
+    why_blocks_game_memory: >-
+      「AIエージェント」の完全一致検索を1件だけ弱めるが、memory/context 系 tags と本文の他語では想起できるため、
+      次ゲーム制作への影響は限定的であり構造設計は不要。
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 3
+    dormant: 1
+candidate_lifecycle:
+  status_counts:
+    posted: 580
+    ready_to_post: 9
+    postponed: 226
+    failed: 433
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_for_reassessment: 5
+  lifecycle_conflicts: 0
+raw_archive_audit:
+  cutoff: "2026-07-11"
+  inactive_30d_count: 238
+  by_bucket:
+    web_research: 214
+    headless_eval: 16
+    slack_api: 5
+    slack_archive: 1
+    game_eval: 1
+    root_sync_state: 1
+  action: explicit_keep
+  reason: >-
+    raw provenance と再現用 artifact が混在しており、参照切れ監査なしの一括移動は行わない。
+    今 cycle はアーカイブ候補の件数把握だけに留めた。
+stale_backlog:
+  overdue_open_total: 5
+  stale_triage_queue_rows: 3
+  open_duplicate_group_count: 46
+  mixed_group_count: 40
+  all_open_group_count: 6
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_handoff_inbox_pending_count: 0
+  group_handoff_inbox_ids: []
+  candidate_handoff_pending_count: 3
+  candidate_handoff_ids:
+    - cha-c38a55b5e0c62d82
+    - cha-7b4c6d2e62f41623
+    - cha-21de56dbae1a90ac
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-c38a55b5e0c62d82
+    path: memory/shared_reads_candidates/20260710_causalsteward_divide_conquer_causal_discovery.md
+    status: postponed
+    stale_after: "2026-08-09"
+    priority_reason: >-
+      game_transfer_value=medium。playtest telemetry や失敗原因分析への具体的接続を補えるか Phase 2 で再評価する。
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-7b4c6d2e62f41623
+    path: memory/shared_reads_candidates/20260710_gdc2026_creating_player_expertise_microtalks.md
+    status: postponed
+    stale_after: "2026-08-09"
+    priority_reason: >-
+      game_transfer_value=medium。複数 microtalk を一つの手法として束ね、評価内容と具体例を補えるか Phase 2 で再評価する。
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-21de56dbae1a90ac
+    path: memory/shared_reads_candidates/20260710_last_humble_bee_solo_dev_sanity.md
+    status: postponed
+    stale_after: "2026-08-09"
+    priority_reason: >-
+      game_transfer_value=medium。一般的助言ではなく固有の制作判断・時系列・成果指標を補えるか Phase 2 で再評価する。
+    recommended_review_action: reevaluate_in_phase2
+encoding_audit:
+  memory_md_source_file_status: >-
+    UTF-8 decode 成功。「記憶」「ゲーム設計」「敵パターン」は取得でき、「評価軸」は完全一致なし。
+    他の日本語は正常で、source file 全体の文字化けではない。
+  memory_md_display_or_tooling_status: none
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
