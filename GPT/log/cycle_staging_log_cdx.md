@@ -161,7 +161,94 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index を per-file atom index と照合し、broken entry 0 件を確認した。UTF-8 明示読みで代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」も取得できた。"
+  - "atoms 2839 件の jsonl / per-file md / index ミラーを監査し、parse error・index error・content conflict は各 0 件だった。normalized content の raw 重複 40 群 80 行は既存 fold で 40 行を抑止し、recall-visible 重複 3 群 6 行も 3 行を抑止済みと確認した。"
+  - "30 日超の memory/raw 原文 238 件を確認した。web research の md/txt/pdf と評価・Slack 原文が中心で、一時ファイル名は 0 件だったため provenance を壊す移動は行わなかった。"
+  - "candidate lifecycle 1248 件を監査し、posted 578 / ready_to_post 9 / postponed 235 / failed 423 / needs_review 3 を確認した。期限到来 15 件から queue 上位 5 件を candidate handoff inbox へ冪等 enqueue した。"
+  - "title canonical / mixed duplicate / open duplicate / stale triage / group action の sidecar を現状態から再生成した。actionable group は 0 件で group handoff は 0 件だった。"
+  - "slack_directives.jsonl と slack_broadcasts.jsonl は pending 各 0 件で、close 対象はなかった。"
+issues:
+  - id: ISS-MOJIBAKE-001
+    description: "active atom sr-1776127289-4d9239b255 の『AIエージェント』部分に U+FFFD が2文字残り、title / trigger / excerpt の検索語が欠損している。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; python tools/memory_health.py --json"
+    source_file_status: "UTF-8 明示読みでも per-atom と raw source の双方に『AIエ��ジェント』が存在するため、source-level corruption。別 suspect gr-1777083728-44d444ab7a は UTF-8 正常で literal '???' による検知だった。"
+    display_or_tooling_status: "PowerShell / rg 表示経路の文字化けではない。memory_health は当該 atom を正しく検知し、gr atom については source が正常な false positive。"
+    why_blocks_game_memory: "agent filesystem / progressive disclosure の高 score atom を自然語『エージェント』で探す導線が部分的に弱くなるが、memory / agent tags と URL は残るため影響は限定的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 3
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 15
+  stale_triage_queue_rows: 13
+  remaining_stale_triage_rows_after_selection: 8
+  open_duplicate_group_count: 46
+  mixed_group_count: 40
+  all_open_group_count: 6
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_enqueued_count: 5
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-0c2d5c2fbc8d854b
+    - cha-e26496b8d71f39e6
+    - cha-6fa5da1c6ca9c6dd
+    - cha-c6297a6b770586b4
+    - cha-94a6c15d337b6a52
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-0c2d5c2fbc8d854b
+    path: memory/shared_reads_candidates/20260711_adaptive_puzzle_frustration_fun.md
+    status: postponed
+    stale_after: "2026-08-10"
+    priority_reason: "adaptive difficulty と player modeling の転用先は具体的だが、GA 表現・player model 指標・pilot 比較結果の追加確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-e26496b8d71f39e6
+    path: memory/shared_reads_candidates/20260711_gdc2026_intent_driven_scene_editor.md
+    status: postponed
+    stale_after: "2026-08-10"
+    priority_reason: "intent-driven editor の適用性は高いが、評価方法・操作粒度・修正 loop の具体例が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-6fa5da1c6ca9c6dd
+    path: memory/shared_reads_candidates/20260711_gdc2026_mcp_ai_prototyping_roblox.md
+    status: postponed
+    stale_after: "2026-08-10"
+    priority_reason: "MCP と game engine / QA / build pipeline の接続は有用だが、境界・API・検証 log・失敗制約が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-c6297a6b770586b4
+    path: memory/shared_reads_candidates/20260711_proplay_procedural_world_models.md
+    status: postponed
+    stale_after: "2026-08-10"
+    priority_reason: "procedure graph と reliability 更新の骨格は明確だが、benchmark・比較条件・定量結果・失敗条件が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-94a6c15d337b6a52
+    path: memory/shared_reads_candidates/20260706_gdc2026_postmortem_ai_pipelines.md
+    status: needs_review
+    stale_after: "2026-08-05"
+    priority_reason: "5 日超過した needs_review candidate で、Phase 2 の初回品質判定が必要。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
