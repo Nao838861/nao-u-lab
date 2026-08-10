@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.45.4-caravan-audit';
+import { TILE } from './config.js?v=v004.45.5-caravan-integrity';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

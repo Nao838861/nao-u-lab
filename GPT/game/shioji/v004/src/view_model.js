@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.45.4-caravan-audit';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.45.5-caravan-integrity';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.45.4-caravan-audit';
+} from './food_readability.js?v=v004.45.5-caravan-integrity';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
-  householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.45.4-caravan-audit';
-import { analyzeRoadConnections } from './placement.js?v=v004.45.4-caravan-audit';
+  findTravelPath, householdProductionSummary, productionCost,
+} from './engine_bridge.js?v=v004.45.5-caravan-integrity';
+import { analyzeRoadConnections } from './placement.js?v=v004.45.5-caravan-integrity';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.45.4-caravan-audit';
+} from './render_scene.js?v=v004.45.5-caravan-integrity';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.45.4-caravan-audit';
+} from './visuals.js?v=v004.45.5-caravan-integrity';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',
@@ -85,6 +85,28 @@ export function caravanAccountingPresentation(route, day) {
     )).reduce((total, row) => total + row.profit, 0),
     rows: rows.slice(-12),
   };
+}
+
+function caravanRouteQuotes(snapshot, terrain, building, owner) {
+  if (building.type !== 'carter' || !owner) return [];
+  const markets = snapshot.economy.marketNetwork?.markets ?? [];
+  const baseMarketId = owner.marketId ?? 'main';
+  const base = markets.find(market => market.id === baseMarketId);
+  const crew = Math.min(building.caravanEmployment?.recruitment ?? 1, owner.members.length);
+  return markets.filter(market => market.id !== baseMarketId).map(market => {
+    const path = base?.entrance && market.entrance
+      ? findTravelPath({ ...snapshot.physical, terrain }, base.entrance, market.entrance, 'cart')
+      : null;
+    return {
+      marketId: market.id,
+      marketName: market.name,
+      reachable: Boolean(path),
+      oneWayTicks: path?.cost ?? null,
+      oneWayDays: path ? path.cost / 30 : null,
+      crew,
+      capacity: crew * P.CART_WOOD_CAPACITY,
+    };
+  });
 }
 const REQUIREMENT_GOODS = Object.freeze({
   food1: Object.freeze(['wheat']),
@@ -1165,10 +1187,14 @@ function carrierRows(snapshot, buildings) {
           y: carrier.position.y,
           goods: cargoRows[0]?.goods ?? null,
           amount: cargoRows.reduce((total, row) => total + row.amount, 0),
+          householdId: carrier.householdId ?? null,
           cargoRows,
           people: 1,
           members: 1,
-          peopleRows: [{ id: `${route.id}:driver:${carrier.assetId}`, name: '隊商の御者' }],
+          peopleRows: [{
+            id: carrier.memberId ?? `${route.id}:driver:${carrier.assetId}`,
+            name: carrier.memberName ?? '御者',
+          }],
           activity: 'carrying',
           path: (carrier.path ?? []).map(point => ({ ...point })),
           from: {
@@ -1343,6 +1369,7 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
       caravanCrew: building.type === 'carter' && owner
         ? Math.min(building.caravanEmployment?.recruitment ?? 1, owner.members.length)
         : 0,
+      caravanRouteQuotes: caravanRouteQuotes(snapshot, terrain, building, owner),
       fixed: Boolean(building.fixed),
       ownerHouseholdId: building.ownerHouseholdId,
       occupied: building.ownerHouseholdId !== null,

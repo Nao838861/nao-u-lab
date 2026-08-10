@@ -1,5 +1,5 @@
-import { BUILDING_SIZES } from './config.js?v=v004.45.4-caravan-audit';
-import { islandCalendar } from './ui_summary.js?v=v004.45.4-caravan-audit';
+import { BUILDING_SIZES } from './config.js?v=v004.45.5-caravan-integrity';
+import { islandCalendar } from './ui_summary.js?v=v004.45.5-caravan-integrity';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

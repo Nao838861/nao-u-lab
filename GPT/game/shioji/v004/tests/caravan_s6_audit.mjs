@@ -82,6 +82,11 @@ for (const row of rows) {
   console.log(`| ${row.month} | ${row.trips} | ${row.sales} | ${row.procurement} | ${row.wages} | ${row.cartCosts} | ${row.profit} | ${row.fiscalProfit} | ${row.fishery.totalFood} | ${row.fishery.purse} | ${row.fishery.hungryHouseholds} |`);
 }
 const last = rows.at(-1);
+const finalState = controller.saveState();
+const carter = finalState.economy.households.find(
+  household => household.buildingId === initial.caravanSlice.innBuildingId,
+);
 console.log('');
 console.log(`漁郷の開始時食料 ${rounded(start.totalFood)}荷・人口${start.population}人。`);
 console.log(`会社の木荷車は一年で${last.carts.companyPurchased}台購入、${last.carts.companyBroken}台全損。`);
+console.log(`隊商宿世帯の作業道具は木を${carter.workToolsAcquired.wood}組使用開始し、${carter.workToolsBroken}組が摩耗。年末は${carter.workTool ? `${carter.workTool.kind === 'iron' ? '鉄' : '木'}の道具・残り${rounded(carter.workTool.durability)}日` : '素手'}。`);

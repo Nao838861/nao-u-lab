@@ -2,16 +2,16 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.45.4-caravan-audit';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.45.4-caravan-audit';
-import { displayCultureLevel } from './visuals.js?v=v004.45.4-caravan-audit';
+} from './engine_bridge.js?v=v004.45.5-caravan-integrity';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.45.5-caravan-integrity';
+import { displayCultureLevel } from './visuals.js?v=v004.45.5-caravan-integrity';
 import {
   PLAYER_FACING_BANNED_TERMS,
   executableFoodIntervention,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.45.4-caravan-audit';
-import { islandCalendar } from './ui_summary.js?v=v004.45.4-caravan-audit';
+} from './food_readability.js?v=v004.45.5-caravan-integrity';
+import { islandCalendar } from './ui_summary.js?v=v004.45.5-caravan-integrity';
 
 export { PLAYER_FACING_BANNED_TERMS };
 

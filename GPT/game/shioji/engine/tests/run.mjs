@@ -91,6 +91,7 @@ import {
   transactMarketCargo,
   unloadMarketBuyCargo,
   updateFlowEma,
+  useHouseholdWorkTool,
 } from "../src/econ.js";
 import {
   FOODS as FLOW_ISLAND_FOODS,
@@ -349,6 +350,12 @@ function createCaravanRouteFixture({ cartDurability = P.CART_WOOD_DURABILITY } =
   const { economy, physical } = world.state;
   const carter = createHousehold(economy, { job: "carter", x: 10, y: 6 });
   carter.marketId = "main";
+  // 実ゲームでは初日の世帯tickで手元の木製品から作業道具を組む。
+  // この直接fixtureでも同じ初期状態にして、路線試験中の物量比較へ混ぜない。
+  assert.deepEqual(useHouseholdWorkTool(economy, physical, carter, {
+    day: 0,
+    effort: 0,
+  }), { multiplier: P.WORK_TOOL_WOOD_MULT, brokenKind: null });
   const inn = addEconomicTestBuilding(physical, "carter", 10, 7, 10, 6, carter.id);
   carter.buildingId = inn.id;
   setCaravanEmployment(physical, { buildingId: inn.id, recruitment: 1, wage: 5 });
@@ -4896,6 +4903,26 @@ test("隊商S4: 実在庫を一往復させ、荷車・仕入・小売を含む�
   }
 });
 
+test("隊商S4: 荷車の御者は隊商宿世帯の実在メンバーへ固定する", () => {
+  const fixture = createCaravanRouteFixture();
+  const { economy, physical } = fixture.world.state;
+  const departureDay = fixture.route.nextDepartDay;
+  const departure = stepCaravanDay(economy, physical, { day: departureDay });
+  assert.equal(departure[0]?.departed, true, JSON.stringify(departure));
+  assert.equal(fixture.route.carriers.length, 1);
+  assert.equal(fixture.route.carriers[0].householdId, fixture.carter.id);
+  assert.equal(fixture.route.carriers[0].memberId, fixture.carter.members[0].id);
+  assert.equal(fixture.route.carriers[0].memberName, fixture.carter.members[0].name);
+  assert.deepEqual(fixture.route.currentTrip.crewMemberIds, [fixture.carter.members[0].id]);
+
+  while (fixture.route.state === "outbound") {
+    stepCaravanTick(economy, physical, { day: 1 });
+  }
+  assert.equal(fixture.route.state, "returning");
+  assert.equal(fixture.route.carriers[0].memberId, fixture.carter.members[0].id,
+    "帰路でも同じ御者が運ぶ");
+});
+
 test("隊商S6: 複数品目を指定すると先頭品だけで満載にせず全品目を積む", () => {
   const fixture = createCaravanRouteFixture();
   const { economy, physical } = fixture.world.state;
@@ -4939,6 +4966,31 @@ test("隊商S4: 道路の近道は抽象日数でなく実際の往復tickを短
     return runCaravanUntilReturned(economy, physical, fixture.route, 1);
   };
   assert.ok(run(true) < run(false));
+});
+
+test("需要網3: 隊商職も運行日だけ道具を摩耗し、素手では実移動が遅くなる", () => {
+  const equipped = createCaravanRouteFixture();
+  const equippedBefore = equipped.carter.workTool.durability;
+  const equippedTicks = runCaravanUntilReturned(
+    equipped.world.state.economy,
+    equipped.world.state.physical,
+    equipped.route,
+    1,
+  );
+  assert.equal(equipped.carter.workTool.durability, equippedBefore - 1);
+
+  const bare = createCaravanRouteFixture();
+  bare.carter.workTool = null;
+  bare.carter.pantry.tools = 0;
+  const bareTicks = runCaravanUntilReturned(
+    bare.world.state.economy,
+    bare.world.state.physical,
+    bare.route,
+    1,
+  );
+  assert.ok(bareTicks > equippedTicks, `${bareTicks} <= ${equippedTicks}`);
+  assert.equal(bare.carter.workTool, null);
+  assert.equal(bare.route.workSpeedMultiplier, P.WORK_TOOL_BARE_MULT);
 });
 
 test("隊商S4: 荷車が全損し供給が切れると次便は止まり、理由を出来事に残す", () => {

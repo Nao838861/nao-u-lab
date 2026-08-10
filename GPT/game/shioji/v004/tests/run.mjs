@@ -2305,7 +2305,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.45.4-caravan-audit');
+  assert.equal(VERSION, 'v004.45.5-caravan-integrity');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2635,6 +2635,10 @@ test('隊商S3: 隊商宿の募集人数と給料を表示モデルから公開�
   assert.ok(household);
   assert.deepEqual(inn.caravanEmployment, { recruitment: 2, wage: 0.75 });
   assert.equal(inn.caravanCrew, 2);
+  assert.deepEqual(inn.caravanRouteQuotes.map(quote => quote.marketId), ['fishery']);
+  assert.equal(inn.caravanRouteQuotes[0].reachable, true);
+  assert.ok(inn.caravanRouteQuotes[0].oneWayDays > 1);
+  assert.equal(inn.caravanRouteQuotes[0].capacity, 16);
   assert.equal(JOB_LABELS.carter, '隊商宿');
   assert.deepEqual(BUILDING_SIZES.carter, { width: 3, height: 3 });
 
@@ -2667,7 +2671,13 @@ test('隊商S4: 二市場開始モードの路線は実荷車で往復し表示�
     intervalDays: 3,
   });
   assert.equal(result.ok, true, result.reason);
-  controller.advanceTicks(30 * 30);
+  let travellingCarrier = null;
+  for (let tick = 0; tick < 30 * 30; tick += 1) {
+    controller.advanceTicks(1);
+    travellingCarrier ??= controller.readModel().carriers.find(
+      carrier => carrier.caravanRouteId,
+    ) ?? null;
+  }
   const model = controller.readModel();
   const route = model.caravans[0];
   assert.equal(route.baseMarketId, 'main');
@@ -2677,6 +2687,12 @@ test('隊商S4: 二市場開始モードの路線は実荷車で往復し表示�
     trip.outboundTicks > 0 && trip.returnTicks > 0
   )), JSON.stringify(route.recentTrips));
   assert.ok(model.companyCarts.some(cart => cart.caravanRouteId === route.id));
+  const innHousehold = model.households.find(
+    household => household.buildingId === route.baseBuildingId,
+  );
+  assert.ok(travellingCarrier);
+  assert.equal(travellingCarrier.householdId, innHousehold.id);
+  assert.ok(innHousehold.memberNames.includes(travellingCarrier.peopleRows[0].name));
 });
 
 test('隊商S5: 状態語は運行・待機・御者・荷車・道路・資金の原因を区別する', () => {

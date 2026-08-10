@@ -733,6 +733,33 @@ function recordMissingWorkToolDemand(economy, household) {
   if (need) recordEconomicDemand(economy, need.goods, need.qty, 0, "work_tools");
 }
 
+// 日次生産を持たない給与職も、実際に働いた日だけ同じ作業道具を使う。
+// 速度倍率は摩耗前の道具でその日の仕事を行った値を返し、壊れた後は手元の
+// 材料で交換できなければ、次の勤務日から素手へ戻る。
+export function useHouseholdWorkTool(economy, physical, household, {
+  day = economy.currentDay,
+  effort = 1,
+} = {}) {
+  if (!Number.isFinite(effort) || effort < 0) {
+    throw new TypeError("work tool effort must be non-negative and finite");
+  }
+  acquireHouseholdWorkTool(economy, physical, household, { day });
+  const multiplier = householdWorkToolMultiplier(household);
+  if (effort <= 1e-9) return { multiplier, brokenKind: null };
+  const brokenKind = wearHouseholdWorkTool(household, effort);
+  if (
+    brokenKind
+    && !acquireHouseholdWorkTool(economy, physical, household, { day })
+  ) {
+    recordEconomyEvent(
+      economy,
+      day,
+      `${household.job}#${household.id} ${brokenKind === "iron" ? "鉄" : "木"}の作業道具が摩耗し、素手で作業`,
+    );
+  }
+  return { multiplier, brokenKind };
+}
+
 export function isHouseholdCapitalNeed(physical, household, goods) {
   const needs = householdBuildingNeeds(physical, household);
   const toolNeed = householdWorkToolNeed(household);

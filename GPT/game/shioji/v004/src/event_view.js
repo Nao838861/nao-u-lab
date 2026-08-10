@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.45.4-caravan-audit';
+import { JOB_LABELS } from './config.js?v=v004.45.5-caravan-integrity';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

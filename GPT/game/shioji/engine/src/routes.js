@@ -10,6 +10,7 @@ import {
   postCompanyLedger,
   purchaseCompanyWoodCart,
   recordEconomyEvent,
+  useHouseholdWorkTool,
 } from "./econ.js";
 import {
   buildingById,
@@ -70,6 +71,21 @@ function routeForBase(economy, baseBuildingId) {
   return (economy.caravans ?? []).find((route) => (
     route.baseBuildingId === baseBuildingId && route.state !== "disbanded"
   )) ?? null;
+}
+
+function routeHousehold(economy, physical, route) {
+  const inn = buildingById(physical, route?.baseBuildingId);
+  return economy.households.find((candidate) => candidate.id === inn?.ownerHouseholdId) ?? null;
+}
+
+function workRouteDay(economy, physical, route, day) {
+  if (route.workToolDay === day) return route.workSpeedMultiplier ?? 1;
+  const household = routeHousehold(economy, physical, route);
+  if (!household) return 1;
+  const result = useHouseholdWorkTool(economy, physical, household, { day, effort: 1 });
+  route.workToolDay = day;
+  route.workSpeedMultiplier = result.multiplier;
+  return result.multiplier;
 }
 
 export function createCaravanRoute(economy, physical, {
@@ -356,10 +372,27 @@ function assignCarrierManifests(route) {
   }
 }
 
-function startLeg(physical, route, assets, from, to) {
+function routeCrewMembers(economy, physical, route, count) {
+  const household = routeHousehold(economy, physical, route);
+  if (!household) return [];
+  const byId = new Map((household.members ?? []).map((member) => [member.id, member]));
+  const assigned = (route.currentTrip?.crewMemberIds ?? [])
+    .map((memberId) => byId.get(memberId))
+    .filter(Boolean);
+  for (const member of household.members ?? []) {
+    if (assigned.length >= count) break;
+    if (!assigned.some((candidate) => candidate.id === member.id)) assigned.push(member);
+  }
+  return assigned.slice(0, count);
+}
+
+function startLeg(economy, physical, route, assets, from, to) {
   const path = findTravelPath(physical, from, to, "cart");
   if (!path) return false;
+  const household = routeHousehold(economy, physical, route);
+  const crewMembers = routeCrewMembers(economy, physical, route, assets.length);
   route.carriers = assets.map((asset, index) => {
+    const member = crewMembers[index] ?? null;
     const carrier = createCartCarrier(physical, {
       id: `${route.id}:${route.currentTrip.tripNumber}:${route.state}:${index}`,
       capacity: asset.kind === "iron" ? P.CART_IRON_CAPACITY : P.CART_WOOD_CAPACITY,
@@ -368,6 +401,9 @@ function startLeg(physical, route, assets, from, to) {
     });
     carrier.people = 1;
     carrier.routeId = route.id;
+    carrier.householdId = household?.id ?? null;
+    carrier.memberId = member?.id ?? null;
+    carrier.memberName = member?.name ?? null;
     carrier.departureDelay = index * 0.35;
     return routeTravelCarrier(physical, carrier, from, to);
   });
@@ -402,6 +438,8 @@ function startOutboundTrip(economy, physical, route, assets, { day, purchases = 
     tripNumber: (route.completedTrips ?? 0) + 1,
     departedDay: day,
     crew: assets.length,
+    crewMemberIds: routeCrewMembers(economy, physical, route, assets.length)
+      .map((member) => member.id),
     cartAssetIds: assets.map((asset) => asset.id),
     procurement: purchase.spent,
     retailSales: 0,
@@ -414,7 +452,7 @@ function startOutboundTrip(economy, physical, route, assets, { day, purchases = 
     returnTicks: null,
     distance: 0,
   };
-  if (!startLeg(physical, route, assets, baseEntrance, destEntrance)) {
+  if (!startLeg(economy, physical, route, assets, baseEntrance, destEntrance)) {
     route.state = "waiting_road";
     return false;
   }
@@ -437,7 +475,7 @@ function resumeReturnTrip(economy, physical, route, { day }) {
   const destEntrance = marketEntrance(physical, route.destMarketId);
   const baseEntrance = marketEntrance(physical, route.baseMarketId);
   route.state = "returning";
-  if (!startLeg(physical, route, assets, destEntrance, baseEntrance)) {
+  if (!startLeg(economy, physical, route, assets, destEntrance, baseEntrance)) {
     waiting(economy, route, day, "waiting_road_return", `${route.name}は帰りの荷車道を待っている`);
     return false;
   }
@@ -495,7 +533,10 @@ export function stepCaravanDay(economy, physical, { day }) {
       results.push({ routeId: route.id, departed: false, returning: resumed });
       continue;
     }
-    if (["outbound", "returning"].includes(route.state)) continue;
+    if (["outbound", "returning"].includes(route.state)) {
+      workRouteDay(economy, physical, route, day);
+      continue;
+    }
     if (route.locationMarketId !== route.baseMarketId) continue;
     if (day < (route.nextDepartDay ?? day)) continue;
     const crew = caravanCrewCount(economy, physical, route);
@@ -522,6 +563,7 @@ export function stepCaravanDay(economy, physical, { day }) {
       results.push({ routeId: route.id, departed: false, reason: "road" });
       continue;
     }
+    workRouteDay(economy, physical, route, day);
     results.push({
       routeId: route.id,
       departed: true,
@@ -560,7 +602,7 @@ export function stepCaravanTick(economy, physical, { day }) {
     // 2台編成の所要時間が2倍になる。全車を同じtickで必ず一度ずつ進める。
     let arrived = true;
     for (const carrier of route.carriers) {
-      if (!stepTravelCarrier(physical, carrier, 1)) arrived = false;
+      if (!stepTravelCarrier(physical, carrier, route.workSpeedMultiplier ?? 1)) arrived = false;
     }
     route.progressTicks += 1;
     if (!arrived) continue;

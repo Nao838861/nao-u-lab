@@ -6,9 +6,9 @@ export {
   householdClass,
   householdProductionSummary,
   productionCost,
-} from '../../engine/src/econ.js?v=v004.45.4-caravan-audit';
-import { P } from '../../engine/src/econ.js?v=v004.45.4-caravan-audit';
-import { createEngineApi } from '../../engine/src/api.js?v=v004.45.4-caravan-audit';
+} from '../../engine/src/econ.js?v=v004.45.5-caravan-integrity';
+import { P } from '../../engine/src/econ.js?v=v004.45.5-caravan-integrity';
+import { createEngineApi } from '../../engine/src/api.js?v=v004.45.5-caravan-integrity';
 import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
@@ -16,17 +16,19 @@ import {
   buildCaravanSliceWorld,
   buildBaseCity,
   makeStableCityPlan,
-} from '../../engine/src/audit.js?v=v004.45.4-caravan-audit';
-import { createPhysicalState, makeFlowIslandTerrain, makeMultiMarketTerrain } from '../../engine/src/physical.js?v=v004.45.4-caravan-audit';
-import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.45.4-caravan-audit';
-import { createViewController } from './controller.js?v=v004.45.4-caravan-audit';
+} from '../../engine/src/audit.js?v=v004.45.5-caravan-integrity';
+import {
+  createPhysicalState, findTravelPath, makeFlowIslandTerrain, makeMultiMarketTerrain,
+} from '../../engine/src/physical.js?v=v004.45.5-caravan-integrity';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.45.5-caravan-integrity';
+import { createViewController } from './controller.js?v=v004.45.5-caravan-integrity';
 import {
   SPRING_START_CALENDAR_OFFSET_DAYS,
   START_MODES,
-} from './start_modes.js?v=v004.45.4-caravan-audit';
+} from './start_modes.js?v=v004.45.5-caravan-integrity';
 
 export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS };
-export { makeMultiMarketTerrain };
+export { findTravelPath, makeMultiMarketTerrain };
 export const BUILD_COST_DENARI = P.BUILD_COST * 10;
 
 export function applySpringStartCalendar(world) {
