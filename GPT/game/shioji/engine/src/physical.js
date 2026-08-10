@@ -127,7 +127,7 @@ export const V003_INITIAL_ROADS = Object.freeze([
 ]);
 
 export const INVENTORY_SECTIONS = Object.freeze([
-  "input", "output", "storage", "construction", "inbound", "outbound", "pickup",
+  "input", "output", "storage", "construction", "repair", "inbound", "outbound", "pickup",
 ]);
 
 export const keyOf = (x, y) => `${x},${y}`;
@@ -807,6 +807,10 @@ export function addBuilding(physical, type, x, y, options = {}) {
     ownerHouseholdId: options.ownerHouseholdId ?? null,
     fixed: Boolean(options.fixed),
     grade: options.grade ?? 0,
+    condition: options.condition ?? 100,
+    conditionStatus: options.conditionStatus ?? "good",
+    repairPlan: options.repairPlan ? structuredClone(options.repairPlan) : null,
+    constructionRequired: structuredClone(options.constructionRequired ?? {}),
     inventory: createSectionInventory(),
     caps: structuredClone(options.caps ?? definition.caps ?? {}),
   };
@@ -1023,7 +1027,13 @@ export function sectionCapacity(building, section, goods) {
   const base = Number(building.caps?.[section]?.[goods] ?? 0);
   if (base <= 0) return 0;
   if (["input", "output", "storage"].includes(section)) {
-    return Math.round(base * (1 + building.grade * 0.2));
+    const condition = Number.isFinite(building.condition) ? building.condition : 100;
+    const conditionMultiplier = condition >= 70
+      ? 1
+      : condition >= 40
+        ? 0.9
+        : 0.75;
+    return Math.round(base * (1 + building.grade * 0.2) * conditionMultiplier);
   }
   return base;
 }

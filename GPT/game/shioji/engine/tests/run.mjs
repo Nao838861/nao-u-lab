@@ -25,6 +25,8 @@ import {
   companyLogisticsSite,
   companyStockReleasePrice,
   completeAssignedWork,
+  consumeConstructionMaterials,
+  constructionReady,
   createEconomicState,
   createHousehold,
   createCompanyState,
@@ -58,7 +60,9 @@ import {
   requestCompanyImport,
   requestCompanyStockRelease,
   recordExternalMoneyFlow,
+  repairMaterialsFor,
   regenerateForest,
+  runBuildingMaintenance,
   runCompanyDayStart,
   runCompanyFinance,
   runCompanyProcurement,
@@ -496,7 +500,7 @@ test("段6: input/output/storage/construction棚へ容量内で入出庫する",
   const warehouse = addBuilding(physical, "warehouse", 10, 8, { requireRoad: false }).building;
 
   assert.deepEqual(Object.keys(woodshop.inventory), [
-    "input", "output", "storage", "construction", "inbound", "outbound", "pickup",
+    "input", "output", "storage", "construction", "repair", "inbound", "outbound", "pickup",
   ]);
   depositInventory(woodshop, "input", "log", 12);
   depositInventory(woodshop, "output", "boards", 5);
@@ -508,6 +512,73 @@ test("段6: input/output/storage/construction棚へ容量内で入出庫する",
   assert.equal(sectionAmount(woodshop, "construction", "tools"), 2);
   assert.equal(sectionAmount(warehouse, "storage", "log"), 8);
   assert.equal(sectionCapacity(woodshop, "input", "log"), 26);
+});
+
+test("需要網1: 建設材は帰宅時にconstruction棚へ届き、完成時だけ実消費される", () => {
+  const terrain = Array.from({ length: 20 }, () => (
+    Array.from({ length: 20 }, () => ({ kind: "grass", variant: 0 }))
+  ));
+  const physical = createPhysicalState({ width: 20, height: 20, terrain });
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "woodshop", x: 7, y: 6 });
+  const shelf = Object.fromEntries(GOODS.map((goods) => [goods, 100]));
+  const placed = addBuilding(physical, "woodshop", 4, 4, {
+    definitions: ECONOMIC_BUILDINGS,
+    requireRoad: false,
+    entrance: { x: 7, y: 6 },
+    ownerHouseholdId: household.id,
+    caps: { input: shelf, construction: shelf, repair: shelf },
+    constructionRequired: { log: 6, tools: 4 },
+  });
+  assert.equal(placed.ok, true, placed.reason);
+  household.buildingId = placed.building.id;
+  household.cargo = { direction: "inbound", manifest: { log: 6, tools: 4 } };
+
+  unloadMarketBuyCargo(household, physical);
+  assert.equal(sectionAmount(placed.building, "construction", "log"), 6);
+  assert.equal(sectionAmount(placed.building, "construction", "tools"), 4);
+  assert.equal(constructionReady(physical, household), true);
+  assert.equal(economy.materialFlows.log.cons, 0, "棚へ届いただけでは消費にしない");
+
+  assert.equal(consumeConstructionMaterials(economy, physical, household), true);
+  assert.equal(sectionAmount(placed.building, "construction", "log"), 0);
+  assert.equal(sectionAmount(placed.building, "construction", "tools"), 0);
+  assert.equal(economy.materialFlows.log.cons, 6);
+  assert.equal(economy.materialFlows.tools.cons, 4);
+});
+
+test("需要網1: 高Lv施設は木製品・石材・鉄材を30日周期で修繕要求し、不足は段階表示になる", () => {
+  const terrain = Array.from({ length: 20 }, () => (
+    Array.from({ length: 20 }, () => ({ kind: "grass", variant: 0 }))
+  ));
+  const physical = createPhysicalState({ width: 20, height: 20, terrain });
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "woodshop", x: 7, y: 6 });
+  household.lv = 3;
+  household.state = "home";
+  const shelf = Object.fromEntries(GOODS.map((goods) => [goods, 1000]));
+  const placed = addBuilding(physical, "woodshop", 4, 4, {
+    definitions: ECONOMIC_BUILDINGS,
+    requireRoad: false,
+    entrance: { x: 7, y: 6 },
+    ownerHouseholdId: household.id,
+    caps: { input: shelf, construction: shelf, repair: shelf },
+    condition: 45,
+  });
+  household.buildingId = placed.building.id;
+  const expected = repairMaterialsFor(placed.building, household);
+  assert.ok(expected.tools > 0);
+  assert.ok(expected.stone > 0);
+  assert.ok(expected.iron > 0);
+
+  runBuildingMaintenance(economy, physical, { day: 1 });
+  runBuildingMaintenance(economy, physical, { day: 31 });
+  assert.deepEqual(placed.building.repairPlan.required, expected);
+  assert.ok(economy.dailyDemandFlows.stone.sources.building_repair.demand > 0);
+  runBuildingMaintenance(economy, physical, { day: 61 });
+  assert.equal(placed.building.condition, 30);
+  assert.equal(placed.building.conditionStatus, "needs_repair");
+  assert.ok(economy.events.some(([, message]) => message.includes("建物に要修繕")));
 });
 
 test("段6: 容量超過・在庫不足・運搬ジョブなしの棚跨ぎを拒否する", () => {
@@ -1802,6 +1873,7 @@ test("段21: dayEndの全フェーズ順を固定し実行traceで検査する",
     "death",
     "culture",
     "ladder",
+    "building_maintenance",
     "paving",
     "birth",
     "population_dynamics",

@@ -4,6 +4,7 @@ import {
   P,
   acceptCompanyOrder,
   companyCreditLimit,
+  constructionMaterialsFor,
   createHousehold,
   economicMaterialSnapshot,
   fundSettlementZone,
@@ -300,12 +301,13 @@ export function addAuditZone(world, job, x, y, buildingX = null, buildingY = nul
     canPlace: () => [true, ""],
   });
   if (!funded) return false;
-  const input = Object.fromEntries(GOODS.map((goods) => [goods, Number.MAX_SAFE_INTEGER]));
+  const shelf = Object.fromEntries(GOODS.map((goods) => [goods, Number.MAX_SAFE_INTEGER]));
   const placed = addBuilding(physical, job, site.x, site.y, {
     definitions: ECONOMIC_BUILDINGS,
     entrance: { x, y },
     requireRoad: false,
-    caps: { input },
+    caps: { input: shelf, construction: shelf, repair: shelf },
+    constructionRequired: constructionMaterialsFor(job),
   });
   if (!placed.ok) throw new Error(`区画建物の配置不可: ${job}@${x},${y}/${placed.reason}`);
   economy.zones.at(-1).buildingId = placed.building.id;

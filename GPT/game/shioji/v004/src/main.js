@@ -349,7 +349,8 @@ function formatSupplyDays(days) {
 }
 
 const SUPPLY_SOURCE_LABELS = Object.freeze({
-  households: '暮らし', order: '本国注文', winter: '冬支度', other: 'その他の利用',
+  households: '暮らし', order: '本国注文', winter: '冬支度',
+  local_construction: '現地建設', building_repair: '建物修繕', other: 'その他の利用',
 });
 
 function supplySourceLabel(source) {
@@ -1547,6 +1548,11 @@ function renderBuildingSheet() {
     const productivityPercent = Number.isFinite(productivity?.efficiency)
       ? Math.round(productivity.efficiency * 100) : null;
     const missingGoodsMarkup = growth?.missingGoodsForCurrent?.map(goodsIconMarkup).join('') ?? '';
+    const repairNotice = building.conditionStatus === 'needs_repair'
+      ? `要修繕（状態 ${Math.round(building.condition)}%）`
+      : building.conditionStatus === 'worn'
+        ? `建物に傷みあり（状態 ${Math.round(building.condition)}%）`
+        : `建物は良好（状態 ${Math.round(building.condition)}%）`;
     const headline = household.hungerRun >= 10 || foodDays < 3
       ? `⚠ ${delivery?.label ?? `食料があと${Math.max(0, Math.floor(foodDays))}日分`}`
       : !roadConnected ? '⚠ 市場へ道がつながっていません'
@@ -1555,7 +1561,8 @@ function renderBuildingSheet() {
             : '順調';
     const headlineTone = headline.startsWith('⚠') ? 'warning' : 'good';
     $('#building-summary').innerHTML = `
-      <div class="building-health" data-tone="${headlineTone}">${escapeHtml(headline)}</div>`;
+      <div class="building-health" data-tone="${headlineTone}">${escapeHtml(headline)}</div>
+      <div class="building-health" data-tone="${building.conditionStatus === 'good' ? 'good' : 'warning'}">${escapeHtml(repairNotice)}</div>`;
     const outputRows = building.shelves.filter(row => row.section === 'output' && row.amount > 1e-9);
     const outputNow = outputRows.length
       ? outputRows.map(row => `<span class="goods-inline">${goodsIconMarkup(row.goods)}<span>${escapeHtml(GOODS_LABELS[row.goods] ?? row.goods)} ${formatQuantity(row.amount)}荷</span></span>`).join('<span aria-hidden="true">・</span>')
@@ -1653,7 +1660,7 @@ function renderBuildingSheet() {
   const sectionNames = {
     foodPantry: '家の食料庫', householdGoods: '家の生活用品',
     pantry: '家の保管物', input: '原料棚', output: '製品棚', storage: '保管棚',
-    construction: '建築資材', inbound: '搬入待ち', outbound: '搬出待ち',
+    construction: '建築資材', repair: '修繕棚', inbound: '搬入待ち', outbound: '搬出待ち',
     pickup: '引取待ち', stall: '市場の屋台', companyStock: '会社の倉庫',
   };
   const shelves = [

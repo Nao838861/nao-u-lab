@@ -2513,6 +2513,14 @@ test('開始選択: URLのmodeは3種だけを受理し他のqueryを保つ', ()
 test('段2: full snapshotを地形・建物・キャリア・棚の不変描画モデルへ変換する', () => {
   const api = createEngineApi(buildBaseCity(11));
   const snapshot = api.snapshot({ scope: 'full' });
+  snapshot.physical.buildings[0].condition = 30;
+  snapshot.physical.buildings[0].conditionStatus = 'needs_repair';
+  snapshot.physical.buildings[0].repairPlan = {
+    openedDay: 1, dueDay: 31, required: { stone: 12 },
+  };
+  snapshot.physical.buildings[0].inventory.repair.stone = 2;
+  snapshot.physical.buildings[0].caps.repair ??= {};
+  snapshot.physical.buildings[0].caps.repair.stone = 20;
   const model = snapshotToViewModel(snapshot);
   assert.equal(model.terrain.length, snapshot.physical.height);
   assert.equal(model.terrain[0].length, snapshot.physical.width);
@@ -2523,6 +2531,13 @@ test('段2: full snapshotを地形・建物・キャリア・棚の不変描画�
   );
   assert.ok(model.carriers.every(carrier => carrier.members === undefined || carrier.members === 1));
   assert.ok(model.buildings.every(building => Array.isArray(building.shelves)));
+  assert.equal(model.buildings[0].condition, 30);
+  assert.equal(model.buildings[0].conditionStatus, 'needs_repair');
+  assert.deepEqual(model.buildings[0].repairPlan.required, { stone: 12 });
+  assert.equal(
+    model.buildings[0].shelves.find(row => row.section === 'repair' && row.goods === 'stone').amount,
+    2,
+  );
   assert.equal(Object.isFrozen(model), true);
   assert.equal(Object.isFrozen(model.terrain[0][0]), true);
   assert.equal(Object.isFrozen(model.renderScene), true);

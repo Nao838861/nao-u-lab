@@ -146,7 +146,7 @@ export const GOODS_LABELS = Object.freeze({
 });
 
 export const SECTION_LABELS = Object.freeze({
-  input: '入', output: '出', storage: '倉庫', construction: '工',
+  input: '入', output: '出', storage: '倉庫', construction: '工', repair: '修',
   inbound: '輸入', outbound: '輸出', pickup: '返', pantry: '家', stall: '市',
   companyStock: '会社倉庫',
 });

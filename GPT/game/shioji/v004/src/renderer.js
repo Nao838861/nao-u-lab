@@ -1009,6 +1009,7 @@ export class Renderer {
     }
     this.drawBuildingProps(building);
     this.drawCultureStageDetails(building);
+    this.drawRepairDamage(building);
     if (building.vacant) this.drawVacancyDetails(building);
     ctx.restore();
     const labelPoint = this.camera.project(
@@ -1070,6 +1071,34 @@ export class Renderer {
       ctx.strokeText(label, labelPoint.x, labelPoint.y + 25 * this.camera.zoom);
       ctx.fillText(label, labelPoint.x, labelPoint.y + 25 * this.camera.zoom);
     }
+    ctx.restore();
+  }
+
+  drawRepairDamage(building) {
+    if (building.vacant || building.conditionStatus === 'good') return;
+    const ctx = this.ctx;
+    const scale = this.camera.zoom;
+    const appearance = building.appearance;
+    const center = this.camera.project(
+      building.x + building.width * 0.52,
+      building.y + building.height * 0.5,
+      Math.max(5, appearance.elevation * 0.55),
+    );
+    const severe = building.conditionStatus === 'needs_repair';
+    ctx.save();
+    ctx.strokeStyle = severe ? '#3f2b25' : '#705348';
+    ctx.lineWidth = Math.max(1.2, (severe ? 2 : 1.4) * scale);
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(center.x - 8 * scale, center.y - 7 * scale);
+    ctx.lineTo(center.x - 2 * scale, center.y - 1 * scale);
+    ctx.lineTo(center.x - 6 * scale, center.y + 5 * scale);
+    if (severe) {
+      ctx.moveTo(center.x + 7 * scale, center.y - 5 * scale);
+      ctx.lineTo(center.x + 2 * scale, center.y + 1 * scale);
+      ctx.lineTo(center.x + 8 * scale, center.y + 7 * scale);
+    }
+    ctx.stroke();
     ctx.restore();
   }
 

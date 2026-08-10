@@ -14,6 +14,7 @@ import {
   initializeNaturalResources,
   isProductionInput,
   householdEat,
+  householdBuildingNeeds,
   householdFoodDays,
   householdTransportPlan,
   householdMaterialAmount,
@@ -248,6 +249,11 @@ function householdTripNeeds(economy, physical, household) {
       || productionInputAmount(physical, household, "char")
         + productionInputAmount(physical, household, "coal") < P.SMITH_FUEL
     ));
+  const buildingNeeds = householdBuildingNeeds(physical, household);
+  const capitalGoods = new Set([
+    ...Object.keys(buildingNeeds.construction),
+    ...Object.keys(buildingNeeds.repair),
+  ]);
   const foodThreshold = ["fisher", "shepherd", "veg"].includes(household.job) ? 1.2 : 3;
   return {
     foodDays,
@@ -255,6 +261,8 @@ function householdTripNeeds(economy, physical, household) {
     lowCultureGoods,
     inputLow,
     inputStopped,
+    capitalGoods,
+    capitalLow: capitalGoods.size > 0,
   };
 }
 
@@ -292,7 +300,8 @@ function urgentMarketDemandWeight(economy, physical, household) {
   const purchasableWeight = Object.entries(targets).reduce((total, [goods, [wanted, ceiling]]) => {
     const urgent = (needs.foodUrgent && FOODS.includes(goods))
       || needs.lowCultureGoods.includes(goods)
-      || (needs.inputLow && isProductionInput(household, goods));
+      || (needs.inputLow && isProductionInput(household, goods))
+      || needs.capitalGoods.has(goods);
     if (!urgent) return total;
     const stallQty = (economy.stalls[goods] ?? [])
       .filter((stall) => stall.price <= ceiling)
@@ -314,6 +323,7 @@ function urgentMarketDemandWeight(economy, physical, household) {
 }
 
 function finishMarketTrip(economy, physical, household, { day }) {
+  const returnState = household.marketCarrier.returnState ?? "home";
   unloadMarketBuyCargo(household, physical);
   recordHouseholdTransport(economy, household);
   finishHouseholdCartTrip(economy, household, {
@@ -329,7 +339,7 @@ function finishMarketTrip(economy, physical, household, { day }) {
   const home = householdEntrance(physical, household);
   household.px = home.x;
   household.py = home.y;
-  household.state = "home";
+  household.state = returnState;
 }
 
 export function findDirectSupplier(economy, physical, buyer, {
@@ -678,7 +688,7 @@ export function ensureHouseholdInputSites(economy, physical) {
         requireRoad: false,
         entrance,
         ownerHouseholdId: household.id,
-        caps: buildingCaps("input"),
+        caps: buildingCaps("input", "construction", "repair"),
       });
       if (!placed.ok) throw new Error(`世帯${household.id}の配置不可: ${placed.reason}`);
       building = placed.building;
@@ -691,6 +701,13 @@ export function ensureHouseholdInputSites(economy, physical) {
         depositInventory(building, "input", goods, qty);
       }
     }
+    building.inventory.construction ??= {};
+    building.inventory.repair ??= {};
+    building.caps.construction ??= buildingCaps("construction").construction;
+    building.caps.repair ??= buildingCaps("repair").repair;
+    building.condition = Number.isFinite(building.condition) ? building.condition : 100;
+    building.conditionStatus ??= "good";
+    building.constructionRequired ??= {};
     building.ownerHouseholdId = household.id;
   }
 }
@@ -742,7 +759,7 @@ export function beginMarketTrip(
     return porter;
   });
   distributeManifestAcrossPorters(household.cargo.manifest, porters, "outbound");
-  const start = household.state === "home"
+  const start = household.state === "home" || household.state === "building"
     ? householdEntrance(physical, household)
     : Number.isFinite(household.wx) && Number.isFinite(household.wy)
       ? tilePosition({ x: household.wx, y: household.wy })
@@ -764,6 +781,7 @@ export function beginMarketTrip(
     tripDistance: cartPorter?.routeCost ?? 0,
     routeCost: 0,
     reason,
+    returnState: household.state,
   };
   household.px = start.x;
   household.py = start.y;
@@ -901,7 +919,7 @@ export function decideHouseholdTrips(economy, physical, { timeOfDay = null } = {
   for (const household of economy.households) {
     if (timeOfDay !== null && householdDepartureTime(household) !== timeOfDay) continue;
     if (timeOfDay !== null && household.tookMarketTripToday) continue;
-    if (household.state !== "home") continue;
+    if (household.state !== "home" && household.state !== "building") continue;
     const needs = householdTripNeeds(economy, physical, household);
     const offers = sellOffers(economy, household);
     const sellWeight = Object.entries(offers).reduce(
@@ -921,7 +939,12 @@ export function decideHouseholdTrips(economy, physical, { timeOfDay = null } = {
       && household.purse > -20
       && daysSinceMarket >= P.MARKET_BATCH_DAYS
       && routine.scheduledToday;
-    const work = assignNeedyWork(economy, physical, household);
+    const capitalRestockReady = needs.capitalLow
+      && household.purse > -20
+      && daysSinceMarket >= 1;
+    const work = household.state === "home"
+      ? assignNeedyWork(economy, physical, household)
+      : null;
     if (work) {
       beginAssignedWorkTrip(physical, household);
       household.productionMultiplier = Math.max(
@@ -930,7 +953,9 @@ export function decideHouseholdTrips(economy, physical, { timeOfDay = null } = {
       );
       continue;
     }
-    const reason = needs.foodUrgent && household.purse > 2
+    const reason = capitalRestockReady
+      ? "building_materials"
+      : needs.foodUrgent && household.purse > 2
       ? "food_urgent"
       : needs.inputStopped && household.purse > -20
         ? "input_urgent"

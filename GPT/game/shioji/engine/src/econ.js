@@ -441,6 +441,80 @@ export function householdMult(household) {
   return primary ? Math.min(raw, 2) : raw;
 }
 
+const CONSTRUCTION_MATERIALS = deepFreeze({
+  // 最初の採取職だけは開拓キットの木製品で建てられる。丸太生産前に丸太を
+  // 要求する循環を作らず、以後の畑・工房から現地材の連鎖を始める。
+  fisher: { tools: 4 },
+  fisher2: { tools: 5 },
+  wheat: { log: 6, tools: 3, cloth: 0.5 },
+  veg: { log: 6, tools: 3, cloth: 0.5 },
+  shepherd: { log: 8, tools: 3, cloth: 1 },
+  rapeseed: { log: 6, tools: 3, cloth: 0.5 },
+  logger: { tools: 4 },
+  quarryman: { log: 6, tools: 4 },
+  miner: { log: 6, tools: 4, stone: 4 },
+  collier: { log: 6, tools: 4, stone: 4 },
+  smelter: { tools: 6, stone: 10, iron: 1 },
+  smith: { tools: 6, stone: 8, iron: 1 },
+  woodshop: { log: 6, tools: 6, stone: 3 },
+  cartwright: { log: 8, tools: 6, stone: 3 },
+  charburner: { log: 6, tools: 4, stone: 3 },
+  saltworks: { log: 6, tools: 4, stone: 4 },
+});
+
+export function constructionMaterialsFor(type) {
+  return structuredClone(CONSTRUCTION_MATERIALS[type] ?? { log: 6, tools: 4, stone: 2 });
+}
+
+function ensureBuildingShelves(building) {
+  if (!building) return null;
+  building.inventory ??= {};
+  building.caps ??= {};
+  for (const section of ["input", "construction", "repair"]) {
+    building.inventory[section] ??= {};
+    building.caps[section] ??= Object.fromEntries(
+      GOODS.map((goods) => [goods, Number.MAX_SAFE_INTEGER]),
+    );
+  }
+  building.condition = Number.isFinite(building.condition) ? building.condition : 100;
+  building.conditionStatus ??= "good";
+  building.constructionRequired ??= {};
+  return building;
+}
+
+function outstandingOnShelf(building, section, required) {
+  const outstanding = {};
+  for (const [goods, qty] of Object.entries(required ?? {})) {
+    const missing = Math.max(0, qty - sectionAmount(building, section, goods));
+    if (missing > 1e-9) outstanding[goods] = missing;
+  }
+  return outstanding;
+}
+
+export function householdBuildingNeeds(physical, household) {
+  if (!physical) return { construction: {}, repair: {} };
+  const building = ensureBuildingShelves(buildingById(physical, household?.buildingId));
+  if (!building) return { construction: {}, repair: {} };
+  const construction = building.constructionConsumed
+    ? {}
+    : outstandingOnShelf(building, "construction", building.constructionRequired);
+  const repair = outstandingOnShelf(building, "repair", building.repairPlan?.required);
+  return { construction, repair };
+}
+
+export function isHouseholdCapitalNeed(physical, household, goods) {
+  const needs = householdBuildingNeeds(physical, household);
+  return (needs.construction[goods] ?? 0) > 1e-9 || (needs.repair[goods] ?? 0) > 1e-9;
+}
+
+export function buildingConditionMultiplier(physical, household) {
+  if (!physical) return 1;
+  const condition = buildingById(physical, household?.buildingId)?.condition;
+  if (!Number.isFinite(condition) || condition >= 70) return 1;
+  if (condition >= 40) return 0.9;
+  return 0.75;
+}
+
 export function householdEat(household) {
   return household.members.length;
 }
@@ -1413,10 +1487,30 @@ export function unloadMarketBuyCargo(household, physical = null) {
     throw new Error(`世帯${household.id}に帰宅荷がありません`);
   }
   for (const [goods, qty] of Object.entries(household.cargo.manifest)) {
-    const building = householdInputBuilding(physical, household);
-    if (building && isProductionInput(household, goods)) {
-      depositInventory(building, "input", goods, qty);
-    } else household.pantry[goods] += qty;
+    const building = ensureBuildingShelves(householdInputBuilding(physical, household));
+    let remaining = qty;
+    if (building && !building.constructionConsumed) {
+      const need = Math.max(
+        0,
+        (building.constructionRequired?.[goods] ?? 0)
+          - sectionAmount(building, "construction", goods),
+      );
+      const delivered = Math.min(remaining, need);
+      if (delivered > 0) depositInventory(building, "construction", goods, delivered);
+      remaining -= delivered;
+    }
+    if (building?.repairPlan) {
+      const need = Math.max(
+        0,
+        (building.repairPlan.required?.[goods] ?? 0) - sectionAmount(building, "repair", goods),
+      );
+      const delivered = Math.min(remaining, need);
+      if (delivered > 0) depositInventory(building, "repair", goods, delivered);
+      remaining -= delivered;
+    }
+    if (remaining > 0 && building && isProductionInput(household, goods)) {
+      depositInventory(building, "input", goods, remaining);
+    } else if (remaining > 0) household.pantry[goods] += remaining;
   }
   for (const [goods, qty] of Object.entries(household.cargo.returnManifest ?? {})) {
     household.pantry[goods] += qty;
@@ -1570,6 +1664,19 @@ export function buyTargets(
     }
   }
 
+  const buildingNeeds = householdBuildingNeeds(physical, household);
+  for (const needs of [buildingNeeds.construction, buildingNeeds.repair]) {
+    for (const [goods, wanted] of Object.entries(needs)) {
+      if (!(wanted > 1e-9)) continue;
+      const ceiling = Math.max(
+        (px[goods] ?? P.BELIEF0[goods] ?? 2) * 1.6,
+        P.IMP[goods] !== undefined ? P.IMP[goods] * 1.05 : 0,
+      );
+      if (targets[goods]) targets[goods] = [targets[goods][0] + wanted, Math.max(targets[goods][1], ceiling)];
+      else targets[goods] = [wanted, ceiling];
+    }
+  }
+
   const currentRequirements = (LADDER[householdClass(household)] ?? []).slice(0, household.lv + 1);
   const needed = new Set();
   for (const requirement of currentRequirements) {
@@ -1589,8 +1696,8 @@ export function buyTargets(
     ["iron", P.D_IRON, 5],
   ]) {
     if (!needed.has(goods)) continue;
-    const daily = baseDaily * Math.pow(P.CMULT, household.lv);
     if (targets[goods]) continue;
+    const daily = baseDaily * Math.pow(P.CMULT, household.lv);
     let target = daily * P.CULT_D;
     if (goods === "char" && autumn) target = daily * 2 * 100;
     const current = householdMaterialAmount(physical, household, goods);
@@ -1877,7 +1984,7 @@ export function buyAtMarket(
   // 原料の必要があるあいだは運搬枠の半分までを原料用に取り置く。
   let inputReserve = 0;
   for (const [goods, [wanted]] of Object.entries(targets)) {
-    if (isProductionInput(household, goods)) {
+    if (isProductionInput(household, goods) || isHouseholdCapitalNeed(physical, household, goods)) {
       inputReserve += Math.max(0, wanted) * goodsUnitWeight(goods);
     }
   }
@@ -1972,7 +2079,8 @@ export function buyAtMarket(
       if (shelf.kind !== "AID" && (shelf.price > ceiling || shelf.price <= 0)) continue;
       const { goods } = shelf;
       const unitWeight = goodsUnitWeight(goods);
-      const input = isProductionInput(household, goods);
+      const input = isProductionInput(household, goods)
+        || isHouseholdCapitalNeed(physical, household, goods);
       const available = (shelf.kind === "CO" || shelf.kind === "AID" || shelf.kind === "STOCK" || shelf.kind === "LSTOCK")
         ? shelf.qty
         : shelf.stall.qty;
@@ -2458,7 +2566,7 @@ export function ageMarketStalls(economy, { day, physical = null }) {
   }
 }
 
-export function runWheatHarvest(economy, { day }) {
+export function runWheatHarvest(economy, { day, physical = null }) {
   const effectiveDay = calendarDay(economy, day);
   const month = calendarMonth(economy, day);
   if (month !== 9 || effectiveDay % 30 !== 15) return [];
@@ -2468,6 +2576,7 @@ export function runWheatHarvest(economy, { day }) {
     const fill = Math.min(1, (household.fert ?? 0) / (P.FERT_NEED * 180));
     const qty = P.Y_WHEAT
       * householdMult(household)
+      * buildingConditionMultiplier(physical, household)
       * Math.min(1, household.wheatWork / 300)
       * (1 + P.FERT_BOOST * fill);
     household.pantry.wheat += qty;
@@ -2523,6 +2632,10 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
   const resourceWork = ensureResourceWorkPlan(economy, physical, household);
   if (resourceWork) effectiveFraction *= resourceWork.efficiency;
   if (shouldPauseProduction(economy, household)) return {};
+  effectiveFraction *= buildingConditionMultiplier(physical, household);
+  const workBuilding = physical
+    ? ensureBuildingShelves(buildingById(physical, household.buildingId))
+    : null;
   const work = effectiveFraction * householdMult(household);
   const produced = {};
 
@@ -2774,6 +2887,14 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
   for (const [goods, qty] of Object.entries(produced)) {
     if (!Number.isFinite(qty) || qty <= 0 || goods === "cartWork") continue;
     household.productionToday[goods] = (household.productionToday[goods] ?? 0) + qty;
+  }
+  if (
+    workBuilding
+    && (household.job === "wheat" || Object.entries(produced).some(
+      ([goods, qty]) => goods !== "cartWork" && qty > 1e-9,
+    ))
+  ) {
+    workBuilding.operationWear = (workBuilding.operationWear ?? 0) + effectiveFraction;
   }
   return produced;
 }
@@ -3909,7 +4030,16 @@ function settleHouseholdInZone(economy, physical, household, zone) {
     zone.vacated = false;
   }
   const building = physical ? buildingById(physical, household.buildingId) : null;
-  if (building) building.ownerHouseholdId = household.id;
+  if (building) {
+    building.ownerHouseholdId = household.id;
+    ensureBuildingShelves(building);
+    for (const [goods, need] of Object.entries(building.constructionRequired ?? {})) {
+      const carried = Math.min(need, household.pantry[goods] ?? 0);
+      if (carried <= 1e-9) continue;
+      household.pantry[goods] -= carried;
+      depositInventory(building, "construction", goods, carried);
+    }
+  }
 }
 
 function createSuccessorHousehold(economy, donor, zone, physical = null) {
@@ -4088,6 +4218,8 @@ export function runCompanyDayStart(economy, { day, random, physical = null }) {
   result.settlements = fillSettlementZones(economy, { day, physical });
   for (const household of economy.households) {
     if (household.state !== "building") continue;
+    if (physical && !constructionReady(physical, household)) continue;
+    if (physical) consumeConstructionMaterials(economy, physical, household);
     household.buildDays -= 1;
     if (household.buildDays <= 0) {
       household.state = "home";
@@ -4226,6 +4358,7 @@ export const DAY_END_ORDER = deepFreeze([
   "death",
   "culture",
   "ladder",
+  "building_maintenance",
   "paving",
   "birth",
   "population_dynamics",
@@ -4486,6 +4619,154 @@ export function runPopulationDynamicsPhase(economy, physical, { day, random }) {
   return changes;
 }
 
+const REPAIR_MATERIALS_BY_JOB = deepFreeze({
+  fisher: ["log", "tools", "cloth", "iron"],
+  fisher2: ["log", "tools", "cloth", "iron"],
+  wheat: ["log", "tools", "cloth"],
+  veg: ["log", "tools", "cloth"],
+  shepherd: ["log", "tools", "cloth"],
+  rapeseed: ["log", "tools", "cloth"],
+  logger: ["log", "tools", "cloth"],
+  woodshop: ["tools", "stone", "iron"],
+  cartwright: ["tools", "stone", "iron"],
+  charburner: ["tools", "stone"],
+  saltworks: ["tools", "stone"],
+  quarryman: ["tools", "stone", "iron"],
+  miner: ["tools", "stone", "iron"],
+  collier: ["tools", "stone", "iron"],
+  smelter: ["stone", "iron"],
+  smith: ["stone", "iron"],
+});
+
+export function repairMaterialsFor(building, household) {
+  const lv = Math.max(0, household?.lv ?? 0);
+  const area = Math.max(1, (building?.w ?? 3) * (building?.h ?? 3));
+  const scale = area / 9;
+  const operational = 1 + Math.min(0.5, Math.max(0, building?.operationWear ?? 0) / 60);
+  const allowed = new Set(REPAIR_MATERIALS_BY_JOB[household?.job] ?? ["tools", "stone"]);
+  const required = {};
+  const add = (goods, qty) => {
+    if (allowed.has(goods) && qty > 1e-9) required[goods] = qty * scale * operational;
+  };
+  // Lv0の粗末な施設は屋外設備だけを少量直す。Lv1から加工材、Lv2から石材、
+  // Lv3から鉄材・布を常時使う。操業した月は最大50%だけ上積みされる。
+  add("log", lv === 0 ? 0.5 : 2 + lv);
+  if (lv >= 1) add("tools", 6 + lv * 2);
+  if (lv >= 2) add("stone", 12 * (lv - 1));
+  if (lv >= 3) {
+    add("iron", 3 * (lv - 2));
+    add("cloth", 2 * (lv - 2));
+  }
+  return required;
+}
+
+function consumeShelfPlan(economy, building, section, required, reason) {
+  let requiredTotal = 0;
+  let suppliedTotal = 0;
+  for (const [goods, need] of Object.entries(required ?? {})) {
+    requiredTotal += need;
+    const used = Math.min(need, sectionAmount(building, section, goods));
+    suppliedTotal += used;
+    if (used <= 1e-9) continue;
+    withdrawInventory(building, section, goods, used);
+    recordEconomicMaterialFlow(economy, goods, "cons", used, reason);
+  }
+  return requiredTotal > 1e-9 ? suppliedTotal / requiredTotal : 1;
+}
+
+export function constructionReady(physical, household) {
+  return Object.keys(householdBuildingNeeds(physical, household).construction).length === 0;
+}
+
+export function consumeConstructionMaterials(economy, physical, household) {
+  const building = ensureBuildingShelves(buildingById(physical, household?.buildingId));
+  if (!building || building.constructionConsumed || !constructionReady(physical, household)) return false;
+  consumeShelfPlan(
+    economy,
+    building,
+    "construction",
+    building.constructionRequired,
+    `世帯${household.id}の現地建設`,
+  );
+  building.constructionConsumed = true;
+  return true;
+}
+
+export function runBuildingMaintenance(economy, physical, { day }) {
+  const results = [];
+  if (!physical) return results;
+  for (const household of economy.households) {
+    const building = ensureBuildingShelves(buildingById(physical, household.buildingId));
+    if (!building || household.state === "arriving") continue;
+    if (household.state === "building") {
+      for (const [goods, need] of Object.entries(building.constructionRequired ?? {})) {
+        if (building.constructionConsumed) continue;
+        const dailyNeed = need / 10;
+        const fill = Math.min(
+          1,
+          sectionAmount(building, "construction", goods) / Math.max(need, 1e-9),
+        );
+        recordEconomicDemand(economy, goods, dailyNeed, dailyNeed * fill, "local_construction");
+      }
+      continue;
+    }
+    building.nextRepairDay = Number.isSafeInteger(building.nextRepairDay)
+      ? building.nextRepairDay
+      : day + 30;
+    if (building.repairPlan && day >= building.repairPlan.dueDay) {
+      const ratio = consumeShelfPlan(
+        economy,
+        building,
+        "repair",
+        building.repairPlan.required,
+        `世帯${household.id}の建物修繕`,
+      );
+      building.condition = Math.max(0, Math.min(100,
+        building.condition + (ratio >= 0.95 ? 6 : -15 * (1 - ratio)),
+      ));
+      building.repairNeglectCycles = building.condition < 25
+        ? (building.repairNeglectCycles ?? 0) + 1
+        : 0;
+      if (building.repairNeglectCycles >= 2 && household.lv > 0) {
+        household.lv -= 1;
+        household.up = 0;
+        household.down = 0;
+        building.repairNeglectCycles = 0;
+        building.condition = Math.max(40, building.condition);
+        recordEconomyEvent(economy, day, `${household.job}#${household.id} 修繕不足で▼Lv${household.lv}`);
+      }
+      building.repairPlan = null;
+      building.nextRepairDay = day;
+      results.push({ householdId: household.id, ratio, condition: building.condition });
+    }
+    if (!building.repairPlan && day >= building.nextRepairDay) {
+      building.repairPlan = {
+        openedDay: day,
+        dueDay: day + 30,
+        required: repairMaterialsFor(building, household),
+      };
+      building.operationWear = 0;
+      building.nextRepairDay = day + 30;
+    }
+    const previousStatus = building.conditionStatus;
+    building.conditionStatus = building.condition >= 70
+      ? "good"
+      : building.condition >= 40
+        ? "worn"
+        : "needs_repair";
+    if (previousStatus !== building.conditionStatus && building.conditionStatus !== "good") {
+      const label = building.conditionStatus === "worn" ? "傷みあり" : "要修繕";
+      recordEconomyEvent(economy, day, `${household.job}#${household.id} 建物に${label}`);
+    }
+    for (const [goods, need] of Object.entries(building.repairPlan?.required ?? {})) {
+      const dailyNeed = need / 30;
+      const fill = Math.min(1, sectionAmount(building, "repair", goods) / Math.max(need, 1e-9));
+      recordEconomicDemand(economy, goods, dailyNeed, dailyNeed * fill, "building_repair");
+    }
+  }
+  return results;
+}
+
 export function runDayEnd(economy, physical, { day, random = () => 1, trace = [] }) {
   if (!Number.isSafeInteger(day) || day <= 0) throw new TypeError("dayEnd day must be a positive safe integer");
   if (typeof random !== "function") throw new TypeError("dayEnd random must be a function");
@@ -4500,8 +4781,10 @@ export function runDayEnd(economy, physical, { day, random = () => 1, trace = []
   mark("company_procurement");
   const purchases = runCompanyProcurement(economy, { day, physical });
   mark("wheat_harvest");
-  const harvests = runWheatHarvest(economy, { day });
+  const harvests = runWheatHarvest(economy, { day, physical });
   const survival = runHouseholdDayEnd(economy, physical, { day, markPhase: mark });
+  mark("building_maintenance");
+  const maintenance = runBuildingMaintenance(economy, physical, { day });
   mark("paving");
   if (economy.paving && !economy.paved && economy.paveBought >= P.PAVE_STONE) {
     economy.paved = true;
@@ -4520,7 +4803,7 @@ export function runDayEnd(economy, physical, { day, random = () => 1, trace = []
   mark("money_conservation");
   assertMoneyConservation(economy, { incremental: true });
 
-  return { trace, purchases, harvests, survival, births, population, finance };
+  return { trace, purchases, harvests, survival, maintenance, births, population, finance };
 }
 
 const MONEY_EPSILON = 1e-9;

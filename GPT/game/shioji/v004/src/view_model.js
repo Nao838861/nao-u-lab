@@ -16,7 +16,7 @@ import {
 } from './visuals.js?v=v004.44.4-export-balance';
 
 const INVENTORY_SECTIONS = Object.freeze([
-  'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
+  'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',
 ]);
 
 const CONVERSION_JOBS = Object.freeze({
@@ -1227,6 +1227,15 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
       height: building.h,
       entrance: building.entrance ? { ...building.entrance } : null,
       grade: building.grade ?? 0,
+      condition: Number.isFinite(building.condition) ? building.condition : 100,
+      conditionStatus: building.conditionStatus ?? 'good',
+      repairPlan: building.repairPlan ? {
+        openedDay: building.repairPlan.openedDay,
+        dueDay: building.repairPlan.dueDay,
+        required: { ...(building.repairPlan.required ?? {}) },
+      } : null,
+      constructionRequired: { ...(building.constructionRequired ?? {}) },
+      constructionConsumed: Boolean(building.constructionConsumed),
       fixed: Boolean(building.fixed),
       ownerHouseholdId: building.ownerHouseholdId,
       occupied: building.ownerHouseholdId !== null,
