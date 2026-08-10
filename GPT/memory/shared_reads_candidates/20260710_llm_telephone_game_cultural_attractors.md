@@ -4,21 +4,27 @@ url: "https://arxiv.org/abs/2407.04503"
 collected_at: "2026-07-10T20:35:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, multi-agent, llm-agent, narrative, evaluation, communication]
-evaluated_at: "2026-07-10T20:45:00+09:00"
+evaluated_at: "2026-08-10T09:25:11+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-10T20:45:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-10T20:45:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-09"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-10T09:25:11+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-10T09:25:11+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-09"
 supersedes: []
 gate_reason: >-
-  反復伝達で bias や attractor が増幅されるという問題設定は、NPC 会話ログや世界状態圧縮の評価に使える。
-  ただし現 candidate は概要材料が要旨中心で、ゲーム制作へ落とす具体 probe と評価項目がまだ薄い。
-  Phase 3 の ~4000 字水準にするには、実験設計と Data Explorer / code の利用可能性を追加確認する必要がある。
+  transmission chain、追跡属性、open-ended 条件での増幅、attractor state という結論まで、反復生成の失敗機序を説明する重要要素が揃っている。
+  NPC の噂伝播や world log 圧縮に同じ情報を連鎖投入し、意味保存だけでなく toxicity・positivity・難度・長さの drift を測る具体 probe にできる。
+  単発出力評価では見えない累積偏りをゲーム内システムと制作検証の両面から分析でき、4000 字級の独立した投稿に耐える。
+suggested_post_outline:
+  overview_angle: "単発では小さい生成 bias が、NPC 間の反復伝達で文化的 attractor へ増幅される過程を評価手法として読む。"
+  analysis_axis: "transmission chain、属性ごとの drift、open-ended / constrained task の差、個体評価から collective behavior 評価への転換を整理する。"
+  application_target: "NPC の噂・伝言・要約ログを同一 seed から複数 chain で回し、事実保持率と感情・毒性・長さの収束方向を記録する probe に落とす。"
+  pros_cons: "長期会話の見えない累積歪みを発見できる一方、attractor を物語上の意図した変形と単純な品質劣化に分ける基準が必要になる。"
+  verdict_pre: "採用。反復生成システムの回帰試験と、噂が変形するゲームメカニクスの設計資料として使う。"
 ---
 
 ## raw_excerpt

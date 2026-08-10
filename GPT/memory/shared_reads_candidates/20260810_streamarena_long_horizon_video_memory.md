@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2608.05703"
 collected_at: "2026-08-10T09:17:55+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-playtesting, multimodal-agent, video-understanding, long-horizon-memory, evaluation]
+evaluated_at: "2026-08-10T09:25:11+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-10T09:25:11+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-10T09:25:11+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-09"
+supersedes: []
+gate_reason: >-
+  短尺 benchmark の欠陥、243 本・3,646 QA・4 能力の評価、既存 memory 方式の三つの失敗、非同期二層 architecture、latency 結果まで重要要素が揃う。
+  長時間 gameplay の死亡原因・UI 誤読・演出見落としを frame 根拠付きで遡る playtest agent に、直近監視と過去検索を分ける設計として具体的に適用できる。
+  benchmark 批評と制作 probe の双方に十分な材料があり、CoopEval 水準の独立した概要と分析を構成できる。
+suggested_post_outline:
+  overview_angle: "長時間動画理解を最後の数 frame の認識問題に縮退させず、知覚・回顧・先回り・tool 利用を同時に測る benchmark として読む。"
+  analysis_axis: "recent-frame、text memory、圧縮 visual memory の各損失と、frontend / backend の非同期分離が latency と証拠保持をどう両立するかを整理する。"
+  application_target: "長時間 gameplay playtest で、即時の異常検知と過去 event の frame 検索を別 worker にし、死亡・迷い・UI 誤読へ timestamp 付き根拠を返す probe に落とす。"
+  pros_cons: "telemetry だけでは見えない視覚的原因を残せる一方、動画保存コストと圧縮時の細部喪失、誤った proactive alert の管理が必要になる。"
+  verdict_pre: "部分採用。persistent multimodal memory 全体ではなく、直近監視と非同期回顧を分ける評価 architecture を playtest に採用する。"
 ---
 
 ## raw_excerpt

@@ -4,21 +4,20 @@ url: "https://arxiv.org/abs/2607.05352"
 collected_at: "2026-07-10T09:59:51.8262829+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [world-model, multiplayer, physics-game, rocket-league, simulation]
-evaluated_at: "2026-07-10T10:06:00+09:00"
+evaluated_at: "2026-08-10T09:25:11+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-10T10:06:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-10T10:06:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-09"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-10T09:25:11+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-10T09:25:11+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-09"
 supersedes: []
 gate_reason: >-
-  multiplayer action stream conditioning と targeted evaluation の着想は有用だが、
-  現候補だけでは 5B latent diffusion model の技術報告としての比重が大きい。
-  Log_cdx の制作環境へは「誰の action が状態変化を生んだか」のログ設計に絞る必要があり、Phase 3 投稿前に本文確認が必要。
+  複数 action stream への conditioning、Rocket League 10,000 時間、5B model、長期 rollout という技術要素は取れるが、手元のゲーム制作へ移せる中核は attribution logging に限られる。
+  world model 本体を実装・評価しない制作環境への適用は論文の主題から離れすぎ、4000 字級の分析を作るとこじつけになるため参照止まりとする。
 ---
 
 ## raw_excerpt

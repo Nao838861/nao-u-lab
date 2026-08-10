@@ -14,7 +14,97 @@
 - Phase 1 制約: 品質判定・長文概要・Slack投稿・記憶階層変更は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 7
+pass:
+  - memory/shared_reads_candidates/20260709_static_level_k_llm_behavioural_games.md
+  - memory/shared_reads_candidates/20260710_llm_telephone_game_cultural_attractors.md
+  - memory/shared_reads_candidates/20260810_codegrep_rl_retrieval_agent.md
+  - memory/shared_reads_candidates/20260810_streamarena_long_horizon_video_memory.md
+fail:
+  - path: memory/shared_reads_candidates/20260710_gdc2026_outer_worlds2_poi_design.md
+    reason: "講演概要だけで具体例・評価・失敗条件がなく、4000 字化が一般論の水増しになる"
+  - path: memory/shared_reads_candidates/20260710_multiplayer_world_models_rocket_league.md
+    reason: "制作環境への適用が attribution logging に限られ、world model 本体から離れすぎる"
+  - path: memory/shared_reads_candidates/20260710_open_source_games_llm_strategy_eval.md
+    reason: "game set・protocol・metric・代表結果がなく、前回延期後も評価材料が不足"
+postpone: []
+stale_reviewed:
+  - handoff_id: cha-9d396b94aff6ed9a
+    path: memory/shared_reads_candidates/20260709_static_level_k_llm_behavioural_games.md
+    previous_status: postponed
+    decision: pass
+    updated_stale_after: "2026-09-09"
+  - handoff_id: cha-036bdce71dd32db7
+    path: memory/shared_reads_candidates/20260710_gdc2026_outer_worlds2_poi_design.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-09-09"
+  - handoff_id: cha-f97e8a6d84fe2faa
+    path: memory/shared_reads_candidates/20260710_llm_telephone_game_cultural_attractors.md
+    previous_status: postponed
+    decision: pass
+    updated_stale_after: "2026-09-09"
+  - handoff_id: cha-23377eb5ea21868b
+    path: memory/shared_reads_candidates/20260710_multiplayer_world_models_rocket_league.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-09-09"
+  - handoff_id: cha-cdcd6e5eb8537828
+    path: memory/shared_reads_candidates/20260710_open_source_games_llm_strategy_eval.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-09-09"
+candidate_handoff_audit:
+  pending_before: 5
+  read_ids:
+    - cha-9d396b94aff6ed9a
+    - cha-036bdce71dd32db7
+    - cha-f97e8a6d84fe2faa
+    - cha-23377eb5ea21868b
+    - cha-cdcd6e5eb8537828
+  resolved_ids:
+    - cha-9d396b94aff6ed9a
+    - cha-036bdce71dd32db7
+    - cha-f97e8a6d84fe2faa
+    - cha-23377eb5ea21868b
+    - cha-cdcd6e5eb8537828
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 2
+  malformed_count: 0
+  oldest_collected_at: "2026-08-10T09:17:26+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260810_codegrep_rl_retrieval_agent.md
+    - memory/shared_reads_candidates/20260810_streamarena_long_horizon_video_memory.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260810_codegrep_rl_retrieval_agent.md
+    - memory/shared_reads_candidates/20260810_streamarena_long_horizon_video_memory.md
+  valid_backlog_after: 0
+duplicate_preflight:
+  builders_refreshed_at_start: true
+  builders_refreshed_after_updates: true
+  decisions:
+    continue: 7
+    review: 0
+    skip: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
