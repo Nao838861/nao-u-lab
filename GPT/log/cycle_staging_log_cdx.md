@@ -74,7 +74,18 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260810_optimizer_is_the_agent_reasearch.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786352183698429
+    char_count: 4229
+skipped: []
+review:
+  policy: pass
+  slack_verification: ok
+  final_decision: "部分採用"
+  rationale: "14 task の比較、trajectory、component ablation、controller-light という限界、自環境での三方式 headless 検証案を記事固有の分析として 4229 字にまとめ、禁止表現と必須構成を機械検証した。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
