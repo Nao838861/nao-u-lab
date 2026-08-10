@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.44.5-demand-network';
+import { SPEEDS } from './config.js?v=v004.45.0-caravan-slice';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

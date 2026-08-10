@@ -2304,7 +2304,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.44.5-demand-network');
+  assert.equal(VERSION, 'v004.45.0-caravan-slice');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2464,15 +2464,16 @@ function measureLoggerRoadRecovery(seed) {
   return { seed, before, after, director };
 }
 
-test('開始選択: tutorialとsandboxは同じ未開拓島、testは従来の安定都市になる', () => {
-  assert.deepEqual(Object.keys(START_MODES), ['tutorial', 'sandbox', 'test']);
+test('開始選択: 未開拓2種・見本町・二市場縦切りを選べる', () => {
+  assert.deepEqual(Object.keys(START_MODES), ['tutorial', 'sandbox', 'test', 'caravan']);
   const tutorial = createEngineController({ seed: 11, mode: 'tutorial' });
   const sandbox = createEngineController({ seed: 11, mode: 'sandbox' });
   const testCity = createEngineController({ seed: 11, mode: 'test' });
+  const caravan = createEngineController({ seed: 11, mode: 'caravan' });
   assert.deepEqual(tutorial.readModel(), sandbox.readModel());
   const blank = sandbox.readModel();
   for (const [mode, controller] of [
-    ['tutorial', tutorial], ['sandbox', sandbox], ['test', testCity],
+    ['tutorial', tutorial], ['sandbox', sandbox], ['test', testCity], ['caravan', caravan],
   ]) {
     const started = controller.readModel();
     assert.equal(started.day, 0, `${mode}の経過日は0日から始まる`);
@@ -2522,14 +2523,17 @@ test('開始選択: tutorialとsandboxは同じ未開拓島、testは従来の�
   assert.ok(sandbox.readModel().households.length > 0, '未開拓島の最初の区画へ移民が到着する');
   assert.ok(testCity.readModel().buildings.length > blank.buildings.length);
   assert.ok(testCity.readModel().zones.length > 0);
+  assert.deepEqual([caravan.readModel().width, caravan.readModel().height], [96, 64]);
+  assert.equal(caravan.readModel().marketNetwork.markets.length, 2);
   assert.ok(testCity.readModel().roadKeys.length > 0);
   assert.throws(() => createEngineController({ mode: 'unknown' }), /unknown start mode/);
 });
 
-test('開始選択: URLのmodeは3種だけを受理し他のqueryを保つ', () => {
+test('開始選択: URLのmodeは4種だけを受理し他のqueryを保つ', () => {
   assert.equal(parseStartMode('?mode=tutorial'), 'tutorial');
   assert.equal(parseStartMode('?mode=sandbox'), 'sandbox');
   assert.equal(parseStartMode('?mode=test'), 'test');
+  assert.equal(parseStartMode('?mode=caravan'), 'caravan');
   assert.equal(parseStartMode('?mode=unknown'), null);
   assert.equal(parseStartMode(''), null);
   const selected = new URL(urlForStartMode('https://example.test/game/?seed=11', 'sandbox'));
@@ -2544,6 +2548,64 @@ test('開始選択: URLのmodeは3種だけを受理し他のqueryを保つ', ()
     assert.equal(restarted.searchParams.get('resume'), null, '最初から選んだ時は保存再開指定を破棄する');
     assert.equal(restarted.searchParams.get('seed'), '11');
   }
+});
+
+test('隊商S2: 96×64の母港と漁郷が麦なしで一年自律し餓死を出さない', () => {
+  const controller = createEngineController({ seed: 11, mode: 'caravan' });
+  const initial = controller.saveState();
+  assert.deepEqual([initial.physical.width, initial.physical.height], [96, 64]);
+  assert.deepEqual(
+    initial.marketNetwork.markets.map(market => [market.id, market.name]),
+    [['main', '母港市場'], ['fishery', '漁郷市場']],
+  );
+  const fisheryAtStart = initial.economy.households.filter(
+    household => household.marketId === 'fishery',
+  );
+  assert.deepEqual(
+    fisheryAtStart.map(household => household.job).sort(),
+    ['fisher', 'fisher', 'fisher', 'saltworks'],
+  );
+  assert.equal(fisheryAtStart.every(household => household.pantry.wheat === 0), true);
+  const originalFisheryIds = fisheryAtStart.map(household => household.id);
+
+  controller.advanceTicks(360 * 30);
+  const after = controller.saveState();
+  assert.equal(
+    after.economy.events.some(([, message]) => (
+      message.includes('餓えで亡くなった') || message.includes('離散した')
+    )),
+    false,
+  );
+  const fisheryAfter = originalFisheryIds.map(
+    id => after.economy.households.find(household => household.id === id),
+  );
+  assert.equal(fisheryAfter.every(Boolean), true, '漁郷の種付き4世帯が一年後も残る');
+  assert.equal(fisheryAfter.every(household => household.pantry.wheat === 0), true,
+    '路線なしでは漁郷へ麦が現れない');
+  assert.equal(fisheryAfter.filter(household => household.job === 'fisher').every(
+    household => household.productionHistory.some(row => (row.goods.fish ?? 0) > 0),
+  ), true);
+  const saltworks = fisheryAfter.find(household => household.job === 'saltworks');
+  assert.equal(saltworks.productionHistory.some(row => (row.goods.salt ?? 0) > 0), true);
+});
+
+test('隊商S2: 二市場開始モードは同じ入力journalから同じ状態を再生する', () => {
+  const controller = createEngineController({ seed: 11, mode: 'caravan' });
+  const operation = { type: 'add_road', start: { x: 90, y: 20 }, end: { x: 91, y: 20 } };
+  assert.equal(controller.operate(operation).ok, true);
+  controller.advanceTicks(30 * 30);
+  const expected = controller.saveState();
+  const journal = controller.inputJournal();
+
+  const replay = createEngineController({ seed: 11, mode: 'caravan' });
+  let replayTick = 0;
+  for (const row of journal) {
+    replay.advanceTicks(row.tick - replayTick);
+    replayTick = row.tick;
+    assert.equal(replay.operate(row.op).ok, true);
+  }
+  replay.advanceTicks(expected.tick - replayTick);
+  assert.deepEqual(replay.saveState(), expected);
 });
 
 test('段2: full snapshotを地形・建物・キャリア・棚の不変描画モデルへ変換する', () => {

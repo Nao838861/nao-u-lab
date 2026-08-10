@@ -1,7 +1,7 @@
 import {
   FOOD_GOODS, WINTER_RESERVE_PER_PERSON,
-} from './food_readability.js?v=v004.44.5-demand-network';
-import { toDenari } from './config.js?v=v004.44.5-demand-network';
+} from './food_readability.js?v=v004.45.0-caravan-slice';
+import { toDenari } from './config.js?v=v004.45.0-caravan-slice';
 
 export const SUPPLY_STATUS = Object.freeze({
   no_demand: Object.freeze({ severity: 0, label: '需要なし' }),

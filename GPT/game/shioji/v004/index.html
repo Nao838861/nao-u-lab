@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.44.5-demand-network">
+  <link rel="stylesheet" href="./style.css?v=v004.45.0-caravan-slice">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -300,6 +300,10 @@
             <span><b>見本の町を眺める</b><em>すぐ観察</em></span>
             <small>人、荷車、産業がすでに動く町から、島の仕組みを眺めます。</small>
           </button>
+          <button type="button" data-start-mode="caravan">
+            <span><b>二つの市場</b><em>隊商の試作</em></span>
+            <small>母港と漁郷がある島で、山道を越える定期便を試します。</small>
+          </button>
           <button id="start-import" type="button" data-save-action="import">
             <span><b>保存ファイルを読み込む</b><em>JSON</em></span>
             <small>共有された島の状態を、そのまま確認できます。</small>
@@ -339,7 +343,7 @@
       });
     })();
   </script>
-  <script id="game-module" type="module" src="./src/main.js?v=v004.44.5-demand-network"
+  <script id="game-module" type="module" src="./src/main.js?v=v004.45.0-caravan-slice"
     onerror="window.__SHIOJI_BOOT__?.failed()"></script>
 </body>
 </html>

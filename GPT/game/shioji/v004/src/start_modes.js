@@ -22,6 +22,13 @@ export const START_MODES = Object.freeze({
     description: 'これまでと同じ、人口・道路・産業が動く検証済みの「見本の町」です。',
     blank: false,
   }),
+  caravan: Object.freeze({
+    id: 'caravan',
+    label: '二つの市場',
+    shortLabel: '二つの市場',
+    description: '母港と漁郷が荷車道で結ばれた島で、隊商路線を試します。',
+    blank: false,
+  }),
 });
 
 export function parseStartMode(search = '') {

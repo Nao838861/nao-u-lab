@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.44.5-demand-network';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.45.0-caravan-slice';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.44.5-demand-network';
+} from './food_readability.js?v=v004.45.0-caravan-slice';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.44.5-demand-network';
-import { analyzeRoadConnections } from './placement.js?v=v004.44.5-demand-network';
+} from './engine_bridge.js?v=v004.45.0-caravan-slice';
+import { analyzeRoadConnections } from './placement.js?v=v004.45.0-caravan-slice';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.44.5-demand-network';
+} from './render_scene.js?v=v004.45.0-caravan-slice';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.44.5-demand-network';
+} from './visuals.js?v=v004.45.0-caravan-slice';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',

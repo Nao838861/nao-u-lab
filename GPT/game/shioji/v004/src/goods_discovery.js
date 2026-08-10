@@ -90,7 +90,7 @@ export class GoodsDiscovery {
       return;
     }
 
-    const matureEconomy = mode === 'test';
+    const matureEconomy = mode === 'test' || mode === 'caravan';
     this.known = new Set(matureEconomy ? this.goodsIds : []);
     this.announced = new Set(matureEconomy ? Object.keys(GOODS_DISCOVERY_SCRIPTS) : []);
     this.pending = [];
