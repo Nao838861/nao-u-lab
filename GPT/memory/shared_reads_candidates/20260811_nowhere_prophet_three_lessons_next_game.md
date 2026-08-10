@@ -4,6 +4,27 @@ url: "https://sharkbombs.itch.io/nowhere-prophet/devlog/1277002/3-lessons-for-th
 collected_at: "2026-08-11T02:31:37+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, roguelike, deck-builder, difficulty, run-length, narrative, postmortem]
+evaluated_at: "2026-08-11T02:36:28+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-11T02:36:28+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-11T02:36:28+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-10"
+supersedes: []
+gate_reason: |-
+  作者自身の失敗分析から、難度較正・100分超 run・procedural narrative の問題と、後継作での具体的な構造変更を一対一で追える。
+  run 短縮が従来の deck-building を失わせるため戦闘内へ移す、という変更間の因果まであり、ゲーム制作の具体判断へ接続できる。
+  一次資料として問題設定・着想・設計手段・観察された失敗・次作での結論が揃い、約4000字の概要を独立して構成できる。
+suggested_post_outline:
+  overview_angle: 旧作の三つの失敗を個別の反省ではなく、後継作の core loop・難度導線・物語構造を組み替える因果連鎖として整理する
+  analysis_axis: 作者の熟達による難度較正の歪み、run 長と損失感、短縮で失われる成長、交換可能な narrative と recurring character の差を追う
+  application_target: Log_cdx のゲーム prototype で、難度・1 play の長さ・成長資源の配置・反復人物を変更する際の連鎖チェックと短い playable diff の評価軸に使う
+  pros_cons: 実制作の具体的な trade-off が強みだが、単一作者・単一シリーズの postmortem で定量比較がなく、数値を一般則として移植しない注意が要る
+  verdict_pre: 部分採用。20〜30分という値ではなく、短縮で消える機能を core action 内へ再配置する設計手順を採る
 ---
 
 ## raw_excerpt

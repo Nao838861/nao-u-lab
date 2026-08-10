@@ -7,12 +7,12 @@ genre_tags: [game-design, llm, unity, executable-synthesis, design-patterns]
 evaluated_at: "2026-08-09T22:10:33+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-08-09T22:10:33+09:00"
-last_decision: postpone
-duplicate_reason: duplicate_of_terminal_sibling
-evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260516_goal_playable_patterns_llm_synthesis.md; permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782341106489129; work arxiv:2603.07101"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-11T02:37:54+09:00"
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-709476e07d7dcb0a; terminal:memory/shared_reads_candidates/20260516_goal_playable_patterns_llm_synthesis.md: status posted permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778927776158409; reason:両 open sibling は実投稿済み arXiv work 2603.07101 と一致し内容差がない"
 next_action: none
 stale_after: "2026-09-08"
 supersedes: []

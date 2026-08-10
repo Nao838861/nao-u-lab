@@ -7,12 +7,12 @@ genre_tags: [game-ai, vlm-agent, playtesting, evaluation, unreal-engine, reflect
 evaluated_at: "2026-07-12T02:10:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-12T02:10:00+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260611_omnigamearena_vlm_game_agents.md; permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781162534005769"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-11T02:37:54+09:00"
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-409d1da9037e678a; terminal:memory/shared_reads_candidates/20260611_omnigamearena_vlm_game_agents.md: status posted permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781162534005769; reason:3 open sibling は実投稿済み arXiv work 2606.09826 と一致し題材差がない"
 next_action: none
 stale_after: "2026-08-11"
 supersedes: []

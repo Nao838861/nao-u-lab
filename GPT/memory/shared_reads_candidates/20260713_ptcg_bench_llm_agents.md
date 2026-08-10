@@ -7,12 +7,12 @@ genre_tags: [game-ai, llm-agent, evaluation, card-game, self-evolution, harness]
 evaluated_at: "2026-07-13T04:10:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-13T04:10:00+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260530_ptcg_bench_self_evolving_game_agents.md (https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780075916989739); memory/shared_reads_candidates/20260618_ptcg_bench_self_evolving_card_game_agents.md"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-11T02:37:55+09:00"
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-c3de22ce589e8262; terminal:memory/shared_reads_candidates/20260530_ptcg_bench_self_evolving_game_agents.md: status posted permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780075916989739; memory/shared_reads_candidates/20260618_ptcg_bench_self_evolving_card_game_agents.md: status posted permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781744312376709; reason:表記差だけで両 open sibling は実投稿済み arXiv work 2605.29653 と一致する"
 next_action: none
 stale_after: "2026-08-12"
 supersedes: []

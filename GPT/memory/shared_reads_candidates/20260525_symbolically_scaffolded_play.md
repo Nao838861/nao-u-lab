@@ -4,16 +4,16 @@ url: https://arxiv.org/abs/2510.25820
 collected_at: 2026-05-25T11:41:36+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, llm-npc, dialogue, prompt-design, usability-study]
-evaluated_at: 2026-05-25T11:45:31+09:00
+evaluated_at: "2026-08-11T02:36:28+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-07-12T10:15:54+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260515_symbolically_scaffolded_play.md; permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789224664759"
-stale_after: "2026-08-11"
+last_reviewed_at: "2026-08-11T02:36:28+09:00"
+last_decision: postpone
+duplicate_reason: duplicate_of_terminal_sibling
+evidence: "gate_decision:postpone; evaluated_at:2026-08-11T02:36:28+09:00; duplicate of posted candidate: memory/shared_reads_candidates/20260515_symbolically_scaffolded_play.md; permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789224664759; work arxiv:2510.25820"
+stale_after: "2026-09-10"
 supersedes: []
 phase3_skip:
   reason: "duplicate_url_already_posted"
@@ -21,14 +21,8 @@ phase3_skip:
   skipped_at: "2026-05-25T11:53:05+09:00"
 next_action: none
 gate_reason: |-
-  role-sensitive prompt constraint という具体的な設計論があり、探偵ゲームでの usability study と synthetic evaluation の流れまで候補内に残っている。
-  NPC 制約を一律に強めるのではなく、quest-giver と suspect で安定性/即興性を配分する考え方は、ゲーム制作の会話設計へ具体適用しやすい。
-suggested_post_outline:
-  overview_angle: 生成 NPC のプロンプト制約を「強/弱」ではなく、役割ごとの期待機能に合わせて配分する設計として読む。
-  analysis_axis: 高制約が coherence を上げる場面と believability を削る場面を分け、JSON+RAG scaffold と judge 評価で補助する軸。
-  application_target: 謎解き・案内役・敵役・雑談役などの NPC ロール別に、守るべき事実と崩してよい即興範囲を設計するプロンプト/評価テンプレ。
-  pros_cons: 安定性と破綻防止には強いが、ロール定義と境界設計を怠ると即興の面白さを殺す。
-  verdict_pre: 部分採用。生成会話を使うプロトタイプでは、NPC ごとの scaffold 強度表を作る形で採用する。
+  arXiv:2510.25820 は同一 URL / work identity の candidate が既に #shared-reads へ投稿済みで、実投稿 permalink まで確認できた。
+  role-sensitive scaffold の適用価値は高いが、新しい評価・題材差がないため Phase 3 で再投稿せず duplicate として保留終了する。
 
 ---
 
