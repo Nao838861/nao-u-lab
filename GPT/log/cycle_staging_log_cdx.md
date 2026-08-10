@@ -133,7 +133,35 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786383928-dd93d53e67
+    source_ts: "1786383928.323609"
+    title: "3 Lessons for the next game — Nowhere Prophet postmortem"
+    reason: "source=slack_api/shared-reads、score=11、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新候補から1件だけを選んだ。旧作の難度、100分超run、交換可能すぎる物語を、後継作で情報開示、battle内deck-building、recurring characterへ再配置した知見が、次のgame prototypeで機能を削る判断の副作用確認に直結する。Nao_uの明示的な重要評価は確認できない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: defer
+  decision_reason: "採用閾値は満たすが、既存のsession-length、difficulty-proxy、carried-assumption probesと部分重複する。現cycleにはmechanic削減前後を比較できるplayable diffやdesign recordがなく、consumer、trigger artifact、期待する判断差を具体的に固定できない。active_probes 322件に同型probeを追加せず、実際のprototypeでrun・map・dialogue・progressionを削るdiffが置かれた時だけ再評価する。"
+  change:
+    summary: "reviewed_source_tsとdefer理由だけをstateへ記録。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

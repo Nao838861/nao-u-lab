@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-11T00:52:00+09:00",
+  "updated_at": "2026-08-11T02:52:56+09:00",
   "reviewed_source_ts": [
+    "1786383928.323609",
     "1786369462.101059",
     "1786322484.996019",
     "1786352183.698429",
@@ -621,6 +622,46 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-11T02:52:56+09:00",
+      "selected": {
+        "id": "sr-1786383928-dd93d53e67",
+        "source_ts": "1786383928.323609",
+        "title": "3 Lessons for the next game — Nowhere Prophet postmortem",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たし、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新候補から1件だけを選んだ。旧作の難度、100分超run、交換可能すぎる物語を個別に縮小するのではなく、短縮で消えるdeck-buildingをbattle内へ、procedural variationで消えた関係継続をrecurring characterへ再配置する知見が、次のgame prototypeで機能を削る判断の副作用確認に直結する。Nao_uが本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "decision": "defer",
+      "decision_reason": "合計17で数値上の採用条件は満たす。shared-reads本文は、難度を勝率と情報納得度へ分解すること、run短縮で失われる成長cadenceをcore combatへ再配置すること、交換可能なeventに再会と関係変化の縦軸を通すことを、作者自身の旧作失敗と後継作の構造変更から示すため、relevance・actionability・evidenceは3とした。『削る要素が運んでいた機能を先に特定し、移植先と副作用を測る』点は既存probeにない明示的な差なのでnon_redundancyは2。一方、probe-20260604-player-time-scarcity-session-boundaryはsession長と短時間価値を、probe-20260711-balance-trend-skill-chanceとprobe-20260609-dda-proxy-rule-traceは難度proxyを、probe-20260709-chainswe-chain-regression-carryoverは変更後に引き継ぐ前提と回帰条件を既に確認する。現在のcycleにはmechanic削減前後を比較できるplayable diffやdesign recordがなく、consumer、trigger artifact、期待する判断差を具体的に固定できない。active_probesが322件ある状態で将来一般のgame作業を対象に同型probeを追加すると確認負荷だけが先行するため、active probe・metric・lease・directive・恒久ルールは追加しない。次に実際のprototypeでrun、map、dialogue、progressionのいずれかを削る具体的diffが置かれ、既存controlsだけでは消失機能の移植先を判断できない時に再評価する。",
+      "existing_controls": [
+        "probe-20260604-player-time-scarcity-session-boundary",
+        "probe-20260711-balance-trend-skill-chance",
+        "probe-20260609-dda-proxy-rule-trace",
+        "probe-20260709-chainswe-chain-regression-carryover"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsとdefer理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-11T00:52:00+09:00",
       "selected": {
