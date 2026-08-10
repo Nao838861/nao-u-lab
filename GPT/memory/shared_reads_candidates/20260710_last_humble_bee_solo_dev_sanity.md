@@ -4,21 +4,20 @@ url: "https://www.gamedeveloper.com/business/the-last-humble-bee-postmortem-stay
 collected_at: "2026-07-10T01:30:50+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [postmortem, solo-dev, production, marketing, scope]
-evaluated_at: "2026-07-10T01:35:18+09:00"
+evaluated_at: "2026-08-10T17:48:24+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-10T01:35:18+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-10T01:35:18+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-09"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-10T17:48:24+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-10T17:48:24+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-09"
 supersedes: []
 gate_reason: >-
-  solo dev の制作継続、asset 活用、early demo、Steam page など実務論点はあるが、
-  現候補は助言リストに近く、The Last Humble Bee 固有の制作判断、結果、失敗からの学びがまだ薄い。
-  Phase 3 品質にするには本文から具体的な時系列と成果指標を補う必要がある。
+  30 日後の再評価でも、制作継続・asset 活用・early demo という助言は抽出できる一方、作品固有の結果・失敗・成果指標が不足している。
+  適用先は明確だが、~4000 字の postmortem 分析を支える因果的な振り返りが薄く、候補品質のまま膨らませる危険があるため fail とする。
 ---
 
 ## raw_excerpt
