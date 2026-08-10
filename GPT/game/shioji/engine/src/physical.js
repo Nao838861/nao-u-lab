@@ -887,7 +887,22 @@ export function dockVessel(
   if (typeof goods !== "string" || !Number.isFinite(qty) || qty <= 0) {
     throw new TypeError("port transfer goods/qty must be positive");
   }
-  const dockImmediately = (physical.activePortCallIds?.length ?? 0) === 0;
+  // statusを正本として、終了済みIDが残った派生索引を先に除く。
+  activePortCalls(physical);
+  const activeIds = physical.activePortCallIds ??= [];
+  const queueIds = physical.portCallQueueIds ??= [];
+  let dockImmediately = activeIds.length === 0;
+  // 一船で長期間を占有する通常輸出入が、期限付き契約を待ち列ごと塞がないよう、
+  // 荷役途中の通常船をいったん待機へ戻す。残荷は同じcallに保持して後で再開する。
+  if (!dockImmediately && metadata.kind === "order") {
+    const activeCall = portCallById(physical, activeIds[0]);
+    if (activeCall?.status === "docked" && activeCall.metadata?.kind !== "order") {
+      activeIds.shift();
+      activeCall.status = "waiting";
+      queueIds.unshift(activeCall.id);
+      dockImmediately = true;
+    }
+  }
   const call = {
     id: `pc${physical.nextPortCallId}`,
     portBuildingId: port.id,
@@ -903,8 +918,15 @@ export function dockVessel(
   physical.nextPortCallId += 1;
   physical.portCalls.push(call);
   (physical.portCallIndex ??= {})[call.id] = physical.portCalls.length - 1;
-  if (dockImmediately) (physical.activePortCallIds ??= []).push(call.id);
-  else (physical.portCallQueueIds ??= []).push(call.id);
+  if (dockImmediately) {
+    activeIds.push(call.id);
+  } else if (metadata.kind === "order") {
+    // 期限付きの本国注文は、現在荷役中の船の次に扱う。通常輸出入の長い列の
+    // 最後尾へ置くと、生産・在庫が足りていても契約だけが失効してしまう。
+    queueIds.unshift(call.id);
+  } else {
+    queueIds.push(call.id);
+  }
   return call;
 }
 
@@ -920,22 +942,24 @@ export function portCallById(physical, callId) {
 }
 
 export function activePortCalls(physical) {
-  if (!Array.isArray(physical.activePortCallIds)) {
-    physical.activePortCallIds = physical.portCalls
-      .filter((call) => call.status === "docked")
-      .map((call) => call.id);
-  }
   const active = [];
   const activeIds = [];
-  for (const callId of physical.activePortCallIds) {
+  const seen = new Set();
+  for (const callId of physical.activePortCallIds ?? []) {
     const call = portCallById(physical, callId);
-    if (!call || call.status !== "docked") continue;
+    if (!call || call.status !== "docked" || seen.has(call.id)) continue;
+    seen.add(call.id);
     active.push(call);
     activeIds.push(callId);
   }
-  if (activeIds.length !== physical.activePortCallIds.length) {
-    physical.activePortCallIds = activeIds;
+  // call.statusを正本として、索引から落ちた接岸船も荷役対象へ戻す。
+  for (const call of physical.portCalls) {
+    if (call.status !== "docked" || seen.has(call.id)) continue;
+    seen.add(call.id);
+    active.push(call);
+    activeIds.push(call.id);
   }
+  physical.activePortCallIds = activeIds;
   return active;
 }
 
@@ -970,6 +994,7 @@ export function stepPortHandling(physical, ticks = 1) {
   }
   const transfers = [];
   for (let tick = 0; tick < ticks; tick += 1) {
+    activePortCalls(physical);
     let call = null;
     while ((physical.activePortCallIds?.length ?? 0) > 0) {
       const candidate = portCallById(physical, physical.activePortCallIds[0]);
@@ -978,6 +1003,10 @@ export function stepPortHandling(physical, ticks = 1) {
         break;
       }
       physical.activePortCallIds.shift();
+    }
+    // 終了済みIDだけがactiveに残っていた場合も、待機列を永久停止させない。
+    if (!call && (physical.activePortCallIds?.length ?? 0) === 0) {
+      call = activateNextPortCall(physical);
     }
     if (call && call.direction !== "import" && call.metadata?.yardReady !== true) call = null;
     if (!call) break;
@@ -1219,14 +1248,26 @@ export function haulJobById(physical, jobId) {
 }
 
 function activeHaulJobs(physical) {
-  if (!Array.isArray(physical.activeHaulJobIds)) {
-    physical.activeHaulJobIds = physical.haulJobs
-      .filter((job) => job.status === "in_transit")
-      .map((job) => job.id);
+  // job.statusを正本とし、派生索引が欠けたセーブや履歴整理後も自己修復する。
+  // 旧式は配列自体が存在すると再構築せず、索引から落ちた荷が永久停止していた。
+  const indexed = Array.isArray(physical.activeHaulJobIds)
+    ? physical.activeHaulJobIds
+    : [];
+  const active = [];
+  const seen = new Set();
+  for (const jobId of indexed) {
+    const job = haulJobById(physical, jobId);
+    if (!job || job.status !== "in_transit" || seen.has(job.id)) continue;
+    seen.add(job.id);
+    active.push(job);
   }
-  return physical.activeHaulJobIds
-    .map((jobId) => haulJobById(physical, jobId))
-    .filter((job) => job?.status === "in_transit");
+  for (const job of physical.haulJobs) {
+    if (job.status !== "in_transit" || seen.has(job.id)) continue;
+    seen.add(job.id);
+    active.push(job);
+  }
+  physical.activeHaulJobIds = active.map((job) => job.id);
+  return active;
 }
 
 function deactivateHaulJob(physical, jobId) {

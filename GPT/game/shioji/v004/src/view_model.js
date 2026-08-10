@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.44.4-export-balance';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.44.5-demand-network';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.44.4-export-balance';
+} from './food_readability.js?v=v004.44.5-demand-network';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.44.4-export-balance';
-import { analyzeRoadConnections } from './placement.js?v=v004.44.4-export-balance';
+} from './engine_bridge.js?v=v004.44.5-demand-network';
+import { analyzeRoadConnections } from './placement.js?v=v004.44.5-demand-network';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.44.4-export-balance';
+} from './render_scene.js?v=v004.44.5-demand-network';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.44.4-export-balance';
+} from './visuals.js?v=v004.44.5-demand-network';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',

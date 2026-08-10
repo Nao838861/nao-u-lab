@@ -39,7 +39,8 @@ assert.equal(FOODS.includes('salt'), false, '塩は食料ではない');
   });
   assert.equal(result.order[0], 'wheat', '食料備蓄不足時は食料を最初に買う');
   assert.equal(result.purchased.wheat, 3, '原料用の半枠を除いた運搬枠をまず食料に使う');
-  assert.equal(result.purchased.log ?? 0, 0, '食料不足時に加工原料が運搬枠を先取りしない');
+  assert.equal(result.purchased.log ?? 0, 3,
+    '食料を先に半枠確保した後、残りで加工原料を運び収入源も止めない');
 }
 
 {

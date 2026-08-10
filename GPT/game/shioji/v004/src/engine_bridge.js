@@ -6,23 +6,23 @@ export {
   householdClass,
   householdProductionSummary,
   productionCost,
-} from '../../engine/src/econ.js?v=v004.44.4-export-balance';
-import { P } from '../../engine/src/econ.js?v=v004.44.4-export-balance';
-import { createEngineApi } from '../../engine/src/api.js?v=v004.44.4-export-balance';
+} from '../../engine/src/econ.js?v=v004.44.5-demand-network';
+import { P } from '../../engine/src/econ.js?v=v004.44.5-demand-network';
+import { createEngineApi } from '../../engine/src/api.js?v=v004.44.5-demand-network';
 import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
   buildBaseCity,
   makeStableCityPlan,
-} from '../../engine/src/audit.js?v=v004.44.4-export-balance';
-import { createPhysicalState, makeFlowIslandTerrain, makeMultiMarketTerrain } from '../../engine/src/physical.js?v=v004.44.4-export-balance';
-import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.44.4-export-balance';
-import { createViewController } from './controller.js?v=v004.44.4-export-balance';
+} from '../../engine/src/audit.js?v=v004.44.5-demand-network';
+import { createPhysicalState, makeFlowIslandTerrain, makeMultiMarketTerrain } from '../../engine/src/physical.js?v=v004.44.5-demand-network';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.44.5-demand-network';
+import { createViewController } from './controller.js?v=v004.44.5-demand-network';
 import {
   SPRING_START_CALENDAR_OFFSET_DAYS,
   START_MODES,
-} from './start_modes.js?v=v004.44.4-export-balance';
+} from './start_modes.js?v=v004.44.5-demand-network';
 
 export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS };
 export { makeMultiMarketTerrain };

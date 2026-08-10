@@ -65,27 +65,31 @@ export const P = deepFreeze({
   PR_PICK: 0.85,
   Y_VEG: 16,
   Y_WHEAT: 6000,
-  Y_LOG: 16,
-  Y_ORE: 14,
-  Y_COAL: 10,
-  Y_SMELT: 8,
-  Y_SMITH: 5,
+  // 上流ほど多くの施設を要する基準比率。Lv倍率は全職共通で同じ上限にするため、
+  // 木工房1軒（8×3=24荷）へ木こり3軒、炭焼き1軒（4×2=8荷）へ1軒となる。
+  // 産出を極端に小さくして一次職の採算を壊さず、加工一回の原料投入量で厚みを作る。
+  Y_LOG: 8,
+  Y_ORE: 4,
+  Y_COAL: 2,
+  Y_SMELT: 2,
+  Y_SMITH: 2,
   SMELT_ORE: 2,
   SMELT_FUEL: 1,
   SMITH_BAR: 1,
   SMITH_FUEL: 0.5,
-  LOG_TOOL: 1.5,
-  LOG_CHAR: 1,
+  LOG_TOOL: 3,
+  LOG_CHAR: 2,
   Y_TOOLS: 8,
-  Y_CHAR: 8,
-  Y_SALT: 12,
+  Y_CHAR: 4,
+  Y_SALT: 3,
   Y_MEAT: 16,
   // 麦・野菜を同じ飼料荷として扱う暫定比率。全需要接続後の需要網7で再較正する。
   FEED_MEAT: 1,
   // 牧畜の布は肉生産の副産物。島内需要を大きく超えて積み上がらない量に留める。
   Y_CLOTH: 0.05,
-  // 綿花農家の布は最大11人世帯でも輸出原価2.0を下回らない生産量。
-  Y_COTTON_CLOTH: 5.5,
+  // 人口200級で一軒完結していた布を、島内需要に応じ二軒目が成立する量へ抑える。
+  // 大家族まで輸出価格で必ず黒字にする旧制約は、輸出偏重を再発させるため置かない。
+  Y_COTTON_CLOTH: 3,
   D_CLOTH: 0.03,
   D_IRON: 0.03,
   SALT_CHAR: 1,
@@ -101,8 +105,8 @@ export const P = deepFreeze({
   UP_DAYS: 45,
   DOWN_DAYS: 60,
   HAUL: 40,
-  IMP: { wheat: 4, tools: 6, salt: 5, iron: 4.5, oil: 3 },
-  IMP_COST: { wheat: 2.4, tools: 4.2, salt: 3.5, iron: 3.2, oil: 2.6 },
+  IMP: { wheat: 4, tools: 6, salt: 5, iron: 12, oil: 3 },
+  IMP_COST: { wheat: 2.4, tools: 4.2, salt: 3.5, iron: 8.5, oil: 2.6 },
   EXP: { pres: 0.6, pick: 0.55, cloth: 2 },
   EXP_CAP: { pres: 25, pick: 15, cloth: 12 },
   EXP_ML: { pres: 0.66, pick: 0.6, cloth: 2.2 },
@@ -117,6 +121,9 @@ export const P = deepFreeze({
   PASSAGE: 60,
   BUILD_COST: 250,
   FEE: 0.04,
+  // 最初の注文は、開拓直後の一工房でも事前備蓄から短期間で納められる試し荷。
+  // 信用ができた二件目以降は直近日次余剰5日分（最大80荷）の通常注文へ移る。
+  FIRST_ORDER_QTY: 12,
   SHIP_COST: 8000,
   SHIP_CAP: 2,
   SHIP_PRICE: 1.2,
@@ -128,7 +135,8 @@ export const P = deepFreeze({
   MEAL_FISH: 8,
   FERT_NEED: 3,
   FERT_BOOST: 0.15,
-  Y_STONE: 8,
+  // Lv2以上の全施設が石材を維持消費する前提で、人口200級に複数の採石場を要する量。
+  Y_STONE: 4,
   WOOD0: 150,
   WOOD_R: 0.25,
   ROAD_WORK: 3,
@@ -181,9 +189,9 @@ export const P = deepFreeze({
   DISTRESS: 40,
   COOLDOWN: 360,
   BELIEF0: {
-    fish: 1, veg: 1, wheat: 1.2, pres: 1.2, pick: 1.3, tools: 2,
-    salt: 2, char: 1.5, meat: 1.3, meal: 1, stone: 1, oil: 3,
-    iron: 3.5, cloth: 2.5, ore: 0.8, coal: 1, bar: 2.2,
+    fish: 1, veg: 1, wheat: 1.2, pres: 1.2, pick: 1.3, tools: 5,
+    salt: 4, char: 4.5, meat: 1.3, meal: 1, stone: 2, oil: 3,
+    iron: 10, cloth: 3.5, log: 1.4, ore: 1.8, coal: 2.8, bar: 8,
   },
 });
 
@@ -446,7 +454,7 @@ export function createHousehold(economy, { job, x, y, origin = "immigrant" }) {
   if (origin !== "immigrant") throw new Error(`unsupported household origin: ${origin}`);
   const household = makeHouseholdRecord(economy, { job, x, y });
   applyImmigrantKit(household);
-  // 本土から来る漁家だけは使い込んだ小舟と網を持参する。島内分家は資産を
+  // 本土から来る漁師世帯だけは使い込んだ小舟と網を持参する。島内分家は資産を
   // 複製せず岸漁から始め、必要なら市場の実資材で新調する。
   if (job === "fisher") {
     household.fishingRig = {
@@ -492,11 +500,9 @@ export function createHousehold(economy, { job, x, y, origin = "immigrant" }) {
 }
 
 export function householdMult(household) {
-  const raw = Math.pow(P.LV_MULT, household.lv);
-  const primary = {
-    fisher: 1, fisher2: 1, veg: 1, wheat: 1, shepherd: 1, rapeseed: 1,
-  }[household.job];
-  return primary ? Math.min(raw, 2) : raw;
+  // 加工職だけがLvで3.98倍、6.31倍へ伸びる旧式は、一軒の工房が上流全体を
+  // 飲み込む原因だった。全職を同じ2倍上限にし、施設比率をLvで反転させない。
+  return Math.min(Math.pow(P.LV_MULT, household.lv), 2);
 }
 
 const CONSTRUCTION_MATERIALS = deepFreeze({
@@ -1887,6 +1893,10 @@ export const BUY_ORDER = deepFreeze([
 ]);
 
 const FOOD_BUY_ORDER = deepFreeze(["wheat", "pres", "pick", "veg", "fish", "meat"]);
+const CREDIT_INPUT_JOBS = new Set([
+  "saltworks", "fisher2", "shepherd", "veg",
+  "smelter", "smith", "woodshop", "charburner",
+]);
 
 export function buyTargets(
   economy,
@@ -2091,11 +2101,11 @@ export function buyTargets(
   }
   needed.add("char");
   for (const [goods, baseDaily, ceiling] of [
-    ["tools", P.D_TOOL, 2.5],
-    ["salt", P.D_SALT, 2.5],
-    ["char", P.D_CHAR, 2.5],
-    ["cloth", P.D_CLOTH, 2.8],
-    ["iron", P.D_IRON, 5],
+    ["tools", P.D_TOOL, P.IMP.tools * 1.05],
+    ["salt", P.D_SALT, P.IMP.salt * 1.05],
+    ["char", P.D_CHAR, 5],
+    ["cloth", P.D_CLOTH, 4],
+    ["iron", P.D_IRON, P.IMP.iron * 1.05],
   ]) {
     if (!needed.has(goods)) continue;
     if (targets[goods]) continue;
@@ -2487,7 +2497,8 @@ export function buyAtMarket(
         }
       }
       const reserved = economy.order?.g === goods ? economy.order.left : 0;
-      const freeStock = (economy.stock[goods] ?? 0) - reserved;
+      const warehouseStock = economy.stock[goods] ?? 0;
+      const freeStock = Math.max(0, warehouseStock - reserved);
       const retailStock = physical ? (economy.marketStock[goods] ?? 0) : freeStock;
       if (retailStock > 1e-9) {
         shelves.push({
@@ -2524,14 +2535,28 @@ export function buyAtMarket(
       if (shelf.kind !== "AID" && (shelf.price > ceiling || shelf.price <= 0)) continue;
       const { goods } = shelf;
       const unitWeight = goodsUnitWeight(goods);
-      const input = isProductionInput(household, goods)
-        || isHouseholdCapitalNeed(physical, household, goods);
+      const productionInput = isProductionInput(household, goods);
+      const capitalNeed = isHouseholdCapitalNeed(physical, household, goods);
+      const input = productionInput || capitalNeed;
+      // 信用買いは売上へ直結する日々の原料だけ。建設・修繕・道具・漁具・肥料・
+      // 荷車材料まで一律に借金購入すると、改善投資が食料を買えない世帯を作る。
+      let creditEligible = productionInput && CREDIT_INPUT_JOBS.has(household.job);
+      // 複数原料の製鉄は、主原料がないのに燃料だけ借金購入して棚へ寝かせない。
+      if (creditEligible && ["char", "coal"].includes(goods)) {
+        if (household.job === "smelter") {
+          creditEligible = productionInputAmount(physical, household, "ore")
+            + (purchased.ore ?? 0) > 1e-9;
+        } else if (household.job === "smith") {
+          creditEligible = productionInputAmount(physical, household, "bar")
+            + (purchased.bar ?? 0) > 1e-9;
+        }
+      }
       const available = (shelf.kind === "CO" || shelf.kind === "AID" || shelf.kind === "STOCK" || shelf.kind === "LSTOCK")
         ? shelf.qty
         : shelf.stall.qty;
       const affordable = shelf.kind === "AID"
         ? Infinity
-        : (household.purse + (input ? 30 : 0)) / shelf.price;
+        : (household.purse + (creditEligible ? 30 : 0)) / shelf.price;
       const usableCapacity = input ? capacity : Math.max(0, capacity - inputReserve);
       const qty = Math.min(wanted, available, affordable, usableCapacity / unitWeight);
       if (qty < 1e-9) continue;
@@ -3677,7 +3702,9 @@ const ORDER_NAMES = deepFreeze({
 export const COMPANY_ORDER_GOODS = Object.freeze(Object.keys(ORDER_NAMES));
 
 const ORDER_PRICES = deepFreeze({
-  tools: 2.5,
+  // 丸太投入3倍後の全量仕入原価を辛うじて上回る小口契約。通常輸出ではなく、
+  // 島内余剰5日分に限るため大量輸出益にはならない。
+  tools: 2.8,
   char: 1.2,
   salt: 1.5,
   pres: 0.9,
@@ -4191,12 +4218,15 @@ export function setCompanyStockTarget(economy, goods, qty) {
 export function runCompanyProcurement(economy, { day, physical = null }) {
   const purchases = [];
   for (const goods of Object.keys(economy.stockTgt)) {
+    // 受諾中の注文品は倉庫から港へ出す。市場の小売棚や、そこへ向かう荷を
+    // 「確保済み」と数えると、契約分が棚に取り残されて期限直前まで買い戻せない。
+    const warehouseOnly = economy.order?.g === goods;
     let lack = (economy.stockTgt[goods] ?? 0)
       - (economy.stock[goods] ?? 0)
       - (physical ? (
-        (economy.marketStock[goods] ?? 0)
+        (warehouseOnly ? 0 : (economy.marketStock[goods] ?? 0))
         + pendingCompanyHaul(physical, "procurement", goods)
-        + pendingCompanyHaul(physical, "stock_release", goods)
+        + (warehouseOnly ? 0 : pendingCompanyHaul(physical, "stock_release", goods))
       ) : 0);
     if (lack <= 1e-9 || economy.company.money <= -companyCreditLimit(economy, { day })) continue;
     const stalls = [...economy.stalls[goods]]
@@ -4257,45 +4287,49 @@ export function runCompanyProcurement(economy, { day, physical = null }) {
 function dispatchCompanyOrder(economy, physical, { day }) {
   if (!economy.order) return [];
   const goods = economy.order.g;
-  let remaining = Math.min(
-    economy.stock[goods] ?? 0,
-    Math.max(
-      0,
-      economy.order.left
-        - pendingCompanyHaul(physical, "order", goods)
-        - pendingOrderPortQuantity(physical, goods),
-    ),
+  let remaining = Math.max(
+    0,
+    economy.order.left
+      - pendingCompanyHaul(physical, "order", goods)
+      - pendingOrderPortQuantity(physical, goods),
   );
   const jobs = [];
-  while (remaining > 1e-9) {
-    const qty = Math.min(companyAvailableGoodsCapacity(economy, physical, goods), remaining);
-    if (qty <= 1e-9) break;
-    const averageCost = (economy.stockCost[goods] ?? 0)
-      / Math.max(1e-9, economy.stock[goods] ?? 0);
-    const job = dispatchCompanyHaul(economy, physical, {
-      day,
-      kind: "order",
-      fromRole: "warehouse",
-      fromSection: "storage",
-      toRole: "port",
-      toSection: "outbound",
-      goods,
-      qty,
-      metadata: {
-        cost: qty * averageCost,
-        unitCost: averageCost,
-        orderPrice: economy.order.price,
-        orderDue: economy.order.due,
-      },
-    });
-    if (!job) break;
-    economy.stock[goods] -= qty;
-    economy.stockCost[goods] = Math.max(
-      0,
-      (economy.stockCost[goods] ?? 0) - qty * averageCost,
-    );
-    remaining -= qty;
-    jobs.push(job);
+  // 注文は買上げ目標で倉庫へ確保した原価簿から出す。市場の会社小売棚を
+  // 直接転用すると、注文時に比較した市場最安と古い平均原価が食い違う。
+  for (const source of [
+    { role: "warehouse", section: "storage", stock: economy.stock, cost: economy.stockCost },
+  ]) {
+    while (remaining > 1e-9 && (source.stock[goods] ?? 0) > 1e-9) {
+      const qty = Math.min(
+        companyAvailableGoodsCapacity(economy, physical, goods),
+        remaining,
+        source.stock[goods] ?? 0,
+      );
+      if (qty <= 1e-9) break;
+      const averageCost = (source.cost[goods] ?? 0)
+        / Math.max(1e-9, source.stock[goods] ?? 0);
+      const job = dispatchCompanyHaul(economy, physical, {
+        day,
+        kind: "order",
+        fromRole: source.role,
+        fromSection: source.section,
+        toRole: "port",
+        toSection: "outbound",
+        goods,
+        qty,
+        metadata: {
+          cost: qty * averageCost,
+          unitCost: averageCost,
+          orderPrice: economy.order.price,
+          orderDue: economy.order.due,
+        },
+      });
+      if (!job) break;
+      source.stock[goods] -= qty;
+      source.cost[goods] = Math.max(0, (source.cost[goods] ?? 0) - qty * averageCost);
+      remaining -= qty;
+      jobs.push(job);
+    }
   }
   return jobs;
 }
@@ -4394,7 +4428,6 @@ export function settleCompanyLogistics(economy, physical, { day }) {
         port
         && economy.order
         && economy.order.g === job.goods
-        && day < economy.order.due
       ) {
         dockVessel(physical, {
           portBuildingId: port.id,
@@ -4422,6 +4455,9 @@ export function settleCompanyLogistics(economy, physical, { day }) {
     settled.push({ jobId: job.id, kind: metadata.kind, goods: job.goods, qty: job.qty });
   }
   physical.economicHaulJobIds = stillPending;
+  // 期限付き注文は、完了した通常補充が運び手を解放した瞬間に先に割り当てる。
+  // 日初だけのdispatchでは、連続する市場補充が全運び手を再取得し続けてしまう。
+  if (economy.order) dispatchCompanyOrder(economy, physical, { day });
   dispatchPendingStockReleases(economy, physical, { day });
   dispatchPendingExportLots(economy, physical, { day });
   dispatchPendingImports(economy, physical, { day });
@@ -4497,7 +4533,6 @@ export function settlePortTransfers(economy, physical, { day, transfers }) {
       if (
         !economy.order
         || economy.order.g !== transfer.goods
-        || day >= economy.order.due
       ) continue;
       const shipped = Math.min(transfer.qty, economy.order.left);
       economy.order.left -= shipped;
@@ -4650,12 +4685,24 @@ export function runCompanyDayStart(economy, { day, random, physical = null }) {
     : null;
   const shouldOfferOrder = economy.orderDone === 0 || orderRoll < 0.5;
   if (!economy.order && !economy.orderOffer && orderRoll !== null && shouldOfferOrder) {
-    const candidates = Object.keys(ORDER_NAMES).filter(
-      (goods) => (economy.f30[goods]?.prod ?? 0) > 0.3,
+    const orderableDailySurplus = (goods) => Math.max(
+      0,
+      (economy.f30[goods]?.prod ?? 0) - (economy.f30[goods]?.cons ?? 0),
     );
+    const candidates = economy.orderDone === 0
+      ? ((economy.f30.tools?.prod ?? 0) > 0.3 ? ["tools"] : [])
+      : Object.keys(ORDER_NAMES).filter(
+        (goods) => orderableDailySurplus(goods) > 0.3,
+      );
     if (candidates.length > 0) {
-      const goods = candidates[Math.floor(random() * candidates.length)];
-      const qty = Math.round(30 + random() * 50);
+      // 開拓初回は教程で築いた木工連鎖の試し荷にする。二件目からは生産中の
+      // 品目を従来どおり抽選し、食料加工などにも注文が巡る。
+      const goods = economy.orderDone === 0
+        ? "tools"
+        : candidates[Math.floor(random() * candidates.length)];
+      const qty = economy.orderDone === 0
+        ? P.FIRST_ORDER_QTY
+        : Math.max(1, Math.round(Math.min(80, orderableDailySurplus(goods) * 5)));
       economy.orderOffer = {
         g: goods,
         qty,
@@ -4682,7 +4729,17 @@ export function runCompanyDayStart(economy, { day, random, physical = null }) {
     economy.orderOffer = null;
   }
 
-  if (economy.order && day >= economy.order.due) {
+  // 表示上は「due日目まで」なので、期限当日の荷役も有効にする。
+  // 旧式はdue日の開始時に失効し、港へ着いた端数だけを不自然に持ち帰っていた。
+  const tenderedOrderQty = economy.order && physical
+    ? pendingCompanyHaul(physical, "order", economy.order.g)
+      + pendingOrderPortQuantity(physical, economy.order.g)
+    : 0;
+  if (
+    economy.order
+    && day > economy.order.due
+    && tenderedOrderQty + 1e-9 < economy.order.left
+  ) {
     result.expired = structuredClone(economy.order);
     recordEconomyEvent(
       economy,
@@ -5132,13 +5189,13 @@ export function runPopulationDynamicsPhase(economy, physical, { day, random }) {
 }
 
 const REPAIR_MATERIALS_BY_JOB = deepFreeze({
-  fisher: ["log", "tools", "cloth", "iron"],
-  fisher2: ["log", "tools", "cloth", "iron"],
-  wheat: ["log", "tools", "cloth"],
-  veg: ["log", "tools", "cloth"],
-  shepherd: ["log", "tools", "cloth"],
-  rapeseed: ["log", "tools", "cloth"],
-  logger: ["log", "tools", "cloth"],
+  fisher: ["log", "tools", "stone", "cloth", "iron"],
+  fisher2: ["log", "tools", "stone", "cloth", "iron"],
+  wheat: ["log", "tools", "stone", "cloth"],
+  veg: ["log", "tools", "stone", "cloth"],
+  shepherd: ["log", "tools", "stone", "cloth"],
+  rapeseed: ["log", "tools", "stone", "cloth"],
+  logger: ["log", "tools", "stone", "cloth"],
   woodshop: ["tools", "stone", "iron"],
   cartwright: ["tools", "stone", "iron"],
   charburner: ["tools", "stone"],

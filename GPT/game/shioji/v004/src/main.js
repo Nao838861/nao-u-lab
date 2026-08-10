@@ -1,47 +1,48 @@
-import { IsometricCamera } from './camera.js?v=v004.44.4-export-balance';
-import { SimulationClock } from './clock.js?v=v004.44.4-export-balance';
-import { createBoundaryEvents } from './boundary_events.js?v=v004.44.4-export-balance';
+import { IsometricCamera } from './camera.js?v=v004.44.5-demand-network';
+import { SimulationClock } from './clock.js?v=v004.44.5-demand-network';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.44.5-demand-network';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.44.4-export-balance';
+} from './config.js?v=v004.44.5-demand-network';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.44.4-export-balance';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.44.4-export-balance';
-import { developmentMapView } from './development_map.js?v=v004.44.4-export-balance';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.44.4-export-balance';
-import { formatElenaSpeech } from './elena_text.js?v=v004.44.4-export-balance';
+} from './display_batch.js?v=v004.44.5-demand-network';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.44.5-demand-network';
+import { developmentMapView } from './development_map.js?v=v004.44.5-demand-network';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.44.5-demand-network';
+import { formatElenaSpeech } from './elena_text.js?v=v004.44.5-demand-network';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.44.4-export-balance';
+} from './food_readability.js?v=v004.44.5-demand-network';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.44.4-export-balance';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.44.4-export-balance';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.44.4-export-balance';
-import { goodsDetail } from './goods_detail.js?v=v004.44.4-export-balance';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.44.4-export-balance';
-import { WorldPresentation } from './presentation.js?v=v004.44.4-export-balance';
-import { Renderer } from './renderer.js?v=v004.44.4-export-balance';
+} from './keyboard.js?v=v004.44.5-demand-network';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.44.5-demand-network';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.44.5-demand-network';
+import { goodsDetail } from './goods_detail.js?v=v004.44.5-demand-network';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.44.5-demand-network';
+import { WorldPresentation } from './presentation.js?v=v004.44.5-demand-network';
+import { Renderer } from './renderer.js?v=v004.44.5-demand-network';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.44.4-export-balance';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.44.4-export-balance';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.44.4-export-balance';
+} from './save_game.js?v=v004.44.5-demand-network';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.44.5-demand-network';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.44.5-demand-network';
 import {
   GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRow, supplyDemandRows,
-} from './supply_demand.js?v=v004.44.4-export-balance';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.44.4-export-balance';
+} from './supply_demand.js?v=v004.44.5-demand-network';
+import { orderQuote } from './tutorial_content.js?v=v004.44.5-demand-network';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.44.5-demand-network';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.44.4-export-balance';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.44.4-export-balance';
+} from './ui_guidance.js?v=v004.44.5-demand-network';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.44.5-demand-network';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -1055,8 +1056,9 @@ function renderCartPanel() {
 function renderCompanyOrder() {
   const offer = model.orderOffer;
   const active = model.activeOrder;
+  const quote = offer ? orderQuote(model) : null;
   const signature = JSON.stringify({
-    day: model.day, offer, active, dismissedOfferKey, lowest: offer ? model.marketLowest[offer.g] : null,
+    day: model.day, offer, active, dismissedOfferKey, quote,
   });
   renderIfChanged('company-order', signature, () => {
     if (active) {
@@ -1074,14 +1076,14 @@ function renderCompanyOrder() {
         <p class="order-goods">${goodsIconMarkup(offer.g)}<span>${GOODS_LABELS[offer.g] ?? offer.g} ${formatQuantity(offer.qty)}荷。島の状態と操作記録は変えず、期限まで観察できます。</span></p>
         <div class="order-actions"><button type="button" data-company-action="reconsider">再検討する</button></div>`;
     } else if (offer) {
-      const cheapest = model.marketLowest[offer.g];
-      const marketText = Number.isFinite(cheapest)
-        ? `${formatQuantity(cheapest * 10)}デナリ`
-        : '市場在庫なし';
+      const sourceText = Number.isFinite(quote.marketUnitCost)
+        ? `${formatQuantity(quote.marketUnitCost * 10)}デナリ`
+        : `全量を調達できません（現在 ${formatQuantity(quote.marketAvailable)} / ${formatQuantity(offer.qty)}荷）`;
       $('#order-panel').innerHTML = `
         <h3>本国から注文状</h3>
         <p class="order-goods"><b>${goodsIconMarkup(offer.g)}<span>${GOODS_LABELS[offer.g] ?? offer.g} ${formatQuantity(offer.qty)}荷</span></b>・期限 ${offer.due}日目</p>
-        <p>完遂決済単価 ${formatQuantity(offer.price * 1.25 * 10)}デナリ（注文基準 ${formatQuantity(offer.price * 10)}） / 市場最安 ${marketText}</p>
+        <p>完遂決済単価 ${formatQuantity(offer.price * 1.25 * 10)}デナリ（注文基準 ${formatQuantity(offer.price * 10)}） / 全量仕入原価 ${sourceText}</p>
+        <p>会社倉庫の在庫を先に使い、不足分を安い屋台から全${formatQuantity(offer.qty)}荷集める見積りです。</p>
         <div class="order-actions">
           <button class="accept" type="button" data-company-action="accept-order">受諾する</button>
           <button class="reject" type="button" data-company-action="reject-order">拒否する</button>

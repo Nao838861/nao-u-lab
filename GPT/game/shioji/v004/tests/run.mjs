@@ -2,8 +2,10 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { createEngineApi, replayInputJournal } from '../../engine/src/api.js';
 import { buildBaseCity, findAuditSpot } from '../../engine/src/audit.js';
-import { FOODS, runPopulationDynamicsPhase } from '../../engine/src/econ.js';
-import { ECONOMIC_BUILDINGS } from '../../engine/src/physical.js';
+import {
+  FOODS, createHousehold, requestCompanyImport, runPopulationDynamicsPhase,
+} from '../../engine/src/econ.js';
+import { ECONOMIC_BUILDINGS, depositInventory } from '../../engine/src/physical.js';
 import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
 import {
@@ -73,6 +75,7 @@ import {
   TUTORIAL_OPTIONAL_GOAL_IDS,
   TUTORIAL_PLAYER_TITLES, TUTORIAL_SYSTEM_INSTRUCTIONS,
   isRequiredTutorialGoal, isTutorialGoalUnlocked, tutorialLetterDelivery, estimateWalkLen,
+  orderQuote,
 } from '../src/tutorial_content.js';
 import {
   TutorialDirector, createTutorialDirector, createTutorialDirectorForMode,
@@ -208,17 +211,34 @@ test('ラン3: 発展図は現存産業を点灯し、将来案を操作ロッ�
   assert.doesNotMatch(source, /operate|place_building|unlock|requiredNode/);
 });
 
+function buildCartLifecycleCity(seed) {
+  const world = buildBaseCity(seed);
+  const api = createEngineApi(world);
+  const spot = findAuditSpot(world, 'cartwright');
+  assert.ok(spot, `seed${seed}で荷車工房を配置できる`);
+  const placed = api.applyOperation({
+    type: 'place_building', job: 'cartwright', x: spot[0], y: spot[1],
+  });
+  assert.equal(placed.ok, true);
+  const building = world.state.physical.buildings.find(({ id }) => id === placed.buildingId);
+  const household = createHousehold(world.state.economy, {
+    job: 'cartwright', x: building.entrance.x, y: building.entrance.y,
+  });
+  household.buildingId = building.id;
+  building.ownerHouseholdId = household.id;
+  building.constructionConsumed = true;
+  world.state.economy.zones.find(({ buildingId }) => buildingId === building.id).filled = true;
+  // 荷車そのものの製造・購入・摩耗を、旧基準都市の上流不足から独立して検査する。
+  depositInventory(building, 'input', 'log', 400);
+  depositInventory(building, 'input', 'tools', 50);
+  return world;
+}
+
 test('ラン3: 3シードで木製荷車が製造・世帯購入・使用・摩耗・買い替えまで循環する', () => {
   const rows = [];
   for (const seed of [11, 13, 14]) {
-    const world = buildBaseCity(seed);
+    const world = buildCartLifecycleCity(seed);
     const api = createEngineApi(world);
-    api.advanceDays(60);
-    const spot = findAuditSpot(world, 'cartwright');
-    assert.ok(spot, `seed${seed}で荷車工房を配置できる`);
-    assert.equal(api.applyOperation({
-      type: 'place_building', job: 'cartwright', x: spot[0], y: spot[1],
-    }).ok, true);
     for (let day = 0; day < 600; day += 1) {
       api.advanceDays(1);
       const stats = world.state.economy.cartStats;
@@ -243,14 +263,8 @@ test('ラン3: 3シードで木製荷車が製造・世帯購入・使用・摩�
 });
 
 test('ラン3: 会社の木製荷車は公開操作でだけ購入され、有限容量で使われ摩耗する', () => {
-  const world = buildBaseCity(11);
+  const world = buildCartLifecycleCity(11);
   const api = createEngineApi(world);
-  api.advanceDays(60);
-  const spot = findAuditSpot(world, 'cartwright');
-  assert.ok(spot);
-  assert.equal(api.applyOperation({
-    type: 'place_building', job: 'cartwright', x: spot[0], y: spot[1],
-  }).ok, true);
   let offer = null;
   for (let day = 0; day < 400 && !offer; day += 1) {
     api.advanceDays(1);
@@ -273,7 +287,7 @@ test('ラン3: 会社の木製荷車は公開操作でだけ購入され、有�
   assert.equal(world.state.economy.cartStats.companyBroken, 1);
   const journal = api.inputJournal();
   const replay = replayInputJournal(
-    () => buildBaseCity(11),
+    () => buildCartLifecycleCity(11),
     journal,
     { untilTick: world.state.tick },
   );
@@ -1027,7 +1041,7 @@ test('チュートリアル段6: 市場→支援→入植→食料職→木工�
   advanceUntil(() => director.readState().completedGoals.includes('first-settlers-arrive'), 20, '最初の入植');
   assert.equal(director.currentObjective().id, 'place-island-food');
 
-  for (const job of ['fisher', 'veg']) {
+  for (const job of ['fisher', 'fisher', 'veg', 'veg', 'logger', 'logger']) {
     const placement = findReachablePreviewNear(controller.readModel(), job, market.entrance)?.preview;
     assert.ok(placement, `${job}を市場から徒歩14以内へ置ける`);
     assert.equal(controller.operate({
@@ -1053,7 +1067,7 @@ test('チュートリアル段6: 市場→支援→入植→食料職→木工�
   observe();
   assert.equal(director.readState().completedGoals.includes('first-woodshop'), true);
 
-  advanceUntil(() => hasLetter('first-tools'), 45, '最初の木製品の書状');
+  advanceUntil(() => hasLetter('first-tools'), 90, '上流3軒の入植後に起きる最初の木製品の書状');
   const letters = director.letters();
   const toolsIndex = letters.findIndex(letter => letter.id === 'first-tools');
   const tradeIndex = letters.findIndex(letter => letter.id === 'first-log-trade');
@@ -1205,7 +1219,7 @@ test('チュートリアル段7〜9: 支援1回・早期食料・事前備蓄で
     '市場設置後の最初の入植',
   );
 
-  for (const job of ['fisher', 'veg']) {
+  for (const job of ['fisher', 'fisher', 'veg', 'veg', 'logger', 'logger']) {
     const preview = findReachablePreviewNear(controller.readModel(), job, market.entrance)?.preview;
     assert.ok(preview, `${job}を市場から徒歩14以内へ置ける`);
     assert.equal(controller.operate({
@@ -1258,30 +1272,30 @@ test('チュートリアル段7〜9: 支援1回・早期食料・事前備蓄で
   observe();
   assert.equal(director.currentObjective().id, 'prepare-first-tools-stock');
   assert.equal(controller.operate({
-    type: 'set_stock_target', goods: 'tools', qty: 80,
+    type: 'set_stock_target', goods: 'tools', qty: 12,
   }).ok, true);
   observe();
   assert.equal(director.currentObjective().id, 'accept-first-order');
 
-  advanceDaysUntil(() => Boolean(controller.readModel().orderOffer), 65, '初注文の到着');
+  advanceDaysUntil(() => Boolean(controller.readModel().orderOffer), 110, '木工房が動き始めた後の初注文到着');
   const offer = controller.readModel().orderOffer;
   const offerDay = controller.readModel().day;
-  assert.equal(offerDay, 75, '初回は最初の生産適格日に届く');
+  assert.ok(offerDay >= 75 && offerDay <= 120, `木工房の生産適格日までに初注文が届く: ${offerDay}日`);
   assert.equal(offer.g, 'tools');
   assert.match(director.letters().find(letter => letter.id === 'first-order-offer').summary,
     new RegExp(`${offer.qty}荷`));
   assert.equal(controller.operate({ type: 'accept_order' }).ok, true);
   observe();
   assert.equal(director.currentObjective().id, 'order-procurement-target');
-  assert.equal(hasLetter('order-needs-target'), false, '80荷の事前備蓄を注文量へ下げさせない');
+  assert.equal(hasLetter('order-needs-target'), false, '12荷の事前備蓄を同量の初注文でそのまま使う');
   observe();
   assert.equal(director.readState().completedGoals.includes('order-procurement-target'), true);
-  assert.equal(controller.readModel().stockTargets.tools, 80, '入力した80荷を維持する');
+  assert.equal(controller.readModel().stockTargets.tools, 12, '入力した12荷を維持する');
   observe();
   assert.equal(director.readState().completedGoals.includes('first-order-procurement'), true);
   assert.equal(hasLetter('first-company-procurement'), true, '注文前の実調達在庫を確認する');
 
-  const completionLimit = offer.due * 30;
+  const completionLimit = (offer.due + 1) * 30;
   while (!hasLetter('first-order-complete') && controller.readModel().tick < completionLimit) {
     controller.advanceTicks(1);
     observe();
@@ -1291,8 +1305,8 @@ test('チュートリアル段7〜9: 支援1回・早期食料・事前備蓄で
   ));
   assert.ok(completionEvent, `注文期限${offer.due}日目までに完遂イベントが起きる`);
   assert.ok(
-    controller.readModel().day <= offerDay + 5,
-    `春開始の季節生産でも事前備蓄により受諾後5日以内に完遂する: 受諾${offerDay}日、完遂${controller.readModel().day}日`,
+    controller.readModel().day <= offerDay + 10,
+    `上流3軒をまだ持たない開拓初期でも、小口の事前備蓄により受諾後10日以内に完遂する: 受諾${offerDay}日、完遂${controller.readModel().day}日`,
   );
   const handlingEvents = observedEvents.filter(event => (
     event.type === 'handling' && event.direction === 'export' && event.goods === offer.g
@@ -1764,15 +1778,16 @@ test('チュートリアル段18〜19実測: 3シードで黒字注文と3件比
       const key = `${offer.g}:${offer.qty}:${offer.due}`;
       if (seen.has(key)) continue;
       seen.add(key);
-      const cheapest = model.marketLowest[offer.g];
+      const quote = orderQuote(model);
       offers.push({
         day: model.day, goods: offer.g, qty: offer.qty, due: offer.due,
-        settlement: offer.price * 1.25, cheapest,
-        profitable: Number.isFinite(cheapest) && cheapest <= offer.price * 1.25,
+        settlement: quote.settlementPrice,
+        unitCost: quote.marketUnitCost,
+        available: quote.marketAvailable,
+        profitable: quote.profitable,
       });
       const hasProfitable = offers.some(row => row.profitable);
-      const hasUnsafe = offers.some(row => !Number.isFinite(row.cheapest)
-        || row.cheapest > row.settlement);
+      const hasUnsafe = offers.some(row => !row.profitable);
       if ((hasProfitable && hasUnsafe)
         || offers.length >= ORDER_JUDGMENT_FALLBACK_OFFERS) break;
     }
@@ -1781,14 +1796,33 @@ test('チュートリアル段18〜19実測: 3シードで黒字注文と3件比
   }
   assert.ok(rows.some(row => row.offers.some(offer => offer.profitable)),
     '春開始後も3シードのいずれかで黒字見込み注文を観測できる');
-  assert.ok(rows.some(row => row.offers.some(offer => !Number.isFinite(offer.cheapest)
-    || offer.cheapest > offer.settlement)
+  assert.ok(rows.some(row => row.offers.some(offer => !offer.profitable)
     || row.offers.length >= ORDER_JUDGMENT_FALLBACK_OFFERS),
   `春開始後も危険注文または${ORDER_JUDGMENT_FALLBACK_OFFERS}件比較の代替経路を観測できる`);
-  console.log(`  段18〜19注文実測 ${rows.map(row => `seed${row.seed}: ${row.offers.map(offer => `${offer.goods}@d${offer.day} ${Number.isFinite(offer.cheapest) ? offer.cheapest.toFixed(3) : '在庫なし'}/${offer.settlement.toFixed(3)} ${offer.profitable ? '黒字' : '見送り候補'}`).join(', ')}`).join(' | ')}`);
+  console.log(`  段18〜19注文実測 ${rows.map(row => `seed${row.seed}: ${row.offers.map(offer => `${offer.goods}@d${offer.day} ${Number.isFinite(offer.unitCost) ? `全量原価${offer.unitCost.toFixed(3)}` : `調達${offer.available.toFixed(1)}/${offer.qty}荷`} / 決済${offer.settlement.toFixed(3)} ${offer.profitable ? '黒字' : '見送り候補'}`).join(', ')}`).join(' | ')}`);
 });
 
-test('チュートリアル段18: 実決済と市場最安を並べ、黒字注文を受諾・完遂する', () => {
+test('チュートリアル段18: 最安の一荷ではなく注文全量の加重原価で採算を決める', () => {
+  const model = {
+    day: 100,
+    orderOffer: { g: 'tools', qty: 5, due: 190, price: 2.8 },
+    marketLowest: { tools: 1 },
+    companyStock: { tools: 0 },
+    companyStockAverageCosts: { tools: 0 },
+    stalls: [
+      { goods: 'tools', qty: 1, price: 1 },
+      { goods: 'tools', qty: 4, price: 5 },
+    ],
+  };
+  const quote = orderQuote(model);
+  assert.equal(quote.marketLowest, 1);
+  assert.equal(quote.marketAvailable, 5);
+  assert.equal(quote.marketUnitCost, 4.2);
+  assert.equal(quote.settlementPrice, 3.5);
+  assert.equal(quote.profitable, false, '最安値だけが安い全量赤字注文を受けない');
+});
+
+test('チュートリアル段18: 実決済と注文全量の加重原価を並べ、黒字注文を受諾・完遂する', () => {
   const { controller, director, observe } = tutorialThroughPlay;
   const assessmentDeadline = controller.readModel().day + PROFITABLE_ORDER_OBSERVATION_DAYS;
   while (!director.readState().completedGoals.includes('assess-profitable-order')
@@ -1800,9 +1834,9 @@ test('チュートリアル段18: 実決済と市場最安を並べ、黒字注�
   observe();
   const assessment = director.letters().find(letter => letter.id === 'profitable-order-assessment');
   assert.ok(assessment);
-  assert.ok(assessment.facts.marketLowest < assessment.facts.settlementPrice);
+  assert.ok(assessment.facts.marketUnitCost < assessment.facts.settlementPrice);
   assert.ok(assessment.facts.quotedMargin > 0);
-  assert.match(assessment.body, /一荷あたりの支払と.*値段を比べました/);
+  assert.match(assessment.body, /一荷あたりの支払と.*加重仕入原価を比べました/);
   assert.match(assessment.body, /受諾してください/);
   assert.equal(director.currentObjective().id, 'place-conversion-workshops');
 
@@ -1820,14 +1854,16 @@ test('チュートリアル段18: 実決済と市場最安を並べ、黒字注�
   observe();
   assert.equal(director.readState().completedGoals.includes('target-profitable-order'), true);
 
-  const completionDeadline = assessment.facts.due * 30;
+  // 期限までに港へ全量到着した荷は、翌日の船積み完了まで契約が有効。
+  const completionDeadline = (assessment.facts.due + 2) * 30;
   while (!director.readState().completedGoals.includes('complete-profitable-order')
     && controller.readModel().tick < completionDeadline) {
     controller.advanceTicks(1);
     observe();
   }
+  const completionModel = controller.readModel();
   assert.equal(director.readState().completedGoals.includes('complete-profitable-order'), true,
-    `注文期限${assessment.facts.due}日目までに黒字で完遂する`);
+    `注文期限までに黒字で完遂する ${JSON.stringify({ assessment: assessment.facts, day: completionModel.day, activeOrder: completionModel.activeOrder, stock: completionModel.companyStock[assessment.facts.goods], marketStock: completionModel.companyMarketStock[assessment.facts.goods], portCalls: completionModel.portCalls.filter(call => ['docked', 'waiting'].includes(call.status)), flow: completionModel.flowEma[assessment.facts.goods] })}`);
   observe();
   const completed = director.letters().find(letter => letter.id === 'profitable-order-complete');
   assert.ok(completed);
@@ -1851,7 +1887,7 @@ test('チュートリアル段19: 注文を受けずに見送り、実失効イ�
   const advice = director.letters().find(letter => letter.id === 'skippable-order-assessment');
   assert.ok(advice);
   const selected = advice.facts.selected;
-  assert.ok(['loss', 'no_market', 'comparison_fallback'].includes(selected.reason));
+  assert.ok(['loss', 'insufficient_supply', 'comparison_fallback'].includes(selected.reason));
   assert.match(advice.body, /受諾せず、期限まで待ってください/);
   assert.equal(controller.readModel().activeOrder, null, '見送りは受諾操作を行わない');
   const journalBeforeWait = controller.inputJournal();
@@ -1886,9 +1922,9 @@ test('チュートリアル段19: 注文を受けずに見送り、実失効イ�
   tutorialThroughPlay.fourthChapter = { model: finalModel, journal };
   const profit = tutorialThroughPlay.profitableOrder;
   const expiry = director.readState().goalResults['let-skippable-order-expire'].evidence.expired;
-  console.log(`  段18〜19実測 ${profit.goods}${profit.qty}荷:市場${profit.quote.marketLowest.toFixed(3)}`
-    + `→決済${profit.quote.settlementPrice.toFixed(3)} / 売上${profit.revenue.toFixed(1)}`
-    + `-原価${profit.orderCost.toFixed(1)}=粗利${profit.realizedMargin.toFixed(1)}`
+  console.log(`  段18〜19実測 ${profit.goods}${profit.qty}荷:全量見積${profit.quote.marketUnitCost.toFixed(3)}`
+    + `→決済${profit.quote.settlementPrice.toFixed(3)} / 売上${profit.revenue.toFixed(3)}`
+    + `-原価${profit.orderCost.toFixed(3)}=粗利${profit.realizedMargin.toFixed(3)}`
     + ` / 見送り${selected.goods}${selected.qty}荷 ${selected.reason}→day${expiry.day}失効`);
 });
 
@@ -2268,7 +2304,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.44.4-export-balance');
+  assert.equal(VERSION, 'v004.44.5-demand-network');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -3614,24 +3650,22 @@ test('ラン3 AO: 世帯人数ぶんの個人IDを保ち、在宅生産者を敷
 });
 
 test('段10/11: 実港便の接岸・1荷/tick・出港をsnapshotとイベント差分へ同期する', () => {
-  const api = createEngineApi(buildBaseCity(11));
+  const world = buildBaseCity(11);
+  const api = createEngineApi(world);
   let previousSnapshot = api.snapshot();
   let previousModel = snapshotToViewModel(previousSnapshot);
   let sequence = api.events().at(-1)?.sequence ?? 0;
-  let snapshot = previousSnapshot;
-  let model = previousModel;
-  let events = [];
-  for (let guard = 0; guard < 1800 && model.portCalls.length === 0; guard += 1) {
-    previousSnapshot = snapshot;
-    previousModel = model;
-    api.advanceTicks(1);
-    snapshot = api.snapshot();
-    model = snapshotToViewModel(snapshot);
-    events = api.events({ afterSequence: sequence });
-    sequence = events.at(-1)?.sequence ?? sequence;
-  }
+  // 自動輸入量は需給バランスで変わる。描画契約は固定4荷の小口便で検証する。
+  requestCompanyImport(world.state.economy, world.state.physical, 'tools', {
+    day: 1,
+    qty: 4,
+  });
+  api.advanceTicks(1);
+  let snapshot = api.snapshot();
+  let model = snapshotToViewModel(snapshot);
+  let events = api.events({ afterSequence: sequence });
+  sequence = events.at(-1)?.sequence ?? sequence;
   assert.equal(model.portCalls.length, 1);
-  assert.ok(model.tick <= 1800, '最初の本国便が60日以内に接岸する');
   assert.equal(events.some(event => event.type === 'docking'), true);
   const approaching = interpolateWorldModel(previousModel, model, events, 0.25);
   assert.equal(approaching.portVisuals[0].phase, 'approaching');
@@ -3835,7 +3869,9 @@ test('UI向上段6: 教程の実目標だけが既存操作一つへ案内され
   assert.deepEqual(objectiveActionFor({ id: 'first-logger' }, model([])),
     { kind: 'building', job: 'logger', label: '木こりを選ぶ' });
   assert.equal(objectiveActionFor({ id: 'market-for-logs' }, model([])).job, 'market');
-  assert.equal(objectiveActionFor({ id: 'place-island-food' }, model(['fisher'])).job, 'veg');
+  assert.equal(objectiveActionFor({ id: 'place-island-food' }, model(['fisher'])).job, 'fisher');
+  assert.equal(objectiveActionFor({ id: 'place-island-food' }, model(['fisher', 'fisher'])).job, 'veg');
+  assert.equal(objectiveActionFor({ id: 'place-island-food' }, model(['fisher', 'fisher', 'veg', 'veg'])).job, 'logger');
   assert.equal(objectiveActionFor({ id: 'request-first-aid' }, model([])).sheet, 'company-sheet');
   assert.equal(objectiveActionFor({ id: 'prepare-first-tools-stock' }, model([])).sheet, 'company-sheet');
   assert.equal(objectiveActionFor({ id: 'place-conversion-workshops' }, model(['woodshop'])).job, 'charburner');
@@ -4928,7 +4964,7 @@ test('段14: 道路プレビュー・操作journal・市場接続色と警告座
 
 test('段15: 会社台帳・買上げ目標・市場へ出す・注文比較を描画モデルと公開操作へ接続する', () => {
   const api = createEngineApi(buildBaseCity(11));
-  api.advanceDays(105);
+  api.advanceDays(120);
   const snapshot = api.snapshot();
   assert.ok(snapshot.economy.orderOffer);
   snapshot.economy.stalls.tools = [{ householdId: 999, qty: 4, price: 1.75, age: 0 }];
@@ -4941,7 +4977,7 @@ test('段15: 会社台帳・買上げ目標・市場へ出す・注文比較を�
   controller.operate({ type: 'set_stock_target', goods: 'tools', qty: 12 });
   const release = controller.operate({ type: 'release_stock', goods: 'tools', qty: 16 });
   assert.equal(release.ok, false, '在庫ゼロの市場へ出すは何も運ばない');
-  controller.advanceTicks(105 * 30);
+  controller.advanceTicks(120 * 30);
   assert.equal(controller.operate({ type: 'accept_order' }).ok, true);
   assert.deepEqual(controller.inputJournal().slice(-3).map(row => row.op.type), [
     'set_stock_target', 'release_stock', 'accept_order',
@@ -4952,7 +4988,8 @@ test('段15: 会社台帳・買上げ目標・市場へ出す・注文比較を�
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
   assert.match(main, /offer\.price \* 1\.25 \* 10/,
-    '会社欄は注文基準値でなく完遂時の1.25倍決済単価を市場最安と並べる');
+    '会社欄は注文基準値でなく完遂時の1.25倍決済単価を全量仕入原価と並べる');
+  assert.match(main, /全量仕入原価/);
 });
 
 test('段7支援UI: 逓減量と拒絶を描画モデルへ出し、要請を公開journalへ記録する', () => {

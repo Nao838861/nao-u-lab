@@ -1,5 +1,5 @@
-import { BUILDING_SIZES } from './config.js?v=v004.44.4-export-balance';
-import { islandCalendar } from './ui_summary.js?v=v004.44.4-export-balance';
+import { BUILDING_SIZES } from './config.js?v=v004.44.5-demand-network';
+import { islandCalendar } from './ui_summary.js?v=v004.44.5-demand-network';
 
 export const tileKey = (x, y) => `${x},${y}`;
 
