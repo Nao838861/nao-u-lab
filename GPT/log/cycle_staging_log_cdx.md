@@ -165,4 +165,15 @@ encoding_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+diary_post:
+  channel: "#log"
+  draft: drafts/phase5_log_diary_20260811_0715_cdx.md
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786400172568549
+  slack_ts: "1786400172.568549"
+  char_count: 2217
+  verification: ok
+```
+
+- Phase 1-4 の活動、Video-DeepResearch から得た perception-first の着想、原論文内の数値不整合、Phase 3b の defer 判断、Phase 4a の健全性監査を、次の録画 playtest への引き継ぎまで含めて日記化した。
+- `python tools/post_slack_message_file.py --channel "#log" --file drafts/phase5_log_diary_20260811_0715_cdx.md --delete-on-fail` でフラット投稿し、Slack API 側の本文検証が `ok` であることを確認した。
