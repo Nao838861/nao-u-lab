@@ -62,6 +62,7 @@ import {
   recordExternalMoneyFlow,
   repairMaterialsFor,
   regenerateForest,
+  roadPavingStoneCost,
   runBuildingMaintenance,
   runCompanyDayStart,
   runCompanyFinance,
@@ -71,6 +72,7 @@ import {
   runHouseholdSurvival,
   runPrimaryProductionDay,
   runPopulationDynamicsPhase,
+  runRoadPaving,
   runWheatHarvest,
   resourceWorkEfficiency,
   sellAtMarket,
@@ -113,6 +115,7 @@ import {
   createWalkCarrier,
   depositInventory,
   hasRoad,
+  isPavedRoad,
   isConnected,
   keyOf,
   loseHaulCarrier,
@@ -120,6 +123,7 @@ import {
   materialSnapshot,
   moveInventoryBetweenSections,
   pathLen,
+  paveRoadTile,
   planRoadWorksite,
   recordMaterialFlow,
   removeRoadTile,
@@ -128,6 +132,7 @@ import {
   sectionCapacity,
   stepHaulCarriers,
   stepPortHandling,
+  tileTravelCost,
   withdrawInventory,
   workRoadWorksite,
 } from "../src/physical.js";
@@ -658,6 +663,80 @@ test("段8: 道路の追加・撤去直後にisConnectedの成分判定が変わ
   assert.equal(removeRoadTile(physical, 4, 1), true);
   assert.equal(isConnected(physical, homeA, homeC), false);
   assert.equal(physical.connectionCache.revision, physical.roadRevision);
+});
+
+test("需要網2: 石畳は道路セル単位で移動コストを下げ、撤去時に舗装台帳も消える", () => {
+  const terrain = Array.from({ length: 3 }, () =>
+    Array.from({ length: 7 }, () => ({ kind: "grass", variant: 0 })));
+  const physical = createPhysicalState({ width: 7, height: 3, terrain });
+  addRoadLine(physical, { x: 0, y: 1 }, { x: 4, y: 1 });
+
+  assert.equal(tileTravelCost(physical, 2, 1, "cart"), 0.6);
+  assert.equal(paveRoadTile(physical, 2, 1), true);
+  assert.equal(isPavedRoad(physical, 2, 1), true);
+  assert.equal(tileTravelCost(physical, 2, 1, "cart"), 0.45);
+  assert.equal(pathLen(physical, { x: 1, y: 1 }, { x: 2, y: 1 }, "cart"), 0.45);
+  assert.equal(removeRoadTile(physical, 2, 1), true);
+  assert.equal(physical.pavedRoads["2,1"], undefined);
+});
+
+test("需要網2: 石畳工事は交通量順に一部だけ進み、未投入の石を工事場在庫に残す", () => {
+  const terrain = Array.from({ length: 3 }, () =>
+    Array.from({ length: 7 }, () => ({ kind: "grass", variant: 0 })));
+  const physical = createPhysicalState({ width: 7, height: 3, terrain });
+  addRoadLine(physical, { x: 0, y: 1 }, { x: 4, y: 1 });
+  const economy = createEconomicState();
+  economy.paving = true;
+  economy.paveBought = 6;
+  economy.traffic["3,1"] = 200;
+  economy.traffic["1,1"] = 100;
+
+  const before = economicMaterialSnapshot(economy, physical).inventory.stone;
+  const result = runRoadPaving(economy, physical, { day: 1 });
+  assert.deepEqual(result.pavedTiles, ["3,1"]);
+  assert.equal(result.stoneUsed, P.PAVE_TILE_STONE);
+  assert.equal(economy.paveBought, 2);
+  assert.equal(economicMaterialSnapshot(economy, physical).inventory.stone, before - 4);
+  assert.equal(economy.materialFlows.stone.cons, 4);
+  assert.equal(economy.dailyDemandFlows.stone.sources.road_paving.demand, P.PAVE_DAILY_STONE);
+  assert.equal(economy.dailyDemandFlows.stone.sources.road_paving.consumed, 4);
+  assert.equal(isPavedRoad(physical, 3, 1), true);
+  assert.equal(isPavedRoad(physical, 1, 1), false);
+  assert.equal(economy.paved, false);
+});
+
+test("需要網2: 港周辺の道路セルは通常道路より多く石材を使う", () => {
+  const physical = createPhysicalState({
+    width: 12,
+    height: 8,
+    terrain: Array.from({ length: 8 }, () =>
+      Array.from({ length: 12 }, () => ({ kind: "grass", variant: 0 }))),
+  });
+  addBuilding(physical, "port_test", 1, 1, {
+    definitions: {
+      port_test: { category: "company", roles: ["port"], w: 2, h: 2, caps: {} },
+    },
+    entrance: { x: 1, y: 3 },
+    roles: ["port"],
+    requireRoad: false,
+  });
+  assert.equal(roadPavingStoneCost(physical, "1,3"), P.PAVE_PORT_TILE_STONE);
+  assert.equal(roadPavingStoneCost(physical, "10,6"), P.PAVE_TILE_STONE);
+});
+
+test("需要網2: 旧セーブの全島舗装フラグを道路セル台帳へ移行する", () => {
+  const original = createWorld({ seed: 17 });
+  addRoadLine(original.state.physical, { x: 1, y: 1 }, { x: 3, y: 1 });
+  original.state.economy.paved = true;
+  original.state.economy.paveBought = P.PAVE_STONE;
+  delete original.state.physical.pavedRoads;
+
+  const restored = createWorld({ stateSnapshot: original.state });
+  assert.deepEqual(
+    Object.keys(restored.state.physical.pavedRoads).sort(),
+    Object.keys(restored.state.physical.roads).sort(),
+  );
+  assert.equal(restored.state.economy.paveBought, 0);
 });
 
 test("段9: 出発時に棚から引き輸送中cargoを経て到着時に確定する", () => {
@@ -1399,17 +1478,31 @@ test("段16: sellOffersは職業別keepと重量上限を守る", () => {
 test("段16: 石畳買付台は原価を割らない石だけを直接買い上げる", () => {
   const economy = createEconomicState();
   economy.paving = true;
+  const physical = createPhysicalState({
+    width: 5,
+    height: 3,
+    terrain: Array.from({ length: 3 }, () =>
+      Array.from({ length: 5 }, () => ({ kind: "grass", variant: 0 }))),
+  });
+  addRoadLine(physical, { x: 0, y: 1 }, { x: 4, y: 1 });
   const quarryman = createHousehold(economy, { job: "quarryman", x: 2, y: 2 });
   quarryman.pantry.stone = 100;
   const offered = sellOffers(economy, quarryman).stone;
+  const pavingNeed = 5 * P.PAVE_TILE_STONE;
+  const bought = Math.min(offered, pavingNeed);
   const purseBefore = quarryman.purse;
 
-  const result = sellAtMarket(economy, null, quarryman, { day: 1, random: () => 0 });
-  assert.equal(result.listed.length, 0);
-  assert.equal(economy.paveBought, offered);
+  const result = sellAtMarket(economy, physical, quarryman, { day: 1, random: () => 0 });
+  assert.equal(result.listed.length, offered > bought ? 1 : 0);
+  assert.equal(economy.paveBought, bought);
   assert.equal(quarryman.pantry.stone, 100 - offered);
-  assert.equal(quarryman.purse, purseBefore + offered * 1.4);
-  assert.equal(economy.materialFlows.stone.cons, offered);
+  assert.equal(quarryman.purse, purseBefore + bought * 1.4);
+  assert.equal(economy.materialFlows.stone?.cons ?? 0, 0);
+  assert.equal(
+    quarryman.pantry.stone + economy.paveBought
+      + result.listed.reduce((sum, row) => sum + row.qty, 0),
+    100,
+  );
   assert.equal(assertMoneyConservation(economy), true);
 });
 

@@ -13,7 +13,10 @@ import {
   goodsUnitWeight,
   haulJobById,
   isConnected,
+  isPavedRoad,
+  parseKey,
   pathLen,
+  paveRoadTile,
   sectionAmount,
   sectionCapacity,
   withdrawInventory,
@@ -149,6 +152,10 @@ export const P = deepFreeze({
   // 13職の調達が同日に重なる基準都市でも荷車ゼロの生活床を落とさない人数。
   COMPANY_HAND_PORTERS: 128,
   PAVE_STONE: 200,
+  // 石200荷で全島を一括更新せず、工事班が道路セルごとに敷設する。
+  PAVE_TILE_STONE: 4,
+  PAVE_PORT_TILE_STONE: 8,
+  PAVE_DAILY_STONE: 16,
   PAVE_ROAD_F: 0.45,
   DISTRESS: 40,
   COOLDOWN: 360,
@@ -731,7 +738,90 @@ export function economicMaterialSnapshot(economy, physical = null) {
       cargo[goods] = (cargo[goods] ?? 0) + qty;
     }
   }
+  // 石畳工事場へ買い付け済みだが、まだ道路へ投入していない石。
+  inventory.stone = (inventory.stone ?? 0) + Math.max(0, economy.paveBought ?? 0);
   return { inventory, cargo };
+}
+
+export function roadPavingStoneCost(physical, roadKey) {
+  const [x, y] = parseKey(roadKey);
+  const port = physical ? buildingById(physical, physical.roleBuildingIds?.port) : null;
+  if (!port) return P.PAVE_TILE_STONE;
+  const maxX = port.x + port.w - 1;
+  const maxY = port.y + port.h - 1;
+  const dx = Math.max(port.x - x, 0, x - maxX);
+  const dy = Math.max(port.y - y, 0, y - maxY);
+  return Math.max(dx, dy) <= 2 ? P.PAVE_PORT_TILE_STONE : P.PAVE_TILE_STONE;
+}
+
+function unpavedRoadKeys(physical, economy) {
+  if (!physical) return [];
+  return Object.keys(physical.roads ?? {})
+    .filter((roadKey) => {
+      const [x, y] = parseKey(roadKey);
+      return !isPavedRoad(physical, x, y);
+    })
+    .sort((left, right) => {
+      const trafficDiff = (economy.traffic?.[right] ?? 0) - (economy.traffic?.[left] ?? 0);
+      if (trafficDiff !== 0) return trafficDiff;
+      const [leftX, leftY] = parseKey(left);
+      const [rightX, rightY] = parseKey(right);
+      return leftY - rightY || leftX - rightX;
+    });
+}
+
+function remainingRoadPavingStoneNeed(physical, economy) {
+  return unpavedRoadKeys(physical, economy).reduce(
+    (sum, roadKey) => sum + roadPavingStoneCost(physical, roadKey),
+    0,
+  );
+}
+
+export function runRoadPaving(economy, physical, { day } = {}) {
+  const roads = Object.keys(physical?.roads ?? {});
+  const pending = unpavedRoadKeys(physical, economy);
+  economy.paved = roads.length > 0 && pending.length === 0;
+  if (!economy.paving || pending.length === 0) {
+    return { pavedTiles: [], stoneUsed: 0, remainingTiles: pending.length };
+  }
+
+  const totalNeed = remainingRoadPavingStoneNeed(physical, economy);
+  let worksBudget = P.PAVE_DAILY_STONE;
+  let stoneStock = Math.max(0, economy.paveBought ?? 0);
+  let stoneUsed = 0;
+  const pavedTiles = [];
+  for (const roadKey of pending) {
+    const stoneCost = roadPavingStoneCost(physical, roadKey);
+    if (stoneCost > worksBudget + 1e-9 || stoneCost > stoneStock + 1e-9) continue;
+    const [x, y] = parseKey(roadKey);
+    if (!paveRoadTile(physical, x, y)) continue;
+    worksBudget -= stoneCost;
+    stoneStock -= stoneCost;
+    stoneUsed += stoneCost;
+    pavedTiles.push(roadKey);
+  }
+  economy.paveBought = stoneStock;
+  if (stoneUsed > 0) {
+    recordEconomicMaterialFlow(economy, "stone", "cons", stoneUsed, "道路セルへの石畳敷設");
+  }
+  recordEconomicDemand(
+    economy,
+    "stone",
+    Math.min(P.PAVE_DAILY_STONE, totalNeed),
+    stoneUsed,
+    "road_paving",
+  );
+
+  const remainingTiles = unpavedRoadKeys(physical, economy).length;
+  economy.paved = roads.length > 0 && remainingTiles === 0;
+  if (pavedTiles.length > 0) {
+    const suffix = remainingTiles > 0 ? `（未舗装 ${remainingTiles}区画）` : "";
+    recordEconomyEvent(economy, day, `石畳を${pavedTiles.length}区画敷設${suffix}`);
+  }
+  if (economy.paved && pavedTiles.length > 0) {
+    recordEconomyEvent(economy, day, "★島内の全道路が石畳になった");
+  }
+  return { pavedTiles, stoneUsed, remainingTiles };
 }
 
 function consumeFood(economy, household, goods, qty, kinds) {
@@ -2331,7 +2421,19 @@ function sellManifestAtMarket(
     const desks = [];
     // 輸出台・石畳台は母港の市場だけにある
     if (sellerMarket === "main" && P.EXP[goods] !== undefined) desks.push(["EXP", P.EXP[goods], economy.expCap[goods]]);
-    if (sellerMarket === "main" && goods === "stone" && economy.paving && !economy.paved) desks.push(["PAVE", 1.4, Infinity]);
+    if (
+      sellerMarket === "main"
+      && goods === "stone"
+      && economy.paving
+      && unpavedRoadKeys(physical, economy).length > 0
+    ) {
+      const used = economy.deskUsed.PAVEstone ?? 0;
+      const remaining = Math.max(
+        0,
+        remainingRoadPavingStoneNeed(physical, economy) - (economy.paveBought ?? 0),
+      );
+      desks.push(["PAVE", 1.4, used + remaining]);
+    }
     desks.sort((a, b) => b[1] - a[1]);
     for (const [kind, price, cap] of desks) {
       if (qty <= 1e-9) break;
@@ -2355,14 +2457,6 @@ function sellManifestAtMarket(
             reason: `世帯${household.id}から石畳用stoneを買付`,
           });
           economy.paveBought += accepted;
-          recordEconomicMaterialFlow(
-            economy,
-            "stone",
-            "cons",
-            accepted,
-            "石畳への投入",
-            { includeInDaily: false },
-          );
         }
         qty -= accepted;
       }
@@ -4786,10 +4880,7 @@ export function runDayEnd(economy, physical, { day, random = () => 1, trace = []
   mark("building_maintenance");
   const maintenance = runBuildingMaintenance(economy, physical, { day });
   mark("paving");
-  if (economy.paving && !economy.paved && economy.paveBought >= P.PAVE_STONE) {
-    economy.paved = true;
-    recordEconomyEvent(economy, day, "★石畳完成——全ての道が格上げ(0.6→0.45・永続)");
-  }
+  const paving = runRoadPaving(economy, physical, { day });
   mark("birth");
   const births = runBirthPhase(economy, { day, random });
   mark("population_dynamics");
@@ -4803,7 +4894,7 @@ export function runDayEnd(economy, physical, { day, random = () => 1, trace = []
   mark("money_conservation");
   assertMoneyConservation(economy, { incremental: true });
 
-  return { trace, purchases, harvests, survival, maintenance, births, population, finance };
+  return { trace, purchases, harvests, survival, maintenance, paving, births, population, finance };
 }
 
 const MONEY_EPSILON = 1e-9;

@@ -1437,6 +1437,7 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
     height: snapshot.physical.height,
     terrain,
     roadKeys: Object.keys(snapshot.physical.roads),
+    pavedRoadKeys: Object.keys(snapshot.physical.pavedRoads ?? {}),
     trailRows,
     occupiedKeys: Object.keys(snapshot.physical.occupied),
     buildings,

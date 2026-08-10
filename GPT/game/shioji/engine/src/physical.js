@@ -219,6 +219,7 @@ export function createPhysicalState({
     height,
     terrain,
     roads: {},
+    pavedRoads: {},
     trails: {},
     roadWorksites: [],
     nextRoadWorksiteId: 1,
@@ -311,6 +312,21 @@ export function hasRoad(roadsOrPhysical, x, y) {
   return roadsOf(roadsOrPhysical)?.[keyOf(x, y)] === true;
 }
 
+export function isPavedRoad(physical, x, y) {
+  return hasRoad(physical, x, y) && physical?.pavedRoads?.[keyOf(x, y)] === true;
+}
+
+export function paveRoadTile(physical, x, y) {
+  if (!hasRoad(physical, x, y)) return false;
+  physical.pavedRoads ??= {};
+  const key = keyOf(x, y);
+  if (physical.pavedRoads[key] === true) return false;
+  physical.pavedRoads[key] = true;
+  physical.roadRevision += 1;
+  physical.travelRevision = (physical.travelRevision ?? 0) + 1;
+  return true;
+}
+
 export function line8(a, b) {
   let [x0, y0] = a;
   const [x1, y1] = b;
@@ -401,8 +417,9 @@ export function tileTravelCost(physical, x, y, mode = "walk") {
   if (!inside(physical, x, y) || terrainAt(physical, x, y).kind === "water") return Infinity;
   if (physical.occupied[keyOf(x, y)]) return Infinity;
   const road = hasRoad(physical, x, y);
-  if (mode === "cart") return road ? 0.6 : Infinity;
-  if (road) return 0.6;
+  const roadCost = isPavedRoad(physical, x, y) ? 0.45 : 0.6;
+  if (mode === "cart") return road ? roadCost : Infinity;
+  if (road) return roadCost;
   if (physical.trails?.[keyOf(x, y)] === true) return 0.85;
   if (terrainAt(physical, x, y).kind === "forest") return 1.4;
   return 1;
@@ -660,7 +677,9 @@ export function removeRoadTile(physical, x, y) {
   const key = keyOf(x, y);
   if (physical.roads[key] !== true) return false;
   delete physical.roads[key];
+  delete physical.pavedRoads?.[key];
   physical.roadRevision += 1;
+  physical.travelRevision = (physical.travelRevision ?? 0) + 1;
   return true;
 }
 

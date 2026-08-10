@@ -350,7 +350,8 @@ function formatSupplyDays(days) {
 
 const SUPPLY_SOURCE_LABELS = Object.freeze({
   households: '暮らし', order: '本国注文', winter: '冬支度',
-  local_construction: '現地建設', building_repair: '建物修繕', other: 'その他の利用',
+  local_construction: '現地建設', building_repair: '建物修繕', road_paving: '石畳工事',
+  other: 'その他の利用',
 });
 
 function supplySourceLabel(source) {

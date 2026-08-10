@@ -184,13 +184,14 @@ export function estimateWalkLen(model, from, to) {
     }
   }
   const roads = new Set(model.roadKeys);
+  const pavedRoads = new Set(model.pavedRoadKeys ?? []);
   const enterCost = (x, y) => {
     if (x < 0 || y < 0 || x >= model.width || y >= model.height) return Infinity;
     const kind = tileKind(model, x, y);
     if (kind === 'water') return Infinity;
     const key = `${x},${y}`;
     if (blocked.has(key) && !(x === to.x && y === to.y)) return Infinity;
-    if (roads.has(key)) return 0.6;
+    if (roads.has(key)) return pavedRoads.has(key) ? 0.45 : 0.6;
     return kind === 'forest' ? 1.4 : 1.0;
   };
   const dist = new Map([[`${from.x},${from.y}`, 0]]);

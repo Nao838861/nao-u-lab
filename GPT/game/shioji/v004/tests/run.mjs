@@ -2513,6 +2513,9 @@ test('開始選択: URLのmodeは3種だけを受理し他のqueryを保つ', ()
 test('段2: full snapshotを地形・建物・キャリア・棚の不変描画モデルへ変換する', () => {
   const api = createEngineApi(buildBaseCity(11));
   const snapshot = api.snapshot({ scope: 'full' });
+  const pavedRoadKey = Object.keys(snapshot.physical.roads)[0];
+  snapshot.physical.pavedRoads[pavedRoadKey] = true;
+  snapshot.physical.roadRevision += 1;
   snapshot.physical.buildings[0].condition = 30;
   snapshot.physical.buildings[0].conditionStatus = 'needs_repair';
   snapshot.physical.buildings[0].repairPlan = {
@@ -2525,6 +2528,8 @@ test('段2: full snapshotを地形・建物・キャリア・棚の不変描画�
   assert.equal(model.terrain.length, snapshot.physical.height);
   assert.equal(model.terrain[0].length, snapshot.physical.width);
   assert.equal(model.buildings.length, snapshot.physical.buildings.length);
+  assert.deepEqual(model.pavedRoadKeys, [pavedRoadKey]);
+  assert.equal(model.renderScene.roadRows.find(row => row.key === pavedRoadKey).paved, true);
   assert.equal(
     model.carriers.filter(carrier => carrier.householdId !== undefined).length,
     snapshot.economy.households.reduce((total, household) => total + household.members.length, 0),

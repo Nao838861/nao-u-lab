@@ -47,6 +47,7 @@ import {
   findBuildingSiteForEntrance,
   goodsUnitWeight,
   hasRoad,
+  isPavedRoad,
   keyOf,
   pathLen,
   routeTravelCarrier,
@@ -70,7 +71,11 @@ function stepTo(economy, physical, household, targetX, targetY) {
     physical,
     Math.round(household.px),
     Math.round(household.py),
-  ) ? (economy.paved ? 1.55 : 1.35) : 1;
+  ) ? (isPavedRoad(
+    physical,
+    Math.round(household.px),
+    Math.round(household.py),
+  ) ? 1.55 : 1.35) : 1;
   const movement = Math.min(distance, 0.8 * roadMultiplier);
   household.px += (targetX - household.px) / distance * movement;
   household.py += (targetY - household.py) / distance * movement;
@@ -1000,6 +1005,14 @@ export function createWorld({
   const normalizedSeed = normalizeSeed(restored?.seed ?? seed);
   const physical = restored?.physical ?? physicalState ?? createPhysicalState();
   const economy = restored?.economy ?? createEconomicState({ initialCompanyMoney });
+  const legacyGlobalPaving = economy.paved === true && physical.pavedRoads === undefined;
+  physical.pavedRoads ??= {};
+  // 旧セーブの全島一括舗装を、同じ見た目と移動性能を保ったままセル台帳へ移す。
+  if (economy.paved === true && Object.keys(physical.pavedRoads).length === 0) {
+    for (const roadKey of Object.keys(physical.roads ?? {})) physical.pavedRoads[roadKey] = true;
+  }
+  // 旧paveBoughtは工事場在庫でなく、完成までの累積消費量だった。
+  if (legacyGlobalPaving) economy.paveBought = 0;
   if (!restored) {
     const marketPosition = market ? { ...market } : { x: 8, y: 15 };
     const warehousePosition = warehouse ? { ...warehouse } : { x: 10, y: 15 };

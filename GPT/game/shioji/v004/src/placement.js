@@ -19,7 +19,7 @@ function walkTileCost(
   model,
   x,
   y,
-  { allowOccupiedGoal = false, goal = null, roads, occupied, trails } = {},
+  { allowOccupiedGoal = false, goal = null, roads, pavedRoads, occupied, trails } = {},
 ) {
   const kind = terrainAt(model, x, y);
   if (!kind || kind === 'water') return Infinity;
@@ -27,16 +27,19 @@ function walkTileCost(
     (occupied ?? new Set(model.occupiedKeys)).has(tileKey(x, y))
     && !(allowOccupiedGoal && goal?.x === x && goal?.y === y)
   ) return Infinity;
-  if ((roads ?? new Set(model.roadKeys)).has(tileKey(x, y))) return 0.6;
+  if ((roads ?? new Set(model.roadKeys)).has(tileKey(x, y))) {
+    return (pavedRoads ?? new Set(model.pavedRoadKeys ?? [])).has(tileKey(x, y)) ? 0.45 : 0.6;
+  }
   if ((trails ?? new Set((model.trailRows ?? []).map(row => row.key))).has(tileKey(x, y))) return 0.85;
   return kind === 'forest' ? 1.4 : 1;
 }
 
 function nearestWalkTarget(model, start, predicate, goal = null) {
   const roads = new Set(model.roadKeys);
+  const pavedRoads = new Set(model.pavedRoadKeys ?? []);
   const occupied = new Set(model.occupiedKeys);
   const trails = new Set((model.trailRows ?? []).map(row => row.key));
-  const costOptions = { roads, occupied, trails };
+  const costOptions = { roads, pavedRoads, occupied, trails };
   const indexOf = (x, y) => y * model.width + x;
   const distances = new Float64Array(model.width * model.height);
   distances.fill(Infinity);
@@ -82,9 +85,10 @@ function resourceDistanceField(model, job) {
   }
   if (cached[job]) return cached[job];
   const roads = new Set(model.roadKeys);
+  const pavedRoads = new Set(model.pavedRoadKeys ?? []);
   const occupied = new Set(model.occupiedKeys);
   const trails = new Set((model.trailRows ?? []).map(row => row.key));
-  const costOptions = { roads, occupied, trails };
+  const costOptions = { roads, pavedRoads, occupied, trails };
   const indexOf = (x, y) => y * model.width + x;
   const distances = new Float64Array(model.width * model.height);
   distances.fill(Infinity);

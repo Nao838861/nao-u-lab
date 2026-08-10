@@ -403,10 +403,16 @@ export class Renderer {
     const scene = this.sceneFor(model);
     const roads = scene.roadRows.filter(row => this.boundsVisible(row));
     for (const road of roads) {
+      const fill = road.connected
+        ? (road.paved ? '#c3bda8' : '#a78e61')
+        : '#9f6355';
+      const stroke = road.connected
+        ? (road.paved ? '#777365' : '#69593f')
+        : '#713f3b';
       this.diamond(
         road.x, road.y,
-        road.connected ? '#a78e61' : '#9f6355',
-        road.connected ? '#69593f' : '#713f3b',
+        fill,
+        stroke,
         0.94,
       );
     }
@@ -422,13 +428,17 @@ export class Renderer {
     for (const segment of segments) {
       const center = this.camera.project(segment.x + 0.5, segment.y + 0.5);
       const other = this.camera.project(segment.toX + 0.5, segment.toY + 0.5);
-      ctx.strokeStyle = segment.connected ? '#69593f' : '#713f3b';
+      ctx.strokeStyle = segment.connected
+        ? (segment.paved ? '#777365' : '#69593f')
+        : '#713f3b';
       ctx.lineWidth = Math.max(5, 13 * this.camera.zoom);
       ctx.beginPath();
       ctx.moveTo(center.x, center.y);
       ctx.lineTo(other.x, other.y);
       ctx.stroke();
-      ctx.strokeStyle = segment.connected ? '#b39a6b' : '#bd7867';
+      ctx.strokeStyle = segment.connected
+        ? (segment.paved ? '#d2cdbb' : '#b39a6b')
+        : '#bd7867';
       ctx.lineWidth = Math.max(3, 9 * this.camera.zoom);
       ctx.beginPath();
       ctx.moveTo(center.x, center.y);
