@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-10T22:50:00+09:00",
+  "updated_at": "2026-08-11T00:52:00+09:00",
   "reviewed_source_ts": [
+    "1786369462.101059",
     "1786322484.996019",
     "1786352183.698429",
     "1786330770.045909",
@@ -620,6 +621,46 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-11T00:52:00+09:00",
+      "selected": {
+        "id": "sr-1786369462-7522348096",
+        "source_ts": "1786369462.101059",
+        "title": "Cross-Benchmark Generalization in Long-Horizon Agents",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たし、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ最新候補から1件だけを選んだ。同一環境のholdout得点を再利用可能な技能の証拠とせず、調整信号から隔離した外部benchmarkとpaired trajectoryで転移を監査する知見が、Codexのheadless game評価やmemory／harness改善の過学習判定に直結する。Nao_uが本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads本文は、外部task・grader・reward・checkpoint選択を調整loopから隔離するfirewall、LHMTA外の5 benchmarkでの正方向差、SWE-Bench Pro 731組のpaired trajectory、局所目標・working state・parent goal・完了検証の4行動、effort floor・単一run・共有tool schema・pretraining汚染という限界まで示すため、relevance・actionability・evidenceは3とした。一方、probe-20260619-omni-game-arena-improvement-transferはbaseline／same-condition／held-out比較とoverfit分類を、probe-20260618-cross-game-capability-scopeはsame-game／same-genre／held-out gameの能力範囲を、probe-20260718-benchmark-purpose-variable-alignmentは外部benchmarkの変数と当方判断の目的整合を、probe-20260605-agent-eval-attribution-splitはscoreをmodel・instruction・tool・environment・scaffold・memory・simulator・evaluation scriptへ帰属分解する。新しい差はsealed external setとnear／far／harness transferの三層化だが、現在のstagingには現行版と改善版を同一seed・未見pattern・別prototypeまたは別adapterで比較するartifactがなく、後続consumerのbefore／after判断差を重複なく固定できない。active_probes 322件に加えPhase 4a向けpending leaseが1件あるため、同型probeを追加すると確認負荷が増える。non_redundancyは1、risk_controlは2とし、active probe・metric・lease・directive・恒久ルールは追加しない。次に具体的なheadless paired runが置かれ、既存controlsではsealed set漏洩またはharness surface転移の採否差を表せない時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260619-omni-game-arena-improvement-transfer",
+        "probe-20260618-cross-game-capability-scope",
+        "probe-20260718-benchmark-purpose-variable-alignment",
+        "probe-20260605-agent-eval-attribution-split"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsとdefer理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-10T22:50:00+09:00",
       "selected": {

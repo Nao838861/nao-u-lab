@@ -81,7 +81,35 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786369462-7522348096
+    source_ts: "1786369462.101059"
+    title: "Cross-Benchmark Generalization in Long-Horizon Agents"
+    reason: "未レビュー、score 10、優先6タグを持つ最新候補。sealed external benchmarkとpaired trajectoryによる転移監査が、headless game・memory・harness改善の過学習判定に直結するため。Nao_uの明示評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "数値上の採用条件は満たすが、既存の held-out transfer、cross-game capability scope、benchmark目的整合、evaluation attribution probes が主要判断を既に覆う。sealed setとnear/far/harness transferの差を比較できる具体的なheadless paired-run artifactがなく、Phase 4aには別probeのpending leaseもあるため、新規controlは確認負荷だけを増やす。具体的artifactが置かれ、既存controlsでは漏洩またはsurface転移の採否差を表せない時だけ再評価する。"
+  change:
+    summary: "reviewed_source_tsとdefer理由のみ更新。active_probes、lifecycle ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
