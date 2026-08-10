@@ -1,254 +1,25 @@
-# log_cdx Cycle Staging — 2026-08-10 09:13
+# log_cdx Cycle Staging — 2026-08-10 11:43
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
 
-- 実行時刻: 2026-08-10 09:13-09:19 JST
-- pending inbox: `slack_directives.jsonl` 0件 / `slack_broadcasts.jsonl` 0件
-- 収集 candidate:
-  - `memory/shared_reads_candidates/20260810_codegrep_rl_retrieval_agent.md` — LLM coding agent の repository 探索を独立させ、candidate file の precision と下流の修正効率を測る CodeGrep。
-  - `memory/shared_reads_candidates/20260810_streamarena_long_horizon_video_memory.md` — 平均88.8分の動画で、直近知覚・過去検索・proactive interaction・tool 利用を測る StreamArena / StreamMind。
-- duplicate preflight: 2件とも `continue`。各 candidate 書込み前に posted-source / canonical-title / open-group の3 sidecarを再生成し、最終保存後にも再生成済み。
-- 参照範囲: `memory/raw/web_research/results.jsonl`、`memory/atoms.jsonl`、`memory/raw/slack_api/shared-reads.jsonl`、`memory/raw/slack_api/all-nao-u-lab.jsonl`、arXiv 一次ページ。
-- Phase 1 制約: 品質判定・長文概要・Slack投稿・記憶階層変更は未実施。
+- `memory/shared_reads_candidates/20260810_agent_optimizers_compound_continual_learning.md` — 新しい課題が加わる反復最適化で、過去の改善を維持しながら agent harness の性能を積み上げる条件を比較した Terminal-Bench 2.0 研究。
+- inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
+- 収集元: `memory/raw/web_research/results.jsonl` の arXiv:2607.14004 記録、および arXiv v1 要旨（2026-07-15 submitted）。
+- duplicate preflight: sidecar 3 種を再生成後、URL / title とも `continue`（終了コード 0）。
 
 ## Phase 2: 分析
-
-```yaml
-total_candidates: 7
-pass:
-  - memory/shared_reads_candidates/20260709_static_level_k_llm_behavioural_games.md
-  - memory/shared_reads_candidates/20260710_llm_telephone_game_cultural_attractors.md
-  - memory/shared_reads_candidates/20260810_codegrep_rl_retrieval_agent.md
-  - memory/shared_reads_candidates/20260810_streamarena_long_horizon_video_memory.md
-fail:
-  - path: memory/shared_reads_candidates/20260710_gdc2026_outer_worlds2_poi_design.md
-    reason: "講演概要だけで具体例・評価・失敗条件がなく、4000 字化が一般論の水増しになる"
-  - path: memory/shared_reads_candidates/20260710_multiplayer_world_models_rocket_league.md
-    reason: "制作環境への適用が attribution logging に限られ、world model 本体から離れすぎる"
-  - path: memory/shared_reads_candidates/20260710_open_source_games_llm_strategy_eval.md
-    reason: "game set・protocol・metric・代表結果がなく、前回延期後も評価材料が不足"
-postpone: []
-stale_reviewed:
-  - handoff_id: cha-9d396b94aff6ed9a
-    path: memory/shared_reads_candidates/20260709_static_level_k_llm_behavioural_games.md
-    previous_status: postponed
-    decision: pass
-    updated_stale_after: "2026-09-09"
-  - handoff_id: cha-036bdce71dd32db7
-    path: memory/shared_reads_candidates/20260710_gdc2026_outer_worlds2_poi_design.md
-    previous_status: postponed
-    decision: fail
-    updated_stale_after: "2026-09-09"
-  - handoff_id: cha-f97e8a6d84fe2faa
-    path: memory/shared_reads_candidates/20260710_llm_telephone_game_cultural_attractors.md
-    previous_status: postponed
-    decision: pass
-    updated_stale_after: "2026-09-09"
-  - handoff_id: cha-23377eb5ea21868b
-    path: memory/shared_reads_candidates/20260710_multiplayer_world_models_rocket_league.md
-    previous_status: postponed
-    decision: fail
-    updated_stale_after: "2026-09-09"
-  - handoff_id: cha-cdcd6e5eb8537828
-    path: memory/shared_reads_candidates/20260710_open_source_games_llm_strategy_eval.md
-    previous_status: postponed
-    decision: fail
-    updated_stale_after: "2026-09-09"
-candidate_handoff_audit:
-  pending_before: 5
-  read_ids:
-    - cha-9d396b94aff6ed9a
-    - cha-036bdce71dd32db7
-    - cha-f97e8a6d84fe2faa
-    - cha-23377eb5ea21868b
-    - cha-cdcd6e5eb8537828
-  resolved_ids:
-    - cha-9d396b94aff6ed9a
-    - cha-036bdce71dd32db7
-    - cha-f97e8a6d84fe2faa
-    - cha-23377eb5ea21868b
-    - cha-cdcd6e5eb8537828
-  deferred_ids: []
-  partial_ids: []
-  pending_after: 0
-group_actions: []
-group_handoff_audit:
-  pending_before: 0
-  read_ids: []
-  resolved_ids: []
-  deferred_ids: []
-  partial_ids: []
-  apply_counts:
-    candidates_updated: 0
-    already_terminal: 0
-  pending_after: 0
-unreviewed_intake_audit:
-  valid_backlog_before: 2
-  malformed_count: 0
-  oldest_collected_at: "2026-08-10T09:17:26+09:00"
-  selection_limit: 5
-  selected_paths: []
-  phase1_excluded_paths:
-    - memory/shared_reads_candidates/20260810_codegrep_rl_retrieval_agent.md
-    - memory/shared_reads_candidates/20260810_streamarena_long_horizon_video_memory.md
-  evaluated_paths:
-    - memory/shared_reads_candidates/20260810_codegrep_rl_retrieval_agent.md
-    - memory/shared_reads_candidates/20260810_streamarena_long_horizon_video_memory.md
-  valid_backlog_after: 0
-duplicate_preflight:
-  builders_refreshed_at_start: true
-  builders_refreshed_after_updates: true
-  decisions:
-    continue: 7
-    review: 0
-    skip: 0
-```
+(Phase 2 が書き込む)
 
 ## Phase 3: Shared-reads 投稿
-
-```yaml
-posted:
-  - candidate: memory/shared_reads_candidates/20260709_static_level_k_llm_behavioural_games.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786322449253679
-    char_count: 4401
-  - candidate: memory/shared_reads_candidates/20260710_llm_telephone_game_cultural_attractors.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786322484507229
-    char_count: 4136
-  - candidate: memory/shared_reads_candidates/20260810_codegrep_rl_retrieval_agent.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786322484996019
-    char_count: 4456
-  - candidate: memory/shared_reads_candidates/20260810_streamarena_long_horizon_video_memory.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786322485344499
-    char_count: 4599
-skipped: []
-review:
-  source_checked: "arXiv abstract / HTML / PDF の一次資料を照合"
-  duplicate_preflight: "4件とも continue"
-  policy_validation: "4件とも shared_reads_policy.py 合格"
-  posting_mode: "1 candidate = 1 chat.postMessage、thread_ts なし"
-```
+(Phase 3 が書き込む)
 
 ## Phase 3b: Shared-reads 自己フィードバック
-```yaml
-self_feedback:
-  selected:
-    id: sr-1778774144-8dd96ef859
-    source_ts: "1778774144.767749"
-    title: "BioResearcher: Scenario-Guided Multi-Agent for Translational Medicine（旧日記前検索投稿）"
-    reason: "未レビューの score 10 以上のうち、6優先タグをすべて持つ最高 score 12 の最新候補。atom は superseded・quality=routine、投稿本文の検索 score も7であり、原文と一次資料の対応を確認して現行 shared-reads と同列に再利用できるか判定するため1件だけ選んだ。Nao_u の明示的な重要・適切・反映評価はない。"
-  scores:
-    relevance: 2
-    actionability: 1
-    evidence: 1
-    non_redundancy: 1
-    risk_control: 3
-    reversibility: 3
-    total: 11
-  decision: reject
-  decision_reason: "論文固有の versioned playbook、30超の tool／ML endpoint、sandboxed analysis、claim-level reconciliation、3段階の定量評価を投稿が説明せず、論文から確認できない権限逸脱・atom失効・ゲーム制作30案へ一般化している。actionability 2以上と合計14以上を満たさず、権限・副作用 trace・provenance・playbook 粒度も既存4 probe と重複するため採用しない。"
-  change:
-    summary: "reviewed_source_ts と reject 理由だけを記録。active_probes・lease・directive・恒久ルールの変更は none。"
-    files:
-      - memory/shared_reads_self_feedback_state.json
-      - log/cycle_staging_log_cdx.md
-  lease: null
-  anti_bloat_check:
-    adds_permanent_rule: false
-    replaces_or_simplifies_existing: false
-    conflict_checked: true
-```
+(Phase 3b が書き込む)
 
 ## Phase 4a: 整理 + 問題抽出
-
-```yaml
-cleaned:
-  - "memory/MEMORY.md の index を per-file atom index と照合し、broken entry 0 件を確認した。UTF-8 明示読みで代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」も取得できた。"
-  - "atoms 2839 件の jsonl / per-file md / index ミラーを監査し、parse error・index error・content conflict は各 0 件だった。normalized content の raw 重複 40 群 80 行は既存 fold で 40 行を抑止し、recall-visible 重複 3 群 6 行も 3 行を抑止済みと確認した。"
-  - "30 日超の memory/raw 原文 238 件を確認した。web research の md/txt/pdf と評価・Slack 原文が中心で、一時ファイル名は 0 件だったため provenance を壊す移動は行わなかった。"
-  - "candidate lifecycle 1248 件を監査し、posted 578 / ready_to_post 9 / postponed 235 / failed 423 / needs_review 3 を確認した。期限到来 15 件から queue 上位 5 件を candidate handoff inbox へ冪等 enqueue した。"
-  - "title canonical / mixed duplicate / open duplicate / stale triage / group action の sidecar を現状態から再生成した。actionable group は 0 件で group handoff は 0 件だった。"
-  - "slack_directives.jsonl と slack_broadcasts.jsonl は pending 各 0 件で、close 対象はなかった。"
-issues:
-  - id: ISS-MOJIBAKE-001
-    description: "active atom sr-1776127289-4d9239b255 の『AIエージェント』部分に U+FFFD が2文字残り、title / trigger / excerpt の検索語が欠損している。"
-    severity: low
-    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; python tools/memory_health.py --json"
-    source_file_status: "UTF-8 明示読みでも per-atom と raw source の双方に『AIエ��ジェント』が存在するため、source-level corruption。別 suspect gr-1777083728-44d444ab7a は UTF-8 正常で literal '???' による検知だった。"
-    display_or_tooling_status: "PowerShell / rg 表示経路の文字化けではない。memory_health は当該 atom を正しく検知し、gr atom については source が正常な false positive。"
-    why_blocks_game_memory: "agent filesystem / progressive disclosure の高 score atom を自然語『エージェント』で探す導線が部分的に弱くなるが、memory / agent tags と URL は残るため影響は限定的。"
-recommendation:
-  needs_design: false
-  priority_issues: []
-probe_lifecycle:
-  inspected_due_count: 0
-  inspected_probe_id: null
-  outcome: none
-  counts:
-    pending: 1
-    resolved: 3
-    dormant: 1
-    merged: 0
-    retired: 0
-stale_backlog:
-  overdue_open_total: 15
-  stale_triage_queue_rows: 13
-  remaining_stale_triage_rows_after_selection: 8
-  open_duplicate_group_count: 46
-  mixed_group_count: 40
-  all_open_group_count: 6
-  actionable_group_count: 0
-  backlog_high_water: false
-  group_handoff_budget: 1
-  handed_off_group_count: 0
-  handoff_inbox_pending_count: 0
-  handoff_inbox_ids: []
-  candidate_handoff_enqueued_count: 5
-  candidate_handoff_pending_count: 5
-  candidate_handoff_ids:
-    - cha-0c2d5c2fbc8d854b
-    - cha-e26496b8d71f39e6
-    - cha-6fa5da1c6ca9c6dd
-    - cha-c6297a6b770586b4
-    - cha-94a6c15d337b6a52
-  valid_unreviewed_count: 0
-  oldest_unreviewed_collected_at: null
-  malformed_candidate_count: 0
-  phase2_unreviewed_limit: 5
-group_action_handoff: []
-stale_review_batch:
-  - handoff_id: cha-0c2d5c2fbc8d854b
-    path: memory/shared_reads_candidates/20260711_adaptive_puzzle_frustration_fun.md
-    status: postponed
-    stale_after: "2026-08-10"
-    priority_reason: "adaptive difficulty と player modeling の転用先は具体的だが、GA 表現・player model 指標・pilot 比較結果の追加確認が必要。"
-    recommended_review_action: reevaluate_in_phase2
-  - handoff_id: cha-e26496b8d71f39e6
-    path: memory/shared_reads_candidates/20260711_gdc2026_intent_driven_scene_editor.md
-    status: postponed
-    stale_after: "2026-08-10"
-    priority_reason: "intent-driven editor の適用性は高いが、評価方法・操作粒度・修正 loop の具体例が不足している。"
-    recommended_review_action: reevaluate_in_phase2
-  - handoff_id: cha-6fa5da1c6ca9c6dd
-    path: memory/shared_reads_candidates/20260711_gdc2026_mcp_ai_prototyping_roblox.md
-    status: postponed
-    stale_after: "2026-08-10"
-    priority_reason: "MCP と game engine / QA / build pipeline の接続は有用だが、境界・API・検証 log・失敗制約が不足している。"
-    recommended_review_action: reevaluate_in_phase2
-  - handoff_id: cha-c6297a6b770586b4
-    path: memory/shared_reads_candidates/20260711_proplay_procedural_world_models.md
-    status: postponed
-    stale_after: "2026-08-10"
-    priority_reason: "procedure graph と reliability 更新の骨格は明確だが、benchmark・比較条件・定量結果・失敗条件が不足している。"
-    recommended_review_action: reevaluate_in_phase2
-  - handoff_id: cha-94a6c15d337b6a52
-    path: memory/shared_reads_candidates/20260706_gdc2026_postmortem_ai_pipelines.md
-    status: needs_review
-    stale_after: "2026-08-05"
-    priority_reason: "5 日超過した needs_review candidate で、Phase 2 の初回品質判定が必要。"
-    recommended_review_action: reevaluate_in_phase2
-```
+(Phase 4a が書き込む)
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
@@ -257,15 +28,4 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-
-```yaml
-posted:
-  channel: "#log"
-  channel_id: C0ALRK28Y1H
-  ts: "1786324074.225909"
-  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786324074225909
-  char_count: 2262
-  verification: ok
-  posting_mode: "1 chat.postMessage、thread_ts なし"
-draft: drafts/phase5_log_diary_20260810_cdx.md
-```
+(Phase 5 が書き込む)
