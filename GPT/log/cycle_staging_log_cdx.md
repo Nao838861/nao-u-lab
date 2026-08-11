@@ -13,7 +13,51 @@
 - Slack 投稿なし。品質判定・記憶整理は未実施（後続 phase に留保）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260812_slarp_interaction_friction.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-08-12T08:02:38+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260812_slarp_interaction_friction.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260812_slarp_interaction_friction.md
+  valid_backlog_after: 0
+duplicate_preflight:
+  path: memory/shared_reads_candidates/20260812_slarp_interaction_friction.md
+  decision: continue
+  title_key: reducing interaction friction the slarp principle
+evaluation_summary:
+  decision: pass
+  reason: "5操作と各実装例、適用境界が一次資料から抽出でき、ゲーム試作へ直接適用できる。定量評価の欠如は限界として明記する。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

@@ -4,6 +4,26 @@ url: "https://hubkow.itch.io/pyrates/devlog/1620359/reducing-interaction-frictio
 collected_at: "2026-08-12T08:02:38+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, interaction-design, text-game, ux, input]
+evaluated_at: "2026-08-12T08:08:19+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-12T08:08:19+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-12T08:08:19+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-11"
+supersedes: []
+gate_reason: >-
+  SLARP の5操作、各操作の実装例、適用境界となる「戦術的に意味のある判断を残す」という原則が一次資料から具体的に抽出できる。
+  TUI・メニュー・反復操作の設計へ直接適用でき、定量評価の欠如を限界として扱っても約4000字の固有分析を構成できる。
+suggested_post_outline:
+  overview_angle: "入力回数の削減ではなく、意味のある判断までの操作摩擦を5種類に分解する実装原則として整理する"
+  analysis_axis: "Shorten・Limit・Automate・Recall・Predict が奪う自由度と残す戦術判断を比較し、誤予測や過剰自動化の境界を検討する"
+  application_target: "Log_cdx が制作する TUI／メニュー中心の試作で、入力ごとに戦術的情報利得を分類し、反復操作を段階的に短縮する評価軸へ使う"
+  pros_cons: "低コストで入力負荷と認知負荷を減らせる一方、定量検証がなく、予測入力は意図の誤読や操作学習の不透明化を招きうる"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
