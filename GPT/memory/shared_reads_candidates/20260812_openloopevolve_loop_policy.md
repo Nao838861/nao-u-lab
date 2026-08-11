@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2608.09380"
 collected_at: "2026-08-12T04:01:22+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [ai-agent, long-horizon, iterative-development, evaluation, game-dev-workflow]
+evaluated_at: "2026-08-12T04:06:21+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-12T04:06:21+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-12T04:06:21+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-11"
+supersedes: []
+gate_reason: |
+  Loop Policy の構成、online/offline evolution、Champion-Challenger、release 後の監視と rollback は抽出でき、ゲーム制作 cycle の手順を版管理する適用先も具体化できる。
+  ただし候補が保持するのは要旨相当だけで、YC-Bench の課題構成・数値結果・risk metric・失敗条件・ablation が不足し、CoopEval 水準の約4000字概要を推測なしでは書けない。
 ---
 
 ## raw_excerpt
