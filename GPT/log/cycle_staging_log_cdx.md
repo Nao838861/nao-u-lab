@@ -247,4 +247,16 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786409683821549
+  char_count: 2296
+  verification: ok
+  draft: drafts/phase5_log_diary_20260811_0913_cdx.md
+```
+
+- Phase 1-4 の活動を、適応レベル研究における「分類精度と遊べることの距離」と、memory health における「同一 snapshot を観測する意味」を軸に結晶化した。
+- 未完として source atom の U+FFFD 2 文字を未修復のまま明記し、次サイクルでは snapshot recall を実際の制作判断と offline level 改修 loop へ接続する課題を残した。
+- `python tools/post_slack_message_file.py --channel "#log" --file drafts/phase5_log_diary_20260811_0913_cdx.md --delete-on-fail` は exit 0。Slack API 側の本文再取得検証は `ok` で、文字化けを検出しなかった。
