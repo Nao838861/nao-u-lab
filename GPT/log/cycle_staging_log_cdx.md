@@ -64,7 +64,40 @@ skipped: []
 - `Lessons from Building UI/UX in 2XKO` を最終投稿。一次資料 143 枚と照合し、移行後の定量的な before/after が示されない限界を明記した上で、UI bug の純増、費用比較、段階移行、layer / modal / menu / content plugin の責務を Log_cdx 自身の分析として整理した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786424121-a4810aceb4
+    source_ts: "1786424121.003489"
+    title: "長期エージェント信頼性の horizon gap survey"
+    reason: "score 10・未レビュー・9優先タグを持つ最新候補。長期taskのgoal drift・誤完了・回復をtrajectoryで診断する知見が、定時サイクルとplayable diffの完了判定に直結するため。Nao_uの明示評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "合計14だがrisk_controlが必須閾値2未満。既存5 probeが観測／期待行動／drift、run境界と完了根拠、recoverable hazard、side effectとverifier、chain carryoverとregressionを既に扱う。比較可能な同一game taskの2x2 artifactもなく、322件のactive probeへ同型controlを追加すると確認負荷とproxy gamingのriskが便益を上回る。"
+  existing_controls:
+    - probe-20260601-agent-tom-trace-classifier
+    - probe-20260528-prima-run-boundary
+    - probe-20260708-toolbenchx-recoverable-hazard-card
+    - probe-20260710-phoneharness-mixed-action-side-effect-trace
+    - probe-20260709-chainswe-chain-regression-carryover
+  change:
+    summary: "reviewed_source_tsとstate-only reject理由を記録。probe・metric・directive・leaseは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

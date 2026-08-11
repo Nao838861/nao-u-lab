@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-11T13:58:26+09:00",
+  "updated_at": "2026-08-11T16:03:31+09:00",
   "reviewed_source_ts": [
+    "1786424121.003489",
     "1786416498.654479",
     "1786407960.742429",
     "1786399090.469959",
@@ -627,6 +628,47 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-11T16:03:31+09:00",
+      "selected": {
+        "id": "sr-1786424121-a4810aceb4",
+        "source_ts": "1786424121.003489",
+        "title": "長期エージェント信頼性の horizon gap survey",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たし、memory・harness・game-design・agent・operation・evaluation を含む9優先タグを持つ最新候補から1件だけを選んだ。long-horizon／long-context／long-term memory と agent／harness を分け、最終成否だけでなく trajectory 上の目標逸脱・誤完了・回復を診断する知見は、長い定時サイクルと playable diff の完了判定に直結する。Nao_uが本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14には達するが、risk_control が必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads本文は2024〜2026年のarXiv論文1,547件を計画・記憶・実行・訓練・評価・基礎安全の6領域に整理し、long-horizon／long-context／long-term memory、agent／harness、outcome／trajectoryを分離する。SWE-bench系の弱いtest・挙動差、TRAJEVALの16,758 trajectory、Vending-Benchの20M token超run、単一annotator・約5%誤分類・2026年論文偏重・process signalの相関biasという限界まで記録しているため relevance・actionability・evidence は3とした。一方、probe-20260601-agent-tom-trace-classifier は観測・期待行動・drift分類を、probe-20260528-prima-run-boundary は最後の信頼可能artifact・未解決状態・完了handoffを、probe-20260708-toolbenchx-recoverable-hazard-card はfailure typeと回復経路を、probe-20260710-phoneharness-mixed-action-side-effect-trace は期待side effect・verifier・hallucinated completionを、probe-20260709-chainswe-chain-regression-carryover は前stepのartifact・carryover・regressionを既に扱う。survey固有の2×2比較は差分だが、現在のstagingには同一model・同一game taskの現状／checkpoint付きharness×通常／session境界contextを比較できるartifactがない。322件のactive_probesへ同型controlを追加すると確認負荷とtrajectory loggingの先行実装を増やし、ゲーム品質よりlog整然さを最適化する危険があるため non_redundancy・risk_control は1とした。次に具体的な長期game taskで誤完了・goal drift・回復不能が起き、既存5 controlを適用しても原因層を決められない実例が出た場合だけ再評価する。",
+      "existing_controls": [
+        "probe-20260601-agent-tom-trace-classifier",
+        "probe-20260528-prima-run-boundary",
+        "probe-20260708-toolbenchx-recoverable-hazard-card",
+        "probe-20260710-phoneharness-mixed-action-side-effect-trace",
+        "probe-20260709-chainswe-chain-regression-carryover"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsとreject理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-11T13:58:26+09:00",
       "selected": {
