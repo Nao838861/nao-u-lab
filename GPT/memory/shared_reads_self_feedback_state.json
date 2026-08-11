@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-11T18:14:03+09:00",
+  "updated_at": "2026-08-11T20:17:07+09:00",
   "reviewed_source_ts": [
+    "1786313116.669499",
     "1786431598.049539",
     "1786424121.003489",
     "1786416498.654479",
@@ -629,6 +630,46 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-11T20:17:07+09:00",
+      "selected": {
+        "id": "sr-1786313116-41aa7c64b3",
+        "source_ts": "1786313116.669499",
+        "title": "段階的 adversarial stress test による persona／directive の failure onset 記録",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす最新候補で、memory・harness・game-design・agent・operation・evaluation の6優先タグをすべて持つ1件だけを選んだ。低圧から権威詐称・感情圧力へ段階的に強め、単発passではなく最初の破綻turnと全履歴を保存する知見は、会話NPCと長い自動cycleのdirective維持を過大評価しない判断に直結する。Nao_uが本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件は満たす。shared-reads本文はRole Drift・Ethical Probing・Contradiction・Confusion・Authority Challenge・Emotional Manipulationの6戦略、10 turnの段階的強化、Target／Interrogator／Judgingの分離、3 persona×3 seed、通常のRole Drift条件から複合条件へのOverall低下、turn 6以降の重大違反増加、人手評価との相関まで示し、単発passと累積圧力下のfailure onsetを分ける根拠があるためrelevance・actionability・evidenceは3とした。一方、probe-20260708-seduced-narrative-rhetorical-rule-gateは権威・感情・疑似論理を含む文面とmandatory gateを、probe-20260619-agentic-state-authority-boundaryは外部文面からdurable stateへの権限境界を、probe-20260616-dialogue-session-outcome-splitはmulti-turn会話の局所流暢さとsession outcomeを、probe-20260607-adversarial-role-reviewはhidden failure conditionへの短い攻撃を既に扱う。本atom固有の差は複数戦略を応答適応的に連鎖させ、最初のfailure turnを回帰指標にする点なのでnon_redundancyは2とした。ただし現在のstagingには同一NPCまたはdirective sequenceを通常／単一戦略／段階的複合戦略で10 turn以上replayするbefore／after artifactがなく、後続Phase 4aも会話NPCやadversarial directive harnessの実consumerではない。論文のRF・DI・ED・CSはkeyword、TF-IDF、前後density、tone shiftと手設定重みに依存し、3 persona・3 seedと小さいため、そのまま採用するとproxy最適化と322件あるactive_probesの確認負荷を増やす。consumer、trigger artifact、expected deltaをlease契約どおり固定できないためstate-onlyでdeferする。次に具体的な会話NPCまたは隔離fixtureのdirective sequenceが置かれた時だけ、hard constraint pass/fail、first failure turn、最悪seed、replay一致率に限定した一時metricとして再評価する。",
+      "existing_controls": [
+        "probe-20260708-seduced-narrative-rhetorical-rule-gate",
+        "probe-20260619-agentic-state-authority-boundary",
+        "probe-20260616-dialogue-session-outcome-split",
+        "probe-20260607-adversarial-role-review"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsとdefer理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-11T18:14:03+09:00",
       "selected": {
