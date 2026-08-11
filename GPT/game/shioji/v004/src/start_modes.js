@@ -10,10 +10,10 @@ export const START_MODES = Object.freeze({
   }),
   sandbox: Object.freeze({
     id: 'sandbox',
-    label: '自分でゼロから開拓',
-    shortLabel: '未開拓サンドボックス',
-    description: '港だけがある島で、市場・倉庫・職建物と道を自分で配置します。',
-    blank: true,
+    label: '自分で島を営む',
+    shortLabel: '自由プレイ',
+    description: '母港と魚郷がある島で、隊商路線や産業を自由に育てます。',
+    blank: false,
   }),
   test: Object.freeze({
     id: 'test',

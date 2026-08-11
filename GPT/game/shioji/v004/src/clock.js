@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.46.4-engine-cache';
+import { SPEEDS } from './config.js?v=v004.47.0-playable-96x64';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

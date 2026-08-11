@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.46.4-engine-cache';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.47.0-playable-96x64';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.46.4-engine-cache';
+} from './food_readability.js?v=v004.47.0-playable-96x64';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   findTravelPath, householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.46.4-engine-cache';
-import { analyzeRoadConnections } from './placement.js?v=v004.46.4-engine-cache';
+} from './engine_bridge.js?v=v004.47.0-playable-96x64';
+import { analyzeRoadConnections } from './placement.js?v=v004.47.0-playable-96x64';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.46.4-engine-cache';
+} from './render_scene.js?v=v004.47.0-playable-96x64';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.46.4-engine-cache';
+} from './visuals.js?v=v004.47.0-playable-96x64';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',

@@ -3,9 +3,12 @@ import fs from 'node:fs';
 import { createEngineApi, replayInputJournal } from '../../engine/src/api.js';
 import { buildBaseCity, findAuditSpot } from '../../engine/src/audit.js';
 import {
-  FOODS, createHousehold, requestCompanyImport, runPopulationDynamicsPhase,
+  FOODS, GOODS, assertMoneyConservation, createHousehold, economicMaterialSnapshot,
+  requestCompanyImport, runPopulationDynamicsPhase,
 } from '../../engine/src/econ.js';
-import { ECONOMIC_BUILDINGS, depositInventory } from '../../engine/src/physical.js';
+import {
+  ECONOMIC_BUILDINGS, assertMaterialBalance, depositInventory,
+} from '../../engine/src/physical.js';
 import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
 import {
@@ -22,7 +25,7 @@ import {
 import { developmentMapView } from '../src/development_map.js';
 import {
   BUILD_COST_DENARI, E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS,
-  applySpringStartCalendar, buildBlankCity, createEngineController,
+  applySpringStartCalendar, buildBlankCity, buildPlayableSandboxWorld, createEngineController,
 } from '../src/engine_bridge.js';
 import {
   EVENT_DISPLAY_POLICY, OBSERVED_EVENT_TYPES, eventPlaceLabel, hasEventPresentation,
@@ -101,6 +104,7 @@ import {
 } from '../src/visuals.js';
 
 let passed = 0;
+const failures = [];
 let tutorialThroughPlay = null;
 const PROFITABLE_ORDER_OBSERVATION_DAYS = 400;
 const SKIPPABLE_ORDER_OBSERVATION_DAYS = 600;
@@ -112,16 +116,43 @@ const testMatch = testMatchSource ? new RegExp(testMatchSource) : null;
 const tutorialStage17Requested = testMatchSource?.includes('チュートリアル段17') ?? false;
 const tutorialStage17Dependency = /^チュートリアル段(?:7〜9|1[0-7])(?::|実測:)/;
 
+function readBrowserEntrySource() {
+  const htmlUrl = new URL('../index.html', import.meta.url);
+  const html = fs.readFileSync(htmlUrl, 'utf8');
+  const dynamicEntry = html.match(/const\s+moduleUrl\s*=\s*['"]([^'"]+\.js(?:\?[^'"]*)?)/)?.[1];
+  const staticEntry = html.match(/<script[^>]+type=['"]module['"][^>]+src=['"]([^'"]+\.js(?:\?[^'"]*)?)/)?.[1];
+  const entry = dynamicEntry ?? staticEntry;
+  assert.ok(entry, 'index.htmlからbrowser module entryを解決できる');
+  return fs.readFileSync(new URL(entry.split('?')[0], htmlUrl), 'utf8');
+}
+
+function clampMaterialRoundoff(snapshot) {
+  for (const record of [snapshot.inventory, snapshot.cargo]) {
+    for (const [goods, qty] of Object.entries(record)) {
+      if (qty < 0 && qty > -1e-9) record[goods] = 0;
+    }
+  }
+  return snapshot;
+}
+
 function test(name, body) {
   if (testMatch && !testMatch.test(name)
     && !(tutorialStage17Requested && tutorialStage17Dependency.test(name))) return;
   console.log(`run - ${name}`);
   const startedAt = performance.now();
-  body();
-  const elapsedMs = performance.now() - startedAt;
-  testTimings.push({ name, elapsedMs });
-  passed += 1;
-  console.log(`ok - ${name} (${(elapsedMs / 1000).toFixed(2)}s)`);
+  try {
+    body();
+    const elapsedMs = performance.now() - startedAt;
+    testTimings.push({ name, elapsedMs });
+    passed += 1;
+    console.log(`ok - ${name} (${(elapsedMs / 1000).toFixed(2)}s)`);
+  } catch (error) {
+    const elapsedMs = performance.now() - startedAt;
+    testTimings.push({ name, elapsedMs });
+    failures.push({ name, error });
+    console.error(`not ok - ${name} (${(elapsedMs / 1000).toFixed(2)}s)`);
+    console.error(error?.stack ?? error);
+  }
 }
 
 test('食料警告: 盤面でも購買力・在庫・経路・移動の原因を区別する', () => {
@@ -179,7 +210,7 @@ test('品目スプライト: 全18品を色なしの輪郭で区別し、Canvas�
     assert.match(markup, /viewBox="0 0 16 16"/);
     assert.doesNotMatch(markup, />[木鉱石銑鉄槌岩麦魚菜肉燻漬粉塩炭布油]</);
   }
-  const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  const main = readBrowserEntrySource();
   const renderer = fs.readFileSync(new URL('../src/renderer.js', import.meta.url), 'utf8');
   assert.match(main, /goodsSpriteSvgMarkup\(goods, art\)/);
   assert.match(renderer, /drawGoodsSpriteCanvas\(this\.ctx, art/);
@@ -385,7 +416,7 @@ test('教程T/U: 全目標をエレナ概要と一意なsystem操作へ分け、
     },
   }).letters()[0];
   assert.equal(restoredOldLetter.elenaMessage, TUTORIAL_LETTER_MESSAGES['arrival-report']);
-  const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  const main = readBrowserEntrySource();
   const contentSource = fs.readFileSync(new URL('../src/tutorial_content.js', import.meta.url), 'utf8');
   assert.doesNotMatch(main, /書状を閉じ、画面上部の現在目標/);
   assert.doesNotMatch(contentSource,
@@ -714,7 +745,8 @@ test('チュートリアル段1: v003の旧Worldを持ち込まず観測ディ�
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const director = fs.readFileSync(new URL('../src/tutorial_director.js', import.meta.url), 'utf8');
   assert.doesNotMatch(director, /applyOperation|advanceTicks|\.operate\(/);
-  assert.match(html, /src="\.\/src\/main\.js/);
+  assert.match(html, /const\s+moduleUrl\s*=\s*['"]\.\/src\/main\.js/);
+  assert.match(readBrowserEntrySource(), /createTutorialDirectorForMode/);
   assert.match(html, /潮路の島 v004/);
   assert.equal(fs.existsSync(new URL('../src/world.js', import.meta.url)), false);
   for (const id of [
@@ -834,10 +866,12 @@ test('チュートリアル段3: skipは同じ世界とjournalを保ったまま
   assert.deepEqual(completionDirector.currentObjective().progress, { done: 1, total: 1 });
 });
 
-test('チュートリアル段4: tutorialだけが同じ未開拓worldへディレクターを重ねる', () => {
+test('チュートリアル段4: tutorialは未開拓worldへディレクターだけを重ねる', () => {
   const tutorial = createEngineController({ seed: 11, mode: 'tutorial' });
-  const sandbox = createEngineController({ seed: 11, mode: 'sandbox' });
-  assert.deepEqual(tutorial.readModel(), sandbox.readModel());
+  const blank = snapshotToViewModel(createEngineApi(
+    applySpringStartCalendar(buildBlankCity(11)),
+  ).snapshot({ scope: 'full' }));
+  assert.deepEqual(tutorial.readModel(), blank);
   assert.ok(createTutorialDirectorForMode('tutorial'));
   assert.equal(createTutorialDirectorForMode('sandbox'), null);
   assert.equal(createTutorialDirectorForMode('test'), null);
@@ -2225,7 +2259,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.46.4-engine-cache');
+  assert.equal(VERSION, 'v004.47.0-playable-96x64');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2387,14 +2421,12 @@ function measureLoggerRoadRecovery(seed) {
   return { seed, before, after, director };
 }
 
-test('開始選択: 未開拓2種・見本町・二市場縦切りを選べる', () => {
+test('開始選択: 教程48×40・自由96×64・見本町・二市場縦切りを選べる', () => {
   assert.deepEqual(Object.keys(START_MODES), ['tutorial', 'sandbox', 'test', 'caravan']);
   const tutorial = createEngineController({ seed: 11, mode: 'tutorial' });
   const sandbox = createEngineController({ seed: 11, mode: 'sandbox' });
   const testCity = createEngineController({ seed: 11, mode: 'test' });
   const caravan = createEngineController({ seed: 11, mode: 'caravan' });
-  assert.deepEqual(tutorial.readModel(), sandbox.readModel());
-  const blank = sandbox.readModel();
   for (const [mode, controller] of [
     ['tutorial', tutorial], ['sandbox', sandbox], ['test', testCity], ['caravan', caravan],
   ]) {
@@ -2416,34 +2448,31 @@ test('開始選択: 未開拓2種・見本町・二市場縦切りを選べる',
   }).readModel();
   assert.equal(resumed.calendarOffsetDays, SPRING_START_CALENDAR_OFFSET_DAYS,
     '春開始後の保存は暦オフセットを保って再開する');
+  const blank = tutorial.readModel();
+  assert.deepEqual([blank.width, blank.height], [48, 40]);
   assert.deepEqual(blank.buildings.map(building => building.type), ['port']);
   assert.equal(blank.households.length, 0);
   assert.equal(blank.roadKeys.length, 0);
   assert.deepEqual(PLACEMENT_JOBS.slice(0, 2), ['market', 'warehouse']);
-  sandbox.advanceOneDay();
-  assert.deepEqual(sandbox.readModel().buildings.map(building => building.type), ['port']);
-  for (const type of ['market', 'warehouse']) {
-    const logisticsPreview = findPreview(sandbox.readModel(), type);
-    assert.ok(logisticsPreview, `未開拓島に${type}を配置できる`);
-    assert.equal(sandbox.operate({
-      type: 'place_building', job: type,
-      x: logisticsPreview.entrance.x, y: logisticsPreview.entrance.y,
-      buildingX: logisticsPreview.x, buildingY: logisticsPreview.y,
-    }).ok, true);
-  }
+  assert.deepEqual([sandbox.readModel().width, sandbox.readModel().height], [96, 64]);
   assert.deepEqual(
-    sandbox.readModel().buildings.map(building => building.type).sort(),
-    ['market', 'port', 'warehouse'],
+    sandbox.readModel().marketNetwork.markets.map(market => market.name),
+    ['母港市場', '漁郷市場'],
   );
-  const preview = findPreview(sandbox.readModel(), 'woodshop');
-  assert.ok(preview, '未開拓島にも最初の職建物を配置できる');
-  assert.equal(sandbox.operate({
-    type: 'place_building', job: 'woodshop',
-    x: preview.entrance.x, y: preview.entrance.y,
-    buildingX: preview.x, buildingY: preview.y,
-  }).ok, true);
-  sandbox.advanceTicks(15 * 30);
-  assert.ok(sandbox.readModel().households.length > 0, '未開拓島の最初の区画へ移民が到着する');
+  assert.ok(sandbox.readModel().buildings.some(building => building.type === 'carter'));
+  assert.ok(sandbox.readModel().buildings.some(building => building.type === 'cartwright'));
+  assert.deepEqual(
+    sandbox.saveState(),
+    applySpringStartCalendar(buildPlayableSandboxWorld(11)).state,
+  );
+
+  const oldSandboxState = applySpringStartCalendar(buildBlankCity(11)).state;
+  const oldSandbox = createEngineController({
+    mode: 'sandbox', stateSnapshot: structuredClone(oldSandboxState),
+  }).readModel();
+  assert.deepEqual([oldSandbox.width, oldSandbox.height], [48, 40],
+    '既存の48×40自由セーブは同じ島で再開する');
+  assert.deepEqual(oldSandbox.buildings.map(building => building.type), ['port']);
   assert.ok(testCity.readModel().buildings.length > blank.buildings.length);
   assert.ok(testCity.readModel().zones.length > 0);
   assert.deepEqual([caravan.readModel().width, caravan.readModel().height], [96, 64]);
@@ -2473,9 +2502,11 @@ test('開始選択: URLのmodeは4種だけを受理し他のqueryを保つ', ()
   }
 });
 
-test('隊商S2: 96×64の母港と漁郷が麦なしで一年自律し餓死を出さない', () => {
-  const controller = createEngineController({ seed: 11, mode: 'caravan' });
+test('自由開始96×64: 母港と魚郷は無路線の一年を自律し保存則を守る', () => {
+  const controller = createEngineController({ seed: 11, mode: 'sandbox' });
   const initial = controller.saveState();
+  const materialBefore = economicMaterialSnapshot(initial.economy, initial.physical);
+  const flowBefore = structuredClone(initial.economy.materialFlows);
   assert.deepEqual([initial.physical.width, initial.physical.height], [96, 64]);
   assert.deepEqual(
     initial.marketNetwork.markets.map(market => [market.id, market.name]),
@@ -2497,7 +2528,12 @@ test('隊商S2: 96×64の母港と漁郷が麦なしで一年自律し餓死を�
   assert.equal(initial.economy.pxm?.fishery, undefined,
     '漁郷だけの恣意的な初期相場を置かない');
   assert.equal(fisheryAtStart.every(household => household.pantry.wheat === 0), true);
+  assert.ok(initial.economy.households.filter(household => household.marketId === 'main')
+    .reduce((total, household) => total + household.pantry.wheat, 0) > 0,
+  '母港に麦の余剰がある');
   const originalFisheryIds = fisheryAtStart.map(household => household.id);
+  const originalMainIds = initial.economy.households
+    .filter(household => household.marketId === 'main').map(household => household.id);
   const saltworksAtStart = fisheryAtStart.find(household => household.job === 'saltworks');
   const saltworksBuildingAtStart = initial.physical.buildings.find(
     building => building.id === saltworksAtStart.buildingId,
@@ -2516,6 +2552,9 @@ test('隊商S2: 96×64の母港と漁郷が麦なしで一年自律し餓死を�
     id => after.economy.households.find(household => household.id === id),
   );
   assert.equal(fisheryAfter.every(Boolean), true, '漁郷の種付き4世帯が一年後も残る');
+  assert.equal(originalMainIds.every(
+    id => after.economy.households.some(household => household.id === id),
+  ), true, '母港の種付き世帯も一年後まで自律する');
   assert.equal(fisheryAfter.every(household => household.pantry.wheat === 0), true,
     '路線なしでは漁郷へ麦が現れない');
   assert.equal(fisheryAfter.filter(household => household.job === 'fisher').every(
@@ -2527,17 +2566,30 @@ test('隊商S2: 96×64の母港と漁郷が麦なしで一年自律し餓死を�
   );
   assert.ok(saltworksBuildingAfter.inventory.input.char < startingSaltworksCharcoal,
     '塩田が木炭を実消費して塩を生産する');
+  assertMoneyConservation(after.economy);
+  const flowDelta = Object.fromEntries(GOODS.map(goods => [goods, Object.fromEntries(
+    ['prod', 'imp', 'cons', 'exp'].map(kind => [
+      kind,
+      (after.economy.materialFlows[goods]?.[kind] ?? 0)
+        - (flowBefore[goods]?.[kind] ?? 0),
+    ]),
+  )]));
+  assertMaterialBalance({
+    before: materialBefore,
+    after: clampMaterialRoundoff(economicMaterialSnapshot(after.economy, after.physical)),
+    flows: flowDelta,
+  });
 });
 
-test('隊商S2: 二市場開始モードは同じ入力journalから同じ状態を再生する', () => {
-  const controller = createEngineController({ seed: 11, mode: 'caravan' });
+test('自由開始96×64: 同じ入力journalから同じ状態を再生する', () => {
+  const controller = createEngineController({ seed: 11, mode: 'sandbox' });
   const operation = { type: 'add_road', start: { x: 90, y: 20 }, end: { x: 91, y: 20 } };
   assert.equal(controller.operate(operation).ok, true);
   controller.advanceTicks(30 * 30);
   const expected = controller.saveState();
   const journal = controller.inputJournal();
 
-  const replay = createEngineController({ seed: 11, mode: 'caravan' });
+  const replay = createEngineController({ seed: 11, mode: 'sandbox' });
   let replayTick = 0;
   for (const row of journal) {
     replay.advanceTicks(row.tick - replayTick);
@@ -3230,7 +3282,7 @@ test('起動AA: 公開cacheで新旧moduleを混在させず、失敗時も開�
 test('UI O〜R: 上部メニュー・非重複通知・自動適用在庫・時系列グラフの契約を持つ', () => {
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const css = fs.readFileSync(new URL('../style.css', import.meta.url), 'utf8');
-  const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  const main = readBrowserEntrySource();
   assert.doesNotMatch(html, /エンジンの世界/);
   assert.match(html, /id="top-menu"[\s\S]*id="open-company"[\s\S]*id="open-supply"[\s\S]*id="open-island"[\s\S]*id="open-building"[\s\S]*id="open-events"/);
   for (const id of ['food-stock-chart', 'population-chart', 'finance-chart']) {
@@ -3860,7 +3912,7 @@ test('段12: 実キャリアは荷・出所・行き先・経路を追跡表示�
   assert.match(carrier.to.label, /市場/);
   assert.ok(carrier.path.length >= 2);
   const renderer = fs.readFileSync(new URL('../src/renderer.js', import.meta.url), 'utf8');
-  const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  const main = readBrowserEntrySource();
   assert.match(renderer, /hitTestCarrier/);
   assert.match(main, /selectCarrier/);
 });
@@ -3884,7 +3936,7 @@ test('UI向上段3: 3D建物の上面を前面順にhit testし空所は選ば�
 
 test('UI向上段3/4: 建物sheet・クリック選択・地面先行の選択強調を備える', () => {
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-  const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  const main = readBrowserEntrySource();
   const renderer = fs.readFileSync(new URL('../src/renderer.js', import.meta.url), 'utf8');
   const css = fs.readFileSync(new URL('../style.css', import.meta.url), 'utf8');
   for (const id of [
@@ -3965,7 +4017,7 @@ test('UI向上段5: 全建物を重複なく分類し費用・寸法付き直接
   assert.equal(BUILD_COST_DENARI, 2500);
   assert.ok(PLACEMENT_JOBS.every(job => BUILDING_ART[job] && BUILDING_SIZES[job]));
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-  const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  const main = readBrowserEntrySource();
   for (const id of ['build-tabs', 'building-palette', 'ground-tools', 'cancel-tool']) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
@@ -4127,7 +4179,7 @@ test('UI向上段9: 需給を独立表示し、統計は収支と既定3グラ�
   });
   assert.equal(supplyDemandRows(model, [], matureDiscovery.knownGoods()).length, 18);
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-  const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  const main = readBrowserEntrySource();
   const supply = fs.readFileSync(new URL('../src/supply_demand.js', import.meta.url), 'utf8');
   for (const id of ['supply-sheet', 'supply-grid', 'shortage-alerts', 'island-sheet', 'island-finance', 'open-supply', 'open-island']) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
@@ -4157,7 +4209,7 @@ test('品目の出会い開示: 未開拓は空、見本の町は18品、保有�
   const goodsIds = Object.keys(GOODS_LABELS);
   const blank = createGoodsDiscovery({
     goodsIds,
-    mode: 'sandbox',
+    mode: 'tutorial',
     model: { day: 0, goodsManifest: [] },
   });
   assert.deepEqual(blank.knownGoods(), []);
@@ -4195,7 +4247,7 @@ test('品目の出会い開示: 未開拓は空、見本の町は18品、保有�
   assert.equal(blank.currentMessage(), null, '消費後に再保有しても再び発話しない');
 
   const restored = createGoodsDiscovery({
-    goodsIds, mode: 'sandbox', state: blank.readState(),
+    goodsIds, mode: 'tutorial', state: blank.readState(),
   });
   assert.deepEqual(restored.knownGoods(), blank.knownGoods());
   assert.equal(restored.currentMessage(), null);
@@ -4214,7 +4266,7 @@ test('品目の出会い開示: 未開拓は空、見本の町は18品、保有�
   );
 
   const mature = createGoodsDiscovery({
-    goodsIds, mode: 'test', model: { day: 0, goodsManifest: [] },
+    goodsIds, mode: 'sandbox', model: { day: 0, goodsManifest: [] },
   });
   assert.deepEqual(mature.knownGoods(), goodsIds);
   assert.equal(mature.currentMessage(), null);
@@ -4742,7 +4794,7 @@ test('UI向上段9: 常駐エレナは強制書状を予告し、任意書状を
 
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const css = fs.readFileSync(new URL('../style.css', import.meta.url), 'utf8');
-  const mainSource = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  const mainSource = readBrowserEntrySource();
   assert.match(html, /id="secretary"/);
   assert.match(html, /elena_vance\.png/);
   assert.match(html, /<div id="secretary"[^>]*>[\s\S]*secretary-name[\s\S]*secretary-speech/);
@@ -5120,7 +5172,7 @@ test('段15: 会社台帳・買上げ目標・市場へ出す・注文比較を�
     'set_stock_target', 'release_stock', 'accept_order',
   ]);
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-  const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  const main = readBrowserEntrySource();
   for (const id of ['company-sheet', 'order-panel', 'aid-panel', 'company-goods', 'company-ledger']) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
@@ -5197,7 +5249,7 @@ test('段16: 観測APIの全イベント種とnotice専用トースト・ログ�
     '専用に書かれた発話がないイベント本文はエレナへ流用しない',
   );
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-  const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  const main = readBrowserEntrySource();
   assert.match(html, /id="toast-stack"/);
   assert.match(html, /id="event-log"/);
   assert.match(main, /appendEvents/);
@@ -5207,7 +5259,8 @@ test('段16: 観測APIの全イベント種とnotice専用トースト・ログ�
 });
 
 const slowTests = [...testTimings].sort((left, right) => right.elapsedMs - left.elapsedMs).slice(0, 5);
-console.log(`\n${passed} v004 tests passed in ${((performance.now() - suiteStartedAt) / 1000).toFixed(2)}s`);
+console.log(`\n${passed} v004 tests passed, ${failures.length} failed in ${((performance.now() - suiteStartedAt) / 1000).toFixed(2)}s`);
 if (slowTests[0]?.elapsedMs >= 1000) {
   console.log(`slow: ${slowTests.map(row => `${(row.elapsedMs / 1000).toFixed(2)}s ${row.name}`).join(' | ')}`);
 }
+if (failures.length > 0) process.exitCode = 1;

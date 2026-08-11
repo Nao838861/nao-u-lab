@@ -1,48 +1,48 @@
-import { IsometricCamera } from './camera.js?v=v004.46.4-engine-cache';
-import { SimulationClock } from './clock.js?v=v004.46.4-engine-cache';
-import { createBoundaryEvents } from './boundary_events.js?v=v004.46.4-engine-cache';
+import { IsometricCamera } from './camera.js?v=v004.47.0-playable-96x64';
+import { SimulationClock } from './clock.js?v=v004.47.0-playable-96x64';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.47.0-playable-96x64';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.46.4-engine-cache';
+} from './config.js?v=v004.47.0-playable-96x64';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.46.4-engine-cache';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.46.4-engine-cache';
-import { developmentMapView } from './development_map.js?v=v004.46.4-engine-cache';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.46.4-engine-cache';
-import { formatElenaSpeech } from './elena_text.js?v=v004.46.4-engine-cache';
+} from './display_batch.js?v=v004.47.0-playable-96x64';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.47.0-playable-96x64';
+import { developmentMapView } from './development_map.js?v=v004.47.0-playable-96x64';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.47.0-playable-96x64';
+import { formatElenaSpeech } from './elena_text.js?v=v004.47.0-playable-96x64';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.46.4-engine-cache';
+} from './food_readability.js?v=v004.47.0-playable-96x64';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.46.4-engine-cache';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.46.4-engine-cache';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.46.4-engine-cache';
-import { goodsDetail } from './goods_detail.js?v=v004.46.4-engine-cache';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.46.4-engine-cache';
-import { WorldPresentation } from './presentation.js?v=v004.46.4-engine-cache';
-import { Renderer } from './renderer.js?v=v004.46.4-engine-cache';
+} from './keyboard.js?v=v004.47.0-playable-96x64';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.47.0-playable-96x64';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.47.0-playable-96x64';
+import { goodsDetail } from './goods_detail.js?v=v004.47.0-playable-96x64';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.47.0-playable-96x64';
+import { WorldPresentation } from './presentation.js?v=v004.47.0-playable-96x64';
+import { Renderer } from './renderer.js?v=v004.47.0-playable-96x64';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.46.4-engine-cache';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.46.4-engine-cache';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.46.4-engine-cache';
+} from './save_game.js?v=v004.47.0-playable-96x64';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.47.0-playable-96x64';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.47.0-playable-96x64';
 import {
   GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRow, supplyDemandRows,
-} from './supply_demand.js?v=v004.46.4-engine-cache';
-import { orderQuote } from './tutorial_content.js?v=v004.46.4-engine-cache';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.46.4-engine-cache';
+} from './supply_demand.js?v=v004.47.0-playable-96x64';
+import { orderQuote } from './tutorial_content.js?v=v004.47.0-playable-96x64';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.47.0-playable-96x64';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.46.4-engine-cache';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.46.4-engine-cache';
+} from './ui_guidance.js?v=v004.47.0-playable-96x64';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.47.0-playable-96x64';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -150,7 +150,8 @@ const uiMetrics = {
   batchedTicks: 0,
 };
 camera.setWorldSize(model.width, model.height);
-if (START_MODES[startMode].blank || startMode === 'caravan') {
+if (startMode === 'sandbox' && !startupSave) camera.zoom = 0.38;
+if (START_MODES[startMode].blank || startMode === 'sandbox' || startMode === 'caravan') {
   camera.focus(model.economyMarket.x + 0.5, model.economyMarket.y + 0.5);
 }
 
@@ -1883,7 +1884,7 @@ function renderBuildingSheet() {
       .sort((left, right) => right[1] - left[1]);
     companyStockPanel.innerHTML = `
       <h3>会社の倉庫にある品</h3>
-      <p>会社が市場で買い上げた品です。本国注文の船積み、品薄時の市場への蔵出し、市場・倉庫・港の修繕にここから運びます。</p>
+      <p>会社が市場で買い上げた品です。本国注文の船積み、品薄時に市場へ出す、市場・倉庫・港の修繕にここから運びます。</p>
       ${companyRows.length ? `<div class="shelf-list">${companyRows.map(([goods, amount]) => {
         const averageCost = model.companyStockAverageCosts[goods];
         const cost = Number.isFinite(averageCost)

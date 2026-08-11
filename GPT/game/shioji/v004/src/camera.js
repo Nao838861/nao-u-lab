@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.46.4-engine-cache';
+import { TILE } from './config.js?v=v004.47.0-playable-96x64';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

@@ -11,7 +11,7 @@ import {
   localWood,
   recordEconomicMaterialFlow,
   setCaravanEmployment,
-} from "./econ.js?v=v004.46.4-engine-cache";
+} from "./econ.js?v=v004.47.0-playable-96x64";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -27,8 +27,8 @@ import {
   makeFlowIslandTerrain,
   makeMultiMarketTerrain,
   pathLen,
-} from "./physical.js?v=v004.46.4-engine-cache";
-import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.46.4-engine-cache";
+} from "./physical.js?v=v004.47.0-playable-96x64";
+import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.47.0-playable-96x64";
 
 export const AUDIT_SEEDS = Object.freeze([11, 13, 14]);
 
