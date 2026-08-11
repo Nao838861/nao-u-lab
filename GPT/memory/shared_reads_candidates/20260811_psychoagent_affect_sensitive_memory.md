@@ -7,14 +7,19 @@ genre_tags: [llm-agent, memory, affect, npc, character-simulation, evaluation]
 evaluated_at: "2026-08-11T11:37:34+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-11T11:37:34+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-11T11:37:34+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-11T11:48:42+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786416498654479"
+next_action: none
 stale_after: "2026-09-10"
 supersedes: []
+posted:
+  ts: "1786416498.654479"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786416498654479"
+  char_count: 3541
+  posted_at: "2026-08-11T11:48:42+09:00"
 gate_reason: >-
   factual / affective memory の分離、二段階検索、conflict-aware controller、比較実験と
   非有意だった人手評価まで重要要素を抽出でき、長期 NPC の未解決葛藤を扱う設計へ具体的に適用できる。
