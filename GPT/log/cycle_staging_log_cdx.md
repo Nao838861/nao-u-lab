@@ -99,7 +99,81 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。atom ID 参照 87 件は atoms.jsonl / atoms/index.jsonl の双方で missing 0、Markdown link 0、U+FFFD 0。代表語は 記憶 / ゲーム設計 / 敵パターン を取得でき、評価軸は現行本文に語として存在しないだけで source file 破損ではない。"
+  - "memory/atoms.jsonl と per-file / index mirror 2854 件を監査。parse error / index error / content conflict は各 0。raw normalized-content duplicate 40 群と title+excerpt exact 5 群は canonical overlay 45 群で全て fold 済み、effective display unresolved は 0。"
+  - "memory/raw/ の 30 日超ファイル 240 件を確認。215 件は web_research、16 件は headless_eval、残りは Slack / game-eval 等の原文で、raw 原文保持ルール上 age だけでは archive せず、今回の移動対象は 0 件。"
+  - "shared-reads 派生 queue を現 candidate state から再生成して監査。candidate 本体は変更せず、group / candidate handoff の二重投入も 0 件。"
+  - "slack_directives.jsonl 23 行 / slack_broadcasts.jsonl 21 行を監査し、pending は双方 0 件。handled 更新対象なし。"
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の title / trigger / excerpt に、原文 Slack archive から継承した U+FFFD があり、『AIエージェント』が『AIエ��ジェント』になっている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl#id=sr-1776127289-4d9239b255; memory/raw/slack_archive/shared-reads.jsonl#ts=1776127289.990919"
+    source_file_status: "UTF-8 明示読みでも raw / atoms.jsonl / per-file atom の全てに U+FFFD が存在するため、表示だけでなく source data に局所破損あり。memory/MEMORY.md 自体は UTF-8 正常。"
+    display_or_tooling_status: "表示経路の mojibake ではない。memory_health のもう1件の suspect gr-1777083728-44d444ab7a は原文中の意図された『???』で、UTF-8 source は正常な false positive。"
+    why_blocks_game_memory: "『AIエージェント』の完全一致検索でこの旧atomを落とし得るが、memory / agent tags とURLは残り、単一atomに限定されるため次のゲーム制作を構造的には阻害しない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+atom_audit:
+  atoms: 2854
+  mirror_status: clean
+  repeated_title_groups: 22
+  effective_display_unresolved_groups: 0
+  canonical_overlay_groups: 45
+candidate_lifecycle:
+  total: 1263
+  status_counts:
+    posted: 590
+    ready_to_post: 9
+    postponed: 217
+    failed: 445
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_for_reassessment: 2
+  overdue_paths:
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+    - memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 4
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 43
+  mixed_group_count: 38
+  all_open_group_count: 5
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppressed_by_live_deferred_group_lease:
+    count: 2
+    retry_after: "2026-08-20T13:19:04+09:00"
+    group_handoff_ids:
+      - gha-e6d4d4b5a37a0808
+      - gha-2313a247c62a9028
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- 判定: 新しい構造問題は見つからず、isolatedなsource文字化け1件は既存health auditで検出可能な局所データ品質問題である。Phase 4b / 4c は起動しない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
