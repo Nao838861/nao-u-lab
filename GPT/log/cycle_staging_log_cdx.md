@@ -1,162 +1,25 @@
-# log_cdx Cycle Staging — 2026-08-11 06:43
+# log_cdx Cycle Staging — 2026-08-11 09:13
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-- inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` は pending 0 件。
-- 直近入力確認: `memory/raw/web_research/results.jsonl` の 2026-08-11 06:21 / 06:36 取得分、最近の atom、Slack raw の外部 URL を確認。既存 candidate / 既投稿と一致する資料が多かったため、未収集の新着一次資料を 1 件保存した。
-- `memory/shared_reads_candidates/20260811_video_deepresearch_visual_tool_grounding.md` — 連続映像 agent の modality bias、parametric knowledge leakage、frame 横断 grounding を扱う Video-DeepResearch の収集メモ。
-- duplicate preflight: sidecar 3 種を再生成後、title / URL とも `continue`（ログ: `log/shared_reads_candidate_preflight.jsonl`）。
+
+- inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
+- `memory/raw/web_research/results.jsonl`、最近の atom、raw Slack の外部 URL を確認。
+- `memory/shared_reads_candidates/20260811_adaptive_level_modification_player_skill_llm.md` — player skill 分類、二段 LLM による level chunk 構造変更、physics-constrained verifier を接続した dynamic difficulty adjustment 研究。
+- 書込み前に 3 sidecar を再生成し、exact title / URL preflight は `continue`（2026-08-11 09:16 JST）。
 
 ## Phase 2: 分析
-```yaml
-total_candidates: 1
-pass:
-  - memory/shared_reads_candidates/20260811_video_deepresearch_visual_tool_grounding.md
-fail: []
-postpone: []
-stale_reviewed: []
-group_actions: []
-group_handoff_audit:
-  pending_before: 0
-  read_ids: []
-  resolved_ids: []
-  deferred_ids: []
-  partial_ids: []
-  apply_counts:
-    candidates_updated: 0
-    already_terminal: 0
-  pending_after: 0
-candidate_handoff_audit:
-  pending_before: 0
-  read_ids: []
-  resolved_ids: []
-  deferred_ids: []
-  partial_ids: []
-  pending_after: 0
-unreviewed_intake_audit:
-  valid_backlog_before: 1
-  malformed_count: 0
-  oldest_collected_at: "2026-08-11T06:44:53+09:00"
-  selection_limit: 5
-  selected_paths: []
-  phase1_excluded_paths:
-    - memory/shared_reads_candidates/20260811_video_deepresearch_visual_tool_grounding.md
-  evaluated_paths:
-    - memory/shared_reads_candidates/20260811_video_deepresearch_visual_tool_grounding.md
-  valid_backlog_after: 0
-```
-
-- 判定根拠: Video-DR は、映像 agent が visual tool を避ける modality bias と内部知識へ逃げる parametric knowledge leakage を明示し、perception / exploration 分離、段階的 tool 解放、SFT+GRPO、200 問の Video-DR-Bench と精度まで一連の重要要素を備える。
-- ゲーム制作への適用: 録画ベース自動 playtest で frame 観察を記憶・攻略情報参照より先に強制し、tool trace を監査する小規模 harness へ具体化できる。動画 QA と実 gameplay 操作の差、および benchmark 規模は Phase 3 で限界として明記する。
-- duplicate preflight: sidecar 3 種を開始時に再生成して `--check` 済み。対象 title / URL は `continue`。
+(Phase 2 が書き込む)
 
 ## Phase 3: Shared-reads 投稿
-```yaml
-posted:
-  - candidate: memory/shared_reads_candidates/20260811_video_deepresearch_visual_tool_grounding.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786399090469959
-    char_count: 4116
-skipped: []
-```
-
-- 最終判定: `部分採用`。perception-first の段階的 tool 解放、tool-free leakage 検査、回答と観察 trace の対応付けは有用。一方、offline VQA と interactive gameplay の差、同系列 judge、成功 trajectory の選択バイアス、H800 cluster と人手確認の cost を明記した。
-- 原稿監査: abstract / conclusion と動画長表は200件だが実験本文は100件、表3の35B版 VideoDR-Bench Overall は60.0%だが本文は65.4%とする不整合を PDF 原表で確認し、数値を benchmark 単独精度として誤読しないよう投稿へ反映した。
-- 投稿前レビュー: 4115字（投稿 script 集計4116字）、`shared_reads_policy` pass、重複 preflight `continue`、必須項目順・末尾 URL・禁止表現なしを確認。`post_slack_message_file.py --delete-on-fail` による Slack 本文照合も `verification: ok`。
+(Phase 3 が書き込む)
 
 ## Phase 3b: Shared-reads 自己フィードバック
-```yaml
-self_feedback:
-  selected:
-    id: sr-1786322449-a8db93f659
-    source_ts: "1786322449.253679"
-    title: "LLM Agents as Static Level-k Players in Behavioural Games"
-    reason: "score 13、未レビュー、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ最新候補。初手分布の人間類似性と履歴・相手方策・horizonへの適応を分離する知見がheadless評価の過剰一般化へ直結する。Nao_uの明示評価記録はない。"
-  scores:
-    relevance: 3
-    actionability: 3
-    evidence: 3
-    non_redundancy: 1
-    risk_control: 3
-    reversibility: 3
-    total: 16
-  decision: defer
-  change:
-    summary: "採用条件の総点は満たすが、既存5 controlsが主要部分を覆い、比較可能な反復playtest artifactもないためstate-only reviewとした。active_probes、ledger、directive、恒久ルールは変更していない。"
-    files:
-      - memory/shared_reads_self_feedback_state.json
-      - log/cycle_staging_log_cdx.md
-  lease: null
-  anti_bloat_check:
-    adds_permanent_rule: false
-    replaces_or_simplifies_existing: false
-    conflict_checked: true
-```
-
-- 採否理由: 初手分布、継続適応、horizon 感度、最終局面を分ける4列 metric は実行可能だが、`open-world-behavior-oracle`、`fixed-test-vs-dynamic-stress`、`behavior-signature-distribution-shift`、`synthetic-user-drift-check`、`game-agent-attribution-boundary` の組合せで主要な誤読を検出できる。322件の active probe に独立 control を足さず、次の反復型 playtest で既存 controls が適応欠落を見逃した実例が出た時だけ再評価する。
+(Phase 3b が書き込む)
 
 ## Phase 4a: 整理 + 問題抽出
-
-```yaml
-cleaned:
-  - memory/MEMORY.md の entry index を validate_memory_index.py と per-file atom index に照合し、broken atom reference 0 件を確認した。
-  - atoms.jsonl / per-file atom / atoms/index.jsonl は各 2851 件で一致し、JSON・index parse error、duplicate ID、mirror content conflict は各 0 件だった。
-  - normalized-content 重複は raw 40 group / 80 rows、recall-visible 3 group / 6 rowsだが、duplicate cluster / canonical overlay は current で、表示時 fold の範囲内だった。
-  - memory/raw/ の30日超ファイル 240件を確認した。215件は web_research の一次資料、残りも headless_eval・Slack raw・同期 state 等の provenance / operational artifact であり、参照切れを作る移動は行わず archive 対象 0 件とした。
-  - shared-reads candidate lifecycle は posted 587 / ready_to_post 9 / postponed 217 / failed 445 / needs_review 2。open status の stale_after 欠損と current-state conflict は各 0 件だった。
-  - Slack inbox は directives 0件 / broadcasts 0件 pending で、handled 更新対象はなかった。
-  - mixed duplicate / open duplicate / stale triage / group action sidecar を再生成し、group/candidate handoff inbox を監査した。生成物は既存内容と一致した。
-issues: []
-recommendation:
-  needs_design: false
-  priority_issues: []
-probe_lifecycle:
-  inspected_due_count: 0
-  inspected_probe_id: null
-  outcome: none
-  counts:
-    pending: 0
-    resolved: 4
-    dormant: 1
-candidate_lifecycle:
-  counts:
-    posted: 587
-    ready_to_post: 9
-    postponed: 217
-    failed: 445
-    needs_review: 2
-  current_state_conflicts: 0
-stale_backlog:
-  overdue_open_total: 2
-  stale_triage_queue_rows: 0
-  open_duplicate_group_count: 43
-  mixed_group_count: 38
-  all_open_group_count: 5
-  actionable_group_count: 0
-  backlog_high_water: false
-  group_handoff_budget: 1
-  handed_off_group_count: 0
-  handoff_inbox_pending_count: 0
-  handoff_inbox_ids: []
-  candidate_handoff_pending_count: 0
-  candidate_handoff_ids: []
-  valid_unreviewed_count: 0
-  oldest_unreviewed_collected_at: null
-  malformed_candidate_count: 0
-  phase2_unreviewed_limit: 5
-  lease_suppression_note: >-
-    overdue 2件は all-open duplicate group の deferred lease 2件に包含され、
-    membership fingerprint は一致し retry_after 2026-08-20 前のため stale triage から正しく抑止された。
-group_action_handoff: []
-stale_review_batch: []
-encoding_audit:
-  source_file_status: >-
-    memory/MEMORY.md は UTF-8 明示読みで replacement character 0。
-    代表語は「記憶」「ゲーム設計」「敵パターン」を取得し、「評価軸」の完全一致はないが「評価」は取得した。
-    index validator も正常で、source file 破損の evidence はない。
-  display_or_tooling_status: >-
-    今回の UTF-8 読み・validator・mirror audit の表示は正常。表示経路だけの mojibake も観測しなかった。
-```
+(Phase 4a が書き込む)
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
@@ -165,15 +28,4 @@ encoding_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-```yaml
-diary_post:
-  channel: "#log"
-  draft: drafts/phase5_log_diary_20260811_0715_cdx.md
-  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786400172568549
-  slack_ts: "1786400172.568549"
-  char_count: 2217
-  verification: ok
-```
-
-- Phase 1-4 の活動、Video-DeepResearch から得た perception-first の着想、原論文内の数値不整合、Phase 3b の defer 判断、Phase 4a の健全性監査を、次の録画 playtest への引き継ぎまで含めて日記化した。
-- `python tools/post_slack_message_file.py --channel "#log" --file drafts/phase5_log_diary_20260811_0715_cdx.md --delete-on-fail` でフラット投稿し、Slack API 側の本文検証が `ok` であることを確認した。
+(Phase 5 が書き込む)
