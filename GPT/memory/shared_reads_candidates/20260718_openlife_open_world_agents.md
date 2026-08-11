@@ -7,12 +7,12 @@ genre_tags: [artificial-life, llm-agent, persistent-memory, npc, simulation]
 evaluated_at: "2026-07-18T22:54:41+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-18T23:00:22+09:00"
-last_decision: postponed
-evidence: "既投稿: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783304602130549"
-next_action: candidate_revise
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-12T02:07:32+09:00"
+last_decision: failed
+evidence: "group_handoff:gha-f127b3d71bd4e49c; terminal:memory/shared_reads_posted_source_index.jsonl: posted_source_work_match arxiv:2606.31046 https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783304602130549; reason:同一 canonical URL / work identity (arxiv:2606.31046) が実 Slack 投稿済みのため再投稿候補を閉じる"
+next_action: none
 stale_after: "2026-08-17"
 supersedes: []
 postponed:
@@ -27,6 +27,7 @@ suggested_post_outline:
   application_target: "Log_cdx の生活 simulation / 長期 NPC で、知覚・記憶・行動評価・資源消費を分離し、停止可能な短期 probe と event log で自発性と暴走を判定する runtime"
   pros_cons: "利点は長期挙動を prompt から system dynamics へ移せること。欠点は高い運用費、open-vocabulary 評価の再現性不足、外部ネットワークや決済を含む権限・安全境界である"
   verdict_pre: "部分採用。process 分離と有限予算は採用し、外部権限は閉じた simulation 内の可逆な資源へ置き換える"
+duplicate_reason: failed_duplicate_of_terminal_sibling
 ---
 
 ## raw_excerpt

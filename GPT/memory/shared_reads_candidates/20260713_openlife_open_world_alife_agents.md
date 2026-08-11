@@ -7,16 +7,17 @@ genre_tags: [artificial-life, llm-agent, persistent-memory, agent-society, npc-s
 evaluated_at: "2026-07-13T00:15:28+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-13T00:15:28+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-13T00:15:28+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-12T02:07:32+09:00"
+last_decision: failed
+evidence: "group_handoff:gha-f127b3d71bd4e49c; terminal:memory/shared_reads_posted_source_index.jsonl: posted_source_work_match arxiv:2606.31046 https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783304602130549; reason:同一 canonical URL / work identity (arxiv:2606.31046) が実 Slack 投稿済みのため再投稿候補を閉じる"
+next_action: none
 stale_after: "2026-08-12"
 supersedes: []
 gate_reason: >-
   memory・perception・evaluation・budget metabolism を非同期プロセスとして分離する着想は、長期稼働 NPC の設計へ具体的に接続できる。一方、現 candidate には約2週間の実験について比較条件、指標、定量結果、失敗例がなく、CoopEval 水準の概要で「評価の中身」を根拠付きで説明するには不足するため、本文または補足資料の再調査まで保留する。
+duplicate_reason: failed_duplicate_of_terminal_sibling
 ---
 
 ## raw_excerpt
