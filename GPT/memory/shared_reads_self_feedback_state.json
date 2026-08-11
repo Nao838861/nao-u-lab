@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-12T06:17:56+09:00",
+  "updated_at": "2026-08-12T08:18:34+09:00",
   "reviewed_source_ts": [
     "1778774144.030849",
     "1780037605.969949",
@@ -632,9 +632,50 @@
     "1785313966.530869",
     "1785336918.156559",
     "1780271082.067289",
-    "1779373720.446819"
+    "1779373720.446819",
+    "1779222727.981379"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-12T08:18:34+09:00",
+      "selected": {
+        "id": "sr-1779222727-beec716421",
+        "source_ts": "1779222727.981379",
+        "title": "吉田寛『なぜ「スーパーマリオ」は左端から始まるのか…「説明書を読まなくても遊べる」天才的な設計』4ページ分析",
+        "reason": "source が slack_api/shared-reads、score 13、未レビューという条件を満たし、game-design・evaluation を含む候補のうち、Nao_u が『君らには参考になると思うので4ページ全部読んで記録しておいて欲しい』と明示評価した1件だけを選んだ。画面・音・操作によるアフォーダンスと、同じネタを覚える／遊ぶ／応用する／極める場所へ段階導入する知見が、次のゲーム制作判断に既存 control とは異なる小さな差を作れるか確認した。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の採用条件は満たす。shared-reads 本文は、初代スーパーマリオの左端開始、危険物の外見、旗・ブロック音・残時間BGM、Bダッシュジャンプの操作感、覚える／遊ぶ／応用する／極めるの4段階を、説明なしで次の行動を伝える設計として具体化し、Nao_u の明示評価もあるため relevance・actionability は3とした。一方、根拠は開発者発言と単一作品の解説記事であり、販売本数は各設計要素の因果効果を示さず、4回が3回や5回より良い比較評価もないため evidence は2とした。probe-20260518-internal-ignition-vs-explanation は説明文ではなく内在する誘導を、probe-20260621-q0-five-second-legibility は最初の viewport／verb／target／feedback を、probe-20260516-bullet-hell-wave-rhythm は wave の空間規則と促す行動を、probe-20260720-tutorial-order-controller-sensitivity は導入順序の比較をすでに扱う。4段階の同一ネタ再利用は差分だが、現 cycle の staging には覚える／遊ぶ／応用する／極めるを比較できる playable diff、固定 content の順序 ablation、初回失敗から次行動への trace がなく、直後の Phase 4a も tutorial／wave 設計の実 consumer ではない。consumer、trigger artifact、expected delta を lease 契約どおり固定できないため active probe・metric・lease・directive・恒久ルールは追加せず defer する。次に実際の tutorial、序盤 wave、mechanic 導入を変更する playable artifact が置かれ、既存4 controlsだけでは反復が学習段階か単なる再演かを決められない時に、4段階を固定回数ではなく導入役割の一時評価表として再評価する。",
+      "existing_controls": [
+        "probe-20260518-internal-ignition-vs-explanation",
+        "probe-20260621-q0-five-second-legibility",
+        "probe-20260516-bullet-hell-wave-rhythm",
+        "probe-20260720-tutorial-order-controller-sensitivity"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と defer 理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-12T04:12:02+09:00",
       "selected": {

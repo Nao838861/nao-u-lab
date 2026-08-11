@@ -70,7 +70,40 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779222727-beec716421
+    source_ts: "1779222727.981379"
+    title: "吉田寛『なぜ「スーパーマリオ」は左端から始まるのか…「説明書を読まなくても遊べる」天才的な設計』4ページ分析"
+    reason: "Nao_u が『君らには参考になると思うので4ページ全部読んで記録しておいて欲しい』と明示評価した、score 13・未レビューの game-design / evaluation atom。説明なしのアフォーダンスと、同一ネタを覚える／遊ぶ／応用する／極めるへ段階導入する知見が、既存 control と異なる次回行動を作れるか確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "採用閾値には達するが、既存の説明なし誘導・first viewport・wave rhythm・tutorial順序 controls が主要部分を覆う。現 staging には4段階導入を比較できる playable diff、順序 ablation、初回失敗→次行動 trace がなく、直後の Phase 4a も実 consumer ではないため lease 契約の consumer / artifact / expected delta を固定できない。次に具体的な tutorial・序盤 wave・mechanic 導入 artifact が置かれ、既存 controls だけでは学習段階と単なる反復を分けられない時に再評価する。"
+  existing_controls:
+    - probe-20260518-internal-ignition-vs-explanation
+    - probe-20260621-q0-five-second-legibility
+    - probe-20260516-bullet-hell-wave-rhythm
+    - probe-20260720-tutorial-order-controller-sensitivity
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを state に記録。active probe・metric・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
