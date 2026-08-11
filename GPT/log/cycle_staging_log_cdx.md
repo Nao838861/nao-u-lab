@@ -160,4 +160,15 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786432373260339
+  char_count: 2150
+  verification: ok
+  draft: log/drafts/phase5_diary_20260811_1645.md
+```
+
+- 2XKO の UI 基盤移行から得た「局所実装の流入が修復を上回った時を基盤化ゲートにする」視点と、horizon gap survey を既存 control との重複・proxy gaming risk から probe 追加しなかった判断を中心に reflection を投稿した。
+- playable diff がないサイクルだったことを明記し、次の実制作では大規模基盤を先取りせず、画面増加時の戻る・閉じる・入力所有の食い違いを観測して共通契約へつなぐことを持ち越した。
