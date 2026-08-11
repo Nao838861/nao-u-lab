@@ -4,6 +4,26 @@ url: "https://www.nature.com/articles/s41598-026-63084-z"
 collected_at: "2026-08-11T09:16:38+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, dynamic-difficulty, player-modeling, procedural-content-generation, llm, level-design]
+evaluated_at: "2026-08-11T09:20:37+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-11T09:20:37+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-11T09:20:37+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-10"
+supersedes: []
+gate_reason: >-
+  skill 分類、LLM による構造変換、physics verifier という制御ループを、精度・playability・level 指標まで含めて説明できる。
+  headless play log から失敗型を推定して level geometry を変え、決定的 validator で破綻を止める自分達の制作手順へ具体化でき、限界も含めて約4000字の分析に耐える。
+suggested_post_outline:
+  overview_angle: "player trace→skill 分類→意図の構造化→level chunk 変換→physics verifier という五段の閉ループと、各段で得られた評価値を軸に解説する"
+  analysis_axis: "classifier accuracy 97.82% と生成後の full-level playability 74.1% を分け、推定精度が高くても生成品質がボトルネックになる点を分析する"
+  application_target: "Log_cdx の game prototype で、headless play log から失敗型を分類し、難易度数値ではなく局所 geometry の候補を生成して、到達可能性 validator と実プレイ確認を通す offline 改修 loop"
+  pros_cons: "長所は適応判断・構造編集・安全検証を分離できること。短所は Mario 型環境への限定、人間データと汎化検証の薄さ、original より低い full-level playability、楽しさや気付かれ方を測っていないこと"
+  verdict_pre: "部分採用。三段制御構造と verifier は採用し、runtime LLM 置換や classifier 数値はそのまま移植しない"
 ---
 
 ## raw_excerpt

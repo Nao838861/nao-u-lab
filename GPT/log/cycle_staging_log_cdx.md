@@ -10,7 +10,47 @@
 - 書込み前に 3 sidecar を再生成し、exact title / URL preflight は `continue`（2026-08-11 09:16 JST）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260811_adaptive_level_modification_player_skill_llm.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-08-11T09:16:38+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260811_adaptive_level_modification_player_skill_llm.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260811_adaptive_level_modification_player_skill_llm.md
+  valid_backlog_after: 0
+```
+
+- 判定: pass。手法の五段構成と定量評価を抽出でき、headless play log と決定的 validator をつないだ offline level 改修 loop へ具体的に適用できる。
+- 留保: classifier accuracy と生成後 playability は別問題であり、full-level 74.1% は original 80.0% を下回る。player experience と別ゲームへの汎化は未検証として Phase 3 で明記する。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
