@@ -7,14 +7,19 @@ genre_tags: [player-research, character-design, voice-design, ux-measurement, ga
 evaluated_at: "2026-08-12T06:05:52+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-12T06:05:52+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-12T06:05:52+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-12T06:11:11+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786482663927369"
+next_action: none
 stale_after: "2026-09-11"
 supersedes: []
+posted:
+  ts: "1786482663.927369"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786482663927369"
+  char_count: 3693
+  posted_at: "2026-08-12T06:11:11+09:00"
 gate_reason: >-
   9データセット・967人を用い、収束的妥当性、既知集団比較、文脈横断性、信頼性と限界まで抽出できるため、CoopEval 水準の概要を構成できる。
   ゲームキャラクターの声・外見・両者の組合せを短い playtest で比較し、単一質問の低負担性と modality 間の不一致を同時に扱う具体的な適用先がある。
