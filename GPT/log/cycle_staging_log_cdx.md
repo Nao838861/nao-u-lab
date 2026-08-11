@@ -67,7 +67,12 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped: []
+summary: "Phase 2 の gate_decision: pass が 0 件のため、投稿対象なし。Slack 投稿および candidate frontmatter 更新は行わなかった。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
