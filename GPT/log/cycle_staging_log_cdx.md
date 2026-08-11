@@ -93,7 +93,69 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の entry index を検証し、per-file atom index との broken link / unknown atom / duplicate entry が 0 件であることを確認した。"
+  - "atoms.jsonl / per-file .md / atoms/index.jsonl の各 2857 件が一致し、content conflict 0 件、既知の正規化重複 40 群が canonical overlay 45 群で折り畳み済みであることを確認した。"
+  - "shared-reads の title sidecar を再生成し、terminal canonical 86 群、mixed duplicate 38 群、open duplicate 43 群を現在 frontmatter に同期した。"
+  - "slack directives / broadcasts の pending は各 0 件で、close 対象なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 4
+    dormant: 1
+candidate_lifecycle:
+  total: 1267
+  counts:
+    posted: 592
+    ready_to_post: 9
+    postponed: 218
+    failed: 446
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_open_total: 2
+raw_archive_audit:
+  inactive_over_30_days: 240
+  action: explicit_keep
+  reason: "raw/web_research・headless_eval・Slack archive の一次証拠であり、現行 memory_health が参照する raw/slack_archive/shared-reads.jsonl も含む。mtime だけでは移動せず provenance として保持する。"
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 43
+  mixed_group_count: 38
+  all_open_group_count: 5
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  deferred_live_group_count: 2
+  deferred_group_ids:
+    - gha-e6d4d4b5a37a0808
+    - gha-2313a247c62a9028
+  deferred_retry_after: "2026-08-20T13:19:04+09:00"
+  note: "期限到来 2 candidate は上記 deferred group lease と同一 membership で、retry_after 前のため stale triage / candidate handoff から抑止された。"
+group_action_handoff: []
+stale_review_batch: []
+audit_notes:
+  memory_source_file_status: "UTF-8 明示読みは正常。代表語は 記憶 / ゲーム設計 / 敵パターン を取得し、評価軸は本文に存在しないが mojibake residue ではない。"
+  memory_display_or_tooling_status: none
+  memory_health: "warning（raw title debt 730 rows / 508 groups、mojibake suspect atom 2 件）。effective display unresolved は 0、recall smoke 3/3 成功のため新規構造 issue にはしない。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
