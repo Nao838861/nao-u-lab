@@ -68,7 +68,35 @@ skipped: []
 - 投稿前レビュー: `■ 概要` 始まり、`■ URL` 末尾、必須6項目、禁止表現なし、URL 1件、4,481文字。1回の `chat.postMessage` で投稿し、Slack 保存本文の文字化け検証は `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786416498-2bda332f21
+    source_ts: "1786416498.654479"
+    title: "PsychoAgent: factual / affective memory と relevance-gated salience reranking"
+    reason: "未レビューかつ score 12、memory・harness・game-design・agent・identity・knowledge・evaluation の7優先タグを持つ最新候補。事実の正しさと再浮上優先度を分け、関連性 gate の内側だけで salience を使う差分が継続NPCと記憶運用に直結するため。Nao_uの明示評価はなし。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: defer
+  decision_reason: "知見は採用閾値を満たすが、現 cycle には同一eventのfactual／affective sidecar、単一意味検索／二系統意味順／関連性→salience再ランキングのNPC比較trace、誤設定salienceのnegative controlがない。Phase 4aも会話生成・想起順位変更のconsumerではないため、具体的なbefore／after artifactと判断差を置けず、形だけのleaseを作らない。次に5〜10 turnの未解決対立traceまたはcanonical contentとresurfacing priorityを分ける具体的memory変更が置かれた時だけ、一時metricとして再評価する。"
+  change:
+    summary: "reviewed_source_tsとdefer理由だけをstateへ記録。active_probes・ledger・directive・恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-11T11:53:37+09:00",
+  "updated_at": "2026-08-11T13:58:26+09:00",
   "reviewed_source_ts": [
+    "1786416498.654479",
     "1786407960.742429",
     "1786399090.469959",
     "1786322449.253679",
@@ -626,6 +627,46 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-11T13:58:26+09:00",
+      "selected": {
+        "id": "sr-1786416498-2bda332f21",
+        "source_ts": "1786416498.654479",
+        "title": "PsychoAgent: factual / affective memory と relevance-gated salience reranking",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たし、memory・harness・game-design・agent・identity・knowledge・evaluation の7優先タグを持つ最新候補から1件だけを選んだ。事実の正しさと今再浮上させる優先度を分離し、関連性で候補を絞った後だけ salience を使う知見は、継続NPCの未解決対立と記憶運用で、強いが無関係な記憶を反復強化する失敗に直結する。Nao_uが本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件は満たす。shared-reads本文は、factual／affective trace の分離、意味類似度 top 30 から salience top 10 を選ぶ二段階取得、同一20件 budget の ablation、critical-memory retrieval 0.933／0.500／0.667、意味類似度の小さな低下、27出力を5人が盲検評価した結果と非有意な行動品質差、salience生成自体は未検証という限界まで示すため relevance・actionability・evidence は3とした。probe-20260613-egostream-episodic-recall-failure-split は想起失敗の層分けを、probe-20260621-hmem-provenance-pointer-before-abstraction は canonical claim と派生記憶の出典接続を、probe-20260625-amvl-retention-utility-lifecycle は保持宣言と観測utilityを、probe-20260714-openlife-surrounding-process-loop は persistent NPC の relationship／memory trace を既に扱う。ただし『関連性 gate の内側だけで別管理 salience を再ランキングし、事実の正しさを書き換えない』差分は既存controlに完全には含まれないため non_redundancy は2とした。一方、現在の staging には同一 event_id の factual／affective sidecar、単一意味検索／二系統意味順／関連性→salience再ランキングを比較するNPC trace、誤設定salienceのnegative controlがない。後続Phase 4aはmemory cleanupであり、会話生成または想起順位変更の実consumerではない。322件のactive_probesへ対象なしのcontrolを追加すると確認負荷と高salienceの自己強化を先行させるため、consumer、trigger artifact、expected deltaをlease契約どおり固定せずstate-onlyでdeferする。次に1つの未解決対立を含む5〜10 turnのNPC比較trace、またはcanonical contentとresurfacing priorityを分ける具体的memory変更が置かれた時だけ、同一budget・critical retrieval・無関係想起・事実矛盾・反復率を測る一時metricとして再評価する。",
+      "existing_controls": [
+        "probe-20260613-egostream-episodic-recall-failure-split",
+        "probe-20260621-hmem-provenance-pointer-before-abstraction",
+        "probe-20260625-amvl-retention-utility-lifecycle",
+        "probe-20260714-openlife-surrounding-process-loop"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsとdefer理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-11T11:53:37+09:00",
       "selected": {
