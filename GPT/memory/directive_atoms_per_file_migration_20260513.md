@@ -100,6 +100,10 @@ Index: `GPT/memory/atoms/index.jsonl` — recall 用の軽量索引。各 atom �
 - **逆方向互換 (Phase B→C 間)**: atoms.jsonl と per-file 両方が存在。既存ツールは atoms.jsonl を引き続き使用
 - **idempotent migration**: 移行スクリプトは複数回実行しても同じ結果
 
+## 実装メモ（2026-08-11 Phase 4c）
+
+`tools/memory_health.py` は health 1 回につき `atoms.jsonl` を一度だけ読み、raw view と canonical overlay view を同じ read-only snapshot から各集計、recall smoke、mirror audit へ渡すようになった。report の `snapshot` に snapshot ID と source fingerprint、`input_consistency` に監査前後の安定性を出す。監査中に `atoms.jsonl` / canonical overlay / index / per-atom `.md` の fingerprint が変わった場合、mirror drift を corruption と確定せず `concurrent_write / inconclusive` として扱う。standalone の `tools/memory_recall.py` の CLI と記録動作は変更しない。
+
 ## 関連 directive
 
 - `directive_shared_reads_overview_20260512.md` — shared-reads 品質基準

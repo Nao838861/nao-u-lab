@@ -15,7 +15,7 @@ import sys
 from collections import Counter
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping, Sequence
 from urllib.parse import urlparse
 
 import memory_lifecycle
@@ -296,18 +296,28 @@ def annotate_display_labels(
     return annotated
 
 
-def search(query: str, limit: int, include_operational: bool = False) -> list[tuple[float, dict[str, Any]]]:
-    raw_atoms = load_atoms()
-    title_cluster_map = load_title_cluster_map()
-    raw_title_counts = title_counts(raw_atoms)
-    add_search_aliases(raw_atoms, title_cluster_map, raw_title_counts)
-    exact_matches = exact_reference_matches(raw_atoms, query)
+def search_atoms(
+    query: str,
+    limit: int,
+    raw_atoms: Sequence[Mapping[str, Any]],
+    canonical_atoms: Sequence[Mapping[str, Any]],
+    include_operational: bool = False,
+    title_cluster_map: dict[str, dict[str, Any]] | None = None,
+) -> list[tuple[float, dict[str, Any]]]:
+    """Search already-loaded atom views without mutating or re-reading them."""
+    raw_rows = [dict(atom) for atom in raw_atoms]
+    canonical_rows = [dict(atom) for atom in canonical_atoms]
+    if title_cluster_map is None:
+        title_cluster_map = load_title_cluster_map()
+    raw_title_counts = title_counts(raw_rows)
+    add_search_aliases(raw_rows, title_cluster_map, raw_title_counts)
+    exact_matches = exact_reference_matches(raw_rows, query)
     if exact_matches:
         return annotate_display_labels(exact_matches[:limit], title_cluster_map, raw_title_counts)
     if looks_like_reference_query(query):
         return []
 
-    atoms = load_atoms_for_recall()
+    atoms = canonical_rows
     if not include_operational:
         atoms = [atom for atom in atoms if not is_default_excluded(atom)]
     duplicate_title_counts = title_counts(atoms)
@@ -320,6 +330,17 @@ def search(query: str, limit: int, include_operational: bool = False) -> list[tu
     scored = [(score, atom) for score, atom in scored if score > 0]
     results = fold_scored(scored, memory_lifecycle.index_by_id(atoms))[:limit]
     return annotate_display_labels(results, title_cluster_map, duplicate_title_counts)
+
+
+def search(query: str, limit: int, include_operational: bool = False) -> list[tuple[float, dict[str, Any]]]:
+    """Standalone-compatible search entry point using the configured sources."""
+    return search_atoms(
+        query,
+        limit,
+        load_atoms(),
+        load_atoms_for_recall(),
+        include_operational=include_operational,
+    )
 
 
 def result_title(atom: dict[str, Any]) -> str:

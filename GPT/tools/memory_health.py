@@ -3,18 +3,27 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 from collections import Counter
+from dataclasses import dataclass
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Any
+from types import MappingProxyType
+from typing import Any, Mapping
 
 import memory_recall
 import memory_lifecycle
 import topology_audit
 import audit_atom_mirror_drift
-from atoms_fileformat import CANONICAL_OVERLAY_FILENAME
+from atoms_fileformat import (
+    CANONICAL_OVERLAY_FILENAME,
+    apply_canonical_overlay,
+    load_atoms_from_per_file,
+    load_atoms_jsonl,
+    load_canonical_overlay,
+)
 from atom_quality import atom_quality_report
 
 
@@ -28,6 +37,8 @@ RECALL_LOG_PATH = MEMORY_DIR / "recall_log.jsonl"
 ATOM_STATS_PATH = MEMORY_DIR / "atom_stats.json"
 TITLE_QUALITY_AUDIT_PATH = MEMORY_DIR / "atoms" / "title_quality_audit.jsonl"
 CANONICAL_OVERLAY_PATH = MEMORY_DIR / "atoms" / CANONICAL_OVERLAY_FILENAME
+ATOMS_DIR = MEMORY_DIR / "atoms"
+INDEX_PATH = ATOMS_DIR / "index.jsonl"
 
 
 if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
@@ -53,6 +64,81 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
                 continue
             rows.append(json.loads(line))
     return rows
+
+
+@dataclass(frozen=True)
+class AtomSnapshot:
+    snapshot_id: str
+    source_fingerprint: str
+    raw_atoms: tuple[Mapping[str, Any], ...]
+    canonical_atoms: tuple[Mapping[str, Any], ...]
+    overlay_rows: tuple[Mapping[str, Any], ...]
+
+    def provenance(self) -> dict[str, Any]:
+        return {
+            "snapshot_id": self.snapshot_id,
+            "source_fingerprint": self.source_fingerprint,
+            "raw_atoms": len(self.raw_atoms),
+            "canonical_atoms": len(self.canonical_atoms),
+            "overlay_rows": len(self.overlay_rows),
+        }
+
+
+def _fingerprint_entry(path: Path) -> dict[str, Any]:
+    try:
+        relative_path = path.relative_to(ROOT).as_posix()
+    except ValueError:
+        relative_path = str(path)
+    try:
+        stat = path.stat()
+    except FileNotFoundError:
+        return {"path": relative_path, "exists": False}
+    return {
+        "path": relative_path,
+        "exists": True,
+        "size": stat.st_size,
+        "mtime_ns": stat.st_mtime_ns,
+    }
+
+
+def capture_memory_input_fingerprint() -> dict[str, Any]:
+    """Fingerprint all files whose concurrent change can invalidate health."""
+    paths = [ATOMS_PATH, CANONICAL_OVERLAY_PATH, INDEX_PATH]
+    if ATOMS_DIR.exists():
+        paths.extend(sorted(ATOMS_DIR.glob("*/*.md")))
+    entries = [_fingerprint_entry(path) for path in paths]
+    payload = json.dumps(entries, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return {
+        "digest": hashlib.sha256(payload.encode("utf-8")).hexdigest(),
+        "files": len(entries),
+    }
+
+
+def create_atom_snapshot(source_fingerprint: str) -> AtomSnapshot:
+    """Load raw and canonical views once and freeze the health read boundary."""
+    if ATOMS_PATH.exists():
+        raw_rows = load_atoms_jsonl(ATOMS_PATH)
+    else:
+        raw_rows = load_atoms_from_per_file(ATOMS_DIR)
+    overlay_rows = load_canonical_overlay(ATOMS_DIR)
+    canonical_rows = apply_canonical_overlay(raw_rows, overlay_rows)
+    snapshot_seed = json.dumps(
+        {
+            "source_fingerprint": source_fingerprint,
+            "raw_count": len(raw_rows),
+            "canonical_count": len(canonical_rows),
+        },
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    snapshot_id = hashlib.sha256(snapshot_seed.encode("utf-8")).hexdigest()[:16]
+    return AtomSnapshot(
+        snapshot_id=snapshot_id,
+        source_fingerprint=source_fingerprint,
+        raw_atoms=tuple(MappingProxyType(dict(atom)) for atom in raw_rows),
+        canonical_atoms=tuple(MappingProxyType(dict(atom)) for atom in canonical_rows),
+        overlay_rows=tuple(MappingProxyType(dict(row)) for row in overlay_rows),
+    )
 
 
 def title_quality_audit_summary() -> dict[str, Any]:
@@ -123,8 +209,7 @@ def content_duplicate_summary(atoms: list[dict[str, Any]]) -> dict[str, int]:
     }
 
 
-def overlay_duplicate_summary() -> dict[str, Any]:
-    rows = load_jsonl(CANONICAL_OVERLAY_PATH)
+def overlay_duplicate_summary(rows: tuple[Mapping[str, Any], ...]) -> dict[str, Any]:
     reason_counts = Counter(str(row.get("reason") or "unknown") for row in rows)
     folded_by_reason: Counter[str] = Counter()
     for row in rows:
@@ -148,15 +233,22 @@ def parse_dt(value: str | None) -> datetime | None:
         return None
 
 
-def check_recall_smoke() -> list[dict[str, Any]]:
+def check_recall_smoke(snapshot: AtomSnapshot) -> list[dict[str, Any]]:
     probes = [
         "記憶 システム shared-reads",
         "ゲーム 自己判定 ハーネス",
         "substrate surface memory",
     ]
     rows = []
+    title_cluster_map = memory_recall.load_title_cluster_map()
     for query in probes:
-        results = memory_recall.search(query, 3)
+        results = memory_recall.search_atoms(
+            query,
+            3,
+            snapshot.raw_atoms,
+            snapshot.canonical_atoms,
+            title_cluster_map=title_cluster_map,
+        )
         rows.append(
             {
                 "query": query,
@@ -169,7 +261,9 @@ def check_recall_smoke() -> list[dict[str, Any]]:
 
 
 def build_health() -> dict[str, Any]:
-    atoms = load_jsonl(ATOMS_PATH)
+    input_fingerprint_before = capture_memory_input_fingerprint()
+    snapshot = create_atom_snapshot(input_fingerprint_before["digest"])
+    atoms = snapshot.raw_atoms
     recall_visible_atoms = [atom for atom in atoms if not memory_recall.is_default_excluded(atom)]
     raw_rows = load_jsonl(RAW_SHARED_READS_PATH)
     state = load_json(STATE_PATH, {})
@@ -195,7 +289,7 @@ def build_health() -> dict[str, Any]:
     visible_folded_atoms = memory_lifecycle.fold_atoms(recall_visible_atoms)
     raw_content_duplicates = content_duplicate_summary(atoms)
     visible_content_duplicates = content_duplicate_summary(recall_visible_atoms)
-    overlay_duplicates = overlay_duplicate_summary()
+    overlay_duplicates = overlay_duplicate_summary(snapshot.overlay_rows)
     mojibake_suspects = [
         {
             "id": atom.get("id"),
@@ -208,7 +302,10 @@ def build_health() -> dict[str, Any]:
         if report["suspect"]
     ]
     title_quality = title_quality_audit_summary()
-    mirror_audit = audit_atom_mirror_drift.build_audit()
+    mirror_audit = audit_atom_mirror_drift.build_audit(
+        jsonl_atoms=snapshot.raw_atoms,
+        snapshot_provenance=snapshot.provenance(),
+    )
 
     last_run = parse_dt(state.get("last_run"))
     slack_last = parse_dt(slack_state.get("last_run"))
@@ -248,10 +345,8 @@ def build_health() -> dict[str, Any]:
         "per_file_only", "index_only", "jsonl_only", "missing_file",
         "parse_errors", "index_errors", "content_conflicts",
     ))
-    if mirror_failures:
-        errors.append(f"atom mirror drift {mirror_failures}件（明示 reconcile が必要）")
 
-    smoke = check_recall_smoke()
+    smoke = check_recall_smoke(snapshot)
     for row in smoke:
         if row["hits"] == 0:
             errors.append(f"recall smoke failed: {row['query']}")
@@ -264,6 +359,24 @@ def build_health() -> dict[str, Any]:
         limit=5,
     )
 
+    input_fingerprint_after = capture_memory_input_fingerprint()
+    inputs_changed = input_fingerprint_before["digest"] != input_fingerprint_after["digest"]
+    input_consistency = {
+        "status": "inconclusive" if inputs_changed else "stable",
+        "reason": "concurrent_write" if inputs_changed else None,
+        "before": input_fingerprint_before,
+        "after": input_fingerprint_after,
+    }
+    mirror_status = "inconclusive" if inputs_changed else ("drift" if mirror_failures else "clean")
+    if inputs_changed:
+        warnings.append("memory input changed during health audit; concurrent_write / inconclusive")
+    elif mirror_failures:
+        errors.append(f"atom mirror drift {mirror_failures}件（明示 reconcile が必要）")
+
+    public_mirror_audit = {k: v for k, v in mirror_audit.items() if not k.startswith("_")}
+    public_mirror_audit["status"] = mirror_status
+    public_mirror_audit["input_consistency"] = input_consistency
+
     status = "ok"
     if warnings:
         status = "warning"
@@ -273,6 +386,8 @@ def build_health() -> dict[str, Any]:
     return {
         "status": status,
         "time": now.isoformat(timespec="seconds"),
+        "snapshot": snapshot.provenance(),
+        "input_consistency": input_consistency,
         "atoms": len(atoms),
         "recall_visible_atoms": len(recall_visible_atoms),
         "default_excluded_atoms": len(atoms) - len(recall_visible_atoms),
@@ -297,7 +412,7 @@ def build_health() -> dict[str, Any]:
         "canonical_overlay_folded_extra_rows_by_reason": overlay_duplicates["folded_extra_rows_by_reason"],
         "mojibake_suspect_atoms": mojibake_suspects[:20],
         "title_quality_audit": title_quality,
-        "atom_mirror_audit": {k: v for k, v in mirror_audit.items() if not k.startswith("_")},
+        "atom_mirror_audit": public_mirror_audit,
         "raw_shared_reads_rows": len(raw_rows),
         "archive_last_run": state.get("last_run"),
         "slack_last_run": slack_state.get("last_run"),
@@ -327,12 +442,15 @@ def render_text(health: dict[str, Any], compact: bool) -> str:
             f" duplicate_atom_rows={health.get('raw_normalized_content_duplicate_atom_rows')}"
             f" fold_extra={health.get('raw_content_fold_applied_extra_rows')}"
             f" overlay_groups={health.get('canonical_overlay_duplicate_groups')}"
+            f" snapshot={health.get('snapshot', {}).get('snapshot_id')}"
+            f" consistency={health.get('input_consistency', {}).get('status')}"
             f" recall_queries={health['recall_queries']}{suffix}"
         )
     lines = [
         f"memory_health: {health['status']}",
         f"- time: {health['time']}",
         f"- atoms: {health['atoms']}",
+        f"- snapshot: id={health.get('snapshot', {}).get('snapshot_id')} source={health.get('snapshot', {}).get('source_fingerprint')} consistency={health.get('input_consistency', {}).get('status')}",
         f"- recall_visible_atoms: {health.get('recall_visible_atoms')} default_excluded={health.get('default_excluded_atoms')}",
         f"- display_atoms_after_lifecycle_fold: {health.get('display_atoms_after_lifecycle_fold')}",
         f"- recall_visible_after_lifecycle_fold: {health.get('recall_visible_after_lifecycle_fold')}",

@@ -216,7 +216,35 @@ stale_review_batch: []
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+
+```yaml
+implemented:
+  - issue_id: ISS-HEALTH-SNAPSHOT
+    files_changed:
+      - path: tools/memory_health.py
+        change: modified
+      - path: tools/memory_recall.py
+        change: modified
+      - path: tools/audit_atom_mirror_drift.py
+        change: modified
+      - path: tools/test_memory_health_snapshot.py
+        change: created
+      - path: memory/directive_atoms_per_file_migration_20260513.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "health の raw/canonical 読取を snapshot 1 回へ集約し、recall smoke と mirror audit を同じ snapshot の pure consumer にした。対象 fingerprint が監査中に変われば mirror drift を concurrent_write / inconclusive として報告する。"
+    partial: false
+migrations: []
+verification:
+  - "python -m unittest tools.test_memory_health_snapshot -v: 3 tests OK（単一読込、3 probe 同一 snapshot、途中更新時の false drift 抑止、standalone search 互換）"
+  - "python -m unittest tools.test_memory_recall_title_fallback -v: 5 tests OK"
+  - "python -m unittest discover -s tools -p 'test_memory*.py' -v: memory 系 8 tests OK"
+  - "python -m py_compile tools/memory_health.py tools/memory_recall.py tools/audit_atom_mirror_drift.py tools/test_memory_health_snapshot.py: OK"
+  - "python tools/memory_health.py --compact: exit 0、snapshot=f945a97f4b07b753、consistency=stable、既知の title debt / mojibake のみで warning"
+  - "python tools/memory_recall.py '記憶 システム shared-reads' --limit 3 --compact: 3 hits、standalone CLI 正常"
+  - "python tools/audit_atom_mirror_drift.py: atoms.jsonl / per-file .md / index.jsonl は各 2853 件、drift 0 件"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

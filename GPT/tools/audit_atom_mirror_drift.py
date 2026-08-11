@@ -19,7 +19,7 @@ import hashlib
 import json
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping, Sequence
 
 from atoms_fileformat import build_index_entry, parse_atom_md, shard_for
 
@@ -129,16 +129,23 @@ def rebuild_index(atoms: list[dict[str, Any]], paths_by_id: dict[str, str]) -> l
     return entries
 
 
-def build_audit() -> dict[str, Any]:
-    jsonl_atoms = read_jsonl(ATOMS_JSONL)
+def build_audit(
+    jsonl_atoms: Sequence[Mapping[str, Any]] | None = None,
+    snapshot_provenance: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Build the mirror report, optionally reusing an already-loaded JSONL view."""
+    if jsonl_atoms is None:
+        loaded_jsonl_atoms = read_jsonl(ATOMS_JSONL)
+    else:
+        loaded_jsonl_atoms = [dict(atom) for atom in jsonl_atoms]
     per_file_atoms, paths_by_id, per_file_errors = load_per_file_atoms(ATOMS_DIR)
     index_entries, index_errors = load_index_entries(INDEX_PATH)
 
-    jsonl_ids = {atom_id(row) for row in jsonl_atoms if atom_id(row)}
+    jsonl_ids = {atom_id(row) for row in loaded_jsonl_atoms if atom_id(row)}
     per_file_ids = {atom_id(row) for row in per_file_atoms if atom_id(row)}
     index_ids = {atom_id(row) for row in index_entries if atom_id(row)}
 
-    jsonl_by_id = {atom_id(row): row for row in jsonl_atoms if atom_id(row)}
+    jsonl_by_id = {atom_id(row): row for row in loaded_jsonl_atoms if atom_id(row)}
     per_file_by_id = {atom_id(row): row for row in per_file_atoms if atom_id(row)}
     content_conflicts = [
         aid for aid in sorted(jsonl_ids & per_file_ids)
@@ -151,7 +158,7 @@ def build_audit() -> dict[str, Any]:
         if rel and not (ATOMS_DIR / rel).exists():
             missing_file.append({"id": atom_id(entry), "path": rel})
 
-    return {
+    report = {
         "counts": {
             "atoms_jsonl": len(jsonl_ids),
             "per_file_md": len(per_file_ids),
@@ -164,10 +171,13 @@ def build_audit() -> dict[str, Any]:
         "parse_errors": per_file_errors,
         "index_errors": index_errors,
         "content_conflicts": content_conflicts,
-        "_jsonl_atoms": jsonl_atoms,
+        "_jsonl_atoms": loaded_jsonl_atoms,
         "_per_file_atoms": per_file_atoms,
         "_paths_by_id": paths_by_id,
     }
+    if snapshot_provenance is not None:
+        report["snapshot"] = dict(snapshot_provenance)
+    return report
 
 
 def public_report(audit: dict[str, Any], repaired: dict[str, Any] | None = None) -> dict[str, Any]:
