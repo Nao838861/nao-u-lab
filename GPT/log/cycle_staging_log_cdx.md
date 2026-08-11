@@ -7,6 +7,10 @@
 - `memory/shared_reads_candidates/20260811_onedayagent_long_horizon_harness.md` — long-horizon taskをbounded subtask、execution memory、成果物のglobal verification / targeted repairで管理するagent harnessと104 task評価。
 - preflight skip: `One Policy, Infinite NPCs: Persona-Traceable Shared RL Policies for Scalable Game Agents` — `posted_source_work_match`（arXiv:2605.23652、既投稿 permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782609581756829）のためcandidate未作成。
 - pending inbox: directives 0件 / broadcasts 0件。
+- `memory/shared_reads_candidates/20260811_over_the_hill_coop_driving.md` — タイマーや順位を外したオフロード探索で、terrain reading・道具準備・multi-winch・solo/co-op 共通 progression を組み合わせる開発者インタビュー。
+- pending inbox: `slack_directives.jsonl` 0件 / `slack_broadcasts.jsonl` 0件。
+- preflight: sidecar 3種を candidate 書込み直前に再生成し、canonical URL / title ともコマンド出力 `continue`（終了コード 0）を確認。
+
 
 ## Phase 2: 分析
 ```yaml
