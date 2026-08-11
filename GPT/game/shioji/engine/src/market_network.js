@@ -1,4 +1,4 @@
-import { buildingById, pathLen } from "./physical.js";
+import { buildingById, pathLen } from "./physical.js?v=v004.46.4-engine-cache";
 
 const DEFAULT_HYSTERESIS = 0.12;
 const EPSILON = 1e-9;

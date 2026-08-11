@@ -2225,7 +2225,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.46.3-boot-report');
+  assert.equal(VERSION, 'v004.46.4-engine-cache');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -3193,13 +3193,18 @@ test('段3/4: レスポンシブHUDとカメラ・速度操作のブラウザ契
 
 test('起動AA: 公開cacheで新旧moduleを混在させず、失敗時も開始画面と復旧導線を残す', () => {
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-  const sourceRoot = new URL('../src/', import.meta.url);
+  const sourceRoots = [
+    new URL('../src/', import.meta.url),
+    new URL('../../engine/src/', import.meta.url),
+  ];
   const importPattern = /(?:from\s+|import\s*)['"](\.{1,2}\/[^'"]+\.js(?:\?[^'"]*)?)['"]/g;
-  for (const filename of fs.readdirSync(sourceRoot).filter(name => name.endsWith('.js'))) {
-    const source = fs.readFileSync(new URL(filename, sourceRoot), 'utf8');
-    for (const match of source.matchAll(importPattern)) {
-      assert.match(match[1], new RegExp(`\\?v=${VERSION.replaceAll('.', '\\.')}$`),
-        `${filename}: ${match[1]} は公開build版と同じqueryを持つ`);
+  for (const sourceRoot of sourceRoots) {
+    for (const filename of fs.readdirSync(sourceRoot).filter(name => name.endsWith('.js'))) {
+      const source = fs.readFileSync(new URL(filename, sourceRoot), 'utf8');
+      for (const match of source.matchAll(importPattern)) {
+        assert.match(match[1], new RegExp(`\\?v=${VERSION.replaceAll('.', '\\.')}$`),
+          `${sourceRoot.pathname}${filename}: ${match[1]} は公開build版と同じqueryを持つ`);
+      }
     }
   }
   assert.match(html, new RegExp(`style\\.css\\?v=${VERSION.replaceAll('.', '\\.')}`));

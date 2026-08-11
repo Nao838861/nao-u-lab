@@ -1832,5 +1832,10 @@ engine focused 2件と全unit 166件は成功した。一方、v004の「支援1
 
 - Nao_u環境では再試行後も同じ表示が続いた。HTTPログ上はページ、main module、依存moduleがすべて200または304で、404はゲームに無関係なfaviconだけだった。通信失敗だけを原因とする仮説を棄却した。
 - 従来の動的`script`はmodule graphの評価失敗を汎用文へ潰していた。起動を`import(moduleUrl)`へ替えてreject理由を受け取り、同期例外と未処理Promiseも起動前に限って画面とconsoleへ残す。保存データは削除しない。
-- 全moduleのbuild queryを`v004.46.3-boot-report`へ更新して旧依存を再利用しない。実Chromeでmodule取得を意図的に遮断した失敗表示と、解除後の再試行による復旧を確認した。開始選択試験ではチュートリアルを正常に開けた。古い三択・建設欄件数の期待値は現行の隊商追加へ追従させ、その次のsandbox確認は既知の`operation-guide`より`season-event`が先に出る別件で停止した。
+- 全moduleのbuild queryを`v004.46.4-engine-cache`へ更新して旧依存を再利用しない。実Chromeでmodule取得を意図的に遮断した失敗表示と、解除後の再試行による復旧を確認した。開始選択試験ではチュートリアルを正常に開けた。古い三択・建設欄件数の期待値は現行の隊商追加へ追従させ、その次のsandbox確認は既知の`operation-guide`より`season-event`が先に出る別件で停止した。
 - 端末固有例外は、同一localhost上の`boot-error.gif`へmessageとuser agentをqueryとして送ってHTTPログに残す。404になる観測用GETであり、外部送信、保存データの読出し・削除、ゲーム状態の変更は行わない。
+
+### 同日再追試 — engine内部依存の旧cache混入を修復
+
+- Nao_u環境の診断表示から、`The requested module './physical.js' does not provide an export named 'isPavedRoad'`を取得した。v004側の入口にはbuild queryがあった一方、`engine/src`同士の相対importにはqueryがなく、変更前の`physical.js`だけがbrowser cacheから再利用されていた。
+- `api / audit / econ / market_network / routes / world`の全内部importにも`v004.46.4-engine-cache`を付け、v004の入口と同じURL世代へ統一した。今後の再発防止として、v004だけでなくengineの相対importもbuild query完全一致を要求する起動契約試験へ広げた。
