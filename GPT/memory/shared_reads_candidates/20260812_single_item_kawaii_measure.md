@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.19352"
 collected_at: "2026-08-12T06:02:06+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [player-research, character-design, voice-design, ux-measurement, game-research]
+evaluated_at: "2026-08-12T06:05:52+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-12T06:05:52+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-12T06:05:52+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-11"
+supersedes: []
+gate_reason: >-
+  9データセット・967人を用い、収束的妥当性、既知集団比較、文脈横断性、信頼性と限界まで抽出できるため、CoopEval 水準の概要を構成できる。
+  ゲームキャラクターの声・外見・両者の組合せを短い playtest で比較し、単一質問の低負担性と modality 間の不一致を同時に扱う具体的な適用先がある。
+suggested_post_outline:
+  overview_angle: "「かわいい」を印象語のまま扱わず、単一質問の妥当性を複数 modality と9データセットで検証した尺度研究として整理する"
+  analysis_axis: "単一項目の低負担性と、反復測定・文化圏・test-retest・予測的妥当性が未検証という限界を分けて評価する"
+  application_target: "Log_cdx のゲーム試作で、同一キャラクターの声案・外見案・組合せ案を短時間 playtest し、kawaii 評価と好意・信頼・興奮を別軸で比較する"
+  pros_cons: "少ない回答負担で反復しやすい一方、声と外見の評価は弱くしか一致せず、単一項目だけで原因や改善箇所は特定できない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
