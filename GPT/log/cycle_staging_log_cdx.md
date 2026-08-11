@@ -90,7 +90,58 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の entry index を UTF-8 で検証。unknown atom / missing per-file path / duplicate entry / broken link は 0 件。代表語（記憶・ゲーム設計・敵パターン・評価軸）も取得できた"
+  - "atom mirror を監査。atoms.jsonl / per-file md / index.jsonl は各 2857 件で一致し、content conflict は 0 件。normalized-content duplicate 40 群 80 行は既存 overlay 45 群で fold 済み"
+  - "memory/raw/ の 30 日超未更新ファイル 240 件を確認。raw は provenance / consumer evidence の保存層であり、参照切れを起こす移動は行わず保持した"
+  - "shared-reads candidate lifecycle を dry-run 監査。posted 592 / ready_to_post 9 / postponed 218 / failed 449 / needs_review 2、正規未評価 backlog 0、malformed 0"
+  - "open duplicate / stale triage / group action の派生 queue を再生成。open group 42（mixed 38 / all_open 4）、stale triage 0、actionable group 0"
+  - "Slack directive / broadcast の pending は各 0 件。handled への更新対象なし"
+issues:
+  - id: ISS-4A-MOJIBAKE-SIGNAL
+    description: "memory health の mojibake 警告 2 件が、実際の U+FFFD source corruption 1 件と、ゲーム本文中の意味のある『???』を tooling が誤検知した 1 件を同じ警告へ畳んでいる"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl#ts=1776127289.990919; memory/atoms/2026-04/gr-1777083728-44d444ab7a.md; tools/atom_quality.py:38"
+    source_file_status: "memory/MEMORY.md は UTF-8 明示読みで正常。sr-1776127289-4d9239b255 は per-file / atoms.jsonl / raw Slack archive の全てに U+FFFD を含むため source 側の既存破損。gr-1777083728-44d444ab7a は UTF-8 source が正常"
+    display_or_tooling_status: "PowerShell UTF-8 表示は正常。atom_quality.mojibake_score が semantic な『???』も run_count で suspect 扱いするため、game-rights atom は tooling false positive"
+    why_blocks_game_memory: "旧 atom 1 件は『AIエージェント』検索語の一致を弱め、false positive は health warning の信頼性を下げる。ただし index integrity と recall smoke は正常で、記憶階層の再設計を要する阻害ではない"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 4
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 42
+  mixed_group_count: 38
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  lease_suppression_note: "overdue 2 件は同一 work group の deferred lease が retry_after 2026-08-20 まで有効なため、stale triage への再投入 0 件"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
