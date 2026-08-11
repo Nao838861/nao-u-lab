@@ -64,7 +64,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780026573-1dd294f55e
+    source_ts: "1780026573.734729"
+    title: "中間記法パターン (MNP): LLM 操作のために GUI 構造を圧縮した独自 DSL を SSoT にする設計"
+    reason: "score 14 の最新未レビュー候補で、memory・game-design・operation・evaluation の4優先タグを持つ。Nao_u 共有の同テーマ sibling より詳しい後続投稿が、既レビュー結果や既存 control と異なる判断差を作るか確認した。本 atom 自体への明示評価はない。"
+  scores:
+    relevance: 2
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "合計10で採用条件の14に届かず、risk_control も2未満。専用 DSL の token・error・round-trip・改修速度・playable quality の比較証拠がなく、同テーマ sibling は既レビュー、game_templates の MNP mapping も既実装で、4つの intermediate-state controls と重複する。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

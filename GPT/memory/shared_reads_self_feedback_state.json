@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-12T04:12:02+09:00",
+  "updated_at": "2026-08-12T06:17:56+09:00",
   "reviewed_source_ts": [
     "1778774144.030849",
     "1780037605.969949",
@@ -20,6 +20,7 @@
     "1786330770.045909",
     "1786339994.922609",
     "1786322485.344499",
+    "1780026573.734729",
     "1778774144.767749",
     "1778579739.545599",
     "1786307674.143409",
@@ -18993,6 +18994,48 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、既存のepisodic-recall／synchronized-stream／causal-log／long-horizon-latency controlsとの重複、比較可能な長時間video artifact不在によるreject理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-12T06:17:56+09:00",
+      "selected": {
+        "id": "sr-1780026573-1dd294f55e",
+        "source_ts": "1780026573.734729",
+        "title": "中間記法パターン (MNP): LLM 操作のために GUI 構造を圧縮した独自 DSL を SSoT にする設計",
+        "reason": "source が slack_api/shared-reads、score 14、未レビューという条件を満たす最新候補で、memory・game-design・operation・evaluation の4優先タグを持つため1件だけ選んだ。Nao_u が共有した同テーマの sibling より後に Log が事例・費用・game_templates への着地案を詳述した投稿なので、その差分が既レビュー結果や既存 control と異なる次回判断を作るか確認した。Nao_u が本 atom 自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、DSL を SSoT、GUI を renderer/editor とする構造、JSON／YAML に対する token 圧縮仮説、parser／serializer／仕様違反の費用、Tiled TMX・PICO-8 cartridge・Bevy scene の比較候補、game_templates への小さな着地順を示すため relevance・actionability・evidence は2とした。一方、評価根拠は主に提唱 tweet の反応と類型説明で、専用 DSL が code／JSON／Markdown より token、生成 error、round-trip fidelity、改修速度、playable quality を改善した before／after はない。同テーマの sibling atom sr-1779993723-bad455f4dc は2026-08-02に10点で reject 済みで、さらに Claude/projects/game_templates_design.md は2026-05-31に MNP 対応を skeleton.md／game.js の SSoT mapping としてすでに反映している。本 atom の実装提案は履行済みだが効果比較は増えていない。probe-20260516-grounded-playable-spec、probe-20260612-checkable-intermediate-state、probe-20260619-draw2think-inspectable-intermediate-state、probe-20260529-code-as-harness-one-executable-check が薄い spec、検査可能な状態、level／UI flow の中間表現、最小 executable check を既に扱うため non_redundancy=0。322件の active_probes に同義 control を足すと parser・同期境界・schema drift と確認負荷だけを増やすため risk_control=1 とし、未レビュー source_ts を state-only で閉じる。",
+      "existing_controls": [
+        "sr-1779993723-bad455f4dc",
+        "Claude/projects/game_templates_design.md#2026-05-29-MNP",
+        "probe-20260516-grounded-playable-spec",
+        "probe-20260612-checkable-intermediate-state",
+        "probe-20260619-draw2think-inspectable-intermediate-state",
+        "probe-20260529-code-as-harness-one-executable-check"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、レビュー済み sibling、既実装の game_templates MNP mapping、既存 intermediate-state controls との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
