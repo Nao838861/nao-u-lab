@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.46.0-tutorial-no-company-stock">
+  <link rel="stylesheet" href="./style.css?v=v004.46.1-boot-retry">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -292,7 +292,7 @@
         <p>初めてなら、案内つきがおすすめです。同じ仕組みを別の始め方でも遊べます。</p>
         <div id="boot-status" class="boot-status" role="status" aria-live="polite">
           <i></i><span>ゲームを準備しています…</span>
-          <button id="retry-boot" type="button" hidden onclick="location.reload()">もう一度読み込む</button>
+          <button id="retry-boot" type="button" hidden onclick="window.__SHIOJI_BOOT__?.retry()">もう一度読み込む</button>
         </div>
         <div class="start-options">
           <button id="start-resume" class="start-resume" type="button" data-save-action="resume" hidden>
@@ -348,13 +348,28 @@
           window.clearTimeout(timeout);
           setState('failed', '新しい版を読み込めませんでした。もう一度読み込んでください。');
         },
+        retry() {
+          const url = new URL(window.location.href);
+          url.searchParams.set('boot-retry', Date.now().toString(36));
+          window.location.replace(url);
+        },
       });
       window.addEventListener('error', () => {
         if (!window.__SHIOJI_V004__) window.__SHIOJI_BOOT__.failed();
       });
     })();
   </script>
-  <script id="game-module" type="module" src="./src/main.js?v=v004.46.0-tutorial-no-company-stock"
-    onerror="window.__SHIOJI_BOOT__?.failed()"></script>
+  <script>
+    (() => {
+      const retryToken = new URL(window.location.href).searchParams.get('boot-retry');
+      const module = document.createElement('script');
+      module.id = 'game-module';
+      module.type = 'module';
+      module.src = './src/main.js?v=v004.46.1-boot-retry'
+        + (retryToken ? `&boot-retry=${encodeURIComponent(retryToken)}` : '');
+      module.addEventListener('error', () => window.__SHIOJI_BOOT__?.failed());
+      document.body.append(module);
+    })();
+  </script>
 </body>
 </html>

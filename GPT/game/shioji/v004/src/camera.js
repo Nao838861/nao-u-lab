@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.46.0-tutorial-no-company-stock';
+import { TILE } from './config.js?v=v004.46.1-boot-retry';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));
