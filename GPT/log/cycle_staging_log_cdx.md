@@ -8,6 +8,7 @@
 - `memory/shared_reads_candidates/20260811_over_the_hill_coop_driving.md` — タイマーや順位を外したオフロード探索で、terrain reading・道具準備・multi-winch・solo/co-op 共通 progression を組み合わせる開発者インタビュー。
 - pending inbox: `slack_directives.jsonl` 0件 / `slack_broadcasts.jsonl` 0件。
 - preflight: sidecar 3種を candidate 書込み直前に再生成し、canonical URL / title ともコマンド出力 `continue`（終了コード 0）を確認。
+- `memory/shared_reads_candidates/20260812_secrets_tabletop_industry_playtesting_timeline.md` — GDC 2026 の tabletop 制作資料から、Early / Middle / Late / Blind に分けて対象者・問い・次工程への条件を変える playtesting timeline を収集。duplicate preflight: `continue`。
 
 ## Phase 2: 分析
 ```yaml
