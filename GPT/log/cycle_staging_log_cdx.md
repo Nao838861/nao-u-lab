@@ -61,7 +61,34 @@ slack_post_attempted: false
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786431598-0a45ce53cd
+    source_ts: "1786431598.049539"
+    title: "2XKO UI/UX の負債流量 gate と止めない段階移行"
+    reason: "source=slack_api/shared-reads、score=11、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新候補。bug負債の純増と反復feature数からUI基盤化を判断する知見が次の画面追加prototypeに直結するため、1件だけ選んだ。Nao_uの明示的な重要評価は未確認。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "移行前bug純増、費用分離、2週単位proof、strangler型移行、modal/menu stack invariantは具体的だが、移行後の定量比較がなく単一live-service事例である。既存controlはscope、GUI clean-run境界、隣接system回帰を扱う一方、bug流量・continuous screen数・編集競合・残移行費による基盤化gateは直接扱わない。ただし現在のstagingにUI before/after artifactがなく、Phase 4aも実consumerではないためleaseを具体化できない。active_probes 322件へ対象なしのcontrolを追加せず、同種bug再発、bug純増2回、menu file競合、continuous screen 3つ以上のいずれかが具体的diffで現れた時だけ再評価する。"
+  change:
+    summary: "reviewed_source_tsとdefer理由のみ更新。active_probes、ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

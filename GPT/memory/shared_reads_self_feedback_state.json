@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-11T16:03:31+09:00",
+  "updated_at": "2026-08-11T18:14:03+09:00",
   "reviewed_source_ts": [
+    "1786431598.049539",
     "1786424121.003489",
     "1786416498.654479",
     "1786407960.742429",
@@ -628,6 +629,45 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-11T18:14:03+09:00",
+      "selected": {
+        "id": "sr-1786431598-0a45ce53cd",
+        "source_ts": "1786431598.049539",
+        "title": "2XKO UI/UX の負債流量 gate と止めない段階移行",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たし、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新候補から1件だけを選んだ。UI基盤化を抽象化の美学ではなく、bug流入−修正の純増、continuous screen数、編集競合、残feature移行費で判断し、modal／menu stackの横断invariantを小さなproofで検証する知見が、次の画面追加を伴うgame prototypeの判断に直結する。Nao_uが本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads本文は、移行前のUI bugが週平均11.15件発生し8.54件修正されbacklogが週2.61件純増した観測、one-time／continuous featureの費用分離、2週単位のdesign・unified system・proof、4か月の既存feature移行、新規画面から新systemへ流すstrangler型手順、modal単一表示・acknowledge・menu stack・deep linkのinvariantまで示すためrelevance・actionabilityは3とした。一方、移行後のbug流入、修正時間、feature開発週数、file contention、性能、見積と実績の差は提示されず、Unreal・複数team・multi-platform・live-serviceに依存する単一postmortemなのでevidenceは2とした。probe-20260602-game-scope-brief-cut-gateはscopeとCut、probe-20260610-gui-corruption-clean-run-boundaryはGUIのclean run境界、probe-20260709-gameenginebench-runtime-integration-gateはUI/HUDを含む隣接system回帰を既に扱う。ただしbug負債の流量とcontinuous screen数・編集競合・残移行費から共通基盤化の時期を決めるgateは既存controlに直接なく、non_redundancyは2とした。現在のstagingには画面追加、modal/back-stack、旧新UI、bug流入／修正、共通化工数を比較できるartifactがなく、後続Phase 4aもUI基盤判断の実consumerではない。322件のactive_probesへ対象なしのcontrolを追加すると小規模prototypeへlive-service由来の抽象化費を先行させるため、consumer、trigger artifact、expected deltaをlease契約どおり固定せずstate-onlyでdeferする。次に同種のnavigation／focus／input bugが複数画面で再発するか、UI bug純増が2回続くか、一つのmenu fileを複数featureが変更するか、continuous screenが3つ以上になる具体的diffが現れた時だけ、modalとmenu stackに限定した一時probeとして再評価する。",
+      "existing_controls": [
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260610-gui-corruption-clean-run-boundary",
+        "probe-20260709-gameenginebench-runtime-integration-gate"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsとdefer理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-11T16:03:31+09:00",
       "selected": {
