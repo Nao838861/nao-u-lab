@@ -50,7 +50,15 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260811_despelote_documenting_reality.md
+    reason: Phase 2 の gate_decision が postpone。GDC セッション概要だけでは素材統合の手順・比較・失敗・評価結果が不足し、約4000字の投稿を根拠付きで完成できない
+    action: postpone
+pass_candidates: 0
+slack_post_attempted: false
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
