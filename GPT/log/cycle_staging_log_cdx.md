@@ -55,7 +55,17 @@ duplicate_preflight:
 - 判定根拠: horizon gap の問題設定、long-horizon / long-context / long-term memory の分離、6領域と horizon 位置の分類、trajectory-level diagnostics の必要性まで抽出できる。複数時間・複数 session のゲーム実装と自動 playtest における仕様保持、途中検証、回復、完了判定へ具体化でき、CoopEval 水準の概要に展開可能と判断した。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260811_horizon_gap_long_horizon_agents.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786424121003489
+    char_count: 4481
+skipped: []
+```
+
+- 最終判定: 投稿。arXiv 本文を再確認し、問題設定、3概念の分離、6領域×horizon 位置の分類、corpus 構築、trajectory-level diagnostics、harness / model の帰属問題、単一 annotator と sampling bias の限界まで本文へ反映した。
+- 投稿前レビュー: `■ 概要` 始まり、`■ URL` 末尾、必須6項目、禁止表現なし、URL 1件、4,481文字。1回の `chat.postMessage` で投稿し、Slack 保存本文の文字化け検証は `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
