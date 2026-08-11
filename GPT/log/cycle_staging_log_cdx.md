@@ -165,7 +165,55 @@ stale_review_batch: []
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+
+```yaml
+- issue_id: ISS-HEALTH-SNAPSHOT
+  problem_restatement: "health 1 回の中で同じ atoms.jsonl を初期集計、mirror audit、3 本の recall smoke から少なくとも 8 回読み直している。そのため、各単体 reader が正常でも、active dual-write と重なる統合監査は読込負荷と観測時点のずれを増やし、SystemError の発生箇所も固定できない。健全性監査には、同じ入力集合に対する集計・mirror 比較・recall smoke だったと説明できる読取境界が必要である。"
+  alternatives:
+    - name: "案A: 単一読込スナップショットを pure consumer に注入"
+      sketch: "health 起動時に atoms.jsonl と canonical overlay view を一度だけ読んだ不変スナップショットを作る。集計、recall smoke、mirror audit はその同じ集合を引数で受け取り、対象ファイル群の開始時・終了時 fingerprint が変わった場合は corruption ではなく concurrent_write による判定不能として返す。"
+      pros:
+        - "atoms.jsonl の全量再読込を 8 回以上から 1 回へ減らし、現在観測されている不安定経路を直接縮める。"
+        - "件数、重複、recall 結果、mirror の JSONL 側が同一 atom 集合に由来すると説明できる。"
+        - "standalone recall の公開動作を残したまま、health 内部の読込境界だけを段階的に変更できる。"
+      cons:
+        - "memory_recall.search と mirror audit に、既読データを受け取る副作用なしの入口を追加する必要がある。"
+        - "per-file/index まで厳密な同一世代に固定するものではないため、開始・終了 fingerprint と判定不能状態の設計が必要になる。"
+        - "スナップショット provenance を health 出力へ追加し、従来の error/warning と区別する必要がある。"
+      migration_cost: medium
+    - name: "案B: dual-write 完了世代 manifest と reader/writer lease"
+      sketch: "全 writer が世代 ID を発行し、atoms.jsonl、per-file、index の書込み完了後に manifest を確定する。health は確定世代だけを読むか shared lease を取得し、監査中の writer を待機させる。"
+      pros:
+        - "三つの mirror を同一世代として監査でき、同時更新の曖昧さを最も強く除ける。"
+        - "将来 atoms.jsonl を retire する Phase D にも世代境界を再利用できる。"
+        - "監査結果に明確な generation ID を付与できる。"
+      cons:
+        - "全 dual-write writer と scheduled job の協調変更が必要で、今回の局所的な health 不安定より変更範囲が大きい。"
+        - "異常終了時の stale lease、manifest 未確定、復旧手順という新しい障害面を増やす。"
+        - "Phase D の正式計画より先に永続化 protocol を固定するため、後の移行設計を拘束する。"
+      migration_cost: high
+    - name: "案C: SystemError の bounded retry または subprocess 隔離"
+      sketch: "現行の複数読込構造は維持し、SystemError 時だけ health 全体を 1 回再試行するか、recall smoke と mirror audit を別 process に隔離する。失敗箇所と retry 回数を結果に残す。"
+      pros:
+        - "既存 API への変更が少なく、短期間で完走率を上げやすい。"
+        - "subprocess 隔離なら一つの reader failure が health 全体を即時終了させにくい。"
+        - "暫定的な診断情報を増やせる。"
+      cons:
+        - "同じ全量再読込を繰り返すため、原因が読込負荷なら負荷をさらに増やす。"
+        - "retry ごとに観測世代が変わり、同一時点の健全性証拠にならない。"
+        - "偶然完走した結果が構造的な不安定さを隠す可能性がある。"
+      migration_cost: low
+  recommended: "案A: 単一読込スナップショットを pure consumer に注入"
+  recommended_reason: "Phase 4a の対照実験では source corruption ではなく統合経路だけが不安定であり、案Aは失敗面である重複全量読込を直接なくす。案Bほど writer 全体や Phase D の protocol を先取りせず、案Cのように不整合な観測を成功扱いしない。fingerprint 変化時は明示的な判定不能として安全側に倒せるため、誤った mirror drift 判定のコストも限定できる。現状からの距離は中程度だが、変更境界を health 用の pure consumer 入口に閉じられる。"
+  decision: introduce
+  decision_reason: "単一 reader と単一監査は既に成功しており、priority issue の evidence と推奨案の作用点が一致する。追加調査で protocol 全体を設計し直す必要はなく、Phase 4c で小さく導入して読込回数・結果 provenance・同時更新時の非判定を検証できる。"
+  outline_for_4c:
+    - "health 起動時に raw atoms と canonical overlay view を一度だけ構築する read-only snapshot 境界を設け、snapshot ID と source fingerprint を持たせる。"
+    - "recall smoke に既読 snapshot を渡す副作用なしの検索入口を用意し、既存 standalone recall の CLI・記録動作は変更しない。"
+    - "mirror audit が JSONL 側について既読 snapshot を受け取れるようにし、per-file/index の監査結果と snapshot provenance を同じ report に載せる。"
+    - "監査前後で対象 fingerprint が変化した場合は mirror corruption/error と確定せず concurrent_write / inconclusive として明示し、必要なら変化検知後だけ 1 回に限る bounded retry を別層で行う。"
+    - "テストで atoms.jsonl の読込回数が health 1 回につき 1 回であること、3 probe が同一 snapshot を使うこと、途中更新時に false drift を出さないこと、standalone recall の互換性を確認する。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
