@@ -7,12 +7,17 @@ genre_tags: [game-design, interaction-design, text-game, ux, input]
 evaluated_at: "2026-08-12T08:08:19+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-12T08:08:19+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-12T08:08:19+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-12T08:14:25.5825628+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786490009108289"
+next_action: none
+posted:
+  ts: "1786490009.108289"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786490009108289"
+  char_count: 3793
+  posted_at: "2026-08-12T08:14:25.5825628+09:00"
 stale_after: "2026-09-11"
 supersedes: []
 gate_reason: >-
