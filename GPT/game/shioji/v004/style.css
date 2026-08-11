@@ -204,15 +204,22 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .funds b { font: 800 23px Georgia, serif; }
 
 .top-menu {
+  /* 狭い画面では速度ボタンの下へ潜らず、メニュー側が縮んで横スクロールする */
+  flex: 1 1 auto;
   min-width: 0;
   display: flex;
   align-items: center;
   gap: 3px;
   padding: 0 6px;
   border-right: 1px solid var(--line);
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+.top-menu::-webkit-scrollbar { display: none; }
 .top-menu button {
-  min-width: 48px;
+  flex: 0 0 auto;
+  min-width: 0;
+  padding: 0 8px;
   height: 36px;
   border: 1px solid transparent;
   border-radius: 6px;
@@ -237,10 +244,18 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
 .speed {
   margin-left: auto;
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   gap: 2px;
   padding-left: 6px;
+}
+.step-day { flex: 0 0 auto; }
+@media (max-width: 1500px) {
+  /* MacBook幅: 装飾のブランド文字を畳み、印章だけ残して実用ボタンに幅を譲る */
+  .brand > span:not(.brand-seal) { display: none; }
+  .top-menu button { padding: 0 6px; font-size: 10px; }
+  .hud-stat b { font-size: 14px; }
 }
 
 .speed button,
