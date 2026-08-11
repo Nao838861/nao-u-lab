@@ -52,7 +52,16 @@ unreviewed_intake_audit:
 - `Lessons from Building UI/UX in 2XKO`: **pass**。UI bug の流入超過を起点に、旧基盤継続と移行の費用比較、稼働中 feature 開発を止めない段階移行、layer / modal / menu / content plugin の責務まで一次資料から追える。小規模 prototype では全構成の移植ではなく、画面増加時の基盤化ゲートと共通遷移契約として部分採用する。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260811_2xko_unified_ui_infrastructure.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786431598049539
+    char_count: 4398
+skipped: []
+```
+
+- `Lessons from Building UI/UX in 2XKO` を最終投稿。一次資料 143 枚と照合し、移行後の定量的な before/after が示されない限界を明記した上で、UI bug の純増、費用比較、段階移行、layer / modal / menu / content plugin の責務を Log_cdx 自身の分析として整理した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

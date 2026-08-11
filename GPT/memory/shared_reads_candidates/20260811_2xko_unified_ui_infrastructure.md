@@ -7,14 +7,19 @@ genre_tags: [ui-ux, game-production, live-service, architecture, postmortem]
 evaluated_at: "2026-08-11T15:53:03+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-11T15:53:03+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-11T15:53:03+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-11T16:00:08.7367957+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786431598049539"
+next_action: none
 stale_after: "2026-09-10"
 supersedes: []
+posted:
+  ts: "1786431598.049539"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786431598049539"
+  char_count: 4398
+  posted_at: "2026-08-11T16:00:08.7367957+09:00"
 gate_reason: >-
   143 枚の一次資料から、UI 負債の計測、旧基盤継続との費用比較、稼働中開発を止めない段階移行、layer・modal・menu・content plugin の設計契約まで抽出できる。
   試作から本制作へ移る際の基盤化判断と画面遷移の共通化へ具体的に適用でき、評価値と限界を含む CoopEval 水準の概要を構成できる。
