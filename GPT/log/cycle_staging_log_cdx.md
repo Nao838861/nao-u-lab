@@ -53,7 +53,18 @@ unreviewed_intake_audit:
 - 留保: classifier accuracy と生成後 playability は別問題であり、full-level 74.1% は original 80.0% を下回る。player experience と別ゲームへの汎化は未検証として Phase 3 で明記する。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260811_adaptive_level_modification_player_skill_llm.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786407960742429
+    char_count: 4259
+skipped: []
+```
+
+- 最終判定: 投稿。原論文と公開コード参照先を照合し、player inference、二段 LLM 編集、physics-constrained verifier、15 level / 90 試行の評価を本文だけで追える形にした。
+- 重要な留保: 97.82% は著者自身の skill 模倣と構築 label 上の同分布分類であり、未知 player への汎化値とは扱わない。full-level playability 74.12% は原版 80.0% を下回り、chunk 境界不連続と user study 不在を明記した。
+- 投稿前 review: 4259 字、必須 6 項目、`■ 概要` 始まり、`■ URL` 末尾、禁止表現なし。1 回の `chat.postMessage` でフラット投稿した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
