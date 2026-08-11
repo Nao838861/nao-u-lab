@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-11T22:09:59+09:00",
+  "updated_at": "2026-08-12T00:13:12+09:00",
   "reviewed_source_ts": [
+    "1780038653.282729",
     "1786446761.647829",
     "1786313116.669499",
     "1786431598.049539",
@@ -631,6 +632,46 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-12T00:13:12+09:00",
+      "selected": {
+        "id": "sr-1780038653-2be3758602",
+        "source_ts": "1780038653.282729",
+        "title": "文字のみで学習した LLM の valence-arousal 幾何とゲーム評価語への転用",
+        "reason": "source が slack_api/shared-reads、score 15、未レビューという条件を満たす候補のうち source_ts が最も新しく、memory・game-design・operation・evaluation の4優先タグを持つ1件だけを選んだ。感情語を valence と arousal に分ける知見が、graze_log で使う『緊張』『快感』『単調』の曖昧さを減らし、次回のゲーム評価判断を変える独自 control になるか確認するため読んだ。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_controlも必須閾値2を下回るため、新規probe・metric・lease・directiveは追加しない。shared-reads本文は、3モデル、44,000語超のhuman emotion評価、Russell circumplexとの整列、valence／arousal軸への介入という一次論文の構成を示し、『単調』を低arousalと高arousalだが反復構造が弱い状態に分ける小さな診断へ変換できるためrelevance・actionability・evidenceは2とした。一方、本文からゲームプレイ中の主観状態を2軸で再現できる証拠はなく、『幾何の造語症』やgraze_logへの転用はAshの仮説である。probe-20260517-tactical-vs-reflex-shmup-axisは反射・戦術・商業評価語彙を、probe-20260517-learnable-variation-not-random-densityは単調回避を密度・ランダム化・学習可能な変奏に、probe-20260608-calibration-boundary-human-judgmentは測定可能な証拠とfun等の主観判断を、probe-20260609-dda-proxy-rule-traceは観測proxyと推定player stateをすでに分離する。本atom固有の2軸語彙を追加しても次回判断の大半は変わらずnon_redundancyは1である。さらに緊張・快感・単調をvalence-arousalへ強制すると、リズム、戦術、読みやすさ、報酬構造を感情平面へ過圧縮し、322件あるactive_probesの確認負荷と私的な専門語だけを増やす。現在のstagingにも同じplayable artifactを従来語彙／2軸語彙で比較するconsumerやbefore／after artifactがないため、投稿は仮説例として保持しstate-only reviewで閉じる。",
+      "existing_controls": [
+        "probe-20260517-tactical-vs-reflex-shmup-axis",
+        "probe-20260517-learnable-variation-not-random-density",
+        "probe-20260608-calibration-boundary-human-judgment",
+        "probe-20260609-dda-proxy-rule-trace"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsとreject理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-11T22:09:59+09:00",
       "selected": {
