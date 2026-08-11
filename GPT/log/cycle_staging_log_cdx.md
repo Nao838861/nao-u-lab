@@ -95,7 +95,106 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index と per-file atom index を照合し、broken reference 0 件を確認した。"
+  - "title canonical / mixed duplicate / open duplicate group / stale triage / group action の sidecar を、candidate の現在状態と live lease を反映する順で再生成した。"
+  - "Slack inbox、candidate/group handoff inbox、probe lifecycle を監査し、期限到来 handoff / probe がないことを確認した。"
+audits:
+  memory_index:
+    utf8_representative_terms:
+      記憶: true
+      ゲーム設計: true
+      敵パターン: true
+      評価軸: false
+    replacement_character_count: 0
+    broken_references: 0
+    source_file_status: "UTF-8 明示読みは正常。『評価軸』は現行 index 選定内容に含まれないが、U+FFFD は0件で validate_memory_index.py は OK。"
+    display_or_tooling_status: none
+  atoms:
+    rows: 2858
+    parse_errors: 0
+    duplicate_ids: 0
+    mirror_content_conflicts: 0
+    raw_normalized_content_duplicate_groups: 45
+    raw_duplicate_rows: 90
+    fold_applied_extra_rows: 45
+    effective_display_unresolved_groups: 0
+    deterministic_contradiction_signal: 0
+    mojibake_suspects:
+      - id: sr-1776127289-4d9239b255
+        source_file_status: "per-file atom / atoms.jsonl / raw Slack archive の全てに同じ U+FFFD があり、表示経路ではなく取得済み原文側の既存破損。"
+        display_or_tooling_status: none
+      - id: gr-1777083728-44d444ab7a
+        source_file_status: "UTF-8 source は正常。本文中の意図的な『???』を heuristic が拾う既知の false positive。"
+        display_or_tooling_status: none
+  raw:
+    inactive_30d_files: 240
+    archive_candidates: 0
+    action: none
+    reason: "30日超の内訳は web research 一次資料215件、headless/game evaluation evidence 17件、Slack/API provenance 7件、sync marker 1件であり、参照根拠を失わず退避できる明白な一時物はなかった。"
+  candidate_lifecycle:
+    files: 1271
+    status_counts:
+      posted: 593
+      ready_to_post: 9
+      postponed: 218
+      failed: 449
+      needs_review: 2
+      unreviewed_without_current_status: 0
+    current_state_changes: 0
+    open_missing_stale_after: 0
+    overdue_open_total: 2
+    overdue_paths:
+      - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+      - memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+    lease_observation: "2件とも同一 work の all-open duplicate group。gha-e6d4d4b5a37a0808 / gha-2313a247c62a9028 は 2026-08-20 まで deferred、membership fingerprint は一致しており、明示保持として stale triage / candidate handoff から除外された。"
+  duplicate_titles:
+    canonical_terminal_groups: 87
+    mixed_duplicate_queue_rows: 38
+    open_duplicate_group_count: 42
+    mixed_group_count: 38
+    all_open_group_count: 4
+    actionable_group_count: 0
+  slack_inbox:
+    directives_pending: 0
+    broadcasts_pending: 0
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 4
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 42
+  mixed_group_count: 38
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- 判定: index / fold / duplicate group lease / stale handoff / intake の各導線は整合しており、新しい構造問題は確認できなかった。Phase 4b / 4c は起動しない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
