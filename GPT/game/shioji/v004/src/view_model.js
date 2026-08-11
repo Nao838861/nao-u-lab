@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.45.5-caravan-integrity';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.46.0-tutorial-no-company-stock';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.45.5-caravan-integrity';
+} from './food_readability.js?v=v004.46.0-tutorial-no-company-stock';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   findTravelPath, householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.45.5-caravan-integrity';
-import { analyzeRoadConnections } from './placement.js?v=v004.45.5-caravan-integrity';
+} from './engine_bridge.js?v=v004.46.0-tutorial-no-company-stock';
+import { analyzeRoadConnections } from './placement.js?v=v004.46.0-tutorial-no-company-stock';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.45.5-caravan-integrity';
+} from './render_scene.js?v=v004.46.0-tutorial-no-company-stock';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.45.5-caravan-integrity';
+} from './visuals.js?v=v004.46.0-tutorial-no-company-stock';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',

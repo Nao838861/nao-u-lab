@@ -3604,21 +3604,29 @@ test("段29: 非接続の会社物流は輸送人員を生成せず接続後だ�
   );
 });
 
-test("需要網7: 受諾注文の在庫目標は市場の小売棚を倉庫在庫として数えない", () => {
+test("教程会社在庫撤去: 受諾注文は買上げ目標0でも市場から実調達を始める", () => {
   const { economy, physical } = createLogisticsTestFixture();
   assert.equal(addRoadLine(physical, economy.market, economy.warehouse).ok, true);
   const seller = createHousehold(economy, { job: "woodshop", x: 8, y: 8 });
   seller.pantry.tools = 20;
   sellAtMarket(economy, physical, seller, { day: 1, random: () => 0 });
   economy.marketStock.tools = 5;
-  setCompanyStockTarget(economy, "tools", 5);
-
-  assert.deepEqual(runCompanyProcurement(economy, { day: 1, physical }), [],
-    "通常の在庫目標では会社所有の市場棚も数える");
   economy.order = { g: "tools", qty: 5, left: 5, price: 2.5, due: 90 };
-  const purchases = runCompanyProcurement(economy, { day: 2, physical });
-  assert.ok(purchases.length > 0, "注文中は契約分を倉庫へ別に確保する");
-  assert.ok(purchases.reduce((total, purchase) => total + purchase.qty, 0) > 0);
+  const sellerMoneyBefore = seller.purse;
+  const companyMoneyBefore = economy.company.money;
+  const purchases = runCompanyProcurement(economy, { day: 1, physical });
+
+  assert.equal(economy.stockTgt.tools ?? 0, 0, "受諾を在庫目標へ書き戻さない");
+  assert.ok(purchases.length > 0, "受諾した数量を上限に市場から買い付ける");
+  const purchased = purchases.reduce((total, purchase) => total + purchase.qty, 0);
+  const paid = purchases.reduce((total, purchase) => total + purchase.qty * purchase.price, 0);
+  assert.equal(purchased, 5);
+  assert.equal(seller.purse, sellerMoneyBefore + paid);
+  assert.equal(economy.company.money, companyMoneyBefore - paid);
+  assert.equal(economy.stock.tools ?? 0, 0, "到着前の荷を会社在庫とは表示しない");
+  assert.equal(physical.haulJobs.every((job) => (
+    job.economicLogistics?.kind === "procurement" && job.goods === "tools"
+  )), true);
 });
 
 test("段42: 本国注文は港到着後も未決済で船への逐次荷役分だけ売上になる", () => {

@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.45.5-caravan-integrity';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.46.0-tutorial-no-company-stock';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({

@@ -162,11 +162,6 @@ function measureSeed(seed) {
   collect();
   connect(controller, market.entrance, warehouseSetup.preview.entrance);
   collect();
-  assert.equal(director.currentObjective().id, 'prepare-first-tools-stock');
-  assert.equal(controller.operate({
-    type: 'set_stock_target', goods: 'tools', qty: 12,
-  }).ok, true, '最初の小口注文まで木製品を先に買い集める');
-  collect();
   assert.equal(director.currentObjective().id, 'accept-first-order');
 
   let firstOfferDay = null;
@@ -199,11 +194,7 @@ function measureSeed(seed) {
       prematureNotificationsAtFirstOffer = director.letters()
         .filter(letter => futureNotificationIds.has(letter.id))
         .map(letter => letter.id);
-      assert.equal(director.currentObjective().id, 'order-procurement-target');
-      assert.equal(controller.operate({
-        type: 'set_stock_target', goods: offer.g, qty: offer.qty,
-      }).ok, true);
-      collect();
+      assert.equal(director.currentObjective().id, 'complete-first-order');
       collect();
     }
     if (firstOfferDay !== null && !controller.readModel().activeOrder) {
@@ -251,6 +242,8 @@ function measureSeed(seed) {
     ])),
     companyTools: model.companyStock.tools ?? 0,
     toolsTarget: model.stockTargets.tools ?? 0,
+    stockTargetOperations: controller.inputJournal()
+      .filter(row => row.op.type === 'set_stock_target').length,
     warehouseConnected: model.roadConnection.buildings.find(building => (
       model.buildings.find(candidate => candidate.id === building.id)?.roles.includes('warehouse')
     ))?.connected ?? false,
@@ -268,6 +261,8 @@ assert.equal(rows.every(row => row.aidRequests === AID_REQUESTS), true, '指定�
 assert.equal(rows.every(row => row.firstOfferDay !== null), true, '全seedで最初の注文状が届く');
 assert.equal(rows.every(row => row.firstOfferGoods === 'tools'), true, '最初の生産適格注文は木製品になる');
 assert.equal(rows.every(row => row.firstCompletionDay !== null), true, '全seedで最初の注文を完遂する');
+assert.equal(rows.every(row => row.toolsTarget === 0 && row.stockTargetOperations === 0), true,
+  '会社在庫の買上げ目標を設定せず初注文を完遂する');
 assert.equal(rows.every(row => row.prematureGoalsAtFirstOffer.length === 0), true,
   '最初の注文中に未来章の観察目標を先回り完了しない');
 assert.equal(rows.every(row => row.prematureNotificationsAtFirstOffer.length === 0), true,

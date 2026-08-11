@@ -1,4 +1,4 @@
-import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.45.5-caravan-integrity';
+import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.46.0-tutorial-no-company-stock';
 
 export const GOODS_SHELF_LIFE_DAYS = Object.freeze({
   fish: 3,

@@ -2,16 +2,15 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.45.5-caravan-integrity';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.45.5-caravan-integrity';
-import { displayCultureLevel } from './visuals.js?v=v004.45.5-caravan-integrity';
+} from './engine_bridge.js?v=v004.46.0-tutorial-no-company-stock';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.46.0-tutorial-no-company-stock';
+import { displayCultureLevel } from './visuals.js?v=v004.46.0-tutorial-no-company-stock';
 import {
   PLAYER_FACING_BANNED_TERMS,
-  executableFoodIntervention,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.45.5-caravan-integrity';
-import { islandCalendar } from './ui_summary.js?v=v004.45.5-caravan-integrity';
+} from './food_readability.js?v=v004.46.0-tutorial-no-company-stock';
+import { islandCalendar } from './ui_summary.js?v=v004.46.0-tutorial-no-company-stock';
 
 export { PLAYER_FACING_BANNED_TERMS };
 
@@ -142,6 +141,37 @@ function portConnectedToMarket(model) {
 
 const FOOD_GOODS = ['fish', 'veg', 'wheat', 'pres', 'pick', 'meat'];
 
+function tutorialFoodIntervention(model) {
+  if (!model?.mainlandAid?.refused) {
+    return Object.freeze({
+      kind: 'aid',
+      target: { kind: 'sheet', sheet: 'company-sheet' },
+      speech: '食料支援を本国へ要請できます。届くまで時間がかかるので、必要なら早めに頼みましょう。',
+    });
+  }
+  const fisherCount = (model?.buildings ?? []).filter(row => row.type === 'fisher').length;
+  const farmCount = (model?.buildings ?? []).filter(row => row.type === 'veg').length;
+  const job = fisherCount <= farmCount ? '漁師' : '野菜畑';
+  return Object.freeze({
+    kind: 'build',
+    target: null,
+    speech: `本国の支援はもう望めません。建築欄から${job}を増やし、市場へ道をつなぎましょう。`,
+  });
+}
+
+function tutorialWinterFoodForecast(model) {
+  const food = islandFoodSummary(model);
+  const baseline = winterFoodForecast(model);
+  const reserve = food.available;
+  const shortage = Math.max(0, baseline.required - reserve);
+  return Object.freeze({
+    ...baseline,
+    reserve,
+    shortage,
+    sufficient: shortage <= 0,
+  });
+}
+
 const GOODS_LABELS = Object.freeze({
   tools: '木製品', char: '木炭', salt: '塩', pres: '保存食', pick: '漬物',
   oil: '油', cloth: '布', stone: '石材', log: '丸太', fish: '魚',
@@ -242,10 +272,39 @@ export const FOOD_IMPORT_EMA_TARGET = 1.2;
 export const SEASONAL_SURPLUS_MIN = 8;
 export const SEASONAL_VALLEY_RATIO = 0.2;
 export const SEASONAL_RESERVE_TARGET = 16;
-export const ORDER_JUDGMENT_FALLBACK_OFFERS = 3;
+export const ORDER_JUDGMENT_FALLBACK_OFFERS = 1;
 export const TOOLS_PRICE_RISE_RATIO = 0.05;
 export const TOOLS_PRICE_RISE_DELTA = 0.05;
 export const CONVERSION_SURVIVAL_DAYS = 90;
+
+// 会社在庫は意味を後日整理するまで、現行チュートリアルの学習項目から外す。
+// 旧IDと定義は保存互換のため残すが、目標・書状・助言の公開配列には入れない。
+export const TUTORIAL_DEFERRED_COMPANY_STOCK_GOAL_IDS = Object.freeze([
+  'prepare-first-tools-stock',
+  'order-procurement-target',
+  'first-order-procurement',
+  'observe-seasonal-food-valley',
+  'set-seasonal-stock-target',
+  'fill-seasonal-reserve',
+  'release-seasonal-reserve',
+  'close-third-chapter',
+  'target-profitable-order',
+]);
+const TUTORIAL_DEFERRED_COMPANY_STOCK_GOALS = new Set(
+  TUTORIAL_DEFERRED_COMPANY_STOCK_GOAL_IDS,
+);
+const TUTORIAL_DEFERRED_COMPANY_STOCK_LETTERS = new Set([
+  'first-company-procurement',
+  'order-needs-target',
+  'seasonal-food-valley-report',
+  'seasonal-stock-target-set',
+  'seasonal-reserve-filled',
+  'seasonal-release-dispatched',
+  'chapter-three-close',
+]);
+const TUTORIAL_DEFERRED_COMPANY_STOCK_ADVICE = new Set([
+  'seasonal-release-opportunity',
+]);
 export const TUTORIAL_LETTER_ATTENTION = Object.freeze({
   'tutorial-starvation-consequence': 'critical',
   'tutorial-bankruptcy-consequence': 'critical',
@@ -323,7 +382,7 @@ export const TUTORIAL_PLAYER_TITLES = Object.freeze({
   'first-settlers-arrive': '最初の家族が来るのを見届ける',
   'place-island-food': '魚・野菜・丸太の生産基盤を整える',
   'first-woodshop': '丸太を木製品へ変える仕事を用意する',
-  'warehouse-for-order': '買い上げた品を置く倉庫を用意する',
+  'warehouse-for-order': '注文品を港へ渡す物流拠点を用意する',
   'prepare-first-tools-stock': '最初の注文に備えて木製品を集める',
   'accept-first-order': '最初の本国注文を引き受ける',
   'order-procurement-target': '注文に足りる買上げ量か確かめる',
@@ -366,26 +425,26 @@ export const TUTORIAL_ELENA_MESSAGES = Object.freeze({
   'first-settlers-arrive': '市場と当座の食料が整いました。港から市場へ食料を運ぶ人を追いながら、最初の家族を迎えましょう。',
   'place-island-food': '最初の家族が着きました。漁師2軒と野菜畑2軒で食卓を支え、木こりは合計3軒にしましょう。木工房1軒を動かすには、木こり3軒ぶんの丸太が要ります。漁師も水辺から遠ければ、その分だけ日産が落ちます。',
   'first-woodshop': '木工房を木こりへ近い道沿いに建てましょう。近ければ市場を経ずに丸太を買い、短くなった時間で木製品を増やせます。',
-  'warehouse-for-order': '市場と港へ道が通る場所に、倉庫を建てましょう。会社が買った品を、注文まで保管する場所です。',
+  'warehouse-for-order': '市場と港へ道が通る場所に、倉庫を建てましょう。会社の運び手が、買い付けた注文品を港へ渡す中継所です。',
   'prepare-first-tools-stock': '注文が来る前に、木製品を12荷、倉庫に買い集めておきましょう。先に備えれば、期限に追われずに済みます。',
-  'accept-first-order': '本国から注文が届いたら、品の量と期限を確かめて引き受けましょう。倉庫の木製品が、最初の取引に使われます。',
+  'accept-first-order': '本国から注文が届いたら、品の量と期限を確かめて引き受けましょう。受諾すると、会社は必要数を市場で買い付け始めます。',
   'order-procurement-target': '注文を引き受けても、買い付ける量は自動では増えません。注文数に足りるだけ、木製品の買上げ目標を定めましょう。',
   'first-order-procurement': '会社の運び手が、市場の木製品を倉庫へ運びます。会社用の荷車を買えば、一度に運べる量を増やせます。',
-  'complete-first-order': 'そろった木製品は、倉庫から港へ一荷ずつ運ばれます。残りがなくなり、船が出るまで見届けましょう。',
+  'complete-first-order': '買い付けた木製品は、物流拠点を経て港へ一荷ずつ運ばれます。残りがなくなり、船が出るまで見届けましょう。',
   'close-first-chapter': '最初の注文がどう終わったか、書状で振り返りましょう。丸太から船出までの流れをまとめています。',
   'improve-logger-route': '木こりから市場までの遠回りを、短い道へ直しましょう。歩く時間が減れば、その分だけ丸太を多く切れます。',
   'observe-island-food-change': '漁師と野菜畑の食料が市場へ届き始めました。本国から買う量がどう変わるか、しばらく見てみましょう。',
   'reduce-food-imports': '魚と野菜を作る家が働き続ければ、本国から買う食料は減っていきます。市場への道と食料の量を見守りましょう。',
-  'close-second-chapter': '島で食料を作った結果を、書状で確かめましょう。本国へ払うお金がどう変わったかもまとめています。',
+  'close-second-chapter': '島で食料を作った結果を、書状で確かめましょう。次は、本国注文を受けるか見送るかを数字で判断します。',
   'observe-seasonal-food-valley': '食料の量は季節で変わります。市場の食料が多い時と少ない時を見比べ、備える時期を覚えましょう。',
   'set-seasonal-stock-target': '食料が多い季節のうちに、まず16荷を倉庫へ買い集めましょう。これは備蓄操作を覚える最初の一便です。冬全体の必要量は［統計］の予報で確かめられます。',
   'fill-seasonal-reserve': '買い上げた食料を、荷車が倉庫へ運びます。最初の備え16荷が実際に積まれるまで見届けましょう。',
   'release-seasonal-reserve': '市場の食料が少なくなりました。倉庫に備えた16荷を市場へ戻し、家族が買えるようにしましょう。',
   'close-third-chapter': '倉庫へ備えた食料が、品薄の時にどう役立ったか、書状で振り返りましょう。',
   'assess-profitable-order': '本国が払う一荷あたりの代金と、注文数すべてをそろえる平均原価を比べましょう。差が残る注文だけを引き受けます。',
-  'accept-profitable-order': '仕入れより高く売れると見込める注文です。量と期限をもう一度確かめ、引き受けましょう。',
+  'accept-profitable-order': '仕入れより高く売れると見込める注文です。量と期限をもう一度確かめ、引き受けましょう。受諾後の買付は会社が始めます。',
   'target-profitable-order': '引き受けた品を注文数まで買い集めましょう。買上げ目標が少ないままでは、荷車は必要な分を運びません。',
-  'complete-profitable-order': '注文の品がそろい、港へ運ばれていきます。納め終えたら、売上から仕入れを引いて利益を確かめましょう。',
+  'complete-profitable-order': '会社が市場で買い付けた品が港へ運ばれていきます。納め終えたら、売上から仕入れを引いて利益を確かめましょう。',
   'observe-skippable-order': '届いた注文を、代金と全量の仕入原価で比べましょう。損になる注文や、必要数を集められない注文は見送れます。',
   'let-skippable-order-expire': 'この注文は引き受けず、期限が過ぎるまで待ちましょう。見送れば、品もお金も使わずに済みます。',
   'close-fourth-chapter': '引き受けた注文と、見送った注文を、書状で比べましょう。どちらも会社を守るための判断です。',
@@ -407,9 +466,9 @@ export const TUTORIAL_ELENA_COMPLETIONS = Object.freeze({
   'first-settlers-arrive': '最初の家族が島へ着きました。まずは、毎日食べる魚と野菜を島で作れるようにしましょう。',
   'place-island-food': '漁師2軒、野菜畑2軒、木こり3軒がそろいました。家族が働き始めれば、食料と丸太が市場へ届きます。',
   'first-woodshop': '木工房が建ちました。近い木こりに丸太があれば直接買いに行き、注文にも使える木製品へ変えます。',
-  'warehouse-for-order': '倉庫が道につながりました。これで、買い付けた品を運び込めます。',
+  'warehouse-for-order': '物流拠点が道につながりました。市場で買い付けた注文品を、港へ受け渡せます。',
   'prepare-first-tools-stock': '木製品の買上げ目標を12荷に定めました。市場に木製品が並べば、会社の運び手が倉庫へ運びます。',
-  'accept-first-order': '最初の注文を引き受けました。受けただけでは品は集まらないので、買い付ける量を注文数に合わせましょう。',
+  'accept-first-order': '最初の注文を引き受けました。会社が必要数の買付を始めます。市場から港へ向かう運び手を追いましょう。',
   'order-procurement-target': '注文分の木製品を買い付けるよう定めました。あとは会社の運搬便が市場と倉庫を往復して集めます。',
   'first-order-procurement': '注文に必要な木製品が倉庫へそろいました。これから港へ運び、一荷ずつ船に積みます。',
   'complete-first-order': '最後の一荷を積んで、船が出ました。はじめての注文を、無事に届けられます。',
@@ -417,14 +476,14 @@ export const TUTORIAL_ELENA_COMPLETIONS = Object.freeze({
   'improve-logger-route': '木こりから市場までの道が短くなりました。歩く時間が減り、丸太を切る時間が増えます。',
   'observe-island-food-change': '島で作った魚と野菜が、市場へ届き始めました。家族が本国の食料だけに頼らず暮らせます。',
   'reduce-food-imports': '本国から買う食料が減りました。食事に使うお金を、島の家族へ回せています。',
-  'close-second-chapter': '食料を島で作った結果を確かめました。次は、季節による品薄へ備えます。',
+  'close-second-chapter': '食料を島で作った結果を確かめました。次は、本国注文を受けるか見送るかを比べます。',
   'observe-seasonal-food-valley': '市場の食料が少なくなる時期を確かめました。多い季節に買い、倉庫へ残す理由が見えてきました。',
   'set-seasonal-stock-target': '食料を16荷買い上げるよう定めました。余っている間に、荷車が倉庫へ運びます。',
   'fill-seasonal-reserve': '倉庫に食料が16荷そろいました。市場が品薄になった時、この備えを戻せます。',
   'release-seasonal-reserve': '倉庫の食料を市場へ送り出しました。品薄の時期にも、家族が食べ物を買えます。',
   'close-third-chapter': '多い季節の食料を、少ない季節へ渡せました。倉庫は品を置くだけでなく、季節をまたぐ備えになります。',
   'assess-profitable-order': '本国の代金と、注文数すべての仕入原価を比べました。この差が、注文を受けるか決める根拠になります。',
-  'accept-profitable-order': '利益を見込める注文を引き受けました。次は、注文数に足りるだけ品を買い付けます。',
+  'accept-profitable-order': '利益を見込める注文を引き受けました。必要数の買付は会社が始めます。実際の支出と船出を見届けましょう。',
   'target-profitable-order': '注文分の品を買い付けるよう定めました。市場に品があれば、荷車が倉庫へ集めます。',
   'complete-profitable-order': '注文を納め終えました。売上と仕入れを比べれば、見込みどおり利益が残ったか分かります。',
   'observe-skippable-order': '受けない方がよい注文を見分けました。注文状は命令ではなく、会社が選べる取引です。',
@@ -450,7 +509,7 @@ export const TUTORIAL_LETTER_MESSAGES = Object.freeze({
   'initial-aid-plan': '島で食料を作れるようになるまで、一便だけ支援を頼みましょう。最初の家族を迎えるための備えです。',
   'first-import-food': '本国から届いた食料が、市場に並びました。この支えがある間に、島でも魚と野菜を作り始めましょう。',
   'first-log-stall': '木こりの丸太が、市場に並びました。買い手がつけば、売れたお金が木こりの家の財布へ入ります。',
-  'first-tools': '木工房で、最初の木製品ができました。注文が来る前に、木製品を倉庫へ買い集める支度をしましょう。',
+  'first-tools': '木工房で、最初の木製品ができました。市場へ品が並べば、本国からの注文を受けられるようになります。',
   'aid-suggestion': '島の食料が心もとなくなっています。漁師と野菜畑が間に合わないなら、もう一便の支援も考えましょう。',
   'first-order-offer': '本国から、最初の注文が届きました。求められた品、量、期限を、書状で確かめてください。',
   'order-needs-warehouse': '注文の品を保管する倉庫がありません。市場と港へ道が通る場所に、倉庫を建てましょう。',
@@ -528,7 +587,7 @@ const TUTORIAL_AUTHORED_LETTERS = Object.freeze({
     summary: `${goodsLabel(facts.goods)}を${facts.qty ?? '指定の量'}荷、期限までに納める依頼です。`,
     body: [
       `本国が${goodsLabel(facts.goods)}を求めています。全量を期限までに納めた時だけ、注文は完遂になります。`,
-      '引き受けるなら、取引で量と期限を確かめて受諾してください。その後、買上げ目標が注文数に足りているかも確かめましょう。',
+      '引き受けるなら、取引で量と期限を確かめて受諾してください。受諾した数量を上限に、会社が市場で実際の買付を始めます。',
     ].join('\n\n'),
   }),
   'accepted-order-expired': ({ facts = {} }) => ({
@@ -539,13 +598,13 @@ const TUTORIAL_AUTHORED_LETTERS = Object.freeze({
       Number(facts.remaining) > 0
         ? `期限を迎えた時、まだ${Number(facts.remaining).toFixed(1)}荷が残っていました。注文は期限切れです。`
         : '期限までに全量を納め切れず、注文は期限切れになりました。',
-      '次の注文では、残りの量とあと何日かを見ながら、買上げ目標、倉庫への道、市場の在庫を早めに整えてください。',
+      '次の注文では、残りの量とあと何日かを見ながら、物流拠点への道と市場の売物を早めに整えてください。',
     ].join('\n\n'),
   }),
   'chapter-one-close': ({ facts = {} }) => ({
     kicker: '第一章の報告',
     title: facts.expired ? '最初の注文から学んだこと' : '最初の輸出が結んだ道',
-    summary: '丸太から木製品を作り、倉庫と港を通して本国へ届ける流れを確かめました。',
+    summary: '丸太から木製品を作り、物流拠点と港を通して本国へ届ける流れを確かめました。',
     body: [
       facts.expired
         ? '最初の注文は期限切れになりました。それでも、残りと期限を見て準備する理由は確かめられました。'
@@ -592,7 +651,7 @@ const TUTORIAL_AUTHORED_LETTERS = Object.freeze({
     ].join('\n\n'),
   }),
   'chapter-four-close': () => ({
-    kicker: '第四章の報告',
+    kicker: '第三章の報告',
     title: '受ける判断と見送る判断',
     summary: '支払と仕入を比べ、会社に残る取引だけを選べます。',
     body: [
@@ -610,7 +669,7 @@ const TUTORIAL_AUTHORED_LETTERS = Object.freeze({
     ].join('\n\n'),
   }),
   'chapter-five-close': () => ({
-    kicker: '第五章の報告',
+    kicker: '第四章の報告',
     title: '手仕事が暮らしへ届く町になりました',
     summary: '仕事場、原料、市場、家族の暮らしが一つの流れで結ばれました。',
     body: [
@@ -650,12 +709,12 @@ export const TUTORIAL_SYSTEM_INSTRUCTIONS = Object.freeze({
   'first-settlers-arrive': '時間を進め、市場の近くに最初の家族が現れるまで盤面を見る。',
   'place-island-food': '［食料］から［漁師］と［野菜畑］を2軒ずつ市場近くへ置き、［採取］の［木こり］を合計3軒にする。',
   'first-woodshop': '下の［加工］から［木工房］を選び、配置予測で木こりが近隣仕入の候補になる道沿いへ置く。',
-  'warehouse-for-order': '下の［流通］から［倉庫］を置き、［道を敷く］で市場と港へつなぐ。',
+  'warehouse-for-order': '下の［流通］から［倉庫］を置き、［道を敷く］で市場と港へつなぎ、物流中継を作る。',
   'prepare-first-tools-stock': '上の［取引］を開き、木製品の買上げ目標へ12と入力してEnterを押す。',
   'accept-first-order': '注文状が届いたら上の［取引］を開き、注文カードの［受諾する］を押す。',
   'order-procurement-target': '［取引］の注文数と木製品の買上げ目標を比べ、目標が少なければ注文数以上を入力してEnterを押す。',
   'first-order-procurement': '時間を進め、市場から倉庫へ買付品が届くのを見る。',
-  'complete-first-order': '［取引］で「納品済み／残り／あと何日」を確認しながら時間を進め、残りが0荷になるまで倉庫から港への運搬便を追う。',
+  'complete-first-order': '［取引］で「納品済み／残り／あと何日」を確認しながら時間を進め、市場から物流拠点を経て港へ向かう運搬便を追う。',
   'close-first-chapter': '',
   'improve-logger-route': '木こりを押して市場までの往復を読み、［整備］の［道を敷く］で遠回りを短くする。',
   'observe-island-food-change': '上の［統計］を開き、［食料］の線が時間とともに変わるのを確かめる。',
@@ -779,9 +838,6 @@ export function orderQuote(model) {
   const marketLowest = Number.isFinite(observedLowest) ? observedLowest : null;
   let remaining = offer.qty;
   let procurementCost = 0;
-  const warehouseQty = Math.min(remaining, model.companyStock?.[offer.g] ?? 0);
-  procurementCost += warehouseQty * (model.companyStockAverageCosts?.[offer.g] ?? 0);
-  remaining -= warehouseQty;
   for (const stall of model.stalls
     .filter(row => row.goods === offer.g && row.qty > 1e-9)
     .sort((a, b) => a.price - b.price)) {
@@ -806,7 +862,6 @@ export function orderQuote(model) {
     marketLowest,
     marketUnitCost,
     marketAvailable: offer.qty - remaining,
-    warehouseQty,
     marginPerUnit,
     quotedMargin: marginPerUnit === null ? null : marginPerUnit * offer.qty,
     profitable: marginPerUnit !== null && marginPerUnit > 1e-9,
@@ -835,11 +890,7 @@ function profitableOrderEconomics(model, state, events) {
   );
   const revenue = revenueTotal - (facts.startingRevenueTotal ?? 0);
   const purchases = purchaseTotal - (facts.startingPurchaseTotal ?? 0);
-  const startingStockCost = facts.startingStockCost ?? 0;
-  const endingStock = model.companyStock?.[facts.goods] ?? 0;
-  const endingAverageCost = model.companyStockAverageCosts?.[facts.goods] ?? 0;
-  const endingStockCost = endingStock * endingAverageCost;
-  const orderCost = Math.max(0, startingStockCost + purchases - endingStockCost);
+  const orderCost = Math.max(0, purchases);
   return {
     completed: Boolean(completion) || Boolean(prior.completed),
     completionDay: completion?.eventDay ?? completion?.day ?? prior.completionDay ?? model.day,
@@ -847,8 +898,6 @@ function profitableOrderEconomics(model, state, events) {
     qty: facts.qty,
     revenue,
     purchases,
-    startingStockCost,
-    endingStockCost,
     orderCost,
     realizedMargin: revenue - orderCost,
   };
@@ -1179,7 +1228,7 @@ function loggerTripRecovered(model, state) {
     : null;
 }
 
-export const TUTORIAL_GOALS = Object.freeze([
+const TUTORIAL_GOAL_DEFINITIONS = Object.freeze([
   Object.freeze({
     id: 'first-road-and-logger',
     chapter: '第一章・最初の一荷',
@@ -1309,7 +1358,7 @@ export const TUTORIAL_GOALS = Object.freeze([
   Object.freeze({
     id: 'warehouse-for-order',
     chapter: '第一章・最初の一荷',
-    title: '注文を待つ間に倉庫を置き、道で結ぶ',
+    title: '注文品を中継する物流拠点を置き、道で結ぶ',
     evaluate({ model }) {
       const warehouse = warehouseBuilding(model);
       const connected = warehouseConnected(model);
@@ -1319,7 +1368,7 @@ export const TUTORIAL_GOALS = Object.freeze([
         progress: { done, total: 2 },
         detail: warehouse
           ? (connected ? '倉庫が道で結ばれました' : '倉庫はありますが道の外です')
-          : '注文を待つ間に、会社が買い集める倉庫を用意します',
+          : '市場で買った注文品を港へ渡す物流拠点を用意します',
         evidence: { warehouse: Boolean(warehouse), connected },
       };
     },
@@ -1352,12 +1401,12 @@ export const TUTORIAL_GOALS = Object.freeze([
         ? `受諾済み: ${goodsLabel(model.activeOrder.g)} ${model.activeOrder.qty}荷`
         : offer
           ? `注文状が届いています: ${goodsLabel(offer.g)} ${offer.qty}荷(${offer.due}日目まで)`
-          : `倉庫の木製品 ${(model.companyStock?.tools ?? 0).toFixed(1)}荷 / 次の注文判定まで最大あと${daysToJudgment}日。市場から倉庫へ続けざまに出る運び手を追ってみましょう`;
+          : `次の注文判定まで最大あと${daysToJudgment}日。木工房から市場へ木製品が届く様子を見ましょう`;
       return {
         complete: accepted,
         progress: { done: Number(accepted), total: 1 },
         detail,
-        evidence: { accepted, offer: Boolean(offer), stocked: model.companyStock?.tools ?? 0 },
+        evidence: { accepted, offer: Boolean(offer) },
       };
     },
   }),
@@ -1686,7 +1735,7 @@ export const TUTORIAL_GOALS = Object.freeze([
   }),
   Object.freeze({
     id: 'assess-profitable-order',
-    chapter: '第四章・本国の注文',
+    chapter: '第三章・本国の注文',
     title: '決済単価と注文全量の加重原価を比べる',
     evaluate({ model }) {
       const quote = orderQuote(model);
@@ -1707,9 +1756,6 @@ export const TUTORIAL_GOALS = Object.freeze([
               reason => reason?.endsWith(`から倉庫へ${quote.goods}を買上げ`)
                 || reason?.endsWith(`から倉庫へ${quote.goods}を買上げ`),
             ),
-            startingStock: model.companyStock?.[quote.goods] ?? 0,
-            startingStockCost: (model.companyStock?.[quote.goods] ?? 0)
-              * (model.companyStockAverageCosts?.[quote.goods] ?? 0),
           } : null,
         },
       };
@@ -1717,7 +1763,7 @@ export const TUTORIAL_GOALS = Object.freeze([
   }),
   Object.freeze({
     id: 'accept-profitable-order',
-    chapter: '第四章・本国の注文',
+    chapter: '第三章・本国の注文',
     title: '黒字を見込める注文を受諾する',
     evaluate({ model, state }) {
       const facts = profitableOrderFacts(state);
@@ -1734,7 +1780,7 @@ export const TUTORIAL_GOALS = Object.freeze([
   }),
   Object.freeze({
     id: 'target-profitable-order',
-    chapter: '第四章・本国の注文',
+    chapter: '第三章・本国の注文',
     title: '買上げ目標を注文数まで定める',
     evaluate({ model, state }) {
       const facts = profitableOrderFacts(state);
@@ -1753,7 +1799,7 @@ export const TUTORIAL_GOALS = Object.freeze([
   }),
   Object.freeze({
     id: 'complete-profitable-order',
-    chapter: '第四章・本国の注文',
+    chapter: '第三章・本国の注文',
     title: '注文を完遂し、実現した粗利を確かめる',
     evaluate({ model, events, state }) {
       const economics = profitableOrderEconomics(model, state, events);
@@ -1771,7 +1817,7 @@ export const TUTORIAL_GOALS = Object.freeze([
   }),
   Object.freeze({
     id: 'observe-skippable-order',
-    chapter: '第四章・本国の注文',
+    chapter: '第三章・本国の注文',
     title: '受けない注文を、数字から選ぶ',
     evaluate({ model, state }) {
       const observation = skippableOrderObservation(model, state);
@@ -1791,7 +1837,7 @@ export const TUTORIAL_GOALS = Object.freeze([
   }),
   Object.freeze({
     id: 'let-skippable-order-expire',
-    chapter: '第四章・本国の注文',
+    chapter: '第三章・本国の注文',
     title: '注文を受諾せず、期限切れを見届ける',
     evaluate({ model, events, state }) {
       const selected = state?.goalResults?.['observe-skippable-order']?.evidence?.selected ?? null;
@@ -1825,8 +1871,8 @@ export const TUTORIAL_GOALS = Object.freeze([
   }),
   Object.freeze({
     id: 'close-fourth-chapter',
-    chapter: '第四章・本国の注文',
-    title: '第四章の商い判断報告を受け取る',
+    chapter: '第三章・本国の注文',
+    title: '第三章の商い判断報告を受け取る',
     evaluate({ state }) {
       const issued = Boolean(state?.letters?.some(letter => letter.id === 'chapter-four-close'));
       return {
@@ -1839,7 +1885,7 @@ export const TUTORIAL_GOALS = Object.freeze([
   }),
   Object.freeze({
     id: 'observe-tools-price-rise',
-    chapter: '第五章・島の手仕事',
+    chapter: '第四章・島の手仕事',
     title: '木製品相場の立ち上がりを見届ける',
     evaluate({ model, state }) {
       const observation = toolsPriceRiseObservation(model, state);
@@ -1856,7 +1902,7 @@ export const TUTORIAL_GOALS = Object.freeze([
   }),
   Object.freeze({
     id: 'place-conversion-workshops',
-    chapter: '第五章・島の手仕事',
+    chapter: '第四章・島の手仕事',
     title: '木工房・炭焼き小屋・塩田を揃える',
     evaluate({ model }) {
       const rows = conversionWorkshopStatus(model);
@@ -1871,7 +1917,7 @@ export const TUTORIAL_GOALS = Object.freeze([
   }),
   Object.freeze({
     id: 'observe-conversion-cost-chain',
-    chapter: '第五章・島の手仕事',
+    chapter: '第四章・島の手仕事',
     title: '三つの手仕事へ原料が流れるのを待つ',
     evaluate({ model }) {
       const chain = conversionCostChain(model);
@@ -1891,7 +1937,7 @@ export const TUTORIAL_GOALS = Object.freeze([
   }),
   Object.freeze({
     id: 'sustain-conversion-workshops',
-    chapter: '第五章・島の手仕事',
+    chapter: '第四章・島の手仕事',
     title: '三つの手仕事を90日存続させる',
     evaluate({ model, state }) {
       const survival = conversionSurvival(model, state);
@@ -1911,7 +1957,7 @@ export const TUTORIAL_GOALS = Object.freeze([
   }),
   Object.freeze({
     id: 'observe-household-level-up',
-    chapter: '第五章・島の手仕事',
+    chapter: '第四章・島の手仕事',
     title: '暮らしの等級が上がった建物を確かめる',
     evaluate({ state }) {
       const letter = state?.letters?.find(candidate => candidate.id === 'household-level-up');
@@ -1927,14 +1973,14 @@ export const TUTORIAL_GOALS = Object.freeze([
   }),
   Object.freeze({
     id: 'close-fifth-chapter',
-    chapter: '第五章・島の手仕事',
-    title: '第五章の手仕事と暮らしの報告を受け取る',
+    chapter: '第四章・島の手仕事',
+    title: '第四章の手仕事と暮らしの報告を受け取る',
     evaluate({ state }) {
       const issued = Boolean(state?.letters?.some(letter => letter.id === 'chapter-five-close'));
       return {
         complete: issued,
         progress: { done: Number(issued), total: 1 },
-        detail: issued ? '90日の存続と暮らしの成長報告が届きました' : '第五章の報告をまとめています',
+        detail: issued ? '90日の存続と暮らしの成長報告が届きました' : '第四章の報告をまとめています',
         evidence: { issued },
       };
     },
@@ -1950,24 +1996,24 @@ export const TUTORIAL_GOALS = Object.freeze([
         progress: { done: Number(issued), total: 1 },
         detail: issued
           ? '案内が終わり、同じ島で自由に続けられます'
-          : '第五章までの実測を卒業書状へまとめています',
+          : '第四章までの実測を卒業書状へまとめています',
         evidence: { issued },
       };
     },
   }),
 ]);
 
+export const TUTORIAL_GOALS = Object.freeze(TUTORIAL_GOAL_DEFINITIONS.filter(
+  goal => !TUTORIAL_DEFERRED_COMPANY_STOCK_GOALS.has(goal.id),
+));
+
 // 創発を待つ観察課題は案内の進行を止めない。条件が実際に起きた時だけ
 // エレナの報告・助言として回収し、建設や設定など直接操作できる課題を背骨にする。
 export const TUTORIAL_OPTIONAL_GOAL_IDS = Object.freeze([
   'observe-island-food-change',
   'reduce-food-imports',
-  'observe-seasonal-food-valley',
-  'fill-seasonal-reserve',
-  'release-seasonal-reserve',
   'assess-profitable-order',
   'accept-profitable-order',
-  'target-profitable-order',
   'complete-profitable-order',
   'observe-skippable-order',
   'let-skippable-order-expire',
@@ -1986,13 +2032,9 @@ export function isRequiredTutorialGoal(goal) {
 export const TUTORIAL_GOAL_START_AFTER = Object.freeze({
   'observe-island-food-change': 'close-first-chapter',
   'reduce-food-imports': 'close-first-chapter',
-  'observe-seasonal-food-valley': 'close-second-chapter',
-  'fill-seasonal-reserve': 'set-seasonal-stock-target',
-  'release-seasonal-reserve': 'fill-seasonal-reserve',
-  'assess-profitable-order': 'close-third-chapter',
+  'assess-profitable-order': 'close-second-chapter',
   'accept-profitable-order': 'assess-profitable-order',
-  'target-profitable-order': 'accept-profitable-order',
-  'complete-profitable-order': 'target-profitable-order',
+  'complete-profitable-order': 'accept-profitable-order',
   'observe-skippable-order': 'complete-profitable-order',
   'let-skippable-order-expire': 'observe-skippable-order',
   'observe-tools-price-rise': 'close-fourth-chapter',
@@ -2011,7 +2053,7 @@ function adviceEventSequence(event) {
   return event?.sequence ?? `${event?.day ?? 0}:${event?.message ?? ''}`;
 }
 
-export const TUTORIAL_ADVICE = Object.freeze([
+const TUTORIAL_ADVICE_DEFINITIONS = Object.freeze([
   Object.freeze({
     id: 'annual-autumn-food-forecast',
     channel: 'message',
@@ -2021,8 +2063,8 @@ export const TUTORIAL_ADVICE = Object.freeze([
       const { month, year } = calendar;
       const active = month === 9 && previous.announcedYear !== year;
       const food = islandFoodSummary(model);
-      const forecast = winterFoodForecast(model);
-      const intervention = executableFoodIntervention(model);
+      const forecast = tutorialWinterFoodForecast(model);
+      const intervention = tutorialFoodIntervention(model);
       return {
         active,
         completed: false,
@@ -2030,7 +2072,7 @@ export const TUTORIAL_ADVICE = Object.freeze([
         priority: 'info',
         kicker: '秋の冬支度',
         title: `冬までにあと${Math.ceil(forecast.shortage)}荷`,
-        detail: `いまの食料は約${Math.floor(food.runwayDays)}日分。冬越しの目安は${forecast.required}荷、島と会社の備えは${Math.floor(forecast.reserve)}荷です。`,
+        detail: `いまの食料は約${Math.floor(food.runwayDays)}日分。冬越しの目安は${forecast.required}荷、家と市場にある食料は${Math.floor(forecast.reserve)}荷です。`,
         speech: forecast.sufficient
           ? `冬が来ます。畑は休み、魚と蓄えで越します。いま食べられる分は約${Math.floor(food.runwayDays)}日分、冬越しの備えは足りています。`
           : `冬が来ます。畑は休み、魚と蓄えで越します。いま食べられる分は約${Math.floor(food.runwayDays)}日分、冬越しにはあと${Math.ceil(forecast.shortage)}荷必要です。${intervention.speech}`,
@@ -2053,8 +2095,8 @@ export const TUTORIAL_ADVICE = Object.freeze([
         priority: 'info',
         kicker: '食料の廃棄',
         title: `食料が${Math.floor(lost)}荷傷みました`,
-        detail: '魚は約3日、野菜は約30日で傷みます。買い上げすぎず、売れる量を市場へ回す必要があります。',
-        speech: `食料が${Math.floor(lost)}荷傷みました。［需給］で魚と野菜の量を見て、余らせている品の買上げ目標を下げましょう。`,
+        detail: '魚は約3日、野菜は約30日で傷みます。作る量と家族が買う量、市場への道を見直しましょう。',
+        speech: `食料が${Math.floor(lost)}荷傷みました。［需給］で魚と野菜の供給と消費を比べ、余っている生産施設と市場への道を見直しましょう。`,
         target: { kind: 'sheet', sheet: 'supply-sheet' },
       };
     },
@@ -2101,7 +2143,7 @@ export const TUTORIAL_ADVICE = Object.freeze([
       const family = household?.familyName ? `${household.familyName}家` : `世帯#${household?.id ?? '—'}`;
       const job = JOB_LABELS[household?.job] ?? household?.job ?? '住民';
       const subject = `${job}の${family}`;
-      const intervention = executableFoodIntervention(model);
+      const intervention = tutorialFoodIntervention(model);
       return {
         active: hungerRun >= 30,
         completed: false,
@@ -2158,7 +2200,7 @@ export const TUTORIAL_ADVICE = Object.freeze([
       const happened = death?.message?.includes('離散')
         ? `${subject}が、島を出ていきました。`
         : `${subject}で、食べ物を得られず亡くなった方がいます。`;
-      const intervention = executableFoodIntervention(model);
+      const intervention = tutorialFoodIntervention(model);
       return {
         active: fresh,
         completed: false,
@@ -2178,6 +2220,10 @@ export const TUTORIAL_ADVICE = Object.freeze([
   }),
 ]);
 
+export const TUTORIAL_ADVICE = Object.freeze(TUTORIAL_ADVICE_DEFINITIONS.filter(
+  advice => !TUTORIAL_DEFERRED_COMPANY_STOCK_ADVICE.has(advice.id),
+));
+
 function pendingTutorialGoal(state) {
   const goal = TUTORIAL_GOALS.find(candidate => isRequiredTutorialGoal(candidate)
     && !goalCompleted(state, candidate.id));
@@ -2188,7 +2234,7 @@ function pendingTutorialGoal(state) {
   } : null;
 }
 
-export const TUTORIAL_LETTERS = Object.freeze([
+const TUTORIAL_LETTER_DEFINITIONS = Object.freeze([
   Object.freeze({
     id: 'tutorial-starvation-consequence',
     source: 'event',
@@ -2595,7 +2641,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
         facts: { goods: order?.g ?? order?.goods ?? null, remaining, message: expired?.message ?? '' },
         body: [
           `${model.day}日目。船は出ましたが、注文の全量を期限までに納め切れず、残り${Number(remaining).toFixed(1)}荷で期限切れになりました。船出は一部の荷が動いた合図で、注文完遂とは別です。`,
-          '次の注文では、帳場に記した納品済みの量、残り、期限をご確認ください。買上げ目標、倉庫への道、市場の在庫を整えれば、次の注文でやり直せます。',
+          '次の注文では、帳場に記した納品済みの量、残り、期限をご確認ください。物流拠点への道と市場の売物を整えれば、次の注文でやり直せます。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -2951,12 +2997,12 @@ export const TUTORIAL_LETTERS = Object.freeze([
     render({ state }) {
       const quote = profitableOrderFacts(state);
       return {
-        kicker: '第四章・本国の注文',
+        kicker: '第三章・本国の注文',
         title: '決済の値と、仕入の値を並べます',
         summary: `${goodsLabel(quote.goods)}・決済 ${(quote.settlementPrice * 10).toFixed(1)} / 全量仕入 ${(quote.marketUnitCost * 10).toFixed(1)}デナリ`,
         facts: quote,
         body: [
-          `${quote.day}日目。${goodsLabel(quote.goods)}${quote.qty}荷の注文状です。本国の表示単価は${(quote.basePrice * 10).toFixed(1)}デナリですが、完遂時の実決済は1荷あたり${(quote.settlementPrice * 10).toFixed(1)}デナリ。会社倉庫の在庫を先に使い、不足分を安い屋台から全${quote.qty}荷買い集める加重仕入原価は、1荷あたり${(quote.marketUnitCost * 10).toFixed(1)}デナリです。`,
+          `${quote.day}日目。${goodsLabel(quote.goods)}${quote.qty}荷の注文状です。本国の表示単価は${(quote.basePrice * 10).toFixed(1)}デナリですが、完遂時の実決済は1荷あたり${(quote.settlementPrice * 10).toFixed(1)}デナリ。いま市場に並ぶ品を安い屋台から全${quote.qty}荷買い集める加重仕入原価は、1荷あたり${(quote.marketUnitCost * 10).toFixed(1)}デナリです。`,
           `現時点の差は1荷あたり${(quote.marginPerUnit * 10).toFixed(1)}デナリ、全${quote.qty}荷なら${(quote.quotedMargin * 10).toFixed(1)}デナリの黒字見込みです。相場は動きますが、最安の一荷だけでなく必要数すべての仕入を見積もる——その上で受けるかをお決めください。`,
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
@@ -2973,12 +3019,12 @@ export const TUTORIAL_LETTERS = Object.freeze([
       const quote = profitableOrderFacts(state);
       return {
         kicker: '受諾後の仕度',
-        title: '受諾と買付は、別のご下命です',
-        summary: `${goodsLabel(quote.goods)} ${quote.qty}荷・買上げ目標 ${model.stockTargets?.[quote.goods] ?? 0}荷`,
-        facts: { ...quote, target: model.stockTargets?.[quote.goods] ?? 0 },
+        title: '会社が市場で買付を始めます',
+        summary: `${goodsLabel(quote.goods)} ${quote.qty}荷・期限${quote.due}日目まで`,
+        facts: { ...quote },
         body: [
-          `${model.day}日目。${goodsLabel(quote.goods)}${quote.qty}荷の注文を受諾しました。第一章と同じく、受諾しただけでは会社の買付は始まりません。`,
-          `帳場で${goodsLabel(quote.goods)}の買上げ目標を${quote.qty}荷以上に定めてください。取引資金を使う命令は、いつも総督の選択です。`,
+          `${model.day}日目。${goodsLabel(quote.goods)}${quote.qty}荷の注文を受諾しました。受諾した数量を上限に、会社が市場の安い屋台から実際に買い付けます。`,
+          '作り手への支払い、物流拠点への運搬、港の荷役まで、実物と帳簿の両方を見届けましょう。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -2999,7 +3045,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
         summary: `売上 ${toDenari(facts.revenue).toFixed(1)}デナリ / 出荷原価 ${toDenari(facts.orderCost).toFixed(1)}デナリ / 粗利 ${toDenari(facts.realizedMargin).toFixed(1)}デナリ`,
         facts: { ...facts, quote },
         body: [
-          `${facts.completionDay}日目。${goodsLabel(facts.goods)}${facts.qty}荷を納め、実売上は${toDenari(facts.revenue).toFixed(1)}デナリ、今回の出荷に対応する実在庫原価は${toDenari(facts.orderCost).toFixed(1)}デナリ、差し引き粗利は${toDenari(facts.realizedMargin).toFixed(1)}デナリでした。`,
+          `${facts.completionDay}日目。${goodsLabel(facts.goods)}${facts.qty}荷を納め、実売上は${toDenari(facts.revenue).toFixed(1)}デナリ、今回の市場買付原価は${toDenari(facts.orderCost).toFixed(1)}デナリ、差し引き粗利は${toDenari(facts.realizedMargin).toFixed(1)}デナリでした。`,
           `注文状を見た時の全量加重原価は1荷あたり${(quote.marketUnitCost * 10).toFixed(1)}デナリ、完遂決済は${(quote.settlementPrice * 10).toFixed(1)}デナリでした。最初の見立てと、最後の実帳簿を分けて確かめるのが商いです。`,
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
@@ -3016,7 +3062,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
       const evidence = state.goalResults['observe-skippable-order'].evidence;
       const quote = evidence.selected;
       const procurement = quote.marketUnitCost === null
-        ? `必要な${quote.qty}荷に対し、倉庫と市場で現在そろえられるのは${quote.marketAvailable.toFixed(1)}荷です`
+        ? `必要な${quote.qty}荷に対し、市場で現在そろえられるのは${quote.marketAvailable.toFixed(1)}荷です`
         : `全量の加重仕入原価は1荷あたり${(quote.marketUnitCost * 10).toFixed(1)}デナリです`;
       const judgment = quote.reason === 'loss'
         ? `決済との差は1荷あたり${(quote.marginPerUnit * 10).toFixed(1)}デナリで、現在値では赤字です`
@@ -3040,7 +3086,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
     id: 'chapter-four-close',
     source: 'snapshot',
     when({ state }) {
-      return goalCompleted(state, 'close-third-chapter');
+      return goalCompleted(state, 'let-skippable-order-expire');
     },
     render({ state }) {
       const profit = state.goalResults['complete-profitable-order']?.evidence ?? null;
@@ -3050,7 +3096,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
       // 完遂実績と失効実績が両方揃った時だけ詳細文を出す（失効前は expired が null）
       const detailed = Boolean(profit?.completed && selected && skipped?.expired);
       return {
-        kicker: '第四章・商い判断報告',
+        kicker: '第三章・商い判断報告',
         title: '注文は、残量と期限を見て選べます',
         summary: detailed
           ? `利益注文の粗利 ${toDenari(profit.realizedMargin).toFixed(1)}デナリ / 見送り ${goodsLabel(selected.goods)} ${selected.qty}荷`
@@ -3076,7 +3122,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
     render({ state }) {
       const facts = state.goalResults['observe-tools-price-rise'].evidence;
       return {
-        kicker: '第五章・島の手仕事',
+        kicker: '第四章・島の手仕事',
         title: '木製品の値が上がっています',
         summary: `底値 ${(facts.minimumPrice * 10).toFixed(1)}→${(facts.currentPrice * 10).toFixed(1)}デナリ/荷（+${(facts.ratio * 100).toFixed(1)}%）`,
         facts,
@@ -3195,7 +3241,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
         ? `また、${vacancy.day}日目の「${vacancy.message}」から、転職には空き建物という受け皿が要ることも分かりました。`
         : '転職失敗はこの90日には観測されませんでした。起きた時だけ、その実記録と空き建物数をご報告します。';
       return {
-        kicker: '第五章・手仕事と暮らしの報告',
+        kicker: '第四章・手仕事と暮らしの報告',
         title: '三つの手仕事を観察できる町になりました',
         summary: survival && levelUp
           ? `三つの手仕事 ${survival.elapsedDays}日存続・${levelUp.job}#${levelUp.householdId} Lv${levelUp.level}`
@@ -3255,3 +3301,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
     },
   }),
 ]);
+
+export const TUTORIAL_LETTERS = Object.freeze(TUTORIAL_LETTER_DEFINITIONS.filter(
+  letter => !TUTORIAL_DEFERRED_COMPANY_STOCK_LETTERS.has(letter.id),
+));

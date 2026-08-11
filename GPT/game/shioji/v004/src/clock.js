@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.45.5-caravan-integrity';
+import { SPEEDS } from './config.js?v=v004.46.0-tutorial-no-company-stock';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

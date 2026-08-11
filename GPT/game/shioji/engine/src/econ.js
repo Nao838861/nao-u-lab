@@ -4392,18 +4392,33 @@ export function runCompanyProcurement(economy, { day, physical = null }) {
   const procurementGoods = new Set([
     ...Object.keys(economy.stockTgt),
     ...Object.keys(repairNeeds),
+    ...(economy.order?.g ? [economy.order.g] : []),
   ]);
   for (const goods of procurementGoods) {
-    // 受諾中の注文品は倉庫から港へ出す。市場の小売棚や、そこへ向かう荷を
-    // 「確保済み」と数えると、契約分が棚に取り残されて期限直前まで買い戻せない。
-    const warehouseOnly = economy.order?.g === goods;
+    // 注文の受諾そのものを必要数の買付命令とする。プレイヤーに同じ数量を
+    // 買上げ目標へ再入力させず、市場→倉庫→港の実物流だけを残す。
+    // 港へ向かう荷と荷役待ちはすでに契約へ割り当て済みなので、倉庫で新たに
+    // 確保すべき量から控除する。任意備蓄と修繕需要は別用途として加算する。
+    const activeOrder = economy.order?.g === goods ? economy.order : null;
+    const committedToOrder = activeOrder && physical
+      ? pendingCompanyHaul(physical, "order", goods)
+        + pendingOrderPortQuantity(physical, goods)
+      : 0;
+    const orderWarehouseTarget = activeOrder
+      ? Math.max(0, activeOrder.left - committedToOrder)
+      : 0;
+    const warehouseOnly = Boolean(activeOrder);
     const warehouseAvailable = (economy.stock[goods] ?? 0)
       + (physical ? pendingCompanyHaul(physical, "procurement", goods) : 0);
     const repairLack = Math.max(0, (repairNeeds[goods] ?? 0) - warehouseAvailable);
     const warehouseAfterRepair = Math.max(0, warehouseAvailable - (repairNeeds[goods] ?? 0));
+    const warehouseTarget = Math.max(
+      economy.stockTgt[goods] ?? 0,
+      orderWarehouseTarget,
+    );
     const baseLack = Math.max(
       0,
-      (economy.stockTgt[goods] ?? 0)
+      warehouseTarget
         - warehouseAfterRepair
         - (physical && !warehouseOnly ? (economy.marketStock[goods] ?? 0) : 0)
         - (physical && !warehouseOnly ? pendingCompanyHaul(physical, "stock_release", goods) : 0),
