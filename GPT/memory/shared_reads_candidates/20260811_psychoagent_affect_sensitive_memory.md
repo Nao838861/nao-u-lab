@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2608.07438"
 collected_at: "2026-08-11T11:34:17+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [llm-agent, memory, affect, npc, character-simulation, evaluation]
+evaluated_at: "2026-08-11T11:37:34+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-11T11:37:34+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-11T11:37:34+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-10"
+supersedes: []
+gate_reason: >-
+  factual / affective memory の分離、二段階検索、conflict-aware controller、比較実験と
+  非有意だった人手評価まで重要要素を抽出でき、長期 NPC の未解決葛藤を扱う設計へ具体的に適用できる。
+  効果と限界を併記すれば、CoopEval 水準の概要と批判的分析を構成できる。
+suggested_post_outline:
+  overview_angle: "意味的に近い記憶ではなく、現在の葛藤に効く記憶をどう想起させるかという設計問題"
+  analysis_axis: "二系統記憶と二段階検索の寄与を、取得率の改善と人手評価の非有意差の両面から検討する"
+  application_target: "長期会話 NPC・仲間キャラクターの未解決対立、感情的出来事、関係変化を会話と行動選択へ再浮上させる記憶層"
+  pros_cons: "葛藤に重要な記憶を拾いやすく内部状態も観察可能になる一方、意味的一致の低下、評価規模の小ささ、感情 salience の固定化リスクがある"
+  verdict_pre: "部分採用。まず既存 NPC 記憶へ affective channel と検索ログを可逆に追加し、応答一貫性と反復・執着の増加を対照評価する"
 ---
 
 ## raw_excerpt
