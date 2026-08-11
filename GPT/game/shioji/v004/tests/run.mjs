@@ -1294,7 +1294,22 @@ test('チュートリアル段7〜9: 支援1回・早期食料・事前備蓄で
   assert.equal(controller.readModel().stockTargets.tools, 12, '入力した12荷を維持する');
   observe();
   assert.equal(director.readState().completedGoals.includes('first-order-procurement'), true);
-  assert.equal(hasLetter('first-company-procurement'), true, '注文前の実調達在庫を確認する');
+  assert.equal(hasLetter('first-company-procurement'), true, JSON.stringify({
+    message: '注文前の実調達在庫を確認する',
+    day: controller.readModel().day,
+    companyStock: controller.readModel().companyStock.tools,
+    stockTarget: controller.readModel().stockTargets.tools,
+    activeOrder: controller.readModel().activeOrder,
+    repairShelves: controller.readModel().buildings
+      .filter(building => building.roles.some(role => ['market', 'warehouse', 'port'].includes(role)))
+      .map(building => ({
+        roles: building.roles,
+        repairPlan: building.repairPlan,
+        repair: Object.fromEntries(building.shelves
+          .filter(row => row.section === 'repair' && row.amount > 1e-9)
+          .map(row => [row.goods, row.amount])),
+      })),
+  }));
 
   const completionLimit = (offer.due + 1) * 30;
   while (!hasLetter('first-order-complete') && controller.readModel().tick < completionLimit) {

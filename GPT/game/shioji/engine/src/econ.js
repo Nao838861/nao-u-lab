@@ -3909,6 +3909,20 @@ function pendingCompanyHaul(physical, kind, goods) {
     .reduce((total, job) => total + job.qty, 0);
 }
 
+function pendingCompanyRepairHaul(physical, buildingId, goods) {
+  const activeIds = physical.activeHaulJobIds
+    ?? physical.haulJobs.filter((job) => job.status === "in_transit").map((job) => job.id);
+  return activeIds
+    .map((jobId) => haulJobById(physical, jobId))
+    .filter(Boolean)
+    .filter((job) => (
+      job.economicLogistics?.kind === "company_repair"
+      && job.economicLogistics?.targetBuildingId === buildingId
+      && job.goods === goods
+    ))
+    .reduce((total, job) => total + job.qty, 0);
+}
+
 function pendingOrderPortQuantity(physical, goods) {
   return physical.portCalls
     .filter((call) => (
@@ -3920,18 +3934,20 @@ function pendingOrderPortQuantity(physical, goods) {
     .reduce((total, call) => total + call.remaining, 0);
 }
 
-function availableCompanyTransport(economy, physical) {
+function availableCompanyTransport(economy, physical, { walkOnly = false } = {}) {
   ensureCartEconomy(economy);
   if (!physical) return { kind: "legacy", asset: null, capacity: 16 };
-  const cart = economy.companyCarts.find((asset) => (
-    !asset.broken && !asset.busyJobId && asset.durability > 0
-  ));
-  if (cart) {
-    return {
-      kind: "cart",
-      asset: cart,
-      capacity: cart.kind === "iron" ? P.CART_IRON_CAPACITY : P.CART_WOOD_CAPACITY,
-    };
+  if (!walkOnly) {
+    const cart = economy.companyCarts.find((asset) => (
+      !asset.broken && !asset.busyJobId && asset.durability > 0
+    ));
+    if (cart) {
+      return {
+        kind: "cart",
+        asset: cart,
+        capacity: cart.kind === "iron" ? P.CART_IRON_CAPACITY : P.CART_WOOD_CAPACITY,
+      };
+    }
   }
   const activeHandPorters = (physical.activeHaulJobIds ?? [])
     .map((jobId) => haulJobById(physical, jobId))
@@ -3986,7 +4002,18 @@ function assignCompanyPorters(job) {
 function dispatchCompanyHaul(
   economy,
   physical,
-  { day, kind, fromRole, fromSection, toRole, toSection, goods, qty, metadata = {} },
+  {
+    day,
+    kind,
+    fromRole,
+    fromSection,
+    toRole,
+    toSection,
+    goods,
+    qty,
+    metadata = {},
+    walkOnly = false,
+  },
 ) {
   const from = companyLogisticsSite(physical, fromRole);
   const to = companyLogisticsSite(physical, toRole);
@@ -3994,7 +4021,7 @@ function dispatchCompanyHaul(
     recordLogisticsBlocked(economy, day, fromRole, toRole);
     return null;
   }
-  const transport = availableCompanyTransport(economy, physical);
+  const transport = availableCompanyTransport(economy, physical, { walkOnly });
   if (!transport || qty > transport.capacity / goodsUnitWeight(goods) + 1e-9) return null;
   const carrier = transport.kind === "cart"
     ? createCartCarrier(physical, {
@@ -4361,17 +4388,27 @@ export function setCompanyStockTarget(economy, goods, qty) {
 
 export function runCompanyProcurement(economy, { day, physical = null }) {
   const purchases = [];
-  for (const goods of Object.keys(economy.stockTgt)) {
+  const repairNeeds = companyBuildingRepairNeeds(physical);
+  const procurementGoods = new Set([
+    ...Object.keys(economy.stockTgt),
+    ...Object.keys(repairNeeds),
+  ]);
+  for (const goods of procurementGoods) {
     // 受諾中の注文品は倉庫から港へ出す。市場の小売棚や、そこへ向かう荷を
     // 「確保済み」と数えると、契約分が棚に取り残されて期限直前まで買い戻せない。
     const warehouseOnly = economy.order?.g === goods;
-    let lack = (economy.stockTgt[goods] ?? 0)
-      - (economy.stock[goods] ?? 0)
-      - (physical ? (
-        (warehouseOnly ? 0 : (economy.marketStock[goods] ?? 0))
-        + pendingCompanyHaul(physical, "procurement", goods)
-        + (warehouseOnly ? 0 : pendingCompanyHaul(physical, "stock_release", goods))
-      ) : 0);
+    const warehouseAvailable = (economy.stock[goods] ?? 0)
+      + (physical ? pendingCompanyHaul(physical, "procurement", goods) : 0);
+    const repairLack = Math.max(0, (repairNeeds[goods] ?? 0) - warehouseAvailable);
+    const warehouseAfterRepair = Math.max(0, warehouseAvailable - (repairNeeds[goods] ?? 0));
+    const baseLack = Math.max(
+      0,
+      (economy.stockTgt[goods] ?? 0)
+        - warehouseAfterRepair
+        - (physical && !warehouseOnly ? (economy.marketStock[goods] ?? 0) : 0)
+        - (physical && !warehouseOnly ? pendingCompanyHaul(physical, "stock_release", goods) : 0),
+    );
+    let lack = repairLack + baseLack;
     if (lack <= 1e-9 || economy.company.money <= -companyCreditLimit(economy, { day })) continue;
     const stalls = [...economy.stalls[goods]]
       .filter((stall) => (stall.marketId ?? "main") === "main")
@@ -4520,6 +4557,10 @@ export function settleCompanyLogistics(economy, physical, { day }) {
     } else if (metadata.kind === "stock_release") {
       economy.marketStock[job.goods] = (economy.marketStock[job.goods] ?? 0) + job.qty;
       economy.marketStockCost[job.goods] = (economy.marketStockCost[job.goods] ?? 0) + metadata.cost;
+    } else if (metadata.kind === "company_repair") {
+      // 現物はcreateHaulJobの到着処理で対象施設の修繕棚へ入っている。
+      // 会社倉庫の数量・原価は出発時に差し引き、周期到来時の実消費まで
+      // materialFlowsへは計上しない。
     } else if (metadata.kind === "export_market") {
       const lot = exportLotById(economy, metadata.lotId);
       if (lot) {
@@ -5476,6 +5517,42 @@ const REPAIR_MATERIALS_BY_JOB = deepFreeze({
   smith: ["stone", "iron"],
 });
 
+const COMPANY_REPAIR_MATERIALS_BY_ROLE = deepFreeze({
+  market: { tools: 4, stone: 4 },
+  warehouse: { tools: 3, stone: 3 },
+  port: { log: 4, tools: 3, stone: 6 },
+});
+
+function companyRepairRole(building) {
+  return ["market", "warehouse", "port"].find((role) => (
+    building?.role === role || building?.roles?.includes(role)
+  )) ?? null;
+}
+
+export function companyRepairMaterialsFor(building) {
+  const role = companyRepairRole(building);
+  return structuredClone(COMPANY_REPAIR_MATERIALS_BY_ROLE[role] ?? {});
+}
+
+export function companyBuildingRepairNeeds(physical) {
+  const needs = {};
+  if (!physical) return needs;
+  for (const building of physical.buildings ?? []) {
+    if (!companyRepairRole(building) || !building.repairPlan) continue;
+    ensureBuildingShelves(building);
+    for (const [goods, required] of Object.entries(building.repairPlan.required ?? {})) {
+      const outstanding = Math.max(
+        0,
+        required
+          - sectionAmount(building, "repair", goods)
+          - pendingCompanyRepairHaul(physical, building.id, goods),
+      );
+      if (outstanding > 1e-9) needs[goods] = (needs[goods] ?? 0) + outstanding;
+    }
+  }
+  return needs;
+}
+
 export function repairMaterialsFor(building, household) {
   const lv = Math.max(0, household?.lv ?? 0);
   const area = Math.max(1, (building?.w ?? 3) * (building?.h ?? 3));
@@ -5510,6 +5587,78 @@ function consumeShelfPlan(economy, building, section, required, reason) {
     recordEconomicMaterialFlow(economy, goods, "cons", used, reason);
   }
   return requiredTotal > 1e-9 ? suppliedTotal / requiredTotal : 1;
+}
+
+function dispatchCompanyRepairMaterials(economy, physical, building, { day }) {
+  const role = companyRepairRole(building);
+  const warehouse = companyLogisticsSite(physical, "warehouse");
+  if (!role || !warehouse || !building.repairPlan) return [];
+  const jobs = [];
+  for (const [goods, required] of Object.entries(building.repairPlan.required ?? {})) {
+    let remaining = Math.max(
+      0,
+      required
+        - sectionAmount(building, "repair", goods)
+        - pendingCompanyRepairHaul(physical, building.id, goods),
+    );
+    while (remaining > 1e-9) {
+      const transport = availableCompanyTransport(economy, physical, { walkOnly: true });
+      const warehouseQty = Math.max(0, Math.min(
+        economy.stock[goods] ?? 0,
+        sectionAmount(warehouse, "storage", goods),
+      ) - (economy.stockTgt[goods] ?? 0));
+      const qty = Math.min(
+        remaining,
+        warehouseQty,
+        (transport?.capacity ?? 0) / goodsUnitWeight(goods),
+      );
+      if (qty <= 1e-9) break;
+      const averageCost = (economy.stockCost[goods] ?? 0)
+        / Math.max(1e-9, economy.stock[goods] ?? 0);
+      const job = dispatchCompanyHaul(economy, physical, {
+        day,
+        kind: "company_repair",
+        fromRole: "warehouse",
+        fromSection: "storage",
+        toRole: role,
+        toSection: "repair",
+        goods,
+        qty,
+        metadata: { targetBuildingId: building.id, cost: qty * averageCost },
+        walkOnly: true,
+      });
+      if (!job) break;
+      economy.stock[goods] -= qty;
+      economy.stockCost[goods] = Math.max(
+        0,
+        (economy.stockCost[goods] ?? 0) - qty * averageCost,
+      );
+      remaining -= qty;
+      jobs.push(job);
+    }
+  }
+  return jobs;
+}
+
+function updateBuildingConditionStatus(economy, building, day, label) {
+  const previousStatus = building.conditionStatus;
+  building.conditionStatus = building.condition >= 70
+    ? "good"
+    : building.condition >= 40
+      ? "worn"
+      : "needs_repair";
+  if (previousStatus !== building.conditionStatus && building.conditionStatus !== "good") {
+    const statusLabel = building.conditionStatus === "worn" ? "傷みあり" : "要修繕";
+    recordEconomyEvent(economy, day, `${label} 建物に${statusLabel}`);
+  }
+}
+
+function recordBuildingRepairDemand(economy, building) {
+  for (const [goods, need] of Object.entries(building.repairPlan?.required ?? {})) {
+    const dailyNeed = need / 30;
+    const fill = Math.min(1, sectionAmount(building, "repair", goods) / Math.max(need, 1e-9));
+    recordEconomicDemand(economy, goods, dailyNeed, dailyNeed * fill, "building_repair");
+  }
 }
 
 export function constructionReady(physical, household) {
@@ -5586,21 +5735,42 @@ export function runBuildingMaintenance(economy, physical, { day }) {
       building.operationWear = 0;
       building.nextRepairDay = day + 30;
     }
-    const previousStatus = building.conditionStatus;
-    building.conditionStatus = building.condition >= 70
-      ? "good"
-      : building.condition >= 40
-        ? "worn"
-        : "needs_repair";
-    if (previousStatus !== building.conditionStatus && building.conditionStatus !== "good") {
-      const label = building.conditionStatus === "worn" ? "傷みあり" : "要修繕";
-      recordEconomyEvent(economy, day, `${household.job}#${household.id} 建物に${label}`);
+    updateBuildingConditionStatus(economy, building, day, `${household.job}#${household.id}`);
+    recordBuildingRepairDemand(economy, building);
+  }
+  for (const building of physical.buildings ?? []) {
+    const role = companyRepairRole(building);
+    if (!role) continue;
+    ensureBuildingShelves(building);
+    building.nextRepairDay = Number.isSafeInteger(building.nextRepairDay)
+      ? building.nextRepairDay
+      : day + 30;
+    if (building.repairPlan && day >= building.repairPlan.dueDay) {
+      const ratio = consumeShelfPlan(
+        economy,
+        building,
+        "repair",
+        building.repairPlan.required,
+        `会社の${role}修繕`,
+      );
+      building.condition = Math.max(0, Math.min(100,
+        building.condition + (ratio >= 0.95 ? 6 : -15 * (1 - ratio)),
+      ));
+      building.repairPlan = null;
+      building.nextRepairDay = day;
+      results.push({ companyRole: role, buildingId: building.id, ratio, condition: building.condition });
     }
-    for (const [goods, need] of Object.entries(building.repairPlan?.required ?? {})) {
-      const dailyNeed = need / 30;
-      const fill = Math.min(1, sectionAmount(building, "repair", goods) / Math.max(need, 1e-9));
-      recordEconomicDemand(economy, goods, dailyNeed, dailyNeed * fill, "building_repair");
+    if (!building.repairPlan && day >= building.nextRepairDay) {
+      building.repairPlan = {
+        openedDay: day,
+        dueDay: day + 30,
+        required: companyRepairMaterialsFor(building),
+      };
+      building.nextRepairDay = day + 30;
     }
+    updateBuildingConditionStatus(economy, building, day, `会社の${role}`);
+    recordBuildingRepairDemand(economy, building);
+    dispatchCompanyRepairMaterials(economy, physical, building, { day });
   }
   return results;
 }

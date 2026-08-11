@@ -1961,9 +1961,9 @@ async function checkViewport(width, height, mobile) {
       };
     })()`);
     assert.equal(warehouseDetail.hidden, false, JSON.stringify(warehouseDetail));
-    assert.match(warehouseDetail.text, /会社の倉庫にある品.*本国注文.*市場へ出す/s);
-    assert.match(warehouseDetail.status, /順調/);
-    assert.doesNotMatch(warehouseDetail.status, /状態|道路|敷地|座標/);
+    assert.match(warehouseDetail.text, /会社の倉庫にある品.*本国注文.*市場への蔵出し.*市場・倉庫・港の修繕/s);
+    assert.match(warehouseDetail.status, /順調.*建物は良好.*状態 100%/s);
+    assert.doesNotMatch(warehouseDetail.status, /道路|敷地|座標/);
 
     const buildingPoint = await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;

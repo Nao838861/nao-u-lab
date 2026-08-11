@@ -1833,6 +1833,11 @@ function renderBuildingSheet() {
         ${conversionMarkup}
       </section>`;
   } else {
+    const repairNotice = building.conditionStatus === 'needs_repair'
+      ? `要修繕（状態 ${Math.round(building.condition)}%）`
+      : building.conditionStatus === 'worn'
+        ? `建物に傷みあり（状態 ${Math.round(building.condition)}%）`
+        : `建物は良好（状態 ${Math.round(building.condition)}%）`;
     const headline = building.vacant ? '⚠ 働く家族がいません' : '順調';
     const marketProductivity = building.marketProductivity;
     const marketMarkup = marketProductivity ? `
@@ -1843,6 +1848,7 @@ function renderBuildingSheet() {
       </div>` : '';
     $('#building-summary').innerHTML = `
       <div class="building-health" data-tone="${building.vacant ? 'warning' : 'good'}">${headline}</div>
+      <div class="building-health" data-tone="${building.conditionStatus === 'good' ? 'good' : 'warning'}">${escapeHtml(repairNotice)}</div>
       ${marketMarkup}`;
   }
 
@@ -1877,7 +1883,7 @@ function renderBuildingSheet() {
       .sort((left, right) => right[1] - left[1]);
     companyStockPanel.innerHTML = `
       <h3>会社の倉庫にある品</h3>
-      <p>会社が市場で買い上げた品です。本国注文の船積みと、品薄時の市場へ出すはここから運びます。</p>
+      <p>会社が市場で買い上げた品です。本国注文の船積み、品薄時の市場への蔵出し、市場・倉庫・港の修繕にここから運びます。</p>
       ${companyRows.length ? `<div class="shelf-list">${companyRows.map(([goods, amount]) => {
         const averageCost = model.companyStockAverageCosts[goods];
         const cost = Number.isFinite(averageCost)

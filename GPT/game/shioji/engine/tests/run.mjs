@@ -23,7 +23,9 @@ import {
   chopWood,
   calendarMonth,
   companyCreditLimit,
+  companyBuildingRepairNeeds,
   companyLogisticsSite,
+  companyRepairMaterialsFor,
   companyStockReleasePrice,
   completeAssignedWork,
   consumeConstructionMaterials,
@@ -730,6 +732,90 @@ test("需要網1: 高Lv施設は木製品・石材・鉄材を30日周期で修�
   assert.equal(placed.building.condition, 30);
   assert.equal(placed.building.conditionStatus, "needs_repair");
   assert.ok(economy.events.some(([, message]) => message.includes("建物に要修繕")));
+});
+
+test("需要網裁定1: 市場・倉庫・港は専用小修繕表を会社買上げと徒歩運搬で満たす", () => {
+  const { economy, physical } = createLogisticsTestFixture({
+    connectMarketWarehouse: true,
+    connectPort: true,
+  });
+  const market = companyLogisticsSite(physical, "market");
+  const warehouse = companyLogisticsSite(physical, "warehouse");
+  const port = companyLogisticsSite(physical, "port");
+  assert.deepEqual(companyRepairMaterialsFor(market), { tools: 4, stone: 4 });
+  assert.deepEqual(companyRepairMaterialsFor(warehouse), { tools: 3, stone: 3 });
+  assert.deepEqual(companyRepairMaterialsFor(port), { log: 4, tools: 3, stone: 6 });
+
+  runBuildingMaintenance(economy, physical, { day: 1 });
+  runBuildingMaintenance(economy, physical, { day: 31 });
+  assert.deepEqual(companyBuildingRepairNeeds(physical), { tools: 10, stone: 13, log: 4 });
+
+  setCompanyStockTarget(economy, "tools", 2);
+  const quantities = { log: 4, tools: 12, stone: 13 };
+  const companyMoneyBefore = economy.company.money;
+  for (const [goods, qty] of Object.entries(quantities)) {
+    const seller = createHousehold(economy, { job: "logger", x: 7, y: 4 });
+    seller.pantry[goods] = Math.max(seller.pantry[goods] ?? 0, qty);
+    seller.pantry[goods] -= qty;
+    economy.stalls[goods].push({ householdId: seller.id, qty, price: 1, age: 0 });
+    depositInventory(market, "outbound", goods, qty);
+  }
+
+  const purchases = runCompanyProcurement(economy, { day: 32, physical });
+  assert.equal(purchases.reduce((total, purchase) => total + purchase.qty, 0), 29);
+  assert.equal(economy.company.money, companyMoneyBefore - 29);
+  while (physical.activeHaulJobIds.length > 0) {
+    stepHaulCarriers(physical, 1);
+    settleCompanyLogistics(economy, physical, { day: 32 });
+  }
+  assert.deepEqual(
+    Object.fromEntries(Object.keys(quantities).map((goods) => [goods, economy.stock[goods]])),
+    quantities,
+  );
+
+  runBuildingMaintenance(economy, physical, { day: 33 });
+  const repairJobs = physical.haulJobs.filter((job) => (
+    job.economicLogistics?.kind === "company_repair"
+  ));
+  assert.ok(repairJobs.length >= 7);
+  assert.ok(repairJobs.every((job) => (
+    job.carrier.mode === "walk"
+    && job.carrier.companyTransport
+    && !job.carrier.assetId
+  )));
+  while (physical.activeHaulJobIds.length > 0) {
+    stepHaulCarriers(physical, 1);
+    settleCompanyLogistics(economy, physical, { day: 33 });
+  }
+  for (const building of [market, warehouse, port]) {
+    for (const [goods, qty] of Object.entries(companyRepairMaterialsFor(building))) {
+      assert.equal(sectionAmount(building, "repair", goods), qty);
+    }
+  }
+  assert.equal(economy.stock.tools, 2, "プレイヤーの買上げ目標分は修繕材と別に倉庫へ残す");
+  assert.deepEqual(companyBuildingRepairNeeds(physical), {});
+
+  const results = runBuildingMaintenance(economy, physical, { day: 61 });
+  assert.equal(results.filter((result) => result.companyRole).length, 3);
+  assert.ok(results.filter((result) => result.companyRole).every((result) => result.ratio === 1));
+  assert.equal(economy.materialFlows.log.cons, 4);
+  assert.equal(economy.materialFlows.tools.cons, 10);
+  assert.equal(economy.materialFlows.stone.cons, 13);
+});
+
+test("需要網裁定1: 会社施設も修繕不足で徐々に傷み、盤面用状態へ段階遷移する", () => {
+  const { economy, physical } = createLogisticsTestFixture({
+    connectMarketWarehouse: true,
+    connectPort: true,
+  });
+  const market = companyLogisticsSite(physical, "market");
+  market.condition = 45;
+  runBuildingMaintenance(economy, physical, { day: 1 });
+  runBuildingMaintenance(economy, physical, { day: 31 });
+  runBuildingMaintenance(economy, physical, { day: 61 });
+  assert.equal(market.condition, 30);
+  assert.equal(market.conditionStatus, "needs_repair");
+  assert.ok(economy.events.some(([, message]) => message.includes("会社のmarket 建物に要修繕")));
 });
 
 test("段6: 容量超過・在庫不足・運搬ジョブなしの棚跨ぎを拒否する", () => {
