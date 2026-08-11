@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-11T07:03:52+09:00",
+  "updated_at": "2026-08-11T09:30:36+09:00",
   "reviewed_source_ts": [
+    "1786399090.469959",
     "1786322449.253679",
     "1786322484.507229",
     "1786383928.323609",
@@ -624,6 +625,46 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-11T09:30:36+09:00",
+      "selected": {
+        "id": "sr-1786399090-badc4c177d",
+        "source_ts": "1786399090.469959",
+        "title": "Video-DeepResearch (Video-DR): perception-first visual grounding before retrieval",
+        "reason": "source が slack_api/shared-reads、score 13、未レビューという条件を満たし、memory・harness・game-design・agent・identity・knowledge・operation・evaluation の8優先タグを持つ最新候補から1件だけを選んだ。正答したという結果だけで、今回の画面を観察したのか、既存の文章・記憶・parametric knowledgeで当てたのかを混同する失敗が、録画playtestと制作記憶の両方に直結する。Nao_uが本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "decision": "defer",
+      "decision_reason": "合計17で数値上の採用条件は満たす。shared-reads本文はmodality biasとparametric knowledge leakageを分け、tool-freeで4回答中1回でも正解した設問を除外し、visual-onlyからtext／memory retrievalへ段階解放する手順、回答とframe／crop traceの対応、匿名化・label差替え・画面状態反転counterfactual、30B ablation、benchmark件数と35B scoreの原稿内不整合まで示すためrelevance・actionability・evidenceは3とした。既存のmechanic-observation-channel-gateはscreen／input／audio／timingの証明限界を、exploration-vs-utilization-failureは証拠を見つけなかった失敗と見つけて使わなかった失敗を、agent-eval-attribution-splitはscoreをmodel／tool／memory／harness等へ帰属分解し、compiled-memory-boundaryは圧縮記憶を使う時のraw復路を要求する。本atom固有のtool-free除外とperception-first段階解放は独立差なのでnon_redundancyは2だが、現在のstagingには同一gameplay録画から作った20問、tool-free／keyframe-crop／観察後memory解放のbefore／after artifactがなく、後続Phase 4aはmemory cleanupでこの差を実際の判断へ使うconsumerではない。active_probesが322件ある状態で対象不在のprobeを足すと確認負荷が先行し、consumer、trigger artifact、expected deltaをlease契約どおり固定できないためstate-onlyでdeferする。次に具体的な録画playtestまたはcurrent-build evidenceとmemory-derived回答の衝突が置かれ、既存4 controlsだけでは見たふりを判定できない時に、20問以下のoffline replay metricとして再評価する。",
+      "existing_controls": [
+        "probe-20260603-mechanic-observation-channel-gate",
+        "probe-20260525-exploration-vs-utilization-failure",
+        "probe-20260605-agent-eval-attribution-split",
+        "probe-20260621-compiled-memory-boundary"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsとdefer理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-11T07:03:52+09:00",
       "selected": {

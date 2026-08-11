@@ -67,7 +67,40 @@ skipped: []
 - 投稿前 review: 4259 字、必須 6 項目、`■ 概要` 始まり、`■ URL` 末尾、禁止表現なし。1 回の `chat.postMessage` でフラット投稿した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786399090-badc4c177d
+    source_ts: "1786399090.469959"
+    title: "Video-DeepResearch (Video-DR): perception-first visual grounding before retrieval"
+    reason: "source=slack_api/shared-reads、score=13、未レビューで、memory・harness・game-design・agent・identity・knowledge・operation・evaluationの8優先タグを持つ最新候補。正答と、今回の画面を実際に観察した根拠を混同する失敗が録画playtestと制作記憶に直結するため1件だけ選んだ。Nao_uの明示評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: defer
+  decision_reason: "採用閾値は満たすが、既存の観測channel・探索/利用失敗・model/tool/memory帰属・raw復路の4 controlsが主要な誤読を既に覆う。固有差はtool-freeで解ける設問の除外とvisual-first段階解放だが、現在は同一録画のtool-free／keyframe-crop／観察後memory解放を比較する20問以下のartifactがなく、後続Phase 4aも実consumerではない。consumer・trigger artifact・expected deltaを固定できないためoperational leaseにせずstate-onlyで保留した。"
+  existing_controls:
+    - probe-20260603-mechanic-observation-channel-gate
+    - probe-20260525-exploration-vs-utilization-failure
+    - probe-20260605-agent-eval-attribution-split
+    - probe-20260621-compiled-memory-boundary
+  change:
+    summary: "reviewed_source_tsとdefer理由のみ更新。active_probes、ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
