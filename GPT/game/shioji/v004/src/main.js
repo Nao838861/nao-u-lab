@@ -1,48 +1,48 @@
-import { IsometricCamera } from './camera.js?v=v004.46.1-boot-retry';
-import { SimulationClock } from './clock.js?v=v004.46.1-boot-retry';
-import { createBoundaryEvents } from './boundary_events.js?v=v004.46.1-boot-retry';
+import { IsometricCamera } from './camera.js?v=v004.46.3-boot-report';
+import { SimulationClock } from './clock.js?v=v004.46.3-boot-report';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.46.3-boot-report';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.46.1-boot-retry';
+} from './config.js?v=v004.46.3-boot-report';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.46.1-boot-retry';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.46.1-boot-retry';
-import { developmentMapView } from './development_map.js?v=v004.46.1-boot-retry';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.46.1-boot-retry';
-import { formatElenaSpeech } from './elena_text.js?v=v004.46.1-boot-retry';
+} from './display_batch.js?v=v004.46.3-boot-report';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.46.3-boot-report';
+import { developmentMapView } from './development_map.js?v=v004.46.3-boot-report';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.46.3-boot-report';
+import { formatElenaSpeech } from './elena_text.js?v=v004.46.3-boot-report';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.46.1-boot-retry';
+} from './food_readability.js?v=v004.46.3-boot-report';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.46.1-boot-retry';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.46.1-boot-retry';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.46.1-boot-retry';
-import { goodsDetail } from './goods_detail.js?v=v004.46.1-boot-retry';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.46.1-boot-retry';
-import { WorldPresentation } from './presentation.js?v=v004.46.1-boot-retry';
-import { Renderer } from './renderer.js?v=v004.46.1-boot-retry';
+} from './keyboard.js?v=v004.46.3-boot-report';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.46.3-boot-report';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.46.3-boot-report';
+import { goodsDetail } from './goods_detail.js?v=v004.46.3-boot-report';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.46.3-boot-report';
+import { WorldPresentation } from './presentation.js?v=v004.46.3-boot-report';
+import { Renderer } from './renderer.js?v=v004.46.3-boot-report';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.46.1-boot-retry';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.46.1-boot-retry';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.46.1-boot-retry';
+} from './save_game.js?v=v004.46.3-boot-report';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.46.3-boot-report';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.46.3-boot-report';
 import {
   GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRow, supplyDemandRows,
-} from './supply_demand.js?v=v004.46.1-boot-retry';
-import { orderQuote } from './tutorial_content.js?v=v004.46.1-boot-retry';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.46.1-boot-retry';
+} from './supply_demand.js?v=v004.46.3-boot-report';
+import { orderQuote } from './tutorial_content.js?v=v004.46.3-boot-report';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.46.3-boot-report';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.46.1-boot-retry';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.46.1-boot-retry';
+} from './ui_guidance.js?v=v004.46.3-boot-report';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.46.3-boot-report';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');

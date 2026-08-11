@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.46.1-boot-retry';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.46.3-boot-report';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.46.1-boot-retry';
+} from './food_readability.js?v=v004.46.3-boot-report';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   findTravelPath, householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.46.1-boot-retry';
-import { analyzeRoadConnections } from './placement.js?v=v004.46.1-boot-retry';
+} from './engine_bridge.js?v=v004.46.3-boot-report';
+import { analyzeRoadConnections } from './placement.js?v=v004.46.3-boot-report';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.46.1-boot-retry';
+} from './render_scene.js?v=v004.46.3-boot-report';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.46.1-boot-retry';
+} from './visuals.js?v=v004.46.3-boot-report';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',

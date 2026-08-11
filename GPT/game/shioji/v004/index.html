@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.46.1-boot-retry">
+  <link rel="stylesheet" href="./style.css?v=v004.46.3-boot-report">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -328,12 +328,27 @@
   <script>
     (() => {
       const status = () => document.querySelector('#boot-status');
+      const errorDetail = error => {
+        const raw = error?.message ?? error?.reason?.message ?? error?.reason ?? error;
+        if (!raw) return '';
+        return String(raw).replace(/\s+/g, ' ').trim().slice(0, 180);
+      };
       const setState = (state, message) => {
         const node = status();
         if (!node) return;
         node.dataset.state = state;
         node.querySelector('span').textContent = message;
         node.querySelector('#retry-boot').hidden = state !== 'failed';
+      };
+      const reportFailure = detail => {
+        if (!detail) return;
+        const url = new URL('./boot-error.gif', window.location.href);
+        url.searchParams.set('build', 'v004.46.3-boot-report');
+        url.searchParams.set('message', detail);
+        url.searchParams.set('browser', navigator.userAgent.slice(0, 160));
+        const image = new Image();
+        image.src = url.href;
+        window.__SHIOJI_BOOT_REPORT__ = image;
       };
       const timeout = window.setTimeout(() => {
         if (!window.__SHIOJI_V004__) setState('failed', '読み込みが完了しませんでした。通信を確認して、もう一度お試しください。');
@@ -344,9 +359,14 @@
           document.documentElement.classList.remove('booting');
           setState('ready', '遊び方を選べます');
         },
-        failed() {
+        failed(error) {
           window.clearTimeout(timeout);
-          setState('failed', '新しい版を読み込めませんでした。もう一度読み込んでください。');
+          const detail = errorDetail(error);
+          setState('failed', detail
+            ? `新しい版を読み込めませんでした：${detail}。もう一度読み込んでください。`
+            : '新しい版を読み込めませんでした。もう一度読み込んでください。');
+          reportFailure(detail);
+          if (error) console.error('[潮路の島] 起動失敗', error);
         },
         retry() {
           const url = new URL(window.location.href);
@@ -354,22 +374,19 @@
           window.location.replace(url);
         },
       });
-      window.addEventListener('error', () => {
-        if (!window.__SHIOJI_V004__) window.__SHIOJI_BOOT__.failed();
+      window.addEventListener('error', event => {
+        if (!window.__SHIOJI_V004__) window.__SHIOJI_BOOT__.failed(event.error ?? event.message);
+      });
+      window.addEventListener('unhandledrejection', event => {
+        if (!window.__SHIOJI_V004__) window.__SHIOJI_BOOT__.failed(event.reason);
       });
     })();
   </script>
-  <script>
-    (() => {
-      const retryToken = new URL(window.location.href).searchParams.get('boot-retry');
-      const module = document.createElement('script');
-      module.id = 'game-module';
-      module.type = 'module';
-      module.src = './src/main.js?v=v004.46.1-boot-retry'
-        + (retryToken ? `&boot-retry=${encodeURIComponent(retryToken)}` : '');
-      module.addEventListener('error', () => window.__SHIOJI_BOOT__?.failed());
-      document.body.append(module);
-    })();
+  <script type="module">
+    const retryToken = new URL(window.location.href).searchParams.get('boot-retry');
+    const moduleUrl = './src/main.js?v=v004.46.3-boot-report'
+      + (retryToken ? `&boot-retry=${encodeURIComponent(retryToken)}` : '');
+    import(moduleUrl).catch(error => window.__SHIOJI_BOOT__?.failed(error));
   </script>
 </body>
 </html>

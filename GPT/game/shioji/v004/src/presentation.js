@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.46.1-boot-retry';
+import { pileVisual } from './visuals.js?v=v004.46.3-boot-report';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));

@@ -2225,7 +2225,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.46.1-boot-retry');
+  assert.equal(VERSION, 'v004.46.3-boot-report');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -3211,6 +3211,12 @@ test('起動AA: 公開cacheで新旧moduleを混在させず、失敗時も開�
     '再試行は同じ失敗済みmodule URLを再利用しない');
   assert.match(html, /main\.js\?v=[^'"\n]+[\s\S]*boot-retry=/,
     '再試行tokenをmain module URLにも渡してブラウザcacheを避ける');
+  assert.match(html, /import\(moduleUrl\)\.catch\(error => window\.__SHIOJI_BOOT__/,
+    'module graphの例外を起動UIへ渡す');
+  assert.match(html, /errorDetail[\s\S]*起動失敗/,
+    '起動失敗時は原因文を隠さず画面とconsoleへ残す');
+  assert.match(html, /boot-error\.gif[\s\S]*message[\s\S]*navigator\.userAgent/,
+    '端末固有の起動例外を同じローカルHTTPログから追える');
   assert.match(html, /v002\/assets\/elena_vance\.png/);
   assert.match(html, /id="continue-tutorial-letter"[\s\S]*島を開いて時間を進める/);
   assert.match(html, /書状を読んでいる間、島の時間は止まっています/);

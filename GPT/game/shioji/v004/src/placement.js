@@ -1,5 +1,5 @@
-import { BUILDING_SIZES } from './config.js?v=v004.46.1-boot-retry';
-import { islandCalendar } from './ui_summary.js?v=v004.46.1-boot-retry';
+import { BUILDING_SIZES } from './config.js?v=v004.46.3-boot-report';
+import { islandCalendar } from './ui_summary.js?v=v004.46.3-boot-report';
 
 export const tileKey = (x, y) => `${x},${y}`;
 
