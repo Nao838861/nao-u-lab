@@ -103,7 +103,66 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の High Signal / Recent / Game Task Entry Points / Tag Entry Points を per-file atom index と照合し、unknown id・欠損 atom file・重複 entry・broken link は 0 件だった。"
+  - "memory/atoms.jsonl 2,852 件と per-file/index 各 2,852 件を照合し、ID 重複・parse error・mirror content conflict は 0 件。正規化本文重複 40 群は既存 canonical overlay 45 群に収載済みで、追加の矛盾は検出しなかった。"
+  - "memory/raw/ の 30 日超無更新ファイル 240 件を確認した。Slack 原文・論文 PDF/TXT・取得 provenance として参照される保管物であり、この cycle で archive 移動すべき transient file は 0 件と判定した。"
+  - "shared-reads candidate lifecycle 1,261 件を監査し、posted 588 / ready_to_post 9 / postponed 217 / failed 445 / needs_review 2。正規未評価 0、malformed 0。"
+  - "open duplicate group / stale triage / group action の sidecar を再生成した。期限超過 open candidate 2 件は既存 group lease で 2026-08-20 まで明示 defer 中のため、group/candidate handoff の新規 enqueue はともに 0 件だった。"
+  - "Slack directives 23 行・broadcasts 21 行を監査し、pending は双方 0 件。完了根拠なしに handled へ変更した行はない。"
+  - "probe lifecycle を due-only limit 1 で確認し、期限到来 lease は 0 件。ledger validate は errors 0 だったため receipt 更新はない。"
+issues:
+  - id: ISS-HEALTH-SNAPSHOT
+    description: "memory_health.py が atoms.jsonl を build_health、mirror audit、各 recall probe で複数回全量読込し、active dual-write 中の監査で SystemError により完走しない。再実行ごとに失敗箇所が memory_recall.load_atoms と audit_atom_mirror_drift.read_jsonl の間で移動した。"
+    severity: medium
+    evidence: "tools/memory_health.py:174-254; python tools/memory_health.py --json / --compact の 2 回の失敗。対照として build_health の recall smoke 無効化による単一監査は atoms=2852、mirror counts=2852/2852/2852、content_conflicts=[] で成功し、python tools/memory_recall.py '記憶 システム shared-reads' --limit 3 も 3 hit で成功。"
+    source_file_status: "atoms.jsonl は UTF-8 JSONL として単一読込でき、per-file/index mirror との件数・内容整合も正常。個別 source corruption を示す evidence はない。"
+    display_or_tooling_status: "統合 health audit の複数回再読込経路だけが不安定。standalone recall と単一スナップショット相当の監査経路は正常。"
+    why_blocks_game_memory: "定期 health check が完走しないと、ゲーム制作前に必要な recall smoke・mirror drift・重複状態を同一時点の証拠として検証できず、次制作へ渡す記憶の健全性判定が非決定的になる。"
+  - id: ISS-SOURCE-MOJIBAKE-001
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』が title / Use when / Excerpt で『AIエ��ジェント』になっており、U+FFFD が source に保存されている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/index.jsonl id=sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8 明示読込で同じ U+FFFD 2 文字を確認したため、shell 表示だけの mojibake ではなく source file 自体の局所破損。memory/MEMORY.md は UTF-8 で『記憶』『ゲーム設計』『敵パターン』を取得でき、entry validator の mojibake residue は 0。"
+    display_or_tooling_status: "none。per-file と index は source の破損文字列をそのまま表示している。"
+    why_blocks_game_memory: "この 1 atom だけは正しい『AIエージェント』完全一致で想起しにくくなるが、game lesson や Nao_u 教師 feedback の広い導線は失われていない。局所修復対象であり新設計は不要。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-HEALTH-SNAPSHOT
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 4
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  deferred_by_live_group_lease_count: 2
+  deferred_retry_after: "2026-08-20T13:19:04+09:00"
+  open_duplicate_group_count: 43
+  mixed_group_count: 38
+  all_open_group_count: 5
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
