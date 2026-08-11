@@ -1,5 +1,5 @@
-import { BUILDING_SIZES } from './config.js?v=v004.44.4-export-balance';
-import { islandCalendar } from './ui_summary.js?v=v004.44.4-export-balance';
+import { BUILDING_SIZES } from './config.js?v=v004.45.5-caravan-integrity';
+import { islandCalendar } from './ui_summary.js?v=v004.45.5-caravan-integrity';
 
 export const tileKey = (x, y) => `${x},${y}`;
 
@@ -19,7 +19,7 @@ function walkTileCost(
   model,
   x,
   y,
-  { allowOccupiedGoal = false, goal = null, roads, occupied, trails } = {},
+  { allowOccupiedGoal = false, goal = null, roads, pavedRoads, occupied, trails } = {},
 ) {
   const kind = terrainAt(model, x, y);
   if (!kind || kind === 'water') return Infinity;
@@ -27,16 +27,19 @@ function walkTileCost(
     (occupied ?? new Set(model.occupiedKeys)).has(tileKey(x, y))
     && !(allowOccupiedGoal && goal?.x === x && goal?.y === y)
   ) return Infinity;
-  if ((roads ?? new Set(model.roadKeys)).has(tileKey(x, y))) return 0.6;
+  if ((roads ?? new Set(model.roadKeys)).has(tileKey(x, y))) {
+    return (pavedRoads ?? new Set(model.pavedRoadKeys ?? [])).has(tileKey(x, y)) ? 0.45 : 0.6;
+  }
   if ((trails ?? new Set((model.trailRows ?? []).map(row => row.key))).has(tileKey(x, y))) return 0.85;
   return kind === 'forest' ? 1.4 : 1;
 }
 
 function nearestWalkTarget(model, start, predicate, goal = null) {
   const roads = new Set(model.roadKeys);
+  const pavedRoads = new Set(model.pavedRoadKeys ?? []);
   const occupied = new Set(model.occupiedKeys);
   const trails = new Set((model.trailRows ?? []).map(row => row.key));
-  const costOptions = { roads, occupied, trails };
+  const costOptions = { roads, pavedRoads, occupied, trails };
   const indexOf = (x, y) => y * model.width + x;
   const distances = new Float64Array(model.width * model.height);
   distances.fill(Infinity);
@@ -82,9 +85,10 @@ function resourceDistanceField(model, job) {
   }
   if (cached[job]) return cached[job];
   const roads = new Set(model.roadKeys);
+  const pavedRoads = new Set(model.pavedRoadKeys ?? []);
   const occupied = new Set(model.occupiedKeys);
   const trails = new Set((model.trailRows ?? []).map(row => row.key));
-  const costOptions = { roads, occupied, trails };
+  const costOptions = { roads, pavedRoads, occupied, trails };
   const indexOf = (x, y) => y * model.width + x;
   const distances = new Float64Array(model.width * model.height);
   distances.fill(Infinity);
@@ -175,6 +179,8 @@ export function resourcePlacementEstimate(model, job, entrance) {
 }
 
 const INPUT_PRODUCERS = Object.freeze({
+  fisher2: Object.freeze(['fisher']),
+  shepherd: Object.freeze(['wheat', 'veg']),
   woodshop: Object.freeze(['logger']),
   charburner: Object.freeze(['logger']),
   saltworks: Object.freeze(['charburner']),
@@ -303,8 +309,7 @@ function rejection(model, job, entrance) {
   }
   if (terrain === 'forest') return '森そのものではなく森の際へ配置してください';
   if (terrain === 'rock') return '岩場そのものではなく岩場の際へ配置してください';
-  const required = job === 'fisher2' ? ['water', '魚粉小屋は水際にしか置けません']
-    : job === 'quarryman' ? ['rock', '採石場は岩場の際に置いてください']
+  const required = job === 'quarryman' ? ['rock', '採石場は岩場の際に置いてください']
         : job === 'miner' ? ['ore', '鉱山は鉄鉱床の2区画以内に置いてください']
           : job === 'collier' ? ['coal', '炭鉱は炭層の2区画以内に置いてください']
             : null;

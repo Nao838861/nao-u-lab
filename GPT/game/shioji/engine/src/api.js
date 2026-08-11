@@ -5,6 +5,7 @@ import {
   purchaseCompanyWoodCart,
   requestCompanyStockRelease,
   requestMainlandAid,
+  setCaravanEmployment,
   setCompanyStockTarget,
 } from "./econ.js";
 import {
@@ -21,6 +22,7 @@ import {
   placeCompanyLogisticsBuilding,
 } from "./world.js";
 import { executeMarketTrade, quoteMarketTrade } from "./market_network.js";
+import { configureCaravanRoute } from "./routes.js";
 
 function jsonClone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -63,6 +65,7 @@ function controllerSnapshot(state, { includePhysical = false } = {}) {
       height: physical.height,
       terrain: physical.terrain,
       roads: physical.roads,
+      pavedRoads: physical.pavedRoads ?? {},
       trails: physical.trails,
       roadWorksites: physical.roadWorksites,
       roadOrigin: physical.roadOrigin,
@@ -95,6 +98,10 @@ function viewSnapshot(state, { terrainAfterRevision = null } = {}) {
       },
       currentDay: economy.currentDay,
       directTrades: economy.directTrades ?? [],
+      caravans: economy.caravans ?? [],
+      caravanSalesPending: economy.caravanSalesPending ?? {},
+      companyCarts: economy.companyCarts ?? [],
+      cartStats: economy.cartStats ?? {},
       households: economy.households.map((household) => {
         const {
           productionHistory: _productionHistory,
@@ -120,6 +127,8 @@ function viewSnapshot(state, { terrainAfterRevision = null } = {}) {
       mainlandAid: economy.mainlandAid,
       marketStock: economy.marketStock,
       marketStockCost: economy.marketStockCost,
+      marketStockM: economy.marketStockM ?? {},
+      marketStockCostM: economy.marketStockCostM ?? {},
       natural: economy.natural,
       order: economy.order,
       orderOffer: economy.orderOffer,
@@ -160,6 +169,7 @@ function viewSnapshot(state, { terrainAfterRevision = null } = {}) {
       roadWorksites: physical.roadWorksites,
       roadRevision: physical.roadRevision ?? 0,
       roads: physical.roads,
+      pavedRoads: physical.pavedRoads ?? {},
       terrain: terrainAfterRevision === travelRevision ? null : physical.terrain,
       travelRevision,
       trails: physical.trails,
@@ -544,6 +554,25 @@ export function createEngineApi(
         return { ok: removeRoadTile(physical, op.x, op.y) };
       case "set_stock_target":
         return { ok: true, qty: setCompanyStockTarget(economy, op.goods, op.qty) };
+      case "set_caravan_employment":
+        return setCaravanEmployment(physical, {
+          buildingId: op.buildingId,
+          recruitment: op.recruitment,
+          wage: op.wage,
+        });
+      case "set_caravan_route": {
+        const actionDay = world.state.tick % 30 === 0
+          ? world.state.day + 1
+          : world.state.day;
+        return configureCaravanRoute(economy, physical, {
+          baseBuildingId: op.baseBuildingId,
+          destMarketId: op.destMarketId,
+          goodsOut: op.goodsOut,
+          goodsBack: op.goodsBack,
+          intervalDays: op.intervalDays,
+          day: actionDay,
+        });
+      }
       case "release_stock": {
         const job = requestCompanyStockRelease(economy, physical, op.goods, {
           day: world.state.day,

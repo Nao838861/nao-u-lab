@@ -1,4 +1,4 @@
-import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.44.4-export-balance';
+import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.45.5-caravan-integrity';
 
 export const GOODS_SHELF_LIFE_DAYS = Object.freeze({
   fish: 3,
@@ -9,12 +9,12 @@ const GOODS_DETAIL_FALLBACK_FACTS = Object.freeze({
   ore: '鉄鉱石は、石炭か木炭と製鉄所で銑鉄になります。',
   coal: '石炭は、製鉄と鍛冶の燃料になります。',
   bar: '銑鉄は、石炭か木炭と鍛冶屋で鉄材になります。',
-  iron: '鉄材は、家の発展に使います。',
-  stone: '石材は、道を舗装する材料です。',
+  iron: '鉄材は、鉄の道具、帆走漁具、高レベル施設の修繕に使います。',
+  stone: '石材は、道の舗装と高レベル施設の継続的な修繕に使います。',
   veg: '野菜は30日ほど持ち、塩があれば畑の家で漬物になります。',
-  meat: '肉は牧場で作る食料です。',
-  meal: '粉は魚粉屋で作り、麦畑と綿花畑の肥料になります。',
-  cloth: '布は牧場と綿花畑で作り、家の発展に使います。',
+  meat: '肉は牧場が麦か野菜を飼料にして作る食料です。',
+  meal: '魚粉は魚粉屋が魚を加工して作り、麦畑と綿花畑の肥料に使います。',
+  cloth: '布は牧場と綿花畑で作り、衣服のほか、漁網・帆・建物の修繕に使います。',
   oil: '油は本土から仕入れ、家の発展に使います。',
 });
 
@@ -64,12 +64,12 @@ export const GOODS_RECIPES = Object.freeze({
   wheat: recipe({ makers: ['wheat'], output: 'wheat' }),
   fish: recipe({ makers: ['fisher'], output: 'fish' }),
   veg: recipe({ makers: ['veg'], output: 'veg' }),
-  meat: recipe({ makers: ['shepherd'], output: 'meat' }),
+  meat: recipe({ makers: ['shepherd'], alternatives: [['wheat', 'veg']], output: 'meat' }),
   pres: recipe({
     makers: ['fisher'], inputs: ['fish', 'salt'], optional: ['char'], output: 'pres',
   }),
   pick: recipe({ makers: ['veg'], inputs: ['veg', 'salt'], output: 'pick' }),
-  meal: recipe({ makers: ['fisher2'], output: 'meal' }),
+  meal: recipe({ makers: ['fisher2'], inputs: ['fish'], output: 'meal' }),
   salt: recipe({ makers: ['saltworks'], inputs: ['char'], output: 'salt' }),
   char: recipe({ makers: ['charburner'], inputs: ['log'], output: 'char' }),
   cloth: recipe({ makers: ['shepherd', 'rapeseed'], output: 'cloth' }),

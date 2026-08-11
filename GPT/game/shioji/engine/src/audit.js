@@ -4,10 +4,13 @@ import {
   P,
   acceptCompanyOrder,
   companyCreditLimit,
+  constructionMaterialsFor,
   createHousehold,
   economicMaterialSnapshot,
   fundSettlementZone,
   localWood,
+  recordEconomicMaterialFlow,
+  setCaravanEmployment,
 } from "./econ.js";
 import {
   ECONOMIC_BUILDINGS,
@@ -18,9 +21,11 @@ import {
   buildingById,
   canPlaceBuilding,
   createPhysicalState,
+  depositInventory,
   findBuildingSiteForEntrance,
   hasRoad,
   makeFlowIslandTerrain,
+  makeMultiMarketTerrain,
   pathLen,
 } from "./physical.js";
 import { createWorld, ensureCompanyLogisticsSites } from "./world.js";
@@ -238,7 +243,7 @@ export function canPlaceSettlement(economy, physical, job, x, y) {
   if (terrain === "forest") return [false, "森を切り開く仕組みはまだありません——森の際に"];
   if (terrain === "rock") return [false, "岩場の上には建てられません——際に"];
   if (
-    (job === "fisher" || job === "fisher2")
+    job === "fisher"
     && !nearTerrain(physical, x, y, "water", 2)
   ) return [false, "漁師は水際にしか住めません"];
   if (job === "logger" && !nearTerrain(physical, x, y, "forest", 2)) {
@@ -300,12 +305,13 @@ export function addAuditZone(world, job, x, y, buildingX = null, buildingY = nul
     canPlace: () => [true, ""],
   });
   if (!funded) return false;
-  const input = Object.fromEntries(GOODS.map((goods) => [goods, Number.MAX_SAFE_INTEGER]));
+  const shelf = Object.fromEntries(GOODS.map((goods) => [goods, Number.MAX_SAFE_INTEGER]));
   const placed = addBuilding(physical, job, site.x, site.y, {
     definitions: ECONOMIC_BUILDINGS,
     entrance: { x, y },
     requireRoad: false,
-    caps: { input },
+    caps: { input: shelf, construction: shelf, repair: shelf },
+    constructionRequired: constructionMaterialsFor(job),
   });
   if (!placed.ok) throw new Error(`区画建物の配置不可: ${job}@${x},${y}/${placed.reason}`);
   economy.zones.at(-1).buildingId = placed.building.id;
@@ -372,6 +378,342 @@ export function buildBaseCity(seed, { marketEntrance = E_STABLE_MARKET_ANCHOR } 
       throw new Error(`基準都市の入口pathLenが帯外: ${zone.job}@${zone.x},${zone.y}=${distance}`);
     }
   }
+  return world;
+}
+
+export const CARAVAN_SLICE_SIZE = Object.freeze({ width: 96, height: 64 });
+export const CARAVAN_SLICE_PROVISION_DAYS = 360;
+export const CARAVAN_SLICE_CARTWRIGHT_PROVISION_DAYS = 420;
+export const CARAVAN_SLICE_CARTWRIGHT_START_CARTS = Math.ceil(
+  CARAVAN_SLICE_CARTWRIGHT_PROVISION_DAYS / P.CART_WORK_DAYS,
+);
+export const CARAVAN_SLICE_CARTWRIGHT_OWN_TOOLS = (
+  Math.ceil(CARAVAN_SLICE_CARTWRIGHT_PROVISION_DAYS / P.WORK_TOOL_WOOD_DAYS)
+    * P.WORK_TOOL_WOOD_COST
+  + CARAVAN_SLICE_CARTWRIGHT_PROVISION_DAYS * P.D_TOOL
+);
+export const CARAVAN_SLICE_SALTWORKS_CHARCOAL = 360;
+// 2人世帯ではなく「募集2人」に対する一人分の日給。
+// 2台16荷の往復便が価格差を拾えば黒字化を狙える初期値にする。
+export const CARAVAN_SLICE_INN_EMPLOYMENT = Object.freeze({ recruitment: 2, wage: 0.75 });
+export const CARAVAN_SLICE_MARKETS = Object.freeze({
+  main: Object.freeze({ id: "main", name: "母港市場", entrance: Object.freeze({ x: 31, y: 51 }) }),
+  fishery: Object.freeze({ id: "fishery", name: "漁郷市場", entrance: Object.freeze({ x: 78, y: 51 }) }),
+});
+
+const CARAVAN_FISHERY_LAYOUT = Object.freeze([
+  Object.freeze(["fisher", 67, 58, 66, 55]),
+  Object.freeze(["fisher", 71, 58, 70, 55]),
+  Object.freeze(["fisher", 85, 58, 84, 55]),
+  Object.freeze(["saltworks", 87, 51, 88, 50]),
+]);
+
+const CARAVAN_INN_LAYOUT = Object.freeze(["carter", 42, 44, 42, 41]);
+const CARAVAN_CARTWRIGHT_LAYOUT = Object.freeze(["cartwright", 45, 42, 46, 41]);
+// 人口200級の母港で、木工房2軒×木こり3軒 + 炭焼き1軒×木こり1軒を満たす。
+// 荷車工房はこの余力から日量0.5荷の丸太を使い、隊商の消耗品需要へつなぐ。
+const CARAVAN_MAIN_EXPANSION_LAYOUT = Object.freeze([
+  Object.freeze(["logger", 39, 37, 38, 34]),
+  Object.freeze(["logger", 43, 37, 42, 34]),
+  Object.freeze(["logger", 47, 37, 46, 34]),
+  Object.freeze(["logger", 39, 32, 38, 29]),
+  Object.freeze(["logger", 43, 32, 42, 29]),
+  Object.freeze(["logger", 47, 32, 46, 29]),
+  Object.freeze(["woodshop", 39, 37, 38, 38]),
+  Object.freeze(["cartwright", 43, 37, 42, 38]),
+]);
+
+const CARAVAN_FISHERY_MARKET_SITE = Object.freeze({ x: 76, y: 52 });
+const CARAVAN_ROAD_POLYLINES = Object.freeze([
+  Object.freeze([[31, 51], [52, 51], [52, 40], [61, 40], [67, 51], [78, 51]]),
+  Object.freeze([[67, 58], [69, 58], [69, 51], [78, 51]]),
+  Object.freeze([[71, 58], [69, 58]]),
+  Object.freeze([[85, 58], [82, 58], [82, 51], [78, 51]]),
+  Object.freeze([[78, 51], [87, 51]]),
+  Object.freeze([[38, 44], [42, 44], [45, 44], [45, 42]]),
+  Object.freeze([[38, 37], [61, 37]]),
+  Object.freeze([[38, 32], [50, 32], [50, 37], [61, 37]]),
+]);
+
+function clearCaravanRectangle(terrain, x, y, width, height) {
+  for (let offsetY = 0; offsetY < height; offsetY += 1) {
+    for (let offsetX = 0; offsetX < width; offsetX += 1) {
+      const tile = terrain[y + offsetY]?.[x + offsetX];
+      if (tile && tile.kind !== "water") tile.kind = "grass";
+    }
+  }
+}
+
+function makeCaravanSliceTerrain(mainPlan) {
+  const { width, height } = CARAVAN_SLICE_SIZE;
+  const terrain = makeMultiMarketTerrain(width, height);
+  for (const [type, site] of Object.entries(mainPlan.logisticsSites)) {
+    const definition = ECONOMIC_BUILDINGS[type];
+    clearCaravanRectangle(terrain, site.x, site.y, definition.w, definition.h);
+  }
+  for (const [job, , , buildingX, buildingY] of mainPlan.layout) {
+    const definition = ECONOMIC_BUILDINGS[job];
+    clearCaravanRectangle(terrain, buildingX, buildingY, definition.w, definition.h);
+  }
+  clearCaravanRectangle(
+    terrain,
+    CARAVAN_INN_LAYOUT[3],
+    CARAVAN_INN_LAYOUT[4],
+    ECONOMIC_BUILDINGS.carter.w,
+    ECONOMIC_BUILDINGS.carter.h,
+  );
+  clearCaravanRectangle(
+    terrain,
+    CARAVAN_CARTWRIGHT_LAYOUT[3],
+    CARAVAN_CARTWRIGHT_LAYOUT[4],
+    ECONOMIC_BUILDINGS.cartwright.w,
+    ECONOMIC_BUILDINGS.cartwright.h,
+  );
+  for (const [job, , , buildingX, buildingY] of CARAVAN_MAIN_EXPANSION_LAYOUT) {
+    const definition = ECONOMIC_BUILDINGS[job];
+    clearCaravanRectangle(terrain, buildingX, buildingY, definition.w, definition.h);
+  }
+  clearCaravanRectangle(
+    terrain,
+    CARAVAN_FISHERY_MARKET_SITE.x,
+    CARAVAN_FISHERY_MARKET_SITE.y,
+    ECONOMIC_BUILDINGS.market.w,
+    ECONOMIC_BUILDINGS.market.h,
+  );
+  for (const [job, , , buildingX, buildingY] of CARAVAN_FISHERY_LAYOUT) {
+    const definition = ECONOMIC_BUILDINGS[job];
+    clearCaravanRectangle(terrain, buildingX, buildingY, definition.w, definition.h);
+  }
+  return terrain;
+}
+
+function addScenarioRoads(physical, polylines, label) {
+  for (const polyline of polylines) {
+    for (let index = 1; index < polyline.length; index += 1) {
+      const [fromX, fromY] = polyline[index - 1];
+      const [toX, toY] = polyline[index];
+      const road = addRoadLine(physical, { x: fromX, y: fromY }, { x: toX, y: toY });
+      if (!road.ok && !road.cells.every(({ x, y }) => hasRoad(physical, x, y))) {
+        throw new Error(`${label}の道路敷設不可: ${fromX},${fromY}→${toX},${toY}`);
+      }
+    }
+  }
+}
+
+function occupyScenarioZone(world, zone, marketId) {
+  const { economy, physical } = world.state;
+  const household = createHousehold(economy, { job: zone.job, x: zone.x, y: zone.y });
+  household.buildingId = zone.buildingId;
+  household.marketId = marketId;
+  zone.filled = true;
+  const building = buildingById(physical, zone.buildingId);
+  if (building) {
+    building.ownerHouseholdId = household.id;
+    building.constructionConsumed = true;
+  }
+  return household;
+}
+
+export function buildCaravanSliceWorld(seed) {
+  const stablePlan = makeStableCityPlan(CARAVAN_SLICE_MARKETS.main.entrance);
+  const mainLayout = Object.freeze(stablePlan.layout.filter(([job]) => job !== "fisher"));
+  const mainPlan = {
+    ...stablePlan,
+    // 漁郷の帰り荷が母港の実需要を満たす。母港にも漁師を置くと同じ魚が競合し、
+    // 価格差でなく初期配置だけを理由に帰り荷が無意味になるため、この開始条件では置かない。
+    layout: mainLayout,
+    logisticsSites: {
+      ...stablePlan.logisticsSites,
+      port: {
+        x: stablePlan.logisticsSites.port.x,
+        y: 57,
+        entrance: { x: stablePlan.logisticsSites.port.entrance.x, y: 56 },
+      },
+    },
+  };
+  const { width, height } = CARAVAN_SLICE_SIZE;
+  const physical = createPhysicalState({
+    width,
+    height,
+    terrain: makeCaravanSliceTerrain(mainPlan),
+  });
+  const world = createWorld({
+    seed,
+    initialCompanyMoney: P.TREASURY0
+      + P.BUILD_COST * (
+        CARAVAN_FISHERY_LAYOUT.length + CARAVAN_MAIN_EXPANSION_LAYOUT.length
+      ),
+    physicalState: physical,
+    market: { ...mainPlan.logisticsSites.market.entrance },
+    warehouse: { ...mainPlan.logisticsSites.warehouse.entrance },
+    port: { ...mainPlan.logisticsSites.port.entrance },
+    logisticsSites: mainPlan.logisticsSites,
+    marketNetwork: {
+      markets: [CARAVAN_SLICE_MARKETS.main, CARAVAN_SLICE_MARKETS.fishery],
+    },
+  });
+  const { economy } = world.state;
+  const mainLogistics = ensureCompanyLogisticsSites(economy, physical);
+  const mainRecord = world.state.marketNetwork.markets.find(
+    (market) => market.id === CARAVAN_SLICE_MARKETS.main.id,
+  );
+  mainRecord.buildingId = mainLogistics.market.id;
+  mainLogistics.market.marketId = CARAVAN_SLICE_MARKETS.main.id;
+  for (const [job, x, y, buildingX, buildingY] of mainPlan.layout) {
+    if (!addAuditZone(world, job, x, y, buildingX, buildingY)) {
+      throw new Error(`母港圏の配置不可: ${job}@${x},${y}`);
+    }
+  }
+  if (!addAuditZone(world, ...CARAVAN_INN_LAYOUT)) {
+    throw new Error(`母港圏の隊商宿配置不可: ${CARAVAN_INN_LAYOUT[1]},${CARAVAN_INN_LAYOUT[2]}`);
+  }
+  if (!addAuditZone(world, ...CARAVAN_CARTWRIGHT_LAYOUT)) {
+    throw new Error(
+      `母港圏の荷車工房配置不可: ${CARAVAN_CARTWRIGHT_LAYOUT[1]},${CARAVAN_CARTWRIGHT_LAYOUT[2]}`,
+    );
+  }
+  for (const layout of CARAVAN_MAIN_EXPANSION_LAYOUT) {
+    if (!addAuditZone(world, ...layout)) {
+      throw new Error(`母港圏の増設配置不可: ${layout[0]}@${layout[1]},${layout[2]}`);
+    }
+  }
+
+  const unlimited = Object.fromEntries(GOODS.map((goods) => [goods, Number.MAX_SAFE_INTEGER]));
+  const fisheryMarket = addBuilding(
+    physical,
+    "market",
+    CARAVAN_FISHERY_MARKET_SITE.x,
+    CARAVAN_FISHERY_MARKET_SITE.y,
+    {
+      definitions: ECONOMIC_BUILDINGS,
+      fixed: true,
+      requireRoad: false,
+      entrance: { ...CARAVAN_SLICE_MARKETS.fishery.entrance },
+      roles: [`market:${CARAVAN_SLICE_MARKETS.fishery.id}`],
+      marketId: CARAVAN_SLICE_MARKETS.fishery.id,
+      caps: { inbound: unlimited, outbound: unlimited, pickup: unlimited },
+    },
+  );
+  if (!fisheryMarket.ok) throw new Error(`漁郷市場の配置不可: ${fisheryMarket.reason}`);
+  const fisheryRecord = world.state.marketNetwork.markets.find(
+    (market) => market.id === CARAVAN_SLICE_MARKETS.fishery.id,
+  );
+  fisheryRecord.buildingId = fisheryMarket.building.id;
+  const fisheryZoneStart = economy.zones.length;
+  for (const [job, x, y, buildingX, buildingY] of CARAVAN_FISHERY_LAYOUT) {
+    if (!addAuditZone(world, job, x, y, buildingX, buildingY)) {
+      const check = canPlaceBuilding(physical, job, buildingX, buildingY, {
+        definitions: ECONOMIC_BUILDINGS,
+        entrance: { x, y },
+        requireRoad: false,
+      });
+      throw new Error(
+        `漁郷の配置不可: ${job}@${x},${y}/${check.reason ?? "資金不足"}`,
+      );
+    }
+  }
+  addScenarioRoads(physical, mainPlan.roadPolylines, "母港圏");
+  addScenarioRoads(physical, [[[34, 55], [34, 56]]], "母港圏");
+  addScenarioRoads(physical, CARAVAN_ROAD_POLYLINES, "母港・漁郷間");
+
+  const mainZones = economy.zones.slice(0, fisheryZoneStart);
+  const fisheryZones = economy.zones.slice(fisheryZoneStart);
+  const mainHouseholds = mainZones.map((zone) => occupyScenarioZone(world, zone, "main"));
+  const fisheryHouseholds = fisheryZones.map(
+    (zone) => occupyScenarioZone(world, zone, CARAVAN_SLICE_MARKETS.fishery.id),
+  );
+  const motherProvision = mainHouseholds[0];
+  const caravanInnZone = mainZones.find((zone) => zone.job === "carter");
+  const caravanInn = buildingById(physical, caravanInnZone?.buildingId);
+  const employment = setCaravanEmployment(physical, {
+    buildingId: caravanInn?.id,
+    ...CARAVAN_SLICE_INN_EMPLOYMENT,
+  });
+  if (!employment.ok) throw new Error(`隊商宿の雇用設定不可: ${employment.reason}`);
+  const cartwrightHouseholds = mainHouseholds.filter(
+    (household) => household.job === "cartwright",
+  );
+  if (cartwrightHouseholds.length < 2) throw new Error("母港圏の荷車工房世帯が不足しています");
+  for (const household of cartwrightHouseholds) {
+    const cartwrightBuilding = buildingById(physical, household.buildingId);
+    for (const [goods, qty] of [
+      ["log", P.CART_LOG * CARAVAN_SLICE_CARTWRIGHT_START_CARTS],
+      [
+        "tools",
+        P.CART_TOOLS * CARAVAN_SLICE_CARTWRIGHT_START_CARTS
+          + CARAVAN_SLICE_CARTWRIGHT_OWN_TOOLS,
+      ],
+    ]) {
+      depositInventory(cartwrightBuilding, "input", goods, qty);
+      recordEconomicMaterialFlow(
+        economy,
+        goods,
+        "imp",
+        qty,
+        `母港荷車工房${household.id}の入植時${goods}`,
+        { includeInDaily: false },
+      );
+    }
+  }
+  for (const household of mainHouseholds) {
+    const provisionDays = household.job === "cartwright"
+      ? CARAVAN_SLICE_CARTWRIGHT_PROVISION_DAYS
+      : CARAVAN_SLICE_PROVISION_DAYS;
+    const provision = household.members.length * provisionDays;
+    household.pantry.wheat += provision;
+    recordEconomicMaterialFlow(
+      economy,
+      "wheat",
+      "imp",
+      provision,
+      `母港世帯${household.id}の入植時保存食`,
+      { includeInDaily: false },
+    );
+  }
+  for (const household of fisheryHouseholds) {
+    motherProvision.pantry.wheat += household.pantry.wheat;
+    household.pantry.wheat = 0;
+    const preservedFood = household.members.length * CARAVAN_SLICE_PROVISION_DAYS;
+    household.pantry.meat += preservedFood;
+    recordEconomicMaterialFlow(
+      economy,
+      "meat",
+      "imp",
+      preservedFood,
+      `漁郷世帯${household.id}の入植時保存食`,
+      { includeInDaily: false },
+    );
+    household.marketEntrance = { ...CARAVAN_SLICE_MARKETS.fishery.entrance };
+    household.marketBuildingId = fisheryMarket.building.id;
+    if (household.job === "saltworks") {
+      depositInventory(
+        buildingById(physical, household.buildingId),
+        "input",
+        "char",
+        CARAVAN_SLICE_SALTWORKS_CHARCOAL,
+      );
+      recordEconomicMaterialFlow(
+        economy,
+        "char",
+        "imp",
+        CARAVAN_SLICE_SALTWORKS_CHARCOAL,
+        `漁郷世帯${household.id}の入植時燃料`,
+        { includeInDaily: false },
+      );
+    }
+  }
+  economy.jobSelectionPool = [...new Set([
+    ...E_STABLE_JOBS,
+    "carter",
+    "cartwright",
+    ...CARAVAN_FISHERY_LAYOUT.map(([job]) => job),
+  ])];
+  world.state.caravanSlice = {
+    id: "two-markets",
+    mainMarketId: CARAVAN_SLICE_MARKETS.main.id,
+    fisheryMarketId: CARAVAN_SLICE_MARKETS.fishery.id,
+    innBuildingId: caravanInn.id,
+  };
   return world;
 }
 

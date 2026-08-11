@@ -80,10 +80,13 @@ export function objectiveActionFor(objective, model) {
       : { kind: 'tool', tool: 'road', label: '倉庫へ道を結ぶ' };
   }
   if (objective.id === 'place-island-food') {
-    if (buildingCount(model, 'fisher') === 0) {
+    if (buildingCount(model, 'fisher') < 2) {
       return { kind: 'building', job: 'fisher', label: '漁師を選ぶ' };
     }
-    return { kind: 'building', job: 'veg', label: '野菜畑を選ぶ' };
+    if (buildingCount(model, 'veg') < 2) {
+      return { kind: 'building', job: 'veg', label: '野菜畑を選ぶ' };
+    }
+    return { kind: 'building', job: 'logger', label: '木こりを選ぶ' };
   }
   if (objective.id === 'first-settlers-arrive') {
     return { kind: 'speed', speed: 3, label: '運び手を見ながら一日毎秒にする' };

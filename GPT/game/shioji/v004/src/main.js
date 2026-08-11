@@ -1,47 +1,48 @@
-import { IsometricCamera } from './camera.js?v=v004.44.4-export-balance';
-import { SimulationClock } from './clock.js?v=v004.44.4-export-balance';
-import { createBoundaryEvents } from './boundary_events.js?v=v004.44.4-export-balance';
+import { IsometricCamera } from './camera.js?v=v004.45.5-caravan-integrity';
+import { SimulationClock } from './clock.js?v=v004.45.5-caravan-integrity';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.45.5-caravan-integrity';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.44.4-export-balance';
+} from './config.js?v=v004.45.5-caravan-integrity';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.44.4-export-balance';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.44.4-export-balance';
-import { developmentMapView } from './development_map.js?v=v004.44.4-export-balance';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.44.4-export-balance';
-import { formatElenaSpeech } from './elena_text.js?v=v004.44.4-export-balance';
+} from './display_batch.js?v=v004.45.5-caravan-integrity';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.45.5-caravan-integrity';
+import { developmentMapView } from './development_map.js?v=v004.45.5-caravan-integrity';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.45.5-caravan-integrity';
+import { formatElenaSpeech } from './elena_text.js?v=v004.45.5-caravan-integrity';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.44.4-export-balance';
+} from './food_readability.js?v=v004.45.5-caravan-integrity';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.44.4-export-balance';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.44.4-export-balance';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.44.4-export-balance';
-import { goodsDetail } from './goods_detail.js?v=v004.44.4-export-balance';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.44.4-export-balance';
-import { WorldPresentation } from './presentation.js?v=v004.44.4-export-balance';
-import { Renderer } from './renderer.js?v=v004.44.4-export-balance';
+} from './keyboard.js?v=v004.45.5-caravan-integrity';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.45.5-caravan-integrity';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.45.5-caravan-integrity';
+import { goodsDetail } from './goods_detail.js?v=v004.45.5-caravan-integrity';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.45.5-caravan-integrity';
+import { WorldPresentation } from './presentation.js?v=v004.45.5-caravan-integrity';
+import { Renderer } from './renderer.js?v=v004.45.5-caravan-integrity';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.44.4-export-balance';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.44.4-export-balance';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.44.4-export-balance';
+} from './save_game.js?v=v004.45.5-caravan-integrity';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.45.5-caravan-integrity';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.45.5-caravan-integrity';
 import {
   GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRow, supplyDemandRows,
-} from './supply_demand.js?v=v004.44.4-export-balance';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.44.4-export-balance';
+} from './supply_demand.js?v=v004.45.5-caravan-integrity';
+import { orderQuote } from './tutorial_content.js?v=v004.45.5-caravan-integrity';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.45.5-caravan-integrity';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.44.4-export-balance';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.44.4-export-balance';
+} from './ui_guidance.js?v=v004.45.5-caravan-integrity';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.45.5-caravan-integrity';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -106,6 +107,7 @@ let lastRunningSpeed = clock.speedIndex || 1;
 let currentSecretaryRoute = null;
 let selectedSupplyGoods = null;
 let focusedSupplyGoods = null;
+let selectedCaravanId = null;
 let lastTutorialObjective = tutorialDirector?.currentObjective() ?? null;
 let currentTutorialHandoff = null;
 let tutorialHandoffTimer = null;
@@ -148,7 +150,9 @@ const uiMetrics = {
   batchedTicks: 0,
 };
 camera.setWorldSize(model.width, model.height);
-if (START_MODES[startMode].blank) camera.focus(model.economyMarket.x + 0.5, model.economyMarket.y + 0.5);
+if (START_MODES[startMode].blank || startMode === 'caravan') {
+  camera.focus(model.economyMarket.x + 0.5, model.economyMarket.y + 0.5);
+}
 
 function formatNumber(value) {
   return Math.round(value).toLocaleString('ja-JP');
@@ -349,7 +353,9 @@ function formatSupplyDays(days) {
 }
 
 const SUPPLY_SOURCE_LABELS = Object.freeze({
-  households: '暮らし', order: '本国注文', winter: '冬支度', other: 'その他の利用',
+  households: '暮らし', order: '本国注文', winter: '冬支度',
+  local_construction: '現地建設', building_repair: '建物修繕', road_paving: '石畳工事',
+  work_tools: '作業道具', fishing_gear: '木舟・漁網・帆', fisher2: '魚粉加工', other: 'その他の利用',
 });
 
 function supplySourceLabel(source) {
@@ -544,6 +550,7 @@ function renderHud() {
   });
   renderBuildDock();
   if (!$('#company-sheet').hidden && !isEditableTarget(document.activeElement)) renderCompanySheet();
+  if (!$('#caravan-sheet').hidden) renderCaravanPanel();
   if (!$('#building-sheet').hidden) renderBuildingSheet();
   if (!$('#island-sheet').hidden) renderIslandSheet();
   if (!$('#supply-sheet').hidden) renderSupplySheet();
@@ -1050,11 +1057,128 @@ function renderCartPanel() {
   });
 }
 
+function caravanMonthLabel(month) {
+  return `第${Math.floor(month / 12) + 1}期 ${month % 12 + 1}月`;
+}
+
+function caravanMoney(amount, { signed = false } = {}) {
+  const denari = toDenari(amount ?? 0);
+  return `${signed && denari > 0 ? '+' : ''}${formatQuantity(denari)}デナリ`;
+}
+
+function caravanCargoMarkup(manifest) {
+  const rows = Object.entries(manifest ?? {}).filter(([, qty]) => qty > 1e-9);
+  return rows.length ? rows.map(([goods, qty]) => (
+    `<span class="goods-inline">${goodsIconMarkup(goods)}<span>${escapeHtml(GOODS_LABELS[goods] ?? goods)} ${formatQuantity(qty)}荷</span></span>`
+  )).join('<span aria-hidden="true">・</span>') : '<span class="caravan-empty-load">空荷</span>';
+}
+
+function caravanForecastText(quote) {
+  if (!quote) return '目的地を選ぶと、現在の道路で所要日数を見積もります。';
+  if (!quote.reachable) return '荷車道がつながっていないため、まだ運行できません。';
+  if (quote.crew <= 0) {
+    return `片道 約${formatQuantity(quote.oneWayDays)}日。御者がいないため、まだ運行できません。`;
+  }
+  return `片道 約${formatQuantity(quote.oneWayDays)}日・現在${quote.crew}人なら1便 最大${formatQuantity(quote.capacity)}荷`;
+}
+
+function renderCaravanPanel() {
+  const routes = model.caravans ?? [];
+  if (!routes.some(route => route.id === selectedCaravanId)) {
+    selectedCaravanId = routes[0]?.id ?? null;
+  }
+  const signature = JSON.stringify({
+    day: model.day,
+    selectedCaravanId,
+    routes: routes.map(route => ({
+      id: route.id,
+      state: route.state,
+      status: route.status,
+      nextDepartDay: route.nextDepartDay,
+      currentTrip: route.currentTrip,
+      recentTrips: route.recentTrips,
+      accounting: route.accounting,
+      cartAssetIds: route.cartAssetIds,
+      goodsOut: route.goodsOut,
+      goodsBack: route.goodsBack,
+    })),
+  });
+  renderIfChanged('caravan-panel', signature, () => {
+    const panel = $('#caravan-panel');
+    if (!routes.length) {
+      panel.innerHTML = `
+        <h3>隊商の収支</h3>
+        <p class="sheet-note">隊商宿を選び、目的地と行き荷・帰り荷を決めると、ここで路線ごとの採算を確認できます。</p>`;
+      uiMetrics.domWrites += 1;
+      return;
+    }
+    const selected = routes.find(route => route.id === selectedCaravanId) ?? routes[0];
+    const list = routes.map(route => {
+      const current = route.accounting.current;
+      return `
+        <button type="button" class="caravan-row${route.id === selected.id ? ' selected' : ''}" data-company-action="select-caravan" data-caravan-id="${escapeHtml(route.id)}">
+          <span><b>${escapeHtml(route.name)}</b><small>${escapeHtml(route.baseMarketName)} → ${escapeHtml(route.destMarketName)}</small></span>
+          <em data-state="${escapeHtml(route.status.key)}">${escapeHtml(route.status.label)}</em>
+          <span class="caravan-row-profit"><small>今月</small><b class="${current.profit >= 0 ? 'plus' : 'minus'}">${caravanMoney(current.profit, { signed: true })}</b></span>
+          <span class="caravan-row-profit"><small>年累計</small><b class="${route.accounting.fiscalProfit >= 0 ? 'plus' : 'minus'}">${caravanMoney(route.accounting.fiscalProfit, { signed: true })}</b></span>
+        </button>`;
+    }).join('');
+    const rows = [...selected.accounting.rows];
+    if (!rows.some(row => row.month === selected.accounting.currentMonth)) {
+      rows.push(selected.accounting.current);
+    }
+    rows.sort((left, right) => right.month - left.month);
+    const monthly = rows.map(row => `
+      <div class="caravan-ledger-row">
+        <b>${caravanMonthLabel(row.month)}</b>
+        <span><small>売上</small>${caravanMoney(row.sales)}</span>
+        <span><small>仕入</small>${caravanMoney(row.procurement)}</span>
+        <span><small>固定給</small>${caravanMoney(row.wages)}</span>
+        <span><small>荷車</small>${caravanMoney(row.cartCosts)}</span>
+        <strong class="${row.profit >= 0 ? 'plus' : 'minus'}">${caravanMoney(row.profit, { signed: true })}</strong>
+      </div>`).join('');
+    const trip = selected.recentTrips.at(-1) ?? selected.currentTrip;
+    const tripSales = trip?.retailSales ?? 0;
+    const tripProfit = trip
+      ? tripSales - (trip.procurement ?? 0) - (trip.wages ?? 0) - (trip.cartCosts ?? 0)
+      : 0;
+    const tripMarkup = trip ? `
+      <div class="caravan-trip-heading"><b>第${trip.tripNumber}便</b><small>${trip.departedDay}日出発${trip.returnedDay ? `・${trip.returnedDay}日帰着` : '・運行中'}</small></div>
+      <p><small>行き荷</small>${caravanCargoMarkup(trip.outbound)}</p>
+      <p><small>帰り荷</small>${caravanCargoMarkup(trip.returning)}</p>
+      <div class="caravan-trip-costs">
+        <span><small>売上（現在まで）</small><b>${caravanMoney(tripSales)}</b></span>
+        <span><small>仕入</small><b>${caravanMoney(trip.procurement)}</b></span>
+        <span><small>固定給</small><b>${caravanMoney(trip.wages)}</b></span>
+        <span><small>荷車</small><b>${caravanMoney(trip.cartCosts)}</b></span>
+        <span><small>差引（現在まで）</small><b class="${tripProfit >= 0 ? 'plus' : 'minus'}">${caravanMoney(tripProfit, { signed: true })}</b></span>
+      </div>` : '<p class="sheet-note">まだ帰着した便はありません。</p>';
+    const nextText = ['outbound', 'returning'].includes(selected.state)
+      ? `第${selected.currentTrip?.tripNumber ?? '—'}便が運行中`
+      : selected.daysUntilDeparture === 0 ? '出発日です' : `次の出発まで${selected.daysUntilDeparture}日`;
+    panel.innerHTML = `
+      <h3>隊商の収支</h3>
+      <p class="sheet-note">売上は、到着品を住民が実際に買った時だけ計上します。</p>
+      <div class="caravan-list">${list}</div>
+      <div class="caravan-detail">
+        <div class="caravan-detail-title"><span><b>${escapeHtml(selected.name)}</b><small>${escapeHtml(selected.baseMarketName)} → ${escapeHtml(selected.destMarketName)}・${nextText}</small></span><em data-state="${escapeHtml(selected.status.key)}">${escapeHtml(selected.status.label)}</em></div>
+        <div class="caravan-load-plan"><span><small>行き荷</small>${selected.goodsOut.map(goodsIconMarkup).join('') || 'なし'}</span><span><small>帰り荷</small>${selected.goodsBack.map(goodsIconMarkup).join('') || 'なし'}</span><span><small>運行間隔</small><b>${selected.intervalDays}日</b></span><span><small>御者と荷車</small><b>${selected.currentTrip?.crew ?? selected.cartAssetIds.length}人・${selected.cartAssetIds.length}台</b></span></div>
+        <h4>月ごとの収支</h4>
+        <div class="caravan-ledger">${monthly}</div>
+        <h4>直近便の内訳</h4>
+        <div class="caravan-trip">${tripMarkup}</div>
+        <div class="order-actions"><button type="button" data-company-action="open-caravan-base" data-building-id="${escapeHtml(selected.baseBuildingId)}">隊商宿で路線を確認する</button></div>
+      </div>`;
+    uiMetrics.domWrites += 1;
+  });
+}
+
 function renderCompanyOrder() {
   const offer = model.orderOffer;
   const active = model.activeOrder;
+  const quote = offer ? orderQuote(model) : null;
   const signature = JSON.stringify({
-    day: model.day, offer, active, dismissedOfferKey, lowest: offer ? model.marketLowest[offer.g] : null,
+    day: model.day, offer, active, dismissedOfferKey, quote,
   });
   renderIfChanged('company-order', signature, () => {
     if (active) {
@@ -1072,14 +1196,14 @@ function renderCompanyOrder() {
         <p class="order-goods">${goodsIconMarkup(offer.g)}<span>${GOODS_LABELS[offer.g] ?? offer.g} ${formatQuantity(offer.qty)}荷。島の状態と操作記録は変えず、期限まで観察できます。</span></p>
         <div class="order-actions"><button type="button" data-company-action="reconsider">再検討する</button></div>`;
     } else if (offer) {
-      const cheapest = model.marketLowest[offer.g];
-      const marketText = Number.isFinite(cheapest)
-        ? `${formatQuantity(cheapest * 10)}デナリ`
-        : '市場在庫なし';
+      const sourceText = Number.isFinite(quote.marketUnitCost)
+        ? `${formatQuantity(quote.marketUnitCost * 10)}デナリ`
+        : `全量を調達できません（現在 ${formatQuantity(quote.marketAvailable)} / ${formatQuantity(offer.qty)}荷）`;
       $('#order-panel').innerHTML = `
         <h3>本国から注文状</h3>
         <p class="order-goods"><b>${goodsIconMarkup(offer.g)}<span>${GOODS_LABELS[offer.g] ?? offer.g} ${formatQuantity(offer.qty)}荷</span></b>・期限 ${offer.due}日目</p>
-        <p>完遂決済単価 ${formatQuantity(offer.price * 1.25 * 10)}デナリ（注文基準 ${formatQuantity(offer.price * 10)}） / 市場最安 ${marketText}</p>
+        <p>完遂決済単価 ${formatQuantity(offer.price * 1.25 * 10)}デナリ（注文基準 ${formatQuantity(offer.price * 10)}） / 全量仕入原価 ${sourceText}</p>
+        <p>会社倉庫の在庫を先に使い、不足分を安い屋台から全${formatQuantity(offer.qty)}荷集める見積りです。</p>
         <div class="order-actions">
           <button class="accept" type="button" data-company-action="accept-order">受諾する</button>
           <button class="reject" type="button" data-company-action="reject-order">拒否する</button>
@@ -1500,6 +1624,7 @@ function renderBuildingSheet() {
   const building = model.buildings.find(row => row.id === selectedBuildingId);
   if (!building) return false;
   const household = model.households.find(row => row.id === building.ownerHouseholdId) ?? null;
+  const caravanRoute = model.caravans?.find(route => route.baseBuildingId === building.id) ?? null;
   const selectedConversion = model.conversionEconomics.find(row => row.buildingId === building.id) ?? null;
   const roadConnected = model.roadConnection?.buildings
     ?.find(row => row.id === building.id)?.connected ?? true;
@@ -1508,6 +1633,7 @@ function renderBuildingSheet() {
     household,
     roadConnected,
     conversion: selectedConversion,
+    caravanRoute,
     companyStock: building.roles?.includes('warehouse') ? model.companyStock : null,
     companyCosts: building.roles?.includes('warehouse') ? model.companyStockAverageCosts : null,
   });
@@ -1519,6 +1645,58 @@ function renderBuildingSheet() {
   uiMetrics.componentRenders += 1;
   const jobLabel = JOB_LABELS[building.type] ?? building.type;
   const family = household?.familyName ? `${household.familyName}家` : household ? `世帯${household.id}` : null;
+  const employmentPanel = $('#building-caravan-employment');
+  employmentPanel.hidden = building.type !== 'carter';
+  if (building.type === 'carter') {
+    const employment = building.caravanEmployment ?? { recruitment: 1, wage: 1 };
+    const wageDenari = employment.wage * 10;
+    const crew = building.caravanCrew ?? 0;
+    employmentPanel.innerHTML = `
+      <h3>隊商の雇用</h3>
+      <p>この宿に暮らす家族から御者を募ります。便が止まっている日も、充足人数分の固定給を会社が支払います。</p>
+      <div class="caravan-employment-dials">
+        <label><span><b>募集人数</b><output data-caravan-recruitment-output>${employment.recruitment}人</output></span>
+          <input type="range" min="0" max="12" step="1" value="${employment.recruitment}" data-caravan-recruitment aria-label="隊商の募集人数"></label>
+        <label><span><b>1人1日の給料</b><output data-caravan-wage-output>${formatQuantity(wageDenari)}デナリ</output></span>
+          <input type="range" min="0" max="200" step="5" value="${wageDenari}" data-caravan-wage aria-label="隊商の1人1日の給料"></label>
+      </div>
+      <small class="caravan-employment-status" data-caravan-employment-status>募集${employment.recruitment}人・充足${crew}人・固定費${formatQuantity(crew * wageDenari)}デナリ/日</small>`;
+  }
+  const routePanel = $('#building-caravan-route');
+  routePanel.hidden = building.type !== 'carter';
+  if (building.type === 'carter') {
+    const baseMarketId = caravanRoute?.baseMarketId ?? household?.marketId ?? 'main';
+    const markets = (model.marketNetwork?.markets ?? []).filter(market => market.id !== baseMarketId);
+    const goods = goodsDiscovery.knownGoods();
+    const selectedDestination = caravanRoute?.destMarketId ?? markets[0]?.id ?? '';
+    const routeQuotes = building.caravanRouteQuotes ?? [];
+    const selectedQuote = routeQuotes.find(quote => quote.marketId === selectedDestination) ?? null;
+    const selectedOut = caravanRoute?.goodsOut?.[0] ?? '';
+    const selectedBack = caravanRoute?.goodsBack?.[0] ?? '';
+    // 二市場の初年度実測では3日便は麦を積み上げ、20日便なら実需を追いやすい。
+    const interval = caravanRoute?.intervalDays ?? 20;
+    const locked = Boolean(caravanRoute?.currentTrip);
+    const goodsOptions = (selected, emptyLabel) => [
+      `<option value="">${emptyLabel}</option>`,
+      ...goods.map(goodsId => `<option value="${escapeHtml(goodsId)}" ${goodsId === selected ? 'selected' : ''}>${escapeHtml(GOODS_LABELS[goodsId] ?? goodsId)}</option>`),
+    ].join('');
+    routePanel.innerHTML = `
+      <h3>定期路線</h3>
+      <p>目的地と往復の積み荷を決めると、現在の荷車道で最も早い経路を自動で走ります。売買は両端の市場だけで行います。</p>
+      ${caravanRoute ? `<div class="caravan-route-status"><b>${escapeHtml(caravanRoute.baseMarketName)} → ${escapeHtml(caravanRoute.destMarketName)}</b><em data-state="${escapeHtml(caravanRoute.status.key)}">${escapeHtml(caravanRoute.status.label)}</em><small>${locked ? '帰着後に路線を変更できます。' : `次の出発まで${caravanRoute.daysUntilDeparture}日`}</small></div>` : ''}
+      <div class="caravan-route-form">
+        <label><span>目的地</span><select data-caravan-destination ${locked ? 'disabled' : ''}>${markets.map(market => {
+          const quote = routeQuotes.find(row => row.marketId === market.id);
+          return `<option value="${escapeHtml(market.id)}" ${market.id === selectedDestination ? 'selected' : ''} data-caravan-forecast="${escapeHtml(caravanForecastText(quote))}">${escapeHtml(market.name)}</option>`;
+        }).join('')}</select></label>
+        <label><span>行き荷</span><select data-caravan-goods-out ${locked ? 'disabled' : ''}>${goodsOptions(selectedOut, '積まない')}</select></label>
+        <label><span>帰り荷</span><select data-caravan-goods-back ${locked ? 'disabled' : ''}>${goodsOptions(selectedBack, '積まない')}</select></label>
+        <label class="caravan-route-interval"><span>運行間隔 <output data-caravan-interval-output>${interval}日</output></span><input type="range" min="1" max="30" step="1" value="${interval}" data-caravan-interval ${locked ? 'disabled' : ''}></label>
+        <button type="button" data-caravan-route-save ${locked || !markets.length ? 'disabled' : ''}>${caravanRoute ? '路線を変更する' : '路線を設定する'}</button>
+      </div>
+      <small class="caravan-route-forecast" data-caravan-route-forecast>${escapeHtml(caravanForecastText(selectedQuote))}</small>
+      <small class="caravan-route-note">${locked ? '運行中の便を止めず、帰着を待ちます。' : '行き荷か帰り荷を一つ以上選んでください。'}</small>`;
+  }
   $('#building-sheet-kicker').textContent = household
     ? `${family}・${household.members}人`
     : building.roles?.includes('port') ? '港湾物流'
@@ -1546,7 +1724,24 @@ function renderBuildingSheet() {
     const productivity = household.productivity;
     const productivityPercent = Number.isFinite(productivity?.efficiency)
       ? Math.round(productivity.efficiency * 100) : null;
+    const workTool = household.workTool;
+    const workToolLabel = workTool.kind === 'iron'
+      ? `鉄の道具（残り${Math.max(0, Math.ceil(workTool.durability))}日・生産120%）`
+      : workTool.kind === 'wood'
+        ? `木の道具（残り${Math.max(0, Math.ceil(workTool.durability))}日・生産100%）`
+        : '素手（生産75%）';
+    const fishingRig = household.fishingRig;
+    const fishingRigLabel = fishingRig?.kind === 'sail'
+      ? `帆走漁具（残り${Math.max(0, Math.ceil(fishingRig.durability))}日・漁獲115%）`
+      : fishingRig?.kind === 'coastal'
+        ? `木舟と漁網（残り${Math.max(0, Math.ceil(fishingRig.durability))}日・漁獲100%）`
+        : '岸漁（漁獲90%・木舟と漁網を修繕待ち）';
     const missingGoodsMarkup = growth?.missingGoodsForCurrent?.map(goodsIconMarkup).join('') ?? '';
+    const repairNotice = building.conditionStatus === 'needs_repair'
+      ? `要修繕（状態 ${Math.round(building.condition)}%）`
+      : building.conditionStatus === 'worn'
+        ? `建物に傷みあり（状態 ${Math.round(building.condition)}%）`
+        : `建物は良好（状態 ${Math.round(building.condition)}%）`;
     const headline = household.hungerRun >= 10 || foodDays < 3
       ? `⚠ ${delivery?.label ?? `食料があと${Math.max(0, Math.floor(foodDays))}日分`}`
       : !roadConnected ? '⚠ 市場へ道がつながっていません'
@@ -1555,7 +1750,8 @@ function renderBuildingSheet() {
             : '順調';
     const headlineTone = headline.startsWith('⚠') ? 'warning' : 'good';
     $('#building-summary').innerHTML = `
-      <div class="building-health" data-tone="${headlineTone}">${escapeHtml(headline)}</div>`;
+      <div class="building-health" data-tone="${headlineTone}">${escapeHtml(headline)}</div>
+      <div class="building-health" data-tone="${building.conditionStatus === 'good' ? 'good' : 'warning'}">${escapeHtml(repairNotice)}</div>`;
     const outputRows = building.shelves.filter(row => row.section === 'output' && row.amount > 1e-9);
     const outputNow = outputRows.length
       ? outputRows.map(row => `<span class="goods-inline">${goodsIconMarkup(row.goods)}<span>${escapeHtml(GOODS_LABELS[row.goods] ?? row.goods)} ${formatQuantity(row.amount)}荷</span></span>`).join('<span aria-hidden="true">・</span>')
@@ -1585,8 +1781,9 @@ function renderBuildingSheet() {
     const productionTone = !idealActive || productivityPercent === null ? 'good'
       : productivityPercent >= 80 ? 'good' : productivityPercent >= 50 ? 'warning' : 'danger';
     const cause = !idealActive
-      ? (building.type === 'wheat' ? '麦は9月の収穫でまとめて実ります。'
-        : ['veg', 'rapeseed', 'fisher2'].includes(building.type) ? '今の季節にする仕事はありません。'
+      ? (building.type === 'carter' ? '隊商の運行有無にかかわらず、会社から固定給を受け取ります。'
+        : building.type === 'wheat' ? '麦は9月の収穫でまとめて実ります。'
+        : ['veg', 'rapeseed'].includes(building.type) ? '今の季節にする仕事はありません。'
           : '日々の生産で数える仕事ではありません。')
       : productivity.resourceWork
         ? `${productivity.resourceWork.kind === 'forest' ? '森' : '漁場'}まで片道 ${Number.isFinite(productivity.resourceWork.oneWayTicks) ? productivity.resourceWork.oneWayTicks.toFixed(1) : '到達不能'}刻——通いの時間が実働 ${Math.round(productivity.resourceWork.workTicks)}/30刻を決めています。`
@@ -1627,6 +1824,8 @@ function renderBuildingSheet() {
           <span><small>順調な日の生産</small><b>${productionIdeal}</b></span>
           <span><small>達成率</small><b>${productionRate}</b></span>
         </div>
+        ${building.type === 'carter' ? '' : `<p class="productivity-tool"><b>作業道具</b>　${escapeHtml(workToolLabel)}</p>`}
+        ${building.type === 'fisher' ? `<p class="productivity-tool"><b>漁の設備</b>　${escapeHtml(fishingRigLabel)}</p>` : ''}
         <p class="productivity-cause">${cause}</p>
         <small class="productivity-level-note">達成率は「順調な日」——移動・品切れ・空腹で手が止まらない日の生産量——を100%とした30日平均です。配置はLv条件へ直接加点せず、増えた生産・収入・供給が暮らしと次のLvを支えます。</small>
         <p class="goods-output-list">${outputNow}</p>
@@ -1653,7 +1852,7 @@ function renderBuildingSheet() {
   const sectionNames = {
     foodPantry: '家の食料庫', householdGoods: '家の生活用品',
     pantry: '家の保管物', input: '原料棚', output: '製品棚', storage: '保管棚',
-    construction: '建築資材', inbound: '搬入待ち', outbound: '搬出待ち',
+    construction: '建築資材', repair: '修繕棚', inbound: '搬入待ち', outbound: '搬出待ち',
     pickup: '引取待ち', stall: '市場の屋台', companyStock: '会社の倉庫',
   };
   const shelves = [
@@ -2057,6 +2256,7 @@ function openSheet(id) {
   document.querySelectorAll('#top-menu button').forEach(button => {
     const target = {
       'open-company': 'company-sheet', 'open-island': 'island-sheet',
+      'open-caravans': 'caravan-sheet',
       'open-supply': 'supply-sheet',
       'open-building': 'building-sheet', 'open-events': 'event-sheet',
       'open-development': 'development-sheet',
@@ -2067,6 +2267,7 @@ function openSheet(id) {
   });
   if (id === 'building-sheet') renderBuildingSheet();
   if (id === 'company-sheet') renderCompanySheet();
+  if (id === 'caravan-sheet') renderCaravanPanel();
   if (id === 'event-sheet') renderEventSheet();
   if (id === 'development-sheet') renderDevelopmentMap();
   if (id === 'tutorial-letter-sheet') renderTutorialLetterSheet();
@@ -2093,6 +2294,7 @@ function closeSheet(id) {
 }
 
 $('#open-company').addEventListener('click', () => openSheet('company-sheet'));
+$('#open-caravans').addEventListener('click', () => openSheet('caravan-sheet'));
 $('#open-supply').addEventListener('click', () => {
   focusedSupplyGoods = null;
   openSheet('supply-sheet');
@@ -2160,6 +2362,68 @@ $('#open-island-from-building').addEventListener('click', () => openSheet('suppl
 $('#building-company-stock').addEventListener('click', event => {
   if (event.target.closest('[data-open-company-stock]')) openSheet('company-sheet');
 });
+$('#building-caravan-employment').addEventListener('input', () => {
+  const recruitment = Number($('[data-caravan-recruitment]')?.value ?? 0);
+  const wageDenari = Number($('[data-caravan-wage]')?.value ?? 0);
+  const building = model.buildings.find(row => row.id === selectedBuildingId);
+  const crew = building?.ownerHouseholdId === null
+    ? 0
+    : Math.min(recruitment, model.households.find(
+      household => household.id === building?.ownerHouseholdId,
+    )?.members ?? 0);
+  $('[data-caravan-recruitment-output]').textContent = `${recruitment}人`;
+  $('[data-caravan-wage-output]').textContent = `${formatQuantity(wageDenari)}デナリ`;
+  $('[data-caravan-employment-status]').textContent = `募集${recruitment}人・充足${crew}人・固定費${formatQuantity(crew * wageDenari)}デナリ/日`;
+});
+$('#building-caravan-employment').addEventListener('change', () => {
+  const recruitment = Number($('[data-caravan-recruitment]')?.value ?? 0);
+  const wage = Number($('[data-caravan-wage]')?.value ?? 0) / 10;
+  applyEngineOperation({
+    type: 'set_caravan_employment',
+    buildingId: selectedBuildingId,
+    recruitment,
+    wage,
+  }, `募集${recruitment}人・給料${formatQuantity(wage * 10)}デナリ/日に変更しました`, '隊商の雇用条件を変更できません');
+});
+$('#building-caravan-route').addEventListener('input', event => {
+  if (!event.target.matches('[data-caravan-interval]')) return;
+  $('[data-caravan-interval-output]').textContent = `${event.target.value}日`;
+});
+$('#building-caravan-route').addEventListener('change', event => {
+  if (!event.target.matches('[data-caravan-destination]')) return;
+  const option = event.target.selectedOptions?.[0];
+  const forecast = $('[data-caravan-route-forecast]');
+  if (forecast) forecast.textContent = option?.dataset.caravanForecast ?? '';
+});
+$('#building-caravan-route').addEventListener('click', event => {
+  if (!event.target.closest('[data-caravan-route-save]')) return;
+  const destMarketId = $('[data-caravan-destination]')?.value ?? '';
+  const goodsOut = $('[data-caravan-goods-out]')?.value ?? '';
+  const goodsBack = $('[data-caravan-goods-back]')?.value ?? '';
+  const intervalDays = Number($('[data-caravan-interval]')?.value ?? 20);
+  if (!destMarketId) {
+    $('#status span').textContent = '目的地にできる別の市場がありません';
+    return;
+  }
+  if (!goodsOut && !goodsBack) {
+    $('#status span').textContent = '行き荷か帰り荷を一つ以上選んでください';
+    return;
+  }
+  const result = applyEngineOperation({
+    type: 'set_caravan_route',
+    baseBuildingId: selectedBuildingId,
+    destMarketId,
+    goodsOut: goodsOut ? [goodsOut] : [],
+    goodsBack: goodsBack ? [goodsBack] : [],
+    intervalDays,
+  }, `定期路線を設定しました（${intervalDays}日ごと）`, '路線を設定できません');
+  if (result?.ok !== false) {
+    selectedCaravanId = model.caravans.find(
+      route => route.baseBuildingId === selectedBuildingId,
+    )?.id ?? selectedCaravanId;
+    renderBuildingSheet();
+  }
+});
 $('#shortage-alerts').addEventListener('click', event => {
   const button = event.target.closest('[data-shortage-goods]');
   if (!button) return;
@@ -2213,6 +2477,7 @@ $('#secretary-letter-action').addEventListener('click', event => {
 });
 
 const companySheet = $('#company-sheet');
+const caravanSheet = $('#caravan-sheet');
 companySheet.addEventListener('input', event => {
   if (!(event.target instanceof HTMLInputElement)) return;
   const row = event.target.closest('.goods-row');
@@ -2324,6 +2589,22 @@ function rejectOrderOffer() {
   $('#status span').textContent = '注文状を見送りました（エンジン状態は不変）';
   return dismissedOfferKey;
 }
+
+caravanSheet.addEventListener('click', event => {
+  const button = event.target.closest('[data-company-action]');
+  if (!button) return;
+  const action = button.dataset.companyAction;
+  if (action === 'select-caravan') {
+    selectedCaravanId = button.dataset.caravanId;
+    renderSignatures.delete('caravan-panel');
+    renderCaravanPanel();
+    return;
+  }
+  if (action === 'open-caravan-base') {
+    const building = model.buildings.find(row => row.id === button.dataset.buildingId);
+    if (building) selectBuilding(building);
+  }
+});
 
 companySheet.addEventListener('click', event => {
   const button = event.target.closest('[data-company-action]');

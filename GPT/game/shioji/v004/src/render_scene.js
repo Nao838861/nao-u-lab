@@ -93,10 +93,11 @@ function staticDrawables(model, naturalDrawables) {
 
 function roadScene(model) {
   const roadSet = new Set(model.roadKeys);
+  const pavedSet = new Set(model.pavedRoadKeys ?? []);
   const connected = new Set(model.roadConnection?.connectedRoadKeys ?? []);
   const rows = model.roadKeys.map(key => {
     const point = parseTileKey(key);
-    return { key, ...point, connected: connected.has(key) };
+    return { key, ...point, connected: connected.has(key), paved: pavedSet.has(key) };
   });
   const segments = [];
   for (const row of rows) {
@@ -107,6 +108,7 @@ function roadScene(model) {
         x: row.x, y: row.y,
         toX: row.x + dx, toY: row.y + dy,
         connected: row.connected && connected.has(otherKey),
+        paved: row.paved && pavedSet.has(otherKey),
       });
     }
   }

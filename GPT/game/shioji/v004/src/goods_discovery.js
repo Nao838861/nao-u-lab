@@ -6,9 +6,9 @@ export const GOODS_DISCOVERY_SCRIPTS = Object.freeze({
   pres: '保存食ができました。魚より長く保存できます。',
   pick: '漬物ができました。野菜より長く保存できます。',
   wheat: '麦が採れました。収穫は9月の年1回です。',
-  fish: '魚が獲れました。3日で腐りますが、塩があれば保存食に変えられます。',
-  log: '丸太が採れました。木製品と木炭に加工できます。',
-  tools: '木製品ができました。家の発展と木の荷車に使います。',
+  fish: '魚が獲れました。3日で腐りますが、食料のほか、保存食や魚粉へ加工できます。',
+  log: '丸太が採れました。木製品と木炭に加工できます。建物の修繕や漁の木舟にも使います。',
+  tools: '木製品ができました。作業道具、家の発展、木の荷車、木舟の修繕に使います。',
 });
 
 const MINIMUM_AMOUNT = 1e-9;
@@ -90,7 +90,7 @@ export class GoodsDiscovery {
       return;
     }
 
-    const matureEconomy = mode === 'test';
+    const matureEconomy = mode === 'test' || mode === 'caravan';
     this.known = new Set(matureEconomy ? this.goodsIds : []);
     this.announced = new Set(matureEconomy ? Object.keys(GOODS_DISCOVERY_SCRIPTS) : []);
     this.pending = [];

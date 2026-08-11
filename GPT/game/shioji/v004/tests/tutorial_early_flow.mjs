@@ -145,12 +145,11 @@ function measureSeed(seed) {
   );
   assert.equal(director.currentObjective().id, 'place-island-food');
 
-  model = controller.readModel();
-  place(controller, 'fisher', findPreviewNear(model, 'fisher', market.entrance));
-  collect();
-  model = controller.readModel();
-  place(controller, 'veg', findPreviewNear(model, 'veg', market.entrance));
-  collect();
+  for (const job of ['fisher', 'fisher', 'veg', 'veg', 'logger', 'logger']) {
+    model = controller.readModel();
+    place(controller, job, findPreviewNear(model, job, market.entrance));
+    collect();
+  }
   assert.equal(director.currentObjective().id, 'first-woodshop');
   model = controller.readModel();
   place(controller, 'woodshop', findPreviewNear(model, 'woodshop', market.entrance));
@@ -165,8 +164,8 @@ function measureSeed(seed) {
   collect();
   assert.equal(director.currentObjective().id, 'prepare-first-tools-stock');
   assert.equal(controller.operate({
-    type: 'set_stock_target', goods: 'tools', qty: 80,
-  }).ok, true, '初注文の最大量まで木製品を先に買い集める');
+    type: 'set_stock_target', goods: 'tools', qty: 12,
+  }).ok, true, '最初の小口注文まで木製品を先に買い集める');
   collect();
   assert.equal(director.currentObjective().id, 'accept-first-order');
 

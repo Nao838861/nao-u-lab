@@ -1,15 +1,15 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.44.4-export-balance';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.44.4-export-balance';
-import { islandCalendar } from './ui_summary.js?v=v004.44.4-export-balance';
+} from './config.js?v=v004.45.5-caravan-integrity';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.45.5-caravan-integrity';
+import { islandCalendar } from './ui_summary.js?v=v004.45.5-caravan-integrity';
 import {
   compileRenderScene, inventoryLayerDepth, marketStallLayerDepth, mergeDrawables,
-} from './render_scene.js?v=v004.44.4-export-balance';
+} from './render_scene.js?v=v004.45.5-caravan-integrity';
 import {
   buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
   seasonalTerrainVisual,
-} from './visuals.js?v=v004.44.4-export-balance';
+} from './visuals.js?v=v004.45.5-caravan-integrity';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
@@ -403,10 +403,16 @@ export class Renderer {
     const scene = this.sceneFor(model);
     const roads = scene.roadRows.filter(row => this.boundsVisible(row));
     for (const road of roads) {
+      const fill = road.connected
+        ? (road.paved ? '#c3bda8' : '#a78e61')
+        : '#9f6355';
+      const stroke = road.connected
+        ? (road.paved ? '#777365' : '#69593f')
+        : '#713f3b';
       this.diamond(
         road.x, road.y,
-        road.connected ? '#a78e61' : '#9f6355',
-        road.connected ? '#69593f' : '#713f3b',
+        fill,
+        stroke,
         0.94,
       );
     }
@@ -422,13 +428,17 @@ export class Renderer {
     for (const segment of segments) {
       const center = this.camera.project(segment.x + 0.5, segment.y + 0.5);
       const other = this.camera.project(segment.toX + 0.5, segment.toY + 0.5);
-      ctx.strokeStyle = segment.connected ? '#69593f' : '#713f3b';
+      ctx.strokeStyle = segment.connected
+        ? (segment.paved ? '#777365' : '#69593f')
+        : '#713f3b';
       ctx.lineWidth = Math.max(5, 13 * this.camera.zoom);
       ctx.beginPath();
       ctx.moveTo(center.x, center.y);
       ctx.lineTo(other.x, other.y);
       ctx.stroke();
-      ctx.strokeStyle = segment.connected ? '#b39a6b' : '#bd7867';
+      ctx.strokeStyle = segment.connected
+        ? (segment.paved ? '#d2cdbb' : '#b39a6b')
+        : '#bd7867';
       ctx.lineWidth = Math.max(3, 9 * this.camera.zoom);
       ctx.beginPath();
       ctx.moveTo(center.x, center.y);
@@ -1009,6 +1019,7 @@ export class Renderer {
     }
     this.drawBuildingProps(building);
     this.drawCultureStageDetails(building);
+    this.drawRepairDamage(building);
     if (building.vacant) this.drawVacancyDetails(building);
     ctx.restore();
     const labelPoint = this.camera.project(
@@ -1070,6 +1081,34 @@ export class Renderer {
       ctx.strokeText(label, labelPoint.x, labelPoint.y + 25 * this.camera.zoom);
       ctx.fillText(label, labelPoint.x, labelPoint.y + 25 * this.camera.zoom);
     }
+    ctx.restore();
+  }
+
+  drawRepairDamage(building) {
+    if (building.vacant || building.conditionStatus === 'good') return;
+    const ctx = this.ctx;
+    const scale = this.camera.zoom;
+    const appearance = building.appearance;
+    const center = this.camera.project(
+      building.x + building.width * 0.52,
+      building.y + building.height * 0.5,
+      Math.max(5, appearance.elevation * 0.55),
+    );
+    const severe = building.conditionStatus === 'needs_repair';
+    ctx.save();
+    ctx.strokeStyle = severe ? '#3f2b25' : '#705348';
+    ctx.lineWidth = Math.max(1.2, (severe ? 2 : 1.4) * scale);
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(center.x - 8 * scale, center.y - 7 * scale);
+    ctx.lineTo(center.x - 2 * scale, center.y - 1 * scale);
+    ctx.lineTo(center.x - 6 * scale, center.y + 5 * scale);
+    if (severe) {
+      ctx.moveTo(center.x + 7 * scale, center.y - 5 * scale);
+      ctx.lineTo(center.x + 2 * scale, center.y + 1 * scale);
+      ctx.lineTo(center.x + 8 * scale, center.y + 7 * scale);
+    }
+    ctx.stroke();
     ctx.restore();
   }
 

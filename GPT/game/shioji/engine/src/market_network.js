@@ -32,6 +32,7 @@ export function normalizeMarketNetwork(network, fallback = null) {
       id: String(market.id ?? (index === 0 ? "main" : `market-${index + 1}`)),
       name: String(market.name ?? (index === 0 ? "本市場" : `市場 ${index + 1}`)),
       entrance: { x: Math.round(market.entrance?.x ?? market.x), y: Math.round(market.entrance?.y ?? market.y) },
+      buildingId: market.buildingId ?? null,
       portId: market.portId ?? null,
     }))
     .filter((market) => Number.isFinite(market.entrance.x) && Number.isFinite(market.entrance.y));
@@ -54,6 +55,17 @@ export function createMarketNetwork({ markets = [], fallback = null, hysteresis 
 
 export function assignMarketNetwork(physical, economy, network) {
   const normalized = normalizeMarketNetwork(network, economy?.market ?? null);
+  for (const market of normalized.markets) {
+    const recorded = buildingById(physical, market.buildingId);
+    const building = recorded ?? (physical.buildings ?? []).find((candidate) => (
+      candidate.type === "market"
+      && candidate.entrance?.x === market.entrance.x
+      && candidate.entrance?.y === market.entrance.y
+    ));
+    if (!building) continue;
+    building.marketId = market.id;
+    market.buildingId = building.id;
+  }
   const assignments = { ...normalized.assignments };
   const assignmentRows = [];
   const assign = (id, position, previousId = assignments[id]) => {
@@ -74,9 +86,29 @@ export function assignMarketNetwork(physical, economy, network) {
   }
   for (const household of economy?.households ?? []) {
     const building = buildingById(physical, household.buildingId);
-    const result = assign(`household:${household.id}`, building?.entrance ?? household, household.marketId);
+    const assignmentId = `household:${household.id}`;
+    const activeMarket = household.marketCarrier?.marketId
+      ? normalized.markets.find((market) => market.id === household.marketCarrier.marketId)
+      : null;
+    const result = activeMarket
+      ? {
+        marketId: activeMarket.id,
+        distance: finiteDistance(
+          physical,
+          building?.entrance ?? household,
+          activeMarket.entrance,
+        ),
+      }
+      : assign(assignmentId, building?.entrance ?? household, household.marketId);
+    if (activeMarket) {
+      assignments[assignmentId] = result.marketId;
+      assignmentRows.push({ id: assignmentId, ...result });
+    }
+    const market = normalized.markets.find((candidate) => candidate.id === result.marketId) ?? null;
     household.marketId = result.marketId;
     household.marketDistance = result.distance;
+    household.marketEntrance = market ? { ...market.entrance } : null;
+    household.marketBuildingId = market?.buildingId ?? null;
   }
   normalized.assignments = assignments;
   normalized.assignmentRows = assignmentRows;

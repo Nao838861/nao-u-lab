@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.44.4-export-balance';
+import { SPEEDS } from './config.js?v=v004.45.5-caravan-integrity';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

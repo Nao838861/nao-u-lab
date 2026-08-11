@@ -2,7 +2,7 @@ export const SAVE_SCHEMA = 'shioji-v004-save';
 export const SAVE_SCHEMA_VERSION = 1;
 export const LOCAL_SAVE_KEY = 'shioji-v004-autosave';
 
-const MODES = new Set(['tutorial', 'sandbox', 'test']);
+const MODES = new Set(['tutorial', 'sandbox', 'test', 'caravan']);
 
 function clone(value) {
   return structuredClone(value);
