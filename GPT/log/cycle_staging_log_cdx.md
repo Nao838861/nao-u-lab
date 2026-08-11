@@ -91,7 +91,55 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、High Signal / Recent の atom index 参照を検証。validate_memory_index.py は OK、代表語は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false で、最後は語の不在であり source 破損ではない。"
+  - "memory/atoms.jsonl 2856 行を監査。JSON parse error 0、duplicate id 0。normalized/content hash の既知 fold 対象は 40 groups / 80 rows、duplicate cluster sidecar は 45 groups で --check 一致。"
+  - "memory/raw/ の 30日超無更新は 240 files / 70,573,817 bytes。web_research 一次資料、Slack archive、game/headless 評価証拠を含むため移動せず、参照整合性を保つアーカイブ候補として識別のみ行った。"
+  - "shared_reads candidate lifecycle を dry-run 監査。posted=591 / ready_to_post=9 / postponed=218 / failed=445 / needs_review=2、missing frontmatter=0、valid unreviewed=0、malformed=0。"
+  - "open duplicate group / stale triage / group action sidecar を規定順に再生成。open groups=43（mixed=38 / all_open=5）、stale triage=0、actionable groups=0。再生成差分なし。"
+  - "期限超過 open 2件は既存 group lease gha-e6d4d4b5a37a0808 / gha-2313a247c62a9028 が deferred かつ retry_after=2026-08-20 のため再投入対象外。group/candidate handoff enqueue はともに0件、inbox audit error 0。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0。受領や staging のみを根拠に handled 化した行はない。"
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の title / excerpt / trigger に replacement character が残り、『AIエージェント』相当の語が壊れている。memory_health のもう1件 gr-1777083728-44d444ab7a は原文の literal 『???』による false positive。"
+    severity: low
+    evidence: "memory/atoms.jsonl#id=sr-1776127289-4d9239b255; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl#ts=1776127289.990919"
+    source_file_status: "UTF-8 読みは成功するが、raw Slack archive の同一 ts から replacement character が既に存在し、atom と per-file mirror に継承されている。局所的な source lineage 破損。"
+    display_or_tooling_status: "PowerShell / Python の UTF-8 表示経路は正常。gr-1777083728-44d444ab7a の警告は tooling heuristic の false positive。"
+    why_blocks_game_memory: "1 atom に限定されるが、title / trigger の語彙検索と関連候補クラスタで『エージェント』検索の再現率を局所的に落とす。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 4
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 43
+  mixed_group_count: 38
+  all_open_group_count: 5
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
