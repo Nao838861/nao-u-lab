@@ -7,12 +7,17 @@ genre_tags: [agent, long-horizon, harness, memory, verification, game-developmen
 evaluated_at: "2026-08-11T20:06:30+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-11T20:06:30+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-11T20:06:30+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1786446761.647829"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786446761647829"
+  char_count: 4454
+  posted_at: "2026-08-11T20:12:59+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-11T20:12:59+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786446761647829"
+next_action: none
 stale_after: "2026-09-10"
 supersedes: []
 gate_reason: >-
