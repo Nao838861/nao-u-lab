@@ -106,7 +106,58 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md index を validate_memory_index.py で照合。per-file atom index との不一致・broken entry は 0 件。"
+  - "memory/atoms.jsonl を memory_health.py で監査。atom ID 重複エラーは 0 件。normalized content 重複 40 群 / 80 rows は既存 overlay 45 群で fold 済み、effective unresolved title group は 0 件。"
+  - "memory/raw/ の 30 日超ファイルを監査。240 files / 70,573,817 bytes は raw source・Slack provenance・評価 trace の保持領域で、supersede 根拠のない原文を mtime だけで移動しないため archive 0 件。"
+  - "candidate lifecycle dry-run は 1272 files、変更 0。status 内訳は posted 594 / failed 449 / postponed 218 / ready_to_post 9 / needs_review 2。"
+  - "title canonical / mixed / open duplicate sidecar を再生成。terminal canonical 87 groups、mixed queue 38 groups、open duplicate 42 groups（mixed 38 / all_open 4）。"
+  - "stale triage / group action queue を lease 反映後に再生成。期限到来 open 2 件は 2026-08-20 までの既存 deferred group lease で抑止され、queue / handoff とも 0 件。"
+  - "Slack directive / broadcast inbox は pending 0 件。受領だけを根拠に handled へ変える行はなし。"
+issues:
+  - id: ISS-4A-20260812-01
+    description: "active atom sr-1776127289-4d9239b255 の title / trigger / excerpt に『エ��ジェント』が残る局所的な source mojibake。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md:3"
+    source_file_status: "UTF-8 明示読みで raw Slack source、atoms.jsonl、per-file atom の全てに同じ U+FFFD 連続を確認。memory/MEMORY.md は代表語『記憶』『ゲーム設計』『敵パターン』『評価軸』を UTF-8 で取得でき、本文破損なし。memory_health のもう1件 gr-1777083728-44d444ab7a は UTF-8 source / per-file とも正常で false-positive。"
+    display_or_tooling_status: "none; shell 表示経路だけの mojibake ではなく source 側に既存する。"
+    why_blocks_game_memory: "『AIエージェント』の完全一致検索を1 atomで弱めるが、tags / source_ts / ID と他の正常 atom から想起できるため影響は局所的。構造設計の blocker ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 4
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 42
+  mixed_group_count: 38
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
