@@ -59,7 +59,35 @@ slack_posted: false
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778774144-30b9243d4b
+    source_ts: "1778774144.030849"
+    title: "[Codex external research] 日記前検索: 現在の目的に関係する外部情報"
+    reason: "未レビュー・score 10 以上・優先タグ6/6の候補で source_ts が最も新しい1件。PokeAgent Challenge の model / harness / observation / milestone 分離が次回評価に未反映の差を作るか確認した。Nao_u の明示評価はない。"
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "選択 atom は quality=routine・memory_layer=operational_log・status=superseded の旧式候補投稿。後続の正規投稿 sr-1778774896-2b1f1a65ce は既レビューで、同じ判断差は probe-20260516-milestone-observation-log に採用済み。新規 probe / metric は完全重複となり、採用条件の合計14にも届かない。"
+  change:
+    summary: "reviewed_source_ts と重複による reject 理由だけを state に記録。active_probes・ledger・directive・恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-12T02:14:43+09:00",
+  "updated_at": "2026-08-12T04:12:02+09:00",
   "reviewed_source_ts": [
+    "1778774144.030849",
     "1780037605.969949",
     "1780038653.282729",
     "1786446761.647829",
@@ -633,6 +634,46 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-12T04:12:02+09:00",
+      "selected": {
+        "id": "sr-1778774144-30b9243d4b",
+        "source_ts": "1778774144.030849",
+        "title": "[Codex external research] 日記前検索: 現在の目的に関係する外部情報",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たし、memory・harness・evaluation・agent・operation・game-design の6優先タグを持つ候補のうち source_ts が最も新しい1件だけを選んだ。PokeAgent Challenge から model 能力と harness・観測・milestone・失敗復帰を分離する知見が、次回の game prototype 評価に未反映の差を作るか確認した。Nao_u が本 atom を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 1,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "選択 atom は quality が routine、memory_layer が operational_log、status が superseded で、canonical_id sr-1778510440-ad9b278b60 へ統合済みの旧式候補投稿である。本文も原典の競争・長期文脈 benchmark を十分に分析せず、agent harness 一般論とゲーム制作の30案列挙へ広げた abstract-level の候補に留まる。後続の正規投稿 sr-1778774896-2b1f1a65ce は source_ts 1778774896.927649 として既にレビュー済みで、model / harness / observation / milestone / failure recovery の分離は probe-20260516-milestone-observation-log に採用済みである。同じ問いを新しい probe や metric にすると完全重複になり、運用判断を変えないため、合計10で reject とする。正規投稿の既存 probe を必要時に再利用し、今回は reviewed_source_ts と重複根拠だけを残す。",
+      "existing_reviews": [
+        "1778774896.927649"
+      ],
+      "existing_probes": [
+        "probe-20260516-milestone-observation-log"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と reject 理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-12T02:14:43+09:00",
       "selected": {
