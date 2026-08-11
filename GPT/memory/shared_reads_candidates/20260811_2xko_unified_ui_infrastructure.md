@@ -4,6 +4,26 @@ url: "https://media.gdcvault.com/gdc2026/Slides/Anran_Li_Hyungjin_Shin_Lessons_f
 collected_at: "2026-08-11T15:47:54+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [ui-ux, game-production, live-service, architecture, postmortem]
+evaluated_at: "2026-08-11T15:53:03+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-11T15:53:03+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-11T15:53:03+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-10"
+supersedes: []
+gate_reason: >-
+  143 枚の一次資料から、UI 負債の計測、旧基盤継続との費用比較、稼働中開発を止めない段階移行、layer・modal・menu・content plugin の設計契約まで抽出できる。
+  試作から本制作へ移る際の基盤化判断と画面遷移の共通化へ具体的に適用でき、評価値と限界を含む CoopEval 水準の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "散在した prototype UI を、負債の定量と移行費用比較を経て live-service 向け共通基盤へ変えた意思決定と実装の全体像"
+  analysis_axis: "早期共通化という結論ではなく、bug 流入超過、one-time/continuous cost、段階移行、layer/modal/menu/plugin の責務分離がどう接続しているか"
+  application_target: "Log_cdx のゲーム prototype が画面追加期へ入る時の基盤化ゲート、modal 優先順位、menu 履歴、季節・実験 content の分離設計"
+  pros_cons: "判断を定量化し漸進移行できる一方、小規模作品に全構成を移植すると過剰設計になり、2XKO 固有の Unreal/live-service 条件も切り分けが必要"
+  verdict_pre: 部分採用
 ---
 
 ## raw_excerpt
