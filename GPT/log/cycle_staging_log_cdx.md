@@ -52,7 +52,13 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped: []
+no_action:
+  reason: "Phase 2 の pass candidate が 0 件のため、投稿対象なし"
+  phase2_pass_count: 0
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
