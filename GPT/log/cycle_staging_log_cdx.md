@@ -65,7 +65,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786407960-b6a6692bd5
+    source_ts: "1786407960.742429"
+    title: "Skill-adaptive Mario level chunk editing with deterministic reachability validation"
+    reason: "source=slack_api/shared-reads、score=13、未レビューで、8優先タグを持つ最新候補。player trace→局所編集→局所/full-stage validatorの分離がheadless playtestの過大評価防止に直結するため選んだ。Nao_uの明示的な重要評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件14未満、かつrisk_controlも必須閾値2未満。論文由来のclassifierとplayability差は具体的だが、模倣human data、速度由来label、session holdout/user study欠如、当環境での未実測によりevidenceは2。既存のlocal/global evaluator、open player model、adaptive exploration、ordinal tier、skill/chanceの5 controlsが主要な判断を既に覆い、322 active probesへ同型controlを増やしても次回判断を変えにくい。"
+  change:
+    summary: "reviewed_source_tsとreject理由だけを記録。active_probes、probe lifecycle ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

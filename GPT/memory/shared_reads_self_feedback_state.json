@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-11T09:30:36+09:00",
+  "updated_at": "2026-08-11T11:53:37+09:00",
   "reviewed_source_ts": [
+    "1786407960.742429",
     "1786399090.469959",
     "1786322449.253679",
     "1786322484.507229",
@@ -625,6 +626,47 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-11T11:53:37+09:00",
+      "selected": {
+        "id": "sr-1786407960-b6a6692bd5",
+        "source_ts": "1786407960.742429",
+        "title": "Skill-adaptive Mario level chunk editing with deterministic reachability validation",
+        "reason": "source が slack_api/shared-reads、score 13、未レビューという条件を満たし、memory・skills・harness・game-design・agent・identity・knowledge・evaluation の8優先タグを持つ最新候補から1件だけを選んだ。player traceから失敗型を推定し、局所編集を候補化した後に局所とfull-stageを別々のdeterministic validatorで検査する知見は、headless playtestとゲーム生成物の過大評価を防ぐ課題に直結する。Nao_uが本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_controlも必須閾値2を下回るため、新規probe・metric・directiveは追加しない。shared-reads本文はclassifier 97.82%、chunk単体playability 83.53%、full level 74.12%、normal／expertの二指標非分離を示し、推定・局所編集・hard validationを分ける行動へ変換できるためrelevanceとactionabilityは3とした。一方、human dataは著者によるskill模倣、cluster labelとclassifier入力の双方が水平速度へ依存し、session単位holdoutとuser studyがなく、この環境でも編集前後を実測していないためevidenceは2とした。既存のlocal-constraint-global-evaluator-splitは局所制約と全体reachability／completionを、open-player-model-correction-boundaryは強い人物labelとtrace evidenceの分離を、adaptive-exploration-loss-boundaryはadaptive difficultyのsafe armと未検証proxyを、ordinal-tier-balance-lintとbalance-trend-skill-chanceは難易度label・bot success・人間体感の境界をすでに確認する。本atom固有の局所pass／full-stage failは最初のprobeとほぼ同型でnon_redundancyは1である。active_probesが322件ある状態で同型controlを増やすと確認負荷が判断差を上回るためrisk_controlは1とし、reviewed stateだけを更新する。次の該当game生成・DDA・headless balance作業では新規probeを足さず、既存5 controlsから対象に合うものを選んで適用する。",
+      "existing_controls": [
+        "probe-20260609-local-constraint-global-evaluator-split",
+        "probe-20260718-open-player-model-correction-boundary",
+        "probe-20260718-adaptive-exploration-loss-boundary",
+        "probe-20260719-ordinal-tier-balance-lint",
+        "probe-20260711-balance-trend-skill-chance"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsとreject理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-11T09:30:36+09:00",
       "selected": {
