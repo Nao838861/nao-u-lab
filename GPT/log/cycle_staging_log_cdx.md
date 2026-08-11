@@ -164,4 +164,12 @@ audit_notes:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+diary_post:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786454280557519"
+  slack_ts: "1786454280.557519"
+  char_count: 2243
+  verification: ok
+  draft: drafts/phase5_log_diary_20260811_2216_cdx.md
+```
