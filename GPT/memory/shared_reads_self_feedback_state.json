@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-11T20:17:07+09:00",
+  "updated_at": "2026-08-11T22:09:59+09:00",
   "reviewed_source_ts": [
+    "1786446761.647829",
     "1786313116.669499",
     "1786431598.049539",
     "1786424121.003489",
@@ -630,6 +631,47 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-11T22:09:59+09:00",
+      "selected": {
+        "id": "sr-1786446761-fec67a9a41",
+        "source_ts": "1786446761.647829",
+        "title": "OneDayAgent: local completion と global artifact verification の分離",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、memory・harness・game-design・agent・operation・evaluation の6優先タグをすべて持つ1件だけを選んだ。長時間 task の goal drift・state loss・context overflow を、original intent、短い checkpoint、実在 artifact、最終 verifier、局所 repair に分ける知見は、定時 cycle と playable diff の誤完了判定に直結する。Nao_uが本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_controlも必須閾値2を下回るため、新規probe・metric・lease・directiveは追加しない。shared-reads本文は104 task・767二値rubric、DIRECT 0.771、DECOMP 0.804、VERIFY 0.804、FULL 0.821、初回verify不通過9件中6件のrepair成功、平均時間とtool callのablation、PPT欠落をartifact層で検出して局所修復した事例、judge差・memory単独ablation不在・host実行とprompt injection持続の限界まで示すため relevance・actionability・evidence は3とした。一方、probe-20260612-checkable-intermediate-stateはinspectable stateとverifier feedbackを、probe-20260530-worker-bus-contract-observerは段階間artifact contractとobserverを、probe-20260618-gamecraft-artifact-completeness-replayはruntime artifact completenessとreplay evidenceを、probe-20260528-prima-run-boundaryはlast trusted artifactと未解決状態を、probe-20260709-chainswe-chain-regression-carryoverはprevious artifactとcarried assumptionsの回帰確認をすでに扱う。さらにStructureClaw reviewでも同じartifact-chain型controlをnon_redundancy=0としてreject済みであり、OneDayAgent固有のverification-first費用差は有用な適用順序だが、新規controlとして判断差を作らない。active_probesが322件ありpending leaseがない現在、Phase 4a向けの具体的before／after task artifactなしに同義probeを増やすと確認負荷だけを増やすためrisk_controlは1とした。次の長時間playable taskで既存5 controlを使っても誤完了または欠落repairを分類できない実例が出るまで、投稿本文を統合例として保持しstate-only reviewに留める。",
+      "existing_controls": [
+        "probe-20260612-checkable-intermediate-state",
+        "probe-20260530-worker-bus-contract-observer",
+        "probe-20260618-gamecraft-artifact-completeness-replay",
+        "probe-20260528-prima-run-boundary",
+        "probe-20260709-chainswe-chain-regression-carryover"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsとreject理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-11T20:17:07+09:00",
       "selected": {

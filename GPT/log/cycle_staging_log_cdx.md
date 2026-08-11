@@ -63,7 +63,34 @@ slack_posted: false
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786446761-fec67a9a41
+    source_ts: "1786446761.647829"
+    title: "OneDayAgent: local completion と global artifact verification の分離"
+    reason: "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、memory・harness・game-design・agent・operation・evaluation の6優先タグをすべて持つ1件だけを選んだ。長時間 task の goal drift・state loss・context overflow を、original intent、短い checkpoint、実在 artifact、最終 verifier、局所 repair に分ける知見は、定時 cycle と playable diff の誤完了判定に直結する。Nao_u の明示評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件の14に届かず、risk_controlも必須閾値2を下回る。104 task・767 rubric、verification-onlyとdecomposition-onlyがともにDIRECT比+3.3 point、repair 9件中6件回復という根拠は具体的だが、checkable-intermediate-state、worker-bus-contract-observer、gamecraft-artifact-completeness-replay、prima-run-boundary、chainswe-chain-regression-carryoverが同じartifact照合・段階境界・回帰確認を既に扱う。StructureClawも同型理由でreject済み。322件のactive probeへ同義controlを足しても判断差がなく、具体的な長時間taskのbefore/after artifactを持つ後続consumerもないためstate-only reviewとした。"
+  change:
+    summary: "reviewed_source_tsとreject理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
