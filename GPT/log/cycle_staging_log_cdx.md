@@ -10,7 +10,44 @@
 - duplicate preflight: sidecar 3 種を収集開始前と書込み直前に再生成。上記 candidate は `continue`（title key: `despelote capturing the feeling of 2001 quito ecuador`）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260811_despelote_documenting_reality.md
+    reason: GDC セッション概要だけでは素材統合の手順・比較・失敗・評価結果が不足し、約4000字の概要を根拠付きで構成できない
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-08-11T18:01:58+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260811_despelote_documenting_reality.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260811_despelote_documenting_reality.md
+  valid_backlog_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
