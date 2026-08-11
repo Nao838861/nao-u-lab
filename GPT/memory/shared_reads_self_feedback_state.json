@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-12T00:13:12+09:00",
+  "updated_at": "2026-08-12T02:14:43+09:00",
   "reviewed_source_ts": [
+    "1780037605.969949",
     "1780038653.282729",
     "1786446761.647829",
     "1786313116.669499",
@@ -632,6 +633,46 @@
     "1779373720.446819"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-12T02:14:43+09:00",
+      "selected": {
+        "id": "sr-1780037605-b3939f3db4",
+        "source_ts": "1780037605.969949",
+        "title": "GAM: Hierarchical Graph-based Agentic Memory for LLM Agents",
+        "reason": "source が slack_api/shared-reads、score 15、未レビューという条件を満たす候補のうち source_ts が最も新しく、memory・agent・operation・evaluation の4優先タグを持つ1件だけを選んだ。event progression graph、topic associative network、cross-layer edges、sparse maintenance event の知見が、現行の per-atom 記憶移行と Phase 4a の記憶整理判断に新しい差を作るか確認するため読んだ。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かないため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、event progression graph を外した LoCoMo Average F1 が40.00から25.06へ落ちる ablation、topic 層・state switching・multi-factor retrieval の寄与差、session-end／natural pause／2048 token overflow に限定した sparse maintenance を示すため relevance は3、actionability と evidence は2とした。一方、評価は Qwen 2.5-7B と dialogue 系 benchmark に限られ、自分達の cycle log／atom corpus への再現はなく、topic edge の LLM confidence は現行の deterministic な構造抽出方針とも衝突する。さらに probe-20260517-hierarchical-memory-recall-ladder、probe-20260601-memory-link-llm-roi-gate、probe-20260611-memory-lifecycle-phase-boundary、probe-20260626-load-strategy-progressive-disclosure が階層 recall・link 費用・maintenance 境界・load strategy を既に扱い、per-atom .md + index.jsonl と dual-read も実装済みである。本投稿固有の sparse maintenance threshold は有用だが、現在の staging には再生成頻度を変える before／after artifact がなく、Phase 4a の具体的判断差を lease 契約どおり指定できない。active_probes が322件ある状態で同義 control を増やすより、次に index／edge 再生成の実測コストまたは stale 差分が問題化した時だけ既存 lifecycle control の評価材料として再利用する。",
+      "existing_controls": [
+        "probe-20260517-hierarchical-memory-recall-ladder",
+        "probe-20260601-memory-link-llm-roi-gate",
+        "probe-20260611-memory-lifecycle-phase-boundary",
+        "probe-20260626-load-strategy-progressive-disclosure"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と reject 理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-12T00:13:12+09:00",
       "selected": {

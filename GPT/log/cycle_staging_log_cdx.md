@@ -75,7 +75,39 @@ summary: "Phase 2 の gate_decision: pass が 0 件のため、投稿対象な�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780037605-b3939f3db4
+    source_ts: "1780037605.969949"
+    title: "GAM: Hierarchical Graph-based Agentic Memory for LLM Agents"
+    reason: "score 15 の未レビュー候補で source_ts が最も新しく、memory・agent・operation・evaluation の4優先タグを持つ。階層 graph と sparse maintenance が現行の per-atom 記憶運用に新しい判断差を作るか確認するため選んだ。Nao_u の明示評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件の14に届かない。時系列 graph の ablation と sparse maintenance は有用だが、dialogue benchmark から自分達の atom corpus への再現がなく、LLM confidence edge は deterministic な構造抽出方針と衝突する。階層 recall・link 費用・lifecycle 境界・load strategy は既存4 control と per-atom dual-read 実装が既に扱う。再生成頻度を比較する before／after artifact もないため state-only review とした。"
+  existing_controls:
+    - probe-20260517-hierarchical-memory-recall-ladder
+    - probe-20260601-memory-link-llm-roi-gate
+    - probe-20260611-memory-lifecycle-phase-boundary
+    - probe-20260626-load-strategy-progressive-disclosure
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。新規 probe・metric・directive・恒久ルールは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
