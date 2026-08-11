@@ -100,7 +100,58 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、index entry と per-file atom index の整合を検証した。validate_memory_index.py は OK、broken entry は 0 件。"
+  - "memory/atoms.jsonl と per-file/index mirror を監査した。2855 atom の mirror conflict / parse error は 0 件、45 duplicate group は canonical overlay 済みで effective display unresolved group は 0 件。"
+  - "memory/raw/ の 30 日超未更新 240 files（70,573,817 bytes）を確認した。Slack 原文・評価 trace・論文抽出の provenance / consumer artifact であり、参照切れを避けるため移動対象 0 件とした。"
+  - "shared-reads lifecycle を監査し、posted 591 / ready_to_post 9 / postponed 217 / failed 445 / needs_review 2 を確認した。"
+  - "title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再生成した。open duplicate は mixed 38 / all_open 5、actionable group は 0 件。"
+  - "Slack directive / broadcast inbox を監査した。pending は両方 0 件で、handled 更新対象はなかった。"
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』部分が『AIエ��ジェント』となっており、U+FFFD が title / trigger / excerpt と dual-write mirror に残っている。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md:1"
+    source_file_status: "UTF-8 明示読みでも raw Slack archive、atoms.jsonl、per-file .md、index.jsonl に同じ U+FFFD が存在し、source data 自体の破損と確認。memory/MEMORY.md は UTF-8 decode 正常で、代表語は 記憶 / ゲーム設計 / 敵パターン を取得、評価軸は現行 index 本文に語がないだけで replacement character はない。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "『AIエージェント』での語彙検索と trigger 一致をこの 1 atom だけ弱める。ただし tags と source URL から到達可能で、ゲーム制作記憶全体の導線は塞がない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 4
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 43
+  mixed_group_count: 38
+  all_open_group_count: 5
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_evidence:
+    - "joint agent memory and exploration learning via novelty signals: deferred group lease gha-e6d4d4b5a37a0808, retry_after 2026-08-20T13:19:04+09:00"
+    - "an exploration of collision based enemy morphology generation: deferred group lease gha-2313a247c62a9028, retry_after 2026-08-20T13:19:04+09:00"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
