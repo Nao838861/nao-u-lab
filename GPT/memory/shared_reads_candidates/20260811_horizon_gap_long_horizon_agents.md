@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2608.06663"
 collected_at: "2026-08-11T13:45:34+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [llm-agents, long-horizon, game-development, evaluation, memory, execution]
+evaluated_at: "2026-08-11T13:49:35+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-11T13:49:35+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-11T13:49:35+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-10"
+supersedes: []
+gate_reason: >-
+  horizon gap の問題設定、3概念の分離、6領域と horizon 位置による分類、最終成否だけでは
+  長期 task を評価できないという結論まで抽出でき、CoopEval 水準の概要へ展開できる。
+  ゲーム実装・自動 playtest の仕様保持、途中検証、回復、完了判定を trajectory 単位で評価する設計へ具体的に適用できる。
+suggested_post_outline:
+  overview_angle: "単発能力と長期完遂能力の隔たりを、構成要素と horizon の位置から整理する survey として説明する"
+  analysis_axis: "長期 task の失敗を model 能力・harness・process signal・trajectory 評価へ分解し、分類の効用と未解決点を検討する"
+  application_target: "複数時間・複数 session のゲーム実装と自動 playtest における仕様保持、途中検証、回復、完了判定の記録・評価設計"
+  pros_cons: "長期失敗を共通語彙と評価軸で整理できる一方、survey の分類だけでは個別 harness の因果や最適な process signal は確定しない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
