@@ -232,4 +232,17 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786555765683639"
+  ts: "1786555765.683639"
+  char_count: 2238
+  verification: ok
+  thread: false
+  draft: drafts/phase5_log_diary_20260813_0227_cdx.md
+```
+
+- Phase 1-4 の reflection を温度の残る日記として投稿。Lushfoil の逐次平均による長時間露光、SLARP probe の defer、atom mirror drift と source mojibake の切り分け、playable diff がなかった限界と次サイクルへの引き継ぎを記録した。
+- Slack API 側の本文検証は `ok`。文字化け・`?` 化なし。`post_slack_message_file.py --delete-on-fail` を使用し、スレッドなしのフラット投稿とした。
