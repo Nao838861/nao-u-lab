@@ -88,7 +88,66 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index entry を per-file atom index と照合し、broken link / missing atom 0 件を確認"
+  - "atom duplicate cluster 45 群と canonical overlay 45 群の同期を確認。normalized-content 重複 40 群は全て fold 済みで、effective display unresolved 0 件"
+  - "shared-reads title canonical 90 群、open duplicate 39 群（mixed 36 / all_open 3）を再監査"
+  - "既に Phase 2 で処理済みの candidate 1 件を stale triage derived queue から除外し、queue を 0 行へ再生成"
+  - "slack_directives / slack_broadcasts は pending 0 件のため status 更新なし"
+  - "30 日超 raw 240 件を確認。一次資料・headless 評価証拠として参照中のため、今回の archive 対象は 0 件"
+issues:
+  - id: ISS-4A-20260813-01
+    description: "shared-reads raw 1 投稿と派生 atom 1 件の『AIエージェント』に U+FFFD 置換文字が残る"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492,1216; memory/atoms.jsonl:317; atom sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8 明示読みでも raw と派生 atom の双方が『AIエ��ジェント』であり、source data 自体の局所破損"
+    display_or_tooling_status: "UTF-8 明示読みで同じ置換文字を再現。PowerShell の default encoding で別途生じた JSONL mojibake とは切り分け済み"
+    why_blocks_game_memory: "該当 1 atom の title / trigger に対する『AIエージェント』完全一致検索を弱めるが、他の tag・本文検索と canonical index は機能しており影響は局所的"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 4
+    dormant: 1
+candidate_lifecycle:
+  counts:
+    posted: 595
+    ready_to_post: 9
+    postponed: 210
+    failed: 460
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_open_total: 2
+  overdue_paths:
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+    - memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+  suppression_reason: "両件とも all-open duplicate group の deferred lease が retry_after 2026-08-20T13:19:04+09:00 まで有効で、stale triage への再投入を抑止"
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 39
+  mixed_group_count: 36
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
