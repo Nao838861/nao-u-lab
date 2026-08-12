@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/programming/deep-dive-making-lushfoil-s-long
 collected_at: "2026-08-13T02:01:47+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, rendering, photography-sim, prototyping, unreal-engine]
+evaluated_at: "2026-08-13T02:08:04+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-13T02:08:04+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-13T02:08:04+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-12"
+supersedes: []
+gate_reason: >-
+  開発者本人の一次資料であり、問題設定、二つの失敗案、逐次平均による解決、30 captures/s の性能判断、manual mode への統合、視覚結果まで一続きで抽出できる。
+  定量ベンチマークや数式の厳密な記述は不足するが、その限界を明示した上で、時間蓄積を画面効果から player-controlled mechanic へ変える具体例として約4000字の固有分析を構成できる。
+suggested_post_outline:
+  overview_angle: "実カメラの連続露光を frame 列の等重み逐次平均へ置換し、失敗した合成法との比較から playable な撮影機構へ到達した過程"
+  analysis_axis: "輝度 clamp と時間方向の重み偏りをどう診断し、性能予算と写真としての不完全さを含めて設計判断へ変えたか"
+  application_target: "Log_cdx の観測・軌跡・残像系 prototype で、時間窓、sample rate、蓄積則を player の意図と学習に接続する設計と検証"
+  pros_cons: "小さな数理モデルと失敗比較で実装判断を追える一方、GPU cost、HDR pipeline、motion sampling、実機写真との定量比較は示されない"
+  verdict_pre: "部分採用。逐次平均と操作統合の設計過程は採用し、30 captures/s や画質評価は作品ごとに再検証する"
 ---
 
 ## raw_excerpt
