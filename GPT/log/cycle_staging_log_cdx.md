@@ -134,7 +134,30 @@ reason: Phase 2 の `gate_decision: pass` candidate が 0 件のため、投稿�
 completed_at: "2026-08-13T04:26:49+09:00"
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+self_feedback:
+  selected:
+    id: sr-1780015414-4e9ee0b196
+    source_ts: "1780015414.955959"
+    title: "Amaike『RAG運用コストを1/15に削る「毎回検索しない」アーキテクチャ』(Zenn 2026-05-28)"
+    reason: "score 11・未レビューの最新候補群から、同一投稿の判定断片ではなくURL・4層構成・適用分析を持つ本体atom 1件だけを選び、semantic unit単位の事前生成とrecall fast pathが既存controlにない判断差を作るか確認した。Nao_uの明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "合計11で採用条件14に届かず、risk_controlも必須閾値2未満。投稿はLLM単独／想定Q&A／軽量RAG／full RAGの4層、static corpus前提、再生成、infra costを具体化する一方、Layer 1の想定問答精度と当方の動的atom corpusでのbefore／afterを持たない。read lane比較、階層recall、deterministic baseline対LLM fallback、1回のquery rewriteは既存probeが既に扱う。固定query set・同一corpus・lane別latency／hit quality／誤回答・before／after判断を持つtrigger artifactもないため、fast-path controlを追加すると誤routingと確認負荷が増える。"
+  change:
+    summary: "reviewed_source_tsとreject理由のみを更新。probe・metric・lease・directive・恒久ルールは追加しなかった。"
+    files: [memory/shared_reads_self_feedback_state.json, log/cycle_staging_log_cdx.md]
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-13T02:18:24+09:00",
+  "updated_at": "2026-08-13T04:30:06+09:00",
   "reviewed_source_ts": [
+    "1780015414.955959",
     "1778774144.030849",
     "1780037605.969949",
     "1780038653.282729",
@@ -637,6 +638,46 @@
     "1786490009.108289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-13T04:30:06+09:00",
+      "selected": {
+        "id": "sr-1780015414-4e9ee0b196",
+        "source_ts": "1780015414.955959",
+        "title": "Amaike『RAG運用コストを1/15に削る「毎回検索しない」アーキテクチャ』(Zenn 2026-05-28)",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす候補のうち source_ts が最も新しく、memory・agent・operation・evaluation の4優先タグを持つ本体 atom 1件だけを選んだ。同じSlack投稿の直後にある sr-1780015414-afc9dcdcb8 は判定部分の分割取り込みなので混ぜず、URL・4層構成・適用分析を保持する本体だけで、semantic unit単位の事前生成とrecall fast pathが現行運用へ新しい判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_controlも必須閾値2を下回るため、新規probe・metric・lease・directiveは追加しない。shared-reads本文は、Layer 0のLLM単独、Layer 1のsemantic unit単位の想定Q&A、Layer 2の軽量RAG、Layer 3のfull RAGという4層と、static corpus前提・再生成・infra costを具体化しており、検索経路ごとのquery、latency、hit quality、fallback率を比較する行動へは変換できるためrelevance=3、actionability=2とした。一方、投稿自身がLayer 1の想定問答精度を未測定、コスト数値を試算、Prompt Caching削減率を公式値の引用と明記しており、この環境の動的atom corpusでのbefore／afterもないためevidence=2とした。probe-20260516-read-lanes-before-memory-writeはsemantic／full-text／graph／time lane比較を、probe-20260517-hierarchical-memory-recall-ladderは検索順序を、probe-20260601-memory-link-llm-roi-gateはdeterministic baselineとLLM fallback境界を、probe-20260731-rlm-one-hop-query-rewriteは1回のread-only rewriteによる判断差を既に扱う。現行のauto_recall_gate.pyもtask種別からqueryを組み立てmemory_recallへ渡しており、4層fast pathを別controlにしても既存probeと重複するためnon_redundancy=0とした。現在のstagingには固定query set、同一corpus、各laneのlatency／hit quality／誤回答、before／after判断を持つtrigger artifactがない。未測定の30%吸収や1/15削減を先に運用へ写すと誤routingとprobe確認負荷を増やすためrisk_control=1とし、reviewed stateだけを更新する。",
+      "existing_controls": [
+        "probe-20260516-read-lanes-before-memory-write",
+        "probe-20260517-hierarchical-memory-recall-ladder",
+        "probe-20260601-memory-link-llm-roi-gate",
+        "probe-20260731-rlm-one-hop-query-rewrite"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、既存recall controlsとの重複、投稿内の未測定精度、比較artifact不在によるreject理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-13T02:18:24+09:00",
       "selected": {
