@@ -4,6 +4,20 @@ url: "https://schedule.gdconf.com/session/offering-a-helping-hand-experimenting-
 collected_at: "2026-08-13T07:47:45+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, onboarding, player-assistance, llm, real-time-game-state]
+evaluated_at: "2026-08-13T07:53:40+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-13T07:53:40+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-13T07:53:40+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-12"
+supersedes: []
+gate_reason: >
+  静的な game knowledge、動的な game state、character 制約を束ねる着想は onboarding の具体場面へ適用できる。
+  ただし資料は GDC session 概要だけで Vault recording もなく、実装構成、評価方法、結果、限界を抽出できないため、CoopEval 水準の約4000字概要を根拠付きで構成できない。
 ---
 
 ## raw_excerpt
