@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.47.1-household-trips';
+import { SPEEDS } from './config.js?v=v004.48.0-explicit-import';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

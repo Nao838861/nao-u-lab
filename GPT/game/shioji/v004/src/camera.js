@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.47.1-household-trips';
+import { TILE } from './config.js?v=v004.48.0-explicit-import';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

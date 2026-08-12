@@ -6,9 +6,9 @@ export {
   householdClass,
   householdProductionSummary,
   productionCost,
-} from '../../engine/src/econ.js?v=v004.47.1-household-trips';
-import { P } from '../../engine/src/econ.js?v=v004.47.1-household-trips';
-import { createEngineApi } from '../../engine/src/api.js?v=v004.47.1-household-trips';
+} from '../../engine/src/econ.js?v=v004.48.0-explicit-import';
+import { P } from '../../engine/src/econ.js?v=v004.48.0-explicit-import';
+import { createEngineApi } from '../../engine/src/api.js?v=v004.48.0-explicit-import';
 import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
@@ -16,16 +16,16 @@ import {
   buildCaravanSliceWorld,
   buildBaseCity,
   makeStableCityPlan,
-} from '../../engine/src/audit.js?v=v004.47.1-household-trips';
+} from '../../engine/src/audit.js?v=v004.48.0-explicit-import';
 import {
   createPhysicalState, findTravelPath, makeFlowIslandTerrain, makeMultiMarketTerrain,
-} from '../../engine/src/physical.js?v=v004.47.1-household-trips';
-import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.47.1-household-trips';
-import { createViewController } from './controller.js?v=v004.47.1-household-trips';
+} from '../../engine/src/physical.js?v=v004.48.0-explicit-import';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.48.0-explicit-import';
+import { createViewController } from './controller.js?v=v004.48.0-explicit-import';
 import {
   SPRING_START_CALENDAR_OFFSET_DAYS,
   START_MODES,
-} from './start_modes.js?v=v004.47.1-household-trips';
+} from './start_modes.js?v=v004.48.0-explicit-import';
 
 export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS };
 export { findTravelPath, makeMultiMarketTerrain };

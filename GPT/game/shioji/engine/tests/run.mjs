@@ -2333,6 +2333,7 @@ test("段17: CO輸入棚は生産入力だけ財布-30まで信用買いでき�
   for (const goods of FOODS) shepherd.pantry[goods] = 100;
   shepherd.pantry.wheat = 0;
   shepherd.pantry.veg = 0;
+  economy.importStock.wheat = 100;
   economy.px.meat = 7;
   postCompanyLedger(economy.company, { day: 1, amount: shepherd.purse, reason: "信用テストの財布預入" });
   shepherd.purse = 0;
@@ -2353,6 +2354,7 @@ test("段17: CO輸入棚は生産入力だけ財布-30まで信用買いでき�
   for (const goods of FOODS) fisher.pantry[goods] = 100;
   fisher.pantry.salt = 0;
   noCreditEconomy.px.pres = 5;
+  noCreditEconomy.importStock.salt = 100;
   postCompanyLedger(noCreditEconomy.company, {
     day: 1,
     amount: fisher.purse,
@@ -2362,6 +2364,78 @@ test("段17: CO輸入棚は生産入力だけ財布-30まで信用買いでき�
   const noCredit = buyAtMarket(noCreditEconomy, fisher, { day: 61 });
   assert.equal(noCredit.transactions.some((transaction) => transaction.goods === "salt"), false);
   assert.equal(fisher.purse, 0);
+});
+
+test("現金循環: 世帯の不足は通常輸入を自動発注せず明示操作だけが便を作る", () => {
+  const { economy, physical } = createLogisticsTestFixture({ connectPort: true });
+  const buyer = createHousehold(economy, { job: "logger", x: 7, y: 4 });
+  for (const goods of FOODS) buyer.pantry[goods] = 0;
+  buyAtMarket(economy, buyer, { day: 1, physical });
+  assert.equal(economy.importRequests.length, 0, "世帯の買い物は会社の輸入判断を代行しない");
+
+  const world = createWorld({ seed: 11, physicalState: physical });
+  world.state.economy = economy;
+  world.state.day = 1;
+  world.state.tick = 30;
+  economy.currentDay = 1;
+  economy.currentTick = 30;
+  const api = createEngineApi(world);
+  const result = api.applyOperation({ type: "request_import", goods: "wheat", qty: 5 });
+  assert.equal(result.ok, true);
+  assert.equal(economy.importRequests.length, 1);
+  assert.equal(economy.importRequests[0].qty, 5);
+  assert.deepEqual(api.inputJournal().at(-1).op, {
+    type: "request_import", goods: "wheat", qty: 5,
+  });
+  const replay = replayInputJournal(() => {
+    const fixture = createLogisticsTestFixture({ connectPort: true });
+    const replayWorld = createWorld({ seed: 11, physicalState: fixture.physical });
+    replayWorld.state.economy = fixture.economy;
+    replayWorld.state.day = 1;
+    replayWorld.state.tick = 30;
+    replayWorld.state.economy.currentDay = 1;
+    replayWorld.state.economy.currentTick = 30;
+    return replayWorld;
+  }, api.inputJournal(), { untilTick: world.state.tick });
+  assert.equal(replay.world.state.economy.importRequests.length, 1);
+  assert.equal(replay.world.state.economy.importRequests[0].qty, 5);
+  const invalid = api.applyOperation({ type: "request_import", goods: "log", qty: 5 });
+  assert.deepEqual(invalid, { ok: false, request: null, reason: "invalid_goods" });
+});
+
+test("現金循環: 食料危機では実在庫の安い食料を固定品目順より先に買う", () => {
+  const economy = createEconomicState();
+  const buyer = createHousehold(economy, { job: "logger", x: 0, y: 0 });
+  const wheatSeller = createHousehold(economy, { job: "wheat", x: 0, y: 0 });
+  const vegSeller = createHousehold(economy, { job: "veg", x: 0, y: 0 });
+  for (const goods of FOODS) buyer.pantry[goods] = 0;
+  economy.stalls.wheat.push({ householdId: wheatSeller.id, qty: 100, price: 2, age: 0 });
+  economy.stalls.veg.push({ householdId: vegSeller.id, qty: 100, price: 0.5, age: 0 });
+
+  const result = buyAtMarket(economy, buyer, { day: 1 });
+  assert.equal(result.order[0], "veg");
+  assert.equal(result.transactions[0].goods, "veg");
+});
+
+test("現金循環: 修繕・道具・生活用品は三日分の最低食費を残す", () => {
+  const economy = createEconomicState();
+  const buyer = createHousehold(economy, { job: "logger", x: 0, y: 0 });
+  const seller = createHousehold(economy, { job: "woodshop", x: 0, y: 0 });
+  for (const goods of FOODS) buyer.pantry[goods] = 100;
+  buyer.pantry.tools = 0;
+  buyer.lv = 1;
+  postCompanyLedger(economy.company, {
+    day: 1,
+    amount: buyer.purse - 10,
+    reason: "食費保留テストの財布預入",
+  });
+  buyer.purse = 10;
+  economy.stalls.tools.push({ householdId: seller.id, qty: 100, price: 1, age: 0 });
+
+  const result = buyAtMarket(economy, buyer, { day: 1 });
+  assert.equal(result.transactions.some(transaction => transaction.goods === "tools"), false);
+  assert.equal(result.blockers.tools, "food_reserve");
+  assert.equal(buyer.purse, 10);
 });
 
 test("段18: 飢えた世帯だけが高値の主食を買い食料pxを上げる", () => {

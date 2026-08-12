@@ -1,6 +1,6 @@
 import {
   snapshotToViewModel, terrainRevisionForModel,
-} from './view_model.js?v=v004.47.1-household-trips';
+} from './view_model.js?v=v004.48.0-explicit-import';
 
 export function createViewController(api) {
   if (!api?.snapshot || !api?.advanceTicks || !api?.applyOperation) {

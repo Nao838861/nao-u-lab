@@ -3,11 +3,12 @@ import {
   acceptCompanyOrder,
   householdProductionSummary,
   purchaseCompanyWoodCart,
+  requestCompanyImport,
   requestCompanyStockRelease,
   requestMainlandAid,
   setCaravanEmployment,
   setCompanyStockTarget,
-} from "./econ.js?v=v004.47.1-household-trips";
+} from "./econ.js?v=v004.48.0-explicit-import";
 import {
   activePortCalls,
   addRoadLine,
@@ -15,14 +16,14 @@ import {
   haulJobById,
   removeBuilding,
   removeRoadTile,
-} from "./physical.js?v=v004.47.1-household-trips";
-import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.47.1-household-trips";
+} from "./physical.js?v=v004.48.0-explicit-import";
+import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.48.0-explicit-import";
 import {
   forgetCompanyLogisticsBuilding,
   placeCompanyLogisticsBuilding,
-} from "./world.js?v=v004.47.1-household-trips";
-import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.47.1-household-trips";
-import { configureCaravanRoute } from "./routes.js?v=v004.47.1-household-trips";
+} from "./world.js?v=v004.48.0-explicit-import";
+import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.48.0-explicit-import";
+import { configureCaravanRoute } from "./routes.js?v=v004.48.0-explicit-import";
 
 function jsonClone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -124,6 +125,8 @@ function viewSnapshot(state, { terrainAfterRevision = null } = {}) {
       demand30: economy.demand30 ?? {},
       goDay: economy.goDay,
       imported: economy.imported,
+      importStock: economy.importStock,
+      importRequests: economy.importRequests,
       mainlandAid: economy.mainlandAid,
       marketStock: economy.marketStock,
       marketStockCost: economy.marketStockCost,
@@ -594,6 +597,25 @@ export function createEngineApi(
           ? world.state.day + 1
           : world.state.day;
         return requestMainlandAid(economy, physical, { day: actionDay });
+      }
+      case "request_import": {
+        const actionDay = world.state.tick % 30 === 0
+          ? world.state.day + 1
+          : world.state.day;
+        let request = null;
+        try {
+          request = requestCompanyImport(economy, physical, op.goods, {
+            day: actionDay,
+            qty: op.qty,
+          });
+        } catch {
+          return { ok: false, request: null, reason: "invalid_goods" };
+        }
+        return {
+          ok: Boolean(request),
+          request: request ? jsonClone(request) : null,
+          reason: request ? null : "port_or_funds",
+        };
       }
       case "purchase_company_cart": {
         const actionDay = world.state.tick % 30 === 0

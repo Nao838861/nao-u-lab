@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.47.1-household-trips';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.48.0-explicit-import';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.47.1-household-trips';
+} from './food_readability.js?v=v004.48.0-explicit-import';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   findTravelPath, householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.47.1-household-trips';
-import { analyzeRoadConnections } from './placement.js?v=v004.47.1-household-trips';
+} from './engine_bridge.js?v=v004.48.0-explicit-import';
+import { analyzeRoadConnections } from './placement.js?v=v004.48.0-explicit-import';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.47.1-household-trips';
+} from './render_scene.js?v=v004.48.0-explicit-import';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.47.1-household-trips';
+} from './visuals.js?v=v004.48.0-explicit-import';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',
@@ -1656,6 +1656,8 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
       },
     ])),
     imported: { ...snapshot.economy.imported },
+    importStock: { ...(snapshot.economy.importStock ?? {}) },
+    importRequests: (snapshot.economy.importRequests ?? []).map(request => ({ ...request })),
     moneyOutBy: { ...snapshot.economy.outBy },
     companyStock: { ...snapshot.economy.stock },
     companyStockAverageCosts,

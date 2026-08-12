@@ -1,4 +1,4 @@
-import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.47.1-household-trips';
+import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.48.0-explicit-import';
 
 export const GOODS_SHELF_LIFE_DAYS = Object.freeze({
   fish: 3,

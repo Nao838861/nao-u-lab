@@ -2259,7 +2259,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.47.1-household-trips');
+  assert.equal(VERSION, 'v004.48.0-explicit-import');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -3895,7 +3895,15 @@ test('段10/11: 実港便の接岸・1荷/tick・出港をsnapshotとイベン�
 });
 
 test('段12: 実キャリアは荷・出所・行き先・経路を追跡表示できるモデルを持つ', () => {
-  const api = createEngineApi(buildBaseCity(11));
+  const world = buildBaseCity(11);
+  const request = requestCompanyImport(
+    world.state.economy,
+    world.state.physical,
+    'wheat',
+    { day: world.state.economy.currentDay, qty: 12 },
+  );
+  assert.ok(request, 'プレイヤーが明示注文した麦便が成立する');
+  const api = createEngineApi(world);
   let model = snapshotToViewModel(api.snapshot());
   let carrier = null;
   for (let guard = 0; guard < 1800 && !carrier; guard += 1) {

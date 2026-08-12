@@ -21,7 +21,7 @@ import {
   sectionCapacity,
   withdrawInventory,
   workRoadWorksite,
-} from "./physical.js?v=v004.47.1-household-trips";
+} from "./physical.js?v=v004.48.0-explicit-import";
 
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) return value;
@@ -2486,18 +2486,17 @@ export function companyStockReleasePrice(economy, goods, { market = false } = {}
   );
 }
 
-function pendingImportQuantity(economy, goods) {
-  const requests = Array.isArray(economy.unsoldImportRequestIds)
-    ? economy.unsoldImportRequestIds
-      .map((requestId) => importRequestById(economy, requestId))
-      .filter(Boolean)
-    : (economy.importRequests ?? []).filter((request) => request.status !== "sold");
-  return requests
-    .filter((request) => request.goods === goods)
-    .reduce(
-      (total, request) => total + Math.max(0, request.qty - request.soldQty - request.marketQty),
-      0,
-    );
+export function pendingCompanyImportCost(economy) {
+  return (economy.importRequests ?? []).reduce((total, request) => {
+    if (request.aid || request.status === "sold") return total;
+    const paidQty = Number.isFinite(request.paidQty)
+      ? request.paidQty
+      : request.status === "vessel"
+        ? 0
+        : request.qty;
+    const unpaidQty = Math.max(0, request.qty - paidQty);
+    return total + unpaidQty * (request.unitCost ?? P.IMP_COST[request.goods] ?? 0);
+  }, 0);
 }
 
 export const MAINLAND_AID = deepFreeze({ BASE_WHEAT: 240, DECAY: 0.25, REFUSAL_AT: 4 });
@@ -2523,6 +2522,12 @@ export function requestCompanyImport(economy, physical, goods, { day, qty, aid =
   if (!Number.isFinite(qty) || qty <= 1e-9) return null;
   const port = companyLogisticsSite(physical, "port");
   if (!port) return null;
+  const unitCost = aid ? 0 : (P.IMP_COST[goods] ?? P.IMP[goods] * 0.7);
+  if (
+    !aid
+    && economy.company.money - pendingCompanyImportCost(economy) - qty * unitCost
+      < -companyCreditLimit(economy, { day })
+  ) return null;
   const request = {
     id: `imp${economy.nextImportRequestId}`,
     goods,
@@ -2533,7 +2538,8 @@ export function requestCompanyImport(economy, physical, goods, { day, qty, aid =
     status: "vessel",
     requestedDay: day,
     aid,
-    unitCost: aid ? 0 : (P.IMP_COST[goods] ?? P.IMP[goods] * 0.7),
+    unitCost,
+    paidQty: 0,
   };
   economy.nextImportRequestId += 1;
   const call = dockVessel(physical, {
@@ -2548,7 +2554,78 @@ export function requestCompanyImport(economy, physical, goods, { day, qty, aid =
   (economy.importRequestIndex ??= {})[request.id] = economy.importRequests.length - 1;
   (economy.activeImportRequestIds ??= []).push(request.id);
   (economy.unsoldImportRequestIds ??= []).push(request.id);
+  if (!aid) {
+    recordEconomyEvent(
+      economy,
+      day,
+      `本土へ${goods}を${qty.toFixed(1)}荷発注——仕入予定${(qty * unitCost).toFixed(1)}`,
+    );
+  }
   return request;
+}
+
+function marketShelvesForGoods(economy, physical, household, goods) {
+  const marketId = householdMarketId(household);
+  const shelves = economy.stalls[goods]
+    .filter((stall) => (
+      (stall.marketId ?? "main") === marketId
+      && findHousehold(economy, stall.householdId)
+      && stall.qty > 1e-9
+    ))
+    .map((stall) => ({ price: stall.price, qty: stall.qty }));
+  const localQty = economy.marketStockM?.[marketId]?.[goods] ?? 0;
+  if (localQty > 1e-9) {
+    shelves.push({
+      price: Math.max(0.1, marketPriceBook(economy, marketId)[goods] ?? P.BELIEF0[goods] ?? 2),
+      qty: localQty,
+    });
+  }
+  if (marketId !== "main") return shelves;
+  const importQty = physical ? (economy.importStock[goods] ?? 0) : 0;
+  if (importQty > 1e-9) shelves.push({ price: P.IMP[goods], qty: importQty });
+  const aidQty = physical ? (economy.aidStock?.[goods] ?? 0) : 0;
+  if (aidQty > 1e-9) shelves.push({ price: 0, qty: aidQty });
+  const companyQty = physical
+    ? (economy.marketStock[goods] ?? 0)
+    : Math.max(0, (economy.stock[goods] ?? 0) - (economy.order?.g === goods ? economy.order.left : 0));
+  const companyPrice = companyStockReleasePrice(economy, goods, { market: Boolean(physical) });
+  if (companyQty > 1e-9 && Number.isFinite(companyPrice)) {
+    shelves.push({ price: companyPrice, qty: companyQty });
+  }
+  return shelves;
+}
+
+function cheapestMarketFoodPrice(economy, physical, household) {
+  const prices = FOODS.flatMap((goods) => (
+    marketShelvesForGoods(economy, physical, household, goods)
+      .filter((shelf) => shelf.price > 0)
+      .map((shelf) => shelf.price)
+  ));
+  return prices.length > 0 ? Math.min(...prices) : staplePrice(economy);
+}
+
+function foodCashReserve(economy, physical, household) {
+  return householdEat(household) * P.FOOD_FIRST_D
+    * cheapestMarketFoodPrice(economy, physical, household);
+}
+
+function foodPurchaseOrder(economy, physical, household, targets, fallbackOrder) {
+  const fallbackRank = new Map(fallbackOrder.map((goods, index) => [goods, index]));
+  return fallbackOrder.filter((goods) => targets[goods]).sort((left, right) => {
+    const leftCeiling = targets[left]?.[1] ?? 0;
+    const rightCeiling = targets[right]?.[1] ?? 0;
+    const lowest = (goods, ceiling) => marketShelvesForGoods(
+      economy,
+      physical,
+      household,
+      goods,
+    ).filter((shelf) => shelf.price <= ceiling).reduce(
+      (price, shelf) => Math.min(price, shelf.price),
+      Infinity,
+    );
+    return lowest(left, leftCeiling) - lowest(right, rightCeiling)
+      || (fallbackRank.get(left) ?? 0) - (fallbackRank.get(right) ?? 0);
+  });
 }
 
 function recordCaravanRetailSale(economy, routeId, { day, amount, tripNumber = null }) {
@@ -2590,9 +2667,19 @@ export function buyAtMarket(
   const householdFoodOrder = household.job === "shepherd"
     ? ["veg", "wheat", "fish", "pres", "pick", "meat"]
     : FOOD_BUY_ORDER;
+  const pricedFoodOrder = foodPurchaseOrder(
+    economy,
+    physical,
+    household,
+    targets,
+    householdFoodOrder,
+  );
   const preferredOrder = foodDays < P.FOOD_FIRST_D
-    ? [...householdFoodOrder, ...jobOrder.filter((goods) => !FOODS.includes(goods))]
-    : jobOrder;
+    ? [...pricedFoodOrder, ...jobOrder.filter((goods) => !FOODS.includes(goods))]
+    : [
+      ...jobOrder.filter((goods) => !FOODS.includes(goods)),
+      ...pricedFoodOrder,
+    ];
   const order = preferredOrder.filter((goods) => targets[goods]);
   const transactions = [];
   const manifest = {};
@@ -2643,23 +2730,13 @@ export function buyAtMarket(
       }
       if (buyerMarket !== "main") continue;
       if (P.IMP[goods] !== undefined) {
-        const importQty = physical ? (economy.importStock[goods] ?? 0) : Infinity;
+        const importQty = economy.importStock[goods] ?? 0;
         if (importQty > 1e-9) {
           shelves.push({ goods, kind: "CO", qty: importQty, price: P.IMP[goods] });
         }
         const aidQty = physical ? (economy.aidStock?.[goods] ?? 0) : 0;
         if (aidQty > 1e-9) {
           shelves.push({ goods, kind: "AID", qty: aidQty, price: 0 });
-        }
-        if (
-          physical
-          && P.IMP[goods] <= ceiling
-          && wanted > importQty + pendingImportQuantity(economy, goods) + 1e-9
-        ) {
-          requestCompanyImport(economy, physical, goods, {
-            day,
-            qty: wanted - importQty - pendingImportQuantity(economy, goods),
-          });
         }
       }
       const reserved = economy.order?.g === goods ? economy.order.left : 0;
@@ -2704,9 +2781,11 @@ export function buyAtMarket(
       const productionInput = isProductionInput(household, goods);
       const capitalNeed = isHouseholdCapitalNeed(physical, household, goods);
       const input = productionInput || capitalNeed;
+      const workingInput = productionInput && !capitalNeed;
+      const protectsFoodCash = !FOODS.includes(goods) && !workingInput;
       // 信用買いは売上へ直結する日々の原料だけ。建設・修繕・道具・漁具・肥料・
       // 荷車材料まで一律に借金購入すると、改善投資が食料を買えない世帯を作る。
-      let creditEligible = productionInput && CREDIT_INPUT_JOBS.has(household.job);
+      let creditEligible = workingInput && CREDIT_INPUT_JOBS.has(household.job);
       // 複数原料の製鉄は、主原料がないのに燃料だけ借金購入して棚へ寝かせない。
       if (creditEligible && ["char", "coal"].includes(goods)) {
         if (household.job === "smelter") {
@@ -2720,9 +2799,12 @@ export function buyAtMarket(
       const available = (shelf.kind === "CO" || shelf.kind === "AID" || shelf.kind === "STOCK" || shelf.kind === "LSTOCK")
         ? shelf.qty
         : shelf.stall.qty;
+      const reserve = protectsFoodCash
+        ? foodCashReserve(economy, physical, household, purchased)
+        : 0;
       const affordable = shelf.kind === "AID"
         ? Infinity
-        : (household.purse + (creditEligible ? 30 : 0)) / shelf.price;
+        : Math.max(0, household.purse - reserve + (creditEligible ? 30 : 0)) / shelf.price;
       const usableCapacity = input ? capacity : Math.max(0, capacity - inputReserve);
       const qty = Math.min(wanted, available, affordable, usableCapacity / unitWeight);
       if (qty < 1e-9) continue;
@@ -2897,9 +2979,16 @@ export function buyAtMarket(
     }
     if (wanted > 1e-9) {
       unmet[orderedGoods] = wanted;
+      const orderedCapitalNeed = isHouseholdCapitalNeed(physical, household, orderedGoods);
+      const orderedWorkingInput = isProductionInput(household, orderedGoods) && !orderedCapitalNeed;
+      const reserveBlocked = !FOODS.includes(orderedGoods)
+        && !orderedWorkingInput
+        && household.purse > 1e-9
+        && household.purse <= foodCashReserve(economy, physical, household, purchased) + 1e-9;
       if (stockedShelves.length === 0) blockers[orderedGoods] = "no_stock";
       else if (affordableShelves.length === 0) blockers[orderedGoods] = "too_expensive";
       else if (capacity <= 1e-9) blockers[orderedGoods] = "no_capacity";
+      else if (reserveBlocked) blockers[orderedGoods] = "food_reserve";
       else if (household.purse <= 1e-9) blockers[orderedGoods] = "no_money";
       else blockers[orderedGoods] = "partial";
     }
@@ -4753,6 +4842,7 @@ export function settlePortTransfers(economy, physical, { day, transfers }) {
           `${transfer.goods}を本土から港ヤードへ輸入`,
         );
       }
+      request.paidQty = Math.min(request.qty, (request.paidQty ?? 0) + transfer.qty);
       if (transfer.completed) request.status = "port";
     } else if (metadata.kind === "household_export") {
       const lot = exportLotById(economy, metadata.lotId);

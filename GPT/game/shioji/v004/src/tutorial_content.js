@@ -2,15 +2,15 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.47.1-household-trips';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.47.1-household-trips';
-import { displayCultureLevel } from './visuals.js?v=v004.47.1-household-trips';
+} from './engine_bridge.js?v=v004.48.0-explicit-import';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.48.0-explicit-import';
+import { displayCultureLevel } from './visuals.js?v=v004.48.0-explicit-import';
 import {
   PLAYER_FACING_BANNED_TERMS,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.47.1-household-trips';
-import { islandCalendar } from './ui_summary.js?v=v004.47.1-household-trips';
+} from './food_readability.js?v=v004.48.0-explicit-import';
+import { islandCalendar } from './ui_summary.js?v=v004.48.0-explicit-import';
 
 export { PLAYER_FACING_BANNED_TERMS };
 
@@ -1595,7 +1595,7 @@ const TUTORIAL_GOAL_DEFINITIONS = Object.freeze([
   Object.freeze({
     id: 'reduce-food-imports',
     chapter: '第二章・島の食卓',
-    title: '本土から買う食料を一日0.60荷未満へ減らす',
+    title: '本土から買う食料を一日0.60荷未満に保つ',
     evaluate({ model }) {
       const metrics = foodFlowMetrics(model);
       const complete = metrics.productionEma >= FOOD_PRODUCTION_EMA_MIN

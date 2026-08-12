@@ -1,48 +1,48 @@
-import { IsometricCamera } from './camera.js?v=v004.47.1-household-trips';
-import { SimulationClock } from './clock.js?v=v004.47.1-household-trips';
-import { createBoundaryEvents } from './boundary_events.js?v=v004.47.1-household-trips';
+import { IsometricCamera } from './camera.js?v=v004.48.0-explicit-import';
+import { SimulationClock } from './clock.js?v=v004.48.0-explicit-import';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.48.0-explicit-import';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.47.1-household-trips';
+} from './config.js?v=v004.48.0-explicit-import';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.47.1-household-trips';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.47.1-household-trips';
-import { developmentMapView } from './development_map.js?v=v004.47.1-household-trips';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.47.1-household-trips';
-import { formatElenaSpeech } from './elena_text.js?v=v004.47.1-household-trips';
+} from './display_batch.js?v=v004.48.0-explicit-import';
+import { BUILD_COST_DENARI, P, createEngineController } from './engine_bridge.js?v=v004.48.0-explicit-import';
+import { developmentMapView } from './development_map.js?v=v004.48.0-explicit-import';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.48.0-explicit-import';
+import { formatElenaSpeech } from './elena_text.js?v=v004.48.0-explicit-import';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.47.1-household-trips';
+} from './food_readability.js?v=v004.48.0-explicit-import';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.47.1-household-trips';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.47.1-household-trips';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.47.1-household-trips';
-import { goodsDetail } from './goods_detail.js?v=v004.47.1-household-trips';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.47.1-household-trips';
-import { WorldPresentation } from './presentation.js?v=v004.47.1-household-trips';
-import { Renderer } from './renderer.js?v=v004.47.1-household-trips';
+} from './keyboard.js?v=v004.48.0-explicit-import';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.48.0-explicit-import';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.48.0-explicit-import';
+import { goodsDetail } from './goods_detail.js?v=v004.48.0-explicit-import';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.48.0-explicit-import';
+import { WorldPresentation } from './presentation.js?v=v004.48.0-explicit-import';
+import { Renderer } from './renderer.js?v=v004.48.0-explicit-import';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.47.1-household-trips';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.47.1-household-trips';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.47.1-household-trips';
+} from './save_game.js?v=v004.48.0-explicit-import';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.48.0-explicit-import';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.48.0-explicit-import';
 import {
   GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRow, supplyDemandRows,
-} from './supply_demand.js?v=v004.47.1-household-trips';
-import { orderQuote } from './tutorial_content.js?v=v004.47.1-household-trips';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.47.1-household-trips';
+} from './supply_demand.js?v=v004.48.0-explicit-import';
+import { orderQuote } from './tutorial_content.js?v=v004.48.0-explicit-import';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.48.0-explicit-import';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.47.1-household-trips';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.47.1-household-trips';
+} from './ui_guidance.js?v=v004.48.0-explicit-import';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.48.0-explicit-import';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -129,6 +129,7 @@ let companyEditingInput = null;
 const stockTargetDrafts = new Map();
 const stockTargetFeedback = new Map();
 const stockReleaseDrafts = new Map();
+const importQuantityDrafts = new Map();
 const renderSignatures = new Map();
 const HISTORY_DAYS = 180;
 const economyHistory = (startupSave?.economyHistory ?? []).slice(-HISTORY_DAYS);
@@ -1031,6 +1032,35 @@ function renderAidPanel() {
   });
 }
 
+function renderImportPanel() {
+  const knownGoods = new Set(goodsDiscovery.knownGoods());
+  const importGoods = Object.keys(P.IMP).filter(goods => knownGoods.has(goods));
+  const signature = JSON.stringify([
+    model.importRequests,
+    model.importStock,
+    importGoods.map(goods => importQuantityDrafts.get(goods) ?? null),
+  ]);
+  renderIfChanged('company-imports', signature, () => {
+    $('#import-panel').innerHTML = `
+      <h3>本土から仕入れる</h3>
+      <p>ここで発注した品だけが船で届きます。仕入代は到着時に会社から本土へ支払われ、島の外へ出ます。</p>
+      <div class="company-goods">${importGoods.map(goods => {
+        const pending = (model.importRequests ?? []).filter(request => (
+          !request.aid && request.goods === goods && request.status !== 'sold'
+        )).reduce((total, request) => total + Math.max(0, request.qty - request.soldQty), 0);
+        const market = model.importStock?.[goods] ?? 0;
+        const qty = importQuantityDrafts.get(goods) ?? (FOOD_GOODS.includes(goods) ? 20 : 10);
+        const unitCost = P.IMP_COST[goods] ?? P.IMP[goods] * 0.7;
+        return `<div class="goods-row" data-import-goods="${goods}">
+          <span class="goods-identity">${goodsIconMarkup(goods)}<span><b>${GOODS_LABELS[goods]}</b><small>原価 ${formatQuantity(toDenari(unitCost))}D/荷・発注中 ${formatQuantity(pending)}荷・市場 ${formatQuantity(market)}荷</small></span></span>
+          <label class="release-editor"><span>発注量</span><input data-import-qty type="number" min="1" step="1" value="${escapeHtml(qty)}" aria-label="${GOODS_LABELS[goods]}の輸入発注量"><small>荷</small></label>
+          <button type="button" data-company-action="request-import" data-goods="${goods}">本土へ発注</button>
+        </div>`;
+      }).join('')}</div>`;
+    uiMetrics.domWrites += 1;
+  });
+}
+
 function renderCartPanel() {
   const offers = model.households.flatMap(household => (
     (household.cartStock ?? []).map(cart => ({ ...cart, seller: household }))
@@ -1257,6 +1287,7 @@ function renderCompanySheet() {
     || companyMouseInteraction || companyInteractionReleasePending || companyEditingInput) return;
   setTextIfChanged('#company-balance', formatNumber(toDenari(model.companyMoney)));
   renderAidPanel();
+  renderImportPanel();
   renderCartPanel();
   renderCompanyOrder();
   renderCompanyGoods();
@@ -2487,6 +2518,11 @@ const companySheet = $('#company-sheet');
 const caravanSheet = $('#caravan-sheet');
 companySheet.addEventListener('input', event => {
   if (!(event.target instanceof HTMLInputElement)) return;
+  if (event.target.matches('[data-import-qty]')) {
+    const goods = event.target.closest('[data-import-goods]')?.dataset.importGoods;
+    if (goods) importQuantityDrafts.set(goods, event.target.value);
+    return;
+  }
   const row = event.target.closest('.goods-row');
   if (!row?.dataset.goods) return;
   if (event.target.matches('[data-stock-target]')) {
@@ -2628,6 +2664,24 @@ companySheet.addEventListener('click', event => {
   }
   if (action === 'request-aid') {
     applyEngineOperation({ type: 'request_aid' }, '本国へ食料支援を要請しました', '本国は要請に応じません');
+    renderCompanySheet();
+    return;
+  }
+  if (action === 'request-import') {
+    const goods = button.dataset.goods;
+    const input = button.closest('[data-import-goods]')?.querySelector('[data-import-qty]');
+    const qty = Math.max(0, Math.round(Number(input?.value) || 0));
+    if (!goods || qty < 1) {
+      $('#status span').textContent = '発注量は1荷以上で入力してください';
+      return;
+    }
+    const unitCost = P.IMP_COST[goods] ?? P.IMP[goods] * 0.7;
+    const result = applyEngineOperation(
+      { type: 'request_import', goods, qty },
+      `${GOODS_LABELS[goods]} ${qty}荷を本土へ発注しました（仕入予定 ${formatQuantity(toDenari(qty * unitCost))}デナリ）`,
+      '港の接続か会社の余力がなく発注できません',
+    );
+    if (result?.ok !== false) importQuantityDrafts.delete(goods);
     renderCompanySheet();
     return;
   }

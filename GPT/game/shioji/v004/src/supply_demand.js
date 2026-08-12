@@ -1,7 +1,7 @@
 import {
   FOOD_GOODS, WINTER_RESERVE_PER_PERSON,
-} from './food_readability.js?v=v004.47.1-household-trips';
-import { toDenari } from './config.js?v=v004.47.1-household-trips';
+} from './food_readability.js?v=v004.48.0-explicit-import';
+import { toDenari } from './config.js?v=v004.48.0-explicit-import';
 
 export const SUPPLY_STATUS = Object.freeze({
   no_demand: Object.freeze({ severity: 0, label: '需要なし' }),
