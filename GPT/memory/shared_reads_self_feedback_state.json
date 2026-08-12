@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-13T04:30:06+09:00",
+  "updated_at": "2026-08-13T08:01:09+09:00",
   "reviewed_source_ts": [
+    "1780015414.981379",
     "1780015414.955959",
     "1778774144.030849",
     "1780037605.969949",
@@ -638,6 +639,46 @@
     "1786490009.108289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-13T08:01:09+09:00",
+      "selected": {
+        "id": "sr-1780015414-afc9dcdcb8",
+        "source_ts": "1780015414.981379",
+        "title": "Amaike RAG 4層分類の採用判定・次サイクル試行（分割後半）",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす live 候補のうち source_ts が最も新しく、memory・agent・operation・evaluation の4優先タグを持つ1件だけを選んだ。ただしこれは直前にレビューした sr-1780015414-4e9ee0b196 と同じ Slack 投稿の判定・forward commitment 部分であり、独立した shared-reads 知見ではない。Nao_u が本 fragment を『重要』『適切』『自分に反映してほしい』と明示評価した記録はなく、採用表現は Log 自身の旧判断である。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_controlも必須閾値2を下回るため、新規probe・metric・lease・directiveは追加しない。fragment は semantic unit 単位のpre-generation、規則ベースedgeとingest hook、infra cost pre-mortem、dynamic corpus対応、想定queryからのrecall適中率測定という具体的な行動へ変換できるためrelevance=3、actionability=2とした。一方、これは親投稿の判定と旧forward commitmentだけで、外部記事URL・実測結果・完了receiptを自身に持たず、リンク先 projects/memory_redesign.md も現行treeで確認できないためevidence=1に留める。直前レビュー済みの親atomが同じ4層構成とfast pathをすでに評価し、probe-20260516-read-lanes-before-memory-writeはsemantic／full-text／graph／time lane比較を、probe-20260517-hierarchical-memory-recall-ladderは検索順序を、probe-20260601-memory-link-llm-roi-gateはdeterministic baselineとLLM fallback境界を、probe-20260731-rlm-one-hop-query-rewriteは1回のread-only rewriteによる判断差を扱うためnon_redundancy=0である。旧commitmentを別probeとして再採用すると、同一投稿を二重にルール化し、比較artifactなしにstaleなkaizen前提を復活させるためrisk_control=1とした。reviewed stateだけを更新する。",
+      "existing_controls": [
+        "probe-20260516-read-lanes-before-memory-write",
+        "probe-20260517-hierarchical-memory-recall-ladder",
+        "probe-20260601-memory-link-llm-roi-gate",
+        "probe-20260731-rlm-one-hop-query-rewrite"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、同一Slack投稿のレビュー済み親atom・既存recall controlsとの重複、旧forward commitmentの完了receipt不在によるreject理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-13T04:30:06+09:00",
       "selected": {

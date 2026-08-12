@@ -58,7 +58,34 @@ reason: "Phase 2 の gate_decision: pass 候補が 0 件のため、#shared-read
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780015414-afc9dcdcb8
+    source_ts: "1780015414.981379"
+    title: "Amaike RAG 4層分類の採用判定・次サイクル試行（分割後半）"
+    reason: "score 11・未レビューの live 候補で source_ts が最も新しく、4優先タグを持つ1件だけを選んだ。ただし直前レビュー済み親atomと同じSlack投稿の判定・forward commitment断片で、Nao_uの明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "具体的なrecall改善行動には変換できるが、外部URL・実測・完了receiptを自身に持たず、同一投稿の親atomと既存4 controlsが同じ判断境界を既に扱う。合計14未満かつrisk_control<2のためstate-onlyで閉じた。"
+  change:
+    summary: "reviewed_source_tsとreject理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
