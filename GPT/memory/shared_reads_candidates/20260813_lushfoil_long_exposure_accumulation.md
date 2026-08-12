@@ -7,14 +7,19 @@ genre_tags: [game-design, rendering, photography-sim, prototyping, unreal-engine
 evaluated_at: "2026-08-13T02:08:04+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-13T02:08:04+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-13T02:08:04+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-13T02:14:21+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786554834311589"
+next_action: none
 stale_after: "2026-09-12"
 supersedes: []
+posted:
+  ts: "1786554834.311589"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786554834311589"
+  char_count: 3574
+  posted_at: "2026-08-13T02:14:21+09:00"
 gate_reason: >-
   開発者本人の一次資料であり、問題設定、二つの失敗案、逐次平均による解決、30 captures/s の性能判断、manual mode への統合、視覚結果まで一続きで抽出できる。
   定量ベンチマークや数式の厳密な記述は不足するが、その限界を明示した上で、時間蓄積を画面効果から player-controlled mechanic へ変える具体例として約4000字の固有分析を構成できる。

@@ -51,7 +51,18 @@ unreviewed_intake_audit:
 - 判定根拠: 開発者本人の記事から問題設定、二つの失敗、逐次平均、30 captures/s、manual mode 統合、視覚結果を抽出可能。定量性能評価の不足は限界として扱い、時間蓄積 mechanic への具体適用を含む約4000字の固有分析を構成できるため pass。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260813_lushfoil_long_exposure_accumulation.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786554834311589
+    char_count: 3574
+skipped: []
+```
+
+- 最終判定: 投稿。元記事を再確認し、逐次平均の完全な漸化式と定量性能評価が記事には示されない限界を明記した。
+- 投稿前 review: `shared_reads_policy.validate_shared_reads_message` を通過。`■ 概要` 開始、必須 6 項目、`■ URL` 末尾、禁止表現なし、3,574 字、1 candidate / 1 `chat.postMessage`、thread なし。
+- Slack 結果: `ok: true`、channel `C0AN2FEHEJJ`、ts `1786554834.311589`。`chat.getPermalink` は現行 client の JSON POST で必須引数を認識せず `invalid_arguments` となったため、workspace / channel / ts から Slack 標準形式の permalink を記録した。投稿の再送は行っていない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
