@@ -60,6 +60,7 @@ import {
   recordEconomicDemand,
   recordEconomyEvent,
   productionCost,
+  processingInputPriceCeiling,
   productionMultiplierForTrip,
   productionInputAmount,
   producePrimaryTick,
@@ -93,6 +94,8 @@ import {
   transactMarketCargo,
   unloadMarketBuyCargo,
   updateFlowEma,
+  updateStockDaysPrices,
+  stockDaysPriceMultiplier,
   useHouseholdWorkTool,
 } from "../src/econ.js";
 import {
@@ -1157,7 +1160,7 @@ test("段11: P・GOODS・FOODS・PERISHが意図した需給網・移動係数�
   for (const changed of [
     "IMP", "IMP_COST", "EXP", "EXP_CAP", "EXP_ML", "Y_OIL", "WOOD_R", "WOOD0",
     "Y_LOG", "Y_ORE", "Y_COAL", "Y_SMELT", "Y_SMITH", "LOG_TOOL", "LOG_CHAR",
-    "Y_CHAR", "Y_SALT", "Y_COTTON_CLOTH", "Y_STONE",
+    "Y_CHAR", "Y_SALT", "Y_COTTON_CLOTH", "Y_STONE", "FISH_LIFE",
   ]) {
     delete sourceConstants[changed];
   }
@@ -2139,7 +2142,7 @@ test("現金循環: 実働歩留まりが低い職は直近実績を単位原価
   assert.ok(realized <= base / 0.35 + 1e-9);
 });
 
-test("現金循環: 木工房は木製品相場から粗利を残せる丸太価格まで許容する", () => {
+test("現金循環: 木工房は木製品相場から労賃と安全幅を引いた丸太価格まで許容する", () => {
   const economy = createEconomicState();
   const woodshop = createHousehold(economy, { job: "woodshop", x: 0, y: 0 });
   woodshop.pantry.log = 0;
@@ -2147,8 +2150,74 @@ test("現金循環: 木工房は木製品相場から粗利を残せる丸太価
 
   const ceiling = buyTargets(economy, woodshop, { day: 61 }).log[1];
 
-  assert.ok(ceiling >= 1.5);
-  assert.ok(ceiling * P.LOG_TOOL * 1.15 <= economy.px.tools + 1e-9);
+  assert.equal(ceiling, processingInputPriceCeiling(
+    economy, null, woodshop, "log", P.LOG_TOOL, { day: 61 },
+  ));
+  assert.ok(ceiling * P.LOG_TOOL < economy.px.tools);
+});
+
+test("価格規則: 在庫日数の階段が取引ゼロでも相場と既存棚を更新する", () => {
+  assert.equal(stockDaysPriceMultiplier(0), 2);
+  assert.equal(stockDaysPriceMultiplier(6.99), 2);
+  assert.equal(stockDaysPriceMultiplier(7), 1.5);
+  assert.equal(stockDaysPriceMultiplier(30), 1.25);
+  assert.equal(stockDaysPriceMultiplier(60), 1.1);
+  assert.equal(stockDaysPriceMultiplier(Infinity), 1.1);
+
+  const economy = createEconomicState();
+  const logger = createHousehold(economy, { job: "logger", x: 0, y: 0 });
+  economy.px.log = 0.2;
+  economy.demand30.log = { demand: 10, consumed: 0, sources: {} };
+  economy.stalls.log.push({ householdId: logger.id, qty: 300, price: 9, age: 1 });
+  const cost = productionCost(economy, null, logger, "log", { day: 61 });
+
+  const updated = updateStockDaysPrices(economy, null, { day: 61 });
+
+  assert.equal(updated.main.log.days, 30);
+  assert.ok(Math.abs(economy.px.log - cost * 1.25) < 1e-9);
+  assert.ok(Math.abs(economy.stalls.log[0].price - economy.px.log) < 1e-9);
+  assert.equal(economy.prices.log.length, 0, "約定履歴なしでも更新する");
+});
+
+test("価格規則: 全加工連鎖に上流ask床より高い損益分岐上限がある", () => {
+  const economy = createEconomicState();
+  const households = Object.fromEntries([
+    "logger", "woodshop", "charburner", "saltworks", "miner", "collier",
+    "smelter", "smith", "fisher", "fisher2", "wheat", "veg", "shepherd",
+  ].map((job) => [job, createHousehold(economy, { job, x: 0, y: 0 })]));
+  updateStockDaysPrices(economy, null, { day: 61 });
+  const chains = [
+    ["logger", "log", "woodshop", "tools", "log", P.LOG_TOOL],
+    ["logger", "log", "charburner", "char", "log", P.LOG_CHAR],
+    ["charburner", "char", "saltworks", "salt", "char", P.SALT_CHAR / P.Y_SALT],
+    ["miner", "ore", "smelter", "bar", "ore", P.SMELT_ORE],
+    ["collier", "coal", "smelter", "bar", "coal", P.SMELT_FUEL],
+    ["smelter", "bar", "smith", "iron", "bar", P.SMITH_BAR],
+    ["collier", "coal", "smith", "iron", "coal", P.SMITH_FUEL],
+    ["fisher", "fish", "fisher2", "meal", "fish", P.MEAL_FISH],
+    ["wheat", "wheat", "shepherd", "meat", "wheat", P.FEED_MEAT],
+    ["veg", "veg", "shepherd", "meat", "veg", P.FEED_MEAT],
+    ["charburner", "char", "fisher", "pres", "char", P.SMOKE_CHAR / (P.PR_SMOKE - P.PR_SALT)],
+    ["saltworks", "salt", "fisher", "pres", "salt", P.PRES_SALT / P.PR_SALT],
+    ["saltworks", "salt", "veg", "pick", "salt", P.PICK_SALT / P.PR_PICK],
+  ];
+  for (const [upstreamJob, upstreamGoods, buyerJob, outputGoods, inputGoods, ratio] of chains) {
+    const askFloor = productionCost(
+      economy, null, households[upstreamJob], upstreamGoods, { day: 61 },
+    ) * 1.05;
+    const ceiling = processingInputPriceCeiling(
+      economy,
+      null,
+      households[buyerJob],
+      inputGoods,
+      ratio,
+      { day: 61, outputGoods },
+    );
+    assert.ok(
+      askFloor < ceiling,
+      `${upstreamGoods}→${outputGoods}: ask ${askFloor} < ceiling ${ceiling}`,
+    );
+  }
 });
 
 test("段16: sellOffersは職業別keepと重量上限を守る", () => {
@@ -2294,7 +2363,9 @@ test("段17: buyTargets天井表・LADDER・固定買い順を正本どおり保
   woodshop.pantry.log = 0;
   assert.deepEqual(
     buyTargets(economy, woodshop, { day: 1 }).log,
-    [P.LOG_TOOL * 16, Math.max(0.9, economy.px.tools / P.LOG_TOOL / 1.15)],
+    [P.LOG_TOOL * 16, processingInputPriceCeiling(
+      economy, null, woodshop, "log", P.LOG_TOOL, { day: 1 },
+    )],
   );
 
   const farmer = createHousehold(economy, { job: "wheat", x: 0, y: 0 });
@@ -2352,7 +2423,7 @@ test("段17: 食料6日未満は生産入力logより食料wheatを先に約定�
   assert.equal(assertMoneyConservation(economy), true);
 });
 
-test("段17: 屋台約定はpxをEMA更新し売り手から4%手数料を会社へ移す", () => {
+test("段17: 屋台約定は相場を直接動かさず売り手から4%手数料を会社へ移す", () => {
   const economy = createEconomicState();
   const seller = createHousehold(economy, { job: "wheat", x: 0, y: 0 });
   const buyer = createHousehold(economy, { job: "logger", x: 0, y: 0 });
@@ -2371,7 +2442,7 @@ test("段17: 屋台約定はpxをEMA更新し売り手から4%手数料を会社
   assert.equal(buyer.purse, buyerPurse - payment);
   assert.equal(seller.purse, sellerPurse + payment - fee);
   assert.equal(economy.co.fee, fee);
-  assert.ok(Math.abs(economy.px.wheat - (P.BELIEF0.wheat * 0.9 + 2 * 0.1)) < 1e-12);
+  assert.equal(economy.px.wheat, P.BELIEF0.wheat);
   assert.deepEqual(economy.prices.wheat, [[1, 2, transaction.qty]]);
   assert.deepEqual(economicMaterialSnapshot(economy), before);
   assert.equal(assertMoneyConservation(economy), true);
@@ -2396,7 +2467,7 @@ test("段17: CO輸入棚は生産入力だけ財布-30まで信用買いでき�
   assert.equal(economy.co.impMargin, 7.5 * (P.IMP.wheat - P.IMP_COST.wheat));
   assert.equal(economy.moneyBoundary.out, 7.5 * P.IMP_COST.wheat);
   assert.equal(economy.materialFlows.wheat.imp, 240 + 7.5);
-  assert.equal(economy.px.wheat, P.BELIEF0.wheat * 0.9 + P.IMP.wheat * 0.1);
+  assert.equal(economy.px.wheat, P.BELIEF0.wheat);
   assert.equal(assertMoneyConservation(economy), true);
 
   const noCreditEconomy = createEconomicState();
@@ -2592,7 +2663,7 @@ test("現金循環: 修繕・道具・生活用品は三日分の最低食費を
   assert.equal(buyer.purse, 10);
 });
 
-test("段18: 飢えた世帯だけが高値の主食を買い食料pxを上げる", () => {
+test("段18: 飢えた世帯だけが高値の主食を買い約定価格を履歴へ残す", () => {
   const run = (foodDays) => {
     const economy = createEconomicState();
     const seller = createHousehold(economy, { job: "wheat", x: 0, y: 0 });
@@ -2608,13 +2679,14 @@ test("段18: 飢えた世帯だけが高値の主食を買い食料pxを上げ�
 
   const starving = run(0);
   const merelyLow = run(2);
-  assert.ok(starving.economy.px.wheat > starving.before);
+  assert.equal(starving.economy.px.wheat, starving.before);
   assert.equal(merelyLow.economy.px.wheat, merelyLow.before);
   assert.equal(starving.result.transactions.some((transaction) => transaction.goods === "wheat"), true);
   assert.equal(merelyLow.result.transactions.some((transaction) => transaction.goods === "wheat"), false);
+  assert.equal(starving.economy.prices.wheat.at(-1)[1], 2);
 });
 
-test("段18: 豊漁の安い魚が約定するとfish pxが下がる", () => {
+test("段18: 豊漁の安い魚が約定しても在庫日数相場は次の朝まで変わらない", () => {
   const economy = createEconomicState();
   const fisher = createHousehold(economy, { job: "fisher", x: 0, y: 0 });
   const buyer = createHousehold(economy, { job: "logger", x: 0, y: 0 });
@@ -2627,33 +2699,24 @@ test("段18: 豊漁の安い魚が約定するとfish pxが下がる", () => {
 
   const result = buyAtMarket(economy, buyer, { day: 65 });
   assert.equal(result.transactions.some((transaction) => transaction.goods === "fish"), true);
-  assert.ok(economy.px.fish < before);
+  assert.equal(economy.px.fish, before);
+  assert.ok(economy.prices.fish.length > 0);
   assert.equal(assertMoneyConservation(economy), true);
 });
 
-test("段18: 丸太市況の上昇が木製品原価・ask・tools pxへ順に伝播する", () => {
+test("段18: 丸太市況の上昇が木製品原価と在庫日数相場へ順に伝播する", () => {
   const run = (logPrice) => {
     const economy = createEconomicState();
     economy.px.log = logPrice;
-    economy.px.tools = 4;
     const seller = createHousehold(economy, { job: "woodshop", x: 0, y: 0 });
-    const buyer = createHousehold(economy, { job: "logger", x: 0, y: 0 });
-    seller.pantry.tools = 100;
-    buyer.lv = 1;
-    for (const goods of FOODS) buyer.pantry[goods] = 100;
-    buyer.pantry.tools = 0;
     const cost = productionCost(economy, null, seller, "tools", { day: 1 });
-    const sale = sellAtMarket(economy, null, seller, { day: 1, random: () => 0 });
-    const ask = sale.listed.find((stall) => stall.goods === "tools").price;
-    const bought = buyAtMarket(economy, buyer, { day: 1 });
-    assert.equal(bought.transactions.some((transaction) => transaction.goods === "tools"), true);
-    return { ask, cost, px: economy.px.tools };
+    updateStockDaysPrices(economy, null, { day: 1 });
+    return { cost, px: economy.px.tools };
   };
 
   const low = run(0.1);
   const high = run(0.6);
   assert.ok(high.cost > low.cost);
-  assert.ok(high.ask > low.ask);
   assert.ok(high.px > low.px);
 });
 
@@ -2757,7 +2820,9 @@ test("需要網4: 魚粉屋は実在する魚を原料棚から加工し、不�
   });
   const [wanted, ceiling] = buyTargets(economy, household, { day: 272, physical }).fish;
   assert.equal(wanted, P.Y_FISH * 2);
-  assert.equal(ceiling, economy.px.fish * 1.25);
+  assert.equal(ceiling, processingInputPriceCeiling(
+    economy, physical, household, "fish", P.MEAL_FISH, { day: 272 },
+  ));
 });
 
 test("需要網4: 魚粉屋の原料棚でも生鮮魚は家庭・屋台と同じ寿命で腐敗する", () => {
@@ -2770,8 +2835,8 @@ test("需要網4: 魚粉屋の原料棚でも生鮮魚は家庭・屋台と同�
   depositInventory(building, "input", "fish", 30);
 
   runDayEnd(economy, physical, { day: 1 });
-  assert.equal(sectionAmount(building, "input", "fish"), 20);
-  assert.equal(economy.led.spoil.fish, 10);
+  assert.equal(sectionAmount(building, "input", "fish"), 24);
+  assert.equal(economy.led.spoil.fish, 6);
 });
 
 test("段19: 各変換職のcostは生計費と正本の原料pxを連鎖する", () => {
@@ -4292,9 +4357,9 @@ test("段43: 生鮮は引き取り棚で待つ間も同じ寿命で腐敗する"
   economy.stalls.fish.push({ householdId: fisher.id, qty: 30, price: 1, age: 5 });
   depositInventory(companyLogisticsSite(physical, "market"), "outbound", "fish", 30);
   ageMarketStalls(economy, { day: 6, physical });
-  assert.ok(Math.abs(economy.marketReturns[0].qty - 20) < 1e-9);
+  assert.ok(Math.abs(economy.marketReturns[0].qty - 24) < 1e-9);
   ageMarketStalls(economy, { day: 7, physical });
-  assert.ok(Math.abs(economy.marketReturns[0].qty - (20 - 20 / P.FISH_LIFE)) < 1e-9);
+  assert.ok(Math.abs(economy.marketReturns[0].qty - (24 - 24 / P.FISH_LIFE)) < 1e-9);
   assert.ok(Math.abs(
     sectionAmount(companyLogisticsSite(physical, "market"), "pickup", "fish")
       - economy.marketReturns[0].qty,
@@ -4571,25 +4636,35 @@ test("段34: 製鉄・鍛冶の原料買い天井式を適用する", () => {
   smelter.pantry.char = 0;
   smelter.pantry.coal = 0;
   const smelterTargets = buyTargets(economy, smelter, { day: 1 });
-  const smelterCeiling = 2.2 / 2 * 0.6;
-  assert.deepEqual(smelterTargets.ore, [20, smelterCeiling]);
-  assert.deepEqual(smelterTargets.char, [10, smelterCeiling]);
-  assert.deepEqual(smelterTargets.coal, [10, smelterCeiling]);
+  const smelterOreCeiling = processingInputPriceCeiling(
+    economy, null, smelter, "ore", P.SMELT_ORE, { day: 1 },
+  );
+  const smelterFuelCeiling = processingInputPriceCeiling(
+    economy, null, smelter, "char", P.SMELT_FUEL, { day: 1 },
+  );
+  assert.deepEqual(smelterTargets.ore, [20, smelterOreCeiling]);
+  assert.deepEqual(smelterTargets.char, [10, smelterFuelCeiling]);
+  assert.deepEqual(smelterTargets.coal, [10, smelterFuelCeiling]);
 
   const smith = createHousehold(economy, { job: "smith", x: 21, y: 20 });
   smith.pantry.bar = 0;
   smith.pantry.char = 0;
   smith.pantry.coal = 0;
   const smithTargets = buyTargets(economy, smith, { day: 1 });
-  const smithCeiling = 4.5 * 0.6;
-  assert.deepEqual(smithTargets.bar, [10, smithCeiling]);
-  assert.deepEqual(smithTargets.char, [5, smithCeiling]);
-  assert.deepEqual(smithTargets.coal, [5, smithCeiling]);
+  const smithBarCeiling = processingInputPriceCeiling(
+    economy, null, smith, "bar", P.SMITH_BAR, { day: 1 },
+  );
+  const smithFuelCeiling = processingInputPriceCeiling(
+    economy, null, smith, "char", P.SMITH_FUEL, { day: 1 },
+  );
+  assert.deepEqual(smithTargets.bar, [10, smithBarCeiling]);
+  assert.deepEqual(smithTargets.char, [5, smithFuelCeiling]);
+  assert.deepEqual(smithTargets.coal, [5, smithFuelCeiling]);
 });
 
 test("段35 E-Fe3: 炭焼き小屋なしでも安い石炭棚を選び製鉄が回る", () => {
   const economy = createEconomicState();
-  economy.px.bar = 4;
+  economy.px.bar = 12;
   const smelter = createHousehold(economy, { job: "smelter", x: 20, y: 20 });
   const coalSeller = createHousehold(economy, { job: "collier", x: 3, y: 25 });
   const otherSeller = createHousehold(economy, { job: "logger", x: 27, y: 26 });

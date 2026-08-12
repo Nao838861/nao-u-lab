@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.49.0-economy-recovery';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.50.0-stock-days-market';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.49.0-economy-recovery';
+} from './food_readability.js?v=v004.50.0-stock-days-market';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   findTravelPath, householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.49.0-economy-recovery';
-import { analyzeRoadConnections } from './placement.js?v=v004.49.0-economy-recovery';
+} from './engine_bridge.js?v=v004.50.0-stock-days-market';
+import { analyzeRoadConnections } from './placement.js?v=v004.50.0-stock-days-market';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.49.0-economy-recovery';
+} from './render_scene.js?v=v004.50.0-stock-days-market';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.49.0-economy-recovery';
+} from './visuals.js?v=v004.50.0-stock-days-market';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',
@@ -1447,6 +1447,7 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
         purchased: { ...(household.lastMarketVisit.purchased ?? {}) },
         unmet: { ...(household.lastMarketVisit.unmet ?? {}) },
         blockers: { ...(household.lastMarketVisit.blockers ?? {}) },
+        ceilings: { ...(household.lastMarketVisit.ceilings ?? {}) },
       } : null,
       recentIncome: Number.isFinite(household.incomeLog?.at(-1))
         ? household.incomeLog.at(-1) : (household.income30 ?? 0),
@@ -1544,6 +1545,12 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
     goods,
     qty > 1e-9 ? companyStockReleasePrice(snapshot.economy, goods, { market: true }) : null,
   ]));
+  for (const [goods, releasePrice] of Object.entries(companyReleasePrices)) {
+    if (Number.isFinite(releasePrice)) marketLowest[goods] = Math.min(
+      marketLowest[goods] ?? Infinity,
+      releasePrice,
+    );
+  }
   const companyStockReleaseQuotes = Object.fromEntries(Object.entries(snapshot.economy.stock).map(([goods, qty]) => [
     goods,
     qty > 1e-9 ? companyStockReleasePrice(snapshot.economy, goods) : null,

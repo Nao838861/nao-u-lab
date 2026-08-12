@@ -1,15 +1,15 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.49.0-economy-recovery';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.49.0-economy-recovery';
-import { islandCalendar } from './ui_summary.js?v=v004.49.0-economy-recovery';
+} from './config.js?v=v004.50.0-stock-days-market';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.50.0-stock-days-market';
+import { islandCalendar } from './ui_summary.js?v=v004.50.0-stock-days-market';
 import {
   compileRenderScene, inventoryLayerDepth, marketStallLayerDepth, mergeDrawables,
-} from './render_scene.js?v=v004.49.0-economy-recovery';
+} from './render_scene.js?v=v004.50.0-stock-days-market';
 import {
   buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
   seasonalTerrainVisual,
-} from './visuals.js?v=v004.49.0-economy-recovery';
+} from './visuals.js?v=v004.50.0-stock-days-market';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 

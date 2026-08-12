@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.49.0-economy-recovery';
+import { pileVisual } from './visuals.js?v=v004.50.0-stock-days-market';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));

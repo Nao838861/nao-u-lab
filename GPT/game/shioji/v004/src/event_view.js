@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.49.0-economy-recovery';
+import { JOB_LABELS } from './config.js?v=v004.50.0-stock-days-market';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

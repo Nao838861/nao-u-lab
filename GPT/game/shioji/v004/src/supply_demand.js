@@ -1,8 +1,8 @@
 import {
   FOOD_GOODS, WINTER_RESERVE_PER_PERSON,
-} from './food_readability.js?v=v004.49.0-economy-recovery';
-import { toDenari } from './config.js?v=v004.49.0-economy-recovery';
-import { GOODS_RECIPES } from './goods_detail.js?v=v004.49.0-economy-recovery';
+} from './food_readability.js?v=v004.50.0-stock-days-market';
+import { toDenari } from './config.js?v=v004.50.0-stock-days-market';
+import { GOODS_RECIPES } from './goods_detail.js?v=v004.50.0-stock-days-market';
 
 export const SUPPLY_STATUS = Object.freeze({
   no_demand: Object.freeze({ severity: 0, label: '需要なし' }),
@@ -34,7 +34,7 @@ function marketAmount(model, goods) {
   return locations.reduce(
     (total, location) => total + (location.section === 'stall' ? finite(location.amount) : 0),
     0,
-  );
+  ) + finite(model?.companyMarketStock?.[goods]);
 }
 
 export function stockWhereabouts(model, goods, limit = 3) {
@@ -257,7 +257,19 @@ export function supplyDiagnosis(model, row) {
     stockBlocked: purchaseAttempts.filter(household => (
       household.lastMarketVisit?.blockers?.[row.goods] === 'no_stock'
     )).length,
+    minimumAsk: Number.isFinite(model?.marketLowest?.[row.goods])
+      ? toDenari(model.marketLowest[row.goods]) : null,
+    maximumCeiling: null,
   };
+  const priceCeilings = purchaseAttempts
+    .filter(household => household.lastMarketVisit?.blockers?.[row.goods] === 'too_expensive')
+    .map(household => household.lastMarketVisit?.ceilings?.[row.goods])
+    .filter(Number.isFinite);
+  if (priceCeilings.length > 0) purchasing.maximumCeiling = toDenari(Math.max(...priceCeilings));
+  purchasing.priceMismatch = row.marketStock > 0.005
+    && purchasing.priceBlocked > 0
+    && purchasing.minimumAsk !== null
+    && purchasing.maximumCeiling !== null;
   purchasing.solvent = Math.max(
     0,
     purchasing.attempted - purchasing.cashBlocked - purchasing.priceBlocked,

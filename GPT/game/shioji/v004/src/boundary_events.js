@@ -1,16 +1,16 @@
 import {
   FOOD_GOODS,
   islandFoodSummary,
-} from './food_readability.js?v=v004.49.0-economy-recovery';
-import { islandCalendar } from './ui_summary.js?v=v004.49.0-economy-recovery';
+} from './food_readability.js?v=v004.50.0-stock-days-market';
+import { islandCalendar } from './ui_summary.js?v=v004.50.0-stock-days-market';
 
 export const BOUNDARY_EVENT_STATE_VERSION = 1;
 export const FOOD_RUNWAY_THRESHOLD_DAYS = 14;
 export const FOOD_WARNING_COOLDOWN_DAYS = 7;
 
 export const PRESERVATION_STOP_SCRIPTS = Object.freeze({
-  salt: '塩がなくなりました。魚を保存食にできず、獲れた魚は3日で腐ります。',
-  char: '木炭がなくなりました。魚を燻製にできず、獲れた魚は3日で腐ります。',
+  salt: '塩がなくなりました。魚を保存食にできず、獲れた魚は5日で腐ります。',
+  char: '木炭がなくなりました。魚を燻製にできず、獲れた魚は5日で腐ります。',
 });
 
 const MINIMUM_AMOUNT = 1e-9;

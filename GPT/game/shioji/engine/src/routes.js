@@ -6,12 +6,11 @@ import {
   caravanCrewCount as caravanInnCrewCount,
   householdMarketId,
   marketBuildingForId,
-  marketPriceBook,
   postCompanyLedger,
   purchaseCompanyWoodCart,
   recordEconomyEvent,
   useHouseholdWorkTool,
-} from "./econ.js?v=v004.49.0-economy-recovery";
+} from "./econ.js?v=v004.50.0-stock-days-market";
 import {
   buildingById,
   createCartCarrier,
@@ -22,7 +21,7 @@ import {
   sectionAmount,
   stepTravelCarrier,
   withdrawInventory,
-} from "./physical.js?v=v004.49.0-economy-recovery";
+} from "./physical.js?v=v004.50.0-stock-days-market";
 
 export const CARAVAN_CART_CAPACITY = P.CART_WOOD_CAPACITY;
 export const CARAVAN_INTERVAL_LIMITS = Object.freeze({ min: 1, max: 30 });
@@ -238,9 +237,6 @@ export function caravanCapacity(economy, physical, route) {
 }
 
 function recordMarketPrice(economy, marketId, goods, price, qty, day) {
-  const book = marketPriceBook(economy, marketId);
-  const previous = book[goods] ?? P.BELIEF0[goods] ?? price;
-  book[goods] = previous + 0.1 * (price - previous);
   const previousCount = economy.priceCounts[goods] ?? economy.prices[goods].length;
   economy.prices[goods].push([day, price, qty]);
   economy.priceCounts[goods] = previousCount + 1;

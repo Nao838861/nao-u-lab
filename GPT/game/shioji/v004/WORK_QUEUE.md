@@ -2,8 +2,8 @@
 
 迷ったらこの順。各項の設計正本はリンク先。**1項目=1セッション（実装→push→HANDOFF報告→停止）**。
 
-1. **【優先高】丸太の価格デッドロック**: [BUG_20260813_LOG_PRICE_DEADLOCK.md](BUG_20260813_LOG_PRICE_DEADLOCK.md)。修正a(損益分岐上限)+b(在庫日数の階段価格)+c(帯assert)+項3(摩擦表示・view_model露出込み)。受け入れ=day567セーブで丸太取引が再開し木炭連鎖が回復
-2. **魚の日持ち5日**: [../decisions/DECISIONS_20260813_fish_life_5days.md](../decisions/DECISIONS_20260813_fish_life_5days.md)。小粒なので1と同セッション可
+1. **【完了 v004.50.0】丸太の価格デッドロック**: [BUG_20260813_LOG_PRICE_DEADLOCK.md](BUG_20260813_LOG_PRICE_DEADLOCK.md)。損益分岐上限、在庫日数の階段価格、13連鎖の帯assert、摩擦表示を実装。day567保存90日で丸太約定+302、木炭約定+33、木炭生産EMA+85.7%を確認
+2. **【完了 v004.50.0】魚の日持ち5日**: [../decisions/DECISIONS_20260813_fish_life_5days.md](../decisions/DECISIONS_20260813_fish_life_5days.md)。engine、鮮度表示、発話、試験を5日へ統一。専用早便は2日周期・最大1.5日分の小口購入を維持
 3. **96×64化**: [WORK_ORDER_20260812_PLAYABLE_96X64.md](WORK_ORDER_20260812_PLAYABLE_96X64.md)。前提の差し戻し2件は解消済み。原因可読パックはMir実装済みなので前置きなしで着手可
 4. **隊商S6処方3件→1年再実測→再監査**: [../decisions/DECISIONS_20260812_oil_and_caravan_s6.md](../decisions/DECISIONS_20260812_oil_and_caravan_s6.md)（複数品目路線UI・売れない理由・給料相場併記）。96×64の島で実測し、合格判定はNao_uの実プレイ
 5. **需要網の残裁定**: [../decisions/DECISIONS_20260811_demand_rulings.md](../decisions/DECISIONS_20260811_demand_rulings.md)——魚粉FERT型(裁定2)・銑鉄重修繕(裁定3)・肉の塩漬け(裁定4)・**油の退役**(20260812裁定)。会社施設修繕(裁定1)は実装済み

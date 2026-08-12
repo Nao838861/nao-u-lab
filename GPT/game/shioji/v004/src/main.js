@@ -1,49 +1,49 @@
-import { IsometricCamera } from './camera.js?v=v004.49.0-economy-recovery';
-import { SimulationClock } from './clock.js?v=v004.49.0-economy-recovery';
-import { createBoundaryEvents } from './boundary_events.js?v=v004.49.0-economy-recovery';
+import { IsometricCamera } from './camera.js?v=v004.50.0-stock-days-market';
+import { SimulationClock } from './clock.js?v=v004.50.0-stock-days-market';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.50.0-stock-days-market';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.49.0-economy-recovery';
+} from './config.js?v=v004.50.0-stock-days-market';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.49.0-economy-recovery';
-import { BUILD_COST_DENARI, P, createEngineController } from './engine_bridge.js?v=v004.49.0-economy-recovery';
-import { developmentMapView } from './development_map.js?v=v004.49.0-economy-recovery';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.49.0-economy-recovery';
-import { formatElenaSpeech } from './elena_text.js?v=v004.49.0-economy-recovery';
+} from './display_batch.js?v=v004.50.0-stock-days-market';
+import { BUILD_COST_DENARI, P, createEngineController } from './engine_bridge.js?v=v004.50.0-stock-days-market';
+import { developmentMapView } from './development_map.js?v=v004.50.0-stock-days-market';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.50.0-stock-days-market';
+import { formatElenaSpeech } from './elena_text.js?v=v004.50.0-stock-days-market';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.49.0-economy-recovery';
+} from './food_readability.js?v=v004.50.0-stock-days-market';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.49.0-economy-recovery';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.49.0-economy-recovery';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.49.0-economy-recovery';
-import { goodsDetail } from './goods_detail.js?v=v004.49.0-economy-recovery';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.49.0-economy-recovery';
-import { WorldPresentation } from './presentation.js?v=v004.49.0-economy-recovery';
-import { Renderer } from './renderer.js?v=v004.49.0-economy-recovery';
+} from './keyboard.js?v=v004.50.0-stock-days-market';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.50.0-stock-days-market';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.50.0-stock-days-market';
+import { goodsDetail } from './goods_detail.js?v=v004.50.0-stock-days-market';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.50.0-stock-days-market';
+import { WorldPresentation } from './presentation.js?v=v004.50.0-stock-days-market';
+import { Renderer } from './renderer.js?v=v004.50.0-stock-days-market';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.49.0-economy-recovery';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.49.0-economy-recovery';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.49.0-economy-recovery';
+} from './save_game.js?v=v004.50.0-stock-days-market';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.50.0-stock-days-market';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.50.0-stock-days-market';
 import {
   GOODS_GLYPHS, jobInputNeeds, shortageRows, stockWhereabouts, supplyDemandRow,
   supplyDemandRows, supplyDiagnosis,
-} from './supply_demand.js?v=v004.49.0-economy-recovery';
-import { orderQuote } from './tutorial_content.js?v=v004.49.0-economy-recovery';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.49.0-economy-recovery';
+} from './supply_demand.js?v=v004.50.0-stock-days-market';
+import { orderQuote } from './tutorial_content.js?v=v004.50.0-stock-days-market';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.50.0-stock-days-market';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.49.0-economy-recovery';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.49.0-economy-recovery';
+} from './ui_guidance.js?v=v004.50.0-stock-days-market';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.50.0-stock-days-market';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -458,7 +458,7 @@ function renderSupplySheet() {
         ? `<em class="supply-cue-vacancy">空き家${diagnosis.cue.count}——入居の条件: 食料の見込みと道</em>`
         : '';
     const purchasing = diagnosis.purchasing?.attempted > 0
-      ? `<span class="supply-purchasing"><small>前回の買い出し</small><b>買える不足 ${diagnosis.purchasing.solvent}軒</b><em>${diagnosis.purchasing.cashBlocked > 0 ? `財布不足${diagnosis.purchasing.cashBlocked}軒` : ''}${diagnosis.purchasing.priceBlocked > 0 ? `${diagnosis.purchasing.cashBlocked > 0 ? '・' : ''}価格不一致${diagnosis.purchasing.priceBlocked}軒` : ''}${diagnosis.purchasing.stockBlocked > 0 ? `${diagnosis.purchasing.cashBlocked + diagnosis.purchasing.priceBlocked > 0 ? '・' : ''}現物なし${diagnosis.purchasing.stockBlocked}軒` : ''}</em></span>`
+      ? `<span class="supply-purchasing"><small>前回の買い出し</small><b>買える不足 ${diagnosis.purchasing.solvent}軒</b><em>${diagnosis.purchasing.cashBlocked > 0 ? `財布不足${diagnosis.purchasing.cashBlocked}軒` : ''}${diagnosis.purchasing.priceBlocked > 0 ? `${diagnosis.purchasing.cashBlocked > 0 ? '・' : ''}価格不一致${diagnosis.purchasing.priceBlocked}軒` : ''}${diagnosis.purchasing.stockBlocked > 0 ? `${diagnosis.purchasing.cashBlocked + diagnosis.purchasing.priceBlocked > 0 ? '・' : ''}現物なし${diagnosis.purchasing.stockBlocked}軒` : ''}${diagnosis.purchasing.priceMismatch ? `<strong>市場に在庫はあるが値が合わない（店頭${formatQuantity(diagnosis.purchasing.minimumAsk)}D〜／買い手上限${formatQuantity(diagnosis.purchasing.maximumCeiling)}D）</strong>` : ''}</em></span>`
       : '';
     return `<span class="supply-diagnosis"><small>作り手</small><b>${diagnosis.producers}軒</b><em>${parts.join('・') || '—'}</em>${waiting}${cue}${purchasing}</span>`;
   })()}

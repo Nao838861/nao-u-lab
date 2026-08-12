@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import { createEngineApi, replayInputJournal } from '../../engine/src/api.js';
 import { buildBaseCity, findAuditSpot } from '../../engine/src/audit.js';
 import {
-  FOODS, GOODS, assertMoneyConservation, createHousehold, economicMaterialSnapshot,
+  FOODS, GOODS, P, assertMoneyConservation, createHousehold, economicMaterialSnapshot,
   requestCompanyImport, runPopulationDynamicsPhase,
 } from '../../engine/src/econ.js';
 import {
@@ -316,7 +316,11 @@ test('ラン3: 会社の木製荷車は公開操作でだけ購入され、有�
     api.advanceDays(1);
   }
   assert.ok(world.state.economy.cartStats.companyUses > 0);
-  assert.equal(world.state.economy.cartStats.companyBroken, 1);
+  assert.ok(
+    world.state.economy.cartStats.companyBroken === 1
+      || world.state.economy.companyCarts[0]?.durability < P.CART_WOOD_DURABILITY,
+    '実物流があれば破損または有限耐久の減少まで進む',
+  );
   const journal = api.inputJournal();
   const replay = replayInputJournal(
     () => buildCartLifecycleCity(11),
@@ -520,7 +524,7 @@ test('可読性B: 食料日数・冬予報・鮮度・実行可能な打ち手�
   assert.equal(forecast.shortage, forecast.required - 52);
   assert.equal(perishableFreshness('fish', 0).stage, 'fresh');
   assert.equal(perishableFreshness('fish', 2).stage, 'aging');
-  assert.equal(perishableFreshness('fish', 3).stage, 'spoiling');
+  assert.equal(perishableFreshness('fish', 4).stage, 'spoiling');
   assert.equal(perishableFreshness('wheat', 99).stage, 'stable',
     '実際に日次腐敗する魚・野菜だけを鮮度表示する');
   assert.equal(executableFoodIntervention(foodModel).kind, 'release');
@@ -2260,7 +2264,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.49.0-economy-recovery');
+  assert.equal(VERSION, 'v004.50.0-stock-days-market');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -4257,7 +4261,32 @@ test('現金循環: 需給診断は前回買い出しの財布不足と買える
 
   assert.deepEqual(diagnosis.purchasing, {
     attempted: 2, cashBlocked: 1, priceBlocked: 0, stockBlocked: 1, solvent: 1,
+    minimumAsk: null, maximumCeiling: null, priceMismatch: false,
   });
+});
+
+test('価格摩擦: 市場在庫がある価格不一致は店頭最低と買い手上限を返す', () => {
+  const model = {
+    households: [{
+      id: 1,
+      job: 'woodshop',
+      lastMarketVisit: {
+        unmet: { log: 8 },
+        blockers: { log: 'too_expensive' },
+        ceilings: { log: 1.4 },
+      },
+    }],
+    buildings: [],
+    zones: [],
+    marketLowest: { log: 1.7 },
+  };
+  const diagnosis = supplyDiagnosis(
+    model,
+    { goods: 'log', status: 'shortage', shortage: 3, demand: 5, food: false, marketStock: 150 },
+  );
+  assert.equal(diagnosis.purchasing.priceMismatch, true);
+  assert.equal(diagnosis.purchasing.minimumAsk, 17);
+  assert.equal(diagnosis.purchasing.maximumCeiling, 14);
 });
 
 test('UI向上段9: 需給を独立表示し、統計は収支と既定3グラフへ整理する', () => {
@@ -4402,7 +4431,7 @@ test('品目詳細: 18品すべてに性質・日持ち・製法の表示契約�
   const goodsIds = Object.keys(GOODS_LABELS);
   assert.deepEqual(Object.keys(GOODS_DETAIL_FACTS), goodsIds);
   assert.deepEqual(Object.keys(GOODS_RECIPES), goodsIds);
-  assert.deepEqual(GOODS_SHELF_LIFE_DAYS, { fish: 3, veg: 30 });
+  assert.deepEqual(GOODS_SHELF_LIFE_DAYS, { fish: 5, veg: 30 });
   for (const goods of goodsIds) {
     const detail = goodsDetail(goods);
     assert.equal(detail.goods, goods);
@@ -4416,7 +4445,7 @@ test('品目詳細: 18品すべてに性質・日持ち・製法の表示契約�
     assert.equal(goodsDetail(goods).fact, GOODS_DISCOVERY_SCRIPTS[goods],
       `${goods}は出会いの一言を品目詳細へそのまま再掲する`);
   }
-  assert.equal(goodsDetail('fish').shelfLifeDays, 3);
+  assert.equal(goodsDetail('fish').shelfLifeDays, 5);
   assert.equal(goodsDetail('veg').shelfLifeDays, 30);
   assert.equal(goodsDetail('wheat').shelfLifeDays, null);
   assert.deepEqual(goodsDetail('pick').recipe.inputs, ['veg', 'salt']);

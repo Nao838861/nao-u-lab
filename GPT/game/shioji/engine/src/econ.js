@@ -21,7 +21,7 @@ import {
   sectionCapacity,
   withdrawInventory,
   workRoadWorksite,
-} from "./physical.js?v=v004.49.0-economy-recovery";
+} from "./physical.js?v=v004.50.0-stock-days-market";
 
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) return value;
@@ -59,7 +59,7 @@ export const P = deepFreeze({
   RATION: 0.15,
   Y_FISH: 20,
   Y_FISH_W: 5,
-  FISH_LIFE: 3,
+  FISH_LIFE: 5,
   VEG_LIFE: 30,
   PICK_SALT: 0.1,
   PR_PICK: 0.85,
@@ -964,6 +964,135 @@ export function marketPriceBook(economy, marketId = "main") {
   return economy.pxm[marketId];
 }
 
+export const STOCK_DAYS_PRICE_STEPS = deepFreeze([
+  { below: 7, multiplier: 2 },
+  { below: 30, multiplier: 1.5 },
+  { below: 60, multiplier: 1.25 },
+  { below: Infinity, multiplier: 1.1 },
+]);
+
+export function stockDaysPriceMultiplier(days) {
+  const normalized = Number.isFinite(days) ? Math.max(0, days) : Infinity;
+  return (STOCK_DAYS_PRICE_STEPS.find((step) => normalized < step.below)
+    ?? STOCK_DAYS_PRICE_STEPS.at(-1)).multiplier;
+}
+
+const PRICE_JOBS_BY_GOODS = deepFreeze({
+  fish: ["fisher"],
+  pres: ["fisher"],
+  veg: ["veg"],
+  pick: ["veg"],
+  wheat: ["wheat"],
+  meat: ["shepherd"],
+  cloth: ["shepherd", "rapeseed"],
+  log: ["logger"],
+  tools: ["woodshop"],
+  char: ["charburner"],
+  salt: ["saltworks"],
+  meal: ["fisher2"],
+  stone: ["quarryman"],
+  ore: ["miner"],
+  coal: ["collier"],
+  bar: ["smelter"],
+  iron: ["smith"],
+});
+
+// 原価が次段へ渡る順に更新する。取引の有無ではなく、実在庫と実需要だけで
+// 毎朝同じ価格へ決まるため、小市場や長期の約定ゼロでも信念が凍らない。
+const STOCK_PRICE_GOODS_ORDER = deepFreeze([
+  "fish", "veg", "wheat", "log", "ore", "coal", "stone", "cloth", "oil",
+  "tools", "char", "salt", "meat", "meal", "pick", "pres", "bar", "iron",
+]);
+
+function marketInventoryAmount(economy, marketId, goods) {
+  const stallQty = (economy.stalls?.[goods] ?? []).reduce((total, stall) => (
+    total + ((stall.marketId ?? "main") === marketId ? Math.max(0, stall.qty ?? 0) : 0)
+  ), 0);
+  const localStock = Math.max(0, economy.marketStockM?.[marketId]?.[goods] ?? 0);
+  if (marketId !== "main") return stallQty + localStock;
+  return stallQty
+    + localStock
+    + Math.max(0, economy.marketStock?.[goods] ?? 0)
+    + Math.max(0, economy.importStock?.[goods] ?? 0)
+    + Math.max(0, economy.aidStock?.[goods] ?? 0);
+}
+
+function marketDemandShare(economy, marketId) {
+  const populationByMarket = {};
+  for (const household of economy.households ?? []) {
+    const id = householdMarketId(household);
+    populationByMarket[id] = (populationByMarket[id] ?? 0) + householdEat(household);
+  }
+  const total = Object.values(populationByMarket).reduce((sum, value) => sum + value, 0);
+  if (total <= 0) return marketId === "main" ? 1 : 0;
+  return (populationByMarket[marketId] ?? 0) / total;
+}
+
+function representativeProductionCost(economy, physical, marketId, goods, day) {
+  const costs = (economy.households ?? [])
+    .filter((household) => (
+      (PRICE_JOBS_BY_GOODS[goods] ?? []).includes(household.job)
+      && householdMarketId(household) === marketId
+    ))
+    .map((household) => productionCost(economy, physical, household, goods, { day }))
+    .filter((cost) => Number.isFinite(cost) && cost > 0)
+    .sort((left, right) => left - right);
+  if (costs.length === 0) return null;
+  return costs[Math.floor((costs.length - 1) / 2)];
+}
+
+export function updateStockDaysPrices(
+  economy,
+  physical = null,
+  { day = economy.currentDay } = {},
+) {
+  const marketIds = new Set([
+    "main",
+    ...Object.keys(economy.pxm ?? {}),
+    ...Object.keys(economy.marketStockM ?? {}),
+    ...(economy.households ?? []).map((household) => householdMarketId(household)),
+    ...GOODS.flatMap((goods) => (
+      (economy.stalls?.[goods] ?? []).map((stall) => stall.marketId ?? "main")
+    )),
+  ]);
+  const result = {};
+  for (const marketId of marketIds) {
+    const book = marketPriceBook(economy, marketId);
+    const demandShare = marketDemandShare(economy, marketId);
+    result[marketId] = {};
+    for (const goods of STOCK_PRICE_GOODS_ORDER) {
+      const demandRow = economy.demand30?.[goods];
+      const totalDemand = Math.max(
+        demandRow?.demand ?? 0,
+        economy.f30?.[goods]?.cons ?? 0,
+        economy.f30?.[goods]?.exp ?? 0,
+      );
+      const dailyDemand = totalDemand * demandShare;
+      const inventory = marketInventoryAmount(economy, marketId, goods);
+      const days = dailyDemand > 0.005
+        ? inventory / dailyDemand
+        : inventory > 0.005 ? Infinity : 0;
+      const multiplier = stockDaysPriceMultiplier(days);
+      const cost = representativeProductionCost(economy, physical, marketId, goods, day);
+      if (cost !== null) book[goods] = Math.max(0.1, cost * multiplier);
+      result[marketId][goods] = { inventory, dailyDemand, days, multiplier, price: book[goods] };
+    }
+    for (const goods of GOODS) {
+      for (const stall of economy.stalls?.[goods] ?? []) {
+        if ((stall.marketId ?? "main") !== marketId || !(stall.qty > 1e-9)) continue;
+        const seller = findHousehold(economy, stall.householdId);
+        if (!seller) continue;
+        const cost = productionCost(economy, physical, seller, goods, { day });
+        let price = Math.max(cost * 1.05, book[goods] ?? cost * 1.05);
+        if (P.IMP[goods]) price = Math.min(price, P.IMP[goods] * 0.97);
+        stall.price = Math.max(cost * 1.05, price);
+      }
+    }
+  }
+  economy.stockDaysPrices = result;
+  return result;
+}
+
 export function marketPathLength(economy, physical, household, mode = "walk") {
   const marketEntrance = householdMarketEntrance(economy, physical, household);
   if (!marketEntrance) return Infinity;
@@ -1815,18 +1944,23 @@ export function shouldPauseProduction(economy, household) {
 }
 
 export function staplePrice(economy) {
+  return staplePriceForMarket(economy, "main");
+}
+
+function staplePriceForMarket(economy, marketId) {
+  const prices = marketPriceBook(economy, marketId);
   return Math.max(
     1,
     Math.min(
-      economy.px.wheat ?? 2,
-      economy.px.veg ?? 9,
-      economy.px.pres ?? 9,
+      prices.wheat ?? 2,
+      prices.veg ?? 9,
+      prices.pres ?? 9,
       P.IMP.wheat,
     ),
   );
 }
 
-export function productionCost(economy, physical, household, goods, { day = economy.currentDay } = {}) {
+function productionLaborCost(economy, physical, household, goods, { day = economy.currentDay } = {}) {
   const month = calendarMonth(economy, day);
   const winter = month >= 10 || month <= 2;
   const dailyYield = {
@@ -1867,29 +2001,71 @@ export function productionCost(economy, physical, household, goods, { day = econ
   // 実際に働けた日の歩留まりだけを一次産品へ使う。在庫上限による停産日は除き、
   // 事故一日で価格が跳ねないよう7実働日・最大約2.86倍へ制限する。加工品は
   // 上流の実績原価を原料価格から受けるため、ここでも補正すると二重計上になる。
-  const labor = householdEat(household) * staplePrice(economy)
+  return householdEat(household) * staplePriceForMarket(
+    economy,
+    householdMarketId(household),
+  )
     / (dailyYield * householdMult(household) * Math.max(0.5, scarcity) * realizedRatio);
+}
+
+export function productionCost(economy, physical, household, goods, { day = economy.currentDay } = {}) {
+  const labor = productionLaborCost(economy, physical, household, goods, { day });
+  const prices = marketPriceBook(economy, householdMarketId(household));
   const fuelPrice = Math.min(
-    economy.px.char ?? P.BELIEF0.char,
-    economy.px.coal ?? P.BELIEF0.coal,
+    prices.char ?? P.BELIEF0.char,
+    prices.coal ?? P.BELIEF0.coal,
   );
   const input = {
-    salt: (P.SALT_CHAR / P.Y_SALT) * (economy.px.char ?? 2),
-    tools: P.LOG_TOOL * (economy.px.log ?? 1),
-    char: P.LOG_CHAR * (economy.px.log ?? 1),
-    pres: P.PRES_SALT * (economy.px.salt ?? 2) / P.PR_SALT,
-    pick: P.PICK_SALT * (economy.px.salt ?? 2) / P.PR_PICK,
-    meal: P.MEAL_FISH * (economy.px.fish ?? P.BELIEF0.fish),
+    salt: (P.SALT_CHAR / P.Y_SALT) * (prices.char ?? 2),
+    tools: P.LOG_TOOL * (prices.log ?? 1),
+    char: P.LOG_CHAR * (prices.log ?? 1),
+    pres: P.PRES_SALT * (prices.salt ?? 2) / P.PR_SALT,
+    pick: P.PICK_SALT * (prices.salt ?? 2) / P.PR_PICK,
+    meal: P.MEAL_FISH * (prices.fish ?? P.BELIEF0.fish),
     meat: P.FEED_MEAT * Math.min(
-      economy.px.wheat ?? P.BELIEF0.wheat,
-      economy.px.veg ?? P.BELIEF0.veg,
+      prices.wheat ?? P.BELIEF0.wheat,
+      prices.veg ?? P.BELIEF0.veg,
     ),
-    bar: P.SMELT_ORE * (economy.px.ore ?? P.BELIEF0.ore)
+    bar: P.SMELT_ORE * (prices.ore ?? P.BELIEF0.ore)
       + P.SMELT_FUEL * fuelPrice,
-    iron: P.SMITH_BAR * (economy.px.bar ?? P.BELIEF0.bar)
+    iron: P.SMITH_BAR * (prices.bar ?? P.BELIEF0.bar)
       + P.SMITH_FUEL * fuelPrice,
   }[goods] ?? 0;
   return labor + input;
+}
+
+const PROCESSING_OUTPUT_BY_JOB = deepFreeze({
+  woodshop: "tools",
+  charburner: "char",
+  saltworks: "salt",
+  smelter: "bar",
+  smith: "iron",
+  fisher2: "meal",
+  shepherd: "meat",
+  veg: "pick",
+  fisher: "pres",
+});
+
+/**
+ * 製品相場から自分の労賃を引き、原料一荷が生む製品量で逆算する。
+ * 0.9は価格が同日に少し動いても赤字へ落ちないための共通安全幅であり、
+ * 品目ごとの根拠のない係数を置かない。
+ */
+export function processingInputPriceCeiling(
+  economy,
+  physical,
+  household,
+  inputGoods,
+  inputPerOutput,
+  { day = economy.currentDay, outputGoods = PROCESSING_OUTPUT_BY_JOB[household?.job], outputPrice = null } = {},
+) {
+  if (!(inputPerOutput > 0) || !outputGoods) return 0;
+  const prices = marketPriceBook(economy, householdMarketId(household));
+  const productPrice = Number.isFinite(outputPrice)
+    ? outputPrice
+    : prices[outputGoods] ?? P.BELIEF0[outputGoods] ?? 0;
+  const labor = productionLaborCost(economy, physical, household, outputGoods, { day });
+  return Math.max(0, (productPrice - labor) / inputPerOutput * 0.9);
 }
 
 export function sellOffers(
@@ -2079,7 +2255,7 @@ export function buyTargets(
     }
   }
   if (household.job !== "fisher" && household.job !== "fisher2") {
-    // 魚は3日で腐るため、総食料が尽きるまで待たず短く回す。ただし家庭で
+    // 魚は5日で腐るため、総食料が尽きるまで待たず短く回す。ただし家庭で
     // 腐らせる買い溜めにはせず、現在庫を差し引いて最大1.5日分だけ求める。
     // 2日おきの早便でも翌日分を残し、毎日の買い物で仕事を潰さない量である。
     const wantedFish = Math.max(0, dailyFood * 1.5 - (household.pantry.fish ?? 0));
@@ -2135,21 +2311,27 @@ export function buyTargets(
     targets.meal = [P.FERT_NEED * 20 - inputQty("meal"), benefit * 0.7];
   }
   if (household.job === "saltworks" && inputQty("char") < P.SALT_CHAR * 5) {
-    targets.char = [P.SALT_CHAR * 10 - inputQty("char"), P.Y_SALT * (px.salt ?? 2) * 0.5];
+    targets.char = [
+      P.SALT_CHAR * 10 - inputQty("char"),
+      processingInputPriceCeiling(
+        economy, physical, household, "char", P.SALT_CHAR / P.Y_SALT, { day },
+      ),
+    ];
   }
   if (household.job === "woodshop" && inputQty("log") < P.LOG_TOOL * 8) {
     targets.log = [
       P.LOG_TOOL * 16 - inputQty("log"),
-      // 木製品の売価から粗利15%を残して逆算する。一次産品の実績原価だけを
-      // 上げても旧0.6係数のままでは丸太が恒久的にtoo_expensiveとなり、
-      // 木こりの売上と木工房の生産が同時に止まる。
-      Math.max(0.9, (px.tools ?? 2) / P.LOG_TOOL / 1.15),
+      processingInputPriceCeiling(
+        economy, physical, household, "log", P.LOG_TOOL, { day },
+      ),
     ];
   }
   if (household.job === "charburner" && inputQty("log") < P.LOG_CHAR * 8) {
     targets.log = [
       P.LOG_CHAR * 16 - inputQty("log"),
-      Math.max(0.9, (px.char ?? 2) / P.LOG_CHAR * 0.6),
+      processingInputPriceCeiling(
+        economy, physical, household, "log", P.LOG_CHAR, { day },
+      ),
     ];
   }
   if (household.job === "cartwright") {
@@ -2167,46 +2349,71 @@ export function buyTargets(
     }
   }
   if (household.job === "smelter") {
-    const inputCeiling = (px.bar ?? P.BELIEF0.bar) / P.SMELT_ORE * 0.6;
     if (inputQty("ore") < 10) {
-      targets.ore = [20 - inputQty("ore"), inputCeiling];
+      targets.ore = [
+        20 - inputQty("ore"),
+        processingInputPriceCeiling(
+          economy, physical, household, "ore", P.SMELT_ORE, { day },
+        ),
+      ];
     }
     const fuel = inputQty("char") + inputQty("coal");
     if (fuel < 5) {
       const wanted = 10 - fuel;
-      targets.char = [wanted, inputCeiling];
-      targets.coal = [wanted, inputCeiling];
+      const fuelCeiling = processingInputPriceCeiling(
+        economy, physical, household, "char", P.SMELT_FUEL, { day },
+      );
+      targets.char = [wanted, fuelCeiling];
+      targets.coal = [wanted, fuelCeiling];
     }
   }
   if (household.job === "smith") {
-    const inputCeiling = (px.iron ?? P.IMP.iron) * 0.6;
     if (inputQty("bar") < 5) {
-      targets.bar = [10 - inputQty("bar"), inputCeiling];
+      targets.bar = [
+        10 - inputQty("bar"),
+        processingInputPriceCeiling(
+          economy, physical, household, "bar", P.SMITH_BAR, { day },
+        ),
+      ];
     }
     const fuel = inputQty("char") + inputQty("coal");
     if (fuel < 2.5) {
       const wanted = 5 - fuel;
-      targets.char = [wanted, inputCeiling];
-      targets.coal = [wanted, inputCeiling];
+      const fuelCeiling = processingInputPriceCeiling(
+        economy, physical, household, "char", P.SMITH_FUEL, { day },
+      );
+      targets.char = [wanted, fuelCeiling];
+      targets.coal = [wanted, fuelCeiling];
     }
   }
   if (household.job === "veg" && inputQty("salt") < 1.5) {
     targets.salt = [
       4 - inputQty("salt"),
-      (px.pick ?? 2) * P.PR_PICK / P.PICK_SALT * 0.4,
+      processingInputPriceCeiling(
+        economy, physical, household, "salt", P.PICK_SALT / P.PR_PICK, { day },
+      ),
     ];
   }
   if (household.job === "fisher") {
     if (inputQty("salt") < 3) {
       targets.salt = [
         6 - inputQty("salt"),
-        (px.pres ?? 2) * P.PR_SALT / P.PRES_SALT * 0.5,
+        processingInputPriceCeiling(
+          economy, physical, household, "salt", P.PRES_SALT / P.PR_SALT, { day },
+        ),
       ];
     }
     if (inputQty("char") < 2) {
       targets.char = [
         4 - inputQty("char"),
-        (P.PR_SMOKE - P.PR_SALT) * (px.pres ?? 2) / P.SMOKE_CHAR * 0.5,
+        processingInputPriceCeiling(
+          economy,
+          physical,
+          household,
+          "char",
+          P.SMOKE_CHAR / Math.max(1e-9, P.PR_SMOKE - P.PR_SALT),
+          { day },
+        ),
       ];
     }
   }
@@ -2215,7 +2422,9 @@ export function buyTargets(
     if (inputQty("fish") < dailyFish) {
       targets.fish = [
         dailyFish * 2 - inputQty("fish"),
-        Math.max(0.9, (px.fish ?? P.BELIEF0.fish) * 1.25),
+        processingInputPriceCeiling(
+          economy, physical, household, "fish", P.MEAL_FISH, { day },
+        ),
       ];
     }
   }
@@ -2224,9 +2433,8 @@ export function buyTargets(
     const currentFeed = inputQty("wheat") + inputQty("veg");
     if (currentFeed < dailyFeed) {
       const wantedEach = (dailyFeed * 2 - currentFeed) / 2;
-      const ceiling = Math.max(
-        0.9,
-        (px.meat ?? P.BELIEF0.meat) / P.FEED_MEAT * 0.65,
+      const ceiling = processingInputPriceCeiling(
+        economy, physical, household, "wheat", P.FEED_MEAT, { day },
       );
       for (const goods of ["wheat", "veg"]) {
         if (targets[goods]) {
@@ -3016,8 +3224,6 @@ export function buyAtMarket(
         economy.prices[goods].splice(0, economy.prices[goods].length - 256);
       }
       if (shelf.kind !== "AID") {
-        const book = marketPriceBook(economy, buyerMarket);
-        book[goods] = (book[goods] ?? shelf.price) * 0.9 + shelf.price * 0.1;
         transactions.push({
           goods,
           qty,
@@ -3171,7 +3377,12 @@ function sellManifestAtMarket(
     if (qty > 1e-9) {
       if (withdrawFromPantry) household.pantry[goods] -= qty;
       const cost = productionCost(economy, physical, household, goods, { day });
-      const price = quoteAskPrice(cost, goods, random);
+      let price = Math.max(
+        cost * 1.05,
+        marketPriceBook(economy, sellerMarket)[goods] ?? quoteAskPrice(cost, goods, random),
+      );
+      if (P.IMP[goods]) price = Math.min(price, P.IMP[goods] * 0.97);
+      price = Math.max(price, cost * 1.05);
       const stall = { householdId: household.id, marketId: sellerMarket, qty, price, age: 0 };
       economy.stalls[goods].push(stall);
       touchStallMembership(economy);
@@ -3239,6 +3450,9 @@ export function transactMarketCargo(economy, physical, household, { day, random 
     purchased: { ...bought.purchased },
     unmet: { ...bought.unmet },
     blockers: { ...bought.blockers },
+    ceilings: Object.fromEntries(Object.entries(bought.targets).map(([goods, target]) => [
+      goods, target[1],
+    ])),
     remainingCapacity: bought.remainingCapacity,
     purseAfter: household.purse,
   };
@@ -3317,6 +3531,7 @@ export function ageMarketStalls(economy, { day, physical = null }) {
   economy.deskUsed = {};
   economy.dailyMaterialFlows = {};
   economy.dailyDemandFlows = {};
+  updateStockDaysPrices(economy, physical, { day });
   for (const lot of economy.marketReturns) {
     const spoiled = spoilMarketQuantity(
       economy,

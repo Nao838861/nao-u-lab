@@ -3,7 +3,7 @@ export const SEASONAL_EVENT_STATE_VERSION = 1;
 export const SEASONAL_EVENT_SCRIPTS = Object.freeze({
   firstSnow: '初雪です。畑は春まで止まり、魚は1日20荷から5荷に減ります。蓄えと漁で春を待ちます。',
   thaw: '雪が解けました。畑が動き始めます。',
-  fishSpoilage: '魚が傷んで捨てられました。魚は3日と持ちません。',
+  fishSpoilage: '魚が傷んで捨てられました。魚は5日ほどで傷みます。',
   vegSpoilage: '野菜も傷みました。野菜は30日ほど持ちます。',
 });
 

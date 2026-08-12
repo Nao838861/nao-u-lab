@@ -1,4 +1,4 @@
-import { islandCalendar } from './ui_summary.js?v=v004.49.0-economy-recovery';
+import { islandCalendar } from './ui_summary.js?v=v004.50.0-stock-days-market';
 
 export const FOOD_GOODS = Object.freeze([
   'fish', 'veg', 'wheat', 'pres', 'pick', 'meat',
@@ -14,7 +14,7 @@ export const PLAYER_FACING_BANNED_TERMS = Object.freeze([
 export const WINTER_RESERVE_PER_PERSON = 46;
 
 const ACTUAL_PERISHABLE_LIFE_DAYS = Object.freeze({
-  fish: 3,
+  fish: 5,
   veg: 30,
 });
 

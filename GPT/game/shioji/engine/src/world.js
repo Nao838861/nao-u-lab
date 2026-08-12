@@ -42,7 +42,7 @@ import {
   settlePortTransfers,
   transactMarketCargo,
   unloadMarketBuyCargo,
-} from "./econ.js?v=v004.49.0-economy-recovery";
+} from "./econ.js?v=v004.50.0-stock-days-market";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -63,10 +63,10 @@ import {
   stepTravelCarrier,
   stepHaulCarriers,
   stepPortHandling,
-} from "./physical.js?v=v004.49.0-economy-recovery";
-import { nextMulberry32, normalizeSeed } from "./prng.js?v=v004.49.0-economy-recovery";
-import { createMarketNetwork, marketNetworkSummary } from "./market_network.js?v=v004.49.0-economy-recovery";
-import { stepCaravanDay, stepCaravanTick } from "./routes.js?v=v004.49.0-economy-recovery";
+} from "./physical.js?v=v004.50.0-stock-days-market";
+import { nextMulberry32, normalizeSeed } from "./prng.js?v=v004.50.0-stock-days-market";
+import { createMarketNetwork, marketNetworkSummary } from "./market_network.js?v=v004.50.0-stock-days-market";
+import { stepCaravanDay, stepCaravanTick } from "./routes.js?v=v004.50.0-stock-days-market";
 
 function tread(economy, x, y) {
   const key = keyOf(Math.round(x), Math.round(y));
@@ -1100,7 +1100,7 @@ export function decideHouseholdTrips(economy, physical, { timeOfDay = null } = {
       && household.purse > 2
       && canFundAnyMarketTarget(household, targets, foodTargets);
     // 生魚は早めに買うが、毎日の市場往復で生産そのものを止めない。
-    // 3日腐敗に対して2日間隔なら十分な余裕があり、1.5日分の上限とも釣り合う。
+    // 5日腐敗に対して2日間隔なら十分な余裕があり、1.5日分の上限とも釣り合う。
     const freshFishReady = freshFish.ready
       && daysSinceMarket >= 2
       && !needs.inputLow
@@ -1225,6 +1225,12 @@ export function createWorld({
     // 旧保存の完成建物は、画面を一日進める前に互換移行する。
     for (const household of economy.households) {
       normalizeCompletedBuildingConstruction(physical, household);
+      if (household.lastMarketVisit && !household.lastMarketVisit.ceilings) {
+        const targets = buyTargets(economy, household, { day: state.day, physical });
+        household.lastMarketVisit.ceilings = Object.fromEntries(
+          Object.entries(targets).map(([goods, target]) => [goods, target[1]]),
+        );
+      }
     }
   }
 

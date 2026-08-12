@@ -1,5 +1,5 @@
-import { BUILDING_SIZES } from './config.js?v=v004.49.0-economy-recovery';
-import { islandCalendar } from './ui_summary.js?v=v004.49.0-economy-recovery';
+import { BUILDING_SIZES } from './config.js?v=v004.50.0-stock-days-market';
+import { islandCalendar } from './ui_summary.js?v=v004.50.0-stock-days-market';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

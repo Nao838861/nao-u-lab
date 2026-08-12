@@ -1,7 +1,7 @@
-import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.49.0-economy-recovery';
+import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.50.0-stock-days-market';
 
 export const GOODS_SHELF_LIFE_DAYS = Object.freeze({
-  fish: 3,
+  fish: 5,
   veg: 30,
 });
 

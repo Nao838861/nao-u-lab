@@ -100,7 +100,7 @@ async function checkViewport(width, height, mobile) {
       bootFailure: document.querySelector('#boot-status')?.dataset.state === 'failed',
     };
   })()`);
-  assert.equal(fresh.version, 'v004.49.0-economy-recovery', JSON.stringify(fresh));
+  assert.equal(fresh.version, 'v004.50.0-stock-days-market', JSON.stringify(fresh));
   assert.equal(fresh.mode, 'sandbox', JSON.stringify(fresh));
   assert.deepEqual(fresh.size, [96, 64], JSON.stringify(fresh));
   assert.deepEqual(fresh.markets, ['母港市場', '漁郷市場'], JSON.stringify(fresh));

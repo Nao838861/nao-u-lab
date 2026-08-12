@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.49.0-economy-recovery';
+import { TILE } from './config.js?v=v004.50.0-stock-days-market';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

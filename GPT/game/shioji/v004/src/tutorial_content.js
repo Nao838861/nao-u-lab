@@ -2,15 +2,15 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.49.0-economy-recovery';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.49.0-economy-recovery';
-import { displayCultureLevel } from './visuals.js?v=v004.49.0-economy-recovery';
+} from './engine_bridge.js?v=v004.50.0-stock-days-market';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.50.0-stock-days-market';
+import { displayCultureLevel } from './visuals.js?v=v004.50.0-stock-days-market';
 import {
   PLAYER_FACING_BANNED_TERMS,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.49.0-economy-recovery';
-import { islandCalendar } from './ui_summary.js?v=v004.49.0-economy-recovery';
+} from './food_readability.js?v=v004.50.0-stock-days-market';
+import { islandCalendar } from './ui_summary.js?v=v004.50.0-stock-days-market';
 
 export { PLAYER_FACING_BANNED_TERMS };
 
@@ -2099,7 +2099,7 @@ const TUTORIAL_ADVICE_DEFINITIONS = Object.freeze([
         priority: 'info',
         kicker: '食料の廃棄',
         title: `食料が${Math.floor(lost)}荷傷みました`,
-        detail: '魚は約3日、野菜は約30日で傷みます。作る量と家族が買う量、市場への道を見直しましょう。',
+        detail: '魚は約5日、野菜は約30日で傷みます。作る量と家族が買う量、市場への道を見直しましょう。',
         speech: `食料が${Math.floor(lost)}荷傷みました。［需給］で魚と野菜の供給と消費を比べ、余っている生産施設と市場への道を見直しましょう。`,
         target: { kind: 'sheet', sheet: 'supply-sheet' },
       };

@@ -6,9 +6,9 @@ export {
   householdClass,
   householdProductionSummary,
   productionCost,
-} from '../../engine/src/econ.js?v=v004.49.0-economy-recovery';
-import { P } from '../../engine/src/econ.js?v=v004.49.0-economy-recovery';
-import { createEngineApi } from '../../engine/src/api.js?v=v004.49.0-economy-recovery';
+} from '../../engine/src/econ.js?v=v004.50.0-stock-days-market';
+import { P } from '../../engine/src/econ.js?v=v004.50.0-stock-days-market';
+import { createEngineApi } from '../../engine/src/api.js?v=v004.50.0-stock-days-market';
 import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
@@ -16,16 +16,16 @@ import {
   buildCaravanSliceWorld,
   buildBaseCity,
   makeStableCityPlan,
-} from '../../engine/src/audit.js?v=v004.49.0-economy-recovery';
+} from '../../engine/src/audit.js?v=v004.50.0-stock-days-market';
 import {
   createPhysicalState, findTravelPath, makeFlowIslandTerrain, makeMultiMarketTerrain,
-} from '../../engine/src/physical.js?v=v004.49.0-economy-recovery';
-import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.49.0-economy-recovery';
-import { createViewController } from './controller.js?v=v004.49.0-economy-recovery';
+} from '../../engine/src/physical.js?v=v004.50.0-stock-days-market';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.50.0-stock-days-market';
+import { createViewController } from './controller.js?v=v004.50.0-stock-days-market';
 import {
   SPRING_START_CALENDAR_OFFSET_DAYS,
   START_MODES,
-} from './start_modes.js?v=v004.49.0-economy-recovery';
+} from './start_modes.js?v=v004.50.0-stock-days-market';
 
 export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS };
 export { findTravelPath, makeMultiMarketTerrain };
