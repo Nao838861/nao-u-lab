@@ -160,7 +160,59 @@ self_feedback:
     conflict_checked: true
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+cleaned:
+  - "memory/MEMORY.md の High Signal / Recent index を per-file atom index と照合し、broken entry 0 件を確認。UTF-8 明示読みで代表語 `記憶` / `ゲーム設計` / `敵パターン` / `評価軸` を取得できた。"
+  - "atoms 2,860 件の mirror を監査し、atoms.jsonl / per-file .md / index.jsonl の件数一致、ID 重複 0、content conflict 0 を確認。既知の duplicate cluster 45 群は canonical overlay に収載済み。"
+  - "candidate lifecycle を dry-run 監査し、変更対象 0 件を確認。status 内訳は posted 595 / ready_to_post 9 / postponed 210 / failed 458 / needs_review 2。"
+  - "Phase 2 後の candidate frontmatter を正本として title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再生成した。"
+  - "Slack directive / broadcast の pending は各 0 件で、handled 更新対象なし。"
+  - "memory/raw/ の mtime 30 日超は 240 files。主に web_research の一次資料・dated phase3 source と既存 slack_archive であり、原文保持契約を優先してこの phase では移動しなかった。"
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の `AIエージェント` 部分が U+FFFD を2文字含む状態で、title / trigger / excerpt と raw Slack archive に保存されている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919"
+    source_file_status: "UTF-8 明示読みで source 自体に置換文字 `��` を確認。memory/MEMORY.md 本文は代表語4種を正常取得し、source破損なし。"
+    display_or_tooling_status: "none。PowerShell / rg の UTF-8 表示でも同じ置換文字が再現し、表示経路だけの mojibake ではない。"
+    why_blocks_game_memory: "memory 系手法の atom 1件で title / trigger の語が壊れ、`AIエージェント` を用いた完全一致検索と読みやすさを局所的に損なう。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 4
+    dormant: 1
+stale_review_batch:
+  - handoff_id: cha-79d7c562dd8c14c5
+    path: memory/shared_reads_candidates/20260714_wwdc26_game_porting_toolkit_agentic_coding.md
+    status: postponed
+    stale_after: "2026-08-13"
+    priority_reason: "agent skills / Metal CLI / evaluation environment を first playable まで接続する適用先は明確だが、比較条件・測定結果・失敗条件が不足し、再評価期限に到達した。"
+    recommended_review_action: reevaluate_in_phase2
+stale_backlog:
+  overdue_open_total: 3
+  stale_triage_queue_rows: 1
+  open_duplicate_group_count: 39
+  mixed_group_count: 36
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 1
+  candidate_handoff_ids: [cha-79d7c562dd8c14c5]
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
