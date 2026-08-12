@@ -4,6 +4,20 @@ url: "https://schedule.gdconf.com/session/silent-hill-f-the-challenges-of-creati
 collected_at: "2026-08-13T06:16:36+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, combat-design, horror, pacing, mechanics, postmortem]
+evaluated_at: "2026-08-13T06:26:11+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-13T06:26:11+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-13T06:26:11+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-12"
+supersedes: []
+gate_reason: >-
+  ranged combat が担っていた pacing regulator を melee mechanics・progression・enemy AI・主人公設計へ再配置する問題設定は、ゲーム制作へ具体的に適用できる。
+  ただし現候補は公式講演概要であり、実際の system comparison、設計判断の過程、評価・失敗例、結論の具体が未収録なため、約4000字の概要を根拠付きで書けない。
 ---
 
 ## raw_excerpt
