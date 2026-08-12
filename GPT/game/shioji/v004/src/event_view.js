@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.48.0-explicit-import';
+import { JOB_LABELS } from './config.js?v=v004.49.0-economy-recovery';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

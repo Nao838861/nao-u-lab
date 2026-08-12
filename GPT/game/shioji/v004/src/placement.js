@@ -1,5 +1,5 @@
-import { BUILDING_SIZES } from './config.js?v=v004.48.0-explicit-import';
-import { islandCalendar } from './ui_summary.js?v=v004.48.0-explicit-import';
+import { BUILDING_SIZES } from './config.js?v=v004.49.0-economy-recovery';
+import { islandCalendar } from './ui_summary.js?v=v004.49.0-economy-recovery';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

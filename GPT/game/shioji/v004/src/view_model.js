@@ -1,19 +1,19 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.48.0-explicit-import';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.49.0-economy-recovery';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.48.0-explicit-import';
+} from './food_readability.js?v=v004.49.0-economy-recovery';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   findTravelPath, householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.48.0-explicit-import';
-import { analyzeRoadConnections } from './placement.js?v=v004.48.0-explicit-import';
+} from './engine_bridge.js?v=v004.49.0-economy-recovery';
+import { analyzeRoadConnections } from './placement.js?v=v004.49.0-economy-recovery';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.48.0-explicit-import';
+} from './render_scene.js?v=v004.49.0-economy-recovery';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.48.0-explicit-import';
+} from './visuals.js?v=v004.49.0-economy-recovery';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',
@@ -393,6 +393,10 @@ function marketRhythmStatus(household, economy) {
       food_urgent: {
         label: '食料の緊急買い出し中',
         detail: '食料切れは出荷日を待たず、すぐ市場へ向かいます。',
+      },
+      fresh_food: {
+        label: '新鮮な魚を買い出し中',
+        detail: '魚が腐る前に、二日おきに一日半分まで買いに向かいます。',
       },
       input_urgent: {
         label: '止まった仕事の原料を調達中',
@@ -1438,6 +1442,12 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
       },
       tookMarketTripToday: Boolean(household.tookMarketTripToday),
       purse: Number.isFinite(household.purse) ? household.purse : null,
+      lastMarketVisit: household.lastMarketVisit ? {
+        day: household.lastMarketVisit.day,
+        purchased: { ...(household.lastMarketVisit.purchased ?? {}) },
+        unmet: { ...(household.lastMarketVisit.unmet ?? {}) },
+        blockers: { ...(household.lastMarketVisit.blockers ?? {}) },
+      } : null,
       recentIncome: Number.isFinite(household.incomeLog?.at(-1))
         ? household.incomeLog.at(-1) : (household.income30 ?? 0),
       satisfaction,

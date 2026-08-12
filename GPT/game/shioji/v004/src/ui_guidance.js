@@ -200,8 +200,45 @@ export function secretaryRouteFor({
       detail: actionAdvice.detail,
     };
   }
-  if (incident && String(incident.speech ?? '').trim()) {
-    const spoilage = Boolean(incident.goods);
+  if (handoff) {
+    return {
+      priority: 'goal-complete',
+      tier: 'guidance',
+      target: { kind: 'tutorial-handoff' },
+      badge: '達成',
+      action: handoff.nextId ? '次の案内へ' : '島へ戻る',
+      speech: handoff.speech,
+    };
+  }
+  const important = [...events].reverse().find(event => (
+    event.important && String(event.elenaSpeech ?? '').trim()
+  ));
+  const incidentIsSpoilage = Boolean(incident?.goods);
+  if (incidentIsSpoilage && String(incident.speech ?? '').trim()) {
+    return {
+      priority: 'first-spoilage',
+      tier: 'notice',
+      target: { kind: 'seasonal-event', id: incident.id },
+      speech: incident.speech,
+      kicker: '初めての腐敗',
+      title: incident.goods,
+      detail: `${incident.day}日目`,
+    };
+  }
+  if (important) {
+    return {
+      priority: 'important-event',
+      tier: 'notice',
+      target: { kind: 'event', sequence: important.sequence },
+      speech: important.elenaSpeech,
+      kicker: '重要な出来事',
+      title: important.title,
+      detail: important.details || `${important.day}日目の出来事`,
+    };
+  }
+  if (incident && String(incident.speech ?? '').trim()
+    && (!objective || objective.complete)) {
+    const spoilage = incidentIsSpoilage;
     return {
       priority: spoilage ? 'first-spoilage' : 'season-event',
       tier: 'notice',
@@ -221,16 +258,6 @@ export function secretaryRouteFor({
       kicker: '新しい品',
       title: discovery.goods.join('・'),
       detail: `${discovery.day}日目に島で初めて保有`,
-    };
-  }
-  if (handoff) {
-    return {
-      priority: 'goal-complete',
-      tier: 'guidance',
-      target: { kind: 'tutorial-handoff' },
-      badge: '達成',
-      action: handoff.nextId ? '次の案内へ' : '島へ戻る',
-      speech: handoff.speech,
     };
   }
   const optionalLetter = [...letters].reverse().find(letter => (
@@ -288,20 +315,6 @@ export function secretaryRouteFor({
       kicker: infoAdvice.kicker,
       title: infoAdvice.title,
       detail: infoAdvice.detail,
-    };
-  }
-  const important = [...events].reverse().find(event => (
-    event.important && String(event.elenaSpeech ?? '').trim()
-  ));
-  if (important) {
-    return {
-      priority: 'important-event',
-      tier: 'notice',
-      target: { kind: 'event', sequence: important.sequence },
-      speech: important.elenaSpeech,
-      kicker: '重要な出来事',
-      title: important.title,
-      detail: important.details || `${important.day}日目の出来事`,
     };
   }
   return fallback;

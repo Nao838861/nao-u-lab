@@ -116,6 +116,7 @@ import {
   assertOccupancyInvariant,
   completeHaulJob,
   carrierGoodsCapacity,
+  buildingById,
   createCartCarrier,
   createHaulJob,
   createMaterialFlowLedger,
@@ -2122,6 +2123,34 @@ test("段16: staple床1.0を保ちaskは必ず原価以上になる", () => {
   }
 });
 
+test("現金循環: 実働歩留まりが低い職は直近実績を単位原価へ有限に反映する", () => {
+  const economy = createEconomicState();
+  const fisher = createHousehold(economy, { job: "fisher", x: 0, y: 0 });
+  const ideal = P.Y_FISH * householdMult(fisher);
+  const base = productionCost(economy, null, fisher, "fish", { day: 61 });
+  fisher.productionHistory = Array.from({ length: 7 }, (_, index) => ({
+    day: 54 + index,
+    goods: { fish: ideal * 0.2 },
+    ideal: { fish: ideal },
+  }));
+  const realized = productionCost(economy, null, fisher, "fish", { day: 61 });
+
+  assert.ok(realized > base);
+  assert.ok(realized <= base / 0.35 + 1e-9);
+});
+
+test("現金循環: 木工房は木製品相場から粗利を残せる丸太価格まで許容する", () => {
+  const economy = createEconomicState();
+  const woodshop = createHousehold(economy, { job: "woodshop", x: 0, y: 0 });
+  woodshop.pantry.log = 0;
+  economy.px.tools = 5.4;
+
+  const ceiling = buyTargets(economy, woodshop, { day: 61 }).log[1];
+
+  assert.ok(ceiling >= 1.5);
+  assert.ok(ceiling * P.LOG_TOOL * 1.15 <= economy.px.tools + 1e-9);
+});
+
 test("段16: sellOffersは職業別keepと重量上限を守る", () => {
   const economy = createEconomicState();
   const logger = createHousehold(economy, { job: "logger", x: 2, y: 2 });
@@ -2137,6 +2166,27 @@ test("段16: sellOffersは職業別keepと重量上限を守る", () => {
     sellOffers(economy, farmer).wheat,
     Math.min(surplus * 0.1 + 2, surplus, householdHaul(farmer)),
   );
+});
+
+test("現金循環: 実績原価で野菜へ交換できる漁師は半日未満を守って魚を出す", () => {
+  const economy = createEconomicState();
+  const fisher = createHousehold(economy, { job: "fisher", x: 0, y: 0 });
+  const daily = householdEat(fisher);
+  const ideal = P.Y_FISH * householdMult(fisher);
+  fisher.productionHistory = Array.from({ length: 7 }, (_, index) => ({
+    day: 54 + index,
+    goods: { fish: ideal * 0.2 },
+    ideal: { fish: ideal },
+  }));
+  fisher.pantry.fish = daily;
+  fisher.pantry.salt = 0;
+  economy.px.fish = 0.2;
+  economy.px.veg = 0.35;
+
+  const offer = sellOffers(economy, fisher, { day: 61 });
+
+  assert.ok(offer.fish > 0);
+  assert.ok(fisher.pantry.fish - offer.fish >= daily * 0.4 - 1e-9);
 });
 
 test("段16: 石畳買付台は原価を割らない石だけを直接買い上げる", () => {
@@ -2244,7 +2294,7 @@ test("段17: buyTargets天井表・LADDER・固定買い順を正本どおり保
   woodshop.pantry.log = 0;
   assert.deepEqual(
     buyTargets(economy, woodshop, { day: 1 }).log,
-    [P.LOG_TOOL * 16, Math.max(0.9, economy.px.tools / P.LOG_TOOL * 0.6)],
+    [P.LOG_TOOL * 16, Math.max(0.9, economy.px.tools / P.LOG_TOOL / 1.15)],
   );
 
   const farmer = createHousehold(economy, { job: "wheat", x: 0, y: 0 });
@@ -2417,6 +2467,110 @@ test("現金循環: 食料危機では実在庫の安い食料を固定品目順
   assert.equal(result.transactions[0].goods, "veg");
 });
 
+test("現金循環: 自分の露店からは買わず財布と手数料を動かさない", () => {
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "veg", x: 0, y: 0 });
+  for (const goods of FOODS) household.pantry[goods] = 100;
+  household.pantry.veg = 0;
+  economy.stalls.veg.push({
+    householdId: household.id,
+    marketId: "main",
+    qty: 20,
+    price: 0.5,
+    age: 0,
+  });
+  const purseBefore = household.purse;
+  const feeBefore = economy.co.fee;
+
+  const result = buyAtMarket(economy, household, { day: 1 });
+
+  assert.equal(result.transactions.some(({ source }) => source === "STALL"), false);
+  assert.equal(household.purse, purseBefore);
+  assert.equal(economy.co.fee, feeBefore);
+  assert.equal(economy.stalls.veg[0].qty, 20);
+  assert.equal(assertMoneyConservation(economy), true);
+});
+
+test("現金循環: 新鮮な魚と半日未満の手持ちがあれば二日おきに一日半分まで早便を出す", () => {
+  const { economy, physical } = createLogisticsTestFixture();
+  const buyer = createHousehold(economy, { job: "logger", x: 7, y: 5 });
+  const seller = createHousehold(economy, { job: "fisher", x: 7, y: 5 });
+  for (const goods of FOODS) buyer.pantry[goods] = 100;
+  buyer.pantry.fish = 0;
+  buyer.pantry.tools = 100;
+  buyer.pantry.salt = 100;
+  buyer.pantry.char = 100;
+  buyer.workTool = { kind: "wood", durability: 30, maxDurability: 30, acquiredDay: 1 };
+  buyer.lastMarketDepartureDay = 1;
+  economy.currentDay = 3;
+  economy.currentTick = 60;
+  economy.stalls.fish.push({
+    householdId: seller.id,
+    marketId: "main",
+    qty: 20,
+    price: 0.5,
+    age: 1,
+  });
+  depositInventory(companyLogisticsSite(physical, "market"), "outbound", "fish", 20);
+
+  decideHouseholdTrips(economy, physical);
+
+  assert.ok(buyer.marketCarrier);
+  assert.equal(buyer.marketCarrier.reason, "fresh_food");
+  let ticks = 0;
+  while (buyer.state !== "home" && ticks < 200) {
+    stepMarketTrip(economy, physical, buyer, { day: 3, random: () => 0 });
+    ticks += 1;
+  }
+  assert.ok(ticks < 200);
+  assert.ok(buyer.pantry.fish > 0);
+  assert.ok(buyer.pantry.fish <= householdEat(buyer) * 1.5 + 1e-9,
+    "家庭では最大一日半分だけ持つ");
+  assert.ok(seller.purse > P.PURSE0, "魚の売上が漁師へ移る");
+  assert.equal(assertMoneyConservation(economy), true);
+});
+
+test("現金循環: 初売り前の魚は古い魚相場でなく安い主食二倍まで交換を許す", () => {
+  const economy = createEconomicState();
+  const buyer = createHousehold(economy, { job: "veg", x: 0, y: 0 });
+  buyer.pantry.fish = 0;
+  economy.px.fish = 0.2;
+  economy.px.veg = 0.35;
+  economy.px.wheat = 4;
+  economy.px.pres = 1.2;
+
+  const ceiling = buyTargets(economy, buyer, { day: 61 }).fish[1];
+
+  assert.equal(ceiling, 0.7);
+  assert.ok(ceiling <= economy.px.veg * 2.5);
+});
+
+test("現金循環: 魚を半日分持つ世帯・二日物の魚・前便翌日は早便を出さない", () => {
+  const run = ({ pantryDays, age, lastDepartureDay = 1 }) => {
+    const { economy, physical } = createLogisticsTestFixture();
+    const buyer = createHousehold(economy, { job: "logger", x: 7, y: 5 });
+    const seller = createHousehold(economy, { job: "fisher", x: 7, y: 5 });
+    for (const goods of FOODS) buyer.pantry[goods] = 100;
+    buyer.pantry.fish = householdEat(buyer) * pantryDays;
+    buyer.pantry.tools = 100;
+    buyer.pantry.salt = 100;
+    buyer.pantry.char = 100;
+    buyer.workTool = { kind: "wood", durability: 30, maxDurability: 30, acquiredDay: 1 };
+    buyer.lastMarketDepartureDay = lastDepartureDay;
+    economy.currentDay = 3;
+    economy.currentTick = 60;
+    economy.stalls.fish.push({
+      householdId: seller.id, marketId: "main", qty: 20, price: 0.5, age,
+    });
+    decideHouseholdTrips(economy, physical);
+    return buyer.marketCarrier?.reason ?? null;
+  };
+
+  assert.notEqual(run({ pantryDays: 0.5, age: 0 }), "fresh_food");
+  assert.notEqual(run({ pantryDays: 0, age: 2 }), "fresh_food");
+  assert.notEqual(run({ pantryDays: 0, age: 0, lastDepartureDay: 2 }), "fresh_food");
+});
+
 test("現金循環: 修繕・道具・生活用品は三日分の最低食費を残す", () => {
   const economy = createEconomicState();
   const buyer = createHousehold(economy, { job: "logger", x: 0, y: 0 });
@@ -2468,7 +2622,7 @@ test("段18: 豊漁の安い魚が約定するとfish pxが下がる", () => {
     producePrimaryTick(economy, null, fisher, { day, fraction: 1 });
   }
   sellAtMarket(economy, null, fisher, { day: 65, random: () => 0 });
-  for (const goods of FOODS) buyer.pantry[goods] = 100;
+  for (const goods of FOODS) buyer.pantry[goods] = goods === "fish" ? 0 : 100;
   const before = economy.px.fish;
 
   const result = buyAtMarket(economy, buyer, { day: 65 });
@@ -2968,6 +3122,20 @@ test("段46: 最初の生産適格注文だけは抽選待ちせず、二件目�
   });
   assert.equal(surplusOrder.created.qty, 10,
     "島内消費分を本国注文へ回さず、余剰だけを数える");
+
+  const strandedLogs = createEconomicState();
+  strandedLogs.orderDone = 1;
+  const logger = createHousehold(strandedLogs, { job: "logger", x: 0, y: 0 });
+  strandedLogs.stalls.log.push({
+    householdId: logger.id, marketId: "main", qty: 20, price: 0.5, age: 0,
+  });
+  const logRolls = [0, 0];
+  const logOrder = runCompanyDayStart(strandedLogs, {
+    day: 75, random: () => logRolls.shift(),
+  });
+  assert.equal(logOrder.created.g, "log");
+  assert.equal(logOrder.created.qty, 10,
+    "加工職が消えても、実在する丸太余剰の半分を有限注文へできる");
 });
 
 test("段22: 支度金・信用限度・月利・破産を会社台帳と本土境界へ記帳する", () => {
@@ -3357,6 +3525,22 @@ test("需要網: 無一文の建築材買い出しを止め、手持ち修繕材
   assert.equal(household.marketCarrier, null);
 });
 
+test("現金循環: 信用対象外の漁師は買えない塩と炭を求めて市場へ出ない", () => {
+  const { economy, physical } = createLogisticsTestFixture();
+  const fisher = createHousehold(economy, { job: "fisher", x: 7, y: 5 });
+  for (const goods of FOODS) fisher.pantry[goods] = 100;
+  fisher.pantry.salt = 0;
+  fisher.pantry.char = 0;
+  fisher.purse = 0;
+  economy.currentDay = 3;
+
+  decideHouseholdTrips(economy, physical);
+
+  assert.equal(fisher.state, "home");
+  assert.equal(fisher.marketCarrier, null);
+  assert.equal(Boolean(fisher.tookMarketTripToday), false);
+});
+
 test("需要網: 旧セーブの稼働済み建物は未完建設扱いにせず家財を回収する", () => {
   const fixture = createLogisticsTestFixture();
   const household = createHousehold(fixture.economy, { job: "woodshop", x: 7, y: 5 });
@@ -3372,6 +3556,8 @@ test("需要網: 旧セーブの稼働済み建物は未完建設扱いにせず
   assert.equal(placed.ok, true, placed.reason);
   household.buildingId = placed.building.id;
   household.buildDays = 10;
+  household.state = "building";
+  household.marketCarrier = { returnState: "building" };
   household.pantry.log = 2;
   depositInventory(placed.building, "construction", "log", 6);
   delete placed.building.constructionConsumed;
@@ -3380,8 +3566,49 @@ test("需要網: 旧セーブの稼働済み建物は未完建設扱いにせず
 
   assert.equal(placed.building.constructionConsumed, true);
   assert.equal(household.buildDays, 0);
+  assert.equal(household.state, "home");
+  assert.equal(household.marketCarrier.returnState, "home");
   assert.equal(sectionAmount(placed.building, "construction", "log"), 0);
   assert.equal(household.pantry.log, 8, "旧状態で棚に残った未消費材は家財へ戻す");
+});
+
+test("現金循環: 旧保存の完成建物は一日進める前に復元移行する", () => {
+  const fixture = createLogisticsTestFixture();
+  const household = createHousehold(fixture.economy, { job: "woodshop", x: 7, y: 5 });
+  const home = addEconomicTestBuilding(
+    fixture.physical,
+    "woodshop",
+    7,
+    6,
+    7,
+    5,
+    household.id,
+  );
+  household.buildingId = home.id;
+  household.state = "building";
+  household.buildDays = 10;
+  home.constructionConsumed = null;
+  (home.caps.construction ??= {}).log = 10;
+  depositInventory(home, "construction", "log", 2);
+  const pantryLogBefore = household.pantry.log;
+  const restored = createWorld({
+    stateSnapshot: {
+      day: 120,
+      tick: 3600,
+      seed: 11,
+      rngState: 11,
+      physical: fixture.physical,
+      economy: fixture.economy,
+    },
+  });
+  const migrated = restored.state.economy.households[0];
+  const migratedHome = buildingById(restored.state.physical, migrated.buildingId);
+
+  assert.equal(migrated.state, "home");
+  assert.equal(migrated.buildDays, 0);
+  assert.equal(migratedHome.constructionConsumed, true);
+  assert.equal(sectionAmount(migratedHome, "construction", "log"), 0);
+  assert.equal(migrated.pantry.log, pantryLogBefore + 2);
 });
 
 test("需要網: 新規区画は支度金の本土建築材を入居便で受け取り実消費する", () => {

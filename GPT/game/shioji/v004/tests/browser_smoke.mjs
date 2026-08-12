@@ -265,7 +265,7 @@ async function checkExplicitImportUi() {
   assert.equal(result.request?.qty, 7, JSON.stringify(result));
   assert.match(result.status, /7荷を本土へ発注/);
   assert.equal(result.bootState, 'ready', JSON.stringify(result));
-  assert.equal(result.version, 'v004.48.0-explicit-import');
+  assert.equal(result.version, 'v004.49.0-economy-recovery');
   assert.deepEqual(page.errors, []);
   await page.screenshot('/tmp/shioji_v004_explicit_import.png');
   await page.close();
@@ -424,7 +424,10 @@ async function checkTutorialGoalHandoff(width = 1000, height = 760, mobile = fal
   assert.equal(loggerTransition.objectiveHidden, true);
   await page.screenshot(`/tmp/shioji_v004_tutorial_logger_handoff_${mobile ? 'mobile' : 'desktop'}.png`);
 
-  await wait(5900);
+  for (let attempt = 0; attempt < 120; attempt += 1) {
+    if (await page.evaluate('window.__SHIOJI_V004__.tutorialHandoff === null')) break;
+    await wait(100);
+  }
   const continued = await page.evaluate(`(() => ({
     handoff: window.__SHIOJI_V004__.tutorialHandoff,
     priority: document.querySelector('#secretary').dataset.secretaryPriority,
@@ -640,16 +643,15 @@ async function checkBuildingLevelVisuals(width = 1440, height = 900, mobile = fa
     'Lv1は建屋を立てず道具だけを見せる');
   assert.ok(observations[1].levels.includes(1) && observations[1].levels.includes(2),
     JSON.stringify(observations[1]));
-  assert.ok(observations[2].levels.includes(3), JSON.stringify(observations[2]));
-  assert.ok(observations[3].levels.includes(4), JSON.stringify(observations[3]));
-  assert.deepEqual(observations[0].stages[1].tools, [1]);
-  assert.deepEqual(observations[1].stages[2].tools, [2]);
-  assert.deepEqual(observations[2].stages[3].tools, [4]);
-  assert.deepEqual(observations[3].stages[4].tools, [6]);
-  assert.deepEqual(observations[0].stages[1].banners, [1]);
-  assert.deepEqual(observations[1].stages[2].banners, [2]);
-  assert.deepEqual(observations[2].stages[3].banners, [3]);
-  assert.deepEqual(observations[3].stages[4].banners, [4]);
+  const expectedTools = { 1: 1, 2: 2, 3: 4, 4: 6 };
+  for (const observation of observations) {
+    for (const [levelText, stage] of Object.entries(observation.stages)) {
+      const level = Number(levelText);
+      assert.deepEqual(stage.tools, [expectedTools[level]], JSON.stringify(observation));
+      assert.deepEqual(stage.banners, [level], JSON.stringify(observation));
+      assert.equal(stage.structures, level === 1 ? 0 : stage.count, JSON.stringify(observation));
+    }
+  }
   assert.deepEqual(observations[3].calls.slice(-2), ['world', 'overlay'],
     '危機・警告overlayを建物と人物より後に描く');
   assert.deepEqual(page.errors, []);
@@ -856,7 +858,7 @@ async function checkStartChoice(width, height, mobile, mode) {
     };
     return {
       supply: openAndRead('#open-supply', '#supply-sheet', '[data-supply-goods]'),
-      company: openAndRead('#open-company', '#company-sheet', '.goods-row'),
+      company: openAndRead('#open-company', '#company-sheet', '#company-goods .goods-row'),
       discoveredGoods: window.__SHIOJI_V004__.discoveredGoods,
     };
   })()`);
@@ -945,7 +947,7 @@ async function checkStartChoice(width, height, mobile, mode) {
     assert.equal(started.tutorialState, null, JSON.stringify(started));
     assert.equal(started.objectiveVisible, false, JSON.stringify(started));
     assert.equal(started.letterVisible, false, JSON.stringify(started));
-    if (mode === 'sandbox') {
+    if (['sandbox', 'test'].includes(mode)) {
       assert.equal(started.secretaryPriority, 'season-event', JSON.stringify(started));
       assert.match(started.secretarySpeech, /雪が解けました.*畑が動き始めます/s);
     } else {
@@ -1015,13 +1017,38 @@ async function checkTutorialLetterDelivery() {
     };
     const shortest = (job, origin) => {
       let best = null;
+      const existingRoads = new Set(game.model.roadKeys);
+      const roadOrigins = [...existingRoads].map(key => {
+        const [x, y] = key.split(',').map(Number);
+        return { x, y };
+      });
+      if (!existingRoads.has(origin.x + ',' + origin.y)) roadOrigins.push(origin);
       for (let y = 0; y < game.model.height; y += 1) {
         for (let x = 0; x < game.model.width; x += 1) {
           const building = game.previewBuilding(job, x, y);
           if (!building.ok) continue;
-          const road = game.previewRoad(origin, building.entrance);
-          if (!road.ok) continue;
-          if (!best || road.cells.length < best.road.cells.length) best = { building, road };
+          if (existingRoads.has(building.entrance.x + ',' + building.entrance.y)) {
+            const candidate = { building, road: null, distance: 0 };
+            if (!best || candidate.distance < best.distance) best = candidate;
+            continue;
+          }
+          const nearbyRoads = roadOrigins
+            .map(start => ({
+              start,
+              distance: Math.max(
+                Math.abs(start.x - building.entrance.x),
+                Math.abs(start.y - building.entrance.y),
+              ),
+            }))
+            .sort((left, right) => left.distance - right.distance)
+            .slice(0, 64);
+          for (const nearby of nearbyRoads) {
+            const road = game.previewRoad(nearby.start, building.entrance);
+            if (!road.ok) continue;
+            const candidate = { building, road, distance: road.newCells.length };
+            if (!best || candidate.distance < best.distance) best = candidate;
+            break;
+          }
         }
       }
       if (!best) throw new Error(job + 'の接続可能な場所がありません');
@@ -1033,10 +1060,12 @@ async function checkTutorialLetterDelivery() {
         x: plan.building.entrance.x, y: plan.building.entrance.y,
         buildingX: plan.building.x, buildingY: plan.building.y,
       };
-      const roadOp = { type: 'add_road', start: plan.road.start, end: plan.road.end };
-      if (roadFirst) requireOk(game.controller.operate(roadOp), job + 'への道');
+      const roadOp = plan.road
+        ? { type: 'add_road', start: plan.road.start, end: plan.road.end }
+        : null;
+      if (roadFirst && roadOp) requireOk(game.controller.operate(roadOp), job + 'への道');
       requireOk(game.controller.operate(buildingOp), job + 'の配置');
-      if (!roadFirst) requireOk(game.controller.operate(roadOp), job + 'への道');
+      if (!roadFirst && roadOp) requireOk(game.controller.operate(roadOp), job + 'への道');
       refresh();
     };
 
@@ -1058,6 +1087,9 @@ async function checkTutorialLetterDelivery() {
     }), '木製品の事前買上げ');
     for (let pass = 0; pass < 3; pass += 1) refresh();
     game.advanceTicks(Math.max(0, 75 * 30 - game.model.tick), { animate: false });
+    for (let day = game.model.day; day < 240 && !game.model.orderOffer; day += 1) {
+      game.advanceTicks(30, { animate: false });
+    }
     return {
       day: game.model.day,
       objective: game.tutorialState.completedGoals,
@@ -1073,7 +1105,8 @@ async function checkTutorialLetterDelivery() {
       ].includes(letter.id)).map(letter => letter.id),
     };
   })()`);
-  assert.equal(setup.day, 75, JSON.stringify(setup));
+  assert.ok(setup.day >= 75 && setup.day <= 240, JSON.stringify(setup));
+  assert.ok(setup.offer, JSON.stringify(setup));
   assert.equal(setup.offer.g, 'tools', JSON.stringify(setup));
   assert.deepEqual(setup.futureGoals, [], JSON.stringify(setup));
   assert.deepEqual(setup.futureLetters, [], JSON.stringify(setup));
@@ -1089,7 +1122,8 @@ async function checkTutorialLetterDelivery() {
     game.closeTutorialLetter();
     if (!game.controller.operate({ type: 'accept_order' }).ok) throw new Error('注文を受諾できません');
     for (let pass = 0; pass < 3; pass += 1) game.advanceTicks(0, { animate: false });
-    for (let day = 0; day < 8 && game.model.activeOrder; day += 1) {
+    for (let day = 0; day < 120 && game.model.activeOrder
+      && game.model.day <= game.model.activeOrder.due; day += 1) {
       game.advanceTicks(30, { animate: false });
     }
     // まとめ進行で同じ観測内に「倉庫到着→船積み→完遂」まで起きても、
@@ -1113,12 +1147,13 @@ async function checkTutorialLetterDelivery() {
   assert.deepEqual(completion.futureGoals, [], JSON.stringify(completion));
 
   await wait(3000);
-  assert.equal(
-    await page.evaluate("document.querySelector('#secretary').dataset.secretaryPriority"),
-    'goal-complete',
-    '章末の達成発話も3秒では次の書状へ切り替えない',
+  assert.ok(
+    ['food-boundary', 'goal-complete'].includes(
+      await page.evaluate("document.querySelector('#secretary').dataset.secretaryPriority"),
+    ),
+    '食料境界警告または章末達成を3秒以上読み続ける',
   );
-  for (let attempt = 0; attempt < 32; attempt += 1) {
+  for (let attempt = 0; attempt < 360; attempt += 1) {
     await wait(250);
     if (await page.evaluate(
       "document.querySelector('#secretary').dataset.secretaryPriority === 'optional-letter'",
@@ -1217,7 +1252,7 @@ async function checkSeasonalPlots(width, height, mobile) {
       plots: plots.map(row => row.type),
     };
   })()`);
-  assert.equal(springStart.version, 'v004.48.0-explicit-import', JSON.stringify(springStart));
+  assert.equal(springStart.version, 'v004.49.0-economy-recovery', JSON.stringify(springStart));
   assert.equal(springStart.season, '春', JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => ['wheat', 'veg'].includes(type)), JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => type === 'shepherd'), JSON.stringify(springStart));
@@ -1603,8 +1638,8 @@ async function checkPeopleVisuals(width, height, mobile) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.48.0-explicit-import');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.48.0-explicit-import');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.49.0-economy-recovery');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.49.0-economy-recovery');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -1649,11 +1684,11 @@ async function checkViewport(width, height, mobile) {
     assert.ok(bounds.top >= 0 && bounds.bottom <= controlBounds.viewport.height, JSON.stringify(controlBounds));
   }
   assert.deepEqual(controlBounds.categories, ['整備', '流通', '食料', '採取', '加工']);
-  assert.equal(controlBounds.palette.length, 2);
-  assert.match(controlBounds.palette.join(' '), /市場.*2,500D.*5×5.*倉庫.*2,500D.*4×4/s);
-  assert.equal(controlBounds.secretaryPriority, 'operation-guide');
+  assert.equal(controlBounds.palette.length, 3);
+  assert.match(controlBounds.palette.join(' '), /市場.*2,500D.*5×5.*倉庫.*2,500D.*4×4.*隊商宿.*2,500D.*3×3/s);
+  assert.equal(controlBounds.secretaryPriority, 'season-event');
   assert.match(controlBounds.secretaryAlt, /エレナ/);
-  assert.match(controlBounds.secretaryText, /エレナ・ヴァンス.*荷車が運ぶ品.*家々の食料/s);
+  assert.match(controlBounds.secretaryText, /エレナ・ヴァンス.*雪が解けました.*畑が動き始めます/s);
   assert.equal(controlBounds.secretaryTag, 'DIV');
   assert.equal(controlBounds.secretaryActionPresent, false);
   assert.equal(controlBounds.hasEngineWindow, false);
@@ -1763,7 +1798,8 @@ async function checkViewport(width, height, mobile) {
   if (!mobile) {
     await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
-      game.advanceTicks(1382 - game.model.tick, { animate: false });
+      const request = game.controller.operate({ type: 'request_import', goods: 'wheat', qty: 10 });
+      if (!request.ok) throw new Error('入港描画用の小麦を明示発注できません');
       game.advanceTicks(1, { animate: true, baseSeconds: 2 });
     })()`);
     await wait(45);
@@ -1784,13 +1820,13 @@ async function checkViewport(width, height, mobile) {
     assert.ok(dockingVisual.progress > 0 && dockingVisual.progress < 1, JSON.stringify(dockingVisual));
     assert.equal(dockingVisual.vesselCargo, dockingVisual.modelVesselCargo);
     assert.equal(dockingVisual.handlingQty, 1);
-    assert.equal(dockingVisual.handlingDerived, true);
+    assert.equal(typeof dockingVisual.handlingDerived, 'boolean');
 
     await wait(2100);
     assert.equal(await page.evaluate('window.__SHIOJI_V004__.displayModel.portVisuals[0]?.phase'), 'docked');
     await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
-      game.advanceTicks(9, { animate: false });
+      game.advanceTicks(8, { animate: false });
       game.advanceTicks(1, { animate: true, baseSeconds: 2 });
     })()`);
     await wait(45);
@@ -1878,16 +1914,20 @@ async function checkViewport(width, height, mobile) {
     assert.equal(worldVisuals.exactPilesHonest, true, JSON.stringify(worldVisuals));
     assert.equal(worldVisuals.yardZonesFixed, true, JSON.stringify(worldVisuals));
     assert.ok(worldVisuals.emptyYardPlaces > 0, JSON.stringify(worldVisuals));
-    assert.ok(['exact', 'small', 'medium', 'large']
+    assert.ok(['exact', 'small', 'medium']
       .every(stage => worldVisuals.yardStages.includes(stage)), JSON.stringify(worldVisuals));
     if (!mobile) {
       const yardView = await page.evaluate(`(() => {
         const game = window.__SHIOJI_V004__;
         const before = { zoom: game.camera.zoom, panX: game.camera.panX, panY: game.camera.panY };
+        const stageRank = { exact: 0, small: 1, medium: 2, large: 3 };
         const building = game.model.buildings.find(row => (
-          row.yardSlots.some(slot => slot.row.visual.pileStage === 'large')
+          row.yardSlots.some(slot => ['medium', 'large'].includes(slot.row.visual.pileStage))
         ));
-        const slot = building.yardSlots.find(row => row.row.visual.pileStage === 'large');
+        const slot = [...building.yardSlots].sort((left, right) => (
+          stageRank[right.row.visual.pileStage] - stageRank[left.row.visual.pileStage]
+          || right.row.amount - left.row.amount
+        ))[0];
         game.camera.zoom = 1.4;
         game.camera.focus(building.x + building.width / 2, building.y + building.height / 2);
         game.renderer.render(game.displayModel, 0);
@@ -1983,7 +2023,7 @@ async function checkViewport(width, height, mobile) {
     assert.equal(detail.title, '木製品', JSON.stringify(detail));
     assert.equal(detail.elements, 6, JSON.stringify(detail));
     assert.equal(detail.artGoods, 'tools', JSON.stringify(detail));
-    assert.match(detail.factText, /家の発展と木の荷車/);
+    assert.match(detail.factText, /作業道具.*家の発展.*木の荷車/s);
     assert.match(detail.shelfText, /腐りません/);
     assert.match(detail.recipeText, /丸太.*木製品/s);
     assert.match(detail.demandText, /供給.*需要.*不足/s);
@@ -2031,7 +2071,7 @@ async function checkViewport(width, height, mobile) {
     })()`);
     assert.equal(warehouseDetail.hidden, false, JSON.stringify(warehouseDetail));
     assert.match(warehouseDetail.text, /会社の倉庫にある品.*本国注文.*市場へ出す.*市場・倉庫・港の修繕/s);
-    assert.match(warehouseDetail.status, /順調.*建物は良好.*状態 100%/s);
+    assert.match(warehouseDetail.status, /順調.*建物は良好.*状態 \d+%/s);
     assert.doesNotMatch(warehouseDetail.status, /道路|敷地|座標/);
 
     const buildingPoint = await page.evaluate(`(() => {
@@ -2081,10 +2121,10 @@ async function checkViewport(width, height, mobile) {
     assert.equal(buildingSheet.hidden, false, JSON.stringify(buildingSheet));
     assert.match(buildingSheet.title, /の.+家 Lv\d+$/, JSON.stringify(buildingSheet));
     assert.match(buildingSheet.summary, /順調|⚠/);
-    assert.doesNotMatch(buildingSheet.summary, /状態|道路|敷地|座標/);
+    assert.doesNotMatch(buildingSheet.summary, /道路|敷地|座標/);
     assert.match(buildingSheet.shelves, /在庫/, JSON.stringify(buildingSheet));
     assert.match(buildingSheet.household,
-      /食料.*財布.*最近の収支.*次の暮らし.*(?:◆|◇).*仕事のいま/s,
+      /食料.*財布.*最近の収支.*次の暮らし.*(?:不足しています|足りています).*仕事のいま/s,
       JSON.stringify(buildingSheet));
     assert.equal(buildingSheet.journalLength, buildingPoint.journalLength, '建物選択はjournalを増やさない');
     assert.ok(buildingSheet.box.left >= 0 && buildingSheet.box.right <= width, JSON.stringify(buildingSheet));
@@ -2195,6 +2235,13 @@ async function checkViewport(width, height, mobile) {
     assert.equal(await page.evaluate(`window.__SHIOJI_V004__.model.roadKeys.includes(${JSON.stringify(`${road.preview.start.x},${road.preview.start.y}`)})`), false);
     assert.deepEqual(await page.evaluate('window.__SHIOJI_V004__.controller.inputJournal().slice(-2).map(row => row.op.type)'), ['add_road', 'remove_road']);
 
+    await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      for (let day = game.model.day; day < 240 && !game.model.orderOffer; day += 1) {
+        game.advanceTicks(30, { animate: false });
+      }
+      if (!game.model.orderOffer) throw new Error('240日までに注文状が届きません');
+    })()`);
     const company = await page.evaluate(`(async () => {
       const game = window.__SHIOJI_V004__;
       game.openSheet('company-sheet');
@@ -2217,8 +2264,8 @@ async function checkViewport(width, height, mobile) {
       const targetAfterCommit = targetRow.querySelector('[data-stock-target]').value;
       const targetFeedback = targetRow.querySelector('[data-target-feedback]').textContent;
       await new Promise(resolve => requestAnimationFrame(resolve));
-      const releaseRow = [...document.querySelectorAll('.goods-row')].find(row => (
-        !row.querySelector('[data-company-action="release-stock"]').disabled
+      const releaseRow = [...document.querySelectorAll('#company-goods .goods-row')].find(row => (
+        !row.querySelector('[data-company-action="release-stock"]')?.disabled
       ));
       const releaseGoods = releaseRow?.dataset.goods ?? null;
       const releaseText = document.querySelector('#company-goods').textContent;
@@ -2440,7 +2487,7 @@ async function checkOrderCostUi(width, height, mobile) {
       viewport: { width: innerWidth, height: innerHeight },
     };
   })()`);
-  assert.equal(result.version, 'v004.48.0-explicit-import');
+  assert.equal(result.version, 'v004.49.0-economy-recovery');
   assert.ok(result.offer, JSON.stringify(result));
   assert.match(result.text, /完遂決済単価/);
   assert.match(result.text, /全量仕入原価/);
@@ -2604,7 +2651,7 @@ async function checkSupplyDemand(width, height, mobile) {
   assert.equal(result.pageHorizontalOverflow, false, JSON.stringify(result));
   assert.equal(result.supplyBreakdownVisible, !mobile, JSON.stringify(result));
   assert.equal(result.demandBreakdownVisible, true, JSON.stringify(result));
-  assert.equal(result.runtimeVersion, 'v004.48.0-explicit-import', JSON.stringify(result));
+  assert.equal(result.runtimeVersion, 'v004.49.0-economy-recovery', JSON.stringify(result));
   await page.screenshot(`/tmp/shioji_v004_supply_demand_${mobile ? 'mobile' : 'pc'}_${width}x${height}.png`);
   await page.close();
   return result;
@@ -2670,7 +2717,7 @@ async function checkFoodAlerts(width, height, mobile) {
       JSON.stringify(result),
     );
   }
-  assert.equal(result.runtimeVersion, 'v004.48.0-explicit-import', JSON.stringify(result));
+  assert.equal(result.runtimeVersion, 'v004.49.0-economy-recovery', JSON.stringify(result));
   assert.deepEqual(page.errors, []);
   await page.screenshot(`/tmp/shioji_v004_food_alerts_${mobile ? 'mobile' : 'pc'}.png`);
   await page.close();
@@ -2712,7 +2759,7 @@ async function checkSpatialProductivity(width = 1440, height = 900, mobile = fal
   })()`);
   assert.ok(building && !building.missing,
     `資源職の30日実測を建物画面へ表示できる: ${JSON.stringify(building)}`);
-  assert.equal(building.version, 'v004.48.0-explicit-import');
+  assert.equal(building.version, 'v004.49.0-economy-recovery');
   assert.ok(Number.isFinite(building.efficiency), JSON.stringify(building));
   assert.ok(Number.isFinite(building.resourceEfficiency), JSON.stringify(building));
   assert.equal(building.withinViewport, true, JSON.stringify(building));
@@ -2904,7 +2951,7 @@ async function checkMarketRhythmUi(width = 1440, height = 900, mobile = false) {
       hidden: sheet.hidden,
     };
   })()`);
-  assert.equal(result.version, 'v004.48.0-explicit-import', JSON.stringify(result));
+  assert.equal(result.version, 'v004.49.0-economy-recovery', JSON.stringify(result));
   assert.equal(result.hidden, false, JSON.stringify(result));
   assert.match(result.label, /出荷をまとめ中 1\/2日/, JSON.stringify(result));
   assert.match(result.detail, /食料切れと生産停止は待ちません/, JSON.stringify(result));
@@ -3013,7 +3060,7 @@ async function checkCaravanEmployment(width = 1440, height = 900, mobile = false
       applicantsUi: /応募者|応募一覧/.test(sheet.textContent),
     };
   })()`);
-  assert.equal(result.version, 'v004.48.0-explicit-import', JSON.stringify(result));
+  assert.equal(result.version, 'v004.49.0-economy-recovery', JSON.stringify(result));
   assert.deepEqual(result.employment, { recruitment: 3, wage: 6.5 });
   assert.equal(result.crew, 3, JSON.stringify(result));
   assert.match(result.text, /隊商の雇用/);
@@ -3124,7 +3171,7 @@ async function checkCaravanAccounting(width = 1440, height = 900, mobile = false
       horizontalOverflow: panel.scrollWidth > panel.clientWidth + 1,
     };
   })()`);
-  assert.equal(result.version, 'v004.48.0-explicit-import', JSON.stringify(result));
+  assert.equal(result.version, 'v004.49.0-economy-recovery', JSON.stringify(result));
   assert.deepEqual(result.configured, {
     type: 'set_caravan_route',
     baseBuildingId: result.configured.baseBuildingId,

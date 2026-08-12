@@ -2,15 +2,15 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.48.0-explicit-import';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.48.0-explicit-import';
-import { displayCultureLevel } from './visuals.js?v=v004.48.0-explicit-import';
+} from './engine_bridge.js?v=v004.49.0-economy-recovery';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.49.0-economy-recovery';
+import { displayCultureLevel } from './visuals.js?v=v004.49.0-economy-recovery';
 import {
   PLAYER_FACING_BANNED_TERMS,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.48.0-explicit-import';
-import { islandCalendar } from './ui_summary.js?v=v004.48.0-explicit-import';
+} from './food_readability.js?v=v004.49.0-economy-recovery';
+import { islandCalendar } from './ui_summary.js?v=v004.49.0-economy-recovery';
 
 export { PLAYER_FACING_BANNED_TERMS };
 
@@ -1211,7 +1211,11 @@ function islandFoodChange(model, state) {
   const priceChanged = Math.abs(current.fishPrice - before.fishPrice) >= FOOD_PRICE_CHANGE_MIN
     || Math.abs(current.vegPrice - before.vegPrice) >= FOOD_PRICE_CHANGE_MIN;
   const importChanged = Math.abs(current.importEma - before.importEma) >= FOOD_IMPORT_EMA_CHANGE_MIN;
-  return current.productionEma >= FOOD_PRODUCTION_EMA_MIN && priceChanged && importChanged
+  // 明示輸入化後は第二章開始時点から輸入EMAが0の島もある。その場合に
+  // 「輸入が変化するまで待つ」と、存在しない自動輸入を教程が要求してしまう。
+  // 島内生産の立ち上がりと実際の市場価格変化を観測できれば前へ進め、
+  // 輸入変化は比較事実としてだけ残す。
+  return current.productionEma >= FOOD_PRODUCTION_EMA_MIN && priceChanged
     ? { before, current, priceChanged, importChanged }
     : null;
 }

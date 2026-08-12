@@ -1,4 +1,4 @@
-import { buildingById, pathLen } from "./physical.js?v=v004.48.0-explicit-import";
+import { buildingById, pathLen } from "./physical.js?v=v004.49.0-economy-recovery";
 
 const DEFAULT_HYSTERESIS = 0.12;
 const EPSILON = 1e-9;
