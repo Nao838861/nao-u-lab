@@ -64,7 +64,7 @@ import {
   SPRING_START_CALENDAR_OFFSET_DAYS, START_MODES, parseStartMode, urlForStartMode,
 } from '../src/start_modes.js';
 import {
-  SUPPLY_STATUS, shortageRows, supplyDemandRow, supplyDemandRows,
+  SUPPLY_STATUS, shortageRows, supplyDemandRow, supplyDemandRows, supplyDiagnosis,
 } from '../src/supply_demand.js';
 import {
   CONVERSION_SURVIVAL_DAYS, FOOD_IMPORT_EMA_TARGET,
@@ -4111,6 +4111,73 @@ test('UI向上段7: 統計の現物は棚・食料庫・屋台を所在別に一
   assert.equal(Object.isFrozen(model.goodsManifest[0].locations), true);
 });
 
+test('原因可読: 人数調べは原料待ちを検出し、待ちの原料と合図の抑制を返す', () => {
+  const model = {
+    households: [
+      { id: 1, job: 'woodshop', buildingId: 10, productivity: { idealByGoods: { tools: 2 } } },
+      { id: 2, job: 'woodshop', buildingId: 11, productivity: { idealByGoods: { tools: 2 } } },
+    ],
+    buildings: [
+      { id: 10, type: 'woodshop', conditionStatus: 'good', shelves: [{ section: 'input', goods: 'log', amount: 0 }] },
+      { id: 11, type: 'woodshop', conditionStatus: 'good', shelves: [{ section: 'input', goods: 'log', amount: 6 }] },
+    ],
+    zones: [],
+  };
+  const row = { goods: 'tools', status: 'shortage', shortage: 1, demand: 5, food: false };
+  const diagnosis = supplyDiagnosis(model, row);
+  assert.equal(diagnosis.producers, 2);
+  assert.equal(diagnosis.states.starving, 1);
+  assert.equal(diagnosis.states.healthy, 1);
+  assert.equal(diagnosis.waitingInput, 'log', '不足の根は上流の丸太を指す');
+  assert.equal(diagnosis.cue, null, '原料待ちがいる間は建築余地の合図を出さない');
+});
+
+test('原因可読: 空き家がある間は建築合図の代わりに入居案内を返す', () => {
+  const model = { households: [], buildings: [], zones: [{ job: 'logger', filled: false }] };
+  const row = { goods: 'log', status: 'shortage', shortage: 2, demand: 4, food: false };
+  const diagnosis = supplyDiagnosis(model, row);
+  assert.equal(diagnosis.vacancy, 1);
+  assert.equal(diagnosis.cue.kind, 'vacancy');
+});
+
+test('原因可読: 全作り手が健康でなお足りない時だけ「あと◯軒ぶん」が根に出る', () => {
+  const model = {
+    households: [{ id: 1, job: 'logger', buildingId: 10, productivity: { idealByGoods: { log: 2 } } }],
+    buildings: [{ id: 10, type: 'logger', conditionStatus: 'good', shelves: [] }],
+    zones: [],
+  };
+  const row = { goods: 'log', status: 'shortage', shortage: 3, demand: 5, food: false };
+  const healthy = supplyDiagnosis(model, row);
+  assert.equal(healthy.cue.kind, 'build');
+  assert.equal(healthy.cue.job, 'logger');
+  assert.equal(healthy.cue.count, 2);
+  model.buildings[0].conditionStatus = 'worn';
+  assert.equal(supplyDiagnosis(model, row).cue, null, '修繕待ちが混ざれば合図は消える');
+});
+
+test('原因可読: 食料は作り手ゼロ以外で建築合図を出さない(季節の谷の保守則)', () => {
+  const model = {
+    households: [{ id: 1, job: 'fisher', buildingId: 10, productivity: { idealByGoods: { fish: 1 } } }],
+    buildings: [{ id: 10, type: 'fisher', conditionStatus: 'good', shelves: [] }],
+    zones: [],
+  };
+  const row = { goods: 'fish', status: 'shortage', shortage: 5, demand: 9, food: true };
+  assert.equal(supplyDiagnosis(model, row).cue, null);
+  assert.equal(supplyDiagnosis({ ...model, households: [] }, row).cue.kind, 'build',
+    '作り手ゼロなら食料でも建てる合図を出す');
+});
+
+test('原因可読: 実都市のsnapshotでも人数調べが立つ', () => {
+  const api = createEngineApi(buildBaseCity(11));
+  api.advanceTicks(30 * 30);
+  const model = snapshotToViewModel(api.snapshot({ scope: 'full' }));
+  const row = supplyDemandRow(model, 'fish');
+  const diagnosis = supplyDiagnosis(model, row);
+  assert.ok(diagnosis.producers >= 1, '漁師の作り手が数えられる');
+  const total = Object.values(diagnosis.states).reduce((a, b) => a + b, 0);
+  assert.equal(total, diagnosis.producers, '全作り手がいずれかの状態に分類される');
+});
+
 test('UI向上段8: 需給は需要=消費+不足を保ち、原因別の5状態で深刻順に並べる', () => {
   const makeModel = ({ supply = 2, consumed = 2, demand = 2, stock = 20, marketStock = stock } = {}) => ({
     population: 0,
@@ -4163,6 +4230,33 @@ test('UI向上段8: 需給は需要=消費+不足を保ち、原因別の5状態
   assert.deepEqual(Object.values(SUPPLY_STATUS).map(row => row.label), [
     '需要なし', '足りている', '在庫で補給中', '届いていない', '不足',
   ]);
+});
+
+test('現金循環: 需給診断は前回買い出しの財布不足と買える不足を分ける', () => {
+  const model = {
+    households: [
+      {
+        id: 1, job: 'logger', lastMarketVisit: {
+          unmet: { fish: 2 }, blockers: { fish: 'no_money' },
+        },
+      },
+      {
+        id: 2, job: 'veg', lastMarketVisit: {
+          unmet: { fish: 1 }, blockers: { fish: 'no_stock' },
+        },
+      },
+    ],
+    buildings: [],
+    zones: [],
+  };
+  const diagnosis = supplyDiagnosis(
+    model,
+    { goods: 'fish', status: 'shortage', shortage: 1, demand: 2, food: true },
+  );
+
+  assert.deepEqual(diagnosis.purchasing, {
+    attempted: 2, cashBlocked: 1, priceBlocked: 0, stockBlocked: 1, solvent: 1,
+  });
 });
 
 test('UI向上段9: 需給を独立表示し、統計は収支と既定3グラフへ整理する', () => {

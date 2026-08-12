@@ -1,48 +1,49 @@
-import { IsometricCamera } from './camera.js?v=v004.48.0-explicit-import';
-import { SimulationClock } from './clock.js?v=v004.48.0-explicit-import';
-import { createBoundaryEvents } from './boundary_events.js?v=v004.48.0-explicit-import';
+import { IsometricCamera } from './camera.js?v=v004.49.0-economy-recovery';
+import { SimulationClock } from './clock.js?v=v004.49.0-economy-recovery';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.49.0-economy-recovery';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.48.0-explicit-import';
+} from './config.js?v=v004.49.0-economy-recovery';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.48.0-explicit-import';
-import { BUILD_COST_DENARI, P, createEngineController } from './engine_bridge.js?v=v004.48.0-explicit-import';
-import { developmentMapView } from './development_map.js?v=v004.48.0-explicit-import';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.48.0-explicit-import';
-import { formatElenaSpeech } from './elena_text.js?v=v004.48.0-explicit-import';
+} from './display_batch.js?v=v004.49.0-economy-recovery';
+import { BUILD_COST_DENARI, P, createEngineController } from './engine_bridge.js?v=v004.49.0-economy-recovery';
+import { developmentMapView } from './development_map.js?v=v004.49.0-economy-recovery';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.49.0-economy-recovery';
+import { formatElenaSpeech } from './elena_text.js?v=v004.49.0-economy-recovery';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.48.0-explicit-import';
+} from './food_readability.js?v=v004.49.0-economy-recovery';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.48.0-explicit-import';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.48.0-explicit-import';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.48.0-explicit-import';
-import { goodsDetail } from './goods_detail.js?v=v004.48.0-explicit-import';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.48.0-explicit-import';
-import { WorldPresentation } from './presentation.js?v=v004.48.0-explicit-import';
-import { Renderer } from './renderer.js?v=v004.48.0-explicit-import';
+} from './keyboard.js?v=v004.49.0-economy-recovery';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.49.0-economy-recovery';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.49.0-economy-recovery';
+import { goodsDetail } from './goods_detail.js?v=v004.49.0-economy-recovery';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.49.0-economy-recovery';
+import { WorldPresentation } from './presentation.js?v=v004.49.0-economy-recovery';
+import { Renderer } from './renderer.js?v=v004.49.0-economy-recovery';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.48.0-explicit-import';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.48.0-explicit-import';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.48.0-explicit-import';
+} from './save_game.js?v=v004.49.0-economy-recovery';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.49.0-economy-recovery';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.49.0-economy-recovery';
 import {
-  GOODS_GLYPHS, shortageRows, stockWhereabouts, supplyDemandRow, supplyDemandRows,
-} from './supply_demand.js?v=v004.48.0-explicit-import';
-import { orderQuote } from './tutorial_content.js?v=v004.48.0-explicit-import';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.48.0-explicit-import';
+  GOODS_GLYPHS, jobInputNeeds, shortageRows, stockWhereabouts, supplyDemandRow,
+  supplyDemandRows, supplyDiagnosis,
+} from './supply_demand.js?v=v004.49.0-economy-recovery';
+import { orderQuote } from './tutorial_content.js?v=v004.49.0-economy-recovery';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.49.0-economy-recovery';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.48.0-explicit-import';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.48.0-explicit-import';
+} from './ui_guidance.js?v=v004.49.0-economy-recovery';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.49.0-economy-recovery';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -404,7 +405,8 @@ function renderSupplySheet() {
       <span class="market-network-chip"><strong>${escapeHtml(row.name)}</strong><small>${row.households}世帯・${row.buildings}建物</small><em>平均${formatQuantity(row.averageDistance)}歩</em></span>
     `).join('')}<small class="market-network-note">各世帯は、実際の道のりが最も短い市場に属します。道を整えると市場圏が変わり、相場と不足も市場ごとに変わります。</small>${receiptText}`;
   });
-  const signature = JSON.stringify({ rows, focusedSupplyGoods, networkSignature });
+  const diagnoses = Object.fromEntries(rows.map(row => [row.goods, supplyDiagnosis(model, row)]));
+  const signature = JSON.stringify({ rows, diagnoses, focusedSupplyGoods, networkSignature });
   renderIfChanged('supply-grid', signature, () => {
     $('#supply-grid').innerHTML = rows.length ? rows.map(row => {
       const supplyTotal = row.supply;
@@ -435,6 +437,29 @@ function renderSupplySheet() {
           <span class="supply-bar"><small>需要</small><span class="bar-track"><i class="seg-cons" style="width:${pct(consumedTotal)}"></i><i class="seg-shortage" style="width:${pct(row.shortage)}"></i></span><b>${formatQuantity(row.demand)}</b></span>
           <span class="supply-breakdown demand-breakdown"><small>消費 ${formatQuantity(consumedTotal)}</small><small>不足 ${formatQuantity(row.shortage)}</small></span>
         </span>
+        ${(() => {
+    const diagnosis = diagnoses[row.goods];
+    if (!diagnosis) return '';
+    const parts = [];
+    if (diagnosis.states.healthy) parts.push(`順調${diagnosis.states.healthy}`);
+    if (diagnosis.states.starving) parts.push(`原料待ち${diagnosis.states.starving}`);
+    if (diagnosis.states.repair) parts.push(`修繕待ち${diagnosis.states.repair}`);
+    if (diagnosis.states.far) parts.push(`通いが遠い${diagnosis.states.far}`);
+    const waiting = diagnosis.waitingInput
+      ? `<span class="supply-link" role="link" tabindex="0" data-supply-link="${diagnosis.waitingInput}">待ちの原料: ${escapeHtml(GOODS_LABELS[diagnosis.waitingInput] ?? diagnosis.waitingInput)} →</span>`
+      : '';
+    const cue = diagnosis.cue?.kind === 'build'
+      ? `<strong class="supply-cue">${diagnosis.cue.count === null
+        ? `作り手がいません——${escapeHtml(JOB_LABELS[diagnosis.cue.job] ?? diagnosis.cue.job)}を建てる`
+        : `${escapeHtml(JOB_LABELS[diagnosis.cue.job] ?? diagnosis.cue.job)} あと${diagnosis.cue.count}軒ぶんの余地`}</strong>`
+      : diagnosis.cue?.kind === 'vacancy'
+        ? `<em class="supply-cue-vacancy">空き家${diagnosis.cue.count}——入居の条件: 食料の見込みと道</em>`
+        : '';
+    const purchasing = diagnosis.purchasing?.attempted > 0
+      ? `<span class="supply-purchasing"><small>前回の買い出し</small><b>買える不足 ${diagnosis.purchasing.solvent}軒</b><em>${diagnosis.purchasing.cashBlocked > 0 ? `財布不足${diagnosis.purchasing.cashBlocked}軒` : ''}${diagnosis.purchasing.priceBlocked > 0 ? `${diagnosis.purchasing.cashBlocked > 0 ? '・' : ''}価格不一致${diagnosis.purchasing.priceBlocked}軒` : ''}${diagnosis.purchasing.stockBlocked > 0 ? `${diagnosis.purchasing.cashBlocked + diagnosis.purchasing.priceBlocked > 0 ? '・' : ''}現物なし${diagnosis.purchasing.stockBlocked}軒` : ''}</em></span>`
+      : '';
+    return `<span class="supply-diagnosis"><small>作り手</small><b>${diagnosis.producers}軒</b><em>${parts.join('・') || '—'}</em>${waiting}${cue}${purchasing}</span>`;
+  })()}
         <span class="supply-foot">
           <span class="supply-number${row.undelivered ? ' undelivered' : ''}"><small>市場</small><b>${formatQuantity(row.marketStock)}荷</b></span>
           <span class="supply-number"><small>島全体</small><b>${formatQuantity(row.stock)}荷</b></span>
@@ -743,6 +768,21 @@ function roadRemovalPreview(tile) {
   return { kind: 'remove-road', cells: [tile], ok, reason: ok ? '' : '完成道路を押してください', tile };
 }
 
+function placementInputWarning(job) {
+  // 島全体で主原料が不足している加工建物は、置いた瞬間から原料に飢える。
+  // 断定でなく事実の警告(決定ログ20260813)。判定は需給パネルと同じ行データ。
+  const needs = jobInputNeeds(job);
+  const rows = currentSupplyRows();
+  const short = goods => rows.find(row => row.goods === goods)?.status === 'shortage';
+  const lacking = needs.required.filter(short);
+  for (const group of needs.anyOf) {
+    if (group.length > 0 && group.every(short)) lacking.push(group[0]);
+  }
+  if (lacking.length === 0) return null;
+  const names = lacking.map(goods => GOODS_LABELS[goods] ?? goods).join('・');
+  return `⚠ ${names}が島全体で不足——この建物は原料に飢えます`;
+}
+
 function updateToolPreview(tile, start = toolDragStart) {
   if (!activeTool) {
     renderer.operationPreview = null;
@@ -765,9 +805,13 @@ function updateToolPreview(tile, start = toolDragStart) {
         ? `近所の${JOB_LABELS[preview.productivity.supplier.job] ?? preview.productivity.supplier.job}が仕入候補・市場往復より約${preview.productivity.savedTicks.toFixed(1)}刻短縮`
         : `最寄り原料元まで片道${preview.productivity.supplier.distance.toFixed(1)}刻（市場経由の方が近い配置です）`
       : preview.productivity ? '近所に原料の生産者はいません。市場から調達します' : null;
-  setToolHint(preview.ok
-    ? productivityHint ?? (activeTool === 'road' ? 'この線へ道路を敷設します' : 'この位置で確定できます')
-    : preview.reason, preview.ok ? 'good' : 'bad');
+  const inputWarning = activeTool === 'building' && preview.ok
+    ? placementInputWarning(activeBuildingJob) : null;
+  const okHint = [
+    productivityHint ?? (activeTool === 'road' ? 'この線へ道路を敷設します' : 'この位置で確定できます'),
+    inputWarning,
+  ].filter(Boolean).join('。');
+  setToolHint(preview.ok ? okHint : preview.reason, preview.ok ? 'good' : 'bad');
   return preview;
 }
 
@@ -2472,6 +2516,15 @@ $('#shortage-alerts').addEventListener('click', event => {
   });
 });
 $('#supply-grid').addEventListener('click', event => {
+  const upstreamLink = event.target.closest('[data-supply-link]');
+  if (upstreamLink) {
+    focusedSupplyGoods = upstreamLink.dataset.supplyLink;
+    renderSupplySheet();
+    const target = $(`[data-supply-goods="${focusedSupplyGoods}"]`);
+    target?.scrollIntoView({ block: 'nearest' });
+    target?.focus();
+    return;
+  }
   const row = event.target.closest('[data-supply-goods]');
   if (!row) return;
   selectedSupplyGoods = row.dataset.supplyGoods;

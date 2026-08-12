@@ -1,7 +1,8 @@
 import {
   FOOD_GOODS, WINTER_RESERVE_PER_PERSON,
-} from './food_readability.js?v=v004.48.0-explicit-import';
-import { toDenari } from './config.js?v=v004.48.0-explicit-import';
+} from './food_readability.js?v=v004.49.0-economy-recovery';
+import { toDenari } from './config.js?v=v004.49.0-economy-recovery';
+import { GOODS_RECIPES } from './goods_detail.js?v=v004.49.0-economy-recovery';
 
 export const SUPPLY_STATUS = Object.freeze({
   no_demand: Object.freeze({ severity: 0, label: '需要なし' }),
@@ -169,4 +170,151 @@ export function supplyDemandRows(model, history = [], goodsIds = []) {
 
 export function shortageRows(rows) {
   return Object.freeze((rows ?? []).filter(row => row.shortage > 0.005));
+}
+
+// ── 原因可読パック（決定ログ20260813_supply_panel_diagnosis） ──
+// 断定の一語は出さない（外れた瞬間に計器の信用が死ぬ）。返すのは
+// (1)検証可能な作り手の人数調べ (2)原料待ちの上流連結 (3)厳格な3条件
+// (自品目が律速・空き家なし・季節の谷でない)が全て成立する根にだけ出る
+// 建築余地の合図。迷ったら合図を出さない。
+
+export const PRODUCER_STATE_LABELS = Object.freeze({
+  healthy: '順調', starving: '原料待ち', repair: '修繕待ち', far: '通いが遠い',
+});
+
+function requiredInputsFor(goods) {
+  const recipeRow = GOODS_RECIPES[goods];
+  if (!recipeRow) return { required: [], anyOf: [] };
+  const makers = new Set(recipeRow.makers);
+  // 自産の原料（漁師にとっての魚など）は買い付け対象でないため飢え判定から除く
+  const selfMade = new Set();
+  for (const [otherGoods, other] of Object.entries(GOODS_RECIPES)) {
+    if (other.makers.some(maker => makers.has(maker))) selfMade.add(otherGoods);
+  }
+  return {
+    required: (recipeRow.inputs ?? []).filter(input => !selfMade.has(input)),
+    anyOf: (recipeRow.alternatives ?? [])
+      .map(group => group.filter(input => !selfMade.has(input)))
+      .filter(group => group.length > 0),
+  };
+}
+
+export function jobInputNeeds(job) {
+  const required = new Set();
+  const anyOf = [];
+  for (const [goods, recipeRow] of Object.entries(GOODS_RECIPES)) {
+    if (!recipeRow.makers.includes(job)) continue;
+    const inputs = requiredInputsFor(goods);
+    for (const input of inputs.required) required.add(input);
+    for (const group of inputs.anyOf) anyOf.push(group);
+  }
+  return { required: [...required], anyOf };
+}
+
+function inputShelfAmount(model, household, goods) {
+  const building = model?.buildings?.find(row => row.id === household.buildingId);
+  return (building?.shelves ?? [])
+    .filter(row => row.section === 'input' && row.goods === goods)
+    .reduce((total, row) => total + finite(row.amount), 0);
+}
+
+function producerState(model, household, inputs) {
+  const starvingInputs = [];
+  for (const goods of inputs.required) {
+    if (inputShelfAmount(model, household, goods) < 0.5) starvingInputs.push(goods);
+  }
+  for (const group of inputs.anyOf) {
+    const total = group.reduce((sum, goods) => sum + inputShelfAmount(model, household, goods), 0);
+    if (total < 0.5 && group.length > 0) starvingInputs.push(group[0]);
+  }
+  if (starvingInputs.length > 0) return { state: 'starving', starvingInputs };
+  const building = model?.buildings?.find(row => row.id === household.buildingId);
+  if (building?.conditionStatus && building.conditionStatus !== 'good') {
+    return { state: 'repair', starvingInputs: [] };
+  }
+  const efficiency = household.productivity?.resourceWork?.efficiency;
+  if (Number.isFinite(efficiency) && efficiency < 0.5) return { state: 'far', starvingInputs: [] };
+  return { state: 'healthy', starvingInputs: [] };
+}
+
+export function supplyDiagnosis(model, row) {
+  const recipeRow = GOODS_RECIPES[row.goods];
+  const makers = recipeRow?.makers ?? [];
+  if (makers.length === 0 || row.status === 'no_demand') return null;
+  const inputs = requiredInputsFor(row.goods);
+  const producers = (model?.households ?? []).filter(household => makers.includes(household.job));
+  const purchaseAttempts = (model?.households ?? []).filter(household => (
+    finite(household.lastMarketVisit?.unmet?.[row.goods]) > 0.005
+  ));
+  const purchasing = {
+    attempted: purchaseAttempts.length,
+    cashBlocked: purchaseAttempts.filter(household => (
+      household.lastMarketVisit?.blockers?.[row.goods] === 'no_money'
+    )).length,
+    priceBlocked: purchaseAttempts.filter(household => (
+      household.lastMarketVisit?.blockers?.[row.goods] === 'too_expensive'
+    )).length,
+    stockBlocked: purchaseAttempts.filter(household => (
+      household.lastMarketVisit?.blockers?.[row.goods] === 'no_stock'
+    )).length,
+  };
+  purchasing.solvent = Math.max(
+    0,
+    purchasing.attempted - purchasing.cashBlocked - purchasing.priceBlocked,
+  );
+  const states = { healthy: 0, starving: 0, repair: 0, far: 0 };
+  const starvingCounts = {};
+  let idealTotal = 0;
+  let idealCount = 0;
+  for (const household of producers) {
+    const verdict = producerState(model, household, inputs);
+    states[verdict.state] += 1;
+    for (const goods of verdict.starvingInputs) {
+      starvingCounts[goods] = (starvingCounts[goods] ?? 0) + 1;
+    }
+    const ideal = household.productivity?.idealByGoods?.[row.goods];
+    if (Number.isFinite(ideal) && ideal > 1e-9) {
+      idealTotal += ideal;
+      idealCount += 1;
+    }
+  }
+  const waitingInput = Object.entries(starvingCounts)
+    .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))[0]?.[0] ?? null;
+  const vacancy = (model?.zones ?? [])
+    .filter(zone => makers.includes(zone.job) && !zone.filled).length
+    + (model?.buildings ?? []).filter(building => (
+      makers.includes(building.type) && building.vacant
+    )).length;
+  let cue = null;
+  if (row.shortage > 0.005) {
+    if (vacancy > 0) {
+      cue = { kind: 'vacancy', count: vacancy };
+    } else if (producers.length === 0) {
+      cue = { kind: 'build', job: makers[0], count: null };
+    } else if (
+      !row.food
+      && states.starving === 0 && states.repair === 0 && states.far === 0
+    ) {
+      // 食料は季節の谷（冬の漁など）を現在能力から誤診しやすいため、作り手ゼロ以外は
+      // 合図を出さず既存の冬予報に委ねる（保守則: 迷ったら出さない）
+      const perProducer = idealCount > 0 ? idealTotal / idealCount : 0;
+      if (perProducer > 1e-9 && perProducer * producers.length < row.demand - 0.005) {
+        cue = {
+          kind: 'build',
+          job: makers[0],
+          count: Math.max(1, Math.min(9, Math.ceil(row.shortage / perProducer))),
+        };
+      }
+    }
+  }
+  return Object.freeze({
+    goods: row.goods,
+    makers: Object.freeze([...makers]),
+    producers: producers.length,
+    states: Object.freeze(states),
+    waitingInput,
+    vacancy,
+    purchasing: Object.freeze(purchasing),
+    cue: cue ? Object.freeze(cue) : null,
+  });
 }

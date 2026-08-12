@@ -724,6 +724,14 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .bar-track .seg-imp { background: #7eb7bd; }
 .bar-track .seg-cons { background: #e5b65b; }
 .bar-track .seg-shortage { background: #ef8c77; }
+.supply-diagnosis { display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px; margin-top: 3px; font-size: 9px; }
+.supply-diagnosis small { color: var(--muted); }
+.supply-diagnosis b { font-size: 10px; }
+.supply-diagnosis em { color: var(--muted); font-style: normal; }
+.supply-link { color: #a9dcea; text-decoration: underline; cursor: pointer; }
+.supply-link:hover { color: var(--cream); }
+.supply-cue { color: var(--gold); font-weight: 700; }
+.supply-cue-vacancy { color: var(--muted); font-style: normal; }
 .supply-foot { min-width: 0; display: flex; gap: 8px; justify-content: space-between; align-items: baseline; overflow: hidden; }
 .supply-foot .supply-number small { font-size: 9px; }
 .supply-foot .supply-number b { font-size: 11px; }
