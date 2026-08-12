@@ -108,6 +108,7 @@ let lastRunningSpeed = clock.speedIndex || 1;
 let currentSecretaryRoute = null;
 let selectedSupplyGoods = null;
 let focusedSupplyGoods = null;
+let supplyFilter = 'all';
 let selectedCaravanId = null;
 let lastTutorialObjective = tutorialDirector?.currentObjective() ?? null;
 let currentTutorialHandoff = null;
@@ -383,7 +384,7 @@ function renderShortageAlerts() {
 }
 
 function renderSupplySheet() {
-  const rows = currentSupplyRows();
+  const rows = currentSupplyRows().filter(row => supplyFilter !== 'food' || row.food);
   const network = model.marketNetwork;
   const networkNode = $('#market-network-summary');
   const networkSignature = JSON.stringify({
@@ -406,7 +407,7 @@ function renderSupplySheet() {
     `).join('')}<small class="market-network-note">各世帯は、実際の道のりが最も短い市場に属します。道を整えると市場圏が変わり、相場と不足も市場ごとに変わります。</small>${receiptText}`;
   });
   const diagnoses = Object.fromEntries(rows.map(row => [row.goods, supplyDiagnosis(model, row)]));
-  const signature = JSON.stringify({ rows, diagnoses, focusedSupplyGoods, networkSignature });
+  const signature = JSON.stringify({ rows, diagnoses, focusedSupplyGoods, supplyFilter, networkSignature });
   renderIfChanged('supply-grid', signature, () => {
     $('#supply-grid').innerHTML = rows.length ? rows.map(row => {
       const supplyTotal = row.supply;
@@ -430,6 +431,7 @@ function renderSupplySheet() {
           <span class="supply-name"><b>${escapeHtml(GOODS_LABELS[row.goods])}</b></span>
           <small class="supply-badge">${row.statusLabel}</small>
           <span class="supply-number supply-days"><small>${row.status === 'no_demand' ? '' : '在庫'}</small><b>${row.status === 'no_demand' ? '需要なし' : `${formatSupplyDays(row.daysRemaining)}分`}</b></span>
+          <span class="supply-number supply-price ${trendClass}"><small>相場</small><b>${row.price === null ? '—' : `${formatQuantity(row.price)}D ${row.priceTrend.arrow}`}</b></span>
         </span>
         <span class="supply-bars" aria-hidden="true">
           <span class="supply-bar"><small>供給</small><span class="bar-track"><i class="seg-prod" style="width:${pct(row.produced)}"></i><i class="seg-imp" style="width:${pct(row.imported)}"></i></span><b>${formatQuantity(supplyTotal)}</b></span>
@@ -463,7 +465,6 @@ function renderSupplySheet() {
         <span class="supply-foot">
           <span class="supply-number${row.undelivered ? ' undelivered' : ''}"><small>市場</small><b>${formatQuantity(row.marketStock)}荷</b></span>
           <span class="supply-number"><small>島全体</small><b>${formatQuantity(row.stock)}荷</b></span>
-          <span class="supply-number ${trendClass}"><small>相場</small><b>${row.price === null ? '—' : `${formatQuantity(row.price)}D ${row.priceTrend.arrow}`}</b></span>
         </span>
       </button>`;
     }).join('') : '<p class="sheet-note goods-empty">まだ島に品がありません</p>';
@@ -2514,6 +2515,15 @@ $('#shortage-alerts').addEventListener('click', event => {
   requestAnimationFrame(() => {
     $(`[data-supply-goods="${focusedSupplyGoods}"]`)?.focus();
   });
+});
+$('#supply-filter').addEventListener('click', event => {
+  const filterButton = event.target.closest('[data-supply-filter]');
+  if (!filterButton) return;
+  supplyFilter = filterButton.dataset.supplyFilter;
+  document.querySelectorAll('[data-supply-filter]').forEach(button => {
+    button.setAttribute('aria-selected', String(button.dataset.supplyFilter === supplyFilter));
+  });
+  renderSupplySheet();
 });
 $('#supply-grid').addEventListener('click', event => {
   const upstreamLink = event.target.closest('[data-supply-link]');
