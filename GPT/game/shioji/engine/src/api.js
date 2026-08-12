@@ -7,7 +7,7 @@ import {
   requestMainlandAid,
   setCaravanEmployment,
   setCompanyStockTarget,
-} from "./econ.js?v=v004.47.0-playable-96x64";
+} from "./econ.js?v=v004.47.1-household-trips";
 import {
   activePortCalls,
   addRoadLine,
@@ -15,14 +15,14 @@ import {
   haulJobById,
   removeBuilding,
   removeRoadTile,
-} from "./physical.js?v=v004.47.0-playable-96x64";
-import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.47.0-playable-96x64";
+} from "./physical.js?v=v004.47.1-household-trips";
+import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.47.1-household-trips";
 import {
   forgetCompanyLogisticsBuilding,
   placeCompanyLogisticsBuilding,
-} from "./world.js?v=v004.47.0-playable-96x64";
-import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.47.0-playable-96x64";
-import { configureCaravanRoute } from "./routes.js?v=v004.47.0-playable-96x64";
+} from "./world.js?v=v004.47.1-household-trips";
+import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.47.1-household-trips";
+import { configureCaravanRoute } from "./routes.js?v=v004.47.1-household-trips";
 
 function jsonClone(value) {
   return JSON.parse(JSON.stringify(value));

@@ -1831,6 +1831,8 @@ test("空間生産性: 工房は十分近い木こりへ直接買付し市場往
   economy.market = { ...market.entrance };
   seller.pantry.log = 30;
   seller.lv = 1;
+  seller.state = "toMarket";
+  seller.marketCarrier = { porters: [{ memberId: seller.members[0].id }] };
   buyer.purse = 100;
   economy.px.tools = 10;
   const beforeMoney = buyer.purse + seller.purse;
@@ -1850,6 +1852,8 @@ test("空間生産性: 工房は十分近い木こりへ直接買付し市場往
     marketPath: pathLen(physical, buyerBuilding.entrance, market.entrance),
   }));
   assert.equal(offer.sellerId, seller.id);
+  assert.ok(seller.members.length > seller.marketCarrier.porters.length,
+    "売り手本人の便出中でも、家に残る家族が直接取引を受ける");
   assert.ok(offer.directTicks <= offer.marketTicks * P.DIRECT_TRADE_MAX_MARKET_RATIO);
   assert.equal(beginDirectSupplyTrip(economy, physical, buyer, offer).started, true);
   let ticks = 0;
@@ -3255,6 +3259,88 @@ test("25C: 売り便は2日分をまとめて分散出発し、空腹時は待�
   decideHouseholdTrips(emergency.economy, emergency.physical);
   assert.equal(emergency.household.state, "toMarket", "空腹なら満載を待たず買い出しへ出る");
   assert.equal(emergency.household.marketCarrier.reason, "food_urgent");
+});
+
+test("需要網: 無一文の建築材買い出しを止め、手持ち修繕材は家から棚へ移す", () => {
+  const fixture = createLogisticsTestFixture();
+  const household = createHousehold(fixture.economy, { job: "logger", x: 7, y: 5 });
+  const home = addEconomicTestBuilding(
+    fixture.physical, "logger", 7, 6, 7, 5, household.id,
+  );
+  household.buildingId = home.id;
+  for (const goods of GOODS) household.pantry[goods] = 0;
+  for (const goods of FOODS) household.pantry[goods] = 100;
+  household.pantry.log = 5;
+  household.purse = 0;
+  home.repairPlan = { required: { log: 3, tools: 2 }, dueDay: 30 };
+  fixture.economy.currentDay = 2;
+
+  decideHouseholdTrips(fixture.economy, fixture.physical);
+
+  assert.equal(sectionAmount(home, "repair", "log"), 3,
+    "自宅にある丸太は市場へ取りに行かず修繕棚へ移す");
+  assert.equal(household.state, "home", "支払手段がなければ建築材買い出しへ出ない");
+  assert.equal(household.marketCarrier, null);
+});
+
+test("需要網: 旧セーブの稼働済み建物は未完建設扱いにせず家財を回収する", () => {
+  const fixture = createLogisticsTestFixture();
+  const household = createHousehold(fixture.economy, { job: "woodshop", x: 7, y: 5 });
+  const shelf = Object.fromEntries(GOODS.map((goods) => [goods, 100]));
+  const placed = addBuilding(fixture.physical, "woodshop", 7, 6, {
+    definitions: ECONOMIC_BUILDINGS,
+    entrance: { x: 7, y: 5 },
+    requireRoad: false,
+    ownerHouseholdId: household.id,
+    caps: { input: shelf, construction: shelf, repair: shelf },
+    constructionRequired: { log: 6, tools: 4, stone: 3 },
+  });
+  assert.equal(placed.ok, true, placed.reason);
+  household.buildingId = placed.building.id;
+  household.buildDays = 10;
+  household.pantry.log = 2;
+  depositInventory(placed.building, "construction", "log", 6);
+  delete placed.building.constructionConsumed;
+
+  ensureHouseholdInputSites(fixture.economy, fixture.physical);
+
+  assert.equal(placed.building.constructionConsumed, true);
+  assert.equal(household.buildDays, 0);
+  assert.equal(sectionAmount(placed.building, "construction", "log"), 0);
+  assert.equal(household.pantry.log, 8, "旧状態で棚に残った未消費材は家財へ戻す");
+});
+
+test("需要網: 新規区画は支度金の本土建築材を入居便で受け取り実消費する", () => {
+  const physical = createEconomicTestPhysical();
+  const economy = createEconomicState();
+  economy.port = { x: 1, y: 1 };
+  const shelf = Object.fromEntries(GOODS.map((goods) => [goods, 100]));
+  const placed = addBuilding(physical, "woodshop", 7, 6, {
+    definitions: ECONOMIC_BUILDINGS,
+    entrance: { x: 7, y: 5 },
+    requireRoad: false,
+    caps: { input: shelf, construction: shelf, repair: shelf },
+    constructionRequired: { log: 6, tools: 6, stone: 3 },
+  });
+  assert.equal(placed.ok, true, placed.reason);
+  economy.zones.push({
+    job: "woodshop", x: 7, y: 5, buildingId: placed.building.id, filled: false,
+  });
+  const before = economicMaterialSnapshot(economy, physical);
+  const [settlement] = fillSettlementZones(economy, { day: 15, physical });
+  assert.equal(settlement.kind, "immigrant");
+  assert.equal(placed.building.constructionConsumed, false);
+  assert.equal(sectionAmount(placed.building, "construction", "log"), 6);
+  assert.equal(sectionAmount(placed.building, "construction", "tools"), 6);
+  assert.equal(sectionAmount(placed.building, "construction", "stone"), 3);
+  assert.equal(constructionReady(physical, settlement.household), true);
+  assertMaterialBalance({
+    before,
+    after: economicMaterialSnapshot(economy, physical),
+    flows: Object.fromEntries(GOODS.map((goods) => [goods, {
+      imp: (economy.materialFlows[goods]?.imp ?? 0), prod: 0, cons: 0, exp: 0,
+    }])),
+  });
 });
 
 test("25C: 道普請へは家族の一人だけを決定的に割り当て、残る人の生産分を保つ", () => {

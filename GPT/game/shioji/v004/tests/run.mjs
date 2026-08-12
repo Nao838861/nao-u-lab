@@ -311,7 +311,7 @@ test('ラン3: 会社の木製荷車は公開操作でだけ購入され、有�
   assert.equal(world.state.economy.companyCarts.length, 1);
   assert.equal(world.state.economy.cartStats.companyPurchased, 1);
   assert.ok(world.state.economy.company.money < moneyBefore);
-  api.applyOperation({ type: 'set_stock_target', goods: 'tools', qty: 80 });
+  api.applyOperation({ type: 'set_stock_target', goods: 'tools', qty: 200 });
   for (let day = 0; day < 300 && world.state.economy.cartStats.companyBroken < 1; day += 1) {
     api.advanceDays(1);
   }
@@ -2259,7 +2259,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.47.0-playable-96x64');
+  assert.equal(VERSION, 'v004.47.1-household-trips');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*終章/s);
   assert.match(readme, /見本の町/);

@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.47.0-playable-96x64';
+import { JOB_LABELS } from './config.js?v=v004.47.1-household-trips';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

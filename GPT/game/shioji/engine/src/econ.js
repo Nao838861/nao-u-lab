@@ -21,7 +21,7 @@ import {
   sectionCapacity,
   withdrawInventory,
   workRoadWorksite,
-} from "./physical.js?v=v004.47.0-playable-96x64";
+} from "./physical.js?v=v004.47.1-household-trips";
 
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) return value;
@@ -568,6 +568,26 @@ export function householdBuildingNeeds(physical, household) {
   return { construction, repair };
 }
 
+export function normalizeCompletedBuildingConstruction(physical, household) {
+  const building = ensureBuildingShelves(buildingById(physical, household?.buildingId));
+  if (
+    !building
+    || (building.constructionConsumed !== null && building.constructionConsumed !== undefined)
+    || ["arriving", "building"].includes(household?.state)
+  ) return false;
+  // 建設材の実物流を導入する前に完成していた建物は、完成フラグを持たない。
+  // そのまま不足建設材を追わせると、稼働済み世帯が永遠に市場へ通うため、
+  // 旧状態でconstruction棚へ退避された未消費材を家財へ戻して完成済みに正規化する。
+  for (const [goods, qty] of Object.entries(building.inventory.construction ?? {})) {
+    if (!(qty > 1e-9)) continue;
+    household.pantry[goods] = (household.pantry[goods] ?? 0) + qty;
+    building.inventory.construction[goods] = 0;
+  }
+  building.constructionConsumed = true;
+  household.buildDays = 0;
+  return true;
+}
+
 export function householdWorkToolNeed(household) {
   const active = household?.workTool;
   if (
@@ -579,6 +599,36 @@ export function householdWorkToolNeed(household) {
   return (household?.lv ?? 0) >= 2
     ? { kind: "iron", goods: "iron", qty: P.WORK_TOOL_IRON_COST }
     : { kind: "wood", goods: "tools", qty: P.WORK_TOOL_WOOD_COST };
+}
+
+export function stageOwnedBuildingMaterials(physical, household) {
+  const building = ensureBuildingShelves(buildingById(physical, household?.buildingId));
+  if (!building) return {};
+  const moved = {};
+  const plans = [];
+  if (!building.constructionConsumed) {
+    plans.push(["construction", building.constructionRequired ?? {}, false]);
+  }
+  if (building.repairPlan) plans.push(["repair", building.repairPlan.required ?? {}, true]);
+  const workToolNeed = householdWorkToolNeed(household);
+  const fishingRigNeed = householdFishingRigNeed(household);
+  for (const [section, required, preserveWorkingCapital] of plans) {
+    for (const [goods, requiredQty] of Object.entries(required)) {
+      const missing = Math.max(0, requiredQty - sectionAmount(building, section, goods));
+      if (missing <= 1e-9) continue;
+      const reserved = preserveWorkingCapital
+        ? (workToolNeed?.goods === goods ? workToolNeed.qty : 0)
+          + (fishingRigNeed?.materials?.[goods] ?? 0)
+        : 0;
+      const available = Math.max(0, (household.pantry[goods] ?? 0) - reserved);
+      const qty = Math.min(missing, available);
+      if (qty <= 1e-9) continue;
+      household.pantry[goods] -= qty;
+      depositInventory(building, section, goods, qty);
+      moved[goods] = (moved[goods] ?? 0) + qty;
+    }
+  }
+  return moved;
 }
 
 export function householdWorkToolMultiplier(household) {
@@ -1183,7 +1233,7 @@ function disperseHousehold(economy, household, day, physical = null) {
     }
     household.fishingRig = null;
   }
-  const market = companyLogisticsSite(physical, "market");
+  const market = marketBuildingForId(physical, householdMarketId(household));
   for (const [goods, stalls] of Object.entries(economy.stalls)) {
     for (let index = stalls.length - 1; index >= 0; index -= 1) {
       if (stalls[index].householdId !== household.id) continue;
@@ -4780,6 +4830,25 @@ function settleHouseholdInZone(economy, physical, household, zone) {
   if (building) {
     building.ownerHouseholdId = household.id;
     ensureBuildingShelves(building);
+    // 区画指定時の支度金は本土建築資材を含む。移民・分家とも不足分を入居便で
+    // 受け取り、新規建物の実消費を経て完成する。
+    if (!building.constructionConsumed && household.state === "arriving") {
+      for (const [goods, required] of Object.entries(building.constructionRequired ?? {})) {
+        const available = (household.pantry[goods] ?? 0)
+          + sectionAmount(building, "construction", goods);
+        const missing = Math.max(0, required - available);
+        if (missing <= 1e-9) continue;
+        household.pantry[goods] = (household.pantry[goods] ?? 0) + missing;
+        recordEconomicMaterialFlow(
+          economy,
+          goods,
+          "imp",
+          missing,
+          `世帯${household.id}の本土建築資材`,
+          { includeInDaily: false },
+        );
+      }
+    }
     for (const [goods, need] of Object.entries(building.constructionRequired ?? {})) {
       const carried = Math.min(need, household.pantry[goods] ?? 0);
       if (carried <= 1e-9) continue;

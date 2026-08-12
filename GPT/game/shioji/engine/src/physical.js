@@ -814,6 +814,7 @@ export function addBuilding(physical, type, x, y, options = {}) {
   const check = canPlaceBuilding(physical, type, x, y, options);
   if (!check.ok) return check;
   const definition = definitions[type];
+  const constructionRequired = structuredClone(options.constructionRequired ?? {});
   const building = {
     id: `b${physical.nextBuildingId}`,
     type,
@@ -831,7 +832,8 @@ export function addBuilding(physical, type, x, y, options = {}) {
     condition: options.condition ?? 100,
     conditionStatus: options.conditionStatus ?? "good",
     repairPlan: options.repairPlan ? structuredClone(options.repairPlan) : null,
-    constructionRequired: structuredClone(options.constructionRequired ?? {}),
+    constructionRequired,
+    constructionConsumed: Object.keys(constructionRequired).length === 0,
     caravanEmployment: type === "carter"
       ? structuredClone(options.caravanEmployment ?? { recruitment: 1, wage: 1 })
       : null,

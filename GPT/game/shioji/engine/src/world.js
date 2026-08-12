@@ -32,14 +32,16 @@ import {
   productionMultiplierForTrip,
   pruneEconomyHistory,
   recordEconomyEvent,
+  normalizeCompletedBuildingConstruction,
   runCompanyDayStart,
   runDayEnd,
   sellOffers,
+  stageOwnedBuildingMaterials,
   settleCompanyLogistics,
   settlePortTransfers,
   transactMarketCargo,
   unloadMarketBuyCargo,
-} from "./econ.js?v=v004.47.0-playable-96x64";
+} from "./econ.js?v=v004.47.1-household-trips";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -60,10 +62,10 @@ import {
   stepTravelCarrier,
   stepHaulCarriers,
   stepPortHandling,
-} from "./physical.js?v=v004.47.0-playable-96x64";
-import { nextMulberry32, normalizeSeed } from "./prng.js?v=v004.47.0-playable-96x64";
-import { createMarketNetwork, marketNetworkSummary } from "./market_network.js?v=v004.47.0-playable-96x64";
-import { stepCaravanDay, stepCaravanTick } from "./routes.js?v=v004.47.0-playable-96x64";
+} from "./physical.js?v=v004.47.1-household-trips";
+import { nextMulberry32, normalizeSeed } from "./prng.js?v=v004.47.1-household-trips";
+import { createMarketNetwork, marketNetworkSummary } from "./market_network.js?v=v004.47.1-household-trips";
+import { stepCaravanDay, stepCaravanTick } from "./routes.js?v=v004.47.1-household-trips";
 
 function tread(economy, x, y) {
   const key = keyOf(Math.round(x), Math.round(y));
@@ -403,7 +405,7 @@ export function findDirectSupplier(economy, physical, buyer, {
   for (const seller of economy.households) {
     if (
       seller === buyer
-      || seller.state !== "home"
+      || !householdCanSellFromHome(seller)
       || householdMarketId(seller) !== buyerMarket
     ) continue;
     const available = sellOffers(economy, seller, { capacityLimit: Infinity })[goods] ?? 0;
@@ -464,6 +466,30 @@ function directSupplierForTrip(economy, physical, household, day) {
     || left.goods.localeCompare(right.goods)
   ));
   return candidates[0] ?? null;
+}
+
+function householdCanSellFromHome(household) {
+  if (["arriving", "building", "toSupplier", "atSupplier"].includes(household.state)) {
+    return false;
+  }
+  if (household.state === "home") return true;
+  const travelling = (household.marketCarrier?.porters?.length ?? 0)
+    + (household.workCarrier?.people ?? 0);
+  return household.members.length - travelling > 0;
+}
+
+function canFundMarketTarget(household, goods, wanted) {
+  if (!(wanted > 1e-9)) return false;
+  const credit = isProductionInput(household, goods) ? 30 : 0;
+  return household.purse + credit > 1e-9;
+}
+
+function canFundAnyMarketTarget(household, targets, goodsFilter = null) {
+  return Object.entries(targets).some(([goods, [wanted, ceiling]]) => (
+    (!goodsFilter || goodsFilter.has(goods))
+    && ceiling > 0
+    && canFundMarketTarget(household, goods, wanted)
+  ));
 }
 
 export function beginDirectSupplyTrip(economy, physical, household, offer) {
@@ -756,6 +782,7 @@ export function ensureHouseholdInputSites(economy, physical) {
     building.conditionStatus ??= "good";
     building.constructionRequired ??= {};
     building.ownerHouseholdId = household.id;
+    normalizeCompletedBuildingConstruction(physical, household);
   }
 }
 
@@ -972,7 +999,9 @@ export function decideHouseholdTrips(economy, physical, { timeOfDay = null } = {
     if (timeOfDay !== null && householdDepartureTime(household) !== timeOfDay) continue;
     if (timeOfDay !== null && household.tookMarketTripToday) continue;
     if (household.state !== "home" && household.state !== "building") continue;
+    stageOwnedBuildingMaterials(physical, household);
     const needs = householdTripNeeds(economy, physical, household);
+    const targets = buyTargets(economy, household, { day: economy.currentDay, physical });
     const offers = sellOffers(economy, household);
     const sellWeight = Object.entries(offers).reduce(
       (total, [goods, qty]) => total + qty * goodsUnitWeight(goods),
@@ -983,17 +1012,43 @@ export function decideHouseholdTrips(economy, physical, { timeOfDay = null } = {
     const daysSinceMarket = Number.isSafeInteger(household.lastMarketDepartureDay)
       ? Math.max(0, day - household.lastMarketDepartureDay)
       : Infinity;
+    const foodTargets = new Set(FOODS);
+    const inputTargets = new Set(
+      Object.keys(targets).filter((goods) => isProductionInput(household, goods)),
+    );
     const cultureReady = needs.lowCultureGoods.length > 0
       && household.purse > 15
       && daysSinceMarket >= P.MARKET_CULTURE_INTERVAL_DAYS
-      && routine.scheduledToday;
+      && routine.scheduledToday
+      && canFundAnyMarketTarget(
+        household,
+        targets,
+        new Set(needs.lowCultureGoods),
+      );
     const inputRestockReady = needs.inputLow
       && household.purse > -20
       && daysSinceMarket >= P.MARKET_BATCH_DAYS
-      && routine.scheduledToday;
+      && routine.scheduledToday
+      && canFundAnyMarketTarget(household, targets, inputTargets);
     const capitalRestockReady = needs.capitalLow
-      && household.purse > -20
-      && daysSinceMarket >= 1;
+      && household.purse > 1e-9
+      && daysSinceMarket >= 1
+      && canFundAnyMarketTarget(
+        household,
+        targets,
+        needs.capitalGoods,
+      );
+    const foodRestockReady = needs.foodUrgent
+      && household.purse > 2
+      && canFundAnyMarketTarget(household, targets, foodTargets);
+    const directSupplier = needs.inputLow
+      ? directSupplierForTrip(economy, physical, household, day)
+      : null;
+    // 食料が1.5日ぶん未満の時だけ市場を先にする。それより余裕があれば、
+    // 近隣原料を取りに行って収入源を再起動し、翌便の食料代を作る。
+    const directReady = household.state === "home"
+      && Boolean(directSupplier)
+      && (!foodRestockReady || needs.foodDays >= 1.5);
     const work = household.state === "home"
       ? assignNeedyWork(economy, physical, household)
       : null;
@@ -1005,12 +1060,19 @@ export function decideHouseholdTrips(economy, physical, { timeOfDay = null } = {
       );
       continue;
     }
-    const reason = capitalRestockReady
+    if (directReady && (needs.inputStopped || inputRestockReady)) {
+      const trip = beginDirectSupplyTrip(economy, physical, household, directSupplier);
+      if (trip.started) continue;
+    }
+    const reason = household.state === "building" && capitalRestockReady
       ? "building_materials"
-      : needs.foodUrgent && household.purse > 2
-      ? "food_urgent"
-      : needs.inputStopped && household.purse > -20
-        ? "input_urgent"
+      : needs.inputStopped
+      && canFundAnyMarketTarget(household, targets, inputTargets)
+      ? "input_urgent"
+      : foodRestockReady
+        ? "food_urgent"
+        : capitalRestockReady
+          ? "building_materials"
         : routine.sellReady
           ? "routine_batch"
           : inputRestockReady
@@ -1020,7 +1082,6 @@ export function decideHouseholdTrips(economy, physical, { timeOfDay = null } = {
               : null;
     if (!reason) continue;
     if (reason === "input_urgent" || reason === "input_restocks") {
-      const directSupplier = directSupplierForTrip(economy, physical, household, day);
       if (directSupplier) {
         const trip = beginDirectSupplyTrip(economy, physical, household, directSupplier);
         if (trip.started) continue;
