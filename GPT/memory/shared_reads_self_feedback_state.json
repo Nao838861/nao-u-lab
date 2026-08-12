@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-12T08:18:34+09:00",
+  "updated_at": "2026-08-13T02:18:24+09:00",
   "reviewed_source_ts": [
     "1778774144.030849",
     "1780037605.969949",
@@ -633,9 +633,50 @@
     "1785336918.156559",
     "1780271082.067289",
     "1779373720.446819",
-    "1779222727.981379"
+    "1779222727.981379",
+    "1786490009.108289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-13T02:18:24+09:00",
+      "selected": {
+        "id": "sr-1786490009-b84927abf5",
+        "source_ts": "1786490009.108289",
+        "title": "Pyrates: Reducing Interaction Friction — the SLARP principle",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす候補のうち source_ts が最も新しく、memory・harness・game-design・operation・evaluation の5優先タグを持つ1件だけを選んだ。SLARP の Shorten／Limit／Automate／Recall／Predict と『意味のある判断は残す』境界が、次のTUI・メニュー・反復入力を持つゲーム試作で操作摩擦とagencyを分ける小さな判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads本文は、Shortenを表記圧縮、Limitを行為空間の剪定、Automateを状態遷移の省略、Recallを履歴default、Predictを意図推定として分け、後者ほど誤りの損失とagency介入が増えると整理している。さらに、分岐到達までの入力数、意味のある判断一回当たりの入力数、無効入力、default取消、意図しないstate遷移、自動化停止遅延という比較指標へ変換できるため relevance・actionability は3とした。一方、根拠はPyrates作者の複数実装例で、導入前後の操作数、初見成功率、誤補完率、主観負荷の比較がなく、各SLARP要素の寄与も分離されていないため evidence は2とした。probe-20260717-player-intent-action-response はintentとobservable responseを、probe-20260617-ai-onboarding-autonomy-support はfriction reductionとagencyを、probe-20260618-shared-control-handoff-contract はcontrol ownership・override・undoを、probe-20260710-feedback-device-amplitude-axis は最小介入強度とchoice preservationを既に扱う。本atom固有の差は、入力区間を判断価値で分類し、意味のない区間だけをgame-stateの停止条件付きで畳み、event logで摩擦減少と誤介入を同時比較する点なので non_redundancy は2とした。ただし現在のstagingにはTUI、menu、反復入力、自動戦闘、default補完、予測移動の基準版／変更版artifactがなく、直後のPhase 4aも入力UI判断の実consumerではない。consumer_phase、trigger_artifact、expected_deltaをlease契約どおり固定できないため active probe・metric・lease・directive・恒久ルールは追加せずdeferする。次に該当するplayable diffが置かれた時だけ、入力数削減ではなく『意味のある判断を保ったまま無効入力・取消・誤遷移・停止遅延が減るか』に限定した一時metricとして再評価する。",
+      "existing_controls": [
+        "probe-20260717-player-intent-action-response",
+        "probe-20260617-ai-onboarding-autonomy-support",
+        "probe-20260618-shared-control-handoff-contract",
+        "probe-20260710-feedback-device-amplitude-axis"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と defer 理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-12T08:18:34+09:00",
       "selected": {
