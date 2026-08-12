@@ -1,13 +1,12 @@
-# log_cdx Cycle Staging — 2026-08-13 04:13
+# log_cdx Cycle Staging — 2026-08-13 06:13
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
 
-- `memory/shared_reads_candidates/20260813_synchain_persistent_agent_attack_chains.md` — agent 自身が生成した skill / memory artifact に潜伏した影響が、後続 workflow で trusted context として再活性化する SynChain と、その task-chain 評価データ CUAChain を収集。
-- pending directive / broadcast: 0 件。
-- 収集元: `memory/raw/web_research/results.jsonl` の 2026-08-13 04:06 JST 取得分、および arXiv API の一次メタデータ・要旨。
-- duplicate preflight: `continue`。sidecar 3 種を収集開始前と書込み直前に再生成済み。
+- `memory/shared_reads_candidates/20260813_silent_hill_f_melee_horror_tempo.md` — 『SILENT HILL f』が ranged horror の暗黙の戦闘テンポ調整を分解し、melee-only の mechanics・progression・enemy AI・主人公設計へ再構築した GDC 2026 公式講演。
+- pending 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` ともに該当なし。
+- duplicate preflight: `continue`（canonical URL / title とも新規）。
 
 ## Phase 2: 分析
 
