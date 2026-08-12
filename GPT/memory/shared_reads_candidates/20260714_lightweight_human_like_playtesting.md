@@ -4,19 +4,20 @@ url: "https://arxiv.org/abs/2102.13026"
 collected_at: "2026-07-14T22:45:21+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-testing, automated-playtesting, player-modeling, mobile-games]
-evaluated_at: "2026-07-14T22:46:38+09:00"
+evaluated_at: "2026-08-13T04:23:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-14T22:46:38+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-14T22:46:38+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-13"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-13T04:23:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-13T04:23:00+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-12"
 supersedes: []
 gate_reason: >-
-  8分程度の人間プレイから scene と action の対応を抽象 tactic 化し、別 scene へ具体化する二段階方式は明確で、短時間プロトタイプの回帰 playtest へ適用できる。ただし候補内には、比較対象、評価指標、ゲーム別の結果、失敗条件が十分に残っておらず、現状の材料だけでは CoopEval 水準の約4000字概要を根拠付きで構成できない。
+  人間の短時間操作から tactic を抽出する適用像は具体的だが、比較条件、評価指標、ゲーム別結果、失敗条件が候補にない。
+  30 日の保留後も CoopEval 水準の約4000字を根拠付きで構成できる材料が増えていないため fail とする。
 ---
 
 ## raw_excerpt

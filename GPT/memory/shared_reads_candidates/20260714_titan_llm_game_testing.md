@@ -4,17 +4,17 @@ url: https://arxiv.org/abs/2509.22170
 collected_at: 2026-07-14T20:59:32+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-testing, llm-agent, mmorpg, qa, long-horizon]
-evaluated_at: "2026-07-14T21:01:47+09:00"
+evaluated_at: "2026-08-13T04:20:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-14T21:01:47+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "posted_url_match; canonical_url:https://arxiv.org/abs/2509.22170; canonical_path:memory/shared_reads_candidates/20260602_titan_llm_agents_automated_video_game_testing.md; permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780340975651269; matched_title_key:leveraging llm agents for automated video game testing"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-13T04:20:00+09:00"
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-0a7d41e00b44c495; terminal:memory/shared_reads_candidates/20260602_titan_llm_agents_automated_video_game_testing.md: status=posted; permalink=https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780340975651269; canonical_url=https://arxiv.org/abs/2509.22170; reason:canonical URL / arXiv work identity が既投稿 candidate と一致し、新規分析差分がないため。"
 next_action: none
-stale_after: "2026-08-13"
+stale_after: "2026-09-12"
 supersedes: []
 gate_reason: |-
   canonical URL が既投稿 candidate と一致するため、本文評価前の URL-first preflight で重複として閉じる。

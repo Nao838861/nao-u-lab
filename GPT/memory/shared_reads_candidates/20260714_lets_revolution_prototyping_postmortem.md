@@ -4,28 +4,21 @@ url: "https://www.gamedeveloper.com/production/prototyping-i-let-s-revolution-i-
 collected_at: "2026-07-14T10:00:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, postmortem, prototyping, puzzle, roguelike, procedural-generation]
-evaluated_at: "2026-07-14T09:45:50+09:00"
+evaluated_at: "2026-08-13T04:23:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: pass
+gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-14T10:10:00+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "既投稿: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779769858830679"
+last_reviewed_at: "2026-08-13T04:23:00+09:00"
+last_decision: postpone
+duplicate_reason: duplicate_of_terminal_sibling
+evidence: "gate_decision:postpone; evaluated_at:2026-08-13T04:23:00+09:00; duplicate_of_posted:memory/shared_reads_candidates/20260526_lets_revolution_minesweeper_prototyping.md; permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779769858830679"
 next_action: none
-postponed_reason: "同一 URL・同一記事が 2026-05-26 に #shared-reads へ投稿済みであり、再投稿に値する新規分析差分がないため。"
-stale_after: "2026-08-13"
+stale_after: "2026-09-12"
 supersedes: []
 gate_reason: >-
-  Minesweeper の path 化から、単調な最適行動と blind guess を検出し、pawn・Mana ability・attack clock・生成規則へ段階的に変換した因果連鎖が具体的である。
-  小さな probe、agency の診断、core loop の育成、完走優先の scope 判断までゲーム制作の反復場面へ直接移せ、約4000字の独立した分析に耐える。
-suggested_post_outline:
-  overview_angle: "既知 mechanic の表層移植ではなく、prototype で露出した agency 欠如を一手ずつ別の core loop へ変換した過程"
-  analysis_axis: "各 prototype が何を検証し、単調な最適解・50/50 推測・進行停滞をどの mechanic と生成制約で解いたか"
-  application_target: "Log_cdx の小規模 game prototype で、最小 probe から dominant strategy と blind choice を発見し、移動・資源・敵 clock・PCG 制約を順に追加する設計サイクル"
-  pros_cons: "長所は失敗の症状と設計変更の因果が追えること。短所は単一チームの事後分析であり、各変更の寄与を分離した比較実験ではないこと"
-  verdict_pre: "採用"
+  canonical URL と work identity が 2026-05-26 の既投稿 candidate に一致し、再投稿に値する分析差分がない。
+  内容品質の再評価は行わず、Phase 3 対象から除外する。
 ---
 
 ## raw_excerpt
