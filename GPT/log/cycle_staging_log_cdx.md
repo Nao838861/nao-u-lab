@@ -125,7 +125,13 @@ group_actions:
     analysis_time_minutes: 3
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+posted: []
+skipped: []
+reviewed_pass_candidates: 0
+decision: no_action
+reason: Phase 2 の `gate_decision: pass` candidate が 0 件のため、投稿対象なし。postpone / fail candidate は Phase 3 へ持ち込まず、Slack 投稿と candidate frontmatter 更新は実施しなかった。
+completed_at: "2026-08-13T04:26:49+09:00"
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
