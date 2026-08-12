@@ -252,8 +252,11 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 }
 .step-day { flex: 0 0 auto; }
 @media (max-width: 1500px) {
-  /* MacBook幅: 装飾のブランド文字を畳み、印章だけ残して実用ボタンに幅を譲る */
-  .brand > span:not(.brand-seal) { display: none; }
+  /* MacBook幅: 装飾のブランド文字は畳むが、バージョン番号だけは残す
+     (プレイテスト報告に必要な情報のため) */
+  .brand > span:not(.brand-seal) b { display: none; }
+  .brand > span:not(.brand-seal) small { max-width: 96px; font-size: 0; }
+  .brand #build-version { font-size: 9px; }
   .top-menu button { padding: 0 6px; font-size: 10px; }
   .hud-stat b { font-size: 14px; }
 }
