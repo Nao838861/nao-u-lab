@@ -94,7 +94,68 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の High Signal / Recent / entry point ID を per-file atom index と照合し、broken entry 0 件を確認した"
+  - "memory/atoms.jsonl と per-file/index の 2875 件 mirror が clean、content conflict 0 件、正規化本文重複 40 群は既存 canonical overlay で fold 済みと確認した"
+  - "memory/raw/ の 2026-07-15 より前に更新された 240 ファイルを archive 候補として棚卸しした。raw provenance の参照元なので、この cycle では移動しなかった"
+  - "shared-reads candidate lifecycle 1295 件と duplicate title sidecar を再監査した。terminal canonical 93 群、open duplicate 37 群、mixed duplicate 34 群"
+  - "Slack directive / broadcast の pending はともに 0 件で、handled 更新対象なし"
+  - "期限超過 open candidate 2 件は既存 group handoff receipt により 2026-08-20 まで明示 defer 中と確認し、重複 enqueue を抑止した"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 7
+    dormant: 1
+candidate_lifecycle:
+  counts:
+    posted: 610
+    ready_to_post: 9
+    postponed: 207
+    failed: 467
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_for_reassessment: 2
+  overdue_paths:
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+    - memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+  overdue_disposition: "両方とも同一 work の all-open duplicate group に属し、既存 deferred receipt gha-e6d4d4b5a37a0808 / gha-2313a247c62a9028 が retry_after 2026-08-20T13:19:04+09:00 を保持するため explicit_keep。今回の Phase 2 再評価 queue へは重複投入しない"
+encoding_audit:
+  memory_md_source_file_status: "UTF-8 明示読み成功。記憶 / ゲーム設計 / 敵パターンを取得し、U+FFFD は 0 件。評価軸という完全一致語は現行 index 本文にないが、表示崩れや source 破損はない"
+  memory_md_display_or_tooling_status: none
+  atom_mojibake_suspects: "2 件を原文照合。sr-1776127289-4d9239b255 は raw Slack archive 自体に同じ置換文字がある source-originated の局所欠損。gr-1777083728-44d444ab7a は UTF-8 原文・atom とも正常で health heuristic の false positive。構造設計を要する問題ではない"
+raw_archive_audit:
+  inactive_30d_count: 240
+  action: explicit_keep
+  reason: "memory/raw は atom の provenance 正本であり、参照切れを起こす一括移動は Phase 4a の mechanical cleanup 範囲外"
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 37
+  mixed_group_count: 34
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
