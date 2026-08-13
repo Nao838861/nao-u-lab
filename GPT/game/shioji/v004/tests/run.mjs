@@ -91,7 +91,8 @@ import {
 import { islandCalendar, islandHealthSummary, recentCompanySummary } from '../src/ui_summary.js';
 import {
   COMPANY_VISIBLE_PORTER_LIMIT, FOOD_DELIVERY_ALERT_LABELS,
-  caravanAccountingPresentation, caravanStatePresentation, foodDeliveryAlertLabel,
+  caravanAccountingPresentation, caravanRouteDiagnosis, caravanStatePresentation,
+  caravanWageMarket, foodDeliveryAlertLabel,
   snapshotToViewModel, terrainTopologyForModel,
   walkingVisualPosition, walkingVisualProfile,
 } from '../src/view_model.js';
@@ -2264,7 +2265,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.50.0-stock-days-market');
+  assert.equal(VERSION, 'v004.51.0-caravan-guidance');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2700,6 +2701,48 @@ test('隊商S5: 月次表は実売上から仕入・固定給・荷車を引き�
   assert.equal(accounting.current.profit, 2);
   assert.equal(accounting.fiscalProfit, 11);
   assert.deepEqual(accounting.rows.map(row => row.profit), [8, 9, 2]);
+});
+
+test('隊商S6: 日当相場は隊商以外の直近月収と食い扶持から幅・中央値を返す', () => {
+  const controller = createEngineController({ seed: 11, mode: 'caravan' });
+  const snapshot = controller.saveState();
+  const carter = snapshot.economy.households.find(household => household.job === 'carter');
+  const candidates = snapshot.economy.households.filter(household => household.job !== 'carter');
+  candidates.forEach((household, index) => {
+    household.incomeLog = [30 * (1 + index * 0.25)];
+  });
+  const market = caravanWageMarket(snapshot.economy, carter.id);
+  assert.equal(market.sampleCount, candidates.length);
+  assert.ok(market.low > 0);
+  assert.ok(market.low <= market.median && market.median <= market.high);
+  assert.ok(market.median >= market.subsistence);
+});
+
+test('隊商S6: 路線在庫だけを売れ残りへ帰属し、相手市場の財布・価格理由を数える', () => {
+  const controller = createEngineController({ seed: 11, mode: 'caravan' });
+  const snapshot = controller.saveState();
+  const fisheryHouseholds = snapshot.economy.households
+    .filter(household => household.marketId === 'fishery');
+  assert.ok(fisheryHouseholds.length >= 2);
+  fisheryHouseholds[0].lastMarketVisit = {
+    day: snapshot.day, unmet: { wheat: 2 }, blockers: { wheat: 'no_money' }, ceilings: {},
+  };
+  fisheryHouseholds[1].lastMarketVisit = {
+    day: snapshot.day, unmet: { wheat: 1 }, blockers: { wheat: 'too_expensive' }, ceilings: {},
+  };
+  snapshot.economy.marketStockLotsM.fishery ??= {};
+  snapshot.economy.marketStockLotsM.fishery.wheat = [
+    { routeId: 'route:test', tripNumber: 1, qty: 4, cost: 4 },
+    { routeId: 'route:other', tripNumber: 1, qty: 9, cost: 9 },
+  ];
+  const route = {
+    id: 'route:test', baseMarketId: 'main', destMarketId: 'fishery',
+    goodsOut: ['wheat'], goodsBack: [],
+  };
+  const diagnosis = caravanRouteDiagnosis(snapshot, route);
+  assert.deepEqual(diagnosis.unsold.map(row => ({
+    goods: row.goods, qty: row.qty, noMoney: row.noMoney, tooExpensive: row.tooExpensive,
+  })), [{ goods: 'wheat', qty: 4, noMoney: 1, tooExpensive: 1 }]);
 });
 
 test('隊商S5: 実世界の小売売上は翌日待ちにせず月次表と便内訳へ計上する', () => {

@@ -560,13 +560,20 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .caravan-employment-dials b { font-size: 10px; }
 .caravan-employment-dials output { color: var(--gold); font: 700 11px Georgia, "Yu Mincho", serif; }
 .caravan-employment-dials input { width: 100%; accent-color: var(--gold); }
-.caravan-employment-status { display: block; margin-top: 5px; color: var(--muted); font-size: 9px; }
+.caravan-wage-market, .caravan-employment-status { display: block; margin-top: 5px; color: var(--muted); font-size: 9px; }
+.caravan-wage-market { color: #a9dcea; }
 .caravan-route-status { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 3px 6px; align-items: center; margin: 7px 0; padding: 7px 8px; border: 1px solid rgba(126,183,189,.3); border-radius: 7px; background: rgba(126,183,189,.06); }
 .caravan-route-status small { grid-column: 1 / -1; color: var(--muted); font-size: 8px; }
 .caravan-route-form { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 7px; padding: 9px 10px; border: 1px solid rgba(229,182,91,.3); border-radius: 7px; background: rgba(229,182,91,.06); }
 .caravan-route-form label { display: grid; gap: 4px; color: var(--muted); font-size: 8px; }
 .caravan-route-form select { width: 100%; min-width: 0; border: 1px solid var(--line); border-radius: 4px; background: #123335; color: var(--cream); padding: 5px; font-size: 9px; }
 .caravan-route-form select:disabled, .caravan-route-form input:disabled { opacity: .55; }
+.caravan-goods-field { min-width: 0; margin: 0; padding: 5px; border: 1px solid rgba(226,209,161,.16); border-radius: 5px; }
+.caravan-goods-field legend { padding: 0 3px; color: var(--muted); font-size: 8px; }
+.caravan-goods-field > div { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 3px; max-height: 150px; overflow-y: auto; }
+.caravan-goods-choice { display: flex !important; grid-template-columns: none !important; min-height: 28px; flex-direction: row; align-items: center; gap: 3px !important; padding: 2px 3px; border-radius: 4px; background: rgba(255,255,255,.025); color: var(--cream) !important; cursor: pointer; }
+.caravan-goods-choice input { width: 14px; height: 14px; margin: 0; accent-color: var(--gold); }
+.caravan-goods-choice .goods-sprite { flex: 0 0 auto; }
 .caravan-route-interval, .caravan-route-form > button { grid-column: 1 / -1; }
 .caravan-route-interval > span { display: flex; justify-content: space-between; }
 .caravan-route-interval output { color: var(--gold); font-weight: 700; }
@@ -574,6 +581,9 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .caravan-route-form > button { border: 1px solid rgba(159,203,118,.5); border-radius: 5px; background: rgba(159,203,118,.09); color: var(--green); padding: 7px; cursor: pointer; font-size: 9px; }
 .caravan-route-form > button:disabled { opacity: .4; cursor: default; }
 .caravan-route-note { display: block; margin-top: 5px; color: var(--muted); font-size: 8px; }
+.caravan-diagnosis { display: grid; gap: 3px; margin: 8px 0; padding: 8px 9px; border: 1px solid rgba(239,140,119,.4); border-radius: 6px; background: rgba(239,140,119,.07); color: #ffb09a; font-size: 9px; line-height: 1.5; }
+.caravan-diagnosis.clear { border-color: rgba(159,203,118,.32); background: rgba(159,203,118,.06); color: var(--green); }
+.caravan-diagnosis span { color: var(--muted); }
 .household-vitals { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 5px; }
 .household-vitals span { display: grid; gap: 2px; padding: 6px; border-radius: 5px; background: rgba(255,255,255,.035); }
 .household-vitals small { color: var(--muted); font-size: 8px; }

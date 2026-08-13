@@ -8,7 +8,7 @@ import {
   requestMainlandAid,
   setCaravanEmployment,
   setCompanyStockTarget,
-} from "./econ.js?v=v004.50.0-stock-days-market";
+} from "./econ.js?v=v004.51.0-caravan-guidance";
 import {
   activePortCalls,
   addRoadLine,
@@ -16,14 +16,14 @@ import {
   haulJobById,
   removeBuilding,
   removeRoadTile,
-} from "./physical.js?v=v004.50.0-stock-days-market";
-import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.50.0-stock-days-market";
+} from "./physical.js?v=v004.51.0-caravan-guidance";
+import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.51.0-caravan-guidance";
 import {
   forgetCompanyLogisticsBuilding,
   placeCompanyLogisticsBuilding,
-} from "./world.js?v=v004.50.0-stock-days-market";
-import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.50.0-stock-days-market";
-import { configureCaravanRoute } from "./routes.js?v=v004.50.0-stock-days-market";
+} from "./world.js?v=v004.51.0-caravan-guidance";
+import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.51.0-caravan-guidance";
+import { configureCaravanRoute } from "./routes.js?v=v004.51.0-caravan-guidance";
 
 function jsonClone(value) {
   return JSON.parse(JSON.stringify(value));

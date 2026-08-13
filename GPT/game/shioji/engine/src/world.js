@@ -42,7 +42,7 @@ import {
   settlePortTransfers,
   transactMarketCargo,
   unloadMarketBuyCargo,
-} from "./econ.js?v=v004.50.0-stock-days-market";
+} from "./econ.js?v=v004.51.0-caravan-guidance";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -63,10 +63,10 @@ import {
   stepTravelCarrier,
   stepHaulCarriers,
   stepPortHandling,
-} from "./physical.js?v=v004.50.0-stock-days-market";
-import { nextMulberry32, normalizeSeed } from "./prng.js?v=v004.50.0-stock-days-market";
-import { createMarketNetwork, marketNetworkSummary } from "./market_network.js?v=v004.50.0-stock-days-market";
-import { stepCaravanDay, stepCaravanTick } from "./routes.js?v=v004.50.0-stock-days-market";
+} from "./physical.js?v=v004.51.0-caravan-guidance";
+import { nextMulberry32, normalizeSeed } from "./prng.js?v=v004.51.0-caravan-guidance";
+import { createMarketNetwork, marketNetworkSummary } from "./market_network.js?v=v004.51.0-caravan-guidance";
+import { stepCaravanDay, stepCaravanTick } from "./routes.js?v=v004.51.0-caravan-guidance";
 
 function tread(economy, x, y) {
   const key = keyOf(Math.round(x), Math.round(y));

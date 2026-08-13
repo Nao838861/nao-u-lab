@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.50.0-stock-days-market';
+import { TILE } from './config.js?v=v004.51.0-caravan-guidance';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

@@ -1,19 +1,20 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.50.0-stock-days-market';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.51.0-caravan-guidance';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.50.0-stock-days-market';
+} from './food_readability.js?v=v004.51.0-caravan-guidance';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
-  findTravelPath, householdProductionSummary, productionCost,
-} from './engine_bridge.js?v=v004.50.0-stock-days-market';
-import { analyzeRoadConnections } from './placement.js?v=v004.50.0-stock-days-market';
+  findTravelPath, householdProductionSummary, laborWage, productionCost,
+} from './engine_bridge.js?v=v004.51.0-caravan-guidance';
+import { analyzeRoadConnections } from './placement.js?v=v004.51.0-caravan-guidance';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.50.0-stock-days-market';
+} from './render_scene.js?v=v004.51.0-caravan-guidance';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.50.0-stock-days-market';
+} from './visuals.js?v=v004.51.0-caravan-guidance';
+import { GOODS_RECIPES } from './goods_detail.js?v=v004.51.0-caravan-guidance';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',
@@ -85,6 +86,120 @@ export function caravanAccountingPresentation(route, day) {
     )).reduce((total, row) => total + row.profit, 0),
     rows: rows.slice(-12),
   };
+}
+
+function quantile(sorted, ratio) {
+  if (!sorted.length) return null;
+  if (sorted.length === 1) return sorted[0];
+  const point = (sorted.length - 1) * ratio;
+  const lower = Math.floor(point);
+  const fraction = point - lower;
+  return sorted[lower] + (sorted[Math.min(sorted.length - 1, lower + 1)] - sorted[lower]) * fraction;
+}
+
+export function caravanWageMarket(economy, excludedHouseholdId = null) {
+  const candidates = (economy?.households ?? []).filter(household => (
+    household.id !== excludedHouseholdId && household.job !== 'carter'
+  ));
+  const observed = candidates.map(household => {
+    const monthly = Number.isFinite(household.incomeLog?.at(-1))
+      ? household.incomeLog.at(-1) : household.income30;
+    return Number.isFinite(monthly) && monthly > 1e-9 ? monthly / 30 : null;
+  }).filter(Number.isFinite).sort((left, right) => left - right);
+  const subsistence = candidates.map(household => laborWage(economy, household))
+    .filter(value => Number.isFinite(value) && value > 1e-9)
+    .sort((left, right) => left - right);
+  const floor = quantile(subsistence, 0.5) ?? 0;
+  const low = Math.max(floor, quantile(observed, 0.25) ?? floor);
+  const median = Math.max(floor, quantile(observed, 0.5) ?? floor);
+  const high = Math.max(median, quantile(observed, 0.75) ?? median);
+  return { low, median, high, subsistence: floor, sampleCount: observed.length };
+}
+
+function routeLotAmount(economy, marketId, goods, routeId) {
+  return (economy.marketStockLotsM?.[marketId]?.[goods] ?? [])
+    .filter(lot => lot.routeId === routeId)
+    .reduce((total, lot) => total + Math.max(0, lot.qty ?? 0), 0);
+}
+
+function inputWaitingForGoods(snapshot, marketId, goods) {
+  const recipe = GOODS_RECIPES[goods] ?? null;
+  const makerJobs = recipe?.makers ?? [];
+  const households = snapshot.economy.households.filter(household => (
+    household.marketId === marketId && makerJobs.includes(household.job)
+  ));
+  const waitingGoods = new Set();
+  let waitingCount = 0;
+  for (const household of households) {
+    const selfMade = new Set(Object.entries(GOODS_RECIPES)
+      .filter(([, row]) => row.makers.includes(household.job))
+      .map(([madeGoods]) => madeGoods));
+    const needs = {
+      required: recipe.inputs.filter(inputGoods => !selfMade.has(inputGoods)),
+      anyOf: recipe.alternatives.map(group => (
+        group.filter(inputGoods => !selfMade.has(inputGoods))
+      )).filter(group => group.length > 0),
+    };
+    const building = snapshot.physical.buildings.find(row => row.id === household.buildingId);
+    const input = building?.inventory?.input ?? {};
+    const missing = needs.required.filter(inputGoods => (input[inputGoods] ?? 0) < 0.5);
+    for (const group of needs.anyOf) {
+      if (group.reduce((sum, inputGoods) => sum + (input[inputGoods] ?? 0), 0) < 0.5) {
+        missing.push(group[0]);
+      }
+    }
+    if (missing.length > 0) {
+      waitingCount += 1;
+      missing.forEach(inputGoods => waitingGoods.add(inputGoods));
+    }
+  }
+  return {
+    goods,
+    producerCount: households.length,
+    waitingCount,
+    waitingGoods: [...waitingGoods],
+  };
+}
+
+export function caravanRouteDiagnosis(snapshot, route) {
+  const marketNames = new Map(
+    (snapshot.economy.marketNetwork?.markets ?? []).map(market => [market.id, market.name]),
+  );
+  const unsold = [];
+  const inspectLeg = (direction, marketId, goodsList) => {
+    for (const goods of goodsList ?? []) {
+      const qty = routeLotAmount(snapshot.economy, marketId, goods, route.id);
+      if (qty <= 1e-9) continue;
+      const recentBuyers = snapshot.economy.households.filter(household => (
+        household.marketId === marketId
+        && Number.isFinite(household.lastMarketVisit?.day)
+        && household.lastMarketVisit.day >= snapshot.day - 30
+        && (household.lastMarketVisit.unmet?.[goods] ?? 0) > 1e-9
+      ));
+      unsold.push({
+        direction,
+        marketId,
+        marketName: marketNames.get(marketId) ?? marketId,
+        goods,
+        qty,
+        noMoney: recentBuyers.filter(household => (
+          household.lastMarketVisit.blockers?.[goods] === 'no_money'
+        )).length,
+        tooExpensive: recentBuyers.filter(household => (
+          household.lastMarketVisit.blockers?.[goods] === 'too_expensive'
+        )).length,
+        recentBuyerCount: recentBuyers.length,
+      });
+    }
+  };
+  inspectLeg('outbound', route.destMarketId, route.goodsOut);
+  inspectLeg('returning', route.baseMarketId, route.goodsBack);
+
+  const returnSupply = (route.goodsBack ?? []).map(goods => {
+    const row = inputWaitingForGoods(snapshot, route.destMarketId, goods);
+    return { ...row, marketName: marketNames.get(route.destMarketId) ?? route.destMarketId };
+  }).filter(row => row.producerCount > 0 && row.waitingCount > 0);
+  return { unsold, returnSupply };
 }
 
 function caravanRouteQuotes(snapshot, terrain, building, owner) {
@@ -1374,6 +1489,8 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
         ? Math.min(building.caravanEmployment?.recruitment ?? 1, owner.members.length)
         : 0,
       caravanRouteQuotes: caravanRouteQuotes(snapshot, terrain, building, owner),
+      caravanWageMarket: building.type === 'carter'
+        ? caravanWageMarket(snapshot.economy, owner?.id ?? null) : null,
       fixed: Boolean(building.fixed),
       ownerHouseholdId: building.ownerHouseholdId,
       occupied: building.ownerHouseholdId !== null,
@@ -1404,6 +1521,7 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
       familyName: household.sur ?? '',
       memberNames: (household.members ?? []).map(member => member?.name ?? String(member)),
       job: household.job,
+      marketId: household.marketId ?? 'main',
       x: household.px ?? household.x,
       y: household.py ?? household.y,
       homeX: household.x,
@@ -1655,6 +1773,7 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
         monthly: { ...(route.monthly ?? {}) },
         status: caravanStatePresentation(route),
         accounting: caravanAccountingPresentation(route, snapshot.day),
+        diagnosis: caravanRouteDiagnosis(snapshot, route),
         daysUntilDeparture: Math.max(0, (route.nextDepartDay ?? snapshot.day) - snapshot.day),
       };
     }),

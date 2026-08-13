@@ -1,5 +1,5 @@
-import { BUILDING_SIZES } from './config.js?v=v004.50.0-stock-days-market';
-import { islandCalendar } from './ui_summary.js?v=v004.50.0-stock-days-market';
+import { BUILDING_SIZES } from './config.js?v=v004.51.0-caravan-guidance';
+import { islandCalendar } from './ui_summary.js?v=v004.51.0-caravan-guidance';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

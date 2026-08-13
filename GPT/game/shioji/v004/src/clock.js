@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.50.0-stock-days-market';
+import { SPEEDS } from './config.js?v=v004.51.0-caravan-guidance';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {
