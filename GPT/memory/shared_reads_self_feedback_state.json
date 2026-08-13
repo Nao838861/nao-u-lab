@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-14T02:01:29+09:00",
+  "updated_at": "2026-08-14T03:58:30+09:00",
   "reviewed_source_ts": [
+    "1786640273.261849",
     "1786606268.894169",
     "1779987414.841039",
     "1780015414.981379",
@@ -648,6 +649,54 @@
     "1786606286.694329"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-14T03:58:30+09:00",
+      "selected": {
+        "id": "sr-1786640273-c456cc22bc",
+        "source_ts": "1786640273.261849",
+        "title": "BOUND: persistent search drift を state-matched decision boundary で修正する",
+        "reason": "source が slack_api/shared-reads、score 13、未レビューという条件を満たす候補のうち source_ts が最も新しく、memory・harness・game-design・agent・operation・evaluation の6優先タグをすべて持つ1件だけを選んだ。固定した task anchor、可変 evidence、Continue／Reroute／Answer、誤 anchor の active context 除外を同じ decision state で扱う知見が、直後の Phase 4a の検索・整理判断に既存 control と異なる差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "adopt_probe",
+      "decision_reason": "合計16で全必須閾値を満たす。shared-reads 本文は、Original Search Target／Key Constraints を固定 anchor、Confirmed Evidence／Missing Information／Drift Status を可変 state として分け、student が実際に到達した同一 decision-time state から chosen／rejected continuation を作る。失敗 rollout では rerouting、成功 rollout では十分な evidence 後の終了を教え、検証済み2,424 pairをQwen3-4B-Instruct-2507へDPOした。同一初期 model・teacher・action space・retriever・評価条件のTrajectory SFT比で、Bamboogle EM 36.8→42.4・F1 47.7→54.2、BrowseComp-Plus accuracy 24.8→29.6・recall 30.4→32.1、14 metric中12で首位という比較と、rerouting supervision除去、student correction化、generic correction化、誤 passage保持の各ablationまであるため evidence=3とした。probe-20260731-rlm-one-hop-query-rewrite は曖昧な hit 後の1回の query rewrite、probe-20260724-minimum-sufficient-scope-ladder は局所 scope と拡張条件、probe-20260517-hierarchical-memory-recall-ladder は検索順序、probe-20260517-control-flow-before-prompt-growth は retry／skip／stop を既に扱う。本投稿固有の判断差は、元の target／constraint と進捗 state を分離し、Reroute 時に誤 anchor を作った evidence を provenance には残しつつ active context から外し、evidence が十分なら Answer で止める一連の分岐なので non_redundancy=2とした。次の Phase 4a の最初の曖昧な cleanup 検索1件だけに限定し、creative exploration、DPO、永続 ranking／schema／directiveへ広げず、該当検索がなければ no_applicable_search_branch で閉じるため risk_control=2、1 cycleで退役可能なので reversibility=3とした。",
+      "existing_controls": [
+        "probe-20260731-rlm-one-hop-query-rewrite",
+        "probe-20260724-minimum-sufficient-scope-ladder",
+        "probe-20260517-hierarchical-memory-recall-ladder",
+        "probe-20260517-control-flow-before-prompt-growth"
+      ],
+      "change": {
+        "type": "leased_probe",
+        "summary": "Phase 4a の最初の曖昧な cleanup 検索1件について、固定 anchor と可変 evidence を分け、Continue／Reroute／Answer と active-context 除外を比較する一時 probe を active_probes に追加し、同 cycle の staging Phase 4a を consumer とする lease を1件 enqueue した。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "memory/shared_reads_probe_lifecycle.jsonl",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": {
+        "probe_id": "probe-20260814-bound-search-state-brief",
+        "consumer_phase": "Phase 4a",
+        "trigger_artifact": "log/cycle_staging_log_cdx.md#Phase 4a: 整理 + 問題抽出 / search_state_brief",
+        "expected_delta": "最初の曖昧なcleanup検索で、scopeを変えるevidenceをactive premiseに残さず、必要evidence充足後のover-searchを止め、cleanup／handoff／issue／needs_design判断のbefore／after差を記録する。",
+        "lease_due": "2026-08-14T06:00:00+09:00",
+        "enqueue_result": "enqueued"
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-14T02:01:29+09:00",
       "selected": {
@@ -19601,6 +19650,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260814-bound-search-state-brief",
+      "created_at": "2026-08-14T03:58:30+09:00",
+      "source_ts": "1786640273.261849",
+      "scope": "next Phase 4a memory cleanup only; inspect at most the first ambiguous search branch whose target and done condition can be stated, and do not apply to creative exploration or add model training, persistent ranking, schema, directive, or automatic evidence deletion",
+      "questions": [
+        "最初の曖昧な cleanup 検索について、検索前の before 判断と、Original Search Target／Key Constraints／Confirmed Evidence／Missing Information／Drift Status の短い brief を記録し、最初の2項を途中で無言に変更しなかったか。",
+        "各追加 lookup 後に Continue／Reroute／Answer のいずれかを選び、Reroute なら wrong-anchor／constraint／local-topic drift を作った evidence を provenance logには残しつつ active premiseから外したか。",
+        "Missing Informationが閉じた時点でAnswerとして停止し、cleanup／handoff／issue／needs_designのbefore／after判断を比較したか。該当分岐がなければno_applicable_search_branchで閉じ、創作探索、DPO、永続ranking／schema／directiveへ広げなかったか。"
+      ],
+      "expires_after": "Resolve after the next Phase 4a search_state_brief receipt, including no_applicable_search_branch; do not carry this lease into a later cycle."
+    },
     {
       "id": "probe-20260813-dependency-guided-memory-rollback",
       "created_at": "2026-08-13T22:00:00+09:00",

@@ -56,7 +56,40 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786640273-c456cc22bc
+    source_ts: "1786640273.261849"
+    title: "BOUND: persistent search drift を state-matched decision boundary で修正する"
+    reason: "score 13の未レビュー最新候補で、memory・harness・game-design・agent・operation・evaluationの6優先タグを持つ。固定anchor、可変evidence、Continue／Reroute／Answer、誤anchorのactive-context除外が直後のPhase 4a検索判断を変えるか1件だけ確認する。Nao_uの明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "Phase 4aの最初の曖昧なcleanup検索1件に、五項目briefとContinue／Reroute／Answer境界を適用する一時probeを追加した。既存のquery rewrite・scope ladder・recall ladder・control-flow probeは個別要素を扱うが、誤anchor evidenceをprovenanceに残しつつactive premiseから外し、十分なevidence後に終了する同一分岐は未包含だった。creative exploration、DPO、永続ranking／schema／directiveは対象外。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - memory/shared_reads_probe_lifecycle.jsonl
+      - log/cycle_staging_log_cdx.md
+  lease:
+    probe_id: probe-20260814-bound-search-state-brief
+    consumer_phase: Phase 4a
+    trigger_artifact: "log/cycle_staging_log_cdx.md#Phase 4a: 整理 + 問題抽出 / search_state_brief"
+    expected_delta: "最初の曖昧なcleanup検索で、scopeを変えるevidenceをactive premiseに残さず、必要evidence充足後のover-searchを止め、cleanup／handoff／issue／needs_design判断のbefore／after差を記録する。"
+    lease_due: "2026-08-14T06:00:00+09:00"
+    enqueue_result: enqueued
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
