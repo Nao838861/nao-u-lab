@@ -7,12 +7,12 @@ genre_tags: [game-design, controls, touch, mobile, game-feel, accessibility]
 evaluated_at: "2026-08-13T14:21:19.8352277+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-13T14:21:19.8352277+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-13T14:21:19.8352277+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-13T14:28:27.4512319+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786598887602949"
+next_action: none
 stale_after: "2026-09-12"
 supersedes: []
 gate_reason: >-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Log_cdx の mobile／browser prototype で、必須 action、同時入力、親指の移動量、画面遮蔽、入力結果の視認性を実装前後に監査する"
   pros_cons: "操作数と画面占有を減らし入力意図を伝えやすい一方、文脈切替による予測不能、隠れた gesture、端末差、定量的 playtest 根拠の不足が残る"
   verdict_pre: "部分採用"
+posted:
+  ts: "1786598887.602949"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786598887602949"
+  char_count: 4441
+  posted_at: "2026-08-13T14:28:27.4512319+09:00"
 ---
 
 ## raw_excerpt
