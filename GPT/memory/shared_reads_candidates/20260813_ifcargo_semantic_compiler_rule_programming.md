@@ -7,14 +7,19 @@ genre_tags: [game-design, ai-native-games, puzzle, llm, natural-language-rules, 
 evaluated_at: "2026-08-13T19:50:31+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-13T19:50:31+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-13T19:50:31+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-13T19:55:26+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786618526865149"
+next_action: none
 stale_after: "2026-09-12"
 supersedes: []
+posted:
+  ts: "1786618526.865149"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786618526865149"
+  char_count: 4388
+  posted_at: "2026-08-13T19:55:26+09:00"
 gate_reason: >-
   semantic compiler、制約付き command schema、決定論的 engine validation という中核が明確で、
   24人・8レベルの mixed-methods playtest から制御感と診断負荷の両面を論じられる。
