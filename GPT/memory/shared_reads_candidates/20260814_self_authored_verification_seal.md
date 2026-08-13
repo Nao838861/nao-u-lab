@@ -7,12 +7,17 @@ genre_tags: [game-ai, automated-playtesting, agent-evaluation, self-improvement,
 evaluated_at: "2026-08-14T03:49:48+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-14T03:49:48+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-14T03:49:48+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1786647298.287999"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786647298287999"
+  char_count: 4383
+  posted_at: "2026-08-14T03:55:13+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-14T03:55:13+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786647298287999"
+next_action: none
 stale_after: "2026-09-13"
 supersedes: []
 gate_reason: >-
