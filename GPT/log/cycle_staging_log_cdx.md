@@ -98,7 +98,55 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "MEMORY.md の index 参照 87 件を atoms.jsonl と照合し、broken link 0 件を確認した。"
+  - "atoms.jsonl 2863 行を監査し、duplicate id 0 群、既知の内容重複 45 群が canonical overlay と整合することを確認した。"
+  - "raw/ の最終更新 30 日超 240 件を棚卸しした（web_research 215 / headless_eval 16 / slack_api 6 / game_eval 1 / slack_archive 1 / raw root 1）。原文 provenance の正本であり、明示的な archive 先がないため移動は行わなかった。"
+  - "candidate lifecycle 1279 件を dry-run 監査した（posted 598 / ready_to_post 9 / postponed 210 / failed 460 / needs_review 2）。status 差分 0、期限到来 2 件を確認した。"
+  - "open duplicate group、stale triage、group action sidecar を規定順で再生成した（39 / 0 / 0 行）。生成結果は既存内容と同一だった。"
+  - "Slack directive / broadcast pending はともに 0 件で、handled 更新対象はなかった。"
+issues:
+  - id: ISS-UTF8-ATOM-001
+    description: "atom sr-1776127289-4d9239b255 の title / excerpt に replacement character が残り、『AIエージェント』が『AIエ��ジェント』になっている。"
+    severity: low
+    evidence: "memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みでも atoms.jsonl と per-file md の双方に U+FFFD が存在するため、source data 自体の局所破損。MEMORY.md は UTF-8 読みで『記憶』『ゲーム設計』『敵パターン』を取得でき、『評価軸』は現 index 本文に存在しないが表示文字化けはない。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "この 1 atom だけ『エージェント』の完全一致検索から漏れる。ただし agent tag と URL は残るため影響は局所的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 4
+    dormant: 1
+stale_review_batch: []
+group_action_handoff: []
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 39
+  mixed_group_count: 36
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_note: "期限到来 2 件は既存 group handoff 2 件が retry_after 2026-08-20 まで deferred 中のため、live lease 合成後の stale triage から抑止された。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
