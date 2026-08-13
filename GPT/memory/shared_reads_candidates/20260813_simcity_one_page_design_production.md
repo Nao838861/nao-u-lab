@@ -7,12 +7,12 @@ genre_tags: [game-design, production, documentation, simulation]
 evaluated_at: "2026-08-13T23:51:10+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-13T23:51:10+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-13T23:51:10+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-13T23:56:55.826839+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786633015826839"
+next_action: none
 stale_after: "2026-09-12"
 supersedes: []
 gate_reason: >-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Log_cdx の小規模 simulation prototype で、core loop・依存関係図と調整数値表を分離し、実装前レビューと更新配布を同じ周期へ入れる"
   pros_cons: "俯瞰性・複雑さの早期発見・共有の能動性が利点。図の制作コスト、数値詳細の収容限界、古版管理が欠点"
   verdict_pre: "部分採用"
+posted:
+  ts: "1786633015.826839"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786633015826839"
+  char_count: 3878
+  posted_at: "2026-08-13T23:56:55.826839+09:00"
 ---
 
 ## raw_excerpt
