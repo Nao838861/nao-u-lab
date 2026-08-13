@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-14T03:58:30+09:00",
+  "updated_at": "2026-08-14T05:58:30+09:00",
   "reviewed_source_ts": [
+    "1786647298.287999",
     "1786640273.261849",
     "1786606268.894169",
     "1779987414.841039",
@@ -649,6 +650,46 @@
     "1786606286.694329"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-14T05:58:30+09:00",
+      "selected": {
+        "id": "sr-1786647298-faf681759f",
+        "source_ts": "1786647298.287999",
+        "title": "SEAL: self-authored verifier と deployment truth の非回帰境界",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす候補のうち source_ts が最も新しく、memory・harness・game-design・agent・operation・evaluation の6優先タグをすべて持つ1件だけを選んだ。policy と test を同時に自己改変した時の verifier-deployment gap と、candidate／incumbent の外生的な対比較が、Codex の playable build・headless bot・memory index の accepted state 更新へ既存 control と異なる判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads 本文は、自己採点と非公開 deployment evaluation を分離した Atari 5作品・7モデル・10 round の枠組み、35条件すべてで self-score 0.70以上なのに15条件が random reference 未満となる verifier-deployment gap、failure to discover／retain の分離、candidate と accepted incumbent を hidden rollout で対比較し accept／reject の1 bitだけを返す SEAL、Breakout の final truth 7.7→15.4・peak-to-final loss 6.9→0.4、12比較中11件で同等以上、audit と deployment truth が逆転する反例まで示すため relevance・actionability・evidence は3とした。本知見固有の差は、code だけでなく test・設定・prompt・memory snapshot を accepted bundle として保持し、自己編集可能な探索用 test とは別の外生的 gate で candidate-versus-incumbent の非回帰だけを見る点である。一方、probe-20260619-omni-game-arena-improvement-transfer は baseline／same-condition／held-out 比較を、probe-20260711-evaluation-version-boundary は評価定義変更時の固定 anchor と prior-version evidence を、probe-20260711-benchjack-trust-boundary-preflight は benchmark 出力と authoritative verifier の境界を、probe-20260709-chainswe-chain-regression-carryover は変更後の既得能力 carryover を既に扱うため non_redundancy=1とした。現在の staging には candidate／incumbent bundle、同一 seed の sealed audit、採否前後を比較できる playable・headless・memory-index artifact がなく、後続 Phase 4a には BOUND probe の pending lease が1件ある。consumer_phase・trigger_artifact・expected_delta を重複なく lease 契約どおり指定できない状態で active_probes へ同型 gate を増やすと、確認負荷と保守的な false rejection を増やすため、新規 probe・metric・lease・directive・恒久ルールは追加しない。次に実際の accepted bundle と candidate が置かれ、既存4 controlsだけでは自己編集した test と deployment truth の共倒れ、または peak-to-final regression を止められない具体例が出た時だけ、1 build・1 paired audit の一時 metric として再評価する。",
+      "existing_controls": [
+        "probe-20260619-omni-game-arena-improvement-transfer",
+        "probe-20260711-evaluation-version-boundary",
+        "probe-20260711-benchjack-trust-boundary-preflight",
+        "probe-20260709-chainswe-chain-regression-carryover"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、SEAL 固有差・既存評価／回帰 controls との重複・比較 artifact 不在による defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-14T03:58:30+09:00",
       "selected": {
