@@ -84,7 +84,63 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md と per-file atom index を照合し、broken index entry 0 件を確認。UTF-8 明示読みでは『記憶』『ゲーム設計』『敵パターン』を取得し、『評価軸』は現行生成内容に literal がないだけで、MEMORY.md 自体に置換文字はない。"
+  - "atom mirror 2,874 件を監査し、per-file / index / atoms.jsonl の欠落・parse error・content conflict は各 0 件。duplicate overlay 45 群（normalized_content_hash 40、title_excerpt_exact 5）は既存 fold と一致。"
+  - "candidate lifecycle を dry-run 監査し、posted 610 / ready_to_post 9 / postponed 207 / failed 466 / needs_review 2、書換え 0 件を確認。"
+  - "open duplicate group / stale triage / group action sidecar を再生成し、36 / 0 / 0 行を確認。group と candidate handoff enqueue はともに 0 件の冪等 no-op。"
+  - "Slack directives 23 行、broadcasts 21 行を監査し、pending は双方 0 件。受領だけを根拠とする close は行っていない。"
+  - "memory/raw/ の 2026-07-15 より前に更新された 240 ファイルを archive 候補として識別。raw provenance の保持契約があり、Phase 4a では移動・削除していない。"
+issues:
+  - id: ISS-4A-20260814-01
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』部分に U+FFFD が2文字残り、title / trigger / excerpt の完全一致検索を弱めている。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms/2026-04/sr-1776127289-4d9239b255.md:3; memory/atoms/index.jsonl:317"
+    source_file_status: "UTF-8 明示読みで raw Slack 正本と per-atom file の双方に『AIエ��ジェント』を確認。source data 自体に置換文字がある。"
+    display_or_tooling_status: "none。PowerShell / rg の表示経路だけの mojibake ではない。memory/MEMORY.md は UTF-8 正常。別の health suspect gr-1777083728-44d444ab7a は本文の意図的な『???』を検知した false positive。"
+    why_blocks_game_memory: "この1件だけは『AIエージェント』の完全一致検索から漏れ得るが、tags / links / surrounding terms では到達可能で、ゲーム制作記憶全体の導線は遮断しない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 1
+  inspected_probe_id: probe-20260814-bound-search-state-brief
+  outcome: resolved
+  counts:
+    pending: 0
+    resolved: 7
+    dormant: 1
+stale_review_batch: []
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 36
+  mixed_group_count: 33
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_note: "期限超過2件はいずれも all-open duplicate group。membership fingerprint が一致する deferred lease gha-e6d4d4b5a37a0808 / gha-2313a247c62a9028 の retry_after=2026-08-20T13:19:04+09:00 前なので再投入しない。"
+group_action_handoff: []
+search_state_brief:
+  initial_ambiguous_signal: "memory_health warning の raw title debt 730 行と mojibake suspect 2件を、記憶階層全体の検索性問題かもしれないと置いた。"
+  scope_changing_evidence_disposition: "effective_display_unresolved=0、mirror conflict=0、duplicate overlay check=ok を得た時点で title debt を active premise から外した。UTF-8 原文照合で1件だけ source corruption、もう1件は『???』の false positive と限定した。"
+  stop_condition: "MEMORY index、atom mirror、duplicate fold、UTF-8 source、recall smoke の各独立証拠が揃い、追加の広域検索が needs_design 判定を変えない状態。"
+  before_decision: "warning 全体を構造的な検索性 issue として Phase 4b に渡す可能性あり。"
+  after_decision: "単一atomの低severityデータ品質issueに限定し、既存fold / semantic alias / task lens が機能しているため needs_design=false。"
+  changed: true
+  evidence: "log/cycle_staging_log_cdx.md#Phase 4a: 整理 + 問題抽出 / search_state_brief"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
