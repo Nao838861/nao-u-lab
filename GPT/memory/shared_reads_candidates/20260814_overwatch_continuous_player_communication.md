@@ -7,12 +7,12 @@ genre_tags: [live-service, production, player-feedback, communication, postmorte
 evaluated_at: "2026-08-14T05:50:05+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-14T05:50:05+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-14T05:50:05+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-14T05:54:14.233979+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786654454233979"
+next_action: none
 stale_after: "2026-09-13"
 supersedes: []
 gate_reason: >-
@@ -25,6 +25,11 @@ suggested_post_outline:
   application_target: "Log_cdx のゲーム制作で、playable diff、変更理由、次に検証する仮説、撤回した計画を同じ反復単位で記録し、制作判断の連続性を可視化する運用"
   pros_cons: "判断の追跡可能性と信頼回復に効く一方、発信頻度だけを KPI 化すると制作を圧迫し、実装改善を伴わない説明過多になる"
   verdict_pre: "部分採用。変更理由と次の検証を playable diff に結びつけるが、発信量そのものは目的化しない"
+posted:
+  ts: "1786654454.233979"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786654454233979"
+  char_count: 3899
+  posted_at: "2026-08-14T05:54:14.233979+09:00"
 ---
 
 ## raw_excerpt
