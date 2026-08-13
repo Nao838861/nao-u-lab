@@ -126,7 +126,104 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の entry section と per-file atom index を照合し、broken link / 欠落 entry が0件であることを確認した。"
+  - "atom mirror 2867件を監査し、atoms.jsonl / per-file md / index.jsonl の欠落・parse error・content conflict が0件であることを確認した。raw content重複40群は既存canonical overlayでfold済みで、effective display上の未解決重複は0件だった。"
+  - "shared-reads title canonical indexを再生成し、terminal duplicate group 90群を現行candidate状態へ同期した。mixed 36群 / all-open 3群のsidecarも再監査した。"
+  - "Slack directives 23行 / broadcasts 21行を監査し、pending 0件を確認した。完了根拠のないstatus変更は行わなかった。"
+  - "stale/group queueを規定順で再生成・監査した。期限到来2 candidateは既存deferred group leaseにより2026-08-20まで明示保持され、今回の二重handoffは0件だった。"
+issues:
+  - id: ISS-4A-20260813-01
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』相当箇所にU+FFFDが2文字残り、raw原文・atoms.jsonl・per-file atom・indexへ伝播している。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md:3; memory/atoms/index.jsonl:317"
+    source_file_status: "UTF-8明示読みは成功したが、raw source payload自体に『エ��ジェント』としてU+FFFDが2文字存在するためsource corruptionである。"
+    display_or_tooling_status: "PowerShell UTF-8表示はsource内容をそのまま表示しており、表示経路だけのmojibakeではない。"
+    why_blocks_game_memory: "『AIエージェント』の完全一致検索を落とし、related candidateのtitleにも破損語を伝播させる。ただし単一atomの局所データ欠損で、階層設計を止める規模ではない。"
+  - id: ISS-4A-20260813-02
+    description: "memory_healthのmojibake heuristicが、Nao_u原文中の意図的なUI表記『???』を文字化け疑いとして数える。"
+    severity: low
+    evidence: "tools/atom_quality.py:52; memory/atoms/2026-04/gr-1777083728-44d444ab7a.md:25; memory/raw/slack_api/game-rights.jsonl:143"
+    source_file_status: "UTF-8明示読みで正常。raw Slack原文とatomの双方に同じ意図的な『???』があり、U+FFFDはない。"
+    display_or_tooling_status: "mojibake_scoreの連続question-mark規則によるtooling false positive。"
+    why_blocks_game_memory: "health warningの信号対雑音比を下げ、実際のsource corruption 1件を見落としやすくするが、現在のrecall smokeは全3queryでhitしている。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "2件とも局所的なデータ品質・監査heuristicの問題であり、新しい記憶構造を設計する必要はない。Phase 4b/4cは起動しない。"
+encoding_audit:
+  memory_md_representative_terms:
+    記憶: found
+    ゲーム設計: found
+    敵パターン: found
+    評価軸: found
+  source_file_status: "memory/MEMORY.md はUTF-8明示読みで代表語4件を取得でき、source破損なし。"
+  display_or_tooling_status: none
+atom_audit:
+  raw_atoms: 2867
+  canonical_atoms: 2822
+  raw_normalized_content_duplicate_groups: 40
+  canonical_overlay_duplicate_groups: 45
+  effective_display_unresolved_groups: 0
+  mirror_content_conflicts: 0
+candidate_lifecycle:
+  counts:
+    posted: 602
+    ready_to_post: 9
+    postponed: 210
+    failed: 460
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_for_reassessment: 2
+raw_archive_audit:
+  older_than_30_days_count: 240
+  older_than_30_days_bytes: 70573817
+  breakdown:
+    game_eval: 1
+    headless_eval: 16
+    slack_api: 6
+    slack_archive: 1
+    web_research: 215
+  archive_action: none
+  reason: "mtimeだけではraw provenanceを移動しない。slack_archiveは既にarchive層であり、他のraw原文も参照証拠として保持した。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  receipt: null
+  counts:
+    pending: 0
+    resolved: 4
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 39
+  mixed_group_count: 36
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  live_deferred_group_ids:
+    - gha-e6d4d4b5a37a0808
+    - gha-2313a247c62a9028
+  live_deferred_candidate_count: 2
+  retry_after: "2026-08-20T13:19:04+09:00"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
