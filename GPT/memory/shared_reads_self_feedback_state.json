@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-13T12:20:00+09:00",
+  "updated_at": "2026-08-13T14:33:05+09:00",
   "reviewed_source_ts": [
     "1779987414.841039",
     "1780015414.981379",
@@ -638,9 +638,51 @@
     "1779373720.446819",
     "1779222727.981379",
     "1786490009.108289",
-    "1786582584.310989"
+    "1786582584.310989",
+    "1786590673.904389"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-13T14:33:05+09:00",
+      "selected": {
+        "id": "sr-1786590673-7d24ecec64",
+        "source_ts": "1786590673.904389",
+        "title": "Designing for Difficulty: Readability in ARPGs",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす候補のうち source_ts が最も新しく、memory・harness・game-design・evaluation の4優先タグを持つ1件だけを選んだ。telegraph の検出、cue と counter の意味対応、counter 実行、反撃窓、pattern 導入順を分ける観点が、次の action／shooting prototype 評価で既存 control と異なる判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、telegraphing と expectations を分離し、moveset／pattern／chunking、Window of Opportunity、既習 pattern の連結・timing variation・複数敵・timer・resource pressure という難化レバーを具体化している。さらに action／shooting prototype へ telegraph_start、impact_time、cue_channels、expected_counter、actual_outcome、punish_window、introduction_order を記録し、死亡を検出失敗・意味誤学習・猶予不足・実行失敗・反撃窓不足・注意競合へ分ける案に直結するため relevance と actionability は3とした。一方、根拠は Death's Gambit 開発者の経験的 commentary で、参加者数、学習曲線、死亡原因分布、frustration 尺度を比較した実験ではないため evidence=2に留める。probe-20260609-dda-proxy-rule-trace は cue response と inferred player state を、probe-20260608-projectile-speed-information-channel は telegraph が伝える情報と recognition failure を、probe-20260527-bullet-rhythm-variation-readability は learnable anchor と noise を、probe-20260616-short-horizon-prediction-failsafe は telegraph と punish の境界をすでに扱う。加えて sr-1779166310-b2e905889a の既レビューは最初の失敗が次試行の入力仮説を変えるかを評価済みであり、本 atom の teach／enforce／recombine はその行動を細分化するが次回判断の大半を変えないため non_redundancy=1。active_probes は322件で、現在の Phase 4a cleanup には三攻撃の敵、学習曲線、counter 選択、punish window を比較できる trigger artifact がない。対象なしに同型 control を追加すると確認負荷を増やし、feint や意図的曖昧さまで一対一 cue mapping で抑制する危険があるため risk_control=1 とした。次に同一敵の単体導入と timing variation／複数敵を比較する playable artifact が生じ、既存 controls では cue detection と counter meaning の不一致を診断できない実例が出た時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260609-dda-proxy-rule-trace",
+        "probe-20260608-projectile-speed-information-channel",
+        "probe-20260527-bullet-rhythm-variation-readability",
+        "probe-20260616-short-horizon-prediction-failsafe",
+        "review-sr-1779166310-b2e905889a"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の difficulty proxy・projectile information・rhythm readability・prediction failsafe・初回失敗学習観点との重複、比較可能な戦闘 artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-13T12:20:00+09:00",
       "selected": {
