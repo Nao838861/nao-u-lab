@@ -64,7 +64,34 @@ reason: "Phase 2 の pass が 0 件のため、投稿対象なし。fail candida
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779950173-5befb73aa7
+    source_ts: "1779950173.173749"
+    title: "From Experience to Strategy: Trainable Graph Memory"
+    reason: "未レビューの score 13 atom で、memory・game-design・agent・operation・evaluation を含む9タグを持つ。現在の Phase 4a memory cleanup に近い一方、FSM・外生 reward・local validation の欠落が原投稿で明示されており、既存 control と異なる判断差を安全に作れるか確認するため1件だけ選んだ。Nao_u の明示的な重要評価はない。"
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "採用閾値14に届かず、actionability と risk_control も必須閾値2未満。Query／Transition Path／Meta-Cognition と edge-weight 学習の論文 evidence はあるが、自由形式 atom を FSM にする fixture、GPT-4o／REINFORCE、遅延・主観 feedback を数値化する外生 reward、QA からゲーム制作判断への local validation がない。成功／失敗対比、trajectory 帰属、観測 utility は既存 controls と重複し、原投稿自身も build_atom_edges.py への直接採用を却下しているため state-only review とする。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録。active_probes、probe lifecycle ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
