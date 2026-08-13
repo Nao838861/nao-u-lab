@@ -63,7 +63,40 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786615785-61a57e1a9d
+    source_ts: "1786615785.391759"
+    title: "Player-Driven Emergence in LLM-Driven Game Narrative"
+    reason: "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ1件だけを選んだ。designer walkthrough と play log の未一致を、失敗 command も含む player intent／未実装 affordance の候補として次の playable diff へ接続できるか確認した。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: defer
+  decision_reason: "数値上の採用条件は満たすが、現在の staging には designer walkthrough／play log／次の playable diff がなく、後続 Phase 4a は memory cleanup で実 consumer にならない。さらに LatticeMind probe の Phase 4a pending lease が既に1件ある。consumer・比較 artifact・判断差を具体化できないため、新規 active probe や二重 lease を追加せず state-only review とした。"
+  existing_controls:
+    - probe-20260717-player-intent-action-response
+    - probe-20260515-persona-headless-comparison
+    - probe-20260604-open-world-behavior-oracle
+    - probe-20260622-npc-dialogue-perception-boundary
+  change:
+    summary: "reviewed/source_ts と defer 理由だけを state に記録。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-13T19:14:10+09:00",
+  "updated_at": "2026-08-13T20:00:00+09:00",
   "reviewed_source_ts": [
     "1779987414.841039",
     "1780015414.981379",
@@ -641,9 +641,50 @@
     "1786582584.310989",
     "1786590673.904389",
     "1786590652.427149",
-    "1786614426.363069"
+    "1786614426.363069",
+    "1786615785.391759"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-13T20:00:00+09:00",
+      "selected": {
+        "id": "sr-1786615785-61a57e1a9d",
+        "source_ts": "1786615785.391759",
+        "title": "Player-Driven Emergence in LLM-Driven Game Narrative",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす候補のうち source_ts が最も新しく、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ1件だけを選んだ。designer walkthrough と実 play log の未一致を、失敗 command も含む player intent／未実装 affordance の候補として次の playable diff へ接続する観点が、ゲーム制作の評価を勝敗だけで閉じないために有効か確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件は満たす。shared-reads 本文は、固定 game logic と生成対話を分離した DejaBoom!、designer walkthrough と player log を strategy／state graph へ変換して基準へ merge されない node を拾う手順、28人・平均75 step・43 unique emergent node という探索的結果、未実装 affordance・roleplay・parser mismatch・hallucinationを分ける必要、抽出・merge の gold label 不足まで示すため relevance・actionability・evidence は3とした。probe-20260717-player-intent-action-response は intent から action schema／world response まで、probe-20260515-persona-headless-comparison は複数 persona の同一条件比較、probe-20260604-open-world-behavior-oracle は想定外 behavior の観測、probe-20260622-npc-dialogue-perception-boundary は生成会話と game state の境界を既に扱う。一方、designer walkthrough を baseline graph とし、未merge node を有効な別解／未実装 affordance／roleplay／説明不足／入力解釈ミス／hallucinationへ分類して diff 候補化する点は既存 control に完全には含まれないため non_redundancy=2。1 prototype・約5 log・source span 付き抽出へ限定すれば risk と rollback は制御できる。しかし現在の staging には比較可能な walkthrough／play log／次の playable diff がなく、後続 Phase 4a は memory cleanup で本知見を実際の判断に使う consumer ではない。さらに Phase 4a には probe-20260813-latticemind-conflict-state-scope の pending lease が既に1件ある。consumer_phase・trigger_artifact・expected_delta を契約どおり指定できない状態で、既存323件の active probe へ追加したり二重 lease を増やしたりせず、次に具体的な prototype log が揃った時だけ一時 probe として再評価する。",
+      "existing_controls": [
+        "probe-20260717-player-intent-action-response",
+        "probe-20260515-persona-headless-comparison",
+        "probe-20260604-open-world-behavior-oracle",
+        "probe-20260622-npc-dialogue-perception-boundary"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、採用閾値は満たすが具体的な playable consumer と比較 artifact がなく、既存 Phase 4a lease と競合するため defer した理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-13T19:14:10+09:00",
       "selected": {
