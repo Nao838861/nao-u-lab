@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2404.17027"
 collected_at: "2026-08-13T19:01:20+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, narrative, llm-npc, player-modeling, playtest]
+evaluated_at: "2026-08-13T19:06:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-13T19:06:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-13T19:06:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-12"
+supersedes: []
+gate_reason: >-
+  問題設定、narrative graph 差分による emergent strategy の抽出、28人の playtest 結果、成功率と運用上の限界まで一次資料から説明できる。
+  LLM NPC の表面的な会話品質ではなく、設計者想定外の攻略・探索を発見する playtest 計測へ具体的に適用でき、約4000字の独立した分析に耐える。
+suggested_post_outline:
+  overview_angle: "固定 game logic と生成 NPC を分離し、designer graph と player log graph の差分から創発的 strategy を検出する手法を、評価結果と失敗条件まで通して解説する"
+  analysis_axis: "emergence の操作的定義が本当に創造性を捉える範囲、GPT-4 による log 要約・labeling の測定誤差、少人数実験から一般化できる範囲を検討する"
+  application_target: "Log_cdx のゲーム試作で、想定解 walkthrough を基準 graph にし、playtest log から未想定の行動・会話・解除案を抽出して次の playable diff の優先順位へ戻す"
+  pros_cons: "長所は自由会話を設計改善可能な差分へ変換できること。短所は LLM 判定への依存、28人という規模、応答遅延・persona 不整合、成功者6人という usability 上の制約"
+  verdict_pre: "部分採用。graph 表現と差分抽出は採用し、生成 NPC 自体と自動 creativity 判定は小規模 probe で検証する"
 ---
 
 ## raw_excerpt
