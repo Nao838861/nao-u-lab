@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-13T10:00:54+09:00",
+  "updated_at": "2026-08-13T12:20:00+09:00",
   "reviewed_source_ts": [
     "1779987414.841039",
     "1780015414.981379",
@@ -637,9 +637,50 @@
     "1780271082.067289",
     "1779373720.446819",
     "1779222727.981379",
-    "1786490009.108289"
+    "1786490009.108289",
+    "1786582584.310989"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-13T12:20:00+09:00",
+      "selected": {
+        "id": "sr-1786582584-654168e93d",
+        "source_ts": "1786582584.310989",
+        "title": "ContractSim: 不確実環境での長期契約交渉と履行可能性評価",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす候補のうち source_ts が最も新しく、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ1件だけを選んだ。交渉時の合意率ではなく、将来の不確実性下での履行可能性、相互利益、条件条項、acceptance regret まで測る観点が、phase handoff や lifecycle lease の実行可能性に既存 control と異なる判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14には達するが、risk_control が必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、契約を将来の共同 trajectory への制約として構造化し、162交渉で合意率98.1%に対して平均履行可能確率90.0%、95%以上の履行可能性77.4%、相互利益84.9%と、合意・履行・利益を分けている。条件条項、提案可能性、acceptance regret、想定外の履行不能状態まで示すため relevance・actionability・evidence は3とした。一方、probe-20260527-coopeval-institution-before-goodwill は required artifact・owner・done condition・evidence・mediator・escape hatch を、probe-20260530-worker-bus-contract-observer は typed bus contract と最小 observer を、probe-20260608-bdd-route-contract-regression は期待動作と実行可能 trace を、probe-20260706-paperclaw-prototype-hypothesis-contract は継続前の observable verdict をすでに扱う。ContractSim 固有の相互利益と不確実性分布は交渉ゲームには差分だが、現在の Phase 4a cleanup は交渉 artifact ではなく、これを内部 handoff 全般へ広げても次回判断の大半は変わらないため non_redundancy=1。active_probes は322件で、具体的な交渉／条件付き履行の before／after artifact がないまま同型 control を足すと確認負荷と経済交渉評価の過剰一般化を増やすため risk_control=1 とした。次に交渉 NPC、条件付き quest、または履行失敗を実測できる phase contract が具体化し、既存4 controlsだけでは mutual benefit／feasibility／regret を判定できない時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260527-coopeval-institution-before-goodwill",
+        "probe-20260530-worker-bus-contract-observer",
+        "probe-20260608-bdd-route-contract-regression",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の explicit coordination contract・typed bus contract・executable trace・observable verdict controls との重複、具体的な条件付き履行 artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-13T10:00:54+09:00",
       "selected": {
