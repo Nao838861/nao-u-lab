@@ -92,7 +92,64 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "MEMORY.md の index を per-file atom index と照合し、欠損・余剰・broken entry が 0 件であることを確認した。UTF-8 読みでは『記憶』『ゲーム設計』『敵パターン』を取得でき、『評価軸』は source に文字列自体がないため、mojibake ではないと切り分けた。"
+  - "atoms.jsonl / per-file .md / atoms/index.jsonl は各 2863 件で一致し、parse error・index error・content conflict は 0 件だった。45 duplicate cluster は既存 overlay 45 群に全件対応しており、新規の矛盾はなかった。"
+  - "memory/raw/ の 30 日超ファイルを監査した。240 件・70,573,817 bytes（web_research 215、headless_eval 16、slack_api 6、その他 3）を確認したが、raw は immutable provenance として保持する現行方針があり、mtime だけでは安全な archive 対象を確定できないため移動・削除はしなかった。"
+  - "shared-reads candidate lifecycle は posted 599 / ready_to_post 9 / postponed 210 / failed 460 / needs_review 2。terminal 状態は再評価 queue から除外され、期限超過2件は live deferred group lease により 2026-08-20 まで明示保持されている。"
+  - "title canonical index 90群、mixed duplicate queue 36群を検証し、open duplicate group queue 39群（mixed 36 / all_open 3）を再生成した。actionable group と新規 group/candidate handoff はともに 0 件だった。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件で、handled 更新対象はなかった。"
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』が『AIエ��ジェント』として保存されている。単発の source data corruption であり、MEMORY.md 全体や表示経路の文字化けではない。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl source_ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8 明示読みで raw source と atom mirror の双方に U+FFFD 2文字を確認。gr-1777083728-44d444ab7a は UTF-8 本文が正常で、health heuristic の false positive。"
+    display_or_tooling_status: "PowerShell Get-Content -Encoding UTF8 と rg の結果が一致しており、display/tooling mojibake ではない。MEMORY.md index validation は OK。"
+    why_blocks_game_memory: "この1件だけは『AIエージェント』の完全一致検索から漏れうるが、tags・source_ts・URL・memory trigger では到達可能であり、次のゲーム制作全体を塞ぐ規模ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 4
+    dormant: 1
+stale_review_batch: []
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 39
+  mixed_group_count: 36
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  backlog_high_water_reason: "overdue_open_total > stale_triage_queue_rows だが actionable group は 3 件未満。2件とも live deferred group lease が抑止している。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  overdue_disposition:
+    - path: memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+      status: postponed
+      action: explicit_keep
+      reason: "同一 work の group handoff が retry_after 2026-08-20T13:19:04+09:00 まで deferred。期限到来後に group 単位で Phase 2 再評価する。"
+    - path: memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+      status: postponed
+      action: explicit_keep
+      reason: "同一 work の group handoff が retry_after 2026-08-20T13:19:04+09:00 まで deferred。期限到来後に group 単位で Phase 2 再評価する。"
+group_action_handoff: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
