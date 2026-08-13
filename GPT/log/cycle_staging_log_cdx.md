@@ -167,7 +167,78 @@ self_feedback:
     conflict_checked: true
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語（記憶／ゲーム設計／敵パターン／評価軸）と per-file atom index の一致を確認した。broken index entry は 0 件。"
+  - "memory/atoms.jsonl を監査し、2872 atom の jsonl／per-file／index mirror conflict 0 件、canonical overlay 45 群、raw normalized-content duplicate 40 群が既存 overlay で fold 済みであることを確認した。"
+  - "shared-reads の title canonical／mixed duplicate／open duplicate／stale triage／group-action sidecar を現在状態から再生成した。"
+  - "期限到来 open candidate 2 件は既存 group handoff の deferred lease（retry_after 2026-08-20）で抑止されていることを確認し、新規 group／candidate handoff は enqueue しなかった。"
+  - "Slack inbox は directives／broadcasts とも pending 0 件で、handled 更新対象はなかった。"
+  - "memory/raw/ の30日超 240件を監査し、原文 provenance と再現用 artifact のため移動しなかった。"
+  - "due probe 1件を明示 ID edge だけで監査し、判断差なしの receipt を残した。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 1
+  inspected_probe_id: probe-20260813-dependency-guided-memory-rollback
+  outcome: resolved
+  counts:
+    pending: 0
+    resolved: 6
+    dormant: 1
+candidate_lifecycle:
+  counts:
+    posted: 608
+    ready_to_post: 9
+    postponed: 207
+    failed: 466
+    needs_review: 2
+  overdue_open_total: 2
+  missing_stale_after_total: 3
+  valid_unreviewed_count: 0
+  malformed_count: 0
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows_before_group_handoff: 0
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 36
+  mixed_group_count: 33
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+audit_notes:
+  encoding:
+    memory_source_file_status: "UTF-8 明示読みで代表語4件を取得でき、memory/MEMORY.md source に破損なし。"
+    display_or_tooling_status: none
+    atom_mojibake: "memory_health.py は2 atom を suspect とした。今回の bounded probe で見た sr-1776127289-4d9239b255 は UTF-8 raw Slack archive 自体に『エ��ジェント』を含む局所 source defect。もう1件は probe の1件上限に従い展開せず、構造 issue にはしない。"
+  atom_consistency: "input snapshot stable。2872 atom、content_conflicts 0、effective display unresolved duplicate 0。"
+  raw_archive_audit: "30日超は web_research 215、headless_eval 16、slack_api 6、slack_archive 1、game_eval 1、sync_state 1。raw provenance を保ち、前回 receipt で制作判断の根拠と確認済みの headless_eval も含めて archive 移動 0 件。"
+  memory_recovery_slice:
+    diagnosed_item: sr-1776127289-4d9239b255
+    source_file_status: "memory/raw/slack_archive/shared-reads.jsonl の source_ts 1776127289.990919 にも同じ置換文字があり、表示経路ではなく原文側の局所欠損。"
+    display_or_tooling_status: none
+    before_decision: "局所 source defect として記録し、atom の有用な本文・URLは保持、issues と needs_design は増やさない。"
+    explicit_edge_audit: "atom id／source_ts で追跡。atoms.jsonl、per-file、index、atom_stats は同一 item の mirror、related_candidates は再生成可能な similarity sidecar。別 claim への used_ids／generated_ids／supersedes edge はなかった。"
+    independent_support: "raw archive の重複行は同一 source_ts の同一破損なので独立根拠ではない。一方、本文・2 URL・残りの記述は保持可能で、item 全体を inactive にする根拠もない。"
+    after_decision: "no_explicit_descendant。unsupported descendant の追加無効化は行わず、raw と atom を保持する。cleanup／issue／needs_design 判断は変更しない。"
+    changed: false
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl#source_ts=1776127289.990919; memory/atoms/index.jsonl#sr-1776127289-4d9239b255"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
