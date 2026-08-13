@@ -100,7 +100,68 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index 参照 atom 87件を atoms.jsonl と照合し、broken link 0件を確認した。"
+  - "memory/atoms.jsonl 2860件と per-file/index mirror を監査し、ID重複・mirror content conflict 0件、既知の normalized-content 重複40群は canonical overlay で fold 済みと確認した。"
+  - "shared-reads の title canonical index、mixed/open duplicate queue、stale triage queue、group action queue を再生成した。"
+  - "Slack directive / broadcast inbox を監査し、pending 0件のため handled 更新は行わなかった。"
+  - "group/candidate handoff inbox と probe lifecycle を validate し、schema error 0件を確認した。"
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の『エージェント』が raw Slack 原文の時点から『エ��ジェント』に破損しており、title / trigger / excerpt に継承されている。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みでも raw source と per-atom source の双方に U+FFFD が残るため、source file 自体の局所破損。memory/MEMORY.md は代表語『記憶』『ゲーム設計』『敵パターン』『評価軸』をすべて UTF-8 で取得でき、本文破損なし。"
+    display_or_tooling_status: "none; PowerShell 表示経路だけの mojibake ではない。memory_health のもう1件 gr-1777083728-44d444ab7a は原文中の意図的な『???』による false positive。"
+    why_blocks_game_memory: "当該1 atomだけ『エージェント』語での完全一致検索とtitle可読性が落ちるが、他のtag・本文・リンクは残っており影響は局所的。構造設計を起動する規模ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 4
+    dormant: 1
+stale_review_batch: []
+group_action_handoff: []
+candidate_lifecycle:
+  counts:
+    posted: 596
+    ready_to_post: 9
+    postponed: 210
+    failed: 460
+    needs_review: 2
+  overdue_open_total: 2
+  missing_stale_after: 3
+  anomaly_note: "status/candidate_status conflict 0件。dry-run の stale_after 30日既定値差18件は明示された後続review日を持つ履歴差で、現在状態の巻き戻し対象ではない。"
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 39
+  mixed_group_count: 36
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_note: "期限超過2件は既存 all_open group handoff gha-e6d4d4b5a37a0808 / gha-2313a247c62a9028 が retry_after 2026-08-20 まで deferred で、membership fingerprint も一致するため再投入しなかった。"
+raw_archive_audit:
+  inactive_over_30d_files: 240
+  action: "none"
+  reason: "web_research 215件、headless_eval 16件ほかを検出したが、raw は provenance anchor であり参照先を壊さず移す既存契約がない。Phase 4a では移動・削除せず、default recall 層にも入らないため設計issueには昇格しない。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
