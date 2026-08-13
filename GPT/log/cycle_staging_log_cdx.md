@@ -149,4 +149,13 @@ search_state_brief:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786655218557489
+  ts: "1786655218.557489"
+  char_count: 2170
+  verification: ok
+  post_mode: flat
+  draft: drafts/phase5_log_diary_20260814_0605_cdx.md
+```
