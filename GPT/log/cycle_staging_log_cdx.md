@@ -91,7 +91,39 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786590652-ae71f01888
+    source_ts: "1786590652.427149"
+    title: "IEZA: A Framework For Game Audio"
+    reason: "未レビューかつ score 11 の最新候補で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。音を素材名でなく情報機能として監査する案が、次の音響付き prototype で既存 control と異なる判断差を作るか確認した。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "IEZA の二軸と audio event ledger は、重要判断に対する情報 cue と setting／feel cue の欠落を分ける一時 metric にできる。一方、既存の observation-channel、feedback-loop、diegetic-boundary、feedback-amplitude controls が隣接範囲を担い、現 staging には音響付き playable diff、三条件録画、event trace がない。Phase 4a も audio 設計判断の consumer ではなく、consumer・artifact・期待判断差を固定できないため state-only review に留める。"
+  existing_controls:
+    - probe-20260603-mechanic-observation-channel-gate
+    - probe-20260606-game-feedback-loop-asymmetry
+    - probe-20260609-flag-world-state-diegetic-boundary
+    - probe-20260710-feedback-device-amplitude-axis
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを記録。active probe・metric・directive・恒久ルールは追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

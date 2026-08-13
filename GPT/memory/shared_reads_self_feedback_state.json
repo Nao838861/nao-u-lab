@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-13T14:33:05+09:00",
+  "updated_at": "2026-08-13T16:35:19+09:00",
   "reviewed_source_ts": [
     "1779987414.841039",
     "1780015414.981379",
@@ -639,9 +639,50 @@
     "1779222727.981379",
     "1786490009.108289",
     "1786582584.310989",
-    "1786590673.904389"
+    "1786590673.904389",
+    "1786590652.427149"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-13T16:35:19+09:00",
+      "selected": {
+        "id": "sr-1786590652-ae71f01888",
+        "source_ts": "1786590652.427149",
+        "title": "IEZA: A Framework For Game Audio",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす候補のうち source_ts が最も新しく、memory・harness・game-design・operation・evaluation の5優先タグを持つ1件だけを選んだ。音を素材名ではなく diegetic／non-diegetic と activity／setting の二軸で整理し、重要なプレイ判断に対する情報経路と feel の欠落を audio event ledger で監査する案が、次の音響付き prototype で既存 control と異なる判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の採用条件は満たす。shared-reads本文は、Interface／Effect／Zone／Affect を資産分類ではなく、どの層から activity と setting のどちらを何の判断のために伝えるかという設計座標として扱う。さらに trigger、intended_information、quadrant、urgency、competing_sounds、fallback cue を持つ audio event ledger、現行音／Effect・Interface除去／Zone・Affect除去の三条件比較、発火遅延・event coverage・同時発火・adaptive layer一致の deterministic log と人間の聴取判断の分離へ変換できるため actionability は3とした。一方、根拠は既存理論の整理と三年間の教育利用、二年度の課題に関する定性的報告で、参加者数、共通rubric、年度差を統制した統計、実作品での誤認率や判断時間は示されないため evidence は2とした。probe-20260603-mechanic-observation-channel-gate は audio を含む観測channelと各証拠限界を、probe-20260606-game-feedback-loop-asymmetry は headless／visual／human play feel の非対称性を、probe-20260609-flag-world-state-diegetic-boundary は hidden state と sound／UIによるplayer-facing feedbackを、probe-20260710-feedback-device-amplitude-axis は feedback介入の強度と保持すべきchoiceを既に扱う。本atom固有の差は、音の存在層と情報機能を交差させ、重要判断ごとに情報cueとsetting／feel cueの欠落を切り分ける点なので non_redundancy は2とした。ただし現在のstagingには音響付きplayable diff、audio event ledger、同一戦闘の三条件録画またはevent traceがなく、直後のPhase 4aもaudio設計判断の実consumerではない。consumer_phase、before／after trigger_artifact、expected_deltaをlease契約どおり固定できないため active probe・metric・lease・directive・恒久ルールは追加せずdeferする。次に具体的なaudio付きprototypeが生じ、既存4 controlsだけでは『鳴ったが何の判断にも寄与しない』状態と『情報は伝わるがsetting／feelが欠ける』状態を分離できない時だけ、一時metricとして再評価する。",
+      "existing_controls": [
+        "probe-20260603-mechanic-observation-channel-gate",
+        "probe-20260606-game-feedback-loop-asymmetry",
+        "probe-20260609-flag-world-state-diegetic-boundary",
+        "probe-20260710-feedback-device-amplitude-axis"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と defer 理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-13T14:33:05+09:00",
       "selected": {
