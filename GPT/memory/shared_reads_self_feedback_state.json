@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-13T22:00:00+09:00",
+  "updated_at": "2026-08-14T00:02:07+09:00",
   "reviewed_source_ts": [
     "1779987414.841039",
     "1780015414.981379",
@@ -643,9 +643,51 @@
     "1786590652.427149",
     "1786614426.363069",
     "1786615785.391759",
-    "1786606281.572199"
+    "1786606281.572199",
+    "1786606286.694329"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-14T00:02:07+09:00",
+      "selected": {
+        "id": "sr-1786606286-45b01fafc4",
+        "source_ts": "1786606286.694329",
+        "title": "Harnessing agent memory to build lifelong AI partners for materials scientists",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす直近2件のうち source_ts が新しく、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ1件だけを選んだ。検査可能な Fact と再実行可能な Skill、failure boundary、validation、provenance、deprecation の組合せが、Codex の記憶を読後メモから検証済み制作手順へ変える既存運用に新しい判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、Fact-memory と Skill-memory の schema、49 question・138 executable subtask の3 round、Sol27LC で同種失敗の91.7%回避、13 workflow の trace burden と tool call 削減、弱い source memory が強い target に害を与える例や非単調な成功数まで示すため relevance・actionability・evidence は3とした。一方、probe-20260515-promotion-boundary は反復した実行証拠がない procedure を skill に昇格しない境界を、probe-20260604-skill-lifecycle-promotion-gate は atom／candidate／executable／evaluated／retire の遷移と trigger・harness・expiry を、probe-20260620-skillopt-skill-doc-validation と probe-20260626-skillopt-instruction-edit-validation-gate は最小 validation・transfer scope・held-out regression・退役条件を、probe-20260604-memory-action-loop-evidence は記憶が次の action を変えた evidence pointer を既に要求する。したがって Fact/Skill 分離、validation、failure boundary、model 間移植、deprecation の判断差は既存 controls に包含され non_redundancy=0。active_probes は324件で、直後の Phase 4a には dependency-guided rollback の pending lease もある。具体的な build／headless smoke の3回再利用 artifact なしに同義 probe を足すと確認負荷と未検証 procedure の昇格リスクだけを増やすため risk_control=1とし、source record だけを閉じる。",
+      "existing_controls": [
+        "probe-20260515-promotion-boundary",
+        "probe-20260604-skill-lifecycle-promotion-gate",
+        "probe-20260620-skillopt-skill-doc-validation",
+        "probe-20260626-skillopt-instruction-edit-validation-gate",
+        "probe-20260604-memory-action-loop-evidence"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の skill 昇格・実行検証・held-out 検証・action-return 証拠 controls との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-13T22:00:00+09:00",
       "selected": {

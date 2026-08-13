@@ -64,7 +64,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786606286-45b01fafc4
+    source_ts: "1786606286.694329"
+    title: "Harnessing agent memory to build lifelong AI partners for materials scientists"
+    reason: "未レビューの直近2件から、6優先タグをすべて持ち source_ts が新しい1件だけを選び、Fact/Skill 分離と validation・deprecation が既存運用に新しい判断差を作るか確認した。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "既存の skill 昇格境界、executable/evaluated lifecycle、最小・held-out validation、action-return evidence の5 controls が同じ判断をすでに覆う。active_probes 324件と Phase 4a 向け pending lease 1件があるうえ、比較可能な build/headless smoke の3回再利用 artifact もないため、同義 probe の追加は確認負荷と未検証 procedure の昇格リスクを増やす。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録し、probe・metric・lease・directive・恒久ルールは追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
