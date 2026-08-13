@@ -4,6 +4,20 @@ url: https://www.gamedeveloper.com/production/what-devs-need-to-know-about-local
 collected_at: "2026-08-13T23:46:52+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-production, localization, collaboration, accessibility]
+evaluated_at: "2026-08-13T23:51:10+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-13T23:51:10+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-13T23:51:10+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-12"
+supersedes: []
+gate_reason: >-
+  記事本文だけでは、ローカライズを black box にしないという問題設定と協働の必要性までは読めるが、
+  具体的 workflow・実例・評価が埋め込み音声側にあり、CoopEval 水準の概要を根拠付きで構成できない。音声または transcript の一次内容を採取後に再評価する。
 ---
 
 ## raw_excerpt

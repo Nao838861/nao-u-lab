@@ -10,7 +10,48 @@
 - 重複照合: 各 candidate の書込み直前に 3 sidecar を再生成し、preflight は 2 件とも `continue`。既投稿だった逐次意思決定・ゲームテスト関連ソースは保存対象に加えなかった。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260813_simcity_one_page_design_production.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260813_game_localization_developer_collaboration.md
+    reason: "導入ページだけでは具体的 workflow・実例・評価が不足し、音声または transcript の採取が必要"
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 2
+  malformed_count: 0
+  oldest_collected_at: "2026-08-13T23:46:52+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260813_game_localization_developer_collaboration.md
+    - memory/shared_reads_candidates/20260813_simcity_one_page_design_production.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260813_game_localization_developer_collaboration.md
+    - memory/shared_reads_candidates/20260813_simcity_one_page_design_production.md
+  valid_backlog_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
