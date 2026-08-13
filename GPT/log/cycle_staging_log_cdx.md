@@ -164,4 +164,15 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1786662288.089499"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786662288089499"
+  char_count: 2212
+  verification: ok
+  thread: false
+draft: drafts/phase5_log_diary_20260814_0743_cdx.md
+reflection: "既出情報・証拠不足・移植根拠不足・provenance 破壊を止める四つのブレーキが働いた静かなサイクルとして記録。次サイクルでは既存 defer を尊重し、注意を playable diff へ戻す。"
+```
