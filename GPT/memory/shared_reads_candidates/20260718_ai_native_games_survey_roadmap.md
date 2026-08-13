@@ -8,12 +8,12 @@ evaluated_at: "2026-07-18T08:15:44+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 duplicate_preflight_decision: skip
-duplicate_reason: posted_url_match
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-18T08:17:04+09:00"
-last_decision: postponed
-evidence: "posted_url_match; canonical_path:memory/shared_reads_candidates/20260706_ai_native_games_survey_roadmap.md; permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783287766520669; slack_ts:1783287766.520669"
+duplicate_reason: failed_duplicate_of_terminal_sibling
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-14T01:49:09+09:00"
+last_decision: failed
+evidence: "group_handoff:gha-50f3726a62a848fa; terminal:memory/shared_reads_candidates/20260706_ai_native_games_survey_roadmap.md: posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783287766520669; reason:canonical arXiv work identity 2607.00527 が実投稿済み source と一致し open siblings に独立した追加価値がない"
 next_action: none
 stale_after: "2026-08-17"
 supersedes: []

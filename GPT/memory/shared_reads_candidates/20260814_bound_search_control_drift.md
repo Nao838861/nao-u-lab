@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2608.08768"
 collected_at: "2026-08-14T01:45:37+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [llm, agent, deep-search, drift, evaluation, game-development]
+evaluated_at: "2026-08-14T01:50:17+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-14T01:50:17+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-14T01:50:17+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-13"
+supersedes: []
+gate_reason: >-
+  persistent search drift を decision-time brief、corrective / termination contrast、state-matched preference pair、DPO 蒸留へ分解でき、問題・手法・評価・結論が揃う。
+  six comparable benchmarks のうち five datasets、14 metrics 中 12 で首位という評価と限界を含め、約4000字の概要を一般論へ逃げず構成できる。
+  ゲーム制作では仕様調査・参照作品探索・不具合原因調査の継続／修正／終了境界を、元の設計制約を保ったまま評価する仕組みに直接適用できる。
+suggested_post_outline:
+  overview_angle: "deep-search agent が局所的にもっともらしい根拠へ漂流し続ける問題を、search-state brief と decision boundary の教師信号で修正する手法として整理する。"
+  analysis_axis: "brief が保持する目標・制約・取得済み根拠、corrective / termination contrast の作り方、DPO 蒸留、seven benchmarks での改善と teacher 判定依存の限界。"
+  application_target: "ゲーム仕様・参照作品・不具合原因を長時間調査する制作 agent に、goal drift の修正と根拠十分時の探索終了を学習・監査する state snapshot を導入する。"
+  pros_cons: "利点は推論時 teacher なしで局所的な制御判断を改善し、修正だけでなく終了も学べること。欠点は QA / deep-search benchmark 中心で、ゲーム制作の曖昧な審美判断には独自の state と outcome 定義が必要なこと。"
+  verdict_pre: "部分採用。モデル再学習より先に、制作サイクルの search brief と継続／修正／終了ログとして小さく導入する。"
 ---
 
 ## raw_excerpt

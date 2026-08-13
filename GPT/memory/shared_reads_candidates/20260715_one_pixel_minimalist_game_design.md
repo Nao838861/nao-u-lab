@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2207.03827"
 collected_at: "2026-07-15T09:30:21.1699902+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, minimalism, prototyping, mechanics, interaction-design]
-evaluated_at: "2026-07-15T09:31:31.9751057+09:00"
+evaluated_at: "2026-08-14T01:50:17+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-15T09:31:31.9751057+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-15T09:31:31.9751057+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-14"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-14T01:50:17+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-14T01:50:17+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-13"
 supersedes: []
 gate_reason: >-
-  1 pixel / 1 key という制約、参加者構成、bottom-up な実験設計までは抽出でき、短時間プロトタイプで mechanic の核を検証する用途にも直結する。
-  ただし現候補には生成 concepts の分析軸、観察された差、評価結果、結論の具体がなく、CoopEval 水準の約4000字概要を根拠付きで書くには原文の結果節が必要。
+  1 pixel / 1 key の制約と bottom-up な制作実験は短時間 prototype に接続できるが、候補には concept 分析軸・群間差・評価結果・結論がない。
+  一か月の再評価待ちを経ても CoopEval 水準の約4000字概要を根拠付きで構成できないため、資料参照用として閉じる。
 ---
 
 ## raw_excerpt

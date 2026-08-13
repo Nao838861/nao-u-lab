@@ -7,17 +7,18 @@ genre_tags: [game-design, biofeedback, controls, game-feel, hci, playtesting]
 evaluated_at: "2026-07-15T04:25:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-15T04:25:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-15T04:25:00+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-14T01:49:10+09:00"
+last_decision: failed
+evidence: "group_handoff:gha-884578791527a986; terminal:memory/shared_reads_candidates/20260516_multimodal_biofeedback_videogame_control.md: posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778870430127129; reason:canonical arXiv work identity 1406.0532 が実投稿済み source と一致し今回候補は既投稿の評価と適用範囲に含まれる"
+next_action: none
 stale_after: "2026-08-14"
 supersedes: []
 gate_reason: >-
   通常操作・単一信号・複合信号を同一 prototype で比べる問題設定と、入力を楽しさ・誤発動防止・身体的コストへ接続する適用先は明確。
   ただし 8 mechanic の具体的なセンサー割当、定量結果、比較上の限界が不足し、現状では約4000字の概要を一般論なしで支えられない。
+duplicate_reason: failed_duplicate_of_terminal_sibling
 ---
 
 ## raw_excerpt

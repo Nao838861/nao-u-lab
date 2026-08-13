@@ -7,12 +7,12 @@ genre_tags: [game-evaluation, llm-agent, adversarial-dialogue, partial-observabi
 evaluated_at: "2026-07-15T11:15:59+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-15T11:17:07+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779942387259629"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-14T01:49:09+09:00"
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-3a818e735c38119e; terminal:memory/shared_reads_candidates/20260528_aidg_information_deduction_game.md: posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779942387259629; reason:canonical arXiv work identity 2602.17443 が実投稿済み source と一致し既投稿が手法 評価 適用まで包含している"
 next_action: none
 stale_after: "2026-08-14"
 supersedes: []
