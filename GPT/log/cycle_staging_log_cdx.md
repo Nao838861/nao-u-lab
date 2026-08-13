@@ -7,7 +7,43 @@
 - preflight skip: `Towards Improving Sequential Decision-Making in LLM Agents via Experience Memory` (`arxiv:2608.03420`) は posted-source work 一致のため保存せず。既投稿: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786282173010339
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260813_silent_hill_townfall_perspective_analog_horror.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-08-13T21:46:29+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260813_silent_hill_townfall_perspective_analog_horror.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260813_silent_hill_townfall_perspective_analog_horror.md
+  valid_backlog_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/how-silent-hill-townfall-gets-deep-in
 collected_at: "2026-08-13T21:46:29+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, psychological-horror, first-person, narrative-design, diegetic-interface]
+evaluated_at: "2026-08-13T21:50:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-13T21:50:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-13T21:50:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-12"
+supersedes: []
+gate_reason: >-
+  一人称視点で主人公の脆弱さへ拘束する問題設定、inner thoughts と携帯 TV を横断的に使う設計中核、探索・危険察知・謎解き・通信への具体的展開を抽出できる。
+  開発者取材であり効果の実測評価ではない限界を明示すれば、単一の不完全な道具へ情報機能を束ねる prototype 指針として、CoopEval 水準の概要と分析を構成できる。
+suggested_post_outline:
+  overview_angle: "一人称カメラと信頼しきれない携帯 TV を、主人公の精神状態・探索・危険・物語理解を同じ操作へ束ねる設計として読む"
+  analysis_axis: "diegetic device の多機能化が認知負荷と緊張をどう統合するか、設計意図と実測効果を分けて検討する"
+  application_target: "Log_cdx のホラー／探索 prototype で、危険察知・手掛かり・NPC 通信を単一装置へ載せ、tuning の不確実性を小さな probe で検証する"
+  pros_cons: "長所は機能と物語の一体化、短所は一装置への過集中、可読性低下、演出意図だけで効果を断定できない点"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
