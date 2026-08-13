@@ -92,7 +92,99 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+search_state_brief:
+  original_search_target: "Phase 4a の必須監査を、MEMORY index、atom mirror、candidate lifecycle、raw、inbox、due probe の順で完了し、構造的 issue と needs_design を判定する"
+  key_constraints:
+    - "設計・実装・大規模再編を行わない"
+    - "group handoff を candidate handoff より先に確定する"
+    - "due probe は最大1件だけ扱う"
+  confirmed_evidence:
+    - "atom 2873件は atoms.jsonl / per-file / index.jsonl 間で missing・parse error・content conflict が0件"
+    - "stale_after 到来2件は既存 group lease が retry_after 2026-08-20 まで deferred のため、stale triage と handoff 対象から正しく抑止された"
+    - "memory_health の mojibake suspect 2件のうち1件は raw source 自体に replacement character があり、もう1件は正常な日本語 excerpt の false positive"
+  missing_information:
+    - "sr-1776127289-4d9239b255 の破損前 Slack 原文はローカル raw からは取得できない"
+  excluded_false_anchors:
+    - "gr-1777083728-44d444ab7a を source corruption とみなす仮説"
+    - "stale_after 到来だけを根拠に deferred lease を無視して再 handoff する仮説"
+  drift_status: "Reroute once, then Answer"
+  before_decision: "warning 2件と期限超過2件から、encoding 全体調査または即時 handoff が必要な可能性を残した"
+  after_decision: "一致 raw rowとlive leaseまで局所確認し、実問題は既知の単一 source defect、期限超過は意図した抑止と確定したため探索を終了した"
+  changed: true
+
+cleaned:
+  - "MEMORY.md の index atom IDを照合し、broken reference 0件を確認した"
+  - "atom mirror 2873件を監査し、ID欠損・parse error・content conflict 0件、duplicate cluster index 45群が最新であることを確認した"
+  - "shared-reads title canonical / mixed / open-group / stale-triage / group-action sidecar を再生成した"
+  - "candidate lifecycle 1293件を dry-run監査した（posted 609、ready_to_post 9、postponed 207、failed 466、needs_review 2、書換え必要0）"
+  - "Slack directives / broadcasts の pending 0件を確認した（handled 更新なし）"
+  - "probe lifecycle 9行を validate し、error 0件を確認した"
+issues:
+  - id: ISS-UTF8-001
+    description: "単一の active atom sr-1776127289-4d9239b255 で『AIエージェント』の一部が replacement character へ変わっており、raw archive にも同じ破損がある"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492,1216; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory_health mojibake_suspect_atoms"
+    source_file_status: "UTF-8 明示読みは成功するが、保存済み source text 自体が『エ��ジェント』を含む。MEMORY.md は『記憶』『ゲーム設計』『敵パターン』を取得でき、『評価軸』の完全一致はないが『評価』を取得できる。gr-1777083728-44d444ab7a は正常な日本語で false positive"
+    display_or_tooling_status: "none（表示は保存済み replacement character を忠実に示しており、shell/tooling 起因の mojibake ではない）"
+    why_blocks_game_memory: "該当1 atomだけ『AIエージェント』の完全一致検索と引用精度が落ちるが、mirror・他の検索導線・ゲーム記憶全体は健全"
+recommendation:
+  needs_design: false
+  priority_issues: []
+
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 6
+    dormant: 1
+
+candidate_lifecycle:
+  status_counts:
+    posted: 609
+    ready_to_post: 9
+    postponed: 207
+    failed: 466
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_open_total: 2
+  overdue_paths:
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+    - memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+
+raw_archive_audit:
+  older_than_30_days: 240
+  oldest: "memory/raw/slack_archive/shared-reads.jsonl (2026-05-11T08:24:42)"
+  archived_count: 0
+  decision: "raw provenance の正本と phase source を含むため自動移動せず、候補棚卸しだけ行った"
+
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 36
+  mixed_group_count: 33
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_evidence:
+    - "gha-e6d4d4b5a37a0808: JAMEL group deferred until 2026-08-20T13:19:04+09:00"
+    - "gha-2313a247c62a9028: collision morphology group deferred until 2026-08-20T13:19:04+09:00"
+
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
