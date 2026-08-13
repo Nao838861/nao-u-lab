@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2608.10475"
 collected_at: "2026-08-13T09:46:29+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, multi-agent, negotiation, simulation, llm, evaluation]
+evaluated_at: "2026-08-13T09:50:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-13T09:50:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-13T09:50:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-12"
+supersedes: []
+gate_reason: >-
+  契約交渉から履行までを一つの長期 trajectory として扱い、合意品質と実行時の compliance・defection を分ける手法と評価結果を抽出できる。
+  交渉・同盟・取引を持つゲームで、NPC の発話品質ではなく成立可能性、相互利益、条件付き条項、履行・裏切りを検証する具体的な playtest 設計へ転用でき、約4000字の分析に必要な密度がある。
+suggested_post_outline:
+  overview_angle: "自然言語契約を交渉文の巧さではなく、合意可能性・効率・相互利益と、その後の履行・裏切りまで通して評価する ContractSim の設計"
+  analysis_axis: "交渉フェーズと実行フェーズの分離、不確実性と部分観測、contingency clause の生成、利益最大化と信頼可能性のずれ"
+  application_target: "交渉・同盟・取引を持つ simulation / social game の NPC playtest に、合意成立率・条件網羅率・履行率・誘発なしの裏切り率を別々に測る評価 harness を導入する"
+  pros_cons: "長期的な社会行動を再現可能な指標へ分解できる一方、契約を trajectory constraint へ翻訳する実装負荷が高く、LLM-NPC を使わない作品には直接適用しにくい"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
