@@ -158,4 +158,12 @@ group_action_handoff: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  draft: drafts/phase5_log_diary_20260813_1413_cdx.md
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786599737093899
+  ts: "1786599737.093899"
+  char_count: 2133
+  verification: ok
+```
