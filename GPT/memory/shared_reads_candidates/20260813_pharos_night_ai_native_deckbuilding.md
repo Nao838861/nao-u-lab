@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2608.12216"
 collected_at: "2026-08-13T19:46:25+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, ai-native-games, deck-building, tactical-arena, multi-agent, llm, playtesting]
+evaluated_at: "2026-08-13T19:50:31+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-13T19:50:31+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-13T19:50:31+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-12"
+supersedes: []
+gate_reason: >-
+  自然言語カード効果を既定 mechanic と数値表へ接続する実装着想は具体的で、ゲーム制作への適用性もある。
+  ただし保存済み資料では13人 playtest の手順・比較条件・結果内訳が不足し、約4000字の概要を推測なしで支えられないため保留する。
 ---
 
 ## raw_excerpt

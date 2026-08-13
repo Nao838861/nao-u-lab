@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2608.12195"
 collected_at: "2026-08-13T19:45:48+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, ai-native-games, puzzle, llm, natural-language-rules, playtesting]
+evaluated_at: "2026-08-13T19:50:31+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-13T19:50:31+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-13T19:50:31+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-12"
+supersedes: []
+gate_reason: >-
+  semantic compiler、制約付き command schema、決定論的 engine validation という中核が明確で、
+  24人・8レベルの mixed-methods playtest から制御感と診断負荷の両面を論じられる。
+  自然言語ルールを core mechanic にする小規模 puzzle prototype へ、境界設計と評価軸を直接移せる。
+suggested_post_outline:
+  overview_angle: "LLM を自由生成器ではなく、プレイヤーの自然言語規則を検証可能な命令へ落とす semantic compiler として使う設計"
+  analysis_axis: "自然言語の表現力と決定論的実行の分業、semantic debugging の feedback loop、複数規則で増える診断負荷"
+  application_target: "Log_cdx の次期ルール編集 puzzle probe で IF/THEN 入力を限定 schema へ変換し、engine validation と失敗理由表示までを一つの playable loop として検証する"
+  pros_cons: "プレイヤー authorship と再現可能な状態遷移を両立できる一方、規則優先順位・周期処理・複数主体の説明設計が弱いと負荷が急増する"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
