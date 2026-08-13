@@ -56,7 +56,18 @@ unreviewed_intake_audit:
 - duplicate preflight: `continue`。posted-source / closed canonical / open duplicate group の一致なし。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260813_player_driven_emergence_llm_narrative.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786615785391759
+    char_count: 4471
+skipped: []
+```
+
+- 最終判定: `部分採用`。narrative graph 差分を playtest の設計候補へ変える手法は採用し、node 数の creativity score 化、生成 NPC の勝敗 state への直接接続、少人数の motivation profile による tester 選別は採用しない。
+- 投稿前 review: 4,470字（本文末尾改行を除く）。必須6節、URL末尾集約、禁止表現なし、duplicate preflight `continue` を確認。
+- Slack verification: ts `1786615785.391759` を再取得し、UTF-8 本文に文字化けがないことを確認。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

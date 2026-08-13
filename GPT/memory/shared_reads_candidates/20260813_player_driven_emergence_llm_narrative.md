@@ -7,12 +7,17 @@ genre_tags: [game-design, narrative, llm-npc, player-modeling, playtest]
 evaluated_at: "2026-08-13T19:06:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-13T19:06:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-13T19:06:00+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1786615785.391759"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786615785391759"
+  char_count: 4471
+  posted_at: "2026-08-13T19:09:53+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-13T19:09:53+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786615785391759"
+next_action: none
 stale_after: "2026-09-12"
 supersedes: []
 gate_reason: >-
