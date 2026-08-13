@@ -92,7 +92,63 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みと validate_memory_index.py で監査し、per-file atom index との broken reference 0 件を確認した。"
+  - "memory/atoms.jsonl 2870 件を memory_health.py で監査し、mirror drift・parse error・ID 欠落 0 件、raw normalized-content duplicate 40 群は canonical overlay で全件 fold 済みと確認した。"
+  - "shared-reads の open duplicate / mixed duplicate / stale triage / group action sidecar を再生成した。open group 39 群（mixed 36 / all_open 3）、stale triage 0 件、actionable group 0 件で、生成結果の内容差分はなかった。"
+  - "Slack directives 23 行と broadcasts 21 行を監査し、pending 0 件のため lifecycle 更新は行わなかった。"
+  - "memory/raw/ の mtime 30 日超を 240 files 確認した。slack_archive・web research PDF/TXT など provenance 正本と再検証 evidence が混在するため、mtime だけで一括移動せず archive 候補として記録した。"
+issues:
+  - id: ISS-4A-20260813-ENC001
+    description: "atom sr-1776127289-4d9239b255 の title / trigger / excerpt に U+FFFD が残り、『AIエージェント』が『AIエ��ジェント』になっている。raw Slack archive の同一 source_ts にも同じ破損がある。"
+    severity: low
+    evidence: "memory/atoms.jsonl#id=sr-1776127289-4d9239b255; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl#source_ts=1776127289.990919"
+    source_file_status: "UTF-8 明示読みで source raw・atoms.jsonl・per-file md のすべてに U+FFFD を確認したため、表示経路ではなく source data の局所破損。MEMORY.md 自体は UTF-8 読み成功（記憶=true、ゲーム設計=true、敵パターン=true、評価軸=false は現行本文に語がないため）。"
+    display_or_tooling_status: "none; PowerShell UTF-8 読みと rg の双方で同じ文字列を観測。memory_health のもう1件 gr-1777083728-44d444ab7a は原文確認上 U+FFFD なし。"
+    why_blocks_game_memory: "エージェント記憶設計を語る atom の主要検索語が壊れており、語彙一致による recall と related-candidate 接続の精度を局所的に落とす。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 5
+    dormant: 1
+stale_review_batch: []
+stale_backlog:
+  candidate_status_counts:
+    posted: 606
+    ready_to_post: 9
+    postponed: 212
+    failed: 460
+    needs_review: 2
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 39
+  mixed_group_count: 36
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_note: "期限超過 open candidate 2 件は既存 deferred group lease（retry_after 2026-08-20）が同一 membership を抑止しており、stale triage / group action への再投入は 0 件。"
+group_action_handoff: []
+memory_recovery_slice:
+  inspected: false
+  reason: "probe-20260813-dependency-guided-memory-rollback の lease_due は 2026-08-14T00:30:00+09:00 で、この cycle の due-only 対象外。consumer artifact の判断前後 receipt は期限到来 cycle に残す。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
