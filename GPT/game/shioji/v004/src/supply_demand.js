@@ -1,8 +1,8 @@
 import {
   FOOD_GOODS, WINTER_RESERVE_PER_PERSON,
-} from './food_readability.js?v=v004.53.0-second-market-tutorial';
-import { toDenari } from './config.js?v=v004.53.0-second-market-tutorial';
-import { GOODS_RECIPES } from './goods_detail.js?v=v004.53.0-second-market-tutorial';
+} from './food_readability.js?v=v004.54.0-cause-readable';
+import { toDenari } from './config.js?v=v004.54.0-cause-readable';
+import { GOODS_RECIPES } from './goods_detail.js?v=v004.54.0-cause-readable';
 
 export const SUPPLY_STATUS = Object.freeze({
   no_demand: Object.freeze({ severity: 0, label: '需要なし' }),

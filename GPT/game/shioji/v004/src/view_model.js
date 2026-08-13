@@ -1,20 +1,20 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.53.0-second-market-tutorial';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.54.0-cause-readable';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.53.0-second-market-tutorial';
+} from './food_readability.js?v=v004.54.0-cause-readable';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   findTravelPath, householdProductionSummary, laborWage, productionCost,
-} from './engine_bridge.js?v=v004.53.0-second-market-tutorial';
-import { analyzeRoadConnections } from './placement.js?v=v004.53.0-second-market-tutorial';
+} from './engine_bridge.js?v=v004.54.0-cause-readable';
+import { analyzeRoadConnections } from './placement.js?v=v004.54.0-cause-readable';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.53.0-second-market-tutorial';
+} from './render_scene.js?v=v004.54.0-cause-readable';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.53.0-second-market-tutorial';
-import { GOODS_RECIPES } from './goods_detail.js?v=v004.53.0-second-market-tutorial';
+} from './visuals.js?v=v004.54.0-cause-readable';
+import { GOODS_RECIPES } from './goods_detail.js?v=v004.54.0-cause-readable';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',

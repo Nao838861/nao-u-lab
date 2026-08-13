@@ -1,4 +1,4 @@
-import { buildingById, pathLen } from "./physical.js?v=v004.53.0-second-market-tutorial";
+import { buildingById, pathLen } from "./physical.js?v=v004.54.0-cause-readable";
 
 const DEFAULT_HYSTERESIS = 0.12;
 const EPSILON = 1e-9;

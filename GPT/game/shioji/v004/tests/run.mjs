@@ -396,7 +396,8 @@ test('性能L: イベントcursorは全履歴filterと同じ順序・値を返�
 test('教程T/U: 全目標をエレナ概要と一意なsystem操作へ分け、player-facing内部語を出さない', () => {
   const reportOnly = new Set([
     'close-first-chapter', 'close-second-chapter',
-    'close-fourth-chapter', 'close-fifth-chapter', 'graduate-governor',
+    'close-fourth-chapter', 'close-fifth-chapter', 'close-sixth-chapter',
+    'graduate-governor',
   ]);
   assert.deepEqual(
     TUTORIAL_GOALS.slice(0, 2).map(goal => goal.id),
@@ -658,7 +659,12 @@ test('可読性B: エレナのボタンは書状・家ジャンプだけ、操�
 });
 
 test('教程AA: 未来章をロックし、重要度に応じて強制書状・任意書状・一言を分ける', () => {
-  assert.equal(Object.keys(TUTORIAL_GOAL_START_AFTER).length, TUTORIAL_OPTIONAL_GOAL_IDS.length);
+  assert.deepEqual(
+    Object.keys(TUTORIAL_GOAL_START_AFTER)
+      .filter(id => !TUTORIAL_OPTIONAL_GOAL_IDS.includes(id)),
+    ['wait-main-wheat-stock'],
+    '新章の麦在庫待ちは必須だが、先の路線目標をロックする',
+  );
   for (const [id, prerequisite] of Object.entries(TUTORIAL_GOAL_START_AFTER)) {
     const goal = { id };
     assert.equal(isTutorialGoalUnlocked(goal, { completedGoals: [] }), false, `${id}は先回りしない`);
@@ -688,7 +694,8 @@ test('教程AA: 未来章をロックし、重要度に応じて強制書状・�
   assert.equal(tutorialLetterDelivery('first-order-complete'), 'message');
   const activeDeliveries = TUTORIAL_LETTERS.map(letter => tutorialLetterDelivery(letter.id));
   assert.equal(activeDeliveries.filter(value => value === 'forced').length, 6);
-  assert.equal(activeDeliveries.filter(value => value === 'letter').length, 7);
+  assert.equal(activeDeliveries.filter(value => value === 'letter').length, 9,
+    '二市場の出題書状と第六章締め書状を任意書状へ加える');
 
   const minimalLetter = id => Object.freeze({
     id,
@@ -922,7 +929,8 @@ test('チュートリアル段4: tutorialは96×64の母港と既存漁郷へデ
   assert.equal(model.buildings.filter(building => building.roles.includes('port')).length, 1);
   assert.equal(model.buildings.filter(building => building.roles.includes('market')).length, 0,
     '母港市場は第一章で建てる');
-  assert.equal(model.buildings.filter(building => building.marketId === 'fishery').length, 1);
+  assert.equal(model.buildings.filter(building => building.marketId === 'fishery').length, 5,
+    '漁郷市場・漁師3軒・塩田1軒を初日から実在させる');
   assert.deepEqual(model.households.filter(household => household.marketId === 'fishery')
     .map(household => household.job), ['fisher', 'fisher', 'fisher', 'saltworks']);
   assert.equal(model.households.filter(household => household.marketId === 'main').length, 0);
@@ -1042,9 +1050,11 @@ test('チュートリアル段5前提実測: 港だけの無人島でも木こ�
     }).ok, true);
     controller.advanceTicks(15 * 30);
     const model = controller.readModel();
-    assert.equal(model.population, 9, `seed${seed}の15日目人口`);
+    assert.equal(model.households.filter(household => household.marketId === 'main').length, 1,
+      `seed${seed}の15日目に母港の木こり1世帯が入る`);
+    assert.ok(model.population > 34, `seed${seed}は既存漁郷34人に母港移民が加わる`);
     assert.equal(model.buildings.some(building => building.roles.includes('market')), false);
-    assert.equal(model.roadKeys.length, 0);
+    assert.ok(model.roadKeys.length > 0, '初日から既存漁郷への街道は実在する');
   }
 });
 
@@ -2512,7 +2522,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.53.0-second-market-tutorial');
+  assert.equal(VERSION, 'v004.54.0-cause-readable');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2674,7 +2684,7 @@ function measureLoggerRoadRecovery(seed) {
   return { seed, before, after, director };
 }
 
-test('開始選択: 教程48×40・自由96×64・見本町・二市場縦切りを選べる', () => {
+test('開始選択: 教程・自由96×64・見本町・二市場縦切りを選べる', () => {
   assert.deepEqual(Object.keys(START_MODES), ['tutorial', 'sandbox', 'test', 'caravan']);
   const tutorial = createEngineController({ seed: 11, mode: 'tutorial' });
   const sandbox = createEngineController({ seed: 11, mode: 'sandbox' });
@@ -2702,10 +2712,12 @@ test('開始選択: 教程48×40・自由96×64・見本町・二市場縦切り
   assert.equal(resumed.calendarOffsetDays, SPRING_START_CALENDAR_OFFSET_DAYS,
     '春開始後の保存は暦オフセットを保って再開する');
   const blank = tutorial.readModel();
-  assert.deepEqual([blank.width, blank.height], [48, 40]);
-  assert.deepEqual(blank.buildings.map(building => building.type), ['port']);
-  assert.equal(blank.households.length, 0);
-  assert.equal(blank.roadKeys.length, 0);
+  assert.deepEqual([blank.width, blank.height], [96, 64]);
+  assert.equal(blank.buildings.filter(building => building.roles.includes('port')).length, 1);
+  assert.equal(blank.buildings.filter(building => building.marketId === 'fishery').length, 5);
+  assert.equal(blank.households.filter(household => household.marketId === 'main').length, 0);
+  assert.equal(blank.households.filter(household => household.marketId === 'fishery').length, 4);
+  assert.ok(blank.roadKeys.length > 0, '既存漁郷と母港予定地の街道を初日から持つ');
   assert.deepEqual(PLACEMENT_JOBS.slice(0, 2), ['market', 'warehouse']);
   assert.deepEqual([sandbox.readModel().width, sandbox.readModel().height], [96, 64]);
   assert.deepEqual(
@@ -4474,6 +4486,38 @@ test('原因可読: 実都市のsnapshotでも人数調べが立つ', () => {
   assert.ok(diagnosis.producers >= 1, '漁師の作り手が数えられる');
   const total = Object.values(diagnosis.states).reduce((a, b) => a + b, 0);
   assert.equal(total, diagnosis.producers, '全作り手がいずれかの状態に分類される');
+});
+
+test('原因可読: 建築余地の合図どおり増設すると30日以内に不足が改善する', () => {
+  // seed1/day120は、丸太の作り手が健康でも需要に届かず、空き家もないため
+  // 厳格な建築合図が実際に出る決定的fixture。
+  const controller = createEngineController({ seed: 1, mode: 'test' });
+  controller.advanceTicks(120 * 30);
+  let model = controller.readModel();
+  const before = supplyDemandRow(model, 'log');
+  const diagnosis = supplyDiagnosis(model, before);
+  assert.deepEqual(diagnosis.cue, { kind: 'build', job: 'logger', count: 2 });
+
+  for (let index = 0; index < diagnosis.cue.count; index += 1) {
+    const preview = findPreview(controller.readModel(), diagnosis.cue.job);
+    assert.ok(preview, `木こり増設${index + 1}軒目の配置余地`);
+    assert.equal(controller.operate({
+      type: 'place_building',
+      job: diagnosis.cue.job,
+      x: preview.entrance.x,
+      y: preview.entrance.y,
+      buildingX: preview.x,
+      buildingY: preview.y,
+    }).ok, true);
+  }
+
+  controller.advanceTicks(30 * 30);
+  model = controller.readModel();
+  const after = supplyDemandRow(model, 'log');
+  assert.ok(after.shortage + 0.005 < before.shortage,
+    `丸太不足 ${before.shortage.toFixed(3)}→${after.shortage.toFixed(3)}`);
+  assert.ok(model.households.filter(household => household.job === 'logger').length >= 2,
+    '増設区画へ実際に木こり世帯が入居する');
 });
 
 test('UI向上段8: 需給は需要=消費+不足を保ち、原因別の5状態で深刻順に並べる', () => {

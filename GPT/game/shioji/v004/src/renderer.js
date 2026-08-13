@@ -1,15 +1,15 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.53.0-second-market-tutorial';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.53.0-second-market-tutorial';
-import { islandCalendar } from './ui_summary.js?v=v004.53.0-second-market-tutorial';
+} from './config.js?v=v004.54.0-cause-readable';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.54.0-cause-readable';
+import { islandCalendar } from './ui_summary.js?v=v004.54.0-cause-readable';
 import {
   compileRenderScene, inventoryLayerDepth, marketStallLayerDepth, mergeDrawables,
-} from './render_scene.js?v=v004.53.0-second-market-tutorial';
+} from './render_scene.js?v=v004.54.0-cause-readable';
 import {
   buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
   seasonalTerrainVisual,
-} from './visuals.js?v=v004.53.0-second-market-tutorial';
+} from './visuals.js?v=v004.54.0-cause-readable';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 

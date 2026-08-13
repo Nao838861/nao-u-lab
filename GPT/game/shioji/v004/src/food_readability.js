@@ -1,4 +1,4 @@
-import { islandCalendar } from './ui_summary.js?v=v004.53.0-second-market-tutorial';
+import { islandCalendar } from './ui_summary.js?v=v004.54.0-cause-readable';
 
 export const FOOD_GOODS = Object.freeze([
   'fish', 'veg', 'wheat', 'pres', 'pick', 'meat',

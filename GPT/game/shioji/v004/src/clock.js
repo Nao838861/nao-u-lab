@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.53.0-second-market-tutorial';
+import { SPEEDS } from './config.js?v=v004.54.0-cause-readable';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

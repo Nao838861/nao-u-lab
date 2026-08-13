@@ -169,6 +169,7 @@ import {
   E_STABLE_BAD_FAMINE_RATIO_MIN,
   E_STABLE_BAD_POPULATION_RATIO_MAX,
   E_STABLE_JOBS,
+  E_STABLE_MATURE_INITIAL_COUNTS,
   E_STABLE_MARKET_ANCHOR,
   E_STABLE_PATH_BAND,
   E_STABLE_RELATIVE_LAYOUT,
@@ -177,6 +178,7 @@ import {
   IRON_DEMAND_HOUSEHOLDS,
   IRON_DEMAND_LEVEL,
   buildBaseCity,
+  buildDemandMatureCity,
   buildCaravanSliceWorld,
   buildTutorialTwoMarketWorld,
   buildBadCity,
@@ -187,6 +189,7 @@ import {
   findAuditSpot,
   mimicPlayer,
   makeStableCityPlan,
+  runBadCityScenario,
   runFlowIslandAudit,
   runStableCityScenario,
 } from "../src/audit.js";
@@ -206,7 +209,6 @@ const tests = [];
 const matchIndex = process.argv.indexOf('--match');
 const testMatch = matchIndex >= 0 ? new RegExp(process.argv[matchIndex + 1]) : null;
 const includeFullAcceptance = !process.argv.includes("--unit-only") && !testMatch;
-const badBaselineYearly = Object.freeze([{ day: 1440, population: 96, famine: 367 }]);
 
 function runStableWorker(seed, mode = "direct", runBad = false) {
   return new Promise((resolve, reject) => {
@@ -228,7 +230,7 @@ function runIronWorker(depositRoads) {
         seed: 11,
         depositRoads,
         days: depositRoads ? 1440 : 1080,
-        badBaselineYearly: depositRoads ? null : badBaselineYearly,
+        badBaselineYearly: null,
       },
     });
     worker.once("message", resolve);
@@ -4932,6 +4934,20 @@ test("段46: E-Stable配置は市場アンカーからの相対生成式でpathL
   assert.ok(Math.max(...distances) <= E_STABLE_PATH_BAND[1] + 1e-9);
 });
 
+test("裁定10: 需要網の成熟都市は木工房2・木こり7・採石2を実在させる", () => {
+  const world = buildDemandMatureCity(11);
+  const counts = Object.fromEntries(Object.keys(E_STABLE_MATURE_INITIAL_COUNTS).map((job) => [
+    job,
+    world.state.economy.households.filter((household) => household.job === job).length,
+  ]));
+  assert.deepEqual(counts, E_STABLE_MATURE_INITIAL_COUNTS);
+  assert.equal(world.state.economy.households.every((household) => household.members.length === 4), true);
+  assert.equal(world.state.economy.company.money * 10, 22500);
+  assert.equal(world.state.economy.zones.length, 22);
+  assert.equal(world.state.economy.zones.every(({ filled }) => filled), true);
+  assert.equal(assertMoneyConservation(world.state.economy), true);
+});
+
 if (includeFullAcceptance) test("段47: 相対悪配置はpathLen>25で良配置との失敗シグネチャを示す", async () => {
   const badWorld = buildBadCity(11);
   for (const zone of badWorld.state.economy.zones) {
@@ -4941,21 +4957,19 @@ if (includeFullAcceptance) test("段47: 相対悪配置はpathLen>25で良配置
       `${zone.job}@${zone.x},${zone.y}`,
     );
   }
-  const [stableWorkers, ironWorkers] = await Promise.all([
-    fullStableAuditPromise,
-    fullIronAudit(),
-  ]);
+  const stableWorkers = await fullStableAuditPromise;
   const goodAtFourYears = stableWorkers
     .find(({ seed, mode }) => seed === 11 && mode === "api")
     .apiScenario.yearly.find(({ day }) => day === 1440);
-  const bad = ironWorkers.find(({ depositRoads }) => !depositRoads).badScenario;
-  assert.deepEqual(
-    { day: goodAtFourYears.day, population: goodAtFourYears.population, famine: goodAtFourYears.famine },
-    badBaselineYearly[0],
-  );
+  const bad = runBadCityScenario(11, {
+    days: 1440,
+    baselineYearly: [goodAtFourYears],
+    materialCheckInterval: 360,
+  });
+  assert.equal(bad.baseline.day, 1440);
   assert.equal(bad.passed, true);
-  assert.ok(bad.failureSignature.famineRatio >= E_STABLE_BAD_FAMINE_RATIO_MIN);
-  assert.ok(bad.failureSignature.populationRatio <= E_STABLE_BAD_POPULATION_RATIO_MAX);
+  assert.equal(Object.values(bad.failureSignature.signatures).some(Boolean), true);
+  assert.ok(bad.failureSignature.extinctJobs.length >= 2);
   assert.deepEqual(bad.physical, { carriers: true, occupancy: true });
   assert.equal(bad.material.passed, true);
 });

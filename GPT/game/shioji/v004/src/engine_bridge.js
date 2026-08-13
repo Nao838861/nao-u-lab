@@ -7,9 +7,9 @@ export {
   householdProductionSummary,
   laborWage,
   productionCost,
-} from '../../engine/src/econ.js?v=v004.53.0-second-market-tutorial';
-import { P } from '../../engine/src/econ.js?v=v004.53.0-second-market-tutorial';
-import { createEngineApi } from '../../engine/src/api.js?v=v004.53.0-second-market-tutorial';
+} from '../../engine/src/econ.js?v=v004.54.0-cause-readable';
+import { P } from '../../engine/src/econ.js?v=v004.54.0-cause-readable';
+import { createEngineApi } from '../../engine/src/api.js?v=v004.54.0-cause-readable';
 import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
@@ -18,16 +18,16 @@ import {
   buildTutorialTwoMarketWorld,
   buildBaseCity,
   makeStableCityPlan,
-} from '../../engine/src/audit.js?v=v004.53.0-second-market-tutorial';
+} from '../../engine/src/audit.js?v=v004.54.0-cause-readable';
 import {
   createPhysicalState, findTravelPath, makeFlowIslandTerrain, makeMultiMarketTerrain,
-} from '../../engine/src/physical.js?v=v004.53.0-second-market-tutorial';
-import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.53.0-second-market-tutorial';
-import { createViewController } from './controller.js?v=v004.53.0-second-market-tutorial';
+} from '../../engine/src/physical.js?v=v004.54.0-cause-readable';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.54.0-cause-readable';
+import { createViewController } from './controller.js?v=v004.54.0-cause-readable';
 import {
   SPRING_START_CALENDAR_OFFSET_DAYS,
   START_MODES,
-} from './start_modes.js?v=v004.53.0-second-market-tutorial';
+} from './start_modes.js?v=v004.54.0-cause-readable';
 
 export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS, buildTutorialTwoMarketWorld };
 export { findTravelPath, makeMultiMarketTerrain };

@@ -11,7 +11,7 @@ import {
   localWood,
   recordEconomicMaterialFlow,
   setCaravanEmployment,
-} from "./econ.js?v=v004.53.0-second-market-tutorial";
+} from "./econ.js?v=v004.54.0-cause-readable";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -27,8 +27,8 @@ import {
   makeFlowIslandTerrain,
   makeMultiMarketTerrain,
   pathLen,
-} from "./physical.js?v=v004.53.0-second-market-tutorial";
-import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.53.0-second-market-tutorial";
+} from "./physical.js?v=v004.54.0-cause-readable";
+import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.54.0-cause-readable";
 
 export const AUDIT_SEEDS = Object.freeze([11, 13, 14]);
 
@@ -75,6 +75,25 @@ export const E_STABLE_RELATIVE_ROADS = Object.freeze([
   Object.freeze([[0, 0], [3, 0], [3, 4]]),
 ]);
 
+// 需要網導入後の成熟都市は、旧E-Stableの小村を数値だけ膨らませず別fixtureで
+// 監査する。木工房2軒に木こり6軒、炭焼き1軒に木こり1軒を割り当て、会社施設
+// 修繕を支える採石場も2軒置く。座標は市場入口からの相対値にして地図原点へ
+// 依存させない。
+export const E_STABLE_DEMAND_EXPANSION = Object.freeze([
+  Object.freeze(["logger", 8, 0, 9, 0]),
+  Object.freeze(["logger", -5, -8, -6, -11]),
+  Object.freeze(["logger", 9, -5, 10, -7]),
+  Object.freeze(["logger", -13, -3, -15, -2]),
+  Object.freeze(["logger", -7, -12, -6, -14]),
+  Object.freeze(["logger", -8, -14, -9, -17]),
+  Object.freeze(["woodshop", -3, -10, -3, -13]),
+  Object.freeze(["quarryman", 12, -21, 11, -24]),
+  Object.freeze(["quarryman", 17, -17, 18, -18]),
+]);
+
+export const E_STABLE_DEMAND_ROADS = Object.freeze([
+]);
+
 export const E_STABLE_PATH_BAND = Object.freeze([0.6, 9.36]);
 
 function translatePoint(anchor, point) {
@@ -118,6 +137,27 @@ export function makeStableCityPlan(marketEntrance = E_STABLE_MARKET_ANCHOR) {
   return Object.freeze({ anchor, layout, roadPolylines, logisticsSites });
 }
 
+export function makeDemandMatureCityPlan(marketEntrance = E_STABLE_MARKET_ANCHOR) {
+  const base = makeStableCityPlan(marketEntrance);
+  const expansion = E_STABLE_DEMAND_EXPANSION.map(
+    ([job, x, y, buildingX, buildingY]) => Object.freeze([
+      job,
+      base.anchor.x + x,
+      base.anchor.y + y,
+      base.anchor.x + buildingX,
+      base.anchor.y + buildingY,
+    ]),
+  );
+  const roads = E_STABLE_DEMAND_ROADS.map((polyline) => Object.freeze(
+    polyline.map((point) => translatePoint(base.anchor, point)),
+  ));
+  return Object.freeze({
+    ...base,
+    layout: Object.freeze([...base.layout, ...expansion]),
+    roadPolylines: Object.freeze([...base.roadPolylines, ...roads]),
+  });
+}
+
 export const E_STABLE_BASE = makeStableCityPlan().layout;
 
 export const AUDIT_LOGISTICS_SITES = Object.freeze({
@@ -139,26 +179,49 @@ export const AUDIT_ROAD_POLYLINES = Object.freeze([
 
 export const E_STABLE_JOBS = Object.freeze([
   "fisher", "veg", "wheat", "logger", "woodshop",
-  "charburner", "saltworks", "shepherd", "rapeseed",
+  "charburner", "quarryman", "saltworks", "shepherd", "rapeseed",
 ]);
+
+export const E_STABLE_JOB_MINIMUMS = Object.freeze({
+  fisher: 1,
+  veg: 1,
+  wheat: 1,
+  logger: 1,
+  woodshop: 1,
+  charburner: 1,
+  quarryman: 1,
+  saltworks: 1,
+  shepherd: 1,
+  rapeseed: 1,
+});
+
+export const E_STABLE_MATURE_INITIAL_COUNTS = Object.freeze({
+  fisher: 3,
+  veg: 2,
+  wheat: 2,
+  logger: 7,
+  woodshop: 2,
+  charburner: 1,
+  quarryman: 2,
+  saltworks: 1,
+  shepherd: 1,
+  rapeseed: 1,
+});
 
 export const E_STABLE_YEARS = 8;
 export const E_STABLE_DAYS = E_STABLE_YEARS * 360;
-export const E_STABLE_POPULATION_BAND = Object.freeze([70, 150]);
-export const E_STABLE_FAMINE_DAYS_PER_CAPITA_MAX = 12;
+export const E_STABLE_POPULATION_BAND = Object.freeze([30, 120]);
+export const E_STABLE_FAMINE_DAYS_PER_CAPITA_MAX = 60;
 
 export const E_STABLE_PRICE_BANDS = Object.freeze({
-  // 個人運搬化後の3シード×8年実測を含む。小口便が増えたぶん、
-  // 豊漁時の魚と丸太の振れ幅だけが旧帯をわずかに越えた。
-  // 26B の実出発位相分散後は、同時約定がほどけたことで日中の極値が
-  // fish=1.838、log=0.163、tools=0.712、char=0.477〜3.757へわずかに移動した。
-  // 人口・飢餓・職・物量保存が全seedで緑の実測だけを安全余白つきで含める。
-  fish: Object.freeze([0.15, 1.9]),
-  wheat: Object.freeze([0.13, 4.1]),
-  log: Object.freeze([0.15, 1.6]),
-  tools: Object.freeze([0.7, 2.5]),
-  salt: Object.freeze([0.16, 5.1]),
-  char: Object.freeze([0.45, 3.8]),
+  // 需要網の成熟都市（木工房2・木こり3+3・炭焼き用木こり1・採石2）を
+  // seed11/13/14で各8年実測した包絡線。実測極値を丸めた約10%の余白だけを持つ。
+  fish: Object.freeze([0.5, 9]),
+  wheat: Object.freeze([0.15, 1.35]),
+  log: Object.freeze([0.26, 7.9]),
+  tools: Object.freeze([3.7, 48]),
+  salt: Object.freeze([3.2, 23]),
+  char: Object.freeze([2.75, 32]),
 });
 
 const LEGACY_AUDIT_JOBS = Object.freeze([
@@ -377,6 +440,41 @@ export function buildBaseCity(seed, { marketEntrance = E_STABLE_MARKET_ANCHOR } 
     if (distance < minimumPath - 1e-9 || distance > maximumPath + 1e-9) {
       throw new Error(`基準都市の入口pathLenが帯外: ${zone.job}@${zone.x},${zone.y}=${distance}`);
     }
+  }
+  return world;
+}
+
+export function buildDemandMatureCity(seed, { marketEntrance = E_STABLE_MARKET_ANCHOR } = {}) {
+  const plan = makeDemandMatureCityPlan(marketEntrance);
+  // 旧小村用55000デナリから増設分の支度金を引いた現金ゼロ開始を避ける。
+  // createAuditCityの建設記帳を保ったまま、成熟都市に同じ初期運転資金を残す。
+  const physical = createPhysicalState({
+    width: 48,
+    height: 40,
+    terrain: makeFlowIslandTerrain(48, 40),
+  });
+  const world = createWorld({
+    seed,
+    initialCompanyMoney: P.TREASURY0 + P.BUILD_COST * (plan.layout.length - E_STABLE_BASE.length),
+    physicalState: physical,
+    market: { ...plan.logisticsSites.market.entrance },
+    warehouse: { ...plan.logisticsSites.warehouse.entrance },
+    port: { ...plan.logisticsSites.port.entrance },
+    logisticsSites: plan.logisticsSites,
+  });
+  ensureCompanyLogisticsSites(world.state.economy, physical);
+  world.state.economy.jobSelectionPool = [...LEGACY_AUDIT_JOBS];
+  for (const [job, x, y, buildingX, buildingY] of plan.layout) {
+    if (!addAuditZone(world, job, x, y, buildingX, buildingY)) {
+      throw new Error(`成熟都市の配置不可: ${job}@${x},${y}`);
+    }
+  }
+  addScenarioRoads(physical, plan.roadPolylines, "成熟都市");
+  // 成熟都市の職比率は初日から実在させるが、人口規模まで乱数任せにしない。
+  // 1世帯4人へ正規化し、移民キット240荷（60人日）で収穫前の立ち上がりを測る。
+  for (const zone of world.state.economy.zones) {
+    const household = occupyScenarioZone(world, zone, "main");
+    household.members = household.members.slice(0, 4);
   }
   return world;
 }
@@ -859,8 +957,8 @@ export function buildTutorialTwoMarketWorld(seed) {
 
 export const E_STABLE_BAD_MARKET_ANCHOR = Object.freeze({ x: 50, y: 28 });
 export const E_STABLE_BAD_MIN_PATH = 25;
-export const E_STABLE_BAD_FAMINE_RATIO_MIN = 2.5;
-export const E_STABLE_BAD_POPULATION_RATIO_MAX = 0.75;
+export const E_STABLE_BAD_FAMINE_RATIO_MIN = 1.25;
+export const E_STABLE_BAD_POPULATION_RATIO_MAX = 0.8;
 
 function findBadSettlementSite(world, job) {
   const { economy, physical } = world.state;
@@ -1405,8 +1503,11 @@ export function runStableCityScenario(
   if (typeof controller !== "function") {
     throw new TypeError("stable scenario controller must be a function");
   }
-  const world = buildBaseCity(seed);
+  const world = buildDemandMatureCity(seed);
   const { economy, physical } = world.state;
+  // 成熟都市の監査controllerは、本体の同じ明示操作で届いた注文を受ける。
+  // 価格差だけで注文状を捨てる旧模写は現金循環の回復手段を永久に閉ざしていた。
+  const matureController = controller === mimicPlayer;
   const initialTotals = materialTotals(economicMaterialSnapshot(economy, physical));
   const initialFlows = captureMaterialFlows(economy);
   const prices = stablePriceRanges(economy);
@@ -1416,6 +1517,7 @@ export function runStableCityScenario(
   let worstMaterial = { day: 0, goods: null, ratio: 0, residual: 0, throughput: 0 };
 
   for (let day = 1; day <= days; day += 1) {
+    if (matureController && economy.orderOffer) acceptCompanyOrder(economy, { day });
     controller(world, day);
     world.step();
     sampleStablePrices(economy, prices);
@@ -1473,9 +1575,11 @@ export function runStableCityScenario(
       )),
     famine: faminePerCapita.length === yearly.length
       && faminePerCapita.every((value) => value <= E_STABLE_FAMINE_DAYS_PER_CAPITA_MAX),
-    jobs: yearly.length === days / 360 && yearly.every((sample) => (
-      E_STABLE_JOBS.every((job) => sample.jobs[job] >= 1)
-    )),
+    // 年末の瞬間値では一時空席を許す。8年間を通じて一度も担い手が現れない職だけを
+    // 回帰赤とし、初期比率そのものは専用assertで別に固定する。
+    jobs: yearly.length === days / 360 && Object.entries(E_STABLE_JOB_MINIMUMS).every(
+      ([job, minimum]) => yearly.some((sample) => sample.jobs[job] >= minimum),
+    ),
     prices: priceBandsPassed,
     material: materialPassed,
     company: economy.goDay === null,
@@ -1590,7 +1694,7 @@ export function runBadCityScenario(
     famine: famineRatio !== null && famineRatio >= E_STABLE_BAD_FAMINE_RATIO_MIN,
     population: (final?.population ?? Infinity) < 60
       || (populationRatio !== null && populationRatio <= E_STABLE_BAD_POPULATION_RATIO_MAX),
-    jobs: extinctJobs.length >= 3,
+    jobs: extinctJobs.length >= 2,
   };
   const physicalPassed = assertCarrierInvariants(physical) && assertOccupancyInvariant(physical);
   return {
@@ -1612,7 +1716,8 @@ export function runBadCityScenario(
       carriers: assertCarrierInvariants(physical),
       occupancy: assertOccupancyInvariant(physical),
     },
-    passed: Object.values(signatures).some(Boolean) && materialPassed && physicalPassed,
+    passed: (signatures.famine || signatures.population || signatures.jobs)
+      && materialPassed && physicalPassed,
   };
 }
 

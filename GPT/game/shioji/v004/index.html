@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.53.0-second-market-tutorial">
+  <link rel="stylesheet" href="./style.css?v=v004.54.0-cause-readable">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -348,7 +348,7 @@
       const reportFailure = detail => {
         if (!detail) return;
         const url = new URL('./boot-error.gif', window.location.href);
-        url.searchParams.set('build', 'v004.53.0-second-market-tutorial');
+        url.searchParams.set('build', 'v004.54.0-cause-readable');
         url.searchParams.set('message', detail);
         url.searchParams.set('browser', navigator.userAgent.slice(0, 160));
         const image = new Image();
@@ -389,7 +389,7 @@
   </script>
   <script type="module">
     const retryToken = new URL(window.location.href).searchParams.get('boot-retry');
-    const moduleUrl = './src/main.js?v=v004.53.0-second-market-tutorial'
+    const moduleUrl = './src/main.js?v=v004.54.0-cause-readable'
       + (retryToken ? `&boot-retry=${encodeURIComponent(retryToken)}` : '');
     import(moduleUrl).catch(error => window.__SHIOJI_BOOT__?.failed(error));
   </script>

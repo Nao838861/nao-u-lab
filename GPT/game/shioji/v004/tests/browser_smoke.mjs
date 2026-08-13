@@ -265,7 +265,7 @@ async function checkExplicitImportUi() {
   assert.equal(result.request?.qty, 7, JSON.stringify(result));
   assert.match(result.status, /7荷を本土へ発注/);
   assert.equal(result.bootState, 'ready', JSON.stringify(result));
-  assert.equal(result.version, 'v004.53.0-second-market-tutorial');
+  assert.equal(result.version, 'v004.54.0-cause-readable');
   assert.deepEqual(page.errors, []);
   await page.screenshot('/tmp/shioji_v004_explicit_import.png');
   await page.close();
@@ -838,10 +838,11 @@ async function checkStartChoice(width, height, mobile, mode) {
   assert.equal(started.season, '春・3月', JSON.stringify(started));
   assert.equal(started.screenHidden, true, JSON.stringify(started));
   if (mode === 'tutorial') {
-    assert.deepEqual(started.size, [48, 40], JSON.stringify(started));
-    assert.equal(started.buildings, 1, JSON.stringify(started));
-    assert.equal(started.households, 0, JSON.stringify(started));
-    assert.equal(started.roads, 0, JSON.stringify(started));
+    assert.deepEqual(started.size, [96, 64], JSON.stringify(started));
+    assert.equal(started.marketCount, 2, JSON.stringify(started));
+    assert.ok(started.buildings >= 6, JSON.stringify(started));
+    assert.equal(started.households, 4, JSON.stringify(started));
+    assert.ok(started.roads > 0, JSON.stringify(started));
   } else if (mode === 'test') {
     assert.deepEqual(started.size, [48, 40], JSON.stringify(started));
     assert.ok(started.buildings > 3, JSON.stringify(started));
@@ -1260,7 +1261,7 @@ async function checkSeasonalPlots(width, height, mobile) {
       plots: plots.map(row => row.type),
     };
   })()`);
-  assert.equal(springStart.version, 'v004.53.0-second-market-tutorial', JSON.stringify(springStart));
+  assert.equal(springStart.version, 'v004.54.0-cause-readable', JSON.stringify(springStart));
   assert.equal(springStart.season, '春', JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => ['wheat', 'veg'].includes(type)), JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => type === 'shepherd'), JSON.stringify(springStart));
@@ -1646,8 +1647,8 @@ async function checkPeopleVisuals(width, height, mobile) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.53.0-second-market-tutorial');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.53.0-second-market-tutorial');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.54.0-cause-readable');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.54.0-cause-readable');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -2495,7 +2496,7 @@ async function checkOrderCostUi(width, height, mobile) {
       viewport: { width: innerWidth, height: innerHeight },
     };
   })()`);
-  assert.equal(result.version, 'v004.53.0-second-market-tutorial');
+  assert.equal(result.version, 'v004.54.0-cause-readable');
   assert.ok(result.offer, JSON.stringify(result));
   assert.match(result.text, /完遂決済単価/);
   assert.match(result.text, /全量仕入原価/);
@@ -2659,10 +2660,102 @@ async function checkSupplyDemand(width, height, mobile) {
   assert.equal(result.pageHorizontalOverflow, false, JSON.stringify(result));
   assert.equal(result.supplyBreakdownVisible, !mobile, JSON.stringify(result));
   assert.equal(result.demandBreakdownVisible, true, JSON.stringify(result));
-  assert.equal(result.runtimeVersion, 'v004.53.0-second-market-tutorial', JSON.stringify(result));
+  assert.equal(result.runtimeVersion, 'v004.54.0-cause-readable', JSON.stringify(result));
   await page.screenshot(`/tmp/shioji_v004_supply_demand_${mobile ? 'mobile' : 'pc'}_${width}x${height}.png`);
   await page.close();
   return result;
+}
+
+async function checkCauseReadableActions(width, height, mobile) {
+  const page = await newPage(width, height, mobile);
+  const upstream = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.setSpeed(0);
+    for (let day = 0; day < 180; day += 1) game.advanceTicks(30, { animate: false });
+    document.querySelector('#open-supply').click();
+    const link = document.querySelector('[data-supply-link]');
+    if (!link) return {
+      missing: true,
+      cards: [...document.querySelectorAll('[data-supply-goods]')].map(row => ({
+        goods: row.dataset.supplyGoods,
+        status: row.dataset.status,
+        text: row.textContent,
+      })),
+    };
+    const sourceGoods = link.closest('[data-supply-goods]')?.dataset.supplyGoods ?? null;
+    const targetGoods = link.dataset.supplyLink;
+    link.click();
+    const target = document.querySelector('[data-supply-goods="' + targetGoods + '"]');
+    return {
+      missing: false,
+      sourceGoods,
+      targetGoods,
+      focusedGoods: document.activeElement?.dataset?.supplyGoods ?? null,
+      targetExists: Boolean(target),
+      targetVisible: Boolean(target && target.getBoundingClientRect().height > 0),
+      supplyVisible: !document.querySelector('#supply-sheet').hidden,
+    };
+  })()`);
+  assert.equal(upstream.missing, false,
+    `上流品目への遷移元が実際の需給カードにある: ${JSON.stringify(upstream)}`);
+  assert.equal(upstream.targetExists, true, JSON.stringify(upstream));
+  assert.equal(upstream.targetVisible, true, JSON.stringify(upstream));
+  assert.equal(upstream.supplyVisible, true, JSON.stringify(upstream));
+  assert.equal(upstream.focusedGoods, upstream.targetGoods, JSON.stringify(upstream));
+  await page.screenshot(`/tmp/shioji_v004_cause_upstream_${mobile ? 'mobile' : 'pc'}.png`);
+
+  const placement = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    document.querySelector('[data-close-sheet="supply-sheet"]').click();
+    document.querySelector('[data-build-category="processing"]').click();
+    document.querySelector('[data-building-job="woodshop"]').click();
+    let preview = null;
+    for (let y = 0; y < game.model.height && !preview; y += 1) {
+      for (let x = 0; x < game.model.width; x += 1) {
+        const candidate = game.previewBuilding('woodshop', x, y);
+        if (candidate.ok) { preview = candidate; break; }
+      }
+    }
+    if (!preview) return { missing: true };
+    game.camera.focus(preview.entrance.x + 0.5, preview.entrance.y + 0.5);
+    game.renderer.render(game.displayModel, 0);
+    const projected = game.camera.project(preview.entrance.x + 0.5, preview.entrance.y + 0.5);
+    const canvasBox = document.querySelector('#world').getBoundingClientRect();
+    return {
+      missing: false,
+      point: { x: canvasBox.left + projected.x, y: canvasBox.top + projected.y },
+      expectedWarning: /丸太/.test(game.model.supplyDemand?.find(row => row.goods === 'log')?.status ?? '')
+        || null,
+    };
+  })()`);
+  assert.equal(placement.missing, false, JSON.stringify(placement));
+  await page.send('Input.dispatchMouseEvent', {
+    type: 'mouseMoved', x: placement.point.x, y: placement.point.y,
+  });
+  await wait(80);
+  const hint = await page.evaluate(`(() => {
+    const element = document.querySelector('#tool-hint');
+    const box = element.getBoundingClientRect();
+    return {
+      hidden: element.hidden,
+      tone: element.className,
+      text: element.textContent,
+      withinViewport: box.left >= 0 && box.right <= innerWidth
+        && box.top >= 0 && box.bottom <= innerHeight,
+      runtimeVersion: window.__SHIOJI_V004__.version,
+    };
+  })()`);
+  assert.equal(hint.hidden, false, JSON.stringify(hint));
+  assert.match(hint.tone, /good/, JSON.stringify(hint));
+  assert.match(hint.text, /(?:近所の.+仕入候補|最寄り原料元|近所に原料の生産者はいません)/,
+    JSON.stringify(hint));
+  assert.match(hint.text, /(?:不足|市場から調達)/, JSON.stringify(hint));
+  assert.equal(hint.withinViewport, true, JSON.stringify(hint));
+  assert.equal(hint.runtimeVersion, 'v004.54.0-cause-readable', JSON.stringify(hint));
+  assert.deepEqual(page.errors, []);
+  await page.screenshot(`/tmp/shioji_v004_cause_placement_${mobile ? 'mobile' : 'pc'}.png`);
+  await page.close();
+  return { upstream, hint };
 }
 
 async function checkFoodAlerts(width, height, mobile) {
@@ -2725,7 +2818,7 @@ async function checkFoodAlerts(width, height, mobile) {
       JSON.stringify(result),
     );
   }
-  assert.equal(result.runtimeVersion, 'v004.53.0-second-market-tutorial', JSON.stringify(result));
+  assert.equal(result.runtimeVersion, 'v004.54.0-cause-readable', JSON.stringify(result));
   assert.deepEqual(page.errors, []);
   await page.screenshot(`/tmp/shioji_v004_food_alerts_${mobile ? 'mobile' : 'pc'}.png`);
   await page.close();
@@ -2767,7 +2860,7 @@ async function checkSpatialProductivity(width = 1440, height = 900, mobile = fal
   })()`);
   assert.ok(building && !building.missing,
     `資源職の30日実測を建物画面へ表示できる: ${JSON.stringify(building)}`);
-  assert.equal(building.version, 'v004.53.0-second-market-tutorial');
+  assert.equal(building.version, 'v004.54.0-cause-readable');
   assert.ok(Number.isFinite(building.efficiency), JSON.stringify(building));
   assert.ok(Number.isFinite(building.resourceEfficiency), JSON.stringify(building));
   assert.equal(building.withinViewport, true, JSON.stringify(building));
@@ -2920,14 +3013,14 @@ async function checkSaveDeliveryUi(width = 1440, height = 900, mobile = false) {
     households: window.__SHIOJI_V004__.model.households.length,
     roads: window.__SHIOJI_V004__.model.roadKeys.length,
   })`);
-  assert.deepEqual(startedOver, {
-    mode: 'tutorial',
-    resume: null,
-    screenHidden: true,
-    buildings: ['port'],
-    households: 0,
-    roads: 0,
-  }, JSON.stringify(startedOver));
+  assert.equal(startedOver.mode, 'tutorial', JSON.stringify(startedOver));
+  assert.equal(startedOver.resume, null, JSON.stringify(startedOver));
+  assert.equal(startedOver.screenHidden, true, JSON.stringify(startedOver));
+  assert.equal(startedOver.buildings.filter(type => type === 'port').length, 1,
+    JSON.stringify(startedOver));
+  assert.ok(startedOver.buildings.length >= 6, JSON.stringify(startedOver));
+  assert.equal(startedOver.households, 4, JSON.stringify(startedOver));
+  assert.ok(startedOver.roads > 0, JSON.stringify(startedOver));
   await page.screenshot(`/tmp/shioji_v004_start_over_${mobile ? 'mobile' : 'desktop'}.png`);
   assert.deepEqual(page.errors, []);
   await page.close();
@@ -2959,7 +3052,7 @@ async function checkMarketRhythmUi(width = 1440, height = 900, mobile = false) {
       hidden: sheet.hidden,
     };
   })()`);
-  assert.equal(result.version, 'v004.53.0-second-market-tutorial', JSON.stringify(result));
+  assert.equal(result.version, 'v004.54.0-cause-readable', JSON.stringify(result));
   assert.equal(result.hidden, false, JSON.stringify(result));
   assert.match(result.label, /出荷をまとめ中 1\/2日/, JSON.stringify(result));
   assert.match(result.detail, /食料切れと生産停止は待ちません/, JSON.stringify(result));
@@ -3068,7 +3161,7 @@ async function checkCaravanEmployment(width = 1440, height = 900, mobile = false
       applicantsUi: /応募者|応募一覧/.test(sheet.textContent),
     };
   })()`);
-  assert.equal(result.version, 'v004.53.0-second-market-tutorial', JSON.stringify(result));
+  assert.equal(result.version, 'v004.54.0-cause-readable', JSON.stringify(result));
   assert.deepEqual(result.employment, { recruitment: 3, wage: 6.5 });
   assert.equal(result.crew, 3, JSON.stringify(result));
   assert.match(result.text, /隊商の雇用/);
@@ -3188,7 +3281,7 @@ async function checkCaravanAccounting(width = 1440, height = 900, mobile = false
       horizontalOverflow: panel.scrollWidth > panel.clientWidth + 1,
     };
   })()`);
-  assert.equal(result.version, 'v004.53.0-second-market-tutorial', JSON.stringify(result));
+  assert.equal(result.version, 'v004.54.0-cause-readable', JSON.stringify(result));
   assert.deepEqual(result.configured, {
     type: 'set_caravan_route',
     baseBuildingId: result.configured.baseBuildingId,
@@ -3304,6 +3397,12 @@ if (process.argv.includes('--boot-retry-only')) {
     compactPc: compactPc.statusCounts,
     mobile: mobile.statusCounts,
     compactMobile: compactMobile.statusCounts,
+  })}`);
+} else if (process.argv.includes('--cause-readable-only')) {
+  const pc = await checkCauseReadableActions(1440, 900, false);
+  const mobile = await checkCauseReadableActions(390, 844, true);
+  console.log(`CHARTER ISLE v004 cause readable actions smoke: PASS ${JSON.stringify({
+    pc: pc.upstream, mobile: mobile.upstream,
   })}`);
 } else if (process.argv.includes('--food-alert-only')) {
   const pc = await checkFoodAlerts(1440, 900, false);

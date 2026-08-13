@@ -1,8 +1,8 @@
 import {
   FOOD_GOODS,
   islandFoodSummary,
-} from './food_readability.js?v=v004.53.0-second-market-tutorial';
-import { islandCalendar } from './ui_summary.js?v=v004.53.0-second-market-tutorial';
+} from './food_readability.js?v=v004.54.0-cause-readable';
+import { islandCalendar } from './ui_summary.js?v=v004.54.0-cause-readable';
 
 export const BOUNDARY_EVENT_STATE_VERSION = 1;
 export const FOOD_RUNWAY_THRESHOLD_DAYS = 14;
