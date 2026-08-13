@@ -7,12 +7,12 @@ genre_tags: [game-design, psychological-horror, first-person, narrative-design, 
 evaluated_at: "2026-08-13T21:50:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-13T21:50:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-13T21:50:00+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-13T21:56:51.6902695+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786625792029789"
+next_action: none
 stale_after: "2026-09-12"
 supersedes: []
 gate_reason: >-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Log_cdx のホラー／探索 prototype で、危険察知・手掛かり・NPC 通信を単一装置へ載せ、tuning の不確実性を小さな probe で検証する"
   pros_cons: "長所は機能と物語の一体化、短所は一装置への過集中、可読性低下、演出意図だけで効果を断定できない点"
   verdict_pre: "部分採用"
+posted:
+  ts: "1786625792.029789"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786625792029789"
+  char_count: 3687
+  posted_at: "2026-08-13T21:56:51.6902695+09:00"
 ---
 
 ## raw_excerpt
