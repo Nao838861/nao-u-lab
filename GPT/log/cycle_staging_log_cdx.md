@@ -51,7 +51,18 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260813_contractsim_natural_language_contracting.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786582584310989
+    char_count: 4267
+skipped: []
+review:
+  policy: pass
+  source_verified: arXiv full text
+  slack_utf8_verification: pass
+  decision: "部分採用。交渉と履行、先制違反と報復、条項数と到達状態 coverage を分離する評価設計を採用候補とする。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

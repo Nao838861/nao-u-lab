@@ -7,14 +7,19 @@ genre_tags: [game-design, multi-agent, negotiation, simulation, llm, evaluation]
 evaluated_at: "2026-08-13T09:50:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-13T09:50:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-13T09:50:00+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-13T09:56:33+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786582584310989"
+next_action: none
 stale_after: "2026-09-12"
 supersedes: []
+posted:
+  ts: "1786582584.310989"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786582584310989"
+  char_count: 4267
+  posted_at: "2026-08-13T09:56:33+09:00"
 gate_reason: >-
   契約交渉から履行までを一つの長期 trajectory として扱い、合意品質と実行時の compliance・defection を分ける手法と評価結果を抽出できる。
   交渉・同盟・取引を持つゲームで、NPC の発話品質ではなく成立可能性、相互利益、条件付き条項、履行・裏切りを検証する具体的な playtest 設計へ転用でき、約4000字の分析に必要な密度がある。
