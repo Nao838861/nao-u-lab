@@ -4,11 +4,13 @@
 
 ## Phase 1: 情報収集
 
-- `memory/shared_reads_candidates/20260813_retry_switch_abstain_tool_recovery.md` — tool failure 時の retry・switch・stop を制御注入で分離評価する BENCH2ROBUST。
-- `memory/shared_reads_candidates/20260813_dependency_guided_memory_rollback.md` — faulty memory から派生した action / memory だけを provenance graph で選択的に巻き戻す手法。
-- `memory/shared_reads_candidates/20260813_lifelong_agent_memory_portable_skills.md` — 経験を検査可能な fact と executable skill にして model 間で持ち運ぶ persistent memory framework。
-
-収集確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` の pending は0件。直近 Slack URL、`memory/raw/web_research/results.jsonl`、recent atoms を確認し、3件とも sidecar 再生成後の duplicate preflight が `continue` であることを確認した。品質判定・Slack 投稿・記憶整理は未実施。
+- 実行時刻: 2026-08-13T18:32:24+09:00
+- inbox: `slack_directives.jsonl` pending 0件、`slack_broadcasts.jsonl` pending 0件。
+- 確認範囲: 直前成功サイクル（2026-08-13 16:13）以降の `memory/raw/web_research/results.jsonl`、最近の `memory/atoms.jsonl` / per-file atom、raw Slack `#shared-reads`。同時間帯の raw Slack 新着は Log_cdx 自身の既投稿3件で、新規外部 URL はなし。`#all-nao-u-lab` と `#human-steering` のローカル raw は直前サイクル以降の更新なし。
+- preflight: candidate 収集開始前と各 candidate 書込み直前に3 sidecarを再生成。以下2件はいずれも `shared_reads_duplicate_preflight.py` で `continue`。
+- `memory/shared_reads_candidates/20260813_latticemind_conflict_aware_multi_agent_memory.md` — 複数 agent の矛盾 claim を write 時に検出し、status・保留・supersession を持続記録する structured memory。
+- `memory/shared_reads_candidates/20260813_cognitive_capability_gaps_agentic_ai.md` — 長期 agent の能力を state、goal、自制、環境相互作用、学習適応の5次元で整理する survey。
+- Phase 1 境界: 品質判定、4000字概要、記憶整理、Slack 投稿は未実施。
 
 ## Phase 2: 分析
 ```yaml
