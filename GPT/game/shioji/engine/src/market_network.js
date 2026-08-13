@@ -1,4 +1,4 @@
-import { buildingById, pathLen } from "./physical.js?v=v004.51.0-caravan-guidance";
+import { buildingById, pathLen } from "./physical.js?v=v004.52.0-demand-rulings";
 
 const DEFAULT_HYSTERESIS = 0.12;
 const EPSILON = 1e-9;

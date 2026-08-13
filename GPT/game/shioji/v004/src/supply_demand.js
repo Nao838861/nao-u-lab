@@ -1,8 +1,8 @@
 import {
   FOOD_GOODS, WINTER_RESERVE_PER_PERSON,
-} from './food_readability.js?v=v004.51.0-caravan-guidance';
-import { toDenari } from './config.js?v=v004.51.0-caravan-guidance';
-import { GOODS_RECIPES } from './goods_detail.js?v=v004.51.0-caravan-guidance';
+} from './food_readability.js?v=v004.52.0-demand-rulings';
+import { toDenari } from './config.js?v=v004.52.0-demand-rulings';
+import { GOODS_RECIPES } from './goods_detail.js?v=v004.52.0-demand-rulings';
 
 export const SUPPLY_STATUS = Object.freeze({
   no_demand: Object.freeze({ severity: 0, label: '需要なし' }),
@@ -15,7 +15,7 @@ export const SUPPLY_STATUS = Object.freeze({
 export const GOODS_GLYPHS = Object.freeze({
   log: '木', ore: '鉱', coal: '石', bar: '銑', iron: '鉄', tools: '槌',
   stone: '岩', wheat: '麦', fish: '魚', veg: '菜', meat: '肉', pres: '燻',
-  pick: '漬', meal: '粉', salt: '塩', char: '炭', cloth: '布', oil: '油',
+  pick: '漬', meal: '粉', salt: '塩', char: '炭', cloth: '布',
 });
 
 const FOOD_WINDOW_DAYS = 90;

@@ -1,4 +1,4 @@
-import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.51.0-caravan-guidance';
+import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.52.0-demand-rulings';
 
 export const GOODS_SHELF_LIFE_DAYS = Object.freeze({
   fish: 5,
@@ -15,7 +15,6 @@ const GOODS_DETAIL_FALLBACK_FACTS = Object.freeze({
   meat: '肉は牧場が麦か野菜を飼料にして作る食料です。',
   meal: '魚粉は魚粉屋が魚を加工して作り、麦畑と綿花畑の肥料に使います。',
   cloth: '布は牧場と綿花畑で作り、衣服のほか、漁網・帆・建物の修繕に使います。',
-  oil: '油は本土から仕入れ、家の発展に使います。',
 });
 
 export const GOODS_DETAIL_FACTS = Object.freeze({
@@ -36,7 +35,6 @@ export const GOODS_DETAIL_FACTS = Object.freeze({
   salt: GOODS_DISCOVERY_SCRIPTS.salt,
   char: GOODS_DISCOVERY_SCRIPTS.char,
   cloth: GOODS_DETAIL_FALLBACK_FACTS.cloth,
-  oil: GOODS_DETAIL_FALLBACK_FACTS.oil,
 });
 
 const recipe = ({
@@ -73,7 +71,6 @@ export const GOODS_RECIPES = Object.freeze({
   salt: recipe({ makers: ['saltworks'], inputs: ['char'], output: 'salt' }),
   char: recipe({ makers: ['charburner'], inputs: ['log'], output: 'char' }),
   cloth: recipe({ makers: ['shepherd', 'rapeseed'], output: 'cloth' }),
-  oil: recipe({ makers: ['port'], output: 'oil' }),
 });
 
 export function goodsDetail(goods) {

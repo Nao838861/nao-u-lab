@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.51.0-caravan-guidance';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.52.0-demand-rulings';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({
@@ -128,7 +128,7 @@ const PRODUCTION_GOODS = Object.freeze({
   smith: Object.freeze(['iron']),
   wheat: Object.freeze(['wheat']),
   veg: Object.freeze(['veg', 'pick']),
-  shepherd: Object.freeze(['meat', 'cloth']),
+  shepherd: Object.freeze(['meat', 'pres', 'cloth']),
   rapeseed: Object.freeze(['cloth']),
 });
 

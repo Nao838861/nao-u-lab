@@ -294,4 +294,4 @@ export function goodsSpriteSvgMarkup(goods, art) {
   return `<svg class="goods-sprite" data-goods-sprite="${sprite}" viewBox="0 0 16 16" aria-hidden="true" focusable="false">${rows}</svg>`;
 }
 
-export const GOODS_SPRITE_IDS = Object.freeze(Object.keys(SPRITES));
+export const GOODS_SPRITE_IDS = Object.freeze(Object.keys(SPRITES).filter(goods => goods !== 'oil'));

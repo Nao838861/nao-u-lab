@@ -747,15 +747,17 @@ test("需要網裁定1: 市場・倉庫・港は専用小修繕表を会社買�
   const warehouse = companyLogisticsSite(physical, "warehouse");
   const port = companyLogisticsSite(physical, "port");
   assert.deepEqual(companyRepairMaterialsFor(market), { tools: 4, stone: 4 });
-  assert.deepEqual(companyRepairMaterialsFor(warehouse), { tools: 3, stone: 3 });
-  assert.deepEqual(companyRepairMaterialsFor(port), { log: 4, tools: 3, stone: 6 });
+  assert.deepEqual(companyRepairMaterialsFor(warehouse), { tools: 3, stone: 3, bar: 1 });
+  assert.deepEqual(companyRepairMaterialsFor(port), { log: 4, tools: 3, stone: 6, bar: 2 });
 
   runBuildingMaintenance(economy, physical, { day: 1 });
   runBuildingMaintenance(economy, physical, { day: 31 });
-  assert.deepEqual(companyBuildingRepairNeeds(physical), { tools: 10, stone: 13, log: 4 });
+  assert.deepEqual(companyBuildingRepairNeeds(physical), {
+    tools: 10, stone: 13, log: 4, bar: 3,
+  });
 
   setCompanyStockTarget(economy, "tools", 2);
-  const quantities = { log: 4, tools: 12, stone: 13 };
+  const quantities = { log: 4, tools: 12, stone: 13, bar: 3 };
   const companyMoneyBefore = economy.company.money;
   for (const [goods, qty] of Object.entries(quantities)) {
     const seller = createHousehold(economy, { job: "logger", x: 7, y: 4 });
@@ -766,8 +768,8 @@ test("需要網裁定1: 市場・倉庫・港は専用小修繕表を会社買�
   }
 
   const purchases = runCompanyProcurement(economy, { day: 32, physical });
-  assert.equal(purchases.reduce((total, purchase) => total + purchase.qty, 0), 29);
-  assert.equal(economy.company.money, companyMoneyBefore - 29);
+  assert.equal(purchases.reduce((total, purchase) => total + purchase.qty, 0), 32);
+  assert.equal(economy.company.money, companyMoneyBefore - 32);
   while (physical.activeHaulJobIds.length > 0) {
     stepHaulCarriers(physical, 1);
     settleCompanyLogistics(economy, physical, { day: 32 });
@@ -1164,7 +1166,7 @@ test("段11: P・GOODS・FOODS・PERISHが意図した需給網・移動係数�
   ]) {
     delete sourceConstants[changed];
   }
-  for (const changed of ["tools", "salt", "char", "stone", "iron", "cloth", "ore", "coal", "bar"]) {
+  for (const changed of ["tools", "salt", "char", "stone", "iron", "cloth", "oil", "ore", "coal", "bar"]) {
     delete sourceConstants.BELIEF0[changed];
   }
   const actualConstants = Object.fromEntries(
@@ -1180,9 +1182,12 @@ test("段11: P・GOODS・FOODS・PERISHが意図した需給網・移動係数�
   assert.equal("TRAVEL_RATE" in P, false);
   assert.equal("ROAD_F" in P, false);
   assert.equal("TRAVEL_MAX" in P, false);
-  assert.deepEqual(P.IMP, { wheat: 4, tools: 6, salt: 5, iron: 12, oil: 3 });
+  assert.deepEqual(P.IMP, { wheat: 4, tools: 6, salt: 5, iron: 12 });
   assert.deepEqual(P.EXP, { pres: 0.6, pick: 0.55, cloth: 2 });
-  assert.deepEqual(GOODS.slice(0, FLOW_ISLAND_GOODS.length), FLOW_ISLAND_GOODS);
+  assert.deepEqual(
+    GOODS.filter((goods) => FLOW_ISLAND_GOODS.includes(goods)),
+    FLOW_ISLAND_GOODS.filter((goods) => goods !== "oil"),
+  );
   assert.deepEqual(FOODS, FLOW_ISLAND_FOODS);
   assert.deepEqual(PERISH, FLOW_ISLAND_PERISH);
   assert.equal(createWorld({ seed: 11 }).state.economy.company.money, P.TREASURY0);
@@ -1232,14 +1237,17 @@ test("段12: HH構造・家族生成・eat/haulがflow_islandと同値", () => {
   assert.equal(household.job, source.job);
   assert.equal(household.purse, source.purse);
   assert.deepEqual(
-    Object.fromEntries(FLOW_ISLAND_GOODS.map((goods) => [goods, household.pantry[goods]])),
-    source.pantry,
+    Object.fromEntries(
+      FLOW_ISLAND_GOODS.filter((goods) => goods !== "oil")
+        .map((goods) => [goods, household.pantry[goods]]),
+    ),
+    Object.fromEntries(Object.entries(source.pantry).filter(([goods]) => goods !== "oil")),
   );
   assert.deepEqual(
     Object.fromEntries(["ore", "coal", "bar"].map((goods) => [goods, household.pantry[goods]])),
     { ore: 0, coal: 0, bar: 0 },
   );
-  for (const goods of ["fish", "veg", "wheat", "pres", "pick", "meat", "meal", "oil"]) {
+  for (const goods of ["fish", "veg", "wheat", "pres", "pick", "meat", "meal"]) {
     assert.equal(household.belief[goods], source.belief[goods], goods);
   }
   assert.deepEqual(
@@ -1701,6 +1709,15 @@ test("需要網7: Lv2以上なら農漁業を含む全施設が石材を毎月�
     const required = repairMaterialsFor({ w: 3, h: 3, operationWear: 0 }, household);
     assert.ok(required.stone > 0, job);
   }
+});
+
+test("需要網裁定3: Lv4製鉄所だけが銑鉄の重修繕を持つ", () => {
+  const economy = createEconomicState();
+  const smelter = createHousehold(economy, { job: "smelter", x: 0, y: 0 });
+  smelter.lv = 3;
+  assert.equal(repairMaterialsFor({ w: 3, h: 3, operationWear: 0 }, smelter).bar, undefined);
+  smelter.lv = 4;
+  assert.equal(repairMaterialsFor({ w: 3, h: 3, operationWear: 0 }, smelter).bar, 2);
 });
 
 test("暦オフセット: 経過1日目を春3月として季節生産へ反映する", () => {
@@ -2343,7 +2360,7 @@ test("段17: buyTargets天井表・LADDER・固定買い順を正本どおり保
   assert.deepEqual(LADDER, FLOW_ISLAND_LADDER);
   assert.deepEqual(BUY_ORDER, [
     "ore", "bar", "log", "salt", "char", "coal", "tools", "cloth", "iron", "meal",
-    "stone", "oil", "fish", "veg", "wheat", "pres", "pick", "meat",
+    "stone", "fish", "veg", "wheat", "pres", "pick", "meat",
   ]);
   assert.equal(BUY_ORDER.includes("pick"), true);
 
@@ -2764,6 +2781,23 @@ test("段19: 木工・炭焼き小屋・製塩・綿花・採石・魚粉を正�
     Math.abs(rapeseedResult.cloth - P.Y_COTTON_CLOTH * (1 + P.FERT_BOOST * fill)) < 1e-12,
   );
 
+  const veg = make("veg");
+  veg.household.pantry.meal = 1;
+  veg.household.pantry.veg = 0;
+  const vegResult = producePrimaryTick(veg.economy, null, veg.household, { day: 61, fraction: 1 });
+  assert.equal(veg.household.pantry.meal, 1 - P.FERT_DAILY_NEED);
+  assert.equal(vegResult.veg, P.Y_VEG * (1 + P.FERT_BOOST));
+
+  const shepherd = make("shepherd");
+  shepherd.household.pantry.wheat = P.Y_MEAT * P.FEED_MEAT;
+  shepherd.household.pantry.meal = 1;
+  shepherd.household.pantry.meat = 0;
+  const shepherdResult = producePrimaryTick(
+    shepherd.economy, null, shepherd.household, { day: 61, fraction: 1 },
+  );
+  assert.equal(shepherd.household.pantry.meal, 1 - P.FERT_DAILY_NEED);
+  assert.equal(shepherdResult.meat, P.Y_MEAT * (1 + P.FERT_BOOST));
+
   const quarryman = make("quarryman");
   quarryman.household.pantry.stone = 0;
   producePrimaryTick(quarryman.economy, null, quarryman.household, { day: 1, fraction: 1 });
@@ -2823,6 +2857,31 @@ test("需要網4: 魚粉屋は実在する魚を原料棚から加工し、不�
   assert.equal(ceiling, processingInputPriceCeiling(
     economy, physical, household, "fish", P.MEAL_FISH, { day: 272 },
   ));
+});
+
+test("需要網裁定4: 牧場は自家用を残し肉と塩を保存食へ自動加工する", () => {
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "shepherd", x: 0, y: 0 });
+  for (const goods of FOODS) household.pantry[goods] = 100;
+  household.pantry.meat = householdEat(household) * 2 + 10;
+  household.pantry.salt = 10;
+  runDayEnd(economy, null, { day: 1 });
+  const preservedRaw = economy.materialFlows.pres.prod / P.PR_MEAT_SALT;
+  assert.ok(preservedRaw > 8 && preservedRaw <= 10);
+  assert.ok(economy.materialFlows.salt.cons >= preservedRaw * P.MEAT_PRES_SALT);
+  assert.ok(economy.materialFlows.meat.cons > preservedRaw);
+  assert.ok(household.pantry.meat <= householdEat(household) * 2 + 1e-9);
+});
+
+test("油退役: 現役品・輸入・買い順から外し旧保存の家財キーだけ残せる", () => {
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "logger", x: 0, y: 0 });
+  household.pantry.oil = 7;
+  assert.equal(GOODS.includes("oil"), false);
+  assert.equal(BUY_ORDER.includes("oil"), false);
+  assert.equal(P.IMP.oil, undefined);
+  assert.equal(household.pantry.oil, 7);
+  assert.throws(() => requestCompanyImport(economy, "oil", 1, { day: 1 }), /輸入対象外/);
 });
 
 test("需要網4: 魚粉屋の原料棚でも生鮮魚は家庭・屋台と同じ寿命で腐敗する", () => {

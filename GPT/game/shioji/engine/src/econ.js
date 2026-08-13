@@ -21,7 +21,7 @@ import {
   sectionCapacity,
   withdrawInventory,
   workRoadWorksite,
-} from "./physical.js?v=v004.51.0-caravan-guidance";
+} from "./physical.js?v=v004.52.0-demand-rulings";
 
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) return value;
@@ -31,7 +31,7 @@ function deepFreeze(value) {
 
 export const GOODS = deepFreeze([
   "fish", "veg", "wheat", "pres", "pick", "tools", "salt", "char",
-  "meat", "meal", "stone", "oil", "iron", "cloth", "log", "ore", "coal", "bar",
+  "meat", "meal", "stone", "iron", "cloth", "log", "ore", "coal", "bar",
 ]);
 export const PERISH = deepFreeze(["fish", "veg", "meat", "pres", "pick", "wheat", "meal"]);
 export const FOODS = deepFreeze(["fish", "veg", "wheat", "pres", "pick", "meat"]);
@@ -97,6 +97,8 @@ export const P = deepFreeze({
   PR_SMOKE: 0.95,
   SMOKE_CHAR: 0.1,
   PRES_SALT: 0.125,
+  MEAT_PRES_SALT: 0.125,
+  PR_MEAT_SALT: 0.75,
   CMULT: 1.35,
   D_TOOL: 0.2,
   D_SALT: 0.06,
@@ -105,8 +107,8 @@ export const P = deepFreeze({
   UP_DAYS: 45,
   DOWN_DAYS: 60,
   HAUL: 40,
-  IMP: { wheat: 4, tools: 6, salt: 5, iron: 12, oil: 3 },
-  IMP_COST: { wheat: 2.4, tools: 4.2, salt: 3.5, iron: 8.5, oil: 2.6 },
+  IMP: { wheat: 4, tools: 6, salt: 5, iron: 12 },
+  IMP_COST: { wheat: 2.4, tools: 4.2, salt: 3.5, iron: 8.5 },
   EXP: { pres: 0.6, pick: 0.55, cloth: 2 },
   EXP_CAP: { pres: 25, pick: 15, cloth: 12 },
   EXP_ML: { pres: 0.66, pick: 0.6, cloth: 2.2 },
@@ -135,6 +137,9 @@ export const P = deepFreeze({
   MEAL_FISH: 8,
   FERT_NEED: 3,
   FERT_BOOST: 0.15,
+  // 野菜・牧草は日々の任意施肥。既存3圃場なら年420荷となり、麦・綿花の
+  // 季節施肥と合わせて魚粉屋1〜2軒ぶんの島内需要になる量へ年量から逆算する。
+  FERT_DAILY_NEED: 0.5,
   // Lv2以上の全施設が石材を維持消費する前提で、人口200級に複数の採石場を要する量。
   Y_STONE: 4,
   WOOD0: 150,
@@ -190,7 +195,7 @@ export const P = deepFreeze({
   COOLDOWN: 360,
   BELIEF0: {
     fish: 1, veg: 1, wheat: 1.2, pres: 1.2, pick: 1.3, tools: 5,
-    salt: 4, char: 4.5, meat: 1.3, meal: 1, stone: 2, oil: 3,
+    salt: 4, char: 4.5, meat: 1.3, meal: 1, stone: 2,
     iron: 10, cloth: 3.5, log: 1.4, ore: 1.8, coal: 2.8, bar: 8,
   },
 });
@@ -1000,7 +1005,7 @@ const PRICE_JOBS_BY_GOODS = deepFreeze({
 // 原価が次段へ渡る順に更新する。取引の有無ではなく、実在庫と実需要だけで
 // 毎朝同じ価格へ決まるため、小市場や長期の約定ゼロでも信念が凍らない。
 const STOCK_PRICE_GOODS_ORDER = deepFreeze([
-  "fish", "veg", "wheat", "log", "ore", "coal", "stone", "cloth", "oil",
+  "fish", "veg", "wheat", "log", "ore", "coal", "stone", "cloth",
   "tools", "char", "salt", "meat", "meal", "pick", "pres", "bar", "iron",
 ]);
 
@@ -1542,6 +1547,25 @@ function runHouseholdCultureAndLadder(economy, physical, household, day, markPha
     recordEconomicMaterialFlow(economy, "veg", "cons", raw, `世帯${household.id}の漬け込み`);
     recordEconomicMaterialFlow(economy, "salt", "cons", salt, `世帯${household.id}の漬け込み`);
     recordEconomicMaterialFlow(economy, "pick", "prod", pick, `世帯${household.id}の漬け込み`);
+  }
+  if (
+    household.job === "shepherd"
+    && household.pantry.meat > householdEat(household) * 2
+    && householdMaterialAmount(physical, household, "salt") > 0.2
+  ) {
+    const raw = Math.min(
+      household.pantry.meat - householdEat(household) * 2,
+      householdMaterialAmount(physical, household, "salt") / P.MEAT_PRES_SALT,
+      15,
+    );
+    const salt = raw * P.MEAT_PRES_SALT;
+    const preserved = raw * P.PR_MEAT_SALT;
+    household.pantry.meat -= raw;
+    withdrawHouseholdMaterial(physical, household, "salt", salt);
+    household.pantry.pres += preserved;
+    recordEconomicMaterialFlow(economy, "meat", "cons", raw, `世帯${household.id}の肉の塩漬け`);
+    recordEconomicMaterialFlow(economy, "salt", "cons", salt, `世帯${household.id}の肉の塩漬け`);
+    recordEconomicMaterialFlow(economy, "pres", "prod", preserved, `世帯${household.id}の肉の塩漬け`);
   }
   if (household.job === "fisher" && household.pantry.fish > 1e-9) {
     const raw = Math.min(
@@ -2210,7 +2234,7 @@ export function unloadMarketBuyCargo(household, physical = null) {
 
 export const BUY_ORDER = deepFreeze([
   "ore", "bar", "log", "salt", "char", "coal", "tools", "cloth", "iron", "meal",
-  "stone", "oil", "fish", "veg", "wheat", "pres", "pick", "meat",
+  "stone", "fish", "veg", "wheat", "pres", "pick", "meat",
 ]);
 
 const FOOD_BUY_ORDER = deepFreeze(["wheat", "pres", "pick", "veg", "fish", "meat"]);
@@ -2220,6 +2244,9 @@ const CREDIT_INPUT_JOBS = new Set([
 ]);
 
 export function canUseProductionInputCredit(household, goods) {
+  if (["meal", "salt"].includes(goods) && ["veg", "shepherd"].includes(household?.job)) {
+    return false;
+  }
   return CREDIT_INPUT_JOBS.has(household?.job) && isProductionInput(household, goods);
 }
 
@@ -2296,19 +2323,29 @@ export function buyTargets(
       Math.min((px.meat ?? 3) * 1.4, cheapest * 2.2),
     ];
   }
-  if (
-    (household.job === "wheat" || household.job === "rapeseed")
-    && inputQty("meal") < P.FERT_NEED * 10
-    && month >= 3
-    && month <= 8
-  ) {
-    const benefit = (household.job === "wheat"
-      ? P.Y_WHEAT * householdMult(household)
-      : P.Y_COTTON_CLOTH * householdMult(household) * 540)
-      * P.FERT_BOOST
-      * (household.job === "wheat" ? (px.wheat ?? 2) : (px.cloth ?? 2.5))
-      / (P.FERT_NEED * 180);
-    targets.meal = [P.FERT_NEED * 20 - inputQty("meal"), benefit * 0.7];
+  const fertilizerActive = (
+    (["wheat", "rapeseed"].includes(household.job) && month >= 3 && month <= 8)
+    || (household.job === "veg" && month >= 3 && month <= 10)
+    || household.job === "shepherd"
+  );
+  const fertilizerTarget = ["veg", "shepherd"].includes(household.job)
+    ? P.FERT_DAILY_NEED * 20 : P.FERT_NEED * 20;
+  if (fertilizerActive && inputQty("meal") < fertilizerTarget / 2) {
+    const annualBase = {
+      wheat: P.Y_WHEAT,
+      rapeseed: P.Y_COTTON_CLOTH * 180,
+      veg: P.Y_VEG * 240,
+      shepherd: P.Y_MEAT * 360,
+    }[household.job] * householdMult(household);
+    const outputPrice = household.job === "wheat" ? (px.wheat ?? 2)
+      : household.job === "rapeseed" ? (px.cloth ?? 2.5)
+        : household.job === "veg" ? (px.veg ?? 2)
+          : (px.meat ?? 2);
+    const annualMeal = ["veg", "shepherd"].includes(household.job)
+      ? P.FERT_DAILY_NEED * (household.job === "veg" ? 240 : 360)
+      : P.FERT_NEED * 180;
+    const benefit = annualBase * P.FERT_BOOST * outputPrice / annualMeal;
+    targets.meal = [fertilizerTarget - inputQty("meal"), benefit * 0.7];
   }
   if (household.job === "saltworks" && inputQty("char") < P.SALT_CHAR * 5) {
     targets.char = [
@@ -2445,6 +2482,19 @@ export function buyTargets(
         } else targets[goods] = [wantedEach, ceiling];
       }
     }
+    if (inputQty("salt") < 2) {
+      targets.salt = [
+        4 - inputQty("salt"),
+        processingInputPriceCeiling(
+          economy,
+          physical,
+          household,
+          "salt",
+          P.MEAT_PRES_SALT / P.PR_MEAT_SALT,
+          { day },
+        ),
+      ];
+    }
   }
 
   const buildingNeeds = householdBuildingNeeds(physical, household);
@@ -2532,9 +2582,9 @@ export function buyTargets(
 export function isProductionInput(household, goods) {
   return (household.job === "saltworks" && goods === "char")
     || (household.job === "fisher2" && goods === "fish")
-    || (household.job === "shepherd" && (goods === "wheat" || goods === "veg"))
+    || (household.job === "shepherd" && ["wheat", "veg", "meal", "salt"].includes(goods))
     || (household.job === "fisher" && ["salt", "char", "log", "tools", "cloth", "iron"].includes(goods))
-    || (household.job === "veg" && goods === "salt")
+    || (household.job === "veg" && ["salt", "meal"].includes(goods))
     || ((household.job === "wheat" || household.job === "rapeseed") && goods === "meal")
     || (household.job === "smelter" && ["ore", "char", "coal"].includes(goods))
     || (household.job === "smith" && ["bar", "char", "coal"].includes(goods))
@@ -3727,7 +3777,16 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     recordEconomicMaterialFlow(economy, "fish", "prod", qty, `世帯${household.id}の漁`);
     produced.fish = qty;
   } else if (household.job === "veg" && month >= 3 && month <= 10) {
-    const qty = P.Y_VEG * work;
+    const used = Math.min(
+      productionInputAmount(physical, household, "meal"),
+      P.FERT_DAILY_NEED * effectiveFraction,
+    );
+    withdrawProductionInput(physical, household, "meal", used);
+    if (used > 1e-9) {
+      recordEconomicMaterialFlow(economy, "meal", "cons", used, `世帯${household.id}の野菜施肥`);
+    }
+    const fill = Math.min(1, used / Math.max(1e-9, P.FERT_DAILY_NEED * effectiveFraction));
+    const qty = P.Y_VEG * work * (1 + P.FERT_BOOST * fill);
     household.pantry.veg += qty;
     economy.led.prod.veg = (economy.led.prod.veg ?? 0) + qty;
     recordEconomicMaterialFlow(economy, "veg", "prod", qty, `世帯${household.id}の野菜畑`);
@@ -3748,8 +3807,21 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     withdrawProductionInput(physical, household, "wheat", wheat);
     const feed = veg + wheat;
     const fill = desiredFeed > 1e-9 ? feed / desiredFeed : 0;
-    const meat = desiredMeat * fill;
-    const cloth = P.Y_CLOTH * work * fill;
+    const usedMeal = Math.min(
+      productionInputAmount(physical, household, "meal"),
+      P.FERT_DAILY_NEED * effectiveFraction,
+    );
+    withdrawProductionInput(physical, household, "meal", usedMeal);
+    if (usedMeal > 1e-9) {
+      recordEconomicMaterialFlow(economy, "meal", "cons", usedMeal, `世帯${household.id}の牧草施肥`);
+    }
+    const fertilizerFill = Math.min(
+      1,
+      usedMeal / Math.max(1e-9, P.FERT_DAILY_NEED * effectiveFraction),
+    );
+    const boost = 1 + P.FERT_BOOST * fertilizerFill;
+    const meat = desiredMeat * fill * boost;
+    const cloth = P.Y_CLOTH * work * fill * boost;
     if (feed > 1e-9) {
       household.pantry.meat += meat;
       household.pantry.cloth += cloth;
@@ -5982,8 +6054,8 @@ const REPAIR_MATERIALS_BY_JOB = deepFreeze({
 
 const COMPANY_REPAIR_MATERIALS_BY_ROLE = deepFreeze({
   market: { tools: 4, stone: 4 },
-  warehouse: { tools: 3, stone: 3 },
-  port: { log: 4, tools: 3, stone: 6 },
+  warehouse: { tools: 3, stone: 3, bar: 1 },
+  port: { log: 4, tools: 3, stone: 6, bar: 2 },
 });
 
 function companyRepairRole(building) {
@@ -6034,6 +6106,9 @@ export function repairMaterialsFor(building, household) {
   if (lv >= 3) {
     add("iron", 3 * (lv - 2));
     add("cloth", 2 * (lv - 2));
+  }
+  if (household?.job === "smelter" && lv >= 4) {
+    required.bar = (required.bar ?? 0) + 2 * scale * operational;
   }
   return required;
 }

@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.51.0-caravan-guidance';
+import { TILE } from './config.js?v=v004.52.0-demand-rulings';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

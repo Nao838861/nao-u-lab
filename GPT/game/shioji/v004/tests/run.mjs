@@ -195,9 +195,9 @@ test('食料警告: 盤面でも購買力・在庫・経路・移動の原因を
   assert.equal(building.stateSignals.crisis.label, 'お金がなく買えない');
 });
 
-test('品目スプライト: 全18品を色なしの輪郭で区別し、CanvasとUIで同じ定義を使う', () => {
+test('品目スプライト: 現役17品を色なしの輪郭で区別し、CanvasとUIで同じ定義を使う', () => {
   const goods = Object.keys(GOODS_LABELS);
-  assert.equal(goods.length, 18);
+  assert.equal(goods.length, 17);
   assert.deepEqual([...GOODS_SPRITE_IDS].sort(), [...goods].sort());
   const signatures = goods.map(item => goodsSpriteGeometrySignature(item));
   assert.equal(new Set(signatures).size, goods.length);
@@ -215,6 +215,43 @@ test('品目スプライト: 全18品を色なしの輪郭で区別し、Canvas�
   const renderer = fs.readFileSync(new URL('../src/renderer.js', import.meta.url), 'utf8');
   assert.match(main, /goodsSpriteSvgMarkup\(goods, art\)/);
   assert.match(renderer, /drawGoodsSpriteCanvas\(this\.ctx, art/);
+});
+
+test('油退役: 旧保存の残量・屋台・輸送・路線が表示モデルへ漏れない', () => {
+  assert.equal(GOODS.includes('oil'), false);
+  assert.equal(Object.hasOwn(GOODS_LABELS, 'oil'), false);
+  assert.equal(Object.hasOwn(GOODS_ART, 'oil'), false);
+  const world = buildBaseCity(11);
+  createHousehold(world.state.economy, { job: 'logger', x: 4, y: 4 });
+  const snapshot = createEngineApi(world).snapshot({ scope: 'full' });
+  const household = snapshot.economy.households[0];
+  household.pantry.oil = 7;
+  snapshot.economy.stalls.oil = [{ householdId: household.id, qty: 2, price: 1, age: 0 }];
+  snapshot.economy.stock.oil = 3;
+  snapshot.economy.stockCost.oil = 3;
+  snapshot.economy.marketStock.oil = 1;
+  snapshot.economy.marketStockCost.oil = 1;
+  snapshot.economy.imported.oil = 4;
+  snapshot.economy.importStock.oil = 5;
+  snapshot.economy.importRequests.push({ id: 'legacy-oil', goods: 'oil', qty: 6 });
+  snapshot.economy.caravans = [{
+    id: 'legacy-oil-route', baseMarketId: 'market:main', destMarketId: 'market:fish',
+    goodsOut: ['oil', 'wheat'], goodsBack: ['oil', 'fish'], cartAssetIds: [], recentTrips: [],
+  }];
+  snapshot.physical.portCalls.push({
+    id: 'legacy-oil-call', goods: 'oil', qty: 1, direction: 'import', portBuildingId: null,
+  });
+  const model = snapshotToViewModel(snapshot);
+  assert.equal(model.households.some(row => row.pantry.some(item => item.goods === 'oil')), false);
+  assert.equal(model.stalls.some(row => row.goods === 'oil'), false);
+  assert.equal(model.stockLocations.some(row => row.goods === 'oil'), false);
+  assert.equal(model.goodsManifest.includes('oil'), false);
+  assert.equal(model.portCalls.some(call => call.goods === 'oil'), false);
+  assert.equal(Object.hasOwn(model.companyStock, 'oil'), false);
+  assert.equal(Object.hasOwn(model.companyMarketStock, 'oil'), false);
+  assert.equal(Object.hasOwn(model.importStock, 'oil'), false);
+  assert.deepEqual(model.caravans[0].goodsOut, ['wheat']);
+  assert.deepEqual(model.caravans[0].goodsBack, ['fish']);
 });
 
 test('段1: createEngineApiで基準都市を起動し1日30tick進める', () => {
@@ -2265,7 +2302,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.51.0-caravan-guidance');
+  assert.equal(VERSION, 'v004.52.0-demand-rulings');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -4352,7 +4389,7 @@ test('UI向上段9: 需給を独立表示し、統計は収支と既定3グラ�
   const matureDiscovery = createGoodsDiscovery({
     goodsIds: Object.keys(GOODS_LABELS), mode: 'test', model,
   });
-  assert.equal(supplyDemandRows(model, [], matureDiscovery.knownGoods()).length, 18);
+  assert.equal(supplyDemandRows(model, [], matureDiscovery.knownGoods()).length, 17);
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const main = readBrowserEntrySource();
   const supply = fs.readFileSync(new URL('../src/supply_demand.js', import.meta.url), 'utf8');
@@ -4380,7 +4417,7 @@ test('UI向上段9: 需給を独立表示し、統計は収支と既定3グラ�
   assert.match(main, /不足 \$\{formatQuantity\(row\.shortage\)\}/);
 });
 
-test('品目の出会い開示: 未開拓は空、見本の町は18品、保有履歴は再消費後も残る', () => {
+test('品目の出会い開示: 未開拓は空、見本の町は現役17品、保有履歴は再消費後も残る', () => {
   const goodsIds = Object.keys(GOODS_LABELS);
   const blank = createGoodsDiscovery({
     goodsIds,
@@ -4470,7 +4507,7 @@ test('品目の出会い台本: 8品だけに専用文を持ち、数字・名�
   assert.equal(route.speech, GOODS_DISCOVERY_SCRIPTS.log);
 });
 
-test('品目詳細: 18品すべてに性質・日持ち・製法の表示契約を持つ', () => {
+test('品目詳細: 現役17品すべてに性質・日持ち・製法の表示契約を持つ', () => {
   const goodsIds = Object.keys(GOODS_LABELS);
   assert.deepEqual(Object.keys(GOODS_DETAIL_FACTS), goodsIds);
   assert.deepEqual(Object.keys(GOODS_RECIPES), goodsIds);

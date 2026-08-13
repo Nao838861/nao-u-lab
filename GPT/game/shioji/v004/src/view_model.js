@@ -1,20 +1,20 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.51.0-caravan-guidance';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.52.0-demand-rulings';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.51.0-caravan-guidance';
+} from './food_readability.js?v=v004.52.0-demand-rulings';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   findTravelPath, householdProductionSummary, laborWage, productionCost,
-} from './engine_bridge.js?v=v004.51.0-caravan-guidance';
-import { analyzeRoadConnections } from './placement.js?v=v004.51.0-caravan-guidance';
+} from './engine_bridge.js?v=v004.52.0-demand-rulings';
+import { analyzeRoadConnections } from './placement.js?v=v004.52.0-demand-rulings';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.51.0-caravan-guidance';
+} from './render_scene.js?v=v004.52.0-demand-rulings';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.51.0-caravan-guidance';
-import { GOODS_RECIPES } from './goods_detail.js?v=v004.51.0-caravan-guidance';
+} from './visuals.js?v=v004.52.0-demand-rulings';
+import { GOODS_RECIPES } from './goods_detail.js?v=v004.52.0-demand-rulings';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',
@@ -281,6 +281,7 @@ function shelfRows(building) {
     const capacities = building.caps?.[section] ?? {};
     const goods = new Set([...Object.keys(amounts), ...Object.keys(capacities)]);
     for (const goodsId of goods) {
+      if (goodsId === 'oil') continue;
       rows.push({
         section,
         goods: goodsId,
@@ -294,7 +295,7 @@ function shelfRows(building) {
 }
 
 function pantryRows(household) {
-  return Object.entries(household.pantry ?? {}).map(([goods, amount]) => ({
+  return Object.entries(household.pantry ?? {}).filter(([goods]) => goods !== 'oil').map(([goods, amount]) => ({
     section: FOOD_GOODS_SET.has(goods) ? 'foodPantry' : 'householdGoods',
     goods, amount, capacity: null, visual: pileVisual(amount, goods),
   }));
@@ -802,7 +803,7 @@ function carrierRows(snapshot, buildings) {
     : { label: '市場', x: snapshot.economy.market.x, y: snapshot.economy.market.y };
   let companyCrewUsed = 0;
   const hauls = snapshot.physical.haulJobs
-    .filter(job => job.status !== 'completed' && job.carrier?.position)
+    .filter(job => job.goods !== 'oil' && job.status !== 'completed' && job.carrier?.position)
     .flatMap(job => {
       const from = buildingEndpoint(buildingById, job.from);
       const to = buildingEndpoint(buildingById, job.to);
@@ -1457,7 +1458,7 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
     const roles = [...(building.roles ?? [])];
     const companyLogistics = roles.some(role => role === 'market' || role === 'warehouse');
     const companyStockShelves = roles.includes('warehouse')
-      ? Object.entries(snapshot.economy.stock).flatMap(([goods, amount]) => amount > 1e-9 ? [{
+      ? Object.entries(snapshot.economy.stock).flatMap(([goods, amount]) => goods !== 'oil' && amount > 1e-9 ? [{
         section: 'companyStock', goods, amount, capacity: null, visual: pileVisual(amount, goods),
       }] : [])
       : [];
@@ -1598,7 +1599,7 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
     building.yardPlaces = yardLayout(building, building.yardStock);
     building.yardSlots = Object.freeze(building.yardPlaces.filter(place => place.row));
   }
-  const stalls = Object.entries(snapshot.economy.stalls).flatMap(([goods, rows]) => (
+  const stalls = Object.entries(snapshot.economy.stalls).filter(([goods]) => goods !== 'oil').flatMap(([goods, rows]) => (
     rows.map(stall => ({
       goods,
       ...stall,
@@ -1625,7 +1626,8 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
   }));
   const manifest = stockManifest(
     buildings, households, stalls, marketBuilding,
-    snapshot.economy.stock, snapshot.economy.stockCost,
+    Object.fromEntries(Object.entries(snapshot.economy.stock).filter(([goods]) => goods !== 'oil')),
+    snapshot.economy.stockCost,
   );
   const traffic = new Map(Object.entries(snapshot.economy.traffic ?? {}));
   for (const [key, value] of Object.entries(snapshot.physical.trails ?? {})) {
@@ -1636,7 +1638,7 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
     .filter(row => row.stage > 0);
   const productivity = productivityOverview({ snapshot, buildings, households });
   if (marketBuilding) marketBuilding.marketProductivity = productivity.neighborhood;
-  const portCalls = snapshot.physical.portCalls.map(call => {
+  const portCalls = snapshot.physical.portCalls.filter(call => call.goods !== 'oil').map(call => {
     const port = snapshot.physical.buildings.find(building => building.id === call.portBuildingId);
     const section = call.direction === 'export' ? 'outbound' : 'inbound';
     return {
@@ -1647,19 +1649,19 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
     };
   });
   const portBuilding = buildings.find(building => building.type === 'port');
-  const marketLowest = Object.fromEntries(Object.entries(snapshot.economy.stalls).map(([goods, rows]) => [
+  const marketLowest = Object.fromEntries(Object.entries(snapshot.economy.stalls).filter(([goods]) => goods !== 'oil').map(([goods, rows]) => [
     goods,
     rows.filter(row => row.qty > 1e-9).reduce((lowest, row) => Math.min(lowest, row.price), Infinity),
   ]));
-  const companyStockAverageCosts = Object.fromEntries(Object.entries(snapshot.economy.stock).map(([goods, qty]) => [
+  const companyStockAverageCosts = Object.fromEntries(Object.entries(snapshot.economy.stock).filter(([goods]) => goods !== 'oil').map(([goods, qty]) => [
     goods,
     qty > 1e-9 ? (snapshot.economy.stockCost[goods] ?? 0) / qty : null,
   ]));
-  const companyMarketStockAverageCosts = Object.fromEntries(Object.entries(snapshot.economy.marketStock).map(([goods, qty]) => [
+  const companyMarketStockAverageCosts = Object.fromEntries(Object.entries(snapshot.economy.marketStock).filter(([goods]) => goods !== 'oil').map(([goods, qty]) => [
     goods,
     qty > 1e-9 ? (snapshot.economy.marketStockCost[goods] ?? 0) / qty : null,
   ]));
-  const companyReleasePrices = Object.fromEntries(Object.entries(snapshot.economy.marketStock).map(([goods, qty]) => [
+  const companyReleasePrices = Object.fromEntries(Object.entries(snapshot.economy.marketStock).filter(([goods]) => goods !== 'oil').map(([goods, qty]) => [
     goods,
     qty > 1e-9 ? companyStockReleasePrice(snapshot.economy, goods, { market: true }) : null,
   ]));
@@ -1669,7 +1671,7 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
       releasePrice,
     );
   }
-  const companyStockReleaseQuotes = Object.fromEntries(Object.entries(snapshot.economy.stock).map(([goods, qty]) => [
+  const companyStockReleaseQuotes = Object.fromEntries(Object.entries(snapshot.economy.stock).filter(([goods]) => goods !== 'oil').map(([goods, qty]) => [
     goods,
     qty > 1e-9 ? companyStockReleasePrice(snapshot.economy, goods) : null,
   ]));
@@ -1729,7 +1731,8 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
         total + household.pantry.reduce((sum, row) => sum + row.visual.amount, 0)
       ), 0)
       + stalls.reduce((total, stall) => total + stall.visual.amount, 0)
-      + Object.values(snapshot.economy.stock).reduce((total, amount) => total + amount, 0),
+      + Object.entries(snapshot.economy.stock).filter(([goods]) => goods !== 'oil')
+        .reduce((total, [, amount]) => total + amount, 0),
     portCalls,
     portBerth: portBuilding
       ? portBerth(portBuilding, terrain, snapshot.physical.width, snapshot.physical.height)
@@ -1766,8 +1769,8 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
         ...route,
         baseMarketName: marketNames.get(route.baseMarketId) ?? route.baseMarketId,
         destMarketName: marketNames.get(route.destMarketId) ?? route.destMarketId,
-        goodsOut: [...(route.goodsOut ?? [])],
-        goodsBack: [...(route.goodsBack ?? [])],
+        goodsOut: [...(route.goodsOut ?? [])].filter(goods => goods !== 'oil'),
+        goodsBack: [...(route.goodsBack ?? [])].filter(goods => goods !== 'oil'),
         cartAssetIds: [...(route.cartAssetIds ?? [])],
         recentTrips: (route.recentTrips ?? []).map(trip => ({ ...trip })),
         monthly: { ...(route.monthly ?? {}) },
@@ -1791,20 +1794,20 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
         ])),
       },
     ])),
-    imported: { ...snapshot.economy.imported },
-    importStock: { ...(snapshot.economy.importStock ?? {}) },
-    importRequests: (snapshot.economy.importRequests ?? []).map(request => ({ ...request })),
+    imported: Object.fromEntries(Object.entries(snapshot.economy.imported).filter(([goods]) => goods !== 'oil')),
+    importStock: Object.fromEntries(Object.entries(snapshot.economy.importStock ?? {}).filter(([goods]) => goods !== 'oil')),
+    importRequests: (snapshot.economy.importRequests ?? []).filter(request => request.goods !== 'oil').map(request => ({ ...request })),
     moneyOutBy: { ...snapshot.economy.outBy },
-    companyStock: { ...snapshot.economy.stock },
+    companyStock: Object.fromEntries(Object.entries(snapshot.economy.stock).filter(([goods]) => goods !== 'oil')),
     companyStockAverageCosts,
-    companyMarketStock: { ...snapshot.economy.marketStock },
+    companyMarketStock: Object.fromEntries(Object.entries(snapshot.economy.marketStock).filter(([goods]) => goods !== 'oil')),
     companyMarketStockAverageCosts,
     companyReleasePrices,
     companyStockReleaseQuotes,
     spoilTotal: snapshot.economy.spoil ?? 0,
     spoilByGoods: { ...(snapshot.economy.spoilByGoods ?? {}) },
     conversionEconomics,
-    stockTargets: { ...snapshot.economy.stockTgt },
+    stockTargets: Object.fromEntries(Object.entries(snapshot.economy.stockTgt).filter(([goods]) => goods !== 'oil')),
     mainlandAid: (() => {
       const requests = snapshot.economy.mainlandAid?.requests ?? 0;
       const refused = requests >= MAINLAND_AID.REFUSAL_AT;

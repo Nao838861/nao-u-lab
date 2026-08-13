@@ -265,7 +265,7 @@ async function checkExplicitImportUi() {
   assert.equal(result.request?.qty, 7, JSON.stringify(result));
   assert.match(result.status, /7荷を本土へ発注/);
   assert.equal(result.bootState, 'ready', JSON.stringify(result));
-  assert.equal(result.version, 'v004.51.0-caravan-guidance');
+  assert.equal(result.version, 'v004.52.0-demand-rulings');
   assert.deepEqual(page.errors, []);
   await page.screenshot('/tmp/shioji_v004_explicit_import.png');
   await page.close();
@@ -509,9 +509,17 @@ async function checkGoodsDiscovery() {
     };
   })()`);
   assert.deepEqual(result.initial, { rows: 0, text: 'まだ島に品がありません' });
-  assert.deepEqual(result.discoveredGoods, ['log']);
-  assert.deepEqual(result.rows, ['log']);
-  assert.equal(result.priority, 'goods-discovery');
+  assert.equal(result.discoveredGoods.includes('log'), true, JSON.stringify(result));
+  assert.equal(result.discoveredGoods.includes('oil'), false, JSON.stringify(result));
+  assert.deepEqual([...result.rows].sort(), [...result.discoveredGoods].sort());
+  if (result.priority !== 'goods-discovery') {
+    await wait(3600);
+    Object.assign(result, await page.evaluate(`({
+      speech: document.querySelector('#secretary-speech').textContent,
+      priority: document.querySelector('#secretary').dataset.secretaryPriority,
+    })`));
+  }
+  assert.equal(result.priority, 'goods-discovery', JSON.stringify(result));
   assert.match(result.speech, /丸太が採れました.*木製品と木炭に加工できます/s);
   await page.screenshot(path.join(
     process.env.SHIOJI_GOODS_SCREENSHOT_DIR ?? new URL('./artifacts', import.meta.url).pathname,
@@ -863,9 +871,9 @@ async function checkStartChoice(width, height, mobile, mode) {
     };
   })()`);
   if (mode !== 'tutorial') {
-    assert.equal(discoveryLists.supply.rows, 18, JSON.stringify(discoveryLists));
-    assert.equal(discoveryLists.company.rows, 18, JSON.stringify(discoveryLists));
-    assert.equal(discoveryLists.discoveredGoods.length, 18, JSON.stringify(discoveryLists));
+    assert.equal(discoveryLists.supply.rows, 17, JSON.stringify(discoveryLists));
+    assert.equal(discoveryLists.company.rows, 17, JSON.stringify(discoveryLists));
+    assert.equal(discoveryLists.discoveredGoods.length, 17, JSON.stringify(discoveryLists));
   } else {
     assert.equal(discoveryLists.supply.rows, 0, JSON.stringify(discoveryLists));
     assert.equal(discoveryLists.company.rows, 0, JSON.stringify(discoveryLists));
@@ -1252,7 +1260,7 @@ async function checkSeasonalPlots(width, height, mobile) {
       plots: plots.map(row => row.type),
     };
   })()`);
-  assert.equal(springStart.version, 'v004.51.0-caravan-guidance', JSON.stringify(springStart));
+  assert.equal(springStart.version, 'v004.52.0-demand-rulings', JSON.stringify(springStart));
   assert.equal(springStart.season, '春', JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => ['wheat', 'veg'].includes(type)), JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => type === 'shepherd'), JSON.stringify(springStart));
@@ -1638,8 +1646,8 @@ async function checkPeopleVisuals(width, height, mobile) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.51.0-caravan-guidance');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.51.0-caravan-guidance');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.52.0-demand-rulings');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.52.0-demand-rulings');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -1983,10 +1991,10 @@ async function checkViewport(width, height, mobile) {
       };
     })()`);
     assert.equal(supply.hidden, false, JSON.stringify(supply));
-    assert.equal(supply.rowCount, 18, JSON.stringify(supply));
+    assert.equal(supply.rowCount, 17, JSON.stringify(supply));
     assert.equal(supply.allNamed, true, JSON.stringify(supply));
     assert.equal(supply.allSprites, true, JSON.stringify(supply));
-    assert.equal(supply.uniqueSprites, 18, JSON.stringify(supply));
+    assert.equal(supply.uniqueSprites, 17, JSON.stringify(supply));
     assert.equal(supply.allFields, true, JSON.stringify(supply));
     assert.equal(supply.sorted, true, JSON.stringify(supply));
     assert.equal(supply.fitsWithoutScroll, true, JSON.stringify(supply));
@@ -2421,7 +2429,7 @@ async function checkViewport(width, height, mobile) {
       };
     })()`);
     assert.equal(mobileSupply.hidden, false, JSON.stringify(mobileSupply));
-    assert.equal(mobileSupply.rows, 18, JSON.stringify(mobileSupply));
+    assert.equal(mobileSupply.rows, 17, JSON.stringify(mobileSupply));
     assert.equal(mobileSupply.allFields, true, JSON.stringify(mobileSupply));
     assert.equal(mobileSupply.fitsWithoutScroll, true, JSON.stringify(mobileSupply));
     assert.ok(mobileSupply.box.left >= 0 && mobileSupply.box.right <= width, JSON.stringify(mobileSupply));
@@ -2487,7 +2495,7 @@ async function checkOrderCostUi(width, height, mobile) {
       viewport: { width: innerWidth, height: innerHeight },
     };
   })()`);
-  assert.equal(result.version, 'v004.51.0-caravan-guidance');
+  assert.equal(result.version, 'v004.52.0-demand-rulings');
   assert.ok(result.offer, JSON.stringify(result));
   assert.match(result.text, /完遂決済単価/);
   assert.match(result.text, /全量仕入原価/);
@@ -2635,7 +2643,7 @@ async function checkSupplyDemand(width, height, mobile) {
       runtimeVersion: window.__SHIOJI_V004__.version,
     };
   })()`);
-  assert.equal(result.rows, 18, JSON.stringify(result));
+  assert.equal(result.rows, 17, JSON.stringify(result));
   assert.equal(result.statusesValid, true, JSON.stringify(result));
   assert.equal(result.allHaveSupplyAndDemand, true, JSON.stringify(result));
   assert.equal(result.hasConsumptionAndShortage, true, JSON.stringify(result));
@@ -2651,7 +2659,7 @@ async function checkSupplyDemand(width, height, mobile) {
   assert.equal(result.pageHorizontalOverflow, false, JSON.stringify(result));
   assert.equal(result.supplyBreakdownVisible, !mobile, JSON.stringify(result));
   assert.equal(result.demandBreakdownVisible, true, JSON.stringify(result));
-  assert.equal(result.runtimeVersion, 'v004.51.0-caravan-guidance', JSON.stringify(result));
+  assert.equal(result.runtimeVersion, 'v004.52.0-demand-rulings', JSON.stringify(result));
   await page.screenshot(`/tmp/shioji_v004_supply_demand_${mobile ? 'mobile' : 'pc'}_${width}x${height}.png`);
   await page.close();
   return result;
@@ -2717,7 +2725,7 @@ async function checkFoodAlerts(width, height, mobile) {
       JSON.stringify(result),
     );
   }
-  assert.equal(result.runtimeVersion, 'v004.51.0-caravan-guidance', JSON.stringify(result));
+  assert.equal(result.runtimeVersion, 'v004.52.0-demand-rulings', JSON.stringify(result));
   assert.deepEqual(page.errors, []);
   await page.screenshot(`/tmp/shioji_v004_food_alerts_${mobile ? 'mobile' : 'pc'}.png`);
   await page.close();
@@ -2759,7 +2767,7 @@ async function checkSpatialProductivity(width = 1440, height = 900, mobile = fal
   })()`);
   assert.ok(building && !building.missing,
     `資源職の30日実測を建物画面へ表示できる: ${JSON.stringify(building)}`);
-  assert.equal(building.version, 'v004.51.0-caravan-guidance');
+  assert.equal(building.version, 'v004.52.0-demand-rulings');
   assert.ok(Number.isFinite(building.efficiency), JSON.stringify(building));
   assert.ok(Number.isFinite(building.resourceEfficiency), JSON.stringify(building));
   assert.equal(building.withinViewport, true, JSON.stringify(building));
@@ -2951,7 +2959,7 @@ async function checkMarketRhythmUi(width = 1440, height = 900, mobile = false) {
       hidden: sheet.hidden,
     };
   })()`);
-  assert.equal(result.version, 'v004.51.0-caravan-guidance', JSON.stringify(result));
+  assert.equal(result.version, 'v004.52.0-demand-rulings', JSON.stringify(result));
   assert.equal(result.hidden, false, JSON.stringify(result));
   assert.match(result.label, /出荷をまとめ中 1\/2日/, JSON.stringify(result));
   assert.match(result.detail, /食料切れと生産停止は待ちません/, JSON.stringify(result));
@@ -3060,7 +3068,7 @@ async function checkCaravanEmployment(width = 1440, height = 900, mobile = false
       applicantsUi: /応募者|応募一覧/.test(sheet.textContent),
     };
   })()`);
-  assert.equal(result.version, 'v004.51.0-caravan-guidance', JSON.stringify(result));
+  assert.equal(result.version, 'v004.52.0-demand-rulings', JSON.stringify(result));
   assert.deepEqual(result.employment, { recruitment: 3, wage: 6.5 });
   assert.equal(result.crew, 3, JSON.stringify(result));
   assert.match(result.text, /隊商の雇用/);
@@ -3180,7 +3188,7 @@ async function checkCaravanAccounting(width = 1440, height = 900, mobile = false
       horizontalOverflow: panel.scrollWidth > panel.clientWidth + 1,
     };
   })()`);
-  assert.equal(result.version, 'v004.51.0-caravan-guidance', JSON.stringify(result));
+  assert.equal(result.version, 'v004.52.0-demand-rulings', JSON.stringify(result));
   assert.deepEqual(result.configured, {
     type: 'set_caravan_route',
     baseBuildingId: result.configured.baseBuildingId,

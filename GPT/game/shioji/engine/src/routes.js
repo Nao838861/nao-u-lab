@@ -10,7 +10,7 @@ import {
   purchaseCompanyWoodCart,
   recordEconomyEvent,
   useHouseholdWorkTool,
-} from "./econ.js?v=v004.51.0-caravan-guidance";
+} from "./econ.js?v=v004.52.0-demand-rulings";
 import {
   buildingById,
   createCartCarrier,
@@ -21,7 +21,7 @@ import {
   sectionAmount,
   stepTravelCarrier,
   withdrawInventory,
-} from "./physical.js?v=v004.51.0-caravan-guidance";
+} from "./physical.js?v=v004.52.0-demand-rulings";
 
 export const CARAVAN_CART_CAPACITY = P.CART_WOOD_CAPACITY;
 export const CARAVAN_INTERVAL_LIMITS = Object.freeze({ min: 1, max: 30 });

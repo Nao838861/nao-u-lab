@@ -1,5 +1,5 @@
-import { BUILDING_SIZES } from './config.js?v=v004.51.0-caravan-guidance';
-import { islandCalendar } from './ui_summary.js?v=v004.51.0-caravan-guidance';
+import { BUILDING_SIZES } from './config.js?v=v004.52.0-demand-rulings';
+import { islandCalendar } from './ui_summary.js?v=v004.52.0-demand-rulings';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.51.0-caravan-guidance';
+import { pileVisual } from './visuals.js?v=v004.52.0-demand-rulings';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));

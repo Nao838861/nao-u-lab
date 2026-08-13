@@ -2,15 +2,15 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.51.0-caravan-guidance';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.51.0-caravan-guidance';
-import { displayCultureLevel } from './visuals.js?v=v004.51.0-caravan-guidance';
+} from './engine_bridge.js?v=v004.52.0-demand-rulings';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.52.0-demand-rulings';
+import { displayCultureLevel } from './visuals.js?v=v004.52.0-demand-rulings';
 import {
   PLAYER_FACING_BANNED_TERMS,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.51.0-caravan-guidance';
-import { islandCalendar } from './ui_summary.js?v=v004.51.0-caravan-guidance';
+} from './food_readability.js?v=v004.52.0-demand-rulings';
+import { islandCalendar } from './ui_summary.js?v=v004.52.0-demand-rulings';
 
 export { PLAYER_FACING_BANNED_TERMS };
 
@@ -174,7 +174,7 @@ function tutorialWinterFoodForecast(model) {
 
 const GOODS_LABELS = Object.freeze({
   tools: '木製品', char: '木炭', salt: '塩', pres: '保存食', pick: '漬物',
-  oil: '油', cloth: '布', stone: '石材', log: '丸太', fish: '魚',
+  cloth: '布', stone: '石材', log: '丸太', fish: '魚',
   veg: '野菜', wheat: '麦', meat: '肉', iron: '鉄',
 });
 

@@ -1,4 +1,4 @@
-export const VERSION = 'v004.51.0-caravan-guidance';
+export const VERSION = 'v004.52.0-demand-rulings';
 
 // 経済エンジンの貨幣値は表示単位の1/10。UIへ出す時だけデナリへ直す。
 export const DENARI_PER_MONEY_UNIT = 10;
@@ -140,13 +140,12 @@ export const GOODS_ART = Object.freeze({
   salt: goodsArt('salt', '#eee9d8', '#777a74', '#fffdf1', '#91aab0'),
   char: goodsArt('char', '#505653', '#222726', '#7c817a', '#b37648'),
   cloth: goodsArt('cloth', '#ae748a', '#5d4050', '#dcb1bf', '#7d5065'),
-  oil: goodsArt('oil', '#a77a35', '#5c431f', '#d8ad54', '#7c5928'),
 });
 
 export const GOODS_LABELS = Object.freeze({
   log: '丸太', ore: '鉄鉱石', coal: '石炭', bar: '銑鉄', iron: '鉄材', tools: '木製品',
   stone: '石材', wheat: '麦', fish: '魚', veg: '野菜', meat: '肉', pres: '保存食',
-  pick: '漬物', meal: '粉', salt: '塩', char: '木炭', cloth: '布', oil: '油',
+  pick: '漬物', meal: '粉', salt: '塩', char: '木炭', cloth: '布',
 });
 
 export const SECTION_LABELS = Object.freeze({
