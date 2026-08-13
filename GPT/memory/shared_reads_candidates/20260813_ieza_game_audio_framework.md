@@ -7,14 +7,19 @@ genre_tags: [game-audio, game-design, accessibility, feedback, framework]
 evaluated_at: "2026-08-13T12:04:36+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-13T12:04:36+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-13T12:04:36+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-13T12:10:57.0675390+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786590652427149"
+next_action: none
 stale_after: "2026-09-12"
 supersedes: []
+posted:
+  ts: "1786590652.427149"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786590652427149"
+  char_count: 3543
+  posted_at: "2026-08-13T12:10:57.0675390+09:00"
 gate_reason: >-
   音響を制作物の種類ではなく、世界内外と activity/setting の二軸で整理する中核手法、
   学生作品での教育利用、限界まで抽出できる。操作フィードバック、環境設計、感情誘導を

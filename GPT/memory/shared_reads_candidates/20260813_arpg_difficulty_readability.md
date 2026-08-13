@@ -7,14 +7,19 @@ genre_tags: [game-design, combat, difficulty, readability, action-rpg]
 evaluated_at: "2026-08-13T12:04:36+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-13T12:04:36+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-13T12:04:36+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-13T12:11:15.6775179+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786590673904389"
+next_action: none
 stale_after: "2026-09-12"
 supersedes: []
+posted:
+  ts: "1786590673.904389"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786590673904389"
+  char_count: 4116
+  posted_at: "2026-08-13T12:11:15.6775179+09:00"
 gate_reason: >-
   可読性を予告と期待結果の一貫性に分け、反復・chunking・学習順序から難易度を組み立てる
   手法と具体的な難化レバーを抽出できる。戦闘プロトタイプの理不尽さ診断へ直接適用でき、

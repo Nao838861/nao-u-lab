@@ -52,7 +52,20 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260813_ieza_game_audio_framework.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786590652427149
+    char_count: 3543
+  - candidate: memory/shared_reads_candidates/20260813_arpg_difficulty_readability.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786590673904389
+    char_count: 4116
+skipped: []
+```
+
+- IEZA は四分類を完成度スコアにせず、音の情報経路と feel の欠落を探す設計座標として部分採用。教育事例が定性的である限界と、headless 発火検証／人間の聴取検証の分離を明記した。
+- ARPG readability は telegraphing、expectations、chunking、Window of Opportunity、導入順を別々に測る評価枠として採用。経験則であり固定閾値ではない限界を明記した。
+- 2 投稿とも現行フォーマット、禁止表現、文字数 policy を通過し、投稿後の Slack 再読で文字化けなしを確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
