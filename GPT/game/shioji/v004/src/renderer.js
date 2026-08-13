@@ -10,6 +10,7 @@ import {
   buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
   seasonalTerrainVisual,
 } from './visuals.js?v=v004.54.0-cause-readable';
+import { renderArtSlice } from './art_slice.js?v=b1-style-slice-20260814';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
@@ -193,6 +194,10 @@ export class Renderer {
     this.lastFrameMetrics = {};
     const ctx = this.ctx;
     ctx.clearRect(0, 0, this.width, this.height);
+    if (renderArtSlice(ctx, this.width, this.height, this.pulse)) {
+      this.lastFrameMetrics.artSlice = true;
+      return;
+    }
     if (!this.backgroundGradient) {
       this.backgroundGradient = ctx.createLinearGradient(0, 0, 0, this.height);
       this.backgroundGradient.addColorStop(0, '#173f43');

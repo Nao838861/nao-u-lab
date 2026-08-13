@@ -1,4 +1,5 @@
 import { IsometricCamera } from './camera.js?v=v004.54.0-cause-readable';
+import { ART_SLICE_MODE } from './art_slice.js?v=b1-style-slice-20260814';
 import { SimulationClock } from './clock.js?v=v004.54.0-cause-readable';
 import { createBoundaryEvents } from './boundary_events.js?v=v004.54.0-cause-readable';
 import {
@@ -47,6 +48,10 @@ import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
+if (ART_SLICE_MODE) {
+  document.body.classList.add('art-slice', `art-slice-${ART_SLICE_MODE}`);
+  document.documentElement.classList.add('art-slice');
+}
 const requestedStartMode = parseStartMode(location.search);
 const resumeRequested = new URLSearchParams(location.search).get('resume') === '1';
 let storedSave = null;
@@ -156,6 +161,10 @@ camera.setWorldSize(model.width, model.height);
 if (startMode === 'sandbox' && !startupSave) camera.zoom = 0.38;
 if (START_MODES[startMode].blank || startMode === 'sandbox' || startMode === 'caravan') {
   camera.focus(model.economyMarket.x + 0.5, model.economyMarket.y + 0.5);
+}
+if (ART_SLICE_MODE === 'before') {
+  camera.zoom = 0.8;
+  camera.focus(model.economyMarket.x + 2.5, model.economyMarket.y + 5.5);
 }
 
 function formatNumber(value) {
@@ -2998,6 +3007,8 @@ if (requestedStartMode || startupSave) {
 } else {
   showStartScreen();
 }
+
+if (ART_SLICE_MODE) hideStartScreen();
 
 if (SPEEDS.length !== 4) throw new Error('speed controls and speed definitions must stay aligned');
 

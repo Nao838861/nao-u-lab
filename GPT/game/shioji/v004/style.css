@@ -41,6 +41,24 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 #world.map-dragging { cursor: grabbing; }
 #world.tool-active { cursor: crosshair; }
 
+body.art-slice #hud,
+body.art-slice #shortage-alerts,
+body.art-slice #tutorial-objective,
+body.art-slice #observer,
+body.art-slice #build-dock,
+body.art-slice #tool-hint,
+body.art-slice #toast-stack,
+body.art-slice #tracking,
+body.art-slice .sheet,
+body.art-slice #tutorial-letter-modal,
+body.art-slice #status,
+body.art-slice #start-screen {
+  display: none !important;
+}
+
+body.art-slice-after #world { cursor: none; }
+body.art-slice > :not(#world):not(script) { display: none !important; }
+
 .panel {
   border: 1px solid var(--line);
   background: linear-gradient(145deg, rgba(28, 66, 65, .94), var(--panel));

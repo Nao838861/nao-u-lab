@@ -3130,3 +3130,5 @@
   ISSUE: 未コミットの変更が19件。git syncが停止している可能性
 [2026-08-14 04:13:48] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "FAIL", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
   ISSUE: 未コミットの変更が17件。git syncが停止している可能性
+[2026-08-14 07:40:30] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "FAIL", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: 未コミットの変更が27件。git syncが停止している可能性
