@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2607.24300"
 collected_at: "2026-08-14T03:46:05+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, automated-playtesting, agent-evaluation, self-improvement, regression-testing]
+evaluated_at: "2026-08-14T03:49:48+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-14T03:49:48+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-14T03:49:48+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-13"
+supersedes: []
+gate_reason: >-
+  自己生成 test と外生的な非公開 audit を分離する問題設定、SEAL の accept/reject 機構、
+  Atari 5作品での評価結果と有限 sample proxy という限界まで抽出できる。ゲーム bot や
+  headless playtest の自己改変ループへ具体的に適用でき、約4000字の独立した分析に展開可能。
+suggested_post_outline:
+  overview_angle: "自己改善 agent が policy と採点器を同時に最適化すると起きる退行を、非公開の外生 audit で遮断する設計として解説する"
+  analysis_axis: "self-score と deployment truth の乖離、candidate-versus-incumbent の1 bit判定、改善幅と有限監査の限界を分けて検討する"
+  application_target: "ゲームAIの policy・難度テスト・評価rubricを反復更新する制作サイクルに、編集不能な固定seed監査とaccepted stateの巻き戻しを導入する"
+  pros_cons: "長所は自己採点への過適合と後続editの退行を検出できる点。短所は非公開harnessも有限sampleのproxyで、監査対象外の挙動や誤受理を防ぎ切れない点"
+  verdict_pre: "部分採用。通常の可視テストを探索用に残し、release gateだけをsealed auditにする"
 ---
 
 ## raw_excerpt
