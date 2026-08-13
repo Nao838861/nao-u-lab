@@ -7,12 +7,12 @@ genre_tags: [llm, agent, deep-search, drift, evaluation, game-development]
 evaluated_at: "2026-08-14T01:50:17+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-14T01:50:17+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-14T01:50:17+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-14T01:57:53.261849+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786640273261849"
+next_action: none
 stale_after: "2026-09-13"
 supersedes: []
 gate_reason: >-
@@ -25,6 +25,11 @@ suggested_post_outline:
   application_target: "ゲーム仕様・参照作品・不具合原因を長時間調査する制作 agent に、goal drift の修正と根拠十分時の探索終了を学習・監査する state snapshot を導入する。"
   pros_cons: "利点は推論時 teacher なしで局所的な制御判断を改善し、修正だけでなく終了も学べること。欠点は QA / deep-search benchmark 中心で、ゲーム制作の曖昧な審美判断には独自の state と outcome 定義が必要なこと。"
   verdict_pre: "部分採用。モデル再学習より先に、制作サイクルの search brief と継続／修正／終了ログとして小さく導入する。"
+posted:
+  ts: "1786640273.261849"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786640273261849"
+  char_count: 4455
+  posted_at: "2026-08-14T01:57:53.261849+09:00"
 ---
 
 ## raw_excerpt
