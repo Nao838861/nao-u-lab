@@ -23,6 +23,7 @@ import {
   chopWood,
   calendarMonth,
   companyCreditLimit,
+  companyAvailableGoodsCapacity,
   companyBuildingRepairNeeds,
   companyLogisticsSite,
   companyRepairMaterialsFor,
@@ -177,6 +178,7 @@ import {
   IRON_DEMAND_LEVEL,
   buildBaseCity,
   buildCaravanSliceWorld,
+  buildTutorialTwoMarketWorld,
   buildBadCity,
   canPlaceSettlement,
   createAuditWorld,
@@ -1969,9 +1971,11 @@ test("隊商S1: 世帯は帰属市場へ実移動し、屋台・返品・直接�
     stall.qty,
   );
 
+  fisherySeller.marketId = "main";
   for (let day = 2; day <= 7; day += 1) ageMarketStalls(economy, { day, physical });
   const returned = economy.marketReturns.find((lot) => lot.householdId === fisherySeller.id);
   assert.equal(returned?.marketId, "fishery");
+  fisherySeller.marketId = "fishery";
   assert.ok(sectionAmount(fisheryMarket, "pickup", "log") > 0);
   assert.equal(sectionAmount(mainMarket, "pickup", "log"), 0);
 
@@ -5316,6 +5320,7 @@ test("段44: 転職は建物型を変えず空き工房へ世帯と家財を移�
     household.id,
   );
   const woodshopHome = addEconomicTestBuilding(physical, "woodshop", 10, 2, 9, 3);
+  woodshopHome.marketId = "fishery";
   household.buildingId = loggerHome.id;
   economy.zones.push(
     { job: "logger", x: 5, y: 3, buildingId: loggerHome.id, filled: true },
@@ -5345,6 +5350,7 @@ test("段44: 転職は建物型を変えず空き工房へ世帯と家財を移�
   assert.equal(loggerHome.ownerHouseholdId, null);
   assert.equal(woodshopHome.ownerHouseholdId, household.id);
   assert.equal(household.buildingId, woodshopHome.id);
+  assert.equal(household.marketId, "fishery");
   assert.deepEqual([household.x, household.y, household.px, household.py], [9, 3, 9, 3]);
   assert.equal(sectionAmount(loggerHome, "input", "log"), 0);
   assert.equal(sectionAmount(woodshopHome, "input", "log"), 17);
@@ -5444,6 +5450,76 @@ test("隊商S3: 同じ困窮世帯は高給なら隊商宿へ移り、低給な�
   });
 });
 
+test("隊商S3: 安定世帯も現在収入以上の求人へ応募する", () => {
+  const physical = createEconomicTestPhysical();
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "logger", x: 5, y: 3 });
+  const home = addEconomicTestBuilding(physical, "logger", 2, 2, 5, 3, household.id);
+  const inn = addEconomicTestBuilding(physical, "carter", 10, 2, 9, 3);
+  household.buildingId = home.id;
+  household.incMonths = Array(12).fill(30);
+  household.hungerHist = [];
+  household.jobCycleDone = true;
+  setCaravanEmployment(physical, { buildingId: inn.id, recruitment: 1, wage: 2 });
+
+  const changes = runPopulationDynamicsPhase(economy, physical, {
+    day: 360,
+    random: () => 0.99,
+  });
+
+  assert.equal(household.job, "carter");
+  assert.equal(inn.ownerHouseholdId, household.id);
+  assert.deepEqual(changes.at(-1), {
+    kind: "job_switch",
+    householdId: household.id,
+    from: "logger",
+    to: "carter",
+  });
+});
+
+test("二市場入植: 漁郷世帯は母港区画の分家元にならない", () => {
+  const physical = createEconomicTestPhysical();
+  const economy = createEconomicState();
+  economy.port = { x: 1, y: 1 };
+  const fishery = createHousehold(economy, { job: "logger", x: 18, y: 12 });
+  fishery.marketId = "fishery";
+  const fisheryHome = addEconomicTestBuilding(physical, "logger", 17, 9, 18, 12, fishery.id);
+  fisheryHome.marketId = "fishery";
+  fishery.buildingId = fisheryHome.id;
+  const logger = addEconomicTestBuilding(physical, "logger", 5, 5, 5, 4);
+  logger.marketId = "main";
+  economy.zones.push({ job: "logger", x: 5, y: 4, buildingId: logger.id, filled: false });
+
+  const [settlement] = fillSettlementZones(economy, { day: 15, physical });
+
+  assert.equal(settlement.kind, "immigrant");
+  assert.equal(settlement.donor, null);
+  assert.equal(fishery.members.length >= 8, true, "漁郷世帯を母港へ分家させない");
+  assert.equal(settlement.household.job, "logger");
+});
+
+test("二市場入植: 初便用の貸与荷車は通常の会社運搬へ流用しない", () => {
+  const world = buildTutorialTwoMarketWorld(11);
+  const fisheryBuildings = world.state.physical.buildings.filter(
+    (building) => ["fisher", "saltworks"].includes(building.type),
+  );
+  assert.ok(fisheryBuildings.length > 0);
+  assert.equal(fisheryBuildings.every((building) => building.marketId === "fishery"), true,
+    "漁郷の仕事場自身も市場圏を保持する");
+  const charter = world.state.economy.companyCarts.find(
+    (cart) => cart.origin === "tutorial-charter",
+  );
+  assert.ok(charter);
+  assert.equal(charter.reservedFor, "caravan");
+  const transport = companyAvailableGoodsCapacity(
+    world.state.economy,
+    world.state.physical,
+    "wheat",
+  );
+  assert.equal(transport, P.COMPANY_HAND_PORTERS * P.CART_HAND_CAPACITY,
+    "貸与荷車を除き、通常運搬は徒歩容量だけを数える");
+});
+
 test("隊商S3: 二市場世界は種付き隊商宿1軒を持ち雇用操作をjournal再生できる", () => {
   const create = () => buildCaravanSliceWorld(11);
   const world = create();
@@ -5516,6 +5592,30 @@ test("隊商S4: 実在庫を一往復させ、荷車・仕入・小売を含む�
       - (materialBefore.inventory[goods] ?? 0) - (materialBefore.cargo[goods] ?? 0),
     ) < 1e-7, `${goods}の物量がずれた`);
   }
+});
+
+test("隊商S4: 会社残高が負でも信用限度内なら市場仕入れできる", () => {
+  const fixture = createCaravanRouteFixture();
+  const { economy, physical } = fixture.world.state;
+  economy.companyCarts.push({
+    id: "credit-test-cart",
+    kind: "wood",
+    durability: P.CART_WOOD_DURABILITY,
+    maxDurability: P.CART_WOOD_DURABILITY,
+    price: 0,
+    ownerKind: "company",
+    ownerId: "company",
+    purchasedDay: 0,
+    busyJobId: null,
+  });
+  economy.company.money = -1000;
+  const creditBefore = companyCreditLimit(economy, { day: 1 }) + economy.company.money;
+  assert.ok(creditBefore > 16);
+
+  runCaravanUntilReturned(economy, physical, fixture.route, 1);
+
+  assert.ok(fixture.route.recentTrips[0].outbound.wheat > 0);
+  assert.equal(fixture.route.recentTrips[0].fundingShortfall, false);
 });
 
 test("隊商S4: 荷車の御者は隊商宿世帯の実在メンバーへ固定する", () => {

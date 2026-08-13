@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.52.0-demand-rulings';
+import { JOB_LABELS } from './config.js?v=v004.53.0-second-market-tutorial';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

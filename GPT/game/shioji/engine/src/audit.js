@@ -11,7 +11,7 @@ import {
   localWood,
   recordEconomicMaterialFlow,
   setCaravanEmployment,
-} from "./econ.js?v=v004.52.0-demand-rulings";
+} from "./econ.js?v=v004.53.0-second-market-tutorial";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -27,8 +27,8 @@ import {
   makeFlowIslandTerrain,
   makeMultiMarketTerrain,
   pathLen,
-} from "./physical.js?v=v004.52.0-demand-rulings";
-import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.52.0-demand-rulings";
+} from "./physical.js?v=v004.53.0-second-market-tutorial";
+import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.53.0-second-market-tutorial";
 
 export const AUDIT_SEEDS = Object.freeze([11, 13, 14]);
 
@@ -509,6 +509,7 @@ function occupyScenarioZone(world, zone, marketId) {
   const building = buildingById(physical, zone.buildingId);
   if (building) {
     building.ownerHouseholdId = household.id;
+    building.marketId = marketId;
     building.constructionConsumed = true;
   }
   return household;
@@ -713,6 +714,145 @@ export function buildCaravanSliceWorld(seed) {
     mainMarketId: CARAVAN_SLICE_MARKETS.main.id,
     fisheryMarketId: CARAVAN_SLICE_MARKETS.fishery.id,
     innBuildingId: caravanInn.id,
+  };
+  return world;
+}
+
+// 新規教程は、母港を空のまま始めつつ、峠向こうの漁郷だけを初期条件として
+// 実在させる。同じ96×64の島を育てた末に二市場を結ぶための開始世界であり、
+// 途中で集落や在庫を生成する教程専用イベントは使わない。
+export function buildTutorialTwoMarketWorld(seed) {
+  const stablePlan = makeStableCityPlan(CARAVAN_SLICE_MARKETS.main.entrance);
+  const portSite = {
+    x: stablePlan.logisticsSites.port.x,
+    y: 57,
+    entrance: { x: stablePlan.logisticsSites.port.entrance.x, y: 56 },
+  };
+  const mainPlan = {
+    ...stablePlan,
+    logisticsSites: { ...stablePlan.logisticsSites, port: portSite },
+  };
+  const physical = createPhysicalState({
+    ...CARAVAN_SLICE_SIZE,
+    terrain: makeCaravanSliceTerrain(mainPlan),
+  });
+  const world = createWorld({
+    seed,
+    initialCompanyMoney: P.TREASURY0 + P.BUILD_COST * CARAVAN_FISHERY_LAYOUT.length,
+    physicalState: physical,
+    market: { ...CARAVAN_SLICE_MARKETS.main.entrance },
+    port: { ...portSite.entrance },
+    logisticsSites: { port: portSite },
+    marketNetwork: {
+      markets: [CARAVAN_SLICE_MARKETS.main, CARAVAN_SLICE_MARKETS.fishery],
+    },
+  });
+  const { economy } = world.state;
+  ensureCompanyLogisticsSites(economy, physical);
+
+  const unlimited = Object.fromEntries(GOODS.map((goods) => [goods, Number.MAX_SAFE_INTEGER]));
+  const fisheryMarket = addBuilding(
+    physical,
+    "market",
+    CARAVAN_FISHERY_MARKET_SITE.x,
+    CARAVAN_FISHERY_MARKET_SITE.y,
+    {
+      definitions: ECONOMIC_BUILDINGS,
+      fixed: true,
+      requireRoad: false,
+      entrance: { ...CARAVAN_SLICE_MARKETS.fishery.entrance },
+      roles: [`market:${CARAVAN_SLICE_MARKETS.fishery.id}`],
+      marketId: CARAVAN_SLICE_MARKETS.fishery.id,
+      caps: { inbound: unlimited, outbound: unlimited, pickup: unlimited },
+    },
+  );
+  if (!fisheryMarket.ok) throw new Error(`教程漁郷市場の配置不可: ${fisheryMarket.reason}`);
+  const fisheryRecord = world.state.marketNetwork.markets.find(
+    (market) => market.id === CARAVAN_SLICE_MARKETS.fishery.id,
+  );
+  fisheryRecord.buildingId = fisheryMarket.building.id;
+
+  for (const [job, x, y, buildingX, buildingY] of CARAVAN_FISHERY_LAYOUT) {
+    if (!addAuditZone(world, job, x, y, buildingX, buildingY)) {
+      throw new Error(`教程漁郷の配置不可: ${job}@${x},${y}`);
+    }
+  }
+  addScenarioRoads(physical, [[[34, 55], [34, 56]]], "教程母港");
+  addScenarioRoads(physical, CARAVAN_ROAD_POLYLINES.slice(0, 5), "教程峠道");
+
+  const fisheryHouseholds = economy.zones.map(
+    (zone) => occupyScenarioZone(world, zone, CARAVAN_SLICE_MARKETS.fishery.id),
+  );
+  for (const household of fisheryHouseholds) {
+    const removedWheat = household.pantry.wheat;
+    household.pantry.wheat = 0;
+    recordEconomicMaterialFlow(
+      economy,
+      "wheat",
+      "exp",
+      removedWheat,
+      `教程漁郷世帯${household.id}の開拓キット差替`,
+      { includeInDaily: false },
+    );
+    const preservedFood = household.members.length * CARAVAN_SLICE_PROVISION_DAYS;
+    household.pantry.meat += preservedFood;
+    recordEconomicMaterialFlow(
+      economy,
+      "meat",
+      "imp",
+      preservedFood,
+      `教程漁郷世帯${household.id}の入植時保存食`,
+      { includeInDaily: false },
+    );
+    household.marketEntrance = { ...CARAVAN_SLICE_MARKETS.fishery.entrance };
+    household.marketBuildingId = fisheryMarket.building.id;
+    if (household.job === "saltworks") {
+      depositInventory(
+        buildingById(physical, household.buildingId),
+        "input",
+        "char",
+        CARAVAN_SLICE_SALTWORKS_CHARCOAL,
+      );
+      recordEconomicMaterialFlow(
+        economy,
+        "char",
+        "imp",
+        CARAVAN_SLICE_SALTWORKS_CHARCOAL,
+        `教程漁郷世帯${household.id}の入植時燃料`,
+        { includeInDaily: false },
+      );
+    }
+  }
+
+  // 凍結した操作骨子は宿→雇用→路線であり、荷車工房を途中追加しない。
+  // そのため開拓会社の貸与物を初期資産として一台だけ置く。以後の摩耗・破損・
+  // 代替購入は本編と同じ規則で処理される。
+  economy.companyCarts.push({
+    id: `wood-cart-${economy.nextCartAssetId}`,
+    kind: "wood",
+    durability: P.CART_WOOD_DURABILITY,
+    maxDurability: P.CART_WOOD_DURABILITY,
+    price: 0,
+    makerHouseholdId: null,
+    ownerKind: "company",
+    ownerId: "company",
+    purchasedDay: 0,
+    busyJobId: null,
+    origin: "tutorial-charter",
+    reservedFor: "caravan",
+  });
+  economy.nextCartAssetId += 1;
+  economy.jobSelectionPool = [...new Set([
+    ...E_STABLE_JOBS,
+    "carter",
+    "cartwright",
+    ...CARAVAN_FISHERY_LAYOUT.map(([job]) => job),
+  ])];
+  world.state.caravanSlice = {
+    id: "tutorial-two-markets",
+    mainMarketId: CARAVAN_SLICE_MARKETS.main.id,
+    fisheryMarketId: CARAVAN_SLICE_MARKETS.fishery.id,
+    charterCartAssetId: economy.companyCarts[0].id,
   };
   return world;
 }

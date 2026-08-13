@@ -8,7 +8,7 @@
 2. **【完了 v004.50.0】魚の日持ち5日**: [../decisions/DECISIONS_20260813_fish_life_5days.md](../decisions/DECISIONS_20260813_fish_life_5days.md)。engine、鮮度表示、発話、試験を5日へ統一。専用早便は2日周期・最大1.5日分の小口購入を維持
 3. **【完了 v004.47.0】96×64化**: [WORK_ORDER_20260812_PLAYABLE_96X64.md](WORK_ORDER_20260812_PLAYABLE_96X64.md)。自由開始を96×64二市場へ変更し、教程・旧48×40保存互換、PC／スマホ、性能、保存則を確認済み
 4. **【実装・自動監査完了 v004.51.0／実プレイ判定待ち】隊商S6処方3件→1年再実測→再監査**: [../decisions/DECISIONS_20260812_oil_and_caravan_s6.md](../decisions/DECISIONS_20260812_oil_and_caravan_s6.md)。複数品目路線UI・路線別の売れない理由・給料相場／月額を実装。一年比較、貨幣保存、PC／スマホ合格。最終判定は項目8でNao_uが実プレイ
-4b. **教程の新章「二つ目の市場」**: [../decisions/DECISIONS_20260813_tutorial_second_market.md](../decisions/DECISIONS_20260813_tutorial_second_market.md)。前提=3と4の完了。出題(漁郷の麦欠乏の書状)→回答(隊商宿・募集と給料・路線敷設は既存操作のみ)→初便を等速で見届ける課題→採点(レシート+漁郷の実変化)。識字テストを先に書く完成度ループ規約適用
+4b. **【完了 v004.53.0】教程の新章「二つ目の市場」**: [../decisions/DECISIONS_20260813_tutorial_second_market.md](../decisions/DECISIONS_20260813_tutorial_second_market.md)。新規教程を96×64の同一島へ移し、初日から漁郷市場・漁師3軒・塩田1軒を実在させた。母港では麦畑を自分で建て、隊商宿の募集・日給・路線を既存操作で設定する。全章通しで麦8荷→魚8荷→漁郷の実購入→会計→卒業、journal再生一致を確認
 5. **【完了 v004.52.0】需要網の残裁定**: [../decisions/DECISIONS_20260811_demand_rulings.md](../decisions/DECISIONS_20260811_demand_rulings.md)——魚粉FERT型(裁定2)・銑鉄重修繕(裁定3)・肉の塩漬け(裁定4)・**油の退役**(20260812裁定)を実装。会社施設修繕(裁定1)も銑鉄接続まで完了
 6. **長期帯の再構築**: 新比率の成熟都市で8年帯を作り直し（既知赤の再較正とセット・裁定10）
 7. 原因可読パックの残3点: [WORK_ORDER_20260813_CAUSE_READABLE_PANEL.md](WORK_ORDER_20260813_CAUSE_READABLE_PANEL.md)実績欄参照（(1)は1に同梱済み。残りは30日回帰テストとChrome確認+バージョン一括昇版）

@@ -1,20 +1,20 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.52.0-demand-rulings';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.53.0-second-market-tutorial';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.52.0-demand-rulings';
+} from './food_readability.js?v=v004.53.0-second-market-tutorial';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   findTravelPath, householdProductionSummary, laborWage, productionCost,
-} from './engine_bridge.js?v=v004.52.0-demand-rulings';
-import { analyzeRoadConnections } from './placement.js?v=v004.52.0-demand-rulings';
+} from './engine_bridge.js?v=v004.53.0-second-market-tutorial';
+import { analyzeRoadConnections } from './placement.js?v=v004.53.0-second-market-tutorial';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.52.0-demand-rulings';
+} from './render_scene.js?v=v004.53.0-second-market-tutorial';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.52.0-demand-rulings';
-import { GOODS_RECIPES } from './goods_detail.js?v=v004.52.0-demand-rulings';
+} from './visuals.js?v=v004.53.0-second-market-tutorial';
+import { GOODS_RECIPES } from './goods_detail.js?v=v004.53.0-second-market-tutorial';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',
@@ -1472,6 +1472,7 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
       width: building.w,
       height: building.h,
       entrance: building.entrance ? { ...building.entrance } : null,
+      marketId: building.marketId ?? (roles.includes('market') ? 'main' : null),
       grade: building.grade ?? 0,
       condition: Number.isFinite(building.condition) ? building.condition : 100,
       conditionStatus: building.conditionStatus ?? 'good',

@@ -5,6 +5,8 @@ const COMPANY_GOALS = new Set([
   'release-seasonal-reserve', 'assess-profitable-order', 'accept-profitable-order',
   'target-profitable-order', 'complete-profitable-order', 'observe-skippable-order',
   'let-skippable-order-expire',
+  'configure-first-caravan-route', 'read-first-caravan-receipt',
+  'observe-second-market-result',
 ]);
 
 const ISLAND_GOALS = new Set([
@@ -16,6 +18,7 @@ const ISLAND_GOALS = new Set([
 const LETTER_GOALS = new Set([
   'close-first-chapter', 'close-second-chapter', 'close-third-chapter',
   'close-fourth-chapter', 'close-fifth-chapter', 'graduate-governor',
+  'close-sixth-chapter',
 ]);
 
 export const GUIDANCE_TIERS = Object.freeze({
@@ -57,6 +60,12 @@ function buildingCount(model, job) {
   return model.buildings.filter(building => building.type === job).length;
 }
 
+function motherPortBuildingCount(model, job) {
+  return model.buildings.filter(building => (
+    building.type === job && (building.marketId ?? 'main') === 'main'
+  )).length;
+}
+
 export function objectiveActionFor(objective, model) {
   if (!objective || !model) return null;
   if (objective.id === 'first-road-and-logger') {
@@ -80,11 +89,14 @@ export function objectiveActionFor(objective, model) {
       : { kind: 'tool', tool: 'road', label: '倉庫へ道を結ぶ' };
   }
   if (objective.id === 'place-island-food') {
-    if (buildingCount(model, 'fisher') < 2) {
+    if (motherPortBuildingCount(model, 'fisher') < 2) {
       return { kind: 'building', job: 'fisher', label: '漁師を選ぶ' };
     }
-    if (buildingCount(model, 'veg') < 2) {
+    if (motherPortBuildingCount(model, 'veg') < 1) {
       return { kind: 'building', job: 'veg', label: '野菜畑を選ぶ' };
+    }
+    if (motherPortBuildingCount(model, 'wheat') < 1) {
+      return { kind: 'building', job: 'wheat', label: '麦畑を選ぶ' };
     }
     return { kind: 'building', job: 'logger', label: '木こりを選ぶ' };
   }
@@ -104,6 +116,32 @@ export function objectiveActionFor(objective, model) {
         return { kind: 'building', job, label: `${labels[job]}を選ぶ` };
       }
     }
+  }
+  if (objective.id === 'inspect-second-market-road') {
+    return { kind: 'building-detail', buildingId: model.buildings.find(
+      building => building.marketId === 'fishery',
+    )?.id, label: '漁郷市場を見る' };
+  }
+  if (objective.id === 'build-caravan-inn') {
+    return { kind: 'building', job: 'carter', label: '隊商宿を選ぶ' };
+  }
+  if (objective.id === 'staff-caravan-inn') {
+    return { kind: 'building-detail', buildingId: model.buildings.find(
+      building => building.type === 'carter' && (!building.occupied
+        || model.households.find(household => household.buildingId === building.id)?.marketId === 'main'),
+    )?.id, label: '隊商宿を開く' };
+  }
+  if (objective.id === 'wait-main-wheat-stock') {
+    return { kind: 'speed', speed: 3, label: '収穫まで一日毎秒で進める' };
+  }
+  if (['configure-first-caravan-route', 'read-first-caravan-receipt',
+    'observe-second-market-result'].includes(objective.id)) {
+    return { kind: 'building-detail', buildingId: model.buildings.find(
+      building => building.type === 'carter',
+    )?.id, label: '隊商宿を開く' };
+  }
+  if (['watch-first-caravan-depart', 'watch-first-caravan-arrive'].includes(objective.id)) {
+    return { kind: 'speed', speed: 1, label: '通常の速さで初便を追う' };
   }
   if (COMPANY_GOALS.has(objective.id)) {
     return { kind: 'sheet', sheet: 'company-sheet', label: '取引を開く' };

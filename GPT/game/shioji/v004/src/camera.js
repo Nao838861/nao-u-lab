@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.52.0-demand-rulings';
+import { TILE } from './config.js?v=v004.53.0-second-market-tutorial';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

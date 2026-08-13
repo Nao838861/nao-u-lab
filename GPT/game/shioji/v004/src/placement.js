@@ -1,5 +1,5 @@
-import { BUILDING_SIZES } from './config.js?v=v004.52.0-demand-rulings';
-import { islandCalendar } from './ui_summary.js?v=v004.52.0-demand-rulings';
+import { BUILDING_SIZES } from './config.js?v=v004.53.0-second-market-tutorial';
+import { islandCalendar } from './ui_summary.js?v=v004.53.0-second-market-tutorial';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

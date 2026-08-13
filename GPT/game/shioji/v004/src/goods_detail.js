@@ -1,4 +1,4 @@
-import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.52.0-demand-rulings';
+import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.53.0-second-market-tutorial';
 
 export const GOODS_SHELF_LIFE_DAYS = Object.freeze({
   fish: 5,

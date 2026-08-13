@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.52.0-demand-rulings';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.53.0-second-market-tutorial';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({

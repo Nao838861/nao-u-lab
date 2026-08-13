@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.52.0-demand-rulings';
+import { pileVisual } from './visuals.js?v=v004.53.0-second-market-tutorial';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));

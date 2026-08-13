@@ -1,4 +1,4 @@
-import { buildingById, pathLen } from "./physical.js?v=v004.52.0-demand-rulings";
+import { buildingById, pathLen } from "./physical.js?v=v004.53.0-second-market-tutorial";
 
 const DEFAULT_HYSTERESIS = 0.12;
 const EPSILON = 1e-9;
@@ -10,6 +10,9 @@ function finiteDistance(physical, from, to) {
 
 function nearestMarket(physical, markets, position, previousId, hysteresis) {
   const candidates = markets
+    // 市場棟がまだない予定地は所属先にしない。市場設置時に主市場レコードが
+    // 実入口へ更新されるため、その次の日から通常の距離割当へ入る。
+    .filter((market) => market.buildingId)
     .map((market) => ({
       market,
       distance: finiteDistance(physical, position, market.entrance),
@@ -82,7 +85,7 @@ export function assignMarketNetwork(physical, economy, network) {
   };
   for (const building of physical.buildings ?? []) {
     if (building.type === "market" || building.type === "warehouse" || building.type === "port") continue;
-    assign(`building:${building.id}`, building.entrance ?? building);
+    assign(`building:${building.id}`, building.entrance ?? building, building.marketId);
   }
   for (const household of economy?.households ?? []) {
     const building = buildingById(physical, household.buildingId);

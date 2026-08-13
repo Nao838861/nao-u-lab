@@ -4,13 +4,14 @@ import {
   GOODS,
   P,
   caravanCrewCount as caravanInnCrewCount,
+  companyCreditLimit,
   householdMarketId,
   marketBuildingForId,
   postCompanyLedger,
   purchaseCompanyWoodCart,
   recordEconomyEvent,
   useHouseholdWorkTool,
-} from "./econ.js?v=v004.52.0-demand-rulings";
+} from "./econ.js?v=v004.53.0-second-market-tutorial";
 import {
   buildingById,
   createCartCarrier,
@@ -21,7 +22,7 @@ import {
   sectionAmount,
   stepTravelCarrier,
   withdrawInventory,
-} from "./physical.js?v=v004.52.0-demand-rulings";
+} from "./physical.js?v=v004.53.0-second-market-tutorial";
 
 export const CARAVAN_CART_CAPACITY = P.CART_WOOD_CAPACITY;
 export const CARAVAN_INTERVAL_LIMITS = Object.freeze({ min: 1, max: 30 });
@@ -265,7 +266,11 @@ function caravanBuyAtMarket(economy, physical, route, marketId, goodsList, capac
       const seller = economy.households.find((candidate) => candidate.id === stall.householdId);
       if (!seller) continue;
       const physicalQty = market ? sectionAmount(market, "outbound", goods) : stall.qty;
-      const affordableQty = economy.company.money / Math.max(1e-9, stall.price);
+      const availableCredit = Math.max(
+        0,
+        economy.company.money + companyCreditLimit(economy, { day }),
+      );
+      const affordableQty = availableCredit / Math.max(1e-9, stall.price);
       const availableQty = Math.min(
         stall.qty,
         physicalQty,

@@ -25,7 +25,8 @@ import {
 import { developmentMapView } from '../src/development_map.js';
 import {
   BUILD_COST_DENARI, E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS,
-  applySpringStartCalendar, buildBlankCity, buildPlayableSandboxWorld, createEngineController,
+  applySpringStartCalendar, buildBlankCity, buildPlayableSandboxWorld,
+  buildTutorialTwoMarketWorld, createEngineController,
 } from '../src/engine_bridge.js';
 import {
   EVENT_DISPLAY_POLICY, OBSERVED_EVENT_TYPES, eventPlaceLabel, hasEventPresentation,
@@ -114,8 +115,11 @@ const testTimings = [];
 const matchIndex = process.argv.indexOf('--match');
 const testMatchSource = matchIndex >= 0 ? process.argv[matchIndex + 1] : null;
 const testMatch = testMatchSource ? new RegExp(testMatchSource) : null;
-const tutorialStage17Requested = testMatchSource?.includes('チュートリアル段17') ?? false;
-const tutorialStage17Dependency = /^チュートリアル段(?:7〜9|1[0-7])(?::|実測:)/;
+const tutorialThroughStage = Number(testMatchSource?.match(/チュートリアル段(1[7-9]|2[0-3])/)?.[1] ?? 0);
+const tutorialThroughDependency = /^チュートリアル段(?:7〜9|16〜17|1[0-9]|2[0-3])(?::|実測:)/;
+const tutorialIndependentMeasurements = new Set([
+  'チュートリアル段10実測: 遠回りの木こりは実往復tickが長く、直結道路で倍率が回復する',
+]);
 
 function readBrowserEntrySource() {
   const htmlUrl = new URL('../index.html', import.meta.url);
@@ -138,7 +142,10 @@ function clampMaterialRoundoff(snapshot) {
 
 function test(name, body) {
   if (testMatch && !testMatch.test(name)
-    && !(tutorialStage17Requested && tutorialStage17Dependency.test(name))) return;
+    && !(tutorialThroughStage > 0
+      && tutorialThroughDependency.test(name)
+      && !tutorialIndependentMeasurements.has(name)
+      && Number(name.match(/^チュートリアル段(?:7〜9|16〜17|(\d+))/)?.[1] ?? 9) <= tutorialThroughStage)) return;
   console.log(`run - ${name}`);
   const startedAt = performance.now();
   try {
@@ -908,15 +915,119 @@ test('チュートリアル段3: skipは同じ世界とjournalを保ったまま
   assert.deepEqual(completionDirector.currentObjective().progress, { done: 1, total: 1 });
 });
 
-test('チュートリアル段4: tutorialは未開拓worldへディレクターだけを重ねる', () => {
+test('チュートリアル段4: tutorialは96×64の母港と既存漁郷へディレクターだけを重ねる', () => {
   const tutorial = createEngineController({ seed: 11, mode: 'tutorial' });
-  const blank = snapshotToViewModel(createEngineApi(
-    applySpringStartCalendar(buildBlankCity(11)),
-  ).snapshot({ scope: 'full' }));
-  assert.deepEqual(tutorial.readModel(), blank);
+  const model = tutorial.readModel();
+  assert.deepEqual([model.width, model.height], [96, 64]);
+  assert.equal(model.buildings.filter(building => building.roles.includes('port')).length, 1);
+  assert.equal(model.buildings.filter(building => building.roles.includes('market')).length, 0,
+    '母港市場は第一章で建てる');
+  assert.equal(model.buildings.filter(building => building.marketId === 'fishery').length, 1);
+  assert.deepEqual(model.households.filter(household => household.marketId === 'fishery')
+    .map(household => household.job), ['fisher', 'fisher', 'fisher', 'saltworks']);
+  assert.equal(model.households.filter(household => household.marketId === 'main').length, 0);
+  assert.equal(model.households.filter(household => household.marketId === 'fishery')
+    .every(household => household.pantry.find(row => row.goods === 'wheat').amount === 0), true);
+  assert.equal(model.companyCarts.length, 1, '開拓会社の貸与荷車を初期資産にする');
+  const director = createTutorialDirectorForMode('tutorial');
+  director.observe(model, []);
+  assert.equal(director.currentObjective().id, 'first-road-and-logger');
+  assert.equal(director.currentObjective().complete, false, '遠景の漁郷は第一章を先回りしない');
   assert.ok(createTutorialDirectorForMode('tutorial'));
   assert.equal(createTutorialDirectorForMode('sandbox'), null);
   assert.equal(createTutorialDirectorForMode('test'), null);
+});
+
+test('チュートリアル新章: 出題・識字・低給失敗・実便レシートをエンジン状態で採点する', () => {
+  const sandbox = createEngineController({ seed: 11, mode: 'sandbox' });
+  sandbox.advanceTicks(180 * 30);
+  let model = sandbox.readModel();
+  const inn = model.buildings.find(building => building.type === 'carter' && building.occupied);
+  assert.ok(inn, '本編の常設隊商宿を使う');
+
+  const highWage = Math.max(1, inn.caravanWageMarket.median);
+  assert.equal(sandbox.operate({
+    type: 'set_caravan_employment', buildingId: inn.id, recruitment: 1, wage: highWage,
+  }).ok, true);
+  assert.equal(sandbox.operate({
+    type: 'set_caravan_route', baseBuildingId: inn.id, destMarketId: 'fishery',
+    goodsOut: ['wheat'], goodsBack: ['fish'], intervalDays: 30,
+  }).ok, true);
+
+  const selectedGoals = new Set([
+    'inspect-second-market-road', 'build-caravan-inn', 'staff-caravan-inn',
+    'configure-first-caravan-route', 'watch-first-caravan-depart',
+    'watch-first-caravan-arrive', 'read-first-caravan-receipt',
+    'observe-second-market-result', 'close-sixth-chapter', 'graduate-governor',
+  ]);
+  const director = new TutorialDirector({
+    goals: TUTORIAL_GOALS.filter(goal => selectedGoals.has(goal.id)),
+    state: { version: 1, completedGoals: ['close-fifth-chapter'], letters: [] },
+  });
+  const observe = () => director.observe(sandbox.readModel(), []);
+  observe();
+  const opening = director.letters().find(letter => letter.id === 'second-market-call');
+  assert.ok(opening);
+  assert.match(opening.body, /市場は家族が売買する場所/);
+  assert.match(TUTORIAL_ELENA_MESSAGES['staff-caravan-inn'], /給料が低すぎれば/);
+  assert.match(TUTORIAL_SYSTEM_INSTRUCTIONS['staff-caravan-inn'], /日給×人数×30/);
+
+  for (let index = 0; index < 4; index += 1) observe();
+  assert.equal(director.readState().completedGoals.includes('configure-first-caravan-route'), true);
+  const journalAtRoute = sandbox.inputJournal();
+
+  let sawOutbound = false;
+  let sawReturning = false;
+  const limitDay = sandbox.readModel().day + 90;
+  while (sandbox.readModel().day <= limitDay) {
+    sandbox.advanceTicks(1);
+    model = sandbox.readModel();
+    sawOutbound ||= model.caravans[0]?.state === 'outbound'
+      && (model.caravans[0]?.currentTrip?.outbound?.wheat ?? 0) > 0;
+    sawReturning ||= model.caravans[0]?.state === 'returning';
+    observe();
+    if (director.readState().completedGoals.includes('observe-second-market-result')) break;
+  }
+  model = sandbox.readModel();
+  const route = model.caravans[0];
+  const receipt = route.recentTrips[0];
+  assert.equal(sawOutbound, true);
+  assert.equal(sawReturning, true);
+  assert.ok(receipt.outbound.wheat > 0);
+  assert.ok(receipt.returning.fish > 0);
+  assert.ok(model.households.filter(household => household.marketId === 'fishery')
+    .some(household => (household.lastMarketVisit?.purchased?.wheat ?? 0) > 0));
+  assert.equal(route.accounting.current.profit,
+    route.accounting.current.sales - route.accounting.current.procurement
+      - route.accounting.current.wages - route.accounting.current.cartCosts);
+
+  observe();
+  observe();
+  observe();
+  assert.ok(director.letters().some(letter => letter.id === 'chapter-six-close'));
+  assert.ok(director.letters().some(letter => letter.id === 'tutorial-graduation'));
+  assert.equal(director.isComplete(), true);
+
+  const replay = createEngineController({ seed: 11, mode: 'sandbox' });
+  let replayTick = 0;
+  for (const row of sandbox.inputJournal()) {
+    replay.advanceTicks(row.tick - replayTick);
+    replayTick = row.tick;
+    assert.equal(replay.operate(row.op).ok, true);
+  }
+  replay.advanceTicks(model.tick - replayTick);
+  assert.deepEqual(replay.readModel(), model, '路線設定を含む公開journalを同じ世界へ再生できる');
+  assert.equal(journalAtRoute.some(row => row.op.type === 'set_caravan_employment'), true);
+  assert.equal(journalAtRoute.some(row => row.op.type === 'set_caravan_route'), true);
+
+  const lowModel = structuredClone(model);
+  const lowInn = lowModel.buildings.find(building => building.type === 'carter');
+  lowInn.caravanEmployment = { recruitment: 1, wage: 0 };
+  lowInn.caravanCrew = 0;
+  const staffingGoal = TUTORIAL_GOALS.find(goal => goal.id === 'staff-caravan-inn');
+  const lowResult = staffingGoal.evaluate({ model: lowModel, state: {} });
+  assert.equal(lowResult.complete, false);
+  assert.match(lowResult.detail, /御者 0人/);
 });
 
 test('チュートリアル段5前提実測: 港だけの無人島でも木こり区画へ15日目に移民が入る', () => {
@@ -1115,7 +1226,7 @@ test('チュートリアル段6: 市場→支援→入植→食料職→木工�
   advanceUntil(() => director.readState().completedGoals.includes('first-settlers-arrive'), 20, '最初の入植');
   assert.equal(director.currentObjective().id, 'place-island-food');
 
-  for (const job of ['fisher', 'fisher', 'veg', 'veg', 'logger', 'logger']) {
+  for (const job of ['wheat', 'fisher', 'fisher', 'veg', 'logger', 'logger']) {
     const placement = findReachablePreviewNear(controller.readModel(), job, market.entrance)?.preview;
     assert.ok(placement, `${job}を市場から徒歩14以内へ置ける`);
     assert.equal(controller.operate({
@@ -1131,7 +1242,9 @@ test('チュートリアル段6: 市場→支援→入植→食料職→木工�
   advanceUntil(() => hasLetter('first-log-stall'), 20, '市場に丸太が並ぶ');
   assert.equal(director.currentObjective().id, 'first-woodshop');
 
-  const woodshopPreview = findPreviewNear(controller.readModel(), 'woodshop', market.entrance);
+  const woodshopPreview = findReachablePreviewNear(
+    controller.readModel(), 'woodshop', market.entrance,
+  )?.preview;
   assert.ok(woodshopPreview);
   assert.equal(controller.operate({
     type: 'place_building', job: 'woodshop',
@@ -1293,7 +1406,7 @@ test('チュートリアル段7〜9: 会社在庫を教えず、受諾だけで�
     '市場設置後の最初の入植',
   );
 
-  for (const job of ['fisher', 'fisher', 'veg', 'veg', 'logger', 'logger']) {
+  for (const job of ['wheat', 'fisher', 'fisher', 'veg', 'logger', 'logger']) {
     const preview = findReachablePreviewNear(controller.readModel(), job, market.entrance)?.preview;
     assert.ok(preview, `${job}を市場から徒歩14以内へ置ける`);
     assert.equal(controller.operate({
@@ -1971,7 +2084,11 @@ function placeMissingConversionBuildings(controller) {
   const placed = [];
   for (const job of ['woodshop', 'charburner', 'saltworks']) {
     let model = controller.readModel();
-    if (model.buildings.some(building => building.type === job)) continue;
+    if (model.buildings.some(building => {
+      if (building.type !== job) return false;
+      const owner = model.households.find(household => household.buildingId === building.id);
+      return (owner?.marketId ?? building.marketId ?? 'main') === 'main';
+    })) continue;
     const market = model.buildings.find(building => building.roles.includes('market'));
     const candidate = findReachablePreviewNear(model, job, market.entrance);
     assert.ok(candidate?.preview, `${job}を市場から徒歩14以内へ配置できる`);
@@ -2105,7 +2222,7 @@ test('チュートリアル段20: 木製品の実相場上昇から三変換職�
     assert.match(chainLetter.body, /原料へ払った代金は、作った品の費用に含まれます/);
     assert.doesNotMatch(chainLetter.body, /EMA/);
   }
-  assert.equal(director.currentObjective().id, 'graduate-governor');
+  assert.equal(director.currentObjective().id, 'inspect-second-market-road');
   tutorialThroughPlay.fifthChapterStart = {
     journalBefore,
     rise: riseLetter?.facts ?? null,
@@ -2113,7 +2230,7 @@ test('チュートリアル段20: 木製品の実相場上昇から三変換職�
   };
 });
 
-test('チュートリアル段21: 三変換職の配置で卒業し、90日存続とLv上昇は任意報告にする', () => {
+test('チュートリアル段21: 三変換職の配置後も卒業せず、二つ目の市場へ進む', () => {
   const { controller, director, observe } = tutorialThroughPlay;
   observe();
   observe();
@@ -2121,9 +2238,10 @@ test('チュートリアル段21: 三変換職の配置で卒業し、90日存�
   assert.ok(closing);
   assert.equal(closing.delivery, 'letter');
   assert.equal(director.readState().completedGoals.includes('close-fifth-chapter'), true);
-  assert.equal(director.isComplete(), true);
-  assert.equal(director.currentObjective().id, 'graduate-governor');
-  assert.equal(director.currentObjective().complete, true);
+  assert.equal(director.isComplete(), false);
+  assert.equal(director.currentObjective().id, 'build-caravan-inn');
+  assert.equal(director.currentObjective().complete, false);
+  assert.ok(director.letters().some(letter => letter.id === 'second-market-call'));
   const survival = director.readState().goalResults['sustain-conversion-workshops']?.evidence ?? null;
   const levelLetter = director.letters().find(letter => letter.id === 'household-level-up') ?? null;
 
@@ -2148,12 +2266,103 @@ test('チュートリアル段21: 三変換職の配置で卒業し、90日存�
   console.log(`  段20〜21実測 seed11:${rise
     ? `木製品day${rise.minimumDay} ${rise.minimumPrice.toFixed(3)}→day${rise.currentDay} ${rise.currentPrice.toFixed(3)}`
     : '木製品相場上昇は任意観測のまま未発生'}`
-    + ' / 三職配置で教程卒業'
+    + ' / 三職配置から二市場章へ'
     + `${survival?.elapsedDays ? ` / 任意観測${survival.elapsedDays}日` : ''}`
     + `${levelLetter ? ` / ${levelLetter.facts.message}@day${levelLetter.facts.day}` : ''}`);
 });
 
-test('チュートリアル段22: 卒業書状へ町の実測と安定監査の参照帯を並記する', () => {
+test('チュートリアル段22: 同じ島で隊商宿を建て、麦と魚の初便を通常規則で往復させる', () => {
+  const { controller, director, observe } = tutorialThroughPlay;
+  const market = controller.readModel().buildings.find(building => building.roles.includes('market'));
+  const preview = findReachablePreviewNear(controller.readModel(), 'carter', market.entrance)?.preview;
+  assert.ok(preview, '母港市場圏に隊商宿を置ける');
+  const placed = controller.operate({
+    type: 'place_building', job: 'carter',
+    x: preview.entrance.x, y: preview.entrance.y,
+    buildingX: preview.x, buildingY: preview.y,
+  });
+  assert.equal(placed.ok, true);
+  observe();
+  let inn = controller.readModel().buildings.find(building => building.id === placed.buildingId);
+  const wage = Math.max(1, inn.caravanWageMarket.median);
+  assert.equal(controller.operate({
+    type: 'set_caravan_employment', buildingId: inn.id, recruitment: 1, wage,
+  }).ok, true);
+
+  const occupancyLimit = controller.readModel().day + 120;
+  while (!inn.occupied && controller.readModel().day <= occupancyLimit) {
+    controller.advanceTicks(30);
+    observe();
+    inn = controller.readModel().buildings.find(building => building.id === placed.buildingId);
+  }
+  assert.equal(inn.occupied, true, '適正日給の隊商宿へ実世帯が入る');
+  observe();
+  assert.equal(director.readState().completedGoals.includes('staff-caravan-inn'), true);
+
+  const wheatLimit = controller.readModel().tick + 400 * 30;
+  while (!director.readState().completedGoals.includes('wait-main-wheat-stock')
+    && controller.readModel().tick <= wheatLimit) {
+    controller.advanceTicks(30);
+    observe();
+  }
+  const wheatEvidence = director.readState().goalResults['wait-main-wheat-stock']?.evidence;
+  assert.ok(wheatEvidence?.wheat >= 8, '母港の麦畑が収穫し、初便8荷ぶんが市場に並ぶ');
+  assert.equal(director.currentObjective().id, 'configure-first-caravan-route');
+
+  assert.equal(controller.operate({
+    type: 'set_caravan_route', baseBuildingId: inn.id, destMarketId: 'fishery',
+    goodsOut: ['wheat'], goodsBack: ['fish'], intervalDays: 30,
+  }).ok, true);
+  observe();
+  let sawOutbound = false;
+  let sawReturning = false;
+  const returnLimit = controller.readModel().day + 90;
+  while (!director.readState().completedGoals.includes('observe-second-market-result')
+    && controller.readModel().day <= returnLimit) {
+    controller.advanceTicks(1);
+    const model = controller.readModel();
+    sawOutbound ||= model.caravans[0]?.state === 'outbound';
+    sawReturning ||= model.caravans[0]?.state === 'returning';
+    observe();
+  }
+  assert.equal(sawOutbound, true);
+  assert.equal(sawReturning, true);
+  const model = controller.readModel();
+  const route = model.caravans[0];
+  const receipt = route.recentTrips[0];
+  assert.ok(receipt.outbound.wheat > 0, JSON.stringify({
+    day: model.day,
+    companyMoney: model.companyMoney,
+    wheatEvidence,
+    wheatStalls: model.stalls.filter(stall => (
+      stall.goods === 'wheat' && (stall.marketId ?? 'main') === 'main'
+    )).map(stall => ({
+      householdId: stall.householdId, qty: stall.qty, age: stall.age, price: stall.price,
+    })),
+    receipt,
+    recentTrips: route.recentTrips,
+  }));
+  assert.ok(receipt.returning.fish > 0);
+  assert.ok(model.households.filter(household => household.marketId === 'fishery')
+    .some(household => (household.lastMarketVisit?.purchased?.wheat ?? 0) > 0));
+  assert.equal(route.accounting.current.profit,
+    route.accounting.current.sales - route.accounting.current.procurement
+      - route.accounting.current.wages - route.accounting.current.cartCosts);
+  observe();
+  observe();
+  assert.equal(director.readState().completedGoals.includes('close-sixth-chapter'), true);
+  assert.ok(director.letters().some(letter => letter.id === 'chapter-six-close'));
+  assert.equal(director.isComplete(), true);
+  assert.equal(director.currentObjective().id, 'graduate-governor');
+  tutorialThroughPlay.secondMarketChapter = {
+    model,
+    journal: controller.inputJournal(),
+    receipt,
+    accounting: route.accounting.current,
+  };
+});
+
+test('チュートリアル段23: 二市場章後の卒業書状へ町の実測と安定監査の参照帯を並記する', () => {
   const { controller, director, observe } = tutorialThroughPlay;
   const modelBefore = controller.readModel();
   const journalBefore = controller.inputJournal();
@@ -2220,8 +2429,8 @@ test('チュートリアル段22: 卒業書状へ町の実測と安定監査の�
 });
 
 function replayRawJournalWithDirector(fixture) {
-  const guided = createEngineApi(applySpringStartCalendar(buildBlankCity(11)));
-  const plain = createEngineApi(applySpringStartCalendar(buildBlankCity(11)));
+  const guided = createEngineApi(applySpringStartCalendar(buildTutorialTwoMarketWorld(11)));
+  const plain = createEngineApi(applySpringStartCalendar(buildTutorialTwoMarketWorld(11)));
   const director = createTutorialDirector();
   let tick = 0;
   let sequence = 0;
@@ -2284,6 +2493,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
     ['第二章', tutorialThroughPlay.secondChapter],
     ['第三章', tutorialThroughPlay.fourthChapter],
     ['第四章', tutorialThroughPlay.fifthChapter],
+    ['第五章', tutorialThroughPlay.secondMarketChapter],
     ['終章', tutorialThroughPlay.graduation],
   ];
   let previousTick = -1;
@@ -2302,9 +2512,9 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.52.0-demand-rulings');
+  assert.equal(VERSION, 'v004.53.0-second-market-tutorial');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
-  assert.match(readme, /第一章.*第二章.*第三章.*第四章.*終章/s);
+  assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
 });
 
@@ -4153,7 +4363,10 @@ test('UI向上段6: 教程の実目標だけが既存操作一つへ案内され
   assert.equal(objectiveActionFor({ id: 'market-for-logs' }, model([])).job, 'market');
   assert.equal(objectiveActionFor({ id: 'place-island-food' }, model(['fisher'])).job, 'fisher');
   assert.equal(objectiveActionFor({ id: 'place-island-food' }, model(['fisher', 'fisher'])).job, 'veg');
-  assert.equal(objectiveActionFor({ id: 'place-island-food' }, model(['fisher', 'fisher', 'veg', 'veg'])).job, 'logger');
+  assert.equal(objectiveActionFor({ id: 'place-island-food' }, model(['fisher', 'fisher', 'veg'])).job, 'wheat');
+  assert.equal(objectiveActionFor({ id: 'place-island-food' }, model([
+    'fisher', 'fisher', 'veg', 'wheat',
+  ])).job, 'logger');
   assert.equal(objectiveActionFor({ id: 'request-first-aid' }, model([])).sheet, 'company-sheet');
   assert.equal(objectiveActionFor({ id: 'prepare-first-tools-stock' }, model([])).sheet, 'company-sheet');
   assert.equal(objectiveActionFor({ id: 'place-conversion-workshops' }, model(['woodshop'])).job, 'charburner');
@@ -5123,13 +5336,14 @@ test('UI向上段11: 固定3tickバッチは自由プレイ表示を3分の1に�
     tutorialThroughPlay.thirdChapter,
     tutorialThroughPlay.fourthChapter,
     tutorialThroughPlay.fifthChapter,
+    tutorialThroughPlay.secondMarketChapter,
     tutorialThroughPlay.graduation,
   ];
   let graduationController = null;
   for (const fixture of chapters) {
     const replay = replayFixtureInEngineBatches(fixture, DISPLAY_BATCH_TICKS);
-    assert.deepEqual(replay.readModel(), fixture.model, '全6章の最終描画モデルが一致する');
-    assert.deepEqual(replay.inputJournal(), fixture.journal, '全6章の入力journalが一致する');
+    assert.deepEqual(replay.readModel(), fixture.model, '全7章の最終描画モデルが一致する');
+    assert.deepEqual(replay.inputJournal(), fixture.journal, '全7章の入力journalが一致する');
     if (fixture === tutorialThroughPlay.graduation) graduationController = replay;
   }
   const rawGraduation = replayFixtureInEngineBatches(tutorialThroughPlay.graduation, 1);

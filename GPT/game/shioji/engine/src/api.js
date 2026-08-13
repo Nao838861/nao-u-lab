@@ -8,7 +8,7 @@ import {
   requestMainlandAid,
   setCaravanEmployment,
   setCompanyStockTarget,
-} from "./econ.js?v=v004.52.0-demand-rulings";
+} from "./econ.js?v=v004.53.0-second-market-tutorial";
 import {
   activePortCalls,
   addRoadLine,
@@ -16,14 +16,14 @@ import {
   haulJobById,
   removeBuilding,
   removeRoadTile,
-} from "./physical.js?v=v004.52.0-demand-rulings";
-import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.52.0-demand-rulings";
+} from "./physical.js?v=v004.53.0-second-market-tutorial";
+import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.53.0-second-market-tutorial";
 import {
   forgetCompanyLogisticsBuilding,
   placeCompanyLogisticsBuilding,
-} from "./world.js?v=v004.52.0-demand-rulings";
-import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.52.0-demand-rulings";
-import { configureCaravanRoute } from "./routes.js?v=v004.52.0-demand-rulings";
+} from "./world.js?v=v004.53.0-second-market-tutorial";
+import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.53.0-second-market-tutorial";
+import { configureCaravanRoute } from "./routes.js?v=v004.53.0-second-market-tutorial";
 
 function jsonClone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -509,6 +509,16 @@ export function createEngineApi(
               buildingY: op.buildingY ?? null,
             },
           );
+          if (placed.ok && op.job === "market") {
+            const mainMarket = world.state.marketNetwork?.markets?.find(
+              (market) => market.id === "main",
+            );
+            if (mainMarket) {
+              mainMarket.entrance = { ...placed.building.entrance };
+              mainMarket.buildingId = placed.building.id;
+              placed.building.marketId = "main";
+            }
+          }
           return {
             ok: placed.ok,
             buildingId: placed.ok ? placed.building.id : null,
@@ -523,6 +533,21 @@ export function createEngineApi(
           op.buildingX ?? null,
           op.buildingY ?? null,
         );
+        if (ok) {
+          const building = buildingById(physical, economy.zones.at(-1).buildingId);
+          if (building) {
+            building.marketId = "main";
+            const mainMarket = world.state.marketNetwork?.markets?.find(
+              (market) => market.id === "main",
+            );
+            if (mainMarket?.buildingId) {
+              const household = economy.households.find(
+                (candidate) => candidate.id === building.ownerHouseholdId,
+              );
+              if (household) household.marketId = "main";
+            }
+          }
+        }
         return { ok, buildingId: ok ? economy.zones.at(-1).buildingId : null };
       }
       case "remove_building": {

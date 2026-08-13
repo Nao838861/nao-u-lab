@@ -2,15 +2,15 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.52.0-demand-rulings';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.52.0-demand-rulings';
-import { displayCultureLevel } from './visuals.js?v=v004.52.0-demand-rulings';
+} from './engine_bridge.js?v=v004.53.0-second-market-tutorial';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.53.0-second-market-tutorial';
+import { displayCultureLevel } from './visuals.js?v=v004.53.0-second-market-tutorial';
 import {
   PLAYER_FACING_BANNED_TERMS,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.52.0-demand-rulings';
-import { islandCalendar } from './ui_summary.js?v=v004.52.0-demand-rulings';
+} from './food_readability.js?v=v004.53.0-second-market-tutorial';
+import { islandCalendar } from './ui_summary.js?v=v004.53.0-second-market-tutorial';
 
 export { PLAYER_FACING_BANNED_TERMS };
 
@@ -72,6 +72,18 @@ function loggerLogStock(model) {
 
 function marketBuilding(model) {
   return model.buildings.find(building => building.roles?.includes('market')) ?? null;
+}
+
+function householdForBuilding(model, building) {
+  return model.households.find(household => household.buildingId === building.id) ?? null;
+}
+
+function motherPortJobBuildings(model, job) {
+  return model.buildings.filter(building => {
+    if (building.type !== job) return false;
+    const owner = householdForBuilding(model, building);
+    return !owner || (owner.marketId ?? 'main') === 'main';
+  });
 }
 
 function woodshopHouseholds(model) {
@@ -149,8 +161,8 @@ function tutorialFoodIntervention(model) {
       speech: '食料支援を本国へ要請できます。届くまで時間がかかるので、必要なら早めに頼みましょう。',
     });
   }
-  const fisherCount = (model?.buildings ?? []).filter(row => row.type === 'fisher').length;
-  const farmCount = (model?.buildings ?? []).filter(row => row.type === 'veg').length;
+  const fisherCount = motherPortJobBuildings(model, 'fisher').length;
+  const farmCount = motherPortJobBuildings(model, 'veg').length;
   const job = fisherCount <= farmCount ? '漁師' : '野菜畑';
   return Object.freeze({
     kind: 'build',
@@ -257,7 +269,7 @@ export function islandFoodRunwayDays(model) {
 function farHouseholdFromMarket(model) {
   const market = marketBuilding(model);
   if (!market?.entrance) return null;
-  for (const household of model.households) {
+  for (const household of model.households.filter(row => (row.marketId ?? 'main') === 'main')) {
     const home = model.buildings.find(building => building.id === household.buildingId);
     if (!home?.entrance) continue;
     const walk = estimateWalkLen(model, home.entrance, market.entrance);
@@ -333,6 +345,8 @@ export const TUTORIAL_LETTER_ATTENTION = Object.freeze({
   'conversion-cost-chain': 'notice',
   'household-level-up': 'notice',
   'chapter-five-close': 'notice',
+  'second-market-call': 'critical',
+  'chapter-six-close': 'notice',
   'tutorial-graduation': 'critical',
   'first-log-trade': 'notice',
 });
@@ -354,6 +368,8 @@ export const TUTORIAL_LETTER_DELIVERY = Object.freeze({
   'chapter-four-close': 'letter',
   'conversion-cost-chain': 'letter',
   'chapter-five-close': 'letter',
+  'second-market-call': 'letter',
+  'chapter-six-close': 'letter',
   'tutorial-graduation': 'forced',
 });
 
@@ -411,6 +427,16 @@ export const TUTORIAL_PLAYER_TITLES = Object.freeze({
   'sustain-conversion-workshops': '三つの手仕事が続く町にする',
   'observe-household-level-up': '品物が暮らしを豊かにする様子を見る',
   'close-fifth-chapter': '仕事の連鎖が暮らしへ届いた結果を知る',
+  'inspect-second-market-road': '峠向こうの漁郷と道を確かめる',
+  'build-caravan-inn': '市場間の定期便を担う隊商宿を建てる',
+  'staff-caravan-inn': '募集人数と給料を決め、御者を迎える',
+  'wait-main-wheat-stock': '母港市場に麦が並ぶ季節を待つ',
+  'configure-first-caravan-route': '麦を送り、魚を持ち帰る路線を定める',
+  'watch-first-caravan-depart': '初便の荷車が麦を積んで発つのを見る',
+  'watch-first-caravan-arrive': '麦が漁郷市場へ届くのを見る',
+  'read-first-caravan-receipt': '帰着した初便のレシートを読む',
+  'observe-second-market-result': '漁郷の食卓と月次収支の変化を確かめる',
+  'close-sixth-chapter': '二つの市場を結んだ結果を受け取る',
   'graduate-governor': '自分の島を読み続ける',
 });
 
@@ -423,7 +449,7 @@ export const TUTORIAL_ELENA_MESSAGES = Object.freeze({
   'connect-market-to-port': '港と市場の入口を道でつなぎましょう。本土から届く食料も、島から出す荷も、この道を通ります。',
   'request-first-aid': '漁師と野菜畑が働き始めるまでの食料を、本国から一便だけ送ってもらいましょう。',
   'first-settlers-arrive': '市場と当座の食料が整いました。港から市場へ食料を運ぶ人を追いながら、最初の家族を迎えましょう。',
-  'place-island-food': '最初の家族が着きました。漁師2軒と野菜畑2軒で食卓を支え、木こりは合計3軒にしましょう。木工房1軒を動かすには、木こり3軒ぶんの丸太が要ります。漁師も水辺から遠ければ、その分だけ日産が落ちます。',
+  'place-island-food': '最初の家族が着きました。漁師2軒、野菜畑1軒、麦畑1軒で食卓を支え、木こりは合計3軒にしましょう。木工房1軒を動かすには、木こり3軒ぶんの丸太が要ります。漁師も水辺から遠ければ、その分だけ日産が落ちます。',
   'first-woodshop': '木工房を木こりへ近い道沿いに建てましょう。近ければ市場を経ずに丸太を買い、短くなった時間で木製品を増やせます。',
   'warehouse-for-order': '市場と港へ道が通る場所に、倉庫を建てましょう。会社の運び手が、買い付けた注文品を港へ渡す中継所です。',
   'prepare-first-tools-stock': '注文が来る前に、木製品を12荷、倉庫に買い集めておきましょう。先に備えれば、期限に追われずに済みます。',
@@ -454,6 +480,16 @@ export const TUTORIAL_ELENA_MESSAGES = Object.freeze({
   'sustain-conversion-workshops': '三つの仕事場へ、家族と原料が届く状態を90日保ちましょう。道が切れたり原料が尽きたりしていないか見守ります。',
   'observe-household-level-up': '食料や暮らしの品が毎日届く家を見守りましょう。満たされた日が続くと、家と仕事場が一段育ちます。',
   'close-fifth-chapter': '三つの手仕事と家族の暮らしがどう変わったか、書状で振り返りましょう。',
+  'inspect-second-market-road': '峠向こうの漁郷では魚が揚がっていますが、麦はありません。まず二つの市場と、その間に続く荷車道を地図で確かめましょう。',
+  'build-caravan-inn': '市場は家族が売買する場所、隊商宿は市場と市場の間へ定期便を出す仕事場です。母港市場の近くへ隊商宿を建てましょう。',
+  'staff-caravan-inn': '隊商宿で募集人数と一人一日あたりの給料を決めましょう。給料が低すぎれば、空き家のまま御者が集まりません。',
+  'wait-main-wheat-stock': '行き荷にする麦は、母港の麦畑が収穫して市場へ出す実物です。市場に8荷以上並ぶまで季節を進めましょう。',
+  'configure-first-caravan-route': '御者を迎えたら、目的地を漁郷市場、行き荷を麦、帰り荷を魚に定めましょう。',
+  'watch-first-caravan-depart': '開拓会社から貸与された荷車があります。通常の速さに戻し、麦を積んだ初便が峠へ発つところを見届けましょう。',
+  'watch-first-caravan-arrive': '荷車を追い、漁郷市場へ麦を降ろして魚を積むところを見届けましょう。',
+  'read-first-caravan-receipt': '初便が母港へ帰りました。隊商のレシートで仕入、売上、給料、荷車費、差引を確かめましょう。',
+  'observe-second-market-result': '漁郷の家族が届いた麦を実際に買えたか、隊商の今月収支と並べて確かめましょう。黒字だけが合格ではなく、数字から次便を直せることが大切です。',
+  'close-sixth-chapter': '初便の荷と暮らしと収支を、書状にまとめました。この欄から直接開けます。',
   'graduate-governor': 'ここまでの報告を、最後の書状にまとめました。読み終えた後も、この島はそのまま続いていきます。',
 });
 
@@ -464,7 +500,7 @@ export const TUTORIAL_ELENA_COMPLETIONS = Object.freeze({
   'connect-market-to-port': '港と市場が道でつながりました。本国の食料を、市場まで運べるようになりました。',
   'request-first-aid': '本国へ食料支援を頼みました。この一便が届く間に、島で食料を作る支度を進められます。',
   'first-settlers-arrive': '最初の家族が島へ着きました。まずは、毎日食べる魚と野菜を島で作れるようにしましょう。',
-  'place-island-food': '漁師2軒、野菜畑2軒、木こり3軒がそろいました。家族が働き始めれば、食料と丸太が市場へ届きます。',
+  'place-island-food': '漁師2軒、野菜畑1軒、麦畑1軒、木こり3軒がそろいました。家族が働き始めれば、食料と丸太が市場へ届きます。',
   'first-woodshop': '木工房が建ちました。近い木こりに丸太があれば直接買いに行き、注文にも使える木製品へ変えます。',
   'warehouse-for-order': '物流拠点が道につながりました。市場で買い付けた注文品を、港へ受け渡せます。',
   'prepare-first-tools-stock': '木製品の買上げ目標を12荷に定めました。市場に木製品が並べば、会社の運び手が倉庫へ運びます。',
@@ -495,6 +531,16 @@ export const TUTORIAL_ELENA_COMPLETIONS = Object.freeze({
   'sustain-conversion-workshops': '三つの手仕事が90日続きました。道と原料と働く家族が、途切れず届いた結果です。',
   'observe-household-level-up': '家と仕事場が一段育ちました。暮らしに必要な品が、毎日届き続けた成果です。',
   'close-fifth-chapter': '手仕事から生まれた品が、家族の暮らしへ届くところまで確かめました。',
+  'inspect-second-market-road': '母港市場と漁郷市場、その間の峠道を確かめました。市場どうしを結ぶ仕事場を用意できます。',
+  'build-caravan-inn': '隊商宿が建ちました。次は人数と給料を決め、御者が働きたい募集にしましょう。',
+  'staff-caravan-inn': '隊商宿に御者が入りました。人数と日給は毎日の固定費として月次収支へ残ります。',
+  'wait-main-wheat-stock': '母港市場に初便を満たせる麦が並びました。ここから路線を定めます。',
+  'configure-first-caravan-route': '麦を行き荷、魚を帰り荷にする定期路線を定めました。次の出発を通常の速さで見届けましょう。',
+  'watch-first-caravan-depart': '初便が実際の麦を積んで峠へ発ちました。荷車を追って漁郷まで見届けましょう。',
+  'watch-first-caravan-arrive': '麦が漁郷市場へ届き、荷車は帰りの魚を仕入れました。母港へ戻るまで追いましょう。',
+  'read-first-caravan-receipt': '初便が往復し、実際の仕入と運行結果がレシートへ残りました。次は漁郷の食卓と月次収支を読みます。',
+  'observe-second-market-result': '漁郷の家族が届いた麦を買いました。路線が市場の数字だけでなく、家族の食卓まで変えています。',
+  'close-sixth-chapter': '二つの市場を結んだ実便を振り返りました。荷物、暮らし、収支を一つの因果として読めます。',
   'graduate-governor': 'ここまでお疲れさまでした。案内は終わりますが、島も家族の暮らしも、このまま続いていきます。',
 });
 
@@ -543,6 +589,8 @@ export const TUTORIAL_LETTER_MESSAGES = Object.freeze({
   'household-level-up': 'お見事です。暮らしに必要な品が届き続け、家と仕事場が一段育ちました。',
   'no-vacancy-job-change': '仕事を替えたい家族がいますが、移り住める空き家がありません。育てたい仕事の建物を、一棟空けておきましょう。',
   'chapter-five-close': '手仕事と家族の暮らしをまとめました。この欄から直接開けます。',
+  'second-market-call': '峠向こうの漁郷から、麦がないとの知らせです。魚はあっても、穀物の食事は市場の境界を越えなければ届きません。',
+  'chapter-six-close': '二つの市場を結んだ初便の結果をまとめました。この欄から直接開けます。',
   'tutorial-graduation': 'ここまでの島の姿を、最後の書状にまとめました。読み終えた後も、同じ島をそのまま育てていけます。',
   'first-log-trade': '木こりの丸太が、市場で初めて売れました。売れたお金は、木こりの家の財布に入っています。',
 });
@@ -707,7 +755,7 @@ export const TUTORIAL_SYSTEM_INSTRUCTIONS = Object.freeze({
   'connect-market-to-port': '［整備］の［道を敷く］で、港の入口と市場の入口をつなぐ。',
   'request-first-aid': '上の［取引］を開き、［支援を要請する］を1回押す。',
   'first-settlers-arrive': '時間を進め、市場の近くに最初の家族が現れるまで盤面を見る。',
-  'place-island-food': '［食料］から［漁師］と［野菜畑］を2軒ずつ市場近くへ置き、［採取］の［木こり］を合計3軒にする。',
+  'place-island-food': '［食料］から［漁師］を2軒、［野菜畑］と［麦畑］を1軒ずつ市場近くへ置き、［採取］の［木こり］を合計3軒にする。',
   'first-woodshop': '下の［加工］から［木工房］を選び、配置予測で木こりが近隣仕入の候補になる道沿いへ置く。',
   'warehouse-for-order': '下の［流通］から［倉庫］を置き、［道を敷く］で市場と港へつなぎ、物流中継を作る。',
   'prepare-first-tools-stock': '上の［取引］を開き、木製品の買上げ目標へ12と入力してEnterを押す。',
@@ -738,18 +786,36 @@ export const TUTORIAL_SYSTEM_INSTRUCTIONS = Object.freeze({
   'sustain-conversion-workshops': '三棟の道路と原料を保ち、90日間、働く世帯が途切れないよう観察する。',
   'observe-household-level-up': '働いている建物を押し、世帯の満たされた品と暮らしの変化を確かめる。',
   'close-fifth-chapter': '',
+  'inspect-second-market-road': '地図で母港市場と漁郷市場を押し、入口どうしが途切れない荷車道で結ばれていることを確かめる。',
+  'build-caravan-inn': '下の［流通］から［隊商宿］を選び、母港市場の道沿いへ建てる。',
+  'staff-caravan-inn': '隊商宿を押し、募集を1人以上、日給を島の日当相場以上に設定して、家族が入るまで待つ。日給×人数×30が月額固定費になる。',
+  'wait-main-wheat-stock': '時間を進め、母港市場の麦が8荷以上になるまで待つ。麦畑は9月半ばにまとめて収穫する。',
+  'configure-first-caravan-route': '入居した隊商宿を押し、目的地を［漁郷市場］、行き荷を［麦］、帰り荷を［魚］にして路線を保存する。',
+  'watch-first-caravan-depart': '速度を通常へ戻し、麦を積んだ荷車が母港市場を発つまで盤面を見る。',
+  'watch-first-caravan-arrive': '荷車を選び、峠道を通って漁郷市場へ麦を降ろすまで追う。',
+  'read-first-caravan-receipt': '帰着後に隊商宿を開き、第一便のレシートで往路麦・帰路魚・仕入額を確かめる。',
+  'observe-second-market-result': '漁郷の家族を押して麦の購入を確かめ、隊商の今月欄で売上－仕入－給料－荷車費＝差引を読む。',
+  'close-sixth-chapter': '',
   'graduate-governor': '',
 });
 
 function marketGoodsAvailability(model, goods) {
   const stalls = model.stalls
-    .filter(stall => stall.goods === goods)
+    .filter(stall => stall.goods === goods && (stall.marketId ?? 'main') === 'main')
     .reduce((total, stall) => total + (stall.qty ?? 0), 0);
   const market = marketBuilding(model);
   const inbound = (market?.shelves ?? [])
     .filter(shelf => shelf.section === 'inbound' && shelf.goods === goods)
     .reduce((total, shelf) => total + (shelf.amount ?? 0), 0);
   return stalls + inbound;
+}
+
+function marketStallAvailability(model, goods, marketId = 'main') {
+  return model.stalls
+    .filter(stall => stall.goods === goods
+      && (stall.marketId ?? 'main') === marketId
+      && (stall.age ?? 0) < 5)
+    .reduce((total, stall) => total + (stall.qty ?? 0), 0);
 }
 
 function seasonalFoodValley(model, state, goalId = 'observe-seasonal-food-valley', goodsRows = SEASONAL_FOOD_GOODS) {
@@ -955,7 +1021,7 @@ function toolsPriceRiseObservation(model, state) {
 
 function conversionWorkshopStatus(model) {
   return CONVERSION_JOB_DEFINITIONS.map(definition => {
-    const buildings = model.buildings.filter(building => building.type === definition.job);
+    const buildings = motherPortJobBuildings(model, definition.job);
     const occupied = buildings.find(building => building.occupied);
     const household = occupied
       ? model.households.find(row => row.buildingId === occupied.id && row.job === definition.job)
@@ -1135,6 +1201,71 @@ function goalCompleted(state, id) {
   return Boolean(state?.completedGoals?.includes(id));
 }
 
+function tutorialMarketRecord(model, marketId) {
+  return model.marketNetwork?.markets?.find(market => market.id === marketId) ?? null;
+}
+
+function tutorialMarketBuilding(model, marketId) {
+  return model.buildings.find(building => (
+    marketId === 'main'
+      ? building.roles?.includes('market')
+      : building.marketId === marketId || building.roles?.includes(`market:${marketId}`)
+  )) ?? null;
+}
+
+function tutorialCaravanRoute(model) {
+  return model.caravans?.find(route => route.baseMarketId === 'main'
+    && route.destMarketId === 'fishery') ?? null;
+}
+
+function tutorialMarketsRoadConnected(model, from, to) {
+  if (!from || !to) return false;
+  const roads = new Set(model.roadKeys ?? []);
+  const start = `${from.x},${from.y}`;
+  const finish = `${to.x},${to.y}`;
+  if (!roads.has(start) || !roads.has(finish)) return false;
+  const queue = [from];
+  const visited = new Set();
+  while (queue.length > 0) {
+    const point = queue.shift();
+    const key = `${point.x},${point.y}`;
+    if (visited.has(key)) continue;
+    if (key === finish) return true;
+    visited.add(key);
+    for (let dy = -1; dy <= 1; dy += 1) {
+      for (let dx = -1; dx <= 1; dx += 1) {
+        if ((!dx && !dy) || !roads.has(`${point.x + dx},${point.y + dy}`)) continue;
+        queue.push({ x: point.x + dx, y: point.y + dy });
+      }
+    }
+  }
+  return false;
+}
+
+function householdFoodAmountForTutorial(household) {
+  return FOOD_GOODS.reduce((total, goods) => total + pantryAmount(household, goods), 0);
+}
+
+function fisheryMarketFacts(model) {
+  const households = model.households.filter(household => household.marketId === 'fishery');
+  const wheat = households.reduce((total, household) => total + pantryAmount(household, 'wheat'), 0);
+  const fish = households.reduce((total, household) => total + pantryAmount(household, 'fish'), 0);
+  const purchasedWheat = households.reduce((total, household) => (
+    total + (household.lastMarketVisit?.purchased?.wheat ?? 0)
+  ), 0);
+  const foodDays = households.reduce((total, household) => (
+    total + householdFoodAmountForTutorial(household)
+  ), 0) / Math.max(1, households.reduce((total, household) => total + household.members, 0));
+  return {
+    households: households.length,
+    population: households.reduce((total, household) => total + household.members, 0),
+    wheat,
+    fish,
+    purchasedWheat,
+    foodDays,
+  };
+}
+
 function starvationReport(events) {
   const deaths = events.filter(event => event.type === 'death');
   if (!deaths.length) return null;
@@ -1182,25 +1313,31 @@ function foodDependenceFacts(state) {
 
 function foodBuildingStatus(model) {
   const market = marketBuilding(model);
-  const fishers = model.buildings.filter(building => building.type === 'fisher');
-  const vegetables = model.buildings.filter(building => building.type === 'veg');
-  const loggerCount = model.buildings.filter(building => building.type === 'logger').length;
+  const fishers = motherPortJobBuildings(model, 'fisher');
+  const vegetables = motherPortJobBuildings(model, 'veg');
+  const wheatFarms = motherPortJobBuildings(model, 'wheat');
+  const loggerCount = motherPortJobBuildings(model, 'logger').length;
   const fisherWalk = market && fishers.length > 0
     ? Math.max(...fishers.map(building => estimateWalkLen(model, building.entrance, market.entrance)))
     : Infinity;
   const vegWalk = market && vegetables.length > 0
     ? Math.max(...vegetables.map(building => estimateWalkLen(model, building.entrance, market.entrance)))
     : Infinity;
+  const wheatWalk = market && wheatFarms.length > 0
+    ? Math.max(...wheatFarms.map(building => estimateWalkLen(model, building.entrance, market.entrance)))
+    : Infinity;
   return {
     fisher: fishers.length > 0,
     veg: vegetables.length > 0,
     fisherCount: fishers.length,
     vegCount: vegetables.length,
+    wheatCount: wheatFarms.length,
     loggerCount,
     fisherWalk,
     vegWalk,
-    near: fishers.length >= 2 && vegetables.length >= 2
-      && fisherWalk <= 14 && vegWalk <= 14,
+    wheatWalk,
+    near: fishers.length >= 2 && vegetables.length >= 1 && wheatFarms.length >= 1
+      && fisherWalk <= 14 && vegWalk <= 14 && wheatWalk <= 14,
   };
 }
 
@@ -1328,18 +1465,19 @@ const TUTORIAL_GOAL_DEFINITIONS = Object.freeze([
   Object.freeze({
     id: 'place-island-food',
     chapter: '第一章・最初の一荷',
-    title: '木工房より先に、漁師2・野菜畑2・木こり3を置く',
+    title: '木工房より先に、漁師2・野菜畑1・麦畑1・木こり3を置く',
     evaluate({ model }) {
       const status = foodBuildingStatus(model);
       const done = Math.min(status.fisherCount, 2)
-        + Math.min(status.vegCount, 2)
+        + Math.min(status.vegCount, 1)
+        + Math.min(status.wheatCount, 1)
         + Math.min(status.loggerCount, 3)
         + Number(status.near);
       return {
-        complete: status.fisherCount >= 2 && status.vegCount >= 2
-          && status.loggerCount >= 3 && status.near,
+        complete: status.fisherCount >= 2 && status.vegCount >= 1
+          && status.wheatCount >= 1 && status.loggerCount >= 3 && status.near,
         progress: { done, total: 8 },
-        detail: `漁師 ${status.fisherCount}/2棟 / 野菜畑 ${status.vegCount}/2棟 / 木こり ${status.loggerCount}/3棟`,
+        detail: `漁師 ${status.fisherCount}/2棟 / 野菜畑 ${status.vegCount}/1棟 / 麦畑 ${status.wheatCount}/1棟 / 木こり ${status.loggerCount}/3棟`,
         evidence: status,
       };
     },
@@ -1990,6 +2128,187 @@ const TUTORIAL_GOAL_DEFINITIONS = Object.freeze([
     },
   }),
   Object.freeze({
+    id: 'inspect-second-market-road',
+    chapter: '第五章・二つ目の市場',
+    title: '二市場と峠道を確認する',
+    evaluate({ model, state }) {
+      const main = tutorialMarketRecord(model, 'main');
+      const fishery = tutorialMarketRecord(model, 'fishery');
+      const issued = state?.letters?.some(letter => letter.id === 'second-market-call') ?? false;
+      const mainBuilding = tutorialMarketBuilding(model, 'main');
+      const fisheryBuilding = tutorialMarketBuilding(model, 'fishery');
+      const roadReady = Boolean(mainBuilding && fisheryBuilding
+        && tutorialMarketsRoadConnected(model, mainBuilding.entrance, fisheryBuilding.entrance));
+      const complete = issued && roadReady;
+      return {
+        complete,
+        progress: { done: Number(issued) + Number(roadReady), total: 2 },
+        detail: roadReady
+          ? '母港市場と漁郷市場の入口は荷車道で結ばれています'
+          : '母港市場から漁郷市場まで、途切れた道路がないか確かめます',
+        evidence: { issued, roadReady, main, fishery, fisheryFacts: fisheryMarketFacts(model) },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'build-caravan-inn',
+    chapter: '第五章・二つ目の市場',
+    title: '母港市場圏へ隊商宿を建てる',
+    evaluate({ model }) {
+      const inns = motherPortJobBuildings(model, 'carter');
+      return {
+        complete: inns.length > 0,
+        progress: { done: Number(inns.length > 0), total: 1 },
+        detail: `母港市場圏の隊商宿 ${inns.length}棟`,
+        evidence: { buildingIds: inns.map(building => building.id) },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'staff-caravan-inn',
+    chapter: '第五章・二つ目の市場',
+    title: '募集人数と日給を決め、御者を迎える',
+    evaluate({ model }) {
+      const inn = motherPortJobBuildings(model, 'carter')[0] ?? null;
+      const wage = inn?.caravanEmployment?.wage ?? 0;
+      const recruitment = inn?.caravanEmployment?.recruitment ?? 0;
+      const median = inn?.caravanWageMarket?.median ?? 0;
+      const crew = inn?.caravanCrew ?? 0;
+      const complete = crew > 0 && recruitment > 0 && wage + 1e-9 >= median;
+      return {
+        complete,
+        progress: { done: Number(inn !== null) + Number(crew > 0), total: 2 },
+        detail: inn
+          ? `募集 ${recruitment}人・日給${toDenari(wage).toFixed(1)}デナリ・月額${toDenari(wage * recruitment * 30).toFixed(0)}デナリ / 島の日当中央値${toDenari(median).toFixed(1)}デナリ / 御者 ${crew}人`
+          : '隊商宿を待っています',
+        evidence: { buildingId: inn?.id ?? null, recruitment, wage, median, crew },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'wait-main-wheat-stock',
+    chapter: '第五章・二つ目の市場',
+    title: '母港市場へ初便の麦が並ぶのを待つ',
+    evaluate({ model }) {
+      const wheat = marketStallAvailability(model, 'wheat', 'main');
+      const complete = wheat >= 8;
+      return {
+        complete,
+        progress: { done: Math.min(wheat, 8), total: 8 },
+        detail: `母港市場の麦 ${wheat.toFixed(1)}/8.0荷（麦畑は9月半ばに収穫）`,
+        evidence: { wheat, required: 8, day: model.day },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'configure-first-caravan-route',
+    chapter: '第五章・二つ目の市場',
+    title: '麦を行き荷、魚を帰り荷にする',
+    evaluate({ model }) {
+      const route = tutorialCaravanRoute(model);
+      const goodsReady = Boolean(route?.goodsOut?.includes('wheat') && route?.goodsBack?.includes('fish'));
+      return {
+        complete: goodsReady,
+        progress: { done: Number(Boolean(route)) + Number(goodsReady), total: 2 },
+        detail: route
+          ? `行き荷 ${route.goodsOut.map(goodsLabel).join('・') || 'なし'} / 帰り荷 ${route.goodsBack.map(goodsLabel).join('・') || 'なし'}`
+          : '隊商宿で漁郷市場への路線を定めます',
+        evidence: { routeId: route?.id ?? null, goodsOut: route?.goodsOut ?? [], goodsBack: route?.goodsBack ?? [] },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'watch-first-caravan-depart',
+    chapter: '第五章・二つ目の市場',
+    title: '麦を積んだ初便の出発を見る',
+    evaluate({ model }) {
+      const route = tutorialCaravanRoute(model);
+      const current = route?.currentTrip ?? null;
+      const wheat = current?.outbound?.wheat ?? 0;
+      const complete = Boolean(current && route.state === 'outbound' && wheat > 1e-9);
+      return {
+        complete,
+        progress: { done: Number(complete), total: 1 },
+        detail: current ? `第一便の行き荷 麦${wheat.toFixed(1)}荷 / ${route.status.label}` : '第一便の出発を待っています',
+        evidence: { routeId: route?.id ?? null, state: route?.state ?? null, trip: current },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'watch-first-caravan-arrive',
+    chapter: '第五章・二つ目の市場',
+    title: '漁郷へ麦が届くのを見る',
+    evaluate({ model }) {
+      const route = tutorialCaravanRoute(model);
+      const current = route?.currentTrip ?? null;
+      const wheat = current?.outbound?.wheat ?? 0;
+      const arrived = Boolean(current && route.state === 'returning'
+        && Number.isFinite(current.outboundTicks) && wheat > 1e-9);
+      return {
+        complete: arrived,
+        progress: { done: Number(arrived), total: 1 },
+        detail: arrived ? `麦${wheat.toFixed(1)}荷を降ろし、帰路へ入りました` : '麦を積んだ荷車が漁郷へ着くのを待っています',
+        evidence: { routeId: route?.id ?? null, state: route?.state ?? null, trip: current },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'read-first-caravan-receipt',
+    chapter: '第五章・二つ目の市場',
+    title: '帰着した第一便のレシートを読む',
+    evaluate({ model }) {
+      const route = tutorialCaravanRoute(model);
+      const trip = route?.recentTrips?.[0] ?? null;
+      return {
+        complete: Boolean(trip),
+        progress: { done: Number(Boolean(trip)), total: 1 },
+        detail: trip
+          ? `仕入${toDenari(trip.procurement ?? 0).toFixed(0)}・売上${toDenari(trip.retailSales ?? 0).toFixed(0)}・給料${toDenari(trip.wages ?? 0).toFixed(0)}・荷車${toDenari(trip.cartCosts ?? 0).toFixed(0)}デナリ`
+          : '第一便が母港へ帰るのを待っています',
+        evidence: { routeId: route?.id ?? null, trip },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'observe-second-market-result',
+    chapter: '第五章・二つ目の市場',
+    title: '漁郷の麦購入と今月収支を確かめる',
+    evaluate({ model }) {
+      const route = tutorialCaravanRoute(model);
+      const facts = fisheryMarketFacts(model);
+      const receipt = route?.recentTrips?.[0] ?? null;
+      const accounting = route?.accounting?.current ?? null;
+      const receivedWheat = receipt?.outbound?.wheat ?? 0;
+      const receivedAtMarket = (route?.diagnosis?.unsold ?? []).some(row => (
+        row.marketId === 'fishery' && row.goods === 'wheat' && row.qty > 1e-9
+      ));
+      const purchased = facts.purchasedWheat > 1e-9;
+      const complete = Boolean(receipt && receivedWheat > 1e-9 && purchased && accounting);
+      return {
+        complete,
+        progress: { done: Number(Boolean(receipt)) + Number(purchased), total: 2 },
+        detail: accounting
+          ? `${purchased ? `漁郷の麦購入${facts.purchasedWheat.toFixed(1)}荷` : receivedAtMarket ? '麦は漁郷市場で買い手を待っています' : '漁郷への麦到着を確認中'} / 今月 売上${toDenari(accounting.sales).toFixed(0)}－仕入${toDenari(accounting.procurement).toFixed(0)}－給料${toDenari(accounting.wages).toFixed(0)}－荷車${toDenari(accounting.cartCosts).toFixed(0)}＝差引${toDenari(accounting.profit).toFixed(0)}デナリ`
+          : '初便の帰着後に漁郷の家族と隊商収支を確かめます',
+        evidence: { routeId: route?.id ?? null, receipt, accounting, fishery: facts, receivedAtMarket },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'close-sixth-chapter',
+    chapter: '第五章・二つ目の市場',
+    title: '第五章の実便報告を受け取る',
+    evaluate({ state }) {
+      const issued = Boolean(state?.letters?.some(letter => letter.id === 'chapter-six-close'));
+      return {
+        complete: issued,
+        progress: { done: Number(issued), total: 1 },
+        detail: issued ? '初便の荷・暮らし・収支の報告が届きました' : '第一便の報告をまとめています',
+        evidence: { issued },
+      };
+    },
+  }),
+  Object.freeze({
     id: 'graduate-governor',
     chapter: '終章・総督の島',
     title: '卒業書状を受け取る',
@@ -2000,7 +2319,7 @@ const TUTORIAL_GOAL_DEFINITIONS = Object.freeze([
         progress: { done: Number(issued), total: 1 },
         detail: issued
           ? '案内が終わり、同じ島で自由に続けられます'
-          : '第四章までの実測を卒業書状へまとめています',
+          : '第五章までの実測を卒業書状へまとめています',
         evidence: { issued },
       };
     },
@@ -2045,6 +2364,7 @@ export const TUTORIAL_GOAL_START_AFTER = Object.freeze({
   'observe-conversion-cost-chain': 'place-conversion-workshops',
   'sustain-conversion-workshops': 'place-conversion-workshops',
   'observe-household-level-up': 'place-conversion-workshops',
+  'wait-main-wheat-stock': 'staff-caravan-inn',
 });
 
 export function isTutorialGoalUnlocked(goal, state) {
@@ -2374,8 +2694,10 @@ const TUTORIAL_LETTER_DEFINITIONS = Object.freeze([
   Object.freeze({
     id: 'market-needs-port-road',
     source: 'snapshot',
-    when({ model }) {
-      return Boolean(marketBuilding(model)) && !portConnectedToMarket(model);
+    when({ model, state }) {
+      return goalCompleted(state, 'market-for-logs')
+        && !goalCompleted(state, 'connect-market-to-port')
+        && Boolean(marketBuilding(model)) && !portConnectedToMarket(model);
     },
     render({ model }) {
       return {
@@ -3263,10 +3585,62 @@ const TUTORIAL_LETTER_DEFINITIONS = Object.freeze([
     },
   }),
   Object.freeze({
-    id: 'tutorial-graduation',
+    id: 'second-market-call',
     source: 'snapshot',
     when({ state }) {
       return goalCompleted(state, 'close-fifth-chapter');
+    },
+    render({ model }) {
+      const facts = fisheryMarketFacts(model);
+      return {
+        kicker: '第五章・峠向こうからの知らせ',
+        title: '魚のある漁郷に、麦がありません',
+        summary: `漁郷 ${facts.population}人・麦${facts.wheat.toFixed(1)}荷・魚${facts.fish.toFixed(1)}荷`,
+        facts,
+        body: [
+          `峠向こうの漁郷には${facts.population}人が暮らし、魚${facts.fish.toFixed(1)}荷がありますが、麦は${facts.wheat.toFixed(1)}荷です。魚だけでは、穀物を望む食卓を満たせません。`,
+          '母港市場と漁郷市場は別の市場です。市場は家族が売買する場所ですが、市場の境界を越えて品を運ぶ定期便は、まだありません。二つの市場と峠道を確かめてください。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'chapter-six-close',
+    source: 'snapshot',
+    when({ state }) {
+      return goalCompleted(state, 'observe-second-market-result');
+    },
+    render({ model }) {
+      const route = tutorialCaravanRoute(model);
+      const trip = route?.recentTrips?.[0] ?? null;
+      const accounting = route?.accounting?.current ?? null;
+      const fishery = fisheryMarketFacts(model);
+      const facts = { routeId: route?.id ?? null, trip, accounting, fishery };
+      return {
+        kicker: '第五章・二つの市場の報告',
+        title: '初便は荷物と暮らしと収支を結びました',
+        summary: trip
+          ? `往路 麦${(trip.outbound?.wheat ?? 0).toFixed(1)}荷・帰路 魚${(trip.returning?.fish ?? 0).toFixed(1)}荷・漁郷購入 麦${fishery.purchasedWheat.toFixed(1)}荷`
+          : '第一便の実績をまとめました',
+        facts,
+        body: [
+          trip
+            ? `第一便は麦${(trip.outbound?.wheat ?? 0).toFixed(1)}荷を漁郷へ送り、魚${(trip.returning?.fish ?? 0).toFixed(1)}荷を母港へ持ち帰りました。漁郷の家族は麦${fishery.purchasedWheat.toFixed(1)}荷を実際に買いました。`
+            : '第一便の往復が終わりました。',
+          accounting
+            ? `今月の隊商収支は、売上${toDenari(accounting.sales).toFixed(0)}－仕入${toDenari(accounting.procurement).toFixed(0)}－給料${toDenari(accounting.wages).toFixed(0)}－荷車費${toDenari(accounting.cartCosts).toFixed(0)}＝差引${toDenari(accounting.profit).toFixed(0)}デナリです。赤字なら、空荷、給料、間隔、買い手の財布をこの順に確かめられます。`
+            : '隊商宿を押せば、売上・仕入・給料・荷車費と差引を月ごとに確かめられます。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'tutorial-graduation',
+    source: 'snapshot',
+    when({ state }) {
+      return goalCompleted(state, 'close-sixth-chapter');
     },
     render({ model }) {
       const facts = tutorialGraduationFacts(model);

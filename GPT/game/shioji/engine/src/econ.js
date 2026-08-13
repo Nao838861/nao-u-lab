@@ -21,7 +21,7 @@ import {
   sectionCapacity,
   withdrawInventory,
   workRoadWorksite,
-} from "./physical.js?v=v004.52.0-demand-rulings";
+} from "./physical.js?v=v004.53.0-second-market-tutorial";
 
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) return value;
@@ -3537,9 +3537,11 @@ export function loadMarketReturns(economy, physical, household, availableCapacit
   return manifest;
 }
 
-function queueMarketReturn(economy, physical, household, goods, qty, day) {
+function queueMarketReturn(economy, physical, household, goods, qty, day, marketIdOverride = null) {
   if (qty <= 1e-9) return null;
-  const marketId = householdMarketId(household);
+  // 屋台を出した後に世帯が転職・転居しても、現物は出品時の市場棚に残る。
+  // 返品先を現在の所属市場から引くと、別市場の棚を減らして二重計上になる。
+  const marketId = marketIdOverride ?? householdMarketId(household);
   const lot = {
     id: `ret${economy.nextMarketReturnId}`,
     householdId: household.id,
@@ -3630,7 +3632,15 @@ export function ageMarketStalls(economy, { day, physical = null }) {
       );
       stall.qty -= spoiled;
       if (stall.age >= 6 && household) {
-        queueMarketReturn(economy, physical, household, goods, stall.qty, day);
+        queueMarketReturn(
+          economy,
+          physical,
+          household,
+          goods,
+          stall.qty,
+          day,
+          stall.marketId ?? "main",
+        );
         stall.qty = 0;
       }
       if (stall.qty <= 1e-9) {
@@ -4421,6 +4431,7 @@ function availableCompanyTransport(economy, physical, { walkOnly = false } = {})
   if (!walkOnly) {
     const cart = economy.companyCarts.find((asset) => (
       !asset.broken && !asset.busyJobId && asset.durability > 0
+      && asset.reservedFor !== "caravan"
     ));
     if (cart) {
       return {
@@ -5347,7 +5358,12 @@ export function fillSettlementZones(economy, { day, physical = null }) {
   if (day % 15 !== 0 || !economy.port) return settlements;
   for (const zone of economy.zones) {
     if (zone.filled || settlements.length >= 2) continue;
+    // 分家は空き区画と同じ市場圏の世帯からだけ選ぶ。二市場の島で遠方集落の
+    // 世帯を母港区画へ瞬間移住させると、母港の最初の入植船が消える。
+    const zoneBuilding = physical ? buildingById(physical, zone.buildingId) : null;
+    const zoneMarketId = zoneBuilding?.marketId ?? "main";
     const donor = economy.households
+      .filter((household) => !physical || householdMarketId(household) === zoneMarketId)
       .filter((household) => household.members.length >= 8 && household.state === "home")
       .sort((a, b) => b.members.length - a.members.length)[0];
     if (donor) {
@@ -5849,6 +5865,20 @@ function stayIncomeWeight(economy, household) {
   return Math.max(1, householdAnnualIncome(household), median);
 }
 
+function attractiveCaravanVacancy(economy, physical, household) {
+  return vacantJobBuildings(economy, physical, "carter", { household })
+    .filter((building) => (
+      (building.marketId ?? householdMarketId(household)) === householdMarketId(household)
+    ))
+    .sort((left, right) => (
+      caravanExpectedAnnualIncome(right, household)
+        - caravanExpectedAnnualIncome(left, household)
+    ))
+    .find((building) => (
+      caravanExpectedAnnualIncome(building, household) >= stayIncomeWeight(economy, household)
+    )) ?? null;
+}
+
 function moveHouseholdBuildingInventory(household, fromBuilding, toBuilding, nextJob) {
   if (!fromBuilding || fromBuilding === toBuilding) return;
   const nextHousehold = { ...household, job: nextJob };
@@ -5891,6 +5921,7 @@ export function moveHouseholdToVacantBuilding(
   household.buildingId = targetBuilding.id;
   household.x = targetBuilding.entrance.x;
   household.y = targetBuilding.entrance.y;
+  if (targetBuilding.marketId) household.marketId = targetBuilding.marketId;
   household.px = targetBuilding.entrance.x;
   household.py = targetBuilding.entrance.y;
   household.state = "home";
@@ -5945,6 +5976,9 @@ export function runPopulationDynamicsPhase(economy, physical, { day, random }) {
       household.hungerHist.reduce((total, hungry) => total + hungry, 0) >= P.DISTRESS
       || household.insolvM >= 3
     );
+    const caravanRecruitment = household.job !== "carter" && household.jobCycleDone
+      ? attractiveCaravanVacancy(economy, physical, household)
+      : null;
     if (household.insolvM >= 6 && household.purse < 0) {
       const debt = -household.purse;
       postCompanyLedger(economy.company, {
@@ -5958,13 +5992,13 @@ export function runPopulationDynamicsPhase(economy, physical, { day, random }) {
       recordEconomyEvent(economy, day, `${household.sur}家の借財を帳消しに(徳政)`);
     }
     if (
-      distress
+      (distress || caravanRecruitment)
       && household.state === "home"
       && day - (household.lastSwitch || -9e9) >= P.COOLDOWN
-      && random() < 0.5
+      && (caravanRecruitment || random() < 0.5)
     ) {
       const previousJob = household.job;
-      const nextJob = physical ? pickHouseholdJob(economy, physical, {
+      const nextJob = caravanRecruitment ? "carter" : physical ? pickHouseholdJob(economy, physical, {
         exclude: previousJob,
         household,
         random,
@@ -5982,7 +6016,9 @@ export function runPopulationDynamicsPhase(economy, physical, { day, random }) {
               - caravanExpectedAnnualIncome(left, household)
           ));
         }
-        const targetBuilding = targetBuildings[0];
+        const targetBuilding = caravanRecruitment
+          ? targetBuildings.find((building) => building.id === caravanRecruitment.id)
+          : targetBuildings[0];
         if (!targetBuilding) {
           recordEconomyEvent(
             economy,
