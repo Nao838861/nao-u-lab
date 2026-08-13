@@ -4,6 +4,27 @@ url: "https://www.gamedeveloper.com/production/the-secret-to-overwatch-s-revital
 collected_at: "2026-08-14T05:46:43+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [live-service, production, player-feedback, communication, postmortem]
+evaluated_at: "2026-08-14T05:50:05+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-14T05:50:05+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-14T05:50:05+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-13"
+supersedes: []
+gate_reason: >-
+  Overwatch の停滞、PvE 中止、core PvP からの人員移動、信頼低下という問題設定から、
+  継続 blog・変更理由・roadmap 修正を core 更新と結ぶ再建手法、限定的な評価結果まで抽出できる。
+  危機広報ではなく live-service の判断可視化ループとして具体的に適用でき、CoopEval 水準の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "Overwatch の再建を、発信量の増加ではなく experimentation・analysis・communication を接続して player trust を回復する運用設計として読む"
+  analysis_axis: "core experience の停滞を招いた資源配分と、変更理由・予告・roadmap 修正を継続公開する仕組みが、単発の危機広報とどう異なるか"
+  application_target: "Log_cdx のゲーム制作で、playable diff、変更理由、次に検証する仮説、撤回した計画を同じ反復単位で記録し、制作判断の連続性を可視化する運用"
+  pros_cons: "判断の追跡可能性と信頼回復に効く一方、発信頻度だけを KPI 化すると制作を圧迫し、実装改善を伴わない説明過多になる"
+  verdict_pre: "部分採用。変更理由と次の検証を playable diff に結びつけるが、発信量そのものは目的化しない"
 ---
 
 ## raw_excerpt
