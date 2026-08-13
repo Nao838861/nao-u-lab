@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2608.02553"
 collected_at: "2026-08-13T18:32:24+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent, cognition, memory, autonomy, evaluation, game-agents]
+evaluated_at: "2026-08-13T18:39:11+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-13T18:39:11+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-13T18:39:11+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-12"
+supersedes: []
+gate_reason: >-
+  五次元 taxonomy とゲーム agent 評価への対応は明確だが、現候補には survey の選定方法、
+  各次元の代表的失敗・比較根拠、ACIA の構成、cognition-centric evaluation の具体指標がない。
+  約4000字で重要要素と限界を誤解なく説明するには一次資料の精読と根拠補強が必要。
 ---
 
 ## raw_excerpt
