@@ -99,7 +99,79 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の High Signal / Recent / Game Task Entry Points / Tag Entry Points を per-file atom index と照合し、unknown ID、重複 ID、missing per-file path、broken entry link が 0 件であることを確認した。"
+  - "atoms.jsonl / per-file .md / index.jsonl は各 2869 件で一致し、missing・parse error・content conflict はすべて 0 件。45 duplicate cluster は canonical overlay 45 群で機械的に fold 済みだった。"
+  - "shared-reads candidate 1288 件の lifecycle を監査し、posted 605 / failed 460 / postponed 212 / ready_to_post 9 / needs_review 2、現在状態 conflict 0 件を確認した。"
+  - "open duplicate group 39 群（mixed 36 / all_open 3）と stale triage / group action queue を再検証した。overdue 2 件はいずれも同一 work group の期限前 deferred lease に包含され、今 cycle の再投入は 0 件だった。"
+  - "slack_directives.jsonl 23 行、slack_broadcasts.jsonl 21 行を監査し、pending 0 件のため handled 更新は行わなかった。"
+  - "memory/raw の最終更新30日超は 240 file（web_research 215 / headless_eval 16 / slack_api 6 / slack_archive 1 / game_eval 1 / sync_state 1）。raw 原文・評価 evidence であり参照切れ監査なしの一括移動は行わず、archive 候補数だけを記録した。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+encoding_audit:
+  memory_md_source_file_status: "UTF-8 明示読み成功。代表語は 記憶 / ゲーム設計 / 敵パターン が取得でき、評価軸 は完全一致なし。decode error と index section の mojibake residue は 0 件。"
+  memory_md_display_or_tooling_status: none
+  atom_warning_review: "memory_health の2警告をUTF-8原文まで展開した。sr-1776127289-4d9239b255 は raw slack_archive 自体に replacement characters がある既知のsource corruption、gr-1777083728-44d444ab7a は本文中の意図的な『???』による false positive。2件とも孤立したsource品質問題で、今回の構造設計gateにはしない。"
+atom_consistency:
+  raw_atoms: 2869
+  per_file_atoms: 2869
+  index_rows: 2869
+  content_conflicts: 0
+  duplicate_clusters: 45
+  overlay_groups: 45
+  effective_display_unresolved_groups: 0
+  conflict_scope_check:
+    apparent_conflict: "candidate lifecycle の historical gate_decision: postpone と後続 current status: failed"
+    scope_result: "時点・lifecycle scope が異なる正規遷移であり、同一scopeの未解決claimではない。status / candidate_status の同一scope conflict は0件。"
+    contested_items: []
+candidate_lifecycle:
+  total: 1288
+  counts:
+    posted: 605
+    failed: 460
+    postponed: 212
+    ready_to_post: 9
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_for_reassessment: 2
+probe_lifecycle:
+  inspected_due_count: 1
+  inspected_probe_id: probe-20260813-latticemind-conflict-state-scope
+  outcome: resolved
+  receipt:
+    before_decision: "gate_decision と current status の表層不一致を矛盾として issue 化する。"
+    after_decision: "historical gate と後続 current state をscope分離し、同一scope conflict 0件を確認したため issue 化しない。未解決claimがあれば contested のまま残す境界は維持する。"
+    changed: true
+    evidence: "log/cycle_staging_log_cdx.md#Phase 4a: 整理 + 問題抽出 / atom_consistency.conflict_scope_check"
+  counts:
+    pending: 0
+    resolved: 5
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 39
+  mixed_group_count: 36
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
