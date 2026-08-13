@@ -70,7 +70,42 @@ skipped: []
 - Slack verification: ts `1786615785.391759` を再取得し、UTF-8 本文に文字化けがないことを確認。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786614426-bd0700d50a
+    source_ts: "1786614426.363069"
+    title: "LatticeMind: A Conflict-Aware Memory Primitive for Multi-Agent Systems"
+    reason: "未レビュー候補のうち source_ts が最も新しく、6優先タグをすべて持つ。直後の Phase 4a の atoms 重複・矛盾監査で、同じ claim、scope 違い、未解決競合、検証済み supersession の分類が判断差を作るか確認できるため。Nao_u の明示評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  decision_reason: "既存の ssgm memory integration、atma state-role、automem memory-action controls は conflict／currentness／provenance／supersede を扱うが、same_claim／scope_divergence／contested／superseded の四分岐は直接扱わない。全 memory へ一般化せず、Phase 4a の最初の衝突候補1件だけで before／after を比較するため採用した。"
+  change:
+    summary: "Phase 4a の最初の重複・矛盾候補1件を四分岐で分類する一時 probe を追加し、同 cycle の lease を1件 enqueue した。directive・phase prompt・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - memory/shared_reads_probe_lifecycle.jsonl
+      - log/cycle_staging_log_cdx.md
+  lease:
+    probe_id: probe-20260813-latticemind-conflict-state-scope
+    consumer_phase: "Phase 4a"
+    trigger_artifact: "log/cycle_staging_log_cdx.md#Phase 4a: 整理 + 問題抽出"
+    expected_delta: "最初の見かけ上の矛盾について scope 違いを誤重複扱いせず、同一 scope の未解決 claim を上書きせず contested として issue 判断へ残す。"
+    lease_due: "2026-08-13T19:16:00+09:00"
+    enqueue_result: enqueued
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

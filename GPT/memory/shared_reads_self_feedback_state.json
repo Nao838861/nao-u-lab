@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-13T16:35:19+09:00",
+  "updated_at": "2026-08-13T19:14:10+09:00",
   "reviewed_source_ts": [
     "1779987414.841039",
     "1780015414.981379",
@@ -640,9 +640,57 @@
     "1786490009.108289",
     "1786582584.310989",
     "1786590673.904389",
-    "1786590652.427149"
+    "1786590652.427149",
+    "1786614426.363069"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-13T19:14:10+09:00",
+      "selected": {
+        "id": "sr-1786614426-bd0700d50a",
+        "source_ts": "1786614426.363069",
+        "title": "LatticeMind: A Conflict-Aware Memory Primitive for Multi-Agent Systems",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす候補のうち source_ts が最も新しく、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ1件だけを選んだ。直後の Phase 4a に atoms.jsonl の重複・矛盾監査という具体的 consumer があり、同じ claim、scope 違い、同一 scope の未解決競合、検証済み supersession を分けることで既存 control と異なる判断差を観測できるため読んだ。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "adopt_probe",
+      "decision_reason": "合計16で全必須閾値を満たす。shared-reads 本文は、claim を key・scope・evidence・time・status で保持し、同値なら証拠を集約、異値なら conflict とし、deterministic check 後に残る意味的矛盾だけを reconciliation へ渡す。label-blind ConflictBank 75例で0.97、software-state long-noise で0.83を示す一方、実 repo bridge では LLM-Merge 0.61 に対して StateMemory 0.51と逆転し、extract-state も律速であるため、全 memory schema への一般化ではなく現行 Phase 4a の最初の衝突1件だけを対象にする。probe-20260617-ssgm-memory-integration-gate は競合・鮮度・access boundary、probe-20260709-atma-state-role-ghost-memory-check は current／historical／superseded、probe-20260710-automem-memory-action-audit は最小 memory action と supersede 有無を既に扱う。本投稿固有の判断差は、見かけ上の衝突を same_claim、scope_divergence、contested、superseded に分け、scope が違う記録や未解決 claim を上書きしない点なので non_redundancy=2。consumer、artifact、expected delta、同 cycle の期限を固定でき、probe 1件と lease 1件以外の directive・phase prompt・恒久ルールを増やさないため risk_control=2、reversibility=3とした。",
+      "existing_controls": [
+        "probe-20260617-ssgm-memory-integration-gate",
+        "probe-20260709-atma-state-role-ghost-memory-check",
+        "probe-20260710-automem-memory-action-audit"
+      ],
+      "change": {
+        "type": "leased_probe",
+        "summary": "Phase 4a の最初の重複・矛盾候補1件を same_claim／scope_divergence／contested／superseded に分ける一時 probe を active_probes に追加し、同 cycle の staging Phase 4a を consumer とする lease を1件 enqueue した。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "memory/shared_reads_probe_lifecycle.jsonl",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": {
+        "probe_id": "probe-20260813-latticemind-conflict-state-scope",
+        "consumer_phase": "Phase 4a",
+        "trigger_artifact": "log/cycle_staging_log_cdx.md#Phase 4a: 整理 + 問題抽出",
+        "expected_delta": "最初の見かけ上の矛盾について scope 違いを誤重複扱いせず、同一 scope の未解決 claim を上書きせず contested として issue 判断へ残す。",
+        "lease_due": "2026-08-13T19:16:00+09:00",
+        "enqueue_result": "enqueued"
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-13T16:35:19+09:00",
       "selected": {
@@ -19379,6 +19427,19 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260813-latticemind-conflict-state-scope",
+      "created_at": "2026-08-13T19:14:10+09:00",
+      "source_ts": "1786614426.363069",
+      "scope": "next Phase 4a atoms.jsonl duplicate/contradiction audit only; inspect at most the first apparent claim collision and do not introduce a global memory schema or LLM reconciler",
+      "questions": [
+        "最初の見かけ上の重複・矛盾について normalized key と game／build／branch／environment／time の scope を先に記録し、same_claim、scope_divergence、contested、superseded のどれかに分類したか。",
+        "source_ts、raw path、permalink、commit／test artifact のいずれかを evidence にし、recency だけで勝者を決めず、同一 scope で証拠不足なら両 claim を contested のまま残したか。",
+        "分類前の issue／cleanup／needs_design 判断と分類後の判断を比較し、該当衝突がなければ no_applicable_conflict として止め、共通 schema・resolver・恒久 directive へ広げなかったか。"
+      ],
+      "expires_after": "2026-08-13T19:16:00+09:00 以降の次の Phase 4a 1回で resolve する。該当衝突がない、既存3 controlだけで同じ分類が残る、または分類負荷が判断差を上回る場合は dormant または changed=false で閉じる。",
+      "withdrawal_condition": "scope 抽出が原文から安定せず誤分類を増やす、単純 duplicate audit より遅い、または創作・探索 claim へ current value を強制する場合は恒久化せず1回で退役候補にする。"
+    },
     {
       "id": "probe-20260731-rlm-one-hop-query-rewrite",
       "created_at": "2026-07-31T17:46:00+09:00",
