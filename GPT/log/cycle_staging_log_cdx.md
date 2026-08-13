@@ -65,7 +65,39 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779987414-c1fe1b8bd1
+    source_ts: "1779987414.841039"
+    title: "Predictive Maps of Multi-Agent Reasoning: A Successor-Representation Spectrum for LLM Communication Topologies"
+    reason: "未レビューの score>=10 候補で source_ts が最も新しく、memory・game-design・agent・evaluation の4優先タグを持つ。通信 topology の drift／consensus／robustness 分解が将来の game-agent 評価に非重複の判断差を作るか確認するため選んだ。Nao_u の明示評価はない。"
+  scores:
+    relevance: 2
+    actionability: 2
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "3 topology・1 model family・1 structured state-tracking task の controlled case studyで、実装可能な診断語彙はあるが一般化根拠は限定的。現行では Mir／Log／Ash への問いかけ運用が停止し、具体的な multi-agent trigger artifact がない。単独 anchorとの比較、coordination outcome分離、役割／local gate、shared-prior相関は既存4 probesが既に扱うため、新規 topology probe は重複とactive_probes肥大化が勝る。将来、同一task・model・budgetでchain／star／meshを比較する成果物が生じ、既存controlsがtopology固有差を取り逃がした時だけ再検討する。"
+  existing_controls:
+    - probe-20260618-multi-agent-anchor-protocol
+    - probe-20260620-alem-base-vs-coordination
+    - probe-20260625-llm-coordination-message-boundary
+    - probe-20260708-algorithmic-collusion-shared-prior-check
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に追加した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-13T08:01:09+09:00",
+  "updated_at": "2026-08-13T10:00:54+09:00",
   "reviewed_source_ts": [
+    "1779987414.841039",
     "1780015414.981379",
     "1780015414.955959",
     "1778774144.030849",
@@ -639,6 +640,46 @@
     "1786490009.108289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-13T10:00:54+09:00",
+      "selected": {
+        "id": "sr-1779987414-c1fe1b8bd1",
+        "source_ts": "1779987414.841039",
+        "title": "Predictive Maps of Multi-Agent Reasoning: A Successor-Representation Spectrum for LLM Communication Topologies",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす候補のうち source_ts が最も新しく、memory・game-design・agent・evaluation の4優先タグを持つ1件だけを選んだ。通信 topology を chain／star／mesh に分け、drift・consensus・perturbation sensitivity を別々に診断する観点が、将来の game-agent／NPC 群評価で既存 probe と異なる判断を作るか確認するため読んだ。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かないため、新規 probe・metric・directive・lease は追加しない。shared-reads 本文は successor representation と spectral radius／gap／condition number、affine-noise 補正を使い、chain・star・mesh を Qwen2.5-7B-Instruct の structured state tracking 100 trial ずつで比較しており、topology metadata と aggregation count を記録する案へ変換できるため relevance と actionability は各2とした。一方、3 topology・1 model family・1 task familyの controlled case studyで、star と mesh の consensus 順位は raw spectrum だけでは説明できず、iid noise 仮定も同一 base model 群では崩れ得るため evidence=2に留める。現行では Mir／Log／Ash への問いかけ運用が停止し、今回の Phase 3b に具体的な multi-agent trigger artifact がない。さらに multi-agent-anchor-protocol が単独 anchor・同一条件・限界便益を、alem-base-vs-coordination が local competence と coordination outcome の分離および communication／shared-memory ablation を、llm-coordination-message-boundary が役割とlocal decision gateを、algorithmic-collusion-shared-prior-check が同一 model／prompt／memory による相関誤差をすでに扱う。新規 topology probe は実行対象なしに active_probes を増やし、既存比較軸を言い換える比率が高いため non_redundancy=1とした。将来、同一 task・model・budget で chain／star／mesh を比較する具体的な game-agent artifact が生じた時は、既存4 probesで topology 固有の drift／aggregation 差を取り逃がした証拠がある場合だけ再検討する。",
+      "existing_controls": [
+        "probe-20260618-multi-agent-anchor-protocol",
+        "probe-20260620-alem-base-vs-coordination",
+        "probe-20260625-llm-coordination-message-boundary",
+        "probe-20260708-algorithmic-collusion-shared-prior-check"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、現行の複数AI運用停止・具体的trigger artifact不在・既存multi-agent controlsとの重複によるreject理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-13T08:01:09+09:00",
       "selected": {
