@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2608.10502"
 collected_at: "2026-08-13T16:16:30+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [ai-agent, memory, recovery, provenance, game-testing]
+evaluated_at: "2026-08-13T16:20:07+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-13T16:20:07+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-13T16:20:07+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-12"
+supersedes: []
+gate_reason: >-
+  faulty memory の削除だけでは派生した claim・action・memory が残るという問題を、runtime provenance graph による影響範囲の同定と選択的再実行で解く手法が明確で、二つの評価集合の回復率も示されている。
+  長期プレイテスト agent や継続 NPC の誤記憶を、正常な世界状態を壊さず局所修復する検証基盤へ具体化でき、約4000字で手法・限界・導入条件を論じられる。
+suggested_post_outline:
+  overview_angle: "誤った memory を消すだけでは不十分で、そこから派生した action と persistent state まで因果的に巻き戻す必要がある"
+  analysis_axis: "memory-to-action provenance graph、信頼済み根拠の保持、影響範囲限定 replay の精度・費用・失敗条件"
+  application_target: "長期自動プレイ、継続 NPC、制作支援 agent の state に provenance edge を持たせ、誤った観測から派生した判断だけを再実行する recovery harness"
+  pros_cons: "正常 state と計算量を温存できる一方、依存 edge の欠落や過剰結合が rollback 範囲を誤らせるため provenance 完全性の監査が必要"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
