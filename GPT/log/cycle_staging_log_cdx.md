@@ -69,7 +69,26 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260813_retry_switch_abstain_tool_recovery.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786606268894169
+    char_count: 4209
+  - candidate: memory/shared_reads_candidates/20260813_dependency_guided_memory_rollback.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786606281572199
+    char_count: 4241
+  - candidate: memory/shared_reads_candidates/20260813_lifelong_agent_memory_portable_skills.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786606286694329
+    char_count: 4056
+skipped: []
+review:
+  required_format: pass
+  char_range_3500_4500: pass
+  banned_phrases: pass
+  url_final_section: pass
+  duplicate_preflight: continue
+  slack_message_verification: pass
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
