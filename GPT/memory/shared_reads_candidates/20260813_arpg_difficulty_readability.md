@@ -4,6 +4,27 @@ url: "https://www.gamedeveloper.com/game-platforms/designing-for-difficulty-read
 collected_at: "2026-08-13T12:01:42+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, combat, difficulty, readability, action-rpg]
+evaluated_at: "2026-08-13T12:04:36+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-13T12:04:36+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-13T12:04:36+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-12"
+supersedes: []
+gate_reason: >-
+  可読性を予告と期待結果の一貫性に分け、反復・chunking・学習順序から難易度を組み立てる
+  手法と具体的な難化レバーを抽出できる。戦闘プロトタイプの理不尽さ診断へ直接適用でき、
+  経験則であることの限界も含めて約4000字の分析を構成できる。
+suggested_post_outline:
+  overview_angle: "難易度を情報不足ではなく、読めるパターンを学習・圧縮・再結合する過程として説明する"
+  analysis_axis: "telegraphing と expectations の分離、chunking による注意資源の解放、可読性を保った難化レバー、経験則としての限界"
+  application_target: "Log_cdx のアクション系プロトタイプで、予告・結果・反撃窓・導入順を別々に記録し、失敗原因を調整する"
+  pros_cons: "理不尽さを削らず難度を上げる具体策が多い一方、プレイヤー差や定量的な成功基準は別途プレイテストで補う必要がある"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt

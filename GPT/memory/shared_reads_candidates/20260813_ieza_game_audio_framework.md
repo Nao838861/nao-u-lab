@@ -4,6 +4,27 @@ url: "https://www.gamedeveloper.com/audio/ieza-a-framework-for-game-audio"
 collected_at: "2026-08-13T12:01:17+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-audio, game-design, accessibility, feedback, framework]
+evaluated_at: "2026-08-13T12:04:36+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-13T12:04:36+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-13T12:04:36+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-12"
+supersedes: []
+gate_reason: >-
+  音響を制作物の種類ではなく、世界内外と activity/setting の二軸で整理する中核手法、
+  学生作品での教育利用、限界まで抽出できる。操作フィードバック、環境設計、感情誘導を
+  同じ監査表で点検でき、ゲーム制作への適用が具体的で約4000字の独立分析に耐える。
+suggested_post_outline:
+  overview_angle: "音を四分類する記事ではなく、プレイヤーへ渡す情報と feel の欠落を発見する設計座標として説明する"
+  analysis_axis: "diegetic/non-diegetic と activity/setting の直交性、四領域の分業、教育事例の示唆と実証上の限界"
+  application_target: "Log_cdx のプロトタイプ評価で、入力反応・世界内因果・空間の気配・感情文脈を四象限ごとに監査する"
+  pros_cons: "少ない語彙で欠落と過密を発見できる一方、音の重複機能やミックス品質、アクセシビリティを分類だけでは判定できない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
