@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-14T00:02:07+09:00",
+  "updated_at": "2026-08-14T02:01:29+09:00",
   "reviewed_source_ts": [
+    "1786606268.894169",
     "1779987414.841039",
     "1780015414.981379",
     "1780015414.955959",
@@ -647,6 +648,47 @@
     "1786606286.694329"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-14T02:01:29+09:00",
+      "selected": {
+        "id": "sr-1786606268-fe80e791ec",
+        "source_ts": "1786606268.894169",
+        "title": "Bench2Robust: scenario-controlled tool-failure robustness evaluation",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす候補のうち source_ts が最も新しく、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ1件だけを選んだ。tool failure 後の Retry／Switch／Abstain を解決可能性が固定された scenario で分離する知見が、Codex の headless playtest と制作自動化に既存 control とは異なる判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14には達するが、risk_control が必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、clean 60%と明示故障6種・silent corruption 3種、S1 retry／S2 switch／S3 abstain の解決可能性固定、Combined Retail 1,339 task の訓練と402 held-out task、69/70 slice の性能低下、BTM／RL／併用の比較、static fallback context の ablation、abstention oracle と silent error 観測の限界まで示すため relevance・actionability・evidence は3とした。本投稿固有の差は、故障率を上げるだけでなく episode ごとの正しい recovery strategy を固定して strategy 別に採点する点である。一方、probe-20260708-toolbenchx-recoverable-hazard-card は recoverable hazard と retry／fallback／stop-with-evidence を、probe-20260710-llm-bounded-replanning-decision-layer は RETRY／ESCALATE／NOOP などの bounded decision と cost comparison を、probe-20260719-zero2skill-conditional-correction-gate は failure class・retry budget・rollback を、probe-20260710-phoneharness-mixed-action-side-effect-trace と probe-20260708-harnessfix-failure-anchor-repair-scope は tool surface・expected state delta・failure layer を既に要求するため non_redundancy=1とした。さらに現在の staging には同じ seed で S1／S2／S3 を比較できる fault-injected headless artifact がなく、Phase 4a には dependency-guided rollback の pending lease が1件ある。consumer、trigger artifact、expected delta を lease 契約どおり指定できない状態で同義 probe を増やすと active_probes 324件の確認負荷を増やし、S3 の誤った早期停止も誘発しうるため risk_control=1。次に fault injection fixture と correct-strategy oracle が揃い、既存 hazard card では retry と switch の誤選択を区別できない時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260708-toolbenchx-recoverable-hazard-card",
+        "probe-20260710-llm-bounded-replanning-decision-layer",
+        "probe-20260719-zero2skill-conditional-correction-gate",
+        "probe-20260710-phoneharness-mixed-action-side-effect-trace",
+        "probe-20260708-harnessfix-failure-anchor-repair-scope"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と defer 理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更しなかった。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-14T00:02:07+09:00",
       "selected": {

@@ -139,7 +139,32 @@ posted:
 skipped: []
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+self_feedback:
+  selected:
+    id: sr-1786606268-fe80e791ec
+    source_ts: "1786606268.894169"
+    title: "Bench2Robust: scenario-controlled tool-failure robustness evaluation"
+    reason: "未レビューの score 12 候補のうち最新で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。Retry／Switch／Abstain を解決可能性固定 scenario で分離する知見が、既存の recovery controls と異なる次回判断を作るか確認するため1件だけ選んだ。Nao_u の明示評価は確認できない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "合計14には達するが risk_control が必須閾値2未満。ToolBench-X hazard card、bounded replanning、Zero2Skill correction gate、PhoneHarness／HarnessFix が recovery path・retry budget・tool surface・state delta・failure layer を既に扱う。本 atom 固有の scenario-controlled solvability は有用だが、同じ seed の S1／S2／S3 fault-injection artifact と correct-strategy oracle がなく、consumer／artifact／判断差を lease 契約どおり指定できない。Phase 4a には別 probe の pending lease もあり、324件の active probes に同義 control を足すと確認負荷と premature abstain risk が増える。fixture が揃い、既存 control では retry と switch の誤選択を区別できない時に再評価する。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを state に記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
