@@ -146,7 +146,7 @@ terrain[fert2core | fert2north] = FERT2
 # ── 4. 森(燃料と木材・前線が動く場) ──
 forest = np.zeros((N, N), bool)
 for cx, cy, r in [(114, 88, 11), (134, 84, 10), (152, 88, 10), (166, 94, 9),  # 2の北側・丘陵の門の手前に集中
-                  (104, 191, 5), (82, 196, 4),                            # 母港のそばの小さな森(教程の距離感・3年で尽きる)
+                  (115, 183, 4),                                          # 母港北東の小森(旧港隣接森の1/3規模。木こり3軒×3年で完全枯渇の較正対象)
                   (134, 148, 10), (146, 156, 9), (128, 158, 8),           # 1と3の中間の森(不定形の複数塊)
                   (152, 142, 7), (122, 146, 6), (142, 166, 7),
                   (208, 116, 8), (108, 42, 8), (166, 40, 7),               # 東の小さな林・北の少しの木
@@ -279,7 +279,7 @@ grow &= (terrain == GRASS) | (terrain == FERT1)
 terrain[grow] = FOREST
 shrink = forest_mask & dilate(~forest_mask, 1) & (fine2 < -0.4)
 terrain[shrink] = GRASS
-port_clear = blob(92, 205, 15, wobble=0.2) & ~blob(104, 191, 6, wobble=0.2)
+port_clear = blob(96, 202, 17, wobble=0.2) & ~blob(115, 183, 6, wobble=0.2)
 terrain[(terrain == FOREST) & port_clear] = GRASS   # 母港圏は教程の小森だけ(大きくなり過ぎ防止)
 coast3 = island & dilate(~island, 3)
 terrain[(terrain == FOREST) & coast3] = GRASS   # 海際3タイルに森は生えない(1の森が海に接する違和感の恒久対策)
@@ -330,6 +330,9 @@ for pname, (x, y) in PASSES.items():
 big.save('/private/tmp/claude-503/-Users-Nao-u-nao-u-lab-Claude/c9cb35e1-aa97-4415-88e2-75290db11847/scratchpad/map_design/b2_map_annotated.png')
 print('images saved')
 
+forest_ne = int(((terrain == FOREST) & (np.abs(xx-115) <= 8) & (np.abs(yy-183) <= 8)).sum())
+print('母港北東の小森:', forest_ne, 'タイル →', forest_ne * 150, '荷(WOOD0=150)')
+
 # ── 11. エンジン投入用データ書き出し ──
 import json
 CHAR = {SEA: '~', SHALLOW: '-', SAND: '.', GRASS: 'g', FERT1: 'f', FERT2: 'F',
@@ -345,7 +348,7 @@ for y in range(N):
         row.append(ch)
     rows.append(''.join(row))
 data = {
-    'version': 'b2-map-v1.2 (v3f)',
+    'version': 'b2-map-v1.3 (v3g)',
     'size': [N, N],
     'legend': {'~': 'sea', '-': 'shallow(視覚のみ・水扱い)', 'R': 'sea+豊かな漁場', 'm': 'sea+中漁場',
                '.': 'sand', 'g': 'grass', 'f': 'fert1(畑適地)', 'F': 'fert2(肥沃コア)',
