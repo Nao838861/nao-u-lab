@@ -90,7 +90,69 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、index entry と per-file atom index の対応を検証した。broken entry は 0 件、代表語（記憶／ゲーム設計／敵パターン／評価軸）も取得できた。"
+  - "memory/atoms.jsonl と per-file/index mirror を監査した。2877 件で mirror drift／content conflict は 0、duplicate cluster 45 群は canonical overlay と一致した。"
+  - "memory/raw/ の 30 日超未更新ファイル 240 件を確認した。215 件は web_research 原文、残りも Slack archive・headless/game eval 等の provenance 原文であり、参照切れを避けるため今 cycle は移動しなかった。"
+  - "shared-reads candidate lifecycle 1298 件を監査した。posted 613、ready_to_post 9、postponed 207、failed 467、needs_review 2。"
+  - "open duplicate／stale triage／group action／canonical title／mixed duplicate sidecar を再生成・監査した。live lease を反映後の新規 group/candidate handoff はともに 0 件。"
+  - "Slack directive／broadcast inbox を監査した。pending はともに 0 件で、handled への更新対象はなかった。"
+issues:
+  - id: ISS-UTF8-001
+    description: "active atom sr-1776127289-4d9239b255 の『AIエージェント』相当箇所に U+FFFD が 2 文字残る。memory_health のもう 1 件の suspect（gr-1777083728-44d444ab7a）は Nao_u 原文中の文字列『???』による検知で、UTF-8 破損ではない。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; python tools/memory_health.py --json"
+    source_file_status: "UTF-8 明示読みでも per-file atom、atoms.jsonl、raw Slack archive の全てに同じ U+FFFD があり、source-level の欠損。atom mirror 自体は一致している。"
+    display_or_tooling_status: "none。PowerShell/rg の表示だけの mojibake ではない。"
+    why_blocks_game_memory: "『AIエージェント』の完全一致検索でこの高信号 atom を取りこぼす可能性がある。ただし ID・周辺語・tags では検索可能で、影響は局所的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 7
+    dormant: 1
+candidate_lifecycle:
+  total: 1298
+  counts:
+    posted: 613
+    ready_to_post: 9
+    postponed: 207
+    failed: 467
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_for_reassessment: 2
+  overdue_paths:
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+    - memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+  lease_suppression: "両件とも同一 work の all_open group に属し、既存 deferred group lease の retry_after=2026-08-20T13:19:04+09:00 前かつ membership fingerprint 一致のため、stale triage から正しく除外された。"
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 37
+  mixed_group_count: 34
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
