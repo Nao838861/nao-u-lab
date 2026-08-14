@@ -63,6 +63,7 @@ for cx, cy, r in [(44, 76, 3), (236, 196, 3), (126, 244, 2), (32, 168, 2)]:  # �
     island |= blob(cx, cy, r, wobble=0.5)
 for cx, cy, r in [(148, 184, 3), (86, 177, 3)]:   # 内陸の小さな池(1-3・1-4の間の景物)
     island &= ~blob(cx, cy, r, wobble=0.4)
+island &= ~blob(96, 121, 9, wobble=0.35)          # 2の左・山あいの大きな湖
 
 terrain = np.full((N, N), SEA, dtype=np.int16)
 terrain[island] = GRASS  # islandはこの後の北の潟の切除で更新される
@@ -102,6 +103,12 @@ for cx, cy, r in [(158, 168, 8), (166, 176, 6), (116, 172, 7), (150, 128, 6)]:
     mountains |= blob(cx, cy, r, wobble=0.3)
 # 草原の点在する大岩(1-3・1-4の間。極小=道は自然に迂回)
 for cx, cy, r in [(134, 190, 2), (167, 193, 2), (120, 198, 2), (74, 158, 2), (94, 166, 2)]:
+    mountains |= blob(cx, cy, r, wobble=0.5)
+# 湖畔の岩(湖の囲まれ感)・4周辺/3の右/2の縁の低密度の大岩
+for cx, cy, r in [(85, 113, 3), (106, 130, 3),
+                  (86, 124, 2), (78, 118, 2),
+                  (204, 188, 2), (214, 221, 2),
+                  (112, 122, 2), (160, 107, 2)]:
     mountains |= blob(cx, cy, r, wobble=0.5)
 # 峠(山を貫く回廊が唯一の道)
 def corridor(x0, y0, x1, y1, width=4):
@@ -143,8 +150,11 @@ for cx, cy, r in [(114, 88, 11), (134, 84, 10), (152, 88, 10), (166, 94, 9),  # 
                   (134, 148, 10), (146, 156, 9), (128, 158, 8),           # 1と3の中間の森(不定形の複数塊)
                   (152, 142, 7), (122, 146, 6), (142, 166, 7),
                   (208, 116, 8), (108, 42, 8), (166, 40, 7),               # 東の小さな林・北の少しの木
-                  (114, 188, 3), (128, 181, 4), (156, 190, 3), (172, 200, 3),  # 1-3の間の点在林
-                  (78, 168, 3), (90, 150, 3), (68, 146, 2), (98, 179, 3)]:     # 1-4の間の点在林
+                  (132, 182, 3), (156, 190, 3), (172, 200, 3),               # 1-3の間の点在林(母港寄りは間引き)
+                  (90, 150, 3), (68, 146, 2),                                 # 1-4の間の点在林(同)
+                  (76, 121, 2), (82, 152, 3),                                 # 4の周辺(低密度)
+                  (208, 193, 3), (218, 201, 2), (201, 222, 2),                # 3の右と右下(低密度)
+                  (104, 111, 3), (162, 117, 3), (150, 70, 2)]:                # 2の縁(農地の外)・約束の土地の点景
     forest |= blob(cx, cy, r, wobble=0.2)
 forest &= island & ~mountains & ~fert2core & ~fert2north & ~pocket
 forest &= ~(blob(134, 102, 20, wobble=0.15))
@@ -269,6 +279,8 @@ grow &= (terrain == GRASS) | (terrain == FERT1)
 terrain[grow] = FOREST
 shrink = forest_mask & dilate(~forest_mask, 1) & (fine2 < -0.4)
 terrain[shrink] = GRASS
+port_clear = blob(92, 205, 15, wobble=0.2) & ~blob(104, 191, 6, wobble=0.2)
+terrain[(terrain == FOREST) & port_clear] = GRASS   # 母港圏は教程の小森だけ(大きくなり過ぎ防止)
 coast3 = island & dilate(~island, 3)
 terrain[(terrain == FOREST) & coast3] = GRASS   # 海際3タイルに森は生えない(1の森が海に接する違和感の恒久対策)
 for hi, lo in [(FERT2, FERT1), (FERT1, GRASS)]:
@@ -333,7 +345,7 @@ for y in range(N):
         row.append(ch)
     rows.append(''.join(row))
 data = {
-    'version': 'b2-map-v1.1 (v3e)',
+    'version': 'b2-map-v1.2 (v3f)',
     'size': [N, N],
     'legend': {'~': 'sea', '-': 'shallow(視覚のみ・水扱い)', 'R': 'sea+豊かな漁場', 'm': 'sea+中漁場',
                '.': 'sand', 'g': 'grass', 'f': 'fert1(畑適地)', 'F': 'fert2(肥沃コア)',
