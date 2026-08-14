@@ -15,6 +15,13 @@ export const START_MODES = Object.freeze({
     description: '母港と魚郷がある島で、隊商路線や産業を自由に育てます。',
     blank: false,
   }),
+  'big-island': Object.freeze({
+    id: 'big-island',
+    label: '大きな島（試験）',
+    shortLabel: '大きな島（試験）',
+    description: '256×256のB2地図で、母港から開拓を試します。',
+    blank: false,
+  }),
   test: Object.freeze({
     id: 'test',
     label: '見本の町を眺める',

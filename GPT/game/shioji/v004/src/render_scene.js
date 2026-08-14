@@ -71,7 +71,7 @@ function compileTerrainLayer(model, occupied) {
   for (let y = 0; y < model.height; y += 1) {
     for (let x = 0; x < model.width; x += 1) {
       const tile = model.terrain[y][x];
-      const value = `${tile.kind}:${tile.variant ?? 0}:${tile.fertility ?? 0}:${tile.wood ?? 3}:${tile.fishery ?? ''}:${tile.fishStage ?? 3};`;
+      const value = `${tile.kind}:${tile.terrainClass ?? ''}:${tile.variant ?? 0}:${tile.fertility ?? 0}:${tile.wood ?? 3}:${tile.fishery ?? ''}:${tile.fishStage ?? 3};`;
       for (let index = 0; index < value.length; index += 1) {
         const code = value.charCodeAt(index);
         primary = Math.imul(primary ^ code, 16777619);

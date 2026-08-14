@@ -1,50 +1,51 @@
-import { IsometricCamera } from './camera.js?v=v004.56.0-fertile-land';
-import { ART_SLICE_MODE } from './art_slice.js?v=v004.56.0-fertile-land';
-import { SimulationClock } from './clock.js?v=v004.56.0-fertile-land';
-import { createBoundaryEvents } from './boundary_events.js?v=v004.56.0-fertile-land';
+import { IsometricCamera } from './camera.js?v=v004.57.0-b2-trial';
+import { loadB2MapData } from './b2_map.js?v=v004.57.0-b2-trial';
+import { ART_SLICE_MODE } from './art_slice.js?v=v004.57.0-b2-trial';
+import { SimulationClock } from './clock.js?v=v004.57.0-b2-trial';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.57.0-b2-trial';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.56.0-fertile-land';
+} from './config.js?v=v004.57.0-b2-trial';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.56.0-fertile-land';
-import { BUILD_COST_DENARI, P, createEngineController } from './engine_bridge.js?v=v004.56.0-fertile-land';
-import { developmentMapView } from './development_map.js?v=v004.56.0-fertile-land';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.56.0-fertile-land';
-import { formatElenaSpeech } from './elena_text.js?v=v004.56.0-fertile-land';
+} from './display_batch.js?v=v004.57.0-b2-trial';
+import { BUILD_COST_DENARI, P, createEngineController } from './engine_bridge.js?v=v004.57.0-b2-trial';
+import { developmentMapView } from './development_map.js?v=v004.57.0-b2-trial';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.57.0-b2-trial';
+import { formatElenaSpeech } from './elena_text.js?v=v004.57.0-b2-trial';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.56.0-fertile-land';
+} from './food_readability.js?v=v004.57.0-b2-trial';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.56.0-fertile-land';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.56.0-fertile-land';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.56.0-fertile-land';
-import { goodsDetail } from './goods_detail.js?v=v004.56.0-fertile-land';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.56.0-fertile-land';
-import { WorldPresentation } from './presentation.js?v=v004.56.0-fertile-land';
-import { Renderer } from './renderer.js?v=v004.56.0-fertile-land';
+} from './keyboard.js?v=v004.57.0-b2-trial';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.57.0-b2-trial';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.57.0-b2-trial';
+import { goodsDetail } from './goods_detail.js?v=v004.57.0-b2-trial';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.57.0-b2-trial';
+import { WorldPresentation } from './presentation.js?v=v004.57.0-b2-trial';
+import { Renderer } from './renderer.js?v=v004.57.0-b2-trial';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.56.0-fertile-land';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.56.0-fertile-land';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.56.0-fertile-land';
+} from './save_game.js?v=v004.57.0-b2-trial';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.57.0-b2-trial';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.57.0-b2-trial';
 import {
   GOODS_GLYPHS, jobInputNeeds, shortageRows, stockWhereabouts, supplyDemandRow,
   supplyDemandRows, supplyDiagnosis,
-} from './supply_demand.js?v=v004.56.0-fertile-land';
-import { orderQuote } from './tutorial_content.js?v=v004.56.0-fertile-land';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.56.0-fertile-land';
+} from './supply_demand.js?v=v004.57.0-b2-trial';
+import { orderQuote } from './tutorial_content.js?v=v004.57.0-b2-trial';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.57.0-b2-trial';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.56.0-fertile-land';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.56.0-fertile-land';
+} from './ui_guidance.js?v=v004.57.0-b2-trial';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.57.0-b2-trial';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -63,6 +64,9 @@ try {
 }
 const startupSave = resumeRequested ? storedSave : null;
 const startMode = startupSave?.mode ?? requestedStartMode ?? 'sandbox';
+const b2MapDefinition = !startupSave && startMode === 'big-island'
+  ? await loadB2MapData()
+  : null;
 const worldScaleFoundation = new URLSearchParams(location.search).get('world-scale') === '1';
 const legacyFixture = new URLSearchParams(location.search).get('legacy-fixture') === '1';
 const controller = createEngineController({
@@ -72,6 +76,7 @@ const controller = createEngineController({
   inputJournal: startupSave?.inputJournal ?? [],
   worldScaleFoundation: !startupSave && worldScaleFoundation,
   legacyFixture: !startupSave && legacyFixture,
+  b2MapDefinition,
 });
 const camera = new IsometricCamera();
 const renderer = new Renderer(canvas, camera);
@@ -163,6 +168,7 @@ const uiMetrics = {
 };
 camera.setWorldSize(model.width, model.height);
 if (startMode === 'sandbox' && !startupSave) camera.zoom = 0.38;
+if (startMode === 'big-island' && !startupSave) camera.zoom = 0.28;
 if (START_MODES[startMode].blank || startMode === 'sandbox' || startMode === 'caravan') {
   const startFocus = model.worldData?.startFocus ?? model.economyMarket;
   camera.focus(startFocus.x + 0.5, startFocus.y + 0.5);

@@ -8,7 +8,7 @@ import {
   requestMainlandAid,
   setCaravanEmployment,
   setCompanyStockTarget,
-} from "./econ.js?v=v004.56.0-fertile-land";
+} from "./econ.js?v=v004.57.0-b2-trial";
 import {
   activePortCalls,
   addRoadLine,
@@ -16,14 +16,14 @@ import {
   haulJobById,
   removeBuilding,
   removeRoadTile,
-} from "./physical.js?v=v004.56.0-fertile-land";
-import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.56.0-fertile-land";
+} from "./physical.js?v=v004.57.0-b2-trial";
+import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.57.0-b2-trial";
 import {
   forgetCompanyLogisticsBuilding,
   placeCompanyLogisticsBuilding,
-} from "./world.js?v=v004.56.0-fertile-land";
-import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.56.0-fertile-land";
-import { configureCaravanRoute } from "./routes.js?v=v004.56.0-fertile-land";
+} from "./world.js?v=v004.57.0-b2-trial";
+import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.57.0-b2-trial";
+import { configureCaravanRoute } from "./routes.js?v=v004.57.0-b2-trial";
 
 function jsonClone(value) {
   return JSON.parse(JSON.stringify(value));

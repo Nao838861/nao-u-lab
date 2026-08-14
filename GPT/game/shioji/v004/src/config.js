@@ -1,4 +1,4 @@
-export const VERSION = 'v004.56.0-fertile-land';
+export const VERSION = 'v004.57.0-b2-trial';
 
 // 経済エンジンの貨幣値は表示単位の1/10。UIへ出す時だけデナリへ直す。
 export const DENARI_PER_MONEY_UNIT = 10;
@@ -18,9 +18,16 @@ export const SPEEDS = Object.freeze([
 
 export const TERRAIN_COLORS = Object.freeze({
   water: ['#164e57', '#195861', '#1b6068', '#15535d'],
+  sea: ['#123f55', '#16475c', '#194d61', '#103a4f'],
+  shallow: ['#74aebb', '#6aa4b2', '#7bb4c0', '#69a0ae'],
+  richFishery: ['#13bca4', '#18ad9b', '#22c6ad', '#10a890'],
+  mediumFishery: ['#367b8c', '#3c8493', '#327384', '#438b98'],
   grass: ['#6e8b50', '#739254', '#698449', '#78975a'],
+  fertile: ['#9fab55', '#a6b35b', '#96a34e', '#acb960'],
+  fertileCore: ['#d2b94f', '#c9ae45', '#dac45a', '#bea33d'],
   sand: ['#aa986c', '#b3a174', '#a18f65', '#b9a777'],
   forest: ['#557343', '#5c7b47', '#4f6d3d', '#62804b'],
+  mountain: ['#606675', '#565d6c', '#69707e', '#4f5664'],
   rock: ['#777b6c', '#737969', '#7e8071', '#6d7467'],
   ore: ['#806f63', '#8c786a', '#76655d', '#927e6d'],
   coal: ['#525652', '#494d4a', '#5c605a', '#424744'],

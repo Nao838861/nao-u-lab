@@ -1,5 +1,5 @@
-import { BUILDING_SIZES } from './config.js?v=v004.56.0-fertile-land';
-import { islandCalendar } from './ui_summary.js?v=v004.56.0-fertile-land';
+import { BUILDING_SIZES } from './config.js?v=v004.57.0-b2-trial';
+import { islandCalendar } from './ui_summary.js?v=v004.57.0-b2-trial';
 
 export const tileKey = (x, y) => `${x},${y}`;
 
@@ -281,6 +281,7 @@ function validFootprint(model, job, entrance, site) {
   const cells = footprintCells(site.x, site.y, definition.width, definition.height);
   if (cells.some(cell => terrainAt(model, cell.x, cell.y) === null)) return false;
   if (definition.shore) {
+    if (cells.some(cell => terrainAt(model, cell.x, cell.y) === 'mountain')) return false;
     const landCount = cells.filter(cell => terrainAt(model, cell.x, cell.y) !== 'water').length;
     if (landCount === 0 || landCount === cells.length) return false;
   } else if (definition.fertile && cells.some(cell => !isFertileAt(model, cell.x, cell.y))) return false;
@@ -291,7 +292,7 @@ function validFootprint(model, job, entrance, site) {
     ? entrance.y === site.y - 1 || entrance.y === site.y + definition.height
     : entrance.y >= site.y && entrance.y < site.y + definition.height
       && (entrance.x === site.x - 1 || entrance.x === site.x + definition.width);
-  if (!perimeter || terrainAt(model, entrance.x, entrance.y) === 'water'
+  if (!perimeter || ['water', 'mountain'].includes(terrainAt(model, entrance.x, entrance.y))
     || occupied.has(tileKey(entrance.x, entrance.y))) return false;
   return !overlapsReservation(model, job, entrance, site);
 }
@@ -306,6 +307,7 @@ function rejection(model, job, entrance) {
   ) return job === 'market' ? '市場はすでにあります' : '倉庫はすでにあります';
   const terrain = terrainAt(model, entrance.x, entrance.y);
   if (!terrain || terrain === 'water') return '水の上には建てられません';
+  if (terrain === 'mountain') return '山には建物を置けません';
   if ((model.zones ?? []).some(zone => Math.round(zone.x) === entrance.x && Math.round(zone.y) === entrance.y)
     || model.households.some(household => Math.round(household.homeX) === entrance.x
       && Math.round(household.homeY) === entrance.y)) return 'この土地には既に建物があります';
@@ -402,13 +404,13 @@ export function previewRoadPlacement(model, start, end) {
   const cells = line8(from, to);
   const occupied = new Set(model.occupiedKeys);
   const roads = new Set(model.roadKeys);
-  const blocked = cells.some(cell => terrainAt(model, cell.x, cell.y) === 'water'
+  const blocked = cells.some(cell => ['water', 'mountain'].includes(terrainAt(model, cell.x, cell.y))
     || terrainAt(model, cell.x, cell.y) === null || occupied.has(tileKey(cell.x, cell.y)));
   const newCells = cells.filter(cell => !roads.has(tileKey(cell.x, cell.y)));
   return {
     kind: 'road', start: from, end: to, cells, newCells,
     ok: !blocked && newCells.length > 0,
-    reason: blocked ? '水面・盤外・建物の上へ道は敷けません'
+    reason: blocked ? '水面・山・盤外・建物の上へ道は敷けません'
       : newCells.length === 0 ? 'すでに完成した道路です' : '',
   };
 }

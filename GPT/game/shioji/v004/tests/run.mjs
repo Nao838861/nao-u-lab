@@ -7,8 +7,10 @@ import {
   requestCompanyImport, runPopulationDynamicsPhase,
 } from '../../engine/src/econ.js';
 import {
-  ECONOMIC_BUILDINGS, assertMaterialBalance, depositInventory,
+  ECONOMIC_BUILDINGS, addRoadTile, assertMaterialBalance, canPlaceBuilding, depositInventory,
+  findTravelPath, planRoadWorksite, tileTravelCost,
 } from '../../engine/src/physical.js';
+import { parseB2MapData } from '../src/b2_map.js';
 import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
 import {
@@ -127,7 +129,8 @@ const tutorialIndependentMeasurements = new Set([
 function readBrowserEntrySource() {
   const htmlUrl = new URL('../index.html', import.meta.url);
   const html = fs.readFileSync(htmlUrl, 'utf8');
-  const dynamicEntry = html.match(/const\s+moduleUrl\s*=\s*['"]([^'"]+\.js(?:\?[^'"]*)?)/)?.[1];
+  const dynamicEntry = html.match(/:\s*['"]([^'"]*\/main\.js(?:\?[^'"]*)?)['"]\s*;/)?.[1]
+    ?? html.match(/const\s+moduleUrl\s*=\s*['"]([^'"]+\.js(?:\?[^'"]*)?)/)?.[1];
   const staticEntry = html.match(/<script[^>]+type=['"]module['"][^>]+src=['"]([^'"]+\.js(?:\?[^'"]*)?)/)?.[1];
   const entry = dynamicEntry ?? staticEntry;
   assert.ok(entry, 'index.htmlからbrowser module entryを解決できる');
@@ -804,7 +807,7 @@ test('チュートリアル段1: v003の旧Worldを持ち込まず観測ディ�
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const director = fs.readFileSync(new URL('../src/tutorial_director.js', import.meta.url), 'utf8');
   assert.doesNotMatch(director, /applyOperation|advanceTicks|\.operate\(/);
-  assert.match(html, /const\s+moduleUrl\s*=\s*['"]\.\/src\/main\.js/);
+  assert.match(html, /['"]\.\/src\/main\.js\?v=/);
   assert.match(readBrowserEntrySource(), /createTutorialDirectorForMode/);
   assert.match(html, /潮路の島 v004/);
   assert.equal(fs.existsSync(new URL('../src/world.js', import.meta.url)), false);
@@ -2532,7 +2535,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.56.0-fertile-land');
+  assert.equal(VERSION, 'v004.57.0-b2-trial');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2694,8 +2697,8 @@ function measureLoggerRoadRecovery(seed) {
   return { seed, before, after, director };
 }
 
-test('開始選択: 教程・自由96×64・見本町・二市場縦切りを選べる', () => {
-  assert.deepEqual(Object.keys(START_MODES), ['tutorial', 'sandbox', 'test', 'caravan']);
+test('開始選択: 教程・自由96×64・大きな島・見本町・二市場縦切りを選べる', () => {
+  assert.deepEqual(Object.keys(START_MODES), ['tutorial', 'sandbox', 'big-island', 'test', 'caravan']);
   const tutorial = createEngineController({ seed: 11, mode: 'tutorial' });
   const sandbox = createEngineController({ seed: 11, mode: 'sandbox' });
   const testCity = createEngineController({ seed: 11, mode: 'test' });
@@ -2756,9 +2759,10 @@ test('開始選択: 教程・自由96×64・見本町・二市場縦切りを選
   assert.throws(() => createEngineController({ mode: 'unknown' }), /unknown start mode/);
 });
 
-test('開始選択: URLのmodeは4種だけを受理し他のqueryを保つ', () => {
+test('開始選択: URLのmodeは5種だけを受理し他のqueryを保つ', () => {
   assert.equal(parseStartMode('?mode=tutorial'), 'tutorial');
   assert.equal(parseStartMode('?mode=sandbox'), 'sandbox');
+  assert.equal(parseStartMode('?mode=big-island'), 'big-island');
   assert.equal(parseStartMode('?mode=test'), 'test');
   assert.equal(parseStartMode('?mode=caravan'), 'caravan');
   assert.equal(parseStartMode('?mode=unknown'), null);
@@ -2775,6 +2779,97 @@ test('開始選択: URLのmodeは4種だけを受理し他のqueryを保つ', ()
     assert.equal(restarted.searchParams.get('resume'), null, '最初から選んだ時は保存再開指定を破棄する');
     assert.equal(restarted.searchParams.get('seed'), '11');
   }
+});
+
+test('B2試験モード: v1.2地形・母港・山ロック・P1峠を同じphysicalで保つ', () => {
+  const source = JSON.parse(fs.readFileSync(
+    new URL('../../design/map_b2/b2_map_data.json', import.meta.url),
+    'utf8',
+  ));
+  const definition = parseB2MapData(source);
+  assert.equal(Object.values(definition.counts).reduce((total, count) => total + count, 0), 65536);
+  assert.deepEqual(
+    Object.fromEntries(['M', 'f', 'F', 'R', 'm', '-'].map(symbol => [symbol, definition.counts[symbol]])),
+    { M: 8183, f: 4516, F: 1492, R: 3207, m: 294, '-': 2459 },
+  );
+  const controller = createEngineController({ seed: 11, mode: 'big-island', b2MapDefinition: definition });
+  const state = controller.saveState();
+  const model = controller.readModel();
+  assert.deepEqual([model.width, model.height], [256, 256]);
+  assert.deepEqual(model.worldData.startFocus, { x: 104, y: 201 });
+  assert.equal(model.households.length, 12);
+  assert.equal(state.marketNetwork.markets.length, 1, '他の市場候補は空き地のまま');
+  assert.equal(model.buildings.filter(building => building.roles.includes('port')).length, 1);
+  assert.equal(model.buildings.filter(building => building.roles.includes('market')).length, 1);
+  const mountain = { x: 67, y: 19 };
+  assert.equal(state.physical.terrain[mountain.y][mountain.x].kind, 'mountain');
+  assert.equal(tileTravelCost(state.physical, mountain.x, mountain.y), Infinity);
+  assert.equal(addRoadTile(state.physical, mountain.x, mountain.y), false);
+  assert.equal(planRoadWorksite(state.physical, mountain.x, mountain.y), null);
+  assert.equal(canPlaceBuilding(state.physical, 'market', mountain.x, mountain.y, {
+    definitions: ECONOMIC_BUILDINGS, fixed: true, requireRoad: false,
+  }).reason, 'terrain-blocked');
+  assert.equal(previewRoadPlacement(model, mountain, mountain).ok, false);
+  assert.match(previewRoadPlacement(model, mountain, mountain).reason, /山/);
+  const passRoute = findTravelPath(
+    state.physical,
+    state.economy.market,
+    definition.passes.P1,
+    'walk',
+  );
+  assert.ok(passRoute && passRoute.cost > 0, 'P1峠へは山を貫通せず到達できる');
+  const restored = createEngineController({
+    mode: 'big-island', stateSnapshot: structuredClone(state),
+  }).readModel();
+  assert.deepEqual([restored.width, restored.height], [256, 256]);
+  assert.equal(restored.households.length, model.households.length);
+});
+
+test('B2試験モード: 母港12世帯が一年自律し、保存則とjournal再生が一致する', () => {
+  const definition = parseB2MapData(JSON.parse(fs.readFileSync(
+    new URL('../../design/map_b2/b2_map_data.json', import.meta.url),
+    'utf8',
+  )));
+  const create = () => createEngineController({ seed: 11, mode: 'big-island', b2MapDefinition: definition });
+  const controller = create();
+  const initial = controller.saveState();
+  const originalIds = initial.economy.households.map(household => household.id);
+  const materialBefore = economicMaterialSnapshot(initial.economy, initial.physical);
+  const flowBefore = structuredClone(initial.economy.materialFlows);
+  const operation = {
+    type: 'add_road', start: { x: 118, y: 190 }, end: { x: 119, y: 190 },
+  };
+  assert.equal(controller.operate(operation).ok, true);
+  controller.advanceTicks(360 * 30);
+  const after = controller.saveState();
+  assert.equal(after.day, 360);
+  assert.equal(originalIds.every(id => after.economy.households.some(household => household.id === id)), true);
+  assert.equal(after.economy.events.some(([, message]) => (
+    message.includes('餓えで亡くなった') || message.includes('離散した')
+  )), false);
+  assertMoneyConservation(after.economy);
+  const flowDelta = Object.fromEntries(GOODS.map(goods => [goods, Object.fromEntries(
+    ['prod', 'imp', 'cons', 'exp'].map(kind => [
+      kind,
+      (after.economy.materialFlows[goods]?.[kind] ?? 0)
+        - (flowBefore[goods]?.[kind] ?? 0),
+    ]),
+  )]));
+  assertMaterialBalance({
+    before: materialBefore,
+    after: clampMaterialRoundoff(economicMaterialSnapshot(after.economy, after.physical)),
+    flows: flowDelta,
+  });
+
+  const replay = create();
+  let replayTick = 0;
+  for (const row of controller.inputJournal()) {
+    replay.advanceTicks(row.tick - replayTick);
+    replayTick = row.tick;
+    assert.equal(replay.operate(row.op).ok, true);
+  }
+  replay.advanceTicks(after.tick - replayTick);
+  assert.deepEqual(replay.saveState(), after);
 });
 
 test('自由開始96×64: 母港と魚郷は無路線の一年を自律し保存則を守る', () => {

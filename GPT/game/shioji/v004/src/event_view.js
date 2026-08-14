@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.56.0-fertile-land';
+import { JOB_LABELS } from './config.js?v=v004.57.0-b2-trial';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

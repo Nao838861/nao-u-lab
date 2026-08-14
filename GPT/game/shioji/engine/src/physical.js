@@ -389,7 +389,8 @@ export function terrainAt(physical, x, y) {
 }
 
 export function isLand(physical, x, y) {
-  return inside(physical, x, y) && terrainAt(physical, x, y).kind !== "water";
+  return inside(physical, x, y)
+    && !["water", "mountain"].includes(terrainAt(physical, x, y).kind);
 }
 
 function roadsOf(roadsOrPhysical) {
@@ -502,7 +503,7 @@ export function roadPath(roadsOrPhysical, start, goal) {
 
 export function tileTravelCost(physical, x, y, mode = "walk") {
   if (mode !== "walk" && mode !== "cart") throw new Error(`unknown travel mode: ${mode}`);
-  if (!inside(physical, x, y) || terrainAt(physical, x, y).kind === "water") return Infinity;
+  if (!isLand(physical, x, y)) return Infinity;
   if (physical.occupied[keyOf(x, y)]) return Infinity;
   const road = hasRoad(physical, x, y);
   const roadCost = isPavedRoad(physical, x, y) ? 0.45 : 0.6;
@@ -862,6 +863,9 @@ export function canPlaceBuilding(physical, type, x, y, options = {}) {
   const tiles = footprintTiles(type, x, y, definitions);
   if (tiles.some((tile) => !inside(physical, tile.x, tile.y))) {
     return { ok: false, reason: "out-of-bounds" };
+  }
+  if (tiles.some((tile) => terrainAt(physical, tile.x, tile.y).kind === "mountain")) {
+    return { ok: false, reason: "terrain-blocked" };
   }
   if (definition.shore) {
     const landCount = tiles.filter((tile) => isLand(physical, tile.x, tile.y)).length;

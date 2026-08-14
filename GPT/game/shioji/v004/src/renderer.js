@@ -1,17 +1,17 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.56.0-fertile-land';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.56.0-fertile-land';
-import { islandCalendar } from './ui_summary.js?v=v004.56.0-fertile-land';
+} from './config.js?v=v004.57.0-b2-trial';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.57.0-b2-trial';
+import { islandCalendar } from './ui_summary.js?v=v004.57.0-b2-trial';
 import {
   compileRenderScene, inventoryLayerDepth, marketStallLayerDepth, mergeDrawables,
   sceneRowsInBounds,
-} from './render_scene.js?v=v004.56.0-fertile-land';
+} from './render_scene.js?v=v004.57.0-b2-trial';
 import {
   buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
   seasonalTerrainVisual,
-} from './visuals.js?v=v004.56.0-fertile-land';
-import { renderArtSlice } from './art_slice.js?v=v004.56.0-fertile-land';
+} from './visuals.js?v=v004.57.0-b2-trial';
+import { renderArtSlice } from './art_slice.js?v=v004.57.0-b2-trial';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
@@ -281,8 +281,8 @@ export class Renderer {
         const x = sum - y;
         if (x < bounds.minX || x > bounds.maxX) continue;
         const tile = model.terrain[y][x];
-        const palette = TERRAIN_COLORS[tile.kind] ?? TERRAIN_COLORS.grass;
-        const winter = seasonalTerrainVisual(tile.kind, this.season);
+        const palette = TERRAIN_COLORS[tile.terrainClass ?? tile.kind] ?? TERRAIN_COLORS.grass;
+        const winter = tile.terrainClass ? null : seasonalTerrainVisual(tile.kind, this.season);
         const fills = winter?.fills ?? palette;
         const fill = fills[(tile.variant ?? 0) % fills.length];
         const stroke = winter?.stroke ?? (tile.kind === 'water' ? '#1b626a' : '#4f6942');

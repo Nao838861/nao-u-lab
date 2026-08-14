@@ -11,26 +11,29 @@ import {
   localWood,
   recordEconomicMaterialFlow,
   setCaravanEmployment,
-} from "./econ.js?v=v004.56.0-fertile-land";
+} from "./econ.js?v=v004.57.0-b2-trial";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
   addRoadLine,
+  addRoadTile,
   assertCarrierInvariants,
   assertOccupancyInvariant,
   buildingById,
   canPlaceBuilding,
   createPhysicalState,
   depositInventory,
+  findTravelPath,
   findBuildingSiteForEntrance,
   hasRoad,
+  isLand,
   makeFlowIslandTerrain,
   makeEmptyWorldTerrain,
   makeMultiMarketTerrain,
   markFertileArea,
   pathLen,
-} from "./physical.js?v=v004.56.0-fertile-land";
-import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.56.0-fertile-land";
+} from "./physical.js?v=v004.57.0-b2-trial";
+import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.57.0-b2-trial";
 
 export const AUDIT_SEEDS = Object.freeze([11, 13, 14]);
 
@@ -293,6 +296,7 @@ export function canPlaceSettlement(economy, physical, job, x, y) {
   const roundedY = Math.round(y);
   const terrain = terrainKind(physical, roundedX, roundedY);
   if (!terrain || terrain === "water") return [false, "水の上には建てられません"];
+  if (terrain === "mountain") return [false, "山には建物を置けません"];
   if (
     economy.zones.some((zone) => Math.round(zone.x) === roundedX && Math.round(zone.y) === roundedY)
     || economy.households.some(
@@ -490,6 +494,141 @@ export const WORLD_SCALE_FOUNDATION = Object.freeze({
   peoplePerHousehold: 5,
   startFocus: Object.freeze({ x: 128, y: 128 }),
 });
+
+export const B2_TRIAL_STARTER_JOBS = Object.freeze([
+  // 母港の畑適地は意図的に狭く、現行4×4全域肥沃制約では一軒分だけ。
+  // その一軒を先に確保し、残りは沿岸・森林・加工職でスターターを構成する。
+  "wheat", "fisher", "fisher", "logger", "logger", "logger",
+  "woodshop", "woodshop", "charburner", "saltworks", "cartwright", "fisher2",
+]);
+
+const B2_TRIAL_PROVISION_DAYS = 365;
+
+function nearB2Terrain(physical, x, y, kind, radius = 2) {
+  for (let offsetY = -radius; offsetY <= radius; offsetY += 1) {
+    for (let offsetX = -radius; offsetX <= radius; offsetX += 1) {
+      if (terrainKind(physical, x + offsetX, y + offsetY) === kind) return true;
+    }
+  }
+  return false;
+}
+
+function b2StarterPredicate(physical, job, x, y) {
+  if (job === "fisher" || job === "saltworks") return nearB2Terrain(physical, x, y, "water");
+  if (job === "logger") return nearB2Terrain(physical, x, y, "forest");
+  return true;
+}
+
+function placeB2StarterZone(world, job, center) {
+  const { economy, physical } = world.state;
+  const candidates = [];
+  for (let y = center.y - 28; y <= center.y + 18; y += 1) {
+    for (let x = center.x - 24; x <= center.x + 32; x += 1) {
+      if (!isLand(physical, x, y) || !b2StarterPredicate(physical, job, x, y)) continue;
+      if (economy.zones.some(zone => zone.x === x && zone.y === y)) continue;
+      candidates.push({ x, y, distance: Math.hypot(x - center.x, y - center.y) });
+    }
+  }
+  candidates.sort((left, right) => left.distance - right.distance || left.y - right.y || left.x - right.x);
+  for (const entrance of candidates) {
+    const site = findBuildingSiteForEntrance(physical, job, entrance, {
+      definitions: ECONOMIC_BUILDINGS,
+      toward: center,
+    });
+    if (!site) continue;
+    const route = findTravelPath(physical, economy.market, entrance, "walk");
+    const size = ECONOMIC_BUILDINGS[job];
+    if (!route || route.path.some(point => (
+      point.x >= site.x && point.x < site.x + size.w
+      && point.y >= site.y && point.y < site.y + size.h
+    ))) continue;
+    if (addAuditZone(world, job, entrance.x, entrance.y, site.x, site.y)) {
+      return economy.zones.at(-1);
+    }
+  }
+  throw new Error(`B2母港スターター配置不可: ${job}`);
+}
+
+function connectB2Road(physical, origin, target, label) {
+  const route = findTravelPath(physical, origin, target, "walk");
+  if (!route) throw new Error(`B2母港道路の経路なし: ${label}`);
+  for (const point of route.path) {
+    if (!addRoadTile(physical, point.x, point.y)) {
+      throw new Error(`B2母港道路敷設不可: ${label}@${point.x},${point.y}`);
+    }
+  }
+}
+
+export function buildB2TrialWorld(seed = 11, definition) {
+  if (!definition || definition.width !== 256 || definition.height !== 256) {
+    throw new TypeError("B2 map definition must be 256×256");
+  }
+  const mother = definition.markets?.["1"];
+  if (!mother) throw new TypeError("B2 mother port market is required");
+  // JSONの座標は海岸の拠点中心。建物入口は数タイル内陸側に分け、
+  // 港・市場・倉庫が互いの入口を塞がない実寸配置にする。
+  const marketEntrance = { x: 108, y: 199 };
+  const logisticsSites = {
+    market: { x: 109, y: 197, entrance: marketEntrance },
+    warehouse: { x: 113, y: 202, entrance: { x: 112, y: 202 } },
+    port: { x: 101, y: 197, entrance: { x: 104, y: 200 } },
+  };
+  const physical = createPhysicalState({
+    width: definition.width,
+    height: definition.height,
+    terrain: definition.terrain.map(row => row.map(tile => ({ ...tile }))),
+    roadOrigin: { ...marketEntrance },
+    startFocus: { ...mother },
+  });
+  const world = createWorld({
+    seed,
+    initialCompanyMoney: P.TREASURY0 + P.BUILD_COST * B2_TRIAL_STARTER_JOBS.length,
+    physicalState: physical,
+    market: { ...marketEntrance },
+    warehouse: { ...logisticsSites.warehouse.entrance },
+    port: { ...logisticsSites.port.entrance },
+    logisticsSites,
+    marketNetwork: {
+      markets: [{ id: "main", name: "母港市場", entrance: { ...marketEntrance } }],
+    },
+  });
+  const { economy } = world.state;
+  const logistics = ensureCompanyLogisticsSites(economy, physical);
+  world.state.marketNetwork.markets[0].buildingId = logistics.market.id;
+  logistics.market.marketId = "main";
+
+  connectB2Road(physical, marketEntrance, logistics.port.entrance, "港");
+  connectB2Road(physical, marketEntrance, logistics.warehouse.entrance, "倉庫");
+  const zones = [];
+  for (const job of B2_TRIAL_STARTER_JOBS) {
+    const zone = placeB2StarterZone(world, job, mother);
+    zones.push(zone);
+    // 後続建物が先行区画の入口を塞がないよう、一軒ずつ接続する。
+    connectB2Road(physical, marketEntrance, zone, `${zone.job}#${zone.id}`);
+  }
+
+  const households = zones.map(zone => occupyScenarioZone(world, zone, "main"));
+  for (const household of households) {
+    const provision = household.members.length * B2_TRIAL_PROVISION_DAYS;
+    household.pantry.wheat += provision;
+    recordEconomicMaterialFlow(
+      economy,
+      "wheat",
+      "imp",
+      provision,
+      `B2母港世帯${household.id}の開拓時保存食`,
+      { includeInDaily: false },
+    );
+  }
+  economy.jobSelectionPool = [...new Set([...E_STABLE_JOBS, ...B2_TRIAL_STARTER_JOBS])];
+  world.state.b2Trial = {
+    version: definition.version,
+    counts: { ...definition.counts },
+    passes: structuredClone(definition.passes ?? {}),
+    motherMarketId: "main",
+  };
+  return world;
+}
 
 // B-0の性能fixture。これは手設計マップではなく、Mirの地図データを受ける前に
 // 世界サイズ・人口・描画経路だけを検証する空地形である。

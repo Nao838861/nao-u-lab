@@ -265,7 +265,7 @@ async function checkExplicitImportUi() {
   assert.equal(result.request?.qty, 7, JSON.stringify(result));
   assert.match(result.status, /7荷を本土へ発注/);
   assert.equal(result.bootState, 'ready', JSON.stringify(result));
-  assert.equal(result.version, 'v004.56.0-fertile-land');
+  assert.equal(result.version, 'v004.57.0-b2-trial');
   assert.deepEqual(page.errors, []);
   await page.screenshot('/tmp/shioji_v004_explicit_import.png');
   await page.close();
@@ -1261,7 +1261,7 @@ async function checkSeasonalPlots(width, height, mobile) {
       plots: plots.map(row => row.type),
     };
   })()`);
-  assert.equal(springStart.version, 'v004.56.0-fertile-land', JSON.stringify(springStart));
+  assert.equal(springStart.version, 'v004.57.0-b2-trial', JSON.stringify(springStart));
   assert.equal(springStart.season, '春', JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => ['wheat', 'veg'].includes(type)), JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => type === 'shepherd'), JSON.stringify(springStart));
@@ -1647,8 +1647,8 @@ async function checkPeopleVisuals(width, height, mobile) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.56.0-fertile-land');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.56.0-fertile-land');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.57.0-b2-trial');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.57.0-b2-trial');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -2496,7 +2496,7 @@ async function checkOrderCostUi(width, height, mobile) {
       viewport: { width: innerWidth, height: innerHeight },
     };
   })()`);
-  assert.equal(result.version, 'v004.56.0-fertile-land');
+  assert.equal(result.version, 'v004.57.0-b2-trial');
   assert.ok(result.offer, JSON.stringify(result));
   assert.match(result.text, /完遂決済単価/);
   assert.match(result.text, /全量仕入原価/);
@@ -2660,7 +2660,7 @@ async function checkSupplyDemand(width, height, mobile) {
   assert.equal(result.pageHorizontalOverflow, false, JSON.stringify(result));
   assert.equal(result.supplyBreakdownVisible, !mobile, JSON.stringify(result));
   assert.equal(result.demandBreakdownVisible, true, JSON.stringify(result));
-  assert.equal(result.runtimeVersion, 'v004.56.0-fertile-land', JSON.stringify(result));
+  assert.equal(result.runtimeVersion, 'v004.57.0-b2-trial', JSON.stringify(result));
   await page.screenshot(`/tmp/shioji_v004_supply_demand_${mobile ? 'mobile' : 'pc'}_${width}x${height}.png`);
   await page.close();
   return result;
@@ -2751,7 +2751,7 @@ async function checkCauseReadableActions(width, height, mobile) {
     JSON.stringify(hint));
   assert.match(hint.text, /(?:不足|市場から調達)/, JSON.stringify(hint));
   assert.equal(hint.withinViewport, true, JSON.stringify(hint));
-  assert.equal(hint.runtimeVersion, 'v004.56.0-fertile-land', JSON.stringify(hint));
+  assert.equal(hint.runtimeVersion, 'v004.57.0-b2-trial', JSON.stringify(hint));
   assert.deepEqual(page.errors, []);
   await page.screenshot(`/tmp/shioji_v004_cause_placement_${mobile ? 'mobile' : 'pc'}.png`);
   await page.close();
@@ -2818,7 +2818,7 @@ async function checkFoodAlerts(width, height, mobile) {
       JSON.stringify(result),
     );
   }
-  assert.equal(result.runtimeVersion, 'v004.56.0-fertile-land', JSON.stringify(result));
+  assert.equal(result.runtimeVersion, 'v004.57.0-b2-trial', JSON.stringify(result));
   assert.deepEqual(page.errors, []);
   await page.screenshot(`/tmp/shioji_v004_food_alerts_${mobile ? 'mobile' : 'pc'}.png`);
   await page.close();
@@ -2860,7 +2860,7 @@ async function checkSpatialProductivity(width = 1440, height = 900, mobile = fal
   })()`);
   assert.ok(building && !building.missing,
     `資源職の30日実測を建物画面へ表示できる: ${JSON.stringify(building)}`);
-  assert.equal(building.version, 'v004.56.0-fertile-land');
+  assert.equal(building.version, 'v004.57.0-b2-trial');
   assert.ok(Number.isFinite(building.efficiency), JSON.stringify(building));
   assert.ok(Number.isFinite(building.resourceEfficiency), JSON.stringify(building));
   assert.equal(building.withinViewport, true, JSON.stringify(building));
@@ -3052,7 +3052,7 @@ async function checkMarketRhythmUi(width = 1440, height = 900, mobile = false) {
       hidden: sheet.hidden,
     };
   })()`);
-  assert.equal(result.version, 'v004.56.0-fertile-land', JSON.stringify(result));
+  assert.equal(result.version, 'v004.57.0-b2-trial', JSON.stringify(result));
   assert.equal(result.hidden, false, JSON.stringify(result));
   assert.match(result.label, /出荷をまとめ中 1\/2日/, JSON.stringify(result));
   assert.match(result.detail, /食料切れと生産停止は待ちません/, JSON.stringify(result));
@@ -3161,7 +3161,7 @@ async function checkCaravanEmployment(width = 1440, height = 900, mobile = false
       applicantsUi: /応募者|応募一覧/.test(sheet.textContent),
     };
   })()`);
-  assert.equal(result.version, 'v004.56.0-fertile-land', JSON.stringify(result));
+  assert.equal(result.version, 'v004.57.0-b2-trial', JSON.stringify(result));
   assert.deepEqual(result.employment, { recruitment: 3, wage: 6.5 });
   assert.equal(result.crew, 3, JSON.stringify(result));
   assert.match(result.text, /隊商の雇用/);
@@ -3281,7 +3281,7 @@ async function checkCaravanAccounting(width = 1440, height = 900, mobile = false
       horizontalOverflow: panel.scrollWidth > panel.clientWidth + 1,
     };
   })()`);
-  assert.equal(result.version, 'v004.56.0-fertile-land', JSON.stringify(result));
+  assert.equal(result.version, 'v004.57.0-b2-trial', JSON.stringify(result));
   assert.deepEqual(result.configured, {
     type: 'set_caravan_route',
     baseBuildingId: result.configured.baseBuildingId,

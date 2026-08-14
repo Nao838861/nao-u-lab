@@ -21,7 +21,7 @@ import {
   sectionCapacity,
   withdrawInventory,
   workRoadWorksite,
-} from "./physical.js?v=v004.56.0-fertile-land";
+} from "./physical.js?v=v004.57.0-b2-trial";
 
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) return value;
