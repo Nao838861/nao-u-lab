@@ -1,20 +1,20 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.59.0-food-balance';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.60.0-b2-p2';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.59.0-food-balance';
+} from './food_readability.js?v=v004.60.0-b2-p2';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   findTravelPath, householdProductionSummary, laborWage, productionCost,
-} from './engine_bridge.js?v=v004.59.0-food-balance';
-import { analyzeRoadConnections } from './placement.js?v=v004.59.0-food-balance';
+} from './engine_bridge.js?v=v004.60.0-b2-p2';
+import { analyzeRoadConnections } from './placement.js?v=v004.60.0-b2-p2';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.59.0-food-balance';
+} from './render_scene.js?v=v004.60.0-b2-p2';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.59.0-food-balance';
-import { GOODS_RECIPES } from './goods_detail.js?v=v004.59.0-food-balance';
+} from './visuals.js?v=v004.60.0-b2-p2';
+import { GOODS_RECIPES } from './goods_detail.js?v=v004.60.0-b2-p2';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',
@@ -1547,7 +1547,7 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
     const production = household.productionSummary ?? householdProductionSummary(
       snapshot.economy,
       household,
-      { day: snapshot.day },
+      { day: snapshot.day, physical: snapshot.physical },
     );
     return {
       id: household.id,
@@ -1749,10 +1749,16 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
       ? Math.max(0, snapshot.economy.foodNeed30)
       : households.reduce((total, household) => total + household.members, 0),
     foodResourceHealth: {
-      minimumFisheryRatio: Math.min(
-        Math.max(0, (snapshot.economy.natural?.bay ?? P.BAY0) / P.BAY0),
-        Math.max(0, (snapshot.economy.natural?.bay2 ?? P.BAY0) / P.BAY0),
-      ),
+      minimumFisheryRatio: (() => {
+        const natural = snapshot.economy.natural ?? {};
+        const fisheries = natural.localizedFisheries?.length > 0
+          ? natural.localizedFisheries
+          : ['bay', 'bay2'];
+        return Math.min(...fisheries.map(fishery => {
+          const capacity = natural.fisheryCapacity?.[fishery] ?? P.BAY0;
+          return Math.max(0, (natural[fishery] ?? capacity) / capacity);
+        }));
+      })(),
     },
     width: snapshot.physical.width,
     height: snapshot.physical.height,

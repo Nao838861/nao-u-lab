@@ -1,5 +1,9 @@
 const B2_MAP_VERSION = 'v1.3';
 const B2_MAP_SIZE = 256;
+const B2_FISHERY_CAPACITY_PER_TILE = Object.freeze({
+  richFishery: 650,
+  mediumFishery: 20,
+});
 
 const SYMBOLS = Object.freeze({
   '~': tile => ({ kind: 'water', terrainClass: 'sea', ...tile }),
@@ -20,6 +24,46 @@ const SYMBOLS = Object.freeze({
   o: tile => ({ kind: 'ore', ...tile }),
   c: tile => ({ kind: 'coal', ...tile }),
 });
+
+function labelLocalFisheries(terrain) {
+  const seen = new Set();
+  const nextIndex = { richFishery: 1, mediumFishery: 1 };
+  for (let y = 0; y < B2_MAP_SIZE; y += 1) {
+    for (let x = 0; x < B2_MAP_SIZE; x += 1) {
+      const terrainClass = terrain[y][x].terrainClass;
+      if (!Object.hasOwn(B2_FISHERY_CAPACITY_PER_TILE, terrainClass)) continue;
+      const startKey = `${x},${y}`;
+      if (seen.has(startKey)) continue;
+      const cells = [];
+      const pending = [{ x, y }];
+      seen.add(startKey);
+      while (pending.length > 0) {
+        const point = pending.pop();
+        cells.push(point);
+        for (const [offsetX, offsetY] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+          const nextX = point.x + offsetX;
+          const nextY = point.y + offsetY;
+          const key = `${nextX},${nextY}`;
+          if (
+            nextX < 0 || nextY < 0 || nextX >= B2_MAP_SIZE || nextY >= B2_MAP_SIZE
+            || seen.has(key)
+            || terrain[nextY][nextX].terrainClass !== terrainClass
+          ) continue;
+          seen.add(key);
+          pending.push({ x: nextX, y: nextY });
+        }
+      }
+      const kind = terrainClass === 'richFishery' ? 'rich' : 'medium';
+      const fishery = `b2-${kind}-${nextIndex[terrainClass]}`;
+      nextIndex[terrainClass] += 1;
+      const fisheryCapacity = cells.length * B2_FISHERY_CAPACITY_PER_TILE[terrainClass];
+      for (const point of cells) {
+        terrain[point.y][point.x].fishery = fishery;
+        terrain[point.y][point.x].fisheryCapacity = fisheryCapacity;
+      }
+    }
+  }
+}
 
 function integerPoint(point, label) {
   if (!Number.isSafeInteger(point?.x) || !Number.isSafeInteger(point?.y)) {
@@ -50,6 +94,7 @@ export function parseB2MapData(data) {
       return factory({ variant: (x * 17 + y * 31) % 4, b2Symbol: symbol });
     });
   });
+  labelLocalFisheries(terrain);
   const markets = Object.fromEntries(Object.entries(data.markets ?? {}).map(([id, point]) => [
     id, integerPoint(point, `B2 market ${id}`),
   ]));

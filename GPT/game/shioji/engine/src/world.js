@@ -42,7 +42,7 @@ import {
   settlePortTransfers,
   transactMarketCargo,
   unloadMarketBuyCargo,
-} from "./econ.js?v=v004.59.0-food-balance";
+} from "./econ.js?v=v004.60.0-b2-p2";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -64,10 +64,10 @@ import {
   stepTravelCarrier,
   stepHaulCarriers,
   stepPortHandling,
-} from "./physical.js?v=v004.59.0-food-balance";
-import { nextMulberry32, normalizeSeed } from "./prng.js?v=v004.59.0-food-balance";
-import { createMarketNetwork, marketNetworkSummary } from "./market_network.js?v=v004.59.0-food-balance";
-import { stepCaravanDay, stepCaravanTick } from "./routes.js?v=v004.59.0-food-balance";
+} from "./physical.js?v=v004.60.0-b2-p2";
+import { nextMulberry32, normalizeSeed } from "./prng.js?v=v004.60.0-b2-p2";
+import { createMarketNetwork, marketNetworkSummary } from "./market_network.js?v=v004.60.0-b2-p2";
+import { stepCaravanDay, stepCaravanTick } from "./routes.js?v=v004.60.0-b2-p2";
 
 function tread(economy, x, y) {
   const key = keyOf(Math.round(x), Math.round(y));
@@ -1359,7 +1359,7 @@ export function createWorld({
 
     if (timeOfDay === 29) {
       runDayEnd(economy, physical, { day: state.day, random });
-      finalizeHouseholdProductionDay(economy, { day: state.day });
+      finalizeHouseholdProductionDay(economy, { day: state.day, physical });
     }
     stepHaulCarriers(state.physical, 1);
     settleCompanyLogistics(state.economy, state.physical, { day: state.day });

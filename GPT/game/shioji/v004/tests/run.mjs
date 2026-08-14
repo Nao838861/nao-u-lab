@@ -3,12 +3,13 @@ import fs from 'node:fs';
 import { createEngineApi, replayInputJournal } from '../../engine/src/api.js';
 import { buildBaseCity, findAuditSpot } from '../../engine/src/audit.js';
 import {
-  FOODS, GOODS, P, assertMoneyConservation, createHousehold, economicMaterialSnapshot,
+  FOODS, GOODS, P, assertMoneyConservation, chopWood, createEconomicState, createHousehold,
+  economicMaterialSnapshot, householdMult, initializeNaturalResources, regenerateForest,
   requestCompanyImport, runPopulationDynamicsPhase,
 } from '../../engine/src/econ.js';
 import {
   ECONOMIC_BUILDINGS, addRoadTile, assertMaterialBalance, canPlaceBuilding, depositInventory,
-  findTravelPath, planRoadWorksite, tileTravelCost,
+  createPhysicalState, findTravelPath, planRoadWorksite, tileTravelCost,
 } from '../../engine/src/physical.js';
 import { parseB2MapData } from '../src/b2_map.js';
 import { IsometricCamera } from '../src/camera.js';
@@ -2590,7 +2591,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.59.0-food-balance');
+  assert.equal(VERSION, 'v004.60.0-b2-p2');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2847,6 +2848,18 @@ test('B2試験モード: v1.3地形・母港・山ロック・P1峠を同じphys
     Object.fromEntries(['M', 'f', 'F', 'R', 'm', '-'].map(symbol => [symbol, definition.counts[symbol]])),
     { M: 8183, f: 4559, F: 1492, R: 3207, m: 294, '-': 2459 },
   );
+  const fisheryCells = definition.terrain.flat().filter(tile => tile.fishery);
+  const fisheries = Object.fromEntries([...new Set(fisheryCells.map(tile => tile.fishery))].map(id => [
+    id,
+    fisheryCells.filter(tile => tile.fishery === id).length,
+  ]));
+  assert.deepEqual(fisheries, {
+    'b2-rich-1': 2815,
+    'b2-rich-2': 392,
+    'b2-medium-1': 94,
+    'b2-medium-2': 200,
+  });
+  assert.equal(fisheryCells.every(tile => tile.fisheryCapacity > 0), true);
   const controller = createEngineController({ seed: 11, mode: 'big-island', b2MapDefinition: definition });
   const state = controller.saveState();
   const model = controller.readModel();
@@ -2878,6 +2891,61 @@ test('B2試験モード: v1.3地形・母港・山ロック・P1峠を同じphys
   }).readModel();
   assert.deepEqual([restored.width, restored.height], [256, 256]);
   assert.equal(restored.households.length, model.households.length);
+});
+
+test('B2 P2: 北東53セルの森は木こり3軒で500日以内に尽き、無伐採なら不変', () => {
+  const source = JSON.parse(fs.readFileSync(
+    new URL('../../design/map_b2/b2_map_data.json', import.meta.url),
+    'utf8',
+  ));
+  const make = () => {
+    const definition = parseB2MapData(source);
+    const physical = createPhysicalState({
+      width: definition.width,
+      height: definition.height,
+      terrain: definition.terrain.map(row => row.map(tile => ({ ...tile }))),
+    });
+    const economy = createEconomicState();
+    initializeNaturalResources(economy, physical);
+    return { economy, physical };
+  };
+  const componentKeys = [];
+  for (let y = 182; y <= 191; y += 1) {
+    for (let x = 111; x <= 117; x += 1) {
+      if (source.terrain[y][x] === 't') componentKeys.push(`${x},${y}`);
+    }
+  }
+  assert.equal(componentKeys.length, 53);
+
+  const untouched = make();
+  const before = componentKeys.map(key => untouched.economy.natural.wood[key]);
+  for (let day = 5; day <= 500; day += 5) {
+    regenerateForest(untouched.economy, untouched.physical, { day, random: () => 0 });
+  }
+  assert.deepEqual(componentKeys.map(key => untouched.economy.natural.wood[key]), before);
+
+  const worked = make();
+  const loggers = [111, 112, 113].map(x => createHousehold(
+    worked.economy,
+    { job: 'logger', x, y: 180 },
+  ));
+  let exhaustedDay = null;
+  for (let day = 1; day <= 500; day += 1) {
+    worked.economy.currentDay = day;
+    for (const logger of loggers) {
+      chopWood(worked.economy, worked.physical, logger, P.Y_LOG * householdMult(logger));
+    }
+    regenerateForest(worked.economy, worked.physical, { day, random: () => 0 });
+    if (componentKeys.every(key => (worked.economy.natural.wood[key] ?? 0) === 0)) {
+      exhaustedDay = day;
+      break;
+    }
+  }
+  assert.ok(exhaustedDay !== null && exhaustedDay <= 500, `exhaustedDay=${exhaustedDay}`);
+  assert.equal(componentKeys.every(key => {
+    const [x, y] = key.split(',').map(Number);
+    return worked.physical.terrain[y][x].kind === 'bald';
+  }), true);
 });
 
 test('B2試験モード: 母港12世帯が一年自律し、保存則とjournal再生が一致する', () => {
@@ -2925,6 +2993,26 @@ test('B2試験モード: 母港12世帯が一年自律し、保存則とjournal�
   }
   replay.advanceTicks(after.tick - replayTick);
   assert.deepEqual(replay.saveState(), after);
+});
+
+test('B2 P2: 母港だけを3年営むと湾内漁場が枯渇段階へ入る', () => {
+  const definition = parseB2MapData(JSON.parse(fs.readFileSync(
+    new URL('../../design/map_b2/b2_map_data.json', import.meta.url),
+    'utf8',
+  )));
+  const controller = createEngineController({ seed: 11, mode: 'big-island', b2MapDefinition: definition });
+  controller.advanceTicks(1080 * 30);
+  const state = controller.saveState();
+  const motherFishery = 'b2-medium-2';
+  const capacity = state.economy.natural.fisheryCapacity[motherFishery];
+  const ratio = state.economy.natural[motherFishery] / capacity;
+  assert.equal(capacity, 4000);
+  assert.ok(ratio <= 0.08, `mother fishery ratio=${ratio}`);
+  assert.equal(state.economy.natural.fishStages[motherFishery], 0);
+  assert.equal(state.economy.natural['b2-rich-2'], state.economy.natural.fisheryCapacity['b2-rich-2']);
+  assert.equal(state.economy.households.filter(household => household.job === 'fisher').every(
+    household => household.fisheryId === motherFishery,
+  ), true);
 });
 
 test('自由開始96×64: 母港と魚郷は無路線の一年を自律し保存則を守る', () => {

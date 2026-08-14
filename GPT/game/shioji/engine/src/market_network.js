@@ -1,4 +1,4 @@
-import { buildingById, pathLen } from "./physical.js?v=v004.59.0-food-balance";
+import { buildingById, pathLen } from "./physical.js?v=v004.60.0-b2-p2";
 
 const DEFAULT_HYSTERESIS = 0.12;
 const EPSILON = 1e-9;

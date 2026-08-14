@@ -37,10 +37,12 @@ import {
   createHousehold,
   createCompanyState,
   economicMaterialSnapshot,
+  farmFertilityMultiplier,
   fillSettlementZones,
   finalizeHouseholdProductionDay,
   fundSettlementZone,
   fisheryStage,
+  fisheryCapacity,
   householdClass,
   householdEat,
   householdFoodDays,
@@ -103,6 +105,7 @@ import {
   updateStockDaysPrices,
   stockDaysPriceMultiplier,
   useHouseholdWorkTool,
+  wheatDailyYield,
 } from "../src/econ.js";
 import {
   FOODS as FLOW_ISLAND_FOODS,
@@ -707,6 +710,46 @@ test("肥えた土地: 旧保存へ既定層を補い、既設農場の敷地を
   }
   assert.ok(physical.terrain.flat().some((tile) => tile.fertility === 1));
   assert.equal(physical.terrain[0][0].fertility ?? 0, 0);
+});
+
+test("B2 P2: 農場4種はF=1.0・f=0.75・裸地=0.35の敷地平均を日産へ使う", () => {
+  const makeFarm = (terrainClass, fertility) => {
+    const terrain = Array.from({ length: 8 }, () => Array.from(
+      { length: 8 }, () => ({
+        kind: "grass", variant: 0, terrainClass, fertility: Math.max(1, fertility),
+      }),
+    ));
+    const physical = createPhysicalState({ width: 8, height: 8, terrain });
+    const economy = createEconomicState();
+    const household = createHousehold(economy, { job: "veg", x: 2, y: 1 });
+    const building = addBuilding(physical, "veg", 2, 2, {
+      definitions: ECONOMIC_BUILDINGS,
+      entrance: { x: 3, y: 1 },
+      requireRoad: false,
+      ownerHouseholdId: household.id,
+    }).building;
+    household.buildingId = building.id;
+    for (let y = building.y; y < building.y + building.h; y += 1) {
+      for (let x = building.x; x < building.x + building.w; x += 1) {
+        physical.terrain[y][x].fertility = fertility;
+      }
+    }
+    household.pantry.veg = 0;
+    return { economy, physical, household };
+  };
+  const core = makeFarm("fertileCore", 2);
+  const fertile = makeFarm("fertile", 1);
+  const bare = makeFarm("grass", 0);
+  assert.equal(farmFertilityMultiplier(core.physical, core.household), 1);
+  assert.equal(farmFertilityMultiplier(fertile.physical, fertile.household), 0.75);
+  assert.ok(Math.abs(farmFertilityMultiplier(bare.physical, bare.household) - 0.35) < 1e-12);
+  const quantities = [core, fertile, bare].map(fixture => (
+    producePrimaryTick(fixture.economy, fixture.physical, fixture.household, {
+      day: 61, fraction: 1,
+    }).veg
+  ));
+  assert.ok(Math.abs(quantities[1] / quantities[0] - 0.75) < 1e-9);
+  assert.ok(Math.abs(quantities[2] / quantities[0] - 0.35) < 1e-9);
 });
 
 test("段5: 3x3占有を記録し重複・道路横断を拒否する", () => {
@@ -1916,6 +1959,9 @@ test("A-3漁場: 漁師は通う入江だけを消耗し、休漁中の別入江
   assert.equal(fisheryStage(P.BAY0 * 0.4), 2);
   assert.equal(fisheryStage(P.BAY0 * 0.2), 1);
   assert.equal(fisheryStage(0), 0);
+  const localEconomy = { natural: { fisheryCapacity: { local: 1234 } } };
+  assert.equal(fisheryCapacity(localEconomy, "local"), 1234);
+  assert.equal(fisheryStage(1234 * 0.4, fisheryCapacity(localEconomy, "local")), 2);
 
   regenerateFisheries(economy, physical, { day: 65 });
   assert.ok(economy.natural.bay2 > bay2Before, "休漁した入江は日末に回復する");
@@ -2138,7 +2184,7 @@ test("隊商S1: 二市場を8年駆動して貨幣・物量保存を守る", () 
   );
 });
 
-test("段14: 森は5日ごとに成長し隣接する森から禿山へ再生する", () => {
+test("B2 P2: 森は500日待っても自然回復せず禿山も再播種されない", () => {
   const terrain = Array.from({ length: 3 }, () => (
     Array.from({ length: 3 }, () => ({ kind: "grass", variant: 0 }))
   ));
@@ -2150,13 +2196,15 @@ test("段14: 森は5日ごとに成長し隣接する森から禿山へ再生す
   initializeNaturalResources(economy, physical);
   economy.natural.wood["0,1"] = 100;
 
-  regenerateForest(economy, physical, { day: 5, random: () => 1 });
-  assert.equal(economy.natural.wood["0,1"], 100 + P.WOOD_R * 5);
-  // 再播種の条件(隣接森の蓄積>30%)を較正値と独立に満たす
-  economy.natural.wood["0,1"] = P.WOOD0;
-  regenerateForest(economy, physical, { day: 30, random: () => 0 });
-  assert.equal(physical.terrain[1][1].kind, "forest");
-  assert.equal(economy.natural.wood["1,1"], P.WOOD0 * 0.25);
+  let randomCalls = 0;
+  for (let day = 5; day <= 500; day += 5) {
+    regenerateForest(economy, physical, { day, random: () => { randomCalls += 1; return 0; } });
+  }
+  assert.equal(P.WOOD_R, 0);
+  assert.equal(economy.natural.wood["0,1"], 100);
+  assert.equal(physical.terrain[1][1].kind, "bald");
+  assert.equal(economy.natural.wood["1,1"], undefined);
+  assert.equal(randomCalls, 0, "非再生の森は乱数列も消費しない");
 });
 
 test("段14b: 伐採は木段階を地形へ同期し、木こりへ薄化を一度だけ予告する", () => {
@@ -2192,35 +2240,34 @@ test("段14b: 伐採は木段階を地形へ同期し、木こりへ薄化を一
   assert.equal(logger.woodThinWarned, false, "森が戻れば予告は再武装される");
 });
 
-test("段15: 麦はd255に年1回だけwheatWorkと施肥率から収穫する", () => {
+test("B2 P2: 麦は3〜9月に連続生産し秋へ厚く、年産を変えず9月末に集計する", () => {
   const physical = createPhysicalState();
   const economy = createEconomicState();
   const farmer = createHousehold(economy, { job: "wheat", x: 4, y: 4 });
   farmer.workTool = {
-    kind: "wood", durability: 1_000, maxDurability: 1_000, acquiredDay: 1,
+    kind: "wood", durability: 10_000, maxDurability: 10_000, acquiredDay: 1,
   };
-  farmer.pantry.meal = P.FERT_NEED * 180;
-  const wheatBefore = farmer.pantry.wheat;
-
-  for (let day = 1; day <= 254; day += 1) {
-    runPrimaryProductionDay(economy, physical, { day });
-    assert.deepEqual(runWheatHarvest(economy, { day }), []);
+  farmer.pantry.wheat = 0;
+  farmer.pantry.meal = 0;
+  let produced = 0;
+  for (let day = 1; day <= 270; day += 1) {
+    const result = producePrimaryTick(economy, physical, farmer, { day, fraction: 1 });
+    produced += result.wheat ?? 0;
+    farmer.pantry.wheat = 0;
   }
-  assert.equal(farmer.pantry.wheat, wheatBefore);
-  assert.equal(farmer.jobCycleDone, false);
-
-  runPrimaryProductionDay(economy, physical, { day: 255 });
-  const harvest = runWheatHarvest(economy, { day: 255 });
-  const expected = P.Y_WHEAT * (255 / 300) * (1 + P.FERT_BOOST);
+  assert.equal(wheatDailyYield(1), 0);
+  assert.ok(wheatDailyYield(9) > wheatDailyYield(3));
+  assert.ok(Math.abs(produced - P.Y_WHEAT * householdMult(farmer)) < 1e-8);
+  const harvest = runWheatHarvest(economy, { day: 270 });
+  const expected = P.Y_WHEAT * householdMult(farmer);
   assert.equal(harvest.length, 1);
   assert.ok(Math.abs(harvest[0].qty - expected) < 1e-8);
-  assert.ok(Math.abs(farmer.pantry.wheat - wheatBefore - expected) < 1e-8);
+  assert.equal(farmer.pantry.wheat, 0, "秋の集計で麦を二重生成しない");
   assert.equal(farmer.wheatWork, 0);
+  assert.equal(farmer.wheatProducedYear, 0);
   assert.equal(farmer.fert, 0);
   assert.equal(farmer.jobCycleDone, true);
-
-  producePrimaryTick(economy, physical, farmer, { day: 256, fraction: 1 });
-  assert.equal(farmer.wheatWork, 0);
+  assert.match(economy.events.at(-1)[1], /今年の麦/);
 });
 
 test("段15: pantryと自分の屋台が日産10日分を超えると生産を休む", () => {
@@ -2409,7 +2456,7 @@ test("段16: sellOffersは職業別keepと重量上限を守る", () => {
   const surplus = farmer.pantry.wheat - keep;
   assert.equal(
     sellOffers(economy, farmer).wheat,
-    Math.min(surplus * 0.1 + 2, surplus, householdHaul(farmer)),
+    Math.min(surplus * 0.5 + 2, surplus, householdHaul(farmer)),
   );
 });
 
@@ -3233,21 +3280,21 @@ test("段21: dayEndの全フェーズ順を固定し実行traceで検査する",
   assert.deepEqual(result.trace, expected);
 });
 
-test("段21: d255は会社買上げ後に麦を収穫し、その麦で食事してから文化・ラダーへ進む", () => {
+test("B2 P2: 9月末は連続生産済みの今年の麦を集計してから食事・文化・ラダーへ進む", () => {
   const economy = createEconomicState();
   const farmer = createHousehold(economy, { job: "wheat", x: 0, y: 0 });
   for (const goods of FOODS) farmer.pantry[goods] = 0;
-  farmer.wheatWork = 300;
+  farmer.pantry.wheat = 100;
+  farmer.wheatProducedYear = 100;
   farmer.up = P.UP_DAYS - 1;
 
-  const result = runDayEnd(economy, null, { day: 255, random: () => 1 });
+  const result = runDayEnd(economy, null, { day: 270, random: () => 1 });
   assert.equal(result.harvests.length, 1);
-  assert.equal(result.harvests[0].qty, P.Y_WHEAT);
+  assert.equal(result.harvests[0].qty, 100);
   assert.equal(economy.hungryN, 0);
-  assert.ok(farmer.pantry.wheat < P.Y_WHEAT);
+  assert.ok(farmer.pantry.wheat < 100);
   assert.equal(farmer.lv, 1);
   assert.equal(farmer.satLast.food1, true);
-  assert.ok(economy.f30.wheat.prod > 0);
   assert.ok(economy.f30.wheat.cons > 0);
 });
 

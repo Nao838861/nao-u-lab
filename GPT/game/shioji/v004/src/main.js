@@ -1,51 +1,51 @@
-import { IsometricCamera } from './camera.js?v=v004.59.0-food-balance';
-import { loadB2MapData } from './b2_map.js?v=v004.59.0-food-balance';
-import { ART_SLICE_MODE } from './art_slice.js?v=v004.59.0-food-balance';
-import { SimulationClock } from './clock.js?v=v004.59.0-food-balance';
-import { createBoundaryEvents } from './boundary_events.js?v=v004.59.0-food-balance';
+import { IsometricCamera } from './camera.js?v=v004.60.0-b2-p2';
+import { loadB2MapData } from './b2_map.js?v=v004.60.0-b2-p2';
+import { ART_SLICE_MODE } from './art_slice.js?v=v004.60.0-b2-p2';
+import { SimulationClock } from './clock.js?v=v004.60.0-b2-p2';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.60.0-b2-p2';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.59.0-food-balance';
+} from './config.js?v=v004.60.0-b2-p2';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.59.0-food-balance';
-import { BUILD_COST_DENARI, P, createEngineController } from './engine_bridge.js?v=v004.59.0-food-balance';
-import { developmentMapView } from './development_map.js?v=v004.59.0-food-balance';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.59.0-food-balance';
-import { formatElenaSpeech } from './elena_text.js?v=v004.59.0-food-balance';
+} from './display_batch.js?v=v004.60.0-b2-p2';
+import { BUILD_COST_DENARI, P, createEngineController } from './engine_bridge.js?v=v004.60.0-b2-p2';
+import { developmentMapView } from './development_map.js?v=v004.60.0-b2-p2';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.60.0-b2-p2';
+import { formatElenaSpeech } from './elena_text.js?v=v004.60.0-b2-p2';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.59.0-food-balance';
+} from './food_readability.js?v=v004.60.0-b2-p2';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.59.0-food-balance';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.59.0-food-balance';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.59.0-food-balance';
-import { goodsDetail } from './goods_detail.js?v=v004.59.0-food-balance';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.59.0-food-balance';
-import { WorldPresentation } from './presentation.js?v=v004.59.0-food-balance';
-import { Renderer } from './renderer.js?v=v004.59.0-food-balance';
+} from './keyboard.js?v=v004.60.0-b2-p2';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.60.0-b2-p2';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.60.0-b2-p2';
+import { goodsDetail } from './goods_detail.js?v=v004.60.0-b2-p2';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.60.0-b2-p2';
+import { WorldPresentation } from './presentation.js?v=v004.60.0-b2-p2';
+import { Renderer } from './renderer.js?v=v004.60.0-b2-p2';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.59.0-food-balance';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.59.0-food-balance';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.59.0-food-balance';
+} from './save_game.js?v=v004.60.0-b2-p2';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.60.0-b2-p2';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.60.0-b2-p2';
 import {
   GOODS_GLYPHS, jobInputNeeds, shortageRows, stockWhereabouts, supplyDemandRow,
   supplyDemandRows, supplyDiagnosis,
-} from './supply_demand.js?v=v004.59.0-food-balance';
-import { orderQuote } from './tutorial_content.js?v=v004.59.0-food-balance';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.59.0-food-balance';
+} from './supply_demand.js?v=v004.60.0-b2-p2';
+import { orderQuote } from './tutorial_content.js?v=v004.60.0-b2-p2';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.60.0-b2-p2';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.59.0-food-balance';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.59.0-food-balance';
+} from './ui_guidance.js?v=v004.60.0-b2-p2';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.60.0-b2-p2';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');

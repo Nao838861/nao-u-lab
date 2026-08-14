@@ -8,7 +8,7 @@ import {
   requestMainlandAid,
   setCaravanEmployment,
   setCompanyStockTarget,
-} from "./econ.js?v=v004.59.0-food-balance";
+} from "./econ.js?v=v004.60.0-b2-p2";
 import {
   activePortCalls,
   addRoadLine,
@@ -16,14 +16,14 @@ import {
   haulJobById,
   removeBuilding,
   removeRoadTile,
-} from "./physical.js?v=v004.59.0-food-balance";
-import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.59.0-food-balance";
+} from "./physical.js?v=v004.60.0-b2-p2";
+import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.60.0-b2-p2";
 import {
   forgetCompanyLogisticsBuilding,
   placeCompanyLogisticsBuilding,
-} from "./world.js?v=v004.59.0-food-balance";
-import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.59.0-food-balance";
-import { configureCaravanRoute } from "./routes.js?v=v004.59.0-food-balance";
+} from "./world.js?v=v004.60.0-b2-p2";
+import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.60.0-b2-p2";
+import { configureCaravanRoute } from "./routes.js?v=v004.60.0-b2-p2";
 
 function jsonClone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -117,7 +117,7 @@ function viewSnapshot(state, { terrainAfterRevision = null } = {}) {
           productionSummary: householdProductionSummary(
             economy,
             household,
-            { day: state.day },
+            { day: state.day, physical },
           ),
         };
       }),

@@ -12,7 +12,7 @@
 5. **【完了 v004.52.0】需要網の残裁定**: [../decisions/DECISIONS_20260811_demand_rulings.md](../decisions/DECISIONS_20260811_demand_rulings.md)——魚粉FERT型(裁定2)・銑鉄重修繕(裁定3)・肉の塩漬け(裁定4)・**油の退役**(20260812裁定)を実装。会社施設修繕(裁定1)も銑鉄接続まで完了
 5b'. **【完了 v004.58.0】階段価格の暴走修正**: [BUG_20260814_PRICE_RUNAWAY.md](BUG_20260814_PRICE_RUNAWAY.md)。px.veg=1232/px.wheat=0.227の発散で市場全面凍結（Nao_u実プレイday249）。有界target+EMA、輸入／原価錨、空棚除外+輸入麦錨、8年全品目assertを実装。day249保存90日とday567保存蘇生を再検証済み
 5b''. **【完了 v004.59.0】食料HUDの生産収支と輸入の合図**: [../decisions/DECISIONS_20260815_food_hud_balance.md](../decisions/DECISIONS_20260815_food_hud_balance.md)。必要食料量を30日EMAで保持し、飢餓時の実消費低下を黒字と誤認しない常設収支、原因別診断、既存輸入／需給への1タップ導線を実装。day2262保存で`生産30.2 − 消費52.0 ＝ −21.8荷/日`、麦と野菜を名指すエレナ発話、麦の本土発注欄への遷移を実Chrome確認。30日恒常化時だけ一通の総括書状を出す。正本: [../decisions/DECISIONS_20260815_elena_food_follow.md](../decisions/DECISIONS_20260815_elena_food_follow.md)
-5c. **【次・着手】256×256全面移行（統括・最後まで）**: [WORK_ORDER_20260814_B2_FULL_REBUILD.md](WORK_ORDER_20260814_B2_FULL_REBUILD.md)。P1基盤→P2地形機構(mountain通行不可・肥沃度・A-3ローカル漁場・3年枯渇)→P3開始モード→P4教程移植→P5較正再構築→P6総仕上げ→**P7🛑停止(Nao_u実プレイ=キュー8の関門を兼ねる)**。マップはpull済みv1.3(修正はMir生成器経由)。旧オーダーWORK_ORDER_20260814_B2_MAP_INGAMEは本オーダーに包含
+5c. **【P1〜P2完了 v004.60.0・次P3】256×256全面移行（統括・最後まで）**: [WORK_ORDER_20260814_B2_FULL_REBUILD.md](WORK_ORDER_20260814_B2_FULL_REBUILD.md)。P1基盤とP2地形機構（山、地力、4局所漁場、連続麦、森の完全非再生）を受け入れ済み。次はP3開始モード→P4教程移植→P5較正再構築→P6総仕上げ→**P7🛑停止(Nao_u実プレイ=キュー8の関門を兼ねる)**。マップはpull済みv1.3(修正はMir生成器経由)。旧オーダーWORK_ORDER_20260814_B2_MAP_INGAMEは本オーダーに包含
 6. **【完了 v004.53.0】長期帯の再構築**: 新比率の成熟都市で8年帯を作り直し（既知赤の再較正とセット・裁定10）
 7. **【完了 v004.54.0】原因可読パック**: [WORK_ORDER_20260813_CAUSE_READABLE_PANEL.md](WORK_ORDER_20260813_CAUSE_READABLE_PANEL.md)実績欄参照。価格不一致、建築合図どおりの30日改善回帰、PC／スマホ実Chromeの上流カード遷移と配置プレビュー、バージョン一括昇版まで完了
 

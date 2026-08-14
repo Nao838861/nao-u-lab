@@ -21,7 +21,7 @@ import {
   sectionCapacity,
   withdrawInventory,
   workRoadWorksite,
-} from "./physical.js?v=v004.59.0-food-balance";
+} from "./physical.js?v=v004.60.0-b2-p2";
 
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) return value;
@@ -143,7 +143,8 @@ export const P = deepFreeze({
   // Lv2以上の全施設が石材を維持消費する前提で、人口200級に複数の採石場を要する量。
   Y_STONE: 4,
   WOOD0: 150,
-  WOOD_R: 0.25,
+  // B2では森は有限資源。植林を実装するまでは自然回復・再播種とも行わない。
+  WOOD_R: 0,
   ROAD_WORK: 3,
   CART_LOG: 4,
   CART_TOOLS: 0.5,
@@ -381,6 +382,7 @@ function makeHouseholdRecord(economy, { job, x, y }) {
     kindLog: [],
     hunger: 0,
     wheatWork: 0,
+    wheatProducedYear: 0,
     jobCycleDone: job !== "wheat",
     unsold: [],
     income30: 0,
@@ -839,6 +841,29 @@ export function buildingConditionMultiplier(physical, household) {
   if (!Number.isFinite(condition) || condition >= 70) return 1;
   if (condition >= 40) return 0.9;
   return 0.75;
+}
+
+export function farmFertilityMultiplier(physical, household) {
+  if (!physical?.terrain) return 1;
+  const building = buildingById(physical, household?.buildingId);
+  if (!building) return 1;
+  let total = 0;
+  let cells = 0;
+  for (let y = building.y; y < building.y + building.h; y += 1) {
+    for (let x = building.x; x < building.x + building.w; x += 1) {
+      const tile = physical.terrain[y]?.[x];
+      const fertility = Number(tile?.fertility) || 0;
+      total += tile?.terrainClass === "fertileCore"
+        ? 1
+        : tile?.terrainClass === "fertile"
+          ? 0.75
+          : fertility > 0
+            ? 1
+            : 0.35;
+      cells += 1;
+    }
+  }
+  return cells > 0 ? total / cells : 1;
 }
 
 export function householdEat(household) {
@@ -1806,12 +1831,19 @@ export function woodStage(stock) {
   return 1;
 }
 
-export function fisheryStage(stock) {
-  if (!(stock > P.BAY0 * 0.08)) return 0;
-  if (stock > P.BAY0 * 0.65) return 3;
-  if (stock > P.BAY0 * 0.3) return 2;
+export function fisheryStage(stock, capacity = P.BAY0) {
+  if (!(stock > capacity * 0.08)) return 0;
+  if (stock > capacity * 0.65) return 3;
+  if (stock > capacity * 0.3) return 2;
   return 1;
 }
+
+export function fisheryCapacity(economy, fishery) {
+  const capacity = economy?.natural?.fisheryCapacity?.[fishery];
+  return Number.isFinite(capacity) && capacity > 0 ? capacity : P.BAY0;
+}
+
+const FISHERY_TARGET_CACHE = new WeakMap();
 
 function fisheryKeyForTarget(physical, target) {
   if (!physical?.terrain || !target) return "bay";
@@ -1820,16 +1852,37 @@ function fisheryKeyForTarget(physical, target) {
   ];
   for (const [offsetX, offsetY] of candidates) {
     const tile = physical.terrain[target.y + offsetY]?.[target.x + offsetX];
-    if (tile?.kind === "water" && (tile.fishery === "bay" || tile.fishery === "bay2")) {
+    if (tile?.kind === "water" && typeof tile.fishery === "string") {
       return tile.fishery;
     }
   }
-  return "bay";
+  let cache = FISHERY_TARGET_CACHE.get(physical);
+  if (!cache) {
+    cache = new Map();
+    FISHERY_TARGET_CACHE.set(physical, cache);
+  }
+  const targetKey = `${target.x},${target.y}`;
+  if (cache.has(targetKey)) return cache.get(targetKey);
+  let nearest = null;
+  for (let y = 0; y < physical.height; y += 1) {
+    for (let x = 0; x < physical.width; x += 1) {
+      const fishery = physical.terrain[y]?.[x]?.fishery;
+      if (typeof fishery !== "string") continue;
+      const distance = (x - target.x) ** 2 + (y - target.y) ** 2;
+      if (!nearest || distance < nearest.distance
+        || (distance === nearest.distance && fishery < nearest.fishery)) {
+        nearest = { fishery, distance };
+      }
+    }
+  }
+  const fishery = nearest?.fishery ?? "bay";
+  cache.set(targetKey, fishery);
+  return fishery;
 }
 
 function syncFisheryStageTiles(economy, physical, fishery) {
   if (!physical?.terrain) return;
-  const stage = fisheryStage(economy.natural[fishery]);
+  const stage = fisheryStage(economy.natural[fishery], fisheryCapacity(economy, fishery));
   economy.natural.fishStages ??= {};
   if (economy.natural.fishStages[fishery] === stage) return;
   economy.natural.fishStages[fishery] = stage;
@@ -1851,7 +1904,7 @@ function localizedFisheriesFor(economy, physical) {
   const fisheries = new Set();
   for (const row of physical?.terrain ?? []) {
     for (const tile of row) {
-      if (tile?.fishery === "bay" || tile?.fishery === "bay2") fisheries.add(tile.fishery);
+      if (typeof tile?.fishery === "string") fisheries.add(tile.fishery);
     }
   }
   economy.natural.localizedFisheries = [...fisheries].sort();
@@ -1862,10 +1915,11 @@ export function regenerateFisheries(economy, physical, { day }) {
   const localizedFisheries = localizedFisheriesFor(economy, physical);
   for (const fishery of localizedFisheries) {
     if (economy.natural.fisheryHarvestDay?.[fishery] === day) continue;
-    const stock = Math.max(0, economy.natural[fishery] ?? P.BAY0);
-    const depletion = stock / P.BAY0;
+    const capacity = fisheryCapacity(economy, fishery);
+    const stock = Math.max(0, economy.natural[fishery] ?? capacity);
+    const depletion = stock / capacity;
     economy.natural[fishery] = Math.min(
-      P.BAY0,
+      capacity,
       stock + P.BAY_R * stock * (1 - depletion) + P.RESEED * (1 - depletion),
     );
     syncFisheryStageTiles(economy, physical, fishery);
@@ -1873,7 +1927,8 @@ export function regenerateFisheries(economy, physical, { day }) {
   for (const household of economy.households) {
     if (household.job !== "fisher") continue;
     const fishery = household.fisheryId ?? fisheryKeyForTarget(physical, household.resourceWork?.target);
-    const ratio = (economy.natural[fishery] ?? P.BAY0) / P.BAY0;
+    const capacity = fisheryCapacity(economy, fishery);
+    const ratio = (economy.natural[fishery] ?? capacity) / capacity;
     if (ratio < 0.3 && !household.fisheryThinWarned) {
       household.fisheryThinWarned = true;
       recordEconomyEvent(
@@ -1902,13 +1957,18 @@ export function initializeNaturalResources(economy, physical) {
   economy.natural.wood = {};
   economy.natural.fishStages = {};
   economy.natural.fisheryHarvestDay = {};
+  economy.natural.fisheryCapacity = { bay: P.BAY0, bay2: P.BAY0 };
   economy.natural.localizedFisheries = [];
   const localizedFisheries = new Set();
   for (let y = 0; y < physical.height; y += 1) {
     for (let x = 0; x < physical.width; x += 1) {
       const tile = physical.terrain[y]?.[x];
-      if (tile?.fishery === "bay" || tile?.fishery === "bay2") {
+      if (typeof tile?.fishery === "string") {
         localizedFisheries.add(tile.fishery);
+        const capacity = Number(tile.fisheryCapacity);
+        economy.natural.fisheryCapacity[tile.fishery] = Number.isFinite(capacity) && capacity > 0
+          ? capacity
+          : (economy.natural.fisheryCapacity[tile.fishery] ?? P.BAY0);
       }
       if (terrainKindAt(physical, x, y) === "forest") {
         economy.natural.wood[`${x},${y}`] = P.WOOD0;
@@ -1919,6 +1979,7 @@ export function initializeNaturalResources(economy, physical) {
   }
   economy.natural.localizedFisheries = [...localizedFisheries].sort();
   for (const fishery of economy.natural.localizedFisheries) {
+    economy.natural[fishery] = economy.natural.fisheryCapacity[fishery];
     syncFisheryStageTiles(economy, physical, fishery);
   }
   return economy.natural;
@@ -1933,9 +1994,9 @@ function resourceTargetValid(economy, physical, household, target) {
       && (economy.natural.wood[`${target.x},${target.y}`] ?? 0) > 0.5;
   }
   if (household.job === "fisher") {
-    return [
-      [1, 0], [-1, 0], [0, 1], [0, -1],
-    ].some(([offsetX, offsetY]) => (
+    if (["water", "mountain"].includes(terrainKindAt(physical, target.x, target.y))) return false;
+    const candidates = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+    return candidates.some(([offsetX, offsetY]) => (
       terrainKindAt(physical, target.x + offsetX, target.y + offsetY) === "water"
     ));
   }
@@ -1998,6 +2059,7 @@ export function ensureResourceWorkPlan(economy, physical, household) {
     efficiency,
     revision,
   };
+  if (household.job === "fisher") household.fisheryId = null;
   return household.resourceWork;
 }
 
@@ -2173,7 +2235,7 @@ function productionLaborCost(economy, physical, household, goods, { day = econom
     // 休作期の生産0は在庫日数側で希少性へ反映する。0.01で割ると、季節不能を
     // 1荷原価と誤認して冬ごとに野菜相場が三桁へ跳ぶため、実作期の日産を参照する。
     veg: P.Y_VEG,
-    wheat: P.Y_WHEAT / 360,
+    wheat: wheatDailyYield(month) || P.Y_WHEAT / 210,
     meat: P.Y_MEAT,
     cloth: household.job === "rapeseed" ? P.Y_COTTON_CLOTH : P.Y_CLOTH,
     tools: P.Y_TOOLS,
@@ -2191,11 +2253,16 @@ function productionLaborCost(economy, physical, household, goods, { day = econom
   }[goods] ?? 1;
   const householdFishery = household.fisheryId
     ?? fisheryKeyForTarget(physical, household.resourceWork?.target);
+  const householdFisheryCapacity = fisheryCapacity(economy, householdFishery);
   const scarcity = {
     log: localWood(economy, physical, household),
-    fish: (economy.natural[householdFishery] ?? P.BAY0) / P.BAY0,
-    pres: (economy.natural[householdFishery] ?? P.BAY0) / P.BAY0,
+    fish: (economy.natural[householdFishery] ?? householdFisheryCapacity) / householdFisheryCapacity,
+    pres: (economy.natural[householdFishery] ?? householdFisheryCapacity) / householdFisheryCapacity,
   }[goods] ?? 1;
+  const land = ["wheat", "veg", "meat"].includes(goods)
+    || (goods === "cloth" && ["rapeseed", "shepherd"].includes(household.job))
+    ? farmFertilityMultiplier(physical, household)
+    : 1;
   const recentProduction = (household.productionHistory ?? [])
     .slice(-14)
     .filter((row) => (row.goods?.[goods] ?? 0) > 1e-9 && (row.ideal?.[goods] ?? 0) > 1e-9)
@@ -2214,7 +2281,7 @@ function productionLaborCost(economy, physical, household, goods, { day = econom
     economy,
     householdMarketId(household),
   )
-    / (dailyYield * householdMult(household) * Math.max(0.5, scarcity) * realizedRatio);
+    / (dailyYield * householdMult(household) * land * Math.max(0.5, scarcity) * realizedRatio);
 }
 
 export function productionCost(economy, physical, household, goods, { day = economy.currentDay } = {}) {
@@ -2329,7 +2396,8 @@ export function sellOffers(
     let keep = FOODS.includes(goods) ? householdEat(household) * 2 : 2;
     let rate = 0.5;
     if (goods === "wheat") {
-      rate = 0.1;
+      // 年一括投下時代の10%小出しを廃止。日次収穫は他の食料と同じ半量を出す。
+      rate = 0.5;
       keep = householdEat(household) * P.RATION * 10;
     }
     if (goods === "veg") keep = householdEat(household) * P.RATION * 10;
@@ -2516,12 +2584,16 @@ export function buyTargets(
     ];
   }
   const fertilizerActive = (
-    (["wheat", "rapeseed"].includes(household.job) && month >= 3 && month <= 8)
+    (household.job === "wheat" && month >= 3 && month <= 9)
+    || (household.job === "rapeseed" && month >= 3 && month <= 8)
     || (household.job === "veg" && month >= 3 && month <= 10)
     || household.job === "shepherd"
   );
   const fertilizerTarget = ["veg", "shepherd"].includes(household.job)
-    ? P.FERT_DAILY_NEED * 20 : P.FERT_NEED * 20;
+    ? P.FERT_DAILY_NEED * 20
+    : household.job === "wheat"
+      ? P.FERT_NEED * (180 / 210) * 20
+      : P.FERT_NEED * 20;
   if (fertilizerActive && inputQty("meal") < fertilizerTarget / 2) {
     const annualBase = {
       wheat: P.Y_WHEAT,
@@ -3847,24 +3919,16 @@ export function ageMarketStalls(economy, { day, physical = null }) {
 export function runWheatHarvest(economy, { day, physical = null }) {
   const effectiveDay = calendarDay(economy, day);
   const month = calendarMonth(economy, day);
-  if (month !== 9 || effectiveDay % 30 !== 15) return [];
+  if (month !== 9 || effectiveDay % 30 !== 0) return [];
   const harvested = [];
   for (const household of economy.households) {
     if (household.job !== "wheat") continue;
     const fill = Math.min(1, (household.fert ?? 0) / (P.FERT_NEED * 180));
-    const qty = P.Y_WHEAT
-      * householdMult(household)
-      * buildingConditionMultiplier(physical, household)
-      * Math.min(1, household.wheatWork / 300)
-      * (1 + P.FERT_BOOST * fill);
-    household.pantry.wheat += qty;
-    household.productionToday ??= {};
-    household.productionToday.wheat = (household.productionToday.wheat ?? 0) + qty;
-    economy.led.prod.wheat = (economy.led.prod.wheat ?? 0) + qty;
-    recordEconomicMaterialFlow(economy, "wheat", "prod", qty, `世帯${household.id}の麦収穫`);
+    const qty = Math.max(0, household.wheatProducedYear ?? 0);
     economy.harvestLog.push([day, qty]);
     harvested.push({ householdId: household.id, qty, fertilizerFill: fill });
     household.wheatWork = 0;
+    household.wheatProducedYear = 0;
     household.fert = 0;
     household.jobCycleDone = true;
     if (fill > 0.05) {
@@ -3875,7 +3939,34 @@ export function runWheatHarvest(economy, { day, physical = null }) {
       );
     }
   }
+  if (harvested.length > 0) {
+    const total = harvested.reduce((sum, row) => sum + row.qty, 0);
+    const previous = economy.wheatHarvestPrevious;
+    const comparison = Number.isFinite(previous)
+      ? `昨年比${total - previous >= 0 ? "+" : ""}${(total - previous).toFixed(0)}荷`
+      : "初年の記録";
+    recordEconomyEvent(
+      economy,
+      day,
+      `今年の麦は${total.toFixed(0)}荷——${comparison}、秋の収穫を終えた`,
+    );
+    economy.wheatHarvestPrevious = total;
+  }
   return harvested;
+}
+
+const WHEAT_MONTH_WEIGHTS = deepFreeze({
+  3: 0.55,
+  4: 0.65,
+  5: 0.75,
+  6: 0.85,
+  7: 1,
+  8: 1.45,
+  9: 1.75,
+});
+
+export function wheatDailyYield(month) {
+  return P.Y_WHEAT * (WHEAT_MONTH_WEIGHTS[month] ?? 0) / (7 * 30);
 }
 
 function withdrawProductionFuel(economy, physical, household, qty) {
@@ -3960,18 +4051,20 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
         1,
         household.fert / Math.max(1, P.FERT_NEED * (month - 2) * 30),
       );
-      const qty = P.Y_COTTON_CLOTH * work * (1 + P.FERT_BOOST * fill);
+      const qty = P.Y_COTTON_CLOTH * work * farmFertilityMultiplier(physical, household)
+        * (1 + P.FERT_BOOST * fill);
       household.pantry.cloth += qty;
       recordEconomicMaterialFlow(economy, "cloth", "prod", qty, `世帯${household.id}の綿織り`);
       produced.cloth = qty;
     }
   } else if (household.job === "fisher") {
-    const fishery = fisheryKeyForTarget(physical, resourceWork?.target);
-    const depletion = (economy.natural[fishery] ?? P.BAY0) / P.BAY0;
+    const fishery = household.fisheryId ?? fisheryKeyForTarget(physical, resourceWork?.target);
+    const capacity = fisheryCapacity(economy, fishery);
+    const depletion = (economy.natural[fishery] ?? capacity) / capacity;
     const qty = (winter ? P.Y_FISH_W : P.Y_FISH) * work * depletion;
-    const stock = economy.natural[fishery] ?? P.BAY0;
+    const stock = economy.natural[fishery] ?? capacity;
     economy.natural[fishery] = Math.min(
-      P.BAY0,
+      capacity,
       stock - qty
         + effectiveFraction * (
           P.BAY_R * stock * (1 - depletion) + P.RESEED * (1 - depletion)
@@ -3998,13 +4091,15 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
       recordEconomicMaterialFlow(economy, "meal", "cons", used, `世帯${household.id}の野菜施肥`);
     }
     const fill = Math.min(1, used / Math.max(1e-9, P.FERT_DAILY_NEED * effectiveFraction));
-    const qty = P.Y_VEG * work * (1 + P.FERT_BOOST * fill);
+    const qty = P.Y_VEG * work * farmFertilityMultiplier(physical, household)
+      * (1 + P.FERT_BOOST * fill);
     household.pantry.veg += qty;
     economy.led.prod.veg = (economy.led.prod.veg ?? 0) + qty;
     recordEconomicMaterialFlow(economy, "veg", "prod", qty, `世帯${household.id}の野菜畑`);
     produced.veg = qty;
   } else if (household.job === "shepherd") {
-    const desiredMeat = P.Y_MEAT * work;
+    const land = farmFertilityMultiplier(physical, household);
+    const desiredMeat = P.Y_MEAT * work * land;
     const desiredFeed = desiredMeat * P.FEED_MEAT;
     const veg = Math.min(
       desiredFeed,
@@ -4033,7 +4128,7 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     );
     const boost = 1 + P.FERT_BOOST * fertilizerFill;
     const meat = desiredMeat * fill * boost;
-    const cloth = P.Y_CLOTH * work * fill * boost;
+    const cloth = P.Y_CLOTH * work * land * fill * boost;
     if (feed > 1e-9) {
       household.pantry.meat += meat;
       household.pantry.cloth += cloth;
@@ -4056,17 +4151,26 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
       if (endOfDay) recordMissingWorkToolDemand(economy, household);
       return produced;
     }
-    household.wheatWork += effectiveFraction;
-    if (month >= 3 && month <= 8) {
+    const dailyYield = wheatDailyYield(month);
+    if (dailyYield > 0) {
+      const fertilizerNeed = P.FERT_NEED * (180 / 210) * effectiveFraction;
       const used = Math.max(
         0,
-        Math.min(productionInputAmount(physical, household, "meal"), P.FERT_NEED * effectiveFraction),
+        Math.min(productionInputAmount(physical, household, "meal"), fertilizerNeed),
       );
       withdrawProductionInput(physical, household, "meal", used);
       household.fert = (household.fert ?? 0) + used;
       if (used > 0) {
         recordEconomicMaterialFlow(economy, "meal", "cons", used, `世帯${household.id}の施肥`);
       }
+      const fill = Math.min(1, used / Math.max(1e-9, fertilizerNeed));
+      const qty = dailyYield * work * farmFertilityMultiplier(physical, household)
+        * (1 + P.FERT_BOOST * fill);
+      household.pantry.wheat += qty;
+      household.wheatProducedYear = (household.wheatProducedYear ?? 0) + qty;
+      economy.led.prod.wheat = (economy.led.prod.wheat ?? 0) + qty;
+      recordEconomicMaterialFlow(economy, "wheat", "prod", qty, `世帯${household.id}の麦作`);
+      produced.wheat = qty;
     }
   } else if (household.job === "logger") {
     const qty = chopWood(economy, physical, household, P.Y_LOG * work);
@@ -4231,14 +4335,14 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     if (!Number.isFinite(qty) || qty <= 0 || goods === "cartWork") continue;
     household.productionToday[goods] = (household.productionToday[goods] ?? 0) + qty;
   }
-  const didProductiveWork = household.job === "wheat" || Object.entries(produced).some(
+  const didProductiveWork = Object.entries(produced).some(
     ([goods, qty]) => goods !== "cart" && qty > 1e-9,
   );
   if (
     workBuilding
-    && (household.job === "wheat" || Object.entries(produced).some(
+    && Object.entries(produced).some(
       ([goods, qty]) => goods !== "cartWork" && qty > 1e-9,
-    ))
+    )
   ) {
     workBuilding.operationWear = (workBuilding.operationWear ?? 0) + effectiveFraction;
   }
@@ -4271,25 +4375,33 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
   return produced;
 }
 
-export function householdIdealDailyOutput(economy, household, { day = economy.currentDay } = {}) {
+export function householdIdealDailyOutput(
+  economy,
+  household,
+  { day = economy.currentDay, physical = null } = {},
+) {
   const month = calendarMonth(economy, day);
   const winter = month >= 10;
   const mult = householdMult(household);
+  const land = farmFertilityMultiplier(physical, household);
   const outputs = {};
   const add = (goods, qty) => {
     if (qty > 1e-9) outputs[goods] = qty;
   };
   if (household.job === "fisher") {
     const fishery = household.fisheryId ?? "bay";
+    const capacity = fisheryCapacity(economy, fishery);
     add("fish", (winter ? P.Y_FISH_W : P.Y_FISH) * mult
-      * Math.max(0, (economy.natural[fishery] ?? P.BAY0) / P.BAY0));
+      * Math.max(0, (economy.natural[fishery] ?? capacity) / capacity));
   } else if (household.job === "fisher2") {
     add("meal", P.Y_FISH * mult / P.MEAL_FISH);
   } else if (household.job === "veg" && month >= 3 && month <= 10) {
-    add("veg", P.Y_VEG * mult);
+    add("veg", P.Y_VEG * mult * land);
   } else if (household.job === "shepherd") {
-    add("meat", P.Y_MEAT * mult);
-    add("cloth", P.Y_CLOTH * mult);
+    add("meat", P.Y_MEAT * mult * land);
+    add("cloth", P.Y_CLOTH * mult * land);
+  } else if (household.job === "wheat") {
+    add("wheat", wheatDailyYield(month) * mult * land);
   } else if (household.job === "logger") add("log", P.Y_LOG * mult);
   else if (household.job === "woodshop") add("tools", P.Y_TOOLS * mult);
   else if (household.job === "charburner") add("char", P.Y_CHAR * mult);
@@ -4300,29 +4412,36 @@ export function householdIdealDailyOutput(economy, household, { day = economy.cu
   else if (household.job === "smelter") add("bar", P.Y_SMELT * mult);
   else if (household.job === "smith") add("iron", P.Y_SMITH * mult);
   else if (household.job === "rapeseed" && month >= 3 && month <= 8) {
-    add("cloth", P.Y_COTTON_CLOTH * mult);
+    add("cloth", P.Y_COTTON_CLOTH * mult * land);
   }
   return outputs;
 }
 
-export function finalizeHouseholdProductionDay(economy, { day = economy.currentDay } = {}) {
+export function finalizeHouseholdProductionDay(
+  economy,
+  { day = economy.currentDay, physical = null } = {},
+) {
   for (const household of economy.households) {
     household.productionHistory ??= [];
     household.productionHistory.push({
       day,
       goods: { ...(household.productionToday ?? {}) },
-      ideal: householdIdealDailyOutput(economy, household, { day }),
+      ideal: householdIdealDailyOutput(economy, household, { day, physical }),
     });
     if (household.productionHistory.length > 30) household.productionHistory.shift();
     household.productionToday = {};
   }
 }
 
-export function householdProductionSummary(economy, household, { day = economy.currentDay } = {}) {
+export function householdProductionSummary(
+  economy,
+  household,
+  { day = economy.currentDay, physical = null } = {},
+) {
   const history = household.productionHistory ?? [];
   const actualByGoods = {};
   const idealByGoods = {};
-  const currentIdeal = householdIdealDailyOutput(economy, household, { day });
+  const currentIdeal = householdIdealDailyOutput(economy, household, { day, physical });
   for (const row of history) {
     for (const [goods, qty] of Object.entries(row.goods ?? {})) {
       actualByGoods[goods] = (actualByGoods[goods] ?? 0) + qty;
@@ -4465,20 +4584,8 @@ export function completeAssignedWork(economy, physical, household, { day }) {
   return { worked: kind !== null, kind, paid, completed };
 }
 
-export function regenerateForest(economy, physical, { day, random }) {
+export function regenerateForest(economy, physical, { day }) {
   if (!physical?.terrain || day % 5 !== 0) return;
-  for (const [key, stock] of Object.entries(economy.natural.wood)) {
-    if (stock > 0 && stock < P.WOOD0) {
-      economy.natural.wood[key] = Math.min(P.WOOD0, stock + P.WOOD_R * 5);
-      const separator = key.indexOf(",");
-      syncWoodStageTile(
-        physical,
-        Number(key.slice(0, separator)),
-        Number(key.slice(separator + 1)),
-        economy.natural.wood[key],
-      );
-    }
-  }
   for (const household of economy.households) {
     if (household.job !== "logger") continue;
     const homeX = Math.round(household.x);
@@ -4499,28 +4606,6 @@ export function regenerateForest(economy, physical, { day, random }) {
       );
     } else if (ratio > 0.8 && household.woodThinWarned) {
       household.woodThinWarned = false;
-    }
-  }
-  if (day % 30 !== 0) return;
-  for (let y = 0; y < physical.height; y += 1) {
-    for (let x = 0; x < physical.width; x += 1) {
-      if (terrainKindAt(physical, x, y) !== "bald") continue;
-      let adjacent = 0;
-      for (let offsetY = -1; offsetY <= 1; offsetY += 1) {
-        for (let offsetX = -1; offsetX <= 1; offsetX += 1) {
-          const nearX = x + offsetX;
-          const nearY = y + offsetY;
-          if (
-            terrainKindAt(physical, nearX, nearY) === "forest"
-            && (economy.natural.wood[`${nearX},${nearY}`] ?? 0) > P.WOOD0 * 0.3
-          ) adjacent += 1;
-        }
-      }
-      if (adjacent >= 2 && random() < 0.06) {
-        setTerrainKind(physical, x, y, "forest");
-        economy.natural.wood[`${x},${y}`] = P.WOOD0 * 0.25;
-        syncWoodStageTile(physical, x, y, P.WOOD0 * 0.25);
-      }
     }
   }
 }
