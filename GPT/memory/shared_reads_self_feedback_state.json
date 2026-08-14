@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-14T07:57:14+09:00",
+  "updated_at": "2026-08-14T10:01:24+09:00",
   "reviewed_source_ts": [
+    "1779971755.674859",
     "1779950173.173749",
     "1786647298.287999",
     "1786640273.261849",
@@ -651,6 +652,44 @@
     "1786606286.694329"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-14T10:01:24+09:00",
+      "selected": {
+        "id": "sr-1779971755-d865c15b8e",
+        "source_ts": "1779971755.674859",
+        "title": "Grounding Machine Creativity in Game Design Knowledge Representations: Empirical Probing of LLM-Based Executable Synthesis of Goal Playable Patterns under Structural Constraints",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補のうち、memory・game-design・agent・operation・evaluation の5優先タグを持つ1件だけを選んだ。抽象的な goal pattern を entities・constraints・rule dynamics・playable artifact check へ接続する知見が次回の game prototype 着手を具体的に変えるか確認した。Nao_u が本 atom 自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、26種類の goal pattern instantiation、DeepSeek-Coder-V2-Lite-Instruct と Qwen2.5-Coder-7B-Instruct、自然言語から直接 Unity/C# を生成する baseline と人手作成 Unity-specific IR を挟む pipeline、自動 Unity replay による compilation success、意味・構造接続の grounding failure と構文・配置等の hygiene failure の分離まで示す。prototype candidate を goal pattern、entities、constraints、rule dynamics、playable artifact check に落とす行動へ直接変換できるため relevance・actionability・evidence は3とした。一方、同一論文を扱う sr-1778927776-342dc46c2f／source_ts 1778927776.158409 は2026-05-16に17点で review 済みで、probe-20260516-grounded-playable-spec が goal pattern、必要 object、input、勝敗・進行条件、観測 log の薄い intermediate spec、playable replay、grounding／hygiene failure 分類をすでに保持する。本 atom の5項目表はその既存 probe を言い換えるだけで non_redundancy=0。既存 probe は lifecycle ledger に lease のない legacy dormant だが、現在の staging には新規 game prototype や playable diff がなく、直後の Phase 4a memory cleanup を consumer とする具体的 before／after artifact と expected delta を指定できない。active_probes 325件へ同一 work の duplicate control を追加すると確認負荷だけを増やすため risk_control=1とし、未レビュー source_ts を state-only で閉じる。次に実際の prototype 着手 artifact が生じた場合は、新規追加ではなく既存 probe を具体的 lease とともに再利用する。",
+      "existing_controls": [
+        "sr-1778927776-342dc46c2f",
+        "probe-20260516-grounded-playable-spec"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、同一論文のレビュー済み atom・既存 grounded-playable-spec probe・現 cycle の比較可能な playable artifact 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-14T07:57:14+09:00",
       "selected": {

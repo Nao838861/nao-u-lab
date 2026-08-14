@@ -59,7 +59,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779971755-d865c15b8e
+    source_ts: "1779971755.674859"
+    title: "Grounding Machine Creativity in Game Design Knowledge Representations: Empirical Probing of LLM-Based Executable Synthesis of Goal Playable Patterns under Structural Constraints"
+    reason: "score 10・未レビューで、memory / game-design / agent / operation / evaluation の5優先タグを持つ最新候補から1件だけ選定。同一論文の先行 review と既存 probe に対して独立した判断差があるか確認した。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "26 goal patterns、2 code model、direct generation と Unity-specific IR pipeline、自動 replay、grounding / hygiene failure 分離は具体的で行動可能。しかし同一論文の sr-1778927776-342dc46c2f は review 済みで、probe-20260516-grounded-playable-spec が薄い intermediate spec、playable check、失敗分類をすでに保持する。現 cycle に比較可能な prototype / playable diff がなく Phase 4a lease の consumer・artifact・判断差を指定できないため、duplicate control を増やさず state-only で閉じた。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新。probe / metric / lease / directive / 恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
