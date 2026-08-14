@@ -1,8 +1,12 @@
-import { islandCalendar } from './ui_summary.js?v=v004.58.0-price-anchors';
-
 export const FOOD_GOODS = Object.freeze([
   'fish', 'veg', 'wheat', 'pres', 'pick', 'meat',
 ]);
+
+const PRIMARY_FOOD_LABELS = Object.freeze({
+  wheat: '麦',
+  veg: '野菜',
+  fish: '魚',
+});
 
 export const PLAYER_FACING_BANNED_TERMS = Object.freeze([
   '教程', 'EMA', 'input棚',
@@ -59,6 +63,78 @@ export function householdFoodDays(household) {
   return householdFoodAmount(household) / Math.max(1, finiteAmount(household?.members));
 }
 
+export function foodProductionBalance(model) {
+  const food = islandFoodSummary(model);
+  const flow = FOOD_GOODS.reduce((totals, goods) => {
+    const row = model?.flowEma?.[goods] ?? {};
+    totals.produced += finiteAmount(row.prod);
+    totals.actualConsumed += finiteAmount(row.cons);
+    return totals;
+  }, { produced: 0, actualConsumed: 0 });
+  // 飢餓時は「食べられた量」が落ちるため、実消費だけでは不足が黒字に見える。
+  // 日次必要量のEMAを下限として、満たせなかった需要も収支へ残す。
+  const required = Number.isFinite(model?.foodNeedEma)
+    ? Math.max(0, model.foodNeedEma)
+    : finiteAmount(model?.population);
+  const consumed = Math.max(flow.actualConsumed, required);
+  const balance = flow.produced - consumed;
+  const marketFood = food.stalls + food.market;
+  const fisheryRatio = Number.isFinite(model?.foodResourceHealth?.minimumFisheryRatio)
+    ? Math.max(0, model.foodResourceHealth.minimumFisheryRatio) : 1;
+  let diagnosis = 'stable';
+  let reason = '生産と消費が釣り合っています';
+  let action = '食料の在庫推移を確認できます';
+  if (balance < -0.05 && fisheryRatio < 0.3) {
+    diagnosis = 'depleted';
+    reason = '資源が痩せています';
+    action = '漁場の資源量を確認できます';
+  } else if (balance < -0.05) {
+    diagnosis = 'insufficient';
+    reason = '作る量が足りない';
+    action = '畑・漁を増やすか、本国から麦を注文できます';
+  } else if (consumed > 0.05 && marketFood < Math.max(0.5, consumed * 0.25)) {
+    diagnosis = 'undelivered';
+    reason = '作れているが届いていない';
+    action = '食料の供給経路を確認できます';
+  }
+  return Object.freeze({
+    produced: flow.produced,
+    actualConsumed: flow.actualConsumed,
+    consumed,
+    required,
+    balance,
+    marketFood,
+    fisheryRatio,
+    diagnosis,
+    reason,
+    action,
+  });
+}
+
+export function foodShortageGoods(model, limit = 2) {
+  const requiredShare = foodProductionBalance(model).consumed / 3;
+  return Object.keys(PRIMARY_FOOD_LABELS)
+    .map(goods => ({
+      goods,
+      label: PRIMARY_FOOD_LABELS[goods],
+      produced: finiteAmount(model?.flowEma?.[goods]?.prod),
+    }))
+    .map(row => ({ ...row, shortage: Math.max(0, requiredShare - row.produced) }))
+    .filter(row => row.shortage > 0.05)
+    .sort((left, right) => right.shortage - left.shortage)
+    .slice(0, Math.max(1, limit));
+}
+
+export function dominantProducedFood(model) {
+  return Object.keys(PRIMARY_FOOD_LABELS)
+    .map(goods => ({
+      goods,
+      label: PRIMARY_FOOD_LABELS[goods],
+      produced: finiteAmount(model?.flowEma?.[goods]?.prod),
+    }))
+    .sort((left, right) => right.produced - left.produced)[0];
+}
+
 export function foodHudSummary(model, history = []) {
   const food = islandFoodSummary(model);
   const baseline = [...history].reverse().find(row => (
@@ -66,21 +142,13 @@ export function foodHudSummary(model, history = []) {
   )) ?? history[0] ?? null;
   const delta = baseline ? food.runwayDays - baseline.foodRunwayDays : 0;
   const arrow = delta <= -3 ? '↘↘' : delta <= -0.8 ? '↘' : '→';
-  const month = islandCalendar(model?.day, model?.calendarOffsetDays).month;
-  const flow = FOOD_GOODS.reduce((totals, goods) => {
-    const row = model?.flowEma?.[goods] ?? {};
-    totals.produced += finiteAmount(row.prod);
-    totals.consumed += finiteAmount(row.cons);
-    return totals;
-  }, { produced: 0, consumed: 0 });
-  const reason = [12, 1, 2].includes(month)
-    ? '冬・畑が休み'
-    : flow.consumed > flow.produced * 1.12
-      ? '消費が生産より多い'
-      : delta <= -0.8 ? '備えが減少' : '生産と消費が安定';
+  const production = foodProductionBalance(model);
+  const reason = production.diagnosis === 'insufficient'
+    ? `${production.reason}・本国から注文できます`
+    : production.reason;
   const tone = food.runwayDays < 7 ? 'danger'
-    : food.runwayDays < 14 ? 'warning' : 'steady';
-  return Object.freeze({ ...food, delta, arrow, reason, tone });
+    : food.runwayDays < 14 || production.diagnosis !== 'stable' ? 'warning' : 'steady';
+  return Object.freeze({ ...food, ...production, delta, arrow, reason, tone });
 }
 
 export function winterFoodForecast(model) {

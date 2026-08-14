@@ -42,7 +42,7 @@ import {
   settlePortTransfers,
   transactMarketCargo,
   unloadMarketBuyCargo,
-} from "./econ.js?v=v004.58.0-price-anchors";
+} from "./econ.js?v=v004.59.0-food-balance";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -64,10 +64,10 @@ import {
   stepTravelCarrier,
   stepHaulCarriers,
   stepPortHandling,
-} from "./physical.js?v=v004.58.0-price-anchors";
-import { nextMulberry32, normalizeSeed } from "./prng.js?v=v004.58.0-price-anchors";
-import { createMarketNetwork, marketNetworkSummary } from "./market_network.js?v=v004.58.0-price-anchors";
-import { stepCaravanDay, stepCaravanTick } from "./routes.js?v=v004.58.0-price-anchors";
+} from "./physical.js?v=v004.59.0-food-balance";
+import { nextMulberry32, normalizeSeed } from "./prng.js?v=v004.59.0-food-balance";
+import { createMarketNetwork, marketNetworkSummary } from "./market_network.js?v=v004.59.0-food-balance";
+import { stepCaravanDay, stepCaravanTick } from "./routes.js?v=v004.59.0-food-balance";
 
 function tread(economy, x, y) {
   const key = keyOf(Math.round(x), Math.round(y));

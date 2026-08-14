@@ -1,4 +1,4 @@
-import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.58.0-price-anchors';
+import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.59.0-food-balance';
 
 export const GOODS_SHELF_LIFE_DAYS = Object.freeze({
   fish: 5,

@@ -1,17 +1,17 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.58.0-price-anchors';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.58.0-price-anchors';
-import { islandCalendar } from './ui_summary.js?v=v004.58.0-price-anchors';
+} from './config.js?v=v004.59.0-food-balance';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.59.0-food-balance';
+import { islandCalendar } from './ui_summary.js?v=v004.59.0-food-balance';
 import {
   compileRenderScene, inventoryLayerDepth, marketStallLayerDepth, mergeDrawables,
   sceneRowsInBounds,
-} from './render_scene.js?v=v004.58.0-price-anchors';
+} from './render_scene.js?v=v004.59.0-food-balance';
 import {
   buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
   seasonalTerrainVisual,
-} from './visuals.js?v=v004.58.0-price-anchors';
-import { renderArtSlice } from './art_slice.js?v=v004.58.0-price-anchors';
+} from './visuals.js?v=v004.59.0-food-balance';
+import { renderArtSlice } from './art_slice.js?v=v004.59.0-food-balance';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 

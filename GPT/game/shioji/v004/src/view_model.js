@@ -1,20 +1,20 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.58.0-price-anchors';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.59.0-food-balance';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.58.0-price-anchors';
+} from './food_readability.js?v=v004.59.0-food-balance';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   findTravelPath, householdProductionSummary, laborWage, productionCost,
-} from './engine_bridge.js?v=v004.58.0-price-anchors';
-import { analyzeRoadConnections } from './placement.js?v=v004.58.0-price-anchors';
+} from './engine_bridge.js?v=v004.59.0-food-balance';
+import { analyzeRoadConnections } from './placement.js?v=v004.59.0-food-balance';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.58.0-price-anchors';
+} from './render_scene.js?v=v004.59.0-food-balance';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.58.0-price-anchors';
-import { GOODS_RECIPES } from './goods_detail.js?v=v004.58.0-price-anchors';
+} from './visuals.js?v=v004.59.0-food-balance';
+import { GOODS_RECIPES } from './goods_detail.js?v=v004.59.0-food-balance';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',
@@ -1745,6 +1745,15 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
     directTrades: productivity.island.directTrade.rows,
     companyBankruptcyDay: snapshot.economy.goDay ?? null,
     population: households.reduce((total, household) => total + household.members, 0),
+    foodNeedEma: Number.isFinite(snapshot.economy.foodNeed30)
+      ? Math.max(0, snapshot.economy.foodNeed30)
+      : households.reduce((total, household) => total + household.members, 0),
+    foodResourceHealth: {
+      minimumFisheryRatio: Math.min(
+        Math.max(0, (snapshot.economy.natural?.bay ?? P.BAY0) / P.BAY0),
+        Math.max(0, (snapshot.economy.natural?.bay2 ?? P.BAY0) / P.BAY0),
+      ),
+    },
     width: snapshot.physical.width,
     height: snapshot.physical.height,
     worldData: snapshot.physical.worldData

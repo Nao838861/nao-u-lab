@@ -507,6 +507,16 @@ test("需給観測: 需要台帳は消費超過と不正値を拒否する", () 
   assert.throws(() => recordEconomicDemand(economy, "log", 1, 0, ""), /source/);
 });
 
+test("食料収支: 食べられなかった需要も30日平均から消えない", () => {
+  const economy = createEconomicState();
+  economy.foodNeedToday = 52;
+  updateFlowEma(economy);
+  assert.equal(economy.foodNeed30, 52, "初日は現在の必要量を基準にする");
+  economy.foodNeedToday = 32;
+  updateFlowEma(economy);
+  assert.equal(economy.foodNeed30, 51, "以後は30日相当のEMAで追従する");
+});
+
 test("worldは同じシードと操作から同じJSON状態になる", () => {
   const run = () => {
     const world = createWorld({ seed: 17 });

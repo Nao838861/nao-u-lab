@@ -1,8 +1,8 @@
 import {
   FOOD_GOODS, WINTER_RESERVE_PER_PERSON,
-} from './food_readability.js?v=v004.58.0-price-anchors';
-import { toDenari } from './config.js?v=v004.58.0-price-anchors';
-import { GOODS_RECIPES } from './goods_detail.js?v=v004.58.0-price-anchors';
+} from './food_readability.js?v=v004.59.0-food-balance';
+import { toDenari } from './config.js?v=v004.59.0-food-balance';
+import { GOODS_RECIPES } from './goods_detail.js?v=v004.59.0-food-balance';
 
 export const SUPPLY_STATUS = Object.freeze({
   no_demand: Object.freeze({ severity: 0, label: '需要なし' }),

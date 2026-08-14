@@ -1,4 +1,4 @@
-import { buildingById, pathLen } from "./physical.js?v=v004.58.0-price-anchors";
+import { buildingById, pathLen } from "./physical.js?v=v004.59.0-food-balance";
 
 const DEFAULT_HYSTERESIS = 0.12;
 const EPSILON = 1e-9;

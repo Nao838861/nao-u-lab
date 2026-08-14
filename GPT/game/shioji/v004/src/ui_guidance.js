@@ -163,6 +163,9 @@ export function secretaryActionForRoute(route) {
   if (target?.kind === 'letter' && target.delivery === 'letter') {
     return Object.freeze({ kind: 'letter', id: target.id, label: route.action ?? '書状を開く' });
   }
+  if (target?.kind === 'boundary-letter') {
+    return Object.freeze({ kind: 'boundary-letter', id: target.id, label: '書状を開く' });
+  }
   if (target?.kind === 'event') {
     return Object.freeze({ kind: 'event', sequence: target.sequence, label: 'この家を見る' });
   }
@@ -212,14 +215,17 @@ export function secretaryRouteFor({
     };
   }
   if (boundary && String(boundary.speech ?? '').trim()) {
-    const food = boundary.type === 'food';
+    const food = boundary.type === 'food' || boundary.type === 'balance';
+    const summaryLetter = boundary.type === 'balanceLetter' && boundary.letter;
     return {
-      priority: food ? 'food-boundary' : 'preservation-stop',
-      tier: 'notice',
-      target: { kind: 'boundary-event', id: boundary.id },
+      priority: summaryLetter ? 'optional-letter' : food ? 'food-boundary' : 'preservation-stop',
+      tier: summaryLetter ? 'action' : 'notice',
+      target: summaryLetter
+        ? { kind: 'boundary-letter', id: boundary.id }
+        : { kind: 'boundary-event', id: boundary.id },
       speech: boundary.speech,
-      kicker: food ? '島の食料' : '保存が停止',
-      title: boundary.type,
+      kicker: summaryLetter || food ? '島の食料' : '保存が停止',
+      title: summaryLetter ? boundary.letter.title : boundary.type,
       detail: `${boundary.day}日目`,
     };
   }

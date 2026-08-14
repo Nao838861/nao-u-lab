@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.58.0-price-anchors';
+import { JOB_LABELS } from './config.js?v=v004.59.0-food-balance';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

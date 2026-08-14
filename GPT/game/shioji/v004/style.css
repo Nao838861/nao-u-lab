@@ -149,7 +149,7 @@ body.b2-map-preview #world { cursor: grab; }
 .hud-stat b { display: block; margin-top: 3px; font-size: 16px; white-space: nowrap; }
 .calendar-stat em { display: block; margin-top: 1px; color: var(--gold); font-size: 10px; font-style: normal; white-space: nowrap; }
 .food-runway {
-  min-width: 142px;
+  min-width: 238px;
   border: 0;
   border-right: 1px solid var(--line);
   background: rgba(159,203,118,.055);
@@ -157,6 +157,7 @@ body.b2-map-preview #world { cursor: grab; }
   text-align: left;
   cursor: pointer;
 }
+.food-runway span { display: block; margin-top: 1px; font-size: 9px; white-space: nowrap; }
 .food-runway em { display: block; margin-top: 1px; color: var(--green); font-size: 9px; font-style: normal; white-space: nowrap; }
 .food-runway[data-tone="warning"] { background: rgba(229,182,91,.1); }
 .food-runway[data-tone="warning"] b, .food-runway[data-tone="warning"] em { color: var(--gold); }
@@ -1068,9 +1069,9 @@ body.b2-map-preview #world { cursor: grab; }
   }
   .brand, .population-stat, .step-day { display: none; }
   .hud-stat { min-width: 68px; padding: 6px 7px; }
-  .food-runway { min-width: 86px; padding: 5px 6px; }
-  .food-runway em { max-width: 84px; overflow: hidden; font-size: 7px; text-overflow: ellipsis; }
-  .funds { min-width: 112px; }
+  .food-runway { min-width: 116px; padding: 5px 5px; }
+  .food-runway span, .food-runway em { max-width: 112px; overflow: hidden; font-size: 7px; line-height: 1.15; text-overflow: ellipsis; }
+  .funds { min-width: 90px; }
   .funds b { font-size: 17px; }
   .hud-stat b { font-size: 11px; }
   .speed { padding-left: 2px; }

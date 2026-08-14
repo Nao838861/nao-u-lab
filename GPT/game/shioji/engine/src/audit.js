@@ -12,7 +12,7 @@ import {
   priceAnchorBounds,
   recordEconomicMaterialFlow,
   setCaravanEmployment,
-} from "./econ.js?v=v004.58.0-price-anchors";
+} from "./econ.js?v=v004.59.0-food-balance";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -33,8 +33,8 @@ import {
   makeMultiMarketTerrain,
   markFertileArea,
   pathLen,
-} from "./physical.js?v=v004.58.0-price-anchors";
-import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.58.0-price-anchors";
+} from "./physical.js?v=v004.59.0-food-balance";
+import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.59.0-food-balance";
 
 export const AUDIT_SEEDS = Object.freeze([11, 13, 14]);
 

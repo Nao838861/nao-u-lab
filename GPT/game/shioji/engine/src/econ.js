@@ -21,7 +21,7 @@ import {
   sectionCapacity,
   withdrawInventory,
   workRoadWorksite,
-} from "./physical.js?v=v004.58.0-price-anchors";
+} from "./physical.js?v=v004.59.0-food-balance";
 
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) return value;
@@ -1514,6 +1514,7 @@ function runHouseholdFoodAndDeath(
 ) {
   markPhase("food");
   let need = householdEat(household);
+  economy.foodNeedToday = (economy.foodNeedToday ?? 0) + need;
   economy.led.need += need;
   const kinds = new Set();
 
@@ -3774,6 +3775,7 @@ export function ageMarketStalls(economy, { day, physical = null }) {
   economy.deskUsed = {};
   economy.dailyMaterialFlows = {};
   economy.dailyDemandFlows = {};
+  economy.foodNeedToday = 0;
   updateStockDaysPrices(economy, physical, { day });
   for (const lot of economy.marketReturns) {
     const spoiled = spoilMarketQuantity(
@@ -5934,6 +5936,11 @@ export function updateFlowEma(economy) {
     }
     economy.demand30[goods] = demandFlow;
   }
+  const foodNeedToday = Number.isFinite(economy.foodNeedToday)
+    ? Math.max(0, economy.foodNeedToday) : 0;
+  economy.foodNeed30 = Number.isFinite(economy.foodNeed30)
+    ? economy.foodNeed30 * 0.95 + foodNeedToday * 0.05
+    : foodNeedToday;
   return economy.f30;
 }
 
@@ -6810,6 +6817,8 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
     materialFlows: {},
     dailyMaterialFlows: {},
     dailyDemandFlows: {},
+    foodNeedToday: 0,
+    foodNeed30: null,
     f30: {},
     demand30: {},
     priceReferenceCosts: { main: {} },

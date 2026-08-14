@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.58.0-price-anchors';
+import { pileVisual } from './visuals.js?v=v004.59.0-food-balance';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));

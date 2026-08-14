@@ -1,51 +1,51 @@
-import { IsometricCamera } from './camera.js?v=v004.58.0-price-anchors';
-import { loadB2MapData } from './b2_map.js?v=v004.58.0-price-anchors';
-import { ART_SLICE_MODE } from './art_slice.js?v=v004.58.0-price-anchors';
-import { SimulationClock } from './clock.js?v=v004.58.0-price-anchors';
-import { createBoundaryEvents } from './boundary_events.js?v=v004.58.0-price-anchors';
+import { IsometricCamera } from './camera.js?v=v004.59.0-food-balance';
+import { loadB2MapData } from './b2_map.js?v=v004.59.0-food-balance';
+import { ART_SLICE_MODE } from './art_slice.js?v=v004.59.0-food-balance';
+import { SimulationClock } from './clock.js?v=v004.59.0-food-balance';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.59.0-food-balance';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.58.0-price-anchors';
+} from './config.js?v=v004.59.0-food-balance';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.58.0-price-anchors';
-import { BUILD_COST_DENARI, P, createEngineController } from './engine_bridge.js?v=v004.58.0-price-anchors';
-import { developmentMapView } from './development_map.js?v=v004.58.0-price-anchors';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.58.0-price-anchors';
-import { formatElenaSpeech } from './elena_text.js?v=v004.58.0-price-anchors';
+} from './display_batch.js?v=v004.59.0-food-balance';
+import { BUILD_COST_DENARI, P, createEngineController } from './engine_bridge.js?v=v004.59.0-food-balance';
+import { developmentMapView } from './development_map.js?v=v004.59.0-food-balance';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.59.0-food-balance';
+import { formatElenaSpeech } from './elena_text.js?v=v004.59.0-food-balance';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.58.0-price-anchors';
+} from './food_readability.js?v=v004.59.0-food-balance';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.58.0-price-anchors';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.58.0-price-anchors';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.58.0-price-anchors';
-import { goodsDetail } from './goods_detail.js?v=v004.58.0-price-anchors';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.58.0-price-anchors';
-import { WorldPresentation } from './presentation.js?v=v004.58.0-price-anchors';
-import { Renderer } from './renderer.js?v=v004.58.0-price-anchors';
+} from './keyboard.js?v=v004.59.0-food-balance';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.59.0-food-balance';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.59.0-food-balance';
+import { goodsDetail } from './goods_detail.js?v=v004.59.0-food-balance';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.59.0-food-balance';
+import { WorldPresentation } from './presentation.js?v=v004.59.0-food-balance';
+import { Renderer } from './renderer.js?v=v004.59.0-food-balance';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.58.0-price-anchors';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.58.0-price-anchors';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.58.0-price-anchors';
+} from './save_game.js?v=v004.59.0-food-balance';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.59.0-food-balance';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.59.0-food-balance';
 import {
   GOODS_GLYPHS, jobInputNeeds, shortageRows, stockWhereabouts, supplyDemandRow,
   supplyDemandRows, supplyDiagnosis,
-} from './supply_demand.js?v=v004.58.0-price-anchors';
-import { orderQuote } from './tutorial_content.js?v=v004.58.0-price-anchors';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.58.0-price-anchors';
+} from './supply_demand.js?v=v004.59.0-food-balance';
+import { orderQuote } from './tutorial_content.js?v=v004.59.0-food-balance';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.59.0-food-balance';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.58.0-price-anchors';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.58.0-price-anchors';
+} from './ui_guidance.js?v=v004.59.0-food-balance';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.59.0-food-balance';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -98,6 +98,7 @@ const boundaryEvents = createBoundaryEvents({
   model,
   state: startupSave?.boundaryEvents ?? null,
 });
+boundaryEvents.observe(model);
 const tutorialDirector = createTutorialDirectorForMode(startMode, {
   state: startupSave?.tutorialState ?? null,
 });
@@ -572,10 +573,14 @@ function renderHud() {
   setTextIfChanged('#population-value', `${formatNumber(model.population)}人`);
   const foodHud = foodHudSummary(model, economyHistory);
   setTextIfChanged('#food-days-value', `あと${Math.max(0, Math.floor(foodHud.runwayDays))}日分 ${foodHud.arrow}`);
+  const balanceSign = foodHud.balance >= 0 ? '+' : '−';
+  const balanceAmount = Math.abs(foodHud.balance).toFixed(1);
+  setTextIfChanged('#food-balance-value', `生産${foodHud.produced.toFixed(1)} − 消費${foodHud.consumed.toFixed(1)} ＝ ${balanceSign}${balanceAmount}荷/日`);
   setTextIfChanged('#food-reason', foodHud.reason);
-  renderIfChanged('hud-food-tone', foodHud.tone, () => {
+  renderIfChanged('hud-food-tone', `${foodHud.tone}:${foodHud.diagnosis}:${balanceAmount}`, () => {
     $('#food-runway').dataset.tone = foodHud.tone;
-    $('#food-runway').title = `食料はあと約${foodHud.runwayDays.toFixed(1)}日分。${foodHud.reason}。押すと食料グラフを開きます`;
+    $('#food-runway').title = `食料はあと約${foodHud.runwayDays.toFixed(1)}日分。${foodHud.reason}。${foodHud.action}`;
+    $('#food-runway').setAttribute('aria-label', `${$('#food-balance-value').textContent}。${foodHud.reason}。${foodHud.action}`);
     uiMetrics.domWrites += 1;
   });
   const health = islandHealthSummary(model, economyHistory);
@@ -2232,7 +2237,12 @@ function renderIslandSheet() {
 }
 
 function openTutorialLetter(id) {
-  const letter = tutorialDirector?.visibleLetters().find(row => row.id === id);
+  let letter = tutorialDirector?.visibleLetters().find(row => row.id === id);
+  const boundaryLetter = boundaryEvents.message(id);
+  if (!letter && boundaryLetter?.letter) {
+    letter = { id, ...boundaryLetter.letter };
+    boundaryEvents.markAnnounced(id);
+  }
   if (!letter) return false;
   const opening = openTutorialLetterId === null;
   if (opening) {
@@ -2437,6 +2447,30 @@ $('#open-island').addEventListener('click', () => {
   openSheet('island-sheet');
 });
 $('#food-runway').addEventListener('click', () => {
+  const foodHud = foodHudSummary(model, economyHistory);
+  if (foodHud.diagnosis === 'insufficient') {
+    openSheet('company-sheet');
+    requestAnimationFrame(() => {
+      const row = $('[data-import-goods="wheat"]');
+      row?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      row?.querySelector('[data-company-action="request-import"]')?.focus();
+    });
+    return;
+  }
+  if (foodHud.diagnosis === 'undelivered' || foodHud.diagnosis === 'depleted') {
+    supplyFilter = 'food';
+    focusedSupplyGoods = foodHud.diagnosis === 'depleted' ? 'fish' : null;
+    document.querySelectorAll('[data-supply-filter]').forEach(button => {
+      button.setAttribute('aria-selected', String(button.dataset.supplyFilter === supplyFilter));
+    });
+    openSheet('supply-sheet');
+    requestAnimationFrame(() => {
+      const target = focusedSupplyGoods ? $(`[data-supply-goods="${focusedSupplyGoods}"]`) : null;
+      target?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      target?.focus();
+    });
+    return;
+  }
   openSheet('island-sheet');
   requestAnimationFrame(() => {
     $('[data-chart="food-stock"]')?.scrollIntoView({ block: 'center', behavior: 'smooth' });
@@ -2614,6 +2648,10 @@ $('#secretary-letter-action').addEventListener('click', event => {
   if (action.kind === 'letter') {
     const id = event.currentTarget.dataset.letterId;
     if (id) openTutorialLetter(id);
+    return;
+  }
+  if (action.kind === 'boundary-letter') {
+    openTutorialLetter(action.id);
     return;
   }
   if (action.kind === 'advice-building') {

@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.58.0-price-anchors';
+import { TILE } from './config.js?v=v004.59.0-food-balance';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

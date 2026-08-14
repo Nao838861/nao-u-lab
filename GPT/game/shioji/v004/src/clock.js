@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.58.0-price-anchors';
+import { SPEEDS } from './config.js?v=v004.59.0-food-balance';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

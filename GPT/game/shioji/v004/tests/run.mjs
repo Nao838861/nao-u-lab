@@ -15,7 +15,7 @@ import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
 import {
   FOOD_RUNWAY_THRESHOLD_DAYS, FOOD_WARNING_COOLDOWN_DAYS, PRESERVATION_STOP_SCRIPTS,
-  createBoundaryEvents, foodBoundarySpeech,
+  createBoundaryEvents, foodBalanceBoundarySpeech, foodBoundarySpeech,
 } from '../src/boundary_events.js';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, DENARI_PER_MONEY_UNIT, GOODS_ART,
@@ -37,7 +37,8 @@ import {
 import { formatElenaSpeech } from '../src/elena_text.js';
 import {
   PLAYER_FACING_BANNED_TERMS, WINTER_RESERVE_PER_PERSON, executableFoodIntervention,
-  foodHudSummary, islandFoodSummary, perishableFreshness, winterFoodForecast,
+  foodHudSummary, foodProductionBalance, islandFoodSummary, perishableFreshness,
+  winterFoodForecast,
 } from '../src/food_readability.js';
 import {
   GOODS_SPRITE_IDS, goodsSpriteDefinition, goodsSpriteGeometrySignature,
@@ -586,6 +587,36 @@ test('可読性B: 食料日数・冬予報・鮮度・実行可能な打ち手�
   assert.equal(executableFoodIntervention({
     ...foodModel, companyStock: {}, mainlandAid: { refused: true },
   }).kind, 'target');
+
+  const starving = {
+    ...foodModel,
+    population: 52,
+    foodNeedEma: 52,
+    households: [],
+    stalls: [],
+    companyMarketStock: {},
+    flowEma: {
+      fish: { prod: 22.047, cons: 18.179 },
+      veg: { prod: 8.196, cons: 0 },
+      wheat: { prod: 0.0002, cons: 0.0364 },
+    },
+    foodResourceHealth: { minimumFisheryRatio: 0.97 },
+  };
+  const balance = foodProductionBalance(starving);
+  assert.equal(balance.diagnosis, 'insufficient');
+  assert.ok(Math.abs(balance.balance - -21.7568) < 1e-4);
+  assert.equal(foodHudSummary(starving).reason, '作る量が足りない・本国から注文できます');
+  assert.equal(foodProductionBalance({
+    ...starving,
+    flowEma: { fish: { prod: 60, cons: 52 } },
+  }).diagnosis, 'undelivered');
+  assert.equal(foodProductionBalance({
+    ...starving,
+    foodResourceHealth: { minimumFisheryRatio: 0.2 },
+  }).diagnosis, 'depleted');
+  assert.equal(foodProductionBalance({
+    population: 0, foodNeedEma: 0, households: [], stalls: [], companyMarketStock: {},
+  }).diagnosis, 'stable', '人口0の未開拓島を流通不全にしない');
 
   const api = createEngineApi(buildBaseCity(11));
   api.advanceDays(2);
@@ -2559,7 +2590,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.58.0-price-anchors');
+  assert.equal(VERSION, 'v004.59.0-food-balance');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -5104,6 +5135,9 @@ function boundaryModel({
   fish = 4,
   salt = 2,
   char = 2,
+  foodProduction = 2,
+  foodNeedEma = population,
+  marketFood = 0,
 } = {}) {
   return {
     day,
@@ -5114,10 +5148,11 @@ function boundaryModel({
       pantry: [{ goods: 'wheat', amount: food }],
     }],
     stalls: [],
-    companyMarketStock: {},
+    companyMarketStock: { wheat: marketFood },
     companyStock: {},
+    foodNeedEma,
     flowEma: {
-      wheat: { prod: 2, imp: 0.5, cons: 4 },
+      wheat: { prod: foodProduction, imp: 0.5, cons: 4 },
     },
     goodsManifest: [
       { goods: 'fish', totalAmount: fish },
@@ -5126,6 +5161,46 @@ function boundaryModel({
     ],
   };
 }
+
+test('境界の声: 食料生産収支が黒字から赤字へ跨いだ時に輸入判断を知らせる', () => {
+  const events = createBoundaryEvents({
+    model: boundaryModel({ day: 1, foodProduction: 12, foodNeedEma: 10 }),
+  });
+  events.observe(boundaryModel({ day: 2, foodProduction: 8, foodNeedEma: 10 }));
+  assert.equal(events.currentMessage().type, 'balance');
+  assert.match(events.currentMessage().speech, /1日2\.0荷分足りません/);
+  assert.match(events.currentMessage().speech, /本国へ麦を注文してください/);
+  assert.equal(foodBalanceBoundarySpeech({
+    ...boundaryModel({ day: 2262, population: 52, foodNeedEma: 52 }),
+    flowEma: {
+      fish: { prod: 22.047, cons: 18.179 },
+      veg: { prod: 8.196, cons: 0 },
+      wheat: { prod: 0.0002, cons: 0.0364 },
+    },
+  }), '麦と野菜が足りていません。島の食料は1日21.8荷分足りません——畑を増やすか、本国へ麦を注文してください。');
+});
+
+test('境界の声: 食料不足が30日続いた時だけ一通の総括書状を出し、改善後に再武装する', () => {
+  const events = createBoundaryEvents({
+    model: boundaryModel({ day: 1, foodProduction: 12, foodNeedEma: 10 }),
+  });
+  events.observe(boundaryModel({ day: 2, foodProduction: 8, foodNeedEma: 10 }));
+  events.markAnnounced(events.currentMessage().id);
+  events.observe(boundaryModel({ day: 30, foodProduction: 8, foodNeedEma: 10 }));
+  assert.equal(events.currentMessage(), null);
+  events.observe(boundaryModel({ day: 31, foodProduction: 8, foodNeedEma: 10 }));
+  assert.equal(events.currentMessage().type, 'balanceLetter');
+  assert.match(events.currentMessage().letter.body, /輸入は自動では起きません/);
+  const letterRoute = secretaryRouteFor({ boundary: events.currentMessage() });
+  assert.equal(letterRoute.target.kind, 'boundary-letter');
+  assert.equal(secretaryActionForRoute(letterRoute).kind, 'boundary-letter');
+  events.markAnnounced(events.currentMessage().id);
+  events.observe(boundaryModel({
+    day: 32, foodProduction: 12, foodNeedEma: 10, marketFood: 3,
+  }));
+  events.observe(boundaryModel({ day: 33, foodProduction: 8, foodNeedEma: 10 }));
+  assert.equal(events.currentMessage().type, 'balance', '黒字へ改善した後の再悪化だけ一言を再発する');
+});
 
 test('境界の声: 食料14日割れの跨ぎだけを拾い、同一境界は7日空ける', () => {
   assert.equal(FOOD_RUNWAY_THRESHOLD_DAYS, 14);

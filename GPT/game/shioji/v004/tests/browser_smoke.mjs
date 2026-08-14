@@ -265,7 +265,7 @@ async function checkExplicitImportUi() {
   assert.equal(result.request?.qty, 7, JSON.stringify(result));
   assert.match(result.status, /7荷を本土へ発注/);
   assert.equal(result.bootState, 'ready', JSON.stringify(result));
-  assert.equal(result.version, 'v004.58.0-price-anchors');
+  assert.equal(result.version, 'v004.59.0-food-balance');
   assert.deepEqual(page.errors, []);
   await page.screenshot('/tmp/shioji_v004_explicit_import.png');
   await page.close();
@@ -1261,7 +1261,7 @@ async function checkSeasonalPlots(width, height, mobile) {
       plots: plots.map(row => row.type),
     };
   })()`);
-  assert.equal(springStart.version, 'v004.58.0-price-anchors', JSON.stringify(springStart));
+  assert.equal(springStart.version, 'v004.59.0-food-balance', JSON.stringify(springStart));
   assert.equal(springStart.season, '春', JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => ['wheat', 'veg'].includes(type)), JSON.stringify(springStart));
   assert.ok(springStart.plots.some(type => type === 'shepherd'), JSON.stringify(springStart));
@@ -1647,8 +1647,8 @@ async function checkPeopleVisuals(width, height, mobile) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.58.0-price-anchors');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.58.0-price-anchors');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.59.0-food-balance');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.59.0-food-balance');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -2496,7 +2496,7 @@ async function checkOrderCostUi(width, height, mobile) {
       viewport: { width: innerWidth, height: innerHeight },
     };
   })()`);
-  assert.equal(result.version, 'v004.58.0-price-anchors');
+  assert.equal(result.version, 'v004.59.0-food-balance');
   assert.ok(result.offer, JSON.stringify(result));
   assert.match(result.text, /完遂決済単価/);
   assert.match(result.text, /全量仕入原価/);
@@ -2660,7 +2660,7 @@ async function checkSupplyDemand(width, height, mobile) {
   assert.equal(result.pageHorizontalOverflow, false, JSON.stringify(result));
   assert.equal(result.supplyBreakdownVisible, !mobile, JSON.stringify(result));
   assert.equal(result.demandBreakdownVisible, true, JSON.stringify(result));
-  assert.equal(result.runtimeVersion, 'v004.58.0-price-anchors', JSON.stringify(result));
+  assert.equal(result.runtimeVersion, 'v004.59.0-food-balance', JSON.stringify(result));
   await page.screenshot(`/tmp/shioji_v004_supply_demand_${mobile ? 'mobile' : 'pc'}_${width}x${height}.png`);
   await page.close();
   return result;
@@ -2751,7 +2751,7 @@ async function checkCauseReadableActions(width, height, mobile) {
     JSON.stringify(hint));
   assert.match(hint.text, /(?:不足|市場から調達)/, JSON.stringify(hint));
   assert.equal(hint.withinViewport, true, JSON.stringify(hint));
-  assert.equal(hint.runtimeVersion, 'v004.58.0-price-anchors', JSON.stringify(hint));
+  assert.equal(hint.runtimeVersion, 'v004.59.0-food-balance', JSON.stringify(hint));
   assert.deepEqual(page.errors, []);
   await page.screenshot(`/tmp/shioji_v004_cause_placement_${mobile ? 'mobile' : 'pc'}.png`);
   await page.close();
@@ -2818,7 +2818,7 @@ async function checkFoodAlerts(width, height, mobile) {
       JSON.stringify(result),
     );
   }
-  assert.equal(result.runtimeVersion, 'v004.58.0-price-anchors', JSON.stringify(result));
+  assert.equal(result.runtimeVersion, 'v004.59.0-food-balance', JSON.stringify(result));
   assert.deepEqual(page.errors, []);
   await page.screenshot(`/tmp/shioji_v004_food_alerts_${mobile ? 'mobile' : 'pc'}.png`);
   await page.close();
@@ -2860,7 +2860,7 @@ async function checkSpatialProductivity(width = 1440, height = 900, mobile = fal
   })()`);
   assert.ok(building && !building.missing,
     `資源職の30日実測を建物画面へ表示できる: ${JSON.stringify(building)}`);
-  assert.equal(building.version, 'v004.58.0-price-anchors');
+  assert.equal(building.version, 'v004.59.0-food-balance');
   assert.ok(Number.isFinite(building.efficiency), JSON.stringify(building));
   assert.ok(Number.isFinite(building.resourceEfficiency), JSON.stringify(building));
   assert.equal(building.withinViewport, true, JSON.stringify(building));
@@ -3026,6 +3026,62 @@ async function checkSaveDeliveryUi(width = 1440, height = 900, mobile = false) {
   await page.close();
 }
 
+async function checkFoodBalanceSave() {
+  const savePath = process.env.SHIOJI_FOOD_BALANCE_SAVE;
+  assert.ok(savePath, 'SHIOJI_FOOD_BALANCE_SAVE is required');
+  assert.ok(fs.existsSync(savePath), `food balance save is missing: ${savePath}`);
+  const page = await newPage(1440, 900, false, GAME);
+  await page.evaluate(`(() => {
+    window.__SHIOJI_V004__.setSpeed(0);
+    window.__SHIOJI_V004__.openSheet('save-sheet');
+  })()`);
+  const documentNode = await page.send('DOM.getDocument', { depth: 1 });
+  const inputNode = await page.send('DOM.querySelector', {
+    nodeId: documentNode.root.nodeId,
+    selector: '#save-file-input',
+  });
+  assert.ok(inputNode.nodeId > 0, 'save file input is present');
+  await page.send('DOM.setFileInputFiles', { files: [savePath], nodeId: inputNode.nodeId });
+  await page.evaluate(`document.querySelector('#save-file-input')
+    .dispatchEvent(new Event('change', { bubbles: true }))`).catch(error => {
+    if (!/navigated or closed/i.test(error.message)) throw error;
+  });
+  await wait(500);
+  const loaded = await waitForBrowserValue(page, `(() => {
+    const game = window.__SHIOJI_V004__;
+    return game?.model?.day === 2262 && document.querySelector('#start-screen').hidden
+      ? {
+        day: game.model.day,
+        balance: document.querySelector('#food-balance-value').textContent,
+        reason: document.querySelector('#food-reason').textContent,
+        aria: document.querySelector('#food-runway').getAttribute('aria-label'),
+        elena: document.querySelector('#secretary-speech').textContent,
+      } : null;
+  })()`, { timeoutMs: 30_000, description: 'day2262 save HUD' });
+  assert.match(loaded.balance, /生産30\.2 − 消費52\.0 ＝ −21\.8荷\/日/);
+  assert.equal(loaded.reason, '作る量が足りない・本国から注文できます');
+  assert.match(loaded.aria, /畑・漁を増やすか、本国から麦を注文できます/);
+  assert.match(loaded.elena, /麦と野菜が足りていません/);
+  assert.match(loaded.elena, /本国へ麦を注文してください/);
+  await page.screenshot('/tmp/shioji_v004_food_balance_day2262.png');
+  const routed = await page.evaluate(`(() => {
+    document.querySelector('#food-runway').click();
+    const wheat = document.querySelector('[data-import-goods="wheat"]');
+    return {
+      companyHidden: document.querySelector('#company-sheet').hidden,
+      wheatVisible: Boolean(wheat),
+      buttonText: wheat?.querySelector('[data-company-action="request-import"]')?.textContent,
+    };
+  })()`);
+  assert.equal(routed.companyHidden, false, JSON.stringify(routed));
+  assert.equal(routed.wheatVisible, true, JSON.stringify(routed));
+  assert.match(routed.buttonText, /本土へ発注/);
+  assert.deepEqual(page.errors, []);
+  await page.screenshot('/tmp/shioji_v004_food_balance_import.png');
+  await page.close();
+  return { loaded, routed };
+}
+
 async function checkMarketRhythmUi(width = 1440, height = 900, mobile = false) {
   const page = await newPage(width, height, mobile, GAME);
   const result = await page.evaluate(`(() => {
@@ -3052,7 +3108,7 @@ async function checkMarketRhythmUi(width = 1440, height = 900, mobile = false) {
       hidden: sheet.hidden,
     };
   })()`);
-  assert.equal(result.version, 'v004.58.0-price-anchors', JSON.stringify(result));
+  assert.equal(result.version, 'v004.59.0-food-balance', JSON.stringify(result));
   assert.equal(result.hidden, false, JSON.stringify(result));
   assert.match(result.label, /出荷をまとめ中 1\/2日/, JSON.stringify(result));
   assert.match(result.detail, /食料切れと生産停止は待ちません/, JSON.stringify(result));
@@ -3161,7 +3217,7 @@ async function checkCaravanEmployment(width = 1440, height = 900, mobile = false
       applicantsUi: /応募者|応募一覧/.test(sheet.textContent),
     };
   })()`);
-  assert.equal(result.version, 'v004.58.0-price-anchors', JSON.stringify(result));
+  assert.equal(result.version, 'v004.59.0-food-balance', JSON.stringify(result));
   assert.deepEqual(result.employment, { recruitment: 3, wage: 6.5 });
   assert.equal(result.crew, 3, JSON.stringify(result));
   assert.match(result.text, /隊商の雇用/);
@@ -3281,7 +3337,7 @@ async function checkCaravanAccounting(width = 1440, height = 900, mobile = false
       horizontalOverflow: panel.scrollWidth > panel.clientWidth + 1,
     };
   })()`);
-  assert.equal(result.version, 'v004.58.0-price-anchors', JSON.stringify(result));
+  assert.equal(result.version, 'v004.59.0-food-balance', JSON.stringify(result));
   assert.deepEqual(result.configured, {
     type: 'set_caravan_route',
     baseBuildingId: result.configured.baseBuildingId,
@@ -3414,6 +3470,9 @@ if (process.argv.includes('--boot-retry-only')) {
   await checkSaveDeliveryUi(1440, 900, false);
   await checkSaveDeliveryUi(390, 844, true);
   console.log('CHARTER ISLE v004 save/delivery smoke: PASS');
+} else if (process.argv.includes('--food-balance-save-only')) {
+  const result = await checkFoodBalanceSave();
+  console.log(`CHARTER ISLE v004 food balance save smoke: PASS ${JSON.stringify(result)}`);
 } else if (process.argv.includes('--market-rhythm-only')) {
   await checkMarketRhythmUi(1440, 900, false);
   await checkMarketRhythmUi(390, 844, true);
