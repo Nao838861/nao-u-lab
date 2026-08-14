@@ -169,7 +169,11 @@ const uiMetrics = {
 camera.setWorldSize(model.width, model.height);
 if (startMode === 'sandbox' && !startupSave) camera.zoom = 0.38;
 if (startMode === 'big-island' && !startupSave) camera.zoom = 0.28;
-if (START_MODES[startMode].blank || startMode === 'sandbox' || startMode === 'caravan') {
+if (START_MODES[startMode].blank || startMode === 'sandbox' || startMode === 'caravan'
+  || model.worldData?.startFocusExplicit) {
+  // 世界が明示の開始注視点を持つ場合(256×256のB2試験など)は必ずそこへ。
+  // 巨大マップで既定の中央(128,128)に置くと、町から遠い無人の平原だけが見えて
+  // 「何も出ない」ように見える(Nao_u報告 2026-08-15)。
   const startFocus = model.worldData?.startFocus ?? model.economyMarket;
   camera.focus(startFocus.x + 0.5, startFocus.y + 0.5);
 }
