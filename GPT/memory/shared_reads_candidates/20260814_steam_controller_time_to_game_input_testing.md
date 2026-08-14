@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/pc/-millimeters-matter-inside-the-steam-cont
 collected_at: "2026-08-14T09:46:28+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, controls, onboarding, playtesting, accessibility, hardware]
+evaluated_at: "2026-08-14T09:49:58+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-14T09:49:58+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-14T09:49:58+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-13"
+supersedes: []
+gate_reason: >-
+  初代の高い学習曲線を、既存の身体的慣習、time-to-game、数 mm 単位の形状比較、mixed input 検査へ分解した設計判断が具体的である。
+  定量比較はないが、問題設定・試作評価・結論とゲーム側の再現可能な検査項目が揃い、約4000字の概要と適用分析を根拠を薄めず構成できる。
+suggested_post_outline:
+  overview_angle: "新規入力の価値を残しつつ、既知の操作慣習と初回起動までの摩擦を設計対象に戻した Steam Controller の反復設計"
+  analysis_axis: "time-to-game、身体寸法差を拾う prototype 比較、既定値と customization の二層化、mixed input failure の4軸"
+  application_target: "Log_cdx の操作プロトタイプで、初回入力成立までの計測、対象プレイヤー別の配置比較、入力方式切替時の UI/state 回帰テストを同じ playtest checklist にする"
+  pros_cons: "既存慣習を足場に新規性を試せ、mm 単位の差と入力混在不具合を早期発見できる。一方、ハードウェア取材由来で定量結果がなく、個別ゲームへの閾値は別途検証が要る"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
