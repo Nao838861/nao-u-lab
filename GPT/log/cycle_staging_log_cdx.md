@@ -90,7 +90,71 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の High Signal / Recent / task・tag entry point を per-file atom index と照合。broken link / duplicate id は 0 件。"
+  - "atoms.jsonl / per-file md / atoms/index.jsonl は各 2875 件で mirror drift・parse error・index error・content conflict なし。normalized content duplicate 40 群は既存 overlay で fold 済み。"
+  - "30 日超の raw 240 件（70,573,817 bytes）を確認。内訳の中心は web_research 128 件、phase3_sources 17 件、headless_eval 16 件。いずれも原文または評価 evidence のため移動せず archive 候補として保持。"
+  - "candidate lifecycle 1296 件と title duplicate sidecar を監査・再生成。期限超過 2 件は既存 deferred group lease が 2026-08-20 まで有効なため、この cycle の再 enqueue は 0 件。"
+  - "slack_directives / slack_broadcasts の pending はともに 0 件。handled 変更なし。"
+issues:
+  - id: ISS-20260814-01
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』が『AIエ��ジェント』として保存され、memory_health の mojibake warning が残る。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl:492; memory_health mojibake_suspect_atoms"
+    source_file_status: "UTF-8 明示読みは成功したが、atom と raw source の双方に replacement character が実在する。表示経路だけの mojibake ではない。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "この1件では正しい『AIエージェント』語での完全一致検索が落ち、agent memory の過去比較へ到達しにくい。ただし他 atom と現行 recall smoke は正常。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+candidate_lifecycle:
+  files: 1296
+  counts:
+    posted: 611
+    ready_to_post: 9
+    postponed: 207
+    failed: 467
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_open_total: 2
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 7
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 37
+  mixed_group_count: 34
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  deferred_group_suppressions:
+    - group_key: "joint agent memory and exploration learning via novelty signals"
+      representative: memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+      retry_after: "2026-08-20T13:19:04+09:00"
+    - group_key: "an exploration of collision based enemy morphology generation"
+      representative: memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+      retry_after: "2026-08-20T13:19:04+09:00"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
