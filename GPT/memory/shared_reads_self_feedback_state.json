@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-14T10:01:24+09:00",
+  "updated_at": "2026-08-14T12:29:36+09:00",
   "reviewed_source_ts": [
+    "1786668938.237989",
     "1779971755.674859",
     "1779950173.173749",
     "1786647298.287999",
@@ -652,6 +653,46 @@
     "1786606286.694329"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-14T12:29:36+09:00",
+      "selected": {
+        "id": "sr-1786668938-30acc325a1",
+        "source_ts": "1786668938.237989",
+        "title": "Steam Controller の time to game と mixed-input state transition 設計",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、memory・harness・game-design・operation・evaluation の5優先タグを持つため1件だけ選んだ。既知の操作慣習、起動から最初の有効操作までの activation funnel、gamepad／mouse 切替時の state transition 検査が、次の input／onboarding prototype の判断を具体化できるか確認した。Nao_u が本 atom 自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で採用閾値と必須指標を満たす。shared-reads 本文は、既知の controller 慣習を初回成功の足場にすること、build 起動から移動と主 action の成立までを time-to-first-valid-action として測ること、完了率と離脱 step を分けること、既定 mapping と advanced customization を二層化すること、gamepad→mouse→gamepad・stick 保持中の mouse・disconnect 後の keyboard 復旧等を state-transition fixture にすることまで示すため actionability は3とした。一方、根拠は Valve 関係者への取材と公式資料に基づく具体的設計経緯だが、tester 数、profile 分布、variant ごとの成功率、継続疲労、time-to-game の before／after 値が非公開なので evidence は2に留める。probe-20260626-meta-horizon-friction-layer-triage は friction layer と observable cue、probe-20260603-mechanic-observation-channel-gate は input trace と人間観測の境界、probe-20260617-ai-onboarding-autonomy-support は摩擦低減と agency の分離、probe-20260621-q0-five-second-legibility は最初の playable moment の理解可能性をすでに扱う。ただし activation funnel の step 別離脱と mixed-input の focus／glyph／action dispatch 回帰は既存 control にないため non_redundancy は2とした。現在の staging には input／onboarding を変更する playable build、trace、fixture がなく、直後の Phase 4a memory cleanup では before／after の判断差を作れない。consumer_phase、比較可能な trigger_artifact、expected_delta を実態に即して指定できないため、lease 契約に従って adopt_probe／adopt_metric にせず state-only で defer する。次の該当 playable artifact が生じた時に、既存4 control で activation funnel または mixed-input failure を分類できない具体例があれば再評価する。",
+      "existing_controls": [
+        "probe-20260626-meta-horizon-friction-layer-triage",
+        "probe-20260603-mechanic-observation-channel-gate",
+        "probe-20260617-ai-onboarding-autonomy-support",
+        "probe-20260621-q0-five-second-legibility"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、activation funnel／mixed-input 回帰の有用性、既存 control との差分、比較可能な playable artifact 不在による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-14T10:01:24+09:00",
       "selected": {

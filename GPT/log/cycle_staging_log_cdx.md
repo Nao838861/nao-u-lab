@@ -59,7 +59,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786668938-30acc325a1
+    source_ts: "1786668938.237989"
+    title: "Steam Controller の time to game と mixed-input state transition 設計"
+    reason: "score 10 の未レビュー最新候補で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。activation funnel と mixed-input 回帰が次の input／onboarding 判断を具体化できるか、1件だけ確認した。Nao_u の本 atom への明示評価はない。"
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "採用閾値は満たすが、現在の staging に input／onboarding を変更する playable build、trace、fixture がなく、直後の Phase 4a memory cleanup で before／after 判断差を作れない。既存の friction-layer triage、observation-channel gate、onboarding autonomy、Q0 legibility と競合しない差分は activation funnel の step 別離脱と mixed-input の focus／glyph／action dispatch 回帰にあるが、consumer_phase・比較可能な trigger_artifact・expected_delta を実態に即して指定できないため、lease 契約に従い state-only review とする。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
