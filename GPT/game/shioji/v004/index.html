@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.60.0-b2-p2">
+  <link rel="stylesheet" href="./style.css?v=v004.61.0-b2-p3">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -352,7 +352,7 @@
       const reportFailure = detail => {
         if (!detail) return;
         const url = new URL('./boot-error.gif', window.location.href);
-        url.searchParams.set('build', 'v004.60.0-b2-p2');
+        url.searchParams.set('build', 'v004.61.0-b2-p3');
         url.searchParams.set('message', detail);
         url.searchParams.set('browser', navigator.userAgent.slice(0, 160));
         const image = new Image();
@@ -395,8 +395,8 @@
     const retryToken = new URL(window.location.href).searchParams.get('boot-retry');
     const preview = new URL(window.location.href).searchParams.get('map-preview') === 'b2';
     const entry = preview
-      ? './src/b2_map_preview.js?v=v004.60.0-b2-p2'
-      : './src/main.js?v=v004.60.0-b2-p2';
+      ? './src/b2_map_preview.js?v=v004.61.0-b2-p3'
+      : './src/main.js?v=v004.61.0-b2-p3';
     const moduleUrl = entry
       + (retryToken ? `&boot-retry=${encodeURIComponent(retryToken)}` : '');
     import(moduleUrl).catch(error => window.__SHIOJI_BOOT__?.failed(error));

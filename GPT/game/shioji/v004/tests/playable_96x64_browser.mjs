@@ -87,32 +87,35 @@ async function checkViewport(width, height, mobile) {
   await page.navigate(sandboxUrl);
   const fresh = await page.evaluate(`(() => {
     const game = window.__SHIOJI_V004__;
-    const markets = game.model.marketNetwork.markets;
+    const markets = game.controller.saveState().marketNetwork.markets;
     const main = markets.find(market => market.id === 'main');
-    const fishery = markets.find(market => market.id === 'fishery');
-    const projected = Object.fromEntries([main, fishery].map(market => [
-      market.id, game.camera.project(market.entrance.x + 0.5, market.entrance.y + 0.5),
-    ]));
+    const projectedMain = game.camera.project(main.entrance.x + 0.5, main.entrance.y + 0.5);
+    const focus = game.model.worldData.startFocus;
+    const projectedFocus = game.camera.project(focus.x + 0.5, focus.y + 0.5);
     return {
       version: game.version,
       mode: game.startMode,
       size: [game.model.width, game.model.height],
       markets: markets.map(market => market.name),
       zoom: game.camera.zoom,
-      mainAtCenter: Math.abs(projected.main.x - innerWidth / 2) < 2
-        && Math.abs(projected.main.y - innerHeight / 2) < 2,
-      fisheryVisible: projected.fishery.x >= 0 && projected.fishery.x <= innerWidth
-        && projected.fishery.y >= 0 && projected.fishery.y <= innerHeight,
+      focusAtCenter: Math.abs(projectedFocus.x - innerWidth / 2) < 2
+        && Math.abs(projectedFocus.y - innerHeight / 2) < 2,
+      mainVisible: projectedMain.x >= 0 && projectedMain.x <= innerWidth
+        && projectedMain.y >= 0 && projectedMain.y <= innerHeight,
+      households: game.model.households.length,
+      buildings: game.model.buildings.length,
       bootFailure: document.querySelector('#boot-status')?.dataset.state === 'failed',
     };
   })()`);
-  assert.equal(fresh.version, 'v004.60.0-b2-p2', JSON.stringify(fresh));
+  assert.equal(fresh.version, 'v004.61.0-b2-p3', JSON.stringify(fresh));
   assert.equal(fresh.mode, 'sandbox', JSON.stringify(fresh));
-  assert.deepEqual(fresh.size, [96, 64], JSON.stringify(fresh));
-  assert.deepEqual(fresh.markets, ['母港市場', '漁郷市場'], JSON.stringify(fresh));
-  assert.equal(fresh.zoom, 0.38, JSON.stringify(fresh));
-  assert.equal(fresh.mainAtCenter, true, JSON.stringify(fresh));
-  if (!mobile) assert.equal(fresh.fisheryVisible, true, JSON.stringify(fresh));
+  assert.deepEqual(fresh.size, [256, 256], JSON.stringify(fresh));
+  assert.deepEqual(fresh.markets, ['母港市場'], JSON.stringify(fresh));
+  assert.equal(fresh.zoom, 0.28, JSON.stringify(fresh));
+  assert.equal(fresh.focusAtCenter, true, JSON.stringify(fresh));
+  assert.equal(fresh.mainVisible, true, JSON.stringify(fresh));
+  assert.equal(fresh.households, 12, JSON.stringify(fresh));
+  assert.ok(fresh.buildings >= 15, JSON.stringify(fresh));
   assert.equal(fresh.bootFailure, false, JSON.stringify(fresh));
 
   await page.navigate(`${ROOT}?mode=tutorial&legacy-fixture=1`);

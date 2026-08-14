@@ -29,7 +29,8 @@ import { developmentMapView } from '../src/development_map.js';
 import {
   BUILD_COST_DENARI, E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS,
   applySpringStartCalendar, buildBlankCity, buildPlayableSandboxWorld,
-  buildTutorialTwoMarketWorld, buildWorldScaleFoundation, createEngineController,
+  buildTutorialTwoMarketWorld, buildWorldScaleFoundation,
+  createEngineController as createRawEngineController,
 } from '../src/engine_bridge.js';
 import {
   EVENT_DISPLAY_POLICY, OBSERVED_EVENT_TYPES, eventPlaceLabel, hasEventPresentation,
@@ -115,6 +116,20 @@ import {
 let passed = 0;
 const failures = [];
 let tutorialThroughPlay = null;
+const B2_MAP_DEFINITION = parseB2MapData(JSON.parse(fs.readFileSync(
+  new URL('../../design/map_b2/b2_map_data.json', import.meta.url),
+  'utf8',
+)));
+
+function createEngineController(options = {}) {
+  const b2Mode = ['tutorial', 'sandbox', 'big-island'].includes(options.mode);
+  return createRawEngineController({
+    ...options,
+    b2MapDefinition: options.stateSnapshot || !b2Mode
+      ? options.b2MapDefinition
+      : options.b2MapDefinition ?? B2_MAP_DEFINITION,
+  });
+}
 const PROFITABLE_ORDER_OBSERVATION_DAYS = 400;
 const SKIPPABLE_ORDER_OBSERVATION_DAYS = 600;
 const suiteStartedAt = performance.now();
@@ -960,21 +975,16 @@ test('チュートリアル段3: skipは同じ世界とjournalを保ったまま
   assert.deepEqual(completionDirector.currentObjective().progress, { done: 1, total: 1 });
 });
 
-test('チュートリアル段4: tutorialは96×64の母港と既存漁郷へディレクターだけを重ねる', () => {
+test('チュートリアル段4: tutorialは256×256の母港市場から始まり他市場を種付けしない', () => {
   const tutorial = createEngineController({ seed: 11, mode: 'tutorial' });
   const model = tutorial.readModel();
-  assert.deepEqual([model.width, model.height], [96, 64]);
+  assert.deepEqual([model.width, model.height], [256, 256]);
+  assert.deepEqual(model.worldData.startFocus, { x: 104, y: 201 });
   assert.equal(model.buildings.filter(building => building.roles.includes('port')).length, 1);
-  assert.equal(model.buildings.filter(building => building.roles.includes('market')).length, 0,
-    '母港市場は第一章で建てる');
-  assert.equal(model.buildings.filter(building => building.marketId === 'fishery').length, 5,
-    '漁郷市場・漁師3軒・塩田1軒を初日から実在させる');
-  assert.deepEqual(model.households.filter(household => household.marketId === 'fishery')
-    .map(household => household.job), ['fisher', 'fisher', 'fisher', 'saltworks']);
-  assert.equal(model.households.filter(household => household.marketId === 'main').length, 0);
-  assert.equal(model.households.filter(household => household.marketId === 'fishery')
-    .every(household => household.pantry.find(row => row.goods === 'wheat').amount === 0), true);
-  assert.equal(model.companyCarts.length, 1, '開拓会社の貸与荷車を初期資産にする');
+  assert.equal(model.buildings.filter(building => building.roles.includes('market')).length, 1);
+  assert.deepEqual(tutorial.saveState().marketNetwork.markets.map(market => market.id), ['main']);
+  assert.equal(model.households.length, 12);
+  assert.equal(model.households.every(household => household.marketId === 'main'), true);
   const director = createTutorialDirectorForMode('tutorial');
   director.observe(model, []);
   assert.equal(director.currentObjective().id, 'first-road-and-logger');
@@ -2591,7 +2601,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.60.0-b2-p2');
+  assert.equal(VERSION, 'v004.61.0-b2-p3');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2753,7 +2763,7 @@ function measureLoggerRoadRecovery(seed) {
   return { seed, before, after, director };
 }
 
-test('開始選択: 教程・自由96×64・大きな島・見本町・二市場縦切りを選べる', () => {
+test('開始選択: 本編の教程・自由は256×256で始まり、旧48×40/96×64保存は元の島で続く', () => {
   assert.deepEqual(Object.keys(START_MODES), ['tutorial', 'sandbox', 'big-island', 'test', 'caravan']);
   const tutorial = createEngineController({ seed: 11, mode: 'tutorial' });
   const sandbox = createEngineController({ seed: 11, mode: 'sandbox' });
@@ -2781,24 +2791,32 @@ test('開始選択: 教程・自由96×64・大きな島・見本町・二市場
   assert.equal(resumed.calendarOffsetDays, SPRING_START_CALENDAR_OFFSET_DAYS,
     '春開始後の保存は暦オフセットを保って再開する');
   const blank = tutorial.readModel();
-  assert.deepEqual([blank.width, blank.height], [96, 64]);
+  assert.deepEqual([blank.width, blank.height], [256, 256]);
   assert.equal(blank.buildings.filter(building => building.roles.includes('port')).length, 1);
-  assert.equal(blank.buildings.filter(building => building.marketId === 'fishery').length, 5);
-  assert.equal(blank.households.filter(household => household.marketId === 'main').length, 0);
-  assert.equal(blank.households.filter(household => household.marketId === 'fishery').length, 4);
-  assert.ok(blank.roadKeys.length > 0, '既存漁郷と母港予定地の街道を初日から持つ');
+  assert.equal(blank.buildings.filter(building => building.roles.includes('market')).length, 1);
+  assert.deepEqual(tutorial.saveState().marketNetwork.markets.map(market => market.id), ['main']);
+  assert.equal(blank.households.every(household => household.marketId === 'main'), true);
+  assert.ok(blank.roadKeys.length > 0, '母港内の港・市場・開始産業を道で結ぶ');
   assert.deepEqual(PLACEMENT_JOBS.slice(0, 2), ['market', 'warehouse']);
-  assert.deepEqual([sandbox.readModel().width, sandbox.readModel().height], [96, 64]);
+  assert.deepEqual([sandbox.readModel().width, sandbox.readModel().height], [256, 256]);
   assert.deepEqual(
-    sandbox.readModel().marketNetwork.markets.map(market => market.name),
-    ['母港市場', '漁郷市場'],
+    sandbox.saveState().marketNetwork.markets.map(market => market.name),
+    ['母港市場'],
   );
-  assert.ok(sandbox.readModel().buildings.some(building => building.type === 'carter'));
   assert.ok(sandbox.readModel().buildings.some(building => building.type === 'cartwright'));
   assert.deepEqual(
     sandbox.saveState(),
-    applySpringStartCalendar(buildPlayableSandboxWorld(11)).state,
+    createEngineController({ seed: 11, mode: 'big-island' }).saveState(),
   );
+
+  const old96State = applySpringStartCalendar(buildPlayableSandboxWorld(11)).state;
+  const old96Sandbox = createEngineController({
+    mode: 'sandbox', stateSnapshot: structuredClone(old96State),
+  }).readModel();
+  assert.deepEqual([old96Sandbox.width, old96Sandbox.height], [96, 64],
+    '既存の96×64自由セーブは同じ島で再開する');
+  assert.deepEqual(old96Sandbox.marketNetwork?.markets?.map(market => market.id) ?? [],
+    ['main', 'fishery']);
 
   const oldSandboxState = applySpringStartCalendar(buildBlankCity(11)).state;
   const oldSandbox = createEngineController({

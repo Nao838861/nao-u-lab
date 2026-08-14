@@ -1,20 +1,20 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.60.0-b2-p2';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.61.0-b2-p3';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.60.0-b2-p2';
+} from './food_readability.js?v=v004.61.0-b2-p3';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   findTravelPath, householdProductionSummary, laborWage, productionCost,
-} from './engine_bridge.js?v=v004.60.0-b2-p2';
-import { analyzeRoadConnections } from './placement.js?v=v004.60.0-b2-p2';
+} from './engine_bridge.js?v=v004.61.0-b2-p3';
+import { analyzeRoadConnections } from './placement.js?v=v004.61.0-b2-p3';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.60.0-b2-p2';
+} from './render_scene.js?v=v004.61.0-b2-p3';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.60.0-b2-p2';
-import { GOODS_RECIPES } from './goods_detail.js?v=v004.60.0-b2-p2';
+} from './visuals.js?v=v004.61.0-b2-p3';
+import { GOODS_RECIPES } from './goods_detail.js?v=v004.61.0-b2-p3';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',

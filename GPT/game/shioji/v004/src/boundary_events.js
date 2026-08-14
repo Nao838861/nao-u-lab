@@ -4,8 +4,8 @@ import {
   foodProductionBalance,
   foodShortageGoods,
   islandFoodSummary,
-} from './food_readability.js?v=v004.60.0-b2-p2';
-import { islandCalendar } from './ui_summary.js?v=v004.60.0-b2-p2';
+} from './food_readability.js?v=v004.61.0-b2-p3';
+import { islandCalendar } from './ui_summary.js?v=v004.61.0-b2-p3';
 
 export const BOUNDARY_EVENT_STATE_VERSION = 1;
 export const FOOD_RUNWAY_THRESHOLD_DAYS = 14;

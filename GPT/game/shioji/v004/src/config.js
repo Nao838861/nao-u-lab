@@ -1,4 +1,4 @@
-export const VERSION = 'v004.60.0-b2-p2';
+export const VERSION = 'v004.61.0-b2-p3';
 
 // 経済エンジンの貨幣値は表示単位の1/10。UIへ出す時だけデナリへ直す。
 export const DENARI_PER_MONEY_UNIT = 10;
