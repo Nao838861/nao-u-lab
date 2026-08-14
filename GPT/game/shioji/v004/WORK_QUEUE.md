@@ -10,6 +10,7 @@
 4. **【実装・自動監査完了 v004.51.0／実プレイ判定待ち】隊商S6処方3件→1年再実測→再監査**: [../decisions/DECISIONS_20260812_oil_and_caravan_s6.md](../decisions/DECISIONS_20260812_oil_and_caravan_s6.md)。複数品目路線UI・路線別の売れない理由・給料相場／月額を実装。一年比較、貨幣保存、PC／スマホ合格。最終判定は項目8でNao_uが実プレイ
 4b. **【完了 v004.53.0】教程の新章「二つ目の市場」**: [../decisions/DECISIONS_20260813_tutorial_second_market.md](../decisions/DECISIONS_20260813_tutorial_second_market.md)。新規教程を96×64の同一島へ移し、初日から漁郷市場・漁師3軒・塩田1軒を実在させた。母港では麦畑を自分で建て、隊商宿の募集・日給・路線を既存操作で設定する。全章通しで麦8荷→魚8荷→漁郷の実購入→会計→卒業、journal再生一致を確認
 5. **【完了 v004.52.0】需要網の残裁定**: [../decisions/DECISIONS_20260811_demand_rulings.md](../decisions/DECISIONS_20260811_demand_rulings.md)——魚粉FERT型(裁定2)・銑鉄重修繕(裁定3)・肉の塩漬け(裁定4)・**油の退役**(20260812裁定)を実装。会社施設修繕(裁定1)も銑鉄接続まで完了
+5b'. **【緊急・5cより先】階段価格の暴走修正**: [BUG_20260814_PRICE_RUNAWAY.md](BUG_20260814_PRICE_RUNAWAY.md)。px.veg=1232/px.wheat=0.227の発散で市場全面凍結（Nao_u実プレイday249）。階段を積分器から有界関数へ・錨の徹底・暴走assert追加。256移行(5c)は価格層が正気であることが前提
 5c. **【Nao_u指示・最上位】256×256全面移行（統括・最後まで）**: [WORK_ORDER_20260814_B2_FULL_REBUILD.md](WORK_ORDER_20260814_B2_FULL_REBUILD.md)。P1基盤→P2地形機構(mountain通行不可・肥沃度・A-3ローカル漁場・3年枯渇)→P3開始モード→P4教程移植→P5較正再構築→P6総仕上げ→**P7🛑停止(Nao_u実プレイ=キュー8の関門を兼ねる)**。マップはv1.2(修正はMir生成器経由)。旧オーダーWORK_ORDER_20260814_B2_MAP_INGAMEは本オーダーに包含
 6. **【完了 v004.53.0】長期帯の再構築**: 新比率の成熟都市で8年帯を作り直し（既知赤の再較正とセット・裁定10）
 7. **【完了 v004.54.0】原因可読パック**: [WORK_ORDER_20260813_CAUSE_READABLE_PANEL.md](WORK_ORDER_20260813_CAUSE_READABLE_PANEL.md)実績欄参照。価格不一致、建築合図どおりの30日改善回帰、PC／スマホ実Chromeの上流カード遷移と配置プレビュー、バージョン一括昇版まで完了
