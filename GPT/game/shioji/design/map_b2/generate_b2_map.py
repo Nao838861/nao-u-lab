@@ -57,7 +57,8 @@ island &= ~blob(242, 112, 30, wobble=0.3)     # 北東の入り江(広大な漁�
 island &= ~blob(150, 236, 18, wobble=0.35)    # 南の入り江(母港と新漁港の間)
 # 枠は直線で切らない: ノイズ入りの海マージン(14〜26タイル)で有機的に沈める
 border = np.minimum.reduce([xx, yy, (N-1) - xx, (N-1) - yy]).astype(float)
-island &= border > (15 + (fbm(404) + 1) * 6)
+coast_noise = (value_noise(24, 404) * 1.0 + value_noise(12, 405) * 0.6 + value_noise(6, 406) * 0.3) / 1.9
+island &= border > (13 + (coast_noise + 1) * 9)
 
 terrain = np.full((N, N), SEA, dtype=np.int16)
 terrain[island] = GRASS  # islandはこの後の北の潟の切除で更新される
@@ -113,15 +114,15 @@ fert2core = blob(134, 102, 14, wobble=0.2) & fert1
 north_basin = (blob(130, 46, 44, wobble=0.2) | blob(90, 50, 24, wobble=0.25) | blob(180, 50, 22, wobble=0.25))
 north_basin &= island & ~mountains & (yy < 70 + (fbm(505) + 1) * 7)  # 南縁は直線にしない
 fert2north = blob(126, 44, 20, wobble=0.25) & north_basin                # 北のコアは中央より広い
-fert_sw = blob(66, 176, 10, wobble=0.18) & island & ~mountains           # 第二の盆地(近いが狭い)
+fert_sw = blob(192, 172, 10, wobble=0.25) & island & ~mountains          # 第二の盆地(漁港の北の後背地・狭い)
 fert_port = blob(100, 192, 6, wobble=0.2) & island & ~mountains          # 母港のわずかな畑(人口150の上限の根拠)
 terrain[fert1 | fert_sw | north_basin | fert_port] = FERT1
 terrain[fert2core | fert2north] = FERT2
 # ── 4. 森(燃料と木材・前線が動く場) ──
 forest = np.zeros((N, N), bool)
-for cx, cy, r in [(96, 158, 15), (140, 170, 14), (78, 140, 11),          # 盆地の南縁の帯
-                  (100, 214, 5), (82, 200, 5),                            # 母港のすぐ側の小さな森(約3年で尽きる較正)
-                  (86, 108, 10), (150, 110, 9), (208, 116, 9),           # 丘陵の裾
+for cx, cy, r in [(114, 88, 11), (134, 84, 10), (152, 88, 10), (166, 94, 9),  # 2の北側・丘陵の門の手前に集中
+                  (98, 212, 4), (84, 202, 4),                             # 母港のすぐ側のごく小さな森(約3年で尽きる較正)
+                  (100, 150, 7), (208, 116, 8),                           # 点在の小さな林
                   (108, 42, 8), (166, 40, 7)]:                             # 北の少しの木
     forest |= blob(cx, cy, r, wobble=0.2)
 forest &= island & ~mountains & ~fert2core & ~fert2north & ~pocket
@@ -166,7 +167,7 @@ sea_ok = ~island
 # 後半用の広大な漁場: 東〜北東の沖を一続きの豊かな帯に
 fish_rich |= (blob(238, 150, 22, wobble=0.3) | blob(246, 118, 24, wobble=0.3)
               | blob(240, 88, 20, wobble=0.3)) & sea_ok
-fish_rich |= blob(204, 218, 13, wobble=0.3) & sea_ok     # 新漁港(南東)の沖: 6より大きく8より小さい
+fish_rich |= blob(214, 230, 14, wobble=0.3) & sea_ok     # 新漁港(南東)の沖: 6より大きく8より小さい
 fish_mid  |= blob(88, 222, 8, wobble=0.3) & sea_ok        # 母港の湾内の小規模漁場(約3年で痩せる較正)
 fish_mid  |= blob(148, 24, 8, wobble=0.3) & sea_ok        # 北の潟(終盤のわずかな海)
 
@@ -178,7 +179,7 @@ MARKETS = {  # id: (x, y, 名前)
     4: (54, 132, '山間鉱山(西)'),
 }
 CANDIDATES = {
-    5: (66, 176, '第二の盆地(近いが狭い)'),
+    5: (192, 172, '第二の盆地(漁港の北・狭い)'),
     6: (97, 214, '母港の漁場(湾内・小・3年で痩せる)'),
     7: (128, 48, '北の大盆地(終盤の約束の土地)'),
     8: (226, 130, '東の大漁場(後半・広大)'),
