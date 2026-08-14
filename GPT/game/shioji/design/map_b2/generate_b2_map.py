@@ -59,6 +59,8 @@ island &= ~blob(150, 236, 18, wobble=0.35)    # 南の入り江(母港と新漁�
 border = np.minimum.reduce([xx, yy, (N-1) - xx, (N-1) - yy]).astype(float)
 coast_noise = (value_noise(24, 404) * 1.0 + value_noise(12, 405) * 0.6 + value_noise(6, 406) * 0.3) / 1.9
 island &= border > (13 + (coast_noise + 1) * 9)
+for cx, cy, r in [(44, 76, 3), (236, 196, 3), (126, 244, 2), (32, 168, 2)]:  # 沖の小さな岩礁
+    island |= blob(cx, cy, r, wobble=0.5)
 
 terrain = np.full((N, N), SEA, dtype=np.int16)
 terrain[island] = GRASS  # islandはこの後の北の潟の切除で更新される
@@ -87,8 +89,10 @@ mountains |= hill_line          # 北への門: x≈110-124(西口) と x≈154-
 for cx, cy, r in [(182, 106, 13), (188, 124, 13), (192, 142, 12), (194, 158, 11)]:
     mountains |= blob(cx, cy, r, wobble=0.25)
 # 西の山地(山間鉱山の新しい家): ポケットを抱く峠ロックの小山塊
+west_massif = np.zeros((N, N), bool)
 for cx, cy, r in [(48, 124, 15), (62, 112, 13), (66, 138, 13), (50, 150, 12)]:
-    mountains |= blob(cx, cy, r, wobble=0.15)
+    west_massif |= blob(cx, cy, r, wobble=0.15)
+mountains |= west_massif
 pocket = blob(54, 132, 9, wobble=0.15)
 mountains &= ~pocket
 # 1・2・3の間の丘(空白を埋める自然地形。低い岩場の背・通行は周囲を回れる)
@@ -106,6 +110,12 @@ def corridor(x0, y0, x1, y1, width=4):
 passes = np.zeros((N, N), bool)
 passes |= corridor(84, 142, 60, 136)      # P1: 平野→西の鉱山
 passes |= corridor(178, 138, 200, 136)    # P2: 盆地→東海岸(後半漁場への近道)
+fine = value_noise(10, 601) + value_noise(5, 602) * 0.5
+m_edge_out = dilate0(mountains, 1) & ~mountains
+m_edge_in = mountains & dilate0(~mountains, 1)
+mountains |= m_edge_out & (fine > 0.32)
+structural = north_rim | west_massif | hill_line   # 構造壁は侵食しない(抜け道・峠ロック破りの防止)
+mountains &= ~(m_edge_in & (fine < -0.4) & ~structural)
 mountains &= ~passes
 island &= ~island_cut
 mountains &= island
@@ -124,7 +134,7 @@ terrain[fert2core | fert2north] = FERT2
 # ── 4. 森(燃料と木材・前線が動く場) ──
 forest = np.zeros((N, N), bool)
 for cx, cy, r in [(114, 88, 11), (134, 84, 10), (152, 88, 10), (166, 94, 9),  # 2の北側・丘陵の門の手前に集中
-                  (101, 196, 5), (79, 202, 4),                            # 母港のそばの小さな森(教程の距離感・3年で尽きる)
+                  (104, 191, 5), (82, 196, 4),                            # 母港のそばの小さな森(教程の距離感・3年で尽きる)
                   (134, 148, 10), (146, 156, 9), (128, 158, 8),           # 1と3の中間の森(不定形の複数塊)
                   (152, 142, 7), (122, 146, 6), (142, 166, 7),
                   (208, 116, 8), (108, 42, 8), (166, 40, 7)]:              # 東の小さな林・北の少しの木
@@ -140,10 +150,10 @@ def dilate(mask, n=1):
         out = out | np.roll(out, 1, 0) | np.roll(out, -1, 0) | np.roll(out, 1, 1) | np.roll(out, -1, 1)
     return out
 
-coast_land = island & dilate(~island, 2)
+coast_land = island & (dilate(~island, 1) | (dilate(~island, 3) & (fine > 0.15)))
 sand = coast_land & (terrain == GRASS)
 terrain[sand] = SAND
-shallow = ~island & dilate(island, 3)
+shallow = ~island & (dilate(island, 2) | (dilate(island, 4) & (fine < 0.1)))
 terrain[shallow & (terrain == SEA)] = SHALLOW
 
 # ── 6. 鉱床(山際にだけ現れる) ──
@@ -243,6 +253,23 @@ def bfs2(grid, sx, sy):
     return dist
 d_blocked = bfs2(blocked, *MARKETS[1][:2])
 print('峠を全て塞いだ場合の山間鉱山:', '到達不能(峠が唯一の道) OK' if d_blocked[MARKETS[4][1], MARKETS[4][0]] < 0 else f'{d_blocked[MARKETS[4][1], MARKETS[4][0]]}タイルで到達=山が漏れている NG')
+
+# ── 9.5 自然化パス: 森と畑の縁をノイズで出入りさせる ──
+fine2 = value_noise(8, 701) + value_noise(4, 702) * 0.5
+forest_mask = terrain == FOREST
+grow = dilate(forest_mask, 1) & ~forest_mask & (fine2 > 0.35) & island & ~mountains
+grow &= (terrain == GRASS) | (terrain == FERT1)
+terrain[grow] = FOREST
+shrink = forest_mask & dilate(~forest_mask, 1) & (fine2 < -0.4)
+terrain[shrink] = GRASS
+coast3 = island & dilate(~island, 3)
+terrain[(terrain == FOREST) & coast3] = GRASS   # 海際3タイルに森は生えない(1の森が海に接する違和感の恒久対策)
+for hi, lo in [(FERT2, FERT1), (FERT1, GRASS)]:
+    hi_mask = terrain == hi
+    edge = hi_mask & dilate(terrain == lo, 1)
+    terrain[edge & (fine2 < -0.35)] = lo
+    outer = (terrain == lo) & dilate(hi_mask, 1)
+    terrain[outer & (fine2 > 0.45)] = hi
 
 # ── 10. 描画 ──
 HIGHMOUNT = (86, 82, 78)
