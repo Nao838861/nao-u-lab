@@ -202,11 +202,28 @@ export function makeMultiMarketTerrain(width = 96, height = 64) {
         && ((x * 7 + y * 13) % 5 < 3)) kind = "forest";
       if (kind === "grass" && easternOre && ((x * 5 + y * 3) % 4 < 2)) kind = "ore";
       if (kind === "grass" && easternCoal && ((x * 11 + y * 7) % 5 < 2)) kind = "coal";
-      row.push({ kind, variant: (x * 17 + y * 31) % 4 });
+      const fishery = kind === "water"
+        ? (x >= width - 6 ? "bay2" : "bay")
+        : null;
+      row.push({
+        kind,
+        variant: (x * 17 + y * 31) % 4,
+        ...(fishery ? { fishery, fishStage: 3 } : {}),
+      });
     }
     terrain.push(row);
   }
   return terrain;
+}
+
+export function makeEmptyWorldTerrain(width = 256, height = 256) {
+  if (!Number.isSafeInteger(width) || !Number.isSafeInteger(height) || width <= 0 || height <= 0) {
+    throw new TypeError("world terrain size must use positive safe integers");
+  }
+  return Array.from({ length: height }, (_, y) => Array.from({ length: width }, (_, x) => ({
+    kind: "grass",
+    variant: (x * 17 + y * 31) % 4,
+  })));
 }
 
 export function createPhysicalState({
@@ -214,10 +231,21 @@ export function createPhysicalState({
   height = V003_GRID.height,
   terrain = makeV003Terrain(width, height),
   roadOrigin = null,
+  startFocus = null,
 } = {}) {
+  const resolvedStartFocus = startFocus ?? { x: width / 2, y: height / 2 };
+  if (!Number.isFinite(resolvedStartFocus.x) || !Number.isFinite(resolvedStartFocus.y)) {
+    throw new TypeError("world start focus must be finite");
+  }
   return {
     width,
     height,
+    worldData: {
+      width,
+      height,
+      startFocus: { x: resolvedStartFocus.x, y: resolvedStartFocus.y },
+      startFocusExplicit: Boolean(startFocus),
+    },
     terrain,
     roads: {},
     pavedRoads: {},

@@ -11,7 +11,7 @@ import {
   localWood,
   recordEconomicMaterialFlow,
   setCaravanEmployment,
-} from "./econ.js?v=v004.54.0-cause-readable";
+} from "./econ.js?v=v004.55.0-world-foundation";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -25,10 +25,11 @@ import {
   findBuildingSiteForEntrance,
   hasRoad,
   makeFlowIslandTerrain,
+  makeEmptyWorldTerrain,
   makeMultiMarketTerrain,
   pathLen,
-} from "./physical.js?v=v004.54.0-cause-readable";
-import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.54.0-cause-readable";
+} from "./physical.js?v=v004.55.0-world-foundation";
+import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.55.0-world-foundation";
 
 export const AUDIT_SEEDS = Object.freeze([11, 13, 14]);
 
@@ -480,6 +481,58 @@ export function buildDemandMatureCity(seed, { marketEntrance = E_STABLE_MARKET_A
 }
 
 export const CARAVAN_SLICE_SIZE = Object.freeze({ width: 96, height: 64 });
+
+export const WORLD_SCALE_FOUNDATION = Object.freeze({
+  width: 256,
+  height: 256,
+  households: 150,
+  peoplePerHousehold: 5,
+  startFocus: Object.freeze({ x: 128, y: 128 }),
+});
+
+// B-0の性能fixture。これは手設計マップではなく、Mirの地図データを受ける前に
+// 世界サイズ・人口・描画経路だけを検証する空地形である。
+export function buildWorldScaleFoundation(seed = 11) {
+  const definition = WORLD_SCALE_FOUNDATION;
+  const physical = createPhysicalState({
+    width: definition.width,
+    height: definition.height,
+    terrain: makeEmptyWorldTerrain(definition.width, definition.height),
+    startFocus: definition.startFocus,
+  });
+  const world = createWorld({
+    seed,
+    physicalState: physical,
+    market: { ...definition.startFocus },
+    logisticsSites: {},
+  });
+  for (let index = 0; index < definition.households; index += 1) {
+    const column = index % 15;
+    const row = Math.floor(index / 15);
+    // 空地形で資源探索職を走らせると「資源なし全域走査」の測定になり、B-0の
+    // 世界寸法・人口・描画負荷スパイクと目的が混ざる。中立な畑世帯に固定する。
+    const job = "wheat";
+    const x = 54 + column * 5;
+    const y = 92 + row * 5;
+    const buildingX = x;
+    const buildingY = y;
+    const entrance = { x: x + 1, y: y - 1 };
+    const placed = addBuilding(physical, job, buildingX, buildingY, {
+      definitions: ECONOMIC_BUILDINGS,
+      entrance,
+      requireRoad: false,
+    });
+    if (!placed.ok) throw new Error(`B-0世帯fixture配置不可: ${index}/${placed.reason}`);
+    const household = createHousehold(world.state.economy, { job, ...entrance });
+    household.members = household.members.slice(0, definition.peoplePerHousehold);
+    household.buildingId = placed.building.id;
+    placed.building.ownerHouseholdId = household.id;
+    placed.building.marketId = "main";
+    placed.building.constructionConsumed = true;
+  }
+  return world;
+}
+
 export const CARAVAN_SLICE_PROVISION_DAYS = 360;
 export const CARAVAN_SLICE_CARTWRIGHT_PROVISION_DAYS = 420;
 export const CARAVAN_SLICE_CARTWRIGHT_START_CARTS = Math.ceil(

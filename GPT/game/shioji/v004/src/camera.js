@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.54.0-cause-readable';
+import { TILE } from './config.js?v=v004.55.0-world-foundation';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

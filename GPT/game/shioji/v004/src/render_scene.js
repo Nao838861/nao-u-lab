@@ -7,6 +7,50 @@ function parseTileKey(key) {
 }
 
 const SCENE_TOPOLOGIES = new WeakMap();
+const SPATIAL_BUCKET_SIZE = 16;
+
+function bucketKey(x, y) {
+  return `${x},${y}`;
+}
+
+function compileSpatialBuckets(rows, bucketSize = SPATIAL_BUCKET_SIZE) {
+  const buckets = {};
+  for (const row of rows) {
+    const bounds = row.bounds ?? row;
+    const minX = Math.floor(bounds.x / bucketSize);
+    const maxX = Math.floor((bounds.x + (bounds.width ?? 1)) / bucketSize);
+    const minY = Math.floor(bounds.y / bucketSize);
+    const maxY = Math.floor((bounds.y + (bounds.height ?? 1)) / bucketSize);
+    for (let bucketY = minY; bucketY <= maxY; bucketY += 1) {
+      for (let bucketX = minX; bucketX <= maxX; bucketX += 1) {
+        const key = bucketKey(bucketX, bucketY);
+        (buckets[key] ??= []).push(row);
+      }
+    }
+  }
+  return Object.freeze({ bucketSize, buckets: Object.freeze(buckets) });
+}
+
+export function sceneRowsInBounds(scene, bounds) {
+  const index = scene?.staticSpatialIndex;
+  if (!index || !bounds) return scene?.staticDrawables ?? [];
+  const minX = Math.floor(bounds.minX / index.bucketSize);
+  const maxX = Math.floor(bounds.maxX / index.bucketSize);
+  const minY = Math.floor(bounds.minY / index.bucketSize);
+  const maxY = Math.floor(bounds.maxY / index.bucketSize);
+  const seen = new Set();
+  const rows = [];
+  for (let bucketY = minY; bucketY <= maxY; bucketY += 1) {
+    for (let bucketX = minX; bucketX <= maxX; bucketX += 1) {
+      for (const row of index.buckets[bucketKey(bucketX, bucketY)] ?? []) {
+        if (seen.has(row)) continue;
+        seen.add(row);
+        rows.push(row);
+      }
+    }
+  }
+  return rows.sort((left, right) => left.depth - right.depth);
+}
 
 export function buildingLayerDepth(building) {
   return building.x + building.width + building.y + building.height;
@@ -27,7 +71,7 @@ function compileTerrainLayer(model, occupied) {
   for (let y = 0; y < model.height; y += 1) {
     for (let x = 0; x < model.width; x += 1) {
       const tile = model.terrain[y][x];
-      const value = `${tile.kind}:${tile.variant ?? 0}:${tile.wood ?? 3};`;
+      const value = `${tile.kind}:${tile.variant ?? 0}:${tile.wood ?? 3}:${tile.fishery ?? ''}:${tile.fishStage ?? 3};`;
       for (let index = 0; index < value.length; index += 1) {
         const code = value.charCodeAt(index);
         primary = Math.imul(primary ^ code, 16777619);
@@ -46,6 +90,17 @@ function compileTerrainLayer(model, occupied) {
           kind: 'rock',
           data: { x, y, type: tile.kind },
           depth: x + y + 1,
+          bounds: { x, y, width: 1, height: 1 },
+        });
+      } else if (tile.kind === 'water' && tile.fishery
+        && (tile.fishStage ?? 3) > 0 && (x * 5 + y * 7) % 5 < (tile.fishStage ?? 3)) {
+        naturalDrawables.push({
+          kind: 'fish_school',
+          data: {
+            x, y, fishery: tile.fishery, stage: tile.fishStage ?? 3,
+            variant: tile.variant ?? 0,
+          },
+          depth: x + y + 0.5,
           bounds: { x, y, width: 1, height: 1 },
         });
       }
@@ -176,6 +231,9 @@ export function compileRenderScene(
   const scene = {
     terrainKey: terrainLayer.key,
     staticDrawables: staticRows,
+    // 256×256でも毎frame全世界の自然物をmergeしない。描画互換の全行は残し、
+    // camera周辺だけを16tile bucketから読む。
+    staticSpatialIndex: compileSpatialBuckets(staticRows),
     roadRows: roads.rows,
     roadSegments: roads.segments,
     trailRows: trails,

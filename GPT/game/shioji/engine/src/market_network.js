@@ -1,4 +1,4 @@
-import { buildingById, pathLen } from "./physical.js?v=v004.54.0-cause-readable";
+import { buildingById, pathLen } from "./physical.js?v=v004.55.0-world-foundation";
 
 const DEFAULT_HYSTERESIS = 0.12;
 const EPSILON = 1e-9;

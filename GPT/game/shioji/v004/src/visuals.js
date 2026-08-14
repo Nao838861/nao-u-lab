@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.54.0-cause-readable';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.55.0-world-foundation';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({

@@ -8,7 +8,7 @@ import {
   requestMainlandAid,
   setCaravanEmployment,
   setCompanyStockTarget,
-} from "./econ.js?v=v004.54.0-cause-readable";
+} from "./econ.js?v=v004.55.0-world-foundation";
 import {
   activePortCalls,
   addRoadLine,
@@ -16,14 +16,14 @@ import {
   haulJobById,
   removeBuilding,
   removeRoadTile,
-} from "./physical.js?v=v004.54.0-cause-readable";
-import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.54.0-cause-readable";
+} from "./physical.js?v=v004.55.0-world-foundation";
+import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.55.0-world-foundation";
 import {
   forgetCompanyLogisticsBuilding,
   placeCompanyLogisticsBuilding,
-} from "./world.js?v=v004.54.0-cause-readable";
-import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.54.0-cause-readable";
-import { configureCaravanRoute } from "./routes.js?v=v004.54.0-cause-readable";
+} from "./world.js?v=v004.55.0-world-foundation";
+import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.55.0-world-foundation";
+import { configureCaravanRoute } from "./routes.js?v=v004.55.0-world-foundation";
 
 function jsonClone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -64,6 +64,7 @@ function controllerSnapshot(state, { includePhysical = false } = {}) {
     snapshot.physical = {
       width: physical.width,
       height: physical.height,
+      worldData: physical.worldData,
       terrain: physical.terrain,
       roads: physical.roads,
       pavedRoads: physical.pavedRoads ?? {},
@@ -164,6 +165,7 @@ function viewSnapshot(state, { terrainAfterRevision = null } = {}) {
         .map((jobId) => haulJobById(physical, jobId))
         .filter(Boolean),
       height: physical.height,
+      worldData: physical.worldData,
       occupied: physical.occupied,
       portCalls: physical.portCalls.filter((call) => call.status === "docked")
         .concat(physical.portCalls.filter((call) => (

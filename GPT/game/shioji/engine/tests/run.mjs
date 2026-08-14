@@ -38,6 +38,7 @@ import {
   fillSettlementZones,
   finalizeHouseholdProductionDay,
   fundSettlementZone,
+  fisheryStage,
   householdClass,
   householdEat,
   householdFoodDays,
@@ -71,6 +72,7 @@ import {
   recordExternalMoneyFlow,
   repairMaterialsFor,
   regenerateForest,
+  regenerateFisheries,
   roadPavingStoneCost,
   runBuildingMaintenance,
   runCompanyDayStart,
@@ -1814,6 +1816,46 @@ test("空間生産性: 木こりは遠い森ほど実働と日産が落ち、道
   assert.equal(strandedFisher.resourceWork.efficiency, 0);
 });
 
+test("A-3漁場: 漁師は通う入江だけを消耗し、休漁中の別入江は回復する", () => {
+  const terrain = Array.from({ length: 5 }, () => (
+    Array.from({ length: 12 }, () => ({ kind: "grass", variant: 0 }))
+  ));
+  for (let x = 0; x < 5; x += 1) {
+    terrain[0][x] = { kind: "water", variant: 0, fishery: "bay", fishStage: 3 };
+  }
+  for (let x = 7; x < 12; x += 1) {
+    terrain[4][x] = { kind: "water", variant: 0, fishery: "bay2", fishStage: 3 };
+  }
+  const physical = createPhysicalState({ width: 12, height: 5, terrain });
+  const economy = createEconomicState();
+  initializeNaturalResources(economy, physical);
+  const fisher = createHousehold(economy, { job: "fisher", x: 2, y: 1 });
+  economy.natural.bay = P.BAY0;
+  economy.natural.bay2 = P.BAY0 * 0.2;
+  const bay2Before = economy.natural.bay2;
+
+  producePrimaryTick(economy, physical, fisher, { day: 61, fraction: 1 });
+
+  assert.equal(fisher.fisheryId, "bay");
+  assert.ok(economy.natural.bay < P.BAY0);
+  assert.equal(economy.natural.bay2, bay2Before, "遠い入江は漁獲で減らない");
+  assert.equal(fisheryStage(P.BAY0), 3);
+  assert.equal(fisheryStage(P.BAY0 * 0.4), 2);
+  assert.equal(fisheryStage(P.BAY0 * 0.2), 1);
+  assert.equal(fisheryStage(0), 0);
+
+  regenerateFisheries(economy, physical, { day: 65 });
+  assert.ok(economy.natural.bay2 > bay2Before, "休漁した入江は日末に回復する");
+  assert.equal(terrain[4][7].fishStage, 1, "残量段階が水面の魚影へ同期する");
+  assert.equal(fisher.fisheryThinWarned, undefined, "利用中の豊かな入江には警告しない");
+
+  delete economy.natural.localizedFisheries;
+  const legacyBay2Before = economy.natural.bay2;
+  regenerateFisheries(economy, physical, { day: 66 });
+  assert.deepEqual(economy.natural.localizedFisheries, ["bay", "bay2"]);
+  assert.ok(economy.natural.bay2 > legacyBay2Before, "旧保存は地形タグから局所漁場を復元する");
+});
+
 test("空間生産性: 30日実測は建物の日産・理想日産・距離効率を同じ根拠から返す", () => {
   const terrain = Array.from({ length: 3 }, () => (
     Array.from({ length: 8 }, () => ({ kind: "grass", variant: 0 }))
@@ -3064,6 +3106,7 @@ test("段21: dayEndの全フェーズ順を固定し実行traceで検査する",
     "population_dynamics",
     "company_finance",
     "forest_regeneration",
+    "fishery_regeneration",
     "flow_ema",
     "money_conservation",
   ];
@@ -4846,7 +4889,11 @@ if (includeFullAcceptance) test("段36履歴/段45: Lv4世帯4軒の成熟需要
   const audit = evaluateIronChainScenarios(connected, disconnected);
   assert.equal(audit.total, 4);
   assert.deepEqual(audit.results.map(({ id }) => id), ["E-Fe1", "E-Fe2", "E-Fe4", "E-Fe5"]);
-  assert.equal(audit.results.find(({ id }) => id === "E-Fe5").passed, true);
+  assert.equal(
+    audit.results.find(({ id }) => id === "E-Fe5").passed,
+    true,
+    JSON.stringify(audit.results),
+  );
   assert.equal(audit.connected.day, 1440);
   assert.equal(audit.disconnected.day, 1080);
   assert.equal(audit.passed, audit.total);
@@ -5805,7 +5852,13 @@ if (includeFullAcceptance) test("段49: T=8年×3シード+公開API版の完全
   assert.deepEqual(workers.map(({ seed }) => seed).sort((a, b) => a - b), [11, 13, 14]);
   assert.equal(workers.every(({ scenario, apiScenario }) => (
     (scenario ?? apiScenario).passed
-  )), true);
+  )), true, JSON.stringify(workers.map(({ seed, scenario, apiScenario }) => ({
+    seed,
+    bands: (scenario ?? apiScenario).bands,
+    yearly: (scenario ?? apiScenario).yearly,
+    material: (scenario ?? apiScenario).material,
+    physical: (scenario ?? apiScenario).physical,
+  }))));
   const api = workers.find(({ mode }) => mode === "api");
   assert.ok(api.journalLength > 0);
   assert.equal(api.apiScenario.day, 2880);

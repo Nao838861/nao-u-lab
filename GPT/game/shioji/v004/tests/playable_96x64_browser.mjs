@@ -51,10 +51,16 @@ class Page {
   }
 
   async navigate(url) {
+    // 同一tab内の遷移では前ページのglobalが一瞬残る。新しいmoduleが起動した
+    // 証拠としてURLとreadyStateも揃うまで待つ。
     await this.send('Page.navigate', { url });
     for (let attempt = 0; attempt < 120; attempt += 1) {
       await wait(100);
-      if (await this.evaluate('Boolean(window.__SHIOJI_V004__)')) return;
+      if (await this.evaluate(`(
+        location.href === ${JSON.stringify(url)}
+        && document.readyState === 'complete'
+        && Boolean(window.__SHIOJI_V004__)
+      )`)) return;
     }
     throw new Error(`game did not load: ${url}`);
   }
@@ -100,7 +106,7 @@ async function checkViewport(width, height, mobile) {
       bootFailure: document.querySelector('#boot-status')?.dataset.state === 'failed',
     };
   })()`);
-  assert.equal(fresh.version, 'v004.54.0-cause-readable', JSON.stringify(fresh));
+  assert.equal(fresh.version, 'v004.55.0-world-foundation', JSON.stringify(fresh));
   assert.equal(fresh.mode, 'sandbox', JSON.stringify(fresh));
   assert.deepEqual(fresh.size, [96, 64], JSON.stringify(fresh));
   assert.deepEqual(fresh.markets, ['母港市場', '漁郷市場'], JSON.stringify(fresh));

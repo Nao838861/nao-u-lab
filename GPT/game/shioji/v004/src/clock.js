@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.54.0-cause-readable';
+import { SPEEDS } from './config.js?v=v004.55.0-world-foundation';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

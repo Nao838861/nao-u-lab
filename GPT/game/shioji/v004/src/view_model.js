@@ -1,20 +1,20 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.54.0-cause-readable';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.55.0-world-foundation';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.54.0-cause-readable';
+} from './food_readability.js?v=v004.55.0-world-foundation';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   findTravelPath, householdProductionSummary, laborWage, productionCost,
-} from './engine_bridge.js?v=v004.54.0-cause-readable';
-import { analyzeRoadConnections } from './placement.js?v=v004.54.0-cause-readable';
+} from './engine_bridge.js?v=v004.55.0-world-foundation';
+import { analyzeRoadConnections } from './placement.js?v=v004.55.0-world-foundation';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.54.0-cause-readable';
+} from './render_scene.js?v=v004.55.0-world-foundation';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.54.0-cause-readable';
-import { GOODS_RECIPES } from './goods_detail.js?v=v004.54.0-cause-readable';
+} from './visuals.js?v=v004.55.0-world-foundation';
+import { GOODS_RECIPES } from './goods_detail.js?v=v004.55.0-world-foundation';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',
@@ -29,6 +29,7 @@ const CONVERSION_JOBS = Object.freeze({
 
 const MODEL_TOPOLOGY_REVISIONS = new WeakMap();
 export const COMPANY_VISIBLE_PORTER_LIMIT = 6;
+export const PERSON_VISUAL_LOD_THRESHOLD = 1_200;
 const FOOD_GOODS_SET = new Set(FOOD_GOODS);
 export const FOOD_DELIVERY_ALERT_LABELS = Object.freeze({
   no_money: 'お金がなく買えない',
@@ -1343,6 +1344,36 @@ function carrierRows(snapshot, buildings) {
   ];
 }
 
+export function applyPersonVisualLod(rows, threshold = PERSON_VISUAL_LOD_THRESHOLD) {
+  if (rows.length <= threshold) return rows;
+  const groupedHome = new Map();
+  const kept = [];
+  for (const row of rows) {
+    const canGroup = row.kind === 'household'
+      && row.state === 'home'
+      && row.householdId !== undefined
+      && !row.goods;
+    if (!canGroup) {
+      kept.push(row);
+      continue;
+    }
+    const existing = groupedHome.get(row.householdId);
+    if (!existing) {
+      groupedHome.set(row.householdId, {
+        ...row,
+        id: `household-lod:${row.householdId}`,
+        members: row.members ?? 1,
+        peopleRows: [...(row.peopleRows ?? [])],
+        visualLod: 'household',
+      });
+    } else {
+      existing.members += row.members ?? 1;
+      existing.peopleRows.push(...(row.peopleRows ?? []));
+    }
+  }
+  return [...kept, ...groupedHome.values()];
+}
+
 function portBerth(building, terrain, width, height) {
   const candidates = [
     { side: 'north', dx: 0, dy: -1, x: building.x + building.width / 2, y: building.y - 0.7 },
@@ -1702,6 +1733,7 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
       consumptionEma: snapshot.economy.f30?.[definition.goods]?.cons ?? 0,
     }];
   });
+  const carriers = applyPersonVisualLod(carrierRows(snapshot, buildings));
   const base = {
     day: snapshot.day,
     tick: snapshot.tick,
@@ -1715,13 +1747,24 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
     population: households.reduce((total, household) => total + household.members, 0),
     width: snapshot.physical.width,
     height: snapshot.physical.height,
+    worldData: snapshot.physical.worldData
+      ? {
+        ...snapshot.physical.worldData,
+        startFocus: { ...snapshot.physical.worldData.startFocus },
+      }
+      : {
+        width: snapshot.physical.width,
+        height: snapshot.physical.height,
+        startFocus: { ...snapshot.economy.market },
+        startFocusExplicit: false,
+      },
     terrain,
     roadKeys: Object.keys(snapshot.physical.roads),
     pavedRoadKeys: Object.keys(snapshot.physical.pavedRoads ?? {}),
     trailRows,
     occupiedKeys: Object.keys(snapshot.physical.occupied),
     buildings,
-    carriers: carrierRows(snapshot, buildings),
+    carriers,
     households,
     stalls,
     marketStalls,

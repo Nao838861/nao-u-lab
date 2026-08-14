@@ -21,7 +21,7 @@ import {
   sectionCapacity,
   withdrawInventory,
   workRoadWorksite,
-} from "./physical.js?v=v004.54.0-cause-readable";
+} from "./physical.js?v=v004.55.0-world-foundation";
 
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) return value;
@@ -1718,6 +1718,87 @@ export function woodStage(stock) {
   return 1;
 }
 
+export function fisheryStage(stock) {
+  if (!(stock > P.BAY0 * 0.08)) return 0;
+  if (stock > P.BAY0 * 0.65) return 3;
+  if (stock > P.BAY0 * 0.3) return 2;
+  return 1;
+}
+
+function fisheryKeyForTarget(physical, target) {
+  if (!physical?.terrain || !target) return "bay";
+  const candidates = [
+    [0, 0], [1, 0], [-1, 0], [0, 1], [0, -1],
+  ];
+  for (const [offsetX, offsetY] of candidates) {
+    const tile = physical.terrain[target.y + offsetY]?.[target.x + offsetX];
+    if (tile?.kind === "water" && (tile.fishery === "bay" || tile.fishery === "bay2")) {
+      return tile.fishery;
+    }
+  }
+  return "bay";
+}
+
+function syncFisheryStageTiles(economy, physical, fishery) {
+  if (!physical?.terrain) return;
+  const stage = fisheryStage(economy.natural[fishery]);
+  economy.natural.fishStages ??= {};
+  if (economy.natural.fishStages[fishery] === stage) return;
+  economy.natural.fishStages[fishery] = stage;
+  let changed = false;
+  for (const row of physical.terrain) {
+    for (const tile of row) {
+      if (tile?.fishery !== fishery || tile.fishStage === stage) continue;
+      tile.fishStage = stage;
+      changed = true;
+    }
+  }
+  if (changed) physical.travelRevision = (physical.travelRevision ?? 0) + 1;
+}
+
+function localizedFisheriesFor(economy, physical) {
+  if (Array.isArray(economy.natural.localizedFisheries)) {
+    return economy.natural.localizedFisheries;
+  }
+  const fisheries = new Set();
+  for (const row of physical?.terrain ?? []) {
+    for (const tile of row) {
+      if (tile?.fishery === "bay" || tile?.fishery === "bay2") fisheries.add(tile.fishery);
+    }
+  }
+  economy.natural.localizedFisheries = [...fisheries].sort();
+  return economy.natural.localizedFisheries;
+}
+
+export function regenerateFisheries(economy, physical, { day }) {
+  const localizedFisheries = localizedFisheriesFor(economy, physical);
+  for (const fishery of localizedFisheries) {
+    if (economy.natural.fisheryHarvestDay?.[fishery] === day) continue;
+    const stock = Math.max(0, economy.natural[fishery] ?? P.BAY0);
+    const depletion = stock / P.BAY0;
+    economy.natural[fishery] = Math.min(
+      P.BAY0,
+      stock + P.BAY_R * stock * (1 - depletion) + P.RESEED * (1 - depletion),
+    );
+    syncFisheryStageTiles(economy, physical, fishery);
+  }
+  for (const household of economy.households) {
+    if (household.job !== "fisher") continue;
+    const fishery = household.fisheryId ?? fisheryKeyForTarget(physical, household.resourceWork?.target);
+    const ratio = (economy.natural[fishery] ?? P.BAY0) / P.BAY0;
+    if (ratio < 0.3 && !household.fisheryThinWarned) {
+      household.fisheryThinWarned = true;
+      recordEconomyEvent(
+        economy,
+        day,
+        `${household.sur}家の入江から魚影が減ってきた——別の入江か休漁を考える頃合い`,
+      );
+    } else if (ratio > 0.55 && household.fisheryThinWarned) {
+      household.fisheryThinWarned = false;
+    }
+  }
+}
+
 function syncWoodStageTile(physical, x, y, stock) {
   const tile = physical?.terrain?.[y]?.[x];
   if (!tile || typeof tile !== "object" || tile.kind !== "forest") return;
@@ -1731,14 +1812,26 @@ export function initializeNaturalResources(economy, physical) {
   economy.natural.bay = P.BAY0;
   economy.natural.bay2 = P.BAY0;
   economy.natural.wood = {};
+  economy.natural.fishStages = {};
+  economy.natural.fisheryHarvestDay = {};
+  economy.natural.localizedFisheries = [];
+  const localizedFisheries = new Set();
   for (let y = 0; y < physical.height; y += 1) {
     for (let x = 0; x < physical.width; x += 1) {
+      const tile = physical.terrain[y]?.[x];
+      if (tile?.fishery === "bay" || tile?.fishery === "bay2") {
+        localizedFisheries.add(tile.fishery);
+      }
       if (terrainKindAt(physical, x, y) === "forest") {
         economy.natural.wood[`${x},${y}`] = P.WOOD0;
         const tile = physical.terrain[y][x];
         if (tile && typeof tile === "object") tile.wood = 3;
       }
     }
+  }
+  economy.natural.localizedFisheries = [...localizedFisheries].sort();
+  for (const fishery of economy.natural.localizedFisheries) {
+    syncFisheryStageTiles(economy, physical, fishery);
   }
   return economy.natural;
 }
@@ -2006,10 +2099,12 @@ function productionLaborCost(economy, physical, household, goods, { day = econom
     pres: (winter ? P.Y_FISH_W : P.Y_FISH) * P.PR_SALT,
     pick: P.Y_VEG * P.PR_PICK,
   }[goods] ?? 1;
+  const householdFishery = household.fisheryId
+    ?? fisheryKeyForTarget(physical, household.resourceWork?.target);
   const scarcity = {
     log: localWood(economy, physical, household),
-    fish: economy.natural.bay / P.BAY0,
-    pres: economy.natural.bay / P.BAY0,
+    fish: (economy.natural[householdFishery] ?? P.BAY0) / P.BAY0,
+    pres: (economy.natural[householdFishery] ?? P.BAY0) / P.BAY0,
   }[goods] ?? 1;
   const recentProduction = (household.productionHistory ?? [])
     .slice(-14)
@@ -3773,15 +3868,24 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
       produced.cloth = qty;
     }
   } else if (household.job === "fisher") {
-    const depletion = economy.natural.bay / P.BAY0;
+    const fishery = fisheryKeyForTarget(physical, resourceWork?.target);
+    const depletion = (economy.natural[fishery] ?? P.BAY0) / P.BAY0;
     const qty = (winter ? P.Y_FISH_W : P.Y_FISH) * work * depletion;
-    economy.natural.bay = Math.min(
+    const stock = economy.natural[fishery] ?? P.BAY0;
+    economy.natural[fishery] = Math.min(
       P.BAY0,
-      economy.natural.bay - qty
+      stock - qty
         + effectiveFraction * (
-          P.BAY_R * economy.natural.bay * (1 - depletion) + P.RESEED * (1 - depletion)
+          P.BAY_R * stock * (1 - depletion) + P.RESEED * (1 - depletion)
         ),
     );
+    const localized = localizedFisheriesFor(economy, physical).includes(fishery);
+    if (localized) {
+      economy.natural.fisheryHarvestDay ??= {};
+      economy.natural.fisheryHarvestDay[fishery] = day;
+    }
+    household.fisheryId = fishery;
+    if (localized) syncFisheryStageTiles(economy, physical, fishery);
     household.pantry.fish += qty;
     economy.led.prod.fish = (economy.led.prod.fish ?? 0) + qty;
     recordEconomicMaterialFlow(economy, "fish", "prod", qty, `世帯${household.id}の漁`);
@@ -4078,8 +4182,9 @@ export function householdIdealDailyOutput(economy, household, { day = economy.cu
     if (qty > 1e-9) outputs[goods] = qty;
   };
   if (household.job === "fisher") {
+    const fishery = household.fisheryId ?? "bay";
     add("fish", (winter ? P.Y_FISH_W : P.Y_FISH) * mult
-      * Math.max(0, economy.natural.bay / P.BAY0));
+      * Math.max(0, (economy.natural[fishery] ?? P.BAY0) / P.BAY0));
   } else if (household.job === "fisher2") {
     add("meal", P.Y_FISH * mult / P.MEAL_FISH);
   } else if (household.job === "veg" && month >= 3 && month <= 10) {
@@ -5749,6 +5854,7 @@ export const DAY_END_ORDER = deepFreeze([
   "population_dynamics",
   "company_finance",
   "forest_regeneration",
+  "fishery_regeneration",
   "flow_ema",
   "money_conservation",
 ]);
@@ -6377,6 +6483,8 @@ export function runDayEnd(economy, physical, { day, random = () => 1, trace = []
   const finance = runCompanyFinance(economy, { day });
   mark("forest_regeneration");
   regenerateForest(economy, physical, { day, random });
+  mark("fishery_regeneration");
+  regenerateFisheries(economy, physical, { day });
   mark("flow_ema");
   updateFlowEma(economy);
   mark("money_conservation");

@@ -1,5 +1,5 @@
-import { BUILDING_SIZES } from './config.js?v=v004.54.0-cause-readable';
-import { islandCalendar } from './ui_summary.js?v=v004.54.0-cause-readable';
+import { BUILDING_SIZES } from './config.js?v=v004.55.0-world-foundation';
+import { islandCalendar } from './ui_summary.js?v=v004.55.0-world-foundation';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

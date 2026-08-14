@@ -26,7 +26,7 @@ import { developmentMapView } from '../src/development_map.js';
 import {
   BUILD_COST_DENARI, E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS,
   applySpringStartCalendar, buildBlankCity, buildPlayableSandboxWorld,
-  buildTutorialTwoMarketWorld, createEngineController,
+  buildTutorialTwoMarketWorld, buildWorldScaleFoundation, createEngineController,
 } from '../src/engine_bridge.js';
 import {
   EVENT_DISPLAY_POLICY, OBSERVED_EVENT_TYPES, eventPlaceLabel, hasEventPresentation,
@@ -58,7 +58,9 @@ import {
 import {
   WorldPresentation, interpolateWorldModel, transitionDuration,
 } from '../src/presentation.js';
-import { buildingLayerDepth, mergeDrawables } from '../src/render_scene.js';
+import {
+  buildingLayerDepth, mergeDrawables, sceneRowsInBounds,
+} from '../src/render_scene.js';
 import { Renderer } from '../src/renderer.js';
 import { createSavePayload, parseSaveText } from '../src/save_game.js';
 import {
@@ -91,7 +93,8 @@ import {
 } from '../src/ui_guidance.js';
 import { islandCalendar, islandHealthSummary, recentCompanySummary } from '../src/ui_summary.js';
 import {
-  COMPANY_VISIBLE_PORTER_LIMIT, FOOD_DELIVERY_ALERT_LABELS,
+  COMPANY_VISIBLE_PORTER_LIMIT, FOOD_DELIVERY_ALERT_LABELS, PERSON_VISUAL_LOD_THRESHOLD,
+  applyPersonVisualLod,
   caravanAccountingPresentation, caravanRouteDiagnosis, caravanStatePresentation,
   caravanWageMarket, foodDeliveryAlertLabel,
   snapshotToViewModel, terrainTopologyForModel,
@@ -1950,7 +1953,14 @@ test('チュートリアル段18: 実決済と注文全量の加重原価を並�
     controller.advanceTicks(30);
     observe();
   }
-  assert.equal(director.readState().completedGoals.includes('assess-profitable-order'), true);
+  assert.equal(director.readState().completedGoals.includes('assess-profitable-order'), true,
+    `400日以内に黒字注文を観測する ${JSON.stringify({
+      day: controller.readModel().day,
+      offer: controller.readModel().orderOffer,
+      quote: orderQuote(controller.readModel()),
+      completed: director.readState().completedGoals,
+      evidence: director.readState().goalResults['assess-profitable-order']?.evidence,
+    })}`);
   observe();
   const assessment = director.letters().find(letter => letter.id === 'profitable-order-assessment');
   assert.ok(assessment);
@@ -2522,7 +2532,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.54.0-cause-readable');
+  assert.equal(VERSION, 'v004.55.0-world-foundation');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -3216,6 +3226,45 @@ test('描画構造最適化: snapshot更新時に静的描画場面を一度だ�
     assert.ok(merged.indexOf(inventory) > buildingIndex.get(inventory.data.ownerId),
       `${inventory.data.ownerId}の在庫はtick境界で建屋の裏へ潜らない`);
   }
+});
+
+test('B-0世界基盤: 256×256・150世帯・750人を世界データから構築する', () => {
+  const world = buildWorldScaleFoundation(11);
+  const api = createEngineApi(world);
+  const snapshot = api.snapshot({ scope: 'view' });
+  const model = snapshotToViewModel(snapshot);
+  assert.deepEqual([model.width, model.height], [256, 256]);
+  assert.equal(model.households.length, 150);
+  assert.equal(model.population, 750);
+  assert.deepEqual(model.worldData.startFocus, { x: 128, y: 128 });
+  assert.equal(model.worldData.startFocusExplicit, true);
+  assert.equal(model.terrain.length * model.terrain[0].length, 256 * 256);
+  const local = sceneRowsInBounds(model.renderScene, {
+    minX: 120, maxX: 136, minY: 120, maxY: 136,
+  });
+  assert.ok(local.length > 0);
+  assert.ok(local.length < model.renderScene.staticDrawables.length,
+    '画面内bucketだけを候補にし全世界走査を避ける');
+  const next = snapshotToViewModel(api.snapshot({
+    scope: 'view',
+    terrainAfterRevision: snapshot.physical.travelRevision,
+  }), { previousModel: model });
+  assert.equal(next.terrain, model.terrain, '同revisionの65,536地形セルを複製し直さない');
+});
+
+test('B-0描画LOD: 1200人超では在宅者だけを世帯表示へ束ね、移動中は個人を保つ', () => {
+  const moving = {
+    id: 'moving', kind: 'household', householdId: 1, state: 'toMarket', goods: null,
+    members: 1, peopleRows: [{ id: 'p1' }],
+  };
+  const homeRows = Array.from({ length: PERSON_VISUAL_LOD_THRESHOLD }, (_, index) => ({
+    id: `home:${index}`, kind: 'household', householdId: 2 + Math.floor(index / 5),
+    state: 'home', goods: null, members: 1, peopleRows: [{ id: `p${index + 2}` }],
+  }));
+  const lod = applyPersonVisualLod([moving, ...homeRows]);
+  assert.equal(lod.includes(moving), true, '移動中の実体はLOD後もそのまま残る');
+  assert.equal(lod.length, 1 + PERSON_VISUAL_LOD_THRESHOLD / 5);
+  assert.ok(lod.filter(row => row.visualLod === 'household').every(row => row.members === 5));
 });
 
 test('可視物流AC: 家族列は実人数・実活動状態・実仕事先を描画モデルへ渡す', () => {

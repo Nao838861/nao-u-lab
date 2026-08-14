@@ -1,16 +1,17 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.54.0-cause-readable';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.54.0-cause-readable';
-import { islandCalendar } from './ui_summary.js?v=v004.54.0-cause-readable';
+} from './config.js?v=v004.55.0-world-foundation';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.55.0-world-foundation';
+import { islandCalendar } from './ui_summary.js?v=v004.55.0-world-foundation';
 import {
   compileRenderScene, inventoryLayerDepth, marketStallLayerDepth, mergeDrawables,
-} from './render_scene.js?v=v004.54.0-cause-readable';
+  sceneRowsInBounds,
+} from './render_scene.js?v=v004.55.0-world-foundation';
 import {
   buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
   seasonalTerrainVisual,
-} from './visuals.js?v=v004.54.0-cause-readable';
-import { renderArtSlice } from './art_slice.js?v=b1-style-slice-20260814';
+} from './visuals.js?v=v004.55.0-world-foundation';
+import { renderArtSlice } from './art_slice.js?v=v004.55.0-world-foundation';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
@@ -710,10 +711,13 @@ export class Renderer {
 
   collectDynamicDrawables(model, scene) {
     const drawables = [];
+    const addVisible = drawable => {
+      if (!drawable.bounds || this.boundsVisible(drawable.bounds)) drawables.push(drawable);
+    };
     const buildingById = new Map(model.buildings.map(building => [building.id, building]));
     for (const [index, inventory] of (model.inventoryVisuals ?? []).entries()) {
       const owner = buildingById.get(inventory.ownerId);
-      drawables.push({
+      addVisible({
         kind: 'inventory',
         data: inventory,
         // 補間の有無で建物との前後関係を変えない。動的在庫も静的在庫と同じ
@@ -725,7 +729,7 @@ export class Renderer {
     }
     const market = model.buildings.find(building => building.type === 'market');
     for (const [index, stall] of (model.marketStallVisuals ?? []).entries()) {
-      drawables.push({
+      addVisible({
         kind: 'stall',
         data: stall,
         depth: market ? marketStallLayerDepth(market, index) : stall.x + stall.y + 1.1,
@@ -734,7 +738,7 @@ export class Renderer {
       });
     }
     for (const carrier of model.carriers) {
-      drawables.push({
+      addVisible({
         kind: 'carrier',
         data: carrier,
         depth: carrier.x + carrier.y + 1,
@@ -744,9 +748,11 @@ export class Renderer {
     }
     for (const ship of model.portVisuals ?? []) {
       const position = this.shipPosition(model.portBerth, ship);
-      drawables.push({
+      addVisible({
         kind: 'ship', data: { ...ship, ...position },
-        depth: position.x + position.y + 1, dynamic: true,
+        depth: position.x + position.y + 1,
+        bounds: { x: position.x - 2, y: position.y - 2, width: 4, height: 4 },
+        dynamic: true,
       });
     }
     for (const handling of model.handlingVisuals ?? []) {
@@ -760,9 +766,11 @@ export class Renderer {
         x: start.x + (finish.x - start.x) * progress,
         y: start.y + (finish.y - start.y) * progress,
       };
-      drawables.push({
+      addVisible({
         kind: 'handling', data: { ...handling, ...position },
-        depth: position.x + position.y + 1.2, dynamic: true,
+        depth: position.x + position.y + 1.2,
+        bounds: { x: position.x - 0.5, y: position.y - 0.5, width: 1, height: 1 },
+        dynamic: true,
       });
     }
     return drawables.sort((left, right) => left.depth - right.depth);
@@ -771,16 +779,20 @@ export class Renderer {
   collectWorldDrawables(model) {
     const scene = this.sceneFor(model);
     return mergeDrawables(
-      scene.staticDrawables,
+      sceneRowsInBounds(scene, this.frameBounds),
       this.collectDynamicDrawables(model, scene),
     );
   }
 
   drawWorldObjects(model) {
     const scene = this.sceneFor(model);
+    const nearbyStatic = sceneRowsInBounds(scene, this.frameBounds);
     let staticDrawn = 0;
     let dynamicDrawn = 0;
-    for (const drawable of this.collectWorldDrawables(model)) {
+    for (const drawable of mergeDrawables(
+      nearbyStatic,
+      this.collectDynamicDrawables(model, scene),
+    )) {
       if (!drawable.dynamic && !this.boundsVisible(drawable.bounds)) continue;
       if (drawable.dynamic && drawable.bounds && !this.boundsVisible(drawable.bounds)) continue;
       if (!drawable.dynamic && drawable.kind === 'inventory' && model.inventoryVisuals) continue;
@@ -789,6 +801,7 @@ export class Renderer {
       else staticDrawn += 1;
       if (drawable.kind === 'tree') this.drawTree(drawable.data);
       if (drawable.kind === 'rock') this.drawRock(drawable.data);
+      if (drawable.kind === 'fish_school') this.drawFishSchool(drawable.data);
       if (drawable.kind === 'building') this.drawBuilding(drawable.data);
       if (drawable.kind === 'inventory') this.drawInventoryPile(drawable.data);
       if (drawable.kind === 'stall') this.drawMarketStall(drawable.data);
@@ -797,6 +810,7 @@ export class Renderer {
       if (drawable.kind === 'handling') this.drawHandlingBlock(drawable.data);
     }
     this.lastFrameMetrics.staticCandidates = scene.staticDrawables.length;
+    this.lastFrameMetrics.staticNearby = nearbyStatic.length;
     this.lastFrameMetrics.staticDrawn = staticDrawn;
     this.lastFrameMetrics.dynamicDrawn = dynamicDrawn;
   }
@@ -908,6 +922,37 @@ export class Renderer {
       ctx.fillStyle = winter.snow;
       ctx.fill();
       ctx.strokeStyle = winter.outline;
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  drawFishSchool({ x, y, stage = 3, variant = 0 }) {
+    const point = this.camera.project(x + 0.5, y + 0.48, 2);
+    const scale = this.camera.zoom;
+    const ctx = this.ctx;
+    ctx.save();
+    ctx.strokeStyle = stage >= 3 ? '#d5e4ba' : stage === 2 ? '#b8cfad' : '#8eaf9d';
+    ctx.fillStyle = ctx.strokeStyle;
+    ctx.globalAlpha = 0.5 + stage * 0.1;
+    const count = stage >= 3 ? 3 : stage === 2 ? 2 : 1;
+    for (let index = 0; index < count; index += 1) {
+      const offsetX = (index - (count - 1) / 2) * 6 * scale;
+      const offsetY = ((variant + index) % 2) * 2 * scale;
+      ctx.beginPath();
+      ctx.ellipse(point.x + offsetX, point.y + offsetY, 3.4 * scale, 1.5 * scale, -0.18, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(point.x + offsetX - 3 * scale, point.y + offsetY);
+      ctx.lineTo(point.x + offsetX - 6 * scale, point.y + offsetY - 2.4 * scale);
+      ctx.lineTo(point.x + offsetX - 6 * scale, point.y + offsetY + 2.4 * scale);
+      ctx.closePath();
+      ctx.fill();
+    }
+    if (stage >= 3 && (x + y + variant) % 4 === 0) {
+      ctx.globalAlpha = 0.5;
+      ctx.beginPath();
+      ctx.arc(point.x + 7 * scale, point.y - 5 * scale, 2 * scale, Math.PI, Math.PI * 2);
       ctx.stroke();
     }
     ctx.restore();

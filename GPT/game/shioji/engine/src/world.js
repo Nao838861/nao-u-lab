@@ -42,7 +42,7 @@ import {
   settlePortTransfers,
   transactMarketCargo,
   unloadMarketBuyCargo,
-} from "./econ.js?v=v004.54.0-cause-readable";
+} from "./econ.js?v=v004.55.0-world-foundation";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -63,10 +63,10 @@ import {
   stepTravelCarrier,
   stepHaulCarriers,
   stepPortHandling,
-} from "./physical.js?v=v004.54.0-cause-readable";
-import { nextMulberry32, normalizeSeed } from "./prng.js?v=v004.54.0-cause-readable";
-import { createMarketNetwork, marketNetworkSummary } from "./market_network.js?v=v004.54.0-cause-readable";
-import { stepCaravanDay, stepCaravanTick } from "./routes.js?v=v004.54.0-cause-readable";
+} from "./physical.js?v=v004.55.0-world-foundation";
+import { nextMulberry32, normalizeSeed } from "./prng.js?v=v004.55.0-world-foundation";
+import { createMarketNetwork, marketNetworkSummary } from "./market_network.js?v=v004.55.0-world-foundation";
+import { stepCaravanDay, stepCaravanTick } from "./routes.js?v=v004.55.0-world-foundation";
 
 function tread(economy, x, y) {
   const key = keyOf(Math.round(x), Math.round(y));
@@ -1179,6 +1179,18 @@ export function createWorld({
   const normalizedSeed = normalizeSeed(restored?.seed ?? seed);
   const physical = restored?.physical ?? physicalState ?? createPhysicalState();
   const economy = restored?.economy ?? createEconomicState({ initialCompanyMoney });
+  const fallbackStartFocus = market ?? restored?.economy?.market ?? null;
+  physical.worldData ??= {
+    width: physical.width,
+    height: physical.height,
+    startFocus: fallbackStartFocus
+      ? { ...fallbackStartFocus }
+      : { x: physical.width / 2, y: physical.height / 2 },
+    startFocusExplicit: Boolean(fallbackStartFocus),
+  };
+  if (!restored && market && !physical.worldData.startFocusExplicit) {
+    physical.worldData.startFocus = { ...market };
+  }
   const legacyGlobalPaving = economy.paved === true && physical.pavedRoads === undefined;
   physical.pavedRoads ??= {};
   // 旧セーブの全島一括舗装を、同じ見た目と移動性能を保ったままセル台帳へ移す。
