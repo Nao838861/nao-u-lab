@@ -91,6 +91,9 @@ for cx, cy, r in [(48, 124, 15), (62, 112, 13), (66, 138, 13), (50, 150, 12)]:
     mountains |= blob(cx, cy, r, wobble=0.15)
 pocket = blob(54, 132, 9, wobble=0.15)
 mountains &= ~pocket
+# 1・2・3の間の丘(空白を埋める自然地形。低い岩場の背・通行は周囲を回れる)
+for cx, cy, r in [(158, 168, 8), (166, 176, 6), (116, 172, 7), (150, 128, 6)]:
+    mountains |= blob(cx, cy, r, wobble=0.3)
 # 峠(山を貫く回廊が唯一の道)
 def corridor(x0, y0, x1, y1, width=4):
     steps = int(max(abs(x1-x0), abs(y1-y0))) * 2 + 1
@@ -121,12 +124,14 @@ terrain[fert2core | fert2north] = FERT2
 # ── 4. 森(燃料と木材・前線が動く場) ──
 forest = np.zeros((N, N), bool)
 for cx, cy, r in [(114, 88, 11), (134, 84, 10), (152, 88, 10), (166, 94, 9),  # 2の北側・丘陵の門の手前に集中
-                  (98, 212, 4), (84, 202, 4),                             # 母港のすぐ側のごく小さな森(約3年で尽きる較正)
-                  (100, 150, 7), (208, 116, 8),                           # 点在の小さな林
-                  (108, 42, 8), (166, 40, 7)]:                             # 北の少しの木
+                  (101, 196, 5), (79, 202, 4),                            # 母港のそばの小さな森(教程の距離感・3年で尽きる)
+                  (134, 148, 10), (146, 156, 9), (128, 158, 8),           # 1と3の中間の森(不定形の複数塊)
+                  (152, 142, 7), (122, 146, 6), (142, 166, 7),
+                  (208, 116, 8), (108, 42, 8), (166, 40, 7)]:              # 東の小さな林・北の少しの木
     forest |= blob(cx, cy, r, wobble=0.2)
 forest &= island & ~mountains & ~fert2core & ~fert2north & ~pocket
 forest &= ~(blob(134, 102, 20, wobble=0.15))
+forest &= ~(blob(139, 153, 4, wobble=0.4) | blob(129, 150, 3, wobble=0.4) | blob(148, 148, 3, wobble=0.5))  # 森の中の空き地
 terrain[forest] = FOREST
 # ── 5. 砂浜と浅瀬 ──
 def dilate(mask, n=1):
@@ -158,7 +163,7 @@ deposit(ROCKDEP, 46, 144, 10, 30)
 deposit(ORE, 74, 46, 9, 14)
 deposit(COAL, 196, 54, 9, 14)
 # 盆地の南の岩場(採石のみ)
-deposit(ROCKDEP, 148, 186, 8, 10)
+deposit(ROCKDEP, 160, 172, 9, 14)
 
 # ── 7. 漁場(海側に豊かさとして描く) ──
 fish_rich = np.zeros((N, N), bool)
