@@ -61,6 +61,8 @@ coast_noise = (value_noise(24, 404) * 1.0 + value_noise(12, 405) * 0.6 + value_n
 island &= border > (13 + (coast_noise + 1) * 9)
 for cx, cy, r in [(44, 76, 3), (236, 196, 3), (126, 244, 2), (32, 168, 2)]:  # 沖の小さな岩礁
     island |= blob(cx, cy, r, wobble=0.5)
+for cx, cy, r in [(148, 184, 3), (86, 177, 3)]:   # 内陸の小さな池(1-3・1-4の間の景物)
+    island &= ~blob(cx, cy, r, wobble=0.4)
 
 terrain = np.full((N, N), SEA, dtype=np.int16)
 terrain[island] = GRASS  # islandはこの後の北の潟の切除で更新される
@@ -98,6 +100,9 @@ mountains &= ~pocket
 # 1・2・3の間の丘(空白を埋める自然地形。低い岩場の背・通行は周囲を回れる)
 for cx, cy, r in [(158, 168, 8), (166, 176, 6), (116, 172, 7), (150, 128, 6)]:
     mountains |= blob(cx, cy, r, wobble=0.3)
+# 草原の点在する大岩(1-3・1-4の間。極小=道は自然に迂回)
+for cx, cy, r in [(134, 190, 2), (167, 193, 2), (120, 198, 2), (74, 158, 2), (94, 166, 2)]:
+    mountains |= blob(cx, cy, r, wobble=0.5)
 # 峠(山を貫く回廊が唯一の道)
 def corridor(x0, y0, x1, y1, width=4):
     steps = int(max(abs(x1-x0), abs(y1-y0))) * 2 + 1
@@ -137,7 +142,9 @@ for cx, cy, r in [(114, 88, 11), (134, 84, 10), (152, 88, 10), (166, 94, 9),  # 
                   (104, 191, 5), (82, 196, 4),                            # 母港のそばの小さな森(教程の距離感・3年で尽きる)
                   (134, 148, 10), (146, 156, 9), (128, 158, 8),           # 1と3の中間の森(不定形の複数塊)
                   (152, 142, 7), (122, 146, 6), (142, 166, 7),
-                  (208, 116, 8), (108, 42, 8), (166, 40, 7)]:              # 東の小さな林・北の少しの木
+                  (208, 116, 8), (108, 42, 8), (166, 40, 7),               # 東の小さな林・北の少しの木
+                  (114, 188, 3), (128, 181, 4), (156, 190, 3), (172, 200, 3),  # 1-3の間の点在林
+                  (78, 168, 3), (90, 150, 3), (68, 146, 2), (98, 179, 3)]:     # 1-4の間の点在林
     forest |= blob(cx, cy, r, wobble=0.2)
 forest &= island & ~mountains & ~fert2core & ~fert2north & ~pocket
 forest &= ~(blob(134, 102, 20, wobble=0.15))
@@ -326,7 +333,7 @@ for y in range(N):
         row.append(ch)
     rows.append(''.join(row))
 data = {
-    'version': 'b2-map-v1.0 (v3d)',
+    'version': 'b2-map-v1.1 (v3e)',
     'size': [N, N],
     'legend': {'~': 'sea', '-': 'shallow(視覚のみ・水扱い)', 'R': 'sea+豊かな漁場', 'm': 'sea+中漁場',
                '.': 'sand', 'g': 'grass', 'f': 'fert1(畑適地)', 'F': 'fert2(肥沃コア)',
