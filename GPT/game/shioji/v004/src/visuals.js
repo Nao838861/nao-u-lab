@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.55.0-world-foundation';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.56.0-fertile-land';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({

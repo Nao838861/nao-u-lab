@@ -1,20 +1,20 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.55.0-world-foundation';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.56.0-fertile-land';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.55.0-world-foundation';
+} from './food_readability.js?v=v004.56.0-fertile-land';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   findTravelPath, householdProductionSummary, laborWage, productionCost,
-} from './engine_bridge.js?v=v004.55.0-world-foundation';
-import { analyzeRoadConnections } from './placement.js?v=v004.55.0-world-foundation';
+} from './engine_bridge.js?v=v004.56.0-fertile-land';
+import { analyzeRoadConnections } from './placement.js?v=v004.56.0-fertile-land';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.55.0-world-foundation';
+} from './render_scene.js?v=v004.56.0-fertile-land';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.55.0-world-foundation';
-import { GOODS_RECIPES } from './goods_detail.js?v=v004.55.0-world-foundation';
+} from './visuals.js?v=v004.56.0-fertile-land';
+import { GOODS_RECIPES } from './goods_detail.js?v=v004.56.0-fertile-land';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',

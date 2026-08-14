@@ -1,12 +1,20 @@
-import { BUILDING_SIZES } from './config.js?v=v004.55.0-world-foundation';
-import { islandCalendar } from './ui_summary.js?v=v004.55.0-world-foundation';
+import { BUILDING_SIZES } from './config.js?v=v004.56.0-fertile-land';
+import { islandCalendar } from './ui_summary.js?v=v004.56.0-fertile-land';
 
 export const tileKey = (x, y) => `${x},${y}`;
 
-function terrainAt(model, x, y) {
+function terrainTileAt(model, x, y) {
   return x >= 0 && y >= 0 && x < model.width && y < model.height
-    ? model.terrain[y][x]?.kind ?? null
+    ? model.terrain[y][x] ?? null
     : null;
+}
+
+function terrainAt(model, x, y) {
+  return terrainTileAt(model, x, y)?.kind ?? null;
+}
+
+function isFertileAt(model, x, y) {
+  return (terrainTileAt(model, x, y)?.fertility ?? 0) > 0;
 }
 
 const WALK_DIRS = Object.freeze([
@@ -275,7 +283,8 @@ function validFootprint(model, job, entrance, site) {
   if (definition.shore) {
     const landCount = cells.filter(cell => terrainAt(model, cell.x, cell.y) !== 'water').length;
     if (landCount === 0 || landCount === cells.length) return false;
-  } else if (cells.some(cell => !['grass', 'sand'].includes(terrainAt(model, cell.x, cell.y)))) return false;
+  } else if (definition.fertile && cells.some(cell => !isFertileAt(model, cell.x, cell.y))) return false;
+  else if (cells.some(cell => !['grass', 'sand'].includes(terrainAt(model, cell.x, cell.y)))) return false;
   if (cells.some(cell => roads.has(tileKey(cell.x, cell.y)))) return false;
   if (cells.some(cell => occupied.has(tileKey(cell.x, cell.y)))) return false;
   const perimeter = entrance.x >= site.x && entrance.x < site.x + definition.width
@@ -346,9 +355,17 @@ export function previewBuildingPlacement(model, job, point) {
       return facingLeft - facingRight || left.y - right.y || left.x - right.x;
     });
   const site = candidates[0];
+  const hasFertileCandidate = definition.fertile && perimeterOrigins(
+    entrance, definition.width, definition.height,
+  ).some(candidate => footprintCells(
+    candidate.x, candidate.y, definition.width, definition.height,
+  ).every(cell => isFertileAt(model, cell.x, cell.y)));
   if (!site) return {
     kind: 'building', job, entrance, ok: false,
-    reason: '実寸フットプリント・地形・道路・予約地の条件を満たしません', cells: [],
+    reason: definition.fertile && !hasFertileCandidate
+      ? '農場は、敷地すべてが「肥えた土地」になる場所にだけ建てられます'
+      : '実寸フットプリント・地形・道路・予約地の条件を満たしません',
+    cells: [],
   };
   return {
     kind: 'building', job, entrance, x: site.x, y: site.y,

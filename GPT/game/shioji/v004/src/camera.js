@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.55.0-world-foundation';
+import { TILE } from './config.js?v=v004.56.0-fertile-land';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

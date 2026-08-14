@@ -3,7 +3,7 @@ import {
   TUTORIAL_ELENA_COMPLETIONS, TUTORIAL_ELENA_MESSAGES, TUTORIAL_LETTER_MESSAGES,
   TUTORIAL_PLAYER_TITLES, TUTORIAL_SYSTEM_INSTRUCTIONS,
   authorTutorialLetter, isRequiredTutorialGoal, isTutorialGoalUnlocked, tutorialLetterDelivery,
-} from './tutorial_content.js?v=v004.55.0-world-foundation';
+} from './tutorial_content.js?v=v004.56.0-fertile-land';
 
 const SAVE_VERSION = 1;
 

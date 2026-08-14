@@ -11,7 +11,7 @@ import {
   localWood,
   recordEconomicMaterialFlow,
   setCaravanEmployment,
-} from "./econ.js?v=v004.55.0-world-foundation";
+} from "./econ.js?v=v004.56.0-fertile-land";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -27,9 +27,10 @@ import {
   makeFlowIslandTerrain,
   makeEmptyWorldTerrain,
   makeMultiMarketTerrain,
+  markFertileArea,
   pathLen,
-} from "./physical.js?v=v004.55.0-world-foundation";
-import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.55.0-world-foundation";
+} from "./physical.js?v=v004.56.0-fertile-land";
+import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.56.0-fertile-land";
 
 export const AUDIT_SEEDS = Object.freeze([11, 13, 14]);
 
@@ -605,6 +606,9 @@ function makeCaravanSliceTerrain(mainPlan) {
   for (const [job, , , buildingX, buildingY] of mainPlan.layout) {
     const definition = ECONOMIC_BUILDINGS[job];
     clearCaravanRectangle(terrain, buildingX, buildingY, definition.w, definition.h);
+    if (definition.fertile) {
+      markFertileArea(terrain, buildingX, buildingY, definition.w, definition.h);
+    }
   }
   clearCaravanRectangle(
     terrain,
@@ -1055,6 +1059,9 @@ export function buildBadCity(
     width,
     height,
   });
+  // 悪配置対照も本編と同じ農地制約を守る。市場から遠い西側だけを肥沃地にし、
+  // 距離による失敗を「農場が置けない」という別要因へすり替えない。
+  markFertileArea(world.state.physical.terrain, 3, 20, 28, 16);
   for (const [job] of E_STABLE_RELATIVE_LAYOUT) {
     const site = findBadSettlementSite(world, job);
     if (!site || !addAuditZone(world, job, site[0], site[1])) {

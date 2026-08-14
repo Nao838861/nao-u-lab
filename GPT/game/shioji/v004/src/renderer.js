@@ -1,17 +1,17 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.55.0-world-foundation';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.55.0-world-foundation';
-import { islandCalendar } from './ui_summary.js?v=v004.55.0-world-foundation';
+} from './config.js?v=v004.56.0-fertile-land';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.56.0-fertile-land';
+import { islandCalendar } from './ui_summary.js?v=v004.56.0-fertile-land';
 import {
   compileRenderScene, inventoryLayerDepth, marketStallLayerDepth, mergeDrawables,
   sceneRowsInBounds,
-} from './render_scene.js?v=v004.55.0-world-foundation';
+} from './render_scene.js?v=v004.56.0-fertile-land';
 import {
   buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
   seasonalTerrainVisual,
-} from './visuals.js?v=v004.55.0-world-foundation';
-import { renderArtSlice } from './art_slice.js?v=v004.55.0-world-foundation';
+} from './visuals.js?v=v004.56.0-fertile-land';
+import { renderArtSlice } from './art_slice.js?v=v004.56.0-fertile-land';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
@@ -288,8 +288,28 @@ export class Renderer {
         const stroke = winter?.stroke ?? (tile.kind === 'water' ? '#1b626a' : '#4f6942');
         this.diamond(x, y, fill, stroke);
         if (tile.kind !== 'water' && seasonWash) this.diamond(x, y, seasonWash);
+        if ((tile.fertility ?? 0) > 0) this.drawFertileLandMark(x, y, tile.variant ?? 0);
       }
     }
+  }
+
+  drawFertileLandMark(x, y, variant) {
+    const ctx = this.ctx;
+    ctx.save();
+    ctx.strokeStyle = this.season === '冬' ? 'rgba(103,77,47,.58)' : 'rgba(91,62,31,.54)';
+    ctx.lineWidth = Math.max(0.65, this.camera.zoom * 1.05);
+    ctx.lineCap = 'round';
+    for (let row = 0; row < 3; row += 1) {
+      const offset = 0.25 + row * 0.2;
+      const jitter = ((variant + row) % 2) * 0.025;
+      const from = this.camera.project(x + 0.18 + jitter, y + offset, 1);
+      const to = this.camera.project(x + 0.66 + jitter, y + offset, 1);
+      ctx.beginPath();
+      ctx.moveTo(from.x, from.y);
+      ctx.lineTo(to.x, to.y);
+      ctx.stroke();
+    }
+    ctx.restore();
   }
 
   drawWaterWaves(model) {

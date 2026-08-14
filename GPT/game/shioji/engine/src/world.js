@@ -42,7 +42,7 @@ import {
   settlePortTransfers,
   transactMarketCargo,
   unloadMarketBuyCargo,
-} from "./econ.js?v=v004.55.0-world-foundation";
+} from "./econ.js?v=v004.56.0-fertile-land";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -52,6 +52,7 @@ import {
   createWalkCarrier,
   createPhysicalState,
   depositInventory,
+  ensureFertilityLayer,
   findBuildingSiteForEntrance,
   goodsUnitWeight,
   hasRoad,
@@ -63,10 +64,10 @@ import {
   stepTravelCarrier,
   stepHaulCarriers,
   stepPortHandling,
-} from "./physical.js?v=v004.55.0-world-foundation";
-import { nextMulberry32, normalizeSeed } from "./prng.js?v=v004.55.0-world-foundation";
-import { createMarketNetwork, marketNetworkSummary } from "./market_network.js?v=v004.55.0-world-foundation";
-import { stepCaravanDay, stepCaravanTick } from "./routes.js?v=v004.55.0-world-foundation";
+} from "./physical.js?v=v004.56.0-fertile-land";
+import { nextMulberry32, normalizeSeed } from "./prng.js?v=v004.56.0-fertile-land";
+import { createMarketNetwork, marketNetworkSummary } from "./market_network.js?v=v004.56.0-fertile-land";
+import { stepCaravanDay, stepCaravanTick } from "./routes.js?v=v004.56.0-fertile-land";
 
 function tread(economy, x, y) {
   const key = keyOf(Math.round(x), Math.round(y));
@@ -1178,6 +1179,7 @@ export function createWorld({
   )) throw new TypeError("保存された島の状態が不正です");
   const normalizedSeed = normalizeSeed(restored?.seed ?? seed);
   const physical = restored?.physical ?? physicalState ?? createPhysicalState();
+  ensureFertilityLayer(physical);
   const economy = restored?.economy ?? createEconomicState({ initialCompanyMoney });
   const fallbackStartFocus = market ?? restored?.economy?.market ?? null;
   physical.worldData ??= {

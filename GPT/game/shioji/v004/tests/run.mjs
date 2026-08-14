@@ -2532,7 +2532,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.55.0-world-foundation');
+  assert.equal(VERSION, 'v004.56.0-fertile-land');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -5491,6 +5491,7 @@ test('段13: 入口カーソルからエンジンと同じ実寸敷地を選び�
       width: definition.w, height: definition.h,
       ...(definition.category === 'fixed' ? { fixed: true } : {}),
       ...(definition.shore ? { shore: true } : {}),
+      ...(definition.fertile ? { fertile: true } : {}),
     });
   }
   let water = null;
@@ -5565,6 +5566,44 @@ test('空間生産性UI: 木こりと漁師は資源から遠くても配置で�
     resourcePlacementEstimate(model, 'logger', logger.entrance),
     logger.productivity,
   );
+});
+
+test('肥えた土地: 農場4種の配置予測は敷地16マスすべての肥沃度を検査する', () => {
+  const terrain = Array.from({ length: 9 }, () => Array.from(
+    { length: 15 }, () => ({ kind: 'grass', variant: 0, fertility: 0 }),
+  ));
+  for (let y = 2; y < 6; y += 1) {
+    for (let x = 2; x < 6; x += 1) terrain[y][x].fertility = 1;
+  }
+  const model = {
+    width: 15,
+    height: 9,
+    terrain,
+    roadKeys: [],
+    pavedRoadKeys: [],
+    occupiedKeys: [],
+    trailRows: [],
+    buildings: [],
+    households: [],
+    zones: [],
+    roadWorksites: [],
+    reservedBuildingSites: [],
+    economyMarket: { x: 3, y: 1 },
+    day: 0,
+  };
+  for (const job of ['wheat', 'veg', 'shepherd', 'rapeseed']) {
+    const fertile = previewBuildingPlacement(model, job, { x: 3, y: 1 });
+    assert.equal(fertile.ok, true, `${job}は肥えた土地へ置ける`);
+    assert.deepEqual([fertile.x, fertile.y, fertile.cells.length], [2, 2, 16]);
+    const ordinary = previewBuildingPlacement(model, job, { x: 10, y: 1 });
+    assert.equal(ordinary.ok, false);
+    assert.match(ordinary.reason, /肥えた土地/);
+  }
+  terrain[5][5].fertility = 0;
+  const mixed = previewBuildingPlacement(model, 'wheat', { x: 3, y: 1 });
+  assert.equal(mixed.ok, false);
+  assert.match(mixed.reason, /敷地すべて/);
+  assert.equal(previewBuildingPlacement(model, 'woodshop', { x: 10, y: 1 }).ok, true);
 });
 
 test('空間生産性UI: 生産者が近い加工配置は市場経由との差を具体的に予告する', () => {

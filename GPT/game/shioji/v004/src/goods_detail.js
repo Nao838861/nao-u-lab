@@ -1,4 +1,4 @@
-import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.55.0-world-foundation';
+import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.56.0-fertile-land';
 
 export const GOODS_SHELF_LIFE_DAYS = Object.freeze({
   fish: 5,

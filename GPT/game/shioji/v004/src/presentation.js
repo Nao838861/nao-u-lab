@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.55.0-world-foundation';
+import { pileVisual } from './visuals.js?v=v004.56.0-fertile-land';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));

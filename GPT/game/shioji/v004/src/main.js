@@ -1,50 +1,50 @@
-import { IsometricCamera } from './camera.js?v=v004.55.0-world-foundation';
-import { ART_SLICE_MODE } from './art_slice.js?v=v004.55.0-world-foundation';
-import { SimulationClock } from './clock.js?v=v004.55.0-world-foundation';
-import { createBoundaryEvents } from './boundary_events.js?v=v004.55.0-world-foundation';
+import { IsometricCamera } from './camera.js?v=v004.56.0-fertile-land';
+import { ART_SLICE_MODE } from './art_slice.js?v=v004.56.0-fertile-land';
+import { SimulationClock } from './clock.js?v=v004.56.0-fertile-land';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.56.0-fertile-land';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.55.0-world-foundation';
+} from './config.js?v=v004.56.0-fertile-land';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.55.0-world-foundation';
-import { BUILD_COST_DENARI, P, createEngineController } from './engine_bridge.js?v=v004.55.0-world-foundation';
-import { developmentMapView } from './development_map.js?v=v004.55.0-world-foundation';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.55.0-world-foundation';
-import { formatElenaSpeech } from './elena_text.js?v=v004.55.0-world-foundation';
+} from './display_batch.js?v=v004.56.0-fertile-land';
+import { BUILD_COST_DENARI, P, createEngineController } from './engine_bridge.js?v=v004.56.0-fertile-land';
+import { developmentMapView } from './development_map.js?v=v004.56.0-fertile-land';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.56.0-fertile-land';
+import { formatElenaSpeech } from './elena_text.js?v=v004.56.0-fertile-land';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.55.0-world-foundation';
+} from './food_readability.js?v=v004.56.0-fertile-land';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.55.0-world-foundation';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.55.0-world-foundation';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.55.0-world-foundation';
-import { goodsDetail } from './goods_detail.js?v=v004.55.0-world-foundation';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.55.0-world-foundation';
-import { WorldPresentation } from './presentation.js?v=v004.55.0-world-foundation';
-import { Renderer } from './renderer.js?v=v004.55.0-world-foundation';
+} from './keyboard.js?v=v004.56.0-fertile-land';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.56.0-fertile-land';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.56.0-fertile-land';
+import { goodsDetail } from './goods_detail.js?v=v004.56.0-fertile-land';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.56.0-fertile-land';
+import { WorldPresentation } from './presentation.js?v=v004.56.0-fertile-land';
+import { Renderer } from './renderer.js?v=v004.56.0-fertile-land';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.55.0-world-foundation';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.55.0-world-foundation';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.55.0-world-foundation';
+} from './save_game.js?v=v004.56.0-fertile-land';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.56.0-fertile-land';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.56.0-fertile-land';
 import {
   GOODS_GLYPHS, jobInputNeeds, shortageRows, stockWhereabouts, supplyDemandRow,
   supplyDemandRows, supplyDiagnosis,
-} from './supply_demand.js?v=v004.55.0-world-foundation';
-import { orderQuote } from './tutorial_content.js?v=v004.55.0-world-foundation';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.55.0-world-foundation';
+} from './supply_demand.js?v=v004.56.0-fertile-land';
+import { orderQuote } from './tutorial_content.js?v=v004.56.0-fertile-land';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.56.0-fertile-land';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.55.0-world-foundation';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.55.0-world-foundation';
+} from './ui_guidance.js?v=v004.56.0-fertile-land';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.56.0-fertile-land';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');

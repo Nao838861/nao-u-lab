@@ -1,8 +1,8 @@
 import {
   FOOD_GOODS,
   islandFoodSummary,
-} from './food_readability.js?v=v004.55.0-world-foundation';
-import { islandCalendar } from './ui_summary.js?v=v004.55.0-world-foundation';
+} from './food_readability.js?v=v004.56.0-fertile-land';
+import { islandCalendar } from './ui_summary.js?v=v004.56.0-fertile-land';
 
 export const BOUNDARY_EVENT_STATE_VERSION = 1;
 export const FOOD_RUNWAY_THRESHOLD_DAYS = 14;

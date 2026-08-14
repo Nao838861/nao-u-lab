@@ -1,6 +1,6 @@
 import {
   snapshotToViewModel, terrainRevisionForModel,
-} from './view_model.js?v=v004.55.0-world-foundation';
+} from './view_model.js?v=v004.56.0-fertile-land';
 
 export function createViewController(api) {
   if (!api?.snapshot || !api?.advanceTicks || !api?.applyOperation) {

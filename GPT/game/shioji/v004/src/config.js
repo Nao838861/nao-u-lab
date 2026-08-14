@@ -1,4 +1,4 @@
-export const VERSION = 'v004.55.0-world-foundation';
+export const VERSION = 'v004.56.0-fertile-land';
 
 // 経済エンジンの貨幣値は表示単位の1/10。UIへ出す時だけデナリへ直す。
 export const DENARI_PER_MONEY_UNIT = 10;
@@ -90,10 +90,10 @@ export const BUILDING_SIZES = Object.freeze({
   collier: Object.freeze({ width: 3, height: 3 }),
   smelter: Object.freeze({ width: 3, height: 3 }),
   smith: Object.freeze({ width: 3, height: 3 }),
-  wheat: Object.freeze({ width: 4, height: 4 }),
-  veg: Object.freeze({ width: 4, height: 4 }),
-  shepherd: Object.freeze({ width: 4, height: 4 }),
-  rapeseed: Object.freeze({ width: 4, height: 4 }),
+  wheat: Object.freeze({ width: 4, height: 4, fertile: true }),
+  veg: Object.freeze({ width: 4, height: 4, fertile: true }),
+  shepherd: Object.freeze({ width: 4, height: 4, fertile: true }),
+  rapeseed: Object.freeze({ width: 4, height: 4, fertile: true }),
   market: Object.freeze({ width: 5, height: 5 }),
   warehouse: Object.freeze({ width: 4, height: 4 }),
   port: Object.freeze({ width: 4, height: 3, fixed: true, shore: true }),

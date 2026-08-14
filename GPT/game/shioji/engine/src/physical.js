@@ -96,6 +96,7 @@ export const V003_BUILDINGS = Object.freeze({
 });
 
 const ECONOMIC_LAND = Object.freeze(["grass", "sand"]);
+export const FARM_BUILDING_TYPES = Object.freeze(["wheat", "veg", "shepherd", "rapeseed"]);
 const ECONOMIC_JOB_BUILDINGS = Object.freeze({
   fisher: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
   fisher2: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
@@ -110,10 +111,10 @@ const ECONOMIC_JOB_BUILDINGS = Object.freeze({
   collier: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
   smelter: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
   smith: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
-  wheat: { category: "production", w: 4, h: 4, allowedTerrain: ECONOMIC_LAND },
-  veg: { category: "production", w: 4, h: 4, allowedTerrain: ECONOMIC_LAND },
-  shepherd: { category: "production", w: 4, h: 4, allowedTerrain: ECONOMIC_LAND },
-  rapeseed: { category: "production", w: 4, h: 4, allowedTerrain: ECONOMIC_LAND },
+  wheat: { category: "production", w: 4, h: 4, allowedTerrain: ECONOMIC_LAND, fertile: true },
+  veg: { category: "production", w: 4, h: 4, allowedTerrain: ECONOMIC_LAND, fertile: true },
+  shepherd: { category: "production", w: 4, h: 4, allowedTerrain: ECONOMIC_LAND, fertile: true },
+  rapeseed: { category: "production", w: 4, h: 4, allowedTerrain: ECONOMIC_LAND, fertile: true },
 });
 
 export const ECONOMIC_BUILDINGS = Object.freeze({
@@ -142,6 +143,39 @@ function seededNoise(x, y) {
   return value - Math.floor(value);
 }
 
+export function markFertileArea(terrain, x, y, width, height, fertility = 1) {
+  if (!Number.isFinite(fertility) || fertility <= 0) {
+    throw new TypeError("fertility must be a positive finite number");
+  }
+  let marked = 0;
+  for (let tileY = Math.max(0, y); tileY < Math.min(terrain.length, y + height); tileY += 1) {
+    const row = terrain[tileY];
+    for (let tileX = Math.max(0, x); tileX < Math.min(row.length, x + width); tileX += 1) {
+      const tile = row[tileX];
+      if (!tile || !ECONOMIC_LAND.includes(tile.kind)) continue;
+      tile.fertility = fertility;
+      marked += 1;
+    }
+  }
+  return marked;
+}
+
+function addDefaultFertilityPatches(terrain, width, height) {
+  if (width >= 96 && height >= 64) {
+    // 母港の乏しい農地2区画と、北部開拓後に使う広い農地。
+    markFertileArea(terrain, 15, 45, 19, 14);
+    markFertileArea(terrain, 44, 44, 8, 12);
+    markFertileArea(terrain, 50, 5, 25, 17);
+    return;
+  }
+  if (width >= 48 && height >= 40) {
+    markFertileArea(terrain, 9, 22, 18, 14);
+    markFertileArea(terrain, 38, 21, 7, 8);
+    return;
+  }
+  markFertileArea(terrain, 3, 3, Math.min(10, width - 3), Math.min(7, height - 3));
+}
+
 export function makeV003Terrain(width = V003_GRID.width, height = V003_GRID.height) {
   const terrain = [];
   for (let y = 0; y < height; y += 1) {
@@ -157,6 +191,7 @@ export function makeV003Terrain(width = V003_GRID.width, height = V003_GRID.heig
     }
     terrain.push(row);
   }
+  addDefaultFertilityPatches(terrain, width, height);
   return terrain;
 }
 
@@ -178,6 +213,7 @@ export function makeFlowIslandTerrain(width = 48, height = 40) {
     }
     terrain.push(row);
   }
+  addDefaultFertilityPatches(terrain, width, height);
   return terrain;
 }
 
@@ -213,6 +249,7 @@ export function makeMultiMarketTerrain(width = 96, height = 64) {
     }
     terrain.push(row);
   }
+  addDefaultFertilityPatches(terrain, width, height);
   return terrain;
 }
 
@@ -223,7 +260,27 @@ export function makeEmptyWorldTerrain(width = 256, height = 256) {
   return Array.from({ length: height }, (_, y) => Array.from({ length: width }, (_, x) => ({
     kind: "grass",
     variant: (x * 17 + y * 31) % 4,
+    fertility: 1,
   })));
+}
+
+export function ensureFertilityLayer(physical) {
+  const hasLayer = physical.terrain.some((row) => row.some(
+    (tile) => tile && typeof tile === "object" && Object.hasOwn(tile, "fertility"),
+  ));
+  if (!hasLayer) addDefaultFertilityPatches(physical.terrain, physical.width, physical.height);
+  // 旧セーブに存在する農場は、その敷地を肥沃地へ移して配置済み状態を保つ。
+  for (const building of physical.buildings ?? []) {
+    if (!FARM_BUILDING_TYPES.includes(building.type)) continue;
+    markFertileArea(
+      physical.terrain,
+      building.x,
+      building.y,
+      building.w ?? building.width ?? 4,
+      building.h ?? building.height ?? 4,
+    );
+  }
+  return physical;
 }
 
 export function createPhysicalState({
@@ -237,7 +294,7 @@ export function createPhysicalState({
   if (!Number.isFinite(resolvedStartFocus.x) || !Number.isFinite(resolvedStartFocus.y)) {
     throw new TypeError("world start focus must be finite");
   }
-  return {
+  const physical = {
     width,
     height,
     worldData: {
@@ -277,6 +334,8 @@ export function createPhysicalState({
     groundPiles: [],
     nextGroundPileId: 1,
   };
+  ensureFertilityLayer(physical);
+  return physical;
 }
 
 export const COMPLETED_LOGISTICS_HISTORY_LIMIT = 96;
@@ -809,6 +868,10 @@ export function canPlaceBuilding(physical, type, x, y, options = {}) {
     if (landCount === 0 || landCount === tiles.length) {
       return { ok: false, reason: "shore-required" };
     }
+  } else if (definition.fertile && tiles.some((tile) => (
+    !(terrainAt(physical, tile.x, tile.y).fertility > 0)
+  ))) {
+    return { ok: false, reason: "fertile-land-required" };
   } else if (definition.allowedTerrain && tiles.some((tile) => (
     !definition.allowedTerrain.includes(terrainAt(physical, tile.x, tile.y).kind)
   ))) {

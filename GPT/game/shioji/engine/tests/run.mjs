@@ -131,12 +131,14 @@ import {
   createWalkCarrier,
   depositInventory,
   dockVessel,
+  ensureFertilityLayer,
   hasRoad,
   isPavedRoad,
   isConnected,
   keyOf,
   loseHaulCarrier,
   makeFlowIslandTerrain,
+  markFertileArea,
   materialSnapshot,
   moveInventoryBetweenSections,
   pathLen,
@@ -344,6 +346,10 @@ function addEconomicTestBuilding(
   entranceY,
   ownerHouseholdId = null,
 ) {
+  if (["wheat", "veg", "shepherd", "rapeseed"].includes(type)) {
+    const definition = ECONOMIC_BUILDINGS[type];
+    markFertileArea(physical.terrain, x, y, definition.w, definition.h);
+  }
   const input = Object.fromEntries(GOODS.map((goods) => [goods, Number.MAX_SAFE_INTEGER]));
   const placed = addBuilding(physical, type, x, y, {
     definitions: ECONOMIC_BUILDINGS,
@@ -634,6 +640,60 @@ test("段5: v003と同じ地形・道路グラフをNode単体で生成する", 
   const path = roadPath(physical, V003_FIXED.port.entrance, V003_FIXED.forestGate);
   assert.ok(path);
   assert.equal(path.every(({ x, y }) => hasRoad(physical, x, y)), true);
+});
+
+test("肥えた土地: 農場4種は敷地全体を肥沃地に要求し、他の建物は通常地へ置ける", () => {
+  const makePhysical = () => {
+    const terrain = Array.from({ length: 9 }, () => Array.from(
+      { length: 15 }, () => ({ kind: "grass", variant: 0, fertility: 0 }),
+    ));
+    markFertileArea(terrain, 2, 2, 4, 4);
+    return createPhysicalState({ width: 15, height: 9, terrain });
+  };
+  for (const job of ["wheat", "veg", "shepherd", "rapeseed"]) {
+    const fertile = addBuilding(makePhysical(), job, 2, 2, {
+      definitions: ECONOMIC_BUILDINGS,
+      entrance: { x: 3, y: 1 },
+      requireRoad: false,
+    });
+    assert.equal(fertile.ok, true, `${job}は肥えた土地へ置ける`);
+    const ordinary = addBuilding(makePhysical(), job, 9, 2, {
+      definitions: ECONOMIC_BUILDINGS,
+      entrance: { x: 10, y: 1 },
+      requireRoad: false,
+    });
+    assert.equal(ordinary.ok, false);
+    assert.equal(ordinary.reason, "fertile-land-required");
+  }
+  const mixed = makePhysical();
+  mixed.terrain[5][5].fertility = 0;
+  assert.equal(addBuilding(mixed, "wheat", 2, 2, {
+    definitions: ECONOMIC_BUILDINGS,
+    entrance: { x: 3, y: 1 },
+    requireRoad: false,
+  }).reason, "fertile-land-required");
+  assert.equal(addBuilding(makePhysical(), "woodshop", 9, 2, {
+    definitions: ECONOMIC_BUILDINGS,
+    entrance: { x: 10, y: 1 },
+    requireRoad: false,
+  }).ok, true);
+});
+
+test("肥えた土地: 旧保存へ既定層を補い、既設農場の敷地を維持する", () => {
+  const physical = {
+    width: 20,
+    height: 12,
+    terrain: Array.from({ length: 12 }, () => Array.from(
+      { length: 20 }, () => ({ kind: "grass", variant: 0 }),
+    )),
+    buildings: [{ type: "wheat", x: 14, y: 6, width: 4, height: 4 }],
+  };
+  ensureFertilityLayer(physical);
+  for (let y = 6; y < 10; y += 1) {
+    for (let x = 14; x < 18; x += 1) assert.equal(physical.terrain[y][x].fertility, 1);
+  }
+  assert.ok(physical.terrain.flat().some((tile) => tile.fertility === 1));
+  assert.equal(physical.terrain[0][0].fertility ?? 0, 0);
 });
 
 test("段5: 3x3占有を記録し重複・道路横断を拒否する", () => {
