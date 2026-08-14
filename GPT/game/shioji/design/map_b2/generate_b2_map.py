@@ -39,61 +39,73 @@ island[:14, :] = False; island[-12:, :] = False
 island[:, :12] = False; island[:, -12:] = False
 
 terrain = np.full((N, N), SEA, dtype=np.int16)
-terrain[island] = GRASS
+terrain[island] = GRASS  # islandはこの後の北の潟の切除で更新される
 
 # ── 2. 山塊（通行不可）──
 mountains = np.zeros((N, N), bool)
-# 北の大山塊: 島の北側を横断し、鉱山ポケットを抱く
-for cx, cy, r in [(70, 66, 22), (100, 60, 26), (132, 52, 26), (164, 52, 26), (196, 66, 24),
-                  (214, 90, 18), (84, 84, 13), (120, 84, 16), (176, 78, 16)]:
-    mountains |= blob(cx, cy, r, wobble=0.16)
-# 北の稜線は海まで落とす(海岸の抜け道を作らない——峠だけが通り道の担保)
-ridge_line = 86 + (np.sin(xx * 0.045) * 7).astype(int)
-mountains |= island & (yy < ridge_line)
-# 鉱山ポケット(盆地状に山を抜く)
-pocket = blob(150, 66, 18, wobble=0.12)
-mountains &= ~pocket
-# 東の海岸山脈: 盆地と漁港を隔てる
+def dilate0(mask, n=1):
+    out = mask.copy()
+    for _ in range(n):
+        out = out | np.roll(out, 1, 0) | np.roll(out, -1, 0) | np.roll(out, 1, 1) | np.roll(out, -1, 1)
+    return out
+# 北は海際の稜線だけ(内側は広大な盆地に明け渡す)。稜線は海岸から8タイル幅
+north_rim = island & dilate0(~island, 8) & (yy < 72)
+mountains |= north_rim
+# 北の潟(わずかな海): 稜線を切って海を招き入れる
+lagoon = blob(148, 22, 10, wobble=0.25) | blob(142, 30, 7, wobble=0.2)
+island_cut = lagoon
+# 中央盆地と北の大盆地を分ける丘陵(2つの広い口を開ける)
+hill_line = np.zeros((N, N), bool)
+for cx, cy, r in [(58, 94, 11), (74, 97, 11), (90, 100, 10), (103, 101, 9),
+                  (132, 101, 10), (146, 99, 10),
+                  (176, 95, 10), (192, 92, 10), (206, 88, 11), (218, 84, 10)]:
+    hill_line |= blob(cx, cy, r, wobble=0.16)
+mountains |= hill_line          # 北への門: x≈110-124(西口) と x≈154-168(東口)の2つだけ
+# 東の海岸山脈: 盆地と漁港を隔てる(v1のまま)
 for cx, cy, r in [(180, 108, 13), (184, 128, 13), (186, 148, 13), (184, 168, 13), (178, 186, 12)]:
     mountains |= blob(cx, cy, r, wobble=0.14)
-# 南西の小山脈(西の鉱脈候補を抱く)
-for cx, cy, r in [(48, 108, 13), (58, 124, 11)]:
+# 西の山地(山間鉱山の新しい家): ポケットを抱く峠ロックの小山塊
+for cx, cy, r in [(46, 112, 15), (60, 100, 13), (64, 126, 13), (48, 138, 12)]:
     mountains |= blob(cx, cy, r, wobble=0.15)
-# 峠を切る(山を貫く回廊。これが唯一の通り道)
+pocket = blob(52, 120, 9, wobble=0.12)
+mountains &= ~pocket
+# 峠(山を貫く回廊が唯一の道)
 def corridor(x0, y0, x1, y1, width=4):
     steps = int(max(abs(x1-x0), abs(y1-y0))) * 2 + 1
     mask = np.zeros((N, N), bool)
     for t in np.linspace(0, 1, steps):
         cx, cy = x0 + (x1-x0)*t, y0 + (y1-y0)*t
-        w = width * (1 + 0.35*np.sin(t*9))   # 幅が揺れる自然な峠道
+        w = width * (1 + 0.35*np.sin(t*9))
         mask |= (np.hypot(xx-cx, yy-cy) < w)
     return mask
 passes = np.zeros((N, N), bool)
-passes |= corridor(116, 100, 138, 74)     # P1: 盆地→鉱山(南口)
-passes |= corridor(206, 96, 164, 70)      # P2: 漁港→鉱山(東口)
-passes |= corridor(172, 150, 192, 150)    # P3: 盆地→漁港
+passes |= corridor(78, 122, 56, 120)      # P1: 平野→西の鉱山
+passes |= corridor(172, 150, 192, 150)    # P2: 盆地→漁港
 mountains &= ~passes
+island &= ~island_cut
 mountains &= island
 terrain[mountains] = MOUNTAIN
 
 # ── 3. 肥沃度(畑適地) ──
-fert1 = blob(122, 138, 33, wobble=0.13) & island & ~mountains          # 中央盆地
-fert2core = blob(122, 138, 18, wobble=0.15) & fert1
-fert_sw = blob(66, 176, 11, wobble=0.18) & island & ~mountains          # 第二の盆地(近いが狭い)
-terrain[fert1 | fert_sw] = FERT1
-terrain[fert2core] = FERT2
-
+fert1 = blob(122, 138, 30, wobble=0.13) & island & ~mountains            # 中央盆地
+fert2core = blob(122, 138, 15, wobble=0.15) & fert1
+north_basin = (blob(130, 48, 46, wobble=0.12) | blob(90, 52, 26, wobble=0.15) | blob(180, 52, 24, wobble=0.15))
+north_basin &= island & ~mountains & (yy < 92)
+fert2north = blob(126, 46, 22, wobble=0.15) & north_basin                # 北のコアは中央より広い
+fert_sw = blob(66, 176, 10, wobble=0.18) & island & ~mountains           # 第二の盆地(近いが狭い)
+fert_port = blob(100, 192, 6, wobble=0.2) & island & ~mountains          # 母港のわずかな畑(人口150の上限の根拠)
+terrain[fert1 | fert_sw | north_basin | fert_port] = FERT1
+terrain[fert2core | fert2north] = FERT2
 # ── 4. 森(燃料と木材・前線が動く場) ──
 forest = np.zeros((N, N), bool)
-for cx, cy, r in [(96, 158, 17), (140, 170, 15), (76, 138, 12),          # 盆地の南縁の帯
-                  (56, 190, 12), (118, 200, 12),                          # 母港圏の際
-                  (94, 106, 12), (152, 96, 11), (208, 116, 9),           # 山裾
-                  (160, 40, 10), (128, 34, 9)]:                           # 北の斜面
+for cx, cy, r in [(96, 158, 15), (140, 170, 14), (78, 140, 11),          # 盆地の南縁の帯
+                  (120, 202, 7), (60, 196, 7),                            # 母港の小さな森(約3年で尽きる較正)
+                  (86, 108, 10), (150, 110, 9), (208, 116, 9),           # 丘陵の裾
+                  (108, 42, 8), (166, 40, 7)]:                             # 北の少しの木
     forest |= blob(cx, cy, r, wobble=0.2)
-forest &= island & ~mountains & ~fert2core & ~pocket
-forest &= ~(blob(122, 138, 24, wobble=0.1))   # 盆地の耕作コアは開けておく
+forest &= island & ~mountains & ~fert2core & ~fert2north & ~pocket
+forest &= ~(blob(122, 138, 22, wobble=0.1))
 terrain[forest] = FOREST
-
 # ── 5. 砂浜と浅瀬 ──
 def dilate(mask, n=1):
     out = mask.copy()
@@ -116,13 +128,13 @@ def deposit(kind, cx, cy, r, count):
     pick = rng.choice(len(ys), size=min(count, len(ys)), replace=False)
     terrain[ys[pick], xs[pick]] = kind
 
-# 鉱山ポケット(主鉱床: 鉄+石炭+石材が揃う)
-deposit(ORE, 142, 62, 12, 46)
-deposit(COAL, 160, 72, 12, 46)
-deposit(ROCKDEP, 150, 54, 12, 38)
-# 西の鉱脈候補(小・鉄のみ・石炭なし)
-deposit(ORE, 54, 114, 9, 18)
-deposit(ROCKDEP, 48, 102, 8, 14)
+# 西の山間鉱山(主鉱床: 鉄+石炭+石材が揃う・峠P1ロック)
+deposit(ORE, 48, 114, 10, 40)
+deposit(COAL, 58, 128, 10, 40)
+deposit(ROCKDEP, 44, 132, 10, 30)
+# 北の大盆地の少しの鉱床(終盤開発の種)
+deposit(ORE, 96, 60, 8, 12)
+deposit(COAL, 176, 58, 8, 12)
 # 盆地の南の岩場(採石のみ)
 deposit(ROCKDEP, 148, 186, 8, 10)
 
@@ -132,23 +144,24 @@ fish_mid = np.zeros((N, N), bool)
 sea_ok = ~island
 fish_rich |= blob(226, 148, 17, wobble=0.2) & sea_ok      # 漁港沖(豊か)
 fish_rich |= blob(236, 100, 11, wobble=0.2) & sea_ok      # 北東入り江(豊か・遠い候補)
-fish_mid  |= blob(64, 226, 13, wobble=0.2) & sea_ok       # 母港西の入江(中程度=近いが痩せ)
-fish_mid  |= blob(150, 226, 11, wobble=0.2) & sea_ok      # 南岸(中)
+fish_mid  |= blob(76, 224, 9, wobble=0.2) & sea_ok        # 母港の小規模漁場(約3年で痩せる較正)
+fish_mid  |= blob(148, 24, 8, wobble=0.25) & sea_ok       # 北の潟(終盤のわずかな海)
 
 # ── 8. 市場と候補地 ──
 MARKETS = {  # id: (x, y, 名前)
-    1: (92, 206, '母港'),
+    1: (92, 206, '母港(枯渇するスターター)'),
     2: (122, 140, '中央盆地(農耕)'),
     3: (204, 150, '漁港'),
-    4: (150, 66, '山間鉱山'),
+    4: (52, 120, '山間鉱山(西)'),
 }
 CANDIDATES = {
     5: (66, 176, '第二の盆地(近いが狭い)'),
-    6: (64, 222, '近い入江(漁は中程度)'),
-    7: (52, 112, '西の鉱脈(小・石炭なし)'),
+    6: (76, 218, '母港の漁場(小・3年で痩せる)'),
+    7: (128, 52, '北の大盆地(終盤の約束の土地)'),
     8: (236, 104, '北東の入り江(豊か・遠い)'),
+    9: (146, 34, '北の潟(わずかな海)'),
 }
-PASSES = {'P1': (126, 88), 'P2': (188, 84), 'P3': (182, 150)}
+PASSES = {'P1': (66, 121), 'P2': (182, 150)}
 
 # ── 9. 経路検証(BFS: 山と海は通行不可) ──
 passable = island & ~mountains
@@ -187,7 +200,7 @@ for mid, (x, y, name) in {**MARKETS, **CANDIDATES}.items():
 # 峠を塞いだら鉱山に行けないことの確認
 blocked = passable.copy()
 for px, py in PASSES.values():
-    blocked[max(0,py-9):py+9, max(0,px-9):px+9] = False
+    blocked[max(0,py-11):py+11, max(0,px-11):px+11] = False
 def bfs2(grid, sx, sy):
     dist = np.full((N, N), -1, np.int32)
     dq = deque([(sx, sy)]); dist[sy, sx] = 0
