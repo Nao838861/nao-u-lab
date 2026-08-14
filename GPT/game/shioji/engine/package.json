@@ -5,6 +5,7 @@
   "scripts": {
     "audit:iron": "node scripts/e_iron.mjs",
     "audit:legacy": "node scripts/e_legacy.mjs",
+    "audit:price-soak": "node scripts/price_soak.mjs",
     "audit:stable": "node scripts/e_stable.mjs",
     "test": "node tests/run.mjs",
     "test:focused": "node tests/run.mjs --match"

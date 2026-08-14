@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.57.1-b2-trial';
+import { JOB_LABELS } from './config.js?v=v004.58.0-price-anchors';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

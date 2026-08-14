@@ -1,4 +1,4 @@
-const B2_MAP_VERSION = 'v1.2';
+const B2_MAP_VERSION = 'v1.3';
 const B2_MAP_SIZE = 256;
 
 const SYMBOLS = Object.freeze({

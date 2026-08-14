@@ -1,17 +1,17 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.57.1-b2-trial';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.57.1-b2-trial';
-import { islandCalendar } from './ui_summary.js?v=v004.57.1-b2-trial';
+} from './config.js?v=v004.58.0-price-anchors';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.58.0-price-anchors';
+import { islandCalendar } from './ui_summary.js?v=v004.58.0-price-anchors';
 import {
   compileRenderScene, inventoryLayerDepth, marketStallLayerDepth, mergeDrawables,
   sceneRowsInBounds,
-} from './render_scene.js?v=v004.57.1-b2-trial';
+} from './render_scene.js?v=v004.58.0-price-anchors';
 import {
   buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
   seasonalTerrainVisual,
-} from './visuals.js?v=v004.57.1-b2-trial';
-import { renderArtSlice } from './art_slice.js?v=v004.57.1-b2-trial';
+} from './visuals.js?v=v004.58.0-price-anchors';
+import { renderArtSlice } from './art_slice.js?v=v004.58.0-price-anchors';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 

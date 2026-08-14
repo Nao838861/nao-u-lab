@@ -9,9 +9,10 @@ import {
   economicMaterialSnapshot,
   fundSettlementZone,
   localWood,
+  priceAnchorBounds,
   recordEconomicMaterialFlow,
   setCaravanEmployment,
-} from "./econ.js?v=v004.57.1-b2-trial";
+} from "./econ.js?v=v004.58.0-price-anchors";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -32,8 +33,8 @@ import {
   makeMultiMarketTerrain,
   markFertileArea,
   pathLen,
-} from "./physical.js?v=v004.57.1-b2-trial";
-import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.57.1-b2-trial";
+} from "./physical.js?v=v004.58.0-price-anchors";
+import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.58.0-price-anchors";
 
 export const AUDIT_SEEDS = Object.freeze([11, 13, 14]);
 
@@ -215,7 +216,8 @@ export const E_STABLE_MATURE_INITIAL_COUNTS = Object.freeze({
 
 export const E_STABLE_YEARS = 8;
 export const E_STABLE_DAYS = E_STABLE_YEARS * 360;
-export const E_STABLE_POPULATION_BAND = Object.freeze([30, 120]);
+// 有界価格・輸入錨導入後の3シード8年包絡（最小25人）へ、1人だけ余白を置く。
+export const E_STABLE_POPULATION_BAND = Object.freeze([24, 120]);
 // seed11公開API版の現行決定値60.08日/人を、小数丸めで落とさない1日刻みの帯。
 // 経済規則は変えず、人口・職・価格・保存則の他条件と悪配置対照は維持する。
 export const E_STABLE_FAMINE_DAYS_PER_CAPITA_MAX = 61;
@@ -223,12 +225,12 @@ export const E_STABLE_FAMINE_DAYS_PER_CAPITA_MAX = 61;
 export const E_STABLE_PRICE_BANDS = Object.freeze({
   // 需要網の成熟都市（木工房2・木こり3+3・炭焼き用木こり1・採石2）を
   // seed11/13/14で各8年実測した包絡線。実測極値を丸めた約10%の余白だけを持つ。
-  fish: Object.freeze([0.5, 9]),
+  fish: Object.freeze([0.38, 9]),
   wheat: Object.freeze([0.15, 1.35]),
-  log: Object.freeze([0.26, 7.9]),
+  log: Object.freeze([0.25, 8.2]),
   tools: Object.freeze([3.7, 48]),
   salt: Object.freeze([3.2, 23]),
-  char: Object.freeze([2.75, 32]),
+  char: Object.freeze([2.75, 34.5]),
 });
 
 const LEGACY_AUDIT_JOBS = Object.freeze([
@@ -1674,6 +1676,28 @@ function sampleStablePrices(economy, ranges) {
   }
 }
 
+function createPriceAnchorAudit() {
+  return { passed: true, samples: 0, firstViolation: null };
+}
+
+function samplePriceAnchors(economy, physical, day, audit) {
+  const books = { main: economy.px, ...(economy.pxm ?? {}) };
+  for (const [marketId, book] of Object.entries(books)) {
+    for (const goods of GOODS) {
+      const price = book?.[goods];
+      const row = economy.stockDaysPrices?.[marketId]?.[goods];
+      const { cost, lower } = row ?? priceAnchorBounds(
+        economy, physical, marketId, goods, { day },
+      );
+      const upper = Math.max(P.IMP[goods] !== undefined ? P.IMP[goods] * 1.2 : 0, cost * 3);
+      audit.samples += 1;
+      if (Number.isFinite(price) && price >= lower - 1e-9 && price <= upper + 1e-9) continue;
+      audit.passed = false;
+      audit.firstViolation ??= { day, marketId, goods, price, cost, lower, upper };
+    }
+  }
+}
+
 function inspectStableMaterial(economy, physical, initialTotals, initialFlows, day) {
   const report = scenarioMaterialReport(economy, physical, initialTotals, initialFlows);
   let worst = { day, goods: null, ratio: 0, residual: 0, throughput: 0 };
@@ -1712,6 +1736,11 @@ export function runStableCityScenario(
   const initialTotals = materialTotals(economicMaterialSnapshot(economy, physical));
   const initialFlows = captureMaterialFlows(economy);
   const prices = stablePriceRanges(economy);
+  const priceAnchors = createPriceAnchorAudit();
+  const observedJobMaximums = Object.fromEntries(E_STABLE_JOBS.map((job) => [
+    job,
+    economy.households.filter((household) => household.job === job).length,
+  ]));
   const yearly = [];
   let previousFamine = 0;
   let materialPassed = true;
@@ -1721,7 +1750,20 @@ export function runStableCityScenario(
     if (matureController && economy.orderOffer) acceptCompanyOrder(economy, { day });
     controller(world, day);
     world.step();
+    // 「8年間を通じて一度も担い手が現れない職だけ赤」の契約どおり、年末の
+    // 瞬間値ではなく全日の最大実在数を観測する。
+    const dailyJobCounts = Object.fromEntries(E_STABLE_JOBS.map((job) => [job, 0]));
+    for (const household of economy.households) {
+      if (dailyJobCounts[household.job] !== undefined) dailyJobCounts[household.job] += 1;
+    }
+    for (const job of E_STABLE_JOBS) {
+      observedJobMaximums[job] = Math.max(
+        observedJobMaximums[job],
+        dailyJobCounts[job],
+      );
+    }
     sampleStablePrices(economy, prices);
+    samplePriceAnchors(economy, physical, day, priceAnchors);
     if (day % materialCheckInterval === 0 || day === days) {
       const material = inspectStableMaterial(
         economy,
@@ -1779,9 +1821,10 @@ export function runStableCityScenario(
     // 年末の瞬間値では一時空席を許す。8年間を通じて一度も担い手が現れない職だけを
     // 回帰赤とし、初期比率そのものは専用assertで別に固定する。
     jobs: yearly.length === days / 360 && Object.entries(E_STABLE_JOB_MINIMUMS).every(
-      ([job, minimum]) => yearly.some((sample) => sample.jobs[job] >= minimum),
+      ([job, minimum]) => observedJobMaximums[job] >= minimum,
     ),
     prices: priceBandsPassed,
+    priceAnchors: priceAnchors.passed,
     material: materialPassed,
     company: economy.goDay === null,
   };
@@ -1790,6 +1833,8 @@ export function runStableCityScenario(
     day: world.state.day,
     yearly,
     prices,
+    observedJobMaximums,
+    priceAnchors,
     famine: {
       earlyAverage: earlyFamine,
       lateAverage: lateFamine,

@@ -1,6 +1,11 @@
 import { parentPort, workerData } from "node:worker_threads";
 
-import { runBadCityScenario, runStableCityScenario } from "../src/audit.js";
+import {
+  E_STABLE_JOBS,
+  mimicPlayer,
+  runBadCityScenario,
+  runStableCityScenario,
+} from "../src/audit.js";
 import { createEngineApi, mimicPlayerThroughApi } from "../src/api.js";
 
 const {
@@ -11,10 +16,33 @@ const {
   runBad = false,
 } = workerData;
 const startedAt = performance.now();
-const scenario = mode === "api" ? null : runStableCityScenario(seed, {
-  days,
-  materialCheckInterval,
-});
+let scenario = null;
+if (mode !== "api") {
+  let controller = mimicPlayer;
+  if (mode === "price_soak") {
+    let randomState = (seed >>> 0) || 1;
+    const nextRandom = () => {
+      randomState = (Math.imul(randomState, 1664525) + 1013904223) >>> 0;
+      return randomState / 0x100000000;
+    };
+    const randomJobPool = Array.from({ length: 24 }, () => (
+      E_STABLE_JOBS[Math.floor(nextRandom() * E_STABLE_JOBS.length)]
+    ));
+    let initialized = false;
+    controller = (world, day) => {
+      if (!initialized) {
+        world.state.economy.jobSelectionPool = [...randomJobPool];
+        initialized = true;
+      }
+      return mimicPlayer(world, day);
+    };
+  }
+  scenario = runStableCityScenario(seed, {
+    days,
+    materialCheckInterval,
+    controller,
+  });
+}
 let api = null;
 let apiScenario = null;
 if (mode === "api" || mode === "direct_api") {

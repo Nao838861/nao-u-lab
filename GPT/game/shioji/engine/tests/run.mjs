@@ -12,7 +12,9 @@ import {
   LADDER,
   P,
   PERISH,
+  STOCK_PRICE_EMA_ALPHA,
   acceptCompanyOrder,
+  assertPriceAnchors,
   ageMarketStalls,
   assignNeedyWork,
   assertCompanyLedger,
@@ -59,6 +61,7 @@ import {
   marketTripCost,
   marketTripDuration,
   postCompanyLedger,
+  priceAnchorBounds,
   recordEconomicDemand,
   recordEconomyEvent,
   productionCost,
@@ -2294,14 +2297,51 @@ test("価格規則: 在庫日数の階段が取引ゼロでも相場と既存棚
   economy.px.log = 0.2;
   economy.demand30.log = { demand: 10, consumed: 0, sources: {} };
   economy.stalls.log.push({ householdId: logger.id, qty: 300, price: 9, age: 1 });
-  const cost = productionCost(economy, null, logger, "log", { day: 61 });
+  const before = economy.px.log;
 
   const updated = updateStockDaysPrices(economy, null, { day: 61 });
+  const cost = updated.main.log.cost;
+  const target = cost * 1.25;
+  const expected = before + (target - before) * STOCK_PRICE_EMA_ALPHA;
 
   assert.equal(updated.main.log.days, 30);
-  assert.ok(Math.abs(economy.px.log - cost * 1.25) < 1e-9);
-  assert.ok(Math.abs(economy.stalls.log[0].price - economy.px.log) < 1e-9);
+  assert.ok(Math.abs(economy.px.log - expected) < 1e-9);
+  const stallCost = productionCost(economy, null, logger, "log", { day: 61 });
+  assert.ok(Math.abs(economy.stalls.log[0].price - Math.max(
+    stallCost * 1.05, economy.px.log,
+  )) < 1e-9);
   assert.equal(economy.prices.log.length, 0, "約定履歴なしでも更新する");
+});
+
+test("価格錨: 保存由来の暴騰・暴落を一朝で有界帯へ戻しEMA targetだけを積分する", () => {
+  const economy = createEconomicState();
+  createHousehold(economy, { job: "veg", x: 0, y: 0 });
+  economy.px.veg = 1232.3892432958887;
+  economy.px.wheat = 0.22712933753943218;
+  economy.demand30.veg = { demand: 4, consumed: 0, sources: {} };
+
+  const rows = updateStockDaysPrices(economy, null, { day: 249 });
+  const wheatBounds = priceAnchorBounds(economy, null, "main", "wheat", { day: 249 });
+  assert.ok(economy.px.veg >= rows.main.veg.lower - 1e-9);
+  assert.ok(economy.px.veg <= rows.main.veg.upper + 1e-9);
+  assert.ok(economy.px.wheat >= rows.main.wheat.lower - 1e-9);
+  assert.ok(economy.px.wheat <= P.IMP.wheat * 1.2 + 1e-9);
+  assert.equal(wheatBounds.upper, P.IMP.wheat * 1.2);
+  assert.equal(rows.main.veg.target, Math.min(
+    rows.main.veg.upper,
+    Math.max(rows.main.veg.lower, rows.main.veg.cost * rows.main.veg.multiplier),
+  ));
+  assert.equal(assertPriceAnchors(economy, null, { day: 249 }), true);
+});
+
+test("食料買値錨: 空棚の安値を最安主食へ混ぜず輸入麦4Dを候補に含める", () => {
+  const economy = createEconomicState();
+  const logger = createHousehold(economy, { job: "logger", x: 0, y: 0 });
+  for (const goods of ["veg", "wheat", "pres"]) economy.px[goods] = 100;
+  logger.pantry.fish = 0;
+  const targets = buyTargets(economy, logger, { day: 249 });
+  assert.ok(targets.fish);
+  assert.ok(targets.fish[1] <= P.IMP.wheat * 2.5 + 1e-9);
 });
 
 test("価格規則: 全加工連鎖に上流ask床より高い損益分岐上限がある", () => {
@@ -2310,6 +2350,7 @@ test("価格規則: 全加工連鎖に上流ask床より高い損益分岐上限
     "logger", "woodshop", "charburner", "saltworks", "miner", "collier",
     "smelter", "smith", "fisher", "fisher2", "wheat", "veg", "shepherd",
   ].map((job) => [job, createHousehold(economy, { job, x: 0, y: 0 })]));
+  for (const household of Object.values(households)) household.lv = 2;
   updateStockDaysPrices(economy, null, { day: 61 });
   const chains = [
     ["logger", "log", "woodshop", "tools", "log", P.LOG_TOOL],
@@ -2734,6 +2775,8 @@ test("現金循環: 初売り前の魚は古い魚相場でなく安い主食二
   economy.px.veg = 0.35;
   economy.px.wheat = 4;
   economy.px.pres = 1.2;
+  const seller = createHousehold(economy, { job: "logger", x: 0, y: 0 });
+  economy.stalls.veg.push({ householdId: seller.id, qty: 10, price: 0.35, age: 0 });
 
   const ceiling = buyTargets(economy, buyer, { day: 61 }).fish[1];
 
@@ -2829,7 +2872,7 @@ test("段18: 豊漁の安い魚が約定しても在庫日数相場は次の朝�
   assert.equal(assertMoneyConservation(economy), true);
 });
 
-test("段18: 丸太市況の上昇が木製品原価と在庫日数相場へ順に伝播する", () => {
+test("段18: 丸太市況の上昇を木製品原価へ伝え、輸入品相場は錨内に留める", () => {
   const run = (logPrice) => {
     const economy = createEconomicState();
     economy.px.log = logPrice;
@@ -2842,7 +2885,8 @@ test("段18: 丸太市況の上昇が木製品原価と在庫日数相場へ順�
   const low = run(0.1);
   const high = run(0.6);
   assert.ok(high.cost > low.cost);
-  assert.ok(high.px > low.px);
+  assert.ok(high.px >= low.px);
+  assert.ok(high.px <= P.IMP.tools * 1.2 + 1e-9);
 });
 
 test("段19: 木工・炭焼き小屋・製塩・綿花・採石・魚粉を正本量で変換する", () => {
@@ -3169,6 +3213,7 @@ test("段21: dayEndの全フェーズ順を固定し実行traceで検査する",
     "fishery_regeneration",
     "flow_ema",
     "money_conservation",
+    "price_anchors",
   ];
   assert.deepEqual(DAY_END_ORDER, expected);
   assert.equal(Object.isFrozen(DAY_END_ORDER), true);
@@ -5889,6 +5934,11 @@ if (includeFullAcceptance) test("段49: T=8年×3シード+公開API版の完全
   const api = workers.find(({ mode }) => mode === "api");
   assert.ok(api.journalLength > 0);
   assert.equal(api.apiScenario.day, 2880);
+  for (const worker of workers) {
+    const scenario = worker.scenario ?? worker.apiScenario;
+    assert.equal(scenario.priceAnchors.passed, true, JSON.stringify(scenario.priceAnchors));
+    assert.ok(scenario.priceAnchors.samples >= 2880 * GOODS.length);
+  }
   assert.ok(
     Math.max(...workers.map(({ elapsedMs }) => elapsedMs)) < 78_000,
     JSON.stringify(workers.map(({ seed, mode, elapsedMs }) => ({ seed, mode, elapsedMs }))),

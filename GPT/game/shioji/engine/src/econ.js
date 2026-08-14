@@ -21,7 +21,7 @@ import {
   sectionCapacity,
   withdrawInventory,
   workRoadWorksite,
-} from "./physical.js?v=v004.57.1-b2-trial";
+} from "./physical.js?v=v004.58.0-price-anchors";
 
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) return value;
@@ -976,6 +976,8 @@ export const STOCK_DAYS_PRICE_STEPS = deepFreeze([
   { below: Infinity, multiplier: 1.1 },
 ]);
 
+export const STOCK_PRICE_EMA_ALPHA = 0.99;
+
 export function stockDaysPriceMultiplier(days) {
   const normalized = Number.isFinite(days) ? Math.max(0, days) : Infinity;
   return (STOCK_DAYS_PRICE_STEPS.find((step) => normalized < step.below)
@@ -1042,8 +1044,78 @@ function representativeProductionCost(economy, physical, marketId, goods, day) {
     .map((household) => productionCost(economy, physical, household, goods, { day }))
     .filter((cost) => Number.isFinite(cost) && cost > 0)
     .sort((left, right) => left - right);
-  if (costs.length === 0) return null;
-  return costs[Math.floor((costs.length - 1) / 2)];
+  if (costs.length === 0) {
+    return {
+      cost: economy.priceReferenceCosts?.[marketId]?.[goods]
+        ?? P.IMP_COST[goods] ?? P.BELIEF0[goods] ?? 1,
+      observed: false,
+    };
+  }
+  return { cost: costs[Math.floor((costs.length - 1) / 2)], observed: true };
+}
+
+export function priceAnchorBounds(
+  economy,
+  physical,
+  marketId,
+  goods,
+  { day = economy.currentDay, recordReference = false } = {},
+) {
+  const reference = representativeProductionCost(economy, physical, marketId, goods, day);
+  const productionCostReference = reference.cost;
+  // 輸入可能品は、本土から調達できる原価も市場の参照原価である。非効率な
+  // 国産一軒の原価だけを採ると「輸入上限 < 原価30%」が起き、二つの錨を
+  // 同時に満たせない。市場の限界調達原価として安い方を使い、国産実原価は
+  // 診断用に残す。実輸入便を自動生成する処理ではない。
+  const cost = P.IMP[goods] !== undefined
+    ? Math.min(productionCostReference, P.IMP_COST[goods] ?? P.IMP[goods])
+    : productionCostReference;
+  if (recordReference && reference.observed) {
+    economy.priceReferenceCosts ??= {};
+    economy.priceReferenceCosts[marketId] ??= {};
+    economy.priceReferenceCosts[marketId][goods] = productionCostReference;
+  }
+  return {
+    cost,
+    productionCost: productionCostReference,
+    lower: cost * 0.3,
+    upper: P.IMP[goods] !== undefined ? P.IMP[goods] * 1.2 : cost * 3,
+  };
+}
+
+export function assertPriceAnchors(
+  economy,
+  physical,
+  { day = economy.currentDay } = {},
+) {
+  const books = { main: economy.px, ...(economy.pxm ?? {}) };
+  for (const [marketId, book] of Object.entries(books)) {
+    for (const goods of GOODS) {
+      const price = book?.[goods];
+      const row = economy.stockDaysPrices?.[marketId]?.[goods];
+      // runDayEndを単体で呼ぶ小さな変換テストには朝市フェーズがない。実worldで
+      // updateStockDaysPricesが採取した当日の参照原価がある市場だけを検査する。
+      if (!row) continue;
+      const { cost, lower } = row;
+      // 不変条件の上側は、輸入錨と国産原価帯のどちらが大きくても監査できる
+      // 共通包絡。輸入可能品の実更新はこれより厳しいIMP×1.2で固定される。
+      const upper = Math.max(
+        P.IMP[goods] !== undefined ? P.IMP[goods] * 1.2 : 0,
+        cost * 3,
+      );
+      if (
+        !Number.isFinite(price)
+        || price < lower - 1e-9
+        || price > upper + 1e-9
+      ) {
+        throw new Error(
+          `価格錨違反 day=${day} market=${marketId} goods=${goods}`
+          + ` px=${price} band=[${lower},${upper}] cost=${cost}`,
+        );
+      }
+    }
+  }
+  return true;
 }
 
 export function updateStockDaysPrices(
@@ -1078,9 +1150,24 @@ export function updateStockDaysPrices(
         ? inventory / dailyDemand
         : inventory > 0.005 ? Infinity : 0;
       const multiplier = stockDaysPriceMultiplier(days);
-      const cost = representativeProductionCost(economy, physical, marketId, goods, day);
-      if (cost !== null) book[goods] = Math.max(0.1, cost * multiplier);
-      result[marketId][goods] = { inventory, dailyDemand, days, multiplier, price: book[goods] };
+      const { cost, productionCost, lower, upper } = priceAnchorBounds(
+        economy, physical, marketId, goods, { day, recordReference: true },
+      );
+      // 錨の原価は輸入可能性を含む限界調達原価だが、在庫階段の信号は国産の
+      // 実原価を残す。そうしないと塩などの在庫がある朝にtargetまで輸入原価へ
+      // 落ち、明示輸入がないのに国産加工連鎖だけを採算割れさせてしまう。
+      const target = Math.min(upper, Math.max(lower, productionCost * multiplier));
+      const previous = Number.isFinite(book[goods]) ? book[goods] : target;
+      // 価格は在庫日数から一意に決まるtargetへ追従するだけで、前日比を掛けない。
+      // 保存に暴走値が入っていても同じ朝に上下錨へ戻し、積分器を構造上作らない。
+      book[goods] = Math.min(upper, Math.max(
+        lower,
+        previous + (target - previous) * STOCK_PRICE_EMA_ALPHA,
+      ));
+      result[marketId][goods] = {
+        inventory, dailyDemand, days, multiplier, cost, productionCost,
+        target, lower, upper, price: book[goods],
+      };
     }
     for (const goods of GOODS) {
       for (const stall of economy.stalls?.[goods] ?? []) {
@@ -2082,7 +2169,9 @@ function productionLaborCost(economy, physical, household, goods, { day = econom
   const winter = month >= 10 || month <= 2;
   const dailyYield = {
     fish: winter ? P.Y_FISH_W : P.Y_FISH,
-    veg: month >= 3 && month <= 10 ? P.Y_VEG : 0.01,
+    // 休作期の生産0は在庫日数側で希少性へ反映する。0.01で割ると、季節不能を
+    // 1荷原価と誤認して冬ごとに野菜相場が三桁へ跳ぶため、実作期の日産を参照する。
+    veg: P.Y_VEG,
     wheat: P.Y_WHEAT / 360,
     meat: P.Y_MEAT,
     cloth: household.job === "rapeseed" ? P.Y_COTTON_CLOTH : P.Y_CLOTH,
@@ -2354,8 +2443,15 @@ export function buyTargets(
   const inputQty = (goods) => productionInputAmount(physical, household, goods);
   const dailyFood = Math.max(1, householdEat(household));
   const foodDays = householdFoodDays(household);
-  const px = marketPriceBook(economy, householdMarketId(household));
-  const cheapest = Math.min(px.veg ?? 9, px.wheat ?? 9, px.pres ?? 9);
+  const marketId = householdMarketId(household);
+  const px = marketPriceBook(economy, marketId);
+  const availableStaplePrices = ["veg", "wheat", "pres"]
+    .filter((goods) => marketInventoryAmount(economy, marketId, goods) > 1e-9)
+    .map((goods) => px[goods] ?? P.BELIEF0[goods]);
+  const cheapest = Math.min(
+    ...availableStaplePrices,
+    P.IMP.wheat,
+  );
   const month = calendarMonth(economy, day);
   const autumn = month >= 7 && month <= 9;
   let targetDays = autumn ? 10 : P.PANTRY_FOOD_D;
@@ -5857,6 +5953,7 @@ export const DAY_END_ORDER = deepFreeze([
   "fishery_regeneration",
   "flow_ema",
   "money_conservation",
+  "price_anchors",
 ]);
 
 const BIRTH_NAMES = deepFreeze([
@@ -6489,6 +6586,8 @@ export function runDayEnd(economy, physical, { day, random = () => 1, trace = []
   updateFlowEma(economy);
   mark("money_conservation");
   assertMoneyConservation(economy, { incremental: true });
+  mark("price_anchors");
+  assertPriceAnchors(economy, physical, { day });
 
   return { trace, purchases, harvests, survival, maintenance, paving, births, population, finance };
 }
@@ -6713,6 +6812,7 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
     dailyDemandFlows: {},
     f30: {},
     demand30: {},
+    priceReferenceCosts: { main: {} },
     materialLedger: [],
     led: { prod: {}, eat: {}, spoil: {}, need: 0 },
     hungryN: 0,

@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.57.1-b2-trial';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.58.0-price-anchors';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({

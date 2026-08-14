@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { createEngineApi, replayInputJournal } from '../../engine/src/api.js';
-import { buildBaseCity } from '../../engine/src/audit.js';
+import { buildCaravanSliceWorld } from '../../engine/src/audit.js';
 import { createViewController } from '../src/controller.js';
 import { previewBuildingPlacement, previewRoadPlacement } from '../src/placement.js';
 
@@ -42,7 +42,7 @@ function findRoadPreview(model) {
 
 assertPublishedV003Unchanged();
 
-const liveApi = createEngineApi(buildBaseCity(SEED));
+const liveApi = createEngineApi(buildCaravanSliceWorld(SEED));
 const controller = createViewController(liveApi);
 
 const buildingPreview = findBuildingPreview(controller.readModel(), 'woodshop');
@@ -101,7 +101,7 @@ for (const type of [
 }
 
 const replay = replayInputJournal(
-  () => buildBaseCity(SEED),
+  () => buildCaravanSliceWorld(SEED),
   journal,
   { untilTick: FINAL_TICK },
 );

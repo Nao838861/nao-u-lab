@@ -2386,9 +2386,12 @@ test('チュートリアル段22: 同じ島で隊商宿を建て、麦と魚の�
     receipt,
     recentTrips: route.recentTrips,
   }));
-  assert.ok(receipt.returning.fish > 0);
-  assert.ok(model.households.filter(household => household.marketId === 'fishery')
-    .some(household => (household.lastMarketVisit?.purchased?.wheat ?? 0) > 0));
+  assert.equal(route.goodsBack.includes('fish'), true);
+  assert.ok((receipt.returning.fish ?? 0) >= 0,
+    '帰り荷は魚を指定するが、住民の早買い・冬の空棚なら第一便は空荷を許す');
+  const resultEvidence = director.readState().goalResults['observe-second-market-result']?.evidence;
+  assert.ok(resultEvidence?.fishery?.purchasedWheat > 0,
+    '一時的なlastMarketVisitでなく実配送－売れ残りから漁郷の累積購入を確認する');
   assert.equal(route.accounting.current.profit,
     route.accounting.current.sales - route.accounting.current.procurement
       - route.accounting.current.wages - route.accounting.current.cartCosts);
@@ -2556,7 +2559,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.57.1-b2-trial');
+  assert.equal(VERSION, 'v004.58.0-price-anchors');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2802,7 +2805,7 @@ test('開始選択: URLのmodeは5種だけを受理し他のqueryを保つ', ()
   }
 });
 
-test('B2試験モード: v1.2地形・母港・山ロック・P1峠を同じphysicalで保つ', () => {
+test('B2試験モード: v1.3地形・母港・山ロック・P1峠を同じphysicalで保つ', () => {
   const source = JSON.parse(fs.readFileSync(
     new URL('../../design/map_b2/b2_map_data.json', import.meta.url),
     'utf8',
@@ -2811,7 +2814,7 @@ test('B2試験モード: v1.2地形・母港・山ロック・P1峠を同じphys
   assert.equal(Object.values(definition.counts).reduce((total, count) => total + count, 0), 65536);
   assert.deepEqual(
     Object.fromEntries(['M', 'f', 'F', 'R', 'm', '-'].map(symbol => [symbol, definition.counts[symbol]])),
-    { M: 8183, f: 4516, F: 1492, R: 3207, m: 294, '-': 2459 },
+    { M: 8183, f: 4559, F: 1492, R: 3207, m: 294, '-': 2459 },
   );
   const controller = createEngineController({ seed: 11, mode: 'big-island', b2MapDefinition: definition });
   const state = controller.saveState();

@@ -2,15 +2,15 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.57.1-b2-trial';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.57.1-b2-trial';
-import { displayCultureLevel } from './visuals.js?v=v004.57.1-b2-trial';
+} from './engine_bridge.js?v=v004.58.0-price-anchors';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.58.0-price-anchors';
+import { displayCultureLevel } from './visuals.js?v=v004.58.0-price-anchors';
 import {
   PLAYER_FACING_BANNED_TERMS,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.57.1-b2-trial';
-import { islandCalendar } from './ui_summary.js?v=v004.57.1-b2-trial';
+} from './food_readability.js?v=v004.58.0-price-anchors';
+import { islandCalendar } from './ui_summary.js?v=v004.58.0-price-anchors';
 
 export { PLAYER_FACING_BANNED_TERMS };
 
@@ -792,7 +792,7 @@ export const TUTORIAL_SYSTEM_INSTRUCTIONS = Object.freeze({
   'wait-main-wheat-stock': '時間を進め、母港市場の麦が8荷以上になるまで待つ。麦畑は9月半ばにまとめて収穫する。',
   'configure-first-caravan-route': '入居した隊商宿を押し、目的地を［漁郷市場］、行き荷を［麦］、帰り荷を［魚］にして路線を保存する。',
   'watch-first-caravan-depart': '速度を通常へ戻し、麦を積んだ荷車が母港市場を発つまで盤面を見る。',
-  'watch-first-caravan-arrive': '荷車を選び、峠道を通って漁郷市場へ麦を降ろすまで追う。',
+  'watch-first-caravan-arrive': '荷車を選び、峠道を通って漁郷市場へ麦を降ろし、その日の魚棚を確かめて帰路へ入るまで追う。',
   'read-first-caravan-receipt': '帰着後に隊商宿を開き、第一便のレシートで往路麦・帰路魚・仕入額を確かめる。',
   'observe-second-market-result': '漁郷の家族を押して麦の購入を確かめ、隊商の今月欄で売上－仕入－給料－荷車費＝差引を読む。',
   'close-sixth-chapter': '',
@@ -1250,9 +1250,22 @@ function fisheryMarketFacts(model) {
   const households = model.households.filter(household => household.marketId === 'fishery');
   const wheat = households.reduce((total, household) => total + pantryAmount(household, 'wheat'), 0);
   const fish = households.reduce((total, household) => total + pantryAmount(household, 'fish'), 0);
-  const purchasedWheat = households.reduce((total, household) => (
+  const lastVisitPurchasedWheat = households.reduce((total, household) => (
     total + (household.lastMarketVisit?.purchased?.wheat ?? 0)
   ), 0);
+  const route = tutorialCaravanRoute(model);
+  const deliveredWheat = (route?.recentTrips ?? []).reduce((total, trip) => (
+    total + (trip.outbound?.wheat ?? 0)
+  ), 0);
+  const unsoldWheat = (route?.diagnosis?.unsold ?? []).reduce((total, row) => (
+    row.marketId === 'fishery' && row.goods === 'wheat' ? total + row.qty : total
+  ), 0);
+  // lastMarketVisitは次の買い出しで上書きされる。教程の実績は、隊商が実際に
+  // 漁郷へ降ろした麦から現存する売れ残りを引き、累積の購入量として保持する。
+  const purchasedWheat = Math.max(
+    lastVisitPurchasedWheat,
+    Math.max(0, deliveredWheat - unsoldWheat),
+  );
   const foodDays = households.reduce((total, household) => (
     total + householdFoodAmountForTutorial(household)
   ), 0) / Math.max(1, households.reduce((total, household) => total + household.members, 0));

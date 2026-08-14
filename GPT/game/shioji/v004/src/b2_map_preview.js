@@ -1,4 +1,4 @@
-import { IsometricCamera } from './camera.js?v=v004.57.1-b2-trial';
+import { IsometricCamera } from './camera.js?v=v004.58.0-price-anchors';
 
 const PREVIEW_VERSION = 'b2-map-preview-s0-v1';
 const SOURCE_URL = new URL('../../design/map_b2/b2_map_data.json', import.meta.url);
@@ -23,7 +23,7 @@ const TERRAIN = Object.freeze({
 });
 
 function assertMap(data) {
-  if (!data?.version?.includes('v1.2')) throw new Error(`B2 map v1.2 is required: ${data?.version ?? 'unknown'}`);
+  if (!data?.version?.includes('v1.3')) throw new Error(`B2 map v1.3 is required: ${data?.version ?? 'unknown'}`);
   if (data.size?.[0] !== 256 || data.size?.[1] !== 256) throw new Error('B2 map must be 256×256');
   if (!Array.isArray(data.terrain) || data.terrain.length !== 256) throw new Error('B2 map must have 256 terrain rows');
   for (const [y, row] of data.terrain.entries()) {
@@ -39,7 +39,7 @@ function createPreviewHud() {
   hud.id = 'b2-map-preview-hud';
   hud.innerHTML = `
     <div class="b2-preview-title">
-      <b>B2 MAP <span>v1.2</span></b>
+      <b>B2 MAP <span>v1.3</span></b>
       <span>256×256 見た目プレビュー</span>
       <strong id="b2-preview-fps">— fps</strong>
     </div>
@@ -227,7 +227,7 @@ function render(now) {
 resize();
 window.__SHIOJI_V004__ = Object.freeze({
   version: PREVIEW_VERSION,
-  preview: 'b2-map-v1.2',
+  preview: 'b2-map-v1.3',
   map,
   camera,
   metrics: () => Object.freeze({ fps: measuredFps, cachePixels: terrainCache.canvas.width * terrainCache.canvas.height }),
