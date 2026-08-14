@@ -1044,6 +1044,27 @@ test('チュートリアル新章: 出題・識字・低給失敗・実便レシ
   assert.match(lowResult.detail, /御者 0人/);
 });
 
+test('チュートリアル第五章: 実入居後の日当相場変動で成立済み雇用を未達へ戻さない', () => {
+  const staffingGoal = TUTORIAL_GOALS.find(goal => goal.id === 'staff-caravan-inn');
+  const result = staffingGoal.evaluate({
+    model: {
+      households: [{ id: 1, buildingId: 10, marketId: 'main' }],
+      buildings: [{
+        id: 10,
+        type: 'carter',
+        caravanEmployment: { recruitment: 1, wage: 1 },
+        caravanWageMarket: { median: 2 },
+        caravanCrew: 1,
+      }],
+    },
+    state: {},
+  });
+  assert.equal(result.complete, true);
+  assert.deepEqual(result.evidence, {
+    buildingId: 10, recruitment: 1, wage: 1, median: 2, crew: 1,
+  });
+});
+
 test('チュートリアル段5前提実測: 港だけの無人島でも木こり区画へ15日目に移民が入る', () => {
   for (const seed of [11, 13, 14]) {
     const controller = createEngineController({ seed, mode: 'tutorial' });
@@ -2535,7 +2556,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.57.0-b2-trial');
+  assert.equal(VERSION, 'v004.57.1-b2-trial');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);

@@ -1,17 +1,17 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.57.0-b2-trial';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.57.0-b2-trial';
-import { islandCalendar } from './ui_summary.js?v=v004.57.0-b2-trial';
+} from './config.js?v=v004.57.1-b2-trial';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.57.1-b2-trial';
+import { islandCalendar } from './ui_summary.js?v=v004.57.1-b2-trial';
 import {
   compileRenderScene, inventoryLayerDepth, marketStallLayerDepth, mergeDrawables,
   sceneRowsInBounds,
-} from './render_scene.js?v=v004.57.0-b2-trial';
+} from './render_scene.js?v=v004.57.1-b2-trial';
 import {
   buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
   seasonalTerrainVisual,
-} from './visuals.js?v=v004.57.0-b2-trial';
-import { renderArtSlice } from './art_slice.js?v=v004.57.0-b2-trial';
+} from './visuals.js?v=v004.57.1-b2-trial';
+import { renderArtSlice } from './art_slice.js?v=v004.57.1-b2-trial';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
@@ -116,10 +116,30 @@ export class Renderer {
   boundsVisible({ x, y, width = 1, height = 1 }) {
     const bounds = this.frameBounds;
     if (!bounds) return true;
-    return x + width >= bounds.minX
+    const insideWorldBounds = x + width >= bounds.minX
       && x <= bounds.maxX + 1
       && y + height >= bounds.minY
       && y <= bounds.maxY + 1;
+    if (!insideWorldBounds) return false;
+
+    // 等角投影された画面はworld座標では菱形になる。外接矩形だけで判定すると、
+    // 256×256地図では画面四隅の外にある木や岩まで約2倍描いてしまう。
+    // 背の高い樹木・建物が端で急に消えない余白を残しつつ、screen座標でも絞る。
+    const corners = [
+      this.camera.project(x, y),
+      this.camera.project(x + width, y),
+      this.camera.project(x + width, y + height),
+      this.camera.project(x, y + height),
+    ];
+    const padding = 96 * this.camera.zoom;
+    const minScreenX = Math.min(...corners.map(point => point.x));
+    const maxScreenX = Math.max(...corners.map(point => point.x));
+    const minScreenY = Math.min(...corners.map(point => point.y));
+    const maxScreenY = Math.max(...corners.map(point => point.y));
+    return maxScreenX >= -padding
+      && minScreenX <= this.width + padding
+      && maxScreenY >= -padding
+      && minScreenY <= this.height + padding;
   }
 
   footprint(x, y, width, height, fill, stroke, alpha = 1) {
@@ -317,13 +337,20 @@ export class Renderer {
       minX: 0, maxX: model.width - 1, minY: 0, maxY: model.height - 1,
     };
     const ctx = this.ctx;
+    const waveModulo = Math.max(model.width, model.height) >= 192 ? 12 : 4;
     ctx.save();
     ctx.strokeStyle = '#76b6b0';
     ctx.lineWidth = Math.max(0.7, this.camera.zoom);
     for (let y = bounds.minY; y <= bounds.maxY; y += 1) {
       for (let x = bounds.minX; x <= bounds.maxX; x += 1) {
         const tile = model.terrain[y][x];
-        if (tile.kind !== 'water' || (x * 3 + y + (tile.variant ?? 0)) % 4 !== 0) continue;
+        if (tile.kind !== 'water'
+          || (x * 3 + y + (tile.variant ?? 0)) % waveModulo !== 0) continue;
+        // 大マップの外接world矩形には、実画面の菱形外にある海面が多く含まれる。
+        // 波は動的層なのでterrain cacheへ入れず、投影点で画面外を落としてから描く。
+        const center = this.camera.project(x + 0.5, y + 0.5, 1);
+        if (center.x < -20 || center.x > this.width + 20
+          || center.y < -20 || center.y > this.height + 20) continue;
         const from = this.camera.project(x + 0.22, y + 0.46, 1);
         const to = this.camera.project(x + 0.62, y + 0.46, 1);
         ctx.globalAlpha = 0.28 + Math.sin(this.pulse * 1.4 + x + y) * 0.06;

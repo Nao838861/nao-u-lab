@@ -1,4 +1,4 @@
-import { IsometricCamera } from './camera.js?v=v004.57.0-b2-trial';
+import { IsometricCamera } from './camera.js?v=v004.57.1-b2-trial';
 
 const PREVIEW_VERSION = 'b2-map-preview-s0-v1';
 const SOURCE_URL = new URL('../../design/map_b2/b2_map_data.json', import.meta.url);

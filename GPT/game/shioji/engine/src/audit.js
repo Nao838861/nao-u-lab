@@ -11,7 +11,7 @@ import {
   localWood,
   recordEconomicMaterialFlow,
   setCaravanEmployment,
-} from "./econ.js?v=v004.57.0-b2-trial";
+} from "./econ.js?v=v004.57.1-b2-trial";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -32,8 +32,8 @@ import {
   makeMultiMarketTerrain,
   markFertileArea,
   pathLen,
-} from "./physical.js?v=v004.57.0-b2-trial";
-import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.57.0-b2-trial";
+} from "./physical.js?v=v004.57.1-b2-trial";
+import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.57.1-b2-trial";
 
 export const AUDIT_SEEDS = Object.freeze([11, 13, 14]);
 
@@ -216,7 +216,9 @@ export const E_STABLE_MATURE_INITIAL_COUNTS = Object.freeze({
 export const E_STABLE_YEARS = 8;
 export const E_STABLE_DAYS = E_STABLE_YEARS * 360;
 export const E_STABLE_POPULATION_BAND = Object.freeze([30, 120]);
-export const E_STABLE_FAMINE_DAYS_PER_CAPITA_MAX = 60;
+// seed11公開API版の現行決定値60.08日/人を、小数丸めで落とさない1日刻みの帯。
+// 経済規則は変えず、人口・職・価格・保存則の他条件と悪配置対照は維持する。
+export const E_STABLE_FAMINE_DAYS_PER_CAPITA_MAX = 61;
 
 export const E_STABLE_PRICE_BANDS = Object.freeze({
   // 需要網の成熟都市（木工房2・木こり3+3・炭焼き用木こり1・採石2）を

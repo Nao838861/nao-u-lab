@@ -2,15 +2,15 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.57.0-b2-trial';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.57.0-b2-trial';
-import { displayCultureLevel } from './visuals.js?v=v004.57.0-b2-trial';
+} from './engine_bridge.js?v=v004.57.1-b2-trial';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.57.1-b2-trial';
+import { displayCultureLevel } from './visuals.js?v=v004.57.1-b2-trial';
 import {
   PLAYER_FACING_BANNED_TERMS,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.57.0-b2-trial';
-import { islandCalendar } from './ui_summary.js?v=v004.57.0-b2-trial';
+} from './food_readability.js?v=v004.57.1-b2-trial';
+import { islandCalendar } from './ui_summary.js?v=v004.57.1-b2-trial';
 
 export { PLAYER_FACING_BANNED_TERMS };
 
@@ -2174,7 +2174,9 @@ const TUTORIAL_GOAL_DEFINITIONS = Object.freeze([
       const recruitment = inn?.caravanEmployment?.recruitment ?? 0;
       const median = inn?.caravanWageMarket?.median ?? 0;
       const crew = inn?.caravanCrew ?? 0;
-      const complete = crew > 0 && recruitment > 0 && wage + 1e-9 >= median;
+      // 実入居は、その世帯が募集時点の日当と現職収入を比較して応募した確定事実。
+      // 入居後に島の中央値が動いても、成立済みの雇用を教程上だけ未達へ戻さない。
+      const complete = crew > 0 && recruitment > 0;
       return {
         complete,
         progress: { done: Number(inn !== null) + Number(crew > 0), total: 2 },
