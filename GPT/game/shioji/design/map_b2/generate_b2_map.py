@@ -310,3 +310,35 @@ for pname, (x, y) in PASSES.items():
     draw.text((X, Y), pname, fill=(255, 230, 150), font=font_s, anchor='mm')
 big.save('/private/tmp/claude-503/-Users-Nao-u-nao-u-lab-Claude/c9cb35e1-aa97-4415-88e2-75290db11847/scratchpad/map_design/b2_map_annotated.png')
 print('images saved')
+
+# ── 11. エンジン投入用データ書き出し ──
+import json
+CHAR = {SEA: '~', SHALLOW: '-', SAND: '.', GRASS: 'g', FERT1: 'f', FERT2: 'F',
+        FOREST: 't', MOUNTAIN: 'M', ROCKDEP: 'r', ORE: 'o', COAL: 'c', PIER: 'g'}
+rows = []
+for y in range(N):
+    row = []
+    for x in range(N):
+        ch = CHAR[terrain[y, x]]
+        if ch in ('~', '-'):
+            if fish_rich[y, x]: ch = 'R'      # 豊かな漁場の海
+            elif fish_mid[y, x]: ch = 'm'     # 中程度の漁場の海
+        row.append(ch)
+    rows.append(''.join(row))
+data = {
+    'version': 'b2-map-v1.0 (v3d)',
+    'size': [N, N],
+    'legend': {'~': 'sea', '-': 'shallow(視覚のみ・水扱い)', 'R': 'sea+豊かな漁場', 'm': 'sea+中漁場',
+               '.': 'sand', 'g': 'grass', 'f': 'fert1(畑適地)', 'F': 'fert2(肥沃コア)',
+               't': 'forest', 'M': 'mountain(通行不可)', 'r': 'rock(石材)', 'o': 'ore', 'c': 'coal'},
+    'markets': {str(k): {'x': v[0], 'y': v[1], 'name': v[2]} for k, v in MARKETS.items()},
+    'candidates': {str(k): {'x': v[0], 'y': v[1], 'name': v[2]} for k, v in CANDIDATES.items()},
+    'passes': {k: {'x': v[0], 'y': v[1]} for k, v in PASSES.items()},
+    'verification': {'pass_locked_mine': True, 'distances_from_port_tiles': {
+        str(mid): int(d_port[y, x]) for mid, (x, y, name) in {**MARKETS, **CANDIDATES}.items()}},
+    'terrain': rows,
+}
+out = '/private/tmp/claude-503/-Users-Nao-u-nao-u-lab-Claude/c9cb35e1-aa97-4415-88e2-75290db11847/scratchpad/map_design/b2_map_data.json'
+with open(out, 'w', encoding='utf-8') as f:
+    json.dump(data, f, ensure_ascii=False, indent=None, separators=(',', ':'))
+print('data exported')
