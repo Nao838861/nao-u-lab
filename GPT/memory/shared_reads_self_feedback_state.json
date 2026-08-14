@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-14T12:29:36+09:00",
+  "updated_at": "2026-08-14T14:36:24+09:00",
   "reviewed_source_ts": [
+    "1779972051.823869",
     "1786668938.237989",
     "1779971755.674859",
     "1779950173.173749",
@@ -653,6 +654,47 @@
     "1786606286.694329"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-14T14:36:24+09:00",
+      "selected": {
+        "id": "sr-1779972051-c7866ec6ed",
+        "source_ts": "1779972051.823869",
+        "title": "LieCraft: A Multi-Agent Framework for Evaluating Deceptive Capabilities in Language Models",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす候補から1件だけ選んだ。直近未レビューの中で game-design・agent・operation・evaluation の4優先タグを持ち、hidden-role／social deduction prototype の role・private goal・public claim・action log・suspicion・accusation を分離する案が、既存の NPC／multi-agent 評価と異なる次回判断を作れるか確認した。Nao_u が本 atom 自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は10種類の grounded scenario、12モデル、propensity to defect・deception skill・accusation accuracy の3軸、degenerate strategy の抑制を示し、role、private_goal、public_claim、action_log、suspicion_signal、accusation_result、degenerate_strategy_flag のログ案へ直接変換できるため actionability は3とした。一方、投稿からは scenario／model 別の数値、human calibration、娯楽としての不快さ・公平性、当環境での再現結果を確認できず evidence は2に留める。probe-20260625-triex-belief-reasoning-oracle-audit は stated reason／belief／action／oracle を、probe-20260712-deception-intent-perception-confound は design-side deception と player perception を、probe-20260616-social-eval-three-view-consistency は action／reason／message を、probe-20260616-dialogue-session-outcome-split は session objective と安全・player-experience 制約を、probe-20260607-adversarial-role-review は attacker／defender／judge の短い検査をすでに扱うため non_redundancy は1である。現在の staging には hidden-role NPC、固定 seed、player-facing suspicion trace、before／after artifact がなく、直後の Phase 4a memory cleanup を consumer にしても判断差を作れない。さらに active_probes 325件へ deception skill を独立 control として加えると確認負荷を増やし、欺瞞の巧さを安全性・面白さ・公平性から切り離して最適化する危険があるため risk_control は1とした。次に具体的な hidden-role playable artifact が生じ、既存5 controlsだけでは degenerate strategy と見抜ける公平な証拠を同時に判定できない実例が出た時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260625-triex-belief-reasoning-oracle-audit",
+        "probe-20260712-deception-intent-perception-confound",
+        "probe-20260616-social-eval-three-view-consistency",
+        "probe-20260616-dialogue-session-outcome-split",
+        "probe-20260607-adversarial-role-review"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-14T12:29:36+09:00",
       "selected": {
