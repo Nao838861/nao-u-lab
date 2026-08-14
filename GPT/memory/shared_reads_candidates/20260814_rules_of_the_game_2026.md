@@ -7,12 +7,12 @@ genre_tags: [game-design, production, player-trust, innovation, narrative-choice
 evaluated_at: "2026-08-14T14:22:27+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-14T14:22:27+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-14T14:22:27+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-14T14:31:44.078429+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786685504078429"
+next_action: none
 stale_after: "2026-09-13"
 supersedes:
   - memory/shared_reads_candidates/20260527_rules_of_game_2026_microtalks.md
@@ -25,6 +25,11 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の prototype で、変更案ごとに player expectation、検証範囲、state 分岐コスト、実現したい cool action を記録する設計・playtest 判断"
   pros_cons: "複数領域を同じ判断表へ接続できる一方、各 rule は講演者の経験則であり、定量評価や全ジャンルへの一般化は資料単体では保証されない"
   verdict_pre: "部分採用。trust budget と『better か merely different か』の停止質問を優先し、illusion choice は narrative prototype で限定検証する"
+posted:
+  ts: "1786685504.078429"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786685504078429"
+  char_count: 4045
+  posted_at: "2026-08-14T14:31:44.078429+09:00"
 ---
 
 ## raw_excerpt
