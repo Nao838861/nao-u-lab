@@ -8,7 +8,7 @@ import {
   requestMainlandAid,
   setCaravanEmployment,
   setCompanyStockTarget,
-} from "./econ.js?v=v004.61.0-b2-p3";
+} from "./econ.js?v=v004.62.0-b2-p4";
 import {
   activePortCalls,
   addRoadLine,
@@ -16,14 +16,17 @@ import {
   haulJobById,
   removeBuilding,
   removeRoadTile,
-} from "./physical.js?v=v004.61.0-b2-p3";
-import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.61.0-b2-p3";
+} from "./physical.js?v=v004.62.0-b2-p4";
+import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.62.0-b2-p4";
 import {
   forgetCompanyLogisticsBuilding,
   placeCompanyLogisticsBuilding,
-} from "./world.js?v=v004.61.0-b2-p3";
-import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.61.0-b2-p3";
-import { configureCaravanRoute } from "./routes.js?v=v004.61.0-b2-p3";
+} from "./world.js?v=v004.62.0-b2-p4";
+import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.62.0-b2-p4";
+import {
+  configureCaravanRoute,
+  stepCaravanDay,
+} from "./routes.js?v=v004.62.0-b2-p4";
 
 function jsonClone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -595,7 +598,7 @@ export function createEngineApi(
         const actionDay = world.state.tick % 30 === 0
           ? world.state.day + 1
           : world.state.day;
-        return configureCaravanRoute(economy, physical, {
+        const configured = configureCaravanRoute(economy, physical, {
           baseBuildingId: op.baseBuildingId,
           destMarketId: op.destMarketId,
           goodsOut: op.goodsOut,
@@ -603,6 +606,10 @@ export function createEngineApi(
           intervalDays: op.intervalDays,
           day: actionDay,
         });
+        if (configured.ok && !configured.route.currentTrip) {
+          stepCaravanDay(economy, physical, { day: actionDay });
+        }
+        return configured;
       }
       case "release_stock": {
         const job = requestCompanyStockRelease(economy, physical, op.goods, {

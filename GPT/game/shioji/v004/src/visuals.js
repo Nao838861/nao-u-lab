@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.61.0-b2-p3';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.62.0-b2-p4';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({

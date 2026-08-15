@@ -12,7 +12,7 @@ import {
   priceAnchorBounds,
   recordEconomicMaterialFlow,
   setCaravanEmployment,
-} from "./econ.js?v=v004.61.0-b2-p3";
+} from "./econ.js?v=v004.62.0-b2-p4";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -33,8 +33,9 @@ import {
   makeMultiMarketTerrain,
   markFertileArea,
   pathLen,
-} from "./physical.js?v=v004.61.0-b2-p3";
-import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.61.0-b2-p3";
+} from "./physical.js?v=v004.62.0-b2-p4";
+import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.62.0-b2-p4";
+import { createMarketNetwork } from "./market_network.js?v=v004.62.0-b2-p4";
 
 export const AUDIT_SEEDS = Object.freeze([11, 13, 14]);
 
@@ -526,7 +527,7 @@ function b2StarterPredicate(physical, job, x, y) {
 function placeB2StarterZone(world, job, center) {
   const { economy, physical } = world.state;
   const candidates = [];
-  for (let y = center.y - 28; y <= center.y + 18; y += 1) {
+  for (let y = center.y - 28; y <= center.y + 26; y += 1) {
     for (let x = center.x - 24; x <= center.x + 32; x += 1) {
       if (!isLand(physical, x, y) || !b2StarterPredicate(physical, job, x, y)) continue;
       if (economy.zones.some(zone => zone.x === x && zone.y === y)) continue;
@@ -625,6 +626,179 @@ export function buildB2TrialWorld(seed = 11, definition) {
     );
   }
   economy.jobSelectionPool = [...new Set([...E_STABLE_JOBS, ...B2_TRIAL_STARTER_JOBS])];
+  world.state.b2Trial = {
+    version: definition.version,
+    counts: { ...definition.counts },
+    passes: structuredClone(definition.passes ?? {}),
+    motherMarketId: "main",
+  };
+  return world;
+}
+
+export const B2_TUTORIAL_FISHERY_MARKET = Object.freeze({
+  id: "fishery",
+  name: "漁港市場",
+  entrance: Object.freeze({ x: 188, y: 200 }),
+});
+
+export function buildB2TutorialWorld(seed = 11, definition) {
+  if (!definition || definition.width !== 256 || definition.height !== 256) {
+    throw new TypeError("B2 map definition must be 256×256");
+  }
+  const mother = definition.markets?.["1"];
+  if (!mother) throw new TypeError("B2 mother port market is required");
+  const marketEntrance = { x: 108, y: 199 };
+  const portSite = { x: 101, y: 197, entrance: { x: 104, y: 200 } };
+  const physical = createPhysicalState({
+    width: definition.width,
+    height: definition.height,
+    terrain: definition.terrain.map(row => row.map(tile => ({ ...tile }))),
+    roadOrigin: { ...marketEntrance },
+    startFocus: { ...mother },
+  });
+  const world = createWorld({
+    seed,
+    initialCompanyMoney: P.TREASURY0 + P.BUILD_COST * 4,
+    physicalState: physical,
+    market: { ...marketEntrance },
+    port: { ...portSite.entrance },
+    logisticsSites: { port: portSite },
+    marketNetwork: {
+      markets: [
+        { id: "main", name: "母港市場", entrance: { ...marketEntrance } },
+        B2_TUTORIAL_FISHERY_MARKET,
+      ],
+    },
+  });
+  const { economy } = world.state;
+  ensureCompanyLogisticsSites(economy, physical);
+  const fishery = B2_TUTORIAL_FISHERY_MARKET;
+  const marketSite = findBuildingSiteForEntrance(
+    physical,
+    "market",
+    fishery.entrance,
+    { definitions: ECONOMIC_BUILDINGS, toward: economy.market },
+  );
+  if (!marketSite) throw new Error("B2教程漁港市場の敷地なし");
+  const unlimited = Object.fromEntries(GOODS.map((goods) => [goods, Number.MAX_SAFE_INTEGER]));
+  const placedMarket = addBuilding(physical, "market", marketSite.x, marketSite.y, {
+    definitions: ECONOMIC_BUILDINGS,
+    fixed: true,
+    requireRoad: false,
+    entrance: { ...fishery.entrance },
+    roles: [`market:${fishery.id}`],
+    marketId: fishery.id,
+    caps: { inbound: unlimited, outbound: unlimited, pickup: unlimited },
+  });
+  if (!placedMarket.ok) throw new Error(`B2教程漁港市場の配置不可: ${placedMarket.reason}`);
+  world.state.marketNetwork = createMarketNetwork({ markets: [
+    { id: "main", name: "母港市場", entrance: { ...marketEntrance } },
+    { ...fishery, entrance: { ...fishery.entrance }, buildingId: placedMarket.building.id },
+  ] });
+
+  // 海岸沿いの地形距離を教程の既定1.7日に合わせる。直線で地形を横切らず、
+  // 母港東の道標を経由する同一の実道路を人と荷車が使う。
+  const fisheryRoadWaymark = { x: 148, y: 194 };
+  connectB2Road(physical, economy.market, fisheryRoadWaymark, "漁港3・母港側");
+  connectB2Road(physical, fisheryRoadWaymark, fishery.entrance, "漁港3・海岸側");
+  const fisheryZones = ["fisher", "fisher", "fisher", "saltworks"].map(
+    job => placeB2StarterZone(world, job, fishery.entrance),
+  );
+  const fisheryHouseholds = fisheryZones.map(zone => occupyScenarioZone(world, zone, fishery.id));
+  for (const household of fisheryHouseholds) {
+    const removedWheat = household.pantry.wheat;
+    household.pantry.wheat = 0;
+    recordEconomicMaterialFlow(
+      economy,
+      "wheat",
+      "exp",
+      removedWheat,
+      `B2教程漁港世帯${household.id}の開拓キット差替`,
+      { includeInDaily: false },
+    );
+    const preservedFood = household.members.length * CARAVAN_SLICE_PROVISION_DAYS;
+    household.pantry.meat += preservedFood;
+    recordEconomicMaterialFlow(
+      economy,
+      "meat",
+      "imp",
+      preservedFood,
+      `B2教程漁港世帯${household.id}の入植時保存食`,
+      { includeInDaily: false },
+    );
+    household.marketEntrance = { ...fishery.entrance };
+    household.marketBuildingId = placedMarket.building.id;
+    if (household.job === "saltworks") {
+      depositInventory(
+        buildingById(physical, household.buildingId),
+        "input",
+        "char",
+        CARAVAN_SLICE_SALTWORKS_CHARCOAL,
+      );
+      recordEconomicMaterialFlow(
+        economy,
+        "char",
+        "imp",
+        CARAVAN_SLICE_SALTWORKS_CHARCOAL,
+        `B2教程漁港世帯${household.id}の入植時燃料`,
+        { includeInDaily: false },
+      );
+    }
+  }
+
+  economy.companyCarts.push({
+    id: `wood-cart-${economy.nextCartAssetId}`,
+    kind: "wood",
+    durability: P.CART_WOOD_DURABILITY,
+    maxDurability: P.CART_WOOD_DURABILITY,
+    price: 0,
+    makerHouseholdId: null,
+    ownerKind: "company",
+    ownerId: "company",
+    purchasedDay: 0,
+    busyJobId: null,
+    origin: "tutorial-charter",
+    reservedFor: "caravan",
+  });
+  economy.nextCartAssetId += 1;
+  // 教程の注文判断は「黒字なら受ける／赤字なら見送る」を実額で一度ずつ学ぶ。
+  // B2初期市場は地力・距離原価が旧教程より高いため、勅許会社への初期契約だけ
+  // 基準単価を4倍にする。注文状と決済は同じ実単価を使い、補填金は生成しない。
+  economy.orderPriceMultiplier = 4;
+  economy.orderQuantityCap = 0.5;
+  economy.orderSkipQuantityCap = 8;
+  economy.orderDueDays = 180;
+  economy.orderMarketOnly = true;
+  economy.orderPreferredGoods = ["log"];
+  economy.firstOrderOfferDay = 75;
+  economy.firstOrderQuantity = 0.5;
+  economy.firstOrderDueDays = 90;
+  economy.jobSelectionPool = [...new Set([
+    ...E_STABLE_JOBS,
+    ...(economy.jobSelectionPool ?? []),
+    "carter",
+    "cartwright",
+  ])];
+  const road = findTravelPath(physical, economy.market, fishery.entrance, "cart");
+  world.state.caravanSlice = {
+    id: "b2-tutorial-two-markets",
+    mainMarketId: "main",
+    fisheryMarketId: fishery.id,
+    charterCartAssetId: economy.companyCarts.at(-1).id,
+    roadDays: (road?.cost ?? Infinity) / P.RESOURCE_DAY_TICKS,
+  };
+  world.state.b2Tutorial = {
+    fisheryMarketNumber: "3",
+    orderPriceMultiplier: 4,
+    orderQuantityCap: 0.5,
+    orderSkipQuantityCap: 8,
+    orderDueDays: 180,
+    orderMarketOnly: true,
+    orderPreferredGoods: ["log"],
+    firstOrderOfferDay: 75,
+    firstOrderQuantity: 0.5,
+    firstOrderDueDays: 90,
+  };
   world.state.b2Trial = {
     version: definition.version,
     counts: { ...definition.counts },

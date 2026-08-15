@@ -2,15 +2,15 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.61.0-b2-p3';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.61.0-b2-p3';
-import { displayCultureLevel } from './visuals.js?v=v004.61.0-b2-p3';
+} from './engine_bridge.js?v=v004.62.0-b2-p4';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.62.0-b2-p4';
+import { displayCultureLevel } from './visuals.js?v=v004.62.0-b2-p4';
 import {
   PLAYER_FACING_BANNED_TERMS,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.61.0-b2-p3';
-import { islandCalendar } from './ui_summary.js?v=v004.61.0-b2-p3';
+} from './food_readability.js?v=v004.62.0-b2-p4';
+import { islandCalendar } from './ui_summary.js?v=v004.62.0-b2-p4';
 
 export { PLAYER_FACING_BANNED_TERMS };
 
@@ -905,7 +905,8 @@ export function orderQuote(model) {
   let remaining = offer.qty;
   let procurementCost = 0;
   for (const stall of model.stalls
-    .filter(row => row.goods === offer.g && row.qty > 1e-9)
+    .filter(row => row.goods === offer.g && row.qty > 1e-9
+      && (row.marketId ?? 'main') === 'main')
     .sort((a, b) => a.price - b.price)) {
     const qty = Math.min(remaining, stall.qty);
     procurementCost += qty * stall.price;
@@ -2206,12 +2207,16 @@ const TUTORIAL_GOAL_DEFINITIONS = Object.freeze([
     title: '母港市場へ初便の麦が並ぶのを待つ',
     evaluate({ model }) {
       const wheat = marketStallAvailability(model, 'wheat', 'main');
+      const market = marketBuilding(model);
+      const shelfWheat = (market?.shelves ?? [])
+        .filter(shelf => shelf.section === 'outbound' && shelf.goods === 'wheat')
+        .reduce((total, shelf) => total + (shelf.amount ?? 0), 0);
       const complete = wheat >= 8;
       return {
         complete,
         progress: { done: Math.min(wheat, 8), total: 8 },
         detail: `母港市場の麦 ${wheat.toFixed(1)}/8.0荷（麦畑は9月半ばに収穫）`,
-        evidence: { wheat, required: 8, day: model.day },
+        evidence: { wheat, shelfWheat, required: 8, day: model.day },
       };
     },
   }),

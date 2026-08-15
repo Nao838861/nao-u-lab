@@ -21,7 +21,7 @@ import {
   sectionCapacity,
   withdrawInventory,
   workRoadWorksite,
-} from "./physical.js?v=v004.61.0-b2-p3";
+} from "./physical.js?v=v004.62.0-b2-p4";
 
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) return value;
@@ -5536,7 +5536,7 @@ export function settlePortTransfers(economy, physical, { day, transfers }) {
         shipped,
         `${transfer.goods}を本国注文へ出荷`,
       );
-      if (economy.order.left <= 1e-9) {
+      if (economy.order.left <= 1e-6) {
         recordEconomyEvent(economy, day, "★注文を納めた——本国での評判が上がった");
         economy.orderDone += 1;
         economy.order = null;
@@ -5778,28 +5778,34 @@ export function runCompanyDayStart(economy, { day, random, physical = null }) {
       const market = (economy.stalls[goods] ?? [])
         .filter((stall) => (stall.marketId ?? "main") === "main")
         .reduce((total, stall) => total + stall.qty, 0);
-      const warehouse = Math.max(
-        0,
-        (economy.stock[goods] ?? 0) - (economy.stockTgt[goods] ?? 0),
-      );
+      const warehouse = economy.orderMarketOnly
+        ? 0
+        : Math.max(
+          0,
+          (economy.stock[goods] ?? 0) - (economy.stockTgt[goods] ?? 0),
+        );
       return market + warehouse;
     };
     const candidates = economy.orderDone === 0
-      ? ((economy.f30.tools?.prod ?? 0) > 0.3 ? ["tools"] : [])
+      ? ((economy.f30.tools?.prod ?? 0) > 0.3
+        || day >= (economy.firstOrderOfferDay ?? Infinity) ? ["tools"] : [])
       : Object.keys(ORDER_NAMES).filter((goods) => (
         orderableDailySurplus(goods) > 0.3 || orderablePhysicalSurplus(goods) >= 4
       ));
     if (candidates.length > 0) {
       // 開拓初回は教程で築いた木工連鎖の試し荷にする。二件目からは生産中の
       // 品目を従来どおり抽選し、食料加工などにも注文が巡る。
+      const preferred = (economy.orderPreferredGoods ?? []).filter(goods => candidates.includes(goods));
       const processed = candidates.filter((goods) => goods !== "log" && goods !== "stone");
-      const pool = processed.length > 0 ? processed : candidates;
+      const pool = preferred.length > 0
+        ? preferred
+        : processed.length > 0 ? processed : candidates;
       const goods = economy.orderDone === 0
         ? "tools"
         : pool[Math.floor(random() * pool.length)];
       const physicalSurplus = orderablePhysicalSurplus(goods);
-      const qty = economy.orderDone === 0
-        ? P.FIRST_ORDER_QTY
+      const uncappedQty = economy.orderDone === 0
+        ? Math.max(0.1, economy.firstOrderQuantity ?? P.FIRST_ORDER_QTY)
         : Math.max(1, Math.round(Math.min(
           80,
           physicalSurplus > 0
@@ -5807,18 +5813,28 @@ export function runCompanyDayStart(economy, { day, random, physical = null }) {
             : orderableDailySurplus(goods) * 5,
           physicalSurplus > 0 ? physicalSurplus : Infinity,
         )));
+      const qty = economy.orderDone === 0
+        ? uncappedQty
+        : Math.min(uncappedQty, Math.max(
+          0.1,
+          economy.orderDone >= 2
+            ? economy.orderSkipQuantityCap ?? economy.orderQuantityCap ?? Infinity
+            : economy.orderQuantityCap ?? Infinity,
+        ));
       economy.orderOffer = {
         g: goods,
         qty,
         left: qty,
-        price: ORDER_PRICES[goods],
-        due: day + 90,
+        price: ORDER_PRICES[goods] * Math.max(1, economy.orderPriceMultiplier ?? 1),
+        due: day + (economy.orderDone === 0
+          ? Math.max(90, economy.firstOrderDueDays ?? 90)
+          : Math.max(90, economy.orderDueDays ?? 90)),
       };
       result.created = structuredClone(economy.orderOffer);
       recordEconomyEvent(
         economy,
         day,
-        `★本国より注文状: ${ORDER_NAMES[goods]}${qty}荷(@${Math.round(ORDER_PRICES[goods] * 10)}デナリ・90日以内)`,
+        `★本国より注文状: ${ORDER_NAMES[goods]}${qty}荷(@${Math.round(economy.orderOffer.price * 10)}デナリ・${economy.orderOffer.due - day}日以内)`,
       );
     }
   }
@@ -5842,7 +5858,7 @@ export function runCompanyDayStart(economy, { day, random, physical = null }) {
   if (
     economy.order
     && day > economy.order.due
-    && tenderedOrderQty + 1e-9 < economy.order.left
+    && tenderedOrderQty + 1e-6 < economy.order.left
   ) {
     result.expired = structuredClone(economy.order);
     recordEconomyEvent(
@@ -5880,7 +5896,7 @@ export function runCompanyDayStart(economy, { day, random, physical = null }) {
       economy.exported[goods] = (economy.exported[goods] ?? 0) + qty;
       recordEconomicMaterialFlow(economy, goods, "exp", qty, `${goods}を本国注文へ出荷`);
       result.shipped = { goods, qty, revenue };
-      if (economy.order.left <= 1e-9) {
+      if (economy.order.left <= 1e-6) {
         recordEconomyEvent(economy, day, "★注文を納めた——本国での評判が上がった");
         economy.orderDone += 1;
         economy.order = null;

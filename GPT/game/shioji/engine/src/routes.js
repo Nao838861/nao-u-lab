@@ -11,7 +11,7 @@ import {
   purchaseCompanyWoodCart,
   recordEconomyEvent,
   useHouseholdWorkTool,
-} from "./econ.js?v=v004.61.0-b2-p3";
+} from "./econ.js?v=v004.62.0-b2-p4";
 import {
   buildingById,
   createCartCarrier,
@@ -22,7 +22,7 @@ import {
   sectionAmount,
   stepTravelCarrier,
   withdrawInventory,
-} from "./physical.js?v=v004.61.0-b2-p3";
+} from "./physical.js?v=v004.62.0-b2-p4";
 
 export const CARAVAN_CART_CAPACITY = P.CART_WOOD_CAPACITY;
 export const CARAVAN_INTERVAL_LIMITS = Object.freeze({ min: 1, max: 30 });
@@ -142,7 +142,10 @@ export function createCaravanRoute(economy, physical, {
     progressTicks: 0,
     cargo: {},
     cargoCostByGoods: {},
-    nextDepartDay: Math.max(1, day + 1),
+    // 路線を保存した時点で両端市場と荷が揃っていれば、その場で初便を出せる。
+    // 翌朝まで待たせると、画面で確認して選んだ屋台在庫を住民が先に買い切り、
+    // プレイヤーの決定と実際の積載が食い違う。
+    nextDepartDay: Math.max(1, day),
     currentTrip: null,
     carriers: [],
     recentTrips: [],

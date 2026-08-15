@@ -1,17 +1,17 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.61.0-b2-p3';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.61.0-b2-p3';
-import { islandCalendar } from './ui_summary.js?v=v004.61.0-b2-p3';
+} from './config.js?v=v004.62.0-b2-p4';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.62.0-b2-p4';
+import { islandCalendar } from './ui_summary.js?v=v004.62.0-b2-p4';
 import {
   compileRenderScene, inventoryLayerDepth, marketStallLayerDepth, mergeDrawables,
   sceneRowsInBounds,
-} from './render_scene.js?v=v004.61.0-b2-p3';
+} from './render_scene.js?v=v004.62.0-b2-p4';
 import {
   buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
   seasonalTerrainVisual,
-} from './visuals.js?v=v004.61.0-b2-p3';
-import { renderArtSlice } from './art_slice.js?v=v004.61.0-b2-p3';
+} from './visuals.js?v=v004.62.0-b2-p4';
+import { renderArtSlice } from './art_slice.js?v=v004.62.0-b2-p4';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
