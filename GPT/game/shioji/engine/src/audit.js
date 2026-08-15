@@ -36,6 +36,7 @@ import {
 } from "./physical.js?v=v004.62.0-b2-p4";
 import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.62.0-b2-p4";
 import { createMarketNetwork } from "./market_network.js?v=v004.62.0-b2-p4";
+import { createCaravanRoute } from "./routes.js?v=v004.62.0-b2-p4";
 
 export const AUDIT_SEEDS = Object.freeze([11, 13, 14]);
 
@@ -632,6 +633,154 @@ export function buildB2TrialWorld(seed = 11, definition) {
     passes: structuredClone(definition.passes ?? {}),
     motherMarketId: "main",
   };
+  return world;
+}
+
+export const B2_EXPANSION_STRATEGIES = Object.freeze({
+  fishery: Object.freeze({
+    marketKey: "3", marketId: "fishery", name: "漁港市場",
+    jobs: Object.freeze(["fisher", "fisher", "fisher", "saltworks"]),
+    goodsOut: Object.freeze(["wheat", "log"]),
+    goodsBack: Object.freeze(["fish", "salt"]),
+  }),
+  mining: Object.freeze({
+    marketKey: "4", marketId: "mining", name: "山間鉱山市場",
+    jobs: Object.freeze(["miner", "miner", "collier", "collier", "quarryman", "logger"]),
+    goodsOut: Object.freeze(["wheat", "fish"]),
+    goodsBack: Object.freeze(["ore", "coal", "stone"]),
+  }),
+  basin: Object.freeze({
+    marketKey: "2", marketId: "basin", name: "中央盆地市場",
+    jobs: Object.freeze(["wheat", "wheat", "veg", "veg"]),
+    goodsOut: Object.freeze(["fish", "char"]),
+    goodsBack: Object.freeze(["wheat", "veg", "cloth"]),
+  }),
+});
+
+function addB2StrategyMarket(world, definition, strategy) {
+  const { economy, physical } = world.state;
+  const marker = definition.markets?.[strategy.marketKey];
+  if (!marker) throw new Error(`B2市場${strategy.marketKey}がありません`);
+  const candidates = [];
+  for (let y = marker.y - 12; y <= marker.y + 12; y += 1) {
+    for (let x = marker.x - 12; x <= marker.x + 12; x += 1) {
+      if (!isLand(physical, x, y)) continue;
+      const entrance = { x, y };
+      const site = findBuildingSiteForEntrance(physical, "market", entrance, {
+        definitions: ECONOMIC_BUILDINGS,
+        toward: economy.market,
+      });
+      if (!site || !findTravelPath(physical, economy.market, entrance, "walk")) continue;
+      candidates.push({
+        entrance,
+        site,
+        distance: Math.hypot(x - marker.x, y - marker.y),
+      });
+    }
+  }
+  candidates.sort((left, right) => left.distance - right.distance
+    || left.entrance.y - right.entrance.y || left.entrance.x - right.entrance.x);
+  const selected = candidates[0] ?? null;
+  const entrance = selected?.entrance ?? null;
+  const site = selected?.site ?? null;
+  if (!site) throw new Error(`${strategy.name}の敷地がありません`);
+  const unlimited = Object.fromEntries(GOODS.map(goods => [goods, Number.MAX_SAFE_INTEGER]));
+  const placed = addBuilding(physical, "market", site.x, site.y, {
+    definitions: ECONOMIC_BUILDINGS,
+    fixed: true,
+    requireRoad: false,
+    entrance,
+    roles: [`market:${strategy.marketId}`],
+    marketId: strategy.marketId,
+    caps: { inbound: unlimited, outbound: unlimited, pickup: unlimited },
+  });
+  if (!placed.ok) throw new Error(`${strategy.name}の配置不可: ${placed.reason}`);
+
+  connectB2Road(physical, economy.market, entrance, strategy.name);
+  const existingMarkets = world.state.marketNetwork?.markets ?? [];
+  world.state.marketNetwork = createMarketNetwork({ markets: [
+    ...existingMarkets.map(market => ({ ...market, entrance: { ...market.entrance } })),
+    {
+      id: strategy.marketId,
+      name: strategy.name,
+      entrance,
+      buildingId: placed.building.id,
+    },
+  ] });
+
+  const zones = strategy.jobs.map(job => placeB2StarterZone(world, job, entrance));
+  for (const zone of zones) connectB2Road(physical, entrance, zone, `${strategy.marketId}:${zone.job}`);
+  const households = zones.map(zone => occupyScenarioZone(world, zone, strategy.marketId));
+  for (const household of households) {
+    const provision = household.members.length * B2_TRIAL_PROVISION_DAYS;
+    household.pantry.meat += provision;
+    recordEconomicMaterialFlow(
+      economy,
+      "meat",
+      "imp",
+      provision,
+      `${strategy.name}世帯${household.id}の開拓時保存食`,
+      { includeInDaily: false },
+    );
+    household.marketEntrance = entrance;
+    household.marketBuildingId = placed.building.id;
+  }
+
+  const innZone = placeB2StarterZone(world, "carter", economy.market);
+  connectB2Road(physical, economy.market, innZone, `${strategy.marketId}:隊商宿`);
+  const innHousehold = occupyScenarioZone(world, innZone, "main");
+  setCaravanEmployment(physical, {
+    buildingId: innHousehold.buildingId,
+    recruitment: 1,
+    wage: 0.75,
+  });
+  economy.companyCarts.push({
+    id: `wood-cart-${economy.nextCartAssetId}`,
+    kind: "wood",
+    durability: P.CART_WOOD_DURABILITY,
+    maxDurability: P.CART_WOOD_DURABILITY,
+    price: 0,
+    makerHouseholdId: null,
+    ownerKind: "company",
+    ownerId: "company",
+    purchasedDay: 0,
+    busyJobId: null,
+    origin: "b2-calibration-charter",
+  });
+  economy.nextCartAssetId += 1;
+  const routeResult = createCaravanRoute(economy, physical, {
+    name: `${strategy.name}線`,
+    baseBuildingId: innHousehold.buildingId,
+    destMarketId: strategy.marketId,
+    goodsOut: [...strategy.goodsOut],
+    goodsBack: [...strategy.goodsBack],
+    intervalDays: 20,
+    day: 0,
+  });
+  if (!routeResult.ok) throw new Error(`${strategy.name}線の設定不可: ${routeResult.reason}`);
+  return {
+    marketId: strategy.marketId,
+    householdIds: households.map(household => household.id),
+    routeId: routeResult.route.id,
+    roadDays: routeResult.route.pathTicks / 30,
+  };
+}
+
+export function buildB2StrategyWorld(seed = 11, definition, strategyId = "fishery") {
+  const strategy = B2_EXPANSION_STRATEGIES[strategyId];
+  if (!strategy) throw new RangeError(`unknown B2 expansion strategy: ${strategyId}`);
+  const world = buildB2TrialWorld(seed, definition);
+  world.state.economy.company.money += 2000;
+  const expansion = addB2StrategyMarket(world, definition, strategy);
+  world.state.b2Strategy = {
+    id: strategyId,
+    ...expansion,
+  };
+  world.state.economy.jobSelectionPool = [...new Set([
+    ...world.state.economy.jobSelectionPool,
+    ...strategy.jobs,
+    "carter",
+  ])];
   return world;
 }
 
