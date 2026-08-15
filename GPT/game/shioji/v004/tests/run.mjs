@@ -5,7 +5,7 @@ import { buildBaseCity, findAuditSpot } from '../../engine/src/audit.js';
 import {
   FOODS, GOODS, P, assertMoneyConservation, chopWood, createEconomicState, createHousehold,
   economicMaterialSnapshot, householdMult, initializeNaturalResources, regenerateForest,
-  requestCompanyImport, runPopulationDynamicsPhase,
+  producePrimaryTick, regenerateFisheries, requestCompanyImport, runPopulationDynamicsPhase,
 } from '../../engine/src/econ.js';
 import {
   ECONOMIC_BUILDINGS, addRoadTile, assertMaterialBalance, canPlaceBuilding, depositInventory,
@@ -2623,7 +2623,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.62.1-price-meat-hotfix');
+  assert.equal(VERSION, 'v004.62.2-fishery-slope');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -3008,6 +3008,8 @@ test('B2試験モード: 母港12世帯が一年自律し、保存則とjournal�
   assert.equal(controller.operate(operation).ok, true);
   controller.advanceTicks(360 * 30);
   const after = controller.saveState();
+  assert.equal(after.economy.materialFlows.meat?.prod ?? 0, 0,
+    '牧場のない新規世界で肉を生産しない');
   assert.equal(after.day, 360);
   assert.equal(originalIds.every(id => after.economy.households.some(household => household.id === id)), true);
   assert.equal(after.economy.events.some(([, message]) => (
@@ -3038,24 +3040,49 @@ test('B2試験モード: 母港12世帯が一年自律し、保存則とjournal�
   assert.deepEqual(replay.saveState(), after);
 });
 
-test('B2 P2: 母港だけを3年営むと湾内漁場が枯渇段階へ入る', () => {
+function runConstantFisheryCurve(capacity, fisherCount, days) {
+  const economy = createEconomicState();
+  const fishery = 'calibration-medium';
+  economy.natural.localizedFisheries = [fishery];
+  economy.natural.fisheryCapacity = { ...economy.natural.fisheryCapacity, [fishery]: capacity };
+  economy.natural.fishStages = {};
+  economy.natural[fishery] = capacity;
+  const fishers = Array.from({ length: fisherCount }, (_, index) => {
+    const household = createHousehold(economy, { job: 'fisher', x: index, y: 0 });
+    household.fisheryId = fishery;
+    return household;
+  });
+  const samples = {};
+  for (let day = 1; day <= days; day += 1) {
+    economy.currentDay = day;
+    for (const household of fishers) {
+      // 市場・消費の偏りを混ぜず、漁場に対する常勤負荷だけを測る。
+      household.pantry.fish = 0;
+      producePrimaryTick(economy, null, household, { day, fraction: 1, endOfDay: true });
+    }
+    regenerateFisheries(economy, null, { day });
+    if (day === 720 || day === 1080) samples[day] = economy.natural[fishery] / capacity;
+  }
+  return samples;
+}
+
+test('B2 P5: 中規模漁場は3世帯常勤で2年は半量を保ち3年で半量を下回る', () => {
   const definition = parseB2MapData(JSON.parse(fs.readFileSync(
     new URL('../../design/map_b2/b2_map_data.json', import.meta.url),
     'utf8',
   )));
-  const controller = createEngineController({ seed: 11, mode: 'big-island', b2MapDefinition: definition });
-  controller.advanceTicks(1080 * 30);
-  const state = controller.saveState();
-  const motherFishery = 'b2-medium-2';
-  const capacity = state.economy.natural.fisheryCapacity[motherFishery];
-  const ratio = state.economy.natural[motherFishery] / capacity;
-  assert.equal(capacity, 4000);
-  assert.ok(ratio <= 0.08, `mother fishery ratio=${ratio}`);
-  assert.equal(state.economy.natural.fishStages[motherFishery], 0);
-  assert.equal(state.economy.natural['b2-rich-2'], state.economy.natural.fisheryCapacity['b2-rich-2']);
-  assert.equal(state.economy.households.filter(household => household.job === 'fisher').every(
-    household => household.fisheryId === motherFishery,
-  ), true);
+  const mediumTile = definition.terrain.flat().find(tile => tile.fishery === 'b2-medium-2');
+  const richTile = definition.terrain.flat().find(tile => tile.fishery === 'b2-rich-2');
+  const medium = runConstantFisheryCurve(mediumTile.fisheryCapacity, 3, 1080);
+  const overfished = runConstantFisheryCurve(mediumTile.fisheryCapacity, 5, 720);
+  const rich = runConstantFisheryCurve(richTile.fisheryCapacity, 3, 1080);
+  assert.equal(mediumTile.fisheryCapacity, 48000);
+  assert.ok(medium[720] >= 0.5, `medium day720 ratio=${medium[720]}`);
+  assert.ok(medium[1080] < 0.5, `medium day1080 ratio=${medium[1080]}`);
+  assert.ok(overfished[720] < medium[720],
+    `five fishers=${overfished[720]}, three fishers=${medium[720]}`);
+  assert.ok(rich[1080] > medium[1080],
+    `rich=${rich[1080]}, medium=${medium[1080]}`);
 });
 
 test('自由開始96×64: 母港と魚郷は無路線の一年を自律し保存則を守る', () => {

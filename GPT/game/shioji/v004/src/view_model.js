@@ -1,20 +1,20 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.62.1-price-meat-hotfix';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.62.2-fishery-slope';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.62.1-price-meat-hotfix';
+} from './food_readability.js?v=v004.62.2-fishery-slope';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
   findTravelPath, householdProductionSummary, laborWage, productionCost,
-} from './engine_bridge.js?v=v004.62.1-price-meat-hotfix';
-import { analyzeRoadConnections } from './placement.js?v=v004.62.1-price-meat-hotfix';
+} from './engine_bridge.js?v=v004.62.2-fishery-slope';
+import { analyzeRoadConnections } from './placement.js?v=v004.62.2-fishery-slope';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.62.1-price-meat-hotfix';
+} from './render_scene.js?v=v004.62.2-fishery-slope';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.62.1-price-meat-hotfix';
-import { GOODS_RECIPES } from './goods_detail.js?v=v004.62.1-price-meat-hotfix';
+} from './visuals.js?v=v004.62.2-fishery-slope';
+import { GOODS_RECIPES } from './goods_detail.js?v=v004.62.2-fishery-slope';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',

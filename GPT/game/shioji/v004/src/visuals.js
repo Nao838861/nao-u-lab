@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.62.1-price-meat-hotfix';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.62.2-fishery-slope';
 
 export const EXACT_PILE_LIMIT = 20;
 export const PILE_STAGE_LIMITS = Object.freeze({

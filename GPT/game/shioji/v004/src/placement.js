@@ -1,5 +1,5 @@
-import { BUILDING_SIZES } from './config.js?v=v004.62.1-price-meat-hotfix';
-import { islandCalendar } from './ui_summary.js?v=v004.62.1-price-meat-hotfix';
+import { BUILDING_SIZES } from './config.js?v=v004.62.2-fishery-slope';
+import { islandCalendar } from './ui_summary.js?v=v004.62.2-fishery-slope';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

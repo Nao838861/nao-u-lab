@@ -2,7 +2,7 @@ const B2_MAP_VERSION = 'v1.3';
 const B2_MAP_SIZE = 256;
 const B2_FISHERY_CAPACITY_PER_TILE = Object.freeze({
   richFishery: 650,
-  mediumFishery: 20,
+  mediumFishery: 240,
 });
 
 const SYMBOLS = Object.freeze({

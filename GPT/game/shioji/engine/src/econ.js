@@ -21,7 +21,7 @@ import {
   sectionCapacity,
   withdrawInventory,
   workRoadWorksite,
-} from "./physical.js?v=v004.62.1-price-meat-hotfix";
+} from "./physical.js?v=v004.62.2-fishery-slope";
 
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) return value;
@@ -130,7 +130,9 @@ export const P = deepFreeze({
   SHIP_CAP: 2,
   SHIP_PRICE: 1.2,
   BAY0: 600000,
-  BAY_R: 0.00175,
+  // 漁場の回復は漁師ごとではなく日末に一度だけ適用する。中規模漁場を
+  // 3世帯で2年は半量以上、3年では半量未満へなだらかに痩せさせる係数。
+  BAY_R: 0.00025,
   RESEED: 0.3,
   GROVE0: 60000,
   GROVE_R: 0.0006,
@@ -1914,7 +1916,6 @@ function localizedFisheriesFor(economy, physical) {
 export function regenerateFisheries(economy, physical, { day }) {
   const localizedFisheries = localizedFisheriesFor(economy, physical);
   for (const fishery of localizedFisheries) {
-    if (economy.natural.fisheryHarvestDay?.[fishery] === day) continue;
     const capacity = fisheryCapacity(economy, fishery);
     const stock = Math.max(0, economy.natural[fishery] ?? capacity);
     const depletion = stock / capacity;
@@ -4063,13 +4064,10 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     const depletion = (economy.natural[fishery] ?? capacity) / capacity;
     const qty = (winter ? P.Y_FISH_W : P.Y_FISH) * work * depletion;
     const stock = economy.natural[fishery] ?? capacity;
-    economy.natural[fishery] = Math.min(
-      capacity,
-      stock - qty
-        + effectiveFraction * (
-          P.BAY_R * stock * (1 - depletion) + P.RESEED * (1 - depletion)
-        ),
-    );
+    // 採捕と自然回復を分離する。旧実装は漁師一世帯の採捕ごとに回復を足したため、
+    // 世帯数を増やすほど回復回数も増え、低負荷では満タン・閾値を越すと急落する
+    // 崖型になっていた。回復は regenerateFisheries で全漁場へ日末一回だけ行う。
+    economy.natural[fishery] = Math.max(0, stock - qty);
     const localized = localizedFisheriesFor(economy, physical).includes(fishery);
     if (localized) {
       economy.natural.fisheryHarvestDay ??= {};
@@ -4422,6 +4420,14 @@ export function finalizeHouseholdProductionDay(
   { day = economy.currentDay, physical = null } = {},
 ) {
   for (const household of economy.households) {
+    if (
+      household.job !== "shepherd"
+      && (household.productionToday?.meat ?? 0) > 1e-9
+    ) {
+      throw new Error(
+        `肉の生産主体違反 day=${day} household=${household.id} job=${household.job}`,
+      );
+    }
     household.productionHistory ??= [];
     household.productionHistory.push({
       day,

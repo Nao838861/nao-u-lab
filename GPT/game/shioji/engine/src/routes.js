@@ -11,7 +11,7 @@ import {
   purchaseCompanyWoodCart,
   recordEconomyEvent,
   useHouseholdWorkTool,
-} from "./econ.js?v=v004.62.1-price-meat-hotfix";
+} from "./econ.js?v=v004.62.2-fishery-slope";
 import {
   buildingById,
   createCartCarrier,
@@ -22,7 +22,7 @@ import {
   sectionAmount,
   stepTravelCarrier,
   withdrawInventory,
-} from "./physical.js?v=v004.62.1-price-meat-hotfix";
+} from "./physical.js?v=v004.62.2-fishery-slope";
 
 export const CARAVAN_CART_CAPACITY = P.CART_WOOD_CAPACITY;
 export const CARAVAN_INTERVAL_LIMITS = Object.freeze({ min: 1, max: 30 });

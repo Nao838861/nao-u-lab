@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.62.1-price-meat-hotfix';
+import { TILE } from './config.js?v=v004.62.2-fishery-slope';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

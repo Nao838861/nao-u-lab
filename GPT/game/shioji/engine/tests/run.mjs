@@ -1281,8 +1281,9 @@ test("段11: P・GOODS・FOODS・PERISHが意図した需給網・移動係数�
   delete sourceConstants.ROAD_F;
   delete sourceConstants.TRAVEL_MAX;
   // WOOD_R: 空間パズル較正(2026-08-09)。回復が伐採と釣り合い前線が止まるのを防ぐ意図的な差分
+  // BAY_R: 漁師ごとの回復を日末一回へ直した漁場較正(2026-08-16)の意図的な差分
   for (const changed of [
-    "IMP", "IMP_COST", "EXP", "EXP_CAP", "EXP_ML", "Y_OIL", "WOOD_R", "WOOD0",
+    "IMP", "IMP_COST", "EXP", "EXP_CAP", "EXP_ML", "Y_OIL", "WOOD_R", "WOOD0", "BAY_R",
     "Y_LOG", "Y_ORE", "Y_COAL", "Y_SMELT", "Y_SMITH", "LOG_TOOL", "LOG_CHAR",
     "Y_CHAR", "Y_SALT", "Y_COTTON_CLOTH", "Y_STONE", "FISH_LIFE",
   ]) {
@@ -1995,6 +1996,16 @@ test("空間生産性: 30日実測は建物の日産・理想日産・距離効�
     "実績と同じ日の理想値を履歴へ固定する",
   );
   assert.equal(summary.resourceWork.efficiency, logger.resourceWork.efficiency);
+});
+
+test("物量不変条件: 生肉を生産できる世帯は牧場だけ", () => {
+  const economy = createEconomicState();
+  const fisher = createHousehold(economy, { job: "fisher", x: 0, y: 0 });
+  fisher.productionToday.meat = 1;
+  assert.throws(
+    () => finalizeHouseholdProductionDay(economy, { day: 12 }),
+    /肉の生産主体違反 day=12 household=0 job=fisher/,
+  );
 });
 
 test("空間生産性: 工房は十分近い木こりへ直接買付し市場往復時間と貨幣を保存する", () => {

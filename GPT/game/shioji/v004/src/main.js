@@ -1,51 +1,51 @@
-import { IsometricCamera } from './camera.js?v=v004.62.1-price-meat-hotfix';
-import { loadB2MapData } from './b2_map.js?v=v004.62.1-price-meat-hotfix';
-import { ART_SLICE_MODE } from './art_slice.js?v=v004.62.1-price-meat-hotfix';
-import { SimulationClock } from './clock.js?v=v004.62.1-price-meat-hotfix';
-import { createBoundaryEvents } from './boundary_events.js?v=v004.62.1-price-meat-hotfix';
+import { IsometricCamera } from './camera.js?v=v004.62.2-fishery-slope';
+import { loadB2MapData } from './b2_map.js?v=v004.62.2-fishery-slope';
+import { ART_SLICE_MODE } from './art_slice.js?v=v004.62.2-fishery-slope';
+import { SimulationClock } from './clock.js?v=v004.62.2-fishery-slope';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.62.2-fishery-slope';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.62.1-price-meat-hotfix';
+} from './config.js?v=v004.62.2-fishery-slope';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.62.1-price-meat-hotfix';
-import { BUILD_COST_DENARI, P, createEngineController } from './engine_bridge.js?v=v004.62.1-price-meat-hotfix';
-import { developmentMapView } from './development_map.js?v=v004.62.1-price-meat-hotfix';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.62.1-price-meat-hotfix';
-import { formatElenaSpeech } from './elena_text.js?v=v004.62.1-price-meat-hotfix';
+} from './display_batch.js?v=v004.62.2-fishery-slope';
+import { BUILD_COST_DENARI, P, createEngineController } from './engine_bridge.js?v=v004.62.2-fishery-slope';
+import { developmentMapView } from './development_map.js?v=v004.62.2-fishery-slope';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.62.2-fishery-slope';
+import { formatElenaSpeech } from './elena_text.js?v=v004.62.2-fishery-slope';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.62.1-price-meat-hotfix';
+} from './food_readability.js?v=v004.62.2-fishery-slope';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.62.1-price-meat-hotfix';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.62.1-price-meat-hotfix';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.62.1-price-meat-hotfix';
-import { goodsDetail } from './goods_detail.js?v=v004.62.1-price-meat-hotfix';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.62.1-price-meat-hotfix';
-import { WorldPresentation } from './presentation.js?v=v004.62.1-price-meat-hotfix';
-import { Renderer } from './renderer.js?v=v004.62.1-price-meat-hotfix';
+} from './keyboard.js?v=v004.62.2-fishery-slope';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.62.2-fishery-slope';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.62.2-fishery-slope';
+import { goodsDetail } from './goods_detail.js?v=v004.62.2-fishery-slope';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.62.2-fishery-slope';
+import { WorldPresentation } from './presentation.js?v=v004.62.2-fishery-slope';
+import { Renderer } from './renderer.js?v=v004.62.2-fishery-slope';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.62.1-price-meat-hotfix';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.62.1-price-meat-hotfix';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.62.1-price-meat-hotfix';
+} from './save_game.js?v=v004.62.2-fishery-slope';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.62.2-fishery-slope';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.62.2-fishery-slope';
 import {
   GOODS_GLYPHS, jobInputNeeds, shortageRows, stockWhereabouts, supplyDemandRow,
   supplyDemandRows, supplyDiagnosis,
-} from './supply_demand.js?v=v004.62.1-price-meat-hotfix';
-import { orderQuote } from './tutorial_content.js?v=v004.62.1-price-meat-hotfix';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.62.1-price-meat-hotfix';
+} from './supply_demand.js?v=v004.62.2-fishery-slope';
+import { orderQuote } from './tutorial_content.js?v=v004.62.2-fishery-slope';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.62.2-fishery-slope';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.62.1-price-meat-hotfix';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.62.1-price-meat-hotfix';
+} from './ui_guidance.js?v=v004.62.2-fishery-slope';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.62.2-fishery-slope';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');

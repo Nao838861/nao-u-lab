@@ -1,4 +1,4 @@
-import { JOB_LABELS } from './config.js?v=v004.62.1-price-meat-hotfix';
+import { JOB_LABELS } from './config.js?v=v004.62.2-fishery-slope';
 
 const TYPE_PRESENTATION = Object.freeze({
   operation: ['操作', 'neutral'], departure: ['出発', 'neutral'], arrival: ['到着', 'good'],

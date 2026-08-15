@@ -1,17 +1,17 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.62.1-price-meat-hotfix';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.62.1-price-meat-hotfix';
-import { islandCalendar } from './ui_summary.js?v=v004.62.1-price-meat-hotfix';
+} from './config.js?v=v004.62.2-fishery-slope';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.62.2-fishery-slope';
+import { islandCalendar } from './ui_summary.js?v=v004.62.2-fishery-slope';
 import {
   compileRenderScene, inventoryLayerDepth, marketStallLayerDepth, mergeDrawables,
   sceneRowsInBounds,
-} from './render_scene.js?v=v004.62.1-price-meat-hotfix';
+} from './render_scene.js?v=v004.62.2-fishery-slope';
 import {
   buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
   seasonalTerrainVisual,
-} from './visuals.js?v=v004.62.1-price-meat-hotfix';
-import { renderArtSlice } from './art_slice.js?v=v004.62.1-price-meat-hotfix';
+} from './visuals.js?v=v004.62.2-fishery-slope';
+import { renderArtSlice } from './art_slice.js?v=v004.62.2-fishery-slope';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 

@@ -1,4 +1,4 @@
-import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.62.1-price-meat-hotfix';
+import { GOODS_DISCOVERY_SCRIPTS } from './goods_discovery.js?v=v004.62.2-fishery-slope';
 
 export const GOODS_SHELF_LIFE_DAYS = Object.freeze({
   fish: 5,

@@ -12,7 +12,7 @@ import {
   priceAnchorBounds,
   recordEconomicMaterialFlow,
   setCaravanEmployment,
-} from "./econ.js?v=v004.62.1-price-meat-hotfix";
+} from "./econ.js?v=v004.62.2-fishery-slope";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -33,10 +33,10 @@ import {
   makeMultiMarketTerrain,
   markFertileArea,
   pathLen,
-} from "./physical.js?v=v004.62.1-price-meat-hotfix";
-import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.62.1-price-meat-hotfix";
-import { createMarketNetwork } from "./market_network.js?v=v004.62.1-price-meat-hotfix";
-import { createCaravanRoute } from "./routes.js?v=v004.62.1-price-meat-hotfix";
+} from "./physical.js?v=v004.62.2-fishery-slope";
+import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.62.2-fishery-slope";
+import { createMarketNetwork } from "./market_network.js?v=v004.62.2-fishery-slope";
+import { createCaravanRoute } from "./routes.js?v=v004.62.2-fishery-slope";
 
 export const AUDIT_SEEDS = Object.freeze([11, 13, 14]);
 

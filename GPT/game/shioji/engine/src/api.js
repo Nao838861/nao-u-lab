@@ -8,7 +8,7 @@ import {
   requestMainlandAid,
   setCaravanEmployment,
   setCompanyStockTarget,
-} from "./econ.js?v=v004.62.1-price-meat-hotfix";
+} from "./econ.js?v=v004.62.2-fishery-slope";
 import {
   activePortCalls,
   addRoadLine,
@@ -16,17 +16,17 @@ import {
   haulJobById,
   removeBuilding,
   removeRoadTile,
-} from "./physical.js?v=v004.62.1-price-meat-hotfix";
-import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.62.1-price-meat-hotfix";
+} from "./physical.js?v=v004.62.2-fishery-slope";
+import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.62.2-fishery-slope";
 import {
   forgetCompanyLogisticsBuilding,
   placeCompanyLogisticsBuilding,
-} from "./world.js?v=v004.62.1-price-meat-hotfix";
-import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.62.1-price-meat-hotfix";
+} from "./world.js?v=v004.62.2-fishery-slope";
+import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.62.2-fishery-slope";
 import {
   configureCaravanRoute,
   stepCaravanDay,
-} from "./routes.js?v=v004.62.1-price-meat-hotfix";
+} from "./routes.js?v=v004.62.2-fishery-slope";
 
 function jsonClone(value) {
   return JSON.parse(JSON.stringify(value));
