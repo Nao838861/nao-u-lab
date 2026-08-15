@@ -1,6 +1,7 @@
 // 隊商路線 — 定期便・実移動・実費・月次収支（正本: v004/WORLD_DESIGN_DECISIONS_20260810.md Q10-Q29）
 // 一つの隊商宿に一路線。経路は荷車道の最速路、売買は両端の実市場だけで行う。
 import {
+  FOODS,
   GOODS,
   P,
   caravanCrewCount as caravanInnCrewCount,
@@ -24,9 +25,17 @@ import {
   withdrawInventory,
 } from "./physical.js?v=v004.62.2-fishery-slope";
 
-export const CARAVAN_CART_CAPACITY = P.CART_WOOD_CAPACITY;
+// 定期隊商の「1台」は、宿の御者が管理する三台一組の営業車列。個人所有の木荷車
+// 8荷は変えず、長距離路線だけ24荷/御者として集落一つ分の食料を運べる尺度にする。
+export const CARAVAN_CART_CAPACITY = P.CART_WOOD_CAPACITY * 3;
+export const CARAVAN_IRON_CART_CAPACITY = P.CART_IRON_CAPACITY * 3;
 export const CARAVAN_INTERVAL_LIMITS = Object.freeze({ min: 1, max: 30 });
 export const CARAVAN_DEFAULT_INTERVAL_DAYS = 20;
+// 個人の市場往復と同じ距離をそのまま一台の全損距離にすると、1.7〜2.5日線は
+// 3〜4便で止まる。隊商宿の共同整備・輪番利用を含む営業便は走行距離の0.8%を
+// 一台あたりの資産摩耗へ記帳し、木荷車360距離という個人利用の較正は変えない。
+// 最長2.5日線を5日間隔で走る基準編成が、5年帯の途中で全車同時停止しない値。
+export const CARAVAN_CART_WEAR_RATE = 0.008;
 
 function calendarMonthIndex(day) {
   return Math.floor(Math.max(0, day - 1) / 30);
@@ -96,6 +105,7 @@ export function createCaravanRoute(economy, physical, {
   goodsOut = [],
   goodsBack = [],
   intervalDays = CARAVAN_DEFAULT_INTERVAL_DAYS,
+  stockTargetDays = null,
   day = economy.currentDay ?? 0,
 } = {}) {
   const inn = buildingById(physical, baseBuildingId);
@@ -135,6 +145,9 @@ export function createCaravanRoute(economy, physical, {
     goodsOut: outbound,
     goodsBack: returning,
     intervalDays: normalizeInterval(intervalDays),
+    stockTargetDays: Number.isFinite(stockTargetDays)
+      ? Math.max(1, Math.min(30, stockTargetDays))
+      : null,
     cartAssetIds: [],
     state: "idle",
     locationMarketId: baseMarketId,
@@ -142,6 +155,7 @@ export function createCaravanRoute(economy, physical, {
     progressTicks: 0,
     cargo: {},
     cargoCostByGoods: {},
+    cargoLotsByGoods: {},
     // 路線を保存した時点で両端市場と荷が揃っていれば、その場で初便を出せる。
     // 翌朝まで待たせると、画面で確認して選んだ屋台在庫を住民が先に買い切り、
     // プレイヤーの決定と実際の積載が食い違う。
@@ -240,6 +254,10 @@ export function caravanCapacity(economy, physical, route) {
   return Math.min(crew, assignedCartAssets(economy, route).length) * CARAVAN_CART_CAPACITY;
 }
 
+function caravanAssetCapacity(asset) {
+  return asset.kind === "iron" ? CARAVAN_IRON_CART_CAPACITY : CARAVAN_CART_CAPACITY;
+}
+
 function recordMarketPrice(economy, marketId, goods, price, qty, day) {
   const previousCount = economy.priceCounts[goods] ?? economy.prices[goods].length;
   economy.prices[goods].push([day, price, qty]);
@@ -249,17 +267,64 @@ function recordMarketPrice(economy, marketId, goods, price, qty, day) {
   }
 }
 
+export const CARAVAN_TARGET_STOCK_DAYS = 5;
+export const CARAVAN_NONFOOD_TARGET_PER_HOUSEHOLD = 2;
+
+function caravanTargetHouseholds(economy, marketId) {
+  return economy.households.filter(household => householdMarketId(household) === marketId);
+}
+
+function caravanTargetGap(economy, marketId, goods, pendingCargo = {}, stockTargetDays = null) {
+  if (!Number.isFinite(stockTargetDays)) return Infinity;
+  const households = caravanTargetHouseholds(economy, marketId);
+  // 「5日分」は人口そのものではなく日量(pop×RATION)の5倍。さらに魚線の
+  // 需要を麦在庫で満たすと専門産地の現金流入が消えるため、品目ごとに測る。
+  const targetGoods = [goods];
+  const target = FOODS.includes(goods)
+    ? households.reduce((total, household) => total + household.members.length, 0)
+      * P.RATION * stockTargetDays
+    : households.length * CARAVAN_NONFOOD_TARGET_PER_HOUSEHOLD;
+  let available = 0;
+  for (const targetGoodsId of targetGoods) {
+    // 世帯の私蔵は他家が買えない。偏在した私蔵まで「到着地在庫」と数えると、
+    // 市場が空で飢えていても輸送不要と誤判定する（食料HUDで除いた嘘と同型）。
+    available += (economy.stalls?.[targetGoodsId] ?? []).reduce((total, stall) => (
+      (stall.marketId ?? "main") === marketId ? total + stall.qty : total
+    ), 0);
+    available += economy.marketStockM?.[marketId]?.[targetGoodsId] ?? 0;
+    available += pendingCargo[targetGoodsId] ?? 0;
+  }
+  return Math.max(0, target - available);
+}
+
 // 市場棟の実在庫と屋台を同量だけ減らし、売り手世帯へ会社から実払いする。
-function caravanBuyAtMarket(economy, physical, route, marketId, goodsList, capacity, { day }) {
+function caravanBuyAtMarket(
+  economy,
+  physical,
+  route,
+  marketId,
+  targetMarketId,
+  goodsList,
+  capacity,
+  { day },
+) {
   let remainingWeight = capacity;
   let spent = 0;
   const bought = {};
   const costByGoods = {};
+  const lotsByGoods = {};
   let fundingShortfall = false;
   const market = marketBuildingForId(physical, marketId);
   const buyGoods = (goods, weightLimit) => {
-    let goodsWeight = Math.min(remainingWeight, weightLimit);
     const unitWeight = goodsUnitWeight(goods);
+    const targetGap = caravanTargetGap(
+      economy,
+      targetMarketId,
+      goods,
+      bought,
+      route.stockTargetDays,
+    );
+    let goodsWeight = Math.min(remainingWeight, weightLimit, targetGap * unitWeight);
     const stalls = economy.stalls[goods]
       .filter((stall) => (stall.marketId ?? "main") === marketId && stall.qty > 1e-9)
       .sort((left, right) => left.price - right.price
@@ -302,9 +367,67 @@ function caravanBuyAtMarket(economy, physical, route, marketId, goodsList, capac
       spent += payment;
       bought[goods] = (bought[goods] ?? 0) + qty;
       costByGoods[goods] = (costByGoods[goods] ?? 0) + payment;
+      (lotsByGoods[goods] ??= []).push({
+        routeId: route.id,
+        tripNumber: (route.completedTrips ?? 0) + 1,
+        qty,
+        cost: payment,
+      });
       remainingWeight -= qty * unitWeight;
       goodsWeight -= qty * unitWeight;
     }
+
+    // 会社が別路線で運び込んだ在庫も、同じ市場を中継点として積み替えられる。
+    // 世帯屋台だけを積載元にすると、盆地から母港へ届いた麦が母港→鉱山線へ
+    // 決して乗らず、実棚に食料が余ったまま鉱山が飢える。
+    const localTable = economy.marketStockM?.[marketId];
+    const localQty = Math.min(
+      Math.max(0, localTable?.[goods] ?? 0),
+      remainingWeight / unitWeight,
+      goodsWeight / unitWeight,
+      market ? sectionAmount(market, "inbound", goods) : Infinity,
+    );
+    if (localQty <= 1e-9) return;
+    const localCostTable = (economy.marketStockCostM ??= {})[marketId] ??= {};
+    const localLots = ((economy.marketStockLotsM ??= {})[marketId] ??= {})[goods] ??= [];
+    const stockBefore = Math.max(1e-9, localTable[goods] ?? 0);
+    const averageCost = (localCostTable[goods] ?? 0) / stockBefore;
+    let remainingQty = localQty;
+    let transferredCost = 0;
+    while (remainingQty > 1e-9 && localLots.length > 0) {
+      const lot = localLots[0];
+      const qty = Math.min(remainingQty, lot.qty);
+      const unitCost = (lot.cost ?? 0) / Math.max(1e-9, lot.qty);
+      const cost = qty * unitCost;
+      (lotsByGoods[goods] ??= []).push({
+        routeId: lot.routeId,
+        tripNumber: lot.tripNumber ?? null,
+        qty,
+        cost,
+      });
+      lot.qty -= qty;
+      lot.cost = Math.max(0, (lot.cost ?? 0) - cost);
+      remainingQty -= qty;
+      transferredCost += cost;
+      if (lot.qty <= 1e-9) localLots.shift();
+    }
+    if (remainingQty > 1e-9) {
+      const cost = remainingQty * averageCost;
+      (lotsByGoods[goods] ??= []).push({
+        routeId: route.id,
+        tripNumber: (route.completedTrips ?? 0) + 1,
+        qty: remainingQty,
+        cost,
+      });
+      transferredCost += cost;
+    }
+    localTable[goods] = Math.max(0, localTable[goods] - localQty);
+    localCostTable[goods] = Math.max(0, (localCostTable[goods] ?? 0) - transferredCost);
+    if (market) withdrawInventory(market, "inbound", goods, localQty);
+    bought[goods] = (bought[goods] ?? 0) + localQty;
+    costByGoods[goods] = (costByGoods[goods] ?? 0) + transferredCost;
+    remainingWeight -= localQty * unitWeight;
+    goodsWeight -= localQty * unitWeight;
   };
   // 複数品目を指定したのに先頭の一品だけで満載になると、チェックした後続品が
   // 一度も運ばれない。第一巡は積載重量を等分し、余った空きだけ第二巡で埋める。
@@ -314,7 +437,7 @@ function caravanBuyAtMarket(economy, physical, route, marketId, goodsList, capac
     if (remainingWeight <= 1e-9) break;
     buyGoods(goods, remainingWeight);
   }
-  return { bought, costByGoods, spent, fundingShortfall };
+  return { bought, costByGoods, lotsByGoods, spent, fundingShortfall };
 }
 
 function cargoSummary(cargo) {
@@ -334,12 +457,17 @@ function unloadToMarket(economy, physical, route, marketId, { day }) {
     const cost = route.cargoCostByGoods[goods] ?? 0;
     table[goods] = (table[goods] ?? 0) + qty;
     costTable[goods] = (costTable[goods] ?? 0) + cost;
-    (lotTable[goods] ??= []).push({
-      routeId: route.id,
-      tripNumber: route.currentTrip?.tripNumber ?? null,
-      qty,
-      cost,
-    });
+    const cargoLots = route.cargoLotsByGoods?.[goods] ?? [];
+    const cargoLotQty = cargoLots.reduce((total, lot) => total + lot.qty, 0);
+    for (const lot of cargoLots) (lotTable[goods] ??= []).push({ ...lot });
+    if (cargoLotQty + 1e-9 < qty) {
+      (lotTable[goods] ??= []).push({
+        routeId: route.id,
+        tripNumber: route.currentTrip?.tripNumber ?? null,
+        qty: qty - cargoLotQty,
+        cost: Math.max(0, cost - cargoLots.reduce((total, lot) => total + lot.cost, 0)),
+      });
+    }
     if (market) depositInventory(market, "inbound", goods, qty);
   }
   const summary = cargoSummary(route.cargo);
@@ -352,6 +480,7 @@ function unloadToMarket(economy, physical, route, marketId, { day }) {
   );
   route.cargo = {};
   route.cargoCostByGoods = {};
+  route.cargoLotsByGoods = {};
   route.locationMarketId = marketId;
 }
 
@@ -399,7 +528,7 @@ function startLeg(economy, physical, route, assets, from, to) {
     const member = crewMembers[index] ?? null;
     const carrier = createCartCarrier(physical, {
       id: `${route.id}:${route.currentTrip.tripNumber}:${route.state}:${index}`,
-      capacity: asset.kind === "iron" ? P.CART_IRON_CAPACITY : P.CART_WOOD_CAPACITY,
+      capacity: caravanAssetCapacity(asset),
       cartKind: asset.kind,
       assetId: asset.id,
     });
@@ -422,20 +551,20 @@ function startOutboundTrip(economy, physical, route, assets, { day, purchases = 
   const destEntrance = marketEntrance(physical, route.destMarketId);
   if (!baseEntrance || !destEntrance) return false;
   if (!findTravelPath(physical, baseEntrance, destEntrance, "cart")) return false;
-  const capacity = assets.reduce((total, asset) => (
-    total + (asset.kind === "iron" ? P.CART_IRON_CAPACITY : P.CART_WOOD_CAPACITY)
-  ), 0);
+  const capacity = assets.reduce((total, asset) => total + caravanAssetCapacity(asset), 0);
   const purchase = caravanBuyAtMarket(
     economy,
     physical,
     route,
     route.baseMarketId,
+    route.destMarketId,
     route.goodsOut,
     capacity,
     { day },
   );
   route.cargo = purchase.bought;
   route.cargoCostByGoods = purchase.costByGoods;
+  route.cargoLotsByGoods = purchase.lotsByGoods;
   route.fundingShortfall = purchase.fundingShortfall;
   route.state = "outbound";
   route.currentTrip = {
@@ -585,7 +714,10 @@ function wearTripCarts(economy, route, { day }) {
     const index = economy.companyCarts.findIndex((asset) => asset.id === assetId);
     if (index < 0) continue;
     const asset = economy.companyCarts[index];
-    asset.durability = Math.max(0, asset.durability - route.currentTrip.distance);
+    asset.durability = Math.max(
+      0,
+      asset.durability - route.currentTrip.distance * CARAVAN_CART_WEAR_RATE,
+    );
     economy.cartStats.companyUses += 1;
     if (asset.durability > 1e-9) continue;
     economy.companyCarts.splice(index, 1);
@@ -616,20 +748,20 @@ export function stepCaravanTick(economy, physical, { day }) {
       const assets = route.currentTrip.cartAssetIds
         .map((assetId) => economy.companyCarts.find((asset) => asset.id === assetId))
         .filter(Boolean);
-      const capacity = assets.reduce((total, asset) => (
-        total + (asset.kind === "iron" ? P.CART_IRON_CAPACITY : P.CART_WOOD_CAPACITY)
-      ), 0);
+      const capacity = assets.reduce((total, asset) => total + caravanAssetCapacity(asset), 0);
       const purchase = caravanBuyAtMarket(
         economy,
         physical,
         route,
         route.destMarketId,
+        route.baseMarketId,
         route.goodsBack,
         capacity,
         { day },
       );
       route.cargo = purchase.bought;
       route.cargoCostByGoods = purchase.costByGoods;
+      route.cargoLotsByGoods = purchase.lotsByGoods;
       route.fundingShortfall = route.fundingShortfall || purchase.fundingShortfall;
       route.currentTrip.returning = { ...purchase.bought };
       route.currentTrip.fundingShortfall = (

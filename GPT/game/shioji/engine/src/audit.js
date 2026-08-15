@@ -9,8 +9,10 @@ import {
   economicMaterialSnapshot,
   fundSettlementZone,
   localWood,
+  postCompanyLedger,
   priceAnchorBounds,
   recordEconomicMaterialFlow,
+  recordExternalMoneyFlow,
   setCaravanEmployment,
 } from "./econ.js?v=v004.62.2-fishery-slope";
 import {
@@ -509,6 +511,7 @@ export const B2_TRIAL_STARTER_JOBS = Object.freeze([
 ]);
 
 const B2_TRIAL_PROVISION_DAYS = 365;
+const B2_EXPANSION_PROVISION_DAYS = 30;
 
 function nearB2Terrain(physical, x, y, kind, radius = 2) {
   for (let offsetY = -radius; offsetY <= radius; offsetY += 1) {
@@ -640,21 +643,33 @@ export const B2_EXPANSION_STRATEGIES = Object.freeze({
   fishery: Object.freeze({
     marketKey: "3", marketId: "fishery", name: "漁港市場",
     jobs: Object.freeze(["fisher", "fisher", "fisher", "saltworks"]),
-    goodsOut: Object.freeze(["wheat", "log"]),
+    goodsOut: Object.freeze(["wheat", "char", "tools", "log"]),
     goodsBack: Object.freeze(["fish", "salt"]),
+    recruitment: 3, wage: 2, intervalDays: 5,
   }),
   mining: Object.freeze({
     marketKey: "4", marketId: "mining", name: "山間鉱山市場",
-    jobs: Object.freeze(["miner", "miner", "collier", "collier", "quarryman", "logger"]),
-    goodsOut: Object.freeze(["wheat", "fish"]),
-    goodsBack: Object.freeze(["ore", "coal", "stone"]),
+    jobs: Object.freeze(["miner", "miner", "collier", "collier", "quarryman", "smelter", "smith"]),
+    goodsOut: Object.freeze(["wheat", "fish", "tools"]),
+    goodsBack: Object.freeze(["iron", "stone"]),
+    recruitment: 4, wage: 2, intervalDays: 5,
   }),
   basin: Object.freeze({
     marketKey: "2", marketId: "basin", name: "中央盆地市場",
-    jobs: Object.freeze(["wheat", "wheat", "veg", "veg"]),
-    goodsOut: Object.freeze(["fish", "char"]),
+    jobs: Object.freeze([
+      "wheat", "wheat", "wheat", "wheat",
+      "veg", "veg", "rapeseed",
+    ]),
+    goodsOut: Object.freeze(["fish", "char", "tools", "salt"]),
     goodsBack: Object.freeze(["wheat", "veg", "cloth"]),
+    recruitment: 8, wage: 2, intervalDays: 5,
   }),
+});
+
+export const B2_EXPANSION_ORDERS = Object.freeze({
+  fishery: Object.freeze(["fishery", "basin", "mining"]),
+  mining: Object.freeze(["mining", "basin", "fishery"]),
+  basin: Object.freeze(["basin", "fishery", "mining"]),
 });
 
 function addB2StrategyMarket(world, definition, strategy) {
@@ -670,7 +685,7 @@ function addB2StrategyMarket(world, definition, strategy) {
         definitions: ECONOMIC_BUILDINGS,
         toward: economy.market,
       });
-      if (!site || !findTravelPath(physical, economy.market, entrance, "walk")) continue;
+      if (!site) continue;
       candidates.push({
         entrance,
         site,
@@ -680,7 +695,11 @@ function addB2StrategyMarket(world, definition, strategy) {
   }
   candidates.sort((left, right) => left.distance - right.distance
     || left.entrance.y - right.entrance.y || left.entrance.x - right.entrance.x);
-  const selected = candidates[0] ?? null;
+  // 625候補すべてで全域Dijkstraを回すと、3市場fixtureの生成だけで2分を超える。
+  // 敷地距離順に並べてから、実際に採用し得る候補だけの到達性を調べる。
+  const selected = candidates.find(candidate => (
+    findTravelPath(physical, economy.market, candidate.entrance, "walk")
+  )) ?? null;
   const entrance = selected?.entrance ?? null;
   const site = selected?.site ?? null;
   if (!site) throw new Error(`${strategy.name}の敷地がありません`);
@@ -712,7 +731,7 @@ function addB2StrategyMarket(world, definition, strategy) {
   for (const zone of zones) connectB2Road(physical, entrance, zone, `${strategy.marketId}:${zone.job}`);
   const households = zones.map(zone => occupyScenarioZone(world, zone, strategy.marketId));
   for (const household of households) {
-    const provision = household.members.length * B2_TRIAL_PROVISION_DAYS;
+    const provision = household.members.length * B2_EXPANSION_PROVISION_DAYS;
     household.pantry.pres += provision;
     recordEconomicMaterialFlow(
       economy,
@@ -726,38 +745,49 @@ function addB2StrategyMarket(world, definition, strategy) {
     household.marketBuildingId = placed.building.id;
   }
 
-  const innZone = placeB2StarterZone(world, "carter", economy.market);
-  connectB2Road(physical, economy.market, innZone, `${strategy.marketId}:隊商宿`);
-  const innHousehold = occupyScenarioZone(world, innZone, "main");
+  // 遠隔集落の路線はその集落自身の隊商宿が担う。全宿を母港へ置くと固定給が
+  // 母港だけへ集中し、荷は届いているのに遠隔生産者の財布がゼロになる。
+  const innZone = placeB2StarterZone(world, "carter", entrance);
+  connectB2Road(physical, entrance, innZone, `${strategy.marketId}:隊商宿`);
+  const innHousehold = occupyScenarioZone(world, innZone, strategy.marketId);
   setCaravanEmployment(physical, {
     buildingId: innHousehold.buildingId,
-    recruitment: 1,
-    wage: 0.75,
+    recruitment: strategy.recruitment,
+    wage: strategy.wage,
   });
-  economy.companyCarts.push({
-    id: `wood-cart-${economy.nextCartAssetId}`,
-    kind: "wood",
-    durability: P.CART_WOOD_DURABILITY,
-    maxDurability: P.CART_WOOD_DURABILITY,
-    price: 0,
-    makerHouseholdId: null,
-    ownerKind: "company",
-    ownerId: "company",
-    purchasedDay: 0,
-    busyJobId: null,
-    origin: "b2-calibration-charter",
-  });
-  economy.nextCartAssetId += 1;
   const routeResult = createCaravanRoute(economy, physical, {
     name: `${strategy.name}線`,
     baseBuildingId: innHousehold.buildingId,
-    destMarketId: strategy.marketId,
-    goodsOut: [...strategy.goodsOut],
-    goodsBack: [...strategy.goodsBack],
-    intervalDays: 20,
+    destMarketId: "main",
+    goodsOut: [...strategy.goodsBack],
+    goodsBack: [...strategy.goodsOut],
+    intervalDays: strategy.intervalDays,
+    // 5日分では往復だけで棚が空になり、秋収穫から次の春までを持ち越せない。
+    // 生鮮は品目ごとに腐敗するため過剰在庫が自然に抑えられ、麦・加工食は
+    // 長距離線の冬越し用としてUI上限と同じ30日を初期値にする。
+    stockTargetDays: 30,
     day: 0,
   });
   if (!routeResult.ok) throw new Error(`${strategy.name}線の設定不可: ${routeResult.reason}`);
+  for (let index = 0; index < strategy.recruitment; index += 1) {
+    const asset = {
+      id: `wood-cart-${economy.nextCartAssetId}`,
+      kind: "wood",
+      durability: P.CART_WOOD_DURABILITY,
+      maxDurability: P.CART_WOOD_DURABILITY,
+      price: 0,
+      makerHouseholdId: null,
+      ownerKind: "company",
+      ownerId: "company",
+      purchasedDay: 0,
+      busyJobId: routeResult.route.id,
+      caravanRouteId: routeResult.route.id,
+      origin: "b2-calibration-charter",
+    };
+    economy.nextCartAssetId += 1;
+    economy.companyCarts.push(asset);
+    routeResult.route.cartAssetIds.push(asset.id);
+  }
   return {
     marketId: strategy.marketId,
     householdIds: households.map(household => household.id),
@@ -767,18 +797,40 @@ function addB2StrategyMarket(world, definition, strategy) {
 }
 
 export function buildB2StrategyWorld(seed = 11, definition, strategyId = "fishery") {
-  const strategy = B2_EXPANSION_STRATEGIES[strategyId];
-  if (!strategy) throw new RangeError(`unknown B2 expansion strategy: ${strategyId}`);
+  const order = B2_EXPANSION_ORDERS[strategyId];
+  if (!order) throw new RangeError(`unknown B2 expansion strategy: ${strategyId}`);
   const world = buildB2TrialWorld(seed, definition);
-  world.state.economy.company.money += 2000;
-  const expansion = addB2StrategyMarket(world, definition, strategy);
+  // 「拡張後」の帯は初日の開拓村ではなく、母港単独期を越えて遠隔資源を
+  // 必要とし始めた都市を測る。Lv0のまま鉱山を同時に置くと鉄需要が一度の
+  // 在庫充填で止まり、勝ち筋ではなくfixtureの時系列矛盾で鉱山が死ぬ。
+  for (const household of world.state.economy.households) {
+    household.lv = Math.max(household.lv, 4);
+    household.up = 0;
+    household.down = 0;
+  }
+  const expansionFund = 2000 * order.length;
+  postCompanyLedger(world.state.economy.company, {
+    day: 0,
+    amount: expansionFund,
+    reason: `B2 ${strategyId}先行較正fixtureの拡張資金`,
+  });
+  recordExternalMoneyFlow(world.state.economy, {
+    amount: expansionFund,
+    reason: `B2 ${strategyId}先行較正fixtureの拡張資金`,
+  });
+  const expansions = order.map(id => addB2StrategyMarket(
+    world,
+    definition,
+    B2_EXPANSION_STRATEGIES[id],
+  ));
   world.state.b2Strategy = {
     id: strategyId,
-    ...expansion,
+    order: [...order],
+    expansions,
   };
   world.state.economy.jobSelectionPool = [...new Set([
     ...world.state.economy.jobSelectionPool,
-    ...strategy.jobs,
+    ...order.flatMap(id => B2_EXPANSION_STRATEGIES[id].jobs),
     "carter",
   ])];
   return world;

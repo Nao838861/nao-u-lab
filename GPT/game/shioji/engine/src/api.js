@@ -80,6 +80,7 @@ function controllerSnapshot(state, { includePhysical = false } = {}) {
       occupied: physical.occupied,
       roadRevision: physical.roadRevision,
       travelRevision: physical.travelRevision,
+      pathRevision: physical.pathRevision,
       connectionCache: physical.connectionCache,
     };
   }

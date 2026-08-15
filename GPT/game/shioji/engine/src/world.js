@@ -1179,6 +1179,7 @@ export function createWorld({
   )) throw new TypeError("保存された島の状態が不正です");
   const normalizedSeed = normalizeSeed(restored?.seed ?? seed);
   const physical = restored?.physical ?? physicalState ?? createPhysicalState();
+  physical.pathRevision ??= physical.travelRevision ?? 0;
   ensureFertilityLayer(physical);
   const economy = restored?.economy ?? createEconomicState({ initialCompanyMoney });
   const fallbackStartFocus = market ?? restored?.economy?.market ?? null;

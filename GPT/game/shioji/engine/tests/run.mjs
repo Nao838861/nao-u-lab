@@ -2165,6 +2165,17 @@ test("隊商S1: 世帯は帰属市場へ実移動し、屋台・返品・直接�
     after: economicMaterialSnapshot(economy, physical),
     flows: {},
   });
+
+  const returnedLog = returned.qty;
+  fisherySeller.marketId = "main";
+  fisherySeller.members = fisherySeller.members.slice(0, 3);
+  for (const goods of FOODS) fisherySeller.pantry[goods] = 0;
+  fisherySeller.hungerRun = 59;
+  assert.doesNotThrow(() => runHouseholdSurvival(economy, { day: 8, physical }));
+  assert.equal(economy.households.some(row => row.id === fisherySeller.id), false);
+  assert.equal(sectionAmount(fisheryMarket, "pickup", "log"), 0,
+    "転居後に離散しても返品元の市場棚を減らす");
+  assert.ok((economy.ruins.at(-1).inventory.log ?? 0) >= returnedLog);
 });
 
 test("隊商S1: 二市場を8年駆動して貨幣・物量保存を守る", () => {
@@ -4344,6 +4355,43 @@ test("段29: 非接続の会社物流は輸送人員を生成せず接続後だ�
   );
 });
 
+test("多市場調達: 母港へ届いた会社所有の隊商在庫は二重払いせず倉庫目標へ移す", () => {
+  const { economy, physical } = createLogisticsTestFixture({ connectMarketWarehouse: true });
+  const market = companyLogisticsSite(physical, "market");
+  const warehouse = companyLogisticsSite(physical, "warehouse");
+  economy.marketStockM.main = { stone: 8 };
+  economy.marketStockCostM.main = { stone: 12 };
+  economy.marketStockLotsM.main = {
+    stone: [{ routeId: "caravan7", tripNumber: 3, qty: 8, cost: 12 }],
+  };
+  depositInventory(market, "inbound", "stone", 8);
+  setCompanyStockTarget(economy, "stone", 8);
+  const moneyBefore = economy.company.money
+    + economy.households.reduce((total, household) => total + household.purse, 0);
+  const materialBefore = economicMaterialSnapshot(economy, physical);
+
+  const transfers = runCompanyProcurement(economy, { day: 1, physical });
+  assert.deepEqual(transfers.map(({ kind, goods, qty, price }) => ({ kind, goods, qty, price })), [{
+    kind: "route_stock_transfer", goods: "stone", qty: 8, price: 0,
+  }]);
+  assert.equal(economy.marketStockM.main.stone, 0);
+  assert.equal(economy.marketStockCostM.main.stone, 0);
+  assert.deepEqual(economy.marketStockLotsM.main.stone, []);
+  assert.equal(sectionAmount(market, "inbound", "stone"), 0);
+  assert.equal(economy.stock.stone ?? 0, 0, "到着前は倉庫在庫に数えない");
+
+  while (physical.activeHaulJobIds.length > 0) stepHaulCarriers(physical, 1);
+  settleCompanyLogistics(economy, physical, { day: 1 });
+  assert.equal(economy.stock.stone, 8);
+  assert.equal(economy.stockCost.stone, 12);
+  assert.equal(sectionAmount(warehouse, "storage", "stone"), 8);
+  assert.equal(
+    economy.company.money + economy.households.reduce((total, household) => total + household.purse, 0),
+    moneyBefore,
+  );
+  assert.deepEqual(economicMaterialSnapshot(economy, physical), materialBefore);
+});
+
 test("教程会社在庫撤去: 受諾注文は買上げ目標0でも市場から実調達を始める", () => {
   const { economy, physical } = createLogisticsTestFixture();
   assert.equal(addRoadLine(physical, economy.market, economy.warehouse).ok, true);
@@ -5844,6 +5892,42 @@ test("隊商S4: 会社残高が負でも信用限度内なら市場仕入れで�
   assert.equal(fixture.route.recentTrips[0].fundingShortfall, false);
 });
 
+test("隊商S4: 別路線が運び込んだ会社在庫を中継市場で積み替え、原価帰属を保つ", () => {
+  const fixture = createCaravanRouteFixture();
+  const { economy, physical } = fixture.world.state;
+  runCaravanUntilReturned(economy, physical, fixture.route, 1);
+  assert.equal(economy.marketStockM.main.fish, 8);
+  const sourceLot = structuredClone(economy.marketStockLotsM.main.fish[0]);
+  const moneyBeforeTransfer = economy.company.money
+    + economy.households.reduce((total, household) => total + household.purse, 0);
+  const materialBefore = economicMaterialSnapshot(economy, physical);
+
+  assert.equal(configureCaravanRoute(economy, physical, {
+    baseBuildingId: fixture.inn.id,
+    goodsOut: ["fish"],
+    goodsBack: [],
+  }).ok, true);
+  const departureDay = fixture.route.nextDepartDay;
+  const departure = stepCaravanDay(economy, physical, { day: departureDay });
+  assert.equal(departure[0]?.departed, true, JSON.stringify(departure));
+  while (fixture.route.completedTrips < 2) {
+    stepCaravanTick(economy, physical, { day: departureDay });
+  }
+
+  assert.equal(economy.marketStockM.main.fish, 0);
+  assert.equal(economy.marketStockM.fishery.fish, 8);
+  assert.deepEqual(fixture.route.recentTrips.at(-1).outbound, { fish: 8 });
+  assert.equal(fixture.route.recentTrips.at(-1).procurement, 0,
+    "会社所有在庫の積み替えで二重仕入しない");
+  assert.deepEqual(economy.marketStockLotsM.fishery.fish[0], sourceLot,
+    "最初に買い付けた路線・便・原価を配送後も保つ");
+  assert.equal(
+    economy.company.money + economy.households.reduce((total, household) => total + household.purse, 0),
+    moneyBeforeTransfer,
+  );
+  assert.deepEqual(economicMaterialSnapshot(economy, physical), materialBefore);
+});
+
 test("隊商S4: 荷車の御者は隊商宿世帯の実在メンバーへ固定する", () => {
   const fixture = createCaravanRouteFixture();
   const { economy, physical } = fixture.world.state;
@@ -5881,9 +5965,9 @@ test("隊商S6: 複数品目を指定すると先頭品だけで満載にせず�
 
   runCaravanUntilReturned(economy, physical, fixture.route, 1);
 
-  assert.deepEqual(fixture.route.recentTrips[0].outbound, { wheat: 4, tools: 4 });
-  assert.equal(fixture.mainSeller.purse, P.PURSE0 + 8);
-  assert.equal(toolsSeller.purse, P.PURSE0 + 8);
+  assert.deepEqual(fixture.route.recentTrips[0].outbound, { wheat: 8, tools: 8 });
+  assert.equal(fixture.mainSeller.purse, P.PURSE0 + 16);
+  assert.equal(toolsSeller.purse, P.PURSE0 + 16);
   assert.equal(assertMoneyConservation(economy), true);
 });
 
@@ -5935,7 +6019,7 @@ test("需要網3: 隊商職も運行日だけ道具を摩耗し、素手では�
 });
 
 test("隊商S4: 荷車が全損し供給が切れると次便は止まり、理由を出来事に残す", () => {
-  const fixture = createCaravanRouteFixture({ cartDurability: 1 });
+  const fixture = createCaravanRouteFixture({ cartDurability: 0.001 });
   const { economy, physical } = fixture.world.state;
   runCaravanUntilReturned(economy, physical, fixture.route, 1);
   assert.equal(economy.companyCarts.length, 0);

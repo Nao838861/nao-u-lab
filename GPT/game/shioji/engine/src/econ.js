@@ -1486,12 +1486,17 @@ function disperseHousehold(economy, household, day, physical = null) {
     }
     household.fishingRig = null;
   }
-  const market = marketBuildingForId(physical, householdMarketId(household));
   for (const [goods, stalls] of Object.entries(economy.stalls)) {
     for (let index = stalls.length - 1; index >= 0; index -= 1) {
       if (stalls[index].householdId !== household.id) continue;
       inventory[goods] += stalls[index].qty;
-      if (market) withdrawInventory(market, "outbound", goods, stalls[index].qty);
+      const stallMarket = marketBuildingForId(
+        physical,
+        stalls[index].marketId ?? "main",
+      );
+      if (stallMarket) {
+        withdrawInventory(stallMarket, "outbound", goods, stalls[index].qty);
+      }
       stalls.splice(index, 1);
     }
   }
@@ -1499,7 +1504,8 @@ function disperseHousehold(economy, household, day, physical = null) {
     const lot = economy.marketReturns[index];
     if (lot.householdId !== household.id) continue;
     inventory[lot.goods] += lot.qty;
-    if (market) withdrawInventory(market, "pickup", lot.goods, lot.qty);
+    const returnMarket = marketBuildingForId(physical, lot.marketId ?? "main");
+    if (returnMarket) withdrawInventory(returnMarket, "pickup", lot.goods, lot.qty);
     economy.marketReturns.splice(index, 1);
   }
   economy.ruins.push({
@@ -1824,6 +1830,7 @@ function setTerrainKind(physical, x, y, kind) {
   if (typeof tile === "string") physical.terrain[y][x] = kind;
   else tile.kind = kind;
   physical.travelRevision = (physical.travelRevision ?? 0) + 1;
+  physical.pathRevision = (physical.pathRevision ?? physical.travelRevision ?? 0) + 1;
 }
 
 export function woodStage(stock) {
@@ -2031,7 +2038,7 @@ export function ensureResourceWorkPlan(economy, physical, household) {
     };
     return household.resourceWork;
   }
-  const revision = `${physical.roadRevision ?? 0}:${physical.travelRevision ?? 0}`;
+  const revision = `${physical.roadRevision ?? 0}:${physical.pathRevision ?? physical.travelRevision ?? 0}`;
   const cached = household.resourceWork;
   if (
     cached?.revision === revision
@@ -5172,6 +5179,31 @@ export function setCompanyStockTarget(economy, goods, qty) {
   return qty;
 }
 
+function transferRouteStockLots(economy, marketId, goods, qty) {
+  const stockTable = economy.marketStockM?.[marketId];
+  const costTable = (economy.marketStockCostM ??= {})[marketId] ??= {};
+  const lots = ((economy.marketStockLotsM ??= {})[marketId] ??= {})[goods] ??= [];
+  const stockBefore = Math.max(1e-9, stockTable?.[goods] ?? 0);
+  const averageCost = (costTable[goods] ?? 0) / stockBefore;
+  let remaining = Math.min(qty, stockBefore);
+  let transferredCost = 0;
+  while (remaining > 1e-9 && lots.length > 0) {
+    const lot = lots[0];
+    const moved = Math.min(remaining, lot.qty);
+    const unitCost = (lot.cost ?? 0) / Math.max(1e-9, lot.qty);
+    const cost = moved * unitCost;
+    lot.qty -= moved;
+    lot.cost = Math.max(0, (lot.cost ?? 0) - cost);
+    remaining -= moved;
+    transferredCost += cost;
+    if (lot.qty <= 1e-9) lots.shift();
+  }
+  if (remaining > 1e-9) transferredCost += remaining * averageCost;
+  stockTable[goods] = Math.max(0, stockBefore - qty);
+  costTable[goods] = Math.max(0, (costTable[goods] ?? 0) - transferredCost);
+  return transferredCost;
+}
+
 export function runCompanyProcurement(economy, { day, physical = null }) {
   const purchases = [];
   const repairNeeds = companyBuildingRepairNeeds(physical);
@@ -5195,7 +5227,8 @@ export function runCompanyProcurement(economy, { day, physical = null }) {
       : 0;
     const warehouseOnly = Boolean(activeOrder);
     const warehouseAvailable = (economy.stock[goods] ?? 0)
-      + (physical ? pendingCompanyHaul(physical, "procurement", goods) : 0);
+      + (physical ? pendingCompanyHaul(physical, "procurement", goods) : 0)
+      + (physical ? pendingCompanyHaul(physical, "route_stock_transfer", goods) : 0);
     const repairLack = Math.max(0, (repairNeeds[goods] ?? 0) - warehouseAvailable);
     const warehouseAfterRepair = Math.max(0, warehouseAvailable - (repairNeeds[goods] ?? 0));
     const warehouseTarget = Math.max(
@@ -5211,6 +5244,42 @@ export function runCompanyProcurement(economy, { day, physical = null }) {
     );
     let lack = repairLack + baseLack;
     if (lack <= 1e-9 || economy.company.money <= -companyCreditLimit(economy, { day })) continue;
+
+    // 母港へ到着した隊商在庫はすでに会社所有である。注文・備蓄・修繕の
+    // 目標がある時は二重に買い直さず、市場inboundから倉庫へ実運搬する。
+    // これがないと遠隔の鉄や石は小売棚に永久滞留し、4市場経済が会社注文へ
+    // 接続されない。
+    if (physical) {
+      let routeStock = Math.max(0, economy.marketStockM?.main?.[goods] ?? 0);
+      while (lack > 1e-9 && routeStock > 1e-9) {
+        const qty = Math.min(companyAvailableGoodsCapacity(economy, physical, goods), lack, routeStock);
+        if (qty <= 1e-9) break;
+        const job = dispatchCompanyHaul(economy, physical, {
+          day,
+          kind: "route_stock_transfer",
+          fromRole: "market",
+          fromSection: "inbound",
+          toRole: "warehouse",
+          toSection: "storage",
+          goods,
+          qty,
+          metadata: { cost: 0 },
+        });
+        if (!job) break;
+        const cost = transferRouteStockLots(economy, "main", goods, qty);
+        job.economicLogistics.cost = cost;
+        lack -= qty;
+        routeStock -= qty;
+        purchases.push({
+          kind: "route_stock_transfer",
+          goods,
+          householdId: null,
+          qty,
+          price: 0,
+          jobId: job.id,
+        });
+      }
+    }
     const stalls = [...economy.stalls[goods]]
       .filter((stall) => (stall.marketId ?? "main") === "main")
       .sort((a, b) => a.price - b.price);
@@ -5355,6 +5424,9 @@ export function settleCompanyLogistics(economy, physical, { day }) {
     if (metadata.kind === "procurement") {
       economy.stock[job.goods] = (economy.stock[job.goods] ?? 0) + job.qty;
       economy.stockCost[job.goods] = (economy.stockCost[job.goods] ?? 0) + metadata.payment;
+    } else if (metadata.kind === "route_stock_transfer") {
+      economy.stock[job.goods] = (economy.stock[job.goods] ?? 0) + job.qty;
+      economy.stockCost[job.goods] = (economy.stockCost[job.goods] ?? 0) + metadata.cost;
     } else if (metadata.kind === "stock_release") {
       economy.marketStock[job.goods] = (economy.marketStock[job.goods] ?? 0) + job.qty;
       economy.marketStockCost[job.goods] = (economy.marketStockCost[job.goods] ?? 0) + metadata.cost;

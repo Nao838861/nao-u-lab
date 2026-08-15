@@ -317,6 +317,8 @@ export function createPhysicalState({
     nextBuildingId: 1,
     roadRevision: 0,
     travelRevision: 0,
+    // 魚影・木段階の描画更新と、実際に経路コストが変わる更新を分離する。
+    pathRevision: 0,
     carrierRoadRevision: -1,
     connectionCache: { revision: -1, components: {} },
     haulJobs: [],
@@ -413,6 +415,7 @@ export function paveRoadTile(physical, x, y) {
   physical.pavedRoads[key] = true;
   physical.roadRevision += 1;
   physical.travelRevision = (physical.travelRevision ?? 0) + 1;
+  physical.pathRevision = (physical.pathRevision ?? physical.travelRevision ?? 0) + 1;
   return true;
 }
 
@@ -522,7 +525,7 @@ export function findTravelPath(physical, start, goal, mode = "walk") {
     .map(([key]) => key)
     .sort()
     .join(";");
-  const revision = `${physical.roadRevision}:${physical.travelRevision ?? 0}:${trailSignature}`;
+  const revision = `${physical.roadRevision}:${physical.pathRevision ?? physical.travelRevision ?? 0}:${trailSignature}`;
   let cache = travelPathCaches.get(physical);
   if (!cache || cache.revision !== revision) {
     cache = { revision, routes: new Map() };
@@ -769,6 +772,7 @@ export function removeRoadTile(physical, x, y) {
   delete physical.pavedRoads?.[key];
   physical.roadRevision += 1;
   physical.travelRevision = (physical.travelRevision ?? 0) + 1;
+  physical.pathRevision = (physical.pathRevision ?? physical.travelRevision ?? 0) + 1;
   return true;
 }
 
@@ -943,6 +947,7 @@ export function addBuilding(physical, type, x, y, options = {}) {
   }
   for (const role of building.roles) physical.roleBuildingIds[role] = building.id;
   physical.travelRevision = (physical.travelRevision ?? 0) + 1;
+  physical.pathRevision = (physical.pathRevision ?? physical.travelRevision ?? 0) + 1;
   return { ok: true, building };
 }
 
@@ -974,6 +979,7 @@ export function removeBuilding(physical, buildingOrId) {
     if (buildingId === building.id) delete physical.roleBuildingIds[role];
   }
   physical.travelRevision = (physical.travelRevision ?? 0) + 1;
+  physical.pathRevision = (physical.pathRevision ?? physical.travelRevision ?? 0) + 1;
   return true;
 }
 
