@@ -1,4 +1,4 @@
-import { buildingById, pathLen } from "./physical.js?v=v004.62.0-b2-p4";
+import { buildingById, pathLen } from "./physical.js?v=v004.62.1-price-meat-hotfix";
 
 const DEFAULT_HYSTERESIS = 0.12;
 const EPSILON = 1e-9;

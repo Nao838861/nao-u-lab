@@ -2394,11 +2394,18 @@ test("価格錨: 保存由来の暴騰・暴落を一朝で有界帯へ戻しEMA
 test("食料買値錨: 空棚の安値を最安主食へ混ぜず輸入麦4Dを候補に含める", () => {
   const economy = createEconomicState();
   const logger = createHousehold(economy, { job: "logger", x: 0, y: 0 });
-  for (const goods of ["veg", "wheat", "pres"]) economy.px[goods] = 100;
+  economy.px.veg = 0.32;
+  economy.px.wheat = 4.8;
+  economy.px.pres = 0.5;
   logger.pantry.fish = 0;
-  const targets = buyTargets(economy, logger, { day: 249 });
-  assert.ok(targets.fish);
-  assert.ok(targets.fish[1] <= P.IMP.wheat * 2.5 + 1e-9);
+  const emptyShelfCeiling = buyTargets(economy, logger, { day: 249 }).fish[1];
+  assert.ok(emptyShelfCeiling >= P.IMP.wheat * 2 - 1e-9);
+  assert.ok(emptyShelfCeiling <= P.IMP.wheat * 2.5 + 1e-9);
+
+  economy.stalls.veg.push({ householdId: logger.id, qty: 1, price: 0.32, age: 0 });
+  const stockedCeiling = buyTargets(economy, logger, { day: 249 }).fish[1];
+  assert.ok(stockedCeiling <= economy.px.veg * 2.5 + 1e-9);
+  assert.ok(stockedCeiling < emptyShelfCeiling);
 });
 
 test("価格規則: 全加工連鎖に上流ask床より高い損益分岐上限がある", () => {
@@ -5690,6 +5697,17 @@ test("二市場入植: 漁郷世帯は母港区画の分家元にならない", 
 
 test("二市場入植: 初便用の貸与荷車は通常の会社運搬へ流用しない", () => {
   const world = buildTutorialTwoMarketWorld(11);
+  const fisheryHouseholds = world.state.economy.households.filter(
+    (household) => household.marketId === "fishery",
+  );
+  assert.equal(fisheryHouseholds.some((household) => household.job === "shepherd"), false);
+  assert.equal(fisheryHouseholds.reduce(
+    (total, household) => total + household.pantry.meat, 0,
+  ), 0, "牧場ゼロの漁郷へ生肉を種付けしない");
+  assert.equal(fisheryHouseholds.every((household) => household.pantry.pres > 0), true,
+    "入植時保存食は保存食として持たせる");
+  assert.equal(world.state.economy.materialFlows.meat?.imp ?? 0, 0);
+  assert.ok(world.state.economy.materialFlows.pres.imp > 0);
   const fisheryBuildings = world.state.physical.buildings.filter(
     (building) => ["fisher", "saltworks"].includes(building.type),
   );
@@ -5714,6 +5732,13 @@ test("隊商S3: 二市場世界は種付き隊商宿1軒を持ち雇用操作を
   const create = () => buildCaravanSliceWorld(11);
   const world = create();
   const api = createEngineApi(world);
+  const fisheryHouseholds = world.state.economy.households.filter(
+    (household) => household.marketId === "fishery",
+  );
+  assert.equal(fisheryHouseholds.reduce(
+    (total, household) => total + household.pantry.meat, 0,
+  ), 0);
+  assert.equal(fisheryHouseholds.every((household) => household.pantry.pres > 0), true);
   const inn = world.state.physical.buildings.find((building) => building.type === "carter");
   assert.ok(inn);
   assert.notEqual(inn.ownerHouseholdId, null);

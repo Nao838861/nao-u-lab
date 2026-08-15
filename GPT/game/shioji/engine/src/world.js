@@ -42,7 +42,7 @@ import {
   settlePortTransfers,
   transactMarketCargo,
   unloadMarketBuyCargo,
-} from "./econ.js?v=v004.62.0-b2-p4";
+} from "./econ.js?v=v004.62.1-price-meat-hotfix";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -64,10 +64,10 @@ import {
   stepTravelCarrier,
   stepHaulCarriers,
   stepPortHandling,
-} from "./physical.js?v=v004.62.0-b2-p4";
-import { nextMulberry32, normalizeSeed } from "./prng.js?v=v004.62.0-b2-p4";
-import { createMarketNetwork, marketNetworkSummary } from "./market_network.js?v=v004.62.0-b2-p4";
-import { stepCaravanDay, stepCaravanTick } from "./routes.js?v=v004.62.0-b2-p4";
+} from "./physical.js?v=v004.62.1-price-meat-hotfix";
+import { nextMulberry32, normalizeSeed } from "./prng.js?v=v004.62.1-price-meat-hotfix";
+import { createMarketNetwork, marketNetworkSummary } from "./market_network.js?v=v004.62.1-price-meat-hotfix";
+import { stepCaravanDay, stepCaravanTick } from "./routes.js?v=v004.62.1-price-meat-hotfix";
 
 function tread(economy, x, y) {
   const key = keyOf(Math.round(x), Math.round(y));

@@ -107,7 +107,7 @@ async function checkViewport(width, height, mobile) {
       bootFailure: document.querySelector('#boot-status')?.dataset.state === 'failed',
     };
   })()`);
-  assert.equal(fresh.version, 'v004.62.0-b2-p4', JSON.stringify(fresh));
+  assert.equal(fresh.version, 'v004.62.1-price-meat-hotfix', JSON.stringify(fresh));
   assert.equal(fresh.mode, 'sandbox', JSON.stringify(fresh));
   assert.deepEqual(fresh.size, [256, 256], JSON.stringify(fresh));
   assert.deepEqual(fresh.markets, ['母港市場'], JSON.stringify(fresh));

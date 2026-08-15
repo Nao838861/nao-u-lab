@@ -7,9 +7,9 @@ export {
   householdProductionSummary,
   laborWage,
   productionCost,
-} from '../../engine/src/econ.js?v=v004.62.0-b2-p4';
-import { P } from '../../engine/src/econ.js?v=v004.62.0-b2-p4';
-import { createEngineApi } from '../../engine/src/api.js?v=v004.62.0-b2-p4';
+} from '../../engine/src/econ.js?v=v004.62.1-price-meat-hotfix';
+import { P } from '../../engine/src/econ.js?v=v004.62.1-price-meat-hotfix';
+import { createEngineApi } from '../../engine/src/api.js?v=v004.62.1-price-meat-hotfix';
 import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
@@ -21,16 +21,16 @@ import {
   buildBaseCity,
   buildWorldScaleFoundation,
   makeStableCityPlan,
-} from '../../engine/src/audit.js?v=v004.62.0-b2-p4';
+} from '../../engine/src/audit.js?v=v004.62.1-price-meat-hotfix';
 import {
   createPhysicalState, findTravelPath, makeFlowIslandTerrain, makeMultiMarketTerrain,
-} from '../../engine/src/physical.js?v=v004.62.0-b2-p4';
-import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.62.0-b2-p4';
-import { createViewController } from './controller.js?v=v004.62.0-b2-p4';
+} from '../../engine/src/physical.js?v=v004.62.1-price-meat-hotfix';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.62.1-price-meat-hotfix';
+import { createViewController } from './controller.js?v=v004.62.1-price-meat-hotfix';
 import {
   SPRING_START_CALENDAR_OFFSET_DAYS,
   START_MODES,
-} from './start_modes.js?v=v004.62.0-b2-p4';
+} from './start_modes.js?v=v004.62.1-price-meat-hotfix';
 
 export {
   E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS,

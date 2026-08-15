@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.62.0-b2-p4';
+import { pileVisual } from './visuals.js?v=v004.62.1-price-meat-hotfix';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));

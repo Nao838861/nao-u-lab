@@ -991,6 +991,18 @@ test('チュートリアル段4: tutorialは256×256母港と漁港3を1.7日の
   assert.equal(model.households.length, 4);
   assert.deepEqual(model.households.filter(household => household.marketId === 'fishery')
     .map(household => household.job), ['fisher', 'fisher', 'fisher', 'saltworks']);
+  const tutorialState = tutorial.saveState();
+  const fisheryHouseholds = tutorialState.economy.households.filter(
+    household => household.marketId === 'fishery',
+  );
+  assert.equal(fisheryHouseholds.some(household => household.job === 'shepherd'), false);
+  assert.equal(fisheryHouseholds.reduce(
+    (total, household) => total + household.pantry.meat, 0,
+  ), 0, '牧場ゼロの漁港へ生肉を種付けしない');
+  assert.ok(fisheryHouseholds.every(household => household.pantry.pres > 0),
+    '入植時保存食は保存食として持たせる');
+  assert.equal(tutorialState.economy.materialFlows.meat?.imp ?? 0, 0);
+  assert.ok(tutorialState.economy.materialFlows.pres.imp > 0);
   assert.ok(Math.abs(tutorial.saveState().caravanSlice.roadDays - 1.7) < 0.05);
   assert.equal(tutorial.saveState().b2Tutorial.fisheryMarketNumber, '3');
   const director = createTutorialDirectorForMode('tutorial');
@@ -2611,7 +2623,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.62.0-b2-p4');
+  assert.equal(VERSION, 'v004.62.1-price-meat-hotfix');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);

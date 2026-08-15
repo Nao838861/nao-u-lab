@@ -12,7 +12,7 @@ import {
   priceAnchorBounds,
   recordEconomicMaterialFlow,
   setCaravanEmployment,
-} from "./econ.js?v=v004.62.0-b2-p4";
+} from "./econ.js?v=v004.62.1-price-meat-hotfix";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -33,10 +33,10 @@ import {
   makeMultiMarketTerrain,
   markFertileArea,
   pathLen,
-} from "./physical.js?v=v004.62.0-b2-p4";
-import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.62.0-b2-p4";
-import { createMarketNetwork } from "./market_network.js?v=v004.62.0-b2-p4";
-import { createCaravanRoute } from "./routes.js?v=v004.62.0-b2-p4";
+} from "./physical.js?v=v004.62.1-price-meat-hotfix";
+import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.62.1-price-meat-hotfix";
+import { createMarketNetwork } from "./market_network.js?v=v004.62.1-price-meat-hotfix";
+import { createCaravanRoute } from "./routes.js?v=v004.62.1-price-meat-hotfix";
 
 export const AUDIT_SEEDS = Object.freeze([11, 13, 14]);
 
@@ -866,10 +866,10 @@ export function buildB2TutorialWorld(seed = 11, definition) {
       { includeInDaily: false },
     );
     const preservedFood = household.members.length * CARAVAN_SLICE_PROVISION_DAYS;
-    household.pantry.meat += preservedFood;
+    household.pantry.pres += preservedFood;
     recordEconomicMaterialFlow(
       economy,
-      "meat",
+      "pres",
       "imp",
       preservedFood,
       `B2教程漁港世帯${household.id}の入植時保存食`,
@@ -1296,10 +1296,10 @@ export function buildCaravanSliceWorld(seed) {
     motherProvision.pantry.wheat += household.pantry.wheat;
     household.pantry.wheat = 0;
     const preservedFood = household.members.length * CARAVAN_SLICE_PROVISION_DAYS;
-    household.pantry.meat += preservedFood;
+    household.pantry.pres += preservedFood;
     recordEconomicMaterialFlow(
       economy,
-      "meat",
+      "pres",
       "imp",
       preservedFood,
       `漁郷世帯${household.id}の入植時保存食`,
@@ -1416,10 +1416,10 @@ export function buildTutorialTwoMarketWorld(seed) {
       { includeInDaily: false },
     );
     const preservedFood = household.members.length * CARAVAN_SLICE_PROVISION_DAYS;
-    household.pantry.meat += preservedFood;
+    household.pantry.pres += preservedFood;
     recordEconomicMaterialFlow(
       economy,
-      "meat",
+      "pres",
       "imp",
       preservedFood,
       `教程漁郷世帯${household.id}の入植時保存食`,
