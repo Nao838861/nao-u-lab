@@ -713,10 +713,10 @@ function addB2StrategyMarket(world, definition, strategy) {
   const households = zones.map(zone => occupyScenarioZone(world, zone, strategy.marketId));
   for (const household of households) {
     const provision = household.members.length * B2_TRIAL_PROVISION_DAYS;
-    household.pantry.meat += provision;
+    household.pantry.pres += provision;
     recordEconomicMaterialFlow(
       economy,
-      "meat",
+      "pres",
       "imp",
       provision,
       `${strategy.name}世帯${household.id}の開拓時保存食`,
