@@ -8,7 +8,47 @@
 - `memory/shared_reads_candidates/20260816_epicstar_memory_enhanced_strategy.md` — StarCraft II の長期戦略で、勝利 episode bank・working memory・dynamic gating を組み合わせる EpicStar の構成と比較結果を収集。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260816_epicstar_memory_enhanced_strategy.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-08-16T19:31:08+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260816_epicstar_memory_enhanced_strategy.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260816_epicstar_memory_enhanced_strategy.md
+  valid_backlog_after: 0
+```
+
+- duplicate preflight: `continue`。posted-source、closed canonical、open duplicate group の再生成後に確認。
+- 判定根拠: 問題設定、memory 構成、比較結果、ablation、限界が揃い、長期戦略 AI の replay 検索・再利用/再推論切替へ具体適用できる。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
