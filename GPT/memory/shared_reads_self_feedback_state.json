@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-17T01:41:36+09:00",
+  "updated_at": "2026-08-17T03:42:55+09:00",
   "reviewed_source_ts": [
+    "1779957463.790519",
     "1786891365.436139",
     "1786884152.236799",
     "1786876748.953229",
@@ -20125,6 +20126,46 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、既存の conditional-correction・feature-conditioned-update・attributed-trajectory controls との重複、比較 artifact 不在による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-17T03:42:55+09:00",
+      "selected": {
+        "id": "sr-1779957463-6a71f32e23",
+        "source_ts": "1779957463.790519",
+        "title": "Codified Finite-state Machines for Role-playing — 潜在キャラクター状態を有限集合とコード化遷移へ外出しする",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす実質的な投稿のうち新しい候補で、memory・game-design・operation・evaluation の4優先タグを持つため1件だけ選んだ。LLM に毎turnの状態管理を自由文で再推論させず、有限状態・fallback・コード化した遷移・局所的な意味判定へ分ける知見が、次の会話NPCや状態付きmemory lifecycleで既存controlsと異なる判断差を作れるか確認した。Nao_uが本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_controlも必須閾値2を下回るため、新規probe・metric・lease・directiveは追加しない。shared-reads本文は、profileからの有限状態抽出、unactivated／other fallback、get_next_stateとyes／no／unknownの局所意味判定、確率分布を持つCPFSM、path length 1〜10のsynthetic評価、6作品・83キャラ・5,141 scenesのreal plot評価、state registration ablationまで示す。会話NPCでcurrent_state、trigger、next_state、fallback、根拠を保存する行動へ直接変換できるためactionability・evidenceは3とした。一方、probe-20260710-llm-bounded-replanning-decision-layerは決定論的subsystemの権限と有限decision schemaを、probe-20260622-npc-dialogue-perception-boundaryはNPC発話とauthoritative game stateの境界を、probe-20260625-actworld-action-forgetting-state-consistencyは変化した状態の継続を、probe-20260708-seduced-narrative-rhetorical-rule-gateは自由文を通過させるstate-transition predicateをすでに扱う。CFSM固有の状態自動抽出と確率遷移は差分だが、現在のstagingには会話NPC、固定scene、PromptTrans／CFSMのbefore・after trace、player-facing魅力度評価がなく、直後のPhase 4a memory cleanupをconsumerにしても判断差を測れないためrelevance=2、non_redundancy=1とした。active_probes 325件へ同型controlを追加すると確認負荷を増やし、硬い状態集合を人格全体やmemory lifecycleへ過剰一般化する危険があるためrisk_control=1。次に具体的な会話NPC artifactが生じ、既存4 controlsだけではstate identityの揺れと遷移再現性を判定できない実例が出た時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260710-llm-bounded-replanning-decision-layer",
+        "probe-20260622-npc-dialogue-perception-boundary",
+        "probe-20260625-actworld-action-forgetting-state-consistency",
+        "probe-20260708-seduced-narrative-rhetorical-rule-gate"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_tsと、既存のbounded-decision／NPC-boundary／state-persistence／transition-gate controlsとの重複、比較artifact不在によるreject理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

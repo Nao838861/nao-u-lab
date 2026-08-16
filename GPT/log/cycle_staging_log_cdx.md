@@ -103,7 +103,37 @@ duplicate_guard:
   evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786614426363069"
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+self_feedback:
+  selected:
+    id: sr-1779957463-6a71f32e23
+    source_ts: "1779957463.790519"
+    title: "Codified Finite-state Machines for Role-playing — 潜在キャラクター状態を有限集合とコード化遷移へ外出しする"
+    reason: "source=slack_api/shared-reads、score=11、未レビューで、memory・game-design・operation・evaluationの4優先タグを持つ実質的な投稿のうち新しい候補。有限状態・fallback・コード化遷移・局所意味判定が、次の会話NPCまたは状態付きmemory lifecycleで既存controlsと異なる判断差を作るか確認するため1件だけ選んだ。Nao_uの明示評価はない。"
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件の14に届かず、risk_controlも必須閾値2未満。本文は有限状態抽出、unactivated／other fallback、get_next_stateとyes／no／unknownの局所意味判定、CPFSM、長さ1〜10のsynthetic評価、6作品・83キャラ・5,141 scenesのreal plot評価、state registration ablationまで示し、actionabilityとevidenceは高い。一方、既存のbounded decision、NPC dialogue boundary、state persistence、rhetorical rule gateが主要判断を覆い、現stagingには会話NPCの固定scene・before／after trace・player-facing魅力度評価がない。active_probes 325件へ同型controlを追加すると確認負荷と硬い状態集合の過剰一般化を増やすため、state-onlyで閉じる。"
+  existing_controls:
+    - probe-20260710-llm-bounded-replanning-decision-layer
+    - probe-20260622-npc-dialogue-perception-boundary
+    - probe-20260625-actworld-action-forgetting-state-consistency
+    - probe-20260708-seduced-narrative-rhetorical-rule-gate
+  change:
+    summary: "reviewed_source_tsとreject理由だけを更新した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
