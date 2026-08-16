@@ -537,16 +537,21 @@ const CompiledScene: React.FC = () => {
 const RaceScene: React.FC = () => {
   const frame = useCurrentFrame();
   const started = frame >= 45;
-  const generic = clamp(Math.floor(interpolate(frame, [45, 360], [0, rasterBlocks.length])), 0, rasterBlocks.length);
+  const genericWork = clamp(
+    interpolate(frame, [45, 350], [0, rasterBlocks.length * genericLoopCode.length]),
+    0,
+    rasterBlocks.length * genericLoopCode.length,
+  );
+  const generic = clamp(Math.floor(genericWork / genericLoopCode.length), 0, rasterBlocks.length);
   const compiled = clamp(Math.floor(interpolate(frame, [45, 180], [0, compiledProgram.length])), 0, compiledProgram.length);
   const genericCursor = started && generic < rasterBlocks.length ? rasterBlocks[generic] : -1;
   const compiledCursor = started && compiled < compiledProgram.length ? compiledProgram[compiled].blockIndex : -1;
-  const genericLine = started ? Math.floor((frame - 45) / 3) % genericLoopCode.length : -1;
+  const genericLine = started && generic < rasterBlocks.length ? Math.floor(genericWork) % genericLoopCode.length : -1;
   const compiledLine = started && compiled < compiledProgram.length ? compiled : -1;
   const rowsPerColumn = Math.ceil(compiledProgram.length / 3);
   const currentCompiledCode = compiledLine >= 0 ? compiledProgram[compiledLine].code : compiled >= compiledProgram.length ? 'DONE' : 'READY';
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 330), backgroundColor: C.bg, padding: '35px 42px', boxSizing: 'border-box'}}>
+    <AbsoluteFill style={{opacity: fade(frame, 390), backgroundColor: C.bg, padding: '35px 42px', boxSizing: 'border-box'}}>
       <Title size={39} align="center">同じ絵でも、実行する処理の量が違う</Title>
       <div style={{display: 'flex', justifyContent: 'space-around', marginTop: 24}}>
         <div style={{width: 540, textAlign: 'center'}}>
@@ -690,9 +695,6 @@ const RaceScene: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div style={{position: 'absolute', left: 0, right: 0, bottom: 15, textAlign: 'center', fontFamily: FONT, fontWeight: 900, fontSize: 24, color: C.white}}>
-        保存するコードは大きい　／　実行する処理は少ない
       </div>
     </AbsoluteFill>
   );
@@ -873,19 +875,19 @@ export const ExplainerPrototype: React.FC = () => {
       <Sequence from={750} durationInFrames={360}>
         <CompiledScene />
       </Sequence>
-      <Sequence from={1110} durationInFrames={330}>
+      <Sequence from={1110} durationInFrames={390}>
         <RaceScene />
       </Sequence>
-      <Sequence from={1440} durationInFrames={300}>
+      <Sequence from={1500} durationInFrames={300}>
         <AlignmentScene />
       </Sequence>
-      <Sequence from={1740} durationInFrames={240}>
+      <Sequence from={1800} durationInFrames={240}>
         <SizeBankScene />
       </Sequence>
-      <Sequence from={1980} durationInFrames={180}>
+      <Sequence from={2040} durationInFrames={180}>
         <DayOneScene />
       </Sequence>
-      <Sequence from={2160} durationInFrames={180}>
+      <Sequence from={2220} durationInFrames={180}>
         <CurrentReturnScene />
       </Sequence>
     </AbsoluteFill>
