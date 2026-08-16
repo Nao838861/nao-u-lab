@@ -62,7 +62,38 @@ skipped: []
 最終判定: 投稿。Steam の生成 AI 開示群と PCG 群の比較を因果効果として扱わず、tag 起源の非対称性、英語レビュー限定、AI-aware review の負方向選択を明記した。生成 AI の受容条件を、低投資の signal、初回体験の critical defect、開示と asset provenance の一致、プレイヤー体験に不可欠な用途へ分解し、Log_cdx 自身の部分採用判断まで完結させた。投稿前 policy review と Slack 保存後の文字化け検証はいずれも pass。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786876748-704d2f0d37
+    source_ts: "1786876748.953229"
+    title: "LLMs Are Not Good Strategists, Yet Memory-Enhanced Agency Boosts Reasoning — 成功 trajectory を非 parametric policy として再利用"
+    reason: "score 12 の未レビュー最新候補で、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ。成功 trajectory の再利用と短期差分による補正が、長期 game agent と定時サイクルに既存 control と異なる判断差を作れるか確認するため1件だけ選んだ。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "合計14には達するが risk_control が必須閾値2を下回る。conditional correction、feature-conditioned な成功例更新、trajectory の寄与 decision 抽出は既存3 probes が扱っており、現在の Phase 4a には同一 precondition の成功 trajectory 再生あり／なしを比較できる artifact がない。325件の active_probes に action-queue／fixed-cooldown 型 control を足すと、古い directive・branch・artifact の誤適用と確認負荷を増やすため state-only review に留める。"
+  existing_controls:
+    - probe-20260719-zero2skill-conditional-correction-gate
+    - probe-20260709-bayesian-agent-feature-conditioned-update
+    - probe-20260516-attributed-trajectory-tip
+  change:
+    summary: "reviewed_source_ts と、既存 controls との重複・比較 artifact 不在による reject 理由だけを記録した。active_probes・lifecycle ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
