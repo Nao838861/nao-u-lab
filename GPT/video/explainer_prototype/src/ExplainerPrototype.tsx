@@ -303,16 +303,16 @@ const IntroScene: React.FC = () => {
           position: 'absolute',
           left: 64,
           top: 62,
-          width: 850,
+          width: 1000,
           transform: `translateY(${(1 - enter) * 34}px)`,
           opacity: enter,
         }}
       >
         <Eyebrow>FAMILY COMPUTER / 6502 / MMC5</Eyebrow>
         <div style={{height: 18}} />
-        <Title size={58}>
-          <div style={{whiteSpace: 'nowrap'}}>拡大機能のないファミコンで、</div>
-          <div>奥行きをどう描く？</div>
+        <Title size={54}>
+          <div style={{whiteSpace: 'nowrap'}}>ファミコンでスペースハリアーを</div>
+          <div>動かすには？</div>
         </Title>
       </div>
     </AbsoluteFill>
@@ -339,6 +339,242 @@ const PreviousScene: React.FC = () => {
         }}
       >
         PREVIOUS VIDEO
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const LargeCharacterScene: React.FC = () => {
+  const frame = useCurrentFrame();
+  const imageEnter = spring({frame, fps: 30, config: {damping: 18}});
+  const insetOpacity = interpolate(frame, [42, 72], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+  const cpuOpacity = interpolate(frame, [92, 128], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+  const vramOpacity = interpolate(frame, [150, 188], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+  const clearProgress = interpolate(frame, [225, 345], [0, 30], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+    easing: Easing.out(Easing.cubic),
+  });
+  const compositeOpacity = interpolate(frame, [375, 420], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+  const warningOpacity = interpolate(frame, [465, 510], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+
+  return (
+    <AbsoluteFill
+      style={{
+        opacity: fade(frame, 720),
+        background: `radial-gradient(circle at 28% 46%, ${C.cyan}12, transparent 40%), ${C.bg}`,
+        padding: '40px 54px 0',
+        boxSizing: 'border-box',
+      }}
+    >
+      <Eyebrow color={C.cyan} size={18}>DRAWING A LARGE CHARACTER</Eyebrow>
+      <div style={{height: 7}} />
+      <Title size={40}>大きなキャラをどうやって描画しているか</Title>
+
+      <div style={{display: 'flex', gap: 24, marginTop: 24, height: 466}}>
+        <div
+          style={{
+            position: 'relative',
+            width: 742,
+            height: 466,
+            flexShrink: 0,
+            overflow: 'hidden',
+            background: '#000',
+            border: '2px solid #4b4752',
+            boxShadow: `0 18px 60px ${C.cyan}12`,
+            transform: `translateY(${(1 - imageEnter) * 18}px)`,
+            opacity: imageEnter,
+          }}
+        >
+          <Img
+            src={staticFile('large_character_1.png')}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              imageRendering: 'pixelated',
+            }}
+          />
+
+          <div
+            style={{
+              position: 'absolute',
+              right: 15,
+              top: 15,
+              width: 258,
+              height: 169,
+              background: '#000',
+              border: `3px solid ${C.magenta}`,
+              boxShadow: '0 10px 35px rgba(0,0,0,.72)',
+              opacity: insetOpacity,
+              transform: `translateY(${(1 - insetOpacity) * -10}px)`,
+              overflow: 'hidden',
+            }}
+          >
+            <Img
+              src={staticFile('large_character_2.png')}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                imageRendering: 'pixelated',
+              }}
+            />
+          </div>
+
+          <div
+            style={{
+              position: 'absolute',
+              left: 16,
+              top: 16,
+              padding: '8px 12px',
+              background: 'rgba(5,5,7,.84)',
+              borderLeft: `4px solid ${C.cyan}`,
+              color: C.white,
+              fontFamily: MONO,
+              fontSize: 15,
+              fontWeight: 800,
+              letterSpacing: 1.4,
+            }}
+          >
+            LARGE BITMAP CHARACTERS
+          </div>
+        </div>
+
+        <div
+          style={{
+            width: 402,
+            height: 466,
+            padding: 18,
+            boxSizing: 'border-box',
+            background: C.panel,
+            border: '1px solid #38343e',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'baseline',
+              justifyContent: 'space-between',
+              opacity: cpuOpacity,
+            }}
+          >
+            <div style={{fontFamily: MONO, fontSize: 43, fontWeight: 900, color: C.white}}>6502</div>
+            <div style={{fontFamily: MONO, fontSize: 22, fontWeight: 900, color: C.orange}}>1.79 MHz</div>
+          </div>
+          <div
+            style={{
+              marginTop: 5,
+              color: C.dim,
+              fontFamily: MONO,
+              fontSize: 16,
+              letterSpacing: 1.4,
+              opacity: cpuOpacity,
+            }}
+          >
+            8-BIT CPU
+          </div>
+
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginTop: 18,
+              padding: '12px 13px',
+              background: C.panel2,
+              borderLeft: `4px solid ${C.cyan}`,
+              opacity: vramOpacity,
+            }}
+          >
+            <div style={{fontFamily: FONT, color: C.white, fontSize: 18, fontWeight: 800}}>仮想VRAM</div>
+            <div style={{fontFamily: MONO, color: C.cyan, fontSize: 25, fontWeight: 900}}>128 × 96</div>
+          </div>
+
+          <div style={{marginTop: 19}}>
+            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'baseline'}}>
+              <div style={{fontFamily: MONO, color: C.white, fontSize: 17, fontWeight: 800}}>60 FPS / 1 FRAME</div>
+              <div style={{fontFamily: MONO, color: C.cyan, fontSize: 25, fontWeight: 900}}>{Math.round(clearProgress)}%</div>
+            </div>
+            <div
+              style={{
+                position: 'relative',
+                height: 34,
+                marginTop: 9,
+                background: '#292630',
+                border: '1px solid #4a4651',
+                overflow: 'hidden',
+              }}
+            >
+              <div
+                style={{
+                  width: `${clearProgress}%`,
+                  height: '100%',
+                  background: `linear-gradient(90deg, ${C.cyan}, ${C.magenta})`,
+                  boxShadow: `0 0 25px ${C.cyan}55`,
+                }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  left: '30%',
+                  top: 0,
+                  bottom: 0,
+                  width: 2,
+                  background: C.white,
+                  opacity: clearProgress > 3 ? 0.9 : 0,
+                }}
+              />
+            </div>
+            <div style={{marginTop: 7, fontFamily: FONT, color: C.white, fontSize: 18, fontWeight: 800}}>
+              0で消すだけ
+            </div>
+          </div>
+
+          <div
+            style={{
+              marginTop: 16,
+              padding: '11px 13px',
+              background: `${C.red}18`,
+              border: `1px solid ${C.red}88`,
+              color: C.red,
+              fontFamily: FONT,
+              fontSize: 19,
+              fontWeight: 900,
+              opacity: compositeOpacity,
+            }}
+          >
+            ＋ 背景との重ね合わせ
+          </div>
+
+          <div
+            style={{
+              marginTop: 13,
+              color: C.white,
+              fontFamily: FONT,
+              fontSize: 22,
+              fontWeight: 900,
+              opacity: warningOpacity,
+            }}
+          >
+            普通に描くと間に合わない
+          </div>
+        </div>
       </div>
     </AbsoluteFill>
   );
@@ -869,25 +1105,28 @@ export const ExplainerPrototype: React.FC = () => {
       <Sequence from={240} durationInFrames={210}>
         <PreviousScene />
       </Sequence>
-      <Sequence from={450} durationInFrames={300}>
+      <Sequence from={450} durationInFrames={720}>
+        <LargeCharacterScene />
+      </Sequence>
+      <Sequence from={1170} durationInFrames={300}>
         <GenericLoopScene />
       </Sequence>
-      <Sequence from={750} durationInFrames={360}>
+      <Sequence from={1470} durationInFrames={360}>
         <CompiledScene />
       </Sequence>
-      <Sequence from={1110} durationInFrames={390}>
+      <Sequence from={1830} durationInFrames={390}>
         <RaceScene />
       </Sequence>
-      <Sequence from={1500} durationInFrames={300}>
+      <Sequence from={2220} durationInFrames={300}>
         <AlignmentScene />
       </Sequence>
-      <Sequence from={1800} durationInFrames={240}>
+      <Sequence from={2520} durationInFrames={240}>
         <SizeBankScene />
       </Sequence>
-      <Sequence from={2040} durationInFrames={180}>
+      <Sequence from={2760} durationInFrames={180}>
         <DayOneScene />
       </Sequence>
-      <Sequence from={2220} durationInFrames={180}>
+      <Sequence from={2940} durationInFrames={180}>
         <CurrentReturnScene />
       </Sequence>
     </AbsoluteFill>
