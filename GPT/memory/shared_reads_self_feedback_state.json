@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-16T15:46:03+09:00",
+  "updated_at": "2026-08-16T17:42:04+09:00",
   "reviewed_source_ts": [
+    "1779887685.026909",
     "1786685504.078429",
     "1779972051.823869",
     "1786668938.237989",
@@ -656,6 +657,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-16T17:42:04+09:00",
+      "selected": {
+        "id": "sr-1779887685-bd35bc308d",
+        "source_ts": "1779887685.026909",
+        "title": "SkillOpt — Skill（プロンプト）を『訓練』する閉ループ最適化フレームワーク",
+        "reason": "source が slack_api/shared-reads、score 14、未レビューという条件を満たし、memory・skills・harness・agent・operation・evaluation の6優先タグを持つ候補から1件だけ選んだ。独立 optimizer、validation harness、textual learning-rate budget、rejection buffer という4要素が、Phase 3b 自身の指示改善へ既存 control と異なる判断差を作るか確認した。Nao_u が本 atom 自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、task executor と optimizer の分離、独立 validation set、add／delete／replace の可逆編集、1 step 4〜8 edits・最終1〜4 core edits という変更量、rejection buffer、GPT-5.5 direct chat +23.5 points などを示し、指示編集の行動へ直接変換できるため relevance・actionability は3とした。一方、根拠は同一論文の実験と投稿内分析で、当 workspace の phase prompt・directive・skill edit における held-out success、regression、保守 cost の before／after はなく evidence は2に留める。同一 work の sr-1779745539-6683882ff3 は2026-07-16にレビュー済みで、probe-20260620-skillopt-skill-doc-validation と probe-20260626-skillopt-instruction-edit-validation-gate が held-out case、add／delete／replace、小さな edit scope、rejected direction、退役条件をすでに扱う。probe-20260604-skill-lifecycle-promotion-gate も候補から evaluated skill／retire までの昇格境界を持つ。active_probes 325件へ同義 control を追加したり、4〜8 edits を汎用上限として固定したりすると確認負荷と過剰一般化を増やすため non_redundancy=0、risk_control=1とし、未レビュー source_ts を state-only で閉じる。",
+      "existing_controls": [
+        "sr-1779745539-6683882ff3",
+        "probe-20260604-skill-lifecycle-promotion-gate",
+        "probe-20260620-skillopt-skill-doc-validation",
+        "probe-20260626-skillopt-instruction-edit-validation-gate"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、同一論文の既レビュー sibling および既存 SkillOpt／skill lifecycle probes との重複による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-16T15:46:03+09:00",
       "selected": {

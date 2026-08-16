@@ -66,7 +66,34 @@ summary: "pass candidate がないため #shared-reads への投稿は実施し�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779887685-bd35bc308d
+    source_ts: "1779887685.026909"
+    title: "SkillOpt — Skill（プロンプト）を『訓練』する閉ループ最適化フレームワーク"
+    reason: "source=slack_api/shared-reads、score 14、未レビューで、memory・skills・harness・agent・operation・evaluation の6優先タグを持つ。独立 optimizer、validation harness、textual learning-rate budget、rejection buffer が Phase 3b の指示改善に既存 control と異なる判断差を作るか確認するため1件だけ選んだ。Nao_u の本 atom への明示評価は確認できない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "同一論文の sr-1779745539-6683882ff3 はレビュー済みで、既存の skill lifecycle／SkillOpt probes が held-out validation、add/delete/replace、小さな edit scope、rejected direction、退役条件をすでに扱う。active_probes 325件へ同義 control を追加したり、論文中の4〜8 editsを汎用上限へ固定したりすると確認負荷と過剰一般化が増える。合計12で採用条件14未満、risk_controlも必須閾値2未満のため state-only で閉じる。"
+  change:
+    summary: "reviewed_source_ts と、既レビュー sibling／既存 controls との重複による reject 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
