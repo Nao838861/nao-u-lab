@@ -56,7 +56,14 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260816_what_good_are_ai_npcs_player_study.md
+    reason: "Phase 2 の gate_decision が postpone。公開セッション概要だけでは群条件・測定尺度・数値結果・統計的確からしさ・失敗例が不足し、3500-4500字の根拠付き分析へ仕上げられない"
+    action: candidate_revise
+summary: "pass candidate がないため #shared-reads への投稿は実施しなかった"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
