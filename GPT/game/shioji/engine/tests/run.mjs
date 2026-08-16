@@ -73,6 +73,7 @@ import {
   producePrimaryTick,
   quoteAskPrice,
   requestCompanyImport,
+  requestCompanySurplusExport,
   requestCompanyStockRelease,
   recordExternalMoneyFlow,
   repairMaterialsFor,
@@ -1580,6 +1581,25 @@ test("需要網5: 牧場は野菜を先に麦で補う実飼料だけを肉と�
   });
 });
 
+test("物理在庫: 完成済み区画へ入居した加工職の開拓原料を家から作業棚へ移す", () => {
+  const physical = createEconomicTestPhysical(12, 12);
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "woodshop", x: 5, y: 3 });
+  const building = addEconomicTestBuilding(
+    physical, "woodshop", 2, 2, 5, 3, household.id,
+  );
+  household.buildingId = building.id;
+  assert.equal(household.pantry.log, 20);
+  assert.equal(sectionAmount(building, "input", "log"), 0);
+
+  ensureHouseholdInputSites(economy, physical);
+  assert.equal(household.pantry.log, 0);
+  assert.equal(sectionAmount(building, "input", "log"), 20);
+  assert.doesNotThrow(() => ensureHouseholdInputSites(economy, physical),
+    "日初の再実行で二重移動しない");
+  assert.equal(sectionAmount(building, "input", "log"), 20);
+});
+
 test("需要網5: 牧場は麦・野菜を二日分だけ仕入れ対象にし飼料原価を肉へ載せる", () => {
   const economy = createEconomicState();
   const household = createHousehold(economy, { job: "shepherd", x: 0, y: 0 });
@@ -2739,6 +2759,38 @@ test("段17: CO輸入棚は生産入力だけ財布-30まで信用買いでき�
   assert.equal(fisher.purse, 0);
 });
 
+test("段17: 複数原料加工は主原料だけで信用枠を使い切らず燃料分を残す", () => {
+  const economy = createEconomicState();
+  economy.px.bar = 20;
+  const smelter = createHousehold(economy, { job: "smelter", x: 0, y: 0 });
+  const miner = createHousehold(economy, { job: "miner", x: 0, y: 0 });
+  const collier = createHousehold(economy, { job: "collier", x: 0, y: 0 });
+  for (const goods of FOODS) smelter.pantry[goods] = 100;
+  smelter.pantry.ore = 0;
+  smelter.pantry.char = 0;
+  smelter.pantry.coal = 0;
+  postCompanyLedger(economy.company, {
+    day: 1,
+    amount: smelter.purse,
+    reason: "複数原料信用テストの財布預入",
+  });
+  smelter.purse = 0;
+  economy.stalls.ore.push({ householdId: miner.id, qty: 20, price: 1, age: 0 });
+  economy.stalls.coal.push({ householdId: collier.id, qty: 10, price: 1, age: 0 });
+
+  const result = buyAtMarket(economy, smelter, { day: 61 });
+
+  assert.deepEqual(
+    result.transactions.filter(({ goods }) => ["ore", "coal"].includes(goods))
+      .map(({ goods, qty }) => ({ goods, qty })),
+    [{ goods: "ore", qty: 12 }, { goods: "coal", qty: 10 }],
+  );
+  assert.equal(smelter.purse, -22);
+  assert.equal(smelter.pantry.ore, 12);
+  assert.equal(smelter.pantry.coal, 10);
+  assert.equal(assertMoneyConservation(economy), true);
+});
+
 test("現金循環: 世帯の不足は通常輸入を自動発注せず明示操作だけが便を作る", () => {
   const { economy, physical } = createLogisticsTestFixture({ connectPort: true });
   const buyer = createHousehold(economy, { job: "logger", x: 7, y: 4 });
@@ -3500,6 +3552,26 @@ test("段46: 最初の生産適格注文だけは抽選待ちせず、二件目�
   assert.equal(logOrder.created.g, "log");
   assert.equal(logOrder.created.qty, 10,
     "加工職が消えても、実在する丸太余剰の半分を有限注文へできる");
+});
+
+test("多市場輸出: 母港へ届いた隊商余剰を本国注文の在庫・採算として認識する", () => {
+  const economy = createEconomicState();
+  economy.orderDone = 1;
+  economy.f30.salt = { prod: 1, cons: 0, imp: 0, exp: 0 };
+  economy.marketStockM.main = { salt: 10 };
+  economy.marketStockCostM.main = { salt: 8 };
+  economy.orderPreferredGoods = ["salt"];
+  const rolls = [0, 0];
+  const offered = runCompanyDayStart(economy, {
+    day: 75,
+    random: () => rolls.shift(),
+  });
+  assert.equal(offered.created.g, "salt");
+  assert.equal(offered.created.qty, 5,
+    "島内消費後の5日分だけを、母港へ届いた実在庫の範囲で注文する");
+  const accepted = mimicPlayer({ state: { economy } }, 76);
+  assert.equal(accepted.acceptedOrder?.g, "salt",
+    "遠隔地で買付済みの平均原価を使い、母港屋台が空でも採算判断できる");
 });
 
 test("段22: 支度金・信用限度・月利・破産を会社台帳と本土境界へ記帳する", () => {
@@ -5926,6 +5998,108 @@ test("隊商S4: 別路線が運び込んだ会社在庫を中継市場で積み�
     moneyBeforeTransfer,
   );
   assert.deepEqual(economicMaterialSnapshot(economy, physical), materialBefore);
+});
+
+test("隊商S4: 母港へ届いた会社輸入工具を遠隔市場へ運び、売却まで輸入lotを追跡する", () => {
+  const fixture = createCaravanRouteFixture();
+  const { economy, physical } = fixture.world.state;
+  assert.equal(configureCaravanRoute(economy, physical, {
+    baseBuildingId: fixture.inn.id,
+    goodsOut: ["tools"],
+    goodsBack: [],
+  }).ok, true);
+  economy.importStock.tools = 8;
+  economy.importStockCost.tools = 8 * P.IMP_COST.tools;
+  economy.importRequests.push({
+    id: "imp-route-tools",
+    goods: "tools",
+    qty: 8,
+    soldQty: 0,
+    marketQty: 8,
+    portQty: 0,
+    status: "market",
+    requestedDay: 0,
+    aid: false,
+    unitCost: P.IMP_COST.tools,
+    paidQty: 8,
+  });
+  economy.importRequestIndex["imp-route-tools"] = economy.importRequests.length - 1;
+  economy.unsoldImportRequestIds.push("imp-route-tools");
+  depositInventory(fixture.mainMarket, "inbound", "tools", 8);
+
+  runCaravanUntilReturned(economy, physical, fixture.route, 1);
+
+  assert.equal(economy.importStock.tools, 0);
+  assert.equal(economy.importStockCost.tools, 0);
+  assert.equal(economy.importRequests.at(-1).marketQty, 0);
+  assert.equal(economy.importRequests.at(-1).routedQty, 8);
+  assert.equal(economy.marketStockM.fishery.tools, 8);
+  assert.equal(economy.marketStockLotsM.fishery.tools[0].importRequestId, "imp-route-tools");
+  assert.equal(fixture.route.recentTrips[0].procurement, 0,
+    "会社が支払済みの輸入品を積む時に二重仕入しない");
+
+  fixture.fisheryBuyer.lv = 1;
+  fixture.fisheryBuyer.purse = 800;
+  fixture.fisheryBuyer.pantry.tools = 0;
+  for (const goods of FOODS) fixture.fisheryBuyer.pantry[goods] = 100;
+  const bought = buyAtMarket(economy, fixture.fisheryBuyer, {
+    day: 2,
+    physical,
+    capacityLimit: 8,
+  });
+  const boughtAgain = buyAtMarket(economy, fixture.fisheryBuyer, {
+    day: 3,
+    physical,
+    capacityLimit: 8,
+  });
+  assert.equal((bought.purchased.tools ?? 0) + (boughtAgain.purchased.tools ?? 0), 8);
+  assert.equal(economy.importRequests.at(-1).routedQty, 0);
+  assert.equal(economy.importRequests.at(-1).soldQty, 8);
+  assert.equal(economy.importRequests.at(-1).status, "sold");
+  assert.equal(economy.unsoldImportRequestIds.includes("imp-route-tools"), false);
+});
+
+test("港湾余剰輸出: 母港の島内産会社在庫だけを実物流で輸出し、輸入lotは残す", () => {
+  const { economy, physical } = createLogisticsTestFixture({ connectPort: true });
+  const market = companyLogisticsSite(physical, "market");
+  assert.ok(market);
+  economy.marketStockM.main = { stone: 12 };
+  economy.marketStockCostM.main = { stone: 28 };
+  economy.marketStockLotsM.main = {
+    stone: [
+      { routeId: "mine-route", tripNumber: 1, qty: 8, cost: 16 },
+      {
+        routeId: "mine-route",
+        tripNumber: 2,
+        importRequestId: "foreign-stone",
+        qty: 4,
+        cost: 12,
+      },
+    ],
+  };
+  depositInventory(market, "inbound", "stone", 12);
+  const companyBefore = economy.company.money;
+
+  const lot = requestCompanySurplusExport(economy, physical, "stone", {
+    day: 1,
+    qty: 12,
+  });
+
+  assert.equal(lot.qty, 8);
+  assert.equal(lot.unitCost, 2);
+  assert.equal(lot.marketSection, "inbound");
+  assert.equal(economy.marketStockM.main.stone, 4);
+  assert.equal(economy.marketStockLotsM.main.stone.length, 1);
+  assert.equal(economy.marketStockLotsM.main.stone[0].importRequestId, "foreign-stone");
+  for (let tick = 0; tick < 240 && (economy.exported.stone ?? 0) < 8; tick += 1) {
+    stepHaulCarriers(physical, 1);
+    settleCompanyLogistics(economy, physical, { day: 1 });
+    const transfers = stepPortHandling(physical, 1);
+    settlePortTransfers(economy, physical, { day: 1, transfers });
+  }
+  assert.equal(economy.exported.stone, 8);
+  assert.equal(economy.company.money - companyBefore, 8 * 5);
+  assert.equal(sectionAmount(market, "inbound", "stone"), 4);
 });
 
 test("隊商S4: 荷車の御者は隊商宿世帯の実在メンバーへ固定する", () => {

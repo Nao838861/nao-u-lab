@@ -387,47 +387,105 @@ function caravanBuyAtMarket(
       goodsWeight / unitWeight,
       market ? sectionAmount(market, "inbound", goods) : Infinity,
     );
-    if (localQty <= 1e-9) return;
-    const localCostTable = (economy.marketStockCostM ??= {})[marketId] ??= {};
-    const localLots = ((economy.marketStockLotsM ??= {})[marketId] ??= {})[goods] ??= [];
-    const stockBefore = Math.max(1e-9, localTable[goods] ?? 0);
-    const averageCost = (localCostTable[goods] ?? 0) / stockBefore;
-    let remainingQty = localQty;
-    let transferredCost = 0;
-    while (remainingQty > 1e-9 && localLots.length > 0) {
-      const lot = localLots[0];
-      const qty = Math.min(remainingQty, lot.qty);
-      const unitCost = (lot.cost ?? 0) / Math.max(1e-9, lot.qty);
-      const cost = qty * unitCost;
-      (lotsByGoods[goods] ??= []).push({
-        routeId: lot.routeId,
-        tripNumber: lot.tripNumber ?? null,
-        qty,
-        cost,
-      });
-      lot.qty -= qty;
-      lot.cost = Math.max(0, (lot.cost ?? 0) - cost);
-      remainingQty -= qty;
-      transferredCost += cost;
-      if (lot.qty <= 1e-9) localLots.shift();
+    if (localQty > 1e-9) {
+      const localCostTable = (economy.marketStockCostM ??= {})[marketId] ??= {};
+      const localLots = ((economy.marketStockLotsM ??= {})[marketId] ??= {})[goods] ??= [];
+      const stockBefore = Math.max(1e-9, localTable[goods] ?? 0);
+      const averageCost = (localCostTable[goods] ?? 0) / stockBefore;
+      let remainingQty = localQty;
+      let transferredCost = 0;
+      while (remainingQty > 1e-9 && localLots.length > 0) {
+        const lot = localLots[0];
+        const qty = Math.min(remainingQty, lot.qty);
+        const unitCost = (lot.cost ?? 0) / Math.max(1e-9, lot.qty);
+        const cost = qty * unitCost;
+        (lotsByGoods[goods] ??= []).push({
+          ...lot,
+          routeId: lot.routeId,
+          tripNumber: lot.tripNumber ?? null,
+          qty,
+          cost,
+        });
+        lot.qty -= qty;
+        lot.cost = Math.max(0, (lot.cost ?? 0) - cost);
+        remainingQty -= qty;
+        transferredCost += cost;
+        if (lot.qty <= 1e-9) localLots.shift();
+      }
+      if (remainingQty > 1e-9) {
+        const cost = remainingQty * averageCost;
+        (lotsByGoods[goods] ??= []).push({
+          routeId: route.id,
+          tripNumber: (route.completedTrips ?? 0) + 1,
+          qty: remainingQty,
+          cost,
+        });
+        transferredCost += cost;
+      }
+      localTable[goods] = Math.max(0, localTable[goods] - localQty);
+      localCostTable[goods] = Math.max(0, (localCostTable[goods] ?? 0) - transferredCost);
+      if (market) withdrawInventory(market, "inbound", goods, localQty);
+      bought[goods] = (bought[goods] ?? 0) + localQty;
+      costByGoods[goods] = (costByGoods[goods] ?? 0) + transferredCost;
+      remainingWeight -= localQty * unitWeight;
+      goodsWeight -= localQty * unitWeight;
     }
-    if (remainingQty > 1e-9) {
-      const cost = remainingQty * averageCost;
+
+    // 母港へ実到着した会社輸入品も会社路線へ積める。従来は輸入棚を世帯だけが
+    // 買えたため、プレイヤーが工具を輸入しても遠隔市場へ一荷も送れなかった。
+    if (marketId !== "main" || remainingWeight <= 1e-9 || goodsWeight <= 1e-9) return;
+    const importTable = economy.importStock ?? {};
+    const importQty = Math.min(
+      Math.max(0, importTable[goods] ?? 0),
+      remainingWeight / unitWeight,
+      goodsWeight / unitWeight,
+      market ? sectionAmount(market, "inbound", goods) : Infinity,
+    );
+    if (importQty <= 1e-9) return;
+    const importCostTable = economy.importStockCost ?? {};
+    const averageImportCost = (importCostTable[goods] ?? 0)
+      / Math.max(1e-9, importTable[goods] ?? 0);
+    let remainingImport = importQty;
+    let transferredImportCost = 0;
+    for (const request of economy.importRequests ?? []) {
+      if (request.aid || request.goods !== goods || remainingImport <= 1e-9) continue;
+      const available = Math.max(0, request.marketQty ?? 0);
+      const qty = Math.min(remainingImport, available);
+      if (qty <= 1e-9) continue;
+      const cost = qty * (request.unitCost ?? averageImportCost);
       (lotsByGoods[goods] ??= []).push({
         routeId: route.id,
         tripNumber: (route.completedTrips ?? 0) + 1,
-        qty: remainingQty,
+        importRequestId: request.id,
+        qty,
         cost,
       });
-      transferredCost += cost;
+      request.marketQty = Math.max(0, available - qty);
+      request.routedQty = (request.routedQty ?? 0) + qty;
+      request.status = "routed";
+      transferredImportCost += cost;
+      remainingImport -= qty;
     }
-    localTable[goods] = Math.max(0, localTable[goods] - localQty);
-    localCostTable[goods] = Math.max(0, (localCostTable[goods] ?? 0) - transferredCost);
-    if (market) withdrawInventory(market, "inbound", goods, localQty);
-    bought[goods] = (bought[goods] ?? 0) + localQty;
-    costByGoods[goods] = (costByGoods[goods] ?? 0) + transferredCost;
-    remainingWeight -= localQty * unitWeight;
-    goodsWeight -= localQty * unitWeight;
+    if (remainingImport > 1e-9) {
+      const cost = remainingImport * averageImportCost;
+      (lotsByGoods[goods] ??= []).push({
+        routeId: route.id,
+        tripNumber: (route.completedTrips ?? 0) + 1,
+        qty: remainingImport,
+        cost,
+      });
+      transferredImportCost += cost;
+    }
+    importTable[goods] = Math.max(0, importTable[goods] - importQty);
+    importCostTable[goods] = Math.max(
+      0,
+      (importCostTable[goods] ?? 0) - transferredImportCost,
+    );
+    if (market) withdrawInventory(market, "inbound", goods, importQty);
+    bought[goods] = (bought[goods] ?? 0) + importQty;
+    costByGoods[goods] = (costByGoods[goods] ?? 0) + transferredImportCost;
+    remainingWeight -= importQty * unitWeight;
+    goodsWeight -= importQty * unitWeight;
   };
   // 複数品目を指定したのに先頭の一品だけで満載になると、チェックした後続品が
   // 一度も運ばれない。第一巡は積載重量を等分し、余った空きだけ第二巡で埋める。

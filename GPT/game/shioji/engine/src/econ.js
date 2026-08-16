@@ -2511,6 +2511,15 @@ export function canUseProductionInputCredit(household, goods) {
   return CREDIT_INPUT_JOBS.has(household?.job) && isProductionInput(household, goods);
 }
 
+function productionInputCreditAllowance(household, goods) {
+  // 複数原料の加工職は、BUY_ORDERで先に来る主原料だけに信用枠30を全額使うと
+  // 燃料を一荷も買えず、在庫を抱えたまま永久停止する。主原料を20までとし、
+  // 残り10は同じ買出しの燃料へ残す。単一原料職は従来どおり30。
+  if (household?.job === "smelter" && goods === "ore") return 20;
+  if (household?.job === "smith" && goods === "bar") return 20;
+  return 30;
+}
+
 export function buyTargets(
   economy,
   household,
@@ -3063,6 +3072,17 @@ export function companyStockReleasePrice(economy, goods, { market = false } = {}
   );
 }
 
+function localCompanyStockReleasePrice(economy, marketId, goods) {
+  const stock = economy.marketStockM?.[marketId]?.[goods] ?? 0;
+  if (stock <= 1e-9) return null;
+  const averageCost = (economy.marketStockCostM?.[marketId]?.[goods] ?? 0)
+    / Math.max(1e-9, stock);
+  return Math.min(
+    Math.max(averageCost * 1.2, 0.3),
+    (P.IMP[goods] ?? Infinity) * 0.97,
+  );
+}
+
 export function pendingCompanyImportCost(economy) {
   return (economy.importRequests ?? []).reduce((total, request) => {
     if (request.aid || request.status === "sold") return total;
@@ -3154,7 +3174,8 @@ function marketShelvesForGoods(economy, physical, household, goods) {
   const localQty = economy.marketStockM?.[marketId]?.[goods] ?? 0;
   if (localQty > 1e-9) {
     shelves.push({
-      price: Math.max(0.1, marketPriceBook(economy, marketId)[goods] ?? P.BELIEF0[goods] ?? 2),
+      price: localCompanyStockReleasePrice(economy, marketId, goods)
+        ?? Math.max(0.1, marketPriceBook(economy, marketId)[goods] ?? P.BELIEF0[goods] ?? 2),
       qty: localQty,
     });
   }
@@ -3306,8 +3327,9 @@ export function buyAtMarket(
             goods,
             kind: "LSTOCK",
             qty: localStock,
-            price: Math.max(0.1, marketPriceBook(economy, buyerMarket)[goods]
-              ?? P.BELIEF0[goods] ?? 2),
+            price: localCompanyStockReleasePrice(economy, buyerMarket, goods)
+              ?? Math.max(0.1, marketPriceBook(economy, buyerMarket)[goods]
+                ?? P.BELIEF0[goods] ?? 2),
           });
         }
       }
@@ -3387,8 +3409,23 @@ export function buyAtMarket(
         : 0;
       const affordable = shelf.kind === "AID"
         ? Infinity
-        : Math.max(0, household.purse - reserve + (creditEligible ? 30 : 0)) / shelf.price;
-      const usableCapacity = input ? capacity : Math.max(0, capacity - inputReserve);
+        : Math.max(
+          0,
+          household.purse - reserve
+            + (creditEligible ? productionInputCreditAllowance(household, goods) : 0),
+        ) / shelf.price;
+      let usableCapacity = input ? capacity : Math.max(0, capacity - inputReserve);
+      if (
+        productionInput
+        && (
+          (household.job === "smelter" && goods === "ore")
+          || (household.job === "smith" && goods === "bar")
+        )
+      ) {
+        // 往復一回の荷枠も主原料2:燃料1相当で分ける。信用だけ残しても鉱石で
+        // 背負子を満載すれば燃料を運べず、次の買出しまで加工できない。
+        usableCapacity *= 2 / 3;
+      }
       const qty = Math.min(wanted, available, affordable, usableCapacity / unitWeight);
       if (qty < 1e-9) continue;
       if (input) inputReserve = Math.max(0, inputReserve - qty * unitWeight);
@@ -3516,6 +3553,17 @@ export function buyAtMarket(
             amount: attributed,
             tripNumber: lot.tripNumber ?? null,
           });
+          if (lot.importRequestId) {
+            const request = importRequestById(economy, lot.importRequestId);
+            if (request) {
+              request.routedQty = Math.max(0, (request.routedQty ?? 0) - sold);
+              request.soldQty = Math.min(request.qty, (request.soldQty ?? 0) + sold);
+              if (request.soldQty >= request.qty - 1e-9) {
+                request.status = "sold";
+                deactivateId(economy.unsoldImportRequestIds, request.id);
+              }
+            }
+          }
           lot.qty -= sold;
           remainingSale -= sold;
           if (lot.qty <= 1e-9) lots.shift();
@@ -4649,6 +4697,23 @@ const ORDER_PRICES = deepFreeze({
   stone: 1.2,
 });
 
+// 地域間路線で母港へ集めた産業余剰の通常輸出相場。主食と有限丸太は島内へ
+// 残し、Lv上昇で原価が下がる加工品・鉱産物だけを継続輸出の候補にする。
+// 自動売却はせず、requestCompanySurplusExportをプレイヤーが呼んだ時だけ動く。
+export const SURPLUS_EXPORT_PRICES = deepFreeze({
+  tools: 8,
+  char: 7,
+  salt: 7,
+  pres: 1.1,
+  pick: 1,
+  cloth: 3,
+  stone: 5,
+  ore: 4,
+  coal: 5,
+  bar: 18,
+  iron: 18,
+});
+
 export function acceptCompanyOrder(economy, { day = economy.currentDay } = {}) {
   if (!Number.isSafeInteger(day) || day < 0) {
     throw new TypeError("order acceptance day must be a non-negative safe integer");
@@ -4978,7 +5043,7 @@ function dispatchPendingExportLots(economy, physical, { day }) {
         day,
         kind: "export_market",
         fromRole: "market",
-        fromSection: "outbound",
+        fromSection: lot.marketSection ?? "outbound",
         toRole: "warehouse",
         toSection: "storage",
         goods: lot.goods,
@@ -5202,6 +5267,88 @@ function transferRouteStockLots(economy, marketId, goods, qty) {
   stockTable[goods] = Math.max(0, stockBefore - qty);
   costTable[goods] = Math.max(0, (costTable[goods] ?? 0) - transferredCost);
   return transferredCost;
+}
+
+function transferExportableRouteStockLots(economy, marketId, goods, qty) {
+  const stockTable = economy.marketStockM?.[marketId];
+  const costTable = (economy.marketStockCostM ??= {})[marketId] ??= {};
+  const lots = ((economy.marketStockLotsM ??= {})[marketId] ??= {})[goods] ??= [];
+  const stockBefore = Math.max(1e-9, stockTable?.[goods] ?? 0);
+  const averageCost = (costTable[goods] ?? 0) / stockBefore;
+  let remaining = Math.max(0, qty);
+  let movedQty = 0;
+  let movedCost = 0;
+  for (let index = 0; index < lots.length && remaining > 1e-9;) {
+    const lot = lots[index];
+    // 本土から安く仕入れた品をそのまま再輸出する裁定取引は許さない。
+    if (lot.importRequestId) {
+      index += 1;
+      continue;
+    }
+    const moved = Math.min(remaining, lot.qty);
+    const unitCost = (lot.cost ?? 0) / Math.max(1e-9, lot.qty);
+    const cost = moved * unitCost;
+    lot.qty -= moved;
+    lot.cost = Math.max(0, (lot.cost ?? 0) - cost);
+    remaining -= moved;
+    movedQty += moved;
+    movedCost += cost;
+    if (lot.qty <= 1e-9) lots.splice(index, 1);
+    else index += 1;
+  }
+  // 旧保存などlot内訳のない会社在庫は、集計原価で島内産として扱う。
+  const accountedLots = lots.reduce((total, lot) => total + lot.qty, 0);
+  const untracked = Math.max(0, stockBefore - movedQty - accountedLots);
+  const untrackedMoved = Math.min(remaining, untracked);
+  movedQty += untrackedMoved;
+  movedCost += untrackedMoved * averageCost;
+  stockTable[goods] = Math.max(0, stockBefore - movedQty);
+  costTable[goods] = Math.max(0, (costTable[goods] ?? 0) - movedCost);
+  return { qty: movedQty, cost: movedCost };
+}
+
+export function requestCompanySurplusExport(
+  economy,
+  physical,
+  goods,
+  { day, qty, unitRevenue = SURPLUS_EXPORT_PRICES[goods] } = {},
+) {
+  if (!Object.hasOwn(SURPLUS_EXPORT_PRICES, goods)) {
+    throw new Error(`余剰輸出対象外です: ${goods}`);
+  }
+  if (!Number.isFinite(qty) || qty <= 1e-9 || !Number.isFinite(unitRevenue) || unitRevenue <= 0) {
+    return null;
+  }
+  const moved = transferExportableRouteStockLots(economy, "main", goods, qty);
+  if (moved.qty <= 1e-9) return null;
+  const lot = {
+    id: `exp${economy.nextExportLotId}`,
+    householdId: null,
+    goods,
+    qty: moved.qty,
+    marketQty: moved.qty,
+    warehouseQty: 0,
+    portQty: 0,
+    shippedQty: 0,
+    unitRevenue,
+    unitCost: moved.cost / moved.qty,
+    marketSection: "inbound",
+    origin: "company-route-surplus",
+    status: "market",
+    purchasedDay: day,
+  };
+  economy.nextExportLotId += 1;
+  economy.exportLots.push(lot);
+  (economy.exportLotIndex ??= {})[lot.id] = economy.exportLots.length - 1;
+  (economy.activeExportLotIds ??= []).push(lot.id);
+  (economy.pendingExportLotIds ??= []).push(lot.id);
+  recordEconomyEvent(
+    economy,
+    day,
+    `${goods}の島内余剰${moved.qty.toFixed(1)}荷を港湾輸出へ回した`,
+  );
+  dispatchPendingExportLots(economy, physical, { day });
+  return structuredClone(lot);
 }
 
 export function runCompanyProcurement(economy, { day, physical = null }) {
@@ -5856,13 +6003,17 @@ export function runCompanyDayStart(economy, { day, random, physical = null }) {
       const market = (economy.stalls[goods] ?? [])
         .filter((stall) => (stall.marketId ?? "main") === "main")
         .reduce((total, stall) => total + stall.qty, 0);
+      // 遠隔市場で会社が買い、隊商で母港へ運んだ在庫も港湾輸出の原資である。
+      // ここから外すと地域間交易が成立しても本国注文は母港世帯の屋台しか見ず、
+      // 赤字の国内路線を高Lv産業の余剰輸出で回収する弧が閉じない。
+      const routed = Math.max(0, economy.marketStockM?.main?.[goods] ?? 0);
       const warehouse = economy.orderMarketOnly
         ? 0
         : Math.max(
           0,
           (economy.stock[goods] ?? 0) - (economy.stockTgt[goods] ?? 0),
         );
-      return market + warehouse;
+      return market + routed + warehouse;
     };
     const candidates = economy.orderDone === 0
       ? ((economy.f30.tools?.prod ?? 0) > 0.3

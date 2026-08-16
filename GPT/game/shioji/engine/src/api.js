@@ -4,6 +4,7 @@ import {
   householdProductionSummary,
   purchaseCompanyWoodCart,
   requestCompanyImport,
+  requestCompanySurplusExport,
   requestCompanyStockRelease,
   requestMainlandAid,
   setCaravanEmployment,
@@ -651,6 +652,25 @@ export function createEngineApi(
           ok: Boolean(request),
           request: request ? jsonClone(request) : null,
           reason: request ? null : "port_or_funds",
+        };
+      }
+      case "request_surplus_export": {
+        const actionDay = world.state.tick % 30 === 0
+          ? world.state.day + 1
+          : world.state.day;
+        let lot = null;
+        try {
+          lot = requestCompanySurplusExport(economy, physical, op.goods, {
+            day: actionDay,
+            qty: op.qty,
+          });
+        } catch {
+          return { ok: false, lot: null, reason: "invalid_goods" };
+        }
+        return {
+          ok: Boolean(lot),
+          lot: lot ? jsonClone(lot) : null,
+          reason: lot ? null : "no_exportable_surplus",
         };
       }
       case "purchase_company_cart": {

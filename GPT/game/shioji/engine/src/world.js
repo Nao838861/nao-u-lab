@@ -60,6 +60,8 @@ import {
   keyOf,
   pathLen,
   routeTravelCarrier,
+  sectionAmount,
+  sectionCapacity,
   prunePhysicalHistory,
   stepTravelCarrier,
   stepHaulCarriers,
@@ -819,13 +821,19 @@ export function ensureHouseholdInputSites(economy, physical) {
       if (!placed.ok) throw new Error(`世帯${household.id}の配置不可: ${placed.reason}`);
       building = placed.building;
       household.buildingId = building.id;
-      for (const goods of GOODS) {
-        if (!isProductionInput(household, goods)) continue;
-        const qty = household.pantry[goods];
-        if (qty <= 1e-9) continue;
-        household.pantry[goods] = 0;
-        depositInventory(building, "input", goods, qty);
-      }
+    }
+    // 新築時だけでなく、完成済み区画へ入居した移民の開拓キットも作業棚へ
+    // 移す。旧処理はbuildingが既在だと丸太・燃料等を家の棚へ永久に残し、
+    // 原料を持つ加工職が生産0になる物理在庫の断線を作っていた。
+    for (const goods of GOODS) {
+      if (!isProductionInput(household, goods)) continue;
+      const pantryQty = household.pantry[goods] ?? 0;
+      const room = sectionCapacity(building, "input", goods)
+        - sectionAmount(building, "input", goods);
+      const qty = Math.min(pantryQty, Math.max(0, room));
+      if (qty <= 1e-9) continue;
+      household.pantry[goods] -= qty;
+      depositInventory(building, "input", goods, qty);
     }
     building.inventory.construction ??= {};
     building.inventory.repair ??= {};
