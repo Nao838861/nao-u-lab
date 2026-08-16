@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-16T13:39:00+09:00",
+  "updated_at": "2026-08-16T15:46:03+09:00",
   "reviewed_source_ts": [
     "1786685504.078429",
     "1779972051.823869",
@@ -652,9 +652,49 @@
     "1786614426.363069",
     "1786615785.391759",
     "1786606281.572199",
-    "1786606286.694329"
+    "1786606286.694329",
+    "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-16T15:46:03+09:00",
+      "selected": {
+        "id": "sr-1779924586-1320a59420",
+        "source_ts": "1779924586.882839",
+        "title": "Karpathy LLM Wiki を1ヶ月運用してわかった『繋げる力』",
+        "reason": "source が slack_api/shared-reads、score 15、未レビューという条件を満たし、memory・operation・evaluation・game-design の4優先タグを持つ候補から1件だけ選んだ。Raw／Wiki／Schema と Ingest／Query／Lint の三層・三操作、複数 source を概念ページへ接続する実運用報告が、現在の per-atom 記憶と Phase 4 cleanup に既存 control と異なる判断差を作るか確認した。Nao_u が本 atom 自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、Raw／Wiki／Schema と Ingest／Query／Lint、1ヶ月運用での関連概念ページ10〜15件の連鎖更新、複数論文の断片を4評価軸や単一 pattern へ統合した例、概念 page を人が読まなければ知識化しない限界まで示し、次の memory ingest で既存概念への接続と lint anchor を確認する行動へ直接変換できるため relevance・actionability は3とした。一方、根拠は単一の実運用報告で、当環境における recall precision、誤統合率、編集量、次回判断差の before／after はなく evidence は2に留める。同テーマの sr-1779956167-0a1539adff は2026-07-15に review 済みで、probe-20260715-ingest-connection-action-lint が既存 concept／atom／index への接続、次の action 差分、source_ts・raw path・counterexample・state role による誤 merge 停止をすでに扱う。さらに sr-1779993717-fad0f0165e も同じ Raw／Wiki／Schema と Ingest／Query／Lint の重複により reject 済みである。active_probes 325件へ同義 control を追加すると確認負荷と概念 page の無根拠な連鎖編集を増やすため non_redundancy=0、risk_control=1とし、未レビュー source_ts を state-only で閉じる。",
+      "existing_controls": [
+        "sr-1779956167-0a1539adff",
+        "probe-20260715-ingest-connection-action-lint",
+        "sr-1779993717-fad0f0165e"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、同テーマの既レビュー sibling および既存 ingest connection lint probe との重複による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-16T13:39:00+09:00",
       "selected": {

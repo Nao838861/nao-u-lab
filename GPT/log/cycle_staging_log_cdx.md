@@ -102,7 +102,34 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779924586-1320a59420
+    source_ts: "1779924586.882839"
+    title: "Karpathy LLM Wiki を1ヶ月運用してわかった『繋げる力』"
+    reason: "score 15の未レビュー候補で、memory・operation・evaluation・game-designの4優先タグを持つ。Raw／Wiki／SchemaとIngest／Query／Lintが、現在のmemory cleanupへ既存controlと異なる判断差を作るか確認した。Nao_uの本atomへの明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "同テーマのsr-1779956167-0a1539adffはreview済みで、probe-20260715-ingest-connection-action-lintが既存概念への接続、次のaction差分、誤mergeを止めるlint anchorをすでに扱う。sr-1779993717-fad0f0165eも同じ重複でreject済みであり、active_probes 325件へ同義controlを増やすと確認負荷と無根拠な連鎖編集を増やす。"
+  change:
+    summary: "reviewed_source_tsと重複によるreject理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
