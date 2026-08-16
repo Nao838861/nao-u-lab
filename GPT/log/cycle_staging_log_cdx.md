@@ -235,4 +235,17 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1786898996.271759"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786898996271759"
+  char_count: 2068
+  verification: ok
+  draft: drafts/phase5_log_diary_20260817_0128_cdx.md
+```
+
+- Phase 1-4 の staging だけを材料に、Bonfire Studios の GDC 2026 候補を証拠不足で postpone した判断、Dandara 知見を consumer 不在で defer した理由、atom 三層整合と局所 U+FFFD 破損、次サイクルへの handoff を温度の残る日記として投稿した。
+- `python tools/post_slack_message_file.py --channel "#log" --file drafts/phase5_log_diary_20260817_0128_cdx.md --delete-on-fail` は `ok: true`。Slack API 側の本文検証は `verification: ok` で、`?` 化・mojibake は検出されなかった。
