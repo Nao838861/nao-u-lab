@@ -1210,14 +1210,13 @@ const FrameTimelineScene: React.FC = () => {
           {isA ? 'A：計算フレーム' : 'B：描画フレーム'}
         </div>
         <div style={{height: 448, border: '2px solid #47434e', padding: 6, boxSizing: 'border-box', background: C.panel, display: 'flex', flexDirection: 'column'}}>
-          <div style={{height: 320, display: 'flex', flexDirection: 'column'}}>
+          <div style={{height: 320, display: 'flex', flexDirection: 'column', gap: isA ? 5 : 0}}>
             {isA ? <>
-              <Block label="上半分を消去" sub="約1.7ms" color={cpu} height={44} at={45} />
-              <Block label="地面・遠景を描画" sub="約2.6ms" color={cpu} height={68} at={87} />
-              <Block label="プレイヤー・敵・弾・衝突など" sub="負荷で変動　最大 約8.0ms" color={logic} height={208} at={129} />
+              <Block label="上半分を消去" sub="約1.7ms" color={cpu} height={43} at={45} />
+              <Block label="地面・遠景を描画" sub="約2.6ms" color={cpu} height={66} at={87} />
+              <Block label="プレイヤー・敵・弾・衝突など" sub="負荷で変動　最大 約8.0ms" color={logic} height={201} at={129} />
             </> : <>
-              <Block label="Compiled SpriteをVBUFへ描画" sub="約11.2ms" color={cpu} height={291} at={175} />
-              <Block label="余白　約1.1ms" color={C.dim} height={29} at={205} />
+              <Block label="コンパイルドスプライトをVBUFへ描画" sub="最大 約12.3ms" color={cpu} height={320} at={175} />
             </>}
           </div>
           <div style={{height: 114, position: 'relative', borderTop: `4px solid ${C.bg}`, boxSizing: 'border-box', opacity: reveal(isA ? 190 : 240)}}>
@@ -1234,9 +1233,9 @@ const FrameTimelineScene: React.FC = () => {
     );
   };
   const chartOpacity = reveal(390);
-  const previewStage = frame < 87 ? 0 : frame < 129 ? 1 : frame < 210 ? 2 : 3;
-  const stageLabels = ['消去後：真っ黒', '地面・遠景を描画', 'ゲームロジックを反映', 'Compiled Spriteで完成'];
-  const previewImages = ['', 'frame_background.png', 'frame_background_player.png', 'frame_background_player_bg.png'];
+  const previewStage = frame < 45 ? 0 : frame < 87 ? 1 : frame < 129 ? 2 : frame < 210 ? 3 : 4;
+  const stageLabels = ['処理前：完成した画面', '上半分を消去', '地面・遠景を描画', 'ゲームロジックを反映', 'コンパイルドスプライトで完成'];
+  const previewImages = ['frame_background_player_bg.png', 'frame_background_player_bg.png', 'frame_background.png', 'frame_background_player.png', 'frame_background_player_bg.png'];
   return (
     <AbsoluteFill style={{opacity: fade(frame, 600), backgroundColor: C.bg, padding: '34px 42px 0', boxSizing: 'border-box'}}>
       <Title size={38}>30fpsで動かすため、処理を2フレームに分ける</Title>
@@ -1245,26 +1244,27 @@ const FrameTimelineScene: React.FC = () => {
         <Lane kind="A" />
         <Lane kind="B" />
         <div style={{flex: 1}}>
-          <div style={{height: 244, position: 'relative', overflow: 'hidden', background: '#000', border: '2px solid #47434e'}}>
-            {previewStage > 0 ? <Img src={staticFile(previewImages[previewStage])} style={{position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', imageRendering: 'pixelated'}} /> : null}
+          <div style={{width: 420, height: 277, margin: '0 auto', position: 'relative', overflow: 'hidden', background: '#000', border: '2px solid #47434e'}}>
+            <Img src={staticFile(previewImages[previewStage])} style={{position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', imageRendering: 'pixelated'}} />
+            {previewStage === 1 ? <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: '59%', background: '#101014'}} /> : null}
             <div style={{position: 'absolute', left: 12, top: 10, padding: '5px 9px', background: '#09090ddd', fontFamily: FONT, color: C.white, fontSize: 15, fontWeight: 900}}>{stageLabels[previewStage]}</div>
           </div>
-          <div style={{opacity: chartOpacity, marginTop: 12, padding: '11px 14px', background: C.panel, border: '1px solid #47434e'}}>
-          <div style={{fontFamily: FONT, color: C.white, fontSize: 19, fontWeight: 900}}>処理時間の目安</div>
+          <div style={{opacity: chartOpacity, height: 157, boxSizing: 'border-box', marginTop: 10, padding: '7px 14px', background: C.panel, border: '1px solid #47434e'}}>
+          <div style={{fontFamily: FONT, color: C.white, fontSize: 16, fontWeight: 900}}>処理時間の目安</div>
           {[
-            {label: 'Compiled Sprite側', value: '約11.2ms', width: 100, color: cpu},
-            {label: '消去＋地面・遠景', value: '約4.3ms', width: 38, color: C.cyan},
-            {label: 'ゲームロジック上限', value: '約8.0ms', width: 71, color: logic},
-            {label: '大きい木 1本', value: '約2.3ms', width: 21, color: C.orange},
+            {label: 'コンパイルドスプライト', value: '最大 約12.3ms', width: 100, color: cpu},
+            {label: '消去＋地面・遠景', value: '約4.3ms', width: 35, color: C.cyan},
+            {label: 'ゲームロジック上限', value: '約8.0ms', width: 65, color: logic},
+            {label: '大きい木 1本', value: '約2.3ms', width: 19, color: C.orange},
           ].map((bar) => (
-            <div key={bar.label} style={{marginTop: 9}}>
-              <div style={{display: 'flex', justifyContent: 'space-between', gap: 8, fontFamily: FONT, fontSize: 13, fontWeight: 900}}>
+            <div key={bar.label} style={{marginTop: 5}}>
+              <div style={{display: 'flex', justifyContent: 'space-between', gap: 8, fontFamily: FONT, fontSize: 11, fontWeight: 900}}>
                 <span style={{color: C.white}}>{bar.label}</span><span style={{color: bar.color}}>{bar.value}</span>
               </div>
-              <div style={{height: 11, background: '#292630', marginTop: 4}}><div style={{height: '100%', width: `${bar.width}%`, background: bar.color}} /></div>
+              <div style={{height: 7, background: '#292630', marginTop: 2}}><div style={{height: '100%', width: `${bar.width}%`, background: bar.color}} /></div>
             </div>
           ))}
-          <div style={{fontFamily: MONO, color: C.dim, fontSize: 11, marginTop: 8}}>1.79MHz換算</div>
+          <div style={{fontFamily: MONO, color: C.dim, fontSize: 9, marginTop: 4}}>1.79MHz換算</div>
           </div>
         </div>
       </div>
