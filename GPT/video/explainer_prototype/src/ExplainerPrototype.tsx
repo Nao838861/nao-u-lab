@@ -885,9 +885,9 @@ const RaceScene: React.FC = () => {
 };
 
 const costSprites = [
-  {name: 'EM0', src: 'enemy_em0_00.png', width: 110, height: 60},
-  {name: 'EM1', src: 'enemy_em1_00.png', width: 88, height: 88},
-  {name: '敵の弾', src: 'enemy_bullet_00.png', width: 76, height: 76},
+  {name: '敵1', src: 'enemy_em0_00.png', width: 110, height: 60},
+  {name: '敵2', src: 'enemy_2_open.png', width: 82, height: 88},
+  {name: 'ボスの弾', src: 'boss_bullet_00.png', width: 76, height: 72},
 ];
 
 const SpriteCard: React.FC<{sprite: (typeof costSprites)[number]}> = ({sprite}) => (
@@ -914,13 +914,18 @@ const SpriteCard: React.FC<{sprite: (typeof costSprites)[number]}> = ({sprite}) 
   </div>
 );
 
-const CodeStripes: React.FC<{color: string; lines?: number}> = ({color, lines = 8}) => (
-  <div style={{display: 'flex', flexDirection: 'column', gap: 4}}>
+const CodeStripes: React.FC<{color: string; lines?: number; height?: number; gap?: number}> = ({
+  color,
+  lines = 8,
+  height = 5,
+  gap = 4,
+}) => (
+  <div style={{display: 'flex', flexDirection: 'column', gap}}>
     {Array.from({length: lines}).map((_, i) => (
       <div
         key={i}
         style={{
-          height: 5,
+          height,
           width: `${72 + (i % 4) * 8}%`,
           background: color,
           opacity: 0.35 + (i % 3) * 0.18,
@@ -930,9 +935,56 @@ const CodeStripes: React.FC<{color: string; lines?: number}> = ({color, lines = 
   </div>
 );
 
+const MemoryGauge: React.FC<{count: number; compiled?: boolean}> = ({count, compiled = false}) => {
+  const color = compiled ? C.magenta : C.cyan;
+  const programWidth = compiled ? 164 : 78;
+  const itemWidth = compiled ? programWidth : 52;
+  return (
+    <div style={{display: 'flex', gap: 6, height: 23, alignItems: 'stretch'}}>
+      {!compiled ? (
+        <div
+          style={{
+            width: programWidth,
+            display: 'grid',
+            placeItems: 'center',
+            background: color,
+            color: C.bg,
+            fontFamily: FONT,
+            fontSize: 10,
+            fontWeight: 900,
+          }}
+        >
+          プログラム
+        </div>
+      ) : null}
+      {Array.from({length: 3}).map((_, i) => {
+        const visible = i < count;
+        return (
+          <div
+            key={i}
+            style={{
+              width: itemWidth,
+              display: 'grid',
+              placeItems: 'center',
+              background: visible ? color : '#292630',
+              color: visible ? (compiled ? C.white : C.bg) : 'transparent',
+              fontFamily: FONT,
+              fontSize: 10,
+              fontWeight: 900,
+              opacity: visible ? 1 : 0.32,
+            }}
+          >
+            {compiled ? 'プログラム' : 'データ'}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 const CapacityCostScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const count = clamp(Math.floor(interpolate(frame, [30, 210], [1, 4])), 1, 3);
+  const count = clamp(Math.floor(interpolate(frame, [35, 245], [0, 4])), 0, 3);
   return (
     <AbsoluteFill style={{opacity: fade(frame, 360), backgroundColor: C.bg, padding: '38px 48px 0', boxSizing: 'border-box'}}>
       <Title size={42}>コンパイルドスプライトの欠点</Title>
@@ -951,13 +1003,13 @@ const CapacityCostScene: React.FC = () => {
           <div style={{display: 'flex', alignItems: 'center', gap: 18, marginTop: 23}}>
             <div style={{fontFamily: FONT, color: C.white, fontSize: 22, fontWeight: 900}}>絵データだけ追加</div>
             <div style={{fontFamily: MONO, color: C.cyan, fontSize: 24, fontWeight: 900}}>→</div>
-            <div style={{flex: 1, padding: '12px 14px', border: '1px solid #4a4651', background: '#0a0a0d'}}>
-              <div style={{fontFamily: FONT, color: C.dim, fontSize: 12, fontWeight: 800, marginBottom: 7}}>1つの小さな汎用プログラム</div>
-              <CodeStripes color={C.cyan} lines={5} />
+            <div style={{flex: 1, padding: '9px 14px', border: '1px solid #4a4651', background: '#0a0a0d'}}>
+              <div style={{fontFamily: FONT, color: C.dim, fontSize: 12, fontWeight: 800, marginBottom: 6}}>1つの小さな汎用プログラム</div>
+              <CodeStripes color={C.cyan} lines={4} height={4} gap={3} />
             </div>
           </div>
-          <div style={{marginTop: 23, height: 18, background: '#292630'}}>
-            <div style={{height: '100%', width: `${24 + count * 9}%`, background: C.cyan}} />
+          <div style={{marginTop: 23}}>
+            <MemoryGauge count={count} />
           </div>
           <div style={{fontFamily: FONT, color: C.dim, fontSize: 17, marginTop: 7}}>プログラムは1つのまま</div>
         </div>
@@ -975,8 +1027,8 @@ const CapacityCostScene: React.FC = () => {
             ))}
           </div>
           <div style={{fontFamily: FONT, color: C.white, fontSize: 22, fontWeight: 900, marginTop: 14}}>絵ごとにプログラムを追加</div>
-          <div style={{marginTop: 15, height: 18, background: '#292630'}}>
-            <div style={{height: '100%', width: `${count * 31}%`, background: C.magenta}} />
+          <div style={{marginTop: 15}}>
+            <MemoryGauge count={count} compiled />
           </div>
           <div style={{fontFamily: FONT, color: C.magenta, fontSize: 17, fontWeight: 800, marginTop: 7}}>速いが、ROMを大量に使う</div>
         </div>
@@ -987,11 +1039,23 @@ const CapacityCostScene: React.FC = () => {
 
 const PositionLimitScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const wanted = Math.floor(frame / 42) % 5;
-  const actual = Math.floor(wanted / 4) * 4;
+  const positions = [
+    {x: 0, y: 0},
+    {x: 1, y: 0},
+    {x: 2, y: 0},
+    {x: 3, y: 0},
+    {x: 0, y: 1},
+  ];
+  const wanted = positions[Math.floor(frame / 50) % positions.length];
+  const actual = {x: Math.floor(wanted.x / 4) * 4, y: Math.floor(wanted.y / 2) * 2};
   const scale = 7;
-  const gridWidth = 56 * scale;
-  const gridHeight = 30 * scale;
+  const baseWidth = 56 * scale;
+  const baseHeight = 28 * scale;
+  const extendRight = wanted.x >= 2;
+  const extendBottom = wanted.y >= 1;
+  const gridWidth = baseWidth + (extendRight ? 4 * scale : 0);
+  const gridHeight = baseHeight + (extendBottom ? 2 * scale : 0);
+  const differs = wanted.x !== actual.x || wanted.y !== actual.y;
   return (
     <AbsoluteFill style={{opacity: fade(frame, 300), backgroundColor: C.bg, padding: '38px 52px 0', boxSizing: 'border-box'}}>
       <Title size={42}>コンパイルドスプライトの欠点</Title>
@@ -1001,23 +1065,29 @@ const PositionLimitScene: React.FC = () => {
 
       <div style={{display: 'flex', gap: 55, alignItems: 'center', marginTop: 31}}>
         <div style={{width: 650, height: 430, display: 'grid', placeItems: 'center', background: C.panel, border: '1px solid #3a3741'}}>
-          <div style={{position: 'relative', width: gridWidth + 48, height: gridHeight + 48}}>
+          <div style={{position: 'relative', width: baseWidth + 4 * scale + 48, height: baseHeight + 2 * scale + 48}}>
             <div style={{position: 'absolute', left: 24, top: 24, width: gridWidth, height: gridHeight, overflow: 'visible'}}>
               <Img
-                src={staticFile('enemy_em0_00.png')}
+                src={staticFile('enemy_em0_explain.png')}
                 style={{
-                  position: 'absolute', left: actual * scale, top: 0, width: 55 * scale, height: 30 * scale,
+                  position: 'absolute', left: actual.x * scale, top: actual.y * scale, width: 55 * scale, height: 28 * scale,
                   maxWidth: 'none', imageRendering: 'pixelated', zIndex: 1,
                 }}
               />
               <Img
-                src={staticFile('enemy_em0_00.png')}
+                src={staticFile('enemy_em0_explain.png')}
                 style={{
-                  position: 'absolute', left: wanted * scale, top: 0, width: 55 * scale, height: 30 * scale,
-                  maxWidth: 'none', imageRendering: 'pixelated', zIndex: 2, opacity: wanted === actual ? 0 : 0.42,
+                  position: 'absolute', left: wanted.x * scale, top: wanted.y * scale, width: 55 * scale, height: 28 * scale,
+                  maxWidth: 'none', imageRendering: 'pixelated', zIndex: 2, opacity: differs ? 0.42 : 0,
                   filter: 'sepia(1) saturate(8) hue-rotate(275deg) brightness(1.4)',
                 }}
               />
+              {extendRight ? (
+                <div style={{position: 'absolute', left: baseWidth, top: 0, width: 4 * scale, height: gridHeight, background: `${C.orange}18`, zIndex: 2}} />
+              ) : null}
+              {extendBottom ? (
+                <div style={{position: 'absolute', left: 0, top: baseHeight, width: gridWidth, height: 2 * scale, background: `${C.orange}18`, zIndex: 2}} />
+              ) : null}
               <div
                 style={{
                   position: 'absolute', inset: 0, zIndex: 3, border: `2px solid ${C.cyan}`,
@@ -1033,11 +1103,15 @@ const PositionLimitScene: React.FC = () => {
           <div style={{fontFamily: MONO, color: C.cyan, fontSize: 21, fontWeight: 900}}>1 BYTE = 4 × 2 DOTS</div>
           <div style={{marginTop: 27, padding: '20px 22px', background: C.panel, borderLeft: `5px solid ${C.magenta}`}}>
             <div style={{fontFamily: FONT, color: C.dim, fontSize: 18}}>動かしたい位置</div>
-            <div style={{fontFamily: MONO, color: C.magenta, fontSize: 38, fontWeight: 900, marginTop: 5}}>＋{wanted} DOT</div>
+            <div style={{fontFamily: MONO, color: C.magenta, fontSize: 32, fontWeight: 900, marginTop: 5}}>
+              X＋{wanted.x} / Y＋{wanted.y}
+            </div>
           </div>
           <div style={{marginTop: 15, padding: '20px 22px', background: C.panel, borderLeft: `5px solid ${C.cyan}`}}>
             <div style={{fontFamily: FONT, color: C.dim, fontSize: 18}}>実際に描ける位置</div>
-            <div style={{fontFamily: MONO, color: C.cyan, fontSize: 38, fontWeight: 900, marginTop: 5}}>＋{actual} DOT</div>
+            <div style={{fontFamily: MONO, color: C.cyan, fontSize: 32, fontWeight: 900, marginTop: 5}}>
+              X＋{actual.x} / Y＋{actual.y}
+            </div>
           </div>
           <div style={{fontFamily: FONT, color: C.white, fontSize: 24, fontWeight: 900, lineHeight: 1.45, marginTop: 25}}>
             1ドットずつ滑らかに<br />動かすことができない
@@ -1054,24 +1128,34 @@ const AlignedEnemyGrid: React.FC<{scale: number; xShift: number; yShift: number;
   yShift,
   active = false,
 }) => {
-  const gridWidth = 56 * scale;
-  const gridHeight = 30 * scale;
+  const baseWidth = 56 * scale;
+  const baseHeight = 28 * scale;
+  const extendRight = xShift >= 2;
+  const extendBottom = yShift >= 1;
+  const gridWidth = baseWidth + (extendRight ? 4 * scale : 0);
+  const gridHeight = baseHeight + (extendBottom ? 2 * scale : 0);
   const padding = 10;
   return (
-    <div style={{position: 'relative', width: gridWidth + padding * 2 + 3 * scale, height: gridHeight + padding * 2 + scale}}>
+    <div style={{position: 'relative', width: baseWidth + 4 * scale + padding * 2, height: baseHeight + 2 * scale + padding * 2}}>
       <div style={{position: 'absolute', left: padding, top: padding, width: gridWidth, height: gridHeight, overflow: 'visible'}}>
         <Img
-          src={staticFile('enemy_em0_00.png')}
+          src={staticFile('enemy_em0_explain.png')}
           style={{
             position: 'absolute', left: xShift * scale, top: yShift * scale,
-            width: 55 * scale, height: 30 * scale, maxWidth: 'none', imageRendering: 'pixelated', zIndex: 1,
+            width: 55 * scale, height: 28 * scale, maxWidth: 'none', imageRendering: 'pixelated', zIndex: 1,
           }}
         />
+        {extendRight ? (
+          <div style={{position: 'absolute', left: baseWidth, top: 0, width: 4 * scale, height: gridHeight, background: `${C.orange}18`, zIndex: 2}} />
+        ) : null}
+        {extendBottom ? (
+          <div style={{position: 'absolute', left: 0, top: baseHeight, width: gridWidth, height: 2 * scale, background: `${C.orange}18`, zIndex: 2}} />
+        ) : null}
         <div
           style={{
-            position: 'absolute', inset: 0, zIndex: 2,
+            position: 'absolute', inset: 0, zIndex: 3,
             border: `2px solid ${active ? C.orange : C.cyan}`,
-            backgroundImage: `linear-gradient(to right, ${active ? C.orange : C.cyan}99 1px, transparent 1px), linear-gradient(to bottom, ${active ? C.orange : C.cyan}99 1px, transparent 1px)`,
+            backgroundImage: `linear-gradient(to right, ${active ? C.orange : C.cyan}66 1px, transparent 1px), linear-gradient(to bottom, ${active ? C.orange : C.cyan}66 1px, transparent 1px)`,
             backgroundSize: `${4 * scale}px ${2 * scale}px`, pointerEvents: 'none',
           }}
         />
