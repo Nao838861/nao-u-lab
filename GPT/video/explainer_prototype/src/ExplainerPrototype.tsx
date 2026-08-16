@@ -311,8 +311,7 @@ const IntroScene: React.FC = () => {
         <Eyebrow>FAMILY COMPUTER / 6502 / MMC5</Eyebrow>
         <div style={{height: 18}} />
         <Title size={54}>
-          <div style={{whiteSpace: 'nowrap'}}>ファミコンでスペースハリアーを</div>
-          <div>動かすには？</div>
+          <div style={{whiteSpace: 'nowrap'}}>ファミコンでスペースハリアーを動かすには？</div>
         </Title>
       </div>
     </AbsoluteFill>
@@ -351,20 +350,15 @@ const LargeCharacterScene: React.FC = () => {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const vramOpacity = interpolate(frame, [150, 188], [0, 1], {
+  const clearOpacity = interpolate(frame, [210, 250], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const clearProgress = interpolate(frame, [225, 345], [0, 30], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-    easing: Easing.out(Easing.cubic),
-  });
-  const compositeOpacity = interpolate(frame, [375, 420], [0, 1], {
+  const compositeOpacity = interpolate(frame, [355, 400], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const warningOpacity = interpolate(frame, [465, 510], [0, 1], {
+  const warningOpacity = interpolate(frame, [505, 550], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
@@ -413,111 +407,18 @@ const LargeCharacterScene: React.FC = () => {
             boxSizing: 'border-box',
           }}
         >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'baseline',
-              justifyContent: 'space-between',
-              opacity: cpuOpacity,
-            }}
-          >
-            <div style={{fontFamily: MONO, fontSize: 43, fontWeight: 900, color: C.white}}>6502</div>
-            <div style={{fontFamily: MONO, fontSize: 22, fontWeight: 900, color: C.orange}}>1.79 MHz</div>
-          </div>
-          <div
-            style={{
-              marginTop: 2,
-              color: C.dim,
-              fontFamily: MONO,
-              fontSize: 16,
-              letterSpacing: 1.4,
-              opacity: cpuOpacity,
-            }}
-          >
-            8-BIT CPU
-          </div>
-
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginTop: 22,
-              padding: '17px 0',
-              borderTop: '1px solid #3a3741',
-              borderBottom: '1px solid #3a3741',
-              opacity: vramOpacity,
-            }}
-          >
-            <div style={{fontFamily: FONT, color: C.white, fontSize: 18, fontWeight: 800}}>仮想VRAM</div>
-            <div style={{fontFamily: MONO, color: C.cyan, fontSize: 25, fontWeight: 900}}>128 × 96</div>
-          </div>
-
-          <div style={{marginTop: 25}}>
-            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'baseline'}}>
-              <div style={{fontFamily: MONO, color: C.white, fontSize: 17, fontWeight: 800}}>60 FPS / 1 FRAME</div>
-              <div style={{fontFamily: MONO, color: C.cyan, fontSize: 25, fontWeight: 900}}>{Math.round(clearProgress)}%</div>
+          {[
+            {opacity: cpuOpacity, color: C.orange, lead: '1.79 MHz', body: '8bit CPUには大きな絵の書き換えが重い'},
+            {opacity: clearOpacity, color: C.cyan, lead: '30%', body: '128×96を0で消すだけで1フレームの30%'},
+            {opacity: compositeOpacity, color: C.red, lead: 'さらに', body: '背景との重ね合わせ処理が必要'},
+          ].map((item) => (
+            <div key={item.lead} style={{opacity: item.opacity, marginBottom: 18, padding: '18px 20px', background: C.panel, borderLeft: `6px solid ${item.color}`}}>
+              <div style={{fontFamily: MONO, color: item.color, fontSize: 30, fontWeight: 900}}>{item.lead}</div>
+              <div style={{fontFamily: FONT, color: C.white, fontSize: 19, fontWeight: 800, lineHeight: 1.45, marginTop: 5}}>{item.body}</div>
             </div>
-            <div
-              style={{
-                position: 'relative',
-                height: 34,
-                marginTop: 9,
-                background: '#292630',
-                overflow: 'hidden',
-              }}
-            >
-              <div
-                style={{
-                  width: `${clearProgress}%`,
-                  height: '100%',
-                  background: C.cyan,
-                }}
-              />
-              <div
-                style={{
-                  position: 'absolute',
-                  left: '30%',
-                  top: 0,
-                  bottom: 0,
-                  width: 2,
-                  background: C.white,
-                  opacity: clearProgress > 3 ? 0.9 : 0,
-                }}
-              />
-            </div>
-            <div style={{marginTop: 7, fontFamily: FONT, color: C.white, fontSize: 18, fontWeight: 800}}>
-              0で消すだけ
-            </div>
-          </div>
-
-          <div
-            style={{
-              marginTop: 16,
-              padding: '14px 0',
-              borderTop: `1px solid ${C.red}88`,
-              borderBottom: `1px solid ${C.red}88`,
-              color: C.red,
-              fontFamily: FONT,
-              fontSize: 19,
-              fontWeight: 900,
-              opacity: compositeOpacity,
-            }}
-          >
-            ＋ 背景との重ね合わせ
-          </div>
-
-          <div
-            style={{
-              marginTop: 13,
-              color: C.white,
-              fontFamily: FONT,
-              fontSize: 22,
-              fontWeight: 900,
-              opacity: warningOpacity,
-            }}
-          >
-            普通に描くと間に合わない
+          ))}
+          <div style={{opacity: warningOpacity, marginTop: 4, padding: '18px 20px', background: C.magenta, color: C.bg, fontFamily: FONT, fontSize: 23, fontWeight: 900}}>
+            コンパイルドスプライトを使う
           </div>
         </div>
       </div>
@@ -542,7 +443,7 @@ const GenericLoopScene: React.FC = () => {
         boxSizing: 'border-box',
       }}
     >
-      <Eyebrow color={C.cyan} size={32}>一般的なソフトウェア描画</Eyebrow>
+      <Eyebrow color={C.cyan} size={32}>一般的なソフトウェア描画の場合</Eyebrow>
       <div style={{height: 8}} />
       <Title size={37}>すべての4×2ドットに、同じ合成処理を実行</Title>
       <div style={{display: 'flex', alignItems: 'flex-start', gap: 24, marginTop: 27}}>
@@ -937,8 +838,8 @@ const CodeStripes: React.FC<{color: string; lines?: number; height?: number; gap
 
 const MemoryGauge: React.FC<{count: number; compiled?: boolean}> = ({count, compiled = false}) => {
   const color = compiled ? C.magenta : C.cyan;
-  const programWidth = compiled ? 164 : 78;
-  const itemWidth = compiled ? programWidth : 52;
+  const programWidth = compiled ? 164 : 18;
+  const itemWidth = compiled ? programWidth : 72;
   return (
     <div style={{display: 'flex', gap: 6, height: 23, alignItems: 'stretch'}}>
       {!compiled ? (
@@ -950,11 +851,11 @@ const MemoryGauge: React.FC<{count: number; compiled?: boolean}> = ({count, comp
             background: color,
             color: C.bg,
             fontFamily: FONT,
-            fontSize: 10,
+            fontSize: 0,
             fontWeight: 900,
           }}
         >
-          プログラム
+          P
         </div>
       ) : null}
       {Array.from({length: 3}).map((_, i) => {
@@ -982,6 +883,21 @@ const MemoryGauge: React.FC<{count: number; compiled?: boolean}> = ({count, comp
   );
 };
 
+const PerformanceDemoScene: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{opacity: fade(frame, 480), backgroundColor: '#000', display: 'grid', placeItems: 'center'}}>
+      <OffthreadVideo
+        src={staticFile('MonoBitmap260207.mp4')}
+        startFrom={28 * 30}
+        endAt={44 * 30}
+        muted
+        style={{width: 768, height: 720, objectFit: 'fill', imageRendering: 'pixelated'}}
+      />
+    </AbsoluteFill>
+  );
+};
+
 const CapacityCostScene: React.FC = () => {
   const frame = useCurrentFrame();
   const count = clamp(Math.floor(interpolate(frame, [35, 245], [0, 4])), 0, 3);
@@ -994,7 +910,7 @@ const CapacityCostScene: React.FC = () => {
 
       <div style={{display: 'flex', gap: 28, marginTop: 25}}>
         <div style={{width: 570, height: 438, padding: 18, boxSizing: 'border-box', border: `2px solid ${C.cyan}`, background: C.panel}}>
-          <div style={{fontFamily: FONT, color: C.cyan, fontSize: 25, fontWeight: 900}}>一般的なソフトウェア描画</div>
+          <div style={{fontFamily: FONT, color: C.cyan, fontSize: 25, fontWeight: 900}}>一般的なソフトウェア描画の場合</div>
           <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginTop: 14}}>
             {costSprites.map((sprite, i) => (
               <div key={sprite.name} style={{opacity: i < count ? 1 : 0.14}}><SpriteCard sprite={sprite} /></div>
@@ -1039,83 +955,59 @@ const CapacityCostScene: React.FC = () => {
 
 const PositionLimitScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const positions = [
-    {x: 0, y: 0},
-    {x: 1, y: 0},
-    {x: 2, y: 0},
-    {x: 3, y: 0},
-    {x: 0, y: 1},
-  ];
-  const wanted = positions[Math.floor(frame / 50) % positions.length];
-  const actual = {x: Math.floor(wanted.x / 4) * 4, y: Math.floor(wanted.y / 2) * 2};
-  const scale = 7;
-  const baseWidth = 56 * scale;
-  const baseHeight = 28 * scale;
-  const extendRight = wanted.x >= 2;
-  const extendBottom = wanted.y >= 1;
-  const gridWidth = baseWidth + (extendRight ? 4 * scale : 0);
-  const gridHeight = baseHeight + (extendBottom ? 2 * scale : 0);
-  const differs = wanted.x !== actual.x || wanted.y !== actual.y;
+  const offsets = [0, 4, 8];
+  const offset = offsets[Math.floor(frame / 90) % offsets.length];
+  const scale = 8;
+  const gridWidth = 68 * scale;
+  const gridHeight = 28 * scale;
   return (
     <AbsoluteFill style={{opacity: fade(frame, 300), backgroundColor: C.bg, padding: '38px 52px 0', boxSizing: 'border-box'}}>
       <Title size={42}>コンパイルドスプライトの欠点</Title>
       <div style={{fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900, marginTop: 5}}>
-        欠点2：そのままでは4×2ドット単位でしか動かせない
+        欠点2：同じ場所に絵を描くことしかできない
       </div>
 
       <div style={{display: 'flex', gap: 55, alignItems: 'center', marginTop: 31}}>
-        <div style={{width: 650, height: 430, display: 'grid', placeItems: 'center', background: C.panel, border: '1px solid #3a3741'}}>
-          <div style={{position: 'relative', width: baseWidth + 4 * scale + 48, height: baseHeight + 2 * scale + 48}}>
-            <div style={{position: 'absolute', left: 24, top: 24, width: gridWidth, height: gridHeight, overflow: 'visible'}}>
+        <div style={{width: 700, height: 430, display: 'grid', placeItems: 'center', background: C.panel, border: '1px solid #3a3741'}}>
+          <div style={{position: 'relative', width: gridWidth + 48, height: gridHeight + 86}}>
+            <div style={{position: 'absolute', left: 24, top: 24, width: gridWidth, height: gridHeight}}>
               <Img
                 src={staticFile('enemy_em0_explain.png')}
                 style={{
-                  position: 'absolute', left: actual.x * scale, top: actual.y * scale, width: 55 * scale, height: 28 * scale,
+                  position: 'absolute', left: offset * scale, top: 0, width: 55 * scale, height: 28 * scale,
                   maxWidth: 'none', imageRendering: 'pixelated', zIndex: 1,
                 }}
               />
-              <Img
-                src={staticFile('enemy_em0_explain.png')}
-                style={{
-                  position: 'absolute', left: wanted.x * scale, top: wanted.y * scale, width: 55 * scale, height: 28 * scale,
-                  maxWidth: 'none', imageRendering: 'pixelated', zIndex: 2, opacity: differs ? 0.42 : 0,
-                  filter: 'sepia(1) saturate(8) hue-rotate(275deg) brightness(1.4)',
-                }}
-              />
-              {extendRight ? (
-                <div style={{position: 'absolute', left: baseWidth, top: 0, width: 4 * scale, height: gridHeight, background: `${C.orange}18`, zIndex: 2}} />
-              ) : null}
-              {extendBottom ? (
-                <div style={{position: 'absolute', left: 0, top: baseHeight, width: gridWidth, height: 2 * scale, background: `${C.orange}18`, zIndex: 2}} />
-              ) : null}
               <div
                 style={{
-                  position: 'absolute', inset: 0, zIndex: 3, border: `2px solid ${C.cyan}`,
+                  position: 'absolute', inset: 0, zIndex: 2, border: `2px solid ${C.cyan}`,
                   backgroundImage: `linear-gradient(to right, ${C.cyan}88 1px, transparent 1px), linear-gradient(to bottom, ${C.cyan}88 1px, transparent 1px)`,
                   backgroundSize: `${4 * scale}px ${2 * scale}px`, pointerEvents: 'none',
                 }}
               />
             </div>
+            {[0, 4, 8].map((value) => (
+              <div
+                key={value}
+                style={{
+                  position: 'absolute', left: 24 + value * scale, bottom: 0,
+                  transform: 'translateX(-4px)', fontFamily: FONT,
+                  color: value === offset ? C.orange : C.dim, fontSize: 20, fontWeight: 900,
+                }}
+              >
+                {value}
+              </div>
+            ))}
           </div>
         </div>
 
-        <div style={{width: 440}}>
-          <div style={{fontFamily: MONO, color: C.cyan, fontSize: 21, fontWeight: 900}}>1 BYTE = 4 × 2 DOTS</div>
-          <div style={{marginTop: 27, padding: '20px 22px', background: C.panel, borderLeft: `5px solid ${C.magenta}`}}>
-            <div style={{fontFamily: FONT, color: C.dim, fontSize: 18}}>動かしたい位置</div>
-            <div style={{fontFamily: MONO, color: C.magenta, fontSize: 32, fontWeight: 900, marginTop: 5}}>
-              X＋{wanted.x} / Y＋{wanted.y}
-            </div>
+        <div style={{width: 390}}>
+          <div style={{fontFamily: FONT, color: C.cyan, fontSize: 36, fontWeight: 900, lineHeight: 1.35}}>横4ドット単位でしか動かせない</div>
+          <div style={{marginTop: 31, padding: '20px 22px', background: C.panel, borderLeft: `6px solid ${C.orange}`, fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900}}>
+            現在：右へ{offset}ドット
           </div>
-          <div style={{marginTop: 15, padding: '20px 22px', background: C.panel, borderLeft: `5px solid ${C.cyan}`}}>
-            <div style={{fontFamily: FONT, color: C.dim, fontSize: 18}}>実際に描ける位置</div>
-            <div style={{fontFamily: MONO, color: C.cyan, fontSize: 32, fontWeight: 900, marginTop: 5}}>
-              X＋{actual.x} / Y＋{actual.y}
-            </div>
-          </div>
-          <div style={{fontFamily: FONT, color: C.white, fontSize: 24, fontWeight: 900, lineHeight: 1.45, marginTop: 25}}>
-            1ドットずつ滑らかに<br />動かすことができない
-          </div>
+          <div style={{fontFamily: FONT, color: C.dim, fontSize: 21, fontWeight: 800, marginTop: 28}}>縦も2ドット間隔</div>
+          <div style={{fontFamily: FONT, color: C.red, fontSize: 25, fontWeight: 900, lineHeight: 1.45, marginTop: 29}}>滑らかなキャラ移動ができない</div>
         </div>
       </div>
     </AbsoluteFill>
@@ -1169,6 +1061,7 @@ const AlignmentScene: React.FC = () => {
   const index = Math.floor(frame / 42) % 8;
   const xShift = index % 4;
   const parity = Math.floor(index / 4);
+  const movementLabels = ['移動なし', '右へ1', '右へ2', '右へ3', '下へ1', '右1・下1', '右2・下1', '右3・下1'];
   return (
     <AbsoluteFill style={{opacity: fade(frame, 360), backgroundColor: C.bg, padding: '38px 48px 0', boxSizing: 'border-box'}}>
       <Title size={42}>解決策：位置をずらした8本を先に作る</Title>
@@ -1180,7 +1073,7 @@ const AlignmentScene: React.FC = () => {
         <div style={{width: 500, height: 438, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: C.panel, border: '1px solid #3a3741'}}>
           <AlignedEnemyGrid scale={6} xShift={xShift} yShift={parity} active />
           <div style={{fontFamily: MONO, color: C.orange, fontSize: 25, fontWeight: 900, marginTop: 21}}>
-            SELECT X{xShift} / Y{parity}
+            {movementLabels[index]}
           </div>
           <div style={{fontFamily: FONT, color: C.dim, fontSize: 17, marginTop: 7}}>基準グリッドは固定、絵だけをずらす</div>
         </div>
@@ -1199,8 +1092,8 @@ const AlignmentScene: React.FC = () => {
                     display: 'flex', flexDirection: 'column', alignItems: 'center',
                   }}
                 >
-                  <div style={{fontFamily: MONO, color: active ? C.orange : C.dim, fontSize: 14, fontWeight: 900}}>
-                    X{i % 4} / Y{Math.floor(i / 4)}
+                  <div style={{fontFamily: FONT, color: active ? C.orange : C.dim, fontSize: 14, fontWeight: 900}}>
+                    {movementLabels[i]}
                   </div>
                   <AlignedEnemyGrid scale={2} xShift={i % 4} yShift={Math.floor(i / 4)} active={active} />
                   <div style={{width: 96, marginTop: 2}}><CodeStripes color={active ? C.orange : C.magenta} lines={3} /></div>
@@ -1210,7 +1103,7 @@ const AlignmentScene: React.FC = () => {
           </div>
           <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 20, padding: '15px 18px', borderTop: `2px solid ${C.magenta}`, borderBottom: `2px solid ${C.magenta}`}}>
             <div style={{fontFamily: FONT, color: C.white, fontSize: 23, fontWeight: 900}}>1枚の絵に8本のプログラム</div>
-            <div style={{fontFamily: MONO, color: C.magenta, fontSize: 31, fontWeight: 900}}>ROM × 8</div>
+            <div style={{fontFamily: FONT, color: C.magenta, fontSize: 28, fontWeight: 900}}>メモリ消費が8倍！</div>
           </div>
         </div>
       </div>
@@ -1341,22 +1234,25 @@ export const ExplainerPrototype: React.FC = () => {
       <Sequence from={1830} durationInFrames={390}>
         <RaceScene />
       </Sequence>
-      <Sequence from={2220} durationInFrames={360}>
+      <Sequence from={2220} durationInFrames={480}>
+        <PerformanceDemoScene />
+      </Sequence>
+      <Sequence from={2700} durationInFrames={360}>
         <CapacityCostScene />
       </Sequence>
-      <Sequence from={2580} durationInFrames={300}>
+      <Sequence from={3060} durationInFrames={300}>
         <PositionLimitScene />
       </Sequence>
-      <Sequence from={2880} durationInFrames={360}>
+      <Sequence from={3360} durationInFrames={360}>
         <AlignmentScene />
       </Sequence>
-      <Sequence from={3240} durationInFrames={240}>
+      <Sequence from={3720} durationInFrames={240}>
         <SizeBankScene />
       </Sequence>
-      <Sequence from={3480} durationInFrames={180}>
+      <Sequence from={3960} durationInFrames={180}>
         <DayOneScene />
       </Sequence>
-      <Sequence from={3660} durationInFrames={180}>
+      <Sequence from={4140} durationInFrames={180}>
         <CurrentReturnScene />
       </Sequence>
     </AbsoluteFill>
