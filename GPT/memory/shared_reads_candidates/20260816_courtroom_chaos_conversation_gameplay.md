@@ -4,6 +4,20 @@ url: "https://gdcvault.com/play/1035627/Turning-Conversation-into-Gameplay-Lesso
 collected_at: "2026-08-16T13:30:55+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, conversational-gameplay, generative-ai, party-game, prototyping]
+evaluated_at: "2026-08-16T13:33:37+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-16T13:33:37+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-16T13:33:37+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-15"
+supersedes: []
+gate_reason: >-
+  会話を役割・進行フェーズ・目標・採点・フィードバックで playable loop にする設計骨格と、出荷済み事例としての適用先は明確。
+  ただし現 snapshot にはプロトタイプ比較、評価指標、具体結果、失敗条件がなく、CoopEval 水準の約4000字概要を一次資料固有の根拠だけで構成できない。
 ---
 
 ## raw_excerpt
