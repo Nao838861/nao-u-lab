@@ -94,7 +94,82 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index を validate_memory_index.py で照合し、per-file atom index との不一致 0 件を確認した。"
+  - "memory/atoms.jsonl と per-file/index の 2,882 件を memory_health.py で照合し、parse/index/content conflict 0 件、duplicate cluster index 45 群の整合を確認した。raw normalized-content 重複 40 群 80 行は既存 fold、recall-visible 3 群 6 行も既存 fold の対象で、未解決重複はなかった。"
+  - "shared-reads の title sidecar を再生成し、mixed duplicate queue から terminal 化済み Overwatch 群 1 件を除外した。open duplicate group 35 群、stale triage 0 件、group action 0 件を再計算した。"
+  - "Slack directives / broadcasts の pending が各 0 件であることを確認した。handled へ変更すべき行はなかった。"
+issues:
+  - id: ISS-UTF8-001
+    description: "active atom sr-1776127289-4d9239b255 の『AIエージェント』部分に U+FFFD が2文字残っている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md:3（同じ破損は :16/:20/:24 と atoms.jsonl/index にも存在）; memory_health.py --json --compact"
+    source_file_status: "UTF-8 明示読みでも『AIエ��ジェント』を再現し、source file 自体の局所破損を確認。比較対象 gr-1777083728-44d444ab7a は U+FFFD 0 件で誤検知。MEMORY.md の代表語『記憶』『ゲーム設計』『敵パターン』『評価軸』は全て取得できた。"
+    display_or_tooling_status: "none（PowerShell 表示経路だけの mojibake ではない）"
+    why_blocks_game_memory: "『AIエージェント』の完全一致検索と、atom title/trigger を次の設計へ引用する際の可読性を局所的に損なう。ただし他の語で recall 可能で、階層設計を止める規模ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 7
+    dormant: 1
+candidate_lifecycle:
+  total: 1307
+  status_counts:
+    posted: 618
+    ready_to_post: 9
+    postponed: 208
+    failed: 470
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_for_reassessment: 2
+raw_archive_audit:
+  older_than_30_days: 242
+  major_locations:
+    memory/raw/web_research: 130
+    memory/raw/web_research/phase3_sources: 17
+    memory/raw/headless_eval: 16
+    memory/raw/web_research/phase3_pdfs: 13
+    memory/raw/web_research/phase3_posts: 13
+  action: "原文/provenance の正本または既に用途別ディレクトリへ分離済みであるため、この cycle では移動しない。削除・自動 archive 対象にはしない。"
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 35
+  mixed_group_count: 32
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  deferred_due:
+    - path: memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+      status: postponed
+      stale_after: "2026-07-16"
+      decision: explicit_keep
+      evidence: "group lease gha-e6d4d4b5a37a0808 は membership 一致の deferred。retry_after 2026-08-20T13:19:04+09:00 まで再投入しない。"
+    - path: memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+      status: postponed
+      stale_after: "2026-08-05"
+      decision: explicit_keep
+      evidence: "group lease gha-2313a247c62a9028 は membership 一致の deferred。retry_after 2026-08-20T13:19:04+09:00 まで再投入しない。"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
