@@ -64,11 +64,6 @@ const enemyCoverage = [
 
 const rasterBlocks = enemyCoverage.map((_, i) => i);
 const drawableBlocks = rasterBlocks.filter((i) => enemyCoverage[i] !== 0);
-const sampleBlocks = [
-  enemyCoverage.findIndex((v) => v === 0),
-  enemyCoverage.findIndex((v) => v === 2),
-  enemyCoverage.findIndex((v) => v === 1),
-];
 
 const clamp = (v: number, min: number, max: number) =>
   Math.min(max, Math.max(min, v));
@@ -79,18 +74,18 @@ const fade = (frame: number, duration: number) =>
     extrapolateRight: 'clamp',
   });
 
-const Eyebrow: React.FC<{children: React.ReactNode; color?: string}> = ({
+const Eyebrow: React.FC<{children: React.ReactNode; color?: string; size?: number}> = ({
   children,
   color = C.magenta,
+  size = 19,
 }) => (
   <div
     style={{
       color,
       fontFamily: MONO,
       fontWeight: 800,
-      fontSize: 19,
+      fontSize: size,
       letterSpacing: 4,
-      textTransform: 'uppercase',
     }}
   >
     {children}
@@ -361,7 +356,7 @@ const GenericLoopScene: React.FC = () => {
         boxSizing: 'border-box',
       }}
     >
-      <Eyebrow color={C.cyan}>一般的なソフトウェア描画</Eyebrow>
+      <Eyebrow color={C.cyan} size={25}>一般的なソフトウェア描画</Eyebrow>
       <div style={{height: 10}} />
       <Title size={41}>すべての4×2ドットに、同じ合成処理を実行</Title>
       <div style={{display: 'flex', alignItems: 'flex-start', gap: 24, marginTop: 27}}>
@@ -442,11 +437,20 @@ const GenericLoopScene: React.FC = () => {
 
 const CompiledScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const active = Math.floor(frame / 105) % 3;
+  const active = frame < 115 ? 0 : frame < 285 ? 1 : 2;
+  const cursor = frame < 90
+    ? 0
+    : frame < 115
+      ? Math.floor(interpolate(frame, [90, 115], [0, 6], {extrapolateRight: 'clamp'}))
+      : frame < 225
+        ? 6
+        : frame < 285
+          ? Math.floor(interpolate(frame, [225, 285], [6, 21], {extrapolateRight: 'clamp'}))
+          : 21;
   const cards = [
     {title: '全面透明', equation: '(SCREEN AND $FF) OR $00', result: '命令なし', code: ['; 命令なし']},
-    {title: '全面上書き', equation: '(SCREEN AND $00) OR $7F', result: 'そのまま書く', code: ['LDA #$7F', 'STA (screen),Y']},
     {title: '一部だけ描画', equation: '(SCREEN AND $C3) OR $24', result: '必要な合成だけ', code: ['LDA (screen),Y', 'AND #$C3', 'ORA #$24', 'STA (screen),Y']},
+    {title: '全面上書き', equation: '(SCREEN AND $00) OR $7F', result: 'そのまま書く', code: ['LDA #$7F', 'STA (screen),Y']},
   ];
   const activeCard = cards[active];
   return (
@@ -458,12 +462,12 @@ const CompiledScene: React.FC = () => {
         boxSizing: 'border-box',
       }}
     >
-      <Eyebrow>COMPILED SPRITE</Eyebrow>
+      <Eyebrow size={25}>Compiled Sprite</Eyebrow>
       <div style={{height: 10}} />
-      <Title size={42}>絵の値を先に入れ、場所ごとに最短の命令へ</Title>
+      <Title size={39}>目的の絵を最速で書くための専用プログラムを実行</Title>
       <div style={{display: 'flex', gap: 24, alignItems: 'flex-start', marginTop: 27}}>
         <div style={{width: 550, flexShrink: 0}}>
-          <PackedEnemy scale={10} showAll analyze cursor={sampleBlocks[active]} />
+          <PackedEnemy scale={10} showAll analyze cursor={cursor} />
           <div style={{display: 'flex', gap: 14, marginTop: 9, fontFamily: FONT, fontSize: 16, fontWeight: 800}}>
             <span style={{color: '#8b8d96'}}>■ 透明</span>
             <span style={{color: C.orange}}>■ 一部</span>
