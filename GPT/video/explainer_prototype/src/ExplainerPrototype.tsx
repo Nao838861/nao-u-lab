@@ -42,6 +42,34 @@ const filled = sprite.flatMap((row, y) =>
   [...row].flatMap((v, x) => (v === '1' ? [{x, y}] : [])),
 );
 
+// Em0_00.png (55x30)を、VBUFの1バイト＝横4x縦2ドット単位で分類したもの。
+// 0: 全面透明、1: 一部だけ描画、2: 全面上書き。
+const enemyCoverage = [
+  '00000011000000',
+  '00000112000000',
+  '00001222210000',
+  '00111222221000',
+  '00122222222100',
+  '00222222222100',
+  '01222222222210',
+  '11222222222210',
+  '12222222222221',
+  '11112222211111',
+  '00001222210000',
+  '00001122100000',
+  '00000122100000',
+  '00000122100000',
+  '00000011000000',
+].flatMap((row) => [...row].map(Number));
+
+const rasterBlocks = enemyCoverage.map((_, i) => i);
+const drawableBlocks = rasterBlocks.filter((i) => enemyCoverage[i] !== 0);
+const sampleBlocks = [
+  enemyCoverage.findIndex((v) => v === 0),
+  enemyCoverage.findIndex((v) => v === 2),
+  enemyCoverage.findIndex((v) => v === 1),
+];
+
 const clamp = (v: number, min: number, max: number) =>
   Math.min(max, Math.max(min, v));
 
@@ -84,31 +112,6 @@ const Title: React.FC<{
       letterSpacing: -1.5,
       textAlign: align,
       textWrap: 'balance',
-    }}
-  >
-    {children}
-  </div>
-);
-
-const Caption: React.FC<{children: React.ReactNode; accent?: string}> = ({
-  children,
-  accent = C.white,
-}) => (
-  <div
-    style={{
-      position: 'absolute',
-      left: 54,
-      right: 54,
-      bottom: 28,
-      padding: '18px 26px 20px',
-      background: 'rgba(5,5,7,.88)',
-      borderLeft: `5px solid ${accent}`,
-      color: C.white,
-      fontFamily: FONT,
-      fontWeight: 700,
-      fontSize: 27,
-      lineHeight: 1.45,
-      boxShadow: '0 12px 40px rgba(0,0,0,.5)',
     }}
   >
     {children}
@@ -163,6 +166,89 @@ const GridSprite: React.FC<{
     )}
   </div>
 );
+
+const PackedEnemy: React.FC<{
+  scale?: number;
+  order?: number[];
+  processedCount?: number;
+  cursor?: number;
+  showAll?: boolean;
+  showTransparent?: boolean;
+  analyze?: boolean;
+}> = ({
+  scale = 7,
+  order = rasterBlocks,
+  processedCount = 0,
+  cursor = -1,
+  showAll = false,
+  showTransparent = false,
+  analyze = false,
+}) => {
+  const processed = new Set(order.slice(0, processedCount));
+  const width = 55;
+  const height = 30;
+  const blocksPerRow = 14;
+
+  return (
+    <div
+      style={{
+        position: 'relative',
+        width: width * scale,
+        height: height * scale,
+        background: '#0b0c0f',
+        border: '2px solid #53505b',
+        boxShadow: '0 18px 55px rgba(0,0,0,.45)',
+      }}
+    >
+      {enemyCoverage.map((category, i) => {
+        const bx = i % blocksPerRow;
+        const by = Math.floor(i / blocksPerRow);
+        const x = bx * 4;
+        const y = by * 2;
+        const bw = Math.min(4, width - x);
+        const bh = Math.min(2, height - y);
+        const visible = showAll || processed.has(i) || (showTransparent && category === 0);
+        const analysisColor = category === 0 ? '#5a5c65' : category === 1 ? C.orange : C.magenta;
+        return (
+          <div
+            key={i}
+            style={{
+              position: 'absolute',
+              left: x * scale,
+              top: y * scale,
+              width: bw * scale,
+              height: bh * scale,
+              overflow: 'hidden',
+              boxSizing: 'border-box',
+              background: visible ? '#34363e' : '#0c0d10',
+              border: analyze
+                ? `1px solid ${analysisColor}`
+                : '1px solid rgba(120,118,130,.22)',
+              outline: cursor === i ? `4px solid ${C.orange}` : undefined,
+              outlineOffset: -3,
+              zIndex: cursor === i ? 3 : 1,
+            }}
+          >
+            {visible && category !== 0 ? (
+              <Img
+                src={staticFile('enemy_em0_00.png')}
+                style={{
+                  position: 'absolute',
+                  width: width * scale,
+                  height: height * scale,
+                  left: -x * scale,
+                  top: -y * scale,
+                  maxWidth: 'none',
+                  imageRendering: 'pixelated',
+                }}
+              />
+            ) : null}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
 const VideoPlate: React.FC<{
   src: string;
@@ -219,7 +305,6 @@ const IntroScene: React.FC = () => {
           <div>奥行きをどう描く？</div>
         </Title>
       </div>
-      <Caption accent={C.magenta}>絵を「画像データ」ではなく「描画するプログラム」に変える。</Caption>
     </AbsoluteFill>
   );
 };
@@ -245,19 +330,18 @@ const PreviousScene: React.FC = () => {
       >
         PREVIOUS VIDEO
       </div>
-      <Caption accent={C.cyan}>
-        1画面を白黒のビットマップとして扱う仕組みは、前回の動画で。
-      </Caption>
     </AbsoluteFill>
   );
 };
 
 const GenericLoopScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const scan = clamp(Math.floor(interpolate(frame, [20, 280], [0, 64])), 0, 63);
-  const done = scan + 1;
-  const steps = ['1バイト読む', '透明か判定', '描画先を計算', '画面へ書く'];
-  const active = Math.floor(frame / 11) % steps.length;
+  const done = clamp(Math.floor(interpolate(frame, [20, 285], [0, rasterBlocks.length])), 0, rasterBlocks.length);
+  const cursor = rasterBlocks[Math.min(rasterBlocks.length - 1, done)];
+  const category = enemyCoverage[cursor] ?? 0;
+  const kinds = ['全面透明', '一部だけ描画', '全面上書き'];
+  const steps = ['画像とマスクを読む', '画面の元の値を読む', '背景を残す（AND）', '絵を重ねる（OR）', '同じ場所へ書き戻す'];
+  const active = Math.floor(frame / 8) % steps.length;
   return (
     <AbsoluteFill
       style={{
@@ -269,23 +353,49 @@ const GenericLoopScene: React.FC = () => {
     >
       <Eyebrow color={C.cyan}>一般的なソフトウェア描画</Eyebrow>
       <div style={{height: 10}} />
-      <Title size={43}>画像を読みながら、同じ処理を繰り返す</Title>
-      <div style={{display: 'flex', alignItems: 'center', gap: 72, marginTop: 42}}>
-        <GridSprite size={37} revealed={done} cursor={scan} bright={C.cyan} />
+      <Title size={41}>すべての4×2ドットに、同じ合成処理を実行</Title>
+      <div style={{display: 'flex', alignItems: 'center', gap: 58, marginTop: 34}}>
+        <div>
+          <PackedEnemy scale={7} processedCount={done} cursor={cursor} />
+          <div style={{display: 'flex', justifyContent: 'space-between', marginTop: 14, fontFamily: MONO}}>
+            <span style={{color: C.dim, fontSize: 17}}>1 BYTE = 4 × 2 DOTS</span>
+            <span style={{color: C.cyan, fontSize: 17}}>{String(done).padStart(3, '0')} / 210</span>
+          </div>
+        </div>
         <div style={{flex: 1}}>
+          <div style={{display: 'flex', gap: 9, marginBottom: 15}}>
+            {kinds.map((kind, i) => (
+              <div
+                key={kind}
+                style={{
+                  flex: 1,
+                  padding: '10px 5px',
+                  textAlign: 'center',
+                  background: i === category ? `${C.cyan}20` : C.panel,
+                  border: `1px solid ${i === category ? C.cyan : '#3a3741'}`,
+                  color: i === category ? C.white : C.dim,
+                  fontFamily: FONT,
+                  fontSize: 17,
+                  fontWeight: 800,
+                }}
+              >
+                {kind}
+              </div>
+            ))}
+          </div>
           {steps.map((step, i) => (
             <div
               key={step}
               style={{
-                marginBottom: 15,
-                padding: '17px 22px',
+                marginBottom: 8,
+                padding: '11px 18px',
                 border: `2px solid ${i === active ? C.cyan : '#34313c'}`,
                 background: i === active ? `${C.cyan}18` : C.panel,
                 color: i === active ? C.white : C.dim,
                 fontFamily: FONT,
-                fontSize: 28,
+                fontSize: 22,
                 fontWeight: 800,
-                transform: `translateX(${i === active ? 12 : 0}px)`,
+                transform: `translateX(${i === active ? 8 : 0}px)`,
               }}
             >
               <span style={{color: C.cyan, fontFamily: MONO, marginRight: 18}}>
@@ -294,28 +404,22 @@ const GenericLoopScene: React.FC = () => {
               {step}
             </div>
           ))}
-          <div style={{color: C.dim, fontFamily: MONO, fontSize: 19, marginTop: 24}}>
-            LOOP {String(done).padStart(2, '0')} / 64
+          <div style={{color: C.white, fontFamily: MONO, fontSize: 19, marginTop: 14}}>
+            SCREEN = (SCREEN AND MASK) OR IMAGE
           </div>
         </div>
       </div>
-      <Caption accent={C.cyan}>透明な場所でも、「読む・調べる・進める」は必要。</Caption>
     </AbsoluteFill>
   );
 };
 
 const CompiledScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const active = clamp(Math.floor(interpolate(frame, [30, 330], [0, filled.length])), 0, filled.length - 1);
-  const activePixel = filled[active];
-  const reveal = activePixel ? activePixel.y * 8 + activePixel.x + 1 : 0;
-  const code = [
-    'LDA #$3C',
-    'STA (dst),Y',
-    'LDA #$7E',
-    'STA (dst),Y',
-    'ORA (edge),Y',
-    'STA (dst),Y',
+  const active = Math.floor(frame / 105) % 3;
+  const cards = [
+    {title: '全面透明', equation: '(SCREEN AND $FF) OR $00', result: '命令なし', code: ['; 何も生成しない']},
+    {title: '全面上書き', equation: '(SCREEN AND $00) OR IMAGE', result: 'そのまま書く', code: ['LDA #IMAGE', 'STA (dst),Y']},
+    {title: '一部だけ描画', equation: '(SCREEN AND MASK) OR IMAGE', result: '必要な合成だけ', code: ['LDA (dst),Y', 'AND #MASK', 'ORA #IMAGE', 'STA (dst),Y']},
   ];
   return (
     <AbsoluteFill
@@ -328,88 +432,98 @@ const CompiledScene: React.FC = () => {
     >
       <Eyebrow>COMPILED SPRITE</Eyebrow>
       <div style={{height: 10}} />
-      <Title size={44}>この絵だけを描く、専用の6502プログラム</Title>
-      <div style={{display: 'flex', gap: 56, alignItems: 'center', marginTop: 38}}>
-        <div style={{position: 'relative'}}>
-          <GridSprite
-            size={37}
-            revealed={reveal}
-            cursor={activePixel ? activePixel.y * 8 + activePixel.x : -1}
-            bright={C.white}
-          />
-          <div
-            style={{
-              position: 'absolute',
-              top: '50%',
-              right: -44,
-              width: 44,
-              height: 3,
-              background: C.magenta,
-              boxShadow: `0 0 18px ${C.magenta}`,
-            }}
-          />
-        </div>
-        <div style={{flex: 1, border: '1px solid #34313c', background: C.panel, padding: 24}}>
-          <div style={{fontFamily: MONO, color: C.dim, fontSize: 16, marginBottom: 16}}>
-            sprite_object_size_08_shift_3:
+      <Title size={42}>絵の値を先に入れ、場所ごとに最短の命令へ</Title>
+      <div style={{display: 'flex', gap: 42, alignItems: 'center', marginTop: 32}}>
+        <div>
+          <PackedEnemy scale={7} showAll analyze cursor={sampleBlocks[active]} />
+          <div style={{display: 'flex', gap: 14, marginTop: 15, fontFamily: FONT, fontSize: 17, fontWeight: 800}}>
+            <span style={{color: '#8b8d96'}}>■ 透明</span>
+            <span style={{color: C.orange}}>■ 一部</span>
+            <span style={{color: C.magenta}}>■ 全面</span>
           </div>
-          {code.map((line, i) => {
-            const lit = i === active % code.length;
+        </div>
+        <div style={{flex: 1}}>
+          {cards.map((card, i) => {
+            const lit = i === active;
             return (
               <div
-                key={`${line}-${i}`}
+                key={card.title}
                 style={{
-                  padding: '10px 15px',
-                  marginBottom: 7,
-                  background: lit ? `${C.magenta}22` : 'transparent',
-                  borderLeft: `4px solid ${lit ? C.magenta : 'transparent'}`,
+                  padding: '13px 18px',
+                  marginBottom: 11,
+                  background: lit ? `${C.magenta}20` : C.panel,
+                  border: `2px solid ${lit ? C.magenta : '#34313c'}`,
                   color: lit ? C.white : '#706b77',
-                  fontFamily: MONO,
-                  fontWeight: 700,
-                  fontSize: 25,
+                  opacity: lit ? 1 : 0.6,
                 }}
               >
-                {line}
+                <div style={{display: 'flex', alignItems: 'baseline', justifyContent: 'space-between'}}>
+                  <span style={{fontFamily: FONT, fontWeight: 900, fontSize: 22}}>{card.title}</span>
+                  <span style={{fontFamily: MONO, fontSize: 15}}>{card.equation}</span>
+                </div>
+                <div style={{display: 'flex', alignItems: 'center', gap: 16, marginTop: 8}}>
+                  <span style={{fontFamily: FONT, fontSize: 18, fontWeight: 800, color: lit ? C.magenta : C.dim}}>
+                    {card.result}
+                  </span>
+                  <div style={{display: 'flex', gap: 12, fontFamily: MONO, fontSize: 16}}>
+                    {card.code.map((line) => <span key={line}>{line}</span>)}
+                  </div>
+                </div>
               </div>
             );
           })}
+          <div style={{fontFamily: MONO, color: C.cyan, fontSize: 17, marginTop: 17}}>
+            PARTIAL EVALUATION / CONSTANT FOLDING
+          </div>
         </div>
       </div>
-      <Caption accent={C.magenta}>透明部分の命令は、最初から作らない。</Caption>
     </AbsoluteFill>
   );
 };
 
 const RaceScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const generic = clamp(interpolate(frame, [20, 220], [0, 64]), 0, 64);
-  const compiled = clamp(interpolate(frame, [20, 125], [0, filled.length]), 0, filled.length);
-  const genericReveal = Math.floor(generic);
-  const compiledPixel = filled[Math.min(filled.length - 1, Math.floor(compiled))];
-  const compiledReveal = compiledPixel ? compiledPixel.y * 8 + compiledPixel.x + 1 : 0;
+  const generic = clamp(Math.floor(interpolate(frame, [20, 270], [0, rasterBlocks.length])), 0, rasterBlocks.length);
+  const compiled = clamp(Math.floor(interpolate(frame, [20, 145], [0, drawableBlocks.length])), 0, drawableBlocks.length);
+  const genericCursor = generic < rasterBlocks.length ? rasterBlocks[generic] : -1;
+  const compiledCursor = compiled < drawableBlocks.length ? drawableBlocks[compiled] : -1;
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 240), backgroundColor: C.bg, padding: '44px 56px', boxSizing: 'border-box'}}>
-      <Title size={42} align="center">同じ絵でも、実行する仕事が違う</Title>
-      <div style={{display: 'flex', justifyContent: 'space-around', marginTop: 45}}>
+    <AbsoluteFill style={{opacity: fade(frame, 300), backgroundColor: C.bg, padding: '40px 48px', boxSizing: 'border-box'}}>
+      <Title size={41} align="center">同じ絵でも、実行する処理の量が違う</Title>
+      <div style={{display: 'flex', justifyContent: 'space-around', marginTop: 40}}>
         <div style={{textAlign: 'center'}}>
-          <Eyebrow color={C.cyan}>画像データ＋汎用ループ</Eyebrow>
-          <div style={{height: 22}} />
-          <GridSprite size={28} revealed={genericReveal} cursor={Math.min(63, genericReveal)} bright={C.cyan} />
-          <div style={{marginTop: 22, width: 224, height: 12, background: '#22202a'}}>
-            <div style={{height: '100%', width: `${(generic / 64) * 100}%`, background: C.cyan}} />
+          <Eyebrow color={C.cyan}>普通の描画</Eyebrow>
+          <div style={{height: 17}} />
+          <PackedEnemy scale={6} processedCount={generic} cursor={genericCursor} />
+          <div style={{marginTop: 18, width: 330, height: 12, background: '#22202a'}}>
+            <div style={{height: '100%', width: `${(generic / rasterBlocks.length) * 100}%`, background: C.cyan}} />
+          </div>
+          <div style={{fontFamily: FONT, fontWeight: 800, color: C.dim, fontSize: 18, marginTop: 13}}>
+            毎回：読む → AND → OR → 書く
           </div>
         </div>
         <div style={{width: 1, background: '#34313c'}} />
         <div style={{textAlign: 'center'}}>
-          <Eyebrow>絵を兼ねた専用コード</Eyebrow>
-          <div style={{height: 22}} />
-          <GridSprite size={28} revealed={compiledReveal} cursor={-1} bright={C.white} />
-          <div style={{marginTop: 22, width: 224, height: 12, background: '#22202a'}}>
-            <div style={{height: '100%', width: `${(compiled / filled.length) * 100}%`, background: C.magenta}} />
+          <Eyebrow>COMPILED SPRITE</Eyebrow>
+          <div style={{height: 17}} />
+          <PackedEnemy
+            scale={6}
+            order={drawableBlocks}
+            processedCount={compiled}
+            cursor={compiledCursor}
+            showTransparent
+          />
+          <div style={{marginTop: 18, width: 330, height: 12, background: '#22202a'}}>
+            <div style={{height: '100%', width: `${(compiled / drawableBlocks.length) * 100}%`, background: C.magenta}} />
+          </div>
+          <div style={{fontFamily: FONT, fontWeight: 800, color: C.white, fontSize: 18, marginTop: 13}}>
+            透明は省略・全面は直接書く
           </div>
         </div>
       </div>
-      <Caption accent={C.magenta}>絵を描くプログラムそのものが、絵のデータを兼ねる。</Caption>
+      <div style={{position: 'absolute', left: 0, right: 0, bottom: 27, textAlign: 'center', fontFamily: FONT, fontWeight: 900, fontSize: 28, color: C.white}}>
+        絵に必要な処理だけを実行する
+      </div>
     </AbsoluteFill>
   );
 };
@@ -468,7 +582,6 @@ const AlignmentScene: React.FC = () => {
           ))}
         </div>
       </div>
-      <Caption accent={C.orange}>動かすたびに計算するのではなく、位置に合うコードを選ぶ。</Caption>
     </AbsoluteFill>
   );
 };
@@ -533,7 +646,6 @@ const SizeBankScene: React.FC = () => {
           </div>
         </div>
       </div>
-      <Caption accent={C.magenta}>速さを、ROM容量で買う。</Caption>
     </AbsoluteFill>
   );
 };
@@ -548,7 +660,6 @@ const DayOneScene: React.FC = () => {
         <div style={{height: 10}} />
         <Title size={45}>地面と、仮の絵が大きくなるだけ</Title>
       </div>
-      <Caption accent={C.orange}>サイズ違い画像と再生コードは、最初から自動生成。</Caption>
     </AbsoluteFill>
   );
 };
@@ -573,7 +684,6 @@ const CurrentReturnScene: React.FC = () => {
         <div style={{height: 12}} />
         <Title size={52}>この積み重ねが、画面の奥行きになる。</Title>
       </div>
-      <Caption accent={C.magenta}>次は、地面・座標・敵の軌道をテーブルへ分解する。</Caption>
     </AbsoluteFill>
   );
 };
@@ -593,19 +703,19 @@ export const ExplainerPrototype: React.FC = () => {
       <Sequence from={750} durationInFrames={360}>
         <CompiledScene />
       </Sequence>
-      <Sequence from={1110} durationInFrames={240}>
+      <Sequence from={1110} durationInFrames={300}>
         <RaceScene />
       </Sequence>
-      <Sequence from={1350} durationInFrames={300}>
+      <Sequence from={1410} durationInFrames={300}>
         <AlignmentScene />
       </Sequence>
-      <Sequence from={1650} durationInFrames={240}>
+      <Sequence from={1710} durationInFrames={240}>
         <SizeBankScene />
       </Sequence>
-      <Sequence from={1890} durationInFrames={180}>
+      <Sequence from={1950} durationInFrames={180}>
         <DayOneScene />
       </Sequence>
-      <Sequence from={2070} durationInFrames={180}>
+      <Sequence from={2130} durationInFrames={180}>
         <CurrentReturnScene />
       </Sequence>
     </AbsoluteFill>
