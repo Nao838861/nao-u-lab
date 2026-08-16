@@ -418,6 +418,7 @@ function createCaravanRouteFixture({ cartDurability = P.CART_WOOD_DURABILITY } =
     goodsOut: ["wheat"],
     goodsBack: ["fish"],
     intervalDays: 1,
+    collectionEnabled: false,
     day: world.state.day,
   });
   assert.equal(configured.ok, true, configured.reason);
@@ -6050,6 +6051,125 @@ test("隊商S4: 実在庫を一往復させ、荷車・仕入・小売を含む�
   }
 });
 
+test("隊商集荷: 路線荷車が生産者へ空車で向かい大量余剰を市場へ実搬入する", () => {
+  const fixture = createCaravanRouteFixture();
+  const { economy, physical } = fixture.world.state;
+  fixture.route.collectionEnabled = true;
+  economy.stalls.wheat = [];
+  withdrawInventory(fixture.mainMarket, "outbound", "wheat", 8);
+  const farm = addEconomicTestBuilding(
+    physical,
+    "wheat",
+    14,
+    7,
+    14,
+    6,
+    fixture.mainSeller.id,
+  );
+  fixture.mainSeller.buildingId = farm.id;
+  addRoadLine(physical, fixture.mainMarket.entrance, farm.entrance);
+  const materialBefore = economicMaterialSnapshot(economy, physical);
+  const moneyBefore = economy.company.money
+    + economy.households.reduce((total, household) => total + household.purse, 0);
+  const sellerPurseBefore = fixture.mainSeller.purse;
+
+  const collection = stepCaravanDay(economy, physical, { day: 1 });
+
+  assert.equal(collection[0]?.collecting, true, JSON.stringify(collection));
+  assert.equal(fixture.route.state, "collecting_base");
+  assert.equal(fixture.route.carriers.length, 1);
+  assert.deepEqual(fixture.route.carriers[0].manifest, {}, "市場から農場へは空車で向かう");
+  assert.equal(fixture.mainSeller.collectionReserved.wheat, 24);
+  assert.deepEqual(economicMaterialSnapshot(economy, physical), materialBefore,
+    "集荷予約は現物を消さず、生産者の二重出荷だけを防ぐ");
+  assert.equal(
+    sellOffers(economy, fixture.mainSeller, {
+      capacityLimit: Infinity,
+      physical,
+      day: 1,
+    }).wheat,
+    104,
+    "予約済み24荷を本人の次の売荷に重ねない",
+  );
+  let collectionTicks = 0;
+  while (fixture.route.state === "collecting_base" && collectionTicks < 200) {
+    stepCaravanTick(economy, physical, { day: 1 });
+    collectionTicks += 1;
+  }
+  assert.equal(fixture.route.state, "idle");
+  assert.equal(economy.marketStockM.main.wheat, 24);
+  assert.equal(sectionAmount(fixture.mainMarket, "inbound", "wheat"), 24);
+  assert.equal(fixture.mainSeller.pantry.wheat, 216);
+  assert.ok(fixture.mainSeller.purse > sellerPurseBefore);
+  assert.equal(economy.marketStockLotsM.main.wheat[0].collection, true);
+  assert.equal(economy.marketStockLotsM.main.wheat[0].sellerHouseholdId, fixture.mainSeller.id);
+
+  const departure = stepCaravanDay(economy, physical, { day: 2 });
+  assert.equal(departure[0]?.departed, true, JSON.stringify(departure));
+  while ((fixture.route.completedTrips ?? 0) < 1 && collectionTicks < 700) {
+    stepCaravanTick(economy, physical, { day: 2 });
+    collectionTicks += 1;
+  }
+  assert.equal(fixture.route.completedTrips, 1);
+  assert.equal(fixture.route.recentTrips[0].outbound.wheat, 24);
+  assert.ok(fixture.route.recentTrips[0].procurement > 0,
+    "集荷時に払った生産者原価を便のレシートへ引き継ぐ");
+  assert.equal(
+    economy.company.money + economy.households.reduce(
+      (total, household) => total + household.purse,
+      0,
+    ),
+    moneyBefore,
+  );
+  assert.deepEqual(economicMaterialSnapshot(economy, physical), materialBefore);
+});
+
+test("隊商集荷: 指定品が無い等分枠を余っている食料へ再配分する", () => {
+  const fixture = createCaravanRouteFixture();
+  const { economy, physical } = fixture.world.state;
+  fixture.route.collectionEnabled = true;
+  setCaravanEmployment(physical, {
+    buildingId: fixture.inn.id,
+    recruitment: 2,
+    wage: 5,
+  });
+  fixture.cartwright.cartStock.push({
+    id: "wood-cart-test-2",
+    kind: "wood",
+    price: 10,
+    durability: P.CART_WOOD_DURABILITY,
+    maxDurability: P.CART_WOOD_DURABILITY,
+  });
+  configureCaravanRoute(economy, physical, {
+    baseBuildingId: fixture.inn.id,
+    goodsOut: ["wheat", "tools"],
+  });
+  for (const household of economy.households) household.pantry.tools = 0;
+  economy.stalls.wheat = [];
+  withdrawInventory(fixture.mainMarket, "outbound", "wheat", 8);
+  const farm = addEconomicTestBuilding(
+    physical,
+    "wheat",
+    14,
+    7,
+    14,
+    6,
+    fixture.mainSeller.id,
+  );
+  fixture.mainSeller.buildingId = farm.id;
+  addRoadLine(physical, fixture.mainMarket.entrance, farm.entrance);
+
+  const collection = stepCaravanDay(economy, physical, { day: 1 });
+
+  assert.equal(collection[0]?.collecting, true, JSON.stringify(collection));
+  assert.equal(fixture.route.carriers.length, 2);
+  assert.equal(economy.households.reduce(
+    (total, household) => total + (household.collectionReserved?.wheat ?? 0),
+    0,
+  ), 48,
+    "在庫ゼロのtools枠もwheat集荷へ使う");
+});
+
 test("隊商S4: 会社残高が負でも信用限度内なら市場仕入れできる", () => {
   const fixture = createCaravanRouteFixture();
   const { economy, physical } = fixture.world.state;
@@ -6252,6 +6372,73 @@ test("隊商S6: 複数品目を指定すると先頭品だけで満載にせず�
   assert.deepEqual(fixture.route.recentTrips[0].outbound, { wheat: 8, tools: 8 });
   assert.equal(fixture.mainSeller.purse, P.PURSE0 + 16);
   assert.equal(toolsSeller.purse, P.PURSE0 + 16);
+  assert.equal(assertMoneyConservation(economy), true);
+});
+
+test("隊商S4: 募集人数未満でも実在する荷車の台数で運行を始める", () => {
+  const fixture = createCaravanRouteFixture();
+  const { economy, physical } = fixture.world.state;
+  setCaravanEmployment(physical, {
+    buildingId: fixture.inn.id,
+    recruitment: 2,
+    wage: 5,
+  });
+
+  const result = stepCaravanDay(economy, physical, { day: 1 });
+
+  assert.equal(result[0]?.departed, true, JSON.stringify(result));
+  assert.equal(fixture.route.carriers.length, 1);
+  assert.equal(fixture.route.carriers[0].assetId, "wood-cart-test");
+  assert.equal(economy.companyCarts.length, 1);
+  assert.equal(fixture.route.state, "outbound");
+});
+
+test("荷車工房: 売価は材料に八日分の労務原価を加えて回収する", () => {
+  const economy = createEconomicState();
+  const cartwright = createHousehold(economy, { job: "cartwright", x: 1, y: 1 });
+  cartwright.pantry.log = P.CART_LOG;
+  cartwright.pantry.tools = P.CART_TOOLS;
+
+  producePrimaryTick(economy, null, cartwright, {
+    day: 1,
+    fraction: 1,
+    endOfDay: true,
+  });
+  const expectedPrice = (
+    cartwright.cartWork.materialCost + cartwright.cartWork.laborCost
+  ) * P.CART_MARKUP;
+  assert.equal(
+    cartwright.cartWork.laborCost,
+    laborWage(economy, cartwright) * P.CART_WORK_DAYS,
+  );
+  for (let day = 2; day <= 30 && cartwright.cartStock.length === 0; day += 1) {
+    producePrimaryTick(economy, null, cartwright, {
+      day,
+      fraction: 1,
+      endOfDay: true,
+    });
+  }
+
+  assert.equal(cartwright.cartStock.length, 1);
+  assert.equal(cartwright.cartStock[0].price, expectedPrice);
+});
+
+test("隊商S4: 現金赤字でも会社信用枠内なら島内荷車を購入できる", () => {
+  const fixture = createCaravanRouteFixture();
+  const { economy, physical } = fixture.world.state;
+  const transferred = economy.company.money + 100;
+  postCompanyLedger(economy.company, {
+    day: 0,
+    amount: -transferred,
+    reason: "信用枠試験の既払開発費",
+  });
+  fixture.mainSeller.purse += transferred;
+
+  const result = stepCaravanDay(economy, physical, { day: 1 });
+
+  assert.equal(result[0]?.departed, true, JSON.stringify(result));
+  assert.equal(economy.cartStats.companyPurchased, 1);
+  assert.equal(economy.companyCarts[0].id, "wood-cart-test");
   assert.equal(assertMoneyConservation(economy), true);
 });
 

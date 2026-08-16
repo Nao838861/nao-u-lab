@@ -418,6 +418,9 @@ function makeHouseholdRecord(economy, { job, x, y }) {
     road: false,
     purse: P.PURSE0,
     pantry: emptyPantry(),
+    // 隊商が集荷へ向かっている間、積込口へ取り置いた実物。在庫は世帯の建物に
+    // まだあるが、本人の市場便・食事・加工と二重に使わせない。
+    collectionReserved: {},
     belief: { ...P.BELIEF0 },
     lv: 0,
     up: 0,
@@ -1297,6 +1300,9 @@ export function economicMaterialSnapshot(economy, physical = null) {
     for (const [goods, qty] of Object.entries(household.pantry)) {
       inventory[goods] = (inventory[goods] ?? 0) + qty;
     }
+    for (const [goods, qty] of Object.entries(household.collectionReserved ?? {})) {
+      inventory[goods] = (inventory[goods] ?? 0) + qty;
+    }
     if (household.cargo) {
       const manifests = [
         household.cargo.manifest
@@ -1383,6 +1389,9 @@ export function economicMaterialSnapshot(economy, physical = null) {
   }
   for (const route of economy.caravans ?? []) {
     for (const [goods, qty] of Object.entries(route.cargo ?? {})) {
+      cargo[goods] = (cargo[goods] ?? 0) + qty;
+    }
+    for (const [goods, qty] of Object.entries(route.collectionCargo ?? {})) {
       cargo[goods] = (cargo[goods] ?? 0) + qty;
     }
   }
@@ -1507,6 +1516,10 @@ function disperseHousehold(economy, household, day, physical = null) {
   // dayEndは離散後も、その世帯オブジェクトに対する文化消費まで続く。
   // pantryを廃屋在庫と共有し、正本の走査順と新エンジンの物資保存を両立する。
   const inventory = household.pantry;
+  for (const [goods, qty] of Object.entries(household.collectionReserved ?? {})) {
+    inventory[goods] = (inventory[goods] ?? 0) + qty;
+  }
+  household.collectionReserved = {};
   for (const manifest of [household.cargo?.manifest, household.cargo?.returnManifest]) {
     for (const [goods, qty] of Object.entries(manifest ?? {})) {
       inventory[goods] += qty;
@@ -3083,7 +3096,12 @@ export function purchaseCompanyWoodCart(economy, { day, marketId = "main" }) {
   ensureCartEconomy(economy);
   const offer = offeredWoodCarts(economy, { marketId })[0];
   if (!offer) return null;
-  if (economy.company.money < offer.cart.price) return null;
+  // 輸入資材や市場仕入れと同じ会社信用枠を使う。現金が正になるまで資本財を
+  // 買えない旧条件では、開発路線の固定給だけが出て荷車工房の売上が立たない。
+  if (
+    economy.company.money - offer.cart.price
+      < -companyCreditLimit(economy, { day })
+  ) return null;
   const index = offer.household.cartStock.findIndex((cart) => cart.id === offer.cart.id);
   if (index < 0) return null;
   const [cart] = offer.household.cartStock.splice(index, 1);
@@ -3764,7 +3782,11 @@ function sellManifestAtMarket(
     let qty = offered;
     const desks = [];
     // 輸出台・石畳台は母港の市場だけにある
-    if (sellerMarket === "main" && P.EXP[goods] !== undefined) desks.push(["EXP", P.EXP[goods], economy.expCap[goods]]);
+    if (
+      sellerMarket === "main"
+      && P.EXP[goods] !== undefined
+      && economy.manualSurplusExportsOnly !== true
+    ) desks.push(["EXP", P.EXP[goods], economy.expCap[goods]]);
     if (
       sellerMarket === "main"
       && goods === "stone"
@@ -4409,6 +4431,9 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
         required: P.CART_WORK_DAYS,
         materialCost: P.CART_LOG * (economy.px.log ?? P.BELIEF0.log)
           + P.CART_TOOLS * (economy.px.tools ?? P.BELIEF0.tools),
+        // 荷車は材料だけでなく八日間の専業仕事を売る資本財。労務を原価から
+        // 落とすと、売れるほど工房の食費が尽きて次の材料を買えなくなる。
+        laborCost: laborWage(economy, household) * P.CART_WORK_DAYS,
       };
     }
     if (!household.cartWork && household.cartStock.length < 3 && endOfDay) {
@@ -4424,7 +4449,11 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
           kind: "wood",
           durability: P.CART_WOOD_DURABILITY,
           maxDurability: P.CART_WOOD_DURABILITY,
-          price: Math.max(1, household.cartWork.materialCost * P.CART_MARKUP),
+          price: Math.max(
+            1,
+            (household.cartWork.materialCost + (household.cartWork.laborCost ?? 0))
+              * P.CART_MARKUP,
+          ),
           makerHouseholdId: household.id,
         };
         economy.nextCartAssetId += 1;
@@ -5363,7 +5392,13 @@ function transferRouteStockLots(economy, marketId, goods, qty) {
   return transferredCost;
 }
 
-function transferExportableRouteStockLots(economy, marketId, goods, qty) {
+function transferExportableRouteStockLots(
+  economy,
+  marketId,
+  goods,
+  qty,
+  { minProducerLevel = null, maxUnitCost = Infinity } = {},
+) {
   const stockTable = economy.marketStockM?.[marketId];
   const costTable = (economy.marketStockCostM ??= {})[marketId] ??= {};
   const lots = ((economy.marketStockLotsM ??= {})[marketId] ??= {})[goods] ??= [];
@@ -5379,8 +5414,16 @@ function transferExportableRouteStockLots(economy, marketId, goods, qty) {
       index += 1;
       continue;
     }
-    const moved = Math.min(remaining, lot.qty);
     const unitCost = (lot.cost ?? 0) / Math.max(1e-9, lot.qty);
+    if (
+      (Number.isFinite(minProducerLevel)
+        && (!Number.isFinite(lot.producerLevel) || lot.producerLevel < minProducerLevel))
+      || unitCost >= maxUnitCost - 1e-9
+    ) {
+      index += 1;
+      continue;
+    }
+    const moved = Math.min(remaining, lot.qty);
     const cost = moved * unitCost;
     lot.qty -= moved;
     lot.cost = Math.max(0, (lot.cost ?? 0) - cost);
@@ -5390,10 +5433,12 @@ function transferExportableRouteStockLots(economy, marketId, goods, qty) {
     if (lot.qty <= 1e-9) lots.splice(index, 1);
     else index += 1;
   }
-  // 旧保存などlot内訳のない会社在庫は、集計原価で島内産として扱う。
+  // 旧保存などlot内訳のない会社在庫は、通常の明示輸出では島内産として扱う。
+  // 生産Lvや採算を条件にする自動判断では根拠がないため、候補へ混ぜない。
   const accountedLots = lots.reduce((total, lot) => total + lot.qty, 0);
   const untracked = Math.max(0, stockBefore - movedQty - accountedLots);
-  const untrackedMoved = Math.min(remaining, untracked);
+  const averageEligible = !Number.isFinite(minProducerLevel) && averageCost < maxUnitCost - 1e-9;
+  const untrackedMoved = averageEligible ? Math.min(remaining, untracked) : 0;
   movedQty += untrackedMoved;
   movedCost += untrackedMoved * averageCost;
   stockTable[goods] = Math.max(0, stockBefore - movedQty);
@@ -5405,7 +5450,13 @@ export function requestCompanySurplusExport(
   economy,
   physical,
   goods,
-  { day, qty, unitRevenue = SURPLUS_EXPORT_PRICES[goods] } = {},
+  {
+    day,
+    qty,
+    unitRevenue = SURPLUS_EXPORT_PRICES[goods],
+    minProducerLevel = null,
+    profitableOnly = false,
+  } = {},
 ) {
   if (!Object.hasOwn(SURPLUS_EXPORT_PRICES, goods)) {
     throw new Error(`余剰輸出対象外です: ${goods}`);
@@ -5413,7 +5464,10 @@ export function requestCompanySurplusExport(
   if (!Number.isFinite(qty) || qty <= 1e-9 || !Number.isFinite(unitRevenue) || unitRevenue <= 0) {
     return null;
   }
-  const moved = transferExportableRouteStockLots(economy, "main", goods, qty);
+  const moved = transferExportableRouteStockLots(economy, "main", goods, qty, {
+    minProducerLevel,
+    maxUnitCost: profitableOnly ? unitRevenue : Infinity,
+  });
   if (moved.qty <= 1e-9) return null;
   const lot = {
     id: `exp${economy.nextExportLotId}`,
@@ -5428,6 +5482,7 @@ export function requestCompanySurplusExport(
     unitCost: moved.cost / moved.qty,
     marketSection: "inbound",
     origin: "company-route-surplus",
+    minProducerLevel: Number.isFinite(minProducerLevel) ? minProducerLevel : null,
     status: "market",
     purchasedDay: day,
   };

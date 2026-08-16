@@ -288,6 +288,34 @@ test('油退役: 旧保存の残量・屋台・輸送・路線が表示モデル
   assert.deepEqual(model.caravans[0].goodsBack, ['fish']);
 });
 
+test('港湾余剰輸出UI: 母港の島内産だけを原価・高Lv内訳つきで示す', () => {
+  const snapshot = createEngineApi(buildBaseCity(11)).snapshot({ scope: 'full' });
+  snapshot.economy.marketStockM ??= {};
+  snapshot.economy.marketStockM.main ??= {};
+  snapshot.economy.marketStockM.main.tools = 12;
+  snapshot.economy.marketStockCostM ??= {};
+  snapshot.economy.marketStockCostM.main ??= {};
+  snapshot.economy.marketStockCostM.main.tools = 24;
+  snapshot.economy.marketStockLotsM ??= {};
+  snapshot.economy.marketStockLotsM.main ??= {};
+  snapshot.economy.marketStockLotsM.main.tools = [
+    { qty: 4, cost: 8, importRequestId: 'imp1', producerLevel: null },
+    { qty: 3, cost: 6, producerLevel: 2 },
+    { qty: 5, cost: 10, producerLevel: 3 },
+  ];
+
+  const model = snapshotToViewModel(snapshot);
+  const tools = model.surplusExports.find(row => row.goods === 'tools');
+
+  assert.equal(tools.available, 8, '輸入lotを輸出可能量へ混ぜない');
+  assert.equal(tools.averageCost, 2);
+  assert.equal(tools.highLevelQty, 5);
+  assert.equal(tools.unitRevenue, 8);
+  const main = readBrowserEntrySource();
+  assert.match(main, /request_surplus_export/);
+  assert.match(main, /港から島の余剰を輸出する/);
+});
+
 test('段1: createEngineApiで基準都市を起動し1日30tick進める', () => {
   const controller = createEngineController({ seed: 11 });
   const before = controller.readModel();
@@ -3259,6 +3287,8 @@ test('隊商S5: 状態語は運行・待機・御者・荷車・道路・資金�
   assert.deepEqual(caravanStatePresentation({ state: 'returning' }), {
     key: 'running', label: '帰路を運行中',
   });
+  assert.equal(caravanStatePresentation({ state: 'collecting_base' }).label, '母港圏を集荷中');
+  assert.equal(caravanStatePresentation({ state: 'collecting_return' }).label, '帰り荷を集荷中');
   assert.equal(caravanStatePresentation({ state: 'idle' }).label, '待機中');
   assert.equal(caravanStatePresentation({ state: 'waiting_crew' }).label, '御者待ち');
   assert.equal(caravanStatePresentation({ state: 'waiting_cart' }).label, '荷車待ち');

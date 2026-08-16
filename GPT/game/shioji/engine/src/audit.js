@@ -1,5 +1,6 @@
 import {
   COMPANY_ORDER_GOODS,
+  FOODS,
   GOODS,
   P,
   acceptCompanyOrder,
@@ -615,6 +616,9 @@ export function buildB2TrialWorld(
     },
   });
   const { economy } = world.state;
+  // 256本編では、旧来の不可視な輸出台が生産者の売荷を先取りしない。島内市場と
+  // 路線を満たした会社在庫から、プレイヤーが港湾余剰輸出を明示した時だけ出す。
+  economy.manualSurplusExportsOnly = true;
   const logistics = ensureCompanyLogisticsSites(economy, physical);
   world.state.marketNetwork.markets[0].buildingId = logistics.market.id;
   logistics.market.marketId = "main";
@@ -659,11 +663,15 @@ export const B2_EXPANSION_STRATEGIES = Object.freeze({
   fishery: Object.freeze({
     marketKey: "3", marketId: "fishery", name: "漁港市場",
     jobs: Object.freeze(["fisher", "fisher", "fisher", "saltworks"]),
-    goodsOut: Object.freeze(["wheat", "veg", "pick", "char", "tools", "log"]),
+    goodsOut: Object.freeze([
+      "wheat", "veg", "pick", "char", "tools", "log", "stone", "cloth", "iron",
+    ]),
     goodsBack: Object.freeze(["fish", "pres", "salt"]),
-    // 商用荷車1台を三台編成として扱う現在容量では、旧3人編成をそのまま
-    // 残すと九台相当を5日ごとに常設する。漁港は一編成から始める。
-    recruitment: 1, wage: 2, intervalDays: 5,
+    // 4産業世帯+隊商宿の先遣20人は一日約20荷を食べる。24荷編成を5日ごとに
+    // 一台だけ送る旧値では、満載でも4.8荷/日しか届かず路線を正しく設定しても
+    // 必ず飢える。五編成で主食100荷/便相当を確保し、魚・塩・道具も同じ実便で
+    // 双方向に回す。固定給は開発期の赤字路線費として会社台帳へ全額残す。
+    recruitment: 5, wage: 0.75, intervalDays: 5,
   }),
   mining: Object.freeze({
     marketKey: "4", marketId: "mining", name: "山間鉱山市場",
@@ -671,17 +679,23 @@ export const B2_EXPANSION_STRATEGIES = Object.freeze({
     // ここに木こりがないと森復活ゼロの母港林だけが全島唯一の丸太源になり、
     // Lv2以降の木製品と全加工連鎖が5年以内に必ず止まる。
     jobs: Object.freeze([
-      "miner", "miner", "collier", "collier", "quarryman", "smelter", "smith",
+      "miner", "miner", "collier",
+      // 人口200級の四市場ではLv2修繕だけで石材需要が大きい。一軒の採石場
+      // (高Lvでも8荷/日)では交易が正しくても全域の建物が崩れるため、既存の
+      // 成熟都市と同じ二軒を置く。
+      "quarryman", "quarryman", "smelter", "smith",
       "logger", "logger", "logger", "woodshop",
     ]),
     // 低Lv期だけは母港で有償輸入した木製品も運び、現地木工がLv2へ届いたら
     // 鉱山自身の木製品を帰り荷へ切り替える。同じ品目の往復は価格差ではなく
     // 実在庫gapで片方向だけが積まれる。
-    goodsOut: Object.freeze(["wheat", "veg", "fish", "pres", "pick", "tools"]),
+    goodsOut: Object.freeze([
+      "wheat", "veg", "fish", "pres", "pick", "tools", "cloth",
+    ]),
     goodsBack: Object.freeze(["ore", "bar", "iron", "stone", "coal", "log", "tools"]),
-    // 鉱区は食料を産まないため、50人級の先遣集落へ二宿で食料を運ぶ。
-    // 一人一編成（商用荷車3台分）で十二人を雇い、赤字期の雇用も開発費に含める。
-    routeCount: 2, recruitment: 6, wage: 2, intervalDays: 5,
+    // 鉱区は食料を産まない。11産業世帯44人+二宿14人へ、二宿十四編成の
+    // 336荷/5日=67.2荷/日を届ける。赤字期の固定給も開発費として台帳に残す。
+    routeCount: 2, recruitment: 7, wage: 0.75, intervalDays: 5,
   }),
   basin: Object.freeze({
     marketKey: "2", marketId: "basin", name: "中央盆地市場",
@@ -689,13 +703,13 @@ export const B2_EXPANSION_STRATEGIES = Object.freeze({
       "wheat", "wheat", "wheat", "wheat",
       "veg", "veg", "rapeseed",
     ]),
-    goodsOut: Object.freeze(["fish", "char", "tools", "salt"]),
+    goodsOut: Object.freeze(["fish", "char", "tools", "salt", "log", "stone", "iron"]),
     // 野菜農家が市場便の間に漬けた在庫も食料として運ぶ。生野菜だけを指定すると
     // 塩が届いた盆地で漬物だけが滞留し、他市場が食料難になる。
     goodsBack: Object.freeze(["wheat", "veg", "pick", "cloth"]),
     // 麦路線は母港の小売だけでなく、母港を中継する鉱区向け主食も担う背骨。
     // 二宿×五編成で盆地余剰を約48荷/日運べるようにする。
-    routeCount: 2, recruitment: 5, wage: 2, intervalDays: 5,
+    routeCount: 2, recruitment: 5, wage: 0.75, intervalDays: 5,
   }),
 });
 
@@ -786,18 +800,19 @@ function addB2StrategyMarket(world, definition, strategy) {
     household.marketBuildingId = placed.building.id;
   }
 
-  // 遠隔集落の路線はその集落自身の隊商宿が担う。全宿を母港へ置くと固定給が
-  // 母港だけへ集中し、荷は届いているのに遠隔生産者の財布がゼロになる。
+  // 開拓路線は母港の会社隊商が担う。新しい圏内集荷は遠隔生産者へ仕入代金を
+  // 直接払うため、御者給を遠隔地へ置く必要はない。母港発にすることで会社は
+  // 母港の荷車工房から実物を購入でき、荷車を無料生成せず路線を育てられる。
   const routeResults = [];
   for (let routeIndex = 0; routeIndex < (strategy.routeCount ?? 1); routeIndex += 1) {
-    const innZone = placeB2StarterZone(world, "carter", entrance);
+    const innZone = placeB2StarterZone(world, "carter", economy.market);
     connectB2Road(
       physical,
-      entrance,
+      economy.market,
       innZone,
-      `${strategy.marketId}:隊商宿${routeIndex + 1}`,
+      `main:${strategy.marketId}隊商宿${routeIndex + 1}`,
     );
-    const innHousehold = occupyScenarioZone(world, innZone, strategy.marketId);
+    const innHousehold = occupyScenarioZone(world, innZone, "main");
     innHousehold.members = innHousehold.members.slice(
       0,
       Math.max(4, strategy.recruitment),
@@ -811,9 +826,9 @@ function addB2StrategyMarket(world, definition, strategy) {
     const routeResult = createCaravanRoute(economy, physical, {
       name: `${strategy.name}線${suffix}`,
       baseBuildingId: innHousehold.buildingId,
-      destMarketId: "main",
-      goodsOut: [...strategy.goodsBack],
-      goodsBack: [...strategy.goodsOut],
+      destMarketId: strategy.marketId,
+      goodsOut: [...strategy.goodsOut],
+      goodsBack: [...strategy.goodsBack],
       intervalDays: strategy.intervalDays,
       // 5日分では往復だけで棚が空になり、秋収穫から次の春までを持ち越せない。
       // 生鮮は品目ごとに腐敗するため過剰在庫が自然に抑えられ、麦・加工食は
@@ -822,26 +837,9 @@ function addB2StrategyMarket(world, definition, strategy) {
       day: 0,
     });
     if (!routeResult.ok) throw new Error(`${strategy.name}線の設定不可: ${routeResult.reason}`);
+    // 無料の較正用荷車は置かない。募集人数は最大編成として維持し、母港の
+    // 荷車工房から会社が購入できた台数だけ路線が順次運行を始める。
     routeResults.push(routeResult);
-    for (let index = 0; index < strategy.recruitment; index += 1) {
-      const asset = {
-        id: `wood-cart-${economy.nextCartAssetId}`,
-        kind: "wood",
-        durability: P.CART_WOOD_DURABILITY,
-        maxDurability: P.CART_WOOD_DURABILITY,
-        price: 0,
-        makerHouseholdId: null,
-        ownerKind: "company",
-        ownerId: "company",
-        purchasedDay: 0,
-        busyJobId: routeResult.route.id,
-        caravanRouteId: routeResult.route.id,
-        origin: "b2-calibration-charter",
-      };
-      economy.nextCartAssetId += 1;
-      economy.companyCarts.push(asset);
-      routeResult.route.cartAssetIds.push(asset.id);
-    }
   }
   return {
     marketId: strategy.marketId,
@@ -899,23 +897,10 @@ export function advanceB2StrategyExpansion(world, definition, { day = world.stat
   if (day < index * B2_EXPANSION_INTERVAL_DAYS) return null;
   const id = strategy.order[index];
   const spec = B2_EXPANSION_STRATEGIES[id];
-  if (id === "mining" && index > 0) {
-    // 食料を作らない56人級の鉱区を暦だけで開くと、既存市場のLvが育つ前に
-    // 需要を固定投入する必敗手になる。少なくとも一世帯がLv3へ届き、直近30日
-    // の空腹が人口の一日分未満になってから、赤字鉱山線へ投資する。
-    const recentHungerDays = world.state.economy.households.reduce((total, household) => (
-      total + (household.hungerHist ?? []).slice(-30).reduce((sum, value) => sum + value, 0)
-        * household.members.length
-    ), 0);
-    const population = world.state.economy.households.reduce(
-      (total, household) => total + household.members.length,
-      0,
-    );
-    if (
-      !world.state.economy.households.some(household => household.lv >= 3)
-      || recentHungerDays >= population
-    ) return null;
-  }
+  // 鉱区の石材はLv2建物の修繕に必要で、Lv3到達を待ってから鉱区を開くと
+  // 「石がないのでLv3になれない／Lv3がないので石を掘れない」の循環になる。
+  // 盆地の食料背骨を先に置く順序だけを守り、鉱区線そのものは低Lv期の赤字投資
+  // として予定日に開く。これはプレイヤー裁定の「Lvを上げるための赤字路線」。
   const setupCost = (spec.jobs.length + 1) * P.BUILD_COST;
   if (
     world.state.economy.company.money - setupCost
@@ -993,16 +978,24 @@ function provisionB2DevelopmentTools(
 function exportB2IslandSurplus(world, { day }) {
   if (day % 15 !== 0) return [];
   const { economy, physical } = world.state;
+  // 低Lv期の在庫を会社が吸い上げて延命するのではなく、地域交易でLv3へ達した
+  // 生産者の高効率余剰だけを港へ回す。食料は島内に三日分以上残り、その日に
+  // 空腹世帯がいない時だけ候補になる。
+  if (!economy.households.some(household => household.lv >= 3)) return [];
+  const population = auditPopulation(economy);
   const exports = [];
   for (const goods of ["tools", "char", "salt", "cloth", "stone", "ore", "coal", "bar", "iron", "pres", "pick"]) {
-    if (goods === "tools" && !economy.households.some(household => household.lv >= 3)) {
-      continue;
-    }
     const available = economy.marketStockM?.main?.[goods] ?? 0;
-    // 少なくとも四荷は島内小売・修繕・次便の接続用に母港へ残す。
-    const qty = Math.min(24, Math.max(0, available - 4));
+    const islandReserve = FOODS.includes(goods) ? population * 3 : 4;
+    if (FOODS.includes(goods) && (economy.hungryN ?? 0) > 0) continue;
+    const qty = Math.min(24, Math.max(0, available - islandReserve));
     if (qty <= 1e-9) continue;
-    const exported = requestCompanySurplusExport(economy, physical, goods, { day, qty });
+    const exported = requestCompanySurplusExport(economy, physical, goods, {
+      day,
+      qty,
+      minProducerLevel: 3,
+      profitableOnly: true,
+    });
     if (exported) exports.push(exported);
   }
   return exports;

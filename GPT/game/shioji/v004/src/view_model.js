@@ -3,7 +3,7 @@ import {
   FOOD_GOODS, perishableFreshness,
 } from './food_readability.js?v=v004.62.2-fishery-slope';
 import {
-  LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass,
+  LADDER, MAINLAND_AID, P, SURPLUS_EXPORT_PRICES, companyStockReleasePrice, householdClass,
   findTravelPath, householdProductionSummary, laborWage, productionCost,
 } from './engine_bridge.js?v=v004.62.2-fishery-slope';
 import { analyzeRoadConnections } from './placement.js?v=v004.62.2-fishery-slope';
@@ -49,6 +49,9 @@ export function caravanStatePresentation(route) {
   }
   if (route.state === 'outbound') return { key: 'running', label: '往路を運行中' };
   if (route.state === 'returning') return { key: 'running', label: '帰路を運行中' };
+  if (route.state === 'collecting_base') return { key: 'running', label: '母港圏を集荷中' };
+  if (route.state === 'collecting_return') return { key: 'running', label: '帰り荷を集荷中' };
+  if (route.state === 'ready_return') return { key: 'running', label: '帰り荷を積込中' };
   if (route.state === 'waiting_crew') return { key: 'crew', label: '御者待ち' };
   if (['waiting_cart', 'waiting_cart_return'].includes(route.state)) {
     return { key: 'cart', label: '荷車待ち' };
@@ -1858,6 +1861,28 @@ export function snapshotToViewModel(snapshot, { previousModel = null } = {}) {
     importRequests: (snapshot.economy.importRequests ?? []).filter(request => request.goods !== 'oil').map(request => ({ ...request })),
     moneyOutBy: { ...snapshot.economy.outBy },
     companyStock: Object.fromEntries(Object.entries(snapshot.economy.stock).filter(([goods]) => goods !== 'oil')),
+    surplusExports: Object.entries(SURPLUS_EXPORT_PRICES).map(([goods, unitRevenue]) => {
+      const stock = snapshot.economy.marketStockM?.main?.[goods] ?? 0;
+      const lots = snapshot.economy.marketStockLotsM?.main?.[goods] ?? [];
+      const trackedQty = lots.reduce((total, lot) => total + Math.max(0, lot.qty ?? 0), 0);
+      const averageCost = (snapshot.economy.marketStockCostM?.main?.[goods] ?? 0)
+        / Math.max(1e-9, stock);
+      const untrackedQty = Math.max(0, stock - trackedQty);
+      const eligibleLots = lots.filter(lot => !lot.importRequestId);
+      const lotQty = eligibleLots.reduce((total, lot) => total + Math.max(0, lot.qty ?? 0), 0);
+      const lotCost = eligibleLots.reduce((total, lot) => total + Math.max(0, lot.cost ?? 0), 0);
+      const available = untrackedQty + lotQty;
+      const cost = untrackedQty * averageCost + lotCost;
+      return {
+        goods,
+        unitRevenue,
+        available,
+        averageCost: available > 1e-9 ? cost / available : null,
+        highLevelQty: eligibleLots.reduce((total, lot) => (
+          total + ((lot.producerLevel ?? -1) >= 3 ? Math.max(0, lot.qty ?? 0) : 0)
+        ), 0),
+      };
+    }),
     companyStockAverageCosts,
     companyMarketStock: Object.fromEntries(Object.entries(snapshot.economy.marketStock).filter(([goods]) => goods !== 'oil')),
     companyMarketStockAverageCosts,

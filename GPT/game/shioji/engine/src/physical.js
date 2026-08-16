@@ -520,18 +520,28 @@ export function tileTravelCost(physical, x, y, mode = "walk") {
 export function findTravelPath(physical, start, goal, mode = "walk") {
   // trails は旧セーブや監査テストから直接復元されるため、専用revisionだけに
   // 依存せず内容を含める。高コストなのは経路探索本体なので、キュー改善を優先する。
-  const trailSignature = Object.entries(physical.trails ?? {})
-    .filter(([, active]) => active === true)
-    .map(([key]) => key)
-    .sort()
-    .join(";");
+  // 荷車は道路しか通らないためtrailの変化と無関係。walkと同じ一枚のcacheを
+  // 共用すると、住民が作る小道が毎日cart経路まで全消去し、256世界の隊商が
+  // 同じ道路を数千回探索し直す。modeごとにrevisionと経路表を分離する。
+  const trailSignature = mode === "walk"
+    ? Object.entries(physical.trails ?? {})
+      .filter(([, active]) => active === true)
+      .map(([key]) => key)
+      .sort()
+      .join(";")
+    : "roads-only";
   const revision = `${physical.roadRevision}:${physical.pathRevision ?? physical.travelRevision ?? 0}:${trailSignature}`;
-  let cache = travelPathCaches.get(physical);
+  let caches = travelPathCaches.get(physical);
+  if (!caches) {
+    caches = {};
+    travelPathCaches.set(physical, caches);
+  }
+  let cache = caches[mode];
   if (!cache || cache.revision !== revision) {
     cache = { revision, routes: new Map() };
-    travelPathCaches.set(physical, cache);
+    caches[mode] = cache;
   }
-  const cacheKey = `${mode}:${start.x},${start.y}>${goal.x},${goal.y}`;
+  const cacheKey = `${start.x},${start.y}>${goal.x},${goal.y}`;
   if (cache.routes.has(cacheKey)) return cache.routes.get(cacheKey);
   const startCost = tileTravelCost(physical, start.x, start.y, mode);
   const goalCost = tileTravelCost(physical, goal.x, goal.y, mode);

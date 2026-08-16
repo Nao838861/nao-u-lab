@@ -148,6 +148,7 @@ const stockTargetDrafts = new Map();
 const stockTargetFeedback = new Map();
 const stockReleaseDrafts = new Map();
 const importQuantityDrafts = new Map();
+const surplusExportDrafts = new Map();
 const renderSignatures = new Map();
 const HISTORY_DAYS = 180;
 const economyHistory = (startupSave?.economyHistory ?? []).slice(-HISTORY_DAYS);
@@ -1162,6 +1163,34 @@ function renderCartPanel() {
   });
 }
 
+function renderSurplusExportPanel() {
+  const knownGoods = new Set(goodsDiscovery.knownGoods());
+  const rows = (model.surplusExports ?? []).filter(row => knownGoods.has(row.goods));
+  const signature = JSON.stringify([
+    rows,
+    rows.map(row => surplusExportDrafts.get(row.goods) ?? null),
+  ]);
+  renderIfChanged('company-surplus-exports', signature, () => {
+    $('#surplus-export-panel').innerHTML = `
+      <h3>港から島の余剰を輸出する</h3>
+      <p>隊商で母港へ届いた島内産だけを、指定した量だけ港へ送ります。輸入品の横流しはできません。低Lv品を赤字で売るか、高Lvの安い余剰を待つかは会社の判断です。</p>
+      <div class="company-goods">${rows.map(row => {
+        const available = Math.max(0, row.available ?? 0);
+        const qty = surplusExportDrafts.get(row.goods)
+          ?? Math.max(1, Math.min(24, Math.floor(available)));
+        const margin = Number.isFinite(row.averageCost)
+          ? row.unitRevenue - row.averageCost : null;
+        return `<div class="goods-row" data-export-goods="${row.goods}">
+          <span class="goods-identity">${goodsIconMarkup(row.goods)}<span><b>${GOODS_LABELS[row.goods]}</b><small>母港余剰 ${formatQuantity(available)}荷・うちLv3以上 ${formatQuantity(row.highLevelQty)}荷</small></span></span>
+          <div class="release-quote"><small>港売値 ${formatQuantity(toDenari(row.unitRevenue))}D/荷</small><small>平均仕入 ${Number.isFinite(row.averageCost) ? `${formatQuantity(toDenari(row.averageCost))}D/荷` : '—'}・粗利 ${Number.isFinite(margin) ? `${margin >= 0 ? '+' : ''}${formatQuantity(toDenari(margin))}D/荷` : '—'}</small></div>
+          <label class="release-editor"><span>輸出量</span><input data-surplus-export-qty type="number" min="1" max="${Math.max(1, Math.floor(available))}" step="1" value="${escapeHtml(qty)}" aria-label="${GOODS_LABELS[row.goods]}の余剰輸出量"><small>荷</small></label>
+          <button type="button" data-company-action="request-surplus-export" data-goods="${row.goods}" ${available < 1 ? 'disabled' : ''}>港から輸出</button>
+        </div>`;
+      }).join('')}</div>`;
+    uiMetrics.domWrites += 1;
+  });
+}
+
 function caravanMonthLabel(month) {
   return `第${Math.floor(month / 12) + 1}期 ${month % 12 + 1}月`;
 }
@@ -1278,7 +1307,7 @@ function renderCaravanPanel() {
         <span><small>荷車</small><b>${caravanMoney(trip.cartCosts)}</b></span>
         <span><small>差引（現在まで）</small><b class="${tripProfit >= 0 ? 'plus' : 'minus'}">${caravanMoney(tripProfit, { signed: true })}</b></span>
       </div>` : '<p class="sheet-note">まだ帰着した便はありません。</p>';
-    const nextText = ['outbound', 'returning'].includes(selected.state)
+    const nextText = ['outbound', 'returning', 'collecting_base', 'collecting_return', 'ready_return'].includes(selected.state)
       ? `第${selected.currentTrip?.tripNumber ?? '—'}便が運行中`
       : selected.daysUntilDeparture === 0 ? '出発日です' : `次の出発まで${selected.daysUntilDeparture}日`;
     panel.innerHTML = `
@@ -1384,6 +1413,7 @@ function renderCompanySheet() {
   renderAidPanel();
   renderImportPanel();
   renderCartPanel();
+  renderSurplusExportPanel();
   renderCompanyOrder();
   renderCompanyGoods();
   const ledger = model.companyLedger.slice(-24).reverse();
@@ -2677,6 +2707,11 @@ companySheet.addEventListener('input', event => {
     if (goods) importQuantityDrafts.set(goods, event.target.value);
     return;
   }
+  if (event.target.matches('[data-surplus-export-qty]')) {
+    const goods = event.target.closest('[data-export-goods]')?.dataset.exportGoods;
+    if (goods) surplusExportDrafts.set(goods, event.target.value);
+    return;
+  }
   const row = event.target.closest('.goods-row');
   if (!row?.dataset.goods) return;
   if (event.target.matches('[data-stock-target]')) {
@@ -2845,6 +2880,25 @@ companySheet.addEventListener('click', event => {
       '会社の木の荷車を1台購入しました',
       '購入できる木の荷車または会社資金がありません',
     );
+    renderCompanySheet();
+    return;
+  }
+  if (action === 'request-surplus-export') {
+    const goods = button.dataset.goods;
+    const row = model.surplusExports?.find(candidate => candidate.goods === goods);
+    const input = button.closest('[data-export-goods]')?.querySelector('[data-surplus-export-qty]');
+    const available = Math.floor(row?.available ?? 0);
+    const qty = Math.min(available, Math.max(1, Math.round(Number(input?.value) || 0)));
+    if (!goods || available < 1 || qty < 1) {
+      $('#status span').textContent = '母港に輸出できる島内余剰がありません';
+      return;
+    }
+    const result = applyEngineOperation(
+      { type: 'request_surplus_export', goods, qty },
+      `${GOODS_LABELS[goods]} ${qty}荷を港湾輸出へ回しました`,
+      '輸出できる島内余剰または港への経路がありません',
+    );
+    if (result?.ok !== false) surplusExportDrafts.delete(goods);
     renderCompanySheet();
     return;
   }
