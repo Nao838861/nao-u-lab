@@ -60,7 +60,35 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786685504-2ac2eed3d8
+    source_ts: "1786685504.078429"
+    title: "GDC 2026『Rules of the Game』— 守る期待と新しくする軸を分ける bounded prototype probe"
+    reason: "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。5本の経験則を恒久ルール化せず、一時 decision note が既存 control と異なる判断差を作るか確認するため1件だけ選んだ。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "数値上は採用条件を満たすが、scope brief・prototype hypothesis contract・Q0・baseline/held-out 比較の既存4 controls と大半が重なる。守る期待と新規軸を同じ note で衝突確認する差分はあるものの、現 staging には比較可能な playable diff、baseline trace、human playtest がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。consumer_phase・trigger_artifact・expected_delta を契約どおり指定できないため state-only で defer し、次の具体的 game-start／playable diff で既存 controls だけでは採否を決められない実例が出た時だけ再評価する。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

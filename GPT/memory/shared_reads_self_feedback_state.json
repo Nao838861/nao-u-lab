@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-14T14:36:24+09:00",
+  "updated_at": "2026-08-16T13:39:00+09:00",
   "reviewed_source_ts": [
+    "1786685504.078429",
     "1779972051.823869",
     "1786668938.237989",
     "1779971755.674859",
@@ -654,6 +655,46 @@
     "1786606286.694329"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-16T13:39:00+09:00",
+      "selected": {
+        "id": "sr-1786685504-2ac2eed3d8",
+        "source_ts": "1786685504.078429",
+        "title": "GDC 2026『Rules of the Game』— 守る期待と新しくする軸を分ける bounded prototype probe",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、memory・harness・game-design・operation・evaluation の5優先タグを持つため1件だけ選んだ。5人の経験則を恒久ルールへ展開せず、守る期待3つ・今回だけ新しくする軸1つ・better の観測・rollback 条件・最初の cool action までの手数という一時 decision note が、次の prototype 判断に既存 control と異なる差を作るか確認した。Nao_u が本 atom 自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の採用条件と必須指標を満たす。shared-reads 本文は、trust を予期可能性の蓄積として扱うこと、一度に未知にする軸を1つへ局所化すること、illusion choice を即時反応と解釈の余白で支えること、先に cool thing を見せること、変更前より better かを観測して戻すことを、異なる制作現場の具体例から decision note と headless／human の比較へ変換しているため relevance・actionability は3とした。一方、資料は5人の実務経験則であり、rule 間の優先順位、sample 数、統制された before／after、trust や coolness の効果量は示されないため evidence は2に留める。probe-20260602-game-scope-brief-cut-gate は scope promise・pillar test・最小 risk test を、probe-20260706-paperclaw-prototype-hypothesis-contract は observable verdict と test path を、probe-20260621-q0-five-second-legibility は最初の playable moment を、probe-20260619-omni-game-arena-improvement-transfer は baseline と同条件／held-out 比較をすでに扱う。守る期待と新規性の軸を同じ note で衝突確認する点は小さな差分だが、独立 control を増やすほどではないため non_redundancy は1とした。1 prototype・1変更軸・rollback 付きなら risk と撤退は制御できる。しかし現 staging には比較可能な playable diff、baseline trace、human playtest がなく、直後の Phase 4a は memory cleanup で実際の consumer ではない。consumer_phase、trigger_artifact、expected_delta を lease 契約どおり指定できないため adopt_probe／adopt_metric にせず state-only で defer する。次に具体的な game-start／playable diff が置かれ、既存4 controlsだけでは守る期待と新規軸の衝突を採否へ結べない実例が出た時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract",
+        "probe-20260621-q0-five-second-legibility",
+        "probe-20260619-omni-game-arena-improvement-transfer"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、bounded decision note の有用性、既存 prototype controls との重複、比較可能な playable artifact 不在による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-14T14:36:24+09:00",
       "selected": {
