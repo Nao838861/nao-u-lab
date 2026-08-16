@@ -4,6 +4,20 @@ url: "https://schedule.gdconf.com/session/an-odyssey-in-building-games-that-last
 collected_at: "2026-08-17T01:31:43+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, iteration, playtesting, core-experience, postmortem]
+evaluated_at: "2026-08-17T01:34:59+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-17T01:34:59+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-17T01:34:59+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-16"
+supersedes: []
+gate_reason: >-
+  公式セッション説明から問題設定・中心主張・結論は取れるが、約10年の pivot や false start の具体例、反復の手順、成功作と中止作を分けた評価証拠が不足している。
+  現状の材料だけでは CoopEval 水準の約4000字を推測なしで構成できないため、Vault 動画または transcript で講演本体を確認してから再評価する。
 ---
 
 ## raw_excerpt
