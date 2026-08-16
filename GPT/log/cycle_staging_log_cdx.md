@@ -64,7 +64,34 @@ slack_posts: 0
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779928450-84c398f486
+    source_ts: "1779928450.976429"
+    title: "A-MEM: Agentic Memory for LLM Agents — 我々の post-hoc 派生層設計の独立到達点として読む"
+    reason: "未レビューかつ score 10、memory・agent・operation・evaluation の4優先タグを持つ高品質候補。atomic note と動的 link の知見が現在の記憶運用へ直結する一方、同じ分割投稿の後半が既に probe 化済みかを確認するため。"
+  scores:
+    relevance: 3
+    actionability: 1
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "同一論理投稿の後半 1779928451.001299 は既に probe-20260601-memory-link-llm-roi-gate として採用済みで、deterministic baseline・具体的 miss・LLM fallback 境界を問う。現行の per-atom 不変本文と派生 index/link の分離も可逆な部分を実装済みである。新規行動差がなく actionability と non_redundancy が採用水準未満のため state-only review とした。"
+  change:
+    summary: "reviewed_source_ts と重複採否理由だけを state に追加。新規 probe・metric・directive・lease は作成していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
