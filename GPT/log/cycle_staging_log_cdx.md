@@ -95,7 +95,57 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md: per-file atom index との entry 整合を検証し、broken entry 0 件。UTF-8 読みは成功し、代表語は 記憶 / ゲーム設計 / 敵パターン が取得可能、評価軸 の literal は現行本文に存在しない。"
+  - "memory/atoms.jsonl: 2878 rows。per-file .md / index.jsonl も各 2878 rows で、parse error 0、duplicate id 0、missing/extra 0、content conflict 0。raw normalized-content duplicate 40 groups は既存 overlay / recall fold で処理済み。"
+  - "memory/raw/: 247 files 中、2026-07-17 より前の mtime は 241 files（web_research 216 / headless_eval 16 / slack_api 6 / その他 3）。raw 原文は provenance 正本として保持する契約のため、archive 移動候補なし。"
+  - "shared-reads lifecycle: posted 614 / ready_to_post 9 / postponed 209 / failed 468 / needs_review 2。期限超過 open candidate 2 件は同一 work の group deferred lease（retry_after 2026-08-20T13:19:04+09:00）で抑止され、handoff 0 件。"
+  - "Slack inbox: directives pending 0 / broadcasts pending 0。handled へ更新すべき行なし。"
+issues:
+  - id: ISS-4A-20260816-01
+    description: "active atom sr-1776127289-4d9239b255 の title / trigger / excerpt に U+FFFD が保存され、『AIエ��ジェント』として index と related-candidate surface に露出している。memory_health のもう1件 gr-1777083728-44d444ab7a は原文中の意図的な『???』であり source 破損ではない。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/index.jsonl id=sr-1776127289-4d9239b255; memory/atoms/related_candidates.jsonl"
+    source_file_status: "UTF-8 decode は成功するが、U+FFFD が source atom 本文・frontmatter・mirror に実在する。atom mirror 全体の parse / content consistency は clean。"
+    display_or_tooling_status: "tooling-only mojibake ではなく、index と related_candidates が source の壊れた表記をそのまま表示している。"
+    why_blocks_game_memory: "『エージェント』で探す語が分断され、関連 atom 候補で壊れた title が繰り返し露出するため、該当知見の検索性を局所的に下げる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 7
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 36
+  mixed_group_count: 33
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- stale 抑止根拠: `joint agent memory and exploration learning via novelty signals` と `an exploration of collision based enemy morphology generation` は、membership fingerprint が一致する既存 deferred group handoff があり、いずれも `retry_after: 2026-08-20T13:19:04+09:00` より前である。
+- Phase 4b / 4c は起動しない。検出した1件は局所的な source data repair 候補であり、新しい構造設計を必要としない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
