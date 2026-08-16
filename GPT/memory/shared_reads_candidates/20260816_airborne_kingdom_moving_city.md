@@ -4,6 +4,27 @@ url: "https://www.gamedeveloper.com/design/deep-dive-an-economy-of-discovery-beh
 collected_at: "2026-08-16T23:31:22+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, mechanics, city-builder, exploration, economy, postmortem]
+evaluated_at: "2026-08-16T23:35:36+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-16T23:35:36+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-16T23:35:36+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-15"
+supersedes: []
+gate_reason: >-
+  都市全体を動かす verb が採集、研究、推進力、資源配置、探索対象、物語へ波及した設計連鎖を、prototype の転換点から追える。
+  個別 system の数値評価は薄いが、固有 mechanic を既存 genre の全層へ接続する具体場面が多く、
+  world と economy の同時再設計を軸に約4000字の独立した分析を構成できる。
+suggested_post_outline:
+  overview_angle: "空中都市という見た目上の差を、都市そのものを移動させる player verb に変えたことで genre 全体が組み替わった過程として説明する"
+  analysis_axis: "中心 verb と採集距離の接続、in-world research、都市規模と propulsion cost、資源 trail が作る移動中の判断、発見対象の追加と制作領域の拡張"
+  application_target: "Log_cdx の system-driven prototype で、固有 verb を追加した時に資源ループ・成長負荷・world layout・発見報酬が実際に変化したかを dependency map と短い playtest で検証する"
+  pros_cons: "一つの mechanic が複数 system を再編する因果が明瞭な一方、economy の定量値や失敗案の比較条件は少なく、移植時は独自の balance 検証が必要"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt

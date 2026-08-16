@@ -4,6 +4,27 @@ url: "https://www.gamedeveloper.com/design/game-design-deep-dive-i-dandara-i-s-u
 collected_at: "2026-08-16T23:30:49+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, mechanics, platformer, input-design, level-design, postmortem]
+evaluated_at: "2026-08-16T23:35:36+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-16T23:35:36+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-16T23:35:36+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-15"
+supersedes: []
+gate_reason: >-
+  touch 起点の入力発見から jump-only への絞り込み、intent 補助、武器射程、room 制約、gamepad 移植まで、
+  一つの移動 verb が周辺設計を変えた因果を具体例で追える。定量比較はないが、操作と level topology の検査へ直接適用でき、
+  制約から設計語彙を育てる軸で約4000字の独立した分析を構成できる。
+suggested_post_outline:
+  overview_angle: "touch の制約から jump-only を発見し、着地の自由を削ることで速度感と意図の両立を作った反復として説明する"
+  analysis_axis: "入力方式から中心動詞を選ぶ過程、last-valid aim と raycaster による intent 補助、武器射程と接近リスク、mini dead-end を防ぐ room 制約、gamepad での再解釈"
+  application_target: "Log_cdx の移動中心 prototype で、入力ぶれ・失敗後の復帰経路・安全圏からの攻撃・controller 差を同じ movement test map で検査する"
+  pros_cons: "設計変更の因果と失敗例が具体的で再現しやすい一方、成功評価は開発者の観察中心で、入力補助の強度や player 差は別途 playtest が必要"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt

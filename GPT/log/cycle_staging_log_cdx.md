@@ -12,7 +12,51 @@
 - Phase 1 では品質判定・4000字概要・Slack投稿・記憶階層改修を実施していない。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260816_dandara_jump_only_movement.md
+  - memory/shared_reads_candidates/20260816_airborne_kingdom_moving_city.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 2
+  malformed_count: 0
+  oldest_collected_at: "2026-08-16T23:30:49+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260816_dandara_jump_only_movement.md
+    - memory/shared_reads_candidates/20260816_airborne_kingdom_moving_city.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260816_dandara_jump_only_movement.md
+    - memory/shared_reads_candidates/20260816_airborne_kingdom_moving_city.md
+  valid_backlog_after: 0
+```
+
+- Dandara: pass。touch の入力制約から中心動詞を抽出し、intent 補助・攻撃射程・room topology・別 controller まで一貫して反復した一次資料で、移動 prototype の具体的な検査軸へ落とせる。
+- Airborne Kingdom: pass。都市全体の移動が economy と world の双方を再編した因果が明瞭で、固有 verb を既存 genre の複数 system へ接続する設計監査へ適用できる。
+- duplicate preflight は正しい title / URL で両件 `continue`。posted-source、title canonical、open duplicate group の sidecar は Phase 2 開始時と frontmatter 更新後に再生成し、`--check` でも3件とも fresh を確認した。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
