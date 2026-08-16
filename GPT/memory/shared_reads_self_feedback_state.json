@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-16T23:47:21+09:00",
+  "updated_at": "2026-08-17T01:41:36+09:00",
   "reviewed_source_ts": [
+    "1786891365.436139",
     "1786884152.236799",
     "1786876748.953229",
     "1779860611.263189",
@@ -660,6 +661,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-17T01:41:36+09:00",
+      "selected": {
+        "id": "sr-1786891365-9161c34a43",
+        "source_ts": "1786891365.436139",
+        "title": "Dandara の jump-only movement — device error と decision error、失敗後 recovery cost の分離",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、harness・game-design・operation・evaluation の4優先タグを持つため1件だけ選んだ。touch 制約から生まれた中心移動を、入力補助・武器射程・room topology・camera・gamepad 文法まで一体で評価する知見が、次の movement prototype で既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本 atom 自体を「重要」「適切」「自分に反映してほしい」と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads 本文は、自由着地から有効面限定・last-valid aim・可変幅 raycaster への反復、長射程 auto-aim から短射程 shotgun への変更、mini dead-end・camera trigger・gamepad の確定文法まで因果を追い、valid landing 率・意図しない面への着地率・元の進行方向へ戻る追加 action 数という比較へ変換できるため relevance・actionability は3とした。一方、根拠は開発者の事後記録と後期 playtest であり、補助あり／なし、device 別 aim error、room 改修前後の比較数値はないため evidence=2。probe-20260717-player-intent-action-response は intent・action schema・world response を、probe-20260603-mechanic-observation-channel-gate は screen・input trace・timing・player utterance の観測境界を、probe-20260710-feedback-device-amplitude-axis は補助の方向と強度を、probe-20260609-softlock-midstate-recoverability は off-path state からの復帰可能性をすでに扱う。ただし device error と decision error の分離、および失敗後の追加 action 数で rhythm を測る点は完全には重ならないため non_redundancy=2。現在の staging には比較可能な movement prototype、controller 別 trace、landing graph、before／after artifact がなく、直後の Phase 4a は memory cleanup で実際の consumer にならない。consumer_phase・trigger_artifact・expected_delta を lease 契約どおり指定できないため adopt_probe／adopt_metric にせず、次の該当 playable artifact で既存4 controls が device noise または recovery cost を分類できない時だけ再評価する state-only defer とする。",
+      "existing_controls": [
+        "probe-20260717-player-intent-action-response",
+        "probe-20260603-mechanic-observation-channel-gate",
+        "probe-20260710-feedback-device-amplitude-axis",
+        "probe-20260609-softlock-midstate-recoverability"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、数値上は採用水準だが比較可能な movement artifact がなく、既存の intent／observation／assist amplitude／recoverability controls と一部重なるため defer した理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-16T23:47:21+09:00",
       "selected": {

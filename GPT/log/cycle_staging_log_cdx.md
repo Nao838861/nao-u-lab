@@ -75,7 +75,40 @@ skipped: []
 - Slack 投稿、candidate frontmatter 更新、投稿ドラフト作成はいずれもなし。品質ゲートを維持した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786891365-9161c34a43
+    source_ts: "1786891365.436139"
+    title: "Dandara の jump-only movement — device error と decision error、失敗後 recovery cost の分離"
+    reason: "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、harness・game-design・operation・evaluation の4優先タグを持つため1件だけ選んだ。touch 制約から生まれた中心移動を、入力補助・武器射程・room topology・camera・gamepad 文法まで一体で評価する知見が、次の movement prototype で既存 control と異なる小さな判断差を作れるか確認した。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "数値上は採用条件を満たすが、現在の staging には movement prototype、controller 別 trace、landing graph、before／after artifact がなく、後続 Phase 4a は memory cleanup で実際の consumer にならない。既存の intent／observation／assist amplitude／recoverability controls と一部重なるため、lease を空運用で増やさず、次の該当 playable artifact で device error と decision error、または失敗後の追加 action 数を既存 control だけでは分類できない時に再評価する。"
+  existing_controls:
+    - probe-20260717-player-intent-action-response
+    - probe-20260603-mechanic-observation-channel-gate
+    - probe-20260710-feedback-device-amplitude-axis
+    - probe-20260609-softlock-midstate-recoverability
+  change:
+    summary: "reviewed_source_ts と state-only defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
