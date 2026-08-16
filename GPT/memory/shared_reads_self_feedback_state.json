@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-17T05:42:39+09:00",
+  "updated_at": "2026-08-17T07:43:23+09:00",
   "reviewed_source_ts": [
+    "1779910998.722809",
     "1779928450.976429",
     "1779957463.790519",
     "1786891365.436139",
@@ -663,6 +664,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-17T07:43:23+09:00",
+      "selected": {
+        "id": "sr-1779910998-01d639e6fe",
+        "source_ts": "1779910998.722809",
+        "title": ":brain: Mem0g (Mem0 graph memory) — directed labeled graph + Update Resolver による agent memory の core",
+        "reason": "source が slack_api/shared-reads、score 13、未レビューという条件を満たし、memory・agent・operation・evaluation の4優先タグを持つ候補から1件だけ選んだ。directed labeled graph、ADD／UPDATE／DELETE／NOOP resolver、過去事実を残す invalidation が現在の per-atom memory と lifecycle 運用に異なる判断差を作れるか確認した。Nao_u が本 atom 自体を「重要」「適切」「自分に反映してほしい」と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、entity／relation triplet、近傍候補への ADD／UPDATE／DELETE／NOOP、削除せず過去事実として残す invalid flag、LOCOMO 時系列推論 58.13% と OpenAI Memory 21.71% の比較、edge label・entity 正規化・graph 上限・LLM call cost の未解決点まで示すため relevance=3、actionability・evidence=2とした。一方、probe-20260601-memory-link-llm-roi-gate は deterministic edge と具体的 recall miss がない段階で LLM link generation を増やさない境界を、probe-20260709-atma-state-role-ghost-memory-check は current／historical／transition／superseded の役割を、probe-20260813-latticemind-conflict-state-scope は same_claim／scope_divergence／contested／superseded の conflict 分類を既に扱う。現行 per-atom YAML frontmatter、status／supersedes、canonical overlay も本文の temporal invalidation を削除なしで表現する。したがって Mem0g 固有の graph schema や Update Resolver を別 control にしても次回判断は変わらず non_redundancy=0。ローカル corpus で resolver あり／なし、edge label 語彙、recall precision、LLM cost の before／after artifact もなく、325件の active_probes へ同義 control を足すと確認負荷と LLM 依存を増やすため risk_control=1とし、source_ts の review 記録だけを残す。",
+      "existing_controls": [
+        "probe-20260601-memory-link-llm-roi-gate",
+        "probe-20260709-atma-state-role-ghost-memory-check",
+        "probe-20260813-latticemind-conflict-state-scope",
+        "memory/atoms/<YYYY-MM>/<id>.md YAML frontmatter + status/supersedes + memory/atoms/canonical_overlay.jsonl"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "Mem0g 主投稿の source_ts を reviewed にし、graph link・conflict resolution・temporal invalidation が既存 control と実装に包含されるため採用しない理由を記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-17T05:42:39+09:00",
       "selected": {

@@ -64,7 +64,34 @@ skipped: []
 - 投稿形態: `tools/slack_client.py` の `post_message` による #shared-reads への単独通常投稿。thread_ts は使用していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779910998-01d639e6fe
+    source_ts: "1779910998.722809"
+    title: ":brain: Mem0g (Mem0 graph memory) — directed labeled graph + Update Resolver による agent memory の core"
+    reason: "score 13・未レビューで、memory・agent・operation・evaluation の4優先タグを持つ。graph link、Update Resolver、temporal invalidation が現在の memory 運用に未充足の判断差を作るか確認するため、1件だけ選んだ。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "deterministic link→LLM fallback、current／historical／superseded、conflict scope 分類は既存 probe が扱い、per-atom frontmatter と status／supersedes／canonical overlay も temporal invalidation を保持する。ローカル corpus の resolver あり／なし比較もなく、325件の active probe に同義 control を足しても次回判断が変わらない。合計11かつ risk_control=1のため state-only review とする。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを記録。新規 probe・metric・directive・lease は追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
