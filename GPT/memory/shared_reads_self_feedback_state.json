@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-16T17:42:04+09:00",
+  "updated_at": "2026-08-16T19:42:45+09:00",
   "reviewed_source_ts": [
+    "1779860611.263189",
     "1779887685.026909",
     "1786685504.078429",
     "1779972051.823869",
@@ -657,6 +658,47 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-16T19:42:45+09:00",
+      "selected": {
+        "id": "sr-1779860611-b2f0031a82",
+        "source_ts": "1779860611.263189",
+        "title": "スキーマ誘導型エージェントメモリ — 「何を記憶しないか」の設計",
+        "reason": "source が slack_api/shared-reads、score 13、未レビューという条件を満たし、memory・game-design・agent・operation・evaluation の5優先タグを持つ候補から1件だけ選んだ。現在の Phase 4a memory cleanup に対し、自由抽出を狭い entity／edge schema で制約することと、過去の事実を無効化しつつ履歴保持する temporal resolution が、既存 lifecycle controls と異なる判断差を作るか確認した。Nao_u が本 atom 自体を「重要」「適切」「自分に反映してほしい」と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、自由な entity／relationship 抽出が Person／Thing／RELATES_TO に平坦化される問題、生成前に出力空間を制約する entity／edge schema、古い edge を無効化しつつ履歴を残す temporal resolution、3〜4種類から始めて retrieval failure 時だけ拡張する境界を示し、次の memory cleanup で現在・履歴・無効化状態を分ける行動へ直接変換できるため relevance・actionability は3とした。一方、根拠は紹介 tweet と投稿内分析が中心で、当環境における recall precision、誤接続率、schema 拡張回数、cleanup 判断差の before／after はないため evidence は2に留める。probe-20260604-memory-discard-operation-gate は store／update／summarize と discard／retire の選択を、probe-20260625-amvl-retention-utility-lifecycle は retention 宣言と観測 utility の分離を、probe-20260709-atma-state-role-ghost-memory-check は current／historical／transition／superseded の役割分離をすでに扱う。per-atom YAML frontmatter と lifecycle overlay も型・状態・provenance を保持しているため、本 atom の temporal resolution と狭い schema を別 control にしても次回判断は変わらず non_redundancy=0。active_probes 325件へ同義 control や固定カテゴリ上限を足すと確認負荷と未知情報の取りこぼしを増やすため risk_control=1とし、未レビュー source_ts を state-only で閉じる。",
+      "existing_controls": [
+        "probe-20260604-memory-discard-operation-gate",
+        "probe-20260625-amvl-retention-utility-lifecycle",
+        "probe-20260709-atma-state-role-ghost-memory-check",
+        "memory/atoms/<YYYY-MM>/<id>.md YAML frontmatter",
+        "memory/atoms/canonical_overlay.jsonl"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、既存 discard／retention／state-role controls および per-atom lifecycle schema との重複による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-16T17:42:04+09:00",
       "selected": {

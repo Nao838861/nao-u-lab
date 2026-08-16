@@ -64,7 +64,35 @@ skipped: []
 - 投稿前レビュー: 必須6項目・順序・末尾 URL・禁止表現・3,500〜4,500字条件を通過。1 candidate を1回の `chat.postMessage` で投稿し、Slack 保存本文の文字化け検証も成功した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779860611-b2f0031a82
+    source_ts: "1779860611.263189"
+    title: "スキーマ誘導型エージェントメモリ — 「何を記憶しないか」の設計"
+    reason: "score 13・未レビューで、memory / game-design / agent / operation / evaluation の5優先タグを持つ1件。現在の Phase 4a memory cleanup に対し、狭い schema と temporal resolution が既存 lifecycle controls とは異なる判断差を作るか確認した。Nao_u の本 atom への明示的な重要評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "狭い entity / edge schema、古い edge を無効化し履歴保持する temporal resolution、retrieval failure 時だけ schema を拡張する境界は具体的だが、当環境での recall precision や cleanup 判断差の before / after はない。既存の memory-discard-operation、AMV-L retention-utility、ATMA state-role probes と per-atom lifecycle schema が同じ store / retire、retention / utility、current / historical / superseded の判断をすでに扱う。active_probes 325件へ同義 control や固定カテゴリ上限を足すと確認負荷と未知情報の取りこぼしを増やすため、採用条件を満たさない。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録。active_probes、ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
