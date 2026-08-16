@@ -51,7 +51,17 @@ unreviewed_intake_audit:
 - duplicate preflight: `continue`（posted-source / closed canonical title / open duplicate group の一致なし）。Slack 投稿・新規収集・記憶階層の改修は行っていない。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260817_telemetry_supported_game_design.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786919931515999
+    char_count: 3847
+skipped: []
+```
+
+- 最終判定: 投稿。元記事で Question / Record / Analyze / Refine、集計値と個別履歴、定量情報だけでは行動理由を説明できない限界、Madden NFL 11 の改善方向を照合した。
+- 投稿前レビュー: 必須 6 セクション、`■ 概要` 冒頭、`■ URL` 末尾、禁止表現なし、3,847 文字を `tools/shared_reads_policy.py` で確認した。
+- 投稿形態: `tools/slack_client.py` の `post_message` による #shared-reads への単独通常投稿。thread_ts は使用していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

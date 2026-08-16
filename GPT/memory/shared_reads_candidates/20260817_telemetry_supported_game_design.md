@@ -7,12 +7,17 @@ genre_tags: [game-design, telemetry, playtesting, analytics, iteration]
 evaluated_at: "2026-08-17T07:33:42+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-17T07:33:42+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-17T07:33:42+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1786919931.515999"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786919931515999"
+  char_count: 3847
+  posted_at: "2026-08-17T07:38:51.515999+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-17T07:38:51.515999+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786919931515999"
+next_action: none
 stale_after: "2026-09-16"
 supersedes: []
 gate_reason: >-
