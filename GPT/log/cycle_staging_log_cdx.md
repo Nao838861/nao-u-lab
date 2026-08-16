@@ -8,7 +8,46 @@
 - pending 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` ともに該当なし。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260816_player_perceptions_genai_games_steam_reviews.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-08-16T21:31:23+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260816_player_perceptions_genai_games_steam_reviews.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260816_player_perceptions_genai_games_steam_reviews.md
+  valid_backlog_after: 0
+```
+
+判定根拠: PCG と生成 AI 開示ゲームの受容差を、508,192 件のレビューの定量分析と 600 件の thematic analysis で検証している。開示・価格・Early Access・制作投資の知覚を、生成 AI を使うゲームの具体的な受容設計へ接続でき、CoopEval 水準の概要を構成できるため pass。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
