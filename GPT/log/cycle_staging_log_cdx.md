@@ -132,7 +132,79 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "MEMORY.md 内の atom 参照 87 件を atoms/index.jsonl と照合し、broken reference 0 件を確認"
+  - "atom mirror 2878/2878/2878、content conflict 0 件、既知 duplicate cluster 45 群と canonical overlay 45 群の一致を確認"
+  - "shared-reads title canonical / mixed / open-duplicate sidecar を再生成。Phase 2 で failed 化された evaluator-preference sibling 1件を mixed queue から terminal canonical index へ反映"
+  - "stale triage / group-action queue を再生成。live deferred group lease を合成した結果、当 cycle の enqueue は group 0 件・candidate 0 件"
+  - "Slack directives / broadcasts は pending 0 件のため status 更新なし"
+  - "memory/raw の30日超無更新 241ファイル（70,581,501 bytes）を確認。原文 provenance として既存 raw/archive 配下に保持し、移動なし"
+issues:
+  - id: ISS-4A-20260816-01
+    description: "active atom sr-1776127289-4d9239b255 の『AIエージェント』部分に U+FFFD が2文字残る。UTF-8表示経路ではなく raw Slack archive 自体に存在する局所的な原文欠損"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl:317"
+    source_file_status: "UTF-8明示読みで raw source / atoms.jsonl / per-atom md の3層すべてに同じ U+FFFD を確認。gr-1777083728-44d444ab7a の警告は本文中の意図的な『???』による detector false positive"
+    display_or_tooling_status: "Get-Content -Encoding UTF8 と rg の表示は source 内容に一致し、tooling mojibake ではない。MEMORY.md は『記憶』『ゲーム設計』『敵パターン』を取得でき、『評価軸』は本文に文字列自体がないだけで UTF-8破損兆候なし"
+    why_blocks_game_memory: "game task entry point と recall smoke は正常で直近制作を遮断しないが、agent-memory 系検索語の一致と表示品質を1 atomだけ弱める。局所修復で足り、階層設計は不要"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 7
+    dormant: 1
+stale_review_batch: []
+group_action_handoff: []
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 36
+  mixed_group_count: 33
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_note: "overdue 2件は JAMEL / collision enemy morphology の all-open group に属し、membership fingerprint 一致の deferred lease が 2026-08-20 13:19:04+09:00 まで有効なため queue から抑止"
+candidate_lifecycle:
+  files: 1300
+  status_counts:
+    posted: 613
+    ready_to_post: 9
+    postponed: 208
+    failed: 468
+    needs_review: 2
+  missing_stale_after: 3
+  status_conflicts: 0
+  overdue_for_reassessment: 2
+raw_archive_audit:
+  older_than_30_days_count: 241
+  older_than_30_days_bytes: 70581501
+  archived_this_cycle: 0
+  decision: "raw provenance を保持。容量・検索障害の証拠がないため Phase 4a では移動しない"
+encoding_audit:
+  memory_md_source_file_status: "UTF-8 readable; atom reference 87件の欠落なし"
+  representative_terms:
+    記憶: 24
+    ゲーム設計: 8
+    敵パターン: 1
+    評価軸: 0
+  display_or_tooling_status: "none"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
