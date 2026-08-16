@@ -136,7 +136,86 @@ self_feedback:
     conflict_checked: true
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "shared-reads の open duplicate group / stale triage / group action sidecar を現 candidate 状態と live lease から再生成した。"
+  - "期限到来 candidate 1件を handoff inbox へ冪等 enqueue した（cha-115a140818db1d64）。candidate 本体は変更していない。"
+  - "Slack directives / broadcasts は pending 0 件で、handled 更新対象はなかった。"
+  - "due probe lease は 0 件で、probe lifecycle ledger の receipt 更新はなかった。"
+memory_index_audit:
+  broken_links: 0
+  validator_result: "memory/MEMORY.md entry sections match per-file atom index"
+  utf8_probe:
+    記憶: true
+    ゲーム設計: true
+    敵パターン: true
+    評価軸: false
+  source_file_status: "UTF-8 明示読みは正常。『評価軸』は本文に字句不在だが、日本語本文の破損・mojibake は観測しなかった。"
+  display_or_tooling_status: "none"
+atom_audit:
+  atoms_jsonl: 2882
+  per_file_md: 2882
+  index_jsonl: 2882
+  content_conflicts: 0
+  raw_normalized_content_duplicate_groups: 40
+  canonical_overlay_groups: 45
+  effective_display_unresolved_groups: 0
+  note: "raw duplicate は normalized_content_hash / canonical overlay で fold 済み。新しい矛盾・孤児・mirror drift はなかった。"
+raw_archive_audit:
+  older_than_30_days: 242
+  archived: 0
+  reason: "大半は web research / Slack / headless evaluation の一次証拠で、archive_last_run は 2026-08-17T03:36:20。参照関係を変える移動は mechanical cleanup の範囲を超えるため保持した。"
+candidate_lifecycle:
+  counts:
+    posted: 617
+    ready_to_post: 9
+    postponed: 209
+    failed: 469
+    needs_review: 2
+  overdue_open_total: 3
+  missing_stale_after: 3
+  note: "現在状態の dry-run audit は changed 0。terminal candidate は再評価 queue から除外した。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 7
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 3
+  stale_triage_queue_rows: 1
+  open_duplicate_group_count: 35
+  mixed_group_count: 32
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 1
+  candidate_handoff_ids: [cha-115a140818db1d64]
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-115a140818db1d64
+    path: memory/shared_reads_candidates/20260718_itgpt_dance_chart_generation.md
+    status: postponed
+    stale_after: "2026-08-17"
+    priority_reason: "DDR / ITG chart 生成の手法を評価するための入力表現、難度条件、身体的制約、dataset、accuracy 定義、比較値が候補本文に不足しており、Phase 2 で原論文根拠を再評価する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
