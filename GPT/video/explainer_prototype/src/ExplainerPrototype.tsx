@@ -343,6 +343,97 @@ const PreviousScene: React.FC = () => {
   );
 };
 
+const DevelopmentTitleScene: React.FC = () => {
+  const frame = useCurrentFrame();
+  const enter = spring({frame, fps: 30, config: {damping: 15}});
+  return (
+    <AbsoluteFill style={{opacity: fade(frame, 90), backgroundColor: C.bg, display: 'grid', placeItems: 'center'}}>
+      <div style={{textAlign: 'center', opacity: enter, transform: `translateY(${(1 - enter) * 24}px)`}}>
+        <Eyebrow color={C.cyan}>DEVELOPMENT LOG</Eyebrow>
+        <div style={{height: 12}} />
+        <Title size={62}>開発記録</Title>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const DevVideoFrame: React.FC<{src: string; children?: React.ReactNode}> = ({src, children}) => (
+  <div style={{position: 'absolute', left: 52, top: 135, width: 820, height: 500, padding: 12, boxSizing: 'border-box', background: C.panel, border: '2px solid #47434e'}}>
+    <OffthreadVideo src={staticFile(src)} muted style={{width: '100%', height: '100%', objectFit: 'contain', background: '#000', imageRendering: 'pixelated'}} />
+    {children}
+  </div>
+);
+
+const DevelopmentDay1Scene: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{opacity: fade(frame, 450), backgroundColor: C.bg, padding: '36px 48px 0', boxSizing: 'border-box'}}>
+      <Eyebrow color={C.orange}>DAY 1</Eyebrow>
+      <Title size={42}>地面と拡大縮小だけ</Title>
+      <DevVideoFrame src="dev_day1.mp4" />
+      <div style={{position: 'absolute', left: 910, top: 165, width: 310}}>
+        <div style={{fontFamily: FONT, color: C.white, fontSize: 22, fontWeight: 900}}>地面はライン単位</div>
+        <div style={{fontFamily: FONT, color: C.dim, fontSize: 15, lineHeight: 1.6, marginTop: 14}}>Y軸ごとに白／黒の値を持ち、横一列を同じ色で塗る。</div>
+        <div style={{marginTop: 20, border: '1px solid #47434e', background: C.panel, padding: 12}}>
+          {[0, 1, 1, 0, 1, 0, 0].map((v, i) => (
+            <div key={i} style={{display: 'flex', alignItems: 'center', gap: 9, marginTop: i ? 7 : 0}}>
+              <span style={{width: 34, fontFamily: MONO, color: C.dim, fontSize: 12}}>Y{i}</span>
+              <span style={{width: 20, fontFamily: MONO, color: v ? C.white : C.dim, fontSize: 12}}>{v}</span>
+              <span style={{height: 8, flex: 1, background: v ? C.white : '#050507'}} />
+            </div>
+          ))}
+        </div>
+        <div style={{fontFamily: FONT, color: C.cyan, fontSize: 16, fontWeight: 900, marginTop: 18}}>7パターンを切り替えて前進を表現</div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const DevelopmentDay2Scene: React.FC = () => {
+  const frame = useCurrentFrame();
+  const z = Math.min(55, Math.floor(frame / 8));
+  return (
+    <AbsoluteFill style={{opacity: fade(frame, 450), backgroundColor: C.bg, padding: '36px 48px 0', boxSizing: 'border-box'}}>
+      <Eyebrow color={C.orange}>DAY 2</Eyebrow>
+      <Title size={42}>奥行きに合わせて木を動かす</Title>
+      <DevVideoFrame src="dev_day2.mp4" />
+      <div style={{position: 'absolute', left: 910, top: 170, width: 310}}>
+        <div style={{fontFamily: FONT, color: C.white, fontSize: 22, fontWeight: 900}}>Z軸 56段階</div>
+        <div style={{height: 300, marginTop: 20, position: 'relative', borderLeft: `5px solid ${C.cyan}`, background: `linear-gradient(180deg, ${C.cyan}12, ${C.magenta}28)`}}>
+          <div style={{position: 'absolute', left: 15, top: 5, fontFamily: MONO, color: C.cyan, fontSize: 14}}>Z = 55　奥</div>
+          <div style={{position: 'absolute', left: 15, bottom: 5, fontFamily: MONO, color: C.magenta, fontSize: 14}}>Z = 0　手前</div>
+          <div style={{position: 'absolute', left: -10, top: `${(55 - z) / 55 * 270 + 10}px`, width: 15, height: 4, background: C.white}} />
+        </div>
+        <div style={{fontFamily: FONT, color: C.white, fontSize: 15, lineHeight: 1.5, marginTop: 15}}>各段階でスプライトの大きさとY座標を手作業で補正</div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const DevelopmentDay3Scene: React.FC = () => {
+  const frame = useCurrentFrame();
+  const checkerboard = frame >= 300;
+  return (
+    <AbsoluteFill style={{opacity: fade(frame, 450), backgroundColor: C.bg, padding: '36px 48px 0', boxSizing: 'border-box'}}>
+      <Eyebrow color={checkerboard ? C.red : C.orange}>DAY 3</Eyebrow>
+      <Title size={42}>{checkerboard ? '市松模様の地面も試した' : 'プレイヤーの上下で地平線を動かす'}</Title>
+      <div style={{position: 'absolute', left: 125, top: 135, width: 1030, height: 500, padding: 12, boxSizing: 'border-box', background: C.panel, border: `2px solid ${checkerboard ? C.red : '#47434e'}`}}>
+        {checkerboard ? (
+          <Sequence from={300}>
+            <OffthreadVideo src={staticFile('dev_checkerboard.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'contain', background: '#000', imageRendering: 'pixelated'}} />
+          </Sequence>
+        ) : (
+          <OffthreadVideo src={staticFile('dev_day3.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'contain', background: '#000', imageRendering: 'pixelated'}} />
+        )}
+        {checkerboard ? <div style={{position: 'absolute', right: 22, top: 20, padding: '8px 14px', background: '#16080bcc', border: `2px solid ${C.red}`, fontFamily: FONT, color: C.red, fontSize: 24, fontWeight: 900}}>不採用案</div> : null}
+      </div>
+      <div style={{position: 'absolute', left: 125, bottom: 48, fontFamily: FONT, color: checkerboard ? C.dim : C.cyan, fontSize: 16, fontWeight: 900}}>
+        {checkerboard ? '描画量と見た目の両面から不採用' : '地面テーブル：33段階 × 各7パターン'}
+      </div>
+    </AbsoluteFill>
+  );
+};
+
 const LargeCharacterScene: React.FC = () => {
   const frame = useCurrentFrame();
   const imageEnter = spring({frame, fps: 30, config: {damping: 18}});
@@ -1322,44 +1413,50 @@ export const ExplainerPrototype: React.FC = () => {
       <Sequence from={240} durationInFrames={210}>
         <PreviousScene />
       </Sequence>
-      <Sequence from={450} durationInFrames={720}>
+      <Sequence from={450} durationInFrames={90}>
+        <DevelopmentTitleScene />
+      </Sequence>
+      <Sequence from={540} durationInFrames={450}>
+        <DevelopmentDay1Scene />
+      </Sequence>
+      <Sequence from={990} durationInFrames={450}>
+        <DevelopmentDay2Scene />
+      </Sequence>
+      <Sequence from={1440} durationInFrames={450}>
+        <DevelopmentDay3Scene />
+      </Sequence>
+      <Sequence from={1890} durationInFrames={720}>
         <LargeCharacterScene />
       </Sequence>
-      <Sequence from={1170} durationInFrames={300}>
+      <Sequence from={2610} durationInFrames={300}>
         <GenericLoopScene />
       </Sequence>
-      <Sequence from={1470} durationInFrames={360}>
+      <Sequence from={2910} durationInFrames={360}>
         <CompiledScene />
       </Sequence>
-      <Sequence from={1830} durationInFrames={390}>
+      <Sequence from={3270} durationInFrames={390}>
         <RaceScene />
       </Sequence>
-      <Sequence from={2220} durationInFrames={480}>
+      <Sequence from={3660} durationInFrames={480}>
         <PerformanceDemoScene />
       </Sequence>
-      <Sequence from={2700} durationInFrames={360}>
+      <Sequence from={4140} durationInFrames={360}>
         <CapacityCostScene />
       </Sequence>
-      <Sequence from={3060} durationInFrames={300}>
+      <Sequence from={4500} durationInFrames={300}>
         <PositionLimitScene />
       </Sequence>
-      <Sequence from={3360} durationInFrames={360}>
+      <Sequence from={4800} durationInFrames={360}>
         <AlignmentScene />
       </Sequence>
-      <Sequence from={3720} durationInFrames={450}>
+      <Sequence from={5160} durationInFrames={450}>
         <SizeBankScene />
       </Sequence>
-      <Sequence from={4170} durationInFrames={240}>
+      <Sequence from={5610} durationInFrames={240}>
         <BossBattleScene />
       </Sequence>
-      <Sequence from={4410} durationInFrames={600}>
+      <Sequence from={5850} durationInFrames={600}>
         <FrameTimelineScene />
-      </Sequence>
-      <Sequence from={5010} durationInFrames={180}>
-        <DayOneScene />
-      </Sequence>
-      <Sequence from={5190} durationInFrames={180}>
-        <CurrentReturnScene />
       </Sequence>
     </AbsoluteFill>
   );
