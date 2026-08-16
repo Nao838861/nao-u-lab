@@ -364,26 +364,26 @@ const GenericLoopScene: React.FC = () => {
       <Eyebrow color={C.cyan}>一般的なソフトウェア描画</Eyebrow>
       <div style={{height: 10}} />
       <Title size={41}>すべての4×2ドットに、同じ合成処理を実行</Title>
-      <div style={{display: 'flex', alignItems: 'flex-start', gap: 34, marginTop: 27}}>
-        <div style={{width: 440, flexShrink: 0}}>
-          <PackedEnemy scale={8} processedCount={done} cursor={cursor} />
+      <div style={{display: 'flex', alignItems: 'flex-start', gap: 24, marginTop: 27}}>
+        <div style={{width: 550, flexShrink: 0}}>
+          <PackedEnemy scale={10} processedCount={done} cursor={cursor} />
           <div style={{display: 'flex', justifyContent: 'space-between', marginTop: 9, fontFamily: MONO}}>
             <span style={{color: C.dim, fontSize: 17}}>1 BYTE = 4 × 2 DOTS</span>
             <span style={{color: C.cyan, fontSize: 17}}>{String(done).padStart(3, '0')} / 210</span>
           </div>
           <div
             style={{
-              marginTop: 12,
-              padding: '12px 16px 13px',
+              marginTop: 8,
+              padding: '8px 14px 9px',
               background: C.panel,
               border: '1px solid #3b3842',
             }}
           >
-            <div style={{fontFamily: FONT, color: C.cyan, fontWeight: 900, fontSize: 17, marginBottom: 7}}>
+            <div style={{fontFamily: FONT, color: C.cyan, fontWeight: 900, fontSize: 16, marginBottom: 5}}>
               データを読みながら描くプログラム
             </div>
             {genericCode.map((line) => (
-              <div key={line} style={{fontFamily: MONO, color: C.white, fontSize: 16, lineHeight: 1.22}}>
+              <div key={line} style={{fontFamily: MONO, color: C.white, fontSize: 15, lineHeight: 1.15}}>
                 {line}
               </div>
             ))}
@@ -461,9 +461,9 @@ const CompiledScene: React.FC = () => {
       <Eyebrow>COMPILED SPRITE</Eyebrow>
       <div style={{height: 10}} />
       <Title size={42}>絵の値を先に入れ、場所ごとに最短の命令へ</Title>
-      <div style={{display: 'flex', gap: 34, alignItems: 'flex-start', marginTop: 27}}>
-        <div style={{width: 440, flexShrink: 0}}>
-          <PackedEnemy scale={8} showAll analyze cursor={sampleBlocks[active]} />
+      <div style={{display: 'flex', gap: 24, alignItems: 'flex-start', marginTop: 27}}>
+        <div style={{width: 550, flexShrink: 0}}>
+          <PackedEnemy scale={10} showAll analyze cursor={sampleBlocks[active]} />
           <div style={{display: 'flex', gap: 14, marginTop: 9, fontFamily: FONT, fontSize: 16, fontWeight: 800}}>
             <span style={{color: '#8b8d96'}}>■ 透明</span>
             <span style={{color: C.orange}}>■ 一部</span>
