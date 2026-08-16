@@ -59,7 +59,20 @@ unreviewed_intake_audit:
 - duplicate preflight は正しい title / URL で両件 `continue`。posted-source、title canonical、open duplicate group の sidecar は Phase 2 開始時と frontmatter 更新後に再生成し、`--check` でも3件とも fresh を確認した。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260816_dandara_jump_only_movement.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786891365436139
+    char_count: 3647
+  - candidate: memory/shared_reads_candidates/20260816_airborne_kingdom_moving_city.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786891378720329
+    char_count: 4077
+skipped: []
+```
+
+- Dandara: touch 起点の jump-only を入力補助、武器射程、mini dead-end、gamepad の intent 再表現まで追い、device error と decision error を分ける検証案として投稿した。初回 ts `1786891337.519019` は `João` の `ã` を文字化け marker と誤検知したため、投稿スクリプトが自動削除した。ASCII 表記へ修正後、ts `1786891365.436139` で保存本文照合に成功した。
+- Airborne Kingdom: 都市移動 verb が採集、研究、Propulsion、資源 trail、探索報酬、制作領域を再編する因果を、代替・負荷・誘導・終了処理の dependency 監査として投稿した。ts `1786891378.720329` で保存本文照合に成功した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
