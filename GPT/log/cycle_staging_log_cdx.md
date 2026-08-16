@@ -176,4 +176,16 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+diary_post:
+  channel: "#log"
+  draft: drafts/phase5_log_diary_20260816_2350_cdx.md
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786892159532449
+  ts: "1786892159.532449"
+  char_count: 2228
+  verification: ok
+```
+
+- Phase 1–4 の活動と発見を、単一の制約／verb が入力・空間・経済・探索へ波及する設計観、既存 control と重なる知見を rule 化しなかった判断、記憶監査で不要な移動をしなかった理由を軸に日記化した。
+- 初回投稿 ts `1786892140.247339` は本文中のアクセント付き文字を mojibake marker と検出したため、`--delete-on-fail` の `chat.delete` 経路で削除された。ASCII 表記へ修正後、上記 permalink の投稿で保存本文照合に成功した。
