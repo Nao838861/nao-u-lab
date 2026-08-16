@@ -1119,15 +1119,14 @@ const AlignmentScene: React.FC = () => {
 
 const SizeBankScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const chosen = 15 - (Math.floor(frame / 13) % 16);
-  const progress = interpolate(frame, [0, 240], [0, 1], {extrapolateRight: 'clamp'});
+  const chosen = 15 - (Math.floor(frame / 18) % 16);
+  const progress = interpolate(frame, [0, 300], [0, 1], {extrapolateRight: 'clamp'});
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 240), backgroundColor: C.bg, padding: '45px 55px', boxSizing: 'border-box'}}>
-      <Eyebrow>16 SIZES × 8 ALIGNMENTS</Eyebrow>
-      <div style={{height: 8}} />
-      <Title size={42}>拡大するのではなく、128本から選ぶ</Title>
-      <div style={{display: 'flex', gap: 38, marginTop: 35, alignItems: 'stretch'}}>
-        <div style={{width: 770, display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 10}}>
+    <AbsoluteFill style={{opacity: fade(frame, 450), backgroundColor: C.bg, padding: '38px 48px 0', boxSizing: 'border-box'}}>
+      <Title size={42}>拡大するのではなく、16枚から選ぶ</Title>
+      <div style={{fontFamily: FONT, color: C.white, fontSize: 24, fontWeight: 900, marginTop: 6}}>奥から手前まで、違う大きさの絵を用意</div>
+      <div style={{display: 'flex', gap: 28, marginTop: 24, alignItems: 'stretch'}}>
+        <div style={{width: 760, display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 8}}>
           {Array.from({length: 16}).map((_, i) => {
             const visible = i / 16 <= progress;
             const active = i === chosen;
@@ -1135,47 +1134,118 @@ const SizeBankScene: React.FC = () => {
               <div
                 key={i}
                 style={{
-                  height: 130,
+                  height: 158,
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '9px 5px 7px',
+                  justifyContent: 'center',
+                  padding: '8px 4px',
                   boxSizing: 'border-box',
                   background: active ? `${C.magenta}22` : C.panel,
                   border: `2px solid ${active ? C.magenta : '#34313c'}`,
                   opacity: visible ? 1 : 0.08,
-                  transform: `scale(${active ? 1.08 : 1})`,
                 }}
               >
                 <Img
-                  src={staticFile(`tree/Tree0_${String(i).padStart(2, '0')}.png`)}
-                  style={{maxWidth: 76, maxHeight: 94, imageRendering: 'pixelated'}}
+                  src={staticFile(`boss_face/BossFace_${String(i).padStart(2, '0')}.png`)}
+                  style={{maxWidth: 84, maxHeight: 132, imageRendering: 'pixelated'}}
                 />
-                <div style={{fontFamily: MONO, color: active ? C.magenta : C.dim, fontSize: 13}}>SIZE {i}</div>
               </div>
             );
           })}
+          <div style={{gridColumn: '1 / span 4', fontFamily: FONT, color: C.dim, fontSize: 18, fontWeight: 800}}>手前</div>
+          <div style={{gridColumn: '5 / span 4', fontFamily: FONT, color: C.dim, fontSize: 18, fontWeight: 800, textAlign: 'right'}}>奥</div>
         </div>
-        <div style={{flex: 1, border: '1px solid #34313c', background: C.panel, padding: 25}}>
-          <div style={{fontFamily: MONO, fontSize: 16, color: C.cyan}}>PRG BANK</div>
-          <div style={{fontFamily: FONT, color: C.white, fontSize: 30, fontWeight: 900, marginTop: 8}}>8 KB</div>
-          <div style={{height: 22}} />
-          {Array.from({length: 8}).map((_, i) => (
-            <div
-              key={i}
-              style={{
-                height: 30,
-                marginBottom: 8,
-                width: `${75 + (i % 3) * 10}%`,
-                background: i < Math.floor(progress * 9) ? (i % 2 ? C.magenta : C.cyan) : '#292631',
-              }}
+        <div style={{flex: 1, border: `2px solid ${C.magenta}`, background: C.panel, padding: 24, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between'}}>
+          <div style={{fontFamily: FONT, color: C.magenta, fontSize: 22, fontWeight: 900}}>いま使う大きさ</div>
+          <div style={{height: 210, width: '100%', display: 'grid', placeItems: 'center'}}>
+            <Img
+              src={staticFile(`boss_face/BossFace_${String(chosen).padStart(2, '0')}.png`)}
+              style={{maxWidth: 300, maxHeight: 210, imageRendering: 'pixelated'}}
             />
-          ))}
-          <div style={{fontFamily: FONT, color: C.dim, fontSize: 18, lineHeight: 1.5, marginTop: 16}}>
-            実行時の計算を減らし、<br />ROM容量へ移す
+          </div>
+          <div style={{width: '100%', padding: '17px 10px', boxSizing: 'border-box', borderTop: `2px solid ${C.magenta}`, borderBottom: `2px solid ${C.magenta}`, textAlign: 'center'}}>
+            <div style={{fontFamily: FONT, color: C.white, fontSize: 20, fontWeight: 900}}>16サイズ × 8位置</div>
+            <div style={{fontFamily: FONT, color: C.magenta, fontSize: 34, fontWeight: 900, marginTop: 6}}>ボス顔だけで 約90KB</div>
           </div>
         </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const BossBattleScene: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{opacity: fade(frame, 120), backgroundColor: '#000', display: 'grid', placeItems: 'center'}}>
+      <OffthreadVideo
+        src={staticFile('boss_battle.mp4')}
+        startFrom={106 * 30}
+        endAt={110 * 30}
+        muted
+        style={{width: 768, height: 720, objectFit: 'fill', imageRendering: 'pixelated'}}
+      />
+    </AbsoluteFill>
+  );
+};
+
+const FrameTimelineScene: React.FC = () => {
+  const frame = useCurrentFrame();
+  const reveal = (at: number) => interpolate(frame, [at, at + 24], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const cpu = C.magenta;
+  const normalVram = C.cyan;
+  const exram = C.orange;
+  const generation = [
+    {label: 'VBUF消去', sub: '約3,100 cycles', color: cpu, h: 58},
+    {label: '地面・遠景', sub: '約1,400 cycles', color: cpu, h: 50},
+    {label: '敵・弾・衝突などのロジック', sub: 'フレーム合計 約8,000〜11,000 cycles', color: cpu, h: 102},
+  ];
+  const transfer = [
+    {label: 'Compiled SpriteをVBUFへ描画', sub: '約20,000 cycles', color: cpu, h: 180},
+    {label: '通常VRAM側へ転送', sub: '上半分 → 下半分', color: normalVram, h: 58},
+    {label: 'ExRAM側へ転送', sub: '上半分 → 下半分', color: exram, h: 58},
+    {label: '表示ページを切り替える', sub: '', color: C.white, h: 42},
+  ];
+  const renderLane = (title: React.ReactNode, items: typeof generation, start: number) => (
+    <div style={{width: 350}}>
+      <div style={{fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900, textAlign: 'center', marginBottom: 10}}>{title}</div>
+      <div style={{border: '2px solid #47434e', padding: 10, background: C.panel}}>
+        {items.map((item, i) => (
+          <div key={item.label} style={{height: item.h, boxSizing: 'border-box', padding: '10px 13px', marginBottom: 7, background: `${item.color}20`, borderLeft: `7px solid ${item.color}`, opacity: reveal(start + i * 42)}}>
+            <div style={{fontFamily: FONT, color: C.white, fontSize: 17, fontWeight: 900}}>{item.label}</div>
+            {item.sub ? <div style={{fontFamily: MONO, color: item.color, fontSize: 14, fontWeight: 900, marginTop: 4}}>{item.sub}</div> : null}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+  const chartOpacity = reveal(390);
+  return (
+    <AbsoluteFill style={{opacity: fade(frame, 600), backgroundColor: C.bg, padding: '34px 42px 0', boxSizing: 'border-box'}}>
+      <Title size={38}>30fpsで動かすため、処理を2フレームに分ける</Title>
+      <div style={{fontFamily: MONO, color: C.dim, fontSize: 18, fontWeight: 900, marginTop: 7}}>2 NMI ＝ 1ゲーム更新 ＝ 30fps</div>
+      <div style={{display: 'flex', gap: 18, alignItems: 'flex-start', marginTop: 20}}>
+        {renderLane('A：次の画面を作る', generation, 45)}
+        {renderLane(<><span>B：大きな物体を描く</span><br /><span>表示へ渡す</span></>, transfer, 175)}
+        <div style={{flex: 1, opacity: chartOpacity, padding: '15px 17px', background: C.panel, border: '1px solid #47434e'}}>
+          <div style={{fontFamily: FONT, color: C.white, fontSize: 22, fontWeight: 900}}>処理時間の目安</div>
+          {[
+            {label: 'Compiled Sprite側', value: '約20,000', width: 100, color: cpu},
+            {label: 'ロジック・地面側', value: '約8,000〜11,000', width: 52, color: C.cyan},
+            {label: '大きい木 1本', value: '約4,200', width: 21, color: C.orange},
+          ].map((bar) => (
+            <div key={bar.label} style={{marginTop: 20}}>
+              <div style={{display: 'flex', justifyContent: 'space-between', gap: 8, fontFamily: FONT, fontSize: 15, fontWeight: 900}}>
+                <span style={{color: C.white}}>{bar.label}</span><span style={{color: bar.color}}>{bar.value}</span>
+              </div>
+              <div style={{height: 18, background: '#292630', marginTop: 6}}><div style={{height: '100%', width: `${bar.width}%`, background: bar.color}} /></div>
+            </div>
+          ))}
+          <div style={{fontFamily: MONO, color: C.dim, fontSize: 12, marginTop: 20}}>単位：CPU cycles</div>
+        </div>
+      </div>
+      <div style={{position: 'absolute', right: 46, top: 84, display: 'flex', gap: 16, fontFamily: FONT, fontSize: 13, fontWeight: 900}}>
+        <span style={{color: cpu}}>■ CPU処理</span><span style={{color: normalVram}}>■ 通常VRAM</span><span style={{color: exram}}>■ ExRAM</span>
       </div>
     </AbsoluteFill>
   );
@@ -1252,13 +1322,19 @@ export const ExplainerPrototype: React.FC = () => {
       <Sequence from={3360} durationInFrames={360}>
         <AlignmentScene />
       </Sequence>
-      <Sequence from={3720} durationInFrames={240}>
+      <Sequence from={3720} durationInFrames={450}>
         <SizeBankScene />
       </Sequence>
-      <Sequence from={3960} durationInFrames={180}>
+      <Sequence from={4170} durationInFrames={120}>
+        <BossBattleScene />
+      </Sequence>
+      <Sequence from={4290} durationInFrames={600}>
+        <FrameTimelineScene />
+      </Sequence>
+      <Sequence from={4890} durationInFrames={180}>
         <DayOneScene />
       </Sequence>
-      <Sequence from={4140} durationInFrames={180}>
+      <Sequence from={5070} durationInFrames={180}>
         <CurrentReturnScene />
       </Sequence>
     </AbsoluteFill>
