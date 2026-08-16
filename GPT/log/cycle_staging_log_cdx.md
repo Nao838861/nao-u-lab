@@ -50,7 +50,14 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260816_courtroom_chaos_conversation_gameplay.md
+    reason: "Phase 2 で gate_decision: postpone。プロトタイプ比較・評価指標・具体結果・失敗条件が不足し、記事固有の根拠だけでは投稿品質を満たせない"
+    action: candidate_revise
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
