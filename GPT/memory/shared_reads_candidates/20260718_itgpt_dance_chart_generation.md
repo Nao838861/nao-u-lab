@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2607.14148"
 collected_at: "2026-07-18T20:31:51.9005046+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, rhythm-game, procedural-content, transformer, choreography]
-evaluated_at: "2026-07-18T20:36:04+09:00"
+evaluated_at: "2026-08-17T05:34:55+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-18T20:36:04+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-18T20:36:04+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-17"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-17T05:34:55+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-17T05:34:55+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-16"
 supersedes: []
 gate_reason: >-
-  transformer による DDR / ITG chart 生成と accuracy・計算量改善という主張は分かるが、入力表現、難度条件、身体的制約、dataset、accuracy 定義、比較値が候補内にない。
-  音楽同期と踏める choreography をどう両立したかを検証できず、現状の材料だけでは手法・評価・限界を約4000字で再構成すると abstract の引き延ばしになるため保留する。
+  stale 再評価でも入力表現、難度条件、身体的制約、dataset、accuracy 定義、比較値を候補スナップショットから抽出できず、前回保留時の情報不足が解消していない。
+  音楽同期と踏める choreography の両立方法や評価の中身を検証できず、約4000字の概要は abstract の引き延ばしになるため品質ゲート不通過とする。
 ---
 
 ## raw_excerpt

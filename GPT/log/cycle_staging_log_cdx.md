@@ -11,7 +11,47 @@
 - preflight log: `log/shared_reads_candidate_preflight.jsonl`
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass: []
+fail:
+  - path: memory/shared_reads_candidates/20260718_itgpt_dance_chart_generation.md
+    reason: stale 再評価でも手法・評価・比較値の不足が解消せず、約4000字概要を根拠付きで構成できない
+postpone: []
+stale_reviewed:
+  - handoff_id: cha-115a140818db1d64
+    path: memory/shared_reads_candidates/20260718_itgpt_dance_chart_generation.md
+    previous_status: postponed
+    decision: fail
+    updated_stale_after: "2026-09-16"
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 1
+  read_ids: [cha-115a140818db1d64]
+  resolved_ids: [cha-115a140818db1d64]
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 0
+  malformed_count: 0
+  oldest_collected_at: null
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths: []
+  evaluated_paths: []
+  valid_backlog_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
