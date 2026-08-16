@@ -232,6 +232,48 @@ export const LADDER = deepFreeze({
   artisan: ["food1", "food2", "salt", "char", "cloth", "iron"],
 });
 
+const CULTURE_DAILY_NEEDS = deepFreeze({
+  tools: P.D_TOOL,
+  salt: P.D_SALT,
+  char: P.D_CHAR,
+  cloth: P.D_CLOTH,
+  iron: P.D_IRON,
+});
+
+// 修繕棚へ全量を先取りすると、同じ品目を暮らし条件に使う世帯がLvを上げられない。
+// 生活用は次の通常買い出しまでの10日分だけ保護し、それ以上は修繕へ回す。
+const CULTURE_REPAIR_RESERVE_DAYS = 10;
+
+function householdCultureGoods(household) {
+  const requirements = (LADDER[householdClass(household)] ?? [])
+    .slice(0, (household.lv ?? 0) + 1);
+  const goods = new Set();
+  for (const requirement of requirements) {
+    if (requirement === "saltchar") {
+      goods.add("salt");
+      goods.add("char");
+    } else if (CULTURE_DAILY_NEEDS[requirement] !== undefined) {
+      goods.add(requirement);
+    }
+  }
+  return goods;
+}
+
+function householdCultureRepairReserve(household, goods) {
+  if (!householdCultureGoods(household).has(goods)) return 0;
+  return CULTURE_DAILY_NEEDS[goods]
+    * Math.pow(P.CMULT, household.lv ?? 0)
+    * CULTURE_REPAIR_RESERVE_DAYS;
+}
+
+function householdProtectedMaterialReserve(household, goods) {
+  const workToolNeed = householdWorkToolNeed(household);
+  const fishingRigNeed = householdFishingRigNeed(household);
+  return householdCultureRepairReserve(household, goods)
+    + (workToolNeed?.goods === goods ? workToolNeed.qty : 0)
+    + (fishingRigNeed?.materials?.[goods] ?? 0);
+}
+
 const FIRST_NAMES = deepFreeze([
   "ハンス", "グレタ", "ヤン", "マリア", "ピム", "ロッテ", "カレル", "アンナ", "ブラム", "エルス",
   "テオ", "ヨハンナ", "ミーナ", "クラース", "フェム", "ダーン", "ソフィー", "ヘンク", "リーケ", "ヨープ",
@@ -624,15 +666,12 @@ export function stageOwnedBuildingMaterials(physical, household) {
     plans.push(["construction", building.constructionRequired ?? {}, false]);
   }
   if (building.repairPlan) plans.push(["repair", building.repairPlan.required ?? {}, true]);
-  const workToolNeed = householdWorkToolNeed(household);
-  const fishingRigNeed = householdFishingRigNeed(household);
   for (const [section, required, preserveWorkingCapital] of plans) {
     for (const [goods, requiredQty] of Object.entries(required)) {
       const missing = Math.max(0, requiredQty - sectionAmount(building, section, goods));
       if (missing <= 1e-9) continue;
       const reserved = preserveWorkingCapital
-        ? (workToolNeed?.goods === goods ? workToolNeed.qty : 0)
-          + (fishingRigNeed?.materials?.[goods] ?? 0)
+        ? householdProtectedMaterialReserve(household, goods)
         : 0;
       const available = Math.max(0, (household.pantry[goods] ?? 0) - reserved);
       const qty = Math.min(missing, available);
@@ -1626,13 +1665,8 @@ function runHouseholdCultureAndLadder(economy, physical, household, day, markPha
   const month = calendarMonth(economy, day);
   const charcoalMultiplier = month >= 10 || month <= 2 ? 2 : 0.6;
   const satisfied = {};
-  for (const [goods, baseNeed] of [
-    ["tools", P.D_TOOL],
-    ["salt", P.D_SALT],
-    ["char", P.D_CHAR * charcoalMultiplier],
-    ["cloth", P.D_CLOTH],
-    ["iron", P.D_IRON],
-  ]) {
+  for (const [goods, normalNeed] of Object.entries(CULTURE_DAILY_NEEDS)) {
+    const baseNeed = goods === "char" ? normalNeed * charcoalMultiplier : normalNeed;
     consumeCultureGoods(
       economy,
       physical,
@@ -2472,6 +2506,19 @@ export function unloadMarketBuyCargo(household, physical = null) {
       if (delivered > 0) depositInventory(building, "construction", goods, delivered);
       remaining -= delivered;
     }
+    if (remaining > 0 && building?.repairPlan) {
+      // 修繕と暮らしが同じ品目を要求する時、修繕棚が購入品を全量先取りすると
+      // 暮らし階段が永久停止する。次の通常買い出しまでの生活・道具・漁具分だけ
+      // 家財へ残し、残りを修繕へ納める。
+      const protectedNeed = Math.max(
+        0,
+        householdProtectedMaterialReserve(household, goods)
+          - householdMaterialAmount(physical, household, goods),
+      );
+      const protectedQty = Math.min(remaining, protectedNeed);
+      if (protectedQty > 0) household.pantry[goods] += protectedQty;
+      remaining -= protectedQty;
+    }
     if (building?.repairPlan) {
       const need = Math.max(
         0,
@@ -2810,13 +2857,18 @@ export function buyTargets(
     ["iron", P.D_IRON, P.IMP.iron * 1.05],
   ]) {
     if (!needed.has(goods)) continue;
-    if (targets[goods]) continue;
     const daily = baseDaily * Math.pow(P.CMULT, household.lv);
     let target = daily * P.CULT_D;
     if (goods === "char" && autumn) target = daily * 2 * 100;
     const current = householdMaterialAmount(physical, household, goods);
     if (current < target * 0.5) {
-      targets[goods] = [target - current, ceiling];
+      const missing = target - current;
+      if (targets[goods]) {
+        targets[goods] = [
+          targets[goods][0] + missing,
+          Math.max(targets[goods][1], ceiling),
+        ];
+      } else targets[goods] = [missing, ceiling];
     }
   }
   const toolNeed = householdWorkToolNeed(household);
@@ -3391,6 +3443,11 @@ export function buyAtMarket(
       // 信用買いは売上へ直結する日々の原料だけ。建設・修繕・道具・漁具・肥料・
       // 荷車材料まで一律に借金購入すると、改善投資が食料を買えない世帯を作る。
       let creditEligible = workingInput && canUseProductionInputCredit(household, goods);
+      // ただし食料が1.5日未満なら、実在する食料だけは既存の世帯信用枠まで
+      // 掛買いできる。給付や輸入ではなく買手の負債と売手の収入を同額立て、
+      // 季節生産者が次の収穫売上まで市場在庫の横で餓死する循環を避ける。
+      const emergencyFoodCredit = FOODS.includes(goods)
+        && householdFoodDays(household) < 1.5;
       // 複数原料の製鉄は、主原料がないのに燃料だけ借金購入して棚へ寝かせない。
       if (creditEligible && ["char", "coal"].includes(goods)) {
         if (household.job === "smelter") {
@@ -3412,7 +3469,11 @@ export function buyAtMarket(
         : Math.max(
           0,
           household.purse - reserve
-            + (creditEligible ? productionInputCreditAllowance(household, goods) : 0),
+            + (creditEligible
+              ? productionInputCreditAllowance(household, goods)
+              : emergencyFoodCredit
+                ? 30
+                : 0),
         ) / shelf.price;
       let usableCapacity = input ? capacity : Math.max(0, capacity - inputReserve);
       if (
@@ -3898,6 +3959,35 @@ function spoilMarketQuantity(economy, physical, section, goods, qty, reason, mar
   return spoiled;
 }
 
+function spoilCompanyMarketStock(economy, physical, marketId, goods) {
+  const life = goods === "fish" ? P.FISH_LIFE : goods === "veg" ? P.VEG_LIFE : null;
+  const table = economy.marketStockM?.[marketId];
+  const qty = table?.[goods] ?? 0;
+  if (!life || qty <= 1e-9) return 0;
+  const spoiled = qty / life;
+  const ratio = (qty - spoiled) / qty;
+  table[goods] = qty - spoiled;
+  const costTable = (economy.marketStockCostM ??= {})[marketId] ??= {};
+  costTable[goods] = Math.max(0, (costTable[goods] ?? 0) * ratio);
+  const lots = ((economy.marketStockLotsM ??= {})[marketId] ??= {})[goods] ??= [];
+  for (const lot of lots) {
+    lot.qty *= ratio;
+    lot.cost = Math.max(0, (lot.cost ?? 0) * ratio);
+  }
+  const market = marketBuildingForId(physical, marketId);
+  if (market) withdrawInventory(market, "inbound", goods, spoiled);
+  economy.led.spoil[goods] = (economy.led.spoil[goods] ?? 0) + spoiled;
+  recordEconomicMaterialFlow(
+    economy,
+    goods,
+    "cons",
+    spoiled,
+    `隊商棚の${goods === "fish" ? "魚" : "野菜"}の腐敗`,
+    { includeInDaily: false },
+  );
+  return spoiled;
+}
+
 export function ageMarketStalls(economy, { day, physical = null }) {
   economy.currentDay = day;
   economy.deskUsed = {};
@@ -3905,6 +3995,10 @@ export function ageMarketStalls(economy, { day, physical = null }) {
   economy.dailyDemandFlows = {};
   economy.foodNeedToday = 0;
   updateStockDaysPrices(economy, physical, { day });
+  for (const marketId of Object.keys(economy.marketStockM ?? {})) {
+    spoilCompanyMarketStock(economy, physical, marketId, "fish");
+    spoilCompanyMarketStock(economy, physical, marketId, "veg");
+  }
   for (const lot of economy.marketReturns) {
     const spoiled = spoilMarketQuantity(
       economy,

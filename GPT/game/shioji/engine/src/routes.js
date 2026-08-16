@@ -270,19 +270,64 @@ function recordMarketPrice(economy, marketId, goods, price, qty, day) {
 export const CARAVAN_TARGET_STOCK_DAYS = 5;
 export const CARAVAN_NONFOOD_TARGET_PER_HOUSEHOLD = 2;
 
+export function caravanTargetStockDaysForGoods(goods, configuredDays) {
+  if (!Number.isFinite(configuredDays)) return configuredDays;
+  // 腐る品を30日分ずつ各市場へ囲い込むと、先に出発する路線だけが魚・野菜を
+  // 吸い上げる。魚は購入側と同じ短期回転、野菜は寿命の1/3までを上限にする。
+  if (goods === "fish") return Math.min(configuredDays, 2);
+  if (goods === "veg") return Math.min(configuredDays, P.VEG_LIFE / 3);
+  return configuredDays;
+}
+
+export function caravanFoodTargetQuantity(
+  population,
+  goods,
+  configuredDays,
+  foodGoodsCount = 1,
+) {
+  if (!Number.isFinite(population) || population < 0) {
+    throw new TypeError("caravan target population must be non-negative and finite");
+  }
+  return population
+    * caravanTargetStockDaysForGoods(goods, configuredDays)
+    / Math.max(1, foodGoodsCount);
+}
+
 function caravanTargetHouseholds(economy, marketId) {
   return economy.households.filter(household => householdMarketId(household) === marketId);
 }
 
-function caravanTargetGap(economy, marketId, goods, pendingCargo = {}, stockTargetDays = null) {
+function incomingCaravanStock(economy, marketId, goods) {
+  return (economy.caravans ?? []).reduce((total, route) => {
+    const destination = route.state === "outbound"
+      ? route.destMarketId
+      : route.state === "returning"
+        ? route.baseMarketId
+        : null;
+    return destination === marketId ? total + (route.cargo?.[goods] ?? 0) : total;
+  }, 0);
+}
+
+function caravanTargetGap(
+  economy,
+  marketId,
+  goods,
+  pendingCargo = {},
+  stockTargetDays = null,
+  foodGoodsCount = 1,
+) {
   if (!Number.isFinite(stockTargetDays)) return Infinity;
   const households = caravanTargetHouseholds(economy, marketId);
   // 「5日分」は人口そのものではなく日量(pop×RATION)の5倍。さらに魚線の
   // 需要を麦在庫で満たすと専門産地の現金流入が消えるため、品目ごとに測る。
   const targetGoods = [goods];
   const target = FOODS.includes(goods)
-    ? households.reduce((total, household) => total + household.members.length, 0)
-      * P.RATION * stockTargetDays
+    ? caravanFoodTargetQuantity(
+      households.reduce((total, household) => total + household.members.length, 0),
+      goods,
+      stockTargetDays,
+      foodGoodsCount,
+    )
     : households.length * CARAVAN_NONFOOD_TARGET_PER_HOUSEHOLD;
   let available = 0;
   for (const targetGoodsId of targetGoods) {
@@ -293,6 +338,7 @@ function caravanTargetGap(economy, marketId, goods, pendingCargo = {}, stockTarg
     ), 0);
     available += economy.marketStockM?.[marketId]?.[targetGoodsId] ?? 0;
     available += pendingCargo[targetGoodsId] ?? 0;
+    available += incomingCaravanStock(economy, marketId, targetGoodsId);
   }
   return Math.max(0, target - available);
 }
@@ -315,6 +361,7 @@ function caravanBuyAtMarket(
   const lotsByGoods = {};
   let fundingShortfall = false;
   const market = marketBuildingForId(physical, marketId);
+  const foodGoodsCount = Math.max(1, goodsList.filter(goods => FOODS.includes(goods)).length);
   const buyGoods = (goods, weightLimit) => {
     const unitWeight = goodsUnitWeight(goods);
     const targetGap = caravanTargetGap(
@@ -323,6 +370,7 @@ function caravanBuyAtMarket(
       goods,
       bought,
       route.stockTargetDays,
+      foodGoodsCount,
     );
     let goodsWeight = Math.min(remainingWeight, weightLimit, targetGap * unitWeight);
     const stalls = economy.stalls[goods]
@@ -381,8 +429,13 @@ function caravanBuyAtMarket(
     // 世帯屋台だけを積載元にすると、盆地から母港へ届いた麦が母港→鉱山線へ
     // 決して乗らず、実棚に食料が余ったまま鉱山が飢える。
     const localTable = economy.marketStockM?.[marketId];
+    const localHouseholds = caravanTargetHouseholds(economy, marketId);
+    const localFoodReserve = FOODS.includes(goods) && Number.isFinite(route.stockTargetDays)
+      ? localHouseholds.reduce((total, household) => total + household.members.length, 0)
+        * 2 / foodGoodsCount
+      : 0;
     const localQty = Math.min(
-      Math.max(0, localTable?.[goods] ?? 0),
+      Math.max(0, (localTable?.[goods] ?? 0) - localFoodReserve),
       remainingWeight / unitWeight,
       goodsWeight / unitWeight,
       market ? sectionAmount(market, "inbound", goods) : Infinity,

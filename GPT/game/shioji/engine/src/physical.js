@@ -1658,7 +1658,7 @@ const FLOW_KINDS = new Set(["prod", "cons", "imp", "exp"]);
 
 function requireQuantity(value, label) {
   if (!Number.isFinite(value) || value < 0) {
-    throw new TypeError(`${label} must be a finite non-negative number`);
+    throw new TypeError(`${label} must be a finite non-negative number (actual: ${value})`);
   }
 }
 
@@ -1668,6 +1668,9 @@ function goodsKeys(...records) {
 
 function quantity(record, goods) {
   const value = record?.[goods] ?? 0;
+  // 長期シミュレーションの反復減算では、0から約1e-15だけ下へ出る丸め誤差が
+  // あり得る。実在する負在庫は拒否したまま、機械精度の残差だけ0へ畳む。
+  if (value < 0 && value > -1e-9) return 0;
   requireQuantity(value, goods);
   return value;
 }

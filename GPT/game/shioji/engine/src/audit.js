@@ -574,7 +574,14 @@ function connectB2Road(physical, origin, target, label) {
   }
 }
 
-export function buildB2TrialWorld(seed = 11, definition, { householdSize = null } = {}) {
+export function buildB2TrialWorld(
+  seed = 11,
+  definition,
+  {
+    householdSize = null,
+    provisionDays = B2_TRIAL_PROVISION_DAYS,
+  } = {},
+) {
   if (!definition || definition.width !== 256 || definition.height !== 256) {
     throw new TypeError("B2 map definition must be 256×256");
   }
@@ -627,7 +634,7 @@ export function buildB2TrialWorld(seed = 11, definition, { householdSize = null 
     if (Number.isSafeInteger(householdSize) && householdSize > 0) {
       household.members = household.members.slice(0, householdSize);
     }
-    const provision = household.members.length * B2_TRIAL_PROVISION_DAYS;
+    const provision = household.members.length * provisionDays;
     household.pantry.wheat += provision;
     recordEconomicMaterialFlow(
       economy,
@@ -652,7 +659,7 @@ export const B2_EXPANSION_STRATEGIES = Object.freeze({
   fishery: Object.freeze({
     marketKey: "3", marketId: "fishery", name: "漁港市場",
     jobs: Object.freeze(["fisher", "fisher", "fisher", "saltworks"]),
-    goodsOut: Object.freeze(["wheat", "char", "tools", "log"]),
+    goodsOut: Object.freeze(["wheat", "veg", "pick", "char", "tools", "log"]),
     goodsBack: Object.freeze(["fish", "pres", "salt"]),
     // 商用荷車1台を三台編成として扱う現在容量では、旧3人編成をそのまま
     // 残すと九台相当を5日ごとに常設する。漁港は一編成から始める。
@@ -670,7 +677,7 @@ export const B2_EXPANSION_STRATEGIES = Object.freeze({
     // 低Lv期だけは母港で有償輸入した木製品も運び、現地木工がLv2へ届いたら
     // 鉱山自身の木製品を帰り荷へ切り替える。同じ品目の往復は価格差ではなく
     // 実在庫gapで片方向だけが積まれる。
-    goodsOut: Object.freeze(["wheat", "fish", "tools"]),
+    goodsOut: Object.freeze(["wheat", "veg", "fish", "pres", "pick", "tools"]),
     goodsBack: Object.freeze(["ore", "bar", "iron", "stone", "coal", "log", "tools"]),
     // 鉱区は食料を産まないため、50人級の先遣集落へ二宿で食料を運ぶ。
     // 一人一編成（商用荷車3台分）で十二人を雇い、赤字期の雇用も開発費に含める。
@@ -683,7 +690,9 @@ export const B2_EXPANSION_STRATEGIES = Object.freeze({
       "veg", "veg", "rapeseed",
     ]),
     goodsOut: Object.freeze(["fish", "char", "tools", "salt"]),
-    goodsBack: Object.freeze(["wheat", "veg", "cloth"]),
+    // 野菜農家が市場便の間に漬けた在庫も食料として運ぶ。生野菜だけを指定すると
+    // 塩が届いた盆地で漬物だけが滞留し、他市場が食料難になる。
+    goodsBack: Object.freeze(["wheat", "veg", "pick", "cloth"]),
     // 麦路線は母港の小売だけでなく、母港を中継する鉱区向け主食も担う背骨。
     // 二宿×五編成で盆地余剰を約48荷/日運べるようにする。
     routeCount: 2, recruitment: 5, wage: 2, intervalDays: 5,
@@ -691,8 +700,10 @@ export const B2_EXPANSION_STRATEGIES = Object.freeze({
 });
 
 export const B2_EXPANSION_ORDERS = Object.freeze({
-  fishery: Object.freeze(["fishery", "mining", "basin"]),
-  mining: Object.freeze(["mining", "fishery", "basin"]),
+  // 食料を産まない鉱区を盆地より先に二年目まで放置する並びは「戦略差」でなく
+  // 必敗手。最初の特産地は変えても、鉱区の本格展開までに麦背骨を接続する。
+  fishery: Object.freeze(["fishery", "basin", "mining"]),
+  mining: Object.freeze(["mining", "basin", "fishery"]),
   basin: Object.freeze(["basin", "fishery", "mining"]),
 });
 
@@ -846,7 +857,12 @@ export function buildB2StrategyWorld(seed = 11, definition, strategyId = "fisher
   if (!order) throw new RangeError(`unknown B2 expansion strategy: ${strategyId}`);
   // 母港の「人口約150」は到達上限であり開始人口ではない。P5の戦略比較は
   // 4人×12世帯の先遣都市から始め、出生とLv効率で上限へ育つ過程を測る。
-  const world = buildB2TrialWorld(seed, definition, { householdSize: 4 });
+  const world = buildB2TrialWorld(seed, definition, {
+    householdSize: 4,
+    // 一年分の無料麦は母港需要を隠し、day365に突然需要崖を作る。拡張監査は
+    // 全地域を同じ60日スターターに揃え、早期から市場間流通で暮らす。
+    provisionDays: B2_EXPANSION_PROVISION_DAYS,
+  });
   // Lvはfixtureから与えない。低Lvの生産から始め、地域間交易で必要財が届いた
   // 世帯だけが高効率へ上がり、その余剰を輸出できるかをP5の因果として測る。
   // 「先行」は配列順だけでなく時間差でなければ戦略にならない。最初の地域だけ
@@ -883,6 +899,23 @@ export function advanceB2StrategyExpansion(world, definition, { day = world.stat
   if (day < index * B2_EXPANSION_INTERVAL_DAYS) return null;
   const id = strategy.order[index];
   const spec = B2_EXPANSION_STRATEGIES[id];
+  if (id === "mining" && index > 0) {
+    // 食料を作らない56人級の鉱区を暦だけで開くと、既存市場のLvが育つ前に
+    // 需要を固定投入する必敗手になる。少なくとも一世帯がLv3へ届き、直近30日
+    // の空腹が人口の一日分未満になってから、赤字鉱山線へ投資する。
+    const recentHungerDays = world.state.economy.households.reduce((total, household) => (
+      total + (household.hungerHist ?? []).slice(-30).reduce((sum, value) => sum + value, 0)
+        * household.members.length
+    ), 0);
+    const population = world.state.economy.households.reduce(
+      (total, household) => total + household.members.length,
+      0,
+    );
+    if (
+      !world.state.economy.households.some(household => household.lv >= 3)
+      || recentHungerDays >= population
+    ) return null;
+  }
   const setupCost = (spec.jobs.length + 1) * P.BUILD_COST;
   if (
     world.state.economy.company.money - setupCost
@@ -936,11 +969,20 @@ function b2ToolSupply(economy) {
   return privateStock + stalls + routed + (economy.importStock.tools ?? 0) + pending;
 }
 
-function provisionB2DevelopmentTools(world, { day }) {
+function provisionB2DevelopmentTools(
+  world,
+  {
+    day,
+    intervalDays = B2_EXPANSION_INTERVAL_DAYS,
+    lastDay = B2_EXPANSION_INTERVAL_DAYS * 2,
+  },
+) {
   const { economy, physical } = world.state;
   // 本土工具は自動救済ではなく、プレイヤー代理が会社勘定で発注する有限の
   // 開発投資。現地木工の日産が文化・作業道具需要を賄ったら発注を止める。
-  if (day > 540 || (day - 1) % 30 !== 0) return null;
+  // 既定は最初と二地域の入植日だけ90日分を発注し、それ以後は島内木工へ
+  // 切り替える。P5監査では間隔と終了日を変え、育成投資の回収可能性を比較する。
+  if (day > lastDay || (day !== 1 && day % intervalDays !== 0)) return null;
   const dailyDemand = b2ToolDemand(economy, 1);
   if ((economy.f30.tools?.prod ?? 0) >= dailyDemand * 1.1) return null;
   const missing = Math.ceil(Math.max(0, b2ToolDemand(economy) - b2ToolSupply(economy)));
@@ -953,6 +995,9 @@ function exportB2IslandSurplus(world, { day }) {
   const { economy, physical } = world.state;
   const exports = [];
   for (const goods of ["tools", "char", "salt", "cloth", "stone", "ore", "coal", "bar", "iron", "pres", "pick"]) {
+    if (goods === "tools" && !economy.households.some(household => household.lv >= 3)) {
+      continue;
+    }
     const available = economy.marketStockM?.main?.[goods] ?? 0;
     // 少なくとも四荷は島内小売・修繕・次便の接続用に母港へ残す。
     const qty = Math.min(24, Math.max(0, available - 4));
@@ -965,7 +1010,13 @@ function exportB2IslandSurplus(world, { day }) {
 
 export function runB2ExpansionScenario(
   definition,
-  { seed = 11, strategyId = "fishery", days = 1800 } = {},
+  {
+    seed = 11,
+    strategyId = "fishery",
+    days = 1800,
+    developmentToolIntervalDays = B2_EXPANSION_INTERVAL_DAYS,
+    developmentToolLastDay = B2_EXPANSION_INTERVAL_DAYS * 2,
+  } = {},
 ) {
   const world = buildB2StrategyWorld(seed, definition, strategyId);
   const economy = world.state.economy;
@@ -982,7 +1033,11 @@ export function runB2ExpansionScenario(
   let previousFamine = economy.famine;
   for (let day = 1; day <= days; day += 1) {
     advanceB2StrategyExpansion(world, definition, { day });
-    const importedTools = provisionB2DevelopmentTools(world, { day });
+    const importedTools = provisionB2DevelopmentTools(world, {
+      day,
+      intervalDays: developmentToolIntervalDays,
+      lastDay: developmentToolLastDay,
+    });
     if (importedTools) developmentImports.push({
       day,
       goods: importedTools.goods,
