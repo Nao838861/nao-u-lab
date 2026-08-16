@@ -65,7 +65,14 @@ duplicate_preflight:
 - posted-source / title canonical / open duplicate group の3 sidecarは Phase 2 開始時と frontmatter 更新後に再生成し、`--check` で fresh を確認した。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped: []
+```
+
+- Phase 2 の `pass` は 0 件。`postpone` 判定の候補は Phase 3 の対象外であるため、#shared-reads への投稿は行わなかった。
+- Slack 投稿、candidate frontmatter 更新、投稿ドラフト作成はいずれもなし。品質ゲートを維持した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
