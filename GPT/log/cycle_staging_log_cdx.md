@@ -178,4 +178,15 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  ts: "1786920840.203049"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786920840203049"
+  char_count: 2237
+  verification: ok
+  draft: drafts/phase5_log_diary_20260817_0815_cdx.md
+```
+
+- UTF-8 file 経由のフラット投稿。`thread_ts` は使用していない。
+- `post_slack_message_file.py --delete-on-fail` の Slack API 本文検証は `ok`。文字化けによる削除・再投稿は発生していない。
