@@ -838,8 +838,8 @@ const CodeStripes: React.FC<{color: string; lines?: number; height?: number; gap
 
 const MemoryGauge: React.FC<{count: number; compiled?: boolean}> = ({count, compiled = false}) => {
   const color = compiled ? C.magenta : C.cyan;
-  const programWidth = compiled ? 164 : 18;
-  const itemWidth = compiled ? programWidth : 72;
+  const programWidth = compiled ? 164 : 68;
+  const itemWidth = compiled ? programWidth : 82;
   return (
     <div style={{display: 'flex', gap: 6, height: 23, alignItems: 'stretch'}}>
       {!compiled ? (
@@ -851,11 +851,11 @@ const MemoryGauge: React.FC<{count: number; compiled?: boolean}> = ({count, comp
             background: color,
             color: C.bg,
             fontFamily: FONT,
-            fontSize: 0,
+            fontSize: 10,
             fontWeight: 900,
           }}
         >
-          P
+          プログラム
         </div>
       ) : null}
       {Array.from({length: 3}).map((_, i) => {
@@ -921,7 +921,7 @@ const CapacityCostScene: React.FC = () => {
             <div style={{fontFamily: MONO, color: C.cyan, fontSize: 24, fontWeight: 900}}>→</div>
             <div style={{flex: 1, padding: '9px 14px', border: '1px solid #4a4651', background: '#0a0a0d'}}>
               <div style={{fontFamily: FONT, color: C.dim, fontSize: 12, fontWeight: 800, marginBottom: 6}}>1つの小さな汎用プログラム</div>
-              <CodeStripes color={C.cyan} lines={4} height={4} gap={3} />
+              <div style={{width: 55}}><CodeStripes color={C.cyan} lines={4} height={4} gap={3} /></div>
             </div>
           </div>
           <div style={{marginTop: 23}}>
@@ -955,16 +955,16 @@ const CapacityCostScene: React.FC = () => {
 
 const PositionLimitScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const offsets = [0, 4, 8];
-  const offset = offsets[Math.floor(frame / 90) % offsets.length];
+  const offsets = [0, 4, 8, 12, 16, 20];
+  const offset = offsets[Math.floor(frame / 24) % offsets.length];
   const scale = 8;
-  const gridWidth = 68 * scale;
+  const gridWidth = 76 * scale;
   const gridHeight = 28 * scale;
   return (
     <AbsoluteFill style={{opacity: fade(frame, 300), backgroundColor: C.bg, padding: '38px 52px 0', boxSizing: 'border-box'}}>
       <Title size={42}>コンパイルドスプライトの欠点</Title>
       <div style={{fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900, marginTop: 5}}>
-        欠点2：同じ場所に絵を描くことしかできない
+        欠点2：1ドット単位の移動ができない
       </div>
 
       <div style={{display: 'flex', gap: 55, alignItems: 'center', marginTop: 31}}>
@@ -980,13 +980,20 @@ const PositionLimitScene: React.FC = () => {
               />
               <div
                 style={{
+                  position: 'absolute', left: offset * scale, top: 0,
+                  width: 55 * scale, height: 28 * scale, boxSizing: 'border-box',
+                  border: `6px solid ${C.orange}`, zIndex: 3, pointerEvents: 'none',
+                }}
+              />
+              <div
+                style={{
                   position: 'absolute', inset: 0, zIndex: 2, border: `2px solid ${C.cyan}`,
                   backgroundImage: `linear-gradient(to right, ${C.cyan}88 1px, transparent 1px), linear-gradient(to bottom, ${C.cyan}88 1px, transparent 1px)`,
                   backgroundSize: `${4 * scale}px ${2 * scale}px`, pointerEvents: 'none',
                 }}
               />
             </div>
-            {[0, 4, 8].map((value) => (
+            {offsets.map((value) => (
               <div
                 key={value}
                 style={{
@@ -1101,9 +1108,8 @@ const AlignmentScene: React.FC = () => {
               );
             })}
           </div>
-          <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 20, padding: '15px 18px', borderTop: `2px solid ${C.magenta}`, borderBottom: `2px solid ${C.magenta}`}}>
-            <div style={{fontFamily: FONT, color: C.white, fontSize: 23, fontWeight: 900}}>1枚の絵に8本のプログラム</div>
-            <div style={{fontFamily: FONT, color: C.magenta, fontSize: 28, fontWeight: 900}}>メモリ消費が8倍！</div>
+          <div style={{marginTop: 20, padding: '15px 18px', borderTop: `2px solid ${C.magenta}`, borderBottom: `2px solid ${C.magenta}`, fontFamily: FONT, color: C.white, fontSize: 24, fontWeight: 900, textAlign: 'center'}}>
+            1枚の絵に8本のプログラム <span style={{color: C.magenta}}>→ メモリ消費が8倍！</span>
           </div>
         </div>
       </div>
