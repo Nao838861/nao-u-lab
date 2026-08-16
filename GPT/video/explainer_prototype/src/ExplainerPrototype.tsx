@@ -341,6 +341,16 @@ const GenericLoopScene: React.FC = () => {
   const category = enemyCoverage[cursor] ?? 0;
   const kinds = ['全面透明', '一部だけ描画', '全面上書き'];
   const steps = ['画像とマスクを読む', '画面の元の値を読む', '背景を残す（AND）', '絵を重ねる（OR）', '同じ場所へ書き戻す'];
+  const genericCode = [
+    'loop:',
+    '  LDA (screen),Y',
+    '  AND (mask),Y',
+    '  ORA (image),Y',
+    '  STA (screen),Y',
+    '  INY',
+    '  CPY #BYTES',
+    '  BNE loop',
+  ];
   const active = Math.floor(frame / 8) % steps.length;
   return (
     <AbsoluteFill
@@ -354,12 +364,29 @@ const GenericLoopScene: React.FC = () => {
       <Eyebrow color={C.cyan}>一般的なソフトウェア描画</Eyebrow>
       <div style={{height: 10}} />
       <Title size={41}>すべての4×2ドットに、同じ合成処理を実行</Title>
-      <div style={{display: 'flex', alignItems: 'center', gap: 58, marginTop: 34}}>
-        <div>
-          <PackedEnemy scale={7} processedCount={done} cursor={cursor} />
-          <div style={{display: 'flex', justifyContent: 'space-between', marginTop: 14, fontFamily: MONO}}>
+      <div style={{display: 'flex', alignItems: 'flex-start', gap: 34, marginTop: 27}}>
+        <div style={{width: 440, flexShrink: 0}}>
+          <PackedEnemy scale={8} processedCount={done} cursor={cursor} />
+          <div style={{display: 'flex', justifyContent: 'space-between', marginTop: 9, fontFamily: MONO}}>
             <span style={{color: C.dim, fontSize: 17}}>1 BYTE = 4 × 2 DOTS</span>
             <span style={{color: C.cyan, fontSize: 17}}>{String(done).padStart(3, '0')} / 210</span>
+          </div>
+          <div
+            style={{
+              marginTop: 12,
+              padding: '12px 16px 13px',
+              background: C.panel,
+              border: '1px solid #3b3842',
+            }}
+          >
+            <div style={{fontFamily: FONT, color: C.cyan, fontWeight: 900, fontSize: 17, marginBottom: 7}}>
+              データを読みながら描くプログラム
+            </div>
+            {genericCode.map((line) => (
+              <div key={line} style={{fontFamily: MONO, color: C.white, fontSize: 16, lineHeight: 1.22}}>
+                {line}
+              </div>
+            ))}
           </div>
         </div>
         <div style={{flex: 1}}>
@@ -417,10 +444,11 @@ const CompiledScene: React.FC = () => {
   const frame = useCurrentFrame();
   const active = Math.floor(frame / 105) % 3;
   const cards = [
-    {title: '全面透明', equation: '(SCREEN AND $FF) OR $00', result: '命令なし', code: ['; 何も生成しない']},
-    {title: '全面上書き', equation: '(SCREEN AND $00) OR IMAGE', result: 'そのまま書く', code: ['LDA #IMAGE', 'STA (dst),Y']},
-    {title: '一部だけ描画', equation: '(SCREEN AND MASK) OR IMAGE', result: '必要な合成だけ', code: ['LDA (dst),Y', 'AND #MASK', 'ORA #IMAGE', 'STA (dst),Y']},
+    {title: '全面透明', equation: '(SCREEN AND $FF) OR $00', result: '命令なし', code: ['; 命令なし']},
+    {title: '全面上書き', equation: '(SCREEN AND $00) OR $7F', result: 'そのまま書く', code: ['LDA #$7F', 'STA (screen),Y']},
+    {title: '一部だけ描画', equation: '(SCREEN AND $C3) OR $24', result: '必要な合成だけ', code: ['LDA (screen),Y', 'AND #$C3', 'ORA #$24', 'STA (screen),Y']},
   ];
+  const activeCard = cards[active];
   return (
     <AbsoluteFill
       style={{
@@ -433,13 +461,32 @@ const CompiledScene: React.FC = () => {
       <Eyebrow>COMPILED SPRITE</Eyebrow>
       <div style={{height: 10}} />
       <Title size={42}>絵の値を先に入れ、場所ごとに最短の命令へ</Title>
-      <div style={{display: 'flex', gap: 42, alignItems: 'center', marginTop: 32}}>
-        <div>
-          <PackedEnemy scale={7} showAll analyze cursor={sampleBlocks[active]} />
-          <div style={{display: 'flex', gap: 14, marginTop: 15, fontFamily: FONT, fontSize: 17, fontWeight: 800}}>
+      <div style={{display: 'flex', gap: 34, alignItems: 'flex-start', marginTop: 27}}>
+        <div style={{width: 440, flexShrink: 0}}>
+          <PackedEnemy scale={8} showAll analyze cursor={sampleBlocks[active]} />
+          <div style={{display: 'flex', gap: 14, marginTop: 9, fontFamily: FONT, fontSize: 16, fontWeight: 800}}>
             <span style={{color: '#8b8d96'}}>■ 透明</span>
             <span style={{color: C.orange}}>■ 一部</span>
             <span style={{color: C.magenta}}>■ 全面</span>
+          </div>
+          <div
+            style={{
+              marginTop: 12,
+              minHeight: 127,
+              padding: '12px 16px 13px',
+              boxSizing: 'border-box',
+              background: C.panel,
+              border: `1px solid ${C.magenta}`,
+            }}
+          >
+            <div style={{fontFamily: FONT, color: C.magenta, fontWeight: 900, fontSize: 17, marginBottom: 7}}>
+              この場所だけを描く最短のプログラム
+            </div>
+            {activeCard.code.map((line) => (
+              <div key={line} style={{fontFamily: MONO, color: C.white, fontSize: 18, lineHeight: 1.3}}>
+                {line}
+              </div>
+            ))}
           </div>
         </div>
         <div style={{flex: 1}}>
@@ -465,15 +512,12 @@ const CompiledScene: React.FC = () => {
                   <span style={{fontFamily: FONT, fontSize: 18, fontWeight: 800, color: lit ? C.magenta : C.dim}}>
                     {card.result}
                   </span>
-                  <div style={{display: 'flex', gap: 12, fontFamily: MONO, fontSize: 16}}>
-                    {card.code.map((line) => <span key={line}>{line}</span>)}
-                  </div>
                 </div>
               </div>
             );
           })}
-          <div style={{fontFamily: MONO, color: C.cyan, fontSize: 17, marginTop: 17}}>
-            PARTIAL EVALUATION / CONSTANT FOLDING
+          <div style={{fontFamily: FONT, color: C.cyan, fontWeight: 900, fontSize: 19, marginTop: 17}}>
+            絵に合わせて、不要な命令を消す
           </div>
         </div>
       </div>
