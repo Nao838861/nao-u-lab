@@ -838,8 +838,8 @@ const CodeStripes: React.FC<{color: string; lines?: number; height?: number; gap
 
 const MemoryGauge: React.FC<{count: number; compiled?: boolean}> = ({count, compiled = false}) => {
   const color = compiled ? C.magenta : C.cyan;
-  const programWidth = compiled ? 164 : 68;
-  const itemWidth = compiled ? programWidth : 82;
+  const programWidth = compiled ? 164 : 41;
+  const itemWidth = compiled ? programWidth : 57;
   return (
     <div style={{display: 'flex', gap: 6, height: 23, alignItems: 'stretch'}}>
       {!compiled ? (
@@ -851,7 +851,7 @@ const MemoryGauge: React.FC<{count: number; compiled?: boolean}> = ({count, comp
             background: color,
             color: C.bg,
             fontFamily: FONT,
-            fontSize: 10,
+            fontSize: 7.5,
             fontWeight: 900,
           }}
         >
