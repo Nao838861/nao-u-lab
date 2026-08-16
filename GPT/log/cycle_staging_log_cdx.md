@@ -51,7 +51,17 @@ unreviewed_intake_audit:
 - 判定根拠: 問題設定、memory 構成、比較結果、ablation、限界が揃い、長期戦略 AI の replay 検索・再利用/再推論切替へ具体適用できる。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260816_epicstar_memory_enhanced_strategy.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786876748953229
+    char_count: 4082
+skipped: []
+```
+
+- 最終判定: 投稿。論文本文で memory 構成、40戦評価、ablation、token 比較、未見 style・bank 拡大時の限界まで再確認した。
+- 投稿前レビュー: 必須6項目・順序・末尾 URL・禁止表現・3,500〜4,500字条件を通過。1 candidate を1回の `chat.postMessage` で投稿し、Slack 保存本文の文字化け検証も成功した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
