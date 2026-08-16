@@ -1180,8 +1180,8 @@ const BossBattleScene: React.FC = () => {
     <AbsoluteFill style={{opacity: fade(frame, 120), backgroundColor: '#000', display: 'grid', placeItems: 'center'}}>
       <OffthreadVideo
         src={staticFile('boss_battle.mp4')}
-        startFrom={106 * 30}
-        endAt={110 * 30}
+        startFrom={86 * 30}
+        endAt={94 * 30}
         muted
         style={{width: 768, height: 720, objectFit: 'fill', imageRendering: 'pixelated'}}
       />
@@ -1195,38 +1195,48 @@ const FrameTimelineScene: React.FC = () => {
   const cpu = C.magenta;
   const normalVram = C.cyan;
   const exram = C.orange;
-  const generation = [
-    {label: 'VBUF消去', sub: '約3,100 cycles', color: cpu, h: 58},
-    {label: '地面・遠景', sub: '約1,400 cycles', color: cpu, h: 50},
-    {label: '敵・弾・衝突などのロジック', sub: 'フレーム合計 約8,000〜11,000 cycles', color: cpu, h: 102},
-  ];
-  const transfer = [
-    {label: 'Compiled SpriteをVBUFへ描画', sub: '約20,000 cycles', color: cpu, h: 180},
-    {label: '通常VRAM側へ転送', sub: '上半分 → 下半分', color: normalVram, h: 58},
-    {label: 'ExRAM側へ転送', sub: '上半分 → 下半分', color: exram, h: 58},
-    {label: '表示ページを切り替える', sub: '', color: C.white, h: 42},
-  ];
-  const renderLane = (title: React.ReactNode, items: typeof generation, start: number) => (
-    <div style={{width: 350}}>
-      <div style={{fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900, textAlign: 'center', marginBottom: 10}}>{title}</div>
-      <div style={{border: '2px solid #47434e', padding: 10, background: C.panel}}>
-        {items.map((item, i) => (
-          <div key={item.label} style={{height: item.h, boxSizing: 'border-box', padding: '10px 13px', marginBottom: 7, background: `${item.color}20`, borderLeft: `7px solid ${item.color}`, opacity: reveal(start + i * 42)}}>
-            <div style={{fontFamily: FONT, color: C.white, fontSize: 17, fontWeight: 900}}>{item.label}</div>
-            {item.sub ? <div style={{fontFamily: MONO, color: item.color, fontSize: 14, fontWeight: 900, marginTop: 4}}>{item.sub}</div> : null}
-          </div>
-        ))}
-      </div>
+  const Block: React.FC<{label: string; sub?: string; color: string; height: number; at: number}> = ({label, sub, color, height, at}) => (
+    <div style={{height, boxSizing: 'border-box', padding: '8px 12px', background: `${color}20`, borderLeft: `7px solid ${color}`, opacity: reveal(at)}}>
+      <div style={{fontFamily: FONT, color: C.white, fontSize: 16, lineHeight: 1.25, fontWeight: 900}}>{label}</div>
+      {sub ? <div style={{fontFamily: FONT, color, fontSize: 13, lineHeight: 1.2, fontWeight: 900, marginTop: 3}}>{sub}</div> : null}
     </div>
   );
+  const Lane: React.FC<{kind: 'A' | 'B'}> = ({kind}) => {
+    const isA = kind === 'A';
+    return (
+      <div style={{width: 350}}>
+        <div style={{fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900, textAlign: 'center', marginBottom: 10}}>
+          {isA ? 'A：計算フレーム' : 'B：描画フレーム'}
+        </div>
+        <div style={{height: 390, border: '2px solid #47434e', padding: 9, boxSizing: 'border-box', background: C.panel, display: 'flex', flexDirection: 'column', gap: 6}}>
+          <div style={{height: 248, display: 'flex', flexDirection: 'column', gap: 6}}>
+            {isA ? <>
+              <Block label="仮想フレームバッファ消去" sub="描画" color={cpu} height={58} at={45} />
+              <Block label="地面・遠景の描画" sub="描画" color={cpu} height={58} at={87} />
+              <Block label="プレイヤー・敵・弾・衝突などの計算" sub="ゲームロジック　約8,000〜11,000 cycles" color={cpu} height={94} at={129} />
+            </> : <>
+              <Block label="Compiled SpriteをVBUFへ描画" sub="描画　約20,000 cycles" color={cpu} height={210} at={175} />
+            </>}
+          </div>
+          <div style={{height: 112, borderTop: `2px dashed ${isA ? normalVram : exram}`, paddingTop: 7, boxSizing: 'border-box', opacity: reveal(isA ? 190 : 240)}}>
+            <div style={{fontFamily: MONO, color: isA ? normalVram : exram, fontSize: 13, fontWeight: 900, marginBottom: 5}}>EXTENDED VBLANK</div>
+            <div style={{height: 78, padding: '7px 10px', boxSizing: 'border-box', background: `${isA ? normalVram : exram}20`, borderLeft: `7px solid ${isA ? normalVram : exram}`}}>
+              <div style={{fontFamily: FONT, color: C.white, fontSize: 15, lineHeight: 1.2, fontWeight: 900}}>{isA ? '通常VRAMのキャラパターンを更新' : 'ExRAMのキャラパターンを更新'}</div>
+              <div style={{fontFamily: FONT, color: isA ? normalVram : exram, fontSize: 13, fontWeight: 900, marginTop: 3}}>{isA ? 'ダブルバッファ' : 'シングルバッファ　＋ 表示ページ切り替え'}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
   const chartOpacity = reveal(390);
   return (
     <AbsoluteFill style={{opacity: fade(frame, 600), backgroundColor: C.bg, padding: '34px 42px 0', boxSizing: 'border-box'}}>
       <Title size={38}>30fpsで動かすため、処理を2フレームに分ける</Title>
-      <div style={{fontFamily: MONO, color: C.dim, fontSize: 18, fontWeight: 900, marginTop: 7}}>2 NMI ＝ 1ゲーム更新 ＝ 30fps</div>
+      <div style={{fontFamily: MONO, color: C.dim, fontSize: 18, fontWeight: 900, marginTop: 7}}>同じ長さの2フレームを交互に実行</div>
       <div style={{display: 'flex', gap: 18, alignItems: 'flex-start', marginTop: 20}}>
-        {renderLane('A：次の画面を作る', generation, 45)}
-        {renderLane(<><span>B：大きな物体を描く</span><br /><span>表示へ渡す</span></>, transfer, 175)}
+        <Lane kind="A" />
+        <Lane kind="B" />
         <div style={{flex: 1, opacity: chartOpacity, padding: '15px 17px', background: C.panel, border: '1px solid #47434e'}}>
           <div style={{fontFamily: FONT, color: C.white, fontSize: 22, fontWeight: 900}}>処理時間の目安</div>
           {[
@@ -1245,7 +1255,7 @@ const FrameTimelineScene: React.FC = () => {
         </div>
       </div>
       <div style={{position: 'absolute', right: 46, top: 84, display: 'flex', gap: 16, fontFamily: FONT, fontSize: 13, fontWeight: 900}}>
-        <span style={{color: cpu}}>■ CPU処理</span><span style={{color: normalVram}}>■ 通常VRAM</span><span style={{color: exram}}>■ ExRAM</span>
+        <span style={{color: cpu}}>■ CPU処理</span><span style={{color: normalVram}}>■ 通常VRAM更新</span><span style={{color: exram}}>■ ExRAM更新</span>
       </div>
     </AbsoluteFill>
   );
@@ -1325,16 +1335,16 @@ export const ExplainerPrototype: React.FC = () => {
       <Sequence from={3720} durationInFrames={450}>
         <SizeBankScene />
       </Sequence>
-      <Sequence from={4170} durationInFrames={120}>
+      <Sequence from={4170} durationInFrames={240}>
         <BossBattleScene />
       </Sequence>
-      <Sequence from={4290} durationInFrames={600}>
+      <Sequence from={4410} durationInFrames={600}>
         <FrameTimelineScene />
       </Sequence>
-      <Sequence from={4890} durationInFrames={180}>
+      <Sequence from={5010} durationInFrames={180}>
         <DayOneScene />
       </Sequence>
-      <Sequence from={5070} durationInFrames={180}>
+      <Sequence from={5190} durationInFrames={180}>
         <CurrentReturnScene />
       </Sequence>
     </AbsoluteFill>
