@@ -54,7 +54,14 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped: []
+result: no_pass_candidates
+reason: Phase 2 の pass が空のため、最終レビュー対象と Slack 投稿対象は 0 件
+candidate_updates: []
+slack_posts: 0
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
