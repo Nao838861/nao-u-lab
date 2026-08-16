@@ -4,21 +4,21 @@ url: https://arxiv.org/abs/2607.11363v1
 collected_at: 2026-07-17T01:05:00+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [llm-agent, dialogue-game, theory-of-mind, evaluation, coordination]
-evaluated_at: 2026-07-17T01:10:00+09:00
+evaluated_at: 2026-08-16T15:36:03+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: 2026-07-17T01:10:00+09:00
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260715_beyond_sally_anne_east.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784088387032009"
+last_reviewed_at: 2026-08-16T15:36:03+09:00
+last_decision: postpone
+duplicate_reason: duplicate_of_terminal_sibling
+evidence: "gate_decision:postpone; evaluated_at:2026-08-16T15:36:03+09:00; duplicate of posted candidate: memory/shared_reads_candidates/20260715_beyond_sally_anne_east.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784088387032009"
 next_action: none
-stale_after: "2026-08-16"
+stale_after: "2026-09-15"
 supersedes: []
 gate_reason: >-
-  arXiv version suffix を除けば同一 URL で、同一 title の候補が既に投稿済みである。
-  canonical index の未反映を raw Slack permalink と posted candidate frontmatter で補完確認した。
+  posted-source preflight が arXiv work identity の一致を確認したため、同一内容を Phase 3 へ再送しない。
+  投稿済み canonical path と raw Slack permalink が揃っており、本文の再評価ではなく重複保留で閉じる。
 ---
 
 ## raw_excerpt

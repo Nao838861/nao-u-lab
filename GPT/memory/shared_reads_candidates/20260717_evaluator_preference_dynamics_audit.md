@@ -4,21 +4,21 @@ url: https://arxiv.org/abs/2606.29719v1
 collected_at: 2026-07-17T01:05:00+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [llm-agent, evaluation, adaptive-agents, game-testing]
-evaluated_at: 2026-07-17T01:10:00+09:00
+evaluated_at: 2026-08-16T15:37:59+09:00
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: 2026-07-17T01:10:00+09:00
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260712_evaluator_preference_dynamics_audit.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783825416879669"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-16T15:37:59+09:00"
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-d5c4d5d67025dca1; terminal:memory/shared_reads_candidates/20260712_evaluator_preference_dynamics_audit.md: status:posted permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783825416879669; reason:同一 arXiv work identity と URL が既投稿 candidate に一致し permalink も確認済み"
 next_action: none
-stale_after: "2026-08-16"
+stale_after: "2026-09-15"
 supersedes: []
 gate_reason: >-
-  同一 title・同一 URL の候補が既に投稿済みであり、本文評価を重ねる必要がない。
-  canonical index の未反映を raw Slack permalink と posted candidate frontmatter で補完確認した。
+  posted-source preflight が同一 arXiv work identity・同一 URL・既投稿 permalink を確認した。
+  terminal sibling と内容を重複させず、group handoff の open membership を failed で閉じる。
 ---
 
 ## raw_excerpt

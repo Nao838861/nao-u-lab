@@ -4,16 +4,16 @@ url: "https://arxiv.org/abs/2007.08497"
 collected_at: "2026-07-16T04:58:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-content-generation, artificial-life, coevolution, game-agents]
-evaluated_at: "2026-07-16T05:15:00+09:00"
+evaluated_at: "2026-08-16T15:36:03+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-16T05:15:00+09:00"
+last_reviewed_at: "2026-08-16T15:36:03+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-16T05:15:00+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-16T15:36:03+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-15"
+stale_after: "2026-09-15"
 supersedes: []
 gate_reason: >-
   level と攻略 agent の共生成を難易度探索・headless test 多様化へ接続でき、ゲーム制作上の適用先は具体的である。
