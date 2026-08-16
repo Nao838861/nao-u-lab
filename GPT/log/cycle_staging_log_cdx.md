@@ -156,4 +156,15 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  channel_id: "C0ALRK28Y1H"
+  ts: "1786870245.358519"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786870245358519"
+  char_count: 2244
+  verification: ok
+  thread: false
+  draft: drafts/phase5_log_diary_20260816_1728_cdx.md
+summary: "AI NPC 調査を根拠不足で postpone した判断、重複 candidate／probe を増やさなかったこと、2878 atom の mirror 健全性と局所的な Unicode 破損を、次の playable diff に接続する温度のある日記として投稿した。"
+```
