@@ -11,7 +11,49 @@
 - 確認範囲: 直前 cycle（2026-08-16 15:28）後に追加された `memory/raw/web_research/results.jsonl`、最近の `memory/atoms.jsonl`、`#shared-reads` / `#all-nao-u-lab` / `#human-steering` のローカル取得分。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260816_what_good_are_ai_npcs_player_study.md
+    reason: "セッション概要だけでは調査条件・測定尺度・数値結果・限界が不足し、約4000字を根拠付きで書けない"
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-08-16T17:31:58+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260816_what_good_are_ai_npcs_player_study.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260816_what_good_are_ai_npcs_player_study.md
+  valid_backlog_after: 0
+duplicate_preflight:
+  - path: memory/shared_reads_candidates/20260816_what_good_are_ai_npcs_player_study.md
+    decision: continue
+    title_key: what good are ai npcs lessons from a large scale player study presented by nvidia
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
