@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-16T21:48:00+09:00",
+  "updated_at": "2026-08-16T23:47:21+09:00",
   "reviewed_source_ts": [
+    "1786884152.236799",
     "1786876748.953229",
     "1779860611.263189",
     "1779887685.026909",
@@ -659,6 +660,45 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-16T23:47:21+09:00",
+      "selected": {
+        "id": "sr-1786884152-8e8ee5ad28",
+        "source_ts": "1786884152.236799",
+        "title": "Player Perceptions of Generative AI in Games — player-value contract・初回 defect spillover・開示整合性",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、memory・harness・game-design・operation・evaluation の5優先タグを持つため1件だけ選んだ。生成 AI を制作効率ではなく player-facing value で判定し、初回の局所欠陥が作品全体の信頼へ波及することと、開示内容と実物の一致を同時に見る観点が、次の AI 関与 game prototype で既存 control と異なる判断差を作るか確認した。Nao_u が本 atom 自体を「重要」「適切」「自分に反映してほしい」と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads 本文は Steam の PCG 5,186作品・英語レビュー341,447件と生成AI開示5,970作品・166,745件を比較し、生成AI群の recommendation 68.4% 対 PCG 86.3%、回帰 OR 0.63、層化600件の thematic analysis と Krippendorff's alpha 0.920、観察研究としての選定機構・未観測交絡・negative oversampling の限界まで示す。制作効率ではなく player-facing value を導入理由にし、初回 critical defect、human review/fallback、開示と asset inventory の一致を検査する行動へ直接変換できるため relevance・actionability・evidence は3とした。一方、probe-20260706-ai-native-removal-state-transition は AI を有限 authored content に置換した時に core loop が崩れるかを、probe-20260617-provisional-artifact-acceptance-gate は生成物の artifact class・受入条件・cleanup burden を、probe-20260625-contribution-boundary-provenance は origin・権利・再利用境界をすでに扱う。固有差分は、最初の30分の局所 defect が developer effort と作品全体の provenance 評価へ波及すること、および開示と実物の不一致だが、現在の staging には AI 関与 prototype、初回体験 trace、asset inventory／開示文の before／after artifact がなく、実際の consumer_phase・trigger_artifact・expected_delta を lease 契約どおり指定できない。新規 probe を先行追加すると既存 controls との確認重複が増えるため、次の具体的な AI-game artifact で既存3 controls が defect spillover または disclosure mismatch を取り逃がした時だけ再評価する state-only defer とする。",
+      "existing_controls": [
+        "probe-20260706-ai-native-removal-state-transition",
+        "probe-20260617-provisional-artifact-acceptance-gate",
+        "probe-20260625-contribution-boundary-provenance"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、数値上は採用水準だが比較可能な AI-game artifact がなく、既存の AI-native／生成物受入／provenance controls と重なるため defer した理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-16T19:42:45+09:00",
       "selected": {

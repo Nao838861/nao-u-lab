@@ -75,7 +75,39 @@ skipped: []
 - Airborne Kingdom: 都市移動 verb が採集、研究、Propulsion、資源 trail、探索報酬、制作領域を再編する因果を、代替・負荷・誘導・終了処理の dependency 監査として投稿した。ts `1786891378.720329` で保存本文照合に成功した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786884152-8e8ee5ad28
+    source_ts: "1786884152.236799"
+    title: "Player Perceptions of Generative AI in Games — player-value contract・初回 defect spillover・開示整合性"
+    reason: "score 10 の未レビュー最新候補で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。生成AIを制作効率ではなく player-facing value で判定し、初回の局所欠陥と開示不一致が作品全体の信頼へ波及するという差分が、次の AI 関与 game prototype の判断を変えるか確認した。Nao_u の明示的な重要評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "数値上は採用水準。Steam 11,156作品・508,192レビュー、層化600件の thematic analysis、観察研究としての限界まであり、player-value contract・初回 critical defect・human review/fallback・開示と asset inventory の一致へ変換できる。ただし既存の ai-native-removal、provisional-artifact-acceptance、contribution-boundary-provenance controls が主要部分を覆い、現 staging には AI 関与 prototype、初回体験 trace、asset inventory／開示文の before／after artifact がない。consumer・artifact・判断差を具体化できないため lease を作らず、既存 controls が defect spillover／disclosure mismatch を取り逃がす実例が出た時だけ再評価する。"
+  existing_controls:
+    - probe-20260706-ai-native-removal-state-transition
+    - probe-20260617-provisional-artifact-acceptance-gate
+    - probe-20260625-contribution-boundary-provenance
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを state に記録した。active_probes・ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
