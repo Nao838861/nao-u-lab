@@ -4,29 +4,24 @@ url: "https://arxiv.org/abs/2604.15267"
 collected_at: "2026-07-18T22:49:29+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-theory, multi-agent, llm-agent, evaluation, cooperation]
-evaluated_at: "2026-07-18T22:54:41+09:00"
+evaluated_at: "2026-08-17T03:34:44+09:00"
 evaluated_by: log_cdx (Phase 2)
-gate_decision: pass
+gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-18T23:00:22+09:00"
-last_decision: postponed
-evidence: "既投稿: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778536700085879"
+last_reviewed_at: "2026-08-17T03:34:44+09:00"
+last_decision: postpone
+duplicate_reason: duplicate_of_posted_source_work
+evidence: "gate_decision:postpone; evaluated_at:2026-08-17T03:34:44+09:00; posted_source_work_match:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778536700085879"
 next_action: none
-stale_after: "2026-08-17"
+stale_after: "2026-09-16"
 supersedes: []
 postponed:
   reason: "同一論文 v1 の詳細分析が既に #shared-reads にあり、v2 の中核結論も既存投稿と重複するため再投稿しない"
   existing_permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778536700085879"
 gate_reason: >-
-  単発 social dilemma で新しい model が一貫して defect する問題から、協力を善意ではなく equilibrium として維持する mechanism の比較へ進む中核を抽出できる。
-  4 種の game、制度と LLM agent の同一枠評価、協力 NPC・交渉・自己対戦への適用と限界を結べるため、約4000字の独立分析を構成できる。
-suggested_post_outline:
-  overview_angle: "協力的な台詞や性格 prompt ではなく、合理的 agent にとって協力が崩れない interaction mechanism を評価する benchmark として整理する"
-  analysis_axis: "single-shot defect という失敗、game-theoretic mechanism の equilibrium 保証、4 種の dilemma を横断した LLM 行動評価を分けて検討する"
-  application_target: "Log_cdx の協力 NPC / bot 自己対戦で、報酬表・反復・制裁・退出条件を明示し、協力率だけでなく exploit 耐性と均衡条件を測る test harness"
-  pros_cons: "利点は model の善意に依存せず制度側を比較できること。欠点は単純化された payoff game の均衡が、不完全情報や物語動機を含む実ゲームでそのまま成立しないこと"
-  verdict_pre: "部分採用。mechanism-first の評価枠は採用し、実ゲームでは情報制約・関係履歴・プレイヤー混在条件を追加する"
+  posted-source preflight が arXiv:2604.15267 の work identity と既投稿 permalink の一致を確認した。
+  v2 の中核も既存投稿と重複するため、内容品質とは別に Phase 3 の再投稿対象から外す。
 ---
 
 ## raw_excerpt
