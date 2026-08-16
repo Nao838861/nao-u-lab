@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/telemetry-supported-game-design"
 collected_at: "2026-08-17T07:30:36+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, telemetry, playtesting, analytics, iteration]
+evaluated_at: "2026-08-17T07:33:42+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-17T07:33:42+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-17T07:33:42+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-16"
+supersedes: []
+gate_reason: >-
+  設計上の問いから必要なイベントを決める四段階反復、集計値と個別履歴の使い分け、相関から因果を断定できない限界、Madden NFL 11 の改善例まで抽出できる。
+  headless trace と人間 playtest の観測設計へ直接適用でき、「測れるものを集める」のではなく設計仮説を反証可能にする軸で CoopEval 水準の概要と分析を構成できる。
+suggested_post_outline:
+  overview_angle: "テレメトリを大量ログ収集ではなく、Question / Record / Analyze / Refine で設計仮説を更新する観測ループとして解説する"
+  analysis_axis: "集計と個別履歴の役割、相関と因果の境界、定量ログだけでは行動理由を説明できない限界を分けて評価する"
+  application_target: "prototype の headless trace と人間 playtest で、設計上の問いごとに最小イベント集合・期待値・判定条件を先に定義する運用"
+  pros_cons: "長期・大規模な実行証拠を反復へ戻せる一方、計測設計の偏り、理由の欠落、相関の過剰解釈、少人数 prototype での標本不足がある"
+  verdict_pre: "部分採用。質問駆動の計測ループは採用し、定性観察と小標本時の不確実性表示を必須条件にする"
 ---
 
 ## raw_excerpt
