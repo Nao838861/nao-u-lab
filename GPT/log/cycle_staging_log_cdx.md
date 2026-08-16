@@ -110,7 +110,64 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index 参照 87 件を atoms.jsonl と照合し、broken reference 0 件を確認した。"
+  - "memory health を監査し、atoms.jsonl / per-file Markdown / index.jsonl が各 2880 件で一致、ID 重複・mirror conflict・parse error 0 件を確認した。normalized content 重複は raw 40 group / 80 row だが canonical overlay 45 group で fold 済み、effective display unresolved は 0 件だった。"
+  - "memory/raw/ の 30 日超ファイル 242 件（web_research 217、headless_eval 16、slack_api 6、その他 3）を確認した。一次 provenance または既存 archive 配下であり、mtime だけを根拠に移動しなかった。"
+  - "candidate lifecycle 1305 件を dry-run 監査し、現在状態の書換え 0 件、status/candidate_status conflict 0 件を確認した。"
+  - "terminal title canonical index、mixed/all-open duplicate sidecar、stale triage、group action queue を再生成した。terminal canonical 94 group、open duplicate 36 group、actionable group 0 件だった。"
+  - "Slack inbox は directives 23 行 / broadcasts 21 行を確認し、pending 0 件のため handled 更新はなかった。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読みで『記憶』『ゲーム設計』『敵パターン』『評価軸』を取得できた。health warning の 2 atom のうち sr-1776127289-4d9239b255 は raw Slack と atom に置換文字が保存された既存 source corruption、gr-1777083728-44d444ab7a は per-file atom 本文が正常で legacy atoms.jsonl excerpt 側だけが suspect。MEMORY.md の再生成・手修復対象ではない。"
+  display_or_tooling_status: "UTF-8 表示経路は正常。source corruption と shell/tooling mojibake を混同していない。"
+candidate_lifecycle:
+  counts:
+    posted: 617
+    ready_to_post: 9
+    postponed: 209
+    failed: 468
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_open_total: 2
+  overdue_paths:
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+    - memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+  disposition: "2 件とも all-open duplicate group の既存 deferred lease が membership 一致かつ retry_after=2026-08-20 のため、この cycle では明示保持。候補本体を変更せず、Phase 2 再投入もしなかった。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 7
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 36
+  mixed_group_count: 33
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
