@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/postmortem-kraven-manor"
 collected_at: "2026-08-17T23:45:52+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, horror, scope, procedural-generation, level-design]
+evaluated_at: "2026-08-17T23:52:23+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-17T23:52:23+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-17T23:52:23+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-16"
+supersedes: []
+gate_reason: >-
+  技術実証が遊びの実証にならなかった失敗から、content budget、恐怖演出の制御、Room Table への核の再統合まで因果が具体的である。
+  procedural 構想を vertical slice へ縮める判断を自分達の prototype review に直接適用でき、限界を含む約4000字の分析を組み立てられる。
+suggested_post_outline:
+  overview_angle: "半ランダムな大規模構想を5部屋の linear experience へ縮め、room shifting だけを player-authored な核として救出した設計転換"
+  analysis_axis: "技術的 proof of concept と proof of fun のずれ、content 量と演出制御の制約、機能削減後の kernel of fun の再統合"
+  application_target: "Log_cdx のゲーム prototype で、vertical slice 前に機能数・必要 content 量・minute-to-minute action を棚卸しし、一つの操作核へ scope を畳む review gate"
+  pros_cons: "長所は失敗した構想から削減後の具体形まで追えること。短所は学生 project の自己報告で、比較 playtest や定量評価が乏しいこと"
+  verdict_pre: "部分採用—Room Table 自体ではなく、必要 content 量から逆算して構造を縮め、核を一操作へ再配置する判断手順を採用"
 ---
 
 ## raw_excerpt

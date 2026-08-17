@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/business/postmortem-building-i-the-turing-te
 collected_at: "2026-08-17T23:46:25+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, puzzle, postmortem, production, playtesting, marketing]
+evaluated_at: "2026-08-17T23:52:23+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-17T23:52:23+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-17T23:52:23+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-16"
+supersedes: []
+gate_reason: >-
+  18か月・約11万ポンド・77室という制約下で、white box、数値と観察を併用した playtest、modular production、秘密の mechanic と marketing の衝突まで検証材料が揃う。
+  puzzle 量産前の検証と production constraint の設計変換に具体的に使え、成功要因だけでなく独創性不足や linearity の代償まで約4000字で分析できる。
+suggested_post_outline:
+  overview_angle: "低予算 production、77個の puzzle room、物語上隠す必要がある独自 mechanic を一つの設計問題として束ねた postmortem"
+  analysis_axis: "single mechanic の展開限界、white-box playtest の測定と観察、制約を camera・setting・asset 構成へ変換する方法、秘密と訴求力の trade-off"
+  application_target: "Log_cdx の puzzle/gameplay prototype で、量産前の mechanic breadth test、難度曲線の記録、観察ログ、公開前に見せられる hook の有無を同じ review sheet で確認する工程"
+  pros_cons: "長所は予算・期間・room 数・検証方法・設計上の後悔が一続きで具体的なこと。短所は retrospective な自己評価で、playtest 母数や売上との因果が十分には示されないこと"
+  verdict_pre: "部分採用—定量評価だけで個性を均さず観察を併用し、秘密の twist とは別に公開可能な core hook を早期検証する"
 ---
 
 ## raw_excerpt
