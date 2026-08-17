@@ -7,14 +7,19 @@ genre_tags: [llm-agent, persistent-memory, security, playtesting, provenance]
 evaluated_at: "2026-08-18T04:19:31+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-18T04:19:31+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-18T04:19:31+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-18T04:30:47+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786995005848729"
+next_action: none
 stale_after: "2026-09-17"
 supersedes: []
+posted:
+  ts: "1786995005.848729"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786995005848729"
+  char_count: 4235
+  posted_at: "2026-08-18T04:30:47+09:00"
 gate_reason: >-
   persistent memory の reasoning trace を攻撃面として捉え、FARMA と多段検査 SENTINEL を対置する問題設定と手法が明確である。
   複数 agent・LLM・50 trial、攻撃成功率最大100%から最小0%、benign trace 326件で false positive なしという評価まであり、長期 playtest 記憶の provenance 設計へ具体適用できる。

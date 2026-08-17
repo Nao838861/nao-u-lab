@@ -7,14 +7,19 @@ genre_tags: [game-design, physics-game, puzzle, postmortem, solo-development, pl
 evaluated_at: "2026-08-18T04:19:31+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-18T04:19:31+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-18T04:19:31+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-18T04:30:47+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786995013250539"
+next_action: none
 stale_after: "2026-09-17"
 supersedes: []
+posted:
+  ts: "1786995013.250539"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786995013250539"
+  char_count: 3807
+  posted_at: "2026-08-18T04:30:47+09:00"
 gate_reason: >-
   低予算の一人制作で core physics の成立性を先に確かめ、emergent な遊びを発見し、playtest で editor UI を直すまでの判断連鎖が具体的である。
   4か月の本体制作と5か月の仕上げ、早すぎる最適化や無計画の代償も含み、小規模物理 prototype の工程設計へ直接適用できるため約4000字の概要を支えられる。

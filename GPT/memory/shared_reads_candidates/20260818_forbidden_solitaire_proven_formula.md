@@ -7,14 +7,19 @@ genre_tags: [game-design, card-game, genre-hybrid, iteration, audience, market-t
 evaluated_at: "2026-08-18T04:19:31+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-18T04:19:31+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-18T04:19:31+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-18T04:30:47+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786995019258439"
+next_action: none
 stale_after: "2026-09-17"
 supersedes: []
+posted:
+  ts: "1786995019.258439"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786995019258439"
+  char_count: 4079
+  posted_at: "2026-08-18T04:30:47+09:00"
 gate_reason: >-
   30年・17作の solitaire 改良史から、高速な core loop、RPG 的拡張、analog horror 表現へ至る蓄積と役割分担が具体的に説明されている。
   gameplay 未完成時の teaser で wishlist 7000、発売48時間で1万本・同接680という audience signal もあり、既知 mechanic に新しい入口を接続する prototype と市場検証を約4000字で分析できる。

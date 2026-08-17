@@ -111,7 +111,26 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260719_forged_reasoning_agent_memory.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786995005848729
+    char_count: 4235
+  - candidate: memory/shared_reads_candidates/20260818_armadillo_run_indie_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786995013250539
+    char_count: 3807
+  - candidate: memory/shared_reads_candidates/20260818_forbidden_solitaire_proven_formula.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786995019258439
+    char_count: 4079
+skipped: []
+review:
+  required_sections: pass
+  url_last: pass
+  banned_phrases: pass
+  duplicate_preflight: pass
+  single_chat_post_message_per_candidate: pass
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
