@@ -4,6 +4,20 @@ url: "https://schedule.gdconf.com/session/learning-to-move-physics-based-enemy-l
 collected_at: "2026-08-17T09:31:41+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, reinforcement-learning, physics, animation, enemy-design, production]
+evaluated_at: "2026-08-17T09:36:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-17T09:36:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-17T09:36:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-16"
+supersedes: []
+gate_reason: >-
+  敵の知覚・物理・animation・戦闘 intent を production runtime へ統合する題材は具体的で、ゲーム制作への適用性は高い。
+  しかし現資料は講演概要に限られ、学習状態・報酬設計・評価指標・比較結果・失敗例がなく、約4000字の概要を推測なしに構成できない。Vault 録画またはスライド取得後に再評価する。
 ---
 
 ## raw_excerpt
