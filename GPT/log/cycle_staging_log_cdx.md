@@ -53,7 +53,18 @@ unreviewed_intake_audit:
 - duplicate preflight: pre-evaluation は `continue`。frontmatter 更新後の sidecar 再生成では、同一 URL の旧 `failed` candidate `memory/shared_reads_candidates/20260529_webgamebench_browser_native_games.md` との mixed group により `review`。旧 fail は題名推測のみで rubric・baseline・定量結果が不足したことが理由だが、今回の本文 snapshot は runtime rubric、111 task／12 agent、難度別率、人手照合を補っているため、旧 candidate を supersede する独立の `pass` とした。posted sibling はない。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260817_webgamebench_requirement_to_application.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786956003605089
+    char_count: 4157
+skipped: []
+```
+
+- 最終判定: 投稿。論文本文 v2 で frozen specification、B-S-T functional point、実ブラウザ上の runtime rubric、111 task／12 coding agent／14 configuration、難度別 usable rate、43 artifact の人手照合、三値一致 50.0% という自動 Excellent 判定の限界まで確認した。
+- 投稿前 review: `■ 概要` 開始、`■ URL` 末尾、必須6項目、URL 集約、禁止表現なし、4,157字、1回の `chat.postMessage`、スレッドなしを確認。投稿後に Slack 保存本文の文字化け検査も `ok`。
+- duplicate review: 同一 URL の旧 candidate は一次資料不足で `failed`。既投稿 sibling はなく、今回の候補が旧 candidate を supersede するため二重投稿ではない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

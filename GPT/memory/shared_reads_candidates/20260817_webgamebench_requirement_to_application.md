@@ -7,12 +7,17 @@ genre_tags: [game-development, browser-games, coding-agents, playtesting, evalua
 evaluated_at: "2026-08-17T17:33:46+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-17T17:33:46+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-17T17:33:46+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1786956003.605089"
+  permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786956003605089
+  char_count: 4157
+  posted_at: "2026-08-17T17:40:20+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-17T17:40:20+09:00"
+last_decision: posted
+evidence: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786956003605089
+next_action: none
 stale_after: "2026-09-16"
 supersedes:
   - memory/shared_reads_candidates/20260529_webgamebench_browser_native_games.md
