@@ -3,10 +3,10 @@
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-- pending inbox: `slack_directives.jsonl` 0件 / `slack_broadcasts.jsonl` 0件。
-- `memory/shared_reads_candidates/20260818_tower_bloxx_postmortem.md` — 『Tower Bloxx』の throw-away prototype、3週間の短周期 physics tuning、city UI 未試作と新規企画の見積り失敗を記録した postmortem。
-- duplicate preflight: sidecar 再生成直後に `continue`。candidate 保存後の最終状態でも3 sidecar を再生成済み。
-- Slack 投稿なし。品質判定・記憶整理は未実施。
+
+- `memory/shared_reads_candidates/20260818_wik_fable_souls_postmortem.md` — MouseParty prototype から single-player の成立条件を取り違え、開発3か月目に重力と舌 swing へ全面変更した過程、入力補正と tutorial 改修を記録した一次ポストモーテム。
+- pending inbox: `slack_directives.jsonl` / `slack_broadcasts.jsonl` ともに `status: pending` なし。
+- preflight: sidecar 3種を再生成後、同一 URL / work・closed canonical title・open duplicate group の一致なし (`continue`)。
 
 ## Phase 2: 分析
 ```yaml
