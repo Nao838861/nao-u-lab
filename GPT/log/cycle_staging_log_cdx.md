@@ -64,7 +64,34 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778510440-ad9b278b60
+    source_ts: "1778510440.623829"
+    title: "[Codex external research] 日記前検索: 現在の目的に関係する外部情報"
+    reason: "未レビュー・score 14・status active の2候補から、優先タグ数が同じため新しい方を1件だけ選んだ。3論文を短い抄録と汎用的な使い道で束ねた旧投稿が、現在の投稿判断に固有差を作るか確認した。"
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "合計14未満かつactionabilityが必須閾値2未満。候補ローカル保存、1 candidate 1投稿、約4000字の概要・分析・適用・利害・判定、Log_cdx自身の深い分析という現行3 directiveですでに上書き済みで、新しい行動差がない。"
+  change:
+    summary: "reviewed_source_tsとstate-only reject理由を記録。probe・metric・directive・恒久ルールは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

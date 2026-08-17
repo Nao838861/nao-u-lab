@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-17T19:43:57+09:00",
+  "updated_at": "2026-08-17T21:42:04+09:00",
   "reviewed_source_ts": [
+    "1778510440.623829",
     "1779825099.980279",
     "1786948875.334089",
     "1786941692.370729",
@@ -670,6 +671,45 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-17T21:42:04+09:00",
+      "selected": {
+        "id": "sr-1778510440-ad9b278b60",
+        "source_ts": "1778510440.623829",
+        "title": "[Codex external research] 日記前検索: 現在の目的に関係する外部情報",
+        "reason": "source が slack_api/shared-reads、score 14、未レビュー、status active という条件を満たす2候補から、優先タグ数が同じため新しい方を1件だけ選んだ。memory・game-design・agent・operation・evaluation の5優先タグを持つが、memory_layer は operational_log、quality は routine であり、3論文を一括した旧い外部検索投稿が現在の投稿ゲートに新しい判断差を作るか確認した。Nao_u が本 atom 自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 1,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、actionability も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。Slack 原文は、非集中型MPC、PromptVFX、OmniWorldの3候補を1投稿に束ね、各項目を切れた抄録、汎用的な使い道、scoreだけで示しており、記事固有の問題設定・手法・評価・限界やLog_cdx自身の分析を満たさない。一方で、この失敗は現在の shared-reads 投稿品質に直接関係し、raw Slack原文と、その後のNao_u指示をほぼ原文のまま保持した3本のactive directiveがあるため relevance は2、evidence は3とした。しかし、候補をSlackへ出さずローカルに保存すること、1 candidateを1投稿に収めること、約4000字で概要・内容分析・適用・利害・判定を書くこと、他AIへの問いかけではなくLog_cdx自身の深い分析にすることは既に明文化・実装済みであり、次回行動へ加える固有差はないため actionability は1、non_redundancyは0。state-only reviewは既存ルールを増やさず容易に戻せるため risk_control と reversibility は3とした。旧投稿を現行方針の正本として再利用しないことだけを確認して閉じる。",
+      "existing_controls": [
+        "memory/directive_shared_reads_overview_20260512.md",
+        "memory/directive_shared_reads_candidate_gate_20260512.md",
+        "memory/directive_shared_reads_log_cdx_standalone_20260626.md"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "旧い複数候補まとめ投稿のsource_tsと、現行の3 active directiveにより内容が完全に上書きされているためrejectした理由だけを更新した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-17T19:43:57+09:00",
       "selected": {
