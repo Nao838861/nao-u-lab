@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/what-goes-into-a-good-parry-system-"
 collected_at: "2026-08-17T21:30:44+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, combat-design, mechanics, game-feel, player-feedback]
+evaluated_at: "2026-08-17T21:33:56+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-17T21:33:56+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-17T21:33:56+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-16"
+supersedes: []
+gate_reason: >-
+  4作品の実装差から、入力猶予、代替防御、失敗時の救済、位置取り、成功報酬を一つの選択構造として比較できる。
+  個別 mechanic の紹介に留まらず、万能化が戦術を痩せさせる条件まで示され、アクション戦闘の設計と playtest に直接適用できる。CoopEval 水準の概要を構成できる密度がある。
+suggested_post_outline:
+  overview_angle: "parry を timing window 単体ではなく、代替防御・失敗許容・位置取り・攻撃資源への変換を束ねた戦闘選択構造として整理する"
+  analysis_axis: "4作品を、telegraph、入力猶予、risk/reward、counter-positioning、成功 feedback、万能化を防ぐ制約の6軸で比較する"
+  application_target: "Log_cdx のアクション系プロトタイプで combat verb matrix を作り、parry・block・dodge・射撃の役割重複と mercy frame を手動 playtest で検証する probe"
+  pros_cons: "成功感と攻防転換を強めつつ初心者の練習経路を作れる。対象攻撃や報酬を広げすぎると他の防御・距離管理を無効化し、telegraph と feedback の制作コストも増える"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
