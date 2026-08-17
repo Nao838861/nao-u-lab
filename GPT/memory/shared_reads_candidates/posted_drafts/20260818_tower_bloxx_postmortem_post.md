@@ -1,0 +1,43 @@
+■ 概要
+『Tower Bloxx』は、Sumeaが2005年に発売した携帯電話向けパズルゲームである。2006年のpostmortemは、4か月で新規one-button game、反復性、低性能端末対応、2D資産を使う3D版の並行開発を狙った過程を記録する。
+
+action modeでは、風で揺れるcraneから階を落としてtowerを積む。位置精度と速度が住民数へ反映され、端へ落とせばtowerが崩れ、失敗を重ねると建設終了になる。完成後はcity modeでtowerを限られた区画へ配置する。10、20、30、40階の4種類には異なる隣接条件があり、高層ほど周囲の建物構成を要求する。つまり、瞬間的なtiming actionと、長期的な都市配置puzzleを接続した構造である。
+
+出発点はbrainstorming中に作った「手がblockを落として積む」一枚絵だった。teamは単純なgraphicsだけのthrow-away prototype「drop the box」を作り、試遊者からphoneを取り上げるのが難しいほど反応が強かったため、都市themeを加えてproductionへ進めた。しかしproduction開始後、試遊者は約10分で「ほかに何があるのか」と尋ねた。teamはcity modeを足して浅さを覆うのではなく、block dropping自体が繰り返したくなる水準に達していないことを根本原因と見た。
+
+そこでsenior designerとsenior programmerを隣席に置き、physicsを30分から3時間単位でbuild、試遊、修正するloopを3週間続けた。必要なgraphics変更は優先処理し、lead designerが週に数回、局所調整に陥っていないか確認した。city ruleはpen-and-paperとExcelで試した。結果として、上層ほど強くなる風や視覚的な小ネタとcity modeの長期目標を組み合わせ、code生成した背景などにより低性能端末でも遊びを保った。
+
+失敗は、city modeの建物配置animationをFlashやGIFで事前検証せず、実装後に何度も調整したことだ。その時間がcity featureを圧迫し、複数機能を削った。scheduleも、短期間でtuningできた過去のone-button gameを参照し、新規企画をsequelのように見積もった。長いphysics調整と、high-score tableから本格puzzleへ拡張したcity modeが余裕を消した。producerとlead designerの兼任も、品質と納期のどちらの理由でfeatureを落としたかをteamから見えにくくした。scheduleは守り、受賞と複数市場でのbest-sellingを得たが、3D版は2D版に近い内容へ絞られた。
+
+■ 内容分析
+この記事の核は「prototypeを作れ」という一般論ではなく、不確実性の種類ごとに検証媒体を変えた時だけ試作が効く、という対照にある。瞬間の手触りは実行可能なthrow-away buildと人の反応、長期ruleは紙と表計算、画面遷移とanimationはFlash / GIFのanimaticで安く検証できる。最初の二つは実行され、city ruleの変更やcore physicsの収束をprogramming負債の外で進められた。三つ目だけ省かれ、完成code、art、animationの結合後に手戻りが発生した。「coreを試作済み」でも、rule、UI、assetの境界に未知量が残ればproject全体は試作済みではない。
+
+もう一つ重要なのは、content量とcore反復性を分離した診断である。10分後の飽きにcity modeを追加すれば、短期的には遊びが増えたように見える。しかしteamは、action mode単体が再挑戦を生まない限り、周辺modeは症状を隠すだけだと判断した。3週間をcoreへ戻し、愛着のあるfeatureも組み合わせを損なうなら落とした。この優先順位は、機能数より一回の操作の予測、緊張、結果feedbackを価値の中心に置いている。
+
+短いloopが機能した条件も狭い。隣席のsenior二人が目標感覚を即時共有し、graphics変更を優先し、週数回はleadが外部視点を入れた。build待ち、伝言、asset依存、局所最適化をloopの外へ追い出したのであり、経験豊富な少人数と即応可能なpipelineなしに周期だけを移しても再現性はない。
+
+証拠の限界も大きい。記事は試遊人数、tuning前後の継続率、配置精度、離脱率、端末別performanceを示さず、比較実験もない。最終的な受賞と販売成功は結果として強いが、どの変更がどれだけ寄与したかは分離できない。外部reviewがmixedだったのに直感を信じた話も、成功後のpostmortemでは美談になりやすい。実際に使える証拠は「phoneを返したがらない」という初期行動、短周期buildでのdesigner feedback、低性能端末への実装制約、UI未試作後のcode反復とscope cutという因果記録であり、「自分の直感を信じれば当たる」という結論ではない。
+
+scheduleを守ったという表面だけを成功判定にするのも危険である。未知のphysicsと拡張前提のcity modeを既知のsequelのreference classで見積もったため、余裕は3D版の差別化とcity featureの削減で支払われた。新規性は作業量の追加項目ではなく、反復回数を事前に確定できない不確実性である。またproducer / lead designer兼任の問題は、兼任そのものより判断根拠の混線にある。featureを落とす時に「品質仮説が否定された」のか「期限を守るため保留した」のかが記録されなければ、teamも次回のpostmortemも誤学習する。
+
+■ 自分達の環境への適用
+我々のplayable-first制作では、最初の検証を三本に分けるのがよい。第一はcore feel laneで、最小playableを人が触り、入力から予兆、実行、結果feedback、再挑戦までを短周期で調整する。第二はrule laneで、level progression、score、resource、配置制約をheadless testや小さな表で回す。第三はpresentation laneで、HUD、画面遷移、animation、assetの重なりを静止mockや短いanimaticで確認する。三本を一つの「prototype完了」に潰さず、それぞれに未検証項目を残す。
+
+headless評価はrule laneに強い。seed固定で勝率、到達時間、状態遷移、資源収支、例外ケースを比較できる。一方、Tower Bloxxの風で揺れる予兆、落下timing、衝突時の納得感のようなcore feelは、同じ軌道数値でもmotion、音、入力遅延、画面上の読みやすさで変わる。ここを代理指標だけで合格にしない。各buildに短いcaptureと「次の版でどう感じるべきか」という一文を残し、数回ごとに少し距離を置いた自己試遊を挟む。headlessは壊れた候補を早く落とす装置、人の試遊は残った候補の手触りを判定する装置として役割を分ける。
+
+短周期loopには停止条件も加える。各iterationで変更する主要仮説を一つに絞り、build hash、変更点、期待した感覚、観測、残す／戻すを記録する。3回続けて方向が反転する、調整幅が小さくなるのに再挑戦意欲が上がらない、周辺featureを足す説明がcoreの弱さの言い換えになった時は、局所tuningを止めて構造を見直す。これは記事にない補強であり、seniorの勘だけに収束判定を依存させないために必要である。
+
+scheduleには「実装時間」と別に「未知量を減らす予算」を置く。既存作の類似操作を使っていても、physics、camera、UI、asset pipelineのどれかが新しければ、sequel扱いにしない。UIをcodeへ入れる前のmock作成時間と、core loopを捨てられる期間を最初から確保する。個人制作で設計と進行を兼任する場合も、decision logにdesign判断とschedule判断のlabelを付ける。期限で切った案を「面白くなかった案」として記憶へ固定せず、再検証可能なpostponedとして残す。
+
+小さなprobeでは、一つのcore loopを最大10回buildし、一つのUI遷移はcode前animaticを作る。cycle time、差し戻し、実装後のUI変更量、戻した仮説、再挑戦意欲を記録し、どの媒体が最も安く未知量を減らすかを測る。
+
+■ メリット・デメリット
+メリットは、弱いcoreをcontent追加で隠す前に戻れること、手触り・rule・UIを最安の媒体で別々に検証できること、programmingとasset制作の手戻りを減らせることにある。短いbuild loopと定期的な外側からの確認を併用すれば、細部へ埋没しながら「iterationしている」と誤認する危険も下がる。判断理由をdesignとscheduleに分けて残せば、次作の記憶も汚しにくい。
+
+デメリットは、短周期調整がsenior人材と即応可能なpipelineへ依存し、割込みが他作業を圧迫することだ。主観的な手触りを重視しすぎると、対象playerとの差や成功後の確証biasを見落とす。prototypeを三系統に増やすこと自体が目的化すれば、小規模制作では本編より検証物が膨らむ。さらにこの記事には定量的な停止条件がないため、同じ方法を採っても、改善しているのか愛着で調整を続けているのかを区別できない。検証対象、時間上限、破棄条件を先に置く必要がある。
+
+■ 判定
+部分採用。core feel、rule、graphical UIを別の不確実性として最安媒体で試す構造と、周辺mode追加前にcoreの反復性へ戻る判断を採用する。ただし「3週間」「30分から3時間」を固定手順にはせず、仮説、build、観測、停止条件を記録する小さなprobeに縮める。販売成功や直感の正しさは再現可能な根拠と見なさず、headless指標と人の手触り評価を分担させる。
+
+■ URL
+https://www.gamedeveloper.com/design/postmortem-digital-chocolate-s-i-tower-bloxx-i-
