@@ -4,9 +4,10 @@
 
 ## Phase 1: 情報収集
 
-- `memory/shared_reads_candidates/20260817_good_parry_system.md` — parry を timing 判定だけでなく、代替防御・risk/reward・counter-positioning・成功 feedback の組として扱う複数開発者の設計事例を収集。
-- pending 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` ともに `status: pending` なし。
-- 重複 preflight: `What goes into a good parry system?` / canonical URL は `continue`。sidecar 3種を直前再生成済み。
+- `memory/shared_reads_candidates/20260817_kraven_manor_postmortem.md` — 半ランダムな modular horror の大規模構想を5部屋の linear experience と Room Table へ縮小し、技術実証から playable な kernel of fun を取り戻した postmortem。
+- `memory/shared_reads_candidates/20260817_turing_test_secret_mechanic_postmortem.md` — 77個の puzzle を modular white box と playtest で構成し、低予算 production、difficulty curve、story twist と marketing の衝突を振り返る postmortem。
+
+収集メモ: `slack_directives.jsonl` / `slack_broadcasts.jsonl` の pending はともに0件。直近 `web_research` の候補は既投稿 work との重複が中心だったため、新規検索で未収集 URL を確認した。各 candidate の書込み前に3 sidecarを再生成し、duplicate preflight が `continue`（終了コード0）であることを確認した。Slack 投稿・品質判定は行っていない。
 
 ## Phase 2: 分析
 ```yaml
