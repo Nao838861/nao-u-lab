@@ -4,6 +4,21 @@ url: "https://www.gamedeveloper.com/design/game-design-deep-dive-the-digging-mec
 collected_at: "2026-08-17T13:31:17+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, mechanics, level-design, risk-reward, postmortem]
+evaluated_at: "2026-08-17T13:36:44+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-17T13:36:44+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-17T13:36:44+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-16"
+supersedes: []
+gate_reason: >-
+  不可逆な掘削、帰路、資源損失を結ぶ設計核は明確だが、現 candidate の根拠は完成形の構造説明に偏り、
+  開発中の比較案・失敗・評価結果が不足している。約4000字に伸ばすと一般論の補間が増えるため、
+  原記事から iteration と具体的な検証根拠を追加取得するまで保留する。
 ---
 
 ## raw_excerpt

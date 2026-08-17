@@ -4,6 +4,27 @@ url: "https://www.gamedeveloper.com/design/evaluating-game-mechanics-for-depth"
 collected_at: "2026-08-17T13:30:51+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, mechanics, depth, challenge-design, postmortem]
+evaluated_at: "2026-08-17T13:36:44+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-17T13:36:44+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-17T13:36:44+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-16"
+supersedes: []
+gate_reason: >-
+  objective の数と meaningful skill の数を分ける診断法、Ratchet & Clank の失敗例、
+  演出や対象物の追加では構造的な浅さを直せないという結論が揃っている。prototype の反復評価へ
+  そのまま適用でき、概要・分析・実装 probe・限界を約4000字で具体化できる。
+suggested_post_outline:
+  overview_angle: "mechanic の深さを要素数ではなく、明確な objective と再利用可能な meaningful skill の組合せとして診断する方法"
+  analysis_axis: "objective の見かけ上の多様性と、実際にプレイヤーが使い分ける判断・操作の多様性を分離する"
+  application_target: "Log_cdx の prototype review で objective / meaningful skill 棚卸し表を作り、追加要素が新しい判断を生むかを playable diff 前後で比較する"
+  pros_cons: "少ない項目で浅さの原因を説明できる一方、skill の粒度は評価者依存で、手触り・物語・驚きの価値を単独では測れない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
