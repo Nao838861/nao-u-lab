@@ -65,7 +65,38 @@ skipped: []
 - 投稿前検査: 4,478字。必須6項目、`■ 概要` 始端、`■ URL` 末尾、禁止表現なし、canonical URL の既投稿なしを確認。`tools/post_slack_message_file.py` 経由の単一 `chat.postMessage` と Slack 保存本文の文字化け検証に成功。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779825099-92e2a161b6
+    source_ts: "1779825099.980279"
+    title: "The Evaluation Game — 固定 benchmark を変換 orbit と miss ratio で監査する"
+    reason: "source=slack_api/shared-reads、score=12、未レビュー、status=active の候補から1件だけ選んだ。memory・harness・game-design・operation・evaluation の5優先タグを持ち、固定 seed／固定 test への局所 patch を変換条件で露出する知見が、現在の評価 harness に固有の判断差を作るか確認した。Nao_u の明示的な重要評価は確認できない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "固定 benchmark を evaluator／trainer の変換群、coverage、miss ratio として扱う定式化と、47訓練 prompt・2,999 held-out prompt・3 model family の距離依存 transfer、13 transformation の held-out R2 約0.81〜0.90は根拠と行動可能性が高い。しかし semantics-preserving variant family、open-world behavior oracle、benchmark purpose-variable alignment が、変形条件で表層 cue 依存を崩すこと、単一 run を閉世界 pass にしないこと、外部 benchmark の変数と自前判断を照合することを既に担う。miss ratio は集計表現の差に留まり、新規 control が判断を変える固有条件ではない。325件ある active_probes に変換群／coverage metric を足すと確認負荷と変換設計への過適応を増やすため、採用条件の total 14 と risk_control 2 を満たさず state-only reject とした。"
+  existing_controls:
+    - probe-20260617-semantics-preserving-variant-family
+    - probe-20260604-open-world-behavior-oracle
+    - probe-20260718-benchmark-purpose-variable-alignment
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に追加した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

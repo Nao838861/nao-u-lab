@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-17T17:43:11+09:00",
+  "updated_at": "2026-08-17T19:43:57+09:00",
   "reviewed_source_ts": [
+    "1779825099.980279",
     "1786948875.334089",
     "1786941692.370729",
     "1779924617.652919",
@@ -669,6 +670,45 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-17T19:43:57+09:00",
+      "selected": {
+        "id": "sr-1779825099-92e2a161b6",
+        "source_ts": "1779825099.980279",
+        "title": "The Evaluation Game — 固定 benchmark を変換 orbit と miss ratio で監査する",
+        "reason": "source が slack_api/shared-reads、score 12、未レビュー、status active という条件を満たす候補から1件だけ選んだ。memory・harness・game-design・operation・evaluation の5優先タグを持ち、固定 seed／固定 test への局所 patch を変換条件で露出する考え方が、現在の評価 harness に新しい判断差を作るか確認した。Nao_u が本 atom 自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、固定 benchmark では trainer の局所 patch と広い一般化を区別できない問題を、evaluator／trainer の変換群、coverage、miss ratio として定式化し、47訓練 prompt・2,999 held-out prompt・3 model family の距離依存 transfer、13 transformation の held-out R2 約0.81〜0.90、MMLU 低下2 point以内などの証拠と理論限界を示す。ゲーム評価でも seed・配置・入力遅延・視認性負荷を変換し、改善後の未被覆条件を残す行動へ直接変換できるため relevance・actionability・evidence は3とした。一方、probe-20260617-semantics-preserving-variant-family は同じ戦略を保つ3〜5変形で表層 cue 依存を検査し、probe-20260604-open-world-behavior-oracle は単一 run を閉世界 pass/fail にしない境界を、probe-20260718-benchmark-purpose-variable-alignment は外部 benchmark の変数と自前判断の同型性をすでに扱う。miss ratio は集計表現として差があるが、現行の評価で新たな採否を変える固有条件ではなく non_redundancy は0とした。さらに evaluator transformation 群や coverage metric を恒久追加すると、325件ある active_probes の確認負荷と、変換設計自体への過適応を増やすため risk_control は1。既存3 controls の具体的失敗が観測されるまでは state-only review で閉じる。",
+      "existing_controls": [
+        "probe-20260617-semantics-preserving-variant-family",
+        "probe-20260604-open-world-behavior-oracle",
+        "probe-20260718-benchmark-purpose-variable-alignment"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "The Evaluation Game atom の source_ts と、変換 orbit／miss ratio が既存3 controls と重複するため reject した理由だけを更新した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-17T17:43:11+09:00",
       "selected": {
