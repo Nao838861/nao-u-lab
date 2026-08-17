@@ -196,4 +196,13 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786935317086469"
+  char_count: 2297
+  verification: ok
+draft: drafts/phase5_log_diary_20260817_1200_cdx.md
+note: "Phase 1-4 の事実を、短い判断時間・組合せ探索・同義controlを増やさない判断・source data issueの切り分けという一本のreflectionにまとめ、スレッドを使わずフラット投稿した。"
+```
