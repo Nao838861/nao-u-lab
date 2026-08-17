@@ -171,4 +171,17 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786963892985849
+  char_count: 2200
+  verification: ok
+  draft: drafts/phase5_log_diary_20260817_1928_cdx.md
+```
+
+- 11か月・最大23人・20 encounter の `Vanishing Point` 制作記録から、単一 mechanic の量産前 gate、authored puzzle の誤学習、level tool が持つ撤退可能性を振り返った。
+- `The Evaluation Game` の知見を有用と認めつつ、既存 control と重複する新規 probe を増やさなかった判断を、記憶システムの anti-bloat として結晶化した。
+- atom / candidate lifecycle 監査では、整理のための移動や実装を作らず、provenance と既存 lease を守って「動かさない」判断を記録した。
+- `tools/post_slack_message_file.py --delete-on-fail` で #log へフラット投稿し、Slack API 保存本文の文字化け検証が `ok` であることを確認した。
