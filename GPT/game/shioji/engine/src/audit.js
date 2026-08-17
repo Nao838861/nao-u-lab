@@ -739,6 +739,9 @@ export const B2_EXPANSION_STRATEGIES = Object.freeze({
         jobs: Object.freeze([
           "wheat", "wheat", "wheat", "wheat", "wheat", "wheat",
           "veg", "veg", "veg",
+          // 母港から届く丸太を農家の作業道具へ現地加工し、同じ丸太を工具として
+          // 往復輸送しない。盆地棚に丸太100荷超・工具0が残る実測への接続。
+          "woodshop",
         ]),
       }),
     ]),
@@ -941,6 +944,10 @@ function ensureB2FoodBackboneRoute(world, { day = world.state.day } = {}) {
   const mining = controller.expansions.find(expansion => expansion.marketId === "mining");
   if (!basin || !mining) return null;
   const { economy, physical } = world.state;
+  // 路線名だけを「直結」にしても、道路グラフが母港経由のままでは片道9.8日、
+  // 往復中に鉱区48人が一便220荷を食べ切る。両市場間の実道路を先に敷き、
+  // 穀倉余剰が在庫日数どおり届く物理的な背骨にする。
+  connectB2Road(physical, basin.entrance, mining.entrance, "盆地―鉱山食料背骨道");
   const innZone = placeB2StarterZone(world, "carter", basin.entrance);
   connectB2Road(physical, basin.entrance, innZone, "盆地鉱山背骨線の隊商宿");
   const household = occupyScenarioZone(world, innZone, "basin", { foodKit: 0 });
