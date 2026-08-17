@@ -66,7 +66,20 @@ unreviewed_intake_audit:
 - 両 URL の duplicate preflight は sidecar 再生成後に `continue`。posted-source、closed canonical、open duplicate group のいずれにも該当しない。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260817_evaluating_game_mechanics_for_depth.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786941692370729
+    char_count: 4480
+skipped: []
+```
+
+投稿前レビュー:
+
+- 元記事本文を再確認し、Activity Statement、tractor beam / Clank の事例、反復手順、適用しない条件まで最終稿へ反映した。
+- 4,480 字。必須6項目、項目順、冒頭 `■ 概要`、末尾 `■ URL`、禁止表現なしを deterministic policy で確認した。
+- `chat.postMessage` は1回。Slack 保存後の UTF-8 本文検証は `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
