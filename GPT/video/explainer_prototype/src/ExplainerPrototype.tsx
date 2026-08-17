@@ -399,12 +399,15 @@ const DevelopmentDay2Scene: React.FC = () => {
       <DevVideoFrame src="dev_day2.mp4" />
       <div style={{position: 'absolute', left: 910, top: 170, width: 310}}>
         <div style={{fontFamily: FONT, color: C.white, fontSize: 22, fontWeight: 900}}>Z軸 56段階</div>
-        <div style={{height: 300, marginTop: 20, position: 'relative', borderLeft: `5px solid ${C.cyan}`, background: `linear-gradient(180deg, ${C.cyan}12, ${C.magenta}28)`}}>
+        <div style={{height: 230, marginTop: 16, position: 'relative', borderLeft: `5px solid ${C.cyan}`, background: `linear-gradient(180deg, ${C.cyan}12, ${C.magenta}28)`}}>
           <div style={{position: 'absolute', left: 15, top: 5, fontFamily: MONO, color: C.cyan, fontSize: 14}}>Z = 55　奥</div>
           <div style={{position: 'absolute', left: 15, bottom: 5, fontFamily: MONO, color: C.magenta, fontSize: 14}}>Z = 0　手前</div>
-          <div style={{position: 'absolute', left: -10, top: `${(55 - z) / 55 * 270 + 10}px`, width: 15, height: 4, background: C.white}} />
+          <div style={{position: 'absolute', left: -10, top: `${(55 - z) / 55 * 200 + 10}px`, width: 15, height: 4, background: C.white}} />
         </div>
-        <div style={{fontFamily: FONT, color: C.white, fontSize: 15, lineHeight: 1.5, marginTop: 15}}>各段階でスプライトの大きさとY座標を手作業で補正</div>
+        <div style={{fontFamily: FONT, color: C.white, fontSize: 15, lineHeight: 1.5, marginTop: 12}}>各段階でスプライトの大きさとY座標を手作業で補正</div>
+        <div style={{height: 126, marginTop: 10, overflow: 'hidden', border: '1px solid #47434e', background: '#111216'}}>
+          <Img src={staticFile('development_z_table.png')} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'left top', opacity: 0.82}} />
+        </div>
       </div>
     </AbsoluteFill>
   );
