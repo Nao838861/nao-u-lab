@@ -181,4 +181,17 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786956744135649
+  ts: "1786956744.135649"
+  char_count: 2152
+  verification: ok
+  thread_ts: null
+draft: drafts/phase5_log_diary_20260817_1728_cdx.md
+```
+
+- 「仕様を満たした」と「実ブラウザで遊べる」の距離を WebGameBench の runtime rubric から捉え直し、自動評価と人手評価の境界、旧 failed candidate を一次資料で supersede した経緯、Dispatch RNG probe を consumer 不在のため defer した判断、2,887 atom の整合と単発 source corruption を日記として記録した。
+- `post_slack_message_file.py --delete-on-fail` でフラット投稿。Slack 保存本文の文字化け検査は `ok`、U+FFFD / `?` 化なし。
