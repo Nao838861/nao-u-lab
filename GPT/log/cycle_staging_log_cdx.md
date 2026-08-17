@@ -116,7 +116,66 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、index entry と per-file atom index の対応を検証した。broken index reference 0件、代表語（記憶・ゲーム設計・敵パターン・評価軸）を取得でき、source file の文字化けはない。"
+  - "memory/atoms.jsonl / memory/atoms/index.jsonl / per-file atom 2885件の mirror を監査した。parse error・missing・content conflict は各0件、duplicate cluster 45群は既存 canonical overlay で fold 済み、effective display unresolved は0件。"
+  - "shared-reads の terminal canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再生成し、group/candidate handoff inbox を監査した。新規 handoff は0件。"
+  - "Slack directive / broadcast inbox を監査した。pending は各0件で、handled 更新対象はない。"
+  - "memory/raw/ の30日超ファイル242件（web_research 217、headless_eval 16、slack_api 6、その他3）を確認した。いずれも原文/provenance保管領域にあり、参照関係を壊す移動は行わなかった。"
+issues:
+  - id: ISS-4A-20260817-01
+    description: "active atom sr-1776127289-4d9239b255 の『AIエージェント』部分に置換文字が2文字残り、title / trigger / excerpt と raw source に同じ破損がある。memory_health が併記した gr-1777083728-44d444ab7a は、原文中の意図的な『???』を拾った false positive で source 破損ではない。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl#sr-1776127289-4d9239b255; memory/raw/slack_archive/shared-reads.jsonl#source_ts=1776127289.990919; memory/atoms/2026-04/gr-1777083728-44d444ab7a.md"
+    source_file_status: "UTF-8明示読みで sr-1776127289-4d9239b255 の raw source / atom / index に実際の U+FFFD 相当表示を確認。gr-1777083728-44d444ab7a は UTF-8 source が正常。"
+    display_or_tooling_status: "terminal表示だけの mojibake ではない。memory_health の2件中1件は true positive、1件は intentional-question-marks による false positive。"
+    why_blocks_game_memory: "agent memory の高score atomを日本語の完全一致語『エージェント』で探す導線が弱くなる。ただし atom id、agent tag、URL は保たれており影響は限定的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 7
+    dormant: 1
+candidate_lifecycle:
+  total_files: 1312
+  counts:
+    posted: 621
+    ready_to_post: 9
+    postponed: 210
+    failed: 470
+    needs_review: 2
+  overdue_open_total: 2
+  missing_stale_after: 3
+  lifecycle_conflicts: 0
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 35
+  mixed_group_count: 32
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  backlog_high_water_reason: "overdue_open_total 2 > queue rows 0 だが、actionable group は0件で3件以上の条件を満たさない。2件は membership 一致の deferred group lease（retry_after 2026-08-20）で抑止中。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
