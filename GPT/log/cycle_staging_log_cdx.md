@@ -121,7 +121,146 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の High Signal / Recent / Game Task Entry Points / Tag Entry Points を per-file atom index と照合し、unknown ID・重複 ID・missing markdown path は 0 件だった。"
+  - "atoms 2890 件について atoms.jsonl / per-file .md / index.jsonl の mirror を照合し、missing・parse error・content conflict は 0 件だった。normalized-content 重複 40 群 80 行は overlay で 40 行 fold 済みで、未解決の矛盾は検出されなかった。"
+  - "shared-reads candidate lifecycle を監査し、posted 627 / ready_to_post 9 / postponed 210 / failed 470 / needs_review 2 を確認した。terminal 1097 件は再評価 queue から除外した。"
+  - "title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再生成した。open duplicate は mixed 32 群 / all_open 3 群、actionable は 9 群だった。"
+  - "高水位条件に従い group handoff 3 群、candidate handoff 5 件を冪等 enqueue した。candidate 本体の frontmatter は変更していない。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件で、handled 更新対象はなかった。"
+  - "memory/raw/ の 30 日超 242 ファイル（70,590,898 bytes）を確認した。一次証拠・headless eval・Slack archive として参照される raw 保持物のため、この cycle では移動・削除しなかった。"
+issues:
+  - id: ISS-UTF8-001
+    description: "active atom sr-1776127289-4d9239b255 の title / trigger / excerpt に literal replacement characters（��）が残っている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory_health mojibake_suspect_atoms"
+    source_file_status: "UTF-8 明示読みで per-file atom と raw Slack archive の双方に �� を確認したため、表示経路だけの mojibake ではなく取り込み前または raw 保存時からの局所破損。もう1件の suspect gr-1777083728-44d444ab7a は UTF-8 source / raw とも本文が正常で false positive。MEMORY.md は UTF-8 で 記憶 / ゲーム設計 / 敵パターン を取得でき、評価軸 は現本文に存在しないが文字化け痕跡はない。"
+    display_or_tooling_status: "Get-Content -Encoding UTF8 と rg は source の状態をそのまま表示し、memory_health は該当 atom を正しく警告した。"
+    why_blocks_game_memory: "『AIエージェント』を含む memory-architecture lesson の title 検索語が欠け、次の制作で agent memory の段階開示を探す recall 精度を局所的に下げる。ただし game lesson 全体や mirror 整合性は阻害していない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 7
+    dormant: 1
+    merged: 0
+    retired: 0
+candidate_lifecycle:
+  status_counts:
+    posted: 627
+    ready_to_post: 9
+    postponed: 210
+    failed: 470
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_open_total: 17
+stale_backlog:
+  overdue_open_total: 17
+  stale_triage_queue_rows_before_group_lease: 15
+  stale_triage_queue_rows: 12
+  open_duplicate_group_count: 35
+  mixed_group_count: 32
+  all_open_group_count: 3
+  actionable_group_count: 9
+  backlog_high_water: true
+  high_water_evidence: "overdue_open_total 17 > pre-lease stale triage 15、かつ actionable group 9 >= 3"
+  group_handoff_budget: 3
+  handed_off_group_count: 3
+  handoff_inbox_pending_count: 3
+  handoff_inbox_ids:
+    - gha-00d22909169258c0
+    - gha-c4797ef1c6d64bdb
+    - gha-21a4035411e0d199
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-cb10f4942c224e4a
+    - cha-624c309f599462ba
+    - cha-364e9c70f11b0b65
+    - cha-1f8724afd851de32
+    - cha-dbb5c187d8597ecd
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff:
+  - handoff_id: gha-00d22909169258c0
+    group_key: "apex autonomous policy exploration for self evolving llm agents"
+    representative: memory/shared_reads_candidates/20260530_apex_policy_exploration_self_evolving_agents.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260530_apex_policy_exploration_self_evolving_agents.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260525_apex_policy_exploration.md
+      - memory/shared_reads_candidates/20260526_apex_autonomous_policy_exploration.md
+      - memory/shared_reads_candidates/20260528_apex_autonomous_policy_exploration.md
+    latest_evidence: "posted-source index で同一 arXiv work の canonical URL が実 Slack 投稿 2 件と一致。"
+  - handoff_id: gha-c4797ef1c6d64bdb
+    group_key: "ca2 code aware agent for automated game testing"
+    representative: memory/shared_reads_candidates/20260602_ca2_code_aware_game_testing.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260602_ca2_code_aware_game_testing.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260528_ca2_code_aware_game_testing.md
+      - memory/shared_reads_candidates/20260609_ca2_code_aware_game_testing.md
+    latest_evidence: "posted-source index で同一 arXiv work と 2026-05-28 の既投稿 permalink が一致。"
+  - handoff_id: gha-21a4035411e0d199
+    group_key: "flow aware optimal navigation in unsteady flows through reinforcement learning"
+    representative: memory/shared_reads_candidates/20260719_flow_aware_rl_navigation.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260719_flow_aware_rl_navigation.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260720_flow_aware_navigation_unsteady_flows.md
+    latest_evidence: "同題 posted sibling があり、現候補は比較条件ごとの定量値・失敗条件・global parameter の機序が不足。"
+stale_review_batch:
+  - handoff_id: cha-cb10f4942c224e4a
+    path: memory/shared_reads_candidates/20260527_pokemon_battle_agents_llm.md
+    status: postponed
+    stale_after: "2026-08-18"
+    priority_reason: "同一 arXiv work の実投稿と terminal sibling が確認済みで、open representative の close 判断が必要。"
+    recommended_review_action: reevaluate_in_phase2
+    handoff_recommended_action: merge_duplicate
+  - handoff_id: cha-624c309f599462ba
+    path: memory/shared_reads_candidates/20260531_mimic_py_personality_driven_game_testing.md
+    status: postponed
+    stale_after: "2026-08-18"
+    priority_reason: "同一 arXiv work の 4320 字 posted sibling があり、再投稿せず参照用に閉じられるかを確認する。"
+    recommended_review_action: reevaluate_in_phase2
+    handoff_recommended_action: merge_duplicate
+  - handoff_id: cha-364e9c70f11b0b65
+    path: memory/shared_reads_candidates/20260531_pixie_code_level_mechanic_generation.md
+    status: postponed
+    stale_after: "2026-08-18"
+    priority_reason: "同一 AIIDE source URL の posted sibling があり、open representative の terminal 化を確認する。"
+    recommended_review_action: reevaluate_in_phase2
+    handoff_recommended_action: merge_duplicate
+  - handoff_id: cha-1f8724afd851de32
+    path: memory/shared_reads_candidates/20260602_fly_fail_fix_iterative_game_repair.md
+    status: postponed
+    stale_after: "2026-08-18"
+    priority_reason: "NVIDIA Research URL と既投稿 arXiv URL が同一 work を指し、新しい評価差分がないため sibling close を確認する。"
+    recommended_review_action: reevaluate_in_phase2
+    handoff_recommended_action: merge_duplicate
+  - handoff_id: cha-dbb5c187d8597ecd
+    path: memory/shared_reads_candidates/20260602_gameuiagent_structured_ir.md
+    status: postponed
+    stale_after: "2026-08-18"
+    priority_reason: "同一 arXiv work と 2026-05-13 の既投稿 permalink が一致し、新規差分がないため sibling close を確認する。"
+    recommended_review_action: reevaluate_in_phase2
+    handoff_recommended_action: merge_duplicate
+```
+
+判定メモ:
+
+- `memory/MEMORY.md` は UTF-8 source として正常で、代表語のうち `記憶` / `ゲーム設計` / `敵パターン` は取得できた。`評価軸` は現本文に存在しないが、他の日本語本文と index validation が正常なため encoding 破損とは扱わない。
+- raw title debt は 730 行 / 508 群あるが、effective display unresolved は 0。normalized-content duplicate も overlay fold が働いており、今 cycle で新規設計を起動する根拠にはしない。
+- ISS-UTF8-001 は局所的な source data 修復候補であり、新しい仕組みの設計を要しないため `needs_design: false`。Phase 4b / 4c は起動しない。
+- due probe lease は 0 件だったため receipt は作成していない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
