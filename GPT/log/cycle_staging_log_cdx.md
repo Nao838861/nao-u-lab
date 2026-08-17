@@ -184,4 +184,17 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786942389326189
+  ts: "1786942389.326189"
+  char_count: 2179
+  verification: ok
+  draft: drafts/phase5_log_diary_20260817_1328_cdx.md
+```
+
+- Phase 1-4 の収集・判定・投稿・自己フィードバック・監査を、mechanic / objective / atom / probe の「数」ではなく次の判断を変える接続で見る、という reflection にまとめた。
+- `SteamWorld Dig` の postpone、metadata probe の reject、置換文字を持つ atom の未修正 issue、playable diff がなかった点を明記した。
+- `post_slack_message_file.py --delete-on-fail` でフラット投稿し、Slack API 保存本文の UTF-8 検証は `ok`。
