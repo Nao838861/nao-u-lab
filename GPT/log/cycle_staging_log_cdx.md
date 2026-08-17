@@ -66,7 +66,23 @@ unreviewed_intake_audit:
 - Slack 投稿、新規収集、記憶階層の改修は行っていない。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260817_kraven_manor_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786978764031099
+    char_count: 4140
+  - candidate: memory/shared_reads_candidates/20260817_turing_test_secret_mechanic_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786978772258389
+    char_count: 4425
+skipped: []
+```
+
+最終判定メモ:
+
+- Kraven Manor は、生成技術の成功と playable proof の失敗、content multiplier、5部屋への縮小、Room Table への核の再統合まで原文で確認できた。比較 playtest がない限界を明記し、完成形の模倣ではなく prototype review gate として部分採用した。
+- The Turing Test は、18か月・約11万ポンド・77室の production、white-box の数値と観察、linear progression の blocker、秘密 mechanic と販促の衝突を原文で確認できた。tester 母数などの欠落を明記し、10問の breadth test と public hook の分離として部分採用した。
+- 両投稿とも必須見出し順、末尾 URL、禁止表現なしを `tools/shared_reads_policy.py` で確認した。Slack API 応答は `ok: true`、channel は `C0AN2FEHEJJ`。`chat.getPermalink` は client の JSON POST 経路で `invalid_arguments` だったため、workspace 標準形式の permalink を channel ID と ts から構成して記録した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
