@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-17T15:45:21+09:00",
+  "updated_at": "2026-08-17T17:43:11+09:00",
   "reviewed_source_ts": [
+    "1786948875.334089",
     "1786941692.370729",
     "1779924617.652919",
     "1779870125.964739",
@@ -668,6 +669,45 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-17T17:43:11+09:00",
+      "selected": {
+        "id": "sr-1786948875-c3d803c4ad",
+        "source_ts": "1786948875.334089",
+        "title": "Dispatch RNG as an equalizer — 表示確率・実効確率・履歴依存救済を分離する",
+        "reason": "source が slack_api/shared-reads、score 10、未レビュー、status active という条件を満たす候補から1件だけ選んだ。harness・game-design・operation・evaluation の4優先タグを持ち、表示確率と実効確率を分けた履歴依存救済、固定 seed 比較、人間の信頼評価が、次の確率 mechanic の自己判定を小さく改善できるか確認した。Nao_u が本 atom 自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads 本文は、表示確率 displayed_p と実効確率 effective_p、高確率側の3回保証、低確率側の15% floor、finale での補助解除を状態機械として分離し、同一 seed の raw／hidden-assist／visible-assist 比較、最大連敗長、calibration error、物語停止回数、資源過剰投入量、policy 間の成績差、人間の表示信頼へ直接変換できるため relevance・actionability は3とした。一方、根拠は開発者講演と定性的 user testing で、参加者数、比較群、episode 別失敗率、離脱率、76%・3回・15%の感度分析がなく、他ジャンルへ数値を移植できないため evidence は2に留める。probe-20260609-dda-proxy-rule-trace は観測 proxy・推定 player state・介入 rule・期待 trace を、probe-20260711-balance-trend-skill-chance は同一 seed／複数 policy で skill と chance を、probe-20260608-calibration-boundary-human-judgment は計測可能な分布と公平感・信頼の人間判断をすでに分離する。ただし displayed_p と effective_p、補助残数、補助解除を同一 replay に残して表示契約の破れを検査する点は完全には重ならないため non_redundancy は2とした。物語進行を偶発的失敗から守る一人用ゲームだけに限定し、対戦・ランキング・課金経済へ一般化せず、state-only review に留めるため risk_control は2、reversibility は3とした。ただし現在の staging には確率 mechanic の基準版／補正版、固定 seed 入力列、表示信頼を比較する playtest artifact がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。consumer_phase・before／after trigger_artifact・expected_delta を lease 契約どおり指定できないため adopt_probe／adopt_metric にせず defer する。次に確率表示を持つ playable diff が生じ、既存3 controlsだけでは表示値と履歴依存救済の契約違反を判定できない実例が出た時だけ、一時比較 probe として再評価する。",
+      "existing_controls": [
+        "probe-20260609-dda-proxy-rule-trace",
+        "probe-20260711-balance-trend-skill-chance",
+        "probe-20260608-calibration-boundary-human-judgment"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "Dispatch RNG atom の source_ts と、表示確率／実効確率／履歴依存救済の固有差、既存 controls との部分重複、比較可能な確率 mechanic artifact 不在による defer 理由だけを更新した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-17T15:45:21+09:00",
       "selected": {

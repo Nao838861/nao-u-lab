@@ -67,7 +67,42 @@ skipped: []
 - duplicate review: 同一 URL の旧 candidate は一次資料不足で `failed`。既投稿 sibling はなく、今回の候補が旧 candidate を supersede するため二重投稿ではない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786948875-c3d803c4ad
+    source_ts: "1786948875.334089"
+    title: "Dispatch RNG as an equalizer — 表示確率・実効確率・履歴依存救済を分離する"
+    reason: "source=slack_api/shared-reads、score=10、未レビュー、status=active の候補から1件だけ選んだ。harness・game-design・operation・evaluation の4優先タグを持ち、表示確率と実効確率を分けた履歴依存救済、固定seed比較、人間の信頼評価が次の確率mechanicの自己判定を改善するか確認した。Nao_u の本atomへの明示評価は確認できない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: >-
+    採用閾値は満たす。displayed_p／effective_p／補助残数／finale解除を同一replayに残し、
+    raw・hidden-assist・visible-assistを固定seedで比較する差分は有用である。
+    ただし根拠は定性的user testingで標本数・比較群・感度分析がなく、76%・3回・15%は移植できない。
+    既存のDDA proxy-rule、skill-vs-chance、human-calibration controlsとも部分重複する。
+    現在のstagingには確率mechanicの基準版／補正版、固定seed入力列、表示信頼のplaytest artifactがなく、
+    後続Phase 4aはmemory cleanupで実consumerではないため、lease契約のconsumer・before/after artifact・expected deltaを具体化できない。
+    よってactive probeを増やさずstate-only reviewに留め、次に確率表示を持つplayable diffが生じた時だけ再評価する。
+  change:
+    summary: "reviewed_source_ts、採点、既存controlsとの部分重複、比較可能artifact不在によるdefer理由だけをstateとstagingへ記録した。active_probes・ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
