@@ -412,23 +412,32 @@ const DevelopmentDay2Scene: React.FC = () => {
 
 const DevelopmentDay3Scene: React.FC = () => {
   const frame = useCurrentFrame();
-  const checkerboard = frame >= 300;
   return (
     <AbsoluteFill style={{opacity: fade(frame, 450), backgroundColor: C.bg, padding: '36px 48px 0', boxSizing: 'border-box'}}>
-      <Eyebrow color={checkerboard ? C.red : C.orange}>DAY 3</Eyebrow>
-      <Title size={42}>{checkerboard ? '市松模様の地面も試した' : 'プレイヤーの上下で地平線を動かす'}</Title>
-      <div style={{position: 'absolute', left: 125, top: 135, width: 1030, height: 500, padding: 12, boxSizing: 'border-box', background: C.panel, border: `2px solid ${checkerboard ? C.red : '#47434e'}`}}>
-        {checkerboard ? (
-          <Sequence from={300}>
-            <OffthreadVideo src={staticFile('dev_checkerboard.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'contain', background: '#000', imageRendering: 'pixelated'}} />
-          </Sequence>
-        ) : (
-          <OffthreadVideo src={staticFile('dev_day3.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'contain', background: '#000', imageRendering: 'pixelated'}} />
-        )}
-        {checkerboard ? <div style={{position: 'absolute', right: 22, top: 20, padding: '8px 14px', background: '#16080bcc', border: `2px solid ${C.red}`, fontFamily: FONT, color: C.red, fontSize: 24, fontWeight: 900}}>不採用案</div> : null}
+      <Eyebrow color={C.orange}>DAY 3</Eyebrow>
+      <Title size={42}>プレイヤーの上下で地平線を動かす</Title>
+      <div style={{position: 'absolute', left: 125, top: 135, width: 1030, height: 500, padding: 12, boxSizing: 'border-box', background: C.panel, border: '2px solid #47434e'}}>
+        <OffthreadVideo src={staticFile('dev_day3.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'contain', background: '#000', imageRendering: 'pixelated'}} />
       </div>
-      <div style={{position: 'absolute', left: 125, bottom: 48, fontFamily: FONT, color: checkerboard ? C.dim : C.cyan, fontSize: 16, fontWeight: 900}}>
-        {checkerboard ? '描画量と見た目の両面から不採用' : '地面テーブル：33段階 × 各7パターン'}
+      <div style={{position: 'absolute', left: 125, bottom: 48, fontFamily: FONT, color: C.cyan, fontSize: 16, fontWeight: 900}}>
+        地面テーブル：33段階 × 各7パターン
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const DevelopmentCheckerboardScene: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{opacity: fade(frame, 450), backgroundColor: C.bg, padding: '36px 48px 0', boxSizing: 'border-box'}}>
+      <Eyebrow color={C.red}>DAY 3</Eyebrow>
+      <Title size={42}>市松模様の地面も試した</Title>
+      <div style={{position: 'absolute', left: 125, top: 135, width: 1030, height: 500, padding: 12, boxSizing: 'border-box', background: C.panel, border: `2px solid ${C.red}`}}>
+        <OffthreadVideo src={staticFile('dev_checkerboard.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'contain', background: '#000', imageRendering: 'pixelated'}} />
+        <div style={{position: 'absolute', right: 22, top: 20, padding: '8px 14px', background: '#16080bcc', border: `2px solid ${C.red}`, fontFamily: FONT, color: C.red, fontSize: 24, fontWeight: 900}}>不採用案</div>
+      </div>
+      <div style={{position: 'absolute', left: 125, bottom: 48, fontFamily: FONT, color: C.dim, fontSize: 16, fontWeight: 900}}>
+        描画量と見た目の両面から不採用
       </div>
     </AbsoluteFill>
   );
@@ -499,17 +508,18 @@ const LargeCharacterScene: React.FC = () => {
           }}
         >
           {[
-            {opacity: cpuOpacity, color: C.orange, lead: '1.79 MHz', body: '8bit CPUには大きな絵の書き換えが重い'},
-            {opacity: clearOpacity, color: C.cyan, lead: '30%', body: '128×96を0で消すだけで1フレームの30%'},
+            {opacity: cpuOpacity, color: C.orange, lead: 'CPUクロック：1.79MHz', body: '8bit CPUには大きな絵の書き換えが重い'},
+            {opacity: clearOpacity, color: C.cyan, lead: '画面クリアだけで20%', body: '128×96の画面を消すだけでも1フレームの20%'},
             {opacity: compositeOpacity, color: C.red, lead: 'さらに', body: '背景との重ね合わせ処理が必要'},
           ].map((item) => (
-            <div key={item.lead} style={{opacity: item.opacity, marginBottom: 18, padding: '18px 20px', background: C.panel, borderLeft: `6px solid ${item.color}`}}>
+            <div key={item.lead} style={{opacity: item.opacity * (item.lead === 'さらに' ? 1 - warningOpacity : 1), marginBottom: 18, padding: '18px 20px', background: C.panel, borderLeft: `6px solid ${item.color}`}}>
               <div style={{fontFamily: MONO, color: item.color, fontSize: 30, fontWeight: 900}}>{item.lead}</div>
               <div style={{fontFamily: FONT, color: C.white, fontSize: 19, fontWeight: 800, lineHeight: 1.45, marginTop: 5}}>{item.body}</div>
             </div>
           ))}
-          <div style={{opacity: warningOpacity, marginTop: 4, padding: '18px 20px', background: C.magenta, color: C.bg, fontFamily: FONT, fontSize: 23, fontWeight: 900}}>
-            コンパイルドスプライトを使う
+          <div style={{position: 'absolute', right: 58, top: 452, width: 370, boxSizing: 'border-box', zIndex: 4, opacity: warningOpacity, padding: '16px', background: `linear-gradient(135deg, ${C.magenta}, ${C.orange})`, color: C.bg, fontFamily: FONT, textAlign: 'center', fontWeight: 900, boxShadow: `0 0 28px ${C.magenta}55`}}>
+            <div style={{fontSize: 18, letterSpacing: 2}}>高速化の切り札</div>
+            <div style={{fontSize: 28, lineHeight: 1.18, marginTop: 3}}>コンパイルド<br />スプライトを使う</div>
           </div>
         </div>
       </div>
@@ -1425,37 +1435,40 @@ export const ExplainerPrototype: React.FC = () => {
       <Sequence from={1440} durationInFrames={450}>
         <DevelopmentDay3Scene />
       </Sequence>
-      <Sequence from={1890} durationInFrames={720}>
+      <Sequence from={1890} durationInFrames={450}>
+        <DevelopmentCheckerboardScene />
+      </Sequence>
+      <Sequence from={2340} durationInFrames={720}>
         <LargeCharacterScene />
       </Sequence>
-      <Sequence from={2610} durationInFrames={300}>
+      <Sequence from={3060} durationInFrames={300}>
         <GenericLoopScene />
       </Sequence>
-      <Sequence from={2910} durationInFrames={360}>
+      <Sequence from={3360} durationInFrames={360}>
         <CompiledScene />
       </Sequence>
-      <Sequence from={3270} durationInFrames={390}>
+      <Sequence from={3720} durationInFrames={390}>
         <RaceScene />
       </Sequence>
-      <Sequence from={3660} durationInFrames={480}>
+      <Sequence from={4110} durationInFrames={480}>
         <PerformanceDemoScene />
       </Sequence>
-      <Sequence from={4140} durationInFrames={360}>
+      <Sequence from={4590} durationInFrames={360}>
         <CapacityCostScene />
       </Sequence>
-      <Sequence from={4500} durationInFrames={300}>
+      <Sequence from={4950} durationInFrames={300}>
         <PositionLimitScene />
       </Sequence>
-      <Sequence from={4800} durationInFrames={360}>
+      <Sequence from={5250} durationInFrames={360}>
         <AlignmentScene />
       </Sequence>
-      <Sequence from={5160} durationInFrames={450}>
+      <Sequence from={5610} durationInFrames={450}>
         <SizeBankScene />
       </Sequence>
-      <Sequence from={5610} durationInFrames={240}>
+      <Sequence from={6060} durationInFrames={240}>
         <BossBattleScene />
       </Sequence>
-      <Sequence from={5850} durationInFrames={600}>
+      <Sequence from={6300} durationInFrames={600}>
         <FrameTimelineScene />
       </Sequence>
     </AbsoluteFill>
