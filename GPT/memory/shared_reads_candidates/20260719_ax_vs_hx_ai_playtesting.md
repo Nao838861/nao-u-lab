@@ -4,20 +4,20 @@ url: "https://doi.org/10.1080/10447318.2025.2587239"
 collected_at: "2026-07-19T19:17:32+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [playtesting, player-experience, ai-agent, game-design, prototyping]
-evaluated_at: "2026-07-19T19:21:02+09:00"
+evaluated_at: "2026-08-18T04:19:31+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-19T19:21:02+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-19T19:21:02+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-18"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-18T04:19:31+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-18T04:19:31+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-17"
 supersedes: []
 gate_reason: |-
   実プレイ trace に接地する AX と GDD から事前批評する HX の役割分離は、playable build 前後の評価フローへ直接適用できる。
-  しかし publisher abstract 由来の候補本文だけでは prototype 条件、指標、比較結果、発見した issue の内訳がなく、約4000字の概要では結論を過大解釈する恐れがある。
+  ただし publisher abstract 由来の情報だけでは prototype 条件、指標、比較結果、発見 issue の内訳がなく、再評価時点でも約4000字を根拠付きで展開できないため fail とする。
 ---
 
 ## raw_excerpt

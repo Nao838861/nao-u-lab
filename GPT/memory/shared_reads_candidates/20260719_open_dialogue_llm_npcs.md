@@ -4,20 +4,20 @@ url: https://dl.digra.org/index.php/dl/article/view/2837
 collected_at: 2026-07-19T21:32:38+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, npc, dialogue-systems, llm, narrative-systems]
-evaluated_at: "2026-07-19T21:38:00+09:00"
+evaluated_at: "2026-08-18T04:19:31+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-19T21:38:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-19T21:38:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-18"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-18T04:19:31+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-18T04:19:31+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-17"
 supersedes: []
 gate_reason: >-
-  自由入力、脚本制約、ゲーム状態変更、意味データ保存という設計要素は具体的で、会話型 NPC 制作への接続も強い。
-  ただし候補本文には形式化の詳細、実装構成、評価方法・結果・限界がなく、現状の情報だけでは4000字級の概要が概念紹介へ寄るため保留する。
+  自由入力、脚本制約、ゲーム状態変更、意味データ保存という設計要素は会話型 NPC へ接続しやすい。
+  しかし形式化の詳細、実装構成、評価方法・結果・限界が候補本文になく、再評価でも概念紹介を超える約4000字の概要を支えられないため fail とする。
 ---
 
 ## raw_excerpt

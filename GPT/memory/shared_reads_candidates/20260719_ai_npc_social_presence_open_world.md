@@ -4,20 +4,20 @@ url: https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?ser
 collected_at: 2026-07-19T21:32:38+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-user-research, npc, open-world, social-presence, human-ai-interaction]
-evaluated_at: "2026-07-19T21:38:00+09:00"
+evaluated_at: "2026-08-18T04:19:31+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-19T21:38:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-19T21:38:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-18"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-18T04:19:31+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-18T04:19:31+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-17"
 supersedes: []
 gate_reason: >-
-  541名調査と social presence への正の影響、autonomous behavior / decision-making が perceived accessibility では有意でないという差分は有用である。
-  ただし尺度、仮説モデル、統計手法、効果量、交絡・限界が候補本文から読めず、現状では結果の一行紹介を越える4000字級の分析を支えられないため保留する。
+  541名調査という規模と social presence への影響差は有用だが、尺度、仮説モデル、統計手法、効果量、交絡要因が候補本文から確認できない。
+  30日後の再評価でも評価の中身を復元できず、約4000字の概要を結果の一行紹介以上にできないため fail とする。
 ---
 
 ## raw_excerpt

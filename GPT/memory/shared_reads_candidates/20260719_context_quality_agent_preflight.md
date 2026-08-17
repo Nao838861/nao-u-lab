@@ -4,21 +4,20 @@ url: "https://arxiv.org/abs/2607.14275"
 collected_at: "2026-07-19T12:45:40+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [llm-agent, context-engineering, evaluation, harness, playtesting]
-evaluated_at: "2026-07-19T12:49:26+09:00"
+evaluated_at: "2026-08-18T04:19:31+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-19T12:49:26+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-19T12:49:26+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-18"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-18T04:19:31+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-18T04:19:31+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-17"
 supersedes: []
 gate_reason: >-
-  七つの context 品質基準と model 固定の controlled study は、ゲームテスターの実行前 preflight に具体化できる。
-  ただし現 candidate には juror 手順、実験規模、各予測関係の効果量や失敗例がなく、
-  約 4000 字の概要に必要な評価の中身が不足しているため保留する。
+  七つの context 品質基準はゲームテスター実行前の preflight に具体化できるが、juror 手順、実験規模、効果量、失敗例が候補本文にない。
+  30日後も評価の中身が増えておらず、一般的なチェックリスト紹介を超える概要にできないため fail とする。
 ---
 
 ## raw_excerpt

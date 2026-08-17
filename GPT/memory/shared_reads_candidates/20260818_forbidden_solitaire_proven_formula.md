@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/how-forbidden-solitaire-brought-solit
 collected_at: "2026-08-18T04:15:56+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, card-game, genre-hybrid, iteration, audience, market-testing]
+evaluated_at: "2026-08-18T04:19:31+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-18T04:19:31+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-18T04:19:31+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-17"
+supersedes: []
+gate_reason: >-
+  30年・17作の solitaire 改良史から、高速な core loop、RPG 的拡張、analog horror 表現へ至る蓄積と役割分担が具体的に説明されている。
+  gameplay 未完成時の teaser で wishlist 7000、発売48時間で1万本・同接680という audience signal もあり、既知 mechanic に新しい入口を接続する prototype と市場検証を約4000字で分析できる。
+suggested_post_outline:
+  overview_angle: "一作の奇抜な混合ではなく、30年の mechanic 改良と異分野 presentation がどう結合して市場反応へつながったかを追う"
+  analysis_axis: "core loop の反復改良、過剰な戦闘拡張からの学習、studio 間分業、teaser と wishlist を用いた初期 signal"
+  application_target: "Nao_u_BOT の既存 mechanic を捨てず、別 genre の見せ方を入口にして早期 prototype と audience test を設計する"
+  pros_cons: "蓄積資産を再利用できる一方、強い外観だけを模倣して core loop の長期改善を省くと再現しない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

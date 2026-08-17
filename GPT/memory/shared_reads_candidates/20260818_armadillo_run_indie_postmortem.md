@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/indie-postmortem-i-armadillo-run-i-"
 collected_at: "2026-08-18T04:15:35+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, physics-game, puzzle, postmortem, solo-development, playtesting]
+evaluated_at: "2026-08-18T04:19:31+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-18T04:19:31+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-18T04:19:31+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-17"
+supersedes: []
+gate_reason: >-
+  低予算の一人制作で core physics の成立性を先に確かめ、emergent な遊びを発見し、playtest で editor UI を直すまでの判断連鎖が具体的である。
+  4か月の本体制作と5か月の仕上げ、早すぎる最適化や無計画の代償も含み、小規模物理 prototype の工程設計へ直接適用できるため約4000字の概要を支えられる。
+suggested_post_outline:
+  overview_angle: "spring simulation の小実験から製品化まで、core feasibility と仕上げ工程の時間差を軸に制作判断を追う"
+  analysis_axis: "emergent play の発見、設計書なしの利点と負債、playtest による editor 改修、最適化と polish の見積り"
+  application_target: "Nao_u_BOT の物理系小規模 prototype で、遊びの成立確認と editor/usability・販売準備を別 budget として管理する"
+  pros_cons: "少人数制作の実測に接地する一方、一作品の回顧なので工程比率を普遍則にはしない"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt
