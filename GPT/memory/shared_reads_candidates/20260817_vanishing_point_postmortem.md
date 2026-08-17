@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/vanishing-point-postmortem"
 collected_at: "2026-08-17T19:30:47+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, puzzle, mechanics, playtesting, postmortem, production]
+evaluated_at: "2026-08-17T19:35:02.8201415+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-17T19:35:02.8201415+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-17T19:35:02.8201415+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-16"
+supersedes: []
+gate_reason: >-
+  単一 mechanic の downscope、authored puzzle が生む誤学習を検出する頻繁な playtest、可逆な level tool、浅い core prototype の失敗が一つの制作記録で因果的につながっている。
+  11か月・最大23人・20 encounter という制作規模と具体例があり、ゲーム制作の着手ゲートと level iteration へ無理なく適用でき、CoopEval 水準の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "単一 mechanic を20 encounterへ展開した成功と、core prototype不足・曖昧な creative directionが長期化を招いた失敗を同じ制作工程として解く"
+  analysis_axis: "mechanic depthの事前検証、authored puzzleの誤学習、変更を速く戻せるtooling、downscopeの相互作用"
+  application_target: "Log_cdxの新規ゲーム着手時のcore-loop prototype gateと、level追加ごとの誤学習playtest・revert可能な制作サイクル"
+  pros_cons: "具体的な制作判断と失敗因果を転用しやすい一方、単一学生projectの回顧であり定量比較や商用規模への一般化には限界がある"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
