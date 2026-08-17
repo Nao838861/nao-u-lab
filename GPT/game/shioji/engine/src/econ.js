@@ -319,9 +319,14 @@ function emptyPantry() {
 
 const SETTLER_FOOD_KIT = 240;
 
-function applyImmigrantKit(household) {
+function applyImmigrantKit(household, { foodKit = SETTLER_FOOD_KIT } = {}) {
+  if (!Number.isFinite(foodKit) || foodKit < 0) {
+    throw new TypeError("immigrant food kit must be non-negative and finite");
+  }
   household.pantry.tools = 5;
-  household.pantry.wheat = SETTLER_FOOD_KIT;
+  household.pantry.wheat = foodKit;
+  household.settlerFoodReserve = foodKit;
+  household.settlerFoodReserves = foodKit > 0 ? { wheat: foodKit } : {};
   if (household.job === "saltworks") household.pantry.char = 15;
   if (household.job === "woodshop" || household.job === "charburner") household.pantry.log = 20;
   if (household.job === "cartwright") {
@@ -418,6 +423,10 @@ function makeHouseholdRecord(economy, { job, x, y }) {
     road: false,
     purse: P.PURSE0,
     pantry: emptyPantry(),
+    // 本土から持参した開拓食のうち、まだ食べていない量。麦農家だけが
+    // 到着直後にこれを「収穫余剰」と誤認して売り切るのを防ぐ。
+    settlerFoodReserve: 0,
+    settlerFoodReserves: {},
     // 隊商が集荷へ向かっている間、積込口へ取り置いた実物。在庫は世帯の建物に
     // まだあるが、本人の市場便・食事・加工と二重に使わせない。
     collectionReserved: {},
@@ -505,10 +514,13 @@ function ensurePersonIds(economy) {
   economy.nextPersonId = nextId;
 }
 
-export function createHousehold(economy, { job, x, y, origin = "immigrant" }) {
+export function createHousehold(
+  economy,
+  { job, x, y, origin = "immigrant", foodKit = SETTLER_FOOD_KIT },
+) {
   if (origin !== "immigrant") throw new Error(`unsupported household origin: ${origin}`);
   const household = makeHouseholdRecord(economy, { job, x, y });
-  applyImmigrantKit(household);
+  applyImmigrantKit(household, { foodKit });
   // 本土から来る漁師世帯だけは使い込んだ小舟と網を持参する。島内分家は資産を
   // 複製せず岸漁から始め、必要なら市場の実資材で新調する。
   if (job === "fisher") {
@@ -1443,6 +1455,35 @@ export function runRoadPaving(economy, physical, { day } = {}) {
   }
 
   const totalNeed = remainingRoadPavingStoneNeed(physical, economy);
+  // 遠隔採石場から隊商が買い付けた石は既に会社所有であり、世帯へ再販売して
+  // 買い直す必要はない。母港市場の実棚から工事在庫へ用途移管する。
+  const mainStock = economy.marketStockM?.main;
+  const routedStone = Math.max(0, mainStock?.stone ?? 0);
+  const assignedStone = Math.min(
+    routedStone,
+    Math.max(0, totalNeed - (economy.paveBought ?? 0)),
+  );
+  if (assignedStone > 1e-9) {
+    const stockBefore = Math.max(1e-9, mainStock.stone);
+    mainStock.stone -= assignedStone;
+    const costTable = (economy.marketStockCostM ??= {}).main ??= {};
+    const costShare = assignedStone / stockBefore;
+    costTable.stone = Math.max(0, (costTable.stone ?? 0) * (1 - costShare));
+    const lots = ((economy.marketStockLotsM ??= {}).main ??= {}).stone ??= [];
+    let remaining = assignedStone;
+    while (remaining > 1e-9 && lots.length > 0) {
+      const lot = lots[0];
+      const taken = Math.min(remaining, lot.qty ?? 0);
+      const ratio = taken / Math.max(1e-9, lot.qty ?? 0);
+      lot.qty = Math.max(0, (lot.qty ?? 0) - taken);
+      lot.cost = Math.max(0, (lot.cost ?? 0) * (1 - ratio));
+      remaining -= taken;
+      if (lot.qty <= 1e-9) lots.shift();
+    }
+    const market = marketBuildingForId(physical, "main");
+    if (market) withdrawInventory(market, "inbound", "stone", assignedStone);
+    economy.paveBought = (economy.paveBought ?? 0) + assignedStone;
+  }
   let worksBudget = P.PAVE_DAILY_STONE;
   let stoneStock = Math.max(0, economy.paveBought ?? 0);
   let stoneUsed = 0;
@@ -1481,9 +1522,23 @@ export function runRoadPaving(economy, physical, { day } = {}) {
   return { pavedTiles, stoneUsed, remainingTiles };
 }
 
+function settlerFoodReserveFor(household, goods) {
+  if (Number.isFinite(household.settlerFoodReserves?.[goods])) {
+    return Math.max(0, household.settlerFoodReserves[goods]);
+  }
+  // v004.62.2途中保存と旧fixtureは麦の数値欄だけを持つ。
+  return goods === "wheat" ? Math.max(0, household.settlerFoodReserve ?? 0) : 0;
+}
+
 function consumeFood(economy, household, goods, qty, kinds) {
   if (qty <= 1e-9) return 0;
   household.pantry[goods] -= qty;
+  const reserve = settlerFoodReserveFor(household, goods);
+  if (reserve > 0) {
+    household.settlerFoodReserves ??= {};
+    household.settlerFoodReserves[goods] = Math.max(0, reserve - qty);
+    if (goods === "wheat") household.settlerFoodReserve = household.settlerFoodReserves[goods];
+  }
   kinds.add(FOOD_KIND[goods]);
   economy.led.eat[goods] = (economy.led.eat[goods] ?? 0) + qty;
   recordEconomicMaterialFlow(economy, goods, "cons", qty, `世帯${household.id}の食事`);
@@ -1603,7 +1658,29 @@ function runHouseholdFoodAndDeath(
   economy.led.need += need;
   const kinds = new Set();
 
-  for (const goods of ["pres", "wheat", "pick"]) {
+  // 開拓食は全職が同じ用途で持参した食料。漁師や御者だけが自家生産品・市場品を
+  // 先に食べて持参分を抱えると、加工世帯だけが先に尽きて市場が偏る。
+  const protectedFoods = ["wheat", "pres", "pick"].filter((goods) => (
+    settlerFoodReserveFor(household, goods) > 1e-9
+    && household.pantry[goods] > 1e-9
+  ));
+  const hadSettlerFood = protectedFoods.length > 0;
+  if (hadSettlerFood) {
+    let provisionNeed = need * 0.85;
+    for (const goods of protectedFoods) {
+      const used = Math.min(
+        household.pantry[goods],
+        settlerFoodReserveFor(household, goods),
+        provisionNeed,
+      );
+      provisionNeed -= consumeFood(economy, household, goods, used, kinds);
+      need -= used;
+      if (provisionNeed <= 1e-9) break;
+    }
+  }
+  for (const goods of ["pres", "wheat", "pick"].filter(
+    goods => !hadSettlerFood || settlerFoodReserveFor(household, goods) <= 1e-9,
+  )) {
     const used = Math.min(household.pantry[goods], need * P.RATION * 0.85);
     need -= consumeFood(economy, household, goods, used, kinds);
   }
@@ -2453,7 +2530,12 @@ export function sellOffers(
     if (goods === "wheat") {
       // 年一括投下時代の10%小出しを廃止。日次収穫は他の食料と同じ半量を出す。
       rate = 0.5;
-      keep = householdEat(household) * P.RATION * 10;
+      // 開拓食は輸入済みの実物だが、生産者の売上ではない。残量を食べ終える
+      // までは保護し、その上に積み上がった実収穫だけを余剰として市場へ出す。
+      keep = Math.max(
+        householdEat(household) * P.RATION * 10,
+        Math.min(household.pantry.wheat, settlerFoodReserveFor(household, "wheat")),
+      );
     }
     if (goods === "veg") keep = householdEat(household) * P.RATION * 10;
     const surplus = Math.max(0, household.pantry[goods] - keep);
@@ -2466,9 +2548,13 @@ export function sellOffers(
     }
   }
   const dailyFood = Math.max(1, householdEat(household));
-  if (household.job === "fisher" && household.pantry.pres > dailyFood * P.PANTRY_FOOD_D) {
+  const preservedKeep = Math.max(
+    dailyFood * P.PANTRY_FOOD_D,
+    settlerFoodReserveFor(household, "pres"),
+  );
+  if (household.job === "fisher" && household.pantry.pres > preservedKeep) {
     offers.pres = Math.min(
-      household.pantry.pres - dailyFood * P.PANTRY_FOOD_D,
+      household.pantry.pres - preservedKeep,
       capacityLimit,
     );
   }
@@ -2484,10 +2570,10 @@ export function sellOffers(
 export function loadMarketSellCargo(
   economy,
   household,
-  { useCart = Boolean(household.cart) } = {},
+  { useCart = Boolean(household.cart), capacityLimit = Infinity } = {},
 ) {
   if (household.cargo) throw new Error(`世帯${household.id}は既にcargoを運搬中です`);
-  let capacity = householdHaul(household, { useCart });
+  let capacity = Math.min(householdHaul(household, { useCart }), capacityLimit);
   const offers = sellOffers(economy, household);
   const manifest = {};
   for (const [goods, offered] of Object.entries(offers)) {
@@ -2563,6 +2649,21 @@ const CREDIT_INPUT_JOBS = new Set([
   "saltworks", "fisher2", "shepherd", "veg",
   "smelter", "smith", "woodshop", "charburner",
 ]);
+export const PRODUCTION_INPUT_CREDIT_LIMIT = 60;
+// 食料在庫が実在するのに現金だけで餓死させないための共同体掛買い枠。
+// 6か月連続赤字なら既存の徳政処理が会社損失へ振り替えるので、同じ180日を
+// 上限にする。負債は世帯purseのマイナスとして残り、採算悪化を隠さない。
+export const HOUSEHOLD_FOOD_CREDIT_DAYS = 180;
+
+export function householdFoodCreditLimit(economy, household) {
+  return Math.max(
+    30,
+    householdEat(household) * staplePriceForMarket(
+      economy,
+      householdMarketId(household),
+    ) * HOUSEHOLD_FOOD_CREDIT_DAYS,
+  );
+}
 
 export function canUseProductionInputCredit(household, goods) {
   if (["meal", "salt"].includes(goods) && ["veg", "shepherd"].includes(household?.job)) {
@@ -2572,12 +2673,12 @@ export function canUseProductionInputCredit(household, goods) {
 }
 
 function productionInputCreditAllowance(household, goods) {
-  // 複数原料の加工職は、BUY_ORDERで先に来る主原料だけに信用枠30を全額使うと
-  // 燃料を一荷も買えず、在庫を抱えたまま永久停止する。主原料を20までとし、
-  // 残り10は同じ買出しの燃料へ残す。単一原料職は従来どおり30。
-  if (household?.job === "smelter" && goods === "ore") return 20;
-  if (household?.job === "smith" && goods === "bar") return 20;
-  return 30;
+  // 食料掛買いの30Dと同じ枠にすると、食料難で-30Dへ達した加工職は売上を
+  // 作る原料まで買えず永久停止する。運転資金だけは合計-60Dまで認める。
+  // 複数原料職は主原料40D・残り20Dを燃料へ残す。
+  if (household?.job === "smelter" && goods === "ore") return 40;
+  if (household?.job === "smith" && goods === "bar") return 40;
+  return PRODUCTION_INPUT_CREDIT_LIMIT;
 }
 
 export function buyTargets(
@@ -3001,7 +3102,9 @@ export function householdCartPurchaseDecision(economy, physical, household, cart
   const wearPerTrip = Math.max(1, cartOneWay * 2);
   const usefulTrips = cart.durability / wearPerTrip;
   const recoveredValue = timeSaved * P.CART_TIME_VALUE * usefulTrips;
-  const foodReserve = staplePrice(economy) * householdEat(household);
+  // 通常の非食料購入と同じ三日分を残す。荷車だけ一日分で許可すると、
+  // まだ売上の薄いLv1世帯が耐久資産へ現金を使い切って食料を買えなくなる。
+  const foodReserve = foodCashReserve(economy, physical, household);
   const affordable = household.purse >= cart.price + foodReserve;
   return {
     buy: affordable && recoveredValue >= cart.price,
@@ -3490,7 +3593,7 @@ export function buyAtMarket(
             + (creditEligible
               ? productionInputCreditAllowance(household, goods)
               : emergencyFoodCredit
-                ? 30
+                ? householdFoodCreditLimit(economy, household)
                 : 0),
         ) / shelf.price;
       let usableCapacity = input ? capacity : Math.max(0, capacity - inputReserve);
@@ -6442,6 +6545,10 @@ export const DAY_END_ORDER = deepFreeze([
   "price_anchors",
 ]);
 
+export const BIRTH_MONTHLY_CHANCE = 0.02;
+export const BIRTH_HOUSEHOLD_SIZE_LIMIT = 8;
+export const BIRTH_MIN_FOOD_DAYS = 10;
+
 const BIRTH_NAMES = deepFreeze([
   "ハンス", "グレタ", "ヤン", "マリア", "ピム",
   "ロッテ", "カレル", "アンナ", "ブラム", "エルス",
@@ -6454,10 +6561,10 @@ export function runBirthPhase(economy, { day, random }) {
   for (const household of economy.households) {
     const foodDays = householdFoodDays(household);
     if (
-      household.members.length < 11
+      household.members.length < BIRTH_HOUSEHOLD_SIZE_LIMIT
       && household.hungerRun === 0
-      && foodDays > 2
-      && random() < 0.12
+      && foodDays > BIRTH_MIN_FOOD_DAYS
+      && random() < BIRTH_MONTHLY_CHANCE
     ) {
       const member = {
         id: `person${economy.nextPersonId}`,
@@ -6655,17 +6762,26 @@ export function pickHouseholdJob(economy, physical, {
 export function runPopulationDynamicsPhase(economy, physical, { day, random }) {
   const changes = [];
   if (day % 30 !== 0) return changes;
+  const month = calendarMonth(economy, day);
   for (const household of economy.households) {
     household.insolvM = household.purse < -2 ? (household.insolvM ?? 0) + 1 : 0;
     household.hungerHist ??= [];
     if (household.hungerHist.length > 180) {
       household.hungerHist.splice(0, household.hungerHist.length - 180);
     }
-    const distress = household.jobCycleDone && (
+    // 年産職の休作月を月給職と同じ赤字判定へ入れると、冬を越した麦農家が
+    // 播種直前に全員転職し、春なのに畑だけ空く。負債は記録・徳政対象のまま、
+    // 職替えの比較だけを次の作期まで待つ。
+    const seasonalDormant = (
+      ["wheat", "rapeseed"].includes(household.job)
+        && (month < 3 || month > 9)
+    ) || (household.job === "veg" && (month < 3 || month > 10));
+    const distress = !seasonalDormant && household.jobCycleDone && (
       household.hungerHist.reduce((total, hungry) => total + hungry, 0) >= P.DISTRESS
       || household.insolvM >= 3
     );
-    const caravanRecruitment = household.job !== "carter" && household.jobCycleDone
+    const caravanRecruitment = !seasonalDormant
+      && household.job !== "carter" && household.jobCycleDone
       ? attractiveCaravanVacancy(economy, physical, household)
       : null;
     if (household.insolvM >= 6 && household.purse < 0) {
@@ -6826,7 +6942,10 @@ export function repairMaterialsFor(building, household) {
   // Lv0の粗末な施設は屋外設備だけを少量直す。Lv1から加工材、Lv2から石材、
   // Lv3から鉄材・布を常時使う。操業した月は最大50%だけ上積みされる。
   add("log", lv === 0 ? 0.5 : 2 + lv);
-  if (lv >= 1) add("tools", 6 + lv * 2);
+  // 木製品は文化消費・作業道具・建設でも毎日使う。月修繕だけでLv1全世帯が
+  // 木工三軒の理想産出を食い切る旧8荷では、交易が届いても誰もLv2を保てない。
+  // Lv1=4荷から一段1荷ずつ増やし、低Lvは薄利、高Lvの増産分は島の余剰にする。
+  if (lv >= 1) add("tools", 3 + lv);
   if (lv >= 2) add("stone", 12 * (lv - 1));
   if (lv >= 3) {
     add("iron", 3 * (lv - 2));

@@ -55,7 +55,10 @@ function travelQueue() {
   };
 }
 
-export const GOODS_UNIT_WEIGHT = Object.freeze({ ore: 2, bar: 2 });
+// 一荷は生活上の取引単位であり、重量は品目ごとに異なる。穀物袋は生鮮品・
+// 木製品の半重量、鉱石と銑鉄は倍重量。これにより遠隔盆地の麦が交易の背骨に
+// なり、物量を湧かせず同じ実車へ現実的な積み分けが生まれる。
+export const GOODS_UNIT_WEIGHT = Object.freeze({ wheat: 0.5, ore: 2, bar: 2 });
 
 export function goodsUnitWeight(goods) {
   return GOODS_UNIT_WEIGHT[goods] ?? 1;
@@ -316,6 +319,9 @@ export function createPhysicalState({
     occupied: {},
     nextBuildingId: 1,
     roadRevision: 0,
+    // 接続形の変更だけを数える。舗装は移動原価を変えるが市場圏の所属を
+    // 全件引き直す理由にはしないため、roadRevisionと分ける。
+    roadTopologyRevision: 0,
     travelRevision: 0,
     // 魚影・木段階の描画更新と、実際に経路コストが変わる更新を分離する。
     pathRevision: 0,
@@ -738,6 +744,9 @@ export function addRoadTile(physical, x, y) {
   if (physical.roads[key] === true) return true;
   physical.roads[key] = true;
   physical.roadRevision += 1;
+  physical.roadTopologyRevision = (
+    physical.roadTopologyRevision ?? physical.roadRevision - 1
+  ) + 1;
   return true;
 }
 
@@ -781,6 +790,9 @@ export function removeRoadTile(physical, x, y) {
   delete physical.roads[key];
   delete physical.pavedRoads?.[key];
   physical.roadRevision += 1;
+  physical.roadTopologyRevision = (
+    physical.roadTopologyRevision ?? physical.roadRevision - 1
+  ) + 1;
   physical.travelRevision = (physical.travelRevision ?? 0) + 1;
   physical.pathRevision = (physical.pathRevision ?? physical.travelRevision ?? 0) + 1;
   return true;

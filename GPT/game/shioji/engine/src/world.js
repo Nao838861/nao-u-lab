@@ -18,6 +18,7 @@ import {
   householdMult,
   householdBuildingNeeds,
   householdFoodDays,
+  householdFoodCreditLimit,
   householdTransportPlan,
   householdMaterialAmount,
   householdMarketEntrance,
@@ -529,17 +530,19 @@ function householdCanSellFromHome(household) {
   return household.members.length - travelling > 0;
 }
 
-function canFundMarketTarget(household, goods, wanted) {
+function canFundMarketTarget(economy, household, goods, wanted) {
   if (!(wanted > 1e-9)) return false;
-  const credit = canUseProductionInputCredit(household, goods) ? 30 : 0;
+  const credit = FOODS.includes(goods) && householdFoodDays(household) < 1.5
+    ? householdFoodCreditLimit(economy, household)
+    : canUseProductionInputCredit(household, goods) ? 30 : 0;
   return household.purse + credit > 1e-9;
 }
 
-function canFundAnyMarketTarget(household, targets, goodsFilter = null) {
+function canFundAnyMarketTarget(economy, household, targets, goodsFilter = null) {
   return Object.entries(targets).some(([goods, [wanted, ceiling]]) => (
     (!goodsFilter || goodsFilter.has(goods))
     && ceiling > 0
-    && canFundMarketTarget(household, goods, wanted)
+    && canFundMarketTarget(economy, household, goods, wanted)
   ));
 }
 
@@ -551,10 +554,13 @@ export function beginDirectSupplyTrip(economy, physical, household, offer) {
   if (!seller) return { started: false, reason: "supplier_missing" };
   const useCart = offer.mode === "cart";
   const availablePlan = householdTransportPlan(household, { useCart });
+  const porterPlan = offer.directTicks >= 30 && household.members.length > 1
+    ? availablePlan.slice(0, household.members.length - 1)
+    : availablePlan;
   const requiredCapacity = Math.max(1, offer.qty * goodsUnitWeight(offer.goods));
   const plan = [];
   let assignedCapacity = 0;
-  for (const assignment of availablePlan) {
+  for (const assignment of porterPlan) {
     if (plan.length > 0 && assignedCapacity + 1e-9 >= requiredCapacity) break;
     plan.push(assignment);
     assignedCapacity += assignment.capacity;
@@ -861,18 +867,27 @@ export function beginMarketTrip(
 
   const useCart = Boolean(household.cart)
     && Number.isFinite(marketPathLength(economy, physical, household, "cart"));
-  loadMarketSellCargo(economy, household, { useCart });
+  const availablePlan = householdTransportPlan(household, { useCart });
+  // 一日以上かかる往復へ家族全員を出すと、その日の生産が0になり、原料を
+  // 買う加工職ほど「買出し→売上0→再買出し」へ落ちる。短距離便は帰宅後の
+  // 生産倍率を使い、長距離便だけ最低一人を仕事場へ残す。
+  const porterPlan = tripTicks >= 30 && household.members.length > 1
+    ? availablePlan.slice(0, household.members.length - 1)
+    : availablePlan;
+  const porterCapacity = porterPlan.reduce((total, assignment) => (
+    total + assignment.capacity
+  ), 0);
+  loadMarketSellCargo(economy, household, { useCart, capacityLimit: porterCapacity });
   const outboundWeight = Object.entries(household.cargo.manifest).reduce(
     (total, [goods, qty]) => total + qty * goodsUnitWeight(goods),
     0,
   );
   if (outboundWeight > 1e-9) household.marketBatchWaitSinceDay = null;
-  const availablePlan = householdTransportPlan(household, { useCart });
   const intendedBuyWeight = urgentMarketDemandWeight(economy, physical, household, reason);
   const requiredCapacity = Math.max(outboundWeight, intendedBuyWeight, 1);
   const plan = [];
   let assignedCapacity = 0;
-  for (const assignment of availablePlan) {
+  for (const assignment of porterPlan) {
     if (plan.length > 0 && assignedCapacity + 1e-9 >= requiredCapacity) break;
     plan.push(assignment);
     assignedCapacity += assignment.capacity;
@@ -1088,6 +1103,7 @@ export function decideHouseholdTrips(economy, physical, { timeOfDay = null } = {
       && daysSinceMarket >= P.MARKET_CULTURE_INTERVAL_DAYS
       && routine.scheduledToday
       && canFundAnyMarketTarget(
+        economy,
         household,
         targets,
         new Set(needs.lowCultureGoods),
@@ -1096,18 +1112,18 @@ export function decideHouseholdTrips(economy, physical, { timeOfDay = null } = {
       && household.purse > -20
       && daysSinceMarket >= P.MARKET_BATCH_DAYS
       && routine.scheduledToday
-      && canFundAnyMarketTarget(household, targets, inputTargets);
+      && canFundAnyMarketTarget(economy, household, targets, inputTargets);
     const capitalRestockReady = needs.capitalLow
       && household.purse > 1e-9
       && daysSinceMarket >= 1
       && canFundAnyMarketTarget(
+        economy,
         household,
         targets,
         needs.capitalGoods,
       );
     const foodRestockReady = needs.foodUrgent
-      && household.purse > 2
-      && canFundAnyMarketTarget(household, targets, foodTargets);
+      && canFundAnyMarketTarget(economy, household, targets, foodTargets);
     // 生魚は早めに買うが、毎日の市場往復で生産そのものを止めない。
     // 5日腐敗に対して2日間隔なら十分な余裕があり、1.5日分の上限とも釣り合う。
     const freshFishReady = freshFish.ready
@@ -1140,7 +1156,7 @@ export function decideHouseholdTrips(economy, physical, { timeOfDay = null } = {
     const reason = household.state === "building" && capitalRestockReady
       ? "building_materials"
       : needs.inputStopped
-      && canFundAnyMarketTarget(household, targets, inputTargets)
+      && canFundAnyMarketTarget(economy, household, targets, inputTargets)
       ? "input_urgent"
       : foodRestockReady
         ? "food_urgent"

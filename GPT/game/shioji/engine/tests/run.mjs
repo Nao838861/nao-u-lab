@@ -45,6 +45,7 @@ import {
   fisheryCapacity,
   householdClass,
   householdEat,
+  householdFoodCreditLimit,
   householdFoodDays,
   householdFishingRigMultiplier,
   householdFishingRigNeed,
@@ -141,6 +142,7 @@ import {
   depositInventory,
   dockVessel,
   ensureFertilityLayer,
+  goodsUnitWeight,
   hasRoad,
   isPavedRoad,
   isConnected,
@@ -164,6 +166,7 @@ import {
   withdrawInventory,
   workRoadWorksite,
 } from "../src/physical.js";
+import { marketNetworkSummary } from "../src/market_network.js";
 import {
   HOUSEHOLD_DEPARTURE_WINDOW,
   beginDirectSupplyTrip,
@@ -404,14 +407,21 @@ function createCaravanRouteFixture({ cartDurability = P.CART_WOOD_DURABILITY } =
   mainSeller.marketId = "main";
   fisherySeller.marketId = "fishery";
   fisheryBuyer.marketId = "fishery";
+  const mainFoodReserve = economy.households
+    .filter((household) => (household.marketId ?? "main") === "main")
+    .reduce((total, household) => total + household.members.length * 3, 0);
+  const fisheryFoodReserve = economy.households
+    .filter((household) => (household.marketId ?? "main") === "fishery")
+    // 帰り荷の積み込み時には行き荷の麦も棚にあるため、魚と麦で3日留保を分担する。
+    .reduce((total, household) => total + household.members.length * 3 / 2, 0);
   economy.stalls.wheat.push({
-    householdId: mainSeller.id, marketId: "main", qty: 8, price: 2, age: 0,
+    householdId: mainSeller.id, marketId: "main", qty: mainFoodReserve + 8, price: 2, age: 0,
   });
   economy.stalls.fish.push({
-    householdId: fisherySeller.id, marketId: "fishery", qty: 8, price: 3, age: 0,
+    householdId: fisherySeller.id, marketId: "fishery", qty: fisheryFoodReserve + 8, price: 3, age: 0,
   });
-  depositInventory(mainMarket, "outbound", "wheat", 8);
-  depositInventory(fisheryMarket, "outbound", "fish", 8);
+  depositInventory(mainMarket, "outbound", "wheat", mainFoodReserve + 8);
+  depositInventory(fisheryMarket, "outbound", "fish", fisheryFoodReserve + 8);
   const configured = configureCaravanRoute(economy, physical, {
     baseBuildingId: inn.id,
     destMarketId: "fishery",
@@ -422,7 +432,16 @@ function createCaravanRouteFixture({ cartDurability = P.CART_WOOD_DURABILITY } =
     day: world.state.day,
   });
   assert.equal(configured.ok, true, configured.reason);
-  return { ...fixture, carter, inn, cartwright, mainSeller, route: configured.route };
+  return {
+    ...fixture,
+    carter,
+    inn,
+    cartwright,
+    mainSeller,
+    mainFoodReserve,
+    fisheryFoodReserve,
+    route: configured.route,
+  };
 }
 
 function runCaravanUntilReturned(economy, physical, route, day = 1) {
@@ -2091,6 +2110,27 @@ test("空間生産性: 工房は十分近い木こりへ直接買付し市場往
   assert.ok(Math.abs(buyer.purse + seller.purse - beforeMoney) < 1e-9);
 });
 
+test("市場圏性能: 舗装では所属を引き直さず道路接続変更では再計算する", () => {
+  const fixture = createTwoMarketTestWorld(29);
+  const { economy, physical } = fixture.world.state;
+  const first = marketNetworkSummary(physical, economy, fixture.world.state.marketNetwork);
+  const roadKey = Object.keys(physical.roads).find(key => (
+    physical.roads[key] === true && physical.pavedRoads?.[key] !== true
+  ));
+  assert.ok(roadKey);
+  const [x, y] = roadKey.split(",").map(Number);
+
+  assert.equal(paveRoadTile(physical, x, y), true);
+  const paved = marketNetworkSummary(physical, economy, first);
+  assert.equal(paved.assignmentRevision, first.assignmentRevision,
+    "舗装速度だけでは市場所属を全件再計算しない");
+
+  assert.equal(removeRoadTile(physical, x, y), true);
+  const disconnected = marketNetworkSummary(physical, economy, paved);
+  assert.notEqual(disconnected.assignmentRevision, paved.assignmentRevision,
+    "道路の接続形が変われば市場所属を再計算する");
+});
+
 test("隊商S1: 世帯は帰属市場へ実移動し、屋台・返品・直接仕入れを市場内に限る", () => {
   const fixture = createTwoMarketTestWorld();
   const {
@@ -2506,12 +2546,49 @@ test("段16: sellOffersは職業別keepと重量上限を守る", () => {
 
   const farmer = createHousehold(economy, { job: "wheat", x: 3, y: 2 });
   farmer.pantry.wheat = 1_000;
-  const keep = householdEat(farmer) * P.RATION * 10;
+  const keep = Math.max(
+    householdEat(farmer) * P.RATION * 10,
+    farmer.settlerFoodReserve,
+  );
   const surplus = farmer.pantry.wheat - keep;
   assert.equal(
     sellOffers(economy, farmer).wheat,
     Math.min(surplus * 0.5 + 2, surplus, householdHaul(farmer)),
   );
+});
+
+test("段16: 麦農家は開拓食を初収穫と誤認して売らない", () => {
+  const economy = createEconomicState();
+  const farmer = createHousehold(economy, {
+    job: "wheat", x: 3, y: 2, foodKit: 24,
+  });
+
+  assert.deepEqual(sellOffers(economy, farmer), {});
+  const beforeReserve = farmer.settlerFoodReserve;
+  runHouseholdSurvival(economy, { day: 1 });
+  assert.ok(farmer.settlerFoodReserve < beforeReserve, "食べた分だけ保護量を減らす");
+
+  farmer.pantry.wheat += 100;
+  const offer = sellOffers(economy, farmer).wheat;
+  assert.ok(offer > 0, "持参食を越えた収穫は販売する");
+  assert.ok(
+    farmer.pantry.wheat - offer >= farmer.settlerFoodReserve - 1e-9,
+    "持参食の未消費分は販売後も残る",
+  );
+});
+
+test("段16: 漁師も開拓保存食を生産余剰として売らない", () => {
+  const economy = createEconomicState();
+  const fisher = createHousehold(economy, {
+    job: "fisher", x: 3, y: 2, foodKit: 0,
+  });
+  fisher.members = fisher.members.slice(0, 4);
+  fisher.pantry.pres = 24;
+  fisher.settlerFoodReserves.pres = 24;
+
+  assert.equal(sellOffers(economy, fisher).pres, undefined);
+  runHouseholdSurvival(economy, { day: 1 });
+  assert.ok(fisher.settlerFoodReserves.pres < 24, "持参保存食を先に食べる");
 });
 
 test("現金循環: 実績原価で野菜へ交換できる漁師は半日未満を守って魚を出す", () => {
@@ -2680,7 +2757,7 @@ test("段17: 食料日数と購入量は固定9人でなく実際の家族人数
   }
 });
 
-test("現金循環: 食料1.5日未満だけ実在庫を世帯信用枠まで掛買いできる", () => {
+test("現金循環: 食料1.5日未満だけ実在庫を6か月の世帯信用枠まで掛買いできる", () => {
   const economy = createEconomicState();
   const seller = createHousehold(economy, { job: "wheat", x: 0, y: 0 });
   const buyer = createHousehold(economy, { job: "logger", x: 0, y: 0 });
@@ -2695,7 +2772,7 @@ test("現金循環: 食料1.5日未満だけ実在庫を世帯信用枠まで掛
   const bought = buyAtMarket(economy, buyer, { day: 1 });
 
   assert.ok((bought.purchased.wheat ?? 0) > 0);
-  assert.ok(buyer.purse < 0 && buyer.purse >= -30);
+  assert.ok(buyer.purse < 0 && buyer.purse >= -householdFoodCreditLimit(economy, buyer));
   assert.ok(seller.purse > P.PURSE0);
   assert.equal(seller.purse + buyer.purse + economy.company.money, moneyBefore);
 
@@ -2751,7 +2828,7 @@ test("段17: 屋台約定は相場を直接動かさず売り手から4%手数�
   assert.equal(assertMoneyConservation(economy), true);
 });
 
-test("段17: CO輸入棚は生産入力だけ財布-30まで信用買いできる", () => {
+test("段17: CO輸入棚は生産入力だけ財布-60まで運転資金を信用買いできる", () => {
   const economy = createEconomicState();
   const shepherd = createHousehold(economy, { job: "shepherd", x: 0, y: 0 });
   for (const goods of FOODS) shepherd.pantry[goods] = 100;
@@ -2764,12 +2841,12 @@ test("段17: CO輸入棚は生産入力だけ財布-30まで信用買いでき�
 
   const result = buyAtMarket(economy, shepherd, { day: 61 });
   const wheat = result.transactions.find((transaction) => transaction.goods === "wheat");
-  assert.deepEqual(wheat, { goods: "wheat", qty: 7.5, price: P.IMP.wheat, source: "CO" });
-  assert.equal(shepherd.purse, -30);
-  assert.equal(economy.imported.wheat, 7.5);
-  assert.equal(economy.co.impMargin, 7.5 * (P.IMP.wheat - P.IMP_COST.wheat));
-  assert.equal(economy.moneyBoundary.out, 7.5 * P.IMP_COST.wheat);
-  assert.equal(economy.materialFlows.wheat.imp, 240 + 7.5);
+  assert.deepEqual(wheat, { goods: "wheat", qty: 15, price: P.IMP.wheat, source: "CO" });
+  assert.equal(shepherd.purse, -60);
+  assert.equal(economy.imported.wheat, 15);
+  assert.equal(economy.co.impMargin, 15 * (P.IMP.wheat - P.IMP_COST.wheat));
+  assert.equal(economy.moneyBoundary.out, 15 * P.IMP_COST.wheat);
+  assert.equal(economy.materialFlows.wheat.imp, 240 + 15);
   assert.equal(economy.px.wheat, P.BELIEF0.wheat);
   assert.equal(assertMoneyConservation(economy), true);
 
@@ -3417,6 +3494,9 @@ test("段21: 食後の文化消費・漬け込み・腐敗を経て軟ストリ�
   vegetable.pantry.veg = 100;
   vegetable.pantry.salt = 10;
   vegetable.pantry.pick = 0;
+  // 旧エンジンとのフェーズ順比較では、新規開拓食保護という意図的差分を外す。
+  vegetable.settlerFoodReserve = 0;
+  vegetable.settlerFoodReserves = {};
   vegetable.up = P.UP_DAYS - 1;
   const toolsBefore = vegetable.pantry.tools;
 
@@ -3657,19 +3737,19 @@ test("段22: 信用限度は月次成長枠と世帯数枠の小さい方で決�
   assert.equal(companyCreditLimit(twentyHouseholds, { day: 720 }), 20 * 9 * P.LIMIT_PC);
 });
 
-test("段23: 月次出生は非飢餓・食料2日超・11人未満の世帯だけに起きる", () => {
+test("段23: 月次出生は非飢餓・食料10日超・8人未満の世帯だけに起きる", () => {
   const economy = createEconomicState();
   const household = createHousehold(economy, { job: "veg", x: 0, y: 0 });
-  household.members = household.members.slice(0, 10);
-  while (household.members.length < 10) {
+  household.members = household.members.slice(0, 7);
+  while (household.members.length < 7) {
     household.members.push({ name: `家族${household.members.length}`, sex: "♀", age: 10 });
   }
   household.hungerRun = 0;
-  household.pantry.wheat = householdEat(household) * 3;
+  household.pantry.wheat = householdEat(household) * 11;
   const births = runBirthPhase(economy, { day: 30, random: () => 0 });
 
   assert.equal(births.length, 1);
-  assert.equal(household.members.length, 11);
+  assert.equal(household.members.length, 8);
   assert.deepEqual(
     { ...household.members.at(-1), id: undefined },
     { name: "ハンス", sex: "♂", age: 0, id: undefined },
@@ -3809,6 +3889,36 @@ test("段23履歴/段44改定: 初収穫前の麦を守り、困窮職は空き�
   assert.deepEqual(changes.at(-1), {
     kind: "job_switch", householdId: household.id, from: "logger", to: "wheat",
   });
+});
+
+test("季節雇用: 麦農家は冬の月収だけで離農せず春の作期には通常判定へ戻る", () => {
+  const economy = createEconomicState();
+  const physical = createEconomicTestPhysical();
+  const farmer = createHousehold(economy, { job: "wheat", x: 6, y: 3 });
+  const farm = addEconomicTestBuilding(physical, "wheat", 2, 2, 6, 3, farmer.id);
+  const loggerHome = addEconomicTestBuilding(physical, "logger", 10, 2, 9, 3);
+  farmer.buildingId = farm.id;
+  farmer.jobCycleDone = true;
+  farmer.hungerHist = Array(P.DISTRESS).fill(1);
+  economy.jobSelectionPool = ["logger"];
+
+  let winterRandomCalls = 0;
+  const winter = runPopulationDynamicsPhase(economy, physical, {
+    day: 360,
+    random: () => { winterRandomCalls += 1; return 0; },
+  });
+  assert.deepEqual(winter, []);
+  assert.equal(winterRandomCalls, 0);
+  assert.equal(farmer.job, "wheat");
+  assert.equal(farmer.buildingId, farm.id);
+
+  let springRandomCalls = 0;
+  runPopulationDynamicsPhase(economy, physical, {
+    day: 450,
+    random: () => { springRandomCalls += 1; return 0; },
+  });
+  assert.ok(springRandomCalls > 0, "春は通常の困窮・転職抽選へ戻る");
+  assert.ok([farm.id, loggerHome.id].includes(farmer.buildingId));
 });
 
 test("段23: 6ヶ月の負債は徳政で会社貸し倒れへ移して貨幣を保存する", () => {
@@ -3968,6 +4078,18 @@ test("25C: 売り便は2日分をまとめて分散出発し、空腹時は待�
   decideHouseholdTrips(emergency.economy, emergency.physical);
   assert.equal(emergency.household.state, "toMarket", "空腹なら満載を待たず買い出しへ出る");
   assert.equal(emergency.household.marketCarrier.reason, "food_urgent");
+
+  const debt = createReadyHousehold();
+  debt.economy.currentDay = 1;
+  for (const goods of FOODS) debt.household.pantry[goods] = 0;
+  debt.household.purse = -100;
+  assert.ok(
+    debt.household.purse > -householdFoodCreditLimit(debt.economy, debt.household),
+  );
+  decideHouseholdTrips(debt.economy, debt.physical);
+  assert.equal(debt.household.state, "toMarket",
+    "徳政までの信用枠が残る赤字世帯は、食料棚の前で買い出し自体を諦めない");
+  assert.equal(debt.household.marketCarrier.reason, "food_urgent");
 });
 
 test("需要網: 無一文の建築材買い出しを止め、手持ち修繕材は家から棚へ移す", () => {
@@ -4816,7 +4938,7 @@ test("段43: 購入品を先に積み残容量だけ返品を持ち帰り残り�
 
   const result = transactMarketCargo(economy, physical, owner, { day: 8, random: () => 0 });
   const boughtWeight = Object.entries(result.bought.cargo.manifest)
-    .reduce((sum, [goods, qty]) => sum + qty * (goods === "ore" || goods === "bar" ? 2 : 1), 0);
+    .reduce((sum, [goods, qty]) => sum + qty * goodsUnitWeight(goods), 0);
   const returned = result.bought.cargo.returnManifest.tools ?? 0;
   assert.ok(boughtWeight > 0);
   assert.ok(returned > 0 && returned < returnQty);
@@ -4944,13 +5066,13 @@ test("段31: 市場へ出す要求は有限の輸送人員で予約全量を順�
     .filter((job) => job.economicLogistics?.kind === "stock_release");
   assert.equal(first, initialJobs[0]);
   assert.deepEqual(initialJobs.map((job) => job.qty), [40]);
-  assert.equal(initialJobs[0].carrier.porters.length, 20);
+  assert.equal(initialJobs[0].carrier.porters.length, 10);
   assert.ok(initialJobs[0].carrier.porters.every((porter) => (
-    porter.cargo.qty === 2 && porter.people === 1 && porter.capacity === 2
+    porter.cargo.qty === 4 && porter.people === 1 && porter.capacity === 2
   )));
   assert.equal(
     new Set(initialJobs[0].carrier.porters.map((porter) => porter.departureDelay)).size,
-    20,
+    10,
   );
   stepHaulCarriers(physical, 1);
   assert.equal(initialJobs[0].carrier.batchElapsed, 1);
@@ -4998,7 +5120,7 @@ test("段32: 鉄鉱床と炭層は§6.1の座標式どおり生成される", ()
   assert.deepEqual(GOODS.slice(-3), ["ore", "coal", "bar"]);
 });
 
-test("段32: oreとbarは重量2で徒歩・荷車の数量容量が通常財の半分", () => {
+test("段32: 麦は重量0.5、oreとbarは重量2で同じ荷枠の数量へ反映する", () => {
   const terrain = Array.from({ length: 3 }, () => (
     Array.from({ length: 8 }, () => ({ kind: "grass", variant: 0 }))
   ));
@@ -5025,6 +5147,7 @@ test("段32: oreとbarは重量2で徒歩・荷車の数量容量が通常財の
   const cart = createCartCarrier(physical);
   const walkers = createWalkCarrier(physical, { people: 2 });
   assert.equal(carrierGoodsCapacity(cart, "coal"), 8);
+  assert.equal(carrierGoodsCapacity(cart, "wheat"), 16);
   assert.equal(carrierGoodsCapacity(cart, "ore"), 4);
   assert.equal(carrierGoodsCapacity(cart, "bar"), 4);
   assert.equal(carrierGoodsCapacity(walkers, "coal"), 2);
@@ -5966,8 +6089,11 @@ test("二市場入植: 初便用の貸与荷車は通常の会社運搬へ流用
     world.state.physical,
     "wheat",
   );
-  assert.equal(transport, P.COMPANY_HAND_PORTERS * P.CART_HAND_CAPACITY,
-    "貸与荷車を除き、通常運搬は徒歩容量だけを数える");
+  assert.equal(
+    transport,
+    P.COMPANY_HAND_PORTERS * P.CART_HAND_CAPACITY / goodsUnitWeight("wheat"),
+    "貸与荷車を除き、通常運搬は徒歩重量容量だけを数える",
+  );
 });
 
 test("隊商S3: 二市場世界は種付き隊商宿1軒を持ち雇用操作をjournal再生できる", () => {
@@ -5999,7 +6125,10 @@ test("隊商S3: 二市場世界は種付き隊商宿1軒を持ち雇用操作を
 
 test("隊商S4: 実在庫を一往復させ、荷車・仕入・小売を含む貨幣物量を保存する", () => {
   const fixture = createCaravanRouteFixture();
-  const { world, route, mainMarket, fisheryMarket, mainSeller, fisherySeller, fisheryBuyer } = fixture;
+  const {
+    world, route, mainMarket, fisheryMarket, mainSeller, fisherySeller, fisheryBuyer,
+    mainFoodReserve, fisheryFoodReserve,
+  } = fixture;
   const { economy, physical } = world.state;
   for (const goods of GOODS) fisheryBuyer.pantry[goods] = goods === "wheat" ? 0 : 100;
   const moneyBefore = economy.company.money
@@ -6011,8 +6140,8 @@ test("隊商S4: 実在庫を一往復させ、荷車・仕入・小売を含む�
   const ticks = runCaravanUntilReturned(economy, physical, route, 1);
 
   assert.ok(ticks > 0);
-  assert.equal(sectionAmount(mainMarket, "outbound", "wheat"), 0);
-  assert.equal(sectionAmount(fisheryMarket, "outbound", "fish"), 0);
+  assert.equal(sectionAmount(mainMarket, "outbound", "wheat"), mainFoodReserve);
+  assert.equal(sectionAmount(fisheryMarket, "outbound", "fish"), fisheryFoodReserve);
   assert.equal(sectionAmount(fisheryMarket, "inbound", "wheat"), 8);
   assert.equal(sectionAmount(mainMarket, "inbound", "fish"), 8);
   assert.equal(economy.marketStockM.fishery.wheat, 8);
@@ -6056,7 +6185,12 @@ test("隊商集荷: 路線荷車が生産者へ空車で向かい大量余剰を
   const { economy, physical } = fixture.world.state;
   fixture.route.collectionEnabled = true;
   economy.stalls.wheat = [];
-  withdrawInventory(fixture.mainMarket, "outbound", "wheat", 8);
+  withdrawInventory(
+    fixture.mainMarket,
+    "outbound",
+    "wheat",
+    sectionAmount(fixture.mainMarket, "outbound", "wheat"),
+  );
   const farm = addEconomicTestBuilding(
     physical,
     "wheat",
@@ -6067,6 +6201,7 @@ test("隊商集荷: 路線荷車が生産者へ空車で向かい大量余剰を
     fixture.mainSeller.id,
   );
   fixture.mainSeller.buildingId = farm.id;
+  fixture.mainSeller.pantry.wheat += 256;
   addRoadLine(physical, fixture.mainMarket.entrance, farm.entrance);
   const materialBefore = economicMaterialSnapshot(economy, physical);
   const moneyBefore = economy.company.money
@@ -6079,7 +6214,7 @@ test("隊商集荷: 路線荷車が生産者へ空車で向かい大量余剰を
   assert.equal(fixture.route.state, "collecting_base");
   assert.equal(fixture.route.carriers.length, 1);
   assert.deepEqual(fixture.route.carriers[0].manifest, {}, "市場から農場へは空車で向かう");
-  assert.equal(fixture.mainSeller.collectionReserved.wheat, 24);
+  assert.equal(fixture.mainSeller.collectionReserved.wheat, 48);
   assert.deepEqual(economicMaterialSnapshot(economy, physical), materialBefore,
     "集荷予約は現物を消さず、生産者の二重出荷だけを防ぐ");
   assert.equal(
@@ -6088,8 +6223,8 @@ test("隊商集荷: 路線荷車が生産者へ空車で向かい大量余剰を
       physical,
       day: 1,
     }).wheat,
-    104,
-    "予約済み24荷を本人の次の売荷に重ねない",
+    106,
+    "予約済み48荷を本人の次の売荷に重ねない",
   );
   let collectionTicks = 0;
   while (fixture.route.state === "collecting_base" && collectionTicks < 200) {
@@ -6097,12 +6232,30 @@ test("隊商集荷: 路線荷車が生産者へ空車で向かい大量余剰を
     collectionTicks += 1;
   }
   assert.equal(fixture.route.state, "idle");
-  assert.equal(economy.marketStockM.main.wheat, 24);
-  assert.equal(sectionAmount(fixture.mainMarket, "inbound", "wheat"), 24);
-  assert.equal(fixture.mainSeller.pantry.wheat, 216);
+  assert.equal(economy.marketStockM.main?.wheat ?? 0, 0,
+    "集荷済み荷を一般小売棚へ混ぜない");
+  assert.equal(fixture.route.collectionStagedM.main.wheat, 48,
+    "集荷済み荷は次便の路線専用在庫として市場内に留置する");
+  assert.equal(sectionAmount(fixture.mainMarket, "inbound", "wheat"), 48);
+  assert.equal(fixture.mainSeller.pantry.wheat, 448);
   assert.ok(fixture.mainSeller.purse > sellerPurseBefore);
-  assert.equal(economy.marketStockLotsM.main.wheat[0].collection, true);
-  assert.equal(economy.marketStockLotsM.main.wheat[0].sellerHouseholdId, fixture.mainSeller.id);
+  assert.equal(fixture.route.collectionStagedLotsM.main.wheat[0].collection, true);
+  assert.equal(
+    fixture.route.collectionStagedLotsM.main.wheat[0].sellerHouseholdId,
+    fixture.mainSeller.id,
+  );
+
+  const carterWheat = fixture.carter.pantry.wheat;
+  fixture.carter.pantry.wheat = 0;
+  const retailAttempt = buyAtMarket(
+    economy,
+    fixture.carter,
+    { day: 2, physical, capacityLimit: 8 },
+  );
+  assert.equal(retailAttempt.purchased.wheat ?? 0, 0,
+    "翌朝の住民買い物が次便用の集荷荷を消費しない");
+  assert.equal(fixture.route.collectionStagedM.main.wheat, 48);
+  fixture.carter.pantry.wheat = carterWheat;
 
   const departure = stepCaravanDay(economy, physical, { day: 2 });
   assert.equal(departure[0]?.departed, true, JSON.stringify(departure));
@@ -6111,7 +6264,7 @@ test("隊商集荷: 路線荷車が生産者へ空車で向かい大量余剰を
     collectionTicks += 1;
   }
   assert.equal(fixture.route.completedTrips, 1);
-  assert.equal(fixture.route.recentTrips[0].outbound.wheat, 24);
+  assert.equal(fixture.route.recentTrips[0].outbound.wheat, 48);
   assert.ok(fixture.route.recentTrips[0].procurement > 0,
     "集荷時に払った生産者原価を便のレシートへ引き継ぐ");
   assert.equal(
@@ -6146,7 +6299,12 @@ test("隊商集荷: 指定品が無い等分枠を余っている食料へ再配
   });
   for (const household of economy.households) household.pantry.tools = 0;
   economy.stalls.wheat = [];
-  withdrawInventory(fixture.mainMarket, "outbound", "wheat", 8);
+  withdrawInventory(
+    fixture.mainMarket,
+    "outbound",
+    "wheat",
+    sectionAmount(fixture.mainMarket, "outbound", "wheat"),
+  );
   const farm = addEconomicTestBuilding(
     physical,
     "wheat",
@@ -6157,6 +6315,7 @@ test("隊商集荷: 指定品が無い等分枠を余っている食料へ再配
     fixture.mainSeller.id,
   );
   fixture.mainSeller.buildingId = farm.id;
+  fixture.mainSeller.pantry.wheat += 512;
   addRoadLine(physical, fixture.mainMarket.entrance, farm.entrance);
 
   const collection = stepCaravanDay(economy, physical, { day: 1 });
@@ -6166,7 +6325,7 @@ test("隊商集荷: 指定品が無い等分枠を余っている食料へ再配
   assert.equal(economy.households.reduce(
     (total, household) => total + (household.collectionReserved?.wheat ?? 0),
     0,
-  ), 48,
+  ), 96,
     "在庫ゼロのtools枠もwheat集荷へ使う");
 });
 
@@ -6197,31 +6356,44 @@ test("隊商S4: 会社残高が負でも信用限度内なら市場仕入れで�
 test("隊商S4: 別路線が運び込んだ会社在庫を中継市場で積み替え、原価帰属を保つ", () => {
   const fixture = createCaravanRouteFixture();
   const { economy, physical } = fixture.world.state;
-  runCaravanUntilReturned(economy, physical, fixture.route, 1);
-  assert.equal(economy.marketStockM.main.fish, 8);
-  const sourceLot = structuredClone(economy.marketStockLotsM.main.fish[0]);
+  const sourceQty = 8;
+  const sourceLot = {
+    routeId: "upstream-route",
+    tripNumber: 3,
+    producerLevel: 2,
+    sellerHouseholdId: 77,
+    qty: sourceQty,
+    cost: 16,
+  };
+  (economy.marketStockM.main ??= {}).tools = sourceQty;
+  (economy.marketStockCostM.main ??= {}).tools = sourceLot.cost;
+  ((economy.marketStockLotsM.main ??= {}).tools ??= []).push(structuredClone(sourceLot));
+  depositInventory(fixture.mainMarket, "inbound", "tools", sourceQty);
+  for (const household of economy.households) {
+    if (household.marketId === "fishery") household.pantry.tools = 0;
+  }
   const moneyBeforeTransfer = economy.company.money
     + economy.households.reduce((total, household) => total + household.purse, 0);
   const materialBefore = economicMaterialSnapshot(economy, physical);
 
   assert.equal(configureCaravanRoute(economy, physical, {
     baseBuildingId: fixture.inn.id,
-    goodsOut: ["fish"],
+    goodsOut: ["tools"],
     goodsBack: [],
   }).ok, true);
   const departureDay = fixture.route.nextDepartDay;
   const departure = stepCaravanDay(economy, physical, { day: departureDay });
   assert.equal(departure[0]?.departed, true, JSON.stringify(departure));
-  while (fixture.route.completedTrips < 2) {
+  while ((fixture.route.completedTrips ?? 0) < 1) {
     stepCaravanTick(economy, physical, { day: departureDay });
   }
 
-  assert.equal(economy.marketStockM.main.fish, 0);
-  assert.equal(economy.marketStockM.fishery.fish, 8);
-  assert.deepEqual(fixture.route.recentTrips.at(-1).outbound, { fish: 8 });
+  assert.equal(economy.marketStockM.main.tools, 0);
+  assert.equal(economy.marketStockM.fishery.tools, sourceQty);
+  assert.deepEqual(fixture.route.recentTrips.at(-1).outbound, { tools: sourceQty });
   assert.equal(fixture.route.recentTrips.at(-1).procurement, 0,
     "会社所有在庫の積み替えで二重仕入しない");
-  assert.deepEqual(economy.marketStockLotsM.fishery.fish[0], sourceLot,
+  assert.deepEqual(economy.marketStockLotsM.fishery.tools[0], sourceLot,
     "最初に買い付けた路線・便・原価を配送後も保つ");
   assert.equal(
     economy.company.money + economy.households.reduce((total, household) => total + household.purse, 0),
@@ -6357,6 +6529,9 @@ test("隊商S6: 複数品目を指定すると先頭品だけで満載にせず�
   const { economy, physical } = fixture.world.state;
   const toolsSeller = createHousehold(economy, { job: "woodshop", x: 8, y: 6 });
   toolsSeller.marketId = "main";
+  const addedWheatReserve = toolsSeller.members.length * 3;
+  economy.stalls.wheat[0].qty += addedWheatReserve;
+  depositInventory(fixture.mainMarket, "outbound", "wheat", addedWheatReserve);
   economy.stalls.tools.push({
     householdId: toolsSeller.id, marketId: "main", qty: 8, price: 2, age: 0,
   });

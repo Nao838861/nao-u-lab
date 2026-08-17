@@ -49,6 +49,10 @@ export function normalizeMarketNetwork(network, fallback = null) {
     marketStates: structuredClone(raw.marketStates ?? {}),
     tradeReceipts: Array.isArray(raw.tradeReceipts) ? structuredClone(raw.tradeReceipts) : [],
     nextTradeId: Number.isSafeInteger(raw.nextTradeId) ? raw.nextTradeId : 1,
+    assignmentRevision: raw.assignmentRevision ?? null,
+    assignmentRows: Array.isArray(raw.assignmentRows)
+      ? structuredClone(raw.assignmentRows)
+      : [],
   };
 }
 
@@ -68,6 +72,37 @@ export function assignMarketNetwork(physical, economy, network) {
     if (!building) continue;
     building.marketId = market.id;
     market.buildingId = building.id;
+  }
+  const marketSignature = normalized.markets.map(market => (
+    `${market.id}:${market.buildingId ?? "-"}:${market.entrance.x},${market.entrance.y}`
+  )).join("|");
+  const householdSignature = (economy?.households ?? []).map(household => (
+    `${household.id}:${household.buildingId ?? "-"}`
+  )).join("|");
+  const buildingSignature = (physical.buildings ?? []).map(building => (
+    `${building.id}:${building.entrance?.x ?? building.x},${building.entrance?.y ?? building.y}`
+  )).join("|");
+  const assignmentRevision = [
+    physical.roadTopologyRevision ?? physical.roadRevision ?? 0,
+    buildingSignature,
+    marketSignature,
+    householdSignature,
+  ].join("/");
+  if (
+    normalized.assignmentRevision === assignmentRevision
+    && normalized.assignmentRows.length > 0
+  ) {
+    const rows = new Map(normalized.assignmentRows.map(row => [row.id, row]));
+    for (const household of economy?.households ?? []) {
+      const row = rows.get(`household:${household.id}`);
+      if (!row) continue;
+      const market = normalized.markets.find(candidate => candidate.id === row.marketId) ?? null;
+      household.marketId = row.marketId;
+      household.marketDistance = row.distance;
+      household.marketEntrance = market ? { ...market.entrance } : null;
+      household.marketBuildingId = market?.buildingId ?? null;
+    }
+    return normalized;
   }
   const assignments = { ...normalized.assignments };
   const assignmentRows = [];
@@ -115,6 +150,7 @@ export function assignMarketNetwork(physical, economy, network) {
   }
   normalized.assignments = assignments;
   normalized.assignmentRows = assignmentRows;
+  normalized.assignmentRevision = assignmentRevision;
   return normalized;
 }
 

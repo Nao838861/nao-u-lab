@@ -13,6 +13,7 @@ import {
   postCompanyLedger,
   priceAnchorBounds,
   productionCost,
+  purchaseCompanyWoodCart,
   recordEconomicMaterialFlow,
   recordEconomyEvent,
   recordExternalMoneyFlow,
@@ -511,11 +512,14 @@ export const WORLD_SCALE_FOUNDATION = Object.freeze({
 export const B2_TRIAL_STARTER_JOBS = Object.freeze([
   // 母港の畑適地は意図的に狭く、現行4×4全域肥沃制約では一軒分だけ。
   // その一軒を先に確保し、残りは沿岸・森林・加工職でスターターを構成する。
-  "wheat", "fisher", "fisher", "logger", "logger", "logger",
-  "woodshop", "woodshop", "charburner", "saltworks", "cartwright", "fisher2",
+  // 湾内の3漁家は二年維持・三年で痩せるP2較正負荷そのもの。二軒では回復と
+  // 拮抗して外へ出る圧力が消える。256世界の三長距離線は初年に30台超を
+  // 必要とするため、車大工は二軒で実荷車を増産し、会社の実購入で配備する。
+  "wheat", "fisher", "fisher", "fisher", "logger", "logger", "logger",
+  "woodshop", "woodshop", "charburner", "saltworks", "cartwright", "cartwright",
 ]);
 
-const B2_TRIAL_PROVISION_DAYS = 365;
+const B2_TRIAL_PROVISION_DAYS = 60;
 // Lv0→1には45日必要。30日では最初の効率改善より先に開拓食が尽きるため、
 // 一回限りの明示された開拓保存食を60日とし、その後は地域間交易だけで養う。
 const B2_EXPANSION_PROVISION_DAYS = 60;
@@ -579,7 +583,7 @@ export function buildB2TrialWorld(
   seed = 11,
   definition,
   {
-    householdSize = null,
+    householdSize = 4,
     provisionDays = B2_TRIAL_PROVISION_DAYS,
   } = {},
 ) {
@@ -633,21 +637,18 @@ export function buildB2TrialWorld(
     connectB2Road(physical, marketEntrance, zone, `${zone.job}#${zone.id}`);
   }
 
-  const households = zones.map(zone => occupyScenarioZone(world, zone, "main"));
+  const requestedHouseholdSize = Number.isSafeInteger(householdSize) && householdSize > 0
+    ? householdSize
+    : null;
+  const households = zones.map(zone => occupyScenarioZone(world, zone, "main", {
+    foodKit: requestedHouseholdSize === null
+      ? undefined
+      : requestedHouseholdSize * provisionDays,
+  }));
   for (const household of households) {
-    if (Number.isSafeInteger(householdSize) && householdSize > 0) {
-      household.members = household.members.slice(0, householdSize);
+    if (requestedHouseholdSize !== null) {
+      setScenarioHouseholdSize(economy, household, requestedHouseholdSize, "母港先遣隊");
     }
-    const provision = household.members.length * provisionDays;
-    household.pantry.wheat += provision;
-    recordEconomicMaterialFlow(
-      economy,
-      "wheat",
-      "imp",
-      provision,
-      `B2母港世帯${household.id}の開拓時保存食`,
-      { includeInDaily: false },
-    );
   }
   economy.jobSelectionPool = [...new Set([...E_STABLE_JOBS, ...B2_TRIAL_STARTER_JOBS])];
   world.state.b2Trial = {
@@ -662,68 +663,134 @@ export function buildB2TrialWorld(
 export const B2_EXPANSION_STRATEGIES = Object.freeze({
   fishery: Object.freeze({
     marketKey: "3", marketId: "fishery", name: "漁港市場",
-    jobs: Object.freeze(["fisher", "fisher", "fisher", "saltworks"]),
+    // 凍結済み漁場較正の基準負荷を守る。三軒なら低Lvでも16人の漁港圏を養い、
+    // Lv上昇分が魚・保存食の帰り荷になる。七軒案は豊かな漁場さえ一年未満で
+    // 潰し、産業効率でなく乱獲人数だけを増やしていたため採用しない。
+    jobs: Object.freeze([
+      "fisher", "fisher", "fisher", "saltworks",
+    ]),
     goodsOut: Object.freeze([
       "wheat", "veg", "pick", "char", "tools", "log", "stone", "cloth", "iron",
     ]),
     goodsBack: Object.freeze(["fish", "pres", "salt"]),
-    // 4産業世帯+隊商宿の先遣20人は一日約20荷を食べる。24荷編成を5日ごとに
-    // 一台だけ送る旧値では、満載でも4.8荷/日しか届かず路線を正しく設定しても
-    // 必ず飢える。五編成で主食100荷/便相当を確保し、魚・塩・道具も同じ実便で
-    // 双方向に回す。固定給は開発期の赤字路線費として会社台帳へ全額残す。
-    recruitment: 5, wage: 0.75, intervalDays: 5,
+    // 漁港圏16人は魚で自給できるため、二編成は麦・資材の補完と魚・塩の帰り荷を
+    // 同じ実便で運ぶ。固定給は開発期の赤字路線費として会社台帳へ全額残す。
+    recruitment: 2, wage: 0.75, intervalDays: 5,
   }),
   mining: Object.freeze({
     marketKey: "4", marketId: "mining", name: "山間鉱山市場",
-    // 凍結済み4市場裁定では山間部が鉱石・石炭・石材に加えて木材を持つ。
-    // ここに木こりがないと森復活ゼロの母港林だけが全島唯一の丸太源になり、
-    // Lv2以降の木製品と全加工連鎖が5年以内に必ず止まる。
-    jobs: Object.freeze([
-      "miner", "miner", "collier",
-      // 人口200級の四市場ではLv2修繕だけで石材需要が大きい。一軒の採石場
-      // (高Lvでも8荷/日)では交易が正しくても全域の建物が崩れるため、既存の
-      // 成熟都市と同じ二軒を置く。
-      "quarryman", "quarryman", "smelter", "smith",
-      "logger", "logger", "logger", "woodshop",
+    // 最初は石・鉱石・鉄の連鎖だけを先遣する。木材圏まで同時に11世帯を
+    // 移住させる旧fixtureは、Lvが上がる前に食料便の能力を越えていた。
+    // 山林の本格開発はプレイヤーが需要を見て増設でき、母港林だけに依存しない。
+    jobs: Object.freeze(["miner", "collier", "quarryman"]),
+    // 採掘・採炭の在庫がない日に製錬所と鍛冶屋まで一括入植させると、加工職は
+    // 売物を作れないまま原料費だけを負い、保存食が尽きた日に市場前で破綻する。
+    // まず上流を60日、次に製錬を60日動かしてから下流を足す。これは補助金で
+    // 赤字を隠すのではなく、実在する中間財と買手を順に接続する開発手順である。
+    industryStages: Object.freeze([
+      Object.freeze({ afterDays: 60, jobs: Object.freeze(["smelter"]) }),
+      Object.freeze({ afterDays: 120, jobs: Object.freeze(["smith"]) }),
+      // 母港の有限林が薄くなる前に山間林へ生産基盤を移す。原木だけを運ぶと
+      // 母港工房の往復が再び詰まるため、現地加工した木製品・木炭も帰り荷にする。
+      Object.freeze({
+        afterDays: 180,
+        jobs: Object.freeze([
+          "logger", "logger", "logger", "woodshop", "charburner",
+          "quarryman", "quarryman",
+        ]),
+      }),
     ]),
     // 低Lv期だけは母港で有償輸入した木製品も運び、現地木工がLv2へ届いたら
     // 鉱山自身の木製品を帰り荷へ切り替える。同じ品目の往復は価格差ではなく
     // 実在庫gapで片方向だけが積まれる。
     goodsOut: Object.freeze([
-      "wheat", "veg", "fish", "pres", "pick", "tools", "cloth",
+      "wheat", "veg", "fish", "pres", "pick", "tools", "salt", "cloth",
     ]),
-    goodsBack: Object.freeze(["ore", "bar", "iron", "stone", "coal", "log", "tools"]),
-    // 鉱区は食料を産まない。11産業世帯44人+二宿14人へ、二宿十四編成の
-    // 336荷/5日=67.2荷/日を届ける。赤字期の固定給も開発費として台帳に残す。
-    routeCount: 2, recruitment: 7, wage: 0.75, intervalDays: 5,
+    goodsBack: Object.freeze([
+      "ore", "bar", "iron", "stone", "coal", "log", "tools", "char",
+    ]),
+    // 鉱区は食料を産まない。5産業世帯20人へ一宿四編成を通し、低Lv期の
+    // 固定給はLvを上げるために必要な赤字路線として会社台帳へ残す。
+    // 木材圏まで育つと十世帯になるため、食料と中間財を一本へ詰め込まない。
+    // 四台編成を二本に分け、片便が集荷中でももう一便が生活物資を届ける。
+    routeCount: 2, recruitment: 4, wage: 0.75, intervalDays: 5,
   }),
   basin: Object.freeze({
     marketKey: "2", marketId: "basin", name: "中央盆地市場",
     jobs: Object.freeze([
-      "wheat", "wheat", "wheat", "wheat",
-      "veg", "veg", "rapeseed",
+      // 初期入植は最初の冬を越す先遣規模。二年目の播種前に同数を足し、
+      // 低Lvの初日から過剰人口と私蔵麦を作らず年間需要へ追いつく。
+      "wheat", "wheat", "wheat", "wheat", "wheat", "wheat",
+      "veg", "veg", "veg", "rapeseed",
+    ]),
+    industryStages: Object.freeze([
+      Object.freeze({
+        afterDays: 180,
+        jobs: Object.freeze([
+          "wheat", "wheat", "wheat", "wheat", "wheat", "wheat",
+          "veg", "veg", "veg",
+        ]),
+      }),
     ]),
     goodsOut: Object.freeze(["fish", "char", "tools", "salt", "log", "stone", "iron"]),
     // 野菜農家が市場便の間に漬けた在庫も食料として運ぶ。生野菜だけを指定すると
     // 塩が届いた盆地で漬物だけが滞留し、他市場が食料難になる。
     goodsBack: Object.freeze(["wheat", "veg", "pick", "cloth"]),
-    // 麦路線は母港の小売だけでなく、母港を中継する鉱区向け主食も担う背骨。
-    // 二宿×五編成で盆地余剰を約48荷/日運べるようにする。
-    routeCount: 2, recruitment: 5, wage: 0.75, intervalDays: 5,
+    // 三宿十八編成で穀倉余剰を母港へ運び、そこから鉱区線へ中継する。
+    // 高Lvで運び切れないほど余れば、四便目を欲で足す余地として残る。
+    routeCount: 3, recruitment: 6, wage: 0.75, intervalDays: 5,
   }),
 });
 
 export const B2_EXPANSION_ORDERS = Object.freeze({
-  // 食料を産まない鉱区を盆地より先に二年目まで放置する並びは「戦略差」でなく
-  // 必敗手。最初の特産地は変えても、鉱区の本格展開までに麦背骨を接続する。
-  fishery: Object.freeze(["fishery", "basin", "mining"]),
+  // 基準筋は地形の物語どおり魚→鉱→穀。別戦略も120日刻みで不足圏へ接続し、
+  // 開始順の差を残しながら最初の冬までに麦の背骨へ到達する。
+  fishery: Object.freeze(["fishery", "mining", "basin"]),
   mining: Object.freeze(["mining", "basin", "fishery"]),
   basin: Object.freeze(["basin", "fishery", "mining"]),
 });
 
-const B2_EXPANSION_INTERVAL_DAYS = 120;
+// 開拓食60日を使い切る節目ごとに次圏を一つずつ開く。盆地を240日まで待つと
+// 最初の冬まで30日しかなく備蓄不能になる。無料同時建設には戻さず、魚→鉱→穀の
+// 地形物語を二か月刻みで進める。
+const B2_EXPANSION_INTERVAL_DAYS = 60;
+const B2_EXPANSION_MILESTONES = Object.freeze([0, 60, 120]);
 
-function addB2StrategyMarket(world, definition, strategy) {
+function addB2StrategyHouseholds(world, strategy, entrance, marketBuildingId, jobs) {
+  const { economy, physical } = world.state;
+  const zones = jobs.map(job => placeB2StarterZone(world, job, entrance));
+  for (const zone of zones) connectB2Road(physical, entrance, zone, `${strategy.marketId}:${zone.job}`);
+  const households = zones.map(zone => occupyScenarioZone(
+    world,
+    zone,
+    strategy.marketId,
+    { foodKit: 0 },
+  ));
+  for (const household of households) {
+    // 遠隔地は最初から大家族を丸ごと移住させず、四人の先遣世帯で産業を開く。
+    // 開拓食は外部から来た実物として台帳へ記録し、本人が食べた分だけ減らす。
+    setScenarioHouseholdSize(economy, household, 4, `${strategy.name}先遣隊`);
+    const provision = household.members.length * B2_EXPANSION_PROVISION_DAYS;
+    household.pantry.pres += provision;
+    household.settlerFoodReserves ??= {};
+    household.settlerFoodReserves.pres = (
+      household.settlerFoodReserves.pres ?? 0
+    ) + provision;
+    recordEconomicMaterialFlow(
+      economy,
+      "pres",
+      "imp",
+      provision,
+      `${strategy.name}世帯${household.id}の開拓時保存食`,
+      { includeInDaily: false },
+    );
+    household.marketEntrance = entrance;
+    household.marketBuildingId = marketBuildingId;
+  }
+  return households;
+}
+
+function addB2StrategyMarket(world, definition, strategy, { day = world.state.day } = {}) {
   const { economy, physical } = world.state;
   const marker = definition.markets?.[strategy.marketKey];
   if (!marker) throw new Error(`B2市場${strategy.marketKey}がありません`);
@@ -778,27 +845,13 @@ function addB2StrategyMarket(world, definition, strategy) {
     },
   ] });
 
-  const zones = strategy.jobs.map(job => placeB2StarterZone(world, job, entrance));
-  for (const zone of zones) connectB2Road(physical, entrance, zone, `${strategy.marketId}:${zone.job}`);
-  const households = zones.map(zone => occupyScenarioZone(world, zone, strategy.marketId));
-  for (const household of households) {
-    // 遠隔地は最初から大家族を丸ごと移住させず、四人の先遣世帯で産業を開く。
-    // 施設数（産業比率）は維持しつつ、低Lv供給を越える人口を一日に追加して
-    // 昇格前に全市場を飢餓へ落とす旧fixtureを、実プレイ相当の段階入植へ直す。
-    household.members = household.members.slice(0, 4);
-    const provision = household.members.length * B2_EXPANSION_PROVISION_DAYS;
-    household.pantry.pres += provision;
-    recordEconomicMaterialFlow(
-      economy,
-      "pres",
-      "imp",
-      provision,
-      `${strategy.name}世帯${household.id}の開拓時保存食`,
-      { includeInDaily: false },
-    );
-    household.marketEntrance = entrance;
-    household.marketBuildingId = placed.building.id;
-  }
+  const households = addB2StrategyHouseholds(
+    world,
+    strategy,
+    entrance,
+    placed.building.id,
+    strategy.jobs,
+  );
 
   // 開拓路線は母港の会社隊商が担う。新しい圏内集荷は遠隔生産者へ仕入代金を
   // 直接払うため、御者給を遠隔地へ置く必要はない。母港発にすることで会社は
@@ -812,16 +865,32 @@ function addB2StrategyMarket(world, definition, strategy) {
       innZone,
       `main:${strategy.marketId}隊商宿${routeIndex + 1}`,
     );
-    const innHousehold = occupyScenarioZone(world, innZone, "main");
-    innHousehold.members = innHousehold.members.slice(
-      0,
+    const innHousehold = occupyScenarioZone(world, innZone, "main", { foodKit: 0 });
+    setScenarioHouseholdSize(
+      economy,
+      innHousehold,
       Math.max(4, strategy.recruitment),
+      `${strategy.name}隊商隊`,
     );
     setCaravanEmployment(physical, {
       buildingId: innHousehold.buildingId,
       recruitment: strategy.recruitment,
       wage: strategy.wage,
     });
+    const innProvision = innHousehold.members.length * B2_EXPANSION_PROVISION_DAYS;
+    innHousehold.pantry.pres += innProvision;
+    innHousehold.settlerFoodReserves ??= {};
+    innHousehold.settlerFoodReserves.pres = (
+      innHousehold.settlerFoodReserves.pres ?? 0
+    ) + innProvision;
+    recordEconomicMaterialFlow(
+      economy,
+      "pres",
+      "imp",
+      innProvision,
+      `${strategy.name}隊商宿世帯${innHousehold.id}の開拓時保存食`,
+      { includeInDaily: false },
+    );
     const suffix = (strategy.routeCount ?? 1) > 1 ? `${routeIndex + 1}` : "";
     const routeResult = createCaravanRoute(economy, physical, {
       name: `${strategy.name}線${suffix}`,
@@ -843,6 +912,10 @@ function addB2StrategyMarket(world, definition, strategy) {
   }
   return {
     marketId: strategy.marketId,
+    openedDay: day,
+    entrance: { ...entrance },
+    marketBuildingId: placed.building.id,
+    completedIndustryStageCount: 0,
     householdIds: households.map(household => household.id),
     routeId: routeResults[0].route.id,
     routeIds: routeResults.map(result => result.route.id),
@@ -854,7 +927,7 @@ export function buildB2StrategyWorld(seed = 11, definition, strategyId = "fisher
   const order = B2_EXPANSION_ORDERS[strategyId];
   if (!order) throw new RangeError(`unknown B2 expansion strategy: ${strategyId}`);
   // 母港の「人口約150」は到達上限であり開始人口ではない。P5の戦略比較は
-  // 4人×12世帯の先遣都市から始め、出生とLv効率で上限へ育つ過程を測る。
+  // 4人×11世帯の先遣都市から始め、出生とLv効率で上限へ育つ過程を測る。
   const world = buildB2TrialWorld(seed, definition, {
     householdSize: 4,
     // 一年分の無料麦は母港需要を隠し、day365に突然需要崖を作る。拡張監査は
@@ -871,7 +944,9 @@ export function buildB2StrategyWorld(seed = 11, definition, strategyId = "fisher
     world,
     definition,
     B2_EXPANSION_STRATEGIES[firstId],
+    { day: 0 },
   )];
+  if (firstId === "mining") world.state.economy.paving = true;
   world.state.b2Strategy = {
     id: strategyId,
     order: [...order],
@@ -880,7 +955,11 @@ export function buildB2StrategyWorld(seed = 11, definition, strategyId = "fisher
   };
   world.state.economy.jobSelectionPool = [...new Set([
     ...world.state.economy.jobSelectionPool,
-    ...order.flatMap(id => B2_EXPANSION_STRATEGIES[id].jobs),
+    ...order.flatMap(id => [
+      ...B2_EXPANSION_STRATEGIES[id].jobs,
+      ...(B2_EXPANSION_STRATEGIES[id].industryStages ?? [])
+        .flatMap(stage => stage.jobs),
+    ]),
     "carter",
   ])];
   return world;
@@ -891,22 +970,30 @@ export function advanceB2StrategyExpansion(world, definition, { day = world.stat
   if (!strategy) return null;
   const index = strategy.nextExpansionIndex ?? strategy.expansions.length;
   if (index >= strategy.order.length) return null;
-  // 先行地域を一年運営してから次へ出る。一度に全域を無料建設しない一方、
+  // 先行地域を四か月運営してから次へ出る。一度に全域を無料建設しない一方、
   // Lvを上げるために必要な赤字路線は既存の会社信用枠で先行投資できる。
   // 一年分賃金の現金保有を要求すると、交易網完成前の低Lv期から抜けられない。
-  if (day < index * B2_EXPANSION_INTERVAL_DAYS) return null;
+  if (day < (B2_EXPANSION_MILESTONES[index] ?? Infinity)) return null;
   const id = strategy.order[index];
   const spec = B2_EXPANSION_STRATEGIES[id];
   // 鉱区の石材はLv2建物の修繕に必要で、Lv3到達を待ってから鉱区を開くと
   // 「石がないのでLv3になれない／Lv3がないので石を掘れない」の循環になる。
-  // 盆地の食料背骨を先に置く順序だけを守り、鉱区線そのものは低Lv期の赤字投資
-  // として予定日に開く。これはプレイヤー裁定の「Lvを上げるための赤字路線」。
+  // そのため基準筋では鉱区線を低Lv期の赤字投資として先に開き、盆地線を
+  // 最初の冬までに接続する。これはプレイヤー裁定の「Lvを上げるための赤字路線」。
   const setupCost = (spec.jobs.length + 1) * P.BUILD_COST;
   if (
     world.state.economy.company.money - setupCost
     < -companyCreditLimit(world.state.economy, { day })
   ) return null;
-  const expansion = addB2StrategyMarket(world, definition, spec);
+  const expansion = addB2StrategyMarket(world, definition, spec, { day });
+  if (id === "mining" && !world.state.economy.paving) {
+    world.state.economy.paving = true;
+    recordEconomyEvent(
+      world.state.economy,
+      day,
+      "鉱区の石材を使う街道改良を開始した——会社買付の実在石材を交通路へ投入",
+    );
+  }
   strategy.expansions.push(expansion);
   strategy.nextExpansionIndex = index + 1;
   recordEconomyEvent(
@@ -915,6 +1002,70 @@ export function advanceB2StrategyExpansion(world, definition, { day = world.stat
     `${spec.name}へ段階拡張した——会社信用枠内でLv維持に必要な交易網へ先行投資`,
   );
   return expansion;
+}
+
+function advanceB2StrategyIndustryStages(world, { day = world.state.day } = {}) {
+  const controller = world.state.b2Strategy;
+  if (!controller) return [];
+  const added = [];
+  for (const expansion of controller.expansions) {
+    const spec = B2_EXPANSION_STRATEGIES[expansion.marketId];
+    const stages = spec?.industryStages ?? [];
+    let stageIndex = expansion.completedIndustryStageCount ?? 0;
+    while (stageIndex < stages.length) {
+      const stage = stages[stageIndex];
+      if (day < (expansion.openedDay ?? 0) + stage.afterDays) break;
+      const setupCost = stage.jobs.length * P.BUILD_COST;
+      if (
+        world.state.economy.company.money - setupCost
+        < -companyCreditLimit(world.state.economy, { day })
+      ) break;
+      const households = addB2StrategyHouseholds(
+        world,
+        spec,
+        expansion.entrance,
+        expansion.marketBuildingId,
+        stage.jobs,
+      );
+      expansion.householdIds.push(...households.map(household => household.id));
+      stageIndex += 1;
+      expansion.completedIndustryStageCount = stageIndex;
+      const jobs = stage.jobs.join("・");
+      recordEconomyEvent(
+        world.state.economy,
+        day,
+        `${spec.name}の中間財が貯まり、${jobs}を段階入植した`,
+      );
+      added.push({ marketId: spec.marketId, jobs: [...stage.jobs], day });
+    }
+  }
+  return added;
+}
+
+function prepareB2StrategyFleet(world, { day = world.state.day } = {}) {
+  const strategy = world.state.b2Strategy;
+  if (!strategy) return null;
+  // 次圏の開通60日前から実物を先行購入する。開通後に発注すると、車大工が
+  // 在庫上限3台で休んでいた期間を取り戻せず、麦路線が一台編成のまま冬へ入る。
+  // 無料配備ではなく会社支払・車大工収入・遊休資産をすべて台帳に残す。
+  let fundedRegionCount = Math.min(
+    strategy.order.length,
+    strategy.expansions.length,
+  );
+  const nextIndex = strategy.nextExpansionIndex ?? strategy.expansions.length;
+  const nextMilestone = B2_EXPANSION_MILESTONES[nextIndex] ?? Infinity;
+  if (nextIndex < strategy.order.length && day >= nextMilestone - 60) {
+    fundedRegionCount = Math.max(fundedRegionCount, nextIndex + 1);
+  }
+  const target = strategy.order.slice(0, fundedRegionCount).reduce((total, id) => {
+    const spec = B2_EXPANSION_STRATEGIES[id];
+    return total + (spec.routeCount ?? 1) * spec.recruitment;
+  }, 0);
+  const usableCarts = (world.state.economy.companyCarts ?? []).filter(
+    cart => (cart.durability ?? 0) > 1e-9,
+  ).length;
+  if (usableCarts >= target) return null;
+  return purchaseCompanyWoodCart(world.state.economy, { day, marketId: "main" });
 }
 
 function b2RouteTotals(route) {
@@ -1008,7 +1159,9 @@ export function runB2ExpansionScenario(
     strategyId = "fishery",
     days = 1800,
     developmentToolIntervalDays = B2_EXPANSION_INTERVAL_DAYS,
-    developmentToolLastDay = B2_EXPANSION_INTERVAL_DAYS * 2,
+    // 移民の実物開拓キットと島内木工を既定とする。本土工具は比較実験で
+    // 明示的に終了日を渡した時だけ会社発注し、木工需要を自動輸入で消さない。
+    developmentToolLastDay = 0,
   } = {},
 ) {
   const world = buildB2StrategyWorld(seed, definition, strategyId);
@@ -1023,9 +1176,17 @@ export function runB2ExpansionScenario(
   const yearly = [];
   const developmentImports = [];
   const surplusExports = [];
+  const fleetPurchases = [];
   let previousFamine = economy.famine;
   for (let day = 1; day <= days; day += 1) {
+    const fleetPurchase = prepareB2StrategyFleet(world, { day });
+    if (fleetPurchase) fleetPurchases.push({
+      day,
+      cartId: fleetPurchase.id ?? fleetPurchase.cart?.id ?? null,
+      price: fleetPurchase.price ?? fleetPurchase.cart?.price ?? 0,
+    });
     advanceB2StrategyExpansion(world, definition, { day });
+    advanceB2StrategyIndustryStages(world, { day });
     const importedTools = provisionB2DevelopmentTools(world, {
       day,
       intervalDays: developmentToolIntervalDays,
@@ -1085,6 +1246,7 @@ export function runB2ExpansionScenario(
     markets: world.state.marketNetwork?.markets?.length ?? 1,
     expansions: [...(world.state.b2Strategy?.expansions ?? [])],
     developmentImports,
+    fleetPurchases,
     surplusExports,
     routes,
     yearly,
@@ -1428,9 +1590,14 @@ function addScenarioRoads(physical, polylines, label) {
   }
 }
 
-function occupyScenarioZone(world, zone, marketId) {
+function occupyScenarioZone(world, zone, marketId, { foodKit } = {}) {
   const { economy, physical } = world.state;
-  const household = createHousehold(economy, { job: zone.job, x: zone.x, y: zone.y });
+  const household = createHousehold(economy, {
+    job: zone.job,
+    x: zone.x,
+    y: zone.y,
+    ...(foodKit === undefined ? {} : { foodKit }),
+  });
   household.buildingId = zone.buildingId;
   household.marketId = marketId;
   zone.filled = true;
@@ -1439,6 +1606,24 @@ function occupyScenarioZone(world, zone, marketId) {
     building.ownerHouseholdId = household.id;
     building.marketId = marketId;
     building.constructionConsumed = true;
+  }
+  return household;
+}
+
+function setScenarioHouseholdSize(economy, household, size, label) {
+  if (!Number.isSafeInteger(size) || size <= 0) {
+    throw new TypeError("scenario household size must be a positive safe integer");
+  }
+  household.members = household.members.slice(0, size);
+  while (household.members.length < size) {
+    const personId = economy.nextPersonId;
+    economy.nextPersonId += 1;
+    household.members.push({
+      id: `person${personId}`,
+      name: `${label}${household.members.length + 1}`,
+      sex: household.members.length % 2 === 0 ? "♀" : "♂",
+      age: 24 + household.members.length,
+    });
   }
   return household;
 }

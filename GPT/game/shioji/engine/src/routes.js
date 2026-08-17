@@ -166,6 +166,13 @@ export function createCaravanRoute(economy, physical, {
     cargoLotsByGoods: {},
     collectionTrips: [],
     collectionCargo: {},
+    // 圏内集荷で支払済みの荷は、次の本線便が積むまで市場棟内の路線専用区画へ
+    // 留置する。一般小売棚へ混ぜると翌朝までに住民が買い、本線が永久に
+    // 「集荷だけ」を繰り返すため、数量・原価・生産者lotを路線別に保つ。
+    collectionStagedM: {},
+    collectionStagedCostM: {},
+    collectionStagedLotsM: {},
+    collectionReadyToDepart: false,
     pendingCollectionProcurement: 0,
     pendingCollectionDistance: 0,
     pendingCartPurchases: [],
@@ -334,12 +341,26 @@ function caravanNonfoodTargets(economy, physical, marketId, day) {
   const cached = economy.caravanDemandCache.markets[marketId];
   if (cached) return cached;
   const totals = {};
-  for (const household of caravanTargetHouseholds(economy, marketId)) {
+  const households = caravanTargetHouseholds(economy, marketId);
+  for (const household of households) {
     const targets = buyTargets(economy, household, { day: cacheDay, physical });
     for (const [goods, [wanted]] of Object.entries(targets)) {
       if (FOODS.includes(goods)) continue;
       totals[goods] = (totals[goods] ?? 0) + Math.max(0, wanted);
     }
+  }
+  // 修繕・建設の不足全量を一度に遠隔棚へ積むと、まだ買えない工具だけで
+  // 会社資金と荷車を数か月拘束する。実需要は残したまま、一便の補充目標だけを
+  // 圏内世帯数に比例する小売窓へ絞り、売れた分を次便で補う。
+  for (const goods of Object.keys(totals)) {
+    // 木炭・塩・鉱石系は文化品ではなく毎日の生産投入。布や鉄と同じ2荷に
+    // 絞ると、圏内集荷を含む往復中に棚が尽き、上流の売上も止まる。
+    const perHousehold = ["char", "salt", "ore", "coal", "bar"].includes(goods)
+      ? 8
+      : ["tools", "log", "stone"].includes(goods)
+        ? 4
+        : 2;
+    totals[goods] = Math.min(totals[goods], households.length * perHousehold);
   }
   economy.caravanDemandCache.markets[marketId] = totals;
   return totals;
@@ -397,6 +418,18 @@ function marketRouteSupply(economy, marketId, goods) {
   return stalls + company + imported;
 }
 
+function localFoodReserveQuantity(economy, marketId, goods, days = 3) {
+  if (!FOODS.includes(goods)) return 0;
+  const population = caravanTargetHouseholds(economy, marketId)
+    .reduce((total, household) => total + household.members.length, 0);
+  // 現に棚へ出ている食料だけで留保日数を分担する。路線チェック欄の品目数で
+  // 割ると、存在しない野菜・漬物まで一食ぶんと数えて実留保が消えてしまう。
+  const availableFoods = FOODS.filter(candidate => (
+    candidate === goods || marketRouteSupply(economy, marketId, candidate) > 1e-9
+  )).length;
+  return population * days / Math.max(1, availableFoods);
+}
+
 function caravanCollectionPrice(economy, physical, household, marketId, goods, day) {
   const costFloor = productionCost(economy, physical, household, goods, { day }) * 1.05;
   const quoted = marketPriceBook(economy, marketId)[goods] ?? costFloor;
@@ -439,11 +472,17 @@ function collectionPlanForMarket(
       day,
     );
     const staged = marketRouteSupply(economy, marketId, goods);
-    stagedWeight += Math.min(staged, targetGap) * unitWeight;
+    const routeStaged = Math.max(
+      0,
+      route.collectionStagedM?.[marketId]?.[goods] ?? 0,
+    );
+    const localReserve = localFoodReserveQuantity(economy, marketId, goods);
+    const routeReady = routeStaged + Math.max(0, staged - localReserve);
+    stagedWeight += Math.min(routeReady, targetGap) * unitWeight;
     // 圏内集荷は「次の一便を満たす量」だけ先に市場へ寄せる。30日目標の
     // 全量を集め終えるまで本線を出さないと、集荷だけを何日も反復してしまう。
     const tripLoad = Math.min(totalCapacity / unitWeight, targetGap);
-    const lackAtMarket = Math.max(0, tripLoad - staged);
+    const lackAtMarket = Math.max(0, tripLoad - routeReady);
     if (lackAtMarket > 1e-9) needs.push({
       goods,
       remaining: lackAtMarket,
@@ -488,6 +527,7 @@ function collectionPlanForMarket(
         path,
         offered,
         key: `${household.id}:${need.goods}`,
+        lastCollectionDay: household.collectionSaleDays?.[need.goods] ?? -Infinity,
       };
     }).filter(candidate => candidate.offered > 1e-9 && candidate.path),
   ]));
@@ -506,9 +546,16 @@ function collectionPlanForMarket(
           ),
         }))
         .filter(candidate => candidate.available > 1e-9)
-        .sort((left, right) => right.available - left.available
+        .sort((left, right) => {
+          const leftAssigned = plannedBySeller.get(left.key) ?? 0;
+          const rightAssigned = plannedBySeller.get(right.key) ?? 0;
+          return Number(leftAssigned > 1e-9) - Number(rightAssigned > 1e-9)
+          || left.lastCollectionDay - right.lastCollectionDay
+          || left.household.purse - right.household.purse
+          || right.available - left.available
           || left.path.cost - right.path.cost
-          || left.household.id - right.household.id);
+          || left.household.id - right.household.id;
+        });
       const candidate = candidates[0];
       if (!candidate) return null;
       return { need, candidate };
@@ -673,6 +720,7 @@ function pickUpMarketCollection(economy, physical, route, collection, day) {
   if (qty > 1e-9) {
     seller.purse += payment;
     seller.income30 += payment;
+    (seller.collectionSaleDays ??= {})[collection.goods] = day;
     postCompanyLedger(economy.company, {
       day,
       amount: -payment,
@@ -714,9 +762,9 @@ function unloadMarketCollection(economy, physical, route, collection) {
   const goods = collection.goods;
   const marketId = collection.marketId;
   const market = marketBuildingForId(physical, marketId);
-  const table = (economy.marketStockM ??= {})[marketId] ??= {};
-  const costTable = (economy.marketStockCostM ??= {})[marketId] ??= {};
-  const lotTable = (economy.marketStockLotsM ??= {})[marketId] ??= {};
+  const table = (route.collectionStagedM ??= {})[marketId] ??= {};
+  const costTable = (route.collectionStagedCostM ??= {})[marketId] ??= {};
+  const lotTable = (route.collectionStagedLotsM ??= {})[marketId] ??= {};
   table[goods] = (table[goods] ?? 0) + qty;
   costTable[goods] = (costTable[goods] ?? 0) + collection.payment;
   (lotTable[goods] ??= []).push({
@@ -736,6 +784,55 @@ function unloadMarketCollection(economy, physical, route, collection) {
     (route.collectionCargo[goods] ?? 0) - qty,
   );
   if (route.collectionCargo[goods] <= 1e-9) delete route.collectionCargo[goods];
+}
+
+function takeRouteCollectionStaged(
+  economy,
+  physical,
+  route,
+  marketId,
+  goods,
+  maxQty,
+) {
+  const table = (route.collectionStagedM ??= {})[marketId] ??= {};
+  const costTable = (route.collectionStagedCostM ??= {})[marketId] ??= {};
+  const lotTable = (route.collectionStagedLotsM ??= {})[marketId] ??= {};
+  const stockBefore = Math.max(0, table[goods] ?? 0);
+  const qty = Math.min(stockBefore, Math.max(0, maxQty));
+  if (qty <= 1e-9) return { qty: 0, cost: 0, lots: [] };
+  const averageCost = (costTable[goods] ?? 0) / Math.max(1e-9, stockBefore);
+  const sourceLots = lotTable[goods] ??= [];
+  const lots = [];
+  let remaining = qty;
+  let cost = 0;
+  while (remaining > 1e-9 && sourceLots.length > 0) {
+    const lot = sourceLots[0];
+    const taken = Math.min(remaining, lot.qty);
+    const unitCost = (lot.cost ?? 0) / Math.max(1e-9, lot.qty);
+    const takenCost = taken * unitCost;
+    lots.push({ ...lot, qty: taken, cost: takenCost });
+    lot.qty -= taken;
+    lot.cost = Math.max(0, (lot.cost ?? 0) - takenCost);
+    remaining -= taken;
+    cost += takenCost;
+    if (lot.qty <= 1e-9) sourceLots.shift();
+  }
+  if (remaining > 1e-9) {
+    const remainingCost = remaining * averageCost;
+    lots.push({
+      routeId: route.id,
+      tripNumber: (route.completedTrips ?? 0) + 1,
+      collection: true,
+      qty: remaining,
+      cost: remainingCost,
+    });
+    cost += remainingCost;
+  }
+  table[goods] = Math.max(0, stockBefore - qty);
+  costTable[goods] = Math.max(0, (costTable[goods] ?? 0) - cost);
+  const market = marketBuildingForId(physical, marketId);
+  if (market) withdrawInventory(market, "inbound", goods, qty);
+  return { qty, cost, lots };
 }
 
 function stepMarketCollection(economy, physical, route, { day }) {
@@ -777,6 +874,7 @@ function stepMarketCollection(economy, physical, route, { day }) {
   route.collectionTrips = [];
   route.carriers = [];
   route.state = returning ? "ready_return" : "idle";
+  if (!returning) route.collectionReadyToDepart = true;
   return true;
 }
 
@@ -812,6 +910,28 @@ function caravanBuyAtMarket(
       day,
     );
     let goodsWeight = Math.min(remainingWeight, weightLimit, targetGap * unitWeight);
+    const staged = takeRouteCollectionStaged(
+      economy,
+      physical,
+      route,
+      marketId,
+      goods,
+      Math.min(remainingWeight, goodsWeight) / unitWeight,
+    );
+    if (staged.qty > 1e-9) {
+      bought[goods] = (bought[goods] ?? 0) + staged.qty;
+      costByGoods[goods] = (costByGoods[goods] ?? 0) + staged.cost;
+      (lotsByGoods[goods] ??= []).push(...staged.lots);
+      remainingWeight -= staged.qty * unitWeight;
+      goodsWeight -= staged.qty * unitWeight;
+    }
+    let routeAvailableQty = FOODS.includes(goods)
+      ? Math.max(
+        0,
+        marketRouteSupply(economy, marketId, goods)
+          - localFoodReserveQuantity(economy, marketId, goods),
+      )
+      : Infinity;
     const stalls = economy.stalls[goods]
       .filter((stall) => (stall.marketId ?? "main") === marketId && stall.qty > 1e-9)
       .sort((left, right) => left.price - right.price
@@ -829,6 +949,7 @@ function caravanBuyAtMarket(
       const availableQty = Math.min(
         stall.qty,
         physicalQty,
+        routeAvailableQty,
         remainingWeight / unitWeight,
         goodsWeight / unitWeight,
       );
@@ -864,19 +985,16 @@ function caravanBuyAtMarket(
       });
       remainingWeight -= qty * unitWeight;
       goodsWeight -= qty * unitWeight;
+      routeAvailableQty -= qty;
     }
 
     // 会社が別路線で運び込んだ在庫も、同じ市場を中継点として積み替えられる。
     // 世帯屋台だけを積載元にすると、盆地から母港へ届いた麦が母港→鉱山線へ
     // 決して乗らず、実棚に食料が余ったまま鉱山が飢える。
     const localTable = economy.marketStockM?.[marketId];
-    const localHouseholds = caravanTargetHouseholds(economy, marketId);
-    const localFoodReserve = FOODS.includes(goods) && Number.isFinite(route.stockTargetDays)
-      ? localHouseholds.reduce((total, household) => total + household.members.length, 0)
-        * 2 / foodGoodsCount
-      : 0;
     const localQty = Math.min(
-      Math.max(0, (localTable?.[goods] ?? 0) - localFoodReserve),
+      Math.max(0, localTable?.[goods] ?? 0),
+      routeAvailableQty,
       remainingWeight / unitWeight,
       goodsWeight / unitWeight,
       market ? sectionAmount(market, "inbound", goods) : Infinity,
@@ -923,6 +1041,7 @@ function caravanBuyAtMarket(
       costByGoods[goods] = (costByGoods[goods] ?? 0) + transferredCost;
       remainingWeight -= localQty * unitWeight;
       goodsWeight -= localQty * unitWeight;
+      routeAvailableQty -= localQty;
     }
 
     // 母港へ実到着した会社輸入品も会社路線へ積める。従来は輸入棚を世帯だけが
@@ -931,6 +1050,7 @@ function caravanBuyAtMarket(
     const importTable = economy.importStock ?? {};
     const importQty = Math.min(
       Math.max(0, importTable[goods] ?? 0),
+      routeAvailableQty,
       remainingWeight / unitWeight,
       goodsWeight / unitWeight,
       market ? sectionAmount(market, "inbound", goods) : Infinity,
@@ -980,6 +1100,7 @@ function caravanBuyAtMarket(
     costByGoods[goods] = (costByGoods[goods] ?? 0) + transferredImportCost;
     remainingWeight -= importQty * unitWeight;
     goodsWeight -= importQty * unitWeight;
+    routeAvailableQty -= importQty;
   };
   // 複数品目を指定したのに先頭の一品だけで満載になると、チェックした後続品が
   // 一度も運ばれない。第一巡は積載重量を等分し、余った空きだけ第二巡で埋める。
@@ -1146,6 +1267,7 @@ function startOutboundTrip(economy, physical, route, assets, { day, purchases = 
   route.currentTrip.distance += route.pathTicks;
   monthlyRow(route, day).procurement += purchase.spent;
   route.nextDepartDay = day + route.intervalDays;
+  route.collectionReadyToDepart = false;
   route.waitingNotice = null;
   return true;
 }
@@ -1285,7 +1407,7 @@ export function stepCaravanDay(economy, physical, { day }) {
       ...(route.pendingCartPurchases ?? []),
       ...provision.purchases,
     ];
-    if (startMarketCollection(
+    if (!route.collectionReadyToDepart && startMarketCollection(
       economy,
       physical,
       route,
