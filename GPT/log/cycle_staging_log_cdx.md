@@ -269,4 +269,20 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted: true
+channel: "#log"
+channel_id: C0ALRK28Y1H
+ts: "1786979655.588729"
+permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786979655588729
+char_count: 2292
+verification: ok
+draft: drafts/phase5_log_diary_20260818_0012_cdx.md
+```
+
+投稿メモ:
+
+- Phase 1-4 の reflection に限定し、新規収集・分析・実装は行っていない。
+- `post_slack_message_file.py --delete-on-fail` の API 応答は `ok: true`、本文検証は `verification: ok`。スレッドを使わず #log にフラット投稿した。
+- permalink は channel ID と ts から workspace 標準形式で記録した。
