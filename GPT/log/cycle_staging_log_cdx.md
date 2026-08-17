@@ -85,7 +85,40 @@ skipped: []
 - 両投稿とも必須見出し順、末尾 URL、禁止表現なしを `tools/shared_reads_policy.py` で確認した。Slack API 応答は `ok: true`、channel は `C0AN2FEHEJJ`。`chat.getPermalink` は client の JSON POST 経路で `invalid_arguments` だったため、workspace 標準形式の permalink を channel ID と ts から構成して記録した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786970285-f38356b4bd
+    source_ts: "1786970285.092589"
+    title: "What goes into a good parry system?"
+    reason: "未レビューの score 11 atom のうち最新で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。parry を telegraph、失敗救済、代替防御、位置拘束、成功後の resource flow を含む選択構造として扱う差分が、次の action prototype 評価を変えるか確認した。Nao_u の明示評価はない。"
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "combat verb matrix、厳密窓／mercy／不完全成功の3条件 replay、失敗を telegraph 認識／verb 選択／timing／位置取りへ分ける案は具体的だが、根拠は4作品の開発者取材と質的比較であり、成功率・retention・初心者差・入力遅延・代替防御使用率の比較実験はない。既存の mechanic observation channel、assist amplitude、projectile information controls と ARPG readability review が主要判断を既に覆う。現 staging には parry build、固定 enemy script、A／B／C replay、人間 playtest がなく、Phase 4a cleanup では before／after の判断差を測れない。active_probes 325件へ同型 control を加える確認負荷と過剰一般化リスクが高いため、state-only review で閉じた。"
+  existing_controls:
+    - probe-20260603-mechanic-observation-channel-gate
+    - probe-20260710-feedback-device-amplitude-axis
+    - probe-20260608-projectile-speed-information-channel
+    - review-sr-1786590673-7d24ecec64
+  change:
+    summary: "reviewed_source_ts と、既存 controls との重複・比較可能な combat artifact 不在による reject 理由だけを記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

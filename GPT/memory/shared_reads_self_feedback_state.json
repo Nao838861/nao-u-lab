@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-17T21:42:04+09:00",
+  "updated_at": "2026-08-18T00:04:23+09:00",
   "reviewed_source_ts": [
+    "1786970285.092589",
     "1778510440.623829",
     "1779825099.980279",
     "1786948875.334089",
@@ -671,6 +672,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-18T00:04:23+09:00",
+      "selected": {
+        "id": "sr-1786970285-f38356b4bd",
+        "source_ts": "1786970285.092589",
+        "title": "What goes into a good parry system?",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす最新 atom で、memory・harness・game-design・operation・evaluation の5優先タグを持つため1件だけ選んだ。parry を受付時間だけでなく、telegraph、失敗救済、代替防御、位置拘束、成功後の resource flow まで含む選択構造として扱う知見が、次の action prototype 評価で既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は4作品を、攻撃種別の telegraph、不完全成功と mercy frame、代替防御、高報酬と移動拘束、成功後の resource 回復で比較し、combat verb matrix、厳密窓／mercy／不完全成功の3条件 replay、telegraph 認識／verb 選択／timing／位置取りの失敗分類へ直結するため actionability は3とした。一方、根拠は開発者取材と実装比較による質的事例で、player 成功率、retention、初心者／熟練者差、入力遅延、代替防御使用率の比較実験はなく evidence は2に留める。probe-20260603-mechanic-observation-channel-gate は core mechanic を screen／input／audio／timing／player observation に分け、probe-20260710-feedback-device-amplitude-axis は救済強度と保持すべき player choice を、probe-20260608-projectile-speed-information-channel は projectile と telegraph が伝える情報をすでに扱う。さらに sr-1786590673-7d24ecec64 の既レビューは telegraph 検出、counter の意味対応、実行、反撃窓、pattern 導入順を扱っており、本 atom の combat economy まで追う差分はあるが、現在の staging には parry を持つ playable build、固定 enemy script、A／B／C replay、人間 playtest がなく、直後の Phase 4a memory cleanup を consumer にしても判断差を測れないため relevance=2、non_redundancy=1とした。active_probes 325件へ同型 control を追加すると確認負荷を増やし、parry 固有の設計を防御 mechanic 全般へ過剰一般化する危険があるため risk_control=1。次に比較可能な action prototype が生じ、既存 controls だけでは唯一解化と失敗救済の作用点を判定できない実例が出た時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260603-mechanic-observation-channel-gate",
+        "probe-20260710-feedback-device-amplitude-axis",
+        "probe-20260608-projectile-speed-information-channel",
+        "review-sr-1786590673-7d24ecec64"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の observation-channel／assist-amplitude／projectile-information controls および readability review との重複、比較可能な combat artifact 不在による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-17T21:42:04+09:00",
       "selected": {
