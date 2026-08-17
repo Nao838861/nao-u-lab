@@ -294,7 +294,7 @@ const IntroScene: React.FC = () => {
   });
   const enter = spring({frame, fps: 30, config: {damping: 18}});
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 240), backgroundColor: C.bg}}>
+    <AbsoluteFill style={{opacity: fade(frame, 300), backgroundColor: C.bg}}>
       <div style={{position: 'absolute', inset: 0, transform: `scale(${scale})`}}>
         <VideoPlate src="current_demo.mp4" pixelated />
       </div>
@@ -321,7 +321,7 @@ const IntroScene: React.FC = () => {
 const PreviousScene: React.FC = () => {
   const frame = useCurrentFrame();
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 210), backgroundColor: C.bg}}>
+    <AbsoluteFill style={{opacity: fade(frame, 450), backgroundColor: C.bg}}>
       <VideoPlate src="previous_video.mp4" />
       <div
         style={{
@@ -413,14 +413,17 @@ const DevelopmentDay2Scene: React.FC = () => {
 const DevelopmentDay3Scene: React.FC = () => {
   const frame = useCurrentFrame();
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 450), backgroundColor: C.bg, padding: '36px 48px 0', boxSizing: 'border-box'}}>
+    <AbsoluteFill style={{opacity: fade(frame, 300), backgroundColor: C.bg, padding: '36px 48px 0', boxSizing: 'border-box'}}>
       <Eyebrow color={C.orange}>DAY 3</Eyebrow>
       <Title size={42}>プレイヤーの上下で地平線を動かす</Title>
-      <div style={{position: 'absolute', left: 125, top: 135, width: 1030, height: 500, padding: 12, boxSizing: 'border-box', background: C.panel, border: '2px solid #47434e'}}>
-        <OffthreadVideo src={staticFile('dev_day3.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'contain', background: '#000', imageRendering: 'pixelated'}} />
-      </div>
-      <div style={{position: 'absolute', left: 125, bottom: 48, fontFamily: FONT, color: C.cyan, fontSize: 16, fontWeight: 900}}>
-        地面テーブル：33段階 × 各7パターン
+      <DevVideoFrame src="dev_day3.mp4" />
+      <div style={{position: 'absolute', left: 910, top: 170, width: 310}}>
+        <div style={{fontFamily: FONT, color: C.white, fontSize: 22, fontWeight: 900}}>地平線もプレイヤーに追従</div>
+        <div style={{fontFamily: FONT, color: C.dim, fontSize: 15, lineHeight: 1.6, marginTop: 14}}>プレイヤーのY座標に応じて、地面テーブルそのものを切り替える。</div>
+        <div style={{marginTop: 22, padding: '16px 18px', borderLeft: `5px solid ${C.cyan}`, background: C.panel}}>
+          <div style={{fontFamily: MONO, color: C.cyan, fontSize: 25, fontWeight: 900}}>33段階</div>
+          <div style={{fontFamily: FONT, color: C.white, fontSize: 17, fontWeight: 900, marginTop: 5}}>各7パターン</div>
+        </div>
       </div>
     </AbsoluteFill>
   );
@@ -939,7 +942,7 @@ const CodeStripes: React.FC<{color: string; lines?: number; height?: number; gap
 
 const MemoryGauge: React.FC<{count: number; compiled?: boolean}> = ({count, compiled = false}) => {
   const color = compiled ? C.magenta : C.cyan;
-  const programWidth = compiled ? 164 : 41;
+  const programWidth = compiled ? 62 : 41;
   const itemWidth = compiled ? programWidth : 57;
   return (
     <div style={{display: 'flex', gap: 6, height: 23, alignItems: 'stretch'}}>
@@ -1037,8 +1040,9 @@ const CapacityCostScene: React.FC = () => {
             {costSprites.map((sprite, i) => (
               <div key={sprite.name} style={{opacity: i < count ? 1 : 0.14}}>
                 <SpriteCard sprite={sprite} />
-                <div style={{height: 73, padding: '10px 12px', boxSizing: 'border-box', background: '#0a0a0d', border: '1px solid #3a3741'}}>
-                  <CodeStripes color={C.magenta} lines={7} />
+                <div style={{height: 73, padding: '10px 12px', boxSizing: 'border-box', background: '#0a0a0d', border: '1px solid #3a3741', display: 'flex', alignItems: 'center', gap: 7}}>
+                  <div style={{width: 34, flexShrink: 0}}><CodeStripes color={C.magenta} lines={7} height={3} gap={3} /></div>
+                  <div style={{fontFamily: FONT, color: C.magenta, fontSize: 9, fontWeight: 900}}>プログラム</div>
                 </div>
               </div>
             ))}
@@ -1417,58 +1421,58 @@ const CurrentReturnScene: React.FC = () => {
 export const ExplainerPrototype: React.FC = () => {
   return (
     <AbsoluteFill style={{backgroundColor: C.bg}}>
-      <Sequence from={0} durationInFrames={240}>
+      <Sequence from={0} durationInFrames={300}>
         <IntroScene />
       </Sequence>
-      <Sequence from={240} durationInFrames={210}>
+      <Sequence from={300} durationInFrames={450}>
         <PreviousScene />
       </Sequence>
-      <Sequence from={450} durationInFrames={90}>
+      <Sequence from={750} durationInFrames={90}>
         <DevelopmentTitleScene />
       </Sequence>
-      <Sequence from={540} durationInFrames={450}>
+      <Sequence from={840} durationInFrames={450}>
         <DevelopmentDay1Scene />
       </Sequence>
-      <Sequence from={990} durationInFrames={450}>
+      <Sequence from={1290} durationInFrames={450}>
         <DevelopmentDay2Scene />
       </Sequence>
-      <Sequence from={1440} durationInFrames={450}>
+      <Sequence from={1740} durationInFrames={300}>
         <DevelopmentDay3Scene />
       </Sequence>
-      <Sequence from={1890} durationInFrames={450}>
+      <Sequence from={2040} durationInFrames={450}>
         <DevelopmentCheckerboardScene />
       </Sequence>
-      <Sequence from={2340} durationInFrames={720}>
+      <Sequence from={2490} durationInFrames={720}>
         <LargeCharacterScene />
       </Sequence>
-      <Sequence from={3060} durationInFrames={300}>
+      <Sequence from={3210} durationInFrames={300}>
         <GenericLoopScene />
       </Sequence>
-      <Sequence from={3360} durationInFrames={360}>
+      <Sequence from={3510} durationInFrames={360}>
         <CompiledScene />
       </Sequence>
-      <Sequence from={3720} durationInFrames={390}>
+      <Sequence from={3870} durationInFrames={390}>
         <RaceScene />
       </Sequence>
-      <Sequence from={4110} durationInFrames={480}>
+      <Sequence from={4260} durationInFrames={480}>
         <PerformanceDemoScene />
       </Sequence>
-      <Sequence from={4590} durationInFrames={360}>
+      <Sequence from={4740} durationInFrames={360}>
         <CapacityCostScene />
       </Sequence>
-      <Sequence from={4950} durationInFrames={300}>
+      <Sequence from={5100} durationInFrames={300}>
         <PositionLimitScene />
       </Sequence>
-      <Sequence from={5250} durationInFrames={360}>
+      <Sequence from={5400} durationInFrames={360}>
         <AlignmentScene />
       </Sequence>
-      <Sequence from={5610} durationInFrames={450}>
+      <Sequence from={5760} durationInFrames={450}>
         <SizeBankScene />
       </Sequence>
-      <Sequence from={6060} durationInFrames={240}>
+      <Sequence from={6210} durationInFrames={240}>
         <BossBattleScene />
       </Sequence>
-      <Sequence from={6300} durationInFrames={600}>
+      <Sequence from={6450} durationInFrames={600}>
         <FrameTimelineScene />
       </Sequence>
     </AbsoluteFill>
