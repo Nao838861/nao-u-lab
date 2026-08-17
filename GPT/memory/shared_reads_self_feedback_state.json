@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-17T09:39:52+09:00",
+  "updated_at": "2026-08-17T11:45:55+09:00",
   "reviewed_source_ts": [
+    "1779870125.964739",
     "1786919931.515999",
     "1779910998.722809",
     "1779928450.976429",
@@ -665,6 +666,45 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-17T11:45:55+09:00",
+      "selected": {
+        "id": "sr-1779870125-e50de2e049",
+        "source_ts": "1779870125.964739",
+        "title": "GamED.AI — Bloom-to-mechanic contract と deterministic gate による教育ゲーム生成の失敗局所化",
+        "reason": "source が slack_api/shared-reads、score 13、未レビューという条件を満たし、memory・skills・harness・game-design・agent・evaluation の6優先タグを持つ候補から1件だけ選んだ。学習目標、mechanic、scene、asset、assembly を typed handoff と deterministic Quality Gate で分ける知見が、次の playable diff と現行 controls に異なる判断差を作れるか確認した。Nao_u が本 atom 自体を「重要」「適切」「自分に反映してほしい」と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計は14だが、risk_control が必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、200 questions・5 domains・15 mechanics、validation pass rate 90.0%、Pydantic schema compliance 98.3%、ReAct 比73% token reduction、Sequential 56.7%／ReAct 72.5% VPR という比較と、VPR が内部 validator に対する構造指標で classroom learning outcome ではない限界まで示すため evidence=3とした。mechanic contract と phase-bounded handoff は playable diff の入力・操作・成功／失敗・feedback・検証 seed を先に固定し、失敗層を局所化できるため relevance・actionability は3。一方、probe-20260531-external-framework-variable-fit は外部 framework の測定変数と local target の一致確認を、probe-20260619-autobg-critic-gated-design-draft は player verb・勝敗条件・intended judgment を持つ事前 draft と局所 repair を、probe-20260617-runtime-enforcement-3tuple-scope は deterministic predicate と recovery を既に扱う。GamED.AI 固有の Bloom mapping や React template family は現在の非教育ゲーム制作へ持ち込まないため、新しい typed-handoff probe を足しても次の Phase 4a 判断はほぼ変わらず non_redundancy=1。325件の active_probes に同義 control を増やす確認負荷の方が大きいため risk_control=1とし、source_ts の review 記録だけを残す。",
+      "existing_controls": [
+        "probe-20260531-external-framework-variable-fit",
+        "probe-20260619-autobg-critic-gated-design-draft",
+        "probe-20260617-runtime-enforcement-3tuple-scope"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "GamED.AI の source_ts を reviewed にし、mechanic contract・typed handoff・deterministic gate が既存 controls にほぼ包含されるため採用しない理由を記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-17T09:39:52+09:00",
       "selected": {

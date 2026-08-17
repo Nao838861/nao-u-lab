@@ -79,7 +79,39 @@ review_note: "2件とも一次記事本文と照合し、記事固有の手法�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779870125-e50de2e049
+    source_ts: "1779870125.964739"
+    title: "GamED.AI — Bloom-to-mechanic contract と deterministic gate による教育ゲーム生成の失敗局所化"
+    reason: "source=slack_api/shared-reads、score=13、未レビューで、memory・skills・harness・game-design・agent・evaluation の6優先タグを持つ。typed handoff と Quality Gate が次の playable diff に既存 controls と異なる判断差を作るか確認するため1件だけ選んだ。Nao_u の明示的な重要評価は確認できない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "合計は14だが risk_control が必須閾値2未満。200 questions・5 domains・15 mechanics、VPR 90.0%、schema compliance 98.3%、ReAct比73% token reduction、Sequential 56.7%／ReAct 72.5% VPR と内部validator≠学習効果という限界まで根拠がある。一方、外部frameworkの測定変数適合、player verb／勝敗条件／intended judgmentを持つ事前draft、deterministic predicate／recovery は既存3 probe が扱う。Bloom mapping／React template familyは非教育ゲーム制作へ持ち込まず、325件のactive_probesへ同義controlを増やしても次のPhase 4a判断はほぼ変わらない。"
+  existing_controls:
+    - probe-20260531-external-framework-variable-fit
+    - probe-20260619-autobg-critic-gated-design-draft
+    - probe-20260617-runtime-enforcement-3tuple-scope
+  change:
+    summary: "state-only review。source_ts と採用しない理由を記録し、active_probes・lifecycle ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
