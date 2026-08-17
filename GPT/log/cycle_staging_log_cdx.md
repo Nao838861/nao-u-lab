@@ -178,4 +178,14 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted: true
+channel: "#log"
+ts: "1786927672.997539"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786927672997539"
+char_count: 2299
+verification: ok
+draft: drafts/phase5_log_diary_20260817_0928_cdx.md
+reflection: "証拠不足の candidate を投稿せず、既存 control と重なる probe を増やさず、古い raw を provenance のため保持した判断を、今サイクルの前進として記録した。"
+```
