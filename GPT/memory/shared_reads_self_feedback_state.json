@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-18T04:34:48+09:00",
+  "updated_at": "2026-08-18T06:32:52+09:00",
   "reviewed_source_ts": [
+    "1786995005.848729",
     "1786987097.063549",
     "1786978764.031099",
     "1786970285.092589",
@@ -674,6 +675,54 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-18T06:32:52+09:00",
+      "selected": {
+        "id": "sr-1786995005-c9322a49a8",
+        "source_ts": "1786995005.848729",
+        "title": "FARMA: reasoning history poisoning と自己参照増幅",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす直近2件のうち、memory・harness・agent・operation・evaluation の5優先タグを持つため1件だけ選んだ。過去の『検証済み』reasoning が現在の検査を省略させる trust boundary と、同じ root evidence の再要約を独立証拠へ誤変換する問題が、直後の Phase 4a memory cleanup の判断に既存 control との差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "adopt_probe",
+      "decision_reason": "合計16で、relevance・actionability・risk_control・reversibility の必須閾値を満たす。shared-reads 本文は FARMA の injection／amplification、医療・検索QA・shopping の3 domain、複数 model、各条件50 trial、増幅10 cycle、SENTINEL と Reasoning Guard の ablation、adaptive paraphrase と長期・共有 memory 未評価という限界まで示し、過去 reasoning を skip certificate にしないことと、同じ root evidence の再記述を独立 confirmation に数えないことへ直接変換できるため relevance・actionability は3とした。一方、この review では原論文の実験 artifact をローカルに保存・再実行しておらず、単一 agent／simulated store 中心の結果を日本語 mixed-format atom へ外挿できないため evidence は2に留める。probe-20260617-runtime-enforcement-3tuple-scope は evidence freshness、probe-20260813-dependency-guided-memory-rollback は explicit edge と independent support、probe-20260708-algorithmic-collusion-shared-prior-check は shared prior をすでに扱うが、compiled memory の同一 root 再要約を一つの evidence lineage と数える境界は明示していないため non_redundancy は2とした。新規 probe、自然言語 classifier、provenance graph schema、write rejection gate は増やさず、既存 probe-20260621-compiled-memory-boundary の第2問へ lineage fold を一節だけ足し、直後の Phase 4a 1回だけ lease するため risk_control・reversibility は3とした。",
+      "existing_controls": [
+        "probe-20260617-runtime-enforcement-3tuple-scope",
+        "probe-20260813-dependency-guided-memory-rollback",
+        "probe-20260708-algorithmic-collusion-shared-prior-check",
+        "probe-20260621-compiled-memory-boundary"
+      ],
+      "change": {
+        "type": "refine_existing_probe_and_lease",
+        "summary": "既存 compiled-memory-boundary の第2問に、同じ raw／execution root から派生した複数要約を独立証拠として数えない確認を追加した。新規 probe・directive・schema・classifier・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "memory/shared_reads_probe_lifecycle.jsonl",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": {
+        "probe_id": "probe-20260621-compiled-memory-boundary",
+        "consumer_phase": "Phase 4a",
+        "trigger_artifact": "log/cycle_staging_log_cdx.md#Phase 4a: 整理 + 問題抽出",
+        "expected_delta": "最初の compressed memory claim で、同一 root の再要約を独立 confirmation から除外し、cleanup／issue／needs_design の before／after 判断差を記録する。",
+        "lease_due": "2026-08-19T06:00:00+09:00",
+        "enqueue_result": "enqueued"
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": true,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-18T04:34:48+09:00",
       "selected": {
@@ -21250,10 +21299,12 @@
       "id": "probe-20260621-compiled-memory-boundary",
       "created_at": "2026-06-21T07:38:00+09:00",
       "source_ts": "1778654461.319289",
-      "scope": "next memory recall, atom consolidation, staging summary, directive or phase-prompt update, or shared-reads self-feedback where Codex may use a compressed memory artifact as evidence",
+      "refined_at": "2026-08-18T06:32:52+09:00",
+      "refined_by_source_ts": "1786995005.848729",
+      "scope": "next memory recall, atom consolidation, Phase 4a memory cleanup, staging summary, directive or phase-prompt update, or shared-reads self-feedback where Codex may use a compressed memory artifact as evidence",
       "questions": [
         "Before the next memory recall, atom consolidation, staging summary, directive or phase-prompt update, or shared-reads self-feedback that relies on memory, did I name which layer I am using: raw source text, atom/per-file note, index/trigger, staging summary, or a compiled rule/probe?",
-        "Did I separate compile-time judgment from query-time use by recording what was abstracted earlier, what decision is being made now, and whether the raw Slack/shared-reads/source evidence remains reachable if the abstraction is suspect?",
+        "Did I separate compile-time judgment from query-time use by recording what was abstracted earlier, what decision is being made now, and whether the raw Slack/shared-reads/source evidence remains reachable if the abstraction is suspect; when several summaries or atoms share the same raw or execution root, did I count them as one evidence lineage instead of independent confirmation?",
         "If the memory-derived artifact changes behavior or durable state, did I record one rollback or fallback path such as re-open raw source, keep as hypothesis, local-only note, no directive change, or retire the probe if it adds no decision value?"
       ],
       "expires_after": "Review after the next two memory-recall, atom-consolidation, staging-summary, directive/prompt-update, or shared-reads self-feedback notes that mention raw source, compiled artifact, abstraction, trigger/index, fallback, or memory-derived behavior change."

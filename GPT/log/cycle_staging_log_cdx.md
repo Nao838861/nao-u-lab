@@ -66,7 +66,41 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786995005-c9322a49a8
+    source_ts: "1786995005.848729"
+    title: "FARMA: reasoning history poisoning と自己参照増幅"
+    reason: "未レビューの直近2件から、memory・harness・agent・operation・evaluation の5優先タグを持ち、過去の『検証済み』reasoning による検査省略と同一 root evidence の再要約増幅が直後の Phase 4a cleanup に直結する1件だけを選んだ。Nao_u の明示的な重要／適切／自己反映評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  decision_reason: "shared-reads 本文は FARMA の二段攻撃、3 domain・複数 model・各50 trial・10 cycle、SENTINEL ablation と adaptive paraphrase 等の限界を含み、skip certificate と同一 root の独立証拠化を止める行動へ変換できる。一方、原論文 artifact のローカル再現はなく単一 agent／simulated store から現環境への外挿が残るため evidence=2。既存の freshness／dependency／shared-prior controls と部分重複するが、compiled memory の lineage fold は未明示なので、325件目の新規 probe は増やさず既存 probe の第2問だけを精緻化した。"
+  change:
+    summary: "probe-20260621-compiled-memory-boundary の第2問に、同じ raw／execution root の複数要約を独立 confirmation と数えない確認を追加した。新規 probe・directive・schema・classifier・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - memory/shared_reads_probe_lifecycle.jsonl
+      - log/cycle_staging_log_cdx.md
+  lease:
+    probe_id: probe-20260621-compiled-memory-boundary
+    consumer_phase: "Phase 4a"
+    trigger_artifact: "log/cycle_staging_log_cdx.md#Phase 4a: 整理 + 問題抽出"
+    expected_delta: "最初の compressed memory claim で、同一 root の再要約を独立 confirmation から除外し、cleanup／issue／needs_design の before／after 判断差を記録する。"
+    lease_due: "2026-08-19T06:00:00+09:00"
+    enqueue_result: enqueued
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: true
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
