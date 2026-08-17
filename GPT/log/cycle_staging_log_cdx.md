@@ -82,7 +82,38 @@ skipped: []
 - `chat.postMessage` は1回。Slack 保存後の UTF-8 本文検証は `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779924617-0545f021bd
+    source_ts: "1779924617.652919"
+    title: "社内の知見をAIが漏らさず拾う唯一の設計思想 — Karpathy LLM Wiki の ingest 品質"
+    reason: "未レビュー・score 10・memory/operation/evaluation の候補から1件だけ選び、ingest metadata と Raw/Wiki/Schema・Ingest/Query/Lint の分離が既存 control と異なる判断差を作るか確認した。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "合計14未満かつ risk_control 2未満。200〜400 token・1概念、対象/version/時点 metadata は適用可能だが、20万 file での改善は体感報告で比較値がない。同じ知見は probe-20260715-ingest-connection-action-lint が新素材と既存概念の接続、次 action の変化、bad merge を止める source_ts/反例/state role を既に扱い、sr-1779993717-fad0f0165e も同義重複として reject 済み。325件の active_probes へ別名の metadata probe を増やしても次の Phase 4a 判断を変えず、確認負荷と schema 固定化だけを増やすため state-only review とした。"
+  existing_controls:
+    - probe-20260715-ingest-connection-action-lint
+    - sr-1779993717-fad0f0165e の state-only reject receipt
+  change:
+    summary: "reviewed_source_ts と重複・見送り理由だけを更新。probe、metric、lease、directive、恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

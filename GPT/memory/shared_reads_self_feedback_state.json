@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-17T11:45:55+09:00",
+  "updated_at": "2026-08-17T13:45:37+09:00",
   "reviewed_source_ts": [
+    "1779924617.652919",
     "1779870125.964739",
     "1786919931.515999",
     "1779910998.722809",
@@ -666,6 +667,44 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-17T13:45:37+09:00",
+      "selected": {
+        "id": "sr-1779924617-0545f021bd",
+        "source_ts": "1779924617.652919",
+        "title": "社内の知見をAIが漏らさず拾う唯一の設計思想 — Karpathy LLM Wiki の ingest 品質",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす候補から1件だけ選んだ。memory・operation・evaluation の優先タグを持ち、200〜400 token・1概念、対象／version／時点 metadata、Raw／Wiki／Schema と Ingest／Query／Lint の分離が、現在の per-atom memory と Phase 4a に既存 control と異なる判断差を作るか確認した。Nao_u が本 atom 自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、200〜400 token・1概念、対象／version／時点 metadata、Raw／Wiki／Schema と Ingest／Query／Lint、古い情報・重複・幻覚汚染を入口で抑える方針を具体化しており、現行 memory へ接続しやすいため relevance=3、actionability=2とした。一方、20万 file 規模での精度向上は体感報告で、検索精度、stale 検出、cost、更新頻度の比較値がなく evidence=2に留める。同じ Karpathy LLM Wiki を統合した sr-1779956167-0a1539adff から probe-20260715-ingest-connection-action-lint が既に採用され、新素材と既存概念の接続、次 action の変化、source_ts／反例／state role による bad merge の停止を扱う。さらに sr-1779993717-fad0f0165e は Raw／Wiki／Schema と Ingest／Query／Lint の同義重複を理由に reject 済みである。本 atom の metadata template や token 範囲を別 control にしても次回判断を変えず non_redundancy=0。325件の active_probes に同義 control を追加すると確認負荷と schema 固定化を増やすため risk_control=1とし、source_ts の review 記録だけを残す。",
+      "existing_controls": [
+        "probe-20260715-ingest-connection-action-lint",
+        "sr-1779993717-fad0f0165e の state-only reject receipt"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "Karpathy LLM Wiki の ingest 品質 atom を reviewed にし、同じ知見から採用済みの connection-action-lint probe と既存 reject receipt に包含されるため追加採用しない理由を記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-17T11:45:55+09:00",
       "selected": {
