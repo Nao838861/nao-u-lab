@@ -7,6 +7,12 @@
 - pending inbox: `slack_directives.jsonl` 0 件 / `slack_broadcasts.jsonl` 0 件。
 - `memory/shared_reads_candidates/20260817_arc_raiders_physics_based_enemy_locomotion.md` — 『ARC Raiders』で animation・reinforcement learning・physics-based control・point-cloud perception を組み合わせ、敵の learned locomotion を Unreal Engine の production game へ統合した GDC 2026 セッション。
 - duplicate preflight: sidecar 3 種を再生成後、title / URL とも `continue`。`--log log/shared_reads_candidate_preflight.jsonl` を指定して実行（現行 tool は `skip` / `review` のみ追記）。
+- Phase 1 追記（2026-08-17 11:28–11:32 JST）:
+  - inbox確認: `slack_directives.jsonl` pending 0件、`slack_broadcasts.jsonl` pending 0件。既存 web research・最近の atom・shared-reads rawを確認。
+  - `memory/shared_reads_candidates/20260817_nex_machina_maintaining_tension.md` — 1秒以内の計画、短い部屋、group spawn、wave可読性、level間downtime削減のlevel-design記録。
+  - `memory/shared_reads_candidates/20260817_transistor_function_system.md` — random deck案から、16 Functionのactive / upgrade / passive兼用と一時使用不能による組合せ実験へ移行したsystems-design記録。
+  - duplicate preflight: 2件とも `continue`。Slack投稿なし。品質判定・4000字概要作成は未実施（Phase 2/3へ引継ぎ）。
+
 
 ## Phase 2: 分析
 
