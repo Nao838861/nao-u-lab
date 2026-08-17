@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-17T07:43:23+09:00",
+  "updated_at": "2026-08-17T09:39:52+09:00",
   "reviewed_source_ts": [
+    "1786919931.515999",
     "1779910998.722809",
     "1779928450.976429",
     "1779957463.790519",
@@ -664,6 +665,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-17T09:39:52+09:00",
+      "selected": {
+        "id": "sr-1786919931-a59d0b8143",
+        "source_ts": "1786919931.515999",
+        "title": "Telemetry-Supported Game Design — Question / Record / Analyze / Refine による設計質問先行の観測ループ",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新候補で、memory・harness・game-design・evaluation の4優先タグを持つため1件だけ選んだ。設計質問から最小 event を逆算し、headless trace と人間 playtest を次の playable diff へ戻す知見が、現行 controls と異なる判断差を作れるか確認した。Nao_u が本 atom 自体を「重要」「適切」「自分に反映してほしい」と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、Question／Record／Analyze／Refine、session と game-specific event、集計と個別履歴、Madden NFL 11 の勧告、定量 telemetry だけでは行動理由や因果を確定できない限界まで示す。さらに自分達向けに、仮説・期待観測・反証条件・最小 event・build／seed を observation contract とし、headless trace と人間観察を次の playable diff へ接続する案へ落としているため relevance・actionability は3とした。一方、記事本文の Madden 事例には標本数、期間、特徴量、予測精度、変更前後の継続率、比較群がなく、設計勧告の因果効果を検証できないため evidence=2。probe-20260625-quality-workflow-feedback-route は低コスト観測を次 action へ戻す閉ループを、probe-20260622-egocs-causal-gameplay-log は input／state／event／outcome の因果列を、probe-20260622-d2e-synchronized-playtest-stream は run_id／build_id と同期 trace を、probe-20260708-causalgame-outcome-explanation-split は outcome と mechanism、confounder、介入の分離を既に扱う。設計質問を event schema より先に置く表現には小さな差があるが、現行 staging には比較可能な playable diff や telemetry artifact がなく、325件の active_probes へ同義 control を追加しても直後の Phase 4a 判断は変わらないため non_redundancy=1、risk_control=1とした。source_ts の review 記録だけを残す。",
+      "existing_controls": [
+        "probe-20260625-quality-workflow-feedback-route",
+        "probe-20260622-egocs-causal-gameplay-log",
+        "probe-20260622-d2e-synchronized-playtest-stream",
+        "probe-20260708-causalgame-outcome-explanation-split"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "Telemetry-Supported Game Design の source_ts を reviewed にし、設計質問先行の観測ループが既存の workflow-feedback／causal-log／synchronized-stream／causal-explanation controls にほぼ包含されるため採用しない理由を記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-17T07:43:23+09:00",
       "selected": {

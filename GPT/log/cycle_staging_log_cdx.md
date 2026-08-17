@@ -65,7 +65,35 @@ reason: "Phase 2 の gate_decision: pass 候補が 0 件のため、#shared-read
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786919931-a59d0b8143
+    source_ts: "1786919931.515999"
+    title: "Telemetry-Supported Game Design — Question / Record / Analyze / Refine による設計質問先行の観測ループ"
+    reason: "未レビューの score 12 候補で、memory・harness・game-design・evaluation の4優先タグを持つ最新 atom。設計質問先行の観測ループが既存 controls と異なる判断差を作れるか確認するため1件だけ選んだ。Nao_u の明示評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "Question／Record／Analyze／Refine、最小 event、headless trace と人間観察の接続は具体的だが、Madden 事例に比較群・効果量がなく evidence は2。既存 quality-workflow-feedback-route、egocs-causal-gameplay-log、d2e-synchronized-playtest-stream、causalgame-outcome-explanation-split が閉ループ・因果列・同期 trace・相関／因果分離を既に扱う。325件の active_probes に同義 control を足しても現 staging の Phase 4a 判断は変わらず、合計13かつ risk_control<2 のため state-only review とする。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
