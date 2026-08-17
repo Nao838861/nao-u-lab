@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-18T02:23:27+09:00",
+  "updated_at": "2026-08-18T04:34:48+09:00",
   "reviewed_source_ts": [
+    "1786987097.063549",
     "1786978764.031099",
     "1786970285.092589",
     "1778510440.623829",
@@ -673,6 +674,45 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-18T04:34:48+09:00",
+      "selected": {
+        "id": "sr-1786987097-1223fd391c",
+        "source_ts": "1786987097.063549",
+        "title": "MARIOPCG: semantic granularity を保つ text-to-level generation 評価",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新 atom で、memory・harness・game-design・agent・evaluation の5優先タグを持つため1件だけ選んだ。表現可能性、runtime 実行、verifier 観測を先に対応付け、coarse／fine 条件で隠れた failure を分離する知見が、次の game-generation または memory 評価で既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14には達するが、risk_control が必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、112 level、26 tile種、11 instruction class、各 model・dataset 500 sample、playability・adherence・構造破損・memorization の分離、coarse VGLC と高 fidelity MARIOPCG の比較を示し、表現が区別を捨てると instruction failure を同定できないことを具体化している。各 concept を表現 field／runtime effect／verifier observation の三列へ置き、欠損概念を unsupported として評価分母から外し、coarse IR＋coarse prompt／fine IR＋coarse prompt／fine IR＋fine prompt を同じ source・seed で比較する行動へ直接変換できるため relevance・actionability・evidence は3とした。一方、probe-20260619-draw2think-inspectable-intermediate-state は construction fidelity と measurement faithfulness、state representation／validator／measurement の failure layer を、probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation は入力表現と state-representation failure を、probe-20260618-gamecraft-artifact-completeness-replay は build と runtime artifact completeness をすでに扱う。本 atom 固有の semantic coverage 三段表と unsupported denominator は差分だが、独立 control を増やすほどではないため non_redundancy は1とした。さらに active_probes は325件あり、細粒度 schema を一般の memory・game task 全体へ広げると annotation 負荷、prompt signal dilution、既存 control の確認負荷を増やすため risk_control は1。三条件比較は局所的で戻せるので reversibility は3だが、現 staging には比較可能な level JSON、同一 source の coarse／fine IR、runtime trace がなく、直後の Phase 4a cleanup を consumer にしても固有の before／after 判断差を測れない。次に具体的な text-to-level／structured game generation artifact が置かれ、既存3 controlsだけでは unsupported concept と生成失敗を分けられない実例が出た時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260619-draw2think-inspectable-intermediate-state",
+        "probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation",
+        "probe-20260618-gamecraft-artifact-completeness-replay"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、semantic coverage 三段監査の有用性、既存 representation／measurement／runtime controls との部分重複、比較可能な game-generation artifact 不在による defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-18T02:23:27+09:00",
       "selected": {

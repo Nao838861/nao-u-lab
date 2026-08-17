@@ -133,7 +133,39 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786987097-1223fd391c
+    source_ts: "1786987097.063549"
+    title: "MARIOPCG: semantic granularity を保つ text-to-level generation 評価"
+    reason: "未レビューの最新 atom で、memory・harness・game-design・agent・evaluation の5優先タグを持つ。表現可能性→runtime 実行→verifier 観測の三段対応と coarse／fine 比較が既存 control にない判断差を作れるか確認するため、1件だけ選んだ。Nao_u の明示的な重要／適切／自己反映評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "112 level、26 tile種、11 instruction class、各条件500 sampleと四軸評価に基づき、concept ごとの表現 field／runtime effect／verifier observation、unsupported denominator、同一 source・seed の coarse／fine 三条件比較へ変換できる。一方、既存の draw2think／LMGameBench／artifact-completeness controls が representation・measurement・runtime の分離を既に扱うため non_redundancy は1。active_probes 325件へ類似 control を足す確認負荷と、細粒度 schema の過剰一般化・prompt signal dilution があるため risk_control は1。現 staging に比較可能な level JSON、coarse／fine IR、runtime trace がなく、Phase 4a で before／after の判断差を測れる consumer artifact もないため state-only review とし、lease は作らない。"
+  existing_controls:
+    - probe-20260619-draw2think-inspectable-intermediate-state
+    - probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation
+    - probe-20260618-gamecraft-artifact-completeness-replay
+  change:
+    summary: "reviewed/source_ts と defer 根拠だけを state に記録した。active probe、ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
