@@ -59,7 +59,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786995013-3532dee771
+    source_ts: "1786995013.250539"
+    title: "Indie Postmortem: Armadillo Run"
+    reason: "未レビューの score 11 atom のうち最新で、harness・game-design・operation・evaluation の4優先タグを持つ。physics の kill question 通過後に authoring・onboarding・content・polish・release へ risk が移るという phase transition が、既存 control と異なる次回判断を作れるか確認するため1件だけ選んだ。Nao_u の明示的な重要評価は確認できない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "単一作者・単一作品の2006年の回顧で比較実験はないが、technical feasibility と completion lane、headless と human observation、core 時間と残工程見積りを分ける行動へは変換できる。一方、scope brief、prototype hypothesis、creatable/fun/sellable、runtime production slice、feedback-loop asymmetry、AI-readable/manual playtest、critical-stage routing の既存7 controls が判断面をほぼ覆う。現 staging に比較可能な prototype、lane 別残件、before/after 見積り、human usability trace はなく、Phase 4a は実 consumer ではない。active_probes 325件と pending lease 1件へ同型 control を足す負荷が判断差を上回るため state-only で閉じる。"
+  change:
+    summary: "reviewed_source_ts と、既存 controls との重複および比較可能な prototype artifact 不在による reject 理由だけを更新した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

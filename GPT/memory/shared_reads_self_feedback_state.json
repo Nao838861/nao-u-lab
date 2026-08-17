@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-18T06:32:52+09:00",
+  "updated_at": "2026-08-18T08:27:39+09:00",
   "reviewed_source_ts": [
+    "1786995013.250539",
     "1786995005.848729",
     "1786987097.063549",
     "1786978764.031099",
@@ -675,6 +676,49 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-18T08:27:39+09:00",
+      "selected": {
+        "id": "sr-1786995013-3532dee771",
+        "source_ts": "1786995013.250539",
+        "title": "Indie Postmortem: Armadillo Run",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす最新 atom で、harness・game-design・operation・evaluation の4優先タグを持つため1件だけ選んだ。physics の kill question を先に解いた後、authoring・onboarding・content・polish・release へ risk が移るという phase transition が、現在の Codex game cycle で既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、2D spring simulation の成立可否を最初の kill question にし、core code の4か月後に sound・interface・level design・testing・tuning・menu・販売準備へさらに5か月を要したこと、flexible link 編集と tooltip の問題を友人 playtest から修正したこと、profiling なしの早期最適化を失敗として挙げる。これを technical feasibility／playable core／authoring／onboarding／content／polish／release の lane、headless と human observation の責務分離、core 時間と completion 見積りの分離へ変換できるため relevance・actionability は3とした。一方、根拠は2006年の単一作者・単一作品の回顧で、4か月対5か月の工程分類、playtest 人数、UI 改修前後の task time・誤操作、performance、販売成果との因果比較がなく evidence は2に留める。probe-20260602-game-scope-brief-cut-gate は scope promise・first playable・最小 risk test、probe-20260706-paperclaw-prototype-hypothesis-contract は observable verdict、probe-20260517-creatable-fun-sellable-axis は core 実装と fun／external reach の分離、probe-20260518-runtime-verifiable-production-slices は production slice、probe-20260606-game-feedback-loop-asymmetry と probe-20260621-ai-readable-playtest-acceptance-surface は headless／manual feel の証拠境界、probe-20260709-critical-stage-feedback-routing は stage ごとの feedback 接続を既に扱う。本 atom 固有の core 後の completion lane と見積り更新は小さな差だが、独立 control を増やすほどではないため non_redundancy は1とした。現 staging には比較可能な physics prototype、lane 別残件、before／after 見積り、human usability trace がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。active_probes 325件と Phase 4a 向け pending lease 1件がある状態で同型 control を足すと確認負荷と単一 postmortem の過剰一般化を増やすため risk_control は1。次の具体的な prototype で既存7 controlsだけでは core 成立後の残工程を完成扱いしてしまう実例が出た時だけ、lane 別 completion metric として再評価する。",
+      "existing_controls": [
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract",
+        "probe-20260517-creatable-fun-sellable-axis",
+        "probe-20260518-runtime-verifiable-production-slices",
+        "probe-20260606-game-feedback-loop-asymmetry",
+        "probe-20260621-ai-readable-playtest-acceptance-surface",
+        "probe-20260709-critical-stage-feedback-routing"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、core 成立後の completion lane／見積り分離の有用性、既存 scope／hypothesis／production-slice／playtest controls との重複、比較可能な prototype artifact 不在による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-18T06:32:52+09:00",
       "selected": {
