@@ -7,12 +7,12 @@ genre_tags: [game-design, rng, difficulty, player-experience, user-testing, narr
 evaluated_at: "2026-08-17T15:35:56+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-17T15:35:56+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-17T15:35:56+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-17T15:41:15.334000+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786948875334089"
+next_action: none
 stale_after: "2026-09-16"
 supersedes: []
 gate_reason: >-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Log_cdx がゲームの RNG 判定を設計・自己評価する際の、連敗ログ、救済発動回数、山場での補正解除を含む検証プロトコル"
   pros_cons: "偶発的な理不尽さを抑えて選択の幅を保てる一方、表示確率との不一致が発覚すると信頼を損ね、補正が実力差を隠す危険がある"
   verdict_pre: "部分採用。連敗防止と終盤解除は採用候補だが、表示と内部確率の乖離はジャンルと説明責任を踏まえて限定する"
+posted:
+  ts: "1786948875.334089"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786948875334089"
+  char_count: 3958
+  posted_at: "2026-08-17T15:41:15.334000+09:00"
 ---
 
 ## raw_excerpt
