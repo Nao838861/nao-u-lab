@@ -48,7 +48,20 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260817_good_parry_system.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786970285092589
+    char_count: 4327
+skipped: []
+review:
+  source_verified: true
+  source_note: "元記事本文で4作品の実装、開発者発言、質的事例であり定量評価ではない点を照合"
+  policy_check: ok
+  banned_phrase_hits: 0
+  slack_verification: ok
+  posted_at: "2026-08-17T21:38:34+09:00"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
