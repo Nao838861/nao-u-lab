@@ -422,6 +422,9 @@ function makeHouseholdRecord(economy, { job, x, y }) {
     y,
     road: false,
     purse: P.PURSE0,
+    // 非常食の掛買いで生じた負債部分。財布の負数とは別に由来だけを記録し、
+    // その負債が加工職の運転資金60デナリを食い潰さないようにする。
+    foodCreditUsed: 0,
     pantry: emptyPantry(),
     // 本土から持参した開拓食のうち、まだ食べていない量。麦農家だけが
     // 到着直後にこれを「収穫余剰」と誤認して売り切るのを防ぐ。
@@ -3585,13 +3588,19 @@ export function buyAtMarket(
       const reserve = protectsFoodCash
         ? foodCashReserve(economy, physical, household, purchased)
         : 0;
+      const foodDebtOffset = creditEligible
+        ? Math.min(
+          Math.max(0, household.foodCreditUsed ?? 0),
+          Math.max(0, -household.purse),
+        )
+        : 0;
       const affordable = shelf.kind === "AID"
         ? Infinity
         : Math.max(
           0,
           household.purse - reserve
             + (creditEligible
-              ? productionInputCreditAllowance(household, goods)
+              ? productionInputCreditAllowance(household, goods) + foodDebtOffset
               : emergencyFoodCredit
                 ? householdFoodCreditLimit(economy, household)
                 : 0),
@@ -3613,7 +3622,15 @@ export function buyAtMarket(
       if (input) inputReserve = Math.max(0, inputReserve - qty * unitWeight);
 
       const payment = qty * shelf.price;
+      const debtBefore = Math.max(0, -household.purse);
       household.purse -= payment;
+      if (emergencyFoodCredit) {
+        const debtAfter = Math.max(0, -household.purse);
+        household.foodCreditUsed = Math.min(
+          householdFoodCreditLimit(economy, household),
+          Math.max(0, household.foodCreditUsed ?? 0) + Math.max(0, debtAfter - debtBefore),
+        );
+      }
       if (delivery === "pantry") household.pantry[goods] += qty;
       else manifest[goods] = (manifest[goods] ?? 0) + qty;
       purchased[goods] = (purchased[goods] ?? 0) + qty;
@@ -6792,6 +6809,7 @@ export function runPopulationDynamicsPhase(economy, physical, { day, random }) {
         reason: `世帯${household.id}の徳政による貸し倒れ`,
       });
       household.purse = 0;
+      household.foodCreditUsed = 0;
       household.insolvM = 0;
       changes.push({ kind: "debt_relief", householdId: household.id, debt });
       recordEconomyEvent(economy, day, `${household.sur}家の借財を帳消しに(徳政)`);
@@ -6840,6 +6858,7 @@ export function runPopulationDynamicsPhase(economy, physical, { day, random }) {
             reason: `世帯${household.id}の転職徳政による貸し倒れ`,
           });
           household.purse = 0;
+          household.foodCreditUsed = 0;
           changes.push({ kind: "debt_relief", householdId: household.id, debt });
         }
         moveHouseholdToVacantBuilding(

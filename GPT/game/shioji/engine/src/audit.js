@@ -514,9 +514,11 @@ export const B2_TRIAL_STARTER_JOBS = Object.freeze([
   // その一軒を先に確保し、残りは沿岸・森林・加工職でスターターを構成する。
   // 湾内の3漁家は二年維持・三年で痩せるP2較正負荷そのもの。二軒では回復と
   // 拮抗して外へ出る圧力が消える。256世界の三長距離線は初年に30台超を
-  // 必要とするため、車大工は二軒で実荷車を増産し、会社の実購入で配備する。
+  // 必要とするため、車大工は三軒で路線28台と住民の原料運搬車を実生産し、
+  // 会社・世帯それぞれの実購入で配備する。二軒では会社分だけで一年を使い切る。
   "wheat", "fisher", "fisher", "fisher", "logger", "logger", "logger",
-  "woodshop", "woodshop", "charburner", "saltworks", "cartwright", "cartwright",
+  "woodshop", "woodshop", "charburner", "saltworks",
+  "cartwright", "cartwright", "cartwright",
 ]);
 
 const B2_TRIAL_PROVISION_DAYS = 60;
@@ -709,23 +711,31 @@ export const B2_EXPANSION_STRATEGIES = Object.freeze({
     goodsBack: Object.freeze([
       "ore", "bar", "iron", "stone", "coal", "log", "tools", "char",
     ]),
-    // 鉱区は食料を産まない。5産業世帯20人へ一宿四編成を通し、低Lv期の
+    // 鉱区は食料を産まない。四台編成を二本通し、片便が集荷中でも生活物資を
+    // 届ける。会社の28台と住民用荷車は母港の車大工三軒が実生産する。低Lv期の
     // 固定給はLvを上げるために必要な赤字路線として会社台帳へ残す。
     // 木材圏まで育つと十世帯になるため、食料と中間財を一本へ詰め込まない。
-    // 四台編成を二本に分け、片便が集荷中でももう一便が生活物資を届ける。
     routeCount: 2, recruitment: 4, wage: 0.75, intervalDays: 5,
   }),
   basin: Object.freeze({
     marketKey: "2", marketId: "basin", name: "中央盆地市場",
     jobs: Object.freeze([
-      // 初期入植は最初の冬を越す先遣規模。二年目の播種前に同数を足し、
+      // 初期入植は最初の冬を越す先遣規模。二年目の播種前に成長分を足し、
       // 低Lvの初日から過剰人口と私蔵麦を作らず年間需要へ追いつく。
+      // day120入植は初年度に五か月しか作付できない。六圃場では母港・鉱区の
+      // 冬越し需要へ届かず、九圃場でも冬末24日分に留まった。冬越し予報46日を
+      // 実備蓄で満たす十五圃場で入り、二年目は六圃場を人口成長分にする。
+      // 19圃場では低Lv日産が人口需要を24荷下回ったため、成熟時は21圃場にする。
       "wheat", "wheat", "wheat", "wheat", "wheat", "wheat",
+      "wheat", "wheat", "wheat", "wheat", "wheat", "wheat",
+      "wheat", "wheat", "wheat",
       "veg", "veg", "veg", "rapeseed",
     ]),
     industryStages: Object.freeze([
       Object.freeze({
-        afterDays: 180,
+        // 盆地開設day120から300日後=二年目の春直前に入植する。旧day300入植は
+        // 60日開拓食をday360で使い切り、作付開始day421まで冬60日を飢えていた。
+        afterDays: 300,
         jobs: Object.freeze([
           "wheat", "wheat", "wheat", "wheat", "wheat", "wheat",
           "veg", "veg", "veg",
@@ -736,7 +746,8 @@ export const B2_EXPANSION_STRATEGIES = Object.freeze({
     // 野菜農家が市場便の間に漬けた在庫も食料として運ぶ。生野菜だけを指定すると
     // 塩が届いた盆地で漬物だけが滞留し、他市場が食料難になる。
     goodsBack: Object.freeze(["wheat", "veg", "pick", "cloth"]),
-    // 三宿十八編成で穀倉余剰を母港へ運び、そこから鉱区線へ中継する。
+    // 三宿十八台編成で穀倉余剰を母港へ運び、そこから鉱区線へ中継する。
+    // 麦は0.5重量なので一便48荷を積め、島の荷車を隊商だけで独占しない。
     // 高Lvで運び切れないほど余れば、四便目を欲で足す余地として残る。
     routeCount: 3, recruitment: 6, wage: 0.75, intervalDays: 5,
   }),
@@ -923,6 +934,55 @@ function addB2StrategyMarket(world, definition, strategy, { day = world.state.da
   };
 }
 
+function ensureB2FoodBackboneRoute(world, { day = world.state.day } = {}) {
+  const controller = world.state.b2Strategy;
+  if (!controller || controller.foodBackboneRouteId) return null;
+  const basin = controller.expansions.find(expansion => expansion.marketId === "basin");
+  const mining = controller.expansions.find(expansion => expansion.marketId === "mining");
+  if (!basin || !mining) return null;
+  const { economy, physical } = world.state;
+  const innZone = placeB2StarterZone(world, "carter", basin.entrance);
+  connectB2Road(physical, basin.entrance, innZone, "盆地鉱山背骨線の隊商宿");
+  const household = occupyScenarioZone(world, innZone, "basin", { foodKit: 0 });
+  setScenarioHouseholdSize(economy, household, 8, "盆地鉱山背骨線隊商隊");
+  const provision = household.members.length * B2_EXPANSION_PROVISION_DAYS;
+  household.pantry.pres += provision;
+  household.settlerFoodReserves ??= {};
+  household.settlerFoodReserves.pres = provision;
+  recordEconomicMaterialFlow(
+    economy,
+    "pres",
+    "imp",
+    provision,
+    `盆地鉱山背骨線世帯${household.id}の開拓時保存食`,
+    { includeInDaily: false },
+  );
+  setCaravanEmployment(physical, {
+    buildingId: household.buildingId,
+    recruitment: 8,
+    wage: 0.75,
+  });
+  const routeResult = createCaravanRoute(economy, physical, {
+    name: "盆地―鉱山食料背骨線",
+    baseBuildingId: household.buildingId,
+    destMarketId: "mining",
+    goodsOut: ["wheat", "veg"],
+    goodsBack: ["ore", "coal", "bar", "iron", "stone", "char", "tools"],
+    intervalDays: 5,
+    stockTargetDays: 30,
+    day,
+  });
+  if (!routeResult.ok) throw new Error(`盆地―鉱山食料背骨線の設定不可: ${routeResult.reason}`);
+  controller.foodBackboneRouteId = routeResult.route.id;
+  controller.foodBackboneHouseholdId = household.id;
+  recordEconomyEvent(
+    economy,
+    day,
+    "盆地と鉱山を直接結ぶ食料背骨線を開いた——麦と鉱産物を母港で積み替えない",
+  );
+  return routeResult.route;
+}
+
 export function buildB2StrategyWorld(seed = 11, definition, strategyId = "fishery") {
   const order = B2_EXPANSION_ORDERS[strategyId];
   if (!order) throw new RangeError(`unknown B2 expansion strategy: ${strategyId}`);
@@ -996,6 +1056,7 @@ export function advanceB2StrategyExpansion(world, definition, { day = world.stat
   }
   strategy.expansions.push(expansion);
   strategy.nextExpansionIndex = index + 1;
+  ensureB2FoodBackboneRoute(world, { day });
   recordEconomyEvent(
     world.state.economy,
     day,
@@ -1057,10 +1118,11 @@ function prepareB2StrategyFleet(world, { day = world.state.day } = {}) {
   if (nextIndex < strategy.order.length && day >= nextMilestone - 60) {
     fundedRegionCount = Math.max(fundedRegionCount, nextIndex + 1);
   }
-  const target = strategy.order.slice(0, fundedRegionCount).reduce((total, id) => {
+  const spokeTarget = strategy.order.slice(0, fundedRegionCount).reduce((total, id) => {
     const spec = B2_EXPANSION_STRATEGIES[id];
     return total + (spec.routeCount ?? 1) * spec.recruitment;
   }, 0);
+  const target = spokeTarget + (strategy.foodBackboneRouteId ? 8 : 0);
   const usableCarts = (world.state.economy.companyCarts ?? []).filter(
     cart => (cart.durability ?? 0) > 1e-9,
   ).length;

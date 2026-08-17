@@ -418,6 +418,20 @@ function marketRouteSupply(economy, marketId, goods) {
   return stalls + company + imported;
 }
 
+function viableRouteFoodGoodsCount(economy, route, marketId, goodsList) {
+  const viable = goodsList.filter(goods => (
+    FOODS.includes(goods)
+    && (
+      marketRouteSupply(economy, marketId, goods)
+      + Math.max(0, route?.collectionStagedM?.[marketId]?.[goods] ?? 0)
+    ) > 1e-9
+  )).length;
+  // チェックされた食料のうち実在庫ゼロの品まで補充日数を等分すると、鉱区線で
+  // 麦しかない時に「5品指定だから麦6日分」となり、空欄4品の荷枠だけが消える。
+  // 実際に積める品だけで日数を分担し、全品ゼロの時も除数1で次の入荷を待つ。
+  return Math.max(1, viable);
+}
+
 function localFoodReserveQuantity(economy, marketId, goods, days = 3) {
   if (!FOODS.includes(goods)) return 0;
   const population = caravanTargetHouseholds(economy, marketId)
@@ -456,7 +470,7 @@ function collectionPlanForMarket(
   if (!market) return [];
   const totalCapacity = assets.reduce((total, asset) => total + caravanAssetCapacity(asset), 0);
   const shareWeight = totalCapacity / goodsList.length;
-  const foodGoodsCount = Math.max(1, goodsList.filter(goods => FOODS.includes(goods)).length);
+  const foodGoodsCount = viableRouteFoodGoodsCount(economy, route, marketId, goodsList);
   const needs = [];
   let stagedWeight = 0;
   for (const goods of goodsList) {
@@ -896,7 +910,7 @@ function caravanBuyAtMarket(
   const lotsByGoods = {};
   let fundingShortfall = false;
   const market = marketBuildingForId(physical, marketId);
-  const foodGoodsCount = Math.max(1, goodsList.filter(goods => FOODS.includes(goods)).length);
+  const foodGoodsCount = viableRouteFoodGoodsCount(economy, route, marketId, goodsList);
   const buyGoods = (goods, weightLimit) => {
     const unitWeight = goodsUnitWeight(goods);
     const targetGap = caravanTargetGap(
