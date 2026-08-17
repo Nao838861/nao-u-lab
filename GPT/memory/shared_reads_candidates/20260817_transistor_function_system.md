@@ -4,6 +4,24 @@ url: "https://www.gamedeveloper.com/design/game-design-deep-dive-the-functions-o
 collected_at: "2026-08-17T11:31:48+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, systems-design, action-rpg, abilities, experimentation, postmortem]
+evaluated_at: "2026-08-17T11:36:38+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-17T11:36:38+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-17T11:36:38+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-16"
+supersedes: []
+gate_reason: "random deck案が線形物語とdifficulty curveに衝突した失敗から、16 Functionの三用途化、slow death、一時使用不能、物語報酬へ至る判断連鎖が具体的である。少数部品の組合せ空間と失敗後の戦術変更へ直接適用でき、約4000字の投稿を十分な密度で構成できる。"
+suggested_post_outline:
+  overview_angle: "戦法固定をrandomnessで壊す案を捨て、同じ部品の多用途化と一時的損失で横方向の実験を促したsystems-design事例"
+  analysis_axis: "random deckの失敗理由、active・upgrade・passive統合、slow death、backstory報酬が互いにどう実験コストを下げるか"
+  application_target: "Nao_u_BOTの少数mechanic prototypeで、同一部品を複数slot roleへ再利用し、失敗時に即resetせず一時的な構成崩れから別戦術を試させる設計"
+  pros_cons: "少数assetから大きな組合せ空間と発見を作れる一方、組合せ説明、balance、愛用構成が失われた時の不公平感への対処が必要になる"
+  verdict_pre: "採用。三用途化と発見報酬を優先し、強制的な一時使用不能は失敗時UXを検証してから導入する"
 ---
 
 ## raw_excerpt

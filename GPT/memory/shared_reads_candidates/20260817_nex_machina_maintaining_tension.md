@@ -4,6 +4,24 @@ url: "https://www.gamedeveloper.com/design/game-design-deep-dive-maintaining-ten
 collected_at: "2026-08-17T11:31:14+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, level-design, shooter, pacing, enemy-waves, postmortem]
+evaluated_at: "2026-08-17T11:36:38+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-17T11:36:38+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-17T11:36:38+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-16"
+supersedes: []
+gate_reason: "1秒以内の計画、15–30秒の部屋、group spawn、waveの規則性、level間downtime削減という設計要素が具体的で、反復playを含む改稿過程も追える。敵編隊・短時間challenge・telemetry設計へ直接適用でき、約4000字の投稿を推測なしに構成できる。"
+suggested_post_outline:
+  overview_angle: "緊張を敵数の増加ではなく、即読できる選択・予測可能なwave grammar・休止除去の連鎖として設計したlevel-design事例"
+  analysis_axis: "瞬間的な可読性と反復学習を両立するため、layout、spawn、enemy role、transitionを同じpacing目的へ揃える方法"
+  application_target: "Nao_u_BOTの短時間combat prototypeで、各waveの1秒計画、出現形の学習可能性、移動誘導、撃破後transitionをauthoring項目とheadless時系列指標にする"
+  pros_cons: "少ない部屋でも密度と再挑戦性を上げられる一方、downtime削減は認知負荷と疲労を増やし、可読性が崩れると単なる圧力になる"
+  verdict_pre: "部分採用。wave grammarとtransition監査は採るが、休止除去は作品の速度目標に応じて調整する"
 ---
 
 ## raw_excerpt
