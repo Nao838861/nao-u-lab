@@ -7,17 +7,18 @@ genre_tags: [reinforcement-learning, navigation, partial-observability, game-ai,
 evaluated_at: "2026-07-19T03:34:54+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-19T03:34:54+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-19T03:34:54+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-18T02:06:00+09:00"
+last_decision: failed
+evidence: "group_handoff:gha-21a4035411e0d199; terminal:memory/shared_reads_candidates/20260720_flow_aware_navigation_unsteady_flows.md: posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784488268673889; reason:posted-source preflight が同一 arXiv work identity 一致で skip。既投稿との差分がない。"
+next_action: none
 stale_after: "2026-08-18"
 supersedes: []
 gate_reason: |-
   五つの observation strategy、TD3、局所 velocity / vorticity / 短期 memory の比較と結論は抽出でき、変動場 NPC の sensor 設計へ適用できる。
   ただし現候補には比較条件ごとの定量値・失敗条件・global parameter が性能を落とす機序がなく、ゲーム制作へ移す際の制約を含む約4000字概要には根拠が不足するため保留する。
+duplicate_reason: failed_duplicate_of_terminal_sibling
 ---
 
 ## raw_excerpt

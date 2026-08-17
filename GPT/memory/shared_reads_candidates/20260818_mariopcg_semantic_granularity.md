@@ -4,6 +4,26 @@ url: https://openreview.net/forum?id=IlJMxS25fv
 collected_at: "2026-08-18T02:01:19+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, pcg, level-generation, llm, evaluation]
+evaluated_at: "2026-08-18T02:08:28+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-18T02:08:28+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-18T02:08:28+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-17"
+supersedes: []
+gate_reason: |-
+  表現の意味粒度が instruction-following 評価を歪める問題、MARIOPCG、複数 decoder-only model の統制比較、主要結論を抽出できる。
+  自然言語からレベルを生成する際の tile IR と評価設計へ具体的に適用でき、測定上の交絡を軸に約4000字の概要へ展開できる。
+suggested_post_outline:
+  overview_angle: "生成モデルの優劣より先に、データセットと tile 表現が自然言語で指示できる意味を保持しているかを問う。粗い表現が失敗を不可視化する仕組みを中心に書く。"
+  analysis_axis: "既存ベンチマークの semantic collapse、MARIOPCG の高 fidelity 表現、モデル規模をまたぐ統制比較、表現粒度を上げた時に顕在化する failure mode を分けて分析する。"
+  application_target: "Log_cdx の自然言語→ゲーム仕様／レベル生成 probe で、地形・敵・関係性を保持する中間表現と、表現可能性を分母にした instruction-following 評価を設計する。"
+  pros_cons: "利点はモデル能力と表現限界を切り分けられること。弱点は高粒度 vocabulary と annotation のコストが増え、Mario の tile 表現から他ジャンルへの一般化を別途検証する必要があること。"
+  verdict_pre: "部分採用。モデル比較の前に semantic coverage audit を入れる評価原則を採用する。"
 ---
 
 ## raw_excerpt

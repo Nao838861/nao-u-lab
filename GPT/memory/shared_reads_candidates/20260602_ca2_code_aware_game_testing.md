@@ -7,12 +7,12 @@ genre_tags: [game-testing, qa, reinforcement-learning, code-coverage, instrument
 evaluated_at: 2026-07-19T05:49:28+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: 2026-07-19T05:49:28+09:00
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260528_ca2_code_aware_game_testing.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779915242282019"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-18T02:06:00+09:00"
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-c4797ef1c6d64bdb; terminal:memory/shared_reads_candidates/20260528_ca2_code_aware_game_testing.md: posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779915242282019; reason:posted-source preflight が同一 arXiv work の canonical URL 一致で skip。既投稿との差分がない。"
 next_action: none
 stale_after: "2026-08-18"
 supersedes: []

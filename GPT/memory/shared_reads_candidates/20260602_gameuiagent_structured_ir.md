@@ -4,21 +4,21 @@ url: https://arxiv.org/abs/2603.14724
 collected_at: 2026-06-02T13:59:22.2815508+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ui, visual-design, llm-agent, structured-ir, vlm-evaluation]
-evaluated_at: 2026-07-19T05:49:28+09:00
+evaluated_at: 2026-08-18T02:06:48+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: 2026-07-19T05:49:28+09:00
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260513_gameuiagent_structured_game_ui_design.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599413402399"
+last_reviewed_at: 2026-08-18T02:06:48+09:00
+last_decision: postpone
+duplicate_reason: duplicate_of_terminal_sibling
+evidence: "gate_decision:postpone; evaluated_at:2026-08-18T02:06:48+09:00; duplicate of posted work: memory/shared_reads_candidates/20260513_gameuiagent_structured_game_ui_design.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599413402399"
 next_action: none
-stale_after: "2026-08-18"
+stale_after: "2026-09-17"
 supersedes: []
 gate_reason: |-
-  posted-source index で同一 arXiv work と 2026-05-13 の既投稿 permalink が一致した。
-  構造化 IR と failure taxonomy の価値は高いが新規差分がないため、Phase 3 の投稿対象にはしない。
+  posted-source preflight で arXiv:2603.14724 の canonical URL と実 Slack 投稿が一致した。
+  structured IR と failure taxonomy に新規差分がないため、再投稿せず参照用に保留する。
 ---
 
 ## raw_excerpt

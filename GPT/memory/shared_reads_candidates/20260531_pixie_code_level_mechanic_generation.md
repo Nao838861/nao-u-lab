@@ -4,21 +4,21 @@ url: "https://ojs.aaai.org/index.php/AIIDE/article/view/36824"
 collected_at: "2026-05-31T13:29:20.9041162+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-generation, mechanics, unity, mixed-initiative]
-evaluated_at: "2026-07-19T03:34:54+09:00"
+evaluated_at: "2026-08-18T02:06:48+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-19T03:34:54+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260515_pixie_code_level_mechanic_generation.md (https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833805420439)"
+last_reviewed_at: "2026-08-18T02:06:48+09:00"
+last_decision: postpone
+duplicate_reason: duplicate_of_terminal_sibling
+evidence: "gate_decision:postpone; evaluated_at:2026-08-18T02:06:48+09:00; duplicate of posted work: memory/shared_reads_candidates/20260515_pixie_code_level_mechanic_generation.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833805420439"
 next_action: none
-stale_after: "2026-08-18"
+stale_after: "2026-09-17"
 supersedes: []
 gate_reason: |-
-  posted-source index で同一 AIIDE source URL と provenance 付き実 Slack 投稿が一致した。
-  既投稿版が lifecycle 上 posted のため、この代表 candidate は本文再評価へ進めず参照用に閉じる。
+  posted-source preflight で AIIDE source URL と provenance 付き実 Slack 投稿が一致した。
+  code-level mechanic generation の手法に新規差分がないため、再投稿せず参照用に保留する。
 ---
 
 ## raw_excerpt
