@@ -4,6 +4,7 @@
 
 ## Phase 1: 情報収集
 
+- `memory/shared_reads_candidates/20260818_mariopcg_semantic_granularity.md` — 自然言語制御の Mario レベル生成で、データセットと tile 表現の意味粒度が観測される instruction-following 性能をどう変えるかを扱う論文。
 - `memory/shared_reads_candidates/20260817_kraven_manor_postmortem.md` — 半ランダムな modular horror の大規模構想を5部屋の linear experience と Room Table へ縮小し、技術実証から playable な kernel of fun を取り戻した postmortem。
 - `memory/shared_reads_candidates/20260817_turing_test_secret_mechanic_postmortem.md` — 77個の puzzle を modular white box と playtest で構成し、低予算 production、difficulty curve、story twist と marketing の衝突を振り返る postmortem。
 
