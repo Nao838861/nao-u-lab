@@ -4,6 +4,28 @@ url: https://arxiv.org/abs/2605.17637
 collected_at: "2026-08-17T17:30:54+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, browser-games, coding-agents, playtesting, evaluation]
+evaluated_at: "2026-08-17T17:33:46+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-17T17:33:46+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-17T17:33:46+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-16"
+supersedes:
+  - memory/shared_reads_candidates/20260529_webgamebench_browser_native_games.md
+gate_reason: >-
+  旧 candidate の fail 要因だった一次資料不足を解消し、runtime evaluator の評価軸、
+  111 task・12 agent の結果、人手照合で判明した自動判定の限界が揃い、約4000字の概要を構成できる。
+  prototype の受入条件を入力反応・状態遷移・勝敗・restart まで具体化する用途へ直接適用できる。
+suggested_post_outline:
+  overview_angle: "コード生成ベンチマークを、実ブラウザで遊べるゲームの requirement-to-application 評価へ拡張した設計と結果"
+  analysis_axis: "仕様難度別の成功率、runtime evaluator の観測項目、三値品質判定と人手評価の不一致から見る自動 playtest の有効範囲"
+  application_target: "Log_cdx の browser game prototype と headless playtest harness で、起動確認を入力反応・状態遷移・資源更新・勝敗・restart の受入テストへ分解する"
+  pros_cons: "再現可能で集計可能な runtime 診断と agent 比較が利点。Excellent 判定の人手一致が低く、操作可能性より上の遊びの質は別評価が必要"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
