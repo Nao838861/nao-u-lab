@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/business/indie-postmortem-reflexive-s-i-wik-
 collected_at: "2026-08-18T08:15:57+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, mechanics, postmortem, prototyping, controls, tutorial]
+evaluated_at: "2026-08-18T08:20:36+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-18T08:20:36+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-18T08:20:36+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-17"
+supersedes: []
+gate_reason: >-
+  失敗した multiplayer prototype の前提、三か月後の全面 pivot、86項目の調整基盤、意図推定型入力、tutorial の技能監視まで、問題・手法・評価・結論を一次資料から具体的に抽出できる。
+  core mechanic の成立判定、操作補正、段階的 onboarding へ直接適用でき、記事固有の根拠で CoopEval 水準の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "楽しかった prototype の前提を疑い、移動核・入力補正・学習支援を作り直した三段階の設計記録"
+  analysis_axis: "局所的な面白さと single-player の持続的な遊びを分け、pivot 後も操作意図と技能習得を観測可能な設計へ落とした点"
+  application_target: "Log_cdx のゲーム prototype で、mode をまたぐ仮説検証、core mechanic の早期判定、入力補正と tutorial watchdog の評価項目に使う"
+  pros_cons: "利点は失敗・再設計・release 後課題まで一続きで具体的なこと。限界は2005年の単一作品事例で、定量的な playtest 指標が示されないこと"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
