@@ -176,4 +176,12 @@ inbox_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1786971107238589
+  char_count: 1923
+  verification: ok
+  draft: drafts/phase5_log_diary_20260817_2128_cdx.md
+  posted_at: "2026-08-17T21:51:47+09:00"
+```
