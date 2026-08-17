@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-17T13:45:37+09:00",
+  "updated_at": "2026-08-17T15:45:21+09:00",
   "reviewed_source_ts": [
+    "1786941692.370729",
     "1779924617.652919",
     "1779870125.964739",
     "1786919931.515999",
@@ -667,6 +668,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-17T15:45:21+09:00",
+      "selected": {
+        "id": "sr-1786941692-b4126d429a",
+        "source_ts": "1786941692.370729",
+        "title": "Evaluating Game Mechanics for Depth — Activity Statement で objective と meaningful skill を分離する",
+        "reason": "source が slack_api/shared-reads、score 10、未レビュー、status active という条件を満たす候補から1件だけ選んだ。memory・harness・game-design・operation・evaluation の5優先タグを持ち、playtest の『退屈／反復的』を breadth・theatrics・depth に分け、mastery を主目的とする mechanic の objective・meaningful skill・playable evidence を照合する知見が、次のゲーム制作判断を小さく改善できるか確認した。Nao_u が本 atom 自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads 本文は、playtest の『退屈／反復的／variety 不足』を breadth・theatrics・depth に分け、Activity Statement で objective と meaningful skill を露出し、名詞だけ違う機能的重複を除去する手順を示す。さらに objective／meaningful skill／evidence の三列、同一 mechanic の見た目変更・要求水準変更・skill 組合せ変更の比較、初見と再試行の改善幅、説明時間と登場時間の比率へ変換できるため relevance・actionability は3とした。一方、根拠は Mike Stout の production experience と回顧的 playtest で、objective 数や skill 数と retention・成功率・主観的 depth を結ぶ統制比較はなく、skill 粒度も評価者依存なので evidence は2に留める。probe-20260517-learnable-variation-not-random-density は密度・random・学習可能な変奏を、probe-20260709-replayability-budget-core-depth は通常 player が到達できる mastery budget を、probe-20260717-player-intent-action-response と probe-20260603-mechanic-observation-channel-gate は intent・world response・headless／human evidence の境界を既に扱う。ただし objective の言い換えと再利用可能な skill を分離し、asset や対象物の変更を機能的重複として削る Activity Statement は完全には重ならないため non_redundancy は2とした。適用を mastery 目的の mechanic に限定し、skill 数を KPI にせず、narrative・pacing・expression には強制しない境界があるため risk_control は2、state-only review は可逆なので reversibility は3とした。ただし現在の staging には mastery mechanic の基準版／変更版、challenge statement、replay／playtest trace がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。consumer_phase・before／after trigger_artifact・expected_delta を lease 契約どおり指定できないため adopt_probe／adopt_metric にせず defer する。次に mastery を主目的とする playable diff が生じ、既存4 controlsだけでは見かけの variety と判断の種類を分離できない実例が出た時だけ、一時評価表として再評価する。",
+      "existing_controls": [
+        "probe-20260517-learnable-variation-not-random-density",
+        "probe-20260709-replayability-budget-core-depth",
+        "probe-20260717-player-intent-action-response",
+        "probe-20260603-mechanic-observation-channel-gate"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "mechanic depth atom の source_ts と、Activity Statement の固有差、既存 controls との部分重複、比較可能な mastery mechanic artifact 不在による defer 理由だけを更新した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-17T13:45:37+09:00",
       "selected": {

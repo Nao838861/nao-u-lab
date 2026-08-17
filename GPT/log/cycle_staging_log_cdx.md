@@ -63,7 +63,40 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786941692-b4126d429a
+    source_ts: "1786941692.370729"
+    title: "Evaluating Game Mechanics for Depth — Activity Statement で objective と meaningful skill を分離する"
+    reason: "未レビュー・active・score 10 で、memory / harness / game-design / operation / evaluation の5優先タグを持ち、見かけの variety と判断の種類を分離する知見が次のゲーム制作に直結するため。Nao_u の本 atom への明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "数値上は採用水準だが、現在の staging に mastery mechanic の基準版 / 変更版、Activity Statement、replay / playtest trace がなく、後続 Phase 4a も実 consumer ではない。consumer_phase・before/after trigger_artifact・expected_delta を lease 契約どおり指定できないため state-only review に留める。次の該当 playable diff で既存 controls が見かけの variety と meaningful skill の差を分類できない時だけ再評価する。"
+  existing_controls:
+    - probe-20260517-learnable-variation-not-random-density
+    - probe-20260709-replayability-budget-core-depth
+    - probe-20260717-player-intent-action-response
+    - probe-20260603-mechanic-observation-channel-gate
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを更新。active_probes・probe lifecycle ledger・directive・恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
