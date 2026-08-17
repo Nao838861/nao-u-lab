@@ -114,7 +114,80 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の entry index を検証し、2,883 atom に対する欠損・重複 ID・parse error・content conflict が 0 件であることを確認した。"
+  - "shared-reads の mixed / open duplicate / stale triage / group action sidecar を再生成した。terminal canonical 95 群、mixed 32 群、all-open 3 群、actionable 0 群。"
+  - "Slack directives / broadcasts は pending 0 件で、完了根拠のない handled 更新は行わなかった。"
+  - "30 日以上更新のない raw 242 件を監査した。web_research 217、headless_eval 16、slack_api 6、その他 3 は provenance / 評価証拠として参照されるため、mtime だけでは移動せず明示保持した。"
+issues:
+  - id: ISS-4A-20260817-01
+    description: "既知の1 atomで title / trigger / excerpt に literal U+FFFD が残り、『AIエージェント』が『AIエ��ジェント』として索引化されている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/raw/slack_archive/shared-reads.jsonl source_ts=1776127289.990919"
+    source_file_status: "UTF-8 明示読みで per-file atom・atoms.jsonl・raw Slack archive の全てに literal U+FFFD を確認し、表示経路ではなく取り込み元からの source data issue と判定した。memory_health が挙げた gr-1777083728-44d444ab7a は本文中の正規な '???' による false positive。"
+    display_or_tooling_status: "none。PowerShell UTF-8 読みと rg の双方で同じ文字列を確認した。"
+    why_blocks_game_memory: "この1 atomだけ『AIエージェント』の完全一致検索と表示品質を損なうが、tags・source URL・関連候補経由の想起は維持されている。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+index_audit:
+  memory_index_valid: true
+  atom_count: 2883
+  duplicate_id_count: 0
+  normalized_content_duplicate_groups_raw: 40
+  normalized_content_duplicate_groups_recall_visible: 3
+  canonical_overlay_duplicate_groups: 45
+  unresolved_content_conflicts: 0
+  note: "既知の normalized_content_hash 重複は recall 時に fold 済みで、atom mirror 3面の content conflict は 0 件。"
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読みで『記憶』『ゲーム設計』『敵パターン』『評価軸』を取得でき、validate_memory_index.py も OK。本文再生成は不要。"
+  display_or_tooling_status: "none。"
+candidate_lifecycle:
+  counts:
+    posted: 620
+    ready_to_post: 9
+    postponed: 209
+    failed: 470
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_for_reassessment: 2
+  overdue_paths:
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+    - memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+  overdue_disposition: "explicit_keep。どちらも all-open duplicate group の既存 deferred lease（gha-e6d4d4b5a37a0808 / gha-2313a247c62a9028、retry_after 2026-08-20T13:19:04+09:00）に包含されるため、期限前の二重 handoff と candidate 自動変更を行わなかった。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 7
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 35
+  mixed_group_count: 32
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
