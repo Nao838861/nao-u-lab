@@ -4,20 +4,20 @@ url: "https://openreview.net/forum?id=LePUv1OL2p"
 collected_at: "2026-07-19T19:17:32+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-theory, multi-agent, telemetry, evaluation, headless]
-evaluated_at: "2026-07-19T19:21:02+09:00"
+evaluated_at: "2026-08-18T06:21:23+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-19T19:21:02+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-19T19:21:02+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-18"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-18T06:21:23+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-18T06:21:23+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-17"
 supersedes: []
 gate_reason: |-
-  e-value による anytime-valid 検定、複数の equilibrium、FDR 制御、stochastic game 拡張までは抽出でき、bot telemetry への適用先も具体的。
-  ただし candidate 内に実験条件、比較 baseline、検出遅延・誤検出・scale の結果がなく、評価の中身を含む約4000字の概要を現時点では支えられない。
+  手法の着想と bot telemetry への適用先は具体的だが、30日後の再評価でも実験条件、比較 baseline、検出遅延・誤検出・scale の結果が candidate に補われていない。
+  評価の中身を含む約4000字の概要を支えられず、同じ不足を理由に再保留する価値も低いため、参照用として閉じる。
 ---
 
 ## raw_excerpt

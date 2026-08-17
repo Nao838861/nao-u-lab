@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/postmortem-digital-chocolate-s-i-towe
 collected_at: "2026-08-18T06:17:19+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, mechanics, postmortem, prototyping, mobile]
+evaluated_at: "2026-08-18T06:21:23+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-18T06:21:23+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-18T06:21:23+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-17"
+supersedes: []
+gate_reason: |-
+  core の浅さを周辺 mode で隠さず3週間の短周期 tuning に戻した成功と、UI 未試作・新規企画の過小見積り・producer 兼務という失敗が一つの制作過程で比較できる。
+  問題設定、試作の分離、反復手法、結果、限界が揃い、現在の playable-first 制作と検証予算へ具体的に適用できるため、約4000字の概要を支えられる。
+suggested_post_outline:
+  overview_angle: "一枚絵と throw-away prototype から始まった成功を、core tuning と周辺機能の試作不足という対照で追う"
+  analysis_axis: "試作を core physics・長期 rule・graphical UI に分け、それぞれの反復速度と未検証コストを比較する"
+  application_target: "playable-first の初期3週間、headless 指標だけでは測れない手触り調整、UI mock、未知量を含む見積り、制作判断と納期判断の分離"
+  pros_cons: "短周期の隣席協働と捨てる前提の試作は強いが、少人数の senior 人材依存が大きく、定量評価や再現可能な停止条件は弱い"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
