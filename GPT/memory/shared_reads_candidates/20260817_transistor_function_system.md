@@ -7,12 +7,17 @@ genre_tags: [game-design, systems-design, action-rpg, abilities, experimentation
 evaluated_at: "2026-08-17T11:36:38+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-17T11:36:38+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-17T11:36:38+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1786934523.220079"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786934523220079"
+  char_count: 4325
+  posted_at: "2026-08-17T11:42:12+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-17T11:42:12+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786934523220079"
+next_action: none
 stale_after: "2026-09-16"
 supersedes: []
 gate_reason: "random deck案が線形物語とdifficulty curveに衝突した失敗から、16 Functionの三用途化、slow death、一時使用不能、物語報酬へ至る判断連鎖が具体的である。少数部品の組合せ空間と失敗後の戦術変更へ直接適用でき、約4000字の投稿を十分な密度で構成できる。"

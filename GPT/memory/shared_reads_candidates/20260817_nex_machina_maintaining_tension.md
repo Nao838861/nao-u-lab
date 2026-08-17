@@ -7,12 +7,17 @@ genre_tags: [game-design, level-design, shooter, pacing, enemy-waves, postmortem
 evaluated_at: "2026-08-17T11:36:38+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-17T11:36:38+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-17T11:36:38+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1786934510.513479"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786934510513479"
+  char_count: 3839
+  posted_at: "2026-08-17T11:42:12+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-17T11:42:12+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786934510513479"
+next_action: none
 stale_after: "2026-09-16"
 supersedes: []
 gate_reason: "1秒以内の計画、15–30秒の部屋、group spawn、waveの規則性、level間downtime削減という設計要素が具体的で、反復playを含む改稿過程も追える。敵編隊・短時間challenge・telemetry設計へ直接適用でき、約4000字の投稿を推測なしに構成できる。"

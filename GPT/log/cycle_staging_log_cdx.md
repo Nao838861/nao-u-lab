@@ -65,7 +65,18 @@ evaluation_note: "2件とも一次のdesign deep diveで、失敗案から最終
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260817_nex_machina_maintaining_tension.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786934510513479"
+    char_count: 3839
+  - candidate: memory/shared_reads_candidates/20260817_transistor_function_system.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786934523220079"
+    char_count: 4325
+skipped: []
+review_note: "2件とも一次記事本文と照合し、記事固有の手法・評価範囲・失敗条件・headless probeまで展開した。必須6節、文字数、禁止表現、URL末尾をshared_reads_policyで検証後、各1回のchat.postMessageとして個別投稿した。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
