@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-18T00:04:23+09:00",
+  "updated_at": "2026-08-18T02:23:27+09:00",
   "reviewed_source_ts": [
+    "1786978764.031099",
     "1786970285.092589",
     "1778510440.623829",
     "1779825099.980279",
@@ -672,6 +673,47 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-18T02:23:27+09:00",
+      "selected": {
+        "id": "sr-1786978764-276f31071e",
+        "source_ts": "1786978764.031099",
+        "title": "Postmortem: Kraven Manor",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす最新 atom で、memory・harness・game-design・operation・evaluation の5優先タグを持つため1件だけ選んだ。structured randomness の technical proof と、minute-to-minute の選択を示す playable proof、seed 差が判断や緊張曲線を変える variation proof を分ける知見が、次の小規模 game prototype で既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の採用条件と必須指標を満たす。shared-reads 本文は、modular asset と半ランダム接続が2週間半で約20分の demo を作れても歩行以外の行為を証明できなかったこと、content と polish の必要量を超えたこと、vertical slice で5部屋の linear horror へ縮小しつつ room shifting を Room Table の5行為へ濃縮したことを示す。ここから content multiplier の概算、technical／playable／variation proof の分離、同素材の生成版／固定版比較へ変換できるため relevance・actionability は3とした。一方、根拠は単一学生 project の完成後 postmortem で、structured randomness 版と linear 版の比較 playtest、player 数、恐怖反応、完走率、agency や replayability の測定がなく evidence は2に留める。probe-20260602-game-scope-brief-cut-gate は scope promise・Must／Should／Cut・最小 risk test を、probe-20260706-paperclaw-prototype-hypothesis-contract は observable verdict と test path を、probe-20260621-ai-readable-playtest-acceptance-surface は code／AI-readable／manual feel の acceptance 分離を、probe-20260528-pcg-tool-loop-evidence と probe-20260618-snappable-layout-pcg-responsibility は structural validity と player-facing quality、piece／connector／seed／validation の責任分離をすでに扱う。本 atom 固有の technical／playable／variation の三段 proof は小さな差分だが、独立 control を増やすほどではないため non_redundancy は1とした。1 prototype・同素材2版・3 proof に限定すれば過剰な早期削減を避けて戻せるため risk_control=2、reversibility=3とした。しかし現 staging には procedural room prototype、固定版 baseline、seed trace、人間 playtest がなく、直後の Phase 4a は memory cleanup で実際の consumer ではない。consumer_phase、trigger_artifact、expected_delta を lease 契約どおり指定できないため adopt_probe／adopt_metric にせず state-only で defer する。次に具体的な生成または content-heavy prototype が置かれ、既存5 controlsだけでは『動く』『遊べる』『差が意味を持つ』の採否を分けられない実例が出た時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract",
+        "probe-20260621-ai-readable-playtest-acceptance-surface",
+        "probe-20260528-pcg-tool-loop-evidence",
+        "probe-20260618-snappable-layout-pcg-responsibility"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、technical／playable／variation proof の有用性、既存 scope／hypothesis／acceptance／PCG controls との部分重複、比較可能な game artifact 不在による defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-18T00:04:23+09:00",
       "selected": {

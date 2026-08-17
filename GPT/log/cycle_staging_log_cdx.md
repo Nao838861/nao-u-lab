@@ -152,7 +152,34 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1786978764-276f31071e
+    source_ts: "1786978764.031099"
+    title: "Postmortem: Kraven Manor"
+    reason: "score 11 の最新未レビュー atom で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。structured randomness の technical／playable／variation proof を分ける知見が、次の小規模 game prototype で既存 control と異なる判断差を作れるか確認するため1件だけ選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "content multiplier の概算と technical／playable／variation proof の分離は行動化できるが、単一 project の定性的 postmortem で比較 playtest や体験指標がない。既存の scope brief、hypothesis contract、acceptance surface、PCG tool-loop／layout-responsibility probes と部分重複し、現在の staging には procedural prototype、固定版 baseline、seed trace、人間 playtest がない。後続 Phase 4a は memory cleanup で実 consumer ではなく lease の consumer／artifact／判断差を指定できないため、state-only review に留める。"
+  change:
+    summary: "reviewed_source_ts と defer 理由のみ更新。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
