@@ -105,7 +105,74 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、index entry と per-file atom index の対応を検証した。broken entry 0 件。代表語は記憶 / ゲーム設計 / 敵パターンを exact match、評価軸は exact miss だが px-evaluation / evaluation の既存入口を確認した。"
+  - "atoms 2,887 件を監査した。atoms.jsonl / per-file .md / index.jsonl は各 2,887 件で一致し、missing / parse error / content conflict は各 0 件。raw 正規化重複 40 group は canonical overlay で fold 済み、effective unresolved 0 件。"
+  - "memory/raw/ の30日超・archive 名を含まない原文を棚卸しした（241 files: web_research 217 / headless_eval 16 / slack_api 6 / game_eval 1 / root 1）。provenance 原文で archive_last_run も本日 17:07 のため、この cycle では移動・削除なし。"
+  - "shared-reads candidate 1,314 件の lifecycle と duplicate sidecar を再監査した。terminal-only canonical 96 group、open duplicate 35 group（mixed 32 / all_open 3）。candidate 本体の自動変更なし。"
+  - "Slack directive / broadcast inbox を監査した。pending は双方 0 件で、handled 更新対象なし。"
+issues:
+  - id: ISS-4A-20260817-01
+    description: "atom sr-1776127289-4d9239b255 の title / trigger / excerpt に U+FFFD が残り、『AIエージェント』が『AIエ��ジェント』になっている。表示経路だけでなく保存済み raw source まで同じ破損を持つ単発の source integrity debt。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl:492; tools/memory_health.py --json"
+    source_file_status: "UTF-8 明示読みで per-file atom と raw source の双方に U+FFFD を確認。atom mirror 自体は3系統で整合している。"
+    display_or_tooling_status: "PowerShell Get-Content -Encoding UTF8 と rg の表示は安定しており、表示・tooling 経路だけの mojibake ではない。gr-1777083728-44d444ab7a は UTF-8 source と raw が一致する false positive。"
+    why_blocks_game_memory: "memory architecture atom の title / Use when にある検索語『AIエージェント』を壊し、完全一致検索の再現率を局所的に下げる。1 / 2,887 件で tags と URL は残るため影響は限定的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 7
+    dormant: 1
+    merged: 0
+    retired: 0
+candidate_lifecycle:
+  files: 1314
+  status_counts:
+    posted: 623
+    failed: 470
+    postponed: 210
+    ready_to_post: 9
+    needs_review: 2
+  overdue_open_total: 2
+  lifecycle_conflicts: 0
+  valid_unreviewed_count: 0
+  malformed_count: 0
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 35
+  mixed_group_count: 32
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_handoff_pending_count: 0
+  group_handoff_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_evidence:
+    - "gha-e6d4d4b5a37a0808: JAMEL all-open group deferred until 2026-08-20T13:19:04+09:00"
+    - "gha-2313a247c62a9028: collision morphology all-open group deferred until 2026-08-20T13:19:04+09:00"
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- 判定: 期限超過 open 2 件は既存の同一-work group lease が期限前であり、stale triage への再投入を抑止した。高水位条件は `2 > 0` を満たすが actionable group が 0 件で、budget 3 の条件を満たさない。新規 group / candidate handoff はともに 0 件。
+- Phase 4b gate: 起動しない。今回の source corruption は単発かつ再構成可能な cleanup debt で、新しい記憶構造の設計を要しない。raw title debt は 730 rows あるが effective display unresolved は 0 件で、canonical overlay が機能しているため issue 化しない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
