@@ -55,7 +55,14 @@ evaluation_note: "GDC 公式ページで Vault Recording: Video を確認。録�
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+eligible_candidates: 0
+posted: []
+skipped: []
+decision: no_post
+reason: "Phase 2 の gate_decision: pass 候補が 0 件のため、#shared-reads への投稿対象なし"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
