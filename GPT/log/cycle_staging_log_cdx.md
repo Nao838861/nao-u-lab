@@ -168,7 +168,89 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の High Signal / Recent / Game Task Entry Points / Tag Entry Points を per-file atom index と照合し、参照切れ0件を確認"
+  - "shared-reads の title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を現行 candidate 状態から再生成"
+  - "期限到来 postponed candidate 1件を candidate handoff inbox へ冪等 enqueue（cha-695c4c7a2b218eaf）"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+memory_index_audit:
+  broken_link_count: 0
+  validation: pass
+  source_file_status: "UTF-8明示読みで正常。代表語 記憶 / ゲーム設計 / 敵パターン / 評価軸 をすべて取得"
+  display_or_tooling_status: none
+atom_audit:
+  raw_atoms: 2893
+  mirror_status: clean
+  mirror_conflicts: 0
+  duplicate_clusters: 45
+  normalized_content_duplicate_groups: 40
+  title_excerpt_duplicate_groups: 5
+  recall_visible_normalized_content_duplicate_groups: 3
+  effective_display_unresolved_groups: 0
+  contradiction_result: "current lifecycle と三層 mirror に矛盾なし。既知 duplicate は canonical overlay で非破壊 fold 済み"
+  encoding_notes:
+    - "sr-1776127289-4d9239b255 は UTF-8 source 自体に『エ��ジェント』を含む既知の局所文字化け"
+    - "gr-1777083728-44d444ab7a は UTF-8 source 正常で、mojibake detector の false positive"
+raw_archive_audit:
+  cutoff: "2026-07-19"
+  inactive_file_count: 242
+  largest_sets:
+    - "memory/raw/web_research: 130"
+    - "memory/raw/web_research/phase3_sources: 17"
+    - "memory/raw/headless_eval: 16"
+    - "memory/raw/web_research/phase3_pdfs: 13"
+    - "memory/raw/web_research/phase3_posts: 13"
+  action: "archive candidate として識別のみ。raw provenance の移動・削除は Phase 4a では行わない"
+candidate_lifecycle:
+  counts:
+    posted: 631
+    ready_to_post: 9
+    postponed: 201
+    failed: 478
+    needs_review: 2
+  overdue_open_total: 3
+  posted_failed_excluded_from_reevaluation: true
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 7
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 3
+  stale_triage_queue_rows: 1
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 1
+  candidate_handoff_ids:
+    - cha-695c4c7a2b218eaf
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-695c4c7a2b218eaf
+    path: memory/shared_reads_candidates/20260719_anytime_strategic_deviation_detection.md
+    status: postponed
+    stale_after: "2026-08-18"
+    priority_reason: "期限到来。anytime-valid 検定と bot telemetry への適用先は具体的だが、比較 baseline・検出遅延・誤検出・scale の結果が candidate に不足しているため Phase 2 で再評価する"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
