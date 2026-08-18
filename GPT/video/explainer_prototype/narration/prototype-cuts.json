@@ -2,13 +2,16 @@
   "model": "gpt-4o-mini-tts",
   "voice": "marin",
   "responseFormat": "wav",
+  "fps": 30,
+  "tailPaddingSeconds": 0.35,
   "commonInstructions": "日本語の技術解説動画のナレーションです。女性ナレーターらしい明るさと落ち着きのある自然な標準語で話してください。話速は自然な通常速度の約1.1倍にしてください。日本語の助詞や文節の前後で区切らず、語を滑らかにつなげてください。句読点でも長く止まらず、二つの文の境目だけごく短く息継ぎしてください。大げさな演技、広告調、一本調子にはしないでください。固有名詞、数値、英字を明瞭に発音してください。音声だけを出力し、前後に長い無音を入れないでください。",
   "cuts": [
     {
       "id": "C01",
       "startFrame": 0,
-      "durationFrames": 300,
-      "targetSeconds": 10,
+      "durationFrames": 465,
+      "minimumDurationFrames": 300,
+      "targetSeconds": 15.5,
       "measuredDurationSeconds": 15.15,
       "localRate": 4,
       "instructions": "冒頭から自然に入り、全体を一続きの説明として軽快に読んでください。単語を一語ずつ区切らず、助詞の前後に間を置かないでください。二文の間もごく短くしてください。",
@@ -17,21 +20,27 @@
     },
     {
       "id": "C02",
-      "startFrame": 300,
-      "durationFrames": 450,
-      "targetSeconds": 15,
+      "startFrame": 465,
+      "durationFrames": 723,
+      "minimumDurationFrames": 450,
+      "targetSeconds": 24.1,
+      "measuredDurationSeconds": 23.75,
       "localRate": 4,
-      "instructions": "15秒以内へ自然に収めてください。",
-      "text": "今回のデモは、以前に大きなビッグコアとレーザーを動かしたときのビットマップ描画と同じ手法を使用しました。MMC5の拡張チップの機能を使って128x96ドットの仮想VRAMをBGのモノクロパターンを書き換えています。この手法の詳しい解説については、前回の動画をご覧ください。"
+      "instructions": "技術用語を明瞭にしつつ、全体を一続きの自然な説明として軽快に読んでください。単語を一語ずつ区切らず、助詞の前後に間を置かないでください。文の間もごく短くしてください。",
+      "text": "今回のデモは、以前に大きなビッグコアとレーザーを動かしたときのビットマップ描画と同じ手法を使用しました。MMC5の拡張チップの機能を使って128x96ドットの仮想VRAMをBGのモノクロパターンを書き換えています。この手法の詳しい解説については、前回の動画をご覧ください。",
+      "ttsText": "今回のデモには以前に大きなビッグコアとレーザーを動かしたときと同じビットマップ描画の手法を使いました。エムエムシーファイブ拡張チップの機能を使い128かける96ドットの仮想ブイラムを背景のモノクロパターンとして書き換えています。この手法の詳しい解説は前回の動画をご覧ください。"
     },
     {
       "id": "C03",
-      "startFrame": 750,
-      "durationFrames": 90,
-      "targetSeconds": 3,
+      "startFrame": 1188,
+      "durationFrames": 119,
+      "minimumDurationFrames": 90,
+      "targetSeconds": 3.967,
+      "measuredDurationSeconds": 3.6,
       "localRate": 2,
-      "instructions": "3秒以内へ自然に収めてください。",
-      "text": "まずは、開発の経緯を紹介します。"
+      "instructions": "短い章導入として、間延びさせず自然に言い切ってください。助詞の前後に間を置かないでください。",
+      "text": "まずは、開発の経緯を紹介します。",
+      "ttsText": "まずは開発の経緯を紹介します。"
     }
   ]
 }

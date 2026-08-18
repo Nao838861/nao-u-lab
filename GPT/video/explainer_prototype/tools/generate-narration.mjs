@@ -85,10 +85,29 @@ const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
 const apiKey = reportOnly ? undefined : await loadApiKey();
 await mkdir(outputDir, {recursive: true});
 
+const syncNarrationTiming = () => {
+  const fps = manifest.fps ?? 30;
+  const tailPaddingSeconds = manifest.tailPaddingSeconds ?? 0.35;
+  let startFrame = 0;
+
+  for (const cut of manifest.cuts) {
+    const measured = cut.measuredDurationSeconds;
+    cut.startFrame = startFrame;
+    if (Number.isFinite(measured)) {
+      const audioAlignedFrames = Math.ceil((measured + tailPaddingSeconds) * fps);
+      cut.durationFrames = Math.max(cut.minimumDurationFrames ?? 0, audioAlignedFrames);
+    }
+    cut.targetSeconds = Number((cut.durationFrames / fps).toFixed(3));
+    startFrame += cut.durationFrames;
+  }
+};
+
 const report = {
   generatedAt: new Date().toISOString(),
   model: manifest.model,
   voice: manifest.voice,
+  fps: manifest.fps ?? 30,
+  tailPaddingSeconds: manifest.tailPaddingSeconds ?? 0.35,
   cuts: [],
 };
 
@@ -132,17 +151,30 @@ for (const cut of selectedCuts) {
   }
 
   const durationSeconds = wavDurationSeconds(buffer);
-  const overflowSeconds = Math.max(0, durationSeconds - cut.targetSeconds);
   const item = {
     id: cut.id,
     file: `narration/${cut.id}.wav`,
-    targetSeconds: cut.targetSeconds,
     durationSeconds: Number(durationSeconds.toFixed(3)),
-    overflowSeconds: Number(overflowSeconds.toFixed(3)),
-    fits: overflowSeconds <= 0.05,
   };
+  cut.measuredDurationSeconds = item.durationSeconds;
   report.cuts.push(item);
-  console.log(`${cut.id}: ${item.durationSeconds}s / target ${cut.targetSeconds}s / ${item.fits ? 'FIT' : `OVER ${item.overflowSeconds}s`}`);
+}
+
+syncNarrationTiming();
+for (const item of report.cuts) {
+  const cut = manifest.cuts.find((candidate) => candidate.id === item.id);
+  const targetSeconds = cut.durationFrames / (manifest.fps ?? 30);
+  const overflowSeconds = Math.max(0, item.durationSeconds - targetSeconds);
+  item.startFrame = cut.startFrame;
+  item.durationFrames = cut.durationFrames;
+  item.targetSeconds = Number(targetSeconds.toFixed(3));
+  item.overflowSeconds = Number(overflowSeconds.toFixed(3));
+  item.fits = overflowSeconds <= 0.05;
+  console.log(`${item.id}: ${item.durationSeconds}s audio / ${item.targetSeconds}s video / ${item.fits ? 'FIT' : `OVER ${item.overflowSeconds}s`}`);
+}
+
+if (!reportOnly) {
+  await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
 }
 
 await writeFile(reportPath, `${JSON.stringify(report, null, 2)}\n`, 'utf8');

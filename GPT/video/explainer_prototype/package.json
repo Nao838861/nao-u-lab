@@ -10,7 +10,7 @@
     "narration:final-c01": "node tools/generate-narration.mjs --force --cut=C01",
     "narration:local": "powershell -ExecutionPolicy Bypass -File tools/generate-local-narration.ps1 -Force",
     "narration:report": "node tools/generate-narration.mjs --report-only",
-    "render:narration-preview": "remotion render src/index.ts ExplainerPrototype out/完成版/explainer_narration_C01-C03.mp4 --codec=h264 --crf=18 --frames=0-839",
+    "render:narration-preview": "remotion render src/index.ts ExplainerNarrationPreview out/完成版/explainer_narration_C01-C03.mp4 --codec=h264 --crf=18",
     "still": "remotion still src/index.ts ExplainerPrototype out/explainer_prototype_preview.png --frame=885"
   },
   "dependencies": {

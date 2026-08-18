@@ -12,6 +12,12 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from 'remotion';
+import {
+  c01Timing,
+  c02Timing,
+  c03Timing,
+  narrationTimingOffset,
+} from './narrationTiming';
 
 const C = {
   bg: '#050507',
@@ -287,7 +293,7 @@ const VideoPlate: React.FC<{
   </AbsoluteFill>
 );
 
-const IntroScene: React.FC = () => {
+const IntroScene: React.FC<{durationInFrames: number}> = ({durationInFrames}) => {
   const frame = useCurrentFrame();
   const scale = interpolate(frame, [0, 240], [1.04, 1.12], {
     extrapolateRight: 'clamp',
@@ -295,7 +301,7 @@ const IntroScene: React.FC = () => {
   });
   const enter = spring({frame, fps: 30, config: {damping: 18}});
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 300), backgroundColor: C.bg}}>
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg}}>
       <div style={{position: 'absolute', inset: 0, transform: `scale(${scale})`}}>
         <VideoPlate src="current_demo.mp4" pixelated />
       </div>
@@ -319,10 +325,10 @@ const IntroScene: React.FC = () => {
   );
 };
 
-const PreviousScene: React.FC = () => {
+const PreviousScene: React.FC<{durationInFrames: number}> = ({durationInFrames}) => {
   const frame = useCurrentFrame();
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 450), backgroundColor: C.bg}}>
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg}}>
       <VideoPlate src="previous_video.mp4" />
       <div
         style={{
@@ -344,11 +350,11 @@ const PreviousScene: React.FC = () => {
   );
 };
 
-const DevelopmentTitleScene: React.FC = () => {
+const DevelopmentTitleScene: React.FC<{durationInFrames: number}> = ({durationInFrames}) => {
   const frame = useCurrentFrame();
   const enter = spring({frame, fps: 30, config: {damping: 15}});
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 90), backgroundColor: C.bg, display: 'grid', placeItems: 'center'}}>
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, display: 'grid', placeItems: 'center'}}>
       <div style={{textAlign: 'center', opacity: enter, transform: `translateY(${(1 - enter) * 24}px)`}}>
         <Eyebrow color={C.cyan}>DEVELOPMENT LOG</Eyebrow>
         <div style={{height: 12}} />
@@ -1425,67 +1431,67 @@ const CurrentReturnScene: React.FC = () => {
 export const ExplainerPrototype: React.FC = () => {
   return (
     <AbsoluteFill style={{backgroundColor: C.bg}}>
-      <Sequence from={0} durationInFrames={300}>
-        <IntroScene />
+      <Sequence from={c01Timing.startFrame} durationInFrames={c01Timing.durationFrames}>
+        <IntroScene durationInFrames={c01Timing.durationFrames} />
       </Sequence>
-      <Sequence from={300} durationInFrames={450}>
-        <PreviousScene />
+      <Sequence from={c02Timing.startFrame} durationInFrames={c02Timing.durationFrames}>
+        <PreviousScene durationInFrames={c02Timing.durationFrames} />
       </Sequence>
-      <Sequence from={750} durationInFrames={90}>
-        <DevelopmentTitleScene />
+      <Sequence from={c03Timing.startFrame} durationInFrames={c03Timing.durationFrames}>
+        <DevelopmentTitleScene durationInFrames={c03Timing.durationFrames} />
       </Sequence>
-      <Sequence from={840} durationInFrames={450}>
+      <Sequence from={840 + narrationTimingOffset} durationInFrames={450}>
         <DevelopmentDay1Scene />
       </Sequence>
-      <Sequence from={1290} durationInFrames={450}>
+      <Sequence from={1290 + narrationTimingOffset} durationInFrames={450}>
         <DevelopmentDay2Scene />
       </Sequence>
-      <Sequence from={1740} durationInFrames={300}>
+      <Sequence from={1740 + narrationTimingOffset} durationInFrames={300}>
         <DevelopmentDay3Scene />
       </Sequence>
-      <Sequence from={2040} durationInFrames={450}>
+      <Sequence from={2040 + narrationTimingOffset} durationInFrames={450}>
         <DevelopmentCheckerboardScene />
       </Sequence>
-      <Sequence from={2490} durationInFrames={720}>
+      <Sequence from={2490 + narrationTimingOffset} durationInFrames={720}>
         <LargeCharacterScene />
       </Sequence>
-      <Sequence from={3210} durationInFrames={300}>
+      <Sequence from={3210 + narrationTimingOffset} durationInFrames={300}>
         <GenericLoopScene />
       </Sequence>
-      <Sequence from={3510} durationInFrames={360}>
+      <Sequence from={3510 + narrationTimingOffset} durationInFrames={360}>
         <CompiledScene />
       </Sequence>
-      <Sequence from={3870} durationInFrames={390}>
+      <Sequence from={3870 + narrationTimingOffset} durationInFrames={390}>
         <RaceScene />
       </Sequence>
-      <Sequence from={4260} durationInFrames={480}>
+      <Sequence from={4260 + narrationTimingOffset} durationInFrames={480}>
         <PerformanceDemoScene />
       </Sequence>
-      <Sequence from={4740} durationInFrames={360}>
+      <Sequence from={4740 + narrationTimingOffset} durationInFrames={360}>
         <CapacityCostScene />
       </Sequence>
-      <Sequence from={5100} durationInFrames={300}>
+      <Sequence from={5100 + narrationTimingOffset} durationInFrames={300}>
         <PositionLimitScene />
       </Sequence>
-      <Sequence from={5400} durationInFrames={360}>
+      <Sequence from={5400 + narrationTimingOffset} durationInFrames={360}>
         <AlignmentScene />
       </Sequence>
-      <Sequence from={5760} durationInFrames={450}>
+      <Sequence from={5760 + narrationTimingOffset} durationInFrames={450}>
         <SizeBankScene />
       </Sequence>
-      <Sequence from={6210} durationInFrames={240}>
+      <Sequence from={6210 + narrationTimingOffset} durationInFrames={240}>
         <BossBattleScene />
       </Sequence>
-      <Sequence from={6450} durationInFrames={600}>
+      <Sequence from={6450 + narrationTimingOffset} durationInFrames={600}>
         <FrameTimelineScene />
       </Sequence>
-      <Sequence from={0} durationInFrames={300}>
+      <Sequence from={c01Timing.startFrame} durationInFrames={c01Timing.durationFrames}>
         <Audio src={staticFile('narration/C01.wav')} volume={0.95} />
       </Sequence>
-      <Sequence from={300} durationInFrames={450}>
+      <Sequence from={c02Timing.startFrame} durationInFrames={c02Timing.durationFrames}>
         <Audio src={staticFile('narration/C02.wav')} volume={0.95} />
       </Sequence>
-      <Sequence from={750} durationInFrames={90}>
+      <Sequence from={c03Timing.startFrame} durationInFrames={c03Timing.durationFrames}>
         <Audio src={staticFile('narration/C03.wav')} volume={0.95} />
       </Sequence>
     </AbsoluteFill>

@@ -41,9 +41,10 @@ npm.cmd run render:narration-preview
 
 - APIキーは環境変数`OPENAI_API_KEY`、プロジェクト直下の`.env`または`key.env`、あるいは`GPT/.env`から読み込む。`key.env`だけはキー単体を一行で保存した形式にも対応する。
 - `.env`と生成WAVはgit管理しない。
-- `public/narration/duration-report.json`へ予定尺と実測尺の比較を出す。
+- `public/narration/duration-report.json`へ音声尺と映像尺の比較を出す。
 - 原稿または話速を変更して作り直す時は`npm.cmd run narration:regenerate`を使う。
-- C01だけを最終候補設定で再生成する時は`npm.cmd run narration:final-c01`を使う。最終候補は既存の映像尺へ押し込まず、自然な話速で生成した実測尺を映像側へ反映する。
+- 音声生成時に実測尺をmanifestへ記録し、末尾余白を加えた映像尺、各カットの開始フレームを自動更新する。元の映像尺より短くはしない。
+- C01だけを再生成する時は`npm.cmd run narration:final-c01`を使う。音声は既存の映像尺へ押し込まず、自然な話速で生成した実測尺を映像側へ反映する。
 - 試作動画は`out/完成版/explainer_narration_C01-C03.mp4`へ出力する。
 
 API利用枠がない時は、Windows標準の`Microsoft Haruka Desktop`で仮音声を生成できる。
