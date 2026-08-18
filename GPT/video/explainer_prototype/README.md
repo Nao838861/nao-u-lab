@@ -18,9 +18,7 @@
 
 ```powershell
 npm.cmd install
-powershell -ExecutionPolicy Bypass -File tools\prepare-assets.ps1 `
-  -PreviousVideo "C:\Users\owner\Downloads\「ファミコンで長いレーザーと大きなビッグコアを表示する方法の別解」の解説動画.mp4" `
-  -DayOneVideo "C:\Users\owner\Videos\拡大縮小成功記念.mp4"
+npm.cmd run assets:prepare
 npm.cmd run start
 npm.cmd run render
 npm.cmd run still
@@ -29,6 +27,7 @@ npm.cmd run still
 レンダリング結果は`out/`へ出力する。MP4は容量が大きいためgit管理しない。確認用PNGはgit管理する。
 
 元映像から切り出した`public/*.mp4`と、元プロジェクトから複製した`public/tree/`もgit管理しない。`tools/prepare-assets.ps1`でローカルの正本から再生成する。
+正本のパスは`tools/source-assets.json`で管理し、Windows PowerShellからUTF-8として読み込む。
 
 ## ナレーション試作
 
@@ -44,7 +43,7 @@ npm.cmd run render:narration-preview
 - `public/narration/duration-report.json`へ音声尺と映像尺の比較を出す。
 - 原稿または話速を変更して作り直す時は`npm.cmd run narration:regenerate`を使う。
 - 音声生成時に実測尺をmanifestへ記録し、末尾余白を加えた映像尺、各カットの開始フレームを自動更新する。元の映像尺より短くはしない。
-- C01/C02の背景動画は元素材の再生速度を変えず、音声から決まるカット尺までループする。C01のズームもカット全体へ追従させる。
+- `npm.cmd run assets:prepare`は音声から決まるカット尺を読み、長い正本から必要尺を連続抽出する。正本の残り時間が不足する場合だけ自動的にループへフォールバックし、結果を`public/video-asset-report.json`へ出す。C01のズームもカット全体へ追従させる。
 - 生成時は未加工WAVを`public/narration/raw/`へ残し、通常の語間・読点・句点を分けて長すぎる低音量区間を自動で短縮する。カット別の`commaPauseCandidateIndices`で読点の間だけを保護し、`normalizeSentenceSilence`を有効にすると句点の間を設定値へ揃える。短縮設定だけを調整した場合は`npm.cmd run narration:compact`でAPIを呼ばずに再処理できる。
 - C01だけを再生成する時は`npm.cmd run narration:final-c01`を使う。音声は既存の映像尺へ押し込まず、自然な話速で生成した実測尺を映像側へ反映する。
 - 試作動画は`out/完成版/explainer_narration_C01-C03.mp4`へ出力する。

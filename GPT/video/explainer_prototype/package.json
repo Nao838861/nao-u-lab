@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
+    "assets:prepare": "powershell -ExecutionPolicy Bypass -File tools/prepare-assets.ps1",
     "start": "remotion studio src/index.ts",
     "render": "remotion render src/index.ts ExplainerPrototype out/完成版/explainer_prototype_latest.mp4 --codec=h264 --crf=18",
     "narration:generate": "node tools/generate-narration.mjs",

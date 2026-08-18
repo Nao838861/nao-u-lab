@@ -4,7 +4,7 @@
   "speed": 1.2,
   "responseFormat": "wav",
   "fps": 30,
-  "tailPaddingSeconds": 0.5,
+  "tailPaddingSeconds": 0.75,
   "silenceCompaction": {
     "windowMs": 5,
     "thresholdDb": -44,
@@ -22,9 +22,9 @@
     {
       "id": "C01",
       "startFrame": 0,
-      "durationFrames": 356,
+      "durationFrames": 363,
       "minimumDurationFrames": 300,
-      "targetSeconds": 11.867,
+      "targetSeconds": 12.1,
       "measuredDurationSeconds": 11.345,
       "localRate": 4,
       "silenceCompaction": {
@@ -38,10 +38,10 @@
     },
     {
       "id": "C02",
-      "startFrame": 356,
-      "durationFrames": 494,
+      "startFrame": 363,
+      "durationFrames": 501,
       "minimumDurationFrames": 450,
-      "targetSeconds": 16.467,
+      "targetSeconds": 16.7,
       "measuredDurationSeconds": 15.935,
       "localRate": 4,
       "silenceCompaction": {
@@ -56,10 +56,10 @@
     },
     {
       "id": "C03",
-      "startFrame": 850,
-      "durationFrames": 90,
+      "startFrame": 864,
+      "durationFrames": 95,
       "minimumDurationFrames": 90,
-      "targetSeconds": 3,
+      "targetSeconds": 3.167,
       "measuredDurationSeconds": 2.4,
       "localRate": 2,
       "silenceCompaction": {

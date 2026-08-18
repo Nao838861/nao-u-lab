@@ -4,7 +4,6 @@ import {
   Audio,
   Easing,
   Img,
-  Loop,
   OffthreadVideo,
   Sequence,
   interpolate,
@@ -272,9 +271,8 @@ const VideoPlate: React.FC<{
   src: string;
   startFrom?: number;
   pixelated?: boolean;
-  loopDurationInFrames?: number;
-}> = ({src, startFrom = 0, pixelated = false, loopDurationInFrames}) => {
-  const video = (
+}> = ({src, startFrom = 0, pixelated = false}) => (
+  <AbsoluteFill style={{backgroundColor: C.bg}}>
     <OffthreadVideo
       src={staticFile(src)}
       startFrom={startFrom}
@@ -286,21 +284,14 @@ const VideoPlate: React.FC<{
         imageRendering: pixelated ? 'pixelated' : 'auto',
       }}
     />
-  );
-  return (
-    <AbsoluteFill style={{backgroundColor: C.bg}}>
-      {loopDurationInFrames ? (
-        <Loop durationInFrames={loopDurationInFrames}>{video}</Loop>
-      ) : video}
-      <AbsoluteFill
-        style={{
-          background:
-            'linear-gradient(90deg, rgba(5,5,7,.55), transparent 42%, rgba(5,5,7,.12)), linear-gradient(0deg, rgba(5,5,7,.55), transparent 42%)',
-        }}
-      />
-    </AbsoluteFill>
-  );
-};
+    <AbsoluteFill
+      style={{
+        background:
+          'linear-gradient(90deg, rgba(5,5,7,.55), transparent 42%, rgba(5,5,7,.12)), linear-gradient(0deg, rgba(5,5,7,.55), transparent 42%)',
+      }}
+    />
+  </AbsoluteFill>
+);
 
 const IntroScene: React.FC<{durationInFrames: number}> = ({durationInFrames}) => {
   const frame = useCurrentFrame();
@@ -312,7 +303,7 @@ const IntroScene: React.FC<{durationInFrames: number}> = ({durationInFrames}) =>
   return (
     <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg}}>
       <div style={{position: 'absolute', inset: 0, transform: `scale(${scale})`}}>
-        <VideoPlate src="current_demo.mp4" pixelated loopDurationInFrames={240} />
+        <VideoPlate src="current_demo.mp4" pixelated />
       </div>
       <div
         style={{
@@ -338,7 +329,7 @@ const PreviousScene: React.FC<{durationInFrames: number}> = ({durationInFrames})
   const frame = useCurrentFrame();
   return (
     <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg}}>
-      <VideoPlate src="previous_video.mp4" loopDurationInFrames={210} />
+      <VideoPlate src="previous_video.mp4" />
       <div
         style={{
           position: 'absolute',
