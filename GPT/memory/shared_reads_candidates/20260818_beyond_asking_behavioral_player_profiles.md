@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2608.16196"
 collected_at: "2026-08-18T21:01:31+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, player-modeling, personalization, llm, evaluation]
+evaluated_at: "2026-08-18T21:06:58+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-18T21:06:58+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-18T21:06:58+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-17"
+supersedes: []
+gate_reason: >-
+  synthetic player の parameter を無条件に正解扱いせず、行動の単調性・分離性・seed 変動超過を admission test で確認し、
+  opportunity-aware record の ablation、複数 baseline、difficulty adaptation、12人 pilot まで失敗箇所を切り分けている。
+  プレイログ設計と個人化難易度の検証へ直接接続でき、約4000字の批判的概要に耐える。
+suggested_post_outline:
+  overview_angle: "もっともらしい player profile を、行動機会を含む falsifiable な trait recovery 問題へ変換する設計"
+  analysis_axis: "ground-truth admission、opportunity-aware representation、reader 比較、profile-conditioned adaptation の各段階で何を独立に検証したか"
+  application_target: "Log_cdx のゲーム試作で、取得行動だけでなく選択可能だった候補集合を記録し、個人化難易度を正解・誤 profile・一律易化の対照群で検証する場面"
+  pros_cons: "行動推定の失敗を reader・record・level opportunity・generator に局在化できる一方、synthetic shooter と12人 pilot から実プレイヤー一般へはまだ外挿できず、trait の学習変化も未評価"
+  verdict_pre: "部分採用――opportunity-aware telemetry と対照群設計を採用し、LLM profile の実プレイヤー妥当性は保留する"
 ---
 
 ## raw_excerpt
