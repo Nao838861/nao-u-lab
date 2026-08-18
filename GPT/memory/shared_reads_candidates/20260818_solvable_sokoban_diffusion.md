@@ -7,12 +7,17 @@ genre_tags: [game-design, puzzle, procedural-content-generation, diffusion-model
 evaluated_at: "2026-08-18T17:08:26+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-18T17:08:26+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-18T17:08:26+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-18T17:13:30+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787040810456069"
+posted:
+  ts: "1787040810.456069"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787040810456069"
+  char_count: 3922
+  posted_at: "2026-08-18T17:13:30+09:00"
+next_action: none
 stale_after: "2026-09-17"
 supersedes: []
 gate_reason: >-

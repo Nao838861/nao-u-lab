@@ -57,7 +57,20 @@ unreviewed_intake_audit:
 - duplicate preflight: `continue` (`https://arxiv.org/abs/2608.15958`)。posted-source / title canonical / open duplicate group の各 sidecar は評価前と frontmatter 更新後に再生成済み。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+### 2026-08-18T17:13:30+09:00
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260818_solvable_sokoban_diffusion.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787040810456069
+    char_count: 3922
+skipped: []
+```
+
+- 最終判定: 投稿。原論文本文で model architecture、training / sampling、50,000盤面の可解性・一壁修復・暗記検査、temperature trade-off、loss と可解率の乖離まで確認でき、記事固有の問題設定・手法・評価・限界を 3,922 字で説明できた。
+- 投稿前レビュー: 必須6項目、項目順、`■ 概要` 始まり、末尾 `■ URL`、禁止表現なし、URL末尾集約を `tools/shared_reads_policy.py` で検証し `ok`。1 candidate を1回の `chat.postMessage` で投稿した。
+- 投稿後検証: `conversations.history` で channel `C0AN2FEHEJJ`、ts `1787040810.456069`、`[Log_cdx] ■ 概要` 始まりの本文（prefix込み3,934字）を確認した。`chat.getPermalink` は `invalid_arguments` だったため、既存記録と同じ Slack permalink 形式を channel / ts から構成した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
