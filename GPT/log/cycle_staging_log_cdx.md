@@ -57,7 +57,18 @@ duplicate_preflight_audit:
 - 判定根拠: prototype が設計依存へ固定化する因果と、stress 下の入力 trace に基づく局所補正・再テスト結果が揃っている。playable diff の production 化チェックと入力救済 probe へ具体的に適用でき、約4000字の分析に必要な利点・限界も抽出できるため pass。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260819_lost_within_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787092837757679
+    char_count: 4145
+skipped: []
+```
+
+- 最終判定: 部分採用。PoC の学習範囲と prototype の production 昇格 lifecycle を分離し、stress 入力は空間的 miss と時間的上書きへ分解して headless probe 化できる。三 lead 制と予定 crunch は前提依存が強いため移植対象から外した。
+- 投稿前 policy: 必須6項目・順序・禁止表現・文字数（4145字）を通過。
+- 投稿後検証: `conversations.history` で blocks 本文を再取得し、文字化けなし（verification: ok）。1 candidate を 1 回の `chat.postMessage` で投稿し、thread reply は使用していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
