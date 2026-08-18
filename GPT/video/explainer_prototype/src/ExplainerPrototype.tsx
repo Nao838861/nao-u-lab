@@ -689,17 +689,33 @@ const GenericLoopScene: React.FC<{
 
 const CompiledScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 360}) => {
   const frame = useCurrentFrame();
-  const scaledFrame = (originalFrame: number) => originalFrame / 360 * durationInFrames;
-  const active = frame < scaledFrame(115) ? 0 : frame < scaledFrame(285) ? 1 : 2;
-  const cursor = frame < scaledFrame(90)
-    ? 0
-    : frame < scaledFrame(115)
-      ? Math.floor(interpolate(frame, [scaledFrame(90), scaledFrame(115)], [0, 6], {extrapolateRight: 'clamp'}))
-      : frame < scaledFrame(225)
-        ? 6
-        : frame < scaledFrame(285)
-          ? Math.floor(interpolate(frame, [scaledFrame(225), scaledFrame(285)], [6, 21], {extrapolateRight: 'clamp'}))
-          : 21;
+  const blocksPerRow = 14;
+  const startCursor = rasterBlocks.find(
+    (blockIndex) => Math.floor(blockIndex / blocksPerRow) === 2,
+  ) ?? blocksPerRow * 2;
+  const startOrderIndex = rasterBlocks.indexOf(startCursor);
+  const partialTargetOrderIndex = rasterBlocks.findIndex(
+    (blockIndex, orderIndex) => orderIndex > startOrderIndex && enemyCoverage[blockIndex] === 1,
+  );
+  const fullTargetOrderIndex = rasterBlocks.findIndex(
+    (blockIndex, orderIndex) => orderIndex > partialTargetOrderIndex && enemyCoverage[blockIndex] === 2,
+  );
+  const framesPerBlock = 4;
+  const partialMoveStart = 10 * 30;
+  const fullMoveStart = 19 * 30;
+  const cursorOrderIndex = frame < partialMoveStart
+    ? startOrderIndex
+    : frame < fullMoveStart
+      ? Math.min(
+        partialTargetOrderIndex,
+        startOrderIndex + Math.floor((frame - partialMoveStart) / framesPerBlock),
+      )
+      : Math.min(
+        fullTargetOrderIndex,
+        partialTargetOrderIndex + Math.floor((frame - fullMoveStart) / framesPerBlock),
+      );
+  const cursor = rasterBlocks[cursorOrderIndex];
+  const active = enemyCoverage[cursor] ?? 0;
   const cards = [
     {title: '全面透明', equation: '(SCREEN AND $FF) OR $00', result: '命令なし', code: ['; 命令なし']},
     {title: '一部だけ描画', equation: '(SCREEN AND $C3) OR $24', result: '必要な合成だけ', code: ['LDA (screen),Y', 'AND #$C3', 'ORA #$24', 'STA (screen),Y']},
