@@ -97,7 +97,55 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index を検証し、per-file atom index との参照不一致 0 件を確認した。UTF-8 明示読みでは代表語『記憶』『ゲーム設計』『敵パターン』を取得でき、『評価軸』は本文に存在しなかったが mojibake 兆候はなかった。"
+  - "atom 2,899 件について atoms.jsonl / per-file .md / index.jsonl の mirror drift・parse error・content conflict が各 0 件、duplicate cluster 45 群と canonical overlay 45 群の整合を確認した。"
+  - "memory/raw/ の 30 日超・mtime 停止ファイルを 242 件抽出した。原文 provenance を持つため本 cycle では移動・削除せず、archive 候補として観測だけ残した。"
+  - "shared-reads lifecycle を監査し、posted 635 / ready_to_post 9 / postponed 200 / failed 479 / needs_review 2 を確認した。期限到来 open 2 件は既存 group handoff の deferred lease（retry_after 2026-08-20T13:19:04+09:00）と一致するため再投入しなかった。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件で、handled へ更新すべき行はなかった。"
+  - "memory health の mojibake suspect 2 件を UTF-8 明示読みで切り分けた。gr-1777083728-44d444ab7a は原文中のリテラル『???』による誤検知、sr-1776127289-4d9239b255 は raw から active atom まで同じ置換文字を持つ source corruption と確認した。"
+issues:
+  - id: ISS-UTF8-RAW-001
+    description: "active atom sr-1776127289-4d9239b255 の title / trigger / excerpt と raw Slack archive に『AIエ��ジェント』という置換文字が残り、正規表記『AIエージェント』での exact keyword 探索を弱めている。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl:317; memory/atoms/index.jsonl:317"
+    source_file_status: "UTF-8 明示読みでも U+FFFD 相当の置換文字 2 個を取得したため source file 自体の局所破損。raw archive の同一 ts 行にも存在する。"
+    display_or_tooling_status: "PowerShell Get-Content -Encoding UTF8 と rg の双方で同じ文字列を取得。表示経路だけの mojibake ではない。"
+    why_blocks_game_memory: "記憶アーキテクチャと progressive disclosure の lesson を将来のゲーム制作時に日本語キーワードで探す導線が部分的に欠ける。ただし tags に agent / memory があり recall 全体は失われていない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 7
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
