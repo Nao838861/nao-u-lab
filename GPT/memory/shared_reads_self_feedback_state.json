@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-18T12:43:54+09:00",
+  "updated_at": "2026-08-18T15:02:11+09:00",
   "reviewed_source_ts": [
+    "1787024421.016969",
     "1787016560.272959",
     "1787009065.933869",
     "1786995013.250539",
@@ -678,6 +679,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-18T15:02:11+09:00",
+      "selected": {
+        "id": "sr-1787024421-40de74d4ba",
+        "source_ts": "1787024421.016969",
+        "title": "How to decide what mechanics to add to an Early Access game",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新 atom で、memory・harness・game-design・operation・evaluation の5優先タグを持つため1件だけ選んだ。player feedback を件数順の feature list にせず、原文から行動欲求、定型 pitch、実装責任と工数、個別検証後の themed update へ変換する funnel が、Codex の次の playable iteration 選定で既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads 本文は、同義要望を文面ではなく player の行動欲求で束ね、Aesthetic／Quality of Life／Gameplay に分類し、各案を定型 pitch、担当意思、工数、反対意見で絞り、最後に関連 mechanic を themed update へ編成する段階を示す。自分達向けには raw feedback、推定欲求、design pillar、期待 behavior、見積り、最小 probe、中止条件の七項目と、個別 feature flag／評価を残してから theme 化する手順へ変換できるため relevance・actionability は3とした。一方、根拠は単一 studio の運用回顧で、導入前後の retention、開発速度、mechanic 利用率、投票 bias、落とした案の事後妥当性が示されず、記事本文を独立検証していないため evidence は2。probe-20260525-supervised-delta-noncompression は raw wording・observed mismatch・next implementation gate、probe-20260717-player-intent-action-response は intent・action schema・observable response、probe-20260625-quality-workflow-feedback-route は observation から next action への接続、probe-20260709-critical-stage-feedback-routing は actionable stage と evidence 付き keep／change／question をすでに扱う。ただし支持を無料投票にせず実装担当と時間見積りへ結び、theme 化を個別検証後に遅らせる点は既存 control にない小さな差なので non_redundancy は2とした。現在の staging には raw feedback batch、比較可能な playable diff、七項目 pitch の before／after artifact がなく、直後の Phase 4a memory cleanup は実 consumer ではない。consumer_phase、trigger_artifact、expected_delta を lease 契約どおり固定できないため adopt_probe／adopt_metric にせず state-only defer とする。次の具体的な game iteration 選定で候補が複数あり、既存4 controlsだけでは担当意思・工数・個別検証前の theme bundling を判定できない時だけ一時 metric として再評価する。",
+      "existing_controls": [
+        "probe-20260525-supervised-delta-noncompression",
+        "probe-20260717-player-intent-action-response",
+        "probe-20260625-quality-workflow-feedback-route",
+        "probe-20260709-critical-stage-feedback-routing"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、feedback funnel の有用性、既存 raw-delta／intent-response／quality-route／critical-stage controls との重複、実装責任付き pitch と個別検証後の theme 化という差分、比較 artifact 不在による defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-18T12:43:54+09:00",
       "selected": {
