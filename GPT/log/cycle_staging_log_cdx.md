@@ -81,7 +81,35 @@ final_review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787055443-e67c74236e
+    source_ts: "1787055443.325009"
+    title: "Beyond Asking：行動頻度を機会分母で条件づける player-profile 検証"
+    reason: "source=slack_api/shared-reads、score=11、未レビューで、harness・game-design・operation・evaluation の4優先タグを持つ最新候補の一つ。観測行動と、その行動を選べた機会の分離が次のgameplay telemetryに判断差を作るか確認するため1件だけ選んだ。Nao_uの明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: defer
+  decision_reason: "採用閾値は満たすが、現stagingにplayer-profile推定のplayable diff、opportunity-aware recordあり／なしの比較trace、個人化難易度の採否を行うconsumer phaseがない。直後のPhase 4aはmemory cleanupで実consumerではなく、別probeのpending leaseも1件あるためlease契約を具体化できない。既存controlsはplayer profile、行動分布、behavior trace、behavioral claimを扱うが、選択可能機会を分母にする点は差分として残る。具体的なplayer-modeling artifactが生じた時だけ一時metricとして再評価する。"
+  change:
+    summary: "reviewed_source_tsとstate-onlyのdefer理由だけを記録。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

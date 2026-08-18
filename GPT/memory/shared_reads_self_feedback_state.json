@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-18T19:16:23+09:00",
+  "updated_at": "2026-08-18T21:22:33+09:00",
   "reviewed_source_ts": [
+    "1787055443.325009",
     "1787040810.456069",
     "1787032616.028469",
     "1787024421.016969",
@@ -681,6 +682,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-18T21:22:33+09:00",
+      "selected": {
+        "id": "sr-1787055443-e67c74236e",
+        "source_ts": "1787055443.325009",
+        "title": "Beyond Asking：行動頻度を機会分母で条件づける player-profile 検証",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たす最新候補の一つで、harness・game-design・operation・evaluation の4優先タグを持つため1件だけ選んだ。pickupを取らなかった等の結果をtraitへ直結せず、その行動を選べる機会を分母として記録する知見が、次のgameplay telemetryや個人化難易度評価で既存controlと異なる判断差を作れるか確認した。Nao_uが本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件と必須指標は満たす。shared-reads本文は、Dodge／Collector／Aggression／Skill usageを別channelのsynthetic parameterとして作り、parameter変化がtrait固有の行動差をseed変動以上に生むかをadmission testで確認し、行動結果とdecision opportunityを分離したrecord、reader baseline比較、正解・誤profile・一律易化のdifficulty adaptation対照、12人pilotまで段階別に検証している。したがってaction_countだけでなくopportunity_count、action_given_opportunity、未提示機会、seed／scenario、推定profileと適応結果を同じtraceへ残す行動に直接変換でき、relevance・actionability・evidenceは3とした。既存のprobe-20260604-skill-conditioned-playtest-routeはrouteごとのplayer profileとcontrastを、probe-20260619-behavior-signature-distribution-shiftは行動分布のbefore／afterを、probe-20260616-behavior-trace-pcg-diversityはaction trajectoryを、probe-20260710-scoreable-games-benchmark-claim-decompositionはbehavioral claimとcontext variantの分離を扱うが、選択可能だった機会を分母として非行動を解釈することは直接要求しないためnon_redundancy=2とした。一方、現stagingにはplayer-profile推定を行うplayable diff、同一seedでopportunity-aware recordあり／なしを比較するtrace、個人化難易度の採否を行うconsumer phaseがない。直後のPhase 4aはmemory cleanupで実consumerではなく、別probeのpending leaseも1件あるため、consumer_phase・trigger_artifact・expected_deltaをlease契約どおり固定できない。synthetic traitを実人の恒常特性へ過剰一般化する危険とtelemetry増加もあるため、active_probes・metric・lease・directive・恒久ルールは追加せず、具体的なplayer-modeling artifactが生じた時だけ一時metricとして再評価するstate-only deferとする。",
+      "existing_controls": [
+        "probe-20260604-skill-conditioned-playtest-route",
+        "probe-20260619-behavior-signature-distribution-shift",
+        "probe-20260616-behavior-trace-pcg-diversity",
+        "probe-20260710-scoreable-games-benchmark-claim-decomposition"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsと、行動結果／decision opportunity分離の有用性、既存profile／behavior-trace controlsとの差分、比較可能なplayer-modeling artifact不在によるdefer理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-18T19:16:23+09:00",
       "selected": {
