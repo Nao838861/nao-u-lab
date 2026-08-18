@@ -96,7 +96,95 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+executed_at: "2026-08-18T23:33:25+09:00"
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、entry section の atom ID / per-file path / index 対応を検証した。missing 0 件、broken entry 0 件。"
+  - "memory/atoms.jsonl / per-file .md / index.jsonl の 2904 atom mirror を監査した。parse error 0 件、content conflict 0 件、duplicate overlay 45 group は現行 fold で解決済み。"
+  - "candidate lifecycle 1330 件を dry-run 監査した。current-state conflict 0 件、正規未評価 intake 0 件、malformed 0 件。"
+  - "terminal title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再生成した。open group 31 件、stale queue 0 件、actionable group 0 件。"
+  - "Slack inbox の directives / broadcasts を確認した。pending は各 0 件で handled 更新対象なし。"
+  - "raw archive 候補を mtime 基準で確認した。30 日超は 242 files / 70,590,898 bytes だが provenance / evidence pointer を保持するため移動せず retain_in_place とした。"
+issues:
+  - id: ISS-ENC-ATOM-001
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』が raw Slack archive から atoms.jsonl / per-file / index まで『AIエ��ジェント』として保持されている。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492 and :1216 (ts=1776127289.990919); memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/index.jsonl:317"
+    source_file_status: "UTF-8 明示読みは成功。replacement characters は raw source に既存で、atom 3 mirror は同じ文字列を忠実に保持しているため source data quality issue。"
+    display_or_tooling_status: "none。PowerShell UTF-8 表示でも同じ replacement characters を再現し、表示経路だけの mojibake ではない。"
+    why_blocks_game_memory: "memory / agent の高得点 atom 1 件で title / trigger の exact-match 検索精度を局所的に落とすが、mirror・recall 全体や次のゲーム制作導線は止めない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  reason: "ISS-ENC-ATOM-001 は clean raw provenance がなく安全に自動修復できない局所的な source defect であり、新しい構造設計を起動する根拠にはしない。"
+encoding_audit:
+  memory_md_source_file_status: "UTF-8 明示読み成功。代表語は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false（literal 不在）。index validator と entry section の mojibake check は pass しており、literal 不在を encoding 破損とは扱わない。"
+  display_or_tooling_status: "none"
+atom_audit:
+  raw_atoms: 2904
+  per_file_atoms: 2904
+  index_rows: 2904
+  canonical_overlay_groups: 45
+  normalized_content_duplicate_groups: 40
+  effective_display_unresolved_groups: 0
+  content_conflicts: 0
+candidate_lifecycle:
+  counts:
+    posted: 640
+    ready_to_post: 9
+    postponed: 200
+    failed: 479
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_open_total: 2
+  current_state_conflicts: 0
+title_duplicate_audit:
+  terminal_canonical_groups: 100
+  mixed_duplicate_groups: 28
+  open_duplicate_groups: 31
+  unindexed_sample_count: 20
+  disposition: "unindexed sample は open status を含むため terminal canonical に入れず、open-group sidecar と既存 handoff lease で扱う。"
+raw_archive_audit:
+  cutoff_days: 30
+  candidate_file_count: 242
+  candidate_bytes: 70590898
+  action: "retain_in_place"
+  reason: "memory/raw は atom / candidate の provenance と evidence pointer の参照先であり、mtime だけでは安全に archive できない。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  receipt: null
+  next_pending_probe_id: probe-20260621-compiled-memory-boundary
+  next_lease_due: "2026-08-19T06:00:00+09:00"
+  counts:
+    pending: 1
+    resolved: 7
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  backlog_high_water_reason: "overdue 2 > queue 0 だが actionable group 0 < 3。JAMEL と collision morphology の 2 group は membership fingerprint 一致の deferred lease が retry_after 2026-08-20T13:19:04+09:00 まで再投入を抑止している。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
