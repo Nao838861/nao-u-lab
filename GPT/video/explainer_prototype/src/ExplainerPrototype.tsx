@@ -572,9 +572,10 @@ const GenericLoopScene: React.FC<{
   narrationSchedule?: boolean;
 }> = ({durationInFrames = 300, narrationSchedule = false}) => {
   const frame = useCurrentFrame();
-  const narrationAnimationStart = 12 * 30;
   const narrationLoopFrames = 9 * 30;
   const narrationLoopFrame = frame % narrationLoopFrames;
+  const narrationStepStartFrames = [11.86, 13.775, 15.78, 17.135, 18.14]
+    .map((seconds) => Math.round(seconds * 30));
   const done = narrationSchedule
     ? clamp(
       Math.floor(interpolate(narrationLoopFrame, [0, narrationLoopFrames - 1], [0, rasterBlocks.length])),
@@ -587,15 +588,15 @@ const GenericLoopScene: React.FC<{
   const kinds = ['全面透明', '一部だけ描画', '全面上書き'];
   const steps = ['画像とマスクを読む', '画面の元の値を読む', 'マスク処理を行う', '絵を合成する', '元の場所に書き戻す'];
   const active = narrationSchedule
-    ? frame < 12 * 30
+    ? frame < narrationStepStartFrames[0]
       ? -1
-      : frame < 16 * 30
+      : frame < narrationStepStartFrames[1]
         ? 0
-        : frame < 19 * 30
+        : frame < narrationStepStartFrames[2]
           ? 1
-          : frame < 22 * 30
+          : frame < narrationStepStartFrames[3]
             ? 2
-            : frame < 25 * 30
+            : frame < narrationStepStartFrames[4]
               ? 3
               : 4
     : Math.floor(frame / 8) % steps.length;
@@ -701,8 +702,8 @@ const CompiledScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
     (blockIndex, orderIndex) => orderIndex > partialTargetOrderIndex && enemyCoverage[blockIndex] === 2,
   );
   const framesPerBlock = 4;
-  const partialMoveStart = 10 * 30;
-  const fullMoveStart = 19 * 30;
+  const partialMoveStart = Math.round(8.75 * 30);
+  const fullMoveStart = Math.round(13.325 * 30);
   const cursorOrderIndex = frame < partialMoveStart
     ? startOrderIndex
     : frame < fullMoveStart
