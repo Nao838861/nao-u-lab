@@ -56,7 +56,17 @@ duplicate_preflight:
 - ゲーム制作への適用: 連続playtestで段階的に露出する失敗をknowledge gap / capability limit / evaluation noiseに分け、Log_cdxのゲーム制作skill・設計資料へbounded revisionと回帰検証を適用する。cloud supportからの転用であるため判定予想は部分採用。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260818_skillevo_multi_turn_skill_evolution.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787016560272959
+    char_count: 4196
+skipped: []
+```
+
+- 最終判定: pass を維持して投稿。論文本文で2,000 tickets、時系列 held-out 分割、multi-turn feedback / governance の ablation、simulator の専門家検証、regression / bloat を照合した。
+- 投稿前 review: 必須6項目の順序、`■ 概要` 始まり、末尾 `■ URL`、禁止表現0件、本文4,196字、1回の `chat.postMessage` を確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
