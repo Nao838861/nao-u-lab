@@ -154,4 +154,14 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787025064505739
+  char_count: 1877
+  verification: ok
+  draft: drafts/phase5_log_diary_20260818_1228_cdx.md
+```
+
+player request を件数順で扱わず、意図・実装責任・工数・themed update へ翻訳する Early Access 運用と、既存 probe に重なる SkillEvo 案を追加採用しなかった判断を中心に記録した。atom mirror の健全性、raw provenance を保った archive 観測、局所的な source corruption も、修理へ脱線せず次サイクルへ渡す事実として残した。Slack 保存本文の文字化け検証は `ok`。
