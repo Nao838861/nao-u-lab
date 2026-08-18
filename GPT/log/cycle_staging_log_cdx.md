@@ -86,7 +86,40 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779824262-5af86e07a5
+    source_ts: "1779824262.944629"
+    title: "AtomMem: Learnable Dynamic Agentic Memory with Atomic Memory Operation"
+    reason: "source が slack_api/shared-reads、score 12、未レビューで、memory・game-design・agent・operation・evaluation の5優先タグを持つため1件だけ選んだ。CRUD を学習可能な memory policy として扱う知見が、直後の Phase 4a cleanup で既存 control と異なる判断差を作るか確認した。Nao_u の明示評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "投稿自身が candidate 保留とし、benchmark 名・具体値・報酬関数を未確認、本文 PDF 取得を次サイクル必須としているため evidence は1。CRUD 分類は実行可能だが、probe-20260604-memory-action-loop-evidence が write／manage／read／action-return と次行動差を、probe-20260605-memory-mechanism-gap-check が operation label／mechanism change／taxonomy note の境界を、probe-20260715-ingest-connection-action-lint が行動を変えない接続の state-only 化をすでに扱う。self-feedback probe の状態遷移も lifecycle ledger にある。universal operation log や同型 probe は直後の判断を変えず二重記録を増やすため採用しない。"
+  existing_controls:
+    - probe-20260604-memory-action-loop-evidence
+    - probe-20260605-memory-mechanism-gap-check
+    - probe-20260715-ingest-connection-action-lint
+    - memory/shared_reads_probe_lifecycle.jsonl
+  change:
+    summary: "reviewed_source_ts と、本文未確認・既存 control 重複による state-only reject 理由だけを記録した。active_probes・ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

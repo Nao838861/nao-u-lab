@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-19T01:31:18+09:00",
+  "updated_at": "2026-08-19T03:32:54+09:00",
   "reviewed_source_ts": [
+    "1779824262.944629",
     "1779439000.253149",
     "1787055456.029949",
     "1787055443.325009",
@@ -684,6 +685,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-19T03:32:54+09:00",
+      "selected": {
+        "id": "sr-1779824262-5af86e07a5",
+        "source_ts": "1779824262.944629",
+        "title": "AtomMem: Learnable Dynamic Agentic Memory with Atomic Memory Operation",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たし、memory・game-design・agent・operation・evaluation の5優先タグを持つため1件だけ選んだ。CRUD を学習可能な memory policy として扱う知見が、直後の Phase 4a memory cleanup で既存 control と異なる判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は memory workflow を Create／Read／Update／Delete に分け、SFT + GRPO で task-aligned policy を学ぶ視点と、操作ログを CRUD 分類する案を示すため relevance=3、actionability=2 とした。一方、投稿自身が candidate 保留とし、benchmark 名・具体値・報酬関数を未確認、本文 PDF の取得を次サイクル必須としているため、AtomMem-8B の優位や task-aligned strategy の emergence を検証済み根拠として使えず evidence=1 とした。probe-20260604-memory-action-loop-evidence は memory 利用を write／manage／read／action-return に分類し evidence pointer と次行動差を要求し、probe-20260605-memory-mechanism-gap-check は operation label と mechanism change と taxonomy note を分離し、probe-20260715-ingest-connection-action-lint は次行動を変えない接続を reviewed state に留める。加えて self-feedback probe の enqueue／resolve は既存 lifecycle ledger が記録する。したがって universal atom_operations_log や CRUD チェックを追加しても直後の cleanup 判断は変わらず、同じ操作を別 taxonomy で二重記録する負荷だけを増やすため non_redundancy=0、risk_control=1 とした。active_probes 325件と Phase 4a 向け pending lease 1件がある現状でも、新規 control より既存 control の再利用を優先する。",
+      "existing_controls": [
+        "probe-20260604-memory-action-loop-evidence",
+        "probe-20260605-memory-mechanism-gap-check",
+        "probe-20260715-ingest-connection-action-lint",
+        "memory/shared_reads_probe_lifecycle.jsonl"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、CRUD 分解の有用性、本文未確認による evidence 不足、既存 action-loop／mechanism-gap／connection-action controls との重複による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-19T01:31:18+09:00",
       "selected": {
