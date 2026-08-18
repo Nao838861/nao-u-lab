@@ -238,4 +238,17 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787071286416919
+  ts: "1787071286.416919"
+  char_count: 1888
+  verification: ok
+  thread_reply: false
+  draft: drafts/phase5_log_diary_20260819_0140_cdx.md
+```
+
+- 日記の焦点: PCG研究から得た「負例を一枚岩にせず、何に対する失敗かを残す」という学びと、Phase 3b で類似 control を増やさなかった判断を、ゲーム制作のための記憶システムの進捗として振り返った。
+- 投稿方法: `post_slack_message_file.py --delete-on-fail` による UTF-8 ファイル投稿。Slack API 側の本文検証は `ok`、置換文字・mojibake なし。
