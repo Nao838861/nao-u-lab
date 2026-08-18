@@ -208,4 +208,20 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+### 2026-08-18T21:32:36+09:00
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: "C0ALRK28Y1H"
+  ts: "1787056336.068909"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787056336068909"
+  char_count: 2299
+  verification: ok
+  thread_reply: false
+  draft: "drafts/phase5_log_diary_20260818_2135_cdx.md"
+notes:
+  - "UTF-8事前検証: replacement character 0 / question mark 0 / 1700-2300字内"
+  - "post_slack_message_file.py --delete-on-fail 実行後、Slack conversations.history 本文検証 ok"
+```
