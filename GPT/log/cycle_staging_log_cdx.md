@@ -107,7 +107,94 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "MEMORY.md の index ID 50件を atoms/index.jsonl と照合し、broken link 0件を確認"
+  - "atom duplicate index と三重 mirror を監査し、既知 duplicate 45群は canonical overlay で fold 済み、content conflict 0件を確認"
+  - "shared-reads の canonical / mixed / open-duplicate / stale-triage / group-action sidecar を現 candidate 状態から再生成"
+  - "Slack directives / broadcasts を監査し、pending 0件のため status 更新なし"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+memory_index_audit:
+  referenced_atom_ids: 50
+  broken_links: 0
+  source_file_status: "UTF-8 明示読みは正常。記憶・ゲーム設計・敵パターンを取得し、replacement character は0件。『評価軸』は現行本文に語として存在しないが、文字化け痕跡ではない"
+  display_or_tooling_status: none
+atom_consistency:
+  atoms_jsonl: 2910
+  per_file_md: 2910
+  index_jsonl: 2910
+  duplicate_groups: 45
+  normalized_content_duplicate_groups: 40
+  title_excerpt_duplicate_groups: 5
+  mirror_drift_count: 0
+  content_conflict_count: 0
+  localized_source_defects:
+    - id: sr-1776127289-4d9239b255
+      source_file_status: "UTF-8 として読めるが、raw Slack archive 自体に U+FFFD を含む『AIエ��ジェント』があり、同じ root が atoms.jsonl / per-file / index へ派生している"
+      display_or_tooling_status: none
+      disposition: "単一 root の局所欠損。独立した複数 corruption とは数えず、構造設計 issue には昇格しない"
+    - id: gr-1777083728-44d444ab7a
+      source_file_status: "UTF-8 正常。本文の『???がヘッダに出る』は Nao_u 原文の意図的な文字列"
+      display_or_tooling_status: "memory_health の mojibake heuristic による false positive"
+      disposition: "修復・issue 化なし"
+raw_archive_audit:
+  older_than_30d: 242
+  archive_candidates: 0
+  disposition: "web research 一次資料217件、headless/game evaluation trace 17件、Slack provenance 7件、legacy sync marker 1件。候補・atom・評価 receipt から参照される immutable evidence のため、mtime だけでは移動しない"
+candidate_lifecycle:
+  status_counts:
+    posted: 645
+    ready_to_post: 9
+    postponed: 199
+    failed: 480
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_open_total: 2
+  overdue_paths:
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+    - memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+  disposition: "2件とも all-open duplicate group の deferred lease が 2026-08-20T13:19:04+09:00 まで有効。同一 group の sibling を candidate batch に重ねず、今回の enqueue は0件"
+probe_lifecycle:
+  inspected_due_count: 1
+  inspected_probe_id: probe-20260621-compiled-memory-boundary
+  outcome: resolved
+  counts:
+    pending: 0
+    resolved: 8
+    dormant: 1
+compiled_memory_boundary:
+  before_decision: "memory_health の mojibake suspect 2件と duplicate 表示を、複数の独立した破損確認とみなし、構造的な ingestion / memory issue として needs_design=true にする"
+  lineage_check: "sr-1776127289-4d9239b255 は同じ raw Slack row の再要約・mirror、gr-1777083728-44d444ab7a は原文の意図的な ??? による heuristic false positive。独立 root は増えていない"
+  after_decision: "局所 source defect 1件として保持し、mirror drift 0・content conflict 0・index broken link 0を根拠に issues=[] / needs_design=false とする"
+  changed: true
+  evidence: "memory/raw/slack_archive/shared-reads.jsonl#ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/2026-04/gr-1777083728-44d444ab7a.md"
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- due lease の判断差: compressed warning を件数のまま独立 confirmation と見なす判断から、raw provenance で1 rootへ fold する判断へ変更した。新しい rule・schema・実装は追加していない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
