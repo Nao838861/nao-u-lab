@@ -346,6 +346,26 @@ const PreviousScene: React.FC<{durationInFrames: number}> = ({durationInFrames})
       >
         PREVIOUS VIDEO
       </div>
+      <div
+        style={{
+          position: 'absolute',
+          left: 54,
+          top: 46,
+          padding: '12px 18px',
+          background: '#050507d9',
+          borderLeft: `5px solid ${C.cyan}`,
+          color: C.white,
+          fontFamily: FONT,
+          fontWeight: 800,
+          fontSize: 17,
+          lineHeight: 1.45,
+        }}
+      >
+        <div>前回の解説動画</div>
+        <div style={{fontFamily: MONO, color: C.cyan, fontSize: 15}}>
+          https://www.youtube.com/watch?v=AW4DFiy1QC0
+        </div>
+      </div>
     </AbsoluteFill>
   );
 };

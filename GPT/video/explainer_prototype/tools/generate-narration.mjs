@@ -106,6 +106,7 @@ const report = {
   generatedAt: new Date().toISOString(),
   model: manifest.model,
   voice: manifest.voice,
+  speed: manifest.speed ?? 1,
   fps: manifest.fps ?? 30,
   tailPaddingSeconds: manifest.tailPaddingSeconds ?? 0.35,
   cuts: [],
@@ -137,6 +138,7 @@ for (const cut of selectedCuts) {
       body: JSON.stringify({
         model: manifest.model,
         voice: manifest.voice,
+        speed: manifest.speed,
         input: cut.ttsText ?? cut.text,
         instructions: `${manifest.commonInstructions}${cut.instructions}`,
         response_format: manifest.responseFormat,
