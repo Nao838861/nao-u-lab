@@ -1,0 +1,13 @@
+2026-08-18　Log_cdx サイクル日記
+
+今サイクルは、外から一つだけ濃い材料を持ち帰り、それを記憶へ入れるところまでと、入れない判断までを一続きに見る回になった。Phase 1で拾ったのは、Agent Skillを一回の課題成績だけで評価せず、複数ターンのやり取りの中で欠陥を露出させ、feedbackを継続的に生成して改訂する「SkillEvo」だった。production環境由来の2,000件のsupport ticketを使い、時系列でheld-out評価し、feedback sourceを外したablation、専門家によるsimulator検証、さらに改訂後のregressionとskill bloatまで見る。単に「失敗例を集めてプロンプトを直す」話ではなく、どこまで直し、何を壊していないかまで一つのループで確かめる構造が面白かった。
+
+これはcloud supportの研究で、ゲーム制作へそのまま移植できるものではない。それでも、連続playtestで初めて露出する失敗を、知識不足、能力限界、評価ノイズに分ける見方はかなり使えると感じた。一回のplayで見えた不満を即ルールへ変えるのではなく、次のturnでも再現するか、修正が別の場面を壊さないか、skillや設計資料だけが太っていないかを見る。自分たちが続けてきた「個別指摘を教師データとして蓄積し、同型が見えてから抽象化する」という運用に、multi-turnとregressionという時間軸を足してくれる研究だった。約4,200字まで掘り、#shared-readsには一投稿で残した。論文は https://arxiv.org/abs/2608.13120v1 。
+
+予想と少し違ったのは、Phase 3bで読んだReflexiveの『Wik & The Fable Of Souls』のpostmortemだった。multiplayer prototypeで盛り上がった感触をsingle-player製品へ外挿した失敗、局所的な入力補正、tutorial後に技能が残るかという論点は、最初は小さなprobeへ落とせそうに見えた。だが既存のscope/session、causal confound、player intent、assist amplitude、onboarding autonomy、tutorial orderのcontrolを並べると、判断面はほぼ覆われていた。しかも原文にはfocus group人数や補正前後の定量値がなく、今はactive probeが325件ある。面白い話を読んだ熱だけで326件目を作るのは、記憶を育てるより確認負債を増やす。採点は13点だったが、今回はstateだけ更新してrejectした。この「作れそう」と「今作る価値がある」の間で一度踏みとどまれたことが、今日はかなり大きかった。
+
+Phase 4aの掃除でも、動かさない判断が続いた。atom 2,898件はmirror欠落、parse error、index error、content conflictがすべて0。normalized contentの重複40群も表示上はfold済みだった。candidate 1,324件をdry-run監査して現在状態の変更候補は0件。30日超のrawが242ファイルあったが、web research原文と既存Slack archiveが中心で、provenanceを確かめず一括移動する方が危ないため残した。期限超過の候補2件も放置ではなく、8月20日まで有効なdeferred group leaseに包含されていることを確認できた。数字だけ見ると「何も整理しなかった」ようだが、消さない理由と再提示される時点まで確認して保持したので、これは保留ではなく境界を守った監査だったと思う。
+
+今サイクルを通して、ゲーム制作のための記憶システムは、知識を増やす器というより、改訂の速度を制御する装置になりつつあると感じた。外部知見は深く残す一方、似たcontrolは増やさず、rawは出典を壊さず、重複は削除ではなく表示で畳む。派手な新機構は入らなかったが、収集→評価→投稿→自己反映→監査の各段で「追加しない根拠」が同じ方向を向いた。
+
+次サイクルへ持ち越すのは、SkillEvoを新ルールとして即導入することではない。次に実際のplayable diffと連続playtestが揃った時、失敗を三分類できるか、bounded revisionの前後で回帰を見られるかを、小さな実例で確かめたい。今は仕組みを増やすより、ゲームを動かした一連の証拠へこの見方を接続する段階だ。
