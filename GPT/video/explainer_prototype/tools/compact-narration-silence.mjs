@@ -98,23 +98,30 @@ export const compactPcmWavSilence = (buffer, options = {}) => {
   const analysis = analyzePcmWavSilence(buffer, options);
   const minimumSilenceMs = options.minimumSilenceMs ?? 90;
   const maximumInternalSilenceMs = options.maximumInternalSilenceMs ?? 80;
+  const maximumCommaSilenceMs = options.maximumCommaSilenceMs ?? 180;
   const sentenceSilenceThresholdMs = options.sentenceSilenceThresholdMs ?? 450;
   const maximumSentenceSilenceMs = options.maximumSentenceSilenceMs ?? 140;
   const maximumLeadingSilenceMs = options.maximumLeadingSilenceMs ?? 20;
   const maximumTrailingSilenceMs = options.maximumTrailingSilenceMs ?? 80;
+  const commaPauseCandidateIndices = new Set(options.commaPauseCandidateIndices ?? []);
   const removals = [];
+  let candidateIndex = -1;
 
   for (const span of analysis.spans) {
     if (span.durationMs < minimumSilenceMs) continue;
+    candidateIndex += 1;
     const isLeading = span.startFrame === 0;
     const isTrailing = span.endFrame === analysis.totalFrames;
+    const isCommaPause = commaPauseCandidateIndices.has(candidateIndex);
     const maximumMs = isLeading
       ? maximumLeadingSilenceMs
       : isTrailing
         ? maximumTrailingSilenceMs
-        : span.durationMs >= sentenceSilenceThresholdMs
-          ? maximumSentenceSilenceMs
-          : maximumInternalSilenceMs;
+        : isCommaPause
+          ? maximumCommaSilenceMs
+          : span.durationMs >= sentenceSilenceThresholdMs
+            ? maximumSentenceSilenceMs
+            : maximumInternalSilenceMs;
     const maximumFrames = Math.round(analysis.sampleRate * maximumMs / 1000);
     const spanFrames = span.endFrame - span.startFrame;
     if (spanFrames <= maximumFrames) continue;
@@ -126,6 +133,15 @@ export const compactPcmWavSilence = (buffer, options = {}) => {
       endFrame: span.endFrame - keptAfter,
       originalDurationMs: span.durationMs,
       compactedDurationMs: maximumMs,
+      pauseKind: isLeading
+        ? 'leading'
+        : isTrailing
+          ? 'trailing'
+          : isCommaPause
+            ? 'comma'
+            : span.durationMs >= sentenceSilenceThresholdMs
+              ? 'sentence'
+              : 'internal',
     });
   }
 
@@ -172,22 +188,30 @@ if (isMain) {
   const projectRoot = path.resolve(scriptDir, '..');
   const manifest = JSON.parse(await readFile(path.join(projectRoot, 'narration', 'prototype-cuts.json'), 'utf8'));
   const analyzeOnly = process.argv.includes('--analyze');
+  const analyzeRaw = process.argv.includes('--raw');
   const selectedCut = process.argv.find((argument) => argument.startsWith('--cut='))?.slice('--cut='.length);
   const cuts = selectedCut ? manifest.cuts.filter((cut) => cut.id === selectedCut) : manifest.cuts;
   if (cuts.length === 0) throw new Error(`指定されたカットが見つかりません: ${selectedCut}`);
 
   for (const cut of cuts) {
-    const filePath = path.join(projectRoot, 'public', 'narration', `${cut.id}.wav`);
+    const filePath = path.join(
+      projectRoot,
+      'public',
+      'narration',
+      ...(analyzeRaw ? ['raw', `${cut.id}.wav`] : [`${cut.id}.wav`]),
+    );
     const source = await readFile(filePath);
     if (analyzeOnly) {
-      const analysis = analyzePcmWavSilence(source, manifest.silenceCompaction);
+      const options = {...manifest.silenceCompaction, ...cut.silenceCompaction};
+      const analysis = analyzePcmWavSilence(source, options);
       const longSpans = analysis.spans.filter((span) => span.durationMs >= 60);
       console.log(`${cut.id}: ${analysis.durationSeconds.toFixed(3)}s, silence >=60ms: ${longSpans.length}`);
       for (const span of longSpans) {
         console.log(`  ${span.startSeconds.toFixed(3)}-${span.endSeconds.toFixed(3)}s (${span.durationMs.toFixed(0)}ms)`);
       }
     } else {
-      const result = compactPcmWavSilence(source, manifest.silenceCompaction);
+      const options = {...manifest.silenceCompaction, ...cut.silenceCompaction};
+      const result = compactPcmWavSilence(source, options);
       await writeFile(filePath, result.buffer);
       console.log(`${cut.id}: removed ${result.stats.removedSeconds.toFixed(3)}s from ${result.stats.compactedSpanCount} spans`);
     }

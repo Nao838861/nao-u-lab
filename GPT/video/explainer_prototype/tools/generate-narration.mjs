@@ -136,7 +136,10 @@ for (const cut of selectedCuts) {
     const rawPath = path.join(rawOutputDir, `${cut.id}.wav`);
     if (!await fileExists(rawPath)) throw new Error(`${cut.id}の未加工WAVが見つかりません。`);
     const rawBuffer = await readFile(rawPath);
-    const compacted = compactPcmWavSilence(rawBuffer, manifest.silenceCompaction);
+    const compacted = compactPcmWavSilence(rawBuffer, {
+      ...manifest.silenceCompaction,
+      ...cut.silenceCompaction,
+    });
     buffer = compacted.buffer;
     compactionStatsByCut.set(cut.id, compacted.stats);
     await writeFile(outputPath, buffer);
@@ -164,7 +167,10 @@ for (const cut of selectedCuts) {
     }
     buffer = Buffer.from(await response.arrayBuffer());
     await writeFile(path.join(rawOutputDir, `${cut.id}.wav`), buffer);
-    const compacted = compactPcmWavSilence(buffer, manifest.silenceCompaction);
+    const compacted = compactPcmWavSilence(buffer, {
+      ...manifest.silenceCompaction,
+      ...cut.silenceCompaction,
+    });
     buffer = compacted.buffer;
     compactionStatsByCut.set(cut.id, compacted.stats);
     await writeFile(outputPath, buffer);
