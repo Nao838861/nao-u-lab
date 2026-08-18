@@ -66,7 +66,35 @@ skipped: []
 最終判定: 部分採用として投稿。要望を件数順で採るのではなく、意図抽出、定型 pitch、実装責任、工数、themed update へ変換する記事固有の手順を説明した。定量的な成果検証がない限界、説得力バイアス、theme 化による個別検証性の低下も明記し、自分達では headless 検査と人の playtest を通った後だけ milestone 化する案に落とした。投稿前 policy は `ok`、duplicate preflight は `continue`、Slack 保存本文の文字化け検査も `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787016560-9983ed981f
+    source_ts: "1787016560.272959"
+    title: "SkillEvo: Self-Renewing Evolution Gradients from Multi-Turn Interaction Feedback"
+    reason: "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新 atom で、6優先タグをすべて持つ。multi-turn trajectory の masked defect と修復対象三分類が、既存 controls と異なる判断差を作れるか確認するため1件だけ選んだ。Nao_u の明示評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "合計14には達するが risk_control が必須閾値2未満。2,000 tickets、時系列 held-out、multi-turn ablation、governance 有無の bloat 比較は強いが、failure anchor、contrastive trace、held-out edit、feature-conditioned evidence、conditional correction は既存5 probes と重複する。active_probes 325件、Phase 4a 向け pending lease 1件、single-turn／multi-turn と baseline／直前版／新版を比べる具体 artifact がないため追加採用しない。"
+  change:
+    summary: "reviewed_source_ts と state-only reject 理由を記録。active_probes、probe lifecycle ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

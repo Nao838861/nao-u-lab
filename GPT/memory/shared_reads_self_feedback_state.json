@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-18T10:36:25+09:00",
+  "updated_at": "2026-08-18T12:43:54+09:00",
   "reviewed_source_ts": [
+    "1787016560.272959",
     "1787009065.933869",
     "1786995013.250539",
     "1786995005.848729",
@@ -677,6 +678,47 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-18T12:43:54+09:00",
+      "selected": {
+        "id": "sr-1787016560-9983ed981f",
+        "source_ts": "1787016560.272959",
+        "title": "SkillEvo: Self-Renewing Evolution Gradients from Multi-Turn Interaction Feedback",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新 atom で、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つため1件だけ選んだ。multi-turn trajectory で浅い blocker の先に隠れた欠陥を露出し、Knowledge Gap／Capability Limit／Evaluation Noise を分けて bounded revision へ渡す知見が、Codex の skill・memory・game prototype 改善で既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14には達するが、risk_control が必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、6カテゴリ・9 production Skills・98 reference files・2,000 tickets、時系列 held-out 1/4、4 round の Task Success Rate 30.0%→81.8%、multi-turn を single-turn に替えた ablation 66.4%、governance 有無の文書増加2.8%対16.2%、intent coverage 98.9%を示す。浅い blocker の修復後に follow-up で masked defect を露出し、Knowledge Gap／Capability Limit／Evaluation Noise のうち安定事実の欠落だけを書き戻すため relevance・actionability・evidence は3とした。一方、probe-20260708-harnessfix-failure-anchor-repair-scope は failed_step・expected／observed effect・repair scope、probe-20260710-npm-contrastive-procedural-memory は effective／degenerate step と同条件での workflow patch 検証、probe-20260626-skillopt-instruction-edit-validation-gate は held-out case・add／delete／replace・rejected direction、probe-20260709-bayesian-agent-feature-conditioned-update は context features・verified trajectory・counterexample、probe-20260719-zero2skill-conditional-correction-gate は限定 correction・retry outcome・counterexample 時の停止をすでに扱う。SkillEvo 固有の multi-turn intent state machine は cloud support の固定正答領域に依存し、現在の staging には同一 skill／prototype の single-turn 対 multi-turn feedback、baseline／直前版／新版、held-out trajectory を比較できる artifact がない。active_probes は325件で Phase 4a 向け pending lease も1件あり、直後の Phase 4a memory cleanup は skill 改訂 experiment の実 consumer ではない。同型 control を追加すると確認負荷、simulator 誤帰属、創作的 game feedback の noise 扱いを増やすため non_redundancy・risk_control は1とした。次に具体的な skill または prototype 改訂で、既存5 controlsを適用しても浅い blocker 後の failure surface と書戻し対象を判定できない実例が出た時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260708-harnessfix-failure-anchor-repair-scope",
+        "probe-20260710-npm-contrastive-procedural-memory",
+        "probe-20260626-skillopt-instruction-edit-validation-gate",
+        "probe-20260709-bayesian-agent-feature-conditioned-update",
+        "probe-20260719-zero2skill-conditional-correction-gate"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、multi-turn feedback／三分類／bounded revision の有用性、既存 failure-anchor／contrastive-trace／held-out-edit／feature-conditioned／conditional-correction controls との重複、比較 artifact 不在による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-18T10:36:25+09:00",
       "selected": {
