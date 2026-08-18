@@ -105,6 +105,7 @@ export const compactPcmWavSilence = (buffer, options = {}) => {
   const maximumTrailingSilenceMs = options.maximumTrailingSilenceMs ?? 80;
   const normalizeSentenceSilence = options.normalizeSentenceSilence ?? false;
   const commaPauseCandidateIndices = new Set(options.commaPauseCandidateIndices ?? []);
+  const pauseTargetMsByCandidateIndex = options.pauseTargetMsByCandidateIndex ?? {};
   const removals = [];
   const insertions = [];
   let candidateIndex = -1;
@@ -115,11 +116,15 @@ export const compactPcmWavSilence = (buffer, options = {}) => {
     const isLeading = span.startFrame === 0;
     const isTrailing = span.endFrame === analysis.totalFrames;
     const isCommaPause = commaPauseCandidateIndices.has(candidateIndex);
+    const customPauseTargetMs = Number(pauseTargetMsByCandidateIndex[candidateIndex]);
+    const hasCustomPauseTarget = Number.isFinite(customPauseTargetMs);
     const isSentencePause = !isLeading
       && !isTrailing
       && !isCommaPause
       && span.durationMs >= sentenceSilenceThresholdMs;
-    const maximumMs = isLeading
+    const maximumMs = hasCustomPauseTarget
+      ? customPauseTargetMs
+      : isLeading
       ? maximumLeadingSilenceMs
       : isTrailing
         ? maximumTrailingSilenceMs
@@ -130,10 +135,11 @@ export const compactPcmWavSilence = (buffer, options = {}) => {
             : maximumInternalSilenceMs;
     const maximumFrames = Math.round(analysis.sampleRate * maximumMs / 1000);
     const spanFrames = span.endFrame - span.startFrame;
-    if (isSentencePause && normalizeSentenceSilence && spanFrames < maximumFrames) {
+    if ((hasCustomPauseTarget || isSentencePause && normalizeSentenceSilence) && spanFrames < maximumFrames) {
       insertions.push({
         atFrame: Math.round((span.startFrame + span.endFrame) / 2),
         insertedFrames: maximumFrames - spanFrames,
+        pauseKind: hasCustomPauseTarget ? 'custom' : 'sentence',
       });
       continue;
     }
@@ -210,7 +216,8 @@ export const compactPcmWavSilence = (buffer, options = {}) => {
       removedSeconds: removedFrames / analysis.sampleRate,
       insertedSeconds: insertedFrames / analysis.sampleRate,
       compactedSpanCount: removals.length,
-      normalizedSentenceSpanCount: insertions.length,
+      normalizedSentenceSpanCount: insertions.filter((insertion) => insertion.pauseKind === 'sentence').length,
+      normalizedCustomSpanCount: insertions.filter((insertion) => insertion.pauseKind === 'custom').length,
       removals,
       insertions,
     },

@@ -23,6 +23,11 @@ import {
   c05Timing,
   c06Timing,
 } from './developmentNarrationTiming';
+import {
+  c08Timing,
+  c09Timing,
+  c10Timing,
+} from './drawingNarrationTiming';
 
 const C = {
   bg: '#050507',
@@ -210,6 +215,7 @@ const PackedEnemy: React.FC<{
   const width = 55;
   const height = 30;
   const blocksPerRow = 14;
+  const enemyImage = staticFile('enemy_em0_00.png');
 
   return (
     <div
@@ -242,7 +248,12 @@ const PackedEnemy: React.FC<{
               height: bh * scale,
               overflow: 'hidden',
               boxSizing: 'border-box',
-              background: visible ? '#34363e' : '#0c0d10',
+              backgroundColor: visible ? '#34363e' : '#0c0d10',
+              backgroundImage: visible && category !== 0 ? `url(${enemyImage})` : undefined,
+              backgroundSize: `${width * scale}px ${height * scale}px`,
+              backgroundPosition: `${-x * scale}px ${-y * scale}px`,
+              backgroundRepeat: 'no-repeat',
+              imageRendering: 'pixelated',
               border: analyze
                 ? `1px solid ${analysisColor}`
                 : '1px solid rgba(120,118,130,.22)',
@@ -250,22 +261,7 @@ const PackedEnemy: React.FC<{
               outlineOffset: -3,
               zIndex: cursor === i ? 3 : 1,
             }}
-          >
-            {visible && category !== 0 ? (
-              <Img
-                src={staticFile('enemy_em0_00.png')}
-                style={{
-                  position: 'absolute',
-                  width: width * scale,
-                  height: height * scale,
-                  left: -x * scale,
-                  top: -y * scale,
-                  maxWidth: 'none',
-                  imageRendering: 'pixelated',
-                }}
-              />
-            ) : null}
-          </div>
+          />
         );
       })}
     </div>
@@ -487,22 +483,23 @@ const DevelopmentCheckerboardScene: React.FC = () => {
   );
 };
 
-const LargeCharacterScene: React.FC = () => {
+const LargeCharacterScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 720}) => {
   const frame = useCurrentFrame();
+  const scaledFrame = (originalFrame: number) => originalFrame / 720 * durationInFrames;
   const imageEnter = spring({frame, fps: 30, config: {damping: 18}});
-  const cpuOpacity = interpolate(frame, [92, 128], [0, 1], {
+  const cpuOpacity = interpolate(frame, [scaledFrame(92), scaledFrame(128)], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const clearOpacity = interpolate(frame, [210, 250], [0, 1], {
+  const clearOpacity = interpolate(frame, [scaledFrame(210), scaledFrame(250)], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const compositeOpacity = interpolate(frame, [355, 400], [0, 1], {
+  const compositeOpacity = interpolate(frame, [scaledFrame(355), scaledFrame(400)], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const warningOpacity = interpolate(frame, [505, 550], [0, 1], {
+  const warningOpacity = interpolate(frame, [scaledFrame(505), scaledFrame(550)], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
@@ -510,7 +507,7 @@ const LargeCharacterScene: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
-        opacity: fade(frame, 720),
+        opacity: fade(frame, durationInFrames),
         background: C.bg,
         padding: '40px 54px 0',
         boxSizing: 'border-box',
@@ -561,9 +558,9 @@ const LargeCharacterScene: React.FC = () => {
               <div style={{fontFamily: FONT, color: C.white, fontSize: 19, fontWeight: 800, lineHeight: 1.45, marginTop: 5}}>{item.body}</div>
             </div>
           ))}
-          <div style={{position: 'absolute', right: 58, top: 452, width: 370, boxSizing: 'border-box', zIndex: 4, opacity: warningOpacity, padding: '16px', background: `linear-gradient(135deg, ${C.magenta}, ${C.orange})`, color: C.bg, fontFamily: FONT, textAlign: 'center', fontWeight: 900, boxShadow: `0 0 28px ${C.magenta}55`}}>
+          <div style={{position: 'absolute', left: 54, right: 54, top: 510, boxSizing: 'border-box', zIndex: 4, opacity: warningOpacity, padding: '14px 20px 16px', background: `linear-gradient(135deg, ${C.magenta}, ${C.orange})`, color: C.bg, fontFamily: FONT, textAlign: 'center', fontWeight: 900, boxShadow: `0 0 28px ${C.magenta}55`}}>
             <div style={{fontSize: 18, letterSpacing: 2}}>高速化の切り札</div>
-            <div style={{fontSize: 28, lineHeight: 1.18, marginTop: 3}}>コンパイルド<br />スプライトを使う</div>
+            <div style={{fontSize: 32, lineHeight: 1.18, marginTop: 3}}>「コンパイルドスプライト」を使う</div>
           </div>
         </div>
       </div>
@@ -571,18 +568,44 @@ const LargeCharacterScene: React.FC = () => {
   );
 };
 
-const GenericLoopScene: React.FC = () => {
+const GenericLoopScene: React.FC<{
+  durationInFrames?: number;
+  narrationSchedule?: boolean;
+}> = ({durationInFrames = 300, narrationSchedule = false}) => {
   const frame = useCurrentFrame();
-  const done = clamp(Math.floor(interpolate(frame, [20, 285], [0, rasterBlocks.length])), 0, rasterBlocks.length);
+  const narrationAnimationStart = 12 * 30;
+  const narrationLoopFrames = 9 * 30;
+  const narrationLoopFrame = Math.max(0, frame - narrationAnimationStart) % narrationLoopFrames;
+  const done = narrationSchedule
+    ? frame < narrationAnimationStart
+      ? 0
+      : clamp(
+        Math.floor(interpolate(narrationLoopFrame, [0, narrationLoopFrames - 1], [0, rasterBlocks.length])),
+        0,
+        rasterBlocks.length,
+      )
+    : clamp(Math.floor(interpolate(frame, [20, 285], [0, rasterBlocks.length])), 0, rasterBlocks.length);
   const cursor = rasterBlocks[Math.min(rasterBlocks.length - 1, done)];
-  const category = enemyCoverage[cursor] ?? 0;
+  const category = narrationSchedule && frame < narrationAnimationStart ? -1 : enemyCoverage[cursor] ?? 0;
   const kinds = ['全面透明', '一部だけ描画', '全面上書き'];
-  const steps = ['画像とマスクを読む', '画面の元の値を読む', '背景を残す（AND）', '絵を重ねる（OR）', '同じ場所へ書き戻す'];
-  const active = Math.floor(frame / 8) % steps.length;
+  const steps = ['画像とマスクを読む', '画面の元の値を読む', '背景とマスク（AND）', '絵を合成（OR）', '元の場所に書き戻す'];
+  const active = narrationSchedule
+    ? frame < 12 * 30
+      ? -1
+      : frame < 16 * 30
+        ? 0
+        : frame < 19 * 30
+          ? 1
+          : frame < 22 * 30
+            ? 2
+            : frame < 25 * 30
+              ? 3
+              : 4
+    : Math.floor(frame / 8) % steps.length;
   return (
     <AbsoluteFill
       style={{
-        opacity: fade(frame, 300),
+        opacity: fade(frame, durationInFrames),
         background: `radial-gradient(circle at 24% 45%, ${C.cyan}12, transparent 35%), ${C.bg}`,
         padding: '50px 58px',
         boxSizing: 'border-box',
@@ -667,17 +690,18 @@ const GenericLoopScene: React.FC = () => {
   );
 };
 
-const CompiledScene: React.FC = () => {
+const CompiledScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 360}) => {
   const frame = useCurrentFrame();
-  const active = frame < 115 ? 0 : frame < 285 ? 1 : 2;
-  const cursor = frame < 90
+  const scaledFrame = (originalFrame: number) => originalFrame / 360 * durationInFrames;
+  const active = frame < scaledFrame(115) ? 0 : frame < scaledFrame(285) ? 1 : 2;
+  const cursor = frame < scaledFrame(90)
     ? 0
-    : frame < 115
-      ? Math.floor(interpolate(frame, [90, 115], [0, 6], {extrapolateRight: 'clamp'}))
-      : frame < 225
+    : frame < scaledFrame(115)
+      ? Math.floor(interpolate(frame, [scaledFrame(90), scaledFrame(115)], [0, 6], {extrapolateRight: 'clamp'}))
+      : frame < scaledFrame(225)
         ? 6
-        : frame < 285
-          ? Math.floor(interpolate(frame, [225, 285], [6, 21], {extrapolateRight: 'clamp'}))
+        : frame < scaledFrame(285)
+          ? Math.floor(interpolate(frame, [scaledFrame(225), scaledFrame(285)], [6, 21], {extrapolateRight: 'clamp'}))
           : 21;
   const cards = [
     {title: '全面透明', equation: '(SCREEN AND $FF) OR $00', result: '命令なし', code: ['; 命令なし']},
@@ -688,7 +712,7 @@ const CompiledScene: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
-        opacity: fade(frame, 360),
+        opacity: fade(frame, durationInFrames),
         background: `radial-gradient(circle at 76% 50%, ${C.magenta}18, transparent 36%), ${C.bg}`,
         padding: '46px 58px',
         boxSizing: 'border-box',
@@ -1543,6 +1567,25 @@ export const DevelopmentNarrationPreview: React.FC = () => {
       <Sequence from={c06Timing.startFrame} durationInFrames={c06Timing.durationFrames}>
         <DevelopmentDay3Scene durationInFrames={c06Timing.durationFrames} />
         <Audio src={staticFile('narration/development/C06.wav')} volume={0.95} />
+      </Sequence>
+    </AbsoluteFill>
+  );
+};
+
+export const DrawingNarrationPreview: React.FC = () => {
+  return (
+    <AbsoluteFill style={{backgroundColor: C.bg}}>
+      <Sequence from={c08Timing.startFrame} durationInFrames={c08Timing.durationFrames}>
+        <LargeCharacterScene durationInFrames={c08Timing.durationFrames} />
+        <Audio src={staticFile('narration/drawing/C08.wav')} volume={0.95} />
+      </Sequence>
+      <Sequence from={c09Timing.startFrame} durationInFrames={c09Timing.durationFrames}>
+        <GenericLoopScene durationInFrames={c09Timing.durationFrames} narrationSchedule />
+        <Audio src={staticFile('narration/drawing/C09.wav')} volume={0.95} />
+      </Sequence>
+      <Sequence from={c10Timing.startFrame} durationInFrames={c10Timing.durationFrames}>
+        <CompiledScene durationInFrames={c10Timing.durationFrames} />
+        <Audio src={staticFile('narration/drawing/C10.wav')} volume={0.95} />
       </Sequence>
     </AbsoluteFill>
   );

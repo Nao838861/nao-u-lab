@@ -191,9 +191,11 @@ for (const cut of selectedCuts) {
     item.silenceInsertedSeconds = Number((compactionStats.insertedSeconds ?? 0).toFixed(3));
     item.compactedSpanCount = compactionStats.compactedSpanCount;
     item.normalizedSentenceSpanCount = compactionStats.normalizedSentenceSpanCount ?? 0;
+    item.normalizedCustomSpanCount = compactionStats.normalizedCustomSpanCount ?? 0;
     console.log(
       `${cut.id}: compacted ${item.compactedSpanCount} pauses`
       + ` / normalized ${item.normalizedSentenceSpanCount} sentence pauses`
+      + ` / aligned ${item.normalizedCustomSpanCount} scheduled pauses`
       + ` / removed ${item.silenceRemovedSeconds}s`
       + ` / inserted ${item.silenceInsertedSeconds}s`,
     );
