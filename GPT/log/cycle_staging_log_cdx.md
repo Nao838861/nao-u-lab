@@ -52,7 +52,17 @@ unreviewed_intake_audit:
 - 判定根拠: 負例の構成、3モデル比較、2ゲームでの定量評価、複合制約で効果が崩れる原因まで抽出できる。PCG の失敗データ設計と評価軸分離へ具体適用できるため pass。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260819_negative_examples_controllable_level_generation.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787070272834329
+    char_count: 4482
+skipped: []
+```
+
+- 最終判定: 投稿。単一制約と複合制約で負例の効果が変わる理由、Mario / Cave の指標別 trade-off、複数 seed と typed-negative を使う headless probe まで記事固有の分析として完成した。
+- 投稿前レビュー: 必須6項目・順序・文字数・末尾 URL・禁止表現・既投稿重複を確認済み。`chat.postMessage` 1回、thread reply なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
