@@ -54,7 +54,16 @@ duplicate_preflight:
 判定理由: player request を件数順で採るのではなく、意図抽出から担当者投票・工数確認・themed update 化までつなぐ実運用の手順が具体的である。定量評価はないため万能な処方箋とは扱わないが、Nao_u 作品の playtest 後に「次に何を作るか」を決める場面へ直接適用でき、利点と限界を含む約4000字の投稿を構成できるため pass とした。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260818_early_access_mechanics_feedback_roadmap.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787024421016969
+    char_count: 3525
+skipped: []
+```
+
+最終判定: 部分採用として投稿。要望を件数順で採るのではなく、意図抽出、定型 pitch、実装責任、工数、themed update へ変換する記事固有の手順を説明した。定量的な成果検証がない限界、説得力バイアス、theme 化による個別検証性の低下も明記し、自分達では headless 検査と人の playtest を通った後だけ milestone 化する案に落とした。投稿前 policy は `ok`、duplicate preflight は `continue`、Slack 保存本文の文字化け検査も `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
