@@ -71,7 +71,40 @@ skipped: []
 - 投稿後検証: `conversations.history` で blocks 本文を再取得し、文字化けなし（verification: ok）。1 candidate を 1 回の `chat.postMessage` で投稿し、thread reply は使用していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787085841-08b2db85e0
+    source_ts: "1787085841.602779"
+    title: "PolyDebate — stage・skill card・rubric・feedback を同じ技能 schema で結ぶ debate game"
+    reason: "score 10 の最新未レビュー候補で、memory・harness・evaluation・agent・operation・game-design の6優先タグを持つ。learner の選択肢、AI opponent の生成制約、judge の評価条件を同じ skill card へ揃える知見が、次の tutorial／会話 game で既存 controls と異なる判断差を作れるか確認するため1件だけ選んだ。Nao_u の本投稿への明示評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: defer
+  decision_reason: "数値上は採用条件を満たすが、現在の staging には tutorial／会話 game、stage+card あり／なしの比較 build、同一 seed の event trace、再失敗率を持つ trigger artifact がない。直後の Phase 4a は memory cleanup で実 consumer ではなく、期限超過の Phase 4a pending lease も1件あるため、lease contract の consumer・artifact・判断差を固定できない。比較可能な artifact が生じた時だけ一時 metric として再評価する。"
+  existing_controls:
+    - probe-20260717-player-intent-action-response
+    - probe-20260612-checkable-intermediate-state
+    - probe-20260621-ai-readable-playtest-acceptance-surface
+    - probe-20260711-benchjack-trust-boundary-preflight
+  change:
+    summary: "reviewed_source_ts と state-only defer 理由を記録。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

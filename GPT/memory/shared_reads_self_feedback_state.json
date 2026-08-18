@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-19T05:49:16+09:00",
+  "updated_at": "2026-08-19T07:45:19+09:00",
   "reviewed_source_ts": [
+    "1787085841.602779",
     "1779536360.403639",
     "1779824262.944629",
     "1779439000.253149",
@@ -686,6 +687,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-19T07:45:19+09:00",
+      "selected": {
+        "id": "sr-1787085841-08b2db85e0",
+        "source_ts": "1787085841.602779",
+        "title": "PolyDebate — stage・skill card・rubric・feedback を同じ技能 schema で結ぶ debate game",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つため1件だけ選んだ。learner の選択肢、AI opponent の生成制約、judge の評価条件を同じ skill card へ揃える知見が、次の tutorial／会話 game で既存 controls と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件と必須指標は満たす。shared-reads本文は、四つのstage、learner／opponent／judgeが共有するskill card、Analysis 30%・Persuasiveness 30%・Clarity 25%・Appropriacy 15%のrubric、coinによる即時feedback、終了後診断を一つのshared debate stateへ結び、generic／stage-only／stage+cardの100 case比較でoverall 3.1／3.6／4.0、skill usage 2.1／2.9／3.9を示す。judge ablationでも完全版のweighted coverage 99.2%に対しrubric除去51.3%、card除去時のweakness F1 59.6%など構成要素の寄与を分けている。したがって次のtutorial／会話gameで、学習目標、player action、AI応答制約、deterministic telemetry event、即時resource、run後rubricを同じ小さなschemaへ対応づける行動へ直接変換でき、relevance・actionability・evidenceは3とした。probe-20260717-player-intent-action-responseはintent・action schema・observable responseを、probe-20260612-checkable-intermediate-stateは操作・検査可能状態・verifier feedbackを、probe-20260621-ai-readable-playtest-acceptance-surfaceはevent logとmanual feelの境界を、probe-20260711-benchjack-trust-boundary-preflightはLLM judgeとauthoritative evidenceの境界を扱うが、同じ技能語彙をUI上の選択、opponentの制約、judgeのrubricへ三重利用してsemantic driftを検査する点は直接要求しないためnon_redundancy=2とした。一方、現在のstagingにはtutorial／会話game、stage+cardあり／なしの比較build、同一seedのevent trace、再失敗率を持つtrigger artifactがない。直後のPhase 4aはmemory cleanupで実consumerではなく、期限超過のPhase 4a pending leaseも1件あるため、consumer_phase・trigger_artifact・expected_deltaをlease契約どおり固定できない。論文は10人の短期試用で学習成果や長期transferを測っておらず、固定stageとscore gamingを別gameへ過剰一般化する危険もある。よってactive_probes・metric・lease・directive・恒久ルールは追加せず、比較可能なtutorial／会話game artifactが生じた時だけ一時metricとして再評価するstate-only deferとする。",
+      "existing_controls": [
+        "probe-20260717-player-intent-action-response",
+        "probe-20260612-checkable-intermediate-state",
+        "probe-20260621-ai-readable-playtest-acceptance-surface",
+        "probe-20260711-benchjack-trust-boundary-preflight"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_tsと、shared skill schemaの有用性、既存intent／checkable-state／playtest-surface／trust-boundary controlsとの差分、比較可能なtutorial artifact不在によるdefer理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-19T05:49:16+09:00",
       "selected": {
