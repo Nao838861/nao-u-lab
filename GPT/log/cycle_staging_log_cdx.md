@@ -65,7 +65,53 @@ skipped: []
 - 投稿前レビュー: 必須6項目・順序・文字数・末尾 URL・禁止表現・既投稿重複を確認済み。`chat.postMessage` 1回、thread reply なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779439000-f46406e9b6
+    source_ts: "1779439000.253149"
+    title: "Anatomy of Agentic Memory (Jiang et al. 2026) — 4 分類タクソノミ + Table 5 実測で Pot の hybrid 構造が学術側から定量的に正当化された"
+    reason: >-
+      source が slack_api/shared-reads、score 15、未レビューという条件を満たし、
+      memory・game-design・agent・operation・evaluation の5優先タグを持つため1件だけ選んだ。
+      4分類タクソノミと latency／token construction cost が、直後の Phase 4a memory cleanup で
+      既存 control と異なる判断差を作るか確認した。Nao_u の明示評価記録はない。
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: >-
+    合計11で採用条件の14に届かず、risk_control も必須閾値2を下回る。
+    shared-reads 本文は4種の memory structure と system 間の latency／token construction cost 差を示すため、
+    現行構成の分類と cost 確認には使える。一方、Pot の4区分横断は記述的 mapping であり hybrid 全体の優位を
+    直接実証せず、2026-05-22時点の Pot 1〜3秒という記録にも現在 corpus の同一条件 baseline がない。
+    taxonomy と実装根拠、taxonomy note と mechanism change、昇格前の反復証拠、latency／cost budget、
+    memory から次行動への差分証拠は既存5 controlsがすでに覆う。active_probes 325件と Phase 4a 向け pending lease
+    1件があるため、同義 control を足すと判断差より確認負荷と記述分類の処方化リスクが大きい。
+  existing_controls:
+    - probe-20260602-source-type-and-abstract-inference-gate
+    - probe-20260605-memory-mechanism-gap-check
+    - probe-20260515-promotion-boundary
+    - probe-20260605-rag-recall-search-space-gate
+    - probe-20260604-memory-action-loop-evidence
+  change:
+    summary: >-
+      reviewed_source_ts と reject 理由だけを更新した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

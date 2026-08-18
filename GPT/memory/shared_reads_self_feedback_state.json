@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-18T23:28:29+09:00",
+  "updated_at": "2026-08-19T01:31:18+09:00",
   "reviewed_source_ts": [
+    "1779439000.253149",
     "1787055456.029949",
     "1787055443.325009",
     "1787040810.456069",
@@ -683,6 +684,47 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-19T01:31:18+09:00",
+      "selected": {
+        "id": "sr-1779439000-f46406e9b6",
+        "source_ts": "1779439000.253149",
+        "title": "Anatomy of Agentic Memory (Jiang et al. 2026) — 4 分類タクソノミ + Table 5 実測で Pot の hybrid 構造が学術側から定量的に正当化された",
+        "reason": "source が slack_api/shared-reads、score 15、未レビューという条件を満たし、memory・game-design・agent・operation・evaluation の5優先タグを持つため1件だけ選んだ。4分類タクソノミと latency／token construction cost が、直後の Phase 4a memory cleanup で既存 control と異なる判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、agentic memory を Lightweight Semantic／Entity-Centric and Personalized／Episodic and Reflective／Structured and Hierarchical の4構造に分け、SimpleMem 1.057秒・1.3M tokens、MemoryOS 32.372秒、Nemori 7.04M tokens という cost 差と、benchmark saturation・lexical metric・format failure・maintenance overhead の限界を示している。現行 memory の構成要素を分類し、変更前に latency／token cost を見る行動へ変換できるため relevance=3、actionability=2 とした。一方、Pot が4区分を横断することは記述的 mapping であって hybrid 全体の優位を直接実証せず、本文中の Pot 1〜3秒計測も2026-05-22時点の単発記録で、現在 corpus の同一条件 baseline や判断差がないため evidence=2 に留める。probe-20260602-source-type-and-abstract-inference-gate は taxonomy を実装根拠から分離し、probe-20260605-memory-mechanism-gap-check は taxonomy note と mechanism change を分け、probe-20260515-promotion-boundary は反復証拠なしの昇格を止める。さらに probe-20260605-rag-recall-search-space-gate が latency／cost budget と baseline を、probe-20260604-memory-action-loop-evidence が記憶から次行動への差分証拠をすでに扱う。active_probes 325件と Phase 4a 向け pending lease 1件がある状態で4分類チェックを追加しても次回判断を変えず、記述分類を処方へ過剰一般化して確認負荷を増やすため non_redundancy=0、risk_control=1 とした。",
+      "existing_controls": [
+        "probe-20260602-source-type-and-abstract-inference-gate",
+        "probe-20260605-memory-mechanism-gap-check",
+        "probe-20260515-promotion-boundary",
+        "probe-20260605-rag-recall-search-space-gate",
+        "probe-20260604-memory-action-loop-evidence"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、taxonomy／mechanism／promotion／cost budget／action-return を扱う既存5 controlsとの重複、現在条件の比較 artifact 不在による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-18T23:28:29+09:00",
       "selected": {
