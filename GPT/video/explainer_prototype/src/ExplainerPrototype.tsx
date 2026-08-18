@@ -485,21 +485,20 @@ const DevelopmentCheckerboardScene: React.FC = () => {
 
 const LargeCharacterScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 720}) => {
   const frame = useCurrentFrame();
-  const scaledFrame = (originalFrame: number) => originalFrame / 720 * durationInFrames;
   const imageEnter = spring({frame, fps: 30, config: {damping: 18}});
-  const cpuOpacity = interpolate(frame, [scaledFrame(92), scaledFrame(128)], [0, 1], {
+  const cpuOpacity = interpolate(frame, [60, 72], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const clearOpacity = interpolate(frame, [scaledFrame(210), scaledFrame(250)], [0, 1], {
+  const clearOpacity = interpolate(frame, [300, 312], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const compositeOpacity = interpolate(frame, [scaledFrame(355), scaledFrame(400)], [0, 1], {
+  const compositeOpacity = interpolate(frame, [570, 582], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const warningOpacity = interpolate(frame, [scaledFrame(505), scaledFrame(550)], [0, 1], {
+  const warningOpacity = interpolate(frame, [840, 852], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
@@ -575,20 +574,18 @@ const GenericLoopScene: React.FC<{
   const frame = useCurrentFrame();
   const narrationAnimationStart = 12 * 30;
   const narrationLoopFrames = 9 * 30;
-  const narrationLoopFrame = Math.max(0, frame - narrationAnimationStart) % narrationLoopFrames;
+  const narrationLoopFrame = frame % narrationLoopFrames;
   const done = narrationSchedule
-    ? frame < narrationAnimationStart
-      ? 0
-      : clamp(
-        Math.floor(interpolate(narrationLoopFrame, [0, narrationLoopFrames - 1], [0, rasterBlocks.length])),
-        0,
-        rasterBlocks.length,
-      )
+    ? clamp(
+      Math.floor(interpolate(narrationLoopFrame, [0, narrationLoopFrames - 1], [0, rasterBlocks.length])),
+      0,
+      rasterBlocks.length,
+    )
     : clamp(Math.floor(interpolate(frame, [20, 285], [0, rasterBlocks.length])), 0, rasterBlocks.length);
   const cursor = rasterBlocks[Math.min(rasterBlocks.length - 1, done)];
-  const category = narrationSchedule && frame < narrationAnimationStart ? -1 : enemyCoverage[cursor] ?? 0;
+  const category = enemyCoverage[cursor] ?? 0;
   const kinds = ['全面透明', '一部だけ描画', '全面上書き'];
-  const steps = ['画像とマスクを読む', '画面の元の値を読む', '背景とマスク（AND）', '絵を合成（OR）', '元の場所に書き戻す'];
+  const steps = ['画像とマスクを読む', '画面の元の値を読む', 'マスク処理を行う', '絵を合成する', '元の場所に書き戻す'];
   const active = narrationSchedule
     ? frame < 12 * 30
       ? -1
@@ -706,7 +703,7 @@ const CompiledScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
   const cards = [
     {title: '全面透明', equation: '(SCREEN AND $FF) OR $00', result: '命令なし', code: ['; 命令なし']},
     {title: '一部だけ描画', equation: '(SCREEN AND $C3) OR $24', result: '必要な合成だけ', code: ['LDA (screen),Y', 'AND #$C3', 'ORA #$24', 'STA (screen),Y']},
-    {title: '全面上書き', equation: '(SCREEN AND $00) OR $7F', result: 'そのまま書く', code: ['LDA #$7F', 'STA (screen),Y']},
+    {title: '全面上書き', equation: '(SCREEN AND $00) OR $7F', result: '直接メモリへ書く', code: ['LDA #$7F', 'STA (screen),Y']},
   ];
   const activeCard = cards[active];
   return (
