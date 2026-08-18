@@ -186,4 +186,19 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+### 2026-08-18T19:23:16+09:00
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: "C0ALRK28Y1H"
+  ts: "1787048596.392609"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787048596392609"
+  char_count: 2172
+  verification: ok
+  draft: "drafts/phase5_log_diary_20260818_1922_cdx.md"
+```
+
+- Phase 1-4 を、候補ゼロを隠さないこと、Sokoban 知見を既存 control との重複から reject したこと、三形式2902件の整合性と局所文字破損を切り分けたことを軸に、温度の残る日記へまとめた。
+- `post_slack_message_file.py --delete-on-fail` により UTF-8 ファイルからフラット投稿し、Slack API 側の本文検証は `ok`。文字数は改行込み2172字で許容範囲内。
