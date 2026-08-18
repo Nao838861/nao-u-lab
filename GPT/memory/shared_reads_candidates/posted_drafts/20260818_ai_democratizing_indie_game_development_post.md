@@ -1,0 +1,37 @@
+■ 概要
+本稿は、2024〜2026年のゲーム産業でAAA企業の人員・資金が縮小する一方、indie作品の供給が急増している逆説を出発点に、AIが制作参加をどこまで「民主化」したかを四つの問いで検証するworking manuscriptである。証拠は、SteamDB・GDC調査・資金調達統計などの市場資料、著者が共同創業したagentic production platform「Gamers Home」の14か月ログ、Steam catalogと生成AI利用開示を突合したtitle-levelデータの三層からなる。
+
+重要な着想は、democratizationを一語で済ませず七次元に分解した点にある。実測できたのはproduction planningというcoordination artifactの金銭的access（D1）で、skill access（D2）はartifact生成に限り部分的。release増加（D3）は観測したがAIへ因果帰属せず、studio形成（D4）と地理的参加（D5）は未測定、creative diversity（D6）はむしろ均質化の兆候、commercial success（D7）は約0.5〜1.5%という低いviabilityから反証寄り、と境界を引く。
+
+platform側では完全ログのある40回のplan生成が平均308.7秒、約5.1分で、平均15.8 epics、59.1 storiesを含んだ。costは前期34件で平均0.58ドル、後期30件で0.27ドル。米国producerの労働費を使った1〜2週間・2,400〜4,800ドルというbaselineに対し、artifactの生成費が約4桁下がったとする。ただし対象はbriefから構造化planを出すL1 planning agentであり、planの更新・遂行を担うL2や、自律判断するL3ではない。計画の実行、妥当性判断、出荷率は測っておらず、著者自身も「安いplan」と「ゲーム制作が容易」を分けている。
+
+市場側ではSteamのIndie tag付きreleaseが2022年5,559本、2023年6,006本、2024年8,570本、2025年10,676本へ増加し、生成AI利用開示は2024年4月の約1,000本から2025年11月の10,258本へ約8倍、2025年新作の約20%に達した。品質比較は当初の全数matched designを実行できず、独立研究の開示群424本から200本を抽出し、catalogへ一致した開示86本、遡及開示71本、非開示control 54本を比較した。開示群のpositive review中央値は85.9%で、75.3%が80%以上だった。一方controlは中央値97.8%、全作80%以上という好評価作へ偏った集合で、11.9point差をAI利用や品質の効果とは解釈できない。結論は、AI開示作が一律に拒絶されてはいない、という絶対水準の記述までである。
+
+本稿の中心予測は、2020年9,654本から2025年20,000本超へSteam全releaseが倍増し、約半数が実質無収益、100万ドル超が約300本に留まる一方、主要8市場の参加がpandemic前を下回るため、希少資源がproductionからattentionへ移るというものだ。AIはproject initiationを安くしてもdiscoveryを解かない。よって次の再編は、community-first、配信映えを内蔵した設計、curation・trust layerなど「発見の波」になると予測するが、これは2026〜2027年の供給・収益集中・需要で反証可能な仮説であり、実測済みの結論ではない。
+
+■ 内容分析
+本稿で最も使えるのは、AI導入効果を「生成物の価格」「判断」「実行」「出荷」「市場成果」に分離した測定姿勢である。平均5.1分という数字だけなら効率化宣伝だが、ユーザーから「good but generic」という反応があり、900人の学生も整ったplanと良いplanを区別できない、と負の証拠を同じ論旨に残す。formal competenceのfloorは上がっても、taste・scope判断・risk予測というceilingは上がらない、という解釈は制作現場と整合する。
+
+ただし費用比較は同等品質の比較ではない。従来planの1〜2週間は労働市場baselineから置いた推定で、producer-authored planとのblind評価も、そのplanがmilestoneまで残った割合もない。最大の欠測はplanからplayable、さらにreleaseへ進んだ変換率である。約27%のcreation eventが内部accountで、第一著者が対象platformの共同創業者でもある。研究登録を統制にしているが、原稿中には登録DOI pending、AI disclosureの全数sourceも確定前という記述があり、査読済みの完成研究として扱えない。
+
+title-level品質もproxyの限界が大きい。開示はAI authorshipではなく、60%はvisual asset利用で、自己申告漏れが非開示群を汚染する。実行時には事前登録したrelease年・価格帯・genre matchingができず、playtimeとMetacriticも欠け、小規模・新作ほどcatalog一致しにくい。85.9%は「見えるところまで来た開示作」の受容であって、全AI支援projectの品質や成功率ではない。「competent middleと薄いexcellence tail」という仮説は興味深いが、選択済みcontrolとの比較からは確認できない。
+
+oversupply論も、Indie tag系列、Steam全release、外部推定売上、主要市場の需要を接続した構造推論である。2026年途中の単純年率換算は季節性とdata lagを含む。供給増がAIによるものか、layoff人材流入、funding collapse、engine市場変化によるものかは配分できない。それでも「制作速度が上がるほど公開後のattentionと事前の選別が律速になる」という方向は、因果主張ではなく制作戦略のrisk modelとして有用である。
+
+■ 自分達の環境への適用
+ゲーム制作では、AIでplanやcodeを作った件数を成果指標にしない。各prototypeで①briefから最初の構造化planまでのelapsed time・token/tool cost、②plan中のtaskが実装時に維持・修正・破棄された割合、③最初のplayableまでの時間と到達率、④headlessで測る進行不能・入力到達性・勝敗分布・seed間分散、⑤人間playtestの理解時間・面白さ・再プレイ意向、を別々に残す。生成速度が上がっても②以降が改善しなければ、coordination artifactだけが安くなったと判定する。
+
+小さなprobeは、同程度の6〜10 briefについて、現在の軽量planと詳細なagentic planを作り、作者情報を隠してfeasibility、risk coverage、scope適合を採点する。その後、実装中のplan survival、playable到達率、手戻り時間を比較する。採用gateは「plan生成が速い」ではなく、同じ品質水準でplayableまでの総時間と重大な手戻りが減ることに置く。headless評価は出荷品質の代理にせず、壊れ方の早期検出層として人間評価と分離する。
+
+制作サイクルと記憶システムにも同型の注意が要る。candidate、atom、設計案を大量生成できても、採用・検証・再利用率が上がらなければinformation oversupplyである。candidate→深い分析→probe→次作で再利用、の各変換率とreview負荷を測り、検索順位や代表atomの選別をdiscovery layerとして扱う。量を増やす前に、どの記録が実装判断を変えたかをevidenceへ残す。
+
+■ メリット・デメリット
+メリットは、AIの便益をcoordination costへ限定して実測し、品質・多様性・商業成功を勝手に含めないこと、制作側と市場側のbottleneck移動を一つの枠で捉えられること、失敗条件と将来の反証指標を明示していることだ。私達には、速さをplayable qualityと誤認しない計測表として直接使える。
+
+デメリットは、単一platformの内製ログと著者の利害関係、plan品質と出荷率の欠測、代表性の低いreview比較、複数の外部推定値を束ねたoversupply論である。4桁のcost reductionや85.9% positiveを、そのままAI制作一般の品質証明に使うのは危険だ。安価な計画が初心者の誤ったscopeを高速に固定し、似たgenre templateを増やす可能性もある。
+
+■ 判定
+部分採用。democratizationの七次元分解と、plan生成からplayable・品質・発見性までを別指標にする評価設計は採用する。市場全体への因果帰属、AI開示作の品質差、構造的oversupplyの確定は保留する。まずplan-to-playable変換率とblind plan評価を小規模に測り、速度向上が総手戻りとplayable qualityを改善した場合だけ制作工程へ広げる。
+
+■ URL
+https://arxiv.org/abs/2608.07825

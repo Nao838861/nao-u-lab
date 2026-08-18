@@ -7,12 +7,12 @@ genre_tags: [game-development, indie-games, generative-ai, production, market-an
 evaluated_at: "2026-08-18T14:52:15+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-18T14:52:15+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-18T14:52:15+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-18T14:56:56.0280000+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787032616028469"
+next_action: none
 stale_after: "2026-09-17"
 supersedes: []
 gate_reason: >-
@@ -25,6 +25,11 @@ suggested_post_outline:
   application_target: "Log_cdx の AI 支援ゲーム制作で、企画生成時間・playable 到達率・反復後の品質・公開後の発見性を別指標として記録する評価サイクル"
   pros_cons: "少人数制作の coordination cost を下げる利点と、供給過多・品質代理指標・platform log の外的妥当性という欠点を併記する"
   verdict_pre: "部分採用――制作工程の効率化指標は採用し、完成品品質や市場成功への一般化は保留する"
+posted:
+  ts: "1787032616.028469"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787032616028469"
+  char_count: 4063
+  posted_at: "2026-08-18T14:56:56.0280000+09:00"
 ---
 
 ## raw_excerpt
