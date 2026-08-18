@@ -67,7 +67,49 @@ skipped: []
 - candidate frontmatter の更新はなし。投稿品質ゲートを変更せず、次 phase へ進む。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+### 2026-08-18T19:16:23+09:00
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787040810-21d90515c9
+    source_ts: "1787040810.456069"
+    title: "Solvable Sokoban Without a Solver via Diffusion：局所 loss と大域可解性、最小修復の分離"
+    reason: "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新 atom で、harness・game-design・operation・evaluation の4優先タグを持つため1件だけ選んだ。局所 tile 再構成 loss と大域可解性を分け、失敗を最小 edit と生成時 confidence で診断する知見が、次の PCG または level-generation 作業で既存 control と異なる判断差を作れるか確認した。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: >-
+    合計14には達するが risk_control が必須閾値2を下回る。5万生成の無修正可解率、
+    最小修復 edit、生成時 confidence、局所 loss と大域可解率の乖離は直接行動へ変換できる。
+    しかし既存の PCG tool-loop、representation/repair、structural/semantic verifier、
+    behavior-trace diversity、metric-plus-visual repair controls が主要判断を覆う。
+    現 staging に比較可能な generator／confidence／solver trace／修復前後 level はなく、
+    active probe 325件と Phase 4a 向け pending lease 1件があるため新規 control は増やさない。
+  existing_controls:
+    - probe-20260528-pcg-tool-loop-evidence
+    - probe-20260608-pcgml-representation-repair-critique
+    - probe-20260610-structural-semantic-verifier-boundary
+    - probe-20260616-behavior-trace-pcg-diversity
+    - probe-20260621-fly-fail-fix-metric-visual-repair
+  change:
+    summary: "reviewed_source_ts と、既存 controls との重複および比較 artifact 不在による state-only reject 理由だけを記録した。active_probes・ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

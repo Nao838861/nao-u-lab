@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-18T17:19:01+09:00",
+  "updated_at": "2026-08-18T19:16:23+09:00",
   "reviewed_source_ts": [
+    "1787040810.456069",
     "1787032616.028469",
     "1787024421.016969",
     "1787016560.272959",
@@ -680,6 +681,47 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-18T19:16:23+09:00",
+      "selected": {
+        "id": "sr-1787040810-21d90515c9",
+        "source_ts": "1787040810.456069",
+        "title": "Solvable Sokoban Without a Solver via Diffusion：局所 loss と大域可解性、最小修復の分離",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新 atom で、harness・game-design・operation・evaluation の4優先タグを持つため1件だけ選んだ。局所 tile 再構成 loss と大域可解性を分け、失敗を最小 edit と生成時 confidence で診断する知見が、次の PCG または level-generation 作業で既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14には達するが、risk_control が必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、Boxoban 45万盤面で学習し、5万生成の無修正可解率77.4%、不可解盤面の94.5%が内壁1枚の削除で可解、修復対象壁の生成時確率中央値0.45に対して他の内壁0.93、validation loss plateau 後も可解率が約25 percentage point 上昇すること、temperature 低下で可解率と元分布らしさ・難易度が交換になることまで示す。したがって局所生成指標と大域 verifier の曲線を分け、無修正成功率、最小修復 edit 数、修復後の難易度・意図保持、confidence と修復箇所の対応を同じ生成 batch で比較する行動へ直接変換できるため relevance・actionability・evidence は3とした。一方、probe-20260528-pcg-tool-loop-evidence は generator／repair／verifier と structural validity／player-facing quality の分離を、probe-20260608-pcgml-representation-repair-critique は表現・repair・observable constraint を、probe-20260610-structural-semantic-verifier-boundary は構造／意味 verifier の境界を、probe-20260616-behavior-trace-pcg-diversity は生成候補の行動 trace・planner difficulty・human feel の分離を、probe-20260621-fly-fail-fix-metric-visual-repair は量的証拠と修復 scope をすでに扱う。本 atom 固有の confidence による repair candidate 順位付けは小さな差だが、既存 repair probe の具体適用時に局所 metric として足せるため non_redundancy は1とした。現在の staging には比較可能な generator、同一 batch の confidence、solver trace、修復前後 level がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。active_probes は325件で Phase 4a 向け pending lease も1件あるため、対象 artifact なしに確認面を増やす risk_control は1。次に具体的な PCG artifact が置かれ、既存5 controlsだけでは低確信要素と最小修復箇所の対応が採否を変えるか判定できない実例が出た時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260528-pcg-tool-loop-evidence",
+        "probe-20260608-pcgml-representation-repair-critique",
+        "probe-20260610-structural-semantic-verifier-boundary",
+        "probe-20260616-behavior-trace-pcg-diversity",
+        "probe-20260621-fly-fail-fix-metric-visual-repair"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、局所 loss／大域可解性／最小修復／confidence 対応の有用性、既存 PCG／repair／verifier controls との重複、比較 artifact 不在による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-18T17:19:01+09:00",
       "selected": {
