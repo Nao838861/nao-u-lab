@@ -112,7 +112,72 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-08-18T19:21:00+09:00
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の High Signal / Recent / Game Task Entry Points / Tag Entry Points を per-file atom index と照合し、unknown atom・欠損 per-file・重複 entry・index error がないことを確認した。"
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false。評価軸は本文に完全一致語がないだけで、他の日本語と index validator は正常なため source 全体の encoding 破損とは判定しなかった。"
+  - "atoms.jsonl / per-file .md / atoms/index.jsonl は各 2902 件で、missing・parse/index error・content conflict は 0。既知の normalized-content / title-excerpt 重複 45 群は canonical overlay 45 群と一致した。"
+  - "memory/raw/ の最終更新から30日超の242件を監査した。raw は provenance 正本で、戻せる archive 計画なしに移動しない現行方針のため、この cycle の archive は 0 件。"
+  - "candidate lifecycle を dry-run 監査した。posted=637 / ready_to_post=9 / postponed=200 / failed=479 / needs_review=2、field 更新 0、正規未評価 0、malformed 0。"
+  - "terminal title canonical index 100群、mixed duplicate queue 28群、open duplicate queue 31群（mixed 28 / all_open 3）を再生成・監査した。title 一致だけで自動 close せず、open group は lifecycle queue に残した。"
+  - "open duplicate / stale triage / group action sidecar を規定順で再生成した。期限超過2 candidate は既存 all-open group handoff 2件の retry_after=2026-08-20T13:19:04+09:00 により明示保持され、当 cycle の新規 group/candidate handoff は 0 件。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending はともに 0 件で、handled へ変更する行はなかった。"
+issues:
+  - id: ISS-ENC-RAW-001
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』部分が『AIエ��ジェント』として保存され、title / trigger / excerpt と raw Slack archive の双方に replacement character が残っている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl source_ts=1776127289.990919; memory_health.py mojibake_suspect_atoms"
+    source_file_status: "UTF-8 明示読みでも per-file atom と raw source の双方に U+FFFD が2文字存在するため、表示経路ではなく保存済み source data の局所破損。gr-1777083728-44d444ab7a は raw/per-file とも正常で、本文の意図的な『???』を heuristic が拾った誤検知。"
+    display_or_tooling_status: "PowerShell Get-Content -Encoding UTF8 と memory_health.py で同じ文字列を確認。display-only mojibake ではない。"
+    why_blocks_game_memory: "『AIエージェント』の完全一致検索でこの context-engineering lesson が落ちうるため、次のゲーム制作で agent 用の段階的 context 開示を再利用する導線を局所的に弱める。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 7
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  deferred_overdue_groups:
+    - id: gha-e6d4d4b5a37a0808
+      path: memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+      retry_after: "2026-08-20T13:19:04+09:00"
+      decision: explicit_keep
+    - id: gha-2313a247c62a9028
+      path: memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+      retry_after: "2026-08-20T13:19:04+09:00"
+      decision: explicit_keep
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- 判定: canonical overlay、duplicate group sidecar、deferred lease は既知の重複と期限超過を予定通り抑制している。局所的な raw 文字破損は新しい仕組みを要する構造問題ではないため、Phase 4b は起動しない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
