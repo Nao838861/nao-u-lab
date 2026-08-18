@@ -114,7 +114,122 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - shared-reads の title canonical / mixed duplicate / open duplicate / stale triage / group-action sidecar を現行 candidate frontmatter から再生成した。
+  - stale triage 上位3件を candidate handoff inbox へ冪等 enqueue した。candidate 本体の lifecycle は変更していない。
+  - Slack directive / broadcast は pending 0件のため close 対象なし。raw provenance は移動していない。
+audits:
+  memory_index:
+    validator: pass
+    broken_atom_or_index_refs: 0
+    markdown_link_targets: 0
+    encoding_probe:
+      source_file_status: >-
+        memory/MEMORY.md は UTF-8 明示読みで正常。`記憶` / `ゲーム設計` / `敵パターン` は取得でき、
+        `評価軸` の literal は現行本文に存在しないが、代表日本語の破損や index section の mojibake residue はない。
+      display_or_tooling_status: >-
+        PowerShell の折返し表示はあるが source file の文字化けではない。
+  atoms:
+    rows: 2905
+    duplicate_ids: 0
+    parse_errors: 0
+    mirror_content_conflicts: 0
+    mirror_status: clean
+    normalized_content_duplicate_groups: 40
+    normalized_content_duplicate_rows: 80
+    lifecycle_fold_extra_rows: 40
+    effective_display_unresolved_title_rows: 0
+    note: >-
+      normalized duplicate は既存 lifecycle/content fold の管理内。新しい矛盾や削除対象とは判定しない。
+      memory_health の mojibake suspect 2件のうち sr-1776127289-4d9239b255 は source atom に置換文字が残り、
+      gr-1777083728-44d444ab7a は UTF-8 明示読みで正常。既知の局所データ品質であり新規構造 issue にはしない。
+  raw_archive:
+    files_total: 247
+    inactive_30d_or_more: 242
+    inactive_bytes: 70590898
+    action: keep
+    reason: >-
+      Slack 原文、論文抽出、headless 評価 trace の provenance 層であり、古いという理由だけでは移動しない。
+  candidate_lifecycle:
+    files: 1331
+    status_counts:
+      posted: 641
+      ready_to_post: 9
+      postponed: 200
+      failed: 479
+      needs_review: 2
+    missing_stale_after: 3
+    overdue_open_total: 5
+  inbox:
+    slack_directives_pending: 0
+    slack_broadcasts_pending: 0
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  note: >-
+    pending 1件 probe-20260621-compiled-memory-boundary の lease_due は 2026-08-19T06:00:00+09:00 で、
+    当 cycle の確認時刻には未到来。consumer artifact の receipt は作成していない。
+  counts:
+    pending: 1
+    resolved: 7
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 5
+  stale_triage_queue_rows: 3
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_handoff_inbox_pending_count: 0
+  group_handoff_inbox_ids: []
+  suppressed_by_live_deferred_group_lease: 2
+  suppressed_group_ids:
+    - gha-e6d4d4b5a37a0808
+    - gha-2313a247c62a9028
+  candidate_handoff_pending_count: 3
+  candidate_handoff_ids:
+    - cha-97b8b6814b877d4f
+    - cha-3fc935fca3439cb8
+    - cha-b9ef1bf0ab4db406
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-97b8b6814b877d4f
+    path: memory/shared_reads_candidates/20260720_agent_traces_execution_provenance.md
+    status: postponed
+    stale_after: "2026-08-19"
+    priority_reason: >-
+      provenance graph と evidence relation の区別は game playtest の失敗再現に有用だが、
+      benchmark・dataset・metric と比較結果が不足するため Phase 2 で再評価する。
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-3fc935fca3439cb8
+    path: memory/shared_reads_candidates/20260720_crossfire_adaptive_cover.md
+    status: postponed
+    stale_after: "2026-08-19"
+    priority_reason: >-
+      adaptive cover と地形読解の実装条件は抽出できる一方、遭遇設計と playtest の評価証拠が薄いため Phase 2 で再評価する。
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-b9ef1bf0ab4db406
+    path: memory/shared_reads_candidates/20260720_generative_music_gameplay_affect.md
+    status: postponed
+    stale_after: "2026-08-19"
+    priority_reason: >-
+      MMM / PreGLAM と3条件比較の骨格は具体的だが、比較結果と結論が候補本文にないため Phase 2 で再評価する。
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
