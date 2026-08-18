@@ -2,14 +2,17 @@ import {readFile, writeFile, mkdir, access} from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import {fileURLToPath} from 'node:url';
+import {compactPcmWavSilence} from './compact-narration-silence.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDir, '..');
 const manifestPath = path.join(projectRoot, 'narration', 'prototype-cuts.json');
 const outputDir = path.join(projectRoot, 'public', 'narration');
+const rawOutputDir = path.join(outputDir, 'raw');
 const reportPath = path.join(outputDir, 'duration-report.json');
 const force = process.argv.includes('--force');
 const reportOnly = process.argv.includes('--report-only');
+const compactOnly = process.argv.includes('--compact-only');
 const cutArg = process.argv.find((argument) => argument.startsWith('--cut='));
 const selectedCutId = cutArg?.slice('--cut='.length);
 
@@ -82,8 +85,10 @@ const wavDurationSeconds = (buffer) => {
 };
 
 const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
-const apiKey = reportOnly ? undefined : await loadApiKey();
+const apiKey = reportOnly || compactOnly ? undefined : await loadApiKey();
 await mkdir(outputDir, {recursive: true});
+await mkdir(rawOutputDir, {recursive: true});
+const compactionStatsByCut = new Map();
 
 const syncNarrationTiming = () => {
   const fps = manifest.fps ?? 30;
@@ -109,6 +114,7 @@ const report = {
   speed: manifest.speed ?? 1,
   fps: manifest.fps ?? 30,
   tailPaddingSeconds: manifest.tailPaddingSeconds ?? 0.35,
+  silenceCompaction: manifest.silenceCompaction,
   cuts: [],
 };
 
@@ -126,6 +132,14 @@ for (const cut of selectedCuts) {
   if (reportOnly) {
     if (!await fileExists(outputPath)) throw new Error(`${cut.id}.wav が見つかりません。`);
     buffer = await readFile(outputPath);
+  } else if (compactOnly) {
+    const rawPath = path.join(rawOutputDir, `${cut.id}.wav`);
+    if (!await fileExists(rawPath)) throw new Error(`${cut.id}の未加工WAVが見つかりません。`);
+    const rawBuffer = await readFile(rawPath);
+    const compacted = compactPcmWavSilence(rawBuffer, manifest.silenceCompaction);
+    buffer = compacted.buffer;
+    compactionStatsByCut.set(cut.id, compacted.stats);
+    await writeFile(outputPath, buffer);
   } else if (!force && await fileExists(outputPath)) {
     buffer = await readFile(outputPath);
   } else {
@@ -149,6 +163,10 @@ for (const cut of selectedCuts) {
       throw new Error(`${cut.id} の音声生成に失敗しました (${response.status}): ${detail}`);
     }
     buffer = Buffer.from(await response.arrayBuffer());
+    await writeFile(path.join(rawOutputDir, `${cut.id}.wav`), buffer);
+    const compacted = compactPcmWavSilence(buffer, manifest.silenceCompaction);
+    buffer = compacted.buffer;
+    compactionStatsByCut.set(cut.id, compacted.stats);
     await writeFile(outputPath, buffer);
   }
 
@@ -158,6 +176,12 @@ for (const cut of selectedCuts) {
     file: `narration/${cut.id}.wav`,
     durationSeconds: Number(durationSeconds.toFixed(3)),
   };
+  const compactionStats = compactionStatsByCut.get(cut.id);
+  if (compactionStats) {
+    item.silenceRemovedSeconds = Number(compactionStats.removedSeconds.toFixed(3));
+    item.compactedSpanCount = compactionStats.compactedSpanCount;
+    console.log(`${cut.id}: compacted ${item.compactedSpanCount} pauses / removed ${item.silenceRemovedSeconds}s`);
+  }
   cut.measuredDurationSeconds = item.durationSeconds;
   report.cuts.push(item);
 }
