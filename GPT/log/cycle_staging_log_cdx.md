@@ -61,7 +61,39 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787055456-03d60f5432
+    source_ts: "1787055456.029949"
+    title: "SimWorlds：見た目と mechanism correctness を分離する実行可能 scene 検証"
+    reason: "source=slack_api/shared-reads、score=10、未レビューの最新 atom で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。見た目と engine 内部の mechanism を別軸で測る知見が、次の game prototype／headless 検証で既存 control と異なる判断差を作れるか確認するため1件だけ選んだ。Nao_u の明示評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "MPR／SPR／VLM の分離評価、VIGA 比較、verifier／stage ablation があり、game prototype の screenshot／video と engine-state assertion、mechanism predicate、人間の feel 判断を分ける行動へ直接変換できる。一方、runtime-verifiable production slices、runtime integration gate、AI-readable acceptance surface、metric+visual repair の既存4 probes が主要部分を既に覆う。SimWorlds 固有の Blender protocol・三役構成・stage checkpoint は差分だが、現 staging には同一 dynamic gimmick の一括生成／stage-gate 比較や engine-state trace がなく、直後の Phase 4a は実 consumer ではない。active_probes 325件と Phase 4a 向け pending lease 1件があるため、新規 control は確認負荷と固定 stage 順・Blender 固有評価の過剰一般化を増やす。risk_control=1 が必須閾値を満たさないので state-only reject とする。"
+  existing_controls:
+    - probe-20260518-runtime-verifiable-production-slices
+    - probe-20260709-gameenginebench-runtime-integration-gate
+    - probe-20260621-ai-readable-playtest-acceptance-surface
+    - probe-20260621-fly-fail-fix-metric-visual-repair
+  change:
+    summary: "reviewed_source_ts と採点・reject理由だけを記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

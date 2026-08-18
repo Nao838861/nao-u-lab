@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-18T21:22:33+09:00",
+  "updated_at": "2026-08-18T23:28:29+09:00",
   "reviewed_source_ts": [
+    "1787055456.029949",
     "1787055443.325009",
     "1787040810.456069",
     "1787032616.028469",
@@ -682,6 +683,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-18T23:28:29+09:00",
+      "selected": {
+        "id": "sr-1787055456-03d60f5432",
+        "source_ts": "1787055456.029949",
+        "title": "SimWorlds：見た目と mechanism correctness を分離する実行可能 scene 検証",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新 atom で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つため1件だけ選んだ。見た目が正しいことと engine 内部の mechanism が正しいことを別軸で測り、依存順の stage gate と局所 retry に接続する知見が、次の game prototype／headless 検証で既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14には達するが、risk_control が必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、Blender scene を object／relation／motion phase／physics role を持つ実行可能 artifact として構築し、coder・deterministic verifier・visual reviewer、stage checkpoint と局所 retry、42 predicate の MPR、空間関係の SPR、5 frame の VLM score を分離する。50 scene の VIGA 比較で MPR .87対.67、SPR .89対.70、VLM .82対.78、15 scene ablation で full .97/.97/.87、verifier なし .93/.87/.84、stage なし .94/.92/.76まで示す。したがって game prototype で screenshot／video と engine-state assertion、mechanism predicate、代表 frame、人間の feel 判断を別 evidence lane に置く行動へ直接変換でき、relevance・actionability・evidence は3とした。一方、probe-20260518-runtime-verifiable-production-slices は visual scene／code completion／interaction／runtime verification の分離を、probe-20260709-gameenginebench-runtime-integration-gate は固定 trace と neighboring runtime system の state snapshot を、probe-20260621-ai-readable-playtest-acceptance-surface は code completion／AI-readable playtest／manual feel の境界を、probe-20260621-fly-fail-fix-metric-visual-repair は quantitative signal と visual／temporal trace の併置をすでに扱う。SimWorlds 固有の Blender protocol、三役構成、stage checkpoint は差分だが、現在の staging には同一 dynamic gimmick の一括生成／stage-gate 比較、engine-state assertion、修正波及回数、retry 時間を持つ artifact がなく、直後の Phase 4a memory cleanup は実 consumer ではない。active_probes は325件で Phase 4a 向け pending lease も1件あるため、対象 artifact なしに同型 control を追加すると確認負荷、固定 stage 順の過剰適用、Blender 固有評価の一般化を増やすため non_redundancy・risk_control は1とした。次に具体的な dynamic gimmick artifact が置かれ、既存4 controlsだけでは見た目の成功と mechanism failure、局所 retry の判断を分けられない実例が出た時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260518-runtime-verifiable-production-slices",
+        "probe-20260709-gameenginebench-runtime-integration-gate",
+        "probe-20260621-ai-readable-playtest-acceptance-surface",
+        "probe-20260621-fly-fail-fix-metric-visual-repair"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、visual／mechanism evidence 分離・stage checkpoint・局所 retry の有用性、既存 runtime／acceptance／metric-visual controls との重複、比較可能な dynamic-gimmick artifact 不在による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-18T21:22:33+09:00",
       "selected": {
