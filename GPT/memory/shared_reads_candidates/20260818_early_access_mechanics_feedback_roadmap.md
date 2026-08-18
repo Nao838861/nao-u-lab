@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/how-to-decide-what-mechanics-to-add-t
 collected_at: "2026-08-18T12:30:47+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, production, player-feedback, early-access, live-ops]
+evaluated_at: "2026-08-18T12:33:51.9397337+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-18T12:33:51.9397337+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-18T12:33:51.9397337+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-17"
+supersedes: []
+gate_reason: |-
+  要望数をそのまま優先度にせず、意図抽出、分類、定型 pitch、担当者投票、工数見積り、theme 化へ段階的に変換する中核手順と実運用上の結論が明確。
+  定量的な効果測定はないが、playtest feedback から次の mechanic と milestone を決める具体場面へ直接適用でき、限界も含めて約4000字の独立した分析を組める。
+suggested_post_outline:
+  overview_angle: "Early Access の要望投票ではなく、散在する player request を、実装責任と update の物語を持つ roadmap へ変換する意思決定 funnel として書く。"
+  analysis_axis: "頻度、発言の背後にある意図、Aesthetic/QoL/Gameplay 分類、定型 pitch、担当者としての投票、工数、theme という異種の signal を各段階でどう保存・変換するかを分析する。"
+  application_target: "Nao_u 作品の playtest 後に、feedback 原文から次 iteration の mechanic を選び、担当可能性と実装規模を確かめ、意味の通る milestone に束ねる部分。"
+  pros_cons: "メリットは声量だけの feature voting を避け、支持を実装責任へ接続し、player に説明可能な update 単位を作れること。デメリットは self-selection と loud-player bias、定量的な成果検証の欠如、小規模 team の暗黙知への依存。"
+  verdict_pre: "部分採用。feedback の同義統合から担当・工数確認までは採用し、theme 化は個別 mechanic の検証可能性を失わない範囲で使う。"
 ---
 
 ## raw_excerpt
