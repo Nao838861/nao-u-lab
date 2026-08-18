@@ -572,7 +572,7 @@ const GenericLoopScene: React.FC<{
   narrationSchedule?: boolean;
 }> = ({durationInFrames = 300, narrationSchedule = false}) => {
   const frame = useCurrentFrame();
-  const narrationLoopFrames = 9 * 30;
+  const narrationLoopFrames = (narrationSchedule ? 36 : 9) * 30;
   const narrationLoopFrame = frame % narrationLoopFrames;
   const narrationStepStartFrames = [11.86, 13.775, 15.78, 17.135, 18.14]
     .map((seconds) => Math.round(seconds * 30));
@@ -764,6 +764,26 @@ const CompiledScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
           </div>
         </div>
         <div style={{flex: 1}}>
+          <div style={{display: 'flex', gap: 9, marginBottom: 15}}>
+            {cards.map((card, i) => (
+              <div
+                key={card.title}
+                style={{
+                  flex: 1,
+                  padding: '10px 5px',
+                  textAlign: 'center',
+                  background: i === active ? `${C.magenta}20` : C.panel,
+                  border: `1px solid ${i === active ? C.magenta : '#3a3741'}`,
+                  color: i === active ? C.white : C.dim,
+                  fontFamily: FONT,
+                  fontSize: 17,
+                  fontWeight: 800,
+                }}
+              >
+                {card.title}
+              </div>
+            ))}
+          </div>
           {cards.map((card, i) => {
             const lit = i === active;
             return (
