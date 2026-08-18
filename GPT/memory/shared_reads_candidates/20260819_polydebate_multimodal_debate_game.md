@@ -7,12 +7,12 @@ genre_tags: [serious-games, multimodal, llm, feedback-design, game-ui]
 evaluated_at: "2026-08-19T05:36:24+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-19T05:36:24+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-19T05:36:24+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-19T05:44:15+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787085841602779"
+next_action: none
 stale_after: "2026-09-18"
 supersedes: []
 gate_reason: >-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Log_cdx の会話ゲームや tutorial 試作で、抽象的な上達目標を card 化し、turn ごとの observable evidence を rubric 判定から即時 resource へ変換し、終了時に診断へ再集約する feedback loop の設計に使う。"
   pros_cons: "利点は戦略を選択可能な action にする可視性、opponent と評価の状態同期、形成的 feedback の具体性。欠点は利用者10人の軽量評価、実際の学習効果未検証、LLM judge による自己評価的な測定、multimodal pipeline の運用コスト。"
   verdict_pre: "部分採用（card・stage・rubric・resource の対応だけを小さな会話 prototype で試し、3D avatar や全 modality は効果確認後に足す）"
+posted:
+  ts: "1787085841.602779"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787085841602779"
+  char_count: 4361
+  posted_at: "2026-08-19T05:44:15+09:00"
 ---
 
 ## raw_excerpt

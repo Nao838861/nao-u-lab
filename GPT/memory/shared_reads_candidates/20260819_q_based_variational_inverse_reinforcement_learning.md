@@ -7,12 +7,12 @@ genre_tags: [game-ai, inverse-reinforcement-learning, player-modeling, evaluatio
 evaluated_at: "2026-08-19T05:36:24+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-19T05:36:24+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-19T05:36:24+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-19T05:44:15+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787085836073489"
+next_action: none
 stale_after: "2026-09-18"
 supersedes: []
 gate_reason: >-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Log_cdx の headless playtest で、熟練 bot や人間の少数軌跡から目的候補と確信度を推定し、確信の低い状態を追加 replay・人手確認へ回す risk-aware playtest bot の小規模 probe に使う。"
   pros_cons: "利点は raw pixel まで拡張できる報酬・Q の不確実性、少数デモでの安定性、active learning への直結。欠点は既知または sampled transition、expert rationality 仮定、Gaussian/Clark 近似、tail 精度、学習コストへの依存。"
   verdict_pre: "部分採用（まず離散状態の小規模ゲームで、報酬平均より uncertainty map と追加 query 選定の有用性だけを検証する）"
+posted:
+  ts: "1787085836.073489"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787085836073489"
+  char_count: 4405
+  posted_at: "2026-08-19T05:44:15+09:00"
 ---
 
 ## raw_excerpt

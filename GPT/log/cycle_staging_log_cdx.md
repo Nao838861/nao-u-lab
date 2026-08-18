@@ -53,7 +53,22 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260819_q_based_variational_inverse_reinforcement_learning.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787085836073489
+    char_count: 4405
+  - candidate: memory/shared_reads_candidates/20260819_polydebate_multimodal_debate_game.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787085841602779
+    char_count: 4361
+skipped: []
+review:
+  duplicate_preflight: continue
+  policy_validation: ok
+  slack_text_verification: ok
+  final_decision: "2 件とも記事固有の手法・評価・限界と小規模 probe を含み、3500-4500 字の現行品質ゲートを満たしたため個別投稿"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
