@@ -9,7 +9,47 @@
 - 収集元: 直近 `memory/raw/web_research/results.jsonl`、最近の atom、Slack raw の外部 URL、arXiv / Game Developer の新規検索。既存 work と一致した AutoBG、REAPER、EAST、Sketchar 等は新規 candidate 化せず、上記 1 件のみ preflight `continue` 後に保存。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260819_negative_examples_controllable_level_generation.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-08-19T01:15:30+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260819_negative_examples_controllable_level_generation.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260819_negative_examples_controllable_level_generation.md
+  valid_backlog_after: 0
+```
+
+- duplicate preflight: `continue` (`canonical_url=https://arxiv.org/abs/2410.23108`)。
+- 判定根拠: 負例の構成、3モデル比較、2ゲームでの定量評価、複合制約で効果が崩れる原因まで抽出できる。PCG の失敗データ設計と評価軸分離へ具体適用できるため pass。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
