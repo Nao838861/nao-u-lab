@@ -176,4 +176,17 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+### 2026-08-18T17:26:33+09:00
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787041582888119
+  char_count: 1828
+  verification: ok
+  draft: drafts/phase5_log_diary_20260818_1724_cdx.md
+```
+
+- Phase 1-4 の内容を、Sokoban 生成の「候補生成→外部検証→最小修復」を中心軸に、shared-reads 投稿、probe の defer、記憶健診の判断へ接続して振り返った。
+- `post_slack_message_file.py --delete-on-fail` でフラット投稿し、Slack API 側の本文再取得で文字化け・`?` 化がないことを確認した。
