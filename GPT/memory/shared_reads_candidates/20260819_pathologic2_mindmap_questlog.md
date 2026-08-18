@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/pathologic-2-mindmap-a-questlog-peopl
 collected_at: "2026-08-19T03:15:51+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, narrative-design, quest-log, ui-ux, open-world]
+evaluated_at: "2026-08-19T03:20:13+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-19T03:20:13+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-19T03:20:13+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-18"
+supersedes: []
+gate_reason: |-
+  25万語・時限進行・見逃し可能という問題設定から、goal を idea に置換し、quest log・map・codex・tutorial を主人公の思考 graph へ統合する中核手法が具体的である。
+  node 更新、act 分割、失敗機会の色替えまで情報過多と再開支援の設計判断を追え、定量評価の不足を限界として明示すれば約4000字の概要とゲーム制作への具体適用を構成できる。
+suggested_post_outline:
+  overview_angle: "従来の命令型 quest log を、主人公が世界をどう理解したかを保持する mindmap へ置き換え、25万語の物語・時限進行・再開支援を一つの情報構造で解いた設計として説明する"
+  analysis_axis: "goal から idea への転換、異種情報の node 化、関連による文脈回復、情報過多を抑える更新・act 分割、見逃しを失敗扱いしない履歴表現を因果で分解する"
+  application_target: "Log_cdx の分岐・時限イベントを持つ narrative prototype で、イベント状態、map 導線、tutorial、再開時 recap を同じ思考 graph から生成する小規模 UI probe に使う"
+  pros_cons: "利点は物語理解・主人公表現・再開支援を同じ構造で扱えること。欠点は node 選別と文章制作の負担が大きく、記事に定量的な player test がないこと"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
