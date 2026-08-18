@@ -12,7 +12,7 @@
     "maximumInternalSilenceMs": 50,
     "maximumCommaSilenceMs": 180,
     "sentenceSilenceThresholdMs": 450,
-    "maximumSentenceSilenceMs": 220,
+    "maximumSentenceSilenceMs": 380,
     "maximumLeadingSilenceMs": 20,
     "maximumTrailingSilenceMs": 60
   },
@@ -21,10 +21,10 @@
     {
       "id": "C01",
       "startFrame": 0,
-      "durationFrames": 340,
+      "durationFrames": 345,
       "minimumDurationFrames": 300,
-      "targetSeconds": 11.333,
-      "measuredDurationSeconds": 10.965,
+      "targetSeconds": 11.5,
+      "measuredDurationSeconds": 11.125,
       "localRate": 4,
       "silenceCompaction": {
         "commaPauseCandidateIndices": [
@@ -37,11 +37,11 @@
     },
     {
       "id": "C02",
-      "startFrame": 340,
-      "durationFrames": 466,
+      "startFrame": 345,
+      "durationFrames": 476,
       "minimumDurationFrames": 450,
-      "targetSeconds": 15.533,
-      "measuredDurationSeconds": 15.175,
+      "targetSeconds": 15.867,
+      "measuredDurationSeconds": 15.495,
       "localRate": 4,
       "silenceCompaction": {
         "commaPauseCandidateIndices": [
@@ -55,7 +55,7 @@
     },
     {
       "id": "C03",
-      "startFrame": 806,
+      "startFrame": 821,
       "durationFrames": 90,
       "minimumDurationFrames": 90,
       "targetSeconds": 3,
