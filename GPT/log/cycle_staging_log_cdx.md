@@ -71,7 +71,35 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779536360-7aa42863d6
+    source_ts: "1779536360.403639"
+    title: "2026 AI agent 評価ツール独立カテゴリ化 × DRL+MCTS player modelling — Tracing／Replay／Metric と headless 評価"
+    reason: "source=slack_api/shared-reads、score=13、未レビューで、harness・game-design・agent・operation・evaluation の5優先タグを持つため1件だけ選択。Replay 欠落が次回の game evaluation で既存 control と異なる判断差を作るか確認した。Nao_u の明示評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "合計14未満かつ risk_control<2。Tracing／Replay／Metric、任意 step 再実行、最良ケース反復は具体的だが、論文 PDF・計算費・game 転用条件は未確認。既存の commonroad human-operation regression fixture、GameEngineBench fixed-input runtime integration、player intent→observable response controls が scenario fixture、input trace、oracle、replay／log確認を既に要求し、新規 control は次回判断を変えない。active_probes 325件と Phase 4a pending lease 1件があるため確認負荷を増やさない。"
+  change:
+    summary: "reviewed_source_ts と state-only の reject 理由だけを記録。active_probes、probe lifecycle ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

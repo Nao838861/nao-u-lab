@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-19T03:32:54+09:00",
+  "updated_at": "2026-08-19T05:49:16+09:00",
   "reviewed_source_ts": [
+    "1779536360.403639",
     "1779824262.944629",
     "1779439000.253149",
     "1787055456.029949",
@@ -685,6 +686,45 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-19T05:49:16+09:00",
+      "selected": {
+        "id": "sr-1779536360-7aa42863d6",
+        "source_ts": "1779536360.403639",
+        "title": "2026 AI agent 評価ツール独立カテゴリ化 × DRL+MCTS player modelling — Tracing／Replay／Metric と headless 評価",
+        "reason": "source が slack_api/shared-reads、score 13、未レビューという条件を満たし、harness・game-design・agent・operation・evaluation の5優先タグを持つため1件だけ選んだ。商用 agent evaluation の Tracing／Replay／Metric と game headless 評価を対応づけ、Replay 欠落が次回の game evaluation で既存 control と異なる判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、商用 agent evaluation を Tracing／Replay／Metric に分け、任意 step からの再実行、session／trace／span の指標、DRL-enhanced MCTS の最良ケース反復、過去判定を同条件で比較できない Replay 欠落を具体化しているため relevance=3 とした。最小 scenario fixture と input trace を保存する行動へは変換できるが、任意 step 再実行の実装規模、DRL player の計算費、game への転用条件は未確認なので actionability=2。根拠は Maxim AI の二次比較記事、arXiv 2107.12061 と Talakat への接続、ローカル headless format との比較を含む一方、投稿自身が論文 PDF・計算コストを未確認とし、商用5社も game playtest を対象にしていないため evidence=2 とした。probe-20260708-commonroad-human-operation-regression-fixture は build／seed／route／input script と regression oracle を、probe-20260709-gameenginebench-runtime-integration-gate は固定 input trace と neighboring system snapshots を、probe-20260717-player-intent-action-response は intent から observable response までの replay／log／manual 確認をすでに要求する。したがって Replay を別 control にしても次回判断は変わらず non_redundancy=0。active_probes 325件と Phase 4a 向け pending lease 1件がある現状で同型 probe を増やすと確認負荷と大規模 replay 基盤への早すぎる一般化を増やすため risk_control=1 とした。",
+      "existing_controls": [
+        "probe-20260708-commonroad-human-operation-regression-fixture",
+        "probe-20260709-gameenginebench-runtime-integration-gate",
+        "probe-20260717-player-intent-action-response"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、Replay 欠落の有用性、game 固有 evidence の不足、既存 fixture／fixed-trace／observable-response controls との重複による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-19T03:32:54+09:00",
       "selected": {
