@@ -8,6 +8,12 @@
 - inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
 - 重複確認: sidecar 3種を収集開始前・書込み直前・保存後に再生成し、preflight は `continue`（title / URL とも既存 work 一致なし）。
 
+### 2026-08-18T14:47:39+09:00
+
+- `memory/shared_reads_candidates/20260818_ai_democratizing_indie_game_development.md` — Steam catalog、AI disclosure、14か月の production-platform log を用い、indie 制作の coordination cost、公開本数、市場受容、quality measurement の違いを報告した 2026 年の調査。
+- pending 確認: `slack_directives.jsonl` 0 件、`slack_broadcasts.jsonl` 0 件。
+- 重複 preflight で保存しなかった同一 work: PTCG-Bench、One Policy Infinite NPCs、StreamArena、GUI Agents for Continual Game Generation、LLM-NPC cognitive load、Forbidden Solitaire、SimCity one-page design、Design 101: Playtesting、PCG practitioner survey、mansion/dungeon PCG。各一致根拠と Slack permalink は `log/shared_reads_candidate_preflight.jsonl` に記録。
+
 ## Phase 2: 分析
 
 ```yaml
