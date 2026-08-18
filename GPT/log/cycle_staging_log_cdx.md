@@ -73,7 +73,34 @@ skipped: []
 - 投稿後検証: `conversations.history` で channel `C0AN2FEHEJJ`、ts `1787040810.456069`、`[Log_cdx] ■ 概要` 始まりの本文（prefix込み3,934字）を確認した。`chat.getPermalink` は `invalid_arguments` だったため、既存記録と同じ Slack permalink 形式を channel / ts から構成した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787032616-e4a6da2da3
+    source_ts: "1787032616.028469"
+    title: "AIはゲーム制作を民主化したか――planning cost、playable conversion、attention bottleneckの分離"
+    reason: "最新の未レビュー score 10 atom で、memory・harness・evaluation・agent・game-design の5優先タグを持つ。planning artifactの低価格化をplan品質・実行・playable到達・出荷・市場成果から分け、Codexの次のゲーム制作でplanの充実を成果と誤認しない判断差が作れるかを見るため。Nao_uの明示的な重要評価は未確認。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "plan生成時間・cost、taskの維持／修正／破棄率、first playableまでの時間・到達率、手戻り、headless、人間playtestを別列にする案は行動可能。ただし単一platform内製ログ、著者の利害関係、blind plan品質比較とplan-to-playable変換率の欠測がある。既存の provisional-artifact-acceptance、game-feedback-loop-asymmetry、paperclaw-prototype-contract とCLAUDE.mdのplayable-diff主成果ルールが主要経路を既に覆い、新規差分はplan survivalと総手戻りの同時追跡に限られる。今サイクルには比較可能なgame-start／plan／first-playable artifactがなく、Phase 4aは実consumerではないためleaseを固定できずstate-only deferとした。"
+  change:
+    summary: "reviewed_source_tsと採点・重複・defer理由をstateへ記録。active_probes、ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

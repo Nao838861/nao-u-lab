@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-18T15:02:11+09:00",
+  "updated_at": "2026-08-18T17:19:01+09:00",
   "reviewed_source_ts": [
+    "1787032616.028469",
     "1787024421.016969",
     "1787016560.272959",
     "1787009065.933869",
@@ -679,6 +680,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-18T17:19:01+09:00",
+      "selected": {
+        "id": "sr-1787032616-e4a6da2da3",
+        "source_ts": "1787032616.028469",
+        "title": "AIはゲーム制作を民主化したか――planning cost、playable conversion、attention bottleneckの分離",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新 atom で、memory・harness・evaluation・agent・game-design の5優先タグを持つため1件だけ選んだ。AIによるplanning artifactの低価格化を、plan品質、実行、playable到達、出荷、市場成果と分離する知見が、Codexの次のゲーム制作でplanの充実を成果と誤認するのを防ぎ、plan-to-playable変換と手戻りの判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の採用条件と必須指標は満たす。shared-reads本文は、40回のplan生成が平均308.7秒、costが前期平均0.58ドルから後期0.27ドルへ下がった実測を、plan実行・妥当性・出荷率の未測定から分離し、自分達向けにplan生成時間とcost、taskの維持・修正・破棄率、first playableまでの時間と到達率、手戻り、headless、人間playtestを別列にする案へ変換しているため relevance・actionability は3とした。一方、単一platformの内製ログ、第一著者の利害関係、producer-authored planとのblind品質比較とplan-to-playable変換率の欠測、代表性の低いSteam review比較、working manuscriptという状態から evidence は2に留める。probe-20260617-provisional-artifact-acceptance-gate は生成artifactのphase・acceptance criterion・cleanup burdenを、probe-20260606-game-feedback-loop-asymmetry はcompile／headless／visual／human play feelの証拠境界を、probe-20260706-paperclaw-prototype-hypothesis-contract はobservable verdictとtest pathをすでに要求し、CLAUDE.mdもplayable diffをサイクルの主成果としている。plan survivalと総手戻りを同じ表で追う点は小さな差だが、既存controlでplanを完成成果と誤認する主要経路は止められるため non_redundancy は1とした。現在のstagingには比較するlightweight／detailed plan、具体的なgame-start、first-playable artifactがなく、直後のPhase 4aはmemory cleanupで実consumerではない。consumer_phase、before／after trigger_artifact、expected_deltaをlease契約どおり固定できず、Phase 4a向けpending leaseも1件あるため新規probeを重ねない。次の具体的なgame-startで複数のplanning粒度を比較でき、既存3 probesだけではplan itemの維持・修正・破棄と総手戻りを採否へ結べない実例が出た時だけ一時metricとして再評価する。",
+      "existing_controls": [
+        "probe-20260617-provisional-artifact-acceptance-gate",
+        "probe-20260606-game-feedback-loop-asymmetry",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract",
+        "D:/AI/Nao_u_BOT/Claude/CLAUDE.md#ゲームを動かして出す"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、plan cost／plan survival／playable conversion分離の有用性、既存artifact acceptance／feedback-loop／prototype-contract controlsとの重複、比較可能なgame-start artifact不在によるdefer理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-18T15:02:11+09:00",
       "selected": {
