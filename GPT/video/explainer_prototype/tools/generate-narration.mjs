@@ -10,6 +10,8 @@ const outputDir = path.join(projectRoot, 'public', 'narration');
 const reportPath = path.join(outputDir, 'duration-report.json');
 const force = process.argv.includes('--force');
 const reportOnly = process.argv.includes('--report-only');
+const cutArg = process.argv.find((argument) => argument.startsWith('--cut='));
+const selectedCutId = cutArg?.slice('--cut='.length);
 
 const parseEnv = (source) => {
   const values = {};
@@ -90,7 +92,15 @@ const report = {
   cuts: [],
 };
 
-for (const cut of manifest.cuts) {
+const selectedCuts = selectedCutId
+  ? manifest.cuts.filter((cut) => cut.id === selectedCutId)
+  : manifest.cuts;
+
+if (selectedCutId && selectedCuts.length === 0) {
+  throw new Error(`指定されたカットが見つかりません: ${selectedCutId}`);
+}
+
+for (const cut of selectedCuts) {
   const outputPath = path.join(outputDir, `${cut.id}.wav`);
   let buffer;
   if (reportOnly) {
@@ -108,7 +118,7 @@ for (const cut of manifest.cuts) {
       body: JSON.stringify({
         model: manifest.model,
         voice: manifest.voice,
-        input: cut.text,
+        input: cut.ttsText ?? cut.text,
         instructions: `${manifest.commonInstructions}${cut.instructions}`,
         response_format: manifest.responseFormat,
       }),
