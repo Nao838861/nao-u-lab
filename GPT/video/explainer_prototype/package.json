@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "scripts": {
     "start": "remotion studio src/index.ts",
-    "render": "remotion render src/index.ts ExplainerPrototype out/explainer_prototype.mp4 --codec=h264 --crf=18",
+    "render": "remotion render src/index.ts ExplainerPrototype out/完成版/explainer_prototype_latest.mp4 --codec=h264 --crf=18",
     "still": "remotion still src/index.ts ExplainerPrototype out/explainer_prototype_preview.png --frame=885"
   },
   "dependencies": {
