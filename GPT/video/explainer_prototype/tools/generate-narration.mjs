@@ -6,10 +6,14 @@ import {compactPcmWavSilence} from './compact-narration-silence.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDir, '..');
-const manifestPath = path.join(projectRoot, 'narration', 'prototype-cuts.json');
-const outputDir = path.join(projectRoot, 'public', 'narration');
+const manifestArg = process.argv.find((argument) => argument.startsWith('--manifest='));
+const manifestFileName = manifestArg?.slice('--manifest='.length) ?? 'prototype-cuts.json';
+const manifestPath = path.resolve(projectRoot, 'narration', manifestFileName);
+const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+const outputRelativePath = manifest.outputDirectory ?? 'narration';
+const outputDir = path.resolve(projectRoot, 'public', outputRelativePath);
 const rawOutputDir = path.join(outputDir, 'raw');
-const reportPath = path.join(outputDir, 'duration-report.json');
+const reportPath = path.join(outputDir, manifest.reportFileName ?? 'duration-report.json');
 const force = process.argv.includes('--force');
 const reportOnly = process.argv.includes('--report-only');
 const compactOnly = process.argv.includes('--compact-only');
@@ -84,7 +88,6 @@ const wavDurationSeconds = (buffer) => {
   return dataSize / byteRate;
 };
 
-const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
 const apiKey = reportOnly || compactOnly ? undefined : await loadApiKey();
 await mkdir(outputDir, {recursive: true});
 await mkdir(rawOutputDir, {recursive: true});
@@ -179,7 +182,7 @@ for (const cut of selectedCuts) {
   const durationSeconds = wavDurationSeconds(buffer);
   const item = {
     id: cut.id,
-    file: `narration/${cut.id}.wav`,
+    file: `${outputRelativePath.replaceAll('\\', '/')}/${cut.id}.wav`,
     durationSeconds: Number(durationSeconds.toFixed(3)),
   };
   const compactionStats = compactionStatsByCut.get(cut.id);

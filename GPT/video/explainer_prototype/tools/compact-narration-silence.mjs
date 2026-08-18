@@ -221,7 +221,10 @@ const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPat
 if (isMain) {
   const scriptDir = path.dirname(fileURLToPath(import.meta.url));
   const projectRoot = path.resolve(scriptDir, '..');
-  const manifest = JSON.parse(await readFile(path.join(projectRoot, 'narration', 'prototype-cuts.json'), 'utf8'));
+  const manifestArg = process.argv.find((argument) => argument.startsWith('--manifest='));
+  const manifestFileName = manifestArg?.slice('--manifest='.length) ?? 'prototype-cuts.json';
+  const manifest = JSON.parse(await readFile(path.resolve(projectRoot, 'narration', manifestFileName), 'utf8'));
+  const outputRelativePath = manifest.outputDirectory ?? 'narration';
   const analyzeOnly = process.argv.includes('--analyze');
   const analyzeRaw = process.argv.includes('--raw');
   const selectedCut = process.argv.find((argument) => argument.startsWith('--cut='))?.slice('--cut='.length);
@@ -232,7 +235,7 @@ if (isMain) {
     const filePath = path.join(
       projectRoot,
       'public',
-      'narration',
+      outputRelativePath,
       ...(analyzeRaw ? ['raw', `${cut.id}.wav`] : [`${cut.id}.wav`]),
     );
     const source = await readFile(filePath);

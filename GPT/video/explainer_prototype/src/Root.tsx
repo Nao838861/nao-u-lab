@@ -1,6 +1,7 @@
 import React from 'react';
 import {Composition} from 'remotion';
-import {ExplainerPrototype} from './ExplainerPrototype';
+import {DevelopmentNarrationPreview, ExplainerPrototype} from './ExplainerPrototype';
+import {developmentNarrationDurationInFrames} from './developmentNarrationTiming';
 import {
   fullCompositionDurationInFrames,
   narrationPreviewDurationInFrames,
@@ -21,6 +22,14 @@ export const RemotionRoot: React.FC = () => {
         id="ExplainerNarrationPreview"
         component={ExplainerPrototype}
         durationInFrames={narrationPreviewDurationInFrames}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      <Composition
+        id="DevelopmentNarrationPreview"
+        component={DevelopmentNarrationPreview}
+        durationInFrames={developmentNarrationDurationInFrames}
         fps={30}
         width={1280}
         height={720}

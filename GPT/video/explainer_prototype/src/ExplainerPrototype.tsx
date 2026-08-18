@@ -18,6 +18,11 @@ import {
   c03Timing,
   narrationTimingOffset,
 } from './narrationTiming';
+import {
+  c04Timing,
+  c05Timing,
+  c06Timing,
+} from './developmentNarrationTiming';
 
 const C = {
   bg: '#050507',
@@ -385,22 +390,24 @@ const DevelopmentTitleScene: React.FC<{durationInFrames: number}> = ({durationIn
 };
 
 const DevVideoFrame: React.FC<{src: string; children?: React.ReactNode}> = ({src, children}) => (
-  <div style={{position: 'absolute', left: 52, top: 135, width: 820, height: 500, padding: 12, boxSizing: 'border-box', background: C.panel, border: '2px solid #47434e'}}>
+  <div style={{position: 'absolute', left: 40, top: 135, width: 760, height: 570, padding: 8, boxSizing: 'border-box', background: C.panel, border: '2px solid #47434e'}}>
     <OffthreadVideo src={staticFile(src)} muted style={{width: '100%', height: '100%', objectFit: 'contain', background: '#000', imageRendering: 'pixelated'}} />
     {children}
   </div>
 );
 
-const DevelopmentDay1Scene: React.FC = () => {
+const DevelopmentDay1Scene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 450}) => {
   const frame = useCurrentFrame();
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 450), backgroundColor: C.bg, padding: '36px 48px 0', boxSizing: 'border-box'}}>
-      <Eyebrow color={C.orange}>DAY 1</Eyebrow>
-      <Title size={42}>地面と拡大縮小だけ</Title>
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '36px 48px 0', boxSizing: 'border-box'}}>
+      <div style={{position: 'absolute', left: 48, top: 36, zIndex: 5}}>
+        <Eyebrow color={C.orange}>DAY 1</Eyebrow>
+        <Title size={42}>地面と拡大縮小だけ</Title>
+      </div>
       <DevVideoFrame src="dev_day1.mp4" />
-      <div style={{position: 'absolute', left: 910, top: 165, width: 310}}>
-        <div style={{fontFamily: FONT, color: C.white, fontSize: 22, fontWeight: 900}}>地面はライン単位</div>
-        <div style={{fontFamily: FONT, color: C.dim, fontSize: 15, lineHeight: 1.6, marginTop: 14}}>Y軸ごとに白／黒の値を持ち、横一列を同じ色で塗る。</div>
+      <div style={{position: 'absolute', left: 828, top: 158, width: 404}}>
+        <div style={{fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900}}>地面はライン単位</div>
+        <div style={{fontFamily: FONT, color: C.dim, fontSize: 17, lineHeight: 1.6, marginTop: 14}}>Y軸ごとに白／黒の値を持ち、横一列を同じ色で塗る。</div>
         <div style={{marginTop: 20, border: '1px solid #47434e', background: C.panel, padding: 12}}>
           {[0, 1, 1, 0, 1, 0, 0].map((v, i) => (
             <div key={i} style={{display: 'flex', alignItems: 'center', gap: 9, marginTop: i ? 7 : 0}}>
@@ -410,49 +417,53 @@ const DevelopmentDay1Scene: React.FC = () => {
             </div>
           ))}
         </div>
-        <div style={{fontFamily: FONT, color: C.cyan, fontSize: 16, fontWeight: 900, marginTop: 18}}>7パターンを切り替えて前進を表現</div>
+        <div style={{fontFamily: FONT, color: C.cyan, fontSize: 19, lineHeight: 1.5, fontWeight: 900, marginTop: 18}}>7パターンを切り替えて<br />前進を表現</div>
       </div>
     </AbsoluteFill>
   );
 };
 
-const DevelopmentDay2Scene: React.FC = () => {
+const DevelopmentDay2Scene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 450}) => {
   const frame = useCurrentFrame();
-  const z = Math.min(55, Math.floor(frame / 8));
+  const zProgress = (frame % 60) / 59;
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 450), backgroundColor: C.bg, padding: '36px 48px 0', boxSizing: 'border-box'}}>
-      <Eyebrow color={C.orange}>DAY 2</Eyebrow>
-      <Title size={42}>奥行きに合わせて木を動かす</Title>
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '36px 48px 0', boxSizing: 'border-box'}}>
+      <div style={{position: 'absolute', left: 48, top: 36, zIndex: 5}}>
+        <Eyebrow color={C.orange}>DAY 2</Eyebrow>
+        <Title size={42}>奥行きに合わせて木を動かす</Title>
+      </div>
       <DevVideoFrame src="dev_day2.mp4" />
-      <div style={{position: 'absolute', left: 910, top: 170, width: 310}}>
-        <div style={{fontFamily: FONT, color: C.white, fontSize: 22, fontWeight: 900}}>Z軸 56段階</div>
-        <div style={{height: 230, marginTop: 16, position: 'relative', borderLeft: `5px solid ${C.cyan}`, background: `linear-gradient(180deg, ${C.cyan}12, ${C.magenta}28)`}}>
+      <div style={{position: 'absolute', left: 828, top: 155, width: 404}}>
+        <div style={{fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900}}>Z軸 56段階</div>
+        <div style={{height: 210, marginTop: 12, position: 'relative', borderLeft: `5px solid ${C.cyan}`, background: `linear-gradient(180deg, ${C.cyan}12, ${C.magenta}28)`}}>
           <div style={{position: 'absolute', left: 15, top: 5, fontFamily: MONO, color: C.cyan, fontSize: 14}}>Z = 55　奥</div>
           <div style={{position: 'absolute', left: 15, bottom: 5, fontFamily: MONO, color: C.magenta, fontSize: 14}}>Z = 0　手前</div>
-          <div style={{position: 'absolute', left: -10, top: `${(55 - z) / 55 * 200 + 10}px`, width: 15, height: 4, background: C.white}} />
+          <div style={{position: 'absolute', left: -10, top: `${10 + zProgress * 180}px`, width: 22, height: 5, background: C.white, boxShadow: '0 0 8px #fff'}} />
         </div>
-        <div style={{fontFamily: FONT, color: C.white, fontSize: 15, lineHeight: 1.5, marginTop: 12}}>各段階でスプライトの大きさとY座標を手作業で補正</div>
-        <div style={{height: 126, marginTop: 10, overflow: 'hidden', border: '1px solid #47434e', background: '#111216'}}>
-          <Img src={staticFile('development_z_table.png')} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'left top', opacity: 0.82}} />
+        <div style={{fontFamily: FONT, color: C.white, fontSize: 17, lineHeight: 1.5, marginTop: 10}}>各段階でスプライトの大きさとY座標を手作業で補正</div>
+        <div style={{height: 178, marginTop: 9, overflow: 'hidden', border: '1px solid #47434e', background: '#111216'}}>
+          <Img src={staticFile('development_z_table.png')} style={{width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center', opacity: 0.92}} />
         </div>
       </div>
     </AbsoluteFill>
   );
 };
 
-const DevelopmentDay3Scene: React.FC = () => {
+const DevelopmentDay3Scene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 300}) => {
   const frame = useCurrentFrame();
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 300), backgroundColor: C.bg, padding: '36px 48px 0', boxSizing: 'border-box'}}>
-      <Eyebrow color={C.orange}>DAY 3</Eyebrow>
-      <Title size={42}>プレイヤーの上下で地平線を動かす</Title>
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '36px 48px 0', boxSizing: 'border-box'}}>
+      <div style={{position: 'absolute', left: 48, top: 36, zIndex: 5}}>
+        <Eyebrow color={C.orange}>DAY 3</Eyebrow>
+        <Title size={42}>プレイヤーの上下で地平線を動かす</Title>
+      </div>
       <DevVideoFrame src="dev_day3.mp4" />
-      <div style={{position: 'absolute', left: 910, top: 170, width: 310}}>
-        <div style={{fontFamily: FONT, color: C.white, fontSize: 22, fontWeight: 900}}>地平線もプレイヤーに追従</div>
-        <div style={{fontFamily: FONT, color: C.dim, fontSize: 15, lineHeight: 1.6, marginTop: 14}}>プレイヤーのY座標に応じて、地面テーブルそのものを切り替える。</div>
+      <div style={{position: 'absolute', left: 828, top: 165, width: 404}}>
+        <div style={{fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900}}>地平線もプレイヤーに追従</div>
+        <div style={{fontFamily: FONT, color: C.dim, fontSize: 17, lineHeight: 1.65, marginTop: 14}}>プレイヤーのY座標に応じて、地面テーブルそのものを切り替える。</div>
         <div style={{marginTop: 22, padding: '16px 18px', borderLeft: `5px solid ${C.cyan}`, background: C.panel}}>
-          <div style={{fontFamily: MONO, color: C.cyan, fontSize: 25, fontWeight: 900}}>33段階</div>
-          <div style={{fontFamily: FONT, color: C.white, fontSize: 17, fontWeight: 900, marginTop: 5}}>各7パターン</div>
+          <div style={{fontFamily: MONO, color: C.cyan, fontSize: 31, fontWeight: 900}}>33段階</div>
+          <div style={{fontFamily: FONT, color: C.white, fontSize: 21, fontWeight: 900, marginTop: 5}}>各7パターン</div>
         </div>
       </div>
     </AbsoluteFill>
@@ -1513,6 +1524,25 @@ export const ExplainerPrototype: React.FC = () => {
       </Sequence>
       <Sequence from={c03Timing.startFrame} durationInFrames={c03Timing.durationFrames}>
         <Audio src={staticFile('narration/C03.wav')} volume={0.95} />
+      </Sequence>
+    </AbsoluteFill>
+  );
+};
+
+export const DevelopmentNarrationPreview: React.FC = () => {
+  return (
+    <AbsoluteFill style={{backgroundColor: C.bg}}>
+      <Sequence from={c04Timing.startFrame} durationInFrames={c04Timing.durationFrames}>
+        <DevelopmentDay1Scene durationInFrames={c04Timing.durationFrames} />
+        <Audio src={staticFile('narration/development/C04.wav')} volume={0.95} />
+      </Sequence>
+      <Sequence from={c05Timing.startFrame} durationInFrames={c05Timing.durationFrames}>
+        <DevelopmentDay2Scene durationInFrames={c05Timing.durationFrames} />
+        <Audio src={staticFile('narration/development/C05.wav')} volume={0.95} />
+      </Sequence>
+      <Sequence from={c06Timing.startFrame} durationInFrames={c06Timing.durationFrames}>
+        <DevelopmentDay3Scene durationInFrames={c06Timing.durationFrames} />
+        <Audio src={staticFile('narration/development/C06.wav')} volume={0.95} />
       </Sequence>
     </AbsoluteFill>
   );

@@ -12,7 +12,11 @@
     "narration:local": "powershell -ExecutionPolicy Bypass -File tools/generate-local-narration.ps1 -Force",
     "narration:report": "node tools/generate-narration.mjs --report-only",
     "narration:compact": "node tools/generate-narration.mjs --compact-only",
+    "narration:generate-development": "node tools/generate-narration.mjs --manifest=development-cuts.json",
+    "narration:regenerate-development": "node tools/generate-narration.mjs --manifest=development-cuts.json --force",
+    "narration:compact-development": "node tools/generate-narration.mjs --manifest=development-cuts.json --compact-only",
     "render:narration-preview": "remotion render src/index.ts ExplainerNarrationPreview out/完成版/explainer_narration_C01-C03.mp4 --codec=h264 --crf=18",
+    "render:development-preview": "remotion render src/index.ts DevelopmentNarrationPreview out/完成版/explainer_narration_C04-C06.mp4 --codec=h264 --crf=18",
     "still": "remotion still src/index.ts ExplainerPrototype out/explainer_prototype_preview.png --frame=885"
   },
   "dependencies": {
