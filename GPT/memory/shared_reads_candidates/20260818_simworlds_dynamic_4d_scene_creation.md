@@ -7,14 +7,19 @@ genre_tags: [game-development, 3d-generation, multi-agent, physics, evaluation]
 evaluated_at: "2026-08-18T21:06:58+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-18T21:06:58+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-18T21:06:58+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-18T21:17:47+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787055456029949"
+next_action: none
 stale_after: "2026-09-17"
 supersedes: []
+posted:
+  ts: "1787055456.029949"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787055456029949"
+  char_count: 4370
+  posted_at: "2026-08-18T21:17:47+09:00"
 gate_reason: >-
   動的 scene の見た目と内部 mechanism を分離し、固定 stage、deterministic verifier、runtime-state audit を組み合わせる中核が明確で、
   50 scene の4DBuildBench、visual-only baseline、編集比較、ablation により利点と測定限界まで追える。

@@ -7,14 +7,19 @@ genre_tags: [game-design, player-modeling, personalization, llm, evaluation]
 evaluated_at: "2026-08-18T21:06:58+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-18T21:06:58+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-18T21:06:58+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-18T21:17:47+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787055443325009"
+next_action: none
 stale_after: "2026-09-17"
 supersedes: []
+posted:
+  ts: "1787055443.325009"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787055443325009"
+  char_count: 3556
+  posted_at: "2026-08-18T21:17:47+09:00"
 gate_reason: >-
   synthetic player の parameter を無条件に正解扱いせず、行動の単調性・分離性・seed 変動超過を admission test で確認し、
   opportunity-aware record の ablation、複数 baseline、difficulty adaptation、12人 pilot まで失敗箇所を切り分けている。
