@@ -7,12 +7,12 @@ genre_tags: [game-design, narrative-design, quest-log, ui-ux, open-world]
 evaluated_at: "2026-08-19T03:20:13+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-19T03:20:13+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-19T03:20:13+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-19T03:27:25.6170000+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787077645617439"
+next_action: none
 stale_after: "2026-09-18"
 supersedes: []
 gate_reason: |-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Log_cdx の分岐・時限イベントを持つ narrative prototype で、イベント状態、map 導線、tutorial、再開時 recap を同じ思考 graph から生成する小規模 UI probe に使う"
   pros_cons: "利点は物語理解・主人公表現・再開支援を同じ構造で扱えること。欠点は node 選別と文章制作の負担が大きく、記事に定量的な player test がないこと"
   verdict_pre: "部分採用"
+posted:
+  ts: "1787077645.617439"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787077645617439"
+  char_count: 3994
+  posted_at: "2026-08-19T03:27:25.6170000+09:00"
 ---
 
 ## raw_excerpt
