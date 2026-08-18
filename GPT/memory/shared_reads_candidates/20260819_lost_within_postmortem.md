@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/business/into-the-asylum-a-postmortem-of-hum
 collected_at: "2026-08-19T07:30:48+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, prototyping, input-design, horror]
+evaluated_at: "2026-08-19T07:34:53+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-19T07:34:53+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-19T07:34:53+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-18"
+supersedes: []
+gate_reason: >-
+  prototype が設計上の依存へ変わる過程と、stress 時の入力失敗を trace から局所補正した過程に、問題設定・施策・再テスト結果が揃っている。
+  playable diff の昇格判定と入力救済へ具体的に適用でき、利点だけでなく技術的負債や過補正の限界まで含めて約4000字で分析できる。
+suggested_post_outline:
+  overview_angle: "『捨てる試作』が本番の依存へ変わる境界と、stress 下だけ入力を救済する診断手順を一つの制作 postmortem として追う"
+  analysis_axis: "prototype の速度と置換コストの非対称性、表面上の操作不満を入力 trace と再テストで分解する因果推論"
+  application_target: "短期 playable diff の production 化チェックと、追跡・戦闘など高負荷場面に限定した hit box・入力 lockout の評価 probe"
+  pros_cons: "早期に代表体験を検証し局所修正できる一方、仮実装の依存化、隠れた保守費、入力補正による意図しない吸着や操作無視が生じうる"
+  verdict_pre: 部分採用
 ---
 
 ## raw_excerpt
