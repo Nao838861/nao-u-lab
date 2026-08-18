@@ -69,7 +69,42 @@ skipped: []
 - 投稿前 review: 必須6項目の順序、`■ 概要` 始まり、末尾 `■ URL`、禁止表現0件、本文4,196字、1回の `chat.postMessage` を確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787009065-7c7af186ee
+    source_ts: "1787009065.933869"
+    title: "Indie Postmortem: Reflexive's Wik & The Fable Of Souls"
+    reason: "score 11 の未レビュー最新 atom で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。multiplayer prototype の盛り上がりを single-player 製品へ誤外挿した事例、局所入力補正、tutorial 後の技能保持が既存 control と異なる判断差を作れるか確認するため1件だけ選んだ。Nao_u の明示的な重要評価は記録されていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "単一作品の postmortem から、prototype と製品想定の人数・session・観客・device 条件表、補正 on/off replay、tutorial 後の技能再観測へ変換できる。一方、focus group 人数や補正・tutorial の before/after 定量値がなく、quiet watchdog は未実装案である。既存の scope/session、causal confound、player-intent、assist amplitude、onboarding autonomy、tutorial order controls が判断面をほぼ覆う。active_probes 325件、Phase 4a 向け pending lease 1件、比較可能な playable artifact 不在の状態で同型 control を増やすと確認負荷が便益を上回るため、採用条件を満たさず state-only で reject した。"
+  existing_controls:
+    - probe-20260602-game-scope-brief-cut-gate
+    - probe-20260708-causalgame-outcome-explanation-split
+    - probe-20260717-player-intent-action-response
+    - probe-20260710-feedback-device-amplitude-axis
+    - probe-20260617-ai-onboarding-autonomy-support
+    - probe-20260720-tutorial-order-controller-sensitivity
+  change:
+    summary: "reviewed_source_ts と採点・reject 理由のみ更新。active_probes、ledger、directive、恒久ルールは変更しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
