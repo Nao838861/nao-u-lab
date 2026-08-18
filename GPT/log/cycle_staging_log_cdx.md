@@ -107,7 +107,67 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の atom index 50 行を atoms/index.jsonl と照合し、broken link 0 件を確認した。"
+  - "memory/atoms.jsonl 2,898 件を memory_health で監査し、atom mirror の missing / parse error / index error / content conflict は各 0 件だった。normalized content 重複 40 群は canonical overlay で fold 済みで、recall 表示上の未解決重複は 0 件だった。"
+  - "memory/raw/ の 30 日超 242 ファイルを archive 候補として抽出した。web_research 原文と既存 slack_archive が中心で、provenance を壊す一括移動は行わなかった。"
+  - "shared-reads candidate 1,324 件の lifecycle を dry-run 監査した。posted 634 / ready_to_post 9 / postponed 200 / failed 479 / needs_review 2、現在状態の変更候補 0 件だった。"
+  - "open duplicate / stale triage / group action sidecar を規定順で再生成した。期限超過 2 件は 2026-08-20 まで有効な deferred group lease に包含されており、当 cycle の新規 handoff は 0 件だった。"
+  - "slack directives 23 行と broadcasts 21 行を監査し、pending は双方 0 件だったため handled 更新は行わなかった。"
+  - "UTF-8 明示読みで memory/MEMORY.md の代表語 記憶 / ゲーム設計 / 敵パターン / 評価軸を確認した。mojibake suspect 2 atom のうち sr-1776127289-4d9239b255 は raw Slack source 自体に置換文字があり、gr-1777083728-44d444ab7a は原文の literal ??? による false positive だった。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 7
+    dormant: 1
+candidate_lifecycle:
+  total: 1324
+  status_counts:
+    posted: 634
+    ready_to_post: 9
+    postponed: 200
+    failed: 479
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_for_reassessment: 2
+  current_state_changes: 0
+raw_archive_review:
+  older_than_30_days: 242
+  action: retain_in_place
+  reason: "一次資料と既存 archive が中心で、参照・provenance を確認せず移動する根拠がない。"
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_evidence:
+    - "gha-e6d4d4b5a37a0808: JAMEL group deferred until 2026-08-20T13:19:04+09:00"
+    - "gha-2313a247c62a9028: collision enemy morphology group deferred until 2026-08-20T13:19:04+09:00"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
