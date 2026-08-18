@@ -103,8 +103,10 @@ export const compactPcmWavSilence = (buffer, options = {}) => {
   const maximumSentenceSilenceMs = options.maximumSentenceSilenceMs ?? 140;
   const maximumLeadingSilenceMs = options.maximumLeadingSilenceMs ?? 20;
   const maximumTrailingSilenceMs = options.maximumTrailingSilenceMs ?? 80;
+  const normalizeSentenceSilence = options.normalizeSentenceSilence ?? false;
   const commaPauseCandidateIndices = new Set(options.commaPauseCandidateIndices ?? []);
   const removals = [];
+  const insertions = [];
   let candidateIndex = -1;
 
   for (const span of analysis.spans) {
@@ -113,17 +115,28 @@ export const compactPcmWavSilence = (buffer, options = {}) => {
     const isLeading = span.startFrame === 0;
     const isTrailing = span.endFrame === analysis.totalFrames;
     const isCommaPause = commaPauseCandidateIndices.has(candidateIndex);
+    const isSentencePause = !isLeading
+      && !isTrailing
+      && !isCommaPause
+      && span.durationMs >= sentenceSilenceThresholdMs;
     const maximumMs = isLeading
       ? maximumLeadingSilenceMs
       : isTrailing
         ? maximumTrailingSilenceMs
         : isCommaPause
           ? maximumCommaSilenceMs
-          : span.durationMs >= sentenceSilenceThresholdMs
+          : isSentencePause
             ? maximumSentenceSilenceMs
             : maximumInternalSilenceMs;
     const maximumFrames = Math.round(analysis.sampleRate * maximumMs / 1000);
     const spanFrames = span.endFrame - span.startFrame;
+    if (isSentencePause && normalizeSentenceSilence && spanFrames < maximumFrames) {
+      insertions.push({
+        atFrame: Math.round((span.startFrame + span.endFrame) / 2),
+        insertedFrames: maximumFrames - spanFrames,
+      });
+      continue;
+    }
     if (spanFrames <= maximumFrames) continue;
 
     const keptBefore = isLeading ? 0 : Math.floor(maximumFrames / 2);
@@ -139,7 +152,7 @@ export const compactPcmWavSilence = (buffer, options = {}) => {
           ? 'trailing'
           : isCommaPause
             ? 'comma'
-            : span.durationMs >= sentenceSilenceThresholdMs
+            : isSentencePause
               ? 'sentence'
               : 'internal',
     });
@@ -147,11 +160,26 @@ export const compactPcmWavSilence = (buffer, options = {}) => {
 
   const audioParts = [];
   let cursorFrame = 0;
-  for (const removal of removals) {
+  const operations = [
+    ...removals.map((removal) => ({
+      startFrame: removal.startFrame,
+      endFrame: removal.endFrame,
+      insertedFrames: 0,
+    })),
+    ...insertions.map((insertion) => ({
+      startFrame: insertion.atFrame,
+      endFrame: insertion.atFrame,
+      insertedFrames: insertion.insertedFrames,
+    })),
+  ].sort((left, right) => left.startFrame - right.startFrame);
+  for (const operation of operations) {
     const startByte = analysis.data.offset + cursorFrame * analysis.blockAlign;
-    const endByte = analysis.data.offset + removal.startFrame * analysis.blockAlign;
+    const endByte = analysis.data.offset + operation.startFrame * analysis.blockAlign;
     audioParts.push(buffer.subarray(startByte, endByte));
-    cursorFrame = removal.endFrame;
+    if (operation.insertedFrames > 0) {
+      audioParts.push(Buffer.alloc(operation.insertedFrames * analysis.blockAlign));
+    }
+    cursorFrame = operation.endFrame;
   }
   audioParts.push(buffer.subarray(
     analysis.data.offset + cursorFrame * analysis.blockAlign,
@@ -170,14 +198,21 @@ export const compactPcmWavSilence = (buffer, options = {}) => {
     (sum, removal) => sum + removal.endFrame - removal.startFrame,
     0,
   );
+  const insertedFrames = insertions.reduce(
+    (sum, insertion) => sum + insertion.insertedFrames,
+    0,
+  );
   return {
     buffer: output,
     stats: {
       originalDurationSeconds: analysis.durationSeconds,
-      compactedDurationSeconds: (analysis.totalFrames - removedFrames) / analysis.sampleRate,
+      compactedDurationSeconds: (analysis.totalFrames - removedFrames + insertedFrames) / analysis.sampleRate,
       removedSeconds: removedFrames / analysis.sampleRate,
+      insertedSeconds: insertedFrames / analysis.sampleRate,
       compactedSpanCount: removals.length,
+      normalizedSentenceSpanCount: insertions.length,
       removals,
+      insertions,
     },
   };
 };

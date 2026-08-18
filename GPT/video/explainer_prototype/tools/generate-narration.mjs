@@ -185,8 +185,15 @@ for (const cut of selectedCuts) {
   const compactionStats = compactionStatsByCut.get(cut.id);
   if (compactionStats) {
     item.silenceRemovedSeconds = Number(compactionStats.removedSeconds.toFixed(3));
+    item.silenceInsertedSeconds = Number((compactionStats.insertedSeconds ?? 0).toFixed(3));
     item.compactedSpanCount = compactionStats.compactedSpanCount;
-    console.log(`${cut.id}: compacted ${item.compactedSpanCount} pauses / removed ${item.silenceRemovedSeconds}s`);
+    item.normalizedSentenceSpanCount = compactionStats.normalizedSentenceSpanCount ?? 0;
+    console.log(
+      `${cut.id}: compacted ${item.compactedSpanCount} pauses`
+      + ` / normalized ${item.normalizedSentenceSpanCount} sentence pauses`
+      + ` / removed ${item.silenceRemovedSeconds}s`
+      + ` / inserted ${item.silenceInsertedSeconds}s`,
+    );
   }
   cut.measuredDurationSeconds = item.durationSeconds;
   report.cuts.push(item);
