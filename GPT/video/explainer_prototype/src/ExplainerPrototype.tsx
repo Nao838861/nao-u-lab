@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   AbsoluteFill,
+  Audio,
   Easing,
   Img,
   OffthreadVideo,
@@ -1477,6 +1478,15 @@ export const ExplainerPrototype: React.FC = () => {
       </Sequence>
       <Sequence from={6450} durationInFrames={600}>
         <FrameTimelineScene />
+      </Sequence>
+      <Sequence from={0} durationInFrames={300}>
+        <Audio src={staticFile('narration/C01.wav')} volume={0.95} />
+      </Sequence>
+      <Sequence from={300} durationInFrames={450}>
+        <Audio src={staticFile('narration/C02.wav')} volume={0.95} />
+      </Sequence>
+      <Sequence from={750} durationInFrames={90}>
+        <Audio src={staticFile('narration/C03.wav')} volume={0.95} />
       </Sequence>
     </AbsoluteFill>
   );
