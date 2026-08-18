@@ -122,7 +122,104 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - shared-reads の mixed duplicate / open duplicate / stale triage / group-action sidecar を現在の candidate lifecycle から再生成した（candidate frontmatter は変更なし）。
+  - 前 Phase 2 で処理済みの3件を stale triage から除外し、queue を0件へ更新した。
+  - Slack directive / broadcast の pending 0件を確認したため lifecycle close は行わなかった。
+audits:
+  memory_index:
+    atom_or_index_refs: 50
+    broken_atom_or_index_refs: 0
+    markdown_link_targets: 0
+    encoding_probe:
+      source_file_status: >-
+        memory/MEMORY.md を UTF-8 明示で読み、U+FFFD は0件だった。代表語は `記憶` / `ゲーム設計` /
+        `敵パターン` を取得でき、`評価軸` は現在の index 本文に literal として存在しないため false だった。
+        これは文字化けではなく語の不在であり、本文再生成の対象にしない。
+      display_or_tooling_status: >-
+        PowerShell here-string から Python へ日本語 literal を渡す経路では `?` 化を観測したが、
+        Unicode escape を使った UTF-8 source probe は成功した。source file の破損とは分離した。
+  atoms:
+    rows: 2906
+    duplicate_ids: 0
+    parse_errors: 0
+    mirror_content_conflicts: 0
+    mirror_status: clean
+    normalized_content_duplicate_groups: 40
+    normalized_content_duplicate_rows: 80
+    lifecycle_fold_extra_rows: 40
+    effective_display_unresolved_title_rows: 0
+    current_state_conflicts: 0
+    note: >-
+      normalized duplicate は既存 fold で吸収されている。memory_health の mojibake suspect 2件のうち
+      sr-1776127289-4d9239b255 は source atom に局所的な置換文字列を確認し、
+      gr-1777083728-44d444ab7a は原文の `???` を detector が拾った false positive だった。
+      単独の既知データ品質差であり、mirror・recall fold・ゲーム記憶の導線を壊す構造問題ではないため issue 化しない。
+  raw_archive:
+    files_total: 247
+    inactive_30d_or_more: 242
+    inactive_bytes: 70590898
+    action: keep
+    reason: >-
+      古いファイルの大半は Slack 原文、論文抽出、headless 評価 trace などの provenance で、
+      mtime だけでは安全な archive 対象を確定できない。今回は移動しない。
+  candidate_lifecycle:
+    files: 1332
+    status_counts:
+      posted: 642
+      ready_to_post: 9
+      postponed: 199
+      failed: 480
+      needs_review: 2
+    missing_stale_after: 3
+    overdue_open_total: 2
+    state_conflict_anomalies: 0
+    informational_stale_after_default_differences: 18
+  inbox:
+    slack_directives_pending: 0
+    slack_broadcasts_pending: 0
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  note: >-
+    pending の probe-20260621-compiled-memory-boundary は lease_due=2026-08-19T06:00:00+09:00 で、
+    当該 cycle 実行時点では期限前だったため receipt を作成しなかった。
+  counts:
+    pending: 1
+    resolved: 7
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_handoff_inbox_pending_count: 0
+  group_handoff_inbox_ids: []
+  suppressed_by_live_deferred_group_lease: 2
+  suppressed_group_ids:
+    - gha-e6d4d4b5a37a0808
+    - gha-2313a247c62a9028
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
