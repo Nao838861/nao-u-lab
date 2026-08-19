@@ -52,6 +52,7 @@ import {
   householdFishingRigNeed,
   householdHaul,
   householdMaterialAmount,
+  householdRepairMaterialNeed,
   householdTransportPlan,
   householdWorkToolMultiplier,
   householdWorkToolNeed,
@@ -76,6 +77,7 @@ import {
   productionInputPurchaseBudget,
   producePrimaryTick,
   quoteAskPrice,
+  repairMaterialPurchaseBudget,
   requestCompanyImport,
   requestCompanySurplusExport,
   requestCompanyStockRelease,
@@ -257,6 +259,19 @@ function runIronWorker(depositRoads) {
     worker.once("error", reject);
     worker.once("exit", (code) => {
       if (code !== 0) reject(new Error(`iron worker exited with code ${code}`));
+    });
+  });
+}
+
+function runB2P5Worker({ mode = "strategy", strategyId = "fishery", days }) {
+  return new Promise((resolve, reject) => {
+    const worker = new Worker(new URL("../scripts/b2_p5_worker.mjs", import.meta.url), {
+      workerData: { mode, strategyId, seed: 11, days },
+    });
+    worker.once("message", resolve);
+    worker.once("error", reject);
+    worker.once("exit", (code) => {
+      if (code !== 0) reject(new Error(`B2 P5 worker exited with code ${code}`));
     });
   });
 }
@@ -4238,6 +4253,48 @@ test("段23: 6ヶ月の負債は徳政で会社貸し倒れへ移して貨幣を
   assert.equal(assertMoneyConservation(economy), true);
 });
 
+test("現金循環: 食料掛買いは反復徳政へ転嫁せず販売収入まで返済待ちに残す", () => {
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "logger", x: 0, y: 0 });
+  postCompanyLedger(economy.company, {
+    day: 149,
+    amount: P.PURSE0 + 100,
+    reason: "食料掛買い返済待ち試験の住民債務",
+  });
+  household.purse = -100;
+  household.foodCreditUsed = 100;
+  household.insolvM = 5;
+  household.jobCycleDone = true;
+  const companyBefore = economy.company.money;
+
+  const changes = runPopulationDynamicsPhase(economy, null, {
+    day: 150,
+    random: () => 1,
+  });
+
+  assert.equal(household.purse, -100);
+  assert.equal(household.foodCreditArrears, true);
+  assert.deepEqual(changes, [{
+    kind: "food_credit_arrears",
+    householdId: household.id,
+    debt: 100,
+  }]);
+  assert.equal(economy.company.money, companyBefore, "食料債務を会社損失へ付け替えない");
+  assert.equal(assertMoneyConservation(economy), true);
+
+  postCompanyLedger(economy.company, {
+    day: 179,
+    amount: -110,
+    reason: "食料掛買い返済待ち試験の販売代金",
+  });
+  household.purse += 110;
+  runPopulationDynamicsPhase(economy, null, { day: 180, random: () => 1 });
+  assert.equal(household.purse, 10);
+  assert.equal(household.foodCreditUsed, 0);
+  assert.equal(household.foodCreditArrears, false);
+  assert.equal(assertMoneyConservation(economy), true);
+});
+
 test("段24履歴/§0.2: 旧監査28項目を診断として維持しE20残差を守る", () => {
   assert.equal(typeof runFlowIslandAudit, "function");
   assert.equal(typeof economicMaterialSnapshot, "function");
@@ -4411,6 +4468,109 @@ test("需要網: 無一文の建築材買い出しを止め、手持ち修繕材
     "自宅にある丸太は市場へ取りに行かず修繕棚へ移す");
   assert.equal(household.state, "home", "支払手段がなければ建築材買い出しへ出ない");
   assert.equal(household.marketCarrier, null);
+});
+
+test("現金循環: 食料に余裕のある稼働世帯は実在する修繕材だけ有限信用で買える", () => {
+  const fixture = createLogisticsTestFixture();
+  const seller = createHousehold(fixture.economy, { job: "quarryman", x: 7, y: 5 });
+  const buyer = createHousehold(fixture.economy, { job: "logger", x: 7, y: 5 });
+  const home = addEconomicTestBuilding(
+    fixture.physical, "logger", 7, 6, 7, 5, buyer.id,
+  );
+  buyer.buildingId = home.id;
+  for (const goods of GOODS) buyer.pantry[goods] = 0;
+  for (const goods of FOODS) buyer.pantry[goods] = 100;
+  buyer.purse = 0;
+  home.constructionConsumed = true;
+  home.repairPlan = { required: { stone: 100 }, dueDay: 30 };
+  seller.pantry.stone = 0;
+  fixture.economy.stalls.stone.push({
+    householdId: seller.id,
+    marketId: "main",
+    qty: 100,
+    price: 1,
+    age: 0,
+  });
+  depositInventory(
+    buildingById(fixture.physical, fixture.physical.roleBuildingIds.market),
+    "outbound",
+    "stone",
+    100,
+  );
+  fixture.economy.currentDay = 2;
+  const moneyBefore = fixture.economy.company.money
+    + fixture.economy.households.reduce((total, household) => total + household.purse, 0);
+
+  assert.equal(householdRepairMaterialNeed(fixture.physical, buyer, "stone"), 100);
+  assert.equal(repairMaterialPurchaseBudget(fixture.physical, buyer, "stone"), 60);
+  decideHouseholdTrips(fixture.economy, fixture.physical);
+  assert.equal(buyer.state, "toMarket", "実在棚と返済可能枠があれば修繕便へ出る");
+  assert.equal(buyer.marketCarrier.reason, "building_materials");
+  while (buyer.state !== "home") {
+    stepMarketTrip(fixture.economy, fixture.physical, buyer, {
+      day: 2,
+      random: () => 0,
+    });
+  }
+
+  assert.equal(sectionAmount(home, "repair", "stone"), 18, "一便目は家族の実運搬量まで");
+  assert.equal(buyer.purse, -18);
+  assert.equal(repairMaterialPurchaseBudget(fixture.physical, buyer, "stone"), 42);
+
+  const second = buyAtMarket(fixture.economy, buyer, {
+    day: 3,
+    physical: fixture.physical,
+    delivery: "cargo",
+    capacityLimit: 100,
+  });
+  buyer.cargo = second.cargo;
+  unloadMarketBuyCargo(buyer, fixture.physical);
+  assert.equal(second.purchased.stone, 42, "二便目でも累計60Dの信用床を越えない");
+  assert.equal(sectionAmount(home, "repair", "stone"), 60);
+  assert.equal(buyer.purse, -60);
+  assert.equal(buyer.foodCreditUsed, 0, "修繕債務を非常食債務へ偽装しない");
+  assert.equal(seller.purse, P.PURSE0 + 60 * (1 - P.FEE));
+  assert.equal(repairMaterialPurchaseBudget(fixture.physical, buyer, "stone"), 0);
+  assert.ok(Math.abs(
+    fixture.economy.company.money
+      + fixture.economy.households.reduce((total, household) => total + household.purse, 0)
+      - moneyBefore,
+  ) < 1e-9);
+});
+
+test("現金循環: 食料3日未満の世帯は修繕信用より食料を優先する", () => {
+  const fixture = createLogisticsTestFixture();
+  const seller = createHousehold(fixture.economy, { job: "quarryman", x: 7, y: 5 });
+  const buyer = createHousehold(fixture.economy, { job: "logger", x: 7, y: 5 });
+  const home = addEconomicTestBuilding(
+    fixture.physical, "logger", 7, 6, 7, 5, buyer.id,
+  );
+  buyer.buildingId = home.id;
+  for (const goods of GOODS) buyer.pantry[goods] = 0;
+  buyer.pantry.wheat = householdEat(buyer) * 2;
+  buyer.purse = 0;
+  home.constructionConsumed = true;
+  home.repairPlan = { required: { stone: 6 }, dueDay: 30 };
+  seller.pantry.stone = 0;
+  fixture.economy.stalls.stone.push({
+    householdId: seller.id,
+    marketId: "main",
+    qty: 6,
+    price: 1,
+    age: 0,
+  });
+  depositInventory(
+    buildingById(fixture.physical, fixture.physical.roleBuildingIds.market),
+    "outbound",
+    "stone",
+    6,
+  );
+  fixture.economy.currentDay = 2;
+
+  assert.equal(repairMaterialPurchaseBudget(fixture.physical, buyer, "stone"), 0);
+  decideHouseholdTrips(fixture.economy, fixture.physical);
+  assert.equal(buyer.marketCarrier, null);
+  assert.notEqual(buyer.lastMarketTripReason, "building_materials");
 });
 
 test("需要網: 修繕と暮らしが競合する木製品は購入量を合算し生活10日分を先取りする", () => {
@@ -7366,6 +7526,71 @@ if (includeFullAcceptance) test("段49: T=8年×3シード+公開API版の完全
     Math.max(...workers.map(({ elapsedMs }) => elapsedMs)) < 78_000,
     JSON.stringify(workers.map(({ seed, mode, elapsedMs }) => ({ seed, mode, elapsedMs }))),
   );
+});
+
+if (includeFullAcceptance) test("B2 P5: 母港3年・3戦略5年・S6型1年を256世界で検収する", async () => {
+  const [mother, ...strategyRuns] = await Promise.all([
+    runB2P5Worker({ mode: "mother", days: 1080 }),
+    runB2P5Worker({ strategyId: "fishery", days: 1800 }),
+    runB2P5Worker({ strategyId: "mining", days: 1800 }),
+    runB2P5Worker({ strategyId: "basin", days: 1800 }),
+  ]);
+
+  assert.equal(mother.moneyConserved, true);
+  assert.equal(mother.bankruptcyDay, null);
+  assert.ok(mother.baldTiles > mother.initialBaldTiles, JSON.stringify(mother));
+  assert.ok(Math.min(...mother.loggerWood) < 0.8, JSON.stringify(mother.loggerWood));
+  assert.ok(mother.fisheries.length > 0, JSON.stringify(mother));
+  assert.ok(mother.fisheries.every(fishery => fishery.ratio < 0.55), JSON.stringify(mother.fisheries));
+  assert.ok(mother.population < mother.populationStart, JSON.stringify(mother));
+  assert.ok(mother.famine > mother.populationStart, JSON.stringify(mother));
+
+  for (const run of strategyRuns) {
+    assert.equal(run.moneyConserved, true, JSON.stringify(run));
+    assert.equal(run.bankruptcyDay, null, JSON.stringify(run));
+    assert.ok(run.companyEnd >= -run.creditLimit, JSON.stringify(run));
+    assert.equal(run.expansions.length, 3, JSON.stringify(run.expansions));
+    assert.equal(run.markets.length, 4, JSON.stringify(run.markets));
+    assert.ok(run.highLevelHouseholds > 0, JSON.stringify(run));
+    assert.ok(run.orderRevenue + run.regularExportRevenue > 5_000, JSON.stringify(run));
+    assert.ok(Object.values(run.exported).some(quantity => quantity > 0), JSON.stringify(run));
+    for (const market of run.markets) {
+      assert.ok(market.population > 0, JSON.stringify(run.markets));
+      assert.ok(market.foodDays >= 14, JSON.stringify(run.markets));
+      assert.ok(market.hungry30 < market.population, JSON.stringify(run.markets));
+    }
+  }
+
+  assert.deepEqual(
+    strategyRuns.map(run => run.expansions[0].marketId).sort(),
+    ["basin", "fishery", "mining"],
+  );
+  assert.ok(new Set(strategyRuns.map(run => run.medianLevel)).size > 1, JSON.stringify(strategyRuns));
+  const portRevenues = strategyRuns.map(
+    run => run.orderRevenue + run.regularExportRevenue,
+  );
+  assert.ok(Math.max(...portRevenues) - Math.min(...portRevenues) > 2_000, JSON.stringify(portRevenues));
+  const companyEnds = strategyRuns.map(run => run.companyEnd);
+  assert.ok(Math.max(...companyEnds) - Math.min(...companyEnds) > 5_000, JSON.stringify(companyEnds));
+  assert.ok(strategyRuns.some(run => {
+    const last = run.yearly.at(-1)?.companyMoney ?? -Infinity;
+    const previous = run.yearly.at(-2)?.companyMoney ?? Infinity;
+    return last > previous;
+  }), JSON.stringify(strategyRuns.map(run => run.yearly)));
+
+  const s6 = await runB2P5Worker({ strategyId: "fishery", days: 360 });
+  assert.equal(s6.moneyConserved, true, JSON.stringify(s6));
+  assert.equal(s6.bankruptcyDay, null, JSON.stringify(s6));
+  assert.equal(s6.markets.length, 4, JSON.stringify(s6.markets));
+  assert.ok(s6.routes.length >= 7, JSON.stringify(s6.routes));
+  assert.ok(s6.routes.every(route => route.completedTrips > 0), JSON.stringify(s6.routes));
+  assert.ok(s6.routes.some(route => route.margin < 0), JSON.stringify(s6.routes));
+  assert.ok(s6.developmentImports.length > 0, JSON.stringify(s6.developmentImports));
+  for (const market of s6.markets) {
+    assert.ok(market.population > 0, JSON.stringify(s6.markets));
+    assert.ok(market.foodDays >= 14, JSON.stringify(s6.markets));
+    assert.ok(market.hungry30 < market.population, JSON.stringify(s6.markets));
+  }
 });
 
 let failures = 0;

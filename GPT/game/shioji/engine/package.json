@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "audit:b2-p5": "node scripts/b2_p5.mjs",
     "audit:iron": "node scripts/e_iron.mjs",
     "audit:legacy": "node scripts/e_legacy.mjs",
     "audit:price-soak": "node scripts/price_soak.mjs",

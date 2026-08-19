@@ -431,6 +431,7 @@ function makeHouseholdRecord(economy, { job, x, y }) {
     // 非常食の掛買いで生じた負債部分。財布の負数とは別に由来だけを記録し、
     // その負債が加工職の運転資金60デナリを食い潰さないようにする。
     foodCreditUsed: 0,
+    foodCreditArrears: false,
     pantry: emptyPantry(),
     // 本土から持参した開拓食のうち、まだ食べていない量。麦農家だけが
     // 到着直後にこれを「収穫余剰」と誤認して売り切るのを防ぐ。
@@ -898,6 +899,19 @@ export function isHouseholdCapitalNeed(physical, household, goods) {
       && householdMaterialAmount(physical, household, goods) < toolNeed.qty - 1e-9
     )
     || (fishingRigNeed?.materials[goods] ?? 0) > 1e-9;
+}
+
+export function householdRepairMaterialNeed(physical, household, goods) {
+  if (!physical || !goods) return 0;
+  const building = ensureBuildingShelves(buildingById(physical, household?.buildingId));
+  // 建設中の区画へ修繕信用を流すと、同じ品目の建設棚が先に受け取ってしまう。
+  // 稼働済みの世帯建物に立った実在修繕計画だけを信用対象にする。
+  if (!building || building.constructionConsumed !== true || !building.repairPlan) return 0;
+  return Math.max(
+    0,
+    (building.repairPlan.required?.[goods] ?? 0)
+      - sectionAmount(building, "repair", goods),
+  );
 }
 
 export function buildingConditionMultiplier(physical, household) {
@@ -2725,9 +2739,12 @@ const CREDIT_INPUT_JOBS = new Set([
   "smelter", "smith", "woodshop", "charburner",
 ]);
 export const PRODUCTION_INPUT_CREDIT_LIMIT = 60;
+// 稼働建物を直して収入を戻すための有限信用。運転資金と同じ60Dの負債床を
+// 共有し、食料債務だけは別枠として相殺する。現物・売手・代金は通常取引のまま。
+export const HOUSEHOLD_REPAIR_CREDIT_LIMIT = 60;
 // 食料在庫が実在するのに現金だけで餓死させないための共同体掛買い枠。
-// 6か月連続赤字なら既存の徳政処理が会社損失へ振り替えるので、同じ180日を
-// 上限にする。負債は世帯purseのマイナスとして残り、採算悪化を隠さない。
+// 六か月分を上限とするが、通常の徳政で繰り返し会社へ転嫁せず返済待ち債務に
+// 残す。負債は世帯purseのマイナスとして見え、転職・販売収入で返していく。
 export const HOUSEHOLD_FOOD_CREDIT_DAYS = 180;
 
 export function householdFoodCreditLimit(economy, household) {
@@ -2772,6 +2789,25 @@ export function productionInputPurchaseBudget(household, goods) {
     (household.purse ?? 0)
       + productionInputCreditAllowance(household, goods)
       + foodDebtOffset,
+  );
+}
+
+export function repairMaterialPurchaseBudget(physical, household, goods) {
+  if (householdRepairMaterialNeed(physical, household, goods) <= 1e-9) {
+    return Math.max(0, household?.purse ?? 0);
+  }
+  // 食料が危うい時は設備投資より食料を優先する。非常食は既存の掛買い枠で
+  // 取得し、3日以上へ戻ってから修繕材を信用購入する。
+  if (householdFoodDays(household) < P.FOOD_FIRST_D) {
+    return Math.max(0, household?.purse ?? 0);
+  }
+  const foodDebtOffset = Math.min(
+    Math.max(0, household.foodCreditUsed ?? 0),
+    Math.max(0, -(household.purse ?? 0)),
+  );
+  return Math.max(
+    0,
+    (household.purse ?? 0) + HOUSEHOLD_REPAIR_CREDIT_LIMIT + foodDebtOffset,
   );
 }
 
@@ -3499,7 +3535,13 @@ export function requestCompanyImport(economy, physical, goods, { day, qty, aid =
   return request;
 }
 
-function marketShelvesForGoods(economy, physical, household, goods) {
+export function marketShelvesForGoods(
+  economy,
+  physical,
+  household,
+  goods,
+  { ceiling = Infinity } = {},
+) {
   const marketId = householdMarketId(household);
   const shelves = economy.stalls[goods]
     .filter((stall) => (
@@ -3512,7 +3554,7 @@ function marketShelvesForGoods(economy, physical, household, goods) {
   const localQty = economy.marketStockM?.[marketId]?.[goods] ?? 0;
   if (localQty > 1e-9) {
     shelves.push({
-      price: localCompanyStockReleasePrice(economy, marketId, goods)
+      price: localCompanyStockReleasePrice(economy, marketId, goods, { ceiling })
         ?? Math.max(0.1, marketPriceBook(economy, marketId)[goods] ?? P.BELIEF0[goods] ?? 2),
       qty: localQty,
     });
@@ -3726,11 +3768,12 @@ export function buyAtMarket(
       const unitWeight = goodsUnitWeight(goods);
       const productionInput = isProductionInput(household, goods);
       const capitalNeed = isHouseholdCapitalNeed(physical, household, goods);
+      const repairNeed = householdRepairMaterialNeed(physical, household, goods);
       const input = productionInput || capitalNeed;
       const workingInput = productionInput && !capitalNeed;
       const protectsFoodCash = !FOODS.includes(goods) && !workingInput;
-      // 信用買いは売上へ直結する日々の原料だけ。建設・修繕・道具・漁具・肥料・
-      // 荷車材料まで一律に借金購入すると、改善投資が食料を買えない世帯を作る。
+      // 日々の原料信用と、下で別枠判定する実在修繕計画だけが対象。建設・道具・
+      // 漁具・肥料・荷車材料まで一律に借金購入させない。
       let creditEligible = workingInput && canUseProductionInputCredit(household, goods);
       // ただし食料が1.5日未満なら、実在する食料だけは既存の世帯信用枠まで
       // 掛買いできる。給付や輸入ではなく買手の負債と売手の収入を同額立て、
@@ -3753,17 +3796,26 @@ export function buyAtMarket(
       const reserve = protectsFoodCash
         ? foodCashReserve(economy, physical, household, purchased)
         : 0;
+      const cashBudget = Math.max(
+        0,
+        household.purse - reserve
+          + (emergencyFoodCredit
+            ? householdFoodCreditLimit(economy, household)
+            : 0),
+      );
+      // 信用で買える数量は、棚に未納の修繕必要量まで。暮らし・道具目標が同じ
+      // 品目へ合算されても、設備信用だけで余分な家財を買い込ませない。
+      const repairCreditQty = repairNeed > 1e-9
+        ? Math.min(
+          repairNeed,
+          repairMaterialPurchaseBudget(physical, household, goods) / shelf.price,
+        )
+        : 0;
       const affordable = shelf.kind === "AID"
         ? Infinity
-        : (creditEligible
-          ? productionInputPurchaseBudget(household, goods)
-          : Math.max(
-            0,
-            household.purse - reserve
-              + (emergencyFoodCredit
-                ? householdFoodCreditLimit(economy, household)
-                : 0),
-          )) / shelf.price;
+        : creditEligible
+          ? productionInputPurchaseBudget(household, goods) / shelf.price
+          : Math.max(cashBudget / shelf.price, repairCreditQty);
       let usableCapacity = input ? capacity : Math.max(0, capacity - inputReserve);
       if (
         productionInput
@@ -6998,6 +7050,10 @@ export function runPopulationDynamicsPhase(economy, physical, { day, random }) {
   if (day % 30 !== 0) return changes;
   const month = calendarMonth(economy, day);
   for (const household of economy.households) {
+    if (household.purse >= -1e-9 && (household.foodCreditUsed ?? 0) > 0) {
+      household.foodCreditUsed = 0;
+      household.foodCreditArrears = false;
+    }
     household.insolvM = household.purse < -2 ? (household.insolvM ?? 0) + 1 : 0;
     household.hungerHist ??= [];
     if (household.hungerHist.length > 180) {
@@ -7018,18 +7074,35 @@ export function runPopulationDynamicsPhase(economy, physical, { day, random }) {
       && household.job !== "carter" && household.jobCycleDone
       ? attractiveCaravanVacancy(economy, physical, household)
       : null;
-    if (household.insolvM >= 6 && household.purse < 0) {
+    if (
+      household.insolvM >= 6
+      && household.purse < 0
+      && !household.foodCreditArrears
+    ) {
       const debt = -household.purse;
-      postCompanyLedger(economy.company, {
-        day,
-        amount: household.purse,
-        reason: `世帯${household.id}の徳政による貸し倒れ`,
-      });
-      household.purse = 0;
-      household.foodCreditUsed = 0;
-      household.insolvM = 0;
-      changes.push({ kind: "debt_relief", householdId: household.id, debt });
-      recordEconomyEvent(economy, day, `${household.sur}家の借財を帳消しに(徳政)`);
+      if ((household.foodCreditUsed ?? 0) > 1e-9) {
+        // 実在食料の掛買いを六か月ごとに会社へ付け替えると、同じ世帯が再借入し
+        // 黒字路線まで止める。債務は消さず、転職・販売収入で返済する。
+        household.foodCreditArrears = true;
+        changes.push({ kind: "food_credit_arrears", householdId: household.id, debt });
+        recordEconomyEvent(
+          economy,
+          day,
+          `${household.sur}家の食料掛買い${debt.toFixed(1)}Dは返済待ち——販売か転職で返す`,
+        );
+      } else {
+        postCompanyLedger(economy.company, {
+          day,
+          amount: household.purse,
+          reason: `世帯${household.id}の徳政による貸し倒れ`,
+        });
+        household.purse = 0;
+        household.foodCreditUsed = 0;
+        household.foodCreditArrears = false;
+        household.insolvM = 0;
+        changes.push({ kind: "debt_relief", householdId: household.id, debt });
+        recordEconomyEvent(economy, day, `${household.sur}家の借財を帳消しに(徳政)`);
+      }
     }
     if (
       (distress || caravanRecruitment)
@@ -7067,7 +7140,7 @@ export function runPopulationDynamicsPhase(economy, physical, { day, random }) {
           );
           continue;
         }
-        if (household.purse < 0) {
+        if (household.purse < 0 && (household.foodCreditUsed ?? 0) <= 1e-9) {
           const debt = -household.purse;
           postCompanyLedger(economy.company, {
             day,
@@ -7076,6 +7149,7 @@ export function runPopulationDynamicsPhase(economy, physical, { day, random }) {
           });
           household.purse = 0;
           household.foodCreditUsed = 0;
+          household.foodCreditArrears = false;
           changes.push({ kind: "debt_relief", householdId: household.id, debt });
         }
         moveHouseholdToVacantBuilding(

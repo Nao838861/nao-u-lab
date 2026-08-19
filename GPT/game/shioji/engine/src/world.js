@@ -19,6 +19,7 @@ import {
   householdBuildingNeeds,
   householdFoodDays,
   householdFoodCreditLimit,
+  householdRepairMaterialNeed,
   householdTransportPlan,
   householdMaterialAmount,
   householdMarketEntrance,
@@ -28,9 +29,11 @@ import {
   marketTripDuration,
   marketPathLength,
   marketPriceBook,
+  marketShelvesForGoods,
   producePrimaryTick,
   productionInputAmount,
   productionInputPurchaseBudget,
+  repairMaterialPurchaseBudget,
   productionCost,
   productionMultiplierForTrip,
   pruneEconomyHistory,
@@ -531,10 +534,13 @@ function householdCanSellFromHome(household) {
   return household.members.length - travelling > 0;
 }
 
-function canFundMarketTarget(economy, household, goods, wanted) {
+function canFundMarketTarget(economy, physical, household, goods, wanted) {
   if (!(wanted > 1e-9)) return false;
   if (canUseProductionInputCredit(household, goods)) {
     return productionInputPurchaseBudget(household, goods) > 1e-9;
+  }
+  if (householdRepairMaterialNeed(physical, household, goods) > 1e-9) {
+    return repairMaterialPurchaseBudget(physical, household, goods) > 1e-9;
   }
   const credit = FOODS.includes(goods) && householdFoodDays(household) < 1.5
     ? householdFoodCreditLimit(economy, household)
@@ -542,11 +548,28 @@ function canFundMarketTarget(economy, household, goods, wanted) {
   return household.purse + credit > 1e-9;
 }
 
-function canFundAnyMarketTarget(economy, household, targets, goodsFilter = null) {
+function canFundAnyMarketTarget(economy, physical, household, targets, goodsFilter = null) {
   return Object.entries(targets).some(([goods, [wanted, ceiling]]) => (
     (!goodsFilter || goodsFilter.has(goods))
     && ceiling > 0
-    && canFundMarketTarget(economy, household, goods, wanted)
+    && canFundMarketTarget(economy, physical, household, goods, wanted)
+  ));
+}
+
+function canBuyRepairTargetAtMarket(economy, physical, household, targets, goodsFilter) {
+  return Object.entries(targets).some(([goods, [wanted, ceiling]]) => (
+    goodsFilter.has(goods)
+    && wanted > 1e-9
+    && ceiling > 0
+    && householdRepairMaterialNeed(physical, household, goods) > 1e-9
+    && repairMaterialPurchaseBudget(physical, household, goods) > 1e-9
+    && marketShelvesForGoods(
+      economy,
+      physical,
+      household,
+      goods,
+      { ceiling },
+    ).some((shelf) => shelf.qty > 1e-9 && shelf.price >= 0 && shelf.price <= ceiling)
   ));
 }
 
@@ -1108,6 +1131,7 @@ export function decideHouseholdTrips(economy, physical, { timeOfDay = null } = {
       && routine.scheduledToday
       && canFundAnyMarketTarget(
         economy,
+        physical,
         household,
         targets,
         new Set(needs.lowCultureGoods),
@@ -1116,18 +1140,30 @@ export function decideHouseholdTrips(economy, physical, { timeOfDay = null } = {
       && household.purse > -20
       && daysSinceMarket >= P.MARKET_BATCH_DAYS
       && routine.scheduledToday
-      && canFundAnyMarketTarget(economy, household, targets, inputTargets);
+      && canFundAnyMarketTarget(economy, physical, household, targets, inputTargets);
     const capitalRestockReady = needs.capitalLow
-      && household.purse > 1e-9
       && daysSinceMarket >= 1
-      && canFundAnyMarketTarget(
-        economy,
-        household,
-        targets,
-        needs.capitalGoods,
+      && (
+        (
+          household.purse > 1e-9
+          && canFundAnyMarketTarget(
+            economy,
+            physical,
+            household,
+            targets,
+            needs.capitalGoods,
+          )
+        )
+        || canBuyRepairTargetAtMarket(
+          economy,
+          physical,
+          household,
+          targets,
+          needs.capitalGoods,
+        )
       );
     const foodRestockReady = needs.foodUrgent
-      && canFundAnyMarketTarget(economy, household, targets, foodTargets);
+      && canFundAnyMarketTarget(economy, physical, household, targets, foodTargets);
     // 生魚は早めに買うが、毎日の市場往復で生産そのものを止めない。
     // 5日腐敗に対して2日間隔なら十分な余裕があり、1.5日分の上限とも釣り合う。
     const freshFishReady = freshFish.ready
@@ -1160,7 +1196,7 @@ export function decideHouseholdTrips(economy, physical, { timeOfDay = null } = {
     const reason = household.state === "building" && capitalRestockReady
       ? "building_materials"
       : needs.inputStopped
-      && canFundAnyMarketTarget(economy, household, targets, inputTargets)
+      && canFundAnyMarketTarget(economy, physical, household, targets, inputTargets)
       ? "input_urgent"
       : foodRestockReady
         ? "food_urgent"

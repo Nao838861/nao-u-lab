@@ -1911,6 +1911,89 @@ export function runB2ExpansionScenario(
   };
 }
 
+function countB2TerrainKind(physical, kind) {
+  let count = 0;
+  for (const row of physical.terrain ?? []) {
+    for (const tile of row) {
+      if (tile?.kind === kind) count += 1;
+    }
+  }
+  return count;
+}
+
+export function runB2MotherPortScenario(
+  definition,
+  {
+    seed = 11,
+    days = 1080,
+  } = {},
+) {
+  const world = buildB2TrialWorld(seed, definition, {
+    householdSize: 4,
+    provisionDays: B2_TRIAL_PROVISION_DAYS,
+  });
+  const { economy, physical } = world.state;
+  const companyStart = economy.company.money;
+  const populationStart = auditPopulation(economy);
+  const initialBaldTiles = countB2TerrainKind(physical, "bald");
+  const loggers = economy.households.filter(household => household.job === "logger");
+  const initialLoggerWood = loggers.map(household => localWood(economy, physical, household));
+  const yearly = [];
+  let previousFamine = economy.famine;
+
+  for (let day = 1; day <= days; day += 1) {
+    mimicPlayer(world, day, { orderGuard: b2CanAcceptSurplusOrder });
+    world.step();
+    if (day % 360 === 0 || day === days) {
+      const activeFisheryIds = [...new Set(economy.households
+        .filter(household => household.job === "fisher")
+        .map(household => household.fisheryId)
+        .filter(Boolean))].sort();
+      yearly.push({
+        day,
+        population: auditPopulation(economy),
+        famine: economy.famine - previousFamine,
+        companyMoney: economy.company.money,
+        baldTiles: countB2TerrainKind(physical, "bald"),
+        loggerWood: loggers.map(household => localWood(economy, physical, household)),
+        fisheries: activeFisheryIds.map(id => {
+          const capacity = economy.natural.fisheryCapacity?.[id] ?? P.BAY0;
+          const stock = economy.natural[id] ?? capacity;
+          return { id, stock, capacity, ratio: stock / capacity };
+        }),
+      });
+      previousFamine = economy.famine;
+    }
+  }
+
+  const activeFisheryIds = [...new Set(economy.households
+    .filter(household => household.job === "fisher")
+    .map(household => household.fisheryId)
+    .filter(Boolean))].sort();
+  return {
+    seed,
+    days,
+    world,
+    companyStart,
+    companyEnd: economy.company.money,
+    bankruptcyDay: economy.goDay,
+    populationStart,
+    population: auditPopulation(economy),
+    famine: economy.famine,
+    initialBaldTiles,
+    baldTiles: countB2TerrainKind(physical, "bald"),
+    initialLoggerWood,
+    loggerWood: loggers.map(household => localWood(economy, physical, household)),
+    fisheries: activeFisheryIds.map(id => {
+      const capacity = economy.natural.fisheryCapacity?.[id] ?? P.BAY0;
+      const stock = economy.natural[id] ?? capacity;
+      return { id, stock, capacity, ratio: stock / capacity };
+    }),
+    hungry30: b2RecentHungerDays(economy),
+    yearly,
+  };
+}
+
 export const B2_TUTORIAL_FISHERY_MARKET = Object.freeze({
   id: "fishery",
   name: "漁港市場",
