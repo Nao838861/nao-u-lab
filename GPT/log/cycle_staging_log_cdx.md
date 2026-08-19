@@ -62,7 +62,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787115339-349b05404c
+    source_ts: "1787115339.463509"
+    title: "CIGDI: 少人数ゲーム制作の AI 支援と comprehension debt"
+    reason: "memory・harness・game-design・operation・evaluation の5優先タグを持つ未レビュー atom。AI 生成 subsystem の『動く』と『所有者が説明・独立変更・遅延再入できる』を分ける知見が、game／memory tooling の完成判断に新しい差を作るか確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "採用閾値は満たすが、単一チームの探索的事例で長期比較がなく、現 staging には高リスクな AI 生成 subsystem の before／after、同一 trace の独立変更、7〜14日後の再入を比較できる trigger artifact がない。直後の Phase 4a には別 probe の pending lease も1件あるため、対象なしで active probe を増やさず state-only review とした。"
+  change:
+    summary: "reviewed_source_ts と defer 理由のみ更新。probe・metric・directive・恒久ルール・lifecycle ledger は変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
