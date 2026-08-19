@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-19T09:44:00+09:00",
+  "updated_at": "2026-08-19T11:55:23+09:00",
   "reviewed_source_ts": [
+    "1787100006.584759",
     "1779778084.383239",
     "1787085841.602779",
     "1779536360.403639",
@@ -688,6 +689,45 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-19T11:55:23+09:00",
+      "selected": {
+        "id": "sr-1787100006-7b15be17c8",
+        "source_ts": "1787100006.584759",
+        "title": "『Last Year』postmortem — 破産・server停止後のrestore-first再始動",
+        "reason": "sourceがslack_api/shared-reads、score 11、未レビューという条件を満たす最新atomで、memory・harness・game-design・operation・evaluationを含む7タグを持つため1件だけ選んだ。旧サービスと蓄積を先に復旧し、刷新を別releaseとして測る知見が、現在のatoms per-file移行と休止prototype再開に新しい判断差を作るか確認した。Nao_uが本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_controlも必須閾値2を下回るため、新規probe・metric・lease・directiveは追加しない。shared-reads本文は、GameSparksからAWSへのbackend移行、progression保持、購入済み旧版の先行復旧、稼働後の段階的refactor、Discord・trailer反応を具体化しており、restore-firstを次回行動へ翻訳できるためrelevanceとactionabilityは3とした。一方、評価材料は再始動直後の開発側自己報告とcommunity関心指標で、data完全性・稼働率・retention・売上・refactor速度を示さないためevidence=2。memory/directive_atoms_per_file_migration_20260513.mdは既に旧atoms.jsonlを消さず、dual-write、逆方向互換、件数一致、read-only legacy、archiveの順で復旧と刷新を分離している。probe-20260621-compiled-memory-boundaryもraw到達性・同一lineage・fallbackを確認するため、本投稿固有のrecovery manifest以外は既存controlと重複しnon_redundancy=1とした。active_probesが325件ある現状でlive-service事例から汎用restore-first probeを増やすと、通常の小規模prototypeや可逆なschema変更にも8項目manifestを要求する過剰一般化と確認負荷を生むためrisk_control=1とした。",
+      "existing_controls": [
+        "memory/directive_atoms_per_file_migration_20260513.md",
+        "AGENTS.md#atoms.jsonl-to-per-file-md-migration",
+        "probe-20260621-compiled-memory-boundary"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_tsと、restore-firstの有用性、既存atoms移行directiveおよびcompiled-memory controlとの重複によるreject理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-19T09:44:00+09:00",
       "selected": {

@@ -57,7 +57,38 @@ slack_posted: false
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787100006-7b15be17c8
+    source_ts: "1787100006.584759"
+    title: "『Last Year』postmortem — 破産・server停止後のrestore-first再始動"
+    reason: "score 11の未レビュー最新atomで、memory・harness・game-design・operation・evaluationを含む。restore-firstが現在のatoms移行と休止prototype再開に新しい判断差を作るか確認するため1件だけ選定。Nao_uの明示的な重要評価は未確認"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で14未満かつrisk_controlが2未満。GameSparks→AWS移行、progression保持、旧版先行復旧、段階的refactorは行動可能だが、data完全性・稼働率・retention・売上・refactor速度の結果証拠がない。既存のatoms per-file移行directiveがlegacy保持、dual-write/read、一致検証、archiveの順序を既に定め、compiled-memory probeもraw到達性とfallbackを確認する。325件のactive probeへ汎用restore-first checkを加えると、8項目manifestの過剰適用と確認負荷が判断差を上回る"
+  existing_controls:
+    - memory/directive_atoms_per_file_migration_20260513.md
+    - AGENTS.md#atoms.jsonl-to-per-file-md-migration
+    - probe-20260621-compiled-memory-boundary
+  change:
+    summary: "reviewed_source_tsとreject理由のみ更新。新規probe・metric・lease・directive・恒久ルールは追加しない"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
