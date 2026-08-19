@@ -1494,6 +1494,45 @@ const SizeBankScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
   );
 };
 
+const SpriteScaleResultScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 420}) => {
+  const patternFrames = Math.round(durationInFrames * 0.49);
+  const bossFrames = durationInFrames - patternFrames;
+  return (
+    <AbsoluteFill style={{backgroundColor: C.bg}}>
+      <Sequence durationInFrames={patternFrames}>
+        <AbsoluteFill style={{padding: '38px 48px', boxSizing: 'border-box'}}>
+          <Title size={42}>16段階の絵を、奥行きに合わせて選ぶ</Title>
+          <div style={{fontFamily: FONT, color: C.dim, fontSize: 19, fontWeight: 800, marginTop: 8}}>計算量を増やさず、滑らかな拡大縮小を実現</div>
+          <div style={{display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 13, marginTop: 34}}>
+            {bossFaceDimensions.map((dimensions, i) => (
+              <div key={i} style={{height: 208, border: '2px solid #34313c', background: C.panel, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', padding: '13px 4px 9px', boxSizing: 'border-box'}}>
+                <div style={{fontFamily: MONO, color: C.magenta, fontSize: 15, fontWeight: 900}}>{String(i + 1).padStart(2, '0')}</div>
+                <div style={{height: 136, width: '100%', display: 'grid', placeItems: 'center'}}>
+                  <Img src={staticFile(`boss_face/BossFace_${String(i).padStart(2, '0')}.png`)} style={{width: dimensions[0] * 2.05, height: dimensions[1] * 2.05, imageRendering: 'pixelated'}} />
+                </div>
+                <div style={{fontFamily: MONO, color: C.dim, fontSize: 11}}>{dimensions[0]}×{dimensions[1]}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{position: 'absolute', left: 420, right: 420, bottom: 18, padding: '10px 16px', borderTop: `2px solid ${C.magenta}`, borderBottom: `2px solid ${C.magenta}`, textAlign: 'center', fontFamily: FONT, color: C.white, fontSize: 22, fontWeight: 900}}>大量のROM容量 ⇄ 高速で滑らかな描画</div>
+        </AbsoluteFill>
+      </Sequence>
+      <Sequence from={patternFrames} durationInFrames={bossFrames}>
+        <AbsoluteFill style={{backgroundColor: '#000', display: 'grid', placeItems: 'center'}}>
+          <OffthreadVideo
+            src={staticFile('boss_battle.mp4')}
+            startFrom={86 * 30}
+            endAt={86 * 30 + bossFrames}
+            muted
+            style={{width: 768, height: 720, objectFit: 'fill', imageRendering: 'pixelated'}}
+          />
+          <div style={{position: 'absolute', left: 34, top: 30, padding: '10px 15px', background: '#050507dd', borderLeft: `6px solid ${C.magenta}`, fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900}}>速度とクオリティを最優先</div>
+        </AbsoluteFill>
+      </Sequence>
+    </AbsoluteFill>
+  );
+};
+
 const BossBattleScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 240}) => {
   const frame = useCurrentFrame();
   return (
@@ -1505,6 +1544,21 @@ const BossBattleScene: React.FC<{durationInFrames?: number}> = ({durationInFrame
         muted
         style={{width: 768, height: 720, objectFit: 'fill', imageRendering: 'pixelated'}}
       />
+    </AbsoluteFill>
+  );
+};
+
+const FrameFrameworkIntroScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 180}) => {
+  const frame = useCurrentFrame();
+  const enter = spring({frame, fps: 30, config: {damping: 18}});
+  return (
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, display: 'grid', placeItems: 'center'}}>
+      <div style={{textAlign: 'center', transform: `translateY(${(1 - enter) * 28}px)`, opacity: enter}}>
+        <div style={{fontFamily: MONO, color: C.magenta, fontSize: 104, lineHeight: 1, fontWeight: 900}}>30fps</div>
+        <div style={{height: 24}} />
+        <Title size={48}>ファミコンでゲームを動かすフレームワーク</Title>
+        <div style={{fontFamily: FONT, color: C.dim, fontSize: 24, fontWeight: 900, marginTop: 24}}>2フレームへ処理を分散し、1画面を更新する</div>
+      </div>
     </AbsoluteFill>
   );
 };
@@ -1528,24 +1582,24 @@ const FrameTimelineScene: React.FC<{durationInFrames?: number}> = ({durationInFr
     const isA = kind === 'A';
     return (
       <div style={{width: 258}}>
-        <div style={{fontFamily: FONT, color: C.white, fontSize: 23, fontWeight: 900, textAlign: 'center', marginBottom: 8}}>
-          {isA ? 'A：計算フレーム' : 'B：描画フレーム'}
+        <div style={{fontFamily: FONT, color: C.white, fontSize: 18, lineHeight: 1.2, fontWeight: 900, textAlign: 'center', marginBottom: 8}}>
+          {isA ? <>1フレーム目：<br />画面クリアと計算</> : <>2フレーム目：<br />スプライト描画</>}
         </div>
         <div style={{height: 448, border: '2px solid #47434e', padding: 6, boxSizing: 'border-box', background: C.panel, display: 'flex', flexDirection: 'column'}}>
           <div style={{height: 320, display: 'flex', flexDirection: 'column', gap: isA ? 5 : 0}}>
             {isA ? <>
-              <Block label="上半分を消去" sub="約1.7ms" color={cpu} height={43} at={45} />
-              <Block label="地面・遠景を描画" sub="約2.6ms" color={cpu} height={66} at={87} />
-              <Block label="プレイヤー・敵・弾・衝突など" sub="負荷で変動　最大 約8.0ms" color={logic} height={201} at={129} />
+              <Block label="仮想フレームバッファ消去" sub="描画　約1.7ms" color={cpu} height={43} at={175} />
+              <Block label="地面・遠景の描画" sub="描画　約2.6ms" color={cpu} height={66} at={225} />
+              <Block label="プレイヤー・敵・弾・衝突などの計算" sub="ゲームロジック　最大 約8.0ms" color={logic} height={201} at={260} />
             </> : <>
-              <Block label="コンパイルドスプライトをVBUFへ描画" sub="最大 約12.3ms" color={cpu} height={320} at={175} />
+              <Block label="コンパイルドスプライトを描画" sub="描画　最大 約12.3ms" color={cpu} height={320} at={105} />
             </>}
           </div>
-          <div style={{height: 114, position: 'relative', borderTop: `4px solid ${C.bg}`, boxSizing: 'border-box', opacity: reveal(isA ? 190 : 240)}}>
+          <div style={{height: 114, position: 'relative', borderTop: `4px solid ${C.bg}`, boxSizing: 'border-box', opacity: reveal(isA ? 320 : 350)}}>
             <div style={{position: 'absolute', left: 0, top: 0, width: 7, height: 8, background: C.white}} />
             <div style={{position: 'absolute', left: 0, top: 8, width: 7, height: 88, background: isA ? normalVram : exram}} />
             <div style={{position: 'absolute', left: 0, top: 96, width: 7, height: 14, background: C.dim}} />
-            <div style={{position: 'absolute', left: 11, top: 5, fontFamily: MONO, color: isA ? normalVram : exram, fontSize: 11, fontWeight: 900}}>EXTENDED VBLANK　4.4ms</div>
+            <div style={{position: 'absolute', left: 11, top: 5, fontFamily: MONO, color: isA ? normalVram : exram, fontSize: 11, fontWeight: 900}}>VBLANK（延長）　4.4ms</div>
             <div style={{position: 'absolute', left: 11, top: 29, fontFamily: FONT, color: C.white, fontSize: 13, fontWeight: 900}}>OAM DMA　約0.3ms</div>
             <div style={{position: 'absolute', left: 11, top: 51, fontFamily: FONT, color: isA ? normalVram : exram, fontSize: 13, lineHeight: 1.25, fontWeight: 900}}>{isA ? <>通常VRAM更新　約3.4ms<br />ダブルバッファ</> : <>ExRAM更新　約3.4ms<br />シングルバッファ</>}</div>
             <div style={{position: 'absolute', left: 11, bottom: 3, fontFamily: FONT, color: C.dim, fontSize: 11, fontWeight: 900}}>{isA ? '割り込みなど　約0.7ms' : '割り込み・ページ切替など　約0.7ms'}</div>
@@ -1554,10 +1608,10 @@ const FrameTimelineScene: React.FC<{durationInFrames?: number}> = ({durationInFr
       </div>
     );
   };
-  const chartOpacity = reveal(390);
-  const previewStage = frame < scaled(45) ? 0 : frame < scaled(87) ? 1 : frame < scaled(129) ? 2 : frame < scaled(210) ? 3 : 4;
-  const stageLabels = ['処理前：完成した画面', '上半分を消去', '地面・遠景を描画', 'ゲームロジックを反映', 'コンパイルドスプライトで完成'];
-  const previewImages = ['frame_background_player_bg.png', 'frame_background_player_bg.png', 'frame_background.png', 'frame_background_player.png', 'frame_background_player_bg.png'];
+  const chartOpacity = reveal(420);
+  const previewStage = frame < scaled(95) ? 0 : frame < scaled(165) ? 1 : frame < scaled(225) ? 2 : frame < scaled(255) ? 3 : frame < scaled(390) ? 4 : 5;
+  const stageLabels = ['前のフレーム：完成した画面', '前のフレームを表示中', '上半分を消去', '地面・遠景を描画', 'ゲームロジックを反映', 'コンパイルドスプライトで完成'];
+  const previewImages = ['frame_background_player_bg.png', 'frame_background_player_bg.png', 'frame_background_player_bg.png', 'frame_background.png', 'frame_background_player.png', 'frame_background_player_bg.png'];
   return (
     <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '34px 42px 0', boxSizing: 'border-box'}}>
       <Title size={38}>30fpsで動かすため、処理を2フレームに分ける</Title>
@@ -1568,7 +1622,8 @@ const FrameTimelineScene: React.FC<{durationInFrames?: number}> = ({durationInFr
         <div style={{flex: 1}}>
           <div style={{width: 420, height: 277, margin: '0 auto', position: 'relative', overflow: 'hidden', background: '#000', border: '2px solid #47434e'}}>
             <Img src={staticFile(previewImages[previewStage])} style={{position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', imageRendering: 'pixelated'}} />
-            {previewStage === 1 ? <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: '59%', background: '#101014'}} /> : null}
+            {previewStage === 1 ? <div style={{position: 'absolute', inset: 0, background: '#30303880'}} /> : null}
+            {previewStage === 2 ? <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: '59%', background: '#000'}} /> : null}
             <div style={{position: 'absolute', left: 12, top: 10, padding: '5px 9px', background: '#09090ddd', fontFamily: FONT, color: C.white, fontSize: 15, fontWeight: 900}}>{stageLabels[previewStage]}</div>
           </div>
           <div style={{opacity: chartOpacity, height: 157, boxSizing: 'border-box', marginTop: 10, padding: '7px 14px', background: C.panel, border: '1px solid #47434e'}}>
@@ -1866,15 +1921,15 @@ export const LaterNarrationPreview: React.FC = () => {
   return (
     <AbsoluteFill style={{backgroundColor: C.bg}}>
       <Sequence from={c17Timing.startFrame} durationInFrames={c17Timing.durationFrames}>
-        <BossBattleScene durationInFrames={c17Timing.durationFrames} />
+        <SpriteScaleResultScene durationInFrames={c17Timing.durationFrames} />
         <Audio src={staticFile('narration/later/C17.wav')} volume={0.95} />
       </Sequence>
       <Sequence from={c18Timing.startFrame} durationInFrames={c18Timing.durationFrames}>
-        <FrameTimelineScene durationInFrames={c18Timing.durationFrames} />
+        <FrameFrameworkIntroScene durationInFrames={c18Timing.durationFrames} />
         <Audio src={staticFile('narration/later/C18.wav')} volume={0.95} />
       </Sequence>
       <Sequence from={c19Timing.startFrame} durationInFrames={c19Timing.durationFrames}>
-        <GameLogicScene durationInFrames={c19Timing.durationFrames} />
+        <FrameTimelineScene durationInFrames={c19Timing.durationFrames} />
         <Audio src={staticFile('narration/later/C19.wav')} volume={0.95} />
       </Sequence>
     </AbsoluteFill>

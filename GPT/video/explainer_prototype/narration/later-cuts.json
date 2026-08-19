@@ -24,26 +24,31 @@
     {
       "id": "C17",
       "startFrame": 0,
-      "durationFrames": 217,
+      "durationFrames": 426,
       "minimumDurationFrames": 0,
-      "targetSeconds": 7.233,
+      "targetSeconds": 14.2,
       "silenceCompaction": {
         "sentenceSilenceThresholdMs": 10000,
         "commaPauseCandidateIndices": [
-          1
+          1,
+          2,
+          9
+        ],
+        "sentencePauseCandidateIndices": [
+          5
         ]
       },
-      "instructions": "大量のメモリ、高速、滑らかな拡大縮小、スプライト描画を自然につなげて発音してください。",
-      "text": "このような形で大量のメモリと引き換えに、高速で滑らかな拡大縮小ができるスプライト描画を実現できました。",
-      "ttsText": "このような形で大量のメモリと引き換えに、高速で滑らかな拡大縮小ができるスプライト描画を実現できました。",
-      "measuredDurationSeconds": 6.47
+      "instructions": "大量のメモリ、高速、滑らかな拡大縮小、速度とクオリティを自然につなげて発音してください。2文の間には明確な間を置いてください。",
+      "text": "このような形にすることで、大量のメモリと引き換えに、高速で滑らかな拡大縮小ができるスプライト描画を実現できました。今回は滑らかな動きのためにメモリを犠牲にして、速度とクオリティを最優先する形の実装になっています。",
+      "ttsText": "このような形にすることで、大量のメモリと引き換えに、高速で滑らかな拡大縮小ができるスプライト描画を実現できました。今回は滑らかな動きのためにメモリを犠牲にして、速度とクオリティを最優先する形の実装になっています。",
+      "measuredDurationSeconds": 13.45
     },
     {
       "id": "C18",
-      "startFrame": 217,
-      "durationFrames": 174,
+      "startFrame": 426,
+      "durationFrames": 177,
       "minimumDurationFrames": 0,
-      "targetSeconds": 5.8,
+      "targetSeconds": 5.9,
       "silenceCompaction": {
         "sentenceSilenceThresholdMs": 10000,
         "commaPauseCandidateIndices": [
@@ -53,36 +58,42 @@
       "instructions": "ファミコン、30fps、フレームワークを明瞭に発音してください。",
       "text": "次に、ファミコンで30fpsでゲームを動かすためのフレームワークについて説明します。",
       "ttsText": "次に、ファミコンで30エフピーエスでゲームを動かすためのフレームワークについて説明します。",
-      "measuredDurationSeconds": 5.05
+      "measuredDurationSeconds": 5.135
     },
     {
       "id": "C19",
-      "startFrame": 391,
-      "durationFrames": 720,
+      "startFrame": 603,
+      "durationFrames": 986,
       "minimumDurationFrames": 0,
-      "targetSeconds": 24,
+      "targetSeconds": 32.867,
       "silenceCompaction": {
         "sentenceSilenceThresholdMs": 10000,
         "commaPauseCandidateIndices": [
           1,
           2,
-          4,
-          6,
-          10
+          5,
+          10,
+          12,
+          13,
+          14,
+          18,
+          23
         ],
         "sentencePauseCandidateIndices": [
-          5,
-          13
+          8,
+          11,
+          17,
+          21
         ]
       },
-      "instructions": "BG、3D、8bit CPU、数値を明瞭に発音してください。",
-      "text": "ゲームロジックの処理は、プレイヤーや敵の移動、弾の当たり判定やBGのスクロール処理など、ゲームの要素の更新処理を行います。最大8体の敵に、6個の敵の弾と16個の背景オブジェクトを動かして、3Dの座標変換を行って画面に表示する準備をします。3Dの座標変換はファミコンのような8bit CPUにはとても負荷の高い計算になります。",
-      "ttsText": "ゲームロジックの処理は、プレイヤーや敵の移動、弾の当たり判定やビージーのスクロール処理など、ゲームの要素の更新処理を行います。最大8体の敵に、6個の敵の弾と16個の背景オブジェクトを動かして、スリーディーの座標変換を行って画面に表示する準備をします。スリーディーの座標変換はファミコンのような8ビットシーピーユーにはとても負荷の高い計算になります。",
-      "measuredDurationSeconds": 23.245
+      "instructions": "30fps、1フレーム目、2フレーム目、コンパイルドスプライト、3D座標変換、8msを明瞭に発音してください。各文の間には明確な間を置いてください。",
+      "text": "30fpsで動かすために、処理を2フレームに分散して、1フレーム目で画面クリアとゲームロジックの計算、2フレーム目でコンパイルドスプライトの描画を行っています。1フレーム目の最初で画面の上半分を消去し、地面と遠景を描画します。そのあとで、プレイヤーや敵、弾や衝突判定、3D座標変換などのゲームロジックを計算します。2フレーム目では、前のフレームで計算した結果に合わせてスプライトを順番に描画していきます。敵の移動や3D座標変換は、ゲームロジックの予算の8ms以内で計算する必要があります。",
+      "ttsText": "30エフピーエスで動かすために、処理を2フレームに分散して、1フレーム目で画面クリアとゲームロジックの計算、2フレーム目でコンパイルドスプライトの描画を行っています。1フレーム目の最初で画面の上半分を消去し、地面と遠景を描画します。そのあとで、プレイヤーや敵、弾や衝突判定、スリーディー座標変換などのゲームロジックを計算します。2フレーム目では、前のフレームで計算した結果に合わせてスプライトを順番に描画していきます。敵の移動やスリーディー座標変換は、ゲームロジックの予算の8ミリ秒以内で計算する必要があります。",
+      "measuredDurationSeconds": 32.115
     },
     {
       "id": "C20",
-      "startFrame": 1111,
+      "startFrame": 1589,
       "durationFrames": 1017,
       "minimumDurationFrames": 0,
       "targetSeconds": 33.9,
@@ -109,7 +120,7 @@
     },
     {
       "id": "C21",
-      "startFrame": 2128,
+      "startFrame": 2606,
       "durationFrames": 1018,
       "minimumDurationFrames": 0,
       "targetSeconds": 33.933,
@@ -139,7 +150,7 @@
     },
     {
       "id": "C22",
-      "startFrame": 3146,
+      "startFrame": 3624,
       "durationFrames": 425,
       "minimumDurationFrames": 0,
       "targetSeconds": 14.167,
@@ -161,7 +172,7 @@
     },
     {
       "id": "C23",
-      "startFrame": 3571,
+      "startFrame": 4049,
       "durationFrames": 412,
       "minimumDurationFrames": 0,
       "targetSeconds": 13.733,
