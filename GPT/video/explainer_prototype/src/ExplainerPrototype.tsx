@@ -486,20 +486,19 @@ const DevelopmentCheckerboardScene: React.FC = () => {
 const LargeCharacterScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 720}) => {
   const frame = useCurrentFrame();
   const imageEnter = spring({frame, fps: 30, config: {damping: 18}});
-  const introNarrationOffsetFrames = 132;
-  const cpuOpacity = interpolate(frame, [60 + introNarrationOffsetFrames, 72 + introNarrationOffsetFrames], [0, 1], {
+  const cpuOpacity = interpolate(frame, [179, 191], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const clearOpacity = interpolate(frame, [300 + introNarrationOffsetFrames, 312 + introNarrationOffsetFrames], [0, 1], {
+  const clearOpacity = interpolate(frame, [363, 375], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const compositeOpacity = interpolate(frame, [570 + introNarrationOffsetFrames, 582 + introNarrationOffsetFrames], [0, 1], {
+  const compositeOpacity = interpolate(frame, [520, 532], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const warningOpacity = interpolate(frame, [840 + introNarrationOffsetFrames, 852 + introNarrationOffsetFrames], [0, 1], {
+  const warningOpacity = interpolate(frame, [762, 774], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
@@ -573,8 +572,10 @@ const GenericLoopScene: React.FC<{
   narrationSchedule?: boolean;
 }> = ({durationInFrames = 300, narrationSchedule = false}) => {
   const frame = useCurrentFrame();
-  const narrationLoopFrames = (narrationSchedule ? 36 : 9) * 30;
-  const narrationLoopFrame = frame % narrationLoopFrames;
+  const narrationLoopFrames = (narrationSchedule ? 18 : 9) * 30;
+  const narrationLoopFrame = narrationSchedule
+    ? Math.min(frame, narrationLoopFrames - 1)
+    : frame % narrationLoopFrames;
   const narrationStepStartFrames = [11.86, 13.775, 15.78, 17.135, 18.14]
     .map((seconds) => Math.round(seconds * 30));
   const done = narrationSchedule
@@ -587,7 +588,7 @@ const GenericLoopScene: React.FC<{
   const cursor = rasterBlocks[Math.min(rasterBlocks.length - 1, done)];
   const category = enemyCoverage[cursor] ?? 0;
   const kinds = ['全面透明', '一部だけ描画', '全面上書き'];
-  const steps = ['画像とマスクを読む', '画面の元の値を読む', 'マスク処理を行う', '絵を合成する', '元の場所に書き戻す'];
+  const steps = ['画像とマスクを読む', '画面の元の値を読む', 'マスク処理を行う(AND)', '絵を合成する(OR)', '元の場所に書き戻す'];
   const active = narrationSchedule
     ? frame < narrationStepStartFrames[0]
       ? -1
