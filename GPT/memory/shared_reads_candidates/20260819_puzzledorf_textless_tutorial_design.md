@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/game-platforms/tutorial-design-in-puzzledorf
 collected_at: "2026-08-19T22:47:55+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, tutorial, onboarding, puzzle, playtesting]
+evaluated_at: "2026-08-19T22:51:23+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-19T22:51:23+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-19T22:51:23+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-18"
+supersedes: []
+gate_reason: >-
+  説明文を盤面制約・段階的な失敗許容・視聴覚 feedback へ置換する設計と、作者が助けない初見 playtest で学習成立を検証する反復手順が具体例つきで揃う。
+  新規 prototype の最初の数分へ直接適用でき、評価の定量性は弱いものの、限界を明記すれば CoopEval 水準の概要と批判的分析を構成できる。
+suggested_post_outline:
+  overview_angle: "説明を読ませず、失敗しにくい盤面そのものを教材にする tutorial 設計と、その成立を無介入 playtest で確かめる反復"
+  analysis_axis: "制約された行動系列、段階的な失敗導入、正行動の多感覚 reinforcement、常設操作表示が認知負荷と自力発見をどう両立するか"
+  application_target: "Log_cdx が新規ゲーム prototype の冒頭数分を設計・初見評価する際の tutorial beat と観察チェック項目"
+  pros_cons: "利点は説明文依存を減らし non-gamer を含む初見理解を実地検証できること。弱点は単一作品の作者報告で、比較条件・人数・定量指標が示されないこと"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
