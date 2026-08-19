@@ -49,7 +49,14 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260819_planet_coaster_2_dynamic_water.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787132533486309
+    char_count: 4141
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
