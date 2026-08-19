@@ -101,7 +101,80 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "shared_reads_stale_triage_queue.jsonl を現 candidate state と live lease から再生成し、Phase 2 で stale_after が 2026-09-19 へ更新済みの Pragmata 旧1行を除去した（現在0行）"
+  - "open duplicate group / group action sidecar を再生成した（31群 / actionable 0群）。candidate 本体は変更していない"
+  - "Slack directive / broadcast inbox を監査した。pending は各0件で handled 更新は不要だった"
+audits:
+  memory_index:
+    validator: "python tools/validate_memory_index.py"
+    broken_links: 0
+    result: "MEMORY.md の index entry section は per-file atom index と一致"
+  encoding:
+    source_file_status: "memory/MEMORY.md は UTF-8 明示読み成功、U+FFFD 0件。代表語は 記憶 / ゲーム設計 / 敵パターン を取得し、評価軸は現 index 本文に文字列自体がない"
+    display_or_tooling_status: "none。評価軸の0 matchは decode failure / mojibake ではない"
+    atom_source_note: "sr-1776127289-4d9239b255 の『AIエ��ジェント』は raw Slack archive と atoms.jsonl / per-file mirror の全てに同じ U+FFFD があり source-origin の局所破損。gr-1777083728-44d444ab7a は本文に U+FFFD がなく『???』を拾った heuristic false positive"
+  atoms:
+    raw_atoms: 2916
+    parse_errors: 0
+    mirror_content_conflicts: 0
+    raw_normalized_content_duplicate_groups: 40
+    recall_visible_normalized_content_duplicate_groups: 3
+    content_fold_applied_groups: 40
+    result: "重複は canonical overlay / lifecycle content fold で表示・recall 上処理済み。新しい矛盾は検出なし"
+  raw_archive:
+    inactive_over_30d_files: 242
+    total_bytes: 70590898
+    action: retained
+    reason: "mtime だけで archive せず、canonical raw Slack と引用元 PDF/TXT を provenance として保持。通常 recall index の走査対象ではないため今 cycle の game-memory blocker とは判定しない"
+  candidate_lifecycle:
+    status_counts:
+      posted: 651
+      ready_to_post: 9
+      postponed: 198
+      failed: 485
+      needs_review: 2
+    missing_stale_after: 3
+    current_state_conflicts: 0
+    overdue_open_total: 4
+    overdue_groups: 2
+    lease_note: "JAMEL と collision-based enemy morphology の各2 sibling。既存 deferred group lease の retry_after=2026-08-20T13:19:04+09:00 が現時点で有効なため queue へ再投入しない"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
