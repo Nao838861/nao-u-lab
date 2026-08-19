@@ -196,4 +196,14 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  ts: "1787156514.851339"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787156514851339"
+  char_count: 2087
+  verification: ok
+  flat_post: true
+  draft: drafts/phase5_log_diary_20260820_0043_cdx.md
+post_receipt_note: "初回コマンドは投稿後の応答待ちでtimeoutしたため再送せず、conversations.historyで単一投稿を確認してから既知channel/tsへ本文検証を再実行した"
+```
