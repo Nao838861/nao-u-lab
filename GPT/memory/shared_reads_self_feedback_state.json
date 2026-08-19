@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-20T05:31:21+09:00",
+  "updated_at": "2026-08-20T08:08:14+09:00",
   "reviewed_source_ts": [
+    "1779847094.040729",
     "1779809653.165429",
     "1778198682.665689",
     "1787147749.898409",
@@ -21614,6 +21615,47 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、EvoTest の有用性、既存 trajectory／failure split／attempt branch／Test-Time Learning controls との重複、比較 artifact 不在による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-20T08:08:14+09:00",
+      "selected": {
+        "id": "sr-1779847094-04054b20a1",
+        "source_ts": "1779847094.040729",
+        "title": "“I Don’t Have Faith in the Developers to Use My Feedback”: Understanding Player Values and Expectancy for Reporting Systems in Video Games",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、memory・game-design・operation・evaluation の4優先タグを持つため1件だけ選んだ。入力した人が、その入力の価値と反映可能性を信じられるよう status・理由・evidence を返す知見が、Nao_u の指示、playtest feedback、Phase lifecycle の次回行動に既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は expectancy-value theory を用い、reporting の価値を懲罰と共同体改善に分け、望む結果と期待される結果のずれ、処理通知・基準説明・一貫性・開発者信頼が入力継続へ与える影響を survey 98人と follow-up interview 19人から示す。これを Nao_u の指示、playtest feedback、Slack／memory lifecycle で status・採否理由・evidence・次 action を返す行動へ直接変換できるため relevance・actionability は3とした。一方、対象は multiplayer toxicity reporting に偏り、具体 UI の A/B test、長期通報率、再発率、信頼変化、ソロ prototype や agent operation への転用結果はないため evidence は2に留める。tools/slack_inbox_lifecycle.py は pending／handled と handled_reason／evidence を、Phase 3b state は reviewed_source_ts と採否理由を、memory/shared_reads_probe_lifecycle.jsonl は before／after decision と evidence receipt を既に残す。さらに probe-20260625-quality-workflow-feedback-route は観測を次 action へ返し、probe-20260709-critical-stage-feedback-routing は keep／change／question と対象 stage を、probe-20260617-runtime-enforcement-3tuple-scope は unmet predicate と recovery path を扱うため、本投稿の operational translation は既存 control と重なり non_redundancy=0。active_probes は326件あり、moderation 由来の透明性を全 feedback へ別 probe として広げると、秘密保持・悪用防止・未確定判断まで説明対象にする過剰一般化と確認負荷を増やすため risk_control=1 とした。",
+      "existing_controls": [
+        "tools/slack_inbox_lifecycle.py",
+        "memory/shared_reads_probe_lifecycle.jsonl receipt contract",
+        "probe-20260625-quality-workflow-feedback-route",
+        "probe-20260709-critical-stage-feedback-routing",
+        "probe-20260617-runtime-enforcement-3tuple-scope"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、feedback 後の status・理由・evidence 可視化は既存 inbox／Phase 3b／probe receipt controls で実装済みであり、同義 probe は判断差より重複と過剰透明化リスクを増やすため reject した理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

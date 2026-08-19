@@ -92,7 +92,38 @@ skipped: []
 - `tools/post_slack_message_file.py` により 1 回の `chat.postMessage` で投稿し、Slack 再取得検証は `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779847094-04054b20a1
+    source_ts: "1779847094.040729"
+    title: "“I Don’t Have Faith in the Developers to Use My Feedback”: Understanding Player Values and Expectancy for Reporting Systems in Video Games"
+    reason: "score 12 の未レビュー atom で、memory・game-design・operation・evaluation の4優先タグを持つ。入力後の status・理由・evidence の可視性が、Nao_u の指示、playtest feedback、Phase lifecycle で既存 control と異なる判断を作るか確認するため1件だけ選んだ。Nao_u の明示的な重要／適切／自己反映評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "survey 98人／interview 19人に基づく価値・期待・透明性の分解は具体的だが、multiplayer toxicity reporting 以外での A/B test・長期効果はない。さらに slack_inbox_lifecycle の status／handled_reason／evidence、Phase 3b の採否理由、probe ledger の before／after receipt、既存 feedback-route／critical-stage／runtime-enforcement probes が operational translation を既に覆う。同義 probe は判断差を作らず、未確定判断や悪用防止情報まで説明する過剰透明化と active_probes 326件の確認負荷を増やすため採用しない。"
+  change:
+    summary: "reviewed_source_ts と重複・risk-control 不足による state-only reject 理由を記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採用条件: 合計 12 < 14、かつ `risk_control=1 < 2` のため不採用。
+- 選定 atom は1件のみ。新規 probe／metric／directive と lease enqueue はなし。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
