@@ -36,6 +36,7 @@ import {
 import {
   c14Timing,
   c15Timing,
+  c16Timing,
 } from './constraintNarrationTiming';
 
 const C = {
@@ -1256,6 +1257,71 @@ const GameLogicScene: React.FC<{durationInFrames?: number}> = ({durationInFrames
   );
 };
 
+const CoordinateTransformScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 600}) => {
+  const frame = useCurrentFrame();
+  const reveal = (at: number) => interpolate(frame, [at, at + 18], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+  const mappings = [
+    {key: 'Z → X', label: '消失点へ寄せる割合', color: C.cyan, at: 120},
+    {key: 'Z → Y', label: '画面上の高さを補正', color: C.orange, at: 165},
+    {key: 'Z → SIZE', label: '16段階の絵を選択', color: C.magenta, at: 210},
+  ];
+  return (
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '36px 46px 0', boxSizing: 'border-box'}}>
+      <Title size={40}>3Dの座標変換をテーブル参照に置き換える</Title>
+      <div style={{fontFamily: FONT, color: C.dim, fontSize: 20, fontWeight: 800, marginTop: 7}}>
+        掛け算・割り算を減らし、XYZ座標をキーに結果を取り出す
+      </div>
+
+      <div style={{display: 'flex', gap: 26, marginTop: 24, height: 532}}>
+        <div style={{width: 430, display: 'flex', flexDirection: 'column', gap: 12}}>
+          <div style={{opacity: reveal(20), padding: '15px 18px', background: C.panel, borderLeft: `6px solid ${C.red}`}}>
+            <div style={{fontFamily: FONT, color: C.red, fontSize: 17, fontWeight: 900}}>一般的な3D座標変換</div>
+            <div style={{fontFamily: MONO, color: C.white, fontSize: 25, fontWeight: 900, marginTop: 5}}>掛け算 ＋ 割り算</div>
+          </div>
+          <div style={{opacity: reveal(65), display: 'flex', alignItems: 'center', gap: 10}}>
+            <div style={{width: 115, padding: '13px 8px', textAlign: 'center', background: '#101116', border: `2px solid ${C.cyan}`, fontFamily: MONO, color: C.white, fontSize: 22, fontWeight: 900}}>X Y Z</div>
+            <div style={{fontFamily: MONO, color: C.cyan, fontSize: 25, fontWeight: 900}}>→</div>
+            <div style={{flex: 1, padding: '13px 12px', textAlign: 'center', background: `${C.cyan}18`, border: `2px solid ${C.cyan}`, fontFamily: FONT, color: C.cyan, fontSize: 21, fontWeight: 900}}>テーブル参照</div>
+            <div style={{fontFamily: MONO, color: C.cyan, fontSize: 25, fontWeight: 900}}>→</div>
+          </div>
+          <div style={{opacity: reveal(85), padding: '13px 14px', background: C.panel, border: '1px solid #47434e', textAlign: 'center'}}>
+            <div style={{fontFamily: FONT, color: C.white, fontSize: 20, fontWeight: 900}}>画面座標 ＋ 表示する絵</div>
+          </div>
+          <div style={{marginTop: 4, display: 'flex', flexDirection: 'column', gap: 9}}>
+            {mappings.map((mapping) => (
+              <div key={mapping.key} style={{opacity: reveal(mapping.at), display: 'flex', alignItems: 'center', gap: 12, padding: '10px 13px', background: C.panel, borderLeft: `5px solid ${mapping.color}`}}>
+                <div style={{width: 105, fontFamily: MONO, color: mapping.color, fontSize: 20, fontWeight: 900}}>{mapping.key}</div>
+                <div style={{fontFamily: FONT, color: C.white, fontSize: 17, fontWeight: 800}}>{mapping.label}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{opacity: reveal(255), marginTop: 'auto', padding: '13px 15px', borderTop: `2px solid ${C.magenta}`, borderBottom: `2px solid ${C.magenta}`, fontFamily: FONT, color: C.white, fontSize: 20, fontWeight: 900, textAlign: 'center'}}>
+            複雑な計算 → 配列を引く処理
+          </div>
+        </div>
+
+        <div style={{flex: 1, padding: '20px 20px 17px', boxSizing: 'border-box', background: C.panel, border: '1px solid #47434e'}}>
+          <div style={{display: 'flex', alignItems: 'baseline', justifyContent: 'space-between'}}>
+            <div style={{fontFamily: FONT, color: C.white, fontSize: 24, fontWeight: 900}}>実際に使っている変換テーブル</div>
+            <div style={{fontFamily: MONO, color: C.cyan, fontSize: 14, fontWeight: 900}}>56 Z-STEPS</div>
+          </div>
+          <div style={{opacity: reveal(65), height: 385, marginTop: 14, display: 'grid', placeItems: 'center', overflow: 'hidden', background: '#111216', border: `2px solid ${C.cyan}`}}>
+            <Img src={staticFile('development_z_table.png')} style={{width: '100%', height: '100%', objectFit: 'contain', imageRendering: 'auto'}} />
+          </div>
+          <div style={{opacity: reveal(210), display: 'flex', gap: 9, marginTop: 14}}>
+            {['Xの寄せ率', 'Y座標補正', '絵のサイズ 0〜15'].map((label, i) => (
+              <div key={label} style={{flex: 1, padding: '10px 6px', textAlign: 'center', background: '#0a0a0d', borderTop: `3px solid ${[C.cyan, C.orange, C.magenta][i]}`, fontFamily: FONT, color: C.white, fontSize: 15, fontWeight: 900}}>{label}</div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
 const AlignedEnemyGrid: React.FC<{scale: number; xShift: number; yShift: number; active?: boolean}> = ({
   scale,
   xShift,
@@ -1685,6 +1751,10 @@ export const ConstraintNarrationPreview: React.FC = () => {
       <Sequence from={c15Timing.startFrame} durationInFrames={c15Timing.durationFrames}>
         <GameLogicScene durationInFrames={c15Timing.durationFrames} />
         <Audio src={staticFile('narration/constraints/C15.wav')} volume={0.95} />
+      </Sequence>
+      <Sequence from={c16Timing.startFrame} durationInFrames={c16Timing.durationFrames}>
+        <CoordinateTransformScene durationInFrames={c16Timing.durationFrames} />
+        <Audio src={staticFile('narration/constraints/C16.wav')} volume={0.95} />
       </Sequence>
     </AbsoluteFill>
   );
