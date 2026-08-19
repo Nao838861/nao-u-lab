@@ -46,6 +46,7 @@ npm.cmd run render:narration-preview
 - `npm.cmd run assets:prepare`は音声から決まるカット尺を読み、長い正本から必要尺を連続抽出する。正本の残り時間が不足する場合だけ自動的にループへフォールバックし、結果を`public/video-asset-report.json`へ出す。C01のズームもカット全体へ追従させる。
 - 生成時は未加工WAVを`public/narration/raw/`へ残し、通常の語間・読点・句点を分けて長すぎる低音量区間を自動で短縮する。カット別の`commaPauseCandidateIndices`で読点の間だけを保護し、`normalizeSentenceSilence`を有効にすると句点の間を設定値へ揃える。短縮設定だけを調整した場合は`npm.cmd run narration:compact`でAPIを呼ばずに再処理できる。
 - C01だけを再生成する時は`npm.cmd run narration:final-c01`を使う。音声は既存の映像尺へ押し込まず、自然な話速で生成した実測尺を映像側へ反映する。
+- C08冒頭のイントネーション比較は`npm.cmd run narration:test-intonation`で再生成できる。カットごとの`speed`を使い、現行寄りのA案と自然なピッチアクセントを指示したB案を`public/narration/drawing/intonation-test/`へ分けて出力する。
 - 試作動画は`out/完成版/explainer_narration_C01-C03.mp4`へ出力する。
 
 API利用枠がない時は、Windows標準の`Microsoft Haruka Desktop`で仮音声を生成できる。

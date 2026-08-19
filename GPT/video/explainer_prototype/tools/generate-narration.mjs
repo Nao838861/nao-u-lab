@@ -158,7 +158,7 @@ for (const cut of selectedCuts) {
       body: JSON.stringify({
         model: manifest.model,
         voice: manifest.voice,
-        speed: manifest.speed,
+        speed: cut.speed ?? manifest.speed,
         input: cut.ttsText ?? cut.text,
         instructions: `${manifest.commonInstructions}${cut.instructions}`,
         response_format: manifest.responseFormat,
@@ -183,6 +183,7 @@ for (const cut of selectedCuts) {
   const item = {
     id: cut.id,
     file: `${outputRelativePath.replaceAll('\\', '/')}/${cut.id}.wav`,
+    speed: cut.speed ?? manifest.speed ?? 1,
     durationSeconds: Number(durationSeconds.toFixed(3)),
   };
   const compactionStats = compactionStatsByCut.get(cut.id);
