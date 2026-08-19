@@ -136,7 +136,65 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "IDX-01: memory/MEMORY.md の index atom 参照 87 件を atoms.jsonl と照合し、broken 0 件。UTF-8 明示読みで代表語『記憶』『ゲーム設計』『敵パターン』『評価軸』を取得でき、source file は正常。"
+  - "ATOM-02: memory/atoms.jsonl 2916 行は parse error 0、duplicate id 0、duplicate source_ts 0、per-file mirror status clean、content conflict 0。normalized content duplicate は raw 40 group / 80 rows、recall-visible 3 group / 6 rowsで既存 fold が有効。"
+  - "ENC-03: memory_health の mojibake suspect 2 件を UTF-8 原文まで確認。sr-1776127289-4d9239b255 は raw Slack source 自体に replacement character が残る legacy 1件、gr-1777083728-44d444ab7a は本文中の意図的な『???』による false positive。MEMORY.md や表示経路の文字化けではない。"
+  - "RAW-04: memory/raw/ の mtime 30日超は 242 files（web_research root 130、phase3_sources 17、headless_eval 16、phase3_pdfs 13、phase3_posts 13 など）。raw provenance・Nao_u feedback・再検証資料を保護し、確実に不要と判定できるものがないため archive 0 件。"
+  - "CAND-05: candidate lifecycle 1345 files を監査し、posted 651 / ready_to_post 9 / postponed 198 / failed 485 / needs_review 2。正規未評価 backlog 0、malformed 0、期限到来 open candidate 5。terminal status は再評価 queue から除外。"
+  - "QUEUE-06: terminal canonical index 100 rows と mixed duplicate queue 28 rows は check 済み。open duplicate 31 groups（mixed 28 / all_open 3）、stale triage 1 row、group action 0 rowsへ再生成・監査した。"
+  - "HANDOFF-07: group handoff budget 1 に対して actionable group 0 のため enqueue 0。candidate handoff は live group lease 反映後の stale triage から Pragmata 1件を cha-da1f3f7b54e05177 として冪等 enqueue。"
+  - "INBOX-08: slack_directives.jsonl 23 rows / slack_broadcasts.jsonl 21 rows を確認し pending は双方 0。完了根拠のない status 更新は行っていない。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+diagnostic_trace:
+  stable_stage_ids: [IDX-01, ATOM-02, ENC-03, RAW-04, CAND-05, QUEUE-06, HANDOFF-07, INBOX-08]
+  first_failure_stage: null
+  measurement_gap: null
+  protected_slices:
+    - "raw provenance と Nao_u の game-rights feedback は archive 対象から保護"
+    - "posted / failed candidate は再評価 queue から除外"
+    - "Phase 2 handoff は group 1 / candidate 5 の cycle budget を維持"
+  decision: "新しい構造障害は観測されず、既知の raw title debt・legacy mojibake 1件・fold 済み重複は現行経路で隔離または可視化済みのため needs_design false。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 5
+  stale_triage_queue_rows: 1
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 1
+  candidate_handoff_ids:
+    - cha-da1f3f7b54e05177
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-da1f3f7b54e05177
+    path: memory/shared_reads_candidates/20260721_pragmata_puzzle_shooter.md
+    status: postponed
+    stale_after: "2026-08-20"
+    priority_reason: "target 選択→hack→shield break→射撃の cadence と、操作習熟を二人の関係へ重ねる適用価値は明確だが、負荷調整の比較・playtest 結果・棄却案が不足しているため Phase 2 で再評価する。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
