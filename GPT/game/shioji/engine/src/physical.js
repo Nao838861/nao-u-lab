@@ -47,7 +47,9 @@ class MinHeap {
 
 function travelQueue() {
   let sequence = 0;
-  const heap = new MinHeap((left, right) => left.cost - right.cost || left.seq - right.seq);
+  const heap = new MinHeap((left, right) => (
+    (left.priority ?? left.cost) - (right.priority ?? right.cost) || left.seq - right.seq
+  ));
   return {
     get length() { return heap.length; },
     push(item) { heap.push({ ...item, seq: sequence++ }); },
@@ -322,6 +324,9 @@ export function createPhysicalState({
     // 接続形の変更だけを数える。舗装は移動原価を変えるが市場圏の所属を
     // 全件引き直す理由にはしないため、roadRevisionと分ける。
     roadTopologyRevision: 0,
+    // 舗装は道路の接続形を変えない。移動原価の即時再計算と、最短経路そのものを
+    // 定期的に引き直す判断を分け、1マス施工ごとの全島探索を避ける。
+    pavedRevision: 0,
     travelRevision: 0,
     // 魚影・木段階の描画更新と、実際に経路コストが変わる更新を分離する。
     pathRevision: 0,
@@ -421,7 +426,7 @@ export function paveRoadTile(physical, x, y) {
   physical.pavedRoads[key] = true;
   physical.roadRevision += 1;
   physical.travelRevision = (physical.travelRevision ?? 0) + 1;
-  physical.pathRevision = (physical.pathRevision ?? physical.travelRevision ?? 0) + 1;
+  physical.pavedRevision = (physical.pavedRevision ?? 0) + 1;
   return true;
 }
 
@@ -512,15 +517,53 @@ export function roadPath(roadsOrPhysical, start, goal) {
 
 export function tileTravelCost(physical, x, y, mode = "walk") {
   if (mode !== "walk" && mode !== "cart") throw new Error(`unknown travel mode: ${mode}`);
-  if (!isLand(physical, x, y)) return Infinity;
-  if (physical.occupied[keyOf(x, y)]) return Infinity;
-  const road = hasRoad(physical, x, y);
-  const roadCost = isPavedRoad(physical, x, y) ? 0.45 : 0.6;
+  if (!inside(physical, x, y)) return Infinity;
+  const key = keyOf(x, y);
+  const tile = physical.terrain[y][x];
+  const kind = typeof tile === "string" ? tile : tile?.kind;
+  if (["water", "mountain"].includes(kind) || physical.occupied[key]) return Infinity;
+  const road = physical.roads?.[key] === true;
+  const roadCost = road && physical.pavedRoads?.[key] === true ? 0.45 : 0.6;
   if (mode === "cart") return road ? roadCost : Infinity;
   if (road) return roadCost;
-  if (physical.trails?.[keyOf(x, y)] === true) return 0.85;
-  if (terrainAt(physical, x, y).kind === "forest") return 1.4;
+  if (physical.trails?.[key] === true) return 0.85;
+  if (kind === "forest") return 1.4;
   return 1;
+}
+
+const PAVING_PATH_BATCH = 32;
+
+// 道路の接続・建物・地形が変われば即座に経路を引き直す。一方、舗装は既存経路の
+// 速度を毎マス即時反映しつつ、別経路へ乗り換える高価な探索だけ32マス単位にする。
+// 256世界の石畳施工中に同じ数百経路を毎日探索し直すことを防ぐための正本revision。
+export function travelPathRevision(physical) {
+  const topology = physical.roadTopologyRevision ?? physical.roadRevision ?? 0;
+  const path = physical.pathRevision ?? physical.travelRevision ?? 0;
+  const pavingBatch = Math.floor((physical.pavedRevision ?? 0) / PAVING_PATH_BATCH);
+  return `${topology}:${path}:${pavingBatch}`;
+}
+
+function cachedPathCost(physical, path, mode) {
+  let cost = 0;
+  for (let index = 1; index < path.length; index += 1) {
+    const previous = path[index - 1];
+    const tile = path[index];
+    const tileCost = tileTravelCost(physical, tile.x, tile.y, mode);
+    if (!Number.isFinite(tileCost)) return Infinity;
+    const diagonal = previous.x !== tile.x && previous.y !== tile.y;
+    cost += tileCost * (diagonal ? 1.4 : 1);
+  }
+  return cost;
+}
+
+function travelHeuristic(from, goal) {
+  const dx = Math.abs(goal.x - from.x);
+  const dy = Math.abs(goal.y - from.y);
+  const diagonal = Math.min(dx, dy);
+  const straight = Math.max(dx, dy) - diagonal;
+  // 全モードの最小セル原価0.45を使うため、石畳がない区間でも過大評価せず
+  // Dijkstraと同じ最短経路を保つ。
+  return (diagonal * 1.4 + straight) * 0.45;
 }
 
 export function findTravelPath(physical, start, goal, mode = "walk") {
@@ -536,7 +579,7 @@ export function findTravelPath(physical, start, goal, mode = "walk") {
       .sort()
       .join(";")
     : "roads-only";
-  const revision = `${physical.roadRevision}:${physical.pathRevision ?? physical.travelRevision ?? 0}:${trailSignature}`;
+  const revision = `${travelPathRevision(physical)}:${trailSignature}`;
   let caches = travelPathCaches.get(physical);
   if (!caches) {
     caches = {};
@@ -548,7 +591,14 @@ export function findTravelPath(physical, start, goal, mode = "walk") {
     caches[mode] = cache;
   }
   const cacheKey = `${start.x},${start.y}>${goal.x},${goal.y}`;
-  if (cache.routes.has(cacheKey)) return cache.routes.get(cacheKey);
+  if (cache.routes.has(cacheKey)) {
+    const cached = cache.routes.get(cacheKey);
+    if (cached && cached.pavedRevision !== (physical.pavedRevision ?? 0)) {
+      cached.cost = cachedPathCost(physical, cached.path, mode);
+      cached.pavedRevision = physical.pavedRevision ?? 0;
+    }
+    return cached;
+  }
   const startCost = tileTravelCost(physical, start.x, start.y, mode);
   const goalCost = tileTravelCost(physical, goal.x, goal.y, mode);
   if (!Number.isFinite(startCost) || !Number.isFinite(goalCost)) {
@@ -556,7 +606,11 @@ export function findTravelPath(physical, start, goal, mode = "walk") {
     return null;
   }
   if (start.x === goal.x && start.y === goal.y) {
-    const route = { path: [{ x: start.x, y: start.y }], cost: 0 };
+    const route = {
+      path: [{ x: start.x, y: start.y }],
+      cost: 0,
+      pavedRevision: physical.pavedRevision ?? 0,
+    };
     cache.routes.set(cacheKey, route);
     return route;
   }
@@ -566,7 +620,12 @@ export function findTravelPath(physical, start, goal, mode = "walk") {
   const indexOf = (x, y) => y * physical.width + x;
   distances[indexOf(start.x, start.y)] = 0;
   const open = travelQueue();
-  open.push({ x: start.x, y: start.y, cost: 0 });
+  open.push({
+    x: start.x,
+    y: start.y,
+    cost: 0,
+    priority: travelHeuristic(start, goal),
+  });
   const came = {};
 
   while (open.length > 0) {
@@ -581,7 +640,11 @@ export function findTravelPath(physical, start, goal, mode = "walk") {
         path.push({ x, y });
         cursor = came[cursor];
       }
-      const route = { path: path.reverse(), cost: current.cost };
+      const route = {
+        path: path.reverse(),
+        cost: current.cost,
+        pavedRevision: physical.pavedRevision ?? 0,
+      };
       cache.routes.set(cacheKey, route);
       return route;
     }
@@ -597,7 +660,12 @@ export function findTravelPath(physical, start, goal, mode = "walk") {
       if (nextCost >= distances[nextIndex] - 1e-9) continue;
       distances[nextIndex] = nextCost;
       came[keyOf(x, y)] = keyOf(current.x, current.y);
-      open.push({ x, y, cost: nextCost });
+      open.push({
+        x,
+        y,
+        cost: nextCost,
+        priority: nextCost + travelHeuristic({ x, y }, goal),
+      });
     }
   }
   cache.routes.set(cacheKey, null);
@@ -694,12 +762,16 @@ function rebuildConnectionCache(physical) {
       }
     }
   }
-  physical.connectionCache = { revision: physical.roadRevision, components };
+  physical.connectionCache = {
+    revision: physical.roadTopologyRevision ?? physical.roadRevision,
+    components,
+  };
   return physical.connectionCache;
 }
 
 export function roadConnectionComponents(physical) {
-  if (physical.connectionCache?.revision !== physical.roadRevision) {
+  const revision = physical.roadTopologyRevision ?? physical.roadRevision;
+  if (physical.connectionCache?.revision !== revision) {
     return rebuildConnectionCache(physical).components;
   }
   return physical.connectionCache.components;
@@ -1555,9 +1627,10 @@ export function stepHaulCarriers(physical, ticks = 1) {
   for (let tick = 0; tick < ticks; tick += 1) {
     physical.tick += 1;
     const jobs = activeHaulJobs(physical);
-    const roadsChanged = physical.carrierRoadRevision !== physical.roadRevision;
+    const topologyRevision = physical.roadTopologyRevision ?? physical.roadRevision;
+    const roadsChanged = physical.carrierRoadRevision !== topologyRevision;
     assertActiveCarrierJobs(physical, jobs, { checkRoadPaths: roadsChanged });
-    if (roadsChanged) physical.carrierRoadRevision = physical.roadRevision;
+    if (roadsChanged) physical.carrierRoadRevision = topologyRevision;
     for (const job of jobs) {
       if (job.carrier.mode !== "walk" && job.carrier.mode !== "cart") continue;
       moveCarrierOneTick(physical, job);

@@ -3,17 +3,20 @@ import {
   FOODS,
   GOODS,
   P,
+  SURPLUS_EXPORT_PRICES,
   acceptCompanyOrder,
   companyCreditLimit,
   constructionMaterialsFor,
   createHousehold,
   economicMaterialSnapshot,
   fundSettlementZone,
+  householdCultureGoods,
   localWood,
   postCompanyLedger,
   priceAnchorBounds,
   productionCost,
   purchaseCompanyWoodCart,
+  repairMaterialsFor,
   recordEconomicMaterialFlow,
   recordEconomyEvent,
   recordExternalMoneyFlow,
@@ -44,7 +47,10 @@ import {
 } from "./physical.js?v=v004.62.2-fishery-slope";
 import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.62.2-fishery-slope";
 import { createMarketNetwork } from "./market_network.js?v=v004.62.2-fishery-slope";
-import { createCaravanRoute } from "./routes.js?v=v004.62.2-fishery-slope";
+import {
+  configureCaravanRoute,
+  createCaravanRoute,
+} from "./routes.js?v=v004.62.2-fishery-slope";
 
 export const AUDIT_SEEDS = Object.freeze([11, 13, 14]);
 
@@ -672,12 +678,16 @@ export const B2_EXPANSION_STRATEGIES = Object.freeze({
       "fisher", "fisher", "fisher", "saltworks",
     ]),
     goodsOut: Object.freeze([
-      "wheat", "veg", "pick", "char", "tools", "log", "stone", "cloth", "iron",
+      "wheat", "veg", "pick", "char", "coal", "tools", "salt", "log", "stone", "cloth", "iron",
     ]),
     goodsBack: Object.freeze(["fish", "pres", "salt"]),
     // 漁港圏16人は魚で自給できるため、二編成は麦・資材の補完と魚・塩の帰り荷を
     // 同じ実便で運ぶ。固定給は開発期の赤字路線費として会社台帳へ全額残す。
-    recruitment: 2, wage: 0.75, intervalDays: 5,
+    recruitment: 2, wage: 0.5, intervalDays: 5,
+    // 冬季の欠漁と長距離便の途絶を越せるよう、UI上限と同じ30日を持つ。
+    // 15日へ縮めた実測では三年目の欠食が2,303→3,808人日に悪化したため、
+    // 漁港の備蓄を削って他圏を救う調整にはしない。
+    stockTargetDays: 30,
   }),
   mining: Object.freeze({
     marketKey: "4", marketId: "mining", name: "山間鉱山市場",
@@ -692,14 +702,11 @@ export const B2_EXPANSION_STRATEGIES = Object.freeze({
     industryStages: Object.freeze([
       Object.freeze({ afterDays: 60, jobs: Object.freeze(["smelter"]) }),
       Object.freeze({ afterDays: 120, jobs: Object.freeze(["smith"]) }),
-      // 母港の有限林が薄くなる前に山間林へ生産基盤を移す。原木だけを運ぶと
-      // 母港工房の往復が再び詰まるため、現地加工した木製品・木炭も帰り荷にする。
       Object.freeze({
+        // 工具効率の較正後は、初期一軒と追加二軒で修繕需要を担う。工具不足時の
+        // 実測だけを基に五軒まで増やすと、採石家8人の食料負荷が先に増えていた。
         afterDays: 180,
-        jobs: Object.freeze([
-          "logger", "logger", "logger", "woodshop", "charburner",
-          "quarryman", "quarryman",
-        ]),
+        jobs: Object.freeze(["quarryman", "quarryman"]),
       }),
     ]),
     // 低Lv期だけは母港で有償輸入した木製品も運び、現地木工がLv2へ届いたら
@@ -711,64 +718,114 @@ export const B2_EXPANSION_STRATEGIES = Object.freeze({
     goodsBack: Object.freeze([
       "ore", "bar", "iron", "stone", "coal", "log", "tools", "char",
     ]),
-    // 鉱区は食料を産まない。四台編成を二本通し、片便が集荷中でも生活物資を
-    // 届ける。会社の28台と住民用荷車は母港の車大工三軒が実生産する。低Lv期の
-    // 固定給はLvを上げるために必要な赤字路線として会社台帳へ残す。
-    // 木材圏まで育つと十世帯になるため、食料と中間財を一本へ詰め込まない。
-    routeCount: 2, recruitment: 4, wage: 0.75, intervalDays: 5,
+    // 鉱区の食料は盆地直結線、母港線は生活財と鉱産物を担う。旧二本と現地林産
+    // 七世帯の自己完結化は、同じ荷を背骨線と三重輸送して会社費を増やしていた。
+    // 三人一線から始め、実需要に応じてプレイヤー代理が募集を変える。
+    routeCount: 1, recruitment: 3, wage: 0.5, intervalDays: 5,
   }),
   basin: Object.freeze({
     marketKey: "2", marketId: "basin", name: "中央盆地市場",
     jobs: Object.freeze([
-      // 初期入植は最初の冬を越す先遣規模。二年目の播種前に成長分を足し、
-      // 低Lvの初日から過剰人口と私蔵麦を作らず年間需要へ追いつく。
-      // day120入植は初年度に五か月しか作付できない。六圃場では母港・鉱区の
-      // 冬越し需要へ届かず、九圃場でも冬末24日分に留まった。冬越し予報46日を
-      // 実備蓄で満たす十五圃場で入り、二年目は六圃場を人口成長分にする。
-      // 19圃場では低Lv日産が人口需要を24荷下回ったため、成熟時は21圃場にする。
+      // 初期入植は母港と先行圏の最初の冬を越す六圃場。旧十五圃場は全圏同時
+      // 開発の人口を前提にしており、逐次展開ではday360に約2.7万荷を私蔵した。
+      // 低Lv人口を先に増やして余剰を作るのでなく、六世帯が交易でLvを上げ、
+      // 二年目の冬末に食料不足が実在する場合だけ追加作付けを判断する。
       "wheat", "wheat", "wheat", "wheat", "wheat", "wheat",
-      "wheat", "wheat", "wheat", "wheat", "wheat", "wheat",
-      "wheat", "wheat", "wheat",
-      "veg", "veg", "veg", "rapeseed",
+      "veg", "veg", "rapeseed",
     ]),
     industryStages: Object.freeze([
       Object.freeze({
-        // 盆地開設day120から300日後=二年目の春直前に入植する。旧day300入植は
-        // 60日開拓食をday360で使い切り、作付開始day421まで冬60日を飢えていた。
-        afterDays: 300,
+        // 盆地市場30マス圏には600タイルの外縁林がある。母港53タイルと
+        // 鉱区46タイルを先に伐り切ってから工具が止まる旧脚本を避ける。木工二軒
+        // には各三軒、炭焼きには一軒という凍結済み比率どおり七軒を置く。有限林なので
+        // 五年級では北進圧力が残る。
+        afterDays: 120,
         jobs: Object.freeze([
-          "wheat", "wheat", "wheat", "wheat", "wheat", "wheat",
-          "veg", "veg", "veg",
-          // 母港から届く丸太を農家の作業道具へ現地加工し、同じ丸太を工具として
-          // 往復輸送しない。盆地棚に丸太100荷超・工具0が残る実測への接続。
-          "woodshop",
+          "logger", "logger", "logger", "logger", "logger", "logger", "logger",
+          // 島全体では母港にも木工二軒・炭焼き一軒がある。盆地へ木工二軒を
+          // 足すと木こり10軒に対し必要14軒相当となり、全加工場が丸太不足で
+          // 低稼働化した。一軒へ集約し、余る丸太を母港木工と炭焼きへ流す。
+          "woodshop", "charburner",
         ]),
       }),
+      Object.freeze({
+        // 冬末に島全体の実在食料が60日分を切った時だけ、次の作付けを増やす。
+        // 旧無条件追加と違い、初年の実在食料が60日を切った時だけ次の冬越しに
+        // 必要な麦七・野菜一を作付けする。五圃場へ減らした実測では、Lv2世帯が
+        // 多数いてもday780から供給総量が不足したため、余剰扱いにはしない。
+        afterDays: 300,
+        foodCapacityMaxDays: 60,
+        jobs: Object.freeze([
+          "wheat", "wheat", "wheat", "wheat", "wheat", "wheat", "wheat", "veg",
+        ]),
+      }),
+      Object.freeze({
+        // 人口成長が続いた場合は二年分の実収支を見て六圃場を追加する。食料在庫が
+        // 十分なら建てず、Lv効率で生じた余剰を新しい低Lv人口で相殺しない。
+        afterDays: 660,
+        foodCapacityMaxDays: 60,
+        jobs: Object.freeze(["wheat", "wheat", "wheat", "wheat", "wheat", "wheat"]),
+      }),
+      Object.freeze({
+        // 三年目以降も同じ判断を一年後にもう一度だけ行う。増設世帯自身の人口と
+        // 開発費で不足を隠さないよう、一度に一圃場ずつ実収支を見る。
+        afterDays: 1020,
+        foodCapacityMaxDays: 60,
+        jobs: Object.freeze(["wheat"]),
+      }),
+      Object.freeze({
+        // 五年帯でも人口増に対して自動救済はせず、前年冬末の実在庫が60日を
+        // 切った時だけ、プレイヤーが次の春作へ一圃場を追加する。
+        afterDays: 1380,
+        foodCapacityMaxDays: 60,
+        jobs: Object.freeze(["wheat"]),
+      }),
     ]),
-    goodsOut: Object.freeze(["fish", "char", "tools", "salt", "log", "stone", "iron"]),
+    goodsOut: Object.freeze(["fish", "pres", "char", "tools", "salt", "log", "stone", "iron"]),
     // 野菜農家が市場便の間に漬けた在庫も食料として運ぶ。生野菜だけを指定すると
     // 塩が届いた盆地で漬物だけが滞留し、他市場が食料難になる。
     goodsBack: Object.freeze(["wheat", "veg", "pick", "cloth"]),
-    // 三宿十八台編成で穀倉余剰を母港へ運び、そこから鉱区線へ中継する。
-    // 麦は0.5重量なので一便48荷を積め、島の荷車を隊商だけで独占しない。
-    // 高Lvで運び切れないほど余れば、四便目を欲で足す余地として残る。
-    routeCount: 3, recruitment: 6, wage: 0.75, intervalDays: 5,
+    goodsOutByRoute: Object.freeze([
+      Object.freeze(["fish", "pres", "char", "tools", "salt", "log", "stone", "iron"]),
+      Object.freeze(["fish", "pres", "char", "tools", "salt", "log", "stone", "iron"]),
+      Object.freeze(["fish", "salt", "stone", "iron"]),
+    ]),
+    goodsBackByRoute: Object.freeze([
+      Object.freeze(["wheat", "veg", "pick", "cloth"]),
+      Object.freeze(["wheat", "veg", "pick", "cloth"]),
+      Object.freeze(["log", "tools", "char"]),
+    ]),
+    // 二便を食料の背骨、一本を林産便に分ける。食料便へ林産を混ぜた実測では
+    // 麦の荷枠が減って2年目飢餓が107→223人日に悪化した。林産便は残す一方、
+    // プレイヤー代理が在庫に応じて募集人数・便間隔を縮退・再開する。
+    routeCount: 3, recruitment: 4, intervalDays: 5,
+    recruitmentByRoute: Object.freeze([6, 6, 2]),
+    wage: 0.5,
   }),
 });
 
 export const B2_EXPANSION_ORDERS = Object.freeze({
-  // 基準筋は地形の物語どおり魚→鉱→穀。別戦略も120日刻みで不足圏へ接続し、
-  // 開始順の差を残しながら最初の冬までに麦の背骨へ到達する。
-  fishery: Object.freeze(["fishery", "mining", "basin"]),
+  // 基準筋は地形の物語どおり魚→鉱→穀。別戦略も最初の圏を一年運営してから
+  // 次の圏へ進み、低Lv期の赤字路線と入植人口を一度に抱えない。
+  fishery: Object.freeze(["fishery", "basin", "mining"]),
   mining: Object.freeze(["mining", "basin", "fishery"]),
   basin: Object.freeze(["basin", "fishery", "mining"]),
 });
 
-// 開拓食60日を使い切る節目ごとに次圏を一つずつ開く。盆地を240日まで待つと
-// 最初の冬まで30日しかなく備蓄不能になる。無料同時建設には戻さず、魚→鉱→穀の
-// 地形物語を二か月刻みで進める。
-const B2_EXPANSION_INTERVAL_DAYS = 60;
-const B2_EXPANSION_MILESTONES = Object.freeze([0, 60, 120]);
+// 開拓食は入植者本人の60日分であり、60日ごとに全圏を開く合図ではない。
+// 母港の狭い農地は最初の冬を単独では越せないため、魚・鉱山先行でもday120に
+// 盆地の穀倉へ進む。第三圏はさらに120日後、Lv3と食料安定を実測してから
+// 開く。鉱区をday360まで待つとLv2施設が石材不足で先に崩れる一方、旧0/60/120
+// 日の人口96→216という同時負荷には戻さない。
+const B2_EXPANSION_INTERVAL_DAYS = 360;
+const B2_EXPANSION_MILESTONES = Object.freeze([0, 120, 240]);
+
+function b2RecentHungerDays(economy, days = 30) {
+  return economy.households.reduce((total, household) => (
+    total + (household.hungerHist ?? []).slice(-days)
+      .reduce((sum, hungry) => sum + (hungry ? 1 : 0), 0)
+  ), 0);
+}
 
 function addB2StrategyHouseholds(world, strategy, entrance, marketBuildingId, jobs) {
   const { economy, physical } = world.state;
@@ -872,6 +929,7 @@ function addB2StrategyMarket(world, definition, strategy, { day = world.state.da
   // 母港の荷車工房から実物を購入でき、荷車を無料生成せず路線を育てられる。
   const routeResults = [];
   for (let routeIndex = 0; routeIndex < (strategy.routeCount ?? 1); routeIndex += 1) {
+    const recruitment = strategy.recruitmentByRoute?.[routeIndex] ?? strategy.recruitment;
     const innZone = placeB2StarterZone(world, "carter", economy.market);
     connectB2Road(
       physical,
@@ -883,12 +941,12 @@ function addB2StrategyMarket(world, definition, strategy, { day = world.state.da
     setScenarioHouseholdSize(
       economy,
       innHousehold,
-      Math.max(4, strategy.recruitment),
+      Math.max(4, recruitment),
       `${strategy.name}隊商隊`,
     );
     setCaravanEmployment(physical, {
       buildingId: innHousehold.buildingId,
-      recruitment: strategy.recruitment,
+      recruitment,
       wage: strategy.wage,
     });
     const innProvision = innHousehold.members.length * B2_EXPANSION_PROVISION_DAYS;
@@ -910,14 +968,16 @@ function addB2StrategyMarket(world, definition, strategy, { day = world.state.da
       name: `${strategy.name}線${suffix}`,
       baseBuildingId: innHousehold.buildingId,
       destMarketId: strategy.marketId,
-      goodsOut: [...strategy.goodsOut],
-      goodsBack: [...strategy.goodsBack],
+      goodsOut: [...(strategy.goodsOutByRoute?.[routeIndex] ?? strategy.goodsOut)],
+      goodsBack: [...(strategy.goodsBackByRoute?.[routeIndex] ?? strategy.goodsBack)],
       intervalDays: strategy.intervalDays,
       // 5日分では往復だけで棚が空になり、秋収穫から次の春までを持ち越せない。
       // 生鮮は品目ごとに腐敗するため過剰在庫が自然に抑えられ、麦・加工食は
       // 長距離線の冬越し用としてUI上限と同じ30日を初期値にする。
-      stockTargetDays: 30,
-      day: 0,
+      stockTargetDays: strategy.stockTargetDays ?? 30,
+      // 路線の年齢・月次損益は開通日から数える。後発地域までday0扱いにすると、
+      // プレイヤー代理が運行実績のない新線を「3か月赤字」と誤認して即座に縮退する。
+      day,
     });
     if (!routeResult.ok) throw new Error(`${strategy.name}線の設定不可: ${routeResult.reason}`);
     // 無料の較正用荷車は置かない。募集人数は最大編成として維持し、母港の
@@ -951,7 +1011,7 @@ function ensureB2FoodBackboneRoute(world, { day = world.state.day } = {}) {
   const innZone = placeB2StarterZone(world, "carter", basin.entrance);
   connectB2Road(physical, basin.entrance, innZone, "盆地鉱山背骨線の隊商宿");
   const household = occupyScenarioZone(world, innZone, "basin", { foodKit: 0 });
-  setScenarioHouseholdSize(economy, household, 8, "盆地鉱山背骨線隊商隊");
+  setScenarioHouseholdSize(economy, household, 6, "盆地鉱山背骨線隊商隊");
   const provision = household.members.length * B2_EXPANSION_PROVISION_DAYS;
   household.pantry.pres += provision;
   household.settlerFoodReserves ??= {};
@@ -966,15 +1026,18 @@ function ensureB2FoodBackboneRoute(world, { day = world.state.day } = {}) {
   );
   setCaravanEmployment(physical, {
     buildingId: household.buildingId,
-    recruitment: 8,
-    wage: 0.75,
+    recruitment: 6,
+    wage: 0.5,
   });
   const routeResult = createCaravanRoute(economy, physical, {
     name: "盆地―鉱山食料背骨線",
     baseBuildingId: household.buildingId,
     destMarketId: "mining",
-    goodsOut: ["wheat", "veg"],
-    goodsBack: ["ore", "coal", "bar", "iron", "stone", "char", "tools"],
+    // 盆地は穀物だけでなく林業・木工の産地でもある。工具を鉱区の帰り荷に
+    // 指定していた旧配線では、採石家が数千Dを持っていても工具棚が空のまま
+    // 修繕不能になった。実在する産地方向どおり、木製品・木炭・丸太も往路へ載せる。
+    goodsOut: ["wheat", "veg", "pres", "fish", "pick", "tools", "char", "log"],
+    goodsBack: ["ore", "coal", "bar", "iron", "stone"],
     intervalDays: 5,
     stockTargetDays: 30,
     day,
@@ -986,6 +1049,60 @@ function ensureB2FoodBackboneRoute(world, { day = world.state.day } = {}) {
     economy,
     day,
     "盆地と鉱山を直接結ぶ食料背骨線を開いた——麦と鉱産物を母港で積み替えない",
+  );
+  return routeResult.route;
+}
+
+function ensureB2FisheryBasinRoute(world, { day = world.state.day } = {}) {
+  const controller = world.state.b2Strategy;
+  if (!controller || controller.fisheryBasinRouteId) return null;
+  const basin = controller.expansions.find(expansion => expansion.marketId === "basin");
+  const fishery = controller.expansions.find(expansion => expansion.marketId === "fishery");
+  if (!basin || !fishery) return null;
+  const { economy, physical } = world.state;
+  // 生魚5日・保存食の地域特産を母港で二回積み替えず、穀倉との交換を直結する。
+  // 盆地の麦を漁港へ、魚・保存食・塩を盆地へ戻す同じ有償往復便である。
+  connectB2Road(physical, basin.entrance, fishery.entrance, "盆地―漁港食料道");
+  const innZone = placeB2StarterZone(world, "carter", basin.entrance);
+  connectB2Road(physical, basin.entrance, innZone, "盆地漁港食料線の隊商宿");
+  const household = occupyScenarioZone(world, innZone, "basin", { foodKit: 0 });
+  setScenarioHouseholdSize(economy, household, 4, "盆地漁港食料線隊商隊");
+  const provision = household.members.length * B2_EXPANSION_PROVISION_DAYS;
+  household.pantry.pres += provision;
+  household.settlerFoodReserves ??= {};
+  household.settlerFoodReserves.pres = provision;
+  recordEconomicMaterialFlow(
+    economy,
+    "pres",
+    "imp",
+    provision,
+    `盆地漁港食料線世帯${household.id}の開拓時保存食`,
+    { includeInDaily: false },
+  );
+  setCaravanEmployment(physical, {
+    buildingId: household.buildingId,
+    recruitment: 2,
+    wage: 0.5,
+  });
+  const routeResult = createCaravanRoute(economy, physical, {
+    name: "盆地―漁港食料線",
+    baseBuildingId: household.buildingId,
+    destMarketId: "fishery",
+    // 鉱区→盆地で届いた石も漁港修繕へ中継する。母港経由だけにすると母港自身の
+    // 修繕棚で全量が止まり、豊漁域の建物が石不足でLv0へ落ちる。
+    goodsOut: ["wheat", "veg", "pick", "tools", "char", "stone"],
+    goodsBack: ["fish", "pres", "salt"],
+    intervalDays: 5,
+    stockTargetDays: 30,
+    day,
+  });
+  if (!routeResult.ok) throw new Error(`盆地―漁港食料線の設定不可: ${routeResult.reason}`);
+  controller.fisheryBasinRouteId = routeResult.route.id;
+  controller.fisheryBasinHouseholdId = household.id;
+  recordEconomyEvent(
+    economy,
+    day,
+    "盆地と漁港を直接結んだ——麦と魚・保存食を母港で積み替えない",
   );
   return routeResult.route;
 }
@@ -1037,10 +1154,20 @@ export function advanceB2StrategyExpansion(world, definition, { day = world.stat
   if (!strategy) return null;
   const index = strategy.nextExpansionIndex ?? strategy.expansions.length;
   if (index >= strategy.order.length) return null;
-  // 先行地域を四か月運営してから次へ出る。一度に全域を無料建設しない一方、
+  // 先行地域を一年運営してから次へ出る。一度に全域を無料建設しない一方、
   // Lvを上げるために必要な赤字路線は既存の会社信用枠で先行投資できる。
   // 一年分賃金の現金保有を要求すると、交易網完成前の低Lv期から抜けられない。
   if (day < (B2_EXPANSION_MILESTONES[index] ?? Infinity)) return null;
+  if (index >= 2) {
+    const hasHighLevelHousehold = world.state.economy.households.some(
+      household => (household.lv ?? 0) >= 3,
+    );
+    const population = auditPopulation(world.state.economy);
+    if (
+      !hasHighLevelHousehold
+      || b2RecentHungerDays(world.state.economy) >= population
+    ) return null;
+  }
   const id = strategy.order[index];
   const spec = B2_EXPANSION_STRATEGIES[id];
   // 鉱区の石材はLv2建物の修繕に必要で、Lv3到達を待ってから鉱区を開くと
@@ -1064,6 +1191,7 @@ export function advanceB2StrategyExpansion(world, definition, { day = world.stat
   strategy.expansions.push(expansion);
   strategy.nextExpansionIndex = index + 1;
   ensureB2FoodBackboneRoute(world, { day });
+  ensureB2FisheryBasinRoute(world, { day });
   recordEconomyEvent(
     world.state.economy,
     day,
@@ -1083,6 +1211,13 @@ function advanceB2StrategyIndustryStages(world, { day = world.state.day } = {}) 
     while (stageIndex < stages.length) {
       const stage = stages[stageIndex];
       if (day < (expansion.openedDay ?? 0) + stage.afterDays) break;
+      const foodCapacityStage = Number.isFinite(stage.foodCapacityMaxDays);
+      if (foodCapacityStage) {
+        // 同じ日に期限超過した複数年ぶんを一括建設しない。最初の一組を作付けし、
+        // 最低半年は実収穫・人口・流通の結果を見てから次の圃場を判断する。
+        if (day - (expansion.lastFoodCapacityStageDay ?? -Infinity) < 180) break;
+        if (b2IslandFoodDays(world.state.economy) > stage.foodCapacityMaxDays) break;
+      }
       const setupCost = stage.jobs.length * P.BUILD_COST;
       if (
         world.state.economy.company.money - setupCost
@@ -1098,6 +1233,7 @@ function advanceB2StrategyIndustryStages(world, { day = world.state.day } = {}) 
       expansion.householdIds.push(...households.map(household => household.id));
       stageIndex += 1;
       expansion.completedIndustryStageCount = stageIndex;
+      if (foodCapacityStage) expansion.lastFoodCapacityStageDay = day;
       const jobs = stage.jobs.join("・");
       recordEconomyEvent(
         world.state.economy,
@@ -1105,9 +1241,270 @@ function advanceB2StrategyIndustryStages(world, { day = world.state.day } = {}) 
         `${spec.name}の中間財が貯まり、${jobs}を段階入植した`,
       );
       added.push({ marketId: spec.marketId, jobs: [...stage.jobs], day });
+      if (foodCapacityStage) break;
     }
   }
   return added;
+}
+
+function b2MarketHouseholds(economy, marketId) {
+  return economy.households.filter(
+    household => (household.marketId ?? "main") === marketId,
+  );
+}
+
+function b2MarketPopulation(economy, marketId) {
+  return b2MarketHouseholds(economy, marketId).reduce(
+    (total, household) => total + household.members.length,
+    0,
+  );
+}
+
+function b2MarketHungerDays(economy, marketId, days = 30) {
+  return b2MarketHouseholds(economy, marketId).reduce((total, household) => (
+    total + (household.hungerHist ?? []).slice(-days)
+      .reduce((sum, hungry) => sum + (hungry ? 1 : 0), 0)
+  ), 0);
+}
+
+function b2MarketGoodsStock(economy, marketId, goods, { privateStock = true } = {}) {
+  const pantry = privateStock ? b2MarketHouseholds(economy, marketId).reduce(
+    (total, household) => total + Math.max(0, household.pantry?.[goods] ?? 0),
+    0,
+  ) : 0;
+  const stalls = (economy.stalls?.[goods] ?? []).reduce((total, stall) => (
+    (stall.marketId ?? "main") === marketId ? total + Math.max(0, stall.qty ?? 0) : total
+  ), 0);
+  const company = Math.max(0, economy.marketStockM?.[marketId]?.[goods] ?? 0);
+  const imported = marketId === "main" ? Math.max(0, economy.importStock?.[goods] ?? 0) : 0;
+  return pantry + stalls + company + imported;
+}
+
+function b2MarketFoodDays(economy, marketId) {
+  const population = b2MarketPopulation(economy, marketId);
+  if (population <= 0) return Infinity;
+  return FOODS.reduce((total, goods) => (
+    total + b2MarketGoodsStock(economy, marketId, goods)
+  ), 0) / population;
+}
+
+function b2IslandFoodDays(economy) {
+  const population = auditPopulation(economy);
+  if (population <= 0) return Infinity;
+  const markets = new Set([
+    "main",
+    ...(economy.households ?? []).map(household => household.marketId ?? "main"),
+    ...Object.keys(economy.marketStockM ?? {}),
+  ]);
+  const stock = [...markets].reduce((islandTotal, marketId) => (
+    islandTotal + FOODS.reduce((marketTotal, goods) => (
+      marketTotal + b2MarketGoodsStock(economy, marketId, goods)
+    ), 0)
+  ), 0);
+  return stock / population;
+}
+
+function b2RouteRecentMargin(route, day, months = 3) {
+  const completedMonth = Math.floor((day - 2) / 30);
+  const rows = Array.from({ length: months }, (_, offset) => (
+    route.monthly?.[completedMonth - offset] ?? null
+  )).filter(Boolean);
+  if (rows.length < months) return null;
+  return rows.reduce((total, row) => total
+    + (row.sales ?? 0)
+    - (row.procurement ?? 0)
+    - (row.wages ?? 0)
+    - (row.cartCosts ?? row.wear ?? 0), 0);
+}
+
+const B2_ROUTE_VISIBLE_STOCK = Object.freeze({
+  tools: 12, log: 24, char: 12, salt: 12, cloth: 6,
+  stone: 24, ore: 16, coal: 16, bar: 12, iron: 12,
+});
+
+function b2RouteHasVisibleTradeNeed(economy, route) {
+  const directions = [
+    [route.baseMarketId, route.destMarketId, route.goodsOut],
+    [route.destMarketId, route.baseMarketId, route.goodsBack],
+  ];
+  return directions.some(([sourceMarketId, targetMarketId, goodsList]) => (
+    goodsList.some(goods => {
+      if (FOODS.includes(goods)) {
+        return b2MarketFoodDays(economy, targetMarketId) < 18
+          && b2MarketGoodsStock(economy, sourceMarketId, goods) > 4;
+      }
+      const wanted = B2_ROUTE_VISIBLE_STOCK[goods] ?? 8;
+      return b2MarketGoodsStock(
+        economy,
+        targetMarketId,
+        goods,
+        { privateStock: false },
+      ) < wanted
+        && b2MarketGoodsStock(economy, sourceMarketId, goods) > 2;
+    })
+  ));
+}
+
+function b2RouteRole(controller, route) {
+  if (route.id === controller.foodBackboneRouteId) return "food_backbone";
+  if (route.destMarketId === "basin") {
+    return route.goodsBack.includes("wheat") ? "basin_food" : "basin_material";
+  }
+  if (route.destMarketId === "fishery") return "fishery";
+  if (route.destMarketId === "mining") return "mining";
+  return "other";
+}
+
+function b2ApplyRouteInterval(economy, physical, route, intervalDays) {
+  if (route.intervalDays === intervalDays) {
+    delete route.controllerPendingInterval;
+    return true;
+  }
+  const configured = configureCaravanRoute(economy, physical, {
+    baseBuildingId: route.baseBuildingId,
+    intervalDays,
+  });
+  if (!configured.ok) {
+    route.controllerPendingInterval = intervalDays;
+    return false;
+  }
+  delete route.controllerPendingInterval;
+  return true;
+}
+
+/**
+ * P5の検査専用プレイヤー代理。画面でプレイヤーが変更できる募集人数・給料・
+ * 便間隔だけを使い、総在庫、直近飢餓、3か月損益を見て過剰便を縮退・再開する。
+ * 無償物資、価格上書き、転職、瞬間輸送は行わない。
+ */
+export function manageB2StrategyRoutes(world, { day = world.state.day } = {}) {
+  const controller = world.state.b2Strategy;
+  if (!controller) return [];
+  const { economy, physical } = world.state;
+  const decisions = [];
+
+  // 運行中に保留した便間隔は、路線が帰着した最初の日に通常操作で適用する。
+  for (const route of economy.caravans ?? []) {
+    if (Number.isSafeInteger(route.controllerPendingInterval)) {
+      b2ApplyRouteInterval(economy, physical, route, route.controllerPendingInterval);
+    }
+  }
+  if (day <= 1 || (day - 1) % 30 !== 0) return decisions;
+
+  const month = Math.floor((day - 1) / 30) % 12 + 1;
+  const winterApproach = month >= 9 || month <= 2;
+  const priorityMarketId = controller.order?.[0] ?? null;
+  const credit = companyCreditLimit(economy, { day });
+  const creditHeadroom = economy.company.money + credit;
+
+  for (const route of economy.caravans ?? []) {
+    if (route.state === "disbanded") continue;
+    const inn = buildingById(physical, route.baseBuildingId);
+    if (!inn?.caravanEmployment) continue;
+    const current = inn.caravanEmployment;
+    const role = b2RouteRole(controller, route);
+    const age = day - (route.createdDay ?? Math.max(0, route.nextDepartDay ?? 0));
+    const baseHunger = b2MarketHungerDays(economy, route.baseMarketId);
+    const destinationHunger = b2MarketHungerDays(economy, route.destMarketId);
+    const baseFoodDays = b2MarketFoodDays(economy, route.baseMarketId);
+    const destinationFoodDays = b2MarketFoodDays(economy, route.destMarketId);
+    const recentMargin = b2RouteRecentMargin(route, day);
+    const sustainedLoss = recentMargin !== null && recentMargin < -1e-9;
+    const visibleNeed = b2RouteHasVisibleTradeNeed(economy, route);
+    const priority = route.baseMarketId === priorityMarketId
+      || route.destMarketId === priorityMarketId;
+
+    let recruitment = current.recruitment;
+    let intervalDays = route.intervalDays;
+    let mode = "maintain";
+
+    if (age < 90) {
+      mode = "development";
+    } else if (role === "basin_food") {
+      const foodEmergency = baseHunger > 0 || baseFoodDays < 18 || winterApproach;
+      if (foodEmergency) {
+        recruitment = 6;
+        intervalDays = 5;
+        mode = "food_backbone_full";
+      } else if (baseFoodDays >= 30 && sustainedLoss) {
+        const siblingIndex = (economy.caravans ?? [])
+          .filter(candidate => b2RouteRole(controller, candidate) === "basin_food")
+          .findIndex(candidate => candidate.id === route.id);
+        recruitment = siblingIndex === 0 ? 3 : 2;
+        intervalDays = siblingIndex === 0 ? 7 : 10;
+        mode = "food_reserve_hold";
+      }
+    } else if (role === "food_backbone") {
+      if (destinationHunger > 0 || destinationFoodDays < 14 || winterApproach) {
+        recruitment = 6;
+        intervalDays = 5;
+        mode = "mining_food_full";
+      } else if (destinationFoodDays >= 24 && sustainedLoss) {
+        recruitment = 2;
+        intervalDays = 7;
+        mode = "mining_food_hold";
+      }
+    } else {
+      const endpointHunger = baseHunger + destinationHunger;
+      if (endpointHunger > 0 || visibleNeed) {
+        const normal = role === "mining" ? 3 : role === "basin_material" ? 2 : 2;
+        recruitment = normal;
+        intervalDays = 5;
+        mode = endpointHunger > 0 ? "endpoint_recovery" : "visible_demand";
+      } else if (sustainedLoss) {
+        recruitment = priority ? Math.max(1, current.recruitment - 1) : 1;
+        intervalDays = priority ? 7 : 10;
+        mode = "loss_hold";
+      }
+    }
+
+    // 与信余力が建物二軒分を切った時も、食料不足線は落とさない。需要のない
+    // 赤字線だけ一台・10日便へ下げ、会社が次の開発判断をできる余地を残す。
+    if (
+      creditHeadroom < P.BUILD_COST * 2
+      && baseHunger + destinationHunger === 0
+      && !visibleNeed
+      && !["basin_food", "food_backbone"].includes(role)
+    ) {
+      recruitment = 1;
+      intervalDays = 10;
+      mode = "credit_hold";
+    }
+
+    recruitment = Math.max(1, Math.min(12, recruitment));
+    const employmentChanged = recruitment !== current.recruitment;
+    const intervalChanged = intervalDays !== route.intervalDays;
+    if (employmentChanged) {
+      setCaravanEmployment(physical, {
+        buildingId: route.baseBuildingId,
+        recruitment,
+        wage: current.wage,
+      });
+    }
+    if (intervalChanged) b2ApplyRouteInterval(economy, physical, route, intervalDays);
+    route.controllerMode = mode;
+    if (!employmentChanged && !intervalChanged) continue;
+    const decision = {
+      day,
+      routeId: route.id,
+      role,
+      mode,
+      recruitment,
+      intervalDays,
+      recentMargin,
+      baseFoodDays,
+      destinationFoodDays,
+    };
+    decisions.push(decision);
+    (controller.routeDecisions ??= []).push(decision);
+    if (controller.routeDecisions.length > 120) controller.routeDecisions.shift();
+    recordEconomyEvent(
+      economy,
+      day,
+      `${route.name}を${recruitment}人・${intervalDays}日便へ変更——${mode}`,
+    );
+  }
+  return decisions;
 }
 
 function prepareB2StrategyFleet(world, { day = world.state.day } = {}) {
@@ -1116,20 +1513,25 @@ function prepareB2StrategyFleet(world, { day = world.state.day } = {}) {
   // 次圏の開通60日前から実物を先行購入する。開通後に発注すると、車大工が
   // 在庫上限3台で休んでいた期間を取り戻せず、麦路線が一台編成のまま冬へ入る。
   // 無料配備ではなく会社支払・車大工収入・遊休資産をすべて台帳に残す。
-  let fundedRegionCount = Math.min(
-    strategy.order.length,
-    strategy.expansions.length,
-  );
   const nextIndex = strategy.nextExpansionIndex ?? strategy.expansions.length;
   const nextMilestone = B2_EXPANSION_MILESTONES[nextIndex] ?? Infinity;
-  if (nextIndex < strategy.order.length && day >= nextMilestone - 60) {
-    fundedRegionCount = Math.max(fundedRegionCount, nextIndex + 1);
-  }
-  const spokeTarget = strategy.order.slice(0, fundedRegionCount).reduce((total, id) => {
-    const spec = B2_EXPANSION_STRATEGIES[id];
-    return total + (spec.routeCount ?? 1) * spec.recruitment;
+  const activeTarget = (world.state.economy.caravans ?? []).reduce((total, route) => {
+    const inn = buildingById(world.state.physical, route.baseBuildingId);
+    return total + Math.max(0, inn?.caravanEmployment?.recruitment ?? 0);
   }, 0);
-  const target = spokeTarget + (strategy.foodBackboneRouteId ? 8 : 0);
+  const upcomingTarget = nextIndex < strategy.order.length
+    && day >= nextMilestone - 60
+    ? (() => {
+      const spec = B2_EXPANSION_STRATEGIES[strategy.order[nextIndex]];
+      return Array.from(
+      { length: spec.routeCount ?? 1 },
+      (_, routeIndex) => spec.recruitmentByRoute?.[routeIndex] ?? spec.recruitment,
+      ).reduce((sum, recruitment) => sum + recruitment, 0);
+    })()
+    : 0;
+  // 既設路線は代理が実際に募集している人数だけ、新設60日前の路線は標準編成を
+  // 先行購入する。縮退後も仕様上限ぶんを買い続ける旧計算を止める。
+  const target = activeTarget + upcomingTarget;
   const usableCarts = (world.state.economy.companyCarts ?? []).filter(
     cart => (cart.durability ?? 0) > 1e-9,
   ).length;
@@ -1146,32 +1548,139 @@ function b2RouteTotals(route) {
   }), { sales: 0, procurement: 0, wages: 0, cartCosts: 0 });
 }
 
-function b2ToolDemand(economy, days = 90) {
+function b2ToolDemand(economy, physical = null, days = 90) {
   return economy.households.reduce((total, household) => total + (
     P.D_TOOL * Math.pow(P.CMULT, household.lv)
       + P.WORK_TOOL_WOOD_COST / P.WORK_TOOL_WOOD_DAYS
+      + (physical
+        ? (repairMaterialsFor(
+          buildingById(physical, household.buildingId),
+          household,
+        ).tools ?? 0) / 30
+        : 0)
   ) * days, 0);
 }
 
-function b2ToolSupply(economy) {
-  const privateStock = economy.households.reduce((total, household) => (
-    total + (household.pantry.tools ?? 0)
-      + (household.workTool?.kind === "wood"
-        ? household.workTool.durability / household.workTool.maxDurability
-          * P.WORK_TOOL_WOOD_COST
-        : 0)
-  ), 0);
-  const stalls = (economy.stalls.tools ?? []).reduce((total, stall) => total + stall.qty, 0);
-  const routed = Object.values(economy.marketStockM ?? {}).reduce(
-    (total, stock) => total + (stock.tools ?? 0),
+function b2DevelopmentToolShortage(economy, physical, days = 90) {
+  const privateDeficit = economy.households.reduce((total, household) => {
+    const dailyNeed = P.D_TOOL * Math.pow(P.CMULT, household.lv)
+      + P.WORK_TOOL_WOOD_COST / P.WORK_TOOL_WOOD_DAYS
+      + (repairMaterialsFor(
+        buildingById(physical, household.buildingId),
+        household,
+      ).tools ?? 0) / 30;
+    const activeTool = household.workTool?.kind === "wood"
+      ? household.workTool.durability / household.workTool.maxDurability
+        * P.WORK_TOOL_WOOD_COST
+      : 0;
+    const owned = Math.max(0, household.pantry.tools ?? 0) + activeTool;
+    return total + Math.max(0, dailyNeed * days - owned);
+  }, 0);
+  const publicSupply = (economy.stalls.tools ?? []).reduce(
+    (total, stall) => total + Math.max(0, stall.qty ?? 0),
     0,
-  );
+  ) + Object.values(economy.marketStockM ?? {}).reduce(
+    (total, stock) => total + Math.max(0, stock.tools ?? 0),
+    0,
+  ) + Math.max(0, economy.importStock.tools ?? 0);
   const pending = (economy.importRequests ?? []).reduce((total, request) => (
     request.goods === "tools" && request.status !== "sold"
       ? total + Math.max(0, request.qty - (request.soldQty ?? 0))
       : total
   ), 0);
-  return privateStock + stalls + routed + (economy.importStock.tools ?? 0) + pending;
+  return Math.max(0, privateDeficit - publicSupply - pending);
+}
+
+function b2IslandSurplusReserve(economy, goods, physical = null) {
+  if (FOODS.includes(goods)) return auditPopulation(economy) * 15;
+  if (goods === "tools") return b2ToolDemand(economy, physical, 30);
+  const cultureNeed = {
+    salt: P.D_SALT,
+    char: P.D_CHAR * 2,
+    cloth: P.D_CLOTH,
+    iron: P.D_IRON,
+  }[goods];
+  if (Number.isFinite(cultureNeed)) {
+    return economy.households.reduce((total, household) => (
+      householdCultureGoods(household).has(goods)
+        ? total + cultureNeed * Math.pow(P.CMULT, household.lv ?? 0) * 30
+        : total
+    ), 0);
+  }
+  // 石・鉱石・鋼材は修繕と加工が次便まで止まらない最低二荷/世帯を残す。
+  return Math.max(24, economy.households.length * 2);
+}
+
+// 全職の生産倍率はLv2で既定の2倍上限へ達する。輸出だけLv3を要求すると、
+// 最高効率で生じた余剰を一段ぶん文化消費し終えるまで港が拒み、開発赤字を
+// 回収できない。効率上限へ達したLv2を港湾余剰の最低生産者Lvとする。
+const B2_EFFICIENT_PRODUCER_LEVEL = 2;
+
+function b2HighLevelSurplusAtMarket(economy, goods, marketId) {
+  const householdLevels = new Map(economy.households.map(household => [
+    household.id,
+    household.lv ?? 0,
+  ]));
+  const stalls = (economy.stalls[goods] ?? []).reduce((total, stall) => (
+    (stall.marketId ?? "main") === marketId
+      && (householdLevels.get(stall.householdId) ?? 0) >= B2_EFFICIENT_PRODUCER_LEVEL
+      ? total + Math.max(0, stall.qty ?? 0)
+      : total
+  ), 0);
+  const routedLots = economy.marketStockLotsM?.[marketId]?.[goods] ?? [];
+  const routed = routedLots.reduce((total, lot) => (
+    !lot.importRequestId && (lot.producerLevel ?? -1) >= B2_EFFICIENT_PRODUCER_LEVEL
+      ? total + Math.max(0, lot.qty ?? 0)
+      : total
+  ), 0);
+  return stalls + routed;
+}
+
+function b2HighLevelSurplusAtMain(economy, goods) {
+  return b2HighLevelSurplusAtMarket(economy, goods, "main");
+}
+
+function b2HighLevelSurplusReachableToMain(economy, goods) {
+  // 受注前は会社買付目標が無いため、遠隔産地の荷が母港に先置きされるとは
+  // 限らない。実際の路線でgoodsを母港方向へ運べる市場だけを逆向き探索し、
+  // 「産地には余剰があるが運ぶ道がない」注文は従来どおり見送る。
+  const reachable = new Set(["main"]);
+  let changed = true;
+  while (changed) {
+    changed = false;
+    for (const route of economy.caravans ?? []) {
+      if (route.state === "disbanded") continue;
+      for (const [source, target, goodsList] of [
+        [route.baseMarketId, route.destMarketId, route.goodsOut],
+        [route.destMarketId, route.baseMarketId, route.goodsBack],
+      ]) {
+        if (!goodsList?.includes(goods) || !reachable.has(target) || reachable.has(source)) continue;
+        reachable.add(source);
+        changed = true;
+      }
+    }
+  }
+  return [...reachable].reduce((total, marketId) => (
+    total + b2HighLevelSurplusAtMarket(economy, goods, marketId)
+  ), 0);
+}
+
+function b2CanAcceptSurplusOrder(world, offer) {
+  const { economy, physical } = world.state;
+  const requested = Math.max(0, offer.qty ?? offer.left ?? 0);
+  if (requested <= 1e-9) return false;
+  // 「最高効率へ達した島内産業の余剰を出す」を監査代理にも守らせる。
+  // 粗利が出るだけの注文で、低Lvの暮らしや修繕に必要な棚を先取りしない。
+  // 注文受諾前は会社が買付目標を立てていないため、高効率生産者の屋台に
+  // 契約全量が先に積まれることはない。全量先置きを要求すると、注文が無いので
+  // 買わない／買わないので注文できない循環になる。高効率lotの実在、直近余剰、
+  // 島内留保をそれぞれ確認し、契約後の通常買付で期限までに集める。
+  if (b2HighLevelSurplusReachableToMain(economy, offer.g) <= 1e-9) return false;
+  const flow = economy.f30?.[offer.g] ?? {};
+  if ((flow.prod ?? 0) <= (flow.cons ?? 0) + 0.3) return false;
+  const inventory = economicMaterialSnapshot(economy, physical).inventory?.[offer.g] ?? 0;
+  const reserve = b2IslandSurplusReserve(economy, offer.g, physical);
+  return inventory - requested >= reserve - 1e-9;
 }
 
 function provisionB2DevelopmentTools(
@@ -1180,6 +1689,8 @@ function provisionB2DevelopmentTools(
     day,
     intervalDays = B2_EXPANSION_INTERVAL_DAYS,
     lastDay = B2_EXPANSION_INTERVAL_DAYS * 2,
+    developmentEvent = false,
+    developmentHouseholdCount = 0,
   },
 ) {
   const { economy, physical } = world.state;
@@ -1187,10 +1698,28 @@ function provisionB2DevelopmentTools(
   // 開発投資。現地木工の日産が文化・作業道具需要を賄ったら発注を止める。
   // 既定は最初と二地域の入植日だけ90日分を発注し、それ以後は島内木工へ
   // 切り替える。P5監査では間隔と終了日を変え、育成投資の回収可能性を比較する。
-  if (day > lastDay || (day !== 1 && day % intervalDays !== 0)) return null;
-  const dailyDemand = b2ToolDemand(economy, 1);
-  if ((economy.f30.tools?.prod ?? 0) >= dailyDemand * 1.1) return null;
-  const missing = Math.ceil(Math.max(0, b2ToolDemand(economy) - b2ToolSupply(economy)));
+  // 実際の開設日は食料安定ゲートで節目より遅れることがある。day240で輸入を
+  // 止めた直後に鉱区がday271で開くと、新設採石場だけが工具便の対象外になる。
+  // 定期便はlastDayで止める一方、地域開設・加工段階の入植日だけ不足を再評価する。
+  if (
+    !developmentEvent
+    && (day > lastDay || (day !== 1 && day % intervalDays !== 0))
+  ) return null;
+  const dailyDemand = b2ToolDemand(economy, physical, 1);
+  if (
+    !developmentEvent
+    && (economy.f30.tools?.prod ?? 0) >= dailyDemand * 1.1
+  ) return null;
+  let missing = Math.ceil(b2DevelopmentToolShortage(economy, physical));
+  if (developmentEvent) {
+    // 新設一軒を合図に全島の修繕滞納まで本土へ発注すると、畑一軒で857荷の
+    // 不可視輸入が発生する。開発便は新設世帯の建設・初期作業ぶん（一軒12荷）
+    // だけに限り、既存施設の不足は島内木工と市場間交易で解く。
+    missing = Math.min(
+      missing,
+      Math.max(0, Math.ceil(developmentHouseholdCount)) * 12,
+    );
+  }
   if (missing <= 0) return null;
   return requestCompanyImport(economy, physical, "tools", { day, qty: missing });
 }
@@ -1198,25 +1727,56 @@ function provisionB2DevelopmentTools(
 function exportB2IslandSurplus(world, { day }) {
   if (day % 15 !== 0) return [];
   const { economy, physical } = world.state;
-  // 低Lv期の在庫を会社が吸い上げて延命するのではなく、地域交易でLv3へ達した
-  // 生産者の高効率余剰だけを港へ回す。食料は島内に三日分以上残り、その日に
-  // 空腹世帯がいない時だけ候補になる。
-  if (!economy.households.some(household => household.lv >= 3)) return [];
-  const population = auditPopulation(economy);
+  // 低Lv期の在庫を会社が吸い上げて延命するのではなく、地域交易で生産倍率上限の
+  // Lv2へ達した生産者の余剰だけを港へ回す。食料は島内15日、工具・文化財は30日、
+  // 中間財は二荷/世帯を残し、その日に空腹世帯がいない時だけ候補になる。
+  if (!economy.households.some(
+    household => household.lv >= B2_EFFICIENT_PRODUCER_LEVEL,
+  )) return [];
   const exports = [];
+  const routeTargets = economy.surplusExportRouteTargets ??= {};
+  const inventory = economicMaterialSnapshot(economy, physical).inventory ?? {};
   for (const goods of ["tools", "char", "salt", "cloth", "stone", "ore", "coal", "bar", "iron", "pres", "pick"]) {
     const available = economy.marketStockM?.main?.[goods] ?? 0;
-    const islandReserve = FOODS.includes(goods) ? population * 3 : 4;
+    const islandReserve = b2IslandSurplusReserve(economy, goods, physical);
     if (FOODS.includes(goods) && (economy.hungryN ?? 0) > 0) continue;
-    const qty = Math.min(24, Math.max(0, available - islandReserve));
+    const flow = economy.f30?.[goods] ?? {};
+    if ((flow.prod ?? 0) <= (flow.cons ?? 0) + 0.3) continue;
+    const islandExcess = Math.max(0, (inventory[goods] ?? 0) - islandReserve);
+    const reachableHighLevel = b2HighLevelSurplusReachableToMain(economy, goods);
+    const desired = Math.min(24, islandExcess, reachableHighLevel);
+    if (desired > 1e-9) {
+      routeTargets[goods] = {
+        qty: desired,
+        unitRevenue: SURPLUS_EXPORT_PRICES[goods],
+        minProducerLevel: B2_EFFICIENT_PRODUCER_LEVEL,
+        updatedDay: day,
+      };
+    } else {
+      delete routeTargets[goods];
+    }
+    const highLevelSurplus = b2HighLevelSurplusAtMain(economy, goods);
+    const qty = Math.min(
+      24,
+      highLevelSurplus,
+      islandExcess,
+      available,
+    );
     if (qty <= 1e-9) continue;
     const exported = requestCompanySurplusExport(economy, physical, goods, {
       day,
       qty,
-      minProducerLevel: 3,
+      minProducerLevel: B2_EFFICIENT_PRODUCER_LEVEL,
       profitableOnly: true,
     });
-    if (exported) exports.push(exported);
+    if (exported) {
+      exports.push(exported);
+      const target = routeTargets[goods];
+      if (target) {
+        target.qty = Math.max(0, target.qty - exported.qty);
+        if (target.qty <= 1e-9) delete routeTargets[goods];
+      }
+    }
   }
   return exports;
 }
@@ -1227,10 +1787,11 @@ export function runB2ExpansionScenario(
     seed = 11,
     strategyId = "fishery",
     days = 1800,
-    developmentToolIntervalDays = B2_EXPANSION_INTERVAL_DAYS,
-    // 移民の実物開拓キットと島内木工を既定とする。本土工具は比較実験で
-    // 明示的に終了日を渡した時だけ会社発注し、木工需要を自動輸入で消さない。
-    developmentToolLastDay = 0,
+    developmentToolIntervalDays = 120,
+    // day1と二回の拡張節目だけ、プレイヤー代理が会社勘定で開発工具を明示発注
+    // する。食料救済ではなく木工・採石を自立させる有限投資で、UI/台帳/港便を
+    // 通り、以後は島内木工へ切り替える。隠れた継続輸入にはしない。
+    developmentToolLastDay = 240,
   } = {},
 ) {
   const world = buildB2StrategyWorld(seed, definition, strategyId);
@@ -1243,33 +1804,59 @@ export function runB2ExpansionScenario(
   // 単価・発生頻度は通常ゲームの規則を使う。
   economy.orderPreferredGoods = ["cloth", "tools", "salt", "stone", "char", "pres", "pick", "log"];
   const yearly = [];
+  const monthly = [];
   const developmentImports = [];
   const surplusExports = [];
   const fleetPurchases = [];
+  const routeDecisions = [];
   let previousFamine = economy.famine;
+  let previousMonthlyFamine = economy.famine;
   for (let day = 1; day <= days; day += 1) {
+    const expansion = advanceB2StrategyExpansion(world, definition, { day });
+    const industryStages = advanceB2StrategyIndustryStages(world, { day });
+    routeDecisions.push(...manageB2StrategyRoutes(world, { day }));
     const fleetPurchase = prepareB2StrategyFleet(world, { day });
     if (fleetPurchase) fleetPurchases.push({
       day,
       cartId: fleetPurchase.id ?? fleetPurchase.cart?.id ?? null,
       price: fleetPurchase.price ?? fleetPurchase.cart?.price ?? 0,
     });
-    advanceB2StrategyExpansion(world, definition, { day });
-    advanceB2StrategyIndustryStages(world, { day });
     const importedTools = provisionB2DevelopmentTools(world, {
       day,
       intervalDays: developmentToolIntervalDays,
       lastDay: developmentToolLastDay,
+      developmentEvent: Boolean(expansion || industryStages.length > 0),
+      developmentHouseholdCount: (
+        expansion
+          ? (B2_EXPANSION_STRATEGIES[expansion.marketId]?.jobs.length ?? 0)
+            + (B2_EXPANSION_STRATEGIES[expansion.marketId]?.routeCount ?? 1)
+          : 0
+      ) + industryStages.reduce((total, stage) => total + stage.jobs.length, 0),
     });
     if (importedTools) developmentImports.push({
       day,
       goods: importedTools.goods,
       qty: importedTools.qty,
       cost: importedTools.qty * importedTools.unitCost,
+      trigger: expansion
+        ? `market:${expansion.marketId}`
+        : industryStages.length > 0
+          ? `industry:${industryStages.map(stage => stage.jobs.join("+")).join(",")}`
+          : "scheduled",
     });
     surplusExports.push(...exportB2IslandSurplus(world, { day }));
-    mimicPlayer(world, day);
+    mimicPlayer(world, day, { orderGuard: b2CanAcceptSurplusOrder });
     world.step();
+    if (day % 30 === 0 || day === days) {
+      monthly.push({
+        day,
+        population: auditPopulation(economy),
+        hungry: economy.hungryN,
+        famine: economy.famine - previousMonthlyFamine,
+        companyMoney: economy.company.money,
+      });
+      previousMonthlyFamine = economy.famine;
+    }
     if (day % 360 === 0 || day === days) {
       const levels = economy.households.map(household => household.lv).sort((a, b) => a - b);
       yearly.push({
@@ -1316,8 +1903,10 @@ export function runB2ExpansionScenario(
     expansions: [...(world.state.b2Strategy?.expansions ?? [])],
     developmentImports,
     fleetPurchases,
+    routeDecisions,
     surplusExports,
     routes,
+    monthly,
     yearly,
   };
 }
@@ -2252,7 +2841,7 @@ function cheapestOrderGoods(economy, physical, goods, day) {
   return Math.min(stall, routed, producing);
 }
 
-function acceptProfitableOrder(world, day) {
+function acceptProfitableOrder(world, day, { orderGuard = null } = {}) {
   const { economy, physical } = world.state;
   const offer = economy.orderOffer;
   if (!offer) return null;
@@ -2261,6 +2850,7 @@ function acceptProfitableOrder(world, day) {
   if (offer.g === "log" && P.WOOD_R === 0) return null;
   const cheapest = cheapestOrderGoods(economy, physical, offer.g, day);
   if (cheapest > offer.price * 1.25) return null;
+  if (orderGuard && !orderGuard(world, offer, day)) return null;
   return acceptCompanyOrder(economy, { day });
 }
 
@@ -2269,9 +2859,13 @@ function countJobAndZones(economy, job) {
     + economy.zones.filter((zone) => !zone.filled && zone.job === job).length;
 }
 
-export function mimicPlayer(world, day = world.state.day + 1) {
+export function mimicPlayer(
+  world,
+  day = world.state.day + 1,
+  { orderGuard = null } = {},
+) {
   const { economy } = world.state;
-  const acceptedOrder = acceptProfitableOrder(world, day);
+  const acceptedOrder = acceptProfitableOrder(world, day, { orderGuard });
   let stockTargetsUpdated = false;
   let rebuilt = null;
   const staleOrderTarget = !economy.order && COMPANY_ORDER_GOODS.some(

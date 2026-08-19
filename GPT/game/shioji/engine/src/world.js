@@ -30,6 +30,7 @@ import {
   marketPriceBook,
   producePrimaryTick,
   productionInputAmount,
+  productionInputPurchaseBudget,
   productionCost,
   productionMultiplierForTrip,
   pruneEconomyHistory,
@@ -477,7 +478,7 @@ export function findDirectSupplier(economy, physical, buyer, {
       (marketPriceBook(economy, buyerMarket)[goods] ?? ceiling) * 0.95,
     );
     if (!Number.isFinite(price) || price > ceiling + 1e-9) continue;
-    const affordable = Math.max(0, (buyer.purse + 30) / price);
+    const affordable = productionInputPurchaseBudget(buyer, goods) / price;
     const qty = Math.min(wanted, available, affordable);
     if (qty <= 1e-9) continue;
     candidates.push({
@@ -532,9 +533,12 @@ function householdCanSellFromHome(household) {
 
 function canFundMarketTarget(economy, household, goods, wanted) {
   if (!(wanted > 1e-9)) return false;
+  if (canUseProductionInputCredit(household, goods)) {
+    return productionInputPurchaseBudget(household, goods) > 1e-9;
+  }
   const credit = FOODS.includes(goods) && householdFoodDays(household) < 1.5
     ? householdFoodCreditLimit(economy, household)
-    : canUseProductionInputCredit(household, goods) ? 30 : 0;
+    : 0;
   return household.purse + credit > 1e-9;
 }
 
@@ -631,7 +635,7 @@ function transactDirectSupply(economy, physical, household, { day }) {
     })[offer.goods] ?? 0
     : 0;
   const capacity = household.marketCarrier.capacity / goodsUnitWeight(offer.goods);
-  const affordable = Math.max(0, (household.purse + 30) / offer.price);
+  const affordable = productionInputPurchaseBudget(household, offer.goods) / offer.price;
   const qty = Math.min(offer.qty, available, capacity, affordable);
   const payment = qty * offer.price;
   if (qty > 1e-9) {
@@ -1204,6 +1208,8 @@ export function createWorld({
   const normalizedSeed = normalizeSeed(restored?.seed ?? seed);
   const physical = restored?.physical ?? physicalState ?? createPhysicalState();
   physical.pathRevision ??= physical.travelRevision ?? 0;
+  physical.roadTopologyRevision ??= physical.roadRevision ?? 0;
+  physical.pavedRevision ??= Object.keys(physical.pavedRoads ?? {}).length;
   ensureFertilityLayer(physical);
   const economy = restored?.economy ?? createEconomicState({ initialCompanyMoney });
   const fallbackStartFocus = market ?? restored?.economy?.market ?? null;

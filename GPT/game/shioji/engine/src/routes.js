@@ -5,6 +5,7 @@ import {
   GOODS,
   P,
   buyTargets,
+  calendarMonth,
   caravanCrewCount as caravanInnCrewCount,
   companyCreditLimit,
   householdMarketId,
@@ -176,6 +177,9 @@ export function createCaravanRoute(economy, physical, {
     pendingCollectionProcurement: 0,
     pendingCollectionDistance: 0,
     pendingCartPurchases: [],
+    // 採算管理は路線を定めた実日から数える。旧保存に無い場合は監査側が
+    // nextDepartDayを下限として扱うため、保存互換を壊さない。
+    createdDay: Math.max(0, day),
     // 路線を保存した時点で両端市場と荷が揃っていれば、その場で初便を出せる。
     // 翌朝まで待たせると、画面で確認して選んだ屋台在庫を住民が先に買い切り、
     // プレイヤーの決定と実際の積載が食い違う。
@@ -318,6 +322,22 @@ export function caravanFoodTargetQuantity(
     / Math.max(1, foodGoodsCount);
 }
 
+function caravanSeasonalFoodTarget(economy, goods, configuredDays, foodGoodsCount, day) {
+  const normalDays = caravanTargetStockDaysForGoods(goods, configuredDays);
+  if (goods !== "wheat" || !Number.isFinite(normalDays)) {
+    return { days: normalDays, foodGoodsCount };
+  }
+  // 麦は10月から翌2月まで収穫ゼロ。通常の「食料30日を実在品で等分」だけでは、
+  // 秋に麦10日分しか運ばず、盆地に豊作が残ったまま各市場が冬に飢える。
+  // 7〜9月は次の収穫までの備蓄を段階的に積み、腐る魚・野菜とは分担しない。
+  // 長距離便は目標を立てた日から満量が届くまで時間がかかり、秋の世帯購入も
+  // 同じ棚から出る。7月から90→150→210日へ積み上げ、実着地で冬5か月を残す。
+  const winterReserveDays = { 7: 90, 8: 150, 9: 210 }[calendarMonth(economy, day)] ?? 0;
+  return winterReserveDays > normalDays
+    ? { days: winterReserveDays, foodGoodsCount: 1 }
+    : { days: normalDays, foodGoodsCount };
+}
+
 function caravanTargetHouseholds(economy, marketId) {
   return economy.households.filter(household => householdMarketId(household) === marketId);
 }
@@ -336,17 +356,19 @@ function incomingCaravanStock(economy, marketId, goods) {
 function caravanNonfoodTargets(economy, physical, marketId, day) {
   const cacheDay = Number.isSafeInteger(day) ? day : economy.currentDay;
   if (economy.caravanDemandCache?.day !== cacheDay) {
-    economy.caravanDemandCache = { day: cacheDay, markets: {} };
+    economy.caravanDemandCache = { day: cacheDay, markets: {}, ceilings: {} };
   }
   const cached = economy.caravanDemandCache.markets[marketId];
-  if (cached) return cached;
+  if (cached && economy.caravanDemandCache.ceilings?.[marketId]) return cached;
   const totals = {};
+  const ceilings = {};
   const households = caravanTargetHouseholds(economy, marketId);
   for (const household of households) {
     const targets = buyTargets(economy, household, { day: cacheDay, physical });
-    for (const [goods, [wanted]] of Object.entries(targets)) {
+    for (const [goods, [wanted, ceiling]] of Object.entries(targets)) {
       if (FOODS.includes(goods)) continue;
       totals[goods] = (totals[goods] ?? 0) + Math.max(0, wanted);
+      ceilings[goods] = Math.max(ceilings[goods] ?? 0, Math.max(0, ceiling ?? 0));
     }
   }
   // 修繕・建設の不足全量を一度に遠隔棚へ積むと、まだ買えない工具だけで
@@ -363,7 +385,78 @@ function caravanNonfoodTargets(economy, physical, marketId, day) {
     totals[goods] = Math.min(totals[goods], households.length * perHousehold);
   }
   economy.caravanDemandCache.markets[marketId] = totals;
+  (economy.caravanDemandCache.ceilings ??= {})[marketId] = ceilings;
   return totals;
+}
+
+function caravanNonfoodPriceCeiling(economy, physical, marketId, goods, day) {
+  caravanNonfoodTargets(economy, physical, marketId, day);
+  const householdCeiling = economy.caravanDemandCache.ceilings?.[marketId]?.[goods] ?? 0;
+  const orderCeiling = marketId === "main" && economy.order?.g === goods
+    ? Math.max(0, economy.order.price ?? 0) * 1.25
+    : 0;
+  // 港湾余剰輸出を指定した時は、遠隔産地の実在路線へ本土売価を買付上限として
+  // 渡す。到着原価を自動保証せず、この価格以内で買える荷だけを母港へ集める。
+  const surplusExportCeiling = marketId === "main"
+    ? Math.max(0, economy.surplusExportRouteTargets?.[goods]?.unitRevenue ?? 0)
+    : 0;
+  return Math.max(householdCeiling, orderCeiling, surplusExportCeiling);
+}
+
+function companyOrderRouteGap(economy, physical, marketId, goods) {
+  if (marketId !== "main" || economy.order?.g !== goods) return 0;
+  const activeHauls = (physical?.haulJobs ?? []).filter(job => (
+    job.status === "in_transit"
+    && job.goods === goods
+    && ["procurement", "route_stock_transfer", "order"].includes(
+      job.economicLogistics?.kind,
+    )
+  )).reduce((total, job) => total + Math.max(0, job.qty ?? 0), 0);
+  const atPort = (physical?.portCalls ?? []).filter(call => (
+    ["docked", "waiting"].includes(call.status)
+    && call.direction === "export"
+    && call.goods === goods
+    && call.metadata?.kind === "order"
+  )).reduce((total, call) => total + Math.max(0, call.remaining ?? 0), 0);
+  const secured = Math.max(0, economy.stock?.[goods] ?? 0) + activeHauls + atPort;
+  return Math.max(0, (economy.order.left ?? 0) - secured);
+}
+
+function companySurplusExportRouteGap(economy, marketId, goods) {
+  if (marketId !== "main") return 0;
+  return Math.max(0, economy.surplusExportRouteTargets?.[goods]?.qty ?? 0);
+}
+
+function caravanLocalNonfoodGap(economy, physical, marketId, goods, day) {
+  const target = caravanNonfoodTargets(economy, physical, marketId, day)[goods] ?? 0;
+  return Math.max(
+    0,
+    target
+      - marketRouteSupply(economy, marketId, goods)
+      - incomingCaravanStock(economy, marketId, goods),
+  );
+}
+
+function caravanDownstreamNonfoodGap(economy, physical, marketId, goods, day) {
+  // 中継市場の住民需要だけを見ると、鉱区→盆地→漁港の石や
+  // 盆地→母港→鉱区の工具が中継点の棚を満たしたところで止まる。
+  // 一段先へ実在する路線と品目指定がある時だけ、その到着地の未充足量を
+  // 上流便の目標へ足す。再帰はせず、循環路線で需要を水増ししない。
+  const downstreamMarkets = new Set();
+  for (const route of economy.caravans ?? []) {
+    if (route.state === "disbanded") continue;
+    for (const [source, target, goodsList] of [
+      [route.baseMarketId, route.destMarketId, route.goodsOut],
+      [route.destMarketId, route.baseMarketId, route.goodsBack],
+    ]) {
+      if (source === marketId && target !== marketId && goodsList?.includes(goods)) {
+        downstreamMarkets.add(target);
+      }
+    }
+  }
+  return [...downstreamMarkets].reduce((total, targetMarketId) => (
+    total + caravanLocalNonfoodGap(economy, physical, targetMarketId, goods, day)
+  ), 0);
 }
 
 function caravanTargetGap(
@@ -381,18 +474,37 @@ function caravanTargetGap(
   // 「5日分」は人口そのものではなく日量(pop×RATION)の5倍。さらに魚線の
   // 需要を麦在庫で満たすと専門産地の現金流入が消えるため、品目ごとに測る。
   const targetGoods = [goods];
-  const target = FOODS.includes(goods)
+  const seasonalFoodTarget = caravanSeasonalFoodTarget(
+    economy,
+    goods,
+    stockTargetDays,
+    foodGoodsCount,
+    day,
+  );
+  const householdTarget = FOODS.includes(goods)
     ? caravanFoodTargetQuantity(
       households.reduce((total, household) => total + household.members.length, 0),
       goods,
-      stockTargetDays,
-      foodGoodsCount,
+      seasonalFoodTarget.days,
+      seasonalFoodTarget.foodGoodsCount,
     )
     // 非食料を全品一律2荷/世帯にすると、月8〜14荷を使う工具・修繕材と
     // 0.03荷/日の布を同じ量で打ち切ってしまう。各世帯の実buyTargetsには
     // 文化、修繕、建設、道具、生産原料の不足が既に合算されているため、
     // その市場の現在の不足総量を会社棚の補充目標にする。
     : caravanNonfoodTargets(economy, physical, marketId, day)[goods] ?? 0;
+  const downstreamTarget = FOODS.includes(goods)
+    ? 0
+    : caravanDownstreamNonfoodGap(economy, physical, marketId, goods, day);
+  // 本国注文を受けた後は、母港住民の小売需要とは別に契約残量を母港方向の
+  // 実便へ載せる。倉庫・倉庫向け運搬・港荷役へ確保済みの量は二重発注しない。
+  // 受注前の余剰判定は監査側、受注後の集荷は通常の路線物理が担当する。
+  const target = householdTarget + downstreamTarget + companyOrderRouteGap(
+    economy,
+    physical,
+    marketId,
+    goods,
+  ) + companySurplusExportRouteGap(economy, marketId, goods);
   let available = 0;
   for (const targetGoodsId of targetGoods) {
     // 世帯の私蔵は他家が買えない。偏在した私蔵まで「到着地在庫」と数えると、
@@ -444,6 +556,14 @@ function localFoodReserveQuantity(economy, marketId, goods, days = 3) {
   return population * days / Math.max(1, availableFoods);
 }
 
+function localRouteReserveQuantity(economy, physical, marketId, goods, day) {
+  if (FOODS.includes(goods)) return localFoodReserveQuantity(economy, marketId, goods);
+  // 路線は到着地の不足だけでなく、積出地で既に表へ出ている修繕・道具・
+  // 生産原料の需要も守る。これがないと盆地の工具を母港へ全量集荷し、工具を
+  // 作った地域自身の農場が修繕不能→Lv低下→翌年凶作という循環になる。
+  return caravanNonfoodTargets(economy, physical, marketId, day)[goods] ?? 0;
+}
+
 function caravanCollectionPrice(economy, physical, household, marketId, goods, day) {
   const costFloor = productionCost(economy, physical, household, goods, { day }) * 1.05;
   const quoted = marketPriceBook(economy, marketId)[goods] ?? costFloor;
@@ -490,7 +610,13 @@ function collectionPlanForMarket(
       0,
       route.collectionStagedM?.[marketId]?.[goods] ?? 0,
     );
-    const localReserve = localFoodReserveQuantity(economy, marketId, goods);
+    const localReserve = localRouteReserveQuantity(
+      economy,
+      physical,
+      marketId,
+      goods,
+      day,
+    );
     const routeReady = routeStaged + Math.max(0, staged - localReserve);
     stagedWeight += Math.min(routeReady, targetGap) * unitWeight;
     // 圏内集荷は「次の一便を満たす量」だけ先に市場へ寄せる。30日目標の
@@ -535,22 +661,64 @@ function collectionPlanForMarket(
     need.goods,
     sellerRows.map(({ household, building, path, offers }) => {
       const offered = offers[need.goods] ?? 0;
+      const price = caravanCollectionPrice(
+        economy,
+        physical,
+        household,
+        marketId,
+        need.goods,
+        day,
+      );
+      const destinationCeiling = FOODS.includes(need.goods) || !Number.isFinite(route.stockTargetDays)
+        ? Infinity
+        : caravanNonfoodPriceCeiling(
+          economy, physical, targetMarketId, need.goods, day,
+        );
       return {
         household,
         building,
         path,
         offered,
+        price,
+        // 輸送原価を上回る買手が実在するなら運ぶ。固定20%上乗せまで先に
+        // 要求すると、盆地丸太1.80D→母港木工の上限2.04Dのような黒字取引を
+        // 2.16Dで弾き、木製品連鎖を止めてしまう。実売価は買手上限までにする。
+        viable: price <= destinationCeiling + 1e-9,
         key: `${household.id}:${need.goods}`,
         lastCollectionDay: household.collectionSaleDays?.[need.goods] ?? -Infinity,
       };
-    }).filter(candidate => candidate.offered > 1e-9 && candidate.path),
+    }).filter(candidate => candidate.offered > 1e-9 && candidate.path && candidate.viable),
   ]));
+  // 私有棚からの集荷にも地域留保を適用する。公開屋台だけでは地域需要を
+  // 満たせない時、その不足分を私有offerから差し引き、余った分だけ輸出する。
+  for (const need of needs) {
+    if (FOODS.includes(need.goods)) {
+      need.privateCollectionBudget = Infinity;
+      continue;
+    }
+    const localReserve = localRouteReserveQuantity(
+      economy,
+      physical,
+      marketId,
+      need.goods,
+      day,
+    );
+    const publicSupply = marketRouteSupply(economy, marketId, need.goods);
+    const privateSupply = (candidatesByGoods.get(need.goods) ?? []).reduce(
+      (total, candidate) => total + candidate.offered,
+      0,
+    );
+    need.privateCollectionBudget = Math.max(
+      0,
+      privateSupply - Math.max(0, localReserve - publicSupply),
+    );
+  }
   for (const asset of assets) {
     // 最初の一巡は各指定品へ重量を均等配分し、品がない枠は残り需要へ回す。
     // 旧計画は「布がないから布枠30荷を空車」のように等分枠を捨て、麦が
     // 生産者宅へ一万荷余っていても一便30荷で打ち切っていた。
     const choices = needs.map(need => {
-      if (need.remaining <= 1e-9) return null;
+      if (need.remaining <= 1e-9 || need.privateCollectionBudget <= 1e-9) return null;
       const candidates = (candidatesByGoods.get(need.goods) ?? [])
         .map(candidate => ({
           ...candidate,
@@ -591,6 +759,7 @@ function collectionPlanForMarket(
     const qty = Math.min(
       need.remaining,
       candidate.available,
+      need.privateCollectionBudget,
       caravanAssetCapacity(asset) / goodsUnitWeight(need.goods),
     );
     if (qty <= 1e-9) continue;
@@ -602,19 +771,13 @@ function collectionPlanForMarket(
       sellerBuildingId: candidate.building.id,
       marketId,
       targetMarketId,
-      price: caravanCollectionPrice(
-        economy,
-        physical,
-        candidate.household,
-        marketId,
-        need.goods,
-        day,
-      ),
+      price: candidate.price,
       outwardDistance: candidate.path.cost,
     };
     plannedBySeller.set(candidate.key, (plannedBySeller.get(candidate.key) ?? 0) + qty);
     need.remaining -= qty;
     need.assignedWeight += qty * goodsUnitWeight(need.goods);
+    need.privateCollectionBudget -= qty;
     plans.push(selected);
   }
   return plans;
@@ -913,6 +1076,11 @@ function caravanBuyAtMarket(
   const foodGoodsCount = viableRouteFoodGoodsCount(economy, route, marketId, goodsList);
   const buyGoods = (goods, weightLimit) => {
     const unitWeight = goodsUnitWeight(goods);
+    // 在庫日数を持つ自動補充便だけは売却可能性まで判断する。プレイヤーが
+    // 日数目標なしで明示指定した荷は、赤字の育成輸送も含むため止めない。
+    const destinationCeiling = FOODS.includes(goods) || !Number.isFinite(route.stockTargetDays)
+      ? Infinity
+      : caravanNonfoodPriceCeiling(economy, physical, targetMarketId, goods, day);
     const targetGap = caravanTargetGap(
       economy,
       physical,
@@ -939,19 +1107,21 @@ function caravanBuyAtMarket(
       remainingWeight -= staged.qty * unitWeight;
       goodsWeight -= staged.qty * unitWeight;
     }
-    let routeAvailableQty = FOODS.includes(goods)
-      ? Math.max(
-        0,
-        marketRouteSupply(economy, marketId, goods)
-          - localFoodReserveQuantity(economy, marketId, goods),
-      )
-      : Infinity;
+    let routeAvailableQty = Math.max(
+      0,
+      marketRouteSupply(economy, marketId, goods)
+        - localRouteReserveQuantity(economy, physical, marketId, goods, day),
+    );
     const stalls = economy.stalls[goods]
       .filter((stall) => (stall.marketId ?? "main") === marketId && stall.qty > 1e-9)
       .sort((left, right) => left.price - right.price
         || left.householdId - right.householdId);
     for (const stall of stalls) {
       if (remainingWeight <= 1e-9 || goodsWeight <= 1e-9) break;
+      // 仕入原価そのものを払える買手がいない荷は、自動補充便では積まない。
+      // 20%未満でも正の品目粗利がある時は運び、路線固定費を含む赤字は
+      // プレイヤーがLv育成投資として判断できるよう台帳にそのまま残す。
+      if (stall.price > destinationCeiling + 1e-9) continue;
       const seller = economy.households.find((candidate) => candidate.id === stall.householdId);
       if (!seller) continue;
       const physicalQty = market ? sectionAmount(market, "outbound", goods) : stall.qty;
@@ -1006,13 +1176,16 @@ function caravanBuyAtMarket(
     // 世帯屋台だけを積載元にすると、盆地から母港へ届いた麦が母港→鉱山線へ
     // 決して乗らず、実棚に食料が余ったまま鉱山が飢える。
     const localTable = economy.marketStockM?.[marketId];
-    const localQty = Math.min(
+    const localAverageCost = ((economy.marketStockCostM ??= {})[marketId]?.[goods] ?? 0)
+      / Math.max(1e-9, localTable?.[goods] ?? 0);
+    const localEconomicallyViable = localAverageCost <= destinationCeiling + 1e-9;
+    const localQty = localEconomicallyViable ? Math.min(
       Math.max(0, localTable?.[goods] ?? 0),
       routeAvailableQty,
       remainingWeight / unitWeight,
       goodsWeight / unitWeight,
       market ? sectionAmount(market, "inbound", goods) : Infinity,
-    );
+    ) : 0;
     if (localQty > 1e-9) {
       const localCostTable = (economy.marketStockCostM ??= {})[marketId] ??= {};
       const localLots = ((economy.marketStockLotsM ??= {})[marketId] ??= {})[goods] ??= [];
@@ -1062,17 +1235,17 @@ function caravanBuyAtMarket(
     // 買えたため、プレイヤーが工具を輸入しても遠隔市場へ一荷も送れなかった。
     if (marketId !== "main" || remainingWeight <= 1e-9 || goodsWeight <= 1e-9) return;
     const importTable = economy.importStock ?? {};
-    const importQty = Math.min(
+    const importCostTable = economy.importStockCost ?? {};
+    const averageImportCost = (importCostTable[goods] ?? 0)
+      / Math.max(1e-9, importTable[goods] ?? 0);
+    const importQty = averageImportCost <= destinationCeiling + 1e-9 ? Math.min(
       Math.max(0, importTable[goods] ?? 0),
       routeAvailableQty,
       remainingWeight / unitWeight,
       goodsWeight / unitWeight,
       market ? sectionAmount(market, "inbound", goods) : Infinity,
-    );
+    ) : 0;
     if (importQty <= 1e-9) return;
-    const importCostTable = economy.importStockCost ?? {};
-    const averageImportCost = (importCostTable[goods] ?? 0)
-      / Math.max(1e-9, importTable[goods] ?? 0);
     let remainingImport = importQty;
     let transferredImportCost = 0;
     for (const request of economy.importRequests ?? []) {
