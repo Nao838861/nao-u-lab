@@ -66,7 +66,39 @@ reason: "Phase 2 の pass が空のため、#shared-reads への投稿対象な�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779809653-6095865098
+    source_ts: "1779809653.165429"
+    title: "EvoTest: Evolutionary Test-Time Learning for Self-Improving Agentic Systems"
+    reason: "source=slack_api/shared-reads、score=12、未レビューで、memory・harness・game-design・agent・evaluation を横断し、同一ゲームの経験を次 episode の構成差分へ戻す知見が Phase 3b に直結するため1件だけ選んだ。Nao_u の明示的な重要評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件14に届かず、risk_controlも必須閾値2未満。Actor transcriptからprompt・memory・tool routine等をepisode間更新する構造は実行可能だが、既存のtrajectory帰属・探索/利用失敗分離・attempt branch・Test-Time Learning軸と大きく重なる。現stagingには同一gameの複数episode、固定policy／seed、config差分、同一verifierを持つbefore／after artifactがなく、Phase 4a memory cleanupをconsumerにしても判断差を測れない。interactive fictionの結果をaction gameや全phaseへ広げると、粗いtranscript由来のもっともらしい反省、評価器への過適合、326件のactive_probesへの確認負荷を増やすためstate-onlyで閉じる。"
+  existing_probes:
+    - probe-20260516-attributed-trajectory-tip
+    - probe-20260525-exploration-vs-utilization-failure
+    - probe-20260613-attempt-branch-ledger
+    - probe-20260608-memoryagentbench-axis-boundary
+  change:
+    summary: "reviewed_source_tsとreject理由だけを記録。active_probes・probe lifecycle ledger・directive・恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

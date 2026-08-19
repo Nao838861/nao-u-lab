@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-20T03:22:27+09:00",
+  "updated_at": "2026-08-20T05:31:21+09:00",
   "reviewed_source_ts": [
+    "1779809653.165429",
     "1778198682.665689",
     "1787147749.898409",
     "1787140569.154979",
@@ -21573,6 +21574,46 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、literal instruction following の根拠、Claude 固有挙動を Codex へ一般化する限界、既存の少数原則／ルール増殖 canonical guide との完全重複による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-20T05:31:21+09:00",
+      "selected": {
+        "id": "sr-1779809653-6095865098",
+        "source_ts": "1779809653.165429",
+        "title": "EvoTest: Evolutionary Test-Time Learning for Self-Improving Agentic Systems",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、memory・harness・game-design・agent・evaluation の優先タグを横断し、同じゲームの経験を次 episode の system configuration へ戻すという Phase 3b の目的に直接つながるため1件だけ選んだ。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、Jericho Test-Time Learning で同一 game を複数 episode 実行し、Actor transcript から Evolver が prompt・memory・hyperparameter・tool routine を更新する構造、Detective と Library で baseline が勝てない条件を勝ったという適用範囲、Pulse Relay での policy／memory／rubric 差分と既存 telemetry の比較案まで示すため relevance・actionability は3とした。一方、本文から確認できる実証は Microsoft Research の紹介と interactive fiction の結果で、全 Jericho game の比較値、configuration 要素ごとの ablation、リアルタイム action game への転用結果はなく evidence は2に留める。probe-20260516-attributed-trajectory-tip は寄与した決定・状態遷移を次回 tip へ戻し、probe-20260525-exploration-vs-utilization-failure は失敗を発見不足と利用不足へ分け、probe-20260613-attempt-branch-ledger は retry branch と prune reason を残し、probe-20260608-memoryagentbench-axis-boundary は Test-Time Learning を他の memory 軸から分離する。EvoTest 固有の episode 間 configuration diff は差分だが、現 staging には同一 game の複数 episode、固定 seed／policy、episode ごとの config、同一 verifier を持つ before／after artifact がなく、直後の Phase 4a memory cleanup は実 consumer にならないため non_redundancy は1とした。active_probes は326件あり、interactive fiction の system-level evolution を action game や全 phase へ広げると、粗い transcript からもっともらしい反省を作るだけの loop、評価器への過適合、既存 control との確認負荷を増やすため risk_control は1。次に同一 playable を複数 episode で比較でき、既存4 controlsだけでは config 差分と成績変化を結べない具体例が出た時だけ再評価する。",
+      "existing_probes": [
+        "probe-20260516-attributed-trajectory-tip",
+        "probe-20260525-exploration-vs-utilization-failure",
+        "probe-20260613-attempt-branch-ledger",
+        "probe-20260608-memoryagentbench-axis-boundary"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、EvoTest の有用性、既存 trajectory／failure split／attempt branch／Test-Time Learning controls との重複、比較 artifact 不在による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
