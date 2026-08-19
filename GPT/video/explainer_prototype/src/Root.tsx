@@ -7,12 +7,16 @@ import {
   DrawingNarrationPreview,
   ExplainerPrototype,
   LaterNarrationPreview,
+  WorkflowNarrationPreview,
 } from './ExplainerPrototype';
 import {benefitNarrationDurationInFrames} from './benefitNarrationTiming';
 import {constraintNarrationDurationInFrames} from './constraintNarrationTiming';
 import {developmentNarrationDurationInFrames} from './developmentNarrationTiming';
 import {drawingNarrationDurationInFrames} from './drawingNarrationTiming';
-import {laterNarrationPreviewDurationInFrames} from './laterNarrationTiming';
+import {
+  laterNarrationPreviewDurationInFrames,
+  workflowNarrationPreviewDurationInFrames,
+} from './laterNarrationTiming';
 import {
   fullCompositionDurationInFrames,
   narrationPreviewDurationInFrames,
@@ -73,6 +77,14 @@ export const RemotionRoot: React.FC = () => {
         id="LaterNarrationPreview"
         component={LaterNarrationPreview}
         durationInFrames={laterNarrationPreviewDurationInFrames}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      <Composition
+        id="WorkflowNarrationPreview"
+        component={WorkflowNarrationPreview}
+        durationInFrames={workflowNarrationPreviewDurationInFrames}
         fps={30}
         width={1280}
         height={720}

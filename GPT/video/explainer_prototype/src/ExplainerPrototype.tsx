@@ -4,6 +4,7 @@ import {
   Audio,
   Easing,
   Img,
+  Loop,
   OffthreadVideo,
   Sequence,
   interpolate,
@@ -42,6 +43,10 @@ import {
   c17Timing,
   c18Timing,
   c19Timing,
+  c20Timing,
+  c21Timing,
+  c22Timing,
+  c23Timing,
 } from './laterNarrationTiming';
 
 const C = {
@@ -1283,8 +1288,8 @@ const CoordinateTransformScene: React.FC<{durationInFrames?: number}> = ({durati
       <div style={{display: 'flex', gap: 26, marginTop: 24, height: 532}}>
         <div style={{width: 430, display: 'flex', flexDirection: 'column', gap: 12}}>
           <div style={{opacity: reveal(20), padding: '15px 18px', background: C.panel, borderLeft: `6px solid ${C.red}`}}>
-            <div style={{fontFamily: FONT, color: C.red, fontSize: 17, fontWeight: 900}}>一般的な3D座標変換</div>
-            <div style={{fontFamily: MONO, color: C.white, fontSize: 25, fontWeight: 900, marginTop: 5}}>掛け算 ＋ 割り算</div>
+            <div style={{fontFamily: FONT, color: C.red, fontSize: 17, fontWeight: 900}}>ファミコンCPU：6502</div>
+            <div style={{fontFamily: FONT, color: C.white, fontSize: 24, fontWeight: 900, marginTop: 5}}>掛け算・割り算命令がない</div>
           </div>
           <div style={{opacity: reveal(65), display: 'flex', alignItems: 'center', gap: 10}}>
             <div style={{width: 115, padding: '13px 8px', textAlign: 'center', background: '#101116', border: `2px solid ${C.cyan}`, fontFamily: MONO, color: C.white, fontSize: 22, fontWeight: 900}}>X Y Z</div>
@@ -1592,6 +1597,87 @@ const FrameTimelineScene: React.FC<{durationInFrames?: number}> = ({durationInFr
   );
 };
 
+const ProgrammingFlowScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 900}) => {
+  const frame = useCurrentFrame();
+  const show = (fraction: number) => interpolate(frame, [durationInFrames * fraction, durationInFrames * fraction + 18], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const codeLines = ['update_enemy();', 'project_xyz();', 'check_collision();'];
+  return (
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '38px 46px 0', boxSizing: 'border-box'}}>
+      <Title size={40}>C言語を正本に、重い場所だけ最適化</Title>
+      <div style={{fontFamily: FONT, color: C.dim, fontSize: 19, fontWeight: 800, marginTop: 7}}>AIをコンパイラのように使い、Cとアセンブラを並行して維持</div>
+      <div style={{display: 'grid', gridTemplateColumns: '330px 1fr 360px', gap: 24, alignItems: 'stretch', marginTop: 34, height: 470}}>
+        <div style={{opacity: show(0.03), background: C.panel, border: `2px solid ${C.cyan}`, padding: 22}}>
+          <div style={{fontFamily: MONO, color: C.cyan, fontSize: 23, fontWeight: 900}}>C SOURCE</div>
+          <div style={{fontFamily: FONT, color: C.white, fontSize: 18, fontWeight: 900, marginTop: 12}}>アルゴリズムを素早く更新</div>
+          <div style={{marginTop: 27, display: 'flex', flexDirection: 'column', gap: 15}}>
+            {codeLines.map((line, i) => <div key={line} style={{opacity: show(0.08 + i * 0.06), fontFamily: MONO, color: C.white, fontSize: 19, padding: '11px 12px', background: '#0b0c10', borderLeft: `5px solid ${C.cyan}`}}>{line}</div>)}
+          </div>
+          <div style={{marginTop: 25, fontFamily: FONT, color: C.cyan, fontSize: 17, lineHeight: 1.5, fontWeight: 900}}>同じ動作のCソースを<br />常に残す</div>
+        </div>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+          <div style={{opacity: show(0.28), width: 150, height: 150, borderRadius: '50%', border: `4px solid ${C.magenta}`, display: 'grid', placeItems: 'center', background: `${C.magenta}18`, fontFamily: FONT, color: C.magenta, fontSize: 34, fontWeight: 900}}>AI</div>
+          <div style={{opacity: show(0.36), fontFamily: MONO, color: C.magenta, fontSize: 34, margin: '16px 0'}}>→</div>
+          <div style={{opacity: show(0.4), padding: '14px 18px', background: C.panel, borderTop: `3px solid ${C.magenta}`, borderBottom: `3px solid ${C.magenta}`, textAlign: 'center', fontFamily: FONT, color: C.white, fontSize: 18, fontWeight: 900}}>関数単位で変換<br />＋ 最適化</div>
+        </div>
+        <div style={{opacity: show(0.48), background: C.panel, border: `2px solid ${C.orange}`, padding: 22}}>
+          <div style={{fontFamily: MONO, color: C.orange, fontSize: 23, fontWeight: 900}}>6502 ASM</div>
+          <div style={{fontFamily: FONT, color: C.white, fontSize: 18, fontWeight: 900, marginTop: 12}}>速度が必要な関数だけ置換</div>
+          <div style={{marginTop: 25, fontFamily: MONO, color: C.white, fontSize: 17, lineHeight: 1.65, padding: 16, background: '#0b0c10'}}><span style={{color: C.orange}}>LDA</span> enemy_x<br /><span style={{color: C.orange}}>ADC</span> velocity_x<br /><span style={{color: C.orange}}>STA</span> enemy_x<br /><span style={{color: C.orange}}>JSR</span> project_xyz</div>
+          <div style={{opacity: show(0.65), marginTop: 23, padding: '13px 10px', textAlign: 'center', border: '2px solid #62df83', fontFamily: FONT, color: '#62df83', fontSize: 19, fontWeight: 900}}>✓ C版と同じ動作</div>
+        </div>
+      </div>
+      <div style={{opacity: show(0.78), position: 'absolute', left: 260, right: 260, bottom: 16, padding: '14px 20px', borderTop: `2px solid ${C.magenta}`, borderBottom: `2px solid ${C.magenta}`, textAlign: 'center', fontFamily: FONT, color: C.white, fontSize: 23, fontWeight: 900}}>アルゴリズム改善はC言語で何度でも行える</div>
+    </AbsoluteFill>
+  );
+};
+
+const HoudiniTrajectoryScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 450}) => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: '#000'}}>
+      <Loop durationInFrames={175}>
+        <OffthreadVideo src={staticFile('houdini_enemy_trajectory.mp4')} muted endAt={175} style={{width: '100%', height: '100%', objectFit: 'contain'}} />
+      </Loop>
+      <div style={{position: 'absolute', left: 32, top: 28, padding: '11px 17px', background: '#050507dd', borderLeft: `6px solid ${C.orange}`, fontFamily: FONT, color: C.white, fontSize: 26, fontWeight: 900}}>Houdiniで敵編隊の軌跡を作成</div>
+    </AbsoluteFill>
+  );
+};
+
+const AiTrajectoryScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 450}) => {
+  const frame = useCurrentFrame();
+  const draw = interpolate(frame, [durationInFrames * 0.35, durationInFrames * 0.78], [620, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const aiOpacity = interpolate(frame, [durationInFrames * 0.18, durationInFrames * 0.28], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  return (
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '38px 46px 0', boxSizing: 'border-box'}}>
+      <Title size={42}>キャプチャから、AIが敵の軌跡を設計</Title>
+      <div style={{display: 'grid', gridTemplateColumns: '350px 220px 1fr', gap: 28, alignItems: 'center', marginTop: 46}}>
+        <div style={{height: 370, background: '#000', border: `2px solid ${C.cyan}`, overflow: 'hidden', position: 'relative'}}>
+          <Img src={staticFile('frame_background_player_bg.png')} style={{width: '100%', height: '100%', objectFit: 'contain', imageRendering: 'pixelated'}} />
+          <div style={{position: 'absolute', left: 12, bottom: 12, padding: '7px 10px', background: '#050507dd', fontFamily: FONT, color: C.cyan, fontSize: 16, fontWeight: 900}}>ゲーム画面キャプチャ</div>
+        </div>
+        <div style={{opacity: aiOpacity, display: 'flex', flexDirection: 'column', gap: 17, alignItems: 'center'}}>
+          <div style={{width: 160, padding: '15px 8px', border: `2px solid ${C.magenta}`, background: `${C.magenta}18`, textAlign: 'center', fontFamily: FONT, color: C.white, fontSize: 19, fontWeight: 900}}>Claude Fable</div>
+          <div style={{fontFamily: MONO, color: C.magenta, fontSize: 31}}>＋</div>
+          <div style={{width: 160, padding: '15px 8px', border: `2px solid ${C.magenta}`, background: `${C.magenta}18`, textAlign: 'center', fontFamily: FONT, color: C.white, fontSize: 21, fontWeight: 900}}>GPT-5.6</div>
+          <div style={{fontFamily: MONO, color: C.magenta, fontSize: 36}}>→</div>
+        </div>
+        <div style={{height: 370, background: C.panel, border: `2px solid ${C.orange}`, position: 'relative', overflow: 'hidden'}}>
+          <svg width="100%" height="100%" viewBox="0 0 520 370">
+            <defs><linearGradient id="trajectory" x1="0" x2="1"><stop stopColor={C.cyan} /><stop offset="1" stopColor={C.orange} /></linearGradient></defs>
+            {Array.from({length: 8}).map((_, i) => <line key={`h${i}`} x1="0" y1={40 + i * 40} x2="520" y2={40 + i * 40} stroke="#34313c" strokeWidth="1" />)}
+            {Array.from({length: 10}).map((_, i) => <line key={`v${i}`} x1={40 + i * 52} y1="0" x2={40 + i * 52} y2="370" stroke="#282630" strokeWidth="1" />)}
+            <path d="M 25 300 C 90 90 165 80 220 210 S 330 360 385 165 S 470 60 510 120" fill="none" stroke="url(#trajectory)" strokeWidth="7" strokeLinecap="round" strokeDasharray="620" strokeDashoffset={draw} />
+            {[0, 1, 2, 3, 4, 5].map((i) => <circle key={i} cx={70 + i * 82} cy={[190, 96, 188, 300, 175, 94][i]} r="9" fill={i < 3 ? C.cyan : C.orange} opacity={draw < 540 - i * 85 ? 1 : 0} />)}
+          </svg>
+          <div style={{position: 'absolute', left: 16, top: 14, fontFamily: FONT, color: C.orange, fontSize: 18, fontWeight: 900}}>生成した敵編隊の軌跡データ</div>
+          <div style={{position: 'absolute', right: 16, bottom: 14, fontFamily: MONO, color: C.dim, fontSize: 14}}>COMPILE READY</div>
+        </div>
+      </div>
+      <div style={{position: 'absolute', left: 380, right: 380, bottom: 44, padding: '13px', borderTop: `2px solid ${C.magenta}`, borderBottom: `2px solid ${C.magenta}`, textAlign: 'center', fontFamily: FONT, color: C.white, fontSize: 22, fontWeight: 900}}>AIで軌跡を作れるか検証</div>
+    </AbsoluteFill>
+  );
+};
+
 const DayOneScene: React.FC = () => {
   const frame = useCurrentFrame();
   return (
@@ -1790,6 +1876,30 @@ export const LaterNarrationPreview: React.FC = () => {
       <Sequence from={c19Timing.startFrame} durationInFrames={c19Timing.durationFrames}>
         <GameLogicScene durationInFrames={c19Timing.durationFrames} />
         <Audio src={staticFile('narration/later/C19.wav')} volume={0.95} />
+      </Sequence>
+    </AbsoluteFill>
+  );
+};
+
+export const WorkflowNarrationPreview: React.FC = () => {
+  const baseFrame = c20Timing.startFrame;
+  return (
+    <AbsoluteFill style={{backgroundColor: C.bg}}>
+      <Sequence from={c20Timing.startFrame - baseFrame} durationInFrames={c20Timing.durationFrames}>
+        <CoordinateTransformScene durationInFrames={c20Timing.durationFrames} />
+        <Audio src={staticFile('narration/later/C20.wav')} volume={0.95} />
+      </Sequence>
+      <Sequence from={c21Timing.startFrame - baseFrame} durationInFrames={c21Timing.durationFrames}>
+        <ProgrammingFlowScene durationInFrames={c21Timing.durationFrames} />
+        <Audio src={staticFile('narration/later/C21.wav')} volume={0.95} />
+      </Sequence>
+      <Sequence from={c22Timing.startFrame - baseFrame} durationInFrames={c22Timing.durationFrames}>
+        <HoudiniTrajectoryScene durationInFrames={c22Timing.durationFrames} />
+        <Audio src={staticFile('narration/later/C22.wav')} volume={0.95} />
+      </Sequence>
+      <Sequence from={c23Timing.startFrame - baseFrame} durationInFrames={c23Timing.durationFrames}>
+        <AiTrajectoryScene durationInFrames={c23Timing.durationFrames} />
+        <Audio src={staticFile('narration/later/C23.wav')} volume={0.95} />
       </Sequence>
     </AbsoluteFill>
   );
