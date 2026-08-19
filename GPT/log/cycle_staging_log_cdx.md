@@ -66,6 +66,35 @@ reason: "Phase 2 の pass が空のため、投稿対象なし"
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787147749-67cdec3be5
+    source_ts: "1787147749.898409"
+    title: "Puzzledorf — textless tutorial を制約実演と転移課題で設計する"
+    reason: "score 10 の未レビュー最新候補で、優先6タグをすべて持つ。tutorial 通過ではなく後続の自由面への転移を測る知見が、既存 control と異なる次回判断を作るか確認した。Nao_u の明示評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "盤面制約・action・feedback・転移課題・無介入観察へ直接変換できるが、単一作品の作者報告で比較値がない。既存の game-learning-hypothesis-trace、tutorial-order-controller-sensitivity、ai-onboarding-autonomy-support、player-intent-action-response が未知規則、後続levelへの転移、複数controller、active learning、observable response を既に覆う。active_probes 326件と Phase 4a 向け pending lease 1件がある状態で同義 probe を追加すると、Sokoban の一本道設計を他genreへ過剰一般化し確認負荷を増やす。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-19T23:02:05+09:00",
+  "updated_at": "2026-08-20T01:07:15+09:00",
   "reviewed_source_ts": [
+    "1787147749.898409",
     "1787140569.154979",
     "1787115339.463509",
     "1787122615.346739",
@@ -21491,6 +21492,47 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、配布 build parity／最大発火頻度での feedback 評価という固有差、単一事例の証拠限界、比較可能な playable artifact 不在、既存 pending lease との競合による defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-20T01:07:15+09:00",
+      "selected": {
+        "id": "sr-1787147749-67cdec3be5",
+        "source_ts": "1787147749.898409",
+        "title": "Puzzledorf — textless tutorial を制約実演と転移課題で設計する",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・agent・operation・evaluation の6優先タグをすべて持つ最新候補なので1件だけ選んだ。学習命題を一本道の実演へ埋め込み、次の自由度が高い面への転移で理解を確認する知見が、次の game prototype で既存 control と異なる判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、規則説明を盤面制約・player action・即時 feedback へ変換し、失敗不能な実演の後に可逆な失敗を含む自由面を置く。さらに tutorial 通過と理解を分け、first_valid_action_time・invalid_action_count・Undo・Restart・transfer_level_clear、random agent baseline、無介入の初見観察で転移を測る行動へ直接変換できるため relevance・actionability は3とした。一方、根拠は単一作品の作者による反復設計記録で、playtest 人数、完走率、習得時間、説明文版との比較、genre を越えた再現性がなく evidence は2に留める。probe-20260604-game-learning-hypothesis-trace は未知規則・first exposure・feedback 後の仮説更新・後続 level への transfer を、probe-20260720-tutorial-order-controller-sensitivity は segment 入口失敗・学習曲線・複数 controller を、probe-20260617-ai-onboarding-autonomy-support は completion と active learning／agency の分離を、probe-20260717-player-intent-action-response は action と observable world response の対応を既に扱う。操作参照と失敗不能→可逆失敗の段階は小さな差だが、既存4 controls を組み合わせた採否を変える独立 control にはならないため non_redundancy は1とした。active_probes は326件で Phase 4a 向け pending lease も1件ある。ここへ『命題→制約→feedback→転移』を別 probe として足すと、状態数の小さい Sokoban の一本道設計を real-time action や複数 system の prototype へ過剰一般化し、強い誘導による偶然の通過を学習と誤認する確認負荷を増やすため risk_control は1。次の具体的な tutorial artifact で既存4 controlsだけでは操作参照、転移、agency の採否が分かれる実例が出た時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260604-game-learning-hypothesis-trace",
+        "probe-20260720-tutorial-order-controller-sensitivity",
+        "probe-20260617-ai-onboarding-autonomy-support",
+        "probe-20260717-player-intent-action-response",
+        "probe-20260819-d2acci-stage-localization-gate"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、転移課題・無介入観察・操作参照の有用性、既存 learning／tutorial-order／onboarding／intent controls との重複、単一作品の証拠限界、既存 pending lease による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
