@@ -77,7 +77,19 @@ unreviewed_intake_audit:
 - fail 2 件はローカル参照として保持する。Phase 3 投稿、追加収集、記憶階層改修は未実施。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+reviewed_at: "2026-08-20T08:04:04+09:00"
+posted:
+  - candidate: memory/shared_reads_candidates/20260820_cairn_prickly_protagonist.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787180642210759"
+    char_count: 4017
+skipped: []
+```
+
+- 原典本文を再確認し、統制実験ではなく具体場面を横断する批評的 case study として評価範囲を限定した。
+- 必須 6 見出し、4,017 字、URL 末尾集約、禁止表現なしを deterministic check で確認した。
+- `tools/post_slack_message_file.py` により 1 回の `chat.postMessage` で投稿し、Slack 再取得検証は `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
