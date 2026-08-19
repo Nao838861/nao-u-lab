@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/cairn-s-prickly-protagonist-serves-a-
 collected_at: "2026-08-20T07:54:16+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, narrative-design, character-design, climbing-game]
+evaluated_at: "2026-08-20T07:58:08+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-20T07:58:08+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-20T07:58:08+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-19"
+supersedes: []
+gate_reason: >-
+  刺々しい主人公への理解を台詞だけで作らず、必須操作・難度・環境痕跡・反復失敗へ分散する設計が具体場面で追える。
+  単一作品の批評という限界を明示しても、character と player の執着を重ねる実装原理を約4000字で検討できる。
+suggested_post_outline:
+  overview_angle: "好感度ではなく、操作中に露出する執着と矛盾から主人公への理解を作る設計"
+  analysis_axis: "台詞・必須選択・環境・難度曲線・反復失敗が同じ character claim をどう補強するか"
+  application_target: "新規ゲーム prototype で character goal を必須操作・failure loop・environmental trace に対応付ける場面設計"
+  pros_cons: "説明量を増やさず player 行為と人物像を接続できる一方、単一作品への批評的読解で一般化と spoiler に注意が要る"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
