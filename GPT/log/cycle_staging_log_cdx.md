@@ -7,6 +7,7 @@
 - 収集元: 直前サイクル後の `memory/raw/web_research/results.jsonl`、最近の `memory/atoms.jsonl`、取り込み済み Slack raw、外部一次資料。
 - `memory/shared_reads_candidates/20260819_puzzledorf_textless_tutorial_design.md` — 『Puzzledorf』作者が、文章を読ませず、失敗しにくい盤面・視聴覚 feedback・助けない初見 playtest で規則を教えた tutorial 設計記録。
 - duplicate preflight: sidecar 3種を再生成し、上記1件で `continue`（終了コード0）を確認。Slack 投稿なし。
+- 2026-08-20T00:51:39+09:00 `memory/shared_reads_candidates/20260820_wakey_wakey_postmortem.md` — 学生5人の短期制作で、arena fighter から重力 platformer への転換、変更共有の不足、対立回避が工程へ及ぼした経緯を記録した postmortem。
 
 ## Phase 2: 分析
 ```yaml
