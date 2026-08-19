@@ -4,6 +4,20 @@ url: https://www.gamedeveloper.com/design/wakey-wakey---postmortem
 collected_at: "2026-08-20T00:51:39+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, production, platformer, team-communication]
+evaluated_at: "2026-08-20T00:58:31+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-20T00:58:31+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-20T00:58:31+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-19"
+supersedes: []
+gate_reason: >-
+  設計転換、変更共有不足、対立回避が工程遅延へつながる因果は具体的で、短期ゲーム制作への適用性はある。
+  ただし4分程度の単一チーム回顧で比較条件・工程指標・検証結果がなく、約4000字の概要を外部一般論なしで支える密度に達しない。
 ---
 
 ## raw_excerpt
