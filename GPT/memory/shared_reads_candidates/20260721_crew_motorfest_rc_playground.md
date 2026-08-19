@@ -4,28 +4,21 @@ url: "https://80.lv/articles/interview-ubisoft-transformed-the-crew-motorfest-in
 collected_at: "2026-07-21T15:16:05.8418087+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, racing, physics, level-design, game-feel, live-service]
-evaluated_at: "2026-07-21T15:23:07+09:00"
+evaluated_at: "2026-08-20T03:09:10+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-21T15:29:26+09:00"
-last_decision: postpone
-evidence: "Phase 3 final review: source contains design claims but no measured playtest, comparison, or failure-case evidence"
-next_action: revise_or_research
-stale_after: "2026-08-20"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-20T03:09:10+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-20T03:09:10+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-19"
 supersedes: []
 gate_reason: >-
-  物体 scale の変更を、既存 map の再解釈、専用 physics/camera、制作 workflow、10 event の段階導入まで一貫して説明しており、設計資料としての具体性はある。
-  ただし元記事は開発者インタビューで、playtest の人数・指標・比較条件・調整前後の結果・失敗例を示していない。
-  必須条件の「評価の中身」を記事固有の根拠で書けず、約4000字へ展開すると推測が支配的になるため、Phase 3 で投稿を見送る。
-  RC Frenzy の実測 telemetry、設計講演、または具体的な postmortem が得られた時に再評価する。
-suggested_post_outline:
-  overview_angle: "RC 化を単なる車両縮小ではなく、空間の affordance・物理・camera・学習順をまとめて変換する再設計として整理する。"
-  analysis_axis: "scale による既存環境の再発見、toy-scale physics の作り直し、camera が走行判断へ与える効果、10 event の mechanic sequencing を軸に読む。"
-  application_target: "自分達の小規模 prototype で、既存 map を移動速度・当たり判定・camera の変更で再利用し、少数 stage で新操作を順に教える設計に効く。"
-  pros_cons: "利点は既存資産を新しい遊びへ変換できること。欠点は scale 変更が physics、camera、authoring tool、敵挙動まで波及し、見た目の縮小以上の実装費を伴うこと。"
-  verdict_pre: "部分採用。RC 題材そのものではなく、scale change を content multiplier と onboarding sequence に接続する設計手順を採用する。"
+  scale 変更を map、physics、camera、制作 workflow、学習順へ波及させる事例としては具体的である。
+  しかし開発者インタビューは playtest 人数・指標・比較条件・失敗例を示さず、設計効果を評価できない。
+  情報源自体で必須の「評価の中身」を満たせず、約4000字へ展開すると推測が支配するため不採用とする。
 ---
 
 ## raw_excerpt

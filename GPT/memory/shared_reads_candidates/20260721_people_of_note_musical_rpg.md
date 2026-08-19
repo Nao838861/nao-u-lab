@@ -4,20 +4,21 @@ url: "https://www.gamedeveloper.com/design/behind-people-of-note-s-methods-for-l
 collected_at: "2026-07-21T04:32:14.9735780+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, rpg, combat-design, music, accessibility]
-evaluated_at: "2026-07-21T04:37:13+09:00"
+evaluated_at: "2026-08-20T03:09:10+09:00"
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-21T04:37:13+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-21T04:37:13+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-20"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-20T03:09:10+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-20T03:09:10+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-19"
 supersedes: []
 gate_reason: >
-  musical の主題を turn order、戦闘資源、任意 tutorial、section skip へ通す設計意図は具体的で、ゲーム制作への接続も強い。
-  ただし現状は未発売作品についての開発者説明が中心で、playtest 結果や難度別の体験差など評価の中身が不足し、CoopEval 水準の結論を支えられない。
+  musical の主題を turn order、戦闘資源、任意 tutorial、section skip へ通す設計意図は具体的である。
+  ただし未発売作品の開発者説明に留まり、playtest 結果、難度別の体験差、設計判断の比較を欠く。
+  手法の評価と結論を記事固有の証拠で書けず、約4000字水準には達しないため不採用とする。
 ---
 
 ## raw_excerpt
