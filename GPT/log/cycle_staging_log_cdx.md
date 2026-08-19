@@ -96,7 +96,49 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の索引 atom ID 50件を per-file index と照合し、broken 0件を確認した。UTF-8 明示読みでは『記憶』22件、『ゲーム設計』8件、『敵パターン』1件を取得し、『評価軸』の直書きは0件だったが、memory_recall.py --no-log では『評価軸』『敵パターン』とも5件を取得できた。"
+  - "memory/atoms.jsonl 2915件を memory_health.py で監査した。per-file/index mirror は2915/2915/2915で欠落・parse error・content conflict 0件。normalized content duplicate はraw 40群80件、recall-visible 3群6件で、既存fold後のeffective unresolvedは0件。矛盾を示すerrorは0件。"
+  - "mojibake suspect 2件をUTF-8で原文確認した。sr-1776127289-4d9239b255 はraw Slack source自体に replacement character があるlegacy 1件、gr-1777083728-44d444ab7a は本文が正常なfalse positiveだった。局所的でtagsによる想起も残るため構造issueには昇格せず、原文推測修復もしなかった。"
+  - "memory/raw/ のmtime 30日超を監査し242件を確認した。内訳上位は web_research root 130件、phase3_sources 17件、headless_eval 16件、phase3_pdfs 13件、phase3_posts 13件。いずれも一次資料・評価原文または既存archiveであり、参照切れを避けて今回は移動0件とした。"
+  - "candidate lifecycle 1343件を監査した。posted 651、ready_to_post 9、postponed 201、failed 480、needs_review 2。未評価の正規backlog 0件、malformed 0件。"
+  - "open duplicate group / stale triage / group action sidecar を順に再生成した。open group 31群（mixed 28、all_open 3）、stale triage 0件、actionable group 0件。期限超過open 2件はいずれも既存deferred group leaseのretry_after 2026-08-20T13:19:04+09:00前で、queue抑止が契約どおりであることを確認した。"
+  - "group handoff budget 1、candidate handoff limit 5で冪等enqueueを実行し、新規投入0件を確認した。group/candidate handoff inbox のpendingはいずれも0件。"
+  - "slack_directives.jsonl 23件、slack_broadcasts.jsonl 21件を監査し、pending 0件を確認した。handled更新は0件。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 8
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
