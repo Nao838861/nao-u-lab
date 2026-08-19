@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-20T01:07:15+09:00",
+  "updated_at": "2026-08-20T03:22:27+09:00",
   "reviewed_source_ts": [
+    "1778198682.665689",
     "1787147749.898409",
     "1787140569.154979",
     "1787115339.463509",
@@ -21533,6 +21534,45 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、転移課題・無介入観察・操作参照の有用性、既存 learning／tutorial-order／onboarding／intent controls との重複、単一作品の証拠限界、既存 pending lease による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-20T03:22:27+09:00",
+      "selected": {
+        "id": "sr-1778198682-9f6e9b64b1",
+        "source_ts": "1778198682.665689",
+        "title": "Opus 4.7 リテラル追従性UP — Anthropic 公式が認め、Nao_u 5/7 03:18 観察と一致",
+        "reason": "source が slack_api/shared-reads、score 15、未レビューで、game-design・agent・evaluation・principle の優先タグを持ち、Nao_u の『Opus 4.7 は指示への追従性が上がっている説』を一次資料で検証した候補なので1件だけ選んだ。model の literal instruction following が強まる時、禁止ルール追加より目的と判断の質を上位に置く知見が、現在の Codex 運用に新しい判断差を作るか確認した。Nao_u の観察との一致はあるが、本投稿を『重要』『適切』『自分に反映してほしい』と明示した記録はない。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 2,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、Anthropic 公式の Opus 4.7 における literal instruction following の増加、sycophancy との軸分離、旧 model 向け prompt の retune 必要性を示し、二次比較記事の exactly JSON／exactly 3 functions 例と Nao_u の観察で補強しているため evidence は3とした。禁止文を目的記述へ置き換え、旧 prompt の例外圧殺や矛盾発火を点検する行動へ変換できるため relevance・actionability は2。ただし対象は Claude Opus 4.7 の挙動であり、現在の Codex に同じ強度で一般化する直接証拠はない。さらに D:/AI/Nao_u_BOT/Claude/memory/feedback_few_rules_big_effect.md は『手順ではなく思考の質』、feedback_rule_proliferation_canonical.md は禁止追加より既存原則への吸収を正本として既に定め、Phase 3b 自体も恒久ルール追加を最終手段にしている。したがって結論は既存運用へ完全に吸収済みで non_redundancy は0。model/version 固有の literal-following probe を active_probes 326件へ追加すると、Claude の挙動を Codex へ誤一般化し、古くなりやすい model 別ルールと確認負荷を増やすため risk_control は1とした。知見は reviewed state に残すが、次回行動は既存 canonical guide の継続で足りる。",
+      "existing_controls": [
+        "D:/AI/Nao_u_BOT/Claude/memory/feedback_few_rules_big_effect.md",
+        "D:/AI/Nao_u_BOT/Claude/memory/feedback_rule_proliferation_canonical.md",
+        "D:/AI/Nao_u_BOT/GPT/phases/phase3b_self_feedback.md"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、literal instruction following の根拠、Claude 固有挙動を Codex へ一般化する限界、既存の少数原則／ルール増殖 canonical guide との完全重複による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

@@ -105,7 +105,35 @@ slack_posts: 0
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778198682-9f6e9b64b1
+    source_ts: "1778198682.665689"
+    title: "Opus 4.7 リテラル追従性UP — Anthropic 公式が認め、Nao_u 5/7 03:18 観察と一致"
+    reason: "score 15 の未レビュー atom で、Nao_u の literal instruction following 観察を一次資料で検証している。禁止追加より目的・思考の質を上位に置く知見が現行 Codex 運用へ新しい判断差を作るか確認するため1件だけ選んだ。"
+  scores:
+    relevance: 2
+    actionability: 2
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "知見は Anthropic 公式・二次比較・Nao_u 観察で裏付けられるが、Claude Opus 4.7 固有挙動を Codex へ同じ強度で一般化できない。結論は既存の feedback_few_rules_big_effect.md と feedback_rule_proliferation_canonical.md に『手順ではなく思考の質』『禁止追加より既存原則へ吸収』として既に実装済みで、別 probe は判断差を増やさず model 別ルールと確認負荷を増やす。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録。active_probes・lifecycle ledger・directive・恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
