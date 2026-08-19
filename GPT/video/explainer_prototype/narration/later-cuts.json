@@ -1,0 +1,57 @@
+{
+  "model": "gpt-4o-mini-tts",
+  "voice": "marin",
+  "speed": 1.2,
+  "responseFormat": "wav",
+  "fps": 30,
+  "tailPaddingSeconds": 0.75,
+  "outputDirectory": "narration/later",
+  "reportFileName": "duration-report.json",
+  "silenceCompaction": {
+    "windowMs": 5,
+    "thresholdDb": -44,
+    "minimumSilenceMs": 60,
+    "maximumInternalSilenceMs": 50,
+    "maximumCommaSilenceMs": 180,
+    "sentenceSilenceThresholdMs": 450,
+    "maximumSentenceSilenceMs": 600,
+    "normalizeSentenceSilence": true,
+    "maximumLeadingSilenceMs": 20,
+    "maximumTrailingSilenceMs": 60
+  },
+  "commonInstructions": "日本語の技術解説動画のナレーションです。女性ナレーターらしい明るさと落ち着きのある自然な標準語で話してください。通常より少し速めの約1.2倍のテンポ感で、冒頭から間延びさせず軽快に進めてください。単語と助詞を分断せず、日本語の語句を滑らかにつなげてください。読点では自然な短い間を置き、句点では約600ミリ秒の明確な間を置いてください。読点と句点以外では不要な間を置かないでください。大げさな演技、広告調、一本調子にはしないでください。固有名詞、数値、英字を明瞭に発音してください。音声だけを出力し、前後に長い無音を入れないでください。",
+  "cuts": [
+    {
+      "id": "C19",
+      "startFrame": 0,
+      "durationFrames": 486,
+      "minimumDurationFrames": 0,
+      "targetSeconds": 16.2,
+      "silenceCompaction": {
+        "sentenceSilenceThresholdMs": 10000,
+        "commaPauseCandidateIndices": [2, 3, 4, 6, 10],
+        "sentencePauseCandidateIndices": [5]
+      },
+      "instructions": "BG、3D、数値を明瞭に発音してください。",
+      "text": "ゲームロジックの処理は、プレイヤーや敵の移動、弾の当たり判定やBGのスクロール処理など、ゲームの要素の更新処理を行います。最大8体の敵に、6個の敵の弾とx個のBGを動かして、3Dの座標変換を行って画面に表示する準備をします。",
+      "ttsText": "ゲームロジックの処理は、プレイヤーや敵の移動、弾の当たり判定やビージーのスクロール処理など、ゲームの要素の更新処理を行います。最大8体の敵に、6個の敵の弾とエックス個のビージーを動かして、スリーディーの座標変換を行って画面に表示する準備をします。",
+      "measuredDurationSeconds": 15.435
+    },
+    {
+      "id": "C20",
+      "startFrame": 486,
+      "durationFrames": 865,
+      "minimumDurationFrames": 0,
+      "targetSeconds": 28.833,
+      "silenceCompaction": {
+        "sentenceSilenceThresholdMs": 10000,
+        "commaPauseCandidateIndices": [0, 2, 3, 10, 14, 15, 16, 17],
+        "sentencePauseCandidateIndices": [1, 5]
+      },
+      "instructions": "3D、XYZ、Z軸、X座標、Y座標、16段階を明瞭に発音してください。数式を読み上げるように単語を分断せず、自然な技術解説として読んでください。",
+      "text": "3Dの座標変換は、普通はかけ算や割り算が必要になります。しかし、スペースハリアーのような疑似3Dのゲームでは、そのような計算のほとんどをテーブルによる変換に置き換えることができます。Z軸で奥に行くほどXとY座標を消失点に近づける割合をテーブル化したり、Z軸に合わせて16段階ある縮小した絵のどれを表示するかをテーブルで決めたりなど、複雑な座標変換のほとんどをXYZの座標をキーにしてテーブルを引く計算に置き換えられます。",
+      "ttsText": "スリーディーの座標変換は、普通はかけ算や割り算が必要になります。しかし、スペースハリアーのような疑似スリーディーのゲームでは、そのような計算のほとんどをテーブルによる変換に置き換えることができます。ゼット軸で奥に行くほどエックス座標とワイ座標を消失点に近づける割合をテーブル化したり、ゼット軸に合わせて16段階ある縮小した絵のどれを表示するかをテーブルで決めたりなど、複雑な座標変換のほとんどを、エックス、ワイ、ゼットの座標をキーにしてテーブルを引く計算に置き換えられます。",
+      "measuredDurationSeconds": 28.075
+    }
+  ]
+}

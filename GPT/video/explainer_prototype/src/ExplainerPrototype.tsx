@@ -1364,14 +1364,14 @@ const AlignedEnemyGrid: React.FC<{scale: number; xShift: number; yShift: number;
   );
 };
 
-const AlignmentScene: React.FC = () => {
+const AlignmentScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 360}) => {
   const frame = useCurrentFrame();
   const index = Math.floor(frame / 42) % 8;
   const xShift = index % 4;
   const parity = Math.floor(index / 4);
   const movementLabels = ['移動なし', '右へ1', '右へ2', '右へ3', '下へ1', '右1・下1', '右2・下1', '右3・下1'];
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 360), backgroundColor: C.bg, padding: '38px 48px 0', boxSizing: 'border-box'}}>
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '38px 48px 0', boxSizing: 'border-box'}}>
       <Title size={42}>解決策：位置をずらした8本を先に作る</Title>
       <div style={{fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900, marginTop: 5}}>
         横4パターン × 縦2パターン ＝ 8本の専用コード
@@ -1418,12 +1418,21 @@ const AlignmentScene: React.FC = () => {
   );
 };
 
-const SizeBankScene: React.FC = () => {
+const bossFaceDimensions = [
+  [40, 58], [32, 47], [28, 41], [26, 37],
+  [22, 33], [20, 29], [18, 26], [16, 22],
+  [14, 20], [12, 17], [10, 14], [8, 12],
+  [6, 9], [5, 7], [3, 4], [2, 3],
+] as const;
+
+const SizeBankScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 450}) => {
   const frame = useCurrentFrame();
-  const chosen = 15 - (Math.floor(frame / 18) % 16);
+  const scaleCycle = frame % 75;
+  const scaleProgress = scaleCycle <= 37 ? scaleCycle / 37 : (75 - scaleCycle) / 38;
+  const chosen = 15 - Math.round(scaleProgress * 15);
   const progress = interpolate(frame, [0, 300], [0, 1], {extrapolateRight: 'clamp'});
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 450), backgroundColor: C.bg, padding: '38px 48px 0', boxSizing: 'border-box'}}>
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '38px 48px 0', boxSizing: 'border-box'}}>
       <Title size={42}>拡大するのではなく、16枚から選ぶ</Title>
       <div style={{fontFamily: FONT, color: C.white, fontSize: 24, fontWeight: 900, marginTop: 6}}>奥から手前まで、違う大きさの絵を用意</div>
       <div style={{display: 'flex', gap: 28, marginTop: 24, alignItems: 'stretch'}}>
@@ -1449,7 +1458,7 @@ const SizeBankScene: React.FC = () => {
               >
                 <Img
                   src={staticFile(`boss_face/BossFace_${String(i).padStart(2, '0')}.png`)}
-                  style={{maxWidth: 84, maxHeight: 132, imageRendering: 'pixelated'}}
+                  style={{width: bossFaceDimensions[i][0] * 1.6, height: bossFaceDimensions[i][1] * 1.6, imageRendering: 'pixelated'}}
                 />
               </div>
             );
@@ -1462,7 +1471,7 @@ const SizeBankScene: React.FC = () => {
           <div style={{height: 210, width: '100%', display: 'grid', placeItems: 'center'}}>
             <Img
               src={staticFile(`boss_face/BossFace_${String(chosen).padStart(2, '0')}.png`)}
-              style={{maxWidth: 300, maxHeight: 210, imageRendering: 'pixelated'}}
+              style={{width: bossFaceDimensions[chosen][0] * 3.4, height: bossFaceDimensions[chosen][1] * 3.4, imageRendering: 'pixelated'}}
             />
           </div>
           <div style={{width: '100%', padding: '17px 10px', boxSizing: 'border-box', borderTop: `2px solid ${C.magenta}`, borderBottom: `2px solid ${C.magenta}`, textAlign: 'center'}}>
@@ -1749,11 +1758,11 @@ export const ConstraintNarrationPreview: React.FC = () => {
         <Audio src={staticFile('narration/constraints/C14.wav')} volume={0.95} />
       </Sequence>
       <Sequence from={c15Timing.startFrame} durationInFrames={c15Timing.durationFrames}>
-        <GameLogicScene durationInFrames={c15Timing.durationFrames} />
+        <AlignmentScene durationInFrames={c15Timing.durationFrames} />
         <Audio src={staticFile('narration/constraints/C15.wav')} volume={0.95} />
       </Sequence>
       <Sequence from={c16Timing.startFrame} durationInFrames={c16Timing.durationFrames}>
-        <CoordinateTransformScene durationInFrames={c16Timing.durationFrames} />
+        <SizeBankScene durationInFrames={c16Timing.durationFrames} />
         <Audio src={staticFile('narration/constraints/C16.wav')} volume={0.95} />
       </Sequence>
     </AbsoluteFill>

@@ -25,6 +25,8 @@
     "narration:generate-constraints": "node tools/generate-narration.mjs --manifest=constraint-cuts.json",
     "narration:regenerate-constraints": "node tools/generate-narration.mjs --manifest=constraint-cuts.json --force",
     "narration:compact-constraints": "node tools/generate-narration.mjs --manifest=constraint-cuts.json --compact-only",
+    "narration:generate-later": "node tools/generate-narration.mjs --manifest=later-cuts.json",
+    "narration:compact-later": "node tools/generate-narration.mjs --manifest=later-cuts.json --compact-only",
     "render:narration-preview": "remotion render src/index.ts ExplainerNarrationPreview out/完成版/explainer_narration_C01-C03.mp4 --codec=h264 --crf=18",
     "render:development-preview": "remotion render src/index.ts DevelopmentNarrationPreview out/完成版/explainer_narration_C04-C06.mp4 --codec=h264 --crf=18",
     "render:drawing-preview": "remotion render src/index.ts DrawingNarrationPreview out/完成版/explainer_narration_C08-C10.mp4 --codec=h264 --crf=18",
