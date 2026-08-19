@@ -490,7 +490,7 @@ const LargeCharacterScene: React.FC<{durationInFrames?: number}> = ({durationInF
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const clearOpacity = interpolate(frame, [363, 375], [0, 1], {
+  const clearOpacity = interpolate(frame, [319, 331], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
@@ -498,7 +498,7 @@ const LargeCharacterScene: React.FC<{durationInFrames?: number}> = ({durationInF
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const warningOpacity = interpolate(frame, [762, 774], [0, 1], {
+  const warningOpacity = interpolate(frame, [715, 727], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
@@ -705,8 +705,8 @@ const CompiledScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
     (blockIndex, orderIndex) => orderIndex > partialTargetOrderIndex && enemyCoverage[blockIndex] === 2,
   );
   const framesPerBlock = 4;
-  const partialMoveStart = Math.round(5.505 * 30);
-  const fullMoveStart = Math.round(13.325 * 30);
+  const partialMoveStart = Math.round(6.27 * 30);
+  const fullMoveStart = Math.round(14.055 * 30);
   const cursorOrderIndex = frame < partialMoveStart
     ? startOrderIndex
     : frame < fullMoveStart
@@ -737,7 +737,7 @@ const CompiledScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
     >
       <Eyebrow size={32}>コンパイルドスプライト</Eyebrow>
       <div style={{height: 8}} />
-      <Title size={37}>目的の絵を最速で書くための専用プログラムを実行</Title>
+      <Title size={37}>目的の絵を最速で書くための専用プログラムを作成</Title>
       <div style={{display: 'flex', gap: 24, alignItems: 'flex-start', marginTop: 27}}>
         <div style={{width: 550, flexShrink: 0}}>
           <PackedEnemy scale={10} showAll analyze cursor={cursor} />
