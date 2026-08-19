@@ -46,7 +46,15 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+eligible_candidates: []
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260819_meaningful_reasons_to_wander_open_world.md
+    reason: "Phase 2 の gate_decision が postpone のため対象外。具体施策・比較条件・測定範囲が不足し、約4000字の投稿を推測なしで構成できない"
+    action: postpone
+slack_posted: false
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
