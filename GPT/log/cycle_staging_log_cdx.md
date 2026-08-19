@@ -68,7 +68,35 @@ skipped: []
 - Slack 保存後 review: `tools/post_slack_message_file.py` の検証は `ok`。ts=`1787100006.584759`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779778084-e5349725da
+    source_ts: "1779778084.383239"
+    title: "Toward Stable World Models: Measuring and Addressing World Instability in Generative Environments"
+    reason: "score 11の未レビューatomで、memory・harness・game-design・agent・evaluation・principleを持つ。action／inverse actionの閉路で再訪時のworld state保存を測る知見が、既存controlsにない判断差を作るか確認するため1件だけ選んだ。Nao_uの明示評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "World Stabilityは、途中で十分に変化しながらinverse actions後に初期状態へ戻れるかをdiscrepancy／dynamicsで測り、逆操作不能時はseeded replay・save/load・state hashへ翻訳できるため有用。ただし既存のmatrix-game-long-horizon-memory-latency、bdd-route-contract-regression、long-horizon-multilayer-verifierが再訪・replay・長期trace検査を覆う。active_probes 325件へ同型controlを加えても判断差を作らず、確認負荷と過剰一般化だけを増やすため採用条件未達。"
+  change:
+    summary: "reviewed_source_tsと、既存controlsとの重複によるstate-only reject理由を記録した。新規probe・metric・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

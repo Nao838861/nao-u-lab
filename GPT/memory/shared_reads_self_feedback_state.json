@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-19T07:45:19+09:00",
+  "updated_at": "2026-08-19T09:44:00+09:00",
   "reviewed_source_ts": [
+    "1779778084.383239",
     "1787085841.602779",
     "1779536360.403639",
     "1779824262.944629",
@@ -687,6 +688,45 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-19T09:44:00+09:00",
+      "selected": {
+        "id": "sr-1779778084-e5349725da",
+        "source_ts": "1779778084.383239",
+        "title": "Toward Stable World Models: Measuring and Addressing World Instability in Generative Environments",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューという条件を満たし、memory・harness・game-design・agent・evaluation・principle の優先タグを持つため1件だけ選んだ。action と inverse action の閉路で再訪時の world state 保存を測る知見が、現在の replay／long-horizon controls にない判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_controlも必須閾値2を下回るため、新規probe・metric・lease・directiveは追加しない。shared-reads本文は、初期observationからaction sequenceを実行し、inverse actionsで戻った時のdiscrepancyを途中のdynamicsで正規化するWorld Stability score、CS:GO Dust2とDeepMind Labでの比較、Longer Context・Data Augmentation・Inject Reverse Prediction・Refinement Samplingの差、逆操作不能な操作ではseeded replay／save-load／state hashへ翻訳する限界まで示す。したがってrelevance・actionability・evidenceは3とした。一方、probe-20260626-matrix-game-long-horizon-memory-latencyは長期anchorと再訪時のretrieval checkを、probe-20260608-bdd-route-contract-regressionは固定routeの再現とregressionを、probe-20260612-long-horizon-multilayer-verifierは長期traceを複数層で検査する。同じbefore／away／returnまたはreplay state比較を別probeとして追加しても次回判断は変わらないためnon_redundancy=0。active_probesが325件ある現状で同型controlを増やすと確認負荷を増やし、可逆でないgame actionまで閉路検査へ過剰一般化するためrisk_control=1とした。",
+      "existing_controls": [
+        "probe-20260626-matrix-game-long-horizon-memory-latency",
+        "probe-20260608-bdd-route-contract-regression",
+        "probe-20260612-long-horizon-multilayer-verifier"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_tsと、World Stabilityの有用性、既存long-horizon／route-regression／multilayer-verifier controlsとの重複によるreject理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-19T07:45:19+09:00",
       "selected": {
