@@ -53,7 +53,18 @@ unreviewed_intake_audit:
 - 留保: 単一チームの reflective practice / autoethnography であり、framework の一般的効果を示す対照評価ではない。Phase 3 では実践知として扱い、因果的な有効性を過大主張しない。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260819_beyond_technical_debt_comprehension_debt.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787115339463509
+    char_count: 3669
+skipped: []
+```
+
+- 最終判定: 投稿。原論文 PDF を確認し、CIGDI 7 段階、Priority Criteria / Timeboxing、comprehension debt の観測事例、検証負荷、単一チーム・3 か月の限界を本文に反映した。
+- 投稿前レビュー: 3669 字、必須見出し順序・URL 末尾・禁止表現なしを deterministic check で確認。重複 preflight は `continue`。
+- 判定内容: CIGDI 自体の効果は過大主張せず、comprehension debt を機能的正しさと別の受入軸にする「部分採用」とした。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
