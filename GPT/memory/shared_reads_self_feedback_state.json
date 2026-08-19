@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-19T11:55:23+09:00",
+  "updated_at": "2026-08-19T14:02:01+09:00",
   "reviewed_source_ts": [
+    "1779428037.650699",
     "1787100006.584759",
     "1779778084.383239",
     "1787085841.602779",
@@ -689,6 +690,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-19T14:02:01+09:00",
+      "selected": {
+        "id": "sr-1779428037-402620713a",
+        "source_ts": "1779428037.650699",
+        "title": "ICLR 2026 Workshop MemAgents 立場文書 — 「制限要因はもうモデル能力ではなくメモリ」がトップ国際会議の workshop タイトルに昇格した観測",
+        "reason": "source が slack_api/shared-reads、score 15、未レビューという条件を満たし、memory・game-design・agent・operation・evaluation の5優先タグを横断するため1件だけ選んだ。encode・retain・retrieve・consolidate を agent の制限要因として扱う立場が、現在の Phase 4a 記憶整理と atoms per-file 移行に既存 control と異なる次回判断を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は agentic memory を encode・retain・retrieve・consolidate の運用課題として整理し、Explicit Memory と In-Weights Memory の分岐、判断主体、長期履歴、意味衝突を次の記憶変更で確認する行動へは変換できるため relevance=3、actionability=2 とした。一方、原典は workshop proposal の立場表明で、特定 architecture の比較実験、当環境の recall 改善、失敗率、latency、token cost、ゲーム制作判断への寄与を示さないため evidence=1 とした。現在は Phase 4a/4b/4c が記憶問題を cleanup・設計・導入に分離し、memory/directive_atoms_per_file_migration_20260513.md が人間可読な Explicit Memory、provenance、dual-write、archive 境界を実装済みである。probe-20260625-amvl-retention-utility-lifecycle は保持宣言と観測 utility を、probe-20260621-compiled-memory-boundary は raw 到達性と同一 lineage を既に扱うため、本投稿の広い memory-first 主張を別 control にしても次回判断は変わらず non_redundancy=0。active_probes 325件へ『モデルよりメモリを先に疑う』汎用 probe を足すと、model・tool・harness・task specification の欠陥まで memory 改修へ誤帰属し、確認負荷と infrastructure 投資を増やすため risk_control=1 とした。",
+      "existing_controls": [
+        "phases/README.md#Phase-4a-4b-4c",
+        "memory/directive_atoms_per_file_migration_20260513.md",
+        "probe-20260625-amvl-retention-utility-lifecycle",
+        "probe-20260621-compiled-memory-boundary"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、MemAgents の方向性は有用だが実証・新規判断差・risk control が不足するため reject した理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-19T11:55:23+09:00",
       "selected": {

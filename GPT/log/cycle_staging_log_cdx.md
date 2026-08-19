@@ -67,7 +67,35 @@ skipped: []
 - 判定内容: CIGDI 自体の効果は過大主張せず、comprehension debt を機能的正しさと別の受入軸にする「部分採用」とした。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779428037-402620713a
+    source_ts: "1779428037.650699"
+    title: "ICLR 2026 Workshop MemAgents 立場文書 — 『制限要因はもうモデル能力ではなくメモリ』がトップ国際会議の workshop タイトルに昇格した観測"
+    reason: "score 15 の未レビュー atom で、memory・game-design・agent・operation・evaluation の5優先タグを横断する。encode・retain・retrieve・consolidate を agent の制限要因として扱う立場が、現在の Phase 4a 記憶整理と atoms per-file 移行に既存 control と異なる次回判断を作るか確認するため1件だけ選んだ。Nao_u の明示的な重要評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "workshop proposal は記憶研究の方向性を裏付けるが、特定 architecture の比較実験や当環境の recall・失敗率・latency・token cost・ゲーム制作判断への寄与を示さない。Phase 4a/4b/4c、per-atom Explicit Memory 移行、AMV-L retention/utility probe、compiled-memory boundary が既に同じ判断面を扱う。active_probes 325件へ広い memory-first probe を足すと、model・tool・harness・task specification の欠陥まで memory 改修へ誤帰属し、確認負荷と infrastructure 投資を増やすため採用しない。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録した。active_probes・ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
