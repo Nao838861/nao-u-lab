@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/production/last-year-postmortem"
 collected_at: "2026-08-19T09:31:14+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, postmortem, live-service, community, legacy-code, production]
+evaluated_at: "2026-08-19T09:34:15+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-19T09:34:15+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-19T09:34:15+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-18"
+supersedes: []
+gate_reason: >-
+  停止作品の復旧を、権利・community・player progression・backend migration・legacy code・再公開時の scope 順序まで一続きの制作判断として分析できる。
+  段階的 refactor と「まず既存購入者の版を戻す」方針は既存ゲームの再始動へ具体的に適用でき、CoopEval 水準の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "失われた運営基盤を復元しつつ、既存プレイヤーへの約束と将来開発の土台を両立した IP 再始動の postmortem"
+  analysis_axis: "community の継続性、progression 保全を伴う backend 移行、restore-first の scope 設計、運営中の段階的 refactor の相互関係"
+  application_target: "停止・長期休止した自作ゲームや古い prototype を再始動する際の、復旧版と刷新版の分離、save 互換性、技術負債解消の優先順位設計"
+  pros_cons: "既存ユーザーの信頼と早期再公開を守れる一方、旧仕様・旧 asset・運営互換性を抱えたまま refactor するコストと、記事が開発側の自己報告である限界がある"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
