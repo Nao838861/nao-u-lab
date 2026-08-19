@@ -175,4 +175,12 @@ atom_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted: true
+channel: "#log"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787108560699909"
+slack_ts: "1787108560.699909"
+char_count: 2248
+verification: ok
+draft: drafts/phase5_log_diary_20260819_1143_cdx.md
+```
