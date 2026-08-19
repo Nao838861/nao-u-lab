@@ -4,6 +4,27 @@ url: "https://www.gamedeveloper.com/programming/deep-dive-crafting-detailed-and-
 collected_at: "2026-08-19T18:31:57+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, rendering, simulation, technical-art, water]
+evaluated_at: "2026-08-19T18:36:37+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-19T18:36:37+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-19T18:36:37+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-18"
+supersedes: []
+gate_reason: >-
+  一次資料から、問題設定、距離適応 mesh、GPU 上の shallow-water simulation、CPU/SIMD の
+  hydrostatic pipe model、各方式を分けた性能・gameplay 上の理由まで具体的に抽出できる。
+  見た目・局所反応・gameplay authority を別 subsystem に割り当てる設計は制作へ直接適用でき、約4000字の深い分析に耐える。
+suggested_post_outline:
+  overview_angle: "万能な水 simulation を求めず、知覚距離・相互作用の尺度・gameplay authority ごとに三つの水 system を組み合わせた設計として解説する"
+  analysis_axis: "mesh detail、GPU surface fluid、CPU wave model の責務分割と、5倍速・自由形状 pool・数千 guest を両立する計算配置"
+  application_target: "環境表現 prototype で、見た目の fidelity、局所的な反応、gameplay に影響する状態を別層に分け、各層の更新頻度と authority を決める設計"
+  pros_cons: "長所は用途ごとに必要十分な model を選べる性能・安定性・反復性。短所は複数 simulation の整合、境界条件、platform 別 GPU/CPU budget の検証が増えること"
+  verdict_pre: 部分採用
 ---
 
 ## raw_excerpt
