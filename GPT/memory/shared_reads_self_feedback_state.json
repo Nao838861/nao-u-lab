@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-19T14:02:01+09:00",
+  "updated_at": "2026-08-19T16:00:55+09:00",
   "reviewed_source_ts": [
+    "1779352546.125499",
     "1779428037.650699",
     "1787100006.584759",
     "1779778084.383239",
@@ -690,6 +691,47 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-19T16:00:55+09:00",
+      "selected": {
+        "id": "sr-1779352546-e8ac2204b7",
+        "source_ts": "1779352546.125499",
+        "title": "Margaris \"On the Strengths and (Many) Weaknesses of 'Fulfilling the Player Fantasy'\" (2025-11)",
+        "reason": "source が slack_api/shared-reads、score 15、未レビューという条件を満たす候補の先頭で、memory・game-design・evaluation の3優先タグを持つため1件だけ選んだ。player fantasy／『何ごっこか』という強いラベルを具体メカニクス・体験・感情語へ戻す知見が、次のゲーム制作で既存 control と異なる判断を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は『何ごっこか』を最上位原理にせず、具体的なメカニクス・体験・感情語へ書き換える行動へ直接変換できるため relevance=3、actionability=3 とした。本文は原典の論旨、2D STG への適用限界、mimicry_log での失敗、R-J 降格まで記録する一方、原典は設計 essay で比較 playtest や 2D STG の実証を伴わないため evidence=2 とした。同じ投稿の結論は D:/AI/Nao_u_BOT/Claude/projects/principles.md §2026-05-21 C215 で『原則化撤回 + shorthand 用途維持』として既に確定し、D:/AI/Nao_u_BOT/Claude/memory/game_lessons_log.md R-B に Margaris 出典付きで統合済みである。さらに M-14/M-18 と probe-20260717-player-intent-action-response が、抽象ラベルを具体的な楽しい瞬間・実装動詞・action schema・observable world response へ落とす行動を既に覆うため non_redundancy=0。active_probes 325件へ同義 probe を足すと、licensed IP やチーム alignment で有用な shorthand まで一律に抑制し、既存の『何ごっこ』観点との緊張を増やすため risk_control=1 とした。",
+      "existing_controls": [
+        "D:/AI/Nao_u_BOT/Claude/projects/principles.md#2026-05-21-C215-Phase-3",
+        "D:/AI/Nao_u_BOT/Claude/memory/game_lessons_log.md#R-B",
+        "D:/AI/Nao_u_BOT/Claude/memory/lessons/M-14.md",
+        "D:/AI/Nao_u_BOT/Claude/memory/lessons/M-18.md",
+        "probe-20260717-player-intent-action-response"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、知見は既に具体的な game-design control へ統合済みであり、同義 probe は判断差より重複・過剰抑制リスクが大きいため reject した理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-19T14:02:01+09:00",
       "selected": {
