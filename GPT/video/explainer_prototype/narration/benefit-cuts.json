@@ -1,0 +1,89 @@
+{
+  "model": "gpt-4o-mini-tts",
+  "voice": "marin",
+  "speed": 1.2,
+  "responseFormat": "wav",
+  "fps": 30,
+  "tailPaddingSeconds": 0.75,
+  "outputDirectory": "narration/benefits",
+  "reportFileName": "duration-report.json",
+  "silenceCompaction": {
+    "windowMs": 5,
+    "thresholdDb": -44,
+    "minimumSilenceMs": 60,
+    "maximumInternalSilenceMs": 50,
+    "maximumCommaSilenceMs": 180,
+    "sentenceSilenceThresholdMs": 450,
+    "maximumSentenceSilenceMs": 600,
+    "normalizeSentenceSilence": true,
+    "maximumLeadingSilenceMs": 20,
+    "maximumTrailingSilenceMs": 60
+  },
+  "commonInstructions": "日本語の技術解説動画のナレーションです。女性ナレーターらしい明るさと落ち着きのある自然な標準語で話してください。通常より少し速めの約1.2倍のテンポ感で、冒頭から間延びさせず軽快に進めてください。単語と助詞を分断せず、日本語の語句を滑らかにつなげてください。読点では自然な短い間を置き、句点では約600ミリ秒の明確な間を置いてください。読点と句点以外では不要な間を置かないでください。大げさな演技、広告調、一本調子にはしないでください。固有名詞、数値、英字を明瞭に発音してください。音声だけを出力し、前後に長い無音を入れないでください。",
+  "cuts": [
+    {
+      "id": "C11",
+      "startFrame": 0,
+      "durationFrames": 396,
+      "minimumDurationFrames": 390,
+      "targetSeconds": 13.2,
+      "silenceCompaction": {
+        "sentenceSilenceThresholdMs": 10000,
+        "commaPauseCandidateIndices": [
+          3,
+          6,
+          9
+        ],
+        "sentencePauseCandidateIndices": []
+      },
+      "instructions": "一般的なソフトウェア描画とコンパイルドスプライトの速度差を比較する説明です。空白のスキップ、上書き、数倍高速という要点を明瞭に読んでください。",
+      "text": "一般的なソフトウェア描画とコンパイルドスプライトを比較すると、コンパイルドスプライトは空白のピクセルをスキップして、抜きのないピクセルは合成せずそのまま上書きするため、普通の描画に比べて数倍高速にキャラクターを描くことができます。",
+      "ttsText": "一般的なソフトウェア描画とコンパイルドスプライトを比較すると、コンパイルドスプライトは空白のピクセルをスキップして、抜きのないピクセルは合成せずそのまま上書きするため、普通の描画に比べて数倍高速にキャラクターを描くことができます。",
+      "measuredDurationSeconds": 12.45
+    },
+    {
+      "id": "C12",
+      "startFrame": 396,
+      "durationFrames": 365,
+      "minimumDurationFrames": 0,
+      "targetSeconds": 12.167,
+      "silenceCompaction": {
+        "sentenceSilenceThresholdMs": 10000,
+        "commaPauseCandidateIndices": [
+          0,
+          6
+        ],
+        "sentencePauseCandidateIndices": [
+          5
+        ]
+      },
+      "instructions": "実演映像に重ねる成果説明です。CPU、30fps、ビッグコア8体を明瞭に読み、後半は欠点の説明へ自然につないでください。",
+      "text": "コンパイルドスプライトを使うことで、ファミコンのCPUでも30fpsでビッグコア8体+背景が描画できるくらいの速度が出るようになりました。しかし、コンパイルドスプライトには特有の欠点もあります。",
+      "ttsText": "コンパイルドスプライトを使うことで、ファミコンのシーピーユーでも30エフピーエスでビッグコア8体と背景が描画できるくらいの速度が出るようになりました。しかし、コンパイルドスプライトには特有の欠点もあります。",
+      "measuredDurationSeconds": 11.41
+    },
+    {
+      "id": "C13",
+      "startFrame": 761,
+      "durationFrames": 481,
+      "minimumDurationFrames": 360,
+      "targetSeconds": 16.033,
+      "silenceCompaction": {
+        "sentenceSilenceThresholdMs": 10000,
+        "commaPauseCandidateIndices": [
+          3,
+          6,
+          7,
+          8
+        ],
+        "sentencePauseCandidateIndices": [
+          5
+        ]
+      },
+      "instructions": "コンパイルドスプライトの容量面の欠点を説明します。前半は一般的な描画、後半はコンパイルドスプライトという対比が伝わるように、二つの文を明確に区切ってください。",
+      "text": "一般的なソフトウェア描画はデータとプログラムが分かれているので、データだけ用意すれば少ない容量でどんな絵でも描くことができます。コンパイルドスプライトは、絵のパターンごとにプログラムを用意するため、高速に描画できるのと引き換えに、大量のメモリを消費することになります。",
+      "ttsText": "一般的なソフトウェア描画はデータとプログラムが分かれているので、データだけ用意すれば少ない容量でどんな絵でも描くことができます。コンパイルドスプライトは、絵のパターンごとにプログラムを用意するため、高速に描画できるのと引き換えに、大量のメモリを消費することになります。",
+      "measuredDurationSeconds": 15.265
+    }
+  ]
+}

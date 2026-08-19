@@ -28,6 +28,11 @@ import {
   c09Timing,
   c10Timing,
 } from './drawingNarrationTiming';
+import {
+  c11Timing,
+  c12Timing,
+  c13Timing,
+} from './benefitNarrationTiming';
 
 const C = {
   bg: '#050507',
@@ -822,7 +827,7 @@ const CompiledScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
   );
 };
 
-const RaceScene: React.FC = () => {
+const RaceScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 390}) => {
   const frame = useCurrentFrame();
   const started = frame >= 45;
   const genericWork = clamp(
@@ -839,7 +844,7 @@ const RaceScene: React.FC = () => {
   const rowsPerColumn = Math.ceil(compiledProgram.length / 3);
   const currentCompiledCode = compiledLine >= 0 ? compiledProgram[compiledLine].code : compiled >= compiledProgram.length ? 'DONE' : 'READY';
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 390), backgroundColor: C.bg, padding: '35px 42px', boxSizing: 'border-box'}}>
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '35px 42px', boxSizing: 'border-box'}}>
       <Title size={39} align="center">コンパイルドスプライトのメリット</Title>
       <div style={{color: C.white, fontFamily: FONT, fontSize: 23, fontWeight: 800, textAlign: 'center', marginTop: 5}}>
         同じ絵を、メモリと引き換えに高速に描画できる
@@ -1044,10 +1049,10 @@ const CodeStripes: React.FC<{color: string; lines?: number; height?: number; gap
 
 const MemoryGauge: React.FC<{count: number; compiled?: boolean}> = ({count, compiled = false}) => {
   const color = compiled ? C.magenta : C.cyan;
-  const programWidth = compiled ? 62 : 41;
-  const itemWidth = compiled ? programWidth : 57;
+  const programWidth = 48;
+  const itemWidth = 64;
   return (
-    <div style={{display: 'flex', gap: 6, height: 23, alignItems: 'stretch'}}>
+    <div style={{display: 'flex', gap: 6, width: '100%', height: 23, alignItems: 'stretch'}}>
       {!compiled ? (
         <div
           style={{
@@ -1070,7 +1075,8 @@ const MemoryGauge: React.FC<{count: number; compiled?: boolean}> = ({count, comp
           <div
             key={i}
             style={{
-              width: itemWidth,
+              width: compiled ? undefined : itemWidth,
+              flex: compiled ? 1 : undefined,
               display: 'grid',
               placeItems: 'center',
               background: visible ? color : '#292630',
@@ -1089,14 +1095,14 @@ const MemoryGauge: React.FC<{count: number; compiled?: boolean}> = ({count, comp
   );
 };
 
-const PerformanceDemoScene: React.FC = () => {
+const PerformanceDemoScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 480}) => {
   const frame = useCurrentFrame();
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 480), backgroundColor: '#000', display: 'grid', placeItems: 'center'}}>
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: '#000', display: 'grid', placeItems: 'center'}}>
       <OffthreadVideo
         src={staticFile('MonoBitmap260207.mp4')}
         startFrom={28 * 30}
-        endAt={44 * 30}
+        endAt={28 * 30 + durationInFrames}
         muted
         style={{width: 768, height: 720, objectFit: 'fill', imageRendering: 'pixelated'}}
       />
@@ -1104,11 +1110,14 @@ const PerformanceDemoScene: React.FC = () => {
   );
 };
 
-const CapacityCostScene: React.FC = () => {
+const CapacityCostScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 360}) => {
   const frame = useCurrentFrame();
-  const count = clamp(Math.floor(interpolate(frame, [35, 245], [0, 4])), 0, 3);
+  const leftRevealFrames = [24, 90, 156];
+  const rightRevealFrames = [252, 312, 372];
+  const leftCount = leftRevealFrames.filter((revealFrame) => frame >= revealFrame).length;
+  const rightCount = rightRevealFrames.filter((revealFrame) => frame >= revealFrame).length;
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 360), backgroundColor: C.bg, padding: '38px 48px 0', boxSizing: 'border-box'}}>
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '38px 48px 0', boxSizing: 'border-box'}}>
       <Title size={42}>コンパイルドスプライトの欠点</Title>
       <div style={{fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900, marginTop: 5}}>
         欠点1：絵ごとに専用プログラムが必要
@@ -1119,19 +1128,19 @@ const CapacityCostScene: React.FC = () => {
           <div style={{fontFamily: FONT, color: C.cyan, fontSize: 25, fontWeight: 900}}>一般的なソフトウェア描画の場合</div>
           <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginTop: 14}}>
             {costSprites.map((sprite, i) => (
-              <div key={sprite.name} style={{opacity: i < count ? 1 : 0.14}}><SpriteCard sprite={sprite} /></div>
+              <div key={sprite.name} style={{opacity: i < leftCount ? 1 : 0.14}}><SpriteCard sprite={sprite} /></div>
             ))}
           </div>
-          <div style={{display: 'flex', alignItems: 'center', gap: 18, marginTop: 23}}>
+          <div style={{display: 'flex', alignItems: 'center', gap: 14, marginTop: 23}}>
             <div style={{fontFamily: FONT, color: C.white, fontSize: 22, fontWeight: 900}}>絵データだけ追加</div>
             <div style={{fontFamily: MONO, color: C.cyan, fontSize: 24, fontWeight: 900}}>→</div>
-            <div style={{flex: 1, padding: '9px 14px', border: '1px solid #4a4651', background: '#0a0a0d'}}>
-              <div style={{fontFamily: FONT, color: C.dim, fontSize: 12, fontWeight: 800, marginBottom: 6}}>1つの小さな汎用プログラム</div>
+            <div style={{width: 150, flexShrink: 0, padding: '9px 12px', border: '1px solid #4a4651', background: '#0a0a0d'}}>
+              <div style={{fontFamily: FONT, color: C.dim, fontSize: 11, fontWeight: 800, marginBottom: 6}}>1つの小さな汎用プログラム</div>
               <div style={{width: 55}}><CodeStripes color={C.cyan} lines={4} height={4} gap={3} /></div>
             </div>
           </div>
           <div style={{marginTop: 23}}>
-            <MemoryGauge count={count} />
+            <MemoryGauge count={leftCount} />
           </div>
           <div style={{fontFamily: FONT, color: C.dim, fontSize: 17, marginTop: 7}}>プログラムは1つのまま</div>
         </div>
@@ -1140,18 +1149,18 @@ const CapacityCostScene: React.FC = () => {
           <div style={{fontFamily: FONT, color: C.magenta, fontSize: 25, fontWeight: 900}}>コンパイルドスプライト</div>
           <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginTop: 14}}>
             {costSprites.map((sprite, i) => (
-              <div key={sprite.name} style={{opacity: i < count ? 1 : 0.14}}>
+              <div key={sprite.name} style={{opacity: i < rightCount ? 1 : 0.14}}>
                 <SpriteCard sprite={sprite} />
-                <div style={{height: 73, padding: '10px 12px', boxSizing: 'border-box', background: '#0a0a0d', border: '1px solid #3a3741', display: 'flex', alignItems: 'center', gap: 7}}>
-                  <div style={{width: 34, flexShrink: 0}}><CodeStripes color={C.magenta} lines={7} height={3} gap={3} /></div>
-                  <div style={{fontFamily: FONT, color: C.magenta, fontSize: 9, fontWeight: 900}}>プログラム</div>
+                <div style={{height: 73, padding: '8px 10px', boxSizing: 'border-box', background: '#0a0a0d', border: '1px solid #3a3741'}}>
+                  <div style={{fontFamily: FONT, color: C.magenta, fontSize: 9, fontWeight: 900, whiteSpace: 'nowrap'}}>絵に合わせた専用のプログラム</div>
+                  <div style={{width: '100%', marginTop: 6}}><CodeStripes color={C.magenta} lines={7} height={3} gap={3} /></div>
                 </div>
               </div>
             ))}
           </div>
           <div style={{fontFamily: FONT, color: C.white, fontSize: 22, fontWeight: 900, marginTop: 14}}>絵ごとにプログラムを追加</div>
           <div style={{marginTop: 15}}>
-            <MemoryGauge count={count} compiled />
+            <MemoryGauge count={rightCount} compiled />
           </div>
           <div style={{fontFamily: FONT, color: C.magenta, fontSize: 17, fontWeight: 800, marginTop: 7}}>速いが、ROMを大量に使う</div>
         </div>
@@ -1623,6 +1632,25 @@ export const DrawingNarrationPreview: React.FC = () => {
       <Sequence from={c10Timing.startFrame} durationInFrames={c10Timing.durationFrames}>
         <CompiledScene durationInFrames={c10Timing.durationFrames} />
         <Audio src={staticFile('narration/drawing/C10.wav')} volume={0.95} />
+      </Sequence>
+    </AbsoluteFill>
+  );
+};
+
+export const BenefitNarrationPreview: React.FC = () => {
+  return (
+    <AbsoluteFill style={{backgroundColor: C.bg}}>
+      <Sequence from={c11Timing.startFrame} durationInFrames={c11Timing.durationFrames}>
+        <RaceScene durationInFrames={c11Timing.durationFrames} />
+        <Audio src={staticFile('narration/benefits/C11.wav')} volume={0.95} />
+      </Sequence>
+      <Sequence from={c12Timing.startFrame} durationInFrames={c12Timing.durationFrames}>
+        <PerformanceDemoScene durationInFrames={c12Timing.durationFrames} />
+        <Audio src={staticFile('narration/benefits/C12.wav')} volume={0.95} />
+      </Sequence>
+      <Sequence from={c13Timing.startFrame} durationInFrames={c13Timing.durationFrames}>
+        <CapacityCostScene durationInFrames={c13Timing.durationFrames} />
+        <Audio src={staticFile('narration/benefits/C13.wav')} volume={0.95} />
       </Sequence>
     </AbsoluteFill>
   );
