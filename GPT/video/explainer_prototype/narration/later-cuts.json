@@ -94,9 +94,34 @@
     {
       "id": "C20",
       "startFrame": 1589,
-      "durationFrames": 1017,
+      "durationFrames": 678,
       "minimumDurationFrames": 0,
-      "targetSeconds": 33.9,
+      "targetSeconds": 22.6,
+      "silenceCompaction": {
+        "sentenceSilenceThresholdMs": 10000,
+        "commaPauseCandidateIndices": [
+          1,
+          2,
+          4,
+          6,
+          10
+        ],
+        "sentencePauseCandidateIndices": [
+          5,
+          13
+        ]
+      },
+      "instructions": "BG、3D、8bit CPU、8体、6個、16個を明瞭に発音してください。3文の間には明確な間を置いてください。",
+      "text": "ゲームロジックの処理は、プレイヤーや敵の移動、弾の当たり判定やBGのスクロール処理など、ゲームの要素の更新処理を行います。最大8体の敵に、6個の敵の弾と16個の背景オブジェクトを動かして、3Dの座標変換を行って画面に表示する準備をします。3Dの座標変換はファミコンのような8bit CPUにはとても負荷の高い計算になります。",
+      "ttsText": "ゲームロジックの処理は、プレイヤーや敵の移動、弾の当たり判定やビージーのスクロール処理など、ゲームの要素の更新処理を行います。最大8体の敵に、6個の敵の弾と16個の背景オブジェクトを動かして、スリーディーの座標変換を行って画面に表示する準備をします。スリーディーの座標変換はファミコンのような8ビットシーピーユーにはとても負荷の高い計算になります。",
+      "measuredDurationSeconds": 21.85
+    },
+    {
+      "id": "C21",
+      "startFrame": 2267,
+      "durationFrames": 1012,
+      "minimumDurationFrames": 0,
+      "targetSeconds": 33.733,
       "silenceCompaction": {
         "sentenceSilenceThresholdMs": 10000,
         "commaPauseCandidateIndices": [
@@ -116,14 +141,14 @@
       "instructions": "3D、6502、8bit CPU、XYZ、Z軸、X座標、Y座標、16段階を明瞭に発音してください。",
       "text": "3Dの座標変換は、普通はかけ算や割り算が必要になりますが、ファミコンのCPUである6502はかけ算や割り算の命令がありません。しかし、スペースハリアーのような疑似3Dのゲームでは、計算のほとんどをテーブルによる変換に置き換えることができます。Z軸で奥に行くほどXとY座標を消失点に近づける割合をテーブル化したり、Z軸に合わせて16段階ある縮小した絵のどれを表示するかをテーブルで決めたりなど、複雑な座標変換のほとんどをXYZの座標をキーにしてテーブルを引く計算に置き換えられます。",
       "ttsText": "スリーディーの座標変換は、普通はかけ算や割り算が必要になりますが、ファミコンのシーピーユーであるロクゴーマルニはかけ算や割り算の命令がありません。しかし、スペースハリアーのような疑似スリーディーのゲームでは、計算のほとんどをテーブルによる変換に置き換えることができます。ゼット軸で奥に行くほどエックス座標とワイ座標を消失点に近づける割合をテーブル化したり、ゼット軸に合わせて16段階ある縮小した絵のどれを表示するかをテーブルで決めたりなど、複雑な座標変換のほとんどを、エックス、ワイ、ゼットの座標をキーにしてテーブルを引く計算に置き換えられます。",
-      "measuredDurationSeconds": 33.13
+      "measuredDurationSeconds": 32.96
     },
     {
-      "id": "C21",
-      "startFrame": 2606,
-      "durationFrames": 1018,
+      "id": "C22",
+      "startFrame": 3279,
+      "durationFrames": 1005,
       "minimumDurationFrames": 0,
-      "targetSeconds": 33.933,
+      "targetSeconds": 33.5,
       "silenceCompaction": {
         "sentenceSilenceThresholdMs": 10000,
         "commaPauseCandidateIndices": [
@@ -146,14 +171,14 @@
       "instructions": "C言語、インラインアセンブラ、AI、アセンブラ関数、コンパイラを明瞭に発音してください。",
       "text": "今回は開発の効率化のため、アセンブラではなく、C言語でプログラムを書いていました。C言語では速度が足りなくなる場所は個別にインラインアセンブラに置き換えたり、アルゴリズムが固まったところから関数単位でAIにアセンブラ関数へ置き換えてもらい、少しずつ最適化を進めながら開発していきました。また、AIが関数をアセンブラに置き換えたり、アセンブラ側で最適化を行った後も、同じ動作になるC言語のソースを常に維持するようにしていて、AIをコンパイラ代わりに使っているような状況でした。このような作り方は、アルゴリズムレベルの最適化を常にC言語で行えるので効率的でした。",
       "ttsText": "今回は開発の効率化のため、アセンブラではなく、シー言語でプログラムを書いていました。シー言語では速度が足りなくなる場所は個別にインラインアセンブラに置き換えたり、アルゴリズムが固まったところから関数単位でエーアイにアセンブラ関数へ置き換えてもらい、少しずつ最適化を進めながら開発していきました。また、エーアイが関数をアセンブラに置き換えたり、アセンブラ側で最適化を行った後も、同じ動作になるシー言語のソースを常に維持するようにしていて、エーアイをコンパイラ代わりに使っているような状況でした。このような作り方は、アルゴリズムレベルの最適化を常にシー言語で行えるので効率的でした。",
-      "measuredDurationSeconds": 33.155
+      "measuredDurationSeconds": 32.735
     },
     {
-      "id": "C22",
-      "startFrame": 3624,
-      "durationFrames": 425,
+      "id": "C23",
+      "startFrame": 4284,
+      "durationFrames": 421,
       "minimumDurationFrames": 0,
-      "targetSeconds": 14.167,
+      "targetSeconds": 14.033,
       "silenceCompaction": {
         "sentenceSilenceThresholdMs": 10000,
         "commaPauseCandidateIndices": [
@@ -168,26 +193,7 @@
       "instructions": "Houdini、DCCツール、座標変換、軌跡テーブルを明瞭に発音してください。",
       "text": "敵編隊の軌跡は、最初はHoudiniというDCCツールを使って作っていました。ゲーム中の座標変換に合わせたカメラを設定して、Houdini内で動かした軌跡を、そのままコンパイルできる軌跡テーブルの形で出力しています。",
       "ttsText": "敵編隊の軌跡は、最初はフーディーニというディーシーシーツールを使って作っていました。ゲーム中の座標変換に合わせたカメラを設定して、フーディーニ内で動かした軌跡を、そのままコンパイルできる軌跡テーブルの形で出力しています。",
-      "measuredDurationSeconds": 13.4
-    },
-    {
-      "id": "C23",
-      "startFrame": 4049,
-      "durationFrames": 412,
-      "minimumDurationFrames": 0,
-      "targetSeconds": 13.733,
-      "silenceCompaction": {
-        "sentenceSilenceThresholdMs": 10000,
-        "commaPauseCandidateIndices": [
-          3,
-          6,
-          8
-        ]
-      },
-      "instructions": "Houdini、Claude Fable、GPT-5.6、AIを明瞭に発音してください。",
-      "text": "最初はHoudiniで敵編隊の動きを作っていましたが、開発中にClaude FableとGPT-5.6がリリースされて、AIの精度がさらに上がったので、敵の軌跡をAIで作れないかと試してみました。",
-      "ttsText": "最初はフーディーニで敵編隊の動きを作っていましたが、開発中にクロード・フェイブルとジーピーティー・ゴーテンロクがリリースされて、エーアイの精度がさらに上がったので、敵の軌跡をエーアイで作れないかと試してみました。",
-      "measuredDurationSeconds": 12.975
+      "measuredDurationSeconds": 13.27
     }
   ]
 }

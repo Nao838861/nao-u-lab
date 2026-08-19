@@ -1941,19 +1941,19 @@ export const WorkflowNarrationPreview: React.FC = () => {
   return (
     <AbsoluteFill style={{backgroundColor: C.bg}}>
       <Sequence from={c20Timing.startFrame - baseFrame} durationInFrames={c20Timing.durationFrames}>
-        <CoordinateTransformScene durationInFrames={c20Timing.durationFrames} />
+        <GameLogicScene durationInFrames={c20Timing.durationFrames} />
         <Audio src={staticFile('narration/later/C20.wav')} volume={0.95} />
       </Sequence>
       <Sequence from={c21Timing.startFrame - baseFrame} durationInFrames={c21Timing.durationFrames}>
-        <ProgrammingFlowScene durationInFrames={c21Timing.durationFrames} />
+        <CoordinateTransformScene durationInFrames={c21Timing.durationFrames} />
         <Audio src={staticFile('narration/later/C21.wav')} volume={0.95} />
       </Sequence>
       <Sequence from={c22Timing.startFrame - baseFrame} durationInFrames={c22Timing.durationFrames}>
-        <HoudiniTrajectoryScene durationInFrames={c22Timing.durationFrames} />
+        <ProgrammingFlowScene durationInFrames={c22Timing.durationFrames} />
         <Audio src={staticFile('narration/later/C22.wav')} volume={0.95} />
       </Sequence>
       <Sequence from={c23Timing.startFrame - baseFrame} durationInFrames={c23Timing.durationFrames}>
-        <AiTrajectoryScene durationInFrames={c23Timing.durationFrames} />
+        <HoudiniTrajectoryScene durationInFrames={c23Timing.durationFrames} />
         <Audio src={staticFile('narration/later/C23.wav')} volume={0.95} />
       </Sequence>
     </AbsoluteFill>
