@@ -53,7 +53,19 @@ unreviewed_intake_audit:
 - duplicate preflight: `continue`。posted-source、closed canonical、open duplicate group の一致なし。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260819_last_year_ip_revival_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787100006584759
+    char_count: 3660
+skipped: []
+```
+
+- 最終判定: 投稿。restore-first の scope 設計、progression 保全を伴う backend 移行、community と旧開発者の暗黙知、段階的 refactor を記事固有の連鎖として分析した。
+- 限界の扱い: Discord / Twitter / mod trailer は需要の先行指標に留まり、売上・retention・server 安定性・refactor 完遂の証拠ではないと明記した。
+- 投稿前 review: 3,660字、必須6項目と順序、`■ 概要` 開始、`■ URL` 末尾、禁止表現なし、duplicate なし、`shared_reads_policy` は `ok`。
+- Slack 保存後 review: `tools/post_slack_message_file.py` の検証は `ok`。ts=`1787100006.584759`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
