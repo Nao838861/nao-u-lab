@@ -92,7 +92,54 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、index entry と per-file atom index の一致、および代表語（記憶・ゲーム設計・敵パターン・評価軸）の取得を確認した。broken link は 0 件。"
+  - "memory/atoms.jsonl と per-file .md / index.jsonl の各 2914 件が一致し、content conflict 0 件を確認した。raw normalized-content duplicate 40 群は canonical overlay で fold 済み、recall-visible 側の残り 3 群も content fold 済みであり、矛盾として扱う未解決差分はなかった。"
+  - "memory/raw/ の 2026-07-20 より前に更新された 242 ファイルを確認した。slack_archive と topic 別 web_research 原文など再現性・provenance 用の保管物で、同日 archive job も完走済みのため、この cycle で追加移動すべき一時物は 0 件と判断した。"
+  - "candidate lifecycle を監査した（posted 650 / ready_to_post 9 / postponed 201 / failed 480 / needs_review 2）。open duplicate sidecar 31 群（mixed 28 / all_open 3）、mixed sidecar 28 群、stale triage 0 行、group action 0 行へ再生成した。"
+  - "slack_directives.jsonl 23 行と slack_broadcasts.jsonl 21 行を監査し、pending 0 件を確認した。handled へ更新すべき行はなかった。"
+issues:
+  - id: ISS-UTF8-RAW-001
+    description: "historical shared-reads raw 1 行と派生 atom 1 件で『AIエージェント』の一部が U+FFFD に置換されている。memory_health のもう1件の suspect（gr-1777083728-44d444ab7a）は原文中の意図的な『???』による false positive で、source は正常だった。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl:317"
+    source_file_status: "UTF-8 明示読みでも raw source と派生 atom の title / trigger / excerpt に U+FFFD が存在し、source 側の局所破損を確認した。memory/MEMORY.md 本文と代表語は正常。"
+    display_or_tooling_status: "none; PowerShell / rg の表示経路だけの mojibake ではない。"
+    why_blocks_game_memory: "1件限定だが、正しい語『AIエージェント』での完全一致検索と title / trigger ベースの想起精度を下げる。局所データ修復で閉じられるため構造設計は不要。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 8
+    dormant: 1
+stale_review_batch: []
+group_action_handoff: []
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_note: "期限超過2件は all-open duplicate 2群の既存 deferred lease と membership fingerprint が一致し、retry_after=2026-08-20T13:19:04+09:00 より前のため stale triage から抑止された。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
