@@ -2,11 +2,13 @@ import React from 'react';
 import {Composition} from 'remotion';
 import {
   BenefitNarrationPreview,
+  ConstraintNarrationPreview,
   DevelopmentNarrationPreview,
   DrawingNarrationPreview,
   ExplainerPrototype,
 } from './ExplainerPrototype';
 import {benefitNarrationDurationInFrames} from './benefitNarrationTiming';
+import {constraintNarrationDurationInFrames} from './constraintNarrationTiming';
 import {developmentNarrationDurationInFrames} from './developmentNarrationTiming';
 import {drawingNarrationDurationInFrames} from './drawingNarrationTiming';
 import {
@@ -45,6 +47,14 @@ export const RemotionRoot: React.FC = () => {
         id="BenefitNarrationPreview"
         component={BenefitNarrationPreview}
         durationInFrames={benefitNarrationDurationInFrames}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      <Composition
+        id="ConstraintNarrationPreview"
+        component={ConstraintNarrationPreview}
+        durationInFrames={constraintNarrationDurationInFrames}
         fps={30}
         width={1280}
         height={720}

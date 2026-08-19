@@ -22,10 +22,14 @@
     "narration:generate-benefits": "node tools/generate-narration.mjs --manifest=benefit-cuts.json",
     "narration:regenerate-benefits": "node tools/generate-narration.mjs --manifest=benefit-cuts.json --force",
     "narration:compact-benefits": "node tools/generate-narration.mjs --manifest=benefit-cuts.json --compact-only",
+    "narration:generate-constraints": "node tools/generate-narration.mjs --manifest=constraint-cuts.json",
+    "narration:regenerate-constraints": "node tools/generate-narration.mjs --manifest=constraint-cuts.json --force",
+    "narration:compact-constraints": "node tools/generate-narration.mjs --manifest=constraint-cuts.json --compact-only",
     "render:narration-preview": "remotion render src/index.ts ExplainerNarrationPreview out/完成版/explainer_narration_C01-C03.mp4 --codec=h264 --crf=18",
     "render:development-preview": "remotion render src/index.ts DevelopmentNarrationPreview out/完成版/explainer_narration_C04-C06.mp4 --codec=h264 --crf=18",
     "render:drawing-preview": "remotion render src/index.ts DrawingNarrationPreview out/完成版/explainer_narration_C08-C10.mp4 --codec=h264 --crf=18",
     "render:benefit-preview": "remotion render src/index.ts BenefitNarrationPreview out/完成版/explainer_narration_C11-C13.mp4 --codec=h264 --crf=18",
+    "render:constraint-preview": "remotion render src/index.ts ConstraintNarrationPreview out/完成版/explainer_narration_C14-C15.mp4 --codec=h264 --crf=18",
     "still": "remotion still src/index.ts ExplainerPrototype out/explainer_prototype_preview.png --frame=885"
   },
   "dependencies": {

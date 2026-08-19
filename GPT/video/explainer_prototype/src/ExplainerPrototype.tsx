@@ -33,6 +33,10 @@ import {
   c12Timing,
   c13Timing,
 } from './benefitNarrationTiming';
+import {
+  c14Timing,
+  c15Timing,
+} from './constraintNarrationTiming';
 
 const C = {
   bg: '#050507',
@@ -1169,7 +1173,7 @@ const CapacityCostScene: React.FC<{durationInFrames?: number}> = ({durationInFra
   );
 };
 
-const PositionLimitScene: React.FC = () => {
+const PositionLimitScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 300}) => {
   const frame = useCurrentFrame();
   const offsets = [0, 4, 8, 12, 16, 20];
   const offset = offsets[Math.floor(frame / 24) % offsets.length];
@@ -1177,7 +1181,7 @@ const PositionLimitScene: React.FC = () => {
   const gridWidth = 76 * scale;
   const gridHeight = 28 * scale;
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 300), backgroundColor: C.bg, padding: '38px 52px 0', boxSizing: 'border-box'}}>
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '38px 52px 0', boxSizing: 'border-box'}}>
       <Title size={42}>コンパイルドスプライトの欠点</Title>
       <div style={{fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900, marginTop: 5}}>
         欠点2：1ドット単位の移動ができない
@@ -1233,6 +1237,21 @@ const PositionLimitScene: React.FC = () => {
           <div style={{fontFamily: FONT, color: C.red, fontSize: 25, fontWeight: 900, lineHeight: 1.45, marginTop: 29}}>滑らかなキャラ移動ができない</div>
         </div>
       </div>
+    </AbsoluteFill>
+  );
+};
+
+const GameLogicScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 360}) => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: '#000', display: 'grid', placeItems: 'center'}}>
+      <OffthreadVideo
+        src={staticFile('game_CSCD.mp4')}
+        startFrom={17 * 30}
+        endAt={17 * 30 + durationInFrames}
+        muted
+        style={{width: 768, height: 720, objectFit: 'fill', imageRendering: 'pixelated'}}
+      />
     </AbsoluteFill>
   );
 };
@@ -1651,6 +1670,21 @@ export const BenefitNarrationPreview: React.FC = () => {
       <Sequence from={c13Timing.startFrame} durationInFrames={c13Timing.durationFrames}>
         <CapacityCostScene durationInFrames={c13Timing.durationFrames} />
         <Audio src={staticFile('narration/benefits/C13.wav')} volume={0.95} />
+      </Sequence>
+    </AbsoluteFill>
+  );
+};
+
+export const ConstraintNarrationPreview: React.FC = () => {
+  return (
+    <AbsoluteFill style={{backgroundColor: C.bg}}>
+      <Sequence from={c14Timing.startFrame} durationInFrames={c14Timing.durationFrames}>
+        <PositionLimitScene durationInFrames={c14Timing.durationFrames} />
+        <Audio src={staticFile('narration/constraints/C14.wav')} volume={0.95} />
+      </Sequence>
+      <Sequence from={c15Timing.startFrame} durationInFrames={c15Timing.durationFrames}>
+        <GameLogicScene durationInFrames={c15Timing.durationFrames} />
+        <Audio src={staticFile('narration/constraints/C15.wav')} volume={0.95} />
       </Sequence>
     </AbsoluteFill>
   );
