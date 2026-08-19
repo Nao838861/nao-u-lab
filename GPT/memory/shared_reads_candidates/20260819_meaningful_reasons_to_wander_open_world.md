@@ -4,6 +4,20 @@ url: "https://schedule.gdconf.com/session/meaningful-reasons-to-wander-creating-
 collected_at: "2026-08-19T11:46:18+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, open-world, narrative-design, playtesting, onboarding, progression]
+evaluated_at: "2026-08-19T11:49:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-19T11:49:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-19T11:49:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-18"
+supersedes: []
+gate_reason: >-
+  playtest で open-world content が発見後も完了されない問題と、narrative design pass 後に完了件数が 141% 増えた結果は、ゲーム制作へ具体的に適用できる。
+  ただし現資料では quantity / variety / value の分類以外の施策、比較条件、測定範囲が不足し、CoopEval 水準の約4000字を推測なしで構成できないため、講演本文または詳細な取材記録を補って再評価する。
 ---
 
 ## raw_excerpt
