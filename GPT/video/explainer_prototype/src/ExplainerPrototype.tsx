@@ -576,7 +576,7 @@ const GenericLoopScene: React.FC<{
   const narrationLoopFrame = narrationSchedule
     ? Math.min(frame, narrationLoopFrames - 1)
     : frame % narrationLoopFrames;
-  const narrationStepStartFrames = [10.8, 11.44, 12.69, 14.475, 15.845]
+  const narrationStepStartFrames = [10.8, 12.56, 14.345, 15.715, 16.695]
     .map((seconds) => Math.round(seconds * 30));
   const done = narrationSchedule
     ? clamp(

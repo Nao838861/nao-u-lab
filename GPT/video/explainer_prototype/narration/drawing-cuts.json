@@ -62,11 +62,11 @@
         "commaPauseCandidateIndices": [
           2,
           5,
-          9,
           10,
           11,
           13,
-          14
+          14,
+          15
         ],
         "sentencePauseCandidateIndices": [
           4,
