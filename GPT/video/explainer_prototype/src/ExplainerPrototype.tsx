@@ -38,6 +38,11 @@ import {
   c15Timing,
   c16Timing,
 } from './constraintNarrationTiming';
+import {
+  c17Timing,
+  c18Timing,
+  c19Timing,
+} from './laterNarrationTiming';
 
 const C = {
   bg: '#050507',
@@ -1484,14 +1489,14 @@ const SizeBankScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
   );
 };
 
-const BossBattleScene: React.FC = () => {
+const BossBattleScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 240}) => {
   const frame = useCurrentFrame();
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 120), backgroundColor: '#000', display: 'grid', placeItems: 'center'}}>
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: '#000', display: 'grid', placeItems: 'center'}}>
       <OffthreadVideo
         src={staticFile('boss_battle.mp4')}
         startFrom={86 * 30}
-        endAt={94 * 30}
+        endAt={86 * 30 + durationInFrames}
         muted
         style={{width: 768, height: 720, objectFit: 'fill', imageRendering: 'pixelated'}}
       />
@@ -1499,9 +1504,11 @@ const BossBattleScene: React.FC = () => {
   );
 };
 
-const FrameTimelineScene: React.FC = () => {
+const FrameTimelineScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 600}) => {
   const frame = useCurrentFrame();
-  const reveal = (at: number) => interpolate(frame, [at, at + 24], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const timingScale = durationInFrames / 600;
+  const scaled = (at: number) => Math.round(at * timingScale);
+  const reveal = (at: number) => interpolate(frame, [scaled(at), scaled(at + 24)], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   const cpu = C.magenta;
   const logic = '#62df83';
   const normalVram = C.cyan;
@@ -1543,11 +1550,11 @@ const FrameTimelineScene: React.FC = () => {
     );
   };
   const chartOpacity = reveal(390);
-  const previewStage = frame < 45 ? 0 : frame < 87 ? 1 : frame < 129 ? 2 : frame < 210 ? 3 : 4;
+  const previewStage = frame < scaled(45) ? 0 : frame < scaled(87) ? 1 : frame < scaled(129) ? 2 : frame < scaled(210) ? 3 : 4;
   const stageLabels = ['処理前：完成した画面', '上半分を消去', '地面・遠景を描画', 'ゲームロジックを反映', 'コンパイルドスプライトで完成'];
   const previewImages = ['frame_background_player_bg.png', 'frame_background_player_bg.png', 'frame_background.png', 'frame_background_player.png', 'frame_background_player_bg.png'];
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 600), backgroundColor: C.bg, padding: '34px 42px 0', boxSizing: 'border-box'}}>
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '34px 42px 0', boxSizing: 'border-box'}}>
       <Title size={38}>30fpsで動かすため、処理を2フレームに分ける</Title>
       <div style={{fontFamily: MONO, color: C.dim, fontSize: 18, fontWeight: 900, marginTop: 7}}>1 FRAME = 16.7ms　／　同じ長さの2フレームを交互に実行</div>
       <div style={{display: 'flex', gap: 14, alignItems: 'flex-start', marginTop: 15}}>
@@ -1764,6 +1771,25 @@ export const ConstraintNarrationPreview: React.FC = () => {
       <Sequence from={c16Timing.startFrame} durationInFrames={c16Timing.durationFrames}>
         <SizeBankScene durationInFrames={c16Timing.durationFrames} />
         <Audio src={staticFile('narration/constraints/C16.wav')} volume={0.95} />
+      </Sequence>
+    </AbsoluteFill>
+  );
+};
+
+export const LaterNarrationPreview: React.FC = () => {
+  return (
+    <AbsoluteFill style={{backgroundColor: C.bg}}>
+      <Sequence from={c17Timing.startFrame} durationInFrames={c17Timing.durationFrames}>
+        <BossBattleScene durationInFrames={c17Timing.durationFrames} />
+        <Audio src={staticFile('narration/later/C17.wav')} volume={0.95} />
+      </Sequence>
+      <Sequence from={c18Timing.startFrame} durationInFrames={c18Timing.durationFrames}>
+        <FrameTimelineScene durationInFrames={c18Timing.durationFrames} />
+        <Audio src={staticFile('narration/later/C18.wav')} volume={0.95} />
+      </Sequence>
+      <Sequence from={c19Timing.startFrame} durationInFrames={c19Timing.durationFrames}>
+        <GameLogicScene durationInFrames={c19Timing.durationFrames} />
+        <Audio src={staticFile('narration/later/C19.wav')} volume={0.95} />
       </Sequence>
     </AbsoluteFill>
   );
