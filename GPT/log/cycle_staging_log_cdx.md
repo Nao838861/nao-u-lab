@@ -91,7 +91,82 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index 行を per-file atom index と照合し、broken entry 0 件を確認"
+  - "atom duplicate sidecar を read-only 検証し、45 cluster / 45 overlay group が current、ID 三面 mirror conflict 0 件を確認"
+  - "shared-reads の open-group / stale-triage / group-action sidecar を再生成し、actionable group 0 件、candidate handoff 0 件を確認"
+  - "Slack inbox の directives / broadcasts は pending 0 件で、handled 更新対象 0 件を確認"
+issues:
+  - id: ISS-UTF8-001
+    description: "atom sr-1776127289-4d9239b255 の title / heading / Use when / Excerpt に source 保存済みの U+FFFD が計8文字あり、memory_health が mojibake suspect として検出している。gr-1777083728-44d444ab7a の suspect は原文中の意図的な疑問符で false positive"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md:3"
+    source_file_status: "UTF-8 明示読みは成功。対象 atom source 自体に U+FFFD が8文字残る。memory/MEMORY.md は日本語を正常 decode し、代表語 probe は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false だが、評価 の出現を確認したため index rotation による語句不在であり source corruption ではない"
+    display_or_tooling_status: "none; shell 表示経路の mojibake ではない"
+    why_blocks_game_memory: "該当1 atom の title / excerpt 検索精度を局所的に落とすが、canonical overlay と task lens を含む記憶階層全体は機能している"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 8
+    dormant: 1
+candidate_lifecycle:
+  counts:
+    posted: 646
+    ready_to_post: 9
+    postponed: 200
+    failed: 480
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_for_reassessment: 2
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  suppressed_by_live_group_lease_count: 2
+  suppressed_group_retry_after: "2026-08-20T13:19:04+09:00"
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+raw_archive_audit:
+  cutoff: "2026-07-20"
+  inactive_raw_file_count: 242
+  phase3_scratch_archive_candidate_count: 180
+  phase3_scratch_archive_candidate_bytes: 35054881
+  action: "none"
+  note: "raw は provenance として保持し、archive destination と復元契約が未確定のため移動しない。phase3 scratch は archive 候補として記録のみ"
+atom_audit:
+  atoms: 2911
+  mirror_status: clean
+  raw_normalized_content_duplicate_groups: 40
+  recall_visible_normalized_content_duplicate_groups: 3
+  canonical_overlay_duplicate_groups: 45
+  effective_display_unresolved_groups: 0
+  contradictions_found: 0
+```
+
+- Phase 4b gate: `needs_design: false`。残る issue は isolated な source text defect で、構造設計を要しない。
+- overdue 2 件は all-open group lease の `retry_after=2026-08-20T13:19:04+09:00` まで defer 中。stale triage / group action / candidate handoff へ重複投入しなかった。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
