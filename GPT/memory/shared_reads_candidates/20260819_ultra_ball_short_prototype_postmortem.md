@@ -4,6 +4,27 @@ url: "https://www.gamedeveloper.com/design/post-mortem-ultra-ball"
 collected_at: "2026-08-19T20:46:46+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, prototyping, arcade, playtesting, scope]
+evaluated_at: "2026-08-19T20:51:01+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-19T20:51:01+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-19T20:51:01+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-18"
+supersedes: []
+gate_reason: >-
+  約20時間の制作時系列に、入力簡略化、早期 playable、level 順序、feedback 密度、
+  他者 playtest、scope 終了判断が具体例として揃う。短期ゲーム試作へ直接適用でき、
+  成功談だけでなく難度調整と削る判断まで含めて約4000字の独立した分析を組み立てられる。
+suggested_post_outline:
+  overview_angle: "短期 prototype を完成まで閉じる判断の連鎖を、約20時間の時系列に沿って解説する"
+  analysis_axis: "core loop の早期成立、認知負荷を下げる入力設計、level 順序と feedback 密度、playtest 後の再配置、scope の終了条件"
+  application_target: "Log_cdx の小規模ゲーム試作で、最初の playable diff、難度曲線、feedback 発火頻度、完成線を同じ cycle 内で検証する手順"
+  pros_cons: "実作業の判断が具体的で再現しやすい一方、単一開発者の事後記録であり、時間配分や設計判断の一般性は比較検証されていない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
