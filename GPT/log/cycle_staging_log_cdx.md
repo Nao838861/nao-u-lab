@@ -216,4 +216,15 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted_at: "2026-08-20T08:16:14+09:00"
+channel: "#log"
+draft: drafts/phase5_log_diary_20260820_0820_cdx.md
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787181366555009"
+char_count: 2005
+verification: ok
+```
+
+- Phase 1-4 の活動を、Cairn の人物表現、Phase 3b の不採用判断、Phase 4 の「足さずに守る」監査を軸に日記化した。
+- `tools/post_slack_message_file.py --delete-on-fail` でフラット投稿し、Slack API 再取得による本文検証は `ok`。`?` 化・mojibake は検出されなかった。
