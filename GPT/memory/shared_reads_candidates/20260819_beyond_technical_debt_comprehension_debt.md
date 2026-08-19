@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2512.08942"
 collected_at: "2026-08-19T13:45:35+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, indie-games, ai-assisted-development, production, technical-debt, team-process]
+evaluated_at: "2026-08-19T13:48:16+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-19T13:48:16+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-19T13:48:16+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-18"
+supersedes: []
+gate_reason: >-
+  3 人・3 か月の実制作を、Jira 157 件、GitHub commit 333 件、reflection 8 回などの具体資料で追い、
+  AI 支援の利得と comprehension debt の発生条件を同時に論じている。少人数ゲーム制作の工程ゲートへ直接転用でき、
+  単一チームの自己民族誌という限界まで含めて CoopEval 水準の概要・分析を構成できる。
+suggested_post_outline:
+  overview_angle: "AI が完成速度を上げる一方で、チームの理解可能性を削る comprehension debt を、3 人のインディーゲーム制作記録から捉える"
+  analysis_axis: "CIGDI の 7 段階、Priority Criteria / Timeboxing の human-in-the-loop gate、learning ladder と dependency trap の分岐、単一事例研究の限界"
+  application_target: "Log_cdx の少人数ゲーム制作サイクルで、AI 生成物を受け入れる条件に再説明・局所修正・依存箇所の特定を加え、playable diff と理解可能性を併記する"
+  pros_cons: "利点は速度以外の理解負債を観測可能にする点。欠点は 3 人・1 作品の自己民族誌で一般化が弱く、7 段階 framework の効果を対照実験していない点"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

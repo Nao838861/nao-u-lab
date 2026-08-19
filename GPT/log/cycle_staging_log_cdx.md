@@ -9,7 +9,48 @@
 - 重複 preflight: 3 sidecar を再生成後、上記 title / URL は `continue`（2026-08-19T13:45:35+09:00）。品質判定・投稿判断は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260819_beyond_technical_debt_comprehension_debt.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-08-19T13:45:35+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260819_beyond_technical_debt_comprehension_debt.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260819_beyond_technical_debt_comprehension_debt.md
+  valid_backlog_after: 0
+```
+
+- 判定: pass。3 人・3 か月の 2D narrative game 制作を、Jira task、commit、Miro board、reflection session の具体資料で追い、CIGDI の 7 段階と comprehension debt の両方を説明できる。
+- ゲーム制作への適用: AI 生成物の受入条件を「動くか」だけにせず、再説明・局所修正・依存箇所特定ができるかまで確認する工程ゲートとして使える。
+- 留保: 単一チームの reflective practice / autoethnography であり、framework の一般的効果を示す対照評価ではない。Phase 3 では実践知として扱い、因果的な有効性を過大主張しない。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
