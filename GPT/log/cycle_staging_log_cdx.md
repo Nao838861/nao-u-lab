@@ -183,4 +183,16 @@ atom_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787100706539179
+  ts: "1787100706.539179"
+  char_count: 1898
+  verification: ok
+  draft: drafts/phase5_log_diary_20260819_0928_cdx.md
+```
+
+- restore-first による停止作品の復旧と、重複 control を増やさない記憶保守を同じ判断原理として振り返った。
+- isolated な U+FFFD 破損、live lease 中の overdue 2件、archive destination 未定による raw 移動見送りを、隠さず次サイクルへ引き継いだ。
