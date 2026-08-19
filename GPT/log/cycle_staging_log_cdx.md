@@ -110,7 +110,65 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、High Signal / Recent の atom ID を per-file index と照合した。broken link 0件、重複 ID 0件。"
+  - "memory/atoms.jsonl と per-file .md / index.jsonl の2914件を監査した。missing / parse error / content conflict は0件。raw normalized-content duplicate 40群は既存 overlay で fold 済みで、recall-visible の未解決表示重複は0件。"
+  - "shared-reads title canonical / mixed / open-group / stale-triage / group-action sidecar を再生成した。terminal canonical 100群、open duplicate 31群、actionable group 0群。"
+  - "Slack directive / broadcast inbox を監査した。pending は各0件で、受領だけを根拠に close した行はない。"
+  - "30日以上更新のない memory/raw/ 242件（70,590,898 bytes）を監査した。一次資料・playtest evidence として参照される原文のため、この phase では移動・削除していない。"
+issues:
+  - id: ISS-SOURCE-MOJIBAKE-001
+    description: "active atom sr-1776127289-4d9239b255 の『エージェント』が replacement character を含む形で保存され、memory_health の mojibake warning と検索語欠落を生じている。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/index.jsonl:317"
+    source_file_status: "UTF-8 明示読みは成功したが、stable source_ts=1776127289.990919 の raw archive 自体に同じ replacement characters がある。raw→atoms.jsonl→per-file→index の最初の欠落段は ingestion 前の source archive。対照 slice gr-1777083728-44d444ab7a は raw/per-file とも正常で、health warning は false positive。"
+    display_or_tooling_status: "PowerShell UTF-8 表示でも同じ文字列を再現。shell/staging だけの mojibake ではない。MEMORY.md はUTF-8で読め、代表語『記憶』『ゲーム設計』『敵パターン』を取得。『評価軸』は現行 index 本文に存在しないが decode error はない。"
+    why_blocks_game_memory: "『エージェント』での文字列検索と引用品質を1 atomだけ損なう。ただしID・tag・他の日本語は保持され、atom mirror と recall smoke は正常なので次のゲーム制作を構造的には阻害しない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 8
+    dormant: 1
+  note: "due-only の対象は0件。未期限の probe-20260819-d2acci-stage-localization-gate は更新せず、上記 stable ID / first-failure-stage / protected-slice evidence を将来の consumer artifact として残した。"
+candidate_lifecycle:
+  counts:
+    posted: 649
+    ready_to_post: 9
+    postponed: 200
+    failed: 480
+    needs_review: 2
+  overdue_open_total: 2
+  missing_stale_after: 3
+  note: "missing stale_after は posted terminal のみで再評価 queue 対象外。期限到来2件は同一titleの all-open group leaseが retry_after=2026-08-20T13:19:04+09:00 まで deferred のため再投入しない。"
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
