@@ -486,7 +486,7 @@ const DevelopmentCheckerboardScene: React.FC = () => {
 const LargeCharacterScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 720}) => {
   const frame = useCurrentFrame();
   const imageEnter = spring({frame, fps: 30, config: {damping: 18}});
-  const cpuOpacity = interpolate(frame, [179, 191], [0, 1], {
+  const cpuOpacity = interpolate(frame, [107, 119], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
@@ -576,7 +576,7 @@ const GenericLoopScene: React.FC<{
   const narrationLoopFrame = narrationSchedule
     ? Math.min(frame, narrationLoopFrames - 1)
     : frame % narrationLoopFrames;
-  const narrationStepStartFrames = [11.86, 13.775, 15.78, 17.135, 18.14]
+  const narrationStepStartFrames = [10.8, 11.44, 12.69, 14.475, 15.845]
     .map((seconds) => Math.round(seconds * 30));
   const done = narrationSchedule
     ? clamp(
@@ -693,18 +693,19 @@ const GenericLoopScene: React.FC<{
 const CompiledScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 360}) => {
   const frame = useCurrentFrame();
   const blocksPerRow = 14;
-  const startCursor = rasterBlocks.find(
-    (blockIndex) => Math.floor(blockIndex / blocksPerRow) === 2,
-  ) ?? blocksPerRow * 2;
+  const startCursor = rasterBlocks[0];
   const startOrderIndex = rasterBlocks.indexOf(startCursor);
   const partialTargetOrderIndex = rasterBlocks.findIndex(
-    (blockIndex, orderIndex) => orderIndex > startOrderIndex && enemyCoverage[blockIndex] === 1,
+    (blockIndex, orderIndex) =>
+      orderIndex > startOrderIndex
+      && Math.floor(blockIndex / blocksPerRow) === 1
+      && enemyCoverage[blockIndex] === 1,
   );
   const fullTargetOrderIndex = rasterBlocks.findIndex(
     (blockIndex, orderIndex) => orderIndex > partialTargetOrderIndex && enemyCoverage[blockIndex] === 2,
   );
   const framesPerBlock = 4;
-  const partialMoveStart = Math.round(8.75 * 30);
+  const partialMoveStart = Math.round(5.505 * 30);
   const fullMoveStart = Math.round(13.325 * 30);
   const cursorOrderIndex = frame < partialMoveStart
     ? startOrderIndex
