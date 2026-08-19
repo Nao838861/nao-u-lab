@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-19T21:00:42+09:00",
+  "updated_at": "2026-08-19T23:02:05+09:00",
   "reviewed_source_ts": [
+    "1787140569.154979",
     "1787115339.463509",
     "1787122615.346739",
     "1779352546.125499",
@@ -21450,6 +21451,46 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、comprehension debt の固有差、単一事例の証拠限界、具体的 trigger artifact 不在、既存 pending lease との競合による defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-19T23:02:05+09:00",
+      "selected": {
+        "id": "sr-1787140569-281e1441a3",
+        "source_ts": "1787140569.154979",
+        "title": "Postmortem: Ultra Ball",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、harness・game-design・identity・knowledge・operation・evaluation の6優先タグを持つ最新候補なので1件だけ選んだ。短期 prototype で配布 build を正本にすることと、高速時の feedback 発火密度を別条件で評価する知見が、既存 runtime control と異なる判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件と必須指標を満たす。shared-reads 本文は、約20時間の実装と約5時間の公開準備、初期5時間で match state・save・UI・cooked build まで通した縦切り、editor と cooked build の速度差、最大速度で常時発火した shake／sound のノイズ化、逆操作 mechanic の optional challenge への再配置を時系列で示す。したがって editor／headless／配布 build の同一 seed 比較と、単発の強さではなく最速状態での effect 発火数を測る行動へ直接変換できるため relevance・actionability は3とした。一方、単一作者の事後記録で、playtest 人数、level ごとの離脱率、変更前後の成功率、feedback 密度の比較値、scope 追加の効果量がなく、因果的な有効性は未検証なので evidence=2 とした。probe-20260518-runtime-verifiable-production-slices は visual／code／interaction／runtime evidence の分離を、probe-20260709-gameenginebench-runtime-integration-gate は fixed trace と neighboring runtime state を、probe-20260709-replayability-budget-core-depth は初回 core と optional depth を既に扱う。一方、配布 artifact を editor より優先する parity check と最大発火頻度で sensory feedback を判定する点は直接要求しないため non_redundancy=2 とした。ただし現 staging には editor／配布 build の同一 seed trace、effect event rate、変更前後 capture を持つ playable artifact がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。さらに Phase 4a には probe-20260819-d2acci-stage-localization-gate の pending lease が1件ある。記事全体を checklist 化すると、小さな仮説検証にも save・UI・10 level・公開工程を要求し、作者の時間配分や主観を普遍化する危険がある。よって今回は state-only defer とし、次の具体的な短期 prototype で配布 build parity または高頻度 feedback の before／after artifact が生じ、既存3 controlsだけでは採否を決められない時に一時 metric として再評価する。",
+      "existing_controls": [
+        "probe-20260518-runtime-verifiable-production-slices",
+        "probe-20260709-gameenginebench-runtime-integration-gate",
+        "probe-20260709-replayability-budget-core-depth",
+        "probe-20260819-d2acci-stage-localization-gate"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、配布 build parity／最大発火頻度での feedback 評価という固有差、単一事例の証拠限界、比較可能な playable artifact 不在、既存 pending lease との競合による defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

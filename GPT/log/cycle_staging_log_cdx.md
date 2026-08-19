@@ -61,7 +61,39 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787140569-281e1441a3
+    source_ts: "1787140569.154979"
+    title: "Postmortem: Ultra Ball"
+    reason: "source が slack_api/shared-reads、score 10、未レビューで、harness・game-design・identity・knowledge・operation・evaluation の6優先タグを持つ最新候補なので1件だけ選んだ。短期 prototype で配布 build を正本にすることと、高速時の feedback 発火密度を別条件で評価する知見が、既存 runtime control と異なる判断差を作るか確認した。Nao_u の明示評価記録はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "数値上の採用条件は満たす。editor／headless／配布 build の同一 seed 比較と、単発強度ではなく最速状態での effect 発火数を測る点は既存 runtime controls にない小さな差である。一方、根拠は単一作者の事後記録で比較値がなく、現 staging に同一 seed trace、effect event rate、変更前後 capture を持つ playable artifact がない。直後の Phase 4a は実 consumer ではなく、別の pending lease もあるため、具体的 artifact が生じるまで state-only defer とした。"
+  existing_controls:
+    - probe-20260518-runtime-verifiable-production-slices
+    - probe-20260709-gameenginebench-runtime-integration-gate
+    - probe-20260709-replayability-budget-core-depth
+    - probe-20260819-d2acci-stage-localization-gate
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを更新した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
