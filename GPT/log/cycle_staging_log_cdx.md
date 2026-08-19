@@ -90,7 +90,56 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md: validate_memory_index.py は OK。UTF-8 明示読みで『記憶』『ゲーム設計』『敵パターン』を取得でき、『評価軸』の完全一致は無いが、index entry と per-file atom の broken reference は 0 件。MEMORY.md source / display 経路に mojibake は観測しなかった。"
+  - "memory/atoms.jsonl: 2912 atoms、parse / mirror / index error 0、duplicate id 0、content conflict 0。raw normalized-content duplicate は 40 group あるが canonical overlay 45 group と recall fold が適用され、effective display unresolved group は 0。"
+  - "memory/raw/: 30 日超 mtime の archive candidate は 242 files（web_research 217、headless_eval 16、slack_api 6、その他 3）。Phase 4a では移動・削除せず候補として記録した。"
+  - "shared_reads candidate lifecycle: posted 648 / ready_to_post 9 / postponed 200 / failed 480 / needs_review 2。valid unreviewed 0、malformed 0。posted / failed は再評価 queue から除外した。"
+  - "stale triage: stale_after 到来は 2 candidates。いずれも all-open duplicate group の既存 deferred lease（gha-e6d4d4b5a37a0808 / gha-2313a247c62a9028、retry_after 2026-08-20T13:19:04+09:00）で明示保持中のため、group / candidate handoff は 0 件。"
+  - "duplicate title sidecar: terminal canonical group 100、open group 31（mixed 28 / all_open 3）、actionable group 0。unindexed duplicate は mixed/open queue に残し、title 一致だけの自動 close は行わなかった。"
+  - "Slack inbox: directives 23 rows / broadcasts 21 rows、pending は双方 0。handled 更新対象なし。"
+issues:
+  - id: ISS-4A-20260819-01
+    description: "atom sr-1776127289-4d9239b255 の title / trigger / excerpt に『エ��ジェント』という局所的な文字化けが残る。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory_health.py --json mojibake_suspect_atoms"
+    source_file_status: "UTF-8 明示読みでも置換文字を確認したため source file 自体の既存破損。"
+    display_or_tooling_status: "PowerShell Get-Content -Encoding UTF8 でも同じ破損を再現。gr-1777083728-44d444ab7a の suspect 判定は正常な日本語 source に対する tooling false positive。"
+    why_blocks_game_memory: "該当 atom のタイトル検索と検索結果の可読性を局所的に損なうが、mirror 整合性と canonical recall 全体は正常で、構造設計を止める規模ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 8
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 2
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
