@@ -126,7 +126,88 @@ self_feedback:
 - 選定 atom は1件のみ。新規 probe／metric／directive と lease enqueue はなし。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+audited_at: "2026-08-20T08:14:00+09:00"
+cleaned:
+  - "memory/MEMORY.md の Markdown index link を検査し、broken link 0 件を確認した。本文や index は書き換えていない。"
+  - "atoms 2916 件の mirror 整合性と重複 overlay を検査した。ID 重複・content conflict は 0 件、normalized-content 重複 40 群は既存 45 overlay 群で fold 済みだった。"
+  - "memory/raw/ の mtime 30 日超 242 ファイルを確認した。Slack 原文、web research の PDF / 抽出テキスト、headless 評価証拠であり、evidence pointer を保つため今回は移動しなかった。"
+  - "shared-reads の open duplicate / stale triage / group-action sidecar を再生成した。生成結果は既存内容と一致し、追加 handoff は 0 件だった。"
+  - "Slack directive / broadcast inbox を監査した。pending は双方 0 件で、close 対象はなかった。"
+encoding_audit:
+  memory_md:
+    source_file_status: "UTF-8 明示読み成功。記憶・ゲーム設計・敵パターンは取得でき、評価軸は本文に語として存在しなかった。broken link 0 件で、U+FFFD を伴う source 破損の兆候はない。"
+    display_or_tooling_status: "none"
+  atom_mojibake_check:
+    source_file_status: "memory_health の2件中、sr-1776127289-4d9239b255 は source に U+FFFD を確認。gr-1777083728-44d444ab7a は UTF-8 原文が正常で heuristic false positive。前者は孤立した旧 shared-reads atom で、ゲーム記憶の構造設計を要する問題ではないため非 blocking finding とした。"
+    display_or_tooling_status: "UTF-8 表示経路は正常"
+atom_audit:
+  atoms: 2916
+  mirror_status: clean
+  duplicate_id_count: 0
+  content_conflict_count: 0
+  normalized_content_duplicate_groups: 40
+  canonical_overlay_duplicate_groups: 45
+  effective_display_unresolved_groups: 0
+  contradiction_result: "既存 supersedes / canonical lifecycle 以外の新規矛盾は検出されなかった"
+candidate_lifecycle:
+  files: 1348
+  status_counts:
+    posted: 652
+    ready_to_post: 9
+    postponed: 198
+    failed: 487
+    needs_review: 2
+  overdue_open_total: 4
+  overdue_paths:
+    - memory/shared_reads_candidates/20260605_jamel_novelty_memory_exploration.md
+    - memory/shared_reads_candidates/20260610_collision_enemy_morphology_generation.md
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+    - memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+  deferred_group_leases:
+    - id: gha-e6d4d4b5a37a0808
+      retry_after: "2026-08-20T13:19:04+09:00"
+      paths: 2
+    - id: gha-2313a247c62a9028
+      retry_after: "2026-08-20T13:19:04+09:00"
+      paths: 2
+  note: "4件はいずれも membership fingerprint が一致する期限前 deferred group lease により、今回の stale triage から正しく抑止された。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- Phase 4b / 4c は起動しない。既存 lifecycle と lease が backlog を抑止できており、新しい記憶構造を設計すべき問題は確認されなかった。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
