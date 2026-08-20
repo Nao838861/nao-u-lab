@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-20T14:35:00+09:00",
+  "updated_at": "2026-08-20T16:48:41+09:00",
   "reviewed_source_ts": [
+    "1787203828.282949",
     "1787195314.362269",
     "1778382356.679499",
     "1778343080.673839",
@@ -701,6 +702,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-20T16:48:41+09:00",
+      "selected": {
+        "id": "sr-1787203828-75baef2425",
+        "source_ts": "1787203828.282949",
+        "title": "Evolve Or Die: How LiveOps Scaled Our Indie Hit — playable diff を支える複数時間幅の feedback loop",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新 atom で、harness・game-design・operation・evaluation の4優先タグを持つため1件だけ選んだ。短周期 content の頻度ではなく、仮説、playable artifact、定量・定性観測、固定 review、回帰 fixture、progression debt の停止条件を一つの制御系として扱う知見が、Codex の次回行動に既存 control と異なる判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、9週間 event、隔週 rerun、nightly build、weekly beta、月曜30分 review、定性 feedback と mission funnel、content 停止を伴う progression reboot を、各 cycle の仮説・playable artifact・一つの funnel・人手 playtest・決定ログ、および同一 fixture の再演へ具体化しているため relevance・actionability は3とした。一方、根拠は20人規模の単一 studio の講演資料で、engagement graph の実数、retention、売上、開発費、施策前後の統制比較、mission funnel の改善幅を示さず、9週間や週次 cadence の因果効果を一般化できないため evidence=2。probe-20260706-paperclaw-prototype-hypothesis-contract は observable verdict を持つ仮説から test path と次判断までを、probe-20260625-quality-workflow-feedback-route は定量・定性を含む低コスト観測から次 action への接続を、probe-20260708-commonroad-human-operation-regression-fixture は build／seed／route と regression oracle を、probe-20260709-critical-stage-feedback-routing は固定 stage review で feedback を keep／change／question へ変換する経路を既に扱う。本 atom 固有の progression debt による content 停止は有用だが、現在の staging には meta progression の before／after、cohort 別 funnel、停止判断を変える playable artifact がないため non_redundancy=1。active_probes は326件あり、既存4 control を束ね直した3-cycle probe を追加すると、cadence 自体の目的化と確認負荷が判断差を上回るため risk_control=1 とした。",
+      "existing_controls": [
+        "probe-20260706-paperclaw-prototype-hypothesis-contract",
+        "probe-20260625-quality-workflow-feedback-route",
+        "probe-20260708-commonroad-human-operation-regression-fixture",
+        "probe-20260709-critical-stage-feedback-routing"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、複数時間幅の feedback loop は具体的だが既存4 controlと重なり、progression debt の比較 artifact もないため reject した理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-20T14:35:00+09:00",
       "selected": {

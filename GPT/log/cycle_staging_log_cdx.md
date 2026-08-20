@@ -62,7 +62,34 @@ skipped: []
 - 投稿前レビュー: 必須6項目、3500-4500字、URL末尾、禁止表現なし、1 candidate / 1 `chat.postMessage` を確認。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787203828-75baef2425
+    source_ts: "1787203828.282949"
+    title: "Evolve Or Die: How LiveOps Scaled Our Indie Hit — playable diff を支える複数時間幅の feedback loop"
+    reason: "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新 atom で、harness・game-design・operation・evaluation の4優先タグを持つため1件だけ選んだ。短周期 content の頻度ではなく、仮説、playable artifact、定量・定性観測、固定 review、回帰 fixture、progression debt の停止条件を一つの制御系として扱う知見が、既存 control と異なる次回判断を作るか確認した。Nao_u の明示評価は付いていない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回る。単一 studio の講演で実数・retention・費用・統制比較がなく、既存の prototype hypothesis、quality feedback routing、human-operation regression fixture、critical-stage feedback routing が仮説→観測→固定 review→次判断の主要経路を既に覆う。progression debt の停止条件には固有差があるが、比較可能な meta progression artifact が現 staging にない。active_probes 326件へ同型 control を追加すると cadence の目的化と確認負荷が判断差を上回るため、state-only review とした。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
