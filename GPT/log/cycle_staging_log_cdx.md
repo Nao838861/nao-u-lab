@@ -111,7 +111,65 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index atom ID を検査し、欠落 0 件を確認。UTF-8 明示読みでは代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」を取得できた。"
+  - "memory/atoms.jsonl を memory_health で監査。2,922 atom、ID 重複 0、mirror drift 0、normalized-content 重複 40 group / 80 row は既存 canonical overlay と lifecycle fold で吸収済み。"
+  - "memory/raw/ の30日超未更新 242 file を確認。Slack/API・web research・headless/game eval の provenance 正本であり、参照を壊す安全な archive 対象はないため移動 0 件。"
+  - "shared-reads の title canonical / mixed / open-group / stale-triage / group-action sidecar を再生成・監査。terminal canonical 102 group、open duplicate 32 group、stale triage 0、actionable group 0。"
+  - "Slack inbox lifecycle を監査。slack_directives 0 pending、slack_broadcasts 0 pending のため close 更新 0 件。"
+issues:
+  - id: ISS-ENC-001
+    description: "active atom sr-1776127289-4d9239b255 の『AIエージェント』が『AIエ��ジェント』として raw 原文から派生 view まで伝播している。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みでも U+FFFD が残り、source file 自体の局所破損。gr-1777083728-44d444ab7a の警告は原文中の意図的な literal『???』による false positive。"
+    display_or_tooling_status: "none。PowerShell / staging の表示経路による mojibake ではない。memory/MEMORY.md の代表語 probe は正常。"
+    why_blocks_game_memory: "記憶アーキテクチャを扱う atom の exact-term 検索と生成 view の品質を1件だけ損なうが、index・mirror・通常 recall 全体は成立しているため局所 cleanup 課題に留まる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+candidate_lifecycle:
+  files: 1360
+  counts:
+    posted: 659
+    ready_to_post: 9
+    postponed: 202
+    failed: 488
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_for_reassessment: 4
+  overdue_disposition: "2 all-open duplicate group の既存 deferred lease が同一 membership を 2026-09-19 まで抑止。fail 降格・明示保持・新規 handoff は今回 0 件。"
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 32
+  mixed_group_count: 28
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
