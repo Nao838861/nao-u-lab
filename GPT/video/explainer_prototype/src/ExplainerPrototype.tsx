@@ -1295,13 +1295,13 @@ const GameLogicScene: React.FC<{durationInFrames?: number}> = ({durationInFrames
 
 const CoordinateTransformScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 600}) => {
   const frame = useCurrentFrame();
-  const reveal = (at: number) => interpolate(frame, [at, at + 18], [0, 1], {
+  const reveal = (fraction: number) => interpolate(frame, [durationInFrames * fraction, durationInFrames * fraction + 12], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
   const mappings = [
-    {key: '奥行き → 座標', label: '消失点へ寄せる', color: C.cyan, at: 120},
-    {key: '奥行き → 絵', label: '16段階から選ぶ', color: C.magenta, at: 180},
+    {key: '奥行き → 座標', label: '消失点へ寄せる', color: C.cyan, at: 0.64},
+    {key: '奥行き → 絵', label: '16段階から選ぶ', color: C.magenta, at: 0.74},
   ];
   return (
     <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '36px 46px 0', boxSizing: 'border-box'}}>
@@ -1312,17 +1312,17 @@ const CoordinateTransformScene: React.FC<{durationInFrames?: number}> = ({durati
 
       <div style={{display: 'flex', gap: 26, marginTop: 24, height: 532}}>
         <div style={{width: 430, display: 'flex', flexDirection: 'column', gap: 12}}>
-          <div style={{opacity: reveal(20), padding: '15px 18px', background: C.panel, borderLeft: `6px solid ${C.red}`}}>
+          <div style={{opacity: reveal(0.03), padding: '15px 18px', background: C.panel, borderLeft: `6px solid ${C.red}`}}>
             <div style={{fontFamily: FONT, color: C.red, fontSize: 17, fontWeight: 900}}>ファミコンCPU</div>
             <div style={{fontFamily: FONT, color: C.white, fontSize: 24, fontWeight: 900, marginTop: 5}}>掛け算・割り算命令がない</div>
           </div>
-          <div style={{opacity: reveal(65), display: 'flex', alignItems: 'center', gap: 10}}>
+          <div style={{opacity: reveal(0.35), display: 'flex', alignItems: 'center', gap: 10}}>
             <div style={{width: 115, padding: '13px 8px', textAlign: 'center', background: '#101116', border: `2px solid ${C.cyan}`, fontFamily: FONT, color: C.white, fontSize: 20, fontWeight: 900}}>奥行き</div>
             <div style={{fontFamily: MONO, color: C.cyan, fontSize: 25, fontWeight: 900}}>→</div>
             <div style={{flex: 1, padding: '13px 12px', textAlign: 'center', background: `${C.cyan}18`, border: `2px solid ${C.cyan}`, fontFamily: FONT, color: C.cyan, fontSize: 21, fontWeight: 900}}>テーブル参照</div>
             <div style={{fontFamily: MONO, color: C.cyan, fontSize: 25, fontWeight: 900}}>→</div>
           </div>
-          <div style={{opacity: reveal(85), padding: '13px 14px', background: C.panel, border: '1px solid #47434e', textAlign: 'center'}}>
+          <div style={{opacity: reveal(0.43), padding: '13px 14px', background: C.panel, border: '1px solid #47434e', textAlign: 'center'}}>
             <div style={{fontFamily: FONT, color: C.white, fontSize: 20, fontWeight: 900}}>画面座標 ＋ 表示する絵</div>
           </div>
           <div style={{marginTop: 4, display: 'flex', flexDirection: 'column', gap: 9}}>
@@ -1333,7 +1333,7 @@ const CoordinateTransformScene: React.FC<{durationInFrames?: number}> = ({durati
               </div>
             ))}
           </div>
-          <div style={{opacity: reveal(255), marginTop: 'auto', padding: '13px 15px', borderTop: `2px solid ${C.magenta}`, borderBottom: `2px solid ${C.magenta}`, fontFamily: FONT, color: C.white, fontSize: 20, fontWeight: 900, textAlign: 'center'}}>
+          <div style={{opacity: reveal(0.86), marginTop: 'auto', padding: '13px 15px', borderTop: `2px solid ${C.magenta}`, borderBottom: `2px solid ${C.magenta}`, fontFamily: FONT, color: C.white, fontSize: 20, fontWeight: 900, textAlign: 'center'}}>
             複雑な計算 → 配列を引く処理
           </div>
         </div>
@@ -1343,10 +1343,10 @@ const CoordinateTransformScene: React.FC<{durationInFrames?: number}> = ({durati
             <div style={{fontFamily: FONT, color: C.white, fontSize: 24, fontWeight: 900}}>実際に使っている変換テーブル</div>
             <div style={{fontFamily: MONO, color: C.cyan, fontSize: 14, fontWeight: 900}}>56 Z-STEPS</div>
           </div>
-          <div style={{opacity: reveal(65), height: 385, marginTop: 14, display: 'grid', placeItems: 'center', overflow: 'hidden', background: '#111216', border: `2px solid ${C.cyan}`}}>
+          <div style={{opacity: reveal(0.35), height: 385, marginTop: 14, display: 'grid', placeItems: 'center', overflow: 'hidden', background: '#111216', border: `2px solid ${C.cyan}`}}>
             <Img src={staticFile('development_z_table.png')} style={{width: '100%', height: '100%', objectFit: 'contain', imageRendering: 'auto'}} />
           </div>
-          <div style={{opacity: reveal(210), display: 'flex', gap: 9, marginTop: 14}}>
+          <div style={{opacity: reveal(0.72), display: 'flex', gap: 9, marginTop: 14}}>
             {['Xの寄せ率', 'Y座標補正', '絵のサイズ 0〜15'].map((label, i) => (
               <div key={label} style={{flex: 1, padding: '10px 6px', textAlign: 'center', background: '#0a0a0d', borderTop: `3px solid ${[C.cyan, C.orange, C.magenta][i]}`, fontFamily: FONT, color: C.white, fontSize: 15, fontWeight: 900}}>{label}</div>
             ))}
@@ -1681,17 +1681,17 @@ const ProgrammingFlowScene: React.FC<{durationInFrames?: number}> = ({durationIn
       <Title size={40}>C言語を正本に、AIでアセンブラ化</Title>
       <div style={{fontFamily: FONT, color: C.dim, fontSize: 19, fontWeight: 800, marginTop: 7}}>AIをコンパイラのように使い、Cとアセンブラを並行して維持</div>
       <div style={{display: 'grid', gridTemplateColumns: '330px 1fr 360px', gap: 24, alignItems: 'stretch', marginTop: 34, height: 470}}>
-        <div style={{opacity: show(0.03), background: C.panel, border: `2px solid ${C.cyan}`, padding: 22}}>
+        <div style={{opacity: show(0.12), background: C.panel, border: `2px solid ${C.cyan}`, padding: 22}}>
           <div style={{fontFamily: MONO, color: C.cyan, fontSize: 23, fontWeight: 900}}>C SOURCE</div>
           <div style={{fontFamily: FONT, color: C.white, fontSize: 18, fontWeight: 900, marginTop: 12}}>アルゴリズムを素早く更新</div>
           <div style={{marginTop: 27, display: 'flex', flexDirection: 'column', gap: 15}}>
-            {codeLines.map((line, i) => <div key={line} style={{opacity: show(0.08 + i * 0.06), fontFamily: MONO, color: C.white, fontSize: 19, padding: '11px 12px', background: '#0b0c10', borderLeft: `5px solid ${C.cyan}`}}>{line}</div>)}
+            {codeLines.map((line, i) => <div key={line} style={{opacity: show(0.14 + i * 0.055), fontFamily: MONO, color: C.white, fontSize: 19, padding: '11px 12px', background: '#0b0c10', borderLeft: `5px solid ${C.cyan}`}}>{line}</div>)}
           </div>
           <div style={{marginTop: 25, fontFamily: FONT, color: C.cyan, fontSize: 17, lineHeight: 1.5, fontWeight: 900}}>同じ動作のCソースを<br />常に残す</div>
         </div>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-          <div style={{opacity: show(0.28), width: 150, height: 150, borderRadius: '50%', border: `4px solid ${C.magenta}`, display: 'grid', placeItems: 'center', background: `${C.magenta}18`, fontFamily: FONT, color: C.magenta, fontSize: 34, fontWeight: 900}}>AI</div>
-          <div style={{opacity: show(0.36), fontFamily: MONO, color: C.magenta, fontSize: 34, margin: '16px 0'}}>→</div>
+          <div style={{opacity: show(0.32), width: 150, height: 150, borderRadius: '50%', border: `4px solid ${C.magenta}`, display: 'grid', placeItems: 'center', background: `${C.magenta}18`, fontFamily: FONT, color: C.magenta, fontSize: 34, fontWeight: 900}}>AI</div>
+          <div style={{opacity: show(0.37), fontFamily: MONO, color: C.magenta, fontSize: 34, margin: '16px 0'}}>→</div>
           <div style={{opacity: show(0.4), padding: '14px 18px', background: C.panel, borderTop: `3px solid ${C.magenta}`, borderBottom: `3px solid ${C.magenta}`, textAlign: 'center', fontFamily: FONT, color: C.white, fontSize: 18, fontWeight: 900}}>固まった処理を<br />アセンブラへ変換</div>
         </div>
         <div style={{opacity: show(0.48), background: C.panel, border: `2px solid ${C.orange}`, padding: 22}}>
@@ -1701,7 +1701,7 @@ const ProgrammingFlowScene: React.FC<{durationInFrames?: number}> = ({durationIn
           <div style={{opacity: show(0.65), marginTop: 23, padding: '13px 10px', textAlign: 'center', border: '2px solid #62df83', fontFamily: FONT, color: '#62df83', fontSize: 19, fontWeight: 900}}>✓ C版と同じ動作</div>
         </div>
       </div>
-      <div style={{opacity: show(0.78), position: 'absolute', left: 260, right: 260, bottom: 16, padding: '14px 20px', borderTop: `2px solid ${C.magenta}`, borderBottom: `2px solid ${C.magenta}`, textAlign: 'center', fontFamily: FONT, color: C.white, fontSize: 23, fontWeight: 900}}>アルゴリズム改善はC言語で何度でも行える</div>
+      <div style={{opacity: show(0.77), position: 'absolute', left: 260, right: 260, bottom: 16, padding: '14px 20px', borderTop: `2px solid ${C.magenta}`, borderBottom: `2px solid ${C.magenta}`, textAlign: 'center', fontFamily: FONT, color: C.white, fontSize: 23, fontWeight: 900}}>アルゴリズム改善はC言語で何度でも行える</div>
     </AbsoluteFill>
   );
 };
