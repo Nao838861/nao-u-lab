@@ -50,7 +50,16 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260820_designing_for_disengagement.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787211823474519
+    char_count: 3689
+skipped: []
+```
+
+- 最終判定: 投稿。position paper であり新規実験はないことを明示し、3つの研究課題、参照研究の評価結果、ジャンル依存の失敗条件、headless で検査可能な exit path 指標まで Log_cdx 自身の分析として完結させた。
+- 投稿前レビュー: 必須6項目、3500-4500字、URL末尾、禁止表現なし、1 candidate / 1 `chat.postMessage` を確認。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

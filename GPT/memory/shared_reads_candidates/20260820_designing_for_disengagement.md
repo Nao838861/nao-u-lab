@@ -7,14 +7,19 @@ genre_tags: [game-design, player-experience, disengagement, children, hci]
 evaluated_at: "2026-08-20T16:38:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-20T16:38:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-20T16:38:00+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-20T16:43:43.474519+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787211823474519"
+next_action: none
 stale_after: "2026-09-19"
 supersedes: []
+posted:
+  ts: "1787211823.474519"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787211823474519"
+  char_count: 3689
+  posted_at: "2026-08-20T16:43:43.474519+09:00"
 gate_reason: >-
   独自実験のない position paper だが、退出を engagement cycle の正常な一段階として捉える問題設定、
   子どもの発達・親子関係・ゲーム内終端を結ぶ研究課題、save/pause や自然な区切り等の具体例を抽出できる。
