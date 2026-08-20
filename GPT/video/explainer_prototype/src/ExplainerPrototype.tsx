@@ -1404,7 +1404,8 @@ const AlignedEnemyGrid: React.FC<{scale: number; xShift: number; yShift: number;
 
 const AlignmentScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 360}) => {
   const frame = useCurrentFrame();
-  const index = Math.floor(frame / 42) % 8;
+  const movementSequence = [0, 1, 2, 3, 2, 1, 0, 4, 5, 6, 7, 6, 5, 4];
+  const index = movementSequence[Math.floor(frame / 9) % movementSequence.length];
   const xShift = index % 4;
   const parity = Math.floor(index / 4);
   const movementLabels = ['移動なし', '右へ1', '右へ2', '右へ3', '下へ1', '右1・下1', '右2・下1', '右3・下1'];
@@ -1468,7 +1469,7 @@ const SizeBankScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
   const scaleCycle = frame % 75;
   const scaleProgress = scaleCycle <= 37 ? scaleCycle / 37 : (75 - scaleCycle) / 38;
   const chosen = 15 - Math.round(scaleProgress * 15);
-  const progress = interpolate(frame, [0, 300], [0, 1], {extrapolateRight: 'clamp'});
+  const progress = interpolate(frame, [0, 30], [0, 1], {extrapolateRight: 'clamp'});
   const patternCountOpacity = interpolate(
     frame,
     [Math.round(durationInFrames * 0.54), Math.round(durationInFrames * 0.54) + 12],
