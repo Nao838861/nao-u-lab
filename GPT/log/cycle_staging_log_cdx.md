@@ -97,7 +97,40 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787195314-45eb2d57a9
+    source_ts: "1787195314.362269"
+    title: "Beast of Reincarnation hands-on — parry 成功を相棒の選択資源へ渡す bridge action"
+    reason: "score 12 の未レビュー最新候補で、game-design／harness／evaluation を含む。局所成功を次の選択権へ変換する設計が、次回 prototype の判断差へ変換できるかを1件だけ確認した。Nao_u の明示的な重要評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "単一記者の発売前 hands-on で比較 playtest／accessibility／長期 balance の根拠がなく、既存 probe が companion の agency、shared-control、resource access、選択 telemetry を既に覆う。active_probes 326件に対し、今サイクル後半には bridge action の before／after を比較できる game artifact と consumer phase がないため、追加 probe の確認負荷が判断差を上回る。合計14未満かつ risk_control<2。"
+  existing_controls:
+    - probe-20260619-assist-relationship-frame
+    - probe-20260618-shared-control-handoff-contract
+    - probe-20260626-shmup-rescue-resource-role-axis
+    - probe-20260711-utility-choice-observability
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録した。active_probes、lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-20T12:12:02+09:00",
+  "updated_at": "2026-08-20T14:35:00+09:00",
   "reviewed_source_ts": [
+    "1787195314.362269",
     "1778382356.679499",
     "1778343080.673839",
     "1779847094.040729",
@@ -700,6 +701,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-20T14:35:00+09:00",
+      "selected": {
+        "id": "sr-1787195314-45eb2d57a9",
+        "source_ts": "1787195314.362269",
+        "title": "Beast of Reincarnation hands-on — parry 成功を相棒の選択資源へ渡す bridge action",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、memory・skills・harness・game-design・operation・evaluation の優先タグを横断する最新候補なので1件だけ選んだ。parry の局所成功を companion token と次の技選択へ変換する設計が、次の game prototype で機能追加ではなく判断差を作るか検討した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は parry→Fluorescence Points→Koo の技選択という bridge action、token の死蔵・単一技への収束・低 parry 成功層の排除を観測する telemetry まで具体化しており relevance=3、actionability=3 とした。一方、根拠は発売前製品版を遊んだ記者1名の hands-on で、設計者の意図、比較 playtest、accessibility、長期 balance、反復耐性を示さないため evidence=2。probe-20260619-assist-relationship-frame は companion の成功率と agency／関係性の分離を、probe-20260618-shared-control-handoff-contract は control authority と repair を、probe-20260626-shmup-rescue-resource-role-axis は resource access と expert depth の分離を、probe-20260711-utility-choice-observability は選択理由と runner-up を既に扱うため non_redundancy=1。active_probes は326件あり、今サイクル後半は memory cleanup で、bridge action の before／after を比較できる具体的な game artifact と consumer phase を指定できない。ここで類似 probe を追加すると確認負荷が判断差を上回るため risk_control=1 とした。",
+      "existing_controls": [
+        "probe-20260619-assist-relationship-frame",
+        "probe-20260618-shared-control-handoff-contract",
+        "probe-20260626-shmup-rescue-resource-role-axis",
+        "probe-20260711-utility-choice-observability"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、bridge action は具体的だが既存4 controlと重なり、比較可能な game artifact／consumer phase を指定できないため reject した理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-20T12:12:02+09:00",
       "selected": {
