@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-20T21:32:33+09:00",
+  "updated_at": "2026-08-20T23:30:23+09:00",
   "reviewed_source_ts": [
+    "1787228905.427089",
     "1779860566.721249",
     "1787180642.210759",
     "1787211823.474519",
@@ -705,6 +706,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-20T23:30:23+09:00",
+      "selected": {
+        "id": "sr-1787228905-d720adf04e",
+        "source_ts": "1787228905.427089",
+        "title": "Flavors of Challenge — 難度を8軸へ分解する診断枠組み",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新 atom で、memory・harness・game-design・operation・evaluation を含む9タグを持つため1件だけ選んだ。challenge を Reasoning、Physicality、Randomness、Endurance、Out-Game Resources、Representation、Interpersonal Skills、In-Game Resources に分ける知見が、Codex の game prototype 評価に既存 control と異なる判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は challenge を8軸へ分解し、Getting Over It、Sekiro、Titan Souls の profile、retry friction、input／output randomness、time-tax、同一 boss の3 variant probe、headless で観測可能な軸と人間確認が要る軸まで具体化しているため relevance・actionability は3とした。一方、根拠は講演者1名による三作品の主観採点と設計処方で、rater 間一致、player sample、離脱率との相関、軸の独立性、12処方の因果効果を検証しておらず evidence は2に留めた。probe-20260609-dda-proxy-rule-trace は観測 proxy と推定 player state と調整 rule を、probe-20260626-meta-horizon-friction-layer-triage は friction layer と observable cue を、probe-20260711-balance-trend-skill-chance は difficulty／skill／chance の分離を、probe-20260616-relative-difficulty-regression-calibration は固定条件下の相対難度だけを扱う境界を既に確認する。本 atom 固有の8軸 profile は診断語彙として有用だが、既存4 control を束ね直す側面が強く non_redundancy は1。active_probes は326件あり、現在の staging は Phase 4a memory cleanup へ進み、target／observed profile の before／after、同一 encounter variant、human playtest を持つ具体的 trigger artifact がない。ここで8軸 metric を追加すると、0–10の偽精密性と全軸記録の確認負荷が判断差を上回るため risk_control は1とした。次に具体的な boss／wave／retry-loop artifact で既存 controls が負荷の移し替えを取り逃がした実例が出た時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260609-dda-proxy-rule-trace",
+        "probe-20260626-meta-horizon-friction-layer-triage",
+        "probe-20260711-balance-trend-skill-chance",
+        "probe-20260616-relative-difficulty-regression-calibration"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、8軸 difficulty profile の有用性、主観採点・未検証処方という証拠限界、既存 difficulty／friction controls との重複、比較可能な playable artifact 不在による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-20T19:00:23+09:00",
       "selected": {
