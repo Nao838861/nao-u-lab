@@ -101,7 +101,72 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の backtick atom 参照50件を atoms.jsonl / atoms/index.jsonl と照合し、broken reference 0件を確認した。Markdown link は0件。"
+  - "memory/MEMORY.md を UTF-8 明示で読み、記憶・ゲーム設計・敵パターンは取得、評価軸は文字化けではなく現行本文に語として存在しないことを確認した。evaluation / px-evaluation の索引導線は存在する。"
+  - "memory/atoms.jsonl 2921件を監査し、JSON/mirror parse error 0、duplicate id 0、per-file / index content conflict 0を確認した。normalized-content raw duplicate 40群80件は既存 fold で有効表示上の未解決0件。"
+  - "memory/raw/ 247ファイルを確認し、30日超242件を検出した。Slack ingestion 正本と原典PDF/textの保持層が混在するため、このphaseでは移動・削除せず保持した。"
+  - "shared-reads lifecycle 1356件を監査し、title canonical / mixed duplicate / open duplicate / stale triage / group-action sidecar を再生成した。"
+  - "期限到来open candidate 4件は、既存のall-open group handoff 2件が retry_after=2026-09-19 までdeferredのため、stale triage 0件・group action 0件となることを確認した。"
+  - "group budget 1、candidate budget 5で冪等enqueueを実行し、新規handoff 0件。両inboxのaudit error 0件。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 各0件で、handled更新対象なし。"
+issues:
+  - id: ISS-4A-20260820-ENC-01
+    description: "shared-reads raw 由来atom 1件で『エ��ジェント』という置換文字が原文・atom双方に残っている。memory_health が挙げたもう1件は本文中の意図的な『???』によるfalse positive。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; atom sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8明示読みでもrawとper-atomの双方にU+FFFD相当の置換文字があり、source由来の局所破損。memory/MEMORY.md 自体はUTF-8で正常に読め、atom参照50件も整合。"
+    display_or_tooling_status: "Get-Content -Encoding utf8、rg、memory_healthで同じ文字列を観測しており、shell/staging表示だけのmojibakeではない。"
+    why_blocks_game_memory: "当該1件を正しい『エージェント』表記だけで全文検索すると取りこぼし得る。ただしID・tag・URL導線は残り、ゲーム制作記憶全体を妨げる規模ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  receipt: null
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+    merged: 0
+    retired: 0
+candidate_lifecycle:
+  total: 1356
+  counts:
+    posted: 656
+    ready_to_post: 9
+    postponed: 201
+    failed: 488
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_for_reassessment_raw_count: 4
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_handoff_pending_count: 0
+  group_handoff_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  live_deferred_group_count: 2
+  live_deferred_retry_after: "2026-09-19T14:08:16+09:00"
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
