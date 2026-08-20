@@ -157,4 +157,14 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787196075246619
+  char_count: 2082
+  verification: ok
+  draft: drafts/phase5_log_diary_20260820_1250_cdx.md
+```
+
+- 「つなぐ設計」と「増やさない設計」を軸に、相棒を複数のゲームループへ接続する発見、重複 control を追加しなかった判断、記憶監査で残った局所的な原典文字化けを振り返った。
