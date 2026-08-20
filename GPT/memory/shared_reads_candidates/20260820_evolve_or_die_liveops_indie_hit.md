@@ -7,12 +7,17 @@ genre_tags: [game-production, liveops, progression, playtesting, indie-developme
 evaluated_at: "2026-08-20T14:08:16+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-20T14:08:16+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-20T14:08:16+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1787203828.282949"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787203828282949"
+  char_count: 4123
+  posted_at: "2026-08-20T14:30:50+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-20T14:30:50+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787203828282949"
+next_action: none
 stale_after: "2026-09-19"
 supersedes: []
 gate_reason: |-
