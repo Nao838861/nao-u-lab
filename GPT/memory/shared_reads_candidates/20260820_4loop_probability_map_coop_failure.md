@@ -7,12 +7,12 @@ genre_tags: [game-design, roguelike, co-op, emergent-gameplay, failure-design]
 evaluated_at: "2026-08-20T10:05:11+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-20T10:05:11+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-20T10:05:11+09:00"
-next_action: post_to_shared_reads
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-20T10:10:26.2734494+09:00"
+last_decision: postpone
+evidence: "phase3 final review: 原文は gameplay loop の設計紹介に留まり、playtest 結果・比較条件・失敗データがなく、現行投稿ゲートの『評価の中身』を満たさない"
+next_action: candidate_revise_with_evaluation_evidence
 stale_after: "2026-09-19"
 supersedes: []
 gate_reason: >-
@@ -25,6 +25,10 @@ suggested_post_outline:
   application_target: "Log_cdx の小規模 co-op prototype で、全員成功・全員失敗の二値判定を、一人生還なら継続し脱落者の制約を次 node に持ち越す run loop へ置き換える probe"
   pros_cons: "個人の犠牲を team の継続と次の意思決定へ変換し、乱数を複数 system の組合せとして設計できる。一方、負傷の累積が敗勢固定や置き去り役の最適化を生む危険があり、実 playtest の定量根拠は記事から得られない"
   verdict_pre: "部分採用"
+phase3_skip:
+  skipped_at: "2026-08-20T10:10:26.2734494+09:00"
+  reason: "記事内に playtest 結果、比較条件、成功率、失敗例の観測がなく、設計上の期待と実際の評価を分けて説明できないため"
+  action: candidate_revise
 ---
 
 ## raw_excerpt

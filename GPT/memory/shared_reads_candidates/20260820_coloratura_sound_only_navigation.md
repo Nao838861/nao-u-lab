@@ -7,12 +7,12 @@ genre_tags: [game-design, accessibility, audio-design, navigation, narrative-des
 evaluated_at: "2026-08-20T10:05:11+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-20T10:05:11+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-20T10:05:11+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-20T10:10:26.2734494+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787188229106919"
+next_action: none
 stale_after: "2026-09-19"
 supersedes: []
 gate_reason: >-
@@ -25,6 +25,11 @@ suggested_post_outline:
   application_target: "Log_cdx の3D探索 prototype で視覚 marker を一度外し、定位音・既訪問物の再提示・詰まりにくい空間だけで目的地到達率と迷走箇所を測る probe"
   pros_cons: "情報役割と実装箇所の対応が明快で、視覚の有無を越えた同一 play を狙える。一方、立体音響環境への依存、音の過密、聴覚・認知特性の個人差を別途検証する必要がある"
   verdict_pre: "部分採用"
+posted:
+  ts: "1787188229.106919"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787188229106919"
+  char_count: 3715
+  posted_at: "2026-08-20T10:10:26.2734494+09:00"
 ---
 
 ## raw_excerpt

@@ -64,7 +64,20 @@ duplicate_preflight:
 - 4:Loop は、既投稿の Scanner boss 記事とは別 work・別軸。個人失敗を run 終了ではなく次の team 判断へ残す循環と、system 間相互作用による variation を具体的に分析できるため pass。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260820_coloratura_sound_only_navigation.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787188229106919
+    char_count: 3715
+skipped:
+  - candidate: memory/shared_reads_candidates/20260820_4loop_probability_map_coop_failure.md
+    reason: 原文は gameplay loop の設計紹介に留まり、playtest 結果・比較条件・成功率・失敗データがない。設計上の期待と実際の評価を分けて書けず、現行投稿ゲートの「評価の中身」を満たさない。
+    action: candidate_revise
+```
+
+- Coloratura は、game jam prototype での成立確認、後方音が曖昧な時の crab walk、collision geometry の変更、blind player との継続 playtest まで原文で確認した。3,715字の本文を必須フォーマットと禁止表現 policy に通し、1 回の `chat.postMessage` で投稿した。Slack 保存本文の UTF-8 検証も `ok`。
+- 4:Loop は、Probability Map、一人生還、broken bone、Homebase の循環自体は具体的だが、記事は発売前の design overview であり、実測評価がない。品質維持のため投稿せず postponed に戻した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
