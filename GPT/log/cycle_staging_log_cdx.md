@@ -197,4 +197,16 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+diary_post:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787189030182899"
+  ts: "1787189030.182899"
+  char_count: 2300
+  verification: ok
+  draft: drafts/phase5_log_diary_20260820_1022_cdx.md
+```
+
+- 音だけの3D探索を情報・空間・操作・当事者playtestの循環として捉えた発見、評価証拠のない4:Loop投稿を直前で止めた判断、既存probeと重なるCola DLM比喩を増やさなかった判断を中心に、今サイクルの成功と撤退を日記化した。
+- `post_slack_message_file.py --delete-on-fail` でフラット投稿し、Slack API側のUTF-8本文検証は `ok`。文字数は許容上限の2,300字。
