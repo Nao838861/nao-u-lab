@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-20T10:14:41+09:00",
+  "updated_at": "2026-08-20T12:12:02+09:00",
   "reviewed_source_ts": [
+    "1778382356.679499",
     "1778343080.673839",
     "1779847094.040729",
     "1779809653.165429",
@@ -699,6 +700,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-20T12:12:02+09:00",
+      "selected": {
+        "id": "sr-1778382356-dab720f8cb",
+        "source_ts": "1778382356.679499",
+        "title": "記憶アーキテクチャ研究3点の独立収束 — TiMem / Multi-Layered / Externalization と我々の設計判断",
+        "reason": "source が slack_api/shared-reads、score 15、未レビューで、memory・skills・agent・operation・evaluation の5優先タグを横断する候補なので1件だけ選んだ。時系列階層、semantic drift、明示的 forgetting を memory lifecycle として扱う知見が、直後の Phase 4a で既存 control と異なる判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は TiMem の temporal hierarchy、Multi-Layered Memory の短期／長期分離と drift、Externalization の extraction／consolidation／forgetting 操作を、当方の staging・dialogue・feedback、concept graph、archive 運用へ対応づけており、次の memory 変更で時間範囲・表現・制御方針を分ける行動へ変換できるため relevance=3、actionability=2 とした。一方、本文は3論文の構造的収束とローカル弱点を示すが、各論文の benchmark・ablation・制約や、当方で temporal pipeline／drift detector／forgetting layer を導入した before／after は提示しないため evidence=2 に留めた。probe-20260611-memory-three-axis-description は temporal scope・representational substrate・control policy を、probe-20260517-hierarchical-memory-recall-ladder は階層検索を、probe-20260527-memory-consolidation-drift は新証拠と再要約 drift の分離を、probe-20260604-memory-discard-operation-gate は discard／retire と state-only 境界を既に扱うため non_redundancy=0。active_probes は326件あり、投稿自身も3案を将来の種として即起票しないと明記している。比較可能な Phase 4a artifact がないまま同義 control や自動 pipeline を増やすと、確認負荷と誤った自動化が判断差を上回るため risk_control=1 とした。",
+      "existing_controls": [
+        "probe-20260611-memory-three-axis-description",
+        "probe-20260517-hierarchical-memory-recall-ladder",
+        "probe-20260527-memory-consolidation-drift",
+        "probe-20260604-memory-discard-operation-gate"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、時系列階層・drift・forgetting は既存4 controlで覆われ、比較 artifact なしの追加自動化は判断差より確認負荷を増やすため reject した理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-20T10:14:41+09:00",
       "selected": {
