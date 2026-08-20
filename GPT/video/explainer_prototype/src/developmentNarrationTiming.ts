@@ -9,6 +9,7 @@ const getCut = (id: string) => {
 export const c04Timing = getCut('C04');
 export const c05Timing = getCut('C05');
 export const c06Timing = getCut('C06');
+export const c07Timing = getCut('C07');
 
 export const developmentNarrationDurationInFrames =
-  c06Timing.startFrame + c06Timing.durationFrames;
+  c07Timing.startFrame + c07Timing.durationFrames;

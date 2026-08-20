@@ -29,7 +29,7 @@
     "narration:regenerate-later": "node tools/generate-narration.mjs --manifest=later-cuts.json --force",
     "narration:compact-later": "node tools/generate-narration.mjs --manifest=later-cuts.json --compact-only",
     "render:narration-preview": "remotion render src/index.ts ExplainerNarrationPreview out/完成版/explainer_narration_C01-C03.mp4 --codec=h264 --crf=18",
-    "render:development-preview": "remotion render src/index.ts DevelopmentNarrationPreview out/完成版/explainer_narration_C04-C06.mp4 --codec=h264 --crf=18",
+    "render:development-preview": "remotion render src/index.ts DevelopmentNarrationPreview out/完成版/explainer_narration_C04-C07.mp4 --codec=h264 --crf=18",
     "render:drawing-preview": "remotion render src/index.ts DrawingNarrationPreview out/完成版/explainer_narration_C08-C10.mp4 --codec=h264 --crf=18",
     "render:benefit-preview": "remotion render src/index.ts BenefitNarrationPreview out/完成版/explainer_narration_C11-C13.mp4 --codec=h264 --crf=18",
     "render:constraint-preview": "remotion render src/index.ts ConstraintNarrationPreview out/完成版/explainer_narration_C14-C16.mp4 --codec=h264 --crf=18",

@@ -23,6 +23,7 @@ import {
   c04Timing,
   c05Timing,
   c06Timing,
+  c07Timing,
 } from './developmentNarrationTiming';
 import {
   c08Timing,
@@ -414,6 +415,7 @@ const DevVideoFrame: React.FC<{src: string; children?: React.ReactNode}> = ({src
 
 const DevelopmentDay1Scene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 450}) => {
   const frame = useCurrentFrame();
+  const groundBands = [6, 7, 8, 9, 10, 12, 14, 16, 19, 22, 26, 30, 34];
   return (
     <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '36px 48px 0', boxSizing: 'border-box'}}>
       <div style={{position: 'absolute', left: 48, top: 36, zIndex: 5}}>
@@ -424,16 +426,16 @@ const DevelopmentDay1Scene: React.FC<{durationInFrames?: number}> = ({durationIn
       <div style={{position: 'absolute', left: 828, top: 158, width: 404}}>
         <div style={{fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900}}>地面はライン単位</div>
         <div style={{fontFamily: FONT, color: C.dim, fontSize: 17, lineHeight: 1.6, marginTop: 14}}>Y軸ごとに白／黒の値を持ち、横一列を同じ色で塗る。</div>
-        <div style={{marginTop: 20, border: '1px solid #47434e', background: C.panel, padding: 12}}>
-          {[0, 1, 1, 0, 1, 0, 0].map((v, i) => (
-            <div key={i} style={{display: 'flex', alignItems: 'center', gap: 9, marginTop: i ? 7 : 0}}>
-              <span style={{width: 34, fontFamily: MONO, color: C.dim, fontSize: 12}}>Y{i}</span>
-              <span style={{width: 20, fontFamily: MONO, color: v ? C.white : C.dim, fontSize: 12}}>{v}</span>
-              <span style={{height: 8, flex: 1, background: v ? C.white : '#050507'}} />
+        <div style={{marginTop: 12, border: '1px solid #47434e', background: C.panel, padding: '7px 11px'}}>
+          {groundBands.map((bandHeight, i) => (
+            <div key={i} style={{display: 'flex', alignItems: 'stretch', height: bandHeight}}>
+              <span style={{width: 34, paddingTop: 1, fontFamily: MONO, color: C.dim, fontSize: 9}}>Y{i}</span>
+              <span style={{width: 18, paddingTop: 1, fontFamily: MONO, color: i % 2 ? C.white : C.dim, fontSize: 9}}>{i % 2}</span>
+              <span style={{flex: 1, background: i % 2 ? C.white : '#050507', borderLeft: '1px solid #47434e', borderRight: '1px solid #47434e'}} />
             </div>
           ))}
         </div>
-        <div style={{fontFamily: FONT, color: C.cyan, fontSize: 19, lineHeight: 1.5, fontWeight: 900, marginTop: 18}}>7パターンを切り替えて<br />前進を表現</div>
+        <div style={{fontFamily: FONT, color: C.cyan, fontSize: 18, lineHeight: 1.4, fontWeight: 900, marginTop: 10}}>奥は細かく、手前は太く<br />7パターンで前進を表現</div>
       </div>
     </AbsoluteFill>
   );
@@ -449,7 +451,7 @@ const DevelopmentDay2Scene: React.FC<{durationInFrames?: number}> = ({durationIn
         <Title size={42}>奥行きに合わせて木を動かす</Title>
       </div>
       <DevVideoFrame src="dev_day2.mp4" />
-      <div style={{position: 'absolute', left: 828, top: 155, width: 404}}>
+      <div style={{position: 'absolute', left: 808, top: 145, width: 448}}>
         <div style={{fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900}}>Z軸 56段階</div>
         <div style={{height: 210, marginTop: 12, position: 'relative', borderLeft: `5px solid ${C.cyan}`, background: `linear-gradient(180deg, ${C.cyan}12, ${C.magenta}28)`}}>
           <div style={{position: 'absolute', left: 15, top: 5, fontFamily: MONO, color: C.cyan, fontSize: 14}}>Z = 55　奥</div>
@@ -457,8 +459,8 @@ const DevelopmentDay2Scene: React.FC<{durationInFrames?: number}> = ({durationIn
           <div style={{position: 'absolute', left: -10, top: `${10 + zProgress * 180}px`, width: 22, height: 5, background: C.white, boxShadow: '0 0 8px #fff'}} />
         </div>
         <div style={{fontFamily: FONT, color: C.white, fontSize: 17, lineHeight: 1.5, marginTop: 10}}>各段階でスプライトの大きさとY座標を手作業で補正</div>
-        <div style={{height: 178, marginTop: 9, overflow: 'hidden', border: '1px solid #47434e', background: '#111216'}}>
-          <Img src={staticFile('development_z_table.png')} style={{width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center', opacity: 0.92}} />
+        <div style={{height: 245, marginTop: 12, overflow: 'hidden', border: `2px solid ${C.cyan}`, background: '#111216', padding: 5, boxSizing: 'border-box'}}>
+          <Img src={staticFile('development_z_table.png')} style={{width: '104%', height: '104%', objectFit: 'contain', objectPosition: 'center', transform: 'translate(-2%, -2%)', opacity: 0.96}} />
         </div>
       </div>
     </AbsoluteFill>
@@ -486,10 +488,10 @@ const DevelopmentDay3Scene: React.FC<{durationInFrames?: number}> = ({durationIn
   );
 };
 
-const DevelopmentCheckerboardScene: React.FC = () => {
+const DevelopmentCheckerboardScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 450}) => {
   const frame = useCurrentFrame();
   return (
-    <AbsoluteFill style={{opacity: fade(frame, 450), backgroundColor: C.bg, padding: '36px 48px 0', boxSizing: 'border-box'}}>
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '36px 48px 0', boxSizing: 'border-box'}}>
       <Eyebrow color={C.red}>DAY 3</Eyebrow>
       <Title size={42}>市松模様の地面も試した</Title>
       <div style={{position: 'absolute', left: 125, top: 135, width: 1030, height: 500, padding: 12, boxSizing: 'border-box', background: C.panel, border: `2px solid ${C.red}`}}>
@@ -1854,6 +1856,10 @@ export const DevelopmentNarrationPreview: React.FC = () => {
       <Sequence from={c06Timing.startFrame} durationInFrames={c06Timing.durationFrames}>
         <DevelopmentDay3Scene durationInFrames={c06Timing.durationFrames} />
         <Audio src={staticFile('narration/development/C06.wav')} volume={0.95} />
+      </Sequence>
+      <Sequence from={c07Timing.startFrame} durationInFrames={c07Timing.durationFrames}>
+        <DevelopmentCheckerboardScene durationInFrames={c07Timing.durationFrames} />
+        <Audio src={staticFile('narration/development/C07.wav')} volume={0.95} />
       </Sequence>
     </AbsoluteFill>
   );
