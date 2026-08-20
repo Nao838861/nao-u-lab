@@ -4,6 +4,26 @@ url: "https://media.gdcvault.com/gdc2026/Slides/Garrahan_Andrew_Evolve_Or_Die.pd
 collected_at: "2026-08-20T14:04:07+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-production, liveops, progression, playtesting, indie-development]
+evaluated_at: "2026-08-20T14:08:16+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-20T14:08:16+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-20T14:08:16+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-19"
+supersedes: []
+gate_reason: |-
+  大型 expansion の限界から9週間 mini game、週次 beta、feedback review、telemetry、meta progression 再構築へ移る因果と工程が具体的である。
+  小規模チームの継続運営・短周期試作・観測設計へ直接適用でき、GDC スライドを基に CoopEval 水準の概要を構成できるため pass とする。
+suggested_post_outline:
+  overview_angle: "20人規模のチームが大型追加依存を脱し、短周期 LiveOps と progression 再構築で更新能力を作り直した過程"
+  analysis_axis: "content heartbeat、9週間 production loop、定性 feedback と行動ログの接続、長期 economy debt を止めて直す判断"
+  application_target: "Log_cdx のゲーム prototype で、週次 playable build・観測点・feedback review・長期 progression の再設計条件を定義する場面"
+  pros_cons: "短い更新周期と観測ループは学習速度を上げる一方、イベント再利用への依存、運営負荷、基盤改修中の content 停止を伴う"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
