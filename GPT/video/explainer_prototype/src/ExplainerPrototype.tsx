@@ -27,7 +27,6 @@ import {
 } from './developmentNarrationTiming';
 import {
   c08Timing,
-  c09Timing,
   c10Timing,
 } from './drawingNarrationTiming';
 import {
@@ -727,28 +726,30 @@ const CompiledScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
   const fullTargetOrderIndex = rasterBlocks.findIndex(
     (blockIndex, orderIndex) => orderIndex > partialTargetOrderIndex && enemyCoverage[blockIndex] === 2,
   );
-  const framesPerBlock = 4;
-  const partialMoveStart = Math.round(15.975 * 30);
-  const fullMoveStart = Math.round(20.985 * 30);
+  const blockDefinitionStart = Math.round(7.55 * 30);
+  const transparentStart = Math.round(13.56 * 30);
+  const partialMoveStart = Math.round(21.32 * 30);
+  const fullMoveStart = Math.round(32.725 * 30);
+  const summaryStart = Math.round(43.69 * 30);
   const cursorOrderIndex = frame < partialMoveStart
     ? startOrderIndex
     : frame < fullMoveStart
-      ? Math.min(
-        partialTargetOrderIndex,
-        startOrderIndex + Math.floor((frame - partialMoveStart) / framesPerBlock),
-      )
-      : Math.min(
-        fullTargetOrderIndex,
-        partialTargetOrderIndex + Math.floor((frame - fullMoveStart) / framesPerBlock),
-      );
-  const cursor = rasterBlocks[cursorOrderIndex];
-  const active = enemyCoverage[cursor] ?? 0;
+      ? partialTargetOrderIndex
+      : fullTargetOrderIndex;
+  const cursor = frame < transparentStart ? -1 : rasterBlocks[cursorOrderIndex];
+  const active = cursor < 0 ? -1 : enemyCoverage[cursor] ?? 0;
   const cards = [
     {title: '全面透明', equation: '(SCREEN AND $FF) OR $00', result: '命令なし', code: ['; 命令なし']},
     {title: '一部だけ描画', equation: '(SCREEN AND $C3) OR $24', result: '必要な合成だけ', code: ['LDA (screen),Y', 'AND #$C3', 'ORA #$24', 'STA (screen),Y']},
     {title: '全面上書き', equation: '(SCREEN AND $00) OR $7F', result: '直接メモリへ書く', code: ['LDA #$7F', 'STA (screen),Y']},
   ];
-  const activeCard = cards[active];
+  const activeCard = active < 0 ? null : cards[active];
+  const blockDefinitionOpacity = clamp(
+    interpolate(frame, [blockDefinitionStart, blockDefinitionStart + 12], [0, 1]),
+    0,
+    1,
+  );
+  const summaryOpacity = clamp(interpolate(frame, [summaryStart, summaryStart + 12], [0, 1]), 0, 1);
   return (
     <AbsoluteFill
       style={{
@@ -760,14 +761,29 @@ const CompiledScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
     >
       <Eyebrow size={32}>コンパイルドスプライト</Eyebrow>
       <div style={{height: 8}} />
-      <Title size={37}>目的の絵を最速で書くための専用プログラムを作成</Title>
+      <Title size={37}>目的の絵を最速で描くための専用プログラムを作成</Title>
       <div style={{display: 'flex', gap: 24, alignItems: 'flex-start', marginTop: 27}}>
         <div style={{width: 550, flexShrink: 0}}>
           <PackedEnemy scale={10} showAll analyze cursor={cursor} />
-          <div style={{display: 'flex', gap: 14, marginTop: 9, fontFamily: FONT, fontSize: 16, fontWeight: 800}}>
-            <span style={{color: '#8b8d96'}}>■ 透明</span>
-            <span style={{color: C.orange}}>■ 一部</span>
-            <span style={{color: C.magenta}}>■ 全面</span>
+          <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 9}}>
+            <div style={{display: 'flex', gap: 14, fontFamily: FONT, fontSize: 16, fontWeight: 800}}>
+              <span style={{color: '#8b8d96'}}>■ 透明</span>
+              <span style={{color: C.orange}}>■ 一部</span>
+              <span style={{color: C.magenta}}>■ 全面</span>
+            </div>
+            <div
+              style={{
+                opacity: blockDefinitionOpacity,
+                color: C.cyan,
+                border: `1px solid ${C.cyan}`,
+                padding: '4px 9px',
+                fontFamily: MONO,
+                fontSize: 15,
+                fontWeight: 900,
+              }}
+            >
+              1 BYTE = 4×2 DOT
+            </div>
           </div>
           <div
             style={{
@@ -780,13 +796,17 @@ const CompiledScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
             }}
           >
             <div style={{fontFamily: FONT, color: C.magenta, fontWeight: 900, fontSize: 17, marginBottom: 7}}>
-              この場所だけを描く最短のプログラム
+              {activeCard ? 'この場所だけを描く最短のプログラム' : '絵ごとに専用プログラムを生成'}
             </div>
-            {activeCard.code.map((line) => (
-              <div key={line} style={{fontFamily: MONO, color: C.white, fontSize: 18, lineHeight: 1.3}}>
-                {line}
-              </div>
-            ))}
+            {activeCard ? activeCard.code.map((line) => (
+                <div key={line} style={{fontFamily: MONO, color: C.white, fontSize: 18, lineHeight: 1.3}}>
+                  {line}
+                </div>
+              )) : (
+                <div style={{fontFamily: MONO, color: C.white, fontSize: 18, lineHeight: 1.3}}>
+                  IMAGE DATA → DEDICATED PROGRAM
+                </div>
+              )}
           </div>
         </div>
         <div style={{flex: 1}}>
@@ -836,8 +856,17 @@ const CompiledScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
               </div>
             );
           })}
-          <div style={{fontFamily: FONT, color: C.cyan, fontWeight: 900, fontSize: 19, marginTop: 17}}>
-            絵に合わせて、不要な命令を消す
+          <div
+            style={{
+              opacity: summaryOpacity,
+              fontFamily: FONT,
+              color: C.cyan,
+              fontWeight: 900,
+              fontSize: 19,
+              marginTop: 17,
+            }}
+          >
+            絵のデータ → 絵ごとの最速プログラム
           </div>
         </div>
       </div>
@@ -1872,10 +1901,6 @@ export const DrawingNarrationPreview: React.FC = () => {
       <Sequence from={c08Timing.startFrame} durationInFrames={c08Timing.durationFrames}>
         <LargeCharacterScene durationInFrames={c08Timing.durationFrames} />
         <Audio src={staticFile('narration/drawing/C08.wav')} volume={0.95} />
-      </Sequence>
-      <Sequence from={c09Timing.startFrame} durationInFrames={c09Timing.durationFrames}>
-        <GenericLoopScene durationInFrames={c09Timing.durationFrames} narrationSchedule />
-        <Audio src={staticFile('narration/drawing/C09.wav')} volume={0.95} />
       </Sequence>
       <Sequence from={c10Timing.startFrame} durationInFrames={c10Timing.durationFrames}>
         <CompiledScene durationInFrames={c10Timing.durationFrames} />

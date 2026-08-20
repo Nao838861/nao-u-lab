@@ -19,7 +19,7 @@
 | カット | 反映日 | 実装先 | 記録 |
 |---|---|---|---|
 | C04〜C07 | 2026-08-20 | `narration/development-cuts.json` / `src/ExplainerPrototype.tsx` | `video: rebuild C04-C07 development sequence`。原文は本索引を追加した時点の `指示書.md` にも保存 |
-| C08〜C10 | 2026-08-20 | `narration/drawing-cuts.json` / `src/ExplainerPrototype.tsx` | `video: apply latest C08-C10 narration and cues` と同じコミットに原文を保存 |
+| C08・C10（C09は欠番） | 2026-08-20 | `narration/drawing-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: remove C09 and revise C10 narration`。C09を動画とmanifestから削除し、C10の改訂原文を同じコミットに保存 |
 | C20〜C23 | 2026-08-20 | `narration/later-cuts.json` / `src/ExplainerPrototype.tsx` | `video: stabilize C20-C23 narration delivery`。原文は本索引を追加した時点の `指示書.md` にも保存 |
 
 ## 復元方法

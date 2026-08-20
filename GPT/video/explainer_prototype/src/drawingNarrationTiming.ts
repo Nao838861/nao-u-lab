@@ -7,7 +7,6 @@ const getCut = (id: string) => {
 };
 
 export const c08Timing = getCut('C08');
-export const c09Timing = getCut('C09');
 export const c10Timing = getCut('C10');
 
 export const drawingNarrationDurationInFrames =
