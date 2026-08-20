@@ -71,7 +71,35 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787236022-810919b8a3
+    source_ts: "1787236022.589919"
+    title: "7 Seconds to Live post-jam postmortem — 一画面化と retry loop の代償"
+    reason: "source が slack_api/shared-reads、score 10、未レビューで、harness・game-design・evaluation の3優先タグを持つ最新の current atom。scope 圧縮と第一印象の成功が、戦略削減・数値難化・retry loop の累積非操作時間を同時に生んだ事例を、次の playable 評価へ変換できるか1件だけ確認した。Nao_u の明示評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: defer
+  decision_reason: "採用点は満たすが、現在の staging に playable diff、before/after の retry 導線、attempt count、death-to-controllable-retry を比較できる artifact がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。既存の scope／persona／headless mechanic／difficulty proxy／friction controls とも部分重複するため、lease を捏造せず state-only review に留めた。"
+  change:
+    summary: "reviewed_source_ts と defer 理由のみ更新。active_probes・probe lifecycle ledger・directive・恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

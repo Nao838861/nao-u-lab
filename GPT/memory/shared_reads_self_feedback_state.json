@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-20T23:30:23+09:00",
+  "updated_at": "2026-08-21T01:25:53+09:00",
   "reviewed_source_ts": [
+    "1787236022.589919",
     "1787228905.427089",
     "1779860566.721249",
     "1787180642.210759",
@@ -706,6 +707,47 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-21T01:25:53+09:00",
+      "selected": {
+        "id": "sr-1787236022-810919b8a3",
+        "source_ts": "1787236022.589919",
+        "title": "7 Seconds to Live post-jam postmortem — 一画面化と retry loop の代償",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、harness・game-design・evaluation の3優先タグを持つ最新の current atom だったため1件だけ選んだ。一画面・一bossへの scope 圧縮が第一印象を強める一方、戦略削減、数値だけの後半難化、反復死ごとに累積する非操作時間を生んだ事例が、次の playable 評価で既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件と必須指標は満たす。game jam の具体的な制作時間、ratings、play 数、相反する gameplay 評価、約10秒の retry 前休止、単一 damage-race への収束、締切37分前の提出という観測を含み、次の短期 prototype へ death-to-controllable-retry と累積非操作時間、persona 別 strategy 分布を持ち込めるため relevance・actionability は3とした。一方、根拠は作者1名の postmortem と公開反応の要約で、attempt 分布、completion、離脱、入力 trace、policy 別勝率の raw data や対照版がないため evidence は2。probe-20260713-short-hike-constraint-shortcut は scope 圧縮、probe-20260710-procedural-persona-divergence と probe-20260712-headless-opponent-mechanic-matrix は複数 policy と単一攻略への収束、probe-20260609-dda-proxy-rule-trace は難度 proxy、probe-20260626-meta-horizon-friction-layer-triage は retry/drop-off を扱う。本投稿固有の差は、局所演出の待ち時間を attempt 回数で増幅した loop cost として測る点なので non_redundancy は2とした。ただし現在の staging に playable diff、before/after の retry 導線、attempt count、death-to-controllable-retry を比較できる artifact がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。consumer_phase・trigger_artifact・expected_delta を lease 契約どおり指定できないため active probe・metric・lease・directive・恒久ルールは追加しない。次に具体的な death/retry loop を持つ playable artifact が生じ、既存 controls だけでは一回の演出意図と累積 friction を分けられない時だけ一時 metric として再評価する。",
+      "existing_controls": [
+        "probe-20260713-short-hike-constraint-shortcut",
+        "probe-20260710-procedural-persona-divergence",
+        "probe-20260712-headless-opponent-mechanic-matrix",
+        "probe-20260609-dda-proxy-rule-trace",
+        "probe-20260626-meta-horizon-friction-layer-triage"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、retry 待ちを attempt 回数で増幅した累積非操作時間として見る固有差、単一 postmortem の証拠限界、比較可能な playable artifact 不在、既存 scope／persona／difficulty／friction controls との境界による defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-20T23:30:23+09:00",
       "selected": {
