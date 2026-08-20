@@ -1594,7 +1594,7 @@ const FrameTimelineScene: React.FC<{durationInFrames?: number}> = ({durationInFr
   const logic = '#62df83';
   const normalVram = C.cyan;
   const exram = C.orange;
-  const logicPulse = frame < scaled(532) ? 1 : 0.68 + 0.32 * ((Math.sin(((frame - scaled(532)) / 30) * Math.PI * 2) + 1) / 2);
+  const logicPulse = frame < scaled(532) ? 1 : 0.45 + 0.55 * ((Math.sin(((frame - scaled(532)) / 30) * Math.PI * 2) + 1) / 2);
   const Block: React.FC<{label: string; sub?: string; color: string; height: number; at: number; pulse?: boolean}> = ({label, sub, color, height, at, pulse = false}) => (
     <div style={{height, boxSizing: 'border-box', padding: '5px 9px', background: `${color}20`, borderLeft: `7px solid ${color}`, opacity: reveal(at) * (pulse ? logicPulse : 1), boxShadow: pulse && frame >= scaled(532) ? `0 0 18px ${color}66` : 'none'}}>
       <div style={{fontFamily: FONT, color: C.white, fontSize: 14, lineHeight: 1.2, fontWeight: 900}}>{label}</div>
@@ -1647,7 +1647,10 @@ const FrameTimelineScene: React.FC<{durationInFrames?: number}> = ({durationInFr
           <div style={{width: 420, height: 277, margin: '0 auto', position: 'relative', overflow: 'hidden', background: '#000', border: '2px solid #47434e'}}>
             <Img src={staticFile(previewImages[previewStage])} style={{position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', imageRendering: 'pixelated'}} />
             {previewStage === 1 ? <div style={{position: 'absolute', inset: 0, background: '#30303880'}} /> : null}
-            {previewStage === 2 ? <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: '64%', background: '#000'}} /> : null}
+            {previewStage === 2 ? <>
+              <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: '64%', background: '#000'}} />
+              <div style={{position: 'absolute', left: 0, right: 0, top: '64%', bottom: 0, background: '#30303880'}} />
+            </> : null}
             <div style={{position: 'absolute', left: 12, top: 10, padding: '5px 9px', background: '#09090ddd', fontFamily: FONT, color: C.white, fontSize: 15, fontWeight: 900}}>{stageLabels[previewStage]}</div>
           </div>
           <div style={{opacity: chartOpacity, height: 157, boxSizing: 'border-box', marginTop: 10, padding: '7px 14px', background: C.panel, border: '1px solid #47434e'}}>

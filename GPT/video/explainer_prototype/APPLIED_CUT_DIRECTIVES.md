@@ -23,7 +23,7 @@
 | C08・C10（C09は欠番） | 2026-08-21 | `narration/drawing-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: correct C08-C10 narration and block highlights`。C10は生成後の文字起こしでも読み上げ内容を確認し、分類ごとの全ブロック強調へ更新 |
 | C11〜C13 | 2026-08-21 | `narration/benefit-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: clarify C13 dedicated program label`。C13を簡潔な音声指示で再生成したうえで、画面内の説明を「絵ごとに専用のプログラムを追加」へ更新 |
 | C14〜C16 | 2026-08-21 | `narration/constraint-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: rebuild C14-C16 narration naturally`。個別語句の明瞭発音指定を廃止し、自然な説明調で3カットを再生成。C15は最新原稿へ更新し、既存の0.3秒移動ループとC16の1秒点灯を維持 |
-| C17〜C19 | 2026-08-21 | `narration/later-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: revise C17-C19 narration and emphasis`。C17・C19の原稿を更新し、C19の黒消去範囲をプレイヤーが残らない位置まで延長、ゲームロジック枠を約1秒周期で明滅 |
+| C17〜C19 | 2026-08-21 | `narration/later-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: refine C17-C19 narration and timeline`。個別語句の明瞭発音指定を廃止して3カットを再生成。C17を最新原稿へ更新し、C19は上半分の黒消去後も下半分に前フレームのグレー表示を残し、緑枠の明暗差を強化 |
 | C20〜C23 | 2026-08-21 | `narration/later-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: apply latest C20-C23 instructions`。固定TTSスナップショットと自然な内部ポーズ保持を適用し、C21の「しかし」とC22の冒頭・最終文を含む全文を再生成・検証 |
 
 ## 復元方法
