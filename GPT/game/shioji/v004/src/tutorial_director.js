@@ -3,7 +3,7 @@ import {
   TUTORIAL_ELENA_COMPLETIONS, TUTORIAL_ELENA_MESSAGES, TUTORIAL_LETTER_MESSAGES,
   TUTORIAL_PLAYER_TITLES, TUTORIAL_SYSTEM_INSTRUCTIONS,
   authorTutorialLetter, isRequiredTutorialGoal, isTutorialGoalUnlocked, tutorialLetterDelivery,
-} from './tutorial_content.js?v=v004.62.2-fishery-slope';
+} from './tutorial_content.js?v=v004.63.0-b2-complete';
 
 const SAVE_VERSION = 1;
 

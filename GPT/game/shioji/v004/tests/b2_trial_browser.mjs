@@ -143,7 +143,7 @@ const result = await page.evaluate(`(() => {
 assert.equal(page.errors.length, 0, page.errors.join(' | '));
 assert.deepEqual(result.size, [256, 256]);
 assert.deepEqual(result.startFocus, { x: 104, y: 201 });
-assert.equal(result.households, 12);
+assert.equal(result.households, 14);
 assert.equal(result.marketBuildings, 1);
 assert.equal(result.marketCandidatesSeeded, 1);
 assert.equal(result.building.ok, true);
@@ -160,5 +160,34 @@ assert.ok(result.frameMetrics.terrainDrawn < result.frameMetrics.terrainCandidat
 
 const screenshot = await page.send('Page.captureScreenshot', { format: 'png', fromSurface: true });
 fs.writeFileSync('/tmp/shioji_b2_trial.png', Buffer.from(screenshot.data, 'base64'));
-console.log(JSON.stringify(result));
+await page.send('Emulation.setDeviceMetricsOverride', {
+  width: 390, height: 844, deviceScaleFactor: 1, mobile: true,
+  screenWidth: 390, screenHeight: 844,
+});
+await wait(240);
+const mobile = await page.evaluate(`(() => {
+  const game = window.__SHIOJI_V004__;
+  game.camera.focus(game.displayModel.worldData.startFocus.x + 0.5,
+    game.displayModel.worldData.startFocus.y + 0.5);
+  game.renderer.render(game.displayModel, 1 / 60);
+  const canvas = document.querySelector('#world').getBoundingClientRect();
+  return {
+    viewport: [window.innerWidth, window.innerHeight],
+    horizontalOverflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    canvas: { width: canvas.width, height: canvas.height },
+    startMode: game.startMode,
+    size: [game.displayModel.width, game.displayModel.height],
+  };
+})()`);
+assert.deepEqual(mobile.viewport, [390, 844]);
+assert.ok(mobile.horizontalOverflow <= 1, JSON.stringify(mobile));
+assert.ok(mobile.canvas.width > 0 && mobile.canvas.height > 0, JSON.stringify(mobile));
+assert.equal(mobile.startMode, 'big-island');
+assert.deepEqual(mobile.size, [256, 256]);
+assert.equal(page.errors.length, 0, page.errors.join(' | '));
+const mobileScreenshot = await page.send('Page.captureScreenshot', {
+  format: 'png', fromSurface: true,
+});
+fs.writeFileSync('/tmp/shioji_b2_trial_mobile.png', Buffer.from(mobileScreenshot.data, 'base64'));
+console.log(JSON.stringify({ desktop: result, mobile }));
 page.ws.close();

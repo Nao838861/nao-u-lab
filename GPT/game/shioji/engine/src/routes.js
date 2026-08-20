@@ -17,7 +17,7 @@ import {
   recordEconomyEvent,
   sellOffers,
   useHouseholdWorkTool,
-} from "./econ.js?v=v004.62.2-fishery-slope";
+} from "./econ.js?v=v004.63.0-b2-complete";
 import {
   buildingById,
   createCartCarrier,
@@ -28,7 +28,7 @@ import {
   sectionAmount,
   stepTravelCarrier,
   withdrawInventory,
-} from "./physical.js?v=v004.62.2-fishery-slope";
+} from "./physical.js?v=v004.63.0-b2-complete";
 
 // 定期隊商の「1台」は、宿の御者が管理する三台一組の営業車列。個人所有の木荷車
 // 8荷は変えず、長距離路線だけ24荷/御者として集落一つ分の食料を運べる尺度にする。
@@ -112,6 +112,7 @@ export function createCaravanRoute(economy, physical, {
   intervalDays = CARAVAN_DEFAULT_INTERVAL_DAYS,
   stockTargetDays = null,
   collectionEnabled = true,
+  reserveLocalSupply = true,
   day = economy.currentDay ?? 0,
 } = {}) {
   const inn = buildingById(physical, baseBuildingId);
@@ -157,6 +158,7 @@ export function createCaravanRoute(economy, physical, {
     // 品目指定は市場間の積荷方針であると同時に、圏内生産者から市場へ集める
     // 方針でもある。旧保存で未定義なら有効、明示falseは単体fixture用。
     collectionEnabled: collectionEnabled !== false,
+    reserveLocalSupply: reserveLocalSupply !== false,
     cartAssetIds: [],
     state: "idle",
     locationMarketId: baseMarketId,
@@ -233,6 +235,9 @@ export function configureCaravanRoute(economy, physical, options = {}) {
   existing.collectionEnabled = options.collectionEnabled === undefined
     ? existing.collectionEnabled !== false
     : options.collectionEnabled !== false;
+  existing.reserveLocalSupply = options.reserveLocalSupply === undefined
+    ? existing.reserveLocalSupply !== false
+    : options.reserveLocalSupply !== false;
   existing.pathTicks = path.cost;
   existing.waitingNotice = null;
   return { ok: true, route: existing };
@@ -556,7 +561,10 @@ function localFoodReserveQuantity(economy, marketId, goods, days = 3) {
   return population * days / Math.max(1, availableFoods);
 }
 
-function localRouteReserveQuantity(economy, physical, marketId, goods, day) {
+function localRouteReserveQuantity(economy, physical, route, marketId, goods, day) {
+  // 通常路線は積出地の暮らし・修繕を守る。教程の最初の試し荷など、画面で
+  // 留保しない判断を明示した路線だけがこの安全弁を外せる。
+  if (route?.reserveLocalSupply === false) return 0;
   if (FOODS.includes(goods)) return localFoodReserveQuantity(economy, marketId, goods);
   // 路線は到着地の不足だけでなく、積出地で既に表へ出ている修繕・道具・
   // 生産原料の需要も守る。これがないと盆地の工具を母港へ全量集荷し、工具を
@@ -613,6 +621,7 @@ function collectionPlanForMarket(
     const localReserve = localRouteReserveQuantity(
       economy,
       physical,
+      route,
       marketId,
       goods,
       day,
@@ -699,6 +708,7 @@ function collectionPlanForMarket(
     const localReserve = localRouteReserveQuantity(
       economy,
       physical,
+      route,
       marketId,
       need.goods,
       day,
@@ -1110,7 +1120,7 @@ function caravanBuyAtMarket(
     let routeAvailableQty = Math.max(
       0,
       marketRouteSupply(economy, marketId, goods)
-        - localRouteReserveQuantity(economy, physical, marketId, goods, day),
+        - localRouteReserveQuantity(economy, physical, route, marketId, goods, day),
     );
     const stalls = economy.stalls[goods]
       .filter((stall) => (stall.marketId ?? "main") === marketId && stall.qty > 1e-9)

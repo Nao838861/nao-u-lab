@@ -22,7 +22,7 @@ import {
   travelPathRevision,
   withdrawInventory,
   workRoadWorksite,
-} from "./physical.js?v=v004.62.2-fishery-slope";
+} from "./physical.js?v=v004.63.0-b2-complete";
 
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) return value;
@@ -433,7 +433,7 @@ function makeHouseholdRecord(economy, { job, x, y }) {
     foodCreditUsed: 0,
     foodCreditArrears: false,
     pantry: emptyPantry(),
-    // 本土から持参した開拓食のうち、まだ食べていない量。麦農家だけが
+    // 本土から持参した開拓食のうち、まだ食べていない量。麦畑世帯だけが
     // 到着直後にこれを「収穫余剰」と誤認して売り切るのを防ぐ。
     settlerFoodReserve: 0,
     settlerFoodReserves: {},
@@ -7059,7 +7059,7 @@ export function runPopulationDynamicsPhase(economy, physical, { day, random }) {
     if (household.hungerHist.length > 180) {
       household.hungerHist.splice(0, household.hungerHist.length - 180);
     }
-    // 年産職の休作月を月給職と同じ赤字判定へ入れると、冬を越した麦農家が
+    // 年産職の休作月を月給職と同じ赤字判定へ入れると、冬を越した麦畑世帯が
     // 播種直前に全員転職し、春なのに畑だけ空く。負債は記録・徳政対象のまま、
     // 職替えの比較だけを次の作期まで待つ。
     const seasonalDormant = (

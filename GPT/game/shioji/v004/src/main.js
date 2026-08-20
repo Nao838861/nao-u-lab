@@ -1,51 +1,51 @@
-import { IsometricCamera } from './camera.js?v=v004.62.2-fishery-slope';
-import { loadB2MapData } from './b2_map.js?v=v004.62.2-fishery-slope';
-import { ART_SLICE_MODE } from './art_slice.js?v=v004.62.2-fishery-slope';
-import { SimulationClock } from './clock.js?v=v004.62.2-fishery-slope';
-import { createBoundaryEvents } from './boundary_events.js?v=v004.62.2-fishery-slope';
+import { IsometricCamera } from './camera.js?v=v004.63.0-b2-complete';
+import { loadB2MapData } from './b2_map.js?v=v004.63.0-b2-complete';
+import { ART_SLICE_MODE } from './art_slice.js?v=v004.63.0-b2-complete';
+import { SimulationClock } from './clock.js?v=v004.63.0-b2-complete';
+import { createBoundaryEvents } from './boundary_events.js?v=v004.63.0-b2-complete';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.62.2-fishery-slope';
+} from './config.js?v=v004.63.0-b2-complete';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.62.2-fishery-slope';
-import { BUILD_COST_DENARI, P, createEngineController } from './engine_bridge.js?v=v004.62.2-fishery-slope';
-import { developmentMapView } from './development_map.js?v=v004.62.2-fishery-slope';
-import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.62.2-fishery-slope';
-import { formatElenaSpeech } from './elena_text.js?v=v004.62.2-fishery-slope';
+} from './display_batch.js?v=v004.63.0-b2-complete';
+import { BUILD_COST_DENARI, P, createEngineController } from './engine_bridge.js?v=v004.63.0-b2-complete';
+import { developmentMapView } from './development_map.js?v=v004.63.0-b2-complete';
+import { presentEvent, shouldPresentEvent } from './event_view.js?v=v004.63.0-b2-complete';
+import { formatElenaSpeech } from './elena_text.js?v=v004.63.0-b2-complete';
 import {
   FOOD_GOODS,
   foodHudSummary,
   householdFoodDays,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.62.2-fishery-slope';
+} from './food_readability.js?v=v004.63.0-b2-complete';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.62.2-fishery-slope';
-import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.62.2-fishery-slope';
-import { createGoodsDiscovery } from './goods_discovery.js?v=v004.62.2-fishery-slope';
-import { goodsDetail } from './goods_detail.js?v=v004.62.2-fishery-slope';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.62.2-fishery-slope';
-import { WorldPresentation } from './presentation.js?v=v004.62.2-fishery-slope';
-import { Renderer } from './renderer.js?v=v004.62.2-fishery-slope';
+} from './keyboard.js?v=v004.63.0-b2-complete';
+import { goodsSpriteSvgMarkup } from './goods_sprites.js?v=v004.63.0-b2-complete';
+import { createGoodsDiscovery } from './goods_discovery.js?v=v004.63.0-b2-complete';
+import { goodsDetail } from './goods_detail.js?v=v004.63.0-b2-complete';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.63.0-b2-complete';
+import { WorldPresentation } from './presentation.js?v=v004.63.0-b2-complete';
+import { Renderer } from './renderer.js?v=v004.63.0-b2-complete';
 import {
   createSavePayload, parseSaveText, readLocalSave, saveFileName, writeLocalSave,
-} from './save_game.js?v=v004.62.2-fishery-slope';
-import { createSeasonalEvents } from './seasonal_events.js?v=v004.62.2-fishery-slope';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.62.2-fishery-slope';
+} from './save_game.js?v=v004.63.0-b2-complete';
+import { createSeasonalEvents } from './seasonal_events.js?v=v004.63.0-b2-complete';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.63.0-b2-complete';
 import {
   GOODS_GLYPHS, jobInputNeeds, shortageRows, stockWhereabouts, supplyDemandRow,
   supplyDemandRows, supplyDiagnosis,
-} from './supply_demand.js?v=v004.62.2-fishery-slope';
-import { orderQuote } from './tutorial_content.js?v=v004.62.2-fishery-slope';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.62.2-fishery-slope';
+} from './supply_demand.js?v=v004.63.0-b2-complete';
+import { orderQuote } from './tutorial_content.js?v=v004.63.0-b2-complete';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.63.0-b2-complete';
 import {
   guidanceReadingTimeMs, objectiveActionFor, secretaryActionForRoute, secretaryEventsAfter,
   secretaryRouteFor, tutorialHandoffFor, tutorialSpeedAfterObjectiveChange,
-} from './ui_guidance.js?v=v004.62.2-fishery-slope';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.62.2-fishery-slope';
+} from './ui_guidance.js?v=v004.63.0-b2-complete';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.63.0-b2-complete';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -1837,6 +1837,8 @@ function renderBuildingSheet() {
     const selectedBack = new Set(caravanRoute?.goodsBack ?? []);
     // 二市場の初年度実測では3日便は麦を積み上げ、20日便なら実需を追いやすい。
     const interval = caravanRoute?.intervalDays ?? 20;
+    const reserveLocalSupply = caravanRoute?.reserveLocalSupply
+      ?? !(startMode === 'tutorial' && model.caravans.length === 0);
     const locked = Boolean(caravanRoute?.currentTrip);
     const goodsChoices = (direction, selected) => goods.map(goodsId => `
       <label class="caravan-goods-choice">
@@ -1858,7 +1860,11 @@ function renderBuildingSheet() {
         <button type="button" data-caravan-route-save ${locked || !markets.length ? 'disabled' : ''}>${caravanRoute ? '路線を変更する' : '路線を設定する'}</button>
       </div>
       <small class="caravan-route-forecast" data-caravan-route-forecast>${escapeHtml(caravanForecastText(selectedQuote))}</small>
-      <small class="caravan-route-note">${locked ? '運行中の便を止めず、帰着を待ちます。' : '行き荷か帰り荷を一つ以上選んでください。複数品目は積載量を等分して積みます。'}</small>`;
+      <small class="caravan-route-note">${locked
+    ? '運行中の便を止めず、帰着を待ちます。'
+    : reserveLocalSupply
+      ? '行き荷か帰り荷を一つ以上選んでください。複数品目は積載量を等分し、積出地の当座分は残します。'
+      : '教程の初便は、母港の当座分を留保せず、選んだ麦8荷を漁港へ送ります。'}</small>`;
   }
   $('#building-sheet-kicker').textContent = household
     ? `${family}・${household.members}人`
@@ -2616,6 +2622,8 @@ $('#building-caravan-route').addEventListener('click', event => {
     goodsOut,
     goodsBack,
     intervalDays,
+    reserveLocalSupply: caravanRoute?.reserveLocalSupply
+      ?? !(startMode === 'tutorial' && model.caravans.length === 0),
   }, `定期路線を設定しました（${intervalDays}日ごと）`, '路線を設定できません');
   if (result?.ok !== false) {
     selectedCaravanId = model.caravans.find(

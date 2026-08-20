@@ -23,7 +23,7 @@ import {
   requestCompanyImport,
   requestCompanySurplusExport,
   setCaravanEmployment,
-} from "./econ.js?v=v004.62.2-fishery-slope";
+} from "./econ.js?v=v004.63.0-b2-complete";
 import {
   ECONOMIC_BUILDINGS,
   addBuilding,
@@ -44,13 +44,13 @@ import {
   makeMultiMarketTerrain,
   markFertileArea,
   pathLen,
-} from "./physical.js?v=v004.62.2-fishery-slope";
-import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.62.2-fishery-slope";
-import { createMarketNetwork } from "./market_network.js?v=v004.62.2-fishery-slope";
+} from "./physical.js?v=v004.63.0-b2-complete";
+import { createWorld, ensureCompanyLogisticsSites } from "./world.js?v=v004.63.0-b2-complete";
+import { createMarketNetwork } from "./market_network.js?v=v004.63.0-b2-complete";
 import {
   configureCaravanRoute,
   createCaravanRoute,
-} from "./routes.js?v=v004.62.2-fishery-slope";
+} from "./routes.js?v=v004.63.0-b2-complete";
 
 export const AUDIT_SEEDS = Object.freeze([11, 13, 14]);
 
@@ -239,14 +239,15 @@ export const E_STABLE_POPULATION_BAND = Object.freeze([24, 120]);
 export const E_STABLE_FAMINE_DAYS_PER_CAPITA_MAX = 61;
 
 export const E_STABLE_PRICE_BANDS = Object.freeze({
-  // 需要網の成熟都市（木工房2・木こり3+3・炭焼き用木こり1・採石2）を
-  // seed11/13/14で各8年実測した包絡線。実測極値を丸めた約10%の余白だけを持つ。
-  fish: Object.freeze([0.38, 9]),
-  wheat: Object.freeze([0.15, 1.35]),
-  log: Object.freeze([0.25, 8.2]),
-  tools: Object.freeze([3.7, 48]),
-  salt: Object.freeze([3.2, 23]),
-  char: Object.freeze([2.75, 34.5]),
+  // 有界価格器と食料債務返済待ちを含む成熟都市（木工房2・木こり3+3・
+  // 炭焼き用木こり1・採石2）のseed11/13/14×8年実測包絡。構造的な錨検査は
+  // 全日全品を別途守り、こちらはfixture固有の価格分布が急変しないための約10%。
+  fish: Object.freeze([0.33, 6.4]),
+  wheat: Object.freeze([0.05, 1.35]),
+  log: Object.freeze([0.67, 6.3]),
+  tools: Object.freeze([1.65, 8]),
+  salt: Object.freeze([2.55, 6.7]),
+  char: Object.freeze([2.7, 14.8]),
 });
 
 const LEGACY_AUDIT_JOBS = Object.freeze([

@@ -2,15 +2,15 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.62.2-fishery-slope';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.62.2-fishery-slope';
-import { displayCultureLevel } from './visuals.js?v=v004.62.2-fishery-slope';
+} from './engine_bridge.js?v=v004.63.0-b2-complete';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.63.0-b2-complete';
+import { displayCultureLevel } from './visuals.js?v=v004.63.0-b2-complete';
 import {
   PLAYER_FACING_BANNED_TERMS,
   islandFoodSummary,
   winterFoodForecast,
-} from './food_readability.js?v=v004.62.2-fishery-slope';
-import { islandCalendar } from './ui_summary.js?v=v004.62.2-fishery-slope';
+} from './food_readability.js?v=v004.63.0-b2-complete';
+import { islandCalendar } from './ui_summary.js?v=v004.63.0-b2-complete';
 
 export { PLAYER_FACING_BANNED_TERMS };
 
@@ -62,6 +62,13 @@ function newHouseholdEvent(events) {
 
 function pantryAmount(household, goods) {
   return household.pantry?.find(row => row.goods === goods)?.amount ?? 0;
+}
+
+function recentlyProducedAmount(household, goods) {
+  return Math.max(
+    pantryAmount(household, goods),
+    household.productivity?.actualByGoods?.[goods] ?? 0,
+  );
 }
 
 function loggerLogStock(model) {
@@ -2797,12 +2804,12 @@ const TUTORIAL_LETTER_DEFINITIONS = Object.freeze([
     source: 'snapshot',
     when({ model }) {
       return woodshopHouseholds(model)
-        .some(household => pantryAmount(household, 'tools') > 0);
+        .some(household => recentlyProducedAmount(household, 'tools') > 0);
     },
     render({ model, state }) {
       const household = woodshopHouseholds(model)
-        .find(candidate => pantryAmount(candidate, 'tools') > 0);
-      const tools = pantryAmount(household, 'tools');
+        .find(candidate => recentlyProducedAmount(candidate, 'tools') > 0);
+      const tools = recentlyProducedAmount(household, 'tools');
       const tradedBefore = Boolean(state?.letters?.some(letter => letter.id === 'first-log-trade'));
       const provenance = tradedBefore
         ? '工房の棚の丸太——持参分と市場で買い足した分——から'

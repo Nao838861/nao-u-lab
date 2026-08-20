@@ -1,4 +1,4 @@
-import { pileVisual } from './visuals.js?v=v004.62.2-fishery-slope';
+import { pileVisual } from './visuals.js?v=v004.63.0-b2-complete';
 
 function clamp01(value) {
   return Math.max(0, Math.min(1, value));

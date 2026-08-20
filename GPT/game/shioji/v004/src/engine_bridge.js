@@ -8,9 +8,9 @@ export {
   householdProductionSummary,
   laborWage,
   productionCost,
-} from '../../engine/src/econ.js?v=v004.62.2-fishery-slope';
-import { P } from '../../engine/src/econ.js?v=v004.62.2-fishery-slope';
-import { createEngineApi } from '../../engine/src/api.js?v=v004.62.2-fishery-slope';
+} from '../../engine/src/econ.js?v=v004.63.0-b2-complete';
+import { P } from '../../engine/src/econ.js?v=v004.63.0-b2-complete';
+import { createEngineApi } from '../../engine/src/api.js?v=v004.63.0-b2-complete';
 import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
@@ -20,18 +20,19 @@ import {
   buildB2TutorialWorld,
   buildTutorialTwoMarketWorld,
   buildBaseCity,
+  buildDemandMatureCity,
   buildWorldScaleFoundation,
   makeStableCityPlan,
-} from '../../engine/src/audit.js?v=v004.62.2-fishery-slope';
+} from '../../engine/src/audit.js?v=v004.63.0-b2-complete';
 import {
   createPhysicalState, findTravelPath, makeFlowIslandTerrain, makeMultiMarketTerrain,
-} from '../../engine/src/physical.js?v=v004.62.2-fishery-slope';
-import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.62.2-fishery-slope';
-import { createViewController } from './controller.js?v=v004.62.2-fishery-slope';
+} from '../../engine/src/physical.js?v=v004.63.0-b2-complete';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.63.0-b2-complete';
+import { createViewController } from './controller.js?v=v004.63.0-b2-complete';
 import {
   SPRING_START_CALENDAR_OFFSET_DAYS,
   START_MODES,
-} from './start_modes.js?v=v004.62.2-fishery-slope';
+} from './start_modes.js?v=v004.63.0-b2-complete';
 
 export {
   E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS,
@@ -91,7 +92,7 @@ export function createEngineController({
       ? buildB2TrialWorld(seed, b2MapDefinition)
       : mode === 'caravan'
       ? buildCaravanSliceWorld(seed)
-      : profile.blank ? buildBlankCity(seed, marketNetwork) : buildBaseCity(seed);
+      : profile.blank ? buildBlankCity(seed, marketNetwork) : buildDemandMatureCity(seed);
   if (!stateSnapshot) applySpringStartCalendar(world);
   const api = createEngineApi(world, { initialJournal: inputJournal });
   return createViewController(api);

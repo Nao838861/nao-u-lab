@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.62.2-fishery-slope';
+import { TILE } from './config.js?v=v004.63.0-b2-complete';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

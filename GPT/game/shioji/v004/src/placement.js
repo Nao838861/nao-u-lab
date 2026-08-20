@@ -1,5 +1,5 @@
-import { BUILDING_SIZES } from './config.js?v=v004.62.2-fishery-slope';
-import { islandCalendar } from './ui_summary.js?v=v004.62.2-fishery-slope';
+import { BUILDING_SIZES } from './config.js?v=v004.63.0-b2-complete';
+import { islandCalendar } from './ui_summary.js?v=v004.63.0-b2-complete';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

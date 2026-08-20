@@ -9,7 +9,7 @@ import {
   requestMainlandAid,
   setCaravanEmployment,
   setCompanyStockTarget,
-} from "./econ.js?v=v004.62.2-fishery-slope";
+} from "./econ.js?v=v004.63.0-b2-complete";
 import {
   activePortCalls,
   addRoadLine,
@@ -17,17 +17,17 @@ import {
   haulJobById,
   removeBuilding,
   removeRoadTile,
-} from "./physical.js?v=v004.62.2-fishery-slope";
-import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.62.2-fishery-slope";
+} from "./physical.js?v=v004.63.0-b2-complete";
+import { addAuditZone, findAuditSpot } from "./audit.js?v=v004.63.0-b2-complete";
 import {
   forgetCompanyLogisticsBuilding,
   placeCompanyLogisticsBuilding,
-} from "./world.js?v=v004.62.2-fishery-slope";
-import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.62.2-fishery-slope";
+} from "./world.js?v=v004.63.0-b2-complete";
+import { executeMarketTrade, quoteMarketTrade } from "./market_network.js?v=v004.63.0-b2-complete";
 import {
   configureCaravanRoute,
   stepCaravanDay,
-} from "./routes.js?v=v004.62.2-fishery-slope";
+} from "./routes.js?v=v004.63.0-b2-complete";
 
 function jsonClone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -606,6 +606,7 @@ export function createEngineApi(
           goodsOut: op.goodsOut,
           goodsBack: op.goodsBack,
           intervalDays: op.intervalDays,
+          reserveLocalSupply: op.reserveLocalSupply,
           day: actionDay,
         });
         if (configured.ok && !configured.route.currentTrip) {

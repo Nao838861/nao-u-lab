@@ -1,20 +1,20 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.62.2-fishery-slope';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.63.0-b2-complete';
 import {
   FOOD_GOODS, perishableFreshness,
-} from './food_readability.js?v=v004.62.2-fishery-slope';
+} from './food_readability.js?v=v004.63.0-b2-complete';
 import {
   LADDER, MAINLAND_AID, P, SURPLUS_EXPORT_PRICES, companyStockReleasePrice, householdClass,
   findTravelPath, householdProductionSummary, laborWage, productionCost,
-} from './engine_bridge.js?v=v004.62.2-fishery-slope';
-import { analyzeRoadConnections } from './placement.js?v=v004.62.2-fishery-slope';
+} from './engine_bridge.js?v=v004.63.0-b2-complete';
+import { analyzeRoadConnections } from './placement.js?v=v004.63.0-b2-complete';
 import {
   compileRenderScene, renderSceneTopology,
-} from './render_scene.js?v=v004.62.2-fishery-slope';
+} from './render_scene.js?v=v004.63.0-b2-complete';
 import {
   buildingAppearance, buildingStructureLayout, displayCultureLevel, pileVisual, trailVisual,
   yardLayout, yardStockRows,
-} from './visuals.js?v=v004.62.2-fishery-slope';
-import { GOODS_RECIPES } from './goods_detail.js?v=v004.62.2-fishery-slope';
+} from './visuals.js?v=v004.63.0-b2-complete';
+import { GOODS_RECIPES } from './goods_detail.js?v=v004.63.0-b2-complete';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'repair', 'inbound', 'outbound', 'pickup',

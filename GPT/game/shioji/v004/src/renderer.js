@@ -1,17 +1,17 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.62.2-fishery-slope';
-import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.62.2-fishery-slope';
-import { islandCalendar } from './ui_summary.js?v=v004.62.2-fishery-slope';
+} from './config.js?v=v004.63.0-b2-complete';
+import { drawGoodsSpriteCanvas } from './goods_sprites.js?v=v004.63.0-b2-complete';
+import { islandCalendar } from './ui_summary.js?v=v004.63.0-b2-complete';
 import {
   compileRenderScene, inventoryLayerDepth, marketStallLayerDepth, mergeDrawables,
   sceneRowsInBounds,
-} from './render_scene.js?v=v004.62.2-fishery-slope';
+} from './render_scene.js?v=v004.63.0-b2-complete';
 import {
   buildingStructureLayout, pileVisual, seasonalNaturalVisual, seasonalPlotVisual,
   seasonalTerrainVisual,
-} from './visuals.js?v=v004.62.2-fishery-slope';
-import { renderArtSlice } from './art_slice.js?v=v004.62.2-fishery-slope';
+} from './visuals.js?v=v004.63.0-b2-complete';
+import { renderArtSlice } from './art_slice.js?v=v004.63.0-b2-complete';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 
 import { createEngineApi } from '../../engine/src/api.js';
-import { buildBaseCity } from '../../engine/src/audit.js';
+import { buildDemandMatureCity } from '../../engine/src/audit.js';
 import {
   FOODS, P, buyAtMarket, buyTargets, createEconomicState, createHousehold,
 } from '../../engine/src/econ.js';
@@ -38,13 +38,14 @@ assert.equal(FOODS.includes('salt'), false, '塩は食料ではない');
     capacityLimit: 6,
   });
   assert.equal(result.order[0], 'wheat', '食料備蓄不足時は食料を最初に買う');
-  assert.equal(result.purchased.wheat, 3, '原料用の半枠を除いた運搬枠をまず食料に使う');
+  assert.equal(result.purchased.wheat, 6,
+    '原料用の半枠を除いた3荷枠へ重量0.5の麦を6単位積む');
   assert.equal(result.purchased.log ?? 0, 3,
     '食料を先に半枠確保した後、残りで加工原料を運び収入源も止めない');
 }
 
 {
-  const world = buildBaseCity(11);
+  const world = buildDemandMatureCity(11);
   const api = createEngineApi(world);
   api.advanceTicks(47);
   const before = api.snapshot();
@@ -73,7 +74,7 @@ assert.equal(FOODS.includes('salt'), false, '塩は食料ではない');
 }
 
 {
-  const world = buildBaseCity(11);
+  const world = buildDemandMatureCity(11);
   const api = createEngineApi(world);
   api.advanceDays(120);
   const household = world.state.economy.households[0];
@@ -106,7 +107,7 @@ assert.equal(FOODS.includes('salt'), false, '塩は食料ではない');
 }
 
 {
-  const world = buildBaseCity(11);
+  const world = buildDemandMatureCity(11);
   const api = createEngineApi(world);
   api.advanceDays(120);
   const household = world.state.economy.households[0];

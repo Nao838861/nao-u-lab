@@ -6941,6 +6941,35 @@ test("隊商集荷: 積出市場の修繕需要を満たす工具は遠隔地へ
   assert.equal(producer.pantry.tools, 30);
 });
 
+test("隊商積載: 明示した初便だけは積出市場の当座分を留保せず運べる", () => {
+  const fixture = createCaravanRouteFixture();
+  const { economy, physical } = fixture.world.state;
+  const wheatStall = economy.stalls.wheat.find((stall) => (
+    stall.householdId === fixture.mainSeller.id && stall.marketId === "main"
+  ));
+  wheatStall.qty = 8;
+  withdrawInventory(
+    fixture.mainMarket,
+    "outbound",
+    "wheat",
+    sectionAmount(fixture.mainMarket, "outbound", "wheat"),
+  );
+  depositInventory(fixture.mainMarket, "outbound", "wheat", 8);
+  const configured = configureCaravanRoute(economy, physical, {
+    baseBuildingId: fixture.route.baseBuildingId,
+    goodsOut: ["wheat"],
+    goodsBack: [],
+    reserveLocalSupply: false,
+  });
+  assert.equal(configured.ok, true, configured.reason);
+  assert.equal(configured.route.reserveLocalSupply, false);
+
+  runCaravanUntilReturned(economy, physical, fixture.route, 1);
+
+  assert.deepEqual(fixture.route.recentTrips[0].outbound, { wheat: 8 });
+  assert.equal(sectionAmount(fixture.mainMarket, "outbound", "wheat"), 0);
+});
+
 test("隊商S4: 会社残高が負でも信用限度内なら市場仕入れできる", () => {
   const fixture = createCaravanRouteFixture();
   const { economy, physical } = fixture.world.state;
