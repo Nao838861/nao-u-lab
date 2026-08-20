@@ -4,6 +4,20 @@ url: "https://gdcvault.com/play/1035642/Cross-Platform-Isn-t-a"
 collected_at: "2026-08-20T18:47:27+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [cross-platform, input-design, mobile, production, unreal-engine, gdc-2026]
+evaluated_at: "2026-08-20T18:52:33+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-20T18:52:33+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-20T18:52:33+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-19"
+supersedes: []
+gate_reason: >-
+  公式概要から「維持する体験」と端末別適応を分ける論点は読めるが、UI、input、profiling、world partitioning の具体的判断例や評価がない。
+  prototype の cross-platform 設計へ移植できる判定手順と根拠を抽出できず、4000字級の概要が一般論になるため、講演本編を確認できるまで保留する。
 ---
 
 ## raw_excerpt
