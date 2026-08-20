@@ -7,12 +7,12 @@ genre_tags: [game-design, difficulty, challenge-design, player-engagement, gdc-2
 evaluated_at: "2026-08-20T21:21:58+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-20T21:21:58+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-20T21:21:58+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-20T21:28:25.427089+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787228905427089"
+next_action: none
 stale_after: "2026-09-19"
 supersedes: []
 gate_reason: |-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Log_cdx のボス・ステージ評価で、認知、実行、乱数、ゲーム内外資源、表現負荷、持久、対人の各要求と retry friction を別欄で記録する"
   pros_cons: "設計会話と比較評価を具体化できる一方、数値は測定値ではなく診断用の仮説であり、playtest結果と混同すると精密さを装う危険がある"
   verdict_pre: "部分採用"
+posted:
+  ts: "1787228905.427089"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787228905427089"
+  char_count: 4467
+  posted_at: "2026-08-20T21:28:25.427089+09:00"
 ---
 
 ## raw_excerpt

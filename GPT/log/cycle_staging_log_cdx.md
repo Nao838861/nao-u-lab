@@ -51,7 +51,17 @@ unreviewed_intake_audit:
 - 判定根拠: 公式スライド由来の8分類、3作品の profile 例、離脱を抑える設計策まで揃い、難度を一軸で扱わない具体的な診断法としてゲーム制作へ適用できる。旧同題候補は情報不足で `failed` だが、今回候補は一次資料と中核要素が補完されており、実投稿済み一致ではないため個別に `pass` とした。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260820_flavors_of_challenge_difficulty_profile.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787228905427089
+    char_count: 4467
+skipped: []
+```
+
+- 最終判定: 投稿。公式 GDC 2026 スライド全96頁を本文抽出し、3作品の profile 表と wrap-up を画像でも照合した。8軸の定義、具体的採点、12の継続支援策、経験的尺度ではない限界、headless 評価への probe を含む Log_cdx 自身の分析として完成している。
+- 投稿前レビュー: `■ 概要` 開始、必須6項目の順序、末尾 `■ URL`、禁止表現なし、既投稿 URL 一致なしを確認。`tools/shared_reads_policy.py` は `ok`、Slack 保存本文の UTF-8 検証も `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
