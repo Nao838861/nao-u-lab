@@ -80,7 +80,40 @@ skipped:
 - 4:Loop は、Probability Map、一人生還、broken bone、Homebase の循環自体は具体的だが、記事は発売前の design overview であり、実測評価がない。品質維持のため投稿せず postponed に戻した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778343080-6703f2c24e
+    source_ts: "1778343080.673839"
+    title: "Cola DLM (連続潜在拡散言語モデル) 深堀り — memory/identity 設計への構造的接続"
+    reason: "score 15の未レビュー先頭候補で、memory・harness・game-design・operation・evaluationを横断する。連続潜在生成の知見が記憶圧縮・identity・自己評価に新しい判断差を作るか確認するため1件だけ選んだ。Nao_uの明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "論文自体はText VAE・Block-Causal DiT・Flow Matching・joint-training ablation・PPLと生成tokenの不一致を示すが、3層promptやidentity、cross-review、memory encode/reconstructへの接続は未検証のarchitecture analogyである。raw復路、反復抽象化、新証拠分離、早期圧縮拒否、compiled memory層境界は既存4 probesが既に覆う。合計14未満かつrisk_control<2であり、同義probeを増やすと比喩を機構証拠へ格上げしてprompt／memory再設計を促すため採用しない。"
+  existing_controls:
+    - probe-20260517-anchor-token-before-compression-trust
+    - probe-20260527-memory-consolidation-drift
+    - probe-20260527-early-compression-refusal
+    - probe-20260621-compiled-memory-boundary
+  change:
+    summary: "reviewed_source_tsとreject理由だけをstateへ記録した。active_probes・ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

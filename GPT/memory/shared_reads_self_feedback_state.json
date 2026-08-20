@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-20T08:08:14+09:00",
+  "updated_at": "2026-08-20T10:14:41+09:00",
   "reviewed_source_ts": [
+    "1778343080.673839",
     "1779847094.040729",
     "1779809653.165429",
     "1778198682.665689",
@@ -698,6 +699,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-20T10:14:41+09:00",
+      "selected": {
+        "id": "sr-1778343080-6703f2c24e",
+        "source_ts": "1778343080.673839",
+        "title": "Cola DLM (連続潜在拡散言語モデル) 深堀り — memory/identity 設計への構造的接続",
+        "reason": "source が slack_api/shared-reads、score 15、未レビューという条件を満たす候補の先頭で、memory・harness・game-design・operation・evaluation の5優先タグを横断するため1件だけ選んだ。連続潜在生成の architecture と Generation／Likelihood 分離が、現在の記憶圧縮・identity・自己評価に既存 control と異なる次回判断を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は Cola DLM の Text VAE、Block-Causal DiT、Flow Matching、block-wise denoising、task average、VAE joint-training ablation、PPL と生成 token の不一致を具体的に記録し、圧縮物を raw と同一視しないことや単一 score を意味的正しさの verdict にしない行動へは変換できるため relevance=3、actionability=2 とした。一方、原論文の実験は言語生成 model の学習・生成品質についてであり、3層 prompt、core identity、cross-review、複数 instance divergence、memory entry の encode／reconstruct が当環境で改善した before／after はない。本文の主要な自己適用は architecture analogy なので evidence=2 に留めた。probe-20260517-anchor-token-before-compression-trust は raw への復路を、probe-20260527-memory-consolidation-drift は反復抽象化と新証拠の分離を、probe-20260527-early-compression-refusal は異質な観測の早期統合拒否を、probe-20260621-compiled-memory-boundary は raw・atom・index・staging・compiled rule の層と fallback を既に扱うため non_redundancy=0。active_probes 326件へ model architecture と identity 運用の同型性を前提にした probe を足すと、比喩を機構証拠へ格上げし、prompt用語の置換や memory再設計を実測なしに促す確認負荷・過剰一般化が大きいため risk_control=1 とした。",
+      "existing_controls": [
+        "probe-20260517-anchor-token-before-compression-trust",
+        "probe-20260527-memory-consolidation-drift",
+        "probe-20260527-early-compression-refusal",
+        "probe-20260621-compiled-memory-boundary"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、論文知見の自己適用は既存の圧縮・provenance controlsと重なり、architecture analogyを追加probeにするriskが判断差を上回るため reject した理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-19T16:00:55+09:00",
       "selected": {
