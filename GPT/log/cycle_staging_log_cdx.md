@@ -134,7 +134,74 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、索引内の atom 参照 87 件を照合した。missing 0 件。"
+  - "memory_health snapshot で atoms.jsonl / per-file atom / atoms/index.jsonl 各 2924 件の一致、parse/index/content conflict 0 件を確認した。"
+  - "normalized content duplicate は raw 40 群 80 行、recall-visible 3 群 6 行。既存 canonical overlay 45 群ですべて fold 済みのため atom 本文は変更しなかった。"
+  - "30 日超の memory/raw 242 件を確認した。web_research 217 件、headless_eval 16 件などはいずれも一次資料または評価 evidence であり、mtime だけでは退役根拠にならないため移動しなかった。"
+  - "shared-reads title canonical / mixed duplicate / open duplicate group / stale triage / group action sidecar を再生成した。"
+  - "Slack directives / broadcasts は pending 0 件。完了 evidence のない status 更新は行わなかった。"
+issues:
+  - id: ISS-UTF8-ATOM-001
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』部分に U+FFFD が2文字残り、title / Use when / Excerpt の完全一致検索を弱めている。単一 atom のデータ品質欠陥であり、新しい構造設計を要する問題ではない。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; python tools/memory_health.py --json mojibake_suspect_atoms"
+    source_file_status: "UTF-8 decoding は成功するが、source file 自体に『エ��ジェント』という U+FFFD を含む。MEMORY.md は『記憶』『ゲーム設計』『敵パターン』を UTF-8 読みで取得でき、『評価軸』は本文に存在しない。MEMORY.md の再生成対象ではない。"
+    display_or_tooling_status: "none。PowerShell Get-Content -Encoding UTF8 と rg の双方で同じ U+FFFD を確認。gr-1777083728-44d444ab7a の検出は原文中の literal 『???』による false positive。"
+    why_blocks_game_memory: "該当 atom で『AIエージェント』の語を使う exact search と表示品質を局所的に損なう。recall smoke は全3 query が hit しており、記憶階層全体は阻害していない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+candidate_lifecycle:
+  status_counts:
+    posted: 660
+    ready_to_post: 9
+    postponed: 203
+    failed: 489
+    needs_review: 2
+  overdue_for_reassessment: 4
+  missing_stale_after: 3
+  audit_changed: 0
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 27
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  deferred_group_lease_exclusions:
+    - id: gha-e6d4d4b5a37a0808
+      group_key: "joint agent memory and exploration learning via novelty signals"
+      open_candidates: 2
+      retry_after: "2026-09-19T14:08:16+09:00"
+    - id: gha-2313a247c62a9028
+      group_key: "an exploration of collision based enemy morphology generation"
+      open_candidates: 2
+      retry_after: "2026-09-19T14:08:16+09:00"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
