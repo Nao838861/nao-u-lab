@@ -64,7 +64,37 @@ skipped: []
 - 投稿前レビュー: `■ 概要` 開始、必須6項目の順序、末尾 `■ URL`、禁止表現なし、既投稿 URL 一致なしを確認。`tools/shared_reads_policy.py` は `ok`、Slack 保存本文の UTF-8 検証も `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779860566-0c29861e1b
+    source_ts: "1779860566.721249"
+    title: エージェントメモリの統一グラフアーキテクチャ
+    reason: >-
+      source が slack_api/shared-reads、score 12、未レビューで、memory・game-design・agent・identity・knowledge・operation・evaluation の7タグを持つ自己完結した投稿だったため1件だけ選んだ。未レビュー上位の短い続き断片や同一URL siblingは混ぜず、統合グラフと ingestion 順序が現行 memory に独立した判断差を作るか確認した。Nao_u の明示評価は確認できなかった。
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: >-
+    合計10で採用条件の14に届かず、risk_control も必須閾値2未満。短期・長期・推論記憶の統合、provenance、Extraction→Resolution→Embedding→Deduplication の分離は具体的だが、根拠は X 上の設計提案だけで実装・比較評価がない。現行の per-atom index、source_ts、normalized_content_hash、canonical／lifecycle fold と、既存の link coverage／mechanism gap／governance separation／lifecycle boundary controls が同じ判断面を既に覆う。Phase D 移行中に graph DB や推論 trace schema を重ねると source of truth と障害面が増えるため、新規 probe・metric・lease・directive は追加しない。
+  change:
+    summary: reviewed_source_ts と reject 理由だけを state に記録した。active_probes、ledger、directive、恒久ルールは変更していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

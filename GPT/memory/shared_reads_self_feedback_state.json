@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-20T20:56:00+09:00",
+  "updated_at": "2026-08-20T21:32:33+09:00",
   "reviewed_source_ts": [
+    "1779860566.721249",
     "1787180642.210759",
     "1787211823.474519",
     "1787203828.282949",
@@ -21901,6 +21902,48 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、character claim を複数 channel へ分散する固有差、単一批評の証拠限界、比較可能な narrative playable artifact 不在、既存 narrative／observation／intent／agency controls との境界による defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-20T21:32:33+09:00",
+      "selected": {
+        "id": "sr-1779860566-0c29861e1b",
+        "source_ts": "1779860566.721249",
+        "title": "エージェントメモリの統一グラフアーキテクチャ",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、memory・game-design・agent・identity・knowledge・operation・evaluation の7タグを持つ自己完結した投稿だったため1件だけ選んだ。未レビュー上位には短い続き断片や同一URLの sibling もあるため、それらを混ぜず、短期・長期・推論記憶の統合グラフと ingestion 順序が現在の per-atom 移行・Phase 4 memory cleanup に既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は短期・長期・推論記憶を一つのグラフへ接続し、情報の出所を Message／Document／Conversation まで辿る構造と、Extraction→Resolution→Embedding→Deduplication を分ける ingestion 順序を示すため relevance は3、局所的な provenance／dedup 点検へ変換可能なので actionability は2とした。一方、根拠は X 上の設計提案と紹介投稿のみで、公開 schema、実装、retrieval 品質、推論再利用の成功率、latency／cost、flat file や vector baseline との比較がなく evidence は1。現行環境は per-atom Markdown＋index、source_ts、normalized_content_hash、canonical／lifecycle fold、related candidates、dual-read／dual-write を既に持つ。さらに probe-20260607-memory-hub-link-coverage は接続率、probe-20260605-memory-mechanism-gap-check は機構差、probe-20260602-memory-governance-gate-separation は実行経路と governance の分離、probe-20260611-memory-lifecycle-phase-boundary は write／retrieve／execute／forget の段階分離を扱い、既レビューの Mem0g・TagRAG・Graphiti も graph relation、更新、時間 validity の導入を重複または証拠不足で reject しているため non_redundancy は0。Phase D 移行中に統一 graph DB、推論 trace schema、夜間 LLM edge 推定を加えると source of truth と障害面を増やし、同一 URL の sibling を独立根拠と誤認する危険もあるため risk_control は1。次回行動は既存 controls の継続で足りる。",
+      "existing_controls": [
+        "memory/atoms/index.jsonl and normalized_content_hash lifecycle fold",
+        "probe-20260607-memory-hub-link-coverage",
+        "probe-20260605-memory-mechanism-gap-check",
+        "probe-20260602-memory-governance-gate-separation",
+        "probe-20260611-memory-lifecycle-phase-boundary",
+        "reviews: Mem0g / TagRAG / Graphiti"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、統一グラフの provenance／ingestion 順序の有用性、X 設計提案だけという証拠限界、現行 per-atom／lifecycle／link controls との重複、Phase D 中の二重基盤化リスクによる reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
