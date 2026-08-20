@@ -116,7 +116,79 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "MEMORY.md の atom index 参照50件を照合し、broken link 0件を確認した"
+  - "atoms 2917件の atoms.jsonl / per-file md / index.jsonl mirror を監査し、content conflict 0件、未解決content重複0件を確認した"
+  - "shared-reads の title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を規定順で再生成した"
+  - "Slack directive / broadcast inbox を監査し、pending 0件のため close 更新は行わなかった"
+  - "probe lifecycle を検証し、schema error 0件、期限到来lease 0件を確認した"
+issues:
+  - id: ISS-ENC-ACTIVE-ATOM-001
+    description: "active atom sr-1776127289-4d9239b255 の title / trigger に U+FFFD が残り、『AIエージェント』が『AIエ��ジェント』になっている"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/index.jsonl id=sr-1776127289-4d9239b255; memory_health.py mojibake_suspect_atoms"
+    source_file_status: "UTF-8明示読みでも per-file md に U+FFFD 8文字、atoms.jsonl 全体に U+FFFD 6文字を確認。source file 自体の破損"
+    display_or_tooling_status: "PowerShell Get-Content -Encoding UTF8 と index / related-candidates 表示はsourceと同じ文字列を返す。表示経路だけのmojibakeではない"
+    why_blocks_game_memory: "『エージェント』完全一致検索と関連候補の可読性を局所的に損なう。ただし当該atomは他の語とURLで到達可能で、mirror整合・recall smokeは正常"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+candidate_lifecycle:
+  counts:
+    posted: 653
+    ready_to_post: 9
+    postponed: 199
+    failed: 487
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_open_total: 4
+raw_archive_inventory:
+  older_than_30_days_total: 242
+  by_area:
+    web_research: 217
+    headless_eval: 16
+    slack_api: 6
+    slack_archive: 1
+    game_eval: 1
+    sync_state: 1
+  action: "inventory_only"
+  reason: "raw原文保持が現行原則で、移動先・復元導線の既存契約を確認できないため、このphaseでは自動移動しない"
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  deferred_suppression:
+    ids:
+      - gha-e6d4d4b5a37a0808
+      - gha-2313a247c62a9028
+    retry_after: "2026-08-20T13:19:04+09:00"
+    note: "期限超過open候補4件はこの2群に属し、監査時刻にはdeferred leaseが未到来のためqueue 0件"
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
