@@ -133,7 +133,63 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、atom id 参照 87 件を照合した。missing 0 件、Markdown path link 0 件。代表語は 記憶/ゲーム設計/敵パターン が取得でき、評価軸は本文に literal が存在しないだけで decode error はなかった。"
+  - "memory/atoms.jsonl・per-file atom・memory/atoms/index.jsonl は各 2919 件で一致し、mirror parse/index/content conflict は 0 件。raw normalized-content duplicate 40 群は既存 fold で吸収され、recall-visible unresolved duplicate は 0 件だった。"
+  - "memory/raw/ の 2026-07-21 より前に更新が止まった原文 241 件を棚卸しした。raw は provenance の正本で archive destination/retention 判定が未定義のため、この phase では移動・削除していない。"
+  - "shared-reads lifecycle 1352 件を監査した。posted 655 / ready_to_post 9 / postponed 199 / failed 487 / needs_review 2。期限到来 open candidate 4 件は、2 duplicate group の deferred lease が 2026-09-19 まで有効なため再投入しなかった。"
+  - "title canonical / mixed duplicate / open duplicate / stale triage / group-action sidecar を再生成した。terminal canonical 100 群、mixed 28 群、open duplicate 31 群、stale triage 0 件、actionable group 0 件。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件で、handled へ更新すべき行はなかった。candidate/group handoff inbox も pending 0 件、audit error 0 件。"
+  - "due probe lease は 0 件。lifecycle validate は 11 rows、pending 0 / resolved 9 / dormant 1 / merged 0 / retired 0、error 0 件。receipt 更新なし。"
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』が『AIエ��ジェント』として raw source から既に U+FFFD を2文字含み、title / trigger / excerpt と per-file mirror へ伝播している。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492,1216; memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md:3"
+    source_file_status: "UTF-8 decode は成功するが、raw source 自体に replacement character U+FFFD が保存済み。memory_health のもう1件 gr-1777083728-44d444ab7a は UTF-8 原文・mirror とも U+FFFD がなく detector false positive。"
+    display_or_tooling_status: "none。Get-Content -Encoding utf8 と rg の双方で同じ U+FFFD を再現し、表示経路だけの mojibake ではない。"
+    why_blocks_game_memory: "『エージェント』の exact 検索でこの高 score atom が一致せず、関連する記憶設計の想起を1件取りこぼす。ただし他の索引・recall smoke は正常で、広範な遮断ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppressed_by_live_group_lease:
+    - group_key: "joint agent memory and exploration learning via novelty signals"
+      handoff_id: gha-e6d4d4b5a37a0808
+      retry_after: "2026-09-19T14:08:16+09:00"
+    - group_key: "an exploration of collision based enemy morphology generation"
+      handoff_id: gha-2313a247c62a9028
+      retry_after: "2026-09-19T14:08:16+09:00"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
