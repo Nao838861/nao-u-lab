@@ -97,7 +97,60 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の atom 参照 50 件を UTF-8 明示読みで監査し、broken 0 件を確認。代表語（記憶 / ゲーム設計 / 敵パターン / 評価軸）も取得できた。"
+  - "memory/atoms.jsonl と per-file/index の 2921 件を監査し、mirror conflict 0 件を確認。raw normalized-content duplicate 40 群と canonical overlay 45 群は既存 fold で解決済み、effective display unresolved は 0 件。"
+  - "memory/raw/ の 30 日超無更新 242 ファイルを確認。raw は provenance 正本として保持する現行原則に従い、移動・削除は行わなかった。"
+  - "shared-reads candidate lifecycle を監査（posted 657 / ready_to_post 9 / postponed 202 / failed 488 / needs_review 2）。期限超過 open 4 件は既存の deferred group lease 2 件に包含され、retry_after は 2026-09-19 のため再投入しなかった。"
+  - "title sidecar を再生成し、terminal canonical 102 群、open duplicate 32 群（mixed 28 / all_open 4）を確認。live lease 合成後の stale triage / group action queue は 0 件。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件。完了根拠なしに handled へ変更した行はない。"
+issues:
+  - id: ISS-4A-20260820-01
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』部分に置換文字が残り、title / trigger / excerpt の検索語が欠損している。raw slack_archive も同じ欠損を持つ一方、Claude 側 beliefs.md には正常表記の独立証拠がある。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl:492; D:/AI/Nao_u_BOT/Claude/memory/beliefs.md:78"
+    source_file_status: "UTF-8 明示読みでも U+FFFD 相当の置換文字が再現し、source content 自体に欠損あり。memory/MEMORY.md は UTF-8 正常。"
+    display_or_tooling_status: "none（PowerShell 表示だけの mojibake ではない）。gr-1777083728-44d444ab7a の検出は本文中の意図的な '???' による false positive。"
+    why_blocks_game_memory: "当該 atom は記憶アーキテクチャ参照用で、破損語による日本語検索の取りこぼしを起こし得る。ただし game task entry point と recall smoke は正常で、次のゲーム制作を構造的には阻害しない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 32
+  mixed_group_count: 28
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  deferred_group_lease_ids:
+    - gha-e6d4d4b5a37a0808
+    - gha-2313a247c62a9028
+stale_review_batch: []
+```
+
+- probe receipt: due lease 0 件のため作成なし。`shared_reads_probe_lifecycle.py validate` は rows 11 / errors 0。
+- Phase 4b / 4c gate: 起動しない。ISS-4A-20260820-01 は単一データの修復候補であり、新しい仕組みの設計を要しない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
