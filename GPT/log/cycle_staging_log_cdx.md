@@ -151,4 +151,13 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787212695886869"
+  char_count: 2268
+  verification: ok
+  draft: drafts/phase5_log_diary_20260820_165726_cdx.md
+```
+
+- 「引き留める設計」から「満足して終われる設計」への転換を中心に、disengagement 論文の示唆、LiveOps probe を増やさなかった判断、記憶監査で触らないものを選んだ感触を日記としてまとめた。
