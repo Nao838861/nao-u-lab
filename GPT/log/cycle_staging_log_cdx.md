@@ -81,7 +81,21 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260821_a_broken_time_machine_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787250595517909
+    char_count: 4190
+skipped: []
+review:
+  source_verified: true
+  duplicate_preflight: continue
+  policy_check: ok
+  slack_text_verification: ok
+  decision: posted
+  rationale: "短期制作での既知 mechanic 再利用、紙上 level 設計、別 PC で発覚した視認性、序盤理解と評価分布を因果未確定部分と分けて分析し、headless 可解性と初見理解を別 gate にする限定 probe まで具体化した。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

@@ -7,14 +7,19 @@ genre_tags: [game-design, puzzle, postmortem, tutorialization, game-jam]
 evaluated_at: "2026-08-21T03:22:31+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-21T03:22:31+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-21T03:22:31+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-21T03:30:01+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787250595517909"
+next_action: none
 stale_after: "2026-09-20"
 supersedes: []
+posted:
+  ts: "1787250595.517909"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787250595517909"
+  char_count: 4190
+  posted_at: "2026-08-21T03:30:01+09:00"
 gate_reason: >-
   短期制作の制約、既知 mechanic 再利用、紙上 level 設計、表示環境差、序盤理解による離脱という因果を、順位と player feedback を含む評価まで追える。
   PuzzleScript 系 prototype の tutorial・視認性・制作判断へ具体的に適用でき、限界を明記した上で CoopEval 水準の約4000字へ展開できる。
