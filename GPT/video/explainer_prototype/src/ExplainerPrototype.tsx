@@ -1274,25 +1274,24 @@ const CoordinateTransformScene: React.FC<{durationInFrames?: number}> = ({durati
     extrapolateRight: 'clamp',
   });
   const mappings = [
-    {key: 'Z → X', label: '消失点へ寄せる割合', color: C.cyan, at: 120},
-    {key: 'Z → Y', label: '画面上の高さを補正', color: C.orange, at: 165},
-    {key: 'Z → SIZE', label: '16段階の絵を選択', color: C.magenta, at: 210},
+    {key: '奥行き → 座標', label: '消失点へ寄せる', color: C.cyan, at: 120},
+    {key: '奥行き → 絵', label: '16段階から選ぶ', color: C.magenta, at: 180},
   ];
   return (
     <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '36px 46px 0', boxSizing: 'border-box'}}>
       <Title size={40}>3Dの座標変換をテーブル参照に置き換える</Title>
       <div style={{fontFamily: FONT, color: C.dim, fontSize: 20, fontWeight: 800, marginTop: 7}}>
-        掛け算・割り算を減らし、XYZ座標をキーに結果を取り出す
+        掛け算・割り算を減らし、座標や絵をテーブルから取り出す
       </div>
 
       <div style={{display: 'flex', gap: 26, marginTop: 24, height: 532}}>
         <div style={{width: 430, display: 'flex', flexDirection: 'column', gap: 12}}>
           <div style={{opacity: reveal(20), padding: '15px 18px', background: C.panel, borderLeft: `6px solid ${C.red}`}}>
-            <div style={{fontFamily: FONT, color: C.red, fontSize: 17, fontWeight: 900}}>ファミコンCPU：6502</div>
+            <div style={{fontFamily: FONT, color: C.red, fontSize: 17, fontWeight: 900}}>ファミコンCPU</div>
             <div style={{fontFamily: FONT, color: C.white, fontSize: 24, fontWeight: 900, marginTop: 5}}>掛け算・割り算命令がない</div>
           </div>
           <div style={{opacity: reveal(65), display: 'flex', alignItems: 'center', gap: 10}}>
-            <div style={{width: 115, padding: '13px 8px', textAlign: 'center', background: '#101116', border: `2px solid ${C.cyan}`, fontFamily: MONO, color: C.white, fontSize: 22, fontWeight: 900}}>X Y Z</div>
+            <div style={{width: 115, padding: '13px 8px', textAlign: 'center', background: '#101116', border: `2px solid ${C.cyan}`, fontFamily: FONT, color: C.white, fontSize: 20, fontWeight: 900}}>奥行き</div>
             <div style={{fontFamily: MONO, color: C.cyan, fontSize: 25, fontWeight: 900}}>→</div>
             <div style={{flex: 1, padding: '13px 12px', textAlign: 'center', background: `${C.cyan}18`, border: `2px solid ${C.cyan}`, fontFamily: FONT, color: C.cyan, fontSize: 21, fontWeight: 900}}>テーブル参照</div>
             <div style={{fontFamily: MONO, color: C.cyan, fontSize: 25, fontWeight: 900}}>→</div>
@@ -1303,7 +1302,7 @@ const CoordinateTransformScene: React.FC<{durationInFrames?: number}> = ({durati
           <div style={{marginTop: 4, display: 'flex', flexDirection: 'column', gap: 9}}>
             {mappings.map((mapping) => (
               <div key={mapping.key} style={{opacity: reveal(mapping.at), display: 'flex', alignItems: 'center', gap: 12, padding: '10px 13px', background: C.panel, borderLeft: `5px solid ${mapping.color}`}}>
-                <div style={{width: 105, fontFamily: MONO, color: mapping.color, fontSize: 20, fontWeight: 900}}>{mapping.key}</div>
+                <div style={{width: 158, fontFamily: FONT, color: mapping.color, fontSize: 18, fontWeight: 900}}>{mapping.key}</div>
                 <div style={{fontFamily: FONT, color: C.white, fontSize: 17, fontWeight: 800}}>{mapping.label}</div>
               </div>
             ))}
@@ -1658,7 +1657,7 @@ const ProgrammingFlowScene: React.FC<{durationInFrames?: number}> = ({durationIn
   const codeLines = ['update_enemy();', 'project_xyz();', 'check_collision();'];
   return (
     <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '38px 46px 0', boxSizing: 'border-box'}}>
-      <Title size={40}>C言語を正本に、重い場所だけ最適化</Title>
+      <Title size={40}>C言語を正本に、AIでアセンブラ化</Title>
       <div style={{fontFamily: FONT, color: C.dim, fontSize: 19, fontWeight: 800, marginTop: 7}}>AIをコンパイラのように使い、Cとアセンブラを並行して維持</div>
       <div style={{display: 'grid', gridTemplateColumns: '330px 1fr 360px', gap: 24, alignItems: 'stretch', marginTop: 34, height: 470}}>
         <div style={{opacity: show(0.03), background: C.panel, border: `2px solid ${C.cyan}`, padding: 22}}>
@@ -1672,11 +1671,11 @@ const ProgrammingFlowScene: React.FC<{durationInFrames?: number}> = ({durationIn
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
           <div style={{opacity: show(0.28), width: 150, height: 150, borderRadius: '50%', border: `4px solid ${C.magenta}`, display: 'grid', placeItems: 'center', background: `${C.magenta}18`, fontFamily: FONT, color: C.magenta, fontSize: 34, fontWeight: 900}}>AI</div>
           <div style={{opacity: show(0.36), fontFamily: MONO, color: C.magenta, fontSize: 34, margin: '16px 0'}}>→</div>
-          <div style={{opacity: show(0.4), padding: '14px 18px', background: C.panel, borderTop: `3px solid ${C.magenta}`, borderBottom: `3px solid ${C.magenta}`, textAlign: 'center', fontFamily: FONT, color: C.white, fontSize: 18, fontWeight: 900}}>関数単位で変換<br />＋ 最適化</div>
+          <div style={{opacity: show(0.4), padding: '14px 18px', background: C.panel, borderTop: `3px solid ${C.magenta}`, borderBottom: `3px solid ${C.magenta}`, textAlign: 'center', fontFamily: FONT, color: C.white, fontSize: 18, fontWeight: 900}}>固まった処理を<br />アセンブラへ変換</div>
         </div>
         <div style={{opacity: show(0.48), background: C.panel, border: `2px solid ${C.orange}`, padding: 22}}>
           <div style={{fontFamily: MONO, color: C.orange, fontSize: 23, fontWeight: 900}}>6502 ASM</div>
-          <div style={{fontFamily: FONT, color: C.white, fontSize: 18, fontWeight: 900, marginTop: 12}}>速度が必要な関数だけ置換</div>
+          <div style={{fontFamily: FONT, color: C.white, fontSize: 18, fontWeight: 900, marginTop: 12}}>AIがアセンブラへ置き換える</div>
           <div style={{marginTop: 25, fontFamily: MONO, color: C.white, fontSize: 17, lineHeight: 1.65, padding: 16, background: '#0b0c10'}}><span style={{color: C.orange}}>LDA</span> enemy_x<br /><span style={{color: C.orange}}>ADC</span> velocity_x<br /><span style={{color: C.orange}}>STA</span> enemy_x<br /><span style={{color: C.orange}}>JSR</span> project_xyz</div>
           <div style={{opacity: show(0.65), marginTop: 23, padding: '13px 10px', textAlign: 'center', border: '2px solid #62df83', fontFamily: FONT, color: '#62df83', fontSize: 19, fontWeight: 900}}>✓ C版と同じ動作</div>
         </div>
