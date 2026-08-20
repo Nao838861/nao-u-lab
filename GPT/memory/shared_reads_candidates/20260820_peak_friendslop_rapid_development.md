@@ -4,6 +4,20 @@ url: "https://gdcvault.com/play/1035941/Putting-the-Friends-in-Friendslop"
 collected_at: "2026-08-20T20:46:03+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, postmortem, indie, co-op, game-jam, production, burnout]
+evaluated_at: "2026-08-20T20:50:14+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-20T20:50:14+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-20T20:50:14+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-19"
+supersedes: []
+gate_reason: |-
+  GDC 講演の問題設定、対象者、takeaway は抽出できるが、現 candidate は講演ページの紹介文に留まり、短期制作の工程、判断、失敗、burnout 抑制策の具体像と評価証拠がない。
+  ゲームジャム型制作を自分達の短期 prototype cycle へ適用する題材性は高いものの、現材料だけでは重要要素を満たす約4000字の概要を推測なしに構成できないため、講演内容の一次確認まで保留する。
 ---
 
 ## raw_excerpt
