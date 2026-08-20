@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-20T19:00:23+09:00",
+  "updated_at": "2026-08-20T20:56:00+09:00",
   "reviewed_source_ts": [
+    "1787180642.210759",
     "1787211823.474519",
     "1787203828.282949",
     "1787195314.362269",
@@ -21860,6 +21861,46 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、feedback 後の status・理由・evidence 可視化は既存 inbox／Phase 3b／probe receipt controls で実装済みであり、同義 probe は判断差より重複と過剰透明化リスクを増やすため reject した理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-20T20:56:00+09:00",
+      "selected": {
+        "id": "sr-1787180642-e67e1305cb",
+        "source_ts": "1787180642.210759",
+        "title": "Cairn's prickly protagonist serves a powerful purpose — Narrative Notebook #1",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新候補だったため1件だけ選んだ。人物主張を必須操作・失敗 loop・短い反応・環境痕跡・関係の代償へ分散し、好感度ではなく claim の再構成と根拠 scene の一致を見る観点が、次の narrative playable で既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件と必須指標は満たす。shared-reads 本文は、一つの character claim を必須操作・失敗 loop・短い反応・環境痕跡・関係の代償へ異なる役割で分散し、deterministic trace と人間の claim 再構成を分ける小型検証へ変換できるため relevance・actionability は3とした。一方、根拠は完成作を横断した一人の批評的 playthrough であり、異なる skill 群の再構成率、離脱率、scene-character matrix の比較、制作過程の検証はないため evidence は2に留める。probe-20260610-narrative-playthrough-evidence は文章案と playable action／state change を、probe-20260603-mechanic-observation-channel-gate は headless trace と player-facing 観測 channel を、probe-20260717-player-intent-action-response は intent と observable world response を、probe-20260710-feedback-device-amplitude-axis は介入強度と agency 保持を扱う。本投稿固有の差は、同じ人物主張を複数 channel へ別機能で配り、反証を含む scene 根拠から player が claim を再構成できるかを見る点なので non_redundancy は2とした。ただし現在の staging には narrative playable diff、同一 character claim の before／after scene、player action trace、自由記述を対応づけた artifact がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。consumer_phase・trigger_artifact・expected_delta を lease 契約どおり指定できないため active probe・metric・lease・directive・恒久ルールは追加しない。刺々しい主人公、高難度、必須の加害的選択を一般化すると agency loss と skill 差による物語到達差を増やし、scene-character matrix を全 prototype へ課すと確認負荷も増えるため、次に具体的な narrative playable artifact が生じ、既存4 controlsだけでは人物理解と単なる台詞説明を分離できない時だけ一時 metric として再評価する。",
+      "existing_controls": [
+        "probe-20260610-narrative-playthrough-evidence",
+        "probe-20260603-mechanic-observation-channel-gate",
+        "probe-20260717-player-intent-action-response",
+        "probe-20260710-feedback-device-amplitude-axis"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、character claim を複数 channel へ分散する固有差、単一批評の証拠限界、比較可能な narrative playable artifact 不在、既存 narrative／observation／intent／agency controls との境界による defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

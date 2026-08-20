@@ -70,7 +70,35 @@ slack_action: none
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787180642-e67e1305cb
+    source_ts: "1787180642.210759"
+    title: "Cairn's prickly protagonist serves a powerful purpose — Narrative Notebook #1"
+    reason: "source が slack_api/shared-reads、score 12、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新候補だったため1件だけ選んだ。人物主張を必須操作・失敗 loop・短い反応・環境痕跡・関係の代償へ分散し、好感度ではなく claim の再構成と根拠 scene の一致を見る観点が、次の narrative playable で既存 control と異なる判断差を作れるか確認した。Nao_u の明示評価は確認できなかった"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "採用閾値は満たすが、現 staging には narrative playable diff、同一 character claim の before／after scene、player action trace、自由記述を対応づけた artifact がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。consumer_phase・trigger_artifact・expected_delta を具体化できないため state-only review とした。既存の narrative-playthrough／observation-channel／player-intent／feedback-amplitude controls との差は、人物主張を複数 channel へ別機能で配り、反証を含む根拠 scene から claim を再構成できるかを見る点。次に具体 artifact が生じ、既存 controls が台詞説明と人物理解を分離できない時だけ一時 metric として再評価する"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを更新。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
