@@ -1536,40 +1536,17 @@ const SizeBankScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
 };
 
 const SpriteScaleResultScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 420}) => {
-  const patternFrames = Math.round(durationInFrames * 0.49);
-  const bossFrames = durationInFrames - patternFrames;
+  const frame = useCurrentFrame();
   return (
-    <AbsoluteFill style={{backgroundColor: C.bg}}>
-      <Sequence durationInFrames={patternFrames}>
-        <AbsoluteFill style={{padding: '38px 48px', boxSizing: 'border-box'}}>
-          <Title size={42}>16段階の絵を、奥行きに合わせて選ぶ</Title>
-          <div style={{fontFamily: FONT, color: C.dim, fontSize: 19, fontWeight: 800, marginTop: 8}}>計算量を増やさず、滑らかな拡大縮小を実現</div>
-          <div style={{display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 13, marginTop: 34}}>
-            {bossFaceDimensions.map((dimensions, i) => (
-              <div key={i} style={{height: 208, border: '2px solid #34313c', background: C.panel, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', padding: '13px 4px 9px', boxSizing: 'border-box'}}>
-                <div style={{fontFamily: MONO, color: C.magenta, fontSize: 15, fontWeight: 900}}>{String(i + 1).padStart(2, '0')}</div>
-                <div style={{height: 136, width: '100%', display: 'grid', placeItems: 'center'}}>
-                  <Img src={staticFile(`boss_face/BossFace_${String(i).padStart(2, '0')}.png`)} style={{width: dimensions[0] * 2.05, height: dimensions[1] * 2.05, imageRendering: 'pixelated'}} />
-                </div>
-                <div style={{fontFamily: MONO, color: C.dim, fontSize: 11}}>{dimensions[0]}×{dimensions[1]}</div>
-              </div>
-            ))}
-          </div>
-          <div style={{position: 'absolute', left: 420, right: 420, bottom: 18, padding: '10px 16px', borderTop: `2px solid ${C.magenta}`, borderBottom: `2px solid ${C.magenta}`, textAlign: 'center', fontFamily: FONT, color: C.white, fontSize: 22, fontWeight: 900}}>大量のROM容量 ⇄ 高速で滑らかな描画</div>
-        </AbsoluteFill>
-      </Sequence>
-      <Sequence from={patternFrames} durationInFrames={bossFrames}>
-        <AbsoluteFill style={{backgroundColor: '#000', display: 'grid', placeItems: 'center'}}>
-          <OffthreadVideo
-            src={staticFile('boss_battle.mp4')}
-            startFrom={86 * 30}
-            endAt={86 * 30 + bossFrames}
-            muted
-            style={{width: 768, height: 720, objectFit: 'fill', imageRendering: 'pixelated'}}
-          />
-          <div style={{position: 'absolute', left: 34, top: 30, padding: '10px 15px', background: '#050507dd', borderLeft: `6px solid ${C.magenta}`, fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900}}>速度とクオリティを最優先</div>
-        </AbsoluteFill>
-      </Sequence>
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: '#000', display: 'grid', placeItems: 'center'}}>
+      <OffthreadVideo
+        src={staticFile('boss_battle.mp4')}
+        startFrom={86 * 30}
+        endAt={86 * 30 + durationInFrames}
+        muted
+        style={{width: 768, height: 720, objectFit: 'fill', imageRendering: 'pixelated'}}
+      />
+      <div style={{position: 'absolute', left: 34, top: 30, padding: '10px 15px', background: '#050507dd', borderLeft: `6px solid ${C.magenta}`, fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900}}>速度とクオリティを最優先</div>
     </AbsoluteFill>
   );
 };
@@ -1608,35 +1585,37 @@ const FrameTimelineScene: React.FC<{durationInFrames?: number}> = ({durationInFr
   const frame = useCurrentFrame();
   const timingScale = durationInFrames / 600;
   const scaled = (at: number) => Math.round(at * timingScale);
-  const reveal = (at: number) => interpolate(frame, [scaled(at), scaled(at + 24)], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const reveal = (at: number) => interpolate(frame, [scaled(at), scaled(at) + 12], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   const cpu = C.magenta;
   const logic = '#62df83';
   const normalVram = C.cyan;
   const exram = C.orange;
-  const Block: React.FC<{label: string; sub?: string; color: string; height: number; at: number}> = ({label, sub, color, height, at}) => (
-    <div style={{height, boxSizing: 'border-box', padding: '5px 9px', background: `${color}20`, borderLeft: `7px solid ${color}`, opacity: reveal(at)}}>
+  const logicPulse = frame < scaled(532) ? 1 : 0.72 + 0.28 * ((Math.sin((frame - scaled(532)) / 10) + 1) / 2);
+  const Block: React.FC<{label: string; sub?: string; color: string; height: number; at: number; pulse?: boolean}> = ({label, sub, color, height, at, pulse = false}) => (
+    <div style={{height, boxSizing: 'border-box', padding: '5px 9px', background: `${color}20`, borderLeft: `7px solid ${color}`, opacity: reveal(at) * (pulse ? logicPulse : 1), boxShadow: pulse && frame >= scaled(532) ? `0 0 18px ${color}66` : 'none'}}>
       <div style={{fontFamily: FONT, color: C.white, fontSize: 14, lineHeight: 1.2, fontWeight: 900}}>{label}</div>
       {sub ? <div style={{fontFamily: FONT, color, fontSize: 12, lineHeight: 1.15, fontWeight: 900, marginTop: 2}}>{sub}</div> : null}
     </div>
   );
   const Lane: React.FC<{kind: 'A' | 'B'}> = ({kind}) => {
     const isA = kind === 'A';
+    const laneAt = isA ? 74 : 126;
     return (
-      <div style={{width: 258}}>
+      <div style={{width: 258, opacity: reveal(laneAt), transform: `translateY(${(1 - reveal(laneAt)) * 10}px)`}}>
         <div style={{fontFamily: FONT, color: C.white, fontSize: 18, lineHeight: 1.2, fontWeight: 900, textAlign: 'center', marginBottom: 8}}>
           {isA ? <>1フレーム目：<br />画面クリアと計算</> : <>2フレーム目：<br />スプライト描画</>}
         </div>
         <div style={{height: 448, border: '2px solid #47434e', padding: 6, boxSizing: 'border-box', background: C.panel, display: 'flex', flexDirection: 'column'}}>
           <div style={{height: 320, display: 'flex', flexDirection: 'column', gap: isA ? 5 : 0}}>
             {isA ? <>
-              <Block label="仮想フレームバッファ消去" sub="描画　約1.7ms" color={cpu} height={43} at={175} />
-              <Block label="地面・遠景の描画" sub="描画　約2.6ms" color={cpu} height={66} at={225} />
-              <Block label="プレイヤー・敵・弾・衝突などの計算" sub="ゲームロジック　最大 約8.0ms" color={logic} height={201} at={260} />
+              <Block label="仮想フレームバッファ消去" sub="描画　約1.7ms" color={cpu} height={43} at={190} />
+              <Block label="地面・遠景の描画" sub="描画　約2.6ms" color={cpu} height={66} at={253} />
+              <Block label="プレイヤー・敵・弾・衝突などの計算" sub="ゲームロジック　最大 約8.0ms" color={logic} height={201} at={302} pulse />
             </> : <>
-              <Block label="コンパイルドスプライトを描画" sub="描画　最大 約12.3ms" color={cpu} height={320} at={105} />
+              <Block label="コンパイルドスプライトを描画" sub="描画　最大 約12.3ms" color={cpu} height={320} at={419} />
             </>}
           </div>
-          <div style={{height: 114, position: 'relative', borderTop: `4px solid ${C.bg}`, boxSizing: 'border-box', opacity: reveal(isA ? 320 : 350)}}>
+          <div style={{height: 114, position: 'relative', borderTop: `4px solid ${C.bg}`, boxSizing: 'border-box', opacity: reveal(isA ? 402 : 495)}}>
             <div style={{position: 'absolute', left: 0, top: 0, width: 7, height: 8, background: C.white}} />
             <div style={{position: 'absolute', left: 0, top: 8, width: 7, height: 88, background: isA ? normalVram : exram}} />
             <div style={{position: 'absolute', left: 0, top: 96, width: 7, height: 14, background: C.dim}} />
@@ -1649,8 +1628,8 @@ const FrameTimelineScene: React.FC<{durationInFrames?: number}> = ({durationInFr
       </div>
     );
   };
-  const chartOpacity = reveal(420);
-  const previewStage = frame < scaled(95) ? 0 : frame < scaled(165) ? 1 : frame < scaled(225) ? 2 : frame < scaled(255) ? 3 : frame < scaled(390) ? 4 : 5;
+  const chartOpacity = reveal(545);
+  const previewStage = frame < scaled(141) ? 0 : frame < scaled(190) ? 1 : frame < scaled(253) ? 2 : frame < scaled(302) ? 3 : frame < scaled(454) ? 4 : 5;
   const stageLabels = ['前のフレーム：完成した画面', '前のフレームを表示中', '上半分を消去', '地面・遠景を描画', 'ゲームロジックを反映', 'コンパイルドスプライトで完成'];
   const previewImages = ['frame_background_player_bg.png', 'frame_background_player_bg.png', 'frame_background_player_bg.png', 'frame_background.png', 'frame_background_player.png', 'frame_background_player_bg.png'];
   return (

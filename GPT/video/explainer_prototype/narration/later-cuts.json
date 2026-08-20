@@ -11,89 +11,48 @@
     "windowMs": 5,
     "thresholdDb": -44,
     "minimumSilenceMs": 60,
-    "maximumInternalSilenceMs": 50,
-    "maximumCommaSilenceMs": 180,
-    "sentenceSilenceThresholdMs": 450,
-    "maximumSentenceSilenceMs": 600,
-    "normalizeSentenceSilence": true,
+    "preserveInternalSilence": true,
     "maximumLeadingSilenceMs": 20,
     "maximumTrailingSilenceMs": 60
   },
-  "commonInstructions": "日本語の技術解説動画のナレーションです。同じナレーターが一続きで説明しているように、全カットで一定の話速、落ち着いた自然な標準語、均一な音量と抑揚を保ってください。文中で急に加速・減速せず、語尾の調子も揃えてください。単語と助詞を分断せず、日本語の語句を滑らかにつなげてください。句読点に応じた自然な間だけを置いてください。大げさな演技、広告調、一本調子にはしないでください。固有名詞、数値、英字を明瞭に発音してください。音声だけを出力し、前後に長い無音を入れないでください。",
+  "commonInstructions": "日本語の技術解説動画のナレーションです。同じナレーターが一続きで説明しているように、全カットで話速、声の高さ、音量、文末の調子を揃えてください。落ち着いた自然な標準語で、文中では急に加速・減速せず、語句と助詞を滑らかにつなげてください。句読点に応じた自然な間を置き、平叙文の語尾は疑問調にせず自然に着地させてください。大げさな演技、広告調、一本調子にはしないでください。固有名詞、数値、英字を明瞭に発音してください。音声だけを出力し、前後に長い無音を入れないでください。",
   "cuts": [
     {
       "id": "C17",
       "startFrame": 0,
-      "durationFrames": 426,
+      "durationFrames": 491,
       "minimumDurationFrames": 0,
-      "targetSeconds": 14.2,
-      "silenceCompaction": {
-        "sentenceSilenceThresholdMs": 10000,
-        "commaPauseCandidateIndices": [
-          1,
-          2,
-          9
-        ],
-        "sentencePauseCandidateIndices": [
-          5
-        ]
-      },
-      "instructions": "大量のメモリ、高速、滑らかな拡大縮小、速度とクオリティを自然につなげて発音してください。2文の間には明確な間を置いてください。",
+      "targetSeconds": 16.367,
+      "instructions": "原稿を省略、追加、言い換えず、C16から同じ話速と声の高さを保って読み上げてください。『大量のメモリ』『高速で滑らかな拡大縮小』『速度とクオリティ』を明瞭に発音してください。2文の間だけ自然な短い間を置き、文中の速度と抑揚を一定にしてください。",
       "text": "このような形にすることで、大量のメモリと引き換えに、高速で滑らかな拡大縮小ができるスプライト描画を実現できました。今回は滑らかな動きのためにメモリを犠牲にして、速度とクオリティを最優先する形の実装になっています。",
       "ttsText": "このような形にすることで、大量のメモリと引き換えに、高速で滑らかな拡大縮小ができるスプライト描画を実現できました。今回は滑らかな動きのためにメモリを犠牲にして、速度とクオリティを最優先する形の実装になっています。",
-      "measuredDurationSeconds": 13.45
+      "measuredDurationSeconds": 15.595
     },
     {
       "id": "C18",
-      "startFrame": 426,
-      "durationFrames": 177,
+      "startFrame": 491,
+      "durationFrames": 228,
       "minimumDurationFrames": 0,
-      "targetSeconds": 5.9,
-      "silenceCompaction": {
-        "sentenceSilenceThresholdMs": 10000,
-        "commaPauseCandidateIndices": [
-          0
-        ]
-      },
-      "instructions": "ファミコン、30fps、フレームワークを明瞭に発音してください。",
+      "targetSeconds": 7.6,
+      "instructions": "原稿を省略、追加、言い換えず、C17と同じ話速、声の高さ、文末の調子を保って読み上げてください。『ファミコン』『30エフピーエス』『フレームワーク』を明瞭に発音してください。",
       "text": "次に、ファミコンで30fpsでゲームを動かすためのフレームワークについて説明します。",
       "ttsText": "次に、ファミコンで30エフピーエスでゲームを動かすためのフレームワークについて説明します。",
-      "measuredDurationSeconds": 5.135
+      "measuredDurationSeconds": 6.82
     },
     {
       "id": "C19",
-      "startFrame": 603,
-      "durationFrames": 986,
+      "startFrame": 719,
+      "durationFrames": 1110,
       "minimumDurationFrames": 0,
-      "targetSeconds": 32.867,
-      "silenceCompaction": {
-        "sentenceSilenceThresholdMs": 10000,
-        "commaPauseCandidateIndices": [
-          1,
-          2,
-          5,
-          10,
-          12,
-          13,
-          14,
-          18,
-          23
-        ],
-        "sentencePauseCandidateIndices": [
-          8,
-          11,
-          17,
-          21
-        ]
-      },
-      "instructions": "30fps、1フレーム目、2フレーム目、コンパイルドスプライト、3D座標変換、8msを明瞭に発音してください。各文の間には明確な間を置いてください。",
-      "text": "30fpsで動かすために、処理を2フレームに分散して、1フレーム目で画面クリアとゲームロジックの計算、2フレーム目でコンパイルドスプライトの描画を行っています。1フレーム目の最初で画面の上半分を消去し、地面と遠景を描画します。そのあとで、プレイヤーや敵、弾や衝突判定、3D座標変換などのゲームロジックを計算します。2フレーム目では、前のフレームで計算した結果に合わせてスプライトを順番に描画していきます。敵の移動や3D座標変換は、ゲームロジックの予算の8ms以内で計算する必要があります。",
-      "ttsText": "30エフピーエスで動かすために、処理を2フレームに分散して、1フレーム目で画面クリアとゲームロジックの計算、2フレーム目でコンパイルドスプライトの描画を行っています。1フレーム目の最初で画面の上半分を消去し、地面と遠景を描画します。そのあとで、プレイヤーや敵、弾や衝突判定、スリーディー座標変換などのゲームロジックを計算します。2フレーム目では、前のフレームで計算した結果に合わせてスプライトを順番に描画していきます。敵の移動やスリーディー座標変換は、ゲームロジックの予算の8ミリ秒以内で計算する必要があります。",
-      "measuredDurationSeconds": 32.115
+      "targetSeconds": 37,
+      "instructions": "原稿を省略、追加、言い換えず、C17・C18と同じ話速と声の高さを保って読み上げてください。『30エフピーエス』『1フレーム目』『2フレーム目』『コンパイルドスプライト』『スリー・ディー座標変換』『8ミリ秒』を明瞭に発音してください。6文を一続きの解説として読み、文末ごとに自然な短い間を置いてください。",
+      "text": "30fpsで動かすために、処理を2フレームに分散しています。1フレーム目で画面クリアとゲームロジックの計算、2フレーム目でコンパイルドスプライトの描画を行っています。1フレーム目の最初で画面の上半分を消去し、次に、地面と遠景を描画します。そのあとで、プレイヤーや敵、弾や衝突判定、3D座標変換などのゲームロジックを計算します。2フレーム目では、前のフレームで計算した結果に合わせてスプライトを順番に描画していきます。敵の移動や3D座標変換は、ゲームロジックの予算の8ms以内で計算する必要があります。",
+      "ttsText": "30エフピーエスで動かすために、処理を2フレームに分散しています。1フレーム目で画面クリアとゲームロジックの計算、2フレーム目でコンパイルドスプライトの描画を行っています。1フレーム目の最初で画面の上半分を消去し、次に、地面と遠景を描画します。そのあとで、プレイヤーや敵、弾や衝突判定、スリー・ディー座標変換などのゲームロジックを計算します。2フレーム目では、前のフレームで計算した結果に合わせてスプライトを順番に描画していきます。敵の移動やスリー・ディー座標変換は、ゲームロジックの予算の8ミリ秒以内で計算する必要があります。",
+      "measuredDurationSeconds": 36.25
     },
     {
       "id": "C20",
-      "startFrame": 1589,
+      "startFrame": 1829,
       "durationFrames": 727,
       "minimumDurationFrames": 0,
       "targetSeconds": 24.233,
@@ -107,7 +66,7 @@
     },
     {
       "id": "C21",
-      "startFrame": 2316,
+      "startFrame": 2556,
       "durationFrames": 843,
       "minimumDurationFrames": 0,
       "targetSeconds": 28.1,
@@ -121,7 +80,7 @@
     },
     {
       "id": "C22",
-      "startFrame": 3159,
+      "startFrame": 3399,
       "durationFrames": 564,
       "minimumDurationFrames": 0,
       "targetSeconds": 18.8,
@@ -135,7 +94,7 @@
     },
     {
       "id": "C23",
-      "startFrame": 3723,
+      "startFrame": 3963,
       "durationFrames": 481,
       "minimumDurationFrames": 0,
       "targetSeconds": 16.033,
