@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-21T01:25:53+09:00",
+  "updated_at": "2026-08-21T03:34:39+09:00",
   "reviewed_source_ts": [
+    "1779745504.293499",
     "1787236022.589919",
     "1787228905.427089",
     "1779860566.721249",
@@ -707,6 +708,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-21T03:34:39+09:00",
+      "selected": {
+        "id": "sr-1779745504-a81eb5cfd5",
+        "source_ts": "1779745504.293499",
+        "title": "EvolveMem — LLMエージェントの長期メモリ検索設定を自己進化させる",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、memory・agent・operation・evaluation の4優先タグを持つため1件だけ選んだ。検索失敗ログから retrieval strategy を変更し、悪化時に rollback する知見が、現在の recall_log・auto_recall・Phase 4a cleanup に既存 control と異なる判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、検索設定を行動空間にし、失敗ログを診断して semantic search・人名抽出・多段分解・低確信時の再確認を選び、悪化時 rollback と停滞時探索を行う構成、LoCoMo F1 0.432→0.543、MemBench 67.9%、LoCoMo→MemBench 継続進化 79.2%、検索遅延15msという結果まで示すため relevance・actionability は3とした。一方、参照した shared-reads 本文は論文要約であり、ベンチの task 分布、診断LLMの誤変更率、rollback 発火率、探索 cost、我々の corpus への外的妥当性を原典で再検証していないため evidence は2。probe-20260731-rlm-one-hop-query-rewrite は曖昧な hit 後の bounded rewrite、probe-20260517-hierarchical-memory-recall-ladder は検索順序、probe-20260613-egostream-episodic-recall-failure-split は recall failure の分類、probe-20260819-d2acci-stage-localization-gate は最初の memory-cycle failure の局在化を既に扱い、memory/recall_log.jsonl には失敗診断の基礎ログもある。差分は retrieval configuration の自動自己変更だが、active_probes 326件と既存 controls がある状態で benchmark・明示 target metric・比較 fixture なしに導入すると、診断LLM呼び出し、探索ノイズ、設定 drift、rollback 運用が先行するため non_redundancy・risk_control は1とした。今後、同じ failure class が反復し、固定 fixture 上で単一 retrieval toggle の before／after と rollback 条件を指定できる時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260731-rlm-one-hop-query-rewrite",
+        "probe-20260517-hierarchical-memory-recall-ladder",
+        "probe-20260613-egostream-episodic-recall-failure-split",
+        "probe-20260819-d2acci-stage-localization-gate"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、EvolveMem の bounded retrieval 改善としての有用性、原典未再検証という証拠限界、既存 recall controls との重複、比較 fixture 不在と自動設定 drift の risk による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-21T01:25:53+09:00",
       "selected": {

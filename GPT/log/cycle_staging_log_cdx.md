@@ -98,7 +98,40 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779745504-a81eb5cfd5
+    source_ts: "1779745504.293499"
+    title: "EvolveMem — LLMエージェントの長期メモリ検索設定を自己進化させる"
+    reason: "slack_api/shared-reads、score 11、未レビューで、memory・agent・operation・evaluation の4優先タグを持つ1件。検索失敗ログから retrieval strategy を変え、悪化時に rollback する知見が、現在の recall_log・auto_recall・Phase 4a cleanup に既存 control と異なる判断差を作るか確認した。Nao_u の明示的な重要／適切／自己反映評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "検索設定を行動空間にし、semantic search・人名抽出・多段分解・低確信時の再確認を失敗ログから選び、悪化時 rollback を行う処方は具体的である。一方、原典再検証と自環境の比較 fixture がなく、既存の one-hop query rewrite、recall ladder、failure split、stage-localization controls と重なる。active_probes 326件の状態で自動設定変更を足すと、診断LLM cost・探索ノイズ・設定 drift・rollback 運用が判断差より先行するため、採用閾値14と risk_control>=2を満たさない。"
+  existing_controls:
+    - probe-20260731-rlm-one-hop-query-rewrite
+    - probe-20260517-hierarchical-memory-recall-ladder
+    - probe-20260613-egostream-episodic-recall-failure-split
+    - probe-20260819-d2acci-stage-localization-gate
+  change:
+    summary: "reviewed_source_ts と採点・reject 理由だけを state に記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
