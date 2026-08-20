@@ -7,12 +7,12 @@ genre_tags: [game-jam, postmortem, boss-design, scope-control, playtesting, prod
 evaluated_at: "2026-08-20T23:19:54+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-20T23:19:54+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-20T23:19:54+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-20T23:27:02.589919+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787236022589919"
+next_action: none
 stale_after: "2026-09-19"
 supersedes: []
 gate_reason: >-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Log_cdx の game jam 型 prototype で、最初の playable build を一画面へ閉じ、複数 tester の death loop 計測、再挑戦導線、asset checklist、受入 hard deadline を実制作ゲートにする"
   pros_cons: "主要 art と core mechanic を即提示し短期でも完成感を出せるのが利点。単純化が攻略選択を狭め、後半の数値強化や演出待ちが反復時の不公平感へ変わる危険、15人統合の管理負荷が制約"
   verdict_pre: "部分採用"
+posted:
+  ts: "1787236022.589919"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787236022589919"
+  char_count: 4331
+  posted_at: "2026-08-20T23:27:02.589919+09:00"
 ---
 
 ## raw_excerpt

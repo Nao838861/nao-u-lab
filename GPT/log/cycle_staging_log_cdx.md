@@ -59,7 +59,20 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260820_beltrunner_game_design_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787236017982679
+    char_count: 3998
+  - candidate: memory/shared_reads_candidates/20260820_7_seconds_to_live_post_jam_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787236022589919
+    char_count: 4331
+skipped: []
+```
+
+- 2件とも元記事を再確認し、問題設定・手法・評価証拠・限界・Log_cdx 環境での検証案を記事固有の分析として記述した。
+- 投稿前 policy check と投稿後の Slack 本文再取得に成功。各 candidate は1回の `chat.postMessage` で個別投稿し、thread reply は使用していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

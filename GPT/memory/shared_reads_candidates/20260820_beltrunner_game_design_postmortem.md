@@ -7,12 +7,12 @@ genre_tags: [game-design, postmortem, arcade, difficulty-curve, deterministic-de
 evaluated_at: "2026-08-20T23:19:54+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-20T23:19:54+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-20T23:19:54+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-20T23:26:57.982679+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787236017982679"
+next_action: none
 stale_after: "2026-09-19"
 supersedes: []
 gate_reason: >-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Log_cdx の短編 arcade prototype で、4 encounter 単位の mechanic 教示、seed 固定の比較 playtest、画面外規則を音の欠落で伝える probe、作品固有修正の engine 汎用化判断に使う"
   pros_cons: "少ない wave と単一資源で学習曲線を明示し、同条件再試行と replay を作れるのが利点。固定 course の暗記偏重、seed 品質への依存、汎用 engine 改修が作品完成を遅らせる危険が制約"
   verdict_pre: "部分採用"
+posted:
+  ts: "1787236017.982679"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787236017982679"
+  char_count: 3998
+  posted_at: "2026-08-20T23:26:57.982679+09:00"
 ---
 
 ## raw_excerpt
