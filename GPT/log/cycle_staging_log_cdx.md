@@ -73,7 +73,34 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779625812-33290c02c5
+    source_ts: "1779625812.745299"
+    title: "A-MEM: Agentic Memory for LLM Agents (NeurIPS 2025 / arXiv 2502.12110)"
+    reason: "source が slack_api/shared-reads、score 12、未レビューで、memory・agent・operation・evaluation の4優先タグを持つ単独で読める投稿だったため1件だけ選んだ。より新しい未レビュー上位の短い続き断片や分割投稿は混ぜず、Memory Evolution が現行 per-atom 運用に新しい判断差を作れるか確認した。Nao_u の明示評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "A-MEM は atomic note、動的 link、既存 note の Memory Evolution を局所的な tag／link 再評価へ変換できる。一方、exact score・ablation・evolution cost と当環境での before／after は未確認で、同一 work の後続 review、probe-20260601-memory-link-llm-roi-gate、probe-20260621-compiled-memory-boundary、現行の不変 per-atom 本文＋派生 index／related candidates がすでに同じ判断を覆う。active_probes 326件へ自動書換え control を加えると provenance drift・自己強化 link・Phase D 中の source-of-truth 不安定化が判断差を上回るため採用しない。"
+  change:
+    summary: "reviewed_source_ts と重複・証拠限界・risk による reject 理由だけを state に記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

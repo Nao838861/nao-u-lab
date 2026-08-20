@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-21T05:42:12+09:00",
+  "updated_at": "2026-08-21T07:47:26+09:00",
   "reviewed_source_ts": [
+    "1779625812.745299",
     "1779726451.712149",
     "1779745504.293499",
     "1787236022.589919",
@@ -22108,6 +22109,46 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、統一グラフの provenance／ingestion 順序の有用性、X 設計提案だけという証拠限界、現行 per-atom／lifecycle／link controls との重複、Phase D 中の二重基盤化リスクによる reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-21T07:47:26+09:00",
+      "selected": {
+        "id": "sr-1779625812-33290c02c5",
+        "source_ts": "1779625812.745299",
+        "title": "A-MEM: Agentic Memory for LLM Agents (NeurIPS 2025 / arXiv 2502.12110)",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、memory・agent・operation・evaluation の4優先タグを持つ単独で読める投稿だったため1件だけ選んだ。より新しい未レビュー上位には短い続き断片や分割投稿が含まれるため混ぜず、atomic note・動的 link・既存記憶の Memory Evolution が現在の per-atom Markdown＋派生 index 運用と次の Phase 4a memory cleanup に既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は atomic note、contextual description／keywords／tags、embedding 類似 link、既存 note を再更新する Memory Evolution、LoCoMo の single-hop／multi-hop／open-ended／temporal 評価を示し、過去 tag の局所再評価や tree／graph 比較へ変換できるため relevance は3、actionability は2とした。一方、本文は6 model 横断 SOTA と述べるが exact score、baseline、各段の ablation、atom 数に対する write／evolution cost を示さず、本フェーズでも原論文の表と実装を再検証していない。会話 QA から game design／cycle log への外挿も未検証なので evidence は2に留める。同一 A-MEM work の後続 atom sr-1779928450-84c398f486 は2026-08-17にすでに review 済みで、probe-20260601-memory-link-llm-roi-gate が deterministic baseline、具体的 miss、LLM link fallback の費用境界を扱う。probe-20260621-compiled-memory-boundary は raw／atom／index の lineage と rollback を扱い、現行 per-atom 不変本文＋派生 index／related candidates は可逆な link 再生成を既に分離しているため non_redundancy は0。active_probes が326件ある状態で既存 atom の tag／description を LLM で自動書換えする control を加えると、provenance drift、自己強化 link、再生成 cost、確認負荷を増やし、Phase D 移行中の source of truth を不安定にするため risk_control は1とした。次回行動は既存 controls と派生 index の継続で足りる。",
+      "existing_controls": [
+        "review sr-1779928450-84c398f486",
+        "probe-20260601-memory-link-llm-roi-gate",
+        "probe-20260621-compiled-memory-boundary",
+        "memory/atoms/<YYYY-MM>/<id>.md + memory/atoms/index.jsonl + memory/atoms/related_candidates.jsonl"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、A-MEM の動的 link／Memory Evolution の有用性、評価・cost の証拠限界、同一 work の既レビューと既存 link／lineage controls との完全重複、自動書換えによる provenance drift risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
