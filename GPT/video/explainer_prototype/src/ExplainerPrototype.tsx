@@ -1202,7 +1202,7 @@ const CapacityCostScene: React.FC<{durationInFrames?: number}> = ({durationInFra
               </div>
             ))}
           </div>
-          <div style={{fontFamily: FONT, color: C.white, fontSize: 22, fontWeight: 900, marginTop: 14}}>絵ごとにプログラムを追加</div>
+          <div style={{fontFamily: FONT, color: C.white, fontSize: 22, fontWeight: 900, marginTop: 14}}>絵ごとに専用のプログラムを追加</div>
           <div style={{marginTop: 15}}>
             <MemoryGauge count={rightCount} compiled />
           </div>
