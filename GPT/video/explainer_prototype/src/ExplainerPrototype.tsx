@@ -508,19 +508,19 @@ const DevelopmentCheckerboardScene: React.FC<{durationInFrames?: number}> = ({du
 const LargeCharacterScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 720}) => {
   const frame = useCurrentFrame();
   const imageEnter = spring({frame, fps: 30, config: {damping: 18}});
-  const cpuOpacity = interpolate(frame, [107, 119], [0, 1], {
+  const cpuOpacity = interpolate(frame, [255, 267], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const clearOpacity = interpolate(frame, [319, 331], [0, 1], {
+  const clearOpacity = interpolate(frame, [502, 514], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const compositeOpacity = interpolate(frame, [520, 532], [0, 1], {
+  const compositeOpacity = interpolate(frame, [730, 742], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const warningOpacity = interpolate(frame, [715, 727], [0, 1], {
+  const warningOpacity = interpolate(frame, [953, 965], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
@@ -594,15 +594,16 @@ const GenericLoopScene: React.FC<{
   narrationSchedule?: boolean;
 }> = ({durationInFrames = 300, narrationSchedule = false}) => {
   const frame = useCurrentFrame();
-  const narrationLoopFrames = (narrationSchedule ? 18 : 9) * 30;
-  const narrationLoopFrame = narrationSchedule
-    ? Math.min(frame, narrationLoopFrames - 1)
-    : frame % narrationLoopFrames;
-  const narrationStepStartFrames = [10.8, 12.56, 14.345, 15.715, 16.695]
+  const narrationStepStartFrames = [18.08, 20.455, 23.15, 24.96, 26.235]
     .map((seconds) => Math.round(seconds * 30));
   const done = narrationSchedule
     ? clamp(
-      Math.floor(interpolate(narrationLoopFrame, [0, narrationLoopFrames - 1], [0, rasterBlocks.length])),
+      Math.floor(interpolate(
+        frame,
+        [narrationStepStartFrames[0], durationInFrames - 15],
+        [0, rasterBlocks.length],
+        {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'},
+      )),
       0,
       rasterBlocks.length,
     )
@@ -727,8 +728,8 @@ const CompiledScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
     (blockIndex, orderIndex) => orderIndex > partialTargetOrderIndex && enemyCoverage[blockIndex] === 2,
   );
   const framesPerBlock = 4;
-  const partialMoveStart = Math.round(6.27 * 30);
-  const fullMoveStart = Math.round(14.055 * 30);
+  const partialMoveStart = Math.round(15.975 * 30);
+  const fullMoveStart = Math.round(20.985 * 30);
   const cursorOrderIndex = frame < partialMoveStart
     ? startOrderIndex
     : frame < fullMoveStart
