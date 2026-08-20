@@ -20,6 +20,7 @@
 |---|---|---|---|
 | C04〜C07 | 2026-08-20 | `narration/development-cuts.json` / `src/ExplainerPrototype.tsx` | `video: rebuild C04-C07 development sequence`。原文は本索引を追加した時点の `指示書.md` にも保存 |
 | C08・C10（C09は欠番） | 2026-08-21 | `narration/drawing-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: correct C08-C10 narration and block highlights`。C10は生成後の文字起こしでも読み上げ内容を確認し、分類ごとの全ブロック強調へ更新 |
+| C14〜C16 | 2026-08-21 | `narration/constraint-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: apply latest C14-C16 constraints`。固定TTSスナップショットと自然な内部ポーズ保持を適用し、C16の128パターン・約90KB・スーパーマリオ40KB比較を音声に同期 |
 | C20〜C23 | 2026-08-20 | `narration/later-cuts.json` / `src/ExplainerPrototype.tsx` | `video: stabilize C20-C23 narration delivery`。原文は本索引を追加した時点の `指示書.md` にも保存 |
 
 ## 復元方法

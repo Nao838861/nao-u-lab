@@ -1407,7 +1407,7 @@ const AlignmentScene: React.FC<{durationInFrames?: number}> = ({durationInFrames
   const movementLabels = ['移動なし', '右へ1', '右へ2', '右へ3', '下へ1', '右1・下1', '右2・下1', '右3・下1'];
   return (
     <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '38px 48px 0', boxSizing: 'border-box'}}>
-      <Title size={42}>解決策：位置をずらした8本を先に作る</Title>
+      <Title size={34}>解決策：1ドットづつ移動したパターンをあらかじめ用意する</Title>
       <div style={{fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900, marginTop: 5}}>
         横4パターン × 縦2パターン ＝ 8本の専用コード
       </div>
@@ -1466,6 +1466,18 @@ const SizeBankScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
   const scaleProgress = scaleCycle <= 37 ? scaleCycle / 37 : (75 - scaleCycle) / 38;
   const chosen = 15 - Math.round(scaleProgress * 15);
   const progress = interpolate(frame, [0, 300], [0, 1], {extrapolateRight: 'clamp'});
+  const patternCountOpacity = interpolate(
+    frame,
+    [Math.round(durationInFrames * 0.54), Math.round(durationInFrames * 0.54) + 12],
+    [0, 1],
+    {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'},
+  );
+  const memoryOpacity = interpolate(
+    frame,
+    [Math.round(durationInFrames * 0.79), Math.round(durationInFrames * 0.79) + 12],
+    [0, 1],
+    {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'},
+  );
   return (
     <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '38px 48px 0', boxSizing: 'border-box'}}>
       <Title size={42}>拡大するのではなく、16枚から選ぶ</Title>
@@ -1509,9 +1521,13 @@ const SizeBankScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
               style={{width: bossFaceDimensions[chosen][0] * 3.4, height: bossFaceDimensions[chosen][1] * 3.4, imageRendering: 'pixelated'}}
             />
           </div>
-          <div style={{width: '100%', padding: '17px 10px', boxSizing: 'border-box', borderTop: `2px solid ${C.magenta}`, borderBottom: `2px solid ${C.magenta}`, textAlign: 'center'}}>
+          <div style={{width: '100%', padding: '13px 8px', boxSizing: 'border-box', borderTop: `2px solid ${C.magenta}`, borderBottom: `2px solid ${C.magenta}`, textAlign: 'center'}}>
             <div style={{fontFamily: FONT, color: C.white, fontSize: 20, fontWeight: 900}}>16サイズ × 8位置</div>
-            <div style={{fontFamily: FONT, color: C.magenta, fontSize: 34, fontWeight: 900, marginTop: 6}}>ボス顔だけで 約90KB</div>
+            <div style={{fontFamily: FONT, color: C.cyan, fontSize: 24, fontWeight: 900, marginTop: 4, opacity: patternCountOpacity}}>＝ 128パターン</div>
+            <div style={{opacity: memoryOpacity}}>
+              <div style={{fontFamily: FONT, color: C.magenta, fontSize: 32, fontWeight: 900, marginTop: 4}}>ボス顔だけで 約90KB</div>
+              <div style={{fontFamily: FONT, color: C.dim, fontSize: 15, fontWeight: 700, marginTop: 4}}>（参考：スーパーマリオは全部で40KB）</div>
+            </div>
           </div>
         </div>
       </div>
