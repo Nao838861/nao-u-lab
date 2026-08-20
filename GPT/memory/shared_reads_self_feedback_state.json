@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-20T16:48:41+09:00",
+  "updated_at": "2026-08-20T19:00:23+09:00",
   "reviewed_source_ts": [
+    "1787211823.474519",
     "1787203828.282949",
     "1787195314.362269",
     "1778382356.679499",
@@ -702,6 +703,45 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-20T19:00:23+09:00",
+      "selected": {
+        "id": "sr-1787211823-d994d9c8e6",
+        "source_ts": "1787211823.474519",
+        "title": "Designing for Disengagement — safe exit と再開負担を player experience として測る",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューという条件を満たす最新 atom で、memory・harness・game-design・operation・evaluation を含む8タグを持つため1件だけ選んだ。終了を失敗扱いせず、safe_exit 距離・終了時損失・再開負担へ分解する知見が、Codex の phase closure と game prototype 評価に既存 control と異なる判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はない。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、disengagement を engagement cycle の一段階と捉え、終了意思から safe_exit までの距離、保存不能区間、終了時損失、再開負担、外部タイマーと自然な終点の差を具体的な game／headless 指標へ変換しているため relevance・actionability は3とした。一方、原典は文献レビューから研究課題を導く position paper で、pause／save／自然な終点が子どもの agency、家庭内摩擦、well-being、翌回再訪へ与える因果効果を比較実験していない。65%の不支持も子どもに限定されず、ジャンル差・家庭差・retentionとの両立も未検証なので evidence=2とした。Codex の cycle 終了・再開への自己適用は、probe-20260528-prima-run-boundary が last trusted artifact・未解決状態・次 phase を、probe-20260611-memory-lifecycle-phase-boundary が handoff artifact と隣接 phase 境界を、probe-20260709-public-commitment-action-audit が phase closure の完了証拠を既に確認するため non_redundancy=1。本 atom 固有の safe_exit 指標は game prototype では有用だが、現在の staging は Phase 4a memory cleanup へ進み、比較可能な終了設計あり／なしの playable artifact、同一 seed trace、人手評価がない。active_probes は326件あり、対象 artifact なしに一般 probe を追加すると cycle handoff の既存確認を重ね、子ども向け position paper を全ジャンルへ過剰一般化する確認負荷が判断差を上回るため risk_control=1 とした。次に具体的な session 制 prototype で既存 controls が終了時損失または再開負担を取り逃がした実例が出た時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260528-prima-run-boundary",
+        "probe-20260611-memory-lifecycle-phase-boundary",
+        "probe-20260709-public-commitment-action-audit"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、safe exit／再開負担の有用性、position paper の証拠限界、既存 closure／handoff controls との重複、比較可能な playable artifact 不在による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-20T16:48:41+09:00",
       "selected": {

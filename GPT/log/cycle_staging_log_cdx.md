@@ -70,7 +70,35 @@ reviewed_at: "2026-08-20T18:56:55+09:00"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787211823-d994d9c8e6
+    source_ts: "1787211823.474519"
+    title: "Designing for Disengagement — safe exit と再開負担を player experience として測る"
+    reason: "score 12 の最新未レビュー atom で、memory・harness・game-design・operation・evaluation を含む8タグを持つ。終了を失敗扱いせず safe_exit 距離・終了時損失・再開負担へ分ける知見が、Codex の phase closure と game prototype 評価に既存 control と異なる判断差を作るか確認するため1件だけ選んだ。Nao_u の明示評価はない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回る。原典は disengagement を測定可能な設計対象へ変える position paper で、safe_exit 距離・保存不能区間・終了時損失・再開負担への変換は具体的だが、子ども・家庭・ジャンル・retention を跨ぐ因果比較はない。cycle の自己適用は prima-run-boundary、memory-lifecycle-phase-boundary、public-commitment-action-audit が last trusted artifact・未解決状態・次 phase・handoff artifact・完了証拠を既に確認する。現在は比較可能な session 制 playable artifact もないため、新規 probe／metric／lease／directive は追加しない。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
