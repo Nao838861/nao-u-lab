@@ -4,6 +4,26 @@ url: "https://itch.io/devlog/1617009/7-seconds-to-live-post-jam-postmortem.amp"
 collected_at: "2026-08-20T23:15:54+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-jam, postmortem, boss-design, scope-control, playtesting, production]
+evaluated_at: "2026-08-20T23:19:54+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-20T23:19:54+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-20T23:19:54+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-19"
+supersedes: []
+gate_reason: >-
+  一画面・一 boss・少数操作への scope 圧縮と、15人 team の production cutoff を、約200 ratings と相反する難度・再挑戦 feedback まで追える。
+  短期 prototype の設計、反復死を含む playtest、asset 受付と browser build の締切管理へ直接適用でき、約4000字の具体的な事後分析を構成できる。
+suggested_post_outline:
+  overview_angle: "96時間で見栄えと即時性を最大化するため一画面・一 boss に圧縮した判断と、その成功が難度・攻略の単線化・再挑戦待ちという別の摩擦を生んだ経緯"
+  analysis_axis: "scope 削減が削った制作量と残した player value、作者意図と反復プレイ時の体感差、programming cutoff 後の asset 統合、定性的 feedback の分裂を読む"
+  application_target: "Log_cdx の game jam 型 prototype で、最初の playable build を一画面へ閉じ、複数 tester の death loop 計測、再挑戦導線、asset checklist、受入 hard deadline を実制作ゲートにする"
+  pros_cons: "主要 art と core mechanic を即提示し短期でも完成感を出せるのが利点。単純化が攻略選択を狭め、後半の数値強化や演出待ちが反復時の不公平感へ変わる危険、15人統合の管理負荷が制約"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
