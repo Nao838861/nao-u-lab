@@ -870,14 +870,17 @@ const CompiledScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
 
 const RaceScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 390}) => {
   const frame = useCurrentFrame();
-  const started = frame >= 45;
+  const startFrame = Math.round(durationInFrames * 0.25);
+  const compiledEndFrame = Math.round(durationInFrames * 0.46);
+  const genericEndFrame = Math.round(durationInFrames * 0.86);
+  const started = frame >= startFrame;
   const genericWork = clamp(
-    interpolate(frame, [45, 350], [0, rasterBlocks.length * genericLoopCode.length]),
+    interpolate(frame, [startFrame, genericEndFrame], [0, rasterBlocks.length * genericLoopCode.length]),
     0,
     rasterBlocks.length * genericLoopCode.length,
   );
   const generic = clamp(Math.floor(genericWork / genericLoopCode.length), 0, rasterBlocks.length);
-  const compiled = clamp(Math.floor(interpolate(frame, [45, 180], [0, compiledProgram.length])), 0, compiledProgram.length);
+  const compiled = clamp(Math.floor(interpolate(frame, [startFrame, compiledEndFrame], [0, compiledProgram.length])), 0, compiledProgram.length);
   const genericCursor = started && generic < rasterBlocks.length ? rasterBlocks[generic] : -1;
   const compiledCursor = started && compiled < compiledProgram.length ? compiledProgram[compiled].blockIndex : -1;
   const genericLine = started && generic < rasterBlocks.length ? Math.floor(genericWork) % genericLoopCode.length : -1;
@@ -1153,8 +1156,8 @@ const PerformanceDemoScene: React.FC<{durationInFrames?: number}> = ({durationIn
 
 const CapacityCostScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 360}) => {
   const frame = useCurrentFrame();
-  const leftRevealFrames = [24, 90, 156];
-  const rightRevealFrames = [252, 312, 372];
+  const leftRevealFrames = [0.28, 0.4, 0.52].map((fraction) => Math.round(durationInFrames * fraction));
+  const rightRevealFrames = [0.64, 0.75, 0.86].map((fraction) => Math.round(durationInFrames * fraction));
   const leftCount = leftRevealFrames.filter((revealFrame) => frame >= revealFrame).length;
   const rightCount = rightRevealFrames.filter((revealFrame) => frame >= revealFrame).length;
   return (
