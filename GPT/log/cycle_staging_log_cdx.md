@@ -4,11 +4,11 @@
 
 ## Phase 1: 情報収集
 
-- pending 確認: `slack_directives.jsonl` 0件 / `slack_broadcasts.jsonl` 0件
-- `memory/shared_reads_candidates/20260820_beltrunner_game_design_postmortem.md` — Asteroids 型の入口から race を開示し、4 wave 単位の mechanic 教示、seeded course、音響 feedback、engine 汎用化まで追う設計ポストモーテム。
-- `memory/shared_reads_candidates/20260820_7_seconds_to_live_post_jam_postmortem.md` — 96時間制作で一画面・一 boss に scope を絞った過程と、難易度・再挑戦待ち時間への相反する player feedback、次回の production 改善案を記録。
-- duplicate preflight: 2件とも `continue`。各 candidate 書込み直前に3 sidecarを再生成済み。
-- Slack 投稿、品質判定、記憶階層変更は未実施。
+- inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` ともに pending 0 件。
+- 直近入力確認: `memory/raw/web_research/results.jsonl` の最新取得分、`memory/atoms.jsonl` の末尾、既存 candidate / posted-source / canonical-title / open-group index を確認。
+- `memory/shared_reads_candidates/20260821_teaching_games_with_games_ai.md` — GDC 2026 で、ゲームと AI の相互関係を授業内 activity / exercise / technique として扱う教育者セッション。
+- `memory/shared_reads_candidates/20260821_ai_games_production_native_gameplay.md` — GDC 2026 で、AI 活用を 3D 制作支援と AI-native gameplay の二経路に分けて紹介するセッション。
+- duplicate preflight: 上記 2 件はいずれも 3 sidecar 再生成後に `continue`。Slack 投稿・品質判定は未実施。
 
 ## Phase 2: 分析
 
