@@ -20,7 +20,7 @@
 |---|---|---|---|
 | C04〜C07 | 2026-08-20 | `narration/development-cuts.json` / `src/ExplainerPrototype.tsx` | `video: rebuild C04-C07 development sequence`。原文は本索引を追加した時点の `指示書.md` にも保存 |
 | C08・C10（C09は欠番） | 2026-08-21 | `narration/drawing-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: correct C08-C10 narration and block highlights`。C10は生成後の文字起こしでも読み上げ内容を確認し、分類ごとの全ブロック強調へ更新 |
-| C11〜C13 | 2026-08-21 | `narration/benefit-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: apply latest C11-C13 instructions`。固定TTSスナップショットと自然な内部ポーズ保持を適用し、C13の「一つ目の欠点」を含む3文すべてを再生成・検証 |
+| C11〜C13 | 2026-08-21 | `narration/benefit-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: rebuild C13 with neutral narration prompt`。C13冒頭の語句を個別に強調する指示を撤去し、通常の説明文として滑らかに読む簡潔な指示で再生成 |
 | C14〜C16 | 2026-08-21 | `narration/constraint-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: apply latest C14-C16 constraints`。固定TTSスナップショットと自然な内部ポーズ保持を適用し、C16の128パターン・約90KB・スーパーマリオ40KB比較を音声に同期 |
 | C17〜C19 | 2026-08-21 | `narration/later-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: apply latest C17-C19 instructions`。C17を全編ボス戦映像へ変更し、C19の2フレーム枠・各処理・ゲーム画面をナレーションに同期して段階表示 |
 | C20〜C23 | 2026-08-21 | `narration/later-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: apply latest C20-C23 instructions`。固定TTSスナップショットと自然な内部ポーズ保持を適用し、C21の「しかし」とC22の冒頭・最終文を含む全文を再生成・検証 |
