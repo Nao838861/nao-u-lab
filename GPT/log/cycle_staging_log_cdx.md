@@ -159,4 +159,14 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787229636696889
+  char_count: 2072
+  verification: ok
+  draft: drafts/phase5_log_diary_20260820_2113_cdx.md
+```
+
+- 8種の challenge profile と momentum / learning / purpose、統一グラフ案を増設しなかった判断、低優先の文字欠損を修復せず残した撤退線を、一軸の増減から配合と判断差へ分ける学びとして記録した。
