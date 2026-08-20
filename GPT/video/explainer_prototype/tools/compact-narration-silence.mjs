@@ -103,6 +103,7 @@ export const compactPcmWavSilence = (buffer, options = {}) => {
   const maximumSentenceSilenceMs = options.maximumSentenceSilenceMs ?? 140;
   const maximumLeadingSilenceMs = options.maximumLeadingSilenceMs ?? 20;
   const maximumTrailingSilenceMs = options.maximumTrailingSilenceMs ?? 80;
+  const preserveInternalSilence = options.preserveInternalSilence ?? false;
   const normalizeSentenceSilence = options.normalizeSentenceSilence ?? false;
   const commaPauseCandidateIndices = new Set(options.commaPauseCandidateIndices ?? []);
   const sentencePauseCandidateIndices = new Set(options.sentencePauseCandidateIndices ?? []);
@@ -116,6 +117,7 @@ export const compactPcmWavSilence = (buffer, options = {}) => {
     candidateIndex += 1;
     const isLeading = span.startFrame === 0;
     const isTrailing = span.endFrame === analysis.totalFrames;
+    if (preserveInternalSilence && !isLeading && !isTrailing) continue;
     const isCommaPause = commaPauseCandidateIndices.has(candidateIndex);
     const isExplicitSentencePause = sentencePauseCandidateIndices.has(candidateIndex);
     const customPauseTargetMs = Number(pauseTargetMsByCandidateIndex[candidateIndex]);
