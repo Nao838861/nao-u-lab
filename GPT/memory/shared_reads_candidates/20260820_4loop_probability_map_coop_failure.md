@@ -4,6 +4,27 @@ url: "https://blog.playstation.com/2026/02/12/inside-the-gameplay-systems-of-4lo
 collected_at: "2026-08-20T10:01:15+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, roguelike, co-op, emergent-gameplay, failure-design]
+evaluated_at: "2026-08-20T10:05:11+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-20T10:05:11+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-20T10:05:11+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-19"
+supersedes: []
+gate_reason: >-
+  route 投票、少なくとも一人の脱出、死亡後の持続負傷、Homebase での再計画を一つの循環として抽出でき、
+  procedural variation も system 間相互作用まで分解されているため、約4000字の概要を構成できる。
+  協力 prototype で全滅だけを run 終了にし、個人失敗を次の共同判断へ残す failure 設計として具体的に試せる。
+suggested_post_outline:
+  overview_angle: "協力 roguelike の失敗を即終了ではなく、誰か一人の脱出と持続負傷を介して次の route 判断へ接続する設計"
+  analysis_axis: "Probability Map の先読みと投票、mission 内の計画崩壊、一人脱出条件、broken bone、Homebase、相互作用型 variation の循環"
+  application_target: "Log_cdx の小規模 co-op prototype で、全員成功・全員失敗の二値判定を、一人生還なら継続し脱落者の制約を次 node に持ち越す run loop へ置き換える probe"
+  pros_cons: "個人の犠牲を team の継続と次の意思決定へ変換し、乱数を複数 system の組合せとして設計できる。一方、負傷の累積が敗勢固定や置き去り役の最適化を生む危険があり、実 playtest の定量根拠は記事から得られない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

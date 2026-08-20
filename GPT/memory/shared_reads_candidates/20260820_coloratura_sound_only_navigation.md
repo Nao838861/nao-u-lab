@@ -4,6 +4,27 @@ url: "https://blog.playstation.com/2026/07/13/coloratura-designing-a-world-where
 collected_at: "2026-08-20T10:00:50+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, accessibility, audio-design, navigation, narrative-design]
+evaluated_at: "2026-08-20T10:05:11+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-20T10:05:11+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-20T10:05:11+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-19"
+supersedes: []
+gate_reason: >-
+  問題設定、jam prototype の着想、定位音による radar・memory・objective guidance、
+  collision と後方音の反復、当事者 playtest まで具体的で、約4000字の概要を構成できる。
+  視覚 UI を外した探索 probe で、情報の役割を音・空間・操作へ再配分する設計として直接検証できる。
+suggested_post_outline:
+  overview_angle: "accessibility を後付け表示ではなく、音だけで成立する三次元探索の core navigation として設計した事例"
+  analysis_axis: "radar・発見物 memory・objective bell の役割分担、collision geometry、後方音、当事者 playtest の反復"
+  application_target: "Log_cdx の3D探索 prototype で視覚 marker を一度外し、定位音・既訪問物の再提示・詰まりにくい空間だけで目的地到達率と迷走箇所を測る probe"
+  pros_cons: "情報役割と実装箇所の対応が明快で、視覚の有無を越えた同一 play を狙える。一方、立体音響環境への依存、音の過密、聴覚・認知特性の個人差を別途検証する必要がある"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
