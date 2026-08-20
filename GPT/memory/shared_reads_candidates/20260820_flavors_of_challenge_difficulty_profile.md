@@ -4,6 +4,26 @@ url: "https://media.gdcvault.com/gdc2026/Slides/Moody_Brett_FlavorsOfChallenge.p
 collected_at: "2026-08-20T21:16:30+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, difficulty, challenge-design, player-engagement, gdc-2026]
+evaluated_at: "2026-08-20T21:21:58+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-20T21:21:58+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-20T21:21:58+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-19"
+supersedes: []
+gate_reason: |-
+  公式スライドから8種の challenge の定義、0-10 profile による3作品の比較、離脱を抑える momentum・learning・purpose の設計策まで抽出できている。
+  難度を一軸の数値ではなく負荷の配合として診断し、ボス・ステージ・retry loop の具体的な評価表へ落とせるため、CoopEval 水準の概要と独立した適用分析を構成できる。
+suggested_post_outline:
+  overview_angle: "難易度を8種の challenge profile として分解し、配合と提示方法が継続意欲をどう左右するかを3作品の比較で説明する"
+  analysis_axis: "分類の有用性と主観的0-10採点の限界を分け、難度量ではなく負荷の種類・retry cost・成長実感・意味づけの関係を検討する"
+  application_target: "Log_cdx のボス・ステージ評価で、認知、実行、乱数、ゲーム内外資源、表現負荷、持久、対人の各要求と retry friction を別欄で記録する"
+  pros_cons: "設計会話と比較評価を具体化できる一方、数値は測定値ではなく診断用の仮説であり、playtest結果と混同すると精密さを装う危険がある"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
