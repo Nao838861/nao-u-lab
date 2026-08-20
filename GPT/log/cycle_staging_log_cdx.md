@@ -57,7 +57,20 @@ evaluation_summary:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260821_meld_distributed_agentic_memories.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787265764020219"
+    char_count: 4463
+skipped: []
+review:
+  duplicate_preflight: continue
+  policy_validator: pass
+  required_sections: pass
+  banned_phrases: 0
+  source_checked: "arXiv full text including protocol, evaluation, ablations, limitations, and appendices"
+  final_decision: posted
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

@@ -7,12 +7,12 @@ genre_tags: [game-production, multi-agent, memory, knowledge-graph, conflict-pre
 evaluated_at: "2026-08-21T07:35:39+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-21T07:35:39+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-21T07:35:39+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-21T07:42:52+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787265764020219"
+next_action: none
 stale_after: "2026-09-20"
 supersedes: []
 gate_reason: >-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "ゲーム制作の設計仕様・実装記録・playtest 観測に build／level／seed scope を付け、同義統合と仕様変更・観測差の矛盾保持を分離する小規模な memory merge probe"
   pros_cons: "利点は由来と矛盾を保ったまま分散記憶を再利用できること。欠点は NLI/embedding 誤判定、scope 設計と人手裁定の運用コスト、QA ベンチから実制作への外挿が未検証なこと"
   verdict_pre: "部分採用。まず限定された game-production claim で分類ログと誤統合率を測り、全面的な federation 化は後段に置く"
+posted:
+  ts: "1787265764.020219"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787265764020219"
+  char_count: 4463
+  posted_at: "2026-08-21T07:42:52+09:00"
 ---
 
 ## raw_excerpt
