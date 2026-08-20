@@ -50,7 +50,17 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260820_beast_of_reincarnation_layered_combat_companion.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787195314362269
+    char_count: 3776
+skipped: []
+```
+
+- 最終判定: 投稿。発売前 hands-on で定量比較・開発者意図・長期反復評価がない限界を明示しつつ、parry を相棒技資源へ変換する bridge action と、相棒・探索能力・食料を複数 loop の接合点にする設計を記事固有の例から分析した。
+- 投稿前レビュー: 必須6項目の順序、`■ 概要` 開始、末尾 `■ URL`、禁止表現なし、duplicate preflight `continue`、文字数 3776 を確認。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

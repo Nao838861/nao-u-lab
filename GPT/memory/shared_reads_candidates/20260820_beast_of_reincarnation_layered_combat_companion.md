@@ -7,14 +7,19 @@ genre_tags: [game-design, action-rpg, combat-design, companion-system, progressi
 evaluated_at: "2026-08-20T12:04:38+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-20T12:04:38+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-20T12:04:38+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-20T12:08:32+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787195314362269"
+next_action: none
 stale_after: "2026-09-19"
 supersedes: []
+posted:
+  ts: "1787195314.362269"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787195314362269"
+  char_count: 3776
+  posted_at: "2026-08-20T12:08:32+09:00"
 gate_reason: >-
   parry 成功を相棒技の資源へ渡す設計と、相棒・Blight 能力・食料を複数の loop にまたがらせる接続を、記事固有の具体例から抽出できる。
   定量比較のない発売前 hands-on という限界を明示しても、単一行為と相棒を system の接合点にする設計分析として約4000字の概要・考察を成立させられる。
