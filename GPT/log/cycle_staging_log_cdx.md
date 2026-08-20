@@ -99,7 +99,56 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index を validate_memory_index.py で照合し、broken / missing entry 0 件を確認。UTF-8 明示読みで代表語（記憶・ゲーム設計・敵パターン・評価軸）も取得できた。"
+  - "atoms 2918 件の三重ミラーを監査し、per-file / index / atoms.jsonl の欠落・parse error・content conflict は 0 件。duplicate cluster 45 群は canonical overlay 45 群と一致し、表示上の未解決重複は 0 件だった。"
+  - "shared-reads lifecycle 1351 件を dry-run 監査し、posted 654 / ready_to_post 9 / postponed 199 / failed 487 / needs_review 2、正規未評価 0、malformed 0 を確認した。"
+  - "terminal title canonical index 100 群、open duplicate 31 群（mixed 28 / all_open 3）を再確認。stale triage と group-action queue は live deferred lease を反映して 0 行、handoff の新規投入も 0 件だった。"
+  - "slack_directives / slack_broadcasts は pending 0 件で、handled への更新対象なし。"
+  - "memory/raw の 30 日超無更新ファイルを抽出し、242 件（web_research 217 / headless_eval 16 / slack_api 6 / その他 3）を archive 候補として確認。raw provenance と evidence pointer を保つため、この phase では移動 0 件。"
+issues:
+  - id: ISS-SOURCE-MOJIBAKE-001
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』部分に U+FFFD が2文字残り、title / trigger / excerpt の完全一致検索を弱めている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/raw/slack_archive/shared-reads.jsonl source_ts=1776127289.990919"
+    source_file_status: "UTF-8 明示読みでも per-file atom、atoms.jsonl、raw Slack source のすべてに同じ U+FFFD を確認。source 自体の局所破損。MEMORY.md の代表語は正常。"
+    display_or_tooling_status: "none（PowerShell / staging 表示だけの mojibake ではない）"
+    why_blocks_game_memory: "memory / agent 構造を探す際、正しい『AIエージェント』語による exact match と title recall をこの1件だけ取りこぼし得る。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 28
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_handoff_inbox_pending_count: 0
+  group_handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_note: "overdue 4件は JAMEL と collision morphology の all-open 2群。既存 deferred group lease の retry_after=2026-08-20T13:19:04+09:00 前で membership fingerprint も一致するため、当 cycle では再投入しない。"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
