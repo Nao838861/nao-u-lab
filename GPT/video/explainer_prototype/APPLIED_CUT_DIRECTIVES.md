@@ -24,7 +24,7 @@
 | C11〜C13 | 2026-08-21 | `narration/benefit-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: clarify C13 dedicated program label`。C13を簡潔な音声指示で再生成したうえで、画面内の説明を「絵ごとに専用のプログラムを追加」へ更新 |
 | C14〜C16 | 2026-08-21 | `narration/constraint-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: rebuild C14-C16 narration naturally`。個別語句の明瞭発音指定を廃止し、自然な説明調で3カットを再生成。C15は最新原稿へ更新し、既存の0.3秒移動ループとC16の1秒点灯を維持 |
 | C17〜C19 | 2026-08-21 | `narration/later-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: refine C17-C19 narration and timeline`。個別語句の明瞭発音指定を廃止して3カットを再生成。C17を最新原稿へ更新し、C19は上半分の黒消去後も下半分に前フレームのグレー表示を残し、緑枠の明暗差を強化 |
-| C20〜C23 | 2026-08-21 | `narration/later-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: apply latest C20-C23 instructions`。固定TTSスナップショットと自然な内部ポーズ保持を適用し、C21の「しかし」とC22の冒頭・最終文を含む全文を再生成・検証 |
+| C20〜C23 | 2026-08-21 | `narration/later-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: rebuild C20-C23 workflow and bit precision`。個別語句の明瞭発音指定を廃止して4カットを再生成。C20を1フレーム目の処理枠＋実機映像へ変更し、新C23で8bit・16bitの範囲と背景X座標だけ16bitを使う構成を追加 |
 
 ## 復元方法
 

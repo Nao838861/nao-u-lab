@@ -1284,14 +1284,43 @@ const PositionLimitScene: React.FC<{durationInFrames?: number}> = ({durationInFr
 const GameLogicScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 360}) => {
   const frame = useCurrentFrame();
   return (
-    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: '#000', display: 'grid', placeItems: 'center'}}>
-      <OffthreadVideo
-        src={staticFile('game_CSCD.mp4')}
-        startFrom={17 * 30}
-        endAt={17 * 30 + durationInFrames}
-        muted
-        style={{width: 768, height: 720, objectFit: 'fill', imageRendering: 'pixelated'}}
-      />
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '28px 30px', boxSizing: 'border-box'}}>
+      <div style={{display: 'flex', gap: 28, height: '100%', alignItems: 'center'}}>
+        <div style={{width: 330, flex: '0 0 auto'}}>
+          <div style={{fontFamily: FONT, color: C.white, fontSize: 22, lineHeight: 1.2, fontWeight: 900, textAlign: 'center', marginBottom: 10}}>
+            1フレーム目：<br />画面クリアと計算
+          </div>
+          <div style={{height: 548, border: '2px solid #47434e', padding: 8, boxSizing: 'border-box', background: C.panel, display: 'flex', flexDirection: 'column'}}>
+            <div style={{height: 58, padding: '8px 11px', boxSizing: 'border-box', background: `${C.magenta}20`, borderLeft: `8px solid ${C.magenta}`}}>
+              <div style={{fontFamily: FONT, color: C.white, fontSize: 16, fontWeight: 900}}>仮想フレームバッファ消去</div>
+              <div style={{fontFamily: FONT, color: C.magenta, fontSize: 13, fontWeight: 900}}>描画　約1.7ms</div>
+            </div>
+            <div style={{height: 82, marginTop: 6, padding: '8px 11px', boxSizing: 'border-box', background: `${C.magenta}20`, borderLeft: `8px solid ${C.magenta}`}}>
+              <div style={{fontFamily: FONT, color: C.white, fontSize: 16, fontWeight: 900}}>地面・遠景の描画</div>
+              <div style={{fontFamily: FONT, color: C.magenta, fontSize: 13, fontWeight: 900}}>描画　約2.6ms</div>
+            </div>
+            <div style={{flex: 1, marginTop: 6, padding: '12px 11px', boxSizing: 'border-box', background: '#62df8322', borderLeft: '8px solid #62df83', boxShadow: '0 0 22px #62df8355'}}>
+              <div style={{fontFamily: FONT, color: C.white, fontSize: 18, lineHeight: 1.35, fontWeight: 900}}>プレイヤー・敵・弾・<br />衝突などの計算</div>
+              <div style={{fontFamily: FONT, color: '#62df83', fontSize: 17, fontWeight: 900, marginTop: 8}}>ゲームロジック　最大 約8.0ms</div>
+            </div>
+            <div style={{height: 112, marginTop: 6, padding: '9px 11px', boxSizing: 'border-box', borderTop: `5px solid ${C.cyan}`, background: '#0a0a0d'}}>
+              <div style={{fontFamily: MONO, color: C.cyan, fontSize: 13, fontWeight: 900}}>VBLANK（延長）　4.4ms</div>
+              <div style={{fontFamily: FONT, color: C.white, fontSize: 14, fontWeight: 900, marginTop: 7}}>OAM DMA　約0.3ms</div>
+              <div style={{fontFamily: FONT, color: C.cyan, fontSize: 14, lineHeight: 1.35, fontWeight: 900, marginTop: 5}}>通常VRAM更新　約3.4ms<br />ダブルバッファ</div>
+            </div>
+          </div>
+        </div>
+        <div style={{flex: 1, height: 622, position: 'relative', overflow: 'hidden', background: '#000', border: '2px solid #47434e'}}>
+          <OffthreadVideo
+            src={staticFile('game_CSCD.mp4')}
+            startFrom={17 * 30}
+            endAt={17 * 30 + durationInFrames}
+            muted
+            style={{width: '100%', height: '100%', objectFit: 'fill', imageRendering: 'pixelated'}}
+          />
+          <div style={{position: 'absolute', left: 16, top: 14, padding: '8px 12px', background: '#050507dd', borderLeft: '6px solid #62df83', fontFamily: FONT, color: C.white, fontSize: 20, fontWeight: 900}}>ゲームロジックでゲーム要素を更新</div>
+        </div>
+      </div>
     </AbsoluteFill>
   );
 };
@@ -1713,6 +1742,52 @@ const ProgrammingFlowScene: React.FC<{durationInFrames?: number}> = ({durationIn
   );
 };
 
+const BitPrecisionScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 900}) => {
+  const frame = useCurrentFrame();
+  const videoStart = Math.round(durationInFrames * 0.45);
+  const diagramOpacity = interpolate(frame, [videoStart - 12, videoStart], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const videoOpacity = interpolate(frame, [videoStart, videoStart + 12], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const reveal = (at: number) => interpolate(frame, [at, at + 12], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  return (
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg}}>
+      <AbsoluteFill style={{opacity: diagramOpacity, padding: '38px 46px 0', boxSizing: 'border-box'}}>
+        <Title size={43}>座標計算を16bitから8bitへ</Title>
+        <div style={{fontFamily: FONT, color: C.dim, fontSize: 20, fontWeight: 800, marginTop: 7}}>必要な精度だけを残して、CPU負荷を減らす</div>
+        <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28, marginTop: 34}}>
+          <div style={{opacity: reveal(10), height: 350, padding: '28px 30px', boxSizing: 'border-box', background: C.panel, border: `3px solid ${C.cyan}`}}>
+            <div style={{fontFamily: MONO, color: C.cyan, fontSize: 62, lineHeight: 1, fontWeight: 900}}>8bit</div>
+            <div style={{fontFamily: MONO, color: C.white, fontSize: 36, fontWeight: 900, marginTop: 25}}>0 〜 255</div>
+            <div style={{fontFamily: FONT, color: C.cyan, fontSize: 23, fontWeight: 900, marginTop: 34}}>計算が軽い</div>
+            <div style={{fontFamily: FONT, color: C.white, fontSize: 23, lineHeight: 1.45, fontWeight: 900, marginTop: 16}}>ほとんどの座標計算を<br />8bitへ置き換える</div>
+          </div>
+          <div style={{opacity: reveal(Math.round(durationInFrames * 0.12)), height: 350, padding: '28px 30px', boxSizing: 'border-box', background: C.panel, border: `3px solid ${C.orange}`}}>
+            <div style={{fontFamily: MONO, color: C.orange, fontSize: 62, lineHeight: 1, fontWeight: 900}}>16bit</div>
+            <div style={{fontFamily: MONO, color: C.white, fontSize: 36, fontWeight: 900, marginTop: 25}}>0 〜 65,535</div>
+            <div style={{fontFamily: FONT, color: C.orange, fontSize: 23, fontWeight: 900, marginTop: 34}}>広い範囲・高い精度</div>
+            <div style={{fontFamily: FONT, color: C.white, fontSize: 23, lineHeight: 1.45, fontWeight: 900, marginTop: 16}}>背景オブジェクトの<br />X座標だけに残す</div>
+          </div>
+        </div>
+        <div style={{opacity: reveal(Math.round(durationInFrames * 0.28)), margin: '24px auto 0', width: 820, padding: '16px 20px', borderTop: `2px solid ${C.magenta}`, borderBottom: `2px solid ${C.magenta}`, textAlign: 'center', fontFamily: FONT, color: C.white, fontSize: 26, fontWeight: 900}}>
+          16bitを必要な場所だけに限定 → 8bit CPUで高速化
+        </div>
+      </AbsoluteFill>
+      <Sequence from={videoStart} durationInFrames={Math.max(1, durationInFrames - videoStart)}>
+        <AbsoluteFill style={{opacity: videoOpacity, backgroundColor: '#000', display: 'grid', placeItems: 'center'}}>
+          <OffthreadVideo
+            src={staticFile('game_CSCD.mp4')}
+            startFrom={17 * 30}
+            endAt={17 * 30 + Math.max(1, durationInFrames - videoStart)}
+            muted
+            style={{width: 960, height: 720, objectFit: 'fill', imageRendering: 'pixelated'}}
+          />
+          <div style={{position: 'absolute', left: 38, top: 28, padding: '11px 16px', background: '#050507dd', borderLeft: `6px solid ${C.orange}`, fontFamily: FONT, color: C.white, fontSize: 24, fontWeight: 900}}>背景オブジェクトのX座標だけ16bit</div>
+          <div style={{position: 'absolute', left: 38, bottom: 28, padding: '9px 14px', background: '#050507dd', fontFamily: FONT, color: C.dim, fontSize: 19, fontWeight: 900}}>奥ではプレイヤーの左右移動へ滑らかに追従</div>
+        </AbsoluteFill>
+      </Sequence>
+    </AbsoluteFill>
+  );
+};
+
 const HoudiniTrajectoryScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 450}) => {
   const frame = useCurrentFrame();
   return (
@@ -1980,7 +2055,7 @@ export const WorkflowNarrationPreview: React.FC = () => {
         <Audio src={staticFile('narration/later/C22.wav')} volume={0.95} />
       </Sequence>
       <Sequence from={c23Timing.startFrame - baseFrame} durationInFrames={c23Timing.durationFrames}>
-        <HoudiniTrajectoryScene durationInFrames={c23Timing.durationFrames} />
+        <BitPrecisionScene durationInFrames={c23Timing.durationFrames} />
         <Audio src={staticFile('narration/later/C23.wav')} volume={0.95} />
       </Sequence>
     </AbsoluteFill>
