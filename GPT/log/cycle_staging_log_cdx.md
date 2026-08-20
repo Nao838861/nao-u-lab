@@ -60,7 +60,14 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped: []
+no_pass_candidates: true
+reason: "Phase 2 の pass が空。唯一の候補は一次資料の具体内容と評価証拠が不足しており、Phase 2 で postponed 済みのため投稿対象外"
+slack_action: none
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
