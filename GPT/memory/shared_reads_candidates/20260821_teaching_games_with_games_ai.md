@@ -4,6 +4,20 @@ url: "https://gdcvault.com/play/1035741/Teaching-Games-with-Games-X"
 collected_at: "2026-08-21T01:15:05+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, ai, education, design-exercises]
+evaluated_at: "2026-08-21T01:19:22+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-21T01:19:22+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-21T01:19:22+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-20"
+supersedes: []
+gate_reason: >-
+  セッション紹介から問題設定と歴史的な着眼点は読めるが、6人が提示する activity / exercise / technique の具体内容、
+  授業での評価、結果、限界が未収録である。現状ではゲーム企画へ再現可能な形で適用できず、~4000字の概要を根拠付きで構成できない。
 ---
 
 ## raw_excerpt
