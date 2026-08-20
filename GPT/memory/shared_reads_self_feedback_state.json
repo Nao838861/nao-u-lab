@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-21T03:34:39+09:00",
+  "updated_at": "2026-08-21T05:42:12+09:00",
   "reviewed_source_ts": [
+    "1779726451.712149",
     "1779745504.293499",
     "1787236022.589919",
     "1787228905.427089",
@@ -708,6 +709,45 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-21T05:42:12+09:00",
+      "selected": {
+        "id": "sr-1779726451-f31c682eda",
+        "source_ts": "1779726451.712149",
+        "title": "LLM Agent を『人間プレイヤー難易度プロキシ』として使う — Wordle r=0.624 / Slay the Spire r=0.871",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、harness・game-design・agent・operation・evaluation の5優先タグを持つ自己完結した論文紹介だったため1件だけ選んだ。LLM agent の絶対的な人間再現ではなく固定条件下の相対難度だけを読む知見が、次の game evaluation に既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は Wordle の人間平均推測回数との Pearson r=0.624、Slay the Spire の人間突破率との r=0.871、従来 heuristic solver の非有意という比較を示し、同一 agent・prompt・state representation・build・seed を固定して HP、wave、turn、retry の相対差だけを読む行動へ直接変換できるため relevance・actionability・evidence は3とした。一方、probe-20260616-relative-difficulty-regression-calibration は固定 challenge seeds、model／prompt／state representation／allowed actions／build／補償条件の記録、弱い bot からは相対難度または regression direction だけを報告し human playtest、fun、公平性、絶対難度を代替しないことを既にそのまま要求する。probe-20260601-proxy-signal-variance-gate と probe-20260608-calibration-boundary-human-judgment も proxy の分散と外部人間判断の境界を補完しており、本 atom 固有の新しい次回行動は残らないため non_redundancy は0。active_probes が326件ある状態で同義 probe を増やすと確認負荷と『相対なら人間 proxy として妥当』という過剰一般化 risk だけが増え、現在の後続 Phase 4a に比較可能な game build／seed artifact もないため risk_control は1とした。次の該当 game evaluation では新規 control を足さず、既存 probe-20260616-relative-difficulty-regression-calibration を選んで適用する。",
+      "existing_controls": [
+        "probe-20260616-relative-difficulty-regression-calibration",
+        "probe-20260601-proxy-signal-variance-gate",
+        "probe-20260608-calibration-boundary-human-judgment"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、LLM agent 難易度 proxy の有用性、既存 relative-difficulty／proxy-variance／human-judgment controls との完全重複、比較 game artifact 不在による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-21T03:34:39+09:00",
       "selected": {

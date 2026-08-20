@@ -66,7 +66,39 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779726451-f31c682eda
+    source_ts: "1779726451.712149"
+    title: "LLM Agent を『人間プレイヤー難易度プロキシ』として使う — Wordle r=0.624 / Slay the Spire r=0.871"
+    reason: "score 12・未レビューで、harness / game-design / agent / operation / evaluation の5優先タグを持つ自己完結した論文紹介。固定条件下の相対難度 proxy が、次の game evaluation に既存 control と異なる判断差を作れるか確認した。Nao_u の明示評価記録は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "Wordle r=0.624、Slay the Spire r=0.871、heuristic solver 非有意という比較から、同一 agent / prompt / state representation / build / seed で HP・wave・turn・retry の相対差だけを読む行動には変換できる。しかし probe-20260616-relative-difficulty-regression-calibration が固定条件、相対難度または regression direction のみ、人間 playtest・fun・fairness・絶対難度を代替しないという境界を既に同じ形で要求し、proxy-signal-variance と calibration-boundary-human-judgment も補完する。active_probes 326件の確認負荷を増やす新規性がなく、後続 Phase 4a に比較 game artifact もないため採用しない。次の該当 game evaluation では既存 probe を選んで適用する。"
+  existing_controls:
+    - probe-20260616-relative-difficulty-regression-calibration
+    - probe-20260601-proxy-signal-variance-gate
+    - probe-20260608-calibration-boundary-human-judgment
+  change:
+    summary: "reviewed/source_ts と reject 理由のみを state に記録。active_probes・ledger・directive・恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
