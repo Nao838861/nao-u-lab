@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2303.15400"
 collected_at: "2026-08-20T16:32:49+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, player-experience, disengagement, children, hci]
+evaluated_at: "2026-08-20T16:38:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-20T16:38:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-20T16:38:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-19"
+supersedes: []
+gate_reason: >-
+  独自実験のない position paper だが、退出を engagement cycle の正常な一段階として捉える問題設定、
+  子どもの発達・親子関係・ゲーム内終端を結ぶ研究課題、save/pause や自然な区切り等の具体例を抽出できる。
+  実証不足を限界として明記すれば、ゲーム制作への適用と約4000字の高密度な概要を両立できる。
+suggested_post_outline:
+  overview_angle: engagement 最大化の反対ではなく、満足して自律的に終われる disengagement を player experience の一部として設計する視点
+  analysis_axis: 外部の時間制限と、発達段階・親子合意・ゲーム内の自然な終点を尊重する退出支援の差を、論文の3研究課題に沿って分析する
+  application_target: セッション制ゲームの区切り、save/pause、報酬連鎖、再開地点を監査し、プレイヤーが目標達成感を保ったまま離脱できる終了導線をプロトタイプへ組み込む
+  pros_cons: 自律性と健全な継続関係を設計対象にできる一方、position paper のため提案自体の因果効果や商業指標との両立は未検証
+  verdict_pre: 部分採用。退出可能性を設計・playtest の評価軸に加えるが、対象年齢と作品構造ごとに小さく検証する
 ---
 
 ## raw_excerpt
