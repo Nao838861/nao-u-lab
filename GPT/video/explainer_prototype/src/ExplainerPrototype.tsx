@@ -222,6 +222,7 @@ const PackedEnemy: React.FC<{
   showAll?: boolean;
   showTransparent?: boolean;
   analyze?: boolean;
+  highlightCategory?: number;
 }> = ({
   scale = 7,
   order = rasterBlocks,
@@ -230,6 +231,7 @@ const PackedEnemy: React.FC<{
   showAll = false,
   showTransparent = false,
   analyze = false,
+  highlightCategory = -1,
 }) => {
   const processed = new Set(order.slice(0, processedCount));
   const width = 55;
@@ -257,6 +259,8 @@ const PackedEnemy: React.FC<{
         const bh = Math.min(2, height - y);
         const visible = showAll || processed.has(i) || (showTransparent && category === 0);
         const analysisColor = category === 0 ? '#5a5c65' : category === 1 ? C.orange : C.magenta;
+        const categoryHighlightActive = highlightCategory >= 0;
+        const categoryHighlighted = category === highlightCategory;
         return (
           <div
             key={i}
@@ -275,11 +279,13 @@ const PackedEnemy: React.FC<{
               backgroundRepeat: 'no-repeat',
               imageRendering: 'pixelated',
               border: analyze
-                ? `1px solid ${analysisColor}`
+                ? `${categoryHighlighted ? 3 : 1}px solid ${analysisColor}`
                 : '1px solid rgba(120,118,130,.22)',
+              boxShadow: categoryHighlighted ? `inset 0 0 0 2px ${analysisColor}, 0 0 10px ${analysisColor}` : undefined,
+              opacity: categoryHighlightActive && !categoryHighlighted ? 0.24 : 1,
               outline: cursor === i ? `4px solid ${C.orange}` : undefined,
               outlineOffset: -3,
-              zIndex: cursor === i ? 3 : 1,
+              zIndex: cursor === i ? 4 : categoryHighlighted ? 3 : 1,
             }}
           />
         );
@@ -507,19 +513,19 @@ const DevelopmentCheckerboardScene: React.FC<{durationInFrames?: number}> = ({du
 const LargeCharacterScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 720}) => {
   const frame = useCurrentFrame();
   const imageEnter = spring({frame, fps: 30, config: {damping: 18}});
-  const cpuOpacity = interpolate(frame, [255, 267], [0, 1], {
+  const cpuOpacity = interpolate(frame, [223, 235], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const clearOpacity = interpolate(frame, [502, 514], [0, 1], {
+  const clearOpacity = interpolate(frame, [475, 487], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const compositeOpacity = interpolate(frame, [730, 742], [0, 1], {
+  const compositeOpacity = interpolate(frame, [699, 711], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const warningOpacity = interpolate(frame, [953, 965], [0, 1], {
+  const warningOpacity = interpolate(frame, [969, 981], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
@@ -714,30 +720,18 @@ const GenericLoopScene: React.FC<{
 
 const CompiledScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 360}) => {
   const frame = useCurrentFrame();
-  const blocksPerRow = 14;
-  const startCursor = rasterBlocks[0];
-  const startOrderIndex = rasterBlocks.indexOf(startCursor);
-  const partialTargetOrderIndex = rasterBlocks.findIndex(
-    (blockIndex, orderIndex) =>
-      orderIndex > startOrderIndex
-      && Math.floor(blockIndex / blocksPerRow) === 1
-      && enemyCoverage[blockIndex] === 1,
-  );
-  const fullTargetOrderIndex = rasterBlocks.findIndex(
-    (blockIndex, orderIndex) => orderIndex > partialTargetOrderIndex && enemyCoverage[blockIndex] === 2,
-  );
-  const blockDefinitionStart = Math.round(7.55 * 30);
-  const transparentStart = Math.round(13.56 * 30);
-  const partialMoveStart = Math.round(21.32 * 30);
-  const fullMoveStart = Math.round(32.725 * 30);
-  const summaryStart = Math.round(43.69 * 30);
-  const cursorOrderIndex = frame < partialMoveStart
-    ? startOrderIndex
-    : frame < fullMoveStart
-      ? partialTargetOrderIndex
-      : fullTargetOrderIndex;
-  const cursor = frame < transparentStart ? -1 : rasterBlocks[cursorOrderIndex];
-  const active = cursor < 0 ? -1 : enemyCoverage[cursor] ?? 0;
+  const blockDefinitionStart = Math.round(6.385 * 30);
+  const transparentStart = Math.round(12.325 * 30);
+  const partialMoveStart = Math.round(18.055 * 30);
+  const fullMoveStart = Math.round(23.625 * 30);
+  const summaryStart = Math.round(29.745 * 30);
+  const active = frame < transparentStart
+    ? -1
+    : frame < partialMoveStart
+      ? 0
+      : frame < fullMoveStart
+        ? 1
+        : 2;
   const cards = [
     {title: '全面透明', equation: '(SCREEN AND $FF) OR $00', result: '命令なし', code: ['; 命令なし']},
     {title: '一部だけ描画', equation: '(SCREEN AND $C3) OR $24', result: '必要な合成だけ', code: ['LDA (screen),Y', 'AND #$C3', 'ORA #$24', 'STA (screen),Y']},
@@ -764,7 +758,7 @@ const CompiledScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
       <Title size={37}>目的の絵を最速で描くための専用プログラムを作成</Title>
       <div style={{display: 'flex', gap: 24, alignItems: 'flex-start', marginTop: 27}}>
         <div style={{width: 550, flexShrink: 0}}>
-          <PackedEnemy scale={10} showAll analyze cursor={cursor} />
+          <PackedEnemy scale={10} showAll analyze highlightCategory={active} />
           <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 9}}>
             <div style={{display: 'flex', gap: 14, fontFamily: FONT, fontSize: 16, fontWeight: 800}}>
               <span style={{color: '#8b8d96'}}>■ 透明</span>
