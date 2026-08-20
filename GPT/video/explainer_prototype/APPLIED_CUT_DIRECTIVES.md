@@ -13,6 +13,7 @@
 3. 下の表へ、対象カット、反映日、実装先、コミット件名を追記または更新する。
 4. 後から指示が修正された場合は、古い記録を上書きした履歴も Git に残し、表は最新適用版を指すように更新する。
 5. 音声更新後は実測尺をmanifestへ保存し、画面内の表示タイミングも新音声に合わせて確認する。
+6. TTS指示では個別の語句を「明瞭に発音」と列挙しない。読み間違いが実際に確認された場合だけ、発音用本文で最小限に補正する。
 
 ## 最新適用版の索引
 
@@ -21,7 +22,7 @@
 | C04〜C07 | 2026-08-20 | `narration/development-cuts.json` / `src/ExplainerPrototype.tsx` | `video: rebuild C04-C07 development sequence`。原文は本索引を追加した時点の `指示書.md` にも保存 |
 | C08・C10（C09は欠番） | 2026-08-21 | `narration/drawing-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: correct C08-C10 narration and block highlights`。C10は生成後の文字起こしでも読み上げ内容を確認し、分類ごとの全ブロック強調へ更新 |
 | C11〜C13 | 2026-08-21 | `narration/benefit-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: clarify C13 dedicated program label`。C13を簡潔な音声指示で再生成したうえで、画面内の説明を「絵ごとに専用のプログラムを追加」へ更新 |
-| C14〜C16 | 2026-08-21 | `narration/constraint-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: apply revised C14-C16 motion timing`。8種類のずらしパターンを0.3秒間隔の指定順で往復させ、C16の16枚の点灯を1秒で完了するよう更新 |
+| C14〜C16 | 2026-08-21 | `narration/constraint-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: rebuild C14-C16 narration naturally`。個別語句の明瞭発音指定を廃止し、自然な説明調で3カットを再生成。C15は最新原稿へ更新し、既存の0.3秒移動ループとC16の1秒点灯を維持 |
 | C17〜C19 | 2026-08-21 | `narration/later-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: revise C17-C19 narration and emphasis`。C17・C19の原稿を更新し、C19の黒消去範囲をプレイヤーが残らない位置まで延長、ゲームロジック枠を約1秒周期で明滅 |
 | C20〜C23 | 2026-08-21 | `narration/later-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: apply latest C20-C23 instructions`。固定TTSスナップショットと自然な内部ポーズ保持を適用し、C21の「しかし」とC22の冒頭・最終文を含む全文を再生成・検証 |
 
