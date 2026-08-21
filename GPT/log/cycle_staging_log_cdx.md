@@ -84,7 +84,70 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index を validate_memory_index.py で照合し、per-file atom index との欠落・重複リンクなしを確認した。"
+  - "atoms 2931 件の JSONL / per-file MD / index mirror が一致し、content conflict 0 件、normalized content 重複 40 群は canonical overlay で fold 済みと確認した。"
+  - "shared-reads の title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再生成・監査した。"
+  - "Slack directive 23 行と broadcast 21 行を監査し、pending 0 件のため status 更新なし。"
+  - "30 日超の raw 242 件を監査したが、memory/raw は原文保持の archival 正本であり参照切れを避けるため移動なし。"
+issues:
+  - id: ISS-4A-20260821-01
+    description: "atom sr-1776127289-4d9239b255 の『エージェント』が title / trigger / excerpt で U+FFFD 2文字を含む『エ��ジェント』になっている。memory_health のもう1件の suspect は原文中の literal '???' による false positive で、replacement character はない。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md:3,20,24; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/atoms/2026-04/gr-1777083728-44d444ab7a.md:25"
+    source_file_status: "UTF-8 明示読みで sr-1776127289-4d9239b255 の source 自体に U+FFFD を確認。MEMORY.md は『記憶』『ゲーム設計』『敵パターン』を正常取得し、『評価軸』の完全一致はないが evaluation tag/index は正常、source mojibake なし。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "『エージェント』の完全一致検索で当該 atom が漏れ、記憶アーキテクチャの過去比較へ到達しにくくなる。ただし単一 atom の局所データ欠損であり、新構造の設計課題ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+candidate_lifecycle:
+  counts:
+    posted: 667
+    ready_to_post: 9
+    postponed: 204
+    failed: 491
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_for_reassessment: 4
+  anomaly_note: "current status / candidate_status conflict は 0。報告された18件は historical default と明示 stale_after の差で、terminal lifecycle を巻き戻す anomaly ではない。"
+stale_review_batch: []
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 32
+  mixed_group_count: 28
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  deferred_group_count: 2
+  deferred_until: "2026-09-19T14:08:16+09:00"
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_note: "overdue 4件は JAMEL と collision morphology の all-open 2群に畳まれ、membership fingerprint が一致する既存 deferred group lease の retry_after 前なので再 enqueue しなかった。"
+group_action_handoff: []
+raw_archive_audit:
+  older_than_30_days_count: 242
+  action: none
+  reason: "memory/raw は原文保持先であり、archive_last_run は 2026-08-21T17:51:13。単なる mtime を根拠に二重 archive しない。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
