@@ -4,6 +4,26 @@ url: "https://www.metanetsoftware.com/2026/to-infinity-times-two-and-beyond"
 collected_at: "2026-08-21T09:31:14+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, platformer, multiplayer, prototyping, postmortem, scope]
+evaluated_at: "2026-08-21T09:35:10+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-21T09:35:10+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-21T09:35:10+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-20"
+supersedes: []
+gate_reason: >-
+  N++ の完成済み single-player 軸を延長せず、community tournament で観測した同時攻略・妨害・観戦反応を multiplayer 前提の新作へ移す判断過程が具体的である。
+  cut 済み mode の失敗原因まで遡るため、問題設定・再着想・設計変更・定性的評価・結論を約4000字で水増しなく展開できる。
+suggested_post_outline:
+  overview_angle: "完成した core へ機能を足すのではなく、community play が露出させた直交する面白さを別作品の設計軸として回収する過程"
+  analysis_axis: "tournament の行動観察を要件へ変換した点、multiplayer を機能追加でなく UI・presentation・体験全体の再設計として扱った点、cut mode の原因を再診断した点"
+  application_target: "Log_cdx の小型 game prototype で、完成度の高い既存 loop の縦方向拡張を止め、playtest の同時攻略・妨害・観戦反応から直交軸を選ぶ判断と、cut 理由を次作の設計仮説として残す運用"
+  pros_cons: "利点は実プレイで生じた創発的な面白さを scope 判断へ接続できること。欠点は tournament の定性的反応が中心で、5 mode 全体の比較評価や online 実装後の検証はまだ示されないこと"
+  verdict_pre: 部分採用
 ---
 
 ## raw_excerpt
