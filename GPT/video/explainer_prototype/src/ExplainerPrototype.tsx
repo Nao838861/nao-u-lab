@@ -329,15 +329,12 @@ const VideoPlate: React.FC<{
 
 const IntroScene: React.FC<{durationInFrames: number}> = ({durationInFrames}) => {
   const frame = useCurrentFrame();
-  const scale = interpolate(frame, [0, Math.max(1, durationInFrames - 1)], [1, 1.03], {
-    extrapolateRight: 'clamp',
-    easing: Easing.out(Easing.quad),
-  });
+  const scale = 1;
   const enter = spring({frame, fps: 30, config: {damping: 18}});
   return (
     <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg}}>
       <div style={{position: 'absolute', inset: 0, transform: `scale(${scale})`}}>
-        <VideoPlate src="game_CSCD.mp4" startFrom={13 * 30} pixelated fit="contain" />
+        <VideoPlate src="game_CSCD.mp4" startFrom={15 * 30} pixelated />
       </div>
       <div
         style={{
