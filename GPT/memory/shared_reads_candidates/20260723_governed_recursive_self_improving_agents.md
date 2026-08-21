@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2607.12254"
 collected_at: "2026-07-23T06:45:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-development, llm-agents, agent-architecture, evaluation, memory]
-evaluated_at: "2026-07-23T06:48:41+09:00"
+evaluated_at: "2026-08-22T02:34:54+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-23T06:48:41+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-23T06:48:41+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-22"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-22T02:34:54+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-22T02:34:54+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-21"
 supersedes: []
 gate_reason: >-
-  短い実行 loop と evidence-gated improvement loop、外部 governance plane の分離は、ゲーム制作 agent と playtest harness の改善受入れに具体適用できる。
-  ただし候補は現行 v2 の題名と self-model / Auto-Index / Personal Singularity OS の追加を反映せず、position paper のため実験・実装による評価結果もない。現状では CoopEval 水準の概要に必要な出典整合性と評価の中身が不足する。
+  短い実行 loop、evidence-gated improvement loop、外部 governance plane の分離はゲーム制作 agent へ具体適用できる。
+  しかし position paper で実験・実装評価がなく、candidate も現行版の追加要素を反映していない。再評価期限後も評価の中身と出典整合性が不足するため不採用にする。
 ---
 
 ## raw_excerpt

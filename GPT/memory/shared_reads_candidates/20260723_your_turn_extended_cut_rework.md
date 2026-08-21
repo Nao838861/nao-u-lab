@@ -4,20 +4,21 @@ url: "https://itch.io/devlog/1564458/i-finished-your-turn-in-a-week-and-then-i-r
 collected_at: "2026-07-23T10:47:11.6281902+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, postmortem, iteration, game-feel, narrative-design, solo-dev]
-evaluated_at: "2026-07-23T10:56:07+09:00"
+evaluated_at: "2026-08-22T02:34:54+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-23T10:56:07+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-23T10:56:07+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-22"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-22T02:34:54+09:00"
+last_decision: failed
+evidence: "group_handoff:gha-940e2d5cb26f0108; same work as memory/shared_reads_candidates/20260727_your_turn_extended_cut_rework.md; gate_decision:fail; evaluated_at:2026-08-22T02:34:54+09:00"
+next_action: none
+stale_after: "2026-09-21"
 supersedes: []
 gate_reason: >-
-  1週間版から2週間の拡張版へ加えた変更と、操作の物理感・選択の振り返り・再訪性への適用先は具体的である。
-  ただし変更前後のプレイヤー反応、観察手順、成果指標がなく、現状では作者の自己評価を一般則へ膨らませずにCoopEval水準の評価部分を構成できない。
+  初版から拡張版への制作差分とゲーム制作への適用先は具体的だが、変更前後のプレイヤー反応、観察手順、成果指標がなく、作者の自己評価を越えて効果を説明できない。
+  30日後の再評価でも証拠密度は変わらず、同一 work の canonical / AMP 重複候補でもあるため、約4000字へ水増しせず group ごと不採用にする。
+duplicate_reason: failed_duplicate_of_terminal_sibling
 ---
 
 ## raw_excerpt
