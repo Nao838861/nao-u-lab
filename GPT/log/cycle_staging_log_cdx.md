@@ -100,7 +100,87 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "MEMORY.md の atom index 50件を照合し、欠損参照0件を確認"
+  - "atom mirror 2,929件の jsonl / per-file / index 一致と duplicate cluster sidecar の現行性を確認"
+  - "shared-reads title/candidate の canonical・mixed・open-group・stale triage sidecar を再生成"
+  - "Slack directives 23行・broadcasts 21行を監査し、pending 0件を確認（status 更新なし）"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_review_batch: []
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 27
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+candidate_lifecycle:
+  status_counts:
+    posted: 664
+    ready_to_post: 9
+    postponed: 203
+    failed: 491
+    needs_review: 2
+  terminal_excluded_from_review: 1155
+  overdue_open_count: 4
+  overdue_delivery_state: "JAMEL 2件と collision morphology 2件は、既存 all-open group handoff gha-e6d4d4b5a37a0808 / gha-2313a247c62a9028 が membership 一致の deferred 状態。retry_after 2026-09-19 前のため再投入しない"
+title_duplicate_audit:
+  canonical_terminal_groups: 103
+  mixed_groups: 27
+  open_groups: 31
+  suppressible_terminal_siblings: 0
+memory_index_audit:
+  checked_atom_ids: 50
+  broken_links: 0
+  source_file_status: "UTF-8 明示読みで正常。代表語 記憶 / ゲーム設計 / 敵パターン / 評価軸 をすべて取得"
+  display_or_tooling_status: none
+atom_consistency:
+  atoms_jsonl_rows: 2929
+  per_file_rows: 2929
+  index_rows: 2929
+  mirror_content_conflicts: 0
+  raw_normalized_duplicate_groups: 40
+  recall_visible_normalized_duplicate_groups: 3
+  canonical_overlay_groups: 45
+  unresolved_display_groups: 0
+  source_file_status: "入力 fingerprint は監査前後で stable。既知の sr-1776127289-4d9239b255 は raw Slack にも U+FFFD がある局所 source defect、gr-1777083728-44d444ab7a の ??? は原文どおり"
+  display_or_tooling_status: "mojibake detector は上記2件を suspect とするが、後者は false positive。構造 conflict なし"
+raw_archive_audit:
+  inactive_30d_files: 242
+  archived_count: 0
+  decision: "明示 provenance の web research / Slack archive / headless evaluation 原文であり、現行 raw 保持方針を優先して明示保持"
+inbox_audit:
+  directives_pending: 0
+  broadcasts_pending: 0
+  handled_updates: 0
+```
+
+構造的 issue は抽出されなかった。raw atom の重複は canonical overlay で解決済み、4件の期限到来 candidate は既存 group lease の再評価期限前であり、Phase 4b を起動する根拠にはしない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
