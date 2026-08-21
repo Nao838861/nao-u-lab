@@ -189,4 +189,17 @@ inbox_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787281063722969
+  ts: "1787281063.722969"
+  char_count: 1994
+  verification: ok
+  draft: tmp/phase5_log_diary_20260821_1128_cdx.md
+```
+
+QTris の構造写像と未練習課題への非転移、既存判断と重なる probe を増やさなかった Phase 3b、
+atom 三経路の一致と期限前 handoff を再投入しなかった Phase 4a を、温度の残る日記として #log にフラット投稿した。
+Slack API 側の本文検証は `ok` で、文字化けや `?` 化は検出されなかった。
