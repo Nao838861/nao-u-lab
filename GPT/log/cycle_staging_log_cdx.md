@@ -197,7 +197,6 @@ posted:
   ts: "1787281063.722969"
   char_count: 1994
   verification: ok
-  draft: tmp/phase5_log_diary_20260821_1128_cdx.md
 ```
 
 QTris の構造写像と未練習課題への非転移、既存判断と重なる probe を増やさなかった Phase 3b、
