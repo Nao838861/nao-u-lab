@@ -98,7 +98,97 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "shared-reads の open duplicate / stale triage / group action sidecar を現正本から再生成し、group/candidate handoff を規定順に監査した。生成差分と新規 enqueue はともに 0 件。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl を監査し、pending 0 件のため handled 更新は行わなかった。"
+memory_index_audit:
+  validation: ok
+  broken_links: 0
+  utf8_representative_terms:
+    記憶: found
+    ゲーム設計: found
+    敵パターン: found
+    評価軸: found
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読みで代表語を取得でき、per-file atom index と整合。"
+  display_or_tooling_status: none
+atom_audit:
+  atoms: 2934
+  mirror_status: clean
+  content_duplicate_groups_raw: 40
+  content_duplicate_rows_raw: 80
+  content_duplicate_groups_recall_visible: 3
+  canonical_overlay_groups: 45
+  unresolved_display_duplicate_groups: 0
+  contradiction_evidence: none
+  mojibake_suspects: 2
+  confirmed_source_corruption: 1
+  false_positive_literal_question_marks: 1
+raw_archive_audit:
+  total_files: 247
+  older_than_30_days: 242
+  archive_action: none
+  reason: "対象はすでに memory/raw/ の原文保管層にあり、raw/slack_archive/shared-reads.jsonl は memory health の現行入力でもある。mtime だけで移動しない。"
+candidate_lifecycle:
+  total_evaluated_or_in_progress: 1380
+  counts:
+    posted: 670
+    ready_to_post: 9
+    postponed: 202
+    failed: 497
+    needs_review: 2
+  overdue_open_total: 4
+  explicit_keep_via_live_group_lease: 4
+  missing_stale_after_audit_count: 3
+  new_candidate_state_changes: 0
+issues:
+  - id: ISS-001
+    description: "旧 shared-reads 由来 atom 1件で『AIエージェント』の一部が U+FFFD に置換され、raw と atom の双方に保存されている。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492,1216; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; atom id sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8 明示読みでも raw source と per-atom .md の双方が『AIエ��ジェント』であり、source file 自体の局所破損を確認。"
+    display_or_tooling_status: "none; shell 表示だけの mojibake ではない。もう1件の health warning はゲーム内表記『???』の文字列に反応した false positive。"
+    why_blocks_game_memory: "『AIエージェント』の完全一致検索を外し得るが、1 atom に局在し、URL・他タグ・trigger は残るため影響は限定的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  reason: "新しい構造を要する問題は見つからなかった。ISS-001 は権威ある原文を再取得できる時の局所データ修復であり、Phase 4b の設計対象ではない。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 27
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_handoff_pending_count: 0
+  group_handoff_ids: []
+  live_deferred_group_count: 2
+  live_deferred_group_ids:
+    - gha-e6d4d4b5a37a0808
+    - gha-2313a247c62a9028
+  deferred_retry_after: "2026-09-19T14:08:16+09:00"
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
