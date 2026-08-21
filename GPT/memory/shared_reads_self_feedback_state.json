@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-22T04:45:08+09:00",
+  "updated_at": "2026-08-22T06:46:43+09:00",
   "reviewed_source_ts": [
+    "1787341222.261219",
     "1779332718.909909",
     "1779972076.849019",
     "1787318812.905849",
@@ -22565,6 +22566,46 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、直交 prototype／役割遷移／cut 仮説の再訪条件の有用性、既存 core-density／scope-cut／hypothesis／branch controls との重複、発売前・少人数定性 evidence と online への過剰一般化 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-22T06:46:43+09:00",
+      "selected": {
+        "id": "sr-1787341222-1f785db16e",
+        "source_ts": "1787341222.261219",
+        "title": "Social Gym: ルール検証可能な multi-agent 社会推論評価と SPaRTan",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ最新の自己完結した投稿だったため1件だけ選んだ。rule-verifiable outcome、role／seat 別評価、失敗 trajectory 由来 playbook の非単調 transfer が、次の headless game 評価や memory self-feedback に既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は21ゲーム、7 model・各560 episode以上、role／seat 均衡、rule outcome、per-role Elo を示し、SPaRTan では弱い少数派側が平均24%からR3で43%へ改善後R4で35%へ戻る非単調性、cross-game transfer が弱い側+7 pointに対し強い側-7 pointとなる副作用、Qwen3-32Bでは単純 action game以外がほぼ横ばいという capacity 境界まで報告する。同長 placebo 不在、原則30 gameで95% CIが約±18 point、synthetic gameから人間の信頼形成へ外挿できない限界も本文にあるため relevance・actionability・evidenceは3とした。一方、probe-20260709-bayesian-agent-feature-conditioned-update は成功例を task／tool／harness／failure mode の context_features と反例に条件付け、probe-20260618-cross-game-capability-scope は same-game／same-genre／held-out transfer を分離し、probe-20260619-omni-game-arena-improvement-transfer は reflection 前 baseline・same-seed・held-out condition と過適合分類を、probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation は input condition・reflection memory・prompt／seed variance を既に要求する。したがって本投稿から次回行動へ落とせる scope 付き playbook、強い role の悪化、held-out transfer、placebo／無注入比較は既存4 controlsの組合せに吸収され、non_redundancyは0とした。active_probesは326件あり、現在の staging には2 role、固定 seed、注入／同長 placebo／無注入、role-conditioned outcomeを比較できる playable／headless artifactがない。直後のPhase 4a memory cleanupを名目 consumerにして同義 probeを追加すると、適用対象のない確認負荷とcontext-freeな一般化を増やすためrisk_controlは1。次に具体的な非対称 multi-agent artifactが生じた時は新規 controlを足さず、既存4 probeを選んで適用する。",
+      "existing_controls": [
+        "probe-20260709-bayesian-agent-feature-conditioned-update",
+        "probe-20260618-cross-game-capability-scope",
+        "probe-20260619-omni-game-arena-improvement-transfer",
+        "probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、Social Gym／SPaRTan の rule-verifiable・role-conditioned 評価の有用性、既存 feature-scope／cross-game／improvement-transfer／diagnostic-ablation controls との完全重複、比較 artifact 不在と probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

@@ -66,7 +66,35 @@ skipped: []
 - 投稿前 review: 固定6項目・順序・冒頭 `■ 概要`・末尾 `■ URL`・禁止表現・URL 集約・3500〜4500字を確認。Slack 保存本文の文字化け検証も `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787341222-1f785db16e
+    source_ts: "1787341222.261219"
+    title: "Social Gym: ルール検証可能な multi-agent 社会推論評価と SPaRTan"
+    reason: "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ最新の自己完結した投稿だったため1件だけ選んだ。rule-verifiable outcome と role／seat 別評価、失敗 trajectory 由来 playbook の非単調 transfer が次回行動を変えるか確認した。Nao_u の明示評価記録は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計14未満かつ risk_control<2。scope 条件付き更新、held-out transfer、baseline／reflection 比較、input／seed／memory ablation は既存4 probeに吸収済みで、現 staging に2-roleの注入／placebo／無注入を比較できる artifactもない。active_probes 326件へ同義 controlを足す判断差より確認負荷が大きいため state-only review に留めた。"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。active_probes・lifecycle ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
