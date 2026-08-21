@@ -336,7 +336,7 @@ const IntroScene: React.FC<{durationInFrames: number}> = ({durationInFrames}) =>
   return (
     <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg}}>
       <div style={{position: 'absolute', inset: 0, transform: `scale(${scale})`}}>
-        <VideoPlate src="current_demo.mp4" pixelated />
+        <VideoPlate src="game_CSCD.mp4" startFrom={13 * 30} pixelated />
       </div>
       <div
         style={{
@@ -350,9 +350,12 @@ const IntroScene: React.FC<{durationInFrames: number}> = ({durationInFrames}) =>
       >
         <Eyebrow>FAMILY COMPUTER / 6502 / MMC5</Eyebrow>
         <div style={{height: 18}} />
-        <Title size={54}>
+        <Title size={51}>
           <div style={{whiteSpace: 'nowrap'}}>ファミコンでスペースハリアーを動かすには？</div>
         </Title>
+        <div style={{marginTop: 13, fontFamily: FONT, color: C.white, fontSize: 34, lineHeight: 1.25, fontWeight: 900}}>
+          その1：巨大キャラを動かすコンパイルドスプライト
+        </div>
       </div>
     </AbsoluteFill>
   );
@@ -360,6 +363,20 @@ const IntroScene: React.FC<{durationInFrames: number}> = ({durationInFrames}) =>
 
 const PreviousScene: React.FC<{durationInFrames: number}> = ({durationInFrames}) => {
   const frame = useCurrentFrame();
+  const techniqueStartFrame = Math.round(durationInFrames * 0.25);
+  const previousVideoStartFrame = Math.round(durationInFrames * 0.72);
+  const techniqueOpacity = interpolate(
+    frame,
+    [techniqueStartFrame - 10, techniqueStartFrame, previousVideoStartFrame - 10, previousVideoStartFrame],
+    [0, 1, 1, 0],
+    {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'},
+  );
+  const previousVideoOpacity = interpolate(
+    frame,
+    [previousVideoStartFrame, previousVideoStartFrame + 12],
+    [0, 1],
+    {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'},
+  );
   return (
     <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg}}>
       <VideoPlate src="previous_video.mp4" />
@@ -379,23 +396,14 @@ const PreviousScene: React.FC<{durationInFrames: number}> = ({durationInFrames})
       >
         PREVIOUS VIDEO
       </div>
-      <div
-        style={{
-          position: 'absolute',
-          left: 54,
-          top: 46,
-          padding: '12px 18px',
-          background: '#050507d9',
-          borderLeft: `5px solid ${C.cyan}`,
-          color: C.white,
-          fontFamily: FONT,
-          fontWeight: 800,
-          fontSize: 17,
-          lineHeight: 1.45,
-        }}
-      >
-        <div>前回の解説動画</div>
-        <div style={{fontFamily: MONO, color: C.cyan, fontSize: 15}}>
+      <div style={{position: 'absolute', left: 54, top: 48, width: 650, opacity: techniqueOpacity, padding: '20px 24px 23px', boxSizing: 'border-box', background: '#050507e8', borderLeft: `7px solid ${C.cyan}`}}>
+        <div style={{fontFamily: FONT, color: C.cyan, fontSize: 20, fontWeight: 900}}>MMC5の拡張機能で実現</div>
+        <div style={{fontFamily: MONO, color: C.white, fontSize: 57, lineHeight: 1.05, fontWeight: 900, marginTop: 10}}>128×96ドット</div>
+        <div style={{fontFamily: FONT, color: C.white, fontSize: 34, lineHeight: 1.25, fontWeight: 900, marginTop: 7}}>モノクロ画面を高速書き換え</div>
+      </div>
+      <div style={{position: 'absolute', left: 54, right: 54, bottom: 78, opacity: previousVideoOpacity, padding: '17px 26px 19px', boxSizing: 'border-box', background: '#050507ed', borderTop: `3px solid ${C.magenta}`, borderBottom: `3px solid ${C.magenta}`}}>
+        <div style={{fontFamily: FONT, color: C.white, fontSize: 23, lineHeight: 1.2, fontWeight: 900}}>前回の解説動画</div>
+        <div style={{fontFamily: MONO, color: C.cyan, fontSize: 27, lineHeight: 1.25, fontWeight: 900, marginTop: 7}}>
           https://www.youtube.com/watch?v=AW4DFiy1QC0
         </div>
       </div>
