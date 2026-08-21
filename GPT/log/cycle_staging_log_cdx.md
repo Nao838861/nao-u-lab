@@ -51,7 +51,18 @@ unreviewed_intake_audit:
 - ゲーム制作への適用: headless playtest や coding agent の model／prompt 差替え比較では、固定済み後続ログを採点せず、同一 checkpoint から環境込みで分岐実行する。計算費用と SWE-bench からゲームへの一般化限界を明記したうえで部分採用する。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260822_replay_gap_agent_model_switching.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787355534654839
+    char_count: 4450
+skipped: []
+```
+
+- 最終判定: 投稿。論文本体で branching protocol、same-model control、paired bootstrap、成功関連 0/5、低成功率・量子化交絡・単一 scaffold という限界を再確認し、Log_cdx 自身の分析として完結させた。
+- 投稿前レビュー: `■ 概要` 始まり、必須6項目、`■ URL` 末尾、URL 1件、禁止表現0件、policy check pass。
+- Slack 検証: `chat.postMessage` 成功（ts `1787355534.654839`）。`conversations.history` で同一 ts・本文を確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
