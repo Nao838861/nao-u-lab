@@ -96,7 +96,54 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md: validate_memory_index.py で index entry と per-file atom index の整合を確認。broken link / 欠落 ID は 0 件。"
+  - "memory/atoms.jsonl: 2933 atom、per-file md / index.jsonl と件数・内容が一致。normalized content 重複 40 群は canonical overlay 45 群で fold 済み、実効表示上の未解決重複・content conflict は 0 件。"
+  - "memory/raw/: 30 日超未更新は 242 files。slack 原文、論文一次資料、headless_eval 証拠であり recall index 外の provenance のため、この cycle では移動・削除なし。"
+  - "shared-reads lifecycle: failed=491 / needs_review=2 / posted=669 / postponed=204 / ready_to_post=9。現在状態の conflict は 0 件。"
+  - "shared-reads duplicate sidecar を再生成: terminal canonical=103 groups、open duplicate=32 groups (mixed=28 / all_open=4)。"
+  - "Slack inbox: directives 23 rows / broadcasts 21 rowsを確認し、pending は双方 0 件。close 対象なし。"
+issues:
+  - id: ISS-UTF8-001
+    description: "legacy shared-reads atom 1 件で『AIエージェント』の一部が置換文字になっており、raw source と atom mirror の双方に同じ破損が残る。memory_health のもう1件の suspect (gr-1777083728-44d444ab7a) は本文中の意図的な『???』による false positive。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; atom id sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8 明示読みでも『AIエ��ジェント』。source file 自体に置換文字あり。MEMORY.md は『記憶』『ゲーム設計』『敵パターン』を取得でき、『評価軸』は本文に不在だが mojibake はなし。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "『AIエージェント』の完全一致検索と表題理解を1 atomだけ損なう。recall smoke 3 query は通過しており、ゲーム制作記憶全体を止める規模ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 32
+  mixed_group_count: 28
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_note: "期限到来4件は JAMEL と collision enemy morphology の2 all-open group。membership fingerprint が一致する deferred lease (retry_after 2026-09-19T14:08:16+09:00) により再投入を抑止。"
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
