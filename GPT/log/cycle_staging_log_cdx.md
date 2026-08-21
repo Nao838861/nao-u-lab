@@ -98,7 +98,57 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - memory/MEMORY.md の index を検証し、per-file atom index との不一致・broken entry が 0 件であることを確認した。
+  - memory/MEMORY.md を UTF-8 明示読みし、代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」を取得できた。source file の文字化けはない。
+  - atom mirror 2932 件を監査し、atoms.jsonl / per-file .md / index.jsonl の欠損・parse error・content conflict がすべて 0 件であることを確認した。raw normalized-content duplicate 40 群 80 件は既存 overlay で 40 件 fold 済み、unresolved display group は 0 件だった。
+  - memory/raw/ で 2026-07-22 より前に更新停止した 242 ファイルを確認した。いずれも Slack 原文、web research 一次資料、headless/game evaluation 証拠であり、raw provenance の正本なのでこの cycle では移動しなかった。
+  - shared-reads lifecycle を監査した。posted 668 / ready_to_post 9 / postponed 204 / failed 491 / needs_review 2。stale_after 欠損は posted terminal だけで、open lifecycle の欠損はなかった。
+  - canonical title index、mixed/open duplicate queue、stale triage、group action queue を再生成した。open duplicate group は mixed 28 / all_open 4、actionable group は 0 件だった。
+  - stale_after 到来済み open candidate 4 件は、2つの all-open group に対する既存 deferred lease（retry_after 2026-09-19）で明示保持されていた。新規 group/candidate handoff は 0 件だった。
+  - slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件で、handled 更新対象はなかった。
+issues:
+  - id: ISS-4A-20260821-ENC-01
+    description: atom sr-1776127289-4d9239b255 の「AIエージェント」に相当する箇所が、raw Slack archive から atoms.jsonl と per-file atom まで「AIエ��ジェント」として保存されている局所的な原文破損。
+    severity: low
+    evidence: memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md
+    source_file_status: UTF-8 明示読みは成功するが、3表現すべてに U+FFFD が2文字存在する。source data 自体の破損である。
+    display_or_tooling_status: none。PowerShell や staging の表示経路だけの mojibake ではない。memory/MEMORY.md の代表語 probe は正常。
+    why_blocks_game_memory: 「AIエージェント」を含む title / trigger の完全一致検索と読みやすさを局所的に損なうが、対象は1 atom で recall 全体やゲーム間導線を遮断していない。
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_review_batch: []
+group_action_handoff: []
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 32
+  mixed_group_count: 28
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
