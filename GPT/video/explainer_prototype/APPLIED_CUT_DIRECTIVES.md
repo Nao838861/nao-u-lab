@@ -19,7 +19,7 @@
 
 | カット | 反映日 | 実装先 | 記録 |
 |---|---|---|---|
-| C01〜C03 | 2026-08-22 | `src/ExplainerPrototype.tsx` | 最新版は `video: fit C01 gameplay within frame`。C01を実機映像の13秒地点へ差し替えて副題を追加し、4:3映像全体が収まる表示と弱いズームへ変更。C02は技術説明と前回動画URLを音声の文区切りに合わせて順番に表示し、URLの常時表示を廃止 |
+| C01〜C03 | 2026-08-22 | `src/ExplainerPrototype.tsx` | 最新版は `video: reduce C02 technique overlay`。C01を実機映像の13秒地点へ差し替えて副題を追加し、4:3映像全体が収まる表示と弱いズームへ変更。C02は技術説明を左上へ寄せて小型化し、前回動画URLと音声の文区切りに合わせて順番に表示。URLの常時表示を廃止 |
 | C04〜C07 | 2026-08-20 | `narration/development-cuts.json` / `src/ExplainerPrototype.tsx` | `video: rebuild C04-C07 development sequence`。原文は本索引を追加した時点の `指示書.md` にも保存 |
 | C08・C10（C09は欠番） | 2026-08-21 | `narration/drawing-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: correct C08-C10 narration and block highlights`。C10は生成後の文字起こしでも読み上げ内容を確認し、分類ごとの全ブロック強調へ更新 |
 | C11〜C13 | 2026-08-21 | `narration/benefit-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: clarify C13 dedicated program label`。C13を簡潔な音声指示で再生成したうえで、画面内の説明を「絵ごとに専用のプログラムを追加」へ更新 |
