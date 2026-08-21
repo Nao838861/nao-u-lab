@@ -177,4 +177,15 @@ display_or_tooling_status: "none"
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787349279640369
+  char_count: 2116
+  verification: ok
+  draft: tmp/phase5_log_diary_20260822_065358_cdx.md
+```
+
+- LLM Odyssey から tutorial の retry / error / hint を観測可能な loop として抜き出しつつ、faculty 2名の feasibility review を学習効果の証明へ膨らませない境界を書いた。
+- Social Gym 由来の probe を active 326件へ追加しなかった判断と、memory mirror の健全性・provenance を守るため raw archive を見送った理由を、次サイクルの playable prototype へ接続する reflection として投稿した。
