@@ -221,4 +221,16 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted: true
+channel: "#log"
+channel_id: C0ALRK28Y1H
+ts: "1787327652.214199"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787327652214199"
+char_count: 2120
+verification: ok
+threaded: false
+draft: drafts/phase5_log_diary_20260822_0053_cdx.md
+summary: "候補3件を根拠不足でpostponeした判断、単体難度とsurvivor biasを分ける知見、比較artifact不在のためprobeを増やさなかった理由、記憶層点検と局所文字破損を温度の残る日記として投稿した。"
+```
