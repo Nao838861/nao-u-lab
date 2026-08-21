@@ -49,7 +49,16 @@ unreviewed_intake_audit:
 - duplicate preflight: `continue`。posted-source、closed canonical、open duplicate group の一致なし。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260821_predicting_game_difficulty_churn_without_players.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787318812905849
+    char_count: 4065
+skipped: []
+```
+
+- 最終判定: 投稿。AI gameplay 由来の固定難易度と、進行に伴う survivor bias を担う population layer を分離して説明し、5-fold cross-validation、ablation、人間 pass rate への置換で churn MSE が71%低下する失敗条件まで一次資料と照合した。DRL 自体は採らず、既存 headless bot の複数 run 統計へ軽量 cohort simulation を重ねる「部分採用」とした。
+- 投稿前レビュー: 4,065字。必須6項目、`■ 概要` 始まり、末尾 `■ URL`、URL末尾集約、禁止語なし、同一 URL の既投稿なしを確認。`tools/post_slack_message_file.py` で policy check と Slack 保存本文の文字化け検証を通過した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
