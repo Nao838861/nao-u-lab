@@ -115,7 +115,90 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - >-
+    memory/MEMORY.md を UTF-8 明示読みし、per-file atom index との entry section 不一致 0 件を確認した。
+    代表語は「記憶」「ゲーム設計」「敵パターン」を取得でき、「評価軸」は現行本文に存在しなかったが source file の
+    decoding error や表示経路の mojibake はなかった。
+  - >-
+    memory/atoms.jsonl と per-file .md / atoms/index.jsonl を監査した。各 2929 rows、parse / missing / conflict 0 件、
+    duplicate cluster 45 群は canonical overlay 45 群に収載済みで、recall-visible の normalized-content 重複 3 群も
+    fold 適用済みだった。
+  - >-
+    memory/raw/ で 2026-07-22 より前に更新された file 242 件を確認した。内訳の中心は web_research 130 件、
+    phase3_sources 17 件、headless_eval 16 件で、raw provenance の保持対象であるため移動・削除は行わなかった。
+  - >-
+    shared-reads candidate lifecycle を監査した。posted 665、ready_to_post 9、postponed 203、failed 491、
+    needs_review 2、missing_stale_after 3。期限超過 open candidate 4 件は2つの all-open duplicate group に属し、
+    いずれも retry_after=2026-09-19 の live deferred group lease があるため新規 handoff から抑止された。
+  - >-
+    open duplicate group / stale triage / group action sidecar を契約順に再生成し、group / candidate handoff を
+    source_cycle_id=2026-08-21 13:43 で冪等 enqueue した。新規投入 0 件、両 inbox の pending 0 件、audit error 0 件。
+  - >-
+    slack_directives.jsonl 23 rows と slack_broadcasts.jsonl 21 rows を確認し、pending は双方 0 件だった。
+    handled へ変更すべき行はなかった。
+issues:
+  - id: ISS-4A-20260821-ENC-001
+    description: >-
+      atom sr-1776127289-4d9239b255 の「AIエージェント」が「AIエ��ジェント」として保存され、U+FFFD が2文字残る。
+      atom mirror だけでなく raw Slack archive の同一 source_ts にも存在するため、表示だけの mojibake ではない。
+    severity: low
+    evidence: >-
+      memory/raw/slack_archive/shared-reads.jsonl source_ts=1776127289.990919;
+      memory/atoms/2026-04/sr-1776127289-4d9239b255.md
+    source_file_status: >-
+      UTF-8 decode 自体は成功するが、raw source、atoms.jsonl、per-file atom、index の全てに U+FFFD が実在する。
+    display_or_tooling_status: none
+    why_blocks_game_memory: >-
+      「AIエージェント」の完全一致検索をこの atom だけ取りこぼす。周辺語で recall は可能なので影響は局所的である。
+  - id: ISS-4A-20260821-AUDIT-001
+    description: >-
+      mojibake audit が Nao_u 原文中の意図的な ASCII `???` も run_count 条件で suspect とし、
+      gr-1777083728-44d444ab7a を source corruption と同列に警告する。
+    severity: low
+    evidence: >-
+      tools/atom_quality.py:49-52; memory/atoms/2026-04/gr-1777083728-44d444ab7a.md;
+      memory/raw/slack_api/game-rights.jsonl source_ts=1777083728.907429
+    source_file_status: >-
+      UTF-8 source は正常。`???がヘッダに出る` は raw Slack と atom で一致する意図的なゲーム内表現である。
+    display_or_tooling_status: >-
+      atom_quality.mojibake_score の run_count >= 1 による false positive。memory_health は mojibake suspect と表示する。
+    why_blocks_game_memory: >-
+      教師フィードバック本文は検索可能だが、health warning の真陽性と偽陽性が混ざり、将来の破損検知への信頼を弱める。
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 27
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_handoff_pending_count: 0
+  group_handoff_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
