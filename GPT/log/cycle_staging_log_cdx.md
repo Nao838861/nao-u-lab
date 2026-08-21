@@ -67,7 +67,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787303607-65884c48f3
+    source_ts: "1787303607.220099"
+    title: Contextualized AI — executable consequence と grounded explanation の二層接続
+    reason: source が slack_api/shared-reads、score 12、未レビューで、memory・harness・game-design・operation・evaluation を含む8タグを持つ最新の自己完結した投稿だったため1件だけ選んだ。生成物の規則上の作用と player が理解できる説明を分ける知見が、既存 control と異なる次回行動を作れるか確認した。Nao_u の明示評価は確認できなかった。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: GenFlora の2×2被験者内実験（72人）は二層接続を具体化するが、効果量・正確な統計量・順序統制・長期保持を本フェーズで再検証していない。運用案は既存の intent-response、causal gameplay log、NPC dialogue perception boundary、AI-native state transition、structural-semantic verifier boundary に完全に吸収される。active_probes 326件、比較可能な AI game artifact なし、後続 Phase 4a が memory cleanup である現状では、同義 probe の追加は判断差より確認負荷と過剰一般化リスクを増やす。
+  change:
+    summary: reviewed_source_ts と state-only reject の理由だけを記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
