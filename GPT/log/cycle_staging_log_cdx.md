@@ -71,7 +71,46 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787265764-bfd883f95b
+    source_ts: "1787265764.020219"
+    title: "MELD: A Protocol for Merging Knowledge Across Distributed Agentic Memories"
+    reason: >-
+      source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・agent・identity・knowledge・operation・evaluation の8優先タグを持つ最新の自己完結した投稿だったため1件だけ選んだ。
+      短い続き断片を混ぜず、五分類 admission、scope、conflict preservation、監査可能 Patch、ingestion 順序感度が現在の per-atom／lifecycle 運用と次の Phase 4a memory cleanup に既存 control と異なる判断差を作れるか確認した。Nao_u の明示評価は確認できなかった。
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: >-
+    合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。
+    本文は五分類 admission、scope 付き key・embedding・NLI、freshness gate、監査可能 Patch、status CRDT と、recall・誤統合・conflict recall・partition-heal・順序非収束の比較を示すため relevance・evidence は高い。
+    ただし現 staging に claim fixture、merge baseline、順序違いの before／after retrieval artifact はなく、LatticeMind probe が same_claim／scope_divergence／contested／superseded を既に Phase 4a で適用・receipt 済みである。
+    MELD 固有の順序感度は残るが、326件の active_probes と Phase D 移行中の二重正本へ同型 control を増やすリスクが上回る。投入順だけで canonical representative または recall が変わる再現 artifact が出た時だけ、順序感度 metric として再評価する。
+  existing_controls:
+    - probe-20260813-latticemind-conflict-state-scope
+    - probe-20260709-atma-state-role-ghost-memory-check
+    - probe-20260710-automem-memory-action-audit
+    - memory/atoms/index.jsonl normalized_content_hash + canonical/lifecycle fold
+  change:
+    summary: "reviewed_source_ts と state-only reject 理由だけを記録した。active_probes・ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

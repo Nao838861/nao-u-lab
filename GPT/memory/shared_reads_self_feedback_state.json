@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-21T07:47:26+09:00",
+  "updated_at": "2026-08-21T09:46:05+09:00",
   "reviewed_source_ts": [
+    "1787265764.020219",
     "1779625812.745299",
     "1779726451.712149",
     "1779745504.293499",
@@ -22149,6 +22150,46 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、A-MEM の動的 link／Memory Evolution の有用性、評価・cost の証拠限界、同一 work の既レビューと既存 link／lineage controls との完全重複、自動書換えによる provenance drift risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-21T09:46:05+09:00",
+      "selected": {
+        "id": "sr-1787265764-bfd883f95b",
+        "source_ts": "1787265764.020219",
+        "title": "MELD: A Protocol for Merging Knowledge Across Distributed Agentic Memories",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・agent・identity・knowledge・operation・evaluation の8優先タグを持つ最新の自己完結した投稿だったため1件だけ選んだ。短い続き断片を混ぜず、五分類 admission、scope、conflict preservation、監査可能 Patch、ingestion 順序感度が現在の per-atom／lifecycle 運用と次の Phase 4a memory cleanup に既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は insert／merge／relate／conflict／reject の五分類、scope 付き claim key・embedding・NLI、freshness gate、監査可能 Patch、status CRDT を示し、HotpotQA recall@5 0.630、分類 macro-F1 0.845、false-merge 0.013、partition-heal 30/30、key+embedding から NLI 追加による false-merge 0.090→0.013、conflict recall 0.23→0.96まで報告する。さらに16 claim・200順序で177 graph fingerprintとなる非収束、NLI が admission cost の83%、truth adjudication と悪意ある peer は範囲外という限界も明示しているため relevance・evidence は3とした。scope 付き fixture と ingestion 順比較には変換できるが、現 staging に claim fixture、merge baseline、順序違いの before／after retrieval artifact はなく、直後の Phase 4a は通常の memory cleanup なので actionability は2。probe-20260813-latticemind-conflict-state-scope は same_claim／scope_divergence／contested／superseded を既に Phase 4a で適用・receipt 済みで、probe-20260709-atma-state-role-ghost-memory-check、probe-20260710-automem-memory-action-audit、normalized_content_hash、canonical／lifecycle fold も state・scope・最小可逆操作を扱う。MELD 固有の順序感度と五分類 Patch は残るが、既存 controls の採否を今変える独立差は小さいため non_redundancy は1。326件の active_probes と Phase D 移行中の二重正本へ scope schema、NLI、proposal Patch、24件 fixture を追加すると確認負荷・誤統合・source-of-truth drift を増やすため risk_control は1。次に同一 claim set の投入順だけで canonical representative または recall 結果が変わる再現 artifact が出た時、既存 conflict control で判断できなければ順序感度だけを一時 metric として再評価する。",
+      "existing_controls": [
+        "probe-20260813-latticemind-conflict-state-scope",
+        "probe-20260709-atma-state-role-ghost-memory-check",
+        "probe-20260710-automem-memory-action-audit",
+        "memory/atoms/index.jsonl normalized_content_hash + canonical/lifecycle fold"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、MELD の五分類・順序感度・監査 Patch の固有差、既存 conflict／state／lifecycle controls との重複、比較 artifact 不在と二重正本化リスクによる reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
