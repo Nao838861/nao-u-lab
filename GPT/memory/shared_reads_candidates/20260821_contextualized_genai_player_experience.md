@@ -4,6 +4,26 @@ url: "https://doi.org/10.1016/j.entcom.2026.101194"
 collected_at: "2026-08-21T18:03:24+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, player-experience, generative-ai, npc, mechanics, user-study]
+evaluated_at: "2026-08-21T18:06:55.5750350+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-21T18:06:55.5750350+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-21T18:06:55.5750350+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-20"
+supersedes: []
+gate_reason: >-
+  問題設定、二層の contextualization、72人の2×2被験者内実験、主要結果と一般化限界まで抽出できる。
+  生成物をゲーム規則上の状態とNPCの状況説明へ接続する実装・playtest軸が具体的で、CoopEval水準の概要へ展開できる。
+suggested_post_outline:
+  overview_angle: "生成AI出力をゲーム体験へ定着させる二つの接続層と、その独立した効果を検証した研究として整理する"
+  analysis_axis: "item-layerの機械的接続とdialogue-layerの説明的接続を、presence・autonomy・enjoymentへの加算的効果と実験限界から評価する"
+  application_target: "Log_cdxのゲームprototypeで生成内容をcore loopの状態遷移とNPCフィードバックへ別々に接続し、各層を切り替えるablation playtestに使う"
+  pros_cons: "実装層と評価条件の対応が明確な一方、単一の短時間2D farming prototypeと自己報告指標に一般化が制約される"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
