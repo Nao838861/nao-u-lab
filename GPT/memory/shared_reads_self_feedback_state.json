@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-21T16:03:46+09:00",
+  "updated_at": "2026-08-21T18:17:21+09:00",
   "reviewed_source_ts": [
+    "1787295484.419209",
     "1779725135.414829",
     "1787280208.018329",
     "1787272857.895239",
@@ -714,6 +715,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-21T18:17:21+09:00",
+      "selected": {
+        "id": "sr-1787295484-4b55586092",
+        "source_ts": "1787295484.419209",
+        "title": "PlayWorld — basic action prior＋限定補正で長期 objective と world state 保持を分離評価する benchmark",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、memory・harness・game-design・agent・evaluation の5優先タグを持つ最新候補だったため1件だけ選んだ。固定 replay と完全自律 player の中間として、共通の basic action prior を Stop／Extend／Correct で狭く補正し、objective 到達と到達後の world-state 品質を分ける知見が、版間 headless／GUI playtest に既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件と全必須閾値を満たす。shared-reads 本文は171 case・50 action pattern・9 model・1,400本超の video と、geometry consistency／interaction fidelity／out-of-sight evolution／insight evolution の4軸を示す。Preset Only／Agent Only／Preset＋Agent を2 model・各25 caseで比較し、併用が trajectory score と人間選好で最良、Agent による変更操作は12.0%／14.9%だった。さらに到達失敗を最低点へ gate して対象 model の表現失敗と混同しない構成、人間評価との Spearman rho 0.933、全員一致29.2%・Fleiss kappa 0.434という限界まであるため evidence は3とした。initial_state＋objective＋basic_action_prior＋observable_completion＋rubric、実操作・補正理由・終了理由の完全 trace、deterministic engine state を正本にした player／judge 分離へ直接変換できるため relevance・actionability も3とした。probe-20260602-playtest-agent-role-diagnostics は controller ごとの診断役割、probe-20260608-bdd-route-contract-regression は固定 seed／input route／deterministic assertion、probe-20260608-task-level-compatibility-check は objective と環境の solvability gate を既に扱う。一方、操作感度が異なる build 間で同じ long-horizon objective へ到達させる basic prior＋限定補正と補正率の比較は既存3 control に直接は含まれず non_redundancy は2とした。ただし現在の staging には操作感度0.7／1.0／1.3、同一 objective／seed、固定 replay／完全 agent／prior＋補正の比較を持つ playable artifact がなく、直後の Phase 4a memory cleanup は実 consumer ではない。consumer_phase・trigger_artifact・expected_delta を lease contract どおり指定できないため active_probes・metric・ledger・directive・恒久ルールは追加せず state-only defer とする。",
+      "existing_controls": [
+        "probe-20260602-playtest-agent-role-diagnostics",
+        "probe-20260608-bdd-route-contract-regression",
+        "probe-20260608-task-level-compatibility-check"
+      ],
+      "defer_condition": "操作感度または controller 感度が異なる2版以上の playable／headless artifact が現れ、同一 objective・seed・basic action prior・実操作 trace・補正率・deterministic state assertion を保存でき、既存3 controlだけでは到達失敗と game failure の帰属が分かれる時に限り、固定 replay／完全 agent／prior＋限定補正の一時 metric または既存 probe 再利用を検討する。",
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、objective-level fairness を basic action prior＋限定補正で作る固有差、既存 playtest-role／route-contract／task-compatibility controls との境界、比較可能な playable artifact 不在による defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-21T16:03:46+09:00",
       "selected": {
