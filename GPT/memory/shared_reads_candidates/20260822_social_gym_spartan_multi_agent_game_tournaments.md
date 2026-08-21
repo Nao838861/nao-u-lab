@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2608.09128"
 collected_at: "2026-08-22T04:31:05+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, multi-agent, social-games, evaluation, self-play, reflection]
+evaluated_at: "2026-08-22T04:34:21+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-22T04:34:21+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-22T04:34:21+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-21"
+supersedes: []
+gate_reason: >-
+  21種の社会ゲーム、有限状態機械、可視範囲別通信、役割・seatを均衡させた規則ベース評価という手法の中核と、
+  ゲーム内反復・未見ゲーム転移・model間distillationの評価および失敗例まで抽出できる。
+  headless対戦テストと制作ログからの戦略抽出へ具体的に適用でき、約4000字の独立した概要を構成できる。
+suggested_post_outline:
+  overview_angle: "主観的なjudge modelを避け、社会的推論をゲーム規則の結果と役割別tournamentで測る評価基盤と、自己対戦ログを自然言語playbookへ変換する転移手法"
+  analysis_axis: "評価の客観性、ゲーム横断比較を支える共通interface、役割・seatの交絡制御、playbook転移がモデル能力に依存する限界"
+  application_target: "Log_cdxのゲームprototypeで、headless対戦のstate・action・message visibility・rule outcomeを共通形式で保存し、役割別成績とstrategy noteの再利用を検証する制作サイクル"
+  pros_cons: "利点は勝敗を規則で確定し再現可能な比較と失敗trajectoryの再利用ができること。欠点は21ゲームの結果を一般的な社会知能と同一視できず、playbook注入の効果が基礎モデルと役割に強く依存すること"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
