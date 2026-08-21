@@ -97,7 +97,78 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index ID 50件を atoms.jsonl と照合し、broken 0件を確認した。"
+  - "memory_health の stable snapshot で atoms.jsonl / per-file md / index.jsonl 各2935件、missing・parse error・content conflict 0件を確認した。normalized content duplicate 40群は既存 fold / canonical overlay で処理済みのため、原文を変更していない。"
+  - "memory/shared_reads_open_duplicate_group_queue.jsonl、memory/shared_reads_stale_triage_queue.jsonl、memory/shared_reads_group_action_queue.jsonl を現状態から再生成した。"
+  - "candidate lifecycle 1381件を監査した。status 内訳は posted 671 / failed 497 / postponed 202 / ready_to_post 9 / needs_review 2。現在状態の conflict による変更は0件だった。"
+  - "Slack directive / broadcast inbox の pending はともに0件で、handled 更新は0件だった。"
+  - "memory/raw/ の30日超過242件を監査した。web_research 217 / headless_eval 16 / slack_api 6 / その他3で、candidate・atom の provenance pointer を保つため移動0件とした。"
+  - "UTF-8 明示読みで memory/MEMORY.md の代表語は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false。source は正常な UTF-8 で、評価軸は単に現 index 本文に不在。表示・tooling mojibake はなし。"
+  - "memory_health の mojibake suspect 2件を source まで切り分けた。sr-1776127289-4d9239b255 は raw Slack archive 由来の既存置換文字、gr-1777083728-44d444ab7a は原文中の ??? による false positive。局所的で現行 recall を阻害する構造問題ではないため、Phase 4a では原文を修復していない。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+candidate_lifecycle:
+  total: 1381
+  status_counts:
+    posted: 671
+    failed: 497
+    postponed: 202
+    ready_to_post: 9
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_for_reassessment: 4
+  valid_unreviewed_count: 0
+  malformed_count: 0
+title_duplicate_audit:
+  unindexed_duplicate_group_count: 31
+  unindexed_terminal_group_count: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 27
+  all_open_group_count: 4
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 27
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_handoff_pending_count: 0
+  group_handoff_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  deferred_group_lease_suppressed_candidate_count: 4
+  deferred_group_lease_ids:
+    - gha-e6d4d4b5a37a0808
+    - gha-2313a247c62a9028
+  deferred_retry_after: "2026-09-19T14:08:16+09:00"
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+archive_audit:
+  older_than_30d_count: 242
+  archived_count: 0
+  retained_reason: "原文・評価 evidence の provenance pointer を壊さず保持するため。mtime だけでは archive 可否を確定しない。"
+source_file_status: "memory/MEMORY.md は UTF-8 正常。atoms mirror は clean。既存 raw 由来の置換文字1 atomのみ確認。"
+display_or_tooling_status: "none"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
