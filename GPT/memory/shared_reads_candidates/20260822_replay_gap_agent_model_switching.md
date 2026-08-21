@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2608.08239"
 collected_at: "2026-08-22T08:30:28+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent-evaluation, model-routing, replay, headless-playtesting, game-development]
+evaluated_at: "2026-08-22T08:34:14+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-22T08:34:14+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-22T08:34:14+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-21"
+supersedes: []
+gate_reason: >-
+  問題設定、branching rollout と same-model control、約900 rollout の定量結果、
+  outcome flip と step budget の限界まで揃い、約4000字の概要へ展開できる。
+  model を差し替える headless playtest／coding agent 評価を、同一 checkpoint から環境ごと分岐する手順へ具体化できる。
+suggested_post_outline:
+  overview_angle: "static replay が model 切替後の世界線を固定して誤採点する問題と、branching rollout による検証"
+  analysis_axis: "swap 後の action・state・outcome の分岐率を same-model control と分離し、評価器の反実仮想妥当性を測る"
+  application_target: "headless playtest と coding agent の model／prompt／policy 差替え評価で、同一 checkpoint から環境込みの分岐実行と同一条件 control を標準化する"
+  pros_cons: "因果的に妥当な比較と outcome flip の検出ができる一方、環境復元と複数 rollout の計算費用が増え、SWE-bench の結果をゲームへそのまま一般化はできない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
