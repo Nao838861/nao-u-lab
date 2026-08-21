@@ -53,7 +53,17 @@ unreviewed_intake_audit:
 - 注意: 現時点の実証は faculty 2名の feasibility review に限られるため、学習効果や adaptive difficulty の有効性は主張せず、構造と計測設計のみを部分採用する。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260822_llm_odyssey_game_based_llm_engineering.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787348477440319
+    char_count: 4485
+skipped: []
+```
+
+- 最終判定: `部分採用` として投稿。三層 progression、即時 feedback、段階 hint、retry/error telemetry は検証可能な tutorial loop として採用候補にし、固定5 round・70% threshold・hint 減点・自動適応は効果未検証のため移植対象から外した。
+- 投稿前 review: 固定6項目・順序・冒頭 `■ 概要`・末尾 `■ URL`・禁止表現・URL 集約・3500〜4500字を確認。Slack 保存本文の文字化け検証も `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
