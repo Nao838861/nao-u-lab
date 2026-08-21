@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-21T20:13:30+09:00",
+  "updated_at": "2026-08-21T22:39:34+09:00",
   "reviewed_source_ts": [
+    "1787310593.192749",
     "1787303607.220099",
     "1787295484.419209",
     "1779725135.414829",
@@ -716,6 +717,47 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-21T22:39:34+09:00",
+      "selected": {
+        "id": "sr-1787310593-ecf749dd77",
+        "source_ts": "1787310593.192749",
+        "title": "Do Geometry-Aware Positional Encodings Help Transformers in Spatial Imperfect-Information Games?",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・operation・evaluation を含む8タグを持つ最新 atom だったため1件だけ選んだ。geometry feature の効果を representation probe、gold belief、offline imitation、closed-loop gameplay の四段へ分け、どこで改善が消えるかを特定する知見が、次の hidden-state game evaluation で既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件と全必須閾値を満たす。shared-reads 本文は、同一 backbone／学習予算で位置情報なし・RectRel・AxialRoPE・HexRoPE・Graph bias を比較し、deterministic geometry probe、exact-Bayes belief、1,000／10,000局の模倣、三 seed・7,200局の閉ループ対戦を分離している。HexRoPE は D6 belief CE を0.278、radius-4を0.329低減し、少量データの模倣を4.63ポイント改善する一方、集計勝率差は-1.56ポイントで、matchup別には正負が分かれる。上流 metric の改善を policy success と誤認しない具体的な反例、信頼区間、限界まで本文にあるため relevance・actionability・evidence は3とした。probe-20260605-agent-eval-attribution-split は結果の帰属、probe-20260612-checkable-intermediate-state は検査可能な中間状態、probe-20260625-triex-belief-reasoning-oracle-audit は belief／action／oracle、probe-20260616-proxy-segment-fragility は集計 proxy と segment の不一致を既に扱う。一方、本 atom 固有の差は representation→belief→imitation→closed-loop を同一 experiment id でつなぎ、最初に改善が消える段を採否境界にする点なので non_redundancy は2とした。ただし現在の staging には hidden-state mechanic、gold posterior 列挙器、同一 build／seed の四段 artifact がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。consumer_phase・trigger_artifact・expected_delta・lease_due を比較可能に指定できないため active_probes・metric・ledger・directive・恒久ルールは追加せず state-only defer とする。",
+      "existing_controls": [
+        "probe-20260605-agent-eval-attribution-split",
+        "probe-20260612-checkable-intermediate-state",
+        "probe-20260625-triex-belief-reasoning-oracle-audit",
+        "probe-20260616-proxy-segment-fragility"
+      ],
+      "defer_condition": "hidden-state mechanic を持つ具体的な playable／headless artifact が現れ、同一 experiment id で deterministic representation probe、列挙可能な belief gold、固定 replay imitation、固定 seed closed-loop outcome を保存でき、既存4 controlsだけでは改善が消える最初の段を採否へ接続できない時に限り、一時 probe または metric として再評価する。",
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、四段 evaluation ladder の固有差、既存 attribution／intermediate-state／belief-oracle／proxy-segment controls との境界、比較可能な hidden-state artifact 不在による defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-21T20:13:30+09:00",
       "selected": {

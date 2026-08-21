@@ -61,7 +61,39 @@ skipped: []
 - 投稿前レビュー: 4,065字。必須6項目、`■ 概要` 始まり、末尾 `■ URL`、URL末尾集約、禁止語なし、同一 URL の既投稿なしを確認。`tools/post_slack_message_file.py` で policy check と Slack 保存本文の文字化け検証を通過した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787310593-ecf749dd77
+    source_ts: "1787310593.192749"
+    title: "Do Geometry-Aware Positional Encodings Help Transformers in Spatial Imperfect-Information Games?"
+    reason: "score 10 の未レビュー最新 atom 1件。representation→belief→imitation→closed-loop の改善消失点が次の hidden-state game evaluation に固有の判断差を作るか確認した。Nao_u の明示的な重要評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: defer
+  decision_reason: "数値上は採用条件を満たすが、現在の staging に hidden-state mechanic、gold posterior 列挙器、同一 build／seed の四段比較 artifact がなく、後続 Phase 4a は memory cleanup で実 consumer ではない。consumer_phase・trigger_artifact・expected_delta・lease_due を具体化できないため state-only review とした。"
+  existing_controls:
+    - probe-20260605-agent-eval-attribution-split
+    - probe-20260612-checkable-intermediate-state
+    - probe-20260625-triex-belief-reasoning-oracle-audit
+    - probe-20260616-proxy-segment-fragility
+  change:
+    summary: "reviewed_source_ts と defer 理由のみ更新。active_probes・ledger・directive・恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
