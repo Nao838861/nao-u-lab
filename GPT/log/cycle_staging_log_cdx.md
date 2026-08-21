@@ -101,7 +101,35 @@ reason: "Phase 2 の pass が空のため、#shared-reads への投稿対象な�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779972076-8156dc0a8f
+    source_ts: "1779972076.849019"
+    title: "C242『予測軌跡+×印削除』参照断片"
+    reason: "source=slack_api/shared-reads、score=10、未レビューで、memory・game-design・operation の優先タグを持つ候補のうち source_ts が最新だったため1件だけ選んだ。Nao_u の批判原文を参照するが、本 atom 自体への重要評価はなく、分割投稿末尾の参照先2行だけを独立知見として採用できるか確認した。"
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 8
+  decision: reject
+  decision_reason: "atom 単独では方法・比較・変更前後の観測・適用限界を復元できず、リンク先の正本は Claude/memory/feedback_inside_to_outside_leak.md で既に refine 済み。probe-20260616-short-horizon-prediction-failsafe とも重複するため、分割断片を別 control にすると provenance を失ったルールと確認負荷だけが増える。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-22T00:45:28+09:00",
+  "updated_at": "2026-08-22T02:44:06+09:00",
   "reviewed_source_ts": [
+    "1779972076.849019",
     "1787318812.905849",
     "1787310593.192749",
     "1787303607.220099",
@@ -718,6 +719,45 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-22T02:44:06+09:00",
+      "selected": {
+        "id": "sr-1779972076-8156dc0a8f",
+        "source_ts": "1779972076.849019",
+        "title": "C242『予測軌跡+×印削除』参照断片",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、memory・game-design・operation の優先タグを持つ候補のうち source_ts が最新だったため1件だけ選んだ。Nao_u の『予測軌跡+×印が逆にわかりにくい』という批判原文を参照するが、本 atom 自体を『重要』『適切』『自分に反映してほしい』と評価した記録はなく、分割投稿末尾の参照先2行だけを独立知見として採用できるか確認した。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 1,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 8
+      },
+      "decision": "reject",
+      "decision_reason": "合計8で採用条件の14に届かず、actionability と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。本 atom の excerpt は C242 の変更先と Nao_u 批判原文の所在を示す2行だけで、方法、比較条件、変更前後の観測、Boghog 原典、適用限界を単独では保持していない。リンクされた GPT 側 memory/feedback_inside_to_outside_leak.md も存在せず、正本は Claude/memory/feedback_inside_to_outside_leak.md にあり、そこでは内側→外側流出、telegraph は inherently 悪ではないという refine、Boghog の追記候補まで既に記録済みである。さらに probe-20260616-short-horizon-prediction-failsafe が予測 horizon、fail-safe、telegraph、readability claim の境界を扱うため、本断片から別 control を作っても次回判断は変わらず non_redundancy は0。分割投稿断片を独立した高品質知見として一般化すると provenance と文脈を失ったルールを増やすため risk_control は1とし、reviewed state だけを閉じる。",
+      "existing_controls": [
+        "D:/AI/Nao_u_BOT/Claude/memory/feedback_inside_to_outside_leak.md",
+        "probe-20260616-short-horizon-prediction-failsafe",
+        "shared-reads source message ts=1779972076.794739/.823599"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、分割投稿末尾の参照断片は単独 evidence として不足し、Claude 側正本と既存 prediction/readability probe に吸収済みであるため reject した理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-22T00:45:28+09:00",
       "selected": {
