@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2008.12937"
 collected_at: "2026-08-21T22:01:32+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, player-modeling, difficulty, churn, automated-playtesting]
+evaluated_at: "2026-08-21T22:04:59+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-21T22:04:59+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-21T22:04:59+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-20"
+supersedes: []
+gate_reason: >-
+  単一 bot の難易度推定と、進行に伴って構成が変わる仮想プレイヤー集団を分離する着想が明確で、
+  168レベル・95,266人、交差検証、ablation、限界まで揃う。複数ステージ型ゲームの headless 評価へ
+  population layer だけを小さく移植でき、CoopEval 水準の概要と批判的な適用分析を構成できる。
+suggested_post_outline:
+  overview_angle: "AI の平均成功率を人間の離脱予測と同一視せず、難易度推定器の上に変化するプレイヤー集団モデルを重ねる二層構造を軸にする"
+  analysis_axis: "難易度 estimator と population dynamics の責務分離、交差検証・ablation が示す寄与、DRL の human-likeness と実運用未検証という限界"
+  application_target: "Log_cdx が複数ステージ型ゲームプロトタイプを headless 評価する際、既存 bot の成功率列に skill・persistence・boredom の軽量集団シミュレーションを重ね、序盤離脱による survivor bias と難度曲線を検査する"
+  pros_cons: "長所は bot の再学習なしにプレイヤー差と進行順を低コストで試せること。短所は初期分布の同定に実測データが要り、難易度推定器が人間らしくないと誤差が支配的になること"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
