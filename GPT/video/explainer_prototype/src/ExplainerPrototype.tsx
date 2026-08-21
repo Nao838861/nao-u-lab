@@ -426,32 +426,45 @@ const DevelopmentTitleScene: React.FC<{durationInFrames: number}> = ({durationIn
   );
 };
 
-const DevVideoFrame: React.FC<{src: string; children?: React.ReactNode}> = ({src, children}) => (
-  <div style={{position: 'absolute', left: 40, top: 135, width: 760, height: 570, padding: 8, boxSizing: 'border-box', background: C.panel, border: '2px solid #47434e'}}>
-    <OffthreadVideo src={staticFile(src)} muted style={{width: '100%', height: '100%', objectFit: 'contain', background: '#000', imageRendering: 'pixelated'}} />
+const DevVideoFrame: React.FC<{src: string; children?: React.ReactNode; loopDurationInFrames?: number}> = ({src, children, loopDurationInFrames}) => (
+  <div style={{position: 'absolute', left: 40, top: 135, width: 760, height: 570, overflow: 'hidden', padding: 8, boxSizing: 'border-box', background: C.panel, border: '2px solid #47434e'}}>
+    {loopDurationInFrames ? (
+      <Loop durationInFrames={loopDurationInFrames} layout="none">
+        <OffthreadVideo src={staticFile(src)} muted style={{width: '100%', height: '100%', objectFit: 'contain', background: '#000', imageRendering: 'pixelated'}} />
+      </Loop>
+    ) : (
+      <OffthreadVideo src={staticFile(src)} muted style={{width: '100%', height: '100%', objectFit: 'contain', background: '#000', imageRendering: 'pixelated'}} />
+    )}
     {children}
   </div>
 );
 
 const DevelopmentDay1Scene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 450}) => {
   const frame = useCurrentFrame();
-  const groundBands = [6, 7, 8, 9, 10, 12, 14, 16, 19, 22, 26, 30, 34];
+  const groundRows = [1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5].flatMap((runLength, bandIndex) =>
+    Array.from({length: runLength}, () => bandIndex % 2),
+  );
   return (
     <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '36px 48px 0', boxSizing: 'border-box'}}>
       <div style={{position: 'absolute', left: 48, top: 36, zIndex: 5}}>
         <Eyebrow color={C.orange}>DAY 1</Eyebrow>
         <Title size={42}>地面と拡大縮小だけ</Title>
       </div>
-      <DevVideoFrame src="dev_day1.mp4" />
+      <DevVideoFrame src="dev_day1.mp4" loopDurationInFrames={17 * 30} />
       <div style={{position: 'absolute', left: 828, top: 158, width: 404}}>
         <div style={{fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900}}>地面はライン単位</div>
         <div style={{fontFamily: FONT, color: C.dim, fontSize: 17, lineHeight: 1.6, marginTop: 14}}>Y軸ごとに白／黒の値を持ち、横一列を同じ色で塗る。</div>
-        <div style={{marginTop: 12, border: '1px solid #47434e', background: C.panel, padding: '7px 11px'}}>
-          {groundBands.map((bandHeight, i) => (
-            <div key={i} style={{display: 'flex', alignItems: 'stretch', height: bandHeight}}>
-              <span style={{width: 34, paddingTop: 1, fontFamily: MONO, color: C.dim, fontSize: 9}}>Y{i}</span>
-              <span style={{width: 18, paddingTop: 1, fontFamily: MONO, color: i % 2 ? C.white : C.dim, fontSize: 9}}>{i % 2}</span>
-              <span style={{flex: 1, background: i % 2 ? C.white : '#050507', borderLeft: '1px solid #47434e', borderRight: '1px solid #47434e'}} />
+        <div style={{marginTop: 12, border: '1px solid #47434e', background: C.panel, padding: '7px 11px 9px'}}>
+          <div style={{display: 'flex', height: 18, fontFamily: MONO, color: C.dim, fontSize: 9, fontWeight: 900}}>
+            <span style={{width: 40}}>走査線</span>
+            <span style={{width: 24}}>値</span>
+            <span>横一列の色</span>
+          </div>
+          {groundRows.map((value, y) => (
+            <div key={y} style={{display: 'flex', alignItems: 'stretch', height: 9}}>
+              <span style={{width: 40, fontFamily: MONO, color: C.dim, fontSize: 8}}>Y{y}</span>
+              <span style={{width: 24, fontFamily: MONO, color: value ? C.white : C.dim, fontSize: 8, fontWeight: 900}}>{value}</span>
+              <span style={{flex: 1, background: value ? C.white : '#050507', borderLeft: '1px solid #47434e', borderRight: '1px solid #47434e'}} />
             </div>
           ))}
         </div>
