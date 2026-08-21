@@ -440,7 +440,7 @@ const DevelopmentDay1Scene: React.FC<{durationInFrames?: number}> = ({durationIn
   const frame = useCurrentFrame();
   const groundRows = [1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5].flatMap((runLength, bandIndex) =>
     Array.from({length: runLength}, () => bandIndex % 2),
-  );
+  ).slice(0, 23);
   return (
     <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '36px 48px 0', boxSizing: 'border-box'}}>
       <div style={{position: 'absolute', left: 48, top: 36, zIndex: 5}}>
@@ -448,19 +448,14 @@ const DevelopmentDay1Scene: React.FC<{durationInFrames?: number}> = ({durationIn
         <Title size={42}>地面と拡大縮小だけ</Title>
       </div>
       <DevVideoFrame src="dev_day1.mp4" loopDurationInFrames={17 * 30} />
-      <div style={{position: 'absolute', left: 828, top: 158, width: 404}}>
+      <div style={{position: 'absolute', left: 818, top: 158, width: 422}}>
         <div style={{fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900}}>地面はライン単位</div>
         <div style={{fontFamily: FONT, color: C.dim, fontSize: 17, lineHeight: 1.6, marginTop: 14}}>Y軸ごとに白／黒の値を持ち、横一列を同じ色で塗る。</div>
-        <div style={{marginTop: 12, border: '1px solid #47434e', background: C.panel, padding: '7px 11px 9px'}}>
-          <div style={{display: 'flex', height: 18, fontFamily: MONO, color: C.dim, fontSize: 9, fontWeight: 900}}>
-            <span style={{width: 40}}>走査線</span>
-            <span style={{width: 24}}>値</span>
-            <span>横一列の色</span>
-          </div>
+        <div style={{marginTop: 12, border: '1px solid #47434e', background: C.panel, padding: '7px 7px 9px'}}>
           {groundRows.map((value, y) => (
-            <div key={y} style={{display: 'flex', alignItems: 'stretch', height: 9}}>
-              <span style={{width: 40, fontFamily: MONO, color: C.dim, fontSize: 8}}>Y{y}</span>
-              <span style={{width: 24, fontFamily: MONO, color: value ? C.white : C.dim, fontSize: 8, fontWeight: 900}}>{value}</span>
+            <div key={y} style={{display: 'flex', alignItems: 'stretch', height: 11}}>
+              <span style={{width: 27, fontFamily: MONO, color: C.dim, fontSize: 9}}>Y{y}</span>
+              <span style={{width: 16, fontFamily: MONO, color: value ? C.white : C.dim, fontSize: 9, fontWeight: 900}}>{value}</span>
               <span style={{flex: 1, background: value ? C.white : '#050507', borderLeft: '1px solid #47434e', borderRight: '1px solid #47434e'}} />
             </div>
           ))}

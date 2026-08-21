@@ -20,7 +20,7 @@
 | カット | 反映日 | 実装先 | 記録 |
 |---|---|---|---|
 | C01〜C03 | 2026-08-22 | `src/ExplainerPrototype.tsx` | 最新版は `video: restore C01 impact without side crop`。C01を実機映像の15秒地点へ変更し、左右を切らずに横幅いっぱいまで拡大して上下だけをトリミング。追加ズームは廃止。C02は技術説明を左上へ寄せて小型化し、前回動画URLと音声の文区切りに合わせて順番に表示。URLの常時表示を廃止 |
-| C04〜C07 | 2026-08-22 | `narration/development-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: correct C04 scanline table and looping`。C04の地面図をY0から各走査線へ0／1を並べる表へ修正し、映像が停止する前にループ。C05・C06は既存の最新指示を維持し、C07は今回未変更 |
+| C04〜C07 | 2026-08-22 | `narration/development-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: simplify C04 scanline diagram`。C04の地面図をY0〜Y22の0／1と横長の白黒帯だけに簡略化し、映像が停止する前のループを維持。C05・C06は既存の最新指示を維持し、C07は今回未変更 |
 | C08・C10（C09は欠番） | 2026-08-21 | `narration/drawing-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: correct C08-C10 narration and block highlights`。C10は生成後の文字起こしでも読み上げ内容を確認し、分類ごとの全ブロック強調へ更新 |
 | C11〜C13 | 2026-08-21 | `narration/benefit-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: clarify C13 dedicated program label`。C13を簡潔な音声指示で再生成したうえで、画面内の説明を「絵ごとに専用のプログラムを追加」へ更新 |
 | C14〜C16 | 2026-08-21 | `narration/constraint-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: rebuild C14-C16 narration naturally`。個別語句の明瞭発音指定を廃止し、自然な説明調で3カットを再生成。C15は最新原稿へ更新し、既存の0.3秒移動ループとC16の1秒点灯を維持 |
