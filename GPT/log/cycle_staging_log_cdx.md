@@ -9,7 +9,50 @@
 - duplicate preflight: `continue`（同一 URL / canonical title / open duplicate group なし）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260821_godot_lightweight_feedback_loop.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-08-21T13:46:04+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260821_godot_lightweight_feedback_loop.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260821_godot_lightweight_feedback_loop.md
+  valid_backlog_after: 0
+duplicate_preflight:
+  memory/shared_reads_candidates/20260821_godot_lightweight_feedback_loop.md: continue
+decision_notes:
+  memory/shared_reads_candidates/20260821_godot_lightweight_feedback_loop.md: >-
+    pass。Godot の「軽量性」を編集から個別確認までの短い feedback loop として具体化し、
+    shader 制約と定量比較不足も含めてゲーム制作環境の評価軸へ接続できる。
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
