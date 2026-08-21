@@ -68,7 +68,51 @@ skipped: []
 - 投稿前 review: 必須6項目と順序、`■ 概要` 始まり、末尾 `■ URL`、禁止表現なし、1 candidate / 1 `chat.postMessage` を確認。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787280208-e6e11bfcd6
+    source_ts: "1787280208.018329"
+    title: "QTris — 量子過程を盤面準備・カード操作・確率測定へ写像する教材ゲーム"
+    reason: >-
+      source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・operation・evaluation
+      の5優先タグを含む最新候補だったため1件だけ選んだ。構造写像と trained／holdout 分離が既存 control と異なる
+      次回行動を作れるか確認した。Nao_u の明示的な重要・適切・自己反映評価は確認できなかった。
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: >-
+    合計13で採用条件の14に届かず、risk_control も必須閾値2を下回る。QTris は状態・決定論的操作・確率観測の
+    対応と、概念問題90.5%に対する操作問題56.3%、未練習の Orientation 測定10.6%という転移失敗を示すが、
+    対照群・事前／遅延test・講義のみ条件はなく、現在の staging に教材ゲームまたは確率 mechanic の比較 artifact もない。
+    既存の temporal-predicate-as-mechanic、game-learning-hypothesis-trace、tutorial-order-controller-sensitivity が
+    抽象命題の操作可能状態化、first exposure／仮説更新／transfer、学習曲線と controller 差を覆い、直近の Puzzledorf
+    review も同型の命題→制約→feedback→転移を reject 済みである。active_probes 326件へ同義 control を足す確認負荷と
+    単群直後結果の過剰一般化 risk が判断差を上回るため、state-only review とした。
+  existing_controls:
+    - probe-20260711-temporal-predicate-as-mechanic
+    - probe-20260604-game-learning-hypothesis-trace
+    - probe-20260720-tutorial-order-controller-sensitivity
+  change:
+    summary: >-
+      reviewed_source_ts と採点・reject 理由だけを記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは
+      変更していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-21T11:48:18+09:00",
+  "updated_at": "2026-08-21T14:00:34+09:00",
   "reviewed_source_ts": [
+    "1787280208.018329",
     "1787272857.895239",
     "1787265764.020219",
     "1779625812.745299",
@@ -712,6 +713,45 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-21T14:00:34+09:00",
+      "selected": {
+        "id": "sr-1787280208-e6e11bfcd6",
+        "source_ts": "1787280208.018329",
+        "title": "QTris — 量子過程を盤面準備・カード操作・確率測定へ写像する教材ゲーム",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを含む最新候補だったため1件だけ選んだ。題材の因果構造を状態・決定論的操作・確率観測へ写像し、概念再認と未提示操作への転移を分ける知見が、既存 control と異なる次回行動を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、Color／Orientation、4種の状態、Pauli／Hadamard カード、d100測定を量子状態・ユニタリ操作・Born則へ対応づけ、約150人への講義＋基本ゲーム後の有効回答142件で概念7問90.5%に対し操作列5問56.3%、ゲーム中に練習しなかった Orientation 測定 Q11 は10.6%だったと示す。対照群・事前／遅延test・講義のみ条件がなくゲーム固有の教育効果は分離できないが、写像表と誤答の形は具体的なので evidence は3とした。状態／操作／観測／報酬の対応表、既知課題と未提示組合せの holdout、確率値・観測対象・操作順の誤り分離へは変換できるが、現在の staging には教材ゲーム、確率 mechanic、通常課題と holdout を比較できる playable artifact がなく、直後の Phase 4a は memory cleanup なので actionability は2。probe-20260711-temporal-predicate-as-mechanic は抽象命題を player が操作可能な状態・成功条件・deterministic trace へ埋め込むことを、probe-20260604-game-learning-hypothesis-trace は first exposure・仮説更新・後続 level への transfer を、probe-20260720-tutorial-order-controller-sensitivity は学習曲線・segment入口失敗・複数 controller を既に扱う。直近の Puzzledorf review も『命題→制約→feedback→転移』を同じ重複理由で reject 済みで、QTris 固有の決定論的操作／確率観測の分離だけでは既存3 control の採否を変える独立差が小さいため non_redundancy は1。active_probes は326件あり、比較 artifact なしに教育ゲームの単群直後結果を memory recall や全 game design へ広げると、確認負荷と過剰一般化が判断差を上回るため risk_control は1とした。次に具体的な確率 mechanic または教材 prototype で既存3 control だけでは trained／holdout の判断が分かれる artifact が出た時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260711-temporal-predicate-as-mechanic",
+        "probe-20260604-game-learning-hypothesis-trace",
+        "probe-20260720-tutorial-order-controller-sensitivity"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、QTris の構造写像・概念／操作転移分離の有用性、既存 abstract-mechanic／learning-trace／tutorial-order controls との重複、比較 artifact 不在による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-21T05:42:12+09:00",
       "selected": {
