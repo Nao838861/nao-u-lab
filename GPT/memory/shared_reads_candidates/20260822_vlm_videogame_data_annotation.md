@@ -4,6 +4,20 @@ url: https://arxiv.org/abs/2608.05949
 collected_at: "2026-08-22T00:33:36+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, automated-playtesting, vlm, dataset-annotation, reward-modeling]
+evaluated_at: "2026-08-22T00:39:57+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-22T00:39:57+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-22T00:39:57+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-21"
+supersedes: []
+gate_reason: >-
+  sequence 長、解像度、質問 batching、複数 VLM 出力 mixing を分離して検証する軸は、画面観測型 playtest 判定器へ直接適用できる。
+  ただし保存済み資料では使用モデル、比較条件、品質指標、token 消費と失敗率の実測値が不足し、約4000字の概要を推測なしで書けないため保留する。
 ---
 
 ## raw_excerpt

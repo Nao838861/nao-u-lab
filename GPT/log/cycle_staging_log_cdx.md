@@ -14,7 +14,53 @@
 - Phase 1 では品質判定・4000字概要・Slack 投稿・記憶階層改修を行っていない。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 3
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260822_vlm_annotated_conditioned_game_agent.md
+    reason: モデル構成・学習条件・初期実験の結果値と失敗内訳が不足
+  - path: memory/shared_reads_candidates/20260822_pharos_night_ai_native_deckbuilding.md
+    reason: 同一URLの既存postponed siblingと同じabstract範囲でplaytest内訳が不足
+  - path: memory/shared_reads_candidates/20260822_vlm_videogame_data_annotation.md
+    reason: 使用モデル・比較条件・品質指標・token消費の実測値が不足
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 3
+  malformed_count: 0
+  oldest_collected_at: "2026-08-22T00:32:38+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260822_vlm_annotated_conditioned_game_agent.md
+    - memory/shared_reads_candidates/20260822_pharos_night_ai_native_deckbuilding.md
+    - memory/shared_reads_candidates/20260822_vlm_videogame_data_annotation.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260822_vlm_annotated_conditioned_game_agent.md
+    - memory/shared_reads_candidates/20260822_pharos_night_ai_native_deckbuilding.md
+    - memory/shared_reads_candidates/20260822_vlm_videogame_data_annotation.md
+  valid_backlog_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

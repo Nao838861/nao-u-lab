@@ -4,6 +4,20 @@ url: https://arxiv.org/abs/2608.05954
 collected_at: "2026-08-22T00:32:38+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, automated-playtesting, vlm, offline-rl, reward-design]
+evaluated_at: "2026-08-22T00:39:57+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-22T00:39:57+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-22T00:39:57+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-21"
+supersedes: []
+gate_reason: >-
+  VLM reward 注釈から desired return 条件付き offline RL へ繋ぐ問題設定とゲーム映像ログへの適用先は具体的である。
+  ただし保存済み資料ではモデル構成、学習条件、初期実験の結果値と失敗内訳が不足し、約4000字の概要を推測なしで支えられないため保留する。
 ---
 
 ## raw_excerpt
