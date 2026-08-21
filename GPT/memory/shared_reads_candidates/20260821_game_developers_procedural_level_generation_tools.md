@@ -4,6 +4,21 @@ url: https://www.pcgworkshop.com/archive/endrovski2026developers.pdf
 collected_at: "2026-08-21T15:45:53+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, procedural-generation, level-design, tools, developer-survey]
+evaluated_at: "2026-08-21T15:50:33+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-21T15:50:33+09:00"
+last_decision: postponed
+duplicate_reason: duplicate_of_terminal_sibling
+evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260608_pcg_level_generation_practitioner_needs.md; permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780853278343919"
+next_action: none
+stale_after: "2026-09-20"
+supersedes: []
+gate_reason: >-
+  同一タイトルの既存 candidate は、同じ120人調査、職種別採用差、creative control / transparency という同一の結果を扱い、すでに4454字で投稿済み。
+  URL は掲載ページと PDF mirror で異なるが独立資料ではないため、Phase 3 の再投稿対象から外す。
 ---
 
 ## raw_excerpt
