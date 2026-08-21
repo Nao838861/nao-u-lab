@@ -7,12 +7,17 @@ genre_tags: [game-ai, multi-agent, social-games, evaluation, self-play, reflecti
 evaluated_at: "2026-08-22T04:34:21+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-22T04:34:21+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-22T04:34:21+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-22T04:40:22.261219+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787341222261219"
+next_action: none
+posted:
+  ts: "1787341222.261219"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787341222261219"
+  char_count: 4482
+  posted_at: "2026-08-22T04:40:22.261219+09:00"
 stale_after: "2026-09-21"
 supersedes: []
 gate_reason: >-

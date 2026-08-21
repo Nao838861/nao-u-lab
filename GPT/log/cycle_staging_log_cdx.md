@@ -53,7 +53,18 @@ decision_notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260822_social_gym_spartan_multi_agent_game_tournaments.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787341222261219"
+    char_count: 4482
+skipped: []
+review:
+  policy: pass
+  duplicate_preflight: continue
+  stored_text_verification: ok
+  decision: "Social Gym の規則確定 outcome、role/seat 均衡、per-role 評価と、SPaRTan の非単調・model 依存な失敗条件まで記事固有に説明し、headless 評価と scoped playbook probe への適用を具体化できたため投稿。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
