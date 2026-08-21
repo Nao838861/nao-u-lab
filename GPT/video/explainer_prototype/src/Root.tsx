@@ -2,6 +2,7 @@ import React from 'react';
 import {Composition} from 'remotion';
 import {
   BenefitNarrationPreview,
+  C01C17NarrationPreview,
   ConstraintNarrationPreview,
   DevelopmentNarrationPreview,
   DrawingNarrationPreview,
@@ -9,6 +10,7 @@ import {
   LaterNarrationPreview,
   WorkflowNarrationPreview,
 } from './ExplainerPrototype';
+import {c01C17NarrationDurationInFrames} from './c01C17NarrationTiming';
 import {benefitNarrationDurationInFrames} from './benefitNarrationTiming';
 import {constraintNarrationDurationInFrames} from './constraintNarrationTiming';
 import {developmentNarrationDurationInFrames} from './developmentNarrationTiming';
@@ -85,6 +87,14 @@ export const RemotionRoot: React.FC = () => {
         id="WorkflowNarrationPreview"
         component={WorkflowNarrationPreview}
         durationInFrames={workflowNarrationPreviewDurationInFrames}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      <Composition
+        id="C01C17NarrationPreview"
+        component={C01C17NarrationPreview}
+        durationInFrames={c01C17NarrationDurationInFrames}
         fps={30}
         width={1280}
         height={720}

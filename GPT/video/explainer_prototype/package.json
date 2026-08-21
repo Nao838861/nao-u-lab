@@ -35,6 +35,7 @@
     "render:constraint-preview": "remotion render src/index.ts ConstraintNarrationPreview out/完成版/explainer_narration_C14-C16.mp4 --codec=h264 --crf=18",
     "render:later-preview": "remotion render src/index.ts LaterNarrationPreview out/完成版/explainer_narration_C17-C19.mp4 --codec=h264 --crf=18",
     "render:workflow-preview": "remotion render src/index.ts WorkflowNarrationPreview out/完成版/explainer_narration_C20-C23.mp4 --codec=h264 --crf=18",
+    "render:c01-c17": "remotion render src/index.ts C01C17NarrationPreview out/完成版/explainer_narration_C01-C17.mp4 --codec=h264 --crf=18",
     "still": "remotion still src/index.ts ExplainerPrototype out/explainer_prototype_preview.png --frame=885"
   },
   "dependencies": {

@@ -17,6 +17,7 @@ import {
   c01Timing,
   c02Timing,
   c03Timing,
+  narrationPreviewDurationInFrames,
   narrationTimingOffset,
 } from './narrationTiming';
 import {
@@ -24,12 +25,15 @@ import {
   c05Timing,
   c06Timing,
   c07Timing,
+  developmentNarrationDurationInFrames,
 } from './developmentNarrationTiming';
 import {
   c08Timing,
   c10Timing,
+  drawingNarrationDurationInFrames,
 } from './drawingNarrationTiming';
 import {
+  benefitNarrationDurationInFrames,
   c11Timing,
   c12Timing,
   c13Timing,
@@ -38,6 +42,7 @@ import {
   c14Timing,
   c15Timing,
   c16Timing,
+  constraintNarrationDurationInFrames,
 } from './constraintNarrationTiming';
 import {
   c17Timing,
@@ -48,6 +53,7 @@ import {
   c22Timing,
   c23Timing,
 } from './laterNarrationTiming';
+import {c01C17GroupStartFrames} from './c01C17NarrationTiming';
 
 const C = {
   bg: '#050507',
@@ -2033,6 +2039,31 @@ export const LaterNarrationPreview: React.FC = () => {
       <Sequence from={c19Timing.startFrame} durationInFrames={c19Timing.durationFrames}>
         <FrameTimelineScene durationInFrames={c19Timing.durationFrames} />
         <Audio src={staticFile('narration/later/C19.wav')} volume={0.95} />
+      </Sequence>
+    </AbsoluteFill>
+  );
+};
+
+export const C01C17NarrationPreview: React.FC = () => {
+  return (
+    <AbsoluteFill style={{backgroundColor: C.bg}}>
+      <Sequence from={c01C17GroupStartFrames.c01} durationInFrames={narrationPreviewDurationInFrames}>
+        <ExplainerPrototype />
+      </Sequence>
+      <Sequence from={c01C17GroupStartFrames.c04} durationInFrames={developmentNarrationDurationInFrames}>
+        <DevelopmentNarrationPreview />
+      </Sequence>
+      <Sequence from={c01C17GroupStartFrames.c08} durationInFrames={drawingNarrationDurationInFrames}>
+        <DrawingNarrationPreview />
+      </Sequence>
+      <Sequence from={c01C17GroupStartFrames.c11} durationInFrames={benefitNarrationDurationInFrames}>
+        <BenefitNarrationPreview />
+      </Sequence>
+      <Sequence from={c01C17GroupStartFrames.c14} durationInFrames={constraintNarrationDurationInFrames}>
+        <ConstraintNarrationPreview />
+      </Sequence>
+      <Sequence from={c01C17GroupStartFrames.c17} durationInFrames={c17Timing.durationFrames}>
+        <LaterNarrationPreview />
       </Sequence>
     </AbsoluteFill>
   );
