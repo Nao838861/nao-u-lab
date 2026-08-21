@@ -111,7 +111,67 @@ self_feedback:
 - state-only review。採用条件（合計14以上、risk_control 2以上）を満たさないため、probe lifecycle ledger への enqueue は行っていない。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語（記憶・ゲーム設計・敵パターン・評価軸）を確認。Markdown local link は 0 件で broken link も 0 件。"
+  - "memory_health と atom mirror audit を実行。2936 atom の atoms.jsonl / per-file / index は一致し、ID 重複・content conflict・parse error は 0 件。raw normalized-content 重複 40 群は canonical overlay に収載済み。"
+  - "memory/raw/ の30日超ファイル 242 件を確認（web_research 217、headless_eval 16、slack_api 6、その他 3）。一次証拠・既存 archive・稼働中 sync state であり、今回の archive 移動対象は 0 件。"
+  - "shared-reads の mixed/open/stale/group-action sidecar を再生成・監査（mixed 27 群、open 31 群、stale triage 0 件、actionable 0 群）。生成物の内容差分は 0 件。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件。handled 更新対象なし。"
+  - "candidate/group handoff inbox を監査し、双方 pending 0 件・error 0 件。今回の enqueue は双方 0 件。"
+issues:
+  - id: ISS-UTF8-ATOM-001
+    description: "atom sr-1776127289-4d9239b255 の『エージェント』部分が literal U+FFFD 2文字を含む。memory_health のもう1件の suspect（gr-1777083728-44d444ab7a）は本文中の意図された『???』による false positive。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みでも raw Slack archive、atoms.jsonl、per-file .md の3層すべてに U+FFFD が実在するため source data の局所破損。MEMORY.md の代表語4種は正常。"
+    display_or_tooling_status: "PowerShell Get-Content -Encoding UTF8 と rg が同じ U+FFFD を表示しており、shell/staging 表示だけの mojibake ではない。"
+    why_blocks_game_memory: "当該 atom は tags と他の語では検索できるが、『エージェント』完全一致検索と title 可読性を局所的に損なう。1 atom 限定で次ゲーム制作の想起経路全体は塞いでいない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+candidate_lifecycle:
+  counts:
+    posted: 672
+    ready_to_post: 9
+    postponed: 202
+    failed: 497
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_open_total: 4
+  overdue_disposition: "2つの all-open duplicate group として既存 deferred lease が保持。両 group とも retry_after=2026-09-19T14:08:16+09:00 のため、現在は再評価 queue から除外。"
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 27
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+stale_review_batch: []
+```
+
+- `overdue_open_total > stale_triage_queue_rows` だが actionable group は 0 件で、高水位条件の後半（actionable 3件以上）を満たさない。既存 deferred lease の期限前なので fail-open 再提示は行わなかった。
+- Phase 4b/4c は起動しない。ISS-UTF8-ATOM-001 は局所的な source repair 候補であり、新しい仕組みの設計を要しない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
