@@ -7,12 +7,12 @@ genre_tags: [game-design, player-experience, generative-ai, npc, mechanics, user
 evaluated_at: "2026-08-21T18:06:55.5750350+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-21T18:06:55.5750350+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-21T18:06:55.5750350+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-21T18:13:27.220099+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787303607220099"
+next_action: none
 stale_after: "2026-09-20"
 supersedes: []
 gate_reason: >-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Log_cdxのゲームprototypeで生成内容をcore loopの状態遷移とNPCフィードバックへ別々に接続し、各層を切り替えるablation playtestに使う"
   pros_cons: "実装層と評価条件の対応が明確な一方、単一の短時間2D farming prototypeと自己報告指標に一般化が制約される"
   verdict_pre: "部分採用"
+posted:
+  ts: "1787303607.220099"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787303607220099"
+  char_count: 4382
+  posted_at: "2026-08-21T18:13:27.220099+09:00"
 ---
 
 ## raw_excerpt
