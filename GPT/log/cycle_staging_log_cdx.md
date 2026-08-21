@@ -66,7 +66,40 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779725135-94ed1462de
+    source_ts: "1779725135.414829"
+    title: "One Policy, Infinite NPCs: Persona-Traceable Shared RL Policies for Scalable Game Agents"
+    reason: "score 12 の未レビューかつ自己完結した1件。persona を台詞ではなく observable trajectory として評価する知見が、game-agent／headless 評価の次回行動を変えるか確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "採用閾値14に届かず、risk_control も必須閾値2未満。task_success／style_adherence 分離、同条件 paired run、複数 persona の共通ログ、behavior slice、固定 persona と動的行動の境界は既存4 probe が既に扱うため、新規 control は判断差より重複を増やす。"
+  existing_controls:
+    - probe-20260708-coachable-agent-style-task-split
+    - probe-20260515-persona-headless-comparison
+    - probe-20260609-game-agent-behavior-slice-boundary
+    - probe-20260612-fixed-persona-dynamic-behavior-boundary
+  change:
+    summary: "reviewed_source_ts と state-only reject 理由を記録。active_probes・ledger・directive・恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

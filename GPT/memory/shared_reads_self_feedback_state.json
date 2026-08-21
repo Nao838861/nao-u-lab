@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-21T14:00:34+09:00",
+  "updated_at": "2026-08-21T16:03:46+09:00",
   "reviewed_source_ts": [
+    "1779725135.414829",
     "1787280208.018329",
     "1787272857.895239",
     "1787265764.020219",
@@ -713,6 +714,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-21T16:03:46+09:00",
+      "selected": {
+        "id": "sr-1779725135-94ed1462de",
+        "source_ts": "1779725135.414829",
+        "title": "One Policy, Infinite NPCs: Persona-Traceable Shared RL Policies for Scalable Game Agents",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、memory・skills・harness・game-design・agent・identity・knowledge・evaluation の8タグを持つ自己完結した投稿だったため1件だけ選んだ。人格記述を台詞ではなく観測可能な行動 trajectory へ変換し、task success と persona adherence を分ける知見が、現在の game-agent／headless 評価に既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、free-form persona を frozen LLM embedding と low-rank conditioning で shared RL policy へ注入し、InfoNCE trajectory-consistency と KL diversity を用いる構成を説明する。300 persona、zero-shot persona identification が chance の最大17倍、semantic-behavioral alignment の Spearman rho 約0.73、LLM-as-policy 比22倍高速、InfoNCE 除去で identification が chance まで崩れる ablation、UE5 での64 agent 実装まで示すため relevance・actionability・evidence は3とした。一方、probe-20260708-coachable-agent-style-task-split は task_success と style_adherence の別記録、同一 seed／route／scenario の paired run をそのまま要求する。probe-20260515-persona-headless-comparison は複数 persona の同一 seed／build 比較と到達率・死亡地点・収集数等の共通ログ、probe-20260609-game-agent-behavior-slice-boundary は movement／aiming／survival 等の behavior slice 分離、probe-20260612-fixed-persona-dynamic-behavior-boundary は固定 persona と state-conditioned behavior の境界を既に扱う。したがって本 atom の operational translation は既存4 controls に完全に吸収され、non_redundancy は0。active_probes が326件ある状態で persona-traceability の同義 probe を足すと確認負荷が増え、RL benchmark の persona 識別を player が読める人格・面白さ・一般的な NPC 品質へ過剰一般化する risk が判断差を上回るため risk_control は1とした。次の該当 game-agent 評価では新規 control を足さず、既存 probe-20260708-coachable-agent-style-task-split を優先して適用する。",
+      "existing_controls": [
+        "probe-20260708-coachable-agent-style-task-split",
+        "probe-20260515-persona-headless-comparison",
+        "probe-20260609-game-agent-behavior-slice-boundary",
+        "probe-20260612-fixed-persona-dynamic-behavior-boundary"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、persona を observable trajectory で評価する有用性、既存 style／persona／behavior-slice controls との完全重複、RL 指標を player-facing 品質へ過剰一般化する risk による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-21T14:00:34+09:00",
       "selected": {
