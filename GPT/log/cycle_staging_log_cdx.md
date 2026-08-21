@@ -69,7 +69,35 @@ QTris を #shared-reads に投稿した。原論文本文で、基本ゲーム�
 教育効果の数値は単群の直後評価を越えて解釈しないと明記した。投稿前 policy check は 3,644 字、必須6節、禁止表現なしで pass。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787272857-38efed0ea1
+    source_ts: "1787272857.895239"
+    title: "N PLUS INFINITY TIMES TWO — 完成した core の直交方向と cut 仮説の再訪条件"
+    reason: "未レビューの score 10 atom のうち、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ最新候補。完成済み core を量的に延長せず、playtest で現れた関係性を直交 prototype へ移し、cut 案を未解決仮説と再訪条件として残す知見が、既存 control と異なる次回判断を作れるか確認した。Nao_u の明示的な重要／適切／自己反映評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "記事は、single-player core の完了、global sharing と online の費用 trade-off、8人 tournament での初見攻略・競争・先着後の役割変更・観戦反応、約1か月試作した Deathmatch の cut と Team Tag への再定義を分離しており、観察表・local/headless 比較・再訪条件付き cut record へ直接変換できる。一方、発売前の設計回顧で、5 mode、retention、matchmaking、latency、初心者格差、旧版との比較結果は未提示。core-density-before-expansion、game-scope-brief-cut-gate、paperclaw-prototype-hypothesis-contract、attempt-branch-ledger が主要判断を既に覆い、現 staging に multiplayer の before／after artifact もない。active_probes 326件へ local tournament 由来の同義 probe を足すと online／social design への過剰一般化と確認負荷が増えるため、採用閾値未達として state-only reject にした。"
+  change:
+    summary: "reviewed_source_ts と採点・reject 理由だけを記録し、active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

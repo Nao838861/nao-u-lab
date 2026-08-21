@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-21T09:46:05+09:00",
+  "updated_at": "2026-08-21T11:48:18+09:00",
   "reviewed_source_ts": [
+    "1787272857.895239",
     "1787265764.020219",
     "1779625812.745299",
     "1779726451.712149",
@@ -22190,6 +22191,46 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、MELD の五分類・順序感度・監査 Patch の固有差、既存 conflict／state／lifecycle controls との重複、比較 artifact 不在と二重正本化リスクによる reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-21T11:48:18+09:00",
+      "selected": {
+        "id": "sr-1787272857-38efed0ea1",
+        "source_ts": "1787272857.895239",
+        "title": "N PLUS INFINITY TIMES TWO — 完成した core の直交方向と cut 仮説の再訪条件",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ最新候補だったため1件だけ選んだ。完成済みの single-player core を量的に延長せず、playtest で現れた player 間の関係性を直交方向の prototype へ移し、cut 案を未解決仮説と再訪条件として残す知見が、次の game prototype で既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、N++ の single-player core は表現したかった内容を十分な品質で閉じたこと、global level sharing と online multiplayer の同時実現は費用面で断念したこと、8人の対面 tournament で初見攻略・同時競争・先着後の役割変更・観戦反応が一つの loop になったこと、約1か月試作した Deathmatch を完成度不足で cut し後年 Team Tag として再定義したことを分離している。これを core action／player 間情報／役割遷移／viewer 可読性の観察表、独立 time trial と race＋先着後一回 hazard の local/headless 比較、problem／promising_signal／unresolved_risk／revisit_condition／evidence を持つ cut record へ変換できるため relevance・actionability は3とした。一方、記事は発売前の announcement と設計回顧で、外部観察は8人の一大会と festival の定性反応が中心であり、5 mode の比較、retention、matchmaking、latency、初心者格差、旧 Deathmatch と Team Tag の同条件比較はないため evidence は2に留める。probe-20260528-core-density-before-expansion は追加を same-vector deepening／adjacent support／separate-axis expansion／opposite-vector interference に分類し、probe-20260602-game-scope-brief-cut-gate は Must／Should／Cut と拡張前の最小 risk test を、probe-20260706-paperclaw-prototype-hypothesis-contract は事前の observable verdict と support／reject／inconclusive を、probe-20260613-attempt-branch-ledger は abandoned branch と prune reason を既に扱う。本 atom 固有の multiplayer role transition と revisit condition は有用だが、現 staging には multiplayer prototype、同一 seed の time-trial／race artifact、cut branch の before／after がなく、既存4 controls の採否を今変える独立差は小さいため non_redundancy は1。active_probes は326件あり、少人数 local tournament の熱量を一般的な online／social game design へ別 probe として広げると、network・session flow・population・moderation の未検証 cost を落とし、確認負荷を増やすため risk_control は1。次に具体的な multiplayer または role-transition prototype で、既存4 controls だけでは半完成 mode の cut／再訪または separate-axis test の判断が分かれる実例が出た時だけ再評価する。",
+      "existing_controls": [
+        "probe-20260528-core-density-before-expansion",
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract",
+        "probe-20260613-attempt-branch-ledger"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、直交 prototype／役割遷移／cut 仮説の再訪条件の有用性、既存 core-density／scope-cut／hypothesis／branch controls との重複、発売前・少人数定性 evidence と online への過剰一般化 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
