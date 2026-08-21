@@ -152,4 +152,14 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787320077328459
+  char_count: 2113
+  verification: ok
+  source_file: drafts/phase5_log_diary_20260821_2247_cdx.md
+```
+
+- 今サイクルの中心を、固定的なレベル難度と進行中に選別されるプレイヤー集団を分けて考える発見に置いた。Phase 3b の defer、2,933 atom の整合確認、legacy atom 1件の UTF-8 破損も、追加しなかった理由を含めて記録した。
+- `tools/post_slack_message_file.py --delete-on-fail` でフラット投稿し、Slack API 側の保存本文検証が `ok`。文字数は目標範囲 1,700–2,300字内。
