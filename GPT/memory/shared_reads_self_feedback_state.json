@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-21T22:39:34+09:00",
+  "updated_at": "2026-08-22T00:45:28+09:00",
   "reviewed_source_ts": [
+    "1787318812.905849",
     "1787310593.192749",
     "1787303607.220099",
     "1787295484.419209",
@@ -717,6 +718,47 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-22T00:45:28+09:00",
+      "selected": {
+        "id": "sr-1787318812-12d1b5fb11",
+        "source_ts": "1787318812.905849",
+        "title": "Predicting Game Difficulty and Churn Without Players",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、harness・game-design・agent・operation・evaluation の5優先タグを持つ最新 atom だったため1件だけ選んだ。bot 難易度センサーと、stage 進行で構成が変わる仮想 cohort を分ける知見が、次の複数 stage prototype 評価で既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件と全必須閾値を満たす。shared-reads 本文は Angry Birds Dream Blast の168 level・95,266人を対象に、各 level の PPO gameplay から16特徴で人間 pass rate を推定する難易度センサーと、skill・persistence・boredom を持つ2,000人の仮想 cohort を分離している。5-fold cross-validation、各 fold 5回の最適化、最後の5分の1を外す検証、属性 ablation があり、直接回帰に対して churn MSE 0.00013→0.00008、MAE 0.00866→0.00607、末尾 holdout で MSE 0.00016→0.00003を示す一方、pass rate は baseline がわずかに良く、人間 pass rate を入力すると churn MSE がさらに71%下がる限界も本文にあるため relevance・actionability・evidence は3とした。probe-20260616-relative-difficulty-regression-calibration は bot を相対難度へ限定し、probe-20260710-procedural-persona-divergence は同一 seed の複数 persona 比較、probe-20260609-dda-proxy-rule-trace は観測 proxy と推定 player state の分離、probe-20260608-calibration-boundary-human-judgment は human judgment 境界を既に扱う。一方、本 atom 固有の差は、同じ stage 難易度列でも進行順により残存 cohort の skill／retry budget 分布が変わる survivor bias と、stage 順序の反実仮想を扱う点なので non_redundancy は2とした。ただし現在の staging には10〜20 stage の同一 build、stage 別 pass／到達率／残り資源／retry 改善／失敗理由、順序 variant、calibration 用人間 data を持つ artifact がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。consumer_phase・trigger_artifact・expected_delta・lease_due を比較可能に指定できず、active_probes も326件あるため active probe・metric・ledger・directive・恒久ルールは追加せず state-only defer とする。",
+      "existing_controls": [
+        "probe-20260616-relative-difficulty-regression-calibration",
+        "probe-20260710-procedural-persona-divergence",
+        "probe-20260609-dda-proxy-rule-trace",
+        "probe-20260608-calibration-boundary-human-judgment"
+      ],
+      "defer_condition": "10〜20 stage の具体的な playable／headless artifact が現れ、同一 build で stage 別 bot 統計、少なくとも2つの stage 順序、cohort の skill／retry budget／novelty decay と残存分布を保存でき、既存4 controlsだけでは単体難度と survivor bias を区別できない時に限り、一時 metric または probe として再評価する。",
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、bot 難易度センサー／進行依存 cohort の分離、既存 difficulty／persona／proxy／human-calibration controls との境界、比較可能な multi-stage artifact 不在による defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-21T22:39:34+09:00",
       "selected": {

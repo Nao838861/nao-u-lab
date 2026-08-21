@@ -74,7 +74,41 @@ candidate_files_updated: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787318812-12d1b5fb11
+    source_ts: "1787318812.905849"
+    title: "Predicting Game Difficulty and Churn Without Players"
+    reason: "source が slack_api/shared-reads、score 10、未レビューで、harness・game-design・agent・operation・evaluation の5優先タグを持つ最新 atom だったため1件だけ選んだ。bot 難易度センサーと、stage 進行で構成が変わる仮想 cohort を分ける知見が、次の複数 stage prototype 評価で既存 control と異なる判断差を作れるか確認した。Nao_u の明示的な重要評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: defer
+  decision_reason: "168 level・95,266人、5-fold cross-validation、25回の parameter optimization、末尾 holdout、属性 ablation があり、bot difficulty sensor と進行依存 cohort を分離する根拠と実装像は十分。既存 controls は相対難度 calibration、同一 seed の persona divergence、proxy と推定 player state の分離、人間判断境界を扱うが、stage 順序で残存 cohort が変わる survivor bias は固有差として残る。ただし現 staging に10〜20 stage の同一 build、stage 別 bot 統計、順序 variant、cohort parameter、人間 calibration data を持つ比較 artifact はなく、後続 Phase 4a は memory cleanup で実 consumer ではない。lease の consumer／artifact／expected delta／期限を指定できず、326 active probes の確認負荷もあるため state-only defer とした。"
+  existing_controls:
+    - probe-20260616-relative-difficulty-regression-calibration
+    - probe-20260710-procedural-persona-divergence
+    - probe-20260609-dda-proxy-rule-trace
+    - probe-20260608-calibration-boundary-human-judgment
+  defer_condition: "10〜20 stage の playable／headless artifact で、同一 build の stage 別 bot 統計、少なくとも2つの stage 順序、cohort の skill／retry budget／novelty decay と残存分布を保存でき、既存 controls だけでは単体難度と survivor bias を区別できない時に限り再評価する。"
+  change:
+    summary: "reviewed/source_ts、固有差、既存 controls との境界、比較 artifact 不在による defer 理由だけを state と staging に記録。active_probes・ledger・directive・恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
