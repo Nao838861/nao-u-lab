@@ -111,7 +111,108 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を validate_memory_index.py で照合し、atom index 行の broken link / missing id が 0 件であることを確認した。"
+  - "memory/MEMORY.md を UTF-8 明示読みし、記憶・ゲーム設計・敵パターンは取得、U+FFFD は 0 件だった。評価軸は現 index 本文に存在しないが decode failure や置換文字ではないため、source 破損とは判定しなかった。"
+  - "memory_health.py --compact で atoms 2,934 件を監査し、atom id 重複 0、snapshot consistency stable、正規化内容重複 40 群 / 80 rows は既存 lifecycle/content fold で 40 extra rows を折り畳める状態と確認した。矛盾を示す新規 evidence はなかった。"
+  - "memory/raw/ の mtime 30 日超は 242 files。raw は一次資料の保持層であり、参照切れを起こす一括移動は軽い cleanup の範囲を超えるため、この cycle では explicit_keep とした。"
+  - "shared-reads の mixed/open/stale/group-action sidecar を再生成し、group handoff 1件を先に enqueue した後、candidate handoff 4件を冪等 enqueue した。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending は各 0 件。受領だけを根拠に handled 化した行はない。"
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』相当箇所が『AIエ��ジェント』として raw archive から per-file atom / atoms.jsonl / index.jsonl まで残っている。memory_health のもう1件 gr-1777083728-44d444ab7a は本文中の意図された『???』であり、mojibake ではない。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/index.jsonl id=sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8 decode は成功するが、raw Slack archive 自体に U+FFFD が2文字あり、派生 atom にも同じ破損が伝播している。memory/MEMORY.md 本文には U+FFFD なし。"
+    display_or_tooling_status: "Get-Content -Encoding utf8 と rg は source の置換文字を忠実に表示しており、shell / staging 経路だけの mojibake ではない。"
+    why_blocks_game_memory: "title / trigger の『エージェント』完全一致検索ではこの1件を取りこぼし得る。ただし memory / agent tags と source URL が残るため影響は限定的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "新しい階層設計を要する問題は見つからなかった。ISS-ENC-001 は原文照合が必要な局所データ修復であり、Phase 4b を起動しない。"
+candidate_lifecycle:
+  counts:
+    posted: 669
+    ready_to_post: 9
+    postponed: 207
+    failed: 491
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_open_total: 9
+  current_state_conflicts: 0
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+  validation: "11 rows; merged 0; retired 0; errors 0"
+stale_backlog:
+  overdue_open_total: 9
+  stale_triage_queue_rows: 4
+  open_duplicate_group_count: 33
+  mixed_group_count: 28
+  all_open_group_count: 5
+  actionable_group_count: 2
+  backlog_high_water: false
+  backlog_high_water_reason: "overdue 9 > pre-group stale rows 5 だが actionable group は 2 件で、3件以上という第2条件を満たさない。"
+  group_handoff_budget: 1
+  handed_off_group_count: 1
+  handoff_inbox_pending_count: 1
+  handoff_inbox_ids:
+    - gha-940e2d5cb26f0108
+  candidate_handoff_pending_count: 4
+  candidate_handoff_ids:
+    - cha-5e947e4260c2e74e
+    - cha-43f30a1c66716b4d
+    - cha-6000efcfd772ff05
+    - cha-b2236ebf6cc7c8f0
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff:
+  - handoff_id: gha-940e2d5cb26f0108
+    group_key: "i finished your turn in a week and then i reworked it over the course of two weeks"
+    group_kind: all_open
+    representative: memory/shared_reads_candidates/20260723_your_turn_extended_cut_rework.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260723_your_turn_extended_cut_rework.md
+      - memory/shared_reads_candidates/20260727_your_turn_extended_cut_rework.md
+    terminal_siblings: []
+    latest_evidence: "memory/shared_reads_candidates/20260723_your_turn_extended_cut_rework.md stale_after=2026-08-22; 変更前後の player response / 観察手順 / 成果指標が不足。"
+    recommended_action: review_group
+stale_review_batch:
+  - handoff_id: cha-5e947e4260c2e74e
+    path: memory/shared_reads_candidates/20260723_pentiment_imperfect_choice_control.md
+    status: postponed
+    stale_after: "2026-08-22"
+    priority_reason: "open duplicate group。agency は全支配ではないという例は有用だが、二次記事のみで実装手順・評価結果・失敗条件が不足。"
+    recommended_review_action: reevaluate_in_phase2
+    queue_recommended_action: merge_duplicate
+  - handoff_id: cha-43f30a1c66716b4d
+    path: memory/shared_reads_candidates/20260723_governed_recursive_self_improving_agents.md
+    status: postponed
+    stale_after: "2026-08-22"
+    priority_reason: "evidence-gated improvement loop は game agent / playtest harness に移せるが、現行 v2 の根拠を再確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-6000efcfd772ff05
+    path: memory/shared_reads_candidates/20260723_memoharness_experience_adaptive_harness.md
+    status: postponed
+    stale_after: "2026-08-22"
+    priority_reason: "case diagnosis と global pattern の分離は有用だが、control dimension・benchmark 別改善量・失敗例が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-b2236ebf6cc7c8f0
+    path: memory/shared_reads_candidates/20260723_reward_driven_llm_agent_workflows.md
+    status: postponed
+    stale_after: "2026-08-22"
+    priority_reason: "POMDP routing / Graph Memory / pre-action Critic は接続可能だが、公開実装と論文評価の evidence gap を再判定する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
