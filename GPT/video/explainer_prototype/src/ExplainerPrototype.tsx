@@ -304,7 +304,8 @@ const VideoPlate: React.FC<{
   src: string;
   startFrom?: number;
   pixelated?: boolean;
-}> = ({src, startFrom = 0, pixelated = false}) => (
+  fit?: 'cover' | 'contain';
+}> = ({src, startFrom = 0, pixelated = false, fit = 'cover'}) => (
   <AbsoluteFill style={{backgroundColor: C.bg}}>
     <OffthreadVideo
       src={staticFile(src)}
@@ -313,7 +314,7 @@ const VideoPlate: React.FC<{
       style={{
         width: '100%',
         height: '100%',
-        objectFit: 'cover',
+        objectFit: fit,
         imageRendering: pixelated ? 'pixelated' : 'auto',
       }}
     />
@@ -328,7 +329,7 @@ const VideoPlate: React.FC<{
 
 const IntroScene: React.FC<{durationInFrames: number}> = ({durationInFrames}) => {
   const frame = useCurrentFrame();
-  const scale = interpolate(frame, [0, Math.max(1, durationInFrames - 1)], [1.04, 1.12], {
+  const scale = interpolate(frame, [0, Math.max(1, durationInFrames - 1)], [1, 1.03], {
     extrapolateRight: 'clamp',
     easing: Easing.out(Easing.quad),
   });
@@ -336,7 +337,7 @@ const IntroScene: React.FC<{durationInFrames: number}> = ({durationInFrames}) =>
   return (
     <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg}}>
       <div style={{position: 'absolute', inset: 0, transform: `scale(${scale})`}}>
-        <VideoPlate src="game_CSCD.mp4" startFrom={13 * 30} pixelated />
+        <VideoPlate src="game_CSCD.mp4" startFrom={13 * 30} pixelated fit="contain" />
       </div>
       <div
         style={{
