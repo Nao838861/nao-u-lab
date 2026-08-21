@@ -63,7 +63,15 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+eligible_from_phase2: 0
+posted: []
+skipped: []
+no_post_reason: Phase 2 の pass が空で、3 candidate はすべて根拠不足により postponed のため投稿対象なし
+slack_posted: false
+candidate_files_updated: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
