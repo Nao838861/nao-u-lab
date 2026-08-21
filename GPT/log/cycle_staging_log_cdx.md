@@ -55,7 +55,17 @@ decision_notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260821_godot_lightweight_feedback_loop.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787288087371969
+    char_count: 4363
+skipped: []
+```
+
+- 最終判定: 投稿。原文を再確認し、採用統計の母集団差、GodotCon 参加者への interview という selection bias、2D multi-pass shader の制約を明記した。
+- 投稿前 review: 必須6項目と順序、`■ 概要` 始まり、末尾 `■ URL`、禁止表現なし、1 candidate / 1 `chat.postMessage` を確認。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
