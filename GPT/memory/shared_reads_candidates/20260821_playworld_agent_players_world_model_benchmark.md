@@ -7,13 +7,18 @@ genre_tags: [game-ai, agent-playtesting, world-models, evaluation, long-horizon]
 evaluated_at: "2026-08-21T15:50:33+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-21T15:50:33+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-21T15:50:33+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-21T15:58:31+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787295484419209"
+next_action: none
 stale_after: "2026-09-20"
+posted:
+  ts: "1787295484.419209"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787295484419209"
+  char_count: 4461
+  posted_at: "2026-08-21T15:58:31+09:00"
 supersedes: []
 gate_reason: >-
   固定 action sequence では model 間の公平な比較にならないという問題設定から、目的駆動の Agent Player、171 scenario、9 model、長期状態を含む評価軸と結論まで抽出できる。
