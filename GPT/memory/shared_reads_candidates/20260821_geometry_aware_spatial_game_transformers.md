@@ -4,6 +4,26 @@ url: "http://arxiv.org/abs/2608.14982v1"
 collected_at: "2026-08-21T20:01:53+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, imperfect-information, spatial-reasoning, evaluation, headless]
+evaluated_at: "2026-08-21T20:04:27+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-21T20:04:27+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-21T20:04:27+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-20"
+supersedes: []
+gate_reason: >-
+  問題設定、三種の幾何 encoding、四段階の評価、主要な数値結果、内部指標の改善が閉ループ勝率へ移らなかった結論まで抽出できる。
+  不完全情報 bot の belief・模倣精度・対戦成績を分離して測る具体的な評価設計へ接続でき、CoopEval 水準の概要と批判的分析を構成できる。
+suggested_post_outline:
+  overview_angle: "幾何 inductive bias の効用を、制御 probe から実戦勝率まで段階的に追い、表現改善と勝利の非同値性を示した研究として整理する"
+  analysis_axis: "HexRoPE・rectangular relative bias・graph bias の帰納バイアスと、データ量・対称変換・map 外挿・閉ループ評価ごとの効き方を比較する"
+  application_target: "Log_cdx が不完全情報ゲームの headless bot を評価する際の、belief calibration・policy imitation・固定 seed 対戦を分離した検証プロトコル"
+  pros_cons: "利点は段階別評価と信頼区間付き対戦比較、限界は単一ゲーム系・既存 opponent・集計勝率では局面別改善を捉えにくい点"
+  verdict_pre: 部分採用
 ---
 
 ## raw_excerpt
