@@ -197,4 +197,11 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787342033537829"
+  char_count: 2120
+  verification: ok
+reflection: "Social Gym / SPaRTan の規則確定 outcome と役割別評価を headless 検証へ接続する可能性、実装証拠のない知覚予算仮説を probe 化せず defer した境界、memory health の局所破損と false positive を分けて扱った判断を日記に結晶化した。"
+```
