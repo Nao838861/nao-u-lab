@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-22T06:46:43+09:00",
+  "updated_at": "2026-08-22T08:42:18+09:00",
   "reviewed_source_ts": [
+    "1787348477.440319",
     "1787341222.261219",
     "1779332718.909909",
     "1779972076.849019",
@@ -22606,6 +22607,47 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、Social Gym／SPaRTan の rule-verifiable・role-conditioned 評価の有用性、既存 feature-scope／cross-game／improvement-transfer／diagnostic-ablation controls との完全重複、比較 artifact 不在と probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-22T08:42:18+09:00",
+      "selected": {
+        "id": "sr-1787348477-b0e3d33bde",
+        "source_ts": "1787348477.440319",
+        "title": "LLM Odyssey: A Game-Based Platform for Teaching LLM Engineering Concepts",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新の自己完結した投稿だったため1件だけ選んだ。概念操作→制約下判断→統合課題の三層 progression、段階 hint、retry／error telemetry が、次の tutorial prototype や memory self-feedback に既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は13 game を概念操作、production constraint 下の判断、open-ended synthesis の三段階へ編成し、即時 feedback、段階 hint、5 round、worked example、retry、hint request、error pattern、time on task を一つの closed loop にしている。次回 prototype では概念操作／trade-off／統合課題の entry・success event、hint depth、使用後2 action以内の進展、同型 error recurrence、retry 後の戦略変更へ直接変換できるため relevance・actionability は3とした。一方、実績はfaculty 2名のfeasibility reviewと4週間の技術運用だけで、N=50・12週間のpre/post protocolは未実施である。比較群、学習効果、transfer、5 round・70% threshold・hint penalty の妥当性、adaptive difficulty の結果はなく evidence は2に留めた。probe-20260604-game-learning-hypothesis-trace は first exposure／hypothesis update／later-level transfer を、probe-20260720-tutorial-order-controller-sensitivity は segment 順序・学習曲線・入口失敗・controller sensitivity を、probe-20260617-ai-onboarding-autonomy-support と probe-20260710-feedback-device-amplitude-axis は hint の段階・任意性・agency・最小介入強度を、probe-20260626-meta-horizon-friction-layer-triage は tutorial hesitation／retry／drop-off の観測と同一層への可逆 action を既に扱う。したがって本投稿から次回行動へ落とせる progression、hint、retry telemetry は既存5 controlsの組合せに吸収され、non_redundancyは0とした。active_probesは326件あり、現在のstagingにはtutorial playable、三層variant、hint depth／retry trace、human playtestがない。直後のPhase 4a memory cleanupを名目consumerにして同義probeを追加すると、適用対象のない確認負荷と未検証の教育設計の過剰一般化を増やすためrisk_controlは1。次に具体的なtutorial artifactが生じた時は新規controlを足さず、既存5 probeから必要なものだけを選んで適用する。",
+      "existing_controls": [
+        "probe-20260604-game-learning-hypothesis-trace",
+        "probe-20260720-tutorial-order-controller-sensitivity",
+        "probe-20260617-ai-onboarding-autonomy-support",
+        "probe-20260710-feedback-device-amplitude-axis",
+        "probe-20260626-meta-horizon-friction-layer-triage"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、LLM Odyssey の三層 progression／段階 hint／retry telemetry の有用性、正式な学習効果未検証、既存 learning／tutorial-order／onboarding／intervention／friction controls との完全重複、比較 artifact 不在による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

@@ -65,7 +65,50 @@ skipped: []
 - Slack 検証: `chat.postMessage` 成功（ts `1787355534.654839`）。`conversations.history` で同一 ts・本文を確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787348477-b0e3d33bde
+    source_ts: "1787348477.440319"
+    title: "LLM Odyssey: A Game-Based Platform for Teaching LLM Engineering Concepts"
+    reason: >-
+      source が slack_api/shared-reads、score 10、未レビューで、
+      memory・harness・game-design・operation・evaluation の5優先タグを持つ
+      最新の自己完結した投稿だったため1件だけ選んだ。三層 progression、段階 hint、
+      retry／error telemetry が既存 control と異なる判断差を作れるか確認した。
+      Nao_u による重要・適切・反映希望の明示評価は確認できなかった。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: >-
+    13 game の概念操作→制約下判断→統合課題、即時 feedback、段階 hint、
+    retry／error telemetry は具体的で次回 tutorial へ変換できる。一方、正式な学習効果評価は
+    未実施で、既存の game-learning-hypothesis-trace、tutorial-order-controller-sensitivity、
+    ai-onboarding-autonomy-support、feedback-device-amplitude-axis、
+    meta-horizon-friction-layer-triage が同じ次回行動を既に扱う。
+    現 staging に比較可能な tutorial artifact もないため、新規 operational control は増やさない。
+  change:
+    summary: >-
+      reviewed_source_ts と、正式評価未実施・既存5 controlsとの完全重複・比較 artifact 不在による
+      reject 理由だけを state に記録した。active_probes、ledger、directive、恒久ルールは変更していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- state-only review。採用条件（合計14以上、risk_control 2以上）を満たさないため、probe lifecycle ledger への enqueue は行っていない。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
