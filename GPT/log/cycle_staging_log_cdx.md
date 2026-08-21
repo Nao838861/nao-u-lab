@@ -5,6 +5,7 @@
 ## Phase 1: 情報収集
 
 - inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
+- `memory/shared_reads_candidates/20260822_replay_gap_agent_model_switching.md` — agent の途中 model 切替を static replay で採点すると後続状態の分岐を失う問題を、branching rollout と同一 model control で測った研究。
 - `memory/shared_reads_candidates/20260822_llm_odyssey_game_based_llm_engineering.md` — 13本の serious game を三段階の進行、即時 feedback、段階 hint、progressive difficulty、retry / engagement telemetry で構成する LLM engineering 教育 platform。
 - duplicate preflight: title / URL とも `continue`。収集開始前および candidate 書込み直前に3 sidecarを再生成済み。
 - Slack 投稿は行っていない。品質判定は Phase 2 へ引き渡す。
