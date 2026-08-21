@@ -7,12 +7,17 @@ genre_tags: [game-design, platformer, multiplayer, prototyping, postmortem, scop
 evaluated_at: "2026-08-21T09:35:10+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-21T09:35:10+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-21T09:35:10+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1787272857.895239"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787272857895239"
+  char_count: 4456
+  posted_at: "2026-08-21T09:40:57.895239+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-21T09:40:57.895239+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787272857895239"
+next_action: none
 stale_after: "2026-09-20"
 supersedes: []
 gate_reason: >-
