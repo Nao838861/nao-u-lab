@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-22T02:44:06+09:00",
+  "updated_at": "2026-08-22T04:45:08+09:00",
   "reviewed_source_ts": [
+    "1779332718.909909",
     "1779972076.849019",
     "1787318812.905849",
     "1787310593.192749",
@@ -719,6 +720,51 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-22T04:45:08+09:00",
+      "selected": {
+        "id": "sr-1779332718-e3991056e4",
+        "source_ts": "1779332718.909909",
+        "title": "相対スケール問題と知覚予算保存則 — snapwith のリメイク観察を v06 multi-channel readability に接続する",
+        "reason": "source が slack_api/shared-reads、score 15、未レビューで、harness・game-design・operation・evaluation の4優先タグを含む高得点 atom だったため1件だけ選んだ。見栄えや readability 機構の追加が、同じ画面・同じ瞬間に処理できる意思決定材料を減らしうるという主張を、次の Codex game diff で既存 control と異なる判断へ変換できるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "数値上は採用条件を満たす。shared-reads 本文は、画面ピクセルに対する単位要素サイズの関係を、色・形・動き・点滅・telegraph が共有する知覚予算へ拡張し、v05→v06 で readability 機構を5つ積んだ時の『読みづらい評価25%』という事前予測まで接続している。したがって、同一 encounter で追加前後または追加案／削除案を比較し、見える世界量、同時 cue 数、認識前死亡、route choice の変化を記録する行動には変換できる。一方、外部根拠は単一 tweet のリメイク観察で、知覚予算への拡張や v06 の悪化を player test で実証していない。本文が参照する knowledge/20260521_snapwith_relative_scale_perceptual_budget_multi_channel_readability.md も現 workspace では確認できず、evidence は raw shared-reads 本文と atom に限られる。probe-20260603-mechanic-observation-channel-gate、probe-20260608-projectile-speed-information-channel、probe-20260527-bullet-rhythm-variation-readability、probe-20260626-bullet-identity-channel-ladder が observation channel、cue 情報、密度、bullet identity を既に扱うため、新規性は『機構追加と削除候補を同じ encounter で対にする』一点に狭い。現在の staging の後続は memory cleanup の Phase 4a で、比較可能な playable diff、before／after artifact、game-design consumer がない。326件の active_probes に対象なしで追加せず、次に複数 cue を同時追加する game diff が生じ、既存 controls だけでは追加／削除の判断が変わらない実例がある時まで state-only で defer する。",
+      "evidence_sources": [
+        "memory/atoms.jsonl#id=sr-1779332718-e3991056e4",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779332718.909909"
+      ],
+      "existing_controls": [
+        "probe-20260603-mechanic-observation-channel-gate",
+        "probe-20260608-projectile-speed-information-channel",
+        "probe-20260527-bullet-rhythm-variation-readability",
+        "probe-20260626-bullet-identity-channel-ladder"
+      ],
+      "defer_condition": "次の playable game diff で、同一 encounter に複数の色・形・動き・点滅・telegraph を追加する前後または追加案／削除案を比較でき、既存4 controlsでは総知覚負荷による採否差を説明できない時だけ再評価する。",
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、知覚予算仮説の有用性、単一観察と欠落した参照資料による証拠限界、既存 readability controls との重複、比較可能な game artifact 不在による defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-22T02:44:06+09:00",
       "selected": {

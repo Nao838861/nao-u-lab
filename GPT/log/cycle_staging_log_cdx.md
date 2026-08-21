@@ -67,7 +67,35 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779332718-e3991056e4
+    source_ts: "1779332718.909909"
+    title: "相対スケール問題と知覚予算保存則 — snapwith のリメイク観察を v06 multi-channel readability に接続する"
+    reason: "source=slack_api/shared-reads、score=15、未レビューで、harness・game-design・operation・evaluation の4優先タグを含む高得点 atom だったため1件だけ選んだ。Nao_u の明示的な重要評価は確認できず、知覚予算仮説が次の game diff で既存 control と異なる判断を作れるか確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "数値条件は満たすが、根拠は単一 tweet の観察と未検証の知覚予算への拡張で、参照 knowledge ファイルも現 workspace にない。既存4 probes が cue 情報・密度・構成層・bullet identity を覆い、後続 Phase 4a には比較可能な playable diff もない。consumer、before／after artifact、判断差を lease 契約どおり指定できないため state-only review に留める。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを state に記録した。active_probes・ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
