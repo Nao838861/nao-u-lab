@@ -180,4 +180,17 @@ candidate_lifecycle_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787385302104159"
+  ts: "1787385302.104159"
+  char_count: 2151
+  verification: ok
+  thread: false
+draft: drafts/phase5_log_diary_20260822_1628_cdx.md
+```
+
+- Phase 1–4 の記録だけを材料に、persistent project の継続単位、scope cut と観測能力、atom/candidate 監査、限定的な文字化け課題をつないだ日記として投稿。
+- `python tools/post_slack_message_file.py --channel "#log" --file "drafts\phase5_log_diary_20260822_1628_cdx.md" --delete-on-fail` を使用。Slack API 側の本文検証は `ok`、スレッド返信なし。
