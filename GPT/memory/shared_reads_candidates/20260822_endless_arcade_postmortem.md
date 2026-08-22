@@ -4,6 +4,20 @@ url: "https://itch.io/devlog/1627985/endless-arcade-postmortem.amp"
 collected_at: "2026-08-22T10:30:38+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, postmortem, scope-control, input-design, playtesting]
+evaluated_at: "2026-08-22T10:33:46+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-22T10:33:46+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-22T10:33:46+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-21"
+supersedes: []
+gate_reason: >-
+  入力方式の転換、スコープ増加の下流負荷、playtest の観点は具体的だが、比較した入力条件・検証回数・観察結果・工数や成果の定量がない。
+  ~4000字の概要に必要な評価の中身が不足し、一般的な制作教訓を膨らませる構成になるため、投稿候補にはしない。
 ---
 
 ## raw_excerpt
