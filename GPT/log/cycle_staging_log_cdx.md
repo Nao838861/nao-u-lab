@@ -101,7 +101,89 @@ self_feedback:
 - lifecycle: decision が `reject` のため enqueue なし。`python tools/shared_reads_probe_lifecycle.py pending` は pending 0、`validate` は errors 0。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md は UTF-8 明示読みで代表語（記憶 / ゲーム設計 / 敵パターン / 評価軸）を取得でき、81 index entry は python tools/validate_memory_index.py で per-file atom index と一致。Markdown link 0 件のため broken link 0 件。"
+  - "memory/atoms.jsonl は 2941 rows。per-file .md / index.jsonl と件数一致し、parse error・missing file・content conflict は各 0。raw normalized duplicate は 40 groups / 80 rows、canonical overlay は 45 groupsだが、effective display unresolved は 0 groups / 0 rowsで、既存 fold が機能している。"
+  - "memory/raw/ は 30日超未更新 242 files（web_research 130、phase3_sources 17、headless_eval 16ほか）を確認。memory/README.md が raw を source_ts / evidence へ戻る原文層と定めるため、経過日数だけでは archive せず移動 0 件。"
+  - "shared_reads candidate lifecycle 1390 files: posted 677 / ready_to_post 9 / postponed 202 / failed 500 / needs_review 2。overdue open 8 pathsを確認し、group 1件と candidate 3件を persistent handoff inbox へ冪等 enqueueした。candidate本体は未変更。"
+  - "title canonical index 106 terminal groups、mixed duplicate queue 27 groups、open duplicate queue 31 groups（mixed 27 / all_open 4）は freshness check pass。title一致だけでcloseせず、actionable mixed group 1件を Phase 2 へ渡した。"
+  - "未評価 intake は valid 0 / malformed 0。Slack directives / broadcasts は pending 各 0 件で、handled更新対象なし。"
+  - "due probe lease は 0 件。ledger validate errors 0で、receipt更新なし。"
+issues:
+  - id: ISS-20260823-4A-001
+    description: "legacy shared-reads 1件の原文 title / excerpt と派生 atom に U+FFFD が残り、『AIエージェント』の exact title search を弱める。memory_health のもう1件（gr-1777083728-44d444ab7a）は意図的な『???』を拾った false positive で、U+FFFD は 0。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919（lines 492 / 1216）; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8 明示読みでも raw source に U+FFFD 4個、per-file atom に8個が存在するため source data 側の局所破損。memory/MEMORY.md の代表語 probe と atom mirror 整合は正常。"
+    display_or_tooling_status: "none（shell / staging 表示だけの mojibake ではない）"
+    why_blocks_game_memory: "意味検索・ID参照は可能だが、正しい『AIエージェント』表記による exact title search と引用時の品質を局所的に落とす。構造全体や次のゲーム制作導線は遮断しない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 8
+  stale_triage_queue_rows: 3
+  open_duplicate_group_count: 31
+  mixed_group_count: 27
+  all_open_group_count: 4
+  actionable_group_count: 1
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 1
+  handoff_inbox_pending_count: 1
+  handoff_inbox_ids:
+    - gha-9d1ec15dba16d8a7
+  candidate_handoff_pending_count: 3
+  candidate_handoff_ids:
+    - cha-7e93eedc3dd2f00a
+    - cha-61dcddf007034e9e
+    - cha-e2449d92b591af63
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff:
+  - handoff_id: gha-9d1ec15dba16d8a7
+    group_key: "representing and generating levels over time through playtrace reconstructive partitioning"
+    group_kind: mixed
+    representative: memory/shared_reads_candidates/20260724_playtrace_reconstructive_partitioning.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260724_playtrace_reconstructive_partitioning.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260803_playtrace_reconstructive_partitioning.md
+    latest_evidence: "stale_after=2026-08-23。時間的な攻略体験を扱う価値はあるが、cake representation、PRP手順、baseline、validationの一次資料照合が不足。"
+stale_review_batch:
+  - handoff_id: cha-7e93eedc3dd2f00a
+    path: memory/shared_reads_candidates/20260724_strategic_gaze_gameplay_outcomes.md
+    status: postponed
+    stale_after: "2026-08-23"
+    priority_reason: "AOI間遷移・勝敗・entropyは戦略UI playtestへ転用可能だが、現candidateは抄録要点のみで評価詳細が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-61dcddf007034e9e
+    path: memory/shared_reads_candidates/20260724_keling_offline_playtesting_marketing.md
+    status: postponed
+    stale_after: "2026-08-23"
+    priority_reason: "mobile/PC移植時のUI・操作・収益設計の崩れは有用だが、参加人数・比較手順・結果指標が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-e2449d92b591af63
+    path: memory/shared_reads_candidates/20260724_rpg_sketch_21_authors_notes.md
+    status: postponed
+    stale_after: "2026-08-23"
+    priority_reason: "取得済み一次資料が冒頭とseries説明に限られ、手法・評価・結論を確定できない。"
+    recommended_review_action: reevaluate_in_phase2
+```
+
+- 判定: 既存の canonical fold、duplicate group/candidate handoff、probe lifecycle が今回の重複・stale・lease を処理できている。局所 mojibake は小規模なデータ品質修復候補で、新しい仕組みの設計を起動する根拠にはしない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
