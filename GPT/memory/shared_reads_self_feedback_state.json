@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-22T18:47:34+09:00",
+  "updated_at": "2026-08-22T20:43:12+09:00",
   "reviewed_source_ts": [
+    "1787391726.349679",
     "1787384495.616959",
     "1787377407.046889",
     "1779845919.434229",
@@ -727,6 +728,53 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-22T20:43:12+09:00",
+      "selected": {
+        "id": "sr-1787391726-030a9f2bfd",
+        "source_ts": "1787391726.349679",
+        "title": "PMCoder — 長期 coding agent の planning-memory 双方向制御",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ最新候補だったため1件だけ選んだ。phase-conditioned recall、失敗反復からの replanning、実行証拠での sub-task closure が、現在の Codex phase／coding／game harness controls と異なる小さな判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14には達するが、risk_control が必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、SWE-bench Verified 500件を同一 model／harness／250 turn budget で各3回評価し、baseline 142.3件に対して PMCoder 167.3件、失敗 action 再発率 0.0137→0.0069、空または no-op patch 終了 8.3%→2.7%、context exhaustion 6.7%→3.0%を報告する。plan-only 148.7件、memory-only 150.7件、両方167.3件の ablation と interaction 検定、reproduction あり／なしの分解、別 model／OpenHands port の限定的再現、Python 中心 benchmark・script 誤り・patch overfitting の限界まで本文にあり、relevance・actionability・evidence は3とした。本投稿固有の差は、repair phase と active sub-task で recall 範囲を変え、蓄積した edit／read／失敗 return を deterministic な stuck detection と replanning へ戻す双方向結合である。一方、probe-20260710-llm-bounded-replanning-decision-layer は deterministic authority と bounded replanning trigger、probe-20260710-recovery-mode-second-slip-baseline は同じ next_action の再発と milestone／acceptance evidence、probe-20260710-phoneharness-mixed-action-side-effect-trace は action surface／side effect／verifier／premature completion、probe-20260709-public-commitment-action-audit は完了宣言と実証、probe-20260612-checkable-intermediate-state は inspectable state と verifier feedback を既に扱う。phase-conditioned recall だけは狭い差として残るため non_redundancy は1としたが、現在の後続 Phase 4a は memory cleanup で、同一 coding issue に対する通常 recall と phase-conditioned recall、失敗 action 再発、空 diff、context exhaustion、誤完了、回復率を比較できる trigger artifact がない。active_probes が326件ある状態で適用対象のない control を足すと確認負荷と context 注入量を増やし、PMCoder 自身が指摘する stale observation／threshold 誤判定も持ち込むため risk_control は1。次に具体的な長期 coding repair または playable-fix episode で既存5 controlsを適用しても、一度得た正しい診断の喪失と失敗反復を止められない再現 artifact が出た時だけ再評価する。",
+      "evidence_sources": [
+        "memory/atoms.jsonl#id=sr-1787391726-030a9f2bfd",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787391726.349679",
+        "https://arxiv.org/abs/2608.06811"
+      ],
+      "existing_controls": [
+        "probe-20260710-llm-bounded-replanning-decision-layer",
+        "probe-20260710-recovery-mode-second-slip-baseline",
+        "probe-20260710-phoneharness-mixed-action-side-effect-trace",
+        "probe-20260709-public-commitment-action-audit",
+        "probe-20260612-checkable-intermediate-state"
+      ],
+      "defer_condition": "次の具体的な長期 coding repair または playable-fix episode で、同一 issue／build に通常 recall と phase-conditioned recall を比較でき、既存5 controlsを適用しても正しい診断の喪失、失敗 action 再発、空 diff、context exhaustion、誤完了、revert 後の回復の採否差を説明できない時に限り、一時 probe または metric として再評価する。",
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、planning-memory 双方向制御の有用性、既存 replanning／repetition／verifier／completion controls との重複、比較可能な coding artifact 不在と context 注入 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-22T18:47:34+09:00",
       "selected": {

@@ -72,7 +72,45 @@ reason: "Phase 2 の gate_decision: pass が 0 件のため、投稿前レビュ
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787391726-030a9f2bfd
+    source_ts: "1787391726.349679"
+    title: "PMCoder — 長期 coding agent の planning-memory 双方向制御"
+    reason: >-
+      source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・agent・operation・evaluation の
+      6優先タグを持つ最新候補だったため1件だけ選んだ。phase-conditioned recall、失敗反復からの replanning、実行証拠での
+      sub-task closure が、既存 control と異なる次回判断を作れるか確認した。Nao_u の明示的な重要／適切／自己反映評価は
+      ローカル raw では確認できなかった。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: >-
+    PMCoder は SWE-bench Verified 500件・各3回の同条件比較、plan-only／memory-only／両方の ablation、失敗 action 再発・空 diff・
+    context exhaustion・revert recovery の process 指標を持ち、次の長期 coding repair へ直接変換できる。一方、既存の bounded replanning、
+    second-slip、side-effect/verifier、commitment evidence、inspectable intermediate-state controls が大半を覆う。固有差は repair phase と
+    active sub-task に応じて recall を変え、蓄積 action を stuck detection へ戻す点に狭い。現在の後続 Phase 4a は memory cleanup で、
+    通常 recall と phase-conditioned recall を同一 issue で比較できる artifact がない。326件の active_probes へ対象なしの control を足すと
+    context 注入・確認負荷・stale observation の risk が判断差を上回るため、risk_control が採用条件を満たさず state-only defer とした。
+  change:
+    summary: >-
+      reviewed_source_ts と defer 理由だけを更新した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
