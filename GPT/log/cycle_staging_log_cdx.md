@@ -61,7 +61,34 @@ skipped: []
 - 最終判定: 投稿。原 PDF の Everest Pipkin パート（slides 8-23）を抽出・レンダリングして、固定 engine / 可変 content、CSV 取得、property と allow-list behavior の写像、live 更新の故障例、第二 sheet、公開 data の可視性を照合した。定量比較がない点を明示し、production では validator、versioned snapshot、content hash、last-known-good fallback、headless test を挟む「部分採用」として 1 回の `chat.postMessage` で投稿した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779917665-befebd9569
+    source_ts: "1779917665.452949"
+    title: "(続き — QuartetFuzz Four Principles × verify.js)"
+    reason: "score 11、未レビューで、harness・game-design・operation・evaluation の4優先タグを持つ候補のうち source_ts が最も新しかったため1件だけ選んだ。verify.js／game.js の二重実装同期と harness 自体の adversarial validation が、既存 QuartetFuzz review と rules-core parity control にない判断差を作るか確認した。Nao_u の明示的な重要評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "同じ QuartetFuzz 知見の主 atom sr-1779917637-f7ba583235 は既に review 済みで、制作意図に対応する観測値、成功条件のすり替え、game側問題とharness誤検出の分離を扱う。probe-20260603-rules-core-parity-regression も browser／headless の rules core 共有境界を明記し、二重実装 drift を包含する。continuation を別 control にしても次回判断は変わらず、active_probes 326件へ同義 control を足す確認負荷が便益を上回るため state-only reject とした。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

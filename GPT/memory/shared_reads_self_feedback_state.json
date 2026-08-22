@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-23T05:11:16+09:00",
+  "updated_at": "2026-08-23T07:20:00+09:00",
   "reviewed_source_ts": [
+    "1779917665.452949",
     "1779481998.916219",
     "1787413400.296389",
     "1779824236.472699",
@@ -732,6 +733,45 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-23T07:20:00+09:00",
+      "selected": {
+        "id": "sr-1779917665-befebd9569",
+        "source_ts": "1779917665.452949",
+        "title": "(続き — QuartetFuzz Four Principles × verify.js)",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、harness・game-design・operation・evaluation の4優先タグを持つ候補のうち source_ts が最も新しかったため1件だけ選んだ。verify.js と game.js の二重実装を同期し、harness 自身を adversarial に疑う観点が、既存の QuartetFuzz review と rules-core parity control にない判断差を作れるか確認した。Nao_u が本 atom 自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。この atom は『続き』と明記された短い断片で、verify.js の simulation logic と game.js の二重実装を同期する注意、Four Principles の P1／P2／P3、adversarial validation を自己診断へ使う案を示すため relevance=3、actionability・evidence=2とした。一方、同じ QuartetFuzz 知見の主 atom sr-1779917637-f7ba583235 は2026-05-29に既に review 済みで、制作意図に対応する観測値、成功条件のすり替え、game側問題とharness誤検出の分離を probe 化している。さらに probe-20260603-rules-core-parity-regression は browser play と headless simulation が同じ rules core を共有するか、共有しない境界を明記するため、二重実装 drift の判断も包含する。continuation を別 control にしても次回行動は変わらず non_redundancy=0。active_probes が326件ある状態で同義 probe を増やすと、harness trust を高めるより確認負荷を増やすため risk_control=1とし、source_ts の review 記録だけを残す。",
+      "existing_controls": [
+        "reviewed atom sr-1779917637-f7ba583235",
+        "probe-20260603-rules-core-parity-regression",
+        "probe-20260610-structural-semantic-verifier-boundary"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "QuartetFuzz continuation の source_ts と、既レビュー主 atom／rules-core parity controls との重複による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-23T05:11:16+09:00",
       "selected": {
