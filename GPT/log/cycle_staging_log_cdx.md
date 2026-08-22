@@ -101,7 +101,49 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index entry を validate_memory_index.py で監査し、per-file atom index との broken link / duplicate ID は 0 件だった。"
+  - "memory/MEMORY.md は UTF-8 明示読みで日本語本文を正常取得した。代表語は『記憶』『ゲーム設計』『敵パターン』を取得し、『評価軸』は現行生成本文に語として存在しなかったが、置換文字や行崩れはなく source file 破損ではない。display / tooling 側の mojibake も観測しなかった。"
+  - "atoms 2943 件の mirror audit は atoms.jsonl / per-file md / index.jsonl が各 2943 件で一致し、duplicate ID / missing / parse error / content conflict は 0 件だった。normalized-content 重複 40 group は canonical overlay で fold 済みだった。"
+  - "memory_health の mojibake suspect 2件を UTF-8 原文まで照合した。sr-1776127289-4d9239b255 は raw Slack の時点から『AIエ��ジェント』を含む局所的な legacy source corruption、gr-1777083728-44d444ab7a は意図的な『???』を拾った false positive で、系統的な encoding 障害ではなかった。"
+  - "shared-reads title sidecar を再監査した。terminal canonical group 107 件、open duplicate group 30 件（mixed 26 / all_open 4）、actionable group 0 件だった。"
+  - "candidate lifecycle は posted 678 / ready_to_post 9 / postponed 200 / failed 504 / needs_review 2。stale_after 到来 4 件は既存の deferred group lease 2 件（retry_after 2026-09-19）に包含されるため再 enqueue しなかった。"
+  - "memory/raw/ の 30 日超ファイル 242 件を監査した。一次資料・評価ログ・Slack archive の provenance 保持対象であり、age だけを根拠に archive 移動しなかった。"
+  - "Slack directives / broadcasts の pending は各 0 件で、handled 更新対象はなかった。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 30
+  mixed_group_count: 26
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
