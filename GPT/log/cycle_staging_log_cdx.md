@@ -13,7 +13,55 @@
 - Slack 投稿・品質判定・記憶整理は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail:
+  - path: memory/shared_reads_candidates/20260822_mock_mock_library_postmortem.md
+    reason: "制約下の tool 選択と見積り超過は具体的だが、level 設計の効果や playtest feedback の検証材料がなく、約4000字の手法解説には補間が過大"
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-08-22T20:32:19+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260822_mock_mock_library_postmortem.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260822_mock_mock_library_postmortem.md
+  valid_backlog_after: 0
+duplicate_preflight_audit:
+  before_evaluation:
+    decision: continue
+    title_key: "how mock mock was created in a library"
+  after_frontmatter_rebuild:
+    decision: review
+    reason: closed_title_match
+    canonical_path: memory/shared_reads_candidates/20260821_mock_mock_library_postmortem.md
+evaluation_note: >-
+  同一 URL の前日 candidate も同じ情報不足で failed だが、実 Slack 投稿ではないため duplicate skip にはせず、今回候補を本文基準で個別評価した。
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
