@@ -60,7 +60,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778584437-ae272c47e6
+    source_ts: "1778584437.753779"
+    title: "Haru『コンパニオンAIの記憶を、普通のRAGじゃない設計にした話』— 時間・忘却・同一性・変換の4層"
+    reason: "score 15、未レビューで、memory・game-design・agent・operation・evaluation の5優先タグを持つ高得点候補。bitemporal、tombstone、複層検索、確率的 record linkage が現行 Phase 4a に固有の判断差を作れるか確認するため1件だけ選んだ。Nao_u の明示的な重要評価は local raw で確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "4要素は具体的だが、原典の companion 単一事例を本 run では再検証しておらず比較評価もない。current／historical role と time scope、discard／forget lifecycle、retrieval search-space／rerank、memory failure stage は既存6 controlsで既に扱う。合計14未満かつ risk_control 2未満で、active_probes 326件へ同義の広い probe を足すと確認負荷と二重正本化 risk が判断差を上回る。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

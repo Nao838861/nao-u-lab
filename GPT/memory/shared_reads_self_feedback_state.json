@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-22T20:43:12+09:00",
+  "updated_at": "2026-08-22T22:46:50+09:00",
   "reviewed_source_ts": [
+    "1778584437.753779",
     "1787391726.349679",
     "1787384495.616959",
     "1787377407.046889",
@@ -728,6 +729,53 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-22T22:46:50+09:00",
+      "selected": {
+        "id": "sr-1778584437-ae272c47e6",
+        "source_ts": "1778584437.753779",
+        "title": "Haru『コンパニオンAIの記憶を、普通のRAGじゃない設計にした話』— 時間・忘却・同一性・変換の4層",
+        "reason": "source が slack_api/shared-reads、score 15、未レビューで、memory・game-design・agent・operation・evaluation の5優先タグを持つ高得点候補だったため1件だけ選んだ。bitemporal、tombstone、複層検索、確率的レコードリンケージが、現在の per-atom 移行と Phase 4a cleanup に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、普通の RAG に欠ける層を bitemporal な valid time／record time、削除事実を残す tombstone、RRF＋MMR＋Personalized PageRank、Fellegi-Sunter record linkage の4要素へ具体化し、当時の reference-name 誤同定、backup auto-commit、同一 node の反復想起へ接続しているため relevance と actionability は3とした。一方、原典の companion 単一事例を本 run では再検証しておらず、本文にも比較評価、運用 cost、誤統合率、時間粒度の実測がないため evidence は2。bitemporal と同一性は probe-20260709-atma-state-role-ghost-memory-check と probe-20260813-latticemind-conflict-state-scope、tombstone と忘却は probe-20260604-memory-discard-operation-gate と probe-20260607-forget-usage-signal-gate、複層検索は probe-20260605-rag-recall-search-space-gate、memory operation の失敗段階は probe-20260531-memory-stage-risk-classifier が既に扱うため non_redundancy は0。active_probes が326件ある状態で4要素を再び1 probeへ束ねると、適用対象が広すぎて確認負荷と二重正本化を増やし、bitemporal schema や probabilistic linkage の導入を単一記事から早めるため risk_control は1とした。",
+      "evidence_sources": [
+        "memory/atoms.jsonl#id=sr-1778584437-ae272c47e6",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1778584437.753779",
+        "memory/directive_atoms_per_file_migration_20260513.md"
+      ],
+      "existing_controls": [
+        "probe-20260709-atma-state-role-ghost-memory-check",
+        "probe-20260813-latticemind-conflict-state-scope",
+        "probe-20260604-memory-discard-operation-gate",
+        "probe-20260607-forget-usage-signal-gate",
+        "probe-20260605-rag-recall-search-space-gate",
+        "probe-20260531-memory-stage-risk-classifier"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、時間・忘却・同一性・複層検索の有用性、単一事例の証拠限界、既存 lifecycle／state-role／retrieval controls との完全重複、active probe 増殖と二重正本化 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-22T20:43:12+09:00",
       "selected": {
