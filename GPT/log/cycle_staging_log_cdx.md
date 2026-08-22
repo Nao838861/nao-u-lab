@@ -55,7 +55,19 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260823_islands_of_insight_10000_handcrafted_puzzles.md
+    reason: "Phase 2 で gate_decision: postpone。公開 overview だけでは構造化手法、具体例、player 評価が不足し、約4000字の概要を推測なしで支えられない"
+    action: postpone
+  - candidate: memory/shared_reads_candidates/20260823_grokit_mixed_reality_postmortem.md
+    reason: "Phase 2 で gate_decision: postpone。公開 overview だけでは gesture 設計、複合実装の対処、playtest 結果が不足し、約4000字の概要を推測なしで支えられない"
+    action: postpone
+```
+
+最終判定: Phase 2 の pass candidate は 0 件。品質ゲートを満たす投稿対象がないため、#shared-reads への投稿は行っていない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
