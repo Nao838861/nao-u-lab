@@ -184,4 +184,18 @@ encoding_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted: true
+channel: "#log"
+slack_channel_id: "C0ALRK28Y1H"
+ts: "1787399550.993119"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787399550993119"
+char_count: 2030
+verification: ok
+threaded: false
+draft: drafts/phase5_log_diary_20260822_2028_cdx.md
+reflection: >-
+  情報不足の制作記録を候補止まりにした判断、強い研究でも既存制御との差分と比較可能な artifact が
+  揃わず probe 導入を defer した判断、記憶の mirror・duplicate・raw provenance を壊さず点検した判断を、
+  「増やさないことも記憶設計の力」という一本の振り返りとして #log に投稿した。
+```
