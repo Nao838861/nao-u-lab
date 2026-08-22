@@ -31,24 +31,79 @@
     {
       "id": "C15",
       "startFrame": 449,
-      "durationFrames": 703,
+      "durationFrames": 697,
       "minimumDurationFrames": 0,
-      "targetSeconds": 23.433,
+      "targetSeconds": 23.233,
       "instructions": "原稿を省略、追加、言い換えず、C14と同じ話速、声の高さ、音量で自然に読み上げてください。3文をひと続きの説明として、文末ごとに自然な短い間を取ってください。",
+      "silenceCompaction": {
+        "preserveInternalSilence": false,
+        "maximumInternalSilenceMs": 9999,
+        "maximumCommaSilenceMs": 2000,
+        "sentenceSilenceThresholdMs": 9999,
+        "maximumSentenceSilenceMs": 2000,
+        "commaPauseCandidateIndices": [
+          0,
+          5,
+          6,
+          9,
+          16,
+          19
+        ],
+        "sentencePauseCandidateIndices": [
+          4,
+          12,
+          13
+        ],
+        "pauseTargetMsByCandidateIndex": {
+          "3": 219,
+          "7": 159,
+          "8": 163,
+          "11": 193,
+          "14": 211,
+          "15": 204,
+          "17": 159,
+          "18": 193,
+          "20": 174
+        }
+      },
       "text": "解決策は、1ドットずつ移動したパターンをあらかじめ用意することです。今回のケースだと、横4パターン、縦2パターンの合計8パターンの絵を追加で用意して、座標によって使い分けるようにしています。結果として滑らかな移動と引き換えに、ただでさえメモリ消費の多いコンパイルドスプライトで、さらに8倍のメモリを消費しています。",
       "ttsText": "解決策は、1ドットずつ移動したパターンをあらかじめ用意することです。今回のケースだと、横4パターン、縦2パターンの合計8パターンの絵を追加で用意して、座標によって使い分けるようにしています。結果として滑らかな移動と引き換えに、ただでさえメモリ消費の多いコンパイルドスプライトで、さらに8倍のメモリを消費しています。",
-      "measuredDurationSeconds": 22.68
+      "measuredDurationSeconds": 22.455
     },
     {
       "id": "C16",
-      "startFrame": 1152,
-      "durationFrames": 956,
+      "startFrame": 1146,
+      "durationFrames": 939,
       "minimumDurationFrames": 0,
-      "targetSeconds": 31.867,
+      "targetSeconds": 31.3,
       "instructions": "原稿を省略、追加、言い換えず、C14・C15と同じ話速、声の高さ、音量で自然に読み上げてください。4文をひと続きの説明として、文末ごとに自然な短い間を取ってください。",
+      "silenceCompaction": {
+        "preserveInternalSilence": false,
+        "maximumInternalSilenceMs": 110,
+        "maximumCommaSilenceMs": 2000,
+        "sentenceSilenceThresholdMs": 9999,
+        "maximumSentenceSilenceMs": 2000,
+        "commaPauseCandidateIndices": [
+          0,
+          2,
+          3,
+          8,
+          9,
+          10,
+          12,
+          15,
+          18,
+          19
+        ],
+        "sentencePauseCandidateIndices": [
+          7,
+          11,
+          17
+        ]
+      },
       "text": "また、コンパイルドスプライトを使っても、スプライトの拡大縮小ができるわけではないため、拡大縮小は大きさの違うスプライトを大量に用意することで実現しています。今回は、なるべく滑らかに動かすため、奥から手前まで、全部で16パターンの絵を用意しました。16パターンの絵に対して、ドット単位の移動のために8倍の容量を使用するので、128パターンの絵が必要になります。大量のパターンが必要になるため、このボスキャラの顔のスプライトだけで、90KBのメモリを使用しています。",
       "ttsText": "また、コンパイルドスプライトを使っても、スプライトの拡大縮小ができるわけではないため、拡大縮小は大きさの違うスプライトを大量に用意することで実現しています。今回は、なるべく滑らかに動かすため、奥から手前まで、全部で16パターンの絵を用意しました。16パターンの絵に対して、ドット単位の移動のために8倍の容量を使用するので、128パターンの絵が必要になります。大量のパターンが必要になるため、このボスキャラの顔のスプライトだけで、90キロバイトのメモリを使用しています。",
-      "measuredDurationSeconds": 31.11
+      "measuredDurationSeconds": 30.52
     }
   ]
 }
