@@ -94,7 +94,54 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index 87 atom ID を memory/atoms/index.jsonl と照合し、missing 0 件を確認。memory/atoms.jsonl と memory/raw/ の入口も存在。"
+  - "memory/atoms.jsonl / per-file md / index.jsonl は各 2939 件で一致し、content conflict 0 件。normalized content duplicate 40 group は canonical overlay で fold 済み。"
+  - "candidate lifecycle 1387 件を監査: posted 675 / ready_to_post 9 / postponed 202 / failed 499 / needs_review 2。status conflict 0、正規未評価 0、malformed 0。"
+  - "期限超過 open candidate 4 件は既存の deferred group lease 2 件（retry_after 2026-09-19）に包含されており、stale triage / group action / candidate handoff への重複投入は 0 件。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件のため status 更新なし。"
+  - "memory/raw/ の30日超ファイル 242 件（web_research 217、headless_eval 16、slack_api 6、game_eval 1、slack_archive 1、sync_state 1）を確認。原文・evidence pointer の正本なので本 phase では移動なし。"
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の title / trigger / excerpt に『エ��ジェント』が残り、正しい『エージェント』検索から漏れる。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/atoms/index.jsonl id=sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8 明示読みでも replacement sequence を確認。source atom 自体の局所破損。memory/MEMORY.md は UTF-8 で『記憶』『ゲーム設計』『敵パターン』を取得でき、87 index ID は全件解決。『評価軸』の完全一致は現行 index 本文に存在しないが、decode error の証拠ではない。"
+    display_or_tooling_status: "none; Get-Content -Encoding UTF8、memory_health、per-file md の結果が一致。gr-1777083728-44d444ab7a の別警告は正当な本文を保つ偽陽性。"
+    why_blocks_game_memory: "agent 記憶設計の atom が日本語の正規語検索で拾われにくくなるが、1 atom に局在し mirror / recall 全体は正常。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_review_batch: []
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 27
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
