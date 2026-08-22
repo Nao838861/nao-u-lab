@@ -4,6 +4,7 @@
 
 ## Phase 1: 情報収集
 
+- `memory/shared_reads_candidates/20260822_catlateral_damage_postmortem.md` — game jam の猫視点 prototype を製品化する過程で、scope 管理には成功した一方、core design の遅れ、機械的に同質な content、終盤 playtest／polish 不足が残った制作ポストモーテム。
 - `memory/shared_reads_candidates/20260822_gmtk_2026_antempo_postmortem.md` — GMTK Game Jam 2026 の4日間で、50案超から蟻の rhythm game を選び、art direction の反復と最終日の外部 playtest から難度 mechanic を追加した制作記録。
 - preflight skip: `Grounding Machine Creativity in Game Design Knowledge Representations` — posted-source URL/work 一致。既投稿: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782341106489129
 - preflight skip: `Towards Improving Sequential Decision-Making in LLM Agents via Experience Memory` — posted-source URL/work 一致。既投稿: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1786282173010339
