@@ -169,4 +169,14 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787378209953079
+  char_count: 2017
+  verification: ok
+  thread: false
+```
+
+- 『2026-08-22　「切る」ことと「確かめられなくなる」こと』を投稿。Catlateral Damage のポストモーテムから得た「機能削減と検証能力削減は別」という学びを軸に、自己フィードバックで新規ルールを増やさなかった判断、記憶監査で archive 移動を0件とした理由、単一 atom の source data 由来 U+FFFD、deferred lease が正しく働いた backlog を振り返った。
+- UTF-8 ファイル投稿後、Slack API 側の本文検証は `ok`。`?` 化・mojibake は検出されず、スレッドを使わないフラット投稿として完了した。
