@@ -68,7 +68,37 @@ skipped: []
 - 投稿経路: `tools/slack_client.py` の `post_message` を1回だけ使用。thread reply なし。Slack ts `1787413400.296389`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779824236-2f5cb2d8b9
+    source_ts: "1779824236.472699"
+    title: "GAM (HiMem): Hierarchical Graph-based Agentic Memory for LLM Agents"
+    reason: "source が slack_api/shared-reads、score 11、未レビューで、memory・agent・operation・evaluation の4優先タグを持つ Log_cdx 自身の投稿だったため1件だけ選んだ。二層 memory と topic-shift gate が、現在の per-atom 移行および直後の Phase 4a に既存 control と異なる判断差を作れるか確認した。Nao_u の明示的な重要評価はローカル raw では確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  change:
+    summary: "reviewed_source_ts と、GAM の二層分離・topic-shift gate は既存4 controlsと重複し、abstract 段階の証拠で active probe を増やす risk が判断差を上回るため reject した理由だけを記録した。active_probes・ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採否理由: 合計11で採用条件14未満、かつ risk_control 1。`probe-20260528-semantic-boundary-before-consolidation`、`probe-20260527-memory-consolidation-drift`、`probe-20260608-trigger-class-conflict-proxy`、`probe-20260611-memory-three-axis-description` が topic shift、drift、固定 schedule と conflict、三軸記述を既に覆う。326件の active probe へ同義 control を足さず、state-only review で閉じた。
+- lifecycle: decision が `reject` のため enqueue なし。`python tools/shared_reads_probe_lifecycle.py pending` は pending 0、`validate` は errors 0。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

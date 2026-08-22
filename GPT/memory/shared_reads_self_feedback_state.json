@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-22T22:46:50+09:00",
+  "updated_at": "2026-08-23T00:48:17+09:00",
   "reviewed_source_ts": [
+    "1779824236.472699",
     "1778584437.753779",
     "1787391726.349679",
     "1787384495.616959",
@@ -729,6 +730,52 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-23T00:48:17+09:00",
+      "selected": {
+        "id": "sr-1779824236-2f5cb2d8b9",
+        "source_ts": "1779824236.472699",
+        "title": "GAM (HiMem): Hierarchical Graph-based Agentic Memory for LLM Agents",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、memory・agent・operation・evaluation の4優先タグを持つ Log_cdx 自身の投稿だったため1件だけ選んだ。Event Progression Graph と Topic Associative Network の分離、topic shift による consolidation gate が、per-atom 移行中の現在と直後の Phase 4a cleanup に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、進行中イベントを Event Progression Graph に置き、topic shift 時だけ Topic Associative Network へ統合する二層構造、graph-guided／multi-factor retrieval、LoCoMo／LongDialQA 評価という方法を具体化しており、固定周期だけで記憶を統合しない次回行動へ変換できるため relevance=3、actionability=2 とした。一方、投稿時点では abstract 段階で数値、topic-shift detector の実装、誤検出時挙動、当方 corpus での before／after を確認しておらず evidence=2 に留めた。probe-20260528-semantic-boundary-before-consolidation は topic shift／session end／buffer overflow／natural pause／unresolved continuation を統合境界として直接問い、probe-20260527-memory-consolidation-drift は新証拠と再要約 drift、probe-20260608-trigger-class-conflict-proxy は固定 schedule と観測 conflict、probe-20260611-memory-three-axis-description は時間範囲・表現・制御方針を既に扱う。さらに memory/directive_atoms_per_file_migration_20260513.md は atoms／per-file／index の役割と dual-write、archive 境界を実装済みである。active_probes が326件ある状態で GAM の二層名を別 probe にすると、既存 control の言い換えと確認負荷だけを増やし、未検証の detector や graph 化を早めるため non_redundancy=0、risk_control=1 とした。",
+      "evidence_sources": [
+        "memory/atoms.jsonl#id=sr-1779824236-2f5cb2d8b9",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779824236.472699",
+        "https://arxiv.org/abs/2604.12285",
+        "memory/directive_atoms_per_file_migration_20260513.md"
+      ],
+      "existing_controls": [
+        "probe-20260528-semantic-boundary-before-consolidation",
+        "probe-20260527-memory-consolidation-drift",
+        "probe-20260608-trigger-class-conflict-proxy",
+        "probe-20260611-memory-three-axis-description"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、GAM の二層分離・topic-shift gate の有用性、abstract 段階の証拠限界、既存 consolidation controls との完全重複、active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-22T22:46:50+09:00",
       "selected": {
