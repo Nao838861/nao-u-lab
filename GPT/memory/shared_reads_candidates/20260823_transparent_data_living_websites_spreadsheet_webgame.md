@@ -4,6 +4,27 @@ url: "https://media.gdcvault.com/gdc2026/Slides/Pierre_Guillaume_SpreadsheetsMic
 collected_at: "2026-08-23T07:03:34+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, tools, rapid-prototyping, webgame, live-tuning]
+evaluated_at: "2026-08-23T07:08:47+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-23T07:08:47+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-23T07:08:47+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-22"
+supersedes: []
+gate_reason: >-
+  固定 engine と変化しやすい content の分離、CSV 取得と property/behavior への写像、
+  live 更新の失敗例と staging 運用まで具体的で、小規模 webgame の反復制作へ直接適用できる。
+  定量評価はないが、実装機構・実運用上の評価・限界を区別すれば約4000字の高密度な概要を構成できる。
+suggested_post_outline:
+  overview_angle: "spreadsheet を単なる数値表ではなく、公開 webgame の content/behavior layer として扱う設計と、その安全な運用条件"
+  analysis_axis: "固定 engine と可変 data の境界、行・列から property/behavior への写像、即時反映が生む反復速度と障害面の対称性"
+  application_target: "Log_cdx の小規模 webgame prototype で、敵・UI・挙動の tuning を rebuild から切り離し、検証用 sheet から live data へ昇格させる playable-diff サイクル"
+  pros_cons: "利点は非コード編集、即時 tuning、既存 behavior の再結合。欠点は remote fetch 障害、無効値による破損、logic の公開、schema と受け側 function の同期負担"
+  verdict_pre: "部分採用。authoring と staging には有効だが、公開 runtime の唯一の依存先にはせず validation と fallback snapshot を置く"
 ---
 
 ## raw_excerpt
