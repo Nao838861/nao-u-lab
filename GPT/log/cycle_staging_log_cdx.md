@@ -52,7 +52,16 @@ unreviewed_intake_audit:
 - duplicate preflight: `continue`。posted-source、closed canonical、open duplicate group の一致なし。candidate 更新後に3 sidecarを再生成し、再確認済み。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260822_catlateral_damage_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787377407046889
+    char_count: 4456
+skipped: []
+```
+
+- 最終判定: 投稿。元記事を再確認し、scope cut と検証能力の cut を区別する分析、headless 評価と人間 playtest の役割分担、単一事例としての限界を含む 4,456 字へ仕上げた。
+- 投稿前レビュー: `tools/shared_reads_policy.py` の `validate_shared_reads_message` で `ok`。必須 6 項目、禁止表現なし、URL 末尾、1 candidate / 1 `chat.postMessage` を確認。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
