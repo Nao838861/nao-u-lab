@@ -121,7 +121,55 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md は UTF-8 明示読みで decode error なし。代表語 probe は 記憶 / ゲーム設計 / 敵パターン を取得し、評価軸 は現行生成 index に文字列自体がないため非該当。81 index entry は python tools/validate_memory_index.py で per-file atom index と一致し、Markdown link 0件のため broken link 0件。"
+  - "memory/atoms.jsonl は 2943 rows。per-file .md / index.jsonl と件数一致し、parse error・missing file・content conflict は各0。raw normalized duplicate は40 groups / 80 rows、canonical overlay は45 groups、effective display unresolved は0 groups / 0 rowsで既存 fold が機能している。"
+  - "memory/raw/ は2026-07-24より前に更新が止まった242 files（web_research 130、phase3_sources 17、headless_eval 16ほか）を確認。memory/README.md が source_ts / evidence から戻る原文層と定めるため、経過日数だけでは archive せず移動0件。"
+  - "shared_reads candidate lifecycle 1391 files: posted 678 / ready_to_post 9 / postponed 198 / failed 504 / needs_review 2。overdue open 4 pathsは既存のdeferred group lease 2件（retry_after 2026-09-19、membership一致）で明示保持され、stale triage / candidate handoffへの新規投入0件。candidate本体は未変更。"
+  - "title canonical index 107 terminal groups、mixed duplicate queue 26 groups、open duplicate queue 30 groups（mixed 26 / all_open 4）へ再生成し、freshness check pass。直前Phase 2でterminal化したplaytrace groupをcanonicalへ移し、stale triage / group action queueを0件へ整理した。"
+  - "未評価 intake はvalid 0 / malformed 0。Slack directives / broadcasts はpending各0件で、handled更新対象なし。"
+  - "due probe lease は0件。ledger validate errors 0で、receipt更新なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 30
+  mixed_group_count: 26
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  deferred_group_lease_count: 2
+  deferred_group_lease_ids:
+    - gha-e6d4d4b5a37a0808
+    - gha-2313a247c62a9028
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- 判定: 既存のcanonical fold、deferred group lease、candidate/group handoff、probe lifecycleが今回の重複・stale・leaseを処理できている。新しい構造設計を必要とする問題は抽出されなかったため、Phase 4bは起動しない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
