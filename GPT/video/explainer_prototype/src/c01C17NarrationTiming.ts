@@ -2,7 +2,7 @@ import {benefitNarrationDurationInFrames} from './benefitNarrationTiming';
 import {constraintNarrationDurationInFrames} from './constraintNarrationTiming';
 import {developmentNarrationDurationInFrames} from './developmentNarrationTiming';
 import {drawingNarrationDurationInFrames} from './drawingNarrationTiming';
-import {c17Timing} from './laterNarrationTiming';
+import {c17Timing, laterNarrationPreviewDurationInFrames} from './laterNarrationTiming';
 import {narrationPreviewDurationInFrames} from './narrationTiming';
 
 const c01StartFrame = 0;
@@ -23,3 +23,6 @@ export const c01C17GroupStartFrames = {
 
 export const c01C17NarrationDurationInFrames =
   c17StartFrame + c17Timing.durationFrames;
+
+export const c01C18NarrationDurationInFrames =
+  c17StartFrame + laterNarrationPreviewDurationInFrames;

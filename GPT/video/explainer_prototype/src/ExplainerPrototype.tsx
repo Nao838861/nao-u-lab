@@ -51,6 +51,7 @@ import {
   c21Timing,
   c22Timing,
   c23Timing,
+  laterNarrationPreviewDurationInFrames,
 } from './laterNarrationTiming';
 import {c01C17GroupStartFrames} from './c01C17NarrationTiming';
 
@@ -2178,6 +2179,31 @@ export const C01C17NarrationPreview: React.FC = () => {
         <ConstraintNarrationPreview />
       </Sequence>
       <Sequence from={c01C17GroupStartFrames.c17} durationInFrames={c17Timing.durationFrames}>
+        <LaterNarrationPreview />
+      </Sequence>
+    </AbsoluteFill>
+  );
+};
+
+export const C01C18NarrationPreview: React.FC = () => {
+  return (
+    <AbsoluteFill style={{backgroundColor: C.bg}}>
+      <Sequence from={c01C17GroupStartFrames.c01} durationInFrames={narrationPreviewDurationInFrames}>
+        <ExplainerPrototype />
+      </Sequence>
+      <Sequence from={c01C17GroupStartFrames.c04} durationInFrames={developmentNarrationDurationInFrames}>
+        <DevelopmentNarrationPreview />
+      </Sequence>
+      <Sequence from={c01C17GroupStartFrames.c08} durationInFrames={drawingNarrationDurationInFrames}>
+        <DrawingNarrationPreview />
+      </Sequence>
+      <Sequence from={c01C17GroupStartFrames.c11} durationInFrames={benefitNarrationDurationInFrames}>
+        <BenefitNarrationPreview />
+      </Sequence>
+      <Sequence from={c01C17GroupStartFrames.c14} durationInFrames={constraintNarrationDurationInFrames}>
+        <ConstraintNarrationPreview />
+      </Sequence>
+      <Sequence from={c01C17GroupStartFrames.c17} durationInFrames={laterNarrationPreviewDurationInFrames}>
         <LaterNarrationPreview />
       </Sequence>
     </AbsoluteFill>
