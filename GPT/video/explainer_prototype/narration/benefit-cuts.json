@@ -13,8 +13,9 @@
     "minimumSilenceMs": 60,
     "preserveInternalSilence": false,
     "maximumInternalSilenceMs": 110,
-    "sentenceSilenceThresholdMs": 650,
-    "maximumSentenceSilenceMs": 260,
+    "maximumCommaSilenceMs": 2000,
+    "sentenceSilenceThresholdMs": 9999,
+    "maximumSentenceSilenceMs": 2000,
     "maximumLeadingSilenceMs": 20,
     "maximumTrailingSilenceMs": 60
   },
@@ -23,35 +24,70 @@
     {
       "id": "C11",
       "startFrame": 0,
-      "durationFrames": 456,
+      "durationFrames": 494,
       "minimumDurationFrames": 390,
-      "targetSeconds": 15.2,
+      "targetSeconds": 16.467,
       "instructions": "原稿を省略や言い換えをせず、C12・C13へ自然につながる落ち着いた説明調で読み上げてください。語句ごとに区切って強調せず、文全体の話速と抑揚を安定させてください。",
+      "silenceCompaction": {
+        "commaPauseCandidateIndices": [
+          1,
+          2,
+          6,
+          8
+        ]
+      },
       "text": "一般的なソフトウェア描画とコンパイルドスプライトを比較すると、コンパイルドスプライトは空白のピクセルをスキップして、抜きのないピクセルは合成せず直接メモリを上書きするため、普通の描画に比べて数倍も高速にキャラクターを描くことができます。",
       "ttsText": "一般的なソフトウェア描画と、コンパイルドスプライトを比較すると、コンパイルドスプライトは空白のピクセルをスキップして、ぬきのないピクセルは合成せず直接メモリを上書きするため、普通の描画に比べて数倍も高速にキャラクターを描くことができます。",
-      "measuredDurationSeconds": 14.42
+      "measuredDurationSeconds": 15.695
     },
     {
       "id": "C12",
-      "startFrame": 456,
-      "durationFrames": 486,
+      "startFrame": 494,
+      "durationFrames": 537,
       "minimumDurationFrames": 0,
-      "targetSeconds": 16.2,
+      "targetSeconds": 17.9,
       "instructions": "原稿を省略や言い換えをせず、C11と同じ話速、声の高さ、音量を保った自然な説明調で読み上げてください。2文の間には短い自然な間を置いてください。",
+      "silenceCompaction": {
+        "commaPauseCandidateIndices": [
+          0,
+          3,
+          6,
+          10
+        ],
+        "sentencePauseCandidateIndices": [
+          9
+        ]
+      },
       "text": "コンパイルドスプライトは、原理的にCPUができる最高の速度で絵が描けるため、ファミコンのCPUでも30fpsでビッグコア8体+背景が描画できるくらいの速度が出るようになりました。しかし、コンパイルドスプライトには特有の欠点もあります。",
       "ttsText": "コンパイルドスプライトは、原理的にシーピーユーができる最高の速度で絵が描けるため、ファミコンのシーピーユーでも30エフピーエスでビッグ・コア、8体と背景が描画できるくらいの速度が出るようになりました。しかし、コンパイルドスプライトには特有の欠点もあります。",
-      "measuredDurationSeconds": 15.445
+      "measuredDurationSeconds": 17.125
     },
     {
       "id": "C13",
-      "startFrame": 942,
-      "durationFrames": 666,
+      "startFrame": 1031,
+      "durationFrames": 773,
       "minimumDurationFrames": 360,
-      "targetSeconds": 22.2,
+      "targetSeconds": 25.767,
       "instructions": "C11・C12と同じナレーターの自然な説明調で、原稿を順番どおりに読んでください。冒頭の一文は見出しの読み上げではなく、後続の説明につながる普通の文章として滑らかに読み、語ごとに区切った強調や不自然な抑揚を付けないでください。",
+      "silenceCompaction": {
+        "commaPauseCandidateIndices": [
+          2,
+          5,
+          6,
+          7,
+          10,
+          11,
+          13,
+          14
+        ],
+        "sentencePauseCandidateIndices": [
+          3,
+          8
+        ]
+      },
       "text": "コンパイルドスプライトの一つ目の欠点は、絵ごとに専用プログラムが必要になる事です。一般的なソフトウェア描画はデータとプログラムが分かれているので、データだけ用意すれば少ない容量でどんな絵でも描くことができます。一方で、コンパイルドスプライトは、絵のパターンごとにプログラムを用意するため、高速に描画できるのと引き換えに、大量のメモリを消費することになります。",
       "ttsText": "コンパイルドスプライトの一つ目の欠点は、絵ごとに専用プログラムが必要になる事です。一般的なソフトウェア描画はデータとプログラムが分かれているので、データだけ用意すれば少ない容量でどんな絵でも描くことができます。一方で、コンパイルドスプライトは、絵のパターンごとにプログラムを用意するため、こうそくに描画できるのと引き換えに、大量のメモリを消費することになります。",
-      "measuredDurationSeconds": 21.435
+      "measuredDurationSeconds": 25.005
     }
   ]
 }
