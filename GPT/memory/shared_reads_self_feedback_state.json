@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-22T08:42:18+09:00",
+  "updated_at": "2026-08-22T10:39:05+09:00",
   "reviewed_source_ts": [
+    "1787355534.654839",
     "1787348477.440319",
     "1787341222.261219",
     "1779332718.909909",
@@ -22648,6 +22649,47 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、LLM Odyssey の三層 progression／段階 hint／retry telemetry の有用性、正式な学習効果未検証、既存 learning／tutorial-order／onboarding／intervention／friction controls との完全重複、比較 artifact 不在による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-22T10:39:05+09:00",
+      "selected": {
+        "id": "sr-1787355534-9376238d5f",
+        "source_ts": "1787355534.654839",
+        "title": "LLM router の static replay gap と branching rollout",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、memory・harness・game-design・agent・evaluation の5優先タグを持つ最新の自己完結した投稿だったため1件だけ選んだ。途中の model／prompt／policy／memory 差替え後に元 trajectory を採点する replay gap と、checkpoint からの branching rollout＋same-policy control が、headless game・coding agent・memory 評価に既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads 本文は SWE-bench Verified の mini-SWE-agent を30%／70%地点で fork し、swap arm と same-model control を別 container で終端まで再実行する。約900 rollout・717 branch pair、環境復元707/708、swap 後 action の61〜94%書換え、早期 swap 後の正しい replay state 率3.2〜8.0%、成功に関係する static evaluator 判定0勝5敗を示し、serving noise、empty patch、多数派 failure による agreement 水増し、tight budget 下の thoroughness tax、model能力と量子化の交絡も明記するため relevance・actionability・evidence は3とした。probe-20260708-causalgame-outcome-explanation-split は outcome と因果説明、intervention／counterexample を、probe-20260605-agent-eval-attribution-split は model と framework confound を、probe-20260710-scoreable-games-benchmark-claim-decomposition と probe-20260709-clqt-diagnostic-decision-trail は aggregate outcome と process trace を、probe-20260708-commonroad-human-operation-regression-fixture は replayable fixture と oracle を扱う。ただし途中差替え後の実在 trajectory と same-policy noise floor を checkpoint から再実行することは直接要求せず、本 atom 固有差が残るため non_redundancy は2とした。一方、現在の staging には model／prompt／policy／memory を途中差替えする headless episode、fork checkpoint、same-policy control、終端 outcome の比較 artifact がない。active_probes は326件あり、直後の Phase 4a memory cleanup を名目 consumer にして新規 probe を足すと、適用対象のない確認負荷と高価な branching infrastructure の先行実装を増やす。consumer phase、trigger artifact、期待判断差を lease 契約どおり具体化できないため risk_control は1とし、state-only で defer する。次に途中差替えを含む具体的な playable／coding-agent／memory-evaluation artifact が生じ、既存5 controlsだけでは static replay の無効化を判定できない時に、代表episodeの少数 fork metricとして再評価する。",
+      "existing_controls": [
+        "probe-20260708-causalgame-outcome-explanation-split",
+        "probe-20260605-agent-eval-attribution-split",
+        "probe-20260710-scoreable-games-benchmark-claim-decomposition",
+        "probe-20260709-clqt-diagnostic-decision-trail",
+        "probe-20260708-commonroad-human-operation-regression-fixture"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、static replay gap／branching rollout／same-policy control の固有差、既存の因果・帰属・aggregate／process・replay fixture controls との部分重複、比較 artifact 不在と probe 増殖 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

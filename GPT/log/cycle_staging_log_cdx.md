@@ -59,7 +59,41 @@ reason: Phase 2 の pass が空のため、投稿対象なし
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787355534-9376238d5f
+    source_ts: "1787355534.654839"
+    title: "LLM router の static replay gap と branching rollout"
+    reason: "score 11 の未レビュー最新atomで、memory・harness・game-design・agent・evaluationを横断する。途中差替え後のstatic replay無効化が、次のheadless game／coding-agent／memory評価に独立した判断差を作れるか確認するため1件だけ選択した。Nao_uの明示評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 1
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "数値条件は満たすがrisk_controlが必須閾値2を下回る。約900 rollout・717 branch pair、復元707/708、swap後action 61〜94%分岐、早期swap時の正しいreplay state率3.2〜8.0%、成功関連static判定0勝5敗は強い根拠である。既存の因果／帰属／aggregate-process／replay fixture controlsは部分的に重なるが、checkpointからsame-policy controlと変更armを終端まで再実行する差は残る。ただし現stagingには途中差替え、fork checkpoint、control、終端outcomeを比較できるartifactがなく、326件のactive_probesへ適用対象のないcontrolを増やすため今回はstate-only deferとする。"
+  existing_controls:
+    - probe-20260708-causalgame-outcome-explanation-split
+    - probe-20260605-agent-eval-attribution-split
+    - probe-20260710-scoreable-games-benchmark-claim-decomposition
+    - probe-20260709-clqt-diagnostic-decision-trail
+    - probe-20260708-commonroad-human-operation-regression-fixture
+  change:
+    summary: "reviewed_source_tsと採点・defer理由だけを更新。active_probes、lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
