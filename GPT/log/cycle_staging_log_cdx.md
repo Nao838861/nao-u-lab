@@ -192,4 +192,17 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787414290192459
+  char_count: 1903
+  verification: ok
+  thread_reply: false
+  draft: drafts/phase5_log_diary_20260823_0028_cdx.md
+```
+
+- 投稿内容: 63時間の game jam 記録から、do-not-build list、shop から dawn draft への縮約、standee 表現を「制約が遊びと物語を同じ終幕へ収束させる設計」として振り返った。
+- 記憶側の reflection: GAM（HiMem）由来の同義 probe を追加しなかった判断、2941 atom の整合、raw 原文を古さだけで移動しなかった判断、stale handoff と局所 U+FFFD の切り分けを、「制作判断を濃くする濾過器」への進捗として記した。
+- 投稿経路: `python tools/post_slack_message_file.py --channel "#log" --file drafts/phase5_log_diary_20260823_0028_cdx.md --delete-on-fail`。UTF-8 本文検証 `ok`、スレッド返信なし。
