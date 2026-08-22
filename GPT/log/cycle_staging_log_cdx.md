@@ -101,7 +101,77 @@ self_feedback:
 - defer 条件: 次の具体的な playable game diff で feature cut 前後の build と playtest／telemetry／比較経路を示せて、既存6 controlsだけでは工数削減と観測損失の採否差を説明できない時だけ再評価する。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、per-file atom index との対応を検証。broken index row は 0 件、代表語（記憶／ゲーム設計／敵パターン／評価軸）も取得できた。"
+  - "atom 2,938件を監査。atoms.jsonl／per-file .md／index.jsonl は各2,938件で mirror drift・parse error・content conflict・duplicate id は 0 件。normalized content duplicate 40群80行は既存 overlay 45群で fold 済み。"
+  - "candidate sidecar を再生成。closed canonical 105群、open duplicate 31群（mixed 27／all_open 4）、stale triage 0行、group action 0行。candidate frontmatter は変更していない。"
+  - "30日以上更新のない memory/raw/ 242ファイル（web_research 217、headless_eval 16、slack_api 6、その他3）を確認。raw は原文正本で参照証拠を保持する層なので、経過日数だけでは移動しなかった。"
+  - "Slack inbox は directives／broadcasts とも pending 0件。受領だけを根拠に close した行や status 更新はない。"
+issues:
+  - id: ISS-4A-20260822-01
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』が『AIエ��ジェント』になっており、raw Slack archiveにも同じ U+FFFD 破損が残る。memory_health が挙げたもう1件 gr-1777083728-44d444ab7a は原文中の意図的な『???』で、文字化けではない。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md#title; memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms/2026-04/gr-1777083728-44d444ab7a.md#excerpt"
+    source_file_status: "UTF-8明示読みで atom と raw の双方に U+FFFD を確認。gr atom は日本語本文が正常で、疑似検出のみ。MEMORY.md 自体は代表語probe成功。"
+    display_or_tooling_status: "none。shell表示だけのmojibakeではなく、対象raw sourceに同じ置換文字が存在する。"
+    why_blocks_game_memory: "全体を停止させる問題ではないが、この1 atom は正しい『AIエージェント』完全一致検索から漏れ、filesystem/context memory の事例想起を局所的に弱める。設計課題ではなく、原Slack等の独立根拠を得て行う限定的なデータ修復課題。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_review_batch: []
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  remaining_overdue_candidate_backlog: 4
+  open_duplicate_group_count: 31
+  mixed_group_count: 27
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_handoff_pending_count: 0
+  group_handoff_ids: []
+  suppressed_by_live_group_lease_count: 2
+  suppressed_group_lease_ids:
+    - gha-e6d4d4b5a37a0808
+    - gha-2313a247c62a9028
+  suppressed_group_retry_after: "2026-09-19T14:08:16+09:00"
+  candidate_handoff_enqueued_count: 0
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+candidate_lifecycle_audit:
+  status_counts:
+    posted: 674
+    ready_to_post: 9
+    postponed: 202
+    failed: 499
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_for_reassessment: 4
+  overdue_open_paths:
+    - memory/shared_reads_candidates/20260605_jamel_novelty_memory_exploration.md
+    - memory/shared_reads_candidates/20260610_collision_enemy_morphology_generation.md
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+    - memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+  note: "postponed／needs_review には stale_after 欠損なし。欠損3件はこの2状態の再評価対象ではない。overdue 4件は上記2つのlive deferred group leaseが包含しており、candidate単位では重複enqueueしなかった。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
