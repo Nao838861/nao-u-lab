@@ -4,6 +4,20 @@ url: "https://gdcvault.com/play/1035540/Designing-10-000-Handcrafted-Puzzles"
 collected_at: "2026-08-23T05:01:20+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, puzzle, level-design, postmortem, accessibility, pacing]
+evaluated_at: "2026-08-23T05:05:11+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-23T05:05:11+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-23T05:05:11+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-22"
+supersedes: []
+gate_reason: >-
+  大量の手作り puzzle を prototype、難度配列、詰まり回避、tutorial、accessibility、pacing まで一つの content pipeline として扱う視点は、問題集型ゲームの制作へ具体的に適用できる。
+  ただし保存済み資料は講演 overview に留まり、実際の構造化手法、採用・不採用 puzzle の具体例、player 反応や評価結果が不足しており、約4000字の概要を推測なしで支えられないため保留する。
 ---
 
 ## raw_excerpt

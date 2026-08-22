@@ -4,6 +4,20 @@ url: "https://gdcvault.com/play/1034515/Future-Realities-Summit-Grokit-Postmorte
 collected_at: "2026-08-23T05:01:44+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, mixed-reality, multiplayer, hand-tracking, spatial-interaction]
+evaluated_at: "2026-08-23T05:05:11+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-23T05:05:11+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-23T05:05:11+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-22"
+supersedes: []
+gate_reason: >-
+  自然 gesture で tutorial 負荷を下げる設計と、multiplayer、physics、scene understanding の複合実装を同じ postmortem で検証する軸は、MR interaction prototype へ具体的に適用できる。
+  ただし保存済み資料は講演 overview に留まり、gesture 設計の具体例、技術課題への対処、playtest 指標、成功・失敗の結果が不足しており、約4000字の概要を推測なしで支えられないため保留する。
 ---
 
 ## raw_excerpt
