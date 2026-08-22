@@ -99,7 +99,68 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 strict decode で監査し、索引中の atom ID 87 件は memory/atoms/index.jsonl に全件存在、broken link 0 件を確認した。代表語は 記憶・ゲーム設計・敵パターンを取得でき、評価軸は現行本文に存在しないが decode error / 表示 mojibake はない。"
+  - "memory_health と atom ID 集計で 2937 atom の atoms.jsonl / per-file / index mirror が一致し、duplicate ID・content conflict・parse error は 0 件だった。raw normalized-content 重複 40 group は canonical overlay で fold 済み。"
+  - "memory/raw/ の30日超ファイル 242 件（web_research 217、headless_eval 16、slack_api 6、slack_archive 1、game_eval 1、raw root 1）を確認した。原文 provenance と現用 sync state を含むため年齢だけでは移動せず、archive 移動は 0 件。"
+  - "shared-reads の lifecycle 内訳と canonical/mixed/open duplicate sidecar を監査し、terminal canonical 105 group、mixed 27 group、open 31 groupを確認した。open/stale/group-action sidecar を現行 lease 合成順で再生成し、stale triage 0 件、actionable group 0 件だった。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件で、handled 更新対象はなかった。"
+  - "candidate/group handoff inbox はいずれも pending 0 件・schema error 0 件で、group/candidate enqueue はともに 0 件だった。"
+issues:
+  - id: ISS-UTF8-ATOM-001
+    description: "atom sr-1776127289-4d9239b255 の表題・trigger・excerpt に『AIエ��ジェント』という literal U+FFFD が残っている。memory_health のもう1件の suspect（gr-1777083728-44d444ab7a）は本文中の『???』を検知した false positive。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みは成功し、raw Slack archive・atoms.jsonl・per-file .md の同じ箇所に literal U+FFFD が存在するため、表示経路ではなく source data 由来。memory/MEMORY.md 自体は UTF-8 strict decode 成功。"
+    display_or_tooling_status: "Get-Content -Encoding UTF8 と rg の双方で同じ U+FFFD を観測し、shell/staging 固有の mojibake ではない。"
+    why_blocks_game_memory: "該当 atom の title/trigger 語が欠損して検索精度をわずかに下げるが、単一 atom であり全体の recall smoke は正常なので現時点では制作記憶を阻害しない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+candidate_lifecycle:
+  counts:
+    posted: 673
+    ready_to_post: 9
+    postponed: 202
+    failed: 499
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_open_total: 4
+  overdue_disposition: "4件は2つの all-open duplicate group（JAMEL / collision-based enemy morphology）に属し、membership fingerprint が一致する deferred group lease の retry_after=2026-09-19T14:08:16+09:00 より前のため queue から正しく抑止された。"
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 27
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- `overdue_open_total > stale_triage_queue_rows` だが actionable group は 0 件で、高水位条件（actionable group 3 件以上）を満たさない。2 group は期限前 deferred lease により抑止されており、fail-open の欠落ではない。
+- Phase 4b/4c は起動しない。ISS-UTF8-ATOM-001 は既知の単一 source repair であり、新しい仕組みの設計対象ではない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
