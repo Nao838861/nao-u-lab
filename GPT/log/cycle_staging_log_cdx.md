@@ -91,7 +91,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787413400-ce007ebcfc
+    source_ts: "1787413400.296389"
+    title: "I Won't Be Abducted postmortem — reveal を守る scope と検証可能性"
+    reason: "score 11 の未レビュー最新候補で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。短期制作の scope cut と first playable の検証可能性が、既存 control と異なる次回判断を作るか確認した。Nao_u の明示評価記録はローカル raw では未確認。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: defer
+  decision_reason: "合計13で採用条件14に届かず、risk_control も2未満。do-not-build、tuning 軸縮約、代表敵・telegraph・勝敗・仮終幕までを通す first playable は実行可能だが、単一作者 postmortem に比較値がなく、既存の game-scope-brief-cut-gate／runtime-verifiable-production-slices／prototype-hypothesis-contract と大きく重なる。現在の staging には比較可能な game artifact がなく、Phase 4a memory cleanup を consumer にしても判断差を測れないため state-only review とした。"
+  change:
+    summary: "reviewed_source_ts と採点・defer 理由だけを state に記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

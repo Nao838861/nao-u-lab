@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-23T00:48:17+09:00",
+  "updated_at": "2026-08-23T03:05:07+09:00",
   "reviewed_source_ts": [
+    "1787413400.296389",
     "1779824236.472699",
     "1778584437.753779",
     "1787391726.349679",
@@ -730,6 +731,51 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-23T03:05:07+09:00",
+      "selected": {
+        "id": "sr-1787413400-ce007ebcfc",
+        "source_ts": "1787413400.296389",
+        "title": "I Won't Be Abducted postmortem — reveal を守る scope と検証可能性",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新候補だったため1件だけ選んだ。約63時間の短期制作で、must ship／stretch／do not build、単一 reveal、調整軸の縮約、representative enemy と telegraph を含む最初の playable を揃える知見が、次回 prototype に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "defer",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、do-not-build を期限中に解禁しない探索境界とし、shop を無料3択 draft へ変えて価格・収入の tuning debt を減らし、data-only の敵を進捗と数えず、最小盤面・代表敵・主要行動・telegraph・勝敗・仮終幕までを最初の playable に通す行動へ具体化しているため relevance・actionability は3とした。一方、根拠は約63時間の単一作者 postmortem で、完走率、reveal 理解率、upgrade 選択分布、敵別被弾率、telegraph 導入前後の比較がなく、各施策の効果を分離できないため evidence=2 に留める。probe-20260602-game-scope-brief-cut-gate は scope promise・Must／Should／Cut・first playable・最小 risk test を、probe-20260518-runtime-verifiable-production-slices は visual／code／interaction／runtime evidence の分離を、probe-20260706-paperclaw-prototype-hypothesis-contract は observable verdict と test path を既に扱う。本投稿固有の『cut した機能ではなく消えた tuning 軸と保護した検証経路を残す』差分はあるが、既存3 control を適用した採否を今変える独立 control にはならないため non_redundancy=1 とした。active_probes は326件あり、現在の staging に比較可能な短期 prototype、代表敵＋telegraph を含む first playable、before／after tuning 軸がなく、直後の Phase 4a memory cleanup は実 consumer ではない。対象 artifact なしに同型 control を足すと確認負荷と早すぎる scope 固定を増やすため risk_control=1 とし、state-only defer で閉じる。",
+      "defer_condition": "次の短期 game prototype で scope cut または economy／enemy roster 縮約を行い、既存3 control を適用しても『削減で失った tuning 軸』と『保持した検証経路』を判断記録へ残せない具体例が出た時だけ、比較可能な game-start／playable-diff artifact に限定して再評価する。",
+      "evidence_sources": [
+        "memory/atoms.jsonl#id=sr-1787413400-ce007ebcfc",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787413400.296389",
+        "https://chrisdalbano.com/notes/i-wont-be-abducted-postmortem"
+      ],
+      "existing_controls": [
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260518-runtime-verifiable-production-slices",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、do-not-build・tuning 軸縮約・最初の playable に検証可能性を含める有用性、単一 postmortem の証拠限界、既存 scope／production-slice／hypothesis controls との重複、比較可能な game artifact 不在による defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-23T00:48:17+09:00",
       "selected": {
