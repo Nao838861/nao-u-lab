@@ -1645,8 +1645,8 @@ const ClosingSummaryScene: React.FC<{durationInFrames?: number}> = ({durationInF
   const at = (fraction: number) => Math.round(durationInFrames * fraction);
   const introEnd = at(0.12);
   const recapEnd = at(0.66);
-  const thanksStart = at(0.88);
-  const teaserEnd = thanksStart - Math.round(0.25 * 30);
+  const thanksStart = Math.round(25.595 * 30);
+  const teaserEnd = thanksStart - Math.round(0.5 * 30);
   const introOpacity = frame < introEnd ? 1 : 0;
   const recapOpacity = frame >= introEnd && frame < recapEnd ? 1 : 0;
   const teaserOpacity = frame >= recapEnd && frame < teaserEnd ? 1 : 0;
@@ -1796,7 +1796,7 @@ const FrameTimelineScene: React.FC<{durationInFrames?: number}> = ({durationInFr
         <Lane kind="B" />
         <div style={{flex: 1}}>
           <div style={{width: 420, height: 277, margin: '0 auto', position: 'relative', overflow: 'hidden', background: '#000', border: '2px solid #47434e'}}>
-            <Img src={staticFile(previewImages[previewStage])} style={{position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', imageRendering: 'pixelated'}} />
+            <Img src={staticFile(previewImages[previewStage])} style={{position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', imageRendering: 'pixelated', transform: 'scale(1.45)', transformOrigin: 'center 72%'}} />
             {previewStage === 1 ? <div style={{position: 'absolute', inset: 0, background: '#30303880'}} /> : null}
             {previewStage === 2 ? <>
               <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: '64%', background: '#000'}} />
@@ -2155,6 +2155,17 @@ export const LaterNarrationPreview: React.FC = () => {
       <Sequence from={c18Timing.startFrame} durationInFrames={c18Timing.durationFrames}>
         <ClosingSummaryScene durationInFrames={c18Timing.durationFrames} />
         <Audio src={staticFile('narration/later/C18.wav')} volume={0.95} />
+      </Sequence>
+    </AbsoluteFill>
+  );
+};
+
+export const C19NarrationPreview: React.FC = () => {
+  return (
+    <AbsoluteFill style={{backgroundColor: C.bg}}>
+      <Sequence durationInFrames={c19Timing.durationFrames}>
+        <FrameTimelineScene durationInFrames={c19Timing.durationFrames} />
+        <Audio src={staticFile('narration/later/C19.wav')} volume={0.95} />
       </Sequence>
     </AbsoluteFill>
   );

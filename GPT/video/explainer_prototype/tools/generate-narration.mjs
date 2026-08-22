@@ -99,6 +99,7 @@ const syncNarrationTiming = () => {
   let startFrame = 0;
 
   for (const cut of manifest.cuts) {
+    startFrame += cut.gapBeforeFrames ?? 0;
     const measured = cut.measuredDurationSeconds;
     cut.startFrame = startFrame;
     if (Number.isFinite(measured)) {

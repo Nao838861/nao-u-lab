@@ -45,10 +45,11 @@
     },
     {
       "id": "C18",
+      "gapBeforeFrames": 8,
       "startFrame": 530,
-      "durationFrames": 851,
+      "durationFrames": 855,
       "minimumDurationFrames": 0,
-      "targetSeconds": 28.367,
+      "targetSeconds": 28.5,
       "instructions": "入力された各行を上から順番に一度ずつ、どの行も省略、追加、言い換えずに読み上げてください。C17と同じ話速、声の高さ、音量で、ひと続きの締めとして落ち着いて読み、行の間には文末として自然な間を取ってください。原稿にない言葉は追加しないでください。",
       "silenceCompaction": {
         "preserveInternalSilence": false,
@@ -71,7 +72,10 @@
           10,
           14,
           19
-        ]
+        ],
+        "pauseTargetMsByCandidateIndex": {
+          "19": 500
+        }
       },
       "text": "今回の説明は、以上になります。今回のポイントは、描画する絵に特化したプログラムをあらかじめ用意し、大量のメモリと引き換えに、ファミコンのCPU性能を引き出したことです。この仕組みによって、高速で滑らかな拡大縮小を実現することができました。次回は、たくさんの敵や背景を動かしながら、3D座標を高速に計算する仕組みを解説します。それでは、ご視聴ありがとうございました。",
       "ttsText": "今回の説明は、以上になります。\n今回のポイントは、描画する絵に特化したプログラムをあらかじめ用意し、大量のメモリと引き換えに、ファミコンのシーピーユー性能を引き出したことです。\nこの仕組みによって、高速で滑らかな拡大縮小を実現することができました。\n次回は、たくさんの敵や背景を動かしながら、スリー・ディー座標を高速に計算する仕組みを解説します。",
@@ -81,11 +85,11 @@
           "instructions": "技術解説動画の最後の一文です。この一文だけを一度読み、落ち着いた自然な声で穏やかに着地させてください。言葉を追加しないでください。"
         }
       ],
-      "measuredDurationSeconds": 27.59
+      "measuredDurationSeconds": 27.735
     },
     {
       "id": "C19",
-      "startFrame": 1381,
+      "startFrame": 1385,
       "durationFrames": 1060,
       "minimumDurationFrames": 0,
       "targetSeconds": 35.333,
@@ -96,7 +100,7 @@
     },
     {
       "id": "C20",
-      "startFrame": 2441,
+      "startFrame": 2445,
       "durationFrames": 765,
       "minimumDurationFrames": 0,
       "targetSeconds": 25.5,
@@ -107,7 +111,7 @@
     },
     {
       "id": "C21",
-      "startFrame": 3206,
+      "startFrame": 3210,
       "durationFrames": 809,
       "minimumDurationFrames": 0,
       "targetSeconds": 26.967,
@@ -118,7 +122,7 @@
     },
     {
       "id": "C22",
-      "startFrame": 4015,
+      "startFrame": 4019,
       "durationFrames": 686,
       "minimumDurationFrames": 0,
       "targetSeconds": 22.867,
@@ -129,7 +133,7 @@
     },
     {
       "id": "C23",
-      "startFrame": 4701,
+      "startFrame": 4705,
       "durationFrames": 1102,
       "minimumDurationFrames": 0,
       "targetSeconds": 36.733,
