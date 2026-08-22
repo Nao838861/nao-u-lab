@@ -3,7 +3,6 @@ import {Composition} from 'remotion';
 import {
   BenefitNarrationPreview,
   C01C17NarrationPreview,
-  C19NarrationPreview,
   ConstraintNarrationPreview,
   DevelopmentNarrationPreview,
   DrawingNarrationPreview,
@@ -17,7 +16,6 @@ import {constraintNarrationDurationInFrames} from './constraintNarrationTiming';
 import {developmentNarrationDurationInFrames} from './developmentNarrationTiming';
 import {drawingNarrationDurationInFrames} from './drawingNarrationTiming';
 import {
-  c19Timing,
   laterNarrationPreviewDurationInFrames,
   workflowNarrationPreviewDurationInFrames,
 } from './laterNarrationTiming';
@@ -81,14 +79,6 @@ export const RemotionRoot: React.FC = () => {
         id="LaterNarrationPreview"
         component={LaterNarrationPreview}
         durationInFrames={laterNarrationPreviewDurationInFrames}
-        fps={30}
-        width={1280}
-        height={720}
-      />
-      <Composition
-        id="C19NarrationPreview"
-        component={C19NarrationPreview}
-        durationInFrames={c19Timing.durationFrames}
         fps={30}
         width={1280}
         height={720}
