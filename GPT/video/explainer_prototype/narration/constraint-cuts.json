@@ -20,17 +20,17 @@
     {
       "id": "C14",
       "startFrame": 0,
-      "durationFrames": 456,
+      "durationFrames": 449,
       "minimumDurationFrames": 300,
-      "targetSeconds": 15.2,
+      "targetSeconds": 14.967,
       "instructions": "原稿を省略、追加、言い換えず、落ち着いた自然な説明調で読み上げてください。2文をひと続きの説明として、文の途中で不自然に区切らず、文末の間だけ自然に取ってください。",
       "text": "コンパイルドスプライトの2つ目の欠点は、滑らかなキャラの移動ができないことです。今回の仮想ビットマップは1バイトが4×2ドットなので、キャラを横4ドット、縦2ドット単位でしか動かすことができません。",
-      "ttsText": "コンパイルドスプライトのふたつ目の欠点は、滑らかなキャラの移動ができないことです。今回の仮想ビットマップは1バイトが4かける2ドットなので、キャラを横4ドット、縦2ドット単位でしか動かすことができません。",
-      "measuredDurationSeconds": 14.445
+      "ttsText": "コンパイルド・スプライトのふたつ目の欠点は、滑らかなキャラの移動ができないことです。今回の仮想ビットマップは1バイトが4かける2ドットなので、キャラを横4ドット、縦2ドット単位でしか動かすことができません。",
+      "measuredDurationSeconds": 14.195
     },
     {
       "id": "C15",
-      "startFrame": 456,
+      "startFrame": 449,
       "durationFrames": 703,
       "minimumDurationFrames": 0,
       "targetSeconds": 23.433,
@@ -41,7 +41,7 @@
     },
     {
       "id": "C16",
-      "startFrame": 1159,
+      "startFrame": 1152,
       "durationFrames": 956,
       "minimumDurationFrames": 0,
       "targetSeconds": 31.867,

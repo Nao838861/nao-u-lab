@@ -1289,7 +1289,7 @@ const PositionLimitScene: React.FC<{durationInFrames?: number}> = ({durationInFr
         </div>
 
         <div style={{width: 390}}>
-          <div style={{fontFamily: FONT, color: C.cyan, fontSize: 36, fontWeight: 900, lineHeight: 1.35}}>横4ドット単位でしか動かせない</div>
+          <div style={{fontFamily: FONT, color: C.cyan, fontSize: 31, fontWeight: 900, lineHeight: 1.35, whiteSpace: 'nowrap'}}>横4ドット単位でしか動かせない</div>
           <div style={{marginTop: 31, padding: '20px 22px', background: C.panel, borderLeft: `6px solid ${C.orange}`, fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900}}>
             現在：右へ{offset}ドット
           </div>
