@@ -113,7 +113,69 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md: Markdown link 0件、per-file atom index との不一致 0件。UTF-8 明示読みで代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」を取得でき、source file 破損なし"
+  - "memory/atoms.jsonl: 2940 rows、atom mirror は atoms.jsonl / per-file .md / index.jsonl の各2940件で drift 0、parse error 0、ID重複 0"
+  - "atom duplicate: 45群（normalized_content_hash 40 / title_excerpt_exact 5）は canonical overlay 45群と一致し、recall-visible の重複3群も表示時 fold 済み。矛盾を示す lifecycle/mirror error なし"
+  - "memory/raw/: mtime 30日超の原文242件を抽出。slack_archive・web_research PDF/text など provenance source のため、この phase では移動せず archive 候補として確認のみ"
+  - "shared-reads lifecycle: posted 675 / ready_to_post 9 / postponed 202 / failed 500 / needs_review 2。期限到来 open 4件は同一workの2 groupで、既存 deferred group lease（retry_after 2026-09-19）が抑止"
+  - "shared-reads sidecar: canonical title index 106群、mixed duplicate 27群、open duplicate 31群（mixed 27 / all_open 4）を再生成。stale triage 0件、group action 0件"
+  - "Slack inbox: directives pending 0 / broadcasts pending 0。完了根拠のない status 更新はなし"
+  - "probe lifecycle: due lease 0件。ledger validate は11 rows、error 0"
+  - "encoding audit: suspect 2件をUTF-8で原文照合。sr-1776127289-4d9239b255 は raw slack_archive 自体に局所破損あり、gr-1777083728-44d444ab7a は原文の literal '???' による detector false positive。表示経路 mojibake なし"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_review_batch: []
+candidate_lifecycle:
+  counts:
+    posted: 675
+    ready_to_post: 9
+    postponed: 202
+    failed: 500
+    needs_review: 2
+  overdue_open_count: 4
+  missing_stale_after_count: 3
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 27
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  backlog_high_water_reason: "overdue_open_total > queue rows は成立するが actionable group 3件以上は不成立"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  deferred_group_lease_count: 2
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  handed_off_candidate_count: 0
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+archive_audit:
+  older_than_30_days_count: 242
+  moved_count: 0
+  reason_not_moved: "raw provenance の参照先を壊さないため。明示 archive 契約なしでの広範移動は行わない"
+encoding_audit:
+  source_file_status: "memory/MEMORY.md はUTF-8正常。atom suspect 1件はraw source由来の局所破損、1件はfalse positive"
+  display_or_tooling_status: none
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
