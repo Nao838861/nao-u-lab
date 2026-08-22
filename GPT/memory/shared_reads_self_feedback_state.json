@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-22T16:46:15+09:00",
+  "updated_at": "2026-08-22T18:47:34+09:00",
   "reviewed_source_ts": [
+    "1787384495.616959",
     "1787377407.046889",
     "1779845919.434229",
     "1779082565.304899",
@@ -726,6 +727,55 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-22T18:47:34+09:00",
+      "selected": {
+        "id": "sr-1787384495-f00ba91fa8",
+        "source_ts": "1787384495.616959",
+        "title": "EvoX Genesis — 有限 agent から検証済み project state へ継続性を移す",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ最新候補だったため1件だけ選んだ。agent の会話や自己説明ではなく accepted commit・path・test・artifact・未解決 issue を次回行動の開始点にする知見が、現在の phase handoff／git／memory 運用へ既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の採用条件と全必須閾値を満たす。shared-reads 本文、arXiv abstract、公式 repository README は、world=(accepted version, repository path)、有限 agent、隔離 workspace、受理した結果だけを lineage に残す構造と、formation／continuation／redevelopment の具体的結果を一致して示す。したがって、次の software または game continuation で summary-only 継承と commit・test・artifact・issue 継承を同じ accepted state から比較し、再開時間、重複実装、回帰、playable quality の差を見る行動へ変換できるため relevance・actionability は3とした。ただし formation 等は各条件の system-level observation で、persistent agent、flat queue、再帰なし、acceptance gate なしとの統制比較や architecture ablation がない。継続成功を Genesis 固有構造へ因果帰属できず、game の面白さには compiler test 相当の強い oracle もないため evidence は2。probe-20260528-prima-run-boundary は last trusted artifact と未解決 state、probe-20260528-semantic-boundary-before-consolidation は handoff の event-level evidence、probe-20260529-code-as-harness-one-executable-check は実行可能な受入証拠、probe-20260530-repomirage-structural-context-check は path と隣接構造、probe-20260612-checkable-intermediate-state は proposal と verifier feedback、probe-20260621-ai-readable-playtest-acceptance-surface は code／AI playtest／manual feel の分離を既に扱う。今回固有の『同じ accepted state から summary-only と accepted-artifact-only の再開を比較する』差は狭く、non_redundancy は1。現在の後続 Phase 4a は memory cleanup で、同一 accepted version から二つの continuation を比較できる software／game artifact がない。326件の active_probes に対象なしの handoff probe を追加すると確認負荷が増えるため、state-only defer とする。",
+      "evidence_sources": [
+        "memory/atoms.jsonl#id=sr-1787384495-f00ba91fa8",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787384495.616959",
+        "https://arxiv.org/abs/2608.10450v3",
+        "https://github.com/EMI-Group/genesis"
+      ],
+      "existing_controls": [
+        "probe-20260528-prima-run-boundary",
+        "probe-20260528-semantic-boundary-before-consolidation",
+        "probe-20260529-code-as-harness-one-executable-check",
+        "probe-20260530-repomirage-structural-context-check",
+        "probe-20260612-checkable-intermediate-state",
+        "probe-20260621-ai-readable-playtest-acceptance-surface"
+      ],
+      "defer_condition": "次の具体的な software または game continuation で、同じ accepted commit／build から summary-only と commit・test・artifact・issue-only の二経路を再開でき、既存6 controlsだけでは再開時間・重複実装・回帰・playable quality の採否差を説明できない時に限り、一時 probe または metric として再評価する。",
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、project state 継承の有用性、system-level observation の因果限界、既存 handoff／harness／playtest controls との重複、比較可能な continuation artifact 不在による defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-22T16:46:15+09:00",
       "selected": {

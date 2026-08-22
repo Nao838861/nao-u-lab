@@ -64,7 +64,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787384495-f00ba91fa8
+    source_ts: "1787384495.616959"
+    title: "EvoX Genesis — 有限 agent から検証済み project state へ継続性を移す"
+    reason: "未レビューかつ score 11、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ最新 atom。accepted project state の継承が既存 handoff controls と異なる次回行動を作れるか確認するため、1件だけ選んだ。Nao_u の明示的な重要評価はローカル raw では確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "accepted commit・path・test・artifact・issue を継続単位にし、summary-only と accepted-artifact-only の再開を比較する行動へ変換できる。一方、原典は大規模な system-level observation だが architecture ablation や統制比較がなく、game の playable quality には強い acceptance oracle がない。既存の run-boundary、semantic handoff、executable-check、repo-context、checkable-state、playtest-acceptance probes が近接領域を既に覆う。後続 Phase 4a には同一 accepted state から二経路を比較できる continuation artifact がないため operational lease を指定できず、326件の active probes を増やさない。"
+  change:
+    summary: "reviewed/source_ts と defer 理由のみ state に記録。active_probes、ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
