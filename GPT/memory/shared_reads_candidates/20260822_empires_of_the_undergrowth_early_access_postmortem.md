@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/postmortem-how-empires-of-the-undergr
 collected_at: "2026-08-22T22:31:23+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, early-access, rts, prototyping, community]
+evaluated_at: "2026-08-22T22:35:15+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-22T22:35:15+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-22T22:35:15+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-21"
+supersedes: []
+gate_reason: >-
+  一次の開発回顧から、入力方式に由来する作品固有性、独自 engine を捨てた技術転換、demo が資金調達の信頼を変えた比較、長期 Early Access の更新 cadence と community 運用を因果付きで抽出できる。
+  小規模ゲーム制作の prototype gate、技術投資の撤退判断、公開版と feedback 導線の設計へ直接適用でき、評価の中身と限界も含めて CoopEval 水準の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "7年以上の Early Access を、操作DNAの発見・技術的 sunk cost の切断・demo による信頼形成・長期待機を支える運用設計の連鎖として整理する"
+  analysis_axis: "成功談の列挙ではなく、最初の失敗と方針転換の前後比較から、何が製品価値と実行可能性を変えたかを分析する"
+  application_target: "Log_cdx のゲーム試作で、入力から固有の遊びを検証する playable gate、独自基盤を捨てる判断条件、更新間隔と feedback 窓口を一体で設計する評価軸に使う"
+  pros_cons: "長所は単一作品の7年以上を通した具体的な意思決定記録である点。短所は成功後の当事者回顧で、売上や継続率など更新戦略の定量比較が限定的な点"
+  verdict_pre: "部分採用 — 操作DNA・demo-first・長期更新運用は採用し、長い更新間隔そのものは team 規模と検証手段に応じて条件付きで使う"
 ---
 
 ## raw_excerpt

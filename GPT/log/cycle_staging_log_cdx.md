@@ -8,7 +8,47 @@
 - pending 確認: `slack_directives.jsonl` 0件、`slack_broadcasts.jsonl` 0件。直近の `memory/raw/web_research/results.jsonl`、`memory/atoms.jsonl`、raw Slack の既存 URL を確認済み。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260822_empires_of_the_undergrowth_early_access_postmortem.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-08-22T22:31:23+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260822_empires_of_the_undergrowth_early_access_postmortem.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260822_empires_of_the_undergrowth_early_access_postmortem.md
+  valid_backlog_after: 0
+duplicate_preflight:
+  decision: continue
+  canonical_url: https://www.gamedeveloper.com/design/postmortem-how-empires-of-the-undergrowth-came-together-in-over-7-years-of-early-access
+  sidecars_fresh: true
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
