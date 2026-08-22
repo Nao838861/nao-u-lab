@@ -15,7 +15,7 @@ export const c22Timing = getCut('C22');
 export const c23Timing = getCut('C23');
 
 export const laterNarrationPreviewDurationInFrames =
-  c19Timing.startFrame + c19Timing.durationFrames;
+  c18Timing.startFrame + c18Timing.durationFrames;
 
 export const workflowNarrationPreviewDurationInFrames =
   c23Timing.startFrame + c23Timing.durationFrames - c20Timing.startFrame;

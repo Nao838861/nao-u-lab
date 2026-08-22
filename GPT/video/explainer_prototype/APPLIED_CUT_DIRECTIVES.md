@@ -24,7 +24,7 @@
 | C08・C10（C09は欠番） | 2026-08-21 | `narration/drawing-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: correct C08-C10 narration and block highlights`。C10は生成後の文字起こしでも読み上げ内容を確認し、分類ごとの全ブロック強調へ更新 |
 | C11〜C13 | 2026-08-22 | `narration/benefit-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: preserve punctuation pauses in C11-C13`。C11を「直接メモリを上書き」「数倍も高速に」、C12をCPUができる最高速度の説明へ更新。未加工音声の単語タイムスタンプと無音区間を対応付け、読点・句点に対応する間は元の長さを維持し、それ以外の不自然な文中無音だけ110msへ短縮。音声尺に合わせてC12・C13の開始位置と映像尺を再同期。C13の読み上げ内容と「絵ごとに専用のプログラムを追加」は維持 |
 | C14〜C16 | 2026-08-22 | `narration/constraint-cuts.json` / `src/ExplainerPrototype.tsx` | C14冒頭の発音修正と右側テキストの1行表示を維持。C15は句読点以外の無音をC11〜C13の25%相当だけ短縮し、C16はC11〜C13と同じ110ms上限まで短縮。未加工音声の単語位置と無音区間を対応付け、読点・句点の間は元の長さを保護。短縮後の尺へC16開始位置を再同期 |
-| C17〜C19 | 2026-08-21 | `narration/later-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: refine C17-C19 narration and timeline`。個別語句の明瞭発音指定を廃止して3カットを再生成。C17を最新原稿へ更新し、C19は上半分の黒消去後も下半分に前フレームのグレー表示を残し、緑枠の明暗差を強化 |
+| C17〜C18 | 2026-08-22 | `narration/later-cuts.json` / `src/ExplainerPrototype.tsx` | C17の締めを「描画速度とクオリティを最大限に引き出すことができました」へ更新。C18は旧フレームワーク導入から第1部のまとめへ置換し、旧C20で使った実機動画を全画面表示。未加工音声の単語位置と無音区間を対応付け、読点・句点の間を保護しつつ、それ以外の不自然な間だけ110msへ短縮。C19以降は今回の動画から除外して次の動画用データとして維持 |
 | C20〜C23 | 2026-08-21 | `narration/later-cuts.json` / `src/ExplainerPrototype.tsx` | 最新版は `video: rebuild C20-C23 workflow and bit precision`。個別語句の明瞭発音指定を廃止して4カットを再生成。C20を1フレーム目の処理枠＋実機映像へ変更し、新C23で8bit・16bitの範囲と背景X座標だけ16bitを使う構成を追加 |
 
 ## 復元方法

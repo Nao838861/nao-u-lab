@@ -1619,6 +1619,20 @@ const BossBattleScene: React.FC<{durationInFrames?: number}> = ({durationInFrame
   );
 };
 
+const ClosingSummaryScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 720}) => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: '#000', display: 'grid', placeItems: 'center'}}>
+      <OffthreadVideo
+        src={staticFile('game_CSCD.mp4')}
+        startFrom={17 * 30}
+        muted
+        style={{width: 768, height: 720, objectFit: 'fill', imageRendering: 'pixelated'}}
+      />
+    </AbsoluteFill>
+  );
+};
+
 const FrameFrameworkIntroScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 180}) => {
   const frame = useCurrentFrame();
   const enter = spring({frame, fps: 30, config: {damping: 18}});
@@ -2047,12 +2061,8 @@ export const LaterNarrationPreview: React.FC = () => {
         <Audio src={staticFile('narration/later/C17.wav')} volume={0.95} />
       </Sequence>
       <Sequence from={c18Timing.startFrame} durationInFrames={c18Timing.durationFrames}>
-        <FrameFrameworkIntroScene durationInFrames={c18Timing.durationFrames} />
+        <ClosingSummaryScene durationInFrames={c18Timing.durationFrames} />
         <Audio src={staticFile('narration/later/C18.wav')} volume={0.95} />
-      </Sequence>
-      <Sequence from={c19Timing.startFrame} durationInFrames={c19Timing.durationFrames}>
-        <FrameTimelineScene durationInFrames={c19Timing.durationFrames} />
-        <Audio src={staticFile('narration/later/C19.wav')} volume={0.95} />
       </Sequence>
     </AbsoluteFill>
   );
