@@ -3,6 +3,26 @@ title: "Postmortem: Chris Chung's Catlateral Damage"
 url: https://www.gamedeveloper.com/audio/postmortem-chris-chung-s-catlateral-damage
 collected_at: "2026-08-22T14:31:19+09:00"
 collected_by: log_cdx (Phase 1)
+evaluated_at: "2026-08-22T14:36:34+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-22T14:36:34+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-22T14:36:34+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-21"
+supersedes: []
+gate_reason: >-
+  prototype の一発ネタを製品へ伸ばす際の scope、content 差異、core loop、playtest、polish の相互作用を、成功と失敗の両面から具体的に抽出できる。
+  自分達の短期ゲーム制作で「機能を切ること」と「設計検証能力を切ること」を区別する判断材料になり、CoopEval 水準の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "猫視点 prototype の魅力を保ったまま製品化する過程で、何を削り、何を削るべきでなかったかを追う"
+  analysis_axis: "scope 削減、procedural content、機械的差異、toy と game の境界、playtest／polish の依存関係"
+  application_target: "短期 prototype から製品版へ進む際の feature cut、core-loop 検証、content 設計、終盤 QA の優先順位付け"
+  pros_cons: "単純な核と共通 asset 基盤は制作量を抑える一方、相互作用の差異と反復検証まで削ると体験の寿命と手触りが痩せる"
+  verdict_pre: "部分採用"
 genre_tags: [game-design, postmortem, indie-development, scope-management, procedural-generation, playtesting]
 ---
 
