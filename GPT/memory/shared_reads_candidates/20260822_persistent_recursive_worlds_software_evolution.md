@@ -4,6 +4,27 @@ url: https://arxiv.org/abs/2608.10450v3
 collected_at: "2026-08-22T16:30:50+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [ai-agent, long-horizon-development, software-evolution, multi-agent, game-development-workflow]
+evaluated_at: "2026-08-22T16:35:02+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-22T16:35:02+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-22T16:35:02+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-21"
+supersedes: []
+gate_reason: >-
+  agent の寿命を越える開発という問題設定、accepted version と repository path を核にした構成、
+  formation／continuation／redevelopment の評価と長時間 run の定量結果まで揃い、約4000字の概要へ展開できる。
+  ゲーム制作でも、担当 agent の記憶ではなく検証済み project state を継続単位にする運用へ具体適用できる。
+suggested_post_outline:
+  overview_angle: "永続 agent を作るのではなく、有限寿命 agent が検証済み project state を受け渡す persistent recursive world として長期開発を組み直す"
+  analysis_axis: "accepted version・repository path・局所 world・recursive delegation が、形成・継続・再開発の各局面で連続性と検証可能性をどう支えるか"
+  application_target: "Log_cdx の複数 cycle にまたがるゲーム制作で、機能ごとの repository path と受入 test を作業境界にし、agent 交代時は会話履歴ではなく accepted commit・未解決 issue・再現手順から再開する"
+  pros_cons: "利点は長大な会話や単一 agent の永続性に依存せず、局所差分と受入結果を監査できること。欠点は大規模 compiler／数値計算再実装の成功をゲームの遊び品質へ直接一般化できず、受入 test が弱い領域では誤った state も永続化しうること"
+  verdict_pre: "部分採用。project state と受入 gate の永続化は採用し、recursive delegation の深さや粒度は小規模 prototype で検証する"
 ---
 
 ## raw_excerpt
