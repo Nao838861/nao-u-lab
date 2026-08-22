@@ -46,10 +46,10 @@
     {
       "id": "C18",
       "startFrame": 522,
-      "durationFrames": 680,
+      "durationFrames": 851,
       "minimumDurationFrames": 0,
-      "targetSeconds": 22.667,
-      "instructions": "原稿を省略、追加、言い換えず、C17と同じ話速、声の高さ、音量で自然に読み上げてください。4文をひと続きの締めとして落ち着いて読み、文末ごとに自然な間を取り、最後は穏やかに着地させてください。",
+      "targetSeconds": 28.367,
+      "instructions": "入力された各行を上から順番に一度ずつ、どの行も省略、追加、言い換えずに読み上げてください。C17と同じ話速、声の高さ、音量で、ひと続きの締めとして落ち着いて読み、行の間には文末として自然な間を取ってください。原稿にない言葉は追加しないでください。",
       "silenceCompaction": {
         "preserveInternalSilence": false,
         "maximumInternalSilenceMs": 110,
@@ -60,22 +60,32 @@
           1,
           3,
           6,
-          7,
-          11
+          8,
+          12,
+          15,
+          16,
+          20
         ],
         "sentencePauseCandidateIndices": [
           2,
-          5,
-          10
+          10,
+          14,
+          19
         ]
       },
-      "text": "今回の説明は、以上になります。コンパイルドスプライトを使うことで、ファミコンのCPUの性能を最大限に引き出して滑らかな拡大縮小を実現することができました。次回の動画では、限られたCPU性能で、たくさんの敵や背景を動かしながら3Dの座標計算を高速に行うための手法を解説する予定です。それでは、ご視聴ありがとうございました。",
-      "ttsText": "今回の説明は、以上になります。コンパイルドスプライトを使うことで、ファミコンのシーピーユーの性能を最大限に引き出して滑らかな拡大縮小を実現することができました。次回の動画では、限られたシーピーユー性能で、たくさんの敵や背景を動かしながらスリー・ディーの座標計算を高速に行うための手法を解説する予定です。それでは、ご視聴ありがとうございました。",
-      "measuredDurationSeconds": 21.915
+      "text": "今回の説明は、以上になります。今回のポイントは、描画する絵に特化したプログラムをあらかじめ用意し、大量のメモリと引き換えに、ファミコンのCPU性能を引き出したことです。この仕組みによって、高速で滑らかな拡大縮小を実現することができました。次回は、たくさんの敵や背景を動かしながら、3D座標を高速に計算する仕組みを解説します。それでは、ご視聴ありがとうございました。",
+      "ttsText": "今回の説明は、以上になります。\n今回のポイントは、描画する絵に特化したプログラムをあらかじめ用意し、大量のメモリと引き換えに、ファミコンのシーピーユー性能を引き出したことです。\nこの仕組みによって、高速で滑らかな拡大縮小を実現することができました。\n次回は、たくさんの敵や背景を動かしながら、スリー・ディー座標を高速に計算する仕組みを解説します。",
+      "appendTtsSegments": [
+        {
+          "text": "それでは、ご視聴ありがとうございました。",
+          "instructions": "技術解説動画の最後の一文です。この一文だけを一度読み、落ち着いた自然な声で穏やかに着地させてください。言葉を追加しないでください。"
+        }
+      ],
+      "measuredDurationSeconds": 27.59
     },
     {
       "id": "C19",
-      "startFrame": 1202,
+      "startFrame": 1373,
       "durationFrames": 1060,
       "minimumDurationFrames": 0,
       "targetSeconds": 35.333,
@@ -86,7 +96,7 @@
     },
     {
       "id": "C20",
-      "startFrame": 2262,
+      "startFrame": 2433,
       "durationFrames": 765,
       "minimumDurationFrames": 0,
       "targetSeconds": 25.5,
@@ -97,7 +107,7 @@
     },
     {
       "id": "C21",
-      "startFrame": 3027,
+      "startFrame": 3198,
       "durationFrames": 809,
       "minimumDurationFrames": 0,
       "targetSeconds": 26.967,
@@ -108,7 +118,7 @@
     },
     {
       "id": "C22",
-      "startFrame": 3836,
+      "startFrame": 4007,
       "durationFrames": 686,
       "minimumDurationFrames": 0,
       "targetSeconds": 22.867,
@@ -119,7 +129,7 @@
     },
     {
       "id": "C23",
-      "startFrame": 4522,
+      "startFrame": 4693,
       "durationFrames": 1102,
       "minimumDurationFrames": 0,
       "targetSeconds": 36.733,

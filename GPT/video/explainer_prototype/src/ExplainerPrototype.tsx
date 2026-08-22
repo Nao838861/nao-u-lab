@@ -1590,6 +1590,15 @@ const SizeBankScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
 
 const SpriteScaleResultScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 420}) => {
   const frame = useCurrentFrame();
+  const at = (fraction: number) => Math.round(durationInFrames * fraction);
+  const patternOpacity = interpolate(frame, [at(0.12), at(0.18), at(0.47), at(0.53)], [0, 1, 1, 0], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+  const payoffOpacity = interpolate(frame, [at(0.5), at(0.57), at(0.95), durationInFrames], [0, 1, 1, 0], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
   return (
     <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: '#000', display: 'grid', placeItems: 'center'}}>
       <OffthreadVideo
@@ -1599,7 +1608,25 @@ const SpriteScaleResultScene: React.FC<{durationInFrames?: number}> = ({duration
         muted
         style={{width: 768, height: 720, objectFit: 'fill', imageRendering: 'pixelated'}}
       />
-      <div style={{position: 'absolute', left: 34, top: 30, padding: '10px 15px', background: '#050507dd', borderLeft: `6px solid ${C.magenta}`, fontFamily: FONT, color: C.white, fontSize: 25, fontWeight: 900}}>速度とクオリティを最優先</div>
+      <div style={{position: 'absolute', inset: 0, background: '#000a', opacity: payoffOpacity}} />
+
+      <div style={{position: 'absolute', left: 56, bottom: 54, opacity: patternOpacity, transform: `translateY(${(1 - patternOpacity) * 20}px)`, padding: '18px 24px', background: '#050507e8', borderLeft: `8px solid ${C.orange}`, boxShadow: '0 12px 30px #000a'}}>
+        <div style={{fontFamily: FONT, color: C.dim, fontSize: 21, fontWeight: 900}}>滑らかな拡大縮小のために用意</div>
+        <div style={{fontFamily: MONO, color: C.white, fontSize: 40, fontWeight: 900, marginTop: 5}}>
+          <span style={{color: C.cyan}}>16段階</span> × <span style={{color: C.magenta}}>8位置</span> ＝ <span style={{color: C.orange}}>128パターン</span>
+        </div>
+      </div>
+
+      <div style={{position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', opacity: payoffOpacity, transform: `scale(${0.97 + payoffOpacity * 0.03})`}}>
+        <div style={{textAlign: 'center'}}>
+          <div style={{fontFamily: FONT, color: C.orange, fontSize: 27, fontWeight: 900, letterSpacing: 2}}>大量のメモリと引き換えに</div>
+          <div style={{fontFamily: FONT, color: C.white, fontSize: 54, lineHeight: 1.25, fontWeight: 900, marginTop: 14}}>描画速度とクオリティを最大化</div>
+          <div style={{display: 'flex', justifyContent: 'center', gap: 18, marginTop: 28}}>
+            <div style={{padding: '12px 20px', background: `${C.red}24`, border: `2px solid ${C.red}`, fontFamily: FONT, color: C.red, fontSize: 23, fontWeight: 900}}>メモリ消費 ↑</div>
+            <div style={{padding: '12px 20px', background: `${C.cyan}24`, border: `2px solid ${C.cyan}`, fontFamily: FONT, color: C.cyan, fontSize: 23, fontWeight: 900}}>描画速度・品質 ↑</div>
+          </div>
+        </div>
+      </div>
     </AbsoluteFill>
   );
 };
@@ -1621,14 +1648,82 @@ const BossBattleScene: React.FC<{durationInFrames?: number}> = ({durationInFrame
 
 const ClosingSummaryScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 720}) => {
   const frame = useCurrentFrame();
+  const at = (fraction: number) => Math.round(durationInFrames * fraction);
+  const windowOpacity = (inStart: number, inEnd: number, outStart: number, outEnd: number) => interpolate(
+    frame,
+    [at(inStart), at(inEnd), at(outStart), at(outEnd)],
+    [0, 1, 1, 0],
+    {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'},
+  );
+  const introOpacity = windowOpacity(0, 0.035, 0.12, 0.16);
+  const recapOpacity = windowOpacity(0.12, 0.17, 0.64, 0.69);
+  const teaserOpacity = windowOpacity(0.66, 0.71, 0.88, 0.92);
+  const thanksOpacity = interpolate(frame, [at(0.88), at(0.93)], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const cardReveal = (fraction: number) => interpolate(frame, [at(fraction), at(fraction + 0.035)], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const dimOpacity = interpolate(frame, [0, at(0.16), at(0.7), at(0.9)], [0.32, 0.68, 0.78, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const recapCards = [
+    {label: '絵ごとの専用コード', sub: 'あらかじめ用意', color: C.magenta, at: 0.19},
+    {label: 'CPU性能を引き出す', sub: 'メモリと引き換え', color: C.orange, at: 0.32},
+    {label: '高速・滑らかな描画', sub: '拡大縮小を実現', color: C.cyan, at: 0.47},
+  ];
   return (
-    <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: '#000', display: 'grid', placeItems: 'center'}}>
+    <AbsoluteFill style={{backgroundColor: '#000', display: 'grid', placeItems: 'center', overflow: 'hidden'}}>
       <OffthreadVideo
         src={staticFile('game_CSCD.mp4')}
         startFrom={17 * 30}
         muted
         style={{width: 768, height: 720, objectFit: 'fill', imageRendering: 'pixelated'}}
       />
+      <div style={{position: 'absolute', inset: 0, background: '#020207', opacity: dimOpacity}} />
+
+      <div style={{position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', opacity: introOpacity}}>
+        <div style={{textAlign: 'center', transform: `translateY(${(1 - introOpacity) * 18}px)`}}>
+          <div style={{fontFamily: FONT, color: C.magenta, fontSize: 24, fontWeight: 900, letterSpacing: 8}}>SUMMARY</div>
+          <div style={{fontFamily: FONT, color: C.white, fontSize: 68, fontWeight: 900, marginTop: 10}}>まとめ</div>
+          <div style={{width: 160, height: 5, margin: '18px auto 0', background: C.magenta}} />
+        </div>
+      </div>
+
+      <div style={{position: 'absolute', inset: 0, padding: '48px 54px', boxSizing: 'border-box', opacity: recapOpacity}}>
+        <div style={{fontFamily: FONT, color: C.white, fontSize: 37, fontWeight: 900}}>コンパイルドスプライトのポイント</div>
+        <div style={{fontFamily: FONT, color: C.dim, fontSize: 21, fontWeight: 800, marginTop: 8}}>大量のメモリと引き換えに、ファミコンの性能を引き出す</div>
+        <div style={{display: 'flex', alignItems: 'stretch', gap: 16, marginTop: 62}}>
+          {recapCards.map((card, index) => {
+            const reveal = cardReveal(card.at);
+            return (
+              <React.Fragment key={card.label}>
+                <div style={{flex: 1, minHeight: 190, padding: '26px 19px', boxSizing: 'border-box', background: '#0b0a10ed', borderTop: `7px solid ${card.color}`, opacity: reveal, transform: `translateY(${(1 - reveal) * 20}px)`, boxShadow: '0 16px 32px #0009'}}>
+                  <div style={{fontFamily: FONT, color: card.color, fontSize: 21, fontWeight: 900}}>STEP {index + 1}</div>
+                  <div style={{fontFamily: FONT, color: C.white, fontSize: 28, lineHeight: 1.35, fontWeight: 900, marginTop: 14}}>{card.label}</div>
+                  <div style={{fontFamily: FONT, color: C.dim, fontSize: 18, fontWeight: 800, marginTop: 12}}>{card.sub}</div>
+                </div>
+                {index < recapCards.length - 1 ? <div style={{alignSelf: 'center', fontFamily: FONT, color: C.white, fontSize: 34, fontWeight: 900, opacity: reveal}}>→</div> : null}
+              </React.Fragment>
+            );
+          })}
+        </div>
+      </div>
+
+      <div style={{position: 'absolute', inset: 0, opacity: teaserOpacity, background: '#05050be8', display: 'grid', placeItems: 'center'}}>
+        <svg viewBox="0 0 1280 720" style={{position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.28}}>
+          {[0, 160, 320, 480, 640, 800, 960, 1120, 1280].map((x) => <line key={`ray-${x}`} x1="640" y1="280" x2={x} y2="720" stroke={C.cyan} strokeWidth="2" />)}
+          {[390, 455, 530, 620, 715].map((y) => <line key={`row-${y}`} x1="0" y1={y} x2="1280" y2={y} stroke={C.cyan} strokeWidth="2" />)}
+        </svg>
+        <div style={{position: 'relative', textAlign: 'center', transform: `scale(${0.96 + teaserOpacity * 0.04})`}}>
+          <div style={{fontFamily: FONT, color: C.orange, fontSize: 26, fontWeight: 900, letterSpacing: 6}}>NEXT</div>
+          <div style={{fontFamily: FONT, color: C.white, fontSize: 44, fontWeight: 900, marginTop: 20}}>次回：ファミコンで3Dを高速化</div>
+          <div style={{fontFamily: FONT, color: C.cyan, fontSize: 25, fontWeight: 900, marginTop: 22}}>敵・背景・3D座標を限られたCPU性能で動かす</div>
+        </div>
+      </div>
+
+      <div style={{position: 'absolute', inset: 0, opacity: thanksOpacity, background: '#030305', display: 'grid', placeItems: 'center'}}>
+        <div style={{textAlign: 'center', transform: `translateY(${(1 - thanksOpacity) * 18}px)`}}>
+          <div style={{fontFamily: FONT, color: C.white, fontSize: 52, fontWeight: 900}}>ご視聴ありがとうございました</div>
+          <div style={{width: 220, height: 4, margin: '25px auto', background: C.magenta}} />
+          <div style={{fontFamily: FONT, color: C.dim, fontSize: 22, fontWeight: 800}}>ファミコンでスペースハリアーを動かすには？</div>
+          <div style={{fontFamily: FONT, color: C.cyan, fontSize: 19, fontWeight: 900, marginTop: 8}}>その1：コンパイルドスプライトの活用</div>
+        </div>
+      </div>
     </AbsoluteFill>
   );
 };

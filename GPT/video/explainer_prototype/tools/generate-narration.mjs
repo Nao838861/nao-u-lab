@@ -2,7 +2,7 @@ import {readFile, writeFile, mkdir, access} from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import {fileURLToPath} from 'node:url';
-import {compactPcmWavSilence} from './compact-narration-silence.mjs';
+import {compactPcmWavSilence, concatenatePcmWavs} from './compact-narration-silence.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDir, '..');
@@ -129,6 +129,29 @@ if (selectedCutId && selectedCuts.length === 0) {
   throw new Error(`指定されたカットが見つかりません: ${selectedCutId}`);
 }
 
+const generateSpeech = async ({input, instructions, cutId, speed}) => {
+  const response = await fetch('https://api.openai.com/v1/audio/speech', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: manifest.model,
+      voice: manifest.voice,
+      speed,
+      input,
+      instructions,
+      response_format: manifest.responseFormat,
+    }),
+  });
+  if (!response.ok) {
+    const detail = await response.text();
+    throw new Error(`${cutId} の音声生成に失敗しました (${response.status}): ${detail}`);
+  }
+  return Buffer.from(await response.arrayBuffer());
+};
+
 for (const cut of selectedCuts) {
   const outputPath = path.join(outputDir, `${cut.id}.wav`);
   let buffer;
@@ -149,26 +172,27 @@ for (const cut of selectedCuts) {
   } else if (!force && await fileExists(outputPath)) {
     buffer = await readFile(outputPath);
   } else {
-    const response = await fetch('https://api.openai.com/v1/audio/speech', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: manifest.model,
-        voice: manifest.voice,
-        speed: cut.speed ?? manifest.speed,
+    const segments = [
+      {
         input: cut.ttsText ?? cut.text,
         instructions: `${manifest.commonInstructions}${cut.instructions}`,
-        response_format: manifest.responseFormat,
-      }),
-    });
-    if (!response.ok) {
-      const detail = await response.text();
-      throw new Error(`${cut.id} の音声生成に失敗しました (${response.status}): ${detail}`);
+      },
+      ...(cut.appendTtsSegments ?? []).map((segment) => ({
+        input: segment.text,
+        instructions: `${manifest.commonInstructions}${segment.instructions ?? cut.instructions}`,
+      })),
+    ];
+    const generatedSegments = [];
+    for (const segment of segments) {
+      generatedSegments.push(await generateSpeech({
+        ...segment,
+        cutId: cut.id,
+        speed: cut.speed ?? manifest.speed,
+      }));
     }
-    buffer = Buffer.from(await response.arrayBuffer());
+    buffer = generatedSegments.length === 1
+      ? generatedSegments[0]
+      : concatenatePcmWavs(generatedSegments);
     await writeFile(path.join(rawOutputDir, `${cut.id}.wav`), buffer);
     const compacted = compactPcmWavSilence(buffer, {
       ...manifest.silenceCompaction,

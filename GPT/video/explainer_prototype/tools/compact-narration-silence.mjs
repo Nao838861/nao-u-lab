@@ -42,6 +42,26 @@ const parsePcmWav = (buffer) => {
   return {...format, data};
 };
 
+export const concatenatePcmWavs = (buffers) => {
+  if (!Array.isArray(buffers) || buffers.length === 0) throw new Error('連結するWAVがありません。');
+  const parsed = buffers.map((buffer) => parsePcmWav(buffer));
+  const base = parsed[0];
+  for (const wav of parsed.slice(1)) {
+    for (const key of ['audioFormat', 'channels', 'sampleRate', 'blockAlign', 'bitsPerSample']) {
+      if (wav[key] !== base[key]) throw new Error(`WAV形式が一致しません: ${key}`);
+    }
+  }
+  const audio = Buffer.concat(buffers.map((buffer, index) => {
+    const wav = parsed[index];
+    return buffer.subarray(wav.data.offset, wav.data.offset + wav.data.size);
+  }));
+  const header = Buffer.from(buffers[0].subarray(0, base.data.offset));
+  header.writeUInt32LE(audio.length, base.data.headerOffset + 4);
+  const output = Buffer.concat([header, audio]);
+  output.writeUInt32LE(output.length - 8, 4);
+  return output;
+};
+
 export const analyzePcmWavSilence = (buffer, options = {}) => {
   const wav = parsePcmWav(buffer);
   const windowMs = options.windowMs ?? 5;
