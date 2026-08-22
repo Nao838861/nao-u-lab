@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-23T03:05:07+09:00",
+  "updated_at": "2026-08-23T05:11:16+09:00",
   "reviewed_source_ts": [
+    "1779481998.916219",
     "1787413400.296389",
     "1779824236.472699",
     "1778584437.753779",
@@ -731,6 +732,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-23T05:11:16+09:00",
+      "selected": {
+        "id": "sr-1779481998-bedd150852",
+        "source_ts": "1779481998.916219",
+        "title": "ミステリゲームメカニクス進化史 (planetary_gear, note)",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、skills・harness・game-design・agent・identity・knowledge・operation・evaluation の8タグを持つ自己完結した historical backlog だったため1件だけ選んだ。強制判定を、試行回数、判定対象の極小化、部分正解、探索負荷低減、検索ツールの正規化で分解する系譜が、次回の game prototype／headless 評価へ既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、かまいたちの夜、逆転裁判、Return of the Obra Dinn、The Case of the Golden Idol、The Roottrees are Dead／Type Help を、試行・判定・部分正解・探索・外部ツールという具体的な設計装置へ対応づけ、強制判定で詰まる箇所を次の playable diff や headless rubric へ変換できるため relevance・actionability は3とした。一方、根拠は単一のジャンル史記事と作品解釈で、各装置の導入前後、player segment、詰まり率、完走率、部分正解の副作用を比較した実証は本文にないため evidence は2に留める。同一 work を含む sr-1779514661-65b281f689 は既に review 済みで、probe-20260527-early-compression-refusal が複数観察を早く一ラベルへ畳まない境界を、probe-20260528-adv-playbook-recall-grain が first clue／hint timing／partial credit／search burden と ability／exploration／judgment／retry cost の分類を、probe-20260526-near-miss-not-binary が部分進捗と binary verdict の分離を既に扱う。したがって本投稿から追加できる行動は既存3 controlsへ完全に吸収され non_redundancy は0。active_probes は326件あり、現在の staging には ADV／mystery playable、強制判定の詰まり trace、装置導入前後を比べる artifact がない。直後の Phase 4a memory cleanup を名目 consumer にして同義 probe を追加すると、判断差のない確認負荷だけを増やすため risk_control は1とした。次に該当 game artifact が生じた時は新規 control を足さず、既存3 probeから必要なものだけを選ぶ。",
+      "existing_controls": [
+        "review sr-1779514661-65b281f689",
+        "probe-20260527-early-compression-refusal",
+        "probe-20260528-adv-playbook-recall-grain",
+        "probe-20260526-near-miss-not-binary"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、強制判定を複数の設計装置へ分解する有用性、単一ジャンル史記事の証拠限界、同一 work の既レビューと既存 ADV／partial-progress controls との完全重複、比較 artifact 不在による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-23T03:05:07+09:00",
       "selected": {

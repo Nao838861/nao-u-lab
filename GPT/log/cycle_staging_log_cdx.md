@@ -70,7 +70,35 @@ skipped:
 最終判定: Phase 2 の pass candidate は 0 件。品質ゲートを満たす投稿対象がないため、#shared-reads への投稿は行っていない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779481998-bedd150852
+    source_ts: "1779481998.916219"
+    title: "ミステリゲームメカニクス進化史 (planetary_gear, note)"
+    reason: "score 12・8タグの未レビュー historical backlog から1件だけ選択。強制判定を試行・判定極小化・部分正解・探索負荷・検索ツールへ分解する知見が、既存 control と異なる次回行動を作るか確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "同一 work を含む sr-1779514661-65b281f689 は既レビューで、early-compression-refusal、ADV forced-judgment burden、near-miss／partial-progress の3 controlsが本投稿の次回行動をすでに覆う。active probe 326件、比較可能な ADV／mystery artifact なしの状態で同義 probe を増やすと判断差より確認負荷が大きい。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録した。probe・metric・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
