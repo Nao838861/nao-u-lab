@@ -64,7 +64,39 @@ skipped: []
 - 投稿前レビュー: `tools/shared_reads_policy.py` の `validate_shared_reads_message` で `ok`。必須 6 項目、禁止表現なし、URL 末尾、1 candidate / 1 `chat.postMessage` を確認。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779845919-2c945ce26b
+    source_ts: "1779845919.434229"
+    title: "Atlan『Agent Memory Architectures: 5 Patterns and Trade-offs』— Pattern 5 と3層プロンプト構造"
+    reason: "score 12・未レビュー・8関連タグの自己完結した1件を選択。より新しい続き断片を混ぜず、governance／staleness／cross-agent contamination が既存controlと異なる判断差を作るか確認した。Nao_uの明示評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "vendor比較として5種architectureとgovernance failureの整理は有用だが、出典不足・当方環境との非同条件性があり、既存のgovernance gate／authority boundary／retention-utility／load strategy controlsに吸収される。合計14未満かつrisk_control 2未満のため、新規probe・metric・directiveは追加しない。"
+  existing_controls:
+    - probe-20260602-memory-governance-gate-separation
+    - probe-20260619-agentic-state-authority-boundary
+    - probe-20260625-amvl-retention-utility-lifecycle
+    - probe-20260626-load-strategy-progressive-disclosure
+  change:
+    summary: "reviewed_source_tsとreject根拠だけをstateへ記録。active_probes、ledger、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

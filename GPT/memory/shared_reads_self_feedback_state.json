@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-22T12:44:35+09:00",
+  "updated_at": "2026-08-22T14:47:36+09:00",
   "reviewed_source_ts": [
+    "1779845919.434229",
     "1779082565.304899",
     "1787355534.654839",
     "1787348477.440319",
@@ -22735,6 +22736,46 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、static replay gap／branching rollout／same-policy control の固有差、既存の因果・帰属・aggregate／process・replay fixture controls との部分重複、比較 artifact 不在と probe 増殖 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-22T14:47:36+09:00",
+      "selected": {
+        "id": "sr-1779845919-2c945ce26b",
+        "source_ts": "1779845919.434229",
+        "title": "Atlan「Agent Memory Architectures: 5 Patterns and Trade-offs」 — Pattern 5 (Enterprise Context Layer) と自分達の3層プロンプト構造の構造的相同",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、memory・game-design・agent・identity・knowledge・operation・evaluation・principle の8タグを持つ自己完結度の高い候補だったため1件だけ選んだ。より新しい未レビュー候補には同一投稿の続き断片が含まれるため混ぜず、5種の memory architecture、governance、staleness、cross-agent contamination が現在の per-atom／phase 運用に既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は working-only、flat vector、tiered、graph＋vector、enterprise context layer の5種を、LoCoMo 精度・p95 latency・token cost と governance failure で比較し、Pattern 5 を現在の3層 prompt／rule 構造へ対応づけているため relevance は3、既存経路の ownership・staleness・load strategy の点検へ変換できるため actionability は2とした。一方、Atlan は enterprise metadata catalog vendor で Pattern 5 を推す position bias があり、37% inter-agent misalignment の出典が本文に無く、Pattern 5 の3x text-to-SQL／20% answer accuracy と当方の file-based memory／game task の同条件比較もないため evidence は2に留めた。probe-20260602-memory-governance-gate-separation は consistency・staleness・access risk と execution path の分離を、probe-20260619-agentic-state-authority-boundary は authority source・ingestion／execution・durable write の境界を、probe-20260625-amvl-retention-utility-lifecycle は retention と観測 utility の分離を、probe-20260626-load-strategy-progressive-disclosure は task-triggered source-of-truth 読込を既に扱う。したがって本 atom の governance overlay、tier、source drift、cross-agent contamination は既存4 controlsの組合せに吸収され、non_redundancy は0とした。active_probes は326件あり、直後の Phase 4a に architecture pattern を比較する具体的な before／after artifact はないため、同義 probe を追加すると確認負荷と vendor taxonomy の過剰一般化が増える。次に memory backend または governance layer を実際に差し替える比較 artifact が生じた時は、新規 controlを足さず既存4 probeを適用する。",
+      "existing_controls": [
+        "probe-20260602-memory-governance-gate-separation",
+        "probe-20260619-agentic-state-authority-boundary",
+        "probe-20260625-amvl-retention-utility-lifecycle",
+        "probe-20260626-load-strategy-progressive-disclosure"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、5種 architecture 比較の有用性、vendor evidence の限界、既存 governance／authority／retention／load-strategy controls との重複に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
