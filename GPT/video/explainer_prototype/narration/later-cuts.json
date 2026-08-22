@@ -45,7 +45,7 @@
     },
     {
       "id": "C18",
-      "startFrame": 522,
+      "startFrame": 530,
       "durationFrames": 851,
       "minimumDurationFrames": 0,
       "targetSeconds": 28.367,
@@ -85,7 +85,7 @@
     },
     {
       "id": "C19",
-      "startFrame": 1373,
+      "startFrame": 1381,
       "durationFrames": 1060,
       "minimumDurationFrames": 0,
       "targetSeconds": 35.333,
@@ -96,7 +96,7 @@
     },
     {
       "id": "C20",
-      "startFrame": 2433,
+      "startFrame": 2441,
       "durationFrames": 765,
       "minimumDurationFrames": 0,
       "targetSeconds": 25.5,
@@ -107,7 +107,7 @@
     },
     {
       "id": "C21",
-      "startFrame": 3198,
+      "startFrame": 3206,
       "durationFrames": 809,
       "minimumDurationFrames": 0,
       "targetSeconds": 26.967,
@@ -118,7 +118,7 @@
     },
     {
       "id": "C22",
-      "startFrame": 4007,
+      "startFrame": 4015,
       "durationFrames": 686,
       "minimumDurationFrames": 0,
       "targetSeconds": 22.867,
@@ -129,7 +129,7 @@
     },
     {
       "id": "C23",
-      "startFrame": 4693,
+      "startFrame": 4701,
       "durationFrames": 1102,
       "minimumDurationFrames": 0,
       "targetSeconds": 36.733,
