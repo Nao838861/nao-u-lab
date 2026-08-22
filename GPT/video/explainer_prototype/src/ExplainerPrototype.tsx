@@ -1786,6 +1786,7 @@ const FrameTimelineScene: React.FC<{durationInFrames?: number}> = ({durationInFr
   const chartOpacity = reveal(545);
   const previewStage = frame < scaled(141) ? 0 : frame < scaled(190) ? 1 : frame < scaled(253) ? 2 : frame < scaled(302) ? 3 : frame < scaled(454) ? 4 : 5;
   const stageLabels = ['前のフレーム：完成した画面', '前のフレームを表示中', '上半分を消去', '地面・遠景を描画', 'ゲームロジックを反映', 'コンパイルドスプライトで完成'];
+  const previewImages = ['frame_background_player_bg.png', 'frame_background_player_bg.png', 'frame_background_player_bg.png', 'frame_background.png', 'frame_background_player.png', 'frame_background_player_bg.png'];
   return (
     <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: C.bg, padding: '34px 42px 0', boxSizing: 'border-box'}}>
       <Title size={38}>30fpsで動かすため、処理を2フレームに分ける</Title>
@@ -1794,14 +1795,13 @@ const FrameTimelineScene: React.FC<{durationInFrames?: number}> = ({durationInFr
         <Lane kind="A" />
         <Lane kind="B" />
         <div style={{flex: 1}}>
-          <div style={{width: 420, height: 236, margin: '0 auto', position: 'relative', overflow: 'hidden', background: '#000', border: '2px solid #47434e'}}>
-            <OffthreadVideo src={staticFile('game_CSCD.mp4')} startFrom={15 * 30} muted style={{position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', imageRendering: 'pixelated'}} />
+          <div style={{width: 420, height: 277, margin: '0 auto', position: 'relative', overflow: 'hidden', background: '#000', border: '2px solid #47434e'}}>
+            <Img src={staticFile(previewImages[previewStage])} style={{position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', imageRendering: 'pixelated', transform: 'scale(1.45)', transformOrigin: 'center 100%'}} />
             {previewStage === 1 ? <div style={{position: 'absolute', inset: 0, background: '#30303880'}} /> : null}
             {previewStage === 2 ? <>
               <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: '64%', background: '#000'}} />
               <div style={{position: 'absolute', left: 0, right: 0, top: '64%', bottom: 0, background: '#30303880'}} />
             </> : null}
-            {previewStage === 3 ? <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: '64%', background: '#000'}} /> : null}
             <div style={{position: 'absolute', left: 12, top: 10, padding: '5px 9px', background: '#09090ddd', fontFamily: FONT, color: C.white, fontSize: 15, fontWeight: 900}}>{stageLabels[previewStage]}</div>
           </div>
           <div style={{opacity: chartOpacity, height: 157, boxSizing: 'border-box', marginTop: 10, padding: '7px 14px', background: C.panel, border: '1px solid #47434e'}}>
