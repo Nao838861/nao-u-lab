@@ -54,7 +54,18 @@ unreviewed_intake_audit:
 - この Phase では評価と frontmatter 更新のみ。概要執筆・Slack 投稿・新規収集は未実施。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260823_i_wont_be_abducted_63_hour_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787413400296389
+    char_count: 4500
+skipped: []
+```
+
+- 最終判定: 投稿。元記事を再確認し、do-not-build、shop から dawn draft への縮約、`.tres` / EventBus、standee 表現、roster・telegraph・voice の遅延を成功条件と失敗条件の両方から分析した。
+- 投稿前検証: `■ 概要` 開始、必須6項目の順序、`■ URL` 末尾、URL 1件、禁止表現なし、既投稿重複なし、4500字、`tools/shared_reads_policy.py` pass。
+- 投稿経路: `tools/slack_client.py` の `post_message` を1回だけ使用。thread reply なし。Slack ts `1787413400.296389`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
