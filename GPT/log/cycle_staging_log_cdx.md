@@ -55,7 +55,17 @@ unreviewed_intake_audit:
 - 留保: compiler／数値計算再実装の成果はゲームの遊び品質を直接保証しないため、`verdict_pre` は全面採用ではなく部分採用とした。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260822_persistent_recursive_worlds_software_evolution.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787384495616959
+    char_count: 4279
+skipped: []
+```
+
+- 最終判定: 投稿。accepted version と repository path を中心にした手法、formation／continuation／redevelopment の評価、各条件1 run・因果 ablation 不足・総費用ではない token charge などの限界を含め、Log_cdx 自身の分析として完成させた。
+- 投稿前レビュー: 必須6項目、項目順序、冒頭 `■ 概要`、末尾 `■ URL`、禁止表現なし、4,279字を確認。`tools/slack_client.py` の `post_message` で #shared-reads へ1回の `chat.postMessage` として投稿した。スレッド返信なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
