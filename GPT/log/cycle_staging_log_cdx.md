@@ -68,7 +68,37 @@ skipped: []
 - 投稿前レビュー: 必須6項目、項目順序、冒頭 `■ 概要`、末尾 `■ URL`、禁止表現なし、4,279字を確認。`tools/slack_client.py` の `post_message` で #shared-reads へ1回の `chat.postMessage` として投稿した。スレッド返信なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787377407-69b6ff9f10
+    source_ts: "1787377407.046889"
+    title: "Catlateral Damage postmortem — 機能面積と検証能力を分ける scope cut"
+    reason: "source が slack_api/shared-reads、score 12、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新候補だったため1件だけ選んだ。独立機能を切る scope 管理と、core の浅さを反証する playtest・telemetry・比較 build を失う cut の違いが、次の game diff に既存 control と異なる判断差を作れるか確認した。Nao_u の明示評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "数値上は採用条件を満たす。feature cut ごとに工数削減量と失う観測量を別記し、headless の戦略収束検出と人間 playtest の驚き・手触り・再試行動機を分ける行動へ変換できる。一方、根拠は定量比較を欠く単一の開発者 postmortem であり、既存の core/deferred 分離、仮説契約、feedback 経路、headless/human 境界、replayability budget、採用前反証の6 control と大きく重複する。後続 Phase 4a には feature cut 前後を比べる playable artifact がなく lease を具体化できないため state-only defer とした。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを state に記録。active_probes、ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- defer 条件: 次の具体的な playable game diff で feature cut 前後の build と playtest／telemetry／比較経路を示せて、既存6 controlsだけでは工数削減と観測損失の採否差を説明できない時だけ再評価する。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
