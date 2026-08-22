@@ -4,13 +4,13 @@ import {
   Audio,
   Easing,
   Img,
-  Loop,
-  OffthreadVideo,
-  Sequence,
+  Loop as RemotionLoop,
+  OffthreadVideo as RemotionOffthreadVideo,
+  Sequence as RemotionSequence,
   interpolate,
   spring,
   staticFile,
-  useCurrentFrame,
+  useCurrentFrame as useRemotionCurrentFrame,
   useVideoConfig,
 } from 'remotion';
 import {
@@ -65,6 +65,45 @@ const C = {
   cyan: '#48d8ff',
   orange: '#ffb84a',
   red: '#ff5c6c',
+};
+
+const BASE_TIMELINE_FPS = 30;
+
+const useTimelineScale = () => {
+  const {fps} = useVideoConfig();
+  return fps / BASE_TIMELINE_FPS;
+};
+
+const useCurrentFrame = () => {
+  const frame = useRemotionCurrentFrame();
+  return frame / useTimelineScale();
+};
+
+const Sequence: React.FC<React.ComponentProps<typeof RemotionSequence>> = (props) => {
+  const scale = useTimelineScale();
+  return (
+    <RemotionSequence
+      {...props}
+      from={Math.round((props.from ?? 0) * scale)}
+      durationInFrames={props.durationInFrames === undefined ? undefined : Math.round(props.durationInFrames * scale)}
+    />
+  );
+};
+
+const Loop: React.FC<React.ComponentProps<typeof RemotionLoop>> = (props) => {
+  const scale = useTimelineScale();
+  return <RemotionLoop {...props} durationInFrames={Math.round(props.durationInFrames * scale)} />;
+};
+
+const OffthreadVideo: React.FC<React.ComponentProps<typeof RemotionOffthreadVideo>> = (props) => {
+  const scale = useTimelineScale();
+  return (
+    <RemotionOffthreadVideo
+      {...props}
+      startFrom={props.startFrom === undefined ? undefined : Math.round(props.startFrom * scale)}
+      endAt={props.endAt === undefined ? undefined : Math.round(props.endAt * scale)}
+    />
+  );
 };
 
 const FONT = '"Yu Gothic UI", "Hiragino Sans", system-ui, sans-serif';

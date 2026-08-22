@@ -111,6 +111,14 @@ export const RemotionRoot: React.FC = () => {
         width={1280}
         height={720}
       />
+      <Composition
+        id="C01C18NarrationPreview60"
+        component={C01C18NarrationPreview}
+        durationInFrames={c01C18NarrationDurationInFrames * 2}
+        fps={60}
+        width={1280}
+        height={720}
+      />
     </>
   );
 };
