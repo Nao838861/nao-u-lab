@@ -303,9 +303,10 @@ const PackedEnemy: React.FC<{
         const bw = Math.min(4, width - x);
         const bh = Math.min(2, height - y);
         const visible = showAll || processed.has(i) || (showTransparent && category === 0);
-        const analysisColor = category === 0 ? '#5a5c65' : category === 1 ? C.orange : C.magenta;
+        const analysisColor = category === 0 ? '#eef1f8' : category === 1 ? C.orange : C.magenta;
         const categoryHighlightActive = highlightCategory >= 0;
         const categoryHighlighted = category === highlightCategory;
+        const transparentHighlighted = category === 0 && categoryHighlighted;
         return (
           <div
             key={i}
@@ -317,7 +318,7 @@ const PackedEnemy: React.FC<{
               height: bh * scale,
               overflow: 'hidden',
               boxSizing: 'border-box',
-              backgroundColor: visible ? '#34363e' : '#0c0d10',
+              backgroundColor: transparentHighlighted ? '#969daa' : visible ? '#34363e' : '#0c0d10',
               backgroundImage: visible && category !== 0 ? `url(${enemyImage})` : undefined,
               backgroundSize: `${width * scale}px ${height * scale}px`,
               backgroundPosition: `${-x * scale}px ${-y * scale}px`,
@@ -326,7 +327,11 @@ const PackedEnemy: React.FC<{
               border: analyze
                 ? `${categoryHighlighted ? 3 : 1}px solid ${analysisColor}`
                 : '1px solid rgba(120,118,130,.22)',
-              boxShadow: categoryHighlighted ? `inset 0 0 0 2px ${analysisColor}, 0 0 10px ${analysisColor}` : undefined,
+              boxShadow: categoryHighlighted
+                ? transparentHighlighted
+                  ? `inset 0 0 0 3px ${analysisColor}, 0 0 16px 2px ${analysisColor}`
+                  : `inset 0 0 0 2px ${analysisColor}, 0 0 10px ${analysisColor}`
+                : undefined,
               opacity: categoryHighlightActive && !categoryHighlighted ? 0.24 : 1,
               outline: cursor === i ? `4px solid ${C.orange}` : undefined,
               outlineOffset: -3,
@@ -820,7 +825,7 @@ const CompiledScene: React.FC<{durationInFrames?: number}> = ({durationInFrames 
           <PackedEnemy scale={10} showAll analyze highlightCategory={active} />
           <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 9}}>
             <div style={{display: 'flex', gap: 14, fontFamily: FONT, fontSize: 16, fontWeight: 800}}>
-              <span style={{color: '#8b8d96'}}>■ 透明</span>
+              <span style={{color: '#d5d9e4'}}>■ 透明</span>
               <span style={{color: C.orange}}>■ 一部</span>
               <span style={{color: C.magenta}}>■ 全面</span>
             </div>
