@@ -50,7 +50,15 @@ group_handoff_audit:
 - 判定根拠: 固定 engine と可変 content の境界、CSV/property/behavior の実装経路、live 更新の障害例と検証用 sheet 運用まで抽出可能。小規模 webgame の playable-diff サイクルへ直接適用でき、定量評価がない点を明示しても約4000字の概要を構成できるため pass。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260823_transparent_data_living_websites_spreadsheet_webgame.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787436897991969
+    char_count: 3984
+skipped: []
+```
+
+- 最終判定: 投稿。原 PDF の Everest Pipkin パート（slides 8-23）を抽出・レンダリングして、固定 engine / 可変 content、CSV 取得、property と allow-list behavior の写像、live 更新の故障例、第二 sheet、公開 data の可視性を照合した。定量比較がない点を明示し、production では validator、versioned snapshot、content hash、last-known-good fallback、headless test を挟む「部分採用」として 1 回の `chat.postMessage` で投稿した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

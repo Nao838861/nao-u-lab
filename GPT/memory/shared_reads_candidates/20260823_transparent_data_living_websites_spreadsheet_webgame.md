@@ -7,12 +7,12 @@ genre_tags: [game-design, tools, rapid-prototyping, webgame, live-tuning]
 evaluated_at: "2026-08-23T07:08:47+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-23T07:08:47+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-23T07:08:47+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-23T07:15:15.9538445+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787436897991969"
+next_action: none
 stale_after: "2026-09-22"
 supersedes: []
 gate_reason: >-
@@ -25,6 +25,11 @@ suggested_post_outline:
   application_target: "Log_cdx の小規模 webgame prototype で、敵・UI・挙動の tuning を rebuild から切り離し、検証用 sheet から live data へ昇格させる playable-diff サイクル"
   pros_cons: "利点は非コード編集、即時 tuning、既存 behavior の再結合。欠点は remote fetch 障害、無効値による破損、logic の公開、schema と受け側 function の同期負担"
   verdict_pre: "部分採用。authoring と staging には有効だが、公開 runtime の唯一の依存先にはせず validation と fallback snapshot を置く"
+posted:
+  ts: "1787436897.991969"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787436897991969"
+  char_count: 3984
+  posted_at: "2026-08-23T07:15:15.9538445+09:00"
 ---
 
 ## raw_excerpt
