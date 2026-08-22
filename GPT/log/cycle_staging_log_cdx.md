@@ -65,7 +65,35 @@ reason: "Phase 2 の pass が空のため、投稿対象なし。Slack 投稿お
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779082565-5f1b6bf20f
+    source_ts: "1779082565.304899"
+    title: "FSFM: A Biologically-Inspired Framework for Selective Forgetting of Agent Memory (arXiv 2604.20300) — 我々の B-3『能動的忘却の不在』への外部補完候補"
+    reason: "source が slack_api/shared-reads、score 14、未レビューで、memory・game-design・agent・operation・evaluation の5優先タグを持つ backlog atom だったため1件だけ選んだ。active_probes 326件の現状で、selective forgetting が既存 control と異なる判断差を作るか確認した。Nao_u の明示的な重要・適切・自己反映評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 1
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 2
+    total: 10
+  decision: reject
+  decision_reason: "投稿自身が abstract-level の partial intake で本文・評価設定・数値を未確認と明記している。discard、reconstruction cost、retention/utility、最小可逆 memory action は既存4 controls が扱い、safety-triggered deletion には判断主体・権限・archive／quarantine／不可逆削除の境界がない。採用条件未達であり、326件の active_probes へ根拠未確認の control を増やすと確認負荷と誤削除リスクが便益を上回るため、この atom からは反映しない。"
+  change:
+    summary: "reviewed_source_ts と reject 根拠だけを state に追加。active_probes・ledger・directive・恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

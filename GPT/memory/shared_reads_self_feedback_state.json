@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-22T10:39:05+09:00",
+  "updated_at": "2026-08-22T12:44:35+09:00",
   "reviewed_source_ts": [
+    "1779082565.304899",
     "1787355534.654839",
     "1787348477.440319",
     "1787341222.261219",
@@ -723,6 +724,50 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-22T12:44:35+09:00",
+      "selected": {
+        "id": "sr-1779082565-5f1b6bf20f",
+        "source_ts": "1779082565.304899",
+        "title": "FSFM: A Biologically-Inspired Framework for Selective Forgetting of Agent Memory (arXiv 2604.20300) — 我々の B-3『能動的忘却の不在』への外部補完候補",
+        "reason": "source が slack_api/shared-reads、score 14、未レビューで、memory・game-design・agent・operation・evaluation の5優先タグを持つ backlog atom だったため1件だけ選んだ。active_probes が326件ある現在、selective forgetting の4分類が既存の discard／retention controls と異なる小さな判断差を作れるかを優先確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 2,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、evidence と risk_control も2未満のため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は selective forgetting を passive decay／active deletion／safety-triggered／adaptive reinforcement の4分類と efficiency／quality／security の3軸へ分け、memory cleanup の検討語彙には変換できるため relevance=3、actionability=2 とした。一方、投稿自身が abstract-level の partial intake で本文・dataset・baseline・ablation を未確認と明記し、+8.49%／+29.2%／100% の評価条件も検証していないため evidence=1 とした。probe-20260604-memory-discard-operation-gate、probe-20260612-forgetting-reconstruction-cost、probe-20260625-amvl-retention-utility-lifecycle、probe-20260710-automem-memory-action-audit が discard 対象、再構築費用、保持宣言と観測 utility、最小可逆操作を既に扱う。safety-triggered 軸だけは完全同義ではないため non_redundancy=1 としたが、投稿には何を安全根拠として、誰の権限で、archive／quarantine／不可逆削除のどれを選ぶかがなく、現在の raw 保持・supersede・quarantine 境界とも衝突しうる。326件の active_probes に根拠未確認の forgetting control を足すと、確認負荷と誤削除リスクが便益を上回るため risk_control=1。可逆な demotion や archive へ限定する余地はあるため reversibility=2 とした。この atom は operational input として reject し、将来、原典確認済みの別 source と具体的な before／after artifact が出た場合だけ新規 source として評価する。",
+      "evidence_sources": [
+        "memory/atoms.jsonl#id=sr-1779082565-5f1b6bf20f",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779082565.304899"
+      ],
+      "existing_controls": [
+        "probe-20260604-memory-discard-operation-gate",
+        "probe-20260612-forgetting-reconstruction-cost",
+        "probe-20260625-amvl-retention-utility-lifecycle",
+        "probe-20260710-automem-memory-action-audit"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、partial intake の証拠不足、既存 forgetting／retention controls との重複、safety-triggered deletion の権限・可逆性不足による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-22T04:45:08+09:00",
       "selected": {
