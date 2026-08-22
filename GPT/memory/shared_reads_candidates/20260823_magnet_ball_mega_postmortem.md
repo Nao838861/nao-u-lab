@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/magnet-ball-a-mega-postmortem-how-lea
 collected_at: "2026-08-23T02:46:40+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, prototyping, postmortem, student-project, playtesting]
+evaluated_at: "2026-08-23T02:52:48+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-23T02:52:48+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-23T02:52:48+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-22"
+supersedes: []
+gate_reason: |-
+  会議と先行 asset 投資で撤退不能になった失敗から、design question ごとの playable prototype、版比較、playtest で企画を再起動した因果過程が具体例と失敗条件を伴っている。
+  Magnet Ball への収束、膠着解消、短周期制作の burn-out、prototype tool 継続利用の負債まで揃い、ゲーム制作へ適用可能な約4000字の批判的概要を構成できる。
+suggested_post_outline:
+  overview_angle: "企画会議と sunk cost で停滞した学生チームが、問いに答える playable prototype の連続へ制作単位を変え、残り約2か月から Magnet Ball を成立させた過程"
+  analysis_axis: "prototype 数ではなく、各版がどの design question に答え、player experience の変化をどの比較証拠で確認したかを軸に、成功条件と技術的・人的負債を分けて読む"
+  application_target: "Log_cdx の短期ゲーム prototype で、着手前に design question と判定基準を置き、playable diff・過去版・playtest 証拠を一組で保存する制作サイクル"
+  pros_cons: "議論を検証可能な差分へ変え、sunk cost からの方向転換を助ける。一方、週次 prototype は burn-out を招き、仮 tool と onboarding を後回しにすると本制作の負債になる"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

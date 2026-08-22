@@ -7,17 +7,18 @@ genre_tags: [game-design, procedural-content-generation, level-design, playtrace
 evaluated_at: "2026-07-24T17:08:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-24T17:08:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-24T17:08:00+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-23T02:54:08+09:00"
+last_decision: failed
+evidence: "group_handoff:gha-9d1ec15dba16d8a7; terminal:memory/shared_reads_candidates/20260803_playtrace_reconstructive_partitioning.md: status=failed; same URL; method and metrics incomplete; reason:同一 title・同一 arXiv URL の同一 work で追加資料がなく failed sibling の不足判定へ統合する"
+next_action: none
 stale_after: "2026-08-23"
 supersedes: []
 gate_reason: |-
   level を静的配置でなく解法中の状態遷移として表す問題設定と、Sokoban で6手法に比較した評価枠は、時間的な攻略体験を生成・比較するレベル設計へ具体的に接続できる。
   ただし現 candidate では cake representation の構造、PRP の再構成・分割手順、baseline、validity と diversity の指標・数値・失敗条件が不明で、手法の中核と評価内容を約4000字で再現できない。
+duplicate_reason: failed_duplicate_of_terminal_sibling
 ---
 
 ## raw_excerpt
