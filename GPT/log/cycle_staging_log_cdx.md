@@ -90,7 +90,48 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index entry を validate_memory_index.py で監査し、per-file atom index との broken link / duplicate ID は 0 件だった。"
+  - "memory/MEMORY.md を UTF-8 明示で読み、代表語『記憶』『ゲーム設計』『敵パターン』『評価軸』を取得できた。source file は正常で、表示経路の mojibake も観測しなかった。"
+  - "atoms 2940 件の mirror audit は atoms.jsonl / per-file md / index.jsonl が各 2940 件で一致し、missing / parse error / content conflict は 0 件だった。normalized-content 重複 40 group は canonical overlay で fold 済みで、recall-visible 側の残り 3 group も lifecycle/content fold 対象だった。"
+  - "shared-reads title sidecar を再監査した。terminal canonical group 106 件、open duplicate group 31 件（mixed 27 / all_open 4）、actionable group 0 件だった。"
+  - "candidate lifecycle は posted 676 / ready_to_post 9 / postponed 202 / failed 500 / needs_review 2。stale_after 到来 4 件は既存の deferred group lease 2 件（retry_after 2026-09-19）に包含されるため再 enqueue しなかった。"
+  - "memory/raw/ の 30 日超ファイル 242 件を監査した。一次資料・評価ログ・Slack archive の provenance 保持対象であり、age だけを根拠に archive 移動しなかった。"
+  - "Slack directives / broadcasts の pending は各 0 件で、handled 更新対象はなかった。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 31
+  mixed_group_count: 27
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
