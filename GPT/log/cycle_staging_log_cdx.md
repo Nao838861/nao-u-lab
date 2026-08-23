@@ -95,7 +95,90 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "shared-reads の terminal title canonical index を再生成し、closed group 107件を確認した。suppressible sibling は0件で、candidate frontmatter は変更していない。"
+  - "mixed/open duplicate、stale triage、group action sidecar を再生成した。永続 handoff inbox への新規 enqueue は group 0件 / candidate 0件だった。"
+  - "Slack directive / broadcast inbox を監査し、pending は双方0件だったため handled 更新は発生しなかった。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+memory_index_audit:
+  validator: ok
+  markdown_links: 0
+  atom_references: 50
+  broken_atom_references: 0
+  utf8_probe:
+    source_file_status: "UTF-8 明示読みで 記憶 / ゲーム設計 / 敵パターン / 評価軸 の代表語と index 本文を取得でき、decode error はなかった。"
+    display_or_tooling_status: none
+atom_consistency:
+  mirror_counts:
+    atoms_jsonl: 2948
+    per_file_md: 2948
+    index_jsonl: 2948
+  mirror_status: clean
+  parse_errors: 0
+  content_conflicts: 0
+  raw_normalized_content_duplicate_groups: 40
+  raw_normalized_content_duplicate_rows: 80
+  recall_visible_duplicate_groups_before_fold: 3
+  canonical_overlay_groups: 45
+  current_scope_conflicts: 0
+  note: "重複は canonical overlay / lifecycle fold で解決済みで、raw atom は provenance 保持のため削除していない。"
+encoding_audit:
+  source_file_status: "memory_health の suspect 2件を UTF-8 明示読みで確認した。sr-1776127289-4d9239b255 は raw Slack provenance 由来の置換文字を含む局所 source defect、gr-1777083728-44d444ab7a は Nao_u 原文中の意図的な ??? で false positive だった。"
+  display_or_tooling_status: none
+  action: "同一 raw root の再要約を独立破損として数えず、局所 defect は provenance を保持したため issue 化しない。"
+raw_archive_audit:
+  cutoff: "2026-07-24"
+  old_file_count: 242
+  old_web_research_count: 217
+  archive_candidates: 0
+  decision: "mtime だけでは provenance 原文の退役根拠にならないため、raw は移動・削除せず保持した。"
+candidate_lifecycle:
+  total_with_evaluation: 1407
+  counts:
+    posted: 685
+    ready_to_post: 9
+    postponed: 205
+    failed: 506
+    needs_review: 2
+  overdue_open_total: 4
+  overdue_group_keys:
+    - "joint agent memory and exploration learning via novelty signals"
+    - "an exploration of collision based enemy morphology generation"
+  suppression: "2 group とも membership fingerprint が一致する deferred lease が live で、retry_after は 2026-09-19T14:08:16+09:00。期限前の再投入を抑止した。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  receipt: null
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 30
+  mixed_group_count: 26
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_handoff_inbox_pending_count: 0
+  group_handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
