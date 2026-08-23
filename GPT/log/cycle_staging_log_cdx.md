@@ -155,7 +155,72 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+executed_at: "2026-08-24T05:49:00+09:00"
+cleaned:
+  - "memory/MEMORY.md を UTF-8 で検査し、index entry と per-file atom index の対応が一致することを確認。代表語 記憶 / ゲーム設計 / 敵パターン / 評価軸 も取得できた。"
+  - "memory/atoms.jsonl 2952件を監査。atom id 重複・parse error・三重ミラーの content conflict は0件。正規化本文40群と title/excerpt exact 5群は既存 canonical overlay 45群で折り畳まれている。"
+  - "memory/raw/ の30日超無更新ファイル242件を確認。raw は source_ts から戻る原文正本として保持する現行方針のため、mtime のみを根拠に archive 移動しなかった。"
+  - "candidate lifecycle を監査: posted 688 / ready_to_post 9 / postponed 204 / failed 508 / needs_review 2。terminal の posted / failed は再評価 queue から除外した。"
+  - "open duplicate group / stale triage / group action sidecar を再生成し、stale だった mixed duplicate queue を25群へ更新した。"
+  - "slack_directives.jsonl 23行と slack_broadcasts.jsonl 21行を監査。pending は双方0件で、handled 更新対象なし。"
+  - "期限前 group defer lease 2群を抑止したうえで、単独 stale candidate 2件を candidate handoff inbox へ冪等 enqueue した。"
+issues:
+  - id: ISS-UTF8-001
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』相当箇所が U+FFFD 2文字を含み、raw から index まで同じ破損が伝播している。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/atoms/index.jsonl id=sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8 明示読みは成功したが、raw source 自体に『エ��ジェント』として U+FFFD が保存されており、source data corruption。memory_health のもう1件 gr-1777083728-44d444ab7a は本文中の意図的な『???』による false positive で破損なし。"
+    display_or_tooling_status: "none; PowerShell/staging 表示経路の mojibake ではない。"
+    why_blocks_game_memory: "『AIエージェント』の exact title/query と原文再現性を弱めるが、該当atomはゲーム教師フィードバック正本ではなく、影響は局所的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 6
+  stale_triage_queue_rows: 2
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 2
+  candidate_handoff_ids:
+    - cha-ca92165c527ff228
+    - cha-d1acdc1f18e5adf2
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_note: "overdue 6件のうち duplicate group 4件は既存 deferred group lease（JAMEL / collision morphology、retry_after 2026-09-19、membership fingerprint 一致）で抑止。queue 2行 < overdue 6件だが actionable group は0件のため高水位条件は不成立。"
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-ca92165c527ff228
+    path: memory/shared_reads_candidates/20260725_dark_maze_custom_web_engine_postmortem.md
+    status: postponed
+    stale_after: "2026-08-24"
+    priority_reason: "duplicate group 外の期限到来候補。緊張感を grid・視界・逃走 loop へ絞った制約駆動設計と、複数端末・portal 公開で露出した failure が次作へ転用可能。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-d1acdc1f18e5adf2
+    path: memory/shared_reads_candidates/20260725_grappling_smooth_movement_indie_budget.md
+    status: postponed
+    stale_after: "2026-08-24"
+    priority_reason: "duplicate group 外の期限到来候補。入力・move set・physics・表示の接続は有用だが、講演内の調整事例と評価根拠が不足するため Phase 2 で再評価が必要。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
