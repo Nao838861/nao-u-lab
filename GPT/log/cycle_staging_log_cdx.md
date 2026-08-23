@@ -94,7 +94,80 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の atom index 50件を atoms.jsonl と照合し、broken link 0件を確認"
+  - "atoms 2950件の mirror audit を実行し、per-file/index/jsonl の欠落・parse error・content conflict が各0件、既存 canonical overlay 45群が重複を fold 済みと確認"
+  - "shared-reads candidate 1408件の lifecycle を dry-run 監査し、現在状態の自動変更は0件、status/candidate_status conflict は0件と確認"
+  - "open duplicate / stale triage / group action sidecar を再生成し、既存 deferred lease を反映した結果、新規 group/candidate handoff は各0件"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending は各0件で、handled 更新対象なし"
+  - "memory/raw 配下の30日超無更新ファイル242件を抽出。raw provenance の正本を保つため、このphaseでは移動・削除せず監査記録のみ"
+issues:
+  - id: ISS-ENC-001
+    description: "legacy atom sr-1776127289-4d9239b255 の『AIエージェント』部分に U+FFFD が2文字残り、title / trigger / excerpt の検索語が一部欠損している"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919"
+    source_file_status: "UTF-8明示読みで per-atom MD、atoms.jsonl、raw Slack archive の全てに同じ U+FFFD を確認。source側の既存破損であり、memory/MEMORY.md は代表語『記憶』『ゲーム設計』『敵パターン』を正常取得し、『評価軸』はliteral未収載だが置換文字化けではない。gr-1777083728-44d444ab7a の『???』は原文どおりで、encoding破損ではない"
+    display_or_tooling_status: "PowerShell Get-Content -Encoding UTF8 と rg が同じ置換文字を表示しており、shell表示経路だけのmojibakeではない"
+    why_blocks_game_memory: "該当atomを『AIエージェント』で検索する際の一致率を局所的に下げるが、atom ID・URL・他のcontext engineering語彙では到達できるため影響は限定的"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+candidate_lifecycle:
+  audited_count: 1408
+  counts:
+    posted: 685
+    ready_to_post: 9
+    postponed: 205
+    failed: 507
+    needs_review: 2
+  missing_stale_after: 3
+  missing_stale_after_scope: "effective audit上の欠損はposted terminalのみで、open再評価queueへの影響なし"
+  overdue_open_total: 4
+  overdue_paths:
+    - memory/shared_reads_candidates/20260605_jamel_novelty_memory_exploration.md
+    - memory/shared_reads_candidates/20260610_collision_enemy_morphology_generation.md
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+    - memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+  overdue_disposition: "2つのall-open duplicate groupとして既存deferred leaseに包含。membership fingerprintは不変で retry_after=2026-09-19T14:08:16+09:00 のため、今回の再投入を抑止"
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 30
+  mixed_group_count: 26
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+raw_archive_audit:
+  cutoff: "2026-07-24"
+  older_than_30_days_count: 242
+  largest_locations:
+    - "memory/raw/web_research: 130"
+    - "memory/raw/web_research/phase3_sources: 17"
+    - "memory/raw/headless_eval: 16"
+  action: "audit_only_no_move"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
