@@ -9,7 +9,65 @@
 - duplicate preflight: `continue`（canonical URL / title とも新規）。Slack 投稿は行っていない。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260823_bubble_in_the_void_simple_prototypes.md
+fail:
+  - path: memory/shared_reads_candidates/20260823_deprofessionalization_small_game_teams.md
+    reason: "問題と適用先は具体的だが、意見・事例中心で再現可能な手法と評価が不足する"
+postpone:
+  - path: memory/shared_reads_candidates/20260823_idraak_semantic_drift_technical_requirements.md
+    reason: "要旨だけでは SRR の生成・比較規則と6 workflow の差を4000字水準で説明できない"
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 3
+  malformed_count: 0
+  oldest_collected_at: "2026-08-23T16:01:40+09:00"
+  selection_limit: 5
+  selected_paths:
+    - memory/shared_reads_candidates/20260823_bubble_in_the_void_simple_prototypes.md
+    - memory/shared_reads_candidates/20260823_idraak_semantic_drift_technical_requirements.md
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260823_deprofessionalization_small_game_teams.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260823_deprofessionalization_small_game_teams.md
+    - memory/shared_reads_candidates/20260823_bubble_in_the_void_simple_prototypes.md
+    - memory/shared_reads_candidates/20260823_idraak_semantic_drift_technical_requirements.md
+  valid_backlog_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  - path: memory/shared_reads_candidates/20260823_deprofessionalization_small_game_teams.md
+    decision: continue
+  - path: memory/shared_reads_candidates/20260823_bubble_in_the_void_simple_prototypes.md
+    decision: continue
+  - path: memory/shared_reads_candidates/20260823_idraak_semantic_drift_technical_requirements.md
+    decision: continue
+sidecar_check:
+  posted_source_rows: 841
+  posted_source_unresolved_posts: 109
+  title_canonical_rows: 107
+  open_duplicate_group_rows: 30
+  stale: false
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

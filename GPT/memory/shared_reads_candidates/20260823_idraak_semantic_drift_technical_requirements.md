@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2608.08801v1"
 collected_at: "2026-08-23T16:15:20+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [llm, semantic-drift, requirements, evaluation, multi-agent, game-development]
+evaluated_at: "2026-08-23T16:37:14+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-23T16:37:14+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-23T16:37:14+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-22"
+supersedes: []
+gate_reason: >-
+  問題設定、複数 dataset、主要 metric、単純な few-shot が agentic workflow を上回る結論は強く、
+  ゲーム仕様の数値・否定・義務条件の受け渡し検査へ具体的に接続できる。
+  ただし現 candidate は要旨依存で、SRR の生成・比較規則と6 workflow の差を説明できないため、一次資料読解まで保留する。
 ---
 
 ## raw_excerpt

@@ -4,6 +4,27 @@ url: "https://tomsterbg.itch.io/bubble-in-the-void/devlog/1610142/completing-a-g
 collected_at: "2026-08-23T16:01:40+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, puzzle, prototyping, ux]
+evaluated_at: "2026-08-23T16:37:14+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-23T16:37:14+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-23T16:37:14+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-22"
+supersedes: []
+gate_reason: >-
+  締切6〜8時間前の水・泳ぎ・浮力の最小実装、Kanban による scope 分離、
+  blockout の意味衝突から初見誤読へ至る失敗と修正が一つの制作例で因果的につながっている。
+  実装順・diegetic cue・設定 UI・build QA を約4000字で具体的に分析できる。
+suggested_post_outline:
+  overview_angle: "締切直前の複雑な水ギミックを簡易物理へ分解して完成させる一方、仮形状の多義性が遊び方の誤読を生んだ短期制作の両面"
+  analysis_axis: "必須と着想の scope 分離、専用 simulation を避けた最小実装、機能上の成立と初見での可読性のずれ、post-jam 修正の因果"
+  application_target: "Log_cdx の短期ゲーム prototype で、mechanic を marker・area・velocity の最小部品へ落とし、同時に各仮形状へ一つの gameplay 意味を割り当てる制作チェックへ適用する"
+  pros_cons: "締切内に playable な複合ギミックを成立させ再利用できる点が利点。簡易物理の境界条件、blockout の意味衝突、設定 UI と multi-platform build の後回しが弱点"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
