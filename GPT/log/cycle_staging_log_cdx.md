@@ -150,7 +150,114 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index atom ID 50件を atoms.jsonl と照合し、broken 0件を確認した。"
+  - "memory_health の stable snapshot で atoms.jsonl / per-file md / index.jsonl 各2952件、missing・parse error・content conflict 0件を確認した。normalized content duplicate 40群は既存 fold / canonical overlay で処理済みのため、原文を変更していない。"
+  - "memory/shared_reads_open_duplicate_group_queue.jsonl、memory/shared_reads_stale_triage_queue.jsonl、memory/shared_reads_group_action_queue.jsonl を現状態から再生成した。"
+  - "candidate lifecycle 1410件を監査した。status 内訳は posted 687 / failed 508 / postponed 204 / ready_to_post 9 / needs_review 2。現在状態の conflict による変更は0件だった。"
+  - "期限超過 candidate 11件のうち、期限前 deferred group lease に含まれる4件を除外し、stale triage 7件を生成した。actionable group は0件で、candidate 単位の上位5件を Phase 2 handoff inbox へ冪等 enqueue した。"
+  - "Slack directive / broadcast inbox の pending はともに0件で、handled 更新は0件だった。"
+  - "memory/raw/ の30日超過242件を監査した。web_research 217 / headless_eval 16 / slack_api 6 / その他3で、candidate・atom の provenance pointer を保つため移動0件とした。"
+  - "UTF-8 明示読みで memory/MEMORY.md の代表語は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false。source は正常な UTF-8 で、評価軸は単に現 index 本文に不在。表示・tooling mojibake はなし。"
+  - "memory_health の mojibake suspect 2件を source まで切り分けた。sr-1776127289-4d9239b255 は raw Slack archive 由来の既存置換文字、gr-1777083728-44d444ab7a は原文中の ??? による false positive。局所的で現行 recall を阻害する構造問題ではないため、Phase 4a では原文を修復していない。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+candidate_lifecycle:
+  total: 1410
+  status_counts:
+    posted: 687
+    failed: 508
+    postponed: 204
+    ready_to_post: 9
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_for_reassessment: 11
+  valid_unreviewed_count: 0
+  malformed_count: 0
+title_duplicate_audit:
+  unindexed_duplicate_group_count: 29
+  unindexed_terminal_group_count: 0
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+stale_backlog:
+  overdue_open_total: 11
+  stale_triage_queue_rows: 7
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_handoff_pending_count: 0
+  group_handoff_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-b7ebc407c92968ab
+    - cha-7fbf148b7a4e97a9
+    - cha-230b01f3d2396123
+    - cha-6a58fe9eb0f6ed90
+    - cha-d4ee9427370997c2
+  deferred_group_lease_suppressed_candidate_count: 4
+  deferred_group_lease_ids:
+    - gha-e6d4d4b5a37a0808
+    - gha-2313a247c62a9028
+  deferred_retry_after: "2026-09-19T14:08:16+09:00"
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-b7ebc407c92968ab
+    path: memory/shared_reads_candidates/20260517_generative_ai_pcg_survey_jstage.md
+    status: postponed
+    stale_after: "2026-08-24"
+    priority_reason: "limited-data / designer-steered PCG は小規模ゲーム制作へ直結するが、survey の分類軸・代表手法・比較評価が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-7fbf148b7a4e97a9
+    path: memory/shared_reads_candidates/20260517_pcg_survey_llm_integration.md
+    status: postponed
+    stale_after: "2026-08-24"
+    priority_reason: "search / noise / ML / LLM / combined methods の配置図は有用だが、各手法の評価軸・限界・代表例が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-230b01f3d2396123
+    path: memory/shared_reads_candidates/20260518_generative_archaeology_sandstorm_pcg.md
+    status: postponed
+    stale_after: "2026-08-24"
+    priority_reason: "PCG を生成痕跡の解釈へ接続する着想と187人 survey は具体的だが、定量・定性結果と glitch の影響分類が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-6a58fe9eb0f6ed90
+    path: memory/shared_reads_candidates/20260518_pcg_player_personas_evolution.md
+    status: postponed
+    stale_after: "2026-08-24"
+    priority_reason: "4 persona agents と3 experience metrics は headless 評価へ接続できるが、定義・進化処理・比較結果が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-d4ee9427370997c2
+    path: memory/shared_reads_candidates/20260526_sphinx2_narrative_puzzles_open_world.md
+    status: postponed
+    stale_after: "2026-08-24"
+    priority_reason: "narrative puzzle と open-world 探索の接続と評価枠は具体的だが、puzzle heuristics・生成手順・study 規模が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+archive_audit:
+  older_than_30d_count: 242
+  archived_count: 0
+  retained_reason: "原文・評価 evidence の provenance pointer を壊さず保持するため。mtime だけでは archive 可否を確定しない。"
+source_file_status: "memory/MEMORY.md は UTF-8 正常。atoms mirror は clean。既存 raw 由来の置換文字1 atomのみ確認。"
+display_or_tooling_status: "none"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
