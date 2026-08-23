@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-24T01:44:16+09:00",
+  "updated_at": "2026-08-24T03:48:02+09:00",
   "reviewed_source_ts": [
+    "1787503228.368619",
     "1779834973.898019",
     "1779887735.171239",
     "1779009798.720239",
@@ -742,6 +743,52 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-24T03:48:02+09:00",
+      "selected": {
+        "id": "sr-1787503228-1001796590",
+        "source_ts": "1787503228.368619",
+        "title": "Hunter Diorama — no-op を含む action economy の相互作用監査",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを含む最新候補だったため1件だけ選んだ。4日間jamで過大な初期案を6-slot timeline＋3-laneへ縮約した後も、chargeのtime costとhealth costが重なってturn skipが支配戦略になり、RNG forecast、逆向きslot表示、3 turn tutorial、必敗attack、無効skillが一つのdecision loop上で衝突した事例を、次の短期prototypeで既存controlと異なる判断差へ変換できるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカルrawでは確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の下限には届くが、risk_control=1で必須閾値2を満たさないため、新規probe・metric・lease・directiveは追加しない。shared-reads本文はattack・move・defend・no-opを同列に置くinteraction map、同一state／fixed seedでの最速攻撃・最大charge・lane回避・stagger lock・全skip・交互policy比較、必敗stateと無効skillの検出、forecast利用policy対無視policy、slot表示方向のproperty test、mechanic別onboardingへ変換しており、次のrule-heavy prototypeへ直接適用できるためrelevance・actionabilityは3とした。一方、根拠は単一作者のpostmortemと定性的なjam feedbackで、tutorial完了率、初回敗北点、forecast利用率、score分布、修正前後比較がなく、固定chainや3段階fightは未検証の処方なのでevidenceは2。probe-20260525-center-input-three-state-bad-policyはcamper／panic／novice、probe-20260526-untracked-frontier-before-policy-lockは未追跡strategy、probe-20260712-boardwalk-rule-contract-taxonomyはlegal action／terminal境界、probe-20260720-tutorial-order-controller-sensitivityはonboarding順序を既に扱う。ただし同一stateからno-opを明示actionとして走らせ、active policyに対して生存時間と最終効用の両方で支配するかをaccept／revise判断へ結ぶ点は直接要求されず、non_redundancyは2とした。現在のstagingにtime／health action economyを持つ比較可能なplayable diff、fixed-seed trace、no-op controlはなく、直後のPhase 4aはmemory cleanupで実consumerではない。active_probesが326件ある状態で将来一般のgame_startを名目consumerにするとlease contractを満たさず確認負荷だけを増やすためrisk_controlは1とし、state-onlyでdeferする。",
+      "defer_condition": "次のrule-heavy turn-based prototypeまたはtime／health資源を同時消費するaction economyの具体的artifactで、同一state・fixed seedのlegal action traceとno-op controlを比較でき、既存4 controlsだけでは支配戦略の有無がcontinue／revise／reject判断へ残らない時に限り、全skip対代表active policyの一比較へ限定したartifact-local probeまたはmetricとして再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787503228-1001796590.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787503228.368619",
+        "https://itch.io/devlog/1609220/hunter-diorama-gmtk-2026-postmortem.amp"
+      ],
+      "existing_controls": [
+        "probe-20260525-center-input-three-state-bad-policy",
+        "probe-20260526-untracked-frontier-before-policy-lock",
+        "probe-20260712-boardwalk-rule-contract-taxonomy",
+        "probe-20260720-tutorial-order-controller-sensitivity"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsと、no-op支配戦略を同一stateで比較する固有差、単一postmortemの証拠限界、既存bad-policy／strategy-frontier／rule-contract／tutorial-order controlsとの部分重複、比較artifact不在によるdefer理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-24T01:44:16+09:00",
       "selected": {

@@ -106,7 +106,48 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787503228-1001796590
+    source_ts: "1787503228.368619"
+    title: "Hunter Diorama — no-op を含む action economy の相互作用監査"
+    reason: >-
+      score 12の未レビュー最新候補で、memory・harness・game-design・operation・evaluationの5優先タグを持つ。
+      chargeのtime costとhealth costが重なってturn skipが支配戦略になった失敗を、no-opを含む同一stateのpolicy比較へ変換できるため1件だけ選んだ。
+      Nao_uの明示的な重要・適切・自己反映評価はローカルrawで確認できなかった。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: >-
+    数値上の下限14には届くが、risk_control=1で必須閾値2を満たさない。
+    同一state・fixed seedで全skipとactive policyを比較し、生存時間と最終効用の両方で支配するかを見る点は既存controlにない差分を持つ。
+    ただし根拠は定量telemetryや修正前後比較のない単一postmortemであり、現在のstagingにはtime／health action economy、fixed-seed trace、no-op controlを持つplayable artifactがない。
+    直後のPhase 4aはmemory cleanupで実consumerにならず、active_probes 326件へ将来一般のleaseを足すと確認負荷だけが増えるためstate-onlyで見送った。
+  existing_controls:
+    - probe-20260525-center-input-three-state-bad-policy
+    - probe-20260526-untracked-frontier-before-policy-lock
+    - probe-20260712-boardwalk-rule-contract-taxonomy
+    - probe-20260720-tutorial-order-controller-sensitivity
+  change:
+    summary: >-
+      reviewed_source_tsと、no-op支配戦略の固有差、証拠限界、既存controlとの部分重複、比較artifact不在によるdefer理由だけをstateへ記録した。
+      active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
