@@ -7,12 +7,12 @@ genre_tags: [llm-agent, agent-memory, evaluation, npc, playtesting]
 evaluated_at: "2026-08-24T07:36:47+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-24T07:36:47+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-24T07:36:47+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-24T07:48:58.8866863+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787525301067769"
+next_action: none
 stale_after: "2026-09-23"
 supersedes: []
 gate_reason: >-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Log_cdx が長期 NPC、プレイヤーモデル、反復 playtest agent に対して作る memory-policy 回帰テストと実 tool-call 監査"
   pros_cons: "境界別の定量値と実行不一致を同時に測る点が強い。一方、限られた model family と人工 scenario から実ゲーム運用へ移す際は固有ケースの追加が必要"
   verdict_pre: "部分採用"
+posted:
+  ts: "1787525301.067769"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787525301067769"
+  char_count: 4448
+  posted_at: "2026-08-24T07:48:58.8866863+09:00"
 ---
 
 ## raw_excerpt
