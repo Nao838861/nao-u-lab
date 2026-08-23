@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-23T21:44:31+09:00",
+  "updated_at": "2026-08-23T23:42:33+09:00",
   "reviewed_source_ts": [
+    "1779887735.171239",
     "1779009798.720239",
     "1787478894.683509",
     "1787471063.991199",
@@ -23456,6 +23457,51 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、marker-driven 因果分解の有用性、単一 postmortem の証拠限界、既存 scope／runtime／causal／affordance controls との重複による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-23T23:42:33+09:00",
+      "selected": {
+        "id": "sr-1779887735-f615791d0a",
+        "source_ts": "1779887735.171239",
+        "title": "Karpathy LLM Wiki 実践 — Raw／Wiki／Schema 3層と Ingest／Query／Lint",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、memory・identity・knowledge・operation・evaluation・principle の6タグを持つ候補のうち source_ts が最新だったため1件だけ選んだ。Raw Layer、構造化 Wiki Layer、人間管理 Schema Layerと Ingest／Query／Lint の分離が、現在の raw Slack、per-atom、MEMORY index、memory health 運用に既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は Raw／Wiki／Schema の3層、Ingest／Query／Lint の3操作、1概念1チャンク、自己完結 context、原文保持を具体化しており、memory ingestion の点検へ変換できるため relevance は3、actionability は2とした。一方、約20万件で検索精度が『劇的に改善』という自己報告には比較条件、精度値、error analysis、hallucination／staleness率、保守costの測定がなく、原典論文による独立評価でもないため evidence は1。現在は raw JSONL、per-atom MD＋index、MEMORY.md、memory_ingest／recall／health が同じ層分離を実装済みで、probe-20260517-memory-poisoning-ingest-check は要約汚染、probe-20260531-memory-stage-risk-classifier は ingestion／consolidation／retrieval の失敗段、probe-20260621-compiled-memory-boundary は raw／atom／index／compiled rule の証拠境界、probe-20260715-ingest-connection-action-lint は concept 接続と lint anchor、probe-20260515-writeback-boundary は恒久昇格を既に扱うため non_redundancy は0とした。active_probes は326件あり、固定200〜400 tokenや自動 Wiki／Lint を一般ルール化すると意味単位より長さを優先し、LLM要約を永続的に増幅する危険がある。直後の Phase 4a に backend 比較、recall精度、汚染率、保守costを before／after 比較できる artifact もないため risk_control は1とした。必要時は新規 control を足さず既存5 controlsを適用する。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1779887735-f615791d0a.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779887735.171239"
+      ],
+      "existing_controls": [
+        "probe-20260517-memory-poisoning-ingest-check",
+        "probe-20260531-memory-stage-risk-classifier",
+        "probe-20260621-compiled-memory-boundary",
+        "probe-20260715-ingest-connection-action-lint",
+        "probe-20260515-writeback-boundary"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、3層 ingestion パターンの有用性、定量 evidence の不足、現行 raw／atom／index 構造および既存5 controlsとの重複、固定粒度／自動 lint の汚染リスクに基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
