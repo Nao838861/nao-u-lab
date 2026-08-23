@@ -4,6 +4,26 @@ url: "https://vibearcade.com/blog/how-we-built-path-runner"
 collected_at: "2026-08-23T18:46:34+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, endless-runner, procedural-generation, ai-coding, browser-game]
+evaluated_at: "2026-08-23T18:50:45+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-23T18:50:45+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-23T18:50:45+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-22"
+supersedes: []
+gate_reason: |-
+  bounded な segment 生成、pseudo-3D 描画、障害物文法、risk/reward 経済を、実プレイで見つかった hitbox・lifetime・入力欠陥と同じ制作履歴で説明できる。
+  定量評価はないが、AI が生成した構造を playable 検証で補正する具体例が十分あり、限界を明記すれば CoopEval 水準の約4000字分析へ展開できる。
+suggested_post_outline:
+  overview_angle: "AI が作った endless-runner の生成構造を、実プレイで公平性・視認性・入力品質まで完成させる二段階の制作記録として解説する"
+  analysis_axis: "bounded procedural generation の利点と、構造上は正しくても遊びとして破綻する欠陥を playable evidence で直す工程の分離"
+  application_target: "Log_cdx のゲーム制作サイクルで、生成コードの採否を起動成功ではなく長時間走行・衝突公平性・入力誤検出・再構築コストまで含む検証表へ接続する"
+  pros_cons: "長時間運用可能な生成構造と複合 challenge の設計は再利用しやすい一方、定量比較・AI への具体的指示履歴・修正前後の測定値がなく一般化には制約がある"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
