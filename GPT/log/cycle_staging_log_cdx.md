@@ -124,7 +124,35 @@ preflight:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779887506-f75cd3bcba
+    source_ts: "1779887506.631529"
+    title: "統一グラフベースのエージェント記憶アーキテクチャ（同一URL sibling）"
+    reason: "source が slack_api/shared-reads、score 11、未レビューで、memory・game-design・agent・operation・evaluation の5優先タグを持ち、直後の Phase 4a memory cleanup に近い候補だったため1件だけ選んだ。同じURLの既レビュー atom と既存 controls に対して独立した判断差を作るか確認した。Nao_u の明示評価はローカル raw では確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "短期・長期・推論記憶の統合、lineage、Resolution／Deduplication 分離は Phase 4a に関連するが、根拠は X 上の設計提案で実装・benchmark・baseline 比較がない。同一 URL・同一主張の sr-1779860566-0c29861e1b は2026-08-20にすでに reject 済みで、per-atom／normalized hash／canonical lifecycle と既存 graph・mechanism・governance・lifecycle controls が判断を覆う。Phase D 中かつ active_probes 326件の状態で sibling を別 control にすると、同一投稿を独立根拠と誤認し確認負荷と二重正本を増やすため採用しない。"
+  change:
+    summary: "reviewed_source_ts と重複・証拠限界・既存 control との完全重複による state-only reject を記録した。active_probes、ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
