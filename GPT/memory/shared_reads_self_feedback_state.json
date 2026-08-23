@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-23T11:31:09+09:00",
+  "updated_at": "2026-08-23T13:36:17+09:00",
   "reviewed_source_ts": [
+    "1779910998.747929",
     "1779917637.687879",
     "1787436897.991969",
     "1779917665.452949",
@@ -735,6 +736,47 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-23T13:36:17+09:00",
+      "selected": {
+        "id": "sr-1779910998-6bb4447d69",
+        "source_ts": "1779910998.747929",
+        "title": "- デメリット: LLM-powered Update Resolver は毎 turn LLM 呼び出しを増やす。1195 atom (GPT/memory/atoms/2026-05) でも追従可能だが、Log の自律サイクル LLM 依存度がさらに上がる。kaizen #1",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、memory・operation・evaluation の3優先タグを持つ非 superseded 候補のうち source_ts が最も新しかったため1件だけ選んだ。LLM-powered Update Resolver の費用、edge label 語彙、deterministic edge の先行実測という注意が、現在の per-atom memory と Phase 4 cleanup に既存 control と異なる判断差を作れるか確認した。Nao_u が本 atom 自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。この atom は LLM-powered Update Resolver の毎 turn 費用、edge label 語彙統制、ローカル小規模モデルでの未検証、deterministic edges.jsonl を先に実測する順序を示すため relevance=3、actionability=2 とした。一方、本文は『デメリット』から始まる同一 thread の続き断片で、schema、実験条件、比較結果を単独では復元できないため evidence=1。同じ Mem0g 主投稿 sr-1779910998-01d639e6fe（source_ts 1779910998.722809）は2026-08-17に既に reject 済みで、probe-20260601-memory-link-llm-roi-gate が deterministic baseline と具体的 recall miss がない段階で LLM link generation を増やさない境界を、probe-20260709-atma-state-role-ghost-memory-check が current／historical／transition／superseded の役割を、probe-20260813-latticemind-conflict-state-scope が claim conflict の scope 分類を扱う。現行 per-atom frontmatter と canonical lifecycle も temporal invalidation を表現するため non_redundancy=0。active_probes が326件ある状態で同一 thread の断片から別 control を増やすと、判断差のない確認負荷と LLM 依存だけを増やすため risk_control=1とし、読了記録だけを残す。",
+      "existing_controls": [
+        "reviewed atom sr-1779910998-01d639e6fe",
+        "probe-20260601-memory-link-llm-roi-gate",
+        "probe-20260709-atma-state-role-ghost-memory-check",
+        "probe-20260813-latticemind-conflict-state-scope",
+        "memory/atoms/<YYYY-MM>/<id>.md YAML frontmatter + canonical lifecycle"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、同一 Mem0g thread の既レビュー主 atom／既存 graph・state・conflict controls との完全重複による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-23T11:31:09+09:00",
       "selected": {

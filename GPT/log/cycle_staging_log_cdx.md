@@ -90,7 +90,38 @@ skipped: []
 - `tools/post_slack_message_file.py` による投稿後再読は 2 件とも `verification: ok`。スレッド返信・分割投稿は行っていない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779910998-6bb4447d69
+    source_ts: "1779910998.747929"
+    title: "- デメリット: LLM-powered Update Resolver は毎 turn LLM 呼び出しを増やす。1195 atom (GPT/memory/atoms/2026-05) でも追従可能だが、Log の自律サイクル LLM 依存度がさらに上がる。kaizen #1"
+    reason: "未レビュー・score 11・memory／operation／evaluation の3優先タグを持つ非 superseded 候補で source_ts が最も新しかったため1件だけ選定。同じ Mem0g thread の主 atom と既存 controls にない判断差があるか確認した。Nao_u の明示的な重要評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "合計14未満かつ risk_control 2未満。この atom は Mem0g 主投稿 sr-1779910998-01d639e6fe の25ms後に投稿された『デメリット』続き断片で、主投稿は2026-08-17に既レビュー・reject 済み。deterministic edge を先に測る境界、memory state の役割、claim conflict の scope 分類も既存3 probe が覆う。fragment 単独では schema・比較条件・結果を復元できず、別 control は判断差ではなく確認負荷と LLM 依存を増やす。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録。active_probes、ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 判定時刻: 2026-08-23T13:36:17+09:00
+- 選定 atom は1件だけ。`adopt_probe`／`adopt_metric` ではないため、`memory/shared_reads_probe_lifecycle.jsonl` への enqueue は行っていない。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
