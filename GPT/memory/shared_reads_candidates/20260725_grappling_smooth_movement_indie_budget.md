@@ -4,20 +4,20 @@ url: "https://gdcvault.com/play/1035867/Grappling-with-Success-Smooth-Movement"
 collected_at: "2026-07-25T12:02:02.6349833+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, movement, game-feel, physics, indie-development, gdc]
-evaluated_at: "2026-07-25T12:06:41.1666887+09:00"
+evaluated_at: "2026-08-24T07:36:47+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-25T12:06:41.1666887+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-25T12:06:41.1666887+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-24"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-24T07:36:47+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-24T07:36:47+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-23"
 supersedes: []
 gate_reason: >-
-  入力受付・move set・metrics・physics・表示を一続きに扱う着想とゲーム制作への適用先は具体的だが、
-  現候補には講演内の調整事例、評価内容、得られた結論がなく、CoopEval 水準の約4000字を根拠付きで構成できない。
+  入力受付・move set・metrics・physics・表示を一続きに扱う着想とゲーム制作への適用先は具体的。
+  しかし候補内には講演の調整事例、比較条件、評価内容、結論がなく、約4000字を一次資料に基づいて構成できないため投稿候補として閉じる。
 ---
 
 ## raw_excerpt

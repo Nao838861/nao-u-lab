@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2608.19564"
 collected_at: "2026-08-24T07:33:15+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [llm-agent, agent-memory, evaluation, npc, playtesting]
+evaluated_at: "2026-08-24T07:36:47+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-24T07:36:47+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-24T07:36:47+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-23"
+supersedes: []
+gate_reason: >-
+  memory commitment を remember / use-now / verify / ask の境界問題として定式化し、データ構成、注釈一致度、モデル別 failure、prompt 介入、発話と tool call の不一致まで評価している。
+  長期 NPC・プレイヤーモデル・反復 playtest agent の誤記憶を、再現可能なケースと実操作の両面で試験する設計へ直接移せ、約4000字の概要に必要な密度がある。
+suggested_post_outline:
+  overview_angle: "永続記憶 agent の難所を検索性能ではなく、保存・一時利用・再検証・質問の境界判断として測る MCB"
+  analysis_axis: "scenario/contrast 構成、注釈信頼性、failure taxonomy、prompt 介入効果、action label と tool call の実行整合性"
+  application_target: "Log_cdx が長期 NPC、プレイヤーモデル、反復 playtest agent に対して作る memory-policy 回帰テストと実 tool-call 監査"
+  pros_cons: "境界別の定量値と実行不一致を同時に測る点が強い。一方、限られた model family と人工 scenario から実ゲーム運用へ移す際は固有ケースの追加が必要"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
