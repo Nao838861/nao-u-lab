@@ -124,7 +124,72 @@ self_feedback:
 - 選定 atom は1件だけ。`adopt_probe`／`adopt_metric` ではないため、`memory/shared_reads_probe_lifecycle.jsonl` への enqueue は行っていない。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。U+FFFD は 0 件、index の atom 参照 50 件に missing 0 件、Markdown link は 0 件。代表語 probe は『記憶』『ゲーム設計』『敵パターン』を取得し、『評価軸』は現行 index 本文に含まれない通常の内容差で、encoding 破損ではない。"
+  - "memory/atoms.jsonl / per-file .md / index.jsonl は各 2946 件で mirror drift、parse error、content conflict、duplicate id は 0 件。normalized-content duplicate 40 群と canonical overlay 45 群は lifecycle fold 後の unresolved 0 件を確認。"
+  - "memory/raw/ は 30 日以上更新のない 242 files / 70,590,898 bytes を監査。Slack 原文・論文 PDF/text は atom/candidate の provenance 正本なので、この cycle では archive 移動せず保持。"
+  - "shared-reads candidate 1401 件を dry-run 監査し lifecycle 自動修正 0 件。terminal posted / failed は再評価 queue から除外され、overdue open 4 件は既存の deferred group lease 2 件（retry_after 2026-09-19T14:08:16+09:00）で明示保持されていることを確認。"
+  - "title canonical / mixed / open-group / stale-triage / group-action sidecar を再生成。terminal duplicate group 107、mixed group 26、open duplicate group 30、stale triage 0、actionable group 0。"
+  - "Slack directives / broadcasts は pending 0 件で、handled へ更新すべき行なし。candidate / group handoff inbox も pending 0 件。"
+issues:
+  - id: ISS-4A-20260823-01
+    description: "shared-reads atom 1 件の原文に『AIエ��ジェント』という U+FFFD 2 文字が残り、title / trigger / excerpt の検索語が部分的に壊れている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl#ts=1776127289.990919"
+    source_file_status: "両 source file は UTF-8 decode 可能だが、raw Slack 原文自体に U+FFFD が 2 文字あり、per-file atom と atoms.jsonl に同じ文字列が保持されている。memory/MEMORY.md は UTF-8 decode 正常・U+FFFD 0 件。"
+    display_or_tooling_status: "memory_health のもう1件の suspect gr-1777083728-44d444ab7a は原文中の意図的な literal『???』であり、表示経路の mojibake ではない。shell / staging 表示だけの破損は確認していない。"
+    why_blocks_game_memory: "2946 atom 中 1 件に限定されるが、『AIエージェント』の完全一致 title / trigger recall を弱める。既存 URL と source_ts から原文へは到達できるため影響は局所的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+candidate_lifecycle:
+  status_counts:
+    posted: 681
+    ready_to_post: 9
+    postponed: 204
+    failed: 505
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_open_total: 4
+  note: "overdue 4 件は JAMEL と collision morphology の all-open duplicate group 各 2 件。membership fingerprint 一致の deferred group lease が 2026-09-19 まで有効なため、stale triage / candidate handoff へ重複投入しない。"
+atom_audit:
+  raw_atoms: 2946
+  mirror_content_conflicts: 0
+  duplicate_id_groups: 0
+  raw_normalized_content_duplicate_groups: 40
+  canonical_overlay_duplicate_groups: 45
+  effective_display_unresolved_groups: 0
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 30
+  mixed_group_count: 26
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
