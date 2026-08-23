@@ -49,7 +49,19 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260823_path_runner_ai_procedural_generation.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787478894683509
+    char_count: 4478
+skipped: []
+final_review:
+  source_rechecked: true
+  duplicate_found: false
+  policy_check: pass
+  slack_text_verification: ok
+  verdict: 部分採用
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
