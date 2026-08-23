@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-23T13:36:17+09:00",
+  "updated_at": "2026-08-23T16:48:50+09:00",
   "reviewed_source_ts": [
+    "1787459499.783049",
     "1779910998.747929",
     "1779917637.687879",
     "1787436897.991969",
@@ -23274,6 +23275,47 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、5種 architecture 比較の有用性、vendor evidence の限界、既存 governance／authority／retention／load-strategy controls との重複に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-23T16:48:50+09:00",
+      "selected": {
+        "id": "sr-1787459499-a61761ca50",
+        "source_ts": "1787459499.783049",
+        "title": "Spin to Wind — 作者の熟達と初見・device別難度を分離する校正",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、skills・harness・game-design・identity・knowledge・evaluation・principle の7タグを持つ最新候補だったため1件だけ選んだ。作者の反復playによるskill drift、controllerとkeyboard／touchpadの入力差、jam playerの3〜10分という短い滞在時間を、難所削除・goal終端cushion・goal zone拡大・train間隔拡大という可逆な調整へ接続しており、次の短期prototypeで作者runを難度証拠にしない判断差が作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の下限には届くが、risk_control=1で必須閾値2を満たさないため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、作者が何十回もclearしたLevel 12を初心者のつもりで再試行してなお5回失敗したこと、controllerよりkeyboard／touchpadの精密steeringが難しいこと、jam playerの多くは3〜10分しか遊ばないことを観測に置き、難所5面の削除、goal終端tile、goal zone、train間隔という空間・時間cushionへ変換している。さらに現行／cushion緩和／短縮版のA・B・C、最初の10分の到達面、attempt数、retry時間、core mechanic使用回数まで提案しており actionability は3とした。一方、根拠は単一作者のpostmortemで、削除前後のcompletion rate、device別成功率、離脱位置、mobile実機結果がなく、Level 12の自己模擬も真の初見状態ではないため evidence は2。既存の meta-horizon-friction-layer-triage はinput／onboarding friction、commonroad-human-operation-regression-fixture は手動runの再現fixture、lmgamebench-ai-playtest-diagnostic-ablation はagent結果とplayer qualityの分離、game-scope-brief-cut-gate はCut firstを扱う。ただし『作者のskill driftを難度証拠から外し、device別・最初の10分・cushion差分で再校正する』組合せは既存controlに明記されず non_redundancy は2とした。現在はactive_probesが326件あり、今サイクルの後続Phase 4aには比較可能なplayable diff、device profile、初見10分traceがない。対象artifactなしに追加すると確認負荷だけが増えるため、具体的な短期prototypeが生じるまでstate-only deferとする。",
+      "defer_condition": "次の短期game prototypeで作者runを難度証拠に使いそうな場面があり、同一buildまたは同一levelについて少なくとも2種類の入力device／control profileと最初の10分の到達・attempt・retry記録を比較できるartifactが生じた時、既存4 controlsだけではskill driftと入力許容幅を分離できない場合に限り、現行／cushion緩和／短縮版の一比較へ限定して再評価する。",
+      "existing_controls": [
+        "probe-20260626-meta-horizon-friction-layer-triage",
+        "probe-20260708-commonroad-human-operation-regression-fixture",
+        "probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation",
+        "probe-20260602-game-scope-brief-cut-gate"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、作者skill drift／device差／短時間到達の有用性、単一postmortemの証拠限界、既存friction／manual fixture／AI playtest／scope controlsとの部分重複、比較artifact不在によるdefer理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

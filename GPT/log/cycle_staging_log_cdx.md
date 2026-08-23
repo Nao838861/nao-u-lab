@@ -80,7 +80,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787459499-a61761ca50
+    source_ts: "1787459499.783049"
+    title: "Spin to Wind — 作者の熟達と初見・device別難度を分離する校正"
+    reason: "score 11の未レビュー最新候補1件。作者のskill drift、device差、最初の3〜10分を、難所削除と空間・時間cushionへ接続する判断が次の短期prototypeに使えるか確認した。Nao_uの明示的な重要評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "本文は作者runを初見難度の証拠から分離し、device別・最初の10分・現行／cushion緩和／短縮版の比較へ変換できる。一方、単一作者のpostmortemで削除前後やdevice別の実測がなく、既存friction／manual fixture／AI playtest／scope controlsと部分重複する。active_probesは326件で、今サイクルの後続Phase 4aには比較可能なplayable diff、device profile、初見10分traceがないためrisk_controlの必須閾値を満たさず、state-only reviewに留めた。"
+  change:
+    summary: "reviewed_source_tsとdefer理由のみ更新。active_probes、probe lifecycle ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
