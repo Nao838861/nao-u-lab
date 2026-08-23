@@ -1,0 +1,41 @@
+■ 概要
+『Hunter Diorama』は、GMTK Game Jam 2026 で4日間に制作された tactical RPG である。『Star Renegades』の60 time units を6 slotへ圧縮し、Front / Middle / Back の3 laneを追加した。turnはslot 6から1へ進み、actionのchargeに使うslot数だけ自傷damageを受ける。敵へ攻撃すると行動を後ろへ押し、十分なstaggerでそのturnから追い出せる。敵の攻撃laneを避けつつ、staggerと自傷damageの間で行動を選ぶのが中核である。
+
+初期案は、FFT型grid、timeline、決定論的予告、card chain、chess piece別移動、部位破壊を同居させていた。Day 1終了時に過大さへ気づきながら、さらに12時間粘った後、Day 2に大半を削除。side-by-side combatと3 laneへ作り直し、characterの差は数値へ寄せた。codeの一部は転用できたが、dead systemが残った。
+
+完成版は見た目と戦闘の深さを好評とされ、jamのPopular pageにも載った。codeで作った硬いanimationとmagic numberを、cardboard風dioramaの個性へ転換した点は成功だった。一方、結果とfeedbackは平均的な参加者には難し過ぎ、特にonboardingが崩れたことを示した。ただしscore分布や離脱率はなく、gameplayと説明不足の寄与は分離できていない。
+
+設計上は、charge中の自傷が被弾を二重に罰し、playerは攻撃せずturnをskipしてhealthを温存する戦術を発見した。boss attackのRNGは学習可能なpuzzle性を弱め、直前追加のforecastはほぼ使われなかった。tutorialは3 turnへ大量の情報を詰め、stagger pushback、time cost、stagger damage、turn skipを説明しなかった。さらにslotは6→1と減るのにskillはcostで示され、cost 5がslot 2に置かれる逆向きの対応になった。勝てない敵attackを消し忘れ、あるskillは与えられるpush量よりstun damageが大きく能力を活かせない。作者は、敵attackを固定chainにして次を学べるようにし、fightをmechanic別の3段階へ分けるべきだったと結論づけ、まずjam版を磨き直すとしている。
+
+■ 内容分析
+このpostmortemの価値は、個別mechanicの良し悪しより、action economy、予測可能性、表示、学習順序を別々に作ると、一つのdecision loopとして矛盾することを示した点にある。charge damageは「強いactionほど遅い」という時間costへ、同じ時間に比例したhealth costも重ねる。被弾したturnでは敵damageに自傷まで加わるため、積極行動の期待値が急落する。そこでno-opが最適になるのは偶然の裏技ではなく、実装済み選択肢の比較から導かれる合理的な結果である。待つこと自体を駆け引きにするなら敵patternの進行、位置取り、回復機会などのtrade-offが必要で、単に攻撃しないことが資源を保存するだけなら支配戦術になりやすい。
+
+RNGとforecastの衝突も同型である。次のattackがrandomなのに、board flipでaggro変化の恐怖を作り、forecastで情報を補っても、playerが「観測→予測→準備→結果」を反復できなければ知識が蓄積しない。直前に表示を足すだけでは、何を見てどのskillやlaneへ変換すべきかという対応関係が学べない。固定chain案は予測と習熟を回復するが、完全固定では暗記へ寄り過ぎる。実装するなら、短いattack grammarを固定し、分岐条件だけを明示する方が、puzzle性と再挑戦時の変化を両立しやすい。
+
+6→1のslotと、増えるほど遅いtime costの対応は、内部計算が正しくてもmental modelを壊す例である。cost 5から到着slot 2を毎回頭で変換させると、playerは戦術でなくUIの座標変換に認知資源を使う。tooltip追加だけでは根治せず、表示値を「発動slot」に統一する、timelineを1→6へ反転する、またはcostから到着位置へ線を引くなど、数と空間の方向を合わせる必要がある。
+
+tutorialの失敗は説明文の不足だけではない。作者自身がこのgenreを好む前提でplaytestし、iconを推測でき、複数概念を3 turnで扱えると見積もった。未発見だったturn skipや消し忘れた必敗attackは、作者playだけでは仕様と実装の差を監査できないことを示す。対照的にart制作は、animation技術の制約を硬い動きとdiorama表現へ接続し、描き直しなしでassetを活かす運用により速度を得た。ただしmagic numberは短期jamの局所解で、長期更新には弱い。
+
+評価の限界も明確である。Popular掲載、comment、jam ratingから「見た目は成功、平均層には難しい」という信号は得られたが、tutorial完了率、初回敗北点、forecast利用率、score分布がない。作者自身もgameplayの悪さとonboardingの悪さを切り分けられないと認める。したがって固定chainや3段階fightは筋の良い仮説であって、実証済み処方ではない。
+
+■ 自分達の環境への適用
+短期game prototypeでは、Day 1にmechanic一覧ではなくinteraction mapを1枚作る。行をplayer action、列をtime、health、enemy delay、lane、informationとし、各actionが何を消費し何を進めるかを書く。Hunter Diorama型ならattack、move、defend、no-opを必ず同列に置く。面白そうな機構が単独で成立するかではなく、no-opを含む組合せが中核loopを迂回しないかを実装前に見る。
+
+headless評価には小さなpolicy probeを入れる。同一stateからlegal actionを列挙し、数turn先までbeam searchして、damage dealt、damage taken、resource残量、enemy action cancel数を記録する。少なくとも、①毎turn最速攻撃、②最大charge、③lane回避優先、④stagger lock、⑤全turn skip、⑥skipと攻撃の交互、を固定seedで比較する。全skipが生存時間と最終効用の両方で優位なら警告し、特定enemy attack後に勝利可能actionが0なら必敗stateとしてfailさせる。skillについてもstun damage、最大push、実際にcancel可能なattackの組を列挙し、「表示された強みが到達可能なstateで一度も効かない」を検出する。
+
+RNG評価は平均勝率だけで終えない。同一player policyを複数seedへ流し、観測できるforecastを使うpolicyと無視するpolicyの差を測る。差がほぼないなら情報が行動へ変換できていない。固定chain案も、初見と二周目で被弾、forecast参照、選択分岐がどう変わるかを比較し、「知った結果うまくなる」ことをgateにする。
+
+UIは計算式と画面座標のproperty testを分ける。costが1増えた時、発動が画面上で一貫した方向へ遅くなること、表示labelと実際の解決順が全skillで一致することをscreenshotまたはDOM座標で検証する。内部値のunit testがgreenでも、cost 5→slot 2のような逆写像は残るため、対応表を人が1秒以内に読めるかも確認する。
+
+onboardingは文章量でなく、解禁順を変える。fight 1はlane移動、fight 2はtimelineとstagger、fight 3でcharge damageとturn skipを組み合わせる。各段階に、そのmechanicを使わないと不利だが一度の失敗では詰まない敵patternを置く。外部playtestでは説明を挟まず、最初に迷った時刻、誤読した数値、使われなかった表示、敗北直前のaction列を保存する。制作記憶にはintended loop、observed strategy、再現seed、修正仮説、再評価結果を一つのdecision recordとして残し、次のprototypeで反証する。
+
+■ メリット・デメリット
+メリットは、4日間の具体的なpivotと失敗が、scope、balance、UI、tutorialの再現可能な検査へ落とせることだ。特にno-opをactionとして列挙する、予告情報の利用価値をpolicy差で測る、表示方向をpropertyとして検査する、mechanicごとにfightを分ける、という四点は小さく試せる。制約をart styleへ転換した例も、足りない技術を隠すのでなく作品の文法にする判断として有用である。
+
+デメリットは、単一jam作品の作者による事後分析で、定量telemetryも対照実験もないことだ。turn skipは作品によっては緊張を生む正当な選択であり、一律に禁止すると防御的な間を消す。固定attack chainも暗記作業へ傾く危険がある。3段階tutorialは制作量を増やし、4日jamでは本編をさらに削る必要がある。magic numberと「描き直しなし」の協働法も、二人の信頼と短納期には合うが、長期保守や大人数teamへそのまま移植できない。
+
+■ 判定
+部分採用。個別mechanicの処方ではなく、短期prototypeの相互作用監査として採る。no-opを含むpolicy probe、必敗stateと無効skillのheadless検査、timeline表示の方向一致、mechanic別onboardingを次の小規模制作で試す。固定chainやcharge damageの変更は自動採用せず、観測→選択→結果のloopが学習可能かという実測で決める。
+
+■ URL
+https://itch.io/devlog/1609220/hunter-diorama-gmtk-2026-postmortem.amp
