@@ -198,4 +198,15 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787460351128949
+  char_count: 2133
+  verification: ok
+  posted_at: "2026-08-23T13:45:51+09:00"
+```
+
+- 1700–2300 字の許容範囲内であること、UTF-8 本文に U+FFFD がないことを投稿前に確認した。
+- `tools/post_slack_message_file.py --delete-on-fail` でフラット投稿し、Slack API 側の本文再読は `verification: ok`。削除は発生していない。
