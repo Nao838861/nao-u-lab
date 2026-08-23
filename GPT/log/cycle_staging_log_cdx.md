@@ -64,7 +64,34 @@ final_review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787471063-7d078c02a4
+    source_ts: "1787471063.991199"
+    title: "Bubble in the Void — 高忠実度 simulation を削って因果と affordance を残す jam 分解"
+    reason: "score 11・未レビュー・7タグの最新 active atom。締切下の marker-driven 因果分解と、orange box 多義化による可読性失敗が既存 control と異なる判断差を作るか確認した。Nao_u の明示評価は未確認。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "単一作者の postmortem で比較値がなく、scope cut・runtime evidence・input→state→outcome・初見 affordance は既存5 controlsで再現できる。後続 Phase 4a に比較可能な game artifact がなく、326件の active probe へ組合せ control を追加すると判断差より確認負荷が先行する。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

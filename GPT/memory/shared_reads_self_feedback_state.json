@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-23T16:48:50+09:00",
+  "updated_at": "2026-08-23T18:58:56+09:00",
   "reviewed_source_ts": [
+    "1787471063.991199",
     "1787459499.783049",
     "1779910998.747929",
     "1779917637.687879",
@@ -23316,6 +23317,51 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、作者skill drift／device差／短時間到達の有用性、単一postmortemの証拠限界、既存friction／manual fixture／AI playtest／scope controlsとの部分重複、比較artifact不在によるdefer理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-23T18:58:56+09:00",
+      "selected": {
+        "id": "sr-1787471063-7d078c02a4",
+        "source_ts": "1787471063.991199",
+        "title": "Bubble in the Void — 高忠実度 simulation を削って因果と affordance を残す jam 分解",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、memory・harness・game-design・identity・knowledge・operation・evaluation の7タグを持つ最新 active 候補だったため1件だけ選んだ。締切6〜8時間前に水・泳ぎ・浮力を marker／area／animation／axis constraint へ分解しつつ、orange box の多義化では操作対象の可読性を失った対照が、次の短期 prototype で既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、排水口を塞ぐ→水位上昇→上下移動→装置浮上→扉開放という因果を、box mesh animation、重力切替 area、高さ差からの一次元応答へ分解し、一部屋で headless 因果通過、30／120 FPS、初見役割識別、別仕掛けへの再利用を測る行動まで具体化しているため relevance・actionability は3とした。一方、根拠は単一作者の postmortem と人数不明の player feedback で、task completion、誤操作率、修正前後比較、複数機での性能値がなく、marker-driven 実装の安定性も一般化できないため evidence は2。probe-20260602-game-scope-brief-cut-gate は Must／Should／Cut と最小 risk test、probe-20260518-runtime-verifiable-production-slices は rule／interaction／runtime 証拠、probe-20260717-player-intent-action-response と probe-20260622-egocs-causal-gameplay-log は input から observable state／outcome まで、probe-20260621-q0-five-second-legibility は first viewport の visual affordance を既に扱う。marker-driven 代替、外部記号の一意性、frame-rate invariance を一つの一室 probe に束ねる差は残るため non_redundancy は1だが、各判断は既存5 controls の選択適用で再現できる。active_probes は326件あり、直後の Phase 4a は memory cleanup で、比較可能な game room、marker-driven mechanic、FPS trace、初見識別結果がない。対象 artifact なしに組合せ probe を増やすと確認負荷と jam 事例の過剰一般化が増えるため risk_control は1とした。次の該当 prototype では新規 control を足さず、既存5 controls を必要な分だけ適用する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787471063-7d078c02a4.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787471063.991199"
+      ],
+      "existing_controls": [
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260518-runtime-verifiable-production-slices",
+        "probe-20260717-player-intent-action-response",
+        "probe-20260622-egocs-causal-gameplay-log",
+        "probe-20260621-q0-five-second-legibility"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、marker-driven 因果分解の有用性、単一 postmortem の証拠限界、既存 scope／runtime／causal／affordance controls との重複による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
