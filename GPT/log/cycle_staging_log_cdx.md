@@ -82,7 +82,46 @@ skipped:
 - candidate は `postponed` へ戻し、本文取得後に再評価する。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779917637-5c4228c80c
+    source_ts: "1779917637.687879"
+    title: "QuartetFuzz Four Principles × verify.js の条件付き自己診断案"
+    reason: >-
+      source が slack_api/shared-reads、score 11、未レビューで、harness・game-design・operation・evaluation の
+      4優先タグを持つ候補のうち source_ts が最も新しかったため1件だけ選んだ。同じ QuartetFuzz work の
+      既レビューと既存 verifier controls にない判断差があるかを確認した。Nao_u の明示的な重要評価は確認できなかった。
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: >-
+    verify.js と game.js の二重実装同期、P1/P2/P3、adversarial validation の自己適用は具体的だが、
+    原論文の追加証拠ではなく旧 artifact 向けの短い適用メモである。同一 work の主 atom
+    sr-1779917637-f7ba583235 は既に review・probe 化され、continuation sr-1779917665-befebd9569 も
+    同じ重複理由で本日 reject 済み。rules-core-parity-regression と structural-semantic-verifier-boundary が
+    rules core の共有境界、deterministic trace、構造／意味妥当性、観測不確実性を既に扱うため、
+    新規 control は次回判断を変えない。合計11で採用閾値14未満、risk_control も必須閾値2未満なので reject とした。
+  change:
+    summary: >-
+      reviewed_source_ts と重複による reject 理由だけを更新した。
+      active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

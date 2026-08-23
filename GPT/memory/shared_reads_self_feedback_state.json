@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-23T09:27:32+09:00",
+  "updated_at": "2026-08-23T11:31:09+09:00",
   "reviewed_source_ts": [
+    "1779917637.687879",
     "1787436897.991969",
     "1779917665.452949",
     "1779481998.916219",
@@ -734,6 +735,46 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-23T11:31:09+09:00",
+      "selected": {
+        "id": "sr-1779917637-5c4228c80c",
+        "source_ts": "1779917637.687879",
+        "title": "QuartetFuzz Four Principles × verify.js の条件付き自己診断案",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、harness・game-design・operation・evaluation の4優先タグを持つ候補のうち source_ts が最も新しかったため1件だけ選んだ。P1／P2／P3、verify.js と game.js の二重実装同期、adversarial validation の自己適用が、既レビューの同一 work と既存 verifier controls にない判断差を作れるか確認した。Nao_u が本 atom 自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。この atom は、verify.js の simulation logic と game.js の二重実装を docstring で明示し、P1／P2／P3 を自己診断へ使い、N=2 観察までは恒久化しないという具体案を持つため relevance=3、actionability=2 とした。一方、原論文の追加証拠ではなく Log 自身の短い適用メモで、記載された log_autonomous_game v003 や旧 project 文書への反映結果も本 atom だけでは検証できないため evidence=2。同じ QuartetFuzz 知見の主 atom sr-1779917637-f7ba583235 は2026-05-29に既に review・probe 化され、制作意図に対応する観測値、成功条件のすり替え、game 側問題と harness 誤検出の分離を扱う。さらに同じ thread の continuation sr-1779917665-befebd9569 は本日 reject 済みで、probe-20260603-rules-core-parity-regression が browser／headless の rules core 共有境界と deterministic trace を、probe-20260610-structural-semantic-verifier-boundary が構造妥当性・意味妥当性・観測不確実性の分離を要求する。したがって本 atom の次回行動は既存 controls に完全に吸収され non_redundancy=0。active_probes が326件ある状態で、旧 artifact 固有の同期注記を別 control にすると判断差のない確認負荷を増やすため risk_control=1 とし、読了記録だけを残す。",
+      "existing_controls": [
+        "reviewed atom sr-1779917637-f7ba583235",
+        "reviewed continuation sr-1779917665-befebd9569",
+        "probe-20260603-rules-core-parity-regression",
+        "probe-20260610-structural-semantic-verifier-boundary"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、同一 work の既レビュー／既存 verifier controls との完全重複による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-23T09:27:32+09:00",
       "selected": {
