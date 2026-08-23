@@ -124,7 +124,70 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。index entry は per-file atom index と一致し、Markdown link 行は 0 件のため broken link も 0 件。"
+  - "atoms.jsonl / per-file md / index.jsonl は各 2944 件で mirror drift・parse error・content conflict 0 件。重複 45 群は canonical overlay 済みで effective display の未解決重複 0 件。"
+  - "shared-reads title canonical index を再生成し、terminal duplicate group 107 件を確認。mixed duplicate group は 26 件で自動 close せず review 経路に保持。"
+  - "candidate lifecycle 1398 件を dry-run audit。現在状態の修正は 0 件、Slack directives / broadcasts の pending も各 0 件。"
+  - "memory/raw の 30 日超ファイル 242 件を確認。Slack 原文・論文本文など atom/candidate の provenance evidence なので今回は移動せず保持。"
+issues:
+  - id: ISS-4A-20260823-01
+    description: "shared-reads 由来 atom 1 件で『AIエージェント』が『AIエ��ジェント』になっており、title / trigger / excerpt と raw archive に同じ破損が残る。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl#ts=1776127289.990919"
+    source_file_status: "UTF-8 decode は成功するが、source raw 自体に U+FFFD が 2 文字あり、派生 atom に伝播している。MEMORY.md は UTF-8 decode 成功、代表語『記憶』『ゲーム設計』『敵パターン』を取得でき、『評価軸』は現行生成内容に存在しない。"
+    display_or_tooling_status: "none; shell 表示だけの mojibake ではなく source data の局所破損。memory_health のもう1件の suspect は本文中の意図的な『???』で、表示破損とは判定しない。"
+    why_blocks_game_memory: "『AIエージェント』の完全一致検索と title-based recall から当該知見が漏れる可能性がある。ただし 2944 atom 中 1 件の局所問題で、階層設計を止める規模ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+candidate_lifecycle:
+  status_counts:
+    posted: 679
+    ready_to_post: 9
+    postponed: 204
+    failed: 504
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_open_total: 4
+  note: "overdue 4 件は 2 all-open duplicate groups に属し、membership 一致の deferred group lease が 2026-09-19 まで有効なため今 cycle の queue から抑止。postponed / needs_review で stale_after 欠損は 0 件。"
+atom_audit:
+  raw_atoms: 2944
+  mirror_content_conflicts: 0
+  raw_normalized_content_duplicate_groups: 40
+  canonical_overlay_duplicate_groups: 45
+  effective_display_unresolved_groups: 0
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 30
+  mixed_group_count: 26
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
