@@ -7,12 +7,17 @@ genre_tags: [game-design, simulation, incremental-game, postmortem, headless-tes
 evaluated_at: "2026-08-23T21:34:09+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-23T21:34:09+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-23T21:34:09+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-23T21:40:05+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787488784496619"
+next_action: none
+posted:
+  ts: "1787488784.496619"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787488784496619"
+  char_count: 4482
+  posted_at: "2026-08-23T21:40:05+09:00"
 stale_after: "2026-09-22"
 supersedes: []
 gate_reason: >-

@@ -53,7 +53,14 @@ unreviewed_intake_audit:
 判定: pass。decay chain の時間刻み誤差に対する3案と、55件の headless test から見つかった実 defect / 出力異常 / fixture 不備を分けて説明できる。simulation game の resource 更新、offline progress、演出 event、regression test に直接接続でき、CoopEval 水準の概要を構成できる。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260823_halflight_decay_chain_headless_tests.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787488784496619
+    char_count: 4482
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
