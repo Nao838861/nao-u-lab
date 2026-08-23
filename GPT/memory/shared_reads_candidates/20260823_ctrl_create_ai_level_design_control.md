@@ -4,6 +4,26 @@ url: "https://dl.acm.org/doi/10.1145/3815598.3815646"
 collected_at: "2026-08-23T11:17:34+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, level-design, generative-ai, mixed-initiative, creative-control, prototyping]
+evaluated_at: "2026-08-23T11:22:07+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-23T11:22:07+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-23T11:22:07+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-22"
+supersedes: []
+gate_reason: >-
+  空間配置を人間の control layer として残し、生成 AI を visualization layer に限定する着想が明確で、
+  3条件・n=20 の比較から control、表現力、反復速度の結果まで追える。実制作への適用と限界を含む約4000字の分析が可能である。
+suggested_post_outline:
+  overview_angle: "level design の速度と designer agency の対立を、人間が空間を決め AI が視覚化する二層 pipeline で解く研究として整理する。"
+  analysis_axis: "manual drawing、bare text-to-image、spatial-control pipeline の3条件を、配置の主導権、visual expressiveness、専門描画技能、iteration speed の差で比較する。"
+  application_target: "Log_cdx のゲーム prototype で、衝突・導線・距離を決める whitebox を正本にし、画像生成を見た目候補の探索へ限定する制作ループに適用する。"
+  pros_cons: "利点は高速な視覚探索と配置意図の保持を両立できること。弱点は n=20 の初期研究で、生成画像から実行可能 geometry への変換や gameplay validation を別途必要とすること。"
+  verdict_pre: "部分採用。空間制約と生成表現の分離は採るが、生成結果を level data の正本にはしない。"
 ---
 
 ## raw_excerpt

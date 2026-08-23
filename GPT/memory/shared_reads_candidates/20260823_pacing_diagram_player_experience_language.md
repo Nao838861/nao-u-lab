@@ -4,6 +4,20 @@ url: "https://dl.acm.org/doi/10.1145/3815598.3815683"
 collected_at: "2026-08-23T11:17:02+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, pacing, player-experience, design-tools, temporal-structure]
+evaluated_at: "2026-08-23T11:22:07+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-23T11:22:07+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-23T11:22:07+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-22"
+supersedes: []
+gate_reason: >-
+  問題設定と formalization の狙いは具体的だが、現資料は公式 abstract と metadata に限られ、
+  core structural elements の実体、適用例、評価方法・結果がない。約4000字の概要を推測なしで支えられないため、本文確認まで保留する。
 ---
 
 ## raw_excerpt
