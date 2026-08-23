@@ -4,6 +4,21 @@ url: "https://itch.io/devlog/1634773/my-experience-making-my-first-game.amp"
 collected_at: "2026-08-23T23:31:46+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, mechanics, postmortem, platformer, scope-control, speedrun]
+evaluated_at: "2026-08-23T23:36:10+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-23T23:36:10+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-23T23:36:10+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-22"
+supersedes: []
+gate_reason: >-
+  clone の空中停止、movement replay による補正、speedrun への scope 縮小、
+  初見と熟練の所要時間差は具体的だが、実装比較・再現条件・検証手順・評価設計が薄い。
+  CoopEval 水準の約4000字へ展開すると記事外の推測が中心になるため投稿候補にはしない。
 ---
 
 ## raw_excerpt
