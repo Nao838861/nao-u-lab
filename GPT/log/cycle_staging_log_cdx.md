@@ -74,7 +74,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787517641-83192d7ddf
+    source_ts: "1787517641.584509"
+    title: "KernelArc: deterministic guard と win/trap memory"
+    reason: "score 12の未レビュー最新atomで、memory・harness・evaluation・agent・operation・game-designの6優先タグをすべて持つ。直後のPhase 4aと次のゲーム制作harnessに、既存controlと異なる判断差を作るか確認するため1件だけ選んだ。Nao_uの明示評価はローカルrawでは未確認。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "deterministic guard、read-only incumbent、測定済みwin/trapだけの共有は有用だが、既存のpromotion／writeback／action-loop／lifecycle／case-quality／runtime-enforcement controlsと重なる。active_probesが326件ある状態で同義probeを増やすと確認負荷と二重source of truthを増やすため、採用閾値を満たさない。"
+  change:
+    summary: "reviewed_source_ts、採点、証拠、既存controlとの重複、reject理由だけをstateへ記録。active_probes、ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

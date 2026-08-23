@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-24T05:44:26+09:00",
+  "updated_at": "2026-08-24T07:53:02+09:00",
   "reviewed_source_ts": [
+    "1787517641.584509",
     "1779887506.631529",
     "1787503228.368619",
     "1779834973.898019",
@@ -744,6 +745,55 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-24T07:53:02+09:00",
+      "selected": {
+        "id": "sr-1787517641-83192d7ddf",
+        "source_ts": "1787517641.584509",
+        "title": "KernelArc: deterministic guard と win/trap memory",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ直近の高品質投稿だったため1件だけ選んだ。複数の探索 lens、read-only incumbent、deterministic benchmark guard、測定済み win/trap だけの共有が、次のゲーム制作 harness または Phase 4a memory cleanup に既存 control と異なる判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、non_redundancy と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、候補予算を固定した Single／2 agent 比較、全 workload correctness、aggregate score、speedup、5 trajectory、permutation test、leaderboard順位、費用未固定や少数taskという限界まで保持しており evidence は3。deterministic guard、read-only incumbent、連続非改善だけでの plateau 判定、win/trapへの圧縮はゲーム harness と memory lifecycle に移せるため relevance は3、actionability は2とした。一方、probe-20260515-promotion-boundary、probe-20260515-writeback-boundary、probe-20260604-memory-action-loop-evidence、probe-20260611-memory-lifecycle-phase-boundary、probe-20260617-cbr-reusable-case-quality、probe-20260617-runtime-enforcement-3tuple-scope が、検証前の昇格禁止、writeback境界、行動差の証拠、lifecycle分離、再利用可能なcase、deterministic enforcementをすでに扱うため non_redundancy は1。現行の raw／candidate／staging と canonical atom／directive／posted permalink の分離、source provenance、duplicate preflight、lifecycle ledger も KernelArc の guard 設計を既に具体化している。active_probes が326件ある状態で同義の control を増やすと確認負荷と二重 source of truth を増やし、論文自身も4 agentの一貫した利得やmemory上限を一般化していないため risk_control は1。Single対2-agent probeは、具体的prototype、固定seed・candidate budget・evaluator・費用計測が揃い、かつユーザーが並列agent作業を明示した別タスクでのみ再評価すればよい。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787517641-83192d7ddf.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787517641.584509",
+        "memory/shared_reads_candidates/20260824_kernelarc_multi_agent_gpu_optimization.md",
+        "https://arxiv.org/abs/2608.17071"
+      ],
+      "existing_controls": [
+        "probe-20260515-promotion-boundary",
+        "probe-20260515-writeback-boundary",
+        "probe-20260604-memory-action-loop-evidence",
+        "probe-20260611-memory-lifecycle-phase-boundary",
+        "probe-20260617-cbr-reusable-case-quality",
+        "probe-20260617-runtime-enforcement-3tuple-scope",
+        "raw/candidate/staging versus canonical atom/directive/posted permalink lifecycle"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、KernelArcの測定根拠、既存promotion／writeback／lifecycle／provenance controlsとの重複、active probe増殖リスクに基づくreject理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-24T05:44:26+09:00",
       "selected": {
