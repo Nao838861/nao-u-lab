@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-23T18:58:56+09:00",
+  "updated_at": "2026-08-23T21:14:00+09:00",
   "reviewed_source_ts": [
+    "1787478894.683509",
     "1787471063.991199",
     "1787459499.783049",
     "1779910998.747929",
@@ -738,6 +739,52 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-23T21:14:00+09:00",
+      "selected": {
+        "id": "sr-1787478894-c17bf0ee70",
+        "source_ts": "1787478894.683509",
+        "title": "Vibe Arcade『Path Runner』— AI生成の骨格を playable gate で選別する制作記録",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。bounded segment lifecycle、procedural 配置の生存可能性、見た目と collision、object lifetime、修理と rebuild の同一 acceptance test を、次の playable diff に既存 control と異なる小さな判断差として持ち込めるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の採用条件と必須指標を満たす。shared-reads 本文は、前方生成・後方破棄の segment 骨格、jump／slide／lane-change の obstacle grammar、gem economy、theme 分離が最終 rebuild 後も残った一方、高い消失点、見た目より広い hitbox、segment と gem の lifetime coupling、touch の誤認、起動不能後の2D rebuildによる product identity 喪失を具体的な failure として示す。固定 seed での生存 path、最短予告時間、active object 数の定常性、rendered bounds と collision bounds、修理案と rebuild の同一 acceptance test へ変換できるため relevance・actionability は3とした。一方、根拠は単一制作事例で、保持 segment 数、seed、frame time、memory profile、失敗率、touch 閾値、修理と rebuild の所要時間・回帰数の比較がなく evidence は2。probe-20260528-pcg-tool-loop-evidence は generator／repair／verifier と structural validity／player-facing quality を、probe-20260618-snappable-layout-pcg-responsibility は piece／selection／spacing／navigation constraint を、probe-20260619-draw2think-inspectable-intermediate-state は reachability／safety margin の deterministic check を、probe-20260625-feature-integration-depth-gate は collision・timing・spawn／despawn を含む runtime contract を扱う。本投稿固有の object lifecycle と gameplay lifetime の分離、および rebuild 後に残す骨格を同一 acceptance test で比べる観点は残るが、既存4 controlsを具体 artifactへ選択適用した時の補助項目であり独立 controlとしての non_redundancy は1とした。対象を次の procedural runner／obstacle prototype 一件に限定すれば risk_control=2、reversibility=3だが、現在の staging には比較可能な runner build、固定 seed trace、resource count、collision overlay、repair／rebuild pair がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。consumer_phase・trigger_artifact・expected_delta を lease 契約どおり指定できないため active probe・metric・lease・directive・恒久ルールは追加せず state-only defer とする。",
+      "defer_condition": "次の procedural runner、obstacle grammar、または long-run object lifecycle を持つ具体的 playable artifact が生じ、固定 seed の生存可能性、resource count、collision overlay、または repair／rebuild の同一 acceptance test のいずれかで既存4 controlsだけでは採否差を説明できない時に限り、artifact-local な一時 probe または metric として再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787478894-c17bf0ee70.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787478894.683509",
+        "https://vibearcade.com/blog/how-we-built-path-runner"
+      ],
+      "existing_controls": [
+        "probe-20260528-pcg-tool-loop-evidence",
+        "probe-20260618-snappable-layout-pcg-responsibility",
+        "probe-20260619-draw2think-inspectable-intermediate-state",
+        "probe-20260625-feature-integration-depth-gate"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、bounded lifecycle／procedural fairness／collision／rebuild比較の有用性、単一 case study の証拠限界、既存 PCG／runtime controls との重複、比較可能な playable artifact 不在による defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-23T13:36:17+09:00",
       "selected": {

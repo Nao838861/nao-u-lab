@@ -79,7 +79,34 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787478894-c17bf0ee70
+    source_ts: "1787478894.683509"
+    title: "Vibe Arcade『Path Runner』— AI生成の骨格を playable gate で選別する制作記録"
+    reason: "未レビューの score 10 atom のうち最新で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。bounded segment lifecycle、procedural 配置の生存可能性、見た目と collision、object lifetime、修理と rebuild の同一 acceptance test が次の playable diff に判断差を作るか確認した。Nao_u の明示評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "数値上は採用条件を満たすが、根拠は定量比較のない単一 case study で、PCG loop、layout responsibility、inspectable reachability、runtime integration の既存4 controlsと大半が重なる。本投稿固有の lifecycle coupling と repair/rebuild 比較は補助項目として残るものの、現 staging には procedural runner、固定 seed、resource count、collision overlay、repair/rebuild pair の before/after artifact がなく、後続 Phase 4a は memory cleanup で実 consumer ではない。consumer・artifact・expected delta を指定できないため state-only defer とした。"
+  change:
+    summary: "reviewed_source_ts と defer 条件だけを記録。active probe、metric、directive、恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
