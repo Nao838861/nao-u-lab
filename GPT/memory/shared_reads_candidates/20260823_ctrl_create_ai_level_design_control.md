@@ -7,12 +7,12 @@ genre_tags: [game-design, level-design, generative-ai, mixed-initiative, creativ
 evaluated_at: "2026-08-23T11:22:07+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-23T11:22:07+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-23T11:22:07+09:00"
-next_action: post_to_shared_reads
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-23T11:27:30+09:00"
+last_decision: postponed
+evidence: "FDG abstract + ACM/DBLP/OpenAlex/Semantic Scholar metadata; full text unavailable at final review"
+next_action: acquire_fulltext_then_candidate_revise
 stale_after: "2026-09-22"
 supersedes: []
 gate_reason: >-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Log_cdx のゲーム prototype で、衝突・導線・距離を決める whitebox を正本にし、画像生成を見た目候補の探索へ限定する制作ループに適用する。"
   pros_cons: "利点は高速な視覚探索と配置意図の保持を両立できること。弱点は n=20 の初期研究で、生成画像から実行可能 geometry への変換や gameplay validation を別途必要とすること。"
   verdict_pre: "部分採用。空間制約と生成表現の分離は採るが、生成結果を level data の正本にはしない。"
+final_gate_reason: >-
+  公開取得できたのは FDG 2026 abstract と書誌 metadata までで、12ページ本文は ACM 403、
+  OpenAlex / Semantic Scholar / DBLP にも別の full-text URL がなかった。pipeline の具体構成、
+  参加者属性、課題設計、尺度、統計量、質的分析、失敗条件を監査できず、3500-4500字の
+  記事固有分析を推測なしで支えられないため、Phase 3 の最終ゲートで投稿を延期する。
 ---
 
 ## raw_excerpt

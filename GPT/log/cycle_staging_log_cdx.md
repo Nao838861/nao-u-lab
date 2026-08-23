@@ -65,7 +65,21 @@ duplicate_preflight:
 - 判定根拠: pacing diagram は問題設定と形式化の狙いは有用だが、現資料では schema と評価が読めず保留。Ctrl + Create は人間の空間制約と AI の視覚化を分離する具体手法、3条件・n=20 の比較、結果と実制作上の限界を分析できるため pass。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260823_ctrl_create_ai_level_design_control.md
+    reason: >-
+      FDG 2026 abstract と書誌 metadata では問題設定、3条件、n=20、結果の方向性までしか確認できず、
+      12ページ本文の pipeline 構成、参加者属性、課題設計、尺度、統計量、質的分析、失敗条件を監査できない。
+      ACM は 403、OpenAlex / Semantic Scholar / DBLP にも別の full-text URL がなく、約4000字の
+      記事固有分析を推測なしで支えられないため投稿しない。
+    action: postpone
+```
+
+- Slack #shared-reads 投稿: 0件。
+- candidate は `postponed` へ戻し、本文取得後に再評価する。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
