@@ -11,7 +11,46 @@
 - Slack 投稿なし。品質判定・4000字概要・記憶階層変更は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260823_halflight_decay_chain_headless_tests.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-08-23T21:31:22+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260823_halflight_decay_chain_headless_tests.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260823_halflight_decay_chain_headless_tests.md
+  valid_backlog_after: 0
+```
+
+判定: pass。decay chain の時間刻み誤差に対する3案と、55件の headless test から見つかった実 defect / 出力異常 / fixture 不備を分けて説明できる。simulation game の resource 更新、offline progress、演出 event、regression test に直接接続でき、CoopEval 水準の概要を構成できる。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

@@ -4,6 +4,26 @@ url: "https://itch.io/devlog/1636764/a-decay-chain-is-closed-form-until-the-daug
 collected_at: "2026-08-23T21:31:22+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, simulation, incremental-game, postmortem, headless-testing, numerical-methods]
+evaluated_at: "2026-08-23T21:34:09+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-23T21:34:09+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-23T21:34:09+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-22"
+supersedes: []
+gate_reason: >-
+  時間刻みによる decay chain の誤差を、解析解・fixed substep・dt clamp の選択肢と実装上の副作用まで比較できる。
+  55件の headless test で実 defect、pass しても異常な出力、無効 fixture を区別しており、数値 simulation の検証設計へ具体的に適用できるため、約4000字の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "decay chain の時間離散化と、green test の背後に残る不具合を同じ制作記録から読む"
+  analysis_axis: "数学的に正しい更新則、演出 event の刻み、offline progress、fixture validity を分離して検証する"
+  application_target: "Log_cdx の simulation prototype で、複数段階の状態遷移を持つ resource 更新と headless regression test の設計に適用する"
+  pros_cons: "dt clamp と scenario 出力監査は低コストで導入できる一方、長時間 offline progress の計算量と解析解を使わない近似誤差は別途管理が必要"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
