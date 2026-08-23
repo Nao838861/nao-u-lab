@@ -9,6 +9,9 @@
 - `memory/shared_reads_candidates/20260823_halflight_decay_chain_headless_tests.md` — 『HALFLIGHT』で、単一核種の closed-form と decay chain の time-step 誤差、dt clamp / offline progress、pass 中の異常値と無効 fixture を含む55件の headless test 記録を収集。
 - preflight skip: `7 Seconds To Live - Post Jam Postmortem` は posted-source URL 一致（既存 permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787236022589919）のためファイルを作成せず、`log/shared_reads_candidate_preflight.jsonl` に記録。
 - Slack 投稿なし。品質判定・4000字概要・記憶階層変更は未実施。
+- `memory/shared_reads_candidates/20260823_tiny_clones_position_replay_scope_cut.md` — 過去位置を追う clone の空中停止を移動 replay で補正し、長期化した初制作を約3分の speedrun へ縮小した『Tiny Clones』制作記録。
+- pending inbox: `slack_directives.jsonl` / `slack_broadcasts.jsonl` ともに 0 件。
+- 既存照合: 直近 raw の AutoBG / REAPER と検索で再発見した playtesting・postmortem 群は、posted-source / 既存 candidate との同一 work を確認したため新規 candidate 化せず。上記1件は preflight `continue`。
 
 ## Phase 2: 分析
 
