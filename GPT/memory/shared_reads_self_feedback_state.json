@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-23T23:42:33+09:00",
+  "updated_at": "2026-08-24T01:44:16+09:00",
   "reviewed_source_ts": [
+    "1779834973.898019",
     "1779887735.171239",
     "1779009798.720239",
     "1787478894.683509",
@@ -741,6 +742,48 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-24T01:44:16+09:00",
+      "selected": {
+        "id": "sr-1779834973-8507d04585",
+        "source_ts": "1779834973.898019",
+        "title": "NextMars pilot と v002 wave 縮約の事後同型",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、memory・harness・game-design・operation・evaluation の優先タグを持つため1件だけ選んだ。既存の wave 1 軽量化、8秒静寂ガード、段階観測を外部記事の contained-scope pilot と後から対応づける行為が、次の game prototype や Phase 4a に独立した判断差を作るか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、v002 の wave 1 軽量化、wave 2 の8秒静寂ガード、段階観測を NextMars の contained-scope pilot と対応づけ、7要素を全て規則化せず4質問だけに絞る anti-bloat 判断を示すため relevance・actionability は2とした。一方、本文自身がこの対応を事後正当化と呼び、記事に具体的な game 例がないこと、applicability test は自分側の責任であること、新規プロトコル化は不要であることを明記する。外部記事と当時の v002 artifact の独立比較も本 atom 単独では確認できないため evidence は2に留めた。probe-20260706-paperclaw-prototype-hypothesis-contract は実装前の observable verdict と test path、support／reject／inconclusive を既に要求し、probe-20260516-attributed-trajectory-tip は過去ログから寄与した決定・状態遷移を1件だけ帰属する。したがって『事前仮説と事後説明を分ける』『過去の pilot を次回 tip へ戻す』行動は既存2 controls に完全に吸収され non_redundancy=0。active_probes が326件ある状態で旧 v002 固有の4質問を別 control にすると、具体的な current artifact や consumer の判断差なしに確認負荷だけを増やすため risk_control=1とした。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1779834973-8507d04585.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779834973.898019"
+      ],
+      "existing_controls": [
+        "probe-20260706-paperclaw-prototype-hypothesis-contract",
+        "probe-20260516-attributed-trajectory-tip"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、事後同型であること、原投稿自身の非プロトコル化判断、既存 hypothesis／trajectory controls との完全重複による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-23T21:44:31+09:00",
       "selected": {
