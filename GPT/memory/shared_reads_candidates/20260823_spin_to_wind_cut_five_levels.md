@@ -4,6 +4,26 @@ url: "https://itch.io/devlog/1623006/cutting-five-levels-is-the-hardest-thing-iv
 collected_at: "2026-08-23T13:18:10+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, level-design, playtesting, difficulty, postmortem, mobile, game-jam]
+evaluated_at: "2026-08-23T13:25:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-23T13:25:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-23T13:25:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-22"
+supersedes: []
+gate_reason: >-
+  30面を作った開発者自身の操作熟達と controller 偏重が初見難度を歪めた問題を、初心者としての再試行、入力 device 差、短時間離脱という観察から5面削除と許容幅拡大へ戻した因果が具体的である。
+  成績の高さと到達しやすさを分けて読み、単一作者の自己報告という限界も含めれば、短期 prototype の難度校正へ適用できる約4000字の批判的概要を構成できる。
+suggested_post_outline:
+  overview_angle: "作り手の熟達で見えなくなった初見難度を、面数削減と成功判定の許容幅へ変換した mobile 再調整"
+  analysis_axis: "jam 順位や content 量ではなく、初心者の失敗回数、入力 device、想定 play 時間を難度証拠としてどう結び直したか"
+  application_target: "Log_cdx の短期 prototype で、作者の連続 play と初見条件を分離し、複数入力系・無習熟 run・序盤離脱点を同じ校正表で確認する工程"
+  pros_cons: "削除と許容幅調整は短期間で到達率を改善できる一方、保持率や複数 player の測定値はなく、難所削除が奥行きを損なう可能性も別に検証が要る"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
