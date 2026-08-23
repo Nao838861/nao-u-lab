@@ -1,12 +1,12 @@
-# log_cdx Cycle Staging — 2026-08-23 16:13
+# log_cdx Cycle Staging — 2026-08-23 16:28
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
 
-- pending確認: `slack_directives.jsonl` 0件、`slack_broadcasts.jsonl` 0件。
-- `memory/shared_reads_candidates/20260823_idraak_semantic_drift_technical_requirements.md` — 数値制約・極性・モダリティを含む技術要件のsemantic driftを、SRR比較・multi-agent verification・few-shot promptingの6方式で検出比較した研究。
-- duplicate preflight: AutoBG（arXiv:2606.01976）は同一workの投稿済み記録に一致したため、規定どおりcandidateを新規作成せずskip（ログにSlack permalinkと一致根拠を記録）。
+- `memory/shared_reads_candidates/20260823_deprofessionalization_small_game_teams.md` — 小規模ゲームチームの成功が増える一方、個人関係と職務の境界、行動規範、leader 責任が不足し得るという production 観点の記事を収集。
+- pending 確認: `slack_directives.jsonl` 0件 / `slack_broadcasts.jsonl` 0件。
+- duplicate preflight: `continue`（canonical URL / title とも新規）。Slack 投稿は行っていない。
 
 ## Phase 2: 分析
 (Phase 2 が書き込む)
