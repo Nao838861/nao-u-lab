@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2304.08293"
 collected_at: "2026-05-18T11:59:26+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, pcg, narrative, player-interpretation, research]
-evaluated_at: "2026-07-25T20:53:21+09:00"
+evaluated_at: "2026-08-24T05:33:29+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-07-25T20:53:21+09:00"
+last_reviewed_at: "2026-08-24T05:33:29+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-25T20:53:21+09:00"
-stale_after: "2026-08-24"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-24T05:33:29+09:00"
+stale_after: "2026-09-23"
 supersedes: []
 next_action: revise_or_research
 gate_reason: >-
   PCG を「生成された痕跡を解釈する遊び」へ接続する着想と、187人の survey という評価枠は具体的。
-  ただし候補本文には定量・定性結果と glitch の影響分類がなく、~4000字の概要を根拠付きで書くには研究本文の補強が必要。
+  ただし今回の再評価でも定量・定性結果と glitch の影響分類がなく、~4000字の概要を根拠付きで書くには研究本文の補強が必要。
 
 ---
 
