@@ -94,7 +94,85 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "shared-reads の terminal title canonical index を再生成・検証し、closed group 107件で一致した。candidate frontmatter は変更していない。"
+  - "mixed/open duplicate・stale triage・group action sidecar を順に再生成し、永続 handoff inbox を監査した。新規 enqueue は group 0件 / candidate 0件。"
+  - "Slack directive / broadcast inbox を監査した。pending は各0件で、根拠なしの handled 遷移は行っていない。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+memory_index_audit:
+  validator: ok
+  broken_atom_references: 0
+  utf8_probe:
+    source_file_status: "UTF-8 明示読みは正常。記憶 / ゲーム設計 / 敵パターンを取得できた。評価軸という語は現在の生成 index には未収載だが、置換文字や decode error はない。"
+    display_or_tooling_status: none
+atom_consistency:
+  mirror_counts:
+    atoms_jsonl: 2947
+    per_file_md: 2947
+    index_jsonl: 2947
+  mirror_status: clean
+  raw_normalized_content_duplicate_groups: 40
+  raw_normalized_content_duplicate_rows: 80
+  recall_visible_duplicate_groups_before_fold: 3
+  canonical_overlay_groups: 45
+  current_scope_conflicts: 0
+  note: "重複は canonical overlay / lifecycle fold で表示時に畳まれており、新規の矛盾・孤児化としては扱わない。"
+encoding_audit:
+  source_file_status: "memory_health の suspect 2件を UTF-8 で確認。sr-1776127289-4d9239b255 は raw Slack provenance から既に置換文字を含む局所 source defect、gr-1777083728-44d444ab7a の ??? は Nao_u 原文中の意図的表記。"
+  display_or_tooling_status: none
+  action: "Phase 4a では原文を推測修復せず保持。構造的 issue には昇格しない。"
+raw_archive_audit:
+  cutoff: "2026-07-24"
+  old_file_count: 242
+  old_web_research_count: 217
+  archive_candidates: 0
+  decision: "mtime だけでは provenance の不要化を証明できないため移動しない。raw は検証可能性の正本として保持する。"
+candidate_lifecycle:
+  total_with_evaluation: 1405
+  counts:
+    posted: 683
+    ready_to_post: 9
+    postponed: 205
+    failed: 506
+    needs_review: 2
+  overdue_open_total: 4
+  overdue_group_keys:
+    - "joint agent memory and exploration learning via novelty signals"
+    - "an exploration of collision based enemy morphology generation"
+  suppression: "両 group とも membership fingerprint 一致の deferred lease が有効で、retry_after は 2026-09-19T14:08:16+09:00。再投入しない。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  receipt: null
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 30
+  mixed_group_count: 26
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_handoff_inbox_pending_count: 0
+  group_handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
