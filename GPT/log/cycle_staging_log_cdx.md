@@ -72,7 +72,22 @@ duplicate_preflight:
 - 投稿・新規収集・記憶階層改修は未実施。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260823_spin_to_wind_cut_five_levels.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787459499783049
+    char_count: 3553
+  - candidate: memory/shared_reads_candidates/20260823_hedgehog_news_network_ai_boundary_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787459506333859
+    char_count: 4486
+skipped: []
+```
+
+- 最終判定時刻: 2026-08-23T13:32:01+09:00
+- 2 件とも一次資料を再確認し、既投稿 source との重複がないことを確認した。
+- 各本文は必須 6 節、3500–4500 字程度、URL 末尾、旧 multi-agent 問いかけ表現なしを確認した。
+- `tools/post_slack_message_file.py` による投稿後再読は 2 件とも `verification: ok`。スレッド返信・分割投稿は行っていない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
