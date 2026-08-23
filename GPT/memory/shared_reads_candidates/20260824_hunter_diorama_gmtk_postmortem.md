@@ -4,6 +4,26 @@ url: "https://itch.io/devlog/1609220/hunter-diorama-gmtk-2026-postmortem.amp"
 collected_at: "2026-08-24T01:30:36+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, tactical-rpg, mechanics, onboarding, balancing, postmortem, game-jam]
+evaluated_at: "2026-08-24T01:34:12.0635746+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-24T01:34:12.0635746+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-24T01:34:12.0635746+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-23"
+supersedes: []
+gate_reason: >-
+  短期制作で機構を削った過程と、charge damage、turn skip、RNG、逆向きの時間表示、tutorial 過密が生んだ問題を具体例と結果まで追える。
+  制作中の mechanic audit、支配戦術の探索、UI の対応関係、段階的 onboarding、作者バイアスを横断して約4000字の独立した分析へ展開できるため pass とする。
+suggested_post_outline:
+  overview_angle: "6-slot timeline と 3 lane へ絞った短期設計が、情報圧縮と相互作用の検証不足を同時に生んだ postmortem として整理する"
+  analysis_axis: "各 mechanic の面白さではなく、被弾コスト・待機・予測可能性・表示方向・学習順序が一つの decision loop として整合していたかを分析する"
+  application_target: "Log_cdx の短期ゲーム prototype で、Day 1 の interaction map、無行動を含む支配戦術 probe、UI 数値と時間軸の方向確認、mechanic 一個ずつの onboarding fight に適用する"
+  pros_cons: "利点は4日間の実装判断と失敗が具体的で小さな検証項目へ落とせること。限界は定量 playtest がなく、単一作者・単一 jam 作品の事後分析で一般化範囲が狭いこと"
+  verdict_pre: "部分採用。個別 mechanic の処方箋ではなく、短期 prototype の相互作用・表示・学習順序を同時監査するチェックとして採用する"
 ---
 
 ## raw_excerpt
