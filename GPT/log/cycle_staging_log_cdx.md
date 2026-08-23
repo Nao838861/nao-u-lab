@@ -104,7 +104,84 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index atom 参照50件を照合し、broken link 0件を確認"
+  - "memory/atoms.jsonl の重複 sidecar を check し、45群が canonical overlay 管理下で最新であることを確認"
+  - "memory/raw/ の30日超ファイル242件を棚卸しし、原文 provenance のため自動移動せず explicit_keep とした"
+  - "shared-reads の open duplicate / stale triage / group-action queue を現候補と live lease から再生成"
+  - "Slack directives / broadcasts の pending 0件を確認し、status 更新対象なし"
+  - "due probe lease 0件を確認し、resolve receipt 更新対象なし"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 9
+    dormant: 1
+stale_review_batch: []
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_note: "overdue 4件は JAMEL / collision-based enemy morphology の2群。membership fingerprint が一致する deferred lease が retry_after 2026-09-19 まで有効なため、契約どおり再投入しない"
+group_action_handoff: []
+candidate_lifecycle:
+  counts:
+    posted: 689
+    ready_to_post: 9
+    postponed: 202
+    failed: 510
+    needs_review: 2
+  missing_stale_after_total: 3
+  missing_stale_after_open: 0
+  overdue_for_reassessment: 4
+  lifecycle_conflicts: 0
+memory_audit:
+  memory_index_atom_refs: 50
+  broken_links: 0
+  atom_rows: 2953
+  duplicate_groups: 45
+  recall_visible_duplicate_groups_after_fold: 3
+  unresolved_contradictions: 0
+  source_consistency: stable
+  encoding:
+    source_file_status: "memory/MEMORY.md は UTF-8 明示読みで正常。代表語 記憶 / ゲーム設計 / 敵パターン は取得、評価軸は exact token 不在だが evaluation tag と自己判定 entry は存在"
+    display_or_tooling_status: none
+    mojibake_audit: "memory_health の2件を原文照合。sr-1776127289-4d9239b255 は raw Slack archive 自体に replacement character があり表示経路問題ではない。gr-1777083728-44d444ab7a は UTF-8 source 正常で false positive。いずれも今回のゲーム記憶検索を阻害する構造 issue にはしない"
+raw_archive_audit:
+  cutoff: "2026-07-25T00:00:00+09:00"
+  older_than_30_days: 242
+  web_research_artifacts: 217
+  action: explicit_keep
+  reason: "raw は一次 provenance の正本であり、容量障害や既定 retention policy がないため Phase 4a では移動しない"
+validation:
+  memory_health: warning
+  memory_health_warning_scope: "raw title debt は overlay 後の effective unresolved 0。上記 mojibake suspect 2件以外の recall smoke は3 queryとも hit"
+  atom_duplicate_index: ok
+  probe_lifecycle_errors: []
+  candidate_handoff_errors: []
+  group_handoff_errors: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
