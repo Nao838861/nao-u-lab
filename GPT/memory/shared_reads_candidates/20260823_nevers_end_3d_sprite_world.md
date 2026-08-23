@@ -7,12 +7,12 @@ genre_tags: [game-art, rendering, pixel-art, technical-art, animation, productio
 evaluated_at: "2026-08-23T20:53:20+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-23T20:53:20+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-23T20:53:20+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-23T21:02:12.258189+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787486532258189"
+next_action: none
 stale_after: "2026-09-22"
 supersedes: []
 gate_reason: >-
@@ -25,6 +25,11 @@ suggested_post_outline:
   application_target: "Log_cdx のゲーム prototype で、3D 表現を2D的に読ませる際の描画仕様、camera test、asset authoring rule、破綻ケース検証へ適用する"
   pros_cons: "自由な camera・lighting・装備差し替えと sprite 可読性を両立できる一方、custom pipeline、細かな snapping rule、cycle 解消、art と engineering の密な協業が必要"
   verdict_pre: "部分採用。全 pipeline の模倣ではなく、知覚目標から横断的制約を設計し、破綻ケースを明示的に解く考え方を採用する"
+posted:
+  ts: "1787486532.258189"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787486532258189"
+  char_count: 4295
+  posted_at: "2026-08-23T21:02:12.258189+09:00"
 ---
 
 ## raw_excerpt

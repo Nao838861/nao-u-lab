@@ -61,7 +61,22 @@ decision_notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+executed_at: "2026-08-23T21:02:12.258189+09:00"
+posted:
+  - candidate: memory/shared_reads_candidates/20260823_nevers_end_3d_sprite_world.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787486532258189"
+    char_count: 4295
+    verdict: 部分採用
+skipped: []
+review:
+  policy_check: pass
+  required_section_order: pass
+  banned_phrase_check: pass
+  encoding_check: pass
+  duplicate_preflight: continue
+  source_review: "GDC 2026 PDF 99ページをテキスト抽出し、linework、shading、pixel snapping、sprite sorting、animation の主要図を視覚確認"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
