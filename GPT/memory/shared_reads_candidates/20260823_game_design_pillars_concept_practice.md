@@ -4,6 +4,20 @@ url: "https://dl.acm.org/doi/10.1145/3815598.3815686"
 collected_at: "2026-08-23T09:16:56+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, design-pillars, player-experience, team-alignment, production]
+evaluated_at: "2026-08-23T09:21:13+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-23T09:21:13+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-23T09:21:13+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-22"
+supersedes: []
+gate_reason: >
+  early decision、team alignment、運用低下という問題設定は、体験目標を実装・調整・評価まで追跡する制作工程へ直接適用できる。
+  ただし保存内容には questionnaire の人数・設問・結果分布や operationalize の実例がなく、概念と実務の gap を約4000字で実証的に説明するには一次資料の追加確認が必要。
 ---
 
 ## raw_excerpt

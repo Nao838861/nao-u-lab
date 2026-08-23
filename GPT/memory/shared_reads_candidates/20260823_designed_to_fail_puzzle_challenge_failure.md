@@ -4,6 +4,20 @@ url: "https://dl.acm.org/doi/10.1145/3815598.3815617"
 collected_at: "2026-08-23T09:16:27+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, puzzle, challenge-design, failure, developer-interviews]
+evaluated_at: "2026-08-23T09:21:13+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-23T09:21:13+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-23T09:21:13+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-22"
+supersedes: []
+gate_reason: >
+  20名への interview、inductive thematic analysis、incorrect attempt と disengagement の区別は明確で、失敗 telemetry と再試行設計へ具体的に接続できる。
+  ただし保存内容は abstract / DOI metadata の要約に限られ、主題体系、分析例、限界を欠くため、手法・評価・結論を約4000字で誤解なく説明するには一次資料の追加確認が必要。
 ---
 
 ## raw_excerpt
