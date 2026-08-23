@@ -59,7 +59,32 @@ result: no_pass_candidates
 reason: "Phase 2 の pass が 0 件のため、#shared-reads への投稿対象なし。postpone 2 件は根拠不足のまま候補プールに保持する"
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+self_feedback:
+  selected:
+    id: sr-1787436897-756f08ab13
+    source_ts: "1787436897.991969"
+    title: "GDC 2026 Spreadsheets Microtalks — 固定 engine と可変 content の境界"
+    reason: "source が slack_api/shared-reads、score 12、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新候補だったため1件だけ選んだ。固定 engine と spreadsheet-driven content、許可済み behavior token、validation、versioned snapshot、content hash、last-known-good fallback の組合せが、次の小規模 webgame prototype の更新経路へ既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "採用閾値は満たすが、現在の staging には spreadsheet／外部 data から game content を更新する具体的 playable artifact と before／after pipeline がなく、直後の Phase 4a は実 consumer ではない。既存の content-pipeline friction、recoverable hazard、rules-core parity、runtime evidence controls と重なる部分を除いた固有差は、allow-list と schema を通した可変 content、検証済み versioned snapshot、content hash を配布・再現単位にする点である。consumer_phase・trigger_artifact・expected_delta を lease 契約どおり指定できないため、今回は state-only defer とした。"
+  change:
+    summary: "reviewed_source_ts と、case study の証拠限界、既存 controls との差分、具体的 consumer artifact 不在による defer 条件だけを記録した。active_probes・ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

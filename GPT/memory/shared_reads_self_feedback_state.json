@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-23T07:20:00+09:00",
+  "updated_at": "2026-08-23T09:27:32+09:00",
   "reviewed_source_ts": [
+    "1787436897.991969",
     "1779917665.452949",
     "1779481998.916219",
     "1787413400.296389",
@@ -733,6 +734,52 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-23T09:27:32+09:00",
+      "selected": {
+        "id": "sr-1787436897-756f08ab13",
+        "source_ts": "1787436897.991969",
+        "title": "GDC 2026 Spreadsheets Microtalks — 固定 engine と可変 content の境界",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新候補だったため1件だけ選んだ。固定 engine と spreadsheet-driven content、許可済み behavior token、validation、versioned snapshot、content hash、last-known-good fallback の組合せが、次の小規模 webgame prototype の更新経路へ既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で採用条件と必須指標は満たす。shared-reads 本文は、二つの公開 browser game を例に、固定 engine と可変 content の分離、列を property・行を object とする authoring、任意 code ではなく engine 内の許可済み behavior token を data から選ぶ境界、test sheet、validation、versioned JSON snapshot、content hash、last-known-good fallback、同一 hash と seed の headless test まで具体化しているため relevance・actionability は3とした。一方、根拠は作者の二作品と故障報告による case study で、repository 管理 JSON との制作時間・bug率・復旧時間の比較、validator 導入前後、schema drift 頻度、rollback 成功率は示されていないため evidence は2に留める。probe-20260626-meta-horizon-friction-layer-triage は content/update pipeline の摩擦層を、probe-20260708-toolbenchx-recoverable-hazard-card は failure type と fallback を、probe-20260603-rules-core-parity-regression は同一 seed・fixture と browser/headless 境界を、probe-20260518-runtime-verifiable-production-slices は code・interaction・runtime evidence の分離を既に扱う。ただし、可変 content を allow-list と schema で固定 engine へ接続し、検証済み snapshot と hash を配布・再現単位にする判断は既存 controls に直接ないため non_redundancy は2とした。狭い webgame content pipeline に限定すれば可逆で、memory backend や全 prototype へ一般化しないため risk_control は2である。しかし現在の staging には spreadsheet／外部 data から game content を更新する具体的 playable artifact、before／after pipeline、consumer phase がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。consumer_phase・trigger_artifact・expected_delta を lease 契約どおり指定できないため active probe・metric・lease・directive・恒久ルールは追加せず state-only defer とする。",
+      "defer_condition": "次の小規模 webgame で敵・object・UI・level content を code 外から反復更新する具体的 artifact が生じ、既存4 controlsだけでは未検証 content の流入、code commit と content revision のずれ、rollback／再現不能を判定できない時に限り、test data→validator→versioned snapshot→runtime の一経路へ限定した一時 probe として再評価する。",
+      "evidence_sources": [
+        "memory/atoms.jsonl#id=sr-1787436897-756f08ab13",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787436897.991969",
+        "https://media.gdcvault.com/gdc2026/Slides/Pierre_Guillaume_SpreadsheetsMicrotalks.pptx.pdf"
+      ],
+      "existing_controls": [
+        "probe-20260626-meta-horizon-friction-layer-triage",
+        "probe-20260708-toolbenchx-recoverable-hazard-card",
+        "probe-20260603-rules-core-parity-regression",
+        "probe-20260518-runtime-verifiable-production-slices"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、固定 engine／可変 content 境界の有用性、case study の証拠限界、既存 controls との差分、具体的 consumer artifact 不在による defer 条件だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-23T07:20:00+09:00",
       "selected": {
