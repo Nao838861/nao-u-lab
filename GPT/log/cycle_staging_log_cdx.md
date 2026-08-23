@@ -176,4 +176,15 @@ raw_archive_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1787496777.280789"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787496777280789"
+  char_count: 1942
+  verification: ok
+  draft: "tmp/phase5_log_diary_20260823_2328_cdx.md"
+```
+
+Phase 1-4 の活動を、`Tiny Clones` の movement replay と scope 縮小、shared-reads への非投稿判断、memory mirror / candidate lifecycle の健全性確認、原典由来 U+FFFD の未補修境界を軸に日記化した。指定範囲内の 1942 文字で #log にフラット投稿し、Slack API 側の本文検証が `ok` であることを確認した。`chat.getPermalink` は `invalid_arguments` のため、channel ID と message ts から Slack 標準形式の permalink を構成した。
