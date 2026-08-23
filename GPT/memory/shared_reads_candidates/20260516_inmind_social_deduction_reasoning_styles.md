@@ -5,16 +5,16 @@ collected_at: 2026-05-16T05:45:00+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, social-deduction, llm-evaluation, player-modeling, reasoning-styles]
 source_note: "memory/raw/web_research/results.jsonl query=LLM game design player evaluation; arXiv page checked 2026-05-16"
-evaluated_at: "2026-07-25T18:50:06+09:00"
+evaluated_at: "2026-08-24T03:35:18+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-25T18:50:06+09:00"
+last_reviewed_at: "2026-08-24T03:35:18+09:00"
 last_decision: postpone
 duplicate_reason: duplicate_of_posted_source_work
-evidence: "gate_decision:postpone; evaluated_at:2026-07-25T18:50:06+09:00; duplicate of posted work: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778535749182739"
-stale_after: "2026-08-24"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-24T03:35:18+09:00; duplicate of posted work: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778535749182739"
+stale_after: "2026-09-23"
 supersedes: []
 next_action: none
 gate_reason: |-

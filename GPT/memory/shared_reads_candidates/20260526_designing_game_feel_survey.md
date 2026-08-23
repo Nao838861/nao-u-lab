@@ -7,18 +7,19 @@ genre_tags: [game-design, game-feel, controls, player-experience, survey]
 evaluated_at: "2026-07-25T23:07:50+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-07-25T23:07:50+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-25T23:07:50+09:00"
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-08-24T03:37:45+09:00"
+last_decision: failed
+evidence: "group_handoff:gha-5f2dd05c8c2a3041; terminal:memory/shared_reads_candidates/20260801_designing_game_feel_survey.md: status=posted permalink=https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1785546082307349; reason:同一 survey の arXiv sibling が投稿済みで旧候補に独立した追加分析がない"
 stale_after: "2026-08-24"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: >-
   physicality / amplification / support と tuning / juicing / streamlining の対応は、操作感をエフェクト量だけで評価しない枠として適用性が高い。
   一方、保持情報からは 200 件超をどう選別・統合したか、各 domain の境界と反例を復元できず、survey の評価内容を薄めず ~4000字にするには本文精読が必要なため保留する。
 
+duplicate_reason: failed_duplicate_of_terminal_sibling
 ---
 
 ## raw_excerpt

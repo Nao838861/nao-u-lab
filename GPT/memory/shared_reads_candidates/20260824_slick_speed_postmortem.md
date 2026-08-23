@@ -4,6 +4,26 @@ url: "https://itch.io/devlog/1439113/slick-speed-post-mortem.amp"
 collected_at: "2026-08-24T03:31:12+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, mechanics, postmortem, game-jam, arcade, scope]
+evaluated_at: "2026-08-24T03:35:18+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-24T03:35:18+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-24T03:35:18+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-23"
+supersedes: []
+gate_reason: >-
+  過去 jam の scope 失敗を起点に、10日工程の配分、移動だけの入力、障害物同士の衝突から生まれた展開、未実装要素の cut、playtest の反応まで因果を追える。
+  短期 prototype で polish 枠を先に確保し、入力数ではなく object 間相互作用で深さを作る具体策として適用でき、限界も含めて約4000字の概要と分析を構成できる。
+suggested_post_outline:
+  overview_angle: 10日間 jam で scope を制御し、最小入力と障害物同士の相互作用から arcade game の展開を作った制作判断を時系列で整理する
+  analysis_axis: polish 専用日の先取り、偶発的に見つかった相互作用を中核へ昇格する判断、期限内に cut した機能の整合性を評価する
+  application_target: Log_cdx の短期 prototype で、初日に入力語彙を固定し、object 間相互作用の探索日と sound・UI・playtest の保護枠を工程表へ置く
+  pros_cons: 小規模制作の具体的な時間配分と scope 判断を再利用できる一方、単一作者の事後報告であり比較実験や継続率などの定量評価はない
+  verdict_pre: 部分採用
 ---
 
 ## raw_excerpt

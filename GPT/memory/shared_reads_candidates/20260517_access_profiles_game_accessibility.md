@@ -5,15 +5,15 @@ collected_at: "2026-05-17T01:29:32+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, accessibility, player-experience, infrastructure]
 candidate_status: postponed
-evaluated_at: "2026-07-25T18:50:06+09:00"
-stale_after: "2026-08-24"
+evaluated_at: "2026-08-24T03:35:18+09:00"
+stale_after: "2026-09-23"
 supersedes: []
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
-last_reviewed_at: "2026-07-25T18:50:06+09:00"
+last_reviewed_at: "2026-08-24T03:35:18+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-25T18:50:06+09:00; full method and evaluation evidence unavailable in candidate snapshot"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-24T03:35:18+09:00; full method and evaluation evidence unavailable in candidate snapshot"
 next_action: revise_or_research
 gate_reason: |-
   accessibility feature を個別オプションではなく、player/developer/engine/launcher/retailer を結ぶ Access Profiles という基盤として扱う問題設定と着想が明確。

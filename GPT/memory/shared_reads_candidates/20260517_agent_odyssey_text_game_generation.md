@@ -4,15 +4,15 @@ url: "https://agentodyssey.github.io/paper.pdf"
 collected_at: "2026-05-17T07:29:29+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, text-game, agent-evaluation, procedural-generation, memory]
-evaluated_at: "2026-07-25T20:53:21+09:00"
+evaluated_at: "2026-08-24T03:35:18+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-07-25T20:53:21+09:00"
+last_reviewed_at: "2026-08-24T03:35:18+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-25T20:53:21+09:00"
-stale_after: "2026-08-24"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-24T03:35:18+09:00"
+stale_after: "2026-09-23"
 supersedes: []
 next_action: revise_or_research
 gate_reason: >
