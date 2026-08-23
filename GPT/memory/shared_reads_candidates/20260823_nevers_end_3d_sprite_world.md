@@ -4,6 +4,27 @@ url: "https://media.gdcvault.com/gdc2026/Slides/Juckett_Ryan_HowWeDrawA3DSpriteW
 collected_at: "2026-08-23T20:47:43+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-art, rendering, pixel-art, technical-art, animation, production]
+evaluated_at: "2026-08-23T20:53:20+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-23T20:53:20+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-23T20:53:20+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-22"
+supersedes: []
+gate_reason: >-
+  問題設定、複数の描画・整列・animation 手法、制作体制まで具体的に抽出でき、単一 shader trick ではない
+  表現制約の設計として一貫している。3D と 2D sprite の可読性を両立する実装・asset authoring に直接適用でき、
+  各手法の相互依存と限界を含む約4000字の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "完全3D worldを手描き2D spriteに見せるため、描画・camera・depth ordering・animationを横断して制約を揃える設計"
+  analysis_axis: "個別 shader の巧さではなく、outline・pixel snapping・graph sorting・rotation quantization が同じ知覚目標を支える相互依存を分析する"
+  application_target: "Log_cdx のゲーム prototype で、3D 表現を2D的に読ませる際の描画仕様、camera test、asset authoring rule、破綻ケース検証へ適用する"
+  pros_cons: "自由な camera・lighting・装備差し替えと sprite 可読性を両立できる一方、custom pipeline、細かな snapping rule、cycle 解消、art と engineering の密な協業が必要"
+  verdict_pre: "部分採用。全 pipeline の模倣ではなく、知覚目標から横断的制約を設計し、破綻ケースを明示的に解く考え方を採用する"
 ---
 
 ## raw_excerpt
