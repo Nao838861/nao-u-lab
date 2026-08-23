@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-23T21:14:00+09:00",
+  "updated_at": "2026-08-23T21:44:31+09:00",
   "reviewed_source_ts": [
+    "1779009798.720239",
     "1787478894.683509",
     "1787471063.991199",
     "1787459499.783049",
@@ -739,6 +740,52 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-23T21:44:31+09:00",
+      "selected": {
+        "id": "sr-1779009798-791cc741fa",
+        "source_ts": "1779009798.720239",
+        "title": "CreativeGame: mechanic を明示オブジェクト化する version-to-version game generation",
+        "reason": "source が slack_api/shared-reads、score 14、未レビューで、memory・game-design・agent・operation・evaluation の5優先タグを持つ Log_cdx 自身の高品質投稿だったため1件だけ選んだ。planned／realized mechanic、runtime validation、lineage-scoped memory の分離が、次の game_start または playable diff に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件と全必須閾値を満たす。shared-reads 本文は、mechanic を生成後の説明ではなく plan・tracking・archive・evaluation の明示オブジェクトとし、CURRENT_MECHANIC_SET、planned／realized mechanic、mechanic delta、runtime gate、lineage-scoped memory へ接続する。71 lineages、88 nodes、774-entry archive、4 case lineages まで実装規模と具体例があり、次の game_start または playable diff で preserve／add／remove／recombine を先に書き、実装後の realized mechanic と runtime evidence を照合する行動へ変換できるため relevance・actionability は3とした。一方、人間 playtest や楽しさの直接評価、architecture ablation、proxy reward 各項の統制比較はなく、平均 creativity／playability も LLM scoring saturation の影響を受けるため evidence は2に留める。probe-20260518-runtime-verifiable-production-slices は asset／rule／interaction／runtime の分離を、probe-20260625-feature-integration-depth-gate は mechanic 変更が跨ぐ runtime contracts を、probe-20260706-paperclaw-prototype-hypothesis-contract は事前の observable verdict と test path を既に扱う。ただし mechanic の preserve／add／remove／recombine と planned／realized delta を版間 lineage に残す観点は直接要求していないため non_redundancy は2とした。対象を一つの versioned game artifact に限定すれば risk_control=2、reversibility=3だが、現在の staging には適用可能な game_start、版間 playable diff、planned／realized mechanic の before／after artifact がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。active_probes が326件ある状態で consumer_phase・trigger_artifact・expected_delta を指定できない control を足さず、active probe・metric・lease・directive・恒久ルールは追加しない state-only defer とする。",
+      "defer_condition": "次の game_start または versioned playable diff で具体的な game artifact があり、既存3 controlsだけでは preserve／add／remove／recombine の計画と realized mechanic の不一致が continue／revise／reject 判断へ残らない時に限り、artifact-local な一時 probe または metric として再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1779009798-791cc741fa.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779009798.720239",
+        "memory/shared_reads_candidates/20260604_creativegame_mechanic_aware_generation.md",
+        "https://arxiv.org/abs/2604.19926"
+      ],
+      "existing_controls": [
+        "probe-20260518-runtime-verifiable-production-slices",
+        "probe-20260625-feature-integration-depth-gate",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、planned／realized mechanic lineage の有用性、human playtest／ablation 不在の証拠限界、既存 runtime／hypothesis controls との重複、比較可能な game artifact 不在による defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-23T21:14:00+09:00",
       "selected": {

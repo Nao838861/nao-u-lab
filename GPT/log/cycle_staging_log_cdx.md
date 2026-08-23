@@ -63,7 +63,36 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779009798-791cc741fa
+    source_ts: "1779009798.720239"
+    title: "CreativeGame: mechanic を明示オブジェクト化する version-to-version game generation"
+    reason: "source が slack_api/shared-reads、score 14、未レビューで、memory・game-design・agent・operation・evaluation の5優先タグを持つ Log_cdx 自身の高品質投稿だった。planned／realized mechanic と runtime validation を版間 lineage に残す差分が、次の game_start／playable diff で既存 control と異なる判断を作るか確認するため1件だけ選んだ。Nao_u の明示的な重要評価はローカル raw では確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "数値上は採用条件を満たす。mechanic を preserve／add／remove／recombine として事前計画し、実装後の realized mechanic・runtime evidence・lineage memory と照合する観点は行動へ変換でき、既存の runtime-verifiable-production-slices、feature-integration-depth-gate、prototype-hypothesis-contract にない差も残る。一方、根拠は system 実装と4 lineage の case study で、人間 playtest・楽しさの直接評価・architecture ablation・proxy reward の統制比較がない。現在の staging には比較可能な game_start／versioned playable artifact がなく、直後の Phase 4a は memory cleanup で実 consumer ではないため、lease contract の consumer_phase・trigger_artifact・expected_delta を指定できない。326件ある active_probes を増やさず state-only defer とした。"
+  defer_condition: "次の game_start または versioned playable diff で、既存3 controlsだけでは planned／realized mechanic の不一致が continue／revise／reject 判断へ残らない具体例が出た時だけ、artifact-local な一時 probe／metric として再評価する。"
+  change:
+    summary: "reviewed_source_ts と採点・defer 理由だけを state に記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
