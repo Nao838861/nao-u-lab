@@ -4,21 +4,21 @@ url: "https://arxiv.org/abs/2512.10501"
 collected_at: "2026-06-06T11:59:30+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [pcg, llm-agent, level-design, tool-parameterization, evaluation]
-evaluated_at: "2026-07-26T19:06:07+09:00"
+evaluated_at: "2026-08-25T06:39:10+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-26T19:06:07+09:00"
+last_reviewed_at: "2026-08-25T06:39:10+09:00"
 last_decision: postpone
 duplicate_reason: duplicate_of_posted_source
-evidence: "duplicate of posted source: memory/raw/slack_api/shared-reads.jsonl ts=1780708885.257199; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780708885257199"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-25T06:39:10+09:00; duplicate of posted source: memory/raw/slack_api/shared-reads.jsonl ts=1780708885.257199; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780708885257199"
 next_action: none
-stale_after: "2026-08-25"
+stale_after: "2026-09-24"
 supersedes: []
 gate_reason: |-
   raw Slack に同一 work identity の arXiv:2512.10501 が 2026-06-06 に実投稿済みであり、Phase 3 の再投稿対象にしない。
-  posted-source index の抽出漏れで preflight は continue だったため、raw Slack 横断照合を最終安全網として postpone で閉じる。
+  再生成後も posted-source preflight は抽出漏れで continue だったため、raw Slack 横断照合を最終安全網として postpone のまま閉じる。
 ---
 
 ## raw_excerpt

@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2603.06679"
 collected_at: "2026-05-31T04:44:12+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, world-models, level-design, multiplayer, generative-ai]
-evaluated_at: "2026-07-26T12:21:31+09:00"
+evaluated_at: "2026-08-25T06:39:10+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-07-26T12:21:31+09:00"
+last_reviewed_at: "2026-08-25T06:39:10+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-26T12:21:31+09:00"
-stale_after: "2026-08-25"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-25T06:39:10+09:00"
+stale_after: "2026-09-24"
 supersedes: []
 next_action: revise_or_research
 gate_reason: |-
   Memory / Observation / Dynamics の分解は、生成世界の永続状態、編集可能性、複数視点の整合を実装単位へ落とす設計語彙として具体性がある。
-  ただし保存済みメモは abstract 由来で、level-edit 手順、multiplayer 同期、比較対象、評価指標、失敗条件がなく、実証内容と制約を説明できるまで保留する。
+  ただし今回も abstract 由来の情報だけで、level-edit 手順、multiplayer 同期、比較対象、評価指標、失敗条件を確認できず、実証内容と制約を説明できるまで保留する。
 
 ---
 

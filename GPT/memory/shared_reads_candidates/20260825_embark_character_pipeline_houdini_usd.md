@@ -4,6 +4,20 @@ url: "https://gdcvault.com/play/1035652/Freedom-Through-Structure-Character-Pipe
 collected_at: "2026-08-25T06:34:38+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-production, character-pipeline, procedural-workflow, houdini, usd]
+evaluated_at: "2026-08-25T06:39:10+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-25T06:39:10+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-25T06:39:10+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-24"
+supersedes: []
+gate_reason: |-
+  manual から automated までを連続量として扱う設計と、Houdini / USD / PDG / Solaris による職種横断の制作基盤はゲーム制作へ具体的に接続できる。
+  ただし公開済み情報はセッション概要に限られ、asset schema、導入手順、制作例、工数・品質の評価がなく、CoopEval 水準の概要を検証可能な密度で書けないため保留する。
 ---
 
 ## raw_excerpt

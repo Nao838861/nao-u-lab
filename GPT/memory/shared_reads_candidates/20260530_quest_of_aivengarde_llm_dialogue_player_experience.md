@@ -4,20 +4,20 @@ url: "https://portal.findresearcher.sdu.dk/en/publications/quest-of-aivengarde-c
 collected_at: "2026-05-30T04:29:22+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, npc-dialogue, llm, player-experience, rpg]
-evaluated_at: "2026-07-26T12:21:31+09:00"
+evaluated_at: "2026-08-25T06:39:10+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-07-26T12:21:31+09:00"
+last_reviewed_at: "2026-08-25T06:39:10+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-26T12:21:31+09:00"
-stale_after: "2026-08-25"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-25T06:39:10+09:00"
+stale_after: "2026-09-24"
 supersedes: []
 next_action: revise_or_research
 gate_reason: |-
   static control と生成自由度の異なる 3 variant、64 participants の mixed-methods 比較は、NPC 対話の自由度と物語制御を測る設計へ直接適用できる。
-  ただし保存済みメモには survey/log の具体指標、variant 別の効果量、casual player 判定、narrative control の失敗例がなく、結論を検証可能な密度にするには本文精読が必要。
+  ただし今回も survey/log の具体指標、variant 別の効果量、casual player 判定、narrative control の失敗例を確認できず、結論を検証可能な密度にするには一次資料の追加精読が必要。
 
 ---
 

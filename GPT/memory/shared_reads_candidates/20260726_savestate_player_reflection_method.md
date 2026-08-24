@@ -4,16 +4,20 @@ url: "https://arxiv.org/abs/2607.17128v2"
 collected_at: "2026-07-26T16:32:21.8625578+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [player-experience, user-research, reflection, methodology, post-play]
-status: needs_review
-candidate_status: needs_review
-lifecycle_backfill_reason: "missing_status_defaulted_to_needs_review"
-lifecycle_backfilled_at: "2026-08-02"
-last_reviewed_at: "2026-07-26T16:32:21.8625578+09:00"
-last_decision: needs_review
-evidence: "candidate_file:20260726_savestate_player_reflection_method.md; status:needs_review"
-next_action: evaluate_in_phase2
-stale_after: "2026-08-25"
+evaluated_at: "2026-08-25T06:39:10+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-25T06:39:10+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-25T06:39:10+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-24"
 supersedes: []
+gate_reason: |-
+  reflection-in-action と reflection-on-action を記録で接続する二段階手法は、物語・余韻・自己省察を狙うゲームのプレイテストへ具体的に適用できる。
+  ただし保存メモには参加者・対象ゲーム・記録 UI・分析手順・比較基準・限界の詳細がなく、適用実績と妥当性を CoopEval 水準で説明するには一次資料の追加精読が必要。
 ---
 
 ## raw_excerpt

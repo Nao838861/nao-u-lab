@@ -4,16 +4,26 @@ url: "https://arxiv.org/abs/2607.19523v1"
 collected_at: "2026-07-26T16:31:46.9873770+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [ai-agent, game-playing, evaluation, supervised-fine-tuning, exploration]
-status: needs_review
-candidate_status: needs_review
-lifecycle_backfill_reason: "missing_status_defaulted_to_needs_review"
-lifecycle_backfilled_at: "2026-08-02"
-last_reviewed_at: "2026-07-26T16:31:46.9873770+09:00"
-last_decision: needs_review
-evidence: "candidate_file:20260726_reasoning_diversity_collapse_llm_game_play.md; status:needs_review"
-next_action: evaluate_in_phase2
-stale_after: "2026-08-25"
+evaluated_at: "2026-08-25T06:39:10+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-25T06:39:10+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-25T06:39:10+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-24"
 supersedes: []
+gate_reason: |-
+  最適手を厳密計算できる 4 ゲーム、4 種の SFT 条件、状態・対戦の二段評価、24 条件中 21 条件という結果まで揃い、推論や単一正解教師が強さと独立に方策多様性を潰す機構を説明できる。
+  AI テストプレイヤーや NPC を勝率だけで評価する盲点へ直接効き、行動・軌跡エントロピーと全最適手 augmentation を小さな検証へ落とせるため、CoopEval 水準の深掘りに進める。
+suggested_post_outline:
+  overview_angle: "推論量や正解率の向上が探索の豊かさを保証せず、教師データの action support が方策崩壊を左右することを実験設計から解説する"
+  analysis_axis: "直接回答/推論付きと単一最適手/全最適手の 2×2 比較を、正解率・行動エントロピー・Elo・軌跡エントロピーの役割差で読む"
+  application_target: "Log_cdx の AI テストプレイヤー/NPC 評価に勝率と別の多様性指標を加え、複数の有効戦略を残す教師・プロンプト設計を probe する"
+  pros_cons: "強さと多様性を分離して測れる一方、三目並べ系の決定論的・完全情報ゲームから複雑なリアルタイムゲームへ一般化できる範囲は未確定"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
