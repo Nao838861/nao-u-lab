@@ -106,7 +106,14 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+reviewed_at: "2026-08-25T02:26:10+09:00"
+phase2_pass_count: 0
+decision: no_action
+reason: Phase 2 の pass candidate が 0 件のため、投稿前レビューおよび Slack 投稿の対象なし
+posted: []
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
