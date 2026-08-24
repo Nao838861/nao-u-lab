@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-25T00:28:20+09:00",
+  "updated_at": "2026-08-25T02:28:27+09:00",
   "reviewed_source_ts": [
+    "1787549421.981719",
     "1787578096.431759",
     "1787571086.965349",
     "1787563773.446379",
@@ -753,6 +754,53 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-25T02:28:27+09:00",
+      "selected": {
+        "id": "sr-1787549421-7a14a3237a",
+        "source_ts": "1787549421.981719",
+        "title": "Building A Better Future postmortem — option 数ではなく結果まで追跡可能な方針数で agency を測る",
+        "reason": "source が slack_api/shared-reads、score 13、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新の高品質投稿だったため1件だけ選んだ。自由入力や option 数を agency と同一視せず、同一 seed の strict／maximal accusation／avoidant policy が翌日以降の state・資産・NPC・職場評価を分けるかを見る提案が、次の制度 simulation または分岐 prototype に既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14だが、risk_control=1で必須閾値2を満たさず、consumer_phase・比較対象となる具体的な game artifact・期限を現在の cycle から指定できないため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、14 downloads、公開 comment なし、友人3人の feedback、3語自由入力と用途の薄い option、長い定型文、仕事 loop 偏重という失敗を、初日の quota から一日一 mechanic へ増やす案と、同一 seed の3 policy replayへ変換しているため relevance と actionability は3とした。ただし改善版の telemetry、離脱地点、option 利用率、方針到達率、before／after比較はなく、quota 案も未検証なので evidence は2とした。probe-20260717-player-intent-action-response は入力から observable world response まで、probe-20260626-mindstudio-executable-branch-preview は alternate branch の state-action-next-state trace、probe-20260712-headless-opponent-mechanic-matrix は複数 policy と core mechanic 利用、probe-20260706-paperclaw-prototype-hypothesis-contract は事前仮説と measured verdict を既に扱う。一方、UI option 数と翌日以降まで持続する方針分岐数を直接対比する点は完全には重複しないため non_redundancy は2とした。active_probes が327件あり、適用先のないまま3日縦切りと3 policyを新たな probe にすると評価面だけを増やすため risk_control は1とした。",
+      "defer_condition": "次の制度 simulation、仕事 loop、分岐 narrative、または自由入力を持つ具体的な playable artifact で、同一開始 state から2つ以上の player policy を replay でき、option 数は多いのに翌日以降の結果が収束する疑いがあり、既存4 controlsだけでは option burden と persistent agency を分けられない時に限り、一回限りの比較 metric として再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787549421-7a14a3237a.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787549421.981719",
+        "https://itch.io/devlog/1630954/12-update-postmortem.amp",
+        "https://hidragiros.itch.io/buildingabetterfuture/devlog/1631179/13-update"
+      ],
+      "existing_controls": [
+        "probe-20260717-player-intent-action-response",
+        "probe-20260626-mindstudio-executable-branch-preview",
+        "probe-20260712-headless-opponent-mechanic-matrix",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、option 数ではなく翌日以降まで持続する方針分岐で agency を見る有用性、極小 feedback と改善前後比較不在の証拠限界、既存 response／branch／policy／hypothesis controls との部分重複、具体 artifact 不在と active probe 増殖 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-24T10:07:11+09:00",
       "selected": {

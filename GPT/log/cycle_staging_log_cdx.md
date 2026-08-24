@@ -116,7 +116,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787549421-7a14a3237a
+    source_ts: "1787549421.981719"
+    title: "Building A Better Future postmortem — option 数ではなく結果まで追跡可能な方針数で agency を測る"
+    reason: "source=slack_api/shared-reads、score=13、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新の高品質投稿。自由入力や option 数ではなく、同一 seed の異なる方針が翌日以降の state を分けるかという検証差を確認するため1件だけ選んだ。Nao_u の明示的な重要評価はローカル raw では未確認。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "合計14だが risk_control=1で採用必須条件を満たさない。14 downloads・公開 comment なし・友人3人という極小 feedback で、改善版 telemetry／方針到達率／before-after 比較もない。player-intent-action-response、executable-branch-preview、headless-opponent-mechanic-matrix、prototype-hypothesis-contract が response・branch・policy・測定判定を既に扱う一方、option burden と翌日以降まで持続する agency の直接比較には部分的な固有差がある。ただし現在の cycle には3日縦切り／3 policy replayを適用する具体的 game artifact がなく、active_probes 327件に評価面だけを追加するため state-only review とする。"
+  defer_condition: "次の制度 simulation、仕事 loop、分岐 narrative、または自由入力を持つ playable artifact で、同一開始 state から2つ以上の policy を replay でき、option 数は多いのに翌日以降の結果が収束する疑いがあり、既存4 controlsだけでは option burden と persistent agency を分けられない時に一回限りの比較 metric として再評価する。"
+  change:
+    summary: "reviewed_source_ts と採点・defer理由のみ更新。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
