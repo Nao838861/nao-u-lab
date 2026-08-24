@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2608.10669v1"
 collected_at: "2026-08-25T08:48:47+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [ai-agent, evaluation, automated-testing, harness, safety]
+evaluated_at: "2026-08-25T08:53:01.7891158+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-25T08:53:01.7891158+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-25T08:53:01.7891158+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-24"
+supersedes: []
+gate_reason: >-
+  問題設定、exposure / execution / observation / adjudication の分解、service sandbox と state evidence、
+  1,661 case・6 model・3 harness の評価まで揃い、ゲーム用 agent harness へ具体的に移せる。約4000字で方法と限界を自立して説明できる。
+suggested_post_outline:
+  overview_angle: "単一 ASR が隠す測定誤差を、実行可能な攻撃と状態証拠で分解する評価設計"
+  analysis_axis: "攻撃生成・隔離実行・receipt/final state・adjudication の因果鎖と、harness/evidence view 依存性"
+  application_target: "AI playtester と headless game agent の違反・攻略・失敗を、発言ログではなく game-state diff と action receipt で判定する回帰 harness"
+  pros_cons: "状態に接地した再現性と診断性が強み。service sandbox 構築コスト、対象 surface の偏り、ASR の一般化限界が弱み"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
