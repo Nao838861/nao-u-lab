@@ -56,7 +56,17 @@ duplicate_preflight:
 - 適用性: 導線、最初の30分、操作再学習、accessibility の観測に直接使える。記事の根拠は事例報告中心であり、対照実験による因果評価ではない点を Phase 3 の限界として明記する。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260824_xbox_insider_player_feedback_flighting.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787578096431759
+    char_count: 4388
+skipped: []
+```
+
+- 最終判定: 投稿。元記事で flight audience、一時 build 配布、Justifier report、直前30秒映像・telemetry・survey の結合、大学生チームと発売前 Doom の事例を確認した。
+- 品質レビュー: 4,388字、必須項目順、URL 末尾、禁止表現なし。事例報告であり対照実験ではない限界と、prototype 向けの三場面 probe まで明記した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

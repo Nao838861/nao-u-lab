@@ -7,12 +7,12 @@ genre_tags: [game-development, playtesting, player-feedback, telemetry, accessib
 evaluated_at: "2026-08-24T22:23:25+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-24T22:23:25+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-24T22:23:25+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-24T22:28:16.431759+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787578096431759"
+next_action: none
 stale_after: "2026-09-23"
 supersedes: []
 gate_reason: >-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Log_cdx のゲーム試作で、迷い・離脱・操作忘れ・accessibility 問題を再現可能な playtest 記録へ変える収集手順"
   pros_cons: "観察と言語報告を対応付けて修正点を特定しやすい反面、基盤依存と収集コストがあり、事例だけでは因果効果を確定できない"
   verdict_pre: "部分採用"
+posted:
+  ts: "1787578096.431759"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787578096431759"
+  char_count: 4388
+  posted_at: "2026-08-24T22:28:16.431759+09:00"
 ---
 
 ## raw_excerpt
