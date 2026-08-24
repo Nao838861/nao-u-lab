@@ -4,6 +4,26 @@ url: "https://80.lv/articles/how-grabbit-2-simulates-physics-inside-the-unity-ed
 collected_at: "2026-08-25T04:20:37+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, level-design, unity, editor-tools, physics, mcp]
+evaluated_at: "2026-08-25T04:25:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-25T04:25:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-25T04:25:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-24"
+supersedes: []
+gate_reason: |-
+  一時 physics world、局所 scene cache、convex decomposition、非同期 bake、Undo / crash recovery まで、問題と実装上の解決が具体的に揃っている。
+  level dressing、自動 level-building、AI tool の安全な操作境界へ直接適用でき、失敗条件も含めて CoopEval 水準の概要を構成できるため通過とする。
+suggested_post_outline:
+  overview_angle: "配置座標を生成する道具ではなく、編集時だけ動く復旧可能な局所 physics simulation として Grabbit 2 を解説する。"
+  analysis_axis: "初版の全 scene 走査・一時 component 残留・Undo 不安定を、spatial cache、temporary pool、parallel bake、session recovery でどう解いたかを見る。"
+  application_target: "Nao_u_BOT の制作ツールで、prop 配置を非破壊 simulation として試し、結果だけ commit する editor workflow と MCP tool 境界へ適用する。"
+  pros_cons: "利点は自然な配置、多数 object の局所処理、Undo と中断復旧。弱点は collider 近似の品質、bake cost、物理設定差による再現性、AI 操作時の変更範囲管理。"
+  verdict_pre: "部分採用。まず小規模 scene で選択範囲限定・preview・commit/rollback を持つ配置 probe に落とす。"
 ---
 
 ## raw_excerpt

@@ -4,21 +4,21 @@ url: "https://arxiv.org/abs/2605.07926"
 collected_at: "2026-05-29T03:59:57+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent-evaluation, puzzle, tool-use, escape-room, long-horizon]
-evaluated_at: "2026-07-26T07:52:30+09:00"
+evaluated_at: "2026-08-25T04:25:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-07-26T07:52:30+09:00"
+last_reviewed_at: "2026-08-25T04:25:00+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-26T07:52:30+09:00"
-stale_after: "2026-08-25"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-25T04:25:00+09:00"
+stale_after: "2026-09-24"
 supersedes: []
 next_action: revise_or_research
 gate_reason: >-
   escape-room 型の長距離依存、段階的情報開示、未知 tool-use は、パズル設計と headless evaluator の失敗分類へ具体的に接続できる。
-  一方、現 candidate にはタスク構成、採点方法、baseline 結果、失敗分類の実データがなく、評価の中身と結論を CoopEval 水準で再構成できない。
-  一次資料から実験条件と主要結果を補えるまで投稿を保留する。
+  一方、今回の再確認でもタスク構成、採点方法、baseline 結果、失敗分類の実データがなく、評価の中身と結論を CoopEval 水準で再構成できない。
+  保存資料へ実験条件と主要結果が補われるまで投稿を保留する。
 
 ---
 

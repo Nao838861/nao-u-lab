@@ -13,7 +13,92 @@
 - Slack 投稿、品質判定、4000字概要、記憶階層変更は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 7
+pass:
+  - memory/shared_reads_candidates/20260825_grabbit2_editor_physics_level_design.md
+  - memory/shared_reads_candidates/20260825_unreal_custom_motorcycle_system.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260528_robo_cortex_embodied_agent_memory.md
+    reason: "dual-grain memory の実体と比較・定量評価が保存資料にない"
+  - path: memory/shared_reads_candidates/20260529_agent_escape_bench_escape_room_reasoning.md
+    reason: "採点方法、baseline、失敗分類の実データが保存資料にない"
+  - path: memory/shared_reads_candidates/20260529_gamma_world_multi_agent_world_model.md
+    reason: "比較結果、定量値、失敗モードが保存資料にない"
+  - path: memory/shared_reads_candidates/20260529_omniworld_4d_world_model_dataset.md
+    reason: "posted duplicate work: arxiv:2509.12201 / p1778535759606529"
+  - path: memory/shared_reads_candidates/20260530_label_free_px_lets_play_videos.md
+    reason: "特徴抽出、比較条件、相関指標、human study 規模が保存資料にない"
+stale_reviewed:
+  - handoff_id: cha-f0ec9e93fb0702ae
+    path: memory/shared_reads_candidates/20260528_robo_cortex_embodied_agent_memory.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-09-24"
+  - handoff_id: cha-9657427d973e1b65
+    path: memory/shared_reads_candidates/20260529_agent_escape_bench_escape_room_reasoning.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-09-24"
+  - handoff_id: cha-fa0f6f8de14b2343
+    path: memory/shared_reads_candidates/20260529_gamma_world_multi_agent_world_model.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-09-24"
+  - handoff_id: cha-886cf30e998b8e20
+    path: memory/shared_reads_candidates/20260529_omniworld_4d_world_model_dataset.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-09-24"
+  - handoff_id: cha-0468e0c990649d2b
+    path: memory/shared_reads_candidates/20260530_label_free_px_lets_play_videos.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-09-24"
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 5
+  read_ids:
+    - cha-f0ec9e93fb0702ae
+    - cha-9657427d973e1b65
+    - cha-fa0f6f8de14b2343
+    - cha-886cf30e998b8e20
+    - cha-0468e0c990649d2b
+  resolved_ids:
+    - cha-f0ec9e93fb0702ae
+    - cha-9657427d973e1b65
+    - cha-fa0f6f8de14b2343
+    - cha-886cf30e998b8e20
+    - cha-0468e0c990649d2b
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 2
+  malformed_count: 0
+  oldest_collected_at: "2026-08-25T04:20:37+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260825_grabbit2_editor_physics_level_design.md
+    - memory/shared_reads_candidates/20260825_unreal_custom_motorcycle_system.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260825_grabbit2_editor_physics_level_design.md
+    - memory/shared_reads_candidates/20260825_unreal_custom_motorcycle_system.md
+  valid_backlog_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

@@ -4,21 +4,21 @@ url: "https://arxiv.org/abs/2605.28816"
 collected_at: "2026-05-29T03:59:57+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [multi-agent, world-model, simulation, game-ai, realtime]
-evaluated_at: "2026-07-26T07:52:30+09:00"
+evaluated_at: "2026-08-25T04:25:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-07-26T07:52:30+09:00"
+last_reviewed_at: "2026-08-25T04:25:00+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-26T07:52:30+09:00"
-stale_after: "2026-08-25"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-25T04:25:00+09:00"
+stale_after: "2026-09-24"
 supersedes: []
 next_action: revise_or_research
 gate_reason: >-
   agent identity encoding、Sparse Hub Attention、teacher/student 蒸留、24 FPS rollout という手法の中核は抽出できる。
-  しかし現 candidate には比較対象、主要な定量結果、失敗モードがなく、multi-agent game simulation へ採用する条件も切れない。
-  一次資料から評価の中身と結論を補えるまで投稿を保留する。
+  しかし今回の再確認でも比較対象、主要な定量結果、失敗モードが保存資料になく、multi-agent game simulation へ採用する条件を切れない。
+  評価の中身と結論を補える資料が加わるまで投稿を保留する。
 
 ---
 

@@ -4,6 +4,26 @@ url: "https://80.lv/articles/creating-a-custom-motorcycle-system-for-unreal-engi
 collected_at: "2026-08-25T04:21:19+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, unreal-engine, physics, vehicle-design, game-feel, debugging]
+evaluated_at: "2026-08-25T04:25:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-25T04:25:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-25T04:25:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-24"
+supersedes: []
+gate_reason: |-
+  標準 vehicle model の限界を状態列挙で判定し、rider を含む力学系、静止・動摩擦、転倒後の failure play、診断可視化まで一つの設計判断として追える。
+  物理 game feel と custom system の採否を具体場面へ落とせ、成功談だけでなく一年規模のコストと適用境界も分析できるため通過とする。
+suggested_post_outline:
+  overview_angle: "四輪向け標準 model の tuning 失敗から、二輪と rider を全状態で扱う独自 core へ移った判断過程を中心に書く。"
+  analysis_axis: "走行外 state の列挙、補正同士の干渉、摩擦 rule、failure state の遊び化、診断 tool への投資を、model boundary の発見として分析する。"
+  application_target: "Nao_u_BOT の物理 prototype で、標準 component 採用前に全状態を列挙し、例外補正が増えた時点で core model と可視化 tool を同時設計する判断へ使う。"
+  pros_cons: "利点は一貫した game feel、転倒や復帰まで遊びにできること、debug 可能性。弱点は一年規模の実装費、物理知識への依存、標準 engine 更新の恩恵を失うこと。"
+  verdict_pre: "部分採用。独自二輪 system 自体ではなく、状態列挙で model 境界を見抜き、failure play と診断表示を先に試す方法を採る。"
 ---
 
 ## raw_excerpt
