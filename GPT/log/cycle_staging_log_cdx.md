@@ -56,7 +56,19 @@ unreviewed_intake_audit:
 - ゲーム制作では、完成物の品質とは別に playtest・比較・記録といった要求 action の shortfall を監査する具体用途がある。LLM judge agreement と conflict pilot の規模は、Phase 3 で限界として明記する。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted_at: "2026-08-24T16:30:38+09:00"
+posted:
+  - candidate: memory/shared_reads_candidates/20260824_harness_if_instruction_surfaces.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787556626596989
+    char_count: 4056
+skipped: []
+```
+
+- `Harness-IF` を投稿。task success と instruction compliance を分離する rule-level 評価、zero-injection による AP-Acc、shortfall failure mass、surface conflict pilot を原論文で再確認した。
+- 77.1% は shortfall 自体の異常な失敗率ではなく評価機会の多さによる mass であること、surface 順位は9 build・4 conflict pair の pooled tendency で普遍的 hierarchy ではないことを明記した。
+- 投稿前 policy: 4,056字、必須6節・順序・末尾URL・禁止語・duplicate preflight `continue` を通過。スレッド返信なし、1回の `chat.postMessage` で完了。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
