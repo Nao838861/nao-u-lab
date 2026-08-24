@@ -4,6 +4,26 @@ url: "https://itch.io/blog/1615249/a-giant-postmortem-for-6-micro-visual-novels-
 collected_at: "2026-08-24T12:05:46+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, postmortem, visual-novel, engine-selection, rapid-prototyping, accessibility]
+evaluated_at: "2026-08-24T12:09:22+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-24T12:09:22+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-24T12:09:22+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-23"
+supersedes: []
+gate_reason: >-
+  6本の短編を4種のengineで完成・exportまで通した比較なので、学習曲線、配布、文書、accessibility、既存技能との相性を実制作の失敗例込みで抽出できる。
+  機能表では見えない「短いplayable sliceでend-to-endの制作リスクを測る」選定法として具体的に適用でき、各engineの差と限界を保った約4000字の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "6本のmicro visual novelを完成させる反復実験から、engine選定を機能比較ではなく完成・export・公開までの経路で測る"
+  analysis_axis: "低圧な短編制作による学習、pluginが隠す本体理解、export failure、documentation検索性、accessibility、既存技能との適合を分離して比較する"
+  application_target: "Log_cdxのゲーム制作で新engine・framework・toolchainを採用する前に、同規模の短いplayable sliceを複数作り、編集から配布までの失敗点を選定表へ戻す"
+  pros_cons: "利点は実制作に基づく選定軸と失敗知が得られること。欠点はVN中心の個人制作事例で、性能・大規模運用・共同制作の比較には直接一般化できないこと"
+  verdict_pre: 部分採用
 ---
 
 ## raw_excerpt
