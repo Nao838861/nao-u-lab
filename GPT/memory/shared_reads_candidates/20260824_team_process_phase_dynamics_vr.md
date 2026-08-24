@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2608.18660"
 collected_at: "2026-08-24T09:50:28+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-research, playtesting, player-experience, collaboration, vr, llm-analysis]
+evaluated_at: "2026-08-24T09:55:29+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-24T09:55:29+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-24T09:55:29+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-23"
+supersedes: []
+gate_reason: >-
+  意味的変化点、TF-IDF/NMF、代表発話、ローカル LLM、人手確認、操作ログ照合という分析経路は具体的で、協力ゲームのプレイテストへ適用しやすい。
+  ただし現 candidate には実験規模、検出結果、妥当性評価、主要な結論がなく、CoopEval 水準の概要を根拠付きで閉じられないため一次資料の補完まで保留する。
 ---
 
 ## raw_excerpt
