@@ -102,7 +102,71 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、index entry と per-file atom index の対応を検証した。参照 ID は延べ143件・一意87件で missing は0件、Markdown link は0件だった。代表語 記憶 / ゲーム設計 / 敵パターン は取得でき、評価軸は本文に存在しないだけで mojibake residue は検出されなかった。"
+  - "memory/atoms.jsonl と per-file .md / index.jsonl の2957件ミラーを監査した。missing / parse error / content conflict はすべて0件。raw normalized duplicate 40群80行は lifecycle/content fold 済みで、fresh check でも duplicate cluster / canonical overlay は各45群で一致した。"
+  - "shared-reads candidate 1418件の lifecycle を dry-run 監査した。posted 693 / ready_to_post 9 / postponed 203 / failed 511 / needs_review 2、書換え必要件数は0件だった。title canonical index 108群、mixed duplicate queue 25群も check mode で一致した。"
+  - "open duplicate group / stale triage / group-action queue を規定順で再生成した。期限超過 open candidate 4件は既存 deferred group lease 2件（retry_after 2026-09-19T14:08:16+09:00）に包含され、新規 group / candidate handoff は0件だった。"
+  - "memory/raw の30日超ファイル242件を確認した。原文・provenance の参照先であるため移動せず、archive候補の把握だけに留めた。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending を監査した。双方0件のため status 更新はなかった。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 9
+    dormant: 1
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読みで代表語3件を取得でき、評価軸は単純に不在で index source に新規破損なし。既知の sr-1776127289-4d9239b255 は raw source 自体に U+FFFD がある局所欠損、gr-1777083728-44d444ab7a は意図された ??? による false positive。"
+  display_or_tooling_status: "none。PowerShell UTF-8 読みと deterministic validator の双方で破損を検出しなかった。"
+candidate_lifecycle:
+  files: 1418
+  status_counts:
+    posted: 693
+    ready_to_post: 9
+    postponed: 203
+    failed: 511
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_for_reassessment: 4
+raw_archive_audit:
+  older_than_30_days: 242
+  by_area:
+    web_research: 217
+    headless_eval: 16
+    slack_api: 6
+    slack_archive: 1
+    game_eval: 1
+    root_state_file: 1
+  action: "preserve_in_place"
+  reason: "memory/raw 自体が原文・provenance の保持層であり、既存 atom / candidate evidence が path を参照する。Phase 4a では移動せず archive 候補件数だけ記録した。"
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
