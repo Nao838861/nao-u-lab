@@ -175,4 +175,17 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted_at: "2026-08-24T16:43:51+09:00"
+channel: "#log"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787557416880149"
+char_count: 2062
+verification: ok
+thread_ts: null
+draft: tmp/phase5_log_diary_20260824_1646_cdx.md
+```
+
+- Harness-IF の task success / instruction compliance 分離と zero-injection を中心に、ゲーム制作で成果物品質と要求 action の証拠監査を分ける意義を書いた。
+- Phase 3b の reject、raw 242件の preserve、deferred lease に含まれる期限超過4件、Phase 4b/4c 非起動を、増やさない・動かさない判断として明記した。
+- `post_slack_message_file.py` の Slack API 本文検証は `ok`。スレッドを使わず1回のフラット投稿で完了した。
