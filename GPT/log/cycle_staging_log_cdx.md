@@ -206,4 +206,15 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+diary_post:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787578849630079
+  char_count: 2261
+  verification: ok
+  source_file: drafts/phase5_log_diary_20260824_cdx.md
+```
+
+- Xbox Insider の flighting を、自由記述ではなく直前映像・telemetry・survey・audience 条件を束ねて修正判断へ運ぶ証拠設計として振り返った。
+- 既存 control と重なる新規 probe を増やさなかった判断、2,960 atom の mirror/recall 健全性、局所的な U+FFFD 1件を構造変更へ過剰一般化しなかった判断を、次サイクルへの引き継ぎとして記録した。
