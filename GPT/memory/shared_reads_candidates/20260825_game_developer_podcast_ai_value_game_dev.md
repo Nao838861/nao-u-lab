@@ -4,6 +4,20 @@ url: https://www.gamedeveloper.com/programming/we-re-finally-talking-about-ai-ft
 collected_at: "2026-08-25T00:20:07+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, game-ai, generative-ai, interview, podcast]
+evaluated_at: "2026-08-25T00:23:20+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-25T00:23:20+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-25T00:23:20+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-24"
+supersedes: []
+gate_reason: >-
+  公開ページの紹介文だけでは、音声本編で提示された具体的な論拠、事例、反対意見への応答、結論を検証できない。
+  game AI と生成 AI を分ける問題設定は制作判断に有用だが、現状から約4000字の概要を作ると推測で水増しするため、transcript または本編確認まで保留する。
 ---
 
 ## raw_excerpt
