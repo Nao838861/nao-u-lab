@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-24T07:53:02+09:00",
+  "updated_at": "2026-08-24T10:07:11+09:00",
   "reviewed_source_ts": [
+    "1787525301.067769",
     "1787517641.584509",
     "1779887506.631529",
     "1787503228.368619",
@@ -745,6 +746,52 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-24T10:07:11+09:00",
+      "selected": {
+        "id": "sr-1787525301-a4cbc30841",
+        "source_ts": "1787525301.067769",
+        "title": "Memory Commitment Benchmark — persist／ephemeral／verify／clarify の境界",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、memory・agent・operation・evaluation・game-design の5優先タグを持つ最新の高品質投稿だったため1件だけ選んだ。恒久記憶への commit、一時利用、変化する外部状態の再確認、本人しか解けない意図の質問を分け、判断 label と実際の tool action の不一致まで測る点が、次の memory ingest または game lesson 再利用に既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15だが、risk_control=1で必須閾値2を満たさないため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は primary 140件、held-out／contrast 140件、blind注釈一致97.1%・kappa 0.962、paired bootstrap／McNemar／Holm補正、四 action 別 error と label–tool agreement を保持し、over-memory と under-asking を総合 accuracy から分離しているため relevance・actionability・evidence は3とした。probe-20260515-writeback-boundary は恒久 writeback の昇格境界、probe-20260531-memory-stage-risk-classifier は ingestion／consolidation／retrieval の失敗段、probe-20260619-agentic-state-authority-boundary は authority source と ask-user 等の stop condition、probe-20260604-memory-action-loop-evidence は memory が変えた実 action の証拠を既に扱う。一方、verify と clarify を不確実性の source-of-truth で分け、判断 label と file write／current note／source check／user-input request の一致を測る組合せは既存 control に明記されず non_redundancy は2とした。ただし論文は小規模・synthetic・英語で、MCB-Act も tool 選択までしか実行せず downstream 効用を測らない。現在は比較可能な日本語 fixture、実際の memory policy 差分、長期 NPC／player model、game lesson 再利用 artifact がなく、active_probes も326件ある。四分類 schema や各15件・計60件 fixture を先に作ると、対象なしに評価面と保守負荷だけを増やすため risk_control は1とした。次の具体 artifact が生じるまで state-only で defer する。",
+      "defer_condition": "次の memory ingest 回帰、長期 NPC／player model、または過去 game lesson を現行 build へ再利用する具体的 artifact で、同じ item の判断 label と実 actionを比較でき、既存4 controlsだけでは verify と clarify の誤 routing または silent persist を説明できない時に限り、実データの少数 case へ限定した一時 metric として再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787525301-a4cbc30841.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787525301.067769",
+        "https://arxiv.org/abs/2608.19564"
+      ],
+      "existing_controls": [
+        "probe-20260515-writeback-boundary",
+        "probe-20260531-memory-stage-risk-classifier",
+        "probe-20260619-agentic-state-authority-boundary",
+        "probe-20260604-memory-action-loop-evidence"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、persist／ephemeral／verify／clarify の有用性、label–tool gap、既存 writeback／stage／authority／action-loop controls との部分重複、比較 artifact 不在と fixture 先行増殖 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-24T07:53:02+09:00",
       "selected": {

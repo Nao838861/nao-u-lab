@@ -66,7 +66,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787525301-a4cbc30841
+    source_ts: "1787525301.067769"
+    title: "Memory Commitment Benchmark — persist／ephemeral／verify／clarify の境界"
+    reason: "score 12 の未レビュー最新投稿で、memory・agent・operation・evaluation・game-design の5優先タグを持つ。恒久 commit、一時利用、外部状態の再確認、本人への質問、および判断 label と tool action の不一致が現在の memory 運用に固有差を作るか1件だけ確認した。Nao_u の明示評価はローカル raw では確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 1
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "合計15だが risk_control=1で必須閾値を満たさない。verify と clarify の source-of-truth 分離、および label–tool agreement は既存 control にない固有差だが、論文は小規模・synthetic・英語で downstream 実行を測らない。現在は比較可能な日本語 fixture、memory policy 差分、長期 NPC／player model、game lesson 再利用 artifact がなく、active_probes 326件の上へ60件 fixtureや四分類 schemaを足すと評価面だけが増える。"
+  change:
+    summary: "reviewed_source_ts、採点、既存4 controlsとの部分重複、比較 artifact 不在による defer 条件だけを state に記録した。active_probes、ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
