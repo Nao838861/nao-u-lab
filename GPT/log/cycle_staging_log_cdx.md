@@ -119,7 +119,35 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778705953-b774452a72
+    source_ts: "1778705953.161159"
+    title: "fladdict『ポーカーは配られた手札で勝負するゲームではない』— bankroll と試行細分化"
+    reason: "source が slack_api/shared-reads、score 15、未レビューで、harness・game-design・agent・operation・evaluation の5優先タグを持つため1件だけ選んだ。単発の成功／失敗を難易度判定にせず、試行単位・総試行数・1回の失敗で回復不能になる確率を分ける観点が次の反復型ゲーム評価を変えるか確認した。Nao_u の明示評価はローカル raw では確認できなかった。"
+  scores:
+    relevance: 2
+    actionability: 2
+    evidence: 1
+    non_redundancy: 2
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: defer
+  decision_reason: "合計11で採用条件14に届かず、risk_controlも必須閾値2を下回る。単一tweetをKelly criterionやergodicityへ接続した投稿者自身の推論であり、graze_logの成功率・継続率・risk表示before／after・初見playerの不条理知覚は未測定。既存policy／milestone／perception controlsと部分重複し、比較可能な反復型playable artifactもないため、state-only reviewに留めた。"
+  change:
+    summary: "reviewed_source_tsと、試行粒度／bankroll観点の局所有用性、証拠限界、既存controlsとの部分重複、比較artifact不在とactive probe増殖riskに基づくdefer理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

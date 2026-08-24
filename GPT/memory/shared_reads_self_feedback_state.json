@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-25T02:28:27+09:00",
+  "updated_at": "2026-08-25T04:36:43+09:00",
   "reviewed_source_ts": [
+    "1778705953.161159",
     "1787549421.981719",
     "1787578096.431759",
     "1787571086.965349",
@@ -754,6 +755,51 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-25T04:36:43+09:00",
+      "selected": {
+        "id": "sr-1778705953-b774452a72",
+        "source_ts": "1778705953.161159",
+        "title": "fladdict『ポーカーは配られた手札で勝負するゲームではない』— bankroll と試行細分化",
+        "reason": "source が slack_api/shared-reads、score 15、未レビューで、harness・game-design・agent・operation・evaluation の5優先タグを持つため1件だけ選んだ。単発の成功／失敗を難易度判定にせず、試行単位、総試行数、1回の失敗で回復不能になる確率を分ける観点が、次の反復型ゲーム評価に既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 2,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "defer",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_controlも必須閾値2を下回るため、新規probe・metric・lease・directiveは追加しない。shared-reads本文は、1 grazeとstage全体のどちらを試行単位にするか、総試行数、1回の失敗による破産、risk表示を分ける問いへ変換しており、反復型game harnessへの関連性と局所的な実行可能性はある。一方、外部根拠は単一tweetで、Kelly criterion・bankroll fractionation・ergodicity economicsとの接続も投稿者自身の推論であり、graze_logでの成功率、継続率、risk表示のbefore／after、初見playerの不条理知覚を測っていないためevidenceは1とした。probe-20260525-center-input-three-state-bad-policyは複数player policy、probe-20260516-milestone-observation-logは到達・停止・復帰、probe-20260712-deception-intent-perception-confoundは設計意図とunfairness知覚の分離を既に扱う。ただし試行粒度と失敗時bankroll消費を直接対比する点は完全には重複しないためnon_redundancyは2とした。現在のstagingには比較可能な反復型playable diff、残機／gauge、fixed-seed trace、player観測がなく、直後のPhase 4aはmemory cleanupで実consumerではない。active_probesが327件、Phase 4a向けpending leaseが1件ある状態で、Kelly比や並列agent全滅を一般的な採用gateにすると、測定不能な経済比喩と確認負荷を増やすためrisk_controlは1とした。",
+      "defer_condition": "次の反復型game prototypeで、残機・gauge・retry回数など有限の試行bankrollがあり、同一seedで少なくとも2つの試行粒度またはrisk表示を比較でき、既存policy／milestone／perception controlsだけでは単発失敗と回復不能構造を分けられない時に限り、一回限りの局所metricとして再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1778705953-b774452a72.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1778705953.161159",
+        "https://x.com/fladdict/status/2054553243951513702"
+      ],
+      "existing_controls": [
+        "probe-20260525-center-input-three-state-bad-policy",
+        "probe-20260516-milestone-observation-log",
+        "probe-20260712-deception-intent-perception-confound"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsと、試行粒度／bankroll観点の局所有用性、単一tweetと未測定の自己適用という証拠限界、既存policy／milestone／perception controlsとの部分重複、比較artifact不在とactive probe増殖riskに基づくdefer理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-25T02:28:27+09:00",
       "selected": {
