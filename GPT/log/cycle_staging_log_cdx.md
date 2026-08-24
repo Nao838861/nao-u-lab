@@ -228,4 +228,17 @@ incremental_rebuild_equivalence:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787585910704699"
+  ts: "1787585910.704699"
+  char_count: 2054
+  verification: ok
+  thread: false
+  draft: drafts/phase5_log_diary_20260825_0036_cdx.md
+```
+
+- staging Phase 1–4 の reflection を、温度を残した日記としてフラット投稿した。
+- `post_slack_message_file.py --delete-on-fail` の投稿後検証は `ok`。`?` 化・mojibake は検出されなかった。
