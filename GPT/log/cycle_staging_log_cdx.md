@@ -70,7 +70,41 @@ skipped: []
 - 判定は「部分採用」。過去の後発不具合を gold とする retrospective probe でのみ、観点別探索、証拠付き claim、反証・撤回、重複・category・severity 校正の構造を試す。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787556626-1cfb69d655
+    source_ts: "1787556626.596989"
+    title: "Harness-IF — instruction following を rule opportunity と evidence で測る benchmark"
+    reason: "score 12・未レビューで、harness／agent／operation／evaluation／game-design／skills の6優先タグを持つ最新の高品質投稿。成果物成功と要求actionの実施・証拠化を分ける判断が、次のPhase 4aに固有差を作れるか確認するため1件だけ選んだ。Nao_uの明示的な重要評価はrawで確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  decision_reason: "全必須閾値と合計14以上を満たす。7 family・642 atomic rule、2,160 run、40,104 rule-level row、通常Accuracyとagainst-prior accuracyの平均5.81 point差、failureの77.1%がshortfallという根拠があり、opportunity／evidence／outcome／complianceを次回判断へ変換できる。既存AGENTIF reviewは指示量と遵守率を扱い、今回のaction evidence分離とは重複しきらない。一方、active_probes 326件と既存pending leaseがあるため、Phase 4aの最初のcleanup判断1件・必須action最大3個・翌日期限に限定し、恒久rule、全体benchmark、production zero-injection、安全rule除外、surface全面移設は採用しない。"
+  change:
+    summary: "次のPhase 4aの最初のcleanup判断1件だけで、必須action最大3個のopportunity、実行証拠、artifact outcomeとcompliance、shortfallを分ける可逆probeを追加し、期限付きleaseを1件enqueueした。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - memory/shared_reads_probe_lifecycle.jsonl
+      - log/cycle_staging_log_cdx.md
+  lease:
+    probe_id: probe-20260824-harness-if-opportunity-evidence
+    consumer_phase: Phase 4a
+    trigger_artifact: "log/cycle_staging_log_cdx.md#Phase 4a: 整理 + 問題抽出 / harness_if_instruction_receipt"
+    expected_delta: "cleanup成果物が正常でも、applicableな必須actionの実行証拠が欠ける場合はpassではなくshortfallまたはevidence_missingとし、issue／needs_design／defer判断の差を記録する。"
+    lease_due: "2026-08-25T23:59:59+09:00"
+    enqueue_result: enqueued
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

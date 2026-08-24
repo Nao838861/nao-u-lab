@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-24T16:36:00+09:00",
+  "updated_at": "2026-08-24T18:35:00+09:00",
   "reviewed_source_ts": [
+    "1787556626.596989",
     "1778303440.276719",
     "1787541323.680259",
     "1787533356.965689",
@@ -23894,6 +23895,58 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-08-24T18:35:00+09:00",
+      "selected": {
+        "id": "sr-1787556626-1cfb69d655",
+        "source_ts": "1787556626.596989",
+        "title": "Harness-IF — instruction following を rule opportunity と evidence で測る benchmark",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、harness・agent・operation・evaluation・game-design・skills の6優先タグを持つ最新の高品質投稿だったため1件だけ選んだ。成果物の成功と、要求された action の実施・証拠化を分け、applicability、shortfall、default 行動との偶然一致まで区別する点が、次の Phase 4a で健康状態だけを見て required action の抜けを通過させる判断を小さく変えられるか確認する。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録は raw で確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "adopt_probe",
+      "decision_reason": "合計16で全必須閾値を満たす。Harness-IF は7 family・642 atomic rule、12 model build×60 item×3 round、40,104 rule-level rowを使い、通常 Accuracy と against-prior accuracy の平均5.81 point差、8,440 failure の77.1%が要求 action の shortfall だったことを報告しており、完成物だけでは隠れる process defect を見る根拠と具体的な判定単位がある。judge 依存と item selection optimism は本文で限界として明示されているため、全rule計測やsurface順位付けには広げない。既レビュー AGENTIF は指示長・constraint数と遵守率低下を扱い、phase prompt の output check は最終項目を列挙するが、applicable opportunity、action evidence、artifact success と compliance の分離は直接扱わないため non_redundancy=2。active_probes 326件と既存 Phase 4a pending lease 1件があるため risk_control=2とし、次の Phase 4a の最初のcleanup判断1件で重要actionを最大3個だけ監査し、期限後はreceiptで閉じる。恒久ルール、全体benchmark、productionでのzero-injection、安全rule除外、surface移設は行わない。",
+      "evidence_sources": [
+        "memory/atoms.jsonl#id=sr-1787556626-1cfb69d655",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787556626.596989",
+        "https://arxiv.org/abs/2608.11727v1"
+      ],
+      "existing_controls": [
+        "review:sr-1778285008-7920fb4ad8",
+        "phases/phase3b_self_feedback.md#出力チェック",
+        "probe-20260530-worker-bus-contract-observer"
+      ],
+      "change": {
+        "type": "bounded_probe",
+        "summary": "次の Phase 4a の最初のcleanup判断1件だけで、重要な必須actionを最大3個選び、opportunity、実行証拠、artifact outcome と compliance、shortfallを分ける可逆probeを追加し、期限付きleaseを1件作成した。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "memory/shared_reads_probe_lifecycle.jsonl",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": {
+        "probe_id": "probe-20260824-harness-if-opportunity-evidence",
+        "consumer_phase": "Phase 4a",
+        "trigger_artifact": "log/cycle_staging_log_cdx.md#Phase 4a: 整理 + 問題抽出 / harness_if_instruction_receipt",
+        "expected_delta": "cleanup成果物が正常でも、applicableな必須actionの実行証拠が欠ける場合はpassではなくshortfallまたはevidence_missingとし、issue／needs_design／defer判断の差を記録する。",
+        "lease_due": "2026-08-25T23:59:59+09:00",
+        "enqueue_result": "enqueued"
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -27821,6 +27874,18 @@
         "原文到達性、superseded 除外、game-rights／禁止事項、headless 成功と player experience の分離のうち該当する protected slice を一つ選び、before／after 比較がなければ needs_design を立てず defer し、DCR field増殖や全体 replayへ広げなかったか。"
       ],
       "expires_after": "Resolve after the next Phase 4a receipt, including no_applicable_issue or measurement_gap; do not carry this lease into a later cycle."
+    },
+    {
+      "id": "probe-20260824-harness-if-opportunity-evidence",
+      "created_at": "2026-08-24T18:35:00+09:00",
+      "source_ts": "1787556626.596989",
+      "scope": "next Phase 4a memory cleanup only; inspect the first cleanup, issue, or needs_design decision and at most three important required actions from the applicable phase prompt; do not create a full compliance benchmark, run zero-injection on production tasks, remove safety rules, relocate all rules between surfaces, add a directive, or persist a new scoring schema",
+      "questions": [
+        "最初のcleanup判断1件について、適用されるphase promptから損害の大きい必須actionを最大3個だけ選び、各actionのopportunityをapplicable／not_applicableで示し、applicableならcommand output、path、staging sectionのいずれか1つを実行証拠として結んだか。",
+        "cleanup成果物やhealth結果の成功とinstruction complianceを分け、applicableなactionの証拠がない場合はpass扱いせずshortfall／evidence_missing／executed_but_unrecordedのいずれかにしたか。",
+        "普段から行うdefault actionを配置surfaceの効果と誤認せず、分類後にissue／needs_design／deferのbefore／after判断差を記録したか。該当actionがなければnot_applicableで閉じ、productionのzero-injection、安全rule除外、全rule計測へ広げなかったか。"
+      ],
+      "expires_after": "Resolve after the next Phase 4a harness_if_instruction_receipt, including not_applicable; do not carry this lease beyond 2026-08-25T23:59:59+09:00."
     }
   ]
 }
