@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-24T12:20:25+09:00",
+  "updated_at": "2026-08-24T14:36:12+09:00",
   "reviewed_source_ts": [
+    "1787541323.680259",
     "1787533356.965689",
     "1787525301.067769",
     "1787517641.584509",
@@ -23800,6 +23801,52 @@
       "anti_bloat_check": {
         "adds_permanent_rule": false,
         "replaces_or_simplifies_existing": true,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-24T14:36:12+09:00",
+      "selected": {
+        "id": "sr-1787541323-6bcab502e0",
+        "source_ts": "1787541323.680259",
+        "title": "6本のmicro VN比較 — 機能表ではなく完成・export・復旧でengineを選ぶ",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補から1件だけ選んだ。memory・harness・game-design・operation・evaluation の5優先タグを持ち、未知engineを機能表やeditor previewで選ばず、短い完成作、配布targetへのexport、障害からの復旧まで通す観点が、次のengine／framework／renderer／動画toolchain選定に既存controlと異なる判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカルrawでは確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の下限には届くが、risk_control が必須閾値2を下回るため、新規probe・metric・lease・directiveは追加しない。shared-reads本文は、Ren'Pyで15本を公開した作者がGodot＋Dialogic 2、Decker、Light.vn、Narratを6本のmicro VNで試し、会話までの速さ、下層engineの理解、GUI変更、公開文書の検索性、target OS／webへのexport、accessibility、既存project流用時の隠れ依存を、完成・失敗・復旧の具体例へ接続する。次のtool選定で第1sliceを最短の操作可能作、第2sliceを非標準要素＋clean build＋配布artifactとし、『始めやすい』と『壊れた時に直して届けられる』を分ける行動へ直接変換できるためrelevance・actionabilityは3とした。一方、作品ごとにword数、締切、要求機能、体調、使用回数が異なる単一作者のpostmortemで、同一課題・同一時間の比較、build成功率、復旧時間、大規模保守、共同制作の測定がないためevidenceは2。probe-20260518-runtime-verifiable-production-slicesはvisual／code／interaction／runtime証拠を、probe-20260709-gameenginebench-runtime-integration-gateはbuild／launchとfixed traceによるruntime integrationを、probe-20260708-toolbenchx-recoverable-hazard-cardはclean-path成功と復旧経路を、probe-20260626-meta-horizon-friction-layer-triageはdeveloper setup／build／content pipelineの摩擦層を既に扱う。ただしtool選定時に上層pluginでの初回成功と下層engineへ降りた修正、配布targetまでを二段sliceで比較する点は直接要求されずnon_redundancyは2とした。現在のstagingには比較対象tool、同一60秒scene、clean build、target artifact、復旧traceがなく、直後のPhase 4aはmemory cleanupで実consumerではない。active_probesは326件あり、Phase 4a向けpending leaseも1件あるため、具体artifactなしに二段sliceを全prototypeへ要求すると確認負荷と過剰な着手gateを増やす。よってrisk_controlは1とし、state-only deferで閉じる。",
+      "defer_condition": "次に新engine、framework、renderer、動画toolchainの具体的な選定があり、同じ最小sceneを候補toolで完成・clean build・予定targetへexportでき、既存4 controlsだけでは上層での開始速度と下層での修正可能性を分けて採否できない時に限り、artifact-localな二段slice metricとして再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787541323-6bcab502e0.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787541323.680259",
+        "https://itch.io/blog/1615249/a-giant-postmortem-for-6-micro-visual-novels-or-on-trying-out-new-vn-engines"
+      ],
+      "existing_controls": [
+        "probe-20260518-runtime-verifiable-production-slices",
+        "probe-20260709-gameenginebench-runtime-integration-gate",
+        "probe-20260708-toolbenchx-recoverable-hazard-card",
+        "probe-20260626-meta-horizon-friction-layer-triage"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsと、完成・export・復旧まで通すtool選定の有用性、単一postmortemの証拠限界、既存runtime／integration／recovery／friction controlsとの部分重複、比較artifact不在と既存pending leaseによるdefer理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
     }

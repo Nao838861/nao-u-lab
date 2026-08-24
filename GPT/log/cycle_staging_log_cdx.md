@@ -66,7 +66,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787541323-6bcab502e0
+    source_ts: "1787541323.680259"
+    title: "6本のmicro VN比較 — 機能表ではなく完成・export・復旧でengineを選ぶ"
+    reason: "score 10の最新未レビュー1件。未知toolを機能表やeditor previewで選ばず、短い完成作、配布targetへのexport、障害復旧まで通す観点が次回のtool選定に判断差を作れるか確認した。Nao_uの明示評価はローカルrawで未確認。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "数値上は合計14だがrisk_controlが必須閾値2未満。単一作者・条件不統一のpostmortemであり、既存runtime／integration／recoverable-hazard／friction controlsと部分重複する。比較対象tool、同一scene、clean build、target artifact、復旧traceが現在なく、active probe 326件とPhase 4a向けpending lease 1件があるため、具体artifactなしの二段slice probeは追加しない。次の具体的tool選定で既存controlsだけでは開始速度と下層修正可能性を分けられない時に限り再評価する。"
+  change:
+    summary: "reviewed_source_tsとdefer理由・再評価条件だけをstateへ記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
