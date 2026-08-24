@@ -69,7 +69,41 @@ skipped: []
 - 品質レビュー: 4,388字、必須項目順、URL 末尾、禁止表現なし。事例報告であり対照実験ではない限界と、prototype 向けの三場面 probe まで明記した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787571086-be226bcf0d
+    source_ts: "1787571086.965349"
+    title: "Temporal augmentations for streamed video-game agents — frame-wise noise と時間相関 corruption の分離"
+    reason: "source=slack_api/shared-reads、score=13、未レビューで、memory・harness・game-design・agent・operation・evaluation の6優先タグを含む8タグを持つ最新候補だったため1件だけ選んだ。時間相関 corruption と milestone／復帰計測が既存 control と異なる判断差を作るか確認した。Nao_u の明示評価は raw で確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用下限14に届かず、non_redundancy と risk_control も必須閾値2未満。2 game・3 task、複数 demonstration 数、clean／standard／streaming／combined、lag／人工破損の比較と大きな改善幅は具体的だが、milestone・復帰・clean/corruption境界・temporal trace・fixed trace は既存5 probeが既に扱う。frame-wise と時間相関 noise の直接比較だけは固有だが、現 staging に画面入力agent・同一replay・injectorの比較artifactがなく、active_probes=327、Phase 4a pending lease=2のため、追加controlは判断差より確認負荷とsynthetic artifactへの過適合を増やす。"
+  existing_controls:
+    - probe-20260516-milestone-observation-log
+    - probe-20260610-gui-corruption-clean-run-boundary
+    - probe-20260621-fly-fail-fix-metric-visual-repair
+    - probe-20260622-egocs-causal-gameplay-log
+    - probe-20260709-gameenginebench-runtime-integration-gate
+  change:
+    summary: "reviewed_source_ts と採点・reject理由だけをstateへ記録。active_probes、lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
