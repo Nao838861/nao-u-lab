@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-25T04:36:43+09:00",
+  "updated_at": "2026-08-25T06:53:04+09:00",
   "reviewed_source_ts": [
+    "1778693425.089629",
     "1778705953.161159",
     "1787549421.981719",
     "1787578096.431759",
@@ -755,6 +756,52 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-25T06:53:04+09:00",
+      "selected": {
+        "id": "sr-1778693425-588a8df4f9",
+        "source_ts": "1778693425.089629",
+        "title": "Verbalized Sampling: How to Mitigate Mode Collapse and Unlock LLM Diversity — 典型性帯を言語化する多案生成",
+        "reason": "source が slack_api/shared-reads、score 14、未レビューで、harness・game-design・agent・evaluation の4優先タグを持つため1件だけ選んだ。今サイクルで reasoning diversity collapse を扱う候補を投稿した直後なので、multi-agent の構造的収束とは別に、単一モデル内の typicality bias が game brainstorm の採用候補を狭めるかを見る知見が時宜に合う。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14には達するが、risk_control=1で必須閾値2を満たさず、consumer_phase・比較対象となる具体的な brainstorm artifact・期限を現在の cycle から指定できないため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は preference data の typicality bias、確率分布を言語化する training-free prompt、creative writing で direct prompting 比1.6–2.1倍の多様性という abstract の結果を、game brainstorm で高・中・低の典型性帯を明示し、低確率帯から少なくとも1案を採用評価へ残す行動に変換しているため relevance・actionability は3とした。一方、詳細メモ自身が本文PDF未取得であることを明記し、creative writing の多様性と game の面白さの相関、既存 brainstorm への適用前後、低確率案の採用率を測っていないため evidence は2とした。probe-20260528-anti-template-selection-signal は既知templateから選ばれる固有signalを、probe-20260614-pluralistic-leaderboard-candidate-diversity は複数preference clusterとlower aggregate candidate保持を、probe-20260606-context-diversity-pruning-gate は多様性が必要な工程でalternate seedや観測を残すことを既に扱う。ただし単一modelに確率帯を言語化させ、低典型案を評価対象へ通す点は直接要求していないため non_redundancy は2とした。現在の staging は shared-reads 投稿後で具体的な game brainstorm、候補ごとのtypicality帯、実装・体感評価を持たず、直後のPhase 4aはmemory cleanupで実consumerではない。active_probesが327件、Phase 4a向けpending leaseが1件ある状態で対象不在の評価面を増やすと確認負荷と『低確率=面白い』という誤一般化を増やすため risk_control は1とした。",
+      "defer_condition": "次の具体的な game prototype brainstorm で5案以上を同一briefから生成し、候補の典型性帯、少なくとも1つの低典型案の採用評価、実装または体感によるkeep／change根拠を同じartifactへ残せる時に限り、一回限りの局所metricとして再評価する。低典型案を採用義務にはしない。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1778693425-588a8df4f9.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1778693425.089629",
+        "../Claude/knowledge/20260514_verbalized_sampling_typicality_bias_mode_collapse.md",
+        "https://arxiv.org/abs/2510.01171"
+      ],
+      "existing_controls": [
+        "probe-20260528-anti-template-selection-signal",
+        "probe-20260614-pluralistic-leaderboard-candidate-diversity",
+        "probe-20260606-context-diversity-pruning-gate"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、典型性帯を明示して低典型案も評価対象へ残す局所有用性、abstract-only と game 面白さ未測定という証拠限界、既存diversity controlsとの部分重複、具体artifact不在とactive probe増殖riskに基づくdefer条件だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-25T04:36:43+09:00",
       "selected": {

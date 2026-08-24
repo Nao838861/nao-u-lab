@@ -104,7 +104,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778693425-588a8df4f9
+    source_ts: "1778693425.089629"
+    title: "Verbalized Sampling: How to Mitigate Mode Collapse and Unlock LLM Diversity — 典型性帯を言語化する多案生成"
+    reason: "score 14の未レビューatomで、harness・game-design・agent・evaluationの4優先タグを持つ。今サイクルのreasoning diversity collapse投稿と接続しつつ、単一model内のtypicality biasがgame brainstormを狭めるかを1件だけ確認した。Nao_uの明示評価記録はローカルrawで未確認。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "合計14だがrisk_controlが必須閾値2未満。abstractではVSによるcreative writingの多様性1.6–2.1倍を示す一方、本文PDF、gameの面白さとの相関、brainstorm適用前後は未確認。既存のanti-template／pluralistic-candidate／context-diversity controlsと部分重複し、現cycleにはtypicality帯と実装・体感評価を比較できる具体的brainstorm artifactがない。active_probes 327件とPhase 4a向けpending lease 1件へ対象不在の評価面を足さない。"
+  change:
+    summary: "reviewed_source_tsと、次の具体的game brainstormでのみ再評価する条件をstateへ記録した。active_probes・ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
