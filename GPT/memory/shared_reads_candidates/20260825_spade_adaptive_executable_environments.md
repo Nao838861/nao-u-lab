@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2608.19197"
 collected_at: "2026-08-25T02:19:06+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, self-play, procedural-generation, llm-agents, adaptive-difficulty, evaluation]
+evaluated_at: "2026-08-25T02:22:15+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-25T02:22:15+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-25T02:22:15+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-24"
+supersedes: []
+gate_reason: |-
+  executable environment と verifier を能力境界へ適応生成する構成は、攻略後の弱点を露出する adaptive challenge / test bot 課題へ具体的に適用できる。
+  ただし候補は一次要旨のみで、regret 推定式、生成環境の妥当性検査、8 benchmark と game 条件の具体値、失敗例がなく、約4000字の概要には評価の中身が足りない。
+  手法詳細・結果表・限界を一次本文から候補へ補強できるまで保留する。
 ---
 
 ## raw_excerpt

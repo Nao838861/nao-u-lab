@@ -4,21 +4,21 @@ url: "https://arxiv.org/abs/2605.18597"
 collected_at: "2026-05-28T15:14:28+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [ai-agent, action-space, planning, efficiency, game-testing]
-evaluated_at: "2026-07-26T03:39:00+09:00"
+evaluated_at: "2026-08-25T02:22:15+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-07-26T03:39:00+09:00"
+last_reviewed_at: "2026-08-25T02:22:15+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-26T03:39:00+09:00"
-stale_after: "2026-08-25"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-25T02:22:15+09:00"
+stale_after: "2026-09-24"
 supersedes: []
 next_action: revise_or_research
 gate_reason: |-
   軌跡から multi-step semantic behavior を学ぶ中核発想と、操作ログ圧縮・headless bot への適用先は明確。
-  一方で学習目的、model 統合、benchmark 名、action token・wall-clock・成功率の具体差がなく、hand-crafted macro との差分を投稿水準で説明できない。
-  原論文の手法詳細と結果表を確認できるまで保留する。
+  再評価時点でも学習目的、model 統合、benchmark 名、action token・wall-clock・成功率の具体差がなく、hand-crafted macro との差分を投稿水準で説明できない。
+  原論文の手法詳細と結果表を候補へ補強できるまで保留する。
 
 ---
 

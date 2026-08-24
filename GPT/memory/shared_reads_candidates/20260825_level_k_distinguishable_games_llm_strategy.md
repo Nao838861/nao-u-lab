@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2608.21296"
 collected_at: "2026-08-25T02:18:36+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, game-theory, llm-agents, evaluation, opponent-modeling]
+evaluated_at: "2026-08-25T02:22:15+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-25T02:22:15+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-25T02:22:15+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-24"
+supersedes: []
+gate_reason: |-
+  level-k distinguishability と既知ゲーム暗記を避ける評価構成は、敵 AI・playtest bot の opponent modeling を検査する具体場面へ接続できる。
+  ただし候補は一次要旨のみで、4 game structure の構成、4 LLM の比較値、10 level の誤差分布、限界がなく、約4000字の概要を評価根拠つきで支えられない。
+  手法定義と結果表を一次本文から候補へ補強できるまで保留する。
 ---
 
 ## raw_excerpt
