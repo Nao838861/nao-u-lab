@@ -150,7 +150,108 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md は UTF-8 明示読みで日本語本文を取得でき、validate_memory_index.py は OK。Markdown file link は 0 件で、High Signal / Recent の atom ID は per-file index と整合した。"
+  - "memory/atoms.jsonl は 2961 rows、per-file md / index.jsonl も各 2961 rowsで mirror clean。normalized-content duplicate 40 groups / 80 rowsは既存 fold に収まり、duplicate cluster 45件は fresh check と一致、content_conflicts は 0 件だった。"
+  - "memory/raw/ の mtime 30日超は 242 files。slack archive、論文原文、headless-eval evidenceを含む provenance slice のため自動移動せず、archive候補の列挙だけに留めた。"
+  - "shared-reads candidate lifecycle は posted 698 / ready_to_post 9 / postponed 206 / failed 511 / needs_review 2。期限到来 open 9件のうち live lease と duplicate-group抑止を反映した stale triage 5件を Phase 2 handoffへ enqueueした。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件。受領だけで close した行はなく、status更新も不要だった。"
+  - "probe lifecycle は validate error 0。期限到来 lease は 0 件だったため receipt は追加していない。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+encoding_audit:
+  memory_md:
+    source_file_status: "UTF-8 valid。代表語 記憶 / ゲーム設計 / 敵パターン を取得。評価軸は MEMORY.md 本文にはなく atom index 側で取得でき、文字化け兆候ではない。"
+    display_or_tooling_status: none
+  atom_health_warnings:
+    source_file_status: "sr-1776127289-4d9239b255 は per-file atom と同一 source_ts の raw Slack root の双方に U+FFFD があり、局所的な source defect。gr-1777083728-44d444ab7a は原文の意図的な文字列 ??? を detector が拾った false positive。"
+    display_or_tooling_status: "UTF-8明示読みと raw provenance で再現し、shell / staging表示だけの mojibake ではない。独立した複数破損や ingestion 系統障害ではないため構造 issue には昇格しない。"
+atom_consistency:
+  raw_atoms: 2961
+  mirror_status: clean
+  content_conflicts: 0
+  raw_normalized_content_duplicate_groups: 40
+  recall_visible_duplicate_groups: 3
+  canonical_overlay_groups: 45
+  duplicate_cluster_check: ok
+candidate_lifecycle:
+  counts:
+    posted: 698
+    ready_to_post: 9
+    postponed: 206
+    failed: 511
+    needs_review: 2
+  missing_status: 0
+  overdue_open_total: 9
+  lifecycle_conflicts: 0
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 10
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 9
+  stale_triage_queue_rows: 5
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-bdb5f0e7998b5010
+    - cha-d855528b27161e19
+    - cha-75ab867e5b5b820c
+    - cha-32badb826ba6090a
+    - cha-aa39eb936e240e59
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-bdb5f0e7998b5010
+    path: memory/shared_reads_candidates/20260530_quest_of_aivengarde_llm_dialogue_player_experience.md
+    status: postponed
+    stale_after: "2026-08-25"
+    priority_reason: "3 variant・64 participants の比較はNPC対話設計へ移せるが、survey/log指標とvariant別効果量が保存資料に不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-d855528b27161e19
+    path: memory/shared_reads_candidates/20260531_multigen_editable_multiplayer_worlds.md
+    status: postponed
+    stale_after: "2026-08-25"
+    priority_reason: "Memory / Observation / Dynamics 分解は有用だが、level-edit手順、同期、比較、評価指標、失敗条件が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-75ab867e5b5b820c
+    path: memory/shared_reads_candidates/20260606_zero_shot_3d_map_llm_agents.md
+    status: postponed
+    stale_after: "2026-08-25"
+    priority_reason: "raw Slack に同一 arXiv work の実投稿証拠があり、posted-source index 抽出漏れを Phase 2 で照合して再投稿を止める必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-32badb826ba6090a
+    path: memory/shared_reads_candidates/20260726_reasoning_diversity_collapse_llm_game_play.md
+    status: needs_review
+    stale_after: "2026-08-25"
+    priority_reason: "needs_review の期限到来 candidate で、現行品質gateによる初回の明示判定が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-aa39eb936e240e59
+    path: memory/shared_reads_candidates/20260726_savestate_player_reflection_method.md
+    status: needs_review
+    stale_after: "2026-08-25"
+    priority_reason: "needs_review の期限到来 candidate で、現行品質gateによる初回の明示判定が必要。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
