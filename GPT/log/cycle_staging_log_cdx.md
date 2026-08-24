@@ -147,7 +147,94 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+audited_at: "2026-08-25T02:33:28+09:00"
+cleaned:
+  - "memory/MEMORY.md の entry index を per-file atom index と照合し、broken link / 欠損 atom ID / 重複 index ID が 0 件であることを確認"
+  - "memory/atoms.jsonl と per-file .md / index.jsonl の 2961 件を照合し、content conflict 0 件、duplicate cluster sidecar 45 群が最新であることを確認。raw normalized-content duplicate 40 群は recall fold 済み"
+  - "memory/raw/ の最終更新30日超 242ファイルを archive 候補として確認。一次資料・Slack provenance であり recall 入口へ直接混入しないため、この cycle では移動なし"
+  - "shared-reads candidate lifecycle を監査: posted 696 / ready_to_post 9 / postponed 206 / failed 511 / needs_review 2。posted / failed は再評価 queue から除外"
+  - "open duplicate group / stale triage / group action sidecar を順に再生成し、group live lease を反映後、期限到来 candidate 5件を handoff inbox へ冪等 enqueue"
+  - "Slack directives 23行 / broadcasts 21行を監査し、pending 0 件を確認。close 対象なし"
+  - "UTF-8 明示読みで memory/MEMORY.md の代表語 記憶 / ゲーム設計 / 敵パターン / 評価軸 を取得。source file は正常。memory_health の mojibake suspect 2件は、1件が raw Slack 原文にも存在する孤立した U+FFFD、1件がゲーム内表記 ??? の検知であり、MEMORY.md の表示経路破損ではない"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  receipt: null
+  counts:
+    pending: 1
+    resolved: 10
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  candidate_status_counts:
+    posted: 696
+    ready_to_post: 9
+    postponed: 206
+    failed: 511
+    needs_review: 2
+  overdue_open_total: 14
+  stale_triage_queue_rows: 10
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total > stale_triage_queue_rows は真だが actionable group が 0 件で、3件以上という第2条件を満たさない"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-f0ec9e93fb0702ae
+    - cha-9657427d973e1b65
+    - cha-fa0f6f8de14b2343
+    - cha-886cf30e998b8e20
+    - cha-0468e0c990649d2b
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-f0ec9e93fb0702ae
+    path: memory/shared_reads_candidates/20260528_robo_cortex_embodied_agent_memory.md
+    status: postponed
+    stale_after: "2026-08-25"
+    priority_reason: "dual-grain memory と失敗ログ再利用の転用価値は高いが、実体・比較条件・定量結果が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-9657427d973e1b65
+    path: memory/shared_reads_candidates/20260529_agent_escape_bench_escape_room_reasoning.md
+    status: postponed
+    stale_after: "2026-08-25"
+    priority_reason: "escape-room の長距離依存と未知 tool-use は有用だが、task 構成・採点・baseline・失敗分類が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-fa0f6f8de14b2343
+    path: memory/shared_reads_candidates/20260529_gamma_world_multi_agent_world_model.md
+    status: postponed
+    stale_after: "2026-08-25"
+    priority_reason: "agent identity encoding 等の中核は明確だが、比較対象・定量結果・失敗 mode が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-886cf30e998b8e20
+    path: memory/shared_reads_candidates/20260529_omniworld_4d_world_model_dataset.md
+    status: postponed
+    stale_after: "2026-08-25"
+    priority_reason: "posted-source preflight で canonical work 一致の evidence があり、Phase 2 で重複 close 判断を確定する必要がある"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-0468e0c990649d2b
+    path: memory/shared_reads_candidates/20260530_label_free_px_lets_play_videos.md
+    status: postponed
+    stale_after: "2026-08-25"
+    priority_reason: "ラベルなし PX 推定は評価補助へ転用できるが、特徴抽出・比較・相関・human study の根拠が不足"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
