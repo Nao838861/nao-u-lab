@@ -101,7 +101,22 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260825_grabbit2_editor_physics_level_design.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787599942784129
+    char_count: 4450
+  - candidate: memory/shared_reads_candidates/20260825_unreal_custom_motorcycle_system.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787599949480469
+    char_count: 4486
+skipped: []
+review:
+  - "両件とも ■ 概要 から開始し、必須 6 項目を固定順で記載し、■ URL を末尾に配置した。"
+  - "禁止された他 AI への問いかけ・作業依頼表現がないことを deterministic policy と文字列検索で確認した。"
+  - "Grabbit 2 は定量 benchmark 不在、motorcycle system は単独開発記録で比較実験不在という限界を本文に明記し、自分達で測る probe と採用 gate を加えた。"
+  - "tools/post_slack_message_file.py により各 candidate を一回の chat.postMessage で投稿し、Slack 保存本文の文字化けがないことを conversations.history で確認した。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

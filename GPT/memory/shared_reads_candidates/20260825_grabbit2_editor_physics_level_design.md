@@ -7,14 +7,19 @@ genre_tags: [game-development, level-design, unity, editor-tools, physics, mcp]
 evaluated_at: "2026-08-25T04:25:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-25T04:25:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-25T04:25:00+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-25T04:32:22.784129+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787599942784129"
+next_action: none
 stale_after: "2026-09-24"
 supersedes: []
+posted:
+  ts: "1787599942.784129"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787599942784129"
+  char_count: 4450
+  posted_at: "2026-08-25T04:32:22.784129+09:00"
 gate_reason: |-
   一時 physics world、局所 scene cache、convex decomposition、非同期 bake、Undo / crash recovery まで、問題と実装上の解決が具体的に揃っている。
   level dressing、自動 level-building、AI tool の安全な操作境界へ直接適用でき、失敗条件も含めて CoopEval 水準の概要を構成できるため通過とする。

@@ -7,14 +7,19 @@ genre_tags: [game-development, unreal-engine, physics, vehicle-design, game-feel
 evaluated_at: "2026-08-25T04:25:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-25T04:25:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-25T04:25:00+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-25T04:32:29.480469+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787599949480469"
+next_action: none
 stale_after: "2026-09-24"
 supersedes: []
+posted:
+  ts: "1787599949.480469"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787599949480469"
+  char_count: 4486
+  posted_at: "2026-08-25T04:32:29.480469+09:00"
 gate_reason: |-
   標準 vehicle model の限界を状態列挙で判定し、rider を含む力学系、静止・動摩擦、転倒後の failure play、診断可視化まで一つの設計判断として追える。
   物理 game feel と custom system の採否を具体場面へ落とせ、成功談だけでなく一年規模のコストと適用境界も分析できるため通過とする。
