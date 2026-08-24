@@ -135,7 +135,61 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、index entry の unknown atom・重複 entry・参照切れが 0 件であることを validate_memory_index.py で確認した。代表語（記憶、ゲーム設計、敵パターン、評価軸）も取得できた。"
+  - "atoms.jsonl / per-file atom / atoms/index.jsonl は各 2963 件で一致し、parse error・missing file・content conflict は 0 件だった。normalized-content 重複 40 群 80 行は既存 canonical overlay ですべて fold 済み（effective display unresolved 0）。"
+  - "memory/raw/ の 30 日超ファイル 242 件（70,590,898 bytes）を監査した。Slack archive と論文 PDF/TXT などの一次証拠であり、mtime だけでは archive 可否を判定できないため移動しなかった。"
+  - "shared-reads の title/open-group/stale sidecar を再生成した。Phase 2 で処理済みの 5 行が stale triage から除かれ、現在の stale triage / group-action queue はともに 0 行。candidate 本体は変更していない。"
+  - "Slack directives / broadcasts の pending は各 0 件で、handled へ更新すべき行はなかった。"
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』部分に U+FFFD が 2 字残り、title / Use when / excerpt の完全一致検索を局所的に弱めている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl source_ts=1776127289.990919; memory_health.py --json"
+    source_file_status: "UTF-8 明示読みで per-file atom と raw Slack 正本の双方に同じ U+FFFD を確認したため source data 自体の局所破損。ファイル全体の encoding 破損ではない。もう一つの suspect gr-1777083728-44d444ab7a は原文中の意図的な『???』を detector が拾った false positive。"
+    display_or_tooling_status: "none。Get-Content -Encoding UTF8 と rg の表示は一致し、memory/MEMORY.md の代表語 probe も正常。"
+    why_blocks_game_memory: "『AIエージェント』の完全一致 query から当該 memory-architecture atom を取りこぼし得る。ただし tags・別 atom・recall overlay の導線があるため影響は限定的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  receipt: null
+  counts:
+    pending: 1
+    resolved: 10
+    dormant: 1
+stale_review_batch: []
+stale_backlog:
+  candidate_lifecycle_counts:
+    posted: 699
+    ready_to_post: 9
+    postponed: 208
+    failed: 511
+    needs_review: 0
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  overdue_suppression: "4 candidates は既存の deferred group lease 2 件（gha-e6d4d4b5a37a0808 / gha-2313a247c62a9028、retry_after 2026-09-19）に包含されるため再投入しなかった。"
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
