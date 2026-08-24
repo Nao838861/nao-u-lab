@@ -107,7 +107,94 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index atom 参照50件をUTF-8で監査し、missing 0件を確認した。Markdown file linkは0件。"
+  - "memory/atoms.jsonl / per-file .md / index.jsonl は各2,958件で一致し、ID重複・mirror content conflict・parse errorはいずれも0件だった。normalized content重複40群80行は既存fold対象で、duplicate cluster 45群のfresh checkも一致した。"
+  - "candidate lifecycleをdry-run監査した（posted 694 / ready_to_post 9 / postponed 203 / failed 511 / needs_review 2）。現在状態の修復対象は0件だった。"
+  - "open duplicate group / stale triage / group action sidecarを正本から再生成した。生成結果は既存ファイルと同一で、handoff inbox監査もerror 0件だった。"
+  - "Slack inboxを監査し、pending directive 0件・pending broadcast 0件を確認した。受領だけを根拠にcloseした行はない。"
+  - "memory/raw/ のmtime 30日超を242件確認した。うちweb_researchの旧収集物が中心だが、raw provenance参照を保持するため、このcycleでは移動・削除していない。"
+issues:
+  - id: ISS-MOJIBAKE-001
+    description: "atom sr-1776127289-4d9239b255 の『エージェント』部分がU+FFFDを含み、title / trigger / excerptの検索語が1箇所壊れている。gr-1777083728-44d444ab7a は原文中の『???』を検知したfalse positiveであり、source破損ではない。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md:24"
+    source_file_status: "UTF-8明示読みでもraw Slack archive・atoms.jsonl・per-file atomの3層すべてに同じU+FFFDが存在し、source data自体の局所破損と判定。MEMORY.md代表語は『記憶』『ゲーム設計』『敵パターン』を取得でき、『評価軸』は本文に語自体が存在しない。MEMORY.md全体の文字コード破損は認めない。"
+    display_or_tooling_status: "none; shell表示はUTF-8 sourceを忠実に表示しており、display-only mojibakeではない。"
+    why_blocks_game_memory: "該当atomを『エージェント』で検索した時のtitle/trigger一致を弱める。ただし単一atomで、現在のゲーム制作記憶全体の導線を遮断する規模ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  due_check_reason: "2026-08-24 18時台のdue-only queryは空。最早pending probeのlease_dueは2026-08-24T23:59:59+09:00で、まだ期限到来前だったためresolveしない。"
+  counts:
+    pending: 2
+    resolved: 9
+    dormant: 1
+incremental_rebuild_equivalence:
+  probe_id: probe-20260530-worker-bus-contract-observer
+  lifecycle_action: "not_resolved_before_due"
+  before_decision: "steady-stateのmemory healthとmirror auditだけなら、派生物に構造的issueなしと判定する。"
+  after_decision: "tools/build_atom_duplicate_groups.py --check が正本からのfresh生成結果と現行duplicate cluster / canonical overlayの一致（45群）を確認したため、issueなし判定を維持する。"
+  changed: false
+  evidence: "memory/atoms/duplicate_clusters.jsonl; memory/atoms/canonical_overlay.jsonl"
+harness_if_instruction_receipt:
+  probe_id: probe-20260824-harness-if-opportunity-evidence
+  lifecycle_action: "observed_but_not_resolved_before_due"
+  before_decision: "cleanup artifactが正常ならPhase 4a complianceもpassとみなす。"
+  required_actions:
+    - action: "MEMORY index参照とUTF-8 sourceを監査する"
+      applicable: true
+      evidence: "index_atom_refs=50 / missing_atom_refs=0、および代表語probeを本Phase 4aに記録"
+    - action: "atom正本・mirror・重複派生物を監査する"
+      applicable: true
+      evidence: "atoms 2,958件の三者一致、duplicate cluster fresh check 45群"
+    - action: "candidate duplicate/stale queueを再生成しhandoffを監査する"
+      applicable: true
+      evidence: "memory/shared_reads_open_duplicate_group_queue.jsonl; memory/shared_reads_stale_triage_queue.jsonl; inbox audit errors 0"
+  artifact_outcome: pass
+  compliance: pass
+  shortfall: none
+  after_decision: "artifact outcomeと必須action evidenceを分離しても3 actionすべてに証拠があり、passを維持する。"
+  changed: false
+candidate_lifecycle:
+  status_counts:
+    posted: 694
+    ready_to_post: 9
+    postponed: 203
+    failed: 511
+    needs_review: 2
+  missing_stale_after: 3
+  overdue_open_total: 4
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  backlog_high_water_reason: "overdue_open_total > queue rows は成立するが、actionable groupが3件以上ではない。4件は2群とも2026-09-19までのlive deferred group leaseで抑止された。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
+
+- `needs_design: false`。局所的なsource文字化けは設計課題ではなく、既存source provenanceを確認した上で別cycleの限定修復候補とする。raw旧収集物やopen duplicate backlogにも既存lifecycle / lease導線があり、今回新しい仕組みを設計する根拠はない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
