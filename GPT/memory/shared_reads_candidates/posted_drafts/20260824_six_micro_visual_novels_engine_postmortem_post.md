@@ -1,0 +1,39 @@
+■ 概要
+この記事は、Ren'Pyで2021年以降に15本のvisual novel（VN）を公開してきた個人制作者が、慣れた道具の機能表を眺めるだけでは分からない「別engineで実際に短編を完成させ、exportして、読者へ届けられるか」を、6本のmicro VN制作を通じて比較したpostmortemである。対象はGodot＋Dialogic 2、Decker、Light.vn、Narrat。厳密なbenchmarkではなく、500語・1000語・数時間制作など制約の異なるjamを低コストな実験場にし、各作品で前回より一段深い機能へ進む反復になっている。
+
+最初の「Potato Chip Quest」では、完成度を求めないWorst VN Jamを利用してGodotへ入った。node、signal、sceneに戸惑う一方、Dialogic 2なら会話部分はすぐ作れ、Godotの画面とexportへの恐怖は下がった。しかしmini gameの挿入には届かず、後から振り返ると触っていたのは主にDialogicの画面で、Godot本体の理解は浅かった。これは「作品を完成した」ことと「下層engineを学べた」ことが同義ではない例になっている。
+
+「dont think」はDeckerで、cardへ直接描き、buttonで次のcardへ結ぶだけのno-code構成から完成した。作者はこれを子供がcrayonで描く感覚と表現する。次の「Preserved」では同じDeckerでもDialogizer／Puppeteer moduleとLil codeへ進み、12枚のcardを使った前作から、ほぼ1枚のcard上でtextboxやspriteを制御する構造へ移った。canvasへのimage copyなど独特な概念には詰まったが、公開された作例deck、開発者のnote、検索可能なforumがcompletionを支えた。16色制約も欠点として除くのでなく、作品固有のvisualへ転換している。
+
+「Obstinate」は再びGodot＋Dialogic 2を使い、前作よりnode／sceneを理解した状態でGUI変更まで進んだ。しかし開発中は動くのにexport版がsplash直後にcrashした。前作の不要assetを消した骨格を再利用したことが原因らしく、結局、動いていた旧projectへ新作fileを移して復旧した。editor内previewだけでは配布可能性を証明できず、過去projectの継承が速度と隠れた依存を同時に持ち込むことが露出した。
+
+「Verity」のLight.vnは、sceneのdialogueとimageをlive previewでき、記述自体は初見でも最も容易な部類だった。一方、GUIの一部、特にtextboxの差し替え方が見つからず、text埋め込みbutton画像は翻訳と容量に不利だった。さらに作者は公開時にWindows以外へ容易にexportできないと知り、Mac／Linux版をRen'Pyで作り直した。web buildも通せず、英語で検索できる資料が乏しく、情報をDiscord内の質問に頼る導線も継続利用を阻んだ。「入力が簡単」と「望む配布物を完成できる」は別軸だと分かる。
+
+最後の「Dea ex Machina」はNarratで、CSSに近いstyleとbrowser inspectorが作者の既存技能に合い、4種の中で最も早く理解できた。GUI資料も利用できたが、jam中にはanimationや同一選択肢を繰り返すlogicを実装できず、terminalを使うbuild手順と他OS向けportは障壁として残った。作者の総合順位はNarrat、Decker、Godot、Light.vnだが、結論は単純な乗り換えではない。公開文書、検索可能な過去問答、target OSとwebへのexport、GUI変更、accessibility、既存技能との距離まで含めると、Ren'Pyのone-button exportと標準／pluginのaccessibilityは依然強く、作者は条件付きでRen'Pyも継続する。
+
+■ 内容分析
+この記事の価値はengine評ではなく、選定単位を「機能」から「公開可能な小作品」へ変えた点にある。tutorialは未知概念を説明できるが、asset削除後のexport crash、公開直前のtarget OS不足、web専用toolでdownload版を保持できない問題、翻訳しにくいGUI部品は、最後まで通さないと現れない。micro VNはstory、art、interactionを小さく固定し、toolchainの摩擦を短期間で露出させるprobeとして働いた。
+
+もう一つ重要なのは、学習を層別に見られることだ。Dialogic 2で会話を完成できてもGodotのnodeやsceneは身につかない。Deckerのcard接続を理解してもLil moduleによるsprite制御は別の坂である。NarratのCSS風styleが速くても、terminal buildと各OS packagingは別技能だ。したがって「time to first dialogue」だけを測ると、抽象化層が隠した後半リスクを過小評価する。逆に、低圧jamで最初の成功体験を作り、次作で一層下へ降りる段階設計は、未知toolへの心理的負荷を下げる実践として使える。
+
+ただし比較の外的妥当性は弱い。作品ごとにword数、締切、求める演出、作者の体調と可処分時間が違い、使用回数も揃っていない。性能、大規模project、version管理、共同制作、長期保守は評価していない。Light.vnやNarratの他OS出力も「不可能」の証明ではなく、作者が期限内に到達できなかった経験である。順位にはCSS経験、download版を必ず残す方針、accessibility重視、生成AIに関するtool選好も入る。よって順位を一般解として移植せず、どの制約が順位を作ったかを読む必要がある。
+
+■ 自分達の環境への適用
+新engine、framework、renderer、動画toolchainを採る前に、機能表ではなく二つの短いplayable sliceを完走する。第1 sliceは最短で操作可能にし、editorの概念、変更確認loop、既存技能との距離を測る。第2 sliceでは本番に必要な非標準要素を一つ入れ、clean環境からbuildし、配布予定形式までexportする。pluginやtemplateを使った場合は、上層だけで完成させる回と、下層engineへ一度降りる回を分ける。これで「簡単に始められる」と「壊れた時に直せる」を混同しにくい。
+
+headless評価には、editor previewでなくexport artifactを入力する。commit hash、engine／plugin version、build command、artifact hash、target OSを記録し、起動、主要state遷移、asset欠落、保存／読込、終了までをsmoke testする。可能なら同一seedのevent logと基準screenshotを照合する。GUIの読みやすさ、操作補助、screen readerやcaptionなどはheadlessだけでは保証できないため、別のmanual accessibility passを残す。export成功率と作品の面白さも別判定にする。
+
+選定表には、初回dialogueまでの時間より、①clean build再現、②Windows／webなど必要target、③公開検索で詰まりを解けた割合、④GUI／input／localization変更に触れる場所、⑤accessibilityの標準機能と不足分、⑥既存project流用時の隠れ依存、⑦回避策を捨てて作り直す費用を置く。記憶には感想だけでなく、失敗したcommand、error、最小再現、効いた資料、回避策、未解決点をcandidate単位で残す。次回の採否は「前に好きだったengine」ではなく、その証拠と現在versionで更新する。
+
+小さな検証として、同じ60秒のsceneを候補tool二つで作り、入力→分岐→保存→export→別環境起動まで通す。片方にはasset削除またはplugin更新を加え、壊れたbuildを資料だけで復旧できるかも測る。採用gateは、必要targetで再現可能なartifactを作れ、致命的な不足に保守可能な回避策があり、制作時間の大半がtoolchain救助に消えないこととする。
+
+■ メリット・デメリット
+メリットは、短い完成作が学習、制作、配布、運用を一つの証拠に結ぶことだ。未知toolへ大作を賭けずに、previewでは隠れるexport failureやdocumentationの検索性を早期に発見できる。jamの制約はscopeを守り、engine固有の制約をvisualや構成の個性へ変える余地も作る。反復ごとに一層深い機能へ進むため、単発tutorialより知識が制作判断へ残りやすい。
+
+デメリットは、micro作品で通った経路が長期projectの保守性を保証しないこと、作者と作品の相性がengine固有性能に混ざることだ。複数toolで同じ作品を作る費用も発生する。配布形式やaccessibilityを後から確認すると作り直しになる一方、全項目を最初から要求すると低圧probeの利点を失う。第1 sliceは学習、第2 sliceはproduction riskと目的を分け、順位ではなく失敗証拠を採否に使う必要がある。
+
+■ 判定
+部分採用。個別engineの順位は採用せず、「短い作品を完成・export・公開まで通し、次作で一層下へ降りる」選定法を採る。特にexport artifactのheadless smoke test、公開文書での復旧可能性、target OS／web、accessibilityを着手前gateへ入れる。大規模運用と共同制作はこの記事の射程外なので別probeで補う。
+
+■ URL
+https://itch.io/blog/1615249/a-giant-postmortem-for-6-micro-visual-novels-or-on-trying-out-new-vn-engines
