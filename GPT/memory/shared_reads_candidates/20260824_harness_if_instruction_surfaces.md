@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2608.11727v1"
 collected_at: "2026-08-24T16:19:17+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent, harness, evaluation, game-development, workflow]
+evaluated_at: "2026-08-24T16:23:10+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-24T16:23:10+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-24T16:23:10+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-23"
+supersedes: []
+gate_reason: >-
+  複数の instruction surface、atomic rule、実行証拠、zero-injection probe を組み合わせる手法と、定量結果・失敗分類・測定限界まで抽出できる。
+  ゲーム制作では完成物評価と別に playtest・比較・記録の実行漏れを監査する具体用途があり、約4000字の概要と独自分析へ十分に展開できる。
+suggested_post_outline:
+  overview_angle: "coding agent の rule 遵守を複数 instruction surface と実行証拠から rule 単位で測り、既定動作との偶然一致を AP-Acc で分離する評価設計"
+  analysis_axis: "atomic rule と evidence-based verdict の強み、shortfall 優勢という失敗像、zero-injection の識別力、LLM judge と小規模 conflict pilot の限界"
+  application_target: "Log_cdx のゲーム制作サイクルで、AGENTS.md・skill・user instruction に置いた playtest／比較／記録要求が trace 上で実行されたかを成果物品質とは別軸で検証する"
+  pros_cons: "要求 action の抜けと instruction 配置の弱点を可視化できる一方、証拠計装と N/A 判定のコストが高く、judge agreement と surface hierarchy の一般化には注意が要る"
+  verdict_pre: "部分採用 — rule 全面スコア化ではなく、重要な要求 action に絞った zero-injection 付き監査として導入候補"
 ---
 
 ## raw_excerpt

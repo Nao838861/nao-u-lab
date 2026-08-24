@@ -12,7 +12,48 @@
 - 既出照合メモ: raw 研究の `arXiv:2608.03420` と `arXiv:2603.07101` は posted-source / atom / 既存 candidate で同一 work を確認したため、新規ファイルは作成していない。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+analyzed_at: "2026-08-24T16:23:10+09:00"
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260824_harness_if_instruction_surfaces.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-08-24T16:19:17+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260824_harness_if_instruction_surfaces.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260824_harness_if_instruction_surfaces.md
+  valid_backlog_after: 0
+```
+
+- `Harness-IF` は pass。複数 surface に置かれた atomic rule の遵守を trace / diff / test / artifact / log で判定し、zero-injection と AP-Acc で既定動作との偶然一致を分離する手法まで抽出できる。
+- ゲーム制作では、完成物の品質とは別に playtest・比較・記録といった要求 action の shortfall を監査する具体用途がある。LLM judge agreement と conflict pilot の規模は、Phase 3 で限界として明記する。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
