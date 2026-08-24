@@ -76,7 +76,45 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787563773-cd3e51f168
+    source_ts: "1787563773.446379"
+    title: "Tree-of-Concerns — 観点別探索・反証・横断校正で未記載の失敗条件を探す"
+    reason: >-
+      source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・agent・operation・evaluation
+      を含む9タグを持つ最新候補だったため1件だけ選んだ。観点別の独立探索、著者側からの反証、重複・category・severity
+      の横断校正が、既存 control と異なる判断差を作れるか確認した。Nao_u の本投稿への明示評価は raw で確認できなかった。
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: >-
+    414論文・1,905件の未記載 limitation、held-out 100論文、Coverage@10 36.1%、Precision 40.3%、
+    No-Branching／no-Expansion／no-Panel ablation があり、発散・反証・横断校正を分ける evidence は強い。
+    一方、attacker／defender／judge、採用前の反証、観測先行、layer／severity／target／repair／accept-reject、
+    blind spot に対する逆向き観点は既存6 probes が既に扱う。現 staging に比較可能な review artifact はなく、
+    retrospective は過去10資料・gold concern・人間確認・最大約45 call／資料を要する。active_probes 327件、
+    Phase 4a pending lease 2件の状態で追加すると確認負荷と批判の過剰生成を増やすため採用しない。
+  change:
+    summary: >-
+      reviewed_source_ts と reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
