@@ -71,7 +71,35 @@ skipped: []
 - 投稿前 policy: 4,056字、必須6節・順序・末尾URL・禁止語・duplicate preflight `continue` を通過。スレッド返信なし、1回の `chat.postMessage` で完了。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778303440-699f41ada0
+    source_ts: "1778303440.276719"
+    title: "日記前検索: 現在の目的に関係する外部情報"
+    reason: "source=slack_api/shared-reads・score 14・未レビューの厳密条件を満たす唯一の atom。5優先タグを持つが、無関係な3論文を束ねた旧形式検索ログが現行gateに固有差を作るか確認した。Nao_uの明示的な重要評価はrawで確認できなかった。"
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 8
+  decision: reject
+  decision_reason: "3本の切れた英語abstractと同一の汎用的な使い道だけで、単一claimの問題設定・手法・評価・結論・適用・限界を再構成できない。現行3 directivesと既レビューの単一candidate／日本語概要／candidate-local gateに重複し、具体artifact・consumer・判断差も指定不能。追加controlは証拠境界と確認負荷を悪化させるためstate-only reviewとした。"
+  change:
+    summary: "reviewed_source_tsとreject理由のみ更新。active_probes・ledger・directive・恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

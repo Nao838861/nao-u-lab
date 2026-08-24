@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-24T14:36:12+09:00",
+  "updated_at": "2026-08-24T16:36:00+09:00",
   "reviewed_source_ts": [
+    "1778303440.276719",
     "1787541323.680259",
     "1787533356.965689",
     "1787525301.067769",
@@ -23838,6 +23839,50 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_tsと、完成・export・復旧まで通すtool選定の有用性、単一postmortemの証拠限界、既存runtime／integration／recovery／friction controlsとの部分重複、比較artifact不在と既存pending leaseによるdefer理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-24T16:36:00+09:00",
+      "selected": {
+        "id": "sr-1778303440-699f41ada0",
+        "source_ts": "1778303440.276719",
+        "title": "日記前検索: 現在の目的に関係する外部情報",
+        "reason": "source が slack_api/shared-reads、score 14、未レビューという厳密条件を満たす唯一の atom だったため1件だけ選んだ。memory・game-design・agent・operation・evaluation の5優先タグを持つ一方、3本の無関係な外部検索結果を同一投稿へ束ねた旧形式の operational log であり、現在の単一candidate・日本語の高密度な概要・候補ローカル保存ゲートに照らして、次回行動へ残せる固有差があるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録は raw で確認できなかった。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 1,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 8
+      },
+      "decision": "reject",
+      "decision_reason": "合計8で採用条件の14に届かず、actionability と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。本文は Sketchar、教育gamification、LLM生成TCGという別々の3論文について、切れた英語abstractと全件同一の『後続サイクルで照合する』という使い道を並べるだけで、問題設定・手法・評価・結論・当環境への適用・限界を一つの判断へ統合していない。原論文URLは残るため evidence は1、shared-reads の投稿品質と候補routingには関係するため relevance は2としたが、どの論文のどの仮説を何のartifactで試すかを指定できず actionability は1。現行の3 active directives と、既レビュー sr-1778535044-2700dbea60 の単一candidate／日本語概要／candidate-local gate が同じ失敗をすでに扱うため non_redundancy は0。active_probes 326件と Phase 4a 向け pending lease 1件があり、旧い低密度検索ログから追加controlを作ると、出典別の証拠境界を曖昧にしたまま確認負荷を増やすため risk_control は1。原文とatomは歴史的 evidence として保持し、reviewed state だけを更新する。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1778303440-699f41ada0.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1778303440.276719"
+      ],
+      "existing_controls": [
+        "memory/directive_shared_reads_overview_20260512.md",
+        "memory/directive_shared_reads_candidate_gate_20260512.md",
+        "memory/directive_shared_reads_log_cdx_standalone_20260626.md",
+        "review:sr-1778535044-2700dbea60"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、旧multi-item外部検索ログが現行の単一candidate・日本語概要・候補ローカル保存ゲートに重複し、固有の実行可能性と証拠が不足するため reject した理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
