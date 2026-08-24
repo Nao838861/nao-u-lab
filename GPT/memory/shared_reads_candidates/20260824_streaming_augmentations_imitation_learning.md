@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2607.14200"
 collected_at: "2026-08-24T20:20:51+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, imitation-learning, automated-playtesting, streaming, robustness]
+evaluated_at: "2026-08-24T20:24:22.6307426+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-24T20:24:22.6307426+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-24T20:24:22.6307426+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-23"
+supersedes: []
+gate_reason: >-
+  時間相関を持つ streaming 劣化を4種の連続 perturbation として再現する着想、学習条件、
+  milestone による評価、通常時と lag 時の定量結果が揃い、約4000字の概要へ展開できる。
+  画面入力型の自動テストプレイヤーに対する観測経路 robustness probe へ直接適用できる。
+suggested_post_outline:
+  overview_angle: "少数 demonstration の imitation learning を、時間相関する配信映像劣化に耐えさせるデータ augmentation の設計と検証"
+  analysis_axis: "静止画単位のノイズ付与ではなく、50〜100 frame の連続性をモデル化したことが汎化性能と lag 耐性へどう効いたか"
+  application_target: "Log_cdx の画面入力型自動テストプレイヤーで、連続 frame の欠損・圧縮・残像を再現する観測 robustness probe と milestone 評価を組み込む"
+  pros_cons: "少数の実演データと既存映像から導入しやすく、配信条件外でも改善が見える一方、2ゲーム3 task の手動注釈評価であり、一般化範囲と各 augmentation の寄与分離は限定的"
+  verdict_pre: 部分採用
 ---
 
 ## raw_excerpt
