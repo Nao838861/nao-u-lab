@@ -9,7 +9,51 @@
 - duplicate preflight: 投稿済み同一 work 7 件は `skip` としてログ化し、candidate は作成しなかった。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260824_xbox_insider_player_feedback_flighting.md
+fail: []
+postpone: []
+stale_reviewed: []
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-08-24T22:19:46+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260824_xbox_insider_player_feedback_flighting.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260824_xbox_insider_player_feedback_flighting.md
+  valid_backlog_after: 0
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  decision: continue
+  canonical_url: https://developer.microsoft.com/en-us/games/articles/2026/06/office-hours-recap-inside-xbox-insider-player-feedback
+  sidecar_checks: fresh
+```
+
+- 判定: `pass`。自由記述を直前映像・telemetry・survey・audience 条件と束ねる仕組みは、問題報告から修正箇所までの距離を縮める具体的な playtest 設計として説明できる。
+- 適用性: 導線、最初の30分、操作再学習、accessibility の観測に直接使える。記事の根拠は事例報告中心であり、対照実験による因果評価ではない点を Phase 3 の限界として明記する。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

@@ -4,6 +4,26 @@ url: "https://developer.microsoft.com/en-us/games/articles/2026/06/office-hours-
 collected_at: "2026-08-24T22:19:46+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, playtesting, player-feedback, telemetry, accessibility]
+evaluated_at: "2026-08-24T22:23:25+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-24T22:23:25+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-24T22:23:25+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-23"
+supersedes: []
+gate_reason: >-
+  プレイヤーの自由記述を直前映像・telemetry・survey・audience 条件と束ね、修正箇所へ接続する flighting の中核を具体的に説明できる。
+  導線、序盤報酬、操作再学習、accessibility へ適用可能で約4000字の分析を構成できる一方、効果検証は対照実験ではなく事例報告中心という限界も明示できる。
+suggested_post_outline:
+  overview_angle: "感想収集ではなく、報告時点の文脈を復元できる証拠束として player feedback を設計する"
+  analysis_axis: "flight audience、直前映像・telemetry・survey の結合、修正判断への接続、事例報告としての評価限界"
+  application_target: "Log_cdx のゲーム試作で、迷い・離脱・操作忘れ・accessibility 問題を再現可能な playtest 記録へ変える収集手順"
+  pros_cons: "観察と言語報告を対応付けて修正点を特定しやすい反面、基盤依存と収集コストがあり、事例だけでは因果効果を確定できない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
