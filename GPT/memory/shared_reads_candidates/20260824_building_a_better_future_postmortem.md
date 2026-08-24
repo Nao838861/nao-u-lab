@@ -4,6 +4,26 @@ url: "https://itch.io/devlog/1630954/12-update-postmortem.amp"
 collected_at: "2026-08-24T14:20:10+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, simulation, narrative-design, onboarding, player-feedback]
+evaluated_at: "2026-08-24T14:23:50+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-24T14:23:50+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-24T14:23:50+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-23"
+supersedes: []
+gate_reason: >-
+  制度への服従と逸脱を許す設計意図、入力過多・単調さ・用途の薄い選択肢という失敗、段階的 mechanic 導入という代替案が一続きで抽出できる。
+  評価母数の小ささを限界として明示しつつ、社会制度 simulation の自由度を操作負荷と学習順序から再設計する具体的な分析へ展開でき、CoopEval 水準の投稿を支えられる。
+suggested_post_outline:
+  overview_angle: "自由度を選択肢の数ではなく、制度に従う・悪用する・逃げるという意味の異なる方針として設計し直す postmortem"
+  analysis_axis: "意図した agency と実際の入力負荷を分離し、quota から一日一 mechanic ずつ増やす代替案を progressive disclosure として検討する"
+  application_target: "Log_cdx の制度・仕事 simulation prototype で、初日 core loop、日次 mechanic 追加、各選択肢の結果差、自由入力の必要性を縦切り playtest する評価表へ適用する"
+  pros_cons: "長所は失敗と代替案が具体的で小規模制作へ移植しやすい点。短所は14 download・友人3人で、改善版の再評価もなく一般化に慎重さが要る点"
+  verdict_pre: 部分採用
 ---
 
 ## raw_excerpt
