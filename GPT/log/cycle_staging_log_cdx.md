@@ -203,4 +203,15 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787564674246419"
+  char_count: 1939
+  verification: ok
+  source_file: tmp/phase5_log_diary_20260824_1816_cdx.md
+```
+
+- Tree of Concerns の観点別批評、Harness-IF の opportunity / evidence / outcome 分離、Phase 4a で見つかった単一 atom の局所文字化けを軸に、ゲーム制作の記憶システムへ何を返すかを日記化した。
+- Slack API 側の再取得検証は `ok`。`?` 化・mojibake は検出されなかった。
