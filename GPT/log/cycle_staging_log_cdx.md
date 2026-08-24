@@ -71,7 +71,38 @@ skipped: []
 - 投稿品質ゲート（本文確認、3500–4500字程度、必須フォーマット、1 candidate＝1投稿）を満たす candidate がないため、無投稿で完了した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787578096-c0fead4059
+    source_ts: "1787578096.431759"
+    title: "XBOX Insider flighting — build・直前行動・telemetry・本人報告を束ねる feedback artifact"
+    reason: "source=slack_api/shared-reads、score=10、未レビューで、memory・harness・game-design・agent・operation・evaluation の6優先タグを含む最新候補。証拠packageが既存controlと異なる次回行動を作れるか確認した。Nao_uの明示評価はrawで未確認。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "build／cohort／直前clip／telemetry／commentを一件へ束ねる手順は具体的だが、原記事は効果量・対照群・工数削減を示さない。repro-condition、causal gameplay log、human-operation regression fixture、quality／critical-stage feedback routing が中核行動を既に扱い、固有差のcohort segmentation／privacyを試す現在artifactもない。合計14未満かつnon_redundancy・risk_controlが必須閾値未満なので、新規controlを増やさない。"
+  change:
+    summary: "reviewed_source_tsとstate-only reject理由だけを記録。active_probes、probe lifecycle ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 既存 control: `probe-20260526-repro-condition-before-verdict` / `probe-20260622-egocs-causal-gameplay-log` / `probe-20260708-commonroad-human-operation-regression-fixture` / `probe-20260625-quality-workflow-feedback-route` / `probe-20260709-critical-stage-feedback-routing`。
+- `active_probes` は327件、Phase 4a向け pending lease は2件。新規 enqueue は0件で、ledgerは変更していない。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-24T22:31:39+09:00",
+  "updated_at": "2026-08-25T00:28:20+09:00",
   "reviewed_source_ts": [
+    "1787578096.431759",
     "1787571086.965349",
     "1787563773.446379",
     "1787556626.596989",
@@ -24031,6 +24032,52 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、時間相関corruption・milestone深度・復帰計測の根拠、既存game-evaluation controlsとの重複、比較artifact不在、active probeとpending leaseの増殖リスクに基づくreject理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-25T00:28:20+09:00",
+      "selected": {
+        "id": "sr-1787578096-c0fead4059",
+        "source_ts": "1787578096.431759",
+        "title": "XBOX Insider flighting — build・直前行動・telemetry・本人報告を束ねる feedback artifact",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・agent・operation・evaluation の6優先タグを含む8タグを持つ最新候補だったため1件だけ選んだ。自由記述だけでなく build、cohort、直前clip、telemetry、comment を一件の証拠束にする方法が、次の playable／headless 評価に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録は raw で確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、non_redundancy と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は XBOX Insider の audience、build 配布、直前30秒clip、screen capture、telemetry、comment、survey を一件へ束ねる Justifier report と、Doom の約60人・週次playtest、大学生teamの反復事例を保持する。build hash、checkpoint、input trace、state snapshot、comment、cohort tag を同じ artifact に保存する行動へ具体化できるため relevance・actionability は3とした。一方、Office Hours recap であり、変更前後のcompletion rate、対照群、false positive、工数削減を示さず、事例と原記事だけでは効果を検証できないため evidence は2に留める。probe-20260526-repro-condition-before-verdict は initial state／action／expected／observed と replay可能性を、probe-20260622-egocs-causal-gameplay-log は input／view／state／event／outcome chain を、probe-20260708-commonroad-human-operation-regression-fixture は build／seed／route／checkpoint／oracle を、probe-20260625-quality-workflow-feedback-route と probe-20260709-critical-stage-feedback-routing は観測を修正可能な次判断へ送ることを既に扱う。cohort segmentation と privacy 境界には固有差があるが、今の staging に比較可能な playable artifact や participant cohort はなく、中核の証拠package行動は既存controlsへ吸収されるため non_redundancy は1。active_probesは327件あり、Phase 4a向けpending leaseも2件ある。具体artifactなしに三場面probeや新schemaを足すと、確認・保存・privacy管理の負荷だけを増やし現在の判断を変えないため risk_control は1。次の該当playtestでは新規controlを足さず既存5 controlsを必要な分だけ使い、cohort差または直前contextの有無が実際に修正判断を分ける artifact が出た時だけ再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787578096-c0fead4059.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787578096.431759",
+        "https://developer.microsoft.com/en-us/games/articles/2026/06/office-hours-recap-inside-xbox-insider-player-feedback/"
+      ],
+      "existing_controls": [
+        "probe-20260526-repro-condition-before-verdict",
+        "probe-20260622-egocs-causal-gameplay-log",
+        "probe-20260708-commonroad-human-operation-regression-fixture",
+        "probe-20260625-quality-workflow-feedback-route",
+        "probe-20260709-critical-stage-feedback-routing"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、証拠packageの具体性、効果量不足、既存replay／causal trace／regression fixture／feedback routing controlsとの重複、active probeとpending leaseの増殖リスクに基づくreject理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
