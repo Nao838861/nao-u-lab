@@ -56,7 +56,18 @@ unreviewed_intake_audit:
 - 判定理由: 手法の構成要素と評価結果を抽出でき、ゲーム設計資料・playtest 報告・postmortem の未記載失敗条件を観点別に発見・校正する具体的工程へ落とし込めるため `pass`。Phase 3 では科学論文批評からゲーム制作へ移す際の外的妥当性と運用コストを限界として明記する。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260824_tree_of_concerns_scientific_critique.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787563773446379
+    char_count: 3965
+skipped: []
+```
+
+- 最終判定: `posted`。論文 PDF で、専門観点別の独立 debate tree、4 段階の node 内反証、Panel Review、ToC-Bench の内訳、100 論文 held-out 評価、ablation、コスト、後続知識による見逃しを照合した。
+- 投稿前 review: 3,965 文字、必須 6 セクションの順序、禁止表現 0 件、URL 末尾集約を `tools/shared_reads_policy.py` で確認。Slack の保存文も再取得し、文字化けがないことを確認した。
+- 判定は「部分採用」。過去の後発不具合を gold とする retrospective probe でのみ、観点別探索、証拠付き claim、反証・撤回、重複・category・severity 校正の構造を試す。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
