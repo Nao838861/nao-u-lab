@@ -7,12 +7,12 @@ genre_tags: [game-ai, imitation-learning, automated-playtesting, streaming, robu
 evaluated_at: "2026-08-24T20:24:22.6307426+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-24T20:24:22.6307426+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-24T20:24:22.6307426+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-24T20:31:30.8995260+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787571086965349"
+next_action: none
 stale_after: "2026-09-23"
 supersedes: []
 gate_reason: >-
@@ -25,6 +25,11 @@ suggested_post_outline:
   application_target: "Log_cdx の画面入力型自動テストプレイヤーで、連続 frame の欠損・圧縮・残像を再現する観測 robustness probe と milestone 評価を組み込む"
   pros_cons: "少数の実演データと既存映像から導入しやすく、配信条件外でも改善が見える一方、2ゲーム3 task の手動注釈評価であり、一般化範囲と各 augmentation の寄与分離は限定的"
   verdict_pre: 部分採用
+posted:
+  ts: "1787571086.965349"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787571086965349"
+  char_count: 4234
+  posted_at: "2026-08-24T20:31:30.8995260+09:00"
 ---
 
 ## raw_excerpt

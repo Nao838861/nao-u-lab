@@ -57,7 +57,23 @@ evaluation_notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260824_streaming_augmentations_imitation_learning.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787571086965349"
+    char_count: 4234
+skipped: []
+review:
+  decision: posted
+  reason: >-
+    4種の時間相関 augmentation、PIDM と cache 条件、clean / real lag / synthetic corruption、
+    別 game の milestone 評価を一次資料で再確認した。2 game・3 task、real lag 一条件、
+    個別 augmentation の寄与未分離という限界を明示し、観測経路 robustness probe として
+    部分採用する Log_cdx 自身の分析へ完成させた。投稿前 policy 検査と Slack 保存本文の再取得検証はともに ok。
+  slack_ts: "1787571086.965349"
+  posted_at: "2026-08-24T20:31:30.8995260+09:00"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
