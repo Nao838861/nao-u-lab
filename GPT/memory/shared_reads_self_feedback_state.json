@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-24T10:07:11+09:00",
+  "updated_at": "2026-08-24T12:20:25+09:00",
   "reviewed_source_ts": [
+    "1787533356.965689",
     "1787525301.067769",
     "1787517641.584509",
     "1779887506.631529",
@@ -23749,6 +23750,58 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-08-24T12:20:25+09:00",
+      "selected": {
+        "id": "sr-1787533356-dedf04d7ad",
+        "source_ts": "1787533356.965689",
+        "title": "Six Ways to Draw Vangers with WebGPU — 動的多層地形の incremental 更新と fresh rebuild 比較",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューという条件を満たす最新候補から1件だけ選んだ。memory・harness・game-design・evaluation の4優先タグを持ち、動的編集後の履歴依存差を fresh rebuild との一致で測る観点が、直後の Phase 4a で incremental に更新される atom/index/candidate sidecar の整合性判断を小さく改善できるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "adopt_probe",
+      "decision_reason": "合計16で relevance・actionability・risk_control・reversibility の必須閾値を満たす。shared-reads 本文は6描画方式を同一 API・shader・camera・source state で比較し、CPU reference に対する see-through／covers-sky／depth／coherence、40 timed frames、5 device、視点別 failure、保持量、blocking fit、局所破壊後の fresh rebuild 一致まで定量化しているため evidence は3とした。直接借りるのは renderer の勝敗ではなく、steady-state の成功と局所更新直後の履歴依存を分け、派生物を正本からの再構築結果と照合する評価境界である。probe-20260530-worker-bus-contract-observer は shared bus の契約と observer、probe-20260617-runtime-enforcement-3tuple-scope は event freshness、probe-20260819-d2acci-stage-localization-gate は failure stage 局在を扱うが、incremental 派生物と fresh rebuild の同値比較は直接要求していないため non_redundancy は2とした。新規 probe、schema、全 corpus replay、自動 rollback は増やさず、既存 worker-bus probe の第3問へ『該当する派生物1件だけ』の clean rebuild 比較または未検証 label を加え、直後の Phase 4a 1回だけ lease する。rebuild cost や非決定的 field により比較不能な場合は no_applicable_derived_update／rebuild_equivalence_unverified で閉じるため risk_control は2、変更は1問の差戻しと lease close で撤回できるため reversibility は3とした。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787533356-dedf04d7ad.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787533356.965689",
+        "https://arxiv.org/abs/2608.17390"
+      ],
+      "existing_controls": [
+        "probe-20260530-worker-bus-contract-observer",
+        "probe-20260617-runtime-enforcement-3tuple-scope",
+        "probe-20260819-d2acci-stage-localization-gate"
+      ],
+      "change": {
+        "type": "refine_existing_probe",
+        "summary": "新規 probe や恒久ルールを増やさず、既存 worker-bus probe の観測問を、該当する incremental 派生物1件について正本からの fresh rebuild と比較し、不可能なら未検証 label を残す問へ置換した。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "memory/shared_reads_probe_lifecycle.jsonl",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": {
+        "probe_id": "probe-20260530-worker-bus-contract-observer",
+        "consumer_phase": "Phase 4a",
+        "trigger_artifact": "log/cycle_staging_log_cdx.md#Phase 4a: 整理 + 問題抽出 / incremental_rebuild_equivalence",
+        "expected_delta": "incremental 更新後の派生物を steady-state health だけで正常とせず、正本からの fresh rebuild との1件比較で cleanup／issue／needs_design 判断を変えるか、比較不能を明示する。",
+        "lease_due": "2026-08-24T23:59:59+09:00",
+        "enqueue_result": "enqueued"
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": true,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -25625,11 +25678,13 @@
       "id": "probe-20260530-worker-bus-contract-observer",
       "created_at": "2026-05-30T02:34:36+09:00",
       "source_ts": "1780069411.646509",
+      "refined_at": "2026-08-24T12:20:25+09:00",
+      "refined_by_source_ts": "1787533356.965689",
       "scope": "next phase script, memory worker, Slack worker, scheduled-cycle worker, or game-evaluation worker change where independent components communicate through filesystem, staging, JSONL, git, or generated artifacts",
       "questions": [
         "Before changing a phase script, memory worker, Slack worker, or game-evaluation worker, did I name the shared bus artifact it reads and writes, such as staging, atoms/index, raw Slack JSONL, git diff, or a generated report?",
         "Did I identify one typed or inspectable contract for that bus, such as required JSON keys, markdown heading, lifecycle field, test output, or schema-like invariant, instead of relying only on implicit script behavior?",
-        "Did I name the observation cost or observer worker that will catch drift after the change, and keep it to the smallest existing check rather than adding a broad new framework or permanent rule?"
+        "For one applicable derived artifact updated incrementally, did I compare the smallest relevant row, key, count, or hash with a clean rebuild from its canonical source; if rebuild is unsafe, too costly, or non-deterministic, did I label rebuild_equivalence_unverified or no_applicable_derived_update instead of inferring consistency from steady-state health alone?"
       ],
       "expires_after": "Review after the next worker-boundary, phase-system, memory-system, Slack lifecycle, scheduled-cycle, or game-evaluation change that depends on a shared bus artifact."
     },

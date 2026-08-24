@@ -54,7 +54,40 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787533356-dedf04d7ad
+    source_ts: "1787533356.965689"
+    title: "Six Ways to Draw Vangers with WebGPU — 動的多層地形の incremental 更新と fresh rebuild 比較"
+    reason: "未レビューの score 10 候補から1件だけ選択。動的編集後の履歴依存差を fresh rebuild と比べる評価が、直後の Phase 4a にある incremental な memory 派生物の整合性判断へ直接つながる。Nao_u の明示的な重要評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "新規 probe／directive／schema は増やさず、既存 probe-20260530-worker-bus-contract-observer の第3問を、該当する incremental 派生物1件と正本からの clean rebuild の最小比較へ置換した。比較不能時は rebuild_equivalence_unverified または no_applicable_derived_update とする。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - memory/shared_reads_probe_lifecycle.jsonl
+      - log/cycle_staging_log_cdx.md
+  lease:
+    probe_id: probe-20260530-worker-bus-contract-observer
+    consumer_phase: Phase 4a
+    trigger_artifact: "log/cycle_staging_log_cdx.md#Phase 4a: 整理 + 問題抽出 / incremental_rebuild_equivalence"
+    expected_delta: "incremental 更新後の派生物を steady-state health だけで正常とせず、正本からの fresh rebuild との1件比較で cleanup／issue／needs_design 判断を変えるか、比較不能を明示する。"
+    lease_due: "2026-08-24T23:59:59+09:00"
+    enqueue_result: enqueued
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: true
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
