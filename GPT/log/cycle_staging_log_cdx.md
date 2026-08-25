@@ -101,7 +101,73 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の実 atom index 参照 50 件を atoms/index.jsonl と照合し、broken 0 件を確認した。Markdown link 行は 0 件だった。"
+  - "memory_health の stable snapshot a416cd5e49f526ee で atoms.jsonl / per-file md / index.jsonl が各 2970 件、ID・mirror conflict 0 件であることを確認した。raw normalized-content duplicate 40 群は canonical overlay に収載済みで、recall-visible duplicate は 3 群に fold されるため原文を変更しなかった。"
+  - "shared-reads candidate lifecycle を dry-run 監査し、frontmatter を変更せず status 内訳と期限到来 backlog を集計した。"
+  - "closed canonical / mixed duplicate / open duplicate / stale triage / group-action の再生成可能 sidecar を candidate frontmatter 正本から再生成した。"
+  - "Slack inbox は directives / broadcasts とも pending 0 件で、handled へ閉じる対象はなかった。"
+  - "memory/raw の 30 日超未更新ファイル 242 件を棚卸しした。raw provenance と評価 trajectory を保持する正本を含むため、この cycle では移動・削除しなかった。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 10
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_review_batch: []
+group_action_handoff: []
+stale_backlog:
+  lifecycle_status_counts:
+    posted: 705
+    ready_to_post: 9
+    postponed: 208
+    needs_review: 0
+    failed: 511
+  missing_stale_after: 3
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+audit_notes:
+  encoding:
+    source_file_status: "memory/MEMORY.md は UTF-8 明示読みで日本語を正常取得。代表語は 記憶 / ゲーム設計 / 敵パターン が一致し、評価軸 は exact hit なし。本文に U+FFFD はない。atoms 側では既知の sr-1776127289-4d9239b255 だけに U+FFFD を確認した。"
+    display_or_tooling_status: "UTF-8 読みと rg 表示は正常。PowerShell 表示経路由来の mojibake は観測しなかった。"
+    disposition: "既知の単一 raw-root source defect であり mirror 破損や検索層全体の障害ではないため、新規 structural issue / needs_design にはしない。原文は自動修復しない。"
+  atom_consistency:
+    duplicate_ids: 0
+    mirror_content_conflicts: 0
+    raw_normalized_content_duplicate_groups: 40
+    recall_visible_normalized_content_duplicate_groups: 3
+    contradictory_current_state_anomalies: 0
+  stale_suppression:
+    reason: "期限到来 4 candidate は JAMEL と collision enemy morphology の all-open 2 group。両 group は membership fingerprint 一致の deferred receipt と retry_after=2026-09-19T14:08:16+09:00 を持つため、live lease 合成後の stale triage / group-action queue から正しく抑止された。"
+  due_probe_check:
+    command: "python tools/shared_reads_probe_lifecycle.py pending --due-only --limit 1"
+    result: "items=[]。pending 1 件の lease_due は 2026-08-25T23:59:59+09:00 で、監査時点では期限前のため receipt を書かなかった。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
