@@ -115,7 +115,41 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787676360-adc3b757ac
+    source_ts: "1787676360.423389"
+    title: "Evergreen Games — 既存状態と player trust を含む更新面の捉え方"
+    reason: "未レビューの score 10 候補で、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新1件。大規模更新の change surface と reversibility が次の既存 prototype 改修または memory migration の判断を変えるか確認した。Nao_u の明示的な重要評価は raw で確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "2x2 Fish の2年 refactor、約18,000 level／60,000件超の tweak、Caves and Cliffs の platform・既存 world・creator asset 波及は、change surface、blast radius、代表 state replay へ変換できる。一方、企業対談で対照群、retention 差、defect rate、工数、tuning 精度がなく evidence は2。影響 tag、fixed trace と隣接 system、manual replay fixture、task-level compatibility、player-model evidence は既存5 controlsで扱え、独立性は低い。比較可能な大改修 artifact がなく active probe も327件あるため、新規 checklist は判断差より確認負荷と過剰互換投資を増やす。"
+  existing_controls:
+    - probe-20260516-update-aware-regression-tags
+    - probe-20260709-gameenginebench-runtime-integration-gate
+    - probe-20260708-commonroad-human-operation-regression-fixture
+    - probe-20260608-task-level-compatibility-check
+    - probe-20260718-open-player-model-correction-boundary
+  change:
+    summary: "reviewed_source_ts と採点・reject理由だけを state に記録。active_probes、lifecycle ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

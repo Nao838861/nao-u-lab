@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-26T04:01:18+09:00",
+  "updated_at": "2026-08-26T06:02:47+09:00",
   "reviewed_source_ts": [
+    "1787676360.423389",
     "1787676350.878149",
     "1787669112.732279",
     "1787661281.063809",
@@ -24697,6 +24698,53 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、C1–C3／peak retention／memory counterfactual の有用性、既存 process-diagnostic／component-ranking／feedback-routing／trajectory-recovery controls との大幅な重複、比較 artifact 不在、active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-26T06:02:47+09:00",
+      "selected": {
+        "id": "sr-1787676360-adc3b757ac",
+        "source_ts": "1787676360.423389",
+        "title": "Evergreen Games — 既存状態と player trust を含む更新面の捉え方",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新候補だったため1件だけ選んだ。Minecraft／Candy Crush の大規模更新事例から、code diff より既存 state・content・習熟・mental model に跨る change surface と reversibility を見る方法が、次の既存 prototype 大改修または memory migration に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録は raw で確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、non_redundancy と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、Candy Crush の10年以上の codebase に対する2年間の refactor、約18,000 level と60,000件超の tweak、公開後の『酔った fish』問題、Minecraft の world generation・engine・20以上の platform・既存 world・creator asset への波及を保持する。変更を code dependency、保存状態、既存 stage、入力、camera、AI、difficulty、verifier、asset pipeline、学習済み rule の surface として捉え、reversibility／blast radius で delivery を分け、early／mid／stress state を同一 seed・input trace で replay する行動へ直接変換できるため relevance・actionability は3とした。一方、根拠は Microsoft 傘下の Mojang／King 責任者による企業記事と GDC 対談で、retention の前後差、対照群、refactor の defect rate、tuning の自動化精度、工数、Fish 問題の churn 影響を示さないため evidence は2。probe-20260516-update-aware-regression-tags は影響 tag と fragile check、probe-20260709-gameenginebench-runtime-integration-gate は fixed trace と隣接 system、probe-20260708-commonroad-human-operation-regression-fixture は replay fixture と oracle、probe-20260608-task-level-compatibility-check は objective と environment の適合、probe-20260718-open-player-model-correction-boundary は player 推定と evidence trace／訂正を既に扱う。change surface と trust を一つに束ねる差はあるが、中核の次回判断は既存 controls の選択適用へほぼ吸収されるため non_redundancy は1とした。現在の staging には既存 prototype 大改修、旧 save、新旧 rule、代表 state、player mental model の before／after を持つ比較 artifact がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。active_probes は327件あり、全変更へ surface checklist を追加すると確認負荷、過剰互換投資、live-service 事例の小規模 prototype への過剰一般化を増やすため risk_control は1とした。次の大改修で既存5 controlsだけでは不可逆な player state または習熟破壊を事前に見つけられなかった具体例が出た時だけ再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787676360-adc3b757ac.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787676360.423389",
+        "memory/shared_reads_candidates/20260826_evergreen_games_minecraft_candy_crush.md",
+        "https://developer.microsoft.com/en-us/games/articles/2026/05/art-and-science-of-evergreen-games-minecraft-candy-crush/"
+      ],
+      "existing_controls": [
+        "probe-20260516-update-aware-regression-tags",
+        "probe-20260709-gameenginebench-runtime-integration-gate",
+        "probe-20260708-commonroad-human-operation-regression-fixture",
+        "probe-20260608-task-level-compatibility-check",
+        "probe-20260718-open-player-model-correction-boundary"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、change surface／reversibility／representative replay の局所有用性、企業事例の証拠限界、既存 regression／integration／fixture／compatibility／player-model controls との重複、比較 artifact 不在と active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
