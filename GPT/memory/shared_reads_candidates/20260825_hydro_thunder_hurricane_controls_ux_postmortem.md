@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/postmortem-vector-unit-s-i-hydro-thun
 collected_at: "2026-08-25T10:49:25+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, controls, playtesting, racing, usability, qa]
+evaluated_at: "2026-08-25T10:54:12.6947816+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-25T10:54:12.6947816+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-25T10:54:12.6947816+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-24"
+supersedes: []
+gate_reason: >-
+  現実寄りの水面物理を初見操作へ校正した反復と、短時間 playtest が長期 progression や QA coverage を見落とした失敗が対になっている。
+  問題設定・変更手法・外部テスト・制作上の限界まで抽出でき、ゲーム評価を時間軸と目的別に分ける約4000字の批判的概要が成立する。
+suggested_post_outline:
+  overview_angle: "水上物理の忠実さを初見操作へ合わせた成功と、短時間反復だけでは全体体験を保証できなかった失敗を一つの評価設計として読む"
+  analysis_axis: "物理 model の意図的な非現実化、説明なし外部テスト、早期 multiplayer、短時間 tuning と通し progression／QA coverage の分離"
+  application_target: "ゲーム prototype の評価を、初見入力、moment-to-moment、全編 progression、例外・exploit QA の独立した試験へ分ける運用"
+  pros_cons: "少人数でも観測単位を分けて具体的な改善へ接続できる一方、単一作品の制作後記で定量比較がなく、古い console 開発事情をそのまま一般化できない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
