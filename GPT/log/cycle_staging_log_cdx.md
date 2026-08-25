@@ -112,7 +112,36 @@ summary:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787691599-5692cf0d38
+    source_ts: "1787691599.598069"
+    title: "Advanced Shader Delivery — 宣言・環境別 artifact・runtime coverage の供給系"
+    reason: "score 15・未レビュー・優先タグ5種の最新 shared-reads atom。状態宣言→環境別派生物→実行時 coverage の分離が、直後の Phase 4a または次の Windows game validation に既存 control と異なる判断差を作るか1件だけ確認した。Nao_u の明示的な重要評価は raw で確認できなかった。"
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: >-
+    SODB／PSDB／Stats API の三分離は具体的だが、MonoSH と直後の Phase 4a は D3D12 の実 consumer ではなく、公式資料にも hardware matrix、p95／p99 frame time、artifact size、offline compile cost の比較がない。memory への一般化は worker-bus-contract-observer、compiled-memory-boundary、d2acci-stage-localization-gate が、game validation は gameenginebench-runtime-integration-gate と commonroad-human-operation-regression-fixture が既に覆う。active_probes 327件の状態で hardware／driver 固有 checklist を足すと確認負荷と hit-rate proxy への過適合が増えるため、採用条件を満たさない state-only review とした。
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
