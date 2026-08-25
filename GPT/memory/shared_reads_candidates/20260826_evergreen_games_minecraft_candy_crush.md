@@ -4,6 +4,27 @@ url: "https://developer.microsoft.com/en-us/games/articles/2026/05/art-and-scien
 collected_at: "2026-08-26T01:34:03+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, live-ops, player-trust, legacy-code, balancing, postmortem]
+evaluated_at: "2026-08-26T01:37:33+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-26T01:37:33+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-26T01:37:33+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-25"
+supersedes: []
+gate_reason: >-
+  Minecraft と Candy Crush の長期運営を、player trust、旧 codebase、全 level 調整、platform / creator 波及という具体的な変更面で説明し、
+  2年の refactor と60,000件超の tweak など判断規模も示している。企業対談記事で統制評価ではない限界を明示すれば、
+  既存ゲーム改修の事前影響分析と検証計画へ直結する約4000字の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "長寿ゲームの更新を content drop ではなく、旧実装・全level・複数platform・creator・player trustを同時に動かす ecosystem event として捉える"
+  analysis_axis: "2x2 fish と Caves and Cliffs の事例から、小さく見える mechanic が基盤改修と大規模再調整を要求する条件、telemetry と定性知見の役割を読む"
+  application_target: "Log_cdx の既存 prototype 大改修で、mechanic 単体ではなく保存データ、既存stage、入力系、習熟、制作assetまでを変更面として列挙し、先行refactorと回帰検証の要否を決めるチェック"
+  pros_cons: "実運営の規模感と失敗談が具体的で適用しやすい一方、Microsoft / King / Mojang の自己報告であり、比較対照や失敗率などの定量評価は不足する"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2608.13417"
 collected_at: "2026-08-26T01:33:39+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [ai-agent, evaluation, long-horizon, harness, experience-reuse, game-development]
+evaluated_at: "2026-08-26T01:37:33+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-26T01:37:33+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-26T01:37:33+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-25"
+supersedes: []
+gate_reason: >-
+  36 task・756 rollout の比較から、最終値だけでは見えない着想・実装・改善保持を rule-based metric で分解し、
+  経験再利用も task 内外の controlled comparison で測っている。長時間の AI ゲーム制作 loop を診断する評価軸へ直接移せ、
+  問題設定・手法・定量結果・限界を含む約4000字の概要を一次論文から構成できる。
+suggested_post_outline:
+  overview_angle: "最終スコア偏重を離れ、長時間 agent のどこで進歩が得られ失われるかと、経験が次の判断を助けるかを分けて測る評価設計"
+  analysis_axis: "Solution Framing / Execution / Feedback Control、avg@3 と best@3、task 内外の経験再利用 counterfactual が何を識別できるか"
+  application_target: "Log_cdx の長時間ゲーム prototype・headless 改善 cycle に、peak 到達、regression、回復、lesson transfer の deterministic 記録を入れる評価 harness"
+  pros_cons: "失敗箇所と再現性を分離し、記憶の正負効果まで測れる一方、技術 artifact 中心の36 taskから遊びの質へ移すには verifier と評価信号の再設計が必要"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
