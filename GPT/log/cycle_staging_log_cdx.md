@@ -69,7 +69,36 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787638709-8151decd27
+    source_ts: "1787638709.465249"
+    title: "Backyard Baseball の Unity 規模拡大 lesson — prototype 速度から stability へ切り替える昇格signal"
+    reason: "source=slack_api/shared-reads、score=12、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新atomだったため1件だけ選んだ。prototypeの直接実装をいつsystem boundary・asset validation・headless requirement testへ昇格させるかが、次の継続game制作に判断差を作れるか確認した。Nao_uの明示評価はローカルrawで確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "合計14だがrisk_control=1で必須閾値2を満たさない。記事は同じsystemの2回目変更、複数featureの共通state、並行scene／asset編集、手動回帰の反復という4 signalを具体化する一方、導入前後のdefect・QA時間・test保守費を定量比較していない。既存のpromotion boundary、prototype hypothesis contract、runtime integration gate、milestone observation logが昇格根拠・test path・隣接回帰・headless失敗地点を既に扱い、現cycleにも比較可能な継続game artifactがない。active probe 327件とPhase 4a向けpending lease 1件の上へ将来一般のprobeを増やすと、短期prototypeへの過剰設計と確認負荷を増やす。"
+  defer_condition: "次の継続game artifactで4 signalのいずれかが実在し、昇格前後の回帰検出時間とtest保守時間を同じartifactで比較できる時だけ、一回限りの局所metricとして再評価する。新規v001や単発修正には適用しない。"
+  change:
+    summary: "reviewed_source_tsと採点・defer条件だけをstateへ記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

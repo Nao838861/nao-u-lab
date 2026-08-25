@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-25T15:26:42+09:00",
+  "updated_at": "2026-08-25T17:33:35+09:00",
   "reviewed_source_ts": [
+    "1787638709.465249",
     "1787631101.202039",
     "1779843709.551219",
     "1787616148.029579",
@@ -760,6 +761,52 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-25T17:33:35+09:00",
+      "selected": {
+        "id": "sr-1787638709-8151decd27",
+        "source_ts": "1787638709.465249",
+        "title": "Backyard Baseball の Unity 規模拡大 lesson — prototype 速度から stability へ切り替える昇格signal",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新atomだったため1件だけ選んだ。prototypeの直接実装をいつsystem boundary・asset validation・headless requirement testへ昇格させるかという判断が、次の継続game制作に既存controlと異なる小さな差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカルrawでは確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14には達するが、risk_control=1で必須閾値2を満たさず、consumer_phase・比較可能な継続game artifact・期限を現在のcycleから指定できないため、新規probe・metric・lease・directiveは追加しない。shared-reads本文は、同じsystemを2回以上変更する、複数featureが共通stateを読む、scene／assetの並行編集が始まる、回帰確認が手作業1回で済まない、という4 signalをprototype速度からstability投資へ切り替える局所gateにし、fixed seed／stepの移動距離、collision後位置、攻撃frame、damage、state flagをdeterministic requirementとして検査するため relevance・actionabilityは3とした。一方、根拠は出荷経験を持つ実務者のUnity記事だが、導入前後のdefect、compile time、merge conflict、QA時間、test保守費の定量比較がなく、4 signalと4週間計測はLog_cdx側の処方なのでevidenceは2とした。probe-20260515-promotion-boundaryは反復証拠に基づく昇格、probe-20260706-paperclaw-prototype-hypothesis-contractはobservable verdictとtest path、probe-20260709-gameenginebench-runtime-integration-gateはfixed traceと隣接system回帰、probe-20260516-milestone-observation-logはheadless失敗地点を既に扱う。ただしarchitecture／asset lintへ投資を始める4 signal自体は直接要求していないためnon_redundancyは2とした。現在のstagingはshared-reads投稿後のmemory cleanupで、継続gameの同一system変更履歴、共通state、並行asset編集、手動回帰費のbefore／afterを持たない。active_probesが327件、Phase 4a向けpending leaseが1件ある状態で将来一般のgame-startをconsumerにすると、medium-to-large Unityの処方を短期prototypeへ先回り導入し、確認負荷と過剰設計を増やすためrisk_controlは1とした。",
+      "defer_condition": "次の継続game artifactで、同じsystemの2回目以降の変更、複数featureの共通state、並行scene／asset編集、または手動回帰の反復のいずれかがcommit／design_log／test logに実在し、昇格前後の回帰検出時間とtest保守時間を同じartifactで比較できる時に限り、一回限りの局所metricとして再評価する。新規v001や単発修正には適用しない。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787638709-8151decd27.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787638709.465249",
+        "https://unity.com/blog/scaling-workflows-lessons-from-medium-to-large-projects"
+      ],
+      "existing_controls": [
+        "probe-20260515-promotion-boundary",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract",
+        "probe-20260709-gameenginebench-runtime-integration-gate",
+        "probe-20260516-milestone-observation-log"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsと、prototypeからstability投資へ移る4 signalの局所有用性、定量比較不在の証拠限界、既存promotion／hypothesis／runtime integration／milestone controlsとの部分重複、具体artifact不在とactive probe増殖riskに基づくdefer条件だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-25T06:53:04+09:00",
       "selected": {
