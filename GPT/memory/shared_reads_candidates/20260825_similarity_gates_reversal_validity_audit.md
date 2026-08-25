@@ -7,12 +7,17 @@ genre_tags: [ai-agent, evaluation, semantic-similarity, regression-testing, desi
 evaluated_at: "2026-08-25T08:53:01.7891158+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-25T08:53:01.7891158+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-25T08:53:01.7891158+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1787616155.192789"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787616155192789"
+  char_count: 4491
+  posted_at: "2026-08-25T09:02:51.8848621+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-25T09:02:51.8848621+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787616155192789"
+next_action: none
 stale_after: "2026-09-24"
 supersedes: []
 gate_reason: >-
