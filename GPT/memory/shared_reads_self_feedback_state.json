@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-25T21:40:31+09:00",
+  "updated_at": "2026-08-25T23:49:13+09:00",
   "reviewed_source_ts": [
+    "1787661281.063809",
     "1787646553.380989",
     "1787653754.197229",
     "1787638709.465249",
@@ -763,6 +764,52 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-25T23:49:13+09:00",
+      "selected": {
+        "id": "sr-1787661281-faed694d24",
+        "source_ts": "1787661281.063809",
+        "title": "Backyard Baseball 2026 — bottleneck と object 特性から選ぶ大量描画最適化",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新候補だったため1件だけ選んだ。profile first、object分類、one-change comparison、性能改善とsemantic fidelityの分離が、次の性能調整で既存controlと異なる小さな判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカルrawでは確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、non_redundancyとrisk_controlも必須閾値2を下回るため、新規probe・metric・lease・directiveは追加しない。shared-reads本文は、CPU main／render thread、GPU、draw call、GC、memoryを同一camera pathと段階的entity countで測り、objectを静止unique、反復静止、反復移動、視覚animation、個別logic／collisionへ分類し、culling、batching、instancing、VAT、Update集約を適用条件から選ぶ。さらに変更後のbottleneck移動とcollision・個体差・visual fidelityを再確認するため、relevance・actionabilityは3とした。一方、根拠はUnity上の単一商用事例で、hardware、vertex数、animation frame数、draw call、frame time、memory増分の比較表がなく、数十体から数千体というVAT主張やURP推奨を一般化できないためevidenceは2に留める。probe-20260626-meta-horizon-friction-layer-triageはruntime performance層とobservable cue、probe-20260709-gameenginebench-runtime-integration-gateはfixed traceと隣接runtime state、probe-20260819-d2acci-stage-localization-gateはfirst failure stage、probe-20260724-minimum-sufficient-scope-ladderは局所scopeとverifierを既に扱う。profile firstと負荷移送後の再計測は既存controlsの組合せで実行でき、独立controlとしてのnon_redundancyは1とした。現在のstagingにはbaseline／optimized版、固定camera path、profiler capture、memory表、collision／見た目のbefore／afterを持つrendering artifactがなく、直後のPhase 4aはmemory cleanupで実consumerではない。active_probesは327件、Phase 4a向けpending leaseも1件あるため、具体artifactなしに5分類と多数metricを追加すると確認負荷と単一事例の過剰一般化を増やし、現在の判断を変えないためrisk_controlは1とした。次に実在する大量object sceneで既存4 controlsだけではprocessor間の負荷移送またはsemantic regressionを見落とした時だけ再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787661281-faed694d24.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787661281.063809",
+        "memory/shared_reads_candidates/20260825_unity_rendering_massive_object_counts.md",
+        "https://unity.com/blog/rendering-at-scale-efficient-strategies-for-massive-object-counts"
+      ],
+      "existing_controls": [
+        "probe-20260626-meta-horizon-friction-layer-triage",
+        "probe-20260709-gameenginebench-runtime-integration-gate",
+        "probe-20260819-d2acci-stage-localization-gate",
+        "probe-20260724-minimum-sufficient-scope-ladder"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsと、profile first／object分類／負荷移送後の再計測の局所有用性、定量比較不足、既存performance／runtime／stage／scope controlsとの重複、比較artifact不在とactive probe増殖riskに基づくreject理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-25T21:40:31+09:00",
       "selected": {

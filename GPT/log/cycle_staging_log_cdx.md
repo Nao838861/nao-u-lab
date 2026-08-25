@@ -68,7 +68,37 @@ skipped: []
 - Slack verification: `ok`。保存後本文に文字化けなし。ts=`1787669112.732279`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787661281-faed694d24
+    source_ts: "1787661281.063809"
+    title: "Backyard Baseball 2026 — bottleneck と object 特性から選ぶ大量描画最適化"
+    reason: "score 11 の未レビュー最新候補で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。profile first、object分類、one-change comparison、性能とsemantic fidelityの分離が次回行動に固有差を作れるか確認した。Nao_uの明示的な重要評価はローカルrawで未確認。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "profile firstと負荷移送後の再計測は有用だが、既存performance／runtime／stage／scope controlsへ吸収でき、比較可能なrendering artifactもないためstate-only reviewに留めた。新規probe・metric・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採否理由: 合計13で採用条件の14に届かず、`non_redundancy=1` と `risk_control=1` も必須閾値2を下回る。単一商用事例で profiler の比較表がなく、既存の `probe-20260626-meta-horizon-friction-layer-triage`、`probe-20260709-gameenginebench-runtime-integration-gate`、`probe-20260819-d2acci-stage-localization-gate`、`probe-20260724-minimum-sufficient-scope-ladder` が中核行動を既に扱う。
+- 運用境界: active probe 327件、Phase 4a 向け pending lease 1件のため ledger は変更しない。次に実在する大量 object scene で既存 controls が processor 間の負荷移送または semantic regression を見落とした時だけ再評価する。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
