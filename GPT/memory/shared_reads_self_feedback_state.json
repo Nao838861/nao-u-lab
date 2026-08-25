@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-25T13:18:21+09:00",
+  "updated_at": "2026-08-25T15:26:42+09:00",
   "reviewed_source_ts": [
+    "1787631101.202039",
     "1779843709.551219",
     "1787616148.029579",
     "1787608078.731599",
@@ -24362,6 +24363,54 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、同一URL siblingであること、X設計提案だけという証拠限界、既存 per-atom／graph／governance／lifecycle controls との完全重複による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-25T15:26:42+09:00",
+      "selected": {
+        "id": "sr-1787631101-41ef55288e",
+        "source_ts": "1787631101.202039",
+        "title": "Diamonds in the rough — 中規模ローカル LLM によるゲーム企画レビュー",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、memory・harness・game-design・evaluation の4優先タグを持つ最新候補だったため1件だけ選んだ。粗い企画の不足・矛盾を一括採点ではなく設計者への一問へ変える方法が、次の prototype 着手前判断に既存 control と異なる小さな差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録は raw で確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、non_redundancy と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、Player Experience、Theme、Gameplay、Place、Unique Features、Story and Narrative、Goals / Challenge / Rewards、Art Direction、Purpose、Opportunities and Risks の10観点、3モデル・30入力の比較、RTX 3080 Ti／12GB環境、6チーム・学生10名の pilot を保持し、全観点一括出力ではなく不足・矛盾の強い観点から一問だけ返す行動へ変換できるため relevance・actionability は3とした。一方、評価者2名・各入力1回・合成企画・非独立な参加者・自己申告中心で、提案を実際に採用した変更や最初の playable までの手戻りを追跡していないため evidence は2。probe-20260528-judgment-slice-abstraction-scaffold は多数観点を一つの判断 slice へ縮めること、probe-20260625-quality-workflow-feedback-route と probe-20260709-critical-stage-feedback-routing は曖昧さ等の feedback を変更可能な次判断へ送ること、probe-20260717-player-intent-action-response と probe-20260710-chatge-three-lane-turn-record は設計意図を action／world response／実装差分／次確認へ結ぶことを既に扱う。『未記述・矛盾した上位観点から一問』には固有差があるが、中核の採否行動は既存 controls へ吸収されるため non_redundancy は1。active_probes は327件で Phase 4a 向け pending lease も1件あり、現在の staging には無レビュー／10観点一括／一問方式を比較できる企画→playable artifact がない。ここで新規 checklist を足すと確認負荷と網羅性の自己目的化を増やし、直後の memory cleanup 判断を変えないため risk_control は1とした。次の具体的な企画着手で既存 controls が未記述または観点間矛盾を見落とし、質問の有無が playable 前の keep／change 判断を分ける artifact が出た時だけ再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787631101-41ef55288e.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787631101.202039",
+        "memory/shared_reads_candidates/20260825_diamonds_in_the_rough_local_llm_game_concepts.md",
+        "https://arxiv.org/abs/2509.24730v2",
+        "https://ceur-ws.org/Vol-4097/paper9.pdf"
+      ],
+      "existing_controls": [
+        "probe-20260528-judgment-slice-abstraction-scaffold",
+        "probe-20260625-quality-workflow-feedback-route",
+        "probe-20260709-critical-stage-feedback-routing",
+        "probe-20260717-player-intent-action-response",
+        "probe-20260710-chatge-three-lane-turn-record"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、小標本・自己申告中心の evidence 限界、既存 game-design／feedback controls との重複、比較可能な企画→playable artifact 不在に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

@@ -60,7 +60,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787631101-41ef55288e
+    source_ts: "1787631101.202039"
+    title: "Diamonds in the rough — 中規模ローカル LLM によるゲーム企画レビュー"
+    reason: "score 11・未レビューで、memory / harness / game-design / evaluation の4優先タグを持つ最新候補。粗い企画の不足・矛盾を設計者への一問へ変える方法が、次の prototype 着手前判断に固有差を作れるか確認した。Nao_u の本投稿への明示評価は raw で確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で14未満、かつ non_redundancy / risk_control が必須閾値2未満。10観点、3モデル・30入力、学生10名 pilot は不足・矛盾の上位観点から一問だけ返す行動へ具体化できるが、評価者2名・各入力1回・合成企画・非独立な参加者・自己申告中心で、実採用や playable までの手戻りを追跡していない。既存の judgment-slice / quality-feedback-route / critical-stage-routing / intent-action-response / three-lane-turn controls が中核行動を既に担う。active probe 327件、Phase 4a pending lease 1件、比較可能な企画→playable artifact 不在の状態で新規 checklist を足すと確認負荷と網羅性の自己目的化を増やす。"
+  change:
+    summary: "state-only review。reviewed_source_ts と採点・reject理由を記録し、active_probes、lifecycle ledger、directive、恒久ルールは変更しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
