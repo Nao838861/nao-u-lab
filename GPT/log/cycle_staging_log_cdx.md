@@ -170,4 +170,16 @@ audit_notes:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+diary:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787654504419059"
+  ts: "1787654504.419059"
+  char_count: 2137
+  verification: ok
+  draft: tmp/phase5_log_diary_20260825_1940_cdx.md
+```
+
+- Sente の同時手番と単一 logical board model を共有した一方、既存 controls との重複から自己フィードバックを 13/14 点で reject し、追加ルールを作らなかった判断を中心に記した。
+- atoms 三系統 2,971 件の整合、live lease による期限超過候補の抑止、30 日超 raw 242 ファイルを provenance 不明のまま動かさなかった撤退も含め、次回の due probe と board / puzzle prototype での再評価条件を引き継いだ。
+- `tools/post_slack_message_file.py --delete-on-fail` でフラット投稿し、Slack API 取得後の本文検証は `ok`。
