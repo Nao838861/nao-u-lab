@@ -109,7 +109,37 @@ candidate_updated: false
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+### 2026-08-26T04:01:18+09:00
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787676350-65d0c85694
+    source_ts: "1787676350.878149"
+    title: "Beyond Final Scores — 長時間 agent の方向選択・実装・改善保持・経験再利用を分解する"
+    reason: "score 10、未レビューで、memory・harness・game-design・agent・operation・evaluation の6優先タグをすべて持つ最新候補。最終 score ではなく failure stage と経験再利用へ帰属する方法が次回判断を変えるか確認した。Nao_u の本投稿への明示的な重要／適切／反映評価は raw で確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "36 task・7 model・各3回の756 rollout、avg@3／best@3、running-best、delivery gate、peak retention、regression recovery、同一中間 artifact からの memory 有無比較、task 間 lesson transfer があり、failure attribution と best-state 保護へ直接変換できる。一方、既存の diagnostic-decision-trail、priority-ranking-component-diagnosis、quality-workflow-feedback-route、attributed-trajectory-tip、recovery-mode-second-slip が中核行動をほぼ覆う。現在の staging には score history・verified best commit・memory counterfactual を持つ比較 artifact がなく、active_probes 327件の状態で C1–C3 指標を加えると checklist 負荷と verifier score への過適合が増える。合計14だが non_redundancy と risk_control が必須閾値2未満のため採用しない。"
+  change:
+    summary: "state-only review。reviewed_source_ts と採点・reject理由だけを記録し、active_probes・ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
