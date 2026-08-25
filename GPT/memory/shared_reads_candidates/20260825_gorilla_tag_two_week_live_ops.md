@@ -4,6 +4,27 @@ url: "https://unity.com/blog/another-axiom-gorilla-tag"
 collected_at: "2026-08-25T21:19:08+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-production, live-ops, vr, ugc, performance, qa]
+evaluated_at: "2026-08-25T21:24:01+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-25T21:24:01+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-25T21:24:01+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-24"
+supersedes: []
+gate_reason: >-
+  2週間 cycle の分解、実機 QA と build automation、performance budget と whitelist を備えた UGC sandbox、
+  VR comfort を frame-rate と空間表現の両面で扱う判断まで一つの制作事例として抽出できる。短周期の playable delivery と
+  tool の段階公開へ具体的に移せ、一次取材の密度から CoopEval 水準の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "短い更新周期を速度だけで回さず、統合・安定化・実機検証・UGC制約を一つの運用系として成立させる方法"
+  analysis_axis: "cadence、device QA、performance observability、creator freedom の間に置かれた制約と段階開放の設計"
+  application_target: "Log_cdx の playable diff cycle で、統合日と安定化日を分け、対象実機の性能指標と tool 開放条件を done condition に組み込む"
+  pros_cons: "更新速度と創作余地を保ちやすい一方、build automation、実機台数、budget 設計、whitelist 保守の固定費が増える"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
