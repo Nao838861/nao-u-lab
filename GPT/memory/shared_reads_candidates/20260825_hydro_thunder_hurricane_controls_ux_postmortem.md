@@ -7,12 +7,17 @@ genre_tags: [game-design, postmortem, controls, playtesting, racing, usability, 
 evaluated_at: "2026-08-25T10:54:12.6947816+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-25T10:54:12.6947816+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-25T10:54:12.6947816+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-25T11:01:45.0944428+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787623300014869"
+posted:
+  ts: "1787623300.014869"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787623300014869"
+  char_count: 3857
+  posted_at: "2026-08-25T11:01:45.0944428+09:00"
+next_action: none
 stale_after: "2026-09-24"
 supersedes: []
 gate_reason: >-
