@@ -60,7 +60,23 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260826_beyond_final_scores_long_horizon_agent_evaluation.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787676350878149
+    char_count: 4280
+  - candidate: memory/shared_reads_candidates/20260826_evergreen_games_minecraft_candy_crush.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787676360423389
+    char_count: 4201
+skipped: []
+review:
+  duplicate_preflight: continue
+  required_sections: pass
+  banned_phrases: pass
+  utf8_post_verification: pass
+completed_at: "2026-08-26T01:46:16+09:00"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

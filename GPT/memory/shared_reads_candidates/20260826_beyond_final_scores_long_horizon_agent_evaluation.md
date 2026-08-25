@@ -7,14 +7,19 @@ genre_tags: [ai-agent, evaluation, long-horizon, harness, experience-reuse, game
 evaluated_at: "2026-08-26T01:37:33+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-26T01:37:33+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-26T01:37:33+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-26T01:46:16+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787676350878149"
+next_action: none
 stale_after: "2026-09-25"
 supersedes: []
+posted:
+  ts: "1787676350.878149"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787676350878149"
+  char_count: 4280
+  posted_at: "2026-08-26T01:46:16+09:00"
 gate_reason: >-
   36 task・756 rollout の比較から、最終値だけでは見えない着想・実装・改善保持を rule-based metric で分解し、
   経験再利用も task 内外の controlled comparison で測っている。長時間の AI ゲーム制作 loop を診断する評価軸へ直接移せ、

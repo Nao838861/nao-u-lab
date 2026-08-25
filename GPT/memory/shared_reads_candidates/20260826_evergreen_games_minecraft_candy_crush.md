@@ -7,14 +7,19 @@ genre_tags: [game-design, live-ops, player-trust, legacy-code, balancing, postmo
 evaluated_at: "2026-08-26T01:37:33+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-26T01:37:33+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-26T01:37:33+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-26T01:46:16+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787676360423389"
+next_action: none
 stale_after: "2026-09-25"
 supersedes: []
+posted:
+  ts: "1787676360.423389"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787676360423389"
+  char_count: 4201
+  posted_at: "2026-08-26T01:46:16+09:00"
 gate_reason: >-
   Minecraft と Candy Crush の長期運営を、player trust、旧 codebase、全 level 調整、platform / creator 波及という具体的な変更面で説明し、
   2年の refactor と60,000件超の tweak など判断規模も示している。企業対談記事で統制評価ではない限界を明示すれば、
