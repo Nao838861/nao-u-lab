@@ -95,7 +95,73 @@ self_feedback:
 - 再利用方針: 次の該当board／puzzle prototypeでは既存4 controlsを必要な分だけ使い、同時入力の衝突を既存rule-contractで分類できない具体例が出た場合だけ再評価する。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の High Signal / Recent 50 entry を atoms/index.jsonl と照合し、参照切れ 0 件を確認した。Markdown link は 0 件だった。"
+  - "memory_health の stable snapshot dd62e760dbd2dba0 で atoms.jsonl / per-file md / index.jsonl 各 2971 件、ID・mirror conflict 0 件を確認した。raw normalized-content duplicate 40 群は canonical overlay 45 群で管理され、recall-visible duplicate 3 群も表示時 fold 済みだった。"
+  - "shared-reads candidate lifecycle を dry-run 監査し、status / candidate_status の矛盾 0 件、未評価 intake 0 件、malformed 0 件を確認した。"
+  - "closed canonical / mixed duplicate / open duplicate / stale triage / group-action の各 sidecar を再監査し、candidate frontmatter を変更せず terminal group 108 群、open group 29 群を確認した。"
+  - "Slack inbox は directives / broadcasts とも pending 0 件を確認し、handled 更新対象なしとした。"
+  - "memory/raw の 30 日超無更新 242 ファイル（70,590,898 bytes）は raw provenance・論文本文・評価 trajectory の参照元であり、孤立した一時生成物と断定できないため archive 移動しなかった。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 10
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_review_batch: []
+group_action_handoff: []
+stale_backlog:
+  lifecycle_status_counts:
+    posted: 706
+    ready_to_post: 9
+    postponed: 208
+    needs_review: 0
+    failed: 511
+  missing_stale_after: 3
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+audit_notes:
+  encoding:
+    source_file_status: "memory/MEMORY.md は UTF-8 明示読みで 記憶 / ゲーム設計 / 敵パターン を exact hit、評価軸 は本文に不在だが U+FFFD はない。memory_health の suspect 2 atom のうち sr-1776127289-4d9239b255 は raw Slack source 自体に U+FFFD があり、gr-1777083728-44d444ab7a は本文中の意図的な ??? を検知した false positive だった。"
+    display_or_tooling_status: "UTF-8 明示の Get-Content / rg 表示は正常で、shell・staging 経路の mojibake は観測しなかった。"
+    disposition: "前者は単一 raw-root source defect、後者は検知器 false positive であり、今回の index・recall smoke は正常だったため structural issue / needs_design には上げない。原文は変更しない。"
+  atom_consistency:
+    duplicate_ids: 0
+    mirror_content_conflicts: 0
+    raw_normalized_content_duplicate_groups: 40
+    recall_visible_normalized_content_duplicate_groups: 3
+    contradictory_current_state_anomalies: 0
+  stale_suppression:
+    reason: "期限超過 4 candidate は JAMEL と collision enemy morphology の all-open 2 group に属し、membership fingerprint が一致する deferred receipt（retry_after=2026-09-19T14:08:16+09:00）が live lease のため stale triage / group-action queue から正しく抑止された。"
+  due_probe_check:
+    command: "python tools/shared_reads_probe_lifecycle.py pending --due-only --limit 1"
+    result: "items=[]。pending 1 件の lease_due は 2026-08-25T23:59:59+09:00 で監査時刻には未到来のため、receipt を作成しなかった。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
