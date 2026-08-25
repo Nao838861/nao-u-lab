@@ -4,20 +4,20 @@ url: "https://dl.acm.org/doi/10.1145/3772318.3791736"
 collected_at: "2026-06-17T03:14:54+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, player-authorship, rules, metagame, chi2026]
-evaluated_at: "2026-07-27T11:37:50+09:00"
+evaluated_at: "2026-08-26T07:52:47+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-27T11:37:50+09:00"
+last_reviewed_at: "2026-08-26T07:52:47+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-27T11:37:50+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-26T07:52:47+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-26"
+stale_after: "2026-09-25"
 supersedes: []
 gate_reason: |-
-  三つの design theme と player authorship への適用先は明確だが、具体的な game design、playtest 観察、失敗例、評価手順が候補本文にない。
-  現状では約4000字の概要が抽象論へ寄るため、accepted manuscript の事例と根拠を補うまで保留する。
+  三つの design theme と player authorship への適用先は明確だが、具体的な game design、playtest 観察、失敗例、評価手順は候補本文に増えていない。
+  現状では約4000字の概要が抽象論へ寄るため、accepted manuscript の事例と根拠を補うまで保留を継続する。
 ---
 
 ## raw_excerpt

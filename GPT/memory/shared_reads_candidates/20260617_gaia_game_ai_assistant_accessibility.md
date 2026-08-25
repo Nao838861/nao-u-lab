@@ -4,20 +4,20 @@ url: "https://dl.acm.org/doi/10.1145/3742413.3789155"
 collected_at: "2026-06-17T23:45:26+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-accessibility, ai-assistant, player-autonomy, ethics, inclusive-design]
-evaluated_at: "2026-07-27T09:22:54+09:00"
+evaluated_at: "2026-08-26T07:52:47+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-27T09:22:54+09:00"
+last_reviewed_at: "2026-08-26T07:52:47+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-27T09:22:54+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-26T07:52:47+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-26"
+stale_after: "2026-09-25"
 supersedes: []
 gate_reason: >-
   Game AI Assistant を accessibility / autonomy / ethics の設計原則として読む軸は有用だが、保存内容はメタ情報と題名からの推定が中心である。
-  当事者調査の方法、具体的な原則、評価、倫理的 tradeoff を確認できず、約4000字の概要を根拠付きで書けないため postpone を維持する。
+  当事者調査の方法、具体的な原則、評価、倫理的 tradeoff を再確認できず、約4000字の概要を根拠付きで書けないため保留を継続する。
 ---
 
 ## raw_excerpt

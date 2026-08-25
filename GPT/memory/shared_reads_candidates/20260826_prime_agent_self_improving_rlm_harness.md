@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2608.23552"
 collected_at: "2026-08-26T07:49:25+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent, long-horizon, game-development, evaluation, harness, memory, factorio]
+evaluated_at: "2026-08-26T07:52:47+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-26T07:52:47+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-26T07:52:47+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-25"
+supersedes: []
+gate_reason: >-
+  persistent REPL、履歴・memory・skill、安定 handle の subagent、trajectory と親子 cost の記録は、複数日にまたがるゲーム制作 agent の harness 設計へ具体的に接続できる。
+  ただし各 benchmark の比較条件、定量結果、失敗からの recovery 成功率、Factorio での進歩の内訳が候補本文にないため、約4000字の評価込み概要には不足し保留する。
 ---
 
 ## raw_excerpt

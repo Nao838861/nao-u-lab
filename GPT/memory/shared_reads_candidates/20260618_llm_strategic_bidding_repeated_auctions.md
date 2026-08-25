@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2604.24156"
 collected_at: "2026-06-18T01:44:13+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-theory, llm-agents, economy-design, repeated-games, simulation]
-evaluated_at: "2026-07-27T11:37:50+09:00"
+evaluated_at: "2026-08-26T07:52:47+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-27T11:37:50+09:00"
+last_reviewed_at: "2026-08-26T07:52:47+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-27T11:37:50+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-26T07:52:47+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-26"
+stale_after: "2026-09-25"
 supersedes: []
 gate_reason: |-
   repeated auction、budget constraint、VCG benchmark はゲーム内経済の検証へ具体的に接続できる。
-  一方で実験条件、比較戦略、定量結果、失敗ケースが候補本文にないため、均衡回復という結論を検証可能な約4000字概要へ展開できず保留する。
+  一方で実験条件、比較戦略、定量結果、失敗ケースは未補強で、均衡回復という結論を検証可能な約4000字概要へ展開できないため保留を継続する。
 ---
 
 ## raw_excerpt

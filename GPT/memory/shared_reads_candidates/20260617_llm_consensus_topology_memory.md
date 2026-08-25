@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2606.04197"
 collected_at: "2026-06-17T15:29:20.8446899+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [multi-agent, agent-memory, social-simulation, game-ai, coordination]
-evaluated_at: "2026-07-27T11:37:50+09:00"
+evaluated_at: "2026-08-26T07:52:47+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-27T11:37:50+09:00"
+last_reviewed_at: "2026-08-26T07:52:47+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-27T11:37:50+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-26T07:52:47+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-26"
+stale_after: "2026-09-25"
 supersedes: []
 gate_reason: |-
-  16 agent・8 topology・432 run と主要結果は把握できるが、各 topology / memory 条件、指標定義、失敗例の比較が候補本文にはない。
-  NPC の噂・派閥 simulation への適用は有望でも、約4000字の概要に必要な評価の中身を推測で補うことになるため、一次資料の補強まで保留する。
+  16 agent・8 topology・432 run と主要結果は把握できるが、各 topology / memory 条件、指標定義、失敗例の比較は候補本文に増えていない。
+  NPC の噂・派閥 simulation への適用は具体的でも、約4000字の概要に必要な評価の中身を推測で補うことになるため保留を継続する。
 ---
 
 ## raw_excerpt
