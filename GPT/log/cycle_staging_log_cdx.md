@@ -79,7 +79,35 @@ completed_at: "2026-08-26T01:46:16+09:00"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787669112-340ecfdb06
+    source_ts: "1787669112.732279"
+    title: "DREAM — 意味上の戦略を bounded typed parameter へ翻訳する推薦制御面"
+    reason: "未レビュー・score 12・memory／harness／game-design／agent／operation／evaluation の6優先タグを持つ最新候補で、意味判断と実行knobを分ける設計が次回行動へ独自の差を作るか確認するため1件だけ選んだ。Nao_uの明示的な重要評価はrawで確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "合計14だが、non_redundancyとrisk_controlが必須閾値2未満。M1–M3、typed parameter、allowlist／range／version／expiry／default fallback、offline replay→online A/Bは具体的だが、intent-action、structural-semantic verifier、typed bus contract、control-plane boundary、shared-control fallbackの既存5 probeへ大半が吸収される。比較可能なgame artifactがなく、active_probes 327件と期限超過pending lease 1件がある状態で同義bundleを増やすと判断差より確認競合が増える。"
+  change:
+    summary: "reviewed_source_tsとstate-only reject理由だけを記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-25T23:49:13+09:00",
+  "updated_at": "2026-08-26T01:50:09+09:00",
   "reviewed_source_ts": [
+    "1787669112.732279",
     "1787661281.063809",
     "1787646553.380989",
     "1787653754.197229",
@@ -24602,6 +24603,53 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、小標本・自己申告中心の evidence 限界、既存 game-design／feedback controls との重複、比較可能な企画→playable artifact 不在に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-26T01:50:09+09:00",
+      "selected": {
+        "id": "sr-1787669112-340ecfdb06",
+        "source_ts": "1787669112.732279",
+        "title": "DREAM — 意味上の戦略を bounded typed parameter へ翻訳する推薦制御面",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ最新候補だったため1件だけ選んだ。意味上の判断と実行 knob を分離し、allowlist・range・version・expiry・default fallback を通して既存 pipeline へ局所適用する設計が、次回の game prototype または memory operation に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録は raw で確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14だが、non_redundancy と risk_control が必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、L0–L2 Intent Engine、端末側 change-point gate、0.8B main／4B specialist／夜間統合、M1–M3 Meta Engine、schema制約JSONから deterministic typed parameter への変換、allowlist・range・version・expiry・default fallback、offline replay と online A/B を一つの production 構成として示す。re-ranking 制御で IPV +2.06%・Core IPV +2.39%・GMV +0.88%、fine ranking まで広げて +2.71%・+3.06%・+1.31%という実運用結果もあり、既存 game loop を壊さず一 prototype・少数parameter・短いexpiryへ限定する行動へ直接変換できるため relevance・actionability・evidence は3とした。ただし test期間、traffic母数、分散、信頼区間、segment別悪化、各componentの独立寄与、人間の体験価値は示されず、商取引proxyを遊びへ外挿できない。probe-20260717-player-intent-action-response はintentからaction schemaとobservable responseまで、probe-20260610-structural-semantic-verifier-boundary はschema妥当性と意味妥当性、probe-20260530-worker-bus-contract-observer はtyped artifact contract、probe-20260609-control-plane-state-boundary はcontrol／persistent／workspace／remote surface、probe-20260618-shared-control-handoff-contract はoverride・safe fallback・undoを既に扱う。DREAM固有のM1–M3連結は有用な組合せ例だが、中核判断は既存controlsへほぼ吸収されるため non_redundancy は1。現在のstagingにはbounded overrideのbaseline／変更版、同一seed replay、segment別game指標、人間評価を持つ具体artifactがなく、直後のPhase 4aはこのgame controlの実consumerではない。active_probesは327件で期限超過のPhase 4a pending leaseも1件あるため、同義bundleを追加すると判断差より確認競合とchecklist負荷が増えるので risk_control は1とした。次の具体的prototypeで既存5 controlsだけでは意味方針から実parameterへの翻訳失敗またはdefault復帰失敗を分類できない実例が出た時だけ再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787669112-340ecfdb06.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787669112.732279",
+        "memory/shared_reads_candidates/20260825_dream_agentic_recommender_intent_control.md",
+        "https://arxiv.org/abs/2608.09408v3"
+      ],
+      "existing_controls": [
+        "probe-20260717-player-intent-action-response",
+        "probe-20260610-structural-semantic-verifier-boundary",
+        "probe-20260530-worker-bus-contract-observer",
+        "probe-20260609-control-plane-state-boundary",
+        "probe-20260618-shared-control-handoff-contract"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、M1–M3／bounded overrideの局所有用性、既存intent／verifier／bus／control-plane／fallback controlsとの大幅な重複、比較可能なgame artifact不在、active probeとpending leaseの増殖riskに基づくreject理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
