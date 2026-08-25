@@ -142,7 +142,127 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-08-26T04:06:00+09:00
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index atom ID を検証し、broken link 0件を確認した"
+  - "atoms.jsonl / per-file md / index.jsonl の2976件同期、duplicate overlay 45群、parse error / content conflict 0件を確認した"
+  - "terminal duplicate title の canonical index を再生成し、closed group 108件を確認した"
+  - "mixed/open duplicate sidecar を再生成し、open group 29件（mixed 25件 / all_open 4件）を確認した"
+  - "group-action / stale-triage sidecar を live lease 反映順で再生成し、group action 0件、candidate handoff 5件を冪等 enqueue した"
+  - "Slack directive / broadcast と group handoff inbox を監査し、pending 0件のため handled 更新は行わなかった"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+memory_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読みで日本語表示が正常。atom mirror は2976件で一致し、missing / parse error / index error / content conflict は0件"
+  display_or_tooling_status: "none。代表語 probe は『記憶』『ゲーム設計』『敵パターン』を取得。『評価軸』は bounded Recent の世代交代で現 index 本文に存在しないが、atoms.jsonl / index.jsonl の UTF-8 原文では取得でき、mojibake ではない"
+  duplicate_audit:
+    raw_normalized_content_groups: 40
+    raw_duplicate_rows: 80
+    recall_visible_groups: 3
+    recall_visible_rows: 6
+    canonical_overlay_groups: 45
+    effective_display_unresolved_groups: 0
+    disposition: "canonical overlay と lifecycle/content fold で検索表示上は解消済み。raw atom は provenance 保持のため削除しない"
+  non_blocking_findings:
+    - evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+      source_file_status: "UTF-8 明示読みでも『AIエ��ジェント』を含み、source row 自体に置換文字がある"
+      display_or_tooling_status: none
+      disposition: "既知の単一旧レコード品質事項で、ゲーム制作記憶の検索構造を塞がないため issue / Phase 4b 対象にはしない"
+    - evidence: "memory/atoms/2026-04/gr-1777083728-44d444ab7a.md"
+      source_file_status: "UTF-8 明示読みで正常"
+      display_or_tooling_status: "memory_health の mojibake suspect は false positive"
+      disposition: "修復不要"
+raw_archive_review:
+  older_than_30_days_files: 242
+  bytes: 70590898
+  action: explicit_keep
+  reason: "web research 原文・PDF・headless evidence・Slack source を含む provenance 層で、candidate / atom から参照されるため、この phase では移動しない"
+candidate_lifecycle:
+  total_files: 1441
+  counts:
+    posted: 711
+    ready_to_post: 9
+    postponed: 209
+    failed: 512
+    needs_review: 0
+  missing_stale_after: 3
+  overdue_open_total: 30
+  overdue_disposition: "open duplicate group の4件は既存 live lease で明示保持。非 group 26件のうち上位5件を Phase 2 再評価へ渡し、残り21件は次 cycle 以降の bounded handoff に残した"
+  lifecycle_anomaly_counts:
+    stale_after_differs_from_30d_default: 18
+  lifecycle_anomaly_disposition: "status / candidate_status mismatch や evidence 欠損ではなく、明示された再評価期限と機械的30日既定値の差だけなので自動修復しない"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 30
+  stale_triage_queue_rows: 21
+  stale_triage_rows_before_candidate_handoff: 26
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-ef18ac247aefef76
+    - cha-967395958c578636
+    - cha-91166477d40ad557
+    - cha-0c1e1cecb38f69cd
+    - cha-3ab1fe8a1db16352
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-ef18ac247aefef76
+    path: memory/shared_reads_candidates/20260613_nitrogen_generalist_gaming_agents.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "汎用ゲーム agent の制作転用価値は高いが、benchmark 分割・比較条件・定量結果・失敗例が不足するため一次資料で再評価する"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-967395958c578636
+    path: memory/shared_reads_candidates/20260613_skillgenbench_skill_generation_pipelines.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "skill 再利用と固定 harness 評価へ接続できるが、task・指標・pipeline 比較・失敗傾向が不足するため再評価する"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-91166477d40ad557
+    path: memory/shared_reads_candidates/20260615_review_arcade_llm_review_gameability.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "LLM judge の Goodhart 化はゲーム評価 loop に重要だが、反復改稿・gameability 測定・human alignment 比較の根拠が不足する"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-0c1e1cecb38f69cd
+    path: memory/shared_reads_candidates/20260615_virtualenv_embodied_ai_game_mechanics.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "UE5 embodied game 環境の転用先は具体的だが、課題条件・比較モデル・指標・結果・失敗例が不足する"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-3ab1fe8a1db16352
+    path: memory/shared_reads_candidates/20260616_ai_lod_distance_aware_npc_animation.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "距離別 precision 切替は NPC runtime 評価へ直結するが、速度改善・tier・品質指標・切替 overhead が不足する"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
