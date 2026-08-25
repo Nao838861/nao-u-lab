@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-25T19:32:56+09:00",
+  "updated_at": "2026-08-25T21:40:31+09:00",
   "reviewed_source_ts": [
+    "1787646553.380989",
     "1787653754.197229",
     "1787638709.465249",
     "1787631101.202039",
@@ -762,6 +763,55 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-25T21:40:31+09:00",
+      "selected": {
+        "id": "sr-1787646553-4ca668a065",
+        "source_ts": "1787646553.380989",
+        "title": "CorgiSpace — idea と formula を分け、制作中の発見から次の最小変更を決める短編実践",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新候補だったため1件だけ選んだ。idea と最初の prototype／実装である formula を分け、道具の木目に沿う短い playable から観察された核へ次の変更を絞る考えが、次のゲーム制作で既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、non_redundancy と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、Saltsman が限られた余暇の約1年で PICO-8 の小作品13本を完成させ、easy but not obvious、idea／formula 分離、制作中の挙動への注意、道具の木目を一つの実践へ結んだことを示す。idea_core、formula_v0、grain_constraints、noticed_behavior、next_cut へ落とし、観察された核を強める最小変更を選ぶ行動へ変換できるため relevance・actionability は3とした。一方、根拠は熟練制作者1名の完成作・制作日誌・回復感の自己報告と Riendeau の実践照合で、CorgiJam 29件は伝達可能性を補うが、従来手法との完走率・独創性・疲労・手戻りの比較ではないため evidence は2に留める。probe-20260713-short-hike-constraint-shortcut は既存 code／asset／tool と制約を作品固有の shortcut へ変え、core と deferred を分ける。probe-20260706-paperclaw-prototype-hypothesis-contract は次の変更を testable hypothesis と observable verdict へ結ぶ。probe-20260625-quality-workflow-feedback-route は低コストな runtime observation を一つの次行動へ送る。probe-20260710-chatge-three-lane-turn-record と probe-20260709-critical-stage-feedback-routing は design intent／implementation／次 probe と keep／change／question を分離する。idea と formula の名称には固有差があるが、中核の次回行動は既存 controls へほぼ吸収されるため non_redundancy は1とした。現在の staging には比較可能な新規 prototype、初期 formula、runtime observation、次 cut がなく、active_probes は327件で Phase 4a 向け pending lease も1件ある。この状態で5項目 schema と制作エネルギー記録を追加すると、確認負荷、主観記録、PICO-8 の単一事例から全制作への過剰一般化を増やし、直後の memory cleanup 判断を変えないため risk_control は1とした。次の該当制作では新設せず既存5 controlsを必要な分だけ使い、初期 formula の失敗を idea の否定と誤認する同型失敗が実在し、既存 controls で防げなかった時だけ再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787646553-4ca668a065.md",
+        "memory/shared_reads_candidates/20260825_corgispace_short_games_creative_practice.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787646553.380989",
+        "https://www.gamedeveloper.com/design/finding-inspiration-and-a-bit-of-hope-in-corgispace",
+        "https://finji.co/games/corgispace/",
+        "https://itch.io/jam/corgijam"
+      ],
+      "existing_controls": [
+        "probe-20260713-short-hike-constraint-shortcut",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract",
+        "probe-20260625-quality-workflow-feedback-route",
+        "probe-20260710-chatge-three-lane-turn-record",
+        "probe-20260709-critical-stage-feedback-routing"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、idea／formula 分離・道具の木目・観察から次の最小変更を決める局所有用性、単一制作者事例の証拠限界、既存 scope／hypothesis／observation-routing／three-lane controls との重複、比較 artifact 不在と active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-25T19:32:56+09:00",
       "selected": {
