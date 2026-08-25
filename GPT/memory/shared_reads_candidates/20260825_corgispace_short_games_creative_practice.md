@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/finding-inspiration-and-a-bit-of-hope
 collected_at: "2026-08-25T17:20:09+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, prototyping, scope-control, creative-process, postmortem]
+evaluated_at: "2026-08-25T17:23:07+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-25T17:23:07+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-25T17:23:07+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-24"
+supersedes: []
+gate_reason: |-
+  GDC 講演の要点だけでなく、Dust Bunny 等の制作例、idea と formula のずれ、tool/process の木目、短編制作が回復になる条件まで追える。
+  短い playable prototype の scope 制御と、初期実装を正解扱いせず偶発挙動を観察する制作判断へ具体的に接続でき、約4000字の独立した分析を支えられる。
+suggested_post_outline:
+  overview_angle: "短編を量産する速度論ではなく、idea と formula を分離し、制作中の発見で小さな作品を育てる実践として整理する"
+  analysis_axis: "easy, but not obvious／tool の木目／制作者自身の楽しさを、探索範囲・実装制約・継続可能性の三軸で分析する"
+  application_target: "短い playable prototype の初期仮説、最初の実装、実際に起きた面白い挙動を別々に記録し、次の一手を決める制作サイクル"
+  pros_cons: "小規模でも発見密度と完走率を上げやすい一方、偶発性の美化や検証不足、短編への過度な一般化には注意が要る"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
