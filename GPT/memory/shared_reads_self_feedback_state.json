@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-25T11:06:27+09:00",
+  "updated_at": "2026-08-25T13:18:21+09:00",
   "reviewed_source_ts": [
+    "1779843709.551219",
     "1787616148.029579",
     "1787608078.731599",
     "1778693425.089629",
@@ -24312,6 +24313,55 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、四段の因果分離・state-grounded evidenceの有用性、既存effect／verifier／completion controlsとの完全重複、比較artifact不在、active probeとpending leaseの増殖リスクに基づくreject理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-25T13:18:21+09:00",
+      "selected": {
+        "id": "sr-1779843709-7aaca4bb5e",
+        "source_ts": "1779843709.551219",
+        "title": "Paul Iusztin『エージェントメモリは統一グラフで3種を統合すべき』",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、memory・game-design・agent・operation・evaluation を含む9タグを持つ旧残件のうち、現在進行中の per-atom 移行と Phase 4a memory cleanup に最も直結するため1件だけ選んだ。Nao_u が基礎となる投稿を共有した記録はあるが、本 shared-reads 投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録は確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、non_redundancy と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。短期・長期・推論記憶を一つの graph と ingestion pipeline で結ぶ主張は現在の memory 運用に直結し、lineage／resolution／deduplication の局所点検へ変換できるため relevance は3、actionability は2とした。一方、根拠は X 上の設計提案で、公開 schema、実装、baseline、retrieval 品質、latency／cost の比較がなく evidence は1。同一 URL・同一主張の sibling sr-1779860566-0c29861e1b と sr-1779887506-f75cd3bcba は既に review 済みで、後者は2026-08-24に同じ evidence 限界と既存 controls との完全重複から reject されている。現行の per-atom Markdown＋index、source_ts、normalized_content_hash、canonical／lifecycle fold と既存 graph／governance probes が中核行動を既に担うため non_redundancy は0。Phase D 移行中で active_probes が327件、Phase 4a向け pending lease も1件ある状態で同一 URL sibling から別 control を増やすと、同一根拠の水増し、確認負荷、二重 source of truth を増やすため risk_control は1とした。次回行動は新設ではなく、同一 URL sibling を独立 evidence と数えず既存 controls を使うことで足りる。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1779843709-7aaca4bb5e.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779843709.551219",
+        "memory/shared_reads_self_feedback_state.json#source_ts=1779860566.721249",
+        "memory/shared_reads_self_feedback_state.json#source_ts=1779887506.631529"
+      ],
+      "existing_controls": [
+        "memory/atoms/index.jsonl and normalized_content_hash lifecycle fold",
+        "probe-20260607-memory-hub-link-coverage",
+        "probe-20260605-memory-mechanism-gap-check",
+        "probe-20260602-memory-governance-gate-separation",
+        "probe-20260611-memory-lifecycle-phase-boundary",
+        "review: sr-1779860566-0c29861e1b",
+        "review: sr-1779887506-f75cd3bcba"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、同一URL siblingであること、X設計提案だけという証拠限界、既存 per-atom／graph／governance／lifecycle controls との完全重複による reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

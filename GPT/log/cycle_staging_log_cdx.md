@@ -59,7 +59,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779843709-7aaca4bb5e
+    source_ts: "1779843709.551219"
+    title: "Paul Iusztin『エージェントメモリは統一グラフで3種を統合すべき』"
+    reason: "score 12、9タグを持つ未レビュー旧残件で、per-atom移行とPhase 4a memory cleanupに直結するため1件だけ選んだ。Nao_uは基礎投稿を共有したが、本投稿への明示評価は確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "同一URL・同一主張のsibling 2件が既にreview済みで、うち1件は同じ証拠限界と既存controlsとの完全重複からreject済み。X上の設計提案には実装・baseline・品質／cost比較がなく、同義control追加は同一根拠の水増しと確認負荷を増やすため採用条件を満たさない。"
+  change:
+    summary: "reviewed_source_ts、採点、同一URL sibling、証拠限界、既存controlsとの重複によるstate-only reject理由だけを記録した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
