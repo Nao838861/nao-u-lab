@@ -152,7 +152,123 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "MEMORY.md の index と per-file atom index を照合し、broken reference 0 件を確認"
+  - "atom mirror と duplicate overlay を監査し、JSON parse error / duplicate id / content conflict が 0 件であることを確認"
+  - "open duplicate group / stale triage / group action sidecar を再生成"
+  - "期限到来 candidate 25 件のうち、live group lease で抑止された 4 件を除く queue 21 件から 5 件を Phase 2 handoff inbox へ冪等 enqueue"
+  - "Slack directives / broadcasts は pending 0 件のため close 対象なし"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+memory_audit:
+  memory_index:
+    broken_references: 0
+    validator: ok
+    source_file_status: "UTF-8 明示読みで `記憶` / `ゲーム設計` / `敵パターン` / `評価軸` を取得。source file 破損なし"
+    display_or_tooling_status: none
+  atoms:
+    rows: 2976
+    json_parse_errors: 0
+    duplicate_ids: 0
+    content_conflicts: 0
+    normalized_content_duplicate_groups: 40
+    duplicate_handling: "45 overlay group により canonical view で fold 済み。atom 本体は変更・削除していない"
+  raw_archive_audit:
+    inactive_over_30_days: 242
+    by_area:
+      web_research: 217
+      headless_eval: 16
+      slack_api: 6
+      slack_archive: 1
+      game_eval: 1
+      sync_state: 1
+    archive_action_count: 0
+    reason: "原文 provenance、再現用評価 artifact、現用 sync marker であり、参照を壊す機械移動は行わず保持"
+  candidate_lifecycle:
+    files: 1442
+    posted: 712
+    ready_to_post: 9
+    postponed: 209
+    failed: 512
+    needs_review: 0
+    overdue_open_total: 25
+    lifecycle_changes: 0
+    valid_unreviewed: 0
+    malformed: 0
+  slack_inbox:
+    directives_pending: 0
+    broadcasts_pending: 0
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 25
+  stale_triage_queue_rows: 21
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  suppressed_by_live_group_lease_candidate_count: 4
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-b715a76b3f3a3148
+    - cha-cc7534c0a66d35ff
+    - cha-00074ffb12d3bf65
+    - cha-422681833d7037bf
+    - cha-d39412ef08b689e8
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-b715a76b3f3a3148
+    path: memory/shared_reads_candidates/20260617_gaia_game_ai_assistant_accessibility.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "accessibility / autonomy / ethics の適用軸は有用だが、当事者調査・具体原則・評価・倫理的 tradeoff の一次根拠が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-cc7534c0a66d35ff
+    path: memory/shared_reads_candidates/20260617_llm_consensus_topology_memory.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "16 agent・8 topology・432 run の骨格はあるが、条件・指標定義・失敗例の比較が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-00074ffb12d3bf65
+    path: memory/shared_reads_candidates/20260617_player_discretion_rule_changing_play.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "player authorship への適用先は明確だが、具体的 game design・playtest 観察・評価手順が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-422681833d7037bf
+    path: memory/shared_reads_candidates/20260617_spiral_self_play_zero_sum_games.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "self-play / curriculum / role-conditioned advantage の骨格はあるが、報酬設計・benchmark 定量結果・ゲーム別差が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-d39412ef08b689e8
+    path: memory/shared_reads_candidates/20260618_llm_strategic_bidding_repeated_auctions.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "ゲーム内経済へ接続できるが、実験条件・比較戦略・定量結果・失敗ケースが不足"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
