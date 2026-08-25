@@ -63,7 +63,36 @@ skipped: []
 - 投稿検証: `tools/post_slack_message_file.py` により 1 回の `chat.postMessage` で投稿し、`ts=1787653754.197229` の取得後文字化け検査は `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787653754-b78286add3
+    source_ts: "1787653754.197229"
+    title: "Sente — 6人同時手番と単一 logical board model"
+    reason: "今cycleで投稿した未レビュー・score 10・優先タグ5種の最新atomを1件だけ選び、同時解決と単一logical boardが既存controlにない判断差を作るか確認した。Nao_uの明示評価はローカルrawで未確認。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "reviewed_source_tsとreject理由だけをstateへ記録した。既存のrule-contract／parity／production-slice／content-pipeline controlsと直近spreadsheet reviewが中核行動をほぼ覆い、比較artifactもないため、probe・metric・lease・directive・恒久ルールは追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採否理由: 合計13で採用下限14に届かず、`non_redundancy` と `risk_control` も必須閾値2未満。Unityの単一case studyには逐次／同時手番やauthoring方式の定量before／afterがなく、active probe 327件・Phase 4a pending lease 1件の現状では追加controlが判断差より確認負荷を増やす。
+- 再利用方針: 次の該当board／puzzle prototypeでは既存4 controlsを必要な分だけ使い、同時入力の衝突を既存rule-contractで分類できない具体例が出た場合だけ再評価する。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

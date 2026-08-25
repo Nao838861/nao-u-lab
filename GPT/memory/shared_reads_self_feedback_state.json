@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-25T17:33:35+09:00",
+  "updated_at": "2026-08-25T19:32:56+09:00",
   "reviewed_source_ts": [
+    "1787653754.197229",
     "1787638709.465249",
     "1787631101.202039",
     "1779843709.551219",
@@ -761,6 +762,52 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-25T19:32:56+09:00",
+      "selected": {
+        "id": "sr-1787653754-b78286add3",
+        "source_ts": "1787653754.197229",
+        "title": "Sente — 6人同時手番と単一 logical board model",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新atomだったため1件だけ選んだ。今cycleで投稿した直後のため、逐次手番から同時解決への変更と、logical board modelをruntime・editor・spreadsheet authoringへ通す設計が、次のboard／puzzle prototypeで既存controlと異なる小さな判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカルrawでは確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、non_redundancyとrisk_controlも必須閾値2を下回るため、新規probe・metric・lease・directiveは追加しない。shared-reads本文は、逐次手番の待ち時間をtimer付き同時入力／一斉解決へ変え、相手が同時にshieldを差し込む相互予測を生んだこと、表示sceneから分離したlogical boardをruntime randomization・editor・spreadsheet import・Timeline制御へ再利用したことを示す。したがって次のboard／puzzle prototypeで、入力収集と解決の分離、同時衝突規則、単一state model、非programmer authoringを確認する行動へ変換でき、relevance・actionabilityは3とした。一方、根拠はUnityの開発者取材による単一作品のcase studyで、逐次手番との待ち時間・離脱率・試合時間・膠着率・bug率、scene直結方式とのauthoring時間・回帰率・保守費のbefore／after比較がないためevidenceは2に留める。probe-20260712-boardwalk-rule-contract-taxonomyはlegal action・side effect・turn order・terminal境界を、probe-20260603-rules-core-parity-regressionは同一seed／fixtureでのrule parityを、probe-20260518-runtime-verifiable-production-slicesはcode・interaction・runtime evidenceの分離を、probe-20260626-meta-horizon-friction-layer-triageはcontent/update pipelineの摩擦層を既に扱う。さらにsource_ts=1787436897.991969のreviewが固定engine／可変content、spreadsheet authoring、validation、versioned snapshotを既に検討しているため、本atom固有の同時解決を加えても中核の採否行動は既存controlsへほぼ吸収され、non_redundancyは1とした。現在のstagingには比較可能なboard／puzzle playable、逐次／同時の同一state trace、衝突fixture、authoring before／afterがなく、active_probesは327件、Phase 4a向けpending leaseも1件ある。この状態で新規controlを加えると確認負荷と単一case studyの過剰一般化を増やし、直後のmemory cleanup判断を変えないためrisk_controlは1とした。次の該当prototypeでは新設せず既存4 controlsを必要な分だけ使い、同時入力の衝突を既存rule-contractで分類できない具体例が出た時だけ別atomとして再評価する。",
+      "evidence_sources": [
+        "memory/atoms.jsonl#id=sr-1787653754-b78286add3",
+        "memory/shared_reads_candidates/20260825_sente_data_driven_board_simultaneous_turns.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787653754.197229",
+        "https://unity.com/blog/data-driven-board-six-player-strategy-sente"
+      ],
+      "existing_controls": [
+        "probe-20260712-boardwalk-rule-contract-taxonomy",
+        "probe-20260603-rules-core-parity-regression",
+        "probe-20260518-runtime-verifiable-production-slices",
+        "probe-20260626-meta-horizon-friction-layer-triage"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_tsと、同時解決／単一logical boardの局所有用性、定量比較不在の証拠限界、既存rule-contract／parity／production-slice／content-pipeline controlsおよび直近spreadsheet reviewとの重複、比較artifact不在とactive probe増殖riskに基づくreject理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-25T17:33:35+09:00",
       "selected": {
