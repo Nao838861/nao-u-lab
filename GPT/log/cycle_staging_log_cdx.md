@@ -90,7 +90,89 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index を per-file atom index と照合し、broken entry 0 件を確認した。UTF-8 明示読みで代表語（記憶 / ゲーム設計 / 敵パターン / 評価軸）も取得できた。"
+  - "shared-reads の terminal duplicate canonical index を再生成し、108 group を現在の candidate frontmatter に同期した。"
+  - "open duplicate / stale triage / group action sidecar を規定順で再生成した。open duplicate 29 group、stale triage 0 行、actionable group 0 件だった。"
+  - "Slack inbox は directives / broadcasts とも pending 0 件で、handled へ更新すべき行はなかった。"
+  - "memory/raw/ の30日超過242ファイルを監査した。内訳は web_research 217 / headless_eval 16 / slack_api 6 / slack_archive 1 / game_eval 1 / sync_state 1。一次資料・評価証拠・provenance のため明示保持し、archive 移動は行わなかった。"
+issues: []
+audit_evidence:
+  memory_index:
+    validator: "python tools/validate_memory_index.py"
+    result: ok
+    broken_entries: 0
+    source_file_status: "UTF-8 source intact; 代表語4件を取得"
+    display_or_tooling_status: none
+  atoms:
+    total_rows: 2967
+    mirror_conflicts: 0
+    raw_normalized_content_duplicate_groups: 40
+    recall_visible_duplicate_groups: 3
+    canonical_overlay_groups: 45
+    interpretation: "重複は既存 overlay / lifecycle fold で吸収済み。memory health errors 0、effective display unresolved groups 0 のため新規 issue にはしない。"
+  candidate_lifecycle:
+    status_counts:
+      posted: 703
+      ready_to_post: 9
+      postponed: 208
+      failed: 511
+      needs_review: 0
+    missing_stale_after: 3
+    missing_stale_after_scope: "posted の旧 post ファイル3件のみ。open lifecycle ではないため再評価 queue から除外。"
+    overdue_for_reassessment: 4
+    overdue_disposition: "2つの all-open duplicate group に集約済み。両 group は Phase 2 の defer receipt と retry_after=2026-09-19T14:08:16+09:00 を持つため、この cycle は明示保持。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 10
+    dormant: 1
+harness_if_instruction_receipt:
+  applicable_instruction: "Phase 4a の必須 mechanical audit と evidence pointer の記録"
+  action_evidence:
+    - "memory/MEMORY.md: validate_memory_index=OK、UTF-8代表語 probe=4/4"
+    - "tools/memory_health.py --json: mirror conflicts=0、errors=0"
+    - "tools/shared_reads_candidate_handoff.py audit: pending=0、errors=0"
+    - "tools/shared_reads_group_handoff.py audit: pending=0、errors=0"
+    - "tools/shared_reads_probe_lifecycle.py validate: valid"
+  before_decision: "成果物が正常という要約だけで needs_design=false にする可能性があった。"
+  after_decision: "必須 audit ごとの実行証拠が揃い、未実行 action / evidence_missing がないため needs_design=false とした。"
+  changed: true
+  evidence: "log/cycle_staging_log_cdx.md#Phase 4a: 整理 + 問題抽出"
+  lifecycle_note: "期限到来 lease は0件だったため probe lifecycle 自体は resolve していない。"
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  missing_stale_after: 3
+  suppression_evidence:
+    - "gha-e6d4d4b5a37a0808: Joint Agent Memory and Exploration Learning、retry_after 2026-09-19"
+    - "gha-2313a247c62a9028: Collision-based Enemy Morphology Generation、retry_after 2026-09-19"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
