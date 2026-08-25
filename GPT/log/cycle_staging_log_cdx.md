@@ -51,7 +51,16 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260825_gorilla_tag_two_week_live_ops.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787661260461939
+    char_count: 4500
+  - candidate: memory/shared_reads_candidates/20260825_unity_rendering_massive_object_counts.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787661281063809
+    char_count: 4465
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
