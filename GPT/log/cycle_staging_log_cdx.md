@@ -11,6 +11,14 @@
 - `memory/shared_reads_candidates/20260826_evergreen_games_minecraft_candy_crush.md` — MinecraftとCandy Crushの長期運営における信頼、旧codebase、大規模level調整、更新設計の記録。
 - candidate収集数: 2件。各件とも書込み直前に3 sidecarを再生成し、duplicate preflight `continue`（終了コード0）を確認。
 
+### 2026-08-26T03:50:00+09:00
+
+- inbox: `slack_directives.jsonl` / `slack_broadcasts.jsonl` の pending はともに 0 件。
+- 参照範囲: 直近の `memory/raw/web_research/results.jsonl`、`memory/atoms.jsonl`、`memory/slack_recent_ingest.jsonl`、Slack raw snapshot、既存 candidate を確認。AutoBG、Sketchar、biofeedback / VR controller 等の既出 work は新規保存対象にしなかった。
+- `memory/shared_reads_candidates/20260826_future_proof_multi_device_game_workflows.md` — Windows desktop / laptop / handheld / Arm device 間の差を、remote iteration toolchain と engine 側の device-aware architecture で扱う Microsoft GDC 2026 記事。
+- `memory/shared_reads_candidates/20260826_solo_dev_systems_thinker.md` — solo developer が mechanics から narrative・entity system・scope・playtest 獲得までを一人で扱った制作過程をまとめた Microsoft Game Dev 記事。
+- duplicate preflight: 2 件とも sidecar 再生成後、`--log log/shared_reads_candidate_preflight.jsonl` 付きで実行して `continue`（終了コード 0）を確認。
+
 ## Phase 2: 分析
 
 ```yaml
