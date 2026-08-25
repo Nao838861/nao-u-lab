@@ -144,7 +144,89 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の High Signal / Recent / Game Task Entry Points / Tag Entry Points を per-file atom index と照合し、unknown id・missing file・重複 id・index 内 mojibake は 0 件。UTF-8 明示読みで代表語 記憶 / ゲーム設計 / 敵パターン / 評価軸 を確認した。"
+  - "atom mirror は atoms.jsonl / per-file .md / index.jsonl が各 2977 件で、parse error・missing・content conflict は 0 件。duplicate cluster 45 群と canonical overlay 45 群は一致し、既知重複は fold 済み。"
+  - "memory/raw/ の 30 日超ファイル 242 件を確認。raw は一次資料・Slack archive の保持層であり、参照根拠を失う機械移動は行わず、今回の archive 対象は 0 件とした。"
+  - "shared_reads candidate lifecycle は posted 712 / ready_to_post 9 / postponed 210 / failed 512 / needs_review 0。open status で stale_after 欠損は 0 件。期限到来 20 件のうち上位 5 件を candidate handoff inbox へ冪等 enqueue した。"
+  - "open duplicate group 29 群（mixed 25 / all_open 4）を再監査。stale evidence を持つ actionable group は 0 件で、group handoff は発生しなかった。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending はともに 0 件で、handled 更新対象なし。"
+issues:
+  - id: ISS-UTF8-ATOM-001
+    description: "active atom sr-1776127289-4d9239b255 の『エージェント』部分が置換文字を含む『エ��ジェント』として source file・index・派生 related candidate に残っている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md:3"
+    source_file_status: "UTF-8 明示読みでも U+FFFD 相当の置換文字 2 文字を title / heading / Use when / Excerpt で確認。source file 自体の局所破損。"
+    display_or_tooling_status: "PowerShell UTF-8 表示と rg の双方で同じ置換文字を再現。memory/MEMORY.md の代表語・index section は正常で、表示経路だけの mojibake ではない。memory_health のもう1件 gr-1777083728-44d444ab7a は UTF-8 source と rg で疑わしい文字を再現できず heuristic false positive。"
+    why_blocks_game_memory: "『エージェント』検索の一致を1件落とし、破損 title が index と related candidate に伝播する。ただし該当は局所1 atom で、現行の記憶階層全体を妨げる規模ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 20
+  stale_triage_queue_rows: 16
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-d2b05aaa2ef2423d
+    - cha-23e6fda958ba26c7
+    - cha-331f88b15f50a823
+    - cha-3aa3be8534cda706
+    - cha-0071fb8d16c40566
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+stale_review_batch:
+  - handoff_id: cha-d2b05aaa2ef2423d
+    path: memory/shared_reads_candidates/20260619_carmi_human_like_playstyles.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "human-like play-style を headless playtest に移せるが、環境・style 定義・学習法・baseline・再現精度が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-23e6fda958ba26c7
+    path: memory/shared_reads_candidates/20260620_biofeedback_board_games_heart_rate.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "heart rate を mechanics に変換する具体則・workshop の trade-off・prototype 評価結果が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-331f88b15f50a823
+    path: memory/shared_reads_candidates/20260620_orchestrated_reality_playable_worlds.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "structured mutation と durable state の分離は具体的だが、work in progress で player study と model 横断評価が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-3aa3be8534cda706
+    path: memory/shared_reads_candidates/20260620_rtsgamebench_strategic_reasoning_vlm.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "strategic competency 分解は有用だが、比較モデル・定量結果・課題別の失敗差が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-0071fb8d16c40566
+    path: memory/shared_reads_candidates/20260621_fog_of_love_affinity_rl.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "affinity regularization の適用先は明確だが、定式化・baseline・ablation・結果量が不足。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
