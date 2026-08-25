@@ -54,7 +54,18 @@ unreviewed_intake_audit:
 - duplicate preflight: `continue`。posted-source、closed canonical、open duplicate group のいずれにも同一 work はなかった。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260825_dream_agentic_recommender_intent_control.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787669112732279
+    char_count: 4437
+skipped: []
+```
+
+- 最終判定: `部分採用`。原論文 v3 の Intent Engine、M1→M2→M3、Reward Dual Loop、production A/B test、default fallback と評価限界まで確認し、4,437字の単一メッセージとして投稿した。
+- 投稿前 review: 必須6節、`■ 概要` 始まり、末尾 `■ URL`、URL 1件の末尾集約、禁止表現なし、deterministic policy `ok`。
+- Slack verification: `ok`。保存後本文に文字化けなし。ts=`1787669112.732279`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

@@ -7,12 +7,17 @@ genre_tags: [live-ops, personalization, player-modeling, agentic-systems]
 evaluated_at: "2026-08-25T23:38:37+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-25T23:38:37+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-25T23:38:37+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1787669112.732279"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787669112732279"
+  char_count: 4437
+  posted_at: "2026-08-25T23:45:19+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-25T23:45:19+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787669112732279"
+next_action: none
 stale_after: "2026-09-24"
 supersedes: []
 gate_reason: >-
