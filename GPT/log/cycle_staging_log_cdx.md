@@ -101,7 +101,93 @@ self_feedback:
 - 運用境界: active probe 327件、Phase 4a 向け pending lease 1件のため ledger は変更しない。次に実在する大量 object scene で既存 controls が processor 間の負荷移送または semantic regression を見落とした時だけ再評価する。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "terminal duplicate title の canonical index を再生成し、closed group 108件を確認した"
+  - "mixed/open duplicate sidecar を再生成し、open group 29件（mixed 25件 / all_open 4件）を確認した"
+  - "group-action / stale-triage sidecar を規定順で再生成し、live deferred lease 反映後はいずれも0件だった"
+  - "Slack directive / broadcast と group / candidate handoff inbox を監査し、pending 0件のため lifecycle 更新は行わなかった"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+memory_audit:
+  memory_index_ids: 87
+  broken_index_ids: 0
+  utf8_representative_terms:
+    記憶: true
+    ゲーム設計: true
+    敵パターン: true
+    評価軸: true
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読みで正常。atoms.jsonl / per-file md / index.jsonl は各2973件で一致し、missing / parse error / content conflict は0件"
+  display_or_tooling_status: none
+  duplicate_audit:
+    raw_normalized_content_groups: 40
+    raw_duplicate_rows: 80
+    recall_visible_groups: 3
+    recall_visible_rows: 6
+    disposition: "canonical overlay 45件（content hash 40 / title+excerpt 5）で fold 済み。raw atom は provenance 保持のため削除しない"
+  non_blocking_findings:
+    - evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+      source_file_status: "UTF-8 明示読みでも『AIエ��ジェント』を含み、source row 自体に置換文字がある"
+      display_or_tooling_status: none
+      disposition: "単一旧レコードのデータ品質事項。ゲーム制作記憶の構造を塞がないため issue / Phase 4b 対象にはしない"
+    - evidence: "memory/atoms/2026-04/gr-1777083728-44d444ab7a.md; memory/raw/slack_api/game-rights.jsonl ts=1777083728.907429"
+      source_file_status: "UTF-8 明示読みで正常。health の mojibake suspect は false positive"
+      display_or_tooling_status: none
+raw_archive_review:
+  older_than_30_days_files: 242
+  bytes: 70590898
+  action: explicit_keep
+  reason: "web research 原文・PDF・headless evidence・Slack source を含む provenance 層で、現 path を candidate / atom が参照するため、この phase では移動しない"
+candidate_lifecycle:
+  total_files: 1437
+  counts:
+    posted: 709
+    ready_to_post: 9
+    postponed: 208
+    failed: 511
+    needs_review: 0
+  missing_stale_after: 3
+  overdue_open_total: 4
+  overdue_paths:
+    - memory/shared_reads_candidates/20260605_jamel_novelty_memory_exploration.md
+    - memory/shared_reads_candidates/20260610_collision_enemy_morphology_generation.md
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+    - memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+  overdue_disposition: "2つの all_open duplicate group として既存 deferred lease（retry_after 2026-09-19T14:08:16+09:00）が有効。candidate 本体を変更せず次回期限まで明示保持"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 10
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
