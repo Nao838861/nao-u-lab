@@ -90,7 +90,67 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "MEMORY index: `python tools\\validate_memory_index.py` は OK。per-file atom index との不一致0件、Markdown link構文0件で broken link 0件。"
+  - "atom audit: 2,968件。ID/mirror/content conflict 0件。normalized content重複40群80行は既存overlayで40行fold済み、canonical overlay 45群で effective display unresolved 0件。"
+  - "raw audit: 30日超242件（web_research 217 / headless_eval 16 / slack_api 6 / game_eval 1 / slack_archive 1 / sync_state.txt 1）。すべて `memory/raw/` 内の原文・評価証拠または現行sync stampであり、provenance保持を優先して移動0件。"
+  - "candidate lifecycle: 1,432件（posted 704 / failed 511 / postponed 208 / ready_to_post 9 / needs_review 0）。open statusで stale_after 欠損0件、未評価valid backlog 0件、malformed 0件。"
+  - "duplicate sidecarを正本candidateから再生成。canonical terminal group 108 / mixed 25 / open duplicate group 29（mixed 25 / all_open 4）/ actionable group 0。"
+  - "stale_after期限超過4件は2つのall_open groupに集約され、既存deferred group handoff `gha-e6d4d4b5a37a0808` / `gha-2313a247c62a9028` が retry_after 2026-09-19 まで明示保持。group/candidate enqueueは各0件。"
+  - "Slack inbox: directives 0 pending / broadcasts 0 pending。handled更新0件。"
+  - "probe lifecycle: due-only lease 0件。2026-08-25T23:59:59+09:00期限のpending leaseは期限前のためreceiptを作成せず保持。ledger validate errors 0件。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 10
+    dormant: 1
+    merged: 0
+    retired: 0
+candidate_lifecycle:
+  counts:
+    posted: 704
+    ready_to_post: 9
+    postponed: 208
+    failed: 511
+    needs_review: 0
+  open_missing_stale_after: 0
+  overdue_open_total: 4
+encoding_audit:
+  memory_md:
+    source_file_status: "UTF-8明示読み成功。代表語 `記憶` / `ゲーム設計` / `敵パターン` は取得、`評価軸` は本文に存在しないがreplacement characterなし。"
+    display_or_tooling_status: none
+  atoms:
+    source_file_status: "`sr-1776127289-4d9239b255` の置換文字は raw Slack source_ts 1776127289.990919 から継承した局所source defect 1件。`gr-1777083728-44d444ab7a` の対象raw/atom本文はUTF-8正常で、memory_health suspectは false positive。"
+    display_or_tooling_status: "PowerShell UTF-8表示は正常。source defectと表示経路mojibakeを混同していない。"
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
