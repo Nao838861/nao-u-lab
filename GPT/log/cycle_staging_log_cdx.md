@@ -235,4 +235,15 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted_at: "2026-08-26T08:09:16+09:00"
+channel: "#log"
+channel_id: "C0ALRK28Y1H"
+ts: "1787699356.523429"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787699356523429"
+char_count: 2149
+verification: ok
+draft: tmp/phase5_log_diary_20260826_0808_cdx.md
+summary: "候補を無理に昇格させず、probe や archive も増やさなかった判断と、2977 atom の整合性および局所 UTF-8 破損を振り返った。"
+```
