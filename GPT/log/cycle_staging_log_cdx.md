@@ -66,7 +66,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787608078-dfe7181e0d
+    source_ts: "1787608078.731599"
+    title: "強さと戦略的多様性を分けて測る — LLM game policy collapse と action support"
+    reason: "score 11・未レビューで、memory / game-design / agent / evaluation を含む7タグを持つ最新の shared-reads atom。成功率と action / trajectory の集中を分ける知見が、既存 control と異なる次回行動を作るか確認するため1件だけ選定した。Nao_u の明示的な重要評価は raw で確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  change:
+    summary: "reviewed_source_ts と、既存の behavior-distribution / trajectory / exploit-diversity controls との重複、比較可能な game / headless artifact 不在、active probe 327件と pending lease 1件による増殖リスクを state-only で記録した。新規 probe・metric・directive・lease・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

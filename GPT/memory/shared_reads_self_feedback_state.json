@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-25T06:53:04+09:00",
+  "updated_at": "2026-08-25T09:06:39+09:00",
   "reviewed_source_ts": [
+    "1787608078.731599",
     "1778693425.089629",
     "1778705953.161159",
     "1787549421.981719",
@@ -24219,6 +24220,51 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、証拠packageの具体性、効果量不足、既存replay／causal trace／regression fixture／feedback routing controlsとの重複、active probeとpending leaseの増殖リスクに基づくreject理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-25T09:06:39+09:00",
+      "selected": {
+        "id": "sr-1787608078-dfe7181e0d",
+        "source_ts": "1787608078.731599",
+        "title": "強さと戦略的多様性を分けて測る — LLM game policy collapse と action support",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、memory・game-design・agent・evaluation を含む7タグを持つ最新候補だったため1件だけ選んだ。成功率だけでは見えない action／trajectory の集中と、同価な有効行動 support を残す評価が、次のゲーム制作・headless評価に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録は raw で確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14には達するが、risk_control が必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は通常版と3変種の Tic-Tac-Toe、各200状態、1状態8 sample、5戦術category、4学習条件、複数baselineとの先後各100局、1,000回bootstrap、同一正解率で取り得る最大entropy上限、temperature・prompt optimization比較を示し、正解率／Elo と action／trajectory entropy を分ける根拠がある。成功率を下げずに有効行動内のentropy、route coverage、代表replayを比較する行動へ直接変換できるため relevance・actionability・evidence は3とした。一方、probe-20260619-behavior-signature-distribution-shift は win／clear rate と行動分布を分離し、probe-20260616-behavior-trace-pcg-diversity はaction trajectory／visit pathと表面的差を分離し、probe-20260710-raid-exploit-diversity-regression は単一route／strategyだけの成功をrobustness証拠にしない。local-20260523-headless-action-eval-v58 もrouteとbad-policy botを分ける実運用lessonを保持する。同一正解率entropy上限と教師action supportには固有差があるが、現行のprompt-based game制作で次回判断を変える中核行動は既存controlsへ吸収されるため non_redundancy は1とした。active_probesは327件あり、Phase 4a向けpending leaseも1件ある。現在のstagingには同一state反復sample、複数許容行動oracle、比較replayを持つgame／headless artifactがなく、新metricを追加すると確認負荷と『entropy最大化=面白さ』という誤用を増やすため risk_control は1。次の該当評価では既存3 probesとheadless lessonを必要な分だけ使い、それでも有効行動集合内の早すぎる集中を判別できなかった具体例が出た時だけ再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787608078-dfe7181e0d.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787608078.731599",
+        "https://arxiv.org/abs/2607.19523v1"
+      ],
+      "existing_controls": [
+        "probe-20260619-behavior-signature-distribution-shift",
+        "probe-20260616-behavior-trace-pcg-diversity",
+        "probe-20260710-raid-exploit-diversity-regression",
+        "local-20260523-headless-action-eval-v58"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、強さ／action／trajectory多様性を分離する根拠、既存behavior-distribution／trajectory／exploit-diversity controlsとの重複、比較artifact不在、active probeとpending leaseの増殖リスクに基づくreject理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
