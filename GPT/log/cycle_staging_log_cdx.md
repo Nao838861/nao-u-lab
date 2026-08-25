@@ -50,7 +50,17 @@ unreviewed_intake_audit:
 - 留保: 記事は制作事例であり、待ち時間や反復速度の定量比較は示していない。Phase 3 では実証済みの数値成果として一般化せず、衝突解決規則と data pipeline の保守コストをデメリットに含める。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260825_sente_data_driven_board_simultaneous_turns.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787653754197229
+    char_count: 4259
+skipped: []
+```
+
+- 最終判定: 投稿可。Unity の開発者取材であり formal evaluation ではないため、逐次手番との比較効果は一般化せず、記事固有の同時手番、logical board model、spreadsheet authoring、Timeline 制御を分析した。
+- 投稿前 review: 4,259 文字、必須 6 見出しの順序、`■ 概要` 冒頭、`■ URL` 末尾、URL 1 件、禁止表現なしを `shared_reads_policy` と `rg` で確認した。
+- 投稿検証: `tools/post_slack_message_file.py` により 1 回の `chat.postMessage` で投稿し、`ts=1787653754.197229` の取得後文字化け検査は `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
