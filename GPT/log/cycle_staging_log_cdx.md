@@ -10,7 +10,48 @@
 - preflight skip: `One Policy, Infinite NPCs`（arXiv:2605.23652）、`From World-Gen to Quest-Line`（arXiv:2604.25482）、`Automated Playtesting with Procedural Personas`（arXiv:1802.06881）は、いずれも実投稿済み同一 work。`log/shared_reads_candidate_preflight.jsonl` に Slack permalink と一致根拠を記録し、candidate は作成せず。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260825_dream_agentic_recommender_intent_control.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-08-25T23:35:06+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260825_dream_agentic_recommender_intent_control.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260825_dream_agentic_recommender_intent_control.md
+  valid_backlog_after: 0
+```
+
+- 判定: `pass`。DREAM は intent 階層化、戦略計画、既存 pipeline への parameter 変換、offline/online reward loop と大規模 A/B test の数値まで揃い、重要要素を欠かさず説明できる。
+- ゲーム制作への適用: live-ops の quest・難度・offer 制御に対し、既存実装の上へ監査可能な policy layer を段階導入する具体像がある。商取引指標を遊びの質へ直結させない限界を明示することで、約4000字の批判的な投稿へ展開できる。
+- duplicate preflight: `continue`。posted-source、closed canonical、open duplicate group のいずれにも同一 work はなかった。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
