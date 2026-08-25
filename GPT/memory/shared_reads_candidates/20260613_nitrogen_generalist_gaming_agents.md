@@ -4,16 +4,16 @@ url: "https://arxiv.org/abs/2601.02427"
 collected_at: "2026-06-13T04:10:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, agent, benchmark, gameplay-video, generalist-agent]
-evaluated_at: "2026-07-27T04:52:35+09:00"
+evaluated_at: "2026-08-26T05:53:17+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-27T04:52:35+09:00"
+last_reviewed_at: "2026-08-26T05:53:17+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-27T04:52:35+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-26T05:53:17+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-26"
+stale_after: "2026-09-25"
 supersedes: []
 gate_reason: |-
   大規模な動画・行動対から汎用ゲーム agent を作る問題設定と中核構成は抽出できるが、現 candidate には benchmark のゲーム分割、比較条件、定量結果、失敗例がない。

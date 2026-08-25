@@ -4,16 +4,16 @@ url: "https://arxiv.org/abs/2601.07553"
 collected_at: "2026-06-15T12:14:17+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, embodied-agent, simulation, procedural-generation, evaluation]
-evaluated_at: "2026-07-27T09:22:54+09:00"
+evaluated_at: "2026-08-26T05:53:17+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-27T09:22:54+09:00"
+last_reviewed_at: "2026-08-26T05:53:17+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-27T09:22:54+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-26T05:53:17+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-26"
+stale_after: "2026-09-25"
 supersedes: []
 gate_reason: |-
   UE5、escape room、procedural environment、multi-agent collaboration の接続は具体的だが、保存内容は要旨レベルに留まる。
