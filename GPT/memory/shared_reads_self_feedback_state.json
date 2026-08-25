@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-25T09:06:39+09:00",
+  "updated_at": "2026-08-25T11:06:27+09:00",
   "reviewed_source_ts": [
+    "1787616148.029579",
     "1787608078.731599",
     "1778693425.089629",
     "1778705953.161159",
@@ -24265,6 +24266,52 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、強さ／action／trajectory多様性を分離する根拠、既存behavior-distribution／trajectory／exploit-diversity controlsとの重複、比較artifact不在、active probeとpending leaseの増殖リスクに基づくreject理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-25T11:06:27+09:00",
+      "selected": {
+        "id": "sr-1787616148-6f766e3f42",
+        "source_ts": "1787616148.029579",
+        "title": "REDAgentBench — exposure／execution／observation／adjudication と state-grounded verifier の分離",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・agent・evaluation を含む8タグを持つ最新候補だったため1件だけ選んだ。発言やtrajectory上の完了ではなく receipt と実行前後stateで作用を確定する考えが、次の Phase 4a の完了判定に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録は raw で確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、non_redundancy と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は1,661 case、6 model・3 harness、固定rolloutでのtrajectory／state evidence view比較、360 rolloutのhuman audit、Recognition–Execution Gapのmatched replayを示し、exposure／execution／observation／adjudication、trajectoryとrealized state、deterministic verifierと意味judgeを分離する根拠があるため relevance・actionability・evidence は3とした。一方、probe-20260708-harnessfix-failure-anchor-repair-scope は failed stepとexpected／observed state effectを、probe-20260710-phoneharness-mixed-action-side-effect-trace はaction surface・expected side effect・verifier・premature completionを、probe-20260612-checkable-intermediate-state はinspectable state transitionとverifier feedbackを、probe-20260709-public-commitment-action-audit は完了宣言とfinal action evidenceを既に扱う。さらにpendingのprobe-20260824-harness-if-opportunity-evidenceがartifact成功とrequired action evidenceの分離を次のPhase 4aで検証する。REDAgentBench固有の四段taxonomyとevidence-view disagreementは有用な説明枠だが、現在のstagingに固定rolloutをtrajectory-only／state-only／hybridで再判定するisolated artifactはなく、中核行動は既存controlsに完全に吸収されるためnon_redundancyは0。active_probesは327件でPhase 4a向けpending leaseも1件ある状態で同義probeを追加すると確認負荷と同一artifactへの監査競合を増やすためrisk_controlは1。次の該当runでは既存4 controlsとpending Harness-IF leaseを必要な分だけ使い、同一rolloutのevidence view差が既存分類では判断できない具体例が出た時だけ再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787616148-6f766e3f42.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787616148.029579",
+        "https://arxiv.org/abs/2608.10669v1"
+      ],
+      "existing_controls": [
+        "probe-20260708-harnessfix-failure-anchor-repair-scope",
+        "probe-20260710-phoneharness-mixed-action-side-effect-trace",
+        "probe-20260612-checkable-intermediate-state",
+        "probe-20260709-public-commitment-action-audit",
+        "probe-20260824-harness-if-opportunity-evidence"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、四段の因果分離・state-grounded evidenceの有用性、既存effect／verifier／completion controlsとの完全重複、比較artifact不在、active probeとpending leaseの増殖リスクに基づくreject理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

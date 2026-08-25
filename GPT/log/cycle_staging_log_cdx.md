@@ -63,7 +63,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787616148-6f766e3f42
+    source_ts: "1787616148.029579"
+    title: "REDAgentBench — exposure／execution／observation／adjudication と state-grounded verifier の分離"
+    reason: "最新の未レビュー高評価 atom で8タグを持ち、発言やtrajectory上の完了とrealized stateを分ける知見が次のPhase 4aへ新しい判断差を作れるか確認した。Nao_uの明示評価はrawで確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "1,661 case、6 model×3 harness、trajectory／state view比較、human audit、matched replayの根拠は強いが、effect・side effect・inspectable state・完了証拠の分離は既存4 probesとpending Harness-IF leaseに包含される。比較可能なisolated artifactもなく、同義probe追加は確認負荷とPhase 4a監査の競合を増やすため採用条件を満たさない。"
+  change:
+    summary: "reviewed_source_ts、採点、既存controlsとの完全重複、比較artifact不在、probe増殖リスクによるstate-only reject理由だけを記録した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
