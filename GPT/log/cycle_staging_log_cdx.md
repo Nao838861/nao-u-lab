@@ -55,7 +55,18 @@ decision_notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260825_corgispace_short_games_creative_practice.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787646553380989
+    char_count: 3640
+skipped: []
+review:
+  decision: posted
+  basis: "1年・13作品の完成実績、制作日誌、制作者と記事著者の内省を根拠にしつつ、比較実験ではない限界を明記。短編制作の一般則ではなく、1本・2サイクルの部分採用 probe として完結させた。"
+  policy_check: "必須6セクション、3500-4500字、URL末尾、禁止表現なし、単一 chat.postMessage、Slack保存本文 verification=ok"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
