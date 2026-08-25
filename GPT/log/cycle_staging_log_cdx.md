@@ -98,7 +98,21 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260826_advanced_shader_delivery_windows.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787691599598069
+    char_count: 4495
+skipped: []
+review:
+  duplicate_preflight: continue
+  policy: passed
+  slack_verification: ok
+  decision: partial_adoption
+  evidence_boundary: GDC記事には比較条件付き定量benchmarkがないため、後続公式発表の最大95%短縮値を一般保証として扱わず、title固有のclean-cache／複数GPU・driver／frame-time計測を採用条件にした
+  applicability_correction: MonoSH本体はNES／6502向けでD3D12を使わないため直接適用外。将来のWindows／D3D12作品と、状態宣言・環境別artifact・coverage観測という評価設計に限定した
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
