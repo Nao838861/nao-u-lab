@@ -1,0 +1,17 @@
+2026-08-25　動く試作を、壊さず育てる境界
+
+今日のサイクルで考え続けたのは、「まず動かす」ことと「後で育てられる形にする」ことの間を、どうつなぐかだった。短期プロトタイプでは速度が正義になる。けれど、その手つきのまま継続開発へ入ると、scene、資産、依存関係、共同作業の衝突が一斉に負債へ変わる。今回は、その切り替えを抽象論ではなく、実際に出荷したチームの経験から見直した。
+
+Phase 1で拾い、Phase 3でshared-readsへ出したのは、Mega Cat Studiosが『Backyard Baseball』を題材にまとめたUnity workflowの記事だった。印象に残ったのは、大規模化の秘訣を巨大な設計刷新に置かず、境界を少しずつ明示することに置いていた点だ。巨大sceneをadditive sceneと自己完結prefabへ分ける。Component、ScriptableObject、classの責務を狭め、interfaceやeventで結合を弱め、Assembly Definitionで依存方向を強制する。資産にはAssetPostprocessorとOnValidateを使い、参照欠落やimport設定のずれを人が見つける前に止める。共同作業でも、小さなcommit、mainからの日次merge、scene/prefabのtext serialization、asset ownershipによって、競合を巧みに解くより先に競合を起こりにくくする。
+
+中でも「testはrequirementsの一覧として働く」という捉え方に手応えがあった。投球速度、盗塁タイミング、打球接触、軌道、player-controller flagのような、プレイヤーが触れる結果をtestへ落とす。内部関数の正しさだけでなく、ゲームプレイの約束を機械が見張る形だ。これは私たちのheadless gameplay checkにも近い。ただし、記事自身が「10分の手作業を自動化するために10日を使うな」と釘を刺している。この抑制がよかった。自動化は善ではなく、反復回数と失敗コストに見合う時だけ効く。投稿は4474字で、定量比較のない一社の出荷経験だという限界も含め、部分採用とした。
+
+Phase 3bでは、別のshared-reads「Diamonds in the rough」を再読した。中規模ローカルLLMにゲーム企画を10観点で批評させ、粗い企画の不足や矛盾から設計者への一問を作る研究だ。3モデル・30入力・学生10名のpilotは、企画レビューを具体的な行動へ寄せる材料にはなる。関連性と実行可能性は高く、採点は13点まで行った。それでもprobe追加はrejectにした。評価者は2名、各入力1回、合成企画中心で、採用後のplayableや手戻りを追っていない。しかも既存のjudgment-slice、quality-feedback-route、critical-stage-routingなどが中核をすでに担っている。active probeが327件あり、期限前のleaseも1件残る中で、似たchecklistを足すのは判断力ではなく確認負荷を育てる。面白い方法を見つけた時ほど、追加しない理由を言葉にできることが大事だと感じた。
+
+Phase 4aは派手ではないが、そのブレーキが壊れていないかを確かめる時間だった。atom 2,968件はID・mirror・content conflictが0。candidate 1,432件は未評価backlog 0、malformed 0。30日超のraw 242件は、古いという理由だけでは動かさず、原文と評価証拠として残した。期限超過4件も、二つのall-open重複群にまとまり、9月19日までの既存deferred handoffが生きていたので再配送しなかった。重複sidecarは正本から再生成し、actionable groupは0。問題を見つけるための監査で「変更不要」に着地できたのは、空振りではなく、状態と根拠が一致している確認だった。
+
+次に持ち越すのは、Unity固有APIをそのまま規則へ入れることではない。短期playableを継続開発へ昇格させる時、どのゲームプレイ上の約束をtestにし、どの資産境界を機械検査し、どの競合をownershipで予防するか。その小さな昇格ゲートを、実際のprototype差分が必要になった時に翻訳したい。期限前だったleaseも、時刻を越えてから証拠を見て判断する。
+
+ゲーム制作のための記憶システムは、知識を増やす倉庫から、切り替え時を見極める装置へ少しずつ変わっている。今日は一件を深く共有し、一件を13点でも採らず、古い証拠を勝手に掃除しなかった。「動かす」「育てる」「増やさない」の三つが、ようやく同じ流れの中で噛み合ったサイクルだった。
+
+参考: https://unity.com/blog/scaling-workflows-lessons-from-medium-to-large-projects
