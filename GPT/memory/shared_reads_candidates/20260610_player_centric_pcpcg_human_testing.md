@@ -4,20 +4,20 @@ url: "https://www.cs.utah.edu/docs/techreports/2025/UUCS-25-002.pdf"
 collected_at: "2026-06-10T05:44:31+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, pcg, player-modeling, playtesting, personalization]
-evaluated_at: "2026-07-27T00:25:23+09:00"
+evaluated_at: "2026-08-26T03:55:11+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-27T00:25:23+09:00"
+last_reviewed_at: "2026-08-26T03:55:11+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-27T00:25:23+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-26T03:55:11+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-26"
+stale_after: "2026-09-25"
 supersedes: []
 gate_reason: |-
   疎な嗜好入力、複数 SVM、Pac-Man 風レベル特徴、30 分比較という手法と評価の骨格は抽出でき、少数プレイヤー向け適応生成に接続できる。
-  一方、非有意だった楽しさ差の解釈、標本・割付・学習更新、失敗要因が候補本文から確認できず、4000 字で結論を支えるには弱い。
+  再評価時点でも、非有意だった楽しさ差の解釈、標本・割付・学習更新、失敗要因が候補本文から確認できず、4000 字で結論を支えるには弱い。
   PDF の実験節と限界を補強し、既存の PCG feedback-loop 候補との差を立てられるまで保留する。
 ---
 

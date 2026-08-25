@@ -4,6 +4,21 @@ url: "https://developer.microsoft.com/en-us/games/articles/2026/03/gdc-2026-futu
 collected_at: "2026-08-26T03:49:33+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, multi-device, performance, testing, tooling, architecture]
+evaluated_at: "2026-08-26T03:55:11+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-26T03:55:11+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-26T03:55:11+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-25"
+supersedes: []
+gate_reason: |-
+  remote iteration と device-aware architecture は、複数 PC 構成の deploy・計測・回帰確認を一つの test matrix にする具体策へ接続できる。
+  ただし候補本文には導入前後の反復時間、端末別の不具合検出率、性能差などの評価がなく、製品列挙以上の結論を 4000 字で支えられない。
+  各 tool の一次資料と実測例を補強できるまで投稿を保留する。
 ---
 
 ## raw_excerpt

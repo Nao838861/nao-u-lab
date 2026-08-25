@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2606.03678"
 collected_at: "2026-06-09T11:14:25+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent-evaluation, simulation, scenario-generation, game-design, playtest-harness]
-evaluated_at: "2026-07-27T00:25:23+09:00"
+evaluated_at: "2026-08-26T03:55:11+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-27T00:25:23+09:00"
+last_reviewed_at: "2026-08-26T03:55:11+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-27T00:25:23+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-26T03:55:11+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-26"
+stale_after: "2026-09-25"
 supersedes: []
 gate_reason: |
   adversariality と realism を同時に保つ Pareto evolution は、遊べる範囲を壊さず事故例を探す headless harness に具体的に接続できる。
-  ただし既存資料は抄録相当のままで、進化 loop、Pareto 選択、比較条件、定量結果を抽出できず、CoopEval 水準の概要には不足する。
+  再評価時点でも資料は抄録相当のままで、進化 loop、Pareto 選択、比較条件、定量結果を抽出できず、CoopEval 水準の概要には不足する。
   一次資料から手法と実験を補強できるまで投稿を保留する。
 ---
 
