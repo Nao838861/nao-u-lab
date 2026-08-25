@@ -4,6 +4,26 @@ url: "https://unity.com/blog/scaling-workflows-lessons-from-medium-to-large-proj
 collected_at: "2026-08-25T15:04:18+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, unity, architecture, automated-testing, collaboration, postmortem]
+evaluated_at: "2026-08-25T15:08:58+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-25T15:08:58+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-25T15:08:58+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-24"
+supersedes: []
+gate_reason: >-
+  試作優先から継続開発向け構造へ切り替える問題設定に対し、scene / prefab 分割、依存境界、gameplay test、資産検証、競合予防を一つの実務フローとして具体化している。
+  統制実験ではなく出荷経験に基づく報告という限界を明示すれば、短期 prototype の昇格ゲートと headless gameplay check への適用まで含めて CoopEval 水準の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "『動けばよい試作』を、速度を殺さず出荷可能な Unity project へ移す五つの境界設計として整理する"
+  analysis_axis: "architecture・test・asset validation・version-control hygiene・automation ROI が、障害修正より早期検出と競合予防へどう接続するかを分析する"
+  application_target: "短期 playable prototype を継続開発へ昇格させる判定、headless gameplay requirement、asset / scene の機械検査、small commit 運用に適用する"
+  pros_cons: "具体的で段階導入しやすい一方、Unity 固有 API が多く、効果の定量比較ではなく一社の出荷経験に依存する"
+  verdict_pre: "部分採用。原則と昇格ゲートは採用し、Unity 固有の実装は各 prototype の engine と規模に合わせて翻訳する"
 ---
 
 ## raw_excerpt
