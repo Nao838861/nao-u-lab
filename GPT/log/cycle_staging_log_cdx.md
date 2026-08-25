@@ -110,7 +110,108 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査し、50 atom ID と2 path参照の missing 0を確認した。代表語は 記憶／ゲーム設計／敵パターン が取得でき、評価軸は本文に存在しなかったが replacement character は0だった。"
+  - "memory/atoms.jsonl 2974件を監査し、atoms.jsonl／per-file md／index.jsonl は各2974件で content conflict・missing・parse error 0、duplicate 45群は canonical overlay 済み、effective display unresolved 0を確認した。"
+  - "memory/raw/ 247ファイル中、2026-07-27以前に更新された242件を確認した。rawは原文provenanceと既存pointerの参照先なので、年齢だけでは移動せず明示保持とした。"
+  - "shared-readsのterminal canonical／mixed duplicate／open duplicate／stale triage／group action sidecarを順に再生成した。"
+  - "期限到来open candidate 35件のうち、group live leaseと重複しない上位5件をcandidate handoff inboxへ冪等enqueueした。candidate本体は変更していない。"
+  - "Slack directives／broadcastsはpending 0件のためstatus変更なし。"
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』にU+FFFDが2文字残り、raw原文・atoms.jsonl・per-file md・index.jsonlへ同じ破損が伝播している。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 decodeは成功するが、source raw自体に『AIエ��ジェント』としてU+FFFDが存在する。gr-1777083728-44d444ab7a の『???』は原文どおりの表現で文字化けではない。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "『AIエージェント』の完全一致検索を1件だけ弱める。ただしagent tag、ID、URL、周辺語からは到達できるため影響は限定的で、構造設計を起動するほどではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 1
+  inspected_probe_id: probe-20260824-harness-if-opportunity-evidence
+  outcome: resolved
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+harness_if_instruction_receipt:
+  before_decision: "cleanupの正常結果だけを見れば、重大な構造問題なしとしてpass／needs_design false。"
+  after_decision: "applicableな必須actionを個別照合し、6項目すべてに実行証拠があるためpass／needs_design falseを維持。"
+  changed: false
+  outcome: pass
+  evidence:
+    - "MEMORY index: 50 atom refs missing 0、2 path refs missing 0、UTF-8 replacement character 0。"
+    - "atoms: memory_health snapshot 7823e16c82c8b148、mirror audit clean、content conflicts 0、duplicate overlay 45群、effective unresolved 0。"
+    - "raw: 247件をmtime監査、30日超242件はprovenance pointer保全のため明示保持。"
+    - "candidate lifecycle: 1439件をdry-run監査、status conflict修復0、overdue open 35件。"
+    - "inbox: slack_directives／slack_broadcasts pending 0。"
+    - "probe: due lease 1件を本receiptと log/cycle_staging_log_cdx.md#Phase 4a: 整理 + 問題抽出 で観測。"
+candidate_lifecycle_counts:
+  posted: 711
+  ready_to_post: 9
+  postponed: 208
+  failed: 511
+  needs_review: 0
+stale_backlog:
+  overdue_open_total: 35
+  stale_triage_queue_rows: 31
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-8873afd5f7d378b2
+    - cha-d2e2b6efdd4b9ae3
+    - cha-29aff2ddb4afd1fe
+    - cha-f527333ac31d9feb
+    - cha-709ac6d4de8ad480
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-8873afd5f7d378b2
+    path: memory/shared_reads_candidates/20260609_evodrive_pareto_scenario_evolution.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "Pareto evolutionはheadless harnessへ接続できるが、進化loop・選択・比較条件・定量結果が候補本文に不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-d2e2b6efdd4b9ae3
+    path: memory/shared_reads_candidates/20260610_player_centric_pcpcg_human_testing.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "人間テストの骨格はあるが、非有意差の解釈・標本・割付・更新・失敗要因の一次証拠を補う必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-29aff2ddb4afd1fe
+    path: memory/shared_reads_candidates/20260611_llm_based_game_agents_survey.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "genre別agent harnessの設計軸は有用だが、代表研究比較・taxonomy根拠・challenge節の具体性が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-f527333ac31d9feb
+    path: memory/shared_reads_candidates/20260613_emembench_interactive_agent_memory.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "playtest trace評価へ接続できるが、質問生成・環境・指標・主要結果・失敗例を一次資料から補う必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-709ac6d4de8ad480
+    path: memory/shared_reads_candidates/20260613_gamearena_live_computer_games.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "2000超session・100人studyは有用だが、3ゲームの規則・能力割当・scoring・モデル別結果が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
