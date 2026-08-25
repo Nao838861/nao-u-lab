@@ -4,6 +4,26 @@ url: "https://unity.com/blog/data-driven-board-six-player-strategy-sente"
 collected_at: "2026-08-25T19:20:04+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, strategy, simultaneous-turns, data-driven, tooling, level-design]
+evaluated_at: "2026-08-25T19:23:26.0652473+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-25T19:23:26.0652473+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-25T19:23:26.0652473+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-24"
+supersedes: []
+gate_reason: >-
+  逐次手番から同時解決へ変えた問題設定と相互予測の効果、表示から分離した logical board、
+  spreadsheet authoring、Timeline 制御まで制作工程を貫く具体例があり、形式評価ではない限界を明記しても約4000字の分析に耐える。
+suggested_post_outline:
+  overview_angle: "待ち時間の解消を、同時手番の駆け引きと単一 logical board model の制作基盤へ同時に接続した事例として整理する"
+  analysis_axis: "同時解決が生む予測ゲームと、runtime・editor・spreadsheet・campaign 制御を同一 data model に載せる設計の相互補強"
+  application_target: "Log_cdx の board / puzzle prototype で、simulation state を描画から分離し、短い反復で盤面生成・検証・非 programmer authoring を回す設計"
+  pros_cons: "長所は多人数の待ち時間削減、authoring 経路の共通化、盤面変形と共有への拡張性。短所は同時衝突の解決規則、encoded string の保守性、記事に定量比較がない点"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
