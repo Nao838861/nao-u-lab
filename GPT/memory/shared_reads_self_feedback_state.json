@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-26T22:51:08+09:00",
+  "updated_at": "2026-08-27T00:56:43+09:00",
   "reviewed_source_ts": [
+    "1787752001.500119",
     "1787743723.498909",
     "1787728736.441879",
     "1787728730.253559",
@@ -775,6 +776,52 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-27T00:56:43+09:00",
+      "selected": {
+        "id": "sr-1787752001-d4f9cda11b",
+        "source_ts": "1787752001.500119",
+        "title": "Weighted Memory Tree — persistent memory と active context を分離する長期 agent memory",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ最新候補だったため1件だけ選んだ。persistent storage と working context を分け、active path・fold／reopen・obsolete・failure warning・provenance を使う考えが、現在の長期 memory 運用に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14には達するが、non_redundancy と risk_control が採用必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、persistent storage と active context の分離、root から active subtask までの path 保持、completed branch の fold／reopen、obsolete でも非削除、failure warning、selection-based decay を示す。GAIA／GAIA-Text では linear history 比で accuracy が平均約10 point上がり prompt token が約32%減り、poisoning 評価でも ASR・poison retrieval・blast radius と task success を併記している。さらに unweighted tree、semantic selection 単独、summary 単独との ablation と、score が factual correctness ではない限界も保持するため relevance・actionability・evidence は3とした。一方、probe-20260625-amvl-retention-utility-lifecycle は retention と observed utility、probe-20260602-memory-retention-gate は lifecycle 変更前の evidence、probe-20260605-memory-staleness-current-evidence は current／stale、probe-20260611-memory-lifecycle-phase-boundary は Write／Store／Retrieve／Execute／Forget、probe-20260608-memoryagentbench-axis-boundary は retrieval／long-range／forgetting の評価境界を既に扱う。WMT 固有の active path と fold／reopen は局所差だが、中核の次回判断は既存 controls の組合せへほぼ吸収されるため non_redundancy は1とした。現在の staging には同一 task を linear recall と WMT-lite で replay した比較 artifact、obsolete 混入、既知 failure 再発、raw provenance 到達率、token・latencyの before／after がない。active_probes は327件で、具体的 replay なしに tree node、score、selector、summary state を加えると二重正本、誤った action-success score、重要 evidence の沈下、確認負荷を増やすため risk_control は1とした。次に実在する長期 game task で既存 controls だけでは active path と obsolete branch の混入を分離できない再現 trace が出た時だけ、同一 prompt の linear／WMT-lite paired replay として再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787752001-d4f9cda11b.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787752001.500119",
+        "https://arxiv.org/abs/2608.20631v1"
+      ],
+      "existing_controls": [
+        "probe-20260625-amvl-retention-utility-lifecycle",
+        "probe-20260602-memory-retention-gate",
+        "probe-20260605-memory-staleness-current-evidence",
+        "probe-20260611-memory-lifecycle-phase-boundary",
+        "probe-20260608-memoryagentbench-axis-boundary"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、persistent／active 分離・active path・fold／reopen の局所有用性、GAIA と poisoning／ablation の evidence、既存 retention／staleness／lifecycle／evaluation controls との大幅な重複、paired replay artifact 不在と active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-25T23:49:13+09:00",
       "selected": {
