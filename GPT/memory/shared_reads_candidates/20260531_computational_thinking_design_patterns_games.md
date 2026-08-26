@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2407.03860"
 collected_at: "2026-05-31T06:59:25+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, design-patterns, computational-thinking, education, mechanics]
-evaluated_at: "2026-07-28T14:28:31+09:00"
+evaluated_at: "2026-08-27T07:03:34+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-07-28T14:28:31+09:00"
+last_reviewed_at: "2026-08-27T07:03:34+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-28T14:28:31+09:00"
-stale_after: "2026-08-27"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-27T07:03:34+09:00"
+stale_after: "2026-09-26"
 supersedes: []
 gate_reason: >-
-  問題設定と mechanic を推論要求として記述する適用先は明確だが、再確認しても個別 design pattern と
-  computational thinking skill の対応、評価の中身、結論の強さが未抽出である。
-  現状の ~4000 字概要は抽象論とこじつけになりやすいため保留を継続する。
+  問題設定と mechanic を推論要求として記述する適用先は明確だが、個別 design pattern と
+  computational thinking skill の対応、評価の中身、結論の強さは今回も候補内に未抽出である。
+  約4000字概要が抽象論とこじつけになりやすいため、対応表と評価結果が補完されるまで保留する。
 next_action: revise_or_research
 
 ---

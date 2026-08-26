@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2608.14036v1"
 collected_at: "2026-08-27T06:59:32+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent-skills, game-development, workflow, evaluation, retrieval]
+evaluated_at: "2026-08-27T07:03:34+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-27T07:03:34+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-27T07:03:34+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-26"
+supersedes: []
+gate_reason: |-
+  controlled experiment、8,135 trial、238件の質的 label、用途比率と検索精度低下まで揃い、手法・評価・限界を根拠付きで展開できる。
+  ゲーム制作 skill の手順固定、pool 設計、別 engine への適応失敗という具体場面へ直結し、約4000字の概要を無理なく構成できるため pass とする。
+suggested_post_outline:
+  overview_angle: "skill を知識庫ではなく noisy trajectory を安定させる procedural anchor として捉え直す"
+  analysis_axis: "集約成功率の裏にある12の利用様式、retrieval bottleneck、文脈不適合による失敗を分けて読む"
+  application_target: "ゲーム制作 agent の mechanic 実装・playtest・headless 検証 skill と skill pool の選択設計"
+  pros_cons: "再現可能な手順固定と定量根拠が強み。正しい skill の取得だけでは成功を保証せず、engine や prototype 文脈への適応検証が必要"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

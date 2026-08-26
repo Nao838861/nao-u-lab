@@ -4,21 +4,21 @@ url: "https://arxiv.org/abs/2507.03391"
 collected_at: "2026-05-30T12:29:36+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, player-experience, learning, confusion, affect]
-evaluated_at: "2026-07-28T14:28:31+09:00"
+evaluated_at: "2026-08-27T07:03:34+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-07-28T14:28:31+09:00"
+last_reviewed_at: "2026-08-27T07:03:34+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-28T14:28:31+09:00"
-stale_after: "2026-08-27"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-27T07:03:34+09:00"
+stale_after: "2026-09-26"
 supersedes: []
 next_action: revise_or_research
 gate_reason: >
   混乱を失敗ではなく学習・flow・PX の接続点として扱う着想は有用。
-  再確認しても実験条件・測定項目・相関の中身・限界は abstract 相当のままで、
-  Phase 3 の ~4000 字概要にすると一般論へ寄りすぎるため保留を継続する。
+  今回も実験条件・測定項目・相関の中身・限界は abstract 相当のままである。
+  Phase 3 の約4000字概要では一般論へ寄りすぎるため、評価の中身を補完できるまで保留を継続する。
 
 ---
 
