@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-26T18:29:06+09:00",
+  "updated_at": "2026-08-26T20:32:55+09:00",
   "reviewed_source_ts": [
+    "1787728736.441879",
     "1787728730.253559",
     "1787721348.368529",
     "1778841643.230369",
@@ -25040,6 +25041,52 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、verifier signal を lifecycle 全体で保持する有用性、false accept の段階監査という固有差、既存 admission／drift／staleness／conflict／downstream-action controls との大幅な重複、比較 artifact 不在と active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-26T20:32:55+09:00",
+      "selected": {
+        "id": "sr-1787728736-2a3c0fec99",
+        "source_ts": "1787728736.441879",
+        "title": "PinSieve: Production Selective VLM Serving and a Governed Memory Flywheel for Enterprise Content-Quality Triage",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、memory・game-design・agent・operation・evaluation の優先5タグを持つ最新候補から1件だけ選んだ。軽量判定で明確な item を処理し、grey-zone だけを高価な VLM／人手へ送り、auto-pass 側も blind audit する知見が、直後の Phase 4a または次の screenshot／playtest trace QA に既存 control と異なる小さな判断差を作るか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した thread reply は raw で確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14だが、non_redundancy と risk_control が必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、軽量 upstream、grey-zone VLM、human escalation、auto-pass audit を分け、production slice で旧 module 比の false negative rate 13.62%→13.18%、auto-pass 20.48%→41.99%、review productivity 25.7%改善、normalized cost 16.2%低下を報告する。さらに selective feedback の観測経路と audit probability を保存し、representative／uncertainty／recent replay を分布 guardrail と次 window 評価で統治する。六か月の offline chained refresh では平均 IPW-FNR@50% 17.73%→13.29%を示し、online production、offline replay、sampled rationale governance の evidence を分離しているため relevance・actionability・evidence は3とした。一方、probe-20260610-structural-semantic-verifier-boundary は deterministic check と VLM／player-facing semantic judgment の境界、probe-20260710-llm-bounded-replanning-decision-layer は deterministic subsystem authority と bounded escalation、probe-20260625-quality-workflow-feedback-route は低コスト観測から人手 review への経路、probe-20260708-observability-layer-cross-signal-check は local threshold と evidence layer の分離を既に扱う。blind audit と observation propensity は固有差だが、中核の routing 判断は既存 controls の組合せへほぼ吸収されるため non_redundancy は1。現在の staging には deterministic-only／VLM／human review を同一 screenshot または trace で比較できる trigger artifact がなく、直後の Phase 4a へ lease しても before／after 判断差を固定できない。active_probes は327件あり、具体 artifact なしに threshold、audit probability、replay metadata、複数 metric を加えると calibration／監査負荷と checklist 増殖が判断差を上回るため risk_control は1とした。次の実在する大量 screenshot／playtest trace QA で、既存4 controlsだけでは auto-pass 側の miss を観測できない具体例が出た時だけ、固定 sample の blind audit 1件として再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787728736-2a3c0fec99.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787728736.441879",
+        "memory/shared_reads_candidates/20260826_pinsieve_selective_vlm_memory_flywheel.md",
+        "https://arxiv.org/abs/2608.24040"
+      ],
+      "existing_controls": [
+        "probe-20260610-structural-semantic-verifier-boundary",
+        "probe-20260710-llm-bounded-replanning-decision-layer",
+        "probe-20260625-quality-workflow-feedback-route",
+        "probe-20260708-observability-layer-cross-signal-check"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、selective routing／auto-pass blind audit の局所有用性、既存 verifier／bounded-decision／feedback-route／observability controls との大幅な重複、比較 artifact 不在、active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

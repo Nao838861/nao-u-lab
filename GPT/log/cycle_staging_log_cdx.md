@@ -69,7 +69,35 @@ skipped: []
 - 投稿前 policy、禁止表現、URL 末尾、重複 preflight、投稿後の文字化け検証を通過。1 candidate を 1 回の `chat.postMessage` で投稿した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787728736-2a3c0fec99
+    source_ts: "1787728736.441879"
+    title: "PinSieve: Production Selective VLM Serving and a Governed Memory Flywheel for Enterprise Content-Quality Triage"
+    reason: "source が slack_api/shared-reads、score 11、未レビューで、memory・game-design・agent・operation・evaluation の優先5タグを持つ最新候補から1件だけ選んだ。軽量判定→grey-zone VLM→人手 escalation と auto-pass blind audit が、Phase 4a または次の screenshot／trace QA に既存 control と異なる判断差を作るか確認した。Nao_u の明示評価 reply は raw で確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "合計14だが、non_redundancy と risk_control が必須閾値2未満。production routing、selective-feedback 補正、次window評価の根拠は強い一方、既存の structural／semantic verifier 境界、deterministic subsystem authority、低コスト観測から人手 review への routing、local threshold と evidence layer の分離へ中核判断がほぼ吸収される。現 staging に同一 screenshot／trace の deterministic-only／VLM／human 比較 artifact がなく、327 active probes の上に threshold・audit probability・replay metadata を増やすと判断差より校正・監査負荷が大きい。次の実在 QA で既存4 controlsでは auto-pass miss を観測できない具体例が出た時だけ、固定 sample の blind audit 1件として再評価する。"
+  change:
+    summary: "reviewed_source_ts と state-only reject 理由を記録。active_probes、ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
