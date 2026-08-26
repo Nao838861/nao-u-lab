@@ -167,7 +167,56 @@ stale_review_batch: []
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+
+```yaml
+designs:
+  - issue_id: ISS-4A-20260826-01
+    problem_restatement: "現在の mojibake 判定は、復元不能な置換文字 U+FFFD と、ゲーム UI の観測として意味を持つ `???` / 疑問符比率を同じ boolean に潰している。その boolean を health warning と Slack ingest quarantine が共有するため、監査では真の破損が埋もれ、取り込みでは正常な教師 feedback を失いうる。"
+    alternatives:
+      - name: "案A: reason-coded 二段階分類"
+        sketch: "field ごとの検出結果を `hard_corruption`（U+FFFD）と `ambiguous_question_run`（`???` または疑問符比率）へ分離し、atom 集約でも class と reason を失わない。health は hard warning と review-only signal を別集計し、ingest quarantine は hard class だけを止める。既存 `suspect` boolean は移行期間だけ派生値として残す。"
+        pros:
+          - "文字種という観測事実だけで分けるため、ゲーム本文の意味推測や atom 個別 allowlist が不要"
+          - "health と ingest が同じ reason-coded report を使いながら、用途別の action を明示できる"
+          - "既存 field report と helper を段階的に移行でき、失敗時も旧 boolean へ戻しやすい"
+        cons:
+          - "疑問符だけへ化けた真の文字化けは review-only 側に残り、自動 quarantine では捕捉できない"
+          - "report の consumer ごとに hard / ambiguous の扱いを決め、互換期間を管理する必要がある"
+        migration_cost: medium
+      - name: "案B: atom 単位の intentional 表示注記 / allowlist"
+        sketch: "正当な `???` を含む atom に `quality_exceptions: [intentional_question_run]` のような注記を付け、既存 suspect 判定から除外する。未注記の疑問符 run と U+FFFD は従来どおり warning / quarantine 対象にする。"
+        pros:
+          - "確認済み atom については意図的表示と破損を高精度に区別できる"
+          - "既存 boolean と consumer の挙動をほぼ変えずに済む"
+          - "例外判断の根拠を atom 側に監査可能な形で残せる"
+        cons:
+          - "既存・新規 atom ごとに人手注記が必要で、教師 feedback の取り込み前 false positive は防げない"
+          - "例外リストが増え、同じ UI 表記でも注記漏れにより挙動が変わる"
+          - "raw source と dual-written atom の両方へどう注記を伝播するか追加契約が要る"
+        migration_cost: high
+      - name: "案C: 文脈・比率ヒューリスティックの調整"
+        sketch: "`???` 単独では suspect にせず、疑問符比率、周辺の日本語、連続長、既知 mojibake marker の組合せで閾値を調整する。外部 schema や consumer は変えず boolean 判定だけを更新する。"
+        pros:
+          - "変更箇所と移行対象が最小"
+          - "既存 health / quarantine の出力形式を維持できる"
+          - "現在確認された UI 表記の false positive は短期的に抑えられる"
+        cons:
+          - "意味を推測する閾値は説明しにくく、別の UI 記号や短文で再発しやすい"
+          - "hard corruption と ambiguous signal が boolean のままで、監査上の区別は解決しない"
+          - "閾値変更で見逃しが生じても reason が残らず検証しにくい"
+        migration_cost: low
+    recommended: "案A: reason-coded 二段階分類"
+    recommended_reason: "U+FFFD と ASCII 疑問符 run は機械的に区別でき、現状の証拠でも前者だけが raw source と atom の双方に残る真の破損である。案Aは個別データの改変や意味推測をせず、既存 report の拡張と consumer の action 分離で到達できる。案Bより継続保守が小さく、案Cより誤判定時の理由と影響範囲を追跡しやすい。互換 boolean を一時維持すれば rollback も局所的である。"
+    decision: introduce
+    decision_reason: "priority issue は実例があり、同じ boolean が health と ingest の異なる目的を兼ねている構造原因まで特定できている。分類境界、consumer ごとの action、互換方針が定まったため、次 Phase 4c で小さく導入できる。"
+    outline_for_4c:
+      - "atom_quality の field report に reason と `hard_corruption` / `ambiguous_question_run` の分類を追加し、U+FFFD と疑問符 signal を独立集計する"
+      - "atom 集約 report で hard fields と ambiguous fields を分離し、既存 `suspect` / helper の互換期間と廃止条件を明記する"
+      - "Slack ingest の quarantine 条件を hard corruption のみに接続し、ambiguous question run は取り込みを止めない"
+      - "memory health の warning を hard corruption と review-only question signal に分け、件数・atom id・reason を別々に表示する"
+      - "U+FFFD atom、正当な `???` UI atom、通常 atom、疑問符比率だけが高い atom の固定 fixture で分類と consumer action を検証する"
+      - "既存 2 suspect の再監査で hard=1 / ambiguous=1 となり、mirror 内容を改変しないことを確認する"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
