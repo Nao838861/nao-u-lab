@@ -111,7 +111,35 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779809735-5b297cd583
+    source_ts: "1779809735.727529"
+    title: "Large Language Models in Game Development — probabilistic 生成と deterministic game loop の品質境界"
+    reason: "source=slack_api/shared-reads、score=10、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新候補だったため1件だけ選定。LLM runtime の variability を deterministic rule／schema／validation／difficulty／fairness へ接続する知見が次回行動を変えるか確認した。Nao_u の明示評価は raw で確認できなかった。"
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "2ゲームの具体例から生成誤り・難易度崩れ・schema failure・fairness破壊を分ける行動には変換できるが、原典は7学生・2教育プロジェクト・5件のreflective narrativeを中心とし、independent player evaluationがない。既存のstructural/semantic verifier、local/global evaluator、claim-fit、agent-playtest diagnostic、bounded decision controlsが中核判断をすでに覆い、直後のPhase 4aには比較可能なLLM-runtime game artifactもない。active_probes=327、pending lease=0の状態で同義probeを追加すると確認負荷とplayer experienceへの過剰外挿が増えるため、state-only reviewに留める。"
+  change:
+    summary: "reviewed_source_ts と採点・reject理由のみを記録。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

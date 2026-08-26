@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-26T10:01:14+09:00",
+  "updated_at": "2026-08-26T12:11:56+09:00",
   "reviewed_source_ts": [
+    "1779809735.727529",
     "1779887564.839849",
     "1787691599.598069",
     "1787676360.423389",
@@ -24842,6 +24843,55 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、同一 URL sibling の既レビュー、既存 lifecycle／state-role controls との完全重複、比較 evidence 不足、active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-26T12:11:56+09:00",
+      "selected": {
+        "id": "sr-1779809735-5b297cd583",
+        "source_ts": "1779809735.727529",
+        "title": "Large Language Models in Game Development — probabilistic 生成と deterministic game loop の品質境界",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・operation・evaluation の5優先タグを持つ最新候補だったため1件だけ選んだ。LLM を runtime の architectural component にした2ゲームの観察から、生成 variability を deterministic rule、schema、validation、difficulty、fairness へ接続する知見が、次の game prototype または評価 harness に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録は raw で確認できなかった。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、non_redundancy と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。原典は Wizdom Run と Sena の2プロジェクトで、LLM生成問題を mana・boss進行へ結ぶ構成、対話・scenario判断への利用、JSON schema と validation、difficulty label の崩れ、正解なし問題、正答位置の偏り、文脈外応答を具体的に報告する。probabilistic content を deterministic mechanics の内側へ封じ、correctness・difficulty calibration・structural coherence・fairness を別々に点検する行動へ変換しやすいため actionability は3とした。一方、現在のゲーム制作は LLM runtime integration を扱っておらず、直後の Phase 4a も実consumerではないため relevance は2。根拠は7学生・2教育プロジェクト・5件の短いreflective narrativeとartifact triangulationで、著者自身が developer perspective に限定され independent player evaluation がないと明記しているため evidence は2に留める。probe-20260610-structural-semantic-verifier-boundary は構造妥当性とゲーム意味妥当性、probe-20260609-local-constraint-global-evaluator-split は局所制約と全体playability、probe-20260615-plg-evaluation-claim-fit はdifficulty／player experienceなどclaim別evidence、probe-20260607-designer-question-agent-playtest と probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation はagent signalとplayer experienceの分離、probe-20260710-llm-bounded-replanning-decision-layer はdeterministic subsystem authorityとbounded schemaを既に扱う。論文固有の2ゲーム事例は有用だが、中核判断は既存controlsへほぼ吸収されるため non_redundancy は1。active_probesは327件、lifecycle pending leaseは0件で、比較可能なLLM-runtime game artifactなしに新規leaseを追加すると、同義checklist負荷とdeveloper自己報告からplayer experienceへの過剰外挿を増やすため risk_control は1とした。次の具体的なLLM内蔵prototypeで、既存6 controlsだけでは生成誤り、難易度崩れ、schema failure、fairness破壊を分離できない実例が出た時だけ再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1779809735-5b297cd583.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779809735.727529",
+        "memory/shared_reads_candidates/20260527_llm_game_development_playability_px.md",
+        "https://arxiv.org/abs/2603.27896",
+        "https://arxiv.org/html/2603.27896"
+      ],
+      "existing_controls": [
+        "probe-20260610-structural-semantic-verifier-boundary",
+        "probe-20260609-local-constraint-global-evaluator-split",
+        "probe-20260615-plg-evaluation-claim-fit",
+        "probe-20260607-designer-question-agent-playtest",
+        "probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation",
+        "probe-20260710-llm-bounded-replanning-decision-layer"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、probabilistic生成をdeterministic mechanicsへ封じる局所有用性、developer perspectiveに限られる証拠限界、既存verifier／evaluator／agent-playtest／bounded-decision controlsとの大幅な重複、比較artifact不在とactive probe増殖riskに基づくreject理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
