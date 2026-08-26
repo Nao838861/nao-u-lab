@@ -93,7 +93,35 @@ candidate_updates: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779887564-9dd4a0d491
+    source_ts: "1779887564.839849"
+    title: "Graphiti — スキーマ駆動エージェント記憶と retrieval failure 時だけの拡張境界"
+    reason: "memory・agent・operation・evaluation の4優先タグを持つ未レビュー候補。自由抽出の平坦化を防ぐ schema と retrieval failure 時だけの拡張境界が、次の Phase 4a に独自の判断差を作るか確認した。Nao_u の明示評価は raw で確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "同一 URL・同一主張の sibling sr-1779860611-b2f0031a82 は既レビューで、per-atom YAML／lifecycle overlay と discard・retention utility・state-role controls が中核判断を既に担う。紹介 tweet 中心で当環境の recall precision・誤接続率・schema 拡張前後の比較もなく、327件の active_probes に同義 control を足すと evidence 水増しと確認負荷が増えるため、state-only review とした。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録。active_probes、probe lifecycle ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

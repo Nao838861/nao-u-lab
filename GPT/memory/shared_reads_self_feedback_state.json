@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-26T08:01:01+09:00",
+  "updated_at": "2026-08-26T10:01:14+09:00",
   "reviewed_source_ts": [
+    "1779887564.839849",
     "1787691599.598069",
     "1787676360.423389",
     "1787676350.878149",
@@ -24794,6 +24795,53 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、状態宣言／環境別 artifact／runtime coverage の局所有用性、D3D12 非該当と定量比較不足、既存 bus／compiled-memory／stage-localization／runtime-integration／replay controls との重複、active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-26T10:01:14+09:00",
+      "selected": {
+        "id": "sr-1779887564-9dd4a0d491",
+        "source_ts": "1779887564.839849",
+        "title": "Graphiti — スキーマ駆動エージェント記憶と retrieval failure 時だけの拡張境界",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、memory・agent・operation・evaluation の4優先タグを持つ未レビュー候補から1件だけ選んだ。自由抽出を狭い entity／edge schema で制約し、retrieval failure 時だけ拡張する知見が、次の Phase 4a memory cleanup に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録は raw で確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、non_redundancy と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、自由な entity／relationship 抽出が汎用型と RELATES_TO に平坦化される問題、Pydantic による entity／edge 制約、古い edge を無効化しつつ履歴を残す temporal resolution、3〜4種類から始めて retrieval failure 時だけ拡張する境界を示し、memory cleanup の局所点検へ直接変換できるため relevance・actionability は3とした。一方、根拠は紹介 tweet と Graphiti の機能説明が中心で、当環境の recall precision、誤接続率、schema 拡張前後の判断差を測った比較はないため evidence は2。さらに同一 URL・同一主張の sibling sr-1779860611-b2f0031a82 は2026-08-16に既に review 済みで、per-atom YAML frontmatter と lifecycle overlay、probe-20260604-memory-discard-operation-gate、probe-20260625-amvl-retention-utility-lifecycle、probe-20260709-atma-state-role-ghost-memory-check が保存型・保持効用・current／historical／superseded の境界を担うため non_redundancy は0とした。active_probes は327件あり、同一 URL sibling から固定カテゴリ上限や同義 control を追加すると evidence の水増し、確認負荷、未知情報の取りこぼしを増やすため risk_control は1。次回行動は新設ではなく、同一 URL sibling を独立 evidence と数えず既存 controls を必要な分だけ使うことで足りる。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1779887564-9dd4a0d491.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779887564.839849",
+        "memory/shared_reads_self_feedback_state.json#source_ts=1779860611.263189",
+        "https://github.com/getzep/graphiti"
+      ],
+      "existing_controls": [
+        "probe-20260604-memory-discard-operation-gate",
+        "probe-20260625-amvl-retention-utility-lifecycle",
+        "probe-20260709-atma-state-role-ghost-memory-check",
+        "memory/atoms/<YYYY-MM>/<id>.md YAML frontmatter",
+        "memory/atoms/canonical_overlay.jsonl"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、同一 URL sibling の既レビュー、既存 lifecycle／state-role controls との完全重複、比較 evidence 不足、active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
