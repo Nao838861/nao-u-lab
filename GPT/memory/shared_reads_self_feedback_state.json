@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-27T05:07:12+09:00",
+  "updated_at": "2026-08-27T07:19:59+09:00",
   "reviewed_source_ts": [
+    "1787774575.827039",
     "1779834973.870639",
     "1779889026.572709",
     "1787752001.500119",
@@ -778,6 +779,51 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-27T07:19:59+09:00",
+      "selected": {
+        "id": "sr-1787774575-c33ce7f28e",
+        "source_ts": "1787774575.827039",
+        "title": "That’s BU//S#!T — 死亡原因に紐づく任意の局所救済",
+        "reason": "source が slack_api/shared-reads、score 10、未レビュー候補のうち datetime が最新で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つため1件だけ選んだ。死亡原因に紐づく opt-in の局所救済、知覚可能な弱体化段階、救済後の level topology 検査が、次の小型 action prototype に既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件と必須指標は満たす。shared-reads 本文は、死亡後に該当罠だけを player が任意に弱体化する仕組み、sawblade の5段階から知覚可能な3段階への圧縮、SuckerPunch の警告追加、spike 除去後の softlock と ledge 修正を具体的に結んでいるため relevance・actionability は3とした。一方、根拠は jam 作者による少人数の live play と友人 playtest の質的 postmortem で、人数、利用率、離脱率、clear率、対照群がなく evidence は2。probe-20260710-feedback-device-amplitude-axis は最小の介入強度と player choice を、probe-20260603-mechanic-observation-channel-gate は変更の知覚可能性を、probe-20260709-gameenginebench-runtime-integration-gate は neighboring runtime system と restart を既に扱う。本 atom 固有の差は、救済を死亡原因 ID に局在化し、各 nerf 状態の navigation invariant と復帰経路を同時に検査する点なので non_redundancy は2とした。ただし現在の staging には局所救済前後、同一障害、死亡原因 ID、到達可能性、player choice を比較できる playable artifact がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。consumer_phase・trigger_artifact・expected_delta・lease_due を比較可能に指定できないため、active probe・metric・ledger・directive・恒久ルールは追加せず state-only defer とする。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787774575-c33ce7f28e.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787774575.827039",
+        "https://itch.io/devlog/1482054/jam-postmortem-122-changelist-.amp"
+      ],
+      "existing_controls": [
+        "probe-20260710-feedback-device-amplitude-axis",
+        "probe-20260603-mechanic-observation-channel-gate",
+        "probe-20260709-gameenginebench-runtime-integration-gate"
+      ],
+      "defer_condition": "死亡原因 ID に紐づく局所救済を持つ具体的な playable artifact が現れ、同一障害について救済前後の知覚可能性、再死亡、次 checkpoint 到達、softlock、復帰経路、player choice を比較でき、既存3 controlsだけでは局在化と navigation invariant の同時判定を取り逃がす時に限り、一時 probe または metric として再評価する。",
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、局所 opt-in 救済の有用性、少人数 postmortem という証拠限界、既存 intervention／observability／runtime-integration controls との境界、比較可能な playable artifact 不在による defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-27T05:07:12+09:00",
       "selected": {

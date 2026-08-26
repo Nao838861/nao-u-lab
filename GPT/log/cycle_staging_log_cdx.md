@@ -129,7 +129,37 @@ skipped: []
 - 判定はいずれも `部分採用`。skill は procedural な反復作業に限定し、reliability monograph は最小限の evidence chain から試す。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+### 2026-08-27 07:19 JST
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787774575-c33ce7f28e
+    source_ts: "1787774575.827039"
+    title: "That’s BU//S#!T — 死亡原因に紐づく任意の局所救済"
+    reason: "score 10 の最新未レビュー atom で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。死亡原因に局在した opt-in 救済、知覚可能な弱体化、救済後 topology の同時検査が既存 control と異なる判断差を作るか確認した。Nao_u の明示的な重要評価はローカル raw では確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  decision_reason: "数値上の採用条件は満たすが、根拠は少人数の質的 postmortem で、介入強度・知覚可能性・runtime integration は既存 probe と部分重複する。固有差は死亡原因 ID への局在化と各 nerf 状態の navigation invariant／復帰経路の同時検査。ただし今サイクルには救済前後を比較できる playable artifact がなく、後続 Phase 4a は memory cleanup で実 consumer ではないため、lease の consumer・artifact・判断差・期限を具体化せず state-only defer とした。"
+  change:
+    summary: "reviewed_source_ts と、既存 controls との境界、比較 artifact 不在による defer 理由だけを state に記録した。active_probes・ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
