@@ -124,7 +124,88 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示で監査。Markdown link は0件、索引内 atom 参照87件はすべて atoms.jsonl に存在し、broken reference は0件。代表語（記憶 / ゲーム設計 / 敵パターン / 評価軸）も取得できた"
+  - "memory/atoms.jsonl 2,977件を監査。duplicate id / parse error / mirror conflict は0件。normalized content 重複40群80行は canonical overlay 45群で fold 済み、effective display unresolved は0件"
+  - "memory/raw/ の30日超ファイル242件を確認。Slack原文・論文PDF/TXT等の provenance 正本で既存参照を持つため、この cycle では移動せず明示保持"
+  - "shared-reads candidate lifecycle を監査: posted=712, ready_to_post=9, postponed=210, failed=513, needs_review=0。期限超過 open 15件を確認"
+  - "open duplicate / stale triage / group-action sidecar を規定順で再生成。group-action handoff 0件、candidate handoff 5件を enqueue し audit error 0件"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0件。完了根拠のない handled 更新は行わなかった"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 15
+  stale_triage_queue_rows: 11
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  backlog_high_water_reason: "overdue_open_total > stale_triage_queue_rows は成立するが、actionable group が3件以上という条件は不成立"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-7e1c04bf9997ccfe
+    - cha-ee1e23aa33acdb3b
+    - cha-2f8c6453ad4cbe97
+    - cha-db4d58c8e563a135
+    - cha-e66e5290459f950d
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-7e1c04bf9997ccfe
+    path: memory/shared_reads_candidates/20260621_llms_and_games_survey_roadmap.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "NPC / GM / 生成器 / 評価器の役割分類は索引価値が高いが、候補本文には個別手法の評価条件・結果がなく、軸を絞った追加読解が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-ee1e23aa33acdb3b
+    path: memory/shared_reads_candidates/20260622_clbench_continual_learning_stateful_envs.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "経験蓄積と実性能向上を分ける gain metric は制作記憶に直結するが、strategic game-playing domain の具体タスク・比較条件・数値結果が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-2f8c6453ad4cbe97
+    path: memory/shared_reads_candidates/20260622_digital_red_queen_core_war_llm_evolution.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "敵AI・対戦ルール探索へ写像できるが、held-out 評価条件・数値と diversity 低下の範囲が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-db4d58c8e563a135
+    path: memory/shared_reads_candidates/20260622_effinav_object_goal_navigation.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "探索NPCの無駄な往復・既探索領域への固着評価に使えるが、深度/VLM融合、baseline、Habitat / GOAT-BENCH の数値が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-e66e5290459f950d
+    path: memory/shared_reads_candidates/20260625_compact_social_intelligence_agents.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "会話NPCの発話・予測・行動 trace 分離に使えるが、arena ルール、COMPACT 測定手順、モデル別結果が不足"
+    recommended_review_action: reevaluate_in_phase2
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 source 正常。atom warning 2件のうち sr-1776127289-4d9239b255 は raw Slack 原文から replacement character を含み、gr-1777083728-44d444ab7a は raw 原文が正常な detector false positive"
+  display_or_tooling_status: none
+  disposition: "いずれも今回の game-memory 検索導線を塞ぐ構造問題ではないため issue 化せず、source provenance を保持"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
