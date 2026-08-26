@@ -142,7 +142,92 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index を validate_memory_index.py で検証し、atom 参照の欠落・重複は 0 件。UTF-8 明示読みで代表語（記憶／ゲーム設計／敵パターン／評価軸）も取得できた。"
+  - "atoms 2977 件の legacy/per-file/index mirror を監査し、欠落・parse error・content conflict は 0 件。normalized content duplicate 40 群は既存 fold、canonical overlay 45 群は整合済み。"
+  - "memory/raw/ の 30 日超無更新ファイル 242 件を確認。論文本文・評価ログ・Slack 原文など参照 provenance であり、既存リンクを壊す根拠がないため移動せず保持した。"
+  - "candidate lifecycle は posted 713 / ready_to_post 9 / postponed 210 / failed 513 / needs_review 0。terminal 1226 件は再評価 queue から除外した。"
+  - "open duplicate / stale triage / group action sidecar を再生成し、期限到来 candidate 10 件のうち通常 candidate 5 件を Phase 2 handoff inbox へ冪等 enqueue した。"
+  - "Slack directives / broadcasts は pending 0 件で、handled 更新対象なし。"
+issues:
+  - id: ISS-4A-20260826-01
+    description: "履歴 raw から生成された atom 1 件で『AIエ��ジェント』という U+FFFD 置換文字が title / trigger / excerpt に残っている。memory_health のもう1件の suspect は原文中の意図的な『???』で、文字化けではない。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory_health.py --compact"
+    source_file_status: "UTF-8 明示読みでも raw archive と per-atom file の双方に U+FFFD が存在するため、表示だけでなく保存済み source data の既存破損。memory/MEMORY.md の代表語 probe は正常。"
+    display_or_tooling_status: "none。Get-Content -Encoding UTF8 と rg の双方で同じ codepoint を再現。gr-1777083728-44d444ab7a の『???』検出だけは heuristic false positive。"
+    why_blocks_game_memory: "当該 atom 単体で『AIエージェント』検索の recall を弱めるが、ゲーム教師 feedback や現行 index 全体を遮断する規模ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 10
+  stale_triage_queue_rows: 6
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-9bab7c8a67cde010
+    - cha-f09aae1412041066
+    - cha-51dc52a8331c0874
+    - cha-aadcff81d6d5f30b
+    - cha-b978188e48a277bc
+  remaining_unhanded_candidate_count: 1
+  suppressed_by_live_group_lease_candidate_count: 4
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-9bab7c8a67cde010
+    path: memory/shared_reads_candidates/20260727_ggea_gan_guided_dungeon_generation.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "GAN prior・進行 skeleton・FI-2Pop の役割分離、比較対象、収束、外部評価、expressive range が具体的で、ゲーム制作への転用価値が高い。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-f09aae1412041066
+    path: memory/shared_reads_candidates/20260727_operational_hallucination_safety_drift.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "長時間 playtest agent の safety drift 監視へ接続できる一方、task 数・モデル・指標・違反率の一次評価が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-51dc52a8331c0874
+    path: memory/shared_reads_candidates/20260727_splatoon_raiders_difficulty_growth_help.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "難易度三段階、growth、救援 scaling、上級者 dungeon の具体レバーがある一方、発売前資料で調整値・playtest 結果が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-aadcff81d6d5f30b
+    path: memory/shared_reads_candidates/20260613_gametilenet_low_resolution_game_art.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "tile asset review への適用は具体的だが、dataset 規模・annotation schema・baseline・定量結果の補完が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-b978188e48a277bc
+    path: memory/shared_reads_candidates/20260727_30_exit_post_playtest_metrics.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "268 run の到達・選択率と日次 patch を接続できるが、変更前後の比較が未観測で後続 devlog の確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
