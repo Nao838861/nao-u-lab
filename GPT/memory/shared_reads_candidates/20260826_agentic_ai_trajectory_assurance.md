@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2608.01558"
 collected_at: "2026-08-26T09:49:13+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent, safety, trajectory-evaluation, memory, tool-use, game-development]
+evaluated_at: "2026-08-26T09:52:50+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-26T09:52:50+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-26T09:52:50+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-25"
+supersedes: []
+gate_reason: |-
+  per-action check から trajectory-level invariant へ評価単位を広げる問題設定は、長期のゲーム制作 loop の監査へ具体的に適用できる。
+  しかし本稿は十一の研究方向を示す vision paper で、実装された assurance 手法、比較 baseline、定量評価、失敗分析を持たない。
+  問題提起を約4000字へ膨らませても手法と評価の説明にならないため、投稿候補としては fail とする。
 ---
 
 ## raw_excerpt

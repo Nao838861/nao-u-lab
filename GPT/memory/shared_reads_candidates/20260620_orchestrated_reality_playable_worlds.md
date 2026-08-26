@@ -4,21 +4,21 @@ url: "https://arxiv.org/abs/2606.16014"
 collected_at: "2026-06-20T08:44:40+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, world-simulation, llm-agents, npc, narrative, sandbox]
-evaluated_at: "2026-07-27T16:36:13+09:00"
+evaluated_at: "2026-08-26T09:52:50+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-27T16:36:13+09:00"
+last_reviewed_at: "2026-08-26T09:52:50+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-27T16:36:13+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-26T09:52:50+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-26"
+stale_after: "2026-09-25"
 supersedes: []
 gate_reason: |-
   prose と structured mutation を分け、検証済み transition kernel だけを durable state に反映する中核は具体的で、
-  NPC 記憶やクエスト進行への適用も明確。しかし work in progress で player study は未実施、model 横断検証もない。
-  評価の中身を伴う CoopEval 水準には未達のため、追加実験または artifact の実証結果が出るまで postponed とする。
+  NPC 記憶やクエスト進行への適用も明確。しかし再確認時点でも player study と model 横断検証の結果が候補本文にない。
+  評価の中身を伴う CoopEval 水準には未達のため、追加実験または artifact の実証結果が出るまで postponed を継続する。
 ---
 
 ## raw_excerpt

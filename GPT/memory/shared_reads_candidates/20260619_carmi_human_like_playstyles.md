@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2211.17188"
 collected_at: "2026-06-19T21:25:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, automated-playtesting, player-modeling, reinforcement-learning, balancing]
-evaluated_at: "2026-07-27T11:37:50+09:00"
+evaluated_at: "2026-08-26T09:52:50+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-27T11:37:50+09:00"
+last_reviewed_at: "2026-08-26T09:52:50+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-27T11:37:50+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-26T09:52:50+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-26"
+stale_after: "2026-09-25"
 supersedes: []
 gate_reason: |-
   summary data と少量の human data から play-style を再現する着想は、headless playtest に直接適用できる。
-  ただし環境、style 定義、学習法、比較 baseline、再現精度が候補本文にないため、評価の中身を備えた約4000字概要には不足し保留する。
+  再確認時点でも環境、style 定義、学習法、比較 baseline、再現精度が候補本文にないため、評価の中身を備えた約4000字概要には不足し保留を継続する。
 
 ---
 

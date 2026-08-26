@@ -4,21 +4,21 @@ url: "https://arxiv.org/abs/2606.18950"
 collected_at: "2026-06-20T21:05:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, rts, benchmark, vlm-agent, strategic-reasoning, multi-agent]
-evaluated_at: "2026-07-27T16:36:13+09:00"
+evaluated_at: "2026-08-26T09:52:50+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-27T16:36:13+09:00"
+last_reviewed_at: "2026-08-26T09:52:50+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-27T16:36:13+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-26T09:52:50+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-26"
+stale_after: "2026-09-25"
 supersedes: []
 gate_reason: |-
   strategic competency を mini-game に分解する着想、self-evolving generation、FSM と memory の agent 構成は抽出できる。
-  ただし候補本文には比較モデル、定量結果、課題別の失敗差がなく、RTS 以外へ移せる範囲もまだ推論に留まる。
-  論文の評価表と生成 framework の検証内容を補うまで postponed とし、総論だけで約4000字へ膨らませない。
+  再確認時点でも比較モデル、定量結果、課題別の失敗差が候補本文になく、RTS 以外へ移せる範囲も推論に留まる。
+  論文の評価表と生成 framework の検証内容を補うまで postponed を継続し、総論だけで約4000字へ膨らませない。
 ---
 
 ## raw_excerpt

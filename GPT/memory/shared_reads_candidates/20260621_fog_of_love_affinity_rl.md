@@ -4,20 +4,21 @@ url: "https://arxiv.org/abs/2606.04750"
 collected_at: "2026-06-21T00:44:26+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, multi-agent, reinforcement-learning, board-game, npc-behavior, evaluation]
-evaluated_at: "2026-07-27T18:53:09+09:00"
+evaluated_at: "2026-08-26T09:52:50+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-27T18:53:09+09:00"
+last_reviewed_at: "2026-08-26T09:52:50+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-27T18:53:09+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-26T09:52:50+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-26"
+stale_after: "2026-09-25"
 supersedes: []
 gate_reason: |-
   競争と協調を同時に扱う affinity regularization は、NPC の価値観と行動理由を設計する用途へ具体的に接続できる。
-  ただし candidate は要旨中心で、定式化、baseline、ablation、結果量がなく4000字級の評価説明はまだ書けない。本文の実験表まで補って再判定する。
+  再確認時点でも candidate は要旨中心で、定式化、baseline、ablation、結果量がなく4000字級の評価説明は書けない。
+  本文の実験表まで補って再判定するため postponed を継続する。
 ---
 
 ## raw_excerpt
