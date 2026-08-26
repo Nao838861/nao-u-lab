@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from pathlib import Path
 from types import MappingProxyType
-from typing import Any, Mapping
+from typing import Any, Iterable, Mapping
 
 import memory_recall
 import memory_lifecycle
@@ -260,6 +260,61 @@ def check_recall_smoke(snapshot: AtomSnapshot) -> list[dict[str, Any]]:
     return rows
 
 
+def atom_quality_findings(
+    atoms: Iterable[Mapping[str, Any]],
+) -> dict[str, list[dict[str, Any]]]:
+    """Split atom text findings while retaining the legacy suspect union."""
+    findings: dict[str, list[dict[str, Any]]] = {
+        "hard_corruption": [],
+        "ambiguous_question_run": [],
+        "suspect": [],
+    }
+    for atom in atoms:
+        report = atom_quality_report(atom)
+        base = {
+            "id": atom.get("id"),
+            "source_ts": atom.get("source_ts"),
+            "title": atom.get("title"),
+        }
+        if report["hard_corruption"]:
+            findings["hard_corruption"].append(
+                {
+                    **base,
+                    "fields": report["hard_fields"],
+                    "reasons": report["reason_codes"]["hard_corruption"],
+                }
+            )
+        if report["ambiguous_question_run"]:
+            findings["ambiguous_question_run"].append(
+                {
+                    **base,
+                    "fields": report["ambiguous_fields"],
+                    "reasons": report["reason_codes"]["ambiguous_question_run"],
+                }
+            )
+        if report["suspect"]:
+            findings["suspect"].append(
+                {
+                    **base,
+                    "suspect_fields": report["suspect_fields"],
+                    "hard_fields": report["hard_fields"],
+                    "ambiguous_fields": report["ambiguous_fields"],
+                    "reason_codes": report["reason_codes"],
+                }
+            )
+    return findings
+
+
+def _render_quality_findings(rows: list[dict[str, Any]]) -> str:
+    if not rows:
+        return "none"
+    return ", ".join(
+        f"{row.get('id')} fields={','.join(row.get('fields', []))} "
+        f"reasons={','.join(row.get('reasons', []))}"
+        for row in rows
+    )
+
+
 def build_health() -> dict[str, Any]:
     input_fingerprint_before = capture_memory_input_fingerprint()
     snapshot = create_atom_snapshot(input_fingerprint_before["digest"])
@@ -290,17 +345,10 @@ def build_health() -> dict[str, Any]:
     raw_content_duplicates = content_duplicate_summary(atoms)
     visible_content_duplicates = content_duplicate_summary(recall_visible_atoms)
     overlay_duplicates = overlay_duplicate_summary(snapshot.overlay_rows)
-    mojibake_suspects = [
-        {
-            "id": atom.get("id"),
-            "source_ts": atom.get("source_ts"),
-            "title": atom.get("title"),
-            "suspect_fields": report["suspect_fields"],
-        }
-        for atom in atoms
-        for report in [atom_quality_report(atom)]
-        if report["suspect"]
-    ]
+    quality_findings = atom_quality_findings(atoms)
+    hard_corruption_atoms = quality_findings["hard_corruption"]
+    ambiguous_question_run_atoms = quality_findings["ambiguous_question_run"]
+    mojibake_suspects = quality_findings["suspect"]
     title_quality = title_quality_audit_summary()
     mirror_audit = audit_atom_mirror_drift.build_audit(
         jsonl_atoms=snapshot.raw_atoms,
@@ -338,9 +386,20 @@ def build_health() -> dict[str, Any]:
             f"{title_quality['effective_display_unresolved_rows']} rows / "
             f"{title_quality['effective_display_unresolved_groups']} groups"
         )
-    if mojibake_suspects:
-        top = ", ".join(str(row.get("id")) for row in mojibake_suspects[:5])
-        warnings.append(f"mojibake suspect atoms {len(mojibake_suspects)}件: {top}")
+    if hard_corruption_atoms:
+        top = ", ".join(
+            f"{row.get('id')}[{','.join(row['reasons'])}]"
+            for row in hard_corruption_atoms[:5]
+        )
+        warnings.append(f"hard corruption atoms {len(hard_corruption_atoms)}件: {top}")
+    if ambiguous_question_run_atoms:
+        top = ", ".join(
+            f"{row.get('id')}[{','.join(row['reasons'])}]"
+            for row in ambiguous_question_run_atoms[:5]
+        )
+        warnings.append(
+            f"question-run review signals {len(ambiguous_question_run_atoms)}件: {top}"
+        )
     mirror_failures = sum(len(mirror_audit[key]) for key in (
         "per_file_only", "index_only", "jsonl_only", "missing_file",
         "parse_errors", "index_errors", "content_conflicts",
@@ -410,6 +469,10 @@ def build_health() -> dict[str, Any]:
         "canonical_overlay_duplicate_groups": overlay_duplicates["groups"],
         "canonical_overlay_reason_counts": overlay_duplicates["reason_counts"],
         "canonical_overlay_folded_extra_rows_by_reason": overlay_duplicates["folded_extra_rows_by_reason"],
+        "hard_corruption_atom_count": len(hard_corruption_atoms),
+        "ambiguous_question_run_atom_count": len(ambiguous_question_run_atoms),
+        "hard_corruption_atoms": hard_corruption_atoms[:20],
+        "ambiguous_question_run_atoms": ambiguous_question_run_atoms[:20],
         "mojibake_suspect_atoms": mojibake_suspects[:20],
         "title_quality_audit": title_quality,
         "atom_mirror_audit": public_mirror_audit,
@@ -459,6 +522,9 @@ def render_text(health: dict[str, Any], compact: bool) -> str:
         f"- title_display_debt: raw_rows={health.get('raw_title_debt_rows')} raw_groups={health.get('raw_title_debt_groups')} effective_unresolved_rows={health.get('effective_display_unresolved_rows')} effective_unresolved_groups={health.get('effective_display_unresolved_groups')}",
         f"- normalized_content_duplicate_groups: raw={health.get('raw_normalized_content_duplicate_groups')} rows={health.get('raw_normalized_content_duplicate_atom_rows')} fold_extra={health.get('raw_content_fold_applied_extra_rows')} recall_visible={health.get('recall_visible_normalized_content_duplicate_groups')} rows={health.get('recall_visible_normalized_content_duplicate_atom_rows')} fold_extra={health.get('recall_visible_content_fold_applied_extra_rows')}",
         f"- canonical_overlay_duplicate_groups: total={health.get('canonical_overlay_duplicate_groups')} reasons={health.get('canonical_overlay_reason_counts')} fold_extra_by_reason={health.get('canonical_overlay_folded_extra_rows_by_reason')}",
+        f"- atom_text_quality: hard_corruption={health.get('hard_corruption_atom_count', 0)} ambiguous_question_run={health.get('ambiguous_question_run_atom_count', 0)}",
+        f"- hard_corruption_atoms: {_render_quality_findings(health.get('hard_corruption_atoms', []))}",
+        f"- ambiguous_question_run_atoms: {_render_quality_findings(health.get('ambiguous_question_run_atoms', []))}",
         f"- raw_shared_reads_rows: {health.get('raw_shared_reads_rows')}",
         f"- archive_last_run: {health.get('archive_last_run')}",
         f"- slack_last_run: {health.get('slack_last_run')}",

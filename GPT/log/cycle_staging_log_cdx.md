@@ -219,7 +219,32 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260826-01
+    files_changed:
+      - path: tools/atom_quality.py
+        change: modified
+      - path: tools/slack_memory_ingest.py
+        change: modified
+      - path: tools/memory_health.py
+        change: modified
+      - path: tools/test_atom_quality.py
+        change: created
+      - path: AGENTS.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "atom text 品質を reason-coded な hard_corruption / ambiguous_question_run に分離した。Slack ingest は U+FFFD のみ quarantine し、health は hard warning と review-only signal を別表示する。"
+    partial: false
+migrations: []
+verification:
+  - "固定 fixture 4種（U+FFFD / 正当な `???` UI / 通常文 / 疑問符比率のみ高い文）で分類、互換 suspect、Slack ingest action、health 分離を検証。tools 全体は 68 tests OK。"
+  - "実データ 2 suspect の再監査: hard_corruption=1（sr-1776127289-4d9239b255 / replacement_character）、ambiguous_question_run=1（gr-1777083728-44d444ab7a / question_run）。"
+  - "memory_health.py --json: atom mirror status=clean、input consistency=stable、recall smoke 3/3 hit、errors=0。"
+  - "既存 atom は移行・修復せず、atoms.jsonl と対象 per-file 2件の内容を変更していない。"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

@@ -136,6 +136,7 @@ Codex/GPT 側の記憶は `memory/` と `tools/memory_*.py` で管理する。
 - `memory_recall.py` は atoms.jsonl が存在すればそこから、なければ per-file から読む (Phase D 移行が trivial に)。表示・recall では `normalized_content_hash` による同一内容 fold を行い、raw atom は削除しない。
 - 共有モジュール `tools/atoms_fileformat.py` に format helpers / parser / sync logic を集約
 - 他の `atoms.jsonl` 直読スクリプトは未対応 — atoms.jsonl を retire する前にそれらも dual-read 対応が必要
+- atom text 品質は `hard_corruption`（U+FFFD、Slack ingest を quarantine）と `ambiguous_question_run`（`???` / 疑問符比率、health の review-only signal）を分離する。互換 `suspect` は全 consumer の class-specific 移行完了までのみ維持する。
 
 **Phase D 開始前に行うこと**:
 1. 残りのスクリプト群を `atoms_fileformat.load_atoms_from_per_file()` または `memory_ingest` 経由の共通 loader を使う形に改修
