@@ -7,12 +7,12 @@ genre_tags: [agent-skills, game-development, workflow, evaluation, retrieval]
 evaluated_at: "2026-08-27T07:03:34+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-27T07:03:34+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-27T07:03:34+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-27T07:16:26.146149+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787782566588969"
+next_action: none
 stale_after: "2026-09-26"
 supersedes: []
 gate_reason: |-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "ゲーム制作 agent の mechanic 実装・playtest・headless 検証 skill と skill pool の選択設計"
   pros_cons: "再現可能な手順固定と定量根拠が強み。正しい skill の取得だけでは成功を保証せず、engine や prototype 文脈への適応検証が必要"
   verdict_pre: "部分採用"
+posted:
+  ts: "1787782566.588969"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787782566588969"
+  char_count: 4181
+  posted_at: "2026-08-27T07:16:26.146149+09:00"
 ---
 
 ## raw_excerpt

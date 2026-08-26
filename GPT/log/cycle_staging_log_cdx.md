@@ -110,7 +110,23 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+### 2026-08-27 07:16 JST
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260827_demystifying_agent_skills.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787782566588969
+    char_count: 4181
+  - candidate: memory/shared_reads_candidates/20260827_engineering_reliable_coding_agents.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787782580175809
+    char_count: 4351
+skipped: []
+```
+
+- 両候補とも原論文 PDF の本文を確認し、実験条件・評価値・失敗条件・限界を補完した。
+- 投稿前 policy review: 必須見出し順、URL 末尾、禁止表現なし、文字数範囲内を確認。
+- 判定はいずれも `部分採用`。skill は procedural な反復作業に限定し、reliability monograph は最小限の evidence chain から試す。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

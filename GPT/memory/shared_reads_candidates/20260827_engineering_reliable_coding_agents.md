@@ -7,12 +7,12 @@ genre_tags: [coding-agents, game-development, harness, evaluation, observability
 evaluated_at: "2026-08-27T07:03:34+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-27T07:03:34+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-27T07:03:34+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-27T07:16:26.146149+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787782580175809"
+next_action: none
 stale_after: "2026-09-26"
 supersedes: []
 gate_reason: |-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "ゲーム制作サイクルの build 環境、asset/state retrieval、memory、visual・headless 検証、review 経路の障害切り分け"
   pros_cons: "広い evidence map と実行可能な protocol が強み。網羅的レビューではなく、workload・configuration ごとの再検証が必要"
   verdict_pre: "部分採用"
+posted:
+  ts: "1787782580.175809"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787782580175809"
+  char_count: 4351
+  posted_at: "2026-08-27T07:16:26.146149+09:00"
 ---
 
 ## raw_excerpt
