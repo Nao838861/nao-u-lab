@@ -4,6 +4,26 @@ url: "https://itch.io/devlog/1482054/jam-postmortem-122-changelist-.amp"
 collected_at: "2026-08-27T04:51:47+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, difficulty, player-agency, postmortem, game-jam, platformer]
+evaluated_at: "2026-08-27T04:55:19+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-27T04:55:19+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-27T04:55:19+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-26"
+supersedes: []
+gate_reason: |-
+  死亡後に障害単位で弱体化を選ぶ問題設定、プレイヤーが必要時だけ救済を使った観察、25% 刻みから知覚可能な三段階へ直した反復まで抽出できる。
+  アクションゲームの救済 mechanic と playtest 観測へ直接適用でき、限界も含めて CoopEval 水準の約4000字に展開できるため pass とする。
+suggested_post_outline:
+  overview_angle: "難易度を開始前の一括設定ではなく、失敗直後に個別障害へ作用するプレイヤー選択として設計した postmortem"
+  analysis_axis: "救済の選択粒度、弱体化が知覚できる段階差、利用行動の観察から仕様を直す反復"
+  application_target: "アクションゲームの障害調整、詰まり検知後の救済提示、playtest での利用率と継続率の観測"
+  pros_cons: "自尊心と継続意思を保ちやすい一方、選択提示のテンポ、自己責任感、障害別実装コストが増える"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

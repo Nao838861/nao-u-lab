@@ -4,16 +4,16 @@ url: "https://arxiv.org/abs/2603.28386"
 collected_at: "2026-06-28T22:36:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, pcg, agent-evaluation, curriculum, llm, reinforcement-learning]
-evaluated_at: "2026-07-28T03:21:03+09:00"
+evaluated_at: "2026-08-27T04:55:19+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-28T03:21:03+09:00"
+last_reviewed_at: "2026-08-27T04:55:19+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-28T03:21:03+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-27T04:55:19+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-27"
+stale_after: "2026-09-26"
 supersedes: []
 gate_reason: |-
   environment / policy の共進化、mixed-strategy meta-policy、3 評価領域は抽出でき、敵・level の adversarial playtest へ直接接続できる。
