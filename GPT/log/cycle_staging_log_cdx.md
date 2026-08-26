@@ -162,7 +162,117 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-08-27 07:25 JST
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md と per-file atom index を照合し、entry section の欠損・broken link が0件であることを確認した。"
+  - "atoms 2984件の mirror を照合し、atoms.jsonl / per-file .md / index.jsonl は各2984件、content conflict・parse error・missing file はすべて0件だった。"
+  - "raw normalized-content duplicate 40群80行は canonical overlay で40行fold済み、recall-visible duplicate 3群6行も3行fold済みで、effective display unresolved は0件だった。"
+  - "candidate lifecycle 1456件を監査し、posted 721 / ready_to_post 9 / postponed 205 / failed 521 / needs_review 0。current status conflict による修復対象は0件だった。"
+  - "30日超の memory/raw 原文242件を確認した。内訳は web_research 217 / headless_eval 16 / slack_api 6 / slack_archive 1 / game_eval 1 / sync_state 1。raw 正本・再評価 provenance のため移動せず明示保持した。"
+  - "Slack inbox は directives 23行・broadcasts 21行を確認し、pending は双方0件。完了根拠のない handled 更新は行わなかった。"
+issues: []
+encoding_audit:
+  memory_index:
+    source_file_status: "UTF-8明示読みで『記憶』『ゲーム設計』『敵パターン』『評価軸』を取得でき、source file は正常。"
+    display_or_tooling_status: "none"
+  hard_corruption_atom:
+    atom_id: sr-1776127289-4d9239b255
+    source_file_status: "per-file atom と raw Slack archive の双方に U+FFFD があり、表示経路ではなくsource由来の局所欠損。"
+    display_or_tooling_status: "UTF-8表示は正常で、追加のmojibakeはない。"
+    disposition: "単一atomに局在し、mirror・overlay・recall smokeは正常なためPhase 4bを要する構造問題にはしない。原文は自動修復しない。"
+atom_consistency:
+  raw_atoms: 2984
+  canonical_atoms: 2939
+  mirror_status: clean
+  content_conflicts: 0
+  lifecycle_conflicts_requiring_fix: 0
+  hard_corruption_atoms: 1
+  ambiguous_question_run_review_signals: 1
+candidate_lifecycle_summary:
+  posted: 721
+  ready_to_post: 9
+  postponed: 205
+  failed: 521
+  needs_review: 0
+  missing_stale_after: 3
+  overdue_open_total: 12
+duplicate_title_audit:
+  terminal_canonical_groups: 109
+  open_duplicate_group_count: 28
+  mixed_group_count: 25
+  all_open_group_count: 3
+  actionable_group_count: 0
+group_action_handoff: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 12
+  stale_triage_queue_rows: 8
+  open_duplicate_group_count: 28
+  mixed_group_count: 25
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_enqueued_count: 5
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-4569b5d16ae87f97
+    - cha-2943d4e1e336a29d
+    - cha-e24211f799e60f41
+    - cha-ed397376edabde55
+    - cha-aeb42eee0b5f2b4a
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+stale_review_batch:
+  - handoff_id: cha-4569b5d16ae87f97
+    path: memory/shared_reads_candidates/20260531_haptics_gaming_sdk_survey_2025.md
+    status: postponed
+    stale_after: "2026-08-27"
+    priority_reason: "SDK市場surveyの列挙が中心で、ブラウザゲームや既存prototypeへ適用できる実装・評価場面が弱い。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-2943d4e1e336a29d
+    path: memory/shared_reads_candidates/20260606_muse_autoskill_lifecycle.md
+    status: postponed
+    stale_after: "2026-08-27"
+    priority_reason: "canonical URL一致のMUSE-Autoskill投稿がSlack正本にあり、同一work再投稿を避ける判断の再確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-e24211f799e60f41
+    path: memory/shared_reads_candidates/20260609_candy_crush_soda_invisible_layer.md
+    status: postponed
+    stale_after: "2026-08-27"
+    priority_reason: "ゲーム制作への接続は強いが、公開材料がGDC概要に留まり、再設計手法と評価指標が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-ed397376edabde55
+    path: memory/shared_reads_candidates/20260609_qa_strongest_design_ally.md
+    status: postponed
+    stale_after: "2026-08-27"
+    priority_reason: "QAを設計SMEとして扱う観点は有用だが、介入内容・評価軸・成果の一次材料が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-aeb42eee0b5f2b4a
+    path: memory/shared_reads_candidates/20260609_replaced_wingman_lore_ui.md
+    status: postponed
+    stale_after: "2026-08-27"
+    priority_reason: "scope bloatをUI fictionへ畳む具体例だが、実装判断と評価結果の厚みが不足する。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
