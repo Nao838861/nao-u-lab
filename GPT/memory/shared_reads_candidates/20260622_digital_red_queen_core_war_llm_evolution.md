@@ -4,16 +4,16 @@ url: https://arxiv.org/abs/2601.03335
 collected_at: 2026-06-22T08:59:46+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, open-endedness, adversarial-design, llm-evolution, artificial-life]
-evaluated_at: 2026-07-27T21:07:26+09:00
+evaluated_at: 2026-08-26T11:56:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: 2026-07-27T21:07:26+09:00
+last_reviewed_at: 2026-08-26T11:56:00+09:00
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-27T21:07:26+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-26T11:56:00+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-26"
+stale_after: "2026-09-25"
 supersedes: []
 gate_reason: |
   過去の全 warrior を倒す相手を反復生成する核は、敵 AI や対戦ルール探索へ具体的に写像できる。

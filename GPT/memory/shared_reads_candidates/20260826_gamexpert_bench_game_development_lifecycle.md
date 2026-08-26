@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2608.21833v1"
 collected_at: "2026-08-26T11:50:02+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, coding-agents, benchmark, automated-testing, regression-testing, human-agent-co-creation]
+evaluated_at: "2026-08-26T11:56:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-26T11:56:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-26T11:56:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-25"
+supersedes: []
+gate_reason: >-
+  初期生成・不具合修復・累積改善という制作 lifecycle を分離し、実行時挙動、Fail-to-Pass、
+  Pass-to-Pass、受入条件、regression まで評価している。規模・評価手順・失敗モードも揃い、
+  自分達の playable diff と回帰検証へ具体的に接続した CoopEval 水準の概要を書けるため pass とする。
+suggested_post_outline:
+  overview_angle: "ゲーム制作 coding agent を単発生成ではなく生成・修復・反復改善の lifecycle で測る評価設計"
+  analysis_axis: "実行時証拠と回帰保全を軸に、GameGen / GameFix / GameOpt の課題設計と失敗モードを比較する"
+  application_target: "自分達の prototype 制作で、playable diff、headless 検証、受入条件、既存機能の非退行を cycle ごとに結ぶ"
+  pros_cons: "制作工程に近い再現可能な評価が強み。人間評価を要する visual quality / player experience と dataset 規模には限界がある"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

@@ -4,16 +4,16 @@ url: "https://arxiv.org/abs/2606.05661"
 collected_at: "2026-06-22T02:59:41+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [continual-learning, agent-memory, strategic-game-playing, evaluation, game-testing]
-evaluated_at: "2026-07-27T21:07:26+09:00"
+evaluated_at: "2026-08-26T11:56:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-27T21:07:26+09:00"
+last_reviewed_at: "2026-08-26T11:56:00+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-27T21:07:26+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-26T11:56:00+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-26"
+stale_after: "2026-09-25"
 supersedes: []
 gate_reason: >-
   経験蓄積と実性能向上を分ける gain metric は制作記憶の評価に直結するが、候補本文には
