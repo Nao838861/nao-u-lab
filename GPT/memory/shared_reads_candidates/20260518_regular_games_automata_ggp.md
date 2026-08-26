@@ -4,20 +4,20 @@ url: https://ojs.aaai.org/index.php/AAAI/article/view/40203
 collected_at: 2026-05-18T05:59:17+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [general-game-playing, rules, automata, game-ai, toolchain]
-evaluated_at: "2026-07-28T05:21:25+09:00"
+evaluated_at: "2026-08-27T02:51:28+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-07-28T05:21:25+09:00"
+last_reviewed_at: "2026-08-27T02:51:28+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-28T05:21:25+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-27T02:51:28+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-27"
+stale_after: "2026-09-26"
 supersedes: []
 gate_reason: |-
-  有限オートマトンを核に高水準記述、forward model、可視化、benchmark、変換 debugger を同じ系へ接続する着想は、headless test と agent playtest に具体的に効く。
-  ただし現候補は abstract の速度優位主張だけで、対象ゲーム、比較条件、数値、記述例、変換制約がなく、評価の中身を約4000字で説明できないため本文確認まで保留する。
+  再評価でも、有限オートマトンを核に記述、forward model、可視化、benchmark、debugger を接続する手法は、headless test と agent playtest に具体的に適用できる。
+  一方、候補内には対象ゲーム、比較条件、速度差の数値、記述例、変換制約がなく評価の中身を約4000字で説明できないため、AAAI 本文確認まで保留する。
 
 ---
 

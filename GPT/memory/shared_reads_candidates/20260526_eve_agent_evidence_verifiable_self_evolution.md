@@ -4,20 +4,20 @@ url: https://arxiv.org/abs/2605.22905
 collected_at: 2026-05-26T19:52:28+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent, evaluation, self-evolution, evidence, game-testing]
-evaluated_at: 2026-07-28T07:38:04+09:00
+evaluated_at: "2026-08-27T02:51:28+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-07-28T07:38:04+09:00"
+last_reviewed_at: "2026-08-27T02:51:28+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-28T07:38:04+09:00"
-stale_after: "2026-08-27"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-27T02:51:28+09:00"
+stale_after: "2026-09-26"
 supersedes: []
 next_action: revise_or_research
 gate_reason: |-
-  evidence span と marginal accuracy gain を使う中核は明確で、プレイログ根拠付きの自己改善へ具体的に接続できる。
-  ただし候補メモには実験設定、比較対象、定量結果、失敗例がなく、論文の評価節を補うまで CoopEval 水準には届かない。
+  再評価でも、evidence span と marginal accuracy gain を使う中核は明確で、プレイログ根拠付きの自己改善へ具体的に接続できる。
+  ただし候補メモには実験設定、比較対象、定量結果、失敗例がなく、推測なしに CoopEval 水準へ展開できないため論文の評価節確認まで保留する。
 
 ---
 

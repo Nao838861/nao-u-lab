@@ -4,20 +4,21 @@ url: "https://gdcvault.com/play/1035941/Putting-the-Friends-in-Friendslop"
 collected_at: "2026-08-20T20:46:03+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, postmortem, indie, co-op, game-jam, production, burnout]
-evaluated_at: "2026-08-20T20:50:14+09:00"
+evaluated_at: "2026-08-27T02:53:45+09:00"
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-08-20T20:50:14+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-08-20T20:50:14+09:00"
-next_action: revise_or_research
-stale_after: "2026-09-19"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-27T02:53:45+09:00"
+last_decision: failed
+evidence: "group_handoff:gha-27e2337a1499e5f4; terminal:memory/shared_reads_candidates/20260728_peak_friendslop_game_jam_studio_culture.md: canonical URL https://gdcvault.com/play/1035941/Putting-the-Friends-in-Friendslop; status postponed; public overview only; memory/shared_reads_candidates/20260820_peak_friendslop_rapid_development.md: same canonical URL and same GDC session; status postponed; no distinct source material; reason:同一 GDC Vault canonical URL の同一講演で題材差と資料差がなく、公開 overview だけでは制作工程と評価証拠も不足するため閉じる"
+next_action: none
+stale_after: "2026-09-26"
 supersedes: []
 gate_reason: |-
-  GDC 講演の問題設定、対象者、takeaway は抽出できるが、現 candidate は講演ページの紹介文に留まり、短期制作の工程、判断、失敗、burnout 抑制策の具体像と評価証拠がない。
-  ゲームジャム型制作を自分達の短期 prototype cycle へ適用する題材性は高いものの、現材料だけでは重要要素を満たす約4000字の概要を推測なしに構成できないため、講演内容の一次確認まで保留する。
+  同一 GDC Vault canonical URL を持つ sibling と題材・資料が完全に重複し、独立 candidate として残す根拠がない。
+  公開 overview だけでは制作工程、失敗、burnout 対策の評価証拠も不足するため、duplicate group として投稿候補を閉じる。
+duplicate_reason: failed_duplicate_of_terminal_sibling
 ---
 
 ## raw_excerpt

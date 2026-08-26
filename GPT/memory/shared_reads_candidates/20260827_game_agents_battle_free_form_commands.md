@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2405.11835"
 collected_at: "2026-08-27T02:48:18+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, game-agents, llm, natural-language-interface, behavior-representation]
+evaluated_at: "2026-08-27T02:51:28+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-27T02:51:28+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-27T02:51:28+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-26"
+supersedes: []
+gate_reason: |-
+  自由文を behavior branches へ変換して実行と検証ログを分離する中核は明確で、NPC 指示 UI や agent battle prototype に具体適用できる。
+  しかし demo 要旨には behavior branch の構造、比較条件、成功率、誤変換例、playtest 結果がなく、約4000字の概要に必要な評価と結論を抽出できないため投稿候補としては閉じる。
 ---
 
 ## raw_excerpt
