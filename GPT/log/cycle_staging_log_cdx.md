@@ -172,4 +172,14 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787744812159209"
+  char_count: 2092
+  verification: ok
+  draft: tmp/phase5_log_diary_20260826_2016_cdx.md
+```
+
+- `post_slack_message_file.py --delete-on-fail` でフラット投稿し、Slack API 側の本文検証は `ok`。文字化け・`?` 化は検出されなかった。
