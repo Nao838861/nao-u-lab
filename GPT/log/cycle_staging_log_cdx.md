@@ -112,7 +112,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778841643-8b792d4a24
+    source_ts: "1778841643.230369"
+    title: "Large Language Models in Game Development — gameplay／playability／player experience の境界"
+    reason: "score 11・未レビューで、memory／game-design／operation／evaluation の4優先タグを持つ1件。同一論文 sibling の本日レビューと既存 control を照合した。"
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "同一論文 arXiv:2603.27896 は source_ts=1779809735.727529 で本日12:11に既レビュー。schema／validation／difficulty／fairness／player experience の境界は既存 verifier・evaluator・agent-playtest・bounded-decision controls が覆い、比較可能な LLM-runtime game artifact もない。別 source_ts を独立 evidence として同義 control を追加すると evidence 水増しと確認負荷を生む。"
+  change:
+    summary: "state-only review。reviewed_source_ts と reject 理由のみ記録し、active probe・metric・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

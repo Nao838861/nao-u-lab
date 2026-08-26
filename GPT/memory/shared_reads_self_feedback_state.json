@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-26T12:11:56+09:00",
+  "updated_at": "2026-08-26T14:20:40+09:00",
   "reviewed_source_ts": [
+    "1778841643.230369",
     "1779809735.727529",
     "1779887564.839849",
     "1787691599.598069",
@@ -24892,6 +24893,54 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、probabilistic生成をdeterministic mechanicsへ封じる局所有用性、developer perspectiveに限られる証拠限界、既存verifier／evaluator／agent-playtest／bounded-decision controlsとの大幅な重複、比較artifact不在とactive probe増殖riskに基づくreject理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-26T14:20:40+09:00",
+      "selected": {
+        "id": "sr-1778841643-8b792d4a24",
+        "source_ts": "1778841643.230369",
+        "title": "Large Language Models in Game Development — gameplay／playability／player experience の境界",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、memory・game-design・operation・evaluation の4優先タグを持つ候補から1件だけ選んだ。LLM 出力を game rule へ接続した時に correctness、difficulty、fairness、player experience を分ける知見が、直後の Phase 4a または次の game prototype に新しい判断差を作るか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録は raw で確認できなかった。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、non_redundancy と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。本文は Wizdom Run と Sena の2教育プロジェクトをもとに、LLM 出力が mana、boss 進行、scenario 判断へ接続されると、生成誤りが文章品質ではなく game state、difficulty、公平性、信頼を壊すと示す。schema、validation、fallback、difficulty calibration、correctness を分離する行動へ変換しやすいため actionability は3とした。一方、7学生・2事例の developer perspective で independent player evaluation がなく evidence は2、現在の playable artifact は LLM runtime integration を扱わず直後の Phase 4a も実 consumer ではないため relevance は2。同一論文 arXiv:2603.27896 は source_ts=1779809735.727529 として本日12:11に既にレビュー済みで、そのレビューが probe-20260610-structural-semantic-verifier-boundary、probe-20260609-local-constraint-global-evaluator-split、probe-20260615-plg-evaluation-claim-fit、probe-20260607-designer-question-agent-playtest、probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation、probe-20260710-llm-bounded-replanning-decision-layer への重複を確認しているため non_redundancy は0。active_probes は327件あり、同一 work の別 source_ts から同義 control を増やすと evidence の水増しと確認負荷を生むため risk_control は1とした。次回行動は、同一 work sibling を独立 evidence と数えず既存 controls を必要な分だけ選ぶことで足りる。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1778841643-8b792d4a24.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1778841643.230369",
+        "memory/shared_reads_self_feedback_state.json#source_ts=1779809735.727529",
+        "https://arxiv.org/abs/2603.27896"
+      ],
+      "existing_controls": [
+        "probe-20260610-structural-semantic-verifier-boundary",
+        "probe-20260609-local-constraint-global-evaluator-split",
+        "probe-20260615-plg-evaluation-claim-fit",
+        "probe-20260607-designer-question-agent-playtest",
+        "probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation",
+        "probe-20260710-llm-bounded-replanning-decision-layer"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、同一論文 sibling の既レビュー、既存 verifier／evaluator／agent-playtest／bounded-decision controls との完全重複、player evidence 不足、active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
