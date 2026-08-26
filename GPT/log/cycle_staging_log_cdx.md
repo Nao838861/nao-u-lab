@@ -99,7 +99,20 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260827_thats_bs_self_customizable_difficulty_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787774575827039
+    char_count: 3690
+skipped: []
+review:
+  decision: posted
+  verdict: partial_adoption
+  rationale: "死亡後の障害別救済、知覚可能な三段階への反復、削除後 softlock という固有内容を抽出できた。少人数の質的観察で定量比較がない限界を明記し、一障害での event log + 人間 playtest probe に採用範囲を限定した。"
+  policy_check: pass
+  slack_verification: ok
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
