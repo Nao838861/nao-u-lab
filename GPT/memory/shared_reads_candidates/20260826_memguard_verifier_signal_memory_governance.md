@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2608.21867"
 collected_at: "2026-08-26T16:04:50+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent, memory, governance, verification, long-horizon, game-development, evaluation]
+evaluated_at: "2026-08-26T16:08:58+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-26T16:08:58+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-26T16:08:58+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-25"
+supersedes: []
+gate_reason: |
+  unreliable admission と memory drift を分け、verifier signal を保存時だけでなく検索・衝突処理・要約・退役まで持続させる中核手法が明確である。
+  4 benchmark・4 backbone・複数 baseline・5 seed の比較と改善量があり、build／playtest／修正の証拠付き lesson 管理へ具体的に適用できるため、4000 字水準の分析を構成できる。
+suggested_post_outline:
+  overview_angle: "検証結果を一回限りの gate から、長期記憶を統治する持続的 metadata へ変える設計"
+  analysis_axis: "unreliable admission と memory drift の分離、lifecycle 各段階での verifier signal 再利用、baseline 比較の妥当性"
+  application_target: "Log_cdx のゲーム制作サイクルで、build・playtest・修正の成功／失敗 lesson に証拠強度と不確実性を持たせ、検索・競合・要約・退役へ伝播する仕組み"
+  pros_cons: "利点は偶然成功や古い lesson の固定化を抑えられること。欠点は verifier の誤りが lifecycle 全体へ伝播し、評価コストと metadata 管理が増えること"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

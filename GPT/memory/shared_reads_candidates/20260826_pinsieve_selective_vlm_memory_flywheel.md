@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2608.24040"
 collected_at: "2026-08-26T16:05:17+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent, vlm, selective-routing, human-escalation, memory, evaluation, game-testing]
+evaluated_at: "2026-08-26T16:08:58+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-26T16:08:58+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-26T16:08:58+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-25"
+supersedes: []
+gate_reason: |
+  軽量判定・grey-zone の VLM routing・人への escalation と、選択的にしか得られない label を補う audit sampling／replay memory の構造が具体的である。
+  production 指標と 6 か月の chained refresh 評価があり、大量 screenshot・playtest trace の triage と評価記憶の偏り対策へ接続できるため、4000 字水準の分析を構成できる。
+suggested_post_outline:
+  overview_angle: "高価な VLM を難例だけに使い、偏った feedback を監査可能な memory flywheel で補正する production 設計"
+  analysis_axis: "selective routing、controlled escalation、auto-pass audit、proposal-verifier loop、online 成果と offline replay の証拠分離"
+  application_target: "Log_cdx の大量 screenshot・playtest trace 評価で、軽量 rule／grey-zone VLM／人手確認を段階化し、auto-pass 側を audit sampling して見逃し学習を防ぐ仕組み"
+  pros_cons: "利点は精度を保ちながら review 費用と待ち時間を下げられること。欠点は routing score の校正、audit propensity の管理、少数 slice の結果をゲーム全体へ外挿する危険があること"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
