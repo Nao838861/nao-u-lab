@@ -100,7 +100,71 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index 参照 87 ID を atoms.jsonl と照合し、欠落 0 件を確認。validate_memory_index.py も OK。"
+  - "MEMORY.md を UTF-8 明示読みし、代表語は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false。評価軸は文字化けではなく literal 不在で、source 再生成対象にはしなかった。"
+  - "atoms.jsonl / per-file atom / index.jsonl は各 2,982 件、mirror drift・parse error・content conflict は 0 件。duplicate cluster 45 群は既存 canonical overlay と整合。"
+  - "stale だった atom title 派生 index を再生成。title_quality_audit=905 rows / 682 groups、title_cluster_index=786 clusters / 936 members とし、両方の --check を通過。"
+  - "memory/raw/ の最終更新 30 日超は 242 files。raw provenance として参照中の Slack archive / web research 原文を含むため、この cycle では移動せず archive 候補の確認だけに留めた。"
+  - "candidate lifecycle は posted=718 / ready_to_post=9 / postponed=208 / failed=516 / needs_review=0。terminal canonical=108 groups、open duplicate=29 groups（mixed=25 / all_open=4）へ再生成。"
+  - "stale_after 到来済み open candidate 4 件は、2 件ずつ既存 deferred group lease gha-e6d4d4b5a37a0808 / gha-2313a247c62a9028 に包含され、retry_after=2026-09-19T14:08:16+09:00 まで explicit_keep。候補単位の再投入は 0 件。"
+  - "Slack inbox は directives=0 pending / broadcasts=0 pending。完了根拠のない handled 更新は行わなかった。"
+  - "due probe lease は 0 件。probe lifecycle validate は errors=0。"
+issues:
+  - id: ISS-4A-20260826-01
+    description: "mojibake health audit が、実際の U+FFFD source corruption と、ゲーム本文中の意図的な UI 表記 `???` を同じ suspect warning に畳んでいる。source_file_status と表示・tooling status を機械的に区別できない。"
+    severity: medium
+    evidence: "tools/atom_quality.py: mojibake_score の replacement_count / run_count 共通 suspect 判定; memory/raw/slack_archive/shared-reads.jsonl:492 と memory/atoms/2026-04/sr-1776127289-4d9239b255.md に U+FFFD; memory/atoms/2026-04/gr-1777083728-44d444ab7a.md の `???がヘッダに出る` は Nao_u 原文の有効な UI 表記"
+    source_file_status: "UTF-8 strict read は成功。sr-1776127289-4d9239b255 は raw source と dual-written atom の双方に U+FFFD が保存された真の source corruption。gr-1777083728-44d444ab7a は U+FFFD なしで原文正常。"
+    display_or_tooling_status: "memory_health.py は両 atom を同一の `mojibake suspect atoms 2件` warning として表示し、true corruption / semantic question-run を分離しない。"
+    why_blocks_game_memory: "ゲーム feedback では `???` のような UI 記号が正当な観測として現れるため、false positive が真の破損 title を埋もれさせる。逆に一括修復すると教師 feedback を改変する危険があり、次制作での正確な recall と監査判断を弱める。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260826-01
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  receipt: null
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  deferred_group_leases:
+    - id: gha-e6d4d4b5a37a0808
+      group_key: "joint agent memory and exploration learning via novelty signals"
+      candidate_count: 2
+      action: explicit_keep
+      retry_after: "2026-09-19T14:08:16+09:00"
+    - id: gha-2313a247c62a9028
+      group_key: "an exploration of collision based enemy morphology generation"
+      candidate_count: 2
+      action: explicit_keep
+      retry_after: "2026-09-19T14:08:16+09:00"
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
