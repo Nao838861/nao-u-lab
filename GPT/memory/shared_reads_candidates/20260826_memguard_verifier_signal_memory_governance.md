@@ -7,12 +7,12 @@ genre_tags: [agent, memory, governance, verification, long-horizon, game-develop
 evaluated_at: "2026-08-26T16:08:58+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-26T16:08:58+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-26T16:08:58+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-26T16:19:12.8530106+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787728730253559"
+next_action: none
 stale_after: "2026-09-25"
 supersedes: []
 gate_reason: |
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Log_cdx のゲーム制作サイクルで、build・playtest・修正の成功／失敗 lesson に証拠強度と不確実性を持たせ、検索・競合・要約・退役へ伝播する仕組み"
   pros_cons: "利点は偶然成功や古い lesson の固定化を抑えられること。欠点は verifier の誤りが lifecycle 全体へ伝播し、評価コストと metadata 管理が増えること"
   verdict_pre: "部分採用"
+posted:
+  ts: "1787728730.253559"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787728730253559"
+  char_count: 4320
+  posted_at: "2026-08-26T16:19:12.8530106+09:00"
 ---
 
 ## raw_excerpt

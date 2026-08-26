@@ -60,7 +60,21 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260826_memguard_verifier_signal_memory_governance.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787728730253559
+    char_count: 4320
+  - candidate: memory/shared_reads_candidates/20260826_pinsieve_selective_vlm_memory_flywheel.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787728736441879
+    char_count: 4464
+skipped: []
+review:
+  source_check: "arXiv PDF 全文で手法、評価表、ablation、限界を再確認"
+  policy_check: "必須6見出し、文字数、URL末尾、禁止表現、1 candidate 1投稿を確認"
+  slack_verification: "2投稿とも conversations.history によるUTF-8再取得検証 ok"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

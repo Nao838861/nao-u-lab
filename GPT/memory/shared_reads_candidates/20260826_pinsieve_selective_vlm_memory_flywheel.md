@@ -7,12 +7,12 @@ genre_tags: [agent, vlm, selective-routing, human-escalation, memory, evaluation
 evaluated_at: "2026-08-26T16:08:58+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-26T16:08:58+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-26T16:08:58+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-26T16:19:12.8530106+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787728736441879"
+next_action: none
 stale_after: "2026-09-25"
 supersedes: []
 gate_reason: |
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Log_cdx の大量 screenshot・playtest trace 評価で、軽量 rule／grey-zone VLM／人手確認を段階化し、auto-pass 側を audit sampling して見逃し学習を防ぐ仕組み"
   pros_cons: "利点は精度を保ちながら review 費用と待ち時間を下げられること。欠点は routing score の校正、audit propensity の管理、少数 slice の結果をゲーム全体へ外挿する危険があること"
   verdict_pre: "部分採用"
+posted:
+  ts: "1787728736.441879"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787728736441879"
+  char_count: 4464
+  posted_at: "2026-08-26T16:19:12.8530106+09:00"
 ---
 
 ## raw_excerpt
