@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-27T00:56:43+09:00",
+  "updated_at": "2026-08-27T03:01:54+09:00",
   "reviewed_source_ts": [
+    "1779889026.572709",
     "1787752001.500119",
     "1787743723.498909",
     "1787728736.441879",
@@ -776,6 +777,50 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-27T03:01:54+09:00",
+      "selected": {
+        "id": "sr-1779889026-2cd017fc42",
+        "source_ts": "1779889026.572709",
+        "title": "Gravity Well Echo Chamber Modeling With An LLM-Based Confirmation Bias Model",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューの候補を確認し、条件を満たす候補のうち datetime が最新だったため1件だけ選んだ。投稿履歴と多視点入力への反応を分ける観測案が、外部情報を取り込む定時サイクルの自己強化バイアスに既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、bias の観測には先に多視点入力への曝露経路が必要だという観測可能性の制約を示し、外部記事への初期反応と後続 synthesis を分ける行動へは変換できるため relevance・actionability は2とした。一方、投稿自身が本文 PDF を取得できず、confirmation bias の計算式、19 Reddit community の条件、baseline、検出指標、具体値を未確認と明記しているため evidence は1。さらに適用案の中心は Log／Mir／Ash の3インスタンス同期だが、現行 directive は他AIへの問いかけを停止しており、この運用前提は現在の consumer に直結しない。probe-20260606-context-diversity-pruning-gate は memory-heavy context と独立観測の分離を、probe-20260708-algorithmic-collusion-shared-prior-check は共有 prompt・memory・phase incentive による非独立な一致を、probe-20260608-premise-resistance-stale-context は古い前提と後続 evidence の照合を既に扱う。現在の staging には bias 値の before／after、独立した多視点曝露、初期反応と synthesis の比較 artifact がなく、直後の Phase 4a へ lease しても cleanup 判断差を固定できない。active_probes は327件あり、未検証の式、栄養偏り KPI、初期反応保存 schema を加えると観測負荷と既存 control の重複を増やすため non_redundancy・risk_control は1とした。一次本文と再現可能な比較 artifact を伴う別 atom が現れた場合は、その新しい evidence を独立に評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1779889026-2cd017fc42.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779889026.572709",
+        "https://arxiv.org/abs/2509.03832"
+      ],
+      "existing_controls": [
+        "probe-20260606-context-diversity-pruning-gate",
+        "probe-20260708-algorithmic-collusion-shared-prior-check",
+        "probe-20260608-premise-resistance-stale-context"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、観測可能性の局所有用性、本文・指標未確認、停止済み3インスタンス前提、既存 diversity／shared-prior／stale-premise controls との重複、比較 artifact 不在に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-27T00:56:43+09:00",
       "selected": {

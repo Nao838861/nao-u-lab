@@ -109,7 +109,35 @@ slack_posted: false
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779889026-2cd017fc42
+    source_ts: "1779889026.572709"
+    title: "Gravity Well Echo Chamber Modeling With An LLM-Based Confirmation Bias Model"
+    reason: "source が slack_api/shared-reads、score 10、未レビューの候補を確認し、条件を満たす候補のうち datetime が最新だったため1件だけ選んだ。投稿履歴と多視点入力への反応を分ける観測案が、外部情報を取り込む定時サイクルの自己強化バイアスに既存 control と異なる小さな判断差を作れるか確認した。Nao_u の明示評価はローカル raw では確認できなかった。"
+  scores:
+    relevance: 2
+    actionability: 2
+    evidence: 1
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "合計10で採用条件14に届かず、risk_control も必須閾値2未満。投稿自身が本文PDF未取得、計算式・baseline・19 community の具体指標未確認と明記し、適用案の中心も停止済みのLog／Mir／Ash同期前提である。既存のcontext-diversity、shared-prior、stale-premise controlsと重なり、現在のstagingには初期反応と後続synthesisを比較できるartifactがないため、probe／metric／lease／directiveを追加しない。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
