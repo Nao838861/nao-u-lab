@@ -55,7 +55,18 @@ unreviewed_intake_audit:
 - 判定根拠: 題材 seed と genre-form 属性を分離する中核、13ジャンル・5万例の構築、OOD／held-out genre 評価、genre-count ablation、結論まで抽出できる。ゲーム企画・ルール仕様・キャラクター設計を成果物別属性で生成・評価する probe に具体化できるため pass。ただし合成・filtering の偏りと game design 固有評価の詳細不足を限界として扱い、予備判定は部分採用。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260826_attribute_guided_genre_expansion.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787743723498909
+    char_count: 4209
+skipped: []
+```
+
+- 論文本体で data 構築、3 benchmark、dataset 比較、genre-count ablation、独立 judge、人手評価を確認した。
+- 最終判定は「部分採用」。game design 単独の成績と playable quality は未検証のため、大規模 SFT ではなく、題材 seed と artifact contract を分離する小規模 probe として適用する。
+- 投稿前 policy、禁止表現、URL 末尾、重複 preflight、投稿後の文字化け検証を通過。1 candidate を 1 回の `chat.postMessage` で投稿した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
