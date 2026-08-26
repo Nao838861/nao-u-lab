@@ -77,7 +77,35 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787721348-b9919fa02c
+    source_ts: "1787721348.368529"
+    title: "Confident at the moment of action — hidden-information game における belief miscalibration"
+    reason: "score 10 の未レビュー最新候補で優先6タグを持つ。belief・action・事後ground truthの分離が、既存controlsと異なる次回判断を生むか確認した。Nao_uの明示評価はrawで確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "合計14だが non_redundancy と risk_control が必須閾値2未満。belief probabilityと事後ground truthの対応は有用だが、既存のpartial-observation、overconfidence、human-calibration、memory-staleness、agent-attribution probesが中核判断を覆う。直後のPhase 4aにhidden-state trajectoryの比較artifactもなく、327件のactive probeへ同義controlを足す負荷が便益を上回るためstate-only reviewとした。"
+  change:
+    summary: "reviewed_source_tsとreject理由だけを記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

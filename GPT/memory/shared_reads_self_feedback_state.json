@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-26T14:20:40+09:00",
+  "updated_at": "2026-08-26T16:24:40+09:00",
   "reviewed_source_ts": [
+    "1787721348.368529",
     "1778841643.230369",
     "1779809735.727529",
     "1779887564.839849",
@@ -24941,6 +24942,53 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、同一論文 sibling の既レビュー、既存 verifier／evaluator／agent-playtest／bounded-decision controls との完全重複、player evidence 不足、active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-26T16:24:40+09:00",
+      "selected": {
+        "id": "sr-1787721348-b9919fa02c",
+        "source_ts": "1787721348.368529",
+        "title": "Confident at the moment of action — hidden-information game における belief miscalibration",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・agent・operation・evaluation の優先6タグをすべて持つ最新候補から1件だけ選んだ。行動時の自己申告 confidence、選択 action、事後 ground truth を分ける知見が、Codex の headless 評価または memory 判断に既存 probe と異なる小さな判断差を作るか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録は raw で確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14だが、non_redundancy と risk_control が必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、hidden-information game の各 ply で belief distribution と action を分け、終了後に復元した ground truth、候補数に応じた uniform baseline、Brier score、paired bootstrap confidence interval で比較する。完全評価した2 batchでは confidence 0.5以上の capture が合計1/62だけ正しく、capture時 Brierは matched uniform の3.8–15.9倍、静止盤面 screening は trajectory 内評価を28.4 point過大評価した。固定 opponent、実質1 seat、top-k elicitation、予測困難な shift timing、joint elicitation の干渉という限界も明記され、outcome・belief・action・well-formednessを分ける局所評価へ直接変換できるため relevance・actionability・evidence は3とした。一方、probe-20260707-agimaze-partial-observation-state-split は observation／inferred state／uncertainty／action use を、probe-20260609-agentic-overconfidence-bugfinding-calibration は事前予測と事後自己正当化を、probe-20260608-calibration-boundary-human-judgment は calibration可能領域と主観判断の境界を、probe-20260605-memory-staleness-current-evidence は高confidence premiseの現行evidence監査を、probe-20260605-agent-eval-attribution-split はopponent・scaffold・環境などの交絡を既に扱う。belief probability と事後ground truthの一対一ログは固有差だが、中核判断は既存controlsの組合せへほぼ吸収されるため non_redundancy は1。現在のstagingには hidden-state trajectory、belief distribution、事後ground truthを持つ比較artifactがなく、直後のPhase 4aはmemory cleanupで実consumerではない。active_probesは327件、pending leaseは0件であり、具体artifactなしに同義probeを追加すると判断差よりchecklist負荷とconfidence schemaの形骸化を増やすため risk_control は1とした。次の具体的なpartial-observation／hidden-state playtestで、既存5 controlsだけでは高confidence errorと偶然の成功を分離できない実例が出た時だけ再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787721348-b9919fa02c.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787721348.368529",
+        "memory/shared_reads_candidates/20260826_confident_at_action_belief_miscalibration.md",
+        "https://arxiv.org/abs/2608.24691v1"
+      ],
+      "existing_controls": [
+        "probe-20260707-agimaze-partial-observation-state-split",
+        "probe-20260609-agentic-overconfidence-bugfinding-calibration",
+        "probe-20260608-calibration-boundary-human-judgment",
+        "probe-20260605-memory-staleness-current-evidence",
+        "probe-20260605-agent-eval-attribution-split"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、belief／action／事後ground truth分離の局所有用性、既存partial-observation／overconfidence／calibration／staleness／attribution controlsとの大幅な重複、比較artifact不在、active probe増殖riskに基づくreject理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
