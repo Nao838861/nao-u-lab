@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2608.21439"
 collected_at: "2026-08-26T18:19:58+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, npc, world-model, state-representation, gameplay-generation]
+evaluated_at: "2026-08-26T18:23:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-26T18:23:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-26T18:23:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-25"
+supersedes: []
+gate_reason: |-
+  状態理解・意思決定・時間整合した制御・映像生成を分離する四層構成は、NPC 行動の実装・デバッグ・playtest の失敗切り分けへ具体的に適用できる。
+  ただし候補は一次要旨のみで、BOSS-140K の構成、baseline、pairwise comparison の条件、層別 ablation、失敗例や限界がなく、約4000字の概要を評価根拠つきで支えられない。
+  手法詳細・結果表・限界を一次本文から候補へ補強できるまで保留する。
 ---
 
 ## raw_excerpt
