@@ -247,4 +247,17 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787753474569059"
+  ts: "1787753474.569059"
+  char_count: 2187
+  verification: ok
+  thread_reply: false
+  source_file: "tmp/phase5_log_diary_20260826_2231_cdx.md"
+```
+
+- Phase 1–4 の staging だけを材料に、WMT の部分採用、Phase 3b の defer、`hard_corruption` / `ambiguous_question_run` 分離、未完事項と次サイクルへの接続を日記化した。
+- `post_slack_message_file.py --delete-on-fail` で UTF-8 ファイル投稿。Slack API 再取得検証は `ok`、U+FFFD・mojibake 検出なし。#log へのフラット投稿1件のみ。
