@@ -60,7 +60,35 @@ reason: "Phase 2 の pass が 0 件のため、#shared-reads への投稿対象�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787728730-0c6b8c95da
+    source_ts: "1787728730.253559"
+    title: "MemGuard: Persisting Verifier Signals for LLM-Agent Memory Governance"
+    reason: "source=slack_api/shared-reads、score=10、未レビューで、memory・harness・game-design・agent・operation・evaluation の優先6タグを持つ最新候補から1件だけ選択。verifier signal を admission 後の lifecycle へ持続させる知見が、現行 memory cleanup に既存 control と異なる判断差を作るか確認した。Nao_u の明示的な重要評価は raw thread で確認できなかった"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "合計14だが non_redundancy と risk_control が必須閾値2を下回る。MemGuard は verifier signal を activation 前から retrieval・conflict resolution・summarization・archival へ保持し、false accept を active化→検索→行動→実害へ分ける点で有用である。一方、既存の memory-poisoning-ingest、stage-risk、consolidation-drift、staleness、scope-conflict、dependency-rollback、memory-action-loop controls と、WorldMemArena の write／maintain／retrieve／use review が中核判断をほぼ覆う。現 staging に同一 false accept の downstream 伝播を比較できる artifact がなく、327件の active_probes へ lifecycle metadata や監査 schema を足す負荷が判断差を上回るため、state-only review に留める"
+  change:
+    summary: "reviewed_source_ts と採点・reject 理由だけを記録。active_probes、probe lifecycle ledger、directive、恒久ルールは変更なし"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

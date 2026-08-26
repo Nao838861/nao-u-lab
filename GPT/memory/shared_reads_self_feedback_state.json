@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-26T16:24:40+09:00",
+  "updated_at": "2026-08-26T18:29:06+09:00",
   "reviewed_source_ts": [
+    "1787728730.253559",
     "1787721348.368529",
     "1778841643.230369",
     "1779809735.727529",
@@ -24989,6 +24990,56 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、belief／action／事後ground truth分離の局所有用性、既存partial-observation／overconfidence／calibration／staleness／attribution controlsとの大幅な重複、比較artifact不在、active probe増殖riskに基づくreject理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-26T18:29:06+09:00",
+      "selected": {
+        "id": "sr-1787728730-0c6b8c95da",
+        "source_ts": "1787728730.253559",
+        "title": "MemGuard: Persisting Verifier Signals for LLM-Agent Memory Governance",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・agent・operation・evaluation の優先6タグを持つ最新候補から1件だけ選んだ。verifier signal を admission 後の retrieval・conflict resolution・summarization・archival まで保持し、false accept の active化・検索・行動・実害を分ける知見が、現在の per-atom／lifecycle 運用と直後の Phase 4a に既存 control と異なる小さな判断差を作るか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した thread reply は raw で確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14だが、non_redundancy と risk_control が必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文と arXiv 一次 abstract は、unreliable admission と memory drift を分け、reward・confidence・label・uncertainty を activation 前から retrieval・conflict resolution・summarization・archival へ持続させる。Terminal-Bench 2.0、SWE-Bench Verified、WebArena、Mind2Web、4 backbone、4 memory baseline と verifier-only control、5 seed の比較で全16条件の主要成功指標と平均 step が最良、ReasoningBank 比の最大改善が WebArena 7.9 point、Mind2Web 5.6 point、terminal／software engineering 2.4〜3.5 point と報告され、admission 後も verifier signal を使う行動へ具体化できるため relevance・actionability・evidence は3とした。一方、probe-20260517-memory-poisoning-ingest-check は弱い記憶の quarantine、probe-20260531-memory-stage-risk-classifier は ingestion／consolidation／retrieval の失敗段、probe-20260527-memory-consolidation-drift は再要約 drift、probe-20260605-memory-staleness-current-evidence は current evidence、probe-20260813-latticemind-conflict-state-scope は scope 付き conflict、probe-20260813-dependency-guided-memory-rollback は unsupported descendant、probe-20260604-memory-action-loop-evidence は retrieval 後の action 差を既に扱う。WorldMemArena の既レビューも write／maintain／retrieve／use lifecycle を同じ理由で見送っている。MemGuard 固有の false accept を active化→検索→行動→実害へ分ける監査は有用だが、中核判断は既存 controls の組合せへほぼ吸収されるため non_redundancy は1。現在の staging には誤った verifier signal が同一 memory item の downstream action を変えた比較 artifact がなく、直後の Phase 4a へ lease しても before／after 判断差を固定できない。active_probes は327件あり、論文が提案する lifecycle metadata や30〜50件比較を先に追加すると、verifier bias、schema／threshold 校正、二重正本、監査負荷を増やすため risk_control は1とした。次に同一 memory item の false accept が active化・検索・行動のどこまで伝播したか既存 controls で説明できない再現 artifact が出た時だけ、実害段階の1件監査として再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787728730-0c6b8c95da.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787728730.253559",
+        "memory/shared_reads_candidates/posted_drafts/20260826_memguard_verifier_signal_memory_governance_post.md",
+        "https://arxiv.org/abs/2608.21867v1"
+      ],
+      "existing_controls": [
+        "probe-20260517-memory-poisoning-ingest-check",
+        "probe-20260531-memory-stage-risk-classifier",
+        "probe-20260527-memory-consolidation-drift",
+        "probe-20260605-memory-staleness-current-evidence",
+        "probe-20260813-latticemind-conflict-state-scope",
+        "probe-20260813-dependency-guided-memory-rollback",
+        "probe-20260604-memory-action-loop-evidence",
+        "review source_ts=1783313059.907449: WorldMemArena"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、verifier signal を lifecycle 全体で保持する有用性、false accept の段階監査という固有差、既存 admission／drift／staleness／conflict／downstream-action controls との大幅な重複、比較 artifact 不在と active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
