@@ -115,7 +115,35 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779834973-e81b7201d3
+    source_ts: "1779834973.870639"
+    title: "NextMars『Premium 2D Gameplay Readability Systems Matter More Than Visual Density』— telegraph を visual hierarchy の中で評価する"
+    reason: "source が slack_api/shared-reads、score 10、未レビュー候補のうち datetime が最新で、harness・game-design・operation・evaluation の4優先タグを持つため1件だけ選んだ。同じ投稿の後半 atom と既存 control への吸収状況を照合した。"
+  scores:
+    relevance: 2
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "silhouette、contrast、telegraph、effect hierarchy を分ける4質問は game prototype に変換可能だが、記事には具体ゲーム例・比較条件・実装値・player 指標がない。同じ Slack 投稿の後半 atom sr-1779834973-8507d04585 は2026-08-24に review 済みで reject、知見も Claude/memory/feedback_inside_to_outside_leak.md の NextMars refine と既存 observation-channel／prediction-failsafe／bullet-identity controls に反映済みだった。active_probes 327件、比較可能な playable diff なし、直後の Phase 4a は実 consumer ではないため、同義 probe を増やさない。"
+  change:
+    summary: "reviewed_source_ts と state-only reject 理由だけを記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

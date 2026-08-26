@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-27T03:01:54+09:00",
+  "updated_at": "2026-08-27T05:07:12+09:00",
   "reviewed_source_ts": [
+    "1779834973.870639",
     "1779889026.572709",
     "1787752001.500119",
     "1787743723.498909",
@@ -777,6 +778,52 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-27T05:07:12+09:00",
+      "selected": {
+        "id": "sr-1779834973-e81b7201d3",
+        "source_ts": "1779834973.870639",
+        "title": "NextMars『Premium 2D Gameplay Readability Systems Matter More Than Visual Density』— telegraph を visual hierarchy の中で評価する",
+        "reason": "source が slack_api/shared-reads、score 10、未レビュー候補のうち datetime が最新で、harness・game-design・operation・evaluation の4優先タグを持つため1件だけ選んだ。decorative detail と interaction-critical signal、silhouette、telegraph、contained-scope pilot の4質問が、次の game prototype に既存 control と異なる判断差を作れるか確認した。Nao_u が本投稿を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、silhouette、contrast、telegraph、effect hierarchy など7要素と4質問を示し、v001 の予告線失敗を telegraph 自体ではなく visual hierarchy 崩壊として再診断するため relevance・actionability は2とした。一方、記事には具体ゲーム例、比較条件、実装値、player 指標がなく、本文自身も abstract な原則論で applicability test は読者側の責任と明記するため evidence は2に留めた。同じ Slack 投稿の後半 atom sr-1779834973-8507d04585 は2026-08-24に review 済みで、contained-scope pilot の事後正当化は reject 済みである。さらに知見は D:/AI/Nao_u_BOT/Claude/memory/feedback_inside_to_outside_leak.md の NextMars refine にすでに反映され、既存の observation-channel、prediction-failsafe、bullet-identity controls も可読性信号の区別を扱うため non_redundancy は0。現在 active_probes は327件で、staging に比較可能な playable diff や readability before／after がなく、直後の Phase 4a は実 consumer ではない。同じ4質問を別 control として追加すると重複確認負荷だけを増やすため risk_control は1とし、state-only reject で閉じる。",
+      "evidence_sources": [
+        "memory/atoms.jsonl#id=sr-1779834973-e81b7201d3",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779834973.870639",
+        "memory/shared_reads_self_feedback_state.json#review=sr-1779834973-8507d04585",
+        "D:/AI/Nao_u_BOT/Claude/memory/feedback_inside_to_outside_leak.md#refine-telegraph-は-inherently-悪ではない-2026-05-27-c247-nextmars-4軸目"
+      ],
+      "existing_controls": [
+        "review-sr-1779834973-8507d04585",
+        "probe-20260603-mechanic-observation-channel-gate",
+        "probe-20260616-short-horizon-prediction-failsafe",
+        "probe-20260626-bullet-identity-channel-ladder"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、同一投稿の後半 atom が review 済みであること、Claude 側正本と既存 readability controls に吸収済みであること、比較可能な game artifact 不在に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-27T03:01:54+09:00",
       "selected": {
