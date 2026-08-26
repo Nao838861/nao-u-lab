@@ -69,7 +69,35 @@ skipped: []
 - 投稿前 review: 必須6項目・順序・URL末尾・禁止表現・candidate 固有性を確認。本文4,464字（末尾改行除外）で policy pass。`chat.postMessage` 1回、thread 返信なし。Slack 再取得検証 `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787743723-19bf8bd14f
+    source_ts: "1787743723.498909"
+    title: "Scaling Creative Writing Beyond Story-Centric Data with Attribute-Guided Genre Expansion"
+    reason: "score 12・未レビュー・優先5タグの最新候補。題材 seed と成果物 contract の分離が次のゲーム企画・仕様・prototype 到達判断を小さく変えるか確認した。Nao_u の明示評価 reply は raw で未確認。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "既存の genre skeleton／theme slot contract／benchmark 目的整合／structural-semantic verifier と大幅に重なる。直後の Phase 4a には同一 seed・model・token budget で複数成果物と playable diff 到達率を比較できる trigger artifact がなく、327件の active probe へ追加する確認負荷が判断差を上回るため、risk_control が採用閾値未満。次の具体的 game-design artifact で既存4 controlsだけでは topic diversity と artifact-specific compliance を分けられない時に、paired comparison 1件として再評価する。"
+  change:
+    summary: "reviewed state と defer 理由のみ更新。active_probes・ledger・directive・恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

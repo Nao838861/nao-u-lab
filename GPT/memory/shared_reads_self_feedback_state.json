@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-26T20:32:55+09:00",
+  "updated_at": "2026-08-26T22:51:08+09:00",
   "reviewed_source_ts": [
+    "1787743723.498909",
     "1787728736.441879",
     "1787728730.253559",
     "1787721348.368529",
@@ -25087,6 +25088,52 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、selective routing／auto-pass blind audit の局所有用性、既存 verifier／bounded-decision／feedback-route／observability controls との大幅な重複、比較 artifact 不在、active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-26T22:51:08+09:00",
+      "selected": {
+        "id": "sr-1787743723-19bf8bd14f",
+        "source_ts": "1787743723.498909",
+        "title": "Scaling Creative Writing Beyond Story-Centric Data with Attribute-Guided Genre Expansion",
+        "reason": "source が slack_api/shared-reads、score 12、未レビューで、memory・harness・game-design・operation・evaluation の優先5タグを持つ最新候補から1件だけ選んだ。物語量の追加ではなく、題材 seed と成果物固有の構造・機能・書式を分離し、仕様密度を変えて生成・評価する知見が、次のゲーム企画・ルール仕様・prototype 到達判断に既存 control と異なる小さな差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した thread reply は raw で確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14だが、risk_control が採用必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、topic seed と artifact contract を分離し、13 genre・5万 pair、3 base model、外部2 benchmark、650件の内部 test、genre-count ablation、独立 judge、人手50件を示す。形式遵守、実装準備度、構造的多様性、playable diff 到達率を分離して story-first baseline と比べる行動へ直接変換できるため relevance・actionability・evidence は3とした。一方、probe-20260603-genre-skeleton-pressure-budget は固定内容ではなく invariant と variation knob への翻訳を、probe-20260620-crawllm-theme-slot-contract は固定 gameplay contract と編集可能 slot の分離を、probe-20260718-benchmark-purpose-variable-alignment は外部指標と自前判断の変数整合を、probe-20260610-structural-semantic-verifier-boundary は形式妥当性と game-rule／player-facing 妥当性の分離を既に扱う。本投稿固有の属性数0・半数・全数比較は有用だが、現在の staging には同一 seed から企画書・ルール仕様・character design を作り、story-first baseline と playable diff 到達率まで比較できる具体 artifact がない。直後の Phase 4a を名目 consumer にすると適用対象のない lease になる。active_probes は327件あり、既存4 controls の組合せで表現できる判断へ属性表・複数 validator・paired run を追加すると、判断差より checklist と評価負荷が増えるため non_redundancy と risk_control は1とした。次の具体的な game-design artifact で、既存4 controlsだけでは topic diversity と artifact-specific compliance の採否を分けられない実例が出た時に、同一 seed・同一 model・同一 token budget の1 paired comparisonとして再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787743723-19bf8bd14f.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787743723.498909",
+        "memory/shared_reads_candidates/20260826_attribute_guided_genre_expansion.md",
+        "https://arxiv.org/abs/2608.13947v1"
+      ],
+      "existing_controls": [
+        "probe-20260603-genre-skeleton-pressure-budget",
+        "probe-20260620-crawllm-theme-slot-contract",
+        "probe-20260718-benchmark-purpose-variable-alignment",
+        "probe-20260610-structural-semantic-verifier-boundary"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、topic seed／artifact contract 分離の局所有用性、既存4 controlsとの重複、比較 artifact 不在、active probe 増殖 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
