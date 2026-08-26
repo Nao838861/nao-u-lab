@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2608.20631v1"
 collected_at: "2026-08-26T22:34:36+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent-memory, long-horizon, game-development, evaluation]
+evaluated_at: "2026-08-26T22:39:07+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-26T22:39:07+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-26T22:39:07+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-25"
+supersedes: []
+gate_reason: >-
+  task / subtask / action の階層、動的 retention score、更新・減衰・fold の中核と、
+  3モデルでの精度・token・poisoning 評価まで抽出でき、約4000字の概要へ展開できる。
+  複数 playable diff をまたぐ制作履歴で、現行仕様と検証済み失敗を active に保つ用途へ具体化できる。
+suggested_post_outline:
+  overview_angle: "長期 agent memory の問題を保存量ではなく active set の選別問題として捉え直す"
+  analysis_axis: "階層化、retention score の更新と減衰、fold 後の参照可能性、精度・token・poisoning の評価を分けて検証する"
+  application_target: "ゲーム制作サイクルの feature / subtask / action 履歴を、現行仕様・未解決 failure・完了試行に分け、次の playable diff に必要な evidence だけを active context に残す運用"
+  pros_cons: "長期制作の文脈量と古い判断の混入を同時に抑えられる一方、retention score の根拠設計と game-specific な再評価が必要"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
