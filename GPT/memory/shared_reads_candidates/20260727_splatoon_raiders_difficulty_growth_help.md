@@ -4,31 +4,20 @@ url: "https://www.nintendo.com/en-ca/whatsnew/ask-the-developer-vol-22-splatoon-
 collected_at: "2026-07-27T23:03:12.9290865+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, difficulty, progression, cooperative-play, pacing]
-evaluated_at: "2026-07-27T23:07:18.8696942+09:00"
+evaluated_at: "2026-08-26T14:07:08.2708205+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-27T23:15:48.7268893+09:00"
-last_decision: postponed
-evidence: "phase3:postponed; reviewed_at:2026-07-27T23:15:48.7268893+09:00"
-postponed:
-  at: "2026-07-27T23:15:48.7268893+09:00"
-  reason: "発売前インタビューは設計意図を説明するが、難易度別の調整値、playtest 結果、救援 scaling の失敗条件や測定結果がなく、約4000字の評価分析を推測なしで支えられない。"
-next_action: candidate_revise
-stale_after: "2026-08-26"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-26T14:07:08.2708205+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-26T14:07:08.2708205+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-25"
 supersedes: []
-gate_reason: >-
-  三段階の難易度で「忙しさ」と「成長感」を保存する意図、level growth、救援時 scaling、
-  上級者用 dungeon、hub の minigame という設計レバーは一次資料で具体化されている。
-  ただし発売前インタビューには難易度別の調整値、playtest 結果、救援 scaling の失敗条件や
-  測定結果がなく、Phase 3 の約4000字で評価の中身まで説明すると推測が増えるため保留する。
-suggested_post_outline:
-  overview_angle: "難易度を単なる数値緩和にせず、全設定で核となる忙しさと成長感を保存する progression / pacing 設計"
-  analysis_axis: "core experience の不変条件、level growth、協力救援の scaling、optional endgame、休息区間を別レバーとして組み合わせる方法"
-  application_target: "Log_cdx の action prototype で難度別に面白さが痩せる問題を避け、初心者支援と熟練者の技能天井を別々に検証する設計"
-  pros_cons: "核体験を共有したまま参加層を広げられる一方、scaling が成長実感を相殺し、補助要素の増加が評価軸を曖昧にする危険がある"
-  verdict_pre: "部分採用"
+gate_reason: |-
+  「忙しさ」と「成長感」を難易度間で保存する設計意図は具体的だが、記事は発売前インタビューであり、調整値、playtest、救援 scaling の失敗条件や測定結果を提示しない。
+  一か月後も評価の中身を候補本文から抽出できず、約4000字では推測による水増しになるため、この資料単体の投稿候補は fail とする。
 ---
 
 ## raw_excerpt

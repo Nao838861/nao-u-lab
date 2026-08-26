@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2608.24691v1"
 collected_at: "2026-08-26T14:03:52+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, hidden-information, agent-evaluation, playtesting, calibration]
+evaluated_at: "2026-08-26T14:07:08.2708205+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-26T14:07:08.2708205+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-26T14:07:08.2708205+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-25"
+supersedes: []
+gate_reason: |-
+  hidden state の確率申告と行動を分離し、終了後の ground truth、2 batch、62 capture、calibration deficit、4構成と deliberation budget の差まで評価内容と限界を抽出できる。
+  AI playtester の勝敗・合法手・完走率に belief calibration を加える具体的な計測設計へ直結し、約4000字で手法・結果・適用条件を固有に説明できるため pass とする。
+suggested_post_outline:
+  overview_angle: "勝てる agent でも hidden state の信念は壊れ得ることを、行動時 confidence と事後 ground truth の分離で測る"
+  analysis_axis: "outcome-only 指標が見逃す belief miscalibration、calibration deficit の集中、model と deliberation budget の交絡、sample size の限界"
+  application_target: "Log_cdx の AI playtester で observation・belief distribution・action・後日確定する ground truth を別ログにし、勝敗や完走率と並列評価する probe"
+  pros_cons: "内部状態の破綻を結果指標より早く検出できる一方、信念申告が可能な対象に限られ、申告自体が行動を変える可能性と小標本の不確実性がある"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

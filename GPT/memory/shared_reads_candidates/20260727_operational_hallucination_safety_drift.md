@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2607.18366v1"
 collected_at: "2026-07-27T02:31:13+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent, evaluation, long-horizon, game-development, playtesting]
-evaluated_at: "2026-07-27T02:45:00+09:00"
+evaluated_at: "2026-08-26T14:07:08.2708205+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-27T02:45:00+09:00"
+last_reviewed_at: "2026-08-26T14:07:08.2708205+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-27T02:45:00+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-26T14:07:08.2708205+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-26"
+stale_after: "2026-09-25"
 supersedes: []
 gate_reason: |-
-  safety drift・operational hallucination・Action-Aware Supervision Layer は長時間 playtest agent の監視へ具体的に適用できる。
-  ただし候補本文に task 数、対象モデル、指標定義、モデル別の違反率・livelock 率がなく、評価の中身を約4000字で検証可能に説明できないため postpone とする。
+  declaration–action gap と livelock は長時間 playtest agent の監視へ直接適用できるが、候補本文には task 数、対象モデル、指標定義、モデル別の違反率・livelock 率がない。
+  supervision layer の事後 simulation も定量条件を検証できず、約4000字の評価分析に必要な証拠が不足するため postpone を継続する。
 ---
 
 ## raw_excerpt

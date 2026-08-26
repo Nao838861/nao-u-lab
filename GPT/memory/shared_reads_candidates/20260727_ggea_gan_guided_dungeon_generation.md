@@ -4,29 +4,20 @@ url: "https://doi.org/10.1016/j.asoc.2026.115962"
 collected_at: "2026-07-27T04:47:11.6071047+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-generation, dungeon-generation, evolutionary-computation, level-design]
-evaluated_at: "2026-07-27T04:52:35+09:00"
+evaluated_at: "2026-08-26T14:07:08.2708205+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: pass
+gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-27T05:01:39+09:00"
+last_reviewed_at: "2026-08-26T14:07:08.2708205+09:00"
 last_decision: postponed
-evidence: "Phase 3 final review: public primary source exposes the abstract and section snippets, but not the quantitative tables, training data, ablation details, or fitness weights needed for a standalone 3500-4500 character analysis."
-next_action: collect_full_text_or_author_manuscript
-stale_after: "2026-08-26"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-26T14:07:08.2708205+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-25"
 supersedes: []
-phase3_reason: |-
-  GAN prior、skeleton encoding、FI-2Pop の責務分離は有望だが、公開範囲では exact sample size、dataset、baseline settings、数値結果、ablation、composite fitness の重みを検証できない。
-  abstract の主張を一般的な PCG 解説で水増しすると candidate 固有の評価内容と失敗条件を欠くため、全文または著者 manuscript を得るまで投稿しない。
 gate_reason: |-
-  GAN prior、進行 skeleton、FI-2Pop による実行可能性回復という役割分離が明確で、比較対象、収束、外部評価、expressive range まで結論を追える。
-  生成レベルを大域形状・進行保証・局所探索に分ける実装 probe と、playability／多様性の評価軸へ直接落とせるため、4000 字級の分析に耐える。
-suggested_post_outline:
-  overview_angle: "生成モデルを完成品生成器ではなく、探索空間を偏らせる spatial prior として使う三段階設計"
-  analysis_axis: "prior・skeleton・FI-2Pop の責務分離が制御性、実行可能性、探索効率をどう両立させるか"
-  application_target: "ダンジョン試作で主要進行を固定し、局所形状だけを探索して playability と expressive range を比較する小規模 probe"
-  pros_cons: "学習済み形状知識と明示制約を併用できる一方、学習データ偏り、複合 fitness、計算量の再現確認が必要"
-  verdict_pre: "部分採用"
+  prior・skeleton・FI-2Pop の責務分離とゲーム制作への適用先は明確だが、候補本文には dataset、sample size、fitness 重み、baseline 設定、数値結果、ablation がない。
+  比較評価と失敗条件を検証可能な約4000字へ展開できないため、全文または著者 manuscript の確保まで postpone とする。
 ---
 
 ## raw_excerpt
