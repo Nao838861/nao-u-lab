@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2608.13947v1"
 collected_at: "2026-08-26T20:19:31+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, llm, creative-tools, dataset, evaluation]
+evaluated_at: "2026-08-26T20:22:59+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-26T20:22:59+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-26T20:22:59+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-25"
+supersedes: []
+gate_reason: >-
+  問題設定、attribute-guided expansion の中核、13ジャンル・5万例の構築、OOD／held-out genre 評価と
+  genre-count ablation、結論まで抽出できる。ゲーム企画文、ルール仕様、キャラクター設計を成果物固有の
+  属性で分離して生成・評価する運用へ具体化でき、限界も含めて約4000字の分析を構成できる。
+suggested_post_outline:
+  overview_angle: "story の量的拡張では得にくい形式遵守を、題材 seed と成果物形式の属性を分離して獲得する手法として説明する"
+  analysis_axis: "genre attributes による制御、合成データの quality filtering、OOD／held-out genre と genre-count ablation が何を切り分けたか"
+  application_target: "Log_cdx のゲーム企画・ルール仕様・キャラクター設計生成を、成果物別属性表と形式別評価セットに分ける小規模 probe"
+  pros_cons: "少数の人手属性から形式別データを拡張できる一方、強い LLM による合成と自動 filtering の偏り、game design 固有評価の詳細不足が残る"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
