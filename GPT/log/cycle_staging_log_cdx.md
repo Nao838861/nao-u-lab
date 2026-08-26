@@ -143,7 +143,106 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、index verifier と代表語 probe（記憶／ゲーム設計／敵パターン／評価軸）を通過。broken index entry は 0 件。"
+  - "atom mirror 2,978 件と duplicate cluster index 45 群を検証。mirror conflict 0、canonical overlay 適用後の未解決 content duplicate 0 件で、atom 本体は変更なし。"
+  - "shared-reads の mixed/open duplicate、stale triage、group-action sidecar を再生成。live lease を反映し、candidate handoff 1 件を冪等 enqueue。candidate 本体は変更なし。"
+  - "Slack directive / broadcast inbox は pending 0 件。完了根拠のない handled 更新は行っていない。"
+  - "30 日超の raw 242 件を年齢監査。active provenance／評価 evidence を含むため mtime だけでは移動せず、archive 変更は 0 件。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+memory_index_audit:
+  validator: pass
+  broken_link_count: 0
+  utf8_representative_terms:
+    記憶: found
+    ゲーム設計: found
+    敵パターン: found
+    評価軸: found
+atom_consistency:
+  raw_atoms: 2978
+  mirror_status: clean
+  mirror_conflicts: 0
+  duplicate_cluster_groups: 45
+  raw_normalized_content_duplicate_groups: 40
+  recall_visible_normalized_content_duplicate_groups: 3
+  effective_display_unresolved_groups: 0
+  contradiction_result: "機械的に検出可能な ID／mirror／同一内容 conflict は 0。semantic contradiction は自動推定していない。"
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 正常。sr-1776127289-4d9239b255 の置換文字は raw Slack archive にも存在する局所 source defect。gr-1777083728-44d444ab7a は原文中の意図的な ???。"
+  display_or_tooling_status: none
+  structural_issue: false
+raw_archive_audit:
+  older_than_30_days: 242
+  by_area:
+    web_research: 217
+    headless_eval: 16
+    slack_api: 6
+    slack_archive: 1
+    game_eval: 1
+    raw_root: 1
+  archived_count: 0
+  decision: "mtime だけでは provenance／再検証 evidence の保持価値を否定できず、自動 archive しない。"
+candidate_lifecycle:
+  total_with_lifecycle: 1446
+  counts:
+    posted: 714
+    ready_to_post: 9
+    postponed: 207
+    failed: 516
+    needs_review: 0
+  missing_stale_after: 3
+  overdue_open_total: 5
+  current_state_conflicts: 0
+title_duplicate_audit:
+  canonical_terminal_groups: 108
+  mixed_groups: 25
+  all_open_groups: 4
+  open_duplicate_group_count: 29
+  actionable_group_count: 0
+  note: "canonical terminal group は再評価 queue から除外。open group の stale 4 candidate は既存 deferred lease により抑止。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 5
+  stale_triage_queue_rows: 1
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 1
+  candidate_handoff_ids:
+    - cha-dec2929d8ecbbd36
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-dec2929d8ecbbd36
+    path: memory/shared_reads_candidates/20260727_balanced_game_design_mip.md
+    status: postponed
+    stale_after: "2026-08-26"
+    priority_reason: "duplicate group のない期限到来候補。Nash 均衡上の選択分布を近似 MIP で調整する着想は対戦 prototype に移植価値があるが、現候補は要旨中心で目的関数・solver augmentation・case study の評価条件が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
