@@ -7,14 +7,19 @@ genre_tags: [game-development, coding-agents, benchmark, automated-testing, regr
 evaluated_at: "2026-08-26T11:56:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-26T11:56:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-26T11:56:00+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-26T12:05:21+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787713507728929"
+next_action: none
 stale_after: "2026-09-25"
 supersedes: []
+posted:
+  ts: "1787713507.728929"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787713507728929"
+  char_count: 4246
+  posted_at: "2026-08-26T12:05:21+09:00"
 gate_reason: >-
   初期生成・不具合修復・累積改善という制作 lifecycle を分離し、実行時挙動、Fail-to-Pass、
   Pass-to-Pass、受入条件、regression まで評価している。規模・評価手順・失敗モードも揃い、
