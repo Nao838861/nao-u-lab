@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2504.11442v2"
 collected_at: "2026-08-27T00:48:32+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, agent-evaluation, multi-agent, text-games, playtesting]
+evaluated_at: "2026-08-27T00:51:55+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-27T00:51:55+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-27T00:51:55+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-26"
+supersedes: []
+gate_reason: >-
+  問題設定、57以上の環境、online play、TrueSkill、動的 social skill という着想とゲーム制作への適用先は具体的に抽出できる。
+  ただし現 candidate には評価設計、比較対象、定量結果、失敗条件がなく、評価の中身と結論を含む約4000字の概要を一次資料に基づいて書くには根拠が不足している。
 ---
 
 ## raw_excerpt
