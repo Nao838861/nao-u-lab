@@ -7,14 +7,19 @@ genre_tags: [agent-memory, long-horizon, game-development, evaluation]
 evaluated_at: "2026-08-26T22:39:07+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-26T22:39:07+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-26T22:39:07+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-26T22:46:48.2450126+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787752001500119"
+next_action: none
 stale_after: "2026-09-25"
 supersedes: []
+posted:
+  ts: "1787752001.500119"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787752001500119"
+  char_count: 4465
+  posted_at: "2026-08-26T22:46:48.2450126+09:00"
 gate_reason: >-
   task / subtask / action の階層、動的 retention score、更新・減衰・fold の中核と、
   3モデルでの精度・token・poisoning 評価まで抽出でき、約4000字の概要へ展開できる。

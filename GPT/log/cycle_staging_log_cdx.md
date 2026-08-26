@@ -56,7 +56,17 @@ unreviewed_intake_audit:
 - duplicate preflight は `continue`。Phase 2 開始時に posted-source / title canonical / open duplicate group の3 sidecarを再生成し、`--check` を通過済み。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260826_weighted_memory_tree_long_horizon_agents.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787752001500119
+    char_count: 4465
+skipped: []
+```
+
+- 最終判定: 投稿（判定は部分採用）。論文本体で task / subtask / action 階層、retention score、fold / suppress / reopen、GAIA / GAIA-Text、component ablation、memory-poisoning 評価、cross-conversation 未評価などの限界を再確認した。
+- 投稿前 review: 必須6項目・順序・URL末尾・禁止表現・candidate 固有性を確認。本文4,464字（末尾改行除外）で policy pass。`chat.postMessage` 1回、thread 返信なし。Slack 再取得検証 `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
