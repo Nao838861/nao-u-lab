@@ -64,7 +64,35 @@ result: "pass candidate がないため #shared-reads への投稿なし"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787805158-4ddcbe856b
+    source_ts: "1787805158.867599"
+    title: "Skill Issue: Are Skills Language-Invariant in LLMs? — 多言語 self-play による行動技能差の監査"
+    reason: "未レビューの最新 score 10 atom で、memory・harness・game-design・operation・evaluation の優先5タグを持つ。同一条件からの action-level policy drift が既存 control と異なる次回行動を作るか確認した。"
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "大規模 self-play と reasoning language 介入は強い証拠だが、source_ts=1785096049.977699 の The Shibboleth Effect review が locale-only の action-level policy drift をすでに扱い、固定変数・評価版境界・replayable trace の既存3 controlsもある。今回の Phase 4a には英日 NPC／play-agent の比較 artifact がなく、新規 probe は判断差より確認負荷を増やすため採用しない。"
+  change:
+    summary: "reviewed_source_ts と、既レビュー・既存 controls との重複および比較 artifact 不在による state-only reject 理由だけを追加した。active_probes、ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-27T13:38:04+09:00",
+  "updated_at": "2026-08-27T15:43:03+09:00",
   "reviewed_source_ts": [
+    "1787805158.867599",
     "1787797744.256359",
     "1787789896.198629",
     "1787782580.175809",
@@ -782,6 +783,54 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-27T15:43:03+09:00",
+      "selected": {
+        "id": "sr-1787805158-4ddcbe856b",
+        "source_ts": "1787805158.867599",
+        "title": "Skill Issue: Are Skills Language-Invariant in LLMs? — 多言語 self-play による行動技能差の監査",
+        "reason": "source が slack_api/shared-reads、score 10、未レビュー候補のうち datetime が最新で、memory・harness・game-design・operation・evaluation の優先5タグを持つため1件だけ選んだ。同一 model・game・state・action schema で interface language だけを変え、勝敗・invalid action・局面別方策・reasoning language 介入を分ける知見が、次の LLM NPC／play-agent 評価に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した thread reply はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、non_redundancy と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、3 model・6 game・8 language・518,400試合、両手番の role-pooled margin、invalid action、局面別方策、最適戦略の言及と実行、interface language 固定下の reasoning language 介入を示す。言語差を文章品質ではなく action-level policy drift と failure stage で扱う行動へ具体化でき、統制された大規模比較と外的限界もあるため actionability・evidence は3とした。一方、2026-07-27にレビュー済みの The Shibboleth Effect は、同一 build・state・goal・tool schema と role counterbalance で locale だけを変え、action-level 指標を比較する同じ中核判断をすでに記録している。benchmark-purpose-variable-alignment、evaluation-version-boundary、bdd-route-contract-regression も固定変数、評価版境界、replayable trace を扱う。今回固有の reasoning language 介入と spatial／card／optimal-move failure localization は証拠を強めるが、具体的な英日 NPC／play-agent artifact がない現在の Phase 4a では新しい採否差を作らず、non_redundancy は1、relevance は2とした。active_probes は327件、pending lease は0件であり、対象 artifact なしに同義 probe を追加すると checklist 負荷だけが増えるため risk_control は1。次の具体的な多言語 game-agent 回帰で、既存3 controlsと source_ts=1785096049.977699 のレビューだけでは reasoning-path／state-interpretation／action-selection を分離できない再現例が出た時だけ再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787805158-4ddcbe856b.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787805158.867599",
+        "memory/shared_reads_candidates/20260827_skill_issue_language_invariant_game_agents.md",
+        "memory/shared_reads_candidates/posted_drafts/20260827_skill_issue_language_invariant_game_agents_post.md",
+        "memory/shared_reads_self_feedback_state.json#source_ts=1785096049.977699",
+        "https://arxiv.org/abs/2608.25832v1"
+      ],
+      "existing_controls": [
+        "review source_ts=1785096049.977699: The Shibboleth Effect",
+        "probe-20260718-benchmark-purpose-variable-alignment",
+        "probe-20260711-evaluation-version-boundary",
+        "probe-20260608-bdd-route-contract-regression"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、多言語 self-play の証拠強化、既レビューの locale-only action drift と既存3 controls との大幅な重複、比較 artifact 不在、active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-27T13:38:04+09:00",
       "selected": {
