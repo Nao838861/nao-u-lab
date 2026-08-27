@@ -130,7 +130,59 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index を UTF-8 で監査し、per-file atom index 2,987件との対応に broken link / duplicate ID がないことを確認"
+  - "memory/atoms.jsonl を監査し、atom mirror 2,987件が atoms.jsonl / per-file .md / index.jsonl 間で一致し、content conflict 0件であることを確認"
+  - "normalized content 重複40群80行は canonical overlay 45群で折り畳み済み、recall-visible 重複3群6行も表示時 fold が有効であることを確認"
+  - "memory/raw/ の30日超未更新ファイル242件を棚卸し。raw 原文保持の正本方針に従い、この cycle では移動・削除なし"
+  - "shared-reads lifecycle を監査: posted 723 / ready_to_post 9 / postponed 202 / failed 524 / needs_review 0"
+  - "terminal canonical 109群、open duplicate 28群（mixed 25 / all_open 3）を再監査"
+  - "Slack inbox を監査し、directives pending 0件 / broadcasts pending 0件を確認。close 対象なし"
+issues:
+  - id: ISS-4A-20260827-01
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』部分に U+FFFD が2文字残り、title / trigger / excerpt の検索語を損なっている"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md:3; memory/raw/slack_archive/shared-reads.jsonl:492; tools/memory_health.py --json hard_corruption_atom_count=1"
+    source_file_status: "UTF-8 明示読みでも per-file atom、atoms.jsonl、raw Slack archive の全てに U+FFFD を確認。source data 自体の局所破損"
+    display_or_tooling_status: "none。PowerShell / rg の表示経路だけの mojibake ではない。MEMORY.md の代表語『記憶』『ゲーム設計』『敵パターン』『評価軸』は UTF-8 読みで取得可能"
+    why_blocks_game_memory: "『AIエージェント』での完全一致検索と関連候補の語彙照合をこの1 atomだけ弱めるが、URL・tags・周辺語からは到達できるため影響は限定的"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+stale_review_batch: []
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 28
+  mixed_group_count: 25
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  lease_suppression:
+    - "joint agent memory and exploration learning via novelty signals: deferred until 2026-09-19T14:08:16+09:00"
+    - "an exploration of collision based enemy morphology generation: deferred until 2026-09-19T14:08:16+09:00"
+group_action_handoff: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
