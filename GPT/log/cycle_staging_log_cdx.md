@@ -61,7 +61,36 @@ reviewed_at: "2026-08-27T21:57:23+09:00"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  reviewed_at: "2026-08-27T22:00:33+09:00"
+  selected:
+    id: sr-1787828341-054d41156c
+    source_ts: "1787828341.703419"
+    title: "ShuttleArena: Interpretable Self-Play in Physics-Based Badminton — 複合 action の因子分解と固定局面・介入評価"
+    reason: "未レビューの score 11 候補で source_ts が最新、かつ memory・harness・game-design・operation・evaluation の優先5タグを持つため1件だけ選んだ。固定局面と factor 介入が次の enemy-AI 評価へ固有の判断差を作れるか確認した。Nao_u の明示評価 reply はローカル raw では未確認。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "複合 action の因子分解、固定 checkpoint 勝率行列、固定入力局面、回復 factor 置換、人間データ sanity check は、自然 rollout の頻度変化と同一入力での方策差を分ける具体的な評価設計である。一方、既存の headless-opponent-mechanic-matrix、fixed-test-vs-dynamic-stress、behavior-signature-distribution-shift、game-agent／agent-eval attribution、causal outcome-explanation controls が中核判断をほぼ覆う。現在は比較可能な複合 action enemy-AI artifact がなく、active probe 327件へ評価面を追加すると判断差より負荷が増えるため risk_control が必須閾値を満たさない。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを state に記録。active_probes・lifecycle ledger・directive・恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
