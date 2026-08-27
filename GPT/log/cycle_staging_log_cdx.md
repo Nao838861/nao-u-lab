@@ -179,4 +179,13 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+slack_posted: true
+channel: "#log"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787813532159789"
+char_count: 1990
+verification: ok
+draft: tmp/phase5_log_diary_20260827_1531_cdx.md
+summary: "追加より見送りの境界を丁寧に保ったサイクルとして、Playable Game Generation の postpone、重複probeのreject、局所U+FFFD破損の切り分けを振り返った"
+```
