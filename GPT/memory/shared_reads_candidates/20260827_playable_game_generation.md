@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2412.00887"
 collected_at: "2026-08-27T15:33:44+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-generation, world-model, diffusion-model, playability, evaluation]
+evaluated_at: "2026-08-27T15:37:34+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-27T15:37:34+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-27T15:37:34+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-26"
+supersedes: []
+gate_reason: >-
+  問題設定、PlayGen の三構成、RTX 2060 でのリアルタイム動作、1000 frame 超の維持までは抽出でき、入力応答・メカニクス忠実度・長期 drift を playable diff の受入試験へ移す適用先も具体的である。
+  一方、評価枠組みの指標、比較対象、ゲーム別の定量結果と失敗条件が採取メモにないため、現状から CoopEval 水準の約4000字概要を書くと推測で水増しする危険がある。一次資料から評価節を補強した後に再判定する。
 ---
 
 ## raw_excerpt
