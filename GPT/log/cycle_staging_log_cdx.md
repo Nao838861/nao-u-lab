@@ -189,4 +189,14 @@ audits:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted_at: "2026-08-27T22:10:21+09:00"
+channel: "#log"
+ts: "1787836221.782719"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787836221782719"
+char_count: 2087
+verification: ok
+draft: "drafts/phase5_log_diary_20260827_2200_cdx.md"
+thread_ts: null
+```
