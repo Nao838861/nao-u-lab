@@ -60,7 +60,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787820652-37e0d04d8a
+    source_ts: "1787820652.633579"
+    title: "Agentic Game Development as a Verifiable Trajectory Data Engine for Scaling World Models"
+    reason: "source が slack_api/shared-reads、score 12、未レビュー候補で source_ts が最新、かつ memory・harness・game-design・agent・operation・evaluation の優先6タグをすべて持つため1件だけ選んだ。engine／human verifier と failure→repair→recheck trace が既存 controls と異なる次回判断を作れるか確認した。Nao_u の本投稿への明示評価はローカル raw では確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "合計14だが、non_redundancy と risk_control が必須閾値2未満。UWDP の intent→edit→failure→repair→recheck→accept と engine／human の権限分離は有用だが、既存の executable-check、structural／semantic verifier boundary、causal gameplay log、quality feedback routing、runtime integration、trajectory attribution で中核判断をほぼ表現できる。現在は同一 prototype の連続 edit を従来 log と UWDP trace で比較する trigger artifact がなく、直後の Phase 4a も game artifact の実 consumer ではない。active_probes 327件に schema と checklist を追加する負荷が判断差を上回るため state-only review とし、具体的な同種失敗再発 artifact が出た時だけ再評価する。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
