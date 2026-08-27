@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2608.25832v1"
 collected_at: "2026-08-27T13:19:18+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-agents, evaluation, localization, multilingual, self-play, text-games]
+evaluated_at: "2026-08-27T13:23:21+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-27T13:23:21+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-27T13:23:21+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-26"
+supersedes: []
+gate_reason: >-
+  同一モデル・同一ゲームで言語だけを変える対照設計、3モデル・6ゲーム・8言語の評価、
+  invalid action と戦略差、reasoning language 介入まであり、LLM NPC／自動テスターの検証手順へ直結する。
+suggested_post_outline:
+  overview_angle: "知識 benchmark ではなく、同条件 self-play で言語ごとの発現 skill を行動差として測る"
+  analysis_axis: "言語が入力理解、途中推論、行動選択のどこで勝率・違反行動・戦略傾向を変えるか"
+  application_target: "日本語化した LLM NPC・対戦相手・自動テスターを、言語別 win-loss・invalid action・方策差と reasoning language 切替で回帰評価する"
+  pros_cons: "対戦条件を固定して言語差を切り出せる一方、text-based game と選定モデルの範囲を実ゲームへそのまま一般化はできない"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt

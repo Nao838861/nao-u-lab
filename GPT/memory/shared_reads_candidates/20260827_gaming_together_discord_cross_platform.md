@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2608.25942v1"
 collected_at: "2026-08-27T13:18:53+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, social-play, community, cross-platform, player-safety, chi-play]
+evaluated_at: "2026-08-27T13:23:21+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-27T13:23:21+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-27T13:23:21+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-26"
+supersedes: []
+gate_reason: >-
+  16名への半構造化インタビュー、reflexive thematic analysis、platform gap という説明概念、
+  設計含意まで揃い、協力ゲームの外部連携導線と年少者の安全設計へ具体的に接続できる。
+suggested_post_outline:
+  overview_angle: "Discord を周辺ツールではなく、ゲームプレイを構成する cross-platform practice として捉え直す"
+  analysis_axis: "協働体験の拡張と、ゲーム／コミュニケーション基盤間で governance が切れる platform gap の表裏"
+  application_target: "協力ゲームのボイス・募集・関係維持をゲーム外利用込みで設計し、導線・moderation・年少者保護の責任境界を点検する"
+  pros_cons: "実利用者の質的データから設計境界を可視化できる一方、16名の自己報告であり地域・年齢・ゲーム種別への一般化には限界がある"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
