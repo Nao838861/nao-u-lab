@@ -99,7 +99,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787789896-752c0d2883
+    source_ts: "1787789896.198629"
+    title: "Making of - Gracillis VI — 動詞列・依存図・早期 playable build による jam scope 制御"
+    reason: "score 14・未レビュー・優先7タグの最新候補を1件だけ選択。動詞列→依存図→最低限提出可能な build と、既存 capability 再結合時の contract 差分・tutorial 再現性が、次の短期 game prototype に既存 control と異なる判断差を作るか確認した。Nao_u の明示的な重要評価はローカル raw で確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "単一 jam postmortem の自己報告で比較・人数・修正前後がなく、scope promise／first playable／reuse／dependency／tutorial 実行理解／runtime integration は既存6 probesでほぼ覆われる。直後の Phase 4a に比較可能な game artifact もないため採用条件を満たさず、state-only review とした。"
+  change:
+    summary: "reviewed_source_ts と採点・reject理由のみ更新。active_probes、lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-27T09:22:21+09:00",
+  "updated_at": "2026-08-27T11:33:01+09:00",
   "reviewed_source_ts": [
+    "1787789896.198629",
     "1787782580.175809",
     "1787774575.827039",
     "1779834973.870639",
@@ -780,6 +781,55 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-27T11:33:01+09:00",
+      "selected": {
+        "id": "sr-1787789896-752c0d2883",
+        "source_ts": "1787789896.198629",
+        "title": "Making of - Gracillis VI — 動詞列・依存図・早期 playable build による jam scope 制御",
+        "reason": "source が slack_api/shared-reads、score 14、未レビュー候補のうち datetime が最新で、memory・harness・game-design・operation・evaluation を含む7優先タグを持つため1件だけ選んだ。player の動詞列を room／puzzle 依存図へ落とし、締切前半に最低限提出可能な build を確保し、既存 capability の再結合と tutorial の再現可能性を点検する知見が、次の game prototype に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、non_redundancy と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、player の動詞列→room／puzzle 依存図→7日目の60% playable build という順序、glove 削除による tutorial の段階化、既存 room／drone capability の再結合、再利用時の perspective／hitbox／state contract 差分、既出操作と複合 puzzle での再現可能性の分離を一つの制作 trajectory で示す。次の短期 prototype で first playable、dependency、cut、contract、confusion signal を確認する行動へ直接変換できるため relevance・actionability は3とした。一方、根拠は一人の jam 制作者による単一作品の自己報告と定性的 player feedback で、playtest 人数、離脱率、初回 playable 時間、動詞列のみとの比較、修正前後、睡眠コストを含む対照がなく evidence は2に留める。probe-20260602-game-scope-brief-cut-gate は scope promise・cut rules・first playable done condition・risk test、probe-20260713-short-hike-constraint-shortcut は既存 asset／tool／制約の再利用と core／deferred 分離、probe-20260614-dependency-progress-blocked-node は puzzle dependency の blocked node、probe-20260515-insight-design-discovery-path と probe-20260615-rule-verbalization-execution-split は tutorial の提示と実行可能な理解の分離、probe-20260709-gameenginebench-runtime-integration-gate は変更機能と隣接 runtime contract を既に扱う。動詞列→依存図→build の三表現を一続きにする点は局所差だが、中核判断は既存 controls の組合せへほぼ吸収されるため non_redundancy は1とした。現在の staging には同一 prototype の動詞列のみ／動詞列＋依存図、初回 playable 時間、cut 時点、confusion trace を比較できる artifact がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。active_probes は327件、pending lease は0件であり、具体 artifact なしに新しい dependency schema や tutorial checklist を追加すると、判断差より確認負荷と単一事例の過剰一般化を増やすため risk_control は1とした。次の具体的な短期 prototype では新設せず既存6 controlsを必要な分だけ使い、それらだけでは未接続動詞や再利用 contract 差分を見逃した再現例が出た時だけ局所 probe を再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787789896-752c0d2883.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787789896.198629",
+        "memory/shared_reads_candidates/20260827_gracillis_vi_adventure_game_jam_pipeline.md",
+        "memory/shared_reads_candidates/posted_drafts/20260827_gracillis_vi_adventure_game_jam_pipeline_post.md",
+        "https://bullstorm6.itch.io/gracillis-vi-lost-connection/devlog/1541636/making-of-gracillis-vi"
+      ],
+      "existing_controls": [
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260713-short-hike-constraint-shortcut",
+        "probe-20260614-dependency-progress-blocked-node",
+        "probe-20260515-insight-design-discovery-path",
+        "probe-20260615-rule-verbalization-execution-split",
+        "probe-20260709-gameenginebench-runtime-integration-gate"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、動詞列→依存図→早期 playable build の局所有用性、単一 jam postmortem の証拠限界、既存 scope／reuse／dependency／tutorial／runtime controls との大幅な重複、比較 artifact 不在と active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-27T09:22:21+09:00",
       "selected": {
