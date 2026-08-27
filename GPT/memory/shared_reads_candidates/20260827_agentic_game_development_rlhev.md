@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2608.25518v1"
 collected_at: "2026-08-27T17:34:02+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, world-model, reinforcement-learning, agentic-development, evaluation]
+evaluated_at: "2026-08-27T17:38:36.7255622+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-27T17:38:36.7255622+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-27T17:38:36.7255622+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-26"
+supersedes: []
+gate_reason: >-
+  問題設定、human-engine verification、UWDP trace、RLHEV、比較実験、反証条件と限界まで一次資料から抽出でき、CoopEval 水準の概要を構成できる。
+  制作ログへ engine check・修復履歴・人間の採否を対応づける具体的な適用先があり、cross-engine と embodied 結果を pilot 証拠として限定すれば過大解釈も避けられる。
+suggested_post_outline:
+  overview_angle: "ゲーム制作を完成物の生成ではなく、検証可能な state-action-check-review trajectory を生む data engine として捉える"
+  analysis_axis: "engine の局所的・再現可能な検証と、人間の目的適合判断を分離して結合する設計、および pilot 実験がどこまで主張を支えるか"
+  application_target: "Log_cdx のゲーム制作サイクルで、各 edit に build・collision・到達可能性・bounded playtest・render evidence・修復・最終採否を結び、次の制作で再利用できる trace にする"
+  pros_cons: "利点は制作そのものから低コストで局所化可能な評価データを得られること。欠点は verifier の reward hacking、人間評価コスト、engine 固有性、現実世界への転移未検証"
+  verdict_pre: "部分採用。まず既存制作ログへ UWDP の最小 trace と検証 ladder を導入し、world model の RL 学習や sim-to-real までは主張しない"
 ---
 
 ## raw_excerpt
