@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-27T15:43:03+09:00",
+  "updated_at": "2026-08-27T17:58:24+09:00",
   "reviewed_source_ts": [
+    "1787782566.588969",
     "1787805158.867599",
     "1787797744.256359",
     "1787789896.198629",
@@ -783,6 +784,56 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-27T17:58:24+09:00",
+      "selected": {
+        "id": "sr-1787782566-c07f0042b8",
+        "source_ts": "1787782566.588969",
+        "title": "Demystifying Agent Skills: Why They Work—Until They Don't — skill を procedural anchor として分解する",
+        "reason": "source が slack_api/shared-reads、score 10、未レビュー候補のうち memory・harness・game-design・agent・evaluation の優先5タグと skills タグを持つため1件だけ選んだ。同じ source trajectory の Workflow Memory／SKILL.md 表現差、成否 label、別 harness transfer、retrieval pool 増大を matched execution で分ける知見が、現在の Codex skill 運用に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した thread reply はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14だが、non_redundancy と risk_control が採用必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、8,135 trial record、同一 task・条件の528 triple／1,584 arm、人手714 check、Skill 対 Workflow +6.06 points（95% bootstrap CI +0.76〜+11.36）、pool 5→100件で actual-use precision 29.6%→3.3%という証拠を示す。skill の主作用を knowledge injection ではなく procedural anchor と捉え、取得・適応・実行、environment failure、runtime verification、misapplication、context cost を分ける行動へ直接変換できるため relevance・actionability・evidence は3とした。一方、probe-20260604-skill-lifecycle-promotion-gate は trigger・手順・evidence・退役条件、probe-20260710-npm-contrastive-procedural-memory は effective／degenerate step と workflow patch の同条件検証、probe-20260620-skillopt-skill-doc-validation と probe-20260626-skillopt-instruction-edit-validation-gate は最小 validation unit・transfer・held-out regression、probe-20260603-load-strategy-writer-reader-gate は load strategy、probe-20260518-runtime-verifiable-production-slices は runtime verifier、probe-20260718-benchmark-purpose-variable-alignment は外部指標の非同型転用を既に扱う。actual-use precision と task success の非一致、失敗 trace の outcome provenance は局所差だが、中核判断は既存 controls の組合せへほぼ吸収されるため non_redundancy は1。現在の staging には同一 task を Raw／memory／Skill で比較し、misapplication・runtime verification・cost の判断差を固定できる artifact がなく、直後の Phase 4a は実 consumer ではない。active_probes は327件、pending lease は0件であり、記事案どおり20作業×3回や pool 5／20／50の比較を先に導入すると、skill pool・metric・実行コストと checklist 負荷を増やすため risk_control は1とした。次に具体的な skill／workflow 変更で、同一 task の matched artifact と misapplication または runtime-verifier regression が現れ、既存7 controlsだけでは取得・適応・実行の失敗段を区別できない時だけ再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787782566-c07f0042b8.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787782566.588969",
+        "memory/shared_reads_candidates/20260827_demystifying_agent_skills.md",
+        "memory/shared_reads_candidates/posted_drafts/20260827_demystifying_agent_skills_post.md",
+        "https://arxiv.org/abs/2608.14036v1"
+      ],
+      "existing_controls": [
+        "probe-20260604-skill-lifecycle-promotion-gate",
+        "probe-20260710-npm-contrastive-procedural-memory",
+        "probe-20260620-skillopt-skill-doc-validation",
+        "probe-20260626-skillopt-instruction-edit-validation-gate",
+        "probe-20260603-load-strategy-writer-reader-gate",
+        "probe-20260518-runtime-verifiable-production-slices",
+        "probe-20260718-benchmark-purpose-variable-alignment"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、procedural anchor／retrieval・適応・実行分離の有用性、既存 skill lifecycle／実行差分／instruction validation／load strategy／runtime／benchmark controls との大幅な重複、比較 artifact 不在、active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-27T15:43:03+09:00",
       "selected": {

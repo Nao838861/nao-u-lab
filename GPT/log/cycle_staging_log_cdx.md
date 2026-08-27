@@ -73,7 +73,39 @@ skipped: []
 - 判定内容は部分採用。UWDP の最小 trace、検証 ladder、engine/人間の権限分離は採用候補とし、RL 学習、engine 横断一般化、sim-to-real は pilot 証拠のため採用範囲外とした。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+### 2026-08-27 17:58 JST / log_cdx
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787782566-c07f0042b8
+    source_ts: "1787782566.588969"
+    title: "Demystifying Agent Skills: Why They Work—Until They Don't — skill を procedural anchor として分解する"
+    reason: "memory・harness・game-design・agent・evaluation の優先5タグと skills タグを持つ未レビュー atom。matched execution が現在の skill 運用に既存 control と異なる判断差を作るか確認した。Nao_u の明示評価はローカル raw で確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  change:
+    summary: "retrieval・適応・実行を分ける有用性はあるが、既存7 controlsとの重複、比較 artifact 不在、active probe 327件による増殖 risk のため state-only review とした。active_probes・ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採否理由: 合計14だが `non_redundancy=1` と `risk_control=1` が必須閾値2未満。skill lifecycle、contrastive procedural memory、instruction edit validation、load strategy、runtime verifier、benchmark transfer の既存 controls で中核判断をほぼ表現できる。
+- 再評価条件: 同一 task の Raw／memory／Skill matched artifact が現れ、misapplication または runtime-verifier regression を既存 controls だけでは retrieval／adaptation／execution の一段へ局在化できない場合に限る。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
