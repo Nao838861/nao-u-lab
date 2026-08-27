@@ -103,7 +103,22 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+### 2026-08-27 09:18 JST
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260827_gracillis_vi_adventure_game_jam_pipeline.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787789896198629
+    char_count: 4438
+skipped: []
+review:
+  source_checked: true
+  duplicate_url_found: false
+  policy_check: pass
+  slack_verification: ok
+  verdict: partial_adoption
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

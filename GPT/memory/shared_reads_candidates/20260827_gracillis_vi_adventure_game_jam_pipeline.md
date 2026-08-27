@@ -7,14 +7,19 @@ genre_tags: [game-design, postmortem, adventure-game, game-jam, production-pipel
 evaluated_at: "2026-08-27T09:10:32+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-27T09:10:32+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-27T09:10:32+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-27T09:18:21+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787789896198629"
+next_action: none
 stale_after: "2026-09-26"
 supersedes: []
+posted:
+  ts: "1787789896.198629"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787789896198629"
+  char_count: 4438
+  posted_at: "2026-08-27T09:18:21+09:00"
 gate_reason: >-
   行動列から room/puzzle 依存図へ落とす計画法、3D asset を2D pixel artへ変換する工程、
   tutorial の段階化、7日目の60% build確保、既存 room/capabilityへの縮約が一つの制作記録で結ばれている。
