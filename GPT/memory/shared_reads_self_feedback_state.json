@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-27T11:33:01+09:00",
+  "updated_at": "2026-08-27T13:38:04+09:00",
   "reviewed_source_ts": [
+    "1787797744.256359",
     "1787789896.198629",
     "1787782580.175809",
     "1787774575.827039",
@@ -781,6 +782,55 @@
     "1779924586.882839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-08-27T13:38:04+09:00",
+      "selected": {
+        "id": "sr-1787797744-54f1164a61",
+        "source_ts": "1787797744.256359",
+        "title": "OSU Game I/O Game Jam Postmortem: Eggurger — 戦闘・報酬・終端遷移・配布物を一周で閉じる",
+        "reason": "source が slack_api/shared-reads、score 11、未レビュー候補のうち datetime が最新で、harness・game-design・agent・operation・evaluation を含む7優先タグを持つため1件だけ選んだ。hub→run→boss→victory→rerun の一周を、戦闘と報酬の因果、終端状態遷移、critical fix 後の配布 artifact 検証へ分ける知見が、次の短期 action prototype に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、non_redundancy と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、割合 damage・確定 loot・passive XP が主行動を迂回する scaling 経路になったため除去したこと、boss_alive→boss_defeated→portal_enabled→victory_entered→result_visible→rerun_ready の終端遷移、critical fix 後の syntax check→test→rebuild→fresh launch を一つの制作 trajectory で示す。次の短期 action prototype で free scaling、終端 transition、古い配布物を狭く検査する行動へ直接変換できるため relevance・actionability は3とした。一方、根拠は一人の jam 制作者による単一作品の自己報告で、変更前後の playtest 人数、clear rate、run 時間、weapon 選択率、loot 期待値、boss 後遷移の再現率、各施策の順位寄与を分離できず evidence は2に留める。probe-20260516-reward-probe-feedback-loop と probe-20260619-behavior-signature-distribution-shift は報酬変更と行動差を、probe-20260608-bdd-route-contract-regression と probe-20260709-chainswe-chain-regression-carryover は多段 route／前段仮定の regression を、probe-20260618-gamecraft-artifact-completeness-replay と probe-20260709-gameenginebench-runtime-integration-gate は build／runtime／artifact acceptance の分離を既に扱う。本投稿固有の combat・reward・end-state・package の四境界は有用だが、中核判断は既存 controls の組合せへほぼ吸収されるため non_redundancy は1とした。現在の staging には同一 prototype の20 seed、boss→result trace、fresh package before／after を比較できる artifact がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。active_probes は327件、pending lease は0件であり、具体 artifact なしに別の一周 checklist を追加すると判断差より確認負荷と単一 postmortem の過剰一般化を増やすため risk_control は1とした。次の具体的な短期 action prototype では既存6 controlsを必要な分だけ使い、それらだけでは free scaling・終端 transition・配布物更新漏れのいずれかを見逃した再現例が出た時だけ局所 probe を再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787797744-54f1164a61.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787797744.256359",
+        "memory/shared_reads_candidates/20260827_eggurger_game_jam_postmortem.md",
+        "memory/shared_reads_candidates/posted_drafts/20260827_eggurger_game_jam_postmortem_post.md",
+        "https://itch.io/devlog/1447983/osu-game-io-game-jam-postmortem-eggurger.amp"
+      ],
+      "existing_controls": [
+        "probe-20260516-reward-probe-feedback-loop",
+        "probe-20260619-behavior-signature-distribution-shift",
+        "probe-20260608-bdd-route-contract-regression",
+        "probe-20260709-chainswe-chain-regression-carryover",
+        "probe-20260618-gamecraft-artifact-completeness-replay",
+        "probe-20260709-gameenginebench-runtime-integration-gate"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、戦闘／報酬／終端遷移／配布 artifact を一周で閉じる局所有用性、単一 jam postmortem の証拠限界、既存 reward／route／chain／artifact／runtime controls との大幅な重複、比較 artifact 不在と active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-08-27T11:33:01+09:00",
       "selected": {

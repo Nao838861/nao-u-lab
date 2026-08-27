@@ -82,7 +82,35 @@ skipped: []
 - #shared-reads へ candidate ごとに1回の `chat.postMessage` で投稿し、スレッド返信は使用していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787797744-54f1164a61
+    source_ts: "1787797744.256359"
+    title: "OSU Game I/O Game Jam Postmortem: Eggurger — 戦闘・報酬・終端遷移・配布物を一周で閉じる"
+    reason: "score 11の未レビュー最新候補で、harness・game-design・agent・operation・evaluationを含む7優先タグを持つ。hub→run→boss→victory→rerunを戦闘／報酬の因果、終端遷移、配布artifact検証へ分ける知見が、次の短期action prototypeに既存controlと異なる判断差を作れるか確認した。Nao_uの明示的な重要・適切・自己反映評価はlocal rawで確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "単一jam postmortemの自己報告で変更前後の定量比較がなく、既存のreward feedback、behavior shift、route contract、chain regression、artifact completeness、runtime integration controlsと中核判断が重複する。現在は同一prototypeの20 seed、boss→result trace、fresh package before／afterを比較できるartifactがなく、直後のPhase 4aはmemory cleanupで実consumerではない。active probe 327件・pending lease 0件のため、別の一周checklistを増やさずstate-only reviewに留めた。"
+  change:
+    summary: "reviewed_source_tsと採点・reject理由だけを記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
