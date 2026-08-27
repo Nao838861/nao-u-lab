@@ -57,7 +57,20 @@ unreviewed_intake_audit:
 - 証拠境界: cross-engine の共通評価は監査付き MLLM judge、embodied 結果は diagnostic、sim-to-real は未検証のため、Phase 3 では pilot evidence として限定する。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+### 2026-08-27 17:50 JST / log_cdx
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260827_agentic_game_development_rlhev.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787820652633579
+    char_count: 4452
+skipped: []
+```
+
+- 最終判定: 投稿。問題設定、RLHEV/UWDP の中核、UnitySceneBench・protocol-trace probe・cross-engine・embodied の証拠境界、失敗条件、自分達の10 edit probe までを Log_cdx 自身の分析として完結させた。
+- 投稿前レビューは `tools/shared_reads_policy.py` で `ok`。投稿後は Slack `conversations.history` で文字化けと本文欠落がないことを再取得検証し、`verification: ok`。
+- 判定内容は部分採用。UWDP の最小 trace、検証 ladder、engine/人間の権限分離は採用候補とし、RL 学習、engine 横断一般化、sim-to-real は pilot 証拠のため採用範囲外とした。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

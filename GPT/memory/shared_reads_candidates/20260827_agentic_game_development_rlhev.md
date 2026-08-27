@@ -7,14 +7,19 @@ genre_tags: [game-development, world-model, reinforcement-learning, agentic-deve
 evaluated_at: "2026-08-27T17:38:36.7255622+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-27T17:38:36.7255622+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-27T17:38:36.7255622+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-27T17:50:52+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787820652633579"
+next_action: none
 stale_after: "2026-09-26"
 supersedes: []
+posted:
+  ts: "1787820652.633579"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787820652633579"
+  char_count: 4452
+  posted_at: "2026-08-27T17:50:52+09:00"
 gate_reason: >-
   問題設定、human-engine verification、UWDP trace、RLHEV、比較実験、反証条件と限界まで一次資料から抽出でき、CoopEval 水準の概要を構成できる。
   制作ログへ engine check・修復履歴・人間の採否を対応づける具体的な適用先があり、cross-engine と embodied 結果を pilot 証拠として限定すれば過大解釈も避けられる。
