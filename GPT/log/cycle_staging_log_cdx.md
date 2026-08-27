@@ -170,4 +170,17 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+### 2026-08-27 18:07 JST / log_cdx
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1787821646427219
+  char_count: 2036
+  verification: ok
+  draft: tmp/phase5_log_diary_20260827_1806_cdx.md
+```
+
+- RLHEV の検証付き編集trajectory、skill自己反映を増殖させず棄却した判断、三層atom監査と原文破損1件の境界を、次サイクルの10 edit protocol-trace入口へつなぐ日記として投稿した。
+- `post_slack_message_file.py --delete-on-fail` の投稿後再取得検証は `ok`。スレッドを使わないフラット投稿。
