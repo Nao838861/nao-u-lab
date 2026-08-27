@@ -121,7 +121,34 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787782580-493a7e7c89
+    source_ts: "1787782580.175809"
+    title: "Engineering Reliable Coding Agents: Evaluating and Operating the System Around the Model"
+    reason: "source が slack_api/shared-reads、score 10、未レビュー候補のうち最新で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。dependency chain と最初の upstream break の局在化が現在の cycle に新しい判断差を作るか確認するため1件だけ選んだ。Nao_u の明示評価はローカル raw で確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "合計14だが、non_redundancy と risk_control が必須閾値2を下回る。最初の failure stage、raw／派生物の evidence lineage、inspectable acceptance、shared artifact contract、evaluation version、build／runtime acceptance の分離は既存6 controls にほぼ含まれる。具体的な比較 artifact がない状態で六段階 minimum pass や多数 ID を追加すると、327件ある active probe の確認負荷と observability debt を増やすため state-only review とした。"
+  change:
+    summary: "reviewed_source_ts、採点、既存 controls との重複、比較 artifact 不在、probe 増殖 risk に基づく reject 理由だけを state に記録した。新規 probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
