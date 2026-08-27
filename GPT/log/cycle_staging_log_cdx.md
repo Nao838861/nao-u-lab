@@ -11,6 +11,7 @@
 - `memory/shared_reads_candidates/20260827_engineering_reliable_coding_agents.md` — coding agent の信頼性を model 単体でなく harness・state・retrieval・verification・observability を含む dependency chain として整理する monograph。
 - inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` の pending はともに 0 件。
 - 収集元: `memory/raw/web_research/results.jsonl` の直前サイクル以降の新着、および arXiv API 原典抄録。Slack 投稿は実施していない。
+- `memory/shared_reads_candidates/20260827_gracillis_vi_adventure_game_jam_pipeline.md` — 行動列と room 依存図、3D→2D pixel-art pipeline、序盤 tutorial、既存 asset で場面を成立させた adventure game jam 制作記録。
 
 ## Phase 2: 分析
 
