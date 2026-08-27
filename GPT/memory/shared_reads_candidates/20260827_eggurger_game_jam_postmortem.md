@@ -4,6 +4,26 @@ url: "https://itch.io/devlog/1447983/osu-game-io-game-jam-postmortem-eggurger.am
 collected_at: "2026-08-27T11:18:28+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, action-game, balancing, release-engineering]
+evaluated_at: "2026-08-27T11:21:46+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-27T11:21:46+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-27T11:21:46+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-26"
+supersedes: []
+gate_reason: >-
+  jam の限られた期間で、pacing、報酬、割合 damage、boss 後の状態遷移、release artifact をどう局所修正したかが具体例とともに揃い、73 commit・16,010行・jam 1位という評価の文脈もある。
+  調整内容を「戦闘と報酬の因果を戻す」「終端遷移を明示する」「重要修正を即時検証する」という制作原則へ落とせ、短期 playable diff に直接適用できるため、約4000字の概要を記事固有の情報で構成できる。
+suggested_post_outline:
+  overview_angle: "jam 後半の局所修正を、遊びの因果・状態遷移・配布物検証の三層で読み解く"
+  analysis_axis: "個別の数値調整ではなく、無償報酬や runaway scaling を除き、プレイヤー行動と結果の対応を再構成した判断を評価する"
+  application_target: "Nao_u_BOT の短期アクション prototype で、combat tuning、boss→result 遷移、修正直後の syntax/build check を一つの完了条件に束ねる"
+  pros_cons: "局所修正と具体的な失敗例は再利用しやすい一方、単一 jam 作品の自己報告であり、比較 playtest や定量的な retention 評価はない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

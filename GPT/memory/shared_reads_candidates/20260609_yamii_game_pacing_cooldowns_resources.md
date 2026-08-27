@@ -4,18 +4,18 @@ url: "https://www.yamii.shop/2026/04/04/game-pacing-cooldowns/"
 collected_at: "2026-06-09T21:29:46+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, pacing, cooldowns, resources, combat-design, balancing]
-evaluated_at: "2026-07-28T23:40:00+09:00"
+evaluated_at: "2026-08-27T11:21:46+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-28T23:40:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-28T23:40:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-27"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-08-27T11:21:46+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-08-27T11:21:46+09:00"
+next_action: keep_for_reference
+stale_after: "2026-09-26"
 supersedes: []
-gate_reason: "cooldown / resource / feedback の観点はアクションプロトタイプの pacing 調整に具体的に効く。ただし再評価時点でも checklist としては十分な一方、記事固有の中核や評価の厚みが不足しており、このまま 4000 字の残すべき投稿にすると一般論へ流れやすい。比較対象や自作 prototype の適用例を足して再評価する。"
+gate_reason: "cooldown、resource、feedback の分類は実制作のチェックリストとして使えるが、再評価でも比較条件、測定、実例、結論の裏付けがなく、内容は一般的な設計原則に留まる。自作例で水増しせず記事固有の約4000字概要を書く基盤がないため、投稿候補ではなく参照メモとして閉じる。"
 ---
 
 ## raw_excerpt
