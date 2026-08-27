@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2608.09380v1"
 collected_at: "2026-08-27T21:49:27+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, automated-playtesting, agent-policy, long-horizon, evaluation]
+evaluated_at: "2026-08-27T21:53:25+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-08-27T21:53:25+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-08-27T21:53:25+09:00"
+next_action: revise_or_research
+stale_after: "2026-09-26"
+supersedes: []
+gate_reason: >-
+  Loop Policy の版管理、Champion--Challenger 比較、task 境界での release／監視／rollback は自動 playtest へ具体的に適用できる。
+  同一資料の open sibling も含めて benchmark、比較条件、定量結果、失敗分析がなく、手法の評価と限界を含む CoopEval 水準の概要を構成できないため postpone とする。
 ---
 
 ## raw_excerpt
