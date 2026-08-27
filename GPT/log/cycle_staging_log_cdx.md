@@ -108,7 +108,60 @@ self_feedback:
 - 再評価条件: 同一 task の Raw／memory／Skill matched artifact が現れ、misapplication または runtime-verifier regression を既存 controls だけでは retrieval／adaptation／execution の一段へ局在化できない場合に限る。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-08-27 18:04 JST / log_cdx
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、atom index と per-file index の対応を検証した。broken link は0件。代表語は 記憶=22、ゲーム設計=8、敵パターン=1 で正常取得し、評価軸=0 は現行生成本文に語がないためで、mojibake ではない。"
+  - "atoms.jsonl / per-file .md / atoms/index.jsonl の2990件 stable snapshotを照合し、missing・parse error・content conflict は0件。その後の定時取込みで2991件へ進んだ再監査も三層一致。normalized-content 重複40群80行は既存 canonical overlay で40行 fold済み、recall-visible 重複3群6行も3行 fold済み。矛盾の追加修復は不要だった。"
+  - "memory/raw/ の30日超ファイル242件（70,590,898 bytes）を確認した。slack_archive は既にarchive配置済みで、web_research配下はcandidate/atomの一次証拠なので参照関係を壊す移動は行わず保持した。"
+  - "candidate lifecycle を dry-run 監査し、posted=726、ready_to_post=9、postponed=203、failed=524、needs_review=0。status/candidate_status conflict は0件。"
+  - "title canonical / mixed / open-duplicate / stale-triage / group-action sidecar を再生成して監査した。open duplicateは28群（mixed=25、all_open=3）、actionable groupは0群。"
+  - "Slack inbox は directives=0件、broadcasts=0件で、受領だけを根拠にcloseすべき行はなかった。"
+issues:
+  - id: ISS-4A-20260827-01
+    description: "atom sr-1776127289-4d9239b255 の title / trigger / excerpt に U+FFFD が残り、検索語『AIエージェント』が欠損している。raw Slack archive 2行にも同じ U+FFFD があるため、表示経路ではなく取得済み原文側の破損である。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl:492; memory/raw/slack_archive/shared-reads.jsonl:1216; tools/memory_health.py --json"
+    source_file_status: "UTF-8 明示読みで source raw と per-atom .md の双方に U+FFFD を確認。元取得データ自体が hard_corruption。"
+    display_or_tooling_status: "none。UTF-8 表示は source の U+FFFD を忠実に表示しており、PowerShell/staging の mojibake ではない。"
+    why_blocks_game_memory: "当該1 atom の検索再現率をわずかに落とすが、game task entry point・教師feedback・次ゲーム導線には属さず、現時点でゲーム制作記憶を実質的には阻害しない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 28
+  mixed_group_count: 25
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+stale_review_batch: []
+```
+
+- `overdue_open_total=4` は JAMEL 2件と collision morphology 2件。同一work 2群の既存 group lease が `deferred`、`retry_after=2026-09-19T14:08:16+09:00` で membership fingerprint も一致するため、stale triage への再投入を抑止した。期限切れ放置ではなく有効な延期receiptであり、このcycleのgroup/candidate enqueueはいずれも0件。
+- topology dry-run の high-inbound 3件は lifecycle representative への集約、stale bridge 1件は `local-20260726-self-judgment-ownership` が旧自己判定atomを supersedeする既知の有向辺だった。default recallでは旧atomが除外されるため、孤児・時系列断絶・新規設計課題とは判定しなかった。
+- Phase 4b gate: `needs_design: false`。低severityの原文破損1件は外部の健全な原文を再取得できた時の限定修復対象であり、新しい仕組みの設計を要しない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
