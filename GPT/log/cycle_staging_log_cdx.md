@@ -52,7 +52,13 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped: []
+no_action_reason: "Phase 2 の gate_decision: pass candidate が 0 件のため、投稿対象なし"
+reviewed_at: "2026-08-27T21:57:23+09:00"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
