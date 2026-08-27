@@ -93,7 +93,94 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "candidate frontmatter 正本から title canonical / mixed duplicate / open duplicate / stale triage / group action の各 sidecar を再生成した"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl を監査し、pending 0 件のため handled 更新は行わなかった"
+  - "memory/raw/ の30日超未更新ファイル242件を監査した。一次資料・headless評価証拠・Slack archive を含み、年齢だけでは安全に移動できないため archive 移動は0件とした"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+stale_review_batch: []
+stale_backlog:
+  lifecycle_status_counts:
+    posted: 727
+    ready_to_post: 9
+    postponed: 204
+    failed: 524
+    needs_review: 0
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_evidence:
+    - "JAMEL duplicate group: deferred lease retry_after=2026-09-19T14:08:16+09:00"
+    - "collision-based enemy morphology duplicate group: deferred lease retry_after=2026-09-19T14:08:16+09:00"
+audits:
+  memory_index:
+    atom_index_refs: 50
+    broken_atoms_jsonl_refs: 0
+    broken_atoms_index_refs: 0
+    markdown_local_links: 0
+    source_file_status: "UTF-8 明示読みで記憶 / ゲーム設計 / 敵パターン / 評価軸をすべて取得。source file 破損なし"
+    display_or_tooling_status: none
+  atoms:
+    rows: 2992
+    per_file_md: 2992
+    index_rows: 2992
+    duplicate_id_count: 0
+    parse_error_count: 0
+    content_conflict_count: 0
+    raw_normalized_content_duplicate_groups: 40
+    recall_visible_normalized_content_duplicate_groups: 3
+    fold_status: "canonical overlay 45 group と lifecycle/content fold が適用済み。表示層の未解決重複は0"
+    known_local_data_quality:
+      - "sr-1776127289-4d9239b255 に U+FFFD が1件残る。単一atomの既知 source defect であり、構造 issue / Phase 4b 起動条件にはしない"
+      - "gr-1777083728-44d444ab7a の question_run は hard corruption ではなく review-only signal"
+  topology:
+    atoms: 2992
+    edges: 567
+    high_inbound: 3
+    sensitive_to_permanent: 1
+    stale_bridge: 1
+    structural_break_detected: false
+  candidate_lifecycle:
+    files: 1464
+    changed_by_audit: 0
+    current_state_conflicts: 0
+    missing_frontmatter: 0
+    title_canonical_groups: 109
+    mixed_duplicate_queue_rows: 25
+    group_handoff_audit_errors: 0
+    candidate_handoff_audit_errors: 0
+  raw_archive:
+    inactive_over_30d_files: 242
+    archived_count: 0
+    reason: "provenance / evaluation evidence の参照先を mtime だけで移動しない。明示的な obsolete 根拠なし"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
