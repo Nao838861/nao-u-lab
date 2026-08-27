@@ -7,14 +7,19 @@ genre_tags: [game-ai, physics-game, self-play, sports-game, playtesting]
 evaluated_at: "2026-08-27T19:53:08+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-27T19:53:08+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-27T19:53:08+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-27T19:59:01.703419+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787828341703419"
+next_action: none
 stale_after: "2026-09-26"
 supersedes: []
+posted:
+  ts: "1787828341.703419"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787828341703419"
+  char_count: 4304
+  posted_at: "2026-08-27T19:59:01.703419+09:00"
 gate_reason: >-
   問題設定、役割別 action の因子分解、self-play と checkpoint opponent pool、sparse reward、
   tactical probe・回復 ablation・人間データ照合まで重要要素を抽出できる。物理ゲームの敵 AI と自動プレイテストに具体的に接続でき、約4000字で手法・評価・限界を論じられる。
