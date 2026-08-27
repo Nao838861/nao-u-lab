@@ -95,7 +95,82 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "MEMORY.md の atom index 50件を atoms/index.jsonl と照合し、broken link 0件を確認"
+  - "atom mirror 2990件の整合、duplicate overlay 45群、recall-visible exact duplicate 3群の fold 適用を確認。未解決 content duplicate と mirror conflict は0件"
+  - "shared-reads の canonical / mixed / open-group / stale-triage / group-action sidecar を再監査。candidate と handoff inbox の正本は変更なし"
+  - "Slack inbox を監査し、pending directive 0件、pending broadcast 0件を確認。handled への新規遷移はなし"
+  - "30日超の raw 242件を archive 候補として確認。raw provenance を参照する atom/candidate があるため、年齢だけでは移動せず保持"
+memory_index_audit:
+  indexed_atom_ids: 50
+  broken_links: 0
+  encoding_representative_words:
+    記憶: found
+    ゲーム設計: found
+    敵パターン: found
+    評価軸: found
+atom_audit:
+  raw_atoms: 2990
+  mirror_status: clean
+  duplicate_overlay_groups: 45
+  raw_normalized_content_duplicate_groups: 40
+  recall_visible_normalized_content_duplicate_groups: 3
+  effective_display_unresolved_groups: 0
+  contradiction_signal: none
+candidate_lifecycle_counts:
+  posted: 725
+  ready_to_post: 9
+  postponed: 203
+  failed: 524
+  needs_review: 0
+issues:
+  - id: ISS-4A-20260827-01
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』相当箇所に U+FFFD が2文字残り、raw provenance まで同じ破損を持つ"
+    severity: medium
+    evidence: "memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/index.jsonl:317; memory/raw/slack_archive/shared-reads.jsonl:492,1216; memory_health hard_corruption_atom_count=1"
+    source_file_status: "UTF-8 decode は成功するが、raw・atoms.jsonl・per-file atom・index に U+FFFD が物理的に存在するため source corruption"
+    display_or_tooling_status: "none。UTF-8 明示読みで MEMORY.md の代表語4件は取得でき、shell 表示だけの mojibake ではない"
+    why_blocks_game_memory: "agent memory 設計の高 score atom で表記が壊れ、語句検索と再引用の品質を落とす。原 Slack または外部 provenance を確認した局所修復が必要"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "唯一の issue は局所データ修復であり、新しい記憶構造の設計を要しない。重複・検索・handoff の既存経路は機械監査で正常"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 28
+  mixed_group_count: 25
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  backlog_high_water_reason: "overdue_open_total > queue rows だが actionable group が3件未満"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  deferred_group_lease_count: 2
+  deferred_retry_after: "2026-09-19T14:08:16+09:00"
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
