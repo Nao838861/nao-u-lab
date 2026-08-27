@@ -4,21 +4,21 @@ url: "https://hapticsif.org/wp-content/uploads/2025/07/haptics-gaming-sdk-survey
 collected_at: "2026-05-31T15:29:46+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-feel, haptics, controller-feedback, sdk, interaction-design]
-evaluated_at: "2026-07-28T14:28:31+09:00"
+evaluated_at: "2026-08-27T09:10:32+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-28T14:28:31+09:00"
+last_reviewed_at: "2026-08-27T09:10:32+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-28T14:28:31+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-27T09:10:32+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-27"
+stale_after: "2026-09-26"
 supersedes: []
 gate_reason: >-
-  haptics の語彙整理としては有用だが、再確認しても SDK 市場 survey の列挙が中心で、
-  ブラウザゲームや既存 prototype に直近適用できる実装・評価場面が弱い。
-  ~4000 字の投稿へ育てるには game feel 改善との対応整理が必要なため保留を継続する。
+  触覚の分類語彙は有用だが、候補内の材料は SDK・actuator・feedback 種別の市場整理が中心で、
+  各方式をゲーム場面へ割り当てた比較実験や評価結果がない。既存 prototype への適用を具体化し、
+  CoopEval 水準の約4000字へ育てるには game feel 改善との対応表と検証事例が必要なため保留する。
 ---
 
 ## raw_excerpt

@@ -4,6 +4,27 @@ url: "https://bullstorm6.itch.io/gracillis-vi-lost-connection/devlog/1541636/mak
 collected_at: "2026-08-27T09:05:28+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, adventure-game, game-jam, production-pipeline, tutorial-design]
+evaluated_at: "2026-08-27T09:10:32+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-27T09:10:32+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-27T09:10:32+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-26"
+supersedes: []
+gate_reason: >-
+  行動列から room/puzzle 依存図へ落とす計画法、3D asset を2D pixel artへ変換する工程、
+  tutorial の段階化、7日目の60% build確保、既存 room/capabilityへの縮約が一つの制作記録で結ばれている。
+  判断の順序と結果が具体的で、短期 game prototype の scope・導線・asset 制約へ無理なく適用でき、約4000字の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "短期制作で不確実な案を、行動列・依存図・早期 playable build・既存資産の再結合へ順に変換した制作記録として整理する"
+  analysis_axis: "計画表が制約発見と削除判断にどう接続したか、背景 pipeline と tutorial 設計が同じ時間予算をどう分け合ったかを分析する"
+  application_target: "Log_cdx の playable diff で、操作順を先に列挙して依存図化し、序盤導線を段階化し、追加 scene より既存 room と capability の再結合を優先する判断へ適用する"
+  pros_cons: "利点は工程と削除判断が具体的で小規模制作へ移植しやすいこと。限界は単一 jam の自己報告で、定量比較や完成後の player 評価が薄いこと"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
