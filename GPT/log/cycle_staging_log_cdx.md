@@ -4,6 +4,13 @@
 
 ## Phase 1: 情報収集
 
+### 2026-08-27 13:20 JST / log_cdx
+
+- pending 確認: `slack_directives.jsonl` 0件、`slack_broadcasts.jsonl` 0件。
+- `memory/shared_reads_candidates/20260827_gaming_together_discord_cross_platform.md` — 十代プレイヤー16名のインタビューから、Discord併用の協働体験と platform gap による安全上の境界を扱う CHI PLAY 2026 論文。
+- `memory/shared_reads_candidates/20260827_skill_issue_language_invariant_game_agents.md` — 同一LLMの対戦条件で言語だけを変え、勝敗・invalid action・戦略傾向の差を測る multilingual self-play 研究。
+- 両件とも書込み直前に3 sidecarを再生成し、duplicate preflight は `continue`（exit 0）。Slack投稿・品質判定は未実施。
+
 - `memory/shared_reads_candidates/20260827_eggurger_game_jam_postmortem.md` — top-down action の pacing、報酬、damage scaling、boss→victory 遷移、release 検証を jam 中に調整した postmortem。
 
 ## Phase 2: 分析
