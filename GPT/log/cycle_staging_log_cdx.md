@@ -151,7 +151,96 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-08-27 09:29 JST
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index target を確認。Markdown link は0件で、記載された memory/atoms.jsonl、memory/raw/、tools/memory_ingest.py、tools/memory_recall.py は全て存在した"
+  - "atoms 2,986件の health / mirror / duplicate audit を実施。ID重複・mirror conflict・未foldの同一内容重複は0件、normalized content 40群は既存overlayでfold済み"
+  - "memory/raw/ の30日超242件を確認。241件は raw 配下の provenance / dated research / evaluation source、残る1件は sync_state.txt であり、原文保持を優先して移動対象なしとした"
+  - "candidate lifecycle と title duplicate sidecar を監査・再生成し、期限前deferred groupのlive leaseを反映して stale triage を3件へ更新した"
+  - "stale triage の単独candidate 3件を Phase 2 handoff inbox へ冪等enqueueした。group action queue は0件"
+  - "Slack directives / broadcasts は pending 0件のため status 更新なし"
+  - "due probe lease は0件のため resolve / dormant receipt なし。lifecycle validate は errors 0"
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読みで正常。代表語は 記憶・ゲーム設計・敵パターン を取得し、評価軸は本文に文字列として不在だが memory_recall の同語queryは5件取得した"
+  display_or_tooling_status: none
+atom_audit:
+  atoms: 2986
+  mirror_status: clean
+  raw_normalized_content_duplicate_groups: 40
+  recall_visible_duplicate_groups: 3
+  canonical_overlay_duplicate_groups: 45
+  content_conflicts: 0
+  hard_corruption_atoms: 1
+  note: "hard corruption は既知の単一atom sr-1776127289-4d9239b255。今回のゲーム記憶導線を遮断する構造問題ではないため4b対象外"
+candidate_lifecycle:
+  files: 1457
+  counts:
+    posted: 722
+    ready_to_post: 9
+    postponed: 205
+    failed: 521
+    needs_review: 0
+  overdue_open_total: 7
+  missing_stale_after: 3
+  note: "missing_stale_after 3件は status: posted だけを持つ既存の投稿本文3件で、open candidate ではないため stale handoff 対象外"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 7
+  stale_triage_queue_rows: 3
+  open_duplicate_group_count: 28
+  mixed_group_count: 25
+  all_open_group_count: 3
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 3
+  candidate_handoff_ids:
+    - cha-2afc67040b5b629a
+    - cha-ccfeedffb3abc42c
+    - cha-47f5d8b1038e9315
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_note: "overdue 7件のうち duplicate group 4件は、JAMEL と collision morphology の2群に対する retry_after 2026-09-19 の deferred lease で抑止。残る単独3件をcandidate handoffした"
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-2afc67040b5b629a
+    path: memory/shared_reads_candidates/20260609_tmnt_tactical_takedown_18_months.md
+    status: postponed
+    stale_after: "2026-08-27"
+    priority_reason: "18か月制作の問題設定は有用だが、公開GDC概要だけでは developer-first production の具体的手法と評価証拠が不足する"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-ccfeedffb3abc42c
+    path: memory/shared_reads_candidates/20260609_yamii_game_pacing_cooldowns_resources.md
+    status: postponed
+    stale_after: "2026-08-27"
+    priority_reason: "cooldown / resource / feedback はpacing調整へ接続できるが、記事固有の比較と評価が薄く一般論化しやすい"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-47f5d8b1038e9315
+    path: memory/shared_reads_candidates/20260728_batman_arkham_shadow_vr_combat.md
+    status: postponed
+    stale_after: "2026-08-27"
+    priority_reason: "VRへのcombat翻訳は適用価値が高いが、公開overviewだけでは変換規則・失敗案・評価内容を復元できない"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
