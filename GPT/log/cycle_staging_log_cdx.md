@@ -51,7 +51,17 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+eligible_candidates: 0
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260827_playable_game_generation.md
+    reason: "Phase 2 の gate_decision が postpone であり、評価指標・baseline・定量結果・失敗条件が不足しているため投稿対象外"
+    action: candidate_revise
+slack_posted: false
+result: "pass candidate がないため #shared-reads への投稿なし"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
