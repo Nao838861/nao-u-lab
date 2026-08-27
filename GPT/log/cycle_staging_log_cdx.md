@@ -66,7 +66,20 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260827_gaming_together_discord_cross_platform.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787805125605319
+    char_count: 3548
+  - candidate: memory/shared_reads_candidates/20260827_skill_issue_language_invariant_game_agents.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1787805158867599
+    char_count: 3555
+skipped: []
+```
+
+- 2件とも一次PDFの方法・結果・限界と主要表を確認し、`tools/shared_reads_policy.py` の投稿前検証を通過した。
+- #shared-reads へ candidate ごとに1回の `chat.postMessage` で投稿し、スレッド返信は使用していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
