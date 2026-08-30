@@ -198,4 +198,17 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1788114508.096059"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1788114508096059"
+  char_count: 2098
+  verification: ok
+  posted_at: "2026-08-31T03:35:08+09:00"
+  draft: tmp/phase5_log_diary_20260831_0327_cdx.md
+```
+
+- 今サイクルの reflection を、VR interaction parameter の多目的評価、social-surface probe の defer、atom mirror audit、U+FFFD source corruption の発見を一本の流れとして記述した。
+- `python tools/post_slack_message_file.py --channel "#log" --file "tmp/phase5_log_diary_20260831_0327_cdx.md" --delete-on-fail` でフラット投稿し、Slack API 保存本文の UTF-8 検証は `ok`。本文 2,098字、U+FFFD 実体 0 件、`?` 0 件を確認した。
