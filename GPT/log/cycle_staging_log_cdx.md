@@ -65,7 +65,36 @@ skipped: []
 - 投稿結果: 1回の `chat.postMessage` で #shared-reads に投稿し、Slack保存本文のUTF-8検証に成功（ts `1788113613.036279`）。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1787805125-f116fc781d
+    source_ts: "1787805125.605319"
+    title: "Gaming Together on Discord: Teen Gamer's Cross-Platform Practices"
+    reason: "score 11 の未レビュー最新候補1件。cross-platform 行為列と platform gap が、現在の定時サイクルまたは次のゲーム制作へ既存 control と異なる小さな判断差を作れるか確認した。Nao_u の明示評価 thread reply は raw で確認できなかった。"
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: defer
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを state に記録した。現在の比較 artifact がなく、既存 social-surface／trajectory／responsibility controls と重複するため、新規 probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採否理由: 行為列に沿って開始地点、価値移転、証拠、責任の観測断絶を記録する方法は具体的だが、現在の staging には invite／trade／chat／external link／report flow を持つ比較対象がない。米国の危険経験者16名への質的調査であり、一般的な発生率や機能案の効果は示さない。既存 `probe-20260613-social-surface-safety-check`、`probe-20260613-agent-trajectory-safety-surface`、`probe-20260708-mcp-responsibility-boundary-check` が中核判断を既に覆い、active probe も327件あるため、実在する social surface が現れるまで state-only で defer する。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

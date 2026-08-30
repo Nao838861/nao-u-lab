@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-27T22:00:33+09:00",
+  "updated_at": "2026-08-31T03:19:30+09:00",
   "reviewed_source_ts": [
+    "1787805125.605319",
     "1787828341.703419",
     "1787820652.633579",
     "1787782566.588969",
@@ -25669,6 +25670,51 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、topic seed／artifact contract 分離の局所有用性、既存4 controlsとの重複、比較 artifact 不在、active probe 増殖 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-31T03:19:30+09:00",
+      "selected": {
+        "id": "sr-1787805125-f116fc781d",
+        "source_ts": "1787805125.605319",
+        "title": "Gaming Together on Discord: Teen Gamer's Cross-Platform Practices",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、memory・harness・game-design・evaluation の優先4タグを持つ最新候補から1件だけ選んだ。ゲーム内外をまたぐ行為列と、価値・証拠・通報責任の観測が切れる platform gap が、現在の Codex 定時サイクルまたは次のゲーム制作に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した thread reply は raw で確認できなかった。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "defer",
+      "decision_reason": "合計12で採用条件14に届かず、non_redundancy と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、ゲーム→Discord→DM／取引／通報という行為列に沿って開始地点、価値移転、証拠、責任の切れ目を記録し、公開→非公開、ゲーム→外部、会話→価値移転の遷移を試す行動へ具体化できるため actionability は3とした。一方、現在の staging には招待・取引・外部コミュニティ機能を持つ playable diff や before／after 比較 artifact がなく、直後の Phase 4a を consumer にすると no_applicable だけの名目 lease になるため relevance は2。根拠は米国の14〜17歳16名への質的 interview で、危険経験を持つ参加者を目的抽出しており、実ログ、moderator／保護者側観測、機能案の被害低減効果はないため evidence は2。probe-20260613-social-surface-safety-check は player 間 surface、mechanics-derived risk、moderation／recovery affordance を、probe-20260613-agent-trajectory-safety-surface は外部 service をまたぐ安全境界と near-miss 分類を、probe-20260708-mcp-responsibility-boundary-check は provider／local client／人間 gate／Codex action の責任境界を既に扱う。cross-platform action sequence は固有差だが、実在する social surface なしでは既存 controls を言い換える比重が大きく non_redundancy は1。active_probes は327件あり、年少者を含む高 stakes な質的事例から外部サービス依存表、4 headless scenario、複数判断負荷 metric を先に常設すると、privacy／moderation／評価負荷と過剰一般化が判断差を上回るため risk_control は1とした。次に実在する invite、trade、chat、external link、report flow のいずれかを持つ prototype が現れ、既存 social-surface probe だけではサービス間の最初の観測断絶を特定できない時に、代表行為列1件の paired scenario として再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1787805125-f116fc781d.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1787805125.605319",
+        "memory/shared_reads_candidates/20260827_gaming_together_discord_cross_platform.md",
+        "https://arxiv.org/abs/2608.25942v1"
+      ],
+      "existing_controls": [
+        "probe-20260613-social-surface-safety-check",
+        "probe-20260613-agent-trajectory-safety-surface",
+        "probe-20260708-mcp-responsibility-boundary-check"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、cross-platform 行為列／platform gap の局所有用性、現在の比較 artifact 不在、既存 social-surface／trajectory／responsibility controls との重複、質的事例の過剰一般化 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
