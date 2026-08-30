@@ -52,7 +52,17 @@ unreviewed_intake_audit:
 - sidecar: candidate frontmatter 更新後に posted-source / closed canonical / open duplicate group を再生成し、各 `--check` 成功（897 / 109 / 29 rows）。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260831_vr_interaction_mechanics_design_recommendations.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788113613036279
+    char_count: 3744
+skipped: []
+```
+
+- 最終判定: 投稿。原論文で3実験のparameter、客観・主観指標、統計結果、設計勧告、参加者属性と90秒testbedの限界を照合した。本文は3,744字、必須6節、`■ 概要` 開始、`■ URL` 末尾、禁止表現なしを確認した。
+- 投稿結果: 1回の `chat.postMessage` で #shared-reads に投稿し、Slack保存本文のUTF-8検証に成功（ts `1788113613.036279`）。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
