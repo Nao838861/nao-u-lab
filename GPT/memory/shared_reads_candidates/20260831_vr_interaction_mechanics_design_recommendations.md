@@ -4,6 +4,26 @@ url: "https://www.frontiersin.org/journals/virtual-reality/articles/10.3389/frvi
 collected_at: "2026-08-31T03:04:31+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, vr, interaction-mechanics, player-experience, accessibility, playtesting]
+evaluated_at: "2026-08-31T03:08:52+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-31T03:08:52+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-31T03:08:52+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-30"
+supersedes: []
+gate_reason: >-
+  3種類のVR操作を具体的な調整因子へ分解し、計90人の客観性能・楽しさ・workload・VRISEを対応づけている。
+  条件別の結果、設計勧告、短時間testbedと参加者属性による限界が揃い、ゲーム制作への適用をこじつけず約4000字で論じられる。
+suggested_post_outline:
+  overview_angle: "VR操作を難易度の一軸ではなく、性能・快楽・身体負荷が異なる応答を示すparameter群として設計する研究"
+  analysis_axis: "最小負荷が常に最大の楽しさではない点と、補助・当たり判定・可動範囲を独立に測る多目的playtestの価値"
+  application_target: "Log_cdxのVR prototypeで、mechanicごとのparameter matrixと性能・fun・workload・VRISEの受入基準を作る"
+  pros_cons: "実装へ落とせる粒度と90人の比較が強み。単純化した短時間testbed、若く健康な初心者中心、複合mechanic未検証が弱み"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
