@@ -4,21 +4,20 @@ url: "https://research-portal.uu.nl/en/publications/dont-hit-the-wall-just-squee
 collected_at: "2026-06-16T22:44:24+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, player-experience, frustration, toxicity, tangible-interface, chi2026]
-evaluated_at: "2026-07-29T04:08:11+09:00"
+evaluated_at: "2026-09-01T00:00:34+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-29T04:08:11+09:00"
+last_reviewed_at: "2026-09-01T00:00:34+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-29T04:08:11+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-09-01T00:00:34+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-28"
+stale_after: "2026-10-01"
 supersedes: []
 gate_reason: |-
-  frustration を入力デバイスと休止導線で扱う問題設定は明確だが、設計要件、評価結果、限界の材料が増えていない。
-  hardware/tangible intervention から現行のゲーム制作サイクルへ移すには媒介となる設計原則も不足する。
-  具体的な手法と評価を CoopEval 水準で説明できないため、今回は postpone を維持する。
+  frustration を入力デバイスと休止導線で扱う問題設定は明確だが、9名調査の結果、設計要件、限界の材料は今回も増えていない。
+  tangible intervention をゲーム内の休止・鎮静導線へ移す媒介原則を原論文から補える余地があるため、postpone を維持する。
 ---
 
 ## raw_excerpt

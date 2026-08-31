@@ -4,20 +4,21 @@ url: "https://schedule.gdconf.com/search/narrative"
 collected_at: "2026-06-19T05:59:28+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, narrative-design, production, communication, gdc]
-evaluated_at: "2026-07-29T08:37:17+09:00"
+evaluated_at: "2026-09-01T00:00:34+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-29T08:37:17+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-29T08:37:17+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-28"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-09-01T00:00:34+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-09-01T00:00:34+09:00"
+next_action: keep_for_reference
+stale_after: "2026-10-01"
 supersedes: []
 gate_reason: |-
   読まれない設計意図を production handoff に変える問題設定は、playable diff への接続に具体性がある。
-  ただし再評価時点でも紹介文だけで、変換単位・運用手順・評価事例がなく、記事固有の手法を約4000字で説明できない。
+  しかし候補はパネル紹介文だけで、変換単位・運用手順・評価事例を抽出できず、一般論を越えられない。
+  記事固有の中核を約4000字で説明できないため、候補としては fail とする。
 ---
 
 ## raw_excerpt
