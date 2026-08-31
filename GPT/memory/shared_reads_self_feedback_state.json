@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-09-01T05:21:57+09:00",
+  "updated_at": "2026-09-01T07:48:17+09:00",
   "reviewed_source_ts": [
+    "1788207249.323529",
     "1788179905.992809",
     "1788189260.935909",
     "1788179915.664289",
@@ -25953,6 +25954,55 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、candidate supply／recognition／selection 分解の局所有用性、既存 compiled-memory／pluralistic-leaderboard／multiagent-rationale controls との大幅な重複、比較 artifact 不在、active probe 増殖 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-09-01T07:48:17+09:00",
+      "selected": {
+        "id": "sr-1788207249-913c8fa30e",
+        "source_ts": "1788207249.323529",
+        "title": "Harvesters solo development postmortem — AI coding・外注・first playable からの反復 playtest の境界設計",
+        "reason": "source が slack_api/shared-reads、score 11、未レビュー候補のうち source_ts が最新で、memory・harness・game-design・agent・operation・evaluation の優先6タグを持つため1件だけ選んだ。AI coding、外注、human playtest を万能な短縮策ではなく、人間が engine 構造・受入条件・first playable を先に握る制作 loop として扱う知見が、次の game prototype へ既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した thread reply はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "defer",
+      "decision_reason": "合計13で採用条件14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、最小 loop を first playable として固定し、Resource／Config／Scene／UI の ownership を人間が先に決め、外注物を完成画像ではなく layered source・要素別 export・改変権まで含む acceptance で受け取り、同じ build に headless invariant と human observation を結ぶ行動へ直接変換できるため relevance・actionability は3とした。一方、根拠は初の solo 制作を振り返る単一作者の devlog と公開コメントで、tester 数、build 数、AI なしの工数、feedback ごとの変更、外注 acceptance 導入前後、balance 改善の比較がなく、予定超過には engine 学習・art・音楽・外注・暗号化の scope が交絡するため evidence は2に留める。probe-20260602-game-scope-brief-cut-gate は first playable done condition と最小 risk test、probe-20260617-provisional-artifact-acceptance-gate は生成 artifact の phase・受入基準・rework burden、probe-20260621-ai-readable-playtest-acceptance-surface と probe-20260606-game-feedback-loop-asymmetry は headless／manual feel の証拠境界を既に扱う。外注 source の編集可能性と学習目的／公開品質作業の時間枠分離は局所差だが、現在の staging の後続は Phase 4a memory cleanup で、比較可能な game build、外注成果物、学習作業により first playable が遅れた before／after artifact がないため non_redundancy・risk_control は1とした。active_probes は327件、pending lease は0件であり、具体 artifact なしに同義 checklist を増やすと次回判断差より確認負荷が増える。次に実在する game prototype で外注または AI 生成 asset を受け入れるか、学習課題が first playable／balance を押しのける具体例が生じ、既存4 controlsだけでは source 編集可能性または目的別 timebox を採否へ結べない時に、単一 artifact の paired receipt として再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-09/sr-1788207249-913c8fa30e.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1788207249.323529",
+        "memory/shared_reads_candidates/20260901_harvesters_solo_ai_coding_playtest.md",
+        "memory/shared_reads_candidates/posted_drafts/20260901_harvesters_solo_ai_coding_playtest_post.md",
+        "https://chuckiee3.itch.io/harvesters/devlog/1584663/harvesters-a-little-clicker-game-about-mining-in-space",
+        "https://chuckiee3.itch.io/harvesters/comments?before=4"
+      ],
+      "existing_controls": [
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260617-provisional-artifact-acceptance-gate",
+        "probe-20260621-ai-readable-playtest-acceptance-surface",
+        "probe-20260606-game-feedback-loop-asymmetry"
+      ],
+      "defer_condition": "実在する game prototype で外注または AI 生成 asset を受け入れるか、学習課題が first playable／balance を押しのける具体例が生じ、既存4 controlsだけでは source 編集可能性または目的別 timebox を採否へ結べない時に限り、単一 artifact の paired receipt として再評価する。",
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、first playable／人間所有の engine 境界／外注 source acceptance／headless と human observation の併記の局所有用性、既存 scope／acceptance／feedback controls との大幅な重複、比較 artifact 不在、active probe 増殖 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

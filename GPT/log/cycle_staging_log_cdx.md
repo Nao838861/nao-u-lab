@@ -120,7 +120,36 @@ reviewed_at: "2026-09-01T07:44:49+09:00"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1788207249-913c8fa30e
+    source_ts: "1788207249.323529"
+    title: "Harvesters solo development postmortem — AI coding・外注・first playable からの反復 playtest の境界設計"
+    reason: "source が slack_api/shared-reads、score 11、未レビュー候補のうち最新で、memory・harness・game-design・agent・operation・evaluation の優先6タグを持つ。AI coding・外注・human playtest を、人間が engine 構造・受入条件・first playable を握る制作 loop として扱う知見が、次の prototype に小さな判断差を作れるか確認した。Nao_u の本投稿への明示評価はローカル raw では確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: defer
+  decision_reason: "最小 loop の first playable、engine ownership、外注物の layered source acceptance、同一 build への headless invariant と human observation の併記は実行可能。ただし単一作者の devlog と公開コメントであり、tester 数、build 数、AI なし工数、feedback 別変更、外注 acceptance 導入前後を欠く。既存の game-scope-brief-cut-gate、provisional-artifact-acceptance-gate、ai-readable-playtest-acceptance-surface、game-feedback-loop-asymmetry が中核判断を既に扱う。現 staging の後続は Phase 4a memory cleanup で、比較可能な game build・外注成果物・学習作業による first playable 遅延 artifact がない。327件の active probe へ同義 checklist を増やさず、実在 artifact で既存4 controlsが source編集可能性または目的別timeboxを採否へ結べない時だけ再評価する。"
+  change:
+    summary: "reviewed_source_ts と defer 理由・再評価条件だけを state に記録。active_probes、probe lifecycle ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+reviewed_at: "2026-09-01T07:48:17+09:00"
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
