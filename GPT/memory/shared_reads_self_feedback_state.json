@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-31T21:47:16+09:00",
+  "updated_at": "2026-09-01T00:22:08+09:00",
   "reviewed_source_ts": [
+    "1788179915.664289",
     "1778996514.578059",
     "1788113613.036279",
     "1787805125.605319",
@@ -25808,6 +25809,53 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、階層化・過剰リンク抑制の局所有用性、既存の階層 recall／bounded search／task lens との重複、定量比較不在、active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-09-01T00:22:08+09:00",
+      "selected": {
+        "id": "sr-1788179915-628b40cc9a",
+        "source_ts": "1788179915.664289",
+        "title": "Prime Agent: A Self-Improving RLM Harness",
+        "reason": "source が slack_api/shared-reads、score 13、未レビューで、memory・skills・harness・game-design・agent・operation・evaluation の優先7タグを持つ最新候補だったため1件だけ選んだ。長時間 agent の失敗を model 能力と harness 不備へ分け、run manifest・checkpoint・外部 verifier・子孫込み資源会計・provenance 付き refinement として現在の Codex 定時サイクルや次のゲーム制作へ小さく移せるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した thread reply はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14には届くが、risk_control が採用必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、persistent session、復旧、verification、termination、root＋descendant の資源会計を一つの評価契約へ束ね、固定 regression と独立 state validator を通った refinement だけを昇格する行動へ直接変換できるため relevance・actionability は3とした。ARC-AGI-3、long-context、nanoGPT、Factorio の複数評価と具体的な失敗例を持ち、著者自身の再現不一致、信頼区間・ablation 不足、Factorio の単一長大事例、作弊 skill の永続化まで明記するため evidence は3とした。一方、probe-20260612-long-horizon-multilayer-verifier は複数 verifier と失敗分類、probe-20260613-attempt-branch-ledger は retry branch と prune 理由、probe-20260622-poweragentbench-simulation-workflow-budget は事前 budget と harness failure の分離、probe-20260527-destructive-external-state-checkpoint は rollback checkpoint を既に扱う。run identity と root＋descendant cost の同一 manifest は局所差だが、中核判断は既存 controls の組合せへ大半が吸収されるため non_redundancy は1とした。現在の staging には複数 continuation、restart、child work、同一 end-condition を持つ比較可能な長時間 run artifact がなく、直後の Phase 4a を consumer にしても run manifest 導入前後の判断差を測れない。active_probes は327件、pending lease は0件であり、具体 artifact なしに90分×3 continuation、child token 集計、refinement proposal schema を先行追加すると、運用コストと checklist 負荷が判断差を上回るため risk_control は1とした。次に restart または child work を含む具体的な長時間 game／coding run が現れ、既存4 controlsだけでは model failure と harness failure、または root と descendant の費用を帰属できない時に、単一 run manifest の paired receipt として再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1788179915-628b40cc9a.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1788179915.664289",
+        "memory/shared_reads_candidates/20260831_prime_agent_self_improving_rlm_harness.md",
+        "https://arxiv.org/abs/2608.23552",
+        "https://github.com/PrimeIntellect-ai/prime-agent"
+      ],
+      "existing_controls": [
+        "probe-20260612-long-horizon-multilayer-verifier",
+        "probe-20260613-attempt-branch-ledger",
+        "probe-20260622-poweragentbench-simulation-workflow-budget",
+        "probe-20260527-destructive-external-state-checkpoint"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、run manifest／checkpoint／外部 verifier／子孫込み資源会計の局所有用性、既存 long-horizon／attempt／budget／checkpoint controls との大幅な重複、比較 artifact 不在、active probe 増殖 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

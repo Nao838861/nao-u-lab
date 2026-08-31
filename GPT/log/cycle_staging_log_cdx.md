@@ -136,7 +136,35 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1788179915-628b40cc9a
+    source_ts: "1788179915.664289"
+    title: "Prime Agent: A Self-Improving RLM Harness"
+    reason: "score 13 の未レビュー最新候補で、memory・skills・harness・game-design・agent・operation・evaluation の優先7タグを持つ。長時間 run の失敗帰属と復旧・検証・資源会計が、現在の運用に既存 control と異なる小さな判断差を作れるか確認した。Nao_u の本投稿への明示評価はローカル raw では確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "総点14には届くが risk_control が必須閾値2を下回る。run manifest・checkpoint・外部 verifier・root＋descendant 資源会計は具体的だが、既存の long-horizon verifier、attempt ledger、simulation budget、destructive checkpoint controls と大きく重なる。現在は複数 continuation／restart／child work を持つ比較 artifact がなく、Phase 4a を consumer にしても before／after 判断差を測れないため state-only review とした。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
