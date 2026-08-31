@@ -104,7 +104,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1788113613-f97c51d754
+    source_ts: "1788113613.036279"
+    title: "Evaluating interaction mechanics in virtual reality gaming — parameter別の性能・fun・workload境界"
+    reason: "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・operation・evaluation の優先5タグを持つ最新候補だったため1件だけ選んだ。VR mechanic の parameter 別実験が現在の cycle または次の prototype に既存 control と異なる判断差を作れるか確認した。Nao_u の明示評価 reply はローカル raw では確認できなかった。"
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: defer
+  decision_reason: "計90人の条件比較は、parameter別の客観性能とfun・workload・comfortの反転を測る行動へ具体化できる。一方、現 staging にVR build・同一mechanicのbefore/after・人間playtestがなく、直後のPhase 4aは実consumerではない。自動性能とhuman feelの証拠分離、proxy校正、1〜2 parameterの局所修正、支援強度は既存probeでほぼ覆われ、active_probes 327件へ新設する判断差より確認負荷が大きい。次の実在VR artifactで既存controlsだけでは反転を判定できない時に、同一mechanic・1 parameterのpaired comparisonとして再評価する。"
+  change:
+    summary: "reviewed_source_ts と state-only defer 理由を記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

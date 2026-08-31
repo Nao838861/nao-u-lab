@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-31T03:19:30+09:00",
+  "updated_at": "2026-08-31T19:01:25+09:00",
   "reviewed_source_ts": [
+    "1788113613.036279",
     "1787805125.605319",
     "1787828341.703419",
     "1787820652.633579",
@@ -25715,6 +25716,53 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、cross-platform 行為列／platform gap の局所有用性、現在の比較 artifact 不在、既存 social-surface／trajectory／responsibility controls との重複、質的事例の過剰一般化 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-31T19:01:25+09:00",
+      "selected": {
+        "id": "sr-1788113613-f97c51d754",
+        "source_ts": "1788113613.036279",
+        "title": "Evaluating interaction mechanics in virtual reality gaming — parameter別の性能・fun・workload境界",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・operation・evaluation の優先5タグを持つ最新候補だったため1件だけ選んだ。VR mechanic を実装可能な parameter に分け、客観性能と fun・workload・comfort を同時に測る知見が、現在の Codex 定時サイクルまたは次の game prototype に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した thread reply はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "defer",
+      "decision_reason": "合計13で採用条件14に届かず、non_redundancy と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、slash・pick-and-place・shoot を視野範囲、必要力、武器長、puzzle／collider scale、remote grab、余白、照準補助、射出力へ分け、各mechanic 30人・計90人の within-subject 条件比較で客観性能と fun・challenge・competence・身体／認知負荷・継続意思・VRISE を併置する。最小負荷が常に最大funではない反転、laserと弾道表示の併用による干渉、remote grabの負荷増と楽しさ増を示し、parameter別A/Bと多目的な受入判断へ直接変換できるため actionability・evidence は3とした。一方、各mechanicは別参加者群、原則90秒の単純testbed、18〜34歳の健康な参加者中心で、複合mechanic・長時間疲労・多様な身体条件・完成gameへの外挿は未検証である。現在のstagingにはVR build、同一mechanicのbefore／after、人間playtestを結ぶtrigger artifactがなく、直後のPhase 4aはmemory cleanupで実consumerにならないため relevance は2。probe-20260606-game-feedback-loop-asymmetry はheadless／人間play feelの証拠境界、probe-20260601-proxy-signal-variance-gate と probe-20260608-calibration-boundary-human-judgment は自動性能をfunの代理にしない境界、probe-20260621-fly-fail-fix-metric-visual-repair は1〜2 parameterの局所修正と定量／視覚証拠、probe-20260710-feedback-device-amplitude-axis は支援強度と保持すべきchoiceを既に扱う。mechanic固有の負荷応答分類は有用だが、中核判断は既存controlsの組合せへほぼ吸収されるため non_redundancy は1。active_probesは327件あり、具体artifactなしにparameter matrix、複数主観尺度、長時間sessionを常設すると、組合せ爆発と計測負荷が判断差を上回るため risk_control は1とした。次に実在するVR prototypeが現れ、既存controlsだけでは性能向上とfun／comfort悪化の反転を判定できない時に、同一mechanic・1 parameter・固定sessionのpaired comparisonとして再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1788113613-f97c51d754.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1788113613.036279",
+        "memory/shared_reads_candidates/20260831_vr_interaction_mechanics_design_recommendations.md",
+        "https://www.frontiersin.org/journals/virtual-reality/articles/10.3389/frvir.2026.1833901/full"
+      ],
+      "existing_controls": [
+        "probe-20260606-game-feedback-loop-asymmetry",
+        "probe-20260601-proxy-signal-variance-gate",
+        "probe-20260608-calibration-boundary-human-judgment",
+        "probe-20260621-fly-fail-fix-metric-visual-repair",
+        "probe-20260710-feedback-device-amplitude-axis"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、parameter別の客観性能／fun／workload境界の局所有用性、現在の比較artifact不在、既存feedback-loop／proxy-calibration／local-repair／intervention-amplitude controlsとの大幅な重複、active probe増殖riskに基づくdefer理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
