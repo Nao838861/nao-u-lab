@@ -110,7 +110,30 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260831_praxist_solution_lineages.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788189254472329
+    char_count: 4274
+  - candidate: memory/shared_reads_candidates/20260831_agentic_ai_resource_constraints.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788189260935909
+    char_count: 4381
+skipped: []
+review:
+  policy_passed: true
+  required_sections_ordered: true
+  banned_phrases_absent: true
+  one_message_per_candidate: true
+  slack_utf8_verification: ok
+  final_decisions:
+    - candidate: memory/shared_reads_candidates/20260831_praxist_solution_lineages.md
+      decision: partial_adoption
+      boundary: 異なる基盤 model・単発 campaign・主要構成要素の ablation 不足を明記し、typed finding と evidence maturity の最小 ledger だけを採用
+    - candidate: memory/shared_reads_candidates/20260831_agentic_ai_resource_constraints.md
+      decision: partial_adoption
+      boundary: 23 prompt の選択・各1 attempt・単一評価者・memory 単位仮定を明記し、paired receipt と資源計測軸だけを採用
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

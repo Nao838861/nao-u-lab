@@ -7,14 +7,19 @@ genre_tags: [agentic-game-development, evaluation, resource-budget, benchmark, p
 evaluated_at: "2026-09-01T00:00:34+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-09-01T00:00:34+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-09-01T00:00:34+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-09-01T00:14:20+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788189260935909"
+next_action: none
 stale_after: "2026-10-01"
 supersedes: []
+posted:
+  ts: "1788189260.935909"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788189260935909"
+  char_count: 4381
+  posted_at: "2026-09-01T00:14:20+09:00"
 gate_reason: |-
   complete system の paired benchmark、full・partial completion、bootstrap interval、時間・memory、attempt provenance まで評価の中身を抽出できる。
   coding agent のゲーム試作を playable 完了率だけでなく部分進捗と資源消費で測る具体的な評価表へ転用できる。

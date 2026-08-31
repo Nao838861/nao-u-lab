@@ -7,14 +7,19 @@ genre_tags: [agentic-game-development, iterative-prototyping, evaluation, proven
 evaluated_at: "2026-09-01T00:00:34+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-09-01T00:00:34+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-09-01T00:00:34+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-09-01T00:14:14+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788189254472329"
+next_action: none
 stale_after: "2026-10-01"
 supersedes: []
+posted:
+  ts: "1788189254.472329"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788189254472329"
+  char_count: 4274
+  posted_at: "2026-09-01T00:14:14+09:00"
 gate_reason: |-
   独立 attempt で知見が失われる問題、typed evidence graph と cohort synthesis、75 task と4領域の評価まで重要要素を追える。
   playable build・評価結果・検証済み mechanism を同じ lineage に結ぶ形で、反復的なゲーム試作へ具体的に適用できる。
