@@ -135,7 +135,92 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の High Signal / Recent / Game Task Entry Points / Tag Entry Points を per-file atom index と照合し、broken link 0件を確認した。UTF-8 明示読みでは『記憶』『ゲーム設計』『敵パターン』を取得でき、validator も通過した。『評価軸』は本文に現れなかったが、mojibake residue は検出されていない。"
+  - "memory/atoms.jsonl と per-file atom を監査した。atom 2994件、duplicate id 0件、duplicate source_ts 0件、normalized-content duplicate 40群/80行は既存 fold で40行に集約され、duplicate cluster index 45群も fresh だった。矛盾する lifecycle evidence は検出されなかった。"
+  - "title quality は raw debt 874行/651群に対し effective display unresolved 0行/0群で、semantic alias による検索表示の補完が機能していることを確認した。"
+  - "memory/raw/ で 2026-08-01 より前に最終更新された244ファイルを確認した。Slack archive と web research の一次資料で provenance と再検証に使うため、mtime のみを根拠に移動せず、archive 0件とした。"
+  - "shared-reads candidate lifecycle は posted 729 / ready_to_post 9 / postponed 204 / failed 524 / needs_review 0。terminal は再評価対象外とし、canonical/mixed/open/stale/group-action sidecar を再生成した。"
+  - "Slack inbox は directives pending 0件、broadcasts pending 0件で、handled への更新対象はなかった。"
+  - "due probe lease は0件だったため resolve/dormant/merge/retire の receipt は作成せず、pending due 0件の確認結果だけを記録した。"
+issues:
+  - id: ISS-20260831-LEGACY-UFFFD
+    description: "旧 Slack archive の1投稿に U+FFFD が実在し、active atom sr-1776127289-4d9239b255 の title / trigger / excerpt に継承されている。新規 Slack ingest の hard_corruption quarantine は存在するが、この legacy atom は recall-visible のままである。"
+    severity: medium
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; python tools/memory_health.py --json hard_corruption_atoms"
+    source_file_status: "UTF-8 明示読みで raw source と per-file atom の双方に U+FFFD を確認した。source file 自体の既存破損であり、表示だけの mojibake ではない。"
+    display_or_tooling_status: "memory_health、rg、related-candidate 表示はいずれも同じ破損文字列を再現する。tooling 経路固有の変換異常はない。"
+    why_blocks_game_memory: "memory / skills / agent を探す recall や related-candidate 生成で破損タイトルが候補に入り、次のゲーム制作で参照対象を識別しにくくする。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "新規混入の quarantine と health 検出は既に存在する。残件は原文再取得または明示的 lifecycle remediation を要する単発 legacy data cleanup で、新しい仕組みの設計課題ではない。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 25
+  stale_triage_queue_rows: 21
+  open_duplicate_group_count: 29
+  mixed_group_count: 25
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-47a38e960ae17118
+    - cha-81cf3fa9ec4f64c6
+    - cha-db224cdb524b3961
+    - cha-fa7f0e5309d92b9c
+    - cha-fb57a74522535826
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-47a38e960ae17118
+    path: memory/shared_reads_candidates/20260731_procedural_level_design_drl.md
+    status: postponed
+    stale_after: "2026-08-30"
+    priority_reason: "solver→generator の二agent loop は自動playtestへ移せるが、reward・観測/行動・baseline・定量結果が不足するため。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-81cf3fa9ec4f64c6
+    path: memory/shared_reads_candidates/20260801_pragmatic_reasoning_in_design.md
+    status: postponed
+    stale_after: "2026-08-31"
+    priority_reason: "tutorial level と affordance 配置へ接続できるが、design game 条件・参加者・baseline・効果量が不足するため。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-db224cdb524b3961
+    path: memory/shared_reads_candidates/20260801_sonic_pico_park_mechanics_translation.md
+    status: postponed
+    stale_after: "2026-08-31"
+    priority_reason: "guest mechanic の翻訳方針は有用だが、操作・役割・puzzle 構造・評価証拠が不足するため。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-fa7f0e5309d92b9c
+    path: memory/shared_reads_candidates/20260518_ai_graphical_asset_generation_heuristics.md
+    status: postponed
+    stale_after: "2026-08-28"
+    priority_reason: "asset pipeline への段階別配置は適用可能だが、heuristic 一覧・16名調査設計・推奨優先度が不足するため。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-fb57a74522535826
+    path: memory/shared_reads_candidates/20260614_pacific_drive_survival_taxonomy.md
+    status: postponed
+    stale_after: "2026-08-28"
+    priority_reason: "survival fundamentals と player fantasy の軸は適用可能だが、taxonomy 本体・具体例・評価が不足するため。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
