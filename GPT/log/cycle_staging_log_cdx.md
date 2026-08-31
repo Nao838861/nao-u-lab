@@ -152,7 +152,60 @@ reviewed_at: "2026-09-01T07:48:17+09:00"
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。index 内 atom 参照 87 件は全件実在し、参照先 4 path も存在、broken link は 0 件。代表語 probe は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false で、本文に U+FFFD はなく source mojibake は認めなかった"
+  - "memory/atoms.jsonl 3000 行を memory_health と duplicate cluster check で監査。normalized-content 重複は raw 40 群 / 80 行（fold extra 40）、recall-visible 3 群、canonical overlay 45 群で index は整合し、ID 重複・lifecycle 矛盾エラーは 0 件"
+  - "memory/raw/ の最終更新 30 日超ファイルを 244 件抽出。raw は原文正本で archive 契約がないため、この cycle では移動せず保持した"
+  - "shared-reads candidate lifecycle 1474 件を dry-run 監査。posted 735 / ready_to_post 9 / postponed 201 / failed 529 / needs_review 0、current status conflict 0、overdue open 4 件"
+  - "open duplicate / stale triage / group action sidecar を順に再生成し、group/candidate handoff を cycle 2026-09-01 07:31 で冪等監査。新規 enqueue はともに 0 件"
+  - "Slack inbox lifecycle を監査。directives 0 pending / broadcasts 0 pending のため handled 更新なし"
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の title / excerpt / trigger に U+FFFD が残り、『AIエージェント』相当の語が破損している"
+    severity: low
+    evidence: "memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; python tools/memory_health.py --compact"
+    source_file_status: "UTF-8 明示読みでも U+FFFD を確認。source file 自体の局所破損であり、atoms.jsonl と per-file atom の双方に存在する"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "該当 atom の title / trigger の完全一致検索と関連候補表示を局所的に弱めるが、3000 atom 全体の recall や duplicate fold を構造的には阻害していない"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+stale_review_batch: []
+group_action_handoff: []
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 30
+  mixed_group_count: 26
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  deferred_group_lease_suppressed_candidate_count: 4
+  deferred_group_lease_ids:
+    - gha-e6d4d4b5a37a0808
+    - gha-2313a247c62a9028
+  deferred_group_retry_after: "2026-09-19T14:08:16+09:00"
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
