@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2608.25937"
 collected_at: "2026-08-31T21:05:30+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [ai-agent, multi-agent, evaluation, selection, game-testing]
+evaluated_at: "2026-08-31T21:15:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-31T21:15:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-31T21:15:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-30"
+supersedes: []
+gate_reason: |-
+  正解候補が存在しても多数派の誤答へ収束する問題を、candidate generation・judge recognition・terminal selection に分解し、固定 candidate pool の大規模 replay と具体的な accuracy 改善で検証している。
+  複数の AI playtest・設計案・修正案を集めるゲーム制作 pipeline に、候補被覆率と選択器の性能を分離して測る形で直接適用でき、CoopEval 水準の概要を構成できるため pass とする。
+suggested_post_outline:
+  overview_angle: "候補生成に成功しても多数決で正解を失う問題を、供給・認識・最終選択の三段階へ分解した評価研究"
+  analysis_axis: "固定 candidate pool の replay により生成品質を固定し、正解候補の希少性、judge の識別可能性、回答頻度を組み合わせた selection rule の寄与を切り分ける"
+  application_target: "複数 AI による playtest 所見・ゲーム案・修正案の選抜で、oracle coverage、judge recall、selected accuracy を別々に記録する評価 loop"
+  pros_cons: "利点は候補数や合議を増やすだけでは改善しない条件を定量化できること。弱点は知識・推論 benchmark 中心で、主観的な面白さや多目的なゲーム案選抜には別の rubric と人間評価が必要なこと"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

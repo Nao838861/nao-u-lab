@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2608.23552"
 collected_at: "2026-08-31T21:08:34+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [ai-agent, harness, long-horizon, coding-agent, game-playing, evaluation]
+evaluated_at: "2026-08-31T21:15:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-31T21:15:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-31T21:15:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-30"
+supersedes: []
+gate_reason: |-
+  persistent REPL、trajectory 間で持続する memory／skill、recursive subagent、recovery・verification・resource accounting を統合し、model 能力と harness 失敗を分離する問題設定と実装の中核が明確である。
+  ARC-AGI-3、coding、emulator、Factorio の継続進行という複数評価があり、長時間の自動プレイ・ゲーム制作 agent の実行基盤へ具体的に適用できるため pass とする。
+suggested_post_outline:
+  overview_angle: "長期 agent の失敗を model の戦略能力だけに帰さず、持続状態・復旧・検証・資源管理を担う harness の問題として切り出す"
+  analysis_axis: "persistent REPL、continual memory、recursive subagent、標準化された execution／recovery／verification が各 benchmark と Factorio の継続進行にどう寄与するかを分けて読む"
+  application_target: "長時間の自動プレイ、反復的なゲーム実装、途中失敗から再開する評価 run で、session checkpoint・検証証拠・resource budget を明示する agent harness"
+  pros_cons: "利点は実行基盤の故障を戦略能力の不足と混同せず、再開可能な長期作業を設計できること。弱点は harness と model／subagent の寄与分離、運用コスト、ゲーム固有評価の再現性を追加検証する必要があること"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
