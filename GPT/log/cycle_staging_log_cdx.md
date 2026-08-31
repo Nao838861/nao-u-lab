@@ -89,7 +89,14 @@ unreviewed_intake_audit:
   valid_backlog_after: 0
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+posted:
+  - candidate: memory/shared_reads_candidates/20260901_harvesters_solo_ai_coding_playtest.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788207249323529
+    char_count: 4159
+skipped: []
+final_decision: "post — 原典本文と公開コメントで、AI coding の限界、Godot 構造の人間側責任、外注 source の受入条件、first playable からの反復完走、終盤 balance の失敗条件を確認。因果を限定した部分採用として投稿条件を満たした。"
+draft: memory/shared_reads_candidates/posted_drafts/20260901_harvesters_solo_ai_coding_playtest_post.md
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
