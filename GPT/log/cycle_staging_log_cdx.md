@@ -146,7 +146,119 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index を validate_memory_index.py で照合し、per-file atom index との不一致 0 件を確認した。"
+  - "memory/MEMORY.md を UTF-8 明示で読み、代表語 記憶 / ゲーム設計 / 敵パターン / 評価軸 を取得できた。source 本文の文字化けは認めなかった。"
+  - "memory/atoms.jsonl 2998 行を監査し、atom mirror の欠落・parse error・content conflict は各 0 件。normalized content 重複 40 群 80 行は既存 fold に収まり、recall-visible は 3 群 6 行だった。"
+  - "memory/raw/ の 30 日超無更新 244 ファイル（70,607,071 bytes）を棚卸しした。raw provenance / Slack archive / 評価証拠の保管層であり、参照切れを避けるため今 cycle の移動対象は 0 件とした。"
+  - "shared-reads lifecycle 1471 件を監査し、posted 734 / ready_to_post 9 / postponed 199 / failed 529 / needs_review 0 を確認した。"
+  - "title canonical / mixed duplicate / open duplicate / stale triage / group-action sidecar を candidate frontmatter 正本から再生成した。"
+  - "Slack directive 23 行と broadcast 21 行を lifecycle tool で確認し、pending 0 件のため handled 更新はなかった。"
+  - "期限到来 probe lease を limit 1 で照会し、due 0 件のため receipt 更新はなかった。"
+  - "stale triage 上位 5 件を candidate handoff inbox へ冪等 enqueue した。candidate 本体の lifecycle は変更していない。"
+issues:
+  - id: ISS-ENC-001
+    description: "active atom sr-1776127289-4d9239b255 の title / trigger / excerpt に U+FFFD が残っている。単一 source defect で、duplicate fold や mirror drift ではない。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl source_ts=1776127289.990919; memory_health.py hard_corruption_atom_count=1"
+    source_file_status: "UTF-8 明示読みでも AIエ��ジェント を取得し、per-file / atoms.jsonl / raw Slack archive 由来 excerpt に同じ U+FFFD があるため source file 自体の局所破損。"
+    display_or_tooling_status: "none; PowerShell 表示だけの mojibake ではない。MEMORY.md の代表語 probe は正常。"
+    why_blocks_game_memory: "memory / skills / agent タグの active atom が recall された時に検索語と引用の品質を落とす。ただし 1 atom に局在し、mirror・fold・game task lens は正常なので Phase 4b を起動する構造障害ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+    merged: 0
+    retired: 0
+candidate_lifecycle_audit:
+  total: 1471
+  status_counts:
+    posted: 734
+    ready_to_post: 9
+    postponed: 199
+    failed: 529
+    needs_review: 0
+  missing_stale_after: 3
+  overdue_open_total: 14
+  malformed_or_status_conflict_count: 0
+duplicate_title_audit:
+  canonical_terminal_groups: 109
+  mixed_duplicate_groups: 26
+  open_duplicate_groups: 30
+  all_open_duplicate_groups: 4
+  actionable_group_count: 0
+  note: "overdue 4 candidate を含む 2 all-open group は retry_after=2026-09-19 の既存 deferred lease で正しく抑止されている。"
+archive_audit:
+  cutoff: "2026-08-02"
+  inactive_file_count: 244
+  inactive_total_bytes: 70607071
+  archive_move_count: 0
+  reason: "対象は既に memory/raw 配下の provenance / archive / evaluation evidence。参照関係を壊す追加移動は cleanup の範囲外。"
+stale_backlog:
+  overdue_open_total: 14
+  stale_triage_queue_rows: 10
+  open_duplicate_group_count: 30
+  mixed_group_count: 26
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-0f373977ed0bef2b
+    - cha-c49c99642c5e04e1
+    - cha-ebdf2b68fe48e6b6
+    - cha-120ff6d3250ce3f9
+    - cha-0d59ef407641e7df
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-0f373977ed0bef2b
+    path: memory/shared_reads_candidates/20260621_ai_literacy_game_artifacts_review.md
+    status: postponed
+    stale_after: "2026-08-28"
+    priority_reason: "48 artifact と nine design suggestions の分布・比較結果が候補 snapshot に不足し、評価の中身を含む概要へ進めない。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-c49c99642c5e04e1
+    path: memory/shared_reads_candidates/20260729_video_game_state_multitask_transfer.md
+    status: postponed
+    stale_after: "2026-08-28"
+    priority_reason: "共有表現と map transfer は telemetry 評価器へ接続できるが、主要定量結果と最終結論が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-ebdf2b68fe48e6b6
+    path: memory/shared_reads_candidates/20260730_spiderman2_swinging_postmortem.md
+    status: postponed
+    stale_after: "2026-08-29"
+    priority_reason: "物理・入力補助・演出の実装過程、試行、評価、結論を裏づける一次情報が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-120ff6d3250ce3f9
+    path: memory/shared_reads_candidates/20260731_dinner_table_democracy_designing_disagreement.md
+    status: postponed
+    stale_after: "2026-08-30"
+    priority_reason: "structured friction 等の着想は具体的だが、実施条件・評価内容・結論がセッション紹介から復元できない。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-0d59ef407641e7df
+    path: memory/shared_reads_candidates/20260731_godotcon_community_postmortems.md
+    status: postponed
+    stale_after: "2026-08-30"
+    priority_reason: "三つの制作事例それぞれの工程・失敗・比較可能な評価証拠がなく、動画または transcript の再確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
