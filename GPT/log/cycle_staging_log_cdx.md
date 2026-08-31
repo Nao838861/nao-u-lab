@@ -10,7 +10,83 @@
 - duplicate preflight: `continue`（同一 title / URL の posted・closed canonical・open group 一致なし）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+duplicate_preflight:
+  sidecars_rebuilt: [posted_source, title_canonical, open_duplicate_group]
+  decisions:
+    continue: 6
+    review: 0
+    skip: 0
+total_candidates: 6
+pass:
+  - memory/shared_reads_candidates/20260901_harvesters_solo_ai_coding_playtest.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260621_ai_literacy_game_artifacts_review.md
+    reason: "artifact 分布・設計提案・比較結果が不足"
+  - path: memory/shared_reads_candidates/20260729_video_game_state_multitask_transfer.md
+    reason: "主要な定量結果と最終結論が不足"
+  - path: memory/shared_reads_candidates/20260730_spiderman2_swinging_postmortem.md
+    reason: "実装・試行・評価から結論へ至る中核情報が不足"
+  - path: memory/shared_reads_candidates/20260731_dinner_table_democracy_designing_disagreement.md
+    reason: "技法の実施条件・評価内容・結論が不足"
+  - path: memory/shared_reads_candidates/20260731_godotcon_community_postmortems.md
+    reason: "各 postmortem 固有の工程・失敗・評価証拠が不足"
+stale_reviewed:
+  - handoff_id: cha-0f373977ed0bef2b
+    path: memory/shared_reads_candidates/20260621_ai_literacy_game_artifacts_review.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-10-01"
+  - handoff_id: cha-c49c99642c5e04e1
+    path: memory/shared_reads_candidates/20260729_video_game_state_multitask_transfer.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-10-01"
+  - handoff_id: cha-ebdf2b68fe48e6b6
+    path: memory/shared_reads_candidates/20260730_spiderman2_swinging_postmortem.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-10-01"
+  - handoff_id: cha-120ff6d3250ce3f9
+    path: memory/shared_reads_candidates/20260731_dinner_table_democracy_designing_disagreement.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-10-01"
+  - handoff_id: cha-0d59ef407641e7df
+    path: memory/shared_reads_candidates/20260731_godotcon_community_postmortems.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-10-01"
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 5
+  read_ids: [cha-0f373977ed0bef2b, cha-c49c99642c5e04e1, cha-ebdf2b68fe48e6b6, cha-120ff6d3250ce3f9, cha-0d59ef407641e7df]
+  resolved_ids: [cha-0f373977ed0bef2b, cha-c49c99642c5e04e1, cha-ebdf2b68fe48e6b6, cha-120ff6d3250ce3f9, cha-0d59ef407641e7df]
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-09-01T04:51:09+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260901_harvesters_solo_ai_coding_playtest.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260901_harvesters_solo_ai_coding_playtest.md
+  valid_backlog_after: 0
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

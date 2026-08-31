@@ -4,20 +4,20 @@ url: "https://uwspace.uwaterloo.ca/items/3e4cb5bf-8bc8-4b93-aec5-93158b88910b"
 collected_at: "2026-06-21T04:29:49+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, ai-literacy, learning-games, scoping-review, design-patterns]
-evaluated_at: "2026-07-29T10:54:43+09:00"
+evaluated_at: "2026-09-01T04:57:21+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-29T10:54:43+09:00"
+last_reviewed_at: "2026-09-01T04:57:21+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-29T10:54:43+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-09-01T04:57:21+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-28"
+stale_after: "2026-10-01"
 supersedes: []
 gate_reason: |-
-  48 artifact と nine design suggestions を横断する問題設定は重要だが、candidate snapshot には分布、設計提案、代表 artifact の比較結果が増えていない。
-  操作や失敗を AI literacy に変える適用軸は保てるものの、現材料だけでは評価の中身を含む CoopEval 水準の概要を組み立てられないため再調査待ちとする。
+  48件の artifact と9件の design suggestion を横断する問題設定は重要だが、candidate snapshot には分布、設計提案、代表 artifact の比較結果が追加されていない。
+  操作や失敗を AI literacy に変える適用軸は保てるものの、現材料だけでは評価の中身を含む CoopEval 水準の概要を構成できないため、一次資料の補強待ちとする。
 ---
 
 ## raw_excerpt

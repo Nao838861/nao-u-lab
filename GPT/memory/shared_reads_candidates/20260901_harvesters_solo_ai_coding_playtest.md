@@ -4,6 +4,26 @@ url: "https://chuckiee3.itch.io/harvesters/devlog/1584663/harvesters-a-little-cl
 collected_at: "2026-09-01T04:51:09+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [postmortem, solo-development, ai-coding, playtesting, incremental-game]
+evaluated_at: "2026-09-01T04:57:21+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-09-01T04:57:21+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-09-01T04:57:21+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-10-01"
+supersedes: []
+gate_reason: |-
+  AI coding を使う個人制作で、人間が直すべき Godot の境界、外注 asset の受入条件、first playable から反復 playtest する工程と失敗が具体的に記録されている。
+  問題設定・制作手法・観察結果・結論を抽出でき、Log_cdx の playable diff 優先と headless / human playtest の接続へ直接適用できるため、約4000字の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "AI coding・外注・反復 playtest を一人制作の学習ループへ統合した実践記録"
+  analysis_axis: "自動化に任せる領域と人間が構造を直す領域を分け、first playable から検証頻度を上げる設計"
+  application_target: "Log_cdx のゲーム制作で playable diff を先に出し、scene / UI / resource の境界確認と実プレイ評価を短周期で回す工程"
+  pros_cons: "制作速度と学習密度を上げられる一方、AIが解けないbug、外注sourceの受入仕様、終盤状態を含む反復playthroughのコストが残る"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

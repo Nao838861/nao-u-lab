@@ -4,16 +4,16 @@ url: https://talks.godotengine.org/godotcon-boston-2026/talk/E8KRGB/
 collected_at: 2026-07-31T14:03:15.5526049+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-dev, postmortem, prototyping, scope-control]
-evaluated_at: 2026-07-31T14:09:05.6536432+09:00
+evaluated_at: "2026-09-01T04:57:21+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: 2026-07-31T14:09:05.6536432+09:00
+last_reviewed_at: "2026-09-01T04:57:21+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-31T14:09:05.6536432+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-09-01T04:57:21+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-30"
+stale_after: "2026-10-01"
 supersedes: []
 gate_reason: >-
   公式概要は三つの制作事例と scope control / early validation / core pillars の論点を示すが、
