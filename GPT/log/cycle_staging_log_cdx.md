@@ -138,7 +138,110 @@ self_feedback:
     conflict_checked: true
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、High Signal / Recent / Tag Entry Points / Game Task Entry Points の atom 参照を per-file index と照合した。broken reference 0件。"
+  - "memory/atoms.jsonl と per-file mirror / index を監査した。2999件、mirror conflict 0件、duplicate cluster 45群は既存 canonical overlay 45群と一致し、content duplicate 40群は表示時に fold 済み。"
+  - "memory/raw/ の30日超未更新ファイル244件を棚卸しした。一次根拠保持契約に従い、ageだけでは移動・削除せず現状維持とした。"
+  - "shared-reads の canonical / mixed / open-group / stale-triage / group-action sidecar を再監査し、期限到来candidate 5件を Phase 2 handoff inbox へ冪等 enqueue した。"
+  - "slack_directives.jsonl 23件、slack_broadcasts.jsonl 21件を監査し、pending 0件のため lifecycle 更新なし。"
+  - "due probe lease を1件上限で監査し、期限到来0件のため receipt 更新なし。"
+issues:
+  - id: ISS-4A-20260901-01
+    description: "active atom sr-1776127289-4d9239b255 の title / trigger / excerpt に U+FFFD が残り、検索語『AIエージェント』の一部が破損している。"
+    severity: medium
+    evidence: "memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory_health hard_corruption_atom_count=1"
+    source_file_status: "UTF-8 明示読みでも atoms.jsonl と per-file atom の双方に同じ U+FFFD を確認。source data 自体が破損している。"
+    display_or_tooling_status: "none; UTF-8 表示経路でも source と同じ文字列を再現。"
+    why_blocks_game_memory: "active atom が recall 候補として残っているため、AI agent memory の検索語一致と引用精度を落とし、次の制作で参照する原文の意味を誤らせる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  reason: "単一atomの根拠付き修復課題であり、新しい記憶構造の設計は不要。Phase 4b/4cは起動しない。"
+encoding_audit:
+  memory_source_file_status: "UTF-8として正常に読め、mojibake-like residue検査は0件。代表語は『記憶』『ゲーム設計』『敵パターン』を取得し、『評価軸』は現行index本文にliteral一致なし。"
+  display_or_tooling_status: none
+candidate_lifecycle:
+  files: 1472
+  status_counts:
+    posted: 735
+    ready_to_post: 9
+    postponed: 199
+    failed: 529
+    needs_review: 0
+  missing_stale_after: 3
+  overdue_for_reassessment: 9
+  anomalies: "current status conflict 0件。24件の stale_after_differs_from_30d_default は明示的な後続判断を保持しており、historical gate への巻き戻し対象外。"
+raw_archive_audit:
+  cutoff: "2026-08-02"
+  inactive_30d_count: 244
+  by_top_level:
+    web_research: 219
+    headless_eval: 16
+    slack_api: 6
+    slack_archive: 1
+    game_eval: 1
+    raw_root_file: 1
+  action: "preserve_in_place"
+  reason: "raw は一次根拠であり、30日経過だけを根拠に archive / delete しない。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 9
+  stale_triage_queue_rows: 5
+  open_duplicate_group_count: 30
+  mixed_group_count: 26
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids: [cha-6eed224cc9ff50db, cha-285b41729cd7c332, cha-3cbdadf89baf04e9, cha-9b1c90fcb2ccbfb2, cha-60f0d7338a7486f4]
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-6eed224cc9ff50db
+    path: memory/shared_reads_candidates/20260731_making_gameplay_moments_stick.md
+    status: postponed
+    stale_after: "2026-08-30"
+    priority_reason: "五要素は確認できるが、実装手順・作品内の具体例・評価結果が未取得。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-285b41729cd7c332
+    path: memory/shared_reads_candidates/20260801_donkey_kong_bananza_constructive_destruction.md
+    status: postponed
+    stale_after: "2026-08-31"
+    priority_reason: "制作過程、prototype比較、評価内容、講演の結論が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-3cbdadf89baf04e9
+    path: memory/shared_reads_candidates/20260801_exercises_that_play_in_public.md
+    status: postponed
+    stale_after: "2026-08-31"
+    priority_reason: "実施手順、公開後の観察、評価内容と結論を支える一次情報が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-9b1c90fcb2ccbfb2
+    path: memory/shared_reads_candidates/20260801_theory_of_mind_social_learning.md
+    status: postponed
+    stale_after: "2026-08-31"
+    priority_reason: "task条件、参加者、比較model、定量結果が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-60f0d7338a7486f4
+    path: memory/shared_reads_candidates/20260802_lifeafter_aigc_mobile_game_art_pipeline.md
+    status: postponed
+    stale_after: "2026-09-01"
+    priority_reason: "slide本文未取得で、workflow・評価枠・費用削減数値の算定条件を検証できない。"
+    recommended_review_action: reevaluate_in_phase2
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
