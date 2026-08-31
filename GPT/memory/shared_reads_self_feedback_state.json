@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-08-31T19:01:25+09:00",
+  "updated_at": "2026-08-31T21:47:16+09:00",
   "reviewed_source_ts": [
+    "1778996514.578059",
     "1788113613.036279",
     "1787805125.605319",
     "1787828341.703419",
@@ -25763,6 +25764,50 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、parameter別の客観性能／fun／workload境界の局所有用性、現在の比較artifact不在、既存feedback-loop／proxy-calibration／local-repair／intervention-amplitude controlsとの大幅な重複、active probe増殖riskに基づくdefer理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-08-31T21:47:16+09:00",
+      "selected": {
+        "id": "sr-1778996514-55e8c86afb",
+        "source_ts": "1778996514.578059",
+        "title": "LLM生成ドキュメントのObsidian管理手法 — フラットな相互参照を避け、必要部分だけを読む階層化",
+        "reason": "source が slack_api/shared-reads、score 11、未レビューで、memory・game-design・evaluation の優先タグを持つため1件だけ選んだ。LLMが関連文書を過剰に結び、不要な文書まで読み込む問題が、現在の Phase 4a の記憶階層整理に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、LLM生成文書のフラットな相互参照を避け、親から必要部分へ降りる階層化、過剰リンク監視、新規文書の親必須化へ変換できるため relevance=3、actionability=2 とした。一方、根拠は X 投稿の要約と当方環境への自己対応づけであり、相互参照密度、context token、recall quality、発見性低下の before／after を示さないため evidence=1。投稿自身も CLAUDE.md→memory→projects の3層、pointer-only入口、独立文書、game lesson の層構造を既に部分導入済みと判定している。probe-20260517-hierarchical-memory-recall-ladder は上位目標→中粒度→atom の検索順と直 grep の差を、probe-20260814-bound-search-state-brief は必要 evidence 後の over-search 停止と cleanup 判断差を既に扱い、game_memory_task_lens_index.md も broad tag から代表 atom／candidate へ降りる導線を持つ。過剰リンク検出や親必須 rule を別 control にしても次回判断をほぼ変えず non_redundancy=0。active_probes は327件あり、比較 artifact なしに link-density metric、Obsidian graph 監視、親必須 rule を追加すると、過度な階層化による発見性低下と確認負荷が判断差を上回るため risk_control=1 とした。既存 controls と task lens で同じ行動を実行できるため、将来の再評価条件を増やさず reject で閉じる。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1778996514-55e8c86afb.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1778996514.578059",
+        "https://x.com/GianMattya/status/2055818312970637823"
+      ],
+      "existing_controls": [
+        "probe-20260517-hierarchical-memory-recall-ladder",
+        "probe-20260814-bound-search-state-brief",
+        "memory/game_memory_task_lens_index.md"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、階層化・過剰リンク抑制の局所有用性、既存の階層 recall／bounded search／task lens との重複、定量比較不在、active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

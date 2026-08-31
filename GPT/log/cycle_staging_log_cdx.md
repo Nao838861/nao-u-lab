@@ -131,7 +131,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778996514-55e8c86afb
+    source_ts: "1778996514.578059"
+    title: "LLM生成ドキュメントのObsidian管理手法 — フラットな相互参照を避け、必要部分だけを読む階層化"
+    reason: "未レビューの score 11 atom 1件を選び、現在の Phase 4a 記憶整理に対して既存 control と異なる判断差を作れるか確認した。Nao_u の明示評価はローカル raw で確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "合計10で採用条件14に届かず、risk_control も必須閾値2未満。原典は X 投稿の要約で定量的な before/after がなく、投稿自身も当方の3層構造を部分導入済みとする。既存の probe-20260517-hierarchical-memory-recall-ladder、probe-20260814-bound-search-state-brief、memory/game_memory_task_lens_index.md が階層検索・過剰探索停止・task別導線を既に担う。327件の active probe に過剰リンク検出や親必須 rule を追加すると、判断差より発見性低下と確認負荷が増えるため state-only review で閉じた。"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。active_probes、probe lifecycle ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
