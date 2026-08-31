@@ -4,20 +4,20 @@ url: "https://www.gamesradar.com/games/why-so-many-game-developers-dont-want-to-
 collected_at: "2026-06-21T14:59:08+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-industry, generative-ai, creative-process, production-risk]
-evaluated_at: "2026-07-29T10:54:43+09:00"
+evaluated_at: "2026-08-31T18:43:09.2412705+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-29T10:54:43+09:00"
+last_reviewed_at: "2026-08-31T18:43:09.2412705+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-29T10:54:43+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-08-31T18:43:09.2412705+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-28"
+stale_after: "2026-09-30"
 supersedes: []
 gate_reason: |-
   生成AIへの抵抗を創作意図、provenance、junior pipeline、品質、player trust に分ける軸は制作運用へ接続できる。
-  ただし snapshot は30人超の発言を論点列挙へ圧縮したままで、発言者、具体事例、用途別の対立と結論を検証できず、4000字の固有分析には一次材料が不足する。
+  ただし再評価時点でも snapshot は30人超の発言を論点列挙へ圧縮したままで、発言者、具体事例、用途別の対立と結論を検証できず、4000字の固有分析には一次材料が不足する。
 ---
 
 ## raw_excerpt

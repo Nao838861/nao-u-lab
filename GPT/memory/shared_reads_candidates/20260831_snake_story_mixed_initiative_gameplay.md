@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2404.07901"
 collected_at: "2026-08-31T18:36:18+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, mixed-initiative, narrative-game, generative-ai, playtest]
+evaluated_at: "2026-08-31T18:43:09.2412705+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-08-31T18:43:09.2412705+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-08-31T18:43:09.2412705+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-09-30"
+supersedes: []
+gate_reason: >-
+  gameplay と物語選択を candy の reward / risk で衝突させる中核、11名・142 round の評価、writer / player / reader の三類型、単一 prototype という限界まで抽出できる。
+  生成AIを会話 UI ではなく既存 mechanic に結び付ける具体性があり、narrative prototype の設計・playtest 観察へ適用でき、約4000字の概要を固有根拠で構成できる。
+suggested_post_outline:
+  overview_angle: "物語の質と Snake の生存を同じ選択へ束ね、共同創作を gameplay の葛藤へ変えた設計と評価を追う"
+  analysis_axis: "文章生成の自由度ではなく、AI出力と reward / risk の結合が writer・player・reader の役割知覚をどう分岐させたか"
+  application_target: "生成AIを使う narrative prototype で、創作・勝敗・鑑賞の優先度を mechanic と playtest 記録から診断する設計工程"
+  pros_cons: "低コストな既存 mechanic で明確な葛藤と観察軸を作れる一方、11名の game-design student と単一 prototype のため一般化は限定的"
+  verdict_pre: "部分採用。AI出力を選ぶ UI ではなく、選択結果をゲーム状態へ接続する原則と三類型の観察軸を採用する"
 ---
 
 ## raw_excerpt
