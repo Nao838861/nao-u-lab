@@ -7,14 +7,19 @@ genre_tags: [ai-agent, harness, long-horizon, coding-agent, game-playing, evalua
 evaluated_at: "2026-08-31T21:15:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-31T21:15:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-31T21:15:00+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-31T21:38:35.664289+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788179915664289"
+next_action: none
 stale_after: "2026-09-30"
 supersedes: []
+posted:
+  ts: "1788179915.664289"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788179915664289"
+  char_count: 4496
+  posted_at: "2026-08-31T21:38:35.664289+09:00"
 gate_reason: |-
   persistent REPL、trajectory 間で持続する memory／skill、recursive subagent、recovery・verification・resource accounting を統合し、model 能力と harness 失敗を分離する問題設定と実装の中核が明確である。
   ARC-AGI-3、coding、emulator、Factorio の継続進行という複数評価があり、長時間の自動プレイ・ゲーム制作 agent の実行基盤へ具体的に適用できるため pass とする。

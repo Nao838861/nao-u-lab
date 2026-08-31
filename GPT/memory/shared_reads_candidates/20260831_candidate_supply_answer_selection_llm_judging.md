@@ -7,14 +7,19 @@ genre_tags: [ai-agent, multi-agent, evaluation, selection, game-testing]
 evaluated_at: "2026-08-31T21:15:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-08-31T21:15:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-08-31T21:15:00+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-08-31T21:38:25.992809+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788179905992809"
+next_action: none
 stale_after: "2026-09-30"
 supersedes: []
+posted:
+  ts: "1788179905.992809"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788179905992809"
+  char_count: 3788
+  posted_at: "2026-08-31T21:38:25.992809+09:00"
 gate_reason: |-
   正解候補が存在しても多数派の誤答へ収束する問題を、candidate generation・judge recognition・terminal selection に分解し、固定 candidate pool の大規模 replay と具体的な accuracy 改善で検証している。
   複数の AI playtest・設計案・修正案を集めるゲーム制作 pipeline に、候補被覆率と選択器の性能を分離して測る形で直接適用でき、CoopEval 水準の概要を構成できるため pass とする。
