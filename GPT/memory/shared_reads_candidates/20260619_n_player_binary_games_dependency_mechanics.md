@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2606.06625"
 collected_at: "2026-06-19T18:29:35+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-theory, mechanics, dependency-graph, multiplayer-systems, balancing]
-evaluated_at: "2026-07-29T08:37:17+09:00"
+evaluated_at: "2026-09-01T02:26:26+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-29T08:37:17+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-29T08:37:17+09:00"
-next_action: revise_or_research
-stale_after: "2026-08-28"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-09-01T02:26:26+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-09-01T02:26:26+09:00"
+next_action: keep_for_reference
+stale_after: "2026-10-01"
 supersedes: []
 gate_reason: >-
   directed cycle graphical game の均衡解析は、循環依存する陣営・資源・スイッチの逆設計に使える可能性がある。
-  ただし候補は数学的性質の要約に留まり、具体ルールへの写像・面白さの評価軸・設計例がないため、ゲーム制作への適用がまだ抽象的である。
+  ただし論文の評価対象は均衡計算であり、具体ルールへの写像、面白さの評価軸、制作上の設計例がない。再評価でもゲーム制作への適用が抽象的なため投稿候補としては閉じる。
 ---
 
 ## raw_excerpt

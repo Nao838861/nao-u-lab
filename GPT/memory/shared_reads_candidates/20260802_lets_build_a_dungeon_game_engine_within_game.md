@@ -4,20 +4,20 @@ url: "https://80.lv/articles/building-a-game-development-simulator-with-a-game-e
 collected_at: "2026-08-02T08:02:01.5790940+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, simulation, user-generated-content, game-tools, playtesting]
-evaluated_at: "2026-08-02T08:09:00+09:00"
+evaluated_at: "2026-09-01T02:26:26+09:00"
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-08-02T08:09:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-08-02T08:09:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-09-01"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-09-01T02:26:26+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-09-01T02:26:26+09:00"
+next_action: keep_for_reference
+stale_after: "2026-10-01"
 supersedes: []
 gate_reason: >
   game dev sim・RPG builder・ゲーム内 editor・AI NPC・即時 playtest を一つの loop に統合する設計と、dynamic atlas などの技術要素は具体的で適用性も高い。
-  ただし現候補には playtest 結果、設計変更の因果、性能値など評価の中身が不足し、~4000字の概要では機能紹介を水増しする危険があるため、検証 evidence の補強まで保留する。
+  ただし記事は機能紹介と設計意図が中心で、playtest 結果、設計変更の因果、性能値がない。再評価でも約4000字を検証可能な内容で構成できず、機能紹介の水増しになるため投稿候補としては閉じる。
 ---
 
 ## raw_excerpt

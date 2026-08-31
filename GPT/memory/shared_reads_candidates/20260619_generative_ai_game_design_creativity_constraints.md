@@ -4,20 +4,20 @@ url: "https://www.mdpi.com/2079-3200/13/6/60"
 collected_at: "2026-06-19T12:15:36+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, generative-ai, creativity, production-workflow, designer-practice]
-evaluated_at: "2026-07-29T08:37:17+09:00"
+evaluated_at: "2026-09-01T02:26:26+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-07-29T08:37:17+09:00"
+last_reviewed_at: "2026-09-01T02:26:26+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-29T08:37:17+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-09-01T02:26:26+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-28"
+stale_after: "2026-10-01"
 supersedes: []
 gate_reason: |-
-  AI が発想支援と制約の両面を持つ論点は、案生成と制作判断を分ける評価に適用できる。
-  ただし候補には調査設計・データ・固有の結論がなく、一般的な AI ワークフロー論を越える概要を構成できないため保留する。
+  AI が発想支援と制約の両面を持つ論点は、案生成と制作判断を分ける評価へ適用でき、一次論文にも再調査余地がある。
+  ただし candidate には調査設計・データ・固有の結論が未収録で、一般的な AI ワークフロー論を越える概要を構成できないため、本文 evidence の補強まで保留する。
 ---
 
 ## raw_excerpt
