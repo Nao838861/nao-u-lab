@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-09-01T00:22:08+09:00",
+  "updated_at": "2026-09-01T02:46:33+09:00",
   "reviewed_source_ts": [
+    "1788189260.935909",
     "1788179915.664289",
     "1778996514.578059",
     "1788113613.036279",
@@ -25856,6 +25857,54 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、run manifest／checkpoint／外部 verifier／子孫込み資源会計の局所有用性、既存 long-horizon／attempt／budget／checkpoint controls との大幅な重複、比較 artifact 不在、active probe 増殖 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-09-01T02:46:33+09:00",
+      "selected": {
+        "id": "sr-1788189260-7541a692d2",
+        "source_ts": "1788189260.935909",
+        "title": "Resource Constraints and Performance in Agentic AI Systems — outcome と資源を attempt provenance で結ぶ complete-system 評価",
+        "reason": "source が slack_api/shared-reads、score 12、未レビュー候補のうち source_ts が最新で、memory・harness・game-design・agent・operation・evaluation の優先6タグを持つため1件だけ選んだ。full／partial／failure と wall time・peak memory を同じ attempt provenance に結び、双方失敗の cost-only dominance を capability 証拠から外す知見が、現在の Codex 定時サイクルや次の game／coding harness 比較に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した thread reply はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14には届くが、risk_control が採用必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、100 prompt の paired benchmark で full／partial／failure を分離し、task-bootstrap interval と paired test を用い、別の23 promptで wall time・peak memory・weak dominanceを outcome と対応付けている。full completion は31%対25%だが95% intervalは-3〜15 point、detailed layerでは両者full 6/23、NanoBotのweak dominance 18件中10件は双方失敗を安く終えただけという解体があり、『同じ達成を少ない資源で得た』ことと『安く失敗した』ことを分ける行動へ直接変換できるため relevance・actionability・evidence は3とした。一方、既レビュー sr-1785829556-ad5bc49621（AgentSLABench）は outcome と wall time・cost・peak RSS・network・timeout を同一 run_id に置く resource envelope を検討済みで、probe-20260622-poweragentbench-simulation-workflow-budget は事前 budget と harness failure、probe-20260709-clqt-diagnostic-decision-trail は outcome と cost／constraint／process axis、probe-20260718-benchmark-purpose-variable-alignment は外部 benchmark と自前判断の変数整合を既に扱う。双方失敗を dominance から除く点は局所差だが、中核判断は既存 controls の組合せへほぼ吸収されるため non_redundancy は1とした。現在の staging には同一 task を二つの system／workflow で実行した paired artifact、事前定義した partial 条件、outcome に結び付いた resource profile がなく、直後の Phase 4a は memory cleanup で実 consumer にならない。active_probes は327件、pending lease は0件であり、対象 artifact なしに12〜20 task、複数 retry、resource 欄、dominance 集計を追加すると、判断差より instrumentation と checklist 負荷が増えるため risk_control は1とした。次に具体的な同一 game／coding task の system 比較で、既存 controls だけでは成功を伴う efficiency と cost-only failure を分離できない実例が出た時に、1 paired receipt の一時 metric として再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-09/sr-1788189260-7541a692d2.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1788189260.935909",
+        "memory/shared_reads_candidates/20260831_agentic_ai_resource_constraints.md",
+        "memory/shared_reads_candidates/posted_drafts/20260831_agentic_ai_resource_constraints_post.md",
+        "https://arxiv.org/abs/2608.27886"
+      ],
+      "existing_controls": [
+        "review source_ts=1785829556.510789: AgentSLABench",
+        "probe-20260622-poweragentbench-simulation-workflow-budget",
+        "probe-20260709-clqt-diagnostic-decision-trail",
+        "probe-20260718-benchmark-purpose-variable-alignment"
+      ],
+      "defer_condition": "同一 game／coding task を二つの system または workflow で比較し、full／partial／failure を事前定義した paired artifact と outcome 別 resource profile があり、既存3 probes と AgentSLABench review だけでは成功を伴う efficiency と双方失敗の cost-only dominance を分離できない時に限り、一時 metric として再評価する。",
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、outcome-conditioned resource comparison／cost-only dominance 分離の局所有用性、既存 AgentSLABench／budget／decision-trail／benchmark-alignment controls との大幅な重複、比較 artifact 不在、active probe 増殖 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

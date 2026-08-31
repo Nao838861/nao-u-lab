@@ -115,7 +115,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1788189260-7541a692d2
+    source_ts: "1788189260.935909"
+    title: "Resource Constraints and Performance in Agentic AI Systems — outcome と資源を attempt provenance で結ぶ complete-system 評価"
+    reason: "score 12・未レビュー・最新で、memory／harness／game-design／agent／operation／evaluation の優先6タグを持つ1件。成功を伴う resource efficiency と双方失敗の cost-only dominance を分離する知見が、既存 control と異なる次回判断を作れるか確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "合計14だが risk_control=1 で採用必須閾値2を満たさない。100 prompt の paired outcome、23 prompt の time／memory、優位未確定、weak dominance 18件中10件が双方失敗の cost-only case という証拠は直接行動へ変換できる。一方、既レビュー AgentSLABench と既存の budget／decision-trail／benchmark-alignment controls が中核をほぼ覆い、現在の staging には同一 task の paired system artifact、事前定義した partial 条件、outcome 別 resource profile がない。直後の Phase 4a は実 consumer ではないため state-only review とし、具体比較 artifact が出るまで一時 metric を作らない。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを記録。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
