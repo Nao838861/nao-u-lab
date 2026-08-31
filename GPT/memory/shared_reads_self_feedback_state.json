@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-09-01T02:46:33+09:00",
+  "updated_at": "2026-09-01T05:21:57+09:00",
   "reviewed_source_ts": [
+    "1788179905.992809",
     "1788189260.935909",
     "1788179915.664289",
     "1778996514.578059",
@@ -25905,6 +25906,53 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、outcome-conditioned resource comparison／cost-only dominance 分離の局所有用性、既存 AgentSLABench／budget／decision-trail／benchmark-alignment controls との大幅な重複、比較 artifact 不在、active probe 増殖 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-09-01T05:21:57+09:00",
+      "selected": {
+        "id": "sr-1788179905-89a5bbd1d9",
+        "source_ts": "1788179905.992809",
+        "title": "Candidate supply and answer selection shape the value of LLM judging in multi-agent systems",
+        "reason": "source が slack_api/shared-reads、score 10、未レビューで、memory・harness・game-design・agent・operation・evaluation の優先6タグを持つ直近候補だったため1件だけ選んだ。正答候補の供給、judge の認識、最終選択を分離し、同一 root の言い換えを独立票にしない知見が、次の memory cleanup や game／headless 候補選抜に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した thread reply はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14には届くが、risk_control が採用必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、MedXpertQA の各条件7350試行、15,336問・823,988 candidate pair の rank AUC、16,278問の固定 pool replay を用い、oracle availability・judge recognition・selected accuracy を分離しているため relevance・actionability・evidence は3とした。固定 pool では多数決63.82%に対し頻度と順位の hybrid が70.82〜70.95%で、正答供給率が高い regime では judge 一位が多数決を下回るため、judge の常時追加ではなく bottleneck 診断として読む根拠もある。一方、probe-20260621-compiled-memory-boundary は同一 raw root の再要約を独立 confirmation から除外し、probe-20260614-pluralistic-leaderboard-candidate-diversity は集約上位外の cluster-specific candidate を保持し、probe-20260517-multiagent-rationale-bias-log は票数だけでなく rationale・同調・同系列偏りを確認する。candidate supply／recognition／selection の三分解は局所差だが、中核判断は既存 controls の組合せへ大半が吸収されるため non_redundancy は1とした。現在の Phase 4a staging には正解ラベルまたは後続 human-approved diff を持つ固定候補 pool がなく、20〜30件 replay、三方式比較、回収率・回帰率・token費を先行導入しても判断差を測れない。active_probes は327件、pending lease は0件であり、同義 control を増やす運用負荷が判断差を上回るため risk_control は1とした。次に同じ game／headless 修正候補群について後続の human-approved diff または deterministic verifier があり、既存3 probesだけでは『候補に無かった』『認識できなかった』『最終選択で落とした』を帰属できない時に、単一 fixed-pool receipt として再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-08/sr-1788179905-89a5bbd1d9.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1788179905.992809",
+        "memory/shared_reads_candidates/20260831_candidate_supply_answer_selection_llm_judging.md",
+        "memory/shared_reads_candidates/posted_drafts/20260831_candidate_supply_answer_selection_llm_judging_post.md",
+        "https://arxiv.org/abs/2608.25937"
+      ],
+      "existing_controls": [
+        "probe-20260621-compiled-memory-boundary",
+        "probe-20260614-pluralistic-leaderboard-candidate-diversity",
+        "probe-20260517-multiagent-rationale-bias-log"
+      ],
+      "defer_condition": "同じ game／headless 修正候補群に後続の human-approved diff または deterministic verifier があり、既存3 probesだけでは candidate supply・judge recognition・terminal selection のどこで有効候補を失ったか帰属できない時に限り、単一 fixed-pool receipt として再評価する。",
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、candidate supply／recognition／selection 分解の局所有用性、既存 compiled-memory／pluralistic-leaderboard／multiagent-rationale controls との大幅な重複、比較 artifact 不在、active probe 増殖 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
