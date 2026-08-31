@@ -4,6 +4,21 @@ url: "https://schedule.gdconf.com/session/recent-bets-outcomes-from-supercells-c
 collected_at: "2026-09-01T07:22:48+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, live-service, balancing, accessibility, postmortem]
+evaluated_at: "2026-09-01T07:39:51.8418157+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-09-01T07:39:51.8418157+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-09-01T07:39:51.8418157+09:00"
+next_action: revise_or_research
+stale_after: "2026-10-01"
+supersedes: []
+gate_reason: >-
+  2021～2025年の更新履歴を novelty、accessibility、streamlining、長期戦略で読む軸と、
+  反復型制作への適用先は具体的である。ただし候補内には個別施策、失敗と修正の因果、指標、
+  定量結果がなく、約4000字のポストモーテムを裏付けられないため講演資料の公開まで保留する。
 ---
 
 ## raw_excerpt

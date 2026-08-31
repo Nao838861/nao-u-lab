@@ -4,20 +4,21 @@ url: "https://schedule.gdconf.com/session/constructive-destruction-fusing-voxel-
 collected_at: "2026-08-01T14:02:58.1941400+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, action-platformer, voxel, destruction-mechanics, prototyping]
-evaluated_at: "2026-08-01T14:05:47.3572414+09:00"
+evaluated_at: "2026-09-01T07:39:51.8418157+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-08-01T14:05:47.3572414+09:00"
+last_reviewed_at: "2026-09-01T07:39:51.8418157+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-08-01T14:05:47.3572414+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-09-01T07:39:51.8418157+09:00"
 next_action: revise_or_research
-stale_after: "2026-08-31"
+stale_after: "2026-10-01"
 supersedes: []
 gate_reason: >-
-  GDC 公式概要から問題設定と着想、ゲーム制作への適用先は読めるが、制作過程の具体、
-  prototype の比較、評価内容、講演上の結論が不足し、約4000字の概要を根拠付きで構成できない。
+  再評価時点でも候補内の証拠は GDC 公式概要に限られ、制作過程の具体、prototype の比較、
+  評価内容、講演上の結論が不足している。破壊を移動・探索へ束ねる適用先は具体的だが、
+  約4000字の概要を根拠付きで構成できないため、Vault recording の取得まで保留する。
 ---
 
 ## raw_excerpt

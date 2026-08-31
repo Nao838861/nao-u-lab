@@ -4,6 +4,21 @@ url: "https://schedule.gdconf.com/session/clues-and-camping-in-ghost-of-ytei-cur
 collected_at: "2026-09-01T07:22:05+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, open-world, narrative-design, progression, player-guidance]
+evaluated_at: "2026-09-01T07:39:51.8418157+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-09-01T07:39:51.8418157+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-09-01T07:39:51.8418157+09:00"
+next_action: revise_or_research
+stale_after: "2026-10-01"
+supersedes: []
+gate_reason: >-
+  Event Deck の問題設定、着想、自由探索と進行案内を両立する適用先は明確である。
+  ただし候補内の証拠は公式セッション概要だけで、選定条件、配信規則、失敗例、評価結果、
+  講演上の結論がなく、約4000字の概要を根拠付きで構成できないため一次資料の公開まで保留する。
 ---
 
 ## raw_excerpt
