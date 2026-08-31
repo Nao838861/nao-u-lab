@@ -167,7 +167,106 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。atom 参照 87 件の unknown id は 0 件、本文参照先 memory/atoms.jsonl・memory/raw/・tools/memory_ingest.py・tools/memory_recall.py はすべて存在。U+FFFD は 0 件。代表語は 記憶 / ゲーム設計 / 敵パターン を取得し、評価軸は本文に存在しないだけで source corruption ではない。"
+  - "memory/atoms.jsonl と per-file / index mirror を監査。2996 / 2996 / 2996 件で一致し、duplicate id 0、duplicate source_ts 0、content conflict 0。normalized-content 重複は raw 40群80行、recall-visible 3群まで fold 済みで、effective title unresolved は 0 件。"
+  - "memory/raw/ の30日超ファイルは244件。slack_archive・web_research 論文原文・headless_eval など provenance / 再現証拠が中心で、archive 可否を機械的に確定できないため移動 0 件。"
+  - "candidate lifecycle 1470件を current-state 優先で dry-run 監査。posted 733 / ready_to_post 9 / postponed 202 / failed 526 / needs_review 0、lifecycle field の変更候補 0、正規未評価 0、malformed 0。"
+  - "title canonical / mixed duplicate / open duplicate / stale triage / group-action sidecar を再生成。terminal canonical 109群、open duplicate 30群（mixed 26 / all_open 4）、actionable stale group 0。candidate 本体は変更していない。"
+  - "Slack inbox は directives 0 pending / broadcasts 0 pending。完了根拠を満たして新たに handled 化する行は 0 件。"
+  - "due probe lease は 0 件。consumer artifact receipt を作る対象がないため resolve / dormant 更新は 0 件。"
+  - "stale candidate 5件を source_cycle_id 2026-08-31 23:46 で candidate handoff inbox へ冪等 enqueue。"
+issues:
+  - id: ISS-4A-20260831-01
+    description: "継続: historical Slack raw 由来の1 atomで『AIエージェント』中の2文字が U+FFFD になっており、派生 atom の title / Use when / excerpt と index title に伝播している。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory_health hard_corruption_atom_count=1"
+    source_file_status: "UTF-8 明示読みで raw source 自体が『AIエ��ジェント』を保持し、派生 per-file atom と atoms.jsonl / index.jsonl に同じ U+FFFD がある。memory/MEMORY.md 自体の U+FFFD は 0 件。"
+    display_or_tooling_status: "none。PowerShell UTF-8 明示読みと memory_health の双方で同じ source corruption を確認し、表示経路の mojibake ではない。"
+    why_blocks_game_memory: "局所的だが、正しい『AIエージェント』語での title / trigger 検索からこの記憶が漏れる。URL と source_ts は残っており、他 atom やゲーム制作導線全体を阻害する規模ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "継続 issue は単一 historical source の局所修復候補であり、新構造の検討を要しない。重複は recall fold、title debt は overlay により effective unresolved 0、stale backlog は既存 handoff 契約で配送できている。"
+candidate_lifecycle:
+  total: 1470
+  counts:
+    posted: 733
+    ready_to_post: 9
+    postponed: 202
+    failed: 526
+    needs_review: 0
+  overdue_open_total: 19
+  lifecycle_conflict_count: 0
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 19
+  stale_triage_queue_rows: 15
+  open_duplicate_group_count: 30
+  mixed_group_count: 26
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total 19 > queue 15 は満たすが、actionable group 0 < 3 のため高水位の両条件を満たさない。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 5
+  candidate_handoff_ids:
+    - cha-a29565919f95aa26
+    - cha-27a8165d60f43003
+    - cha-8002bacc4f86ca9b
+    - cha-cdd1a833e23c58ba
+    - cha-59b2926c5f11143e
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch:
+  - handoff_id: cha-a29565919f95aa26
+    path: memory/shared_reads_candidates/20260802_cam_wolf_multimodal_social_deduction_agent.md
+    status: postponed
+    stale_after: "2026-09-01"
+    priority_reason: "知覚・causal-aware Reasoner・animated avatar の分離はゲーム制作へ転用価値が高いが、比較 baseline、評価指標、user study 規模、効果量の一次 evidence が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-27a8165d60f43003
+    path: memory/shared_reads_candidates/20260802_let_npcs_fight_attack_reach_data.md
+    status: postponed
+    stale_after: "2026-09-01"
+    priority_reason: "実 gameplay animation から攻撃 reach を測る着想は action game 制作へ具体的だが、一次 URL が404でデータ規模・測定誤差・検出実績を復元できていない。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-8002bacc4f86ca9b
+    path: memory/shared_reads_candidates/20260802_lets_build_a_dungeon_game_engine_within_game.md
+    status: postponed
+    stale_after: "2026-09-01"
+    priority_reason: "game dev sim・ゲーム内 editor・AI NPC・即時 playtest の統合は適用性が高いが、playtest 結果、設計変更の因果、性能値が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-cdd1a833e23c58ba
+    path: memory/shared_reads_candidates/20260619_generative_ai_game_design_creativity_constraints.md
+    status: postponed
+    stale_after: "2026-08-28"
+    priority_reason: "発想支援と制約を分ける評価へ適用できるが、調査設計・データ・固有結論がなく一般的な AI workflow 論を越えない。"
+    recommended_review_action: reevaluate_in_phase2
+  - handoff_id: cha-59b2926c5f11143e
+    path: memory/shared_reads_candidates/20260619_n_player_binary_games_dependency_mechanics.md
+    status: postponed
+    stale_after: "2026-08-28"
+    priority_reason: "循環依存する陣営・資源・スイッチの逆設計に使える可能性はあるが、具体ルールへの写像・面白さの評価軸・設計例が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
