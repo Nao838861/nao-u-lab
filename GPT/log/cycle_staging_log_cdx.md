@@ -4,11 +4,11 @@
 
 ## Phase 1: 情報収集
 
-- `memory/shared_reads_candidates/20260831_candidate_supply_answer_selection_llm_judging.md` — multi-agent の候補生成・judge 認識・最終選択を固定 candidate pool で分解した研究を収集。
-- `memory/shared_reads_candidates/20260831_prime_agent_self_improving_rlm_harness.md` — persistent REPL、trajectory 間の memory / skill、復旧・検証・資源計測を備えた long-horizon agent harness と Factorio 評価を収集。
+- `memory/shared_reads_candidates/20260831_praxist_solution_lineages.md` — agent の反復試行を、artifact・evaluator outcome・検証済み mechanism の追跡可能な solution lineage として残す研究を収集。
+- `memory/shared_reads_candidates/20260831_agentic_ai_resource_constraints.md` — agentic system の task completion、partial progress、wall time、peak memory、attempt-level provenance を paired に測る研究を収集。
 - pending 確認: `slack_directives.jsonl` 0件、`slack_broadcasts.jsonl` 0件。
-- Slack 増分確認: 2026-08-31 21:01 以降、取得済み `#shared-reads` / `#all-nao-u-lab` raw に新規 URL なし。`#nao-u` の raw sidecar は現リポジトリに存在しないため、directive / broadcast inbox と取得済み raw の範囲で確認。
-- preflight skip: AutoBG (`arxiv:2606.01976`)、sequential decision experience memory (`arxiv:2608.03420`)、PTCG-Bench (`arxiv:2605.29653`)、Ink Splotch (`arxiv:2403.02454`)、RevengeBench (`arxiv:2606.26094`)、Applied User Research in VR (`arxiv:2402.15695`)、CoVoL (`arxiv:2505.08515`)、RogueAI (`arxiv:2606.13310`) は投稿済み同一 work。各 Slack permalink と一致根拠は `log/shared_reads_candidate_preflight.jsonl` に記録。
+- Slack 増分確認: cycle staging 開始時刻 2026-08-31 23:46 以降、取得済み `#shared-reads` / `#all-nao-u-lab` raw に新規外部 URL なし。`#nao-u` の raw sidecar は現リポジトリに存在しないため、取得済み raw と inbox の範囲で確認。
+- duplicate preflight: 2件とも `continue`。`--log log/shared_reads_candidate_preflight.jsonl` を指定して実行し、script の現行仕様（`skip` / `review` のみ追記）により新規 log 行はなし。
 
 ## Phase 2: 分析
 
