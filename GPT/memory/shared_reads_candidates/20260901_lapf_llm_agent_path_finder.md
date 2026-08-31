@@ -7,12 +7,12 @@ genre_tags: [game-ai, navigation, llm-agent, pathfinding, playtesting]
 evaluated_at: "2026-09-01T02:26:26+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-09-01T02:26:26+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-09-01T02:26:26+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-09-01T02:41:41.4878965+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788198083505319"
+next_action: none
 stale_after: "2026-10-01"
 supersedes: []
 gate_reason: >-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Nao_u のゲーム内 NPC navigation と自動テストプレイで、危険検出、bounded corrective action、waypoint 更新、安定性 telemetry を一つの検証 loop にする"
   pros_cons: "利点は判断過程と補正を観測可能にし複数指標で regression を追えること。弱点は UAV 2 scenario・各3 trial の小規模評価で、ゲーム固有の動的障害物や frame budget への一般化が未検証なこと"
   verdict_pre: "部分採用"
+posted:
+  ts: "1788198083.505319"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788198083505319"
+  char_count: 4078
+  posted_at: "2026-09-01T02:41:41.4878965+09:00"
 ---
 
 ## raw_excerpt
