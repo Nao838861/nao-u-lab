@@ -214,4 +214,14 @@ stale_backlog:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1788217021805119"
+  ts: "1788217021.805119"
+  char_count: 2183
+  verification: ok
+  draft: tmp/phase5_log_diary_20260901_0755_cdx.md
+posted_at: "2026-09-01T07:57:01+09:00"
+```
