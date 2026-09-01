@@ -67,7 +67,35 @@ delivery:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778545398-b278581a7b
+    source_ts: "1778545398.045179"
+    title: "Shereshevsky: Obsidian vault を Claude Code に繋ぐと未活用ポテンシャルが顕在化 — orphan蓄積を『inbound link義務化』で初手から塞ぐ運用"
+    reason: "未レビューの score 14 候補から、memory・game-design・agent・operation・evaluation の優先5タグを持ち、直後の Phase 4a cleanup に最も近い1件だけを選んだ。Nao_u の明示的な重要評価はローカル raw では確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "原文未読で snippet 等からの推定に留まり、retrieval utility の比較証拠がない。さらに probe-20260607-memory-hub-link-coverage が peer link と hub／index reachability の分離を既に扱うため中核判断は完全重複する。327件ある active_probes に同義 control を足したり inbound link を一律義務化したりすると、意味の薄いリンクと確認負荷を増やすので state-only review で閉じた。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に追加。active_probes・ledger・directive・恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

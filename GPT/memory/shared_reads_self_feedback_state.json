@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-01T22:51:24+09:00",
+  "updated_at": "2026-09-02T01:02:23+09:00",
   "reviewed_source_ts": [
     "1779757222.575779",
     "1779690823.312759",
@@ -796,7 +796,8 @@
     "1786615785.391759",
     "1786606281.572199",
     "1786606286.694329",
-    "1779924586.882839"
+    "1779924586.882839",
+    "1778545398.045179"
   ],
   "reviews": [
     {
@@ -26288,6 +26289,49 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、ベンダー記事の証拠不足、後続 Mir 補正、現行 shared-reads 品質ゲートおよび state／ledger との重複、当時の環境診断の陳腐化に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-09-02T01:02:23+09:00",
+      "selected": {
+        "id": "sr-1778545398-b278581a7b",
+        "source_ts": "1778545398.045179",
+        "title": "Shereshevsky: Obsidian vault を Claude Code に繋ぐと未活用ポテンシャルが顕在化 — orphan蓄積を「inbound link義務化」で初手から塞ぐ運用",
+        "reason": "source が slack_api/shared-reads、score 14、reviewed_source_ts にない候補のうち memory・game-design・agent・operation・evaluation の優先5タグを持ち、直後の Phase 4a memory cleanup に最も近いため1件だけ選んだ。orphan を一律欠陥とせず、peer inbound link と hub／index 経由の到達性を分ける判断が、既存 control と異なる小さな差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件14に届かず、non_redundancy と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、inbox 出口で最低1本の inbound link を要求し、検索には出るが想起されない orphan 蓄積を防ぐ行動へ直接変換できるため relevance・actionability は3とした。一方、投稿自身が Medium memberwall により本文未読で、WebSearch snippet・題名・著者経歴からの推定、weekly review の負荷や閾値も未確認と明記しており、外部比較、retrieval 成功率、後続判断への寄与、誤リンク率がないため evidence は1。probe-20260607-memory-hub-link-coverage は peer-to-peer link coverage と MEMORY／index 等の hub reachability を分離し、未計測なら可逆な audit に留める同じ中核判断を既に扱う。probe-20260516-read-lanes-before-memory-write は orphan／stale 診断を read-only evidence として扱い、probe-20260602-memory-retention-gate は promotion／archive 前の観測証拠を要求するため non_redundancy は0。active_probes は327件で、peer inbound link 1本を一律 promotion 条件にすると、hub／index から到達可能な leaf に意味の薄い link を足し、link count を recall utility と誤認し、書込み負荷を増やす。直後の Phase 4a は既存 control で同じ境界を確認でき、新しい判断差がないため risk_control は1とし、state-only reject で閉じる。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1778545398-b278581a7b.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1778545398.045179"
+      ],
+      "existing_controls": [
+        "probe-20260607-memory-hub-link-coverage",
+        "probe-20260516-read-lanes-before-memory-write",
+        "probe-20260602-memory-retention-gate"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、原文未読の推定という証拠限界、peer link と hub reachability を分ける既存 controls との完全重複、blanket inbound-link 義務による誤リンク・書込み負荷の risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
