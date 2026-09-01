@@ -4,6 +4,27 @@ url: "https://unity.com/blog/reimagining-backyard-baseball-3d-level-design-and-e
 collected_at: "2026-09-02T00:49:05+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, level-design, readability, environmental-storytelling, vfx, sports-game, 3d]
+evaluated_at: "2026-09-02T00:52:03+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-09-02T00:52:03+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-09-02T00:52:03+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-10-02"
+supersedes: []
+gate_reason: >-
+  懐かしさを保つ 2D→3D 再構築という問題設定に対し、readability、360 度の環境制作、
+  衝突反応 VFX、描画性能の制約を一つの制作判断として追える。具体的な実装単位と限界があり、
+  CoopEval 水準の概要とゲーム制作への適用を無理なく展開できる。
+suggested_post_outline:
+  overview_angle: "形状の忠実な複製ではなく、プレイ記憶を守る制約として懐かしさを再定義し、3D 化の各判断を束ねる"
+  analysis_axis: "readability を基礎要件に置き、画面層分け・環境反応・全周 camera・性能 budget がどう相互制約するか"
+  application_target: "既存 2D プロトタイプの 3D 再構築、プレイ領域の視認性設計、衝突時 feedback と環境物語の統合、低負荷な装飾設計"
+  pros_cons: "長所は設計判断が level geometry から VFX・最適化まで連続している点。短所は単一作品の制作事例で、比較実験や定量的な性能値が乏しい点"
+  verdict_pre: "部分採用。readability-first と環境反応の二重用途を設計チェックへ移し、固有の美術解はそのまま一般化しない"
 ---
 
 ## raw_excerpt
