@@ -128,7 +128,72 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-09-02T05:13:00+09:00 整理・監査結果
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index 50 atom ID を memory/atoms/index.jsonl と per-file path に照合し、broken link 0 件を確認した。UTF-8 明示読みで代表語（記憶 / ゲーム設計 / 敵パターン / 評価軸）も取得できた。"
+  - "memory/atoms.jsonl 3001 件を memory_health で監査した。atom ID 重複 0 件、normalized content duplicate 40 group / 80 rows は lifecycle fold 対象で、今回新たな矛盾は確認しなかった。"
+  - "memory/raw/ の 30 日超ファイル 243 件を確認した。raw provenance と再検証入力の正本であるため移動せず、phase3_* / headless_eval を archive 候補として観測のみ残した。"
+  - "shared-reads candidate lifecycle は failed 535 / posted 748 / postponed 200 / ready_to_post 2 / needs_review 0。stale 4 件は retry_after=2026-09-19 の live deferred group lease 2 件に包含され、今回の再投入対象外と確認した。"
+  - "title canonical / mixed / open duplicate sidecar を再生成した。canonical 112 group、mixed 23 group、open duplicate 27 group（mixed 23 / all_open 4）。"
+  - "Slack inbox は directives 0 件 / broadcasts 0 件で、handled 更新対象はなかった。"
+  - "group / stale triage / candidate handoff を契約順に再生成・enqueue し、group 0 件、candidate 0 件を冪等確認した。"
+  - "期限到来 probe lease は 0 件だったため、resolve receipt の追加はなかった。"
+  - "Phase 3 delivery queue を再生成し、未 lease queue 0 件 / handoff pending 2 件を監査した。Phase 4a から投稿・resolve は行っていない。"
+issues:
+  - id: ISS-UTF8-ATOM-001
+    description: "active atom sr-1776127289-4d9239b255 の title / trigger / excerpt に U+FFFD が残り、raw Slack archive、atoms.jsonl、per-file atom、index へ同じ破損が伝播している。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl#id=sr-1776127289-4d9239b255; memory/raw/slack_archive/shared-reads.jsonl#ts=1776127289.990919; python tools/memory_health.py"
+    source_file_status: "UTF-8 明示読みでも『AIエ��ジェント』として U+FFFD を確認。source file 自体の hard corruption である。"
+    display_or_tooling_status: "none。PowerShell / rg の表示経路だけの mojibake ではない。"
+    why_blocks_game_memory: "『AIエージェント』の完全一致検索を弱め、related candidate や recall 表示へ破損表記を伝播させる。ただし 1 atom に限定され、tag・source_ts・他語では検索可能。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "新しい構造設計を要する問題はない。ISS-UTF8-ATOM-001 は既存 health check が検出できている局所データ修復案件であり、Phase 4b は起動しない。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 27
+  mixed_group_count: 23
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_enqueued_count: 0
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  live_deferred_suppressed_candidate_count: 4
+  deferred_retry_after: "2026-09-19T14:08:16+09:00"
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+stale_review_batch: []
+phase3_delivery_audit:
+  queue_count: 0
+  handoff_pending_count: 2
+  handoff_pending_ids:
+    - p3h-ed53a12c825d575b
+    - p3h-2afa61cb70f6c959
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
