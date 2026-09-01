@@ -4,6 +4,27 @@ url: "https://www.gamedeveloper.com/design/paradox-interactive-s-afterworld-want
 collected_at: "2026-09-01T22:35:18+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, grand-strategy, onboarding, role-playing, player-goals]
+evaluated_at: "2026-09-01T22:40:11+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-09-01T22:40:11+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-09-01T22:40:11+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-10-01"
+supersedes: []
+gate_reason: >-
+  grand strategy の入口で目標を見失う問題に対し、局所課題、発見、tribe の役割形成から
+  player 自身の中期目標を発生させる設計が具体例付きで抽出できる。定量評価はないが、開発者の
+  設計意図と限界を分けて扱えば、複雑なゲームの onboarding へ適用可能な約4000字の分析にできる。
+suggested_post_outline:
+  overview_angle: "説明量を増やすのでなく、物語上の局所課題から自己目標を生成させて複雑な戦略ゲームへ導く設計"
+  analysis_axis: "局所課題→発見→idea 獲得→共同体の役割形成→中期目標という導線と、開発者主張・未検証部分の切り分け"
+  application_target: "MonoSH や今後の複雑なシステム型プロトタイプで、全機能説明の前に一手で解ける危機と発見イベントを置き、操作学習をプレイヤー固有の攻略方針へ接続する onboarding"
+  pros_cons: "利点は学習動機と role-play を同じ出来事から生めること。欠点は発見順や選択肢の偏りで重要機能を学ばない可能性があり、導線の観測と救済が必要なこと"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
