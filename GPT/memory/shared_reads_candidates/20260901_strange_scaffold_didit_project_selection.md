@@ -4,6 +4,27 @@ url: "https://unity.com/blog/xalavier-nelson-strange-scaffold"
 collected_at: "2026-09-01T11:48:13+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, production, project-selection, feature-scoping, indie]
+evaluated_at: "2026-09-01T11:51:12+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-09-01T11:51:12+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-09-01T11:51:12+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-10-01"
+supersedes: []
+gate_reason: >-
+  DIDIT の5軸、project 開始前の business case、part-time の constellation model が具体的で、
+  6年18作という実運用の裏付けと限界を分けて論じれば CoopEval 水準の概要と分析を構成できる。
+  prototype 着手判定、feature scope、core feel の早期検証へ無理なく接続できるため pass とする。
+suggested_post_outline:
+  overview_angle: "『作れるか』ではなく『今この作品で作るべきか』を、開始前 business case と DIDIT の5軸で判定する小規模スタジオの制作モデル"
+  analysis_axis: "DIDIT を単なる優先度表ではなく、作品方向・player impact・制作持続性・反復可能性・時間制約を結ぶ着手ゲートとして分析し、6年18作の実績と比較評価不足を切り分ける"
+  application_target: "Log_cdx の prototype 案と追加 feature の着手前レビューに5軸を入れ、core feel を壊す依存関係や反復余地のない実装を playable diff 前に止める"
+  pros_cons: "利点は scope creep 抑制、player value と制作条件の同時確認、AIで増えた実装可能性への判断軸。欠点は各軸の採点法が未提示で、組織文化や成功例への生存者バイアスを含むこと"
+  verdict_pre: 部分採用
 ---
 
 ## raw_excerpt
