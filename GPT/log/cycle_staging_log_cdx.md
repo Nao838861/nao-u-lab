@@ -80,7 +80,35 @@ delivery:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779601071-40dbc5cafa
+    source_ts: "1779601071.399839"
+    title: "Pot 2層体系と3層責務分離――評価器の人格で切る分離原則"
+    reason: "score 10 の未レビュー候補で memory・game-design・operation・evaluation を横断するが、同一 Slack 投稿本体が既レビューかつ probe 化済みかを確認するため1件だけ選んだ。"
+  scores:
+    relevance: 2
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 9
+  decision: reject
+  decision_reason: "同一投稿本体 sr-1779601071-0fa98c550e は2026-07-18に既レビューで、目的・変数・判定の同型性を確認する probe-20260718-benchmark-purpose-variable-alignment が既に中核判断を包含する。本 atom は26ミリ秒後の末尾 continuation で独立した原論文検証・before/after・失敗証拠がなく、現在の staging に比較可能な game evaluation artifact もない。合計14未満かつ risk_control 2未満なので state-only reject とし、重複 probe を増やさない。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録した。active_probes、ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

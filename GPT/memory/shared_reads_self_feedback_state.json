@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-09-02T05:03:56+09:00",
+  "updated_at": "2026-09-02T07:05:58+09:00",
   "reviewed_source_ts": [
+    "1779601071.399839",
     "1779717626.976659",
     "1779726451.738919",
     "1779757222.575779",
@@ -26426,6 +26427,50 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、visual readability 手順の局所有用性、既存 readability／core-density／visual-evidence controls との大幅な重複、比較 artifact 不在、minimalism と grayscale の過剰一般化 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-09-02T07:05:58+09:00",
+      "selected": {
+        "id": "sr-1779601071-40dbc5cafa",
+        "source_ts": "1779601071.399839",
+        "title": "Pot 2層体系と3層責務分離――評価器の人格で切る分離原則",
+        "reason": "source が slack_api/shared-reads、score 10、reviewed_source_ts にない候補のうち source_ts が最新で、memory・game-design・operation・evaluation の優先4タグを持つため1件だけ選んだ。Layer A の直接計測と Layer B の解釈を分ける知見が、現在の Phase 4a cleanup に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本 continuation 自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 9
+      },
+      "decision": "reject",
+      "decision_reason": "合計9で採用条件14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。本 continuation は直接計測と解釈、評価器の人格とユーザー体験段階という二つの分離軸を比較するため、評価結果を一つの verdict に潰さない行動へは変換できるが、現在の staging は memory cleanup であり比較可能な game evaluation artifact がないため relevance・actionability は2に留める。さらに本文は同一 Slack 投稿の3行目に分割取り込みされた末尾断片で、原論文 PDF の手法・評価を未確認のまま Pot 設計との対比を述べ、独立した before／after や失敗証拠がないため evidence は1。26ミリ秒前の同一投稿本体 sr-1779601071-0fa98c550e は2026-07-18に既レビューで、外部 benchmark と自前 harness の変数・固定対象・判断を分ける probe-20260718-benchmark-purpose-variable-alignment まで追加済みである。この probe は目的非同型なら指標直輸入を止めて最小翻訳と独自検証だけを残すため、本 continuation の責務分離から得られる判断を包含し non_redundancy は0。active_probes は327件、pending lease は0件であり、同一投稿の分割行から評価層 checklist を増やすと確認負荷だけが増えるため risk_control は1とし、state-only reject で閉じる。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1779601071-40dbc5cafa.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779601071.350659",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779601071.377389",
+        "memory/shared_reads_self_feedback_state.json#review=sr-1779601071-0fa98c550e"
+      ],
+      "existing_controls": [
+        "review-sr-1779601071-0fa98c550e",
+        "probe-20260718-benchmark-purpose-variable-alignment"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、同一 Slack 投稿本体の既レビュー、既存 benchmark-purpose alignment probe との完全重複、原論文本文および実環境 before／after の不足、比較 artifact 不在と active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
