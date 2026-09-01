@@ -105,7 +105,58 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。atom参照50件は atoms/index.jsonl に全件存在し、broken link 0件。代表語は 記憶/ゲーム設計/敵パターン を取得、評価軸は本文に未出現だが表示文字化けはなし。"
+  - "atoms 3001件を監査し、atom id重複0件・mirror clean・input consistency stableを確認。normalized content重複40群/80行は recall-visible 3群までfoldされ、canonical overlay 45群を再生成した。機械検出できる矛盾はなし。"
+  - "memory/raw/ の30日超無更新244件（web_research 219、headless_eval 16、その他9）を確認。いずれも一次資料・評価証拠・ingest stateであり、無活動日数だけを根拠に移動せず保持した。"
+  - "candidate lifecycleを監査。failed 530 / posted 743 / postponed 203 / ready_to_post 3、needs_review 0。期限到来4件は既処理の同一state receiptで抑止され、当cycleの再handoffは0件。"
+  - "title canonical / mixed / open duplicate sidecar、posted-source index、Phase 3 queueを再生成。posted-source indexは healthy/fresh、Phase 3からの投稿・resolveは未実施。"
+  - "Slack directive / broadcast inbox は pending 0件のため status 更新なし。"
+issues:
+  - id: ISS-UTF8-ATOM-001
+    description: "active atom sr-1776127289-4d9239b255 の title / Use when に U+FFFD が2文字残り、『AIエージェント』の完全一致検索を損なう。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/index.jsonl id=sr-1776127289-4d9239b255; python tools/memory_health.py --compact"
+    source_file_status: "UTF-8明示読みでも『AIエ��ジェント』を確認。source file自体の hard_corruption(replacement_character)。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "ファイルシステム型agent memoryの既存知見を『AIエージェント』完全一致で探す場合に、この1 atomが検索漏れし得る。ただし本文・URLは保持され、recall smokeは全3 queryでhitするため影響は限定的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+stale_review_batch: []
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 27
+  mixed_group_count: 23
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+phase3_delivery_audit:
+  queue_count: 0
+  handoff_pending_count: 3
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
