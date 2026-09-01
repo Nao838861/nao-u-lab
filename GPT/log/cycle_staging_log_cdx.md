@@ -52,7 +52,24 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260626_latent_bridge_realtime_game_agents.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788254177160009
+    char_count: 4470
+preflight:
+  candidate: memory/shared_reads_candidates/20260626_latent_bridge_realtime_game_agents.md
+  state_fingerprint_selected: cdbeedde4e4406e934e4a4b054252bab701b36255bde96e9dabb1e8dbc2afe18
+  state_fingerprint_current: cdbeedde4e4406e934e4a4b054252bab701b36255bde96e9dabb1e8dbc2afe18
+  duplicate_decision: continue
+  canonical_url: https://arxiv.org/abs/2606.24470
+  policy_review: "必須6節・固定順序・URL末尾・禁止表現なし・4470字・Slack履歴照合ok"
+delivery:
+  handoff_id: p3h-1ddff91270440b41
+  decision: posted
+  delivery_mode: new_post
+  evidence: "candidate posted block / Phase 3 posted entry / Slack permalink"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

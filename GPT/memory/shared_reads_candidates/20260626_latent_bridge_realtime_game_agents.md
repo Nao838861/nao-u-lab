@@ -7,12 +7,12 @@ genre_tags: [game-ai, realtime-agents, vlm, playtesting, latency, harness]
 evaluated_at: "2026-06-26T05:56:01+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-26T05:56:01+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-26T05:56:01+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-09-01T18:16:17.160009+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788254177160009"
+next_action: none
 stale_after: "2026-07-26"
 supersedes: []
 gate_reason: "リアルタイムゲーム agent の低遅延反応と遅い計画をどう接続するかが明確で、Text Bridge / Latent Bridge / Fast-Only の比較軸も取れる。Atari と MetaDrive の評価、効く条件と効かない条件の制約まで候補メモに残っており、CoopEval 水準の概要に展開できる。"
@@ -22,6 +22,11 @@ suggested_post_outline:
   application_target: "headless playtest、敵・味方 AI、リアルタイム評価 harness で、低頻度 planner と高頻度 executor を分ける設計判断に使う。"
   pros_cons: "利点は latency と planning の責務分離、欠点は slow reasoning が有効でない task では bridge も効かず、text と latent の併用が干渉し得ること。"
   verdict_pre: "部分採用。自前環境では latent 学習路そのものより、slow/fast loop 分離と bridge の評価項目を先に取り込む。"
+posted:
+  ts: "1788254177.160009"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788254177160009"
+  char_count: 4470
+  posted_at: "2026-09-01T18:16:17.160009+09:00"
 ---
 
 ## raw_excerpt
