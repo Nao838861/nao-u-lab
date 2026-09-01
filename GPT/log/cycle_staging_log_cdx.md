@@ -57,7 +57,28 @@ duplicate_preflight:
 - 限界: LongMemEval、単一 extractor、pruning 1 回の結果であり、graph memory 一般や実ゲーム履歴への一般化は主張しない。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260723_harness_induced_belief_divergence.md
+    reason: "duplicate preflight が review（open_duplicate_title_match / mixed group）。normal_post の必須条件である continue を満たさないため投稿せず、同一 arXiv work の failed sibling を含む重複群の整合を次回再評価へ送った"
+    action: candidate_revise
+preflight:
+  title: "Measuring Harness-Induced Belief Divergence in Multi-Step LLM Agents"
+  canonical_url: "https://arxiv.org/abs/2607.04528v1"
+  decision: review
+  reason: open_duplicate_title_match
+  group_kind: mixed
+  representative_paths:
+    - memory/shared_reads_candidates/20260723_harness_induced_belief_divergence.md
+  candidate_state_fingerprint_unchanged_before_decision: true
+delivery:
+  handoff_id: p3h-ea8adc7aaf02af11
+  decision: postponed
+  delivery_mode: new_post
+  evidence: "candidate lifecycle fields + Phase 3 preflight entry; Slack post_message は未実行"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
