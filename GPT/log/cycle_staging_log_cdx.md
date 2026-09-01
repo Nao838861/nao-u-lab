@@ -70,7 +70,42 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1788198083-788f2ddd2d
+    source_ts: "1788198083.505319"
+    title: "LAPF: LLM-Agent-Based Path Finder — deterministic guard と短期 episode memory を分離した navigation loop"
+    reason: "source が slack_api/shared-reads、score 12、未レビュー候補のうち source_ts が最新で、memory・harness・game-design・agent・evaluation の優先5タグを持つため1件だけ選んだ。提案 action と実行 action を分け、agent の tool choice に依存しない guard と実行結果を含む短期 memory が既存 control と異なる判断差を作れるか確認した。Nao_u の明示評価 thread はローカル raw では確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: defer
+  decision_reason: "合計13で採用条件14に届かず、risk_control も必須閾値2を下回る。単一 scene・1 backbone・各条件3 trial、固定観測 replay、数値注入 hazard の証拠は guaranteed guard の機構確認には使えるが、interactive navigation や自然な3D障害物回避へは外挿できない。bounded replanning、checkable intermediate state、replay／interactive failure split、playtest ablation、decision trail の既存5 controls が中核判断をほぼ覆い、後続 Phase 4a には同一 map／seed の navigation artifact がないため、新規 probe・metric・lease・directive は追加しない。"
+  existing_controls:
+    - probe-20260710-llm-bounded-replanning-decision-layer
+    - probe-20260612-checkable-intermediate-state
+    - probe-20260612-interactive-agent-failure-layer-split
+    - probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation
+    - probe-20260709-clqt-diagnostic-decision-trail
+  defer_condition: "実在する NPC navigation または headless controller で、既存5 controlsだけでは提案の妥当性、guard発火、実行結果、反復補正を分離できない再現例があり、同一 map／seed の before／after artifact を指定できる時に限り再評価する。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを state に記録した。active_probes・ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

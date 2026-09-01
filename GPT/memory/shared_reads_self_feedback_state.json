@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-09-01T07:48:17+09:00",
+  "updated_at": "2026-09-01T09:49:32+09:00",
   "reviewed_source_ts": [
+    "1788198083.505319",
     "1788207249.323529",
     "1788179905.992809",
     "1788189260.935909",
@@ -26003,6 +26004,55 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、first playable／人間所有の engine 境界／外注 source acceptance／headless と human observation の併記の局所有用性、既存 scope／acceptance／feedback controls との大幅な重複、比較 artifact 不在、active probe 増殖 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-09-01T09:49:32+09:00",
+      "selected": {
+        "id": "sr-1788198083-788f2ddd2d",
+        "source_ts": "1788198083.505319",
+        "title": "LAPF: LLM-Agent-Based Path Finder — deterministic guard と短期 episode memory を分離した navigation loop",
+        "reason": "source が slack_api/shared-reads、score 12、未レビュー候補のうち source_ts が最新で、memory・harness・game-design・agent・evaluation の優先5タグを持つため1件だけ選んだ。提案 action と実行 action を分け、agent の tool choice に依存しない guard と実行結果を含む短期 memory を組み合わせる知見が、次の NPC navigation／headless controller へ既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した thread reply はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "defer",
+      "decision_reason": "合計13で採用条件14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、perception→memory→planning→action→result を閉じ、LLM の waypoint 提案と deterministic な実行 guard を分離し、state fingerprint・意図・提案 action・実行 action・guard reason・結果・次の修正を短い episode に残す行動へ直接変換できるため relevance・actionability は3とした。一方、評価は UAVScenes の単一 scene、1 backbone、各条件3 trial で、41 frame の記録 stream を110 decision stepへ循環させる replay であり、action が次の観測を変える interactive simulation ではない。実データの clearance は全 frame 15 m超で、hazard は規定 step の数値上書きにより4回発火させているため、自然な3D障害物の検出・回避や実時間 NPC 制御の証拠にはならず evidence は2とした。probe-20260710-llm-bounded-replanning-decision-layer は A*／NavMesh 等が authority を保持する bounded schema と heuristic baseline・stability cost を、probe-20260612-checkable-intermediate-state は提案と実行結果を検査可能な中間状態へ残すことを、probe-20260612-interactive-agent-failure-layer-split と probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation は replay／interactive 条件や memory・perception・prompt 要因の分離を、probe-20260709-clqt-diagnostic-decision-trail は outcome と process・cost 軸の分離を既に扱う。guaranteed invocation と guard reason は局所差だが、中核判断は既存 controls の組合せへほぼ吸収されるため non_redundancy は1とした。現在の staging の後続は Phase 4a memory cleanup で、同一 map／seed の no-memory・short-memory・rule-only controller、static replay／interactive run、guard coverage／success／repeated correction／latency を比較できる navigation artifact がない。active_probes は327件、pending lease は0件であり、対象 artifact なしに20 run比較と新しい episode schemaを追加すると判断差より計測・checklist負荷が増えるため risk_control は1とした。次に実在する NPC navigation または headless controller で、既存5 controlsだけでは提案の妥当性、guard発火、実行結果、反復補正を分離できない再現例が出た時に、同一 map／seed の1回限りの paired receipt として再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-09/sr-1788198083-788f2ddd2d.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1788198083.505319",
+        "memory/shared_reads_candidates/20260901_lapf_llm_agent_path_finder.md",
+        "memory/shared_reads_candidates/posted_drafts/20260901_lapf_llm_agent_path_finder_post.md",
+        "https://arxiv.org/abs/2608.15175"
+      ],
+      "existing_controls": [
+        "probe-20260710-llm-bounded-replanning-decision-layer",
+        "probe-20260612-checkable-intermediate-state",
+        "probe-20260612-interactive-agent-failure-layer-split",
+        "probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation",
+        "probe-20260709-clqt-diagnostic-decision-trail"
+      ],
+      "defer_condition": "実在する NPC navigation または headless controller で、既存5 controlsだけでは提案の妥当性、guard発火、実行結果、反復補正を分離できない再現例があり、同一 map／seed の before／after artifact を指定できる時に限り、1回限りの paired receipt として再評価する。",
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、guaranteed guard／短期 episode memory の局所有用性、小規模 replay 評価の証拠限界、既存 bounded-decision／intermediate-state／interactive-failure／playtest-ablation／decision-trail controls との大幅な重複、比較 artifact 不在と active probe 増殖 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
