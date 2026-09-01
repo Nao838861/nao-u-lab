@@ -108,7 +108,78 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "MEMORY.md の High Signal / Recent atom 参照を per-file index と照合し、broken 0 を確認した。UTF-8 明示読みは正常で、『記憶』『ゲーム設計』『敵パターン』を取得できた。『評価軸』の literal は MEMORY.md にないが、memory_recall.py では関連 atom を取得でき、source mojibake ではない。"
+  - "atoms 3000件を監査し、JSON / id / dual-write mirror conflict は 0。normalized content 重複 40 group は canonical overlay で fold 済み、effective display unresolved は 0。"
+  - "shared-reads の terminal canonical / mixed duplicate / open duplicate / stale triage / group-action sidecar を現 candidate 状態から再生成した。candidate 本体は変更していない。"
+  - "Slack directives 23行・broadcasts 21行を確認し、pending は双方 0。handled 更新対象なし。"
+  - "30日超未更新の raw 248 files を確認したが、Slack 原文・web research・headless evaluation の provenance であり、古さだけを根拠に移動しなかった。slack archive ingest は 2026-09-01 08:31 に実行済み。"
+issues:
+  - id: ISS-4A-20260901-01
+    description: "ready_to_post 9件が全件 stale_after 超過だが、過去 cycle の pass candidate を Phase 3 へ再提示する永続 queue がない。Phase 3 は当該 cycle の Phase 2 pass だけを読み、stale triage は postponed / needs_review だけを選ぶため、pass 済み候補が lifecycle 上で停止する。"
+    severity: high
+    evidence: "memory/shared_reads_candidates/: ready_to_post=9、最古 stale_after=2026-06-15。例: 20260516_pokeagent_challenge.md、20260529_gamedevbench_agentic_game_development.md、20260610_temporal_design_developer_perspectives.md、20260723_harness_induced_belief_divergence.md。phases/phase3_post_shared_reads.md:87 は staging Phase 2 pass のみ、tools/build_shared_reads_stale_triage_queue.py:25 は TARGET_STATUSES={postponed,needs_review}。"
+    source_file_status: "UTF-8 読み正常。candidate frontmatter の status / candidate_status / last_decision は整合しており、破損ではなく配送経路の欠落。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "Phase 2 で投稿価値ありと判断したゲーム制作知見が Shared-reads / atom 化へ進まず、次の制作で検索できる記憶に昇格しない。posted sibling を持つ mixed duplicate も open のまま残り、再評価判断を濁す。"
+  - id: ISS-4A-20260901-02
+    description: "active atom 1件の title / trigger / excerpt に U+FFFD が実在し、関連 candidate index にも伝播している。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md、memory/atoms.jsonl:317、memory_health.py --json hard_corruption_atom_count=1"
+    source_file_status: "UTF-8 decode は成功するが、source text 自体に『AIエ��ジェント』という replacement character 2文字が存在する実破損。"
+    display_or_tooling_status: "terminal 表示だけの mojibake ではなく per-file / atoms.jsonl / index の全 mirror で再現。"
+    why_blocks_game_memory: "『AIエージェント』の exact term 検索精度をこの1件で落とし、related candidate の表示にも壊れた語を伝播する。単一行のため設計変更は不要。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260901-01
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+stale_review_batch: []
+group_action_handoff: []
+stale_backlog:
+  lifecycle_counts:
+    posted: 736
+    ready_to_post: 9
+    postponed: 203
+    failed: 529
+    needs_review: 0
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 30
+  mixed_group_count: 26
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_handoff_inbox_pending_count: 0
+  group_handoff_inbox_ids: []
+  deferred_group_lease_ids:
+    - gha-e6d4d4b5a37a0808
+    - gha-2313a247c62a9028
+  deferred_group_retry_after: "2026-09-19T14:08:16+09:00"
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  note: "overdue 4件は上記2 group の live deferred lease に包含され、retry_after 前のため stale triage / candidate handoff へ重複投入しなかった。ready_to_post 9件は現 stale triage 対象外で、ISS-4A-20260901-01 として分離した。"
+raw_archive_audit:
+  older_than_30_days: 248
+  archived_now: 0
+  decision: explicit_keep
+  reason: "raw provenance を古さだけで移動しない。既存 slack_archive と ingest state は current。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
