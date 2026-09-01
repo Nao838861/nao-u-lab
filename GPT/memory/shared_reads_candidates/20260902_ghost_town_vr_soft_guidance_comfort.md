@@ -4,6 +4,26 @@ url: "https://unity.com/blog/how-ghost-town-makes-vr-movement-feel-natural"
 collected_at: "2026-09-02T02:48:31+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, vr, player-guidance, accessibility, movement, puzzle-adventure]
+evaluated_at: "2026-09-02T02:51:40.5380941+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-09-02T02:51:40.5380941+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-09-02T02:51:40.5380941+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-10-02"
+supersedes: []
+gate_reason: >-
+  camera を奪えない VR での soft guidance と、物理的忠実さより comfort を優先する移動調整が、同じ「体験を完走可能にする設計原則」で結ばれている。
+  line of sight、環境 detail、音、step movement、vignette、補助の選択制まで具体例が揃い、定量評価の不在を限界として明示すれば約4000字の固有分析を構成できる。
+suggested_post_outline:
+  overview_angle: "自由探索の主体感を壊さず、注意誘導・移動 comfort・詰まり対策を組み合わせて VR 体験を完走可能にする設計"
+  analysis_axis: "soft guidance の感覚チャネル、探索密度、物理的忠実さを削る判断、補助を選択可能にする accessibility を一つの体験経路として分析する"
+  application_target: "Log_cdx の探索・パズル prototype で、強制 camera や単一解法に頼らず、環境 cue と段階的な補助設定で発見と進行を両立させる"
+  pros_cons: "主体感と comfort を守りやすい一方、環境 detail の制作費が増え、記事には酔い・到達率・誘導成功率の定量評価がない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

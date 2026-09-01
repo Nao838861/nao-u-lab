@@ -4,26 +4,20 @@ url: "https://itch.io/devlog/1515914/a-playtest-campaign-overview"
 collected_at: "2026-08-01T14:33:28+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, playtesting, tabletop-rpg, iteration, player-agency]
-evaluated_at: "2026-08-03T22:51:02+09:00"
+evaluated_at: "2026-09-02T02:51:40.5380941+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: pass
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-08-03T23:02:47+09:00"
-last_decision: postponed
-evidence: "Phase 3 final review: 一次記事は21 sessionの概況に留まり、rule変更の比較結果・失敗条件・観測記録が約4000字の固有分析を支える密度に達しない"
-next_action: candidate_revise
-stale_after: "2026-09-02"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-09-02T02:51:40.5380941+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-09-02T02:51:40.5380941+09:00"
+next_action: keep_for_reference
+stale_after: "2026-10-02"
 supersedes: []
 gate_reason: >-
-  2年・21 session の長期 playtest で、予測外の player agency、複数 rule 改訂、補助 sheet の情報設計まで追っている。
-  単発 test では見えない累積変化を次版へ戻す制作サイクルとして具体的で、約4000字の分析密度を確保できる。
-suggested_post_outline:
-  overview_angle: "長期 campaign を、rule・world state・player-facing tool を同時に育てる設計観測装置として読む"
-  analysis_axis: "session 記録、予測外行動による設定変化、rule 改訂、character keeper の可読性改善を時間軸で分析する"
-  application_target: "Log_cdx の prototype playtest で、未発生 encounter も含む履歴と rule／UI の累積変更を次 build に戻す"
-  pros_cons: "長期的な emergent behavior を捉えられる一方、TTRPG の即興性と固定 group に依存し、短期 digital game へは翻訳が必要"
-  verdict_pre: "部分採用"
+  21 session の長期運用と予測外の player agency は具体的だが、rule 改訂の前後差、失敗条件、観測記録が示されていない。
+  前回 Phase 3 の棄却理由を解消する新しい evidence がなく、約4000字の固有分析を一次資料で支えられないため参照資料として閉じる。
 ---
 
 ## raw_excerpt

@@ -4,26 +4,20 @@ url: "https://news.ycombinator.com/item?id=48270848"
 collected_at: "2026-08-03T22:47:14+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, location-based-game, procedural-generation, llm, computer-vision, solo-dev]
-evaluated_at: "2026-08-03T22:51:02+09:00"
+evaluated_at: "2026-09-02T02:51:40.5380941+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: pass
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-08-03T23:02:47+09:00"
-last_decision: postponed
-evidence: "Phase 3 final review: 公開約1か月・約20 playerの自己報告で、種判定精度・生成一貫性・位置情報安全性・費用scaleの評価がなく、現状では約4000字の結論を一次資料から支えられない"
-next_action: candidate_revise
-stale_after: "2026-09-02"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-09-02T02:51:40.5380941+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-09-02T02:51:40.5380941+09:00"
+next_action: keep_for_reference
+stale_after: "2026-10-02"
 supersedes: []
 gate_reason: >-
-  encounter-time generation、cache、決定的地図生成、OpenStreetMap の土地利用を一つの progression loop に接続している。
-  player／遭遇数と運用・画像生成費もあり、巨大 content space を個人制作で扱う手法とリスクを約4000字で具体化できる。
-suggested_post_outline:
-  overview_angle: "世界中の生物と地理を事前生成せず、遭遇時生成と cache で位置情報ゲームへ変える solo-dev architecture"
-  analysis_axis: "種判定→能力・進化生成→sprite cache、OSM による行動 gate、決定的地図描画、運用費を分解する"
-  application_target: "Log_cdx の content-heavy prototype で、必要時だけ生成し、安定 ID と cache で再現性・費用・待ち時間を制御する"
-  pros_cons: "小規模でも巨大な題材空間を扱える一方、種判定誤り、生成一貫性、位置情報 safety、月額費用の検証が不足する"
-  verdict_pre: "部分採用"
+  encounter-time generation、cache、OSM の土地利用、決定的地図生成は具体的だが、種判定精度・生成一貫性・位置情報安全性の評価がない。
+  約20 player の自己報告と費用概算からは規模拡大時の結論を支えられず、前回 Phase 3 の不足も解消されていないため参照資料として閉じる。
 ---
 
 ## raw_excerpt
