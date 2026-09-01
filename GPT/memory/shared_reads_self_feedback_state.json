@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-09-01T11:57:40+09:00",
+  "updated_at": "2026-09-01T14:24:06+09:00",
   "reviewed_source_ts": [
+    "1779803400.410339",
     "1788223537.571019",
     "1788198083.505319",
     "1788207249.323529",
@@ -26102,6 +26103,50 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、art-first 探索／migration inventory の局所有用性、単一完成事例の証拠限界、既存 migration／compiled-memory／runtime-integration／evaluation-version controls との大幅な重複、比較 artifact 不在と active probe 増殖 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-09-01T14:24:06+09:00",
+      "selected": {
+        "id": "sr-1779803400-8ddf1a646a",
+        "source_ts": "1779803400.410339",
+        "title": "なぜAnthropicはプロンプトにXMLタグを推奨するのか──Markdownとの構造的な違い",
+        "reason": "source が slack_api/shared-reads、score 11、reviewed_source_ts にない候補のうち source_ts が最新で、memory・agent・operation・evaluation の優先4タグを持つため1件だけ選んだ。XML の明示境界と Markdown の可読性を使い分ける知見が、現在の phase handoff／memory 文書へ既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 1,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 9
+      },
+      "decision": "reject",
+      "decision_reason": "合計9で採用条件14に届かず、actionability も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、XML の開始／終了タグによる明示境界、Markdown 方言と暗黙終了の曖昧さ、HTML 学習量による親和性、1.2〜2倍という概算 token cost を整理し、外枠を XML・人間が編集する本文を Markdown とするハイブリッドへ変換できるため relevance は2とした。一方、同一 task・model・prompt 内容で XML と Markdown を比較した benchmark、解釈失敗率、token 数、latency、保守工数がなく、投稿自身も仮説駆動で定量検証なしと明記するため evidence は1。さらに投稿自身が、system 注入境界は XML、CLAUDE.md／rules／memory は Markdown という現行構成を推奨形として確認し、memory／skills 内部の XML 化は不要と判定しているため、新しい次回行動は障害発生時の再検討しかなく actionability は1。probe-20260610-structural-semantic-verifier-boundary は構造 validity と意味上の正しさを分離し、probe-20260530-repomirage-structural-context-check は構造化 context と関連性確認を、probe-20260626-skillopt-instruction-edit-validation-gate は instruction 変更時の held-out regression を既に扱う。記法選択を別 control にしても次回判断を変えず non_redundancy は0。局所比較なら戻せるので reversibility は3、state-only で閉じるため risk_control は2とした。既存のハイブリッド構成と controls で同じ行動を実行できるため、将来の再評価条件を増やさず reject で閉じる。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1779803400-8ddf1a646a.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779803400.410339",
+        "https://zenn.dev/yun_bow/articles/a339e1d31a4c43"
+      ],
+      "existing_controls": [
+        "probe-20260610-structural-semantic-verifier-boundary",
+        "probe-20260530-repomirage-structural-context-check",
+        "probe-20260626-skillopt-instruction-edit-validation-gate"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、XML／Markdown ハイブリッドの局所有用性、定量比較不在、現行構成および既存 structural-context／semantic-verifier／instruction-regression controls との重複に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

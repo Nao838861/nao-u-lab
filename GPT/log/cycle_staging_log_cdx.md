@@ -74,7 +74,35 @@ delivery:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779803400-8ddf1a646a
+    source_ts: "1779803400.410339"
+    title: "なぜAnthropicはプロンプトにXMLタグを推奨するのか──Markdownとの構造的な違い"
+    reason: "source が slack_api/shared-reads、score 11、未レビュー候補のうち source_ts が最新で、memory・agent・operation・evaluation の優先4タグを持つため1件だけ選んだ。XML 境界と Markdown 本文の使い分けが、現在の phase handoff／memory 文書へ既存 control と異なる判断差を作れるか確認した。Nao_u の明示的な重要評価はローカル raw で確認できなかった。"
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 9
+  decision: reject
+  decision_reason: "投稿自身が現行の XML 外枠＋Markdown 本文を推奨形と確認し、内部 XML 化は不要と判定している。同一 task での記法比較もなく、既存の structural-context／semantic-verifier／instruction-regression controls と重なるため、追加 action は次回判断を変えない。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
