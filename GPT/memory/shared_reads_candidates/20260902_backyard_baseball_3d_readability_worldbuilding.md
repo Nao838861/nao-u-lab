@@ -7,12 +7,17 @@ genre_tags: [game-design, level-design, readability, environmental-storytelling,
 evaluated_at: "2026-09-02T00:52:03+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-09-02T00:52:03+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-09-02T00:52:03+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-09-02T05:00:14+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788292814665709"
+posted:
+  ts: "1788292814.665709"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788292814665709"
+  char_count: 4497
+  posted_at: "2026-09-02T05:00:14+09:00"
+next_action: none
 stale_after: "2026-10-02"
 supersedes: []
 gate_reason: >-

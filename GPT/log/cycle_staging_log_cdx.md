@@ -55,7 +55,44 @@ unreviewed_intake_audit:
 - `Godot Mobile update — April 2026`: `pass`。端末・GPU driver 差という問題設定、debug symbol・crash telemetry・実機報告を workaround へ結ぶ手法、実ゲーム2本で crash rate が約4%から1%未満へ低下した評価、継続的な mobile release engineering という結論が揃う。自分達の制作では、端末 matrix、symbol 保管、crash cluster の再現、修正前後の rate 比較を一続きの release gate にできる。2作品の集計期間・端末別母数が不明な限界を明示すれば、CoopEval 水準の概要を構成可能。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+### 2026-09-02T04:59:56+09:00 投稿直前確認
+
+```yaml
+preflight:
+  handoff_id: p3h-57fdc3f070cdc6a9
+  candidate: memory/shared_reads_candidates/20260902_backyard_baseball_3d_readability_worldbuilding.md
+  action: normal_post
+  state_fingerprint_selected: cf9525f634327ef8d588d6440a639960a6d9be515128949876d066ed99d2461f
+  state_fingerprint_current: cf9525f634327ef8d588d6440a639960a6d9be515128949876d066ed99d2461f
+  state_match: true
+  duplicate_preflight: continue
+  canonical_url: https://unity.com/blog/reimagining-backyard-baseball-3d-level-design-and-environment-art
+  posted_source_index: healthy
+  draft: memory/shared_reads_candidates/posted_drafts/20260902_backyard_baseball_3d_readability_worldbuilding_post.md
+  char_count: 4497
+  policy_review: pass
+```
+
+### 2026-09-02T05:00:14+09:00 投稿結果
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260902_backyard_baseball_3d_readability_worldbuilding.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788292814665709
+    ts: "1788292814.665709"
+    char_count: 4497
+    verification: ok
+skipped: []
+delivery:
+  handoff_id: p3h-57fdc3f070cdc6a9
+  decision: posted
+  delivery_mode: new_post
+  evidence:
+    candidate: "posted block with Slack ts/permalink/char_count/posted_at"
+    staging: "Phase 3 preflight and posted entries"
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788292814665709
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
