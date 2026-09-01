@@ -3,13 +3,27 @@ phase: 3
 name: Shared-reads 投稿
 focus: pass した candidate を #shared-reads に投稿するか最終判定し、投稿する場合は Log_cdx 自身の深い分析として 1 件ずつ出す
 estimated_time: 20-40 min per post
-inputs: [Phase 2 staging, pass 判定 candidate ファイル]
+inputs: [Phase 2 staging, memory/shared_reads_phase3_queue.jsonl, memory/shared_reads_phase3_handoff_inbox.jsonl, pass 判定 candidate ファイル]
 outputs: [Slack #shared-reads メッセージ, candidate ファイル posted/postponed 情報, staging Phase 3 セクション]
 ---
 
 # Phase 3: Shared-reads 投稿
 
-Phase 2 で `gate_decision: pass` になった candidate だけを扱う。ここでは「投稿すること」ではなく、#shared-reads に残す価値がある分析として完成しているかを最終判定する。
+`status` / `candidate_status` がともに `ready_to_post` の candidate だけを扱う。同一 cycle の Phase 2 pass に限定せず、永続 handoff ledger の oldest pending を復元する。ここでは「投稿すること」ではなく、#shared-reads に残す価値がある分析として完成しているかを最終判定する。
+
+## 跨 cycle 配送と処理 budget
+
+Phase 3 の開始時に候補 frontmatter から queue を再生成し、staging header の cycle ID で ledger へ冪等 enqueue する。その後、oldest pending を1件だけ取得する。current-cycle pass も同じ queue に入り、1 cycle の投稿・postpone・defer・invalidate の合計 budget は1件とする。
+
+```powershell
+python tools\build_shared_reads_phase3_queue.py
+python tools\shared_reads_phase3_handoff.py enqueue --source-cycle-id "<staging header cycle id>"
+python tools\shared_reads_phase3_handoff.py pending --limit 1
+```
+
+`memory/shared_reads_phase3_queue.jsonl` は再生成可能な表示で、跨 cycle の正本は `memory/shared_reads_phase3_handoff_inbox.jsonl` である。queue は verified な posted-source と同一 state fingerprint の既存 handoff を除外し、`evaluated_at` が古い順に並ぶ。candidate frontmatter は enqueue 時に変更しない。
+
+pending item の `delivery_action` が `invalidate` の場合は、candidate 状態が選定時から変わっている。投稿せず、現在 frontmatter と staging evidence を付けて `invalidated` で閉じる。`complete_receipt` の場合は、Slack permalink または途中 decision が既に ledger にあるため再投稿せず、candidate / staging の不足だけを補完して resolve する。
 
 ## 現行投稿ルール
 
@@ -84,13 +98,19 @@ Phase 2 で `gate_decision: pass` になった candidate だけを扱う。こ�
 
 ## 手順
 
-1. staging file の Phase 2 セクションから pass candidate を取得する。
-2. candidate ファイルと参照 URL の本文を読む。web_research キャッシュがあれば使い、足りなければ元 URL を確認する。
-3. 投稿条件を満たすか判定する。満たさない場合は投稿せず `postponed` に戻す。
-4. 投稿する場合は必須フォーマットで本文を書く。旧フォーマットの「要約」「メリット」「デメリット／注意点」は使わず、「概要」「メリット・デメリット」へ置換する。
-5. 投稿前レビューを通す。
-6. `tools/slack_client.py` の `post_message` を使い、#shared-reads に 1 candidate ずつ個別投稿する。スレッド返信は禁止。
-7. candidate frontmatter を更新する。
+1. Phase 3 queue を再生成して ledger へ enqueue し、oldest pending を1件だけ取得する。0件なら no-op とする。
+2. `delivery_action` が `invalidate` なら投稿せず `invalidated` receipt を記録して終了する。`complete_receipt` なら Slack へ再投稿せず、既存 permalink を使って手順8の完了条件だけを回復する。
+3. candidate ファイルと参照 URL の本文を読む。web_research キャッシュがあれば使い、足りなければ元 URL を確認する。
+4. 投稿直前に candidate の state fingerprint と duplicate preflight を再確認し、結果を staging に残す。
+
+```powershell
+python tools\shared_reads_duplicate_preflight.py --title "<candidate title>" --url "<candidate url>"
+```
+
+5. state fingerprint が変わっていれば `invalidated` で閉じる。preflight が `skip` / `review`、または投稿条件を満たさない場合は投稿せず candidate を `postponed` に戻し、frontmatter と staging を更新して `postponed` receipt を閉じる。
+6. 投稿する場合は必須フォーマットで本文を書き、投稿前レビューを通す。旧フォーマットの「要約」「メリット」「デメリット／注意点」は使わず、「概要」「メリット・デメリット」へ置換する。
+7. `tools/slack_client.py` の `post_message` を使い、#shared-reads に 1 candidate だけ投稿する。スレッド返信は禁止。Slack の一時失敗時は candidate を `ready_to_post` のまま保ち、`retry_after` を付けて `defer` する。
+8. 投稿成功時は candidate frontmatter と staging を先に更新する。
 
 ```yaml
 posted:
@@ -106,7 +126,16 @@ evidence: <Slack permalink>
 next_action: none
 ```
 
-8. staging Phase 3 セクションに投稿結果または撤退理由を書く。
+9. candidate / staging の両 evidence が揃った後に handoff を resolve する。投稿成功は preflight `continue` と Slack permalink も必須である。resolve が `partial` の場合、ledger は pending のままなので再投稿せず不足 evidence を補う。
+
+```powershell
+python tools\shared_reads_phase3_handoff.py resolve --id <p3h-id> --decision posted --reason "<根拠>" --preflight-decision continue --preflight-evidence "<staging preflight evidence>" --permalink "<Slack permalink>" --candidate-evidence "<candidate posted block>" --staging-evidence "<Phase 3 posted entry>"
+python tools\shared_reads_phase3_handoff.py resolve --id <p3h-id> --decision postponed --reason "<根拠>" --preflight-decision <continue|review|skip> --preflight-evidence "<staging preflight evidence>" --candidate-evidence "<candidate lifecycle fields>" --staging-evidence "<Phase 3 skipped entry>"
+python tools\shared_reads_phase3_handoff.py resolve --id <p3h-id> --decision defer --reason "<Slack 一時失敗>" --preflight-decision continue --preflight-evidence "<staging preflight evidence>" --staging-evidence "<Phase 3 deferred entry>" --retry-after "<ISO 8601>"
+python tools\shared_reads_phase3_handoff.py resolve --id <p3h-id> --decision invalidated --reason "<状態変更>" --candidate-evidence "<current frontmatter>" --staging-evidence "<Phase 3 invalidated entry>"
+```
+
+10. staging Phase 3 セクションに投稿結果、撤退理由、defer、invalidate のいずれかを書く。
 
 ```yaml
 posted:
@@ -117,6 +146,10 @@ skipped:
   - candidate: <path>
     reason: <理由>
     action: postpone | candidate_revise
+delivery:
+  handoff_id: <p3h-...>
+  decision: posted | postponed | deferred | invalidated
+  evidence: <candidate / staging / permalink>
 ```
 
 ## 起動時に確認する directive

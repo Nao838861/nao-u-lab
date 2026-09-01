@@ -58,3 +58,7 @@ stale triage queue の生成時に永続 group handoff inbox の live lease を�
 ## 実装メモ（2026-07-25 Phase 4c）
 
 Phase 4a の stale candidate 選定を `memory/shared_reads_candidate_handoff_inbox.jsonl` へ永続化した。Phase 2 は oldest pending を新規候補より先に最大5件処理し、candidate frontmatter と staging receipt の両方を検証して handled にする。pending と期限前 deferred の同一 candidate state は stale triage から除外し、状態変更または新しい `stale_after` 到来時は再提示する。候補本文・投稿品質基準・candidate lifecycle の正本は変更しない。
+
+## 実装メモ（2026-09-01 Phase 4c）
+
+`ready_to_post` の跨 cycle 配送を `memory/shared_reads_phase3_queue.jsonl` と `memory/shared_reads_phase3_handoff_inbox.jsonl` へ分離した。Phase 3 は oldest pending を1 cycle 1件だけ処理し、投稿直前の candidate fingerprint / duplicate preflight を再確認する。Slack 投稿成功は permalink、candidate frontmatter、staging evidence が揃った時だけ handled とし、一時失敗は candidate を変えず deferred にする。

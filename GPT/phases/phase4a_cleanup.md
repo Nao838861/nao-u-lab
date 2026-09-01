@@ -24,6 +24,7 @@ outputs: [staging Phase 4a セクション (issues + needs_design 判定 + probe
 4. `memory/shared_reads_candidates/` で lifecycle frontmatter の内訳を確認する (`status: posted | ready_to_post | postponed | failed | needs_review`)。`postponed` / `needs_review` candidate は mtime や filename date ではなく `stale_after` を優先し、`stale_after <= 今日` のものを fail 降格、明示保持、または次 Phase 2 再評価のどれにするか記録する。`posted` / `failed` は原則として再評価 queue から外す。再評価に送る最大 5 件は `memory/shared_reads_candidate_handoff_inbox.jsonl` へ冪等 enqueue し、同じ内容を当該 cycle の `stale_review_batch` に表示する
 5. inbox 系 (`slack_directives.jsonl`, `slack_broadcasts.jsonl`) で処理済みのものを `status: handled` に更新
 6. `python tools\shared_reads_probe_lifecycle.py pending --due-only --limit 1` で期限到来 probe lease を1件だけ確認し、consumer artifact の判断前後と evidence pointer を receipt に残す
+7. `python tools\build_shared_reads_phase3_queue.py` と `python tools\shared_reads_phase3_handoff.py audit` を実行し、Phase 3 queue 件数と handoff pending 件数だけを監査する。Phase 4a から投稿・resolve はしない
 
 ## probe lease の機械的 close (2026-07-21 Phase 4c)
 
@@ -91,6 +92,9 @@ stale_review_batch:
     stale_after: "YYYY-MM-DD"
     priority_reason: <Phase 2 に送る理由>
     recommended_review_action: reevaluate_in_phase2 | explicit_keep | fail
+phase3_delivery_audit:
+  queue_count: <ready_to_post から再生成された未 lease 件数>
+  handoff_pending_count: <oldest pending / due deferred の総数>
 ```
 
 ## やらないこと

@@ -232,7 +232,48 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260901-01
+    files_changed:
+      - path: tools/build_shared_reads_phase3_queue.py
+        change: created
+      - path: tools/shared_reads_phase3_handoff.py
+        change: created
+      - path: tools/test_shared_reads_phase3_handoff.py
+        change: created
+      - path: memory/shared_reads_phase3_queue.jsonl
+        change: created
+      - path: memory/shared_reads_phase3_handoff_inbox.jsonl
+        change: created
+      - path: phases/phase3_post_shared_reads.md
+        change: modified
+      - path: phases/phase4a_cleanup.md
+        change: modified
+      - path: phases/README.md
+        change: modified
+      - path: memory/directive_shared_reads_candidate_gate_20260512.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "ready_to_post を候補 frontmatter から再生成する Phase 3 queue と、path + evaluated_at + state fingerprint で冪等化する replay-safe ledger を導入した。Phase 3 は oldest pending を1 cycle 1件だけ処理し、posted / postponed / deferred / invalidated の evidence 完了条件を検証する。"
+    partial: false
+migrations:
+  - what: "既存 ready_to_post 9件を実データで走査し、verified posted-source 5件を除外して4件を評価時点の古い順に queue 化した。dry-run enqueue のみ行い、candidate frontmatter と実 ledger は変更していない。"
+    affected: "memory/shared_reads_candidates/*.md 9件（read-only）、memory/shared_reads_phase3_queue.jsonl 4行、memory/shared_reads_phase3_handoff_inbox.jsonl 0行"
+verification:
+  - "python -X utf8 -m py_compile: 新規 builder / handoff / test の構文確認 OK。"
+  - "python -X utf8 -m unittest tools.test_shared_reads_phase3_handoff: 7 tests OK（冪等 enqueue、oldest 順、posted-source / live lease 除外、状態変更 invalidate、deferred 再提示、postponed、posted evidence 完了条件）。"
+  - "既存回帰: candidate/group handoff 11 tests OK、duplicate preflight 11 tests OK。"
+  - "python -X utf8 -m unittest discover -s tools -p test_shared_reads*.py: shared-reads 関連 50 tests OK。"
+  - "実 queue は ready_to_post 9件中、terminal posted-source 5件を除外して4件。priority_order は evaluated_at 昇順。"
+  - "dry-run enqueue は4件を選定し、実 inbox は0行のまま。Slack 投稿は0件。"
+  - "shared_reads_phase3_handoff.py audit: rows=0 / pending_count=0 / errors=[]。queue --check: 4行で一致。"
+  - "tools/memory_recall.py の smoke test OK。既存記憶 reader は破損していない。"
+  - "対象 tracked files の git diff --check は OK。全 worktree の diff check は既存 log/session_context の trailing whitespace で失敗するため対象外とした。"
+  - "posted-source index は current worktree では stale_candidates を報告した。verified source match の除外は機能し、投稿直前 preflight は index 更新まで安全側の review になる。"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
