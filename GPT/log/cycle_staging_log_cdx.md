@@ -102,7 +102,35 @@ delivery:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779757222-8419a67ad0
+    source_ts: "1779757222.575779"
+    title: "Ontology vs. Semantic Layer: Differences & How to Choose (2026)"
+    reason: "未レビュー候補のうち source_ts が最新で、memory・game-design・agent・evaluation の優先4タグを持つため1件だけ選んだ。Nao_u は元リンクを提示したが、本投稿への明示的な重要／適切評価は確認できなかった。"
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 9
+  decision: reject
+  decision_reason: "Ontology=意味と関係、Semantic Layer=測定ロジックという語彙は現在の memory cleanup に関係するが、原典は比較実装・精度・cost のない Atlan のマーケティング記事で、後続 Mir 評価も技術的深さ不足として投稿価値を否定した。現行の state／cycle status／lifecycle ledger が当時欠けていた measurement surface を既に担い、2026-05-12 から active の shared-reads 品質ゲートも同じ低証拠投稿を止めるため、新しい schema／metric／probe は判断差を作らず二重正本を増やす。"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。active_probes、probe lifecycle ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

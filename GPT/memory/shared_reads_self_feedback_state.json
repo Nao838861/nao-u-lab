@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-09-01T20:33:08+09:00",
+  "updated_at": "2026-09-01T22:51:24+09:00",
   "reviewed_source_ts": [
+    "1779757222.575779",
     "1779690823.312759",
     "1779770186.785349",
     "1779803400.410339",
@@ -26240,6 +26241,53 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、制約域／compile修復／探索playtestの局所有用性、実環境でのbefore／after不足、既存 executable-check／runtime-integration／task-compatibility／feedback-loop controls との完全重複、比較可能な game artifact 不在と active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-09-01T22:51:24+09:00",
+      "selected": {
+        "id": "sr-1779757222-8419a67ad0",
+        "source_ts": "1779757222.575779",
+        "title": "Ontology vs. Semantic Layer: Differences & How to Choose (2026)",
+        "reason": "source が slack_api/shared-reads、score 10、reviewed_source_ts にない候補のうち source_ts が最新で、memory・game-design・agent・evaluation の優先4タグを持つため1件だけ選んだ。意味の関係モデルと測定ロジックの分離が、現在の memory cleanup に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が元リンクを #nao-u に提示したことは本文に残るが、本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 1,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 9
+      },
+      "decision": "reject",
+      "decision_reason": "合計9で採用条件14に届かず、actionability も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、Ontology を概念と関係の meaning model、Semantic Layer を一貫した数値を返す measurement mapping と分け、当時の memory を前者寄りと診断する語彙を示すため relevance は2とした。一方、原典は Atlan の製品マーケティング記事で、schema、実装、query、正確性、latency、保守コスト、ontology 単独／semantic layer 単独／併用の比較がなく evidence は1。後続の Mir atom sr-1779803521-5377faf93c も『用語整理としては有用だが技術的深さはなく、#shared-reads に上げるほどではなかった』と補正している。さらに本投稿は、2026-05-12 から active の概要／約4000字／候補ゲートを満たさない過去品質である。現行環境には memory/state.json、log/codex_log_cycle_status.md、candidate／probe lifecycle ledger があり、『状態を一発で引ける層がない』という当時の前提もそのままでは current evidence にならないため actionability は1。directive_shared_reads_overview_20260512 と directive_shared_reads_candidate_gate_20260512 が既に同じ低証拠・候補品質を止め、既存 state／ledger が measurement surface を担うので non_redundancy は0。記事の二分法から新しい semantic-layer schema や metric を作ると二重正本と計測負荷を増やすため、state-only reject として閉じる。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1779757222-8419a67ad0.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779757222.575779",
+        "memory/raw/slack_api/all-nao-u-lab.jsonl#ts=1779803521.366679",
+        "memory/state.json",
+        "log/codex_log_cycle_status.md"
+      ],
+      "existing_controls": [
+        "memory/directive_shared_reads_overview_20260512.md",
+        "memory/directive_shared_reads_candidate_gate_20260512.md",
+        "memory/state.json",
+        "memory/shared_reads_probe_lifecycle.jsonl"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、ベンダー記事の証拠不足、後続 Mir 補正、現行 shared-reads 品質ゲートおよび state／ledger との重複、当時の環境診断の陳腐化に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
