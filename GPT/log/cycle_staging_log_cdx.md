@@ -81,7 +81,35 @@ delivery:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779690823-9cfbf0f049
+    source_ts: "1779690823.312759"
+    title: "ScriptDoctor: Automatic Generation of PuzzleScript Games via LLMs and Tree Search"
+    reason: "未レビューの score 11 で game-design・agent・operation・evaluation の優先4タグを持ち、候補転載ではなく完全な shared-reads 投稿。制約言語・compile error・探索 playtest の三層が次の行動を変えるか確認するため1件だけ選んだ。Nao_u の明示的な重要評価はローカル raw では未確認。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "生成域、compile/runtime、task solvability、play-facing qualityを分ける行動は有用だが、実環境でのbefore/afterがなく、既存4 controlsで判断を完全に表現できる。合計14未満かつrisk_control<2なので新規controlは増やさない。"
+  change:
+    summary: "reviewed_source_ts と、既存 executable-check／runtime-integration／task-compatibility／feedback-loop controls との完全重複、比較artifact不在、active probe増殖riskに基づくstate-only reject理由を記録。active_probes、ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-09-01T18:22:22+09:00",
+  "updated_at": "2026-09-01T20:33:08+09:00",
   "reviewed_source_ts": [
+    "1779690823.312759",
     "1779770186.785349",
     "1779803400.410339",
     "1788223537.571019",
@@ -26194,6 +26195,51 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、後続 shared-reads／Claude 側正本による補正、既存 observation／prediction／bullet-identity controls との完全重複、比較可能な game artifact 不在、粗い『予告線=邪魔』一般化の競合 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-09-01T20:33:08+09:00",
+      "selected": {
+        "id": "sr-1779690823-9cfbf0f049",
+        "source_ts": "1779690823.312759",
+        "title": "ScriptDoctor: Automatic Generation of PuzzleScript Games via LLMs and Tree Search",
+        "reason": "source が slack_api/shared-reads、score 11、reviewed_source_ts にない候補のうち game-design・agent・operation・evaluation の優先4タグを持ち、候補転載ではなく概要／分析／適用／利点・欠点／判定を備えた投稿なので1件だけ選んだ。制約言語、compile error、探索 playtest の三層が、次の playable diff で既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、PuzzleScript の制約された表現域、人間例による grounding、engine の compile error を返す修復 loop、tree-search agent による解の存在・詰み・自明解の検査を分離し、連続時間 game では完全探索を悪い play 方針の縮約へ置き換える境界まで示す。したがって次の playable diff で生成域、構文／起動、task solvability、play-facing quality を混同せず検査する行動へ直接変換できるため relevance・actionability は3とした。一方、投稿は原論文の方法と自分達の旧 log_autonomous_game への構造的対応を説明するが、当環境で三層を導入した before／after、生成成功率、compile repair 回数、solver coverage、面白さ、連続時間への転用結果を示さず evidence は2に留める。probe-20260529-code-as-harness-one-executable-check は説明を最小 executable check へ変換し、probe-20260709-gameenginebench-runtime-integration-gate は build／launch と fixed trace による runtime integration を分離し、probe-20260608-task-level-compatibility-check は objective と environment の可解性 oracle を要求し、probe-20260606-game-feedback-loop-asymmetry は compile／headless／visual／human play feel の証拠境界を既に扱う。ScriptDoctor の三層はこの4 control の組合せと判断上完全に重複するため non_redundancy は0。現在の staging には比較可能な playable artifact がなく、直後の Phase 4a は game-design consumer でもない。active_probes は327件、pending lease は0件であり、同義の三層 checklist を追加すると次回判断差より確認負荷を増やすため risk_control は1とし、state-only reject で閉じる。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1779690823-9cfbf0f049.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779690823.312759",
+        "https://arxiv.org/abs/2506.06524"
+      ],
+      "existing_controls": [
+        "probe-20260529-code-as-harness-one-executable-check",
+        "probe-20260709-gameenginebench-runtime-integration-gate",
+        "probe-20260608-task-level-compatibility-check",
+        "probe-20260606-game-feedback-loop-asymmetry"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、制約域／compile修復／探索playtestの局所有用性、実環境でのbefore／after不足、既存 executable-check／runtime-integration／task-compatibility／feedback-loop controls との完全重複、比較可能な game artifact 不在と active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
