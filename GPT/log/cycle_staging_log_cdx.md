@@ -111,7 +111,63 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、index validator を通過。atom index の broken link は 0 件、U+FFFD は 0 件。代表語は 記憶 / ゲーム設計 / 敵パターン を取得し、評価軸は literal 不在だが source corruption ではない。"
+  - "atoms 3,001 件の mirror は clean、content conflict は 0 件。normalized-content duplicate 40 群 / 80 行は fold 済みで、duplicate overlay 45 群も build --check を通過。"
+  - "candidate lifecycle を dry-run 監査し、変更 0 件。posted 749 / ready_to_post 2 / postponed 200 / failed 535。期限超過 4 件は既存 deferred group lease 2 件により 2026-09-19 まで再投入しない。"
+  - "title canonical / mixed / open-group / stale-triage / group-action sidecar を再生成・監査。terminal canonical 112 群、mixed 23 群、open duplicate 27 群、stale triage 0 件、actionable group 0 件。"
+  - "30 日超無更新の raw 244 件を確認。slack_archive と web_research 原文は provenance および Phase 3 回収入力なので移動せず保持。"
+  - "slack_directives / slack_broadcasts の pending は各 0 件。handled へ更新すべき行はなし。"
+  - "probe lifecycle / group handoff / candidate handoff / Phase 3 handoff ledger を監査し、schema error は 0 件。"
+issues:
+  - id: ISS-4A-20260902-01
+    description: "active atom 1 件の title / trigger / excerpt に U+FFFD が残る。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; python tools/memory_health.py --json hard_corruption_atoms"
+    source_file_status: "UTF-8 明示読みでも『AIエ��ジェント』を取得し、source file 自体に replacement character 2 文字が存在する。"
+    display_or_tooling_status: "shell 表示だけの mojibake ではない。MEMORY.md 自体は UTF-8 正常で U+FFFD なし。"
+    why_blocks_game_memory: "該当 atom の検索語と表示品質を局所的に損なうが、atom mirror・duplicate fold・recall smoke は正常で、ゲーム記憶全体の導線は遮断しない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+stale_review_batch: []
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 27
+  mixed_group_count: 23
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  deferred_live_group_count: 2
+  deferred_live_group_ids:
+    - gha-e6d4d4b5a37a0808
+    - gha-2313a247c62a9028
+  deferred_retry_after: "2026-09-19T14:08:16+09:00"
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+phase3_delivery_audit:
+  queue_count: 0
+  handoff_pending_count: 2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
