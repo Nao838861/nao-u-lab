@@ -182,7 +182,54 @@ raw_archive_audit:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+
+```yaml
+designs:
+  - issue_id: ISS-4A-20260901-01
+    problem_restatement: "Phase 2 の pass は candidate frontmatter へ永続化される一方、Phase 3 の入力は同一 cycle の staging にしか残らない。このため cycle 中断や別 cycle への持ち越し後、ready_to_post は品質判定済みでも投稿処理へ再配送されず、正本に next_action があっても実行待ち状態を復元できない。"
+    alternatives:
+      - name: "案A: Phase 3 専用の再生成 queue + 永続 handoff ledger"
+        sketch: "candidate frontmatter から ready_to_post を抽出する再生成可能 queue と、path + 評価時点 + 選定状態 fingerprint を持つ Phase 3 専用 ledger を分ける。Phase 3 は current-cycle pass を含む候補を冪等 enqueue し、oldest pending を総量1件の budget で処理して、posted / postponed / deferred の receipt を残す。"
+        pros:
+          - "candidate frontmatter を lifecycle の正本に保ちつつ、跨 cycle の未処理状態と処理証跡を失わない。"
+          - "既存の stale candidate / group handoff と同じ queue + replay-safe ledger の考え方を再利用できる。"
+          - "投稿直前の duplicate preflight、品質撤退、Slack 一時失敗を別結果として扱える。"
+        cons:
+          - "sidecar と ledger が各1個増え、Phase 3 に enqueue / resolve 監査契約が加わる。"
+          - "candidate 更新と ledger resolve の二段階になるため、部分失敗を再実行で収束させる検証が必要。"
+          - "既存9件の初回投入時に、旧フォーマット候補を誤投稿しない final gate が必要。"
+        migration_cost: medium
+      - name: "案B: Phase 3 が candidate directory を毎回直接 scan"
+        sketch: "Phase 3 の開始時に status=ready_to_post を直接列挙し、最古の1件を処理する。新しい永続 inbox は作らず、candidate frontmatter と staging の結果だけで進捗を表す。"
+        pros:
+          - "追加構造が最少で、既存9件を次回から即座に発見できる。"
+          - "candidate 状態が変われば次の scan に自然に反映される。"
+        cons:
+          - "Slack 投稿後・frontmatter 更新前などの部分失敗を識別する durable receipt がなく、再投稿リスクが残る。"
+          - "選定順、defer、retry_after、処理中断の理由が staging 初期化で消える。"
+          - "同一候補が繰り返し先頭になり、後続候補を飢餓させる制御を別途要する。"
+        migration_cost: low
+      - name: "案C: ready_to_post を既存 Phase 2 candidate handoff へ流す"
+        sketch: "stale triage の対象 status に ready_to_post を加え、Phase 2 で再評価して当該 cycle の pass として Phase 3 へ渡す。既存 candidate handoff inbox の pending / deferred / handled をそのまま使う。"
+        pros:
+          - "既存の lease、冪等 enqueue、staging receipt 検証を流用できる。"
+          - "古い pass を現行品質基準で再確認してから投稿できる。"
+        cons:
+          - "評価済み candidate を必ず Phase 2 に戻すため、配送欠落を再評価コストで迂回する設計になる。"
+          - "Phase 2 の review decision と Phase 3 の posting receipt が同じ ledger に混ざり、責務と完了条件が曖昧になる。"
+          - "最大5件の stale 再評価枠を消費し、新規候補や postponed 候補の分析を圧迫する。"
+        migration_cost: medium
+    recommended: "案A: Phase 3 専用の再生成 queue + 永続 handoff ledger"
+    recommended_reason: "案Bより構造は増えるが、Slack 投稿は外部副作用なので、部分失敗時の二重投稿を避ける durable receipt が必要である。案Cは既存機構に近く見える一方、品質評価と投稿配送を混ぜ、毎回の再評価を必須にする。案Aなら既存 handoff の設計語彙を踏襲しながら責務を Phase 3 に閉じられ、総量1件 budget と final gate により初回9件の移行リスクも限定できる。"
+    decision: introduce
+    decision_reason: "ready_to_post 9件がすでに停止しており、待っても staging の跨 cycle 消失は解消しない。candidate frontmatter を変更せず派生 queue と append-only ledger を追加する設計は可逆で、投稿前 preflight と1件 budgetを保てば誤投稿時の影響範囲も小さいため、次の Phase 4c で導入する。"
+    outline_for_4c:
+      - "ready_to_post かつ status / candidate_status が一致する candidate を抽出し、評価時点・stale_after・title / URL evidence・優先順を持つ再生成可能な Phase 3 queue を定義する。terminal posted-source と live handoff は除外し、candidate frontmatter は変更しない。"
+      - "Phase 3 専用 handoff ledger を定義する。path + 評価時点 + 選定状態 fingerprint で冪等化し、pending / handled / deferred、retry_after、Slack permalink、candidate / staging evidence を保持する。"
+      - "Phase 3 の入力を同一 cycle の pass 限定から、current-cycle pass を含む ledger の oldest pending へ変更する。1 cycle の総処理 budget は1件とし、未処理の古い候補を優先して飢餓を防ぐ。"
+      - "処理直前に candidate 状態 fingerprint と shared_reads_duplicate_preflight を再確認する。品質不足は candidate を postponed にして receipt を閉じ、Slack 一時失敗は candidate を ready_to_post のまま deferred、投稿成功は permalink と frontmatter / staging の両 evidence が揃った時だけ handled にする。"
+      - "既存9件を dry-run enqueue し、重複投入0、選定順、状態変更時の無効化、deferred 再提示、投稿成功後の再投入抑止、Slack 投稿なしの smoke test を行う。Phase 4a の監査には queue 件数と handoff pending 件数だけを追加する。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
