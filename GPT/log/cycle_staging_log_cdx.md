@@ -152,7 +152,67 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index 参照 87 件を atoms/index.jsonl と照合し、broken link 0 件を確認した。"
+  - "atoms 3001 件の mirror を監査し、atoms.jsonl / per-file .md / index.jsonl の件数一致、content_conflicts 0 件を確認した。raw duplicate 40 group / 80 row は canonical overlay と content fold で吸収済み。"
+  - "memory/raw/ の30日超ファイル244件を監査した。一次資料・Slack原文・評価ログとして参照可能性があるため、mtimeだけでは移動せず archive 0 件とした。"
+  - "candidate lifecycle と未評価 intake を監査し、正規未評価 0 件、malformed 0 件、Slack directive / broadcast pending 0 件を確認した。"
+  - "open duplicate / stale triage / group action / Phase 3 queue を現行 lease 込みで再生成した。"
+issues:
+  - id: ISS-ATOM-HARD-CORRUPTION-001
+    description: "atom sr-1776127289-4d9239b255 の title / trigger / excerpt に U+FFFD が残り、元の raw Slack archive にも同じ欠損がある。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl#id=sr-1776127289-4d9239b255; memory/raw/slack_archive/shared-reads.jsonl#source_ts=1776127289.990919"
+    source_file_status: "UTF-8 explicit read で U+FFFD を確認。source と mirror の双方に同一欠損があり、表示経路だけの mojibake ではない。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "1件に限定されるが、memory architecture に関する高score atomの語彙検索と引用精度を下げる。原典再取得なしの推測修復はしない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+candidate_lifecycle:
+  counts:
+    posted: 747
+    ready_to_post: 2
+    postponed: 200
+    failed: 535
+    needs_review: 0
+  missing_stale_after: 3
+  overdue_open_total: 4
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 27
+  mixed_group_count: 23
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_note: "overdue 4 件は JAMEL 2件と collision morphology 2件。同一 membership の group lease 2件が retry_after 2026-09-19 前のため stale triage / candidate handoff から抑止された。"
+group_action_handoff: []
+stale_review_batch: []
+phase3_delivery_audit:
+  queue_count: 0
+  handoff_pending_count: 2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
