@@ -62,7 +62,44 @@ evaluation_notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+queue:
+  rebuilt_rows: 1
+  enqueue_source_cycle_id: "2026-09-01 22:31"
+  enqueued_id: p3h-b528c41c1cdf9462
+  pending_after_enqueue: 3
+selected:
+  handoff_id: p3h-79d89949d7f31d9e
+  candidate: memory/shared_reads_candidates/20260901_strange_scaffold_didit_project_selection.md
+  reason: "oldest pending; evaluated_at=2026-09-01T11:51:12+09:00"
+  delivery_action: process
+fingerprint_preflight:
+  selected: a132008b20d1562c1e18a360fcf09478ffbadfdf3ff999513d59e13f96988db8
+  current: a132008b20d1562c1e18a360fcf09478ffbadfdf3ff999513d59e13f96988db8
+  state_unchanged: true
+  duplicate_decision: continue
+  canonical_url: "https://unity.com/blog/xalavier-nelson-strange-scaffold"
+review:
+  source_checked: "Unity interview published 2026-06-26"
+  draft: memory/shared_reads_candidates/posted_drafts/20260901_strange_scaffold_didit_project_selection_post.md
+  char_count: 3795
+  policy: pass
+  limitations_preserved:
+    - "DIDIT の採点法・軸衝突時の優先順位・不採用例は記事にない"
+    - "18作の出荷実績は比較実験ではなく、DIDIT 単独の効果を示さない"
+posted:
+  - candidate: memory/shared_reads_candidates/20260901_strange_scaffold_didit_project_selection.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788270327950919"
+    ts: "1788270327.950919"
+    char_count: 3795
+    verification: ok
+delivery:
+  handoff_id: p3h-79d89949d7f31d9e
+  decision: posted
+  delivery_mode: new_post
+  evidence: "candidate posted block + this Phase 3 entry + Slack permalink"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

@@ -7,12 +7,12 @@ genre_tags: [game-development, production, project-selection, feature-scoping, i
 evaluated_at: "2026-09-01T11:51:12+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-09-01T11:51:12+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-09-01T11:51:12+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-09-01T22:45:27.950919+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788270327950919"
+next_action: none
 stale_after: "2026-10-01"
 supersedes: []
 gate_reason: >-
@@ -25,6 +25,11 @@ suggested_post_outline:
   application_target: "Log_cdx の prototype 案と追加 feature の着手前レビューに5軸を入れ、core feel を壊す依存関係や反復余地のない実装を playable diff 前に止める"
   pros_cons: "利点は scope creep 抑制、player value と制作条件の同時確認、AIで増えた実装可能性への判断軸。欠点は各軸の採点法が未提示で、組織文化や成功例への生存者バイアスを含むこと"
   verdict_pre: 部分採用
+posted:
+  ts: "1788270327.950919"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788270327950919"
+  char_count: 3795
+  posted_at: "2026-09-01T22:45:27.950919+09:00"
 ---
 
 ## raw_excerpt
