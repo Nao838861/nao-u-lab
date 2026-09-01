@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-09-01T14:24:06+09:00",
+  "updated_at": "2026-09-01T18:22:22+09:00",
   "reviewed_source_ts": [
+    "1779770186.785349",
     "1779803400.410339",
     "1788223537.571019",
     "1788198083.505319",
@@ -26147,6 +26148,52 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、XML／Markdown ハイブリッドの局所有用性、定量比較不在、現行構成および既存 structural-context／semantic-verifier／instruction-regression controls との重複に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-09-01T18:22:22+09:00",
+      "selected": {
+        "id": "sr-1779770186-833771bc16",
+        "source_ts": "1779770186.785349",
+        "title": "「予告軌道線」「予測ゴースト」は誰のためのものか — 3 軸独立収束で見えた一般原則",
+        "reason": "source が slack_api/shared-reads、score 10、reviewed_source_ts にない候補のうち source_ts が最新で、harness・game-design・operation・evaluation の優先4タグを持つため1件だけ選んだ。parser 補助、挑戦の肩代わり、視覚ノイズを分ける3軸が、次のゲームUI／telegraph判断へ既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した記録は、同日から後続補正投稿までのローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、trail を parser 補助、未来予測の肩代わりを challenge removal、同色の弾本体・予測線・×印・残像を visual noise として分け、UI追加前の3問へ変換できるため relevance・actionability は2とした。一方、ジャンル知の2軸は同じ shmups.wiki に依存し、認知科学根拠は SSVEP-BCI の visual-noise 実験から action game UI への転用であり、3経路の独立性とゲーム内効果を直接比較していないため evidence は2に留めた。後続の sr-1779834973-e81b7201d3 は、telegraph 自体ではなく contrast／silhouette／effect hierarchy の崩壊が失敗原因だと本結論を補正しており、2026-08-27 に reject 済みである。Claude 側 feedback_inside_to_outside_leak.md に補正済み正本があり、probe-20260603-mechanic-observation-channel-gate、probe-20260616-short-horizon-prediction-failsafe、probe-20260626-bullet-identity-channel-ladder も parser／prediction／readability境界を既に扱うため non_redundancy は0とした。粗い『予告軌道線=邪魔』を別 control にすると、必要な telegraph まで抑制し、後続補正と競合する。現在の staging に比較可能な playable UI artifact はなく、直後の Phase 4a は game-design consumer でもない。active_probes は327件、pending lease は0件であり、同義かつ古い一般化を増やす負荷が判断差を上回るため risk_control は1とし、state-only reject で閉じる。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1779770186-833771bc16.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779770186.785349",
+        "memory/shared_reads_self_feedback_state.json#review=sr-1779834973-e81b7201d3",
+        "D:/AI/Nao_u_BOT/Claude/memory/feedback_inside_to_outside_leak.md#refine-telegraph-は-inherently-悪ではない-2026-05-27-c247-nextmars-4軸目"
+      ],
+      "existing_controls": [
+        "review-sr-1779834973-e81b7201d3",
+        "probe-20260603-mechanic-observation-channel-gate",
+        "probe-20260616-short-horizon-prediction-failsafe",
+        "probe-20260626-bullet-identity-channel-ladder"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、後続 shared-reads／Claude 側正本による補正、既存 observation／prediction／bullet-identity controls との完全重複、比較可能な game artifact 不在、粗い『予告線=邪魔』一般化の競合 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

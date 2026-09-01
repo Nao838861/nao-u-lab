@@ -72,7 +72,34 @@ delivery:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779770186-833771bc16
+    source_ts: "1779770186.785349"
+    title: "「予告軌道線」「予測ゴースト」は誰のためのものか — 3 軸独立収束で見えた一般原則"
+    reason: "未レビューの score 10 以上で source_ts が最新かつ harness・game-design・operation・evaluation の優先4タグを持つため1件だけ選択。parser補助／挑戦の肩代わり／視覚ノイズの3軸が次回UI判断を変えるか、後続補正と既存controlまで照合した。Nao_uの明示評価はローカルrawで未確認。"
+  scores:
+    relevance: 2
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "合計10で採用条件14に届かず、risk_controlも必須閾値2未満。後続のsr-1779834973-e81b7201d3とClaude側feedback_inside_to_outside_leak.mdが、telegraph自体ではなくcontrast／silhouette／effect hierarchy崩壊が失敗原因だと補正済みで、observation-channel／prediction-failsafe／bullet-identity controlsとも完全重複する。粗い『予告軌道線=邪魔』を再採用すると必要なtelegraphまで抑制し、補正済み正本と競合する。比較可能なplayable UI artifactもなく、直後のPhase 4aはgame-design consumerではないためstate-onlyで閉じた。"
+  change:
+    summary: "reviewed_source_tsとreject理由だけを記録。active_probes・lifecycle ledger・directive・恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
