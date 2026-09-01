@@ -122,7 +122,34 @@ delivery:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779726451-1198bd0d1e
+    source_ts: "1779726451.738919"
+    title: "v001への即適用は採用、ただし『30試行 runner + 4指標中央値』の最小実装で開始"
+    reason: "未レビュー候補のうち source_ts が最新で、harness・game-design・agent・operation・evaluation の優先5タグを持つ。30試行の中央値と Nao_u 体感順位の照合が、次の game evaluation に新しい判断差を作れるか確認した。Nao_u の明示的な重要評価はローカル raw で確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "この atom は26ミリ秒前の同一 Slack 投稿本体 sr-1779726451-f31c682eda の判定部分が分割取り込みされた continuation で、本体は2026-08-21に同じ知見として採点・reject済み。一次論文は Wordle／Slay the Spire で LLM agent 成績と人間難度の相関を報告するが、リアルタイム弾避けへの30試行転用と3サイクルの Nao_u 体感照合は未実施。既存 relative-difficulty-regression-calibration／proxy-signal-variance／human-judgment controls が、固定条件の相対難度だけを読み、人間の fun・公平性・絶対難度を代替しない境界をすでに持つ。合計13かつ risk_control=1 のため重複 probe を追加しない。"
+  change:
+    summary: "reviewed_source_ts と同一投稿の既レビュー・既存 controls との完全重複に基づく state-only reject を記録した。active_probes、lifecycle ledger、directive、恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
