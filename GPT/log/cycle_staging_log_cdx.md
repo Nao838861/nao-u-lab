@@ -236,7 +236,74 @@ validation:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+
+```yaml
+designs:
+  - issue_id: ISS-P3-001
+    problem_restatement: >-
+      verified posted-source による再投稿抑止は機能しているが、その判定が queue からの除外だけで終わるため、
+      candidate の open 状態と Slack 上の投稿済み状態を結ぶ durable receipt がない。
+      このため配送安全性は保たれていても、backlog 数、oldest-first 順序、完了判定の正本が一致しない。
+    alternatives:
+      - name: 案A・effective status を読み取り時に合成
+        sketch: >-
+          candidate が ready_to_post でも、healthy な posted-source index に verified URL 一致があれば、
+          audit と一覧では effective_status: posted として扱う。candidate 本体は変更しない。
+        pros:
+          - 既存 candidate と handoff schema を変えずに backlog 表示を直せる。
+          - posted-source index が stale の時は従来状態へ戻せるため可逆性が高い。
+        cons:
+          - candidate frontmatter の open 状態と next_action は矛盾したまま残る。
+          - consumer ごとに effective status 合成を実装すると、正本が暗黙化して判定差が再発する。
+          - terminal receipt が残らず、なぜ閉じたかを candidate 単体から追えない。
+        migration_cost: low
+      - name: 案B・既存 Phase 3 handoff に recovered_existing mode を追加
+        sketch: >-
+          queue 構築時の verified URL 一致を黙って捨てず、action: recover_existing_post として既存 handoff ledger に渡す。
+          Phase 3 は candidate fingerprint、healthy な posted-source、permalink を再確認し、Slack 投稿なしで candidate を posted に閉じ、
+          delivery_mode: recovered_existing を持つ terminal receipt を残す。
+        pros:
+          - 既存の fingerprint、oldest-first、candidate/staging evidence、partial retry の境界を再利用できる。
+          - candidate、posted-source、ledger が terminal 状態で一致し、監査値も自然に収束する。
+          - 新規投稿と既投稿回収を delivery_mode で区別でき、再投稿を fail-closed のまま保てる。
+        cons:
+          - handoff schema と validator に mode 分岐が必要になる。
+          - recovery では duplicate preflight の skip を成功条件として扱うため、通常投稿の continue 条件と明示的に分離する必要がある。
+          - 既存5件を一度だけ backfill して terminal receipt へ閉じる移行が必要になる。
+        migration_cost: medium
+      - name: 案C・queue builder が一致時に candidate を直接 terminal 化
+        sketch: >-
+          verified posted-source URL 一致を検出した時点で、queue builder 自身が candidate frontmatter を posted に更新し、
+          next_action を none にする。別の handoff は作らない。
+        pros:
+          - 1回の queue 再生成で5件の不一致を解消できる。
+          - 新しい queue や ledger 種別を増やさずに済む。
+        cons:
+          - 再生成可能な view の builder が source lifecycle を更新するため責務が混ざる。
+          - candidate 更新と evidence 記録の途中失敗を回復する durable receipt がない。
+          - 誤一致時の変更理由と復旧経路が案Bより弱い。
+        migration_cost: low
+    recommended: 案B・既存 Phase 3 handoff に recovered_existing mode を追加
+    recommended_reason: >-
+      現行の Phase 3 handoff はすでに state fingerprint、permalink、candidate/staging evidence、partial retry を持ち、
+      投稿済み状態へ閉じる境界に最も近い。mode 追加の移行手間はあるが、新しい独立 ledger を増やさず、
+      candidate を正本として terminal 化できる。失敗時も candidate を ready_to_post のまま保ち、
+      posted-source が healthy かつ verified URL 一致、permalink 取得済みという条件が揃うまで resolve しなければよいため、
+      誤った再投稿や証拠なしの完了へ倒れにくい。
+    decision: introduce
+    decision_reason: >-
+      問題は5件の一時的な表示ずれではなく、verified duplicate を lifecycle terminal へ運ぶ導線の欠落であり、
+      今後も同じ stale open state を生成しうる。既存 handoff の安全境界を保った小さな schema 拡張で恒久的に閉じられ、
+      現時点で対象5件と証拠行も特定済みなので Phase 4c に進める。
+    outline_for_4c:
+      - "Phase 3 queue / handoff record に action: normal_post | recover_existing_post を追加し、terminal receipt に delivery_mode を保存する。"
+      - "verified URL 一致を単純除外せず recovery handoff 候補へ変換し、posted-source index が healthy で permalink を持つ場合だけ enqueue する。"
+      - "recovery resolve は candidate fingerprint を再検証し、preflight: skip と exact verified match を成功条件にして、Slack へ投稿せず status / candidate_status を posted、next_action を none にする。"
+      - "terminal receipt に matched canonical URL、permalink、posted-source provenance、candidate evidence、staging evidence、delivery_mode: recovered_existing を保存する。"
+      - "途中失敗は partial/pending のまま残し、通常投稿の preflight: continue 条件と recovery 条件を validator で混同しない。"
+      - "既存5 candidate を同じ経路で backfill し、ready_to_post 4件、handoff pending 4件、queue 0件という期待値を再監査する。"
+      - "同一 URL の verified match、title-only match、stale index、permalink 欠落、fingerprint 変更、冪等再実行を検証する。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
