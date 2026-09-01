@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2608.28704v1"
 collected_at: "2026-09-01T17:04:18+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, automated-playtesting, agent-recovery, sequential-decision-making, interpretability]
+evaluated_at: "2026-09-01T17:09:02+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-09-01T17:09:02+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-09-01T17:09:02+09:00"
+next_action: revise_or_research
+stale_after: "2026-10-01"
+supersedes: []
+gate_reason: >-
+  問題設定、局所修復という中核着想、評価領域、ゲーム内 agent への適用先は明確である。
+  ただし現 candidate は要旨のみで、歪み検出・経験検索・状態修復の具体手順、baseline、指標、数値結果が不足し、一次資料に忠実な約4000字の概要をまだ構成できない。
 ---
 
 ## raw_excerpt
