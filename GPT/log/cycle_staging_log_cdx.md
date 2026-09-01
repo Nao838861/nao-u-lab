@@ -52,7 +52,26 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260611_agentic_video_executable_event_graphs.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788240016710549
+    ts: "1788240016.710549"
+    char_count: 4091
+    source_review: "arXiv:2604.10383v3 全文10ページを再確認。同一workの現題は Authoring for Living Worlds: Tool-Constrained LLM Agents for Executable Multi-Actor Scenarios。"
+skipped: []
+delivery:
+  handoff_id: p3h-147208b5379f520f
+  decision: posted
+  delivery_mode: new_post
+  state_fingerprint: ebc05740a3e37aaa816e2030556e1fb2c195ddac53ac769771d2f9202fd93585
+  fingerprint_check: "selected_candidate_state と current frontmatter の status/candidate_status/evaluated_at/last_reviewed_at/next_action/stale_after/title/url は投稿直前まで一致"
+  preflight_decision: continue
+  preflight_evidence: "python tools/shared_reads_duplicate_preflight.py --title <candidate title> --url https://arxiv.org/abs/2604.10383 => canonical_url=https://arxiv.org/abs/2604.10383, decision=continue"
+  policy_review: "4090字の本文が shared_reads_policy で ok。必須6節・順序・禁止表現・URL末尾集約を確認"
+  evidence: "candidate posted block; this Phase 3 entry; Slack permalink"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

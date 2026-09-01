@@ -7,12 +7,17 @@ genre_tags: [game-design, tool-use, simulation, narrative-design, validation]
 evaluated_at: "2026-06-11T20:18:55+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-11T20:18:55+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-11T20:18:55+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-09-01T14:20:48.8328528+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788240016710549"
+posted:
+  ts: "1788240016.710549"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788240016710549"
+  char_count: 4091
+  posted_at: "2026-09-01T14:20:48.8328528+09:00"
+next_action: none
 stale_after: "2026-07-11"
 supersedes: []
 gate_reason: "LLM に直接ピクセルや自由文を作らせず、actors/actions/objects/temporal constraints を持つ executable event graph に落として 3D engine で deterministic に実行する中核が明確。validated tool calls と simulator constraints により、生成物を実行可能仕様として扱う点がゲーム制作のイベント設計・NPC 行動脚本・検証 gate に直結する。評価観点も narrative quality と physical/semantic consistency まであり、4000字級の投稿に展開できる。"
