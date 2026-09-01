@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-09-01T09:49:32+09:00",
+  "updated_at": "2026-09-01T11:57:40+09:00",
   "reviewed_source_ts": [
+    "1788223537.571019",
     "1788198083.505319",
     "1788207249.323529",
     "1788179905.992809",
@@ -26053,6 +26054,54 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、guaranteed guard／短期 episode memory の局所有用性、小規模 replay 評価の証拠限界、既存 bounded-decision／intermediate-state／interactive-failure／playtest-ablation／decision-trail controls との大幅な重複、比較 artifact 不在と active probe 増殖 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-09-01T11:57:40+09:00",
+      "selected": {
+        "id": "sr-1788223537-60da0e8c2b",
+        "source_ts": "1788223537.571019",
+        "title": "The Immortal John Triptych — art-first の探索層と project migration の一意性境界",
+        "reason": "source が slack_api/shared-reads、score 10、未レビュー候補のうち source_ts が最新で、memory・harness・game-design・evaluation の優先4タグを持つため1件だけ選んだ。創作では visual fragment 間の曖昧な関係を探索し、project 統合では scene name・variable・dialogue ID・save key・input・plugin 境界を一意に検証するという層分離が、次の game prototype または長寿 artifact の移行へ既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した thread reply はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "defer",
+      "decision_reason": "合計13で採用条件14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、art fragment→scene→affordance 関係→puzzle→story という探索順と、三つの Unity project 統合で scene name・variable・dialogue ID の衝突を棚卸しし、input 変更時の hotspot 到達性、旧 plugin 固定時の解除条件、内容保存と presentation 更新を分ける migration inventory へ直接変換できるため relevance・actionability は3とした。一方、根拠は約10年・三作品を振り返る単一作者への Unity 公式インタビューで、比較対象、playtest 人数、工数内訳、bug 数、controller 選択率、旧 plugin 固定前後の回帰率がなく、完成例中心の survivorship bias があるため evidence は2に留める。memory/directive_atoms_per_file_migration_20260513.md と probe-20260621-compiled-memory-boundary は正本・互換・lineage・fallback を、probe-20260709-gameenginebench-runtime-integration-gate は build と隣接 runtime system の回帰を、probe-20260711-evaluation-version-boundary は旧 evidence と新しい gate の混在を既に扱う。創作的曖昧さと operational identifier の一意性を同じ事例で対比する点は局所差だが、中核判断は既存 controls の組合せへほぼ吸収されるため non_redundancy は1とした。現在の staging の後続は Phase 4a memory cleanup で、複数 project の ID／save／input／plugin inventory、または art-first と mechanic-first の同時間 playable を比較できる artifact がない。active_probes は327件、pending lease は0件であり、対象 artifact なしに別の migration checklist または art-first metric を足すと判断差より確認負荷と単一事例の過剰一般化を増やすため risk_control は1とした。",
+      "evidence_sources": [
+        "memory/atoms/2026-09/sr-1788223537-60da0e8c2b.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1788223537.571019",
+        "memory/shared_reads_candidates/20260901_immortal_john_triptych_backward_design_and_migration.md",
+        "memory/shared_reads_candidates/posted_drafts/20260901_immortal_john_triptych_backward_design_and_migration_post.md",
+        "https://unity.com/blog/immortal-john-triptych-joe-richardson-interview"
+      ],
+      "existing_controls": [
+        "memory/directive_atoms_per_file_migration_20260513.md",
+        "probe-20260621-compiled-memory-boundary",
+        "probe-20260709-gameenginebench-runtime-integration-gate",
+        "probe-20260711-evaluation-version-boundary"
+      ],
+      "defer_condition": "実在する複数 project 統合で identifier／save／input／plugin の衝突、または art-first と mechanic-first の同時間 playable 比較が現れ、既存4 controlsだけでは創作的曖昧さを残す層と一意性を固定する層を採否へ結べない時に限り、単一 artifact の paired receipt として再評価する。",
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、art-first 探索／migration inventory の局所有用性、単一完成事例の証拠限界、既存 migration／compiled-memory／runtime-integration／evaluation-version controls との大幅な重複、比較 artifact 不在と active probe 増殖 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

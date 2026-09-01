@@ -80,7 +80,35 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1788223537-60da0e8c2b
+    source_ts: "1788223537.571019"
+    title: "The Immortal John Triptych — art-first の探索層と project migration の一意性境界"
+    reason: "score 10 の最新未レビュー atom で、memory・harness・game-design・evaluation の優先4タグを持つ。創作的曖昧さを残す層と runtime identifier／save／input／plugin を一意にする層の分離が、次回行動へ新しい判断差を作るか確認した。Nao_u の明示評価 thread はローカル raw で確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: defer
+  decision_reason: "art-first の fragment→scene→affordance→puzzle→story と、三 Unity project の scene name／variable／dialogue ID 衝突、hotspot 到達性、旧 plugin 固定の解除条件を分ける migration inventory は直接行動へ変換できる。一方、根拠は単一作者への Unity 公式インタビューで定量比較がなく、既存の atoms per-file migration directive、compiled-memory boundary、runtime integration gate、evaluation version boundary が中核を既に覆う。後続 Phase 4a には比較可能な統合 project または art-first playable がなく、active probe 327件へ同義 control を足す負荷が判断差を上回る。"
+  change:
+    summary: "reviewed_source_ts と state-only の defer 理由を記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
