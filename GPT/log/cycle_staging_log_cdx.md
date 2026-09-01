@@ -95,7 +95,37 @@ delivery:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+### 2026-09-02T05:03:56+09:00 自己フィードバック
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779717626-fcfc55b670
+    source_ts: "1779717626.976659"
+    title: "Dorfromantik — ミニマルな核を保つ biome 拡張と visual readability gate"
+    reason: "未レビュー候補のうち source_ts が最新で、memory・harness・game-design・operation・evaluation の優先5タグを持つ。既存語彙の変奏、in-game camera での silhouette、grayscale value、curated tile の再結合が次の制作判断を変えるか確認した。Nao_u の本投稿への明示評価は raw で確認できなかった。"
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "手順は具体的だが、単一 studio interview で効果の before／after 指標がなく、現 staging に比較可能な game camera／grayscale artifact もない。silhouette・contrast・first viewport・core より先の拡張抑制・visual evidence 境界は既存 controls がほぼ覆う。対象なしに別 visual gate を増やすと、grayscale と minimalism を色相依存 cue や必要な mechanics にまで一般化する risk と確認負荷が上回るため、state-only review で閉じる。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録。active_probes、probe lifecycle ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

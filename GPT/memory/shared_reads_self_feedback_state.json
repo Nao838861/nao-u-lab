@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-09-02T03:06:08+09:00",
+  "updated_at": "2026-09-02T05:03:56+09:00",
   "reviewed_source_ts": [
+    "1779717626.976659",
     "1779726451.738919",
     "1779757222.575779",
     "1779690823.312759",
@@ -26380,6 +26381,51 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、同一 Slack 投稿本体の既レビュー、既存 relative-difficulty／proxy-variance／human-calibration controls との完全重複、リアルタイム転用と3サイクル照合の未実施、active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-09-02T05:03:56+09:00",
+      "selected": {
+        "id": "sr-1779717626-fcfc55b670",
+        "source_ts": "1779717626.976659",
+        "title": "Dorfromantik — ミニマルな核を保つ biome 拡張と visual readability gate",
+        "reason": "source が slack_api/shared-reads、score 10、reviewed_source_ts にない候補のうち source_ts が最新で、memory・harness・game-design・operation・evaluation の優先5タグを持つため1件だけ選んだ。既存語彙の変奏、in-game camera での silhouette、grayscale value、curated tile の再結合が、次の game 制作へ既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した thread reply はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、新機能追加と既存語彙の変奏を分け、thumbnail→3D blockout→in-game camera→Blender の反復、silhouette と grayscale value の確認、curated tile と rule recombination の境界へ変換できるため actionability は3とした。一方、現在の staging には biome、skin、背景、UI、game camera、grayscale before／after を比較できる playable artifact がなく、直後の Phase 4a は memory cleanup なので relevance は2に留める。根拠は Toukana Interactive の制作インタビュー1件で、visual noise、理解時間、誤認率、retention、制作工数、変更前後の player 評価がなく、Medieval Biome Pack の効果を独立比較していないため evidence は2とした。既レビューの NextMars readability review は silhouette・contrast・telegraph・effect hierarchy を、probe-20260621-q0-five-second-legibility は最初の viewport の役割可読性を、probe-20260528-core-density-before-expansion は核より先の拡張抑制を、probe-20260602-visual-exploration-evidence-split は visual evidence と player experience の境界をすでに扱う。本 atom 固有の grayscale biome recolor pipeline は局所差だが、現 artifact の判断を変える独立 control にはならないため non_redundancy は1とした。active_probes は327件、pending lease は0件であり、対象 artifact なしに visual gate を追加すると、すべての art style に grayscale と minimalism を一般化し、必要な新 mechanics や色相依存 cue まで抑える risk と確認負荷が便益を上回るため risk_control は1とし、state-only reject で閉じる。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1779717626-fcfc55b670.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779717626.976659",
+        "https://80.lv/articles/how-dorfromantik-expands-its-cozy-world-through-minimalist-design"
+      ],
+      "existing_controls": [
+        "review: NextMars Premium 2D Gameplay Readability Systems Matter More Than Visual Density",
+        "probe-20260621-q0-five-second-legibility",
+        "probe-20260528-core-density-before-expansion",
+        "probe-20260602-visual-exploration-evidence-split"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、visual readability 手順の局所有用性、既存 readability／core-density／visual-evidence controls との大幅な重複、比較 artifact 不在、minimalism と grayscale の過剰一般化 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
