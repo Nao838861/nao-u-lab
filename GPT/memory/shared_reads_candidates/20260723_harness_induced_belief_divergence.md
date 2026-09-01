@@ -7,13 +7,13 @@ genre_tags: [llm-agent, harness, evaluation, observability, game-testing]
 evaluated_at: "2026-07-23T19:19:27+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-09-01T20:25:54+09:00"
-last_decision: postponed
-evidence: "Phase 3 duplicate preflight: review; reason: open_duplicate_title_match; group_kind: mixed; representative: memory/shared_reads_candidates/20260723_harness_induced_belief_divergence.md"
-next_action: reconcile_duplicate_group_and_requeue
-stale_after: "2026-10-01"
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-23T19:19:27+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-23T19:19:27+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-22"
 supersedes: []
 gate_reason: |-
   harness を単なる実装差ではなく agent の belief trajectory を変える実験変数として測る問題設定、診断軸、stress test、BIWM の対策まで抽出できる。
