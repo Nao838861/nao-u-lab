@@ -4,6 +4,20 @@ url: "https://www.gamedeveloper.com/design/warlock-s-magic-system-was-built-on-g
 collected_at: "2026-09-01T09:35:26+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, systemic-design, player-agency, action-adventure, playtesting]
+evaluated_at: "2026-09-01T09:39:07+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-09-01T09:39:07+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-09-01T09:39:07+09:00"
+next_action: revise_or_research
+stale_after: "2026-10-01"
+supersedes: []
+gate_reason: >-
+  agency を magic に集中させ、想定外到達を nerf せず secret で報いる判断は、systemic prototype の具体的な設計原則として強い。
+  一方で評価証拠が tentacle 連結の一例に偏り、許容した破壊と拒否した破壊の境界、反復後の結果が不足するため、4000字級の深い分析には追加の一次根拠が必要である。
 ---
 
 ## raw_excerpt

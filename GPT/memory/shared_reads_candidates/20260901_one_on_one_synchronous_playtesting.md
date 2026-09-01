@@ -4,6 +4,20 @@ url: "https://www.gamedeveloper.com/design/how-you-yes-you-can-benefit-from-1-on
 collected_at: "2026-09-01T09:34:54+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, playtesting, player-experience, small-team, feedback]
+evaluated_at: "2026-09-01T09:39:07+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-09-01T09:39:07+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-09-01T09:39:07+09:00"
+next_action: revise_or_research
+stale_after: "2026-10-01"
+supersedes: []
+gate_reason: >-
+  1対1同期観察、非言語反応、note から action item への変換という骨格は具体的で、少人数制作への適用先も明確である。
+  ただし session 設計、tester 選定、観察の符号化、優先度決定、比較結果の根拠が薄く、現状の材料だけで4000字にすると一般論や推測が増えるため保留する。
 ---
 
 ## raw_excerpt

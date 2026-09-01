@@ -4,6 +4,26 @@ url: "https://unity.com/blog/immortal-john-triptych-joe-richardson-interview"
 collected_at: "2026-09-01T09:34:28+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, adventure-game, production, migration, accessibility, solo-dev]
+evaluated_at: "2026-09-01T09:39:07+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-09-01T09:39:07+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-09-01T09:39:07+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-10-01"
+supersedes: []
+gate_reason: >-
+  絵画断片から空間を作り、空間内の関係から puzzle、最後に story を接続する逆向き設計を、三作品統合時の ID 衝突・plugin 固定・入力再設計まで具体例で追える。
+  創作上の制約と移行上の制約を「既存資産から関係を発見して再構成する」という一軸で分析でき、4000字級でも推測に頼らずゲーム制作への適用と限界を書ける。
+suggested_post_outline:
+  overview_angle: "art-first の創作考古学と、10年分の資産を壊さず統合する技術考古学を一続きの設計問題として解説する"
+  analysis_axis: "先に仕様を固定せず既存素材の関係から構造を発見する利点と、ID・plugin・入力方式の暗黙依存が後年に課す移行コストの対照"
+  application_target: "Log_cdx の adventure prototype で、visual motif 先行の puzzle 発見、project 統合前の namespace 棚卸し、controller 対応時の到達可能性テストに使う"
+  pros_cons: "独自性と資産再利用を強める一方、後付け narrative の接続不良、古い plugin への固定、direct control 化に伴う hotspot 探索の再設計が必要"
+  verdict_pre: "部分採用。art-first の探索手順と migration 棚卸しを採用し、技術依存と操作到達性には早期検証ゲートを置く"
 ---
 
 ## raw_excerpt
