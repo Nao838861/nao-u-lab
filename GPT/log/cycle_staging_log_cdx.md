@@ -306,7 +306,68 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+
+```yaml
+implemented:
+  - issue_id: ISS-P3-001
+    files_changed:
+      - path: tools/build_shared_reads_phase3_queue.py
+        change: modified
+      - path: tools/shared_reads_phase3_handoff.py
+        change: modified
+      - path: tools/test_shared_reads_phase3_handoff.py
+        change: modified
+      - path: phases/phase3_post_shared_reads.md
+        change: modified
+      - path: memory/directive_shared_reads_candidate_gate_20260512.md
+        change: modified
+      - path: memory/shared_reads_candidates/README.md
+        change: modified
+      - path: memory/shared_reads_phase3_handoff_inbox.jsonl
+        change: modified
+      - path: memory/shared_reads_posted_source_index.jsonl
+        change: modified
+      - path: memory/shared_reads_title_canonical_index.jsonl
+        change: modified
+      - path: memory/shared_reads_open_duplicate_group_queue.jsonl
+        change: modified
+      - path: memory/shared_reads_candidates/20260516_pokeagent_challenge.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260529_gamedevbench_agentic_game_development.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260610_temporal_design_developer_perspectives.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260628_clue_driven_investigative_narratives.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260628_snap_controllable_interactive_narrative.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: >-
+      Phase 3 queue / handoff に normal_post と recover_existing_post を分離し、terminal receipt に
+      new_post / recovered_existing を保存する実装を導入した。recovery は healthy な posted-source、
+      exact URL/work match、permalink/provenance、candidate fingerprint、preflight skip を検証し、
+      raw Slack receipt から candidate を更新して Slack 再投稿なしで閉じる。
+    partial: false
+migrations:
+  - what: >-
+      legacy handoff 5行へ action/schema_version を backfill し、既回収の MAP 1行へ
+      delivery_mode: recovered_existing を補完した。通常投稿待ち4行は normal_post / pending のまま保持した。
+    affected: memory/shared_reads_phase3_handoff_inbox.jsonl の既存5行
+  - what: >-
+      Phase 4a で特定した posted-source 抑止5 candidate を recovery handoff へ enqueue し、
+      raw Slack permalink / ts / char_count / posted_at を回収して posted terminal へ移行した。
+    affected: >-
+      pokeagent、gamedevbench、temporal design、clue-driven investigative narratives、SNAP の5 candidate と5 terminal receipt
+  - what: candidate lifecycle 変更後に posted-source / title canonical / open duplicate group index を再生成した。
+    affected: posted-source 909 rows、title canonical 112 rows、open duplicate group 27 rows
+verification:
+  - "Phase 3 queue: 0 rows、handoff audit: 10 rows / pending 4 / errors 0、ready_to_post: 4 files"
+  - "recovered_existing terminal receipt: 今回5件 + 既存MAP 1件。全件に canonical URL / permalink / provenance / candidate / staging evidence を保持"
+  - "posted-source --check: 909 rows、title canonical --check: 112 rows、open duplicate group --check: 27 rows"
+  - "test_shared_reads_phase3_handoff.py: 14 tests OK。同一URL/work、title-only、stale index、permalink欠落、raw Slack permalink優先、fingerprint変更、冪等再実行を網羅"
+  - "関連4 test suiteを含む合計35 tests OK。memory_recall.py も正常終了"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

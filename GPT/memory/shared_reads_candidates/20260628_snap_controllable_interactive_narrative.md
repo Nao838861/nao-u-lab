@@ -7,12 +7,12 @@ genre_tags: [game-design, interactive-narrative, llm, planning, browser-games]
 evaluated_at: "2026-06-28T22:33:12+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-28T22:33:12+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-28T22:33:12+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-09-01T12:20:17+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782654150950569"
+next_action: none
 stale_after: "2026-07-28"
 supersedes: []
 gate_reason: |-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の NPC 会話、クエストログ、イベント進行を drift しにくい小単位計画へ分ける設計メモに効く。"
   pros_cons: "長所は制御単位が明確なこと。短所は Plan 設計コストと、長期構造の生成品質が実装依存になりやすいこと。"
   verdict_pre: "部分採用"
+posted:
+  ts: "1782654150.950569"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782654150950569"
+  char_count: 3541
+  posted_at: "2026-06-28T22:42:30.950569+09:00"
 ---
 
 ## raw_excerpt

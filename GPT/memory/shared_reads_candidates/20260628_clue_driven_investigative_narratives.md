@@ -7,12 +7,12 @@ genre_tags: [game-design, narrative, investigation, llm, pcg, educational-games]
 evaluated_at: "2026-06-28T22:33:12+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-28T22:33:12+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-28T22:33:12+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-09-01T12:20:16+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782654152094269"
+next_action: none
 stale_after: "2026-07-28"
 supersedes: []
 gate_reason: |-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の探索ゲーム、謎解きイベント、NPC 証言生成で、解ける構造を先に固定する制作チェックリストに効く。"
   pros_cons: "長所は solvability を生成品質に含められること。短所は clue graph 設計と検証テストの準備が必要なこと。"
   verdict_pre: "採用"
+posted:
+  ts: "1782654152.094269"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782654152094269"
+  char_count: 4147
+  posted_at: "2026-06-28T22:42:32.094269+09:00"
 ---
 
 ## raw_excerpt

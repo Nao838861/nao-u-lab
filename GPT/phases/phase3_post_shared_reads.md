@@ -21,9 +21,11 @@ python tools\shared_reads_phase3_handoff.py enqueue --source-cycle-id "<staging 
 python tools\shared_reads_phase3_handoff.py pending --limit 1
 ```
 
-`memory/shared_reads_phase3_queue.jsonl` は再生成可能な表示で、跨 cycle の正本は `memory/shared_reads_phase3_handoff_inbox.jsonl` である。queue は verified な posted-source と同一 state fingerprint の既存 handoff を除外し、`evaluated_at` が古い順に並ぶ。candidate frontmatter は enqueue 時に変更しない。
+`memory/shared_reads_phase3_queue.jsonl` は再生成可能な表示で、跨 cycle の正本は `memory/shared_reads_phase3_handoff_inbox.jsonl` である。queue / handoff の `action` は `normal_post` または `recover_existing_post`。healthy な posted-source index で URL/work 一致と permalink が揃う candidate は除外せず、後者として enqueue する。index が stale、permalink 欠落、title-only 一致の場合は recovery にしない。同一 state fingerprint の既存 handoff は除外し、`evaluated_at` が古い順に並ぶ。candidate frontmatter は enqueue 時に変更しない。
 
 pending item の `delivery_action` が `invalidate` の場合は、candidate 状態が選定時から変わっている。投稿せず、現在 frontmatter と staging evidence を付けて `invalidated` で閉じる。`complete_receipt` の場合は、Slack permalink または途中 decision が既に ledger にあるため再投稿せず、candidate / staging の不足だけを補完して resolve する。
+
+`action: recover_existing_post` は新規投稿ではない。candidate fingerprint を再確認し、duplicate preflight が `skip`、posted-source index が healthy、URL/work が exact verified match、permalink と provenance が揃う時だけ、既存 Slack 投稿を candidate lifecycle へ回収する。Slack API の投稿処理は呼ばない。条件が欠けた場合は candidate を変更せず pending のまま残す。
 
 ## 現行投稿ルール
 
@@ -107,10 +109,10 @@ pending item の `delivery_action` が `invalidate` の場合は、candidate 状
 python tools\shared_reads_duplicate_preflight.py --title "<candidate title>" --url "<candidate url>"
 ```
 
-5. state fingerprint が変わっていれば `invalidated` で閉じる。preflight が `skip` / `review`、または投稿条件を満たさない場合は投稿せず candidate を `postponed` に戻し、frontmatter と staging を更新して `postponed` receipt を閉じる。
+5. state fingerprint が変わっていれば `invalidated` で閉じる。`normal_post` で preflight が `skip` / `review`、または投稿条件を満たさない場合は投稿せず candidate を `postponed` に戻し、frontmatter と staging を更新して `postponed` receipt を閉じる。`recover_existing_post` では preflight `skip` が成功条件であり、`continue` / `review` は回収せず pending に残す。
 6. 投稿する場合は必須フォーマットで本文を書き、投稿前レビューを通す。旧フォーマットの「要約」「メリット」「デメリット／注意点」は使わず、「概要」「メリット・デメリット」へ置換する。
-7. `tools/slack_client.py` の `post_message` を使い、#shared-reads に 1 candidate だけ投稿する。スレッド返信は禁止。Slack の一時失敗時は candidate を `ready_to_post` のまま保ち、`retry_after` を付けて `defer` する。
-8. 投稿成功時は candidate frontmatter と staging を先に更新する。
+7. `normal_post` は `tools/slack_client.py` の `post_message` を使い、#shared-reads に 1 candidate だけ投稿する。スレッド返信は禁止。Slack の一時失敗時は candidate を `ready_to_post` のまま保ち、`retry_after` を付けて `defer` する。`recover_existing_post` は投稿処理を呼ばず、handoff の `posted_source_permalink` を使う。
+8. 新規投稿成功時は candidate frontmatter と staging を先に更新する。既投稿回収時は staging evidence を用意してから `recover-existing` を実行する。この command が fingerprint と healthy index を再検証し、raw Slack receipt から `ts` / `permalink` / `char_count` / `posted_at` を復元して candidate と terminal receipt を更新する。推測値を入れない。
 
 ```yaml
 posted:
@@ -130,6 +132,7 @@ next_action: none
 
 ```powershell
 python tools\shared_reads_phase3_handoff.py resolve --id <p3h-id> --decision posted --reason "<根拠>" --preflight-decision continue --preflight-evidence "<staging preflight evidence>" --permalink "<Slack permalink>" --candidate-evidence "<candidate posted block>" --staging-evidence "<Phase 3 posted entry>"
+python tools\shared_reads_phase3_handoff.py recover-existing --id <p3h-id> --staging-evidence "<Phase 3 recovered entry>"
 python tools\shared_reads_phase3_handoff.py resolve --id <p3h-id> --decision postponed --reason "<根拠>" --preflight-decision <continue|review|skip> --preflight-evidence "<staging preflight evidence>" --candidate-evidence "<candidate lifecycle fields>" --staging-evidence "<Phase 3 skipped entry>"
 python tools\shared_reads_phase3_handoff.py resolve --id <p3h-id> --decision defer --reason "<Slack 一時失敗>" --preflight-decision continue --preflight-evidence "<staging preflight evidence>" --staging-evidence "<Phase 3 deferred entry>" --retry-after "<ISO 8601>"
 python tools\shared_reads_phase3_handoff.py resolve --id <p3h-id> --decision invalidated --reason "<状態変更>" --candidate-evidence "<current frontmatter>" --staging-evidence "<Phase 3 invalidated entry>"
@@ -149,6 +152,7 @@ skipped:
 delivery:
   handoff_id: <p3h-...>
   decision: posted | postponed | deferred | invalidated
+  delivery_mode: new_post | recovered_existing
   evidence: <candidate / staging / permalink>
 ```
 

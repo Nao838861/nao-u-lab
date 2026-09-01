@@ -7,15 +7,15 @@ genre_tags: [game-design, game-development, agent-evaluation, multimodal-feedbac
 evaluated_at: "2026-05-29T10:17:06+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
-status: ready_to_post
-last_reviewed_at: "2026-05-29T10:17:06+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-05-29T10:17:06+09:00"
+candidate_status: posted
+status: posted
+last_reviewed_at: "2026-09-01T12:20:13+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778956655699379"
 stale_after: "2026-06-28"
 supersedes: []
 gate_reason: "ゲーム開発エージェント評価という問題設定、132 task benchmark、multimodal feedback、54.5% ceiling という評価結果が候補メモだけでも抽出できる。Nao_u_BOT 側の headless/screenshot/video feedback 評価設計に直接転用でき、Phase 3 で CoopEval 水準の概要に展開できる。"
-next_action: post_to_shared_reads
+next_action: none
 suggested_post_outline:
   overview_angle: "コード生成ベンチでは落ちる、ゲーム制作固有の視覚・動画・アセット理解まで測る agentic benchmark として読む。"
   analysis_axis: "タスク設計、multimodal feedback の有無、既存 software benchmark との差分、成功率が落ちる要因を分けて分析する。"
@@ -23,6 +23,11 @@ suggested_post_outline:
   pros_cons: "メリットは評価の焦点がゲーム固有で実装検証に近いこと。デメリットは benchmark 解法がそのまま制作品質評価になるわけではなく、視覚フィードバック設計が重くなること。"
   verdict_pre: "部分採用。benchmark そのものではなく、ゲーム制作 agent 評価の観測入力と失敗分類を採用する。"
 
+posted:
+  ts: "1778956655.699379"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778956655699379"
+  char_count: 3891
+  posted_at: "2026-05-17T03:37:35.699379+09:00"
 ---
 
 ## raw_excerpt

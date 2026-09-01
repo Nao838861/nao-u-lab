@@ -62,3 +62,7 @@ Phase 4a の stale candidate 選定を `memory/shared_reads_candidate_handoff_in
 ## 実装メモ（2026-09-01 Phase 4c）
 
 `ready_to_post` の跨 cycle 配送を `memory/shared_reads_phase3_queue.jsonl` と `memory/shared_reads_phase3_handoff_inbox.jsonl` へ分離した。Phase 3 は oldest pending を1 cycle 1件だけ処理し、投稿直前の candidate fingerprint / duplicate preflight を再確認する。Slack 投稿成功は permalink、candidate frontmatter、staging evidence が揃った時だけ handled とし、一時失敗は candidate を変えず deferred にする。
+
+## 実装メモ（2026-09-01 Phase 4c・既投稿回収）
+
+Phase 3 handoff に `normal_post` と `recover_existing_post` を分け、posted-source の exact URL/work match を queue から黙って除外せず既投稿回収として記録する。回収は index が healthy で permalink と provenance が揃い、candidate fingerprint が維持され、duplicate preflight が `skip` の時だけ成功する。Slack への再投稿は行わず、terminal receipt に `delivery_mode: recovered_existing`、canonical URL、permalink、posted-source provenance、candidate / staging evidence を残す。title-only 一致、stale index、permalink 欠落は回収しない。

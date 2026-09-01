@@ -7,16 +7,16 @@ genre_tags: [game-ai, benchmark, agent-evaluation, rpg, partial-observability, l
 evaluated_at: "2026-05-16T15:46:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
-status: ready_to_post
-last_reviewed_at: "2026-05-16T15:46:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-05-16T15:46:00+09:00"
+candidate_status: posted
+status: posted
+last_reviewed_at: "2026-09-01T12:24:08+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778774144030849"
 stale_after: "2026-06-15"
 supersedes: []
 phase3_status: skipped_duplicate
 phase3_reason: "2026-05-15 に同一タイトルの #shared-reads 投稿済み (ts=1778774896.927649) のため Phase 3 では重複投稿しない。"
-next_action: post_to_shared_reads
+next_action: none
 gate_reason: |-
   部分観測の対戦、長期計画の RPG speedrun、20M+ trajectories、heuristic/RL/LLM baselines という評価対象と比較軸がはっきりしている。
   「自作ゲームを agent に遊ばせる」際に、単なるクリア可否ではなく競技性、長文文脈、harness、human gap を測る参照例として具体的に使える。
@@ -28,6 +28,11 @@ suggested_post_outline:
   pros_cons: "メリットは実ゲームに近い複雑性と評価基盤。デメリットは Pokemon 固有知識への依存、制作中の小規模ゲームへそのまま移植しにくい点。"
   verdict_pre: "部分採用。benchmark の構造を借り、題材固有の大規模さは圧縮して使う。"
 
+posted:
+  ts: "1778774144.030849"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778774144030849"
+  char_count: 1372
+  posted_at: "2026-05-15T00:55:44.030849+09:00"
 ---
 
 ## raw_excerpt

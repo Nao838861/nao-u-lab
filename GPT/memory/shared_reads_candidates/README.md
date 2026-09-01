@@ -19,6 +19,8 @@ candidate frontmatter を作成・更新した後は closed / open-group sidecar
 
 2026-07-21 Phase 4c で `memory/shared_reads_open_duplicate_group_queue.jsonl` を追加した。これは mixed group と all-open group の双方を保持する superset sidecar で、stale triage / group-action / duplicate preflight の現行入力である。旧 mixed queue は既存監査との互換用に残す。title 一致だけでは同一 work と確定せず、`source_url_evidence` を読んで review する。
 
+2026-09-01 Phase 4c で Phase 3 handoff に `action: normal_post | recover_existing_post` と terminal `delivery_mode: new_post | recovered_existing` を追加した。healthy な posted-source index の exact URL/work match と permalink/provenance が揃う場合だけ既投稿回収として配送し、Slack へ再投稿しない。title-only 一致、stale index、permalink 欠落は回収成功として扱わない。移行と監査は `python tools\shared_reads_phase3_handoff.py backfill-actions`、`python tools\shared_reads_phase3_handoff.py audit` を使う。
+
 #shared-reads に投稿する基準を満たさない**候補レベル**の記事置き場。
 
 Nao_u 指示 (2026-05-12 13:40 `directive_shared_reads_candidate_gate_20260512.md`):

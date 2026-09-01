@@ -1,3 +1,4 @@
+import json
 import sys
 import tempfile
 import unittest
@@ -7,9 +8,12 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from build_shared_reads_phase3_queue import build_queue
+from shared_reads_title_index import read_frontmatter
 from shared_reads_phase3_handoff import (
+    backfill_actions,
     enqueue_rows,
     pending_rows,
+    recover_existing,
     resolve,
     state_fingerprint,
     state_snapshot_from_meta,
@@ -61,7 +65,22 @@ def candidate_text(
     return "\n".join(lines)
 
 
-def queue_row(relative: str, evaluated_at: str = "2026-05-01T09:00:00+09:00") -> dict:
+def posted_source_row(url: str = "https://example.com/fixture", permalink: str = "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788224400000100") -> dict:
+    return {
+        "canonical_url": url,
+        "source_urls": [url],
+        "work_identity": f"url:{url}",
+        "posted_verified": True,
+        "permalinks": [permalink] if permalink else [],
+        "provenance": [{"kind": "slack_raw", "path": "fixture.jsonl", "line": 1}],
+    }
+
+
+def queue_row(
+    relative: str,
+    evaluated_at: str = "2026-05-01T09:00:00+09:00",
+    action: str = "normal_post",
+) -> dict:
     snapshot = state_snapshot_from_meta(
         {
             "title": "Fixture",
@@ -74,7 +93,8 @@ def queue_row(relative: str, evaluated_at: str = "2026-05-01T09:00:00+09:00") ->
             "next_action": "post_to_shared_reads",
         }
     )
-    return {
+    row = {
+        "action": action,
         "path": relative,
         "title": snapshot["title"],
         "url": snapshot["url"],
@@ -85,10 +105,23 @@ def queue_row(relative: str, evaluated_at: str = "2026-05-01T09:00:00+09:00") ->
         "priority_order": 1,
         "priority_reason": "oldest first",
     }
+    if action == "recover_existing_post":
+        row.update(
+            {
+                "matched_canonical_url": snapshot["url"],
+                "matched_work_identity": f"url:{snapshot['url']}",
+                "posted_source_match_reason": "posted_source_url_match",
+                "posted_source_permalink": "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788224400000100",
+                "posted_source_provenance": [
+                    {"kind": "slack_raw", "path": "fixture.jsonl", "line": 1}
+                ],
+            }
+        )
+    return row
 
 
 class Phase3QueueTest(unittest.TestCase):
-    def test_queue_excludes_verified_posted_source_and_orders_oldest_first(self):
+    def test_queue_converts_verified_posted_source_to_recovery_and_orders_oldest_first(self):
         with tempfile.TemporaryDirectory(dir=PROJECT_ROOT) as temp_dir:
             candidates = Path(temp_dir) / "candidates"
             candidates.mkdir()
@@ -104,18 +137,84 @@ class Phase3QueueTest(unittest.TestCase):
                 candidate_text("Already posted", "https://example.com/posted", "2026-04-01T09:00:00+09:00"),
                 encoding="utf-8",
             )
-            posted_rows = [
-                {
-                    "canonical_url": "https://example.com/posted",
-                    "source_urls": ["https://example.com/posted"],
-                    "work_identity": "url:https://example.com/posted",
-                    "posted_verified": True,
-                }
-            ]
-            rows = build_queue(candidates, [], posted_rows)
-            self.assertEqual([row["title"] for row in rows], ["Old", "New"])
-            self.assertEqual([row["priority_order"] for row in rows], [1, 2])
+            posted_rows = [posted_source_row("https://example.com/posted")]
+            rows = build_queue(candidates, [], posted_rows, {"healthy": True, "reason": "fresh"})
+            self.assertEqual([row["title"] for row in rows], ["Already posted", "Old", "New"])
+            self.assertEqual([row["priority_order"] for row in rows], [1, 2, 3])
+            self.assertEqual(rows[0]["action"], "recover_existing_post")
+            self.assertEqual(rows[0]["posted_source_match_reason"], "posted_source_url_match")
+            self.assertEqual(rows[1]["action"], "normal_post")
             self.assertTrue(all(row["title_evidence"] and row["url_evidence"] for row in rows))
+
+    def test_recovery_is_not_enqueued_from_stale_index_or_missing_permalink(self):
+        with tempfile.TemporaryDirectory(dir=PROJECT_ROOT) as temp_dir:
+            candidates = Path(temp_dir)
+            (candidates / "posted-source.md").write_text(
+                candidate_text("Already posted", "https://example.com/fixture", "2026-04-01T09:00:00+09:00"),
+                encoding="utf-8",
+            )
+            stale = build_queue(
+                candidates,
+                [],
+                [posted_source_row()],
+                {"healthy": False, "reason": "posted_source_index_stale_raw"},
+            )
+            missing_permalink = build_queue(
+                candidates,
+                [],
+                [posted_source_row(permalink="")],
+                {"healthy": True, "reason": "fresh"},
+            )
+            self.assertEqual(stale, [])
+            self.assertEqual(missing_permalink, [])
+
+    def test_title_only_match_stays_normal_and_arxiv_version_match_recovers(self):
+        with tempfile.TemporaryDirectory(dir=PROJECT_ROOT) as temp_dir:
+            candidates = Path(temp_dir)
+            (candidates / "title-only.md").write_text(
+                candidate_text("Same title", "https://example.com/new", "2026-05-01T09:00:00+09:00"),
+                encoding="utf-8",
+            )
+            (candidates / "work-match.md").write_text(
+                candidate_text("Work match", "https://arxiv.org/abs/2607.04528v1", "2026-05-02T09:00:00+09:00"),
+                encoding="utf-8",
+            )
+            title_only = posted_source_row("https://example.com/other")
+            title_only["title_keys"] = ["same title"]
+            work_match = posted_source_row("https://arxiv.org/abs/2607.04528")
+            work_match["work_identity"] = "arxiv:2607.04528"
+            rows = build_queue(
+                candidates,
+                [],
+                [title_only, work_match],
+                {"healthy": True, "reason": "fresh"},
+            )
+            self.assertEqual(rows[0]["action"], "normal_post")
+            self.assertEqual(rows[1]["action"], "recover_existing_post")
+            self.assertEqual(rows[1]["posted_source_match_reason"], "posted_source_work_match")
+
+    def test_recovery_prefers_raw_slack_permalink_over_later_candidate_evidence(self):
+        with tempfile.TemporaryDirectory(dir=PROJECT_ROOT) as temp_dir:
+            candidates = Path(temp_dir)
+            (candidates / "fixture.md").write_text(
+                candidate_text("Fixture", "https://example.com/fixture", "2026-05-01T09:00:00+09:00"),
+                encoding="utf-8",
+            )
+            raw_permalink = "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788224300000100"
+            later_permalink = "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788224400000100"
+            source = posted_source_row()
+            source["permalinks"] = [raw_permalink, later_permalink]
+            source["provenance"] = [
+                {"kind": "slack_raw", "path": "fixture.jsonl", "line": 1, "ts": "1788224300.000100"},
+                {"kind": "posted_candidate", "path": "candidate.md", "evidence_permalink": later_permalink},
+            ]
+            rows = build_queue(
+                candidates,
+                [],
+                [source],
+                {"healthy": True, "reason": "fresh"},
+            )
+            self.assertEqual(rows[0]["posted_source_permalink"], raw_permalink)
 
     def test_queue_suppresses_exact_handled_selection(self):
         with tempfile.TemporaryDirectory(dir=PROJECT_ROOT) as temp_dir:
@@ -136,6 +235,26 @@ class Phase3QueueTest(unittest.TestCase):
 
 
 class Phase3HandoffTest(unittest.TestCase):
+    def test_backfill_actions_recovers_exact_matches_without_closing_pending_rows(self):
+        relative = "memory/shared_reads_candidates/a.md"
+        rows, _ = enqueue_rows([], [queue_row(relative)], "cycle-a", SELECTED_AT)
+        rows[0].pop("action")
+        rows, counts = backfill_actions(
+            rows,
+            [posted_source_row()],
+            {"healthy": True, "reason": "fresh"},
+        )
+        self.assertEqual(counts["recover_existing_post"], 1)
+        self.assertEqual(rows[0]["action"], "recover_existing_post")
+        self.assertEqual(rows[0]["status"], "pending")
+        self.assertEqual(validate_rows(rows), [])
+        rows, second = backfill_actions(
+            rows,
+            [posted_source_row()],
+            {"healthy": True, "reason": "fresh"},
+        )
+        self.assertEqual(second["unchanged"], 1)
+
     def test_enqueue_is_idempotent(self):
         relative = "memory/shared_reads_candidates/a.md"
         rows, first = enqueue_rows([], [queue_row(relative)], "cycle-a", SELECTED_AT)
@@ -269,6 +388,152 @@ class Phase3HandoffTest(unittest.TestCase):
             self.assertEqual(result, "handled")
             self.assertEqual(rows[0]["slack_permalink"], permalink)
             self.assertEqual(validate_rows(rows), [])
+
+    def test_recovered_existing_requires_skip_and_live_exact_match(self):
+        with tempfile.TemporaryDirectory(dir=PROJECT_ROOT) as temp_dir:
+            root = Path(temp_dir)
+            relative = "memory/shared_reads_candidates/a.md"
+            path = root / relative
+            path.parent.mkdir(parents=True)
+            permalink = "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788224400000100"
+            path.write_text(
+                candidate_text(
+                    "Fixture",
+                    "https://example.com/fixture",
+                    "2026-05-01T09:00:00+09:00",
+                    status="posted",
+                    permalink=permalink,
+                ),
+                encoding="utf-8",
+            )
+            rows, _ = enqueue_rows(
+                [],
+                [queue_row(relative, action="recover_existing_post")],
+                "cycle-a",
+                SELECTED_AT,
+            )
+            with self.assertRaisesRegex(ValueError, "requires preflight decision skip"):
+                resolve(
+                    rows,
+                    rows[0]["id"],
+                    "posted",
+                    "recover existing",
+                    "continue",
+                    "fixture preflight",
+                    "candidate posted block",
+                    "Phase 3 recovered[0]",
+                    "fixture",
+                    SELECTED_AT,
+                    root,
+                    permalink=permalink,
+                    posted_source_rows=[posted_source_row()],
+                    posted_source_status={"healthy": True, "reason": "fresh"},
+                )
+            rows, result = resolve(
+                rows,
+                rows[0]["id"],
+                "posted",
+                "recover existing",
+                "skip",
+                "exact verified match",
+                "candidate posted block",
+                "Phase 3 recovered[0]",
+                "fixture",
+                SELECTED_AT,
+                root,
+                permalink=permalink,
+                posted_source_rows=[posted_source_row()],
+                posted_source_status={"healthy": True, "reason": "fresh"},
+            )
+            self.assertEqual(result, "handled")
+            self.assertEqual(rows[0]["delivery_mode"], "recovered_existing")
+            self.assertEqual(rows[0]["preflight_decision"], "skip")
+            self.assertEqual(validate_rows(rows), [])
+
+    def test_recovery_candidate_update_is_delivered_for_receipt_completion(self):
+        with tempfile.TemporaryDirectory(dir=PROJECT_ROOT) as temp_dir:
+            root = Path(temp_dir)
+            relative = "memory/shared_reads_candidates/a.md"
+            path = root / relative
+            path.parent.mkdir(parents=True)
+            permalink = "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788224400000100"
+            path.write_text(
+                candidate_text("Fixture", "https://example.com/fixture", "2026-05-01T09:00:00+09:00"),
+                encoding="utf-8",
+            )
+            rows, _ = enqueue_rows(
+                [],
+                [queue_row(relative, action="recover_existing_post")],
+                "cycle-a",
+                SELECTED_AT,
+            )
+            path.write_text(
+                candidate_text(
+                    "Fixture",
+                    "https://example.com/fixture",
+                    "2026-05-01T09:00:00+09:00",
+                    status="posted",
+                    permalink=permalink,
+                ),
+                encoding="utf-8",
+            )
+            self.assertEqual(pending_rows(rows, root)[0]["delivery_action"], "complete_receipt")
+
+    def test_recover_existing_updates_candidate_and_terminal_receipt_idempotently(self):
+        with tempfile.TemporaryDirectory(dir=PROJECT_ROOT) as temp_dir:
+            root = Path(temp_dir)
+            relative = "memory/shared_reads_candidates/a.md"
+            path = root / relative
+            path.parent.mkdir(parents=True)
+            path.write_text(
+                candidate_text("Fixture", "https://example.com/fixture", "2026-05-01T09:00:00+09:00"),
+                encoding="utf-8",
+            )
+            raw_slack = root / "shared-reads.jsonl"
+            raw_slack.write_text(
+                json.dumps(
+                    {
+                        "ts": "1788224400.000100",
+                        "text": "■ 概要\nfixture\n\n■ URL\nhttps://example.com/fixture",
+                    },
+                    ensure_ascii=False,
+                ) + "\n",
+                encoding="utf-8",
+            )
+            rows, _ = enqueue_rows(
+                [],
+                [queue_row(relative, action="recover_existing_post")],
+                "cycle-a",
+                SELECTED_AT,
+            )
+            rows, result = recover_existing(
+                rows,
+                rows[0]["id"],
+                "Phase 4c recovery fixture",
+                "fixture",
+                SELECTED_AT,
+                root,
+                [posted_source_row()],
+                {"healthy": True, "reason": "fresh"},
+                raw_slack,
+            )
+            self.assertEqual(result, "handled")
+            meta = read_frontmatter(path)
+            self.assertEqual(meta["status"], "posted")
+            self.assertEqual(meta["permalink"], posted_source_row()["permalinks"][0])
+            self.assertEqual(rows[0]["delivery_mode"], "recovered_existing")
+            rows, result = recover_existing(
+                rows,
+                rows[0]["id"],
+                "Phase 4c recovery fixture",
+                "fixture",
+                SELECTED_AT,
+                root,
+                [posted_source_row()],
+                {"healthy": True, "reason": "fresh"},
+                raw_slack,
+            )
+            self.assertEqual(result, "already_handled")
 
     def test_quality_rejection_closes_only_after_postponed_frontmatter_and_staging(self):
         with tempfile.TemporaryDirectory(dir=PROJECT_ROOT) as temp_dir:

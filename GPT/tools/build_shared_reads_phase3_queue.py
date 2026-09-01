@@ -13,6 +13,7 @@ from shared_reads_phase3_handoff import (
     DEFAULT_INBOX,
     ROOT,
     lease_suppresses,
+    recovery_fields as handoff_recovery_fields,
     state_fingerprint,
     state_snapshot_from_meta,
 )
@@ -37,7 +38,9 @@ def build_queue(
     candidates_dir: Path,
     inbox_rows: list[dict[str, Any]],
     posted_source_rows: list[dict[str, Any]],
+    posted_source_status: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
+    source_status = posted_source_status or {"healthy": True, "reason": "fixture_or_legacy_call"}
     records: list[dict[str, Any]] = []
     for path in sorted(candidates_dir.glob("*.md")):
         if path.name.casefold() == "readme.md":
@@ -49,15 +52,25 @@ def build_queue(
         if not snapshot["evaluated_at"] or not snapshot["title"] or not snapshot["url"]:
             continue
         posted_match, posted_reason = find_source_match(snapshot["url"], posted_source_rows)
+        action = "normal_post"
+        recovery_metadata: dict[str, Any] = {}
         if posted_match is not None and posted_match.get("posted_verified"):
-            continue
+            permalinks = sorted(str(value) for value in posted_match.get("permalinks", []) if value)
+            if not source_status.get("healthy") or not permalinks:
+                # A verified-looking match is never converted into a normal post when its
+                # durable source is stale or lacks the receipt needed for safe recovery.
+                continue
+            action = "recover_existing_post"
+            recovery_metadata = handoff_recovery_fields(posted_match, posted_reason)
+            recovery_metadata.pop("action", None)
         relative = rel_path(path)
         fingerprint = state_fingerprint(snapshot)
         if lease_suppresses(relative, fingerprint, inbox_rows):
             continue
         records.append(
             {
-                "schema_version": 1,
+                "schema_version": 2,
+                "action": action,
                 "path": relative,
                 "title": snapshot["title"],
                 "url": snapshot["url"],
@@ -70,7 +83,12 @@ def build_queue(
                 "title_evidence": f"{relative} frontmatter:title_key={normalize_title_key(snapshot['title'])}",
                 "url_evidence": f"{relative} frontmatter:url={snapshot['url']}",
                 "posted_source_check": posted_reason or "no_verified_posted_source_match",
-                "priority_reason": "oldest evaluated ready_to_post candidate first",
+                "priority_reason": (
+                    "oldest verified existing post recovery first"
+                    if action == "recover_existing_post"
+                    else "oldest evaluated ready_to_post candidate first"
+                ),
+                **recovery_metadata,
             }
         )
     records.sort(
@@ -112,7 +130,7 @@ def main() -> int:
         raw_path=args.raw_slack,
         candidates_dir=args.candidates_dir,
     )
-    records = build_queue(args.candidates_dir, inbox_rows, posted_rows)
+    records = build_queue(args.candidates_dir, inbox_rows, posted_rows, posted_status)
     if args.limit >= 0:
         records = records[: args.limit]
     rendered = render_jsonl(records)

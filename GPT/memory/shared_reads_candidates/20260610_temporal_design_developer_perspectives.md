@@ -7,12 +7,12 @@ genre_tags: [game-design, player-experience, pacing, temporal-design, live-servi
 evaluated_at: "2026-06-10T05:49:01+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-10T05:49:01+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-10T05:49:01+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-09-01T12:20:14+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780560557147809"
+next_action: none
 stale_after: "2026-07-10"
 supersedes: []
 gate_reason: |-
@@ -25,6 +25,11 @@ suggested_post_outline:
   application_target: "Nao_u_BOT のプロトタイプ評価で、1プレイの長さ、反復導線、待ち時間、日課化、リテンション施策がプレイヤー時間をどう扱うかを点検する軸。"
   pros_cons: "メリットは抽象的な面白さ評価を時間設計へ分解できること。デメリットはインタビュー研究なので即効性のある実装レシピではないこと。"
   verdict_pre: "部分採用。小型ゲームの pacing / session 設計レビュー用チェック軸として使う。"
+posted:
+  ts: "1780560557.147809"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780560557147809"
+  char_count: 3818
+  posted_at: "2026-06-04T17:09:17.147809+09:00"
 ---
 
 ## raw_excerpt
