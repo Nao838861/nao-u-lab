@@ -49,7 +49,22 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260901_selective_forgetting_graph_agent_memory.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788278226168659
+    char_count: 4492
+preflight:
+  decision: continue
+  evidence: "canonical_url=https://arxiv.org/abs/2608.28978; title_key=selective forgetting a graph based memory framework for long term llm agents; no posted-source / closed canonical / open duplicate match"
+  state_fingerprint: "4e00246bae4a1e6d413ce909c8b478c66558f1de1fbdf41afdf41f7425d80ea5 (matched immediately before post)"
+delivery:
+  handoff_id: p3h-c2d78416e53aa845
+  decision: posted
+  delivery_mode: new_post
+  evidence: "candidate posted block; Slack ts=1788278226.168659; permalink verified; Phase 3 posted entry"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
