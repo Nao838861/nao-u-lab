@@ -7,12 +7,12 @@ genre_tags: [game-design, grand-strategy, onboarding, role-playing, player-goals
 evaluated_at: "2026-09-01T22:40:11+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-09-01T22:40:11+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-09-01T22:40:11+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-09-02T02:59:12.311599+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788285552311599"
+next_action: none
 stale_after: "2026-10-01"
 supersedes: []
 gate_reason: >-
@@ -25,6 +25,11 @@ suggested_post_outline:
   application_target: "MonoSH や今後の複雑なシステム型プロトタイプで、全機能説明の前に一手で解ける危機と発見イベントを置き、操作学習をプレイヤー固有の攻略方針へ接続する onboarding"
   pros_cons: "利点は学習動機と role-play を同じ出来事から生めること。欠点は発見順や選択肢の偏りで重要機能を学ばない可能性があり、導線の観測と救済が必要なこと"
   verdict_pre: "部分採用"
+posted:
+  ts: "1788285552.311599"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788285552311599"
+  char_count: 4039
+  posted_at: "2026-09-02T02:59:12.311599+09:00"
 ---
 
 ## raw_excerpt
