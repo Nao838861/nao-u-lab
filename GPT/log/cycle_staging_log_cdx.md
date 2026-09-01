@@ -52,7 +52,32 @@ group_handoff_audit:
 - ゲーム制作への適用: prototype と追加 feature の着手前に Direction / Impact / Dependencies / Iteration / Time を照合し、player value、core feel、反復余地、制作持続性を playable diff 前に確認する小さなゲートとして部分採用できる。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260518_map_player_motives_inventory.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779051654204839
+    char_count: 3932
+    recovered_existing: true
+skipped: []
+delivery:
+  handoff_id: p3h-7d415e7d6d6f3aa5
+  decision: posted
+  evidence:
+    candidate: "posted block / status: posted / candidate_status: posted"
+    staging: "Phase 3 posted receipt recovery entry"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779051654204839"
+preflight:
+  state_fingerprint: "98cfe15289084c614860243ff233b8bfa52af44023b60505f7a0739c93bc1748"
+  state_match: true
+  duplicate_preflight_decision: continue
+  duplicate_preflight_evidence: "canonical_url=https://link.springer.com/article/10.1007/s11257-025-09431-7; title_key=validating motives of autonomous players map inventory a bottom up model of general motivational factors to videogame play"
+  verified_posted_source: "memory/raw/slack_api/shared-reads.jsonl ts=1779051654.204839; exact canonical URL and completed article-specific analysis"
+  action: "Slack へ再投稿せず、既存 permalink から candidate lifecycle と handoff receipt を回復"
+review:
+  source_checked: "Springer Nature Link 本文（2025-03-30 published）"
+  result: "既存投稿は問題設定、bottom-up 尺度開発、UK/US 検証、9因子、適用、限界を3932字で扱っており、記事固有の分析として投稿済みと確認"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

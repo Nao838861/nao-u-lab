@@ -7,15 +7,20 @@ genre_tags: [game-design, player-motivation, player-experience, research]
 evaluated_at: 2026-05-18T05:48:52+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-candidate_status: ready_to_post
-status: ready_to_post
-last_reviewed_at: "2026-05-18T05:48:52+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-05-18T05:48:52+09:00"
+candidate_status: posted
+status: posted
+last_reviewed_at: "2026-09-01T11:54:17.5614601+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779051654204839"
 stale_after: "2026-06-17"
 supersedes: []
 gate_reason: "一般的なプレイ動機と個別ゲームの enjoyment factors を分ける問題設定が明確で、プロトタイプ評価の混線を解く軸として使える。bottom-up な MAP inventory の位置づけ、既存モデルとの差分、設計レビューへの適用が抽出でき、CoopEval 水準の概要へ展開できる。"
-next_action: post_to_shared_reads
+next_action: none
+posted:
+  ts: "1779051654.204839"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779051654204839"
+  char_count: 3932
+  posted_at: "2026-05-18T06:00:54.204839+09:00"
 suggested_post_outline:
   overview_angle: "「なぜ遊ぶか」と「このゲームの何が楽しいか」を分離する評価軸として MAP inventory を紹介する。"
   analysis_axis: "既存の動機研究がジャンル・タイトル・好みと混ざりやすい問題、bottom-up に一般動機を測る狙い、enjoyment factors との分離を中心に読む。"
