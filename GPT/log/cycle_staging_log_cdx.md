@@ -9,7 +9,52 @@
 - duplicate preflight: 3 sidecar 再生成後、title / canonical URL `https://arxiv.org/abs/2608.28978` は `continue`（終了コード 0）。`continue` は preflight script の仕様上 JSONL へ追記されず、標準出力で確認。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260901_selective_forgetting_graph_agent_memory.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-09-01T20:18:23+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260901_selective_forgetting_graph_agent_memory.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260901_selective_forgetting_graph_agent_memory.md
+  valid_backlog_after: 0
+duplicate_preflight:
+  decision: continue
+  canonical_url: "https://arxiv.org/abs/2608.28978"
+  sidecars_rebuilt_before_evaluation: true
+```
+
+- 判定: **pass**。graph memory の優位性を支持しない negative result と、forgetting による約10%の容量削減を分離しており、宣伝的な「構造化すれば良い」を避けた密度ある概要が書ける。
+- ゲーム制作への適用: 長期自動プレイテストの raw episode を保持したまま構造化記憶を併設し、同じ retrieval budget で recall と bad-policy 回帰を比較してから、再生成可能な派生記憶だけを pruning する probe に落とせる。
+- 限界: LongMemEval、単一 extractor、pruning 1 回の結果であり、graph memory 一般や実ゲーム履歴への一般化は主張しない。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
