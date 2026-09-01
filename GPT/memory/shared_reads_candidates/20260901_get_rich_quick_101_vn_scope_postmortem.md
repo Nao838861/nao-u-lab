@@ -4,6 +4,20 @@ url: "https://wednesday888.itch.io/get-rich-quick-101/devlog/1625572/postmortem-
 collected_at: "2026-09-01T14:06:15+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, visual-novel, postmortem, scope, ui, renpy]
+evaluated_at: "2026-09-01T14:09:19+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-09-01T14:09:19+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-09-01T14:09:19+09:00"
+next_action: keep_for_reference
+stale_after: "2026-10-01"
+supersedes: []
+gate_reason: >-
+  初回 Ren'Py 制作で scope・UI・asset pipeline が膨らんだ具体例は抽出できるが、
+  定量評価・比較対象・再現可能な対処法がなく、約4000字の概要に必要な分析密度を満たさない。
 ---
 
 ## raw_excerpt
