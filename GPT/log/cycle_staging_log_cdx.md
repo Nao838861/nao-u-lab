@@ -112,7 +112,62 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "MEMORY.md の index path 2件（memory/atoms.jsonl / memory/raw/）を確認し、broken path 0件。UTF-8明示読みも成功"
+  - "atom duplicate sidecar を監査し、45 cluster / 45 overlay group、consistency=stable を確認。新規の未管理重複・矛盾は0件"
+  - "staleだった atom title quality audit を924行 / 701 groupへ再生成。raw_title_debt 893件に対し effective_display_unresolved 0件"
+  - "memory/raw/ の30日超非更新ファイル244件を監査。最古は既に slack_archive 配下、残りも一次根拠のため本cycleの移動0件"
+  - "candidate lifecycle 1481件を監査。status競合0件、posted 744 / failed 530 / postponed 205 / ready_to_post 2"
+  - "open duplicate / stale triage / group-action sidecarを規定順で再生成し、group / candidate handoffを冪等enqueue。新規投入はいずれも0件"
+  - "Slack directive / broadcast のpendingはいずれも0件。handled更新0件"
+  - "Phase 3 queueを再生成し、未lease queue 0件 / handoff pending 2件を監査。投稿・resolveは未実施"
+issues:
+  - id: ISS-ENC-001
+    description: "active atom sr-1776127289-4d9239b255 のtitle / headingにU+FFFDが残り、派生 related_candidates にも同じ壊れた語が伝播している"
+    severity: medium
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/atoms/related_candidates.jsonl"
+    source_file_status: "UTF-8明示読みで『エ��ジェント』を確認。source file自体にreplacement characterがあり、表示経路だけのmojibakeではない"
+    display_or_tooling_status: "PowerShell UTF-8読み、memory_health、per-file atom、related_candidatesで同じ破損を再現"
+    why_blocks_game_memory: "activeな記憶のtitle検索と関連候補表示に壊れたtokenが混ざり、同概念のexact検索と再利用時の識別精度を局所的に落とす"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "ISS-ENC-001は新しい記憶構造を要しない孤立したsource repairであり、Phase 4bを起動しない。raw title debtはsemantic aliasで実効表示未解決0件のため構造issue化しない"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+stale_review_batch: []
+group_action_handoff: []
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 27
+  mixed_group_count: 23
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  suppression_evidence: "overdue 4件はJAMEL / collision morphologyの2 duplicate groupに属し、membership一致のdeferred leaseがretry_after=2026-09-19まで有効"
+phase3_delivery_audit:
+  queue_count: 0
+  handoff_pending_count: 2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
