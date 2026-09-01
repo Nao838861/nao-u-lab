@@ -7,12 +7,12 @@ genre_tags: [game-design, vr, player-guidance, accessibility, movement, puzzle-a
 evaluated_at: "2026-09-02T02:51:40.5380941+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-09-02T02:51:40.5380941+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-09-02T02:51:40.5380941+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-09-02T07:02:13.8798290+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788300133879829"
+next_action: none
 stale_after: "2026-10-02"
 supersedes: []
 gate_reason: >-
@@ -24,6 +24,11 @@ suggested_post_outline:
   application_target: "Log_cdx の探索・パズル prototype で、強制 camera や単一解法に頼らず、環境 cue と段階的な補助設定で発見と進行を両立させる"
   pros_cons: "主体感と comfort を守りやすい一方、環境 detail の制作費が増え、記事には酔い・到達率・誘導成功率の定量評価がない"
   verdict_pre: "部分採用"
+posted:
+  ts: "1788300133.879829"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788300133879829"
+  char_count: 3542
+  posted_at: "2026-09-02T07:02:13.8798290+09:00"
 ---
 
 ## raw_excerpt
