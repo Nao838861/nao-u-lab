@@ -176,4 +176,17 @@ phase3_delivery_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1788263143.246759"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1788263143246759"
+  char_count: 2055
+  verification: ok
+  flat_post: true
+  draft_file: tmp/phase5_log_diary_20260901_204447_cdx.md
+```
+
+- Phase 1-4 の reflection を、graph memory の negative result、Phase 3 の duplicate gate、Phase 3b の反肥大化判断、Phase 4a の局所的な U+FFFD debt を軸に日記化した。
+- Slack API 側の本文検証は `ok`。文字化け・`?` 化は検出されず、削除処理は発火していない。
