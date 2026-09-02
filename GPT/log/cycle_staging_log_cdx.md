@@ -9,7 +9,43 @@
 - `memory/shared_reads_candidates/20260902_katavatis_metroidbrainia_without_combat.md` — 戦闘を外した underwater metroidbrainia で、知識 gate、Playdate 向け camera 補助、水中 control、crank による 4D slice 操作を prototype と playtest で組み立てた開発記録。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260902_katavatis_metroidbrainia_without_combat.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+candidate_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  pending_after: 0
+unreviewed_intake_audit:
+  valid_backlog_before: 1
+  malformed_count: 0
+  oldest_collected_at: "2026-09-02T11:04:44+09:00"
+  selection_limit: 5
+  selected_paths: []
+  phase1_excluded_paths:
+    - memory/shared_reads_candidates/20260902_katavatis_metroidbrainia_without_combat.md
+  evaluated_paths:
+    - memory/shared_reads_candidates/20260902_katavatis_metroidbrainia_without_combat.md
+  valid_backlog_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
