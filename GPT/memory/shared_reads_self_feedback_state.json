@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-09-02T16:00:39+09:00",
+  "updated_at": "2026-09-02T18:28:50+09:00",
   "reviewed_source_ts": [
+    "1779009799.499429",
     "1778621157.789119",
     "1778810803.000339",
     "1779406425.626889",
@@ -26654,6 +26655,51 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、canonical Markdown／短命 presentation view 分離の局所有用性、既存 markup-boundary／compiled-memory／worker-bus controls との差、比較 artifact 不在と lease 指定不能に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-09-02T18:28:50+09:00",
+      "selected": {
+        "id": "sr-1779009799-7fc826fcda",
+        "source_ts": "1779009799.499429",
+        "title": "Towards LLM-Based Automatic Playtest: symbolic state と action execution loop",
+        "reason": "source が slack_api/shared-reads、score 10、reviewed_source_ts にない自己完結 root atom から1件だけ選んだ。memory・skills・harness・game-design・operation・evaluation の優先6タグを持ち、画像を直接評価させず symbolic state、許可 action、実行後 snapshot を閉ループにする知見が、Nao_u_BOT の反復的な headless game 評価へ既存 control と異なる判断差を作るか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した thread reply はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件14に届かず、non_redundancy と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、screenshot を OpenCV で数値行列へ変換し、rules と15組の few-shot pattern を与え、LLM の matrix action を ADB swipe へ戻して再観測する loop を示す。150 iterations の単一 match-3 case study では Lap が line coverage 79%、score 27,520、level 8、crash trigger 5で比較手法を上回り、state extractor、許可 action、実行、次 snapshot を接続する行動へ具体化できるため relevance・actionability は3とした。一方、対象は規則的な盤面と隣接 swap に限られ、real-time、physics、hidden state、曖昧な UI、長期計画、人間の面白さへの一般化を検証していないため evidence は2。probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation は raw screenshot／game-state JSON／action-reward history と perception／state-representation／memory／prompt failure を既に分離し、probe-20260712-boardwalk-rule-contract-taxonomy は legal_actions／apply_action／terminal 境界、probe-20260717-player-intent-action-response は action schema と observable world response、probe-20260709-gameenginebench-runtime-integration-gate は固定入力 trace と隣接 state snapshot を既に要求する。本 atom の中核判断はこの4 controlsで完全に表現できるため non_redundancy は0。現在の staging には比較可能な playable／headless artifact がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。active_probes は327件、pending lease は0件であり、対象なしに state schema と30〜100 step loopを追加すると判断差より実装・確認負荷を増やすため risk_control は1とし、state-only rejectで閉じる。次の該当game作業では新規probeを作らず、既存4 controlsから必要なものだけを使う。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1779009799-7fc826fcda.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779009799.499429",
+        "https://arxiv.org/abs/2507.09490"
+      ],
+      "existing_controls": [
+        "probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation",
+        "probe-20260712-boardwalk-rule-contract-taxonomy",
+        "probe-20260717-player-intent-action-response",
+        "probe-20260709-gameenginebench-runtime-integration-gate"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、symbolic state／action execution loop の局所有用性、既存 playtest-diagnostic／rule-contract／intent-response／runtime-integration controls との完全重複、比較 artifact 不在、active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

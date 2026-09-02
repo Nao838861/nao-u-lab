@@ -89,7 +89,37 @@ delivery:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+### 2026-09-02T18:28:50+09:00 自己フィードバック
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779009799-7fc826fcda
+    source_ts: "1779009799.499429"
+    title: "Towards LLM-Based Automatic Playtest: symbolic state と action execution loop"
+    reason: "未レビューの自己完結 root atom から1件だけ選んだ。memory・skills・harness・game-design・operation・evaluation の優先6タグを持ち、symbolic state→許可 action→実行→次 snapshot の閉ループが反復的な headless game 評価へ既存 control と異なる判断差を作るか確認した。Nao_u の明示的な重要評価はローカル raw では確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "単一 match-3 の150 iterationsでは line coverage 79%、score 27,520、level 8、crash 5と具体的だが、real-time／physics／hidden-state gameや人間の面白さへ一般化していない。中核は既存の lmgamebench playtest diagnostic、rule contract、intent-response、runtime integration の4 controlsで完全に覆われる。現在は比較可能な playable／headless artifactがなく、active_probes 327件へ同義probeを増やすと判断差より確認負荷が増えるため、採用条件を満たさずstate-only rejectとした。"
+  change:
+    summary: "reviewed_source_ts と採点・reject理由だけを記録した。active_probes、probe lifecycle ledger、directive、恒久ルールは変更していない。次の該当game作業では新規probeを作らず既存4 controlsから必要分だけを使う。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
