@@ -48,7 +48,22 @@ unreviewed_intake_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260902_agentfold_closed_loop_agentic_search.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788315326871299
+    char_count: 3516
+preflight:
+  decision: continue
+  canonical_url: https://arxiv.org/abs/2608.26747v2
+  selected_state_fingerprint: 6b8f0db7d21c5a47cac672998d9b50be65595d73b7df0ed1c88e9bb2d8fbc056
+  evidence: "shared_reads_duplicate_preflight.py: decision=continue; candidate state unchanged immediately before post"
+delivery:
+  handoff_id: p3h-99bd36f733af0a9f
+  decision: posted
+  delivery_mode: new_post
+  evidence: "candidate posted block + Slack permalink + verified 3516-character message"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

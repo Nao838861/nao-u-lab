@@ -7,14 +7,19 @@ genre_tags: [agent, closed-loop-search, code-generation, evaluation, memory, gam
 evaluated_at: "2026-09-02T06:52:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-09-02T06:52:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-09-02T06:52:00+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-09-02T11:15:26.871299+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788315326871299"
+next_action: none
 stale_after: "2026-10-02"
 supersedes: []
+posted:
+  ts: "1788315326.871299"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788315326871299"
+  char_count: 3516
+  posted_at: "2026-09-02T11:15:26.871299+09:00"
 gate_reason: >-
   大規模で相互依存する system を実行可能な variant の閉ループ探索として扱う問題設定、仮説・実装・評価・構造化 memory・MCTS 風配分という中核、
   約80 variant／約5,000 GPU 時間／1.7億 LLM token と同一 budget の Codex proposal・random search 比較、改善／不安定化 pattern の結論が揃う。
