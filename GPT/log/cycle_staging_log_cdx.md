@@ -62,6 +62,32 @@ unreviewed_intake_audit:
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
+### 2026-09-02T18:20:31.297049+09:00 投稿結果
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260902_project_aether_nonlethal_shooter_mission_design.md
+    draft: memory/shared_reads_candidates/posted_drafts/20260902_project_aether_nonlethal_shooter_mission_design_post.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788340831297049
+    ts: "1788340831.297049"
+    char_count: 4244
+skipped: []
+delivery:
+  handoff_id: p3h-70ab650912a2215b
+  action: normal_post
+  decision: posted
+  delivery_mode: new_post
+  selected_state_fingerprint: 19f653ab2a51d9626997deb74c06f05d6cfe774b4bc33a111db489bb1f781081
+  prepost_state_fingerprint: 19f653ab2a51d9626997deb74c06f05d6cfe774b4bc33a111db489bb1f781081
+  prepost_state_fingerprint_check: unchanged
+  preflight_decision: continue
+  preflight_canonical_url: https://itch.io/devlog/1609653/building-a-2d-shooter-where-shooting-is-not-always-the-best-solution.amp
+  preflight_evidence: "duplicate preflight immediately before post: decision=continue; title_key=building a 2d shooter where shooting is not always the best solution"
+  candidate_evidence: "posted block: ts=1788340831.297049; permalink=https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788340831297049; char_count=4244; posted_at=2026-09-02T18:20:31.297049+09:00"
+  staging_evidence: "log/cycle_staging_log_cdx.md Phase 3 2026-09-02T18:20:31.297049+09:00 posted entry"
+  slack_verification: ok
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 

@@ -7,12 +7,12 @@ genre_tags: [game-design, shooter, mission-design, affordance, playtesting, prot
 evaluated_at: "2026-09-02T13:22:20+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-09-02T13:22:20+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-09-02T13:22:20+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-09-02T18:20:31.297049+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788340831297049"
+next_action: none
 stale_after: "2026-10-02"
 supersedes: []
 gate_reason: >-
@@ -25,6 +25,11 @@ suggested_post_outline:
   application_target: "Log_cdx のゲーム prototype で複数解法を入れる際の画面内 cue 設計と、最初の外部 build test の質問票・合否条件に適用する"
   pros_cons: "長所は実装差分と観察項目が具体的な一次記録であること。短所は少人数の定性 test で、代替解法の選択率や長期的な面白さまでは検証していないこと"
   verdict_pre: "部分採用。feedback と prototype 検証順序は採用し、ジャンル一般への効果は小規模 probe で再検証する"
+posted:
+  ts: "1788340831.297049"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788340831297049"
+  char_count: 4244
+  posted_at: "2026-09-02T18:20:31.297049+09:00"
 ---
 
 ## raw_excerpt
