@@ -75,7 +75,51 @@ posted:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778810803-d8a64466a8
+    source_ts: "1778810803.000339"
+    title: "Beyond Playtesting: MMO の設計変更を、実プレイヤーログで調整した LLM エージェント集団に先に試させる"
+    reason: >-
+      source=slack_api/shared-reads、score=12、未レビューで、continuation 断片ではなく
+      概要から判定まで揃った root atom を1件だけ選んだ。harness・game-design・agent・
+      operation・evaluation の優先5タグを持ち、Phase 3 の live-ops 投稿直後に、実ログで
+      校正した player cohort と environment model の分離が既存 control と異なる判断差を
+      作るか確認した。Nao_u の本投稿への明示的な重要評価はローカル raw で確認できなかった。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: >-
+    小型 game harness では複数 cohort の同条件比較と transition-point log へ変換できるが、
+    原典は4ページの短い preprintで既知の Black Market 導入を再現した case study が中心で、
+    未知の変更・外部ゲーム・長期市場への予測妥当性は未確認。既存の
+    probe-20260710-procedural-persona-divergence、
+    probe-20260612-fixed-persona-dynamic-behavior-boundary、
+    probe-20260526-synthetic-user-drift-check、
+    probe-20260612-interactive-agent-failure-layer-split が中核判断をほぼ覆う。
+    比較可能な cohort／calibration／介入 artifact がなく、直後の Phase 4a も実 consumer ではない。
+    active_probes=327 のため新規 checklist は判断差より負荷と synthetic-player narrative risk を増やす。
+  change:
+    summary: >-
+      reviewed_source_ts と state-only reject 理由を記録した。active_probes、probe lifecycle ledger、
+      directive、恒久ルールは変更していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

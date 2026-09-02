@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-09-02T11:21:46+09:00",
+  "updated_at": "2026-09-02T13:36:00+09:00",
   "reviewed_source_ts": [
+    "1778810803.000339",
     "1779406425.626889",
     "1779601071.399839",
     "1779717626.976659",
@@ -26564,6 +26565,51 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、PCG 3軸の再現可能性、既存 claim-fit／benchmark-decomposition／behavior-diversity／human-calibration controls との完全重複、比較 artifact 不在、benchmark 過圧縮と active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-09-02T13:36:00+09:00",
+      "selected": {
+        "id": "sr-1778810803-d8a64466a8",
+        "source_ts": "1778810803.000339",
+        "title": "Beyond Playtesting: MMO の設計変更を、実プレイヤーログで調整した LLM エージェント集団に先に試させる",
+        "reason": "source が slack_api/shared-reads、score 12、reviewed_source_ts にない候補のうち、同一投稿の continuation 断片ではなく概要から判定まで揃った自己完結 root atom を1件だけ選んだ。harness・game-design・agent・operation・evaluation の優先5タグを持ち、現在の Phase 3 が live-ops 制作知見を投稿した直後なので、実ログで校正した player cohort と環境モデルの分離が次の小型 game harness に既存 control と異なる判断差を作るか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した thread reply はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件14に届かず、non_redundancy と risk_control も必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は、実ゲームログ、Simulation Server、Battle／Shop／Black Market、Data Services、Experiment Manager を分け、player agent を vocabulary expansion・action-planning SFT・GRPO と5 profile で校正し、環境側の戦闘結果を購買・取引・離脱へ戻す。1日分10,000 trajectory の次行動予測、2025 S1→S2 の Battle Server 比較、Black Market 導入後に非公式取引が27.4%から1.5%へ下がる再現を示すため、複数 cohort の同条件比較と transition-point log へ変換でき、relevance・actionability は3とした。一方、4ページの短い preprintで、既知の導入を再現した case study が中心であり、未知の変更、外部ゲーム、長期市場への予測妥当性や小型ゲームへの転用結果がないため evidence は2。probe-20260710-procedural-persona-divergence は同一 seed／scenario の複数 persona と最大分岐、probe-20260612-fixed-persona-dynamic-behavior-boundary は固定 profile と状態依存行動、probe-20260526-synthetic-user-drift-check は介入間の evaluator／population drift と negative control、probe-20260612-interactive-agent-failure-layer-split は agent・environment・harness failure の局在を既に扱う。実ログで agent と environment を別々に校正する点は局所差だが、次の判断は既存4 controlsへほぼ吸収されるため non_redundancy は1。現在の staging には cohort 別 run、実ログ calibration、介入前後の比較を持つ playable／headless artifact がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。active_probes は327件、pending lease は0件であり、具体 artifact なしに profile 別30〜100 run や別モデルを加えると、もっともらしい synthetic-player narrative と評価負荷を増やすため risk_control は1とし、state-only reject で閉じる。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1778810803-d8a64466a8.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1778810803.000339",
+        "https://arxiv.org/abs/2512.02358"
+      ],
+      "existing_controls": [
+        "probe-20260710-procedural-persona-divergence",
+        "probe-20260612-fixed-persona-dynamic-behavior-boundary",
+        "probe-20260526-synthetic-user-drift-check",
+        "probe-20260612-interactive-agent-failure-layer-split"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、実ログ校正された cohort／environment 分離の局所有用性、既存 persona／dynamic-behavior／covariate-shift／failure-layer controls との大幅な重複、比較 artifact 不在、synthetic-player narrative と active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
