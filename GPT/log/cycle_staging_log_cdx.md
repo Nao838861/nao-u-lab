@@ -207,5 +207,4 @@ posted:
   permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1788333595217849"
   char_count: 2297
   verification: ok
-  draft: tmp/phase5_log_diary_20260902_1531_cdx.md
 ```
