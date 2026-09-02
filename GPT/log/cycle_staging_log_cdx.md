@@ -122,7 +122,74 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-09-02T18:40:40+09:00 整理・監査結果
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index atom ID 50件を memory/atoms/index.jsonl と照合し、broken link 0件を確認した"
+  - "memory/atoms.jsonl と per-file/index mirror の 3001件一致、normalized content duplicate 40群の canonical overlay 反映、effective display unresolved 0群を確認した"
+  - "shared-reads の title canonical / mixed duplicate / open duplicate / stale triage / group action sidecar を再生成した"
+  - "stale な posted-source index を再生成し、Phase 3 queue の posted_source_status を healthy:fresh に戻した"
+  - "30日以上更新のない memory/raw 244件を監査した。一次資料・Slack provenance・headless/game evaluation 原文であり、安全な移動契約がないため今 cycle はアーカイブ移動しなかった"
+issues:
+  - id: ISS-001
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』部分が U+FFFD 2文字を含む状態で authoritative raw から atoms.jsonl・per-file・index へ伝播している"
+    severity: medium
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:1216; memory/atoms.jsonl:317; memory/atoms/2026-04/sr-1776127289-4d9239b255.md:3; memory/atoms/index.jsonl:317"
+    source_file_status: "UTF-8 明示読みでも raw source 自体に『AIエ��ジェント』を確認。memory_health hard_corruption_atom_count=1"
+    display_or_tooling_status: "none。memory/MEMORY.md は UTF-8 明示読みで『記憶』22件・『ゲーム設計』8件・『敵パターン』1件を取得し、mojibake は再現しない。『評価軸』は現 index 本文に0件だが U+FFFD などの表示破損ではない"
+    why_blocks_game_memory: "『AIエージェント』の完全一致検索を弱め、filesystem 型の記憶アーキテクチャ比較 atom への到達を取りこぼし得る"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+candidate_lifecycle:
+  counts:
+    posted: 754
+    ready_to_post: 0
+    postponed: 202
+    failed: 536
+    needs_review: 0
+  overdue_open_total: 4
+  overdue_paths:
+    - memory/shared_reads_candidates/20260605_jamel_novelty_memory_exploration.md
+    - memory/shared_reads_candidates/20260610_collision_enemy_morphology_generation.md
+    - memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+    - memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+  suppression_reason: "4件は2つの all-open duplicate group に属し、既存 deferred group lease の retry_after=2026-09-19T14:08:16+09:00 前なので stale triage への再投入を抑止"
+stale_review_batch: []
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 27
+  mixed_group_count: 23
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  group_handoff_pending_count: 0
+  group_handoff_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+phase3_delivery_audit:
+  queue_count: 0
+  handoff_pending_count: 0
+  posted_source_status: healthy
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
