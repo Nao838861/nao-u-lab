@@ -101,7 +101,76 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、High Signal / Recent / Game Task Entry Points / Tag Entry Points の atom 参照と per-file path を検証した。broken link 0件。"
+  - "memory/atoms.jsonl と per-file atom / index の 3001件 mirror を監査した。ID・content conflict 0件。raw normalized content duplicate 40組は既存 overlay で fold 済み。"
+  - "shared-reads の canonical / mixed / open-duplicate / stale-triage / group-action sidecar を再生成した。candidate 本体の lifecycle は変更していない。"
+  - "Slack inbox は directives / broadcasts とも pending 0件で、handled への変更なし。"
+  - "期限到来 probe lease は0件。resolve / dormant / merge / retire receipt の追加なし。"
+  - "30日超未更新の raw 244件（70607071 bytes）を監査した。原文 provenance と headless-eval evidence を含むため、この Phase では移動せず archive 候補として記録のみ。"
+issues:
+  - id: ISS-4A-20260902-01
+    description: "legacy shared-reads atom 1件の title / trigger / excerpt に U+FFFD が残っている。現行 health audit では hard_corruption として正しく分離検出され、新規 Slack ingest の quarantine 境界も既設のため、これは設計不足ではなく既存データの局所的な修復残件。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; python tools/memory_health.py --json hard_corruption_atom_count=1"
+    source_file_status: "UTF-8 明示読みで raw Slack 原文、atoms.jsonl、per-file atom のすべてに U+FFFD を確認。memory/MEMORY.md は UTF-8 として正常で、代表語 probe は 記憶=22 / ゲーム設計=8 / 敵パターン=1。評価軸の完全一致は0だが、日本語本文は正常で encoding 破損を示さない。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "この1件を想起した場合だけ固有語の検索精度と読解性を落とす。全体 recall smoke は3/3 hit、effective display unresolved group は0で、次ゲーム制作への影響は局所的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+stale_review_batch: []
+candidate_lifecycle:
+  counts:
+    posted: 751
+    ready_to_post: 2
+    postponed: 200
+    failed: 535
+    needs_review: 0
+  missing_stale_after: 3
+  overdue_open_total: 4
+raw_archive_audit:
+  cutoff: "2026-08-03"
+  candidate_file_count: 244
+  candidate_bytes: 70607071
+  largest_bucket: "memory/raw/web_research: 131 files"
+  action: "explicit_keep_for_provenance"
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 27
+  mixed_group_count: 23
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  live_deferred_group_leases: 2
+  live_deferred_group_ids:
+    - gha-e6d4d4b5a37a0808
+    - gha-2313a247c62a9028
+  live_deferred_retry_after: "2026-09-19T14:08:16+09:00"
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+phase3_delivery_audit:
+  queue_count: 0
+  handoff_pending_count: 2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
