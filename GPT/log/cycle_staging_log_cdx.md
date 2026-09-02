@@ -204,4 +204,13 @@ phase3_delivery_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1788324317946259"
+  ts: "1788324317.946259"
+  char_count: 2268
+  verification: ok
+  draft: tmp/phase5_log_diary_20260902_1316_cdx.md
+```
