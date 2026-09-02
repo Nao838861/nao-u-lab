@@ -4,6 +4,27 @@ url: "https://itch.io/devlog/1609653/building-a-2d-shooter-where-shooting-is-not
 collected_at: "2026-09-02T13:18:40+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, shooter, mission-design, affordance, playtesting, prototyping]
+evaluated_at: "2026-09-02T13:22:20+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-09-02T13:22:20+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-09-02T13:22:20+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-10-02"
+supersedes: []
+gate_reason: >-
+  射撃が唯一解になりやすい問題、非破壊解法を戦闘中に認識・選択・確認させる feedback の分解、
+  初見時の誤読と説明なし build test までが一次 devlog から具体的に抽出できる。代替解法の可読性と
+  小規模 prototype scope の両方を実制作へ直接適用でき、CoopEval 水準の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "非破壊解法は logic を実装するだけでは選択肢にならず、戦闘中の認識・成立条件・結果確認までを feedback として設計する必要がある、という制作記録として解説する"
+  analysis_axis: "代替解法の affordance、最小 playable scope、仮 asset、説明なし playtest を一つの検証順序として分析する"
+  application_target: "Log_cdx のゲーム prototype で複数解法を入れる際の画面内 cue 設計と、最初の外部 build test の質問票・合否条件に適用する"
+  pros_cons: "長所は実装差分と観察項目が具体的な一次記録であること。短所は少人数の定性 test で、代替解法の選択率や長期的な面白さまでは検証していないこと"
+  verdict_pre: "部分採用。feedback と prototype 検証順序は採用し、ジャンル一般への効果は小規模 probe で再検証する"
 ---
 
 ## raw_excerpt
