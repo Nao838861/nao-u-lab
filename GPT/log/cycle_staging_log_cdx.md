@@ -11,9 +11,10 @@
 
 ```yaml
 total_candidates: 1
-pass:
-  - memory/shared_reads_candidates/20260902_project_aether_nonlethal_shooter_mission_design.md
-fail: []
+pass: []
+fail:
+  - path: memory/shared_reads_candidates/20260902_ubisoft_player_council_feedback_platform.md
+    reason: "参加設計は具体的だが、soft launch 告知段階で成果指標・比較・失敗事例がなく、評価の中身を推測なしで構成できない。"
 postpone: []
 stale_reviewed: []
 group_actions: []
@@ -37,14 +38,19 @@ candidate_handoff_audit:
 unreviewed_intake_audit:
   valid_backlog_before: 1
   malformed_count: 0
-  oldest_collected_at: "2026-09-02T13:18:40+09:00"
+  oldest_collected_at: "2026-09-02T15:35:40+09:00"
   selection_limit: 5
   selected_paths: []
   phase1_excluded_paths:
-    - memory/shared_reads_candidates/20260902_project_aether_nonlethal_shooter_mission_design.md
+    - memory/shared_reads_candidates/20260902_ubisoft_player_council_feedback_platform.md
   evaluated_paths:
-    - memory/shared_reads_candidates/20260902_project_aether_nonlethal_shooter_mission_design.md
+    - memory/shared_reads_candidates/20260902_ubisoft_player_council_feedback_platform.md
   valid_backlog_after: 0
+duplicate_preflight_audit:
+  candidate: memory/shared_reads_candidates/20260902_ubisoft_player_council_feedback_platform.md
+  decision: continue
+  canonical_url: "https://news.ubisoft.com/en-us/article/5je4IbarSid2bQcLUjDI1J/the-player-council-soft-launches-today-on-pc-participate-in-the-game-development-process"
+  sidecars_fresh: true
 ```
 
 ## Phase 3: Shared-reads 投稿
