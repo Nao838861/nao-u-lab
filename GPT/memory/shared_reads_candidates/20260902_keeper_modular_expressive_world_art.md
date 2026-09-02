@@ -4,6 +4,20 @@ url: "https://schedule.gdconf.com/session/the-modular-and-expressive-world-art-o
 collected_at: "2026-09-02T18:06:24+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [environment-art, world-building, modular-assets, vr-tools, unreal-engine]
+evaluated_at: "2026-09-02T18:11:55+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-09-02T18:11:55+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-09-02T18:11:55+09:00"
+next_action: revise_or_research
+stale_after: "2026-10-02"
+supersedes: []
+gate_reason: |
+  少数の modular asset の反復感を、VR sculpt、instance variation、foliage stroke、mesh morphing の組合せで抑える適用先は明確である。
+  ただし現メモは技術名と takeaway の列挙で、各処理の中核、相互接続、性能・制作工数・画質の比較評価がなく、4000字級の分析には Vault 本編の具体例が必要。
 ---
 
 ## raw_excerpt
