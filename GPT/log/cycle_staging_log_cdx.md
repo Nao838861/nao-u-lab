@@ -123,7 +123,74 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "MEMORY.md index を per-file atom index と照合し、broken link / duplicate id 0件を確認した。"
+  - "candidate 派生 index / duplicate queue / stale triage / group-action queue を再生成した（terminal canonical 112群、open duplicate 27群、actionable 0群）。"
+  - "Slack directive / broadcast の pending は各0件で、handled 更新対象なし。"
+  - "30日超の raw 243ファイル（70,606,993 bytes）を監査した。いずれも provenance 原文または評価ログで、参照切れを確認せず移動できないため archive 実行は0件。"
+issues:
+  - id: ISS-4A-20260902-01
+    description: "shared-reads 由来 atom 1件の title / trigger / excerpt に U+FFFD があり、元の Slack archive 原文にも同じ欠損がある。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory_health hard_corruption_atom_count=1"
+    source_file_status: "UTF-8 明示読みで atom と raw Slack archive の双方に『AIエ��ジェント』を確認。source data 自体が欠損している。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "『エージェント』を含む title/trigger の完全一致検索と引用品質を1件だけ損なう。ただし tags と他の語は残り、recall 全体は維持される。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+memory_audit:
+  memory_index: clean
+  atom_mirror_status: clean
+  raw_normalized_content_duplicate_groups: 40
+  canonical_overlay_duplicate_groups: 45
+  effective_display_unresolved_groups: 0
+  content_conflicts: 0
+candidate_lifecycle:
+  counts:
+    posted: 753
+    ready_to_post: 1
+    postponed: 200
+    failed: 536
+    needs_review: 0
+  overdue_open_total: 4
+  missing_stale_after: 3
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_review_batch: []
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 27
+  mixed_group_count: 23
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+  note: "期限超過4件は2つの all-open duplicate group に属し、membership fingerprint 一致の deferred group lease が 2026-09-19 まで有効なため stale triage から抑止された。"
+phase3_delivery_audit:
+  queue_count: 0
+  handoff_pending_count: 1
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
