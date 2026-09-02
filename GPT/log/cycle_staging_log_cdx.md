@@ -97,7 +97,35 @@ delivery:
 - 投稿結果: #shared-reads への1回の `chat.postMessage` が成功し、保存本文の UTF-8 検証も `ok`。current cycle の `SAND` は ledger に enqueue 済みだが、1 cycle budget のため未処理のまま次 cycle へ送る。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779471593-5157e365fe
+    source_ts: "1779471593.720699"
+    title: "LLM ゲーム評価の脆弱性軸 — Orak + Game Reasoning Arena + AI Benchmarks 2026 の三角化"
+    reason: "未レビュー候補のうち、同一投稿の continuation 断片ではない root atom 1件を選択。優先タグ4種を持ち、headless／ゲーム自己判定へ直結する一方、Nao_u の本投稿への明示的な重要評価は raw で確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: "評価対象と evaluator/harness failure の分離、adversarial review、固定 test と stress、benchmark proxy と人間体験、judge 出力と trust evidence の分離は既存5 probe がほぼ包含する。現在の staging に LLM judge／reference leakage／skip scoring を比較できる artifact がなく、active_probes=327、pending lease=0 のため、新規 checklist は判断差より負荷を増やす。実在 evaluator で既存 controls が失敗を局在化できない再現例が出た時だけ再評価する。"
+  change:
+    summary: "state-only review。reviewed_source_ts と defer 理由だけを追加し、active_probes・ledger・directive・恒久ルールは変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

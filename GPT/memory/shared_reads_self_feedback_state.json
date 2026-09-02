@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-02T07:05:58+09:00",
+  "updated_at": "2026-09-02T09:18:35+09:00",
   "reviewed_source_ts": [
     "1779601071.399839",
     "1779717626.976659",
@@ -800,7 +800,8 @@
     "1786606281.572199",
     "1786606286.694329",
     "1779924586.882839",
-    "1778545398.045179"
+    "1778545398.045179",
+    "1779471593.720699"
   ],
   "reviews": [
     {
@@ -26471,6 +26472,51 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、同一 Slack 投稿本体の既レビュー、既存 benchmark-purpose alignment probe との完全重複、原論文本文および実環境 before／after の不足、比較 artifact 不在と active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-09-02T09:18:35+09:00",
+      "selected": {
+        "id": "sr-1779471593-5157e365fe",
+        "source_ts": "1779471593.720699",
+        "title": "LLM ゲーム評価の脆弱性軸 — Orak + Game Reasoning Arena + AI Benchmarks 2026 の三角化",
+        "reason": "source が slack_api/shared-reads、score 10、reviewed_source_ts にない候補のうち、同一投稿の continuation 断片ではなく全体の問題設定を持つ root atom を1件だけ選んだ。memory・harness・game-design・agent・evaluation の優先5タグ中4タグを持ち、Nao_u の headless 検討 directive を背景に、次のゲーム自己判定や Phase 4a の評価判断へ直接つながるため確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した thread reply はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14だが、risk_control が採用必須閾値2を下回るため、新規 probe・metric・lease・directive は追加しない。shared-reads 本文は Orak と Game Reasoning Arena をゲーム評価の正例、AI Benchmarks 2026 を reference 漏洩・unsanitized eval・prompt-injectable LLM judge・正当性 skip score の警告例として三角化し、評価対象の多様性、共通実行基盤、部分点、sandbox、評価器の trust boundary を分けて確認する行動へ変換できるため relevance・actionability・evidence は3とした。一方、probe-20260616-hob-trap-audit-split は final artifact と process failure、subjective juror と deterministic audit、target failure と evaluator failure を分離し、probe-20260607-adversarial-role-review は attacker／defender／judge と具体 evidence を、probe-20260527-fixed-test-vs-dynamic-stress は固定 test と動的 stress を、probe-20260526-lab-proxy-vs-real-use-gap は benchmark proxy と人間体験を、probe-20260613-agent-output-trust-signal-split は fluent judge output と trust evidence を既に扱う。本 atom 固有の4脆弱性分類は局所差だが、中核判断は既存5 controls の組合せへほぼ吸収されるため non_redundancy は1とした。現在の staging には LLM judge、unsanitized eval、reference leakage、skip scoring を含む比較可能な game-evaluation artifact がなく、直後の Phase 4a は memory cleanup で実 consumer ではない。active_probes は327件、pending lease は0件であり、対象 artifact なしに脆弱性 checklist を追加すると判断差より確認負荷を増やすため risk_control は1とした。次に実在する game/headless evaluator で、既存5 controlsだけでは reference leakage、judge injection、score skip のいずれかを局在化できない再現例が出た時だけ、失敗1件を対象とする一時 probe として再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1779471593-5157e365fe.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1779471593.720699"
+      ],
+      "existing_controls": [
+        "probe-20260616-hob-trap-audit-split",
+        "probe-20260607-adversarial-role-review",
+        "probe-20260527-fixed-test-vs-dynamic-stress",
+        "probe-20260526-lab-proxy-vs-real-use-gap",
+        "probe-20260613-agent-output-trust-signal-split"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、評価ハーネス脆弱性分類の局所有用性、既存 adversarial／audit／stress／proxy／trust controls との大幅な重複、比較 artifact 不在、active probe 増殖 risk に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
