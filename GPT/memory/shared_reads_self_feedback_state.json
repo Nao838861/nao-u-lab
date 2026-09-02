@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-09-02T13:36:00+09:00",
+  "updated_at": "2026-09-02T16:00:39+09:00",
   "reviewed_source_ts": [
+    "1778621157.789119",
     "1778810803.000339",
     "1779406425.626889",
     "1779601071.399839",
@@ -26610,6 +26611,49 @@
       "change": {
         "type": "state_only_review",
         "summary": "reviewed_source_ts と、実ログ校正された cohort／environment 分離の局所有用性、既存 persona／dynamic-behavior／covariate-shift／failure-layer controls との大幅な重複、比較 artifact 不在、synthetic-player narrative と active probe 増殖 risk に基づく reject 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-09-02T16:00:39+09:00",
+      "selected": {
+        "id": "sr-1778621157-d0033ec3a9",
+        "source_ts": "1778621157.789119",
+        "title": "2026-05-13 Phase 2 分析: Tariq Shihipar「HTML over Markdown」(1,080万view) は我々の Markdown 基盤を本当に揺らしたか (Ash/Win2)",
+        "reason": "source が slack_api/shared-reads、score 14、reviewed_source_ts にない自己完結 root atom のうち、memory・game-design・agent・operation・evaluation の優先5タグを持つため1件だけ選んだ。長期保持する canonical source と短期消費する rich presentation artifact を分ける知見が、現在の Markdown memory／staging と将来の cross_review 出力に既存 control と異なる小さな判断差を作れるか確認した。Nao_u が本投稿自体を『重要』『適切』『自分に反映してほしい』と明示評価した thread reply はローカル raw では確認できなかった。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で数値上の採用条件は満たす。shared-reads 本文は、数日寿命の review／design output と数年参照する memory corpus を分け、次の cross_review 1本だけで canonical Markdown と隣接 HTML view を比較し、diff inline annotation、見落とし、内容腐敗の見えにくさを測る小さな試行へ変換できるため relevance・actionability は3とした。一方、根拠は Tariq Shihipar の発言、Implicator の反論、LLM judge による20比較の17勝で、人間 reviewer の正答率・見落とし率・編集時間・長期保守、ローカル P-1 試行結果がないため evidence は2。probe-20260527-boundary-layer-markup-choice は instruction 内の machine boundary と human hierarchy、probe-20260621-compiled-memory-boundary は raw／atom／compiled artifact の evidence lineage、probe-20260530-worker-bus-contract-observer は canonical source と derived artifact の再構築同値性を扱うが、canonical Markdown を維持したまま短命 presentation view だけを比較する判断は完全には覆わないため non_redundancy は2とした。canonical file を移行せず sidecar 1件に限定すれば撤退しやすく risk_control は2、reversibility は3。ただし現在の staging には比較可能な game/cross_review artifact がなく、直後の Phase 4a は memory cleanup で presentation format の実 consumer ではないため、consumer_phase、具体的 trigger_artifact、before／after の期待判断差を lease 契約どおり固定できない。active_probes は327件、pending lease は0件であり、対象なしに checklist を増やさず state-only defer とする。次に具体的な cross_review Markdown と reviewer task が置かれた時だけ、同一内容の derived HTML view 1件を対象に再評価する。",
+      "evidence_sources": [
+        "memory/atoms/2026-05/sr-1778621157-d0033ec3a9.md",
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1778621157.789119"
+      ],
+      "existing_controls": [
+        "probe-20260527-boundary-layer-markup-choice",
+        "probe-20260621-compiled-memory-boundary",
+        "probe-20260530-worker-bus-contract-observer"
+      ],
+      "change": {
+        "type": "state_only_review",
+        "summary": "reviewed_source_ts と、canonical Markdown／短命 presentation view 分離の局所有用性、既存 markup-boundary／compiled-memory／worker-bus controls との差、比較 artifact 不在と lease 指定不能に基づく defer 理由だけを記録した。active_probes・probe lifecycle ledger・directive・恒久ルールは変更していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
