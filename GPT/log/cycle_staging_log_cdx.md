@@ -66,7 +66,39 @@ delivery:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779406425-90f3a6da86
+    source_ts: "1779406425.626889"
+    title: "PCG Benchmark: An Open-source Testbed for Generative Challenges in Games"
+    reason: "未 review 候補のうち、直前 review 済み同一投稿の continuation 2件を除いた最新の自己完結 root。game-design・agent・operation・evaluation の4優先タグを持ち、PCG 3軸が既存 control と異なる判断差を作るか確認した。Nao_u の明示評価はローカル raw で確認できなかった。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "原論文は12問題、共通 interface、quality／diversity／controllability、Random／ES／GA の100 individuals・200 generations・10 runs 比較と score の限定を示すため、手法・行動化・証拠は強い。一方、既存の plg-evaluation-claim-fit、scoreable-games-benchmark-claim-decomposition、behavior-trace-pcg-diversity、calibration-boundary-human-judgment が同じ採否境界をすでに覆う。比較可能な PCG artifact がないまま3軸 checklist／共通 API を足すと、作品固有価値の benchmark 過圧縮と327件の active probe 確認負荷を増やすため採用しない。"
+  existing_controls:
+    - probe-20260615-plg-evaluation-claim-fit
+    - probe-20260710-scoreable-games-benchmark-claim-decomposition
+    - probe-20260616-behavior-trace-pcg-diversity
+    - probe-20260608-calibration-boundary-human-judgment
+  change:
+    summary: "reviewed_source_ts と state-only reject 理由を記録。active_probes、ledger、directive、恒久ルールは変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
