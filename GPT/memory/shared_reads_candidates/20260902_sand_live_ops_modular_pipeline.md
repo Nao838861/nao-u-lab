@@ -4,6 +4,27 @@ url: "https://unity.com/blog/hologryph-sand-raiders-of-sophie"
 collected_at: "2026-09-02T09:03:42+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, live-ops, architecture, procedural-generation, performance, multiplayer]
+evaluated_at: "2026-09-02T09:07:40+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-09-02T09:07:40+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-09-02T09:07:40+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-10-02"
+supersedes: []
+gate_reason: >-
+  live-ops の更新コストという問題設定から、compartment／data 駆動、client/server 共通 pipeline、
+  ECS/Burst、Addressables、固定 scenario の日次性能測定まで、手法・評価・結論を具体的に抽出できる。
+  継続更新型ゲームの制作基盤へ直接対応づけられ、CoopEval 水準の約4000字概要を構成できるため pass。
+suggested_post_outline:
+  overview_angle: "コンテンツ追加速度を、局所最適な機能実装ではなく modular data・共通 pipeline・継続性能測定の組み合わせで支える live-ops 基盤として整理する"
+  analysis_axis: "拡張点のデータ化、client/server の不一致防止、main-thread 外への simulation 配置、streaming と回帰検知が互いをどう補完するか"
+  application_target: "Log_cdx の継続更新型ゲーム／大規模 prototype で、部品追加の接続面、server/client 共通データ生成、固定 replay による性能回帰試験を設計する場面"
+  pros_cons: "長所は追加変更の局所化と性能劣化の早期検知。短所は初期基盤コスト、二重 project の運用負荷、記事が自社事例で定量値に乏しい点"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
