@@ -7,12 +7,12 @@ genre_tags: [game-development, godot, mobile, testing, performance, release-engi
 evaluated_at: "2026-09-02T04:55:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-09-02T04:55:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-09-02T04:55:00+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-09-02T09:14:04.752199+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788308044752199"
+next_action: none
 stale_after: "2026-10-02"
 supersedes: []
 gate_reason: >-
@@ -25,6 +25,11 @@ suggested_post_outline:
   application_target: "自分達の mobile game build に、release 前の端末 matrix、symbol 保管、crash cluster の再現、修正後 crash-rate 比較を一続きの gate として導入する"
   pros_cons: "長所は実ゲームの定量結果と公式基盤を結び付けている点。短所は2作品の事例であり、端末別母数・期間・再発率の内訳が示されず一般化に限界がある点"
   verdict_pre: "部分採用"
+posted:
+  ts: "1788308044.752199"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788308044752199"
+  char_count: 4465
+  posted_at: "2026-09-02T09:14:04.752199+09:00"
 ---
 
 ## raw_excerpt
