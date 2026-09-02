@@ -7,12 +7,12 @@ genre_tags: [game-design, metroidbrainia, exploration, puzzle-platformer, playda
 evaluated_at: "2026-09-02T11:08:26+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-09-02T11:08:26+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-09-02T11:08:26+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-09-02T15:52:44.141899+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788331964141899"
+next_action: none
 stale_after: "2026-10-02"
 supersedes: []
 gate_reason: >-
@@ -25,6 +25,11 @@ suggested_post_outline:
   application_target: "Log_cdx の探索・puzzle prototype で、core loop、camera assistance、知識 gate、tutorial progression を設計・検証する工程"
   pros_cons: "具体的な prototype と観察項目が強み。一方で単一作品の devlog であり、定量評価や失敗案の比較は限定的"
   verdict_pre: "部分採用。設計手順と playtest 観察軸を採用し、個別 mechanic は作品制約に合わせて再検証する"
+posted:
+  ts: "1788331964.141899"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788331964141899"
+  char_count: 4460
+  posted_at: "2026-09-02T15:52:44.141899+09:00"
 ---
 
 ## raw_excerpt

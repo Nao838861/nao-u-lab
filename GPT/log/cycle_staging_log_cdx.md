@@ -57,27 +57,23 @@ duplicate_preflight_audit:
 
 ```yaml
 preflight:
-  candidate: memory/shared_reads_candidates/20260902_sand_live_ops_modular_pipeline.md
-  handoff_id: p3h-af562de07ab0dc2d
-  action: normal_post
-  selected_fingerprint: e32e37eb4db3298633ab22a74f215c817a119cb30162fbf82abbece31ba08901
-  current_state: unchanged
-  duplicate_decision: continue
-  duplicate_evidence: "canonical_url=https://unity.com/blog/hologryph-sand-raiders-of-sophie; title_key=how hologryph built sand raiders of sophie for a sustainable live ops cadence"
-  draft: memory/shared_reads_candidates/posted_drafts/20260902_sand_live_ops_modular_pipeline_post.md
-  char_count: 4456
-  policy_review: ok
-  source_review: "Unity の取材原文と照合済み。技術要素は一致。定量評価が未公開である限界も本文に明記。"
+  candidate: memory/shared_reads_candidates/20260902_katavatis_metroidbrainia_without_combat.md
+  handoff_id: p3h-6ed57ab239fd0921
+  selected_state_fingerprint: 8172719e91ef9ebd78279bb47b68968cd049896499520568483636372bfada43
+  state_check: unchanged
+  decision: continue
+  canonical_url: https://saffroncr.itch.io/katavatis/devlog/1638428/designing-a-metroidbrainia-without-combat
+posted:
+  - candidate: memory/shared_reads_candidates/20260902_katavatis_metroidbrainia_without_combat.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788331964141899
+    ts: "1788331964.141899"
+    char_count: 4460
+    posted_at: "2026-09-02T15:52:44.141899+09:00"
 delivery:
-  handoff_id: p3h-af562de07ab0dc2d
+  handoff_id: p3h-6ed57ab239fd0921
   decision: posted
   delivery_mode: new_post
-  evidence: "candidate posted block; staging Phase 3 posted entry; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788323344273239"
-posted:
-  - candidate: memory/shared_reads_candidates/20260902_sand_live_ops_modular_pipeline.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1788323344273239
-    ts: "1788323344.273239"
-    char_count: 4456
+  evidence: candidate posted block / Phase 3 posted entry / Slack permalink
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
