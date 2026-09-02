@@ -128,7 +128,90 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index を per-file atom index と照合し、broken link / 重複 ID なしを確認した。代表語4件も UTF-8 明示読みで取得できた。"
+  - "atoms.jsonl / per-file md / index.jsonl の 3001 件が一致し、content conflict 0件を確認した。raw normalized-content duplicate 40群は既存 overlay で fold 済み。"
+  - "shared-reads title canonical index、mixed/open duplicate sidecar、stale triage、group action、Phase 3 queue を再生成した。"
+  - "Slack directives / broadcasts は pending 0件のため lifecycle 更新なし。"
+  - "memory/raw/ の30日超ファイル244件を archive 候補として棚卸しした。原文 provenance を mtime だけで移動せず、今回は監査のみ。"
+issues:
+  - id: ISS-4A-20260902-01
+    description: "active atom sr-1776127289-4d9239b255 の title / trigger / excerpt に U+FFFD が含まれ、atoms.jsonl・per-file md・index・raw Slack archive に同じ破損が保存されている。"
+    severity: medium
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl:492; python tools/memory_health.py --json"
+    source_file_status: "UTF-8 明示読み成功。表示経路ではなく source file 自体に U+FFFD が存在する。atom mirror の件数・hash 整合性は clean。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "score 11 の active memory が検索結果に出た時、題名・想起 trigger・本文断片が欠損し、記憶システム設計の過去知見を正確に再利用できない。"
+  - id: ISS-4A-20260902-02
+    description: "Phase 3 queue 再生成時、posted-source index が posted_source_index_stale_candidates と判定された。queue は未 lease 0件だが、重複照合の健康状態が false。"
+    severity: medium
+    evidence: "python tools/build_shared_reads_phase3_queue.py; memory/shared_reads_posted_source_index.jsonl; memory/shared_reads_phase3_queue.jsonl"
+    source_file_status: "UTF-8 読み取り可能。builder が candidate corpus に対する index stale を明示した。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "ready_to_post 知見の安全な重複判定・既投稿回収が不確実になり、次のゲーム制作へ渡す shared-reads の配送が停滞しうる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 11
+    dormant: 1
+stale_review_batch: []
+stale_backlog:
+  overdue_open_total: 4
+  stale_triage_queue_rows: 0
+  open_duplicate_group_count: 27
+  mixed_group_count: 23
+  all_open_group_count: 4
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  candidate_handoff_pending_count: 0
+  candidate_handoff_ids: []
+  valid_unreviewed_count: 0
+  oldest_unreviewed_collected_at: null
+  malformed_candidate_count: 0
+  phase2_unreviewed_limit: 5
+group_action_handoff: []
+candidate_lifecycle:
+  counts:
+    posted: 750
+    ready_to_post: 2
+    postponed: 200
+    failed: 535
+    needs_review: 0
+  overdue_for_reassessment: 4
+  new_candidate_handoffs: 0
+raw_archive_candidates:
+  total: 244
+  extension_counts:
+    md: 117
+    txt: 71
+    pdf: 25
+    jsonl: 23
+    json: 6
+    tar: 1
+    html: 1
+title_duplicate_audit:
+  canonical_terminal_groups: 112
+  mixed_groups: 23
+  open_groups: 27
+phase3_delivery_audit:
+  queue_count: 0
+  handoff_pending_count: 2
+```
+
+- `overdue_open_total=4` は2つの all-open group に属し、既存 group handoff が `retry_after=2026-09-19T14:08:16+09:00` まで deferred のため、stale triage と candidate handoff への重複投入は0件。
+- `needs_design: false`。ISS-4A-20260902-01 は既存 provenance に基づく局所修復、ISS-4A-20260902-02 は既存 index 再生成経路の整備対象であり、新しい仕組みの設計を要しない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
