@@ -123,3 +123,8 @@ Xbox欄冒頭に「2台つなげば、2人で対戦できます。」を追記�
 ## GPU初期倍率2x
 
 初回GPU倍率を3xから2xへ変更。保存済み設定は優先し、ストレージアクセス不能時もGPUなら2x。ブラウザで初回・保存済み4x・変更後再読込・保存不能を確認、web_smoke通過。ソースcf824a0、配布41b63b6をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-default-2x.zip、itch.io未アップロード。
+
+
+## オンライン待受表示
+
+queued状態はキャラ選択・CPU練習とも画面下y230にSEARCHING FOR OPPONENTのみを表示。上部の検索表示と下部操作案内を削除。約3.2秒周期でalpha0.4〜1の明滅、reduced-motionでは常時表示。searching_indicatorテストでstage1〜4の案内置換、通常時復帰、明滅周期・描画alpha復帰・reduced-motionを確認しweb_smoke通過。ソース43b7ad6、配布98a6da8をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-searching-indicator.zip、itch.io未アップロード。
