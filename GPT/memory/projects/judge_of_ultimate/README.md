@@ -1,6 +1,6 @@
 # JudgeOfUltimate：CPU方針の入口
 
-最新のランキング・アクセス集計・管理画面の実装状態は [20260910_ranking_analytics_implementation.md](20260910_ranking_analytics_implementation.md)。本番サーバー反映済み、配布ZIP作成済み、itch.io差し替えは未実施。先行設計よりこの実装記録を優先する。
+最新のサバイバル導線・ランキング・共通名入力は [20260911_survival_entry.md](20260911_survival_entry.md)。基盤/アクセス管理は [20260910_ranking_analytics_implementation.md](20260910_ranking_analytics_implementation.md)。本番サーバー反映済み、配布ZIP作成済み、itch.io差し替えは未実施。先行設計より新しい実装記録を優先する。
 
 対象：`D:\HomeBrew\JudgeOfUltimate`。2026-09-08のユーザー指示により、CPU改善の評価を更新。
 
