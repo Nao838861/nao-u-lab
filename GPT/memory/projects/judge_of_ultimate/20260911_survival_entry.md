@@ -162,3 +162,10 @@ RECONNECTING開始から6秒で接続終了。offlineイベントは即終了、
 ユーザーが訪問者の分裂を指摘。一部のブラウザテストが本番collectへ送信していた。匿名IDはlocalStorage単位でPC/スマホ等でも別になる。ローカルhostとnavigator.webdriverはクライアント送信停止、サーバーもローカルOrigin/HeadlessChromeのcollectを204無記録にする。過去分はOrigin/UAがなく判別不能なので削除・統合しない。管理APIでvisitsのIDとprofilesを照合、訪問者/IPグループへ名前列追加。現行名で過去訪問も表示する。
 
 data9件・adminブラウザ・servicesブラウザ・集計除外試験通過。本番Worker 07ee3a88-335c-433d-9ac8-f56fbeea2823へデプロイし、stats名前フィールド・除外204を確認。キーは表示せず読み取り使用。ソースa164826、配布7f7958fをpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-analytics-filter.zip、itch.io未アップロード。
+
+
+## 推定テスト訪問の削除
+
+ユーザーの明示依頼で本番analyticsの短時間テスト候補を削除。名前なしdesktop、全訪問の開始〜最終が10秒未満、モード集合がMENU/SURVIVALのみの9訪問者17訪問。約5〜6秒で終了する反復パターンを対象とし、別IPのMENUのみ1件と長時間/オンラインは残した。
+
+削除前全体・対象JSONと実行SQLはゲームのGit無視領域faithful/build/analytics-before-test-cleanup.json、analytics-test-cleanup-selected.json、analytics-test-cleanup.sql。ID・updated・seq一致条件で削除し、対象UTC日の既存daily行のみ再集計。管理APIで32→15訪問、残存4訪問者、対象全件消失、その他の訪問とオンライン対戦ID維持を確認。ランキングは未変更。アプリの変更やZIP作成はなし。
