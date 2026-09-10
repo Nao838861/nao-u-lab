@@ -61,3 +61,10 @@ PCでは既存の名前入力と全画面ボタンをキャンバス直下の操
 ユーザー指定の itch.io ページを取得すると、右下ボタンは iframe の外側の `button.fullscreen_btn` だった。公式説明でも Embed options の Fullscreen Button が右下へ追加されることを確認。ゲームZIPから親ページを変更できないため、itch.io編集画面でこのオプションをオフにする必要がある。認証済み管理セッションは利用できず、設定変更・ZIPアップロードとも未実施。
 
 ソース `1159273`、配布 `87a999b` をpush済み。最新ZIPは `release/itch/JudgeOfUltimate-web-20260911-fullscreen-controls.zip`。C/サーバー変更なし。設定手順はプロジェクトの `faithful/docs/fullscreen-controls-20260911.md`。
+
+
+## 遊び方の整理
+
+ランキングの上位10人・周辺人数などの補足文を削除。基本操作はボタンと機能の箇条書きにし、既存のスマホ判定と同じ条件でPC/スマホ説明を切り替える。共通コマンドはXbox文字から弱・強・弾・投げ・ガードへ変更。CPU説明・コントローラー・必殺技・キャラ・受け身・アイテム・Web詳細は閉じたdetailsにし、日英とも長文を箇条書きへ整理。
+
+locale_browser、web_smoke、日英×PC/スマホの表示と開閉確認を実施。ソース2279ddd、配布9db20a8をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-manual.zip。itch.ioへのアップロードは未実施。
