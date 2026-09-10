@@ -145,3 +145,8 @@ RECONNECTING開始から6秒で接続終了。offlineイベントは即終了、
 描画方式・解像度・録画をオンライン設定より後のmain末尾に移動。DOM末尾の順序とweb_smoke確認。ソース02fe0c6、配布2958077をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-bottom-controls.zip、itch.io未アップロード。
 
 ユーザー方針: オンライン設定・接続情報はデバッグ機能で、リリース時には消す予定（今回削除指示ではない）。オンライン対戦の説明は独立メニューを作らず一行で置く場所の提案を依頼。ゲーム直下（PCでは名前入力の下）、遊び方より前に「ONLINE BATTLEを選ぶと対戦相手を検索します。待ち受け中はCPU戦で遊べます。」を提案。説明行は提案のみ、未実装。
+
+
+## 接続成立MP3
+
+指定connect.mp3（約1.95秒、48273bytes）をfaithful/webへコピーしビルド・ZIPに同梱。初回matched時のplayChallengerJingleの合成電子音をMP3へ置換。AudioContextで先読みデコードし通常出力と録画先へ接続。接続情報の重複・再戦では再発音なし。connect_soundでデコード、実AudioBufferSource開始、初回1回/重複なし/再戦なしを確認。web_smoke/locale_browser通過。実スピーカー聴取は未実施。ソース0b82fb7、配布3028d16をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-connect-sound.zip、itch.io未アップロード。
