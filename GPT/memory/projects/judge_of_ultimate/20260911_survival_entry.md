@@ -53,3 +53,11 @@ Cコアで既存SEと同じコマンド1件、二重決定で再発音なしを�
 ユーザーが小文字用Capsボタンの追加と数字入力の有無を質問。数字0〜9は既存で対応していると回答し、文字盤左上の空きにCaps: ABC/abcを追加した。40キーの配置は維持。上段から上/下段から下でCapsへ移動でき、タップも可能。切替はこれから入力する英字だけに作用し、既存文字列・数字・操作キーは変えない。
 
 大小・数字混在の保存/再読込、16文字制限、スマホ全画面の直接タップ・パッド入力を既存flow試験で検証。ソース `8f81b41`、ZIP `84916b0` をpush済み。最新配布は `release/itch/JudgeOfUltimate-web-20260911-survival-caps.zip`。itch.io差し替え未実施。Cコアとサーバー変更なし。
+
+## PCの名前・全画面配置とスマホの全画面アイコン
+
+PCでは既存の名前入力と全画面ボタンをキャンバス直下の操作行へ移動。通常表示と全画面表示の両方でゲームに重ならない。スマホでは右上の文字ボタンを全画面/解除のSVGアイコンに置換し、日英のaria-label/titleを維持した。touch_pad/locale_browserテスト通過、PC/スマホ横画面のスクリーンショット確認済み。
+
+ユーザー指定の itch.io ページを取得すると、右下ボタンは iframe の外側の `button.fullscreen_btn` だった。公式説明でも Embed options の Fullscreen Button が右下へ追加されることを確認。ゲームZIPから親ページを変更できないため、itch.io編集画面でこのオプションをオフにする必要がある。認証済み管理セッションは利用できず、設定変更・ZIPアップロードとも未実施。
+
+ソース `1159273`、配布 `87a999b` をpush済み。最新ZIPは `release/itch/JudgeOfUltimate-web-20260911-fullscreen-controls.zip`。C/サーバー変更なし。設定手順はプロジェクトの `faithful/docs/fullscreen-controls-20260911.md`。
