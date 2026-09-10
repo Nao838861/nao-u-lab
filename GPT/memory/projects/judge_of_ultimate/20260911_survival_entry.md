@@ -150,3 +150,8 @@ RECONNECTING開始から6秒で接続終了。offlineイベントは即終了、
 ## 接続成立MP3
 
 指定connect.mp3（約1.95秒、48273bytes）をfaithful/webへコピーしビルド・ZIPに同梱。初回matched時のplayChallengerJingleの合成電子音をMP3へ置換。AudioContextで先読みデコードし通常出力と録画先へ接続。接続情報の重複・再戦では再発音なし。connect_soundでデコード、実AudioBufferSource開始、初回1回/重複なし/再戦なしを確認。web_smoke/locale_browser通過。実スピーカー聴取は未実施。ソース0b82fb7、配布3028d16をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-connect-sound.zip、itch.io未アップロード。
+
+
+## オンライン説明を追加
+
+提案承認によりゲーム直下・遊び方見出し前へ「ONLINE BATTLEを選ぶと対戦相手を検索します。待ち受け中はCPU戦で遊べます。」を追加。枠や見出しは増やさず短い段落、スマホは自然折り返し、英訳対応。locale_browser/web_smoke通過。ソースd827448、配布e7b3d88をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-online-help.zip、itch.io未アップロード。
