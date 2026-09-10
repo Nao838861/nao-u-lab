@@ -40,6 +40,14 @@ O2フルビルド。開始前のCPU差分は配布物へ含むが今回のコミ
 
 ソース `852e297`、配布 `db5078d` をpush済み。現行ZIPは `release/itch/JudgeOfUltimate-web-20260911-p1-arrows.zip`（NORMAL初期値・Capsを含む）。itch.io差し替え未実施。C再ビルド不要のWeb変更。buildのindex.htmlは現行shellからSCRIPTタグを展開して更新した。
 
+## CPU難易度の決定音（後続）
+
+難易度決定にも既存キャラ選択音 `SE_JYA` を追加。VS CPU/WATCHは有効な `jou_cpu_level_confirm` の中で一度だけ発音。サバイバルは `startLocal` の音声リセット後に新規export `jou_menu_confirm_sound` を呼び、すぐ音声キューをconsumeする。
+
+Cコアで既存SEと同じコマンド1件、二重決定で再発音なしを検証。ブラウザ側はheadlessのAudioWorklet準備が完了しなかったため出力先を模擬し、リセット後に正しい音声コマンドが1件渡ることを確認した。実スピーカーの聴取確認ではない。既存サバイバルflow/Web smoke通過、O2フルビルド成功。
+
+ソース `2b4344d`、配布 `b2efacd` をpush済み。最新ZIPは `release/itch/JudgeOfUltimate-web-20260911-difficulty-sound.zip`。itch.io差し替え未実施。
+
 ## 同日のCaps追加
 
 ユーザーが小文字用Capsボタンの追加と数字入力の有無を質問。数字0〜9は既存で対応していると回答し、文字盤左上の空きにCaps: ABC/abcを追加した。40キーの配置は維持。上段から上/下段から下でCapsへ移動でき、タップも可能。切替はこれから入力する英字だけに作用し、既存文字列・数字・操作キーは変えない。
