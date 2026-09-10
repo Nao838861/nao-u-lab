@@ -88,3 +88,8 @@ D:/tempのREI/SHION/KAI/GOU.pngを確認し、そのままfaithful/web/character
 ## ガイド順序
 
 キャラクター別ガイドの日英両方をREI→KAI→GOU→SHIONへ並べ替え。画像と解説をまとめて移動。生成物の順序とweb_smokeを確認。ソース71bd685、ZIP4a74be5をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-guide-order.zip。itch.io未アップロード。
+
+
+## Xboxを主役にした操作説明
+
+PC基本操作を最上段の2列に変更。左Xbox（おすすめ・アクセント枠）、右キーボード（コントローラーなしでも遊べる）を常時表示。両方を箇条書きに統一。720px以下のPCはXbox→キーボードの縦並び、スマホはタッチ説明のみ維持。詳細ガイドの折り畳みは維持。日英・幅1100/650/390の配置確認、スクリーンショット、web_smoke/locale_browser通過。ソース7e8fd5c、ZIP1094652をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-controller-guide.zip、itch.io未アップロード。
