@@ -68,3 +68,8 @@ PCでは既存の名前入力と全画面ボタンをキャンバス直下の操
 ランキングの上位10人・周辺人数などの補足文を削除。基本操作はボタンと機能の箇条書きにし、既存のスマホ判定と同じ条件でPC/スマホ説明を切り替える。共通コマンドはXbox文字から弱・強・弾・投げ・ガードへ変更。CPU説明・コントローラー・必殺技・キャラ・受け身・アイテム・Web詳細は閉じたdetailsにし、日英とも長文を箇条書きへ整理。
 
 locale_browser、web_smoke、日英×PC/スマホの表示と開閉確認を実施。ソース2279ddd、配布9db20a8をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-manual.zip。itch.ioへのアップロードは未実施。
+
+
+## コマンド表記の訂正
+
+ChComon.cのGetCommandを確認。Lhd/Rhdは下の押下で開始し、下を離した状態で左右入力があれば成立する。斜め通過は不要。日英の必殺技・超必殺技表記を↓↘→から↓→へ統一し、下を離して前方向と攻撃ボタン、左向きは↓←と説明した。↘＋強の単発技表記は維持。入力実装は変更なし。web_smoke/locale_browser通過。ソース2a6000e、ZIP4610985をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-command-notation.zip、itch.io未アップロード。
