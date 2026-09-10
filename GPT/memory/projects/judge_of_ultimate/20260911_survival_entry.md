@@ -103,3 +103,8 @@ PC基本操作を最上段の2列に変更。左Xbox（おすすめ・アクセ�
 ## 表記と外部リンクの削除
 
 描画方式のGPU（原作の重なり順）をGPUに短縮し、日英の原作取扱説明書リンク段落を削除。不要な翻訳項目とsource-note CSSも削除。web_smoke/locale_browser通過。ソースb7f06f4、配布632b5aaをpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-label-cleanup.zip、itch.io未アップロード。
+
+
+## コマンド補足削除・キャラガイド初期展開
+
+コマンドのコツと斜め不要の2項目を日英から削除（540baa2、配布d2b2a06）。後続指示でキャラクター別ガイドのみopen属性を追加し最初から展開。日英の生成物とweb_smoke/locale_browser確認済み。ソース305307c、配布2e52cafをpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-open-character-guide.zip。itch.io未アップロード。
