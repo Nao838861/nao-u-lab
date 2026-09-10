@@ -93,3 +93,8 @@ D:/tempのREI/SHION/KAI/GOU.pngを確認し、そのままfaithful/web/character
 ## Xboxを主役にした操作説明
 
 PC基本操作を最上段の2列に変更。左Xbox（おすすめ・アクセント枠）、右キーボード（コントローラーなしでも遊べる）を常時表示。両方を箇条書きに統一。720px以下のPCはXbox→キーボードの縦並び、スマホはタッチ説明のみ維持。詳細ガイドの折り畳みは維持。日英・幅1100/650/390の配置確認、スクリーンショット、web_smoke/locale_browser通過。ソース7e8fd5c、ZIP1094652をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-controller-guide.zip、itch.io未アップロード。
+
+
+## ページ下部パネル
+
+オンライン設定をmain末尾へ移動し、サバイバルランキングはその直前へ挿入。遊び方→ランキング→オンライン設定の順。PCのゲーム直下の名前入力は既存の移動処理で維持。services_browser/web_smoke通過。ソース0e89a1f、配布43f630bをpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-bottom-panels.zip、itch.io未アップロード。
