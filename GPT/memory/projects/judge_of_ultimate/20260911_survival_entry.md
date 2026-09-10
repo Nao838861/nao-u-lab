@@ -108,3 +108,8 @@ PC基本操作を最上段の2列に変更。左Xbox（おすすめ・アクセ�
 ## コマンド補足削除・キャラガイド初期展開
 
 コマンドのコツと斜め不要の2項目を日英から削除（540baa2、配布d2b2a06）。後続指示でキャラクター別ガイドのみopen属性を追加し最初から展開。日英の生成物とweb_smoke/locale_browser確認済み。ソース305307c、配布2e52cafをpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-open-character-guide.zip。itch.io未アップロード。
+
+
+## 2台コントローラー案内
+
+Xbox欄冒頭に「2台つなげば、2人で対戦できます。」を追記し英語にも対応。web_smoke通過。ソース431e19d、配布ce8918eをpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-two-controllers.zip、itch.io未アップロード。
