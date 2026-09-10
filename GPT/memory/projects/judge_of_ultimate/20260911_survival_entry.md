@@ -155,3 +155,10 @@ RECONNECTING開始から6秒で接続終了。offlineイベントは即終了、
 ## オンライン説明を追加
 
 提案承認によりゲーム直下・遊び方見出し前へ「ONLINE BATTLEを選ぶと対戦相手を検索します。待ち受け中はCPU戦で遊べます。」を追加。枠や見出しは増やさず短い段落、スマホは自然折り返し、英訳対応。locale_browser/web_smoke通過。ソースd827448、配布e7b3d88をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-online-help.zip、itch.io未アップロード。
+
+
+## テスト集計除外と訪問者名
+
+ユーザーが訪問者の分裂を指摘。一部のブラウザテストが本番collectへ送信していた。匿名IDはlocalStorage単位でPC/スマホ等でも別になる。ローカルhostとnavigator.webdriverはクライアント送信停止、サーバーもローカルOrigin/HeadlessChromeのcollectを204無記録にする。過去分はOrigin/UAがなく判別不能なので削除・統合しない。管理APIでvisitsのIDとprofilesを照合、訪問者/IPグループへ名前列追加。現行名で過去訪問も表示する。
+
+data9件・adminブラウザ・servicesブラウザ・集計除外試験通過。本番Worker 07ee3a88-335c-433d-9ac8-f56fbeea2823へデプロイし、stats名前フィールド・除外204を確認。キーは表示せず読み取り使用。ソースa164826、配布7f7958fをpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-analytics-filter.zip、itch.io未アップロード。
