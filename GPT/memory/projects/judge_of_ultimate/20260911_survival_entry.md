@@ -133,3 +133,8 @@ queued状態はキャラ選択・CPU練習とも画面下y230にSEARCHING FOR OP
 ## モード別カーソルキー割当
 
 LOCAL VS（非オンライン・mode0・stage>0）はカーソルキーを2Pのみへ、1P方向はWASDのみ。タイトル・CPU・SURVIVAL・WATCH・オンラインはカーソルキーを1Pとして維持するがマニュアルに記載しない。日英の1P方向説明をWASD、2Pをカーソルキーに変更し旧TFGHを撤去。2P攻撃テンキーとゲームパッド2台時のキーボード制限は既存維持。keyboard_modesで方向4種・同時入力・解放・モード切替・オンライン・入力欄編集を検証、web_smoke/locale_browser通過。ソースdb482c7、配布5b5e0c9をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-keyboard-modes.zip、itch.io未アップロード。
+
+
+## 再接続6秒・切断通知
+
+RECONNECTING開始から6秒で接続終了。offlineイベントは即終了、対戦外のサーバー通信停止も6秒で終了。切断時はcancelで通信資源を解放し、オフラインタイトルへ戻して中央通知を表示。5秒自動終了、2秒以降の新規ボタン押下でも終了。通知中はゲーム進行と操作を止め、閉じた押下の誤決定を防止。日英対応。disconnect_notice試験で各時間境界、回復と次回タイマー、通知中停止、offlineイベントを模擬検証、画面確認・locale_browser/web_smoke通過。実回線の物理切断試験は未実施。ソースc3468ac、配布6acb9b4をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-disconnect-notice.zip、itch.io未アップロード。
