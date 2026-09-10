@@ -138,3 +138,10 @@ LOCAL VS（非オンライン・mode0・stage>0）はカーソルキーを2Pの�
 ## 再接続6秒・切断通知
 
 RECONNECTING開始から6秒で接続終了。offlineイベントは即終了、対戦外のサーバー通信停止も6秒で終了。切断時はcancelで通信資源を解放し、オフラインタイトルへ戻して中央通知を表示。5秒自動終了、2秒以降の新規ボタン押下でも終了。通知中はゲーム進行と操作を止め、閉じた押下の誤決定を防止。日英対応。disconnect_notice試験で各時間境界、回復と次回タイマー、通知中停止、offlineイベントを模擬検証、画面確認・locale_browser/web_smoke通過。実回線の物理切断試験は未実施。ソースc3468ac、配布6acb9b4をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-disconnect-notice.zip、itch.io未アップロード。
+
+
+## 描画・録画を最下部へ
+
+描画方式・解像度・録画をオンライン設定より後のmain末尾に移動。DOM末尾の順序とweb_smoke確認。ソース02fe0c6、配布2958077をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-bottom-controls.zip、itch.io未アップロード。
+
+ユーザー方針: オンライン設定・接続情報はデバッグ機能で、リリース時には消す予定（今回削除指示ではない）。オンライン対戦の説明は独立メニューを作らず一行で置く場所の提案を依頼。ゲーム直下（PCでは名前入力の下）、遊び方より前に「ONLINE BATTLEを選ぶと対戦相手を検索します。待ち受け中はCPU戦で遊べます。」を提案。説明行は提案のみ、未実装。
