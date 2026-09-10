@@ -73,3 +73,8 @@ locale_browser、web_smoke、日英×PC/スマホの表示と開閉確認を実�
 ## コマンド表記の訂正
 
 ChComon.cのGetCommandを確認。Lhd/Rhdは下の押下で開始し、下を離した状態で左右入力があれば成立する。斜め通過は不要。日英の必殺技・超必殺技表記を↓↘→から↓→へ統一し、下を離して前方向と攻撃ボタン、左向きは↓←と説明した。↘＋強の単発技表記は維持。入力実装は変更なし。web_smoke/locale_browser通過。ソース2a6000e、ZIP4610985をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-command-notation.zip、itch.io未アップロード。
+
+
+## キャラクター画像
+
+D:/tempのREI/SHION/KAI/GOU.pngを確認し、そのままfaithful/web/charactersへコピー。各ガイドにlazy画像を追加、PCは左200px画像・右解説、スマホは中央最大220px画像・下解説。縦横比を維持し切り抜きなし、日英対応。ビルドとZIPの同梱対象へ4画像を追加。web_smoke/locale_browser、日英×PC/スマホで全画像の読込・配置・初期折り畳みを確認。ソース424a21b、配布cd60c4fをpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-character-art.zip（0.96MB）、itch.io未アップロード。
