@@ -78,3 +78,8 @@ ChComon.cのGetCommandを確認。Lhd/Rhdは下の押下で開始し、下を離
 ## キャラクター画像
 
 D:/tempのREI/SHION/KAI/GOU.pngを確認し、そのままfaithful/web/charactersへコピー。各ガイドにlazy画像を追加、PCは左200px画像・右解説、スマホは中央最大220px画像・下解説。縦横比を維持し切り抜きなし、日英対応。ビルドとZIPの同梱対象へ4画像を追加。web_smoke/locale_browser、日英×PC/スマホで全画像の読込・配置・初期折り畳みを確認。ソース424a21b、配布cd60c4fをpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-character-art.zip（0.96MB）、itch.io未アップロード。
+
+
+## 全画面中の名前非表示・右上解除
+
+後続指示で全画面時の配置を変更。PC通常時は直下の名前とボタンを維持。全画面API・代替拡大中は名前を隠し、解除ボタンを右上に配置、下の操作行の予約領域をなくす。解除で通常配置へ戻す。touch_padで両経路の切替と復帰を確認。ソース16bfdc0、配布1834829をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-fullscreen-exit.zip。itch.io未アップロード。
