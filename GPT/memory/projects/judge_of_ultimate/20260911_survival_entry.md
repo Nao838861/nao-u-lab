@@ -98,3 +98,8 @@ PC基本操作を最上段の2列に変更。左Xbox（おすすめ・アクセ�
 ## ページ下部パネル
 
 オンライン設定をmain末尾へ移動し、サバイバルランキングはその直前へ挿入。遊び方→ランキング→オンライン設定の順。PCのゲーム直下の名前入力は既存の移動処理で維持。services_browser/web_smoke通過。ソース0e89a1f、配布43f630bをpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-bottom-panels.zip、itch.io未アップロード。
+
+
+## 表記と外部リンクの削除
+
+描画方式のGPU（原作の重なり順）をGPUに短縮し、日英の原作取扱説明書リンク段落を削除。不要な翻訳項目とsource-note CSSも削除。web_smoke/locale_browser通過。ソースb7f06f4、配布632b5aaをpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-label-cleanup.zip、itch.io未アップロード。
