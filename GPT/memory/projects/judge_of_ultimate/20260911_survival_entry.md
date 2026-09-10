@@ -83,3 +83,8 @@ D:/tempのREI/SHION/KAI/GOU.pngを確認し、そのままfaithful/web/character
 ## 全画面中の名前非表示・右上解除
 
 後続指示で全画面時の配置を変更。PC通常時は直下の名前とボタンを維持。全画面API・代替拡大中は名前を隠し、解除ボタンを右上に配置、下の操作行の予約領域をなくす。解除で通常配置へ戻す。touch_padで両経路の切替と復帰を確認。ソース16bfdc0、配布1834829をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-fullscreen-exit.zip。itch.io未アップロード。
+
+
+## ガイド順序
+
+キャラクター別ガイドの日英両方をREI→KAI→GOU→SHIONへ並べ替え。画像と解説をまとめて移動。生成物の順序とweb_smokeを確認。ソース71bd685、ZIP4a74be5をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-guide-order.zip。itch.io未アップロード。
