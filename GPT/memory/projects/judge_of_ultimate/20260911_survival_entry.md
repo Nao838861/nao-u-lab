@@ -118,3 +118,8 @@ Xbox欄冒頭に「2台つなげば、2人で対戦できます。」を追記�
 ## プレイヤー名ラベル
 
 プレイヤー名（任意）から（任意）を削除。英語もPlayer nameに短縮。入力の任意性や保存動作は維持。locale_browser通過。ソースe97e876、配布c9c66c2をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-player-name-label.zip、itch.io未アップロード。
+
+
+## GPU初期倍率2x
+
+初回GPU倍率を3xから2xへ変更。保存済み設定は優先し、ストレージアクセス不能時もGPUなら2x。ブラウザで初回・保存済み4x・変更後再読込・保存不能を確認、web_smoke通過。ソースcf824a0、配布41b63b6をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-default-2x.zip、itch.io未アップロード。
