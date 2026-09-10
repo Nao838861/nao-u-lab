@@ -34,6 +34,12 @@ O2フルビルド。開始前のCPU差分は配布物へ含むが今回のコミ
 
 「難易度選択のデフォルトをNormal」に対応し、未保存時/保存領域拒否時の初期値をHARD(2)からNORMAL(1)へ変更。保存済みの前回選択は従来どおり復元する。共通UIのためサバイバル/VS CPU/WATCHに適用。実ブラウザの初期NORMALと選択後の対戦移行、Web smokeを確認。ソース `96b07b3` をpush済み。最新配布は `release/itch/JudgeOfUltimate-web-20260911-normal-default.zip`（Caps追加を含む）。itch.io差し替え未実施。
 
+## 1Pカーソルキー対応（後続）
+
+カーソルキーも1Pの十字キーにする依頼に対応。↑↓←→をWASDと同じ1P入力へ割り当て、2Pの同時入力を避けて2P移動をT/F/G/Hへ移した。日英の説明も更新。方向4つ、キー解放、WASD併用、2P分離、タイトル操作、文字入力欄のカーソル編集、サバイバルflowとWeb smokeを実ブラウザで確認。
+
+ソース `852e297`、配布 `db5078d` をpush済み。現行ZIPは `release/itch/JudgeOfUltimate-web-20260911-p1-arrows.zip`（NORMAL初期値・Capsを含む）。itch.io差し替え未実施。C再ビルド不要のWeb変更。buildのindex.htmlは現行shellからSCRIPTタグを展開して更新した。
+
 ## 同日のCaps追加
 
 ユーザーが小文字用Capsボタンの追加と数字入力の有無を質問。数字0〜9は既存で対応していると回答し、文字盤左上の空きにCaps: ABC/abcを追加した。40キーの配置は維持。上段から上/下段から下でCapsへ移動でき、タップも可能。切替はこれから入力する英字だけに作用し、既存文字列・数字・操作キーは変えない。
