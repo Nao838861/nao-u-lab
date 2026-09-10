@@ -128,3 +128,8 @@ Xbox欄冒頭に「2台つなげば、2人で対戦できます。」を追記�
 ## オンライン待受表示
 
 queued状態はキャラ選択・CPU練習とも画面下y230にSEARCHING FOR OPPONENTのみを表示。上部の検索表示と下部操作案内を削除。約3.2秒周期でalpha0.4〜1の明滅、reduced-motionでは常時表示。searching_indicatorテストでstage1〜4の案内置換、通常時復帰、明滅周期・描画alpha復帰・reduced-motionを確認しweb_smoke通過。ソース43b7ad6、配布98a6da8をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-searching-indicator.zip、itch.io未アップロード。
+
+
+## モード別カーソルキー割当
+
+LOCAL VS（非オンライン・mode0・stage>0）はカーソルキーを2Pのみへ、1P方向はWASDのみ。タイトル・CPU・SURVIVAL・WATCH・オンラインはカーソルキーを1Pとして維持するがマニュアルに記載しない。日英の1P方向説明をWASD、2Pをカーソルキーに変更し旧TFGHを撤去。2P攻撃テンキーとゲームパッド2台時のキーボード制限は既存維持。keyboard_modesで方向4種・同時入力・解放・モード切替・オンライン・入力欄編集を検証、web_smoke/locale_browser通過。ソースdb482c7、配布5b5e0c9をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-keyboard-modes.zip、itch.io未アップロード。
