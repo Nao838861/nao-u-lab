@@ -113,3 +113,8 @@ PC基本操作を最上段の2列に変更。左Xbox（おすすめ・アクセ�
 ## 2台コントローラー案内
 
 Xbox欄冒頭に「2台つなげば、2人で対戦できます。」を追記し英語にも対応。web_smoke通過。ソース431e19d、配布ce8918eをpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-two-controllers.zip、itch.io未アップロード。
+
+
+## プレイヤー名ラベル
+
+プレイヤー名（任意）から（任意）を削除。英語もPlayer nameに短縮。入力の任意性や保存動作は維持。locale_browser通過。ソースe97e876、配布c9c66c2をpush済み。最新ZIPはrelease/itch/JudgeOfUltimate-web-20260911-player-name-label.zip、itch.io未アップロード。
