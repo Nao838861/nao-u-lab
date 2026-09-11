@@ -243,3 +243,9 @@ language_preview.cjsで日本語環境JA→EN→JA→自動、別の英語ブラ
 ユーザー指定でサーバー期限を20〜30秒ランダム＋最大10秒alarmへ変更。旧期限を持つ待機者にもqueuedAt+30秒で上限をかけ、deploy直後から短縮する。通常の再戦上限cancelは相手も検索へ戻るため再接続できる。回線断で通常プレイヤーがオフラインに戻った場合はONLINE BATTLEを再選択する必要があると説明。
 
 マッチング9テスト通過、7aad93f commit/push。Worker 55015919-bd73-4ef4-ad91-49586c95f07fへdeploy、health成功。待ち時間変更は既存ゲームにも反映済み。説明更新用ZIP release/itch/JudgeOfUltimate-web-20260912-shorter-wait.zipを作成、itch.io未アップロード。
+
+## 2026-09-12 Newgrounds専用ZIP
+
+ユーザー依頼で release/newgrounds/JudgeOfUltimate-newgrounds-20260912.zip（1,123,471 bytes）を作成。最新itch ZIPのゲーム本体・ビルドIDを維持し、初回の通信説明と許可／オフライン選択を追加。選択はsessionStorage、ページ下で変更可。拒否時はAPI・beacon・WebSocketを止め、デバッグ自動CPUも接続しない。faithful/package_newgrounds.pyで再生成。投稿用AI利用説明案はfaithful/docs/newgrounds-release.md。
+
+Newgrounds配信元https://uploads.ungrounded.netをマッチング・データ両Workerに追加してdeploy。マッチングff4bef8f-642a-48e3-8a1d-e031d3cd4db9、データ36a47d7b-5925-4148-a4c4-95041a61c9b2。本番OPTIONSでCORS許可確認。サーバー27テスト、PC/スマホの初回・拒否・許可・撤回をPlaywrightで検証（外部通信は捕捉、本番記録なし）。ゲーム1522d9b commit/push。Newgroundsへのアップロード・実サイトプレビューは未実施。
