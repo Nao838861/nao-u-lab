@@ -225,3 +225,9 @@ debug_handicap.cjsで遅延・予測・巻戻しを含む749フレームの実Wa
 ユーザー承認のF8／「遊び方」見出し2秒長押しで設定欄の表示・非表示を切替。初期HTMLでhidden、開く時は全画面を解除して設定欄へスクロール、再読込で閉じる。短押し・10px超移動・スクロール・フォーカス喪失で長押しを取消。見出しの文字選択・長押しメニューを抑止。PCプレイヤー名は従来のゲーム直下、スマホも設定欄からゲーム直下へ移して通常使用可能にした。自動CPU試験は隠しメニューを開いてからOFF操作するよう更新。
 
 hidden_settings.cjsでPC/スマホの初期非表示、名前表示、F8、長押し/取消、再読込、全画面解除を確認。touch_pad.cjsも通過。ad39f60 commit/push。最新ZIP release/itch/JudgeOfUltimate-web-20260912-hidden-settings.zip、前回のゲームbinary・通信build ID維持。itch.io未アップロード、サーバー変更なし。
+
+## 英語表示を簡単に確認する設定
+
+SensorsのSan Francisco指定による確認を案内したが、ユーザー環境ではうまくいかなかった。隠し設定に「表示言語（変更時にページ再読み込み）」の自動／日本語／Englishを追加。sessionStorageのjou-debug-languageでこのタブの検証設定を保持、選択でページだけreloadする。自動は従来どおりnavigator.languages[0]優先、日本語以外は英語。F8で開いて選択でき、ブラウザ再起動は不要。ページ再読み込みに伴い試合は終了するためラベルで明示。
+
+language_preview.cjsで日本語環境JA→EN→JA→自動、別の英語ブラウザ環境で初期自動ENを確認。最新ZIP release/itch/JudgeOfUltimate-web-20260912-language-preview.zip、ゲームbinary・通信build ID維持。commit/push済み、itch.io未アップロード。Sensorsで失敗した正確な原因は未確定。
