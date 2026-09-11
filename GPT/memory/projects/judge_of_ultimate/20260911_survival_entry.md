@@ -181,3 +181,9 @@ data9件・adminブラウザ・servicesブラウザ・集計除外試験通過�
 ユーザー提供のルート「カーソル移動.mp3」「決定ボタンを押す.mp3」をweb/cursor.mp3、confirm.mp3として追加。タイトル・難度・キャラ・再戦・ネームエントリーのカーソルを入力処理前後で比較し、同じ画面内で実際に動いた場合に再生。モーダルのタッチ操作も対応。タイトルchooseMenuで決定音を再生し、画面遷移時のPS1音源リセットでは止めない。Web Audio事前デコード、録画音声への接続、同種音源の重なり抑制を追加。
 
 menu_sounds.cjsでMP3デコード・再生、タイトル移動・決定、難度移動、ネーム移動と無入力無音を確認。既存connect_sound.cjsも通過、ローカル集計送信なし。前回analytics-filter ZIPのゲームバイナリを維持し、shellと変更JS・MP3だけ更新してrelease/itch/JudgeOfUltimate-web-20260912-menu-sounds.zipを作成。CPU作業差分は混ぜず、オンラインbuild IDも互換維持。通常build/packageにも音源コピーを追加。6ebafbbでcommit/push済み、itch.ioアップロードは未実施。
+
+## 2026-09-12 マッチング不成立の調査
+
+ユーザーから複数起動でマッチしない報告。開き方は「別ウィンドウを並べて表示」。本番health成功、観測したWorker alarmに例外なし。独自build IDのWebSocket 2本はmatched成功。公開itchページのiframeはhtml/19195091、online.jsは最新menu-sounds ZIPと完全一致（build a1648266d929-dev-2e61cf1f0702）。実際の公開ページをPlaywrightの2コンテキストで起動し、独自buildへ差し替えて一般プレイヤーから隔離、両方hidden=false、selecting/stage1まで成功。DATAリクエストを遮断し、戦闘開始はしないので対戦集計も増やさない。
+
+不具合は現時点で再現できず、コード・サーバー変更なし。非表示タブは既存仕様でavailable=falseとなるが、ユーザーは並べたウィンドウなのでそれだけで断定しない。古い版と新しい版のbuild違いでは待機し続けるため、両方再読み込み後のONLINE BATTLEで改善するかを非同期質問中。改善しなければ両画面の接続状態や通信ログで切り分けが必要。公開ページ試験スクリプトはGit無視faithful/build/probe-public.cjs。
