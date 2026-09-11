@@ -237,3 +237,9 @@ language_preview.cjsで日本語環境JA→EN→JA→自動、別の英語ブラ
 ユーザー指定でCPU DEBUG表記を削除し、自動CPUのprofile名を空文字に変更。自動CPUという表示も対戦相手に付けない。専用フラグによる内部識別・マッチング条件は維持。サーバーhello/profile/新規match/再戦prepareでもdebugBotの名前を空欄にし、古いクライアントで待機中でも次のmatchから空欄となる。既存の1P/2Pラベルは通常の匿名プレイヤー同様。
 
 マッチング9テスト通過、マッチングWorker 15f63fa7-fb84-4276-a512-dc4163f3f01fへdeploy済み、health成功。最新ZIP release/itch/JudgeOfUltimate-web-20260912-unnamed-cpu.zip（前版online.jsの名前だけ置換、build ID維持）、itch.io未アップロード。ソース・ZIP commit/push済み。
+
+## 自動CPUの再接続待ちを20〜40秒へ短縮
+
+ユーザー指定でサーバー期限を20〜30秒ランダム＋最大10秒alarmへ変更。旧期限を持つ待機者にもqueuedAt+30秒で上限をかけ、deploy直後から短縮する。通常の再戦上限cancelは相手も検索へ戻るため再接続できる。回線断で通常プレイヤーがオフラインに戻った場合はONLINE BATTLEを再選択する必要があると説明。
+
+マッチング9テスト通過、7aad93f commit/push。Worker 55015919-bd73-4ef4-ad91-49586c95f07fへdeploy、health成功。待ち時間変更は既存ゲームにも反映済み。説明更新用ZIP release/itch/JudgeOfUltimate-web-20260912-shorter-wait.zipを作成、itch.io未アップロード。
