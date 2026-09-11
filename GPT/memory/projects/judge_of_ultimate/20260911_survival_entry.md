@@ -211,3 +211,11 @@ Cloudflare R2 Standard＋D1メタデータを候補とする。2026-09-12公式h
 サーバー25テスト、通常v2統合、接続ライフサイクル、touch_pad、menu_sounds通過。専用online_debug_bot.cjsのブラウザ2個・DATAなしローカル試験は1回目53秒で開始後postmatch待ち240秒timeout（途中Worker reloadあり、原因未確定）。2回目は約57秒でmatch、自動選択・CPU対戦の一致（frame1800/hp20,1）・自動再戦・次の自動選択・OFF停止まで完走。最新版公開ゲームバイナリ・build IDを保持しUIだけ差替え。
 
 6ce2d96 commit/push、マッチングWorker 9987f1f8-a7d7-4294-b73b-2205a431f890へdeploy、health成功。最新ZIP release/itch/JudgeOfUltimate-web-20260912-debug-bot.zip、itch.io未アップロード。専用常駐CPUブラウザはまだ起動していない。詳細online-server/DEBUG-BOT.md。既存CPU変更は含めない。
+
+## 自動CPUの再戦上限と手加減
+
+ユーザー指定で再戦上限を新規接続ごとに3回または4回ランダム設定し、初戦を含め計4〜5試合の後にcancel、次のmaintainで専用待機へ復帰。CPUの確定ラウンド勝利ごとに難度をHARD→NORMAL→EASYへ1段階低下、同じ相手との再戦中は維持、新規接続でHARDへ戻す。peerオブジェクトの有無ではなくmatchIdで同じ対戦系列かを判定。
+
+途中ユーザーから「入力のみを送るなら相手はCPU難度を知らなくてよいのでは」と質問。生成済み入力を転送する方式ならその通りだが、現在はbit16のCPU操作フラグを送り、両端末のCゲーム本体がCPUを実行する実装なので難度一致が必要、と説明した。方式変更はせず、入力bit17で難度あり、bit18以降で0〜4を伝達する。確定勝利だけを判定し、予測入力で難度を二重低下させない。各simulation tickで難度が変わる時のみSetComLevelを呼ぶ（同値でも呼ぶとCOM_BRAINがリセットされるため）。core.roundWinsの値も確定フレーム結果に保持する。
+
+debug_handicap.cjsで遅延・予測・巻戻しを含む749フレームの実Wasm状態一致と片側だけの難度変更を検証。debug_rotation.cjsで勝ち/負け/同じ勝数の再通知/最低難度/再戦上限3と4/再待機を検証。rollback_network.js全11ステージの完走・同期、接続ライフサイクルも通過。サーバー変更なし。新ZIP release/itch/JudgeOfUltimate-web-20260912-debug-handicap.zipは旧binaryを維持、入力互換性のためbuild IDに-cpu-level-v1を追加したので対戦する両側で版を更新する必要がある。itch.io未アップロード。
