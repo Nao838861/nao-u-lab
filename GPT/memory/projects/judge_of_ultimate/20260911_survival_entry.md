@@ -231,3 +231,9 @@ hidden_settings.cjsでPC/スマホの初期非表示、名前表示、F8、長�
 SensorsのSan Francisco指定による確認を案内したが、ユーザー環境ではうまくいかなかった。隠し設定に「表示言語（変更時にページ再読み込み）」の自動／日本語／Englishを追加。sessionStorageのjou-debug-languageでこのタブの検証設定を保持、選択でページだけreloadする。自動は従来どおりnavigator.languages[0]優先、日本語以外は英語。F8で開いて選択でき、ブラウザ再起動は不要。ページ再読み込みに伴い試合は終了するためラベルで明示。
 
 language_preview.cjsで日本語環境JA→EN→JA→自動、別の英語ブラウザ環境で初期自動ENを確認。最新ZIP release/itch/JudgeOfUltimate-web-20260912-language-preview.zip、ゲームbinary・通信build ID維持。commit/push済み、itch.io未アップロード。Sensorsで失敗した正確な原因は未確定。
+
+## 自動CPUの名前を空欄に
+
+ユーザー指定でCPU DEBUG表記を削除し、自動CPUのprofile名を空文字に変更。自動CPUという表示も対戦相手に付けない。専用フラグによる内部識別・マッチング条件は維持。サーバーhello/profile/新規match/再戦prepareでもdebugBotの名前を空欄にし、古いクライアントで待機中でも次のmatchから空欄となる。既存の1P/2Pラベルは通常の匿名プレイヤー同様。
+
+マッチング9テスト通過、マッチングWorker 15f63fa7-fb84-4276-a512-dc4163f3f01fへdeploy済み、health成功。最新ZIP release/itch/JudgeOfUltimate-web-20260912-unnamed-cpu.zip（前版online.jsの名前だけ置換、build ID維持）、itch.io未アップロード。ソース・ZIP commit/push済み。
