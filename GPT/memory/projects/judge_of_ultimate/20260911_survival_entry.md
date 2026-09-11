@@ -219,3 +219,9 @@ Cloudflare R2 Standard＋D1メタデータを候補とする。2026-09-12公式h
 途中ユーザーから「入力のみを送るなら相手はCPU難度を知らなくてよいのでは」と質問。生成済み入力を転送する方式ならその通りだが、現在はbit16のCPU操作フラグを送り、両端末のCゲーム本体がCPUを実行する実装なので難度一致が必要、と説明した。方式変更はせず、入力bit17で難度あり、bit18以降で0〜4を伝達する。確定勝利だけを判定し、予測入力で難度を二重低下させない。各simulation tickで難度が変わる時のみSetComLevelを呼ぶ（同値でも呼ぶとCOM_BRAINがリセットされるため）。core.roundWinsの値も確定フレーム結果に保持する。
 
 debug_handicap.cjsで遅延・予測・巻戻しを含む749フレームの実Wasm状態一致と片側だけの難度変更を検証。debug_rotation.cjsで勝ち/負け/同じ勝数の再通知/最低難度/再戦上限3と4/再待機を検証。rollback_network.js全11ステージの完走・同期、接続ライフサイクルも通過。サーバー変更なし。新ZIP release/itch/JudgeOfUltimate-web-20260912-debug-handicap.zipは旧binaryを維持、入力互換性のためbuild IDに-cpu-level-v1を追加したので対戦する両側で版を更新する必要がある。itch.io未アップロード。
+
+## オンライン設定の隠しメニュー化
+
+ユーザー承認のF8／「遊び方」見出し2秒長押しで設定欄の表示・非表示を切替。初期HTMLでhidden、開く時は全画面を解除して設定欄へスクロール、再読込で閉じる。短押し・10px超移動・スクロール・フォーカス喪失で長押しを取消。見出しの文字選択・長押しメニューを抑止。PCプレイヤー名は従来のゲーム直下、スマホも設定欄からゲーム直下へ移して通常使用可能にした。自動CPU試験は隠しメニューを開いてからOFF操作するよう更新。
+
+hidden_settings.cjsでPC/スマホの初期非表示、名前表示、F8、長押し/取消、再読込、全画面解除を確認。touch_pad.cjsも通過。ad39f60 commit/push。最新ZIP release/itch/JudgeOfUltimate-web-20260912-hidden-settings.zip、前回のゲームbinary・通信build ID維持。itch.io未アップロード、サーバー変更なし。
