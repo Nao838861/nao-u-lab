@@ -169,3 +169,9 @@ data9件・adminブラウザ・servicesブラウザ・集計除外試験通過�
 ユーザーの明示依頼で本番analyticsの短時間テスト候補を削除。名前なしdesktop、全訪問の開始〜最終が10秒未満、モード集合がMENU/SURVIVALのみの9訪問者17訪問。約5〜6秒で終了する反復パターンを対象とし、別IPのMENUのみ1件と長時間/オンラインは残した。
 
 削除前全体・対象JSONと実行SQLはゲームのGit無視領域faithful/build/analytics-before-test-cleanup.json、analytics-test-cleanup-selected.json、analytics-test-cleanup.sql。ID・updated・seq一致条件で削除し、対象UTC日の既存daily行のみ再集計。管理APIで32→15訪問、残存4訪問者、対象全件消失、その他の訪問とオンライン対戦ID維持を確認。ランキングは未変更。アプリの変更やZIP作成はなし。
+
+## 対戦相手の多様性と待ち時間の優先
+
+ユーザー指定の「最近の対戦相手を避ける＋長く待っている人を優先＋少人数なら制限を緩める」を v2 マッチングへ実装。候補中20秒以上の待機者を最長順で優先し、それ以外は最近の相手を下げ、同条件なら待機開始順。履歴は接続セッション内の30分・最大8人で両者側を参照する。WebSocket再開では維持、新規接続ではリセット。候補1人なら最近の相手も即選択、既存の失敗後3秒回避と明示的な再戦は維持。ping優先や候補集めの追加待機は導入していない。
+
+21単体テスト、DATAバインディングを外したローカルWorkerで接続・再接続・再戦・自動再マッチングの統合テスト、deploy dry-run通過。コード・テスト・MATCHMAKING.mdを37dc431でcommit/push。本番マッチングWorkerをfaf1bf76-fff9-4c21-a18c-c153a40ee571へデプロイしhealth成功。サーバーだけの変更なのでゲームZIP更新不要。既存のCPU関連差分は触っていない。
