@@ -201,3 +201,13 @@ menu_sounds.cjsでMP3デコード・再生、タイトル移動・決定、難�
 ユーザーが保存・サーバー再生の容量と現実性を質問。rollback.jsの入力は16bitパッド＋bit16 CPU切替、確定フレーム通知あり。オンライン初期化はキャラ・ステージ・モード・seedを受けて状態を初期化する。両者各32bitで保存すると60fps×8byte=480byte/秒、1分28.8KB、3分86.4KB、5分144KB、10分288KB（ヘッダ・定期hash等別、未圧縮の理論値）。確定入力を保存する方式が適切で、予測フレームや毎フレームのメモリsnapshotは保存しない。CPU戦やサバイバルには別途初期状態・進行情報の対応が必要。
 
 Cloudflare R2 Standard＋D1メタデータを候補とする。2026-09-12公式https://developers.cloudflare.com/r2/pricing/確認：10GB-month、Class A月100万、Class B月1000万まで無料、外向き転送無料。超過保存$0.015/GB-month、Workers等は別枠。仮に1件150KBなら1万件1.5GB、1日1000件×30日保持4.5GB。案は1件512KB上限＋30日保持、初期は手動保存。更新互換性は入力だけでは保証できないため再生用ゲームバージョンの保管/旧版リプレイ失効方針が必要。容量見積もりのみでリプレイ機能・R2契約設定・デプロイはしていない。
+
+## 全自動オンラインCPU待機役
+
+通常プレイヤーが1人だけ40〜70秒待った時だけ参加する全自動デバッグCPUを実装。onlineDebug=1クエリ、初期化前JOU_ONLINE_DEBUG=true、または設定欄onlineDebugBotチェックで起動。名前CPU DEBUG、キャラは毎試合ランダム、自動決定・CPU操作・2秒後の再戦YES・通信断後の自動復帰。OFF時はcancelして停止。ユーザーの保存名は上書きせず、プロフィール同期も停止。前面の専用ブラウザを起動しておく方式で、サーバーがゲームを実行するものではない。
+
+サーバーhelloにdebugBotを追加、同ビルドのavailableな通常プレイヤーが1人のみの時だけbotを候補にする（対戦中の通常人も数える）。bot同士不可。通常人の待機開始時に40〜60秒期限＋既存最大10秒alarmで通常40〜70秒。通常人が増えたら進行中の試合は継続し、結果確定後に再戦せず人同士の待機へ戻す。単独なら合意再戦は即許可。自動CPU端末のanalytics送信を止め、debugMatchのサーバー対戦集計も除外。通常相手側の利用記録は残る。
+
+サーバー25テスト、通常v2統合、接続ライフサイクル、touch_pad、menu_sounds通過。専用online_debug_bot.cjsのブラウザ2個・DATAなしローカル試験は1回目53秒で開始後postmatch待ち240秒timeout（途中Worker reloadあり、原因未確定）。2回目は約57秒でmatch、自動選択・CPU対戦の一致（frame1800/hp20,1）・自動再戦・次の自動選択・OFF停止まで完走。最新版公開ゲームバイナリ・build IDを保持しUIだけ差替え。
+
+6ce2d96 commit/push、マッチングWorker 9987f1f8-a7d7-4294-b73b-2205a431f890へdeploy、health成功。最新ZIP release/itch/JudgeOfUltimate-web-20260912-debug-bot.zip、itch.io未アップロード。専用常駐CPUブラウザはまだ起動していない。詳細online-server/DEBUG-BOT.md。既存CPU変更は含めない。
