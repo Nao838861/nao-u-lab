@@ -195,3 +195,9 @@ menu_sounds.cjsでMP3デコード・再生、タイトル移動・決定、難�
 オンライン成績は両者の「1P 1W - 2L」から自分側だけ中央「1Win - 2Lose」へ変更。再戦時のDOM説明も自分だけにし、canvasで大文字化しない。touch_pad.cjsで2P側の勝敗反転、表示1行、タッチジェスチャキャンセル、複数指・長押し・解除・画面端・縦横・全画面・PC配置を検証し成功。既存game_ui_browserの旧表示期待も更新。ac5a91eでcommit/push。
 
 最新ZIPはrelease/itch/JudgeOfUltimate-web-20260912-touch-score.zip。前回menu-sounds ZIPのゲームバイナリとbuild IDを維持し、該当UIだけ更新（CPU作業差分は混ぜない）。itch.ioへのアップロードは未実施。
+
+## リプレイ容量の見積もり（未実装）
+
+ユーザーが保存・サーバー再生の容量と現実性を質問。rollback.jsの入力は16bitパッド＋bit16 CPU切替、確定フレーム通知あり。オンライン初期化はキャラ・ステージ・モード・seedを受けて状態を初期化する。両者各32bitで保存すると60fps×8byte=480byte/秒、1分28.8KB、3分86.4KB、5分144KB、10分288KB（ヘッダ・定期hash等別、未圧縮の理論値）。確定入力を保存する方式が適切で、予測フレームや毎フレームのメモリsnapshotは保存しない。CPU戦やサバイバルには別途初期状態・進行情報の対応が必要。
+
+Cloudflare R2 Standard＋D1メタデータを候補とする。2026-09-12公式https://developers.cloudflare.com/r2/pricing/確認：10GB-month、Class A月100万、Class B月1000万まで無料、外向き転送無料。超過保存$0.015/GB-month、Workers等は別枠。仮に1件150KBなら1万件1.5GB、1日1000件×30日保持4.5GB。案は1件512KB上限＋30日保持、初期は手動保存。更新互換性は入力だけでは保証できないため再生用ゲームバージョンの保管/旧版リプレイ失効方針が必要。容量見積もりのみでリプレイ機能・R2契約設定・デプロイはしていない。
