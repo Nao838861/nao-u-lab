@@ -187,3 +187,11 @@ menu_sounds.cjsでMP3デコード・再生、タイトル移動・決定、難�
 ユーザーから複数起動でマッチしない報告。開き方は「別ウィンドウを並べて表示」。本番health成功、観測したWorker alarmに例外なし。独自build IDのWebSocket 2本はmatched成功。公開itchページのiframeはhtml/19195091、online.jsは最新menu-sounds ZIPと完全一致（build a1648266d929-dev-2e61cf1f0702）。実際の公開ページをPlaywrightの2コンテキストで起動し、独自buildへ差し替えて一般プレイヤーから隔離、両方hidden=false、selecting/stage1まで成功。DATAリクエストを遮断し、戦闘開始はしないので対戦集計も増やさない。
 
 不具合は現時点で再現できず、コード・サーバー変更なし。非表示タブは既存仕様でavailable=falseとなるが、ユーザーは並べたウィンドウなのでそれだけで断定しない。古い版と新しい版のbuild違いでは待機し続けるため、両方再読み込み後のONLINE BATTLEで改善するかを非同期質問中。改善しなければ両画面の接続状態や通信ログで切り分けが必要。公開ページ試験スクリプトはGit無視faithful/build/probe-public.cjs。
+
+## 2026-09-12 スマホ長押し表示・自分の勝敗表示
+
+その後ユーザーからPC同士、続いてスマホも接続できたと報告。接続不成立の原因は未確定のまま終了。新依頼のスマホ十字キー長押しによる拡大鏡・コピー表示対策として、矢印文字をSVGへ置換し、パッド領域だけtouchstart/touchmoveを非passiveでキャンセル、ゲーム内の選択範囲も解除。既存pointer入力と独立したtouch終了照合は維持。ネイティブメニュー抑止の実機確認は未実施。
+
+オンライン成績は両者の「1P 1W - 2L」から自分側だけ中央「1Win - 2Lose」へ変更。再戦時のDOM説明も自分だけにし、canvasで大文字化しない。touch_pad.cjsで2P側の勝敗反転、表示1行、タッチジェスチャキャンセル、複数指・長押し・解除・画面端・縦横・全画面・PC配置を検証し成功。既存game_ui_browserの旧表示期待も更新。ac5a91eでcommit/push。
+
+最新ZIPはrelease/itch/JudgeOfUltimate-web-20260912-touch-score.zip。前回menu-sounds ZIPのゲームバイナリとbuild IDを維持し、該当UIだけ更新（CPU作業差分は混ぜない）。itch.ioへのアップロードは未実施。
