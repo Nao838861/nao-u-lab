@@ -11,3 +11,6 @@ public/tree/
 public/narration/*.wav
 public/narration/duration-report.json
 .remotion/
+out/part2/
+out/part2_audio_review.md
+public/narration/part2/
