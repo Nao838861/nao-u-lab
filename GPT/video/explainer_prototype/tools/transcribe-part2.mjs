@@ -21,7 +21,9 @@ if (!key) throw new Error("API key unavailable");
 const m = JSON.parse(
   await readFile(path.join(root, "narration/part2-cuts.json"), "utf8"),
 );
-const out = path.join(root, "public/narration/part2/transcripts");
+const audioDir = path.join(root, "public", m.outputDirectory);
+const raw = process.argv.includes("--raw");
+const out = path.join(audioDir, raw ? "raw/transcripts" : "transcripts");
 await mkdir(out, { recursive: true });
 let cursor = 0;
 await Promise.all(
@@ -30,7 +32,7 @@ await Promise.all(
       const c = m.cuts[cursor++];
       const dest = path.join(out, c.id + ".json");
       const wav = await readFile(
-        path.join(root, "public/narration/part2", c.id + ".wav"),
+        path.join(audioDir, raw ? "raw" : "", c.id + ".wav"),
       );
       const audioHash = createHash("sha256").update(wav).digest("hex");
       try {

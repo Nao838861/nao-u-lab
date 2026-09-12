@@ -1,4 +1,4 @@
-# 第二部解説動画 AI活用とまとめまで収録
+# 第二部解説動画 短縮と自然な間の補正
 
 ## 再開時に読む
 
@@ -8,21 +8,20 @@
 
 ## 現在の構成
 
-ユーザーと構成を相談後、全体レビューと動きのある映像化を依頼された。重複文を削り、実データと動く模式図による初回レビューを制作。
+最新依頼は「10分は長く冗長なので半分くらいへ再構築し、前回と同じように不自然な間を補正する」。19カットから13カットへ統合し、原稿の重複を削った。前半の技術説明、後半の作り方、AI活用、最後の挨拶は残した。
 
-- 前半：タイトル、約8msの制約、背景の投影と表、描画順、敵の移動表、当たり判定、2フレーム配分とまとめ。
-- 後半：C言語→AIによるアセンブリ化、8bit化、背景Xを16bitで残す理由、Houdiniでの軌跡作成、AIの全自動抽出が難しかった話、人の目印とAI補間、AIへの任せ方の変化、全体のまとめ。
-- 暫定IDはC01〜C12、C14〜C18とC08a・C08bの19件。第一部のカット番号とは別管理。
-- ユーザーの「AIの活用の章とまとめを追加して動画にして」を受け、C16〜C18を追加。20260816_explainer_video_structure.mdの制作記録に基づく。
+カットはC01・C02・C05・C08・C08a・C08b・C09・C10・C11・C14・C16・C17・C18。第一部と番号は別管理。C09が前半の締め。
 
-## 制作物
+## 制作物と再開
 
-- composition `Part2Review`、1280×720、60fps、36,106フレーム、10分1.77秒。
-- 最新出力：`video/explainer_prototype/out/part2/part2_with_ai_and_summary_720p60.mp4`。以前の `part2_review_720p60.mp4` は残している。
-- 実装：`src/Part2.tsx`、抽出データ：`src/part2Data.json`
-- 音声：`narration/part2-cuts.json`、生成済みWAVは `public/narration/part2/`
-- 文境界と音声ハッシュ：`src/part2Alignment.json`
-- 再生成：`node tools/render-part2-review.mjs --output=part2_with_ai_and_summary_720p60.mp4`。詳細は撮影素材メモを参照。
+- 最新出力：`video/explainer_prototype/out/part2/part2_short_natural_720p60.mp4`。旧10分版と初回版はそのまま残す。
+- composition `Part2Review`、1280×720、60fps。実測尺と目次は `PART2_REVIEW_AND_CAPTURE.md`。
+- 実装：`src/Part2.tsx`、実データ：`src/part2Data.json`。
+- 音声manifest：`narration/part2-cuts.json`、WAV：`public/narration/part2_short/`。
+- 生成時の話速を1.2から1.1へ変更し、語句に余裕を持たせた。尺削減は原稿の統合が中心。
+- `prepare-part2-pauses.py` で未加工WAVの単語時刻と句読点を対応付け、句読点を保護して他の文中無音を110ms上限へ補正する。`verify-part2-pauses.mjs` で保護区間とPCM編集を検証する。
+- 補正後の全文照合と文境界は `src/part2Alignment.json`。最後の挨拶は読み落とし対策として本文と別生成し連結する。
+- 再生成の順序は `PART2_REVIEW_AND_CAPTURE.md`。新しいWAVに古い無音候補番号を流用しない。
 
 ## 説明上の重要事項
 
@@ -36,6 +35,6 @@
 
 Houdini録画は `C:/Users/owner/Videos/Houdiniで敵軌跡.mp4`。public内コピーと同一で5.85秒。既存素材を利用済み。
 
-背景の左右追従比較と、AIの実際の誤検出結果は未確保。C12とC15には模式図を明示した仮映像を入れてある。撮影条件は `PART2_REVIEW_AND_CAPTURE.md` に具体化済み。
+背景の左右追従比較と、AIの実際の誤検出結果は未確保。短縮版C11とC16には模式図を明示した仮映像を入れてある。撮影条件は `PART2_REVIEW_AND_CAPTURE.md` に具体化済み。
 
 結末まで含むレビュー版。C16の目印・補間は制作手順の模式再現と明示し、実際の操作映像とは区別した。細かな動きの間・抑揚・差し替え映像は引き続き調整対象。第一部は変更していない。

@@ -175,7 +175,7 @@ for (const cut of selectedCuts) {
   } else {
     const segments = [
       {
-        input: cut.ttsText ?? cut.text,
+        input: cut.ttsInput ?? cut.ttsText ?? cut.text,
         instructions: `${manifest.commonInstructions}${cut.instructions}`,
       },
       ...(cut.appendTtsSegments ?? []).map((segment) => ({

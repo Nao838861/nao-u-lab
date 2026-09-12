@@ -11,7 +11,7 @@ clean = re.sub(r'<!--.*?-->', '', text, flags=re.S)
 sections = re.findall(r'^# (C\d+[ab]?) (.*?)\n(.*?)(?=^# |\Z)', clean, re.M | re.S)
 base = json.loads((ROOT / 'narration/later-cuts.json').read_text(encoding='utf-8'))
 manifest = {k: base[k] for k in ('model', 'voice', 'speed', 'responseFormat', 'commonInstructions')}
-manifest.update(fps=60, tailPaddingSeconds=0.65, outputDirectory='narration/part2', reportFileName='duration-report.json',
+manifest.update(speed=1.1, fps=60, tailPaddingSeconds=0.4, outputDirectory='narration/part2_short', reportFileName='duration-report.json',
                 silenceCompaction={'preserveInternalSilence': True, 'maximumLeadingSilenceMs': 20, 'maximumTrailingSilenceMs': 100})
 cuts = []
 cursor = 0
@@ -26,6 +26,12 @@ for old, title, body in sections:
     cuts.append(cut)
     if old == 'C11':
         cut['ttsText'] = spoken.replace('65535', '六万五千五百三十五')
+    if old == 'C05':
+        cut['ttsText'] = spoken.replace('56段階', '五十六段階')
+    if old == 'C18':
+        # 前回同様、終わりの挨拶の読み落としを避けて別生成し、同じ声で連結する。
+        cut['ttsInput'] = ''.join(lines[:-1])
+        cut['appendTtsSegments'] = [{'text': lines[-1]}]
 manifest['cuts'] = cuts
 dest = ROOT / 'narration/part2-cuts.json'
 if dest.exists():

@@ -10,7 +10,7 @@ const root = path.resolve(import.meta.dirname, "..");
 const out = path.join(root, "out/part2");
 const outputName = path.basename(
   process.argv.find((a) => a.startsWith("--output="))?.slice(9) ??
-    "part2_review_720p60.mp4",
+    "part2_short_natural_720p60.mp4",
 );
 await mkdir(out, { recursive: true });
 const serveUrl = await bundle({

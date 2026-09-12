@@ -9,8 +9,8 @@ last=0
 for c in m['cuts']:
     assert c['startFrame']==last,(c['id'],'timeline gap')
     assert c['measuredDurationSeconds']*60 <= c['durationFrames'],c['id']
-    assert (ROOT/'public/narration/part2'/f"{c['id']}.wav").exists()
-    assert hashlib.sha256((ROOT/'public/narration/part2'/f"{c['id']}.wav").read_bytes()).hexdigest()==a[c['id']]['audioHash'],(c['id'],'stale alignment')
+    assert (ROOT/'public'/m['outputDirectory']/f"{c['id']}.wav").exists()
+    assert hashlib.sha256((ROOT/'public'/m['outputDirectory']/f"{c['id']}.wav").read_bytes()).hexdigest()==a[c['id']]['audioHash'],(c['id'],'stale alignment')
     starts=a[c['id']]['starts']
     assert len(starts)==len(c['sentences'])
     assert all(x<=y for x,y in zip(starts,starts[1:])),c['id']

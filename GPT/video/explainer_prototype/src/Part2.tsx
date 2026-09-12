@@ -939,17 +939,12 @@ const Ending: React.FC<{ b: number }> = ({ b }) => (
     <AbsoluteFill
       style={{ background: "linear-gradient(90deg,#070b13e8,#070b1350)" }}
     />
-    {b < 5 ? (
+    {b < 2 ? (
       <>
         <Label x={70} y={210} size={34} color={cyan}>
-          実行中の計算を減らす
+          計算を事前準備へ
         </Label>
-        {b >= 2 && (
-          <Label x={70} y={315} size={34} color={gold}>
-            必要な範囲と精度を残す
-          </Label>
-        )}
-        {b >= 3 && (
+        {b >= 1 && (
           <Label x={70} y={420} size={34} color={green}>
             AIで事前作業と試行錯誤を支える
           </Label>
@@ -981,7 +976,7 @@ const Scene: React.FC<{ cut: Cut }> = ({ cut }) => {
   const f = useCurrentFrame(),
     { fps } = useVideoConfig(),
     t = f / fps;
-  const { index: b } = beat(cut, t);
+  const { index: b, local } = beat(cut, t);
   const k = cut.sourceCut;
   let content: React.ReactNode;
   if (k === "C01")
@@ -1080,7 +1075,27 @@ const Scene: React.FC<{ cut: Cut }> = ({ cut }) => {
         </Label>
       </>
     );
-  else if (["C04", "C05", "C06"].includes(k))
+  else if (k === "C05")
+    content =
+      b === 0 ? (
+        <>
+          <Demo start={17} />
+          <AbsoluteFill style={{ background: "#070b13bd" }} />
+          <Label x={85} y={240} size={40} color={pink}>
+            乗算・除算の命令がない
+          </Label>
+          <Label x={85} y={340} size={31}>
+            基本命令を組み合わせる → 時間がかかる
+          </Label>
+        </>
+      ) : (
+        <Projection
+          kind={b === 1 ? "C04" : b >= 4 ? "C06" : "C05"}
+          b={b}
+          t={t}
+        />
+      );
+  else if (["C04", "C06"].includes(k))
     content = <Projection kind={k} b={b} t={t} />;
   else if (k === "C07") {
     const correct = t % 8 > 4;
@@ -1106,17 +1121,83 @@ const Scene: React.FC<{ cut: Cut }> = ({ cut }) => {
         </Label>
       </>
     );
-  } else if (k === "C08") content = <Bucket t={t} />;
+  } else if (k === "C08")
+    content =
+      b === 0 ? (
+        <>
+          <Horizon />
+          <Sprite x={660} y={440} size={160} tint="cyan" />
+          <Sprite x={700} y={530} size={240} tint="gold" />
+          <Label x={65} y={180} size={34} color={green}>
+            奥 → 手前の順に描く
+          </Label>
+        </>
+      ) : (
+        <Bucket t={t} />
+      );
   else if (k === "C08a") content = <EnemyTable t={t} />;
   else if (k === "C08b")
-    content = b < 3 ? <Bucket t={t} collision /> : <Hit t={t} />;
-  else if (k === "C09") content = <Timeline b={b} t={t} />;
+    content = b < 2 ? <Bucket t={t} collision /> : <Hit t={t} />;
+  else if (k === "C09")
+    content = (
+      <Timeline
+        b={b === 0 ? 0 : b === 1 ? (local < 2.3 ? 2 : local < 4.8 ? 3 : 4) : 5}
+        t={t}
+      />
+    );
   else if (k === "C10") content = <Flow b={b} t={t} />;
-  else if (k === "C11") content = <Precision t={t} />;
+  else if (k === "C11")
+    content = b < 2 ? <Precision t={t} /> : <Background t={t} />;
   else if (k === "C12") content = <Background t={t} />;
-  else if (k === "C14") content = <Houdini t={t} b={b} />;
-  else if (k === "C16") content = <AssistedTrajectory t={t} b={b} />;
-  else if (k === "C17") content = <AiDevelopment t={t} b={b} />;
+  else if (k === "C14") content = <Houdini t={t} b={b === 0 ? 0 : 3} />;
+  else if (k === "C16")
+    content =
+      b < 2 ? (
+        <Tracking t={t} />
+      ) : (
+        <AssistedTrajectory t={local} b={b === 2 ? (local < 3.5 ? 1 : 2) : 3} />
+      );
+  else if (k === "C17")
+    content = (
+      <>
+        <div
+          style={{
+            position: "absolute",
+            left: 560,
+            top: 155,
+            width: 660,
+            height: 430,
+            overflow: "hidden",
+          }}
+        >
+          <Demo start={17} />
+        </div>
+        {["絵と動作の仕様", "AIが実装", "動いた画面で判断", "修正を伝える"].map(
+          (s, i) => (
+            <Panel
+              key={s}
+              x={60}
+              y={170 + i * 100}
+              w={455}
+              h={78}
+              color={
+                i ===
+                (b === 0 ? Math.min(1, Math.floor(local / 3)) : b === 1 ? 2 : 3)
+                  ? green
+                  : cyan
+              }
+            >
+              <Label x={22} y={20} size={27}>
+                {s}
+              </Label>
+            </Panel>
+          ),
+        )}
+        <Label x={580} y={598} size={23} color={green}>
+          指示 → 実装 → 確認 → 修正
+        </Label>
+      </>
+    );
   else if (k === "C18") content = <Ending b={b} />;
   else content = <Tracking t={t} />;
   return (
@@ -1129,7 +1210,7 @@ const Scene: React.FC<{ cut: Cut }> = ({ cut }) => {
       }}
     >
       {content}
-      {k !== "C01" && !(k === "C18" && b >= 5) && (
+      {k !== "C01" && !(k === "C18" && b >= 2) && (
         <>
           <Label x={55} y={28} size={17} color={cyan}>
             その2 ／{" "}
@@ -1138,7 +1219,6 @@ const Scene: React.FC<{ cut: Cut }> = ({ cut }) => {
             )
               ? "後半：作り方と最適化"
               : "前半：30fpsを支える仕組み"}
-            　{cut.sourceCut}
           </Label>
           <Label x={55} y={65} size={36}>
             {cut.title.replace("後半：", "")}
@@ -1163,7 +1243,10 @@ const Scene: React.FC<{ cut: Cut }> = ({ cut }) => {
           }}
         />
       </div>
-      <Audio src={staticFile(`narration/part2/${cut.id}.wav`)} volume={0.95} />
+      <Audio
+        src={staticFile(`${manifest.outputDirectory}/${cut.id}.wav`)}
+        volume={0.95}
+      />
     </AbsoluteFill>
   );
 };
