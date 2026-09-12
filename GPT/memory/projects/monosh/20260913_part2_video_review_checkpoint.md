@@ -1,4 +1,4 @@
-# 第二部解説動画 初回レビュー制作
+# 第二部解説動画 AI活用とまとめまで収録
 
 ## 再開時に読む
 
@@ -11,18 +11,18 @@
 ユーザーと構成を相談後、全体レビューと動きのある映像化を依頼された。重複文を削り、実データと動く模式図による初回レビューを制作。
 
 - 前半：タイトル、約8msの制約、背景の投影と表、描画順、敵の移動表、当たり判定、2フレーム配分とまとめ。
-- 後半：C言語→AIによるアセンブリ化、8bit化、背景Xを16bitで残す理由、Houdiniでの軌跡作成、AIの全自動抽出が難しかった話。
-- 暫定IDはC01〜C12、C14、C15とC08a・C08bの16件。第一部のカット番号とは別管理。
-- AI抽出の改善策と全体の結末は未確定。未確定の結論は作っていない。
+- 後半：C言語→AIによるアセンブリ化、8bit化、背景Xを16bitで残す理由、Houdiniでの軌跡作成、AIの全自動抽出が難しかった話、人の目印とAI補間、AIへの任せ方の変化、全体のまとめ。
+- 暫定IDはC01〜C12、C14〜C18とC08a・C08bの19件。第一部のカット番号とは別管理。
+- ユーザーの「AIの活用の章とまとめを追加して動画にして」を受け、C16〜C18を追加。20260816_explainer_video_structure.mdの制作記録に基づく。
 
 ## 制作物
 
-- composition `Part2Review`、1280×720、60fps、29,686フレーム、8分14.77秒。
-- 出力：`video/explainer_prototype/out/part2/part2_review_720p60.mp4`
+- composition `Part2Review`、1280×720、60fps、36,106フレーム、10分1.77秒。
+- 最新出力：`video/explainer_prototype/out/part2/part2_with_ai_and_summary_720p60.mp4`。以前の `part2_review_720p60.mp4` は残している。
 - 実装：`src/Part2.tsx`、抽出データ：`src/part2Data.json`
 - 音声：`narration/part2-cuts.json`、生成済みWAVは `public/narration/part2/`
 - 文境界と音声ハッシュ：`src/part2Alignment.json`
-- 再生成：`npm.cmd run render:part2-review`。詳細は撮影素材メモを参照。
+- 再生成：`node tools/render-part2-review.mjs --output=part2_with_ai_and_summary_720p60.mp4`。詳細は撮影素材メモを参照。
 
 ## 説明上の重要事項
 
@@ -38,4 +38,4 @@ Houdini録画は `C:/Users/owner/Videos/Houdiniで敵軌跡.mp4`。public内コ�
 
 背景の左右追従比較と、AIの実際の誤検出結果は未確保。C12とC15には模式図を明示した仮映像を入れてある。撮影条件は `PART2_REVIEW_AND_CAPTURE.md` に具体化済み。
 
-初回レビューなので、細かな動きの間・抑揚・差し替え映像は引き続き調整対象。動画を完成版扱いにしない。第一部は変更していない。
+結末まで含むレビュー版。C16の目印・補間は制作手順の模式再現と明示し、実際の操作映像とは区別した。細かな動きの間・抑揚・差し替え映像は引き続き調整対象。第一部は変更していない。

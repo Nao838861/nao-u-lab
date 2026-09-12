@@ -17,7 +17,7 @@ for c in m['cuts']:
     last=c['startFrame']+c['durationFrames']
 print(f'Validated {len(m["cuts"])} cuts, {last} frames, {last/60:.3f}s')
 for fraction in (.25,.7):
-    canvas=Image.new('RGB',(1280,4*205),'#162030')
+    canvas=Image.new('RGB',(1280,((len(m['cuts'])+3)//4)*205),'#162030')
     draw=ImageDraw.Draw(canvas)
     for i,c in enumerate(m['cuts']):
         im=Image.open(ROOT/'out/part2'/f'{c["id"]}_{fraction}.png').convert('RGB')

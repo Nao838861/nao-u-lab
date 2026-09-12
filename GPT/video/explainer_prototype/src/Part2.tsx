@@ -809,11 +809,173 @@ const Tracking: React.FC<{ t: number }> = ({ t }) => {
         実際の解析失敗映像・結果に差し替え予定
       </Label>
       <Label x={190} y={590} size={24}>
-        全自動では十分な精度が出なかった ― 続きは構成検討中
+        全自動では難しい → 人が要所を教える方法へ
       </Label>
     </>
   );
 };
+
+const AssistedTrajectory: React.FC<{ b: number; t: number }> = ({ b, t }) => {
+  const points = [
+    { x: 175, y: 340 },
+    { x: 627.5, y: 182.5 },
+    { x: 1080, y: 405 },
+  ];
+  const progress = clamp((t % 9) / 6);
+  const pos = (v: number) => ({
+    x: 175 + 905 * v,
+    y: 340 - 190 * Math.sin(v * Math.PI) + 65 * v,
+  });
+  const moving = pos(progress);
+  return (
+    <>
+      <Label x={60} y={145} color={gold}>
+        制作手順の模式再現：同じ敵に目印を付ける
+      </Label>
+      <svg width="1280" height="720" style={{ position: "absolute" }}>
+        <path
+          d={Array.from({ length: 25 }, (_, i) => {
+            const p = pos(i / 24);
+            return `${i ? "L" : "M"}${p.x} ${p.y}`;
+          }).join(" ")}
+          fill="none"
+          stroke="#385267"
+          strokeWidth="2"
+          strokeDasharray="6 8"
+        />
+        {b >= 2 &&
+          Array.from({ length: 25 }, (_, i) => {
+            const p = pos(i / 24);
+            return (
+              <circle
+                key={i}
+                cx={p.x}
+                cy={p.y}
+                r={4}
+                fill={cyan}
+                opacity={i / 24 <= progress ? 1 : 0.15}
+              />
+            );
+          })}
+      </svg>
+      {points.map((p, i) => (
+        <React.Fragment key={i}>
+          <Sprite x={p.x} y={p.y + 45} size={85} enemy opacity={0.65} />
+          <div
+            style={{
+              position: "absolute",
+              left: p.x - 15,
+              top: p.y - 15,
+              width: 30,
+              height: 30,
+              border: `3px solid ${gold}`,
+              borderRadius: "50%",
+            }}
+          />
+          <Label x={p.x - 50} y={460} size={21} color={gold}>
+            目印 {i + 1}
+          </Label>
+        </React.Fragment>
+      ))}
+      {b >= 2 && <Sprite x={moving.x} y={moving.y + 45} size={75} enemy />}
+      <Panel x={65} y={530} w={1145} h={80}>
+        <Label x={25} y={20} size={24} color={b >= 3 ? green : cyan}>
+          {b < 2
+            ? "人：追う敵を指定する"
+            : b === 2
+              ? "AI：座標抽出 → 補間 → 移動テーブル"
+              : "人：原作と比較 → 速度感・距離感を調整"}
+        </Label>
+      </Panel>
+    </>
+  );
+};
+
+const AiDevelopment: React.FC<{ b: number; t: number }> = ({ b, t }) => (
+  <>
+    <div
+      style={{
+        position: "absolute",
+        left: 495,
+        top: 160,
+        width: 725,
+        height: 420,
+        overflow: "hidden",
+        borderRadius: 12,
+      }}
+    >
+      <Demo start={17} />
+    </div>
+    {[
+      ["初期", "変換・アセンブラ化"],
+      ["中期", "座標抽出・表の生成"],
+      ["終盤", "絵と仕様から実装"],
+    ].map(([era, label], i) => (
+      <Panel
+        key={era}
+        x={60}
+        y={165 + i * 126}
+        w={405}
+        h={108}
+        color={i === Math.min(2, Math.max(0, b - 1)) ? gold : cyan}
+      >
+        <Label x={18} y={12} size={18} color={gold}>
+          {era}
+        </Label>
+        <Label x={18} y={47} size={25}>
+          {label}
+        </Label>
+      </Panel>
+    ))}
+    <Label x={95} y={593} size={25} color={green}>
+      画面を見て判断 → 指示 → AIが実装 → 再確認
+    </Label>
+  </>
+);
+
+const Ending: React.FC<{ b: number }> = ({ b }) => (
+  <>
+    <Demo start={13} />
+    <AbsoluteFill
+      style={{ background: "linear-gradient(90deg,#070b13e8,#070b1350)" }}
+    />
+    {b < 5 ? (
+      <>
+        <Label x={70} y={210} size={34} color={cyan}>
+          実行中の計算を減らす
+        </Label>
+        {b >= 2 && (
+          <Label x={70} y={315} size={34} color={gold}>
+            必要な範囲と精度を残す
+          </Label>
+        )}
+        {b >= 3 && (
+          <Label x={70} y={420} size={34} color={green}>
+            AIで事前作業と試行錯誤を支える
+          </Label>
+        )}
+      </>
+    ) : (
+      <AbsoluteFill
+        style={{
+          background: ink,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div style={{ fontSize: 46, fontWeight: 700 }}>
+          ご視聴ありがとうございました
+        </div>
+        <div style={{ fontSize: 25, color: cyan, marginTop: 30 }}>
+          ファミコンでスペースハリアーを動かすには？
+        </div>
+        <div style={{ fontSize: 23, color: "#a2b4c8", marginTop: 12 }}>
+          その2：CPUの最適化
+        </div>
+      </AbsoluteFill>
+    )}
+  </>
+);
 
 const Scene: React.FC<{ cut: Cut }> = ({ cut }) => {
   const f = useCurrentFrame(),
@@ -953,6 +1115,9 @@ const Scene: React.FC<{ cut: Cut }> = ({ cut }) => {
   else if (k === "C11") content = <Precision t={t} />;
   else if (k === "C12") content = <Background t={t} />;
   else if (k === "C14") content = <Houdini t={t} b={b} />;
+  else if (k === "C16") content = <AssistedTrajectory t={t} b={b} />;
+  else if (k === "C17") content = <AiDevelopment t={t} b={b} />;
+  else if (k === "C18") content = <Ending b={b} />;
   else content = <Tracking t={t} />;
   return (
     <AbsoluteFill
@@ -964,11 +1129,13 @@ const Scene: React.FC<{ cut: Cut }> = ({ cut }) => {
       }}
     >
       {content}
-      {k !== "C01" && (
+      {k !== "C01" && !(k === "C18" && b >= 5) && (
         <>
           <Label x={55} y={28} size={17} color={cyan}>
             その2 ／{" "}
-            {["C10", "C11", "C12", "C14", "C15"].includes(k)
+            {["C10", "C11", "C12", "C14", "C15", "C16", "C17", "C18"].includes(
+              k,
+            )
               ? "後半：作り方と最適化"
               : "前半：30fpsを支える仕組み"}
             　{cut.sourceCut}

@@ -28,7 +28,8 @@
       "startFrame": 0,
       "durationFrames": 756,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 11.945
+      "measuredDurationSeconds": 11.945,
+      "targetSeconds": 12.6
     },
     {
       "id": "P2C02",
@@ -46,7 +47,8 @@
       "startFrame": 756,
       "durationFrames": 1568,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 25.47
+      "measuredDurationSeconds": 25.47,
+      "targetSeconds": 26.133
     },
     {
       "id": "P2C03",
@@ -64,7 +66,8 @@
       "startFrame": 2324,
       "durationFrames": 1361,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 22.03
+      "measuredDurationSeconds": 22.03,
+      "targetSeconds": 22.683
     },
     {
       "id": "P2C04",
@@ -82,7 +85,8 @@
       "startFrame": 3685,
       "durationFrames": 1517,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 24.62
+      "measuredDurationSeconds": 24.62,
+      "targetSeconds": 25.283
     },
     {
       "id": "P2C05",
@@ -100,7 +104,8 @@
       "startFrame": 5202,
       "durationFrames": 1576,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 25.61
+      "measuredDurationSeconds": 25.61,
+      "targetSeconds": 26.267
     },
     {
       "id": "P2C06",
@@ -118,7 +123,8 @@
       "startFrame": 6778,
       "durationFrames": 1446,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 23.44
+      "measuredDurationSeconds": 23.44,
+      "targetSeconds": 24.1
     },
     {
       "id": "P2C07",
@@ -136,7 +142,8 @@
       "startFrame": 8224,
       "durationFrames": 1202,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 19.375
+      "measuredDurationSeconds": 19.375,
+      "targetSeconds": 20.033
     },
     {
       "id": "P2C08",
@@ -155,7 +162,8 @@
       "startFrame": 9426,
       "durationFrames": 2043,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 33.395
+      "measuredDurationSeconds": 33.395,
+      "targetSeconds": 34.05
     },
     {
       "id": "P2C08a",
@@ -175,7 +183,8 @@
       "startFrame": 11469,
       "durationFrames": 2449,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 40.165
+      "measuredDurationSeconds": 40.165,
+      "targetSeconds": 40.817
     },
     {
       "id": "P2C08b",
@@ -195,7 +204,8 @@
       "startFrame": 13918,
       "durationFrames": 2764,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 45.415
+      "measuredDurationSeconds": 45.415,
+      "targetSeconds": 46.067
     },
     {
       "id": "P2C09",
@@ -217,7 +227,8 @@
       "startFrame": 16682,
       "durationFrames": 3930,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 64.84
+      "measuredDurationSeconds": 64.84,
+      "targetSeconds": 65.5
     },
     {
       "id": "P2C10",
@@ -237,7 +248,8 @@
       "startFrame": 20612,
       "durationFrames": 1983,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 32.395
+      "measuredDurationSeconds": 32.395,
+      "targetSeconds": 33.05
     },
     {
       "id": "P2C11",
@@ -256,7 +268,8 @@
       "startFrame": 22595,
       "durationFrames": 2184,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 35.74
+      "measuredDurationSeconds": 35.74,
+      "targetSeconds": 36.4
     },
     {
       "id": "P2C12",
@@ -275,7 +288,8 @@
       "startFrame": 24779,
       "durationFrames": 1859,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 30.33
+      "measuredDurationSeconds": 30.33,
+      "targetSeconds": 30.983
     },
     {
       "id": "P2C14",
@@ -293,7 +307,8 @@
       "startFrame": 26638,
       "durationFrames": 1497,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 24.295
+      "measuredDurationSeconds": 24.295,
+      "targetSeconds": 24.95
     },
     {
       "id": "P2C15",
@@ -310,7 +325,70 @@
       "startFrame": 28135,
       "durationFrames": 1551,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 25.2
+      "measuredDurationSeconds": 25.2,
+      "targetSeconds": 25.85
+    },
+    {
+      "id": "P2C16",
+      "sourceCut": "C16",
+      "title": "人が目印を付け、AIが間を埋める",
+      "text": "そこで、すべてを自動で見つけてもらう方法から、人間が要所だけ教える方法に変えました。原作の動画をコマ画像に分け、何枚かの画像で、追いかけたい敵の位置に目印を付けます。AIには、その目印から座標を取り出し、途中の動きを補間して、ゲームで使う移動テーブルに変換してもらいました。出来上がった動きは原作と見比べ、速度感や距離感を調整します。この映像では、自動化を増やすより、人間が曖昧な部分を少し補う方が、効率よく作れました。",
+      "ttsText": "そこで、すべてを自動で見つけてもらう方法から、人間が要所だけ教える方法に変えました。原作の動画をコマ画像に分け、何枚かの画像で、追いかけたい敵の位置に目印を付けます。AIには、その目印から座標を取り出し、途中の動きを補間して、ゲームで使う移動テーブルに変換してもらいました。出来上がった動きは原作と見比べ、速度感や距離感を調整します。この映像では、自動化を増やすより、人間が曖昧な部分を少し補う方が、効率よく作れました。",
+      "sentences": [
+        "そこで、すべてを自動で見つけてもらう方法から、人間が要所だけ教える方法に変えました。",
+        "原作の動画をコマ画像に分け、何枚かの画像で、追いかけたい敵の位置に目印を付けます。",
+        "AIには、その目印から座標を取り出し、途中の動きを補間して、ゲームで使う移動テーブルに変換してもらいました。",
+        "出来上がった動きは原作と見比べ、速度感や距離感を調整します。",
+        "この映像では、自動化を増やすより、人間が曖昧な部分を少し補う方が、効率よく作れました。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 29686,
+      "durationFrames": 1929,
+      "minimumDurationFrames": 0,
+      "measuredDurationSeconds": 31.495,
+      "targetSeconds": 32.15
+    },
+    {
+      "id": "P2C17",
+      "sourceCut": "C17",
+      "title": "AIに任せる範囲が変わった",
+      "text": "開発が進むにつれて、AIに任せる範囲も変わっていきました。初期は、C言語で作った処理の変換や、アセンブラ化を任せていました。その後は、映像からの座標抽出や、テーブル作成にも使うようになりました。終盤には、絵と動作の仕様を渡して実装してもらい、動いた画面を見ながら修正を伝える作り方が増えました。ただし、何を作るか、どの動きならよいか、基本の仕組みをどうするかは、人間が判断する必要がありました。AIに作業を任せながら、実際の結果を見て確かめる。この往復が、開発を進めるうえで大切でした。",
+      "ttsText": "開発が進むにつれて、AIに任せる範囲も変わっていきました。初期は、C言語で作った処理の変換や、アセンブラ化を任せていました。その後は、映像からの座標抽出や、テーブル作成にも使うようになりました。終盤には、絵と動作の仕様を渡して実装してもらい、動いた画面を見ながら修正を伝える作り方が増えました。ただし、何を作るか、どの動きならよいか、基本の仕組みをどうするかは、人間が判断する必要がありました。AIに作業を任せながら、実際の結果を見て確かめる。この往復が、開発を進めるうえで大切でした。",
+      "sentences": [
+        "開発が進むにつれて、AIに任せる範囲も変わっていきました。",
+        "初期は、C言語で作った処理の変換や、アセンブラ化を任せていました。",
+        "その後は、映像からの座標抽出や、テーブル作成にも使うようになりました。",
+        "終盤には、絵と動作の仕様を渡して実装してもらい、動いた画面を見ながら修正を伝える作り方が増えました。",
+        "ただし、何を作るか、どの動きならよいか、基本の仕組みをどうするかは、人間が判断する必要がありました。",
+        "AIに作業を任せながら、実際の結果を見て確かめる。この往復が、開発を進めるうえで大切でした。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 31615,
+      "durationFrames": 2219,
+      "minimumDurationFrames": 0,
+      "measuredDurationSeconds": 36.32,
+      "targetSeconds": 36.983
+    },
+    {
+      "id": "P2C18",
+      "sourceCut": "C18",
+      "title": "まとめ",
+      "text": "今回は、ファミコンでスペースハリアーを動かすための、CPU処理の最適化を紹介しました。ゲームの特性に合わせて計算をテーブルへ移し、奥行きを使って描画順や当たり判定の負担を減らしました。さらに、必要な範囲と精度を見極めて、限られた処理時間に収めています。そしてAIは、変換や大量のテーブル作成、実装と修正の往復を支えてくれました。ファミコンの性能が変わったわけではありません。実行中に何を計算し、何をあらかじめ用意するか。その分け方と作り方の工夫で、この動きを実現しています。それでは、ご視聴ありがとうございました。",
+      "ttsText": "今回は、ファミコンでスペースハリアーを動かすための、CPU処理の最適化を紹介しました。ゲームの特性に合わせて計算をテーブルへ移し、奥行きを使って描画順や当たり判定の負担を減らしました。さらに、必要な範囲と精度を見極めて、限られた処理時間に収めています。そしてAIは、変換や大量のテーブル作成、実装と修正の往復を支えてくれました。ファミコンの性能が変わったわけではありません。実行中に何を計算し、何をあらかじめ用意するか。その分け方と作り方の工夫で、この動きを実現しています。それでは、ご視聴ありがとうございました。",
+      "sentences": [
+        "今回は、ファミコンでスペースハリアーを動かすための、CPU処理の最適化を紹介しました。",
+        "ゲームの特性に合わせて計算をテーブルへ移し、奥行きを使って描画順や当たり判定の負担を減らしました。",
+        "さらに、必要な範囲と精度を見極めて、限られた処理時間に収めています。",
+        "そしてAIは、変換や大量のテーブル作成、実装と修正の往復を支えてくれました。",
+        "ファミコンの性能が変わったわけではありません。実行中に何を計算し、何をあらかじめ用意するか。その分け方と作り方の工夫で、この動きを実現しています。",
+        "それでは、ご視聴ありがとうございました。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 33834,
+      "durationFrames": 2272,
+      "minimumDurationFrames": 0,
+      "measuredDurationSeconds": 37.21,
+      "targetSeconds": 37.867
     }
   ]
 }

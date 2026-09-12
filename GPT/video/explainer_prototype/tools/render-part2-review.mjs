@@ -8,6 +8,10 @@ import { readFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 const root = path.resolve(import.meta.dirname, "..");
 const out = path.join(root, "out/part2");
+const outputName = path.basename(
+  process.argv.find((a) => a.startsWith("--output="))?.slice(9) ??
+    "part2_review_720p60.mp4",
+);
 await mkdir(out, { recursive: true });
 const serveUrl = await bundle({
   entryPoint: path.join(root, "src/index.ts"),
@@ -19,6 +23,11 @@ const m = JSON.parse(
 );
 if (!process.argv.includes("--video-only")) {
   for (const c of m.cuts) {
+    if (
+      process.argv.includes("--new-stills") &&
+      !["C16", "C17", "C18"].includes(c.sourceCut)
+    )
+      continue;
     for (const fraction of [0.25, 0.7]) {
       await renderStill({
         serveUrl,
@@ -37,8 +46,8 @@ await renderMedia({
   composition,
   codec: "h264",
   crf: 21,
-  concurrency: 4,
-  outputLocation: path.join(out, "part2_review_720p60.mp4"),
+  concurrency: 12,
+  outputLocation: path.join(out, outputName),
   onProgress: ({ progress }) => {
     const p = Math.floor(progress * 100);
     if (p >= last + 5) {
@@ -47,4 +56,4 @@ await renderMedia({
     }
   },
 });
-console.log("Video ready: " + path.join(out, "part2_review_720p60.mp4"));
+console.log("Video ready: " + path.join(out, outputName));
