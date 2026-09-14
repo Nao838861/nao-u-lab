@@ -28,12 +28,13 @@ import {
   narrationPreviewDurationInFrames,
 } from './narrationTiming';
 
-import {Part2, part2Duration} from './Part2';
+import {DensePart2,denseDuration} from './DensePart2';
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      <Composition id="Part2Review" component={Part2} durationInFrames={part2Duration} fps={60} width={1280} height={720}/>
+      <Composition id="Part2Rebuilt" component={DensePart2} durationInFrames={denseDuration} fps={30} width={1280} height={720}/>
+      <Composition id="Part2Review" component={DensePart2} durationInFrames={denseDuration} fps={30} width={1280} height={720}/>
       <Composition
         id="ExplainerPrototype"
         component={ExplainerPrototype}

@@ -11,7 +11,7 @@ clean = re.sub(r'<!--.*?-->', '', text, flags=re.S)
 sections = re.findall(r'^# (C\d+[ab]?) (.*?)\n(.*?)(?=^# |\Z)', clean, re.M | re.S)
 base = json.loads((ROOT / 'narration/later-cuts.json').read_text(encoding='utf-8'))
 manifest = {k: base[k] for k in ('model', 'voice', 'speed', 'responseFormat', 'commonInstructions')}
-manifest.update(speed=1.1, fps=60, tailPaddingSeconds=0.4, outputDirectory='narration/part2_short', reportFileName='duration-report.json',
+manifest.update(speed=1.2, fps=30, tailPaddingSeconds=0.4, outputDirectory='narration/part2_dense', reportFileName='duration-report.json',
                 silenceCompaction={'preserveInternalSilence': True, 'maximumLeadingSilenceMs': 20, 'maximumTrailingSilenceMs': 100})
 cuts = []
 cursor = 0
@@ -21,7 +21,7 @@ for old, title, body in sections:
     spoken = ''.join(lines)
     cut = dict(id='P2' + old, sourceCut=old, title=title, text=spoken, ttsText=spoken,
                sentences=lines, instructions='原稿の全ての文を順番に読み、省略や言い換えをしないでください。',
-               startFrame=cursor, durationFrames=round(len(spoken)/7*60), minimumDurationFrames=0)
+               startFrame=cursor, durationFrames=round(len(spoken)/7*manifest['fps']), minimumDurationFrames=0)
     cursor += cut['durationFrames']
     cuts.append(cut)
     if old == 'C11':

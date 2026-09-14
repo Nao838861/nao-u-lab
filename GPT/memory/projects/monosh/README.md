@@ -17,8 +17,8 @@
 
 ## メモ一覧
 
-- `20260913_part2_video_review_checkpoint.md` — 第二部の約4分20秒への短縮、自然な間の補正、撮影素材、再生成入口
-- `video/explainer_prototype/PART2_DENSITY_REVIEW_20260915.md`（GPTルート基準）— 短縮版の具体性不足を見直し、旧C18〜C23のMP4をそのまま再利用する検討。採用範囲は同所の `PART2_ORIGINAL_REUSE_PLAN.json`
+- `20260913_part2_video_review_checkpoint.md` — 第二部を実データと復元ソースで5分15秒へ全面再構築。3巡の自己点検、現行出力と再生成入口
+- `video/explainer_prototype/PART2_DENSITY_REVIEW_20260915.md`（GPTルート基準）— 旧比較検討の履歴。MP4直接利用案は廃止し、現行実装と検証は同所の `REBUILD_AUDIT.md`
 
 - `20260604_nes_optimization_log.md` — 敵弾追加後の処理落ち調査、C/asm 最適化、`.dbg` 事故、次回の確認手順
 - `20260605_spaceharrier_enemy_pattern_and_stability_log.md` — Space Harrier 風3体敵パターン、敵弾 bank/farcall 修正、上端越えVBUF範囲外書き込み対策
