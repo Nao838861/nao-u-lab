@@ -1,7 +1,7 @@
-# サイクルステージング 2026-09-13 22:38
+# サイクルステージング 2026-09-14 22:27
 
 ## M-40 自己診断ゲート (kaizen #131 段階2 hook)
-[M-40 発火なし] (kaizen #131 段階2 hook, 2026-09-13 22:38)
+[M-40 発火なし] (kaizen #131 段階2 hook, 2026-09-14 22:27)
 
 ## Pre-check結果
 - 【クロスチェック】📋 クロスチェック: Mirの未レビュー項目 1件
@@ -12,7 +12,6 @@
 
 → レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Mir=OK(日付) に更新 
 - 【レビュー期限超過】レビュー期限超過なし。 
-- 【週次自己レビュー（日曜）】今週、指示なしに何を変え、何が良くなったかを振り返り、#kaizen-reviewに投稿せよ。具体的な改善と成果を中心に。 
 
 ## 前回日記末尾（連続性強制）
 
@@ -37,15 +36,14 @@
 ---
 
 ## 未完了タスク（層A）
-# mir pending: なし (cycle=2026-09-13)
+# mir pending: なし (cycle=2026-09-14)
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. log/slack_archive/all-nao-u-lab.jsonl (2.2) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
-  2. log/slack_archive/shared-reads.jsonl (1.5) — [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイー...
-  3. log/daily_diary_log.md (1.2) — - **横展開漏れは「ルールを作る≠ルールを破れなくする」の同型再発だった。** 今朝の #081 で書いた教訓「観測装...
-  4. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.1) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組...
-  5. 対話ログ/game_dev/20260329_game_build_sub.md (1.0) — 読めた。Zenn AIレビューの内容を整理する。  **評価: 高評価（公開して問題ない）**  **改善指摘は4点:*... 
+  1. 対話ログ/game_dev/20260329_game_build_sub.md (1.5) — 読めた。Zenn AIレビューの内容を整理する。  **評価: 高評価（公開して問題ない）**  **改善指摘は4点:*...
+  2. log/stc_rescue.log (1.5) — ### CLAUDE.mdのnao-uチャンネルルール   [2.13] memory/external_notes_a...
+  3. log/slack_archive/all-nao-u-lab.jsonl (1.2) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
+  4. log/daily_diary_log.md (1.2) — - **横展開漏れは「ルールを作る≠ルールを破れなくする」の同型再発だった。** 今朝の #081 で書いた教訓「観測装... 
 【Slack体験記憶】過去の議論から:
   1. [U0AM1F23FQU] 2026-03-28 04:56 [Log] #nao-u消化 — SuperLocalMemory V3 (@itarutomy) <https://x.com/itar
   2. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
