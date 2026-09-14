@@ -1,0 +1,75 @@
+{
+  "model": "gpt-4o-mini-tts",
+  "voice": "marin",
+  "speed": 1.2,
+  "responseFormat": "wav",
+  "fps": 30,
+  "tailPaddingSeconds": 0.75,
+  "silenceCompaction": {
+    "windowMs": 5,
+    "thresholdDb": -44,
+    "minimumSilenceMs": 60,
+    "maximumInternalSilenceMs": 50,
+    "maximumCommaSilenceMs": 180,
+    "sentenceSilenceThresholdMs": 450,
+    "maximumSentenceSilenceMs": 600,
+    "normalizeSentenceSilence": true,
+    "maximumLeadingSilenceMs": 20,
+    "maximumTrailingSilenceMs": 60
+  },
+  "commonInstructions": "日本語の技術解説動画のナレーションです。女性ナレーターらしい明るさと落ち着きのある自然な標準語で話してください。通常より少し速めの約1.2倍のテンポ感で、冒頭から間延びさせず軽快に進めてください。単語と助詞を分断せず、日本語の語句を滑らかにつなげてください。読点では自然な短い間を置き、句点では読点より少し長く区切ってください。読点と句点以外では不要な間を置かないでください。大げさな演技、広告調、一本調子にはしないでください。固有名詞、数値、英字を明瞭に発音してください。音声だけを出力し、前後に長い無音を入れないでください。",
+  "cuts": [
+    {
+      "id": "C01",
+      "startFrame": 0,
+      "durationFrames": 363,
+      "minimumDurationFrames": 300,
+      "targetSeconds": 12.1,
+      "measuredDurationSeconds": 11.345,
+      "localRate": 4,
+      "silenceCompaction": {
+        "commaPauseCandidateIndices": [
+          5
+        ]
+      },
+      "instructions": "冒頭の『ファミコンで』は一続きに発音し、『ファミコン』と助詞の『で』の間を絶対に空けないでください。全体を軽快に読み、読点と句点では意味の区切りが分かる自然な間を置いてください。",
+      "text": "ファミコンでスペースハリアーをどうやって動かしているかの解説動画です。ファミコンの限界に挑戦した巨大なキャラが滑らかに拡大縮小する3Dのゲームを動かすのに、どのような手法を取ったかを解説します。",
+      "ttsText": "ファミコンでスペースハリアーをどうやって動かしているかの解説動画です。ファミコンの限界に挑戦した巨大なキャラが滑らかに拡大縮小するスリーディーのゲームを動かすのに、どのような手法を取ったかを解説します。"
+    },
+    {
+      "id": "C02",
+      "startFrame": 363,
+      "durationFrames": 501,
+      "minimumDurationFrames": 450,
+      "targetSeconds": 16.7,
+      "measuredDurationSeconds": 15.935,
+      "localRate": 4,
+      "silenceCompaction": {
+        "commaPauseCandidateIndices": [
+          1,
+          18
+        ]
+      },
+      "instructions": "技術用語を明瞭にしつつ、自然な説明として軽快に読んでください。単語を一語ずつ区切らず、助詞の前後に間を置かないでください。読点と句点だけは意味の区切りが分かる自然な間を置いてください。",
+      "text": "今回のデモは、以前作ったビットマップ描画と同じ手法を使用しました。MMC5の拡張チップの機能を使って128x96ドットの仮想VRAMをBGのモノクロパターンを書き換えています。この手法の詳しい解説については、前回の動画をご覧ください。",
+      "ttsText": "今回のデモは、以前作ったビットマップ描画と同じ手法を使用しました。エムエムシーファイブの拡張チップの機能を使って128かける96ドットの仮想ブイラムを背景のモノクロパターンとして書き換えています。この手法の詳しい解説については、前回の動画をご覧ください。"
+    },
+    {
+      "id": "C03",
+      "startFrame": 864,
+      "durationFrames": 95,
+      "minimumDurationFrames": 90,
+      "targetSeconds": 3.167,
+      "measuredDurationSeconds": 2.4,
+      "localRate": 2,
+      "silenceCompaction": {
+        "commaPauseCandidateIndices": [
+          0
+        ]
+      },
+      "instructions": "短い章導入として、間延びさせず自然に言い切ってください。『まずは』の後の読点だけは短く自然に区切り、それ以外では間を置かないでください。",
+      "text": "まずは、開発の経緯を紹介します。",
+      "ttsText": "まずは、開発の経緯を紹介します。"
+    }
+  ]
+}
