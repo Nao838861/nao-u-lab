@@ -12,7 +12,7 @@ const Text=({x,y,children,size=24,color=white}:{x:number;y:number;children:React
 // XYに同じ係数を使い、木の根元を消失点へ向かう一本の直線上に置く。
 export const treePosition=(z:number)=>({x:370+50*tree.scale[z]/256*3,y:100+264*tree.scale[z]/tree.scale[0],size:tree.size[z]});
 // 同じ説明時間で手前→奥→手前→奥。折り返しでも座標と画像番号を同期する。
-export const treeDepth=(progress:number)=>Math.min(55,Math.floor(56*(progress<=1/3?progress*3:progress<=2/3?2-progress*3:progress*3-2)));
+export const treeDepth=(progress:number)=>Math.min(55,Math.floor(56*(1-Math.abs((Math.max(0,Math.min(1,progress))*7)%2-1))));
 
 function CoordinateIntro(){
   const t=useCurrentFrame()/30;
@@ -76,7 +76,7 @@ function TreeProjection({duration}:{duration:number}){
       <Text x={310} y={53} size={20} color={cyan}>消失点</Text>
       <Img src={staticFile(im.file)} style={{position:'absolute',left:p.x-im.w*1.5,top:p.y-im.h*3,width:im.w*3,height:im.h*3,imageRendering:'pixelated'}}/>
       <svg width={810} height={420} style={{position:'absolute'}}><circle cx={p.x} cy={p.y} r={6} fill="none" stroke={gold} strokeWidth={2}/></svg>
-      <Text x={20} y={374} size={20} color={gold}>{progress>1/3&&progress<2/3?'奥 → 手前':'手前 → 奥'}</Text>
+      <Text x={20} y={374} size={20} color={gold}>{Math.min(6,Math.floor(progress*7))%2?'奥 → 手前':'手前 → 奥'}</Text>
     </div>
     <div style={{position:'absolute',left:884,top:131,width:354,height:420,background:'#111017',border:'1px solid #3b3b49'}}>
       {memoryExplanation?<>

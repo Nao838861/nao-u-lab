@@ -4,7 +4,7 @@ import {readFile,mkdir,writeFile} from 'node:fs/promises';
 import path from 'node:path';
 const root=path.resolve(import.meta.dirname,'..');
 const m=JSON.parse(await readFile(path.join(root,'narration/intro-review-cuts.json'),'utf8'));
-const out=path.join(root,m.reviewOutputDirectory??'out/part2/intro_C01-C04_20260916');
+const out=path.join(root,m.reviewOutputDirectory??'out/part2/開発中カット');
 await mkdir(path.join(out,'確認画像'),{recursive:true});
 const serveUrl=await bundle({entryPoint:path.join(root,'src/index.ts'),publicDir:path.join(root,'public')});
 const composition=await selectComposition({serveUrl,id:'IntroReviewC01C04'});

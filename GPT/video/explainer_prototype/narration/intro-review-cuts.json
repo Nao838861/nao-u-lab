@@ -6,7 +6,7 @@
   "commonInstructions": "日本語の技術解説動画のナレーションです。同じナレーターが一続きで説明しているように、全カットで話速、声の高さ、音量、文末の調子を揃えてください。落ち着いた自然な標準語で、文中では急に加速・減速せず、語句と助詞を滑らかにつなげてください。句読点に応じた自然な間を置き、平叙文の語尾は疑問調にせず自然に着地させてください。固有名詞、数値、英字も文脈に沿って自然につなげ、大げさな演技、広告調、一本調子にはしないでください。音声だけを出力し、前後に長い無音を入れないでください。",
   "fps": 30,
   "tailPaddingSeconds": 0.4,
-  "outputDirectory": "narration/intro_review_20260916_v4",
+  "outputDirectory": "narration/intro_review_working",
   "reportFileName": "duration-report.json",
   "silenceCompaction": {
     "preserveInternalSilence": true,
@@ -140,5 +140,5 @@
       }
     }
   ],
-  "reviewOutputDirectory": "out/part2/intro_C01-C04_20260916_v4"
+  "reviewOutputDirectory": "out/part2/開発中カット"
 }

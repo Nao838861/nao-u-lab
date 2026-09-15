@@ -4,7 +4,7 @@ from pathlib import Path
 from PIL import Image,ImageDraw
 ROOT=Path(__file__).resolve().parents[1]
 m=json.loads((ROOT/'narration/intro-review-cuts.json').read_text(encoding='utf-8'))
-OUT=ROOT/m.get('reviewOutputDirectory','out/part2/intro_C01-C04_20260916')
+OUT=ROOT/m.get('reviewOutputDirectory','out/part2/開発中カット')
 a=json.loads((ROOT/'src/introReviewAlignment.json').read_text(encoding='utf-8'))
 cues=json.loads((ROOT/'src/introReviewCues.json').read_text(encoding='utf-8'))
 assert cues['audioHash']==a['C03']['audioHash']
@@ -34,9 +34,9 @@ const body=source.match(/export const treePosition=\\(z:number\\)=>(.*);/)[1];
 const fn=new Function('tree','z','return '+body);
 const depthBody=source.match(/export const treeDepth=\\(progress:number\\)=>(.*);/)[1];
 const depth=new Function('progress','return '+depthBody);
-if(JSON.stringify([0,1/3,2/3,1].map(depth))!==JSON.stringify([0,55,0,55]))throw new Error('Incorrect depth sequence');
-for(let leg=0;leg<3;leg++){
- const values=Array.from({length:169},(_,i)=>depth((leg+i/168)/3));
+if(JSON.stringify(Array.from({length:8},(_,i)=>depth(i/7)))!==JSON.stringify([0,55,0,55,0,55,0,55]))throw new Error('Incorrect depth sequence');
+for(let leg=0;leg<7;leg++){
+ const values=Array.from({length:169},(_,i)=>depth((leg+i/168)/7));
  if(new Set(values.map(z=>tree.size[z])).size!==16)throw new Error('Incomplete image sequence');
 }
 console.log(JSON.stringify(Array.from({length:56},(_,z)=>fn(tree,z))));
@@ -59,7 +59,7 @@ stills=OUT/'確認画像';stills.mkdir(exist_ok=True)
 samples=[]
 for c in m['cuts']:
     fractions=([.03,.25,.5,.75,.97] if c['id']=='C04' else [.05,.22,.43,.66,.92] if c['id']=='C03' else [.25,.85])
-    if c['id']=='C04':fractions+= [(9+(c['durationFrames']-36)*p)/c['durationFrames'] for p in [0,1/3,2/3,1]]
+    if c['id']=='C04':fractions+= [(9+(c['durationFrames']-36)*p)/c['durationFrames'] for p in [i/7 for i in range(8)]]
     for f in fractions:
         frame=int(c['durationFrames']*f)
         dest=stills/f"final_{c['id']}_{f}.png"

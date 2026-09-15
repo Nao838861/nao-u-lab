@@ -6,13 +6,10 @@ from importlib.util import spec_from_file_location,module_from_spec
 
 ROOT=Path(__file__).resolve().parents[1]
 source=(ROOT/'設計書2.md').read_text(encoding='utf-8')
-parser=argparse.ArgumentParser();parser.add_argument('--cuts',default='C01,C02,C03,C04');parser.add_argument('--revision',default='')
+parser=argparse.ArgumentParser();parser.add_argument('--cuts',default='C01,C02,C03,C04');parser.add_argument('--revision',default='',help='互換用。出力先は開発中カットに固定')
 args=parser.parse_args();selected=set(args.cuts.split(','))
-suffix='_'+args.revision if args.revision else ''
-out=ROOT/('out/part2/intro_C01-C04_20260916'+suffix)
+out=ROOT/'out/part2/開発中カット'
 snapshot=out/'設計書2_制作時点.md'
-if snapshot.exists() and snapshot.read_text(encoding='utf-8')!=source:
-    raise RuntimeError('前回の制作時点を上書きしないため、新しい --revision を指定してください')
 spec=spec_from_file_location('design_diff',ROOT/'tools/diff-intro-design.py');reader=module_from_spec(spec);spec.loader.exec_module(reader)
 blocks=reader.sections(source)
 assert len(blocks)==4,'冒頭C01〜C04の見出しを確認してください'
@@ -25,10 +22,11 @@ dest=ROOT/'narration/intro-review-cuts.json'
 previous=json.loads(dest.read_text(encoding='utf-8')) if dest.exists() else {'cuts':[]}
 old_review=ROOT/previous.get('reviewOutputDirectory','out/part2/intro_C01-C04_20260916')
 old_snapshot=old_review/'設計書2_制作時点.md'
-if old_review!=out and old_snapshot.exists():
+if old_snapshot.exists():
     subprocess.run([sys.executable,str(ROOT/'tools/diff-intro-design.py'),'--previous',str(old_snapshot),'--out',str(out)],check=True)
-m['outputDirectory']='narration/intro_review_20260916'+suffix
-m['reviewOutputDirectory']='out/part2/intro_C01-C04_20260916'+suffix
+    (out/'設計書2_前回制作時点.md').write_text(old_snapshot.read_text(encoding='utf-8'),encoding='utf-8')
+m['outputDirectory']='narration/intro_review_working'
+m['reviewOutputDirectory']='out/part2/開発中カット'
 old_audio=ROOT/'public'/previous.get('outputDirectory',m['outputDirectory'])
 new_audio=ROOT/'public'/m['outputDirectory']
 if old_audio!=new_audio and old_audio.exists() and not new_audio.exists():shutil.copytree(old_audio,new_audio)
