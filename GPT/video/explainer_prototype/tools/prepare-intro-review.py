@@ -1,4 +1,4 @@
-"""ユーザー編集の設計書2から冒頭4カットだけを独立した制作対象にする。"""
+"""ユーザー編集の設計書2から冒頭6カットを独立した制作対象にする。"""
 import hashlib,json,re,argparse,shutil,subprocess,sys
 from pathlib import Path
 from PIL import Image
@@ -6,18 +6,18 @@ from importlib.util import spec_from_file_location,module_from_spec
 
 ROOT=Path(__file__).resolve().parents[1]
 source=(ROOT/'設計書2.md').read_text(encoding='utf-8')
-parser=argparse.ArgumentParser();parser.add_argument('--cuts',default='C01,C02,C03,C04');parser.add_argument('--revision',default='',help='互換用。出力先は開発中カットに固定')
+parser=argparse.ArgumentParser();parser.add_argument('--cuts',default='C01,C02,C03,C04,C05,C06');parser.add_argument('--revision',default='',help='互換用。出力先は開発中カットに固定')
 args=parser.parse_args();selected=set(args.cuts.split(','))
 out=ROOT/'out/part2/開発中カット'
 snapshot=out/'設計書2_制作時点.md'
 spec=spec_from_file_location('design_diff',ROOT/'tools/diff-intro-design.py');reader=module_from_spec(spec);spec.loader.exec_module(reader)
 blocks=reader.sections(source)
-assert len(blocks)==4,'冒頭C01〜C04の見出しを確認してください'
-texts=[re.findall(r'[^。]+。?',reader.audio(blocks[f'C{i:02}'])) for i in range(1,5)]
+assert len(blocks)==6,'冒頭C01〜C06の見出しを確認してください'
+texts=[re.findall(r'[^。]+。?',reader.audio(blocks[f'C{i:02}'])) for i in range(1,7)]
 base=json.loads((ROOT/'narration/part2-cuts.json').read_text(encoding='utf-8'))
 m={k:base[k] for k in ['model','voice','speed','responseFormat','commonInstructions']}
 m.update(fps=30,tailPaddingSeconds=.4,outputDirectory='narration/intro_review_20260916',reportFileName='duration-report.json',silenceCompaction={'preserveInternalSilence':True,'maximumLeadingSilenceMs':20,'maximumTrailingSilenceMs':100},cuts=[])
-titles=['タイトル','30fpsのフレームワーク','ファミコンCPUと3Dの計算','奥行きで、位置と絵を選ぶ']
+titles=['タイトル','30fpsのフレームワーク','ファミコンCPUと3Dの計算','奥行きで、位置と絵を選ぶ','敵の動きもテーブルから取り出す','奥から順に描くバケツソート']
 dest=ROOT/'narration/intro-review-cuts.json'
 previous=json.loads(dest.read_text(encoding='utf-8')) if dest.exists() else {'cuts':[]}
 old_review=ROOT/previous.get('reviewOutputDirectory','out/part2/intro_C01-C04_20260916')
@@ -57,4 +57,4 @@ tables=json.loads((ROOT/'src/part2Data.json').read_text(encoding='utf-8'))
 out.mkdir(parents=True,exist_ok=True)
 snapshot.write_text(source,encoding='utf-8')
 (out/'source.json').write_text(json.dumps({'designSha256':hashlib.sha256((ROOT/'設計書2.md').read_bytes()).hexdigest(),'appliedCuts':sorted(selected),'cuts':[c['text'] for c in m['cuts']]},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-print('Prepared 4 independent cuts and 16 tree images')
+print('Prepared 6 independent cuts and 16 tree images')

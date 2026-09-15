@@ -44,8 +44,8 @@ console.log(JSON.stringify(Array.from({length:56},(_,z)=>fn(tree,z))));
 points=json.loads(subprocess.run(['node','--input-type=module'],input=js,text=True,capture_output=True,cwd=ROOT,check=True).stdout)
 dx=points[0]['x']-370;dy=points[0]['y']-100
 assert all(abs((p['x']-370)*dy-(p['y']-100)*dx)<1e-7 for p in points)
-files=[('C01-C04_通し.mp4',cursor)]+[(c['id']+'.mp4',c['durationFrames']) for c in m['cuts']]
-files.append(('C03-C04_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][2:])))
+files=[('C01-C06_通し.mp4',cursor),('C01-C04_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:4]))]+[(c['id']+'.mp4',c['durationFrames']) for c in m['cuts']]
+files.append(('C03-C04_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][2:4])))
 results=[]
 for filename,frames in files:
     p=OUT/filename
@@ -53,13 +53,15 @@ for filename,frames in files:
     v=next(s for s in probe['streams'] if s['codec_type']=='video')
     assert (v['width'],v['height'],v['r_frame_rate'],int(v['nb_read_frames']))==(1280,720,'30/1',frames),(filename,v)
     assert any(s['codec_type']=='audio' for s in probe['streams'])
-    subprocess.run(['ffmpeg','-v','error','-i',str(p),'-f','null','-'],check=True,capture_output=True)
+    decoded=subprocess.run(['ffmpeg','-v','error','-xerror','-i',str(p),'-f','null','-'],check=True,capture_output=True)
+    assert not decoded.stderr,(filename,decoded.stderr.decode(errors='replace'))
     results.append(dict(file=filename,frames=frames,seconds=frames/30,bytes=p.stat().st_size))
 stills=OUT/'確認画像';stills.mkdir(exist_ok=True)
 samples=[]
 for c in m['cuts']:
-    fractions=([.03,.25,.5,.75,.97] if c['id']=='C04' else [.05,.22,.43,.66,.92] if c['id']=='C03' else [.25,.85])
+    fractions=([.03,.25,.5,.75,.97] if c['id']=='C04' else [.05,.22,.43,.66,.92] if c['id'] in ['C03','C05','C06'] else [.25,.85])
     if c['id']=='C04':fractions+= [(9+(c['durationFrames']-36)*p)/c['durationFrames'] for p in [i/7 for i in range(8)]]
+    if c['id']=='C06':fractions+=[.98]
     for f in fractions:
         frame=int(c['durationFrames']*f)
         dest=stills/f"final_{c['id']}_{f}.png"

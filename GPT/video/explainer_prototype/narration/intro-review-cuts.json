@@ -104,7 +104,8 @@
           "6": 260,
           "8": 470
         }
-      }
+      },
+      "targetSeconds": 17.5
     },
     {
       "id": "C04",
@@ -136,6 +137,73 @@
           "6": 715,
           "7": 340,
           "11": 335
+        }
+      },
+      "targetSeconds": 20.267
+    },
+    {
+      "id": "C05",
+      "sourceCut": "C05",
+      "title": "敵の動きもテーブルから取り出す",
+      "text": "敵の動きもテーブルに従って動かしています。敵の移動はあらかじめすべてのフレームでテーブル化された座標を取り出すだけでよいので、簡単な処理で3次元空間を自由に動かせます。",
+      "ttsText": "敵の動きもテーブルに従って動かしています。敵の移動はあらかじめすべてのフレームでテーブル化された座標を取り出すだけでよいので、簡単な処理で3次元空間を自由に動かせます。",
+      "sentences": [
+        "敵の動きもテーブルに従って動かしています。",
+        "敵の移動はあらかじめすべてのフレームでテーブル化された座標を取り出すだけでよいので、簡単な処理で3次元空間を自由に動かせます。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 1557,
+      "durationFrames": 346,
+      "minimumDurationFrames": 0,
+      "measuredDurationSeconds": 11.12,
+      "targetSeconds": 11.533,
+      "silenceCompaction": {
+        "windowMs": 5,
+        "thresholdDb": -44,
+        "minimumSilenceMs": 60,
+        "preserveInternalSilence": false,
+        "maximumInternalSilenceMs": 110,
+        "sentenceSilenceThresholdMs": 9999,
+        "maximumLeadingSilenceMs": 20,
+        "maximumTrailingSilenceMs": 80,
+        "pauseTargetMsByCandidateIndex": {
+          "3": 620,
+          "7": 370
+        }
+      }
+    },
+    {
+      "id": "C06",
+      "sourceCut": "C06",
+      "title": "奥から順に描くバケツソート",
+      "text": "疑似3Dの描画には、オブジェクトを奥からソートして書く必要があります。今回はバケツソートを使っています。オブジェクトの更新時に、ポインタをZ値に対応する配列に詰め込んで、描画時には配列を奥からスキャンする形でソートを行っています。",
+      "ttsText": "疑似3Dの描画には、オブジェクトを奥からソートして書く必要があります。今回はバケツソートを使っています。オブジェクトの更新時に、ポインタをZ値に対応する配列に詰め込んで、描画時には配列を奥からスキャンする形でソートを行っています。",
+      "sentences": [
+        "疑似3Dの描画には、オブジェクトを奥からソートして書く必要があります。",
+        "今回はバケツソートを使っています。",
+        "オブジェクトの更新時に、ポインタをZ値に対応する配列に詰め込んで、描画時には配列を奥からスキャンする形でソートを行っています。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 1903,
+      "durationFrames": 511,
+      "minimumDurationFrames": 0,
+      "measuredDurationSeconds": 16.615,
+      "targetSeconds": 17.033,
+      "silenceCompaction": {
+        "windowMs": 5,
+        "thresholdDb": -44,
+        "minimumSilenceMs": 60,
+        "preserveInternalSilence": false,
+        "maximumInternalSilenceMs": 110,
+        "sentenceSilenceThresholdMs": 9999,
+        "maximumLeadingSilenceMs": 20,
+        "maximumTrailingSilenceMs": 80,
+        "pauseTargetMsByCandidateIndex": {
+          "1": 365,
+          "3": 655,
+          "6": 715,
+          "7": 305,
+          "10": 555
         }
       }
     }
