@@ -8,10 +8,14 @@ import hashlib
 import json
 import re
 import subprocess
+import argparse
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DEST = ROOT / 'narration/part2-cuts.json'
+parser=argparse.ArgumentParser()
+parser.add_argument('--manifest',default='part2-cuts.json')
+args=parser.parse_args()
+DEST = ROOT / 'narration' / args.manifest
 manifest = json.loads(DEST.read_text(encoding='utf-8'))
 audio_dir = ROOT / 'public' / manifest['outputDirectory']
 
@@ -27,6 +31,7 @@ for(const c of m.cuts){
 }
 console.log(JSON.stringify(result));
 """
+js=js.replace("'narration/part2-cuts.json'",json.dumps('narration/'+args.manifest))
 proc = subprocess.run(['node', '--input-type=module'], input=js, text=True,
                       encoding='utf-8', cwd=ROOT, capture_output=True, check=True)
 analyses = json.loads(proc.stdout)

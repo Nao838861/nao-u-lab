@@ -3,8 +3,9 @@ import { readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { compactPcmWavSilence } from "./compact-narration-silence.mjs";
 const root = new URL("../", import.meta.url);
+const manifestName = process.argv.find(a => a.startsWith('--manifest='))?.slice(11) ?? 'part2-cuts.json';
 const m = JSON.parse(
-  await readFile(new URL("narration/part2-cuts.json", root), "utf8"),
+  await readFile(new URL("narration/" + manifestName, root), "utf8"),
 );
 const base = new URL("public/" + m.outputDirectory + "/", root);
 const map = JSON.parse(await readFile(new URL("pause-map.json", base), "utf8"));

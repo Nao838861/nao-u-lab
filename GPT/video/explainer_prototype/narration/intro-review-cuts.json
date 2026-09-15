@@ -1,0 +1,139 @@
+{
+  "model": "gpt-4o-mini-tts-2025-12-15",
+  "voice": "marin",
+  "speed": 1.2,
+  "responseFormat": "wav",
+  "commonInstructions": "日本語の技術解説動画のナレーションです。同じナレーターが一続きで説明しているように、全カットで話速、声の高さ、音量、文末の調子を揃えてください。落ち着いた自然な標準語で、文中では急に加速・減速せず、語句と助詞を滑らかにつなげてください。句読点に応じた自然な間を置き、平叙文の語尾は疑問調にせず自然に着地させてください。固有名詞、数値、英字も文脈に沿って自然につなげ、大げさな演技、広告調、一本調子にはしないでください。音声だけを出力し、前後に長い無音を入れないでください。",
+  "fps": 30,
+  "tailPaddingSeconds": 0.4,
+  "outputDirectory": "narration/intro_review_20260916",
+  "reportFileName": "duration-report.json",
+  "silenceCompaction": {
+    "preserveInternalSilence": true,
+    "maximumLeadingSilenceMs": 20,
+    "maximumTrailingSilenceMs": 100
+  },
+  "cuts": [
+    {
+      "id": "C01",
+      "sourceCut": "C01",
+      "title": "タイトル",
+      "text": "前回は、キャラクターを高速に描く仕組みを紹介しました。今回は、そのキャラを動かすCPU処理の最適化について解説します。",
+      "ttsText": "前回は、キャラクターを高速に描く仕組みを紹介しました。今回は、そのキャラを動かすCPU処理の最適化について解説します。",
+      "sentences": [
+        "前回は、キャラクターを高速に描く仕組みを紹介しました。",
+        "今回は、そのキャラを動かすCPU処理の最適化について解説します。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 0,
+      "durationFrames": 266,
+      "minimumDurationFrames": 0,
+      "measuredDurationSeconds": 8.44,
+      "silenceCompaction": {
+        "windowMs": 5,
+        "thresholdDb": -44,
+        "minimumSilenceMs": 60,
+        "preserveInternalSilence": false,
+        "maximumInternalSilenceMs": 110,
+        "sentenceSilenceThresholdMs": 9999,
+        "maximumLeadingSilenceMs": 20,
+        "maximumTrailingSilenceMs": 80,
+        "pauseTargetMsByCandidateIndex": {
+          "0": 350,
+          "2": 605,
+          "3": 335
+        }
+      },
+      "targetSeconds": 8.867
+    },
+    {
+      "id": "C02",
+      "sourceCut": "C02",
+      "title": "30fpsのフレームワーク",
+      "text": "ファミコンで30fpsでゲームを動かすためのフレームワークについて説明します。",
+      "ttsText": "ファミコンで30fpsでゲームを動かすためのフレームワークについて説明します。",
+      "sentences": [
+        "ファミコンで30fpsでゲームを動かすためのフレームワークについて説明します。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 266,
+      "durationFrames": 158,
+      "minimumDurationFrames": 0,
+      "measuredDurationSeconds": 4.85,
+      "silenceCompaction": {
+        "windowMs": 5,
+        "thresholdDb": -44,
+        "minimumSilenceMs": 60,
+        "preserveInternalSilence": false,
+        "maximumInternalSilenceMs": 110,
+        "sentenceSilenceThresholdMs": 9999,
+        "maximumLeadingSilenceMs": 20,
+        "maximumTrailingSilenceMs": 80,
+        "pauseTargetMsByCandidateIndex": {}
+      },
+      "targetSeconds": 5.267
+    },
+    {
+      "id": "C03",
+      "sourceCut": "C03",
+      "title": "ファミコンCPUと3Dの計算",
+      "text": "スペースハリアーは疑似3Dのゲームです。3Dの座標変換には、かけ算や割り算が必要になりますが、ファミコンのCPUにはかけ算と割り算の命令がありません。",
+      "ttsText": "スペースハリアーは疑似3Dのゲームです。3Dの座標変換には、かけ算や割り算が必要になりますが、ファミコンのCPUにはかけ算と割り算の命令がありません。",
+      "sentences": [
+        "スペースハリアーは疑似3Dのゲームです。",
+        "3Dの座標変換には、かけ算や割り算が必要になりますが、ファミコンのCPUにはかけ算と割り算の命令がありません。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 424,
+      "durationFrames": 368,
+      "minimumDurationFrames": 0,
+      "measuredDurationSeconds": 11.845,
+      "silenceCompaction": {
+        "windowMs": 5,
+        "thresholdDb": -44,
+        "minimumSilenceMs": 60,
+        "preserveInternalSilence": false,
+        "maximumInternalSilenceMs": 110,
+        "sentenceSilenceThresholdMs": 9999,
+        "maximumLeadingSilenceMs": 20,
+        "maximumTrailingSilenceMs": 80,
+        "pauseTargetMsByCandidateIndex": {
+          "2": 765,
+          "3": 415,
+          "5": 620
+        }
+      },
+      "targetSeconds": 12.267
+    },
+    {
+      "id": "C04",
+      "sourceCut": "C04",
+      "title": "奥行きで、位置と絵を選ぶ",
+      "text": "奥に行くほど座標を消失点に近づけたり、16段階ある縮小画像のどれを表示するかなど、複雑な計算のほとんどはテーブルを引く処理に置き換えられます。",
+      "ttsText": "奥に行くほど座標をしょうしつてんに近づけたり、16段階ある縮小画像のどれを表示するかなど、複雑な計算のほとんどはテーブルをひく処理に置き換えられます。",
+      "sentences": [
+        "奥に行くほど座標を消失点に近づけたり、16段階ある縮小画像のどれを表示するかなど、複雑な計算のほとんどはテーブルを引く処理に置き換えられます。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 792,
+      "durationFrames": 317,
+      "minimumDurationFrames": 0,
+      "measuredDurationSeconds": 10.15,
+      "silenceCompaction": {
+        "windowMs": 5,
+        "thresholdDb": -44,
+        "minimumSilenceMs": 60,
+        "preserveInternalSilence": false,
+        "maximumInternalSilenceMs": 110,
+        "sentenceSilenceThresholdMs": 9999,
+        "maximumLeadingSilenceMs": 20,
+        "maximumTrailingSilenceMs": 80,
+        "pauseTargetMsByCandidateIndex": {
+          "1": 415,
+          "3": 400
+        }
+      },
+      "targetSeconds": 10.567
+    }
+  ]
+}

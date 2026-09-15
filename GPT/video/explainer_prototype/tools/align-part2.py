@@ -1,8 +1,13 @@
 """文字起こしから文境界を合わせ、読み落とし候補を記録する。"""
-import json,re,difflib,hashlib
+import json,re,difflib,hashlib,argparse
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-manifest=json.loads((ROOT/'narration/part2-cuts.json').read_text(encoding='utf-8'))
+parser=argparse.ArgumentParser()
+parser.add_argument('--manifest',default='part2-cuts.json')
+parser.add_argument('--alignment',default='src/part2Alignment.json')
+parser.add_argument('--report',default='out/part2_audio_review.md')
+args=parser.parse_args()
+manifest=json.loads((ROOT/'narration'/args.manifest).read_text(encoding='utf-8'))
 def norm(s):
     return re.sub(r'[^\wぁ-んァ-ン一-龯]','',s.lower())
 alignment={}
@@ -28,6 +33,6 @@ for c in manifest['cuts']:
         starts.append(mapping[candidates[0]]);pos+=len(norm(line))
     alignment[c['id']]={'starts':starts,'similarity':round(sm.ratio(),3),'audioHash':audio_hash}
     report += [f"## {c['sourceCut']} {c['title']}",'',f"一致度: {sm.ratio():.3f}", '',f"原稿：{c['text']}",'',f"文字起こし：{tr['text']}",'']
-(ROOT/'src/part2Alignment.json').write_text(json.dumps(alignment,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-(ROOT/'out/part2_audio_review.md').write_text('\n'.join(report),encoding='utf-8')
+(ROOT/args.alignment).write_text(json.dumps(alignment,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+(ROOT/args.report).write_text('\n'.join(report),encoding='utf-8')
 print({k:v['similarity'] for k,v in alignment.items()})

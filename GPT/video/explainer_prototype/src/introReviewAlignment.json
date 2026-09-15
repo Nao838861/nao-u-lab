@@ -1,0 +1,32 @@
+{
+  "C01": {
+    "starts": [
+      0.0,
+      4.159999847412109
+    ],
+    "similarity": 0.972,
+    "audioHash": "47d63b3ba31154ea5fbf08eb071428d16ad6ab8ecf86a9e1abd3622c38fbb407"
+  },
+  "C02": {
+    "starts": [
+      0.0
+    ],
+    "similarity": 1.0,
+    "audioHash": "f18312bb2e140e31c96df3da55d070687140518ddfdb1cfef01ed7bc943a5260"
+  },
+  "C03": {
+    "starts": [
+      0.0,
+      3.9000000953674316
+    ],
+    "similarity": 0.958,
+    "audioHash": "0b29bc454ea3774031cb947da5f79c8705acd5030e0bdbd5974e9698468520b3"
+  },
+  "C04": {
+    "starts": [
+      0.0
+    ],
+    "similarity": 1.0,
+    "audioHash": "b2451568a54c2b95883191b082d604f381393943a414e0148aef66f8359e52b2"
+  }
+}

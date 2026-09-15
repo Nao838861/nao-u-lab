@@ -18,8 +18,9 @@ for (const file of [
   } catch {}
 }
 if (!key) throw new Error("API key unavailable");
+const manifestName = process.argv.find(a => a.startsWith('--manifest='))?.slice(11) ?? 'part2-cuts.json';
 const m = JSON.parse(
-  await readFile(path.join(root, "narration/part2-cuts.json"), "utf8"),
+  await readFile(path.join(root, "narration", manifestName), "utf8"),
 );
 const audioDir = path.join(root, "public", m.outputDirectory);
 const raw = process.argv.includes("--raw");

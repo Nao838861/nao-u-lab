@@ -1325,7 +1325,7 @@ const GameLogicScene: React.FC<{durationInFrames?: number}> = ({durationInFrames
   );
 };
 
-const CoordinateTransformScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 600}) => {
+export const CoordinateTransformScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 600}) => {
   const frame = useCurrentFrame();
   const reveal = (fraction: number) => interpolate(frame, [durationInFrames * fraction, durationInFrames * fraction + 12], [0, 1], {
     extrapolateLeft: 'clamp',
@@ -1599,7 +1599,7 @@ const BossBattleScene: React.FC<{durationInFrames?: number}> = ({durationInFrame
   );
 };
 
-const FrameFrameworkIntroScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 180}) => {
+export const FrameFrameworkIntroScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 180}) => {
   const frame = useCurrentFrame();
   const enter = spring({frame, fps: 30, config: {damping: 18}});
   return (

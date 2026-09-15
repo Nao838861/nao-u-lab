@@ -29,10 +29,14 @@ import {
 } from './narrationTiming';
 
 import {DensePart2,denseDuration} from './DensePart2';
+import {IntroReview,IntroReviewCut,introReviewDuration} from './IntroReview';
+import introManifest from '../narration/intro-review-cuts.json';
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition id="IntroReviewC01C04" component={IntroReview} durationInFrames={introReviewDuration} fps={30} width={1280} height={720}/>
+      {introManifest.cuts.map((c,index)=><Composition key={c.id} id={`IntroReview${c.id}`} component={IntroReviewCut} defaultProps={{index}} durationInFrames={c.durationFrames} fps={30} width={1280} height={720}/>)}
       <Composition id="Part2Rebuilt" component={DensePart2} durationInFrames={denseDuration} fps={30} width={1280} height={720}/>
       <Composition id="Part2Review" component={DensePart2} durationInFrames={denseDuration} fps={30} width={1280} height={720}/>
       <Composition
