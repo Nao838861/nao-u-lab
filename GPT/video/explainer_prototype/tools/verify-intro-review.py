@@ -3,9 +3,11 @@ import hashlib,json,subprocess
 from pathlib import Path
 from PIL import Image,ImageDraw
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'out/part2/intro_C01-C04_20260916'
 m=json.loads((ROOT/'narration/intro-review-cuts.json').read_text(encoding='utf-8'))
+OUT=ROOT/m.get('reviewOutputDirectory','out/part2/intro_C01-C04_20260916')
 a=json.loads((ROOT/'src/introReviewAlignment.json').read_text(encoding='utf-8'))
+cues=json.loads((ROOT/'src/introReviewCues.json').read_text(encoding='utf-8'))
+assert cues['audioHash']==a['C03']['audioHash']
 tree=json.loads((ROOT/'src/introTreeData.json').read_text(encoding='utf-8'))
 cursor=0
 for c in m['cuts']:
@@ -23,7 +25,20 @@ assert len(tree['scale'])==len(tree['size'])==len(tree['groundY'])==56
 assert set(tree['size'])==set(range(16))
 assert all(a>=b for a,b in zip(tree['scale'],tree['scale'][1:]))
 assert all(a>=b for a,b in zip(tree['groundY'],tree['groundY'][1:]))
+# 実際に描画へ使う関数を実行し、全56位置がガイドと同じ直線上にあるかを検査。
+js="""
+import {readFileSync} from 'node:fs';
+const tree=JSON.parse(readFileSync('src/introTreeData.json','utf8'));
+const source=readFileSync('src/IntroReview.tsx','utf8');
+const body=source.match(/export const treePosition=\\(z:number\\)=>(.*);/)[1];
+const fn=new Function('tree','z','return '+body);
+console.log(JSON.stringify(Array.from({length:56},(_,z)=>fn(tree,z))));
+"""
+points=json.loads(subprocess.run(['node','--input-type=module'],input=js,text=True,capture_output=True,cwd=ROOT,check=True).stdout)
+dx=points[0]['x']-370;dy=points[0]['y']-100
+assert all(abs((p['x']-370)*dy-(p['y']-100)*dx)<1e-7 for p in points)
 files=[('C01-C04_通し.mp4',cursor)]+[(c['id']+'.mp4',c['durationFrames']) for c in m['cuts']]
+files.append(('C03-C04_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][2:])))
 results=[]
 for filename,frames in files:
     p=OUT/filename
@@ -36,7 +51,7 @@ for filename,frames in files:
 stills=OUT/'確認画像';stills.mkdir(exist_ok=True)
 samples=[]
 for c in m['cuts']:
-    for f in ([.03,.25,.5,.75,.97] if c['id']=='C04' else [.25,.85]):
+    for f in ([.03,.25,.5,.75,.97] if c['id']=='C04' else [.05,.22,.43,.66,.92] if c['id']=='C03' else [.25,.85]):
         frame=int(c['durationFrames']*f)
         dest=stills/f"final_{c['id']}_{f}.png"
         subprocess.run(['ffmpeg','-v','error','-i',str(OUT/(c['id']+'.mp4')),'-vf',f'select=eq(n\\,{frame})','-frames:v','1','-y',str(dest)],check=True)
@@ -47,4 +62,4 @@ for i,(p,cid,frame) in enumerate(samples):
     im=Image.open(p);im.thumbnail((320,180));sheet.paste(im,(x,y));draw.text((x+5,y+182),f'{cid} f{frame}',fill='white')
 sheet.save(stills/'final_contact.jpg')
 (OUT/'verification.json').write_text(json.dumps({'videos':results,'verifiedTreeImages':16,'finalScreens':len(samples),'narrationSimilarities':{k:v['similarity'] for k,v in a.items()}},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-print(f'PASS: 5 videos, {cursor} combined frames, 16 tree images, {len(samples)} final screenshots')
+print(f'PASS: {len(files)} videos, {cursor} combined frames, 16 tree images, {len(samples)} final screenshots')

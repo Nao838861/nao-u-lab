@@ -1,13 +1,52 @@
 import React from 'react';
 import {AbsoluteFill,Audio,Img,OffthreadVideo,Sequence,staticFile,useCurrentFrame,useVideoConfig} from 'remotion';
-import {CoordinateTransformScene,FrameFrameworkIntroScene} from '../restored_cpu/src/ExplainerPrototype';
+import {FrameFrameworkIntroScene} from '../restored_cpu/src/ExplainerPrototype';
 import manifest from '../narration/intro-review-cuts.json';
 import tree from './introTreeData.json';
+import cues from './introReviewCues.json';
 
 const bg='#050507',white='#f7f4f8',cyan='#53dcff',gold='#ffba57';
 export const introReviewDuration=manifest.cuts.reduce((n,c)=>n+c.durationFrames,0);
 const Text=({x,y,children,size=24,color=white}:{x:number;y:number;children:React.ReactNode;size?:number;color?:string})=><div style={{position:'absolute',left:x,top:y,fontSize:size,color,lineHeight:1.4,whiteSpace:'pre-line'}}>{children}</div>;
-export const treePosition=(z:number)=>({x:370+50*tree.scale[z]/256*3,y:100+(tree.groundY[z]-60)*8,size:tree.size[z]});
+// XYに同じ係数を使い、木の根元を消失点へ向かう一本の直線上に置く。
+export const treePosition=(z:number)=>({x:370+50*tree.scale[z]/256*3,y:100+264*tree.scale[z]/tree.scale[0],size:tree.size[z]});
+
+function CoordinateIntro(){
+  const t=useCurrentFrame()/30;
+  const q=cues.C03;
+  const reveal=(at:number)=>Math.max(0,Math.min(1,(t-at)/.2));
+  const table=t>=q.however;
+  return <>
+    <Text x={46} y={36} size={40}>3Dの座標変換</Text>
+    <Text x={46} y={94} size={23} color={cyan}>スペースハリアーは、疑似3Dのゲーム</Text>
+    <div style={{position:'absolute',left:46,top:158,width:430,height:117,background:'#15131a',borderLeft:`6px solid ${gold}`,opacity:reveal(q.math)}}>
+      <Text x={18} y={15} size={21} color={gold}>3Dの座標変換には</Text>
+      <Text x={18} y={55} size={27}>かけ算・割り算が必要</Text>
+    </div>
+    <div style={{position:'absolute',left:46,top:303,width:430,height:126,background:'#15131a',borderLeft:'6px solid #ff607f',opacity:reveal(q.cpu)}}>
+      <Text x={18} y={15} size={21} color="#ff607f">ファミコンのCPUには</Text>
+      <Text x={18} y={57} size={25}>かけ算・割り算命令がない</Text>
+    </div>
+    <div style={{position:'absolute',left:46,top:465,width:430,height:163,background:'#12242c',borderLeft:`6px solid ${cyan}`,opacity:reveal(q.however)}}>
+      <Text x={18} y={16} size={23} color={cyan}>しかし、疑似3Dなら</Text>
+      <div style={{opacity:reveal(q.table)}}><Text x={18} y={63} size={26}>計算のほとんどを{`\n`}テーブル参照に置き換える</Text></div>
+    </div>
+    <div style={{position:'absolute',left:502,top:158,width:732,height:470,background:'#15131a',border:`1px solid ${t>=q.table?cyan:'#47434e'}`}}>
+      {table?<div style={{opacity:reveal(q.however)}}>
+        <Text x={22} y={16} size={25}>実際に使っている変換テーブル</Text>
+        <Img src={staticFile('development_z_table.png')} style={{position:'absolute',left:20,top:67,width:690,height:330,objectFit:'contain'}}/>
+        <div style={{opacity:reveal(q.table)}}><Text x={50} y={420} size={23} color={cyan}>奥行き → テーブル → 画面の位置・絵</Text></div>
+      </div>:<>
+        <Text x={48} y={38} size={26}>3Dの座標を、画面の座標へ</Text>
+        <div style={{position:'absolute',left:65,top:112,width:590,height:67,border:`2px solid ${cyan}`,textAlign:'center',paddingTop:13,fontSize:28,boxSizing:'border-box'}}>3Dの座標</div>
+        <Text x={342} y={192} size={33} color={gold}>↓</Text>
+        <div style={{opacity:reveal(q.math)}}><Text x={227} y={249} size={28} color={gold}>かけ算・割り算</Text></div>
+        <Text x={342} y={305} size={33} color={gold}>↓</Text>
+        <div style={{position:'absolute',left:65,top:367,width:590,height:67,border:`2px solid ${cyan}`,textAlign:'center',paddingTop:13,fontSize:28,boxSizing:'border-box'}}>画面の座標</div>
+      </>}
+    </div>
+  </>;
+}
 
 function TreeProjection({duration}:{duration:number}){
   const frame=useCurrentFrame(),{fps}=useVideoConfig();
@@ -15,7 +54,7 @@ function TreeProjection({duration}:{duration:number}){
   const progress=Math.max(0,Math.min(1,(frame-.3*fps)/motionFrames));
   const z=Math.min(55,Math.floor(progress*56));
   const p=treePosition(z),im=tree.images[p.size];
-  const points=Array.from({length:56},(_,k)=>treePosition(k));
+  const near=treePosition(0);
   return <>
     <Text x={42} y={26} size={38}>奥行きで、位置と絵を選ぶ</Text>
     <Text x={44} y={83} size={23} color={cyan}>奥へ行くほど消失点へ。小さい絵へ切り替える。</Text>
@@ -26,7 +65,7 @@ function TreeProjection({duration}:{duration:number}){
         {[-1000,-400,0,240,500,810,1300,1850].map(x=><line key={x} x1={370} y1={100} x2={x} y2={420} stroke="#345454"/>)}
         {[103,110,124,150,198,282,410].map(y=><line key={y} x1={0} y1={y} x2={810} y2={y} stroke="#345454"/>)}
         <line x1={0} y1={100} x2={810} y2={100} stroke={cyan} strokeOpacity={.55}/>
-        <polyline points={points.map(q=>`${q.x},${q.y}`).join(' ')} fill="none" stroke={gold} strokeWidth={2} strokeDasharray="5 7" opacity={.75}/>
+        <line x1={near.x} y1={near.y} x2={370} y2={100} stroke={gold} strokeWidth={2} strokeDasharray="5 7" opacity={.75}/>
         <circle cx={370} cy={100} r={5} fill={cyan}/>
         <ellipse cx={p.x} cy={p.y+2} rx={Math.max(4,im.w*1.6)} ry={Math.max(2,im.w*.19)} fill="#000" opacity={.55}/>
       </svg>
@@ -63,9 +102,10 @@ export function IntroReviewCut({index=0}:{index?:number}){
       <AbsoluteFill style={{background:'linear-gradient(0deg,#050507f5,transparent)'}}/>
       <Text x={65} y={350} size={42}>ファミコンでスペースハリアーを動かすには？</Text>
       <Text x={65} y={425} size={34} color={cyan}>その2：CPUの最適化</Text>
-    </>:index===1?<FrameFrameworkIntroScene durationInFrames={cut.durationFrames}/>:index===2?<CoordinateTransformScene durationInFrames={809}/>:<TreeProjection duration={cut.durationFrames}/>}
+    </>:index===1?<FrameFrameworkIntroScene durationInFrames={cut.durationFrames}/>:index===2?<CoordinateIntro/>:<TreeProjection duration={cut.durationFrames}/>}
     <Audio src={staticFile(`${manifest.outputDirectory}/${cut.id}.wav`)} volume={.95}/>
   </AbsoluteFill>;
 }
 
 export const IntroReview=()=><AbsoluteFill style={{background:bg}}>{manifest.cuts.map((c,i)=><Sequence key={c.id} from={c.startFrame} durationInFrames={c.durationFrames}><IntroReviewCut index={i}/></Sequence>)}</AbsoluteFill>;
+export const IntroReviewC03C04=()=><AbsoluteFill style={{background:bg}}>{manifest.cuts.slice(2).map((c,i)=><Sequence key={c.id} from={c.startFrame-manifest.cuts[2].startFrame} durationInFrames={c.durationFrames}><IntroReviewCut index={i+2}/></Sequence>)}</AbsoluteFill>;

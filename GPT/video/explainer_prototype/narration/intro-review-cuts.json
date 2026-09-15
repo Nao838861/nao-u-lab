@@ -6,7 +6,7 @@
   "commonInstructions": "日本語の技術解説動画のナレーションです。同じナレーターが一続きで説明しているように、全カットで話速、声の高さ、音量、文末の調子を揃えてください。落ち着いた自然な標準語で、文中では急に加速・減速せず、語句と助詞を滑らかにつなげてください。句読点に応じた自然な間を置き、平叙文の語尾は疑問調にせず自然に着地させてください。固有名詞、数値、英字も文脈に沿って自然につなげ、大げさな演技、広告調、一本調子にはしないでください。音声だけを出力し、前後に長い無音を入れないでください。",
   "fps": 30,
   "tailPaddingSeconds": 0.4,
-  "outputDirectory": "narration/intro_review_20260916",
+  "outputDirectory": "narration/intro_review_20260916_v2",
   "reportFileName": "duration-report.json",
   "silenceCompaction": {
     "preserveInternalSilence": true,
@@ -77,17 +77,17 @@
       "id": "C03",
       "sourceCut": "C03",
       "title": "ファミコンCPUと3Dの計算",
-      "text": "スペースハリアーは疑似3Dのゲームです。3Dの座標変換には、かけ算や割り算が必要になりますが、ファミコンのCPUにはかけ算と割り算の命令がありません。",
-      "ttsText": "スペースハリアーは疑似3Dのゲームです。3Dの座標変換には、かけ算や割り算が必要になりますが、ファミコンのCPUにはかけ算と割り算の命令がありません。",
+      "text": "スペースハリアーは疑似3Dのゲームで、3Dの座標変換にはかけ算や割り算が必要になりますが、ファミコンのCPUにはかけ算と割り算の命令がありません。しかし、スペースハリアーのような疑似3Dのゲームでは、計算のほとんどをテーブルによる変換に置き換えることができます。",
+      "ttsText": "スペースハリアーは疑似3Dのゲームで、3Dの座標変換にはかけ算や割り算が必要になりますが、ファミコンのCPUにはかけ算と割り算の命令がありません。しかし、スペースハリアーのような疑似3Dのゲームでは、計算のほとんどをテーブルによる変換に置き換えることができます。",
       "sentences": [
-        "スペースハリアーは疑似3Dのゲームです。",
-        "3Dの座標変換には、かけ算や割り算が必要になりますが、ファミコンのCPUにはかけ算と割り算の命令がありません。"
+        "スペースハリアーは疑似3Dのゲームで、3Dの座標変換にはかけ算や割り算が必要になりますが、ファミコンのCPUにはかけ算と割り算の命令がありません。",
+        "しかし、スペースハリアーのような疑似3Dのゲームでは、計算のほとんどをテーブルによる変換に置き換えることができます。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
       "startFrame": 424,
-      "durationFrames": 368,
+      "durationFrames": 525,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 11.845,
+      "measuredDurationSeconds": 17.1,
       "silenceCompaction": {
         "windowMs": 5,
         "thresholdDb": -44,
@@ -98,12 +98,13 @@
         "maximumLeadingSilenceMs": 20,
         "maximumTrailingSilenceMs": 80,
         "pauseTargetMsByCandidateIndex": {
-          "2": 765,
-          "3": 415,
-          "5": 620
+          "1": 410,
+          "3": 575,
+          "5": 585,
+          "6": 260,
+          "8": 470
         }
-      },
-      "targetSeconds": 12.267
+      }
     },
     {
       "id": "C04",
@@ -115,7 +116,7 @@
         "奥に行くほど座標を消失点に近づけたり、16段階ある縮小画像のどれを表示するかなど、複雑な計算のほとんどはテーブルを引く処理に置き換えられます。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 792,
+      "startFrame": 949,
       "durationFrames": 317,
       "minimumDurationFrames": 0,
       "measuredDurationSeconds": 10.15,
@@ -132,8 +133,8 @@
           "1": 415,
           "3": 400
         }
-      },
-      "targetSeconds": 10.567
+      }
     }
-  ]
+  ],
+  "reviewOutputDirectory": "out/part2/intro_C01-C04_20260916_v2"
 }
