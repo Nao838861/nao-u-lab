@@ -37,6 +37,7 @@ for i,(lines,title) in enumerate(zip(texts,titles),1):
         c=dict(next(p for p in previous['cuts'] if p['id']==cid));c['startFrame']=cursor
         cursor+=c['durationFrames'];m['cuts'].append(c);continue
     c=dict(id=cid,sourceCut=cid,title=title,text=spoken,ttsText=spoken,sentences=lines,instructions='原稿の全ての文を順番に読み、省略や言い換えをしないでください。',startFrame=cursor,durationFrames=round(len(spoken)/7*30),minimumDurationFrames=0)
+    c['narrationLeadFrames']=18 if '一拍おいて' in blocks[cid] else 0
     if cid=='C04':
         # 初回ASRで「教室展」「縮処理」となった箇所だけ読みを指定する。
         c['ttsText']=spoken.replace('消失点','しょうしつてん').replace('テーブルを引く','テーブルをひく')

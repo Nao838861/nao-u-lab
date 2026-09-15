@@ -122,7 +122,7 @@ export function IntroReviewCut({index=0}:{index?:number}){
       <Text x={65} y={350} size={42}>ファミコンでスペースハリアーを動かすには？</Text>
       <Text x={65} y={425} size={34} color={cyan}>その2：CPUの最適化</Text>
     </>:index===1?<FrameFrameworkIntroScene durationInFrames={cut.durationFrames}/>:index===2?<CoordinateIntro/>:index===3?<TreeProjection duration={cut.durationFrames}/>:index===4?<EnemyTableIntro/>:<BucketSortIntro duration={cut.durationFrames}/>}
-    <Audio src={staticFile(`${manifest.outputDirectory}/${cut.id}.wav`)} volume={.95}/>
+    <Sequence from={'narrationLeadFrames' in cut ? cut.narrationLeadFrames : 0}><Audio src={staticFile(`${manifest.outputDirectory}/${cut.id}.wav`)} volume={.95}/></Sequence>
   </AbsoluteFill>;
 }
 

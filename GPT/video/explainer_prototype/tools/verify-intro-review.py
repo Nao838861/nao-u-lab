@@ -12,7 +12,7 @@ tree=json.loads((ROOT/'src/introTreeData.json').read_text(encoding='utf-8'))
 cursor=0
 for c in m['cuts']:
     assert c['startFrame']==cursor
-    assert c['measuredDurationSeconds']*30<c['durationFrames']
+    assert c['measuredDurationSeconds']*30+c.get('narrationLeadFrames',0)<c['durationFrames']
     wav=ROOT/'public'/m['outputDirectory']/(c['id']+'.wav')
     assert hashlib.sha256(wav.read_bytes()).hexdigest()==a[c['id']]['audioHash']
     assert len(c['sentences'])==len(a[c['id']]['starts'])
@@ -55,6 +55,13 @@ for filename,frames in files:
     assert any(s['codec_type']=='audio' for s in probe['streams'])
     decoded=subprocess.run(['ffmpeg','-v','error','-xerror','-i',str(p),'-f','null','-'],check=True,capture_output=True)
     assert not decoded.stderr,(filename,decoded.stderr.decode(errors='replace'))
+    if filename in ['C05.mp4','C06.mp4']:
+        cut=next(c for c in m['cuts'] if c['id']+'.mp4'==filename)
+        assert cut['narrationLeadFrames']==18
+        pcm=subprocess.check_output(['ffmpeg','-v','error','-i',str(p),'-t','0.5','-vn','-ac','1','-ar','24000','-f','s16le','-'])
+        import array
+        samples_pcm=array.array('h',pcm)
+        assert max(abs(v) for v in samples_pcm)<20,(filename,'冒頭の一拍に音声あり')
     results.append(dict(file=filename,frames=frames,seconds=frames/30,bytes=p.stat().st_size))
 stills=OUT/'確認画像';stills.mkdir(exist_ok=True)
 samples=[]
@@ -65,7 +72,7 @@ for c in m['cuts']:
     for f in fractions:
         frame=int(c['durationFrames']*f)
         dest=stills/f"final_{c['id']}_{f}.png"
-        subprocess.run(['ffmpeg','-v','error','-i',str(OUT/(c['id']+'.mp4')),'-vf',f'select=eq(n\\,{frame})','-frames:v','1','-y',str(dest)],check=True)
+        subprocess.run(['ffmpeg','-v','error','-threads','1','-xerror','-i',str(OUT/(c['id']+'.mp4')),'-vf',f'select=eq(n\\,{frame})','-frames:v','1','-y',str(dest)],check=True)
         samples.append((dest,c['id'],frame))
 sheet=Image.new('RGB',(960,205*((len(samples)+2)//3)),(20,20,24));draw=ImageDraw.Draw(sheet)
 for i,(p,cid,frame) in enumerate(samples):

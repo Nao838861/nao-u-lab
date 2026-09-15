@@ -2,6 +2,7 @@ import React from 'react';
 import {Img,staticFile,useCurrentFrame} from 'remotion';
 import data from './denseData.json';
 import alignment from './introReviewAlignment.json';
+import manifest from '../narration/intro-review-cuts.json';
 
 const cyan='#53dcff',gold='#ffba57',white='#f7f4f8';
 const Label=({x,y,children,size=24,color=white}:{x:number;y:number;children:React.ReactNode;size?:number;color?:string})=><div style={{position:'absolute',left:x,top:y,fontSize:size,color,lineHeight:1.4,whiteSpace:'pre-line'}}>{children}</div>;
@@ -56,40 +57,43 @@ export function EnemyTableIntro(){
 
 // 静止画から読み取れる前後関係を、8個の説明用バケツへ配置する。
 export const sortObjects=[
-  {id:'A',name:'奥の木',bucket:6,x:499,y:445,w:89,h:151},
-  {id:'B',name:'手前の木',bucket:4,x:210,y:350,w:156,h:278},
-  {id:'C',name:'敵',bucket:2,x:699,y:303,w:263,h:150},
-  {id:'D',name:'草',bucket:0,x:847,y:512,w:350,h:209},
+  {id:'A',name:'草',bucket:0,x:847,y:512,w:350,h:209},
+  {id:'B',name:'敵',bucket:2,x:699,y:303,w:263,h:150},
+  {id:'C',name:'奥の木',bucket:6,x:499,y:445,w:89,h:151},
+  {id:'D',name:'手前の木',bucket:4,x:210,y:350,w:156,h:278},
 ];
+export const sortedObjects=[...sortObjects].sort((a,b)=>b.bucket-a.bucket);
 function Crop({o}:{o:typeof sortObjects[number]}){
   const scale=Math.min(82/o.w,47/o.h);
-  return <div style={{position:'relative',width:86,height:49,overflow:'hidden'}}><div style={{position:'absolute',left:(86-o.w*scale)/2,top:0,width:o.w*scale,height:o.h*scale,overflow:'hidden'}}><Img src={staticFile('intro/zsort.png')} style={{position:'absolute',left:-o.x*scale,top:-o.y*scale,width:1371*scale,height:827*scale,maxWidth:'none'}}/></div></div>;
+  return <div style={{position:'relative',width:86,height:49,overflow:'hidden'}}><div style={{position:'absolute',left:(86-o.w*scale)/2,top:0,width:o.w*scale,height:o.h*scale,overflow:'hidden',transform:'scaleX(-1)'}}><Img src={staticFile('intro/zsort.png')} style={{position:'absolute',left:-o.x*scale,top:-o.y*scale,width:1371*scale,height:827*scale,maxWidth:'none'}}/></div></div>;
 }
 export function BucketSortIntro({duration}:{duration:number}){
-  const frame=useCurrentFrame(),t=frame/30;
+  const frame=useCurrentFrame(),lead=manifest.cuts[5].narrationLeadFrames??0,t=(frame-lead)/30;
   const starts=(alignment as Record<string,{starts:number[]}>).C06?.starts??[0,5,8];
   const registerAt=starts[2]??8,scanAt=(starts[2]??8)+5;
-  const scanProgress=Math.max(0,Math.min(7,Math.floor((t-scanAt)/Math.max(.25,(duration/30-scanAt-1)/8))));
+  const scanProgress=Math.max(0,Math.min(7,Math.floor((t-scanAt)/Math.max(.25,((duration-lead)/30-scanAt-1)/8))));
   const scanning=t>=scanAt,active=scanning?7-scanProgress:-1;
-  const registered=sortObjects.filter((_,i)=>t>=registerAt+i*.55);
+  const registered=sortObjects.filter((_,i)=>t>=registerAt+i*.8);
+  const adding=!scanning&&t>=registerAt?registered[registered.length-1]:undefined;
   const drawn=registered.filter(o=>scanning&&o.bucket>=active);
   return <>
     <Label x={44} y={26} size={38}>バケツに入れて、奥から順に描く</Label>
     <Label x={44} y={83} color={cyan}>Zで振り分ける → 配列を奥からスキャン</Label>
     <Panel x={44} y={177} w={576} h={348}>
-      <Img src={staticFile('intro/zsort.png')} style={{width:576,height:348}}/>
+      <Img src={staticFile('intro/zsort.png')} style={{width:576,height:348,transform:'scaleX(-1)'}}/>
       {sortObjects.map(o=><React.Fragment key={o.id}>
-        <div style={{position:'absolute',left:o.x*576/1371,top:o.y*348/827,width:o.w*576/1371,height:o.h*348/827,border:`2px solid ${active===o.bucket?gold:cyan}`,background:active===o.bucket?'#ffba5722':'transparent',boxSizing:'border-box'}}/>
-        <div style={{position:'absolute',left:o.x*576/1371,top:o.y*348/827-25,padding:'1px 5px',fontSize:18,background:'#080a10',color:active===o.bucket?gold:cyan}}>{o.id}</div>
+        <div style={{position:'absolute',left:(1371-o.x-o.w)*576/1371,top:o.y*348/827,width:o.w*576/1371,height:o.h*348/827,border:`2px solid ${active===o.bucket||adding===o?gold:cyan}`,background:active===o.bucket||adding===o?'#ffba5722':'transparent',boxSizing:'border-box'}}/>
+        <div style={{position:'absolute',left:(1371-o.x-o.w)*576/1371,top:o.y*348/827-25,padding:'1px 5px',fontSize:18,background:'#080a10',color:active===o.bucket||adding===o?gold:cyan}}>{o.id}</div>
       </React.Fragment>)}
     </Panel>
-    <Label x={44} y={137} size={22}>この1枚にある、木2本・敵1体・草1つ</Label>
-    <Label x={44} y={550} size={23} color={gold}>描画順　奥 → 手前</Label>
-    <div style={{position:'absolute',left:44,top:594,display:'flex',gap:12}}>{sortObjects.map(o=><div key={o.id} style={{width:130,height:60,border:`1px solid ${drawn.includes(o)?gold:'#48434e'}`,background:drawn.includes(o)?'#453620':'#14121a',opacity:drawn.includes(o)?1:.3,fontSize:22,textAlign:'center',paddingTop:14,boxSizing:'border-box'}}>{o.id} {o.name}</div>)}</div>
+    <Label x={44} y={137} size={22}>左から順に処理する：A → B → C → D</Label>
+    <Label x={44} y={536} size={21} color={cyan}>登録順　{sortObjects.map(o=>o.id).join(' → ')}{adding?`　いま ${adding.id} を配列[${adding.bucket}] へ`:''}</Label>
+    <Label x={44} y={572} size={21} color={gold}>描画順　奥から C → D → B → A</Label>
+    <div style={{position:'absolute',left:44,top:609,display:'flex',gap:12}}>{sortedObjects.map(o=><div key={o.id} style={{width:130,height:47,border:`1px solid ${drawn.includes(o)?gold:'#48434e'}`,background:drawn.includes(o)?'#453620':'#14121a',opacity:drawn.includes(o)?1:.3,fontSize:21,textAlign:'center',paddingTop:9,boxSizing:'border-box'}}>{o.id} {o.name}</div>)}</div>
     <Label x={679} y={129} size={20}>奥</Label>
     <Label x={800} y={125} size={19} color={cyan}>配列に入れるのは、物への参照</Label>
     {Array.from({length:8},(_,i)=>{
-      const bucket=7-i,o=registered.find(o=>o.bucket===bucket),on=active===bucket;
+      const bucket=7-i,o=registered.find(o=>o.bucket===bucket),on=active===bucket||adding?.bucket===bucket;
       return <div key={bucket} style={{position:'absolute',left:717,top:158+i*61,width:505,height:54,background:on?'#453620':'#12131d',border:`2px solid ${on?gold:'#45434e'}`,boxSizing:'border-box',display:'flex',alignItems:'center',gap:18,paddingLeft:15,fontSize:22}}>
         <span style={{width:100,color:on?gold:cyan}}>配列[{bucket}]</span>
         {o?<><Crop o={o}/><span>{o.id}：{o.name}</span></>:<span style={{color:'#797483'}}>空</span>}
