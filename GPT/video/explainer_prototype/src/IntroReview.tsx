@@ -4,12 +4,15 @@ import {FrameFrameworkIntroScene} from '../restored_cpu/src/ExplainerPrototype';
 import manifest from '../narration/intro-review-cuts.json';
 import tree from './introTreeData.json';
 import cues from './introReviewCues.json';
+import alignment from './introReviewAlignment.json';
 
 const bg='#050507',white='#f7f4f8',cyan='#53dcff',gold='#ffba57';
 export const introReviewDuration=manifest.cuts.reduce((n,c)=>n+c.durationFrames,0);
 const Text=({x,y,children,size=24,color=white}:{x:number;y:number;children:React.ReactNode;size?:number;color?:string})=><div style={{position:'absolute',left:x,top:y,fontSize:size,color,lineHeight:1.4,whiteSpace:'pre-line'}}>{children}</div>;
 // XYに同じ係数を使い、木の根元を消失点へ向かう一本の直線上に置く。
 export const treePosition=(z:number)=>({x:370+50*tree.scale[z]/256*3,y:100+264*tree.scale[z]/tree.scale[0],size:tree.size[z]});
+// 同じ説明時間で手前→奥→手前→奥。折り返しでも座標と画像番号を同期する。
+export const treeDepth=(progress:number)=>Math.min(55,Math.floor(56*(progress<=1/3?progress*3:progress<=2/3?2-progress*3:progress*3-2)));
 
 function CoordinateIntro(){
   const t=useCurrentFrame()/30;
@@ -29,7 +32,7 @@ function CoordinateIntro(){
     </div>
     <div style={{position:'absolute',left:46,top:465,width:430,height:163,background:'#12242c',borderLeft:`6px solid ${cyan}`,opacity:reveal(q.however)}}>
       <Text x={18} y={16} size={23} color={cyan}>しかし、疑似3Dなら</Text>
-      <div style={{opacity:reveal(q.table)}}><Text x={18} y={63} size={26}>計算のほとんどを{`\n`}テーブル参照に置き換える</Text></div>
+      <Text x={18} y={63} size={26}>計算のほとんどを{`\n`}テーブル参照に置き換える</Text>
     </div>
     <div style={{position:'absolute',left:502,top:158,width:732,height:470,background:'#15131a',border:`1px solid ${t>=q.table?cyan:'#47434e'}`}}>
       {table?<div style={{opacity:reveal(q.however)}}>
@@ -50,9 +53,10 @@ function CoordinateIntro(){
 
 function TreeProjection({duration}:{duration:number}){
   const frame=useCurrentFrame(),{fps}=useVideoConfig();
+  const memoryExplanation=frame/fps>=(alignment.C04.starts[1]??Infinity);
   const motionFrames=Math.max(1,duration-1.2*fps);
   const progress=Math.max(0,Math.min(1,(frame-.3*fps)/motionFrames));
-  const z=Math.min(55,Math.floor(progress*56));
+  const z=treeDepth(progress);
   const p=treePosition(z),im=tree.images[p.size];
   const near=treePosition(0);
   return <>
@@ -72,9 +76,22 @@ function TreeProjection({duration}:{duration:number}){
       <Text x={310} y={53} size={20} color={cyan}>消失点</Text>
       <Img src={staticFile(im.file)} style={{position:'absolute',left:p.x-im.w*1.5,top:p.y-im.h*3,width:im.w*3,height:im.h*3,imageRendering:'pixelated'}}/>
       <svg width={810} height={420} style={{position:'absolute'}}><circle cx={p.x} cy={p.y} r={6} fill="none" stroke={gold} strokeWidth={2}/></svg>
-      <Text x={20} y={374} size={20} color={gold}>手前 → 奥</Text>
+      <Text x={20} y={374} size={20} color={gold}>{progress>1/3&&progress<2/3?'奥 → 手前':'手前 → 奥'}</Text>
     </div>
     <div style={{position:'absolute',left:884,top:131,width:354,height:420,background:'#111017',border:'1px solid #3b3b49'}}>
+      {memoryExplanation?<>
+        <Text x={20} y={15} size={24} color={cyan}>CPUが行う処理</Text>
+        <div style={{position:'absolute',left:20,top:62,width:314,height:49,background:'#393020',borderLeft:`4px solid ${gold}`}}><Text x={12} y={8} size={22}>① 座標 Z = {z} で選ぶ</Text></div>
+        <Text x={166} y={111} size={23} color={gold}>↓</Text>
+        <div style={{position:'absolute',left:20,top:145,width:314,height:166,background:'#152a34',border:`1px solid ${cyan}`}}>
+          <Text x={12} y={9} size={21} color={cyan}>② メモリから値を読む</Text>
+          <Text x={15} y={49} size={18}>Z　　　画面の位置　　　絵</Text>
+          <div style={{position:'absolute',left:10,right:10,top:83,height:39,background:'#393020',display:'grid',gridTemplateColumns:'45px 176px 60px',alignItems:'center',paddingLeft:8,fontSize:19,color:gold}}><span>{z}</span><span>{Math.round(p.x)}, {Math.round(p.y)}</span><span>{p.size+1}番</span></div>
+          <Text x={12} y={134} size={16}>用意した値を取り出すだけ</Text>
+        </div>
+        <Text x={166} y={310} size={23} color={gold}>↓</Text>
+        <div style={{position:'absolute',left:20,top:346,width:314,height:55,background:'#153026',borderLeft:'4px solid #75df91'}}><Text x={12} y={12} size={22} color="#75df91">③ その位置と絵で表示</Text></div>
+      </>:<>
       <Text x={24} y={20} size={24} color={cyan}>奥行き Z = {z}</Text>
       <Text x={24} y={67} size={19}>↓　テーブルを参照</Text>
       <div style={{position:'absolute',left:20,top:114,width:314,height:188,borderLeft:`4px solid ${gold}`,background:'#25212c'}}>
@@ -84,6 +101,7 @@ function TreeProjection({duration}:{duration:number}){
         <Text x={15} y={135} size={25} color={gold}>16段階のうち {p.size+1} 番</Text>
       </div>
       <Text x={24} y={335} size={24}>計算の代わりに、{`\n`}用意した値を取り出す</Text>
+      </>}
     </div>
     <Text x={44} y={567} size={20}>16段階の縮小画像</Text>
     <Text x={886} y={567} size={18} color={gold}>黄色が、いま表示している絵</Text>

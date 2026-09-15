@@ -6,7 +6,7 @@
   "commonInstructions": "日本語の技術解説動画のナレーションです。同じナレーターが一続きで説明しているように、全カットで話速、声の高さ、音量、文末の調子を揃えてください。落ち着いた自然な標準語で、文中では急に加速・減速せず、語句と助詞を滑らかにつなげてください。句読点に応じた自然な間を置き、平叙文の語尾は疑問調にせず自然に着地させてください。固有名詞、数値、英字も文脈に沿って自然につなげ、大げさな演技、広告調、一本調子にはしないでください。音声だけを出力し、前後に長い無音を入れないでください。",
   "fps": 30,
   "tailPaddingSeconds": 0.4,
-  "outputDirectory": "narration/intro_review_20260916_v2",
+  "outputDirectory": "narration/intro_review_20260916_v3_final2",
   "reportFileName": "duration-report.json",
   "silenceCompaction": {
     "preserveInternalSilence": true,
@@ -110,16 +110,17 @@
       "id": "C04",
       "sourceCut": "C04",
       "title": "奥行きで、位置と絵を選ぶ",
-      "text": "奥に行くほど座標を消失点に近づけたり、16段階ある縮小画像のどれを表示するかなど、複雑な計算のほとんどはテーブルを引く処理に置き換えられます。",
-      "ttsText": "奥に行くほど座標をしょうしつてんに近づけたり、16段階ある縮小画像のどれを表示するかなど、複雑な計算のほとんどはテーブルをひく処理に置き換えられます。",
+      "text": "奥に行くほど座標を消失点に近づけたり、16段階ある縮小画像のどれを表示するかなど、複雑な計算のほとんどはテーブルを引く処理に置き換えられます。テーブル化すると、CPUは座標に合わせてメモリから値を取り出すだけで処理が完結するので、3Dの表示を高速に実行できます。",
+      "ttsText": "奥に行くほど座標をしょうしつてんに近づけたり、16段階ある縮小画像のどれを表示するかなど、複雑な計算のほとんどはテーブルをひく処理に置き換えられます。テーブル化すると、CPUは座標に合わせてメモリから値を取り出すだけで処理が完結するので、3Dの表示を高速に実行できます。",
       "sentences": [
-        "奥に行くほど座標を消失点に近づけたり、16段階ある縮小画像のどれを表示するかなど、複雑な計算のほとんどはテーブルを引く処理に置き換えられます。"
+        "奥に行くほど座標を消失点に近づけたり、16段階ある縮小画像のどれを表示するかなど、複雑な計算のほとんどはテーブルを引く処理に置き換えられます。",
+        "テーブル化すると、CPUは座標に合わせてメモリから値を取り出すだけで処理が完結するので、3Dの表示を高速に実行できます。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
       "startFrame": 949,
-      "durationFrames": 317,
+      "durationFrames": 608,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 10.15,
+      "measuredDurationSeconds": 19.865,
       "silenceCompaction": {
         "windowMs": 5,
         "thresholdDb": -44,
@@ -130,11 +131,14 @@
         "maximumLeadingSilenceMs": 20,
         "maximumTrailingSilenceMs": 80,
         "pauseTargetMsByCandidateIndex": {
-          "1": 415,
-          "3": 400
+          "2": 380,
+          "4": 425,
+          "6": 715,
+          "7": 340,
+          "11": 335
         }
       }
     }
   ],
-  "reviewOutputDirectory": "out/part2/intro_C01-C04_20260916_v2"
+  "reviewOutputDirectory": "out/part2/intro_C01-C04_20260916_v3_final2"
 }

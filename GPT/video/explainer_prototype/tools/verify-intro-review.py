@@ -32,6 +32,13 @@ const tree=JSON.parse(readFileSync('src/introTreeData.json','utf8'));
 const source=readFileSync('src/IntroReview.tsx','utf8');
 const body=source.match(/export const treePosition=\\(z:number\\)=>(.*);/)[1];
 const fn=new Function('tree','z','return '+body);
+const depthBody=source.match(/export const treeDepth=\\(progress:number\\)=>(.*);/)[1];
+const depth=new Function('progress','return '+depthBody);
+if(JSON.stringify([0,1/3,2/3,1].map(depth))!==JSON.stringify([0,55,0,55]))throw new Error('Incorrect depth sequence');
+for(let leg=0;leg<3;leg++){
+ const values=Array.from({length:169},(_,i)=>depth((leg+i/168)/3));
+ if(new Set(values.map(z=>tree.size[z])).size!==16)throw new Error('Incomplete image sequence');
+}
 console.log(JSON.stringify(Array.from({length:56},(_,z)=>fn(tree,z))));
 """
 points=json.loads(subprocess.run(['node','--input-type=module'],input=js,text=True,capture_output=True,cwd=ROOT,check=True).stdout)
@@ -51,7 +58,9 @@ for filename,frames in files:
 stills=OUT/'確認画像';stills.mkdir(exist_ok=True)
 samples=[]
 for c in m['cuts']:
-    for f in ([.03,.25,.5,.75,.97] if c['id']=='C04' else [.05,.22,.43,.66,.92] if c['id']=='C03' else [.25,.85]):
+    fractions=([.03,.25,.5,.75,.97] if c['id']=='C04' else [.05,.22,.43,.66,.92] if c['id']=='C03' else [.25,.85])
+    if c['id']=='C04':fractions+= [(9+(c['durationFrames']-36)*p)/c['durationFrames'] for p in [0,1/3,2/3,1]]
+    for f in fractions:
         frame=int(c['durationFrames']*f)
         dest=stills/f"final_{c['id']}_{f}.png"
         subprocess.run(['ffmpeg','-v','error','-i',str(OUT/(c['id']+'.mp4')),'-vf',f'select=eq(n\\,{frame})','-frames:v','1','-y',str(dest)],check=True)
