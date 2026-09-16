@@ -209,6 +209,80 @@
           "8": 410
         }
       }
+    },
+    {
+      "id": "C07",
+      "sourceCut": "C07",
+      "title": "奥行きで当たり判定を絞る",
+      "text": "コリジョン判定も奥行きごとのバケツを使って高速化しています。オブジェクトと弾の当たり判定は、普通なら総当たりで座標のチェックが必要になりますが、奥行き毎に配列を持っているため、弾は自分が通る奥行きのバケツにいるオブジェクトだけを調べればよく、もしそのバケツに何もない時には、高速に棄却できます。",
+      "ttsText": "コリジョン判定も奥行きごとのバケツを使って高速化しています。オブジェクトと弾の当たり判定は、普通なら総当たりで座標のチェックが必要になりますが、奥行き毎に配列を持っているため、弾は自分が通る奥行きのバケツにいるオブジェクトだけを調べればよく、もしそのバケツに何もない時には、高速に棄却できます。",
+      "sentences": [
+        "コリジョン判定も奥行きごとのバケツを使って高速化しています。",
+        "オブジェクトと弾の当たり判定は、普通なら総当たりで座標のチェックが必要になりますが、奥行き毎に配列を持っているため、弾は自分が通る奥行きのバケツにいるオブジェクトだけを調べればよく、もしそのバケツに何もない時には、高速に棄却できます。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 2412,
+      "durationFrames": 637,
+      "minimumDurationFrames": 0,
+      "narrationLeadFrames": 18,
+      "measuredDurationSeconds": 20.215,
+      "targetSeconds": 21.233,
+      "silenceCompaction": {
+        "windowMs": 5,
+        "thresholdDb": -44,
+        "minimumSilenceMs": 60,
+        "preserveInternalSilence": false,
+        "maximumInternalSilenceMs": 110,
+        "sentenceSilenceThresholdMs": 9999,
+        "maximumLeadingSilenceMs": 20,
+        "maximumTrailingSilenceMs": 80,
+        "pauseTargetMsByCandidateIndex": {
+          "3": 405,
+          "5": 385,
+          "9": 560,
+          "12": 450,
+          "16": 460,
+          "18": 345
+        }
+      }
+    },
+    {
+      "id": "C08",
+      "sourceCut": "C08",
+      "title": "フレームごとの2D矩形で判定する",
+      "text": "また、弾と敵の当たり判定は、2Dで処理しています。敵が弾と同じバケツに入っていた時には、敵のテーブルに含まれる該当フレームの2Dのコリジョンの中に弾が入っているかを判定しています。このようにして、3DのコリジョンをZで刈り込んだ後2Dで処理することで、高速に当たり判定を行っています。",
+      "ttsText": "また、弾と敵の当たり判定は、2Dで処理しています。敵が弾と同じバケツに入っていた時には、敵のテーブルに含まれる該当フレームの2Dのコリジョンの中に弾が入っているかを判定しています。このようにして、3DのコリジョンをZで刈り込んだ後2Dで処理することで、高速に当たり判定を行っています。",
+      "sentences": [
+        "また、弾と敵の当たり判定は、2Dで処理しています。",
+        "敵が弾と同じバケツに入っていた時には、敵のテーブルに含まれる該当フレームの2Dのコリジョンの中に弾が入っているかを判定しています。",
+        "このようにして、3DのコリジョンをZで刈り込んだ後2Dで処理することで、高速に当たり判定を行っています。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 3049,
+      "durationFrames": 636,
+      "minimumDurationFrames": 0,
+      "narrationLeadFrames": 18,
+      "measuredDurationSeconds": 20.185,
+      "targetSeconds": 21.2,
+      "silenceCompaction": {
+        "windowMs": 5,
+        "thresholdDb": -44,
+        "minimumSilenceMs": 60,
+        "preserveInternalSilence": false,
+        "maximumInternalSilenceMs": 110,
+        "sentenceSilenceThresholdMs": 9999,
+        "maximumLeadingSilenceMs": 20,
+        "maximumTrailingSilenceMs": 80,
+        "pauseTargetMsByCandidateIndex": {
+          "0": 300,
+          "1": 325,
+          "2": 490,
+          "4": 455,
+          "10": 675,
+          "11": 260,
+          "15": 380
+        }
+      }
     }
   ],
   "reviewOutputDirectory": "out/part2/開発中カット"

@@ -6,6 +6,7 @@ import tree from './introTreeData.json';
 import cues from './introReviewCues.json';
 import alignment from './introReviewAlignment.json';
 import {EnemyTableIntro,BucketSortIntro} from './IntroAdditional';
+import {CollisionRectangleIntro} from './IntroCollision';
 
 const bg='#050507',white='#f7f4f8',cyan='#53dcff',gold='#ffba57';
 export const introReviewDuration=manifest.cuts.reduce((n,c)=>n+c.durationFrames,0);
@@ -121,7 +122,7 @@ export function IntroReviewCut({index=0}:{index?:number}){
       <AbsoluteFill style={{background:'linear-gradient(0deg,#050507f5,transparent)'}}/>
       <Text x={65} y={350} size={42}>ファミコンでスペースハリアーを動かすには？</Text>
       <Text x={65} y={425} size={34} color={cyan}>その2：CPUの最適化</Text>
-    </>:index===1?<FrameFrameworkIntroScene durationInFrames={cut.durationFrames}/>:index===2?<CoordinateIntro/>:index===3?<TreeProjection duration={cut.durationFrames}/>:index===4?<EnemyTableIntro/>:<BucketSortIntro duration={cut.durationFrames}/>}
+    </>:index===1?<FrameFrameworkIntroScene durationInFrames={cut.durationFrames}/>:index===2?<CoordinateIntro/>:index===3?<TreeProjection duration={cut.durationFrames}/>:index===4?<EnemyTableIntro/>:index===5?<BucketSortIntro duration={cut.durationFrames}/>:index===6?<BucketSortIntro duration={cut.durationFrames} collision/>:<CollisionRectangleIntro/>}
     <Sequence from={'narrationLeadFrames' in cut ? cut.narrationLeadFrames : 0}><Audio src={staticFile(`${manifest.outputDirectory}/${cut.id}.wav`)} volume={.95}/></Sequence>
   </AbsoluteFill>;
 }
@@ -129,3 +130,4 @@ export function IntroReviewCut({index=0}:{index?:number}){
 export const IntroReview=()=><AbsoluteFill style={{background:bg}}>{manifest.cuts.map((c,i)=><Sequence key={c.id} from={c.startFrame} durationInFrames={c.durationFrames}><IntroReviewCut index={i}/></Sequence>)}</AbsoluteFill>;
 export const IntroReviewC03C04=()=><AbsoluteFill style={{background:bg}}>{manifest.cuts.slice(2,4).map((c,i)=><Sequence key={c.id} from={c.startFrame-manifest.cuts[2].startFrame} durationInFrames={c.durationFrames}><IntroReviewCut index={i+2}/></Sequence>)}</AbsoluteFill>;
 export const IntroReviewC01C04=()=><AbsoluteFill style={{background:bg}}>{manifest.cuts.slice(0,4).map((c,i)=><Sequence key={c.id} from={c.startFrame} durationInFrames={c.durationFrames}><IntroReviewCut index={i}/></Sequence>)}</AbsoluteFill>;
+export const IntroReviewC01C06=()=><AbsoluteFill style={{background:bg}}>{manifest.cuts.slice(0,6).map((c,i)=><Sequence key={c.id} from={c.startFrame} durationInFrames={c.durationFrames}><IntroReviewCut index={i}/></Sequence>)}</AbsoluteFill>;

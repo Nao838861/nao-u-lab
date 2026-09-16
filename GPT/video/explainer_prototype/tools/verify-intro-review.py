@@ -44,7 +44,7 @@ console.log(JSON.stringify(Array.from({length:56},(_,z)=>fn(tree,z))));
 points=json.loads(subprocess.run(['node','--input-type=module'],input=js,text=True,capture_output=True,cwd=ROOT,check=True).stdout)
 dx=points[0]['x']-370;dy=points[0]['y']-100
 assert all(abs((p['x']-370)*dy-(p['y']-100)*dx)<1e-7 for p in points)
-files=[('C01-C06_通し.mp4',cursor),('C01-C04_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:4]))]+[(c['id']+'.mp4',c['durationFrames']) for c in m['cuts']]
+files=[('C01-C08_通し.mp4',cursor),('C01-C06_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:6])),('C01-C04_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:4]))]+[(c['id']+'.mp4',c['durationFrames']) for c in m['cuts']]
 files.append(('C03-C04_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][2:4])))
 results=[]
 for filename,frames in files:
@@ -55,7 +55,7 @@ for filename,frames in files:
     assert any(s['codec_type']=='audio' for s in probe['streams'])
     decoded=subprocess.run(['ffmpeg','-v','error','-xerror','-i',str(p),'-f','null','-'],check=True,capture_output=True)
     assert not decoded.stderr,(filename,decoded.stderr.decode(errors='replace'))
-    if filename in ['C05.mp4','C06.mp4']:
+    if filename in ['C05.mp4','C06.mp4','C07.mp4','C08.mp4']:
         cut=next(c for c in m['cuts'] if c['id']+'.mp4'==filename)
         assert cut['narrationLeadFrames']==18
         pcm=subprocess.check_output(['ffmpeg','-v','error','-i',str(p),'-t','0.5','-vn','-ac','1','-ar','24000','-f','s16le','-'])
@@ -66,7 +66,7 @@ for filename,frames in files:
 stills=OUT/'確認画像';stills.mkdir(exist_ok=True)
 samples=[]
 for c in m['cuts']:
-    fractions=([.03,.25,.5,.75,.97] if c['id']=='C04' else [.05,.22,.43,.66,.92] if c['id'] in ['C03','C05','C06'] else [.25,.85])
+    fractions=([.03,.25,.5,.75,.97] if c['id']=='C04' else [.05,.22,.43,.66,.92] if c['id'] in ['C03','C05','C06','C07','C08'] else [.25,.85])
     if c['id']=='C04':fractions+= [(9+(c['durationFrames']-36)*p)/c['durationFrames'] for p in [i/7 for i in range(8)]]
     if c['id']=='C06':fractions+=[.98]
     for f in fractions:
