@@ -421,6 +421,106 @@
           "27": 310
         }
       }
+    },
+    {
+      "id": "C13",
+      "sourceCut": "C13",
+      "title": "AIの活用",
+      "text": "次に、AIの活用で開発を効率化した話について説明します。",
+      "ttsText": "次に、AIの活用で開発を効率化した話について説明します。",
+      "sentences": [
+        "次に、AIの活用で開発を効率化した話について説明します。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 6167,
+      "durationFrames": 164,
+      "minimumDurationFrames": 0,
+      "narrationLeadFrames": 18,
+      "measuredDurationSeconds": 4.445,
+      "targetSeconds": 5.467,
+      "silenceCompaction": {
+        "windowMs": 5,
+        "thresholdDb": -44,
+        "minimumSilenceMs": 60,
+        "preserveInternalSilence": false,
+        "maximumInternalSilenceMs": 110,
+        "sentenceSilenceThresholdMs": 9999,
+        "maximumLeadingSilenceMs": 20,
+        "maximumTrailingSilenceMs": 80,
+        "pauseTargetMsByCandidateIndex": {
+          "1": 280
+        }
+      }
+    },
+    {
+      "id": "C14",
+      "sourceCut": "C14",
+      "title": "C言語を正本に、AIでアセンブラ化",
+      "text": "今回は開発の効率化のため、アセンブラではなくC言語でプログラムを書いていました。また、アルゴリズムが固まったところからAIにアセンブラに置き換えてもらいました。AIがアセンブラ化したあとも同じ動作になるC言語のソースは常に維持していて、AIをコンパイラ代わりに使っていました。このようなつくり方は、アルゴリズムレベルの最適化を常にC言語で行えるので効率的でした。",
+      "ttsText": "今回は開発の効率化のため、アセンブラではなくC言語でプログラムを書いていました。また、アルゴリズムが固まったところからAIにアセンブラに置き換えてもらいました。AIがアセンブラ化したあとも同じ動作になるC言語のソースは常に維持していて、AIをコンパイラ代わりに使っていました。このようなつくり方は、アルゴリズムレベルの最適化を常にC言語で行えるので効率的でした。",
+      "sentences": [
+        "今回は開発の効率化のため、アセンブラではなくC言語でプログラムを書いていました。",
+        "また、アルゴリズムが固まったところからAIにアセンブラに置き換えてもらいました。",
+        "AIがアセンブラ化したあとも同じ動作になるC言語のソースは常に維持していて、AIをコンパイラ代わりに使っていました。",
+        "このようなつくり方は、アルゴリズムレベルの最適化を常にC言語で行えるので効率的でした。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 6331,
+      "durationFrames": 751,
+      "minimumDurationFrames": 0,
+      "narrationLeadFrames": 18,
+      "measuredDurationSeconds": 24.02,
+      "targetSeconds": 25.033,
+      "silenceCompaction": {
+        "windowMs": 5,
+        "thresholdDb": -44,
+        "minimumSilenceMs": 60,
+        "preserveInternalSilence": false,
+        "maximumInternalSilenceMs": 110,
+        "sentenceSilenceThresholdMs": 9999,
+        "maximumLeadingSilenceMs": 20,
+        "maximumTrailingSilenceMs": 80,
+        "pauseTargetMsByCandidateIndex": {
+          "1": 345,
+          "3": 560,
+          "4": 355,
+          "7": 720,
+          "12": 370,
+          "15": 660,
+          "16": 295
+        }
+      }
+    },
+    {
+      "id": "C15",
+      "sourceCut": "C15",
+      "title": "Houdiniで敵編隊の軌跡を作成",
+      "text": "敵の軌跡は、最初はHoudiniというツールを使って生成した軌跡を、プログラムのテーブルにコンバートして作っていました。",
+      "ttsText": "敵の軌跡は、最初はHoudiniというツールを使って生成した軌跡を、プログラムのテーブルにコンバートして作っていました。",
+      "sentences": [
+        "敵の軌跡は、最初はHoudiniというツールを使って生成した軌跡を、プログラムのテーブルにコンバートして作っていました。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 7082,
+      "durationFrames": 244,
+      "minimumDurationFrames": 0,
+      "narrationLeadFrames": 18,
+      "measuredDurationSeconds": 7.13,
+      "targetSeconds": 8.133,
+      "silenceCompaction": {
+        "windowMs": 5,
+        "thresholdDb": -44,
+        "minimumSilenceMs": 60,
+        "preserveInternalSilence": false,
+        "maximumInternalSilenceMs": 110,
+        "sentenceSilenceThresholdMs": 9999,
+        "maximumLeadingSilenceMs": 20,
+        "maximumTrailingSilenceMs": 80,
+        "pauseTargetMsByCandidateIndex": {
+          "1": 310,
+          "4": 510
+        }
+      }
     }
   ],
   "reviewOutputDirectory": "out/part2/開発中カット"

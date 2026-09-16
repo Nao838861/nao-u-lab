@@ -1708,7 +1708,7 @@ export const FrameTimelineScene: React.FC<{durationInFrames?: number;eventFrames
   );
 };
 
-const ProgrammingFlowScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 900}) => {
+export const ProgrammingFlowScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 900}) => {
   const frame = useCurrentFrame();
   const show = (fraction: number) => interpolate(frame, [durationInFrames * fraction, durationInFrames * fraction + 18], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   const codeLines = ['update_enemy();', 'project_xyz();', 'check_collision();'];
@@ -1788,7 +1788,7 @@ const BitPrecisionScene: React.FC<{durationInFrames?: number}> = ({durationInFra
   );
 };
 
-const HoudiniTrajectoryScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 450}) => {
+export const HoudiniTrajectoryScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 450}) => {
   const frame = useCurrentFrame();
   return (
     <AbsoluteFill style={{opacity: fade(frame, durationInFrames), backgroundColor: '#000'}}>

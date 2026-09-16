@@ -1,4 +1,4 @@
-"""ユーザー編集の設計書2から冒頭12カットを独立した制作対象にする。"""
+"""ユーザー編集の設計書2から冒頭15カットを独立した制作対象にする。"""
 import hashlib,json,re,argparse,shutil,subprocess,sys
 from pathlib import Path
 from PIL import Image
@@ -6,14 +6,14 @@ from importlib.util import spec_from_file_location,module_from_spec
 
 ROOT=Path(__file__).resolve().parents[1]
 source=(ROOT/'設計書2.md').read_text(encoding='utf-8')
-parser=argparse.ArgumentParser();parser.add_argument('--cuts',default='C01,C02,C03,C04,C05,C06,C07,C08,C09,C10,C11,C12');parser.add_argument('--revision',default='',help='互換用。出力先は開発中カットに固定')
+parser=argparse.ArgumentParser();parser.add_argument('--cuts',default=','.join(f'C{i:02}' for i in range(1,16)));parser.add_argument('--revision',default='',help='互換用。出力先は開発中カットに固定')
 args=parser.parse_args();selected=set(args.cuts.split(','))
 out=ROOT/'out/part2/開発中カット'
 snapshot=out/'設計書2_制作時点.md'
 spec=spec_from_file_location('design_diff',ROOT/'tools/diff-intro-design.py');reader=module_from_spec(spec);spec.loader.exec_module(reader)
 blocks=reader.sections(source)
-assert len(blocks)==12,'冒頭C01〜C12の見出しを確認してください'
-texts=[re.findall(r'[^。]+。?',reader.audio(blocks[f'C{i:02}'])) for i in range(1,13)]
+assert len(blocks)==15,'冒頭C01〜C15の見出しを確認してください'
+texts=[re.findall(r'[^。]+。?',reader.audio(blocks[f'C{i:02}'])) for i in range(1,16)]
 base=json.loads((ROOT/'narration/part2-cuts.json').read_text(encoding='utf-8'))
 m={k:base[k] for k in ['model','voice','speed','responseFormat','commonInstructions']}
 m.update(fps=30,tailPaddingSeconds=.4,outputDirectory='narration/intro_review_20260916',reportFileName='duration-report.json',silenceCompaction={'preserveInternalSilence':True,'maximumLeadingSilenceMs':20,'maximumTrailingSilenceMs':100},cuts=[])
@@ -21,6 +21,7 @@ titles=['タイトル','30fpsのフレームワーク','ファミコンCPUと3D�
 titles+=['奥行きで当たり判定を絞る','フレームごとの2D矩形で判定する']
 titles+=['座標計算を16bitから8bitへ','背景のX座標に16bitの精度を残す']
 titles+=['ゲーム映像','30fpsで動かすため、処理を2フレームに分ける']
+titles+=['AIの活用','C言語を正本に、AIでアセンブラ化','Houdiniで敵編隊の軌跡を作成']
 dest=ROOT/'narration/intro-review-cuts.json'
 previous=json.loads(dest.read_text(encoding='utf-8')) if dest.exists() else {'cuts':[]}
 old_review=ROOT/previous.get('reviewOutputDirectory','out/part2/intro_C01-C04_20260916')
@@ -59,7 +60,7 @@ for i,(lines,title) in enumerate(zip(texts,titles),1):
         new_audio.mkdir(parents=True,exist_ok=True)
         with wave.open(str(new_audio/'C11.wav'),'wb') as wav:
             wav.setnchannels(1);wav.setsampwidth(2);wav.setframerate(24000);wav.writeframes(bytes(220800))
-    if cid=='C12':c['narrationLeadFrames']=18
+    if cid in ['C12','C13','C14','C15']:c['narrationLeadFrames']=18
     cursor+=c['durationFrames']; m['cuts'].append(c)
 dest.write_text(json.dumps(m,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 tree=[]
@@ -73,4 +74,4 @@ tables=json.loads((ROOT/'src/part2Data.json').read_text(encoding='utf-8'))
 out.mkdir(parents=True,exist_ok=True)
 snapshot.write_text(source,encoding='utf-8')
 (out/'source.json').write_text(json.dumps({'designSha256':hashlib.sha256((ROOT/'設計書2.md').read_bytes()).hexdigest(),'appliedCuts':sorted(selected),'cuts':[c['text'] for c in m['cuts']]},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-print('Prepared 12 independent cuts and 16 tree images')
+print('Prepared 15 independent cuts and 16 tree images')
