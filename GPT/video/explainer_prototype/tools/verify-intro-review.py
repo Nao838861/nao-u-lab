@@ -10,6 +10,9 @@ OUT=ROOT/m.get('reviewOutputDirectory','out/part2/開発中カット')
 a=json.loads((ROOT/'src/introReviewAlignment.json').read_text(encoding='utf-8'))
 cues=json.loads((ROOT/'src/introReviewCues.json').read_text(encoding='utf-8'))
 assert cues['audioHash']==a['C03']['audioHash']
+bit_cues=json.loads((ROOT/'src/introBitCues.json').read_text(encoding='utf-8'))
+assert bit_cues['audioHash']==a['C09']['audioHash']
+assert bit_cues['sixteen']<bit_cues['cost']<bit_cues['eight']
 tree=json.loads((ROOT/'src/introTreeData.json').read_text(encoding='utf-8'))
 cursor=0
 for c in m['cuts']:
@@ -46,7 +49,7 @@ console.log(JSON.stringify(Array.from({length:56},(_,z)=>fn(tree,z))));
 points=json.loads(subprocess.run(['node','--input-type=module'],input=js,text=True,capture_output=True,cwd=ROOT,check=True).stdout)
 dx=points[0]['x']-370;dy=points[0]['y']-100
 assert all(abs((p['x']-370)*dy-(p['y']-100)*dx)<1e-7 for p in points)
-files=[('C01-C08_通し.mp4',cursor),('C01-C06_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:6])),('C01-C04_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:4]))]+[(c['id']+'.mp4',c['durationFrames']) for c in m['cuts']]
+files=[('C01-C10_通し.mp4',cursor),('C01-C08_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:8])),('C01-C06_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:6])),('C01-C04_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:4]))]+[(c['id']+'.mp4',c['durationFrames']) for c in m['cuts']]
 files.append(('C03-C04_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][2:4])))
 results=[]
 for filename,frames in files:
@@ -57,7 +60,7 @@ for filename,frames in files:
     assert any(s['codec_type']=='audio' for s in probe['streams'])
     decoded=subprocess.run([FFMPEG,'-v','error','-xerror','-i',str(p),'-c:v','rawvideo','-c:a','pcm_s16le','-f','null','-'],check=True,capture_output=True)
     assert not decoded.stderr,(filename,decoded.stderr.decode(errors='replace'))
-    if filename in ['C05.mp4','C06.mp4','C07.mp4','C08.mp4']:
+    if filename in ['C05.mp4','C06.mp4','C07.mp4','C08.mp4','C09.mp4','C10.mp4']:
         cut=next(c for c in m['cuts'] if c['id']+'.mp4'==filename)
         assert cut['narrationLeadFrames']==18
         pcm=subprocess.check_output([FFMPEG,'-v','error','-i',str(p),'-t','0.5','-vn','-ac','1','-ar','24000','-c:a','pcm_s16le','-f','wav','-'])
@@ -69,7 +72,7 @@ for filename,frames in files:
 stills=OUT/'確認画像';stills.mkdir(exist_ok=True)
 samples=[]
 for c in m['cuts']:
-    fractions=([.03,.25,.5,.75,.97] if c['id']=='C04' else [.05,.22,.43,.66,.92] if c['id'] in ['C03','C05','C06','C07','C08'] else [.25,.85])
+    fractions=([.03,.25,.5,.75,.97] if c['id']=='C04' else [.05,.22,.43,.66,.92] if c['id'] in ['C03','C05','C06','C07','C08','C09','C10'] else [.25,.85])
     if c['id']=='C04':fractions+= [(9+(c['durationFrames']-36)*p)/c['durationFrames'] for p in [i/7 for i in range(8)]]
     if c['id']=='C06':fractions+=[.98]
     if c['id']=='C08':

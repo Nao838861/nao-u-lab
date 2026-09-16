@@ -29,13 +29,14 @@ import {
 } from './narrationTiming';
 
 import {DensePart2,denseDuration} from './DensePart2';
-import {IntroReview,IntroReviewCut,IntroReviewC01C04,IntroReviewC01C06,IntroReviewC03C04,introReviewDuration} from './IntroReview';
+import {IntroReview,IntroReviewCut,IntroReviewC01C04,IntroReviewC01C06,IntroReviewC01C08,IntroReviewC03C04,introReviewDuration} from './IntroReview';
 import introManifest from '../narration/intro-review-cuts.json';
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      <Composition id="IntroReviewC01C08" component={IntroReview} durationInFrames={introReviewDuration} fps={30} width={1280} height={720}/>
+      <Composition id="IntroReviewC01C10" component={IntroReview} durationInFrames={introReviewDuration} fps={30} width={1280} height={720}/>
+      <Composition id="IntroReviewC01C08" component={IntroReviewC01C08} durationInFrames={introManifest.cuts.slice(0,8).reduce((n,c)=>n+c.durationFrames,0)} fps={30} width={1280} height={720}/>
       <Composition id="IntroReviewC01C06" component={IntroReviewC01C06} durationInFrames={introManifest.cuts.slice(0,6).reduce((n,c)=>n+c.durationFrames,0)} fps={30} width={1280} height={720}/>
       <Composition id="IntroReviewC01C04" component={IntroReviewC01C04} durationInFrames={introManifest.cuts.slice(0,4).reduce((n,c)=>n+c.durationFrames,0)} fps={30} width={1280} height={720}/>
       <Composition id="IntroReviewC03C04" component={IntroReviewC03C04} durationInFrames={introManifest.cuts.slice(2,4).reduce((n,c)=>n+c.durationFrames,0)} fps={30} width={1280} height={720}/>

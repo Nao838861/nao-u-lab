@@ -281,6 +281,79 @@
           "11": 260,
           "15": 380
         }
+      },
+      "targetSeconds": 21.2
+    },
+    {
+      "id": "C09",
+      "sourceCut": "C09",
+      "title": "座標計算を16bitから8bitへ",
+      "text": "最初はすべての座標を16bitで計算していましたが、ファミコンでは16bit計算の負荷が高いため、ほとんどの計算を8bitの計算に置き換えました。",
+      "ttsText": "最初はすべての座標を16bitで計算していましたが、ファミコンでは16bit計算の負荷が高いため、ほとんどの計算を8bitの計算に置き換えました。",
+      "sentences": [
+        "最初はすべての座標を16bitで計算していましたが、ファミコンでは16bit計算の負荷が高いため、ほとんどの計算を8bitの計算に置き換えました。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 3685,
+      "durationFrames": 324,
+      "minimumDurationFrames": 0,
+      "narrationLeadFrames": 18,
+      "measuredDurationSeconds": 9.775,
+      "targetSeconds": 10.8,
+      "silenceCompaction": {
+        "windowMs": 5,
+        "thresholdDb": -44,
+        "minimumSilenceMs": 60,
+        "preserveInternalSilence": false,
+        "maximumInternalSilenceMs": 110,
+        "sentenceSilenceThresholdMs": 9999,
+        "maximumLeadingSilenceMs": 20,
+        "maximumTrailingSilenceMs": 80,
+        "pauseTargetMsByCandidateIndex": {
+          "3": 530,
+          "6": 400
+        }
+      }
+    },
+    {
+      "id": "C10",
+      "sourceCut": "C10",
+      "title": "背景のX座標に16bitの精度を残す",
+      "text": "しかし、背景オブジェクトのX座標だけは16bitの精度が必要でした。スペースハリアーの背景オブジェクトは、3D空間の中で固定されておらず、カメラ奥ではプレイヤーが左右に移動すると、プレイヤーに追従するように横方向へ移動しています。この動きを滑らかに再現するには、16bit精度の計算が必要でした。ほかの計算は、すべて8bitに収まる形に変えました。",
+      "ttsText": "しかし、背景オブジェクトのX座標だけは16bitの精度が必要でした。スペースハリアーの背景オブジェクトは、3D空間の中で固定されておらず、カメラ奥ではプレイヤーが左右に移動すると、プレイヤーに追従するように横方向へ移動しています。この動きを滑らかに再現するには、16bit精度の計算が必要でした。ほかの計算は、すべて8bitに収まる形に変えました。",
+      "sentences": [
+        "しかし、背景オブジェクトのX座標だけは16bitの精度が必要でした。",
+        "スペースハリアーの背景オブジェクトは、3D空間の中で固定されておらず、カメラ奥ではプレイヤーが左右に移動すると、プレイヤーに追従するように横方向へ移動しています。",
+        "この動きを滑らかに再現するには、16bit精度の計算が必要でした。",
+        "ほかの計算は、すべて8bitに収まる形に変えました。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 4009,
+      "durationFrames": 778,
+      "minimumDurationFrames": 0,
+      "narrationLeadFrames": 18,
+      "measuredDurationSeconds": 24.93,
+      "targetSeconds": 25.933,
+      "silenceCompaction": {
+        "windowMs": 5,
+        "thresholdDb": -44,
+        "minimumSilenceMs": 60,
+        "preserveInternalSilence": false,
+        "maximumInternalSilenceMs": 110,
+        "sentenceSilenceThresholdMs": 9999,
+        "maximumLeadingSilenceMs": 20,
+        "maximumTrailingSilenceMs": 80,
+        "pauseTargetMsByCandidateIndex": {
+          "1": 65,
+          "6": 650,
+          "7": 285,
+          "9": 635,
+          "12": 350,
+          "14": 775,
+          "16": 330,
+          "18": 725,
+          "19": 260
+        }
       }
     }
   ],
