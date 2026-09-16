@@ -7,7 +7,7 @@ const m=JSON.parse(await readFile(path.join(root,'narration/intro-review-cuts.js
 const out=path.join(root,m.reviewOutputDirectory??'out/part2/開発中カット');
 await mkdir(path.join(out,'確認画像'),{recursive:true});
 const serveUrl=await bundle({entryPoint:path.join(root,'src/index.ts'),publicDir:path.join(root,'public')});
-const composition=await selectComposition({serveUrl,id:'IntroReviewC01C10'});
+const composition=await selectComposition({serveUrl,id:'IntroReviewC01C12'});
 const selected=process.argv.find(a=>a.startsWith('--cuts='))?.slice(7).split(',');
 if(!process.argv.includes('--video-only')){
   for(const c of m.cuts){
@@ -21,14 +21,14 @@ if(!process.argv.includes('--video-only')){
 await writeFile(path.join(out,'cuts.json'),JSON.stringify(m.cuts.map(c=>({id:c.id,title:c.title,startFrame:c.startFrame,durationFrames:c.durationFrames,audioSeconds:c.measuredDurationSeconds})),null,2));
 if(process.argv.includes('--stills-only'))process.exit(0);
 let last=-1;
-await renderMedia({serveUrl,composition,codec:'h264',crf:18,concurrency:10,outputLocation:path.join(out,'C01-C10_通し.mp4'),onProgress:({progress})=>{const p=Math.floor(progress*100);if(p>=last+10){last=p;console.log(`render ${p}%`);}}});
+await renderMedia({serveUrl,composition,codec:'h264',crf:18,concurrency:10,outputLocation:path.join(out,'C01-C12_通し.mp4'),onProgress:({progress})=>{const p=Math.floor(progress*100);if(p>=last+10){last=p;console.log(`render ${p}%`);}}});
 for(const c of m.cuts){
   if(selected&&!selected.includes(c.id))continue;
   const clip=await selectComposition({serveUrl,id:`IntroReview${c.id}`});
   await renderMedia({serveUrl,composition:clip,codec:'h264',crf:18,concurrency:10,outputLocation:path.join(out,`${c.id}.mp4`)});
   console.log(`Ready ${c.id}`);
 }
-console.log('Ready C01-C10 and selected individual cuts');
+console.log('Ready C01-C12 and selected individual cuts');
 if(selected)process.exit(0);
 const pair=await selectComposition({serveUrl,id:'IntroReviewC03C04'});
 await renderMedia({serveUrl,composition:pair,codec:'h264',crf:18,concurrency:10,outputLocation:path.join(out,'C03-C04_通し.mp4')});

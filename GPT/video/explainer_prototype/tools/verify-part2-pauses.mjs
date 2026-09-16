@@ -11,6 +11,7 @@ const base = new URL("public/" + m.outputDirectory + "/", root);
 const map = JSON.parse(await readFile(new URL("pause-map.json", base), "utf8"));
 const stats = {};
 for (const c of m.cuts) {
+  if(c.silent)continue;
   const raw = await readFile(new URL("raw/" + c.id + ".wav", base));
   if (createHash("sha256").update(raw).digest("hex") !== map[c.id].rawHash)
     throw new Error(c.id + ": stale pause map");

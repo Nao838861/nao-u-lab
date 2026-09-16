@@ -25,6 +25,7 @@ import {analyzePcmWavSilence} from './tools/compact-narration-silence.mjs';
 const m=JSON.parse(await readFile('narration/part2-cuts.json','utf8'));
 const result={};
 for(const c of m.cuts){
+ if(c.silent)continue;
  const wav=await readFile('public/'+m.outputDirectory+'/raw/'+c.id+'.wav');
  const a=analyzePcmWavSilence(wav,{windowMs:5,thresholdDb:-44});
  result[c.id]={duration:a.durationSeconds,spans:a.spans.filter(s=>s.durationMs>=60)};
@@ -41,6 +42,7 @@ def norm(text):
 
 report = {}
 for cut in manifest['cuts']:
+    if cut.get('silent'):continue
     cid = cut['id']
     raw_hash = hashlib.sha256((audio_dir/'raw'/f'{cid}.wav').read_bytes()).hexdigest()
     tr = json.loads((audio_dir/'raw/transcripts'/f'{cid}.json').read_text(encoding='utf-8'))

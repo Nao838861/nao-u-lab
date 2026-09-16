@@ -154,6 +154,7 @@ const generateSpeech = async ({input, instructions, cutId, speed}) => {
 };
 
 for (const cut of selectedCuts) {
+  if (cut.silent) continue;
   const outputPath = path.join(outputDir, `${cut.id}.wav`);
   let buffer;
   if (reportOnly) {

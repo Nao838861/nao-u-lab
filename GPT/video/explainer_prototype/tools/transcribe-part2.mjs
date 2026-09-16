@@ -31,6 +31,7 @@ await Promise.all(
   Array.from({ length: 3 }, async () => {
     while (cursor < m.cuts.length) {
       const c = m.cuts[cursor++];
+      if (c.silent) continue;
       const dest = path.join(out, c.id + ".json");
       const wav = await readFile(
         path.join(audioDir, raw ? "raw" : "", c.id + ".wav"),

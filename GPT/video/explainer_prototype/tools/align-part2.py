@@ -13,6 +13,9 @@ def norm(s):
 alignment={}
 report=['# 第二部 音声照合','', '文字起こしとの自動比較。表記揺れを含むため、類似度だけで発音の合否を決めない。','']
 for c in manifest['cuts']:
+    if c.get('silent'):
+        alignment[c['id']]={'starts':[],'similarity':1.0,'audioHash':hashlib.sha256((ROOT/'public'/manifest['outputDirectory']/f"{c['id']}.wav").read_bytes()).hexdigest()}
+        continue
     tr=json.loads((ROOT/'public'/manifest['outputDirectory']/'transcripts'/f"{c['id']}.json").read_text(encoding='utf-8'))
     assert tr.get('sourceText') == c['ttsText'], (c['id'], 'stale transcript text')
     audio_hash=hashlib.sha256((ROOT/'public'/manifest['outputDirectory']/f"{c['id']}.wav").read_bytes()).hexdigest()

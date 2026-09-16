@@ -1614,10 +1614,10 @@ export const FrameFrameworkIntroScene: React.FC<{durationInFrames?: number}> = (
   );
 };
 
-const FrameTimelineScene: React.FC<{durationInFrames?: number}> = ({durationInFrames = 600}) => {
+export const FrameTimelineScene: React.FC<{durationInFrames?: number;eventFrames?: Record<number,number>}> = ({durationInFrames = 600,eventFrames}) => {
   const frame = useCurrentFrame();
   const timingScale = durationInFrames / 600;
-  const scaled = (at: number) => Math.round(at * timingScale);
+  const scaled = (at: number) => eventFrames?.[at] ?? Math.round(at * timingScale);
   const reveal = (at: number) => interpolate(frame, [scaled(at), scaled(at) + 12], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   const cpu = C.magenta;
   const logic = '#62df83';
