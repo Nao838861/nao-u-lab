@@ -55,7 +55,7 @@ for filename,frames in files:
     v=next(s for s in probe['streams'] if s['codec_type']=='video')
     assert (v['width'],v['height'],v['r_frame_rate'],int(v['nb_read_frames']))==(1280,720,'30/1',frames),(filename,v)
     assert any(s['codec_type']=='audio' for s in probe['streams'])
-    decoded=subprocess.run([FFMPEG,'-threads','1','-v','error','-xerror','-i',str(p),'-c:v','rawvideo','-c:a','pcm_s16le','-f','null','-'],check=True,capture_output=True)
+    decoded=subprocess.run([FFMPEG,'-v','error','-xerror','-i',str(p),'-c:v','rawvideo','-c:a','pcm_s16le','-f','null','-'],check=True,capture_output=True)
     assert not decoded.stderr,(filename,decoded.stderr.decode(errors='replace'))
     if filename in ['C05.mp4','C06.mp4','C07.mp4','C08.mp4']:
         cut=next(c for c in m['cuts'] if c['id']+'.mp4'==filename)
@@ -80,7 +80,8 @@ for c in m['cuts']:
     for f in fractions:
         frame=int(c['durationFrames']*f)
         dest=stills/f"final_{c['id']}_{f}.png"
-        subprocess.run([FFMPEG,'-v','error','-threads','1','-xerror','-i',str(OUT/(c['id']+'.mp4')),'-ss',str(frame/30),'-frames:v','1','-y',str(dest)],check=True)
+        subprocess.run([FFMPEG,'-v','error','-xerror','-i',str(OUT/(c['id']+'.mp4')),'-ss',str(frame/30),'-frames:v','1','-y',str(dest)],check=True)
+        assert max(Image.open(dest).convert('L').getextrema())>100, (c['id'],frame,'blank extracted frame')
         samples.append((dest,c['id'],frame))
 sheet=Image.new('RGB',(960,205*((len(samples)+2)//3)),(20,20,24));draw=ImageDraw.Draw(sheet)
 for i,(p,cid,frame) in enumerate(samples):
