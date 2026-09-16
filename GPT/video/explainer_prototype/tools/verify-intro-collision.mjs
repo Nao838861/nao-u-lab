@@ -47,17 +47,17 @@ for(const [i,frame] of glyph.frames.entries()){
 const shotBody=source.match(/export const shotState=\(elapsed:number,window:number\)=>\{([\s\S]*?)\n\};/)[1];
 const shot=new Function('collisionRow','elapsed','window',shotBody).bind(null,collisionRow);
 const outcomes=[];
-for(let i=0;i<5;i++){
- const start=shot(i*2,10),arrival=shot(i*2+1.4,10);
- assert.equal(start.index,i);assert(!start.ready);assert(arrival.ready);
+for(let i=0;i<10;i++){
+ const start=shot(i,10),arrival=shot(i+.7,10);
+ assert.equal(start.index,i%5);assert(!start.ready);assert(arrival.ready);
  assert.equal(start.size,arrival.size);assert.equal(start.x,arrival.x);assert.equal(start.y,arrival.y);
- const samples=Array.from({length:61},(_,j)=>shot(i*2+j/60*1.4,10));
+ const samples=Array.from({length:61},(_,j)=>shot(i+j/60*.7,10));
  assert(samples.every(s=>s.x===start.x&&s.y===start.y&&s.size===64));
  assert.deepEqual([...new Set(samples.map(s=>s.pattern))],[0,1,2,3,4]);
  assert.equal(arrival.x,arrival.targetX);assert.equal(arrival.y,arrival.targetY);
  assert(start.x-start.size/2>=0&&start.x+start.size/2<=576);
  outcomes.push(hit(98,arrival.bx,arrival.by));
 }
-assert.deepEqual(outcomes,[false,true,true,true,false]);
+assert.deepEqual(outcomes,[false,true,true,true,false,false,true,true,true,false]);
 console.log(`PASS: ${data.enemy.sx.length} collision rectangles and inclusive boundaries; ${glyph.pixels.length} original bullet pixels`);
-console.log('PASS: five fixed-XY shots, five original CHR patterns, constant scale, miss/hit/hit/hit/miss');
+console.log('PASS: double-speed fixed-XY shots, two five-shot cycles, original CHR patterns, constant scale');

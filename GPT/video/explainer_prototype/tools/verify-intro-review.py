@@ -75,8 +75,8 @@ for c in m['cuts']:
     if c['id']=='C08':
         lead=c.get('narrationLeadFrames',0)/30;start=a['C08']['starts'][1]
         window=c['durationFrames']/30-lead-start-.4
-        fractions += [(lead+start+window*(i+.72)/5)/(c['durationFrames']/30) for i in range(5)]
-        fractions += [(lead+start+window*p/5)/(c['durationFrames']/30) for p in [.01,.24,.35,.46,.57]]
+        fractions += [(lead+start+window*(i+.72)/10)/(c['durationFrames']/30) for i in range(10)]
+        fractions += [(lead+start+window*p/10)/(c['durationFrames']/30) for p in [.01,.24,.35,.46,.57]]
     for f in fractions:
         frame=int(c['durationFrames']*f)
         dest=stills/f"final_{c['id']}_{f}.png"

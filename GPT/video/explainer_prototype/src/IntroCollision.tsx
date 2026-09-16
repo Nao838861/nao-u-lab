@@ -12,7 +12,7 @@ export const collisionRow=(n:number)=>{
 };
 export const pointInEnemy=(n:number,x:number,y:number)=>{const r=collisionRow(n);return x>=r.xl&&x<=r.xr&&y>=r.yt&&y<=r.yb;};
 export const shotState=(elapsed:number,window:number)=>{
-  const r=collisionRow(98),p=Math.max(0,Math.min(.999999,elapsed/window))*5;
+  const r=collisionRow(98),p=(Math.max(0,Math.min(.999999,elapsed/window))*10)%5;
   const index=Math.floor(p),phase=p-index,flight=Math.min(1,phase/.65);
   const bx=[r.xl-8,r.xl+3,r.x,r.xr-3,r.xr+8][index],by=(r.yt+r.yb)/2;
   const targetX=(bx-64)*4.5,targetY=(by-31)/2*4.5;
