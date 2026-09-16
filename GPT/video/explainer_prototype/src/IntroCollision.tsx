@@ -16,10 +16,9 @@ export const shotState=(elapsed:number,window:number)=>{
   const index=Math.floor(p),phase=p-index,flight=Math.min(1,phase/.65);
   const bx=[r.xl-8,r.xl+3,r.x,r.xr-3,r.xr+8][index],by=(r.yt+r.yb)/2;
   const targetX=(bx-64)*4.5,targetY=(by-31)/2*4.5;
-  const perspective=2.4-1.4*flight;
+  const pattern=[0,0,0,0,1,1,2,2,3,3,4,4][Math.min(11,Math.floor(flight*12))];
   return {index,bx,by,ready:phase>=.65,visible:phase<.9,
-    x:336+(targetX-336)*perspective,y:-40+(targetY+40)*perspective,
-    size:64-46*flight,targetX,targetY};
+    x:targetX,y:targetY,size:64,pattern,targetX,targetY};
 };
 export function CollisionRectangleIntro(){
   const t=(useCurrentFrame()-(manifest.cuts[7].narrationLeadFrames??0))/30;
@@ -39,12 +38,11 @@ export function CollisionRectangleIntro(){
       <div style={{position:'absolute',left:(r.xl-64)*scale,top:(r.yt-31)/2*scale,width:(r.xr-r.xl)*scale,height:(r.yb-r.yt)/2*scale,border:`3px solid ${hit?gold:green}`,background:hit?'#ffba5722':'#75df9111',boxSizing:'border-box'}}/>
       {testing&&<>
         <svg width={576} height={432} style={{position:'absolute'}}>
-          <line x1={336+(shot.targetX-336)*2.4} y1={-40+(shot.targetY+40)*2.4} x2={shot.targetX} y2={shot.targetY} stroke={gold} strokeOpacity={.3} strokeDasharray="4 7"/>
           {judged&&<circle cx={shot.targetX} cy={shot.targetY} r={hit?11:5} fill="none" stroke={hit?gold:cyan} strokeWidth={2}/>}
         </svg>
-        {shot.visible&&<BulletGlyph x={shot.x} y={shot.y} size={shot.size}/>}
+        {shot.visible&&<BulletGlyph x={shot.x} y={shot.y} size={shot.size} pattern={shot.pattern}/>}
       </>}
-      <Text x={16} y={354} size={21} color={green}>{testing?`${shot.index+1} / 5発目　手前 → 奥へ発射`:'フレームごとに矩形も更新する'}</Text>
+      <Text x={16} y={354} size={21} color={green}>{testing?`${shot.index+1} / 5発目　XY固定・弾の絵 ${shot.pattern+1} / 5`:'フレームごとに矩形も更新する'}</Text>
       {testing&&<Text x={16} y={388} size={18} color={cyan}>敵はフレーム98で固定して比較</Text>}
     </div>
     <Text x={44} y={618} size={22} color={gold}>{testing?(judged?`同じ奥行きに到達 → ${hit?'矩形の内側：命中':'矩形の外側：当たらない'}`:'弾はまだ手前 → XY判定は行わない'):'C05と同じ移動テーブル・同じ縮小画像'}</Text>
