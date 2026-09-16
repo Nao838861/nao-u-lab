@@ -11,14 +11,24 @@ export const collisionRow=(n:number)=>{
   return {...r,xl:r.x-r.im.halfW,xr:r.x+r.im.halfW,yt:r.y-r.im.h*2,yb:r.y};
 };
 export const pointInEnemy=(n:number,x:number,y:number)=>{const r=collisionRow(n);return x>=r.xl&&x<=r.xr&&y>=r.yt&&y<=r.yb;};
+export const shotState=(elapsed:number,window:number)=>{
+  const r=collisionRow(98),p=Math.max(0,Math.min(.999999,elapsed/window))*5;
+  const index=Math.floor(p),phase=p-index,flight=Math.min(1,phase/.65);
+  const bx=[r.xl-8,r.xl+3,r.x,r.xr-3,r.xr+8][index],by=(r.yt+r.yb)/2;
+  const targetX=(bx-64)*4.5,targetY=(by-31)/2*4.5;
+  const perspective=2.4-1.4*flight;
+  return {index,bx,by,ready:phase>=.65,visible:phase<.9,
+    x:336+(targetX-336)*perspective,y:-40+(targetY+40)*perspective,
+    size:64-46*flight,targetX,targetY};
+};
 export function CollisionRectangleIntro(){
   const t=(useCurrentFrame()-(manifest.cuts[7].narrationLeadFrames??0))/30;
   const starts=(alignment as Record<string,{starts:number[]}>).C08.starts;
   const testAt=starts[1]??4,testing=t>=testAt;
   const n=testing?98:84+Math.floor(Math.max(0,t)*4)%30,r=collisionRow(n);
-  const progress=(Math.max(0,t-testAt)%5)/5;
-  const bx=Math.round(r.xl-12+(r.xr-r.xl+24)*progress),by=(r.yt+r.yb)/2;
-  const hit=pointInEnemy(n,bx,by);
+  const duration=(manifest.cuts[7].durationFrames-(manifest.cuts[7].narrationLeadFrames??0))/30;
+  const shot=shotState(t-testAt,duration-testAt-.4),{bx,by}=shot;
+  const judged=testing&&shot.ready,hit=judged&&pointInEnemy(n,bx,by);
   const panelX=44,panelY=166,scale=4.5;
   return <>
     <Text x={44} y={26} size={38}>奥行きで絞ったら、2Dの矩形で判定</Text>
@@ -26,11 +36,18 @@ export function CollisionRectangleIntro(){
     <div style={{position:'absolute',left:panelX,top:panelY,width:576,height:432,overflow:'hidden',background:'#0d1119',border:'1px solid #42404b'}}>
       <svg width={576} height={432} style={{position:'absolute'}}>{[108,216,324].map(y=><line key={y} x1={0} x2={576} y1={y} y2={y} stroke="#1c2932"/>)}{[144,288,432].map(x=><line key={x} x1={x} x2={x} y1={0} y2={432} stroke="#1c2932"/>)}</svg>
       <Img src={staticFile(r.im.file)} style={{position:'absolute',left:r.left*scale,top:r.top*scale,width:r.im.w*scale,height:r.im.h*scale,imageRendering:'pixelated'}}/>
-      <div style={{position:'absolute',left:(r.xl-64)*scale,top:(r.yt-31)/2*scale,width:(r.xr-r.xl)*scale,height:(r.yb-r.yt)/2*scale,border:`3px solid ${testing&&hit?gold:green}`,background:testing&&hit?'#ffba5722':'#75df9111',boxSizing:'border-box'}}/>
-      {testing&&<><BulletGlyph x={(bx-64)*scale} y={(by-31)/2*scale} size={32}/><svg width={576} height={432} style={{position:'absolute'}}><circle cx={(bx-64)*scale} cy={(by-31)/2*scale} r={3} fill={gold}/></svg></>}
-      <Text x={16} y={375} size={22} color={green}>{testing?'フレーム98を止めて、弾の中心を確認':'フレームごとに矩形も更新する'}</Text>
+      <div style={{position:'absolute',left:(r.xl-64)*scale,top:(r.yt-31)/2*scale,width:(r.xr-r.xl)*scale,height:(r.yb-r.yt)/2*scale,border:`3px solid ${hit?gold:green}`,background:hit?'#ffba5722':'#75df9111',boxSizing:'border-box'}}/>
+      {testing&&<>
+        <svg width={576} height={432} style={{position:'absolute'}}>
+          <line x1={336+(shot.targetX-336)*2.4} y1={-40+(shot.targetY+40)*2.4} x2={shot.targetX} y2={shot.targetY} stroke={gold} strokeOpacity={.3} strokeDasharray="4 7"/>
+          {judged&&<circle cx={shot.targetX} cy={shot.targetY} r={hit?11:5} fill="none" stroke={hit?gold:cyan} strokeWidth={2}/>}
+        </svg>
+        {shot.visible&&<BulletGlyph x={shot.x} y={shot.y} size={shot.size}/>}
+      </>}
+      <Text x={16} y={354} size={21} color={green}>{testing?`${shot.index+1} / 5発目　手前 → 奥へ発射`:'フレームごとに矩形も更新する'}</Text>
+      {testing&&<Text x={16} y={388} size={18} color={cyan}>敵はフレーム98で固定して比較</Text>}
     </div>
-    <Text x={44} y={618} size={22} color={gold}>{testing?`同じ奥行きの候補 → ${hit?'矩形の内側：命中':'矩形の外側：当たらない'}`:'C05と同じ移動テーブル・同じ縮小画像'}</Text>
+    <Text x={44} y={618} size={22} color={gold}>{testing?(judged?`同じ奥行きに到達 → ${hit?'矩形の内側：命中':'矩形の外側：当たらない'}`:'弾はまだ手前 → XY判定は行わない'):'C05と同じ移動テーブル・同じ縮小画像'}</Text>
     <div style={{position:'absolute',left:664,top:166,width:572,height:282,background:'#11131d',border:'1px solid #42404b'}}>
       <Text x={18} y={12} size={24} color={cyan}>該当フレームの当たり判定</Text>
       <div style={{position:'absolute',left:18,top:62,fontSize:19,color:green,display:'grid',gridTemplateColumns:'85px 90px 90px 90px 90px 85px'}}>{['frame','左X','右X','上Y','下Y','画像'].map(h=><span key={h}>{h}</span>)}</div>
@@ -39,8 +56,8 @@ export function CollisionRectangleIntro(){
     <Text x={680} y={461} size={18} color={cyan}>移動表の中心X・下端Y ＋ 画像の幅・高さの表</Text>
     <div style={{position:'absolute',left:664,top:504,width:572,height:147,background:'#13251f',border:`1px solid ${green}`}}>
       <Text x={18} y={10} size={23} color={green}>Zで候補を選ぶ → XYだけを比べる</Text>
-      <Text x={18} y={51} size={22}>{testing?`${r.xl} ≤ 弾X ${Math.round(bx)} ≤ ${r.xr}　${hit?'○':'×'}`:'左X ≤ 弾のX ≤ 右X'}</Text>
-      <Text x={18} y={89} size={22}>{testing?`${r.yt} ≤ 弾Y ${Math.round(by)} ≤ ${r.yb}　○`:'上Y ≤ 弾のY ≤ 下Y'}</Text>
+      <Text x={18} y={51} size={22}>{judged?`${r.xl} ≤ 弾X ${bx} ≤ ${r.xr}　${hit?'○':'×'}`:testing?'Zがまだ手前：XY判定を待つ':'左X ≤ 弾のX ≤ 右X'}</Text>
+      <Text x={18} y={89} size={22}>{judged?`${r.yt} ≤ 弾Y ${by} ≤ ${r.yb}　○`:testing?'同じ奥行きへ届いた時だけ比較する':'上Y ≤ 弾のY ≤ 下Y'}</Text>
     </div>
     <Text x={44} y={680} size={15} color="#aaa2af">矩形は実ゲームの表から算出。4辺は説明用に展開して表示。弾の動きは判定を示す例。追加の地平線補正は0。</Text>
   </>;

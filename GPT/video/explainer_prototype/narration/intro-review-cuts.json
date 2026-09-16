@@ -263,7 +263,6 @@
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
       "measuredDurationSeconds": 20.185,
-      "targetSeconds": 21.2,
       "silenceCompaction": {
         "windowMs": 5,
         "thresholdDb": -44,
