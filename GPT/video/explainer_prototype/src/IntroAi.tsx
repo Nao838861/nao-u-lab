@@ -34,26 +34,43 @@ export function AutomaticTrackingIntro(){
  </>;
 }
 export function MarkedTrajectoryIntro(){
- const row=Math.floor(useCurrentFrame()/2)%data.enemy.sx.length;
+ const frame=useCurrentFrame();
+ const row=Math.floor(Math.max(0,frame-24)/2)%data.enemy.sx.length;
  const im=sprites.images[data.enemy.sz[row]];
- const keys=[0,33,54,75,105];
- const sourceRow=row*123/94;
- const next=keys.findIndex(v=>v>=sourceRow);
+ // Original 10 Hz captures -> 124 logic rows -> current 95-row table.
+ const keys=[0,33,54,75,105].map(v=>Math.round(v*94/123));
+ const next=keys.findIndex(v=>v>=row);
  const destination=next<0?4:next;
+ const target=keys[destination];
+ const targetImage=sprites.images[data.enemy.sz[target]];
+ // Full NES screen is 256 x 240. VBUF is 128 x 96 at scanline 31.
+ // Keep the same projection for both the sprite and its destination marker.
+ const scale=2.75;
+ const position=(r:number,image:typeof im)=>({x:(data.enemy.sx[r]-image.halfW-64)*scale,y:(Math.floor((data.enemy.bot[r]-31)/2)-image.h+1)*scale+31*scale/2});
+ const pos=position(row,im),goal=position(target,targetImage);
+ const markerX=Math.max(3,Math.min(328,goal.x-5));
+ const markerW=Math.max(18,Math.min(targetImage.w*scale+10,349-markerX));
+ const relativeFrame=data.images[destination].frame-data.images[0].frame;
  return <>
   <T x={44} y={32} size={39}>人が目印を付け、AIが軌跡テーブルへ変換</T>
-  <Box x={170} y={95} w={940} h={330}>
-   <T x={20} y={10} size={23} color={cyan}>AIが再現した敵の動き</T>
-   <div style={{position:'absolute',left:20,top:52,width:900,height:260,overflow:'hidden',background:'#07151b'}}>
-    <svg width={900} height={260}><path d="M0 35 H900 M100 260 L450 35 L800 260" stroke="#345454" fill="none"/></svg>
-    <Img src={staticFile(im.file)} style={{position:'absolute',left:(data.enemy.sx[row]-im.halfW-32)*4.5,top:(Math.floor((data.enemy.bot[row]-31)/2)-im.h+1)*4.5,width:im.w*4.5,height:im.h*4.5,imageRendering:'pixelated'}}/>
-   </div>
+  <T x={170} y={112} size={25} color={cyan}>{'AIが再現した\n敵の動き'}</T>
+  <Box x={464} y={95} w={352} h={330}>
+   <svg width={352} height={330} viewBox="0 0 256 240" style={{position:'absolute',background:'#05090c'}}>
+    {/* Reference camera offset 8: ground contact limit VBUF y=54. */}
+    <path d="M0 139 H256 V223 H0 Z" fill="#14222b"/>
+    <path d="M0 139 H256 M0 143 H256 M0 151 H256 M0 165 H256 M0 187 H256 M0 220 H256 M0 223 L128 139 L256 223 M64 223 L128 139 L192 223" stroke="#52666b" strokeWidth=".7" fill="none"/>
+   </svg>
+   <Img src={staticFile(im.file)} style={{position:'absolute',left:pos.x,top:pos.y,width:im.w*scale,height:im.h*scale,imageRendering:'pixelated'}}/>
+   {row<=keys[4]&&<div style={{position:'absolute',left:markerX,top:goal.y-5,width:markerW,height:targetImage.h*scale+10,border:`3px solid ${gold}`,boxSizing:'border-box',boxShadow:'0 0 0 2px #000',background:'#ffba5710'}}>
+    <div style={{position:'absolute',right:0,top:-28,fontSize:17,fontWeight:800,padding:'1px 5px',background:gold,color:'#17120a',whiteSpace:'nowrap'}}>F{relativeFrame}{goal.x+targetImage.w*scale>352?' →':''}</div>
+   </div>}
   </Box>
+  <T x={855} y={186} size={27} color={gold}>{frame<24?'スタート位置':row>keys[4]?'画面外へ':`フレーム${relativeFrame}の\n目印へ`}</T>
   <T x={44} y={436} size={23}>人が目印を付けた5枚　<span style={{color:gold}}>黄色は、次に向かう目印</span></T>
   {data.images.slice(0,5).map((p,i)=><React.Fragment key={p.frame}>
-   <div style={{position:'absolute',left:44+i*242,top:475,width:224,height:210,border:`3px solid ${i===destination?gold:'#3a4050'}`,boxSizing:'border-box',background:'#10131c'}}>
-    <div style={{height:168,overflow:'hidden',position:'relative'}}><Img src={staticFile(p.file)} style={{position:'absolute',width:224,height:252,top:-42}}/></div>
-    <T x={10} y={176} size={20} color={gold}>{i+1}：Frame {p.frame.toString().padStart(3,'0')}</T>
+   <div style={{position:'absolute',left:44+i*242,top:475,width:224,height:210,boxSizing:'border-box',background:'#10131c',boxShadow:i===destination?`0 0 0 6px ${gold},0 0 22px #ffba5799`:'0 0 0 1px #3a4050'}}>
+    <div style={{height:168,overflow:'hidden',position:'relative',opacity:i===destination?1:.65}}><Img src={staticFile(p.file)} style={{position:'absolute',width:224,height:252,top:-42}}/></div>
+    <div style={{position:'absolute',top:168,width:'100%',height:42,background:i===destination?gold:'#19222e',color:i===destination?'#17120a':'#f7f4f8',fontWeight:700,fontSize:22,textAlign:'center',paddingTop:5,boxSizing:'border-box'}}>フレーム{p.frame-data.images[0].frame}</div>
    </div>
    {i<4&&<T x={269+i*242} y={550} size={21} color={cyan}>→</T>}
   </React.Fragment>)}

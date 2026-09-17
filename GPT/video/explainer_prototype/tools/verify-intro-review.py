@@ -88,7 +88,7 @@ for c in m['cuts']:
     if c['id']=='C14':fractions=[.1,.29,.45,.6,.72,.9]
     if c['id']=='C15':fractions=[.2,.6,.9]
     if c['id'] in ['C16','C17','C18']:fractions=[.12,.3,.55,.75,.94]
-    if c['id']=='C17':fractions += [0,2/c['durationFrames'],190/c['durationFrames']]
+    if c['id']=='C17':fractions += [0,23/c['durationFrames'],26/c['durationFrames'],214/c['durationFrames']]
     if c['id']=='C08':
         lead=c.get('narrationLeadFrames',0)/30;start=a['C08']['starts'][1]
         window=c['durationFrames']/30-lead-start-.4

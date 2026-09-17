@@ -12,7 +12,7 @@ const selected=process.argv.find(a=>a.startsWith('--cuts='))?.slice(7).split(','
 if(!process.argv.includes('--video-only')){
   for(const c of m.cuts){
     if(selected&&!selected.includes(c.id))continue;
-    for(const fraction of c.id==='C04'?[.05,.25,.5,.75,.95]:c.id==='C03'?[.05,.22,.43,.66,.92]:['C16','C17','C18'].includes(c.id)?[.25,.55,.75,.94]:[.25,.75]){
+    for(const fraction of c.id==='C17'?[0,23/c.durationFrames,26/c.durationFrames,.25,.55,.75,.94]:c.id==='C04'?[.05,.25,.5,.75,.95]:c.id==='C03'?[.05,.22,.43,.66,.92]:['C16','C18'].includes(c.id)?[.25,.55,.75,.94]:[.25,.75]){
       await renderStill({serveUrl,composition,frame:c.startFrame+Math.floor(c.durationFrames*fraction),output:path.join(out,'確認画像',`${c.id}_${fraction}.png`)});
       console.log(`QA ${c.id} ${fraction}`);
     }
