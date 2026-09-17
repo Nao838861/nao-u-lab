@@ -22,14 +22,14 @@ export function IntroClosing(){
    <OffthreadVideo src={staticFile('game_CSCD.mp4')} startFrom={13*30} muted style={{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',objectPosition:'center bottom',imageRendering:'pixelated'}}/>
    <AbsoluteFill style={{background:'#020207',opacity:shade}}/>
    <div style={{position:'absolute',left:54,top:36,fontSize:29,fontWeight:900,opacity:body,letterSpacing:2}}>まとめ<span style={{color:'#f552d2',fontSize:17,marginLeft:18,letterSpacing:5}}>SUMMARY</span></div>
-   <AbsoluteFill style={{opacity:window(-.6,1.05),display:'grid',placeItems:'center'}}>
+   <AbsoluteFill style={{opacity:window(-.6,s[1]),display:'grid',placeItems:'center'}}>
     <div style={{textAlign:'center'}}><div style={{fontSize:68,fontWeight:900}}>まとめ</div><div style={{width:160,height:5,background:'#f552d2',margin:'20px auto'}}/></div>
    </AbsoluteFill>
-   <AbsoluteFill style={{opacity:window(1,s[1]),display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
+   <AbsoluteFill style={{opacity:window(s[1],s[2]),display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
     <div style={{fontSize:43,fontWeight:800}}>ハードの性能は変わらない</div>
     <div style={{...reveal(cues.tools),fontSize:53,fontWeight:900,color:'#f552d2',marginTop:28}}>作り方と道具は、進歩する</div>
    </AbsoluteFill>
-   <AbsoluteFill style={{opacity:window(s[1],s[2]),padding:'118px 64px',boxSizing:'border-box'}}>
+   <AbsoluteFill style={{opacity:window(s[2],s[3]),padding:'118px 64px',boxSizing:'border-box'}}>
     <div style={{fontSize:37,fontWeight:900}}>今回、組み合わせたもの</div>
     <div style={{display:'flex',gap:26,alignItems:'stretch',justifyContent:'center',marginTop:35}}>
      <div style={card(cues.optimization,'#53dcff')}><div style={{fontSize:34,fontWeight:900,color:'#53dcff'}}>最適化の工夫</div><div style={{fontSize:26,lineHeight:1.65,marginTop:18}}>計算・敵の動きをテーブル化<br/>奥行きで描画・判定を効率化</div></div>
@@ -38,7 +38,7 @@ export function IntroClosing(){
     </div>
     <div style={{...reveal(cues.result),textAlign:'center',marginTop:46,fontSize:39,fontWeight:900,textShadow:'0 3px 12px #000'}}>ファミコンでスペースハリアーを実現</div>
    </AbsoluteFill>
-   <AbsoluteFill style={{opacity:ramp(s[2],s[2]+.3)*body,display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column',textShadow:'0 3px 12px #000'}}>
+   <AbsoluteFill style={{opacity:ramp(s[3],s[3]+.3)*body,display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column',textShadow:'0 3px 12px #000'}}>
     <div style={{fontSize:37,fontWeight:800}}>昔のハード <span style={{color:'#ffba57'}}>×</span> 今の知識・道具</div>
     <div style={{...reveal(cues.possibility),fontSize:47,fontWeight:900,color:'#53dcff',marginTop:32}}>まだまだ、新しい可能性を引き出せる</div>
    </AbsoluteFill>

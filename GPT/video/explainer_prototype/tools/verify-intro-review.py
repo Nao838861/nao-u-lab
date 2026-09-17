@@ -106,6 +106,7 @@ for c in m['cuts']:
     if c['id']=='C15':fractions=[.2,.6,.9]
     if c['id'] in ['C16','C17','C18','C19']:fractions=[.12,.3,.55,.75,.94]
     if c['id']=='C19':
+        fractions += [.04]
         lead=c['narrationLeadFrames']/30
         fractions += [(lead+closing_cues['bodyEnd']+.6)/(c['durationFrames']/30),(lead+closing_cues['thanksStart']+.6)/(c['durationFrames']/30)]
     if c['id']=='C17':fractions += [0,53/c['durationFrames'],56/c['durationFrames'],244/c['durationFrames']]
