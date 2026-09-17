@@ -102,6 +102,7 @@ const syncNarrationTiming = () => {
     startFrame += cut.gapBeforeFrames ?? 0;
     const measured = cut.measuredDurationSeconds;
     cut.startFrame = startFrame;
+    if(cut.disabled){cut.durationFrames=0;cut.targetSeconds=0;continue;}
     if (Number.isFinite(measured)) {
       const audioAlignedFrames = Math.ceil((measured + tailPaddingSeconds) * fps) + (cut.narrationLeadFrames ?? 0);
       cut.durationFrames = Math.max(cut.minimumDurationFrames ?? 0, audioAlignedFrames);

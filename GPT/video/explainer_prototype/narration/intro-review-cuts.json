@@ -60,11 +60,11 @@
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
       "startFrame": 405,
-      "durationFrames": 169,
+      "durationFrames": 184,
       "minimumDurationFrames": 0,
-      "narrationLeadFrames": 0,
-      "targetSeconds": 5.633,
+      "narrationLeadFrames": 15,
       "measuredDurationSeconds": 5.205,
+      "targetSeconds": 6.133,
       "silenceCompaction": {
         "windowMs": 5,
         "thresholdDb": -44,
@@ -88,10 +88,12 @@
         "しかし、スペースハリアーのような疑似3Dのゲームでは、計算のほとんどをテーブルによる変換に置き換えることができます。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 574,
-      "durationFrames": 525,
+      "startFrame": 589,
+      "durationFrames": 540,
       "minimumDurationFrames": 0,
+      "narrationLeadFrames": 15,
       "measuredDurationSeconds": 17.1,
+      "targetSeconds": 18,
       "silenceCompaction": {
         "windowMs": 5,
         "thresholdDb": -44,
@@ -108,8 +110,7 @@
           "6": 260,
           "8": 470
         }
-      },
-      "targetSeconds": 17.5
+      }
     },
     {
       "id": "C04",
@@ -122,7 +123,7 @@
         "テーブル化すると、CPUは座標に合わせてメモリから値を取り出すだけで処理が完結するので、3Dの表示を高速に実行できます。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 1099,
+      "startFrame": 1129,
       "durationFrames": 608,
       "minimumDurationFrames": 0,
       "measuredDurationSeconds": 19.865,
@@ -156,7 +157,7 @@
         "敵の移動はあらかじめすべてのフレームでテーブル化された座標を取り出すだけでよいので、簡単な処理で3次元空間を自由に動かせます。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 1707,
+      "startFrame": 1737,
       "durationFrames": 364,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -189,7 +190,7 @@
         "オブジェクトの更新時に、ポインタをZ値に対応する配列に詰め込んで、描画時には配列を奥からスキャンする形でソートを行っています。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 2071,
+      "startFrame": 2101,
       "durationFrames": 491,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -218,19 +219,19 @@
       "id": "C07",
       "sourceCut": "C07",
       "title": "奥行きで当たり判定を絞る",
-      "text": "コリジョン判定も奥行きごとのバケツを使って高速化しています。オブジェクトと弾の当たり判定は、普通なら総当たりで座標のチェックが必要になりますが、奥行き毎に配列を持っているため、弾は自分が通る奥行きのバケツにいるオブジェクトだけを調べればよく、もしそのバケツに何もない時には、高速に棄却できます。",
-      "ttsText": "コリジョン判定も奥行きごとのバケツを使って高速化しています。オブジェクトと弾の当たり判定は、普通なら総当たりで座標のチェックが必要になりますが、奥行き毎に配列を持っているため、弾は自分が通る奥行きのバケツにいるオブジェクトだけを調べればよく、もしそのバケツに何もない時には、高速に棄却できます。",
+      "text": "コリジョン判定も奥行きごとのバケツを使って高速化しています。オブジェクトと弾の当たり判定は、普通なら総当たりで座標のチェックが必要になりますが、奥行き毎に配列を持っているため、弾は自分が通る奥行きのバケツにいるオブジェクトだけを調べればよく、もしそのバケツに何もない時には高速に処理をスキップできます。",
+      "ttsText": "コリジョン判定も奥行きごとのバケツを使って高速化しています。オブジェクトと弾の当たり判定は、普通なら総当たりで座標のチェックが必要になりますが、奥行き毎に配列を持っているため、弾は自分が通る奥行きのバケツにいるオブジェクトだけを調べればよく、もしそのバケツに何もない時には高速に処理をスキップできます。",
       "sentences": [
         "コリジョン判定も奥行きごとのバケツを使って高速化しています。",
-        "オブジェクトと弾の当たり判定は、普通なら総当たりで座標のチェックが必要になりますが、奥行き毎に配列を持っているため、弾は自分が通る奥行きのバケツにいるオブジェクトだけを調べればよく、もしそのバケツに何もない時には、高速に棄却できます。"
+        "オブジェクトと弾の当たり判定は、普通なら総当たりで座標のチェックが必要になりますが、奥行き毎に配列を持っているため、弾は自分が通る奥行きのバケツにいるオブジェクトだけを調べればよく、もしそのバケツに何もない時には高速に処理をスキップできます。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 2562,
-      "durationFrames": 637,
+      "startFrame": 2592,
+      "durationFrames": 607,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
-      "measuredDurationSeconds": 20.215,
-      "targetSeconds": 21.233,
+      "measuredDurationSeconds": 19.225,
+      "targetSeconds": 20.233,
       "silenceCompaction": {
         "windowMs": 5,
         "thresholdDb": -44,
@@ -241,12 +242,11 @@
         "maximumLeadingSilenceMs": 20,
         "maximumTrailingSilenceMs": 80,
         "pauseTargetMsByCandidateIndex": {
-          "3": 405,
-          "5": 385,
-          "9": 560,
-          "12": 450,
-          "16": 460,
-          "18": 345
+          "4": 420,
+          "5": 310,
+          "9": 435,
+          "11": 425,
+          "13": 490
         }
       }
     },
@@ -369,12 +369,13 @@
       "sentences": [],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
       "startFrame": 4937,
-      "durationFrames": 150,
-      "minimumDurationFrames": 150,
+      "durationFrames": 0,
+      "minimumDurationFrames": 0,
       "narrationLeadFrames": 0,
+      "measuredDurationSeconds": 0,
+      "targetSeconds": 0,
       "silent": true,
-      "measuredDurationSeconds": 4.6,
-      "targetSeconds": 5
+      "disabled": true
     },
     {
       "id": "C12",
@@ -391,7 +392,7 @@
         "敵の移動や3D座標変換は、ゲームロジックの予算の8ms以内で計算する必要がありました。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 5087,
+      "startFrame": 4937,
       "durationFrames": 1230,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -436,7 +437,7 @@
         "次に、AIの活用で開発を効率化した話について説明します。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 6317,
+      "startFrame": 6167,
       "durationFrames": 164,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -469,7 +470,7 @@
         "このようなつくり方は、アルゴリズムレベルの最適化を常にC言語で行えるので効率的でした。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 6481,
+      "startFrame": 6331,
       "durationFrames": 751,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -505,7 +506,7 @@
         "敵の軌跡は、最初はHoudiniというツールを使って生成した軌跡を、プログラムのテーブルにコンバートして作っていました。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 7232,
+      "startFrame": 7082,
       "durationFrames": 244,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -536,7 +537,7 @@
         "作成中にFableなどの高機能なAIが使えるようになったので、AIに任せられる範囲を増やせないかと考えて、リファレンス動画から自動で敵の軌跡を抽出できないかと試みましたが、全自動での検出は誤検出が多く、使い物にはなりませんでした。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 7476,
+      "startFrame": 7326,
       "durationFrames": 505,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -570,7 +571,7 @@
         "この手法でゲーム後半の敵の軌跡テーブルはAIに半自動で作ってもらうことができるようになったので、開発効率が上がりました。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 7981,
+      "startFrame": 7831,
       "durationFrames": 629,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -606,7 +607,7 @@
         "まだ今のAIでは、全自動の目コピ移植はハードルが高いようです。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 8610,
+      "startFrame": 8460,
       "durationFrames": 1016,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,

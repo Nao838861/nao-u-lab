@@ -44,12 +44,14 @@ for i,(lines,title) in enumerate(zip(texts,titles),1):
         spoken=spoken.replace('バケツソートの結果','奥行きごとのバケツ').replace('自分とZ座標が同じオブジェクトのみ判定ができ','自分が通る奥行きのバケツにいるオブジェクトだけを調べればよく').replace('同じZ位置に何もない時','そのバケツに何もない時')
     if cid=='C08':
         spoken=spoken.replace('敵のテーブルに含まれる外灯フレームの2Dのコリジョン','該当フレームのテーブルの位置と大きさから決まる2Dの矩形')
+    spoken=re.sub(r'。{2,}','。',spoken)
     lines=re.findall(r'[^。]+。?',spoken)
     if cid not in selected:
         c=dict(next(p for p in previous['cuts'] if p['id']==cid));c['startFrame']=cursor
         cursor+=c['durationFrames'];m['cuts'].append(c);continue
     c=dict(id=cid,sourceCut=cid,title=title,text=spoken,ttsText=spoken,sentences=lines,instructions='原稿の全ての文を順番に読み、省略や言い換えをしないでください。',startFrame=cursor,durationFrames=round(len(spoken)/7*30),minimumDurationFrames=0)
     c['narrationLeadFrames']=18 if '一拍おいて' in blocks[cid] or cid in ['C07','C08','C09','C10'] else 0
+    if cid in ['C02','C03'] and '0.5秒' in blocks[cid]:c['narrationLeadFrames']=15
     if cid=='C04':
         # 初回ASRで「教室展」「縮処理」となった箇所だけ読みを指定する。
         c['ttsText']=spoken.replace('消失点','しょうしつてん').replace('テーブルを引く','テーブルをひく')
@@ -58,6 +60,10 @@ for i,(lines,title) in enumerate(zip(texts,titles),1):
         for k in ['measuredDurationSeconds','durationFrames','targetSeconds','silenceCompaction']:
             if k in p and (k!='silenceCompaction' or p.get('ttsText')==c['ttsText']):c[k]=p[k]
     if cid=='C11' and not spoken:
+        if '欠番' in blocks[cid]:
+            c.update(silent=True,disabled=True,measuredDurationSeconds=0,durationFrames=0,minimumDurationFrames=0,narrationLeadFrames=0,targetSeconds=0)
+            m['cuts'].append(c)
+            continue
         c.update(silent=True,measuredDurationSeconds=4.6,durationFrames=150,minimumDurationFrames=150,narrationLeadFrames=0)
         import wave
         new_audio.mkdir(parents=True,exist_ok=True)

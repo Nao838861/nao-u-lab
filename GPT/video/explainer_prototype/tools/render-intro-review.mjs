@@ -1,17 +1,22 @@
 import {bundle} from '@remotion/bundler';
 import {selectComposition,renderStill,renderMedia} from '@remotion/renderer';
-import {readFile,mkdir,writeFile} from 'node:fs/promises';
+import {readFile,mkdir,writeFile,unlink} from 'node:fs/promises';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
 const root=path.resolve(import.meta.dirname,'..');
 const m=JSON.parse(await readFile(path.join(root,'narration/intro-review-cuts.json'),'utf8'));
 const out=path.join(root,m.reviewOutputDirectory??'out/part2/開発中カット');
 await mkdir(path.join(out,'確認画像'),{recursive:true});
+for(const c of m.cuts.filter(c=>c.disabled)){
+  if(!/^C\d\d$/.test(c.id))throw new Error('Invalid cut ID');
+  await unlink(path.join(out,`${c.id}.mp4`)).catch(e=>{if(e.code!=='ENOENT')throw e;});
+}
 const serveUrl=await bundle({entryPoint:path.join(root,'src/index.ts'),publicDir:path.join(root,'public')});
 const composition=await selectComposition({serveUrl,id:'IntroReviewC01C18'});
 const selected=process.argv.find(a=>a.startsWith('--cuts='))?.slice(7).split(',');
 if(!process.argv.includes('--video-only')){
   for(const c of m.cuts){
+    if(c.durationFrames===0)continue;
     if(selected&&!selected.includes(c.id))continue;
     for(const fraction of c.id==='C17'?[0,53/c.durationFrames,56/c.durationFrames,.25,.55,.75,.94]:c.id==='C04'?[.05,.25,.5,.75,.95]:c.id==='C03'?[.05,.22,.43,.66,.92]:['C16','C18'].includes(c.id)?[.25,.55,.75,.94]:[.25,.75]){
       await renderStill({serveUrl,composition,frame:c.startFrame+Math.floor(c.durationFrames*fraction+1e-7),output:path.join(out,'確認画像',`${c.id}_${fraction}.png`)});
@@ -24,6 +29,7 @@ if(process.argv.includes('--stills-only'))process.exit(0);
 let last=-1;
 await renderMedia({serveUrl,composition,codec:'h264',crf:18,concurrency:10,outputLocation:path.join(out,'C01-C18_通し.mp4'),onProgress:({progress})=>{const p=Math.floor(progress*100);if(p>=last+10){last=p;console.log(`render ${p}%`);}}});
 for(const c of m.cuts){
+  if(c.durationFrames===0)continue;
   if(selected&&!selected.includes(c.id))continue;
   const clip=await selectComposition({serveUrl,id:`IntroReview${c.id}`});
   await renderMedia({serveUrl,composition:clip,codec:'h264',crf:18,concurrency:10,outputLocation:path.join(out,`${c.id}.mp4`)});
@@ -31,8 +37,8 @@ for(const c of m.cuts){
 }
 console.log('Ready C01-C18 and selected individual cuts');
 // 冒頭を変更した際は、以前納品した短い通し版も最新の全編から更新する。
-if(selected?.some(id=>/^C0[1-8]$/.test(id))){
-  for(const count of [4,6,8]){
+if(!selected||selected.some(id=>/^C(0[1-9]|10)$/.test(id))){
+  for(const count of [4,6,8,10]){
     const frames=m.cuts.slice(0,count).reduce((n,c)=>n+c.durationFrames,0);
     execFileSync(path.join(root,'node_modules/@remotion/compositor-win32-x64-msvc/ffmpeg.exe'),['-v','error','-y','-i',path.join(out,'C01-C18_通し.mp4'),'-t',String(frames/30),'-c:v','libx264','-crf','18','-c:a','aac',path.join(out,`C01-C${String(count).padStart(2,'0')}_通し.mp4`)]);
     console.log(`Updated opening through C${count}`);

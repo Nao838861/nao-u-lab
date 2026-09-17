@@ -26,7 +26,7 @@ export const treePosition=(z:number)=>({x:370+50*tree.scale[z]/256*3,y:100+264*t
 export const treeDepth=(progress:number)=>Math.min(55,Math.floor(56*(1-Math.abs((Math.max(0,Math.min(1,progress))*7)%2-1))));
 
 function CoordinateIntro(){
-  const t=useCurrentFrame()/30;
+  const t=(useCurrentFrame()-(manifest.cuts[2].narrationLeadFrames??0))/30;
   const q=cues.C03;
   const reveal=(at:number)=>Math.max(0,Math.min(1,(t-at)/.2));
   const table=t>=q.however;
@@ -136,7 +136,7 @@ export function IntroReviewCut({index=0}:{index?:number}){
   </AbsoluteFill>;
 }
 
-export const IntroReview=()=><AbsoluteFill style={{background:bg}}>{manifest.cuts.map((c,i)=><Sequence key={c.id} from={c.startFrame} durationInFrames={c.durationFrames}><IntroReviewCut index={i}/></Sequence>)}</AbsoluteFill>;
+export const IntroReview=()=><AbsoluteFill style={{background:bg}}>{manifest.cuts.map((c,i)=>c.durationFrames===0?null:<Sequence key={c.id} from={c.startFrame} durationInFrames={c.durationFrames}><IntroReviewCut index={i}/></Sequence>)}</AbsoluteFill>;
 export const IntroReviewC03C04=()=><AbsoluteFill style={{background:bg}}>{manifest.cuts.slice(2,4).map((c,i)=><Sequence key={c.id} from={c.startFrame-manifest.cuts[2].startFrame} durationInFrames={c.durationFrames}><IntroReviewCut index={i+2}/></Sequence>)}</AbsoluteFill>;
 export const IntroReviewC01C04=()=><AbsoluteFill style={{background:bg}}>{manifest.cuts.slice(0,4).map((c,i)=><Sequence key={c.id} from={c.startFrame} durationInFrames={c.durationFrames}><IntroReviewCut index={i}/></Sequence>)}</AbsoluteFill>;
 export const IntroReviewC01C06=()=><AbsoluteFill style={{background:bg}}>{manifest.cuts.slice(0,6).map((c,i)=><Sequence key={c.id} from={c.startFrame} durationInFrames={c.durationFrames}><IntroReviewCut index={i}/></Sequence>)}</AbsoluteFill>;

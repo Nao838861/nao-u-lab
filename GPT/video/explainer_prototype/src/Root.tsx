@@ -40,7 +40,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="IntroReviewC01C06" component={IntroReviewC01C06} durationInFrames={introManifest.cuts.slice(0,6).reduce((n,c)=>n+c.durationFrames,0)} fps={30} width={1280} height={720}/>
       <Composition id="IntroReviewC01C04" component={IntroReviewC01C04} durationInFrames={introManifest.cuts.slice(0,4).reduce((n,c)=>n+c.durationFrames,0)} fps={30} width={1280} height={720}/>
       <Composition id="IntroReviewC03C04" component={IntroReviewC03C04} durationInFrames={introManifest.cuts.slice(2,4).reduce((n,c)=>n+c.durationFrames,0)} fps={30} width={1280} height={720}/>
-      {introManifest.cuts.map((c,index)=><Composition key={c.id} id={`IntroReview${c.id}`} component={IntroReviewCut} defaultProps={{index}} durationInFrames={c.durationFrames} fps={30} width={1280} height={720}/>)}
+      {introManifest.cuts.map((c,index)=>c.durationFrames===0?null:<Composition key={c.id} id={`IntroReview${c.id}`} component={IntroReviewCut} defaultProps={{index}} durationInFrames={c.durationFrames} fps={30} width={1280} height={720}/>)}
       <Composition id="Part2Rebuilt" component={DensePart2} durationInFrames={denseDuration} fps={30} width={1280} height={720}/>
       <Composition id="Part2Review" component={DensePart2} durationInFrames={denseDuration} fps={30} width={1280} height={720}/>
       <Composition

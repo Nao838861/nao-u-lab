@@ -26,6 +26,9 @@ tree=json.loads((ROOT/'src/introTreeData.json').read_text(encoding='utf-8'))
 cursor=0
 for c in m['cuts']:
     assert c['startFrame']==cursor
+    if c.get('disabled'):
+        assert c['durationFrames']==0 and not (OUT/(c['id']+'.mp4')).exists()
+        continue
     assert c['measuredDurationSeconds']*30+c.get('narrationLeadFrames',0)<c['durationFrames']
     wav=ROOT/'public'/m['outputDirectory']/(c['id']+'.wav')
     assert hashlib.sha256(wav.read_bytes()).hexdigest()==a[c['id']]['audioHash']
@@ -58,7 +61,7 @@ console.log(JSON.stringify(Array.from({length:56},(_,z)=>fn(tree,z))));
 points=json.loads(subprocess.run(['node','--input-type=module'],input=js,text=True,capture_output=True,cwd=ROOT,check=True).stdout)
 dx=points[0]['x']-370;dy=points[0]['y']-100
 assert all(abs((p['x']-370)*dy-(p['y']-100)*dx)<1e-7 for p in points)
-files=[('C01-C18_通し.mp4',cursor),('C01-C08_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:8])),('C01-C06_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:6])),('C01-C04_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:4]))]+[(c['id']+'.mp4',c['durationFrames']) for c in m['cuts']]
+files=[('C01-C18_通し.mp4',cursor),('C01-C10_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:10])),('C01-C08_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:8])),('C01-C06_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:6])),('C01-C04_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:4]))]+[(c['id']+'.mp4',c['durationFrames']) for c in m['cuts'] if c['durationFrames']>0]
 files.append(('C03-C04_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][2:4])))
 results=[]
 for filename,frames in files:
@@ -78,10 +81,18 @@ for filename,frames in files:
         with wave.open(io.BytesIO(pcm),'rb') as wav:samples_pcm=array.array('h',wav.readframes(wav.getnframes()))
         assert max(abs(v) for v in samples_pcm)<20,(filename,'冒頭の一拍に音声あり')
     results.append(dict(file=filename,frames=frames,seconds=frames/30,bytes=p.stat().st_size))
+    if filename in ['C02.mp4','C03.mp4']:
+        cut=next(c for c in m['cuts'] if c['id']+'.mp4'==filename)
+        assert cut['narrationLeadFrames']==15
+        import array,io,wave
+        pcm=subprocess.check_output([FFMPEG,'-v','error','-i',str(p),'-t','0.45','-vn','-ac','1','-ar','24000','-c:a','pcm_s16le','-f','wav','-'])
+        with wave.open(io.BytesIO(pcm),'rb') as wav:samples_pcm=array.array('h',wav.readframes(wav.getnframes()))
+        assert max(abs(v) for v in samples_pcm)<20,(filename,'冒頭0.5秒の待ちに音声あり')
 stills=OUT/'確認画像';stills.mkdir(exist_ok=True)
 samples=[]
 for c in m['cuts']:
     fractions=([.03,.25,.5,.75,.97] if c['id']=='C04' else [.05,.22,.43,.66,.92] if c['id'] in ['C03','C05','C06','C07','C08','C09','C10'] else [.25,.85])
+    if c.get('disabled'):continue
     if c['id']=='C04':fractions+= [(9+(c['durationFrames']-36)*p)/c['durationFrames'] for p in [i/7 for i in range(8)]]
     if c['id']=='C06':fractions+=[.98]
     if c['id']=='C12':fractions=[.05,.22,.37,.44,.56,.76,.87,.93]
