@@ -35,8 +35,10 @@ for (const c of m.cuts) {
     )
   )
     throw new Error(c.id + ": unexpected pause target");
-  if (result.stats.insertions.length)
+  if (result.stats.insertions.length && !c.pauseBeforeLastSentenceMs)
     throw new Error(c.id + ": unexpected inserted silence");
+  if(result.stats.insertions.some(i=>i.pauseKind!=="custom"))
+    throw new Error(c.id + ": inserted silence outside explicit pause");
   stats[c.id] = result.stats;
 }
 await writeFile(

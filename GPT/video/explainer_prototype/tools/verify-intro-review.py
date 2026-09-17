@@ -11,7 +11,7 @@ a=json.loads((ROOT/'src/introReviewAlignment.json').read_text(encoding='utf-8'))
 cues=json.loads((ROOT/'src/introReviewCues.json').read_text(encoding='utf-8'))
 closing_cues=json.loads((ROOT/'src/introClosingCues.json').read_text(encoding='utf-8'))
 assert closing_cues['audioHash']==a['C19']['audioHash']
-assert closing_cues['depth']<a['C19']['starts'][1]
+assert closing_cues['bodyEnd']<=closing_cues['thanksStart']
 assert cues['audioHash']==a['C03']['audioHash']
 bit_cues=json.loads((ROOT/'src/introBitCues.json').read_text(encoding='utf-8'))
 assert bit_cues['audioHash']==a['C09']['audioHash']
@@ -104,6 +104,9 @@ for c in m['cuts']:
     if c['id']=='C14':fractions=[.1,.29,.45,.6,.72,.9]
     if c['id']=='C15':fractions=[.2,.6,.9]
     if c['id'] in ['C16','C17','C18','C19']:fractions=[.12,.3,.55,.75,.94]
+    if c['id']=='C19':
+        lead=c['narrationLeadFrames']/30
+        fractions += [(lead+closing_cues['bodyEnd']+.6)/(c['durationFrames']/30),(lead+closing_cues['thanksStart']+.6)/(c['durationFrames']/30)]
     if c['id']=='C17':fractions += [0,53/c['durationFrames'],56/c['durationFrames'],244/c['durationFrames']]
     if c['id']=='C08':
         lead=c.get('narrationLeadFrames',0)/30;start=a['C08']['starts'][1]
@@ -116,6 +119,11 @@ for c in m['cuts']:
         subprocess.run([FFMPEG,'-v','error','-xerror','-i',str(OUT/(c['id']+'.mp4')),'-ss',str(frame/30),'-frames:v','1','-y',str(dest)],check=True)
         assert max(Image.open(dest).convert('L').getextrema())>100, (c['id'],frame,'blank extracted frame')
         samples.append((dest,c['id'],frame))
+closing=next(c for c in m['cuts'] if c['id']=='C19')
+last_image=stills/'C19_final_black.png'
+subprocess.run([FFMPEG,'-v','error','-i',str(OUT/'C19.mp4'),'-ss',str((closing['durationFrames']-1)/30),'-frames:v','1','-y',str(last_image)],check=True)
+assert Image.open(last_image).convert('L').getextrema()[1]<8,'C19 must fade completely to black'
+assert (closing['durationFrames']-46)/30>closing['measuredDurationSeconds']+closing['narrationLeadFrames']/30,'fade starts before narration finishes'
 sheet=Image.new('RGB',(960,205*((len(samples)+2)//3)),(20,20,24));draw=ImageDraw.Draw(sheet)
 for i,(p,cid,frame) in enumerate(samples):
     x=i%3*320;y=i//3*205

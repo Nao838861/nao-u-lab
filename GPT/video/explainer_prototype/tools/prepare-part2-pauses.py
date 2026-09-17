@@ -79,6 +79,8 @@ for cut in manifest['cuts']:
             if candidates:
                 i, span = min(candidates, key=lambda v: abs((v[1]['startSeconds']+v[1]['endSeconds'])/2-(lo+hi)/2))
                 targets[str(i)] = span['durationMs']
+                if cut.get('pauseBeforeLastSentenceMs') and pos==len(norm(''.join(cut['sentences'][:-1]))):
+                    targets[str(i)]=max(span['durationMs'],cut['pauseBeforeLastSentenceMs'])
                 boundaries.append({'punctuation':char,'position':pos,'candidate':i,'start':span['startSeconds'],'end':span['endSeconds']})
             else:
                 # 元々間がない句読点に人工的な無音は足さない。

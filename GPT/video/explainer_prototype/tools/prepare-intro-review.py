@@ -73,7 +73,8 @@ for i,(lines,title) in enumerate(zip(texts,titles),1):
             wav.setnchannels(1);wav.setsampwidth(2);wav.setframerate(24000);wav.writeframes(bytes(220800))
     if cid in ['C11','C12','C13','C14','C15','C16','C17','C18','C19']:c['narrationLeadFrames']=18
     if cid=='C19':
-        c['tailPaddingSeconds']=1.0
+        c['tailPaddingSeconds']=2.0
+        c['pauseBeforeLastSentenceMs']=1100
         c['ttsInput']=''.join(lines[:-1])
         c['appendTtsSegments']=[{'text':lines[-1],'instructions':'動画の締めの挨拶を、省略せず落ち着いた声で読んでください。'}]
     cursor+=c['durationFrames']; m['cuts'].append(c)
