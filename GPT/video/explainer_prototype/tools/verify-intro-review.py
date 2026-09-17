@@ -12,6 +12,7 @@ cues=json.loads((ROOT/'src/introReviewCues.json').read_text(encoding='utf-8'))
 closing_cues=json.loads((ROOT/'src/introClosingCues.json').read_text(encoding='utf-8'))
 assert closing_cues['audioHash']==a['C19']['audioHash']
 assert closing_cues['bodyEnd']<=closing_cues['thanksStart']
+assert closing_cues['tools']<closing_cues['optimization']<closing_cues['ai']<closing_cues['result']<closing_cues['possibility']<closing_cues['bodyEnd']
 assert cues['audioHash']==a['C03']['audioHash']
 bit_cues=json.loads((ROOT/'src/introBitCues.json').read_text(encoding='utf-8'))
 assert bit_cues['audioHash']==a['C09']['audioHash']
