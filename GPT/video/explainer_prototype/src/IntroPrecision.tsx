@@ -34,7 +34,7 @@ export function BackgroundPrecisionIntro(){
   const t=(useCurrentFrame()-(manifest.cuts[9].narrationLeadFrames??0))/30;
   const final=t>=(alignment.C10.starts[3]??Infinity);
   return <>
-    <OffthreadVideo src={staticFile('game_CSCD.mp4')} startFrom={17*30} muted style={{position:'absolute',left:160,top:0,width:960,height:720,objectFit:'fill',imageRendering:'pixelated'}}/>
+    <OffthreadVideo src={staticFile('c10_background_capture.mp4')} muted style={{position:'absolute',left:160,top:0,width:960,height:720,objectFit:'fill',imageRendering:'pixelated'}}/>
     <div style={{position:'absolute',left:180,top:26,padding:'12px 18px',background:'#050507e8',borderLeft:`6px solid ${orange}`,fontSize:29,fontWeight:700}}>背景オブジェクトのX座標だけ16bit</div>
     <div style={{position:'absolute',left:180,bottom:28,padding:'13px 18px',background:'#050507e8',borderLeft:`5px solid ${final?cyan:orange}`,fontSize:25,color:final?cyan:'#f7f4f8'}}>{final?'ほかの座標計算は、8bitに収まる形へ':'奥ではプレイヤーの左右移動へ滑らかに追従'}</div>
   </>;
