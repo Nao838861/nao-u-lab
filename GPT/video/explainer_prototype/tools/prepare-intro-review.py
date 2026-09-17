@@ -20,7 +20,7 @@ m.update(fps=30,tailPaddingSeconds=.4,outputDirectory='narration/intro_review_20
 titles=['タイトル','30fpsで動かす最適化の工夫','ファミコンCPUと3Dの計算','奥行きで、位置と絵を選ぶ','敵の動きもテーブルから取り出す','奥から順に描くバケツソート']
 titles+=['奥行きで当たり判定を絞る','フレームごとの2D矩形で判定する']
 titles+=['座標計算を16bitから8bitへ','背景のX座標に16bitの精度を残す']
-titles+=['ゲーム映像','30fpsで動かすため、処理を2フレームに分ける']
+titles+=['30fpsで動かすため、処理を2フレームに分ける','ゲームの更新を8msに収める']
 titles+=['AIの活用','C言語を正本に、AIでアセンブラ化','Houdiniで敵編隊の軌跡を作成']
 titles+=['全自動の軌跡抽出を試す','人のマーキングから軌跡テーブルへ','ボスの動きを人が解析しAIが実装']
 dest=ROOT/'narration/intro-review-cuts.json'
@@ -69,7 +69,7 @@ for i,(lines,title) in enumerate(zip(texts,titles),1):
         new_audio.mkdir(parents=True,exist_ok=True)
         with wave.open(str(new_audio/'C11.wav'),'wb') as wav:
             wav.setnchannels(1);wav.setsampwidth(2);wav.setframerate(24000);wav.writeframes(bytes(220800))
-    if cid in ['C12','C13','C14','C15','C16','C17','C18']:c['narrationLeadFrames']=18
+    if cid in ['C11','C12','C13','C14','C15','C16','C17','C18']:c['narrationLeadFrames']=18
     cursor+=c['durationFrames']; m['cuts'].append(c)
 dest.write_text(json.dumps(m,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 tree=[]

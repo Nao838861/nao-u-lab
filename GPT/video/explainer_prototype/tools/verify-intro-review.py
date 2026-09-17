@@ -72,7 +72,7 @@ for filename,frames in files:
     assert any(s['codec_type']=='audio' for s in probe['streams'])
     decoded=subprocess.run([FFMPEG,'-v','error','-xerror','-i',str(p),'-c:v','rawvideo','-c:a','pcm_s16le','-f','null','-'],check=True,capture_output=True)
     assert not decoded.stderr,(filename,decoded.stderr.decode(errors='replace'))
-    if filename in ['C05.mp4','C06.mp4','C07.mp4','C08.mp4','C09.mp4','C10.mp4','C12.mp4','C13.mp4','C14.mp4','C15.mp4','C16.mp4','C17.mp4','C18.mp4']:
+    if filename in ['C05.mp4','C06.mp4','C07.mp4','C08.mp4','C09.mp4','C10.mp4','C11.mp4','C12.mp4','C13.mp4','C14.mp4','C15.mp4','C16.mp4','C17.mp4','C18.mp4']:
         cut=next(c for c in m['cuts'] if c['id']+'.mp4'==filename)
         assert cut['narrationLeadFrames']==18
         pcm=subprocess.check_output([FFMPEG,'-v','error','-i',str(p),'-t','0.5','-vn','-ac','1','-ar','24000','-c:a','pcm_s16le','-f','wav','-'])
@@ -95,7 +95,8 @@ for c in m['cuts']:
     if c.get('disabled'):continue
     if c['id']=='C04':fractions+= [(9+(c['durationFrames']-36)*p)/c['durationFrames'] for p in [i/7 for i in range(8)]]
     if c['id']=='C06':fractions+=[.98]
-    if c['id']=='C12':fractions=[.05,.22,.37,.44,.56,.76,.87,.93]
+    if c['id']=='C11':fractions=[.05,.22,.37,.44,.56,.76,.87,.93,.98]
+    if c['id']=='C12':fractions=[.05,.25,.5,.75,.93]
     if c['id']=='C14':fractions=[.1,.29,.45,.6,.72,.9]
     if c['id']=='C15':fractions=[.2,.6,.9]
     if c['id'] in ['C16','C17','C18']:fractions=[.12,.3,.55,.75,.94]
