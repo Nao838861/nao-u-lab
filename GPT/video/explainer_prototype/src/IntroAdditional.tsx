@@ -23,7 +23,7 @@ export function EnemyTableIntro(){
   const n=tick-selected*6,r=enemySample(n);
   return <>
     <Label x={44} y={26} size={38}>敵の動きも、テーブルから取り出す</Label>
-    <Label x={44} y={83} color={cyan}>2回目のEM1の次に出る、Em0の6機編隊</Label>
+    <Label x={44} y={83} color={cyan}>各フレームの位置と大きさを、表から読み出す</Label>
     <Panel x={44} y={156} w={576} h={432}>
       <svg width={576} height={432} style={{position:'absolute'}}>
         {[108,216,324].map(y=><line key={y} x1={0} x2={576} y1={y} y2={y} stroke="#1c2932"/>)}
@@ -38,7 +38,7 @@ export function EnemyTableIntro(){
         </React.Fragment>;
       })}
     </Panel>
-    <Label x={48} y={610} size={22} color={gold}>黄色の枠：{selected+1}体目　／　ゲームと同じ30更新／秒</Label>
+    <Label x={48} y={610} size={22} color={gold}>黄色の枠の敵と、右の黄色の行が対応</Label>
     <Panel x={664} y={156} w={572} h={307}>
       <Label x={20} y={16} size={26} color={cyan}>移動テーブル　現在のフレーム：{n}</Label>
       <div style={{position:'absolute',left:20,top:70,display:'grid',gridTemplateColumns:'95px 90px 115px 95px 100px',fontSize:21,color:cyan}}>{['frame','X','下端Y','Z','画像番号'].map(v=><span key={v}>{v}</span>)}</div>
@@ -90,7 +90,6 @@ export function BucketSortIntro({duration,collision=false}:{duration:number;coll
         <div style={{position:'absolute',left:(1371-o.x-o.w)*576/1371,top:o.y*348/827-25,padding:'1px 5px',fontSize:18,background:'#080a10',color:active===o.bucket||adding===o?gold:cyan}}>{o.id}</div>
       </React.Fragment>)}
     </Panel>
-    <Label x={44} y={137} size={22}>{collision?'前の図と同じオブジェクト・同じバケツ':'左から順に処理する：A → B → C → D'}</Label>
     {collision?<>
       <Label x={44} y={536} size={24} color={gold}>弾の奥行き → 配列[{active}] を調べる</Label>
       <Label x={44} y={579} size={26} color={candidate?white:'#75df91'}>{candidate?`${candidate.id}：${candidate.name} が候補 → 座標を確認`:'空 → このバケツの座標判定は0回'}</Label>
@@ -113,6 +112,5 @@ export function BucketSortIntro({duration,collision=false}:{duration:number;coll
     <svg width={38} height={488} style={{position:'absolute',left:668,top:158}}><line x1={19} y1={0} x2={19} y2={467} stroke={cyan} strokeWidth={3}/><path d={collision?'M8 22 L19 0 L30 22':'M8 455 L19 477 L30 455'} fill="none" stroke={cyan} strokeWidth={3}/></svg>
     {collision&&<BulletGlyph x={687} y={185+(7-Math.min(7,travel))*61} size={34}/>}
     <Label x={679} y={648} size={20}>手前</Label>
-    <Label x={44} y={678} size={16} color="#aaa2af">{collision?'弾は説明用にゆっくり表示。実装は1更新で通過したZ範囲を調べる。候補の種類・Z範囲の確認も行う。':'8個のバケツで説明。配置は画面の前後関係を示す例。プレイヤーは対象外。'}</Label>
   </>;
 }

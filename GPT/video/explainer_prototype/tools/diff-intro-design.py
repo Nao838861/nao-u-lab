@@ -19,6 +19,8 @@ def audio(block):
     if marker not in block:return ''
     content=block.split(marker,1)[1].split('\n### ',1)[0]
     content=re.split(r'^-{3,}\s*$',content,maxsplit=1,flags=re.M)[0]
+    # 音声欄の末尾に書かれた画面注記の削除指示は読み上げない。
+    content=re.sub(r'^(?:左上|左下)の「[^\n]*不要[^\n]*$', '', content, flags=re.M)
     if not content.strip():
         # 空の音声欄の後に、完成原稿を引用で記した設計書にも対応。
         return ''.join(line[1:].strip() for line in block.splitlines() if line.startswith('>')).strip()

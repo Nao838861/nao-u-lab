@@ -54,7 +54,7 @@ function CoordinateIntro(){
         <Text x={48} y={38} size={26}>3Dの座標を、画面の座標へ</Text>
         <div style={{position:'absolute',left:65,top:112,width:590,height:67,border:`2px solid ${cyan}`,textAlign:'center',paddingTop:13,fontSize:28,boxSizing:'border-box'}}>3Dの座標</div>
         <Text x={342} y={192} size={33} color={gold}>↓</Text>
-        <div style={{opacity:reveal(q.math)}}><Text x={227} y={249} size={28} color={gold}>かけ算・割り算</Text></div>
+        <div style={{position:'absolute',left:65,top:249,width:590,textAlign:'center',fontSize:28,lineHeight:1.4,color:gold,opacity:reveal(q.math)}}>かけ算・割り算</div>
         <Text x={342} y={305} size={33} color={gold}>↓</Text>
         <div style={{position:'absolute',left:65,top:367,width:590,height:67,border:`2px solid ${cyan}`,textAlign:'center',paddingTop:13,fontSize:28,boxSizing:'border-box'}}>画面の座標</div>
       </>}
