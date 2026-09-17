@@ -4,9 +4,20 @@ import manifest from '../narration/intro-review-cuts.json';
 import data from './introAiData.json';
 import sprites from './denseData.json';
 import cues from './introAiCues.json';
+import {HoudiniTrajectoryScene} from '../restored_cpu/src/ExplainerPrototype';
 const cyan='#53dcff',gold='#ffba57',red='#ff526c',green='#75df91';
 const T=({x,y,children,size=24,color='#f7f4f8'}:{x:number;y:number;children:React.ReactNode;size?:number;color?:string})=><div style={{position:'absolute',left:x,top:y,fontSize:size,color,lineHeight:1.4,whiteSpace:'pre-line'}}>{children}</div>;
 const clock=(i:number,f:number)=>(f-(manifest.cuts[i].narrationLeadFrames??0))/30;
+export function HoudiniTableIntro({durationInFrames}:{durationInFrames:number}){
+ const t=clock(14,useCurrentFrame());
+ const opacity=Math.max(0,Math.min(1,(t-cues.houdiniTable)/.25));
+ return <><HoudiniTrajectoryScene durationInFrames={durationInFrames}/>
+  <div style={{position:'absolute',right:26,bottom:26,width:596,opacity,background:'#090b10',border:`2px solid ${cyan}`,boxShadow:'0 8px 30px #000a'}}>
+   <div style={{padding:'10px 16px',fontSize:24,color:cyan}}>軌跡をプログラムのテーブルへ変換</div>
+   <Img src={staticFile('ai_chapter/enemy_table.png')} style={{display:'block',width:'100%'}}/>
+  </div>
+ </>;
+}
 const Box=({x,y,w,h,children}:{x:number;y:number;w:number;h:number;children:React.ReactNode})=><div style={{position:'absolute',left:x,top:y,width:w,height:h,background:'#10131c',border:'1px solid #3a4050',overflow:'hidden'}}>{children}</div>;
 export function AutomaticTrackingIntro(){
  const t=clock(15,useCurrentFrame());
@@ -30,7 +41,6 @@ export function AutomaticTrackingIntro(){
    <Img src={staticFile(image.file)} style={{position:'absolute',left:(bad?[40,320,160,350,85][i]:40)-image.w*2,top:(bad?[210,70,265,230,100][i]:210)+65-image.h*2,width:image.w*4,height:image.h*4,imageRendering:'pixelated'}}/>
    <T x={20} y={396} color={bad?red:cyan}>{bad?'位置も大きさも、不自然に飛ぶ':'軌跡テーブルへの変換を試す'}</T>
   </Box>
-  <T x={44} y={660} size={18} color={gold}>誤検出の説明用アニメ。実際の検出ログ・生成軌跡ではありません。</T>
  </>;
 }
 export function MarkedTrajectoryIntro(){

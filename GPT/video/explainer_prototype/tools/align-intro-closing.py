@@ -13,5 +13,5 @@ at=chars.index('ご視聴')
 assert at>0
 result={'bodyEnd':ends[at-1],'thanksStart':times[at],'audioHash':tr['audioHash']}
 for key,phrase in [('tools','作り方'),('optimization','最適化'),('ai','AI'),('result','ファミコン'),('possibility','まだまだ')]:
-    result[key]=times[chars.index(phrase)]
+    result[key]=times[chars.lower().index(phrase.lower())]
 (root/'src/introClosingCues.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')

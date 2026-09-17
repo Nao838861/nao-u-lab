@@ -103,7 +103,9 @@ for c in m['cuts']:
     if c['id']=='C11':fractions=[.05,.22,.37,.44,.56,.76,.87,.93,.98]
     if c['id']=='C12':fractions=[.05,.25,.5,.75,.93]
     if c['id']=='C14':fractions=[.1,.29,.45,.6,.72,.9]
-    if c['id']=='C15':fractions=[.2,.6,.9]
+    if c['id']=='C15':
+        lead=c['narrationLeadFrames']/30
+        fractions=[.2,.6,.9]+[(lead+ai_cues['houdiniTable']+offset)/(c['durationFrames']/30) for offset in [-.1,.35]]
     if c['id'] in ['C16','C17','C18','C19']:fractions=[.12,.3,.55,.75,.94]
     if c['id']=='C19':
         fractions += [.04]

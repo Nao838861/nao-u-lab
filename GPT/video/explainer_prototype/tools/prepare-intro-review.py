@@ -41,6 +41,7 @@ cursor=0
 for i,(lines,title) in enumerate(zip(texts,titles),1):
     cid=f'C{i:02}'; spoken=''.join(lines)
     if cid=='C18':
+        spoken=spoken.replace('全自動のメコピ移植','全自動の目コピ移植')
         spoken=spoken.replace('全自動メコピ移植','全自動の目コピ移植').replace('ハードル胃が','ハードルが').replace('手前遠くの直線の往復','手前と奥の直線の往復').replace('サインカーブにプレイヤーから離れる動き','サインカーブにプレイヤーから離れる動きを加える')
     if cid=='C07':
         spoken=spoken.replace('バケツソートの結果','奥行きごとのバケツ').replace('自分とZ座標が同じオブジェクトのみ判定ができ','自分が通る奥行きのバケツにいるオブジェクトだけを調べればよく').replace('同じZ位置に何もない時','そのバケツに何もない時')
