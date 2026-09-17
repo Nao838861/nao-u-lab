@@ -7,7 +7,7 @@ def sections(text):
     text=text.split('---- ここから下は前回のなので無視')[0]
     heads=list(re.finditer(r'^## (.+)$',text,re.M)); result={}
     for i,h in enumerate(heads):
-        match=re.match(r'C?(0[1-9]|1[0-5])(?:[｜ ].*)?$',h[1].strip())
+        match=re.match(r'C?(0[1-9]|1[0-8])(?:[｜ ].*)?$',h[1].strip())
         if match:
             cid='C'+match[1]
             if cid=='C05' and cid in result:cid='C06'
@@ -32,7 +32,7 @@ if __name__=='__main__':
     old=previous.read_text(encoding='utf-8');new=current.read_text(encoding='utf-8');a=sections(old);b=sections(new)
     report=['# 設計書2：前回制作時点との差分','',f'比較元：`{args.previous}`','比較先：現在の `設計書2.md`','', '見出しの C 接頭辞の有無はカット識別時に正規化する。差分の自動検出と、今回反映する範囲は別に判断する。','']
     summary={}
-    for cid in [f'C{i:02}' for i in range(1,16)]:
+    for cid in [f'C{i:02}' for i in range(1,19)]:
         changed=a.get(cid)!=b.get(cid); speech=(audio(a[cid]) if cid in a else '')!=(audio(b[cid]) if cid in b else '')
         summary[cid]={'changed':changed,'audioChanged':speech}
         report.extend([f'## {cid}',f'画面等の指示：{"変更あり" if changed else "変更なし"}／音声：{"変更あり" if speech else "変更なし"}',''])

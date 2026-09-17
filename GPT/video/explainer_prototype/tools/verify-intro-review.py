@@ -13,6 +13,14 @@ assert cues['audioHash']==a['C03']['audioHash']
 bit_cues=json.loads((ROOT/'src/introBitCues.json').read_text(encoding='utf-8'))
 assert bit_cues['audioHash']==a['C09']['audioHash']
 assert bit_cues['sixteen']<bit_cues['cost']<bit_cues['eight']
+ai_cues=json.loads((ROOT/'src/introAiCues.json').read_text(encoding='utf-8'))
+for cid,sha in ai_cues['audioHashes'].items():assert a[cid]['audioHash']==sha
+assert ai_cues['z']<ai_cues['y']<ai_cues['x']<ai_cues['conclusion']
+ai_data=json.loads((ROOT/'src/introAiData.json').read_text(encoding='utf-8'))
+for im in ai_data['images']:
+    assert hashlib.sha256((ROOT/'public'/im['file']).read_bytes()).hexdigest()==im['sha256']
+assert {len(v) for v in ai_data['enemy'].values()}=={95}
+assert all(0<=v<16 for v in ai_data['enemy']['sz'])
 tree=json.loads((ROOT/'src/introTreeData.json').read_text(encoding='utf-8'))
 cursor=0
 for c in m['cuts']:
@@ -49,7 +57,7 @@ console.log(JSON.stringify(Array.from({length:56},(_,z)=>fn(tree,z))));
 points=json.loads(subprocess.run(['node','--input-type=module'],input=js,text=True,capture_output=True,cwd=ROOT,check=True).stdout)
 dx=points[0]['x']-370;dy=points[0]['y']-100
 assert all(abs((p['x']-370)*dy-(p['y']-100)*dx)<1e-7 for p in points)
-files=[('C01-C15_通し.mp4',cursor),('C01-C08_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:8])),('C01-C06_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:6])),('C01-C04_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:4]))]+[(c['id']+'.mp4',c['durationFrames']) for c in m['cuts']]
+files=[('C01-C18_通し.mp4',cursor),('C01-C08_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:8])),('C01-C06_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:6])),('C01-C04_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][:4]))]+[(c['id']+'.mp4',c['durationFrames']) for c in m['cuts']]
 files.append(('C03-C04_通し.mp4',sum(c['durationFrames'] for c in m['cuts'][2:4])))
 results=[]
 for filename,frames in files:
@@ -60,7 +68,7 @@ for filename,frames in files:
     assert any(s['codec_type']=='audio' for s in probe['streams'])
     decoded=subprocess.run([FFMPEG,'-v','error','-xerror','-i',str(p),'-c:v','rawvideo','-c:a','pcm_s16le','-f','null','-'],check=True,capture_output=True)
     assert not decoded.stderr,(filename,decoded.stderr.decode(errors='replace'))
-    if filename in ['C05.mp4','C06.mp4','C07.mp4','C08.mp4','C09.mp4','C10.mp4','C12.mp4','C13.mp4','C14.mp4','C15.mp4']:
+    if filename in ['C05.mp4','C06.mp4','C07.mp4','C08.mp4','C09.mp4','C10.mp4','C12.mp4','C13.mp4','C14.mp4','C15.mp4','C16.mp4','C17.mp4','C18.mp4']:
         cut=next(c for c in m['cuts'] if c['id']+'.mp4'==filename)
         assert cut['narrationLeadFrames']==18
         pcm=subprocess.check_output([FFMPEG,'-v','error','-i',str(p),'-t','0.5','-vn','-ac','1','-ar','24000','-c:a','pcm_s16le','-f','wav','-'])
@@ -78,6 +86,7 @@ for c in m['cuts']:
     if c['id']=='C12':fractions=[.05,.22,.37,.44,.56,.76,.87,.93]
     if c['id']=='C14':fractions=[.1,.29,.45,.6,.72,.9]
     if c['id']=='C15':fractions=[.2,.6,.9]
+    if c['id'] in ['C16','C17','C18']:fractions=[.12,.3,.55,.75,.94]
     if c['id']=='C08':
         lead=c.get('narrationLeadFrames',0)/30;start=a['C08']['starts'][1]
         window=c['durationFrames']/30-lead-start-.4

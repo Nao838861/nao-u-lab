@@ -1,3 +1,4 @@
+import {AutomaticTrackingIntro,MarkedTrajectoryIntro,BossAiIntro} from './IntroAi';
 import React from 'react';
 import {AbsoluteFill,Audio,Img,OffthreadVideo,Sequence,staticFile,useCurrentFrame,useVideoConfig} from 'remotion';
 import {FrameFrameworkIntroScene,FrameTimelineScene,ProgrammingFlowScene,HoudiniTrajectoryScene} from '../restored_cpu/src/ExplainerPrototype';
@@ -129,7 +130,7 @@ export function IntroReviewCut({index=0}:{index?:number}){
       <AbsoluteFill style={{background:'linear-gradient(0deg,#050507f5,transparent)'}}/>
       <Text x={65} y={350} size={42}>ファミコンでスペースハリアーを動かすには？</Text>
       <Text x={65} y={425} size={34} color={cyan}>{index===12?'AIの活用':'その2：CPUの最適化'}</Text>
-    </>:index===1?<FrameFrameworkIntroScene durationInFrames={cut.durationFrames}/>:index===2?<CoordinateIntro/>:index===3?<TreeProjection duration={cut.durationFrames}/>:index===4?<EnemyTableIntro/>:index===5?<BucketSortIntro duration={cut.durationFrames}/>:index===6?<BucketSortIntro duration={cut.durationFrames} collision/>:index===7?<CollisionRectangleIntro/>:index===8?<BitWidthIntro/>:index===9?<BackgroundPrecisionIntro/>:index===10?<OffthreadVideo src={staticFile('game_CSCD.mp4')} startFrom={17*30} muted style={{position:'absolute',left:160,top:0,width:960,height:720,objectFit:'fill'}}/>:index===11?<FrameTimelineScene durationInFrames={cut.durationFrames} eventFrames={timelineEvents()}/>:index===13?<ProgrammingFlowScene durationInFrames={cut.durationFrames}/>:<HoudiniTrajectoryScene durationInFrames={cut.durationFrames}/>}
+    </>:index===1?<FrameFrameworkIntroScene durationInFrames={cut.durationFrames}/>:index===2?<CoordinateIntro/>:index===3?<TreeProjection duration={cut.durationFrames}/>:index===4?<EnemyTableIntro/>:index===5?<BucketSortIntro duration={cut.durationFrames}/>:index===6?<BucketSortIntro duration={cut.durationFrames} collision/>:index===7?<CollisionRectangleIntro/>:index===8?<BitWidthIntro/>:index===9?<BackgroundPrecisionIntro/>:index===10?<OffthreadVideo src={staticFile('game_CSCD.mp4')} startFrom={17*30} muted style={{position:'absolute',left:160,top:0,width:960,height:720,objectFit:'fill'}}/>:index===11?<FrameTimelineScene durationInFrames={cut.durationFrames} eventFrames={timelineEvents()}/>:index===13?<ProgrammingFlowScene durationInFrames={cut.durationFrames}/>:index===14?<HoudiniTrajectoryScene durationInFrames={cut.durationFrames}/>:index===15?<AutomaticTrackingIntro/>:index===16?<MarkedTrajectoryIntro/>:<BossAiIntro/>}
     <Sequence from={'narrationLeadFrames' in cut ? cut.narrationLeadFrames : 0}><Audio src={staticFile(`${manifest.outputDirectory}/${cut.id}.wav`)} volume={.95}/></Sequence>
   </AbsoluteFill>;
 }

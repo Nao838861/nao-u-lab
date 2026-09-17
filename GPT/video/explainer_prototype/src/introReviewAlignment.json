@@ -121,5 +121,29 @@
     ],
     "similarity": 1.0,
     "audioHash": "ac04ce1757c40319d360bd4874e24ee54f8d1d4454bdbed2e5bf8fcd1e5fc381"
+  },
+  "C16": {
+    "starts": [
+      0.0
+    ],
+    "similarity": 0.955,
+    "audioHash": "7691941a248e5ff5e951962c6dcd29b6e50418a1e4f34be9a9ac28f219859aae"
+  },
+  "C17": {
+    "starts": [
+      0.0,
+      11.399999618530273
+    ],
+    "similarity": 0.992,
+    "audioHash": "908fcb17ffd01250a3f10b1d9d1efe40c0f81986f2b918652585ee32a677ac8e"
+  },
+  "C18": {
+    "starts": [
+      0.0,
+      5.559999942779541,
+      28.540000915527344
+    ],
+    "similarity": 0.981,
+    "audioHash": "03c6ccd14698827a48449e799010d775f64602cc2ef9c6f25f2b0e956c9ef391"
   }
 }

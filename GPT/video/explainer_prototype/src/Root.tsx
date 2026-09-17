@@ -35,7 +35,7 @@ import introManifest from '../narration/intro-review-cuts.json';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      <Composition id="IntroReviewC01C15" component={IntroReview} durationInFrames={introReviewDuration} fps={30} width={1280} height={720}/>
+      <Composition id="IntroReviewC01C18" component={IntroReview} durationInFrames={introReviewDuration} fps={30} width={1280} height={720}/>
       <Composition id="IntroReviewC01C08" component={IntroReviewC01C08} durationInFrames={introManifest.cuts.slice(0,8).reduce((n,c)=>n+c.durationFrames,0)} fps={30} width={1280} height={720}/>
       <Composition id="IntroReviewC01C06" component={IntroReviewC01C06} durationInFrames={introManifest.cuts.slice(0,6).reduce((n,c)=>n+c.durationFrames,0)} fps={30} width={1280} height={720}/>
       <Composition id="IntroReviewC01C04" component={IntroReviewC01C04} durationInFrames={introManifest.cuts.slice(0,4).reduce((n,c)=>n+c.durationFrames,0)} fps={30} width={1280} height={720}/>

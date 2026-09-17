@@ -521,6 +521,113 @@
           "4": 510
         }
       }
+    },
+    {
+      "id": "C16",
+      "sourceCut": "C16",
+      "title": "全自動の軌跡抽出を試す",
+      "text": "作成中にFableなどの高機能なAIが使えるようになったので、AIに任せられる範囲を増やせないかと考えて、リファレンス動画から自動で敵の軌跡を抽出できないかと試みましたが、全自動での検出は誤検出が多く、使い物にはなりませんでした。",
+      "ttsText": "作成中にFableなどの高機能なAIが使えるようになったので、AIに任せられる範囲を増やせないかと考えて、リファレンス動画から自動で敵の軌跡を抽出できないかと試みましたが、全自動での検出は誤検出が多く、使い物にはなりませんでした。",
+      "sentences": [
+        "作成中にFableなどの高機能なAIが使えるようになったので、AIに任せられる範囲を増やせないかと考えて、リファレンス動画から自動で敵の軌跡を抽出できないかと試みましたが、全自動での検出は誤検出が多く、使い物にはなりませんでした。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 7326,
+      "durationFrames": 505,
+      "minimumDurationFrames": 0,
+      "narrationLeadFrames": 18,
+      "measuredDurationSeconds": 15.825,
+      "targetSeconds": 16.833,
+      "silenceCompaction": {
+        "windowMs": 5,
+        "thresholdDb": -44,
+        "minimumSilenceMs": 60,
+        "preserveInternalSilence": false,
+        "maximumInternalSilenceMs": 110,
+        "sentenceSilenceThresholdMs": 9999,
+        "maximumLeadingSilenceMs": 20,
+        "maximumTrailingSilenceMs": 80,
+        "pauseTargetMsByCandidateIndex": {
+          "2": 405,
+          "3": 400,
+          "6": 405,
+          "8": 270
+        }
+      }
+    },
+    {
+      "id": "C17",
+      "sourceCut": "C17",
+      "title": "人のマーキングから軌跡テーブルへ",
+      "text": "そこで、敵のキーになるフレームを人力で抽出してマーキングして、このマーキングした位置とフレーム数から敵の動きのテーブルを作る手法を試したところ、こちらはうまくいきました。後半の敵の軌跡テーブルはAIに半自動で作ってもらうことができるようになったので、開発効率が上がりました。",
+      "ttsText": "そこで、敵のキーになるフレームを人力で抽出してマーキングして、このマーキングした位置とフレーム数から敵の動きのテーブルを作る手法を試したところ、こちらはうまくいきました。後半の敵の軌跡テーブルはAIに半自動で作ってもらうことができるようになったので、開発効率が上がりました。",
+      "sentences": [
+        "そこで、敵のキーになるフレームを人力で抽出してマーキングして、このマーキングした位置とフレーム数から敵の動きのテーブルを作る手法を試したところ、こちらはうまくいきました。",
+        "後半の敵の軌跡テーブルはAIに半自動で作ってもらうことができるようになったので、開発効率が上がりました。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 7831,
+      "durationFrames": 566,
+      "minimumDurationFrames": 0,
+      "narrationLeadFrames": 18,
+      "measuredDurationSeconds": 17.84,
+      "targetSeconds": 18.867,
+      "silenceCompaction": {
+        "windowMs": 5,
+        "thresholdDb": -44,
+        "minimumSilenceMs": 60,
+        "preserveInternalSilence": false,
+        "maximumInternalSilenceMs": 110,
+        "sentenceSilenceThresholdMs": 9999,
+        "maximumLeadingSilenceMs": 20,
+        "maximumTrailingSilenceMs": 80,
+        "pauseTargetMsByCandidateIndex": {
+          "0": 300,
+          "3": 440,
+          "7": 430,
+          "9": 770,
+          "13": 410
+        }
+      }
+    },
+    {
+      "id": "C18",
+      "sourceCut": "C18",
+      "title": "ボスの動きを人が解析しAIが実装",
+      "text": "ボスの動きは、完全にバイブコーディングで人間はソースを見ずに作っています。最初はボスの動きをすべてAIに解析させて再現できないか試しましたが、検出の精度が低く動きが全く再現できなかったので、「Z軸は手前と奥の直線の往復で、Y軸はサインカーブの周期移動、X軸はサインカーブにプレイヤーから離れる動きを加える」という人間の解析結果をプログラムに落としてもらう形での再現になりました。まだ今のAIでは、全自動の目コピ移植はハードルが高いようです。",
+      "ttsText": "ボスの動きは、完全にバイブコーディングで人間はソースを見ずに作っています。最初はボスの動きをすべてAIに解析させて再現できないか試しましたが、検出の精度が低く動きが全く再現できなかったので、「Z軸は手前と奥の直線の往復で、Y軸はサインカーブの周期移動、X軸はサインカーブにプレイヤーから離れる動きを加える」という人間の解析結果をプログラムに落としてもらう形での再現になりました。まだ今のAIでは、全自動の目コピ移植はハードルが高いようです。",
+      "sentences": [
+        "ボスの動きは、完全にバイブコーディングで人間はソースを見ずに作っています。",
+        "最初はボスの動きをすべてAIに解析させて再現できないか試しましたが、検出の精度が低く動きが全く再現できなかったので、「Z軸は手前と奥の直線の往復で、Y軸はサインカーブの周期移動、X軸はサインカーブにプレイヤーから離れる動きを加える」という人間の解析結果をプログラムに落としてもらう形での再現になりました。",
+        "まだ今のAIでは、全自動の目コピ移植はハードルが高いようです。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 8397,
+      "durationFrames": 1016,
+      "minimumDurationFrames": 0,
+      "narrationLeadFrames": 18,
+      "measuredDurationSeconds": 32.85,
+      "targetSeconds": 33.867,
+      "silenceCompaction": {
+        "windowMs": 5,
+        "thresholdDb": -44,
+        "minimumSilenceMs": 60,
+        "preserveInternalSilence": false,
+        "maximumInternalSilenceMs": 110,
+        "sentenceSilenceThresholdMs": 9999,
+        "maximumLeadingSilenceMs": 20,
+        "maximumTrailingSilenceMs": 80,
+        "pauseTargetMsByCandidateIndex": {
+          "0": 320,
+          "4": 490,
+          "7": 490,
+          "11": 530,
+          "14": 480,
+          "16": 530,
+          "24": 560,
+          "25": 310
+        }
+      }
     }
   ],
   "reviewOutputDirectory": "out/part2/開発中カット"
