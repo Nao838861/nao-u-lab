@@ -17,7 +17,7 @@ texts=[re.findall(r'[^。]+。?',reader.audio(blocks[f'C{i:02}'])) for i in rang
 base=json.loads((ROOT/'narration/part2-cuts.json').read_text(encoding='utf-8'))
 m={k:base[k] for k in ['model','voice','speed','responseFormat','commonInstructions']}
 m.update(fps=30,tailPaddingSeconds=.4,outputDirectory='narration/intro_review_20260916',reportFileName='duration-report.json',silenceCompaction={'preserveInternalSilence':True,'maximumLeadingSilenceMs':20,'maximumTrailingSilenceMs':100},cuts=[])
-titles=['タイトル','30fpsのフレームワーク','ファミコンCPUと3Dの計算','奥行きで、位置と絵を選ぶ','敵の動きもテーブルから取り出す','奥から順に描くバケツソート']
+titles=['タイトル','30fpsで動かす最適化の工夫','ファミコンCPUと3Dの計算','奥行きで、位置と絵を選ぶ','敵の動きもテーブルから取り出す','奥から順に描くバケツソート']
 titles+=['奥行きで当たり判定を絞る','フレームごとの2D矩形で判定する']
 titles+=['座標計算を16bitから8bitへ','背景のX座標に16bitの精度を残す']
 titles+=['ゲーム映像','30fpsで動かすため、処理を2フレームに分ける']

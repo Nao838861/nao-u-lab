@@ -2,6 +2,7 @@ import {bundle} from '@remotion/bundler';
 import {selectComposition,renderStill,renderMedia} from '@remotion/renderer';
 import {readFile,mkdir,writeFile} from 'node:fs/promises';
 import path from 'node:path';
+import {execFileSync} from 'node:child_process';
 const root=path.resolve(import.meta.dirname,'..');
 const m=JSON.parse(await readFile(path.join(root,'narration/intro-review-cuts.json'),'utf8'));
 const out=path.join(root,m.reviewOutputDirectory??'out/part2/開発中カット');
@@ -29,6 +30,14 @@ for(const c of m.cuts){
   console.log(`Ready ${c.id}`);
 }
 console.log('Ready C01-C18 and selected individual cuts');
+// 冒頭を変更した際は、以前納品した短い通し版も最新の全編から更新する。
+if(selected?.some(id=>['C01','C02'].includes(id))){
+  for(const count of [4,6,8]){
+    const frames=m.cuts.slice(0,count).reduce((n,c)=>n+c.durationFrames,0);
+    execFileSync(path.join(root,'node_modules/@remotion/compositor-win32-x64-msvc/ffmpeg.exe'),['-v','error','-y','-i',path.join(out,'C01-C18_通し.mp4'),'-t',String(frames/30),'-c:v','libx264','-crf','18','-c:a','aac',path.join(out,`C01-C${String(count).padStart(2,'0')}_通し.mp4`)]);
+    console.log(`Updated opening through C${count}`);
+  }
+}
 if(selected)process.exit(0);
 const pair=await selectComposition({serveUrl,id:'IntroReviewC03C04'});
 await renderMedia({serveUrl,composition:pair,codec:'h264',crf:18,concurrency:10,outputLocation:path.join(out,'C03-C04_通し.mp4')});

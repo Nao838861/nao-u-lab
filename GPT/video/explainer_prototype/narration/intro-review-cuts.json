@@ -18,17 +18,20 @@
       "id": "C01",
       "sourceCut": "C01",
       "title": "タイトル",
-      "text": "前回は、キャラクターを高速に描く仕組みを紹介しました。今回は、そのキャラを動かすCPU処理の最適化について解説します。",
-      "ttsText": "前回は、キャラクターを高速に描く仕組みを紹介しました。今回は、そのキャラを動かすCPU処理の最適化について解説します。",
+      "text": "ファミコンでスペースハリアーを動かす仕組みの解説動画の続編です。前回は、キャラクターを高速に描く仕組みを紹介しました。今回は、そのキャラを動かすCPU処理の最適化について解説します。",
+      "ttsText": "ファミコンでスペースハリアーを動かす仕組みの解説動画の続編です。前回は、キャラクターを高速に描く仕組みを紹介しました。今回は、そのキャラを動かすCPU処理の最適化について解説します。",
       "sentences": [
+        "ファミコンでスペースハリアーを動かす仕組みの解説動画の続編です。",
         "前回は、キャラクターを高速に描く仕組みを紹介しました。",
         "今回は、そのキャラを動かすCPU処理の最適化について解説します。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
       "startFrame": 0,
-      "durationFrames": 266,
+      "durationFrames": 405,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 8.44,
+      "narrationLeadFrames": 0,
+      "measuredDurationSeconds": 13.075,
+      "targetSeconds": 13.5,
       "silenceCompaction": {
         "windowMs": 5,
         "thresholdDb": -44,
@@ -39,27 +42,29 @@
         "maximumLeadingSilenceMs": 20,
         "maximumTrailingSilenceMs": 80,
         "pauseTargetMsByCandidateIndex": {
-          "0": 350,
-          "2": 605,
-          "3": 335
+          "2": 695,
+          "3": 275,
+          "5": 775,
+          "6": 255
         }
-      },
-      "targetSeconds": 8.867
+      }
     },
     {
       "id": "C02",
       "sourceCut": "C02",
-      "title": "30fpsのフレームワーク",
-      "text": "ファミコンで30fpsでゲームを動かすためのフレームワークについて説明します。",
-      "ttsText": "ファミコンで30fpsでゲームを動かすためのフレームワークについて説明します。",
+      "title": "30fpsで動かす最適化の工夫",
+      "text": "ファミコンで30fpsでゲームを動かすための最適化の工夫について説明します。",
+      "ttsText": "ファミコンで30fpsでゲームを動かすための最適化の工夫について説明します。",
       "sentences": [
-        "ファミコンで30fpsでゲームを動かすためのフレームワークについて説明します。"
+        "ファミコンで30fpsでゲームを動かすための最適化の工夫について説明します。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 266,
-      "durationFrames": 158,
+      "startFrame": 405,
+      "durationFrames": 169,
       "minimumDurationFrames": 0,
-      "measuredDurationSeconds": 4.85,
+      "narrationLeadFrames": 0,
+      "targetSeconds": 5.633,
+      "measuredDurationSeconds": 5.205,
       "silenceCompaction": {
         "windowMs": 5,
         "thresholdDb": -44,
@@ -70,8 +75,7 @@
         "maximumLeadingSilenceMs": 20,
         "maximumTrailingSilenceMs": 80,
         "pauseTargetMsByCandidateIndex": {}
-      },
-      "targetSeconds": 5.267
+      }
     },
     {
       "id": "C03",
@@ -84,7 +88,7 @@
         "しかし、スペースハリアーのような疑似3Dのゲームでは、計算のほとんどをテーブルによる変換に置き換えることができます。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 424,
+      "startFrame": 574,
       "durationFrames": 525,
       "minimumDurationFrames": 0,
       "measuredDurationSeconds": 17.1,
@@ -118,7 +122,7 @@
         "テーブル化すると、CPUは座標に合わせてメモリから値を取り出すだけで処理が完結するので、3Dの表示を高速に実行できます。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 949,
+      "startFrame": 1099,
       "durationFrames": 608,
       "minimumDurationFrames": 0,
       "measuredDurationSeconds": 19.865,
@@ -152,7 +156,7 @@
         "敵の移動はあらかじめすべてのフレームでテーブル化された座標を取り出すだけでよいので、簡単な処理で3次元空間を自由に動かせます。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 1557,
+      "startFrame": 1707,
       "durationFrames": 364,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -185,7 +189,7 @@
         "オブジェクトの更新時に、ポインタをZ値に対応する配列に詰め込んで、描画時には配列を奥からスキャンする形でソートを行っています。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 1921,
+      "startFrame": 2071,
       "durationFrames": 491,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -221,7 +225,7 @@
         "オブジェクトと弾の当たり判定は、普通なら総当たりで座標のチェックが必要になりますが、奥行き毎に配列を持っているため、弾は自分が通る奥行きのバケツにいるオブジェクトだけを調べればよく、もしそのバケツに何もない時には、高速に棄却できます。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 2412,
+      "startFrame": 2562,
       "durationFrames": 637,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -258,7 +262,7 @@
         "このようにして、3DのコリジョンをZで刈り込んだ後2Dで処理することで、高速に当たり判定を行っています。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 3049,
+      "startFrame": 3199,
       "durationFrames": 636,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -294,7 +298,7 @@
         "最初はすべての座標を16bitで計算していましたが、ファミコンでは16bit計算の負荷が高いため、ほとんどの計算を8bitの計算に置き換えました。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 3685,
+      "startFrame": 3835,
       "durationFrames": 324,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -328,7 +332,7 @@
         "ほかの計算は、すべて8bitに収まる形に変えました。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 4009,
+      "startFrame": 4159,
       "durationFrames": 778,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -364,7 +368,7 @@
       "ttsText": "",
       "sentences": [],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 4787,
+      "startFrame": 4937,
       "durationFrames": 150,
       "minimumDurationFrames": 150,
       "narrationLeadFrames": 0,
@@ -387,7 +391,7 @@
         "敵の移動や3D座標変換は、ゲームロジックの予算の8ms以内で計算する必要がありました。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 4937,
+      "startFrame": 5087,
       "durationFrames": 1230,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -432,7 +436,7 @@
         "次に、AIの活用で開発を効率化した話について説明します。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 6167,
+      "startFrame": 6317,
       "durationFrames": 164,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -465,7 +469,7 @@
         "このようなつくり方は、アルゴリズムレベルの最適化を常にC言語で行えるので効率的でした。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 6331,
+      "startFrame": 6481,
       "durationFrames": 751,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -501,7 +505,7 @@
         "敵の軌跡は、最初はHoudiniというツールを使って生成した軌跡を、プログラムのテーブルにコンバートして作っていました。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 7082,
+      "startFrame": 7232,
       "durationFrames": 244,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -532,7 +536,7 @@
         "作成中にFableなどの高機能なAIが使えるようになったので、AIに任せられる範囲を増やせないかと考えて、リファレンス動画から自動で敵の軌跡を抽出できないかと試みましたが、全自動での検出は誤検出が多く、使い物にはなりませんでした。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 7326,
+      "startFrame": 7476,
       "durationFrames": 505,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -566,7 +570,7 @@
         "この手法でゲーム後半の敵の軌跡テーブルはAIに半自動で作ってもらうことができるようになったので、開発効率が上がりました。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 7831,
+      "startFrame": 7981,
       "durationFrames": 629,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,
@@ -602,7 +606,7 @@
         "まだ今のAIでは、全自動の目コピ移植はハードルが高いようです。"
       ],
       "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
-      "startFrame": 8460,
+      "startFrame": 8610,
       "durationFrames": 1016,
       "minimumDurationFrames": 0,
       "narrationLeadFrames": 18,

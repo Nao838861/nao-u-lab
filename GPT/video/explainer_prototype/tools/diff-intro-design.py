@@ -24,7 +24,7 @@ def audio(block):
         return ''.join(line[1:].strip() for line in block.splitlines() if line.startswith('>')).strip()
     rows=re.findall(r'^\| \d+ \|[^\n]*?\| ([^|]+) \|$',content,re.M)
     if rows:return ''.join(rows)
-    return ''.join(s.strip() for s in content.splitlines() if s.strip() and not s.lstrip().startswith(('(', '（')))
+    return ''.join(re.split(r'\s+<\s+',s.strip(),maxsplit=1)[0] for s in content.splitlines() if s.strip() and not s.lstrip().startswith(('(', '（')))
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--previous',required=True);p.add_argument('--out',required=True);args=p.parse_args()
