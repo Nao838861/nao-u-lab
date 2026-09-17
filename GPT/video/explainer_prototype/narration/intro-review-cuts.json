@@ -646,6 +646,53 @@
           "25": 310
         }
       }
+    },
+    {
+      "id": "C19",
+      "sourceCut": "C19",
+      "title": "まとめ",
+      "text": "計算をテーブルに置き換え、奥行きを使って描画や当たり判定の処理を絞る。ゲームの特性に合わせた工夫で、ファミコンでも30fpsを実現できました。開発では、人間が仕組みを考え、AIに実装やデータ作成を任せています。ご視聴ありがとうございました。",
+      "ttsText": "計算をテーブルに置き換え、奥行きを使って描画や当たり判定の処理を絞る。ゲームの特性に合わせた工夫で、ファミコンでも30fpsを実現できました。開発では、人間が仕組みを考え、AIに実装やデータ作成を任せています。ご視聴ありがとうございました。",
+      "sentences": [
+        "計算をテーブルに置き換え、奥行きを使って描画や当たり判定の処理を絞る。",
+        "ゲームの特性に合わせた工夫で、ファミコンでも30fpsを実現できました。",
+        "開発では、人間が仕組みを考え、AIに実装やデータ作成を任せています。",
+        "ご視聴ありがとうございました。"
+      ],
+      "instructions": "原稿の全ての文を順番に読み、省略や言い換えをしないでください。",
+      "startFrame": 9707,
+      "durationFrames": 574,
+      "minimumDurationFrames": 0,
+      "narrationLeadFrames": 18,
+      "measuredDurationSeconds": 17.51,
+      "targetSeconds": 19.133,
+      "tailPaddingSeconds": 1,
+      "ttsInput": "計算をテーブルに置き換え、奥行きを使って描画や当たり判定の処理を絞る。ゲームの特性に合わせた工夫で、ファミコンでも30fpsを実現できました。開発では、人間が仕組みを考え、AIに実装やデータ作成を任せています。",
+      "appendTtsSegments": [
+        {
+          "text": "ご視聴ありがとうございました。",
+          "instructions": "動画の締めの挨拶を、省略せず落ち着いた声で読んでください。"
+        }
+      ],
+      "silenceCompaction": {
+        "windowMs": 5,
+        "thresholdDb": -44,
+        "minimumSilenceMs": 60,
+        "preserveInternalSilence": false,
+        "maximumInternalSilenceMs": 110,
+        "sentenceSilenceThresholdMs": 9999,
+        "maximumLeadingSilenceMs": 20,
+        "maximumTrailingSilenceMs": 80,
+        "pauseTargetMsByCandidateIndex": {
+          "1": 350,
+          "4": 685,
+          "5": 390,
+          "8": 625,
+          "9": 295,
+          "10": 430,
+          "12": 270
+        }
+      }
     }
   ],
   "reviewOutputDirectory": "out/part2/開発中カット"

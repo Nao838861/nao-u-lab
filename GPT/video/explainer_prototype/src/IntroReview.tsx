@@ -4,6 +4,7 @@ import {AbsoluteFill,Audio,Img,OffthreadVideo,Sequence,staticFile,useCurrentFram
 import {ProgrammingFlowScene,HoudiniTrajectoryScene} from '../restored_cpu/src/ExplainerPrototype';
 import {PartTwoTitle,OptimizationIntro} from './IntroOpening';
 import {IntroTimeline} from './IntroTimeline';
+import {IntroClosing} from './IntroClosing';
 import manifest from '../narration/intro-review-cuts.json';
 import tree from './introTreeData.json';
 import cues from './introReviewCues.json';
@@ -128,7 +129,7 @@ function TreeProjection({duration}:{duration:number}){
 export function IntroReviewCut({index=0}:{index?:number}){
   const cut=manifest.cuts[index];
   return <AbsoluteFill style={{background:bg,color:white,fontFamily:'"Yu Gothic UI",sans-serif'}}>
-    {index===0?<PartTwoTitle/>:index===12?<OptimizationIntro ai/>:index===1?<OptimizationIntro/>:index===2?<CoordinateIntro/>:index===3?<TreeProjection duration={cut.durationFrames}/>:index===4?<EnemyTableIntro/>:index===5?<BucketSortIntro duration={cut.durationFrames}/>:index===6?<BucketSortIntro duration={cut.durationFrames} collision/>:index===7?<CollisionRectangleIntro/>:index===8?<BitWidthIntro/>:index===9?<BackgroundPrecisionIntro/>:index===10?<IntroTimeline durationInFrames={cut.durationFrames} eventFrames={timelineEvents()}/>:index===11?<IntroTimeline durationInFrames={cut.durationFrames} summary/>:index===13?<ProgrammingFlowScene durationInFrames={cut.durationFrames}/>:index===14?<HoudiniTrajectoryScene durationInFrames={cut.durationFrames}/>:index===15?<AutomaticTrackingIntro/>:index===16?<MarkedTrajectoryIntro/>:<BossAiIntro/>}
+    {index===0?<PartTwoTitle/>:index===12?<OptimizationIntro ai/>:index===1?<OptimizationIntro/>:index===2?<CoordinateIntro/>:index===3?<TreeProjection duration={cut.durationFrames}/>:index===4?<EnemyTableIntro/>:index===5?<BucketSortIntro duration={cut.durationFrames}/>:index===6?<BucketSortIntro duration={cut.durationFrames} collision/>:index===7?<CollisionRectangleIntro/>:index===8?<BitWidthIntro/>:index===9?<BackgroundPrecisionIntro/>:index===10?<IntroTimeline durationInFrames={cut.durationFrames} eventFrames={timelineEvents()}/>:index===11?<IntroTimeline durationInFrames={cut.durationFrames} summary/>:index===13?<ProgrammingFlowScene durationInFrames={cut.durationFrames}/>:index===14?<HoudiniTrajectoryScene durationInFrames={cut.durationFrames}/>:index===15?<AutomaticTrackingIntro/>:index===16?<MarkedTrajectoryIntro/>:index===17?<BossAiIntro/>:<IntroClosing/>}
     <Sequence from={'narrationLeadFrames' in cut ? cut.narrationLeadFrames : 0}><Audio src={staticFile(`${manifest.outputDirectory}/${cut.id}.wav`)} volume={.95}/></Sequence>
   </AbsoluteFill>;
 }
