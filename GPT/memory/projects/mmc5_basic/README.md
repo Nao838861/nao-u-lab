@@ -17,6 +17,8 @@
 
 ## 設計と初期実装の入口
 
+- [スクロールBG仕様の決定記録](scroll_map_spec_20260917.md) — 16×16ブロック作成→配置の2段階、上下往復、画面分割の制約、RAM・保存契約。正本はプロジェクト内の `docs/scroll_map_spec.md` と `docs/scroll_map_format.md`。機能は未実装。
+
 - [プロジェクトREADME](D:/HomeBrew/FamiBASIC_Turbo/README.md)
 - [キャラエディタの実装と仕様案](D:/HomeBrew/FamiBASIC_Turbo/docs/character_editor.md) — PC8枠、本体4枠、操作と未達項目。現行仕様はプロジェクト側。
 - [0.1実装・検証記録](implementation_20260916.md) — コンパイラ、PC/本体エディタ、保存、実測と残件。
