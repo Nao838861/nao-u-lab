@@ -36,12 +36,7 @@ s = replace_once(s, 'spawn_frame = ent->frame;\n            spawn_index = R00;',
 s = replace_once(s, 'if (player_stumble_timer == 0u &&\n                (trig_accum & BUTTON_A)', 'if (0 && player_stumble_timer == 0u &&\n                (trig_accum & BUTTON_A)')
 s = replace_once(s, '            if (player_hit_pending != 0u) {', '            player_hit_pending = 0u; /* C10: background contact never interrupts capture. */\n            if (player_hit_pending != 0u) {')
 s = replace_once(s, 'if ((trig_accum & BUTTON_START) &&', 'if (0 && (trig_accum & BUTTON_START) &&')
-s = replace_once(s, '#define PLAYER_SHADOW_OAM_Y    209u', '#define PLAYER_SHADOW_OAM_Y    255u /* C10: hidden */')
-s = replace_once(s, '"eor #$2E\\n"', '"lda #$FF\\n"')
-path.write_text(s, encoding='utf-8')
-path = DEST/'src/write_player_oam.s'
-s = path.read_text(encoding='utf-8')
-s = replace_once(s, '.proc _write_player_oam\n', '.proc _write_player_oam\n    rts ; C10 capture: retain camera input, hide player and shadow.\n')
+# プレイヤーと影は通常どおり表示する。
 path.write_text(s, encoding='utf-8')
 path = DEST/'src/spawn_table_stage1.inc'
 rows = []

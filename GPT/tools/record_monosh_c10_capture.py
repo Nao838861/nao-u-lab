@@ -1,5 +1,5 @@
 """専用ROMを実際に操作し、Mesenの連続フレームからC10素材を録画する。"""
-import json, subprocess
+import subprocess
 from pathlib import Path
 root=Path('D:/temp/MonoSH_C10_background_capture')
 frames=root/'recorded_frames';frames.mkdir(exist_ok=True)
@@ -8,10 +8,10 @@ local frame=0
 local base="D:/temp/MonoSH_C10_background_capture/recorded_frames/"
 emu.addEventCallback(function()
   local t=(frame-60)/60
-  -- 最初は静止。その後、右・停止・左・停止を繰り返す実コントローラー入力。
-  local p=(t-2)%10
-  local right=t>=2 and (p<0.8 or (p>=6 and p<6.8))
-  local left=t>=2 and p>=3 and p<4.6
+  -- 最初3秒は静止。以後は右5秒・左5秒の長周期で統一。
+  local p=(t-3)%10
+  local right=t>=3 and p<5
+  local left=t>=3 and p>=5
   emu.setInput({right=right,left=left,up=false,down=false,a=false,b=false,start=false,select=false},0)
 end,emu.eventType.inputPolled)
 emu.addEventCallback(function()

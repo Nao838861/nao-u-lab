@@ -33,7 +33,8 @@ emu.addEventCallback(function()
     for _,a in ipairs({enemy_count,ebullet_count,bullet_count,boss_state,player_state,stage1_title_timer}) do
       if read(a)~=0 then finish(1,"FAIL nonzero state "..a.." frame="..frame); return end
     end
-    for a=0x204,0x2FC,4 do
+    if read(0x204)==255 then finish(2,"FAIL hidden player frame="..frame); return end
+    for a=0x274,0x2FC,4 do
       if read(a)~=255 then finish(2,"FAIL visible OAM "..a.." frame="..frame); return end
     end
     for i=0,read(bgobj_count)-1 do if read(bgobj_type+i)==1 then trees=true end end
@@ -47,7 +48,7 @@ emu.addEventCallback(function()
   end
   if frame==4200 then
     if not trees or loops<2 or not moved then finish(3,"FAIL trees="..tostring(trees).." loops="..loops.." moved="..tostring(moved).." spawn="..previous); return end
-    finish(0,"PASS 4200 frames; no enemies, bullets, boss, death, title or visible player OAM; trees present; camera moves; background loops="..loops)
+    finish(0,"PASS 4200 frames; player visible; no enemies, bullets, boss, death or title; trees present; camera moves; background loops="..loops)
   end
 end, emu.eventType.endFrame)
 '''
