@@ -16,7 +16,7 @@ mapping={}
 for a,b,n in difflib.SequenceMatcher(None,source,spoken,autojunk=False).get_matching_blocks():
     for i in range(n):mapping[a+i]=times[b+i]
 cues={}
-for key,phrase in [('math','3Dの座標変換には'),('cpu','ファミコンのCPUには'),('however','しかし'),('table','テーブルによる変換')]:
+for key,phrase in [('math','3Dの座標変換には'),('cpu','ファミコンのCPUには'),('however','しかし'),('table','テーブルによる')]:
     pos=source.index(norm(phrase));near=[i for i in range(pos,pos+len(norm(phrase))) if i in mapping]
     assert len(near)>=len(norm(phrase))*.6,(key,'phrase mismatch')
     cues[key]=round(mapping[near[0]],3)

@@ -1,9 +1,9 @@
 {
   "C03": {
-    "math": 3.0,
-    "cpu": 6.74,
-    "however": 10.46,
-    "table": 14.96
+    "math": 3.32,
+    "cpu": 7.08,
+    "however": 10.8,
+    "table": 15.04
   },
-  "audioHash": "95150c8ec2107809397709aa72e21aea4f3aaf885ee7eab6ec0d2448ccca995a"
+  "audioHash": "9c294b71774bd013e090b07484c03c7b4113af2c6fa22bb9007950a3a61e8d19"
 }

@@ -18,18 +18,18 @@
   "C03": {
     "starts": [
       0.0,
-      10.460000038146973
+      10.800000190734863
     ],
-    "similarity": 0.968,
-    "audioHash": "95150c8ec2107809397709aa72e21aea4f3aaf885ee7eab6ec0d2448ccca995a"
+    "similarity": 0.944,
+    "audioHash": "9c294b71774bd013e090b07484c03c7b4113af2c6fa22bb9007950a3a61e8d19"
   },
   "C04": {
     "starts": [
       0.0,
-      11.399999618530273
+      10.880000114440918
     ],
-    "similarity": 0.992,
-    "audioHash": "21dc9c61b76a4b8c00889947acd98339a1ccadae32a8e449d340b0ec0e8a2429"
+    "similarity": 1.0,
+    "audioHash": "0b632525dde767510715ffda823ffd2a095fa7465c8da282ca2f35c2d09c0e06"
   },
   "C05": {
     "starts": [
@@ -51,10 +51,10 @@
   "C07": {
     "starts": [
       0.2199999988079071,
-      5.019999980926514
+      5.539999961853027
     ],
-    "similarity": 0.946,
-    "audioHash": "844757674381578679ff421afd88166d9a309b000aa37010d3824a22665b5930"
+    "similarity": 0.952,
+    "audioHash": "da1b01a4c97582786472304ab0409085d86c0099532240693615e8aacc0d60eb"
   },
   "C08": {
     "starts": [

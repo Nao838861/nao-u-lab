@@ -24,6 +24,9 @@ const m = JSON.parse(
 );
 const audioDir = path.join(root, "public", m.outputDirectory);
 const raw = process.argv.includes("--raw");
+const selected = process.argv.find(a => a.startsWith('--cuts='))?.slice(7).split(',');
+const force = process.argv.includes('--force');
+const prompt = process.argv.find(a => a.startsWith('--prompt='))?.slice(9);
 const out = path.join(audioDir, raw ? "raw/transcripts" : "transcripts");
 await mkdir(out, { recursive: true });
 let cursor = 0;
@@ -31,6 +34,7 @@ await Promise.all(
   Array.from({ length: 3 }, async () => {
     while (cursor < m.cuts.length) {
       const c = m.cuts[cursor++];
+      if (selected && !selected.includes(c.id)) continue;
       if (c.silent) continue;
       const dest = path.join(out, c.id + ".json");
       const wav = await readFile(
@@ -39,7 +43,7 @@ await Promise.all(
       const audioHash = createHash("sha256").update(wav).digest("hex");
       try {
         const old = JSON.parse(await readFile(dest, "utf8"));
-        if (old.sourceText === c.ttsText && old.audioHash === audioHash) {
+        if (!force && old.sourceText === c.ttsText && old.audioHash === audioHash) {
           console.log(c.id + " cached");
           continue;
         }
@@ -52,6 +56,7 @@ await Promise.all(
       );
       form.append("model", "whisper-1");
       form.append("language", "ja");
+      if (prompt) form.append("prompt", prompt);
       form.append("response_format", "verbose_json");
       form.append("timestamp_granularities[]", "word");
       const res = await fetch(
