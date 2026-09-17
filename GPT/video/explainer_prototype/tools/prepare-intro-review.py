@@ -55,7 +55,7 @@ for i,(lines,title) in enumerate(zip(texts,titles),1):
         c['ttsText']=spoken.replace('消失点','しょうしつてん').replace('テーブルを引く','テーブルをひく')
     p=next((p for p in previous['cuts'] if p['id']==cid and p['text']==spoken),None)
     if p:
-        for k in ['measuredDurationSeconds','durationFrames','silenceCompaction']:
+        for k in ['measuredDurationSeconds','durationFrames','targetSeconds','silenceCompaction']:
             if k in p and (k!='silenceCompaction' or p.get('ttsText')==c['ttsText']):c[k]=p[k]
     if cid=='C11' and not spoken:
         c.update(silent=True,measuredDurationSeconds=4.6,durationFrames=150,minimumDurationFrames=150,narrationLeadFrames=0)

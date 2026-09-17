@@ -34,34 +34,29 @@ export function AutomaticTrackingIntro(){
  </>;
 }
 export function MarkedTrajectoryIntro(){
- const t=clock(16,useCurrentFrame());const start=cues.table;
- const n=Math.max(0,Math.floor(Math.max(0,t-start)*15)%(data.enemy.sx.length+15));
- const row=Math.min(data.enemy.sx.length-1,n),im=sprites.images[data.enemy.sz[row]];
+ const row=Math.floor(useCurrentFrame()/2)%data.enemy.sx.length;
+ const im=sprites.images[data.enemy.sz[row]];
  const keys=[0,33,54,75,105];
  const sourceRow=row*123/94;
- const segment=keys.reduce((last,v,i)=>v<=sourceRow?i:last,0);
- const active=t>=start;
+ const next=keys.findIndex(v=>v>=sourceRow);
+ const destination=next<0?4:next;
  return <>
   <T x={44} y={32} size={39}>人が目印を付け、AIが軌跡テーブルへ変換</T>
-  <T x={44} y={94} color={cyan}>当時の赤枠付き画像 → 座標・サイズ抽出 → 中間フレームを補間</T>
+  <Box x={170} y={95} w={940} h={330}>
+   <T x={20} y={10} size={23} color={cyan}>AIが再現した敵の動き</T>
+   <div style={{position:'absolute',left:20,top:52,width:900,height:260,overflow:'hidden',background:'#07151b'}}>
+    <svg width={900} height={260}><path d="M0 35 H900 M100 260 L450 35 L800 260" stroke="#345454" fill="none"/></svg>
+    <Img src={staticFile(im.file)} style={{position:'absolute',left:(data.enemy.sx[row]-im.halfW-32)*4.5,top:(Math.floor((data.enemy.bot[row]-31)/2)-im.h+1)*4.5,width:im.w*4.5,height:im.h*4.5,imageRendering:'pixelated'}}/>
+   </div>
+  </Box>
+  <T x={44} y={436} size={23}>人が目印を付けた5枚　<span style={{color:gold}}>黄色は、次に向かう目印</span></T>
   {data.images.slice(0,5).map((p,i)=><React.Fragment key={p.frame}>
-   <div style={{position:'absolute',left:44+i*242,top:149,width:224,height:210,border:`3px solid ${active&&(i===segment||i===segment+1)?gold:'#3a4050'}`,boxSizing:'border-box',background:'#10131c'}}>
+   <div style={{position:'absolute',left:44+i*242,top:475,width:224,height:210,border:`3px solid ${i===destination?gold:'#3a4050'}`,boxSizing:'border-box',background:'#10131c'}}>
     <div style={{height:168,overflow:'hidden',position:'relative'}}><Img src={staticFile(p.file)} style={{position:'absolute',width:224,height:252,top:-42}}/></div>
     <T x={10} y={176} size={20} color={gold}>{i+1}：Frame {p.frame.toString().padStart(3,'0')}</T>
    </div>
-   {i<4&&<T x={269+i*242} y={224} size={21} color={cyan}>→</T>}
+   {i<4&&<T x={269+i*242} y={550} size={21} color={cyan}>→</T>}
   </React.Fragment>)}
-  <T x={44} y={391} size={27} color={gold}>{!active?'5枚で、同じ敵を順番に指定':segment<4?`画像 ${segment+1} → ${segment+2} の間を補間`:'最後の画像の先へ動きを延長'}</T>
-  <T x={44} y={445} size={23}>赤枠の内側 → 位置と大きさ{`\n\n`}フレーム間隔 → 移動にかかる時間{`\n\n`}AIが間を埋めて、テーブルにする</T>
-  <Box x={636} y={389} w={600} h={270}>
-   <T x={15} y={9} size={22} color={cyan}>同じ軌跡から作った実ゲーム用テーブル</T>
-   <div style={{position:'absolute',left:12,top:48,width:576,height:176,overflow:'hidden',background:'#07151b'}}>
-    <svg width={576} height={176}><path d="M0 25 H576 M96 176 L288 25 L480 176" stroke="#345454" fill="none"/></svg>
-    <Img src={staticFile(im.file)} style={{position:'absolute',left:96+(data.enemy.sx[row]-im.halfW-64)*3,top:(Math.floor((data.enemy.bot[row]-31)/2)-im.h+1)*3,width:im.w*3,height:im.h*3,imageRendering:'pixelated',opacity:active?1:0}}/>
-   </div>
-   <T x={15} y={232} size={19} color={gold}>行 {row} / 94　X={data.enemy.sx[row]}　Z={data.enemy.wz[row]}　絵={data.enemy.sz[row]}</T>
-  </Box>
-  <T x={44} y={680} size={16} color="#aaa2af">画像は10コマ/秒。再生は2倍スロー。生成後に124→95行へ速度調整した表を使い、対応区間を強調（左右の画面外も表示）。</T>
  </>;
 }
 export function BossAiIntro(){
