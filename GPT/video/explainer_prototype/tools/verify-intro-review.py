@@ -17,6 +17,7 @@ ai_cues=json.loads((ROOT/'src/introAiCues.json').read_text(encoding='utf-8'))
 for cid,sha in ai_cues['audioHashes'].items():assert a[cid]['audioHash']==sha
 assert ai_cues['z']<ai_cues['y']<ai_cues['x']<ai_cues['conclusion']
 ai_data=json.loads((ROOT/'src/introAiData.json').read_text(encoding='utf-8'))
+assert [im['frame'] for im in ai_data['images'][:5]]==[19,30,37,44,54]
 for im in ai_data['images']:
     assert hashlib.sha256((ROOT/'public'/im['file']).read_bytes()).hexdigest()==im['sha256']
 assert {len(v) for v in ai_data['enemy'].values()}=={95}

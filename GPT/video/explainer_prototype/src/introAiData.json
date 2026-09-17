@@ -16,6 +16,11 @@
       "sha256": "bcb7ad554065e3a06f8525715f9a0e638fd6bd6f9be873ebc11505b9ed2e9110"
     },
     {
+      "frame": 44,
+      "file": "ai_chapter/frame_044.png",
+      "sha256": "32fc5f67d983e52230074f4c43152e4715e72b83b65d616d49bcc08376466bc5"
+    },
+    {
       "frame": 54,
       "file": "ai_chapter/frame_054.png",
       "sha256": "26315e803b9ea877288045510b7a7d9db8ba19d840bbe174035cd72ea5d9bdd2"
