@@ -30,4 +30,4 @@ const FONT='"Yu Gothic UI",sans-serif',MONO='"Consolas",monospace';
 const Title=({size,children}:{size:number;children:React.ReactNode})=><div style={{fontFamily:FONT,color:C.white,fontSize:size,fontWeight:900}}>{children}</div>;
 const fade=(frame:number,duration:number)=>interpolate(frame,[0,8,duration-8,duration],[0,1,1,0],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});
 '''
-(root/'src/IntroTimeline.tsx').write_text(header+scene,encoding='utf-8')
+(root/'src/IntroTimeline.tsx').write_text('\n'.join(line.rstrip() for line in (header+scene).splitlines()).rstrip()+'\n',encoding='utf-8')

@@ -96,7 +96,7 @@ export const IntroTimeline: React.FC<{durationInFrames?: number;eventFrames?: Re
               <div style={{height: 7, background: '#292630', marginTop: 2}}><div style={{height: '100%', width: `${bar.width}%`, background: bar.color}} /></div>
             </div>
           ))}
-          
+
           </div>
         </div>
       </div>
@@ -106,4 +106,3 @@ export const IntroTimeline: React.FC<{durationInFrames?: number;eventFrames?: Re
     </AbsoluteFill>
   );
 };
-
