@@ -23,3 +23,19 @@
 `tools/probe_array_layout.py` と `docs/research/array_layout_probe/results.json`。基準commit `3ce3fa0` の現行コードと独立CPU試作を比較した。別スレッドの進行中の配列最適化後との比較ではない。
 
 BYTE配列加算の試作は検査あり24～26、検査なし19～21サイクル。試作BYTE入力342,880ケースに合格。製品コンパイラへの統合、割込みとSTOP/CONT、ゲーム全体での検証は未完了。
+
+## 配列の規模・敵の指定・BYTE FORについての回答原文
+
+質問は①256要素超にも対応するか、②敵1体は添字指定で十分か、③BYTEのFOR/NEXTを追加するか。回答：
+
+> 1 a 2 A 3 A
+> FORって今はByteでできないの？これはできるべき。基本、16bitはどうしても必要なところでしか使わない想定。あと、仕様がだいぶ増えてきたけど、コンパイラのサイズって大丈夫？
+> この高速配列は16bitサポートはしなくていい気がしてるけどどうかな？
+
+①256要素超対応、②添字指定のみ・参照別名なし、③BYTE FOR必須として仕様に反映した。高速配列はBYTE/SBYTE要素に絞る案を推奨している。大きい添字や既存INTEGER機能の削除とは区別する。
+
+現行FORはfrontend.cでINTEGER以外を拒否し、loops.sで16bit汎用加算・比較を行う。BYTE対応は未実装。
+
+commit `8e53b85` を独立worktreeで再ビルドしたところFRONT残り7バイト、KERNEL残り10バイト、コンパイラBSS残り28バイト。未配置のSPARE2は24KiBあるが、バンク分割と作業領域の再検討が必要。正本と未決事項は `D:\HomeBrew\FamiBASIC_Turbo\docs\byte_for_and_capacity_review.md`。
+
+ユーザーは未決事項がなくなるまで繰り返し質問するよう依頼している。次の確認は8bitの既定化方法、BYTE FOR終了後の変数値、開始値が終値を超える場合の実行回数。その後STEP・ループ変数変更・STOP/CONT等を詰める。
