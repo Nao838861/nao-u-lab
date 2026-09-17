@@ -35,7 +35,7 @@ export function AutomaticTrackingIntro(){
 }
 export function MarkedTrajectoryIntro(){
  const frame=useCurrentFrame();
- const row=Math.floor(Math.max(0,frame-24)/2)%data.enemy.sx.length;
+ const row=Math.floor(Math.max(0,frame-54)/2)%data.enemy.sx.length;
  const im=sprites.images[data.enemy.sz[row]];
  // Original 10 Hz captures -> 124 logic rows -> current 95-row table.
  const keys=[0,33,54,75,105].map(v=>Math.round(v*94/123));
@@ -65,7 +65,7 @@ export function MarkedTrajectoryIntro(){
     <div style={{position:'absolute',right:0,top:-28,fontSize:17,fontWeight:800,padding:'1px 5px',background:gold,color:'#17120a',whiteSpace:'nowrap'}}>F{relativeFrame}{goal.x+targetImage.w*scale>352?' →':''}</div>
    </div>}
   </Box>
-  <T x={855} y={186} size={27} color={gold}>{frame<24?'スタート位置':row>keys[4]?'画面外へ':`フレーム${relativeFrame}の\n目印へ`}</T>
+  <T x={855} y={186} size={27} color={gold}>{frame<54?'スタート位置':row>keys[4]?'画面外へ':`フレーム${relativeFrame}の\n目印へ`}</T>
   <T x={44} y={436} size={23}>人が目印を付けた5枚　<span style={{color:gold}}>黄色は、次に向かう目印</span></T>
   {data.images.slice(0,5).map((p,i)=><React.Fragment key={p.frame}>
    <div style={{position:'absolute',left:44+i*242,top:475,width:224,height:210,boxSizing:'border-box',background:'#10131c',boxShadow:i===destination?`0 0 0 6px ${gold},0 0 22px #ffba5799`:'0 0 0 1px #3a4050'}}>

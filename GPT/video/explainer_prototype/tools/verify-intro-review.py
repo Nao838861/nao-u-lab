@@ -88,14 +88,14 @@ for c in m['cuts']:
     if c['id']=='C14':fractions=[.1,.29,.45,.6,.72,.9]
     if c['id']=='C15':fractions=[.2,.6,.9]
     if c['id'] in ['C16','C17','C18']:fractions=[.12,.3,.55,.75,.94]
-    if c['id']=='C17':fractions += [0,23/c['durationFrames'],26/c['durationFrames'],214/c['durationFrames']]
+    if c['id']=='C17':fractions += [0,53/c['durationFrames'],56/c['durationFrames'],244/c['durationFrames']]
     if c['id']=='C08':
         lead=c.get('narrationLeadFrames',0)/30;start=a['C08']['starts'][1]
         window=c['durationFrames']/30-lead-start-.4
         fractions += [(lead+start+window*(i+.72)/10)/(c['durationFrames']/30) for i in range(10)]
         fractions += [(lead+start+window*p/10)/(c['durationFrames']/30) for p in [.01,.24,.35,.46,.57]]
     for f in fractions:
-        frame=int(c['durationFrames']*f)
+        frame=int(c['durationFrames']*f+1e-7)
         dest=stills/f"final_{c['id']}_{f}.png"
         subprocess.run([FFMPEG,'-v','error','-xerror','-i',str(OUT/(c['id']+'.mp4')),'-ss',str(frame/30),'-frames:v','1','-y',str(dest)],check=True)
         assert max(Image.open(dest).convert('L').getextrema())>100, (c['id'],frame,'blank extracted frame')
