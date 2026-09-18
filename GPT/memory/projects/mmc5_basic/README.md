@@ -25,7 +25,8 @@
 
 ## 設計と初期実装の入口
 
-- [構造化テーブルの配置グループ検討](D:/HomeBrew/FamiBASIC_Turbo/docs/data_placement_groups_proposal.md) — 未採用案。ユーザーは物理バンクではなく「どのデータを一緒に置くか」だけ管理したい。任意の番号付き同居グループ、シンボル参照、8KB容量、コードBANK・音楽・割り込み・本体素材RAMへの影響を検討。配置グループの採用・実装を完了扱いしない。
+- [構造化テーブルの実装](D:/HomeBrew/FamiBASIC_Turbo/docs/structured_tables.md) — 「今のデータをこの形に変えられる？」を受け、本流の37テーブル1508バイトを `complete/tables.json` のスキーマ・シンボル・任意配置グループへ移行。59個の既存配列と出現227レコードを生成し、元ASMの値と出現生成Pythonを編集元から除去。通常ビルドへ接続し、ROMは従来の `6382e4f70cf1ec2168c926129cbd70f9c1b7cd5c766c302eb1ffaab12820d4c9` と完全一致、38テスト成功。既存配置を維持する互換バックエンドで同居・型・容量・固定件数を検査。画像・BGMは外部素材のまま。GUIエディタ、通常BASICの直接シンボル構文、自動再配置、本体RAM保存は未実装。
+- [配置グループの全体設計](D:/HomeBrew/FamiBASIC_Turbo/docs/data_placement_groups_proposal.md) — ユーザーは物理バンクではなく「どのデータを一緒に置くか」だけ管理したい。データ形式と同居検査は導入済み、コードBANK・音楽・割り込み・本体素材RAMとの全接続完了とは区別する。
 
 - [ランタイム速度最優先の採用決定](runtime_speed_priority_20260917.md) — 新しい固定配列・敵レコードは境界検査なしを既定とする。追加仕様全般を事前確定・直接生成に適した契約で設計し、RUN準備時間より実行速度を優先する。正本はプロジェクトの `docs/runtime_speed_policy.md`。
 
