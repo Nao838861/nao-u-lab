@@ -25,6 +25,8 @@
 
 ## 設計と初期実装の入口
 
+- [構造化テーブルの配置グループ検討](D:/HomeBrew/FamiBASIC_Turbo/docs/data_placement_groups_proposal.md) — 未採用案。ユーザーは物理バンクではなく「どのデータを一緒に置くか」だけ管理したい。任意の番号付き同居グループ、シンボル参照、8KB容量、コードBANK・音楽・割り込み・本体素材RAMへの影響を検討。配置グループの採用・実装を完了扱いしない。
+
 - [ランタイム速度最優先の採用決定](runtime_speed_priority_20260917.md) — 新しい固定配列・敵レコードは境界検査なしを既定とする。追加仕様全般を事前確定・直接生成に適した契約で設計し、RUN準備時間より実行速度を優先する。正本はプロジェクトの `docs/runtime_speed_policy.md`。
 
 - [スクロールBG仕様の決定記録](scroll_map_spec_20260917.md) — 16×16ブロック作成→配置の2段階、上下往復、画面分割の制約、RAM・保存契約。正本はプロジェクト内の `docs/scroll_map_spec.md` と `docs/scroll_map_format.md`。機能は未実装。
