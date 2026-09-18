@@ -2,6 +2,14 @@
 
 製品名は **FamiBASIC Turbo** に確定。プロジェクトフォルダ: `D:\HomeBrew\FamiBASIC_Turbo`。
 
+## 現行サンプルの入口
+
+ユーザーの「この作業ツリーを奔流にして。」により、`D:\HomeBrew\FamiBASIC_Turbo_basic_port` のBASIC移植版を本流へ採用。ゲーム固有ASM全102入口をBASICへ移植した第14段階と、通常敵8体・敵弾8発の第15段階が基準。標準のBuildFlightLab.cmd / PlayFlightLab.cmdは移植版を対象にする。現行仕様はプロジェクト内の `experiments/basic_service_port/README.md` と `docs/basic_port_mainline.md` を読む。
+
+本流採用コミットは `bb8c24b`。mainとexperiment/basic-service-portへpush済み。標準ビルドのROMは第15段階とハッシュ一致し、回帰29件・Mesen全長検証を再実行済み。本流フォルダーにも同じROMを配置した。
+
+複数BASICと外部データを専用ビルダーで結合する構成であり、単独BASICのIDE編集が完成したわけではない。完全60fpsは未達。旧v011だけを確認して「地形やボスは未移植」と判断しない。v011のタイトル・結果画面と広角・高速・地形貫通Rは比較用に残る別構成。
+
 ## GitHubと更新時の同期
 
 - GitHub: https://github.com/Nao838861/FamiBASIC_Turbo （非公開）。`origin` を設定済み、`main` は `origin/main` を追跡する。
