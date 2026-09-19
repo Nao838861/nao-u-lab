@@ -12,10 +12,14 @@ ROM SHA-256は `cde647e184bf0d20fc7061e2da0d05aee9dd03bf2678ab6bed3cc99ea236412c
 
 正本は作業リポジトリの `docs/basic_completion.md` と `docs/basic_completion_optimization_3.json`。これは物理カートリッジの検証ではない。また旧地形版の測定を新地形や単一本体コンパイル版へ転用しない。
 
-## 統合中のもの
+## 最新素材と単一本体BASICの統合
 
-`origin/main` の `3899716` を取り込み中。承認済みの全8地域の画像・穴・がれき、191地形、ボス登場演出、ミサイル寿命修正、自動テーブル再配置を保持する。行番号の違いで全UNITが競合して見えるため、処理名と行参照を正規化して比較した。高速化済みの一般的な地形ID判定は残し、ボス関連とスコア・HUDの更新を取り込んだ。統合後の再ビルド・同一ROM検証は別途必要。
+`origin/main` の `3899716` は `967df89` で統合・push済み。承認済みの全8地域の画像・穴・がれき、191地形、ボス登場演出、ミサイル寿命修正、自動テーブル再配置を保持した。ROM `b585c85f32582f96908bb765aa21c7d54481de66687cde5f5538098ff202fcf0` で、道中7,200・ボス1,203・全地形7,200更新が処理落ち0。897画面・45,143,858画素の不一致0。ゲーム22試験とSDK・素材・制作環境56試験も成功。`docs/basic_completion_integration.json` が正本。ただし後続SDK変更後の最終再検証は別途必要。
 
-`origin/codex/single-basic-console` は `e008f95` まで確認。`experiments/single_basic_console/game` に単一BASICの本体生成入力がある。音楽も接続済みだが、道中の処理落ち、本体ソース編集・再RUN、撃破・リトライの検証が残る。読取り専用ソースからの本体生成を、編集環境まで完成したと表現しない。既存の `docs/single_basic_console_migration.md` を読んで続行する。
+`origin/codex/single-basic-console` は `518e59f` まで取り込み、現在の保存済み先頭は `b443744`（push済み）。`experiments/single_basic_console/game` が唯一のアプリBASICと外部素材で本体生成する経路。自分の背景マスク最適化は `a73c8d7`。本体コンパイラ、素材読出し、GOSUB、WORKBANKの改善を統合した。小さなMEMCOPYの最適化がMEMORにも適用される統合時の問題を修正し、SDK29試験が成功。
 
-プロジェクト全体は未完了。最新素材との統合、単一本体BASIC経路、通常起動・制作環境、最終記録とpushまで継続する。
+ROM `e34c3db2824d423ead40505ac56371b2c85f6866aece20625c3220e305abcb3b` では通常射撃の道中7,200更新で処理落ち98回、背景合成1,200回・62,480バイトの不一致0。全武器を使う道中7,201更新で812回、ボス1,225更新で1回の処理落ちが残る。四砲台破壊、撃破、曲切替、再コンパイル後のリトライは成功。表示中VRAM書込み0。無敵・武器所持を変更するMesen試験で、物理実機ではない。正本は `docs/basic_completion_console_integration.json`。
+
+現在は爆発描画のクリップ・空タイルの事前計算を単一本体BASICへ移植中。未commitの変更は保存済み成果と区別する。道中とボスの完全60fps、BASIC画面とR最終仕様の単一ソースへの移行、本体ソース編集・保存・再RUN、通常入口が残る。読取り専用ソースからの本体生成と、同じソースを再コンパイルするリトライを、編集環境の完成と表現しない。`docs/single_basic_console_migration.md` と `docs/basic_completion.md` を読んで続行する。
+
+プロジェクト全体は未完了。単一本体BASIC経路、通常起動・制作環境、最終記録とpushまで継続する。WindowsのPython/.NET実行が不安定な場合、対象プロセスだけCPU30/31へaffinityを設定すると実行できた。システム設定は変えていない。ユーザーが開いたMesenを終了しない。
