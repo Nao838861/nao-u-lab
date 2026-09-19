@@ -8,7 +8,7 @@
 
 本流採用コミットは `bb8c24b`。mainとexperiment/basic-service-portへpush済み。標準ビルドのROMは第15段階とハッシュ一致し、回帰29件・Mesen全長検証を再実行済み。本流フォルダーにも同じROMを配置した。
 
-現在のPC編集正本は `examples/flight_lab/basic_only/src/main.bas` の1本と外部素材 `assets/project.json`。102処理はPC用の `REM @UNIT` 宣言で分割してコンパイルし、通常BuildServiceでリンクする。`EditFlightLab.cmd` から「テーブル」を開き、37表の値・構造・配置グループを編集して保存・RUNできる。制作時にゲーム専用PythonやASMを読む必要はない。本体の `BANK n` 文とは別の配置経路で、構造化テーブルとの本体BANK配置連携は未対応として診断する。完全60fpsは未達。旧v011のタイトル・結果画面と広角・高速・地形貫通Rは比較用に残る別構成。
+現在のPC編集正本は `examples/flight_lab/basic_only/src/main.bas` の1本と外部素材 `assets/project.json`。102処理はPC用の `REM @UNIT` 宣言で分割してコンパイルし、通常BuildServiceでリンクする。`EditFlightLab.cmd` から「テーブル」を開き、37表の値・構造・配置グループを編集して保存・RUNできる。制作時にゲーム専用PythonやASMを読む必要はない。通常BASICの `BANK n` と構造化テーブルの併用、グループ変更・増量時の自動再配置にも対応済み。PC版が今回の対象で、本体上の素材編集GUIは含まない。完全60fpsは未達。旧v011のタイトル・結果画面と広角・高速・地形貫通Rは比較用に残る別構成。
 
 ## GitHubと更新時の同期
 
@@ -25,10 +25,10 @@
 
 ## 設計と初期実装の入口
 
-- [構造化テーブルの実装](D:/HomeBrew/FamiBASIC_Turbo/docs/structured_tables.md) — 初回の37表1508バイトの構造化に続き、PCエディタへ表編集GUIを統合。ユーザーの範囲指定は「今回はPC版への組み込み」。`basic_only/assets/project.json` が通常制作の正本。`TBYTE(BOSS_MUZZLE.X,PA)` を従来のPEEK命令、`TADDR(WAVES.RECORDS)` を定数番地へ解決し、実行時検索を追加しない。セル編集、構造定義、Undo/Redo、CSV、保存・再読込を実UIで検証。BANKを含む回帰79件と未対応配置の拒否1件が成功。既存配置を維持して同居・型・容量・固定件数を検査する。画像・BGMは外部素材のまま。任意のグループ変更による複数バンクへの自動再配置と本体RAM保存は未実装。
-- [配置グループの全体設計](D:/HomeBrew/FamiBASIC_Turbo/docs/data_placement_groups_proposal.md) — ユーザーは物理バンクではなく「どのデータを一緒に置くか」だけ管理したい。データ形式と同居検査は導入済み、コードBANK・音楽・割り込み・本体素材RAMとの全接続完了とは区別する。
+- [構造化テーブルの実装](D:/HomeBrew/FamiBASIC_Turbo_main/docs/structured_tables.md) — 37表1508バイトをPC表編集GUIへ統合。セル編集、構造定義、Undo/Redo、CSV、保存・RUNに対応。既定配置のTBYTEは従来のPEEK命令と同じ速度。再配置が必要な場合は別バンクへの読出しと元のコード窓の復帰を生成する。
+- [配置グループとBANK統合](D:/HomeBrew/FamiBASIC_Turbo_main/docs/table_bank_placement.md) — ユーザーは物理バンクではなく同居グループだけを指定する。コードBANKとは別番号空間で、整列・8KB制約を検査して自動配置。通常BANK版はスカラーのTADDRポインタも追跡する。NMI・BGM・通常DATAとの併用を検証済み。画像・BGMは外部素材のまま。本体素材GUIと音楽の自由配置は今回の対象外。
 
-PC表編集の通常BuildService経路は、BANK統合後の全ゲーム検証済みROM `0397ffa43e9bf170b70864f87eafb93ddc0d990ac4ce48a5f88dff343b18df69` と全バイト一致。砲口Xの24→28変更はROMの1バイトだけに反映され、BASICの読出し結果は74→78、4個の砲口とも変更前後52サイクル。Undoで元ROMへ完全復元した。結果は `docs/table_authoring_proof.json`。実際の「保存してRUN」から埋込みMesenの232フレーム目のゲーム描画まで確認した。`8950c9e` までmainへpush済み。旧作業フォルダーで別スレッドがnative NESホストを作業していたため、統合と検証は独立clone `D:\HomeBrew\FamiBASIC_Turbo_tables_clean` で実施し、`D:\HomeBrew\FamiBASIC_Turbo_main` も同期した。起動入口は同フォルダーの `EditFlightLab.cmd`。
+2026-09-19、`209fca4`までmainへpush済み。最新BANKブランチ`85dd72d`と最新mainの背景復元`59057c9`を統合し、単独BASICの外部素材も最新背景へ更新。通常ROMは最新mainの検証済み`564ac1f5d179eea9301baeb6f34a1be3fa845b5cff3aca2674a7ee38b7cc2a89`と全バイト一致。表の1セル変更はROMの1バイトだけを変更し、52サイクルのまま。Undoも一致。全37表をグループ0へまとめた場合は砲口読出し120サイクルとなり、再配置の切替費用が発生する。通常配置・全表グループ0の両方でMesen全長・191対象破壊・画素照合・ボス・音楽・リトライ成功。道中7201更新の処理落ちは通常61回／グループ0版99回、ボス区間はともに0回。112件の回帰と、最新main統合後の関連19件を確認。詳細は`docs/table_bank_verification.json`。独立clone `D:\HomeBrew\FamiBASIC_Turbo_tables_clean`で検証し、`D:\HomeBrew\FamiBASIC_Turbo_main`も同期・検証済みROM配置済み。起動は同フォルダーの`EditFlightLab.cmd`。元の`D:\HomeBrew\FamiBASIC_Turbo`は別スレッドのnative NES作業ブランチなので切り替えない。
 
 - [ランタイム速度最優先の採用決定](runtime_speed_priority_20260917.md) — 新しい固定配列・敵レコードは境界検査なしを既定とする。追加仕様全般を事前確定・直接生成に適した契約で設計し、RUN準備時間より実行速度を優先する。正本はプロジェクトの `docs/runtime_speed_policy.md`。
 
