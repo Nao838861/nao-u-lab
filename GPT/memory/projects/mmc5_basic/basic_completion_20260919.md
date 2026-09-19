@@ -1,5 +1,7 @@
 # BASIC完成作業の到達点と継続先
 
+最新mainは`562307f`（2026-09-20、push済み・main worktree clean）。後続のユーザー指示で、最初の補給をミサイル、二番目をワイドへ交換し、三番目以降は維持。マップ終端の224ドットを開始側へ循環移動した。全長7424・スクロール7200は不変、191設備と衝突・破壊データも224ドット移動。PC版と単一BASIC版、BG編集正本、比較HTMLを同期。派生の破壊マスクとPC用collision_runsも再生成するよう素材同期処理を修正した。旧マスクのままの中間版は743画面不一致で不採用。最終ROM`fee21bbc9602a006905334877ff738d841601ef08225aa42c68a5df93f2199f0`は最初の2補給を実行時に確認、全191地形・7200更新の処理落ち0、905画面45,522,293画素不一致0、VBlank超過0。これは全武器試験の再測定ではない。原文は`examples/flight_lab/complete/design_log.md`、証跡は`docs/stage_opening_20260920.json`とPNG。completionブランチはこの1コミットをまだ取り込んでいないので、そちらで継続する際はmainを先に同期する。
+
 ## 現在の先頭（2026-09-20、本流への統合後）
 
 ユーザーの「これまでの変更を本流を壊さずマージし、双方の良い処理を混ぜる」指示を完了。`main`と`codex/basic-completion`は`1e9dcab`までpush済み。`D:\HomeBrew\FamiBASIC_Turbo_main`も同じ先頭へfast-forwardし、clean・remoteとの差分0を確認。元の`D:\HomeBrew\FamiBASIC_Turbo`の未保存作業やユーザーのMesenは変更していない。以下の過去の「最新」は履歴であり、この節を優先する。
