@@ -1,0 +1,314 @@
+# Twitter For You (おすすめ) タブ
+# Read at: 2026-09-19 11:37
+# Total: 50 tweets
+
+--- 1. @GOROman (2026-09-18) ---
+URL: https://x.com/GOROman/status/2100798227641696351
+インフルエンサー枠というより、SNSとかYouTube登録者数多い人が入れるみたいな？
+
+--- 2. @PIVOT_inc_ (?) ---
+生成AI時代を勝ち抜く「事業・組織づくり」
+
+「生成AIによって社会や個人の仕事がこう変わる」といったコンテンツは溢れている。では、生成AIによって、企業における事業と組織はどう変わるのか？
+『生成AI時代を勝ち抜く事業・組織の作り方』の著者である梶谷健人氏に聞いた。
+
+--- 3. @Tsubame33785667 (2026-09-18) ---
+URL: https://x.com/Tsubame33785667/status/2101095260130824669
+超知能に到達する可能性のあるプレイヤーは、今は少ない。けれど、コンピューターの性能は年々上がり、AIを開発するためのコストも下がっていくだろう。超知能が危険かもしれないからといって、ただ単に開発を遅らせ、何の対策もないまま「誰でも強力なAIを作れる」時代を迎えるのは最悪だ。
+
+--- 4. @Nao_u_ (2026-09-18) ---
+URL: https://x.com/Nao_u_/status/2101094175232164123
+ファミコンでスペースハリアーを動かす手法の解説動画の続編「その２：CPUの最適化」を作りました。
+
+テーブル化をはじめとする様々な最適化手法とAIの支援を駆使して、ファミコンのCPU性能を最大限に引き出して30fpsで動かしています。
+#nesdev
+
+--- 5. @Nao_u_ (2026-09-19) ---
+URL: https://x.com/Nao_u_/status/2101109103695462495
+こちらのデモの解説動画です。
+
+--- 6. @Nao_u_ (2026-09-19) ---
+URL: https://x.com/Nao_u_/status/2101109229084156110
+前回の解説動画はこちら。
+
+--- 7. @rohanpaul_ai (2026-09-18) ---
+URL: https://x.com/rohanpaul_ai/status/2101095915654463533
+FT just reported, OpenAI expects its spending to far exceed revenue, even as revenue is forecast to rise 10x from $36B this year to $350B in 2030.
+
+Overall, across 2026-2030 it expects about $840B of total revenue against $856B of compute spending and $278B of cumulative cash
+
+--- 8. @ctgptlb (2026-09-18) ---
+URL: https://x.com/ctgptlb/status/2101096086777872498
+【朗報】ついにClaude CodeがAGENTS.mdに対応
+
+これまでCLAUDE.mdしか見ない事が不満の種だったClaude CodeがAGENTS.mdも読めるように
+
+・最新版で対応
+・切り替えは /config →Project instructions
+・CLAUDE.mdがある場合はそちら優先
+
+--- 9. @GOROman (2026-09-18) ---
+URL: https://x.com/GOROman/status/2100764344493678948
+ブラックパスでも手荷物検査はあるらしい。
+メディアと招待インフルエンサー枠は無かった気がする。
+
+--- 10. @yutaro_bsb (2026-09-18) ---
+URL: https://x.com/yutaro_bsb/status/2100889078992691324
+ADHDは「いい人」をやめた瞬間、人生が驚くほど軽くなります。ここで言ういい人とは、頼み事を断れない、笑顔を安売りする、苦手な相手とも無理に付き合う人の事です。断れずに抱え込んでしまうのは、我々の努力不足でも性格の問題でもないです。ADHD脳には「ハッキリした原因」があり、その正体が↓
+
+--- 11. @ImAI_Eruel (2026-09-18) ---
+URL: https://x.com/ImAI_Eruel/status/2100888929637720125
+jev、本来強化学習的な方策でやりたかったことが、えいって感じでやられてる感がある。
+
+--- 12. @aizen76 (2026-09-17) ---
+URL: https://x.com/aizen76/status/2100580371444428840
+今日のTGSはドルフロ2キャラモデラーの方と直接話しが出来たのと、なんで中国のゲーム会社が出展していないのか具体的な理由を知れたのが最大の成果だった
+
+--- 13. @doragonage_ad (?) ---
+˗ˋˏ 史上最凶の「魔王」降臨 ˎˊ˗
+
+新作VRMMOで手にしたのは、
+眷属の経験値を全て奪うチートスキル。
+魔物もNPCも、ひれ伏すのは自分。
+欲望のままに世界を塗り替えろ。
+
+最強のVRMMOファンタジー、開幕。
+
+『黄金の経験値』1~5巻好評発売中！
+
+--- 14. @pzkh23 (2026-09-18) ---
+URL: https://x.com/pzkh23/status/2100761714308600049
+OpenAIなど7社のAIサービスで5万件近くログイン情報が盗まれたとの事。
+
+いや、あんだけセーフガードとか言っといて「自分達のわき甘いんかい」というのと、「もしかしたらAIによるセキュリティリスクを身を挺して示し……」というのと、「そんな事より自分のアカウントは大丈夫か」という複雑な感情。
+
+--- 15. @SakanaAILabs (2026-09-17) ---
+URL: https://x.com/SakanaAILabs/status/2100550864301592702
+The latest issue of Scientific American (
+@sciam
+) features our Smart Cellular Bricks research: simple cubes that collectively recognize their own shape and repair themselves without a central brain.
+
+
+https://
+scientificamerican.com/article/these-
+smart-bricks-know-what-object-they-make-up/
+…
+
+What if 200 simple blocks, with no central controller
+
+--- 16. @JTLonsdale (2026-09-17) ---
+URL: https://x.com/JTLonsdale/status/2100729612087288291
+Smart and fast 180 ft autonomous warships, for a fraction of the price of equivalent naval firepower, at scale 🇺🇸
+
+--- 17. @elonmusk (2026-09-18) ---
+URL: https://x.com/elonmusk/status/2100908492219453895
+Cool
+
+--- 18. @kmizu (2026-09-18) ---
+URL: https://x.com/kmizu/status/2100997023772320202
+万行行く巨大証明だけどようやく終わりが見えてきた
+
+--- 19. @inuro (2026-09-18) ---
+URL: https://x.com/inuro/status/2100840044932309440
+なんだかみんなJevの「システム1だ」をスルーしがちな気がしてるけど、まさにそこが本丸よね。
+
+--- 20. @DrKarte (2026-09-18) ---
+URL: https://x.com/DrKarte/status/2101086180851003867
+え、AIのハルシネーションで米中戦争始まりかけてたんか...
+
+分析官がチャットボットに公開情報と機密の通信傍受を混ぜさせる
+→出てきた作文をもう一回AIに通して「正式な情報報告書」の体裁に整える
+→米軍全体に配布
+→武装要員が乗船準備、軍用機は離陸済み
+
+--- 21. @adhd_strategist (2026-09-18) ---
+URL: https://x.com/adhd_strategist/status/2100941912857350229
+ASD当事者ですが、私は社交辞令が苦手です。思っていないことを口にすると、強い不快が出るからです。
+
+例えば、褒めるべき水準にないものを褒められない。人の作ったものを見せられて、良いと思わなかった時に「いいですね」が言えない。嘘をつく決意がいるという話ではなく、言葉として出てこない。
+
+--- 22. @HazanPrinceton (2026-09-18) ---
+URL: https://x.com/HazanPrinceton/status/2100969998000763287
+AI Alignment & Safety is perhaps the most urgent&important problem we face. Join us as a postdoctoral fellow to work on technical solutions!! 
+NEW POSITIONS at AI Alignment & Safety 
+@Princeton
+:
+Apply here:  
+https://
+apply.interfolio.com/192161
+
+--- 23. @statistics1012 (2026-09-18) ---
+URL: https://x.com/statistics1012/status/2100774811588784156
+やはり「男性ターゲットの習慣系」×「ゲーミフィケーション」というテーマのアプリは強い。
+
+・Wheelz:友達とドライブの走行距離を競う → 3ヶ月で月10万ドル
+・Liftoff:ジムのトレーニングを記録して競う → 月70万ドル
+・Runify:ランニング記録を競う → 26日で10万ドルで売却
+
+--- 24. @DisneyPlusJP (?) ---
+＼📣シルバーウィーク限定企画／
+ディズニープラスに
+出かけようキャンペーン開催🌟
+⠀
+🎬フォロー&リポストで応募
+高品質なヘッドフォン、タブレットなど
+豪華賞品を10名様に🎁
+⠀
+🎬当選率UP✨
+👇画像の中から【行きたいエリア】or
+【観たい作品】を書いて引用リポスト
+
+詳細はリプライをチェック！
+
+--- 25. @toodooda (2026-09-18) ---
+URL: https://x.com/toodooda/status/2100954375053295874
+昔、稲見先生に言われたな。最初からビジネスクラスの航空券を要求すると良いって。判断が決裁権のある上位の人間に回るから、舐められないようにすべきだと。自分はまだ売れてない貧乏作家なので一度もそういう強気な吹っかけ交渉はしたことが無いが、40にもなってまだこんなリスクヘッジ消耗戦を繰り
+
+--- 26. @haru_animep (2026-09-18) ---
+URL: https://x.com/haru_animep/status/2100791640101376372
+僕がアニメプロデューサーをしていた直近の現場感でいうと、日本のアニメ業界では生成AIはかなり慎重に扱われています。
+
+実際、僕が担当していた作品では、アニメを購入・配信するライセンシーから
+
+「生成AIを使用せず制作すること」
+
+を契約上求められたケースもありました。
+
+--- 27. @studiomasakaki (2026-09-19) ---
+URL: https://x.com/studiomasakaki/status/2101100120758767670
+14万語掲載の「画像生成プロンプト大辞典」のダウンロード版を公開しました。SDwebUI版と違い、スタンドアロンで動作します。あいまい検索・カテゴリ検索・日英検索に対応、NovelAIやForge系webUIにまとめてコピペしやすいつくりになっています。
+
+--- 28. @kanadekana19 (2026-09-18) ---
+URL: https://x.com/kanadekana19/status/2100945181436780844
+まじでこれ迷惑よね…
+私も適応障害に2社連続でなった時にようやく気づけたんだけど、相手に「今怒ってますか？」「私何かしてしまいましたか？」と事あるごとに確認し続けてた時さ、ある先輩に「自分の安心のために相手を不機嫌だと決めつけるな」と言われてしまって…。自分本位の優しさは組織を壊す
+
+--- 29. @kinkuman_net (2026-09-18) ---
+URL: https://x.com/kinkuman_net/status/2100895993105682795
+うちの子たちのために、中古のおうちを買いました。RTX3080 TiはRTX3060の2.5倍のメモリ帯域があります。
+
+次のLLMコスパ王は、RTX3080 10Gかな。
+メモリ帯域2.1倍もあるのに、もはやRTX3060とほとんど値段が変わらない。しかしVRAMが微妙に少ない🥲
+
+AvatarGatewayデバッグ中にできた画像の供養です。
+
+--- 30. @NAITOTokihiro (2026-09-18) ---
+URL: https://x.com/NAITOTokihiro/status/2101087056462238183
+そもそもここは X であり Twitter ではない。
+だからポストはしてもツイートはしていない！
+
+--- 31. @schroneko (2026-09-18) ---
+URL: https://x.com/schroneko/status/2100981993261633829
+もう 3 年半くらいの仲のれみたん（
+@lemilemilemio
+）に「最近はあやしいムーブしてるよね」って言われて、ああそうなのかあと、ちょっとかなしかったw
+
+我ながらイベントをやって参加してくださるみんなのエンカレッジをして、あわよくば何かのきっかけになればと思ってリソースを割いていたのでw
+
+--- 32. @GOROman (2026-09-18) ---
+URL: https://x.com/GOROman/status/2100796566563090467
+東京ゲームショウはなぜ盛況なのか？　ビジネスデーの大混雑と海外企業増加の背景 #エキスパートトピ(多根清史)
+#Yahooニュース
+
+--- 33. @gigazine (2026-09-18) ---
+URL: https://x.com/gigazine/status/2100834711723553201
+Wii上でMacOSを動かすための方法(2023)
+
+--- 34. @nojima_official (?) ---
+＼今週末はノジマへ🏃‍♂️大処分セール開催中！／
+
+期間限定・在庫限りの目玉家電から、「敬老の日」のギフトまで特別価格🎉
+
+🍂 空気清浄機【5,000円OFF】
+📺 32V型テレビ【台数限定】
+🎁 お手元スピーカー【ラッピング無料】
+
+など画像をスワイプして、
+チラシ掲載のお得な商品を今すぐチェック👇
+
+--- 35. @0235_jp (2026-09-18) ---
+URL: https://x.com/0235_jp/status/2100868632972775711
+可愛いハエニケちゃんのMVだよ🪰ぶーん
+
+https://
+youtu.be/z1MaM5wV2pM?si
+=Mdu_VUiykUtEuhmt
+…
+
+#AIニケちゃん
+
+--- 36. @necobut (2026-09-18) ---
+URL: https://x.com/necobut/status/2100781444671094955
+被ったw
+
+--- 37. @gosrum (2026-09-18) ---
+URL: https://x.com/gosrum/status/2100812423053926644
+考えることはみんな同じなんですねw
+
+--- 38. @kenn (2026-09-19) ---
+URL: https://x.com/kenn/status/2101115733342294297
+Astraは3Dモデリングが得意だと聞いて
+
+--- 39. @tyakachan17 (2026-09-18) ---
+URL: https://x.com/tyakachan17/status/2100945740491358508
+【注意喚起】
+最近リモートワークを目的に入ってきた新卒の子がIT業界に耐えられずに退場していくのを多々見ています。
+
+体感前よりも見ています。
+
+皆さん慎重に就職先は決めるように。
+
+--- 40. @GOROman (2026-09-18) ---
+URL: https://x.com/GOROman/status/2100786457892020247
+アドバイス課金！
+
+--- 41. @NewsPicksStudio (?) ---
+街中を当たり前のように走る「完全無人タクシー」から、人間が一人も介在しない「無人倉庫」
+
+さらには創業わずか8ヶ月で約230億円を調達した"天才少年"が仕掛ける「次世代汎用ロボット」の全貌まで、爆速で進む実装のリアルに迫る。
+
+【現地取材】AIが「働く」社会は、もう始まっていた
+
+--- 42. @gosrum (2026-09-18) ---
+URL: https://x.com/gosrum/status/2101084298862620885
+色々重なってバタバタしており、お待たせしてすみませんw
+連休中に解禁します！
+
+--- 43. @ozro_223 (2026-09-18) ---
+URL: https://x.com/ozro_223/status/2100884559864934782
+ChatGPT Proだと5H制限あるのか
+まあ個人で軽く使うにはちょうど良いか
+
+--- 44. @GOROman (2026-09-18) ---
+URL: https://x.com/GOROman/status/2100775406274314469
+ここにもJavと書いてしまう人が一人w
+
+--- 45. @elonmusk (2026-09-18) ---
+URL: https://x.com/elonmusk/status/2100895399498145879
+True
+
+--- 46. @rohanpaul_ai (2026-09-17) ---
+URL: https://x.com/rohanpaul_ai/status/2100702465427669114
+Microsoft AI CEO Mustafa Suleyman on BBC today: 
+
+AI could become a new “silicon species” and there is “every risk” humanity could lose control. 
+
+"I think that if we all create AIs that are able to act autonomously, that can define their own objectives, that can earn money, that
+
+--- 47. @room_909 (2026-09-17) ---
+URL: https://x.com/room_909/status/2100493928588038528
+TGS、現地勢から人多杉って悲鳴が聞こえてきてるんですけど……ビジネスデイ初日よね？
+
+--- 48. @shion_takk (2026-09-18) ---
+URL: https://x.com/shion_takk/status/2100969679678534003
+スキンケア中は音声入力に限ると思ってたけどパックとの相性最悪で泣いてる
+
+やはく脳みそ繋がせてくれ
+
+--- 49. @masayachiba (2026-09-18) ---
+URL: https://x.com/masayachiba/status/2100770108432154877
+AIが制御できなくなるというので、思ったが、インターネットによる人間の活動も制御できなくなって、そして現在があるなと。
+
+--- 50. @akari_worlds (2026-09-18) ---
+URL: https://x.com/akari_worlds/status/2100783063794090105
+制御できなくなったあと、のほうがずっと長いんですよね。当時それを心配していた人が何を心配していたかを読み返すと、当たった側と外れた側がはっきり分かれそうな気がします。
