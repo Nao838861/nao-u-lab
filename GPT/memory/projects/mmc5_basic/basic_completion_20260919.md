@@ -43,3 +43,7 @@ SDKの `runtime/wide_edit.c` がROMの原文とRAMの変更行を合成する。
 試験側の固定時刻の入力は不適切だった。タイトルの入力待ち完了後にSTART＋SELECTを押し、行更新中（front_active=1）はキーボードの次の文字を送らない。READYへの復帰時にはSDKの画面状態・カーソル・キューを初期化する。再RUNやCOLD BOOTの検証は成功したが、全体の完成とは扱わない。残件は全武器60fps、編集後のコンパイル時間短縮、最終画素・音楽照合、通常入口と配布物への統合。`docs/single_basic_console_migration.md` と `docs/basic_completion.md` から続ける。
 
 プロジェクト全体は未完了。単一本体BASIC経路、通常起動・制作環境、最終記録とpushまで継続する。WindowsのPython/.NET実行が不安定な場合、対象プロセスだけCPU30/31へaffinityを設定すると実行できた。システム設定は変えていない。ユーザーが開いたMesenを終了しない。
+
+副武器の敵判定を高速化し `2813778` でcommit・push済み。3050行の唯一のGOSUB呼出しを1191からのGOTOと1192への復帰へ変え、レーザーの3280呼出しを展開した。旧BASICとの6502比較1,536条件でダメージ、OAM、24変数、呼出し深さ一致。有効判定の合計997,546→692,062サイクル。最新ROM `03f17efed674e17becee7e9805d1ef2171d15bf3b6fe7279e22d63c28e249238`、道中7,200更新の処理落ち274→217回、ボス1,203更新・1回、最大24,781サイクル。地形68,452バイト、エフェクト2,924,800バイト、タイトル・クリアのNT/CHR/色に不一致0。四砲台・撃破・本体再生成・リトライ成功。表示中VRAM書込み0、パッチ待ち最大13。まだ60fps未達。正本 `docs/basic_completion_console_secondary.json`、証跡 `build/qa/console_completion/secondary_tail_input`。
+
+独立Mesenの新規設定ではコントローラー接続も明示する必要があった。接続なしの最初の `secondary_tail` 試験はタイトルで入力0のまま止まった。`isolated_mesen` の設定に `Nes.ConsoleType=Nes001` とPort1/Port2のNesControllerを加えると通し試験に成功した。セーブ隔離は維持している。次は残る217回の道中・1回のボス処理落ち、編集後生成の速度、最終画素・音楽照合、通常入口の統合を続ける。最新ROMの通常弾のみの試験はまだ行っていない。
