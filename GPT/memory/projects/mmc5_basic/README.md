@@ -4,6 +4,8 @@
 
 ## 現行サンプルの入口
 
+完成作業の最新チェックポイントは [BASIC完成作業の到達点と継続先](basic_completion_20260919.md)。`codex/basic-completion` の `5a11da2` では旧581地形版の画面・高速R移植と更新抜け0を検証済み。最新画像・本体編集経路との統合は継続中。下記の本流採用・テーブル統合時点の記録とは測定対象を区別する。
+
 ユーザーの「この作業ツリーを奔流にして。」により、`D:\HomeBrew\FamiBASIC_Turbo_basic_port` のBASIC移植版を本流へ採用。ゲーム固有ASM全102入口をBASICへ移植した第14段階と、通常敵8体・敵弾8発の第15段階が基準。標準のBuildFlightLab.cmd / PlayFlightLab.cmdは移植版を対象にする。現行仕様はプロジェクト内の `experiments/basic_service_port/README.md` と `docs/basic_port_mainline.md` を読む。
 
 本流採用コミットは `bb8c24b`。mainとexperiment/basic-service-portへpush済み。標準ビルドのROMは第15段階とハッシュ一致し、回帰29件・Mesen全長検証を再実行済み。本流フォルダーにも同じROMを配置した。
