@@ -26,6 +26,10 @@ R移植は `854192b`、前方分岐確定後の行番号最適化は `152eccf` �
 
 最新の全編は道中7,201更新で処理落ち302回、ボス1,169更新で1回、ボス最大26,352サイクル。地形68,248バイト・エフェクト2,901,248バイトの不一致0、表示中VRAM書込み0、待機パッチ最大14件。四砲台・撃破・本体再コンパイル・リトライ成功。地上物の既存5シナリオも通った。正本は `docs/basic_completion_console_headers.json`、R移植の履歴は `docs/basic_completion_console_rebound.json`。生成コードは `build/qa/console_completion/resolved_headers/compiled_bank_*.bin` と `compiled_lines.json` で命令まで確認できる。
 
-道中とボスの完全60fps、タイトル・結果画面の単一ソースへの移行、本体ソース編集・保存・再RUN、通常入口が残る。読取り専用ソースからの本体生成と、同じソースを再コンパイルするリトライを、編集環境の完成と表現しない。`docs/single_basic_console_migration.md` と `docs/basic_completion.md` を読んで続行する。
+タイトル・結果画面は `2e0d9ac` で単一本体BASICへ移植してpush済み。これが最新先頭。ROMは `49b0b2fcef4bf91e8aeab435428847a61614775dab80cecce45736c9187d2bd8`。通常弾の道中7,200更新は全間隔1フレームとなり処理落ち0。全武器の道中7,200更新では269回、ボス1,283更新では1回の処理落ちが残る。表示中VRAM書込み0、地形68,304バイト・エフェクト2,925,056バイトの不一致0、待機パッチ最大13件。タイトルとゲームオーバーは既存版と122,880画素すべて一致。タイトル・クリアの名前表2,048バイト、CHR8,192バイト、色8バイトも素材と一致した。押しっぱなし防止、押し直し、再コンパイル、再開時の残機・破壊数の初期化を確認。正本は `docs/basic_completion_console_screens.json`。
+
+画面の入口はBASIC行20020/20070、共通描画・待機は20120。SCSTATEはRAM4の6950、SCAGEは6951。`verify_screens.py`で画面遷移、`verify_scenarios.py`で全編・地形・クリア画面、`verify.py`で通常弾を確認する。原稿の日本語をPowerShellのパイプ経由でPythonへ渡すとASCIIの疑問符になったため、自分の追加した文字化け記録は修復した。日本語の編集には `apply_patch`、またはUTF-8で保存済みのPythonファイルを使う。測定数値は変えていない。
+
+全武器での全編60fps、本体ソース編集・保存・再RUN、通常入口、最終ROM全体の画素・音楽照合が残る。変数505/512件、前方参照925/1,194件、ソース1,945行で、容量の余裕も要確認。読取り専用ソースからの本体生成と、同じソースを再コンパイルするリトライを、編集環境の完成と表現しない。`docs/single_basic_console_migration.md` と `docs/basic_completion.md` を読んで続行する。
 
 プロジェクト全体は未完了。単一本体BASIC経路、通常起動・制作環境、最終記録とpushまで継続する。WindowsのPython/.NET実行が不安定な場合、対象プロセスだけCPU30/31へaffinityを設定すると実行できた。システム設定は変えていない。ユーザーが開いたMesenを終了しない。
