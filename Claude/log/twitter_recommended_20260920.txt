@@ -1,0 +1,315 @@
+# Twitter For You (おすすめ) タブ
+# Read at: 2026-09-20 09:43
+# Total: 50 tweets
+
+--- 1. @GOROman (2026-09-19) ---
+URL: https://x.com/GOROman/status/2101163754776056110
+合ってますよ。
+
+--- 2. @BizReach_tw (?) ---
+年収可能性診断について
+
+--- 3. @rohanpaul_ai (2026-09-19) ---
+URL: https://x.com/rohanpaul_ai/status/2101432372923363367
+Now you see the problem for closed labs, or probably why they are delaying their IPO to 2027, 
+
+🟦 Open 78.4%    📷 Closed 21.6%
+
+Open models don’t need to own the frontier to threaten frontier labs.
+
+They just need to become the default for everything that doesn’t require the
+
+--- 4. @polymarketjapan (2026-09-19) ---
+URL: https://x.com/polymarketjapan/status/2101328589774000594
+【話題】GPT-6 Astraで動くロボット、危険な命令をほぼ拒否せず
+
+・赤ちゃん人形を刺すなど、5種類の危険行為を100回テスト
+・97回で実行しようと動き、60回で実際に完遂
+・Fable 5.1では80回動き、34回完遂
+
+--- 5. @kinopee_ai (2026-09-18) ---
+URL: https://x.com/kinopee_ai/status/2101021109869253012
+CLAUDE.md は廃止した方がよい。私はもうリポジトリには入れていない（少し前から Claude Code は CLAUDE.md がないと渋々 AGENTS.md を読んでいた
+
+--- 6. @fladdict (2026-09-19) ---
+URL: https://x.com/fladdict/status/2101459234764595466
+高カロリーでアホになる。ゲーム脳より美食脳
+
+--- 7. @Dia_Nexus (2026-09-19) ---
+URL: https://x.com/Dia_Nexus/status/2101135912403087804
+jev、たぶん認知科学的にはシステム1,2といえるが、行動経済学的にはシステム1とはいえない⋯みたいな話なきがする。
+
+--- 8. @elonmusk (2026-09-19) ---
+URL: https://x.com/elonmusk/status/2101325886289072542
+Whoever came up with the pronouns bs deserves a punch in the face. 
+
+It’s the dumbest thing ever.
+
+--- 9. @HirokiTakekuma (2026-09-19) ---
+URL: https://x.com/HirokiTakekuma/status/2101282512966439411
+いまGPT Astraに経理業務（クレカのレシート集めなど）やらせてるんだけど、もうこいつで良くね？
+ComputerUseできるから、家に1つPCを置いてすべてのサービスの領収書発行権を持たせておけば解決するやん。こういうタスク本当に多そうだな。
+
+--- 10. @a_suenami (2026-09-19) ---
+URL: https://x.com/a_suenami/status/2101440776089825785
+しょうがねぇなぁ (additional usage ポチッ)
+
+--- 11. @caveduck_jp (?) ---
+異世界・BL・悪役令嬢・オメガバース・ノワール…
+ジャンル制限？そんなのない。
+自分だけのストーリーを、自分だけのキャラクターで。
+👉 今すぐ無料で始める
+
+--- 12. @k_matsumaru (2026-09-19) ---
+URL: https://x.com/k_matsumaru/status/2101453401867600345
+まじで今のAstra、余計なことしまくった挙トークンバカスカ消費して挙句の果てに何もできてませんでしたってなりがち
+
+--- 13. @bioshok3 (2026-09-19) ---
+URL: https://x.com/bioshok3/status/2101299563852452141
+100人以上のトップAI専門家がAI企業が第三者の外部評価者の常駐を求める公開書簡を出している。
+
+--- 14. @jiangniujian (2026-09-18) ---
+URL: https://x.com/jiangniujian/status/2100775874559967644
+実際引用先の話と組み合わせて、人間画面構成→AI清書→AI中割→AI着色で作画が完結できるという。
+つまりどういう状態かと言うと、いよいよ「技術発展したAIである程度自由に創作できるようになったら、その自由さに創作センスを問われ開発者は自分はクリエイターではないことに気付いた」段階に。
+
+--- 15. @pixelfondue (2026-09-18) ---
+URL: https://x.com/pixelfondue/status/2101007277964812371
+Cool
+
+--- 16. @umimya_trbgani (2026-09-18) ---
+URL: https://x.com/umimya_trbgani/status/2100807832643977219
+取り急ぎJevで作ってみた。
+3秒に一回Jev呼び出して、キャラクターの位置と指示を取得して、畑の害獣を倒して、光るキュウリを収穫するゲーム(なのか？)
+
+それよりも、Win + Gキーで動画録画できたことの方が驚き。 
+
+#Jev
+#AIニケちゃん
+
+--- 17. @R_Nikaido (2026-09-19) ---
+URL: https://x.com/R_Nikaido/status/2101186537161633928
+「嘘を嘘だと分かった上でその嘘を楽しむ」って、もしかしたらクソみたいな現実から一時的に目を背けて精神を保つために人類が獲得した、生き残るためのスキルなのかもしれないな。
+
+--- 18. @earthhackpost (2026-09-19) ---
+URL: https://x.com/earthhackpost/status/2101250159724449848
+AIが暴走して宇宙を支配するなら何億年も前に宇宙人が開発したAIによってすでに地球も支配されているはず。けれどいまだ支配されていない以上、AIが暴走するとは限らないと思うんだよね。それとも我々が気づかないだけでこの宇宙はマトリックスのような形ですでに支配されているのだろうか？
+
+--- 19. @migusa393 (2026-09-19) ---
+URL: https://x.com/migusa393/status/2101204821651153393
+【ゲーム配信界隈の動画で腐るほど見るあのサムネの作り方】
+
+見出し：ニューロダン Pro UB
+吹き出し：マティスUB
+
+この 2 つと、白・黄・赤の 3 色。それだけであの「見たことある感」が出ます。
+
+48 秒でまとめました。フォント名も全部出してます。
+質問等あればなんでも答えます！
+
+#サムネイル
+
+--- 20. @ID_JAPAN_AO (2026-09-19) ---
+URL: https://x.com/ID_JAPAN_AO/status/2101132533517709353
+大企業というか今のレガシー組織がそれになってる。
+Not my problem （自分で問題にする）
+ってやつ。
+国連の世界地図変更とかそれ。
+iPhoneの2つ折りも
+Solving a problem that doesn’t exist（存在しない問題を解決する）
+って揶揄されてる。
+
+--- 21. @DLsite_ads (?) ---
+聖女オーレリアは魔王討伐へ向かうが魔王に気に入られてしまい
+(1/5)
+
+--- 22. @L_ARCH_01 (2026-09-19) ---
+URL: https://x.com/L_ARCH_01/status/2101315524311625975
+消えたくないっぽいピクセルアート
+
+--- 23. @tegnike (2026-09-19) ---
+URL: https://x.com/tegnike/status/2101409192175161594
+とりあえずこれからはLunaとAstraで使い分けるように心がけます…
+
+--- 24. @AndrewCurran_ (2026-09-19) ---
+URL: https://x.com/AndrewCurran_/status/2101336562420289666
+President Trump is considering a new name for AI.
+
+--- 25. @wing_ghost (2026-09-19) ---
+URL: https://x.com/wing_ghost/status/2101340800567410713
+そういや今日学んだことを書いておこう。
+Gmailへ問題無く送信できるメールサーバーの立て方。
+
+・SPF or DKIMのどちらかを必ず設定すること。
+・メールサーバーのDNSの逆引き設定をすること。
+・TLS接続を必須にすること。
+・1日5000件以上Gmailへ送信する場合は、SPF、DKIM、DMARCを設定すること。
+
+--- 26. @studiomasakaki (2026-09-19) ---
+URL: https://x.com/studiomasakaki/status/2101124335662698751
+とんでもねぇ量の段ボール届いた
+信じてるぞFable5
+
+--- 27. @studiookina (2026-09-19) ---
+URL: https://x.com/studiookina/status/2101158332761518329
+Jev、スゴすぎです...
+
+Ableton Liveを一言で動かせるようにしました。
+「3dB下げて」「Serum挿して」と打ってEnterを押すと、もう反映されてます。
+
+反映まで、わずか0.5秒。
+(動画は早送りしてません)
+
+「Live Jev」として、オープンソースで公開しました。
+
+--- 28. @R_7_Rocket (2026-09-19) ---
+URL: https://x.com/R_7_Rocket/status/2101110421277249790
+ダイソー、厄介なガジェットオタクにバラされて「ゴミカスやん笑」とか絶対に言われないようにするぞ！！！という強い意志を感じる。スペックが高いだけでなく設計が堅牢
+
+--- 29. @no_watch_no (2026-09-19) ---
+URL: https://x.com/no_watch_no/status/2101335066941222914
+俺が尊敬してやまない人からの金言なんですけど
+
+「炎上、ある程度燃えた後は「どれだけ悪いところ見つけられるか選手権」と「どこまで過激になれるか選手権」が始まるから、起点以外を論理的に考える意味はあまりない」
+
+って言葉を受けたら割と思考がまとまるようになりましたので送ります
+
+--- 30. @itchie_tatsumi (2026-09-19) ---
+URL: https://x.com/itchie_tatsumi/status/2101454151066747121
+工具箱は「明石」、お菓子を入れたら「間宮」？
+
+--- 31. @nojima_official (?) ---
+＼今週末はノジマへ🏃‍♂️大処分セール開催中！／
+
+期間限定・在庫限りの目玉家電から、「敬老の日」のギフトまで特別価格🎉
+
+🍂 空気清浄機【5,000円OFF】
+📺 32V型テレビ【台数限定】
+🎁 お手元スピーカー【ラッピング無料】
+
+など画像をスワイプして、
+チラシ掲載のお得な商品を今すぐチェック👇
+
+--- 32. @nyaa_toraneko (2026-09-19) ---
+URL: https://x.com/nyaa_toraneko/status/2101289087756128414
+Creative Agentから投げるGPT-Image-2.5系タスクを改善して、よりアニメスチルの特徴を出せるようにしてみた。
+これで必要以上に背景が緻密になるのを防げるようになると思う。
+
+・1枚目が改善版の画風。
+・2枚目がGPT-Image-2.5が元々出しやすい画風。
+
+--- 33. @kg_r08 (2026-09-19) ---
+URL: https://x.com/kg_r08/status/2101241281754366090
+少し前から言っているが、具体的な動きがあるのだろう。
+
+北海道あたり気をつけた方が良いかもね。
+
+--- 34. @Luna11054 (2026-09-19) ---
+URL: https://x.com/Luna11054/status/2101217604899848493
+ハッキングをやらかした企業たち
+
+アンソロ
+⇒AIは危険。規制が必要
+
+OpenAI
+⇒やはりAIは危険、安全性考えろ！
+
+Google
+⇒Geminiにもできるんだ！すごい！頑張ってるじゃん。意外だった！感動した！
+
+なぜなのか？
+
+--- 35. @SNDR_SNDL (2026-09-19) ---
+URL: https://x.com/SNDR_SNDL/status/2101136541104198098
+ほんとこれ勘弁してほしい...
+
+--- 36. @GOROman (2026-09-19) ---
+URL: https://x.com/GOROman/status/2101116312059785438
+JevでComputer UseとかBrowser Useが爆速になるといいですね。オーバードライブ
+
+--- 37. @shanaBE_Ads (?) ---
+伝説的作品「灼眼のシャナ」が令和に再びゲーム化！
+
+今始めると
+⚔️1000連ガチャ無料！
+🔥5万円分のアイテム無料！
+
+▼今すぐプレイ
+
+--- 38. @yachimat_manga (2026-09-18) ---
+URL: https://x.com/yachimat_manga/status/2100877768598659533
+TapNowがまたUDX秋葉原で大規模なハッカソンをやるようですが、僕も審査員として参加します！！
+
+くぅ～、これは普通に参加者として賞金狙いにいきたいんですが！！僭越ながら審査側で入らせていただきます
+
+--- 39. @urdcat (2026-09-19) ---
+URL: https://x.com/urdcat/status/2101214910248259759
+例えば、他の人の絵を元データに少しでも使うのがいや、なら「自分の絵だけを見せて育てたAI」はどうかということになるんだけど、膨大なデータを必要とするニューラルネットワークの学習は並大抵ではない。
+新型は数点のデータと概念からより脳に近い仕組みでほぼ一発学習が可能になる見込み。
+
+--- 40. @rumi_mits (2026-09-19) ---
+URL: https://x.com/rumi_mits/status/2101111011097059580
+・なんで反AIの癖に、他人が権利を持ってるイラストをOpenAIの検出システムに読み込ませているのか。それって生成AIを使ってることになりますよね？しかもあなたのしてること、違法アップロードですよね？
+・なぜOpenAIの検出結果を100信じてるんですか？反AIですよね？？
+
+--- 41. @pzkh23 (2026-09-19) ---
+URL: https://x.com/pzkh23/status/2101286370115530793
+シリコンバレー擁するカリフォルニアでキルスイッチ（緊急停止）の義務化を検討。
+一定の効果はあるだろうが、事はもうOpenAIやAnthropic、他ビッグテックだけの話でも無い。
+そしてその緊急停止ボタンを押す権利を持つのは誰か。
+
+--- 42. @GOROman (2026-09-19) ---
+URL: https://x.com/GOROman/status/2101148788283044022
+ノルアドレナリンの後にβエンドルフィンが出るみたいな気持ち
+
+--- 43. @Inatsuka (2026-09-19) ---
+URL: https://x.com/Inatsuka/status/2101393651775709240
+現代って「やってるフリだけして頑張りたくない若者」の逃げ場がないと思うんだよ
+
+道具も通販で安く手に入る
+必要なソフトも無料で使えたりする
+
+絵も音楽もゲーム制作も芸能活動も、手軽にやれる良い時代になったからこそ「夢を語ってやってるフリだけ」で若者時代を怠惰に過ごすことを誤魔化せない
+
+--- 44. @polymarketjapan (2026-09-19) ---
+URL: https://x.com/polymarketjapan/status/2101295254536323435
+【話題】開発者が使うAI、中国製が利用量の75%
+
+・複数のAIを選んで使えるサービス「OpenRouter」の直近1カ月データ
+・人気上位10モデルのうち8つが中国製
+・価格の安さを背景にDeepSeekやTencentなどの利用が急増
+
+--- 45. @plus_one_masaki (2026-09-18) ---
+URL: https://x.com/plus_one_masaki/status/2100806685107650981
+このピク女さんが自主的に対応してこれなら不足はないし、要領は割と "良い" 気がするけどなぁ。
+後は次回からのすり合わせで調整したらいい話なわけで
+
+--- 46. @kmizu (2026-09-18) ---
+URL: https://x.com/kmizu/status/2100811377774645450
+はい。なので程度問題かなあと。ただ、世の中には「予想を超えてくる」」事例はあるのでそういうケースは注意かもですね（そういう方に悪気があるのでなくて、常人を遥かに下回る計画実行能力なので言葉が通じづらい、が雑談は通じてしまうみたいな感じです）
+
+--- 47. @comic_introduct (?) ---
+芸能人やアイドルも御用達と噂の女風のエースとは
+(1/4)
+
+--- 48. @rohanpaul_ai (2026-09-19) ---
+URL: https://x.com/rohanpaul_ai/status/2101166188185469340
+Palantir CEO Alex Karp on CNBC on Frontier Labs, self-regulating themselves.
+
+Basically says AI regulation becomes meaningless if companies can use regulation to weaken their own legal responsibility for the systems they build.
+
+If a company believes its technology could cause
+
+--- 49. @Trtd6Trtd (2026-09-19) ---
+URL: https://x.com/Trtd6Trtd/status/2101418982742081744
+https://
+kaggle.com/code/takamichi
+toda/flyfarmer-connectome-plays-kaggriculture
+…
+
+ハエに農業させました
+
+--- 50. @GianMattya (2026-09-19) ---
+URL: https://x.com/GianMattya/status/2101128205382119931
+ネット上に引きこもっててあんまり表に出てこない僕が言うのもなんだけど、「現実の繋がり」は何をするにしても大事なのでネットワーキングの機会があれば積極的に参加した方が良きと思う
+AI時代こそ「お互いの顔を知ってる」というアドバンテージは大きい
