@@ -17,3 +17,12 @@ CPUテスト23件成功。Mesen全編をLv1/Lv2で実行し、背景・地形転
 起動用ROMを再生成、検証ROMとのSHA-256一致：cf3f2c0b01e49f49f734464e13c6ec88986176afa3b874b892017548ab7c293b。仕様・低速GIF・結果はプロジェクトの `docs/laser_travel_20260921.md` と同名 `_results.json`。
 
 作業worktreeは `D:/HomeBrew/FamiBASIC_Turbo_laser_travel`、branch `fix/laser-lv1-travel`。完成版はmainへ反映済み。
+
+
+## 追記：最大160pxへ延長
+
+ユーザー原文：「レーザーの最大が最大64pxなのは短すぎる。160pxくらいまで伸ばしてみて。」
+
+最大160px（10更新で伸長）に変更し、main `1857166` まで反映。従来の64px仕様を置き換える。後端が追う挙動と当たり判定は維持し、ステージ描画もLv2と共有して容量を節約。CPU23件、両レベルのMesen全編照合に成功。更新抜けはLv1道中455回、Lv2道中512回（各7200更新）、ボスは両方6回。安定60fpsは未達。
+
+並行して入った背景編集統合edeb1ceも保持。起動用ROMを再生成し検証ROMとのSHA-256一致：e0a1a197c6713e1760c67be81c10a6fd52cf99f3dbf47f2b240d4c89c509f265。プロジェクトの `docs/laser_travel_160px_20260921_results.json` と `docs/images/laser_lv1_160px_20260921.gif` を参照。
