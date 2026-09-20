@@ -4,7 +4,7 @@
 
 ## 現行サンプルの入口
 
-最新は [インゲーム最適化の到達点](ingame_optimization_20260920.md)。main `651be68` までpush済み。正本は `experiments/single_basic_console/game/src/main.bas`、入口は `EditFlightLab.cmd`。全武器の道中7,200更新で処理落ち333→143回、ボス32→0回。完全60fpsは未達。画面修復を長く遅らせる案は不採用。
+最新は [インゲーム最適化の到達点](ingame_optimization_20260920.md)。main `0556e8e` までpush済み。正本は `experiments/single_basic_console/game/src/main.bas`、入口は `EditFlightLab.cmd`。全武器の道中7,200更新で処理落ち333→143→76回、ボス32→0回。画面内の最大修復待ちも34→23フレームへ短縮。完全60fpsは未達。
 
 ## 以前の本流採用と統合の記録
 
