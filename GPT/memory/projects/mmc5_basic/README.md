@@ -1,8 +1,12 @@
 # FamiBASIC Turbo
 
-製品名は **FamiBASIC Turbo** に確定。プロジェクトフォルダ: `D:\HomeBrew\FamiBASIC_Turbo`。
+製品名は **FamiBASIC Turbo** に確定。現行本流の作業フォルダーは `D:\HomeBrew\FamiBASIC_Turbo_main`。
 
 ## 現行サンプルの入口
+
+最新は [インゲーム最適化の到達点](ingame_optimization_20260920.md)。main `651be68` までpush済み。正本は `experiments/single_basic_console/game/src/main.bas`、入口は `EditFlightLab.cmd`。全武器の道中7,200更新で処理落ち333→143回、ボス32→0回。完全60fpsは未達。画面修復を長く遅らせる案は不採用。
+
+## 以前の本流採用と統合の記録
 
 完成作業の最新チェックポイントは [BASIC完成作業の到達点と継続先](basic_completion_20260919.md)。`codex/basic-completion` の `5a11da2` では旧581地形版の画面・高速R移植と更新抜け0を検証済み。最新画像・本体編集経路との統合は継続中。下記の本流採用・テーブル統合時点の記録とは測定対象を区別する。
 
