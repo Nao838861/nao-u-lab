@@ -4,7 +4,7 @@
 
 ## 現行サンプルの入口
 
-最新は [インゲーム最適化の追加到達点](ingame_optimization_20260921.md)。main `a4746bf` までpush済み。正本は `experiments/single_basic_console/game/src/main.bas`、入口は `EditFlightLab.cmd`。全武器の道中7,200更新で処理落ち333→143→76→59回、ボス32→0回。画面内の最大修復待ちは23フレームを維持。完全60fpsは未達。
+最新は [R・W・M・Lの調整](weapon_tuning_20260921.md)。main `850d956` までpush済み。正本は `experiments/single_basic_console/game/src/main.bas`、入口は `EditFlightLab.cmd`、直接プレイは `PlayFlightLab.cmd`。RはLv1から4発、Lv2は高速化、Wは地形への効きを半減、Mは内部爆発を交互表示、LのLv1は短い消灯を導入。完全60fpsは未達。以前の [最適化記録](ingame_optimization_20260921.md) の59回/ボス0回は2発版の値で、現在の増強後は道中108〜110回/ボス6回。
 
 ## 以前の本流採用と統合の記録
 
