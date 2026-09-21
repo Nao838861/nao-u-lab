@@ -13,6 +13,8 @@ struct FirmwareMetadataState
   bool has_led = false;
   stackchan_websocket_v1_ServoType servo_type = stackchan_websocket_v1_ServoType_SERVO_TYPE_UNSPECIFIED;
   bool supports_audio_duplex = false;
+  bool has_camera = false;
+  bool supports_volume = false;
   char firmware_version[64] = "";
 };
 

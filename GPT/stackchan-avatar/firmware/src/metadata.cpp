@@ -56,6 +56,13 @@ void initializeFirmwareMetadata()
   g_firmware_metadata.has_led = detectHasLed();
   g_firmware_metadata.servo_type = detectServoType();
   g_firmware_metadata.supports_audio_duplex = false;
+  g_firmware_metadata.has_camera =
+#if defined(ARDUINO_M5STACK_CORES3)
+      true;
+#else
+      false;
+#endif
+  g_firmware_metadata.supports_volume = true;
   snprintf(
       g_firmware_metadata.firmware_version,
       sizeof(g_firmware_metadata.firmware_version),
@@ -89,6 +96,8 @@ void setFirmwareMetadataMessage(
   message.body.firmware_metadata.has_led = g_firmware_metadata.has_led;
   message.body.firmware_metadata.servo_type = g_firmware_metadata.servo_type;
   message.body.firmware_metadata.supports_audio_duplex = g_firmware_metadata.supports_audio_duplex;
+  message.body.firmware_metadata.has_camera = g_firmware_metadata.has_camera;
+  message.body.firmware_metadata.supports_volume = g_firmware_metadata.supports_volume;
   snprintf(
       message.body.firmware_metadata.firmware_version,
       sizeof(message.body.firmware_metadata.firmware_version),

@@ -102,6 +102,27 @@ def encode_state_command_message(seq: int, state_id: int) -> bytes:
     return message.SerializeToString()
 
 
+def encode_volume_command_message(seq: int, *, request_id: int, level: int) -> bytes:
+    message = _new_message(
+        ws_pb2.MESSAGE_KIND_VOLUME_CMD,
+        ws_pb2.MESSAGE_TYPE_DATA,
+        seq,
+    )
+    message.volume_cmd.request_id = int(request_id)
+    message.volume_cmd.level = _ensure_range(level, minimum=0, maximum=230, label="volume")
+    return message.SerializeToString()
+
+
+def encode_camera_capture_command_message(seq: int, *, request_id: int) -> bytes:
+    message = _new_message(
+        ws_pb2.MESSAGE_KIND_CAMERA_CMD,
+        ws_pb2.MESSAGE_TYPE_DATA,
+        seq,
+    )
+    message.camera_capture_cmd.request_id = int(request_id)
+    return message.SerializeToString()
+
+
 def encode_server_metadata_message(
     seq: int,
     *,
@@ -179,9 +200,11 @@ __all__ = [
     "encode_audio_wav_data_message",
     "encode_audio_wav_end_message",
     "encode_audio_wav_start_message",
+    "encode_camera_capture_command_message",
     "encode_server_metadata_message",
     "encode_servo_command_message",
     "encode_state_command_message",
+    "encode_volume_command_message",
     "parse_websocket_message",
     "ws_pb2",
 ]

@@ -54,3 +54,5 @@ def test_page_contains_complete_first_run_guide() -> None:
     assert "スタックちゃん接続中" in html
     assert "ファームの再書き込みは不要です" in html
     assert "本体未接続でも実行できます" in html
+    assert "この音量にする" in html
+    assert "静止画を1枚撮る" in html

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import base64
 
 from websockets.asyncio.client import connect
 
@@ -21,6 +22,8 @@ def message(kind: int, body_name: str, *, seq: int = 1) -> bytes:
         body.servo_type = pb.SERVO_TYPE_SCS0009
         body.supports_audio_duplex = False
         body.firmware_version = "mock-0.1"
+        body.has_camera = True
+        body.supports_volume = True
     elif body_name in ("speak_done_evt", "servo_done_evt"):
         body.done = True
     return item.SerializeToString()
@@ -44,6 +47,49 @@ async def run(url: str) -> None:
             elif body == "audio_wav_end":
                 await asyncio.sleep(0.1)
                 await websocket.send(message(pb.MESSAGE_KIND_SPEAK_DONE_EVT, "speak_done_evt"))
+            elif body == "volume_cmd":
+                response = pb.WebSocketMessage(
+                    kind=pb.MESSAGE_KIND_VOLUME_EVT,
+                    message_type=pb.MESSAGE_TYPE_DATA,
+                    seq=item.seq,
+                )
+                response.volume_evt.request_id = item.volume_cmd.request_id
+                response.volume_evt.level = item.volume_cmd.level
+                response.volume_evt.success = True
+                await websocket.send(response.SerializeToString())
+            elif body == "camera_capture_cmd":
+                png = base64.b64decode(
+                    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwC"
+                    "AAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="
+                )
+                request_id = item.camera_capture_cmd.request_id
+                start = pb.WebSocketMessage(
+                    kind=pb.MESSAGE_KIND_CAMERA_IMAGE,
+                    message_type=pb.MESSAGE_TYPE_START,
+                    seq=item.seq,
+                )
+                start.camera_image_start.request_id = request_id
+                start.camera_image_start.width = 1
+                start.camera_image_start.height = 1
+                start.camera_image_start.total_bytes = len(png)
+                start.camera_image_start.mime_type = "image/png"
+                await websocket.send(start.SerializeToString())
+                data = pb.WebSocketMessage(
+                    kind=pb.MESSAGE_KIND_CAMERA_IMAGE,
+                    message_type=pb.MESSAGE_TYPE_DATA,
+                    seq=item.seq,
+                )
+                data.camera_image_data.request_id = request_id
+                data.camera_image_data.image_bytes = png
+                await websocket.send(data.SerializeToString())
+                end = pb.WebSocketMessage(
+                    kind=pb.MESSAGE_KIND_CAMERA_IMAGE,
+                    message_type=pb.MESSAGE_TYPE_END,
+                    seq=item.seq,
+                )
+                end.camera_image_end.request_id = request_id
+                end.camera_image_end.success = True
+                await websocket.send(end.SerializeToString())
 
 
 def main() -> None:

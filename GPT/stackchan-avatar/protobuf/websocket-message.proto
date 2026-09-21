@@ -31,6 +31,12 @@ message WebSocketMessage {
     ServoDoneEvent servo_done_evt = 35;
     FirmwareMetadata firmware_metadata = 36;
     ServerMetadata server_metadata = 37;
+    VolumeCommand volume_cmd = 38;
+    VolumeEvent volume_evt = 39;
+    CameraCaptureCommand camera_capture_cmd = 40;
+    CameraImageStart camera_image_start = 41;
+    CameraImageData camera_image_data = 42;
+    CameraImageEnd camera_image_end = 43;
   }
 }
 
@@ -46,6 +52,10 @@ enum MessageKind {
   MESSAGE_KIND_SERVO_DONE_EVT = 8;
   MESSAGE_KIND_FIRMWARE_METADATA = 9;
   MESSAGE_KIND_SERVER_METADATA = 10;
+  MESSAGE_KIND_VOLUME_CMD = 11;
+  MESSAGE_KIND_VOLUME_EVT = 12;
+  MESSAGE_KIND_CAMERA_CMD = 13;
+  MESSAGE_KIND_CAMERA_IMAGE = 14;
 }
 
 enum MessageType {
@@ -136,9 +146,45 @@ message FirmwareMetadata {
   ServoType servo_type = 6;
   bool supports_audio_duplex = 7;
   string firmware_version = 8;
+  bool has_camera = 9;
+  bool supports_volume = 10;
 }
 
 message ServerMetadata {
   bool has_server_wake_word = 1;
   string server_version = 2;
+}
+
+message VolumeCommand {
+  uint32 request_id = 1;
+  uint32 level = 2;
+}
+
+message VolumeEvent {
+  uint32 request_id = 1;
+  uint32 level = 2;
+  bool success = 3;
+}
+
+message CameraCaptureCommand {
+  uint32 request_id = 1;
+}
+
+message CameraImageStart {
+  uint32 request_id = 1;
+  uint32 width = 2;
+  uint32 height = 3;
+  uint32 total_bytes = 4;
+  string mime_type = 5;
+}
+
+message CameraImageData {
+  uint32 request_id = 1;
+  bytes image_bytes = 2;
+}
+
+message CameraImageEnd {
+  uint32 request_id = 1;
+  bool success = 2;
+  string error = 3;
 }

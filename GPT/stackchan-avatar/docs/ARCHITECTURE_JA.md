@@ -38,6 +38,10 @@ PCは交換可能な「頭脳」です。
 
 プロトコル正本は `protobuf/websocket-message.proto` です。
 
+音量変更は`VolumeCommand`/`VolumeEvent`で要求と適用結果を対応付けます。カメラ静止画は
+`CameraImageStart`、4KB単位の`CameraImageData`、`CameraImageEnd`に分割して転送します。
+PC側は512KBを受信上限とし、要求時にだけ撮影します。
+
 ## 最小会話フロー
 
 ```text

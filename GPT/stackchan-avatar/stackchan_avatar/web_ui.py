@@ -14,14 +14,14 @@ h1{margin-bottom:.25rem}.lead{margin-top:0;color:var(--muted)}.grid{display:grid
 label{display:block;font-weight:700;margin:.75rem 0 .25rem}input,select,textarea{width:100%;font:inherit;padding:.7rem;border:2px solid #999;border-radius:10px;background:white}
 textarea{min-height:6rem}.row{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem}button{font:inherit;font-weight:700;padding:.7rem 1.05rem;border:0;border-radius:999px;background:var(--accent);color:white;cursor:pointer}
 button.secondary{background:#4f6d7a}button:disabled{opacity:.45;cursor:wait}.status{padding:.65rem .8rem;border-radius:10px;background:#f1eee9}.ok{background:#dcf4df}.warn{background:#fff0c7}.error{background:#ffd9d5}
-.hint{font-size:.88rem;color:var(--muted)}pre{white-space:pre-wrap;word-break:break-word;background:#201d1b;color:#f8f3eb;padding:1rem;border-radius:12px;max-height:300px;overflow:auto}.reply{white-space:pre-wrap;min-height:2rem}
+.hint{font-size:.88rem;color:var(--muted)}pre{white-space:pre-wrap;word-break:break-word;background:#201d1b;color:#f8f3eb;padding:1rem;border-radius:12px;max-height:300px;overflow:auto}.reply{white-space:pre-wrap;min-height:2rem}.camera-preview{display:none;width:100%;max-width:480px;margin-top:1rem;border:2px solid var(--ink);border-radius:12px}input[type=range]{padding:.3rem}
 </style></head><body>
 <h1>スタックちゃん セットアップ</h1><p class="lead">上から順に入力すれば、PCアプリの設定とファーム書き込みができます。</p>
 <div id="deviceStatus" class="status">接続状態を確認中…</div>
 <section class="card"><h2>いま、どのボタンを押す？</h2><div class="choice">
 <div class="no-firmware"><b>APIキーや会話モードだけを変えた</b>「PC設定だけ保存」を押してアプリを再起動します。<strong>ファームの再書き込みは不要です。</strong></div>
-<div class="no-firmware"><b>設定済みのAPIキーを試したい</b>保存も転送も不要です。下の「4. 会話テスト」で文章を入力し、「話す」を押します。本体未接続でも文字の返答を確認できます。</div>
-<div class="no-firmware"><b>前回と同じ設定で使う</b>保存も転送も不要です。スタックちゃんの電源を入れ、接続後に「4. 会話テスト」へ進みます。</div>
+<div class="no-firmware"><b>設定済みのAPIキーを試したい</b>保存も転送も不要です。下の「5. 会話テスト」で文章を入力し、「話す」を押します。本体未接続でも文字の返答を確認できます。</div>
+<div class="no-firmware"><b>前回と同じ設定で使う</b>保存も転送も不要です。スタックちゃんの電源を入れ、接続後に「5. 会話テスト」へ進みます。</div>
 <div class="firmware"><b>初回セットアップ、Wi-Fi名・パスワード・PCアドレスを変えた</b>「PC設定だけ保存」の後、「本体へ書き込む」を押します。この場合だけファーム転送が必要です。</div>
 </div></section>
 <section class="card guide"><h2>はじめに：初回はこの順番です</h2>
@@ -30,7 +30,7 @@ button.secondary{background:#4f6d7a}button:disabled{opacity:.45;cursor:wait}.sta
 <li><strong>下の「1. 会話」と「2. Wi-Fi」を確認して「PC設定だけ保存」</strong><br>このボタンでは本体へ転送しません。スタックちゃんには2.4 GHzのWi-Fiが必要です。PCは同じ家庭内LANなら5 GHz接続でも構いません。</li>
 <li><strong>スタックちゃんをUSBでPCにつなぐ</strong><br>データ通信対応ケーブルをベース側USB-C端子へ挿します。首の周囲には物を置かないでください。</li>
 <li><strong>「本体へ書き込む」を押して、完了まで待つ</strong><br>ビルドも自動で行うため、通常は「先にビルド」を押さなくて構いません。初回は数分かかります。</li>
-<li><strong>成功したら本体を再起動し、この画面を開いたまま待つ</strong><br>上の表示が「スタックちゃん接続中」になれば準備完了です。「4. 会話テスト」へ進みます。</li>
+<li><strong>成功したら本体を再起動し、この画面を開いたまま待つ</strong><br>上の表示が「スタックちゃん接続中」になれば準備完了です。「4. 本体機能」や「5. 会話テスト」を試せます。</li>
 </ol>
 <p class="hint">2回目以降は、PCでこのアプリを起動してからスタックちゃんの電源を入れるだけです。Wi-Fi情報を変えた場合だけ再書き込みします。</p>
 </section>
@@ -58,8 +58,15 @@ button.secondary{background:#4f6d7a}button:disabled{opacity:.45;cursor:wait}.sta
 <p class="hint">本体のベース側USB-C端子を使用し、首の周囲を空けてください。初回ビルドは数分かかります。</p>
 <pre id="jobLog">まだ処理を実行していません。</pre>
 </section>
-<section class="card"><h2>4. 会話テスト</h2>
+<section class="card"><h2>4. 本体機能：音量とカメラ</h2>
+<p class="hint">この機能を追加した新しいファームを書き込んだ後に使えます。撮影はボタンを押した時だけ行い、本体画面にも「CAMERA」と表示します。</p>
+<label for="volume">スピーカー音量：<span id="volumeValue">160</span> / 230</label><input id="volume" type="range" min="0" max="230" value="160">
+<div class="row"><button id="setVolume" class="secondary">この音量にする</button><button id="takePhoto">静止画を1枚撮る</button></div>
+<p id="deviceResult" class="hint"></p><img id="cameraPreview" class="camera-preview" alt="スタックちゃんが撮影した画像">
+</section>
+<section class="card"><h2>5. 会話テスト</h2>
 <p class="hint">APIキーだけを試す場合は、本体未接続でも実行できます。文章を入力して「話す」を押し、文字の返答が出れば成功です。本体が接続中なら音声でも話します。</p>
+<p class="hint">接続中は「音量を120にして」「目の前に何がある？」のように頼むと、本体機能を会話から使えます。</p>
 <textarea id="text" placeholder="スタックちゃんに話しかける"></textarea>
 <div class="row"><button id="send">話す</button></div><p id="reply" class="reply"></p>
 </section>
@@ -76,6 +83,9 @@ function renderJob(job){jobRunning=job.running;for(const b of ['#build','#upload
 async function pollJob(){try{renderJob(await jsonFetch('/api/firmware/job'))}catch(e){$('#jobLog').textContent=e.message}}
 async function startJob(action){try{await save();if(action==='upload'&&!confirm('購入時のファームをカスタムファームに置き換えます。続けますか？'))return;const job=await jsonFetch('/api/firmware/start',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({action,port:$('#serialPort').value})});renderJob(job)}catch(e){$('#jobLog').textContent=e.message}}
 $('#save').onclick=()=>save().catch(e=>$('#saveResult').textContent=e.message);$('#refreshPorts').onclick=refreshSetup;$('#build').onclick=()=>startJob('build');$('#upload').onclick=()=>startJob('upload');
+$('#volume').oninput=()=>$('#volumeValue').textContent=$('#volume').value;
+$('#setVolume').onclick=async()=>{try{const j=await jsonFetch('/api/device/volume',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({level:Number($('#volume').value)})});$('#deviceResult').textContent=`音量を ${j.level} にしました。`}catch(e){$('#deviceResult').textContent=e.message}};
+$('#takePhoto').onclick=async()=>{if(!confirm('スタックちゃんの正面を静止画で1枚撮影します。続けますか？'))return;$('#deviceResult').textContent='撮影中…';try{const j=await jsonFetch('/api/device/camera',{method:'POST'});$('#cameraPreview').src=j.image_url;$('#cameraPreview').style.display='block';$('#deviceResult').textContent=`撮影しました（${j.width}×${j.height}）`;}catch(e){$('#deviceResult').textContent=e.message}};
 $('#send').onclick=async()=>{const text=$('#text').value.trim();if(!text)return;$('#reply').textContent='考え中…';try{const j=await jsonFetch('/api/chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({text,speak:true})});$('#reply').textContent=j.reply}catch(e){$('#reply').textContent=e.message}refreshStatus()};
 $('#stopApp').onclick=async()=>{if(!confirm('StackChan Avatarを終了しますか？'))return;try{await jsonFetch('/api/app/stop',{method:'POST'});document.body.innerHTML='<main class="card"><h1>終了しました</h1><p>このタブを閉じてください。</p></main>'}catch(e){alert(e.message)}};
 refreshStatus();refreshSetup();setInterval(refreshStatus,3000);

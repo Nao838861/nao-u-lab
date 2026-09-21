@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import base64
 from collections.abc import Callable
 from pathlib import Path
 
@@ -28,6 +29,10 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     reply: str
     spoken: bool
+
+
+class VolumeRequest(BaseModel):
+    level: int = Field(ge=0, le=230)
 
 
 async def _nod(proxy: WsProxy) -> None:
@@ -78,7 +83,7 @@ def create_application(
             user_text = await proxy.listen()
         except (EmptyTranscriptError, TimeoutError):
             return
-        reply = await brain.reply(user_text)
+        reply = await brain.reply(user_text, device=proxy)
         await _nod(proxy)
         await proxy.speak(reply)
 
@@ -130,30 +135,63 @@ def create_application(
     @application.fastapi.get("/api/status")
     async def status() -> dict[str, object]:
         devices = await application.list_connected()
+        proxy = await application.first_connected_proxy()
+        metadata = proxy.firmware_metadata if proxy else None
         return {
             "ok": True,
             "brain": settings.brain,
             "connected_devices": len(devices),
             "devices": devices,
+            "has_camera": bool(metadata and metadata.has_camera),
+            "supports_volume": bool(metadata and metadata.supports_volume),
+        }
+
+    @application.fastapi.post("/api/device/volume")
+    async def device_volume(request: Request, body: VolumeRequest) -> dict[str, object]:
+        _require_local(request)
+        proxy = await application.first_connected_proxy()
+        if proxy is None:
+            raise HTTPException(status_code=409, detail="スタックちゃんが接続されていません")
+        try:
+            level = await proxy.set_volume(body.level)
+        except Exception as exc:
+            raise HTTPException(status_code=502, detail=f"音量変更に失敗しました: {exc}") from exc
+        return {"ok": True, "level": level}
+
+    @application.fastapi.post("/api/device/camera")
+    async def device_camera(request: Request) -> dict[str, object]:
+        _require_local(request)
+        proxy = await application.first_connected_proxy()
+        if proxy is None:
+            raise HTTPException(status_code=409, detail="スタックちゃんが接続されていません")
+        try:
+            photo = await proxy.capture_image()
+        except Exception as exc:
+            raise HTTPException(status_code=502, detail=f"撮影に失敗しました: {exc}") from exc
+        encoded = base64.b64encode(photo.data).decode("ascii")
+        return {
+            "ok": True,
+            "width": photo.width,
+            "height": photo.height,
+            "image_url": f"data:{photo.mime_type};base64,{encoded}",
         }
 
     @application.fastapi.post("/api/chat", response_model=ChatResponse)
     async def chat(request: ChatRequest) -> ChatResponse:
         try:
-            reply = await brain.reply(request.text)
+            proxy = await application.first_connected_proxy()
+            reply = await brain.reply(request.text, device=proxy)
         except Exception as exc:
             raise HTTPException(status_code=502, detail=f"会話APIエラー: {exc}") from exc
 
         spoken = False
-        if request.speak:
-            proxy = await application.first_connected_proxy()
-            if proxy is not None:
-                await _nod(proxy)
-                await proxy.speak(reply)
-                spoken = True
+        if request.speak and proxy is not None:
+            await _nod(proxy)
+            await proxy.speak(reply)
+            spoken = True
         return ChatResponse(reply=reply, spoken=spoken)
 
     return application
 
 
-__all__ = ["ChatRequest", "ChatResponse", "create_application"]
+__all__ = ["ChatRequest", "ChatResponse", "VolumeRequest", "create_application"]

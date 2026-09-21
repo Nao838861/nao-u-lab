@@ -86,6 +86,16 @@ void Display::loop()
   has_prev_state_ = true;
 }
 
+void Display::showCameraNotice()
+{
+  GFXModule.fillRect(0, 0, GFXModule.width(), 24, TFT_RED);
+  GFXModule.setFont(&fonts::Font2);
+  GFXModule.setTextSize(1);
+  GFXModule.setTextColor(TFT_WHITE, TFT_RED);
+  GFXModule.setCursor(8, 4);
+  GFXModule.print("CAMERA");
+}
+
 void Display::drawForState(StateMachine::State state)
 {
   int32_t width = GFXModule.width();

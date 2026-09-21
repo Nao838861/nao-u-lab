@@ -22,6 +22,7 @@
 #include "../include/wake_up_word.hpp"
 #include "../include/display.hpp"
 #include "../include/servo.hpp"
+#include "../include/camera_capture.hpp"
 
 //////////////////// 設定 ////////////////////
 const char *WIFI_SSID = WIFI_SSID_H;
@@ -40,6 +41,7 @@ static Listening listening(wsClient, stateMachine, SAMPLE_RATE);
 static WakeUpWord wakeUpWord(stateMachine, SAMPLE_RATE);
 static Display display(stateMachine);
 static BodyServo servo;
+static CameraCapture cameraCapture(wsClient);
 
 // Protocol types are defined in include/protocols.hpp
 namespace
@@ -214,6 +216,30 @@ void notifySpeakDone()
   {
     log_w("Failed to send SpeakDoneEvt");
   }
+}
+
+void notifyVolumeApplied(uint32_t requestId, uint32_t level, bool success)
+{
+  auto &message = g_tx_message;
+  message = stackchan_websocket_v1_WebSocketMessage_init_zero;
+  message.kind = stackchan_websocket_v1_MessageKind_MESSAGE_KIND_VOLUME_EVT;
+  message.message_type = stackchan_websocket_v1_MessageType_MESSAGE_TYPE_DATA;
+  message.seq = g_uplink_seq++;
+  message.which_body = stackchan_websocket_v1_WebSocketMessage_volume_evt_tag;
+  message.body.volume_evt.request_id = requestId;
+  message.body.volume_evt.level = level;
+  message.body.volume_evt.success = success;
+  if (!sendUplinkMessage(message))
+  {
+    log_w("Failed to send VolumeEvt");
+  }
+}
+
+void applyVolumeCommand(const stackchan_websocket_v1_VolumeCommand &command)
+{
+  const uint32_t level = std::min<uint32_t>(command.level, 230);
+  M5.Speaker.setVolume(static_cast<uint8_t>(level));
+  notifyVolumeApplied(command.request_id, level, true);
 }
 
 void notifyServoDone()
@@ -423,6 +449,29 @@ void handleWsEvent(WStype_t type, uint8_t *payload, size_t length)
       else
       {
         log_w("ServerMetadata protobuf body mismatch type=%u body=%u", (unsigned)rx.message_type, (unsigned)rx.which_body);
+      }
+      break;
+    case stackchan_websocket_v1_MessageKind_MESSAGE_KIND_VOLUME_CMD:
+      if (rx.message_type == stackchan_websocket_v1_MessageType_MESSAGE_TYPE_DATA &&
+          rx.which_body == stackchan_websocket_v1_WebSocketMessage_volume_cmd_tag)
+      {
+        applyVolumeCommand(rx.body.volume_cmd);
+      }
+      else
+      {
+        log_w("VolumeCmd protobuf body mismatch");
+      }
+      break;
+    case stackchan_websocket_v1_MessageKind_MESSAGE_KIND_CAMERA_CMD:
+      if (rx.message_type == stackchan_websocket_v1_MessageType_MESSAGE_TYPE_DATA &&
+          rx.which_body == stackchan_websocket_v1_WebSocketMessage_camera_capture_cmd_tag)
+      {
+        display.showCameraNotice();
+        cameraCapture.captureAndSend(rx.body.camera_capture_cmd.request_id);
+      }
+      else
+      {
+        log_w("CameraCmd protobuf body mismatch");
       }
       break;
     default:

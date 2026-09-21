@@ -20,6 +20,7 @@ public:
 
   void init();
   void loop();
+  void showCameraNotice();
 
 private:
   void drawForState(StateMachine::State state);
