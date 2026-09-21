@@ -83,8 +83,8 @@ def create_application(
             user_text = await proxy.listen()
         except (EmptyTranscriptError, TimeoutError):
             return
-        reply = await brain.reply(user_text, device=proxy)
         await _nod(proxy)
+        reply = await brain.reply(user_text, device=proxy)
         await proxy.speak(reply)
 
     @application.fastapi.get("/", response_class=HTMLResponse)
@@ -190,7 +190,6 @@ def create_application(
 
         spoken = False
         if request.speak and proxy is not None:
-            await _nod(proxy)
             await proxy.speak(reply)
             spoken = True
         return ChatResponse(reply=reply, spoken=spoken)

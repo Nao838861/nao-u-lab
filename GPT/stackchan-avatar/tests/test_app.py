@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from typing import Any
+
+import pytest
 from fastapi.testclient import TestClient
 
 from stackchan_avatar.app import create_application
@@ -16,6 +19,53 @@ class DummyRecognizer:
 class DummySynthesizer:
     async def synthesize(self, text: str) -> bytes:
         return b""
+
+
+class RecordingBrain:
+    def __init__(self, events: list[str]) -> None:
+        self.events = events
+
+    async def reply(self, text: str, *, device: Any = None) -> str:
+        del device
+        self.events.append(f"reply:{text}")
+        return "返事"
+
+
+class RecordingTalkProxy:
+    def __init__(self, events: list[str]) -> None:
+        self.events = events
+
+    async def listen(self) -> str:
+        self.events.append("recognition-complete")
+        return "こんにちは"
+
+    async def move_servo(self, commands: Any) -> None:
+        del commands
+        self.events.append("nod")
+
+    async def speak(self, text: str) -> None:
+        self.events.append(f"speak:{text}")
+
+
+@pytest.mark.asyncio
+async def test_nod_marks_recognition_completion_before_reply_generation() -> None:
+    events: list[str] = []
+    application = create_application(
+        settings=Settings(brain="echo"),
+        brain=RecordingBrain(events),
+        speech_recognizer=DummyRecognizer(),
+        speech_synthesizer=DummySynthesizer(),
+    )
+    assert application._talk_session_fn is not None
+
+    await application._talk_session_fn(RecordingTalkProxy(events))  # type: ignore[arg-type]
+
+    assert events == [
+        "recognition-complete",
+        "nod",
+        "reply:こんにちは",
+        "speak:返事",
+    ]
 
 
 def test_browser_chat_without_device() -> None:
