@@ -10,7 +10,7 @@ from stackchan_server.protobuf_ws import (
     encode_volume_command_message,
     parse_websocket_message,
 )
-from stackchan_server.ws_proxy import WsProxy
+from stackchan_server.ws_proxy import FirmwareState, WsProxy
 
 
 class FakeWebSocket:
@@ -102,3 +102,19 @@ async def test_camera_chunks_are_reassembled() -> None:
     assert image.data == b"jpeg"
     assert image.mime_type == "image/jpeg"
     assert (image.width, image.height) == (320, 240)
+
+
+def test_listening_state_cancels_active_speech_stream() -> None:
+    proxy = WsProxy(FakeWebSocket(), DummyRecognizer(), DummySynthesizer())
+    proxy._speaker._speaking = True
+    event = pb.WebSocketMessage(
+        kind=pb.MESSAGE_KIND_STATE_EVT,
+        message_type=pb.MESSAGE_TYPE_DATA,
+    )
+    event.state_evt.state = pb.STACKCHAN_STATE_LISTENING
+
+    proxy._handle_state_event(event)
+
+    assert proxy.current_state == FirmwareState.LISTENING
+    assert not proxy._speaker.speaking
+    assert proxy._speaker._cancelled
