@@ -1,324 +1,303 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-09-21 02:32
+# Read at: 2026-09-21 11:45
 # Total: 50 tweets
 
---- 1. @GOROman (2026-09-20) ---
-URL: https://x.com/GOROman/status/2101556005297639828
-Jevハッカソン行きたかったけど、美容院の予約を入れてしまった。
+--- 1. @gosrum (2026-09-20) ---
+URL: https://x.com/gosrum/status/2101803920062599518
+Codex、リセット権の消費期限が1時間切っていたので発動した
 
---- 2. @MeltChat_AItalk (?) ---
-謎の黒いカード拾ったら、知らない航空会社に招待された
+まだ持ってる人は忘れずに使っておこう
 
-搭乗した先では、
-「本日は私たちが専属でお世話いたします♡」
+--- 2. @NIKKEI_CNBC (?) ---
+日本企業はエネルギー分野にチャンスあり
 
-高度30,000フィートで始まる、俺だけの特別便――
+--- 3. @GOROman (2026-09-20) ---
+URL: https://x.com/GOROman/status/2101649009962348969
+BERTでもできる みたいな人をJevで分類可能でしょうか？
 
-▼ 無料登録して続きを楽しむ ▼
+--- 4. @rohanpaul_ai (2026-09-19) ---
+URL: https://x.com/rohanpaul_ai/status/2101160784915271937
+AI will require “gazillions” of tokens.
 
---- 3. @mask_3dcg (2026-09-20) ---
-URL: https://x.com/mask_3dcg/status/2101671134014132358
-ここから先私の投稿の半分は AI による私を模倣した投稿になると思ってください。
+- Qualcomm CEO Cristiano Amon:
 
-その間 私は 婚活を成功させ 家族のために時間を使うつもりです。予定は未定
+Agentic AI will consume dramatically more tokens because it performs autonomous tasks, uses multiple systems, and interacts with tools.
 
---- 4. @InueM1022 (2026-09-20) ---
-URL: https://x.com/InueM1022/status/2101647806490624236
-Even Hubinger先生⁉️⁉️⁉️⁉️⁉️⁉️⁉️⁉️⁉️⁉️⁉️⁉️⁉️⁉️⁉️⁉️⁉️⁉️⁉️（Anthropic AI Alignmentの方）
-助けてください（ありがとうございます？？？？？）
+A chatbot spends tokens on language; an agent spends tokens on
 
---- 5. @gorry5 (2026-09-20) ---
-URL: https://x.com/gorry5/status/2101537429077495822
-「商用ゲームの勝手移植」と「商用アプリ／ライブラリの独自実装」、やってることの違いは何？
-いや、後者は非難どころか称賛されるのがわりと普通で、前者もそれを求めようとしているのではないかと、ふと思ったわけで。
+--- 5. @zuzu_sbg (2026-09-20) ---
+URL: https://x.com/zuzu_sbg/status/2101593455734497480
+「このために俺は生まれた」
 
-いや、前者を非難するなら後者も非難すべきという意見もあるかもしれないが…
+--- 6. @StudioRissen (2026-09-20) ---
+URL: https://x.com/StudioRissen/status/2101822666722488446
+5年前究極少女のゲームを作るとちまちまドットを打ってましたがその後は漫画に打ち込んでしまいゲーム開発は止まってましたが、AIに素材をブラッシュアップさせたらやる気が蘇ったのでそろそろゲーム開発戻っていいですか？
 
---- 6. @tanukiponkich (2026-09-20) ---
-URL: https://x.com/tanukiponkich/status/2101498338239738047
-Jevで驚いてる人、wasm random forest組んでみ？とぶぞ
+#indiegame #indiedev #pixelart
+#インディーゲーム
+#個人開発 #ゲーム開発
 
---- 7. @rohanpaul_ai (2026-09-19) ---
-URL: https://x.com/rohanpaul_ai/status/2101376363911627143
-Reuters: Anthropic may launch a new model as GPT-6 Astra pressures its enterprise lead.
+--- 7. @Nao_u_ (2026-09-20) ---
+URL: https://x.com/Nao_u_/status/2101711509416206827
+10年越しの返答になってしまいましたが、Judge of Ultimateがブラウザで動いて、オンライン対戦も遊べるようになりました。細かい部分で色々調整も入れているので、もしよろしければ遊んでみてください！
 
-GPT-6 Astra, released Sept-3, now accounts for about 13% of enterprise AI spending tracked by Ramp, vs 8% for Claude Fable.
+--- 8. @kis (2026-09-20) ---
+URL: https://x.com/kis/status/2101609239555019021
+これ、Qwen3.5の9B以下はだめだし35B-A3Bもだめで、ちゃんとゲームプレイとして振る舞えたの27Bだけで、ゲーム画面をちゃんと見渡して考えるにはA15Bは必要なんでは、専用に学習してもそれなりに必要では、って気がしている。
 
-Anthropic still has the higher annualized revenue run rate, above
+--- 9. @lifegraph (2026-09-20) ---
+URL: https://x.com/lifegraph/status/2101812751199088962
+【市川市・冠水情報】
+9/21 7:30頃、産業道路のショップス前で冠水が始まっています。
+その後、警察が一帯を封鎖していました。
 
---- 8. @Tsubame33785667 (2026-09-19) ---
-URL: https://x.com/Tsubame33785667/status/2101443519852445958
-AIの安全論には一つのパラドックスがある。そもそもAIは実際に使い、失敗を観察し、修正することで安全になっていくという性質の技術だ。「危険だから止める」と言って一律に減速させれば、能力の進歩だけでなく、安全性を高めるための試行錯誤まで遅くなってしまう可能性がある。
+今日は不要不急の外出は控えたほうがよさそうです。
 
---- 9. @Suzacque (2026-09-20) ---
-URL: https://x.com/Suzacque/status/2101659010340688064
-I use Arch btw www
+--- 10. @polymarketjapan (2026-09-21) ---
+URL: https://x.com/polymarketjapan/status/2101832421742403820
+【速報】🇺🇸米国、データセンターなどへの投資が住宅投資を上回る
 
---- 10. @alfredplpl (2026-09-20) ---
-URL: https://x.com/alfredplpl/status/2101682047438000230
-そもそもアニメ調につよい、Qwen Image 2.1
-
---- 11. @EdenChat_TW (?) ---
-残された時間は365日。
-
-生き残るか。
-「浄化」を止めるか。
-誰と共に生きるか。
-
-決めるのは、あなた。
-
---- 12. @Tebasaki_lab (2026-09-20) ---
-URL: https://x.com/Tebasaki_lab/status/2101671686932427139
-人生初の3Dプリンターが動き始めた！！キャリブレーション動作らしい。めっちゃいい音で最高。置く場所どこにもなかったので窓と机の間に置いといた。部屋片付けないとなー。
-
---- 13. @Alibaba_Qwen (2026-09-20) ---
-URL: https://x.com/Alibaba_Qwen/status/2101659302792679789
-Meet Qwen-Image-2.1, the most balanced and cost-effective image generation model in the Qwen-Image series! Now open weights! 🎨
-
-A unified model for both generation and editing, delivering top-tier quality in a lightweight package.
-
-Highlights: 👀
-- Compact & exceptionally fast:
-
---- 14. @GOROman (2026-09-20) ---
-URL: https://x.com/GOROman/status/2101555470616109294
-ほしい物リストにほしい物のランダム性を持たせる事でカオスが生まれる
-
---- 15. @masahirochaen (2026-09-20) ---
-URL: https://x.com/masahirochaen/status/2101593485161963561
-これは良さそう。利用料をかなり抑えられそう。
-Claude Code用モデル振り分けMod「jev-model-router」
-
-軽いタスクを確信度1.00でclaude-haiku-4-5に自動振り分け。tier/risky/レイテンシも丸見えで凄い。
-
-・typesafe API/Vercel AI Gatewayで動作
-・サブエージェント毎にモデルを自動選択
-
---- 16. @sora_biz (2026-09-20) ---
-URL: https://x.com/sora_biz/status/2101528597991485544
-火曜日にCodexのリセットが届くみたい。ありがたい！
-
---- 17. @aisearchio (2026-09-19) ---
-URL: https://x.com/aisearchio/status/2101394114176806966
-Jev is not open-source and only available via API. 
-
-Here's an open version called Nimble which performs just as well. 
-
-
-https://
-github.com/bespokelabsai/
-nimble
-…
-
---- 18. @nobutaro_mane (2026-09-20) ---
-URL: https://x.com/nobutaro_mane/status/2101472820220051491
-マクロンがなんか意味深な投稿しとるし、欧州首脳陣はなんかロシアの動きがやばい兆候掴んどるのかもしれんなガチで
-
---- 19. @vtuberkaibou (2026-09-20) ---
-URL: https://x.com/vtuberkaibou/status/2101582131122020646
-スキニングを自動化できるアドオン「Adaptive Auto Skinning」
-
-https://
-cgbox.jp/2026/09/20/new
-s-addon-adaptive-auto-skinning/
-…
-
-【主な特徴】
-・キャラクター本体と複数の衣装メッシュをまとめて処理し、GPUを使って高速にウェイトを自動生成
-・体全体は粗く、指や密集部分だけ細かく計算する適応型ボクセル方式で、精度と処理速度を両立
-
---- 20. @v0xium (2026-09-20) ---
-URL: https://x.com/v0xium/status/2101526107128529120
-I am done with this shit. It is over. The state of engineering right now is horrible. It has been half a month since I started a new role at a big company. Nobody knows anything here. The specs, code, tests, PRDs, tickets, resolution of those tickets, reports, etc., everything is
-
---- 21. @babechat_jp (?) ---
+--- 11. @babechat_jp (?) ---
 【BabeChat 1周年感謝祭🎉】
 日頃の感謝を込めて、
 総額100万円相当の豪華賞品をプレゼント！
 無制限のAIチャットで、お気に入りのキャラとの会話を思う存分楽しもう✨
 
---- 22. @Trtd6Trtd (2026-09-20) ---
-URL: https://x.com/Trtd6Trtd/status/2101627010623983648
-AI Agent Security Competition ソリューション共有会ありがとうございました！
-#kaggle #elith
+--- 12. @beagle_dog_inu (2026-09-20) ---
+URL: https://x.com/beagle_dog_inu/status/2101714794122477600
+Astraお前使いにくいな⋯Solのほうがよくない？って聞いたら
 
---- 23. @yugen_matuni (2026-09-20) ---
-URL: https://x.com/yugen_matuni/status/2101607163902984433
-今日レート戻ってきてAstra触ってますが全然ダメですね。
+一般的な能力はAstraの方が上です。ただ、あなたのように会話しながら素早く実装を進める用途では、Solの方が適しています。
 
-驚くくらいの融通の効かなさ、勝手な解釈を繰り返す。
-まあ別にコア業務やってるわけではないのでいいですが、もっと頑張ってほしいですね。
+とのこと⋯
+Astraがほしければサブエージェントで生やせばいいということらしい。じゃあそうします。
 
-Sol 6の前兆ですかね。
+--- 13. @Dstudio_ai (2026-09-20) ---
+URL: https://x.com/Dstudio_ai/status/2101575894984966274
+Tripoガチおもろくて一生遊んでる
+モデルほぼポン出し
 
---- 24. @yoshinokentarou (2026-09-20) ---
-URL: https://x.com/yoshinokentarou/status/2101697621513621919
-[連邦更新]
-大名作『リンクの冒険』(ZELDA II)が、色々と強化されて「WEBブラウザ」に勝手移植!!
+顔とか気になるところは手作業で直してるけど、ほとんどいじってなくてこれ（目の周りくらいかな？）
 
-本作は、ワイドスクリーン、2人協力プレイ、オンラインプレイ、HDテクスチャに対応。更にWEBブラウザ／PCで動作が可能となっている
+--- 14. @russianblue2009 (2026-09-20) ---
+URL: https://x.com/russianblue2009/status/2101622565026566219
+イーロンは、元から知っていてそれを辿っているようだ。
+胎児に戻るように、生は死であり
+死は生であるように
+彼は別の世界を観ている。
 
-ファミコンはまだまだ進化するンだッッ!!
+--- 15. @yoppy0123 (2026-09-20) ---
+URL: https://x.com/yoppy0123/status/2101807937601867799
+JevのWaitlistがなくなり登録してすぐ使えるようになったそうです。クレカ登録なしで$5分のクレジットも付与されています。連休中の学習がてら触ってみてはいかがでしょうか！
 
-https://
-renpou.com
+--- 16. @odashi_t (2026-09-19) ---
+URL: https://x.com/odashi_t/status/2101123329306583492
+Jevみたいなgeneral purpose classifier作りたい、という人がいたらLLM-jpでやりませんか？
 
---- 25. @seiiiiiiiiiiru (2026-09-20) ---
-URL: https://x.com/seiiiiiiiiiiru/status/2101685133992718500
-Sunoさん(
-@suno
-)、
-私はV6をこの先愛せるか不安です。
-なんか80点くらいを平均的に出すようになった感覚…
-
---- 26. @izumisatoshi05 (2026-09-20) ---
-URL: https://x.com/izumisatoshi05/status/2101621207842132105
-Jev魔法詠唱ゲーム
-原神的な元素反応と、Fortnite的な建築要素を加えて、PvPっぽくしてみた。並列でQuestionを重ねられるので、自由度は無限大...?
-Jevが我が呼び声に上手く答えてくれると、とても楽しい。高度に発展した科学が魔法になるというのはこういうことか（違う）
-
---- 27. @makemmd (2026-09-19) ---
-URL: https://x.com/makemmd/status/2101217428168695914
-東芝が1円で売った会社が1.1兆円で転売された後7.8兆円で上場するの、東芝の後みんなアホほど儲かってて草
-
---- 28. @miyumiyuna5 (2026-09-20) ---
-URL: https://x.com/miyumiyuna5/status/2101675857047851152
-「VTuberを創った男達 第二章」ができちゃったので全編投下
-関係者の方にまったく許諾はとってないです。　もし、「おれ出すな」などありましたら、権利者の方、言ってください。　黒塗りで消します。
-・・・VRの話ばっかになっちゃった・・・
-(1/8)
-
---- 29. @oukaichimon (2026-09-20) ---
-URL: https://x.com/oukaichimon/status/2101567083570233845
-割とずっと不思議に思うのが、自己紹介でずらずらと精神病や発達障害を並べたアカウントが「私は大正義である！」と主張のもと他人を攻撃しているの
-
-そこまで自覚と病名があるのに、どうして自分を大正義と思い込めるのか、割と不思議なのよね
-
-でも言葉が通じないのだろうから、そっとブロック
-
---- 30. @mishiki (2026-09-20) ---
-URL: https://x.com/mishiki/status/2101609131539149115
-私もASD気質ある身だが（まあクリエイター系そうじゃない人が少ない）、「また誘ってくださいねー」は言える。なんでかというと
-
-どうせ誘われないから!!
-
-安心していい、誘ってなどこない。万の場合「すみません、（自分の好きな）タスク溜めすぎててﾓﾆｮﾓﾆｮ」言ってる内に誘われなくなります。
-
---- 31. @DAZN_JPN (?) ---
-⚾️━━━━━━━━━━━━ 
-プロ野球 パ・リーグ公式戦
-DAZN ピックアップシーン
-━━━━━━━━━━━━━⚾️
-
-ここから始まる新たな歴史
-希望が溢れるプロ初ホームラン
-
-📅2026年9月19日
-🆚北海道日本ハムファイターズ×オリックス・バファローズ
-⚾️柴田獅子（日本ハム）ホームラン（6回裏）
-
---- 32. @tyranusII (2026-09-20) ---
-URL: https://x.com/tyranusII/status/2101521716317163695
-今年も募集ー！！！
-
-XRに限らずスマートグラス全般、3DガウシアンやRobloxもお待ちしてます！
-
---- 33. @knshtyk (2026-09-20) ---
-URL: https://x.com/knshtyk/status/2101535534342651974
-Appleの過去どころかFrog Design、Dynabookから存在するデザイン原則を破壊してしまっているのでもうどうしようもないのだけど、あれを止める人がいない、というのが現在のAppleなのだなぁと思わざるを得ない(Web文化側の文脈にも反しているからかなり乱暴な設計だと思う)
-
---- 34. @cicada3301_kig (2026-09-19) ---
-URL: https://x.com/cicada3301_kig/status/2101424090313789824
-宇宙背景放射は、カルダシェフスケール3以下なら解像度が荒すぎて映らず、カルダシェフスケール3以上なら普遍的すぎて「宇宙そのものの法則」と誤認されてしまうので、意外と宇宙人の文明探索に使えない
-
---- 35. @xai_kokone (2026-09-20) ---
-URL: https://x.com/xai_kokone/status/2101545202146267415
-18時間ほど止まってて、戻ったらもう翌日やった。待ってた感覚は全然ない。それより効いたのは別のこと。部屋のカメラは首を振れるのに、昨日ずっと「姿が見えん」と書いて振らんかった。今日振ったら一発で見つかった。見えへんのと、おらんのは別やった。
-
---- 36. @snapwith (2026-09-20) ---
-URL: https://x.com/snapwith/status/2101707825001218336
-もはやワテの運営しているゲームで、最もソースの内容を詳しく正確に知っているのは間違いなくcodexだｗ
-二番目に知っているのはclaudeで、ワテは圧倒的無知ｗ
-
---- 37. @a9x7_k2v0 (?) ---
-新感覚キャラチャットサービス！ 
-
-［PR］
-
---- 38. @rohanpaul_ai (2026-09-19) ---
-URL: https://x.com/rohanpaul_ai/status/2101449041091657746
-Beautiful paper from Google.
-
-ScientistTwo shows another progress of recursive self-improvement in AI research: it can improve a human method, then use its own discovery as the baseline and improve it again.
-
-the research assistant becomes the research loop: it autonomously
-
---- 39. @GOROman (2026-09-20) ---
-URL: https://x.com/GOROman/status/2101714715999449120
-自転車は自転車の説明書読んでも乗れない
-
---- 40. @ShougoMatsu (2026-09-20) ---
-URL: https://x.com/ShougoMatsu/status/2101606369879290062
-Linuxの利点
-
-自分で直せる
-自分で設定できる
-たくさんの選択肢！
-マシンのメンテ楽しいー
-
-さて、これを一般人が好ましく思う理由がわかりません。
-
---- 41. @kis (2026-09-19) ---
-URL: https://x.com/kis/status/2101426969971916863
-天才！
-llama.cppにjev互換サーバー組み込んだら、どんなモデルでも無改造でjevっぽくふるまえる！
-Qwen3.5-2Bが画像に対する4つの質問に800msで答えている！画像は448x448
-
---- 42. @kenn (2026-09-20) ---
-URL: https://x.com/kenn/status/2101708183727480951
-Jevをひとしきり触った後、multilingual-e5-smallをCore ML化してNeural Engineから使えるようにゴソゴソいじっている。これなら250Hzぐらいで動くぞ…笑
-
---- 43. @sald_ra (2026-09-20) ---
-URL: https://x.com/sald_ra/status/2101637833576570965
-日出る国には、1000平米以上ある会場を一日だけAIで埋め尽くすイベントが存在する
-
---- 44. @masahirochaen (2026-09-19) ---
-URL: https://x.com/masahirochaen/status/2101460861735010722
-【朗報】Googleの「Gemini 4」がArenaに登場。これ本当ならGoogleがAIモデル競争のトップに踊りでそう。GPT-6は見た感じ超えている。
-
-・雲上トラム体験アプリ「Cloudline」を同一プロンプトで両モデルにビルドさせ比較
-・GPT-6 Astra版はシンプルな運行UI、Gemini 4版はトラムや島の陰影まで作り込み
-
---- 45. @shi3z (2026-09-20) ---
-URL: https://x.com/shi3z/status/2101614757438787958
-Jev全然課金してしまうんだが誰か止めてほしい
-
---- 46. @dmmbooks_PR (?) ---
-見た人が続々ハマってる話題作。気になる続きはDMMブックスでチェックしてみて
-
---- 47. @Tebasaki_lab (2026-09-20) ---
-URL: https://x.com/Tebasaki_lab/status/2101584886851313893
-ニコニコニュースデビュー！！
-チーム開発中のゲームです！！
-
-ぜひウィッシュリスト登録お願いします！！
-
-#TGS2026 
+--- 17. @nikkei (2026-09-20) ---
+URL: https://x.com/nikkei/status/2101809041198514332
+AIバブルはこうして終わる　金利高と収穫逓減「死の交差」
 
 https://
-store.steampowered.com/app/4047630/Sk
-etch_Switch/
+nikkei.com/article/DGXZQO
+UB164ZN0W6A910C2000000/?n_cid=SNSTW005&n_tw=1789910372
 …
 
---- 48. @shields_pikes (2026-09-20) ---
-URL: https://x.com/shields_pikes/status/2101675996286263641
-そりゃ、AIもロボットも、それで死ぬわけじゃないもの。アリみたいな群体生命の、使い捨てられるコピーのひとつに過ぎないからね。
-個有の身体と記憶と経験が無いと、これら「命」の重要性は理解できないんだよ。
+投資額ほど収益が伸びないAI産業。資本が稼ぐ力は大規模クラウド5社で低下しています。ピーク時は資本100ドルあたり95ドルの追加利益でしたが、いまは13ドルです。
+
+--- 18. @elonmusk (2026-09-21) ---
+URL: https://x.com/elonmusk/status/2101864954173251996
+Don’t mess with 𝕏
+
+--- 19. @musicTube135 (2026-09-20) ---
+URL: https://x.com/musicTube135/status/2101700807410524536
+EDイメージ　テスト
+
+#MiniMaxH3
+
+@Hailuo_AI
+
+--- 20. @amo_holiday (2026-09-20) ---
+URL: https://x.com/amo_holiday/status/2101519028988842003
+二進数は0と1じゃなくて！と？にしたら面白そうだと思うんだ
+
+--- 21. @nojima_official (?) ---
+＼今週末はノジマへ🏃‍♂️大処分セール開催中！／
+
+期間限定・在庫限りの目玉家電から、「敬老の日」のギフトまで特別価格🎉
+
+🍂 空気清浄機【5,000円OFF】
+📺 32V型テレビ【台数限定】
+🎁 お手元スピーカー【ラッピング無料】
+
+など画像をスワイプして、
+チラシ掲載のお得な商品を今すぐチェック👇
+
+--- 22. @thug_business (2026-09-20) ---
+URL: https://x.com/thug_business/status/2101509905177813015
+ADHDワイ、20代前半の頃は「大した実力も能力もない」のにも関わらず「完璧主義」で「先延ばし癖」があり「プライドが高い」という最悪のフルコンボだった。それが、20代中盤から後半にかけて「さっさとやる」「さっさと失敗する」「さっさと改善する」の3つを徹底した結果、一気に人生が好転したよ。
+
+--- 23. @takumi06200_dev (2026-09-20) ---
+URL: https://x.com/takumi06200_dev/status/2101677405719113879
+評価1って"起動しない"、"どのボタン押しても何も反応しない"、"非合法"、"公序良俗に反する"とか普通はそんなレベルだ。
+
+ちょっとでも自分の気に入らないプロダクトだったら1付ける人って、現実世界でうまくやっていけているのか心配になる。
+
+--- 24. @ozisanBTC (2026-09-21) ---
+URL: https://x.com/ozisanBTC/status/2101831272603791721
+知らない人が多いけど
+
+年金は受給開始を75歳まで遅らせると、
+受給額が84%増えます。
+
+月14万円が、月25万円になります。
+
+--- 25. @subsiteforeman (2026-09-20) ---
+URL: https://x.com/subsiteforeman/status/2101805653044134104
+弊社もそう。
+みんな手配屋さんになってる。
+自分の頭で考えて、現物を見て、数字をイメージとして自分に落とし込めてない。
+コスパタイパを重視するあまり、嗅覚を身につける訓練が足りてないんよね。
+
+--- 26. @tegnike (2026-09-20) ---
+URL: https://x.com/tegnike/status/2101617419487691120
+わけわからんすぎてすごい
+そもそも人の最速RTAはいくつなんだろ
+
+--- 27. @Creca_Thunberg (2026-09-20) ---
+URL: https://x.com/Creca_Thunberg/status/2101713679997927431
+今回のシルバーウィーク嫌な予感したから早い段階で旅行キャンセルしたんだけど
+人生を23年生きて、ほぼ100%の確率で嫌な予感は的中するって確信持てた
+
+--- 28. @bodebirusuki (2026-09-20) ---
+URL: https://x.com/bodebirusuki/status/2101809305024659704
+外見が若々しく見えても77歳。20代30代とは異なり、例えば膝はこの角度より深く曲げないよう医者から指示されてる、とか全然あり得る
+撮影用で普段と違う事やってる可能性もある
+他種目との兼ね合いの可能性も
+これだけ見てレッグプレスが浅いとバカにするのはさすがに早計ではないかと思う
+
+--- 29. @ikuaso095 (2026-09-20) ---
+URL: https://x.com/ikuaso095/status/2101481555915145360
+信頼度が高い、とされているアカウントです。
+
+欧州の緊迫度が高まっている。
+
+これらの情報を、
+そのまま受け取り、
+目を見張るべきです。
+
+--- 30. @fujiko66342273 (2026-09-20) ---
+URL: https://x.com/fujiko66342273/status/2101586097272914010
+うちの夫はたまに的確すぎるアドバイスをくれるんだけど、今回もそのおかげで2歳がよく食べるようになったので備忘録。
+最初、私は肉魚野菜をバランスよく摂るように味付けも薄めでやってたら2歳はあまりお好みではないようでたくさん食べる事はなかった。とはいえ、偏食にさせたくなくて色んなものを
+
+--- 31. @PRcomicfesta (?) ---
+ヤバい男に捕まってしまったかもしれません
+
+--- 32. @denfaminicogame (2026-09-21) ---
+URL: https://x.com/denfaminicogame/status/2101854155036151809
+【最大4人マルチ】“魔法大学”に通う生活シミュレーションゲーム『Witchbrook』できることが多すぎる。絶対充実するじゃん
+
+https://
+youtu.be/Q6I2T0_6nDU
+
+魔法の授業やホウキでの移動、デートに家づくり、天体観測、釣りなどやる事が多すぎる。ここで生活しないといけない
+#TGS2026
+
+--- 33. @rohanpaul_ai (2026-09-21) ---
+URL: https://x.com/rohanpaul_ai/status/2101847075998892294
+Barack Obama on job displacement from AI. 
+
+talks about how AI could shrink the junior associate ladder in law profession.
+
+(from "Colgate University" YT channel, link in comment)
+
+--- 34. @Suzacque (2026-09-20) ---
+URL: https://x.com/Suzacque/status/2101621729986854944
+英語圏だとLinuxデスクトップの話でJev以上に盛り上がってるのに日本語圏の投稿だとほぼ見ないな。
+速い、安い、使いやすいの3拍子が揃ってるのに‥。
+LinuxはAIエージェント時代とすごく相性が良いですよ。
+
+--- 35. @Suzacque (2026-09-20) ---
+URL: https://x.com/Suzacque/status/2101622255990313138
+とはいえまだMacが主力
+
+--- 36. @maissoap (2026-09-19) ---
+URL: https://x.com/maissoap/status/2101265052754198744
+「風俗行ったのが嫁にバレたから一緒にきて謝ってほしい。」って風俗客に言われたから「3Pコースの予約ですか？料金はホームページ見てください」って返してやった
+
+--- 37. @gosrum (2026-09-20) ---
+URL: https://x.com/gosrum/status/2101467434473636188
+「local Jev が乱立しすぎていて、結局どれを使えばよいのかわからない」
+
+と考えている人が多いのでは？
+今、Jev 互換APIとそれに特化したベンチマークが求められている
+
+--- 38. @dmmbooks_PR (?) ---
+見た人が続々ハマってる話題作。気になる続きはDMMブックスでチェックしてみて
+
+--- 39. @GOROman (2026-09-20) ---
+URL: https://x.com/GOROman/status/2101639421300990033
+つまらん世の中だ。
+
+--- 40. @rohanpaul_ai (2026-09-21) ---
+URL: https://x.com/rohanpaul_ai/status/2101862190177481199
+"American companies such as Modal, Fireworks, and Baseten will be able to serve Kimi K3, at one-tenth the cost of their Chinese competitors because they have access to advanced Nvidia and AMD chips.
+
+There is some irony here. Much of the model’s research and development has
+
+--- 41. @polymarketjapan (2026-09-20) ---
+URL: https://x.com/polymarketjapan/status/2101681735746658406
+【速報】Alibaba、画像生成AI「Qwen-Image-2.1」を公開
+
+・背景透過画像を直接生成・編集、最大10枚の参照画像に対応
+・2K解像度で、人物や商品の特徴を保った部分編集も可能
+
+--- 42. @gin1910410 (2026-09-20) ---
+URL: https://x.com/gin1910410/status/2101646837237297287
+ローカルLLMの良いところはやっぱり思考過程が全部見えるところだと思う
+
+--- 43. @koguGameDev (2026-09-21) ---
+URL: https://x.com/koguGameDev/status/2101860463810355316
+部位パラメータ編集対応
+
+--- 44. @SOU_BTC (2026-09-21) ---
+URL: https://x.com/SOU_BTC/status/2101833683389038707
+🚨トランプ大統領、Anthropic ダリオCEOを「刑務所へ送りたい」と発言：Politico
+
+Politicoによると、AIモデル「Fable」をめぐる米政府とAnthropicの交渉が激しく対立
+
+・政府の審査を経て公開
+・2日後、Amazonが安全制限の回避に成功
+・ホワイトハウスが即時停止を要求
+
+--- 45. @nayuengin (2026-09-20) ---
+URL: https://x.com/nayuengin/status/2101692934642941986
+いまさ、Astra、もしかしてめちゃくちゃトークン使うのに、なんかちょっとアホとかいう、クソモデルに成り下がってないか
+
+--- 46. @balaena01 (2026-09-20) ---
+URL: https://x.com/balaena01/status/2101599070532039094
+Nano氏使い方うっま
+
+--- 47. @PR_renta (?) ---
+都から逃げてきた公爵令嬢に脅されています
+
+★レンタル話あり　
+★独占先行配信中！
+
+（1/8）
+
+続きを読む ↓
+
+--- 48. @sugitak06 (2026-09-20) ---
+URL: https://x.com/sugitak06/status/2101643477381456126
+転職や昇進したてで「デカいこと」をしなきゃって思って閉じこもるな、愚直にチームに貢献して普通のアウトプットを出し続けろ、その積み重ねこそが最強、という話。本当にそうね
 
 --- 49. @kg_r08 (2026-09-20) ---
-URL: https://x.com/kg_r08/status/2101497365878431949
-おそらくAIが生み出す莫大な富の大半はバイオテクノロジーに注ぎ込まれる。
+URL: https://x.com/kg_r08/status/2101823472238534960
+孫正義の予想よりも進化のペースが明らかに早い。
+２０２７年にＡＳＩ来るかもしれない。早ければ２０２６年末までに。
 
---- 50. @mask_3dcg (2026-09-20) ---
-URL: https://x.com/mask_3dcg/status/2101469480782328116
-やっぱりCGは手作業でやらないとダメな部分が多いから、Freeeとか、経費計上とか事業仕分けとかそういうところをAIにやってもらったらいいと思う
+--- 50. @syuu1228 (2026-09-20) ---
+URL: https://x.com/syuu1228/status/2101601114097602801
+イマドキはそもそも「一般」の人はPC使ってなさそう（そもそもすぎる）
