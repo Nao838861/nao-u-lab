@@ -4,7 +4,7 @@
 
 ## 現行サンプルの入口
 
-最新は [Lv1レーザーの移動区間化](laser_travel_20260921.md)。本体変更main `d9d4cca` までpush済み。正本は `experiments/single_basic_console/game/src/main.bas`、編集入口は `EditFlightLab.cmd`、直接プレイは `PlayFlightLab.cmd`。Lv1は先頭が伸びて後端が追って消える最大224px相当・単体約24.2 DPSの線へ変更。Lv2は連続照射。[前回のR・W・M・L調整](weapon_tuning_20260921.md) のR/W/Mは維持。最新の595地形版へ統合済み。全編描画照合成功、安定60fpsは未達。測定条件・更新抜け回数は最新記録を参照。
+最新は [Lv1レーザーの移動区間化](laser_travel_20260921.md)。本体変更main `78ceacf` までpush済み。正本は `experiments/single_basic_console/game/src/main.bas`、編集入口は `EditFlightLab.cmd`、直接プレイは `PlayFlightLab.cmd`。Lv1は先頭が伸びて後端が追って消える最大224px相当・単体約24.2 DPSで左右追従する線へ変更。Lv2は連続照射。[前回のR・W・M・L調整](weapon_tuning_20260921.md) のR/W/Mは維持。最新の595地形版へ統合済み。全編描画照合成功、安定60fpsは未達。測定条件・更新抜け回数は最新記録を参照。
 
 ## 以前の本流採用と統合の記録
 
