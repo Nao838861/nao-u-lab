@@ -1,0 +1,47 @@
+[build-system]
+requires = ["hatchling>=1.25.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "stackchan-avatar"
+version = "0.1.0"
+description = "Windows/macOS companion server and K151 firmware for a generic StackChan avatar"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+license = { file = "LICENSE.md" }
+dependencies = [
+    "fastapi>=0.115,<1",
+    "openai>=2.0,<3",
+    "protobuf>=5,<7",
+    "pydantic-settings>=2.7,<3",
+    "python-dotenv>=1.0,<2",
+    "uvicorn[standard]>=0.34,<1",
+    "websockets>=14,<17",
+]
+
+[project.optional-dependencies]
+dev = [
+    "httpx>=0.28,<1",
+    "pytest>=8,<10",
+    "pytest-asyncio>=0.25,<2",
+    "ruff>=0.9,<1",
+]
+firmware = ["platformio>=6.1,<7"]
+
+[project.scripts]
+stackchan-avatar = "stackchan_avatar.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["stackchan_avatar", "stackchan_server"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+exclude = ["stackchan_server/generated_protobuf"]
+
+[tool.ruff.lint.per-file-ignores]
+"stackchan_server/listen.py" = ["BLE001"]
