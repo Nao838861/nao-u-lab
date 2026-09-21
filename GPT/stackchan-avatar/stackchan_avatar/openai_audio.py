@@ -19,15 +19,22 @@ def _pcm_to_wav(pcm_bytes: bytes, *, sample_rate: int = 16000) -> io.BytesIO:
 
 
 class OpenAISpeechRecognizer:
-    def __init__(self, *, model: str | None = None, client: object | None = None) -> None:
+    def __init__(
+        self,
+        *,
+        model: str | None = None,
+        api_key: str | None = None,
+        client: object | None = None,
+    ) -> None:
         self.model = model or os.getenv("OPENAI_TRANSCRIBE_MODEL", "gpt-4o-mini-transcribe")
+        self.api_key = api_key
         self._client = client
 
     def _get_client(self):
         if self._client is None:
             from openai import OpenAI
 
-            self._client = OpenAI()
+            self._client = OpenAI(api_key=self.api_key)
         return self._client
 
     async def transcribe(self, pcm_bytes: bytes) -> str:
@@ -48,17 +55,19 @@ class OpenAISpeechSynthesizer:
         *,
         model: str | None = None,
         voice: str | None = None,
+        api_key: str | None = None,
         client: object | None = None,
     ) -> None:
         self.model = model or os.getenv("OPENAI_TTS_MODEL", "gpt-4o-mini-tts")
         self.voice = voice or os.getenv("OPENAI_TTS_VOICE", "coral")
+        self.api_key = api_key
         self._client = client
 
     def _get_client(self):
         if self._client is None:
             from openai import OpenAI
 
-            self._client = OpenAI()
+            self._client = OpenAI(api_key=self.api_key)
         return self._client
 
     async def synthesize(self, text: str) -> bytes:

@@ -61,8 +61,11 @@ def create_application(
         recognizer = speech_recognizer or DiagnosticSpeechRecognizer()
         synthesizer = speech_synthesizer or DiagnosticSpeechSynthesizer()
     else:
-        recognizer = speech_recognizer or OpenAISpeechRecognizer()
-        synthesizer = speech_synthesizer or OpenAISpeechSynthesizer()
+        api_key = (
+            settings.openai_api_key.get_secret_value() if settings.openai_api_key else None
+        )
+        recognizer = speech_recognizer or OpenAISpeechRecognizer(api_key=api_key)
+        synthesizer = speech_synthesizer or OpenAISpeechSynthesizer(api_key=api_key)
     application = StackChanApp(
         speech_recognizer=recognizer,
         speech_synthesizer=synthesizer,

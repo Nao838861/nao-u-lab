@@ -23,12 +23,14 @@ class OpenAIBrain:
         self,
         *,
         model: str | None = None,
+        api_key: str | None = None,
         system_prompt: str,
         max_history_turns: int = 6,
         max_reply_chars: int = 180,
         client: object | None = None,
     ) -> None:
         self.model = model or os.getenv("OPENAI_CHAT_MODEL", "gpt-5.6-luna")
+        self.api_key = api_key
         self.system_prompt = system_prompt
         self.max_reply_chars = max_reply_chars
         self._history: deque[dict[str, str]] = deque(maxlen=max_history_turns * 2)
@@ -39,7 +41,7 @@ class OpenAIBrain:
         if self._client is None:
             from openai import OpenAI
 
-            self._client = OpenAI()
+            self._client = OpenAI(api_key=self.api_key)
         return self._client
 
     async def reply(self, text: str) -> str:
@@ -70,7 +72,11 @@ def create_brain(settings) -> Brain:
     if settings.brain.lower() == "echo":
         return EchoBrain()
     if settings.brain.lower() == "openai":
+        api_key = (
+            settings.openai_api_key.get_secret_value() if settings.openai_api_key else None
+        )
         return OpenAIBrain(
+            api_key=api_key,
             system_prompt=settings.system_prompt,
             max_history_turns=settings.max_history_turns,
             max_reply_chars=settings.max_reply_chars,
