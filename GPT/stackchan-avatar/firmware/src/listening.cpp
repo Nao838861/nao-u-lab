@@ -128,7 +128,7 @@ void Listening::loop()
     }
   }
 
-  // 無音が1.8秒続いたら終了
+  // 無音が2秒続いたら終了
   if (shouldStopForSilence())
   {
     log_i("Auto stop: silence detected (avg=%ld)", static_cast<long>(last_level_));

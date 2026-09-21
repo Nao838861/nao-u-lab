@@ -61,5 +61,5 @@ private:
   int32_t last_level_ = 0;
   uint32_t silence_since_ms_ = 0;
   static constexpr int32_t kSilenceLevelThreshold = 200;     // 平均絶対値がこの値以下を無音とみなす
-  static constexpr uint32_t kSilenceDurationMs = 1800;        // 無音とみなす継続時間
+  static constexpr uint32_t kSilenceDurationMs = 2000;        // 無音とみなす継続時間
 };
