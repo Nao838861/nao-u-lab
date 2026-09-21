@@ -49,6 +49,7 @@ namespace
 uint32_t g_uplink_seq = 0;
 uint32_t g_last_comm_ms = 0;
 uint32_t g_last_local_wake_word_ms = 0;
+uint32_t g_speaker_volume_level = 200;
 constexpr uint32_t kCommTimeoutMs = 60000;
 constexpr uint32_t kLocalWakeWordCooldownMs = 750;
 stackchan_websocket_v1_WebSocketMessage g_tx_message = stackchan_websocket_v1_WebSocketMessage_init_zero;
@@ -258,6 +259,7 @@ void applyVolumeCommand(const stackchan_websocket_v1_VolumeCommand &command)
 {
   const uint32_t level = std::min<uint32_t>(command.level, 230);
   M5.Speaker.setVolume(static_cast<uint8_t>(level));
+  g_speaker_volume_level = level;
   notifyVolumeApplied(command.request_id, level, true);
 }
 
@@ -632,5 +634,8 @@ void loop()
     break;
   }
 
+  const uint8_t mouth_level =
+      stateMachine.isSpeaking() && g_speaker_volume_level > 0 ? speaking.mouthLevel() : 0;
+  display.setSpeechMouthLevel(mouth_level);
   display.loop();
 }

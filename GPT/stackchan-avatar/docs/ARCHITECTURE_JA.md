@@ -52,7 +52,7 @@ PC側は512KBを受信上限とし、要求時にだけ撮影します。撮影�
   → OpenAI Transcriptions
   → OpenAI Responses
   → OpenAI Speech (WAV)
-  → PCM再生
+  → PCM再生＋音声振幅に同期した口パク
   → Idle
 ```
 
