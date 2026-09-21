@@ -59,6 +59,29 @@ constexpr uint32_t kRecentSpeakWindowMs = 3000;
 stackchan_websocket_v1_WebSocketMessage g_tx_message = stackchan_websocket_v1_WebSocketMessage_init_zero;
 stackchan_websocket_v1_WebSocketMessage g_rx_message = stackchan_websocket_v1_WebSocketMessage_init_zero;
 
+#if defined(STACKCHAN_FACTORY_AUDIO_PROFILE)
+void configureFactoryAudioProfile()
+{
+  // Factory StackChan drives the AW88298 at 24 kHz over I2S0, supplies MCLK
+  // on GPIO0, and sends both I2S slots. Keep M5Unified's board-specific
+  // magnification and AW88298 protection/enable callback, but align the bus.
+  auto speaker_cfg = M5.Speaker.config();
+  speaker_cfg.sample_rate = 24000;
+  speaker_cfg.stereo = true;
+  speaker_cfg.pin_mck = GPIO_NUM_0;
+  speaker_cfg.i2s_port = I2S_NUM_0;
+  M5.Speaker.config(speaker_cfg);
+
+  log_i(
+      "Factory audio profile: rate=%lu stereo=%u mclk=%d i2s=%d magnification=%u",
+      static_cast<unsigned long>(speaker_cfg.sample_rate),
+      static_cast<unsigned>(speaker_cfg.stereo),
+      static_cast<int>(speaker_cfg.pin_mck),
+      static_cast<int>(speaker_cfg.i2s_port),
+      static_cast<unsigned>(speaker_cfg.magnification));
+}
+#endif
+
 void markCommunicationActive()
 {
   g_last_comm_ms = millis();
@@ -528,6 +551,10 @@ void setup()
 #endif
 
   M5.begin(cfg);
+#endif
+
+#if defined(STACKCHAN_FACTORY_AUDIO_PROFILE)
+  configureFactoryAudioProfile();
 #endif
 
   auto mic_cfg = M5.Mic.config();
