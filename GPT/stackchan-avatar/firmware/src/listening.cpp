@@ -240,7 +240,7 @@ bool Listening::shouldStopForSilence() const
   if (!speech_detected_)
   {
     return listening_started_ms_ != 0 &&
-           millis() - listening_started_ms_ >= kNoSpeechTimeoutMs;
+           millis() - listening_started_ms_ >= no_speech_timeout_ms_;
   }
 
   if (silence_since_ms_ == 0)

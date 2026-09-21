@@ -28,6 +28,9 @@ public:
   // perform recording and periodic DATA sends; handles errors/silence internally
   void loop();
 
+  // 発話開始前に待つ最大時間。次の begin() から適用する。
+  void setNoSpeechTimeoutMs(uint32_t timeoutMs) { no_speech_timeout_ms_ = timeoutMs; }
+
   // 最近の平均音量（絶対値平均）を取得
   int32_t getLastLevel() const { return last_level_; }
 
@@ -66,8 +69,8 @@ private:
   uint32_t silence_since_ms_ = 0;
   bool speech_detected_ = false;
   bool voice_active_ = false;
+  uint32_t no_speech_timeout_ms_ = 6000;
   static constexpr uint32_t kNoiseCalibrationMs = 300;
-  static constexpr uint32_t kNoSpeechTimeoutMs = 6000;
   static constexpr uint32_t kSilenceDurationMs = 2000;
   static constexpr int32_t kImmediateSpeechThreshold = 1800;
   static constexpr int32_t kMinimumSpeechStartThreshold = 650;

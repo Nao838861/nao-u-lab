@@ -49,9 +49,13 @@ namespace
 uint32_t g_uplink_seq = 0;
 uint32_t g_last_comm_ms = 0;
 uint32_t g_last_local_wake_word_ms = 0;
+uint32_t g_last_speak_finished_ms = 0;
 uint32_t g_speaker_volume_level = 200;
 constexpr uint32_t kCommTimeoutMs = 60000;
 constexpr uint32_t kLocalWakeWordCooldownMs = 750;
+constexpr uint32_t kInitialListenTimeoutMs = 6000;
+constexpr uint32_t kFollowUpListenTimeoutMs = 15000;
+constexpr uint32_t kRecentSpeakWindowMs = 3000;
 stackchan_websocket_v1_WebSocketMessage g_tx_message = stackchan_websocket_v1_WebSocketMessage_init_zero;
 stackchan_websocket_v1_WebSocketMessage g_rx_message = stackchan_websocket_v1_WebSocketMessage_init_zero;
 
@@ -536,6 +540,7 @@ void setup()
   listening.init();
   speaking.init();
   speaking.setSpeakFinishedCallback([]() {
+    g_last_speak_finished_ms = millis();
     notifySpeakDone();
   });
   servo.init();
@@ -572,7 +577,12 @@ void setup()
     wakeUpWord.end();
   });
 
-  stateMachine.addStateEntryEvent(StateMachine::Listening, [](StateMachine::State, StateMachine::State) {
+  stateMachine.addStateEntryEvent(StateMachine::Listening, [](StateMachine::State previous, StateMachine::State) {
+    const bool follows_speaking = previous == StateMachine::Speaking ||
+                                 (g_last_speak_finished_ms != 0 &&
+                                  millis() - g_last_speak_finished_ms <= kRecentSpeakWindowMs);
+    listening.setNoSpeechTimeoutMs(
+        follows_speaking ? kFollowUpListenTimeoutMs : kInitialListenTimeoutMs);
     notifyCurrentState(StateMachine::Listening);
     listening.begin();
   });

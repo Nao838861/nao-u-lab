@@ -79,13 +79,14 @@ def create_application(
 
     @application.talk_session
     async def talk(proxy: WsProxy) -> None:
-        try:
-            user_text = await proxy.listen()
-        except (EmptyTranscriptError, TimeoutError):
-            return
-        await _nod(proxy)
-        reply = await brain.reply(user_text, device=proxy)
-        await proxy.speak(reply)
+        while True:
+            try:
+                user_text = await proxy.listen()
+            except (EmptyTranscriptError, TimeoutError):
+                return
+            await _nod(proxy)
+            reply = await brain.reply(user_text, device=proxy)
+            await proxy.speak(reply)
 
     @application.fastapi.get("/", response_class=HTMLResponse)
     async def index() -> HTMLResponse:
@@ -191,6 +192,7 @@ def create_application(
         spoken = False
         if request.speak and proxy is not None:
             await proxy.speak(reply)
+            proxy.trigger_wakeword()
             spoken = True
         return ChatResponse(reply=reply, spoken=spoken)
 
