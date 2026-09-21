@@ -42,5 +42,6 @@ private:
   uint32_t next_seq_ = 0;
   uint32_t sample_rate_ = 24000;
   uint16_t channels_ = 1;
+  uint32_t playback_deadline_ms_ = 0;
   std::function<void()> on_speak_finished_;
 };

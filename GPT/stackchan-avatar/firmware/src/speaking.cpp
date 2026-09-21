@@ -13,6 +13,7 @@ void Speaking::reset()
   next_seq_ = 0;
   sample_rate_ = 24000; // default fallback
   channels_ = 1;
+  playback_deadline_ms_ = 0;
 }
 
 void Speaking::init()
@@ -106,15 +107,36 @@ void Speaking::handleWavEnd(uint32_t seq)
     const int16_t *samples = reinterpret_cast<const int16_t *>(buf.data());
     size_t sample_len = buf.size() / sizeof(int16_t);
     bool stereo = channels_ > 1;
-    M5.Speaker.playRaw(samples, sample_len, sample_rate_, stereo, 1, 0);
+    const bool accepted = M5.Speaker.playRaw(samples, sample_len, sample_rate_, stereo, 1, 0);
+    const uint32_t frames = stereo ? sample_len / 2 : sample_len;
+    const uint32_t expected_ms = sample_rate_ > 0
+                                     ? static_cast<uint32_t>((static_cast<uint64_t>(frames) * 1000) / sample_rate_)
+                                     : 0;
+    playback_deadline_ms_ = millis() + expected_ms + 5000;
+    if (!accepted)
+    {
+      log_e("TTS playRaw rejected");
+    }
   }
 }
 
 void Speaking::loop()
 {
-  if (playing_ && !M5.Speaker.isPlaying())
+  const bool timed_out = playing_ && playback_deadline_ms_ != 0 &&
+                         static_cast<int32_t>(millis() - playback_deadline_ms_) >= 0;
+  if (playing_ && (!M5.Speaker.isPlaying() || timed_out))
   {
-    log_i("TTS play done");
+    if (timed_out)
+    {
+      log_w("TTS playback watchdog forced recovery");
+      M5.Speaker.stop();
+    }
+    else
+    {
+      log_i("TTS play done");
+    }
+    playing_ = false;
+    playback_deadline_ms_ = 0;
     if (on_speak_finished_)
     {
       on_speak_finished_();

@@ -96,6 +96,15 @@ void Display::showCameraNotice()
   GFXModule.print("CAMERA");
 }
 
+void Display::hideCameraNotice()
+{
+  GFXModule.fillScreen(TFT_BLACK);
+  drawForState(state_.getState());
+  drawFace();
+  prev_state_ = state_.getState();
+  has_prev_state_ = true;
+}
+
 void Display::drawForState(StateMachine::State state)
 {
   int32_t width = GFXModule.width();
