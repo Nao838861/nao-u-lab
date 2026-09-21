@@ -1,5 +1,7 @@
 .env
 .venv*/
+.stackchan-venv/
+launcher.log
 .pio/
 .platformio-core/
 __pycache__/

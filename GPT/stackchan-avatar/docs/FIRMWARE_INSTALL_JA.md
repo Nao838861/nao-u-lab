@@ -24,11 +24,18 @@
 
 ## 手順
 
-### 1. PCサーバを先に確認
+### 推奨: GUIで導入
+
+Windowsでは`Start StackChan.bat`、macOSでは`Start StackChan.command`をダブルクリックします。
+ブラウザに表示される1〜4の順番で設定し、「本体へ書き込む」を押してください。通常は以下のコマンド操作は不要です。
+
+### コマンドで導入する場合
+
+#### 1. PCサーバを先に確認
 
 READMEの手順でechoモードのPCサーバとmock StackChanを動かします。ブラウザに接続台数1台が出てから実機へ進みます。
 
-### 2. PCのLAN IPを固定
+#### 2. PCのLAN IPを固定
 
 ```bash
 python scripts/find_pc_ip.py
@@ -36,7 +43,7 @@ python scripts/find_pc_ip.py
 
 表示値をルーターのDHCP予約へ登録します。VPNを使っている場合は家庭内LAN側のアドレスを選びます。
 
-### 3. ファーム設定を生成
+#### 3. ファーム設定を生成
 
 ```bash
 python scripts/configure_firmware.py --ssid "SSID" --password "PASSWORD" --server-host "192.168.1.20"
@@ -44,7 +51,7 @@ python scripts/configure_firmware.py --ssid "SSID" --password "PASSWORD" --serve
 
 生成される`firmware/include/config.h`にはWi-Fiパスワードが含まれるため、Git管理対象外です。
 
-### 4. ビルド
+#### 4. ビルド
 
 ```bash
 python scripts/firmware.py build
@@ -52,7 +59,7 @@ python scripts/firmware.py build
 
 初回はESP32ツールチェーンとライブラリを取得するため時間がかかります。ビルド対象は`m5stack-official-stackchan`です。
 
-### 5. 書き込み
+#### 5. 書き込み
 
 K151のベース側USB-C端子とPCを接続して実行します。
 
@@ -62,7 +69,7 @@ python scripts/firmware.py upload
 
 自動検出できない場合は`--port`を指定します。ポート自体が現れない場合は、別のUSBケーブルを試し、必要に応じてRSTボタンを約3秒押してダウンロードモードへ入れます。
 
-### 6. ログ確認
+#### 6. ログ確認
 
 ```bash
 python scripts/firmware.py monitor

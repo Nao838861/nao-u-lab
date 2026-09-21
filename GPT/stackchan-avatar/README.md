@@ -11,7 +11,8 @@ M5StackChan K151（CoreS3）を、Windows/macOS上のPCと家庭内LANで接続�
 - APIキー不要のecho会話モード
 - OpenAI Responses APIによる短い日本語会話
 - OpenAI音声認識と音声合成
-- ブラウザからのテキスト会話画面
+- ブラウザの初期設定・ファーム書き込み・会話画面
+- Windows/macOS用のダブルクリック起動ランチャー
 - 実機なしで接続確認するmock StackChan
 - Wi-Fi設定生成、ビルド、USB書き込み用Pythonコマンド
 
@@ -31,33 +32,29 @@ M5StackChan K151
 
 APIキーはPCの`.env`だけに保存します。ファームへは書き込みません。
 
-## 1. PCアプリだけを起動する
+## いちばん簡単な起動方法
 
-Python 3.11〜3.13を推奨します。
+Python 3.11〜3.13を一度インストールした後は、コンソールへのコマンド入力は不要です。
 
-### Windows PowerShell
+### Windows
 
-```powershell
-py -3.12 -m venv .venv
-.venv\Scripts\Activate.ps1
-python -m pip install -U pip
-pip install -e ".[dev,firmware]"
-Copy-Item .env.example .env
-python -m stackchan_avatar
-```
+`Start StackChan.bat`をダブルクリックします。
+初回だけ必要な部品を自動インストールし、その後ブラウザで設定画面が開きます。
 
 ### macOS
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install -U pip
-pip install -e '.[dev,firmware]'
-cp .env.example .env
-python -m stackchan_avatar
-```
+`Start StackChan.command`をダブルクリックします。
+初回にmacOSが確認を出した場合は、右クリックして「開く」を選びます。
 
-ブラウザで `http://127.0.0.1:8000/` を開きます。初期状態は`echo`診断モードなので、APIキーなしで画面と通信経路を確認できます。
+設定画面では次の操作を上から順に行えます。
+
+1. 診断モードまたはOpenAI会話を選ぶ
+2. 2.4 GHz Wi-Fi名、パスワード、PCのLANアドレスを入力して保存
+3. USBポートを選び、「先にビルド」または「本体へ書き込む」を押す
+4. 書き込み後に本体を再起動し、接続表示を確認する
+
+APIキーとWi-Fiパスワードは画面へ再表示しません。2回目以降は空欄のまま既存設定を保持できます。
+初期状態は`echo`診断モードなので、APIキーなしで画面と通信経路を確認できます。
 実機では入力内容の代わりに固定文「音声テスト」を使い、返答音声の代わりに短い2音のチャイムを鳴らします。
 実際の言葉を聞き取って話すには、次節のOpenAIモードへ切り替えます。
 
@@ -69,18 +66,25 @@ python scripts/mock_stackchan.py
 
 mockは音声を再生しませんが、PCから送られた状態、チャイム音声、サーボ命令を表示して完了応答を返します。
 
-## 2. OpenAI会話を有効にする
+## OpenAI会話を有効にする
 
-`.env`を次のように変更します。
-
-```dotenv
-STACKCHAN_AVATAR_BRAIN=openai
-OPENAI_API_KEY=sk-...
-```
+設定画面で「OpenAI会話」を選び、APIキーを入力して「設定を保存」します。
+アプリを閉じ、ランチャーをもう一度ダブルクリックすると反映されます。
 
 モデル名、声、履歴数などは`.env.example`にあります。音声合成された声はAI生成音声であることを、利用者へ明示してください。
 
-## 3. K151用ファームを準備する
+## コマンド操作（開発者向け）
+
+通常利用では不要です。自動起動で問題が起きたときや開発時だけ使用します。
+
+```bash
+python3.13 -m venv .venv
+source .venv/bin/activate
+pip install -e '.[dev,firmware]'
+python -m stackchan_avatar
+```
+
+### K151用ファームを準備する
 
 PCのLANアドレスを調べます。
 
@@ -105,7 +109,7 @@ python scripts/configure_firmware.py --ssid "YOUR_WIFI" --password "YOUR_PASSWOR
 
 PCのIPはルーターのDHCP予約で固定することを推奨します。
 
-## 4. ビルドとUSB書き込み
+### ビルドとUSB書き込み
 
 K151をデータ通信対応USB-Cケーブルで接続します。首が回ってケーブルを巻き込まないよう、ベース側USB-C端子を使います。
 

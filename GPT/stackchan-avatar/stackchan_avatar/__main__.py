@@ -8,8 +8,16 @@ from .config import Settings
 
 def main() -> None:
     settings = Settings()
-    application = create_application(settings=settings)
-    uvicorn.run(application.fastapi, host=settings.host, port=settings.port)
+    runtime: dict[str, uvicorn.Server] = {}
+
+    def stop() -> None:
+        runtime["server"].should_exit = True
+
+    application = create_application(settings=settings, stop_callback=stop)
+    config = uvicorn.Config(application.fastapi, host=settings.host, port=settings.port)
+    server = uvicorn.Server(config)
+    runtime["server"] = server
+    server.run()
 
 
 if __name__ == "__main__":

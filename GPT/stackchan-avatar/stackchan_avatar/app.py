@@ -1,6 +1,10 @@
 from __future__ import annotations
 
-from fastapi import HTTPException
+import asyncio
+from collections.abc import Callable
+from pathlib import Path
+
+from fastapi import HTTPException, Request
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 
@@ -12,6 +16,8 @@ from .brain import Brain, create_brain
 from .config import Settings
 from .diagnostic_audio import DiagnosticSpeechRecognizer, DiagnosticSpeechSynthesizer
 from .openai_audio import OpenAISpeechRecognizer, OpenAISpeechSynthesizer
+from .system_setup import FirmwareJobRequest, SetupRequest, SetupService
+from .web_ui import page
 
 
 class ChatRequest(BaseModel):
@@ -34,24 +40,10 @@ async def _nod(proxy: WsProxy) -> None:
     )
 
 
-def _page() -> str:
-    return """<!doctype html>
-<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
-<title>StackChan Avatar</title>
-<style>
-body{font-family:system-ui,sans-serif;max-width:720px;margin:3rem auto;padding:0 1rem;background:#fffaf2;color:#28231f}
-.card{background:white;border:2px solid #28231f;border-radius:20px;padding:1.25rem;box-shadow:5px 5px 0 #f2b84b}
-textarea{box-sizing:border-box;width:100%;min-height:7rem;font:inherit;padding:.8rem;border:2px solid #777;border-radius:12px}
-button{font:inherit;font-weight:700;padding:.7rem 1.1rem;border:0;border-radius:999px;background:#ef6c57;color:white;cursor:pointer}
-#status{font-size:.9rem;color:#655}.reply{white-space:pre-wrap;font-size:1.15rem;min-height:3rem}
-</style></head><body><h1>StackChan Avatar</h1><div class="card">
-<p id="status">確認中…</p><textarea id="text" placeholder="スタックちゃんに話しかける"></textarea>
-<p><button id="send">話す</button></p><div id="reply" class="reply"></div></div>
-<script>
-const statusEl=document.querySelector('#status'), replyEl=document.querySelector('#reply');
-async function refresh(){const r=await fetch('/api/status');const s=await r.json();statusEl.textContent=s.connected_devices?`スタックちゃん接続中 (${s.connected_devices}台)`: 'PC単体モード（実機未接続）';}
-document.querySelector('#send').onclick=async()=>{const text=document.querySelector('#text').value.trim();if(!text)return;replyEl.textContent='考え中…';const r=await fetch('/api/chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({text,speak:true})});const j=await r.json();replyEl.textContent=r.ok?j.reply:(j.detail||'エラー');refresh();};refresh();setInterval(refresh,3000);
-</script></body></html>"""
+def _require_local(request: Request) -> None:
+    host = request.client.host if request.client else ""
+    if host not in {"127.0.0.1", "::1", "testclient"}:
+        raise HTTPException(status_code=403, detail="設定操作はこのPCからだけ実行できます")
 
 
 def create_application(
@@ -60,6 +52,8 @@ def create_application(
     brain: Brain | None = None,
     speech_recognizer=None,
     speech_synthesizer=None,
+    project_root: Path | None = None,
+    stop_callback: Callable[[], None] | None = None,
 ) -> StackChanApp:
     settings = settings or Settings()
     brain = brain or create_brain(settings)
@@ -73,6 +67,7 @@ def create_application(
         speech_recognizer=recognizer,
         speech_synthesizer=synthesizer,
     )
+    setup_service = SetupService(project_root or Path(__file__).resolve().parents[1])
 
     @application.talk_session
     async def talk(proxy: WsProxy) -> None:
@@ -86,7 +81,48 @@ def create_application(
 
     @application.fastapi.get("/", response_class=HTMLResponse)
     async def index() -> HTMLResponse:
-        return HTMLResponse(_page())
+        return HTMLResponse(page())
+
+    @application.fastapi.get("/api/setup")
+    async def setup_status(request: Request) -> dict[str, object]:
+        _require_local(request)
+        return setup_service.summary(brain=settings.brain)
+
+    @application.fastapi.post("/api/setup/save")
+    async def setup_save(request: Request, body: SetupRequest) -> dict[str, object]:
+        _require_local(request)
+        try:
+            setup_service.save(body)
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+        return {
+            "ok": True,
+            "restart_required": body.brain != settings.brain or bool(body.openai_api_key),
+        }
+
+    @application.fastapi.post("/api/firmware/start")
+    async def firmware_start(request: Request, body: FirmwareJobRequest) -> dict[str, object]:
+        _require_local(request)
+        try:
+            await setup_service.start_job(body)
+        except RuntimeError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        return setup_service.job_status()
+
+    @application.fastapi.get("/api/firmware/job")
+    async def firmware_job(request: Request) -> dict[str, object]:
+        _require_local(request)
+        return setup_service.job_status()
+
+    @application.fastapi.post("/api/app/stop")
+    async def stop_app(request: Request) -> dict[str, bool]:
+        _require_local(request)
+        if setup_service.job_status()["running"]:
+            raise HTTPException(status_code=409, detail="ファーム処理の完了後に終了してください")
+        if stop_callback is None:
+            raise HTTPException(status_code=501, detail="この起動方法では画面から終了できません")
+        asyncio.get_running_loop().call_later(0.3, stop_callback)
+        return {"ok": True}
 
     @application.fastapi.get("/api/status")
     async def status() -> dict[str, object]:

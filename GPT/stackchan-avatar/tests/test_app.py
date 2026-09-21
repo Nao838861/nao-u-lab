@@ -5,6 +5,7 @@ from fastapi.testclient import TestClient
 from stackchan_avatar.app import create_application
 from stackchan_avatar.brain import EchoBrain
 from stackchan_avatar.config import Settings
+from stackchan_avatar.web_ui import page
 
 
 class DummyRecognizer:
@@ -36,3 +37,9 @@ def test_browser_chat_without_device() -> None:
         "reply": "「こんにちは」って聞こえたよ。通信は成功！",
         "spoken": False,
     }
+    stop = client.post("/api/app/stop")
+    assert stop.status_code == 501
+
+
+def test_setup_page_contains_escaped_log_separator() -> None:
+    assert r"join('\n')" in page()
