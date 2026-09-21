@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pytest
@@ -59,6 +60,43 @@ def test_blank_secrets_keep_existing_configuration(tmp_path: Path) -> None:
     (root / ".env").write_text("OPENAI_API_KEY=existing\n", encoding="utf-8")
     service.save(SetupRequest(brain="openai"))
     assert "OPENAI_API_KEY=existing" in (root / ".env").read_text(encoding="utf-8")
+
+
+def test_local_config_supplies_wifi_without_exposing_password(tmp_path: Path) -> None:
+    root = _project(tmp_path)
+    root.joinpath("stackchan.local.json").write_text(
+        json.dumps(
+            {
+                "wifi_ssid": "Local WiFi 2G",
+                "wifi_password": "local-secret",
+                "server_host": "192.168.1.30",
+            }
+        ),
+        encoding="utf-8",
+    )
+    service = SetupService(root)
+
+    summary = service.summary(brain="echo")
+    assert summary["default_wifi_ssid"] == "Local WiFi 2G"
+    assert summary["suggested_ip"] == "192.168.1.30"
+    assert summary["local_configured"] is True
+    assert "local-secret" not in str(summary)
+
+    service.save(SetupRequest(brain="echo", wifi_ssid="Local WiFi 2G"))
+    firmware = (root / "firmware" / "include" / "config.h").read_text(encoding="utf-8")
+    assert 'WIFI_SSID_H "Local WiFi 2G"' in firmware
+    assert 'WIFI_PASSWORD_H "local-secret"' in firmware
+
+
+def test_different_wifi_does_not_reuse_local_password(tmp_path: Path) -> None:
+    root = _project(tmp_path)
+    root.joinpath("stackchan.local.json").write_text(
+        json.dumps({"wifi_ssid": "Local WiFi", "wifi_password": "local-secret"}),
+        encoding="utf-8",
+    )
+    service = SetupService(root)
+    with pytest.raises(ValueError, match="両方入力"):
+        service.save(SetupRequest(brain="echo", wifi_ssid="Other WiFi"))
 
 
 async def test_firmware_job_requires_saved_wifi_config(tmp_path: Path) -> None:

@@ -43,3 +43,12 @@ def test_browser_chat_without_device() -> None:
 
 def test_setup_page_contains_escaped_log_separator() -> None:
     assert r"join('\n')" in page()
+
+
+def test_page_contains_complete_first_run_guide() -> None:
+    html = page()
+    assert "初回はこの順番です" in html
+    assert "設定を保存" in html
+    assert "本体へ書き込む" in html
+    assert "本体を再起動" in html
+    assert "スタックちゃん接続中" in html

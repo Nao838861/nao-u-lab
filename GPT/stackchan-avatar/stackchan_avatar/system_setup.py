@@ -2,12 +2,15 @@ from __future__ import annotations
 
 import asyncio
 import ipaddress
+import json
 import os
 import socket
 import sys
 from pathlib import Path
 
 from pydantic import BaseModel, Field
+
+LOCAL_CONFIG_FILENAME = "stackchan.local.json"
 
 
 class SetupRequest(BaseModel):
@@ -49,6 +52,26 @@ def list_serial_ports() -> list[dict[str, str]]:
 
 def _c_string(value: str) -> str:
     return value.replace("\\", "\\\\").replace('"', '\\"')
+
+
+def read_local_config(root: Path) -> dict[str, str]:
+    path = root / LOCAL_CONFIG_FILENAME
+    if not path.exists():
+        return {}
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise ValueError(f"{LOCAL_CONFIG_FILENAME}を読み込めません: {exc}") from exc
+    if not isinstance(raw, dict):
+        raise TypeError(f"{LOCAL_CONFIG_FILENAME}の内容はJSONオブジェクトにしてください")
+    allowed = {"wifi_ssid", "wifi_password", "server_host"}
+    config: dict[str, str] = {}
+    for key in allowed:
+        value = raw.get(key, "")
+        if not isinstance(value, str):
+            raise TypeError(f"{LOCAL_CONFIG_FILENAME}の{key}は文字列にしてください")
+        config[key] = value.strip() if key != "wifi_password" else value
+    return config
 
 
 def write_firmware_config(root: Path, request: SetupRequest) -> None:
@@ -109,9 +132,18 @@ class SetupService:
 
     def summary(self, *, brain: str) -> dict[str, object]:
         env_path = self.root / ".env"
+        local_config: dict[str, str] = {}
+        local_config_error = ""
+        try:
+            local_config = read_local_config(self.root)
+        except (TypeError, ValueError) as exc:
+            local_config_error = str(exc)
         return {
             "brain": brain,
-            "suggested_ip": detect_lan_ip(),
+            "suggested_ip": local_config.get("server_host") or detect_lan_ip(),
+            "default_wifi_ssid": local_config.get("wifi_ssid", ""),
+            "local_configured": bool(local_config),
+            "local_config_error": local_config_error,
             "firmware_configured": (self.root / "firmware" / "include" / "config.h").exists(),
             "openai_key_configured": _has_env_value(env_path, "OPENAI_API_KEY"),
             "serial_ports": list_serial_ports(),
@@ -119,10 +151,30 @@ class SetupService:
         }
 
     def save(self, request: SetupRequest) -> None:
-        if bool(request.wifi_ssid) != bool(request.wifi_password):
+        local_config = read_local_config(self.root)
+        local_ssid = local_config.get("wifi_ssid", "")
+        wifi_ssid = request.wifi_ssid.strip() or local_ssid
+        wifi_password = request.wifi_password
+        if not wifi_password and wifi_ssid == local_ssid:
+            wifi_password = local_config.get("wifi_password", "")
+        server_host = (
+            request.server_host.strip()
+            or local_config.get("server_host", "")
+            or detect_lan_ip()
+        )
+        if bool(wifi_ssid) != bool(wifi_password):
             raise ValueError("Wi-Fi名とパスワードは両方入力してください")
-        if request.wifi_ssid:
-            write_firmware_config(self.root, request)
+        if wifi_ssid:
+            write_firmware_config(
+                self.root,
+                request.model_copy(
+                    update={
+                        "wifi_ssid": wifi_ssid,
+                        "wifi_password": wifi_password,
+                        "server_host": server_host,
+                    }
+                ),
+            )
         env_path = self.root / ".env"
         if (
             request.brain == "openai"
@@ -192,5 +244,6 @@ __all__ = [
     "SetupRequest",
     "SetupService",
     "detect_lan_ip",
+    "read_local_config",
     "write_firmware_config",
 ]

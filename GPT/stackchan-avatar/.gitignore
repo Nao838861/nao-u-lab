@@ -1,4 +1,5 @@
 .env
+/stackchan.local.json
 .venv*/
 .stackchan-venv/
 launcher.log

@@ -93,7 +93,7 @@ def create_application(
         _require_local(request)
         try:
             setup_service.save(body)
-        except ValueError as exc:
+        except (TypeError, ValueError) as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
         return {
             "ok": True,
