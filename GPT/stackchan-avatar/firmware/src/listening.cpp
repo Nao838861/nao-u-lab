@@ -56,7 +56,13 @@ bool Listening::startStreaming()
   ring_write_ = ring_read_ = ring_available_ = 0;
   seq_counter_ = 0;
   last_level_ = 0;
+  noise_floor_ = 120;
+  speech_start_threshold_ = kMinimumSpeechStartThreshold;
+  silence_threshold_ = kMinimumSilenceThreshold;
+  listening_started_ms_ = millis();
   silence_since_ms_ = 0;
+  speech_detected_ = false;
+  voice_active_ = false;
   streaming_ = true;
   return sendPacket(stackchan_websocket_v1_MessageType_MESSAGE_TYPE_START, nullptr, 0);
 }
@@ -128,10 +134,16 @@ void Listening::loop()
     }
   }
 
-  // 無音が2秒続いたら終了
+  // 発話後に動的しきい値以下の状態が2秒続いたら終了
   if (shouldStopForSilence())
   {
-    log_i("Auto stop: silence detected (avg=%ld)", static_cast<long>(last_level_));
+    log_i(
+        "Auto stop: avg=%ld noise=%ld start=%ld stop=%ld speech=%u",
+        static_cast<long>(last_level_),
+        static_cast<long>(noise_floor_),
+        static_cast<long>(speech_start_threshold_),
+        static_cast<long>(silence_threshold_),
+        speech_detected_ ? 1U : 0U);
     if (!stopStreaming())
     {
       log_i("WS send failed (tail/end)");
@@ -157,28 +169,86 @@ void Listening::updateLevelStats(const int16_t *samples, size_t sampleCount)
   }
   last_level_ = static_cast<int32_t>(sum / static_cast<int64_t>(sampleCount));
 
-  uint32_t now = millis();
-  if (last_level_ <= kSilenceLevelThreshold)
+  const uint32_t now = millis();
+  const bool calibrating = now - listening_started_ms_ < kNoiseCalibrationMs;
+  if (calibrating && !speech_detected_)
   {
-    if (silence_since_ms_ == 0)
+    if (last_level_ >= kImmediateSpeechThreshold)
     {
-      silence_since_ms_ = now;
+      speech_detected_ = true;
+      voice_active_ = true;
+      log_i("Immediate speech detected avg=%ld", static_cast<long>(last_level_));
+    }
+    else
+    {
+      noise_floor_ = (noise_floor_ * 7 + last_level_) / 8;
     }
   }
-  else
+  else if (!voice_active_ && last_level_ < speech_start_threshold_)
   {
+    // 発話していない時だけ、エアコンなどの定常音へゆっくり追従する。
+    noise_floor_ = (noise_floor_ * 31 + last_level_) / 32;
+  }
+
+  silence_threshold_ = std::clamp<int32_t>(
+      noise_floor_ * 2,
+      kMinimumSilenceThreshold,
+      kMaximumSilenceThreshold);
+  speech_start_threshold_ = std::clamp<int32_t>(
+      noise_floor_ * 3,
+      std::max(kMinimumSpeechStartThreshold, silence_threshold_ + 200),
+      kMaximumSpeechStartThreshold);
+
+  if (!speech_detected_ && !calibrating && last_level_ >= speech_start_threshold_)
+  {
+    speech_detected_ = true;
+    voice_active_ = true;
+    silence_since_ms_ = 0;
+    log_i(
+        "Speech detected avg=%ld noise=%ld start=%ld stop=%ld",
+        static_cast<long>(last_level_),
+        static_cast<long>(noise_floor_),
+        static_cast<long>(speech_start_threshold_),
+        static_cast<long>(silence_threshold_));
+    return;
+  }
+
+  if (!speech_detected_)
+  {
+    return;
+  }
+
+  if (voice_active_)
+  {
+    if (last_level_ <= silence_threshold_)
+    {
+      voice_active_ = false;
+      silence_since_ms_ = now;
+    }
+    return;
+  }
+
+  if (last_level_ >= speech_start_threshold_)
+  {
+    voice_active_ = true;
     silence_since_ms_ = 0;
   }
 }
 
 bool Listening::shouldStopForSilence() const
 {
+  if (!speech_detected_)
+  {
+    return listening_started_ms_ != 0 &&
+           millis() - listening_started_ms_ >= kNoSpeechTimeoutMs;
+  }
+
   if (silence_since_ms_ == 0)
   {
     return false;
   }
 
-  if (last_level_ > kSilenceLevelThreshold)
+  if (voice_active_)
   {
     return false;
   }

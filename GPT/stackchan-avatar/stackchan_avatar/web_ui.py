@@ -69,6 +69,7 @@ button.secondary{background:#4f6d7a}button:disabled{opacity:.45;cursor:wait}.sta
 <p class="hint">接続中は「音量を120にして」「目の前に何がある？」のように頼むと、本体機能を会話から使えます。</p>
 <p class="hint">スタックちゃんが話している途中で本体画面をタップすると、発話を中止して次の音声入力を待ちます。</p>
 <p class="hint">発話中は声の強弱に合わせて口が動きます。音量を0にすると口パクも止まります。</p>
+<p class="hint">音声入力は最初に周囲の音を短く測り、近くの話し声を基準に自動調整します。話し終えて約2秒で認識を開始します。</p>
 <textarea id="text" placeholder="スタックちゃんに話しかける"></textarea>
 <div class="row"><button id="send">話す</button></div><p id="reply" class="reply"></p>
 </section>

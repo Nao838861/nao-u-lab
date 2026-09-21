@@ -59,7 +59,19 @@ private:
 
   // 無音判定関連
   int32_t last_level_ = 0;
+  int32_t noise_floor_ = 120;
+  int32_t speech_start_threshold_ = 650;
+  int32_t silence_threshold_ = 300;
+  uint32_t listening_started_ms_ = 0;
   uint32_t silence_since_ms_ = 0;
-  static constexpr int32_t kSilenceLevelThreshold = 200;     // 平均絶対値がこの値以下を無音とみなす
-  static constexpr uint32_t kSilenceDurationMs = 2000;        // 無音とみなす継続時間
+  bool speech_detected_ = false;
+  bool voice_active_ = false;
+  static constexpr uint32_t kNoiseCalibrationMs = 300;
+  static constexpr uint32_t kNoSpeechTimeoutMs = 6000;
+  static constexpr uint32_t kSilenceDurationMs = 2000;
+  static constexpr int32_t kImmediateSpeechThreshold = 1800;
+  static constexpr int32_t kMinimumSpeechStartThreshold = 650;
+  static constexpr int32_t kMaximumSpeechStartThreshold = 2800;
+  static constexpr int32_t kMinimumSilenceThreshold = 300;
+  static constexpr int32_t kMaximumSilenceThreshold = 1400;
 };
