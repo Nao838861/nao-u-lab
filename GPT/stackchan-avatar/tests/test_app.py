@@ -9,6 +9,7 @@ from stackchan_avatar.app import create_application
 from stackchan_avatar.brain import EchoBrain
 from stackchan_avatar.config import Settings
 from stackchan_avatar.web_ui import page
+from stackchan_server.listen import TimeoutError as ListenTimeoutError
 
 
 class DummyRecognizer:
@@ -34,8 +35,13 @@ class RecordingBrain:
 class RecordingTalkProxy:
     def __init__(self, events: list[str]) -> None:
         self.events = events
+        self.listen_count = 0
 
     async def listen(self) -> str:
+        self.listen_count += 1
+        if self.listen_count > 1:
+            self.events.append("follow-up-listening")
+            raise ListenTimeoutError
         self.events.append("recognition-complete")
         return "こんにちは"
 
@@ -65,6 +71,7 @@ async def test_nod_marks_recognition_completion_before_reply_generation() -> Non
         "nod",
         "reply:こんにちは",
         "speak:返事",
+        "follow-up-listening",
     ]
 
 
@@ -109,3 +116,4 @@ def test_page_contains_complete_first_run_guide() -> None:
     assert "発話を中止して次の音声入力を待ちます" in html
     assert "音量を0にすると口パクも止まります" in html
     assert "近くの話し声を基準に自動調整します" in html
+    assert "返答を話し終えた後は15秒間" in html
