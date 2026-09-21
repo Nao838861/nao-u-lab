@@ -4,12 +4,14 @@
 #include <cstddef>
 #include <cstdint>
 
+class Display;
+
 class CameraCapture
 {
 public:
-  explicit CameraCapture(WebSocketsClient &ws) : ws_(ws) {}
+  CameraCapture(WebSocketsClient &ws, Display &display) : ws_(ws), display_(display) {}
 
-  bool captureAndSend(uint32_t requestId);
+  bool captureAndSend(uint32_t requestId, bool holdUntilCommentEnds);
 
 private:
   bool initialize();
@@ -19,5 +21,6 @@ private:
   bool sendEnd(uint32_t requestId, bool success, const char *error);
 
   WebSocketsClient &ws_;
+  Display &display_;
   bool initialized_ = false;
 };

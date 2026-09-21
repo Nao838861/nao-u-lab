@@ -1,4 +1,5 @@
 #include "camera_capture.hpp"
+#include "display.hpp"
 
 #include <M5Unified.h>
 #include <algorithm>
@@ -100,10 +101,11 @@ void CameraCapture::shutdown()
 #endif
 }
 
-bool CameraCapture::captureAndSend(uint32_t requestId)
+bool CameraCapture::captureAndSend(uint32_t requestId, bool holdUntilCommentEnds)
 {
   if (!initialize())
   {
+    display_.hideCameraNotice();
     sendEnd(requestId, false, "camera initialization failed");
     return false;
   }
@@ -112,6 +114,7 @@ bool CameraCapture::captureAndSend(uint32_t requestId)
   if (!frame)
   {
     shutdown();
+    display_.hideCameraNotice();
     sendEnd(requestId, false, "camera capture failed");
     return false;
   }
@@ -130,10 +133,12 @@ bool CameraCapture::captureAndSend(uint32_t requestId)
     {
       free(jpeg);
     }
+    display_.hideCameraNotice();
     sendEnd(requestId, false, "jpeg conversion failed");
     return false;
   }
 
+  display_.showPhoto(jpeg, jpeg_length, width, height, holdUntilCommentEnds);
   bool ok = sendStart(requestId, width, height, jpeg_length);
   for (size_t offset = 0; ok && offset < jpeg_length; offset += kImageChunkBytes)
   {

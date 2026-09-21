@@ -1,5 +1,8 @@
 #pragma once
 
+#include <cstddef>
+#include <cstdint>
+
 #include "config.h"
 
 #ifndef RGBLED_BRIGHTNESS
@@ -22,8 +25,15 @@ public:
   void loop();
   void showCameraNotice();
   void hideCameraNotice();
+  bool showPhoto(
+      const uint8_t *jpeg,
+      size_t length,
+      uint32_t imageWidth,
+      uint32_t imageHeight,
+      bool holdUntilCommentEnds);
 
 private:
+  void restoreStateScreen();
   void drawForState(StateMachine::State state);
   void drawFace();
   bool isAtomS3R() const;
@@ -32,4 +42,8 @@ private:
   StateMachine &state_;
   bool has_prev_state_ = false;
   StateMachine::State prev_state_ = StateMachine::Idle;
+  bool photo_visible_ = false;
+  bool photo_hold_until_comment_ = false;
+  bool photo_comment_started_ = false;
+  uint32_t photo_shown_at_ms_ = 0;
 };

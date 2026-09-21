@@ -18,6 +18,8 @@ constexpr uint16_t kLedHueRed = 0;
 constexpr uint16_t kLedHueOrange = 5461;
 constexpr uint16_t kLedHueGreen = 21845;
 constexpr uint16_t kLedHueBlue = 43690;
+constexpr uint32_t kManualPhotoDisplayMs = 5000;
+constexpr uint32_t kPhotoSafetyTimeoutMs = 60000;
 
 uint8_t ledValueFromBrightness()
 {
@@ -65,17 +67,42 @@ Display::Display(StateMachine &stateMachine) : state_(stateMachine) {}
 
 void Display::init()
 {
-  GFXModule.fillScreen(TFT_BLACK);
-  drawForState(state_.getState());
-  drawFace();
-  has_prev_state_ = true;
-  prev_state_ = state_.getState();
+  restoreStateScreen();
 }
 
 void Display::loop()
 {
   StateMachine::State current = state_.getState();
-  if (!has_prev_state_ || current != prev_state_)
+  const bool state_changed = !has_prev_state_ || current != prev_state_;
+
+  if (photo_visible_)
+  {
+    if (state_changed && current == StateMachine::Speaking)
+    {
+      photo_comment_started_ = true;
+    }
+
+    const uint32_t elapsed = millis() - photo_shown_at_ms_;
+    const bool manual_timeout = !photo_hold_until_comment_ && elapsed >= kManualPhotoDisplayMs;
+    const bool comment_finished = photo_hold_until_comment_ && photo_comment_started_ &&
+                                  state_changed && current == StateMachine::Idle;
+    const bool safety_timeout = elapsed >= kPhotoSafetyTimeoutMs;
+    if (manual_timeout || comment_finished || safety_timeout)
+    {
+      restoreStateScreen();
+      return;
+    }
+
+    if (state_changed)
+    {
+      drawForState(current);
+    }
+    prev_state_ = current;
+    has_prev_state_ = true;
+    return;
+  }
+
+  if (state_changed)
   {
     GFXModule.fillScreen(TFT_BLACK);
     drawForState(current);
@@ -88,6 +115,7 @@ void Display::loop()
 
 void Display::showCameraNotice()
 {
+  photo_visible_ = false;
   GFXModule.fillRect(0, 0, GFXModule.width(), 24, TFT_RED);
   GFXModule.setFont(&fonts::Font2);
   GFXModule.setTextSize(1);
@@ -98,6 +126,64 @@ void Display::showCameraNotice()
 
 void Display::hideCameraNotice()
 {
+  restoreStateScreen();
+}
+
+bool Display::showPhoto(
+    const uint8_t *jpeg,
+    size_t length,
+    uint32_t imageWidth,
+    uint32_t imageHeight,
+    bool holdUntilCommentEnds)
+{
+  if (!jpeg || length == 0 || imageWidth == 0 || imageHeight == 0)
+  {
+    return false;
+  }
+
+  const int32_t screen_width = GFXModule.width();
+  const int32_t content_height = GFXModule.height() - statusBarHeight();
+  const float scale_x = static_cast<float>(screen_width) / imageWidth;
+  const float scale_y = static_cast<float>(content_height) / imageHeight;
+  const float scale = std::min(scale_x, scale_y);
+  const int32_t drawn_width = static_cast<int32_t>(imageWidth * scale);
+  const int32_t drawn_height = static_cast<int32_t>(imageHeight * scale);
+  const int32_t x = (screen_width - drawn_width) / 2;
+  const int32_t y = (content_height - drawn_height) / 2;
+
+  GFXModule.fillScreen(TFT_BLACK);
+  const bool drawn = GFXModule.drawJpg(
+      jpeg,
+      static_cast<uint32_t>(length),
+      x,
+      y,
+      screen_width,
+      content_height,
+      0,
+      0,
+      scale);
+  if (!drawn)
+  {
+    restoreStateScreen();
+    return false;
+  }
+
+  photo_visible_ = true;
+  photo_hold_until_comment_ = holdUntilCommentEnds;
+  photo_comment_started_ = false;
+  photo_shown_at_ms_ = millis();
+  drawForState(state_.getState());
+  prev_state_ = state_.getState();
+  has_prev_state_ = true;
+  return true;
+}
+
+void Display::restoreStateScreen()
+{
+  photo_visible_ = false;
+  photo_hold_until_comment_ = false;
+  photo_comment_started_ = false;
+  photo_shown_at_ms_ = 0;
   GFXModule.fillScreen(TFT_BLACK);
   drawForState(state_.getState());
   drawFace();
