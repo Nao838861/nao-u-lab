@@ -24,6 +24,8 @@ class FakeClient:
 class FakeDevice:
     def __init__(self) -> None:
         self.volume = 0
+        self.servo_commands = []
+        self.servo_waits: list[float | None] = []
 
     async def set_volume(self, level: int) -> int:
         self.volume = level
@@ -31,6 +33,12 @@ class FakeDevice:
 
     async def capture_image(self):
         return SimpleNamespace(data=b"photo", mime_type="image/jpeg", width=320, height=240)
+
+    async def move_servo(self, commands) -> None:
+        self.servo_commands = list(commands)
+
+    async def wait_servo_complete(self, timeout_seconds: float | None = 120.0) -> None:
+        self.servo_waits.append(timeout_seconds)
 
 
 @pytest.mark.asyncio
@@ -106,3 +114,33 @@ async def test_openai_brain_attaches_captured_image_after_tool_result() -> None:
     assert "80文字以内" in second_input[-1]["content"][0]["text"]
     assert second_input[-1]["content"][1]["type"] == "input_image"
     assert second_input[-1]["content"][1]["image_url"].startswith("data:image/jpeg;base64,")
+
+
+@pytest.mark.asyncio
+async def test_openai_brain_executes_safe_head_motion_tool() -> None:
+    call = SimpleNamespace(
+        type="function_call",
+        name="move_head",
+        arguments='{"motion": "shake", "repetitions": 2}',
+        call_id="motion-1",
+    )
+    client = FakeClient()
+    client.responses.create = lambda **kwargs: (
+        client.responses.calls.append(kwargs)
+        or (
+            SimpleNamespace(output=[call], output_text="")
+            if len(client.responses.calls) == 1
+            else SimpleNamespace(output=[], output_text="首を振ったよ。")
+        )
+    )
+    device = FakeDevice()
+    brain = OpenAIBrain(model="test-model", system_prompt="短く答える", client=client)
+
+    assert await brain.reply("首を横に振って", device=device) == "首を振ったよ。"
+    move_commands = [command for command in device.servo_commands if len(command) == 3]
+    assert [command[1] for command in move_commands] == [62, 118, 62, 118, 90]
+    assert all(60 <= command[1] <= 120 for command in move_commands)
+    assert device.servo_waits == [15.0]
+    second_input = client.responses.calls[1]["input"]
+    assert second_input[-1]["type"] == "function_call_output"
+    assert '"motion": "shake"' in second_input[-1]["output"]
