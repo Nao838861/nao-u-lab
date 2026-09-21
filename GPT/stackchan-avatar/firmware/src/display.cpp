@@ -219,9 +219,9 @@ void Display::drawForState(StateMachine::State state)
     led_color = Adafruit_NeoPixel::ColorHSV(0, 0, 0);
     break;
   case StateMachine::Listening:
-    bg_color = TFT_BLUE;
-    font_color = TFT_WHITE;
-    led_color = Adafruit_NeoPixel::ColorHSV(kLedHueBlue, 255, ledValueFromBrightness());
+    bg_color = TFT_GREEN;
+    font_color = TFT_BLACK;
+    led_color = Adafruit_NeoPixel::ColorHSV(kLedHueGreen, 255, ledValueFromBrightness());
     break;
   case StateMachine::Thinking:
     bg_color = TFT_ORANGE;
@@ -229,9 +229,9 @@ void Display::drawForState(StateMachine::State state)
     led_color = Adafruit_NeoPixel::ColorHSV(kLedHueOrange, 255, ledValueFromBrightness());
     break;
   case StateMachine::Speaking:
-    bg_color = TFT_GREEN;
-    font_color = TFT_BLACK;
-    led_color = Adafruit_NeoPixel::ColorHSV(kLedHueGreen, 255, ledValueFromBrightness());
+    bg_color = TFT_BLUE;
+    font_color = TFT_WHITE;
+    led_color = Adafruit_NeoPixel::ColorHSV(kLedHueBlue, 255, ledValueFromBrightness());
     break;
   case StateMachine::Disconnected:
     bg_color = TFT_RED;
