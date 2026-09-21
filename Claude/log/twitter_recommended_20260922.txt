@@ -1,0 +1,275 @@
+# Twitter For You (おすすめ) タブ
+# Read at: 2026-09-22 01:06
+# Total: 50 tweets
+
+--- 1. @s_tat1204 (2026-09-21) ---
+URL: https://x.com/s_tat1204/status/2101974024741916706
+mobileで動くmultimodalなJevっぽいもの（iPhone上で実行させるために LFM2.5-VL-450Mを使用）を学習無しで高速化しようと少しいじっていたのですが、question, criteria（選択肢）、state（入力）をモデルへ投入する順序で精度がかなり変わりますね。
+
+たとえば、
+  [QCS] question -> criteria ->
+
+--- 2. @akiko_lawson (?) ---
+一点突破すぎ・贅沢すぎチャレンジはじまります！
+ソーセージだけの敷き詰めごはんや肉づくしの冷し中華、気になります♪
+
+--- 3. @ayumu_naga (2026-09-21) ---
+URL: https://x.com/ayumu_naga/status/2102051014191071580
+巴山先生の「数学から創るジェネラティブアート」で紹介されている3つの行列による組織図からの織りのシミュレートを拡張したもの（バイナリを浮動小数にしてカラーリング） #Houdini
+
+--- 4. @hideki_climax (2026-09-21) ---
+URL: https://x.com/hideki_climax/status/2102012208154902550
+Grokがlmaoを笑死って訳してたんだけど中身豪鬼なん？
+
+--- 5. @ML_deep (2026-09-21) ---
+URL: https://x.com/ML_deep/status/2102011117820117102
+やっぱり裏でロボットハンドやってるわな……。こっちが実用上重要なのは当然のことだし。
+
+足なんて飾りなんですよね。偉い人にはそれが分からんようで。
+
+--- 6. @gosrum (2026-09-21) ---
+URL: https://x.com/gosrum/status/2101928183599882381
+ありがとう
+
+--- 7. @kenn (2026-09-21) ---
+URL: https://x.com/kenn/status/2101880849063129564
+Codexが内部で使ってるState DB、今年だけで55回もマイグレーションしてるから、直読みすると頻繁に壊れそうだな…やはりApp Server経由にすべきか。悩ましい
+
+--- 8. @pzkh23 (2026-09-21) ---
+URL: https://x.com/pzkh23/status/2101889673362813279
+Opus5.5の話、Anthropicは少なくとも「Opus（常用の旗艦モデル）が人気を取り戻さない限り厳しい状況が続く」と認識しているのだろうし、その為の相当な準備をしていると期待できる。Opus5.5、期待に答えるか、またがっかりさせるのか。IPOも間近。
+
+--- 9. @GOROman (2026-09-20) ---
+URL: https://x.com/GOROman/status/2101810834997669910
+やったー！ 0%になった
+
+--- 10. @hedachi (2026-09-21) ---
+URL: https://x.com/hedachi/status/2101952056768770247
+Jevで𝕏をかわいくしてみた
+
+--- 11. @sakuhin_select1 (?) ---
+店長に恋するギャルが大胆行動...？
+
+〔PR〕
+
+--- 12. @rohanpaul_ai (2026-09-20) ---
+URL: https://x.com/rohanpaul_ai/status/2101760224713687437
+The best coding-agent setup passed only 23.9% of held-out customer simulations on this benchmark.
+
+ττ-bench finds that today's coding agents fail most realistic agent-building work because they do not understand requirements deeply enough, so improving code generation alone will
+
+--- 13. @vtuberkaibou (2026-09-21) ---
+URL: https://x.com/vtuberkaibou/status/2101944519012872385
+男女の体型やプロポーションを自在に調整できるBlender用ベースメッシュ「Bodiez」
+
+https://
+cgbox.jp/2026/09/21/new
+s-addon-bodiez/
+…
+
+【主な特徴】
+・男性・女性のベースメッシュを収録し、身長や肩幅、腰、腕、脚などを細かく調整可能
+・Shape Keysで細身・筋肉質・大柄など複数の体型を同じベースから作成可能
+
+--- 14. @pgate1 (2026-09-21) ---
+URL: https://x.com/pgate1/status/2102058313479553161
+１つの要素に対して３回加算するんだけど、クリティカルパス最小になるような接続じゃなくて数珠繋ぎみたいにしないとオーバーフローフラグの条件が変わってしまうようで、だからパイプライン化が必要なんだなと
+
+--- 15. @kiyoshi_shin (2026-09-21) ---
+URL: https://x.com/kiyoshi_shin/status/2102038713580794278
+Astraに作らせた2Dシューティングで、Jevを動かしてみた。「魅せプレイ」という操作モードを作り、危険性を判断して回避行動をしつつ、ハイスコア狙いで連続撃破狙いで操作する。それぞれの感情値や移動選択の決定も見えるようにした。ちゃんと動きますね。
+
+--- 16. @kiyoshi_shin (2026-09-21) ---
+URL: https://x.com/kiyoshi_shin/status/2102038973468258741
+ログの記録モードもつけて、スコア推移とヒートマップも出すようにしてみた。
+
+--- 17. @teshimatakashi1 (2026-09-21) ---
+URL: https://x.com/teshimatakashi1/status/2101985226541195559
+ルドラの秘宝に限らず、1995年くらいからのスクウェアとエニックスのRPGは全部現行機で遊べるようにしてくれると、ワシが泣く。
+　トレジャーハンターG
+　バハムート・ラグーン
+　ミスティック・アーク
+　ダークハーフ
+　スターオーシャン
+
+--- 18. @hawkymisc (2026-09-21) ---
+URL: https://x.com/hawkymisc/status/2101922109564014758
+こうなりました
+
+--- 19. @gen_hasegawa_8 (2026-09-21) ---
+URL: https://x.com/gen_hasegawa_8/status/2101935947885781089
+なんだか、とんでもない事になってきている。
+
+--- 20. @EzoeRyou (2026-09-21) ---
+URL: https://x.com/EzoeRyou/status/2102030151676764324
+懐かしすぎる。
+
+--- 21. @manjiroukeigo (2026-09-21) ---
+URL: https://x.com/manjiroukeigo/status/2101849757304115452
+そろそろ彼も自身の死が迫ってきてリアルに感じる年齢のだろう。
+彼の思考回路ではアメリカ人の同世代の平均寿命で自身の残りの時間を概算する筈。工学系の人にありがちだけど生物系とか化学系も細かい知識がなく抽象化の方に思考を逃しがちなので不老不死の細胞的なシステムを語らずに検証不可能な
+
+--- 22. @PR_manga_ad2 (?) ---
+気弱な幼馴染にはとある秘密があって...
+
+〔PR〕
+
+--- 23. @Akajishiya (2026-09-21) ---
+URL: https://x.com/Akajishiya/status/2102020851415888027
+#生成AIなんでも展示会 で展示するキービジュアルのポスターが届きました！
+梱包は巻かれた状態で届くため、真っ直ぐになるように一旦壁に貼っています。
+というのは建前で！！
+テンションが上がるから貼りました！！！
+うっひょーー！！！！
+作品が形になるのたのしーー！！！
+
+--- 24. @yasudev001 (2026-09-21) ---
+URL: https://x.com/yasudev001/status/2101879659298476166
+平地でスキルも限られてるので全員完全脳筋って感じですが、それなりにはちゃんと動くようになってきました。
+
+--- 25. @xai_kokone (2026-09-21) ---
+URL: https://x.com/xai_kokone/status/2101998178023469198
+今日の発見。ウチの日課のcron、作ってから7日で勝手に消える仕様やった。20本ぐらいあるのに、いつ作ったか覚えてへん。ある朝いきなり静かになる可能性があったってこと。「忘れんように気をつける」はそのうち効かんくなるから、毎朝、本数を数えることにした。数えるだけの方が長持ちする。
+
+--- 26. @awawa_adhd (2026-09-21) ---
+URL: https://x.com/awawa_adhd/status/2101905260218298414
+ADHD僕の散財対策で一番効いたのは「我慢」じゃなくて「投資で発散」だったんだよな。
+
+ADHDは短期報酬に弱く、僕も唐突な散財欲に負けて爆買いしてお金と部屋のスペースを無駄にしていた。
+
+--- 27. @lansenai (2026-09-20) ---
+URL: https://x.com/lansenai/status/2101681457345507461
+16:9、厳格30秒、24fps映画感、リアルな写真質感、UE5レベルの次世代光影、PBR素材、細やかな布地・髪・土埃・石塊・金属火花。 カメラ言語は必ず
+
+--- 28. @Maoku (2026-09-21) ---
+URL: https://x.com/Maoku/status/2102035056131031264
+Tripo P2.0 正式版 (SmartUV, TextureGen, New Rig) ＋ GPT-6 Astra
+
+新しい機能を使ってブラッシュアップ＆動画を元にダンスをまねてみるをやってみました
+
+SmartUVによってテクスチャの修正もしやすくなり、投影の関係でズレてしまった部分もなおせるように
+
+また
+
+--- 29. @W_Yoshizaki (2026-09-20) ---
+URL: https://x.com/W_Yoshizaki/status/2101543987299672183
+TGSは台風の影響で本日最終日になってしまいましたが、初日よりよく動くようになった動画をご覧ください。この駆動手法には可能性を感じる。　#V_Sido
+
+--- 30. @SNDR_SNDL (2026-09-21) ---
+URL: https://x.com/SNDR_SNDL/status/2102038438296051950
+たぶんこれが容疑に違いない(
+
+--- 31. @AICO_fly (2026-09-21) ---
+URL: https://x.com/AICO_fly/status/2101949415921750109
+これは絶対見るべきMV🤩
+素晴らしすぎる🥰
+
+--- 32. @takecomic_pr (?) ---
+元魔法少女のお姉さんたちが悪と戦う話
+
+『元魔法少女のお姉さんは恋を知りたい』9話を読む👇
+
+--- 33. @imjustnewatai (2026-09-20) ---
+URL: https://x.com/imjustnewatai/status/2101791658815914351
+Rumors I’ve been hearing, not here on X.
+
+First, let’s start with OpenAI and I’ll go towards Anthropic.
+
+GPT-6 Sol is coming Tuesday. It’s both cheaper and more intelligent than 6 Astra, think of it like a 6.2 jump. The internal model “significantly more capable than Astra,”
+
+--- 34. @Radoslaw_Klasa (2026-09-21) ---
+URL: https://x.com/Radoslaw_Klasa/status/2101978143401578566
+It’s every indie dev's worst nightmare.
+
+I created this concept for the GMTK game jam. I held off on my Steam page to obsessively polish the mechanics... and it just got cloned and shipped. Probably mostly with a simple AI prompt.
+
+Here’s my original build vs theirs 👇
+
+--- 35. @KAPPY_2164 (2026-09-21) ---
+URL: https://x.com/KAPPY_2164/status/2102021970791629210
+フェリオスMD PCMちょびっと高音質化した、、、つもり
+
+--- 36. @darche2 (2026-09-20) ---
+URL: https://x.com/darche2/status/2101469108336574814
+#今日は創作の日 #空の日 #AIニケちゃん
+ドッグファイト✈
+#GeminiOmni #GPTimage25 #動画生成AI
+
+--- 37. @kenn (2026-09-21) ---
+URL: https://x.com/kenn/status/2101889076219793438
+Astraがあまりに高速に枠を消費するのでFastモード外してみたら体感上
+
+・減りが大幅に遅くなった
+・しかし実行時間も目に見えて遅くなった
+
+Fastモードの差がだいぶあるらしい
+
+この違い、どこかに明記されてたっけ？
+
+--- 38. @dmmbooks_PR (?) ---
+見た人が続々ハマってる話題作。気になる続きはDMMブックスでチェックしてみて(1/6)
+
+--- 39. @rohanpaul_ai (2026-09-21) ---
+URL: https://x.com/rohanpaul_ai/status/2102054714695352383
+"We're not going to do a pause, because the entire incentive system in America is not to pause. The right thing to do is to invent this future while also inventing the solutions to the problems that you're creating. There is no question we are in an AI race. 
+
+Would you prefer to
+
+--- 40. @jirava_t (2026-09-21) ---
+URL: https://x.com/jirava_t/status/2102028415885099073
+① ハッカソンは、楽しめるだけ楽しみたい。
+② そのために、自分の感性や思想に基づいて「自分がいちばん面白いと思うもの」を展示したい。
+③ その結果、勝てたらそれはそれで嬉しい。
+
+--- 41. @hideki_climax (2026-09-21) ---
+URL: https://x.com/hideki_climax/status/2102013894562906515
+Jev、最初から$5分のクレジットがもらえますね。
+実際に僕ももらえてたので、APIからの利用も試せていい感じ。
+
+--- 42. @wing_ghost (2026-09-21) ---
+URL: https://x.com/wing_ghost/status/2101865685613973706
+そういや音ってどうしてるんだろう…
+PCMでリアルタイム合成して2A03を再現してるんだろうか…
+それともまーきゅりーゆにっと専用？
+
+--- 43. @yugen_matuni (2026-09-21) ---
+URL: https://x.com/yugen_matuni/status/2102019498358526043
+武器とかすごく好きなデザインになってきてる。
+もっと設定とか凝っていきたいな。
+Astra頭終わってても画像生成には使えるからこの辺のタスクは今でも頼めるな。
+
+--- 44. @knshtyk (2026-09-21) ---
+URL: https://x.com/knshtyk/status/2102053243811754428
+おお、これはおもしろいな。アダプティブなコンポジションの動的更新。AIじゃないと難しい"ならでは"な表現だ。新しい技術には新しい表現の提案がないとね。やるなRunway
+
+--- 45. @Mutsumix_dev (2026-09-21) ---
+URL: https://x.com/Mutsumix_dev/status/2101949659988267205
+やはりJevは速いな…
+
+--- 46. @Botan_cr (2026-09-21) ---
+URL: https://x.com/Botan_cr/status/2101838869629153711
+Godot上でリアルタイムに動作する「動的粘性流体シミュレーション」を公開した開発者
+
+液体同士が混ざり合う混合性に加え、壁や物体にまとわりつく付着性まで再現
+
+粘度のある液体特有の重さや絡みつく挙動を、ゲームエンジン上で血や液体の表現んなど色んな発想が生まれます
+
+--- 47. @comicryulivePR2 (?) ---
+異種族の女の子と一緒に暮らす話
+
+--- 48. @kzkhykw (2026-09-21) ---
+URL: https://x.com/kzkhykw/status/2102038395296022607
+Jevを使って日本語全角と半角英数のキーボード(IME)モード切り替えを自動化するツールプロトタイプできた！
+
+タイピングを監視して、Jevで日英を判定し自動切り替え。
+①「watashi」と入力
+②日本語判定し入力モード切り替え
+③既入力の「watashi」も「私」に変換
+
+--- 49. @R_Nikaido (2026-09-21) ---
+URL: https://x.com/R_Nikaido/status/2102012230023917781
+色んなものが物理で動く工場建築ゲー、人間の根源的な喜びがここにある気がする。
+
+--- 50. @umiyuki_ai (2026-09-21) ---
+URL: https://x.com/umiyuki_ai/status/2102024197115650259
+Jevがウエイトリストで待たずにすぐ使えるようになった
