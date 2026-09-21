@@ -25,6 +25,7 @@ public:
   void loop();
   void showCameraNotice();
   void hideCameraNotice();
+  void setSpeechMouthLevel(uint8_t level);
   bool showPhoto(
       const uint8_t *jpeg,
       size_t length,
@@ -36,6 +37,7 @@ private:
   void restoreStateScreen();
   void drawForState(StateMachine::State state);
   void drawFace();
+  void drawMouth(uint8_t level);
   bool isAtomS3R() const;
   int32_t statusBarHeight() const;
 
@@ -46,4 +48,6 @@ private:
   bool photo_hold_until_comment_ = false;
   bool photo_comment_started_ = false;
   uint32_t photo_shown_at_ms_ = 0;
+  uint8_t speech_mouth_level_ = 0;
+  uint8_t drawn_mouth_level_ = 255;
 };

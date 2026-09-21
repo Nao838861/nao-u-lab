@@ -1,5 +1,14 @@
 #include "speaking.hpp"
+#include <algorithm>
 #include <utility>
+
+namespace
+{
+constexpr uint32_t kMouthFrameMs = 50;
+constexpr uint32_t kMouthClosedThreshold = 200;
+constexpr uint32_t kMouthSmallThreshold = 900;
+constexpr uint32_t kMouthMediumThreshold = 2400;
+} // namespace
 
 void Speaking::reset()
 {
@@ -14,6 +23,9 @@ void Speaking::reset()
   sample_rate_ = 24000; // default fallback
   channels_ = 1;
   playback_deadline_ms_ = 0;
+  mouth_envelope_.clear();
+  mouth_playback_started_ms_ = 0;
+  mouth_timeline_started_ = false;
 }
 
 void Speaking::init()
@@ -113,6 +125,12 @@ void Speaking::handleWavEnd(uint32_t seq)
     const int16_t *samples = reinterpret_cast<const int16_t *>(buf.data());
     size_t sample_len = buf.size() / sizeof(int16_t);
     bool stereo = channels_ > 1;
+    if (!mouth_timeline_started_)
+    {
+      mouth_playback_started_ms_ = millis();
+      mouth_timeline_started_ = true;
+    }
+    appendMouthEnvelope(samples, sample_len);
     const bool accepted = M5.Speaker.playRaw(samples, sample_len, sample_rate_, stereo, 1, 0);
     const uint32_t frames = stereo ? sample_len / 2 : sample_len;
     const uint32_t expected_ms = sample_rate_ > 0
@@ -123,6 +141,56 @@ void Speaking::handleWavEnd(uint32_t seq)
     {
       log_e("TTS playRaw rejected");
     }
+  }
+}
+
+uint8_t Speaking::mouthLevel() const
+{
+  if (!mouth_timeline_started_ || !M5.Speaker.isPlaying())
+  {
+    return 0;
+  }
+
+  const size_t frame = (millis() - mouth_playback_started_ms_) / kMouthFrameMs;
+  return frame < mouth_envelope_.size() ? mouth_envelope_[frame] : 0;
+}
+
+void Speaking::appendMouthEnvelope(const int16_t *samples, size_t sampleLen)
+{
+  if (!samples || sampleLen == 0)
+  {
+    return;
+  }
+
+  const size_t samples_per_frame = std::max<size_t>(
+      1,
+      (static_cast<size_t>(sample_rate_) * std::max<uint16_t>(channels_, 1) * kMouthFrameMs) /
+          1000);
+  for (size_t offset = 0; offset < sampleLen; offset += samples_per_frame)
+  {
+    const size_t end = std::min(sampleLen, offset + samples_per_frame);
+    uint64_t magnitude_sum = 0;
+    for (size_t index = offset; index < end; ++index)
+    {
+      const int32_t sample = samples[index];
+      magnitude_sum += static_cast<uint32_t>(sample < 0 ? -sample : sample);
+    }
+
+    const uint32_t average = static_cast<uint32_t>(magnitude_sum / (end - offset));
+    uint8_t level = 0;
+    if (average > kMouthMediumThreshold)
+    {
+      level = 3;
+    }
+    else if (average > kMouthSmallThreshold)
+    {
+      level = 2;
+    }
+    else if (average > kMouthClosedThreshold)
+    {
+      level = 1;
+    }
+    mouth_envelope_.push_back(level);
   }
 }
 

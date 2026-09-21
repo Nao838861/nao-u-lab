@@ -107,3 +107,4 @@ def test_page_contains_complete_first_run_guide() -> None:
     assert "この音量にする" in html
     assert "静止画を1枚撮る" in html
     assert "発話を中止して次の音声入力を待ちます" in html
+    assert "音量を0にすると口パクも止まります" in html

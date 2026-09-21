@@ -11,6 +11,7 @@ M5StackChan K151（CoreS3）を、Windows/macOS上のPCと家庭内LANで接続�
 - APIキー不要のecho会話モード
 - OpenAI Responses APIによる短い日本語会話
 - OpenAI音声認識と音声合成
+- 再生音声の強弱に合わせた口パクアニメーション（消音時は停止）
 - 会話またはGUIからの安全な音量変更（0〜230）
 - 要求時だけ撮影するカメラ静止画とOpenAI画像認識
 - ブラウザの初期設定・ファーム書き込み・会話画面

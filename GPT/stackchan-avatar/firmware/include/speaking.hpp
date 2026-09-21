@@ -27,6 +27,9 @@ public:
   // Called from main loop to progress playback state
   void loop();
 
+  // Current speech energy for lip sync: 0=closed, 1..3=open.
+  uint8_t mouthLevel() const;
+
   // Reset any buffered audio / playback state
   void reset();
 
@@ -43,5 +46,10 @@ private:
   uint32_t sample_rate_ = 24000;
   uint16_t channels_ = 1;
   uint32_t playback_deadline_ms_ = 0;
+  std::vector<uint8_t> mouth_envelope_;
+  uint32_t mouth_playback_started_ms_ = 0;
+  bool mouth_timeline_started_ = false;
   std::function<void()> on_speak_finished_;
+
+  void appendMouthEnvelope(const int16_t *samples, size_t sampleLen);
 };

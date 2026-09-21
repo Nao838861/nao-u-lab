@@ -108,9 +108,18 @@ void Display::loop()
     drawForState(current);
     drawFace();
   }
+  else if (current == StateMachine::Speaking && speech_mouth_level_ != drawn_mouth_level_)
+  {
+    drawMouth(speech_mouth_level_);
+  }
 
   prev_state_ = current;
   has_prev_state_ = true;
+}
+
+void Display::setSpeechMouthLevel(uint8_t level)
+{
+  speech_mouth_level_ = std::min<uint8_t>(level, 3);
 }
 
 void Display::showCameraNotice()
@@ -255,13 +264,49 @@ void Display::drawFace()
   int32_t eye_offset_x = width * (isAtomS3R() ? 18 : 21) / 100;
   int32_t eye_radius = std::max<int32_t>(4, std::min(width, height) / (isAtomS3R() ? 20 : 24));
 
-  int32_t mouth_y = height * (isAtomS3R() ? 68 : 71) / 100;
-  int32_t mouth_width = width * (isAtomS3R() ? 32 : 27) / 100;
-  int32_t mouth_height = std::max<int32_t>(3, height / (isAtomS3R() ? 36 : 48));
-
   GFXModule.fillCircle(center_x - eye_offset_x, eye_y, eye_radius, TFT_WHITE);
   GFXModule.fillCircle(center_x + eye_offset_x, eye_y, eye_radius, TFT_WHITE);
-  GFXModule.fillRect(center_x - mouth_width / 2, mouth_y, mouth_width, mouth_height, TFT_WHITE);
+  drawMouth(speech_mouth_level_);
+}
+
+void Display::drawMouth(uint8_t level)
+{
+  const int32_t width = GFXModule.width();
+  const int32_t height = GFXModule.height() - statusBarHeight();
+  const int32_t center_x = width / 2;
+  const int32_t mouth_center_y = height * (isAtomS3R() ? 69 : 72) / 100;
+  const int32_t mouth_width = width * (isAtomS3R() ? 32 : 27) / 100;
+  const int32_t closed_height = std::max<int32_t>(3, height / (isAtomS3R() ? 36 : 48));
+  const int32_t max_height = std::max<int32_t>(closed_height, height / 7);
+  const int32_t open_height = closed_height +
+                              (max_height - closed_height) * std::min<uint8_t>(level, 3) / 3;
+
+  GFXModule.fillRect(
+      center_x - mouth_width / 2 - 2,
+      mouth_center_y - max_height / 2 - 2,
+      mouth_width + 4,
+      max_height + 4,
+      TFT_BLACK);
+  if (level == 0)
+  {
+    GFXModule.fillRect(
+        center_x - mouth_width / 2,
+        mouth_center_y - closed_height / 2,
+        mouth_width,
+        closed_height,
+        TFT_WHITE);
+  }
+  else
+  {
+    GFXModule.fillRoundRect(
+        center_x - mouth_width / 2,
+        mouth_center_y - open_height / 2,
+        mouth_width,
+        open_height,
+        std::max<int32_t>(2, open_height / 3),
+        TFT_WHITE);
+  }
+  drawn_mouth_level_ = level;
 }
 
 bool Display::isAtomS3R() const
