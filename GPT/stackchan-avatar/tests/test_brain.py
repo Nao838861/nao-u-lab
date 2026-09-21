@@ -103,5 +103,6 @@ async def test_openai_brain_attaches_captured_image_after_tool_result() -> None:
     assert await brain.reply("何が見える？", device=FakeDevice()) == "赤い物が見えるよ。"
     second_input = client.responses.calls[1]["input"]
     assert second_input[-2]["type"] == "function_call_output"
+    assert "80文字以内" in second_input[-1]["content"][0]["text"]
     assert second_input[-1]["content"][1]["type"] == "input_image"
     assert second_input[-1]["content"][1]["image_url"].startswith("data:image/jpeg;base64,")

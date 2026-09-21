@@ -21,6 +21,7 @@ public:
   void init();
   void loop();
   void showCameraNotice();
+  void hideCameraNotice();
 
 private:
   void drawForState(StateMachine::State state);

@@ -468,6 +468,7 @@ void handleWsEvent(WStype_t type, uint8_t *payload, size_t length)
       {
         display.showCameraNotice();
         cameraCapture.captureAndSend(rx.body.camera_capture_cmd.request_id);
+        display.hideCameraNotice();
       }
       else
       {

@@ -229,9 +229,17 @@ class SetupService:
                 del log[:-300]
             return_code = await process.wait()
             self._job_state["ok"] = return_code == 0
-            log.append(
-                "完了しました。" if return_code == 0 else "失敗しました。ログを確認してください。"
-            )
+            if return_code == 0 and request.action == "upload":
+                log.append(
+                    "書き込みが完了しました。10秒待っても本体画面が変わらない場合は、"
+                    "ベースのRSTボタンを短く1回押してください。"
+                )
+            else:
+                log.append(
+                    "完了しました。"
+                    if return_code == 0
+                    else "失敗しました。ログを確認してください。"
+                )
         except OSError as exc:
             self._job_state["ok"] = False
             log.append(f"起動エラー: {exc}")
