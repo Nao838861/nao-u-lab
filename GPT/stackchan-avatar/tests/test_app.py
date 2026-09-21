@@ -48,7 +48,9 @@ def test_setup_page_contains_escaped_log_separator() -> None:
 def test_page_contains_complete_first_run_guide() -> None:
     html = page()
     assert "初回はこの順番です" in html
-    assert "設定を保存" in html
+    assert "PC設定だけ保存（転送しない）" in html
     assert "本体へ書き込む" in html
     assert "本体を再起動" in html
     assert "スタックちゃん接続中" in html
+    assert "ファームの再書き込みは不要です" in html
+    assert "本体未接続でも実行できます" in html
