@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field
 
 from stackchan_server import StackChanApp
 from stackchan_server.listen import EmptyTranscriptError, TimeoutError
-from stackchan_server.ws_proxy import ServoMoveType, ServoWaitType, WsProxy
+from stackchan_server.ws_proxy import FirmwareState, ServoMoveType, ServoWaitType, WsProxy
 
 from .brain import Brain, create_brain
 from .config import Settings
@@ -178,10 +178,14 @@ def create_application(
 
     @application.fastapi.post("/api/chat", response_model=ChatResponse)
     async def chat(request: ChatRequest) -> ChatResponse:
+        proxy = await application.first_connected_proxy()
         try:
-            proxy = await application.first_connected_proxy()
+            if request.speak and proxy is not None:
+                await proxy.send_state_command(FirmwareState.THINKING)
             reply = await brain.reply(request.text, device=proxy)
         except Exception as exc:
+            if request.speak and proxy is not None:
+                await proxy.reset_state()
             raise HTTPException(status_code=502, detail=f"会話APIエラー: {exc}") from exc
 
         spoken = False

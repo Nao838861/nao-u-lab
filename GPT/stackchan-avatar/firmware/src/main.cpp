@@ -41,7 +41,7 @@ static Listening listening(wsClient, stateMachine, SAMPLE_RATE);
 static WakeUpWord wakeUpWord(stateMachine, SAMPLE_RATE);
 static Display display(stateMachine);
 static BodyServo servo;
-static CameraCapture cameraCapture(wsClient);
+static CameraCapture cameraCapture(wsClient, display);
 
 // Protocol types are defined in include/protocols.hpp
 namespace
@@ -467,8 +467,9 @@ void handleWsEvent(WStype_t type, uint8_t *payload, size_t length)
           rx.which_body == stackchan_websocket_v1_WebSocketMessage_camera_capture_cmd_tag)
       {
         display.showCameraNotice();
-        cameraCapture.captureAndSend(rx.body.camera_capture_cmd.request_id);
-        display.hideCameraNotice();
+        const StateMachine::State state_at_capture = stateMachine.getState();
+        const bool hold_until_comment = state_at_capture != StateMachine::Idle;
+        cameraCapture.captureAndSend(rx.body.camera_capture_cmd.request_id, hold_until_comment);
       }
       else
       {
