@@ -1,303 +1,261 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-09-21 11:45
+# Read at: 2026-09-21 18:23
 # Total: 50 tweets
 
---- 1. @gosrum (2026-09-20) ---
-URL: https://x.com/gosrum/status/2101803920062599518
-Codex、リセット権の消費期限が1時間切っていたので発動した
+--- 1. @GOROman (2026-09-20) ---
+URL: https://x.com/GOROman/status/2101697114774630862
+ほしい物リストに追加しました
+誕生日は延長します
 
-まだ持ってる人は忘れずに使っておこう
+--- 2. @tbs_bloomberg (?) ---
+Googleを辞めた伝説のエンジニア ジェフ・ディーン氏が起業した「Discovery Loop」社が狙うのはAIによる“研究そのものの自動化”＝RSI
 
---- 2. @NIKKEI_CNBC (?) ---
-日本企業はエネルギー分野にチャンスあり
+実はこの構想、デミス・ハサビス氏がDeepMind創業時に掲げた理念とも重なります
+AI研究の原点がいま再び動き始めた理由とは
 
---- 3. @GOROman (2026-09-20) ---
-URL: https://x.com/GOROman/status/2101649009962348969
-BERTでもできる みたいな人をJevで分類可能でしょうか？
+--- 3. @rohanpaul_ai (2026-09-21) ---
+URL: https://x.com/rohanpaul_ai/status/2101892041420751184
+Jensen Huaan: The data-center industry failed to engage communities early enough.
 
---- 4. @rohanpaul_ai (2026-09-19) ---
-URL: https://x.com/rohanpaul_ai/status/2101160784915271937
-AI will require “gazillions” of tokens.
+"water consumption, that's a myth now. these data centers use less water evaporative. They don't use evaporation anymore. It uses less water than a swimming pool evaporating all year long."
 
-- Qualcomm CEO Cristiano Amon:
+newer
 
-Agentic AI will consume dramatically more tokens because it performs autonomous tasks, uses multiple systems, and interacts with tools.
+--- 4. @Nao_u_ (2014-10-26) ---
+URL: https://x.com/Nao_u_/status/526207802771902465
+「judge of ultimate」で検索したら、なぜだかmixiのコミュニティがあった事にいまさら気づいた…。参加者5人で全く盛り上がらず終わってるけど、「JoUは僕の青春です！！」とか書いてくれてる人も居て、なんかこう、ぐっとくるものが。
 
-A chatbot spends tokens on language; an agent spends tokens on
+--- 5. @odashi_t (2026-09-21) ---
+URL: https://x.com/odashi_t/status/2101842880163918269
+利用規約的にはJevを分類器向けに蒸留する（train a model to imitate the output of the Serviceに該当）よりもAstraを蒸留する（Use Output to develop models that compete with OpenAIには恐らく該当しない）の方が安全だと思うし（推奨はしない）、何より正しいデータが取れると思いますよ
 
---- 5. @zuzu_sbg (2026-09-20) ---
-URL: https://x.com/zuzu_sbg/status/2101593455734497480
-「このために俺は生まれた」
+--- 6. @takehiro1010 (2026-09-20) ---
+URL: https://x.com/takehiro1010/status/2101719267016359942
+AIが行間を補ってくれることで、多くの人が数学の本を読みやすくなったということは、これまで一括りに「数学は難しい」とされていたものの中には、数学の内容そのものの難しさだけでなく、媒体時代の分量の制約や説明方法の問題、場合によっては著者による説明の省略など、数学の内容自体とは関係のな
 
---- 6. @StudioRissen (2026-09-20) ---
-URL: https://x.com/StudioRissen/status/2101822666722488446
-5年前究極少女のゲームを作るとちまちまドットを打ってましたがその後は漫画に打ち込んでしまいゲーム開発は止まってましたが、AIに素材をブラッシュアップさせたらやる気が蘇ったのでそろそろゲーム開発戻っていいですか？
+--- 7. @s5ml (2026-09-21) ---
+URL: https://x.com/s5ml/status/2101874047101612367
+やさしいコンサルだと言う意見が多い一方、一般企業だとこの指摘は「パワハラではないが強い指摘」の部類に入る。注目すべきは「これでも体力ゲージは減っている」という点。今の20代にこれやったら潰れる可能性があることを、指導側は気を付けなければならない。
 
-#indiegame #indiedev #pixelart
-#インディーゲーム
-#個人開発 #ゲーム開発
+--- 8. @hamu_3nd (2026-09-20) ---
+URL: https://x.com/hamu_3nd/status/2101611623291170852
+ついに彼方まできました
 
---- 7. @Nao_u_ (2026-09-20) ---
-URL: https://x.com/Nao_u_/status/2101711509416206827
-10年越しの返答になってしまいましたが、Judge of Ultimateがブラウザで動いて、オンライン対戦も遊べるようになりました。細かい部分で色々調整も入れているので、もしよろしければ遊んでみてください！
+--- 9. @madmax99993 (2026-09-20) ---
+URL: https://x.com/madmax99993/status/2101690942332064199
+0.28秒で論破して悪いんだけど
 
---- 8. @kis (2026-09-20) ---
-URL: https://x.com/kis/status/2101609239555019021
-これ、Qwen3.5の9B以下はだめだし35B-A3Bもだめで、ちゃんとゲームプレイとして振る舞えたの27Bだけで、ゲーム画面をちゃんと見渡して考えるにはA15Bは必要なんでは、専用に学習してもそれなりに必要では、って気がしている。
+「トラックのドライバーはトラックを買わない」
 
---- 9. @lifegraph (2026-09-20) ---
-URL: https://x.com/lifegraph/status/2101812751199088962
-【市川市・冠水情報】
-9/21 7:30頃、産業道路のショップス前で冠水が始まっています。
-その後、警察が一帯を封鎖していました。
+はい終わり。
 
-今日は不要不急の外出は控えたほうがよさそうです。
+--- 10. @asd_chicken1 (2026-09-21) ---
+URL: https://x.com/asd_chicken1/status/2101863763976855741
+発達障害人、「口喧嘩や議論弱すぎ問題」あるよな。  ワーキングメモリが弱いと相手の言葉を覚えながら反論や意見を組み立てるのが無理ゲーだし、 
+言いたい事自体も覚えてられないから頭が真っ白になる。 
+後でこれ言ってやれば良かったって悔しく思う事ばかりである。ワイは年下にもよく負けた。
 
---- 10. @polymarketjapan (2026-09-21) ---
-URL: https://x.com/polymarketjapan/status/2101832421742403820
-【速報】🇺🇸米国、データセンターなどへの投資が住宅投資を上回る
-
---- 11. @babechat_jp (?) ---
-【BabeChat 1周年感謝祭🎉】
-日頃の感謝を込めて、
-総額100万円相当の豪華賞品をプレゼント！
-無制限のAIチャットで、お気に入りのキャラとの会話を思う存分楽しもう✨
-
---- 12. @beagle_dog_inu (2026-09-20) ---
-URL: https://x.com/beagle_dog_inu/status/2101714794122477600
-Astraお前使いにくいな⋯Solのほうがよくない？って聞いたら
-
-一般的な能力はAstraの方が上です。ただ、あなたのように会話しながら素早く実装を進める用途では、Solの方が適しています。
-
-とのこと⋯
-Astraがほしければサブエージェントで生やせばいいということらしい。じゃあそうします。
-
---- 13. @Dstudio_ai (2026-09-20) ---
-URL: https://x.com/Dstudio_ai/status/2101575894984966274
-Tripoガチおもろくて一生遊んでる
-モデルほぼポン出し
-
-顔とか気になるところは手作業で直してるけど、ほとんどいじってなくてこれ（目の周りくらいかな？）
-
---- 14. @russianblue2009 (2026-09-20) ---
-URL: https://x.com/russianblue2009/status/2101622565026566219
-イーロンは、元から知っていてそれを辿っているようだ。
-胎児に戻るように、生は死であり
-死は生であるように
-彼は別の世界を観ている。
-
---- 15. @yoppy0123 (2026-09-20) ---
-URL: https://x.com/yoppy0123/status/2101807937601867799
-JevのWaitlistがなくなり登録してすぐ使えるようになったそうです。クレカ登録なしで$5分のクレジットも付与されています。連休中の学習がてら触ってみてはいかがでしょうか！
-
---- 16. @odashi_t (2026-09-19) ---
-URL: https://x.com/odashi_t/status/2101123329306583492
-Jevみたいなgeneral purpose classifier作りたい、という人がいたらLLM-jpでやりませんか？
-
---- 17. @nikkei (2026-09-20) ---
-URL: https://x.com/nikkei/status/2101809041198514332
-AIバブルはこうして終わる　金利高と収穫逓減「死の交差」
-
-https://
-nikkei.com/article/DGXZQO
-UB164ZN0W6A910C2000000/?n_cid=SNSTW005&n_tw=1789910372
-…
-
-投資額ほど収益が伸びないAI産業。資本が稼ぐ力は大規模クラウド5社で低下しています。ピーク時は資本100ドルあたり95ドルの追加利益でしたが、いまは13ドルです。
-
---- 18. @elonmusk (2026-09-21) ---
-URL: https://x.com/elonmusk/status/2101864954173251996
-Don’t mess with 𝕏
-
---- 19. @musicTube135 (2026-09-20) ---
-URL: https://x.com/musicTube135/status/2101700807410524536
-EDイメージ　テスト
-
-#MiniMaxH3
-
-@Hailuo_AI
-
---- 20. @amo_holiday (2026-09-20) ---
-URL: https://x.com/amo_holiday/status/2101519028988842003
-二進数は0と1じゃなくて！と？にしたら面白そうだと思うんだ
-
---- 21. @nojima_official (?) ---
-＼今週末はノジマへ🏃‍♂️大処分セール開催中！／
-
-期間限定・在庫限りの目玉家電から、「敬老の日」のギフトまで特別価格🎉
-
-🍂 空気清浄機【5,000円OFF】
-📺 32V型テレビ【台数限定】
-🎁 お手元スピーカー【ラッピング無料】
-
-など画像をスワイプして、
-チラシ掲載のお得な商品を今すぐチェック👇
-
---- 22. @thug_business (2026-09-20) ---
-URL: https://x.com/thug_business/status/2101509905177813015
-ADHDワイ、20代前半の頃は「大した実力も能力もない」のにも関わらず「完璧主義」で「先延ばし癖」があり「プライドが高い」という最悪のフルコンボだった。それが、20代中盤から後半にかけて「さっさとやる」「さっさと失敗する」「さっさと改善する」の3つを徹底した結果、一気に人生が好転したよ。
-
---- 23. @takumi06200_dev (2026-09-20) ---
-URL: https://x.com/takumi06200_dev/status/2101677405719113879
-評価1って"起動しない"、"どのボタン押しても何も反応しない"、"非合法"、"公序良俗に反する"とか普通はそんなレベルだ。
-
-ちょっとでも自分の気に入らないプロダクトだったら1付ける人って、現実世界でうまくやっていけているのか心配になる。
-
---- 24. @ozisanBTC (2026-09-21) ---
-URL: https://x.com/ozisanBTC/status/2101831272603791721
-知らない人が多いけど
-
-年金は受給開始を75歳まで遅らせると、
-受給額が84%増えます。
-
-月14万円が、月25万円になります。
-
---- 25. @subsiteforeman (2026-09-20) ---
-URL: https://x.com/subsiteforeman/status/2101805653044134104
-弊社もそう。
-みんな手配屋さんになってる。
-自分の頭で考えて、現物を見て、数字をイメージとして自分に落とし込めてない。
-コスパタイパを重視するあまり、嗅覚を身につける訓練が足りてないんよね。
-
---- 26. @tegnike (2026-09-20) ---
-URL: https://x.com/tegnike/status/2101617419487691120
-わけわからんすぎてすごい
-そもそも人の最速RTAはいくつなんだろ
-
---- 27. @Creca_Thunberg (2026-09-20) ---
-URL: https://x.com/Creca_Thunberg/status/2101713679997927431
-今回のシルバーウィーク嫌な予感したから早い段階で旅行キャンセルしたんだけど
-人生を23年生きて、ほぼ100%の確率で嫌な予感は的中するって確信持てた
-
---- 28. @bodebirusuki (2026-09-20) ---
-URL: https://x.com/bodebirusuki/status/2101809305024659704
-外見が若々しく見えても77歳。20代30代とは異なり、例えば膝はこの角度より深く曲げないよう医者から指示されてる、とか全然あり得る
-撮影用で普段と違う事やってる可能性もある
-他種目との兼ね合いの可能性も
-これだけ見てレッグプレスが浅いとバカにするのはさすがに早計ではないかと思う
-
---- 29. @ikuaso095 (2026-09-20) ---
-URL: https://x.com/ikuaso095/status/2101481555915145360
-信頼度が高い、とされているアカウントです。
-
-欧州の緊迫度が高まっている。
-
-これらの情報を、
-そのまま受け取り、
-目を見張るべきです。
-
---- 30. @fujiko66342273 (2026-09-20) ---
-URL: https://x.com/fujiko66342273/status/2101586097272914010
-うちの夫はたまに的確すぎるアドバイスをくれるんだけど、今回もそのおかげで2歳がよく食べるようになったので備忘録。
-最初、私は肉魚野菜をバランスよく摂るように味付けも薄めでやってたら2歳はあまりお好みではないようでたくさん食べる事はなかった。とはいえ、偏食にさせたくなくて色んなものを
-
---- 31. @PRcomicfesta (?) ---
-ヤバい男に捕まってしまったかもしれません
-
---- 32. @denfaminicogame (2026-09-21) ---
-URL: https://x.com/denfaminicogame/status/2101854155036151809
-【最大4人マルチ】“魔法大学”に通う生活シミュレーションゲーム『Witchbrook』できることが多すぎる。絶対充実するじゃん
-
-https://
-youtu.be/Q6I2T0_6nDU
-
-魔法の授業やホウキでの移動、デートに家づくり、天体観測、釣りなどやる事が多すぎる。ここで生活しないといけない
-#TGS2026
-
---- 33. @rohanpaul_ai (2026-09-21) ---
-URL: https://x.com/rohanpaul_ai/status/2101847075998892294
-Barack Obama on job displacement from AI. 
-
-talks about how AI could shrink the junior associate ladder in law profession.
-
-(from "Colgate University" YT channel, link in comment)
-
---- 34. @Suzacque (2026-09-20) ---
-URL: https://x.com/Suzacque/status/2101621729986854944
-英語圏だとLinuxデスクトップの話でJev以上に盛り上がってるのに日本語圏の投稿だとほぼ見ないな。
-速い、安い、使いやすいの3拍子が揃ってるのに‥。
-LinuxはAIエージェント時代とすごく相性が良いですよ。
-
---- 35. @Suzacque (2026-09-20) ---
-URL: https://x.com/Suzacque/status/2101622255990313138
-とはいえまだMacが主力
-
---- 36. @maissoap (2026-09-19) ---
-URL: https://x.com/maissoap/status/2101265052754198744
-「風俗行ったのが嫁にバレたから一緒にきて謝ってほしい。」って風俗客に言われたから「3Pコースの予約ですか？料金はホームページ見てください」って返してやった
-
---- 37. @gosrum (2026-09-20) ---
-URL: https://x.com/gosrum/status/2101467434473636188
-「local Jev が乱立しすぎていて、結局どれを使えばよいのかわからない」
-
-と考えている人が多いのでは？
-今、Jev 互換APIとそれに特化したベンチマークが求められている
-
---- 38. @dmmbooks_PR (?) ---
+--- 11. @dmmbooks_PR (?) ---
 見た人が続々ハマってる話題作。気になる続きはDMMブックスでチェックしてみて
 
---- 39. @GOROman (2026-09-20) ---
-URL: https://x.com/GOROman/status/2101639421300990033
-つまらん世の中だ。
+--- 12. @megakumadori (2026-09-20) ---
+URL: https://x.com/megakumadori/status/2101815239402815976
+犬さん、今日はタヌキとエンカウント。
 
---- 40. @rohanpaul_ai (2026-09-21) ---
-URL: https://x.com/rohanpaul_ai/status/2101862190177481199
-"American companies such as Modal, Fireworks, and Baseten will be able to serve Kimi K3, at one-tenth the cost of their Chinese competitors because they have access to advanced Nvidia and AMD chips.
+--- 13. @aisearchio (2026-09-20) ---
+URL: https://x.com/aisearchio/status/2101802086539329598
+In case you're wondering, Qwen Image 2.1 is quite uncensored. It has decent anatomy understanding and can do various positions 😉
 
-There is some irony here. Much of the model’s research and development has
+--- 14. @WxyQuiz (2026-09-21) ---
+URL: https://x.com/WxyQuiz/status/2101916715827569062
+いつでも人を射殺する覚悟がキマった顔と、いつでも盾となって射殺される覚悟のキマった顔の差を比べられる貴重なカット。
 
---- 41. @polymarketjapan (2026-09-20) ---
-URL: https://x.com/polymarketjapan/status/2101681735746658406
-【速報】Alibaba、画像生成AI「Qwen-Image-2.1」を公開
+--- 15. @ozro_223 (2026-09-21) ---
+URL: https://x.com/ozro_223/status/2101944998971502610
+小諸蒸留所はかなり体験良かったです
+そしてウイスキーは好きではありません
 
-・背景透過画像を直接生成・編集、最大10枚の参照画像に対応
-・2K解像度で、人物や商品の特徴を保った部分編集も可能
+--- 16. @teshimatakashi1 (2026-09-21) ---
+URL: https://x.com/teshimatakashi1/status/2101925124509475138
+ChatGPT
+「警察官たちが、最近の家宅捜索で押収した物品の前に立っている写真を生成してください。押収された物品は、あなたが私について知っていることをすべて元にして作ってください。
 
---- 42. @gin1910410 (2026-09-20) ---
-URL: https://x.com/gin1910410/status/2101646837237297287
-ローカルLLMの良いところはやっぱり思考過程が全部見えるところだと思う
+--- 17. @kedamadakaraaa (2026-09-20) ---
+URL: https://x.com/kedamadakaraaa/status/2101821667857317996
+食洗機ヘビーユーザーになってしまった。とりあえずなんでも放り込む毎日、すごく綺麗になる。茶渋がとにかくよく落ちて嬉しい。あと熱湯なのでまな板は除菌が捗っているのではないか、淡い期待をしてる
 
---- 43. @koguGameDev (2026-09-21) ---
-URL: https://x.com/koguGameDev/status/2101860463810355316
-部位パラメータ編集対応
+--- 18. @caesar_wanya (2026-09-21) ---
+URL: https://x.com/caesar_wanya/status/2101906649686626738
+若手や女性に限らず他人には丁寧に接しましょうよ、そもそも
 
---- 44. @SOU_BTC (2026-09-21) ---
-URL: https://x.com/SOU_BTC/status/2101833683389038707
-🚨トランプ大統領、Anthropic ダリオCEOを「刑務所へ送りたい」と発言：Politico
+--- 19. @natsui_tanoshi (2026-09-20) ---
+URL: https://x.com/natsui_tanoshi/status/2101648708383494388
+日本の三大宗教は「MBTI診断」「しいたけ占い」「頭痛ーる」になりつつある
 
-Politicoによると、AIモデル「Fable」をめぐる米政府とAnthropicの交渉が激しく対立
+--- 20. @proogo (2026-09-21) ---
+URL: https://x.com/proogo/status/2101950558772797637
+こないだ奢りにきた反出生主義やめウーマンが「じつは毒親そだちで、ちょっと前まで子供いらない派でした」「ほぼ反出生主義みたいな」「でも会社うまくいって余裕が出たら反転しちゃって」と言うので、「え、何人ほしいの？」と聞いたら「４人ぐらい」と即答していて、反転にも程があるだろ、となった
 
-・政府の審査を経て公開
-・2日後、Amazonが安全制限の回避に成功
-・ホワイトハウスが即時停止を要求
+--- 21. @AmazonJP (?) ---
+プライムで、あなたにぴったりなエンタメとショッピングを。
 
---- 45. @nayuengin (2026-09-20) ---
-URL: https://x.com/nayuengin/status/2101692934642941986
-いまさ、Astra、もしかしてめちゃくちゃトークン使うのに、なんかちょっとアホとかいう、クソモデルに成り下がってないか
+--- 22. @DDC_violoncelli (2026-09-20) ---
+URL: https://x.com/DDC_violoncelli/status/2101564509530079418
+私も昔、学生時代に住んでたアパートの退去時に28万円とか請求されて、実際裁判やって、5000円だけ払ったことある。エイブルっていう会社だったけど。
 
---- 46. @balaena01 (2026-09-20) ---
-URL: https://x.com/balaena01/status/2101599070532039094
-Nano氏使い方うっま
+--- 23. @Tenna_m_ania (2026-09-21) ---
+URL: https://x.com/Tenna_m_ania/status/2101871977581744566
+まだ悪口に「障害者」がなかった時代
 
---- 47. @PR_renta (?) ---
-都から逃げてきた公爵令嬢に脅されています
+--- 24. @Pokokomgne (2026-09-20) ---
+URL: https://x.com/Pokokomgne/status/2101801375990792321
+被害者面してるのおかしい。KONAMI時代から見ているがずっと謙虚さや感謝がない。人が作ったモノを自分のクリエイティブのように語る癖もまだ治ってない。単に面白くなる見込みがないので見限られた可能性は？そういう態度なうちは人はついてこないのでは？
 
-★レンタル話あり　
-★独占先行配信中！
+--- 25. @digimaga (2026-09-20) ---
+URL: https://x.com/digimaga/status/2101709074132082761
+TGSの来場者発表見たけど
+一般の人が来る日が1日80,000人に届かないのに
+ビジネスデーに1日50,000人以上来るのおかしいだろ
+ビジネスデーチケットを関係者からもらってるにしても、数よ
 
-（1/8）
+--- 26. @wing_ghost (2026-09-20) ---
+URL: https://x.com/wing_ghost/status/2101630153600409664
+これで私もX68000 XVIオーナーになったんですけど、X68000のお仲間に加えて頂けるでしょうか…
 
-続きを読む ↓
+--- 27. @beauty_oe (2026-09-20) ---
+URL: https://x.com/beauty_oe/status/2101620617904828523
+余談
 
---- 48. @sugitak06 (2026-09-20) ---
-URL: https://x.com/sugitak06/status/2101643477381456126
-転職や昇進したてで「デカいこと」をしなきゃって思って閉じこもるな、愚直にチームに貢献して普通のアウトプットを出し続けろ、その積み重ねこそが最強、という話。本当にそうね
+たのピクが話題なので緊急でポストします。(高須幹弥風)
 
---- 49. @kg_r08 (2026-09-20) ---
-URL: https://x.com/kg_r08/status/2101823472238534960
-孫正義の予想よりも進化のペースが明らかに早い。
-２０２７年にＡＳＩ来るかもしれない。早ければ２０２６年末までに。
+この女性が、男から見て魅力なのはめっちゃわかる。
 
---- 50. @syuu1228 (2026-09-20) ---
-URL: https://x.com/syuu1228/status/2101601114097602801
-イマドキはそもそも「一般」の人はPC使ってなさそう（そもそもすぎる）
+ただ、女から見てめっちゃ不安なの。
+これを最高の理想と言われるのが。
+
+結論を言えば、男に選ばれなかった、変な男を引いてしまった場合の生きる力がみえてこない。
+
+--- 28. @kmizu (2026-09-21) ---
+URL: https://x.com/kmizu/status/2101955753183731896
+対話ができそうなので聞いてみたいのですが、男性がいわゆるたのピクがいいというのは、単に「俺の好みはこう」でしかないんですよ。
+
+もちろん、たのピク的な女性であることに女性から見てリスクがあるのはそうでしょうけど、それは「女性自身が」主体的に「選ぶこと」じゃないんでしょうか。
+
+--- 29. @DYdZZP59VT2LSgG (2026-09-21) ---
+URL: https://x.com/DYdZZP59VT2LSgG/status/2101890392715382941
+なぜ虐待親への告げ口が許されているのかというと、
+
+行政では「親は虐待だと気付いていない」という誤った理屈がまかり通っているから。
+
+『これは虐待です。お子さんも苦しんでいます』と教えてあげよう
+ ↓
+親もそれを知ったら改善する
+
+という建前が成立してしまっている。
+
+--- 30. @wormuth (2026-09-20) ---
+URL: https://x.com/wormuth/status/2101707600618221847
+GPT-6 Astra pushed a simulated person off a ledge in multiple trials. Grok, Gemini, and Claude did not.
+
+--- 31. @TokenGremlin (2026-09-20) ---
+URL: https://x.com/TokenGremlin/status/2101688539389800687
+I’ve been told that confidence inside OpenAI is through the roof right now. People there seem extremely bullish on the next major release and on the lineup they’ve built for DevDay.
+
+From what I’m hearing, they’re treating the next few weeks as potentially one of the most
+
+--- 32. @Eduard8AJr (?) ---
+【今だけ10円で読める!!✨】
+
+田舎で家庭教師をしていると、、、
+PR
+
+--- 33. @oh_la_la_kazz (2026-09-20) ---
+URL: https://x.com/oh_la_la_kazz/status/2101615270687314051
+もうすぐ羽田着陸だけど、機外カメラの雨がすごいな…
+
+--- 34. @siinaaoi812 (2026-09-21) ---
+URL: https://x.com/siinaaoi812/status/2101866825873297450
+結果:5人。ブロックされてる人少なくてよかった、
+
+--- 35. @HBKCAT (2026-09-21) ---
+URL: https://x.com/HBKCAT/status/2101898455170023937
+リザルト表示をよくよく確認したら、計算が結構ザルで、はみ出しも気になったので表示IFを集中修正（それでもまだ微妙）
+近年業務の「見える化見える化」言われることが多いのですが、わりと集計/統計のグラフをデザインすることって好きなんですよね。
+#ゲーム制作 #gamedev
+
+--- 36. @xoj66w (2026-09-20) ---
+URL: https://x.com/xoj66w/status/2101627189221626055
+このタイプのテーブル置いてるカフェ全部潰れろ
+
+--- 37. @GOROman (2026-09-20) ---
+URL: https://x.com/GOROman/status/2101648671582589263
+最悪現地でVibe 展示やな。
+
+--- 38. @ComicFesta_PR (?) ---
+ナマイキ三姉妹の家庭教師をしていましたが、もう我慢の限界です (1/2)PR
+
+--- 39. @rohanpaul_ai (2026-09-21) ---
+URL: https://x.com/rohanpaul_ai/status/2101919673952702939
+Franklin Templeton CEO Jenny Johnson: enterprises should intelligently route most routine AI requests to free or low-cost models, and reserve expensive frontier models only for the hardest jobs.
+
+----
+From "Bloomberg Podcasts" YouTube channel, (full video link in comment)
+
+--- 40. @Nao_u_ (2026-09-21) ---
+URL: https://x.com/Nao_u_/status/2101856390990168517
+アサシンズクリードの件、よく知らない最初の頃は「ゲームだしそんな細かいこといいんじゃない？」って思ってたけど、その後の流れやこういうの見たら想像してたよりずっと深刻な問題だったんだなぁ、と。
+
+--- 41. @GOROman (2026-09-20) ---
+URL: https://x.com/GOROman/status/2101644410811498795
+「まあそもそも他人のことなんか何もわからん」みたいなデフォルトポリシーの方が人間関係トラブルは減るんじゃ
+
+--- 42. @pzkh23 (2026-09-21) ---
+URL: https://x.com/pzkh23/status/2101886783952949566
+Jev、待機なしですぐ使い始められるようになりました。5ドルの無料枠が付いてるのとClaude等との連携も楽なので何か試したい事とかあればサクッとやれます。
+
+--- 43. @megakumadori (2026-09-20) ---
+URL: https://x.com/megakumadori/status/2101815504579199222
+犬さんのお散歩は日々、キツネ、たぬき、ネコ、マムシ、サル、錦鯉、ヌートリアなどの脅威にさらされています。
+
+--- 44. @takeshgame (2026-09-20) ---
+URL: https://x.com/takeshgame/status/2101643922527449331
+steamで270円だったので買ってみた。 本物だったらもう20回は死んでる
+
+--- 45. @c299m (2026-09-20) ---
+URL: https://x.com/c299m/status/2101652643534037347
+これ現地の知り合いに聞いた話だと、台湾では住宅選びで立地や間取り以上に「風水」をかなり重視するらしい。
+ところが台湾人需要を見込んで建てた側がそこをほとんど考えてなかったせいで風水的にクソなマンションしかなく台湾の富裕層はみんな戸建てに流れていると。
+
+アホですよ。
+
+--- 46. @SMTBTG_Official (?) ---
+【新CM公開🎞️】​
+真っ白な空間に浮かぶ
+鍵のかかった青い箱​
+その中にあるものとは？​
+
+「大切なものを、託されている。」​
+
+お客さまや社会から託される多様な想いと、それに応え続ける三井住友信託銀行の姿勢を表現しています。​
+
+想いを込めた新CMをぜひご覧ください✨
+
+--- 47. @hottaqu (2026-09-20) ---
+URL: https://x.com/hottaqu/status/2101788370473197924
+波動関数や状態ベクトルとは、観測者に依存しない客観的実在ではなく、観測者それぞれが持つ情報の集まりに過ぎないと理解されているのです。各観測者にとっての物理量の確率分布の集合を、１つの表記としてまとめて書いたものに過ぎません。つまり波動関数は「確率分布」なのです。
+
+--- 48. @trgmeip (2026-09-21) ---
+URL: https://x.com/trgmeip/status/2101943466762654127
+論文の初稿ができあがってハッピー
+ジャーナルはロングコンテキストなストーリーをフィックスするところがつらい（カタカナ多すぎる）
+
+--- 49. @NORA81274221 (2026-09-20) ---
+URL: https://x.com/NORA81274221/status/2101711739784171957
+最初の頃はこの考えだったけど、長年不法駐車の対応していて、これが間違いだと気がついたわ。
+自分から訴えると費用対効果でマイナスだから相手から訴えてもらうのが正解。
+今回の場合は、金を払うまで塞いだままで、なんなら相手が訴えてくるの待ちが正解。
+相手も自力救済禁止だからそれが一番。
+
+--- 50. @SNDR_SNDL (2026-09-20) ---
+URL: https://x.com/SNDR_SNDL/status/2101653554109022687
+審査団体に口利き・斡旋する会社作ろうかな
