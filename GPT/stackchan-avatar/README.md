@@ -165,7 +165,7 @@ python scripts/firmware.py upload --port /dev/cu.usbmodem1101
 python scripts/firmware.py monitor --port /dev/cu.usbmodem1101
 ```
 
-書き込み後、PCサーバを起動してK151を再起動します。画面が`Disconnected`から`Idle`になれば接続成功です。画面または頭部タッチで録音が始まり、発話終了後にPC側で音声認識・会話・音声合成を行います。
+書き込み後、PCサーバを起動してK151を再起動します。画面が`Disconnected`から`Idle`になれば接続成功です。画面または頭部タッチで録音が始まり、発話終了後にPC側で音声認識・会話・音声合成を行います。スタックちゃんが話している途中で画面をタップすると、その発話を中止して次の音声入力へ切り替わります。
 
 より詳しい手順と復旧方法は [docs/FIRMWARE_INSTALL_JA.md](docs/FIRMWARE_INSTALL_JA.md) を参照してください。
 

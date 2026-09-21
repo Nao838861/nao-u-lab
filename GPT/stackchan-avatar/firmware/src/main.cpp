@@ -218,6 +218,25 @@ void notifySpeakDone()
   }
 }
 
+void handleSpeakingTouchInput()
+{
+  if (!M5.Touch.isEnabled() || M5.Touch.getCount() == 0)
+  {
+    return;
+  }
+
+  const auto &touch = M5.Touch.getDetail(0);
+  if (!touch.wasClicked())
+  {
+    return;
+  }
+
+  log_i("TTS playback cancelled by screen touch");
+  stateMachine.setState(StateMachine::Listening);
+  notifyWakeWordDetected();
+  notifySpeakDone();
+}
+
 void notifyVolumeApplied(uint32_t requestId, uint32_t level, bool success)
 {
   auto &message = g_tx_message;
@@ -600,7 +619,11 @@ void loop()
     // Wait for server side command / audio stream.
     break;
   case StateMachine::Speaking:
-    speaking.loop();
+    handleSpeakingTouchInput();
+    if (stateMachine.getState() == StateMachine::Speaking)
+    {
+      speaking.loop();
+    }
     break;
   case StateMachine::Disconnected:
     // Wait for WS reconnect.

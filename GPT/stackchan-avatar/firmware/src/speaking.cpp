@@ -39,6 +39,12 @@ void Speaking::end()
 
 void Speaking::handleWavStart(uint32_t seq, uint32_t sampleRate, uint16_t channels)
 {
+  if (!state_.isThinking() && !state_.isSpeaking())
+  {
+    log_i("Ignoring TTS stream start outside Thinking/Speaking state");
+    return;
+  }
+
   current_buffer_ = (current_buffer_ + 1) % 3;
   std::vector<uint8_t> &buf = buffer_[current_buffer_];
   buf.clear();

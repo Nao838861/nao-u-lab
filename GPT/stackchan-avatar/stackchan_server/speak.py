@@ -44,6 +44,7 @@ class SpeakHandler:
         self.debug_recording = debug_recording
 
         self._speaking = False
+        self._cancelled = False
         self._speak_finished_counter = 0
 
     @property
@@ -55,6 +56,13 @@ class SpeakHandler:
         self._speaking = False
         logger.info("Received speak done event")
 
+    def handle_speak_cancel_event(self) -> None:
+        if not self._speaking:
+            return
+        self._cancelled = True
+        self._speaking = False
+        logger.info("Received speak cancellation state")
+
     async def speak(
         self,
         text: str,
@@ -63,6 +71,7 @@ class SpeakHandler:
         send_state_command: Callable[[int], Awaitable[None]],
         idle_state: int,
         is_closed: Callable[[], bool],
+        should_reset_to_idle: Callable[[], bool],
     ) -> None:
         start_counter = self._speak_finished_counter
         await self._start_talking_stream(text, next_seq=next_seq)
@@ -73,7 +82,7 @@ class SpeakHandler:
             timeout_seconds=120.0,
             is_closed=is_closed,
         )
-        if not is_closed():
+        if not is_closed() and should_reset_to_idle():
             await send_state_command(idle_state)
 
     async def _wait_for_speaking_finished(
@@ -95,6 +104,7 @@ class SpeakHandler:
             await asyncio.sleep(0.05)
 
     async def _start_talking_stream(self, text: str, *, next_seq: Callable[[], int]) -> None:
+        self._cancelled = False
         self._speaking = True
         try:
             if isinstance(self.speech_synthesizer, StreamingSpeechSynthesizer):
@@ -188,13 +198,19 @@ class SpeakHandler:
         segment_count = 0
         base_time: float | None = None
         async for chunk in speech_synthesizer.synthesize_stream(text):
+            if self._cancelled:
+                break
             pending.extend(chunk)
             if self.debug_recording:
                 saved_pcm.extend(chunk)
             while len(pending) >= segment_bytes:
+                if self._cancelled:
+                    break
                 segment = bytes(pending[:segment_bytes])
                 del pending[:segment_bytes]
                 base_time = await self._wait_for_segment_slot(segment_count, base_time=base_time)
+                if self._cancelled:
+                    break
                 await self._send_segment(
                     segment,
                     output_format.sample_rate_hz,
@@ -202,15 +218,16 @@ class SpeakHandler:
                     next_seq=next_seq,
                 )
                 segment_count += 1
-        if pending:
+        if pending and not self._cancelled:
             base_time = await self._wait_for_segment_slot(segment_count, base_time=base_time)
-            await self._send_segment(
-                bytes(pending),
-                output_format.sample_rate_hz,
-                output_format.channels,
-                next_seq=next_seq,
-            )
-            segment_count += 1
+            if not self._cancelled:
+                await self._send_segment(
+                    bytes(pending),
+                    output_format.sample_rate_hz,
+                    output_format.channels,
+                    next_seq=next_seq,
+                )
+                segment_count += 1
         logger.info("Prepared %d playback segments from streaming TTS", segment_count)
 
         if self.debug_recording and saved_pcm:
@@ -290,6 +307,8 @@ class SpeakHandler:
         base_time = loop.time()
 
         for idx, segment in enumerate(segments):
+            if self._cancelled:
+                break
             if idx == 0:
                 target_ms = 0
             elif idx == 1:
@@ -302,6 +321,8 @@ class SpeakHandler:
             if target_time > now:
                 await asyncio.sleep(target_time - now)
 
+            if self._cancelled:
+                break
             await self._send_segment(segment, tts_sample_rate, tts_channels, next_seq=next_seq)
 
     async def _send_segment(
@@ -312,6 +333,8 @@ class SpeakHandler:
         *,
         next_seq: Callable[[], int],
     ) -> None:
+        if self._cancelled:
+            return
         logger.info("Sending segment bytes=%d", len(segment_pcm))
         await self.ws.send_bytes(
             encode_audio_wav_start_message(
@@ -324,11 +347,14 @@ class SpeakHandler:
         seg_offset = 0
         seg_total = len(segment_pcm)
         while seg_offset < seg_total:
+            if self._cancelled:
+                return
             chunk = segment_pcm[seg_offset : seg_offset + self.down_wav_chunk]
             await self.ws.send_bytes(encode_audio_wav_data_message(next_seq(), chunk))
             seg_offset += len(chunk)
 
-        await self.ws.send_bytes(encode_audio_wav_end_message(next_seq()))
+        if not self._cancelled:
+            await self.ws.send_bytes(encode_audio_wav_end_message(next_seq()))
 
 
 __all__ = ["SpeakHandler"]

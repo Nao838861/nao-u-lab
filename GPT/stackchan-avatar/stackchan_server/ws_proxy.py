@@ -207,6 +207,7 @@ class WsProxy:
             send_state_command=self.send_state_command,
             idle_state=FirmwareState.IDLE,
             is_closed=lambda: self._closed,
+            should_reset_to_idle=lambda: self.current_state == FirmwareState.SPEAKING,
         )
 
     async def send_state_command(self, state_id: int | FirmwareState) -> None:
@@ -448,6 +449,8 @@ class WsProxy:
         try:
             state = FirmwareState(raw_state)
             self._current_firmware_state = state
+            if state == FirmwareState.LISTENING and self._speaker.speaking:
+                self._speaker.handle_speak_cancel_event()
             logger.info("Received firmware state=%s(%d)", state.name, raw_state)
         except ValueError:
             logger.info("Received firmware state=%d", raw_state)

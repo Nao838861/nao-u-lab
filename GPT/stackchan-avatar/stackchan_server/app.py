@@ -10,7 +10,7 @@ from pydantic import BaseModel
 from .speech_recognition import create_speech_recognizer
 from .speech_synthesis import create_speech_synthesizer
 from .types import SpeechRecognizer, SpeechSynthesizer
-from .ws_proxy import WsProxy
+from .ws_proxy import FirmwareState, WsProxy
 
 logger = getLogger(__name__)
 
@@ -113,7 +113,11 @@ class StackChanApp:
                     except Exception:
                         logger.exception("talk_session failed")
                     finally:
-                        if not disconnected and not proxy.closed:
+                        if (
+                            not disconnected
+                            and not proxy.closed
+                            and proxy.current_state != FirmwareState.LISTENING
+                        ):
                             try:
                                 await proxy.reset_state()
                             except WebSocketDisconnect:

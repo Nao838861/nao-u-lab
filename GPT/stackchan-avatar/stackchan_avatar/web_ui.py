@@ -67,6 +67,7 @@ button.secondary{background:#4f6d7a}button:disabled{opacity:.45;cursor:wait}.sta
 <section class="card"><h2>5. 会話テスト</h2>
 <p class="hint">APIキーだけを試す場合は、本体未接続でも実行できます。文章を入力して「話す」を押し、文字の返答が出れば成功です。本体が接続中なら音声でも話します。</p>
 <p class="hint">接続中は「音量を120にして」「目の前に何がある？」のように頼むと、本体機能を会話から使えます。</p>
+<p class="hint">スタックちゃんが話している途中で本体画面をタップすると、発話を中止して次の音声入力を待ちます。</p>
 <textarea id="text" placeholder="スタックちゃんに話しかける"></textarea>
 <div class="row"><button id="send">話す</button></div><p id="reply" class="reply"></p>
 </section>
