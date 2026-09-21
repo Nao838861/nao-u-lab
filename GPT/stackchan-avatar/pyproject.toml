@@ -30,6 +30,7 @@ firmware = ["platformio>=6.1,<7"]
 
 [project.scripts]
 stackchan-avatar = "stackchan_avatar.__main__:main"
+stackchan-selector = "stackchan_avatar.xiaozhi_selector:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["stackchan_avatar", "stackchan_server"]

@@ -5,4 +5,4 @@ __pycache__/
 memory/.local/
 memory/*.lock.json
 memory/*.lock.stale-*.json
-
+/stackchan-avatar/.stackchan-selector.json
