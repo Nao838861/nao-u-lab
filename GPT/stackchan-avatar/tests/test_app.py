@@ -49,6 +49,10 @@ class RecordingTalkProxy:
         del commands
         self.events.append("nod")
 
+    async def wait_servo_complete(self, timeout_seconds: float | None = 120.0) -> None:
+        del timeout_seconds
+        self.events.append("nod-complete")
+
     async def speak(self, text: str) -> None:
         self.events.append(f"speak:{text}")
 
@@ -69,6 +73,7 @@ async def test_nod_marks_recognition_completion_before_reply_generation() -> Non
     assert events == [
         "recognition-complete",
         "nod",
+        "nod-complete",
         "reply:こんにちは",
         "speak:返事",
         "follow-up-listening",

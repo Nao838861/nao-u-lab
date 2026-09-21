@@ -5,13 +5,20 @@ import base64
 import json
 import os
 from collections import deque
+from collections.abc import Sequence
 from typing import Any, Protocol, runtime_checkable
+
+from stackchan_server.ws_proxy import ServoCommand, ServoMoveType, ServoWaitType
 
 
 class DeviceController(Protocol):
     async def set_volume(self, level: int) -> int: ...
 
     async def capture_image(self) -> Any: ...
+
+    async def move_servo(self, commands: Sequence[ServoCommand]) -> None: ...
+
+    async def wait_servo_complete(self, timeout_seconds: float | None = 120.0) -> None: ...
 
 
 DEVICE_TOOLS = [
@@ -47,7 +54,111 @@ DEVICE_TOOLS = [
         },
         "strict": True,
     },
+    {
+        "type": "function",
+        "name": "move_head",
+        "description": (
+            "スタックちゃん自身の首を安全な定型動作で動かす。"
+            "ユーザーが首や顔の向き、うなずき、首振り、ダンスを頼んだ時に使う。"
+            "この機能を使えるので、首を動かせないとは答えない。"
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "motion": {
+                    "type": "string",
+                    "enum": [
+                        "nod",
+                        "shake",
+                        "look_left",
+                        "look_right",
+                        "look_up",
+                        "look_down",
+                        "center",
+                        "dance",
+                    ],
+                    "description": (
+                        "nod=うなずく、shake=首を横に振る、look_left/right/up/down=その方向を見る、"
+                        "center=正面へ戻る、dance=首で短く踊る"
+                    ),
+                },
+                "repetitions": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 3,
+                    "description": "nod、shake、danceの繰り返し回数。通常は1。",
+                },
+            },
+            "required": ["motion", "repetitions"],
+            "additionalProperties": False,
+        },
+        "strict": True,
+    },
 ]
+
+
+def _build_head_motion(motion: str, repetitions: int) -> list[ServoCommand]:
+    repeat = max(1, min(3, int(repetitions)))
+    pause = (ServoWaitType.SLEEP, 90)
+
+    if motion == "nod":
+        commands: list[ServoCommand] = []
+        for _ in range(repeat):
+            commands.extend(
+                [
+                    (ServoMoveType.MOVE_Y, 104, 220),
+                    pause,
+                    (ServoMoveType.MOVE_Y, 78, 220),
+                    pause,
+                ]
+            )
+        commands.append((ServoMoveType.MOVE_Y, 90, 220))
+        return commands
+    if motion == "shake":
+        commands = []
+        for _ in range(repeat):
+            commands.extend(
+                [
+                    (ServoMoveType.MOVE_X, 62, 240),
+                    pause,
+                    (ServoMoveType.MOVE_X, 118, 300),
+                    pause,
+                ]
+            )
+        commands.append((ServoMoveType.MOVE_X, 90, 240))
+        return commands
+    if motion == "look_left":
+        return [(ServoMoveType.MOVE_X, 62, 350)]
+    if motion == "look_right":
+        return [(ServoMoveType.MOVE_X, 118, 350)]
+    if motion == "look_up":
+        return [(ServoMoveType.MOVE_Y, 105, 350)]
+    if motion == "look_down":
+        return [(ServoMoveType.MOVE_Y, 75, 350)]
+    if motion == "center":
+        return [
+            (ServoMoveType.MOVE_X, 90, 350),
+            (ServoMoveType.MOVE_Y, 90, 350),
+        ]
+    if motion == "dance":
+        commands = []
+        for _ in range(repeat):
+            commands.extend(
+                [
+                    (ServoMoveType.MOVE_X, 70, 220),
+                    (ServoMoveType.MOVE_Y, 104, 180),
+                    (ServoMoveType.MOVE_X, 110, 300),
+                    (ServoMoveType.MOVE_Y, 76, 180),
+                ]
+            )
+        commands.extend(
+            [
+                (ServoMoveType.MOVE_X, 90, 240),
+                (ServoMoveType.MOVE_Y, 90, 220),
+            ]
+        )
+        return commands
+    raise ValueError(f"未対応の首動作です: {motion}")
 
 
 @runtime_checkable
@@ -171,6 +282,17 @@ class OpenAIBrain:
                                 "detail": "low",
                             },
                         ],
+                    }
+                elif call.name == "move_head":
+                    motion = str(arguments["motion"])
+                    repetitions = int(arguments["repetitions"])
+                    commands = _build_head_motion(motion, repetitions)
+                    await device.move_servo(commands)
+                    await device.wait_servo_complete(timeout_seconds=15.0)
+                    result = {
+                        "ok": True,
+                        "motion": motion,
+                        "repetitions": max(1, min(3, repetitions)),
                     }
                 else:
                     result = {"ok": False, "error": "未対応の操作です"}

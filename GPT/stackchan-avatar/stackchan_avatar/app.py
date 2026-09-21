@@ -43,6 +43,7 @@ async def _nod(proxy: WsProxy) -> None:
             (ServoMoveType.MOVE_Y, 90, 140),
         ]
     )
+    await proxy.wait_servo_complete(timeout_seconds=3.0)
 
 
 def _require_local(request: Request) -> None:
