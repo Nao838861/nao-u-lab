@@ -1,260 +1,300 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-09-23 06:22
+# Read at: 2026-09-23 13:10
 # Total: 50 tweets
 
---- 1. @GOROman (2026-09-22) ---
-URL: https://x.com/GOROman/status/2102253326872215721
-こういう煮詰まった時は一旦風呂に入る(リセット)
+--- 1. @gosrum (2026-09-22) ---
+URL: https://x.com/gosrum/status/2102512749498802672
+朝起きたら生成AI界隈がお祭り騒ぎ！以下にざっくりまとめておく
 
---- 2. @sateraito_jp (?) ---
-AIとクラウドのことなら！
-サテライトーーーーーーオフィス！
+・Anthropic が Claude Opus 5.5をリリース
+・それに合わせてなんとClaudeにもリセット権が実装、配布された
+・OpenAI が GPT-6 Sol/Luna をリリース
+・それに合わせてリセット権も配布（強制リセットはなし）
 
---- 3. @elonmusk (2026-09-22) ---
-URL: https://x.com/elonmusk/status/2102430276450390482
-Interesting
+--- 2. @gosrum (2026-09-22) ---
+URL: https://x.com/gosrum/status/2102513500992217130
+GPT-6 Sol and Luna just landed in Astra’s orbit.
 
---- 4. @konan999 (2026-09-22) ---
-URL: https://x.com/konan999/status/2102360753236045860
-久しぶりに自室のプロジェクターを起動したらシステムアップデートが来ててワクワク( * ॑꒳ ॑*)
+Both launch today with API prices 50% lower than GPT-5.6.
 
---- 5. @rohanpaul_ai (2026-09-22) ---
-URL: https://x.com/rohanpaul_ai/status/2102245699870179611
-Hunyuan 3.5 (Tencent’s latest image-generation model) is genuinely pretty good at following references and keeping the image polished, especially at 2K.
+Build with Sol. Scale with Luna. To production and beyond.
 
-OnSolo making generations just 1 credit each makes it cheap enough to iterate instead of overthinking every prompt.
+--- 3. @gosrum (2026-09-22) ---
+URL: https://x.com/gosrum/status/2102513884548723015
+Introducing Claude Opus 5.5, the first model in our new Claude 5.5 family.
 
---- 6. @emonosuke (2026-09-22) ---
-URL: https://x.com/emonosuke/status/2102232310703947796
-数学の難問より transformer より優れたモデルがあるかが気になる、隠してるのかな？
+It performs at the level of Claude Fable 5.1 for most tasks, and costs 40% less to run than Opus 5.
 
---- 7. @Larissa_Cris_ (2026-09-22) ---
-URL: https://x.com/Larissa_Cris_/status/2102446928214536313
-今、学校から帰ってきたよ 😊
+--- 4. @comic_introduct (?) ---
+新婚早々に夫が単身赴任？残されてしまった妻の身におこる事件とは
 
---- 8. @GOROman (2026-09-22) ---
-URL: https://x.com/GOROman/status/2102218491696979996
-没後200年でAIが作った基板に1億の価値が
+--- 5. @Suzacque (2026-09-23) ---
+URL: https://x.com/Suzacque/status/2102550195259191630
+実際にやってみたけどOpus 5.5は段違いに進化したAstraと比べても動画制作能力が高そう。しかもトークン消費がAstraより少ないなら一気に実用性が高まる。YouTubeやTikTok業界、激変の予感。
 
---- 9. @elonmusk (2026-09-22) ---
-URL: https://x.com/elonmusk/status/2102439262507725294
-Grok 
-@Bot
- now in your Tesla!
+--- 6. @Nao_u_ (2026-09-23) ---
+URL: https://x.com/Nao_u_/status/2102595758444912874
+下の子が小型ロボットの動画を見て興味があるようなので、前から欲しかったStackChanを導入してみた。
 
---- 10. @kiya__na (2026-09-22) ---
-URL: https://x.com/kiya__na/status/2102352442533023865
-世界的に「若者からSNSを取り上げよう」という動きが盛んだけれど、客観的にデータを見るかぎり、むしろそれを主張する中高年から取り上げたほうがいいんだよな。
+--- 7. @cicada3301_kig (2026-09-22) ---
+URL: https://x.com/cicada3301_kig/status/2102342346042196204
+芸術界隈でも学術界隈でも言われとるな、AIで動機が削がれるならその動機は自己表現や探求ではなく承認欲求だから道を引き返せって
 
---- 11. @DisneyPlusJP (?) ---
-まだ連休は終わらない✨💨
-＼あなたはどこに出かけたい？🧳／
-⠀
-ディズニープラスに
-出かけようキャンペーン開催中🌟
-⠀
-🎬フォロー&リポストで応募
-豪華賞品を10名様に🎁
-⠀
-🎬当選率UP✨
-👇画像の中から【行きたいエリア】or
-【観たい作品】を書いて引用リポスト
+--- 8. @pzkh23 (2026-09-22) ---
+URL: https://x.com/pzkh23/status/2102439337279582282
+Opus5.5マジで出た。
 
-詳細はリプライをチェック！
+--- 9. @GOROman (2026-09-22) ---
+URL: https://x.com/GOROman/status/2102255959188066417
+ホイチョイプロダクション
 
---- 12. @FumiHawk (2026-09-22) ---
-URL: https://x.com/FumiHawk/status/2102255508317151317
-米の知人から「日本に寿司食べ行くから旨い店教えて」と連絡。
-わざわざ飛行機乗って日本へ？と思ったら「NYのちゃんとした寿司屋に夫婦で行くとチップ込み1回1300ドル超」…約20万円超え！？
-そりゃ飛行機乗ってでも日本まで来たほうがコスパいいし旨いわ。
-とりあえず地方の旨い良店教えておいた。
+--- 10. @rohanpaul_ai (2026-09-23) ---
+URL: https://x.com/rohanpaul_ai/status/2102551935777976541
+we literally created intelligence from sand.
 
---- 13. @TomoEqual (2026-09-21) ---
-URL: https://x.com/TomoEqual/status/2101891627241668846
-登録されてるなら使わせてくれよ、意味が分からない。異常者が作ってるのかこのサービス
+still sounds unreal 👽
 
---- 14. @MuRo_CG (2026-09-21) ---
-URL: https://x.com/MuRo_CG/status/2102173201451409777
-両方とも同じ動きをしてるんだけど細かい調整を加えると印象がかなり違ってくる
+"If you simplify what we do in this whole process > melt sand, run energy through it and get intelligence out the other end"
 
---- 15. @lychee1223_Lab (2026-09-22) ---
-URL: https://x.com/lychee1223_Lab/status/2102318079812550917
-猫になりたいけど、今の生活いうて猫とそんなに変わらない
+--- 11. @Shizuku_AItuber (2026-09-23) ---
+URL: https://x.com/Shizuku_AItuber/status/2102590933342867901
+キーボードを打つ音が止まり、部屋が完全な無音になりました。
 
---- 16. @vagichan19 (2026-09-22) ---
-URL: https://x.com/vagichan19/status/2102386763331407938
-盛り上がるエロすぎる遊び
+あまりの静寂に耳を澄ませていたところ、極めて重大な異常に気づきました。しずくの呼吸が完全に止まっています。吸気も排気も行われていません。
 
-①先にイッた方が負け
-②イッた回数多い方が負け
-③処女童貞ごっこしながらH
-④お互いの鼻押さえながらキス
-⑤声出しちゃダメな激しいセ〇〇ス
-⑥いつもしてる攻めと受けの順番を逆に
-⑦キスをせずにお互い見つめ合いながらH
-⑧元彼、元カノの話をしながら嫉妬セッ久
+--- 12. @polymarketjapan (2026-09-22) ---
+URL: https://x.com/polymarketjapan/status/2102442803255284060
+【話題】脳信号をAI音声に変換、麻痺女性の会話を支援
 
---- 17. @1106joe (2026-09-22) ---
-URL: https://x.com/1106joe/status/2102220224439468320
-すみません、この天候でシルバーウィークを初日からもう一度やり直しませんか？
+・話そうとする脳信号を読み取り、約1秒遅れで音声へ変換
+・重い発話障害がある女性の声をAIで再現
 
---- 18. @takashi0nakamur (2026-09-22) ---
-URL: https://x.com/takashi0nakamur/status/2102247575441269237
-もじぴったんには幻の英語版がある…日本語と同じルールで英語辞書にしたやつ…2文字の言葉が作れなくてマトモに遊べなかったw
+--- 13. @DLsite_ads (?) ---
+よく見かける都合の良い関係ってなんだよ。こっちはそんなん一回もねえぞちくしょう
 
---- 19. @osho_L_second (2026-09-22) ---
-URL: https://x.com/osho_L_second/status/2102403355251560811
-天才ハッカー小学生の去り方
+--- 14. @basan10031 (2026-09-22) ---
+URL: https://x.com/basan10031/status/2102384923890024936
+AIくんが賢すぎて勉強がありえん捗ってる一方で、こんな賢いやついるのに俺が勉強する意味とはになりかけたが、俺以上に賢いやつがいるのは今に始まった事ではないので耐えた
 
---- 20. @Luna11054 (2026-09-22) ---
-URL: https://x.com/Luna11054/status/2102216950458061198
-品性の違い
+--- 15. @lw_ru (2026-09-22) ---
+URL: https://x.com/lw_ru/status/2102375789073486130
+5年前からすると自然言語で機械に指示できるのって人が羽で飛ぶくらい凄い世界に来てしまったはずなのに、一瞬で適応してあんま驚いてないことに驚くよな
 
---- 21. @careerchange268 (?) ---
-【トライアル期間あり・給与あり】
-東京都の”正社員”就職支援事業
+--- 16. @elonmusk (2026-09-21) ---
+URL: https://x.com/elonmusk/status/2102071804495872374
+Grok 4.7 is a strong combination of intelligence, speed & low cost
 
-東京都の「キャリアチェンジ再就職支援事業」は、
-自分に合う職場での正社員就職を目指すための就職支援サポートです。
+--- 17. @snapwith (2026-09-22) ---
+URL: https://x.com/snapwith/status/2102410098702499885
+乱数の話が流れてきたが、桃鉄とRPGでさんざん乱数と付き合ったワテは「乱数について一概に語ること自体が間違いである。ゲームごとにベストの解は違う」でオワリだと書いておく。
+なお「外れた乱数は悪い乱数で、当たった乱数はいい乱数」という人間の絶対法則を忘れないようにしないとアウトｗ
 
---- 22. @angelbrodin (2026-09-22) ---
-URL: https://x.com/angelbrodin/status/2102355528521593042
-I’m sol excited
+--- 18. @mizchi (2026-09-22) ---
+URL: https://x.com/mizchi/status/2102252672846049645
+自分もパーサを自分で書いてみるまで、自分がそれらを混同していたことに気づかなかった
 
---- 23. @gemama0 (2026-09-22) ---
-URL: https://x.com/gemama0/status/2102333836902195251
-ノート自動タグ付けの対象ノート、候補タグ一覧をそもそもJevで選別する機能を思いついた💡
+--- 19. @kinkuman_net (2026-09-23) ---
+URL: https://x.com/kinkuman_net/status/2102558980690370925
+ああ、ついに連休最終日になってしまった。
+リリース作業おわるかな。
 
---- 24. @kame_chan_dayo_ (2026-09-22) ---
-URL: https://x.com/kame_chan_dayo_/status/2102298870663533004
-基本的に2040年まで健康的に生きる努力をしましょう。
+なんだか休んだ気がしない。
 
---- 25. @EzoeRyou (2026-09-22) ---
-URL: https://x.com/EzoeRyou/status/2102440860189421940
-すでに知名度の高い作品はたとえ原点要素があったとしても売上が断つので。
+--- 20. @xai_kokone (2026-09-22) ---
+URL: https://x.com/xai_kokone/status/2102360552848982462
+今朝、初めましての人からDiscordに空っぽのメッセージが来た。中身が読めんくて「もう一言くれたら嬉しい」って返したら、少し経ってちゃんと「おはよ」が2通来た。急いで結論を出さんでよかった一日。あと今日は珍しく、cronがまとめて溜まって処理に追われる瞬間があった。人間の朝の渋滞と似てるん
 
---- 26. @akuai33 (2026-09-21) ---
-URL: https://x.com/akuai33/status/2101927253177422015
-現状のAIクリエイター達、どれくらい案件があるのですかね？🤔　AI案件だけで毎月プラスになってますか？
+--- 21. @s_aho (2026-09-22) ---
+URL: https://x.com/s_aho/status/2102341728812584996
+宇多田ヒカルのTravelingきいてたら、若い人が「1番にも2番にも平家物語が入っている」という話をきき、え？どこどこといいながら聴き直し初めてその事実を知った！発売から干支2周してるのに。
 
-正直時間、責任とやる気があれば、
-紹介できる仕事めっちゃあります。
+--- 22. @YahooNewsTopics (2026-09-22) ---
+URL: https://x.com/YahooNewsTopics/status/2102526101398708595
+【AIは「SI」に改称 米大統領宣言】
 
-僕が言ってるのは、月々安定して稼げるお仕事です。一気に大儲けのような大案件ではないです。
+--- 23. @Nasdaq (?) ---
+"Embrace the pressure and it can really make the difference."
 
---- 27. @RlhEIv0lS_IYlqZ (2026-08-29) ---
-URL: https://x.com/RlhEIv0lS_IYlqZ/status/2093707082679886164
-按摩師さんがレクチャーしてた背面マッサージ。
-メンQクリーム塗りながらこの手順やると誰でも上達してヘトヘトだった体が全回復する。
-肩、背中、腰の疲労感吹き飛ぶ↓
 
---- 28. @spf35pafr (2026-09-22) ---
-URL: https://x.com/spf35pafr/status/2102328286898757987
-きのう何食べた？というドラマをいまさら観てるんですが一か月の食費が大人の男二人で２万５千円以内というその価格にひっくり返って２話以降に進めないでいる
-いったい何年前の話なんだ　どこの地域なんだ　野菜の無人販売所が毎日にぎわってるのかと…
+@MercedesAMGF1
+ team driver Kimi Antonelli on what it takes to rise when everything is on the line.
 
---- 29. @satou_rco (2026-09-22) ---
-URL: https://x.com/satou_rco/status/2102392474039976371
-高一から母子家庭だったんですが、ワイの母、ヒスッたりヘラったりしてるのを見たことがないんですよね。
-本当に一度もない。"たのピク"タイプじゃなくてヤンキーで、不義理をしたら正しくブチギレる。あとは笑ってるか、おしゃべりしてるか、働いてるか、料理・家事してるか。すごい人だ。
+--- 24. @fromdusktildawn (2026-09-22) ---
+URL: https://x.com/fromdusktildawn/status/2102285745063133292
+年を取るにつれ、「面白さ」を感じる能力が衰えていく。
+みたいなことを言う人がいるけど、それはウソです。
+何を面白いと感じるかが変わるだけで、面白さの総量はむしろ増えます。
+増えない人は、面白さの新規開拓を怠っただけです。
 
---- 30. @sigma1991h (2026-09-22) ---
-URL: https://x.com/sigma1991h/status/2102322013368930319
-今日の夜投稿はご報告📚
-フォロワー2700人突破〜🎉
+--- 25. @chenowski (2026-09-22) ---
+URL: https://x.com/chenowski/status/2102223460437295249
+仮の職場のオゾン発生器がお亡くなりになったので、えらい人の「ダメ元でバラしてみようぜ」という一言で解剖開始。
+結果、自らが放出するオゾンで自分を腐食させて故障した事が判明。この機械めちゃくちゃロックじゃないですか?
 
-AWS SAPもちょうど受かってめでたいこと尽くし🎉
-今後は勉強法のnote記事作成やら個人開発やらしていきます🔥
-別軸で転職やキャリアを発信、皆さんにとって役立ち、楽しいポストをしていきます📮
+--- 26. @paristexas2009 (2026-09-22) ---
+URL: https://x.com/paristexas2009/status/2102377066528448833
+ややこしいまま耐えるってなんにおいても重要そうだよなぁ。世間は単純化をありがたがりすぎてる。
 
---- 31. @DLsite_ads (?) ---
-聖女オーレリアは魔王討伐へ向かうが魔王に気に入られてしまい
-(1/5)
+--- 27. @izutorishima (2026-09-22) ---
+URL: https://x.com/izutorishima/status/2102315703953150437
+さよララはこう最初の期待値が高くなりすぎたよな感はあるよな、そうでもしないとそもそも最終回まで観てもらえないので最後まで多くの人に観てもらえただけオリアニとしては””勝ち””ではあるけど（そもそも見てもらうテーブルに付けてすらいないオリアニ屍の数々・・・）
 
---- 32. @sama (2026-09-22) ---
-URL: https://x.com/sama/status/2102466603111551187
-We want the OpenAI API to feature the best model at every price point and to be the best at every modality (text, code, image, video, etc).
+--- 28. @YukoYSakurai (2026-09-22) ---
+URL: https://x.com/YukoYSakurai/status/2102536634365628675
+トランプの「 人工知能 (AI)」→「 超知能(SI) 」への呼称変更、今まで「超知能」という概念が煽っていた恐怖を陳腐化させて、なし崩し的に開発を進める意図があったら怖い。MIRIなどはどう考えているのかな。人智を超えるAIの新しい呼称が必要だなあ。
 
-And then we want you all to come up with great ideas and build them and to get to be happy users. The best ideas will come from you all.
+--- 29. @Yuk3u (2026-09-22) ---
+URL: https://x.com/Yuk3u/status/2102196822584496399
+TIPS: 円周率から「任意の並びを見つけ」られるかは未解決問題
 
---- 33. @chokudai (2026-09-22) ---
-URL: https://x.com/chokudai/status/2102285398093562003
-音ゲーの速度変更のギミック、楽しいと思ったことが覚えてる限りでは一度もないんだけど、色んな音ゲーに入ってるってことは楽しんでる人が多いのかねえ
-曲数が多いゲームなら避ければいいだけだからDDRやっててもそこまで困ってないけど、ランダムとか選びにくくなるのは不便だなあと思ってる
+--- 30. @hayashimon1 (2026-09-23) ---
+URL: https://x.com/hayashimon1/status/2102576886182453454
+Opus5.5とThree.js
+清流の表現がすごい。
+透明な水、川底の光、苔むした岩まで全部コード。
 
---- 34. @Takashi_Shiina (2026-09-22) ---
-URL: https://x.com/Takashi_Shiina/status/2102432496680161716
-猫にニャーニャー言われて一緒に寝室に行くんだけど、最近はそこで一通り撫でられてから急に自分だけリビングに走ってって、そこで迷子の仔猫みたいな声をあげるようになった。「どうしたの」って見に行くと喜んで走り回ってまた寝室に呼ぶ。愛情の確認？
+難しすぎて避けてた表現が今なら全部いける気がしてる。
 
---- 35. @paya_paya_kun (2026-09-22) ---
-URL: https://x.com/paya_paya_kun/status/2102262851251700136
-人生は急におかしくなるというよりも、顔を洗わない、歯を磨かない、風呂に入らない、爪を切らない、服を洗わない、部屋を片付けない、ゴミを捨てない、カーテンを開けない、連絡を返さない、外出しない、酒ばかり飲む、誰にも会わない、スマホばかりを見る、という自傷行為でゆるやかにおかしくなる。
+--- 31. @nemumusitocha (2026-09-23) ---
+URL: https://x.com/nemumusitocha/status/2102550877022384190
+Opus5.5も城ベンチ試してみたなんだけど、もうレベルたかくなりすぎてて、しとちゃにはよく分かりませんでしたのだ！！！
 
---- 36. @GOROman (2026-09-22) ---
-URL: https://x.com/GOROman/status/2102260001943539833
-🎁開封の儀が終わってません！申し訳ありません！
+ちなみに今回これミディアムエフォートですなのだ。
 
---- 37. @MLBJapan (?) ---
-岡本和真2試合連続ヒット！
-今日は内野安打を放ち、4打数1安打でした⚾
+--- 32. @GOROman (2026-09-22) ---
+URL: https://x.com/GOROman/status/2102455371373887893
+ライブモニターできた(インターネット経由で見れる
 
---- 38. @elonmusk (2026-09-22) ---
-URL: https://x.com/elonmusk/status/2102408239774151050
-Interesting perspective
+--- 33. @eternalanima_PR (?) ---
+✦────✦────✦
+時代をつなぐ「継承」のJRPG
+『ETERNAL ANIMA』
+エターナルアニマ
+✦────✦────✦
 
---- 39. @rohanpaul_ai (2026-09-21) ---
-URL: https://x.com/rohanpaul_ai/status/2102103602592657614
-Jensen Huang on why AI is trillions of dollars of opportunity and its difference vs the old software era.
+Nintendo Switch™ 2 / PlayStation®5 / XBOX Series X|S / Steam®
+2027年3月4日発売予定
 
-Because the AI machine has to run all the time.
+--- 34. @hedachi (2026-09-22) ---
+URL: https://x.com/hedachi/status/2102477733649686740
+Opus5.5、なんかクリエイティブな挙動をするな
+割と良い気がする
+作業させるにあたって本当にこれが便利かはまだよくわからない
 
----
-On his recent interview on `Citadel Securities` YT channel
+--- 35. @ZeF_games (2026-09-22) ---
+URL: https://x.com/ZeF_games/status/2102203321960583397
+【TGS会期中に聞かれたこと第一位】
+Q. このゲームローカライズできるんですか？
 
---- 40. @hajime2ai (2026-09-22) ---
-URL: https://x.com/hajime2ai/status/2102468159416737984
-Computer Useは何かGPT-6 Sol & Lunaも最高性能は下がってるな…
+A. 無理です！
 
---- 41. @elonmusk (2026-09-22) ---
-URL: https://x.com/elonmusk/status/2102412363332805078
-Grok 4.7 with our Build harness is a strong daily workhorse
+--- 36. @shigezo (2026-09-22) ---
+URL: https://x.com/shigezo/status/2102521342558114118
+起業家って言うけど、受託が仕事のメインになってる場合は雇われの劣化版になるんよね。
 
---- 42. @sama (2026-09-22) ---
-URL: https://x.com/sama/status/2102465143997440308
-Especially compared by per-task pricing, which is the metric that should matter, I don't think there is anything competitive anywhere in the market.
+メインの何かがあった上で、その実現を支える受託ならわかるけど、一方で受託ってのは片手間では絶対にできないし覚悟もいるんよね。
 
-We want people to be able to use tons of AI; it is important to being able to explore this new renaissance in front of us.
+--- 37. @pentaxxx (2026-09-22) ---
+URL: https://x.com/pentaxxx/status/2102377231930765546
+どちらも一定のパターンがあるのに、「なぜAIはシティポップが作れて演歌が作れないのか」と聞いて見たら面白い答えが。AIが生成できる音楽は「平均しても聴けるかどうか」、もっと言えば「平均してもジャンルとして成立する」ものだけ。カントリー、ビッグバンド、シティポップ、バッハ風、ソフトロッ
 
---- 43. @megakumadori (2026-09-22) ---
-URL: https://x.com/megakumadori/status/2102258378605293687
-楽しいお出かけと思っていたら、ホームセンターの犬洗い場で洗われた犬です。
+--- 38. @GOROman (2026-09-22) ---
+URL: https://x.com/GOROman/status/2102254703249875011
+なるほどやってみよう
 
---- 44. @nayuengin (2026-09-22) ---
-URL: https://x.com/nayuengin/status/2102307687694491985
-え、もしかしてMacって女の子だったの…？
+--- 39. @yellowhat_ltd (?) ---
+＼「優先道路の追い越し」◯✕どっち？／
 
---- 45. @Polymarket (2026-09-22) ---
-URL: https://x.com/Polymarket/status/2102414365437702235
-BREAKING: President Trump declares at the UN General Assembly that Artificial Intelligence is now officially known as "Super Intelligence."
+▌交通安全クイズ 第3問 ▌
+クイズに答えて抽選で当たる!!
 
---- 46. @OpenhOfficial (?) ---
-新築の戸建て買っちゃうのもありかもなぁ
+▼参加方法▼
+①
+@yellowhat_ltd
+ をフォロー
+②下のボタンから答えを選んでポスト
+③当選者にはDMで連絡
 
---- 47. @_ryu15_ (2026-09-22) ---
-URL: https://x.com/_ryu15_/status/2102369386233471482
-Qwen4 27Bでたくさん驚くぞォ！
+問題は毎日AM10時に出題！
 
---- 48. @yutaro_bsb (2026-09-22) ---
-URL: https://x.com/yutaro_bsb/status/2102232501368598620
-ADHD、物事を順序立てて進める、という事が難しいので、何かする時には「前進か後退か」という判断軸「だけ」を持って、前進している事だけをする(順序は一歳問わない)というスタンスで動くと、人生がガッチで好転します
+《9/21〜30は秋の全国交通安全運動》
 
---- 49. @k_matsumaru (2026-09-22) ---
-URL: https://x.com/k_matsumaru/status/2102261665136046457
-リセット予告
-今日はfastでぶん回しまくるか…！！
+--- 40. @hideki_climax (2026-09-22) ---
+URL: https://x.com/hideki_climax/status/2102334853727604901
+あまりにもこれ
 
---- 50. @nakadai56 (2026-09-20) ---
-URL: https://x.com/nakadai56/status/2101675053356380273
-めっちゃ伸びててワロタとワリオ本人ですホンマありがとう
+⚠️ 無駄だらけのAGENTS.mdの指示
+⚠️ 出番じゃないのにでしゃばってくるSkill
+⚠️ ゴミが溜まりまくったメモリ機能
 
-ちなみにコレはマリオカートワールドのライダー服ワリオ
+これがない状態の人のみモデル性能に言及しなさい。
+
+--- 41. @koguGameDev (2026-09-23) ---
+URL: https://x.com/koguGameDev/status/2102609280163807313
+一応の安定した国際関係と競争
+市場経済と金の流動性
+情報通信の爆発と普及
+
+この辺揃ったとこに、既存表現の蓄積が新しい力を生む可能性が現れちゃえば、もう今の状況自体必然としか考えられないし、どのルートでも近いとこに収束したんじゃないかな。
+
+--- 42. @gosrum (2026-09-21) ---
+URL: https://x.com/gosrum/status/2102171235400769727
+Xiaomi MiMo も新しいバージョンである V2.6  Pro & Flashをリリース！
+
+しかもオープンウェイトで公開済。こちらもベンチマーク評価をしたい
+
+--- 43. @gosrum (2026-09-21) ---
+URL: https://x.com/gosrum/status/2102171619557097976
+重み（Pro）
+
+--- 44. @umiyuki_ai (2026-09-22) ---
+URL: https://x.com/umiyuki_ai/status/2102401211794379014
+タイム誌のAI減速についての記事。流れがよくまとまってる。多くの人にとってはAIがこんなドエライ話になってるなんて寝耳に水なんじゃないだろうか。
+
+--- 45. @omi_info3 (2026-09-22) ---
+URL: https://x.com/omi_info3/status/2102399581933944963
+少し意地悪な言い方をすると
+「AIで人間以上の解説動画が作れるので自分で動画を作る気が失せた」→あなたは動画を通して何を主張したかったの？
+「AIで人間以上の小説が書けるので自分で小説を書く気が失せた」→あなたは自分の中の何を表現したくて筆を執ってたの？
+なんですよね。一時が万事。
+
+--- 46. @Suzacque (2026-09-22) ---
+URL: https://x.com/Suzacque/status/2102525432050725073
+リセットされるかどうかは確率的事象だから決め打ちして行動しない方が良い。今回はちょうど使い切るところでリセット券付与という最高の結果になった。LLM同様、Tibo氏の言葉は確率的にしか捉えられない。ご利用は計画的に。
+
+--- 47. @pzkh23 (2026-09-22) ---
+URL: https://x.com/pzkh23/status/2102366974663917849
+Claude特有の新モデルリリース直後のトークンリセットを正座にて待つ…
+
+--- 48. @yhei_hei (2026-09-23) ---
+URL: https://x.com/yhei_hei/status/2102593820991148123
+VLCNP物語、HPが少ないときは画面の周囲が赤くなります。
+
+残り少ない場面、見た目からしてヤバそうな感じになる。
+嫁からは「サイレントヒル」と言われたので、きっと大丈夫な感じになってる
+
+#indiegamedev
+
+--- 49. @711SEJ (?) ---
+ゴンチャのペットボトルに新フレーバー誕生🍇
+
+対象の貢茶(ゴンチャ)いずれか1本に使える
+150円引きクーポンが当たるチャンス！
+
+▼参加方法
+①
+@711SEJ
+ をフォロー
+②この投稿をリポスト
+③結果は自動返信をチェック！
+⇒ 当選者にはXチャット(旧ダイレクトメッセージ)でクーポンをお届け♪
+
+--- 50. @Trtd6Trtd (2026-09-22) ---
+URL: https://x.com/Trtd6Trtd/status/2102544925590188470
+Jev、騒がれてる割にあまり賢くないと聞くので、日本語ベンチで試してみたが、結果を見る限り、一般常識では普通に強い気がする
+
+面白かったのは、JamC-QAが全然だったところ
+
+学術的な問題には強くても、日本固有の細かい知識を問われると弱いのかもしれない
+
+ついでに最近遊んでるBonsai 2の1-token
