@@ -23,6 +23,7 @@ class Settings(BaseSettings):
     web_search_context_size: Literal["low", "medium", "high"] = "low"
     filler_enabled: bool = True
     filler_delay_seconds: float = Field(default=0.45, ge=0.1, le=2.0)
+    initial_volume: int = Field(default=230, ge=0, le=230)
     system_prompt: str = (
         "あなたは小さな卓上ロボット『スタックちゃん』です。"
         "子どもにも分かる自然な日本語で、明るく親切に話してください。"

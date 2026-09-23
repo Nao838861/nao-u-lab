@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import base64
 from collections.abc import Callable
+from logging import getLogger
 from pathlib import Path
 
 from fastapi import HTTPException, Request
@@ -24,6 +25,8 @@ from .diagnostic_audio import DiagnosticSpeechRecognizer, DiagnosticSpeechSynthe
 from .openai_audio import OpenAISpeechRecognizer, OpenAISpeechSynthesizer
 from .system_setup import FirmwareJobRequest, SetupRequest, SetupService
 from .web_ui import page
+
+logger = getLogger(__name__)
 
 _SEARCH_WORDS = (
     "調べ",
@@ -82,6 +85,34 @@ async def _reply_with_optional_filler(
     return await reply_task
 
 
+async def _apply_initial_volume(
+    proxy: WsProxy,
+    level: int,
+    *,
+    metadata_timeout_seconds: float = 3.0,
+) -> None:
+    """接続直後の能力交換を待ち、対応機だけサーバ設定の音量へ揃える。"""
+    loop = asyncio.get_running_loop()
+    deadline = loop.time() + metadata_timeout_seconds
+    while proxy.firmware_metadata is None and not proxy.closed and loop.time() < deadline:
+        await asyncio.sleep(0.05)
+
+    metadata = proxy.firmware_metadata
+    if metadata is None:
+        logger.warning("Initial volume skipped: firmware metadata was not received")
+        return
+    if not metadata.supports_volume:
+        logger.info("Initial volume skipped: firmware does not support volume commands")
+        return
+
+    try:
+        applied = await proxy.set_volume(level)
+    except Exception:  # 音量失敗だけで会話接続を切らない
+        logger.warning("Initial volume command failed", exc_info=True)
+        return
+    logger.info("Applied initial speaker volume=%d", applied)
+
+
 class ChatRequest(BaseModel):
     text: str = Field(min_length=1, max_length=1000)
     speak: bool = True
@@ -138,6 +169,10 @@ def create_application(
         speech_synthesizer=synthesizer,
     )
     setup_service = SetupService(project_root or Path(__file__).resolve().parents[1])
+
+    @application.setup
+    async def setup_device(proxy: WsProxy) -> None:
+        await _apply_initial_volume(proxy, settings.initial_volume)
 
     @application.talk_session
     async def talk(proxy: WsProxy) -> None:
@@ -272,6 +307,7 @@ __all__ = [
     "ChatRequest",
     "ChatResponse",
     "VolumeRequest",
+    "_apply_initial_volume",
     "_reply_with_optional_filler",
     "_select_filler",
     "create_application",

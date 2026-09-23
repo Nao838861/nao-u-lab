@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import asyncio
+from types import SimpleNamespace
 from typing import Any
 
 import pytest
 from fastapi.testclient import TestClient
 
 from stackchan_avatar.app import (
+    _apply_initial_volume,
     _reply_with_optional_filler,
     _select_filler,
     create_application,
@@ -71,6 +73,17 @@ class RecordingTalkProxy:
 
     async def send_state_command(self, state: FirmwareState) -> None:
         self.events.append(f"state:{state.name.lower()}")
+
+
+class RecordingSetupProxy:
+    def __init__(self, *, supports_volume: bool) -> None:
+        self.closed = False
+        self.firmware_metadata = SimpleNamespace(supports_volume=supports_volume)
+        self.levels: list[int] = []
+
+    async def set_volume(self, level: int) -> int:
+        self.levels.append(level)
+        return level
 
 
 @pytest.mark.asyncio
@@ -183,3 +196,21 @@ async def test_fast_reply_skips_filler() -> None:
 
     assert reply == "返事"
     assert events == ["reply:こんにちは"]
+
+
+@pytest.mark.asyncio
+async def test_initial_volume_is_applied_to_supported_firmware() -> None:
+    proxy = RecordingSetupProxy(supports_volume=True)
+
+    await _apply_initial_volume(proxy, 230)  # type: ignore[arg-type]
+
+    assert proxy.levels == [230]
+
+
+@pytest.mark.asyncio
+async def test_initial_volume_is_skipped_for_unsupported_firmware() -> None:
+    proxy = RecordingSetupProxy(supports_volume=False)
+
+    await _apply_initial_volume(proxy, 230)  # type: ignore[arg-type]
+
+    assert proxy.levels == []

@@ -60,7 +60,7 @@ button.secondary{background:#4f6d7a}button:disabled{opacity:.45;cursor:wait}.sta
 </section>
 <section class="card"><h2>4. 本体機能：音量とカメラ</h2>
 <p class="hint">この機能を追加した新しいファームを書き込んだ後に使えます。撮影はボタンを押した時だけ行い、本体画面にも「CAMERA」と表示します。</p>
-<label for="volume">スピーカー音量：<span id="volumeValue">160</span> / 230</label><input id="volume" type="range" min="0" max="230" value="160">
+<label for="volume">スピーカー音量：<span id="volumeValue">230</span> / 230</label><input id="volume" type="range" min="0" max="230" value="230">
 <div class="row"><button id="setVolume" class="secondary">この音量にする</button><button id="takePhoto">静止画を1枚撮る</button></div>
 <p id="deviceResult" class="hint"></p><img id="cameraPreview" class="camera-preview" alt="スタックちゃんが撮影した画像">
 </section>
