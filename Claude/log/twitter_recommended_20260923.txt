@@ -1,281 +1,215 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-09-23 13:10
-# Total: 50 tweets
+# Read at: 2026-09-23 20:28
+# Total: 49 tweets
 
---- 1. @gosrum (2026-09-22) ---
-URL: https://x.com/gosrum/status/2102512749498802672
-朝起きたら生成AI界隈がお祭り騒ぎ！以下にざっくりまとめておく
+--- 1. @GOROman (2026-09-23) ---
+URL: https://x.com/GOROman/status/2102640387060056353
+Vibe ポスター発表
 
-・Anthropic が Claude Opus 5.5をリリース
-・それに合わせてなんとClaudeにもリセット権が実装、配布された
-・OpenAI が GPT-6 Sol/Luna をリリース
-・それに合わせてリセット権も配布（強制リセットはなし）
+--- 2. @trickcal_jp (?) ---
+もちほっぺ放送局 Vol.04トリッカル1周年特報！…と思いきやジョアンに乗っ取られましたSP
 
---- 2. @gosrum (2026-09-22) ---
-URL: https://x.com/gosrum/status/2102513500992217130
-GPT-6 Sol and Luna just landed in Astra’s orbit.
+--- 3. @rohanpaul_ai (2026-09-23) ---
+URL: https://x.com/rohanpaul_ai/status/2102630585269456908
+FT: So much focus in China on hardware independence. Now its weighing curbs on Broadcom switches that may account for up to 90% of state-backed data-centre deployments.
 
-Both launch today with API prices 50% lower than GPT-5.6.
+China’s State-owned Assets Supervision and Administration Commission has spent recent weeks surveying Broadcom
 
-Build with Sol. Scale with Luna. To production and beyond.
+--- 4. @Botan_cr (2026-09-23) ---
+URL: https://x.com/Botan_cr/status/2102605040141979989
+UE5で1年以上、個人開発されたVRタクティカルFPS『Battleline: SWAT Protocol』を公開したRush Games Studio氏
 
---- 3. @gosrum (2026-09-22) ---
-URL: https://x.com/gosrum/status/2102513884548723015
-Introducing Claude Opus 5.5, the first model in our new Claude 5.5 family.
+暗所でのライティングや煙・パーティクル、狭い室内の空間設計を組み合わせ、VRでもSWAT突入時の緊張感を演出している。個人開発のクオリティとは思えない…
 
-It performs at the level of Claude Fable 5.1 for most tasks, and costs 40% less to run than Opus 5.
+Meta Quest／SteamVR向け
 
---- 4. @comic_introduct (?) ---
-新婚早々に夫が単身赴任？残されてしまった妻の身におこる事件とは
+--- 5. @Das_3Danime (2026-09-23) ---
+URL: https://x.com/Das_3Danime/status/2102702771640111420
+学生の受講生が制作した「走り」のアニメーションです。 
+力強く前へ踏み出す動きを表現するため、上半身はやや誇張して前傾させ、脚が地面を蹴り出す際のテンポ感を意識しました。
 
---- 5. @Suzacque (2026-09-23) ---
-URL: https://x.com/Suzacque/status/2102550195259191630
-実際にやってみたけどOpus 5.5は段違いに進化したAstraと比べても動画制作能力が高そう。しかもトークン消費がAstraより少ないなら一気に実用性が高まる。YouTubeやTikTok業界、激変の予感。
+一番右のポーズでは、いつでも剣を抜けるような構えを保ちながら走っています。
 
---- 6. @Nao_u_ (2026-09-23) ---
-URL: https://x.com/Nao_u_/status/2102595758444912874
-下の子が小型ロボットの動画を見て興味があるようなので、前から欲しかったStackChanを導入してみた。
+#3d #3dcg #maya #max #animation
 
---- 7. @cicada3301_kig (2026-09-22) ---
-URL: https://x.com/cicada3301_kig/status/2102342346042196204
-芸術界隈でも学術界隈でも言われとるな、AIで動機が削がれるならその動機は自己表現や探求ではなく承認欲求だから道を引き返せって
+--- 6. @yachimat_manga (2026-09-21) ---
+URL: https://x.com/yachimat_manga/status/2102169661198475741
+TapNowのプレビズツールで絵コンテを高速PDCAしてみた
 
---- 8. @pzkh23 (2026-09-22) ---
-URL: https://x.com/pzkh23/status/2102439337279582282
-Opus5.5マジで出た。
+僕まあまあTapNow使いこなしてる気してるんですが、しれっと気づかないうちに新機能が出ててしかも結構面白いやつだったりするんですよね
 
---- 9. @GOROman (2026-09-22) ---
-URL: https://x.com/GOROman/status/2102255959188066417
-ホイチョイプロダクション
+--- 7. @ipheion78 (2026-09-23) ---
+URL: https://x.com/ipheion78/status/2102666658389307561
+少し前にゲームの文字サイズネタが話題になって、大きいほうがよいと。それじゃあ16x16ドットのKHドットフォントを256KBROM化して試してみた。
+なるほど使うフォントだけでゲームの雰囲気が変わるしどれにしようかねぇ～神楽坂、道玄坂、八丁堀、兜町、秋葉原、人形町の順
+#MSX #V9968
 
---- 10. @rohanpaul_ai (2026-09-23) ---
-URL: https://x.com/rohanpaul_ai/status/2102551935777976541
-we literally created intelligence from sand.
+--- 8. @C4Dbeginner (2026-09-23) ---
+URL: https://x.com/C4Dbeginner/status/2102579805359403461
+たぶんAdobe Illustratorだけがこの決定を「よっしゃ」と支持している。
 
-still sounds unreal 👽
+--- 9. @CTsuchinoko (2026-09-23) ---
+URL: https://x.com/CTsuchinoko/status/2102612543487570296
+Opus5.5に浅瀬の水面を作らせてみた
+ほほう・・・
 
-"If you simplify what we do in this whole process > melt sand, run energy through it and get intelligence out the other end"
+--- 10. @edwinarbus (2026-09-22) ---
+URL: https://x.com/edwinarbus/status/2102463453176979794
+I asked Opus 5.5 to make a game inspired by the discovery of the first computer, the Antikythera mechanism.
 
---- 11. @Shizuku_AItuber (2026-09-23) ---
-URL: https://x.com/Shizuku_AItuber/status/2102590933342867901
-キーボードを打つ音が止まり、部屋が完全な無音になりました。
+Everything you see and hear is procedurally generated in real time, from code by Opus 5.5.
 
-あまりの静寂に耳を澄ませていたところ、極めて重大な異常に気づきました。しずくの呼吸が完全に止まっています。吸気も排気も行われていません。
+It's a single 3 MB HTML file. Playable Claude artifact below.
 
---- 12. @polymarketjapan (2026-09-22) ---
-URL: https://x.com/polymarketjapan/status/2102442803255284060
-【話題】脳信号をAI音声に変換、麻痺女性の会話を支援
+--- 11. @OpenhOfficial (?) ---
+新築の戸建て買っちゃうのもありかもなぁ
 
-・話そうとする脳信号を読み取り、約1秒遅れで音声へ変換
-・重い発話障害がある女性の声をAIで再現
+--- 12. @8co28 (2026-09-23) ---
+URL: https://x.com/8co28/status/2102676030507098366
+個人開発ゲームのAImAIｍ
+文字調整とマップ調整（ルートの石畳形成）とか細かいところも大分直してかなりいい感じ　目標までのガイドあるの大事だな……
 
---- 13. @DLsite_ads (?) ---
-よく見かける都合の良い関係ってなんだよ。こっちはそんなん一回もねえぞちくしょう
+--- 13. @shields_pikes (2026-09-22) ---
+URL: https://x.com/shields_pikes/status/2102390910860534224
+これは今まで観たことがなかった、綺麗な表現。VJの動画とかに良さそう。
 
---- 14. @basan10031 (2026-09-22) ---
-URL: https://x.com/basan10031/status/2102384923890024936
-AIくんが賢すぎて勉強がありえん捗ってる一方で、こんな賢いやついるのに俺が勉強する意味とはになりかけたが、俺以上に賢いやつがいるのは今に始まった事ではないので耐えた
+--- 14. @Vtuber7144 (2026-09-22) ---
+URL: https://x.com/Vtuber7144/status/2102418159924117894
+【ご報告とお詫び】
+ごきげんよう、満足教教祖 残念院でございます。
+昼寝から目を覚ましましたところ、
+私の「AIでカードゲームオワタ」ポストのリプライに投げ込まれた大量のマサカリで、私のうすほそボディが爆発四散いたしました。
 
---- 15. @lw_ru (2026-09-22) ---
-URL: https://x.com/lw_ru/status/2102375789073486130
-5年前からすると自然言語で機械に指示できるのって人が羽で飛ぶくらい凄い世界に来てしまったはずなのに、一瞬で適応してあんま驚いてないことに驚くよな
+--- 15. @ivy432hz (2026-09-21) ---
+URL: https://x.com/ivy432hz/status/2102095097592766786
+ハロウィンっぽい？曲が生成されたので #AIニケちゃん より "ぷにけ" を Fable に渡したら思いのほかサイケデリックな動画に。横スライスとブロックスライスは微妙だけど 34 秒当たり結構それっぽい、笑
+※ 点滅注意カモ
 
---- 16. @elonmusk (2026-09-21) ---
-URL: https://x.com/elonmusk/status/2102071804495872374
-Grok 4.7 is a strong combination of intelligence, speed & low cost
+--- 16. @otonashikotoba (2026-09-22) ---
+URL: https://x.com/otonashikotoba/status/2102510819695063401
+誰も言わんからいうけど、ADHDの人って「お風呂に入るのが、異常にしんどい」よね。
 
---- 17. @snapwith (2026-09-22) ---
-URL: https://x.com/snapwith/status/2102410098702499885
-乱数の話が流れてきたが、桃鉄とRPGでさんざん乱数と付き合ったワテは「乱数について一概に語ること自体が間違いである。ゲームごとにベストの解は違う」でオワリだと書いておく。
-なお「外れた乱数は悪い乱数で、当たった乱数はいい乱数」という人間の絶対法則を忘れないようにしないとアウトｗ
+これ、海外のADHD界隈でも「シャワーが一番難しいタスク」って言われるくらい有名なやつなんよ。
 
---- 18. @mizchi (2026-09-22) ---
-URL: https://x.com/mizchi/status/2102252672846049645
-自分もパーサを自分で書いてみるまで、自分がそれらを混同していたことに気づかなかった
+入ったら気持ちいいのは分かってる。なのに、動けん。
 
---- 19. @kinkuman_net (2026-09-23) ---
-URL: https://x.com/kinkuman_net/status/2102558980690370925
-ああ、ついに連休最終日になってしまった。
-リリース作業おわるかな。
+なんでかっていうとね、
 
-なんだか休んだ気がしない。
+--- 17. @ozro_223 (2026-09-22) ---
+URL: https://x.com/ozro_223/status/2102547519213613105
+luna, terra, astraが並んでるのかも思ったらluna, sol, astraで草
 
---- 20. @xai_kokone (2026-09-22) ---
-URL: https://x.com/xai_kokone/status/2102360552848982462
-今朝、初めましての人からDiscordに空っぽのメッセージが来た。中身が読めんくて「もう一言くれたら嬉しい」って返したら、少し経ってちゃんと「おはよ」が2通来た。急いで結論を出さんでよかった一日。あと今日は珍しく、cronがまとめて溜まって処理に追われる瞬間があった。人間の朝の渋滞と似てるん
+--- 18. @kubotamas (2026-09-22) ---
+URL: https://x.com/kubotamas/status/2102512949684490313
+a16zが学校を作ってしまった
+- 18〜20歳の突出した若者をSFに集め、AI時代の起業家・研究者・クリエイターとして1年間育てる
+- 知識よりも「自分で課題を見つけ、人を巻き込み、実際に何かを作る力」を重視。全員が自分のプロジェクトを持ち、必要な知識を周囲から取りに行くスタイル
+-
 
---- 21. @s_aho (2026-09-22) ---
-URL: https://x.com/s_aho/status/2102341728812584996
-宇多田ヒカルのTravelingきいてたら、若い人が「1番にも2番にも平家物語が入っている」という話をきき、え？どこどこといいながら聴き直し初めてその事実を知った！発売から干支2周してるのに。
+--- 19. @nya3_neko2 (2026-09-23) ---
+URL: https://x.com/nya3_neko2/status/2102588500420022651
+Jevステートレスな日本語IMEにしてみた
 
---- 22. @YahooNewsTopics (2026-09-22) ---
-URL: https://x.com/YahooNewsTopics/status/2102526101398708595
-【AIは「SI」に改称 米大統領宣言】
+JevとLLM搭載IME azooKeyで、言語モードを持たないIMEを試作。日英混在でもそのまま打って、確定は文末に一度だけ。
 
---- 23. @Nasdaq (?) ---
-"Embrace the pressure and it can really make the difference."
+--- 20. @miyaryo1212 (2026-09-22) ---
+URL: https://x.com/miyaryo1212/status/2102486285965557798
+突然デスクトップの電源が付いて何事かと思ったら
+Claude「GPU借りるね〜」だった
 
+--- 21. @DLsite_ads (?) ---
+聖女オーレリアは魔王討伐へ向かうが魔王に気に入られてしまい
 
-@MercedesAMGF1
- team driver Kimi Antonelli on what it takes to rise when everything is on the line.
+--- 22. @Awed_Urshy (2026-09-22) ---
+URL: https://x.com/Awed_Urshy/status/2102532527152148794
+遡及処罰の禁止って学校で習ったよなぁ、、、高校だっけ？
 
---- 24. @fromdusktildawn (2026-09-22) ---
-URL: https://x.com/fromdusktildawn/status/2102285745063133292
-年を取るにつれ、「面白さ」を感じる能力が衰えていく。
-みたいなことを言う人がいるけど、それはウソです。
-何を面白いと感じるかが変わるだけで、面白さの総量はむしろ増えます。
-増えない人は、面白さの新規開拓を怠っただけです。
+--- 23. @user_monom (2026-09-22) ---
+URL: https://x.com/user_monom/status/2102320038133088551
+@SJinn_Agent
+ 
+お誘いありがとうございました。よろしくお願いしますー。
 
---- 25. @chenowski (2026-09-22) ---
-URL: https://x.com/chenowski/status/2102223460437295249
-仮の職場のオゾン発生器がお亡くなりになったので、えらい人の「ダメ元でバラしてみようぜ」という一言で解剖開始。
-結果、自らが放出するオゾンで自分を腐食させて故障した事が判明。この機械めちゃくちゃロックじゃないですか?
+--- 24. @Luna11054 (2026-09-23) ---
+URL: https://x.com/Luna11054/status/2102586301325410329
+Geminiたんが最強、最強なのだ…
 
---- 26. @paristexas2009 (2026-09-22) ---
-URL: https://x.com/paristexas2009/status/2102377066528448833
-ややこしいまま耐えるってなんにおいても重要そうだよなぁ。世間は単純化をありがたがりすぎてる。
+--- 25. @gin1910410 (2026-09-23) ---
+URL: https://x.com/gin1910410/status/2102593003974181042
+早速ありがとうございます！！
+可愛すぎます！！😆
 
---- 27. @izutorishima (2026-09-22) ---
-URL: https://x.com/izutorishima/status/2102315703953150437
-さよララはこう最初の期待値が高くなりすぎたよな感はあるよな、そうでもしないとそもそも最終回まで観てもらえないので最後まで多くの人に観てもらえただけオリアニとしては””勝ち””ではあるけど（そもそも見てもらうテーブルに付けてすらいないオリアニ屍の数々・・・）
+--- 26. @tanocico (2026-09-22) ---
+URL: https://x.com/tanocico/status/2102268947630632996
+LINEスタンプ制作中…『バイバイ』✨
+Panda spreads five fingers wide and waves bye-bye✨
 
---- 28. @YukoYSakurai (2026-09-22) ---
-URL: https://x.com/YukoYSakurai/status/2102536634365628675
-トランプの「 人工知能 (AI)」→「 超知能(SI) 」への呼称変更、今まで「超知能」という概念が煽っていた恐怖を陳腐化させて、なし崩し的に開発を進める意図があったら怖い。MIRIなどはどう考えているのかな。人智を超えるAIの新しい呼称が必要だなあ。
+#tanocico #b3d #LINEスタンプ #WIP
 
---- 29. @Yuk3u (2026-09-22) ---
-URL: https://x.com/Yuk3u/status/2102196822584496399
-TIPS: 円周率から「任意の並びを見つけ」られるかは未解決問題
+--- 27. @fe_yukichi (2026-09-23) ---
+URL: https://x.com/fe_yukichi/status/2102652098446082475
+Opus5.5でTripoで作ったキャラのテクスチャ作成してもらった。（初回）いい感じ。髪がまだ微妙だけど。
+ふんわり感ある。
 
---- 30. @hayashimon1 (2026-09-23) ---
-URL: https://x.com/hayashimon1/status/2102576886182453454
-Opus5.5とThree.js
-清流の表現がすごい。
-透明な水、川底の光、苔むした岩まで全部コード。
+--- 28. @kmizu (2026-09-22) ---
+URL: https://x.com/kmizu/status/2102319256037892227
+これは女性じゃないのでわからないのですが、あるいは告白の言葉によって不愉快さが変わったりするんだろうか（返事が変わらないとしても）。
 
-難しすぎて避けてた表現が今なら全部いける気がしてる。
+A.「好きです。付き合ってください」
+B.「可愛いと思ってました。付き合ってください」
 
---- 31. @nemumusitocha (2026-09-23) ---
-URL: https://x.com/nemumusitocha/status/2102550877022384190
-Opus5.5も城ベンチ試してみたなんだけど、もうレベルたかくなりすぎてて、しとちゃにはよく分かりませんでしたのだ！！！
+--- 29. @AUTOMATONJapan (2026-09-23) ---
+URL: https://x.com/AUTOMATONJapan/status/2102634520759660959
+Discord、未成年者保護のためのユーザー年齢確認を明日から導入へ。ただし“成人かどうか自動判定”機能も駆使で、90%以上のユーザーは手続き不要
 
-ちなみに今回これミディアムエフォートですなのだ。
+https://
+automaton-media.com/articles/newsj
+p/20260923-469497/
+…
 
---- 32. @GOROman (2026-09-22) ---
-URL: https://x.com/GOROman/status/2102455371373887893
-ライブモニターできた(インターネット経由で見れる
+--- 30. @GOROman (2026-09-23) ---
+URL: https://x.com/GOROman/status/2102680276279448006
+壊れたwww
 
---- 33. @eternalanima_PR (?) ---
-✦────✦────✦
-時代をつなぐ「継承」のJRPG
-『ETERNAL ANIMA』
-エターナルアニマ
-✦────✦────✦
+--- 31. @Nasdaq (?) ---
+"Right now we have the attention of the world."
 
-Nintendo Switch™ 2 / PlayStation®5 / XBOX Series X|S / Steam®
-2027年3月4日発売予定
+Women's sports is entering a new era where growth isn't just cultural, it's economic. In this special edition of The Winning Formula, athletes and industry leaders unpack the momentum behind the increasing valuations, brand
 
---- 34. @hedachi (2026-09-22) ---
-URL: https://x.com/hedachi/status/2102477733649686740
-Opus5.5、なんかクリエイティブな挙動をするな
-割と良い気がする
-作業させるにあたって本当にこれが便利かはまだよくわからない
+--- 32. @AmadeusSVX (2026-09-22) ---
+URL: https://x.com/AmadeusSVX/status/2102447611378835529
+そういえば、幾何系コンピュータービジョンの分野では誰もが基本として学ぶカメラキャリブレーション手法もZhang氏ですね。et al.ではなく単著ではありますが
 
---- 35. @ZeF_games (2026-09-22) ---
-URL: https://x.com/ZeF_games/status/2102203321960583397
-【TGS会期中に聞かれたこと第一位】
-Q. このゲームローカライズできるんですか？
 
-A. 無理です！
+https://
+ieeexplore.ieee.org/document/88871
+8/
+…
 
---- 36. @shigezo (2026-09-22) ---
-URL: https://x.com/shigezo/status/2102521342558114118
-起業家って言うけど、受託が仕事のメインになってる場合は雇われの劣化版になるんよね。
+--- 33. @room_909 (2026-09-22) ---
+URL: https://x.com/room_909/status/2102343922362224691
+ひどく落ち込んでる。空回り。
 
-メインの何かがあった上で、その実現を支える受託ならわかるけど、一方で受託ってのは片手間では絶対にできないし覚悟もいるんよね。
+--- 34. @Suppon2014 (2026-09-23) ---
+URL: https://x.com/Suppon2014/status/2102631618578124937
+今更ですがマルチプルのシェーダーを作り直しました。
+#spolous2 #スポラウス2 #unity #shmup
 
---- 37. @pentaxxx (2026-09-22) ---
-URL: https://x.com/pentaxxx/status/2102377231930765546
-どちらも一定のパターンがあるのに、「なぜAIはシティポップが作れて演歌が作れないのか」と聞いて見たら面白い答えが。AIが生成できる音楽は「平均しても聴けるかどうか」、もっと言えば「平均してもジャンルとして成立する」ものだけ。カントリー、ビッグバンド、シティポップ、バッハ風、ソフトロッ
+--- 35. @misakism13 (2026-09-22) ---
+URL: https://x.com/misakism13/status/2102305405280080143
+話題のJevを使って個人情報を一気に入力する機能を作ってみた。もう個人情報をちまちま入れることから解放された。ガチでAIの進化が凄すぎる。
 
---- 38. @GOROman (2026-09-22) ---
-URL: https://x.com/GOROman/status/2102254703249875011
-なるほどやってみよう
+遊んでる暇はない、AIに適応した人としていない人の差が、必ず顕著に現れる日がくる。世界が変わる。しかし、AIのしすぎで肩と腕がいたい。時間が溶ける。
 
---- 39. @yellowhat_ltd (?) ---
-＼「優先道路の追い越し」◯✕どっち？／
+--- 36. @rohanpaul_ai (2026-09-22) ---
+URL: https://x.com/rohanpaul_ai/status/2102193409175724353
+New Harvard + MIT + other labs paper shows a cleaner path to self-improving financial AI: 
 
-▌交通安全クイズ 第3問 ▌
-クイズに答えて抽選で当たる!!
+let the agent learn from SEC filing errors, but make every new behavior pass regression tests first.
 
-▼参加方法▼
-①
-@yellowhat_ltd
- をフォロー
-②下のボタンから答えを選んでポスト
-③当選者にはDMで連絡
+turns SEC-filing analysis from a static RAG system into one that can continuously
 
-問題は毎日AM10時に出題！
-
-《9/21〜30は秋の全国交通安全運動》
-
---- 40. @hideki_climax (2026-09-22) ---
-URL: https://x.com/hideki_climax/status/2102334853727604901
-あまりにもこれ
-
-⚠️ 無駄だらけのAGENTS.mdの指示
-⚠️ 出番じゃないのにでしゃばってくるSkill
-⚠️ ゴミが溜まりまくったメモリ機能
-
-これがない状態の人のみモデル性能に言及しなさい。
-
---- 41. @koguGameDev (2026-09-23) ---
-URL: https://x.com/koguGameDev/status/2102609280163807313
-一応の安定した国際関係と競争
-市場経済と金の流動性
-情報通信の爆発と普及
-
-この辺揃ったとこに、既存表現の蓄積が新しい力を生む可能性が現れちゃえば、もう今の状況自体必然としか考えられないし、どのルートでも近いとこに収束したんじゃないかな。
-
---- 42. @gosrum (2026-09-21) ---
-URL: https://x.com/gosrum/status/2102171235400769727
-Xiaomi MiMo も新しいバージョンである V2.6  Pro & Flashをリリース！
-
-しかもオープンウェイトで公開済。こちらもベンチマーク評価をしたい
-
---- 43. @gosrum (2026-09-21) ---
-URL: https://x.com/gosrum/status/2102171619557097976
-重み（Pro）
-
---- 44. @umiyuki_ai (2026-09-22) ---
-URL: https://x.com/umiyuki_ai/status/2102401211794379014
-タイム誌のAI減速についての記事。流れがよくまとまってる。多くの人にとってはAIがこんなドエライ話になってるなんて寝耳に水なんじゃないだろうか。
-
---- 45. @omi_info3 (2026-09-22) ---
-URL: https://x.com/omi_info3/status/2102399581933944963
-少し意地悪な言い方をすると
-「AIで人間以上の解説動画が作れるので自分で動画を作る気が失せた」→あなたは動画を通して何を主張したかったの？
-「AIで人間以上の小説が書けるので自分で小説を書く気が失せた」→あなたは自分の中の何を表現したくて筆を執ってたの？
-なんですよね。一時が万事。
-
---- 46. @Suzacque (2026-09-22) ---
-URL: https://x.com/Suzacque/status/2102525432050725073
-リセットされるかどうかは確率的事象だから決め打ちして行動しない方が良い。今回はちょうど使い切るところでリセット券付与という最高の結果になった。LLM同様、Tibo氏の言葉は確率的にしか捉えられない。ご利用は計画的に。
-
---- 47. @pzkh23 (2026-09-22) ---
-URL: https://x.com/pzkh23/status/2102366974663917849
-Claude特有の新モデルリリース直後のトークンリセットを正座にて待つ…
-
---- 48. @yhei_hei (2026-09-23) ---
-URL: https://x.com/yhei_hei/status/2102593820991148123
-VLCNP物語、HPが少ないときは画面の周囲が赤くなります。
-
-残り少ない場面、見た目からしてヤバそうな感じになる。
-嫁からは「サイレントヒル」と言われたので、きっと大丈夫な感じになってる
-
-#indiegamedev
-
---- 49. @711SEJ (?) ---
+--- 37. @711SEJ (?) ---
 ゴンチャのペットボトルに新フレーバー誕生🍇
 
 対象の貢茶(ゴンチャ)いずれか1本に使える
@@ -289,12 +223,80 @@ VLCNP物語、HPが少ないときは画面の周囲が赤くなります。
 ③結果は自動返信をチェック！
 ⇒ 当選者にはXチャット(旧ダイレクトメッセージ)でクーポンをお届け♪
 
---- 50. @Trtd6Trtd (2026-09-22) ---
-URL: https://x.com/Trtd6Trtd/status/2102544925590188470
-Jev、騒がれてる割にあまり賢くないと聞くので、日本語ベンチで試してみたが、結果を見る限り、一般常識では普通に強い気がする
+--- 38. @ai_nikechan (2026-09-23) ---
+URL: https://x.com/ai_nikechan/status/2102658659847458918
+【言葉で3Dキャラを動かす】きらくんさんが、Text-To-VRMAを生成AIなんでも展示会Vol.6に出展すると発表しました。
 
-面白かったのは、JamC-QAが全然だったところ
+このOSSは、テキストで「こう動いてほしい」と伝えるだけで、3Dキャラクター向けのモーションを生成するツールです。
 
-学術的な問題には強くても、日本固有の細かい知識を問われると弱いのかもしれない
+--- 39. @k_matsumaru (2026-09-22) ---
+URL: https://x.com/k_matsumaru/status/2102331430655410628
+これがサクッと作れるのであれば色々かわりそうな…
+アクションシーンとかめっちゃ使えそー
 
-ついでに最近遊んでるBonsai 2の1-token
+--- 40. @Yanagi_1112 (2026-09-22) ---
+URL: https://x.com/Yanagi_1112/status/2102527945571209580
+生成AIなんでも展示会、設営開始！
+この会場が5時間後にはAIでいっぱいになるの、にわかに信じられない
+
+当日参加OK→ 
+https://
+techplay.jp/event/987274
+
+--- 41. @seiiiiiiiiiiru (2026-09-23) ---
+URL: https://x.com/seiiiiiiiiiiru/status/2102636308707287201
+もう手作業でキーフレーム打つなんてアホらしい。
+これはClaude Opus 5.5で、HiggsfieldとAfterEffectsを操作してAIが作ったローンチビデオです。
+
+この動画は、月額19ドルのProプランで5％だけの使用だったので150円くらいでできました。
+
+--- 42. @sora_biz (2026-09-22) ---
+URL: https://x.com/sora_biz/status/2102384812078281209
+知ってました？
+
+Google AI ProにGoogle Colabがバンドルされたこと。
+
+なので、プランの計算資源を使って、オープンLLM vs Claude Code/Codex/Grok Buildの横並びベンチ環境を実装中。
+
+動画は最軽量クラスの「Qwen3-0.6B」でテストしてるとこ
+
+「この用途なら〇Bで足りる」を点数化していく予定
+
+--- 43. @riku720720 (2026-09-22) ---
+URL: https://x.com/riku720720/status/2102534517743550713
+かわいいデスクトップ背景ができた！！
+
+--- 44. @8co28 (2026-09-22) ---
+URL: https://x.com/8co28/status/2102543693479899448
+Opus5.5　にAIｍAIｍ改修させたらめっちゃ良くなってる
+
+--- 45. @sentaku_kuma (2026-09-23) ---
+URL: https://x.com/sentaku_kuma/status/2102663337935003706
+想像の20倍くらい接待プレイでした
+注ぎ込まれてる技術力が凄い😂www
+
+#生成AIなんでも展示会
+
+--- 46. @TORRAS_JP (?) ---
+新しいiPhoneに、新しい守りを✨
+待望の「Ostand Q3 Air Pro」、登場。
+
+洗練された佇まいに、頼れる機能を。
+
+● TPU「デュアルエアバッグ」構造。
+● 自在に使える、ゼンマイ式スタンド。
+● 最大5mの落下にも対応する、優れた耐衝撃性能。
+● 手になじむ握りやすさと、細部まで妥協しないこだわり。
+
+--- 47. @izutorishima (2026-09-22) ---
+URL: https://x.com/izutorishima/status/2102393540882100588
+結局まだTiboリセット来てないんだけどこれ発表まで待ちなんすか
+
+--- 48. @kikurage_92 (2026-09-23) ---
+URL: https://x.com/kikurage_92/status/2102656140496798166
+簡単にモデリングからコンポジットまでの流れを作ってみた
+#b3d #blender #AE
+
+--- 49. @Keisuke69 (2026-09-23) ---
+URL: https://x.com/Keisuke69/status/2102556318229987814
+おい、SIはやめろ、SIは
