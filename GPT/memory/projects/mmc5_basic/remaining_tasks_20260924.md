@@ -82,11 +82,23 @@ AUTHORINGは引き続き対象外。作業場所は`D:/HomeBrew/FamiBASIC_Turbo_
 `docs/benchmarks/persistent_product_20260924/`。製品ROM等は`.tmp/persistent_full_verified/`、
 内蔵Mesen証跡は`.tmp/persistent_mesen_verified/`。生成物をgitへ入れない。
 
-次はRAM-EDIT-RUNを`3a0e488`で予約・push済み。EDIT-CAPACITY完了で外部待ちが解けたため、
-ユーザーの継続指示に従い差分／再RUN高速化を続行する。まだ実装していない。
-現状はCOMPACT_SYMBOLSでinc_snapshot／inc_tryを無効化、編集でcompiler管理表を破棄する。
-通常構成の増分実装は`runtime/wide_incremental.c`、全RAM版は保存保持と管理表の共存が課題。
+RAM-EDIT-RUNも`5a1b4c4`で完了・mainへpush済み。COMPACT_SYMBOLSでinc_snapshot／inc_tryを有効化。
+RAM5の`$A500..A7FF`へ最大76件の記述子差分を退避し、RAM4のゲーム／LIST／編集使用後に復元。
+元の行領域に収まる変更はその場で生成し、最大8 Bのヘッダはみ出しを復元する。
+追加は空きがある場合に差分化。削除・成長・構造変更・退避不能・NEWなどは全体生成へ戻す。
+確定ソース／manifest／ジャーナルを変更せず、衝突時は保護する。
+最新ゲームのMesen実キー編集後RUNは2,535,090 cycles、約1.416秒。初回は約28.160秒。
+編集後の全編7,584更新・ボス1,237更新・リザルト・再挑戦、約619万画素等の不一致ゼロ。
+道中遅延324／ボス2は残る。ROM最低16 B以上、保存の配置残40 Bも維持。
+自動試験41件、内蔵Mesenの実キー往復と別プロセス冷起動も成功。
+一次記録は`docs/ram_edit_run_20260924.md`、証跡は`docs/benchmarks/ram_edit_run_20260924/`。
+製品ビルド`.tmp/persistent_incremental_v2/`、内蔵Mesen`.tmp/persistent_incremental_console/`。
+FamiBASICの作業ツリーはcleanでmainと同期済み。
+
+現在の未解決は4件（AUTHORING-E2E／VAR-8K／EDITOR-COEXIST／HARDWARE）。
 VAR-8Kは他担当の予約が残る。旧ブランチ不在や時間経過だけで停止と決めず、未解除。
+追加のローカルスレッド履歴・commit参照調査でも、旧担当の停止を確定できなかった。
+AUTHORINGはユーザーの明示指示で引き続き対象外。
 
 EDITOR-COEXISTについて現行512 KiB CHR-ROMを維持するか本体CHR-RAM編集まで対応するか、
 非同期質問を提示済み。まだ回答は得ていない。物理実機HARDWAREも外部待ちのまま。
