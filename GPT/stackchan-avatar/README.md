@@ -12,7 +12,9 @@ M5StackChan K151（CoreS3）を、Windows/macOS上のPCと家庭内LANで接続�
 - OpenAI Responses APIによる短い日本語会話
 - 必要な質問だけ自動実行するOpenAI Web検索（最新情報・ニュース・天気・価格・日程）
 - OpenAI音声認識と音声合成
-- 周囲の定常音へ自動追従する音声区間判定（発話後の無音2秒で確定）
+- 周囲の定常音へ自動追従する音声区間判定（発話後の無音0.8秒で確定）
+- 返答生成が長引く時だけ、質問に合った短いフィラーを先に発話
+- OpenAI SpeechのPCMストリーミング再生
 - 返答終了後15秒間のフォローアップ音声待受（続けて話す時は再タップ不要）
 - 公式に近い状態色（音声待受は緑、発話中は青）
 - 公式StackChan向けビルドでは工場ファームに近い24 kHz・MCLKあり・ステレオI2S出力
@@ -105,9 +107,15 @@ OpenAI会話ではWeb検索が既定で有効です。「今日のニュース�
 最新情報が必要な質問だけモデルが検索を選びます。通常の雑談では検索しません。
 検索範囲は既定で`low`にして、待ち時間とAPI費用を抑えています。
 
+返答が0.45秒以内に生成されない時だけ、「ちょっと調べてみるね」などの短いフィラーを
+先に話します。検索、カメラ、操作、通常の思考をローカルの単純な規則で分類するため、
+フィラー選択用の追加API呼び出しはありません。フィラーを話している間も回答生成は継続します。
+
 ```dotenv
 STACKCHAN_AVATAR_WEB_SEARCH_ENABLED=true
 STACKCHAN_AVATAR_WEB_SEARCH_CONTEXT_SIZE=low
+STACKCHAN_AVATAR_FILLER_ENABLED=true
+STACKCHAN_AVATAR_FILLER_DELAY_SECONDS=0.45
 ```
 
 検索を完全に止める場合は`STACKCHAN_AVATAR_WEB_SEARCH_ENABLED=false`にします。

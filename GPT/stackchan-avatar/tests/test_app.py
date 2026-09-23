@@ -1,15 +1,21 @@
 from __future__ import annotations
 
+import asyncio
 from typing import Any
 
 import pytest
 from fastapi.testclient import TestClient
 
-from stackchan_avatar.app import create_application
+from stackchan_avatar.app import (
+    _reply_with_optional_filler,
+    _select_filler,
+    create_application,
+)
 from stackchan_avatar.brain import EchoBrain
 from stackchan_avatar.config import Settings
 from stackchan_avatar.web_ui import page
 from stackchan_server.listen import TimeoutError as ListenTimeoutError
+from stackchan_server.ws_proxy import FirmwareState
 
 
 class DummyRecognizer:
@@ -30,6 +36,13 @@ class RecordingBrain:
         del device
         self.events.append(f"reply:{text}")
         return "返事"
+
+
+class SlowBrain:
+    async def reply(self, text: str, *, device: Any = None) -> str:
+        del text, device
+        await asyncio.sleep(0.03)
+        return "検索結果"
 
 
 class RecordingTalkProxy:
@@ -55,6 +68,9 @@ class RecordingTalkProxy:
 
     async def speak(self, text: str) -> None:
         self.events.append(f"speak:{text}")
+
+    async def send_state_command(self, state: FirmwareState) -> None:
+        self.events.append(f"state:{state.name.lower()}")
 
 
 @pytest.mark.asyncio
@@ -122,3 +138,48 @@ def test_page_contains_complete_first_run_guide() -> None:
     assert "音量を0にすると口パクも止まります" in html
     assert "近くの話し声を基準に自動調整します" in html
     assert "返答を話し終えた後は15秒間" in html
+
+
+def test_select_filler_by_intent() -> None:
+    assert _select_filler("今日のニュースを調べて") == "うん、ちょっと調べてみるね。"
+    assert _select_filler("目の前を見て") == "うん、ちょっと見てみるね。"
+    assert _select_filler("右を向いて") == "うん、やってみるね。"
+    assert _select_filler("量子力学とは？") == "うーん、ちょっと考えるね。"
+
+
+@pytest.mark.asyncio
+async def test_slow_reply_speaks_filler_while_reply_continues() -> None:
+    events: list[str] = []
+    proxy = RecordingTalkProxy(events)
+
+    reply = await _reply_with_optional_filler(
+        brain=SlowBrain(),  # type: ignore[arg-type]
+        proxy=proxy,  # type: ignore[arg-type]
+        user_text="今日のニュースを調べて",
+        enabled=True,
+        delay_seconds=0.001,
+    )
+
+    assert reply == "検索結果"
+    assert events == [
+        "speak:うん、ちょっと調べてみるね。",
+        "state:thinking",
+    ]
+
+
+@pytest.mark.asyncio
+async def test_fast_reply_skips_filler() -> None:
+    events: list[str] = []
+    proxy = RecordingTalkProxy(events)
+    brain = RecordingBrain(events)
+
+    reply = await _reply_with_optional_filler(
+        brain=brain,
+        proxy=proxy,  # type: ignore[arg-type]
+        user_text="こんにちは",
+        enabled=True,
+        delay_seconds=0.1,
+    )
+
+    assert reply == "返事"
+    assert events == ["reply:こんにちは"]

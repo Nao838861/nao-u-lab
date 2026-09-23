@@ -71,7 +71,8 @@ private:
   bool voice_active_ = false;
   uint32_t no_speech_timeout_ms_ = 6000;
   static constexpr uint32_t kNoiseCalibrationMs = 300;
-  static constexpr uint32_t kSilenceDurationMs = 2000;
+  // 会話の間を短くする。短すぎると文中の息継ぎで確定するため、まず800msを安全側の下限とする。
+  static constexpr uint32_t kSilenceDurationMs = 800;
   static constexpr int32_t kImmediateSpeechThreshold = 1800;
   static constexpr int32_t kMinimumSpeechStartThreshold = 650;
   static constexpr int32_t kMaximumSpeechStartThreshold = 2800;

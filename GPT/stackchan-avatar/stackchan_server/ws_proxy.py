@@ -38,7 +38,7 @@ _BASE_DIR = Path(__file__).resolve().parent
 _RECORDINGS_DIR = _BASE_DIR / "recordings"
 
 _DOWN_WAV_CHUNK = 4096  # bytes per WebSocket frame for synthesized audio (raw PCM)
-_DOWN_SEGMENT_MILLIS = 2000  # duration of a single START-DATA-END segment in milliseconds
+_DOWN_SEGMENT_MILLIS = 500  # 小分けにして、PCMストリームの先頭から早く再生する
 _DOWN_SEGMENT_STAGGER_MILLIS = (
     _DOWN_SEGMENT_MILLIS // 2
 )  # half interval for the second segment start
