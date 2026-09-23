@@ -30,9 +30,24 @@ mainの既存・並行作業の未commit差分は保持した。
 `docs/benchmarks/console_return_fix_20260924/`。通常入口はmainの`EditFlightLab.cmd`。
 起動済みROMへ修正が自動反映するわけではなく、更新したSDKで再ビルド／RUNが必要。
 
-## 継続条件
+## 停止担当の確認と引継ぎ
 
-最終確認時点では、AUTHORING以外の未完了はBASIC-TEMPLATES（別担当が新規予約）、
-VAR-8K（他担当実行中）、EDIT-CAPACITY／EDITOR-COEXIST／RAM-EDIT-RUN／HARDWARE（外部待ち）。
-空いている実行可能な項目はなく、正本の「他担当の実行中・外部待ちだけなら報告して止める」に従う。
-全体完成とは報告しない。次回は最新mainの状態を再確認する。
+追加指示：
+
+> タスクリストを見て。実際に動いていないスレッドがロックしているところがないか探して、あったらあなたが着手して
+
+ローカル履歴DBと実際のrolloutを読み取り専用で照合。EDIT-CAPACITY旧担当
+`01a0b1bf-4f92-7023-b07c-6626dcf7a0f9` は00:28 JSTにtask_completeで終了していた。
+一方AUTHORINGとBASIC-TEMPLATESはツール実行が続いていた。DBの終了表示が古い再開スレッドも
+あるため、DBだけで停止を決めない。VAR-8Kの旧ブランチ不在だけでは停止と断定していない。
+
+EDIT-CAPACITYを自分へ引継ぎ、予約`8e39abb`、ビルド修正`4811b09`をmainへpush。
+永続ソース構成でBSS16 B・ROM102 B超過とメタデータ操作の窓越境を直した。
+保存・本体編集・LIST等28試験、追加RAM保護・容量監査試験が成功。
+最新ゲームの配置候補27,534 Bに対し、本文・索引等の必要下限36,445 Bで8,911 B不足する。
+全RAM配置・通常起動・RETURN/NEW/RUN/容量表示の製品統合は未完了。完了扱いにしない。
+正本の`docs/edit_capacity_takeover_20260924.md`に調査根拠・検証・再開地点を記録した。
+
+最新mainでは他担当がHEADROOM-REGRESSION（優先2a・未着手）を追加。
+通常版のBANK 2/3/5の空き25/233/19 B、KERNEL1 Bという基準割れは今回も再現した。
+自分の実行中予約はEDIT-CAPACITY一件だけ。次回は同項目を継続し、最新mainの予約を確認する。
