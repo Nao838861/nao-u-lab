@@ -142,6 +142,7 @@ def create_application(
         return {
             "ok": True,
             "brain": settings.brain,
+            "web_search_enabled": settings.web_search_enabled,
             "connected_devices": len(devices),
             "devices": devices,
             "has_camera": bool(metadata and metadata.has_camera),

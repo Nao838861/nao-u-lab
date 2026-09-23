@@ -59,7 +59,27 @@ async def test_openai_brain_uses_responses_without_storage() -> None:
     call = client.responses.calls[0]
     assert call["model"] == "test-model"
     assert call["store"] is False
+    assert call["max_output_tokens"] == 600
     assert call["input"][-1] == {"role": "user", "content": "こんにちは"}
+    assert call["tools"] == [{"type": "web_search", "search_context_size": "low"}]
+    assert call["tool_choice"] == "auto"
+
+
+@pytest.mark.asyncio
+async def test_openai_brain_can_disable_web_search() -> None:
+    client = FakeClient()
+    brain = OpenAIBrain(
+        model="test-model",
+        system_prompt="短く答える",
+        web_search_enabled=False,
+        client=client,
+    )
+
+    await brain.reply("こんにちは")
+
+    call = client.responses.calls[0]
+    assert "tools" not in call
+    assert "tool_choice" not in call
 
 
 @pytest.mark.asyncio
@@ -84,6 +104,9 @@ async def test_openai_brain_executes_volume_tool() -> None:
 
     assert await brain.reply("音量を変えて", device=device) == "音量を変えたよ。"
     assert device.volume == 140
+    first_tools = client.responses.calls[0]["tools"]
+    assert first_tools[0] == {"type": "web_search", "search_context_size": "low"}
+    assert any(tool.get("name") == "set_volume" for tool in first_tools)
     second_input = client.responses.calls[1]["input"]
     assert second_input[-1]["type"] == "function_call_output"
     assert '"level": 140' in second_input[-1]["output"]

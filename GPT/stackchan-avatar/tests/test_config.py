@@ -19,4 +19,6 @@ def test_openai_key_is_loaded_from_dotenv_and_passed_to_brain(tmp_path: Path) ->
     assert settings.brain == "openai"
     assert isinstance(brain, OpenAIBrain)
     assert brain.api_key == "test-local-key"
+    assert brain.web_search_enabled is True
+    assert brain.web_search_context_size == "low"
     assert "test-local-key" not in repr(settings)

@@ -96,6 +96,11 @@ DEVICE_TOOLS = [
     },
 ]
 
+WEB_SEARCH_TOOL = {
+    "type": "web_search",
+    "search_context_size": "low",
+}
+
 
 def _build_head_motion(motion: str, repetitions: int) -> list[ServoCommand]:
     repeat = max(1, min(3, int(repetitions)))
@@ -183,12 +188,16 @@ class OpenAIBrain:
         system_prompt: str,
         max_history_turns: int = 6,
         max_reply_chars: int = 180,
+        web_search_enabled: bool = True,
+        web_search_context_size: str = "low",
         client: object | None = None,
     ) -> None:
         self.model = model or os.getenv("OPENAI_CHAT_MODEL", "gpt-5.6-luna")
         self.api_key = api_key
         self.system_prompt = system_prompt
         self.max_reply_chars = max_reply_chars
+        self.web_search_enabled = web_search_enabled
+        self.web_search_context_size = web_search_context_size
         self._history: deque[dict[str, str]] = deque(maxlen=max_history_turns * 2)
         self._client = client
         self._lock = asyncio.Lock()
@@ -235,11 +244,25 @@ class OpenAIBrain:
             "model": self.model,
             "instructions": self.system_prompt,
             "input": messages,
-            "max_output_tokens": 180,
+            # Reasoning and web-search models may consume part of this budget before
+            # emitting the short spoken answer. The final text is still limited by
+            # max_reply_chars in reply().
+            "max_output_tokens": 600,
             "store": False,
         }
+        tools: list[dict[str, Any]] = []
+        if self.web_search_enabled:
+            tools.append(
+                {
+                    **WEB_SEARCH_TOOL,
+                    "search_context_size": self.web_search_context_size,
+                }
+            )
         if device is not None:
-            kwargs["tools"] = DEVICE_TOOLS
+            tools.extend(DEVICE_TOOLS)
+        if tools:
+            kwargs["tools"] = tools
+            kwargs["tool_choice"] = "auto"
         return await asyncio.to_thread(self._get_client().responses.create, **kwargs)
 
     async def _execute_tool(
@@ -321,8 +344,18 @@ def create_brain(settings) -> Brain:
             system_prompt=settings.system_prompt,
             max_history_turns=settings.max_history_turns,
             max_reply_chars=settings.max_reply_chars,
+            web_search_enabled=settings.web_search_enabled,
+            web_search_context_size=settings.web_search_context_size,
         )
     raise ValueError(f"Unknown STACKCHAN_AVATAR_BRAIN: {settings.brain}")
 
 
-__all__ = ["DEVICE_TOOLS", "Brain", "DeviceController", "EchoBrain", "OpenAIBrain", "create_brain"]
+__all__ = [
+    "DEVICE_TOOLS",
+    "WEB_SEARCH_TOOL",
+    "Brain",
+    "DeviceController",
+    "EchoBrain",
+    "OpenAIBrain",
+    "create_brain",
+]

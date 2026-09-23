@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import io
 import os
+import re
 import wave
 
 
@@ -16,6 +17,14 @@ def _pcm_to_wav(pcm_bytes: bytes, *, sample_rate: int = 16000) -> io.BytesIO:
     buffer.seek(0)
     buffer.name = "stackchan.wav"
     return buffer
+
+
+def _text_for_speech(text: str) -> str:
+    """Keep source names audible without reading Markdown syntax or long URLs."""
+    spoken = re.sub(r"\[([^\]]+)\]\(https?://[^)]+\)", r"\1", text)
+    spoken = re.sub(r"https?://\S+", "", spoken)
+    spoken = spoken.replace("**", "").replace("__", "").replace("`", "")
+    return " ".join(spoken.split()).strip()
 
 
 class OpenAISpeechRecognizer:
@@ -75,7 +84,7 @@ class OpenAISpeechSynthesizer:
             response = self._get_client().audio.speech.create(
                 model=self.model,
                 voice=self.voice,
-                input=text,
+                input=_text_for_speech(text),
                 instructions="明るく親しみやすい日本語で、少しゆっくり話してください。",
                 response_format="wav",
             )
@@ -84,4 +93,4 @@ class OpenAISpeechSynthesizer:
         return await asyncio.to_thread(request)
 
 
-__all__ = ["OpenAISpeechRecognizer", "OpenAISpeechSynthesizer"]
+__all__ = ["OpenAISpeechRecognizer", "OpenAISpeechSynthesizer", "_text_for_speech"]
