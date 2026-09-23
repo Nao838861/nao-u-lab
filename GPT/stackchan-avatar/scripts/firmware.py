@@ -6,6 +6,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from stackchan_avatar.firmware_paths import platformio_core_dir
+
 ENVIRONMENT = "m5stack-official-stackchan"
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -13,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def run(*args: str) -> None:
     command = [sys.executable, "-m", "platformio", *args]
     environment = os.environ.copy()
-    environment.setdefault("PLATFORMIO_CORE_DIR", str(ROOT / ".platformio-core"))
+    environment.setdefault("PLATFORMIO_CORE_DIR", str(platformio_core_dir(ROOT)))
     environment.setdefault("PLATFORMIO_SETTING_ENABLE_TELEMETRY", "no")
     print("+", " ".join(command))
     subprocess.run(command, check=True, env=environment)

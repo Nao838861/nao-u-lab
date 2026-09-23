@@ -3,6 +3,7 @@
 .venv*/
 .stackchan-venv/
 launcher.log
+/logs/
 .pio/
 .platformio-core/
 __pycache__/

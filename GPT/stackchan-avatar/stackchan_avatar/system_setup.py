@@ -10,6 +10,8 @@ from pathlib import Path
 
 from pydantic import BaseModel, Field
 
+from .firmware_paths import platformio_core_dir
+
 LOCAL_CONFIG_FILENAME = "stackchan.local.json"
 
 
@@ -211,7 +213,7 @@ class SetupService:
         if request.port:
             command.extend(("--port", request.port))
         environment = os.environ.copy()
-        environment.setdefault("PLATFORMIO_CORE_DIR", str(self.root / ".platformio-core"))
+        environment.setdefault("PLATFORMIO_CORE_DIR", str(platformio_core_dir(self.root)))
         environment.setdefault("PLATFORMIO_SETTING_ENABLE_TELEMETRY", "no")
         log = self._job_state["log"]
         assert isinstance(log, list)

@@ -54,6 +54,10 @@ Python 3.11〜3.13を一度インストールした後は、コンソールへ�
 `Start StackChan.bat`をダブルクリックします。
 初回だけ必要な部品を自動インストールし、その後ブラウザで設定画面が開きます。
 
+Windowsログイン時から常駐させる場合は
+[Windows常駐手順](docs/WINDOWS_RESIDENT_JA.md)に従って登録します。
+デスクトップのショートカットから操作画面を開け、ブラウザを閉じても動き続けます。
+
 ### macOS
 
 `Start StackChan.command`をダブルクリックします。
