@@ -2,6 +2,8 @@
 
 製品名は **FamiBASIC Turbo** に確定。現行本流の作業フォルダーは `D:\HomeBrew\FamiBASIC_Turbo_main`。
 
+現在の残件はプロジェクト内`docs/open_issues.md`が正本。[残件整理と本体モニタ改善](remaining_tasks_20260924.md)に、AUTHORING系を別スレッドへ任せる指示、CLS・LIST修正と検証、作業再開条件を記録した。
+
 ## 現行サンプルの入口
 
 最新は [Lv1レーザーの移動区間化](laser_travel_20260921.md)。本体変更main `78ceacf` までpush済み。正本は `experiments/single_basic_console/game/src/main.bas`、編集入口は `EditFlightLab.cmd`、直接プレイは `PlayFlightLab.cmd`。Lv1は先頭が伸びて後端が追って消える最大224px相当・単体約24.2 DPSで左右追従する線へ変更。Lv2は連続照射。[前回のR・W・M・L調整](weapon_tuning_20260921.md) のR/W/Mは維持。最新の595地形版へ統合済み。全編描画照合成功、安定60fpsは未達。測定条件・更新抜け回数は最新記録を参照。
