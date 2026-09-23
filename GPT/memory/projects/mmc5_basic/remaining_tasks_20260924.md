@@ -95,10 +95,13 @@ RAM5の`$A500..A7FF`へ最大76件の記述子差分を退避し、RAM4のゲー
 製品ビルド`.tmp/persistent_incremental_v2/`、内蔵Mesen`.tmp/persistent_incremental_console/`。
 FamiBASICの作業ツリーはcleanでmainと同期済み。
 
-現在の未解決は4件（AUTHORING-E2E／VAR-8K／EDITOR-COEXIST／HARDWARE）。
-VAR-8Kは他担当の予約が残る。旧ブランチ不在や時間経過だけで停止と決めず、未解除。
-追加のローカルスレッド履歴・commit参照調査でも、旧担当の停止を確定できなかった。
-AUTHORINGはユーザーの明示指示で引き続き対象外。
+2026-09-24の追加回答で、EDITOR-COEXISTも完了。ユーザーの選択原文は
+「現行CHR-ROMを維持し、素材はPCで編集する」。本体素材編集を今回の要件から外し、
+README・決定文書・STUDIO併用拒否時のPC編集案内へ反映した。3入口の拒否とROM未生成、
+Python構文・差分検査を確認し、`33ded7c`をmainへpush。CHR-RAM編集の実装完了ではない。
 
-EDITOR-COEXISTについて現行512 KiB CHR-ROMを維持するか本体CHR-RAM編集まで対応するか、
-非同期質問を提示済み。まだ回答は得ていない。物理実機HARDWAREも外部待ちのまま。
+VAR-8K担当の稼働状況と実機機材について質問したところ、ユーザーは
+「それはこちらでやるので考えなくていい」と回答。両件をユーザー側の担当として
+タスクリストへ反映済み。次回、停止担当の推定や実機機材の再質問を繰り返さない。
+残る未解決はAUTHORING-E2E（別スレッド）／VAR-8K（ユーザー側）／HARDWARE（ユーザー側）の3件。
+AUTHORINGは引き続き明示的な対象外。こちらで進める未解決項目はなく、作業ツリーはclean。
