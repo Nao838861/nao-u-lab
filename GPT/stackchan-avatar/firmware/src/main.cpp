@@ -538,6 +538,11 @@ void handleWsEvent(WStype_t type, uint8_t *payload, size_t length)
 
 void setup()
 {
+#if defined(ARDUINO_USB_CDC_ON_BOOT) && ARDUINO_USB_CDC_ON_BOOT
+  // USB接続中にシリアルモニタを閉じても、ログ待ちで会話を止めない。
+  // HWCDCは0msで再試行カウンタがunderflowするため、最小の非ゼロ値にする。
+  Serial.setTxTimeoutMs(1);
+#endif
 #if USE_STACKCHAN_BSP
   M5StackChan.begin();
 #else

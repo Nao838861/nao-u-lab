@@ -22,46 +22,15 @@ from stackchan_server.ws_proxy import (
 from .brain import Brain, create_brain
 from .config import Settings
 from .diagnostic_audio import DiagnosticSpeechRecognizer, DiagnosticSpeechSynthesizer
+from .fillers import FillerSelector
 from .openai_audio import OpenAISpeechRecognizer, OpenAISpeechSynthesizer
 from .system_setup import FirmwareJobRequest, SetupRequest, SetupService
 from .web_ui import page
 
 logger = getLogger(__name__)
 
-_SEARCH_WORDS = (
-    "調べ",
-    "検索",
-    "ニュース",
-    "天気",
-    "今日",
-    "現在",
-    "最新",
-    "価格",
-    "いつ",
-)
-_VISION_WORDS = ("見て", "見える", "カメラ", "写真", "撮って", "目の前")
-_ACTION_WORDS = (
-    "動か",
-    "向いて",
-    "うなず",
-    "首",
-    "音量",
-    "大きく",
-    "小さく",
-    "踊って",
-)
-
-
-def _select_filler(text: str) -> str:
-    """暫定認識にも使える、結果を先取りしない短い相づちを選ぶ。"""
-    normalized = "".join(text.split())
-    if any(word in normalized for word in _VISION_WORDS):
-        return "うん、ちょっと見てみるね。"
-    if any(word in normalized for word in _ACTION_WORDS):
-        return "うん、やってみるね。"
-    if any(word in normalized for word in _SEARCH_WORDS):
-        return "うん、ちょっと調べてみるね。"
-    return "うーん、ちょっと考えるね。"
+def _select_filler(text: str) -> str | None:
+    return FillerSelector().select(text)
 
 
 async def _reply_with_optional_filler(
@@ -71,18 +40,27 @@ async def _reply_with_optional_filler(
     user_text: str,
     enabled: bool,
     delay_seconds: float,
+    filler_selector: FillerSelector | None = None,
 ) -> str:
     reply_task = asyncio.create_task(brain.reply(user_text, device=proxy))
-    if not enabled:
-        return await reply_task
+    try:
+        if not enabled:
+            return await reply_task
 
-    done, _pending = await asyncio.wait({reply_task}, timeout=delay_seconds)
-    if reply_task not in done:
-        await proxy.speak(_select_filler(user_text))
-        # フィラーの再生完了でファームはIdleへ戻る。本回答の音声開始を受け付けるよう
-        # Thinkingへ戻してから、並行実行中の回答を待つ。
-        await proxy.send_state_command(FirmwareState.THINKING)
-    return await reply_task
+        done, _pending = await asyncio.wait({reply_task}, timeout=delay_seconds)
+        if reply_task not in done:
+            filler = (filler_selector or FillerSelector()).select(user_text)
+            if filler is not None:
+                await proxy.speak(filler)
+                # フィラーの再生完了でファームはIdleへ戻る。本回答の音声開始を受け付けるよう
+                # Thinkingへ戻してから、並行実行中の回答を待つ。
+                await proxy.send_state_command(FirmwareState.THINKING)
+        return await reply_task
+    finally:
+        # タップによる中断や音声送信失敗で、返答生成だけを孤立させない。
+        if not reply_task.done():
+            reply_task.cancel()
+        await asyncio.gather(reply_task, return_exceptions=True)
 
 
 async def _apply_initial_volume(
@@ -169,6 +147,7 @@ def create_application(
         speech_synthesizer=synthesizer,
     )
     setup_service = SetupService(project_root or Path(__file__).resolve().parents[1])
+    filler_selector = FillerSelector()
 
     @application.setup
     async def setup_device(proxy: WsProxy) -> None:
@@ -188,6 +167,7 @@ def create_application(
                 user_text=user_text,
                 enabled=settings.brain.lower() == "openai" and settings.filler_enabled,
                 delay_seconds=settings.filler_delay_seconds,
+                filler_selector=filler_selector,
             )
             await proxy.speak(reply)
 

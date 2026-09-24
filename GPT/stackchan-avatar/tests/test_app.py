@@ -154,10 +154,10 @@ def test_page_contains_complete_first_run_guide() -> None:
 
 
 def test_select_filler_by_intent() -> None:
-    assert _select_filler("今日のニュースを調べて") == "うん、ちょっと調べてみるね。"
-    assert _select_filler("目の前を見て") == "うん、ちょっと見てみるね。"
-    assert _select_filler("右を向いて") == "うん、やってみるね。"
-    assert _select_filler("量子力学とは？") == "うーん、ちょっと考えるね。"
+    assert _select_filler("今日のニュースを調べて") == "最近の動きだね。"
+    assert _select_filler("目の前を見て") == "目の前の様子だね。"
+    assert _select_filler("右を向いて") == "首を動かすんだね。"
+    assert _select_filler("量子力学とは？") == "仕組みから考えてみよう。"
 
 
 @pytest.mark.asyncio
@@ -175,7 +175,7 @@ async def test_slow_reply_speaks_filler_while_reply_continues() -> None:
 
     assert reply == "検索結果"
     assert events == [
-        "speak:うん、ちょっと調べてみるね。",
+        "speak:最近の動きだね。",
         "state:thinking",
     ]
 

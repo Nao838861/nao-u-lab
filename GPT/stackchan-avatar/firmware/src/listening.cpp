@@ -134,7 +134,7 @@ void Listening::loop()
     }
   }
 
-  // 発話後に動的しきい値以下の状態が2秒続いたら終了
+  // 発話後に動的しきい値以下の状態がkSilenceDurationMs続いたら終了
   if (shouldStopForSilence())
   {
     log_i(
