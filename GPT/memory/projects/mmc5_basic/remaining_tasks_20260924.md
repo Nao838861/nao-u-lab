@@ -128,5 +128,17 @@ VAR-8Kも`3b01344`で完了・mainへpush済み。
 一次記録は`docs/var_phase_20260924.md`と`docs/benchmarks/var_phase_20260924/`。
 製品ビルド`.tmp/var_phase_game_v4/`、最大配列試験版`.tmp/var_maximum_game/`、
 内蔵Mesen`.tmp/var_phase_console/`。FamiBASIC worktreeは`D:/HomeBrew/FamiBASIC_Turbo_remaining`。
-残る正本タスクはAUTHORING-E2E（別スレッド）とHARDWARE（ユーザー側）の2件だけ。
-こちらの担当対象に未解決は残っていない。
+この時点ではAUTHORING-E2E（別スレッド）とHARDWARE（ユーザー側）が残っていた。以下の追加作業で更新。
+
+2026-09-24、AUTHORING-E2Eへの「進めて」を受け、以前のAUTHORING除外をこの項目について上書きして引継ぎ。
+空からPC制作・保存・フォルダ移動した同一ROMを、内蔵Mesenの実キーRUN・停止・BASIC編集・再RUN・別プロセス冷起動まで通した。
+`800 POKE 1792,39`の確定後は38から39へ変わり、冷起動LISTとRUNでも39を保持。初期保存で既存保存を上書きしない。
+独立Mesenと内蔵コアの初回・編集後・冷起動後は各61,440画素すべて一致、PC原本の全ファイルハッシュ不変。
+別スレッドのSPRITE-PATTERN-UI完了変更を統合し、描画を新CHR編集UIの実マウスイベントへ追従して全経路を再試験した。
+最終証跡は`.tmp/authoring_e2e_integrated_v2/`、ROM SHA-256は`c453959dbd32a2e016380df6bbdcb2def7ac3a65ecbed508cda7c35b780de1ac`。
+全入りゲーム再ビルド・本体コンパイル容量監査も合格、生成コード62,166 B、コード最小空き260 B、ROM最小19 B。
+一次記録は`docs/authoring_e2e_20260924.md`と`docs/benchmarks/authoring_e2e_20260924/`。
+実装・証跡は`15968d5`、新UI統合再検証は`8820d30`、予約更新とのマージ後`373e08d`をmainへpush済み。作業ツリーclean。
+本体はBASIC編集、素材はPCで編集するCHR-ROM方針を維持。PCソースへの自動逆同期と物理MMC5試験は今回の達成範囲ではない。
+最新の残件はCHR-GRID-NAMES（別スレッドが現在実行中）、LD65-HOST-CAUSE（散発的なホスト障害の根本原因未特定）、HARDWARE（ユーザー担当）。
+CPU 0へ自分の検証プロセスのみ固定して試験を実行したが、これをPC障害の原因特定・解消とは扱わない。
