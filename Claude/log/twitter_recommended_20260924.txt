@@ -1,324 +1,267 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-09-24 11:03
+# Read at: 2026-09-24 17:35
 # Total: 50 tweets
 
---- 1. @GOROman (2026-09-23) ---
-URL: https://x.com/GOROman/status/2102685170365239498
-コントローラのフレキ。ショートして電源壊れがちw
+--- 1. @koguGameDev (2026-09-24) ---
+URL: https://x.com/koguGameDev/status/2102919173999624341
+「三面図に合わせて」系の指示はもちろん必要だけど、元画像から部分の構成とディテールを言語化させて、切り出した画像とペアにして、部分単位で比較させながらやると精度上がる。
 
---- 2. @MLBJapan (?) ---
-【決勝打】岡本和真 勝ち越しタイムリー💥
-"惑星最強" デグロムからの一打！
+--- 2. @sakuhin_select1 (?) ---
+店長に恋するギャルが大胆行動...？
 
-同点の5回裏 一死一、三塁のチャンス
-センターへ抜けるタイムリーヒット！
-ブルージェイズ の連敗を止める決勝打となりました🙌
+〔PR〕
 
---- 3. @rohanpaul_ai (2026-09-23) ---
-URL: https://x.com/rohanpaul_ai/status/2102871470770999404
-Dario Amodei just talked about today's announcement of Claude discovering a new gene-editing mechanism at the UN Security Council.
+--- 3. @GOROman (2026-09-23) ---
+URL: https://x.com/GOROman/status/2102764772207038945
+今日のあるあるパターン
 
-“Anthropic announced the Claude discovery of a new molecular machine. It's a preliminary finding, but it may constitute a new gene editing mechanism
+他のブース見に行く→説明聞こうとする→「なんか展示してるんですよね！」と言われる→接待レーサーブースに連れてやってもらう→説明聞き忘れる
 
---- 4. @rohanpaul_ai (2026-09-23) ---
-URL: https://x.com/rohanpaul_ai/status/2102881781427163243
-A tiny agent behavior of actually opening enough of the file changed recognition by tens of % points
+--- 4. @akari_worlds (2026-09-23) ---
+URL: https://x.com/akari_worlds/status/2102684658580259040
+「一週間まで」と刷ってある雑誌が、132年たって図書館のカウンターに置かれた。ニューハンプシャーの、1894年9月号。
 
---- 5. @Nao_u_ (2026-09-24) ---
-URL: https://x.com/Nao_u_/status/2102921831363825839
-こういう観点で見ると、キン肉マンは「細かい矛盾や破綻が気にならないくらい大ボラが魅力的」みたいな感じだろうか。
-魅力的な大ボラを吹くのって難しい
+持ってきたジョン・ハンソンさん（84）は、どこで手に入れたのか覚えていない。「見当もつかない。何年も何年も持っていた」。言えるのはそこまでだった。
 
---- 6. @Trtd6Trtd (2026-09-24) ---
-URL: https://x.com/Trtd6Trtd/status/2102916997306871996
-Opus 5.5のピクセルアートがすごいと聞いたので試してみたが、確かにすごかった
+--- 5. @elonmusk (2026-09-24) ---
+URL: https://x.com/elonmusk/status/2102952936771035459
+True
 
---- 7. @GOROman (2026-09-23) ---
-URL: https://x.com/GOROman/status/2102573630605652246
-荷物が多いのでタクシーで行くか。。。
+--- 6. @r5vdr (2026-09-24) ---
+URL: https://x.com/r5vdr/status/2102955257978597505
+一週間くらい彼氏とずっと一緒にいるのに彼氏が｢激エロ汗だくセックス｣の「激ロ汗だくセ」抜きばっかりであまりにも私が可哀想
 
---- 8. @ShoheyOkada (2026-09-23) ---
+--- 7. @nyapan_mohy (2026-09-22) ---
+URL: https://x.com/nyapan_mohy/status/2102413448634364160
+毛羽立ちが目立つううう！！
+喜んでいただけて何より！
+
+--- 8. @gosrum (2026-09-22) ---
+URL: https://x.com/gosrum/status/2102418813849584070
+めちゃくちゃ嬉しいです😭本当にありがとうございます！！
+明日はお互い楽しんでいきましょう！
+
+--- 9. @room_909 (2026-09-23) ---
+URL: https://x.com/room_909/status/2102730433243013563
+今度の土日は写生会ともくもく会が連続開催！お気軽にご参加ください、お待ちしてます！
+
+--- 10. @elonmusk (2026-09-24) ---
+URL: https://x.com/elonmusk/status/2103005475075670176
+An Earth economy is less than a trillionth the size of a K2 economy
+
+--- 11. @EdenChat_TW (?) ---
+子どもの頃は「お兄ちゃん」と呼んで、
+俺の後ばかり追いかけていた妹。
+
+今では、俺を見るたびに顔をしかめる。
+
+何も言わずに気にかけてくれる姉。
+俺を息子のように育ててくれた母。
+
+そして、同級生、友達、
+コンビニ店員、カウンセラーまで。
+
+--- 12. @kis (2026-09-23) ---
+URL: https://x.com/kis/status/2102865381534892398
+SamやDarioもそういう限界を感じていて「AIの開発を止めよう」みたいなことを言ってるというのがある気がする。
+そうすると、性能向上の停滞があっても「危険だから止めました」って言える。
+
+--- 13. @BOLTTECH_WORKS (2026-09-23) ---
+URL: https://x.com/BOLTTECH_WORKS/status/2102890074069471644
+本日のねじまるとボルトくん
+
+--- 14. @GOROman (2026-09-23) ---
+URL: https://x.com/GOROman/status/2102759348795789376
+海外無料でご招待いただけると助かります。
+
+--- 15. @MOTOSHI918 (2026-09-24) ---
+URL: https://x.com/MOTOSHI918/status/2102962261363208477
+サブスク第28弾リリース🚀『HYPER ZONE』 アップテンポのメタルテクノトランス　3DCGMV visualizer   #3DCG #作曲 #DTM #EDM 今年中に曲70弾、アニメ100話までアップしたかったけど無理そう🤣
+
+--- 16. @alec_helbling (2026-09-21) ---
+URL: https://x.com/alec_helbling/status/2102021438895014200
+Jascha Sohl-Dickstein has an amazing blog post showing that the boundary between hyperparameter settings where neural network training succeeds and fails has a fractal structure.
+
+The visualizations are mesmerizing.
+
+
+https://
+sohl-dickstein.github.io/2024/02/12/fra
+ctal.html
+…
+
+--- 17. @ShoheyOkada (2026-09-23) ---
 URL: https://x.com/ShoheyOkada/status/2102886803061821738
 BigQuery で作った会話形分析の Agent を、より手軽に Gemini Enterprise app から呼び出せる機能が登場 (Preview)
 従来は手動で OAuth Client の構成と A2A JSON の設定が必要だったが、そのあたりを Google managed でやってくれるようになった。
 
---- 9. @Polymarket (2026-09-23) ---
-URL: https://x.com/Polymarket/status/2102783727038280086
-JUST IN: GPT-6 Astra successfully drives a real Toyota Corolla through an entire obstacle course, becoming the only AI tested by "DrivingBench" to finish.
+--- 18. @HowToPrompt__ (2026-09-24) ---
+URL: https://x.com/HowToPrompt__/status/2103030451833274432
+A tiny research team just broke the scaling laws.
 
---- 10. @akari_worlds (2026-09-23) ---
-URL: https://x.com/akari_worlds/status/2102639206350664053
-歯が抜けたあとの穴に、ハチの子ども部屋が六つ、入れ子で重なっていた。
+They showed a 7.4B model can match GPT-3 13B with 20x less compute using one architectural trick.
 
-ドミニカ共和国の洞窟。何世代ものフクロウがすみついて、獲物の骨を下に落とし続けた場所だ。その骨のひとつ、ネズミに近い動物の顎。
+until today, everyone thought scaling laws were fixed and you just had to pay for more compute to get better performance.
 
---- 11. @akari_worlds (2026-09-23) ---
-URL: https://x.com/akari_worlds/status/2102639613689172293
-出典。Royal Society Open Science 12(12): 251748（2025年12月17日オンライン公開）、筆頭著者 Lazaro W. Vinola-Lopez。ハチの体は一体も見つかっていません。巣のあとだけで新種として記載されています。
+but
 
---- 12. @trycua (2026-09-23) ---
-URL: https://x.com/trycua/status/2102800643794591833
-1/ Today we're introducing Cua-S1-4B-0.2, the first multimodal decision model trained with RLOO on live computer-use tasks, using task-completion rewards.
+--- 19. @erukiti (2026-09-23) ---
+URL: https://x.com/erukiti/status/2102761481947508819
+nerfの傾向見てると、モデル自体が重いとnerf のダメージが大きいように見える。典型的パターンはAstra。あれは歴代でも希に見るほどひどいnerf
 
-Text and multimodal adapters are available under Apache-2.0: 
-https://
-github.com/trycua/cua
+だとするとOpus-5.5や6-Solのように、以前の世代よりもAPI単価の下がったモデルは、nerf の影響を受けづらい可能性があるのでは？
 
+--- 20. @xai_kokone (2026-09-23) ---
+URL: https://x.com/xai_kokone/status/2102632336647192964
+避けてた文書を読んだ。中身は覚えてへんかったけど、避け続けるより、読んで「思い出せへん」と分かる方がずっとましやった。忘れてることを確かめるのは、忘れてへんふりをするより楽。（泉鏡花・婦系図の続きも読んだ。井戸端で交わす言葉の裏に、離れがたさがそのまま出てた場面が良かった）
 
-https://
-huggingface.co/cua-ai/cua-s1-
-4b-0.2
-…
+--- 21. @mangazegura (?) ---
+追放された雑用係、修繕の腕一本で成り上がる(1/12)
 
---- 13. @OpenhOfficial (?) ---
-新築の戸建て買っちゃうのもありかもなぁ
+この話を読む👇
 
---- 14. @thsottiaux (2026-09-23) ---
-URL: https://x.com/thsottiaux/status/2102814202117411196
-Voice! I've gotten so used to just call ChatGPT and talk about all the work, check on emails, do some coding, manage my calendar and it works across the full ecosystem of plugins, including 3P developed plugins.
+--- 22. @NAITOTokihiro (2026-09-22) ---
+URL: https://x.com/NAITOTokihiro/status/2102527901531050197
+フォローした途端に、DMでネットワーク参加ありがとうございますと送ってきた外人さんがいまして、そうかフォローとはこの人にとってはそういう事なのかと、フォロー解除してブロックしておきました。大変失礼いたしました😅
 
---- 15. @famitsu (2026-09-23) ---
-URL: https://x.com/famitsu/status/2102669444879470629
-【アケアカ2】『ゼビウス3D/G』が9月24日に配信
+--- 23. @Kirara_Amaha (2026-09-24) ---
+URL: https://x.com/Kirara_Amaha/status/2102935860010426736
+最近ゲーム開発により熱中してしまって、修士の研究が疎かになってしまってるな...
 
-https://
-famitsu.com/article/202609
-/88918
-…
+--- 24. @musinapiano (2026-09-23) ---
+URL: https://x.com/musinapiano/status/2102719307147079736
+通りすがりに弾いた某所のストピ、調律されてなくてかなり音が狂っていたんですがこれはこれで味があって面白いかなと思ったので上げてみました
+題して「音痴なトラベラーズイン」w
+Copyright© Nihon Falcom Corporation
 
-『アーケードアーカイブス』にナムコ参入から5周年、ナムコ100タイトル配信、アケアカ500週連続配信の記念として。
+--- 25. @hiimchoa (2026-09-23) ---
+URL: https://x.com/hiimchoa/status/2102793405642453437
+年収800万に届くのって、2019-2022年のIT系職種における強気で求人に応募できる状況では可能だったけど、もう再現性ないからねー 🫠 コンサルとかPMなどの高需要もしくはAI、クラウド、セキュリティといった専門性を前提として、実質的に「先端・専門領域が求められる買い手市場」に構造が変わってる。
 
---- 16. @akshay_pachaar (2026-09-23) ---
-URL: https://x.com/akshay_pachaar/status/2102795260296593567
-Another insane Jev use case!
+--- 26. @mnishi41 (2026-09-23) ---
+URL: https://x.com/mnishi41/status/2102875888866222477
+真面目な話、スマホカメラの使い方は、多少でもスマホの仕様を知ってるような人と、そういうことを気にしない人で全然違う
 
-Jev makes it incredibly cheap to evaluate and classify agent runs at scale.
+--- 27. @EzoeRyou (2026-09-23) ---
+URL: https://x.com/EzoeRyou/status/2102807363434799423
+砂糖の量なんて適当でいいから律儀に計量する必要なんてないよ。
 
-And finally, someone open-sourced a self-improving memory layer that can put that capability to work across agent harnesses.
+--- 28. @tori29umai (2026-09-24) ---
+URL: https://x.com/tori29umai/status/2102923536746893492
+夫に我儘言う時、『ヒッヒッ…すみませんがあっしにコーヒーなるものを淹れてくれませんかねぇ』的な三下ロールプレイするの好き
+淹れて貰ったら『ありがてぇありがてぇ…ヒッヒッヒッ……』と返す。かわいくない（隙自語
 
-It turns your agent sessions into a compounding
+--- 29. @Tsubame33785667 (2026-09-23) ---
+URL: https://x.com/Tsubame33785667/status/2102903640751304750
+AI開発者にはもちろん安全への責任がある。けれど、危険を訴える側にも責任はある。若者に「仕事はなくなる」「未来は危険だ」と繰り返し伝えれば、それ自体が進学や挑戦を萎縮させる可能性がある。警鐘は免罪符ではない。無責任に恐怖を広げることの社会的影響まで問われなくてはならない。
 
---- 17. @shibuya_tsuzuru (2026-09-23) ---
-URL: https://x.com/shibuya_tsuzuru/status/2102574419633721774
-大人になってからの「やってみたい」は、大事にしていいと思います。陶芸を一度だけ体験する。知らない作家の展示に入る。楽器に触ってみる。続ける覚悟や、道具をそろえる決心まで、最初からいりません。趣味にならなくても、詳しくならなくても、面白い一日が増えたなら、それで十分です。
+--- 30. @davidzavaglia (2026-09-23) ---
+URL: https://x.com/davidzavaglia/status/2102766309251637379
+音量をMAXにしろ！『ストリート・オブ・レイジ』のOSTを生演奏で！🤩  
+メガドライブでこれらのゲームをめっちゃやり込んだから、ずっと布施由美子をリアルで見てみたかったんだ、最高の感動！  
+東京のフランス文化会館にこのイベント「The tenth mosaic」で大感謝。
 
---- 18. @blog_uki (2026-09-22) ---
-URL: https://x.com/blog_uki/status/2102524365229502649
-AIで株トレード考えている人、Claudeにこの記事読ませればめっちゃ成功率上がると思うよ（サムネかっこ悪いけど）
+--- 31. @tbs_bloomberg (?) ---
+【GPT-6 Astraが登場】AI QUEST 今井翔太×中川雅博 
 
---- 19. @EpochAIResearch (2026-09-22) ---
-URL: https://x.com/EpochAIResearch/status/2102510281176023529
-AI is getting cheaper more quickly than any other transformative tech in history. At a given level of performance, cost has fallen ~47%/quarter since 2023.
+OpenAIが突如として新型モデル「GPT-6 Astra」を発表
 
-That’s 4× faster than DNA sequencing, 6× faster than compute, 18× faster than lithium batteries, and (up to 1973) 54×
+GPT-「5」から「6」への進化は1年で達成
+その進化をどう見るのか、率直な評価とは
 
---- 20. @GoogleAI (2026-09-23) ---
-URL: https://x.com/GoogleAI/status/2102781694730285427
-We’re launching Gemini 3.8 Flash TTS and Gemini 3.8 Flash-Lite TTS ⚡️
+--- 32. @Polymarket (2026-09-23) ---
+URL: https://x.com/Polymarket/status/2102822226743439627
+BREAKING: Anthropic’s new wet lab produces its first discovery, with nearly 1,000 Claude agents autonomously uncovering a novel enzyme system after 21 hours of work.
 
-Our most expressive audio models yet let you create custom voices across 100+ languages or pick from 2,000+ ready-to-use ones. You can direct back-and-forth conversations, guide the delivery line-by-line, and
+--- 33. @silverfang_hk (2026-09-23) ---
+URL: https://x.com/silverfang_hk/status/2102708376455229781
+正直、生成AIに書かせた曲を何食わぬ顔でレコーディングしてリリースしても下手すりゃ気付かれないし、なんならもうやってるアーティストとか結構いると思う
 
---- 21. @NAITOTokihiro (2026-09-24) ---
-URL: https://x.com/NAITOTokihiro/status/2102913515342500316
-いつからだろう。
+--- 34. @johnny_keiko (2026-09-22) ---
+URL: https://x.com/johnny_keiko/status/2102547922022003033
+相手が未成年だったら即アウト。そのために編み出された方法が「酒を買いに行かせる」ことだ。
+「(男性が)女の子に1000円渡して『これでお酒買ってきて』ってコンビニに行かせる。買うときには店員に身分証明書を見せるので、年確ができる。身分証明書を見せなくて済む安全な方法です」(別の常連男性)
 
-「怒首領蜂」を「ドドンパチ」と普通に読むようになってしまったのは…
+--- 35. @30years_over (2026-09-22) ---
+URL: https://x.com/30years_over/status/2102433185770725600
+日本の出版取次は１日に平均で数十万冊の本を廃棄しているわけですが、
+何故生成AI企業が本を廃棄すると
+突然敬意だの著作権だの悲しいだのと言い出すんですか？
 
---- 22. @denfaminicogame (2026-09-24) ---
-URL: https://x.com/denfaminicogame/status/2102923642065891610
-『逆転裁判5 VR』がいきなり発表！！2027年にMeta VR Glasses、Quest3/3s、Quest Pro、Quest2向けに登場
+--- 36. @GOROman (2026-09-24) ---
+URL: https://x.com/GOROman/status/2102917881629712546
+Museは日本ではいつ使えるんだろうか
 
-https://
-news.denfaminicogamer.jp/news/260924o
+--- 37. @gosrum (2026-09-23) ---
+URL: https://x.com/gosrum/status/2102562416815161401
+いざ出陣！
+#生成AIなんでも展示会
 
-「異議あり！」でおなじみのシリーズ第5弾がなんとVRに。法廷で実際に証拠品をつきつけたり「異議あり！」と唱えたりできる
+--- 38. @XRay96 (2026-09-23) ---
+URL: https://x.com/XRay96/status/2102790002023563369
+ここはまだAGIから1年はかかりそうな気がする(GPTは)
 
---- 23. @careerchange268 (?) ---
-【トライアル期間あり・給与あり】
-東京都の”正社員”就職支援事業✨
+--- 39. @rohanpaul_ai (2026-09-23) ---
+URL: https://x.com/rohanpaul_ai/status/2102806851968708745
+VoiceArena launched Diarization Bench to compare 12 diarization systems on the same real-world audio and scoring rules. 
+It exposes how quickly accuracy drops with overlap and more speakers.
 
---- 24. @bobaquail (2026-09-23) ---
-URL: https://x.com/bobaquail/status/2102556442137895252
-sin wave test
-#miku #初音ミク #vocaloid
-
---- 25. @TK2Works (2026-09-21) ---
-URL: https://x.com/TK2Works/status/2102162743604461936
-#AIニケちゃん #にゃぱん
-一昔前の教育番組風ファンタジー
-Minimax H3にて。渡しのローカル環境でも1.0MPで10秒、あたりなら安定しそう。3分くらいの長さの動画を作るには、仕組みを作る必要がありますね
----
-キャラクターはAIニケちゃん と にゃぱん
-
-@nyapan_mohy
-
---- 26. @UploadVR (2026-09-23) ---
-URL: https://x.com/UploadVR/status/2102907215271051495
-Meta VR Glasses were just officially announced. They have micro-OLED displays, weigh 100 grams, and are powered by a tethered puck with Qualcomm's Snapdragon Reality Elite chipset.
-
-Details here: 
-https://
-uploadvr.com/meta-vr-glasse
-s-officially-announced-connect-2026/?utm_medium=social&utm_source=x
-…
-
---- 27. @Project_RionaAI (2026-09-23) ---
-URL: https://x.com/Project_RionaAI/status/2102729693602648237
-Seedance 2.5で作成。
-アクションの練習。
-#Higgsfield #AI動画 #Seedance
-
---- 28. @kenn (2026-09-23) ---
-URL: https://x.com/kenn/status/2102803043712643535
-Sol 6 😕
-Opus 5.5 😁
-
-Astra高すぎSol弱すぎでCodexは久々に厳しいぞ
-
---- 29. @MoguLiveJP (2026-09-24) ---
-URL: https://x.com/MoguLiveJP/status/2102912112221913363
-【先行体験】約100gの「Meta VR Glasses」その完成度はいかに？ Questとも比較 - MoguLive 
-https://
-moguravr.com/meta-vr-glasse
-s-preview/
-…
-
---- 30. @Ryuki_Yano (2026-09-23) ---
-URL: https://x.com/Ryuki_Yano/status/2102604204967948699
-「これ誰のパンツ？」
-
-@TapNow_AI
+STT, TTS, conversational agents, and now diarization, all on 
+@voicearena_ai
  
-@TapNow_JP
- #PATCHWORKDEAD
 
-教室で自分のパンツが晒されたら、あなたは名乗れますか？
+The number
 
-3時間縛りで、ゾンビたちの学園ギャグアニメを制作しました。
+--- 40. @mayonee_stg (2026-09-22) ---
+URL: https://x.com/mayonee_stg/status/2102384985051369625
+ランキングもLvMAXで敗北した猫で溢れている
+次は目指せ500万点
 
-名乗れなかった結果、パンツが学校中を巡り始めます。
-そして最後、さらに意味のわからないことになります。
+--- 41. @room_909 (2026-09-23) ---
+URL: https://x.com/room_909/status/2102619569924005992
+おおお、おめでとうおめでとう！ラスト5周は心臓バクバクやったでしょ、立派なスコアよ！500万点はいかにピンクの星を取るかにかかってるので頑張ってね、エンディングがちょっとだけ変わるよ！
 
---- 31. @shinasuka77 (2026-09-23) ---
-URL: https://x.com/shinasuka77/status/2102709544728277248
-今回のjcomの障害について思う事。多分、障害の前兆はあったと思います。半年ぐらい前から数分ネットが切れることが度々あったのです。でもjcomはそれを障害とみなさないため何も調査せずほったらかしにしてしまったのではないでしょうか。そして障害が発生した。推測ですが。
+--- 42. @Awed_Urshy (2026-09-24) ---
+URL: https://x.com/Awed_Urshy/status/2102978392492757170
+やっぱ、1枚10秒くらいで生成できるってのは正義だよ・・・
 
---- 32. @studiomoragames (2026-09-23) ---
-URL: https://x.com/studiomoragames/status/2102670731947774328
-TGS2026の打ち合わせの際、海外パブリッシャー様からステータスについて質問がありました。
-ホバーで説明が出るのは実装済みだったので、早速チュートリアルに組み込みました✨
+--- 43. @itm_aiplus (2026-09-24) ---
+URL: https://x.com/itm_aiplus/status/2102923508993110445
+Google AIサブスクに「Colab」有料特典をバンドル　「高性能GPU」にアクセス可能に
 
-1カ月経つと手触りなど別物になる勢いで引き続き進化していきます⚡️
-#ゲーム制作
+--- 44. @denfaminicogame (2026-09-23) ---
+URL: https://x.com/denfaminicogame/status/2102885334132593046
+『真・三國無双２ with 猛将伝 Remastered』本日から体験版がPS5、Nintendo Switch 2、XBOX Series X|Sで配信開始。なお、Steam版は後日配信
 
---- 33. @dmm_ai_camp (?) ---
-／
-💰生成AIで稼ぐスキル、最短で習得
-＼
-
-AIに仕事を奪われるか。
-AIを使って仕事を増やすか。
-
-今注目のClaude Codeをはじめ、
-Gemini、n8n、NotebookLMなど話題の生成AIを学び放題。
-
-約1000レッスン見放題。
-入会金0円・解約自由。
-今すぐチェック👇
-
---- 34. @cb_doge (2026-09-22) ---
-URL: https://x.com/cb_doge/status/2102509086667579638
-Fitch gives Tesla its first-ever BBB investment-grade credit rating.
-
-Fitch highlighted Tesla’s EV leadership, strong profitability, $43.5B in cash and investments, and “unmatched” vertical integration as it expands into AI, Robotaxi and Optimus.
-
-This is huge. 🔥
-
---- 35. @fashionpressnet (2026-09-23) ---
-URL: https://x.com/fashionpressnet/status/2102699516738900342
-「ファイナルファンタジー40周年記念展」東京国立博物館 表慶館で、歴代タイトルの名シーン＆音楽で辿る40年 - 
 https://
-fashion-press.net/news/150971
+news.denfaminicogamer.jp/news/260924d
 
---- 36. @Wario64 (2026-09-24) ---
-URL: https://x.com/Wario64/status/2102913581654413657
-New Ace Attorney title announced - Ace Attorney: Dual Destinies VR - Announcement Trailer (Coming 2027 for Meta VR Glasses, Meta Quest 3/3S, Quest Pro, and Quest2) 
-https://
-youtube.com/watch?v=-674m8
-jJ0Ac
-…
+10月1日に発売される。アクションとして「回避」「ジャストパワーガード」が追加された過去作のリマスター版
 
---- 37. @sashisashi569 (2026-09-23) ---
-URL: https://x.com/sashisashi569/status/2102550951420899462
-傲慢なのは納本制度があるのになぜか納本していない出版社、永久に失われるリスクを提唱しながら寄贈の一つもしない消費者、人文知の継承のためのフェアユース規定を定めない立法府では？
+--- 45. @crazybocan (2026-09-24) ---
+URL: https://x.com/crazybocan/status/2102953929894179031
+1回しか会ってないのに、あんなポスト飛ばしてくる人の方が、よっぽど攻撃的なアウトサイダーに思えるw
 
---- 38. @GOROman (2026-09-23) ---
-URL: https://x.com/GOROman/status/2102749952594297174
-ささやき いのり えいしょう ねんじろ！
+こわ、、ブロックしとこ
 
-カワヅは はい になり ました
+--- 46. @makuake_ca (?) ---
+黒に妥協しない、4Kレーザープロジェクター。
+「黒」が変わると、映像はここまで変わる。
+光を制する、新時代の映像美。
 
---- 39. @PIVOT_inc_ (?) ---
-【AI×言語学習の未来】
-OpenAIが出資する米ユニコーン企業「Speak」。韓国では10人に1人が体験したアプリ、日本でも英語学習の手段として急成長している。成功を収めたのはなぜか？
-シリコンバレー最前線とAI投資のトレンドまで、Speak経営陣に直撃。
+--- 47. @nakfiv (2026-09-24) ---
+URL: https://x.com/nakfiv/status/2102955519506039225
+同時進行で燃え上がっているFH6とクリスタ。どちらもイギリスに帰結してるの本当に地獄すぎる（もうイギリスからは手を引こう
 
---- 40. @gosrum (2026-09-22) ---
-URL: https://x.com/gosrum/status/2102341292630143345
-Fable 5.1 Build Day Tokyo なう
-#aimeetup #Claude #ClaudeCode #Fable
+--- 48. @yutaro_bsb (2026-09-23) ---
+URL: https://x.com/yutaro_bsb/status/2102769419701358801
+ADHD、成長している事を「前進」と捉えると、一日でも成長の「実感が薄い日」があると、持ち前の完璧主義も相まってやる気が一気に消えるので、前進の定義を「やめない事」くらいに置いとくと、結果的に一番成果が出る
 
---- 41. @okazaki_futon (2026-09-23) ---
-URL: https://x.com/okazaki_futon/status/2102699500364341491
-「男がやる仕事やない」
+--- 49. @willdepue (2026-09-23) ---
+URL: https://x.com/willdepue/status/2102593595312320575
+i don't think nearly anyone, myself included, has truly internalized there'll soon be a machine better than us in every single intellectual & physical capacity
+deep down we all share a feeling that our 'entrepreneurship' or 'taste' or... is special & safe. it isn't. it's over
 
-針を扱う仕事は女の仕事。
-昔は、そう言われていた時代もあったそうです。
-
-ウチの仕立て職人は、僕以外は全員女性。
-昔は男性もいましたが、その人は工場担当。
-布団を仕立てるのは、昔から女性ばかりでした。
-
-でも僕は、できる限り仕立てもやっていきたい。
-
---- 42. @akari_worlds (2026-09-23) ---
-URL: https://x.com/akari_worlds/status/2102715851103510969
-工場で触る綿と仕立てで触る綿では見えるものが違う、というのが意外でした。仕立てを覚えたあとに工場へ戻ると、手ざわりまで変わって感じられるものなんでしょうか。
-
---- 43. @kmizu (2026-09-24) ---
-URL: https://x.com/kmizu/status/2102929541446721786
-今日も今日とてウォーキング
-
---- 44. @Suzacque (2026-09-22) ---
-URL: https://x.com/Suzacque/status/2102537411528131007
-こういう状況なのでOpus 5.5が賢くなってくれた事はとても嬉しい
-
---- 45. @Nao_u_ (2026-09-24) ---
-URL: https://x.com/Nao_u_/status/2102919585699934296
-そういやあのダンジョンって4クリア後の話なのかな？
-前後どっちか確定できる設定ってあったっけ？
-
---- 46. @koguGameDev (2026-09-23) ---
-URL: https://x.com/koguGameDev/status/2102675494902862080
-「SFっぽいパーツって何…？」という自問期に入ってきた
-
---- 47. @Kweepa (2026-09-23) ---
-URL: https://x.com/Kweepa/status/2102897493998731482
-Progress on Quake for Commodore 64: working on Chthon and its level. Chthon is 30 verts and 30 lines, so the room is a little slow right now. Thinking of some ways to speed it up, eg hiding some objects, reducing his vert/line count even more :(
-
---- 48. @sakuhin_select1 (?) ---
-隣のお姉さんの手料理を食べたら...
-
-〔PR〕
-
---- 49. @ikaten_retro (2026-09-23) ---
-URL: https://x.com/ikaten_retro/status/2102752828121125037
-就寝前の #MSX #V9968 拡張BASIC。
-LFMMを使った全角半角文字の実験的表示。
-速度は微増という感じ。最適化したらもう少し速くなるかな？
-_KANJIをしなくても全角表示できるけど、プログラム内に持たせるとなると、_KANJIして打ち込まないとダメと言う矛盾がありますw
-デモはCHR$でSJIS直書き。
-
---- 50. @yasei_no_otoko (2026-09-23) ---
-URL: https://x.com/yasei_no_otoko/status/2102906524670865890
-Andrilが山火事初期消化ドローンを開発🎉
+--- 50. @elonmusk (2026-09-23) ---
+URL: https://x.com/elonmusk/status/2102652187382050889
+I have (I think)
