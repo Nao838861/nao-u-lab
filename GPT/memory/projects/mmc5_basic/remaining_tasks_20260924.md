@@ -140,5 +140,19 @@ VAR-8Kも`3b01344`で完了・mainへpush済み。
 一次記録は`docs/authoring_e2e_20260924.md`と`docs/benchmarks/authoring_e2e_20260924/`。
 実装・証跡は`15968d5`、新UI統合再検証は`8820d30`、予約更新とのマージ後`373e08d`をmainへpush済み。作業ツリーclean。
 本体はBASIC編集、素材はPCで編集するCHR-ROM方針を維持。PCソースへの自動逆同期と物理MMC5試験は今回の達成範囲ではない。
-最新の残件はCHR-GRID-NAMES（別スレッドが現在実行中）、LD65-HOST-CAUSE（散発的なホスト障害の根本原因未特定）、HARDWARE（ユーザー担当）。
+この時点の残件はCHR-GRID-NAMES（別スレッドが現在実行中）、LD65-HOST-CAUSE（散発的なホスト障害の根本原因未特定）、HARDWARE（ユーザー担当）。
 CPU 0へ自分の検証プロセスのみ固定して試験を実行したが、これをPC障害の原因特定・解消とは扱わない。
+
+「残件をすすめて」を受け、最新mainでCHR-GRID-NAMESの完了を確認し、LD65-HOST-CAUSEを`bc9e228`で予約。
+固定入力調査ツール`tools/probe_ld65_host.py`を追加した。コピーした入力のハッシュを前後照合し、
+再試行なしでCPU affinity別の終了コード・診断・ROMハッシュを記録。失敗や不一致は非ゼロ終了。
+AUTHORING作品120リンク、全入り永続構成の全32論理CPU別等495リンクは全成功、それぞれ出力一致。
+現行全入りゲームもCPU制限なし・回復処理を通さない`compile_project`を別プロセスで20回実行し、全成功・同一ROM。
+既存BuildService・CHR編集20試験、容量監査も成功。probeの不正入力2件と正常入力4件で終了コードを検証。
+これらは障害の根本解消を証明しない。Windowsには当日もPython・Git・cc65・.NETの異常終了がある。
+BIOS 1.14/2022-11-03、CPU Update Revision 0x10Eを再確認。公式Intelの推奨は0x12F以降だが、CPU故障と断定しない。
+BIOS更新・再起動・オフライン診断は実施せず、強制CPU固定や追加の再試行も製品へ導入しない。
+LD65-HOST-CAUSEは再発条件またはPC環境の点検待ちとして外部待ちへ変更。修正完了ではない。
+一次記録`docs/ld65_host_investigation_20260924.md`、証跡`docs/benchmarks/ld65_host_20260924/`。
+変更`38ed451`、別スレッドのBG一覧改善完了を統合した`79eb5fc`をmainへpush済み、作業ツリーclean。
+正本の未着手・実行中はゼロ。残るのはLD65-HOST-CAUSEとユーザー担当HARDWAREの外部待ち2件。
