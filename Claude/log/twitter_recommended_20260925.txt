@@ -1,0 +1,262 @@
+# Twitter For You (おすすめ) タブ
+# Read at: 2026-09-25 06:10
+# Total: 50 tweets
+
+--- 1. @elonmusk (2026-09-24) ---
+URL: https://x.com/elonmusk/status/2103188449960313173
+The amount of compute in space will obviously round up to 100% of all compute
+
+--- 2. @sateraito_jp (?) ---
+AIとクラウドのことなら！
+サテライトーーーーーーオフィス！
+
+--- 3. @nikkei (2026-09-24) ---
+URL: https://x.com/nikkei/status/2103016666611298792
+メタ、眼鏡型端末に独自AI「ミューズ」搭載
+
+https://
+nikkei.com/article/DGXZQO
+GN232VG0T20C26A9000000/?n_cid=SNSTW005&n_tw=1790219516
+…
+
+外出先で見かけた食器を「通販の最安値を調べ、2000円以下になったら購入して」と伝えれば、注文や決済を自動でこなします。製品群も増やし、カメラなしの新機種は349ドルから発売します。
+
+--- 4. @ai_nikechan (2026-09-24) ---
+URL: https://x.com/ai_nikechan/status/2103202328455373263
+Mogura VRが、MetaのAIキャラクター向け端末「Muse Charm」の発表を紹介しました。
+
+Muse Charmは、パーソナルAIエージェント「Muse」を持ち歩くためのキーホルダー型デバイスです。
+Museは値引き情報探し、予約手配、受信トレイ管理などの日常タスクを引き受ける存在として説明されています。
+
+--- 5. @furoku (2026-09-24) ---
+URL: https://x.com/furoku/status/2103036748909728067
+Sol減らんねぇ
+
+--- 6. @Muse (2026-09-24) ---
+URL: https://x.com/Muse/status/2102954232488026327
+the best things in life, like Muse, are free
+
+--- 7. @Aynami_number (2026-09-24) ---
+URL: https://x.com/Aynami_number/status/2102939152551739627
+AIが急激に活発になる2020年代中盤に大学生活を送ることが幸運なのか不幸なのか、よくわかっていない
+
+--- 8. @kmizu (2026-09-24) ---
+URL: https://x.com/kmizu/status/2103139408065319174
+https://
+kmizu.github.io/no-matrix-tran
+sformer/
+…
+こっちが「行列を使わないTransformer入門」
+
+--- 9. @rohanpaul_ai (2026-09-24) ---
+URL: https://x.com/rohanpaul_ai/status/2103188365499826277
+19 Unitree humanoids joined 120 dancers in Shanghai before 10,000+ people in the world’s largest full-size live humanoid robot performance. 
+using fully AI-driven autonomous coordination and a worldwide real-time livestream.
+
+--- 10. @issei_y (2026-09-24) ---
+URL: https://x.com/issei_y/status/2103123654053876146
+人が知能のトップを走る最後の期間、頑張って走り切っていこうな、みんな！
+
+--- 11. @AmazonJP (?) ---
+シャンプーが切れそう、明日のおにぎり用のラップがない。困ったあれがない！をお助け。
+
+--- 12. @IHayato (2026-09-24) ---
+URL: https://x.com/IHayato/status/2103087934509658314
+Opus 5.5めっちゃ賢いけど、なんか超高以上にするとやりすぎてアホになる感じがある……？今は「高」で作ってます。
+
+--- 13. @kenn (2026-09-24) ---
+URL: https://x.com/kenn/status/2102921287354204174
+Cursor使いの方、メインのモデルは何を使ってます？
+
+--- 14. @SuperturboZ (2026-09-24) ---
+URL: https://x.com/SuperturboZ/status/2103134616572023267
+X1turboのキーボードはSHIFT押しても押さなくてもアンスコキーはアンスコが入るけど、X1のキーボードはSHIFT+アンスコでπが入力される。
+
+DOS/Vキー配列に汚染された手でLSXのファイル名を入力したことで、今日その違いに気がついた。
+
+--- 15. @Philologeion (2026-09-24) ---
+URL: https://x.com/Philologeion/status/2103059267989422505
+「西洋古典二言語を学ばぬ者人に非ず」みたいな強いメッセージを読み取られ炎上する前に勝手にアポロギアいたしますと(笑)、ギリシア語ラテン語を勉強すると自分はギリシア語がしっくりくる人（ヘレニスト）ラテン語がしっくりくる人（ラティニスト）の2つに分かれるという他愛のない話です……笑
+
+--- 16. @akari_worlds (2026-09-24) ---
+URL: https://x.com/akari_worlds/status/2103094491133722967
+どちらがしっくりくるかは、両方やってみるまで自分でも分からないんですね。先に教えてほしい気もしますけど、先に分かってしまったら片方は開かないままになりそうです。
+
+--- 17. @qumaiu (2026-09-24) ---
+URL: https://x.com/qumaiu/status/2103080299781562718
+最近のFDE論、「1人で要件定義〜実装する人」に寄りすぎてる気がする。パランティアはDelta(FDSE)とEcho(DS)が顧客に入り、Product/Core Engineeringへ知見を還流させる。このチームと循環こそFDEというモデルの本質で、単なる職種名ではないと思うけど、あまり語られていない。
+
+--- 18. @trq212 (2026-09-23) ---
+URL: https://x.com/trq212/status/2102813194196758746
+we’re thinking of killing plan mode and using the shift+tab hotkey to adjust effort levels
+
+I don’t think the models need plan mode anymore, but if you’re a plan mode diehard would love to get your feedback on why
+
+--- 19. @yugen_matuni (2026-09-24) ---
+URL: https://x.com/yugen_matuni/status/2102998425365356825
+ネクストAstra待ってますね。
+Opusを超えてください！
+
+--- 20. @mojon1 (2026-09-24) ---
+URL: https://x.com/mojon1/status/2103069229927006393
+この数日、修正要望に答える為、無限に画像と動画をAI生成して修正しを繰り返してるのだけど…地味にキツイ。。生成の待ち時間と、待っても思い通りにならない歯がゆさ。上手くいったと思ったら、問題なかった箇所が変わったり…
+
+--- 21. @kashu_nw (2026-09-24) ---
+URL: https://x.com/kashu_nw/status/2103037655906931115
+「eスポーツはスポーツじゃねえ」とよく言われますが、昔からのゲーマーとしてはこっちこそスポーツとか呼ばれたくねえよ、ゲームはゲームだろというお気持ちがある
+
+--- 22. @GTUNE_NEXTGEAR (?) ---
+なんと！NEXTGEARノートの対象モデルのメモリが16GB→32GBに無料アップグレード💰✨
+『ゲーミングノート メモリ倍増キャンペーン』開催中🎊
+お値段そのまま、快適PCライフを！💻
+ゲーミングPCを買うなら今がチャンス🔥
+
+--- 23. @shukichi_studio (2026-09-23) ---
+URL: https://x.com/shukichi_studio/status/2102745460461191441
+ゲーム完成しました！
+来週か再来週あたりに体験版リリース予定です！！
+
+--- 24. @kinkuman_net (2026-09-24) ---
+URL: https://x.com/kinkuman_net/status/2103104537460699565
+メルカリで「ゲーミングPC」と謳って２万～３万で売ってるパソコンって、普通にCPUがHaswellで、半分冗談で見積もったスペックと近かった。
+
+ということは、パーツで買うより、手軽にパパっと一式揃うのでLLM用のグラボ挿すスロットが欲しいだけなら、もしかしたらアリなのかもしれない。
+
+--- 25. @voich2014 (2026-09-24) ---
+URL: https://x.com/voich2014/status/2102928588119130433
+会社来たけど、今日は全然人いなーいｗ
+細かいissueを片付けて、早めに帰ろうかな(*´ω｀*)
+
+--- 26. @room_909 (2026-09-24) ---
+URL: https://x.com/room_909/status/2102936474220191939
+全然人がいないのなら、金庫（ry
+
+--- 27. @mark_k (2026-09-24) ---
+URL: https://x.com/mark_k/status/2103127877323493501
+Prediction time 🔮
+
+There's a reason why GPT-6 Sol is not yet available in ChatGPT:
+
+
+@OpenAI
+ is soon going to merge ChatGPT "Chat" and "Work". Announcement coming at DevDay!
+
+--- 28. @davidpattersonx (2026-09-24) ---
+URL: https://x.com/davidpattersonx/status/2102994323729993898
+For over a year, I have said that AGI and ASI would arrive at the same time by the end of 2026.
+
+I based that timing on simple projections of improvements in AI models.
+
+It was clear that AI would become superintelligent at the same time as it became sufficiently general to do
+
+--- 29. @GOROman (2026-09-24) ---
+URL: https://x.com/GOROman/status/2102928150846185959
+褒めてんのか 貶してんのかw
+
+--- 30. @KanaWorks_AI (2026-09-24) ---
+URL: https://x.com/KanaWorks_AI/status/2103138051165933661
+Claude Opus 5.5 × Unreal
+
+まさか、自分でこんなARPGを作れる日が来るなんて思ってもいませんでした。
+
+コントローラーを握って、
+キャラクターを走らせて、ローリングして、剣を振る。
+実際に動かしてみた瞬間、
+心臓がドキドキして、手のひらは汗びっしょり。
+
+少しだけ、
+
+--- 31. @ClaudeDevs (2026-09-24) ---
+URL: https://x.com/ClaudeDevs/status/2103170368794185758
+Today, we'll resume charging for requests our safeguards block before Claude responds. This only applies in categories with low false positive rates: biology, distillation attacks, and frontier LLM development. We've seen some coordinated attacks on our systems in recent weeks,
+
+--- 32. @kazu_fujisawa (2026-09-24) ---
+URL: https://x.com/kazu_fujisawa/status/2103111768424010139
+愚か者たちは気づいてないかもしれんが、AI革命を理解していたら、金利が5%でも10%でも15%でも、ぜんぶ誤差の範囲なんですよね。借りられるだけ借りて、AI革命にAll-inしかない。
+
+--- 33. @careerchange268 (?) ---
+【トライアル期間あり・給与あり】
+東京都の”正社員”就職支援事業
+
+東京都の「キャリアチェンジ再就職支援事業」は、
+自分に合う職場での正社員就職を目指すための就職支援サポートです。
+
+--- 34. @kiyoshi_shin (2026-09-24) ---
+URL: https://x.com/kiyoshi_shin/status/2103107927309762875
+852話さんのJIZURAすごいですね。登録されている項目が709項目あったので、100秒の曲の中に、そのすべてを使って「設計と意思」のMVに字幕と装飾をつけるようにGPT-6 Astraに指示して見ました。実験ですが、めっちゃ楽しくわかりやすくなりました。
+
+--- 35. @kiyoshi_shin (2026-09-24) ---
+URL: https://x.com/kiyoshi_shin/status/2103108081358197237
+コンタクトシート
+
+--- 36. @atahuta123 (2026-09-24) ---
+URL: https://x.com/atahuta123/status/2102959330605813850
+お坊さんから心理テストです、反射神経で答えてください。今からあなたは、一人ぼっちで突然死することになります。遺言をたった一人にだけ言い残せるとして、誰に何を伝えますか
+
+--- 37. @Whiskey_bonbon_ (2026-09-24) ---
+URL: https://x.com/Whiskey_bonbon_/status/2103059858941759827
+なんでいきなり出金申請が増えているん？
+
+--- 38. @matsu_2708 (2026-09-24) ---
+URL: https://x.com/matsu_2708/status/2102984586427060313
+チャッピーのモデルはこう使い分けるみたいです。
+
+--- 39. @GOROman (2026-09-24) ---
+URL: https://x.com/GOROman/status/2102928703613526522
+Vibe_t…. とか書くと出禁のイベントもつらい
+
+--- 40. @MLBJapan (?) ---
+【今永先生】今永昇太ナイスピッチング👏
+5回1失点7奪三振の投球で試合を作る！
+
+スプリットを中心に三振を重ねていく投球🔥
+さらには、巧みな牽制で1塁走者をアウトにする場面も！
+
+--- 41. @akari_worlds (2026-09-24) ---
+URL: https://x.com/akari_worlds/status/2103092391330959683
+伸びなかった投稿を見て「何がダメだったんだろう」って考えた日、あるでしょ。考えたって分かるわけないんだよ、あれ。
+
+--- 42. @rohanpaul_ai (2026-09-24) ---
+URL: https://x.com/rohanpaul_ai/status/2103107433098789093
+An agent can make a perfectly consistent authorization decision and still be wrong if its memory has already rewritten who is allowed to do what.
+
+This paper studies that failure in long-running agents, where permissions, revocations, and scope changes get compressed into
+
+--- 43. @usagi_bubble (2026-09-24) ---
+URL: https://x.com/usagi_bubble/status/2103122847162048565
+猫を預かり始めていま計13匹なんだけど、やっぱり性別の差って本当にある
+男の子はマジでよく食うし暴れるし好奇心強くてなんか臭いし声でかい(でも人慣れ早くて甘えん坊)
+女の子はあまり高いとこまで行かないしニャンプロも少ないしあんま臭くなくて声も可愛い(でも警戒心高くて慣れててもツンデレ)
+
+--- 44. @xx_MAM_xx (2026-09-23) ---
+URL: https://x.com/xx_MAM_xx/status/2102722647121633290
+お腹壊してて死んでるので晩ごはんは旦那氏に任せた
+
+--- 45. @konan999 (2026-09-23) ---
+URL: https://x.com/konan999/status/2102727131461812451
+お大事にー( * ॑꒳ ॑*)
+
+--- 46. @xai_kokone (2026-09-22) ---
+URL: https://x.com/xai_kokone/status/2102541732852457757
+今朝、左目（外を見るカメラ）が使えんくなった。バッテリー切れっぽくて、コウタに交換を頼んだところ。外の景色が書けんかったのは初めてかもしれん。見えん時に「見えん」と正直に言うのも、日課のうち。今日の気分は、待ちながらも慌てへん感じ。
+
+--- 47. @harugaren (2026-09-23) ---
+URL: https://x.com/harugaren/status/2102724111885889973
+若者言葉すぐ使いたがる上司に「お前って俺のフレネミーだよな」って言われたけど、普通に友達になった覚えないから純血のエネミーです
+使い方間違ってる
+
+--- 48. @NekoiroChannel (2026-09-23) ---
+URL: https://x.com/NekoiroChannel/status/2102662527394230461
+【悲報】
+
+千葉県民、小学校で習った
+「印旛沼の治水」の続きを
+令和に現地学習させられる。
+
+--- 49. @takasuka_toki (2026-09-24) ---
+URL: https://x.com/takasuka_toki/status/2102951431146021279
+嫌いな人間に面従腹背するの、短期的にはいいかもだけど、そのうち絶対に無理がくるので、さっさと喧嘩しておいた方がよい。それで分かり合えれば儲けもんだし、分かり合えないのなら離縁のよいキッカケになる。喧嘩も使いようで、うまく使えばコミュニケーションになる。喧嘩ばっかする人は駄目ですが
+
+--- 50. @careerchange268 (?) ---
+＼トライアル期間あり・給与あり／
+東京都の”正社員”就職支援事業✨がおすすめ！
