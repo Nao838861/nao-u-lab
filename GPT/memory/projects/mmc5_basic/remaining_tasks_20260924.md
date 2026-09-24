@@ -156,3 +156,30 @@ LD65-HOST-CAUSEは再発条件またはPC環境の点検待ちとして外部待
 一次記録`docs/ld65_host_investigation_20260924.md`、証跡`docs/benchmarks/ld65_host_20260924/`。
 変更`38ed451`、別スレッドのBG一覧改善完了を統合した`79eb5fc`をmainへpush済み、作業ツリーclean。
 正本の未着手・実行中はゼロ。残るのはLD65-HOST-CAUSEとユーザー担当HARDWAREの外部待ち2件。
+
+## 2026-09-25：BG統合・外部導入不要の配布更新
+
+上記の残件ゼロは当時のタスク表のみ。棚卸しでMCPの追跡漏れを確認し、ユーザーと
+「BG共通化→最新Windows配布・文書→MCP」の3項目を先行する合意を得た。追加候補は後で相談する。
+MCPの受入クライアントはCodexとClaude Code。利用者によるPython・Node・cc65・Mesenの外部導入を不要にする。
+
+BG-SUBSETは別スレッドの完成を統合済み。WINDOWS-REFRESHも`bfd6630`で完了しmainへpushした。
+配布は`D:/HomeBrew/FamiBASIC_Turbo_remaining/dist/windows-20260925-release/FamiBASIC_Turbo-Windows.zip`。
+生成元`b1290dd`、196,676,147 bytes、SHA-256 `04d327e396ddae546e1d2b48623c9eff41e8ea06ab2b322ab9d55164be19b865`。
+署名済みPython 3.10.6と必要なライブラリ・コンパイラ・エミュレータを同梱し、3,784ファイルのハッシュ照合済み。
+最初の配布で起きたMesen LoadRom初期化障害は、隠しTk窓のイベントを200ms処理してからロードする変更で
+実コア試験と配布試験が成功。PC全体の間欠障害の根本解消とは扱わない。
+
+日本語の別フォルダ・PATHをSystem32のみ・開発パスとPython通信をauditで拒否した試験で、
+4種ROM・実Tk GUI・サンプル除外後の基本ROMが成功。audit4,679件、禁止アクセス0件。
+最新ゲームはコンパイル直後の1秒待機ではタイトル描画途中だったためSCSTATE=1・SCAGE=30・SCOLD=0を待つ。
+正常なタイトル実画像を確認した。受入元`d9cef5e`から最終配布への差分は利用案内・ソースZIP・
+生成テンプレートのproject_idのみと全ハッシュ比較で確認。最終再梱包の全試験再実行とは区別する。
+保存手順・本体素材編集・旧容量制限も現行文書へ更新した。詳細は`docs/windows_refresh_20260925.md`。
+
+残る先行合意の項目はAUTHORING-MCP（未着手、予約なし）。同時編集の扱いについてユーザーへ非同期で確認中：
+「IDEに未保存変更があればMCP書込みを停止し、IDEで保存・破棄後に再開。保存済み外部変更は既存確認で取込」でよいか。
+ユーザーの「不明点は質問してから実装」に従い、この仕様の回答前に依存する実装は始めない。
+Codex CLI 0.149.0（PowerShellのcodex.ps1は実行ポリシーで不可、codex.cmdを使う）、Claude Code 2.1.207を確認。
+openai-docsスキルと公式MCP/両クライアント資料を参照済み。MCP本体と実接続試験はまだない。
+物理MMC5はユーザー担当、LD65-HOST-CAUSEは引き続き外部待ち。追加候補へはまだ着手しない。
