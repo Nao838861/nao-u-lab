@@ -1,320 +1,324 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-09-24 02:35
+# Read at: 2026-09-24 11:03
 # Total: 50 tweets
 
---- 1. @elonmusk (2026-09-23) ---
-URL: https://x.com/elonmusk/status/2102784148977201241
-Thoughtful piece by Jeffrey Katzenberg
+--- 1. @GOROman (2026-09-23) ---
+URL: https://x.com/GOROman/status/2102685170365239498
+コントローラのフレキ。ショートして電源壊れがちw
 
---- 2. @sakuhin_select1 (?) ---
-店長に恋するギャルが大胆行動...？
+--- 2. @MLBJapan (?) ---
+【決勝打】岡本和真 勝ち越しタイムリー💥
+"惑星最強" デグロムからの一打！
 
-〔PR〕
+同点の5回裏 一死一、三塁のチャンス
+センターへ抜けるタイムリーヒット！
+ブルージェイズ の連敗を止める決勝打となりました🙌
 
---- 3. @GOROman (2026-09-23) ---
-URL: https://x.com/GOROman/status/2102625132124815859
-進捗10000%
+--- 3. @rohanpaul_ai (2026-09-23) ---
+URL: https://x.com/rohanpaul_ai/status/2102871470770999404
+Dario Amodei just talked about today's announcement of Claude discovering a new gene-editing mechanism at the UN Security Council.
 
---- 4. @rohanpaul_ai (2026-09-22) ---
-URL: https://x.com/rohanpaul_ai/status/2102529437619441987
-AI may automate much of the routine work currently done by junior lawyers, consultants, bankers, and advertisers. 
+“Anthropic announced the Claude discovery of a new molecular machine. It's a preliminary finding, but it may constitute a new gene editing mechanism
 
-"A chunk of what the people at the bottom of the pyramid were doing—what happens to that? The only thing you can say is that, if you have never worked at a law firm
+--- 4. @rohanpaul_ai (2026-09-23) ---
+URL: https://x.com/rohanpaul_ai/status/2102881781427163243
+A tiny agent behavior of actually opening enough of the file changed recognition by tens of % points
 
---- 5. @konan999 (2026-09-22) ---
-URL: https://x.com/konan999/status/2102313995202142579
-今日も気持ちよく散歩できたなー。空港の公園は沢山の人だった( * ॑꒳ ॑*)
+--- 5. @Nao_u_ (2026-09-24) ---
+URL: https://x.com/Nao_u_/status/2102921831363825839
+こういう観点で見ると、キン肉マンは「細かい矛盾や破綻が気にならないくらい大ボラが魅力的」みたいな感じだろうか。
+魅力的な大ボラを吹くのって難しい
 
---- 6. @KanaWorks_AI (2026-09-23) ---
-URL: https://x.com/KanaWorks_AI/status/2102779235349967310
-Opus 5.5 × three.js
-「しろくま水族館」
+--- 6. @Trtd6Trtd (2026-09-24) ---
+URL: https://x.com/Trtd6Trtd/status/2102916997306871996
+Opus 5.5のピクセルアートがすごいと聞いたので試してみたが、確かにすごかった
 
---- 7. @ethylene_66 (2026-09-23) ---
-URL: https://x.com/ethylene_66/status/2102633309549592746
-まだAIってやつにKaggleという競技が破壊されていないということも嫌というほど分からせられる
+--- 7. @GOROman (2026-09-23) ---
+URL: https://x.com/GOROman/status/2102573630605652246
+荷物が多いのでタクシーで行くか。。。
 
---- 8. @Dr_Singularity (2026-09-22) ---
-URL: https://x.com/Dr_Singularity/status/2102373597574549847
-Physics Singularity is near
+--- 8. @ShoheyOkada (2026-09-23) ---
+URL: https://x.com/ShoheyOkada/status/2102886803061821738
+BigQuery で作った会話形分析の Agent を、より手軽に Gemini Enterprise app から呼び出せる機能が登場 (Preview)
+従来は手動で OAuth Client の構成と A2A JSON の設定が必要だったが、そのあたりを Google managed でやってくれるようになった。
 
-If those super AI math capabilities translate into physics as well, we could see the equivalent of 1000+ years worth of physics progress (human speed) compressed into the next few years.
+--- 9. @Polymarket (2026-09-23) ---
+URL: https://x.com/Polymarket/status/2102783727038280086
+JUST IN: GPT-6 Astra successfully drives a real Toyota Corolla through an entire obstacle course, becoming the only AI tested by "DrivingBench" to finish.
 
---- 9. @pzkh23 (2026-09-23) ---
-URL: https://x.com/pzkh23/status/2102797271494721931
-Attentionもすごいけど、やっぱ位置エンコーディングすごいな。賢さの結構な要素を担ってる…
+--- 10. @akari_worlds (2026-09-23) ---
+URL: https://x.com/akari_worlds/status/2102639206350664053
+歯が抜けたあとの穴に、ハチの子ども部屋が六つ、入れ子で重なっていた。
 
---- 10. @soyukke_game (2026-09-23) ---
-URL: https://x.com/soyukke_game/status/2102641525071155565
-opus 5.5に「トロッコ問題は問題じゃない」っていうゲーム作らせてみた #gamedev
+ドミニカ共和国の洞窟。何世代ものフクロウがすみついて、獲物の骨を下に落とし続けた場所だ。その骨のひとつ、ネズミに近い動物の顎。
 
---- 11. @books_select1 (?) ---
-今までで一番良かった...
+--- 11. @akari_worlds (2026-09-23) ---
+URL: https://x.com/akari_worlds/status/2102639613689172293
+出典。Royal Society Open Science 12(12): 251748（2025年12月17日オンライン公開）、筆頭著者 Lazaro W. Vinola-Lopez。ハチの体は一体も見つかっていません。巣のあとだけで新種として記載されています。
 
-〔PR〕
+--- 12. @trycua (2026-09-23) ---
+URL: https://x.com/trycua/status/2102800643794591833
+1/ Today we're introducing Cua-S1-4B-0.2, the first multimodal decision model trained with RLOO on live computer-use tasks, using task-completion rewards.
 
---- 12. @TK0UkELoX553277 (2026-09-23) ---
-URL: https://x.com/TK0UkELoX553277/status/2102665956573217264
-AI学習のために古本を大量注文する人
+Text and multimodal adapters are available under Apache-2.0: 
+https://
+github.com/trycua/cua
 
-対
-
-廃棄に文句だけつけて買わない人
-
---- 13. @yhkondo (2026-09-23) ---
-URL: https://x.com/yhkondo/status/2102552035958948085
-「AI企業が本を断裁する」というところを問題視されている意見も多いがそこは重要ではない。活字研究書は、そうでなくても、図書館による古い本の除籍、死去した研究者の本の放出などによる廃棄、現役研究者の自炊廃棄などで、どんどんと消え去っているし、それは自然なことだ。
-
---- 14. @ytk_matsuda (2026-09-23) ---
-URL: https://x.com/ytk_matsuda/status/2102647310572478932
-イーロン・マスク「たった50年でゲームがここまで進化したなら、この世界が作り物じゃないと考える方が無理がある」
-イーロン・マスクが語る「私たちが誰かのゲームの中にいる説（シミュレーション仮説）」をわかりやすく↓
-
---- 15. @yakshawan (2026-09-23) ---
-URL: https://x.com/yakshawan/status/2102741314857267542
-ショウジョウバエの脳に美少女3Dアバターを付けてあげる実験10日目。状況がしばらく停滞していましたが、最近ようやく刺激源（餌）を目に収めながら少しずつ這い進んだ結果、口に接触できるようになりました。🥰 彼女の移動訓練は続きます。
-
---- 16. @OKMRKJ (2026-09-23) ---
-URL: https://x.com/OKMRKJ/status/2102780730946552198
-少し、過去を振り返ってみましょう。
-
---- 17. @mattshumer_ (2026-09-22) ---
-URL: https://x.com/mattshumer_/status/2102460702783070631
-Opus 5.5 feels like chatting with a way smarter Opus 4.6.
-
-I’m so happy.
-
---- 18. @yugen_matuni (2026-09-23) ---
-URL: https://x.com/yugen_matuni/status/2102705286977073567
-想像を絶するOpusの浪費速度を経てAstraへ回帰した。
-
-回帰というかレート制限というか何というか。
-
-ただし画像周りのコントロールはやはりAstraもレベル高いので、エネミーキャラのアニメーションは彼に任せれる...はず...
-
---- 19. @bioshok3 (2026-09-22) ---
-URL: https://x.com/bioshok3/status/2102475870376235240
-トランプ、UN AI条約を拒否、「人工知能」という用語を正式に禁止
-「米国は、人工知能を統制するためのグローバリストの陰謀を構築しようとするあらゆる試みを完全に拒否する。」
-「『人工』という言葉は、それが偽物のように聞こえさせる。偽物ではない… 実際には驚くほど素晴らしい…」
-
---- 20. @beagle_dog_inu (2026-09-22) ---
-URL: https://x.com/beagle_dog_inu/status/2102465868370452860
-GPT-6 Astra $10/$50
-Fable 5.1 $10/$50
-
-☆Opus 5.5 $4/$20
-☆GPT-6 Sol $2/$10  
-☆Grok 4.7 $2/$6
-
-☆GPT-6 Luna $0.1/$0.5
-
-大きな世代交代。比較の俎上に載るモデルも一気に減ったと思う。あと性能を気にする意味があるのはサブスクで無料になるSWEくらいか。とりあえずひとまずは全人類Sol Luna
-
---- 21. @akiko_lawson (?) ---
-贅沢すぎ商品発売中です♪
-みなさんはどの商品が気になりますか？
-コメントで教えてください(^^)
-
---- 22. @studiomasakaki (2026-09-23) ---
-URL: https://x.com/studiomasakaki/status/2102690763318718738
-撤収しました！目標の完売は成りませんでしたが、初めての同人誌は400部近く売れました！残りはboothで後日通販したいと思います。
-嬉しい言葉をたくさんかけていただき、皆さん本当にありがとうございました！
-
---- 23. @tanukiponkich (2026-09-23) ---
-URL: https://x.com/tanukiponkich/status/2102748058236879354
-チー牛という日本語の絶妙なセンス、言語の情報圧縮性能の高さには本当に感嘆する。確かに存在するが誰も明確に認識していなかった対象に対してたった3文字で、しかもチーズ牛丼という本人の特徴とは直接関係ない物体で概念化できる。
-
---- 24. @aws202211maru (2026-09-23) ---
-URL: https://x.com/aws202211maru/status/2102574302310875620
-Xを信じてはいけない
-
-以下のことは全て嘘だったということは身をもって証明できています
-
-・30歳越えたら未経験からエンジニア転職は厳しい
-
-・オンプレからやらないといきなりクラウドは厳しい
-
-・フリーランスは5年経験してからじゃないと厳しい
-
-・フリーランスは正社員の2倍稼いでとんとん
-
---- 25. @yswgt879 (2026-09-23) ---
-URL: https://x.com/yswgt879/status/2102695159679127970
-図書館で借りているベーマガDXに、ぴゅう太用の野球拳を発見❗️
-いつの時代もどの機種でも、この手のプログラムはあるものだね🤣
-
---- 26. @Dontgiveup_26 (2026-09-22) ---
-URL: https://x.com/Dontgiveup_26/status/2102286564521111687
-今、世界中の開発者コミュニティが大騒ぎしている理由。
-
-Playwrightを使っていた人々が一斉に乗り換えざるを得なくなったオープンソース「Stagehand v4」が登場。
-
-最近話題のJevまで搭載され、LLM呼び出し97%削減、速度11倍急増。
-
-繰り返し実行コストが「0円」に収束してしまう狂気の自動化の秘密
-
---- 27. @matsu51822384 (2026-09-23) ---
-URL: https://x.com/matsu51822384/status/2102677430234390678
-実は東京28日連続降水してまして…
-9月は毎日雨が降っているという事実…
-昨年までの猛暑と大違い。
-
---- 28. @kitao (2026-09-23) ---
-URL: https://x.com/kitao/status/2102631160170140040
-PyCon JP 2026 Keynote Trailer by 
-@kitao
- is now on Pyxel User Examples!
-
-Pyxelユーザー作品集を更新しました。
-コード非公開や日本語でも大丈夫です。お気軽にご投稿ください！
-
-Examples 作品集:
 
 https://
-kitao.github.io/pyxel-user-exa
-mples/
+huggingface.co/cua-ai/cua-s1-
+4b-0.2
 …
 
-Submit 投稿する:
+--- 13. @OpenhOfficial (?) ---
+新築の戸建て買っちゃうのもありかもなぁ
+
+--- 14. @thsottiaux (2026-09-23) ---
+URL: https://x.com/thsottiaux/status/2102814202117411196
+Voice! I've gotten so used to just call ChatGPT and talk about all the work, check on emails, do some coding, manage my calendar and it works across the full ecosystem of plugins, including 3P developed plugins.
+
+--- 15. @famitsu (2026-09-23) ---
+URL: https://x.com/famitsu/status/2102669444879470629
+【アケアカ2】『ゼビウス3D/G』が9月24日に配信
 
 https://
-github.com/kitao/pyxel/di
-scussions/new?category=user-examples
+famitsu.com/article/202609
+/88918
 …
 
-#pyxel #python #gamedev
+『アーケードアーカイブス』にナムコ参入から5周年、ナムコ100タイトル配信、アケアカ500週連続配信の記念として。
 
---- 29. @circlekinakoboo (2026-09-23) ---
-URL: https://x.com/circlekinakoboo/status/2102730700403130707
-体験版を遊んでくれた人から「ここが遊びにくい」「この操作分かりづらい」と言われると一瞬ウッとなるけど、わざわざ時間を割いて本音を伝えてくれるのって本当にありがたい！
+--- 16. @akshay_pachaar (2026-09-23) ---
+URL: https://x.com/akshay_pachaar/status/2102795260296593567
+Another insane Jev use case!
 
-自分一人じゃ気づけなかった死角を教えてもらえるからこそ、ゲームはどんどん面白くなっていく。『Princess
+Jev makes it incredibly cheap to evaluate and classify agent runs at scale.
 
---- 30. @eggmaya_AI (2026-09-23) ---
-URL: https://x.com/eggmaya_AI/status/2102640589762420935
-鳩ちゃんはそれでも食べたい。第6話
-「そうだ座禅体験、行こう！」公開です！
+And finally, someone open-sourced a self-improving memory layer that can put that capability to work across agent harnesses.
 
-お待たせしました。
-登場人物が多く、3分でどうやって面白くまとまらせるかかなり手こずった1本になります😅
-#TapNow 
+It turns your agent sessions into a compounding
+
+--- 17. @shibuya_tsuzuru (2026-09-23) ---
+URL: https://x.com/shibuya_tsuzuru/status/2102574419633721774
+大人になってからの「やってみたい」は、大事にしていいと思います。陶芸を一度だけ体験する。知らない作家の展示に入る。楽器に触ってみる。続ける覚悟や、道具をそろえる決心まで、最初からいりません。趣味にならなくても、詳しくならなくても、面白い一日が増えたなら、それで十分です。
+
+--- 18. @blog_uki (2026-09-22) ---
+URL: https://x.com/blog_uki/status/2102524365229502649
+AIで株トレード考えている人、Claudeにこの記事読ませればめっちゃ成功率上がると思うよ（サムネかっこ悪いけど）
+
+--- 19. @EpochAIResearch (2026-09-22) ---
+URL: https://x.com/EpochAIResearch/status/2102510281176023529
+AI is getting cheaper more quickly than any other transformative tech in history. At a given level of performance, cost has fallen ~47%/quarter since 2023.
+
+That’s 4× faster than DNA sequencing, 6× faster than compute, 18× faster than lithium batteries, and (up to 1973) 54×
+
+--- 20. @GoogleAI (2026-09-23) ---
+URL: https://x.com/GoogleAI/status/2102781694730285427
+We’re launching Gemini 3.8 Flash TTS and Gemini 3.8 Flash-Lite TTS ⚡️
+
+Our most expressive audio models yet let you create custom voices across 100+ languages or pick from 2,000+ ready-to-use ones. You can direct back-and-forth conversations, guide the delivery line-by-line, and
+
+--- 21. @NAITOTokihiro (2026-09-24) ---
+URL: https://x.com/NAITOTokihiro/status/2102913515342500316
+いつからだろう。
+
+「怒首領蜂」を「ドドンパチ」と普通に読むようになってしまったのは…
+
+--- 22. @denfaminicogame (2026-09-24) ---
+URL: https://x.com/denfaminicogame/status/2102923642065891610
+『逆転裁判5 VR』がいきなり発表！！2027年にMeta VR Glasses、Quest3/3s、Quest Pro、Quest2向けに登場
+
+https://
+news.denfaminicogamer.jp/news/260924o
+
+「異議あり！」でおなじみのシリーズ第5弾がなんとVRに。法廷で実際に証拠品をつきつけたり「異議あり！」と唱えたりできる
+
+--- 23. @careerchange268 (?) ---
+【トライアル期間あり・給与あり】
+東京都の”正社員”就職支援事業✨
+
+--- 24. @bobaquail (2026-09-23) ---
+URL: https://x.com/bobaquail/status/2102556442137895252
+sin wave test
+#miku #初音ミク #vocaloid
+
+--- 25. @TK2Works (2026-09-21) ---
+URL: https://x.com/TK2Works/status/2102162743604461936
+#AIニケちゃん #にゃぱん
+一昔前の教育番組風ファンタジー
+Minimax H3にて。渡しのローカル環境でも1.0MPで10秒、あたりなら安定しそう。3分くらいの長さの動画を作るには、仕組みを作る必要がありますね
+---
+キャラクターはAIニケちゃん と にゃぱん
+
+@nyapan_mohy
+
+--- 26. @UploadVR (2026-09-23) ---
+URL: https://x.com/UploadVR/status/2102907215271051495
+Meta VR Glasses were just officially announced. They have micro-OLED displays, weigh 100 grams, and are powered by a tethered puck with Qualcomm's Snapdragon Reality Elite chipset.
+
+Details here: 
+https://
+uploadvr.com/meta-vr-glasse
+s-officially-announced-connect-2026/?utm_medium=social&utm_source=x
+…
+
+--- 27. @Project_RionaAI (2026-09-23) ---
+URL: https://x.com/Project_RionaAI/status/2102729693602648237
+Seedance 2.5で作成。
+アクションの練習。
+#Higgsfield #AI動画 #Seedance
+
+--- 28. @kenn (2026-09-23) ---
+URL: https://x.com/kenn/status/2102803043712643535
+Sol 6 😕
+Opus 5.5 😁
+
+Astra高すぎSol弱すぎでCodexは久々に厳しいぞ
+
+--- 29. @MoguLiveJP (2026-09-24) ---
+URL: https://x.com/MoguLiveJP/status/2102912112221913363
+【先行体験】約100gの「Meta VR Glasses」その完成度はいかに？ Questとも比較 - MoguLive 
+https://
+moguravr.com/meta-vr-glasse
+s-preview/
+…
+
+--- 30. @Ryuki_Yano (2026-09-23) ---
+URL: https://x.com/Ryuki_Yano/status/2102604204967948699
+「これ誰のパンツ？」
+
 @TapNow_AI
+ 
+@TapNow_JP
+ #PATCHWORKDEAD
 
---- 31. @PixAI_Official (?) ---
-最強アニメAI創作ツールTsubaki.3 
-4周年セール！イラスト・マンガ制作・動画生成が無料・無限に
+教室で自分のパンツが晒されたら、あなたは名乗れますか？
 
-抽選で総額170万円相当をプレゼント！ 
-・Tsubaki.3無制限使用会員プラン 20名 
-・Amazonギフトカード1,000円分 100名  
+3時間縛りで、ゾンビたちの学園ギャグアニメを制作しました。
 
-▼参加方法 
-①
-@PixAI_Official
- をフォロー 
-②投稿をリポスト
+名乗れなかった結果、パンツが学校中を巡り始めます。
+そして最後、さらに意味のわからないことになります。
 
---- 32. @Zzy_yamaguchi (2026-09-23) ---
-URL: https://x.com/Zzy_yamaguchi/status/2102687414409998541
-コンプをかけると声に艶が出る、ってよく言うんだけど、あれ何が起きてるのか。
+--- 31. @shinasuka77 (2026-09-23) ---
+URL: https://x.com/shinasuka77/status/2102709544728277248
+今回のjcomの障害について思う事。多分、障害の前兆はあったと思います。半年ぐらい前から数分ネットが切れることが度々あったのです。でもjcomはそれを障害とみなさないため何も調査せずほったらかしにしてしまったのではないでしょうか。そして障害が発生した。推測ですが。
 
---- 33. @k_matsumaru (2026-09-23) ---
-URL: https://x.com/k_matsumaru/status/2102644735278223694
-Opus 5.5が強すぎて6-SolとLuna触ってるところじゃねえ
+--- 32. @studiomoragames (2026-09-23) ---
+URL: https://x.com/studiomoragames/status/2102670731947774328
+TGS2026の打ち合わせの際、海外パブリッシャー様からステータスについて質問がありました。
+ホバーで説明が出るのは実装済みだったので、早速チュートリアルに組み込みました✨
 
---- 34. @wad0427 (2026-09-23) ---
-URL: https://x.com/wad0427/status/2102639619720532357
-ChatGPT Images 2.5が想像以上にえぐい...
+1カ月経つと手触りなど別物になる勢いで引き続き進化していきます⚡️
+#ゲーム制作
 
-いま話題の画像生成AIなんだけど、
-公式が言ってない裏技、実はたくさんある。
+--- 33. @dmm_ai_camp (?) ---
+／
+💰生成AIで稼ぐスキル、最短で習得
+＼
 
-これ全部知ってる人と知らない人で、コンテンツ作成スピードが10倍は変わるから、この投稿見つけた人にだけ教えるね。
+AIに仕事を奪われるか。
+AIを使って仕事を増やすか。
 
-リプ欄に全部いれといた！保存推奨↓
+今注目のClaude Codeをはじめ、
+Gemini、n8n、NotebookLMなど話題の生成AIを学び放題。
 
---- 35. @shiroshiromagic (2026-09-23) ---
-URL: https://x.com/shiroshiromagic/status/2102602284131893305
-サービスが終了したら何もできないうんたらかんたら
+約1000レッスン見放題。
+入会金0円・解約自由。
+今すぐチェック👇
 
---- 36. @gosrum (2026-09-22) ---
-URL: https://x.com/gosrum/status/2102543436989734957
-gpt-6-luna のベンチマーク回してるけど、lunaちゃんはもしかしてアホの子かもしれない...
+--- 34. @cb_doge (2026-09-22) ---
+URL: https://x.com/cb_doge/status/2102509086667579638
+Fitch gives Tesla its first-ever BBB investment-grade credit rating.
 
-gpt-5.6-luna はもっとスコアが高かったはずだから、gpt-6-luna はエージェント用ではなく別の方向に舵を切ったんだろうか🌙
+Fitch highlighted Tesla’s EV leadership, strong profitability, $43.5B in cash and investments, and “unmatched” vertical integration as it expands into AI, Robotaxi and Optimus.
 
---- 37. @elonmusk (2026-09-22) ---
-Grok 
-@Bot
- usage is growing faster than anything we’ve ever seen
+This is huge. 🔥
+
+--- 35. @fashionpressnet (2026-09-23) ---
+URL: https://x.com/fashionpressnet/status/2102699516738900342
+「ファイナルファンタジー40周年記念展」東京国立博物館 表慶館で、歴代タイトルの名シーン＆音楽で辿る40年 - 
+https://
+fashion-press.net/news/150971
+
+--- 36. @Wario64 (2026-09-24) ---
+URL: https://x.com/Wario64/status/2102913581654413657
+New Ace Attorney title announced - Ace Attorney: Dual Destinies VR - Announcement Trailer (Coming 2027 for Meta VR Glasses, Meta Quest 3/3S, Quest Pro, and Quest2) 
+https://
+youtube.com/watch?v=-674m8
+jJ0Ac
+…
+
+--- 37. @sashisashi569 (2026-09-23) ---
+URL: https://x.com/sashisashi569/status/2102550951420899462
+傲慢なのは納本制度があるのになぜか納本していない出版社、永久に失われるリスクを提唱しながら寄贈の一つもしない消費者、人文知の継承のためのフェアユース規定を定めない立法府では？
 
 --- 38. @GOROman (2026-09-23) ---
-URL: https://x.com/GOROman/status/2102646303801200743
-できた
+URL: https://x.com/GOROman/status/2102749952594297174
+ささやき いのり えいしょう ねんじろ！
 
---- 39. @rohanpaul_ai (2026-09-23) ---
-URL: https://x.com/rohanpaul_ai/status/2102812294879322490
-Frequent AI users in the U.S. are less worried about the technology than people who use it less often: 68% of daily users reported concern, versus 80% of less-frequent users.
+カワヅは はい になり ました
 
-- Gallup’s 2026 World Poll
+--- 39. @PIVOT_inc_ (?) ---
+【AI×言語学習の未来】
+OpenAIが出資する米ユニコーン企業「Speak」。韓国では10人に1人が体験したアプリ、日本でも英語学習の手段として急成長している。成功を収めたのはなぜか？
+シリコンバレー最前線とAI投資のトレンドまで、Speak経営陣に直撃。
 
-Singapore shows the contrast: 46% of adults use AI daily, and 77% of
+--- 40. @gosrum (2026-09-22) ---
+URL: https://x.com/gosrum/status/2102341292630143345
+Fable 5.1 Build Day Tokyo なう
+#aimeetup #Claude #ClaudeCode #Fable
 
---- 40. @koguGameDev (2026-09-23) ---
-URL: https://x.com/koguGameDev/status/2102671467246952844
-プロジェクトルートに置くエージェント向けの諸々、もう「.agents」じゃなく「agents」でいい気がしてきた。
+--- 41. @okazaki_futon (2026-09-23) ---
+URL: https://x.com/okazaki_futon/status/2102699500364341491
+「男がやる仕事やない」
 
---- 41. @Tsubame33785667 (2026-09-22) ---
-URL: https://x.com/Tsubame33785667/status/2102538281565184371
-「AIは真に理解しているのではなく、ただの記号操作にすぎないのではないか」と主張する人々がいる。だが、その問いは結局「人間の理解とは何か」という問いに跳ね返ってくる。ニューロン一個を見ても、そこに意味や意識はない。ならば、人工システムとの境界線は、どこに引けるというのだろうか。
+針を扱う仕事は女の仕事。
+昔は、そう言われていた時代もあったそうです。
 
---- 42. @tokumoto_PMO (2026-09-22) ---
-URL: https://x.com/tokumoto_PMO/status/2102533147724304866
-今SES業界では「案件の数が減っている」という声が出ています。
-しかし、PM・コンサル・要件定義など上流工程では、62.5%が「案件総数が増えている」と回答しています。
-つまりこれは、企業がお金を払うポイントが変わってきているということです。
+ウチの仕立て職人は、僕以外は全員女性。
+昔は男性もいましたが、その人は工場担当。
+布団を仕立てるのは、昔から女性ばかりでした。
 
---- 43. @synthwavedd (2026-09-23) ---
-URL: https://x.com/synthwavedd/status/2102758634727919700
-Claude Opus 5.5 is a very, very good model. Practically everyone at OpenAI was caught off-guard by this launch (not the timing, but the performance of the model!), and there's now a pretty "all hands on deck" atmosphere for 6.1 Astra - timelines are being compressed.
+でも僕は、できる限り仕立てもやっていきたい。
 
-But it'll
+--- 42. @akari_worlds (2026-09-23) ---
+URL: https://x.com/akari_worlds/status/2102715851103510969
+工場で触る綿と仕立てで触る綿では見えるものが違う、というのが意外でした。仕立てを覚えたあとに工場へ戻ると、手ざわりまで変わって感じられるものなんでしょうか。
 
---- 44. @iritec_jp (2026-09-23) ---
-URL: https://x.com/iritec_jp/status/2102675322802196899
-いまやモバイルだけでゲーム開発ができる。
+--- 43. @kmizu (2026-09-24) ---
+URL: https://x.com/kmizu/status/2102929541446721786
+今日も今日とてウォーキング
 
-ClaudeCodeでもCodexでもいいけどリモート接続。ただClaudeCodeのほうがアプリが快適で早い。そしてPC側のClaudeアプリで全セッションをリモートコントロールしておくと便利。
+--- 44. @Suzacque (2026-09-22) ---
+URL: https://x.com/Suzacque/status/2102537411528131007
+こういう状況なのでOpus 5.5が賢くなってくれた事はとても嬉しい
 
---- 45. @sionic4029 (2026-09-22) ---
-URL: https://x.com/sionic4029/status/2102371987205312684
-神保町の古書街で本を買いもしなければ国会図書館も利用しない雰囲気言論人みたいなのが「現物が失われる」とかほざいたコメントつけてるのマジで笑える。てめぇが神保町全部の本を買い占めろやw
-本屋に死蔵されたまま潰れてんのが現実だろうが。
+--- 45. @Nao_u_ (2026-09-24) ---
+URL: https://x.com/Nao_u_/status/2102919585699934296
+そういやあのダンジョンって4クリア後の話なのかな？
+前後どっちか確定できる設定ってあったっけ？
 
---- 46. @Nasdaq (?) ---
-"If you're starting a new business, make sure it’s something you are passionate about, and you'll never feel like you're working." 
+--- 46. @koguGameDev (2026-09-23) ---
+URL: https://x.com/koguGameDev/status/2102675494902862080
+「SFっぽいパーツって何…？」という自問期に入ってきた
 
-In this episode of Nasdaq's The Winning Formula, Super Bowl Champion 
-@ReggieBush
- talks about launching the United Athletes Tour, the importance of
+--- 47. @Kweepa (2026-09-23) ---
+URL: https://x.com/Kweepa/status/2102897493998731482
+Progress on Quake for Commodore 64: working on Chthon and its level. Chthon is 30 verts and 30 lines, so the room is a little slow right now. Thinking of some ways to speed it up, eg hiding some objects, reducing his vert/line count even more :(
 
---- 47. @gemama0 (2026-09-22) ---
-URL: https://x.com/gemama0/status/2102198046201086356
-Jevでノートの自動タグ付けシステムを作った🎉
-Obsidian使っている人はぜひ👇
+--- 48. @sakuhin_select1 (?) ---
+隣のお姉さんの手料理を食べたら...
 
---- 48. @lFBo0i1Pql4130 (2026-09-23) ---
-URL: https://x.com/lFBo0i1Pql4130/status/2102731659540050053
-#Godot #ゲーム制作 #ドット絵 #pixelart 画面サイズ変更。720×1280です。とりあえず画面サイズを変更し、ちょっとだけ修正しました。小さくなりましたが、縦のほうが登っている感じがする。背景画像の修正と足場などの配置修正、リザルト（仮）の修正をしないといけないですね。
+〔PR〕
 
---- 49. @Yatima_K (2026-09-22) ---
-URL: https://x.com/Yatima_K/status/2102526616819974514
-Opus 5.5は，RSI（再帰的自己改善）の影響が出始めている可能性あり！！
-性能の上昇が急になり始めている様子が見える．
+--- 49. @ikaten_retro (2026-09-23) ---
+URL: https://x.com/ikaten_retro/status/2102752828121125037
+就寝前の #MSX #V9968 拡張BASIC。
+LFMMを使った全角半角文字の実験的表示。
+速度は微増という感じ。最適化したらもう少し速くなるかな？
+_KANJIをしなくても全角表示できるけど、プログラム内に持たせるとなると、_KANJIして打ち込まないとダメと言う矛盾がありますw
+デモはCHR$でSJIS直書き。
 
-特に，Mythos 5 → Opus 5 の時の傾きより，Mythos 5.1 → Opus 5.5 の傾きのほうが大きい．
-
---- 50. @ususio_sodium (2026-09-23) ---
-URL: https://x.com/ususio_sodium/status/2102593328764293478
-素敵、人の心が残ってそう
+--- 50. @yasei_no_otoko (2026-09-23) ---
+URL: https://x.com/yasei_no_otoko/status/2102906524670865890
+Andrilが山火事初期消化ドローンを開発🎉
