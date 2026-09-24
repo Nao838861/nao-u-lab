@@ -183,3 +183,36 @@ BG-SUBSETは別スレッドの完成を統合済み。WINDOWS-REFRESHも`bfd6630
 Codex CLI 0.149.0（PowerShellのcodex.ps1は実行ポリシーで不可、codex.cmdを使う）、Claude Code 2.1.207を確認。
 openai-docsスキルと公式MCP/両クライアント資料を参照済み。MCP本体と実接続試験はまだない。
 物理MMC5はユーザー担当、LD65-HOST-CAUSEは引き続き外部待ち。追加候補へはまだ着手しない。
+
+## 2026-09-25：MCP実装、Claude Code認証待ち
+
+ユーザーの「はい」で未保存IDE変更があればMCP書込みを止める方式が確定。
+`0d5cdab`でAUTHORING-MCPを予約して実装し、最終記録`6b72da2`をmainへpush済み。作業ツリーclean。
+15個のstdioツール、共通AuthoringService、IDEとの名前付きパイプ調停、同梱設定生成・起動を追加した。
+BuildServiceとEmbeddedSessionを共用し、プロジェクト版の比較・素材バッチ検証・ディスク競合・Undo・
+ビルド取消・実ROM入力/画像/シンボル・ROM/ZIP出力・切断後の解放を実装。
+MCPの子プロセスにはプロトコルstdinを引き継がず専用起動を使う。画像はPPU描画完了時の画素とフレームを対応させた。
+
+最終配布：`D:/HomeBrew/FamiBASIC_Turbo_remaining/dist/windows-mcp-20260925-final/FamiBASIC_Turbo-Windows.zip`。
+生成元`93d2b4104df61bd5addc05c32e47f4231f8a829a`、196,821,924 bytes、3,803ファイル全ハッシュ照合。
+SHA-256 `ae3c56c0573fe6b19c2e7f747eb8a574ca0266dfcb4ce89b6da17104e180152c`。
+利用者によるPython・Node・cc65・Mesenの追加導入は不要。配布のMCP_Setup.cmdで設定を生成する。
+
+制作/実Tk/実ホスト/テンプレート/環境/統合BG UIの計41試験を関連する変更時に確認。
+全入り容量は62,166 B、コード最小260 B、ROM最小19 Bで合格。
+`6dac5f6`の配布は4種ROM・GUI・MCP・設定生成・サンプル除外を隔離環境で完走。
+最終`93d2b41`のMCPを別フォルダ・System32のみのPATH・開発パスとPython通信拒否で再試験し、
+audit2,778件・禁止アクセス0件。最新タイトル全61,440画素が基準と一致、連続フレーム送りとSTARTも成功。
+小さなプレビューを古い映像と判断したが、元PNGの画素は正常だったためユーザーへ訂正済み。
+ここをゲーム描画不具合の修正と記録しない。物理実機・別PC・OS全体ACLの試験ではない。
+
+最終配布をCodex CLIネイティブ0.147.0（既定ラッパーの0.149.0とは別）から19ツール操作で完走。
+エラー行10→修正→実ROM→A=42、右12フレームB=1、解除後B=0→画像→ROM/ZIP出力。
+証跡`docs/benchmarks/mcp_20260925/`、説明`docs/mcp_verification_20260925.md`、操作`docs/mcp_guide.md`。
+
+**唯一のMCP残件はClaude CodeでのAI制作試験。** Claude Code 2.1.207は最終配布の生成設定でConnected。
+AI呼出しは`OAuth session expired and could not be refreshed`で停止し、非同期質問でユーザーへ再ログインを依頼中。
+既存ユーザー設定は変更していない。接続健康診断は独立したCLAUDE_CONFIG_DIRを使った。
+AUTHORING-MCPを外部待ちへ変更した。ユーザーが再ログイン完了を知らせたら同項目を再予約し、
+`python -m tools.verify_mcp_clients claude --app dist/windows-mcp-20260925-final/FamiBASIC_Turbo --output .tmp/<新規試験先>`
+で制作を確認し、記録・完了・pushする。追加機能候補は3項目完了後に相談するという合意を維持。
