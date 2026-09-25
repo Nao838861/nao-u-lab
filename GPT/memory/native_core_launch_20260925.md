@@ -11,3 +11,7 @@
 - 起動後、ネイティブホストから256×240のフレーム受信を確認。ウィンドウ名は `FamiBASIC Turbo - Native NES (Mesen-free)`。
 
 9月20日の自作コア版であり、9月25日のmainの全機能を統合した版ではない。Mesen同等の精度認定ではない。今回、ソース変更やmainへの統合は行っていない。
+
+## IDEから開くシューティング例
+
+同ブランチの FLIGHT LAB v004（中型敵と護衛）から、C:\AI\FamiBASIC_Turbo_native\.tmp\flight_lab_medium.project.json を生成し、BuildServiceでROM生成成功を確認。IDEの「開く」からこのJSONを選びRUNする。最新全部入り版とは異なる旧サンプル。
