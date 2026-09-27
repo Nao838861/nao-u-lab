@@ -7,6 +7,7 @@ from logging import getLogger
 from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 from pydantic import BaseModel
 
+from .speak import SpeechInterruptedError
 from .speech_recognition import create_speech_recognizer
 from .speech_synthesis import create_speech_synthesizer
 from .types import SpeechRecognizer, SpeechSynthesizer
@@ -110,6 +111,8 @@ class StackChanApp:
                     except WebSocketDisconnect:
                         disconnected = True
                         raise
+                    except SpeechInterruptedError:
+                        logger.info("Talk interrupted by new input")
                     except Exception:
                         logger.exception("talk_session failed")
                     finally:

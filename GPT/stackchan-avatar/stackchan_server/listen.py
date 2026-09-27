@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import builtins
 import wave
 from collections.abc import Awaitable, Callable
 from datetime import UTC, datetime
@@ -31,12 +32,15 @@ class ListenHandler:
         recordings_dir: Path,
         debug_recording: bool,
         listen_audio_timeout_seconds: float,
+        transcription_timeout_seconds: float = 30.0,
     ) -> None:
         self.speech_recognizer = speech_recognizer
         self.recordings_dir = recordings_dir
         self.debug_recording = debug_recording
         self.audio_format = LISTEN_AUDIO_FORMAT
         self.listen_audio_timeout_seconds = listen_audio_timeout_seconds
+        self.transcription_timeout_seconds = transcription_timeout_seconds
+        self._transcription_task: asyncio.Task | None = None
 
         self._pcm_buffer = bytearray()
         self._streaming = False
@@ -47,7 +51,14 @@ class ListenHandler:
         self._speech_stream: StreamingSpeechSession | None = None
 
     async def close(self) -> None:
+        await self._cancel_transcription()
         await self._abort_speech_stream()
+
+    async def _cancel_transcription(self) -> None:
+        if self._transcription_task is not None:
+            self._transcription_task.cancel()
+            await asyncio.gather(self._transcription_task, return_exceptions=True)
+            self._transcription_task = None
 
     async def listen(
         self,
@@ -76,7 +87,8 @@ class ListenHandler:
             if self._pcm_data_counter != last_counter:
                 last_counter = self._pcm_data_counter
                 last_data_time = loop.time()
-            if (loop.time() - last_data_time) >= self.listen_audio_timeout_seconds:
+            transcribing = self._transcription_task is not None and not self._transcription_task.done()
+            if not transcribing and (loop.time() - last_data_time) >= self.listen_audio_timeout_seconds:
                 if not is_closed():
                     await send_state_command(idle_state)
                 raise TimeoutError("Timed out after audio data inactivity from firmware")
@@ -84,7 +96,10 @@ class ListenHandler:
 
     async def handle_start(self, websocket: WebSocket) -> bool:
         logger.info("Received START")
+        await self._cancel_transcription()
         await self._abort_speech_stream()
+        self._message_ready.clear()
+        self._transcript = None
         self._pcm_buffer = bytearray()
         self._streaming = True
         self._message_error = None
@@ -174,10 +189,28 @@ class ListenHandler:
 
         await websocket.send_json(ws_meta)
 
-        transcript = await self._transcribe_async(bytes(self._pcm_buffer))
-
+        pcm_bytes = bytes(self._pcm_buffer)
         self._streaming = False
         self._pcm_buffer = bytearray()
+        # 音声認識を待つ間も状態・中断・再生完了イベントを受信する。
+        self._transcription_task = asyncio.create_task(self._finish_transcription(pcm_bytes))
+
+    async def _finish_transcription(self, pcm_bytes: bytes) -> None:
+        loop = asyncio.get_running_loop()
+        started = loop.time()
+        try:
+            transcript = await asyncio.wait_for(
+                self._transcribe_async(pcm_bytes), self.transcription_timeout_seconds
+            )
+        except builtins.TimeoutError:
+            self._message_error = TimeoutError("Speech recognition timed out")
+            logger.warning("Speech recognition timed out after %.1fs", loop.time() - started)
+            return
+        except Exception as exc:
+            self._message_error = exc
+            logger.exception("Speech recognition failed")
+            return
+        logger.info("Speech recognition completed in %.2fs", loop.time() - started)
 
         if transcript.strip() == "":
             self._message_error = EmptyTranscriptError("Speech recognition result is empty")

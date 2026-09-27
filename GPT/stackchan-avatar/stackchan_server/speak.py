@@ -21,6 +21,10 @@ from .types import AudioFormat, SpeechSynthesizer, StreamingSpeechSynthesizer
 logger = getLogger(__name__)
 
 
+class SpeechInterruptedError(Exception):
+    """実機のタップで再生を中断。古い回答を続けず次の入力へ進む。"""
+
+
 class SpeakHandler:
     def __init__(
         self,
@@ -75,6 +79,8 @@ class SpeakHandler:
     ) -> None:
         start_counter = self._speak_finished_counter
         await self._start_talking_stream(text, next_seq=next_seq)
+        if self._cancelled:
+            raise SpeechInterruptedError()
         if not self._speaking:
             return
         await self._wait_for_speaking_finished(
@@ -95,6 +101,8 @@ class SpeakHandler:
         loop = asyncio.get_running_loop()
         deadline = (loop.time() + timeout_seconds) if timeout_seconds else None
         while True:
+            if self._cancelled:
+                raise SpeechInterruptedError()
             if self._speak_finished_counter >= min_counter:
                 return
             if is_closed():
