@@ -83,3 +83,10 @@ Windows常駐実装は`9a41a8f957`、モデル書き込み修正は`c78a7c9407`�
 Windowsファイアウォールには、このPython 3.13のpythonwについてPublicネットワークの
 受信許可が存在することを確認した。狭いLAN専用ルールを追加・再設定する場合は、
 管理者PowerShell用の`scripts/windows_firewall.ps1`を使う。
+## 2026-09-27 常駐再開
+
+ユーザーの依頼で、停止中（タスク Ready、8000番ポート待受なし）の常駐サーバを
+`scripts/windows_resident.ps1 -Action Start` で起動した。
+タスク `StackChan Avatar` が Running、`/api/status` が `ok: true`、
+実機1台（192.168.0.13）が `idle` で接続済みであることを確認した。
+今回はサーバ起動のみで、ファームウェアの書き込みや音声動作試験は行っていない。
