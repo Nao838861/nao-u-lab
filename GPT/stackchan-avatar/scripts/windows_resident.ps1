@@ -8,6 +8,7 @@ $python = Join-Path $project '.stackchan-venv\Scripts\python.exe'
 $pythonw = Join-Path $project '.stackchan-venv\Scripts\pythonw.exe'
 $runner = Join-Path $PSScriptRoot 'run_resident.py'
 $taskName = 'StackChan Avatar'
+$trayTaskName = 'StackChan Tray'
 Set-Location -LiteralPath $project
 if (!(Test-Path -LiteralPath $pythonw)) {
     throw 'Run Start StackChan.bat once to install Python dependencies.'
@@ -30,6 +31,25 @@ function Wait-Ready {
         Start-Sleep -Milliseconds 300
     } while ((Get-Date) -lt $deadline)
     throw "StackChan did not start. See $project\logs\server.log"
+}
+
+function Start-Tray {
+    $trayRunner = Join-Path $PSScriptRoot 'windows_tray.ps1'
+    $trayArguments = "-NoProfile -STA -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$trayRunner`" -Port $port"
+    $existing = Get-ScheduledTask -TaskName $trayTaskName -ErrorAction SilentlyContinue
+    if ($existing -and $existing.Actions.Arguments -ne $trayArguments) {
+        throw "The task '$trayTaskName' belongs to another configuration."
+    }
+    if (!$existing) {
+        $user = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
+        $trayAction = New-ScheduledTaskAction -Execute "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe" -Argument $trayArguments -WorkingDirectory $project
+        $trigger = New-ScheduledTaskTrigger -AtLogOn -User $user
+        $trigger.Delay = 'PT15S'
+        $principal = New-ScheduledTaskPrincipal -UserId $user -LogonType Interactive -RunLevel Limited
+        $settings = New-ScheduledTaskSettingsSet -MultipleInstances IgnoreNew -ExecutionTimeLimit ([TimeSpan]::Zero) -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
+        Register-ScheduledTask -TaskName $trayTaskName -Action $trayAction -Trigger $trigger -Principal $principal -Settings $settings -Description 'StackChan tray controls at Windows logon.' | Out-Null
+    }
+    Start-ScheduledTask -TaskName $trayTaskName
 }
 
 function Stop-Server {
@@ -85,16 +105,19 @@ switch ($Action) {
         $shortcut.Save()
         Start-ScheduledTask -TaskName $taskName
         Wait-Ready
+        Start-Tray
     }
     'Start' {
         if (!$task) { throw 'Install the resident task first.' }
         Start-ScheduledTask -TaskName $taskName
         Wait-Ready
+        Start-Tray
     }
     'Open' {
         if (!$task) { throw 'Install the resident task first.' }
         Start-ScheduledTask -TaskName $taskName
         Wait-Ready | Out-Null
+        Start-Tray
         Start-Process $url
     }
     'Stop' { Stop-Resident }
@@ -117,6 +140,12 @@ switch ($Action) {
         Invoke-RestMethod "$url/api/status" -TimeoutSec 3
     }
     'Uninstall' {
+        $tray = Get-ScheduledTask -TaskName $trayTaskName -ErrorAction SilentlyContinue
+        $trayRunner = Join-Path $PSScriptRoot 'windows_tray.ps1'
+        if ($tray -and $tray.Actions.Arguments.Contains('"' + $trayRunner + '"')) {
+            Stop-ScheduledTask -TaskName $trayTaskName
+            Unregister-ScheduledTask -TaskName $trayTaskName -Confirm:$false
+        }
         Stop-Resident
         if ($task) { Unregister-ScheduledTask -TaskName $taskName -Confirm:$false }
         $link = Join-Path ([Environment]::GetFolderPath('Desktop')) 'StackChan.lnk'
