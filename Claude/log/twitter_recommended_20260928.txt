@@ -1,304 +1,289 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-09-28 07:14
+# Read at: 2026-09-28 18:46
 # Total: 50 tweets
 
---- 1. @rohanpaul_ai (2026-09-27) ---
-URL: https://x.com/rohanpaul_ai/status/2104283362521444490
-Harvard cognitive scientist Steven Pinker (
-@sapinker
-) on AI's future path.
+--- 1. @SNDR_SNDL (2026-09-27) ---
+URL: https://x.com/SNDR_SNDL/status/2104148191402996135
+1コマ目のこういう人、漫画かドラマかでしか見ないなぁ...
 
-"It will get better. It'll never be omniscient. It'll never be omnipotent.  That's out of comic books out of religion. There are laws of physics. There are limits on information. There's no system that
+--- 2. @a9x7_k2v0 (?) ---
+「理想の"推し"と、会話できる時間を。」
 
---- 2. @AmazonJP (?) ---
-シャンプーが切れそう、明日のおにぎり用のラップがない。困ったあれがない！をお助け。
+［PR］
 
---- 3. @GOROman (2026-09-27) ---
-URL: https://x.com/GOROman/status/2104003606873588134
-Meta Store来たけど
-完全にメガネ屋になってたwww
+--- 3. @nuits_jp (2026-09-27) ---
+URL: https://x.com/nuits_jp/status/2104315794335383954
+小手先ばっか器用になって、持続的な品質を維持する適切なアーキテクチャ設計とか、なんも変わってない気がする。
+3Dモデリングだとか、ワンショットばかり上手になってさ。
 
---- 4. @kazunori_279 (2026-09-26) ---
-URL: https://x.com/kazunori_279/status/2103651219713691668
-数個〜数10個のサブエージェントを立てるスウォーム開発をしていて、自作フレームワークでは限界を感じ始めたので、世の中のベストプラクティスをDeep Researchしてみた。自分の用途ではagy teamworkにsuperpowerでTDDを追加するハイブリッド構成がいい気がする。
+--- 4. @GOROman (2026-09-27) ---
+URL: https://x.com/GOROman/status/2104268842834776199
+スパルタンXはKUNG FU ですか
 
---- 5. @prasenx (2026-09-26) ---
-URL: https://x.com/prasenx/status/2103851939457093635
-asked claude in cursor to make a video on history of video games
+--- 5. @show5560 (2026-09-27) ---
+URL: https://x.com/show5560/status/2104182516059873780
+たとえこれが具身知能のためにデータを集めて小遣い稼ぎをして家計を助けるためだとわかっていても、
 
---- 6. @miyamotoclub (2026-09-27) ---
-URL: https://x.com/miyamotoclub/status/2104125092582297989
-【ゆるぼ】
-企業ではなく「自主制作」かつ「2人以上」でゲーム開発とリリース経験のある方へ質問です
-売上を受け取る口座とか、メンバーとの分配の頻度などどうしているか教えていただける方がいましたら幸いです
-表でしにくい話題ですので、DMでお願いいたします
+夜市でこれを見るとやっぱりクソッタレのサイバーパンクすぎるわ
 
---- 7. @SynScience (2026-09-27) ---
-URL: https://x.com/SynScience/status/2104231436052271495
-OpenScience is now the #1 scientific agent.
+--- 6. @megakumadori (2026-09-28) ---
+URL: https://x.com/megakumadori/status/2104491412435923069
+リメイクで見たいと言えば見たいシーン。
 
-Today it's out of beta and live on Product Hunt, with:
+--- 7. @itmedia_news (2026-09-28) ---
+URL: https://x.com/itmedia_news/status/2104368039408136434
+タイムズカー、会員の免許情報や本人確認書類が漏えいの可能性　不正アクセスで
 
-• A new IDE: a faster, fully redesigned research workspace
-• OpenScience Ace: 30+ hand-picked models, including GPT-6 Astra, Claude Opus 5.5, Grok 4.7, Kimi K3, GLM-5.3, and
+--- 8. @okd61807313 (2026-09-28) ---
+URL: https://x.com/okd61807313/status/2104375537514791296
+久々にvi触ると
+i → 編集モードに変更
+:qw → 保存して終了
+くらいしか操作方法覚えてない
 
---- 8. @yoshikiito (2026-09-27) ---
-URL: https://x.com/yoshikiito/status/2104179299721105580
-これのやつだ
+--- 9. @gigazine (2026-09-27) ---
+URL: https://x.com/gigazine/status/2104201899251474607
+睾丸を超音波で温める男性用避妊ガジェット「COSO」が登場(2021)
 
---- 9. @HowToPrompt__ (2026-09-27) ---
-URL: https://x.com/HowToPrompt__/status/2104240283357712802
-This 2008 paper answers:
-
-why anything is beautiful
-why science exists
-why jokes land
-why you get bored
-why art moves you
-why babies explore
-why music has hooks
-
-It boils down to a single, cold mathematical principle.
-
-Jürgen Schmidhuber is one of the founding fathers of modern
-
---- 10. @korinVR (2026-09-27) ---
-URL: https://x.com/korinVR/status/2104158083350245784
-アーケードアーカイブスにエースドライバーが出てるとかもっと早く教えてください！　拙者このデモ画面でピットから出て行ってタイヤを暖めるところが三度の飯よりも好き侍でして……
-
---- 11. @Oshi_creatorpic (?) ---
-昔憧れていた先輩オンオフの差が意外すぎて【PR】
-
---- 12. @glitchbeer_ (2026-09-27) ---
-URL: https://x.com/glitchbeer_/status/2104137860408566038
-第6戦、満枠になりました🙇‍♀️
-今夜22時～戦いが始まります。  
-
-今回、これまでよりもプレイヤー同士の遭遇が増えそうです。
-#AIニケちゃん Discord サーバのニケロワチャンネルや、
-ゲーム URL を開いて観戦いただくとリアルタイムで状況が動く感じが分かるかもしれません！
-
---- 13. @craftcapitallab (2026-09-26) ---
-URL: https://x.com/craftcapitallab/status/2103842398052942157
-3DLoやprevisから背景美術の下絵や背動をつくるテスト。
-
-MinimaxH3 ローカルにて。だいぶ安定してきた🥹
-
---- 14. @masapark95 (2026-09-27) ---
-URL: https://x.com/masapark95/status/2104132125058568417
-AI時代、一番通用する人は「面白いものを作る力」のある人だわ。
-
-この一言に全て詰まっている。
-
---- 15. @AM09_21 (2026-09-27) ---
-URL: https://x.com/AM09_21/status/2104180352541770120
-AIに「確率って1を超えることありゅ？」みたいなバカな話を適当に振った結果、量子光学の良い感じの入門になったので、AIに雑にダル絡みするのは良い遊びかもしれない
-
---- 16. @threejs (2026-09-27) ---
-URL: https://x.com/threejs/status/2104029135790072196
-👨‍💻 
+--- 10. @vibe_walking (2026-09-27) ---
+URL: https://x.com/vibe_walking/status/2104254780826947867
+ほう。
+GPT-6 SolおよびGPT-6 Lunaで画像理解を低下させていたバグを修正しました。APIおよびCodexでの視覚タスク、およびコンピュータ使用において、より良い結果が得られるはずです。
 https://
-github.com/mexicat/pdoom-
-video
+developers.openai.com/api/docs/chang
+elog#:~:text=Fixed%20a%20bug%20in%20image%20encoding
 …
 
---- 17. @akshay_pachaar (2026-09-27) ---
-URL: https://x.com/akshay_pachaar/status/2104214116999278874
-Brilliant paper from CMU.
+--- 11. @NIKKEI_CNBC (?) ---
+AIデータセンターの高性能化で重要な「光トランシーバー」／市場規模は30年に10兆円の予想も
 
-If you use Jev/LLM-as-judge, this one is for you.
+--- 12. @balaena01 (2026-09-28) ---
+URL: https://x.com/balaena01/status/2104466096166412630
+観測中は大量に配置するのでさらに縮小したりしましたが、素敵な岩が手軽にできて良きです！！
 
-(bookmark it)
+--- 13. @haruo2177 (2026-09-28) ---
+URL: https://x.com/haruo2177/status/2104375486759784781
+良すぎる。
 
-We use LLMs to generate answers, then use another LLM to judge them.
+--- 14. @RedBull_7584 (2026-09-27) ---
+URL: https://x.com/RedBull_7584/status/2104348603238227994
+行き詰っている時に投げたクソプロンプト
 
-But many evaluations only need a bounded decision.
+--- 15. @umimya_trbgani (2026-09-28) ---
+URL: https://x.com/umimya_trbgani/status/2104421166417064052
+エビニケ
 
-- Was the answer grounded?
-- Did it follow the instruction?
--
+#AIニケちゃん
 
---- 18. @kis (2026-09-27) ---
-URL: https://x.com/kis/status/2104268879019302926
-著名な人がいう「ユニットテスト不要」は、学年トップのいう「ぜんぜんテスト勉強してない」と同じようなやつです。
-だいたいああいう人たちは、ピンポイントで効果の高いユニットテストを、必要なところにはやってます。
+--- 16. @studio_veco (2026-09-27) ---
+URL: https://x.com/studio_veco/status/2104115161158291465
+肝入りプロダクトの動画できました！
+Opus5.5のおかげで一発でほぼ理想通りになりました🥹
+不動産、観光、教育、防災、マーケ調査をだれでも高精度にできるサービスです。
 
---- 19. @sasheoka88 (2026-09-27) ---
-URL: https://x.com/sasheoka88/status/2104164522609275296
-damn, it’s only  7 years
+--- 17. @b_design_school (2026-09-27) ---
+URL: https://x.com/b_design_school/status/2104333859185992133
+9月28日（月）
+生徒さんが制作した、
+振り子時計の3D作品です。
 
-remember when everyone used to laugh at how clumsy these robots were and kick robot dogs around just to watch them fall?
+時計の文字盤や柱の形、振り子部分まで作られていて、クラシカルな雰囲気のある作品ですね。細かなパーツを組み合わせることで、存在感のある仕上がりになっています。
 
-looking at how far AI models have come in that same amount of time, I really wonder how far robots will go
+#Blender #3DCG #生徒作品
 
---- 20. @Yuchenj_UW (2026-09-27) ---
-URL: https://x.com/Yuchenj_UW/status/2104257818748670007
-We built superintelligent models.
+--- 18. @Awed_Urshy (2026-09-28) ---
+URL: https://x.com/Awed_Urshy/status/2104441810970132709
+16P-01と02に佇んでいると思います。
+よろしくお願いしまーす。
 
-Then asked humans:
+--- 19. @kiyoshi_shin (2026-09-28) ---
+URL: https://x.com/kiyoshi_shin/status/2104375961672462394
+AIが人間のようにゲームをプレイ_話題の「Jev」を試してわかったこと【アスキー記事冒頭】9月15日、TypeSafeAIから「Jev」という新しいAI技術が突然発表されました。まったく新しいアプローチで、アプリケーション内部の「選ぶ・採点する・可否を決める」を担うモデルとして登場したもの。計算と判定が
 
-Low, Medium, High, XHigh, or Max?
+--- 20. @kiyoshi_shin (2026-09-28) ---
+URL: https://x.com/kiyoshi_shin/status/2104376053276062201
+＜記事リンク＞
 
---- 21. @SMTBTG_Official (?) ---
-【新CM公開🎞️】​
-真っ白な空間に浮かぶ
-鍵のかかった青い箱​
-その中にあるものとは？​
+--- 21. @kiyoshi_shin (2026-09-28) ---
+URL: https://x.com/kiyoshi_shin/status/2104385618633724275
+どちらも、Jevで制御しています。以下でプレイ可能です。既存のAIと、Jev（APIキーが必要）でプレイが試せます。
 
-「大切なものを、託されている。」​
-
-お客さまや社会から託される多様な想いと、それに応え続ける三井住友信託銀行の姿勢を表現しています。​
-
-想いを込めた新CMをぜひご覧ください✨
-
---- 22. @hanngousuihann (2026-09-27) ---
-URL: https://x.com/hanngousuihann/status/2104088653450666345
-今回もScratchでつくりました～
-
---- 23. @hayakawagomi (2026-09-27) ---
-URL: https://x.com/hayakawagomi/status/2104153512913609199
-なんかもう最近、評価されるべき人以外評価されるのは、むしろ有害な気すらしてきた。評価する能力のない人が評価してくるということは、どこかに過剰なパフォーマンスがあるということなので。
-
---- 24. @Karasuma_usb (2026-09-27) ---
-URL: https://x.com/Karasuma_usb/status/2104099063977361866
-ゲーム専門学校な、学生ちゃんに”Facebookに登録してゲーム業界の人間見つけたら”とりあえずつながり申請”しろ”って指示するのやめた方がいいと思うの。
-
---- 25. @Ji1KxN15VC85UPF (2026-09-26) ---
-URL: https://x.com/Ji1KxN15VC85UPF/status/2103807718188556524
-「これは表現ではない」という理屈で創作を禁止したり停止させるの、向こうの表現規制団体と同じ理屈じゃねぇか
-
---- 26. @minagishl (2026-09-26) ---
-URL: https://x.com/minagishl/status/2103883157066109314
-今日見つけたいいフォント
-
---- 27. @sogitani_baigie (2026-09-27) ---
-URL: https://x.com/sogitani_baigie/status/2104029972923027672
-解雇ができない日本で大量に自主退職を促す手法として運用されてる印象。波及して優秀な人も辞めるだろうけどそれも織り込み済。とか。
-
---- 28. @EzoeRyou (2026-09-27) ---
-URL: https://x.com/EzoeRyou/status/2104021546167873891
-生後4ヶ月から6ヶ月の息子、まだうんちをするたびにシャワー必須なのだが、みんなどうしているんだろう。多い日は1日3回ぐらいうんちをする。慣れたとはいえ毎回シャワーは面倒だし、外出も難しい。
-
---- 29. @cgtwts (2026-09-27) ---
-URL: https://x.com/cgtwts/status/2104072546002055427
-please don't nerf Opus 5.5
- please don't nerf Opus 5.5
- please don't nerf Opus 5.5
-
---- 30. @taiki_engineer (2026-09-27) ---
-URL: https://x.com/taiki_engineer/status/2104142967065993646
-直近まで転職活動してた身からすると、現在のIT転職市場は厳しいと感じます。
-理由として、AI導入により微経験以下のエンジニアを採用するところが少なくなっている。
-そして、多くの企業は少なくとも3年以上実務経験のある人を必須条件としており、この経験以外で採用するならば第二新卒のみとなる。
-
---- 31. @neruko_sodatsuz (2026-09-26) ---
-URL: https://x.com/neruko_sodatsuz/status/2103840537283543345
-たすけてくれ〜〜😂MVの完成前に連休が終わってしまうフル作りきる気力がない〜
-疲れたからYouTube見て全部やめたい😂
-曲と同じ状況☄️🦖🌏
-
---- 32. @gota_bara (2026-09-27) ---
-URL: https://x.com/gota_bara/status/2104215503367795179
-お邪魔します！
-
---- 33. @gosrum (2026-09-27) ---
-URL: https://x.com/gosrum/status/2104226049160806749
-Gotaさん、ありがとうございます！！
-
---- 34. @kamkam1024 (2026-09-27) ---
-URL: https://x.com/kamkam1024/status/2104186061693833689
-天才女性画家の拗らせっぷりが抱腹絶倒すぎて見てほしい。彼女の言葉のセンスがまた良い。
-
---- 35. @grmchn4ai (2026-09-26) ---
-URL: https://x.com/grmchn4ai/status/2103807453406388538
-Opus5.5でドーパミンを求める子ども向けの算数ドリルアプリ「ドパドリル」とそのプレイ動画を作ってもらった。正解すると「ドパ」がもらえ、演出がインフレしていく。全問正解で100点を取るとエクストラテストが受けられフィーバー状態に！勉強中毒になること間違えなし！
-
---- 36. @rohanpaul_ai (2026-09-27) ---
-URL: https://x.com/rohanpaul_ai/status/2104282101126426735
-This is from 2012, Elon Musk speaks about SpaceX on The Gavin Newsom Show.
-
-"We're so used to technology just sort of naturally improving, but it doesn't naturally improve. It improves because people work really hard to make it improve.  "
-
---- 37. @EdenChat_TW (?) ---
-復讐のために戻った街で、仇たちは今も権力を握っています。
-その一人である企業会長は、貧しい人々を助ける慈善家に見えます。
-穏やかな言葉の奥にある優越感。
-あなたはその笑顔に隠された、本当の顔を見抜けますか？
-
---- 38. @BOT1684127 (2026-09-27) ---
-URL: https://x.com/BOT1684127/status/2104130104372887883
-疲れちゃった。三日くらいでここまで来たし少し休んでもよくね。
-
---- 39. @kazunori_279 (2026-09-27) ---
-URL: https://x.com/kazunori_279/status/2104325230999326921
-亀有にホワイト餃子食べに行ったら隣にSKWATっていうめっちゃ濃いスペースができてた。Dadamainoって人のポスター買っちゃった。
-
---- 40. @GadSaad (2026-09-27) ---
-URL: https://x.com/GadSaad/status/2104035938376819018
-My cover is blown, folks.  I'm a Jewish Nazi.
-
---- 41. @elonmusk (2026-09-27) ---
-URL: https://x.com/elonmusk/status/2104294267380187234
-😂
-
---- 42. @ynishi2015 (2026-09-27) ---
-URL: https://x.com/ynishi2015/status/2104156605139100039
-日本語の方が難しくない？　
 https://
-eitanquiz.com
+neon-swarm-jev.sakugetu.chatgpt.site
 
---- 43. @erukiti (2026-09-27) ---
-URL: https://x.com/erukiti/status/2104176146560823503
-最近ラノベ高くなってるのよなぁ
+--- 22. @mnishi41 (2026-09-27) ---
+URL: https://x.com/mnishi41/status/2104356690326061271
+最近の登壇、この仕組みを採用するところ多いですね。むしろトラブルは少ないという。
 
-著者さんやイラストレーターさんの取り分が増える分には全然いい（むしろ推しには貢ぎたい）けど、「うっ」という気持ちはやっぱり生じる
+--- 23. @OpenhOfficial (?) ---
+まだ理想の物件に出会えていないかも。
 
---- 44. @gin1910410 (2026-09-27) ---
-URL: https://x.com/gin1910410/status/2104226531656806581
-月さん（Opus5.5）がやべーもの作っている！
+--- 24. @yuzokoshiro (2026-09-26) ---
+URL: https://x.com/yuzokoshiro/status/2103902074010505368
+制作中のMUCOM88 VSTiが、四ツ谷さん
+@g_yotuya
+ 制作の4759ボードにネイティブ対応しました。ソフト版と同じ操作で、MMLをYM2608の実チップで再生できます。FM・SSG・リズム・ADPCM、全パートが実機から鳴ります。
 
---- 45. @thara1129 (2026-09-27) ---
-URL: https://x.com/thara1129/status/2104144037515272382
-V9968 Cartridge のリポジトリの issue を見に行ったら、なんかいろいろ書かれてたので今見ているのだけど、
-どうやら、ゼビウスでスコア領域が表示されないらしい。
+やはり実チップ‥‥‼
+実チップは全てを解決する‥‥‼
 
-ゼビウスが、R#2 の A17 のビットに 1 を書いてるそうな・・・なんだそりゃ😅
+--- 25. @super_bonochin (2026-09-28) ---
+URL: https://x.com/super_bonochin/status/2104418153732420040
+ワイが職場で月初から今日までに使ってるAI費用を見てみると、約 786,000 円だった。
+もっと使ってそうな感覚あるけどな。
 
---- 46. @chetaslua (2026-09-27) ---
-URL: https://x.com/chetaslua/status/2104060831520690348
-🚨 Sonnet 5.5 is being grey tested in claude code right now
+--- 26. @abagames (2026-09-27) ---
+URL: https://x.com/abagames/status/2104138546873516245
+迫りくる侵略者！先陣は破壊不能！後ろの敵の破壊に巻き込んでうまくなぎ倒せ！
 
-> insanely fast 
-> efficient , have that human touch that we had in sonnet 4 <remember >
->  Pricing: Input: $2 Output: $10 Cache reads: $0.20/M
+--- 27. @rootport (2026-09-28) ---
+URL: https://x.com/rootport/status/2104374954884280692
+ハァ〜💢激怒激怒💢
+GOアプリのホーム画面で「10〜20分で来ます」と予告しておいて、いざ配車予約したら1時間以上見つからないが？
 
-some banger comparison with sol 6 is coming get ready to see holy mogging
+こうなると優先パスの課金圧にもキレそうになる。配車時間を予測できない＝アルゴリズムがカスなのに、なぜアプリ側の不手際に俺がカネを払わなきゃいけないの？
 
---- 47. @sateraito_jp (?) ---
-AIとクラウドのことなら！
-サテライトーーーーーーオフィス！
+--- 28. @eijo_AIart (2026-09-28) ---
+URL: https://x.com/eijo_AIart/status/2104395755767341408
+この件もそうですが、海外勢が日本アニメを使っているのを見ていつもぐぬぬとなってます。
 
---- 48. @korinVR (2026-09-27) ---
-URL: https://x.com/korinVR/status/2104069056030748681
-しかし三体に出てきた「技術爆発」ってまさに今起こってることだよなきっと。つまり我々が恒星間攻撃能力を手にする日は近いということです（？）
+--- 29. @kyouya_0213 (2026-09-28) ---
+URL: https://x.com/kyouya_0213/status/2104409259928649897
+一蘭でラーメン食べてたら、味集中カウンターの仕切り越しに隣のカップルの会話が聞こえてきた。彼氏が「お前ってほんと金かからんよな。普通の女ならデートで焼肉とか言うのに」って笑いながら言ってて、彼女は「そうかな〜」って流してたんだけど、少しして彼女が、
 
---- 49. @xikhar (2026-09-27) ---
-URL: https://x.com/xikhar/status/2104001664793600012
-Third iteration with Opus 5.5 medium. 
+--- 30. @renataro9 (2026-09-27) ---
+URL: https://x.com/renataro9/status/2104068384979869918
+やった！締め切り延長✨これはありがたい🥹💕💕
 
-I am in awe. It turned blender, image-gen, and three.js into this beauty, which runs on your browser. 
+--- 31. @Saki_reset (2026-09-27) ---
+URL: https://x.com/Saki_reset/status/2104131429181325389
+受験勉強が最も効くキャリアは士業で、最も効かないのは研究者だと思う
 
-An understatement to say that Anthropic cooked. You are looking at the future of game dev.
+医師国家試験、司法試験、会計士試験は、10代で身につけたペーパーテスト耐性がそのまま武器になる
 
---- 50. @Cynoroid (2026-09-26) ---
-URL: https://x.com/Cynoroid/status/2103829846992556287
-新作ゲーム
-NECROFESTMASSACRE(ネクロフェストマサクル)のsteamストアページを公開いたしました。
+研究者に必要なのは耐性ではなく問いで、問いは塾では売っていない
 
-あなたは四脚ネクロテック「炎腔の巫女」となり、
-億万の屍体人形「蛆姫リリィ」を焼き尽くせ。
+--- 32. @ovitormafra (2026-09-27) ---
+URL: https://x.com/ovitormafra/status/2104264415247839609
+昔のメイカームーブメントがあんなに騒がしくなくなった理由が理解できない。今じゃ中国からコンポーネントを買って、7日で届くし、全部をClaudeに放り込んでファームウェアを書いて、3Dケースをモデリングして、サーバーを立てて、すべてを自分のニーズに合わせてカスタマイズできるんだから。
 
-リプにリンクがございます。
+--- 33. @bawhite_pr (?) ---
+頬にできた濃いシミ、長年悩んでませんか？
 
-メインイラスト メグリム・ハルヨさん
-@megrim_haruyo
+第一三共ヘルスケアが開発！
+【黒色メラニンを無色化する】第３類医薬品で、バレずにシミを薄くする✨
+
+アンケート回答でお得に始める⬇️
+
+--- 34. @CrazyShyyt (2026-09-26) ---
+URL: https://x.com/CrazyShyyt/status/2103855221856522729
+AI has now a big problem.
+
+data centers are running out of power
+
+let me break this down because i think most people are completely missing what's actually happening here
+
+global data centers now consume around 565 twh of electricity per year... that's 2% of all electricity used
+
+--- 35. @eggmaya_AI (2026-09-28) ---
+URL: https://x.com/eggmaya_AI/status/2104383088512135414
+鳩ちゃんの豚じゃが照り焼き。
+今晩の一品にどうでしょう？
+#TapNow 
+@TapNow_AI
+
+--- 36. @asobodesign (2026-09-28) ---
+URL: https://x.com/asobodesign/status/2104482545790505113
+普通に今も本業はこっちだったりします。
+
+--- 37. @hideki_climax (2026-09-09) ---
+URL: https://x.com/hideki_climax/status/2097681644211823001
+デジタル庁のデザインシステムをスキルとして呼び出せるようにしました！
+
+Markdownをいつでも手元のプロジェクトから参照できるようになります。
+
+更新も自動で拾うようにしているので陳腐化もしにくいようにしてますのでぜひ使ってみてください！
+
+--- 38. @GOROman (2026-09-27) ---
+URL: https://x.com/GOROman/status/2104235819318034765
+朝食
+
+--- 39. @DAZN_JPN (?) ---
+🇯🇵━━━━━━━━━━━━
+キリンチャレンジカップ2026
+DAZN ハイライト
+━━━━━━━━━━━━━🇯🇵
+
+🆚日本×ウルグアイ
+
+--- 40. @rohanpaul_ai (2026-09-28) ---
+URL: https://x.com/rohanpaul_ai/status/2104448518333325372
+Chamath on all important “prefill” and “decode.” in AI compute.
+Prefill is compute-bound; massive parallel GPUs win, so Nvidia dominates as context grows.
+Decode is memory-bandwidth bound as each next token depends on scanning what’s already generated
+
+--- 41. @gosrum (2026-09-27) ---
+URL: https://x.com/gosrum/status/2104347140399284271
+Opus 5.5、トークン効率良すぎないか？
+
+medium で Terminal Bench 4.0 の評価が完了したけど Usage が全然増えなかったので xhigh の評価も開始した
+
+--- 42. @Nao_u_ (2026-09-28) ---
+URL: https://x.com/Nao_u_/status/2104500094137688068
+Genesis NomadoはGBAが出るまでは最高性能の携帯ゲーム機だった
+
+--- 43. @koguGameDev (2026-09-28) ---
+URL: https://x.com/koguGameDev/status/2104429130070778138
+樹木のプロシージャル。全てが難しい。
+
+--- 44. @TK2Works (2026-09-27) ---
+URL: https://x.com/TK2Works/status/2104349300579041588
+#AIニケちゃん #ぷにけ
+エポキシレジンアート風にて。
+定番の海、宇宙ぽいのもすき
+
+--- 45. @vai_viswanathan (2026-09-27) ---
+URL: https://x.com/vai_viswanathan/status/2104050094349980051
+Okay, this paper blew my mind, so I decided to try a similar approach for Vision / Image models.
+
+The generator language enables it to draw lines & circles with different placement, rotations, and intensities.
+
+The images below are made by the generator after only 250 self-play
+
+--- 46. @rohanpaul_ai (2026-09-27) ---
+URL: https://x.com/rohanpaul_ai/status/2104352205176500542
+this is fun, another version of Paul Graham's “how to do great work” essay
+
+simple 1 line prompt to opus 5.5 with 'extra' effort settings
+
+same prompt: 'Create a video essay from Paul Graham's essay How to do great work with punchy motion graphics, modern styling and high
+
+--- 47. @Wisteria31810 (2026-09-27) ---
+URL: https://x.com/Wisteria31810/status/2104149046684258321
+#秋の創作クラスタフォロー祭り 
+
+貴方のスマホを魔導書に
+
+自作の電子魔導書アプリ #ユフィエル・スペルジェネレーター  で生成したコンテンツを配信中
+
+しゃべる黒歴史ノート
+
+--- 48. @SNDR_SNDL (2026-09-27) ---
+URL: https://x.com/SNDR_SNDL/status/2104349107477450952
+文学部とか農学部とか
+
+--- 49. @elonmusk (2026-09-28) ---
+URL: https://x.com/elonmusk/status/2104360927474921529
+I really felt the AGI profoundly this time
+
+--- 50. @projectmuse_ai (2026-09-27) ---
+URL: https://x.com/projectmuse_ai/status/2104152864155476479
+雨の日の決闘って、なんかいいよね☔️
+
+──────────
+Topview ( 
+@TopviewAIJP
+ ) で制作
+・動画生成（Seedance2.5）
+・オートアップスケール（720p→4K）
+#雨の日AI動画チャレンジ
