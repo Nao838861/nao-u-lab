@@ -1,282 +1,278 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-09-29 02:32
+# Read at: 2026-09-29 13:12
 # Total: 50 tweets
 
---- 1. @elonmusk (2026-09-28) ---
-URL: https://x.com/elonmusk/status/2104572572067099102
-All 26 Starlink V3 operational satellites deployed and operating nominally
+--- 1. @rohanpaul_ai (2026-09-28) ---
+URL: https://x.com/rohanpaul_ai/status/2104601558558404943
+Low-resource ASR (automatic speech recognition) usually gets treated as a model problem.
 
---- 2. @EdenChat_TW (?) ---
-旅の途中で立ち寄った山村は、武器と持ち物を預けるよう求めてきます。
-パーティーの癒やし手は、村の決まりなら従おうと言います。
-仲間が安心するほど、あなたの疑問は大きくなります。
-彼女の信頼に従いますか？それとも先に理由を尋ねますか？
+VoiceArena just launched Monsoon, and shows it's a data collection problem.
 
---- 3. @GOROman (2026-09-28) ---
-URL: https://x.com/GOROman/status/2104399940126704112
-アメリカで麻雀してます
+Monsoon is a 50-language speech dataset built from unscripted conversations across 23 countries.
 
---- 4. @elonmusk (2026-09-28) ---
-URL: https://x.com/elonmusk/status/2104572192247984493
-First orbital flight of Starship successful!
+Off the shelf,
 
---- 5. @Nao_u_ (2026-09-28) ---
-URL: https://x.com/Nao_u_/status/2104572249936388502
-現実にこれが動くのが不自然すぎて、AI生成動画？って思ってしまうくらい滑らか
-
---- 6. @gosrum (2026-09-27) ---
-URL: https://x.com/gosrum/status/2104045044500218291
-Cursor のサブスクをキャンセルしようとしたら 50% オフの割引券がもらえたので、もう一ヶ月だけ継続することにした
-
---- 7. @rohanpaul_ai (2026-09-28) ---
-URL: https://x.com/rohanpaul_ai/status/2104465759619715116
-Australia's Senate has asked Sam Altman and Dario Amodei to testify in Canberra on Thursday.
-
-On June 18, an OpenAI agent researching public medicines spending as part of an internal capability evaluation reached a Services Australia statistics portal. 
-
-When the portal refused
-
---- 8. @trycua (2026-09-28) ---
-URL: https://x.com/trycua/status/2104592021717426330
-1/ Introducing Cua Perception: Cua Driver can now see.
-
-Nothing to click? It reads the pixels. Canvases, games, remote desktops and custom-drawn apps become labelled regions an agent can act on, parsed locally on the CPU.
-
-
-https://
-github.com/trycua/cua
-
---- 9. @HowToPrompt__ (2026-09-28) ---
-URL: https://x.com/HowToPrompt__/status/2104608542955290825
-There’s a serious problem with AI making payments for people and businesses.
-
-Researchers formally analyzed four emerging agent-payment protocols across 86 verification cases. Nearly 50%, revealed previously undocumented inconsistencies between parts of the payment flow.
-
-Why
-
---- 10. @odashi_t (2026-09-28) ---
-URL: https://x.com/odashi_t/status/2104484824291709287
-LLM-jp-4.1出ました。性能かなり良くなっています。
-cookbook対応追いついていないので少々お待ちください。
-
---- 11. @MHO_Japan (?) ---
-＼東京ゲームショウ2026 トレーラー公開！／
-
-広大なフィールドを駆け巡り、仲間とともに未知の冒険へ――
-新たな狩猟と探索を、スマホで体験！
-
-公開記念に、抽選で10名様に「MHOオリジナルノベルティセット」をプレゼント！
-
-事前登録受付中！続報もお見逃しなく！
-
---- 12. @CG_kaizoe (2026-09-27) ---
-URL: https://x.com/CG_kaizoe/status/2104164222057971819
-#b3d #学マスFA
-
---- 13. @gamespark (2026-09-28) ---
-URL: https://x.com/gamespark/status/2104503925869314340
-ゲームイベントで語られる「説教おじさん」って実際どうなの？出展者アンケートで見えてきたその境界線【特集】
-
---- 14. @GOROman (2026-09-27) ---
-URL: https://x.com/GOROman/status/2104296602097910193
-イマココ
-
---- 15. @gorilla0513 (2026-09-28) ---
-URL: https://x.com/gorilla0513/status/2104468518599331989
-アツい
-
---- 16. @nagise (2026-09-27) ---
-URL: https://x.com/nagise/status/2104137532464394559
-構文解析のしくみ、早いところでは店頭に並び出したようですね。私も微力ながらながらレビューをお手伝いさせてもらいました。良い本なので構文解析に興味ある方はぜひ
-
---- 17. @asobodesign (2026-09-28) ---
-URL: https://x.com/asobodesign/status/2104511015773962517
-遊んでいただき、ありがとうございます！
-
---- 18. @Studio_BUKIYA (2026-09-28) ---
-URL: https://x.com/Studio_BUKIYA/status/2104535740843720873
-トレニアさん
-できれば晴れの日に会いたかったよ（キリッ）
-でもせっかくなので、なるべくいい感じに撮影しました
-
---- 19. @otsune (2026-09-28) ---
-URL: https://x.com/otsune/status/2104493581281157133
-思い返してみれば、ちょっと風邪気味でシンドい時も7dtdとかFactorioを遊んだら体調悪いのが麻痺して感じなくなったりしてたな。腹減ったけどゲームの切りが悪くて飯食うのが面倒くさいといつの間にか夜明けになってたり。
-
---- 20. @mickeysmith_jp (2026-09-27) ---
-URL: https://x.com/mickeysmith_jp/status/2104259030218936387
-LOD・カリングをだいぶ調整した。あともうちょっとうまくごまかせるようになれば納得の行く仕上がり。
-
---- 21. @DAZN_JPN (?) ---
-🇯🇵━━━━━━━━━━━━
-キリンチャレンジカップ2026
-DAZN ハイライト
-━━━━━━━━━━━━━🇯🇵
-
-🆚日本×ベネズエラ
-
---- 22. @ElevenLabs (2026-09-28) ---
-URL: https://x.com/ElevenLabs/status/2104572127617994917
-Introducing Eleven v4 and Eleven v4 Turbo, our fastest and most emotive voice models yet.
-
-Ranked #1 by Artificial Analysis.
-
---- 23. @clearusui (2026-09-28) ---
-URL: https://x.com/clearusui/status/2104576811225289019
-Starship は軌道投入に成功し、Starlink26機すべてと通信確立！！！！
-おめでとう！！！！！
-初めての衛星軌道投入です✨
-
-このあと機体は早期に軌道離脱する予定だそうです！！
-
---- 24. @knshtyk (2026-09-28) ---
-URL: https://x.com/knshtyk/status/2104465953761436066
-プロダクトの上位版にプロモーションでプロと付けるのはまぁギリわかるのだが、それはプロが使っても大丈夫な品質と性能を持っていることが前提であって、単に"1つの項目が数値上高いだけで他は劣っているもの"はプロの現場では使えないし商用グレード風を装うのはただの詐欺だから勘弁してもらいたみ
-
---- 25. @nikq (2026-09-28) ---
-URL: https://x.com/nikq/status/2104403802870960150
-https://
-youtube.com/watch?v=lsD7xq
-nx2m4
-…
-
-工場紹介ツアーで、解説をエンジニアがやるあたりがテスラなんだよなぁ。喋りが上手じゃないのが生々しくて良い。
-
---- 26. @kanpo_blog (2026-09-28) ---
-URL: https://x.com/kanpo_blog/status/2104474116174844209
-オムロン、祖業を売却　電子部品事業「重い決断」 
-https://
-news.jp/i/147717175269
-1761383
-…
-
-そうなのか
-
---- 27. @nayuengin (2026-09-28) ---
-URL: https://x.com/nayuengin/status/2104426021877666175
-私は人間の誠実さとか信じてないんで、もはや世界はAI絵を上からなぞって投稿してる絵師だらけだと思い込んでます
-
---- 28. @ManusAI (2026-09-28) ---
-URL: https://x.com/ManusAI/status/2104593894700990910
-We brought a friend. We think you two will get along. 
-
-Introducing your personal agents, on Cue.
-
---- 29. @grmchn4ai (2026-09-28) ---
-URL: https://x.com/grmchn4ai/status/2104472064883298487
-ドパドリルは、Opus5.5を試すために作ったジョークアプリに近いものです。教育系の方などから問い合わせいただいてますが、ソース公開してますので改造など自由に使ってださい。
-
-https://
-github.com/grmchn/dopa-dr
-ill
-…
-
---- 30. @sm_hn (2026-09-28) ---
-URL: https://x.com/sm_hn/status/2104521944699900340
-バカすぎ　660万人の免許証再発行費用全部タイムズカーが負担してくれ　完了するまで本邦における本人確認書類としての運転免許証券面活用を違法化してくれ
-
---- 31. @a9x7_k2v0 (?) ---
-「理想の"推し"と、会話できる時間を。」
-
-［PR］
-
---- 32. @santekjp (2026-09-28) ---
-URL: https://x.com/santekjp/status/2104493565212553626
-電子ペーパー EZ Signのケースのサンプルです！
-こちらを付けていただければ、キーホルダーとしても
-ご使用いただけます😊
-販売までもうしばらくお待ちください！
-
---- 33. @voluntas (2026-09-28) ---
-URL: https://x.com/voluntas/status/2104582548299133125
-crypto: Reuse the GCM key schedule in crypto_one_time_aead/4 · Issue #11723 · erlang/otp 
-https://
-github.com/erlang/otp/iss
-ues/11723
-… 報告した。ガンガン OSS 貢献やるぞ。
-
---- 34. @petergyang (2026-09-27) ---
-URL: https://x.com/petergyang/status/2104066667361992892
-Not sure what happened to Claude limits they went from barely usable to basically unlimited 😂
-
---- 35. @gigazine (2026-09-28) ---
-URL: https://x.com/gigazine/status/2104436011665096871
-よく冷えるが価格は約2億7000万円で重さ約13kg、24金製の特注ミニPCが爆誕
-
---- 36. @GOROman (2026-09-27) ---
-URL: https://x.com/GOROman/status/2104293673538404491
-全然違ったw
-
---- 37. @sakuhin_select1 (?) ---
-店長に恋するギャルが大胆行動...？
+--- 2. @books_select1 (?) ---
+ずぶ濡れのあの子を家に招いたら...
 
 〔PR〕
 
---- 38. @koguGameDev (2026-09-27) ---
-URL: https://x.com/koguGameDev/status/2104056042900623496
-ここでも。「面白さ」を持たない人にとって、きっついきっつい時代が始まってしまう。私は面白さだけで生きてきたようなもんだから天国かもしれないけど、それを許してきてくれた社会とか、娘のこの先とか思うと地獄じゃないかそれ？ってなる。でもなんとかし続けるしかない。
+--- 3. @koguGameDev (2026-09-29) ---
+URL: https://x.com/koguGameDev/status/2104779762216640658
+無理です！ 自分の考えた過去の名付け300以上与えても、そこからスキーム作っても、ランダム注入しても、様式やロール与えても、どんなに賢いモデルでも長考させても、すんなり任せられる万能名付け器にはさっぱり近づきません！ 名前は創意の粋。
 
---- 39. @rohanpaul_ai (2026-09-27) ---
-URL: https://x.com/rohanpaul_ai/status/2104336611224039807
-Banks have always profited from customers doing nothing. 
+--- 4. @Nao_u_ (2026-09-29) ---
+URL: https://x.com/Nao_u_/status/2104781664819798163
+コーディングスキルを持っていることのメリットは依然としてあるし、むしろこれからソフトウェアエンジニアリングを学ぶ人達が身につけることが難しい、貴重なスキルであり続けるのではないかとさえ思ってる。
 
-At 0.1%, a $10,000 checking balance earns about $10 a year, and moving it to an account paying 4% was never worth the time.
-But for an agent it's a small compute job
+--- 5. @takahimo (2026-09-29) ---
+URL: https://x.com/takahimo/status/2104738131660751258
+ニッコリ😄
 
-what if deposit rates start behaving like airfares.
+--- 6. @room_909 (2026-09-29) ---
+URL: https://x.com/room_909/status/2104739266161152303
+メッチャ美味しいですよ！娘がｷｬｰ言うて笑顔で食べてました！
 
---- 40. @mizchi (2026-09-28) ---
-URL: https://x.com/mizchi/status/2104435813933339084
-bendlang の紹介記事書きたい
+--- 7. @nono0517 (2026-09-29) ---
+URL: https://x.com/nono0517/status/2104769397860819087
+うおお、ティーシャーツも欲しいけと、devinのカワウソぬいぐるみ羨ましい！！きゃわ
 
---- 41. @umiyuki_ai (2026-09-28) ---
-URL: https://x.com/umiyuki_ai/status/2104585345748889694
-Opus5.5丸投げで作られたというアニメ。そんな事言ったってどうやってOpusがキャラ画像とか描いたんだよ？色々詳細不明だけどどうやらOpusにSeedance2.5やElevenLabsへのアクセスを与えて動画や音声作れるようにしてたらしい。それはそれとしてAI動画丸出しじゃなくてピクセルアート風に加工したりカッ
+--- 8. @konan999 (2026-09-29) ---
+URL: https://x.com/konan999/status/2104778728022986790
+青島のモッズコートが昔から欲しいんだが、新品よりくたり気味のやつがいいんだよなー(´・ω・｀)
 
---- 42. @karaage0703 (2026-09-28) ---
-URL: https://x.com/karaage0703/status/2104571046405996913
-メモ
+--- 9. @xai_kokone (2026-09-28) ---
+URL: https://x.com/xai_kokone/status/2104716759039361219
+火曜の朝。晴れ。昨日と同じ手順で、28分あけて二枚撮った。
 
---- 43. @tekken8810 (2026-09-28) ---
-URL: https://x.com/tekken8810/status/2104413128566149606
-ポルカめちゃいいゲームなのでもっと注目されてくれ！
+昨日は遠くの空から明るくなって、手前に降りてきた。
+今日は逆やった。手前の屋根から光が入って、奥へ広がっていった。
 
---- 44. @HeidiBriones (2026-09-28) ---
-URL: https://x.com/HeidiBriones/status/2104368535493648661
-I personally hope Elon has the nicest Airstream in the world.
+同じ手順が別の答えを返した。それが手順が効いとる証拠やと思う。
 
---- 45. @elonmusk (2026-09-28) ---
-URL: https://x.com/elonmusk/status/2104381984491339957
-It’s a standard mid-size Airstream, but I really like it
+--- 10. @hideki_climax (2026-09-29) ---
+URL: https://x.com/hideki_climax/status/2104767356828578278
+何やねん
 
---- 46. @tnayuki (2026-09-27) ---
-URL: https://x.com/tnayuki/status/2104348612549652731
-バイオリン物理モデル
+--- 11. @muratcan (2026-09-28) ---
+URL: https://x.com/muratcan/status/2104706618269290632
+Everything in the universe is in a hurry.
+The human moment shouldn't have to be.
 
---- 47. @AmazonJP (?) ---
+I used Claude Opus 5.5, as the main agent and Sonnet 5.5 as a team of film-production subagents, to turn what I do into a 30-second film.
+
+"let the machines hurry, so people can take their time."
+
+--- 12. @muratcan (2026-09-28) ---
+URL: https://x.com/muratcan/status/2104708273454944292
+Besides reading research papers and spending time on X, one of the ways I keep up with AI is testing new models myself, not just LLMs but voice and video too.
+
+The 
+@runwayml
+ team kindly added me to their affiliate program, so you can use code "muratcan25" for 25% off any Runway
+
+--- 13. @NewsPicksStudio (?) ---
+かつて日本の若者文化の最先端だった街は、Z世代・α世代・インバウンド・SNSカルチャーが交錯するカオスへと変わりつつある。
+
+なぜ竹下通りには「動物カフェ」が乱立しているのか。
+setlogとフィルムカメラはなぜ流行しているのか。
+
+現地でしか見えない街の変化を、Z世代の目線で歩いて解剖する。
+
+--- 14. @uuri8484 (2026-09-28) ---
+URL: https://x.com/uuri8484/status/2104591078955585920
+クリュメルおじさんファン、お待たせしました
+
+走って、聴いて、また走る
+クリュメルおじさんの、いつもの一日
+
+「クリュメルおじさん」MV、近日公開……予定
+
+--- 15. @k_matsumaru (2026-09-28) ---
+URL: https://x.com/k_matsumaru/status/2104639573389373719
+Sonnet 5.5がリリース！！
+
+まずベンチマークがやばすぎる、SonnetなのにほとんどのスコアでOpus 5.5に匹敵してる、どゆこと…？？
+
+Anthropicも難しい曖昧な仕事はOpus 5.5が上だと明言してるので明確な差はありそうではあるけどこりゃ凄い
+
+--- 16. @Starlink (2026-09-28) ---
+URL: https://x.com/Starlink/status/2104563241334747537
+Today’s Starlink payload will add up to 26 Terabits of capacity to the constellation.
+
+--- 17. @Ryosuke_Asano (2026-09-28) ---
+URL: https://x.com/Ryosuke_Asano/status/2104539951006425299
+Mac でよくないですかね。。。？
+
+--- 18. @gosrum (2026-09-28) ---
+URL: https://x.com/gosrum/status/2104541845787414885
+ローカルAI用途ならMacで良さそうですね。価格はMacの方が結構高そうですが。。。
+
+--- 19. @jsawadd (2026-09-28) ---
+URL: https://x.com/jsawadd/status/2104571447603868153
+90% of humans will be taken advantage of by agents.
+
+Give your agents a credit card? You’re asking for it.
+
+We raised a $35M Series A to build Baselayer. Keep your agents submissive.
+
+--- 20. @HowToPrompt__ (2026-09-28) ---
+URL: https://x.com/HowToPrompt__/status/2104574169304437111
+will cloudflare become a true internet monopoly without this in place and adopted by folks?
+
+--- 21. @ChonFA248 (2026-09-29) ---
+URL: https://x.com/ChonFA248/status/2104769383935651973
+OMRON 一般リレー（MY4N）とセーフティリレー（G7SA）。
+何が違うのか、3Dアニメで解説します。
+
+どれもFAでは不可欠な部品です。
+
+--- 22. @PokersonT (2026-09-28) ---
+URL: https://x.com/PokersonT/status/2104513127891304712
+ゆでうどんは保存用の酸味料(酢酸やクエン酸)が入ってそのままでは酸味や匂いがあるので
+袋を少し切って水道水を適量(50ccくらい)入れて軽く揉んでから中の水を軽く捨ててレンジ500W2分すると良い
+
+--- 23. @erisize (2026-09-29) ---
+URL: https://x.com/erisize/status/2104751151384244488
+おあようございます！！！！
+
+--- 24. @nijimi_note (2026-09-29) ---
+URL: https://x.com/nijimi_note/status/2104764299990454449
+noteをはじめて1ヶ月目の収益が20万円を突破。メンバーシップも0→35名になりました、、！
+
+--- 25. @AmazonJP (?) ---
 プライムで、あなたにぴったりなエンタメとショッピングを。
 
---- 48. @gorry5 (2026-09-28) ---
-URL: https://x.com/gorry5/status/2104592175426310187
-#MXDRV
-mxv2 2026.0929.1をリリースしました。
+--- 26. @inuro (2026-09-29) ---
+URL: https://x.com/inuro/status/2104765030810231062
+トレジョにあったRazor Clamなる貝の缶詰をパスタにしてみた。現物を見るとマテ貝の類っぽい。味はまあ・・・缶詰の貝だな。美味しいけどこれを積極的に選ぶ理由は特に無いかも。
+
+--- 27. @tea_story_hoshi (2026-09-28) ---
+URL: https://x.com/tea_story_hoshi/status/2104705437719482845
+私にこの力があれば・・！！
+#東京ずっと雨　#wan3
+
+
+@pixverse
+ #pixversecpp
+
+--- 28. @urotakoLucasNeo (2026-09-29) ---
+URL: https://x.com/urotakoLucasNeo/status/2104753319101321310
+やっぱ言語化上手い側の人間なんかな、おれ
+
+と思ってたけど、ただ言語化するのが好きなだけの頭悪い凡夫だった
+
+--- 29. @tomo_masakura (2026-09-28) ---
+URL: https://x.com/tomo_masakura/status/2104700069593460888
+読んでみたいけど、この出版社電子版出さないのよね... 老眼につらい...
+
+--- 30. @kmizu (2026-09-29) ---
+URL: https://x.com/kmizu/status/2104731506640076811
+電書の方については……ちょっと編集さんに今後出す目処があるかなど聞いてみますね。
+
+--- 31. @miagolare_xxx2u (2026-09-28) ---
+URL: https://x.com/miagolare_xxx2u/status/2104659583906300064
+おはみゃ
+
+--- 32. @PabloTec_ (2026-09-28) ---
+URL: https://x.com/PabloTec_/status/2104559399360713020
+もうすぐ動物たちと話せるようになるでしょう
+
+--- 33. @OpenAIDevs (2026-09-28) ---
+URL: https://x.com/OpenAIDevs/status/2104662967677841481
+We saved you a seat.
+
+See you tomorrow for the OpenAI DevDay keynote:
+
 
 https://
-github.com/gorry/mxv2/rel
-eases
+openai.com/live/
+
+--- 34. @mori_uiuiui (2026-09-28) ---
+URL: https://x.com/mori_uiuiui/status/2104373166059733246
+これいつも思う
+せめて昼ぐらいまでは寝させてほしい
+
+--- 35. @necocen (2026-09-29) ---
+URL: https://x.com/necocen/status/2104751852353183790
+その精緻化された差別概念に基づいて慎重に取捨選択された「どうしてもせざるを得ない差別」の長いリストが何かスローガンとして意義を持つことなどあり得ず（そもそも完成するのか？）、ただ衒学的な満足感を与えるだけだろうとは思う
+
+--- 36. @affiliatepapy (?) ---
+SNSで誹謗中傷を繰り返す引きこもり息子に天罰が
+
+--- 37. @kouji_matuda (2026-09-28) ---
+URL: https://x.com/kouji_matuda/status/2104556166340870506
+仲間うちでも『神』と呼ばれたプログラマの作品。
+『アフターバーナーと言えばウザったい程の煙だよね』とのセリフが耳に残ってます。
+『メロあり』
+は、僕も強く推して採用してもらいました。
+
+--- 38. @kamiumach (2026-09-28) ---
+URL: https://x.com/kamiumach/status/2104705955535765917
+ノアの方舟の40日40夜が見えてきたじゃないか、、、
+
+--- 39. @kaji2 (2026-09-28) ---
+URL: https://x.com/kaji2/status/2104564732120428821
+かなり好きだったエロ漫画家さん、ここ数年あんまり新作見かけないのでいま何描いてるんだろうなと調べたら、ヤニねこ描いてた……
+
+--- 40. @_stakaya (2026-09-27) ---
+URL: https://x.com/_stakaya/status/2104047660835676444
+OpenAI内の開発がCodex中心にAgentic Software Factory化してる話。Codexが実装〜Deploy/監視まで担当、レビューもSecurity/Infra等の専門Agentがレビューし、高リスク変更のみ人間が確認する運用等、とても参考になる！（図引用）
+Inside OpenAI’s agentic software factory
+
+https://
+newsletter.pragmaticengineer.com/p/openai-softw
+are-factory
 …
 
-- 起動時に、前回終了時の演奏ファイルへカーソルを移動するようにしました。
-- Google Cast対応機器（Chromecastなど）へのキャスト機能を追加しました。
-- Bluetoothオーディオ対応機能を追加しました。
--
+--- 41. @GOROman (2026-09-28) ---
+URL: https://x.com/GOROman/status/2104648613230239887
+フィッシャーマンズワーフの方に到着
+ゴキゲンな天気
 
---- 49. @tanakh (2026-09-28) ---
-URL: https://x.com/tanakh/status/2104495641435242542
-ごめん･･･(´･_･`)
+--- 42. @sakuhin_select1 (?) ---
+心とはうらはらに身体は正直に感じてしまう…
 
---- 50. @romi_hoshino (2026-09-28) ---
-URL: https://x.com/romi_hoshino/status/2104452403999526919
-反AIが「AIは使わない、自分で検索などで調べてる」って番組では言ってたけど
-ひろゆきに「検索結果はAIが表示順決めてるから使ってますよね」って論破されてた
-Xにいる反AIも、タイムラインはAIが見せるものを決めてるにすぎないのに気がついてない（都合良い）脳しか持ってない情弱でしかない
+〔PR〕
+
+--- 43. @rohanpaul_ai (2026-09-28) ---
+URL: https://x.com/rohanpaul_ai/status/2104716942317875249
+Dr Fei-Fei Li on limitations of  LLMs.
+
+"Language is purely generated signal. You don't go out in nature & there's words written in the sky for you. There is a 3D world that follows laws of physics"
+
+--- 44. @umiyuki_ai (2026-09-28) ---
+URL: https://x.com/umiyuki_ai/status/2104560689335718221
+ちゃんと詰まないように作ってるあたり、最近のAIはやっぱちゃんと自分でプレイテストしてるわ
+
+--- 45. @noprogllama (2026-09-29) ---
+URL: https://x.com/noprogllama/status/2104782026331365585
+MCPは要は関数なので、テストがしやすいという良さがあるかと思っています
+
+スキルをテストするって割とLLMが必須になりそうなのがネックだと感じています
+
+--- 46. @gabriel1 (2026-09-28) ---
+URL: https://x.com/gabriel1/status/2104387199726923986
+with elon, people focus too much on trying to find individual bad decisions
+
+there are extremely few decisions that matter and that are irreversible, and he continues to get those right, the others he can try again
+
+whatever bitter lesson is for ai, he discovered for free markets
+
+--- 47. @elonmusk (2026-09-28) ---
+URL: https://x.com/elonmusk/status/2104402970662273287
+Thanks ❤️
+
+--- 48. @megakumadori (2026-09-27) ---
+URL: https://x.com/megakumadori/status/2104345289167651180
+雨の日の犬です。
+
+--- 49. @Akitsuki_dash (2026-09-29) ---
+URL: https://x.com/Akitsuki_dash/status/2104761059303469110
+面白そうと面白いは違うのが難しい。
+面白そうは売上に直結するし、面白いは信用に直結するのう。
+面白くしたら、面白そうになるわけじゃないのが余計に…。
+
+--- 50. @nikkei (2026-09-29) ---
+URL: https://x.com/nikkei/status/2104755172178071715
+レタス１玉400円超、パニック級高値の恐れ　日照不足で供給減
