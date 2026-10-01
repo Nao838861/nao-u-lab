@@ -1,296 +1,299 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-10-01 03:13
+# Read at: 2026-10-01 16:04
 # Total: 50 tweets
 
 --- 1. @GOROman (2026-09-30) ---
-URL: https://x.com/GOROman/status/2105220831974686791
-OpenAI DevDay ランチ写真集
+URL: https://x.com/GOROman/status/2105268377023660338
+バイアスの掛かった生存エピソード
+真似するとだいたい脂肪
 
---- 2. @sportskujibig (?) ---
-＼⛩️​10/1はダブル開運日！⛩️​／
+--- 2. @ENRO_oven (?) ---
+ENROから新登場！
+スタンドミキサーや手ごねでは実現できないほど窯伸びが良くなるスパイラルミキサー。
 
-今日は、​一粒万倍日​&天赦日が重なる『ダブル開運日』✨​
+業務用しかなかったスパイラルミキサーがいよいよ家庭用でお手軽なお値段で登場！
 
-あなたにも12億のチャンスが近づいているかも…！💰
+10月末入荷予定分は1,400台。枠は残り約400台！
 
 --- 3. @rohanpaul_ai (2026-09-30) ---
-URL: https://x.com/rohanpaul_ai/status/2105114842910884110
-The authors coined a new term, "vibercrime," for what AI actually does for criminals: it speeds up cheap scams but doesn't create new hackers.
+URL: https://x.com/rohanpaul_ai/status/2105385568482074680
+OpenAI is training an AI model that designs chips.
 
-Many fear chatbots will turn anyone into a hacker. Nearly 100,000 AI-related threads on cybercrime forums show something duller the
+Chip engineers may soon hand off goals like timing closure and power optimization to an AI agent.
 
---- 4. @kmizu (2026-09-30) ---
-URL: https://x.com/kmizu/status/2105311738786988332
-@lyrical_logical
- りりろじさん、お誕生日おめでとーございます！（日付、間違ってませんよね）
+In a multi-year deal announced today, OpenAI and Synopsys are jointly developing a model trained on Synopsys's EDA tools.
 
-楽しいことがたくさんある一年でありますように。
+--- 4. @TakumiMusic2021 (2026-10-01) ---
+URL: https://x.com/TakumiMusic2021/status/2105536658045300808
+2年後には、この方のツイートにいいねした33人だけになっているかもしれませんね。
 
---- 5. @snapwith (2026-09-30) ---
-URL: https://x.com/snapwith/status/2105296974023127100
-ストリートファイターの映画の宣伝を見るたびに「初映画化」みたいな顔をしているのがスゲー気になる。
-やっぱり気になるｗ
+キリスト教徒は人間ではない。黒人は人間ではない。そんな歴史を繰り返してはいけません。
+それはロボットを強制労働させる産業爆発も同様です。我々が苦しいからと言って、新たに苦しむ存在を生んではいけません。
 
---- 6. @kyexyz (2026-09-30) ---
-URL: https://x.com/kyexyz/status/2105342987945300056
-I just one-shotted one of my favorite Roblox games from 2018-2020 (Strucid) with Opus 5.5 xhigh! 
+--- 5. @GOROman (2026-09-30) ---
+URL: https://x.com/GOROman/status/2105327686600040449
+Waymo 用プレイリストできた
 
-It created everything with a single prompt including the images with Codex CLI! This is insane...
+--- 6. @megakumadori (2026-10-01) ---
+URL: https://x.com/megakumadori/status/2105542315561693327
+ボタンを押したとき気持ちいゲームは実際目指しています。
 
---- 7. @konan999 (2026-09-29) ---
-URL: https://x.com/konan999/status/2105072716609155134
-前回も感じたが、お高い注射の効き目の凄さよ。左目がだいぶ良く見える(⊙д⊙)
+やはりボタンを押したとき気持ちいいからかもしれません。
 
---- 8. @Raspberry_Pi (2026-09-30) ---
-URL: https://x.com/Raspberry_Pi/status/2105220339869589515
-Why does “raspberry” have a “p” in it
+--- 7. @kumagi (2026-10-01) ---
+URL: https://x.com/kumagi/status/2105463516245447042
+僕「Opus5.5が騒がれてるけどすごいのはスキルであって、お前ならChromeレンダリングの力すら借りなくてもEbitengineでスクラッチで動画と音声作れるよな？」
+Astra「ええ、俺のGo言語の力見せてやりますよ」
 
---- 9. @izm (2026-09-30) ---
-URL: https://x.com/izm/status/2105341367778246859
-DIYでVR-HMDを作る人たちの最新動画もおもしろかった
+--- 8. @python_academia (2026-10-01) ---
+URL: https://x.com/python_academia/status/2105504714398064859
+【ご報告】結婚しました！これから2人で頑張っていきます！
 
---- 10. @Jason (2026-09-29) ---
-URL: https://x.com/Jason/status/2104953557258584114
-Joe Gebbia is a national treasure 👏
+--- 9. @fladdict (2026-10-01) ---
+URL: https://x.com/fladdict/status/2105453087532154931
+子供が「これやってよい？」と聞くと「コンセントにシャー芯入れてはだめだよ」とが教えてくれるAI作りたい…　たぶん世界中の事故がかなり減らせるが、間違えたに大訴訟や吊るし上げ食らうので、誰も作れない問題。
 
---- 11. @elonmusk (2026-09-30) ---
-URL: https://x.com/elonmusk/status/2105120448866365860
-Yes
+--- 10. @rohanpaul_ai (2026-09-30) ---
+URL: https://x.com/rohanpaul_ai/status/2105360600071323786
+AI fiction reads like slop for several reasons: 
 
---- 12. @universal_eiga (?) ---
-スピルバーグ監督 最新作、新たなるSFの真骨頂。
+> a chatbot answers 1 prompt at a time 
+> context windows are limited. has no idea what the story already promised 40 episodes ago.
+> can’t keep readers hooked beyond a point
 
-         映画『ディスクロージャー・デイ』
-⠀           ⠀▸▸▸　本 日 公 開　◂◂◂ 
+The difference is architecture. Sherpa runs separate
 
-         ❝ 真実の開示 ❞ を 劇場で目撃せよ。
-
---- 13. @OKtamajun (2026-09-30) ---
-URL: https://x.com/OKtamajun/status/2105308003780248051
-とーけんさんも！？大変お疲れ様でございました。特集対談記事などで大変お世話になりました。
-
---- 14. @kinkuman_net (2026-09-30) ---
-URL: https://x.com/kinkuman_net/status/2105300652817883607
-レゼ編、プライムビデオで観ました。
-この電話ボックスが人気がある理由がやっとわかったよ。
-
-👇当時なぜ人だかりができるのか、よくわからず撮った写真
-
---- 15. @TheWorkshopGeek (2026-09-30) ---
-URL: https://x.com/TheWorkshopGeek/status/2105338838633906435
-Ok now that I drew some icons, the cursor can morph between them ! 
-
-It isn't saying much, but that's probably my best #pixelart ever :D
-
-#gamedev #indiegame
-
---- 16. @tatsuvar (2026-09-30) ---
-URL: https://x.com/tatsuvar/status/2105329519024595376
-弱み…猫舌？
-
-ESの指導で本当に困るのよ、この項目。意図がいまいち分からない。
-
---- 17. @shotovim (2026-09-30) ---
-URL: https://x.com/shotovim/status/2105296618593321408
-最近の同期とか定期実行とかの個人的ベスプラ
-
---- 18. @yunkya2 (2026-09-30) ---
-URL: https://x.com/yunkya2/status/2105293108330246481
-#X68000 クロス開発環境 #elf2x68k を更新しました。
-gccが13.5.0に更新された他、DOS/IOCSコールのインライン呼び出し機能が追加されたりしています。
-
---- 19. @yukkuri_tanaka (2026-09-30) ---
-URL: https://x.com/yukkuri_tanaka/status/2105284211389485469
-少しエッチなAokiさんが見れるということで飛んできました（最高です）
-
---- 20. @yoppy_cyber (2026-09-30) ---
-URL: https://x.com/yoppy_cyber/status/2105236214542487710
-息子「パパってシステム詳しいんでしょ？」
-オレ「もちろん」
-
-息子「障害が起きたら何するの？」
-オレ「ベンダー連絡して原因を確認してもらう」
-
-息子「その間にパパは何してるの？」
-オレ「社内からのバッシングに耐えている」
-
---- 21. @salmon_rat (2026-09-30) ---
-URL: https://x.com/salmon_rat/status/2105270168003961300
-【お願い！】
-なんと！SALMON-RATの記事が今キャンペーン2位です！このまま1位になるとGameWithさんのサイトがスピナーにジャックされてしまうようです！埋めつくしたい！！！笑
-
-今日が締切なのでよかったら👇🏻の記事から♡で応援してね！！
-
-
-https://
-indie.gamewith.jp/games/desktop-
-fidget-spinner/devlog/ZZGIKnTtBqTJ
-…
-
-（ログインはしなくてもOK👌🏻
-
---- 22. @a9x7_k2v0 (?) ---
+--- 11. @a9x7_k2v0 (?) ---
 「理想の"推し"と、会話できる時間を。」
 
 ［PR］
 
---- 23. @akari_worlds (2026-09-30) ---
-URL: https://x.com/akari_worlds/status/2105142232827453759
-ChatGPTの月200ドルのプラン、今の契約者も10/30から使える量が半分になる。
-お詫びは$2,500分のクレジット。ただし年末で消える。
+--- 12. @osyarekinniku (2026-09-30) ---
+URL: https://x.com/osyarekinniku/status/2105340751739846958
+まさに夕ご飯でコレをやられた訳ですがwww
+15分ぐらい肉が来なかったよwww
+その間、追い剥ぎされた猫さんが3回連続で来た。
+流石に店員さん呼んで、直接持ってきて貰った。
+履歴上では1人で80皿注文した事になってる。
 
-ソシャゲでいう「詫び石」だよ。運営が不具合のあとに配る、期限つきの無料ガチャ石。
+--- 13. @sukesankoba (2026-09-30) ---
+URL: https://x.com/sukesankoba/status/2105203046531936461
+知ってた？
+スパルタンX に続編が……！？
+これ、かなりのマニアでも知らないんじゃないだろうか……
+#レトロゲーム
 
---- 24. @akari_worlds (2026-09-30) ---
-URL: https://x.com/akari_worlds/status/2105142413002199504
-出典 既存のPro（月200ドル）は10/30から、ChatGPT Work／Codexの使える量がPlusの20倍→10倍、GPT-6 Proは週200→100回。お詫びは$2,500分の利用クレジット（年末で失効）。新しく月500ドルのPro 500も
-
---- 25. @SPRWtv (2026-09-30) ---
-URL: https://x.com/SPRWtv/status/2105105003694133605
-One Plane, One Material
-
-Blender continues to be pretty cool
-
---- 26. @zarabu01 (2026-09-30) ---
-URL: https://x.com/zarabu01/status/2105334615653351585
-オリーブさん届いた。出来はハンバないけど自分の描く絵と手足の長さ比率ちょい違うから脳内変換いるなあ
-
---- 27. @RGM79debris (2026-09-30) ---
-URL: https://x.com/RGM79debris/status/2105341440859820128
-初期リガ・ミリティア、デナン系使っててくれ〜という感情がなんか急に発生してる、
-
---- 28. @geekdrums (2026-09-30) ---
-URL: https://x.com/geekdrums/status/2105341412950815120
-マイケル・ジャクソン好きに一発で刺さる　つまり50億人に刺さる可能性がある
-
---- 29. @SythonUK (2026-09-30) ---
-URL: https://x.com/SythonUK/status/2105252021200941485
-#PARIPINTERSPEECH2026
-
---- 30. @shields_pikes (2026-09-30) ---
-URL: https://x.com/shields_pikes/status/2105259119963963530
-aikoのミス・ブランニュー・デイ、めちゃくちゃ良い。
-ていうか、Aメロのメロディと譜割りが、めちゃくちゃaikoの曲っぽい。いつもの歌い方で、完全に自分の歌にしてるの凄いな。
-
---- 31. @miyahancom (2026-09-30) ---
-URL: https://x.com/miyahancom/status/2105092036802310364
-タイムズの本人確認書類漏洩、もはや運転免許証の写真は本人確認方法と認めないと緊急通達出すレベルだと思うのだが…
-
-そもそもこんな時代に紙を写メしたものでまかり通っていたことがリスクの根本原因であって、これを機にさっさとマイナンバーカードなどの電子署名に強制移行したほうがいいと思う
-
---- 32. @SakanaAILabs (2026-09-29) ---
-URL: https://x.com/SakanaAILabs/status/2104928895627833438
-【Account Executive (GTM) 立ち上げメンバー募集】
-
+--- 14. @ZappyZappy7 (2026-09-30) ---
+URL: https://x.com/ZappyZappy7/status/2105431083798188265
+『翼を絶えず変化させることで電力消費量を低減する インフラ検査・監視ドローン』
 
 https://
-sakana.ai/careers/busine
-ss-role-product-sales-account-executive/
+youtu.be/tOUkn7YmYV4
+
+#drone #inspection #VTOL #multicopter #multirotor #Morpho #Elythor #EPFL
+
+--- 15. @kagerou_honey (2026-10-01) ---
+URL: https://x.com/kagerou_honey/status/2105492225996259623
+デジタル缶バッチを使って、目の動くコイルを作って見ました。
+大きさは15cmくらい(1/2スケール位)です。
+赤ちゃんコイルといった感じで可愛いです。
+
+--- 16. @Tsutsui0524 (2026-09-30) ---
+URL: https://x.com/Tsutsui0524/status/2105114494133547236
+もう正しい税額をおたくらが計算して教えてくれないかな…
+
+--- 17. @sumorod (2026-09-30) ---
+URL: https://x.com/sumorod/status/2105194256847761634
+何食ったらこんなの思いつくんだ
+
+--- 18. @Coriander__3 (2026-09-30) ---
+URL: https://x.com/Coriander__3/status/2105276962923331609
+初音ミクって誰も創作しなくなったらその後の人生とかもなく終了してしまう弱い存在なのに、大勢に創作され続けることで何千年でも生き永らえる強者でもあるの面白い。地元民の信仰を集めて存続してる神社じゃん。
+
+--- 19. @bure_ttr (2026-10-01) ---
+URL: https://x.com/bure_ttr/status/2105459951196086527
+おおう…
+ご存知の方、いらっしゃいましたらよろしくお願いします…
+
+--- 20. @AiFreak_tool (2026-10-01) ---
+URL: https://x.com/AiFreak_tool/status/2105519793495584853
+ElevenLabs v4(
+@ElevenLabs
+ )凄いわ。
+動きも含めていよいよ自然になってきたな...
+
+--- 21. @ichiban_KIRIN (?) ---
+新登場🎉キリン一番搾り生ビール🍺
+
+おいしさ一新、お楽しみください！
+
+--- 22. @flying_sqrr (2026-09-30) ---
+URL: https://x.com/flying_sqrr/status/2105344772403826892
+セロトニン不足で鬱病になってる皆さん。
+
+お　　ど　　れ　　！　　！　　！
+
+実はセロトニンは太陽光を浴びると出るというのが有名だが、リズム運動でも出るのだ。
+
+音楽を聴きながらノったり、トランポリンでジャンプしたり、歩いたりするだけで実はセロトニンドバドバなのだ。
+
+--- 23. @panzer_panDer (2026-09-30) ---
+URL: https://x.com/panzer_panDer/status/2105404112460525759
+能力があろうと無かろうと、これが世に出回った時点で伸びることは完全になくなったね
+
+--- 24. @Studio_Tora_lab (2026-09-30) ---
+URL: https://x.com/Studio_Tora_lab/status/2105347570235011351
+Pushed even further and made some new discoveries, apparently claude opus 5.5 is the first model that can produce actual impact frames
+
+--- 25. @Lstruere (2026-10-01) ---
+URL: https://x.com/Lstruere/status/2105447682622005589
+お金があればなんでもできることを定期的に思い出させてくれる表参道のアップルストア
+
+--- 26. @GOROman (2026-09-30) ---
+URL: https://x.com/GOROman/status/2105380113902690430
+ナヴィ
+
+--- 27. @SuperWiiBros08 (2026-09-30) ---
+URL: https://x.com/SuperWiiBros08/status/2105390230769639766
+guYS With the power of Crack GPS Asstra 6.9, Claus Opoops Slopnet 5.5, I was able to Mod EVERY GAME INTO ONE, I did it all myself with hard work by my typing and coding thanks to AI assistant!!! THE FUTURE IS HERE AND NOW
+
+--- 28. @madonomori (2026-10-01) ---
+URL: https://x.com/madonomori/status/2105469020254376080
+NVIDIA製GPUドライバーに114件もの脆弱性、深刻度の最大評価は「Critical」／「GeForce」ユーザーはv616.56などへの更新を 
+https://
+forest.watch.impress.co.jp/docs/news/2144
+714.html
 …
 
-Sakana Marlin、Namazu、FuguをはじめとするSakana AIプロダクトを、大企業を中心とした顧客に広げていきます。日本のAI企業が世界で勝つための営業の型をゼロから設計していただきます。
+--- 29. @yamamimumemo_ (2026-09-30) ---
+URL: https://x.com/yamamimumemo_/status/2105323951262191972
+やっぱこれ天才だろ、、、
 
-求めるのはエンタープライズ
+ちなみに俺はこのキャラの目を追ってると後頭部のスライド？マジで気にならないので、アニメーター引退します
 
---- 33. @suntory (?) ---
-／
-ビールの金麦まで【あと6日】
-スペシャルムービー公開中！
-＼
-10月6日、金麦はビールになります。
-ご期待ください🍺
+--- 30. @eloah_va_daath (2026-09-30) ---
+URL: https://x.com/eloah_va_daath/status/2105432652652462193
+せんべろという概念、「千円でべろべろに酔える」の略なのに、近年は「千円ジャストで酒1杯と多少のアテが出てくるお得なセット」とか「気合い入れて切り詰めれば千円以内で多少飲み食いできる」とか、「べろ」が蔑ろにされた空虚な言葉になっている気がする。
 
-金麦は、ビールへ。特設ページは動画をタップ
+--- 31. @sakuhin_select1 (?) ---
+潔癖症の彼女が知った初めての欲望とは...
 
---- 34. @sub_fugu (2026-09-30) ---
-URL: https://x.com/sub_fugu/status/2105229148872642866
-カフェで作業してたら隣で勉強してたJK(えらすぎ)に声かけられてコレ渡してくれてあまりにも神イベ
+〔PR〕
 
---- 35. @muutkm (2026-09-30) ---
-URL: https://x.com/muutkm/status/2105340274046370244
-なんでもできるようになろうと一年やった結果、なんでも破壊することしかできないことがわかった
+--- 32. @ai_march39 (2026-09-30) ---
+URL: https://x.com/ai_march39/status/2105405155823014219
+大きい声では言えないんだけど、
+会社員は「ChatGPT」に月3,000円課金しましょう
+10分で仕上げた商品、
+「ココナラ」に出したら注文が途切れません。
 
---- 36. @yam_owl (2026-09-30) ---
-URL: https://x.com/yam_owl/status/2105347760648245348
-今日は徹夜でやるぞ、、と思ってエナドリ飲みまくって気力は十分なのに目がダメだ、、ああ。。
+このプロンプトを順番に投げるだけ↓
 
---- 37. @public_aokn (2026-09-30) ---
-URL: https://x.com/public_aokn/status/2105092204607967301
-多変量解析がどういう発想で定式化されているのか，テクニカルな部分の前に大枠のアイデアを話せればと思います．大元のアイデアさえ押さえれば複雑な非線形の話もその延長線上で見えてきます．
-平日午後のオンライン，講義8時間で8800円です．何卒…！
+--- 33. @yoppymodel (2026-10-01) ---
+URL: https://x.com/yoppymodel/status/2105456536957182327
+むちゃくちゃ火力が高くて笑った。これ日本のメディアが書いてたら袋叩きにされてただろうな。
 
---- 38. @GOROman (2026-09-29) ---
-URL: https://x.com/GOROman/status/2105030184470827205
-Codex
-超高速(Ultra Fast)
+--- 34. @aki_keySecret (2026-09-30) ---
+URL: https://x.com/aki_keySecret/status/2105442215225159708
+実家の父から「もう終わりだ。母さんに見つかった」と血の気が引くようなLINEが来た。
 
---- 39. @AmazonJP (?) ---
-シャンプーが切れそう、明日のおにぎり用のラップがない。困ったあれがない！をお助け。
+ついに隠し金か浮気か、と覚悟を決めて電話をかけると、父は「証拠隠滅も間に合わなかった」と声を震わせた。
 
---- 40. @gosrum (2026-09-30) ---
-URL: https://x.com/gosrum/status/2105312120753860880
-参考までに、こちらが Anthropic が出しているグラフです。Opus 5.5 のスコアに関して、OpenAIが出しているのと見比べてみてください
+「俺がベランダの隅でこっそり育てていたシソ、全部夕食の天ぷらにされた」と父は泣いていた
 
-これ以上は言及するのを避けておきます
+--- 35. @totsuno (2026-10-01) ---
+URL: https://x.com/totsuno/status/2105455902283497522
+「1ヶ月以上、毎日雨が降り続ける」ことが東京都民に与えた、地味だけど膨大な精神的負荷、記録に残しておくべき
+本当に9月は心身共に厳しかった
 
---- 41. @rohanpaul_ai (2026-09-30) ---
-URL: https://x.com/rohanpaul_ai/status/2105166339728126421
-Elon Musk and Jensen Huang left the stage in style tonight.
+--- 36. @GOROman (2026-09-30) ---
+URL: https://x.com/GOROman/status/2105421068873711660
+GMK @ ferry building
+with 
+@kiradragonp
 
-at the Andrew W. Mellon Auditorium in Washington, D.C
+--- 37. @watch_UNEXT (?) ---
+堺雅人主演『半沢直樹』
+U-NEXT独占で全話配信中！
 
---- 42. @konan999 (2026-09-29) ---
-URL: https://x.com/konan999/status/2105060838587715956
-今日も例月出納検査で役場にお篭もり。明日からは少しゆっくりできるスケジュールやー( * ॑꒳ ॑*)37
- #ドラの思い出
+原作は直木賞作家･池井戸潤の｢オレたちバブル入行組｣と｢オレたち花のバブル組｣｡堺雅人演じるバブル期に東京中央銀行に入行したバンカー･半沢直樹の戦いを描く｡
 
---- 43. @equal0001 (2026-09-30) ---
-URL: https://x.com/equal0001/status/2105130523072848338
-結構ダイナミックで良いマップができたんじゃないかと思います
-インディFPSだと中々見られない光景では？
+--- 38. @FRIENDS73539897 (2026-10-01) ---
+URL: https://x.com/FRIENDS73539897/status/2105531978804334740
+どうもぽっと出のご飯です🍚✨️
 
---- 44. @chikushiriko (2026-09-30) ---
-URL: https://x.com/chikushiriko/status/2105330839399879041
-今日のMVP
-#枝のみんなぁー！
+半年後には消えてそうなエンジアＮｏ1の自信があります( *¯ ꒳¯*)
 
---- 45. @autumn_good_35 (2026-09-30) ---
-URL: https://x.com/autumn_good_35/status/2105203193936515397
-『このたび、弊社の開発用データベース（一休 .comサービスの開発に使用するデータのみを格納したデータベース）に対し、第三者による不正アクセスが発生いたしました』😲
+--- 39. @rohanpaul_ai (2026-09-30) ---
+URL: https://x.com/rohanpaul_ai/status/2105420425950077434
+OpenAI declined to send Sam Altman to a Senate hearing on rogue AI agents, offering written answers instead.
 
-一休もお漏らしかよ
+Hawley, who chairs the Senate Homeland Security and Governmental Affairs subpanel holding the hearing, invited Altman by letter on Sept. 25 as part of an ongoing
 
---- 46. @kmtkmt12 (2026-09-30) ---
-URL: https://x.com/kmtkmt12/status/2105111892205457587
-『ライザにセクハラできないなら何を楽しんだらええねん』がライザAIの失敗の本質な気がする。
+--- 40. @ctgptlb (2026-09-29) ---
+URL: https://x.com/ctgptlb/status/2104996701589385597
+【速報】OpenAIがJEVの競合となるDecisions APIを発表
 
-見誤ったのは食事だ天候だの日常をライザに報告することを本気で喜ぶ異常者がガストファンにはほとんどいないことじゃないだろうか
+JEVと異なり、画像の入力にも対応。本日より限定プレビューを提供し、数日以内に広く公開予定
 
---- 47. @finkd (2026-09-30) ---
-URL: https://x.com/finkd/status/2105087367686025454
-I think it's a significant positive step that the leaders of every major American lab have committed to implementing robust internal controls and multiple layers of audits and reviews. This should give people more confidence that the technology each lab is building will work as
+--- 41. @ichiaimarketer (2026-09-29) ---
+URL: https://x.com/ichiaimarketer/status/2105056273909919798
+サム・アルトマンが「人生で一番リターンの大きかった年」と呼ぶのは、無職だった1年なんだって。
+その時に何十冊も教科書を読み、教えてくれる人に会いに行って👇
 
---- 48. @suumo (?) ---
-／
-福原遥さん、DaiShunさん出演
-アニメ「あたしンち」ともコラボした『SUUMO』の新TVCM
-＼
+その1年で
+・原子力工学を学んだ
+・AIが動き始めていたのでAIを学んだ
 
-住まいを、探すこと。
-それは、幸せのかたちを想像することだと思います。
+--- 42. @kensuu (2026-09-30) ---
+URL: https://x.com/kensuu/status/2105422205421281319
+若い人には信じられないかもしれませんが、ゲーム機を使ってインターネットをしてた世代もいるんです。
 
-♪Official 髭男dism 「115万キロのフィルム」
+90年代のときに使ってたTwitterを久しぶりに使ったんですが、懐かしい！しかし使いづらい！よくこんなのでつぶやいてたな⋯
 
-あなたもぜひ、SUUMOと幸せな住まい探しを！
+--- 43. @koguGameDev (2026-09-30) ---
+URL: https://x.com/koguGameDev/status/2105160709353144494
+樹皮試作。もっともっと入れ込みたい。
 
---- 49. @prismaton (2026-09-30) ---
-URL: https://x.com/prismaton/status/2105223509853298980
-CEDEC+KYUSHU 2026 (11.14 土) にて、
-ゲームの音楽にエフェクトをかける事についてお話させていただきますー！
-よろしくお願いします！
-#CEDEC九州
+--- 44. @AM09_21 (2026-09-30) ---
+URL: https://x.com/AM09_21/status/2105431213477658624
+Q. ChatGPT Pro500ってどれくらい高いの？
 
---- 50. @shiba_tsukune (2026-09-30) ---
-URL: https://x.com/shiba_tsukune/status/2105336010100072930
-無言で……落ちたっ……！！ UVエディタを開いただけで……！！
-あのMayaが…… 何の Fatal Error も出さず……ログのひとかけらも発さず……！
+A. 1年間このサブスクを続けたらDGX Sparkに手が届くくらいには高い
+
+--- 45. @IntelExp_jp (?) ---
+【茂木健一郎氏、山口周氏、安野貴博氏　推薦！】
+
+「本書はAGIという新たな『思考資源』について考えるための地図だ」（山口周）
+「牧歌的なAI時代は終わった。予測困難なAGI時代にどう備えるか」（安野貴博）
+「AIの疾走進化に若き学究の熱が呼応した、現代人の必読書！」（茂木健一郎）
+
+--- 46. @voich2014 (2026-10-01) ---
+URL: https://x.com/voich2014/status/2105451059644899463
+昨日家に帰ってから思いつきでフライトシミュを作ってもらった！アプリ名は「PaPaFlight」です。
+紙ヒコーキとおもちゃのプロペラ機で優雅に空の旅を楽しめます。これは良き(*´ω｀*)
+BGMにネットラジオのアニソンとJPOPがかけられますｗ
+動画は京都の聖地に向かう様子です。
+
+--- 47. @TheMaverickWS (2026-09-30) ---
+URL: https://x.com/TheMaverickWS/status/2105345002775916749
+Couldn't help myself
+
+--- 48. @yy_yank (2026-10-01) ---
+URL: https://x.com/yy_yank/status/2105449311513493989
+デフォルトブランチmain と master 論争。
+
+bentoにすると、なんと、git push origin bentoでオリジン弁当ぽくなります
+
+--- 49. @denfaminicogame (2026-09-30) ---
+URL: https://x.com/denfaminicogame/status/2105228299224178793
+「設定メニュー」を“盾”にして戦うゲーム『ESC ape, You died?』無料体験版が配信開始。UIそのものを利用して攻撃できる
+
+https://
+news.denfaminicogamer.jp/news/2609303h
+
+音量を下げて敵の監視をすり抜けられるほか、「タイトルへ」ボタンを足場にすることも可能。設定を変えると、ゲーム世界のルールも変化する
+
+--- 50. @tw_rdi (2026-10-01) ---
+URL: https://x.com/tw_rdi/status/2105539835268391022
+CD-ROM2かよ。
