@@ -1,5 +1,7 @@
 # ミサイルの当てやすさと、中心から外へ散る爆風（2026-10-03）
 
+最新の性能修正は [ミサイル強化後の処理落ち最適化](missile_optimization_20261003.md)。以下の通し負荷は最適化前の記録であり、現在値と混同しない。
+
 対象：`D:/HomeBrew/FamiBASIC_Turbo_main`。標準入口は `PlayFlightLab.cmd` と保存済み `build/basic_only/game`。正本は `experiments/single_basic_console/game`。`D:/Temp/FrontShoot-master` は今回の編集対象ではない。
 
 ## フィードバック原文
