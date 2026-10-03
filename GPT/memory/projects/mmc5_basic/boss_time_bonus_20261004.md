@@ -11,7 +11,7 @@
 
 35回帰、全1801時間境界・26報酬の表示、本体コンパイルとMesen全編で検証。mainは747フレーム・22,000点を151,000→173,000点へ加算。比較版は788フレーム・21,000点を151,300→172,300点へ一度だけ加算し、道中・ボスともフレーム落ち0。mainの既存60fps未達は残り、待ちは72/7。容量は全BANK内・再配置0だが、256 B余裕目標は未達。設定はPython側の定数へ集約し、生成BASICと全編観測へ反映する。
 
-最新実装はmain `df78139`、比較版 `34ea0a2`。両方push済み。IDEの `D:/HomeBrew/FamiBASIC_Turbo_stage_compare` を同期し、起動用ROMを再生成。検証ROMとSHA256 `261d3607958d4af92833c183859e97b151e6ed98a5cf782e76241922cfa6d8f1` が一致。最新の全編・容量・結果画像は `docs/benchmarks/boss_time_bonus_30k_20261004/`。
+時間ボーナス単体の検証時点はmain `df78139`、比較版 `34ea0a2`。現在のリザルト表示・加算演出は [最新の記録](boss_result_animation_20261004.md) を参照。IDEの `D:/HomeBrew/FamiBASIC_Turbo_stage_compare` を同期し、起動用ROMを再生成。検証ROMとSHA256 `261d3607958d4af92833c183859e97b151e6ed98a5cf782e76241922cfa6d8f1` が一致。最新の全編・容量・結果画像は `docs/benchmarks/boss_time_bonus_30k_20261004/`。
 
 正本: [仕様と検証](D:/HomeBrew/FamiBASIC_Turbo_stage_compare/docs/boss_time_bonus_20261004.md)。生成変換は `experiments/horizontal_side_art_b/boss_time_bonus.py`。既存のboss_finale比較fixture 2件は、medium_bonusを無効にした際のhot_bank_layout前提不一致で今回の変換前に失敗するため分離した。実製品の終幕は全編試験で確認済み。
 
