@@ -1,5 +1,7 @@
 # ミサイル強化後の処理落ちを減らした記録（2026-10-03）
 
+さらに残った道中の判定を軽くした最新結果は [道中の命中判定の最適化](stage_collision_optimization_20261003.md)。以下はその前の計測記録。
+
 対象：`D:/HomeBrew/FamiBASIC_Turbo_main`。標準入口は `PlayFlightLab.cmd` と保存済み `build/basic_only/game`。正本は `experiments/single_basic_console/game`。強化と爆風の絵を保つ性能修正であり、新規ゲーム設計ではない。
 
 ## フィードバック原文と判断の訂正
