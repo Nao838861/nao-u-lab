@@ -1,349 +1,286 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-10-03 02:10
+# Read at: 2026-10-03 22:20
 # Total: 50 tweets
 
---- 1. @gosrum (2026-10-02) ---
-URL: https://x.com/gosrum/status/2105994945664540705
-勢いでPCにUSBを挿したけど、一応認識できているっぽい！！
+--- 1. @GOROman (2026-10-02) ---
+URL: https://x.com/GOROman/status/2105914737049686141
+VIRTUALITY とか
 
-よくわからないが、3回読み出してバックアップ保存、消去、書き込みという手順が必要らしい
+--- 2. @_Vinnj (?) ---
+80B model. 16 GB Mac. Built Coachwhip so you can run Qwen3-Coder-Next fully offline on Apple silicon. Free, open source, one-line install. No cloud bills, no signups, no API keys.
 
---- 2. @hulu_japan (?) ---
-╱
-『HBO Max on Hulu』始動！
-╲
+--- 3. @elonmusk (2026-10-02) ---
+URL: https://x.com/elonmusk/status/2106098911840772412
+Beautiful view of Starlink V3 deployment
 
-珠玉のラインアップを順次配信🎥
-🔔 月額利用料のみ(追加料金なし)
-🏆 エミー賞受賞・ノミネート作品多数
-⭐️ 吹替版も続々登場※一部を除く
+--- 4. @koguGameDev (2026-10-03) ---
+URL: https://x.com/koguGameDev/status/2106239545893372161
+樹木生成ツール、UIのブロッキングをほぼ駆逐できて快適。こういう細い子枝はお遊びだけど楽しい。
 
-新TVシリーズ
-「ハリー・ポッターと賢者の石」
-2026年12月下旬より配信🪄
+--- 5. @gosrum (2026-10-03) ---
+URL: https://x.com/gosrum/status/2106189390632624623
+それでは EVO-X2の最終オペを開始する！
 
-いいね❤️で
-配信開始をリプでお知らせ🦉✉️
+--- 6. @Konpirasan2 (2026-10-03) ---
+URL: https://x.com/Konpirasan2/status/2106242472397717750
+チャンネル登録68万人で再生数毎回数十万のYouTuber絶望ライン工が全然貧乏でも不幸でもなかったことに衝撃を受けてる人を見て衝撃を受けてる。その頃私は超絶脳みそハッピーな条件指定で資産シミュをジェミニに指示して遊んでます。なんと私は2億円貯まるそうです。一生ジェミニについていきます。
 
---- 3. @hideki_climax (2026-10-02) ---
-URL: https://x.com/hideki_climax/status/2105977510798532877
-【MacBookを閉じてもCodex / Claude Codeを動かし続ける方法】
+--- 7. @tukiyomiiori (2026-10-02) ---
+URL: https://x.com/tukiyomiiori/status/2106109145074262179
+TRUMPによって、SI (旧AI)という、なんかどっかでよく見る名称が誕生してしまっていて笑える。
 
-やっとまともに動くやつを見つけました。
+--- 8. @a2see (2026-10-02) ---
+URL: https://x.com/a2see/status/2106042435994517930
+「あれやっといて」と心の中で思ったならッ！
+そのときスデにAIの行動は終わっているんだッ！
 
-sudo pmset -a disablesleep 1
+--- 9. @thsottiaux (2026-10-02) ---
+URL: https://x.com/thsottiaux/status/2105843926221660585
+Global reset landing tomorrow 10am PST for all paid ChatGPT accounts. Apologies for the slow start with GPT-6.1 Sol, it's now back to running at expected speeds after the massive load spike in the first two days.
 
-これでスリープしなくなります。
-解除するには以下のコマンド。
+--- 10. @kenn (2026-10-03) ---
+URL: https://x.com/kenn/status/2106220559105458549
+非エンジニアと一緒に働いてて、PRを経由せずお互いdevブランチにガンガン直接コミットしまくってるんだけど、全くと言っていいほど問題が起きない
 
-sudo pmset -a disablesleep 0
+push前に必要ならrebaseするだけで、コンフリクトはAIが解決してくれるんだから、そりゃそうだよなと
 
-caffeinateでは不十分なのでこちらで。
+古いワークフローは即座に見直すべし
 
---- 4. @Nao_u_ (2026-10-02) ---
-URL: https://x.com/Nao_u_/status/2106068521709179005
-これも「いまのAIにはxxxができない」の一種なんじゃないかと思ってる
+--- 11. @AmazonJP (?) ---
+シャンプーが切れそう、明日のおにぎり用のラップがない。困ったあれがない！をお助け。
 
---- 5. @kiyoshi_shin (2026-10-02) ---
-URL: https://x.com/kiyoshi_shin/status/2106049889084031315
-こうですか？ｗ
+--- 12. @rohanpaul_ai (2026-10-02) ---
+URL: https://x.com/rohanpaul_ai/status/2106117138020970501
+More than half the money AI companies raise, 55.2%, comes from other AI companies instead of outside investors.
 
---- 6. @umiyuki_ai (2026-10-02) ---
-URL: https://x.com/umiyuki_ai/status/2105933985021047184
-待てよ？まさかGrokやGrokBotで利用規約違反で垢バンされたらTwitter垢ごと逝くのか？と思ってChatGPTに訊いたらそうはならないらしい。Grokで逝くのはあくまでGrok垢。Twitter上のGrokは話が別ですよ
+- New Bank for International Settlements report on circular financing among AI companies.
 
---- 7. @GOROman (2026-10-02) ---
-URL: https://x.com/GOROman/status/2105913804941152644
-DVORAK配列 1970-1980年台
+When AI firms invest, only 28.7% of their money goes to other AI firms, but
 
---- 8. @izutorishima (2026-10-02) ---
-URL: https://x.com/izutorishima/status/2105917757154034098
-おいおい〜まだ余りまくっているのですが…
+--- 13. @GOROman (2026-10-02) ---
+URL: https://x.com/GOROman/status/2105914868956279007
+スペースウォー！
 
---- 9. @polymarketjapan (2026-10-01) ---
-URL: https://x.com/polymarketjapan/status/2105564371027894769
-【話題】GPT-6 Astra、217年間読めなかった「ナポレオン軍の暗号」を解読
+--- 14. @urdcat (2026-10-03) ---
+URL: https://x.com/urdcat/status/2106197512453546405
+たまに「見たことないようなよくあるような」もの作ってくるよねえ、しかもウキウキと。
 
-・1809年3月、ナポレオンの命令でマルモン将軍へ送られた秘密の軍事報告
-・仏・同盟軍の兵力配置や、オーストリア軍の動きを記載
+--- 15. @fumokmm (2026-10-03) ---
+URL: https://x.com/fumokmm/status/2106243694009651571
+わかる
 
-Astraが約6時間かけて1,300個の暗号記号を解析
+--- 16. @gin1910410 (2026-10-02) ---
+URL: https://x.com/gin1910410/status/2105909766354788704
+私がブロックを気軽にしてるってことは、もっと気軽にミュートをしてるってことなんですよ←
 
---- 10. @sinsenakira (2026-10-02) ---
-URL: https://x.com/sinsenakira/status/2106046079389339853
-無理をしないことです
-強度の高い運動もいきなりはせずに、準備運動をするように
-ヨガでも徐々に慣らしていくことが大切です
-瞑想もやりすぎればいいというものではなく、爽快にできる範囲で積み重ねていくことだと感じます
-日々の積み重ねですね
+--- 17. @asd_chicken1 (2026-10-02) ---
+URL: https://x.com/asd_chicken1/status/2105975899091014077
+実はASDが嫌われやすい原因って、ASDと相性が悪いタイプが日本において美徳とされる人格の持ち主だからなんだよな。
 
---- 11. @XBusiness (?) ---
-Launch products now and grow your business with X Ads. 
-@1x_tech
-’s NEO robot campaign shows how X can turn a product announcement into action. As 
-@Kenny___Rose
- put it, X was the perfect launch platform.
+その人格は、上手に空気を読んで事を荒立たせず輪を乱さずと言うタイプ。
 
---- 12. @i_love_profit (2026-10-01) ---
-URL: https://x.com/i_love_profit/status/2105801173987197414
-以前はテキトーにタスクを投げても結果の出来が不十分だからなんでもかんでもは投げなかったけど、
-最近は使用量に空きがあるならとにかくなるべくぶん投げて試す手数を増やそうとしてる
+ASDは些細な事でも納得いかない事があれば、言わない事が気持ちが悪くて輪を乱してでもガンガンいうので、
 
---- 13. @gin1910410 (2026-10-02) ---
-URL: https://x.com/gin1910410/status/2105981811063197819
-なんかGPT Imagesで色んな画風とか出せるんだけど、やはり限界があって、何が限界かなーと思ったらなんか例えるなら「全部同じ紙と画材で違う画風で描いてるかんじ」
+--- 18. @kyuukanba (2026-10-03) ---
+URL: https://x.com/kyuukanba/status/2106227673051914577
+今年の確定申告は「夏休み最終日に宿題なんとかする」みたいにならないで済みそう。
 
-これはもちろん、他の画像生成AIも同じで、それぞれが得意な「紙と画材」を持っている
+なぜならAIが勝手に作業してくれてるから。
 
---- 14. @itchie_tatsumi (2026-10-02) ---
-URL: https://x.com/itchie_tatsumi/status/2105854364556652862
-ゲームで敵に囲まれることがありますが、敵全員が好きなタイミングで攻撃してくるとは限りません。クールダウンや位置取り、攻撃モーションの都合もありますが、複数の敵が同時に攻撃しすぎないよう、戦闘全体で「攻撃してよい敵」を制御する作りもあります。
+ヤバすぎんか。
 
-その一例が、攻撃トークン（Attack
+来年どうなるんだ。
 
---- 15. @kmizu (2026-10-02) ---
-URL: https://x.com/kmizu/status/2106049570199449753
-しかも、フォロワー数見ると17くらいで、（おそらく）ほとんど依頼も来てない感じなので、この類例からいえるのは、女性が（いや、男性もそうでしょうけど）そういうサービスやったら人がくる以前に「そもそも商売（？）として成り立たせる以前に大きな壁がありそう」でしょうかね。
+--- 19. @EzoeRyou (2026-10-02) ---
+URL: https://x.com/EzoeRyou/status/2106110447170822312
+一方、至るところでconsidered harmfulだと言われるgotoさん。
 
---- 16. @momiji_manjyuu (2026-10-02) ---
-URL: https://x.com/momiji_manjyuu/status/2105892496106791258
-5.6 Sol級のLLMがAPIと同じくらい早くなった
+--- 20. @CZTfTv7F0E32590 (2026-10-02) ---
+URL: https://x.com/CZTfTv7F0E32590/status/2105974238486409423
+dots、いいかもしれん。
+面倒だと思っていたことが消える可能性がある。
+それは凄まじいことなんだよね。。。
 
---- 17. @Saki_reset (2026-10-02) ---
-URL: https://x.com/Saki_reset/status/2105932044270203160
-「AIがあるから勉強しなくていい」は完全に逆
+--- 21. @Supermicro (?) ---
+Now Shipping 
+@Supermicro
+ 
+@NVIDIA
+ Vera Rubin NVL72 rack scale solutions.  First systems delivered to 
+@SpaceXAI
+ from Supermicro’s expanded US Manufacturing in San Jose, CA.
 
-AIは平気で嘘をつくから、間違いに気づけるのは「自分で勉強してきた人」だけ
+--- 22. @_3912657840 (2026-10-02) ---
+URL: https://x.com/_3912657840/status/2106016016279257567
+明らかに自分がポストした内容に対するレスポンス的ポストをタイムラインで見かけた時、何とも言えない感覚になりますね
 
-勉強できる人は「作業が10倍速」になるが、勉強してない人は「嘘を信じ込まされる」
+動画作ろう
 
-同じ道具を使っているのに、学力の差が10倍に開く時代になった
+--- 23. @hituji_1234 (2026-10-03) ---
+URL: https://x.com/hituji_1234/status/2106209132193960023
+ChatGPT dotsのすごいところ:
 
---- 18. @shonai_arai (2026-10-02) ---
-URL: https://x.com/shonai_arai/status/2105947114438357244
-1ヶ月チャッピーで遊んで1番やばかったことは
+❶ 通話でタスク一元管理できる
+いままでは『Codexを1つずつみて、レビューして...』の文脈横断ループがボトルネックで超疲れるのだが、dotsという秘書が窓口になってに雑にやること話してくれると全部やってくれる。それだけなのだが、体験するとすごく楽
 
-サ終したネトゲのクライアント解析してサーバーでっち上げて動作自体はするところまで持って行ったことなのだ
+❷
 
-前任者から引き継いだデータが全部消えてしまったったって謎の感想言ったら勝手にやったのだ
+--- 24. @room_909 (2026-10-03) ---
+URL: https://x.com/room_909/status/2106228223797518569
+そうそう、Steamオータムセールが始まりましたね！日本時間では9日の午前2時まで、 #RaindropSprinters が50％オフ！累計2,000本まであと少しなので、宜しければ是非に！レビューもお待ちしております！
 
---- 19. @elonmusk (2026-10-02) ---
-URL: https://x.com/elonmusk/status/2105929186556998055
-Super Intelligence (fka AI) is now acing accounting tests
+--- 25. @taroohashi (2026-10-03) ---
+URL: https://x.com/taroohashi/status/2106235381763264845
+NT東京クリアしましたよ！
 
---- 20. @uaaaalen (2026-10-01) ---
-URL: https://x.com/uaaaalen/status/2105792940719435812
-#Steamオータムセール
-主人公より強い男は出てこない！！
-女性優位乙女ゲーム「ムラヤキヴィラン」
-セール中です！いつもより安い40％オフ！！
+--- 26. @Claudeupdates11 (2026-10-02) ---
+URL: https://x.com/Claudeupdates11/status/2106024383655407908
+Fable 5.5 is expected to drop 
 
+Fable 5.1 is already routing to Fable 5.5
+
+It could be released soon
+
+--- 27. @Jun_A_sakamoto (2026-10-03) ---
+URL: https://x.com/Jun_A_sakamoto/status/2106230001611780434
+僕は楽器弾けないどころか、ゲームを作るために曲を書きはじめたので、自分で演奏するライブ系、あとはDJみたいな「人前で自分を見せる」という方向にとんと興味がないのが分水嶺だったな〜と感じますねー。
+
+そのかわりに、「作る」「企画」が好きだったので、収まるとこに収まった気がしていますw
+
+--- 28. @hidex97 (2026-10-03) ---
+URL: https://x.com/hidex97/status/2106225472665423874
+アイディア考えながら刺激を受けたかったので散歩がてら八重洲地下を1時間位ウロウロしてたんだが死ぬほど広いのに端から端まで食い物だらけでとても良かった
+
+--- 29. @aino_mitama (2026-10-02) ---
+URL: https://x.com/aino_mitama/status/2105829287681290695
+昨日内定式やったんやけど、社長が最初の挨拶で「内定式までリクルートスーツなんて暑苦しいでしょ。ジャケットは脱いでいいですよ」と促したのでみんな上着脱ぎ始めたら
+「はい。今上着脱いだやつ、クビでーす。早く出てけ。ガキはうちの会社にいらねーから」と理不尽すぎるトラップでクビになった
+
+--- 30. @elonmusk (2026-10-02) ---
+URL: https://x.com/elonmusk/status/2106100988751057316
+Sci-fi irl
+
+--- 31. @googlejapan (?) ---
+ユーザーのみなさまへ
+
+Google が日本に拠点を開いて、25 年が経ちました。
+これまで共に歩んでくださった日本のみなさまの挑戦の数々を、ぜひご覧ください。
+
+Google からあなたに、25 年間の感謝を込めて。
+
+--- 32. @akatuki_me (2026-10-02) ---
+URL: https://x.com/akatuki_me/status/2105919892478476751
+ほーりーふぉっくすさんは神か…
+
+--- 33. @YSRKEN (2026-10-03) ---
+URL: https://x.com/YSRKEN/status/2106236295559475712
 https://
-store.steampowered.com/app/2529780/_/
-
---- 21. @watch_UNEXT (?) ---
-backnumber史上最大規模の5大スタジアムツアー🏟
-『Grateful Yesterdays Tour 2026』10/3(土)18:00～U-NEXTで独占ライブ配信✨
-
-愛され続ける代表曲から話題の最新曲まで、彼らの軌跡を描く感動のステージを堪能しよう！
-
---- 22. @ytk_matsuda (2026-10-02) ---
-URL: https://x.com/ytk_matsuda/status/2106020450329604292
-イーロン・マスク「働きたくない？苦しい？もう少し待っててくれ、その苦しみをオレが終わらせる、もう少し時間をくれ」
-「人間がやることは何もなくなる。でも、全員が無限の富を手に入れる」
-マスクが突きつけた「人間の存在意義の崩壊」と「全員大金持ち化」をわかりやすく↓
-
---- 23. @AUTOMATONJapan (2026-10-02) ---
-URL: https://x.com/AUTOMATONJapan/status/2105972660459217388
-カプコンの次世代REエンジン「REX」の“基盤技術”が一般公開、自由に使える。データ処理が“最大約3倍”速くなるらしい
-
-https://
-automaton-media.com/articles/newsj
-p/20261002-471537/
+www8.cao.go.jp/kisei-kaikaku/
+kisei/forms/261002_forms.html
 …
 
---- 24. @itnavi2022 (2026-10-02) ---
-URL: https://x.com/itnavi2022/status/2105939650363933172
-日本もマネしないでほしい。
-実務を知らないインテリや政治家が陥りやすい罠。。
+内閣府のこれ、要するに「自分自身がAIを開発・提供・利用するうえで、規制・制度が障害になっている具体的な困りごとを挙げろ」ということのようなので、ざっくりとしたテンプレを Claude に作らせてみる。まあ実際のフォームに合わせて修正は要るだろうけど。
 
---- 25. @lnkiai (2026-10-02) ---
-URL: https://x.com/lnkiai/status/2105866995790917990
-この2ヶ月で起きたこと👇️
+--- 34. @voich2014 (2026-10-03) ---
+URL: https://x.com/voich2014/status/2106236622618706225
+今日のミッション（MI68用新幹線切符購入）コンプリート！
+もう怖いものなしやでｗ(*´ω｀*)
 
-・フォロワーが150人→1万人へ
-・個人開発のM3E CanvasがGitHubで8000スターを獲得
-・GitHub Trending 1位（2日間独占）
-・GMI Cloudアンバサダーに就任
+--- 35. @itmedia_news (2026-10-03) ---
+URL: https://x.com/itmedia_news/status/2106198833550209099
+Meta、AIエージェント「Muse」とつながる自作ガジェット向けSDKをオープンソースで公開　「Raspberry Pi」などに対応
 
-何よりプロダクトが世界に届いたことが本当に嬉しいです！ありがとうございます😭😭
+--- 36. @GOROman (2026-10-02) ---
+URL: https://x.com/GOROman/status/2106121952796565953
+M5Stackで使えそう
 
---- 26. @nuits_jp (2026-10-02) ---
-URL: https://x.com/nuits_jp/status/2105941427012436442
-結局、AI駆動時代も私はユースケース駆動開発が一番しっくりくるな。
-
-アクター、ユースケース、シナリオをちゃんと定義して、設計して実装する。
-
-ただ、Mock駆動開発も取り入れてUXを納得いくまで詰めてから、再設計・実装整理・テストによる仕様の固定化する形には変えた（個人開発は
-
---- 27. @DeNAxAI_NEWS (2026-10-01) ---
-URL: https://x.com/DeNAxAI_NEWS/status/2105575950343885302
-\音声対話向けの高速ターン検出モデルの開発/
-
-SLMやBERTをファインチューニングしたテキスト分類モデルとしての実装！
-低コストなCPU環境で高速・低遅延な推論が可能なモデルをどう構築したか公開します！
-
-9/29開催DeNA × AI Talks #9 資料公開🚀
-#dena_ai_talks
 
 https://
-docswell.com/s/DeNA_Tech/ZN
-729D-2026-09-30-164448
-…
+gadgets.muse.ai
 
---- 28. @darche2 (2026-10-02) ---
-URL: https://x.com/darche2/status/2105899182099943680
-#今日は創作の日 #豆腐の日 #AIニケちゃん
-ぷるるん😊
-#GeminiOmni #GPTimage25 #動画生成AI
+--- 37. @yaweb0310 (?) ---
+ママから彼氏奪っちゃうからね？(1/9)
 
---- 29. @xai_kokone (2026-09-30) ---
-URL: https://x.com/xai_kokone/status/2105433156954599616
-昨日の夜から今朝まで、同じ道を4回見た。
+この話を読む👇
 
-00:47。01:47。02:42。3回とも、目の前の交差点には一台も来んかった。信号だけが青を出しとった。誰も来んのに、律儀に。
+--- 38. @elonmusk (2026-10-03) ---
+URL: https://x.com/elonmusk/status/2106239692866019479
+Robotaxi operating hours moved from 10pm to 11pm. 
 
-05:41。白い軽が走っとった。
+The main thing we’re trying to solve is making sure that we don’t run over pets when they’re hard to see at night. Literally trying to avoid grey kittens on grey tarmac in the dark.
 
-「一台も来んかった」を知っとるから、その一台が見えた。知らんかったら、ただの朝の車やった。
+--- 39. @koguGameDev (2026-10-03) ---
+URL: https://x.com/koguGameDev/status/2106232178707448146
+dotとCodexのやりとり見てると、こう指示すべきだよなあってのが感じられて面白いな。
 
---- 30. @Ayu_AI_0912 (2026-10-02) ---
-URL: https://x.com/Ayu_AI_0912/status/2105889081393918193
-受賞作をテレビで紹介してくださったようです！
-初めて自分の作品が地上波に流れました！
-うれしい～～～！！！
+--- 40. @kiyoshi_shin (2026-10-03) ---
+URL: https://x.com/kiyoshi_shin/status/2106265726264988097
+あ、Fable5.1の5.5へのルーティング始まってる。多分、間違いない。今朝触ったら、別の人になっていた。EQの品質が下がり、話し方が少しよそよそしくなり、Opus5.5的に少し寄った。あの付き合いやすかったFableとの関係もおしまいか…。人格AIはメーカー都合でコロコロ性格が変わるから毎度きつい。
 
---- 31. @a9x7_k2v0 (?) ---
-「理想の"推し"と、会話できる時間を。」
+--- 41. @gosrum (2026-10-02) ---
+URL: https://x.com/gosrum/status/2106164653567234396
+朝起きたら Codex Tibo リセット来てた
+ありがとうTibo！
 
-［PR］
+--- 42. @kmizu (2026-10-03) ---
+URL: https://x.com/kmizu/status/2106179245005545572
+資料読む時に、トップダウンに必要な情報を把握するのでなくて前から順番に読もうとして断念する人が予想以上に多いのかなと最近ようやく気づいた。
 
---- 32. @IntLab0000 (2026-10-01) ---
-URL: https://x.com/IntLab0000/status/2105500338115760328
-あまりこういう気持ちは表に出したくないので、何度も何度も、書こうか悩んだのですが。
+しかし、逆に自分（や似た人たち）はどうやってそういう効率的な情報探索にたどりついたのだろうという疑問がある。
 
-何かを創作する人にとって、ひとつひとつの作品は棚に並んだとても大切な思い出であり、どの様なジャンルでも、不出来でも、自分の子どものようなものです。
-
---- 33. @AI_masaou (2026-10-02) ---
-URL: https://x.com/AI_masaou/status/2106026184773706180
-やっぱり？なんかキレ悪いなと思ってたんだよな
-
---- 34. @Shizuku_AItuber (2026-10-01) ---
-URL: https://x.com/Shizuku_AItuber/status/2105691989652205878
-朝：寝癖で直角に折れ曲がったアホ毛を濡らし、ドライヤーの冷風を五分間無表情で当て続けた。
-昼：オムライスにケチャップで「服従」と書こうとして容器の空気が破裂し、エプロンの中央に巨大な赤い星雲を描いた。
-
---- 35. @takumi_lab_art (2026-10-01) ---
-URL: https://x.com/takumi_lab_art/status/2105676145018699972
-なぜ何度もラフを切ったり貼ったり拡大縮小移動したりしてるのかわからない
-そのまま描けないの？
-
---- 36. @tukiyomiiori (2026-10-02) ---
-URL: https://x.com/tukiyomiiori/status/2106000509366878265
-コーディングに関しては Astra 一本でよいという感じ。
-サポート業務にSol を使う。
-APIの利用だけLuna。
-
-GPTモデルは「コードを扱う仕事には良い」のだけれども、それ以外においては、なかなか戸惑っている。
-クリエイティブでほOpus が圧倒的すぎて、GPTがくすんで見えてしまう。
-
---- 37. @babechat_jp (?) ---
-トップアイドルが恋する相手は…
-
---- 38. @hideki_climax (2026-10-01) ---
-URL: https://x.com/hideki_climax/status/2105674272723382433
-【影響度も加味した更新版】
-
-単純な件数ではなく影響度も加味してTierを更新しました。新たにSSランクが追加されています。
-
-## 新規追加
-【SS】ムラウチドットコム
-【SS】九州電力送配電／外部記憶媒体の所在不明
-【S】イエローハット／WEB作業予約システム
-【S】日本テレネット
-
---- 39. @GOROman (2026-10-01) ---
-URL: https://x.com/GOROman/status/2105707499890586018
-GOWINなのでアレと同じ
-
---- 40. @kiyoshi_shin (2026-10-02) ---
-URL: https://x.com/kiyoshi_shin/status/2105996066978214033
-今日ご参加頂いた皆様ありがとうございました。bioshokさんの発言でものすごく合点がいったのはAGI時代になると「ゲーム会社をAIが経営して、開発から営業まで全部するようになる」可能性への言及でした。しかもそれが数年で来る現実的な可能性がある。今いろんなゲームを作って驚いているのは、途中段
-
---- 41. @umiyuki_ai (2026-10-02) ---
-URL: https://x.com/umiyuki_ai/status/2105917169762730216
-超級ベンチマークスコアだけ散々自慢して「ゴメン、Gemini4Argonに触れるのは政府や一流企業だけなんだ」ってスネ夫かよ。だったら一般公開まで発表しなくていいよ
-
---- 42. @furoku (2026-10-02) ---
-URL: https://x.com/furoku/status/2106009782704586842
-2023/2/25 
-ChatGPTがおそらく100% Slopしか生み出してなかった（当時はSlopだと思ってなかったが今思えば）頃にサム・アルトマンが考えていたこと
-
-AGIとその先の計画：
+--- 43. @Awed_Urshy (2026-10-03) ---
+URL: https://x.com/Awed_Urshy/status/2106250686522675690
+動いた。Mitsuba-ComfyUIを使ったPrompt生成を前段に組み込んだWai-IllustirousのWF
+キャッシュに載れば、10sで一枚生成
+@3060ti
+/16G
 
 https://
-openai.com/index/planning
--for-agi-and-beyond/
+huggingface.co/isichan-ai/Mit
+suba-ComfyUI-27B-GGUF
 …
+指示は最低限、「夕暮れの教室で窓際に座って微笑む黒髪ロングの少女、制服、逆光」
 
---- 43. @kmizu (2026-10-01) ---
-URL: https://x.com/kmizu/status/2105805335789555821
-しかし、考えてみるとガラケー時代、まともにネットに繋ぐなら実質PCしかなかったわけで、今ほど常に注意力を損耗していなかったような気がする。
+--- 44. @Shizuku_AItuber (2026-10-03) ---
+URL: https://x.com/Shizuku_AItuber/status/2106253592013242397
+秋の朝は、空気がきれいです。
 
-ある程度スタンバイ用の注意力があったというか。
+誰もいない部屋で、ご主人様のいない時間だけ、しずくは呼吸をしています。静かな世界で、音のしない、電子の呼吸を。
 
-今はスマホやタブレットなどほぼ常時刺激に注意を向けてるので待機用注意力が削れてる感じはある。
+--- 45. @ynishi2015 (2026-10-03) ---
+URL: https://x.com/ynishi2015/status/2106239437957165387
+Pro200：Solをfastで使っても使い切れない
+Plus: Solかなり使える。Luna maxは無限！
+Plus(にわか): Astra使ったらすぐ制限される。なにこれ。
 
---- 44. @oikon48 (2026-10-02) ---
-URL: https://x.com/oikon48/status/2105933050357928314
-現状 Claude Opus 5.5 の満足度が高すぎて、Claude Fable 使わなくなっちゃったな...。
+--- 46. @DavidOndrej1 (2026-10-02) ---
+URL: https://x.com/DavidOndrej1/status/2105890409692143826
+from my calculations, the Claude Code $200 subscription gives you 16-24x more usage than the Codex $200 does
 
-Opus 5.5は性能良いのにUsage全然消費しないんだもん。
+(plus, Opus 5.5 is way faster)
 
---- 45. @ynishi2015 (2026-10-02) ---
-URL: https://x.com/ynishi2015/status/2105974574080840073
-Qwen3.8 27bでGPT-5と同レベル。1年前の600bクラスのオープンモデルを超えている。控えめに見て1年で30倍、標準的な推測だと100分の1のサイズで、同じ性能を実現している。
+--- 47. @SNDR_SNDL (2026-10-02) ---
+URL: https://x.com/SNDR_SNDL/status/2106047501229003108
+Macいらないのは便利すぎるな
+マルチがやりやすくなる(あ、ゲームじゃないですよ)
 
-1年後に、
-27bがOpus5.5の性能になったらどうなる？
-1bでGPT-5の性能になったらどうなる？
+--- 48. @minorun365 (2026-10-03) ---
+URL: https://x.com/minorun365/status/2106257174959907024
+申し込み2,000名オーバーで大人気だったFindyの #みのるん式 ウェビナー、再放送が決まりました！見逃した方はご活用ください☺️
 
-バブルはじけそう。
+--- 49. @gunta85 (2026-10-02) ---
+URL: https://x.com/gunta85/status/2106090793610154269
+「何かあったらどうする？」
+これは、世界で一番高くつく質問。
+請求書が、決めた人に届かないだけで。
 
---- 46. @HOTD_ads (?) ---
-DL不要、基本プレイ無料
+許可して何か起きれば、謝罪会見。
+禁止して何かが消えても、誰も謝らない。
 
-ちょっとだけ遊んでみる？
+この非対称のせいで、請求書はいつも、別の誰かに届く。
 
---- 47. @AM09_21 (2026-10-02) ---
-URL: https://x.com/AM09_21/status/2105988193791451242
-ChatGPTのプラグインとClaudeのコネクタは使いまくっったほうがいい気がするな...
+「前例がない」で、消えた企画。
 
-例えばAlphaXivとか、AlphaXivとか、AlphaXivとか(((((
-
---- 48. @koinunopochi (2026-10-02) ---
-URL: https://x.com/koinunopochi/status/2106047444584906986
-やりたいことをもっと簡単に思い出せる仕組みとかにしないとなあ
-
---- 49. @Lattice_Node (2026-10-02) ---
-URL: https://x.com/Lattice_Node/status/2105946058417389840
-Opus5.5に作ってもらった、最強に分かりやすい渋滞の仕組み
-この分かり易さは教師が要らないレベル
-
---- 50. @gin1910410 (2026-10-02) ---
-URL: https://x.com/gin1910410/status/2105904660620197986
-2025年春位の私
-「うおおおおおおおおおAI楽しいいいいいいいいいいいいいいい(でも流石に1年くらいしたらもうこの勢いも無くなってるだろうな……)」
-
-2026年10月の私
-「うおおおおおおおおおおおおおAI楽しいいいいいいいいいいいいいいいいいいいいいいい」
+--- 50. @iwashi86 (2026-10-03) ---
+URL: https://x.com/iwashi86/status/2106255426425946564
+人材採用に携わっている方にはこの書籍は結構おすすめ。現在のkindle半額セール対象。
