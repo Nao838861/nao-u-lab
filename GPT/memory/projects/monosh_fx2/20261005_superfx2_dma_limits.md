@@ -60,3 +60,11 @@ HBlank中だけforced blankを有効にして追加転送する案は、全12KiB
 ただしHDMAの転送元をカートリッジRAMの別bufferにしただけでは、GSUのRAM所有権と競合する。追加分はGSU停止中に本体WRAMへ退避し、HDMA用の表・データ配置を準備する。退避にも時間がかかり、VRAM用blank内へ置くと通常DMAの枠を削るため、可能ならGSU完了後の表示中へ配置する。その準備時間を含む60Hz成立は未測定。
 
 トリプルバッファや遅延だけでは平均転送量の不足は解決しない。毎frame12,288bytesを新規生成し、同じ転送窓で11,296bytesしか届かない条件を維持すれば、未転送分が毎frame992bytesずつ増える。表示遅延を増やす案が有効になるのは、HBlank内forced blankによる追加転送などで毎frameの総転送量を確保したうえで、描画・転送・表示の順序をずらす場合である。今回も方式変更の実装や新しい測定は行っていない。
+
+## DMAを分割した場合の転送効率
+
+通常DMAは分割でき、一括転送は必須ではない。合計12KiBを送るなら、分割してもpayloadそのものの費用は12,288×8 master clocksのままである。一方、各起動の固定費用、CPUとDMAの位相合わせ、CPUによる転送長・必要なアドレスの設定、$420Bへの書き込み等が追加されるため、同じ時間窓で送れる最大画像bytesは減る。分割のために途中へCPU処理や待ち時間を挟めば、その時間も必要になる。ハードウェア費用とCPUの設定費用は分けて見積もる。
+
+数KiBずつ数回へ分ける場合は、固定費用が画像本体に対して小さい。8bytes程度ずつ通常DMAを何百回もCPUから起動する場合は固定費用の割合が大きく、HBlankの短い枠では特に設定・割り込み費用が問題になる。HDMAは表を事前準備して各行のCPUによる設定を避けられるが、行ごとの管理やchannel費用、forced blank ON/OFF等は残る。
+
+今回の検討では、黒帯＋VBlankの大部分を1回または少数回の通常DMAにまとめ、HBlankで補う追加分だけをHDMAで細かく送る構成を比較できる。同じ69走査線の窓を分割するだけでは不足は解消しない。分割が役立つのは、別の書き込み可能な時間窓を使うか、不要tileを省略してpayloadを減らす場合である。これは仕様に基づく整理で、具体的な分割ROMの計測値ではない。[AnomieのDMA起動タイミング](https://raw.githubusercontent.com/gilligan/snesdev/master/docs/timing.txt) と [bsnes DMA実装](https://github.com/bsnes-emu/bsnes/blob/master/bsnes/sfc/cpu/dma.cpp) を参照。
