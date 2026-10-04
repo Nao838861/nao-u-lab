@@ -7,12 +7,13 @@ from pathlib import Path
 from time import perf_counter
 
 
-def find_merges(tiles, protected):
+def find_merges(tiles, protected, *, preserve_single_pixel=True):
     """番号順で残存タイルにだけ統合。推移的な統合で誤差を増やさない。"""
     kept = {}
     mapping = {}
     distances = Counter()
     examples = []
+    single_pixel = {n for n, pixels in tiles.items() if sum(c != '0' for c in pixels) == 1}
     for number in sorted(tiles):
         pixels = tiles[number]
         if len(pixels) != 64 or any(c not in '0123' for c in pixels):
@@ -20,12 +21,16 @@ def find_merges(tiles, protected):
         target = None
         if number not in protected:
             target = kept.get(pixels)
-            for pos, value in enumerate(pixels):
+            # 1点の絵は色・点数を変えず、完全一致のみまとめる。
+            positions = () if preserve_single_pixel and number in single_pixel else enumerate(pixels)
+            for pos, value in positions:
                 prefix, suffix = pixels[:pos], pixels[pos + 1:]
                 for color in '0123':
                     if color == value:
                         continue
                     candidate = kept.get(prefix + color + suffix)
+                    if preserve_single_pixel and candidate in single_pixel:
+                        continue
                     if candidate is not None and (target is None or candidate < target):
                         target = candidate
         if target is None:
@@ -41,7 +46,7 @@ def find_merges(tiles, protected):
     return mapping, distances, examples
 
 
-def analyze(path):
+def analyze(path, *, preserve_single_pixel=True):
     started = perf_counter()
     raw = path.read_bytes()
     document = json.loads(raw)
@@ -50,13 +55,16 @@ def analyze(path):
     tiles = {int(n): pixels for n, pixels in document['tiles'].items()}
     protected = set(document['protected_tiles'])
     loaded = perf_counter()
-    mapping, distances, examples = find_merges(tiles, protected)
+    mapping, distances, examples = find_merges(tiles, protected, preserve_single_pixel=preserve_single_pixel)
     compared = perf_counter()
     references = Counter(c[0] for m in document['maps'] for b in m['block_defs'] for c in b['cells'])
     missing = sorted(set(references) - set(tiles))
     return dict(
         source=str(path.resolve()), source_sha256=hashlib.sha256(raw).hexdigest(),
         policy='numeric order; earliest retained tile; pixel indices; distance <= 1; protected tiles retained',
+        preserve_single_pixel=preserve_single_pixel,
+        single_pixel_tiles=sum(sum(c != '0' for c in pixels) == 1 for pixels in tiles.values()),
+        single_pixel_policy='exact matches only, in either direction' if preserve_single_pixel else 'distance <= 1',
         original_tiles=len(tiles), retained_tiles=sum(n == target for n, target in mapping.items()),
         identical_merges=distances[0], one_pixel_merges=distances[1],
         protected_tiles=sorted(protected),
@@ -75,10 +83,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('source', type=Path)
     parser.add_argument('--output', type=Path)
+    parser.add_argument('--allow-single-pixel-merges', action='store_true',
+                        help='1点の絵も1画素差統合に含める（既定では完全一致のみ）')
     args = parser.parse_args()
     if args.output and args.output.resolve() == args.source.resolve():
         parser.error('出力先は原本と別にしてください')
-    report = analyze(args.source)
+    report = analyze(args.source, preserve_single_pixel=not args.allow_single_pixel_merges)
     text = json.dumps(report, ensure_ascii=False, indent=2)
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
