@@ -33,7 +33,9 @@ DMAは1byteにつき8 master clocks。1走査線は原則1,364 master clocksで�
 
 [既存の測定データ](../../../projects/monosh_fx2/probes/v001/results/dma.json) では192行の12KiB要求はscanline210付近から次frameの22付近までかかった。HDMAが表示を再開した後にもDMAが続き、その期間のVRAM書き込みが欠けた。VRAMを0へ初期化し、転送元を$FFにして実際に変化したbyteを数えているため、DMAの完了だけを転送成功と判断した結果ではない。標準224行の対照は14KiB要求に対して6,051bytesだけが届いた試験であり、14KiB全転送に成功した意味ではない。
 
-同じ192行表示で10,240bytesだけを要求した対照では全byteが届いた。これは解像度を160行へ変更した試験ではない。OAM/CGRAMの毎frame更新や地面用HDMAはまだ加えていないため、実ゲームで使える画像転送枠はさらに減り得る。
+同じ192行表示で10,240bytesだけを要求した対照では全byteが届いた。これは解像度を160行へ変更した試験ではない。OAM/CGRAMを同じ転送窓で更新する場合は、その時間を画像転送枠から引く必要がある。
+
+地面用HDMAは表示中のHBlankでスクロール等のレジスタを更新する処理であり、その表示中の費用をVBlankの画像DMA予算から差し引く必要はない。今回の992bytes不足は地面用HDMAを加えていない状態で発生しており、地面が主因ではない。ただし自然VBlankの前後に足したforced blankの黒帯は、PPUのタイミング上は標準224行の表示期間に属する。forced blankではHDMAが自動停止しないので、黒帯内にも地面HDMAのchannelを動かしておくと画像DMAを中断し、時間を消費する。非転送行でもactive channelには管理費用があり、転送窓が次frameを跨ぐため0行付近のHDMA初期化費用も考慮する。黒帯内の不要な地面HDMAを避ければ競合を小さくできる。地面の表示中のHDMAと、黒帯制御用INIDISPのHDMAは別の仕事である。根拠は [AnomieのHDMAタイミング](https://raw.githubusercontent.com/gilligan/snesdev/master/docs/timing.txt) と [bsnesのHDMA発火条件と通常DMAへの割り込み](https://github.com/bsnes-emu/bsnes/blob/master/bsnes/sfc/cpu/timing.cpp)。
 
 GSUの描画速度を上げても12KiBの画像量とVRAM書き込み窓は変わらない。画像の圧縮も、VRAMへ展開後の全12KiBを送る方式ならこの不足を解消しない。DMA中は本体CPUも停止する。CPU→GSUの描画リスト転送はVRAM宛てではないのでVBlankに限定されないが、RAMの所有権とCPU停止時間は別途必要になる。
 
