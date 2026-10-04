@@ -1,0 +1,26 @@
+{
+  "tool": "built-in image_gen",
+  "still": "Edit the reference bird. Preserve its cute round fluffy white shima-enaga character, black bead eye, tiny black beak, gray-white feather detail, right-facing side profile. Shorten its tail by 35 percent. Create a clean isolated cutout on a REAL fully transparent alpha background, remove ALL black background and gray halo/glow. Do not paint checkerboards. Full body with generous margins on a 1536x1024 canvas; body center at x=1000 y=590, beak near x=1250 y=470. Reserve space above and below for future flapping wings. Wings folded, static pose. No text or shadows.",
+  "frames": [
+    {
+      "file": "flap-01.png",
+      "prompt": "Edit the reference bird into animation frame 1 of 5: early upstroke: wings lifted diagonally upward about 35 degrees. Preserve exact same cute white fluffy shima-enaga character, right-facing head, round body, black eye, gray feather markings, SHORT tail, feet, rendering style. Wings are the only pose change. Keep body and eye fixed at the same pixel coordinates and same scale as reference, same 1536x1024 canvas, generous margins so the full wings fit. Clean alpha transparent PNG cutout, fully transparent empty background, no painted checkerboards, no halo, no shadows, no text."
+    },
+    {
+      "file": "flap-02.png",
+      "prompt": "Edit the reference bird into animation frame 2 of 5: top of upstroke: wings lifted high above the back almost vertically. Preserve exact same cute white fluffy shima-enaga character, right-facing head, round body, black eye, gray feather markings, SHORT tail, feet, rendering style. Wings are the only pose change. Keep body and eye fixed at the same pixel coordinates and same scale as reference, same 1536x1024 canvas, generous margins so the full wings fit. Clean alpha transparent PNG cutout, fully transparent empty background, no painted checkerboards, no halo, no shadows, no text."
+    },
+    {
+      "file": "flap-03.png",
+      "prompt": "Edit the reference bird into animation frame 3 of 5: mid downstroke: wings widely spread near horizontal. Preserve exact same cute white fluffy shima-enaga character, right-facing head, round body, black eye, gray feather markings, SHORT tail, feet, rendering style. Wings are the only pose change. Keep body and eye fixed at the same pixel coordinates and same scale as reference, same 1536x1024 canvas, generous margins so the full wings fit. Clean alpha transparent PNG cutout, fully transparent empty background, no painted checkerboards, no halo, no shadows, no text."
+    },
+    {
+      "file": "flap-04.png",
+      "prompt": "Edit the reference bird into animation frame 4 of 5: bottom of downstroke: wings swept clearly downward below the shoulder. Preserve exact same cute white fluffy shima-enaga character, right-facing head, round body, black eye, gray feather markings, SHORT tail, feet, rendering style. Wings are the only pose change. Keep body and eye fixed at the same pixel coordinates and same scale as reference, same 1536x1024 canvas, generous margins so the full wings fit. Clean alpha transparent PNG cutout, fully transparent empty background, no painted checkerboards, no halo, no shadows, no text."
+    },
+    {
+      "file": "flap-05.png",
+      "prompt": "Edit the reference bird into animation frame 5 of 5: recovery upstroke: wings bent and partly folded near the body, tips pointing down-back. Preserve exact same cute white fluffy shima-enaga character, right-facing head, round body, black eye, gray feather markings, SHORT tail, feet, rendering style. Wings are the only pose change. Keep body and eye fixed at the same pixel coordinates and same scale as reference, same 1536x1024 canvas, generous margins so the full wings fit. Clean alpha transparent PNG cutout, fully transparent empty background, no painted checkerboards, no halo, no shadows, no text."
+    }
+  ]
+}
