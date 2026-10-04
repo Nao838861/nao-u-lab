@@ -46,3 +46,17 @@ GSUの描画速度を上げても12KiBの画像量とVRAM書き込み窓は変�
 HBlank中だけforced blankを有効にして追加転送する案は、全12KiBと192行を維持する実験候補。通常のHBlankに単にHDMAを置くだけでは成立しない。GSU稼働中のRAM所有権、必要なら追加分のWRAM退避、PPUがそのtileを読む前の到着、BG/OBJの取得時刻、地面HDMAとの共存を検証する必要があり、実機成立は未確認。
 
 黒帯の追加や転送を2frameへ分ける方法は予算を増やすが、表示高さや画像更新率を変える。現在の256×192・毎frame全転送要件を保った達成とは扱わない。方式を変更した実装はこの確認では行っていない。比較案の詳細は [DMA_OPTIONS](../../../projects/monosh_fx2/DMA_OPTIONS.md)、測定条件と限界は [RESULTS](../../../projects/monosh_fx2/probes/v001/RESULTS.md)。
+
+## HDMAによる追加転送と表示遅延の検討
+
+地面用HDMAを使わない場合、空いたchannelを画像転送へ割り当てられる。HDMAの転送先はスクロール専用ではなくPPUのVRAMポートも選べる。ただし通常のHBlankではVRAM書き込みが許可されず、HDMAは通常DMAと同じバスと8 clocks/byteを使うため、同じblank窓で動かすだけでは総転送量は増えない。
+
+候補はHBlankの中でchannelの実行順にforced blank ON、必要ならVMADD設定、VRAMデータ転送、forced blank OFFを並べる方法。HDMA mode5は$2118/$2119/$2118/$2119へ4bytesを送れるため、画像用2channelなら1回8bytesという構成を検討できる。ON/OFFとアドレス設定に別channelを使う。転送パターンとchannelごとの1/2/4bytes上限は [bsnes DMA実装](https://github.com/bsnes-emu/bsnes/blob/master/bsnes/sfc/cpu/dma.cpp) のtransferおよびhdmaTransferで確認した。
+
+量だけの試算では、8bytes×128回＝1,024bytes、8bytes×192回＝1,536bytes。後者を12KiBから切り出せれば、残りは10,752bytesになり既存blank試験の11,296bytes以内になる。ただしこれは実装案のpayload計算で、安全なHBlank転送量の実測ではない。ON/OFF、VMADD、HDMA管理、表のreload、黒帯内のactive channel費用を含めて測定する。forced blank解除によるBG取得やOBJ評価・取得への影響を実機で検証する必要がある。
+
+表示遅延を1frame増やす設計案は、表示中のVRAMページAと次画像構築用ページBを分け、表示frame内にBへHDMAの追加分を送る方法。例として、事前のblankで画像Nの大部分をBへ通常DMAし、表示中はAの画像N-1を見せながらBへ画像Nの追加分をHDMAし、次のblankで完成したBへ表示を切り替える。その間GSUは画像N+1を描く。これならHDMA転送先を表示中の画像にせず、新旧混在を避ける設計にできる。VRAM3枚はこの例には必須でなく、VRAM2枚と本体WRAMの追加分退避で役割を分けられる。
+
+ただしHDMAの転送元をカートリッジRAMの別bufferにしただけでは、GSUのRAM所有権と競合する。追加分はGSU停止中に本体WRAMへ退避し、HDMA用の表・データ配置を準備する。退避にも時間がかかり、VRAM用blank内へ置くと通常DMAの枠を削るため、可能ならGSU完了後の表示中へ配置する。その準備時間を含む60Hz成立は未測定。
+
+トリプルバッファや遅延だけでは平均転送量の不足は解決しない。毎frame12,288bytesを新規生成し、同じ転送窓で11,296bytesしか届かない条件を維持すれば、未転送分が毎frame992bytesずつ増える。表示遅延を増やす案が有効になるのは、HBlank内forced blankによる追加転送などで毎frameの総転送量を確保したうえで、描画・転送・表示の順序をずらす場合である。今回も方式変更の実装や新しい測定は行っていない。
