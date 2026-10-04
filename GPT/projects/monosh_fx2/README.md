@@ -6,6 +6,7 @@ NES 版 MonoSH を元に、MSXSH の V9968 版の60Hz仕様を SNES の CPU へ�
 
 - [設計書](DESIGN.md) — メモリ所有権、CPU と GSU の並行動作、転送量、地面、移植手順、未決事項。
 - [v001測定結果](probes/v001/RESULTS.md) — 11種類のGSU描画経路、534件の画素検証、30体合成、全転送不足、NESとの速度比較。
+- [clip条件とDMA対策](DMA_OPTIONS.md) — 最大の木はclipなし。矩形からの差分転送、固定空白、HBlank forced blank、黒帯追加を比較。
 - [v001再実行手順](probes/v001/README.md) — 検証ROMのビルドと自動実行。
 - [依頼原文](REQUEST.md) — 2026年10月5日の依頼を保持。
 - [帯域計算](tools/frame_budget.py) — 解像度と描画リスト量から時間予算を再計算する。実測値ではない。

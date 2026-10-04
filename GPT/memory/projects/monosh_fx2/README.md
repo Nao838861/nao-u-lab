@@ -13,3 +13,5 @@ NES の MonoSH を SNES の CPU と Super FX2 へ移植する新プロジェク�
 幅1〜128の汎用3経路を含む534件と30体合成2件で参照FB・guard一致。汎用の同色区間は厳密比率、点参照はQ8.8で非整数倍率の丸めが異なるため、111段階の方式切替前に統一する。GSU中のCPUはWRAMで待機するのみ。ゲームロジック、RAM描画リスト解析・reverse DMA、地面、割り込み、実機は未検証。CPU 4msは未実測。NES/MSX元プロジェクトは読み取りのみ。
 
 再実行は `python -X utf8 projects/monosh_fx2/tools/verify_probe.py`。既存ca65/ld65・Mesenと外部casfxを使用。依存commit・実行ファイル／入力ハッシュと測定結果はv001へ保存、`.cache` / `build` はgit対象外。検証ROMはLua入力待ちのプローブであり、ゲームROMではない。
+
+追加壁打ち: 最大の木2.866msと30体場面は全体が画面内に収まるclipなし条件。`cropped` は透明余白除去を指す。NESの表示128／VBUF256／bias64に相当する左右余白はGSUの256幅にはないため、画面内は高速経路、端だけclipに分ける。DMA候補は [DMA_OPTIONS.md](../../../projects/monosh_fx2/DMA_OPTIONS.md)。CPU描画矩形の前後和集合なら2人工場面の集計で320tile・5,120bytes・31区間。分割DMA費用は未測定。全転送を維持する案はHBlank内だけforced blank＋追加分をWRAMへ退避する実験候補で、画面・所有権・OBJ・位相確認が必要。方式変更は未採用。
