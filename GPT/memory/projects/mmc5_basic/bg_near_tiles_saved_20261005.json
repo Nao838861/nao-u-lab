@@ -1,0 +1,154 @@
+{
+  "source": "D:\\HomeBrew\\FamiBASIC_Turbo_main\\build\\basic_only\\game\\assets\\stage.bg.json",
+  "source_sha256": "6847de5a09eb3e226a2a66ab1f1781a123f159f896ac57eacb26454375de7730",
+  "policy": "numeric order; earliest retained tile; pixel indices; distance <= 1; protected tiles retained",
+  "original_tiles": 31993,
+  "retained_tiles": 25630,
+  "identical_merges": 2520,
+  "one_pixel_merges": 3843,
+  "protected_tiles": [
+    0,
+    1,
+    16,
+    17
+  ],
+  "original_max_tile": 32648,
+  "references_to_merged_tiles": 35115,
+  "missing_referenced_tiles": [],
+  "maps": [
+    {
+      "id": 0,
+      "role": "map"
+    },
+    {
+      "id": 2,
+      "role": "map"
+    },
+    {
+      "id": 1,
+      "role": "map"
+    },
+    {
+      "id": 3,
+      "role": "title"
+    },
+    {
+      "id": 4,
+      "role": "over"
+    },
+    {
+      "id": 5,
+      "role": "clear"
+    },
+    {
+      "id": 6,
+      "role": "boss"
+    }
+  ],
+  "examples": [
+    {
+      "removed": 2,
+      "retained": 0,
+      "pixel_difference": 1
+    },
+    {
+      "removed": 5,
+      "retained": 0,
+      "pixel_difference": 1
+    },
+    {
+      "removed": 9,
+      "retained": 0,
+      "pixel_difference": 1
+    },
+    {
+      "removed": 11,
+      "retained": 0,
+      "pixel_difference": 1
+    },
+    {
+      "removed": 13,
+      "retained": 0,
+      "pixel_difference": 1
+    },
+    {
+      "removed": 18,
+      "retained": 0,
+      "pixel_difference": 1
+    },
+    {
+      "removed": 19,
+      "retained": 0,
+      "pixel_difference": 1
+    },
+    {
+      "removed": 25,
+      "retained": 0,
+      "pixel_difference": 1
+    },
+    {
+      "removed": 33,
+      "retained": 0,
+      "pixel_difference": 1
+    },
+    {
+      "removed": 37,
+      "retained": 0,
+      "pixel_difference": 1
+    },
+    {
+      "removed": 40,
+      "retained": 7,
+      "pixel_difference": 1
+    },
+    {
+      "removed": 43,
+      "retained": 0,
+      "pixel_difference": 1
+    },
+    {
+      "removed": 48,
+      "retained": 0,
+      "pixel_difference": 1
+    },
+    {
+      "removed": 49,
+      "retained": 0,
+      "pixel_difference": 1
+    },
+    {
+      "removed": 92,
+      "retained": 0,
+      "pixel_difference": 1
+    },
+    {
+      "removed": 107,
+      "retained": 0,
+      "pixel_difference": 1
+    },
+    {
+      "removed": 108,
+      "retained": 0,
+      "pixel_difference": 1
+    },
+    {
+      "removed": 117,
+      "retained": 94,
+      "pixel_difference": 1
+    },
+    {
+      "removed": 121,
+      "retained": 0,
+      "pixel_difference": 1
+    },
+    {
+      "removed": 124,
+      "retained": 0,
+      "pixel_difference": 1
+    }
+  ],
+  "load_seconds": 0.0848,
+  "comparison_seconds": 1.6348,
+  "total_seconds": 1.745,
+  "source_modified": false
+}
