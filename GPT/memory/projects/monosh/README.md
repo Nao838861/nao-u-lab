@@ -17,6 +17,8 @@
 
 ## メモ一覧
 
+- [MonoSH Super FX2 設計](../monosh_fx2/README.md) — MSXSH の60Hz・倍密度Z2を参照し、SNES CPUでロジック、FX2で2bpp拡縮描画。上下黒帯で全転送する新プロジェクト。
+
 - `20260913_part2_video_review_checkpoint.md` — 第二部を実データと復元ソースで5分15秒へ全面再構築。3巡の自己点検、現行出力と再生成入口
 - `video/explainer_prototype/PART2_DENSITY_REVIEW_20260915.md`（GPTルート基準）— 旧比較検討の履歴。MP4直接利用案は廃止し、現行実装と検証は同所の `REBUILD_AUDIT.md`
 
