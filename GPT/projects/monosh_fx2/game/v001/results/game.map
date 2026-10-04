@@ -1,0 +1,1377 @@
+Modules list:
+-------------
+monosh_boss.o:
+    CODE              Offs=000000  Size=000BA0  Align=00001  Fill=0000
+    BSS               Offs=000000  Size=000277  Align=00001  Fill=0000
+monosh_boss_data.o:
+    RODATA            Offs=000000  Size=002708  Align=00001  Fill=0000
+monosh_combat.o:
+    CODE              Offs=000BA0  Size=00023A  Align=00001  Fill=0000
+    RODATA            Offs=002708  Size=000019  Align=00001  Fill=0000
+    BSS               Offs=000277  Size=00002B  Align=00001  Fill=0000
+monosh_enemy.o:
+    CODE              Offs=000DDA  Size=001F70  Align=00001  Fill=0000
+    BSS               Offs=0002A2  Size=0000B1  Align=00001  Fill=0000
+monosh_enemy_data.o:
+    RODATA            Offs=002721  Size=002A14  Align=00001  Fill=0000
+monosh_player.o:
+    CODE              Offs=002D4A  Size=000622  Align=00001  Fill=0000
+    RODATA            Offs=005135  Size=00003E  Align=00001  Fill=0000
+    BSS               Offs=000353  Size=000012  Align=00001  Fill=0000
+monosh_stage.o:
+    CODE              Offs=00336C  Size=000823  Align=00001  Fill=0000
+    BSS               Offs=000365  Size=0000EE  Align=00001  Fill=0000
+monosh_stage_data.o:
+    RODATA            Offs=005173  Size=001135  Align=00001  Fill=0000
+game.o:
+    CODE              Offs=003B8F  Size=000502  Align=00001  Fill=0000
+    BSS               Offs=000453  Size=000797  Align=00001  Fill=0000
+    DATA              Offs=000000  Size=000003  Align=00001  Fill=0000
+combat_port.o:
+    CODE              Offs=004091  Size=000480  Align=00001  Fill=0000
+    RODATA            Offs=0062A8  Size=000010  Align=00001  Fill=0000
+asset_tables.o:
+    RODATA            Offs=0062B8  Size=005B74  Align=00001  Fill=0000
+ground.o:
+    CODE              Offs=004511  Size=0000AE  Align=00001  Fill=0000
+    BSS               Offs=000BEA  Size=000737  Align=00001  Fill=0000
+cpu_asm.o:
+    CODE              Offs=0045BF  Size=0002DC  Align=00001  Fill=0000
+    BOOT              Offs=000000  Size=00011C  Align=00001  Fill=0000
+    GFX               Offs=000000  Size=010000  Align=00001  Fill=0000
+    HEADER            Offs=000000  Size=000050  Align=00001  Fill=0000
+gsu_asm.o:
+    GSU               Offs=000000  Size=000087  Align=00010  Fill=0000
+    ASSET44           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET45           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET46           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET47           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET48           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET49           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET4A           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET4B           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET4C           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET4D           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET4E           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET4F           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET50           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET51           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET52           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET53           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET54           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET55           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET56           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET57           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET58           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET59           Offs=000000  Size=010000  Align=00001  Fill=0000
+ground_asm.o:
+    CODE              Offs=00489B  Size=0033BD  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=00000A  Align=00001  Fill=0000
+packet_asm.o:
+    CODE              Offs=007C58  Size=0002A8  Align=00001  Fill=0000
+    ZEROPAGE          Offs=00000A  Size=000006  Align=00001  Fill=0000
+projection_asm.o:
+    CODE              Offs=007F00  Size=007097  Align=00001  Fill=0000
+stage_asm.o:
+    CODE              Offs=00EF97  Size=0002BB  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000010  Size=000006  Align=00001  Fill=0000
+dma_asm.o:
+    CODE              Offs=00F252  Size=00015B  Align=00001  Fill=0000
+    BSS               Offs=001321  Size=000106  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000016  Size=000002  Align=00001  Fill=0000
+submit_asm.o:
+    CODE              Offs=00F3AD  Size=0000D4  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(add.o):
+    CODE              Offs=00F481  Size=00001C  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(addeqsp.o):
+    CODE              Offs=00F49D  Size=000011  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(addysp.o):
+    CODE              Offs=00F4AE  Size=00000E  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(aslax2.o):
+    CODE              Offs=00F4BC  Size=00000B  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(aslax3.o):
+    CODE              Offs=00F4C7  Size=00000E  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(aslax4.o):
+    CODE              Offs=00F4D5  Size=000011  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(asleax1.o):
+    CODE              Offs=00F4E6  Size=00000C  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(asrax1.o):
+    CODE              Offs=00F4F2  Size=00000A  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(asrax2.o):
+    CODE              Offs=00F4FC  Size=00000F  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(asrax3.o):
+    CODE              Offs=00F50B  Size=000014  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(asrax4.o):
+    CODE              Offs=00F51F  Size=000019  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(decsp1.o):
+    CODE              Offs=00F538  Size=000009  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(decsp2.o):
+    CODE              Offs=00F541  Size=00000D  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(decsp3.o):
+    CODE              Offs=00F54E  Size=00000D  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(decsp4.o):
+    CODE              Offs=00F55B  Size=00000D  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(decsp5.o):
+    CODE              Offs=00F568  Size=00000D  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(decsp8.o):
+    CODE              Offs=00F575  Size=00000D  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(div.o):
+    CODE              Offs=00F582  Size=000015  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(icmp.o):
+    CODE              Offs=00F597  Size=00002E  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(incsp1.o):
+    CODE              Offs=00F5C5  Size=000007  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(incsp2.o):
+    CODE              Offs=00F5CC  Size=000016  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(incsp3.o):
+    CODE              Offs=00F5E2  Size=000005  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(incsp4.o):
+    CODE              Offs=00F5E7  Size=000005  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(incsp5.o):
+    CODE              Offs=00F5EC  Size=000005  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(incsp6.o):
+    CODE              Offs=00F5F1  Size=000005  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(incsp7.o):
+    CODE              Offs=00F5F6  Size=000005  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(incsp8.o):
+    CODE              Offs=00F5FB  Size=000005  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(ldai.o):
+    CODE              Offs=00F600  Size=00000C  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(lmul.o):
+    CODE              Offs=00F60C  Size=00005C  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(lpush.o):
+    CODE              Offs=00F668  Size=000021  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(makebool.o):
+    CODE              Offs=00F689  Size=00002C  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(memcpy.o):
+    CODE              Offs=00F6B5  Size=00003C  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(mod.o):
+    CODE              Offs=00F6F1  Size=000011  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(mul.o):
+    CODE              Offs=00F702  Size=000045  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(mul8.o):
+    CODE              Offs=00F747  Size=00003A  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(mulax10.o):
+    CODE              Offs=00F781  Size=000019  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(mulax3.o):
+    CODE              Offs=00F79A  Size=000011  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(mulax5.o):
+    CODE              Offs=00F7AB  Size=000014  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(mulax6.o):
+    CODE              Offs=00F7BF  Size=000016  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(mulax7.o):
+    CODE              Offs=00F7D5  Size=000019  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(negabs.o):
+    CODE              Offs=00F7EE  Size=000012  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(popptr1.o):
+    CODE              Offs=00F800  Size=00000E  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(pusha.o):
+    CODE              Offs=00F80E  Size=000016  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(pushax.o):
+    CODE              Offs=00F824  Size=00001A  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(pushwsp.o):
+    CODE              Offs=00F83E  Size=00001C  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(shelp.o):
+    CODE              Offs=00F85A  Size=000020  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(shrax1.o):
+    CODE              Offs=00F87A  Size=000008  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(shrax3.o):
+    CODE              Offs=00F882  Size=00000E  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(shrax4.o):
+    CODE              Offs=00F890  Size=000011  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(staspidx.o):
+    CODE              Offs=00F8A1  Size=000016  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(staxsp.o):
+    CODE              Offs=00F8B7  Size=00000B  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(staxspi.o):
+    CODE              Offs=00F8C2  Size=00001B  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(sub.o):
+    CODE              Offs=00F8DD  Size=000015  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(subysp.o):
+    CODE              Offs=00F8F2  Size=00000D  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(udiv.o):
+    CODE              Offs=00F8FF  Size=00004F  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(umod.o):
+    CODE              Offs=00F94E  Size=000011  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(zeropage.o):
+    ZEROPAGE          Offs=000018  Size=00001A  Align=00001  Fill=0000
+
+
+Segment list:
+-------------
+Name                   Start     End    Size  Align
+----------------------------------------------------
+CODE                  000000  00F95E  00F95F  00001
+ZEROPAGE              000000  000031  000032  00001
+RODATA                002000  00DE2B  00BE2C  00001
+BOOT                  008000  00811B  00011C  00001
+DATA                  00DE2C  00DE2E  000003  00001
+BSS                   00DE2F  00F255  001427  00001
+HEADER                00FFB0  00FFFF  000050  00001
+GSU                   018000  018086  000087  00010
+GFX                   430000  43FFFF  010000  00001
+ASSET44               440000  44FFFF  010000  00001
+ASSET45               450000  45FFFF  010000  00001
+ASSET46               460000  46FFFF  010000  00001
+ASSET47               470000  47FFFF  010000  00001
+ASSET48               480000  48FFFF  010000  00001
+ASSET49               490000  49FFFF  010000  00001
+ASSET4A               4A0000  4AFFFF  010000  00001
+ASSET4B               4B0000  4BFFFF  010000  00001
+ASSET4C               4C0000  4CFFFF  010000  00001
+ASSET4D               4D0000  4DFFFF  010000  00001
+ASSET4E               4E0000  4EFFFF  010000  00001
+ASSET4F               4F0000  4FFFFF  010000  00001
+ASSET50               500000  50FFFF  010000  00001
+ASSET51               510000  51FFFF  010000  00001
+ASSET52               520000  52FFFF  010000  00001
+ASSET53               530000  53FFFF  010000  00001
+ASSET54               540000  54FFFF  010000  00001
+ASSET55               550000  55FFFF  010000  00001
+ASSET56               560000  56FFFF  010000  00001
+ASSET57               570000  57FFFF  010000  00001
+ASSET58               580000  58FFFF  010000  00001
+ASSET59               590000  59FFFF  010000  00001
+
+
+Exports list by name:
+---------------------
+__STARTUP__               000001 REA    _boss_part_active         00DE4D RLA    
+_boss_part_bottom         00DE3B RLA    _boss_part_timer          00DE56 RLA    
+_boss_part_x              00DE32 RLA    _boss_part_z              00DE44 RLA    
+_boss_render_camera_delta 00E094 RLA    _fx_asset_bank            00C110 RLA    
+_fx_asset_height          00C0E4 RLA    _fx_asset_width           00C0B8 RLA    
+_fx_build_ground          004511 RLA    _fx_build_packet          007C58 RLA    
+_fx_buttons               00EA06 RLA    _fx_draw                  00E282 RLA    
+_fx_draw_count            00E502 RLA    _fx_du_table              00C13C RLA    
+_fx_dv_table              00C194 RLA    _fx_far_d_acc             00EA12 RLA    
+_fx_far_u_acc             00EA10 RLA    _fx_fire_actions          00EA09 RLA    
+_fx_frame                 003BA9 RLA    _fx_ground_bandptr        00F147 RLA    
+_fx_ground_bands          00D70E RLA    _fx_ground_c1ptr          00F143 RLA    
+_fx_ground_c3ptr          00F145 RLA    _fx_ground_camera         00C1EC RLA    
+_fx_ground_dark           00DCEE RLA    _fx_ground_depth_rows     00C27D RLA    
+_fx_ground_far_xptr       00F13F RLA    _fx_ground_far_y          00F14D RLA    
+_fx_ground_horizon        00F14B RLA    _fx_ground_light          00DC32 RLA    
+_fx_ground_native         00489B RLA    _fx_ground_phase          00EA05 RLA    
+_fx_ground_steps          00DDAA RLA    _fx_ground_vptr           00F141 RLA    
+_fx_packet                00E505 RLA    _fx_packet_count          00E503 RLA    
+_fx_present               0046B3 RLA    _fx_read_input            0045EF RLA    
+_fx_stage_render          00EF97 RLA    _fx_submit                00F3AD RLA    
+_ground_irq_vblank_count  00EA0D RLA    _main                     004086 RLA    
+_memcpy                   00F6B5 RLA    _monosh_bom_geometry      0047FF RLA    
+_monosh_boss_body_geometry 00375E RLA    _monosh_boss_bom_depth_by_size 00391A RLA    
+_monosh_boss_bom_geometry 00383C RLA    _monosh_boss_bullet_velocity 003A08 RLA    
+_monosh_boss_explosion_ground_bottom 003999 RLA    _monosh_boss_explosion_scale_low 00392A RLA    
+_monosh_boss_face_geometry 003680 RLA    _monosh_boss_frame        0000B2 RLA    
+_monosh_boss_init         000015 RLA    _monosh_boss_path_center_y 0021E0 RLA    
+_monosh_boss_path_center_y_mid 0024B0 RLA    _monosh_boss_path_x       0020F0 RLA    
+_monosh_boss_path_x_mid   0023C0 RLA    _monosh_boss_path_z       002000 RLA    
+_monosh_boss_path_z_mid   0022D0 RLA    _monosh_boss_prepare_render 0000D6 RLA    
+_monosh_boss_should_restart 000000 RLA    _monosh_boss_state        00DE2F RLA    
+_monosh_bullet_reflect_rng 00E0CE RLA    _monosh_combat_fast_cache_reset 0042C6 RLA    
+_monosh_combat_fast_frame 0041EF RLA    _monosh_combat_fast_render 0042CD RLA    
+_monosh_combat_fire_cooldown 00E0CF RLA    _monosh_combat_init       000BA0 RLA    
+_monosh_combat_reflect_bullet 004091 RLA    _monosh_combat_render     000C39 RLA    
+_monosh_ebullet_animation_geometry 004A48 RLA    _monosh_ebullet_geometry  004C04 RLA    
+_monosh_ebullet_velocity  004C0E RLA    _monosh_em1_closed_geometry 0048DD RLA    
+_monosh_em1_open_geometry 0049BB RLA    _monosh_enemy_active_count 001510 RLA    
+_monosh_enemy_bullet_count 00E0D1 RLA    _monosh_enemy_fire_boss_at 001539 RLA    
+_monosh_enemy_frame       00144B RLA    _monosh_enemy_geometry    004721 RLA    
+_monosh_enemy_ground_bottom 0049D9 RLA    _monosh_enemy_init        0013B6 RLA    
+_monosh_enemy_paths       00706F RLA    _monosh_enemy_render_only 001469 RLA    
+_monosh_enemy_spawns      0070A5 RLA    _monosh_enemy_stage_complete 001516 RLA    
+_monosh_ground_depth_pointer 00EA17 RLA    _monosh_ground_offset     00DE2C RLA    
+_monosh_ground_screen_delta 00DE2D RLA    _monosh_player_bottom     00E184 RLA    
+_monosh_player_bullet_count 00E0B5 RLA    _monosh_player_bullet_sizes 004708 RLA    
+_monosh_player_bullets    00E0A6 RLA    _monosh_player_draw_asset 002EB3 RLA    
+_monosh_player_draw_flags 002E79 RLA    _monosh_player_init       002D4A RLA    
+_monosh_player_state      00E186 RLA    _monosh_player_stumble    00E188 RLA    
+_monosh_player_update     002D89 RLA    _monosh_player_x          00E182 RLA    
+_monosh_project_x         007F00 RLA    _monosh_reflected_bullet_count 00E0C5 RLA    
+_monosh_reflected_bullets 00E0B6 RLA    _monosh_runtime_frame_counter 00EA0B RLA    
+_monosh_stage1_spawn_count 00751B RLA    _monosh_stage1_spawns     007173 RLA    
+_monosh_stage_frame       00338F RLA    _monosh_stage_geometry    007F85 RLA    
+_monosh_stage_init        00336C RLA    _monosh_stage_is_clear    0033D5 RLA    
+_monosh_stage_lift        00829A RLA    _monosh_stage_need_hitboxes 00E27D RLA    
+_monosh_stage_object_count 00E1F4 RLA    _monosh_stage_objects     00E194 RLA    
+_monosh_stage_render_only 0033D2 RLA    _monosh_title_draw        00407B RLA    
+addeq0sp                  00F49D RLA    addeqysp                  00F49F RLA    
+addysp                    00F4AF RLA    addysp1                   00F4AE RLA    
+aslax2                    00F4BC RLA    aslax4                    00F4D5 RLA    
+asrax1                    00F4F2 RLA    asrax2                    00F4FC RLA    
+asrax3                    00F50B RLA    asrax4                    00F51F RLA    
+booleq                    00F68F RLA    boolne                    00F689 RLA    
+boolult                   00F6A8 RLA    c_sp                      000018 RLZ    
+decsp1                    00F538 RLA    decsp2                    00F541 RLA    
+decsp3                    00F54E RLA    decsp4                    00F55B RLA    
+decsp5                    00F568 RLA    decsp8                    00F575 RLA    
+fx_commit_dma             00F399 RLA    fx_dma_count              00F1D2 RLA    
+fx_dma_desc               00F1D6 RLA    fx_plan_dma               00F252 RLA    
+fx_project16              007F1E RLA    ground_empty              004A44 RLA    
+incsp1                    00F5C5 RLA    incsp2                    00F5D4 RLA    
+incsp3                    00F5E2 RLA    incsp4                    00F5E7 RLA    
+incsp5                    00F5EC RLA    incsp6                    00F5F1 RLA    
+incsp7                    00F5F6 RLA    incsp8                    00F5FB RLA    
+ldaidx                    00F600 RLA    mul8x16                   00F749 RLA    
+mul8x16a                  00F753 RLA    mulax10                   00F781 RLA    
+mulax3                    00F79A RLA    mulax5                    00F7AB RLA    
+mulax6                    00F7BF RLA    mulax7                    00F7D5 RLA    
+negax                     00F7F2 RLA    popax                     00F5CC RLA    
+popptr1                   00F800 RLA    popsargsudiv16            00F85A RLA    
+ptr1                      000020 RLZ    ptr2                      000022 RLZ    
+ptr3                      000024 RLZ    ptr4                      000026 RLZ    
+push0                     00F824 RLA    push0ax                   00F66B RLA    
+pusha                     00F812 RLA    pusha0                    00F826 RLA    
+pushax                    00F828 RLA    pushw0sp                  00F83E RLA    
+pushwysp                  00F840 RLA    regsave                   00001C RLZ    
+shlax2                    00F4BC RLA    shlax3                    00F4C7 RLA    
+shlax4                    00F4D5 RLA    shleax1                   00F4E6 RLA    
+shrax1                    00F87A RLA    shrax3                    00F882 RLA    
+shrax4                    00F890 RLA    sreg                      00001A RLZ    
+staspidx                  00F8A1 RLA    stax0sp                   00F8B7 RLA    
+staxspidx                 00F8C2 RLA    staxysp                   00F8B9 RLA    
+subysp                    00F8F2 RLA    tmp1                      000028 RLZ    
+tmp2                      000029 RLZ    tmp3                      00002A RLZ    
+tmp4                      00002B RLZ    tosaddax                  00F483 RLA    
+tosdiva0                  00F582 RLA    tosicmp                   00F599 RLA    
+tosicmp0                  00F597 RLA    tosmoda0                  00F6F1 RLA    
+tosmulax                  00F702 RLA    tossuba0                  00F8DD RLA    
+tossubax                  00F8DF RLA    tosudiva0                 00F8FF RLA    
+tosudivax                 00F901 RLA    tosumoda0                 00F94E RLA    
+tosumul0ax                00F60C RLA    tosumula0                 00F747 RLA    
+udiv16                    00F910 RLA    
+
+
+Exports list by value:
+----------------------
+_monosh_boss_should_restart 000000 RLA    __STARTUP__               000001 REA    
+_monosh_boss_init         000015 RLA    c_sp                      000018 RLZ    
+sreg                      00001A RLZ    regsave                   00001C RLZ    
+ptr1                      000020 RLZ    ptr2                      000022 RLZ    
+ptr3                      000024 RLZ    ptr4                      000026 RLZ    
+tmp1                      000028 RLZ    tmp2                      000029 RLZ    
+tmp3                      00002A RLZ    tmp4                      00002B RLZ    
+_monosh_boss_frame        0000B2 RLA    _monosh_boss_prepare_render 0000D6 RLA    
+_monosh_combat_init       000BA0 RLA    _monosh_combat_render     000C39 RLA    
+_monosh_enemy_init        0013B6 RLA    _monosh_enemy_frame       00144B RLA    
+_monosh_enemy_render_only 001469 RLA    _monosh_enemy_active_count 001510 RLA    
+_monosh_enemy_stage_complete 001516 RLA    _monosh_enemy_fire_boss_at 001539 RLA    
+_monosh_boss_path_z       002000 RLA    _monosh_boss_path_x       0020F0 RLA    
+_monosh_boss_path_center_y 0021E0 RLA    _monosh_boss_path_z_mid   0022D0 RLA    
+_monosh_boss_path_x_mid   0023C0 RLA    _monosh_boss_path_center_y_mid 0024B0 RLA    
+_monosh_player_init       002D4A RLA    _monosh_player_update     002D89 RLA    
+_monosh_player_draw_flags 002E79 RLA    _monosh_player_draw_asset 002EB3 RLA    
+_monosh_stage_init        00336C RLA    _monosh_stage_frame       00338F RLA    
+_monosh_stage_render_only 0033D2 RLA    _monosh_stage_is_clear    0033D5 RLA    
+_monosh_boss_face_geometry 003680 RLA    _monosh_boss_body_geometry 00375E RLA    
+_monosh_boss_bom_geometry 00383C RLA    _monosh_boss_bom_depth_by_size 00391A RLA    
+_monosh_boss_explosion_scale_low 00392A RLA    _monosh_boss_explosion_ground_bottom 003999 RLA    
+_monosh_boss_bullet_velocity 003A08 RLA    _fx_frame                 003BA9 RLA    
+_monosh_title_draw        00407B RLA    _main                     004086 RLA    
+_monosh_combat_reflect_bullet 004091 RLA    _monosh_combat_fast_frame 0041EF RLA    
+_monosh_combat_fast_cache_reset 0042C6 RLA    _monosh_combat_fast_render 0042CD RLA    
+_fx_build_ground          004511 RLA    _fx_read_input            0045EF RLA    
+_fx_present               0046B3 RLA    _monosh_player_bullet_sizes 004708 RLA    
+_monosh_enemy_geometry    004721 RLA    _monosh_bom_geometry      0047FF RLA    
+_fx_ground_native         00489B RLA    _monosh_em1_closed_geometry 0048DD RLA    
+_monosh_em1_open_geometry 0049BB RLA    _monosh_enemy_ground_bottom 0049D9 RLA    
+ground_empty              004A44 RLA    _monosh_ebullet_animation_geometry 004A48 RLA    
+_monosh_ebullet_geometry  004C04 RLA    _monosh_ebullet_velocity  004C0E RLA    
+_monosh_enemy_paths       00706F RLA    _monosh_enemy_spawns      0070A5 RLA    
+_monosh_stage1_spawns     007173 RLA    _monosh_stage1_spawn_count 00751B RLA    
+_fx_build_packet          007C58 RLA    _monosh_project_x         007F00 RLA    
+fx_project16              007F1E RLA    _monosh_stage_geometry    007F85 RLA    
+_monosh_stage_lift        00829A RLA    _fx_asset_width           00C0B8 RLA    
+_fx_asset_height          00C0E4 RLA    _fx_asset_bank            00C110 RLA    
+_fx_du_table              00C13C RLA    _fx_dv_table              00C194 RLA    
+_fx_ground_camera         00C1EC RLA    _fx_ground_depth_rows     00C27D RLA    
+_fx_ground_bands          00D70E RLA    _fx_ground_light          00DC32 RLA    
+_fx_ground_dark           00DCEE RLA    _fx_ground_steps          00DDAA RLA    
+_monosh_ground_offset     00DE2C RLA    _monosh_ground_screen_delta 00DE2D RLA    
+_monosh_boss_state        00DE2F RLA    _boss_part_x              00DE32 RLA    
+_boss_part_bottom         00DE3B RLA    _boss_part_z              00DE44 RLA    
+_boss_part_active         00DE4D RLA    _boss_part_timer          00DE56 RLA    
+_boss_render_camera_delta 00E094 RLA    _monosh_player_bullets    00E0A6 RLA    
+_monosh_player_bullet_count 00E0B5 RLA    _monosh_reflected_bullets 00E0B6 RLA    
+_monosh_reflected_bullet_count 00E0C5 RLA    _monosh_bullet_reflect_rng 00E0CE RLA    
+_monosh_combat_fire_cooldown 00E0CF RLA    _monosh_enemy_bullet_count 00E0D1 RLA    
+_monosh_player_x          00E182 RLA    _monosh_player_bottom     00E184 RLA    
+_monosh_player_state      00E186 RLA    _monosh_player_stumble    00E188 RLA    
+_monosh_stage_objects     00E194 RLA    _monosh_stage_object_count 00E1F4 RLA    
+_monosh_stage_need_hitboxes 00E27D RLA    _fx_draw                  00E282 RLA    
+_fx_draw_count            00E502 RLA    _fx_packet_count          00E503 RLA    
+_fx_packet                00E505 RLA    _fx_ground_phase          00EA05 RLA    
+_fx_buttons               00EA06 RLA    _fx_fire_actions          00EA09 RLA    
+_monosh_runtime_frame_counter 00EA0B RLA    _ground_irq_vblank_count  00EA0D RLA    
+_fx_far_u_acc             00EA10 RLA    _fx_far_d_acc             00EA12 RLA    
+_monosh_ground_depth_pointer 00EA17 RLA    _fx_stage_render          00EF97 RLA    
+_fx_ground_far_xptr       00F13F RLA    _fx_ground_vptr           00F141 RLA    
+_fx_ground_c1ptr          00F143 RLA    _fx_ground_c3ptr          00F145 RLA    
+_fx_ground_bandptr        00F147 RLA    _fx_ground_horizon        00F14B RLA    
+_fx_ground_far_y          00F14D RLA    fx_dma_count              00F1D2 RLA    
+fx_dma_desc               00F1D6 RLA    fx_plan_dma               00F252 RLA    
+fx_commit_dma             00F399 RLA    _fx_submit                00F3AD RLA    
+tosaddax                  00F483 RLA    addeq0sp                  00F49D RLA    
+addeqysp                  00F49F RLA    addysp1                   00F4AE RLA    
+addysp                    00F4AF RLA    shlax2                    00F4BC RLA    
+aslax2                    00F4BC RLA    shlax3                    00F4C7 RLA    
+aslax4                    00F4D5 RLA    shlax4                    00F4D5 RLA    
+shleax1                   00F4E6 RLA    asrax1                    00F4F2 RLA    
+asrax2                    00F4FC RLA    asrax3                    00F50B RLA    
+asrax4                    00F51F RLA    decsp1                    00F538 RLA    
+decsp2                    00F541 RLA    decsp3                    00F54E RLA    
+decsp4                    00F55B RLA    decsp5                    00F568 RLA    
+decsp8                    00F575 RLA    tosdiva0                  00F582 RLA    
+tosicmp0                  00F597 RLA    tosicmp                   00F599 RLA    
+incsp1                    00F5C5 RLA    popax                     00F5CC RLA    
+incsp2                    00F5D4 RLA    incsp3                    00F5E2 RLA    
+incsp4                    00F5E7 RLA    incsp5                    00F5EC RLA    
+incsp6                    00F5F1 RLA    incsp7                    00F5F6 RLA    
+incsp8                    00F5FB RLA    ldaidx                    00F600 RLA    
+tosumul0ax                00F60C RLA    push0ax                   00F66B RLA    
+boolne                    00F689 RLA    booleq                    00F68F RLA    
+boolult                   00F6A8 RLA    _memcpy                   00F6B5 RLA    
+tosmoda0                  00F6F1 RLA    tosmulax                  00F702 RLA    
+tosumula0                 00F747 RLA    mul8x16                   00F749 RLA    
+mul8x16a                  00F753 RLA    mulax10                   00F781 RLA    
+mulax3                    00F79A RLA    mulax5                    00F7AB RLA    
+mulax6                    00F7BF RLA    mulax7                    00F7D5 RLA    
+negax                     00F7F2 RLA    popptr1                   00F800 RLA    
+pusha                     00F812 RLA    push0                     00F824 RLA    
+pusha0                    00F826 RLA    pushax                    00F828 RLA    
+pushw0sp                  00F83E RLA    pushwysp                  00F840 RLA    
+popsargsudiv16            00F85A RLA    shrax1                    00F87A RLA    
+shrax3                    00F882 RLA    shrax4                    00F890 RLA    
+staspidx                  00F8A1 RLA    stax0sp                   00F8B7 RLA    
+staxysp                   00F8B9 RLA    staxspidx                 00F8C2 RLA    
+tossuba0                  00F8DD RLA    tossubax                  00F8DF RLA    
+subysp                    00F8F2 RLA    tosudiva0                 00F8FF RLA    
+tosudivax                 00F901 RLA    udiv16                    00F910 RLA    
+tosumoda0                 00F94E RLA    
+
+
+Imports list:
+-------------
+__STARTUP__ (cpu_asm.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:13
+_boss_part_active (monosh_boss.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:74
+_boss_part_bottom (monosh_boss.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:72
+_boss_part_timer (monosh_boss.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:75
+_boss_part_x (monosh_boss.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:71
+_boss_part_z (monosh_boss.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:73
+_boss_render_camera_delta (monosh_boss.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:76
+_fx_asset_bank (asset_tables.o):
+    packet_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\packet.s:6
+_fx_asset_height (asset_tables.o):
+    packet_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\packet.s:6
+_fx_asset_width (asset_tables.o):
+    packet_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\packet.s:6
+_fx_build_ground (ground.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:31
+_fx_build_packet (packet_asm.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:26
+_fx_buttons (game.o):
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\cpu.s:3
+_fx_draw (game.o):
+    submit_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\submit.s:5
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\stage.s:7
+    packet_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\packet.s:5
+_fx_draw_count (game.o):
+    submit_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\submit.s:5
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\stage.s:7
+    packet_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\packet.s:5
+_fx_du_table (asset_tables.o):
+    packet_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\packet.s:6
+_fx_dv_table (asset_tables.o):
+    packet_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\packet.s:6
+_fx_far_d_acc (game.o):
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\ground.s:8
+_fx_far_u_acc (game.o):
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\ground.s:8
+_fx_fire_actions (game.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:13
+_fx_frame (game.o):
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\cpu.s:3
+_fx_ground_bandptr (ground.o):
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\ground.s:5
+_fx_ground_bands (asset_tables.o):
+    ground.o                  D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\ground.s:29
+_fx_ground_c1ptr (ground.o):
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\ground.s:5
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\cpu.s:4
+_fx_ground_c3ptr (ground.o):
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\ground.s:5
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\cpu.s:4
+_fx_ground_camera (asset_tables.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:68
+_fx_ground_dark (asset_tables.o):
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\ground.s:6
+_fx_ground_depth_rows (asset_tables.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:69
+_fx_ground_far_xptr (ground.o):
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\ground.s:8
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\cpu.s:7
+_fx_ground_far_y (ground.o):
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\cpu.s:5
+_fx_ground_horizon (ground.o):
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\ground.s:6
+_fx_ground_light (asset_tables.o):
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\ground.s:6
+_fx_ground_native (ground_asm.o):
+    ground.o                  D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\ground.s:28
+_fx_ground_phase (game.o):
+    ground.o                  D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\ground.s:13
+_fx_ground_steps (asset_tables.o):
+    ground.o                  D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\ground.s:27
+_fx_ground_vptr (ground.o):
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\ground.s:5
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\cpu.s:4
+_fx_packet (game.o):
+    dma_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\dma.s:5
+    packet_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\packet.s:5
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\cpu.s:3
+_fx_packet_count (game.o):
+    dma_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\dma.s:5
+    packet_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\packet.s:5
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\cpu.s:3
+_fx_present (cpu_asm.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:29
+_fx_read_input (cpu_asm.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:30
+_fx_stage_render (stage_asm.o):
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:14
+_fx_submit (submit_asm.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:14
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:25
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:61
+_ground_irq_vblank_count (game.o):
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:37
+_main (game.o):
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\cpu.s:3
+_memcpy (memcpy.o):
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+_monosh_bom_geometry (monosh_enemy_data.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:30
+_monosh_boss_body_geometry (monosh_boss_data.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:57
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:27
+_monosh_boss_bom_depth_by_size (monosh_boss_data.o):
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:29
+_monosh_boss_bom_geometry (monosh_boss_data.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:58
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:28
+_monosh_boss_bullet_velocity (monosh_boss_data.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:62
+_monosh_boss_explosion_ground_bottom (monosh_boss_data.o):
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:31
+_monosh_boss_explosion_scale_low (monosh_boss_data.o):
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:30
+_monosh_boss_face_geometry (monosh_boss_data.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:56
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:26
+_monosh_boss_frame (monosh_boss.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:54
+_monosh_boss_init (monosh_boss.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:53
+_monosh_boss_path_center_y (monosh_boss_data.o):
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:22
+_monosh_boss_path_center_y_mid (monosh_boss_data.o):
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:25
+_monosh_boss_path_x (monosh_boss_data.o):
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:21
+_monosh_boss_path_x_mid (monosh_boss_data.o):
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:24
+_monosh_boss_path_z (monosh_boss_data.o):
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:20
+_monosh_boss_path_z_mid (monosh_boss_data.o):
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:23
+_monosh_boss_prepare_render (monosh_boss.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:55
+_monosh_boss_should_restart (monosh_boss.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:52
+_monosh_boss_state (monosh_boss.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:51
+_monosh_bullet_reflect_rng (monosh_combat.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:26
+_monosh_combat_fast_cache_reset (combat_port.o):
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:29
+_monosh_combat_fast_frame (combat_port.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:61
+_monosh_combat_fast_render (combat_port.o):
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:28
+_monosh_combat_fire_cooldown (monosh_combat.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:25
+_monosh_combat_init (monosh_combat.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:59
+_monosh_combat_reflect_bullet (combat_port.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:16
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:34
+_monosh_combat_render (monosh_combat.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:60
+_monosh_ebullet_animation_geometry (monosh_enemy_data.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:63
+_monosh_ebullet_geometry (monosh_enemy_data.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:34
+_monosh_ebullet_velocity (monosh_enemy_data.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:35
+_monosh_em1_closed_geometry (monosh_enemy_data.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:31
+_monosh_em1_open_geometry (monosh_enemy_data.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:32
+_monosh_enemy_active_count (monosh_enemy.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:48
+_monosh_enemy_bullet_count (monosh_enemy.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:50
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:35
+_monosh_enemy_fire_boss_at (monosh_enemy.o):
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:36
+_monosh_enemy_frame (monosh_enemy.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:46
+_monosh_enemy_geometry (monosh_enemy_data.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:29
+_monosh_enemy_ground_bottom (monosh_enemy_data.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:33
+_monosh_enemy_init (monosh_enemy.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:45
+_monosh_enemy_paths (monosh_enemy_data.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:27
+_monosh_enemy_render_only (monosh_enemy.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:47
+_monosh_enemy_spawns (monosh_enemy_data.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:28
+_monosh_enemy_stage_complete (monosh_enemy.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:49
+_monosh_ground_depth_pointer (game.o):
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\stage.s:6
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:17
+_monosh_ground_offset (game.o):
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\ground.s:7
+    ground.o                  D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\ground.s:14
+_monosh_ground_screen_delta (game.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:52
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:38
+_monosh_player_bottom (monosh_player.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:23
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:34
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:20
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:37
+_monosh_player_bullet_count (monosh_combat.o):
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\stage.s:9
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:16
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:16
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:15
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:33
+_monosh_player_bullet_sizes (monosh_combat.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:27
+_monosh_player_bullets (monosh_combat.o):
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\stage.s:9
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:15
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:14
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:32
+_monosh_player_draw_asset (monosh_player.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:40
+_monosh_player_draw_flags (monosh_player.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:39
+_monosh_player_init (monosh_player.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:37
+_monosh_player_state (monosh_player.o):
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\stage.s:8
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:24
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:35
+_monosh_player_stumble (monosh_player.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:36
+_monosh_player_update (monosh_player.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:38
+_monosh_player_x (monosh_player.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:22
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:33
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:19
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:36
+_monosh_project_x (projection_asm.o):
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:18
+_monosh_reflected_bullet_count (monosh_combat.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:18
+_monosh_reflected_bullets (monosh_combat.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:17
+_monosh_runtime_frame_counter (game.o):
+    packet_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\packet.s:7
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:21
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:21
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:38
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:22
+_monosh_stage1_spawn_count (monosh_stage_data.o):
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:27
+_monosh_stage1_spawns (monosh_stage_data.o):
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:26
+_monosh_stage_frame (monosh_stage.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:42
+_monosh_stage_geometry (monosh_stage_data.o):
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\stage.s:6
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:28
+_monosh_stage_init (monosh_stage.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:41
+_monosh_stage_is_clear (monosh_stage.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:44
+_monosh_stage_lift (monosh_stage_data.o):
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\stage.s:6
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:29
+_monosh_stage_need_hitboxes (monosh_stage.o):
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\stage.s:8
+_monosh_stage_object_count (monosh_stage.o):
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\stage.s:5
+_monosh_stage_objects (monosh_stage.o):
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\stage.s:5
+_monosh_stage_render_only (monosh_stage.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:43
+_monosh_title_draw (game.o):
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:13
+addeq0sp (addeqsp.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+addeqysp (addeqsp.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+addysp (addysp.o):
+    incsp8.o                  runtime/incsp8.s:8
+    incsp7.o                  runtime/incsp7.s:8
+    incsp6.o                  runtime/incsp6.s:8
+    incsp5.o                  runtime/incsp5.s:8
+    incsp4.o                  runtime/incsp4.s:8
+    incsp3.o                  runtime/incsp3.s:8
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+addysp1 (addysp.o):
+    sub.o                     runtime/sub.s:8
+    lmul.o                    runtime/lmul.s:9
+aslax2 (aslax2.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+aslax4 (aslax4.o):
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+asrax1 (asrax1.o):
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+asrax2 (asrax2.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+asrax3 (asrax3.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+asrax4 (asrax4.o):
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+booleq (makebool.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+boolne (makebool.o):
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+boolult (makebool.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+c_sp (zeropage.o):
+    subysp.o                  runtime/subysp.s:9
+    sub.o                     runtime/sub.s:9
+    staxspi.o                 runtime/staxspi.s:10
+    staxsp.o                  runtime/staxsp.s:8
+    staspidx.o                runtime/staspidx.s:9
+    pushwsp.o                 runtime/pushwsp.s:8
+    pushax.o                  runtime/pushax.s:8
+    pusha.o                   runtime/pusha.s:8
+    popptr1.o                 runtime/popptr1.s:9
+    memcpy.o                  common/memcpy.s:15
+    lpush.o                   runtime/lpush.s:13
+    lmul.o                    runtime/lmul.s:10
+    incsp2.o                  runtime/incsp2.s:8
+    incsp1.o                  runtime/incsp1.s:8
+    icmp.o                    runtime/icmp.s:9
+    decsp8.o                  runtime/decsp8.s:8
+    decsp5.o                  runtime/decsp5.s:8
+    decsp4.o                  runtime/decsp4.s:8
+    decsp3.o                  runtime/decsp3.s:8
+    decsp2.o                  runtime/decsp2.s:8
+    decsp1.o                  runtime/decsp1.s:8
+    addysp.o                  runtime/addysp.s:8
+    addeqsp.o                 runtime/addeqsp.s:8
+    add.o                     runtime/add.s:12
+    submit_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\submit.s:6
+    projection_asm.o          D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\projection.s:4
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\cpu.s:9
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:10
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:10
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:10
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:10
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:10
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:10
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:10
+decsp1 (decsp1.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+decsp2 (decsp2.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+decsp3 (decsp3.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+decsp4 (decsp4.o):
+    lpush.o                   runtime/lpush.s:12
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+decsp5 (decsp5.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+decsp8 (decsp8.o):
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+fx_commit_dma (dma_asm.o):
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\cpu.s:8
+fx_dma_count (dma_asm.o):
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\cpu.s:8
+fx_dma_desc (dma_asm.o):
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\cpu.s:8
+fx_plan_dma (dma_asm.o):
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\cpu.s:8
+fx_project16 (projection_asm.o):
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\stage.s:7
+ground_empty (ground_asm.o):
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\game\v001\cpu.s:6
+incsp1 (incsp1.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+incsp2 (incsp2.o):
+    staxspi.o                 runtime/staxspi.s:9
+    staspidx.o                runtime/staspidx.s:8
+    popptr1.o                 runtime/popptr1.s:8
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+incsp3 (incsp3.o):
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+incsp4 (incsp4.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+incsp5 (incsp5.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+incsp6 (incsp6.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+incsp7 (incsp7.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+incsp8 (incsp8.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+ldaidx (ldai.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+mul8x16 (mul8.o):
+    mul.o                     runtime/mul.s:8
+mul8x16a (mul8.o):
+    mul.o                     runtime/mul.s:8
+mulax10 (mulax10.o):
+    ground.o                  D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\ground.s:149
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+mulax3 (mulax3.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+mulax5 (mulax5.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+mulax6 (mulax6.o):
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+mulax7 (mulax7.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+negax (negabs.o):
+    shelp.o                   runtime/shelp.s:11
+    mod.o                     runtime/mod.s:11
+    div.o                     runtime/div.s:11
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+popax (incsp2.o):
+    shelp.o                   runtime/shelp.s:11
+    memcpy.o                  common/memcpy.s:14
+popptr1 (popptr1.o):
+    umod.o                    runtime/umod.s:8
+    udiv.o                    runtime/udiv.s:9
+    mul8.o                    runtime/mul8.s:9
+    mul.o                     runtime/mul.s:9
+    memcpy.o                  common/memcpy.s:14
+popsargsudiv16 (shelp.o):
+    mod.o                     runtime/mod.s:11
+    div.o                     runtime/div.s:11
+ptr1 (zeropage.o):
+    udiv.o                    runtime/udiv.s:10
+    staxspi.o                 runtime/staxspi.s:10
+    staspidx.o                runtime/staspidx.s:9
+    shelp.o                   runtime/shelp.s:12
+    popptr1.o                 runtime/popptr1.s:9
+    mulax7.o                  runtime/mulax7.s:10
+    mulax6.o                  runtime/mulax6.s:9
+    mulax5.o                  runtime/mulax5.s:9
+    mulax3.o                  runtime/mulax3.s:9
+    mulax10.o                 runtime/mulax10.s:9
+    mul8.o                    runtime/mul8.s:10
+    mul.o                     runtime/mul.s:10
+    memcpy.o                  common/memcpy.s:15
+    lmul.o                    runtime/lmul.s:10
+    ldai.o                    runtime/ldai.s:8
+    div.o                     runtime/div.s:12
+    ground.o                  D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\ground.s:11
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:11
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:11
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:11
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:11
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:11
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:11
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:11
+ptr2 (zeropage.o):
+    memcpy.o                  common/memcpy.s:15
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:11
+ptr3 (zeropage.o):
+    memcpy.o                  common/memcpy.s:15
+    lmul.o                    runtime/lmul.s:10
+ptr4 (zeropage.o):
+    umod.o                    runtime/umod.s:9
+    udiv.o                    runtime/udiv.s:10
+    shelp.o                   runtime/shelp.s:12
+    mul8.o                    runtime/mul8.s:10
+    mul.o                     runtime/mul.s:10
+    lmul.o                    runtime/lmul.s:10
+push0 (pushax.o):
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+push0ax (lpush.o):
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+pusha (pusha.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+pusha0 (pushax.o):
+    ground.o                  D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\ground.s:149
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+pushax (pushax.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+pushw0sp (pushwsp.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+pushwysp (pushwsp.o):
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+regsave (zeropage.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:10
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:10
+shlax2 (aslax2.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+shlax3 (aslax3.o):
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+shlax4 (aslax4.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+shleax1 (asleax1.o):
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+shrax1 (shrax1.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+shrax3 (shrax3.o):
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+shrax4 (shrax4.o):
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:439
+sreg (zeropage.o):
+    umod.o                    runtime/umod.s:9
+    udiv.o                    runtime/udiv.s:10
+    mod.o                     runtime/mod.s:12
+    lpush.o                   runtime/lpush.s:13
+    lmul.o                    runtime/lmul.s:10
+    icmp.o                    runtime/icmp.s:9
+    asleax1.o                 runtime/asleax1.s:8
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:10
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:10
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:10
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_combat.s:10
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:10
+staspidx (staspidx.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+stax0sp (staxsp.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+staxspidx (staxspi.o):
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+staxysp (staxsp.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+subysp (subysp.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+tmp1 (zeropage.o):
+    staxspi.o                 runtime/staxspi.s:10
+    staspidx.o                runtime/staspidx.s:9
+    shrax4.o                  runtime/shrax4.s:8
+    shrax3.o                  runtime/shrax3.s:8
+    shrax1.o                  runtime/shrax1.s:8
+    shelp.o                   runtime/shelp.s:12
+    mul.o                     runtime/mul.s:10
+    mod.o                     runtime/mod.s:12
+    div.o                     runtime/div.s:12
+    asrax4.o                  runtime/asrax4.s:9
+    asrax3.o                  runtime/asrax3.s:9
+    asrax2.o                  runtime/asrax2.s:8
+    asrax1.o                  runtime/asrax1.s:8
+    asleax1.o                 runtime/asleax1.s:8
+    aslax4.o                  runtime/aslax4.s:8
+    aslax3.o                  runtime/aslax3.s:8
+    aslax2.o                  runtime/aslax2.s:8
+    add.o                     runtime/add.s:12
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:11
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:11
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:11
+tmp2 (zeropage.o):
+    shelp.o                   runtime/shelp.s:12
+    lmul.o                    runtime/lmul.s:10
+    div.o                     runtime/div.s:12
+tmp3 (zeropage.o):
+    lmul.o                    runtime/lmul.s:10
+tmp4 (zeropage.o):
+    lmul.o                    runtime/lmul.s:10
+tosaddax (add.o):
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+tosdiva0 (div.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+tosicmp (icmp.o):
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+tosicmp0 (icmp.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+tosmoda0 (mod.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+tosmulax (mul.o):
+    ground.o                  D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\ground.s:149
+tossuba0 (sub.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+tossubax (sub.o):
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_stage.s:1266
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_player.s:996
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+tosudiva0 (udiv.o):
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_enemy.s:4618
+tosudivax (udiv.o):
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+tosumoda0 (umod.o):
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\combat_port.s:712
+tosumul0ax (lmul.o):
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\monosh_boss.s:1805
+tosumula0 (mul8.o):
+    ground.o                  D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\ground.s:149
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\build\game_v001\game.s:776
+udiv16 (udiv.o):
+    umod.o                    runtime/umod.s:8
+    shelp.o                   runtime/shelp.s:11
+

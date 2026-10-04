@@ -1,0 +1,3 @@
+# 原本ハッシュの検証に使うため、改行を含めてそのまま保存する。
+game/v001/upstream/* -text
+game/v001/licenses/* -text
