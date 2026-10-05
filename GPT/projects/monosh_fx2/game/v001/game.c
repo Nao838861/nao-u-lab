@@ -23,8 +23,8 @@ unsigned char monosh_ground_offset = 16;
 signed char monosh_ground_screen_delta = -12;
 unsigned char monosh_title_visible = 1;
 unsigned int fx_far_u_acc, fx_far_d_acc;
-static unsigned char hit_pending;
-static unsigned int old_buttons;
+unsigned char hit_pending;
+unsigned int old_buttons;
 extern const unsigned char fx_ground_camera[145];
 extern const unsigned char fx_ground_depth_rows[5265];
 extern unsigned char fx_ground_world_phase;
@@ -96,6 +96,7 @@ void fx_build_packet_reference(void)
 }
 
 #endif
+#ifdef FX_REFERENCE
 void monosh_boss_render_only(void)
 {
     unsigned char i = 9, z, asset, frame;
@@ -123,6 +124,7 @@ void monosh_boss_render_only(void)
         fx_submit(boss_part_x[i], boss_part_bottom[i], g[0], g[1], asset, 0, z, 0);
     }
 }
+#endif
 
 void fx_init(void)
 {
@@ -131,6 +133,7 @@ void fx_init(void)
     monosh_ground_depth_pointer = fx_ground_depth_rows + 16u*81;
 }
 
+#ifdef FX_REFERENCE
 void fx_frame(void)
 {
     unsigned char flags, target, world_active, stage_ready = 0, stage_hit;
@@ -192,6 +195,7 @@ void fx_frame(void)
     }
     fx_build_packet(); fx_build_ground();
 }
+#endif
 
 void main(void)
 {

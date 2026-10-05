@@ -6,6 +6,7 @@
 .import _fx_draw, _fx_draw_count, _fx_packet, _fx_packet_count
 .import _fx_asset_width, _fx_asset_height, _fx_asset_bank
 .import _monosh_runtime_frame_counter
+.import fx_reset_next_bounds, fx_add_next_bounds
 .segment "ZEROPAGE"
 dp: .res 2
 pp: .res 2
@@ -19,6 +20,7 @@ keys: .res 128
 _fx_build_packet:
   php
   rep #$30
+  jsr fx_reset_next_bounds
   lda _fx_draw_count
   and #$ff
   sta $0140
@@ -98,6 +100,179 @@ packet_done:
   plp
   rts
 ; 四辺が画面内の通常スプライト。divider待ちはpacketの書込と重ねる。
+.ifdef FX_GSU_UV
+.ifdef FX_GSU_CLIP
+fast_compile:
+  ldy $0144
+  lda order,y
+  tax
+  lda _fx_draw+7,x
+  and #$ff
+  sta $016a
+  and #$80
+  beq :+
+  lda _monosh_runtime_frame_counter
+  and #1
+  jne skip
+:
+  lda pp
+  sec
+  sbc #_fx_packet
+  tay
+  lda _fx_draw,x
+  sta _fx_packet,y
+  lda _fx_draw+2,x
+  sta _fx_packet+2,y
+  lda _fx_draw+4,x
+  sta _fx_packet+4,y
+  lda _fx_draw+6,x
+  sta _fx_packet+6,y
+  lda _fx_draw+8,x
+  sta _fx_packet+8,y
+  inc _fx_packet_count
+  lda pp
+  clc
+  adc #10
+  sta pp
+skip:
+  inc $0144
+  inc $0144
+  jmp next
+.else
+fast_compile:
+  ldy $0144
+  lda order,y
+  tax
+  lda _fx_draw+7,x
+  and #$ff
+  sta $016a
+  and #$80
+  beq :+
+  lda _monosh_runtime_frame_counter
+  and #1
+  jne skip
+:
+  lda _fx_draw+6,x
+  and #$ff
+  sta $0164
+  lda _fx_draw+4,x
+  and #$ff
+  sta $0160
+  sta $0178                 ; 生の幅。UV表の添字。
+  lsr
+  sta $0170
+  lda _fx_draw,x
+  sec
+  sbc $0170
+  sta $0172
+  stz $016c
+  bpl gsu_x_positive
+  eor #$ffff
+  inc
+  sta $016c
+  lda $0160
+  clc
+  adc $0172
+  sta $0160
+  stz $0172
+gsu_x_positive:
+  lda $0172
+  clc
+  adc $0160
+  cmp #257
+  bcc :+
+  lda #256
+  sec
+  sbc $0172
+  sta $0160
+:
+  lda _fx_draw+5,x
+  and #$ff
+  sta $0162
+  sta $017a                 ; 生の高さ。
+  lda _fx_draw+2,x
+  sec
+  sbc $0162
+  sec
+  sbc #20
+  sta $0174
+  stz $016e
+  bpl gsu_y_positive
+  eor #$ffff
+  inc
+  sta $016e
+  lda $0162
+  clc
+  adc $0174
+  sta $0162
+  stz $0174
+gsu_y_positive:
+  lda $0174
+  clc
+  adc $0162
+  cmp #193
+  bcc :+
+  lda #192
+  sec
+  sbc $0174
+  sta $0162
+:
+  lda $0160
+  jeq skip
+  jmi skip
+  lda $0162
+  jeq skip
+  jmi skip
+  lda pp
+  sec
+  sbc #_fx_packet
+  tay
+  lda $0172
+  sta _fx_packet,y
+  sta _fx_packet+8,y
+  lda $0174
+  sta _fx_packet+2,y
+  lda $0178
+  sta _fx_packet+4,y
+  lda $017a
+  sta _fx_packet+6,y
+  lda $0162
+  sta _fx_packet+10,y
+  lda $0164
+  and #1
+  beq :+
+  lda #$8000
+:
+  ora $016e                 ; base V + 整数のskip Y
+  sta _fx_packet+12,y
+  lda $0160
+  sta _fx_packet+14,y
+  lda $016c
+  sta _fx_packet+16,y
+  lda $016a
+  and #$30
+  asl
+  asl
+  ora $0164                 ; 下6bitはasset、上2bitはX/Y反転
+  xba
+  sta $017c
+  ldx $0164
+  lda _fx_asset_bank,x
+  and #$ff
+  ora $017c
+  sta _fx_packet+18,y
+  jsr fx_add_next_bounds
+  inc _fx_packet_count
+  lda pp
+  clc
+  adc #20
+  sta pp
+skip:
+  inc $0144
+  inc $0144
+  jmp next
+.endif
+.else
 fast_compile:
   ldy $0144
   lda order,y
@@ -227,6 +402,7 @@ ordinary_v:
   lda $016e
 save_v:
   sta _fx_packet+12,y
+  jsr fx_add_next_bounds
   inc _fx_packet_count
   lda pp
   clc
@@ -425,6 +601,7 @@ y_positive:
   lda _fx_asset_bank,x
   and #$ff
   sta (pp),y
+  jsr fx_add_next_bounds
   inc _fx_packet_count
   lda pp
   clc
@@ -453,3 +630,4 @@ product_shift:
   bne product_loop
   lda $0176
   rts
+.endif

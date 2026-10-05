@@ -7,6 +7,7 @@
 .import _fx_draw, _fx_draw_count, fx_project16
 .import _monosh_stage_need_hitboxes, _monosh_player_state
 .import _monosh_player_bullets, _monosh_player_bullet_count
+.import _monosh_player_x, _monosh_player_bottom
 .segment "ZEROPAGE"
 op: .res 2
 gp: .res 2
@@ -317,3 +318,155 @@ geometry_asset:
   .byte 1,4,5,0,2,3,1,1
 draw_asset:
   .byte 5,4,5,0,2,5,5,1
+
+.ifndef FX_REFERENCE
+.export _fx_stage_contact
+.a8
+.i8
+_fx_stage_contact:
+  php
+  rep #$30
+  lda #_monosh_stage_objects
+  sta op
+  lda _monosh_stage_object_count
+  and #$ff
+  sta $0320
+contact_object:
+  lda $0320
+  jeq no_contact
+  ldy #2
+  lda (op),y
+  and #$ff
+  jne contact_next
+  iny
+  lda (op),y
+  and #$ff
+  sta $0322
+  cmp #1
+  beq contact_tree
+  cmp #4
+  beq contact_fly
+  cmp #3
+  beq contact_bush
+  cmp #7
+  jne contact_next
+  lda #74
+  bra contact_bush_height
+contact_bush:
+  lda #54
+contact_bush_height:
+  sta $0324
+  lda _monosh_player_bottom
+  cmp #196
+  jcc contact_next
+  bra contact_geometry
+contact_tree:
+  lda #36
+  bra contact_radius
+contact_fly:
+  lda #32
+contact_radius:
+  sta $0324
+contact_geometry:
+  ldy #0
+  lda (op),y
+  ldx #0
+  jsr fx_project16
+  clc
+  adc #128
+  sec
+  sbc _monosh_player_x
+  bpl :+
+  eor #$ffff
+  inc
+:
+  cmp $0324
+  bcc contact_vertical
+  jne contact_next
+contact_vertical:
+  ldx $0322
+  lda f:$7f0000+geometry_asset,x
+  and #$ff
+  asl
+  tax
+  lda _monosh_stage_geometry,x
+  sta gp
+  ldy #1
+  lda (gp),y
+  and #$ff
+  sta $0326
+  iny
+  lda (gp),y
+  and #$ff
+  sta $0328
+  lda #219
+  sec
+  sbc $0328
+  tay
+  lda _monosh_ground_depth_pointer
+  sta lp
+  lda (lp),y
+  and #$ff
+  sta $0328
+  lda #207
+  sec
+  sbc $0328
+  sta $0328
+  lda $0322
+  cmp #4
+  bne contact_bottom
+  lda _monosh_stage_lift+12
+  sta lp
+  ldy #0
+  lda (lp),y
+  and #$ff
+  sta $032a
+  lda $0328
+  sec
+  sbc $032a
+  sta $0328
+contact_bottom:
+  lda _monosh_player_bottom
+  sec
+  sbc #40
+  sta $032a
+  lda $0328
+  sec
+  sbc $032a
+  bmi contact_next
+  lda _monosh_player_bottom
+  clc
+  adc #8
+  sta $032a
+  lda $0328
+  sec
+  sbc $0326
+  sec
+  sbc $032a
+  bmi contact_hit
+  beq contact_hit
+contact_next:
+  lda op
+  clc
+  adc #6
+  sta op
+  dec $0320
+  jmp contact_object
+contact_hit:
+  lda $0322
+  cmp #3
+  beq contact_trip
+  cmp #7
+  beq contact_trip
+  lda #1
+  bra contact_return
+contact_trip:
+  lda #2
+  bra contact_return
+no_contact:
+  lda #0
+contact_return:
+  ldx #0
+  plp
+  rts
+.endif

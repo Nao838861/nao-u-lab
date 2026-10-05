@@ -2,8 +2,8 @@
 #include "port.h"
 #include "monosh_boss_data.h"
 extern const unsigned char monosh_ebullet_animation_geometry[222];
-static unsigned char boss_dda_phase[6];
-static signed char boss_dda_x[6], boss_dda_y[6];
+unsigned char boss_dda_phase[6];
+signed char boss_dda_x[6], boss_dda_y[6];
 
 unsigned char monosh_enemy_fire_boss_at(unsigned char x, unsigned char y, unsigned char z)
 {
@@ -37,6 +37,13 @@ static void remove_enemy(unsigned char slot)
         monosh_enemy_em1_shrink[slot] = monosh_enemy_em1_shrink[last];
     }
     enemies[last].active = 0;
+}
+
+void fx_enemy_remove(unsigned char slot) { remove_enemy(slot); }
+void fx_enemy_fire_em1(void *record)
+{
+    MonoshEnemy *e = record;
+    fire_enemy_bullet_at(e->x, em1_screen_bottom(e), e->z);
 }
 
 void fx_enemy_em1_update(void *record, unsigned char slot)
@@ -95,6 +102,7 @@ unsigned char monosh_enemy_fast_spawn_due(void)
     --spawn_wait; return 0;
 }
 
+#ifdef FX_REFERENCE
 void monosh_enemy_fast_advance(void)
 {
     unsigned char i = 0, fire, z;
@@ -126,6 +134,7 @@ void monosh_enemy_fast_advance(void)
     }
 }
 
+#endif
 static const unsigned char *em1_geometry(const MonoshEnemy *e)
 {
     unsigned char pose = e->display & 7, index;
@@ -174,6 +183,7 @@ void monosh_enemy_fast_check_player_bullets(void)
     }
 }
 
+#ifdef FX_REFERENCE
 void monosh_enemy_fast_update_bullets(void)
 {
     unsigned char i = 0, last;
@@ -201,6 +211,7 @@ void monosh_enemy_fast_update_bullets(void)
     }
 }
 
+#endif
 void monosh_enemy_fast_render(void)
 {
     unsigned char i = active_count;

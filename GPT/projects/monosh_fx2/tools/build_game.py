@@ -219,16 +219,26 @@ def pack_assets():
                 base=half*32768+y*256
                 for x in range(0,image.width,4):
                     raw[base+128+x//4]=sum(raw[base+x+i]<<(i*2) for i in range(min(4,image.width-x)))
+                    raw[base+160+x//4]=sum(raw[base+x+i]<<((3-i)*2) for i in range(min(4,image.width-x)))
         if raw!=path.read_bytes():path.write_bytes(raw)
 
 def prepare_logic():
     reference = '--reference-logic' in sys.argv
     enemy_impl=(GAME/'enemy_impl.inc').read_text(encoding='utf-8')
     if reference: enemy_impl=enemy_impl.replace('fx_em0_geometry(e);', 'update_em0_geometry(e, path);')
+    else: enemy_impl=enemy_impl.replace('void fx_enemy_em1_update(', 'void fx_enemy_em1_update_reference(')
     (BUILD/'enemy_impl.inc').write_text(enemy_impl,encoding='utf-8')
     for name in ['monosh_player','monosh_stage','monosh_enemy','monosh_combat',
                  'monosh_boss','monosh_projection','monosh_stage_data','monosh_enemy_data','monosh_boss_data']:
         text=(UP/(name+'.c')).read_text()
+        if name == 'monosh_player':
+            for decl in ['unsigned int player_fy','signed char death_vy','unsigned char death_timer',
+                         'unsigned char movement_fraction','unsigned char death_accel_fraction',
+                         'unsigned char intro_timer','unsigned char player_flip','unsigned char player_run_phase',
+                         'const unsigned char pose_x_01','const unsigned char pose_x_12','const unsigned char pose_x_23']:
+                text=text.replace('static '+decl,decl)
+            if not reference:
+                text=text.replace('void monosh_player_update(', 'void monosh_player_update_reference(')
         if name == 'monosh_enemy':
             if not reference:
                 text=text.replace('monosh_enemy_fast_render();', 'fx_enemy_render();').replace('monosh_enemy_fast_render_bullets();', 'fx_enemy_render_bullets();')
@@ -243,8 +253,10 @@ def prepare_logic():
             text=text[:start]+'    enemy->display = path->fire_frame;'+text[end:]
             text+='\n#include "enemy_impl.inc"\n'
         if name == 'monosh_stage':
-            text='#include "port.h"\nvoid fx_stage_render(void);\nvoid fx_stage_update(void);\n'+text
-            if not reference: text=text.replace('    stage_update(monosh_player_x);','    fx_stage_update();')
+            text='#include "port.h"\nvoid fx_stage_render(void);\nvoid fx_stage_update(void);\nunsigned char fx_stage_contact(void);\n'+text
+            if not reference:
+                text=text.replace('    stage_update(monosh_player_x);','    fx_stage_update();')
+                text=text.replace('check_player_contact(monosh_player_x, monosh_player_bottom)', 'fx_stage_contact()')
             text=text.replace('*bottom_y += monosh_ground_screen_delta;',
               '*bottom_y = 207 - monosh_ground_depth_pointer[219-(unsigned char)*bottom_y];')
             text=text.replace('bottom_y += monosh_ground_screen_delta;',
@@ -271,6 +283,10 @@ def prepare_logic():
             text=text.replace('    stage_render();','    fx_stage_render();')
             text=text.replace('    if (monosh_stage_need_hitboxes) check_player_bullets();','    /* stage.s resolves live shots using the same projected rectangle. */')
         if name == 'monosh_boss':
+            text='void fx_boss_project(void);\nvoid fx_boss_hits(void);\n'+text
+            if not reference:
+                text=text.replace('        dos_project_boss_parts();','        fx_boss_project();')
+                text=text.replace('        check_hits();','        fx_boss_hits();')
             text=text.replace('(BOSS_GEOMETRY(monosh_boss_face_geometry, z)[1] >> 2)',
                               '((BOSS_GEOMETRY(monosh_boss_face_geometry, z)[1] >> 3) << 1)')
             text=text.replace('        dos_cache_boss_attributes();','        /* SNES shared draw queue replaces SAT cache. */')
@@ -285,6 +301,12 @@ def prepare_logic():
 
 def main():
     BUILD.mkdir(parents=True,exist_ok=True)
+    config=json.loads((GAME/'config.json').read_text(encoding='utf-8'))
+    full_transfer=('--full-transfer' in sys.argv or config['fullFramebufferTransfer']) and '--partial-transfer' not in sys.argv
+    gsu_uv=('--gsu-uv' in sys.argv or config['gsuUv']) and '--cpu-uv' not in sys.argv
+    gsu_clip=('--gsu-clip' in sys.argv or config['gsuClip']) and '--cpu-clip' not in sys.argv
+    if gsu_clip:
+        gsu_uv=True
     lock=json.loads((ROOT/'probes/v001/sources.lock.json').read_text(encoding='utf-8'))['ARM9/casfx']
     from bootstrap_probe import fetch
     fetch('ARM9/casfx',lock['commit'],'gsu/casfx.inc',lock['files']['gsu/casfx.inc']['sha256'])
@@ -292,17 +314,31 @@ def main():
     from build_ground import build as build_ground
     build_ground()
     pack_assets()
+    scale=bytearray(65536)
+    dimensions=[Image.open(GAME/'assets'/f'{i:02d}.png').size for i in range(44)]
+    for axis in range(2):
+        for asset,size in enumerate(dimensions):
+            struct.pack_into('<256H',scale,axis*0x5800+asset*512,
+                             *[size[axis]*256//n if n else 0 for n in range(256)])
+    scale[0xb000:0xb02c]=bytes(w for w,h in dimensions)
+    scale[0xb02c:0xb058]=bytes(h for w,h in dimensions)
+    (GAME/'assets/scale5e.bin').write_bytes(scale)
     prepare_logic()
     sources=[p for p in sorted(BUILD.glob('monosh_*.c')) if p.stem != 'monosh_projection']+[GAME/n for n in ['game.c','combat_port.c','asset_tables.c','ground.c']]
     objects=[]
     for source in sources:
         out=BUILD/(source.stem+'.s'); obj=BUILD/(source.stem+'.o')
         run([CC65/'cc65.exe','-Oirs','--cpu','65c02','-D','__z88dk_fastcall=',
+             *(['-D','FX_REFERENCE=1'] if '--reference-logic' in sys.argv else []),
              '-I',GAME/'platform','-I',UP,'-I',GAME,'-o',out,source])
         run([CC65/'ca65.exe','-o',obj,out]); objects.append(obj)
-    for name in ['cpu','gsu','ground','packet','projection','stage','stage_update','enemy_render','enemy_collision','enemy_geometry','dma','submit']:
+    for name in ['cpu','gsu','ground','packet','projection','stage','stage_update','enemy_render','enemy_collision','enemy_geometry','enemy_bullet','enemy_update','player','frame','boss_render','boss_collision','combat','dma','submit']:
         obj=BUILD/(name+'_asm.o')
-        run([CC65/'ca65.exe','-I',ROOT/'.cache/casfx/gsu','-I',GAME,'-o',obj,GAME/(name+'.s')]); objects.append(obj)
+        run([CC65/'ca65.exe',*(['-D','FX_REFERENCE=1'] if '--reference-logic' in sys.argv else []),
+             *(['-D','FX_FULL_TRANSFER=1'] if full_transfer else []),
+             *(['-D','FX_GSU_UV=1'] if gsu_uv else []),
+             *(['-D','FX_GSU_CLIP=1'] if gsu_clip else []),
+             '-I',ROOT/'.cache/casfx/gsu','-I',GAME,'-o',obj,GAME/(name+'.s')]); objects.append(obj)
     rom=BUILD/'MonoSHFX2_v001.sfc'
     run([CC65/'ld65.exe','-C',GAME/'rom.cfg','-m',BUILD/'game.map','-Ln',BUILD/'game.lbl',
          '-o',rom,*objects,CC65.parent/'lib/none.lib'])
@@ -313,6 +349,7 @@ def main():
     checksum=sum(data)&65535
     data[0x7fdc:0x7fe0]=struct.pack('<HH',checksum^65535,checksum)
     rom.write_bytes(data)
+    (BUILD/'build_mode.json').write_text(json.dumps({'fullFramebufferTransfer':full_transfer,'gsuUv':gsu_uv,'gsuClip':gsu_clip})+'\n')
     print(f'Built {rom} ({len(data)} bytes)')
 
 if __name__=='__main__': main()

@@ -6,12 +6,14 @@
 #include "monosh_player.h"
 extern unsigned char monosh_combat_fire_cooldown, monosh_bullet_reflect_rng;
 extern const unsigned char monosh_player_bullet_sizes[];
+void monosh_combat_fast_render(void);
 
 void monosh_combat_fast_cache_reset(void) {}
 void v9968_copy_to_vram_linear(unsigned long address,
                              const unsigned char *data, unsigned int size)
 { (void)address; (void)data; (void)size; }
 
+#ifdef FX_REFERENCE
 void monosh_combat_fast_frame(void)
 {
     unsigned char i, fire = 0;
@@ -63,6 +65,7 @@ void monosh_combat_fast_render(void)
     }
 }
 
+#endif
 void monosh_combat_fast_render_cached(void) { monosh_combat_fast_render(); }
 
 void monosh_combat_reflect_bullet(unsigned int packed)

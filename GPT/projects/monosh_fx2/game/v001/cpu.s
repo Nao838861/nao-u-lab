@@ -7,11 +7,13 @@
 .import ground_empty
 .import fx_upload_ground
 .import _fx_ground_far_xptr
-.import fx_plan_dma, fx_commit_dma, fx_dma_count, fx_dma_desc
+.import fx_plan_dma, fx_commit_dma, fx_dma_count, fx_dma_desc, fx_dma_bytes
 .importzp c_sp
 .export __STARTUP__ : absolute = 1
 .export _fx_present, _fx_read_input, _fx_send_ground
 .export reset, game_started, render_started, render_finished, dma_started, dma_finished
+.segment "BSS"
+clear_initialized: .res 2
 
 .segment "BOOT"
 reset:
@@ -233,6 +235,21 @@ _fx_present:
   php
   rep #$30
   jsr fx_plan_dma
+  ; 小さい転送は203行目に間に合わなくても黒帯内で完了できる。
+  ; bytes+区間数*128が9KiB以下だけ220行目まで許可。全FBは203行目。
+  lda #203
+  sta f:$7e1d10
+  lda fx_dma_count
+  .repeat 7
+    asl
+  .endrepeat
+  clc
+  adc fx_dma_bytes
+  cmp #9217
+  bcs :+
+  lda #220
+  sta f:$7e1d10
+:
   jsr fx_upload_ground
   lda _fx_ground_vptr
   sta f:$7e1d04
@@ -255,20 +272,54 @@ _fx_present:
   clc
   adc f:$7e1d00
   asl
-  asl                      ; count*20
+  .ifndef FX_GSU_CLIP
+    asl                    ; 通常commandは20byte、GSU clipは10byteのdraw。
+  .endif
   sta f:$7e1d02
+  beq copy_clear_spans
+  dec
+  ldx #_fx_packet
+  ldy #$0020
+  mvn #$7e,#$70             ; GSU STOP中にWRAM→cart RAMを連続コピー。
+  pea $7e7e
+  plb
+  plb                      ; MVNが変更したDBRをCのWRAMへ戻す。
+copy_clear_spans:
+  .ifdef FX_GSU_CLIP
+  lda clear_initialized
+  bne start_render
+  inc clear_initialized
+  lda #0
+  sta f:$700700
+  bra start_render
+  .else
+  lda clear_initialized
+  bne partial_clear
+  inc clear_initialized
+  lda #1
+  sta f:$700008
+  lda #0
+  sta f:$700600
+  lda #$3000
+  sta f:$700602
+  bra start_render
+partial_clear:
+  lda fx_dma_count
+  sta f:$700008
+  asl
+  asl
+  sta f:$7e1d12
   ldx #0
-  beq :+
-:
-copy_packet:
+copy_clear:
   txa
-  cmp f:$7e1d02
+  cmp f:$7e1d12
   bcs start_render
-  lda _fx_packet,x
-  sta f:$700020,x
+  lda fx_dma_desc,x
+  sta f:$700600,x
   inx
   inx
-  bra copy_packet
+  bra copy_clear
+  .endif
 start_render:
   lda #.loword(render_entry_address)
   ; entryはGSU segment先頭$8000。
@@ -290,12 +341,51 @@ wait_gsu:
 render_finished:
   lda #2
   sta f:$7e1df0
+  .if .defined(FX_GSU_CLIP) .and .not .defined(FX_FULL_TRANSFER)
+  rep #$30
+  lda f:$700008
+  sta fx_dma_count
+  asl
+  asl
+  sta f:$7e1d12
+  ldx #0
+copy_gsu_dma:
+  txa
+  cmp f:$7e1d12
+  bcs gsu_dma_copied
+  lda f:$700600,x
+  sta fx_dma_desc,x
+  inx
+  inx
+  bra copy_gsu_dma
+gsu_dma_copied:
+  lda f:$70000a
+  sta fx_dma_bytes
+  lda #203
+  sta f:$7e1d10
+  lda fx_dma_count
+  .repeat 7
+    asl
+  .endrepeat
+  clc
+  adc fx_dma_bytes
+  cmp #9217
+  bcs :+
+  lda #220
+  sta f:$7e1d10
+:
+  sep #$20
+  .endif
 wait_bottom:
   lda f:$00213f
   lda f:$002137
   lda f:$00213d
   cmp #203
-  bne wait_bottom
+  bcc wait_bottom
+  cmp f:$7e1d10
+  bcc wait_hblank
+  beq wait_hblank
+  bra wait_bottom
 wait_hblank:
   lda f:$004212
   and #$40

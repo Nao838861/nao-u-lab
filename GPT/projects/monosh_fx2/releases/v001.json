@@ -1,6 +1,11 @@
 {
-  "romSha256": "ab7781fd9bbd5dbdf728ffd48a56691fbba0d34d98244665f0f46af539af1ef3",
+  "romSha256": "953d5aa44ed2c6c985b9ba10695ac99525880df766d15ecdc72a6e6dca9c4675",
   "romBytes": 2097152,
+  "buildMode": {
+    "fullFramebufferTransfer": false,
+    "gsuUv": true,
+    "gsuClip": true
+  },
   "display": [
     256,
     180
@@ -59,5 +64,6 @@
     "long": 18000,
     "profile": 2400
   },
-  "equivalenceMatchedUpdates": 4332
+  "equivalenceMatchedUpdates": 5632,
+  "bossEquivalenceMatchedUpdates": 2847
 }

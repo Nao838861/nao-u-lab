@@ -9,6 +9,8 @@ typedef struct FxDraw {
 typedef struct FxCommand {
     unsigned int x, y, du, dv, left, height, v0, width, u0, bank;
 } FxCommand;
+/* fx_packetは最大20byte/要素の保存領域。FX_GSU_CLIPではFxDrawを10byteで
+ * 詰めて送る。FX_GSU_UVのみなら20byteで寸法・clip量、CPU版はQ8.8 UV。 */
 extern FxDraw fx_draw[FX_DRAW_MAX];
 extern unsigned char fx_draw_count;
 extern unsigned int fx_packet_count;

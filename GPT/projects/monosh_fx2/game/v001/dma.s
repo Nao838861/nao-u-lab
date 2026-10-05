@@ -2,12 +2,15 @@
 .smart
 .macpack longbranch
 .export fx_plan_dma, fx_commit_dma, fx_dma_count, fx_dma_desc, fx_dma_bytes
+.export fx_reset_next_bounds, fx_add_next_bounds
 .import _fx_packet, _fx_packet_count
 .segment "ZEROPAGE"
 packet_ptr: .res 2
 .segment "BSS"
 current_min: .res 32
 current_max: .res 32
+next_min: .res 32
+next_max: .res 32
 last_min: .res 32
 last_max: .res 32
 initialized: .res 2
@@ -17,6 +20,20 @@ fx_dma_desc: .res 128       ; VRAM word address、byte length。最大32本。
 .segment "CODE"
 .a16
 .i16
+.if .defined(FX_FULL_TRANSFER) .or .defined(FX_GSU_CLIP)
+fx_plan_dma:
+  lda #1
+  sta fx_dma_count
+  stz fx_dma_desc
+  lda #$3000
+  sta fx_dma_desc+2
+  sta fx_dma_bytes
+  rts
+fx_commit_dma:
+fx_reset_next_bounds:
+fx_add_next_bounds:
+  rts
+.else
 fx_plan_dma:
   lda initialized
   bne :+
@@ -30,47 +47,49 @@ init_last:
   inc initialized
 :
   ldx #30
-  lda #$ffff
-clear_current:
+copy_next:
+  lda next_min,x
   sta current_min,x
-  stz current_max,x
+  lda next_max,x
+  sta current_max,x
   dex
   dex
-  bpl clear_current
-  lda #_fx_packet
-  sta packet_ptr
-  lda _fx_packet_count
-  sta $01c0
-object:
-  lda $01c0
-  jeq union
-  ldy #0
-  lda (packet_ptr),y
-  sta $01c2
+  bpl copy_next
+  jmp union
+
+; packet生成時のclip済み矩形を使い、次のGSU起動前に再走査しない。
+fx_reset_next_bounds:
+  ldx #30
+  lda #$ffff
+reset_next:
+  sta next_min,x
+  stz next_max,x
+  dex
+  dex
+  bpl reset_next
+  rts
+fx_add_next_bounds:
+  lda $0172
   lsr
   lsr
   lsr
   sta $01c4                 ; first column
-  ldy #14
-  lda (packet_ptr),y
+  lda $0160
   clc
-  adc $01c2
+  adc $0172
   dec
   lsr
   lsr
   lsr
   sta $01c6                 ; last column
-  ldy #2
-  lda (packet_ptr),y
-  sta $01c2
+  lda $0174
   lsr
   lsr
   lsr
   sta $01c8                 ; first tile row
-  ldy #10
-  lda (packet_ptr),y
+  lda $0162
   clc
-  adc $01c2
+  adc $0174
   dec
   lsr
   lsr
@@ -80,26 +99,21 @@ object:
   sep #$20
 columns:
   lda $01c8
-  cmp current_min,x
+  cmp next_min,x
   bcs :+
-  sta current_min,x
+  sta next_min,x
 :
   lda $01ca
-  cmp current_max,x
+  cmp next_max,x
   bcc :+
-  sta current_max,x
+  sta next_max,x
 :
   inx
   cpx $01c6
   bcc columns
   beq columns
   rep #$20
-  lda packet_ptr
-  clc
-  adc #20
-  sta packet_ptr
-  dec $01c0
-  jmp object
+  rts
 union:
   stz fx_dma_count
   stz fx_dma_bytes
@@ -114,7 +128,7 @@ scan:
   lda last_min,x
 :
   cmp #$ff
-  beq no_column
+  jeq no_column
   sta $01c8
   lda current_max,x
   cmp last_max,x
@@ -130,8 +144,7 @@ scan:
   asl
   clc
   adc $01c4
-  ldy $01c6
-  sta fx_dma_desc,y
+  sta $01cc
   lda $01ca
   and #$ff
   sec
@@ -141,6 +154,36 @@ scan:
   asl
   asl
   asl
+  sta $01ce
+  ldy $01c6
+  beq new_span
+  ; 次の区間まで64byte以下なら、0の隙間も送ってDMA再設定を省く。
+  lda fx_dma_desc-2,y
+  lsr
+  clc
+  adc fx_dma_desc-4,y
+  sta $01d0
+  lda $01cc
+  sec
+  sbc $01d0
+  cmp #33
+  bcs new_span
+  asl
+  clc
+  adc $01ce
+  sta $01d0
+  clc
+  adc fx_dma_desc-2,y
+  sta fx_dma_desc-2,y
+  lda $01d0
+  clc
+  adc fx_dma_bytes
+  sta fx_dma_bytes
+  bra no_column
+new_span:
+  lda $01cc
+  sta fx_dma_desc,y
+  lda $01ce
   sta fx_dma_desc+2,y
   clc
   adc fx_dma_bytes
@@ -159,7 +202,7 @@ no_column:
   sta $01c4
   inx
   cpx #32
-  bne scan
+  jne scan
   ; 多数の細切れDMAより全FBの方が安い場合には一本へまとめる。
   lda fx_dma_count
   asl
@@ -191,3 +234,4 @@ copy:
   dex
   bpl copy
   rts
+.endif

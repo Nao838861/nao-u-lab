@@ -26,6 +26,17 @@ def main():
                     record[key]+=4294967296/21477.272;wraps+=1
                     assert 0<=record[key]<1000,'unexpected clock discontinuity'
         summary['clockWrapCorrections']=wraps
+        # 完了時刻はDMA量によってfield境界をまたぐ。可視画像の間隔は、
+        # 必ず203〜223行に来るDMA開始のfieldで数える。
+        dma_fields=[r['field'] for r in records if 'dmaStartLine' in r]
+        dma_fields=dma_fields[:sum('dmaMs' in r for r in records)]
+        intervals=[b-a for a,b in zip(dma_fields,dma_fields[1:])]
+        assert all(i>=1 for i in intervals),f'multiple presentations per field: {name}'
+        summary['dmaCompletionIntervals']={k:summary[k] for k in ['interval1','interval2','interval3plus']}
+        summary['interval1']=intervals.count(1)
+        summary['interval2']=intervals.count(2)
+        summary['interval3plus']=sum(i>=3 for i in intervals)
+        summary['intervalBasis']='DMA開始field。完了時刻のfield跨ぎを除く'
         joins=[r['joinedMs'] for r in records if 'joinedMs' in r]
         dmas=[r for r in records if 'dmaMs' in r]
         summary['joinedMeanMs']=statistics.mean(joins)
@@ -60,14 +71,17 @@ def main():
     frozen=json.loads((GAME/'upstream/sources.json').read_text())
     for name,sha in frozen.items(): assert hashlib.sha256((GAME/'upstream'/name).read_bytes()).hexdigest()==sha,name
     manifest={'romSha256':hashlib.sha256(rom.read_bytes()).hexdigest(),'romBytes':rom.stat().st_size,
+              'buildMode':json.loads((BUILD/'build_mode.json').read_text()),
               'display':[256,180],'framebuffer':[256,192],'format':'2bpp','sourceSha256':frozen,
               'testedEmulator':'Mesen 2.1.1, GsuClockSpeed=100, NTSC, extra scanlines=0',
               'scenarioFrames':{name:s['fields'] for name,s in summaries.items()}}
-    equivalence=results/'equivalence/summary.json'
-    if equivalence.exists():
-        comparison=json.loads(equivalence.read_text(encoding='utf-8'))
-        if comparison['nativeRomSha256']==rom_sha:
-            manifest['equivalenceMatchedUpdates']=comparison['matchedUpdates']
+    for scenario,key in [('equivalence','equivalenceMatchedUpdates'),
+                         ('equivalence_boss','bossEquivalenceMatchedUpdates')]:
+        path=results/scenario/'summary.json'
+        if path.exists():
+            comparison=json.loads(path.read_text(encoding='utf-8'))
+            if comparison['nativeRomSha256']==rom_sha:
+                manifest[key]=comparison['matchedUpdates']
     (release/'v001.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     shutil.copy2(BUILD/'game.map',results/'game.map')
     shutil.copy2(BUILD/'game.lbl',results/'game.lbl')

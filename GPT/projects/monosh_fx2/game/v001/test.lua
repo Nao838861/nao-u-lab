@@ -2,6 +2,8 @@ local labels = LABELS
 local output = OUTDIR
 local maxframe = MAXFRAME
 local scenario = SCENARIO
+local gsu_uv = GSU_UV
+local gsu_clip = GSU_CLIP
 local report = assert(io.open(output..'/trace.jsonl','w'))
 local field = 0
 local rendered = 0
@@ -55,11 +57,18 @@ local function guard(fn)
   return function(...)
     if failed then return end
     local ok,err=pcall(fn,...)
-    if not ok then failed=true; local f=io.open(output..'/error.txt','w'); f:write(tostring(err)); f:close(); report:close();emu.stop(1) end
+    if not ok then
+      failed=true
+      local q=io.open(output..'/debugram.bin','wb'); local t={}
+      for k=0,32767 do t[#t+1]=string.char(emu.read(k,emu.memType.gsuWorkRam)) end
+      q:write(table.concat(t)); q:close()
+      local f=io.open(output..'/error.txt','w'); f:write(tostring(err)); f:close(); report:close();emu.stop(1)
+    end
   end
 end
 DISPLAY_CODE
-for _,name in ipairs({'packed_one','packed_half','packed_quarter'}) do
+for _,name in ipairs({'packed_one','packed_half','packed_quarter','packed_double',
+                     'packed_mirror_one','packed_mirror_half','packed_mirror_quarter'}) do
   emu.addMemoryCallback(guard(function() stats[name]=(stats[name] or 0)+1 end),
     emu.callbackType.exec,labels[name],labels[name],emu.cpuType.gsu,emu.memType.gsuMemory)
 end
@@ -67,32 +76,48 @@ if scenario=='packed' then
   emu.addMemoryCallback(guard(function()
     local sprites={{40,100,32,48,0},{90,100,16,24,0},{125,100,8,12,0},
       {165,100,32,48,32},{0,100,32,48,0},{215,30,32,48,0},
-      {4,180,16,24,0},{256,180,8,12,0},{120,170,32,48,16}}
+      {4,180,16,24,0},{256,180,8,12,0},{120,170,32,48,16},
+      {120,190,68,158,0,4},{35,200,68,158,32,4},
+      {160,180,16,24,16},{200,180,8,12,48}}
+    local tail=read('_monosh_runtime_frame_counter',2)%8
+    sprites[#sprites+1]={256-(56+tail)+34,190,68,158,tail%2==0 and 0 or 32,4}
+    stats.doubleTailRequests=stats.doubleTailRequests or {}
+    stats.doubleTailRequests[tail]=true
     for i,d in ipairs(sprites) do
-      local values={d[1]&255,(d[1]>>8)&255,d[2],0,d[3],d[4],9,d[5],i,0}
+      local values={d[1]&255,(d[1]>>8)&255,d[2],0,d[3],d[4],d[6] or 9,d[5],i,0}
       for j,v in ipairs(values) do put('_fx_draw',(i-1)*10+j-1,v) end
     end
     put('_fx_draw_count',0,#sprites)
   end),emu.callbackType.exec,0x7F0000+labels._fx_build_packet,0x7F0000+labels._fx_build_packet,emu.cpuType.snes,emu.memType.snesMemory)
 end
-if scenario=='equivalence' then
+if scenario=='equivalence' or scenario=='equivalence_boss' then
   -- Native移植前後で、物理frame数によらず同じlogic更新の状態を比較する。
   emu.addMemoryCallback(guard(function()
     put('_fx_fire_actions',0,2);put('_monosh_runtime_fire_actions',0,2)
     local inputs={1,2,8,4,9,6,0,0}
-    put('_fx_input',0,inputs[(read('_monosh_runtime_frame_counter',2)//96)%8+1])
+    local input=inputs[(read('_monosh_runtime_frame_counter',2)//96)%8+1]
+    put('_fx_input',0,input)
+    -- entry時点で引数は既にcc65 stackへ積まれている。実引数も揃える。
+    emu.write(0x7e0000+read('c_sp',2),input,emu.memType.snesMemory)
   end),emu.callbackType.exec,0x7F0000+labels._monosh_player_update,0x7F0000+labels._monosh_player_update,emu.cpuType.snes,emu.memType.snesMemory)
   local states=assert(io.open(output..'/states.bin','wb'))
   local blocks={{'_monosh_runtime_frame_counter',2},{'_monosh_player_x',2},{'_monosh_player_bottom',2},
     {'_monosh_player_state',1},{'_monosh_player_invuln',1},{'_monosh_player_stumble',1},{'_monosh_player_pose',1},
+    {'_player_fy',2},{'_death_vy',1},{'_death_timer',1},{'_movement_fraction',1},
+    {'_death_accel_fraction',1},{'_intro_timer',1},{'_player_flip',1},{'_player_run_phase',1},
+    {'_monosh_stage_title_timer',1},{'_monosh_title_visible',1},
     {'_monosh_stage_frame_counter',2},{'_monosh_stage_spawn_index',1},{'_monosh_stage_half_frame',1},
     {'_monosh_stage_object_count',1},{'_monosh_stage_objects',96},{'_monosh_enemy_spawn_index',1},
     {'_monosh_enemy_spawn_wait',2},{'_monosh_enemy_active_count_value',1},{'_monosh_enemy_em1_count',1},
     {'_monosh_enemy_stage_complete_flag',1},{'_monosh_enemies',80},{'_monosh_enemy_em1_phase',16},
     {'_monosh_enemy_em1_shrink',8},{'_monosh_enemy_bullet_count',1},{'_monosh_enemy_bullets',42},
+    {'_boss_dda_phase',6},{'_boss_dda_x',6},{'_boss_dda_y',6},
     {'_monosh_player_bullet_count',1},{'_monosh_player_bullets',15},{'_monosh_reflected_bullet_count',1},
     {'_monosh_reflected_bullets',15},{'_monosh_boss_state',1},{'_monosh_boss_hp',1},
     {'_boss_part_x',9},{'_boss_part_bottom',9},{'_boss_part_z',9},{'_boss_part_active',9},{'_boss_part_timer',9},
+    {'_monosh_ground_offset',1},{'_monosh_ground_screen_delta',1},{'_fx_ground_world_phase',1},
+    {'_fx_far_u_acc',2},{'_fx_far_d_acc',2},{'_monosh_combat_fire_cooldown',1},{'_monosh_bullet_reflect_rng',1},
+    {'_boss_age',1},{'_history_head',1},{'_boss_history_x',128},{'_boss_history_y',128},{'_boss_history_z',128},
     {'_fx_draw_count',1},{'_fx_draw',640}}
   local f=assert(io.open(output..'/state_blocks.json','w'));f:write(encoded(blocks));f:close()
   emu.addMemoryCallback(guard(function()
@@ -129,7 +154,9 @@ emu.addMemoryCallback(guard(function()
     for i,v in ipairs({0,0,1,3,0,0}) do put('_monosh_stage_objects',i-1,v) end
     put('_monosh_stage_object_count',0,1)
   end
-  if scenario~='boss' or field<90 then return end
+  local fixture_frame=scenario=='equivalence_boss' and read('_monosh_runtime_frame_counter',2) or field
+  if (scenario~='boss' and scenario~='equivalence_boss') or fixture_frame<90 then return end
+  if scenario=='equivalence_boss' then put('_monosh_player_invuln',0,255) end
   if not fixture_started then
     fixture_started=true
     put('_monosh_player_invuln',0,255)
@@ -140,7 +167,7 @@ emu.addMemoryCallback(guard(function()
     write('_monosh_stage_frame_counter',3900)
   end
   -- 通常のボス射撃を先に観測。HPは変更せず、後半で自弾だけを命中位置へ置く。
-  if read('_monosh_boss_state')==1 and field>600 then
+  if read('_monosh_boss_state')==1 and fixture_frame>600 then
     local z=byte('_boss_part_z',0)
     local height=byte('_monosh_boss_face_geometry',math.min(z,110)*2+1)
     if z>=8 and z<=90 then
@@ -201,10 +228,10 @@ emu.addMemoryCallback(guard(function(a,v)
   if rendered==0 then
     for i=0,15 do emu.write(0x1ff0+i,0xa5,emu.memType.gsuWorkRam);emu.write(0x5000+i,0x5a,emu.memType.gsuWorkRam) end
   end
-  if rendered==0 or (rendered+1)%300==0 then
+  if rendered==0 or (rendered+1)%300==0 or (scenario=='packed' and rendered<8) then
     dump(string.format('draw%05d.bin',rendered+1),emu.memType.snesMemory,0x7E0000+labels._fx_draw,640)
     local f=assert(io.open(output..string.format('/meta%05d.json',rendered+1),'w'))
-    f:write(encoded({count=read('_fx_draw_count'),logic=read('_monosh_runtime_frame_counter',2)}));f:close()
+    f:write(encoded({count=read('_fx_draw_count'),logic=read('_monosh_runtime_frame_counter',2),gsuUv=gsu_uv,gsuClip=gsu_clip}));f:close()
   end
 end),emu.callbackType.write,0x7E1DF0,0x7E1DF0)
 emu.addMemoryCallback(guard(function(a,v)
@@ -216,7 +243,18 @@ emu.addMemoryCallback(guard(function(a,v)
 end),emu.callbackType.write,0x7E1DF0,0x7E1DF0)
 emu.addMemoryCallback(guard(function(a,v)
   if v~=3 then return end
-  dma_start=emu.getState().masterClock
+  local s=emu.getState()
+  dma_start=s.masterClock
+  local line=s['ppu.scanline'];local count=read('fx_dma_count',2)
+  local deadline=emu.read(0x7e1d10,emu.memType.snesMemory)
+  assert(line>=203 and line<=deadline+3,'DMA start outside admitted blank window')
+  if deadline==220 then
+    assert(read('fx_dma_bytes',2)+count*128<=9216,'large DMA admitted late')
+  end
+  stats.lateDmaStarts=(stats.lateDmaStarts or 0)+(line>206 and 1 or 0)
+  stats.maxDmaStartLine=math.max(stats.maxDmaStartLine or 0,line)
+  stats.maxDmaSpanCount=math.max(stats.maxDmaSpanCount or 0,count)
+  report:write(string.format('{"dmaStartLine":%d,"spans":%d,"deadline":%d,"field":%d}\n',line,count,deadline,field))
   if rendered==0 then
     local f=io.open(output..'/descriptors.txt','w')
     for i=0,31 do
@@ -232,6 +270,7 @@ emu.addMemoryCallback(guard(function(a,v)
   if v~=4 then return end
   rendered=rendered+1
   local s=emu.getState()
+  assert(s['ppu.scanline']<23 or s['ppu.scanline']>=203,'DMA overlaps visible area')
   local duration=elapsed(s.masterClock,dma_start)
   local bytes=read('fx_dma_bytes',2)
   stats.dmaMaxMs=math.max(stats.dmaMaxMs,duration)
@@ -276,7 +315,6 @@ emu.addMemoryCallback(guard(function(a,v)
   end
   assert(same==12288,'partial DMA: '..same)
   stats.checked=stats.checked+1
-  assert(s['ppu.scanline']<23 or s['ppu.scanline']>=203,'DMA overlaps visible area')
   for i=0,15 do assert(emu.read(0x1ff0+i,emu.memType.gsuWorkRam)==0xa5 and emu.read(0x5000+i,emu.memType.gsuWorkRam)==0x5a,'GSU clip writes outside framebuffer') end
   assert(emu.read(0,emu.memType.snesCgRam)==0 and emu.read(1,emu.memType.snesCgRam)==0,'backdrop palette corruption')
   end
@@ -288,7 +326,7 @@ emu.addMemoryCallback(guard(function(a,v)
     for i=0,1311 do b[#b+1]=string.char(emu.read(i,emu.memType.gsuWorkRam)) end
     f:write(table.concat(b));f:close()
   end
-  if rendered==1 or rendered%300==0 then
+  if rendered==1 or rendered%300==0 or (scenario=='packed' and rendered<=8) then
     dump(string.format('frame%05d.bin',rendered),emu.memType.gsuWorkRam,0x2000,12288)
     dump(string.format('packet%05d.bin',rendered),emu.memType.gsuWorkRam,0,1312)
   end
@@ -340,7 +378,9 @@ emu.addEventCallback(guard(function()
     stats.fields=field;stats.rendered=rendered;stats.logic=read('_monosh_runtime_frame_counter',2);stats.stage=read('_monosh_stage_frame_counter',2)
     local f=assert(io.open(output..'/summary.json','w'));f:write(encoded(stats));f:close()
     assert(rendered>1,'no presented frames')
-    if scenario=='packed' then for _,name in ipairs({'packed_one','packed_half','packed_quarter'}) do assert((stats[name] or 0)>0,'unused packed path: '..name) end end
+    if scenario=='packed' then for _,name in ipairs({'packed_one','packed_half','packed_quarter','packed_double',
+      'packed_mirror_one','packed_mirror_half','packed_mirror_quarter'}) do assert((stats[name] or 0)>0,'unused packed path: '..name) end end
+    if scenario=='packed' then for tail=0,7 do assert(stats.doubleTailRequests[tail],'unused double tail: '..tail) end end
     if scenario=='boss' then assert(stats.bossSeen and stats.dyingSeen and stats.doneSeen and stats.loopSeen,'boss progression incomplete') end
     if scenario=='long' then assert(stats.bossSeen and stats.loopSeen and stats.deaths>0 and stats.respawns>0,'natural stage progression incomplete') end
     if scenario=='controls' then assert(stats.singleShotMax==1,'single shot was not exactly one slot') end

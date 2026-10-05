@@ -2,6 +2,7 @@
 .smart
 .macpack longbranch
 .export _fx_enemy_render, _fx_enemy_render_bullets
+.export fx_emit_native
 .import _monosh_enemies, _monosh_enemy_active_count_value
 .import _monosh_enemy_bullets, _monosh_enemy_bullet_count
 .import _monosh_em1_closed_geometry, _monosh_em1_open_geometry
@@ -251,6 +252,7 @@ bullet_geometry:
 
 ; 引数は専用WRAM scratch。Cのsoftware stackへの9byte pushを省く。
 emit:
+fx_emit_native:
   lda $0246
   and #$ff
   jeq emit_done

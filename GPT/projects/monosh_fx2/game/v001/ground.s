@@ -134,30 +134,29 @@ far_tail:
 horizontal_tail:
   jsr horizontal_run
   sty $013e
-row:
   ldx $013c
+  lda #0                    ; TAYが16bitを受け取るのでBも0にする。
+  sep #$20
+row:
   lda f:$7e0000,x
   beq horizontal_done
-  sep #$20
   sta (hp),y
-  rep #$20
   iny
   sty $013e
-  xba
-  and #$ff
+  lda f:$7e0001,x
   tay
   lda (hv),y
-  and #$ff
   ldy $013e
   sta (hp),y
   iny
+  lda #0
+  sta (hp),y
   iny
   sty $013e
-  inc $013c
-  inc $013c
+  inx
+  inx
   bra row
 horizontal_done:
-  sep #$20
   lda #0
   sta (hp),y
 ground_done:
