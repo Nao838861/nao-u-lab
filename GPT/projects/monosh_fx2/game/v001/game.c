@@ -27,6 +27,7 @@ static unsigned char hit_pending;
 static unsigned int old_buttons;
 extern const unsigned char fx_ground_camera[145];
 extern const unsigned char fx_ground_depth_rows[5265];
+extern unsigned char fx_ground_world_phase;
 const unsigned char *monosh_ground_depth_pointer;
 extern unsigned char boss_part_x[], boss_part_bottom[], boss_part_z[], boss_part_active[], boss_part_timer[];
 extern signed char boss_render_camera_delta;
@@ -159,6 +160,7 @@ void fx_frame(void)
     flags = monosh_player_draw_flags();
     world_active = monosh_player_state == MONOSH_PLAYER_ALIVE;
     if (world_active) {
+        fx_ground_world_phase = (fx_ground_world_phase + ((monosh_player_x-128)>>4)) & 127;
         fx_far_u_acc += (monosh_player_x-128)*2;
         fx_far_d_acc += (monosh_player_x-128)*4;
     }

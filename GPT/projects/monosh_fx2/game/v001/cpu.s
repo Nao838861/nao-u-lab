@@ -3,7 +3,9 @@
 .import _main, _fx_frame, _fx_buttons, _fx_packet_count, _fx_packet
 .import _fx_ground_vptr, _fx_ground_c1ptr, _fx_ground_c3ptr
 .import _fx_ground_far_y
+.import _fx_ground_hptr
 .import ground_empty
+.import fx_upload_ground
 .import _fx_ground_far_xptr
 .import fx_plan_dma, fx_commit_dma, fx_dma_count, fx_dma_desc
 .importzp c_sp
@@ -46,7 +48,7 @@ reset:
   sta $210c                 ; BG3 CHR=$4000, BG4 CHR=$6000 bytes
   lda #$40
   sta $2108                 ; BG2 map=$8000
-  lda #$50
+  lda #$51
   sta $2109                 ; BG3 map=$a000
   lda #$60
   sta $210a                 ; BG4 map=$c000
@@ -57,11 +59,13 @@ reset:
   stz $210f
   stz $210f
   lda #$f3
-  sta $210e
+  sta $2110
   lda #$ff
-  sta $210e                 ; BG2 Y=-13 => 最初の8行をcrop
+  sta $2110                 ; BG2だけ固定Y=-13。地面の投影には巻き込まない。
   stz $2111
   stz $2111
+  stz $2113
+  stz $2113
   lda #$f3
   sta $2112
   lda #$ff
@@ -147,13 +151,14 @@ game_started:
   sta f:$7e1d06
   sta f:$7e1d08
   sta f:$7e1d0c
+  sta f:$7e1d0e
   lda #ground_empty
   sta f:$7e1d04
   sep #$20
   lda #0
   sta f:$7e1dff
   jsr _fx_send_ground
-  lda #$fe
+  lda #$be
   sta f:$00420c
   plp
   jsr _main
@@ -173,46 +178,37 @@ _fx_send_ground:
   lda f:$7e1d04
   sta f:$004322
   lda f:$7e1d06
-  sta f:$004342
+  sta f:$004332
   lda f:$7e1d08
-  sta f:$004362
+  sta f:$004342
+  lda f:$7e1d0e
+  sta f:$004352
   lda f:$7e1d0c
   sta f:$004372
   sep #$20
   lda #$7e
+  sta f:$004334
   sta f:$004344
-  sta f:$004364
+  sta f:$004354
   sta f:$004374
   lda #$7f
   sta f:$004324
   lda #2
   sta f:$004320
-  sta f:$004340
-  sta f:$004360
-  sta f:$004370
-  lda #$10
-  sta f:$004321
-  lda #$22
-  sta f:$004341
-  sta f:$004361
-  lda #$11
-  sta f:$004371
-  ; Palette index tableを起動時には使わず、7Fコードの定数をWRAM HDMAから読む。
-  rep #$20
-  lda #index65
-  sta f:$004332
-  lda #index67
-  sta f:$004352
-  sep #$20
-  lda #$7f
-  sta f:$004334
-  sta f:$004354
-  lda #0
-  sta f:$004330
   sta f:$004350
+  sta f:$004370
+  lda #3
+  sta f:$004330
+  sta f:$004340
+  lda #$12
+  sta f:$004321
   lda #$21
   sta f:$004331
+  sta f:$004341
+  lda #$11
   sta f:$004351
+  lda #$13
+  sta f:$004371
   plp
   rts
 
@@ -223,9 +219,11 @@ update_ground_pointers:
   lda f:$7e1d04
   sta f:$004322
   lda f:$7e1d06
-  sta f:$004342
+  sta f:$004332
   lda f:$7e1d08
-  sta f:$004362
+  sta f:$004342
+  lda f:$7e1d0e
+  sta f:$004352
   lda f:$7e1d0c
   sta f:$004372
   plp
@@ -235,6 +233,7 @@ _fx_present:
   php
   rep #$30
   jsr fx_plan_dma
+  jsr fx_upload_ground
   lda _fx_ground_vptr
   sta f:$7e1d04
   lda _fx_ground_c1ptr
@@ -245,6 +244,8 @@ _fx_present:
   sta f:$7e1d0a
   lda _fx_ground_far_xptr
   sta f:$7e1d0c
+  lda _fx_ground_hptr
+  sta f:$7e1d0e
   ; PacketをGSUの停止中にだけ書く。
   lda _fx_packet_count
   sta f:$700000
@@ -303,10 +304,10 @@ wait_hblank:
   sta f:$002100
   jsr update_ground_pointers
   lda f:$7e1d0a
-  sta f:$002112
+  sta f:$002114
   lda f:$7e1d0b
-  sta f:$002112
-  lda #$fe
+  sta f:$002114
+  lda #$be
   sta f:$00420c
   rep #$20
   lda #$1801
@@ -354,18 +355,6 @@ render_entry_address = $8000
 blank_table:
   .byte 22,$80,127,$0f,53,$0f,22,$80,1,$80,0
 
-index65:
-  .byte 111,65,222
-  .repeat 94
-    .byte 65
-  .endrepeat
-  .byte 0
-index67:
-  .byte 111,67,222
-  .repeat 94
-    .byte 67
-  .endrepeat
-  .byte 0
 
 .segment "GFX"
   .incbin "assets/ppu.bin"

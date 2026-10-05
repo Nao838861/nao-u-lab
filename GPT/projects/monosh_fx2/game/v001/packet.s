@@ -2,13 +2,17 @@
 .smart
 .macpack longbranch
 .export _fx_build_packet
+.export packet_done
 .import _fx_draw, _fx_draw_count, _fx_packet, _fx_packet_count
-.import _fx_du_table, _fx_dv_table, _fx_asset_width, _fx_asset_height, _fx_asset_bank
+.import _fx_asset_width, _fx_asset_height, _fx_asset_bank
 .import _monosh_runtime_frame_counter
 .segment "ZEROPAGE"
 dp: .res 2
 pp: .res 2
 steps: .res 2
+.segment "BSS"
+order: .res 128
+keys: .res 128
 .segment "CODE"
 .a8
 .i8
@@ -24,56 +28,61 @@ _fx_build_packet:
   adc $0140
   asl
   sta $0142                ; total draw bytes
-  lda #10
-  sta $0144                ; insertion cursor
+  lda $0140
+  asl
+  sta $0148                ; ソートする2byte indexの総量
+  ldy #0
+  ldx #0
+initialize_order:
+  cpy $0148
+  bcs initialized
+  txa
+  sta order,y
+  lda _fx_draw+8,x
+  eor #$00ff               ; priority昇順、同priorityならZ降順
+  sta keys,y
+  txa
+  clc
+  adc #10
+  tax
+  iny
+  iny
+  bra initialize_order
+initialized:
+  lda #2
+  sta $0144
 sort:
   lda $0144
-  cmp $0142
-  jcs sorted
-  tax
-  .repeat 5,I
-    lda _fx_draw+I*2,x
-    sta $0150+I*2
-  .endrepeat
-  txa
-  sec
-  sbc #10
-  tax
+  cmp $0148
+  bcs sorted
+  tay
+  lda order,y
+  sta $015a
+  lda keys,y
+  sta $0158
+  dey
+  dey
 compare:
-  sep #$20
-  lda _fx_draw+9,x
-  cmp $0159
-  bcc insert
-  bne move_record
-  lda _fx_draw+8,x
+  lda keys,y
   cmp $0158
-  bcs insert
-move_record:
-  rep #$20
-  .repeat 5,I
-    lda _fx_draw+I*2,x
-    sta _fx_draw+10+I*2,x
-  .endrepeat
-  txa
-  sec
-  sbc #10
-  tax
+  bcc insert
+  beq insert
+  sta keys+2,y
+  lda order,y
+  sta order+2,y
+  dey
+  dey
   bpl compare
 insert:
-  rep #$20
-  txa
-  clc
-  adc #10
-  tax
-  .repeat 5,I
-    lda $0150+I*2
-    sta _fx_draw+I*2,x
-  .endrepeat
-  lda $0144
-  clc
-  adc #10
-  sta $0144
-  jmp sort
+  iny
+  iny
+  lda $015a
+  sta order,y
+  lda $0158
+  sta keys,y
+  inc $0144
+  inc $0144
+  bra sort
 sorted:
   lda #_fx_draw
   sta dp
@@ -83,10 +92,147 @@ sorted:
   stz $0144
 next:
   lda $0144
-  cmp $0142
-  bcc compile
+  cmp $0148
+  bcc fast_compile
+packet_done:
   plp
   rts
+; 四辺が画面内の通常スプライト。divider待ちはpacketの書込と重ねる。
+fast_compile:
+  ldy $0144
+  lda order,y
+  tax
+  clc
+  adc #_fx_draw
+  sta dp
+  lda _fx_draw+4,x
+  and #$ff
+  sta $0160
+  lsr
+  sta $0170
+  lda _fx_draw,x
+  sec
+  sbc $0170
+  sta $0172
+  cmp #256
+  jcs compile
+  clc
+  adc $0160
+  cmp #257
+  jcs compile
+  lda _fx_draw+5,x
+  and #$ff
+  sta $0162
+  lda _fx_draw+2,x
+  sec
+  sbc $0162
+  sec
+  sbc #20
+  sta $0174
+  cmp #192
+  jcs compile
+  clc
+  adc $0162
+  cmp #193
+  jcs compile
+  lda _fx_draw+7,x
+  and #$ff
+  sta $016a
+  and #$80
+  beq :+
+  lda _monosh_runtime_frame_counter
+  and #1
+  jne skip
+:
+  lda _fx_draw+6,x
+  and #$ff
+  sta $0164
+  tax
+  lda _fx_asset_width,x
+  and #$ff
+  xba
+  sta f:$004204
+  sep #$20
+  lda $0160
+  sta f:$004206
+  rep #$20
+  lda pp
+  sec
+  sbc #_fx_packet
+  tay
+  lda $0172
+  sta _fx_packet,y
+  sta _fx_packet+8,y
+  lda $0174
+  sta _fx_packet+2,y
+  lda f:$004214
+  sta $0166
+  lda $016a
+  and #$10
+  beq ordinary_u
+  lda $0166
+  eor #$ffff
+  inc
+  sta _fx_packet+4,y
+  lda _fx_asset_width,x
+  and #$ff
+  xba
+  dec
+  bra save_u
+ordinary_u:
+  lda $0166
+  sta _fx_packet+4,y
+  lda #0
+save_u:
+  sta _fx_packet+16,y
+  lda _fx_asset_height,x
+  and #$ff
+  xba
+  sta f:$004204
+  sep #$20
+  lda $0162
+  sta f:$004206
+  rep #$20
+  lda $0160
+  sta _fx_packet+14,y
+  lda $0162
+  sta _fx_packet+10,y
+  lda _fx_asset_bank,x
+  and #$ff
+  sta _fx_packet+18,y
+  lda $0164
+  and #1
+  beq :+
+  lda #$8000
+:
+  sta $016e
+  lda f:$004214
+  sta $0168
+  lda $016a
+  and #$20
+  beq ordinary_v
+  lda $0168
+  eor #$ffff
+  inc
+  sta _fx_packet+6,y
+  lda _fx_asset_height,x
+  and #$ff
+  xba
+  dec
+  ora $016e
+  bra save_v
+ordinary_v:
+  lda $0168
+  sta _fx_packet+6,y
+  lda $016e
+save_v:
+  sta _fx_packet+12,y
+  inc _fx_packet_count
+  lda pp
+  clc
+  adc #20
+  sta pp
+  jmp skip
 compile:
   ldy #4
   lda (dp),y
@@ -100,21 +246,32 @@ compile:
   lda (dp),y
   and #$ff
   sta $0164                 ; asset
-  asl
   tax
-  lda _fx_du_table,x
-  sta steps
+  lda _fx_asset_width,x
+  and #$ff
+  xba
+  sta f:$004204
+  sep #$20
   lda $0160
-  asl
-  tay
-  lda (steps),y
+  sta f:$004206
+  rep #$20
+  .repeat 8
+    nop
+  .endrepeat
+  lda f:$004214
   sta $0166                 ; du
-  lda _fx_dv_table,x
-  sta steps
+  lda _fx_asset_height,x
+  and #$ff
+  xba
+  sta f:$004204
+  sep #$20
   lda $0162
-  asl
-  tay
-  lda (steps),y
+  sta f:$004206
+  rep #$20
+  .repeat 8
+    nop
+  .endrepeat
+  lda f:$004214
   sta $0168                 ; dv
   ldy #7
   lda (dp),y
@@ -148,10 +305,8 @@ compile:
   stz $0172
   lda #0
 clip_x:
-  clc
-  adc $0166
-  dex
-  bne clip_x
+  lda $0166
+  jsr clip_product
   sta $016c
 x_positive:
   lda $0172
@@ -182,10 +337,8 @@ x_positive:
   stz $0174
   lda #0
 clip_y:
-  clc
-  adc $0168
-  dex
-  bne clip_y
+  lda $0168
+  jsr clip_product
   sta $016e
 y_positive:
   lda $0174
@@ -278,12 +431,25 @@ y_positive:
   adc #20
   sta pp
 skip:
-  lda dp
-  clc
-  adc #10
-  sta dp
-  lda $0144
-  clc
-  adc #10
-  sta $0144
+  inc $0144
+  inc $0144
   jmp next
+; X*duを最大8段のshift/addで作る。画面外px分の反復加算を避ける。
+clip_product:
+  sta $0178
+  stz $0176
+product_loop:
+  txa
+  lsr
+  tax
+  bcc product_shift
+  lda $0176
+  clc
+  adc $0178
+  sta $0176
+product_shift:
+  asl $0178
+  cpx #0
+  bne product_loop
+  lda $0176
+  rts

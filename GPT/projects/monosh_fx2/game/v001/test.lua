@@ -9,6 +9,7 @@ local clock_start = 0
 local gsu_start = 0
 local dma_start = 0
 local profile={}
+local native_profile={}
 local failed=false
 local previous_field,previous_boss,previous_player=0,0,0
 local stats={fields=0,rendered=0,checked=0,deaths=0,respawns=0,bossSeen=false,dyingSeen=false,doneSeen=false,loopSeen=false,
@@ -57,7 +58,58 @@ local function guard(fn)
     if not ok then failed=true; local f=io.open(output..'/error.txt','w'); f:write(tostring(err)); f:close(); report:close();emu.stop(1) end
   end
 end
+DISPLAY_CODE
+for _,name in ipairs({'packed_one','packed_half','packed_quarter'}) do
+  emu.addMemoryCallback(guard(function() stats[name]=(stats[name] or 0)+1 end),
+    emu.callbackType.exec,labels[name],labels[name],emu.cpuType.gsu,emu.memType.gsuMemory)
+end
+if scenario=='packed' then
+  emu.addMemoryCallback(guard(function()
+    local sprites={{40,100,32,48,0},{90,100,16,24,0},{125,100,8,12,0},
+      {165,100,32,48,32},{0,100,32,48,0},{215,30,32,48,0},
+      {4,180,16,24,0},{256,180,8,12,0},{120,170,32,48,16}}
+    for i,d in ipairs(sprites) do
+      local values={d[1]&255,(d[1]>>8)&255,d[2],0,d[3],d[4],9,d[5],i,0}
+      for j,v in ipairs(values) do put('_fx_draw',(i-1)*10+j-1,v) end
+    end
+    put('_fx_draw_count',0,#sprites)
+  end),emu.callbackType.exec,0x7F0000+labels._fx_build_packet,0x7F0000+labels._fx_build_packet,emu.cpuType.snes,emu.memType.snesMemory)
+end
+if scenario=='equivalence' then
+  -- Native移植前後で、物理frame数によらず同じlogic更新の状態を比較する。
+  emu.addMemoryCallback(guard(function()
+    put('_fx_fire_actions',0,2);put('_monosh_runtime_fire_actions',0,2)
+    local inputs={1,2,8,4,9,6,0,0}
+    put('_fx_input',0,inputs[(read('_monosh_runtime_frame_counter',2)//96)%8+1])
+  end),emu.callbackType.exec,0x7F0000+labels._monosh_player_update,0x7F0000+labels._monosh_player_update,emu.cpuType.snes,emu.memType.snesMemory)
+  local states=assert(io.open(output..'/states.bin','wb'))
+  local blocks={{'_monosh_runtime_frame_counter',2},{'_monosh_player_x',2},{'_monosh_player_bottom',2},
+    {'_monosh_player_state',1},{'_monosh_player_invuln',1},{'_monosh_player_stumble',1},{'_monosh_player_pose',1},
+    {'_monosh_stage_frame_counter',2},{'_monosh_stage_spawn_index',1},{'_monosh_stage_half_frame',1},
+    {'_monosh_stage_object_count',1},{'_monosh_stage_objects',96},{'_monosh_enemy_spawn_index',1},
+    {'_monosh_enemy_spawn_wait',2},{'_monosh_enemy_active_count_value',1},{'_monosh_enemy_em1_count',1},
+    {'_monosh_enemy_stage_complete_flag',1},{'_monosh_enemies',80},{'_monosh_enemy_em1_phase',16},
+    {'_monosh_enemy_em1_shrink',8},{'_monosh_enemy_bullet_count',1},{'_monosh_enemy_bullets',42},
+    {'_monosh_player_bullet_count',1},{'_monosh_player_bullets',15},{'_monosh_reflected_bullet_count',1},
+    {'_monosh_reflected_bullets',15},{'_monosh_boss_state',1},{'_monosh_boss_hp',1},
+    {'_boss_part_x',9},{'_boss_part_bottom',9},{'_boss_part_z',9},{'_boss_part_active',9},{'_boss_part_timer',9},
+    {'_fx_draw_count',1},{'_fx_draw',640}}
+  local f=assert(io.open(output..'/state_blocks.json','w'));f:write(encoded(blocks));f:close()
+  emu.addMemoryCallback(guard(function()
+    local raw={}
+    for _,b in ipairs(blocks) do for i=0,b[2]-1 do raw[#raw+1]=string.char(byte(b[1],i)) end end
+    states:write(table.concat(raw));states:flush()
+  end),emu.callbackType.exec,0x7F0000+labels._fx_build_packet,0x7F0000+labels._fx_build_packet,emu.cpuType.snes,emu.memType.snesMemory)
+end
 if scenario=='profile' then
+for _,pair in ipairs({{'_fx_build_packet','packet_done'},{'_fx_ground_native','ground_done'}}) do
+  emu.addMemoryCallback(guard(function() native_profile[pair[1]]=emu.getState().masterClock end),
+    emu.callbackType.exec,0x7F0000+labels[pair[1]],0x7F0000+labels[pair[1]],emu.cpuType.snes,emu.memType.snesMemory)
+  emu.addMemoryCallback(guard(function()
+    local start=native_profile[pair[1]]
+    if start then report:write(string.format('{"function":"%s","ms":%.6f,"field":%d}\n',pair[1],elapsed(emu.getState().masterClock,start),field)) end
+  end),emu.callbackType.exec,0x7F0000+labels[pair[2]],0x7F0000+labels[pair[2]],emu.cpuType.snes,emu.memType.snesMemory)
+end
 for _,name in ipairs({'_fx_frame','_fx_build_packet','_fx_build_ground','_fx_ground_native','_monosh_enemy_frame','_monosh_stage_frame'}) do
   emu.addMemoryCallback(guard(function()
     local clock=emu.getState().masterClock
@@ -67,6 +119,8 @@ for _,name in ipairs({'_fx_frame','_fx_build_packet','_fx_build_ground','_fx_gro
 end
 end
 emu.addMemoryCallback(guard(function()
+  -- 入力方向の試験が敵接触による死亡アニメーションに切り替わらないよう固定。
+  if scenario=='controls' then put('_monosh_player_invuln',0,255) end
   if scenario=='stumble' and field>=400 and not fixture_started then
     fixture_started=true
     write('_monosh_player_bottom',201)
@@ -286,6 +340,7 @@ emu.addEventCallback(guard(function()
     stats.fields=field;stats.rendered=rendered;stats.logic=read('_monosh_runtime_frame_counter',2);stats.stage=read('_monosh_stage_frame_counter',2)
     local f=assert(io.open(output..'/summary.json','w'));f:write(encoded(stats));f:close()
     assert(rendered>1,'no presented frames')
+    if scenario=='packed' then for _,name in ipairs({'packed_one','packed_half','packed_quarter'}) do assert((stats[name] or 0)>0,'unused packed path: '..name) end end
     if scenario=='boss' then assert(stats.bossSeen and stats.dyingSeen and stats.doneSeen and stats.loopSeen,'boss progression incomplete') end
     if scenario=='long' then assert(stats.bossSeen and stats.loopSeen and stats.deaths>0 and stats.respawns>0,'natural stage progression incomplete') end
     if scenario=='controls' then assert(stats.singleShotMax==1,'single shot was not exactly one slot') end

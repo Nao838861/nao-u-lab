@@ -1,5 +1,5 @@
 {
-  "romSha256": "abad2e99994b8b167d635f64999d1e54bec19defee2ac6135f4bc427090fc4ed",
+  "romSha256": "ab7781fd9bbd5dbdf728ffd48a56691fbba0d34d98244665f0f46af539af1ef3",
   "romBytes": 2097152,
   "display": [
     256,
@@ -54,7 +54,10 @@
     "stumble": 800,
     "boss": 2600,
     "stress": 360,
+    "packed": 360,
+    "display": 720,
     "long": 18000,
     "profile": 2400
-  }
+  },
+  "equivalenceMatchedUpdates": 4332
 }

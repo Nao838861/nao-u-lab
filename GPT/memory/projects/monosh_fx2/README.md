@@ -4,7 +4,7 @@ NES の MonoSH を SNES の CPU と Super FX2 へ移植する新プロジェク�
 
 正本は [プロジェクト入口](../../../projects/monosh_fx2/README.md) と [設計書](../../../projects/monosh_fx2/DESIGN.md)。原文は同所の `REQUEST.md`。NES 側の入口は [MonoSH 記憶入口](../monosh/README.md)。
 
-**現在は実行可能な移植ROMができた。** 次回は [移植版 v001](20261005_playable_v001.md) と [実ゲームの測定](../../../projects/monosh_fx2/game/v001/RESULTS.md) から再開する。表示256×180、通常30fps前後。Stage 1・被弾・復帰・ボス撃破・次周まで確認済み。192行／60fpsは未達で、CPU更新・描画準備の平均18.28msが主な制約。起動は [play.cmd](../../../projects/monosh_fx2/play.cmd)。
+**現在は表示修正と高速化を行った移植ROMができた。** 次回は [表示改修のチェックポイント](20261005_display_fix_v001.md) と [実ゲームの測定](../../../projects/monosh_fx2/game/v001/RESULTS.md) から再開する。表示256×180、通常進行平均35.31fps。地面の行別縦横・緑四色、遠景Y、FX層の固定V、地上物との高さを修正。Stage 1・被弾・復帰・ボス撃破・次周を確認し、C/nativeは4,332更新一致。192行／60fpsは未達で、profileのCPU平均は18.28msから10.31msへ改善。起動は [play.cmd](../../../projects/monosh_fx2/play.cmd)。[初版の記録](20261005_playable_v001.md) は履歴として残す。
 
 ## 移植前のプローブ履歴
 

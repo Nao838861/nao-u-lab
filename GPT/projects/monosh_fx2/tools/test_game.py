@@ -13,7 +13,7 @@ from build_game import BUILD, GAME
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--frames',type=int,default=360)
-    parser.add_argument('--scenario',default='play',choices=['play','pause','boss','stress','long','profile','controls','stumble'])
+    parser.add_argument('--scenario',default='play',choices=['play','pause','boss','stress','packed','long','profile','controls','stumble','display','equivalence'])
     parser.add_argument('--timeout',type=int,default=60)
     args=parser.parse_args()
     rom=BUILD/'MonoSHFX2_v001.sfc'
@@ -33,6 +33,7 @@ def main():
         if old.is_file(): old.unlink()
     if (output/'error.txt').exists(): (output/'error.txt').unlink()
     script=(GAME/'test.lua').read_text(encoding='utf-8').replace('LABELS',lua(labels)).replace('OUTDIR',lua(output.as_posix())).replace('MAXFRAME',str(args.frames)).replace('SCENARIO',lua(args.scenario))
+    script=script.replace('DISPLAY_CODE',(GAME/'display.lua').read_text(encoding='utf-8'))
     path=output/'test.lua'; path.write_text(script,encoding='utf-8')
     mesen=prepare_runtime(MESEN_EXE)
     settings=mesen.parent/'settings.json'
@@ -56,5 +57,7 @@ def main():
     summary['romSha256']=rom_sha
     summary_path.write_text(json.dumps(summary,indent=2)+'\n',encoding='utf-8')
     subprocess.run([sys.executable,str(Path(__file__).with_name('verify_game_pixels.py')),args.scenario],check=True)
+    if args.scenario=='display':
+        subprocess.run([sys.executable,str(Path(__file__).with_name('verify_game_display.py')),args.scenario],check=True)
 
 if __name__=='__main__': main()

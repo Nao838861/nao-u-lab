@@ -106,7 +106,7 @@ void monosh_enemy_fast_advance(void)
             if (fire && --fire == 0) fire_enemy_bullet(e);
             ++e->frame; path = &monosh_enemy_paths[e->pattern];
             if (e->frame >= path->frames) { remove_enemy(i); continue; }
-            update_em0_geometry(e, path); e->display = fire;
+            fx_em0_geometry(e); e->display = fire;
             if (!e->z && (unsigned char)(e->x - (monosh_player_x/2+60) + 14) < 36 &&
                 (unsigned char)(e->bottom - monosh_player_bottom + 20) < 53) player_hit = 1;
         } else if (e->type == ENEMY_TYPE_BOM0) {

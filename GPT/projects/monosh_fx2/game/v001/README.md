@@ -2,7 +2,7 @@
 
 Stage 1、地形・敵2種・射撃・反射・転倒・死亡・復帰・9節ボス・撃破・次周の進行を含む単独起動SNES ROM。MSX版の60Hz更新仕様とデータを移植し、CPUが更新・ソート、Super FX2が拡縮スプライト、通常BGとHDMAが地面・遠景を担当する。
 
-**表示は256×180、実ゲームは概ね30fpsで、60fpsには未達。** 60Hzの時間刻みの処理を1回ずつ行い、間に合わなければ次の表示枠を待つため、処理落ち中はゲームの時間も遅くなる。軽い場面には60fps、重い場面には20fps以下になる更新もある。現段階の評価は [RESULTS.md](RESULTS.md)。
+**表示は256×180、通常進行の平均35.31fpsで、60fpsには未達。** 60Hzの時間刻みの処理を1回ずつ行い、間に合わなければ次の表示枠を待つため、処理落ち中はゲームの時間も遅くなる。軽い場面には60fps、重い更新には20fps以下になる場合もある。地面・遠景・FX層の表示を修正し、現段階の評価は [RESULTS.md](RESULTS.md)。
 
 ## 遊ぶ
 
@@ -28,7 +28,7 @@ GPTリポジトリのルートで実行する。
 
 ```powershell
 python -X utf8 projects/monosh_fx2/tools/build_game.py
-python -X utf8 projects/monosh_fx2/tools/verify_game.py
+python -X utf8 projects/monosh_fx2/tools/verify_game.py --equivalence
 python -X utf8 projects/monosh_fx2/tools/test_game.py --scenario play --frames 360
 python -X utf8 projects/monosh_fx2/tools/test_game.py --scenario pause --frames 360
 python -X utf8 projects/monosh_fx2/tools/test_game.py --scenario controls --frames 720
@@ -39,6 +39,8 @@ python -X utf8 projects/monosh_fx2/tools/test_game.py --scenario long --frames 1
 ```
 
 テストは専用Mesenを非対話モードで実行する。`long` は通常のパッド入力だけで進め、死亡・復帰・自然なボス到達・撃破・周回を要求する。`boss` はステージ終端と無敵をテスト側から設定し、通常ボス射撃の後に自弾を命中位置へ置く。HPは書き換えず、16回の頭部命中と胴反射・爆発・周回を確認する。`stress` は上下左右をclipした20本の木をテスト側から投入し、全12KiB転送とRAM guardを検査する。これらの状態書換えはLua検証専用で、製品ROMにデバッグショートカットを組み込んでいない。
+
+`--equivalence` はC参照版と65816版を同一入力・更新回数で比較する。`display` は低・中・高カメラの最終RGB、地上物と同じ投影表、緑四色を検査する。`packed` は3種の高速経路・clip・反転を実行したことも要求する。
 
 VRAMとGSUのFBを比較し、別のPython実装でもソート、Q8.8 UV、clip、flip、透明合成の全画素を照合する。`build/game_v001/` は自動生成物。保存済み測定・画像は [results/](results/)。Mesenのテスト用メモリアクセスAPIを使った検証であり、実機確認はまだ行っていない。
 
@@ -52,15 +54,15 @@ VRAMとGSUのFBを比較し、別のPython実装でもソート、Q8.8 UV、clip
 |[upstream/](upstream/)|元のMSX Cと製品ASMの変更しないスナップショット|
 |[combat_port.c](combat_port.c) / [enemy_impl.inc](enemy_impl.inc)|Z80の高速更新経路のC翻訳、射撃・EM1・反射・ボス弾DDA|
 |[submit.s](submit.s) / [packet.s](packet.s)|65816の描画リスト、安定ソート、UV・clip・flip|
-|[stage.s](stage.s) / [projection.s](projection.s)|地形の投影と、描画矩形を共用する自弾判定|
+|[stage.s](stage.s) / [projection.s](projection.s)|地形の投影と、描画矩形を共用する自弾判定。更新はstage_update.s|
 |[gsu.s](gsu.s)|GSU RAMの描画リストを解析し、クリアと最近傍拡縮を行う|
 |[dma.s](dma.s)|前回・今回の矩形を32列の縦範囲にまとめ、消去も転送|
-|[ground.s](ground.s) / [ground.c](ground.c)|通常BGの奥行き市松、グレー階調、カメラ、遠景の2速度スクロール|
+|[ground.s](ground.s) / [ground.c](ground.c)|通常BGの行別縦横投影、奥行き帯ごとの緑四色、独立した遠景スクロール|
 |[cpu.s](cpu.s) / [rom.cfg](rom.cfg)|起動・WRAM配置・CPU/GSU並行処理・HDMA・DMA|
 
 GSU動作中、CPUのコード・定数・作業領域はWRAMだけを使う。GSUへ渡したリストはSTOPまで固定し、CPUは次フレームを準備する。GSU RAMをCPUが読む／DMAするのはSTOP後。地面の可変HDMA表は3組で、表示中・描画中・次フレーム準備が同じ表を書かない。
 
-GSU側は任意倍率とclipを優先した汎用点参照カーネル。原画を2枚ずつROM bankに置くため各原画の高さは128までで、近距離の一部は拡大参照になる。以前のプローブで速かった同色区間・packed等倍／半分／1/4の切替は、このゲーム経路へまだ統合していない。最大表示寸法に合わせた原画配置と高速経路の統合は、60fpsへ向けた次の改善対象。
+GSU側はQ8.8の任意倍率とclipに対応する。原画を2枚ずつROM bankに置くため各原画の高さは128までで、近距離の一部は拡大参照になる。水平UVが等倍・半分・1/4で4原画画素境界から始まる矩形は、4texel/byteのpacked参照へ切り替える。Y反転と行のclipにも対応し、その他の倍率とX反転は汎用点参照で同じQ8.8の画素を描く。最大表示寸法に合わせた原画配置と同色区間描画は、引き続き改善対象。
 
 依存の一次資料は [casfx](https://github.com/ARM9/casfx)、[Mesen GSU実装](https://github.com/SourMesen/Mesen2/tree/master/Core/SNES/Coprocessors/GSU)、ランチャーの入力設定は [Mesen InputConfig](https://github.com/SourMesen/Mesen2/blob/master/UI/Config/InputConfig.cs) と [共通キー定義](https://github.com/SourMesen/Mesen2/blob/master/Core/Shared/KeyDefinitions.h)。固定した取得元・ハッシュは [../../probes/v001/sources.lock.json](../../probes/v001/sources.lock.json)。
 

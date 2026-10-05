@@ -1,6 +1,8 @@
 # MonoSH Super FX2 開発プロジェクト
 
-NES版MonoSHのゲームを、MSXSHの60Hz更新仕様を参照してSNESのCPUへ移植した。Super FX2が拡縮スプライトを奥から描き、通常BGとHDMAが地面・遠景を描く。**Stage 1からボス撃破・次周まで動くROMができた。表示256×180、通常30fps前後で、60fpsの目標には未達。**
+NES版MonoSHのゲームを、MSXSHの60Hz更新仕様を参照してSNESのCPUへ移植した。Super FX2が拡縮スプライトを奥から描き、通常BGとHDMAが地面・遠景を描く。**Stage 1からボス撃破・次周まで動くROMができた。表示256×180、通常進行平均35.31fpsで、60fpsの目標には未達。**
+
+表示改修で地面の行別縦横スクロールと緑四色、遠景の上下移動、FX層の一対一表示、地上物との高さを修正した。C版とネイティブ版の4,332更新一致、最終RGBの三カメラ照合を含む [検証結果](game/v001/RESULTS.md) を保存した。
 
 まず [play.cmd](play.cmd) で遊べる。[ROM単体](releases/MonoSHFX2_v001.sfc) と [操作・ビルド手順](game/v001/README.md)、[実ゲームの測定結果](game/v001/RESULTS.md) を保存した。上下はNESと同じリバース操作。専用ランチャーでは左右矢印、下＝上昇／上＝下降、X連射、Z単発、Enter一時停止。
 

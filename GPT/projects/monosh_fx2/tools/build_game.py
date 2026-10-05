@@ -208,11 +208,32 @@ def export_ppu(dest):
     (dest/'ppu.bin').write_bytes(vram)
     print(f'BG ground {len(tiles)} tiles, far {len(far_tiles)} tiles')
 
+def pack_assets():
+    # 各256byte行の未使用128..159列へ、4画素/byteの同じ原画を置く。
+    for bank in range(22):
+        path=GAME/'assets'/f'bank{0x44+bank:02x}.bin'
+        raw=bytearray(path.read_bytes())
+        for half in range(2):
+            image=Image.open(GAME/'assets'/f'{bank*2+half:02d}.png')
+            for y in range(image.height):
+                base=half*32768+y*256
+                for x in range(0,image.width,4):
+                    raw[base+128+x//4]=sum(raw[base+x+i]<<(i*2) for i in range(min(4,image.width-x)))
+        if raw!=path.read_bytes():path.write_bytes(raw)
+
 def prepare_logic():
+    reference = '--reference-logic' in sys.argv
+    enemy_impl=(GAME/'enemy_impl.inc').read_text(encoding='utf-8')
+    if reference: enemy_impl=enemy_impl.replace('fx_em0_geometry(e);', 'update_em0_geometry(e, path);')
+    (BUILD/'enemy_impl.inc').write_text(enemy_impl,encoding='utf-8')
     for name in ['monosh_player','monosh_stage','monosh_enemy','monosh_combat',
                  'monosh_boss','monosh_projection','monosh_stage_data','monosh_enemy_data','monosh_boss_data']:
         text=(UP/(name+'.c')).read_text()
         if name == 'monosh_enemy':
+            if not reference:
+                text=text.replace('monosh_enemy_fast_render();', 'fx_enemy_render();').replace('monosh_enemy_fast_render_bullets();', 'fx_enemy_render_bullets();')
+                text=text.replace('monosh_enemy_fast_check_player_bullets();', 'fx_enemy_collisions();')
+            text='void fx_em0_geometry(void *);\nvoid fx_enemy_collisions(void);\nvoid fx_enemy_render(void);\nvoid fx_enemy_render_bullets(void);\n'+text
             text='void fx_enemy_em1_update(void *, unsigned char);\n'+text
             text=text.replace('update_em1(enemy, i);','fx_enemy_em1_update(enemy, i);')
             text=text.replace('unsigned char monosh_enemy_fire_boss_at(', 'unsigned char legacy_enemy_fire_boss_at(')
@@ -222,7 +243,8 @@ def prepare_logic():
             text=text[:start]+'    enemy->display = path->fire_frame;'+text[end:]
             text+='\n#include "enemy_impl.inc"\n'
         if name == 'monosh_stage':
-            text='#include "port.h"\nvoid fx_stage_render(void);\n'+text
+            text='#include "port.h"\nvoid fx_stage_render(void);\nvoid fx_stage_update(void);\n'+text
+            if not reference: text=text.replace('    stage_update(monosh_player_x);','    fx_stage_update();')
             text=text.replace('*bottom_y += monosh_ground_screen_delta;',
               '*bottom_y = 207 - monosh_ground_depth_pointer[219-(unsigned char)*bottom_y];')
             text=text.replace('bottom_y += monosh_ground_screen_delta;',
@@ -267,6 +289,9 @@ def main():
     from bootstrap_probe import fetch
     fetch('ARM9/casfx',lock['commit'],'gsu/casfx.inc',lock['files']['gsu/casfx.inc']['sha256'])
     if '--import-assets' in sys.argv or not (GAME/'asset_tables.c').exists(): export_assets()
+    from build_ground import build as build_ground
+    build_ground()
+    pack_assets()
     prepare_logic()
     sources=[p for p in sorted(BUILD.glob('monosh_*.c')) if p.stem != 'monosh_projection']+[GAME/n for n in ['game.c','combat_port.c','asset_tables.c','ground.c']]
     objects=[]
@@ -275,7 +300,7 @@ def main():
         run([CC65/'cc65.exe','-Oirs','--cpu','65c02','-D','__z88dk_fastcall=',
              '-I',GAME/'platform','-I',UP,'-I',GAME,'-o',out,source])
         run([CC65/'ca65.exe','-o',obj,out]); objects.append(obj)
-    for name in ['cpu','gsu','ground','packet','projection','stage','dma','submit']:
+    for name in ['cpu','gsu','ground','packet','projection','stage','stage_update','enemy_render','enemy_collision','enemy_geometry','dma','submit']:
         obj=BUILD/(name+'_asm.o')
         run([CC65/'ca65.exe','-I',ROOT/'.cache/casfx/gsu','-I',GAME,'-o',obj,GAME/(name+'.s')]); objects.append(obj)
     rom=BUILD/'MonoSHFX2_v001.sfc'

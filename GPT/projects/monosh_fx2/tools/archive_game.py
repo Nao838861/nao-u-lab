@@ -10,7 +10,7 @@ from build_game import ROOT, BUILD, GAME
 def main():
     results=GAME/'results';results.mkdir(exist_ok=True)
     release=ROOT/'releases';release.mkdir(exist_ok=True)
-    names=['play','controls','pause','stumble','boss','stress','long','profile']
+    names=['play','controls','pause','stumble','boss','stress','packed','display','long','profile']
     summaries={}
     rom=BUILD/'MonoSHFX2_v001.sfc';rom_sha=hashlib.sha256(rom.read_bytes()).hexdigest()
     for name in names:
@@ -41,7 +41,14 @@ def main():
         summaries[name]=summary
         (results/f'{name}.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
         (results/f'{name}.jsonl.gz').write_bytes(gzip.compress((src/'trace.jsonl').read_bytes(),mtime=0))
-        for prefix in ['frame','draw','packet','meta']:
+        target=results/name
+        target.mkdir(exist_ok=True)
+        assert target.resolve().parent==results.resolve()
+        # この生成物ディレクトリの旧標本だけを除き、新旧ROMの標本を混ぜない。
+        for prefix in ['frame','draw','packet','meta','display']:
+            for old in target.glob(prefix+'[0-9]*.*'):
+                if old.is_file():old.unlink()
+        for prefix in ['frame','draw','packet','meta','display']:
             for sample in src.glob(prefix+'[0-9]*.*'):
                 target=results/name;target.mkdir(exist_ok=True);shutil.copy2(sample,target/sample.name)
         for filename in ['field240.png','scene_boss.png','scene_enemies.png','scene_death.png','boss_state2.png','boss_state3.png']:
@@ -56,6 +63,11 @@ def main():
               'display':[256,180],'framebuffer':[256,192],'format':'2bpp','sourceSha256':frozen,
               'testedEmulator':'Mesen 2.1.1, GsuClockSpeed=100, NTSC, extra scanlines=0',
               'scenarioFrames':{name:s['fields'] for name,s in summaries.items()}}
+    equivalence=results/'equivalence/summary.json'
+    if equivalence.exists():
+        comparison=json.loads(equivalence.read_text(encoding='utf-8'))
+        if comparison['nativeRomSha256']==rom_sha:
+            manifest['equivalenceMatchedUpdates']=comparison['matchedUpdates']
     (release/'v001.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     shutil.copy2(BUILD/'game.map',results/'game.map')
     shutil.copy2(BUILD/'game.lbl',results/'game.lbl')
