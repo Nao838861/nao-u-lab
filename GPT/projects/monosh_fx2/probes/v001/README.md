@@ -8,10 +8,10 @@
 
 必要なものは Python 3.10 以上、Pillow、PATH 上の ca65/ld65、GSU と Lua に対応する Mesen、参照元の NES MonoSH。今回の環境では既存の ca65 V2.19 と Mesen 2.1.1 を使用した。casfx の取得 commit とハッシュは [sources.lock.json](sources.lock.json) に固定している。
 
-GPT リポジトリのルートから実行する。
+プロジェクトのルート（[README.md](../../README.md)のある場所）から実行する。
 
 ```powershell
-python -X utf8 projects/monosh_fx2/tools/verify_probe.py
+python -X utf8 tools/verify_probe.py
 ```
 
 既定の参照先は `D:\HomeBrew\MonoSH` と `D:\HomeBrew\Mesen\Mesen.exe`。必要なら、実行前に次の環境変数で変更できる。
@@ -28,11 +28,11 @@ $env:MONOSH_FX2_MESEN = 'D:\HomeBrew\Mesen\Mesen.exe'
 ## 個別実行
 
 ```powershell
-python -X utf8 projects/monosh_fx2/tools/bootstrap_probe.py
-python -X utf8 projects/monosh_fx2/tools/run_probe.py --sweep
-python -X utf8 projects/monosh_fx2/tools/run_dma_probe.py
-python -X utf8 projects/monosh_fx2/tools/run_nes_baseline.py
-python -X utf8 projects/monosh_fx2/tools/run_scene_probe.py
+python -X utf8 tools/bootstrap_probe.py
+python -X utf8 tools/run_probe.py --sweep
+python -X utf8 tools/run_dma_probe.py
+python -X utf8 tools/run_nes_baseline.py
+python -X utf8 tools/run_scene_probe.py
 ```
 
 個別実行は `build/v001/` に出力する。`run_probe.py --source tree` なら木だけ、`--source fragmented` なら細かい模様だけを再検証できる。個別実行だけでは保存済みの `results/` は更新しない。

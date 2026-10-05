@@ -24,18 +24,18 @@ ROM単体は [../../releases/MonoSHFX2_v001.sfc](../../releases/MonoSHFX2_v001.s
 
 Python 3.10以上、Pillow、PATH上のcc65/ca65/ld65を使用する。ca65用GSUマクロcasfxは固定ハッシュを検査し、なければ取得する。固定済みソース・画像・テーブルがリポジトリ内にあるため、通常ビルドに元のNES/MSXプロジェクトは不要。
 
-GPTリポジトリのルートで実行する。
+プロジェクトのルート（[README.md](../../README.md)のある場所）で実行する。
 
 ```powershell
-python -X utf8 projects/monosh_fx2/tools/build_game.py
-python -X utf8 projects/monosh_fx2/tools/verify_game.py --equivalence
-python -X utf8 projects/monosh_fx2/tools/test_game.py --scenario play --frames 360
-python -X utf8 projects/monosh_fx2/tools/test_game.py --scenario pause --frames 360
-python -X utf8 projects/monosh_fx2/tools/test_game.py --scenario controls --frames 720
-python -X utf8 projects/monosh_fx2/tools/test_game.py --scenario stumble --frames 800
-python -X utf8 projects/monosh_fx2/tools/test_game.py --scenario boss --frames 2600
-python -X utf8 projects/monosh_fx2/tools/test_game.py --scenario stress --frames 360
-python -X utf8 projects/monosh_fx2/tools/test_game.py --scenario long --frames 18000 --timeout 180
+python -X utf8 tools/build_game.py
+python -X utf8 tools/verify_game.py --equivalence
+python -X utf8 tools/test_game.py --scenario play --frames 360
+python -X utf8 tools/test_game.py --scenario pause --frames 360
+python -X utf8 tools/test_game.py --scenario controls --frames 720
+python -X utf8 tools/test_game.py --scenario stumble --frames 800
+python -X utf8 tools/test_game.py --scenario boss --frames 2600
+python -X utf8 tools/test_game.py --scenario stress --frames 360
+python -X utf8 tools/test_game.py --scenario long --frames 18000 --timeout 360
 ```
 
 テストは専用Mesenを非対話モードで実行する。`long` は通常のパッド入力だけで進め、死亡・復帰・自然なボス到達・撃破・周回を要求する。`boss` はステージ終端と無敵をテスト側から設定し、通常ボス射撃の後に自弾を命中位置へ置く。HPは書き換えず、16回の頭部命中と胴反射・爆発・周回を確認する。`stress` は上下左右をclipした20本の木をテスト側から投入し、全12KiB転送とRAM guardを検査する。これらの状態書換えはLua検証専用で、製品ROMにデバッグショートカットを組み込んでいない。

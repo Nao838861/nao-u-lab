@@ -4,6 +4,8 @@ NES の MonoSH を SNES の CPU と Super FX2 へ移植する新プロジェク�
 
 正本は [プロジェクト入口](../../../projects/monosh_fx2/README.md) と [設計書](../../../projects/monosh_fx2/DESIGN.md)。原文は同所の `REQUEST.md`。NES 側の入口は [MonoSH 記憶入口](../monosh/README.md)。
 
+GitHubの独立リポジトリは [Nao838861/MonoSH_FX2](https://github.com/Nao838861/MonoSH_FX2)、既定ブランチmain。[2026年10月6日の公開記録](20261006_github_publish.md)に反映先・clone検証・次回の同期先を保存した。nao-u-labの作業ブランチだけへのpushでは、この独立リポジトリは更新されない。
+
 **現在は表示修正と描画パイプラインの高速化を行った移植ROM。** 次回は [高速化のチェックポイント](20261005_render_pipeline_v001.md) と [実ゲームの測定](../../../projects/monosh_fx2/game/v001/RESULTS.md) から再開する。表示256×180、通常進行平均55.11fps、序盤は起動込み59.55fps。CPU更新を65816へ、UV・clip・消去と転送範囲の準備をGSUへ移した。地面の行別縦横・緑四色、遠景Y、FX層の固定V、接地の修正も維持。自然なボス撃破・次周、C/native通常5,632更新・ボス2,847更新一致、三カメラの最終RGBを確認。192行・全場面60fpsは未達。起動は [play.cmd](../../../projects/monosh_fx2/play.cmd)。[前段の表示修正](20261005_display_fix_v001.md)、[初版](20261005_playable_v001.md) は履歴として残す。
 
 ## 移植前のプローブ履歴
