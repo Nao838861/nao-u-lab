@@ -1,5 +1,7 @@
 # MonoSH Super FX2 記憶入口
 
+地面の格子が曲がる原因は [2026年10月6日の調査](20261006_ground_perspective_diagnosis.md)。木の倍率・接地Yから作った整数格子幅が画面Yに対して直線的でない。原因確認のみで、ROMは未変更。
+
 NES の MonoSH を SNES の CPU と Super FX2 へ移植する新プロジェクト。2026年10月5日に設計を開始した。
 
 正本は [プロジェクト入口](../../../projects/monosh_fx2/README.md) と [設計書](../../../projects/monosh_fx2/DESIGN.md)。原文は同所の `REQUEST.md`。NES 側の入口は [MonoSH 記憶入口](../monosh/README.md)。
