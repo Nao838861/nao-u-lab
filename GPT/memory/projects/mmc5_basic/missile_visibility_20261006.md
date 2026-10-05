@@ -43,3 +43,15 @@ IDEを開き直してF5で更新済みの保存版を使用する。
 IDEと同じ自作コアをセーブ持込なしで起動し、333フレームでRUN、タイトルからゲーム開始後900フレーム・実行時エラー0を確認。これは起動と道中の短い確認であり、新SDKの全編再検証ではない。記録と画面は`build/latest_launch_20261006/{release.json,smoke.json,gameplay.png}`。
 
 最新版入口の`--edit`で同じ保存版を新しいエディタ窓へ開いた。実PID45164のタイトルが`build/basic_only/game`を指すこと、編集UIのキャプチャ、起動ログの例外なしを確認。既存の編集窓は閉じていない。再起動用ファイルは従来どおり`D:\HomeBrew\FamiBASIC_Turbo_main\EditFlightLab.cmd`、F5でこの保存版を実行する。画面と窓情報は`build/latest_launch_20261006/{editor.png,editor_windows.json}`。
+
+## Mesenの序盤スクロールと画面同期（2026-10-06）
+
+ユーザー報告: 「MESENで遊ぶと弾を撃ってなくても序盤で背景がちょっとガクガクするんだが、これはアプリの処理落ちではなく画面同期の都合とかだろうか？60fpsとちょっとずれてると聞いたが。エミュレーションは正確でなくなってもいいのでこれを無くす設定とかMESENにある？」
+
+`D:\HomeBrew\Mesen\Mesen.exe`は2.1.1（commit `137ae7ce3bf3f539d007e2c4ef3cb3b6c97672a1`）。同フォルダーの保存設定では`VerticalSync=false`、`IntegerFpsMode=false`、`EmulationSpeed=100`。設定変更は依頼されていないため、ここでは確認と手順案内だけを行った。
+
+公式実装の[映像設定画面](https://github.com/SourMesen/Mesen2/blob/137ae7ce3bf3f539d007e2c4ef3cb3b6c97672a1/UI/Views/VideoConfigView.axaml)と[フレーム待機](https://github.com/SourMesen/Mesen2/blob/137ae7ce3bf3f539d007e2c4ef3cb3b6c97672a1/Core/Shared/Emulator.cpp#L700)を確認した。Settings → Video → GeneralにInteger FPS modeとVertical syncがある。NTSC NESは約60.0988fpsで、Integer FPS modeはfpsを整数へ丸めて60fpsの実時間ペースにする。約0.16%遅くなるが1フレーム内のCPU処理予算を増やす設定ではない。60Hz表示では非整数fpsとの差が約10秒で1フレームになる計算。Windowsの表示は60Hzまたは120Hzだと60fpsを均等に割り当てやすい。59.94Hzと60Hzは区別する。公式旧版の[説明](https://www.mesen.ca/docs/configuration/video.html#general-options)も60Hz LCD向けのInteger FPS modeの意図を明記しており、現行コードで継続を確認した。
+
+最新版ROM `994194332c366819d59cc986b2cbcc6ec08df5ef14735254e82335227871291e`を同じ自作コアで無射撃・無移動・無敵の条件にし、序盤1200表示フレームを測定。bank4のカメラ座標が全1200フレームで1ピクセルずつ進み、同一座標の繰返し0。`build/latest_launch_20261006/no_fire_scroll_invulnerable.json`に保存した。無敵なしの600フレームでは260～394の135フレーム連続でカメラが止まったが、死亡演出による停止を混ぜないため比較条件を分けた。
+
+これは自作コア内の更新の確認であり、Mesenの実入力・GPU提示・モニター同期は未測定。原因を同期と断定せず、Integer FPS mode + VSyncをONにして同じ序盤で比較するよう案内する。ゲーム側の残る更新落ちはこの設定だけでは解消しない。
