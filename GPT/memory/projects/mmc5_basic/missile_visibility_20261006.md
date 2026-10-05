@@ -33,3 +33,13 @@ IDEを開き直してF5で更新済みの保存版を使用する。
 検証済みROMは`D:\HomeBrew\FamiBASIC_Turbo_main\build\missile_visible_20261006\game.nes`、SHA256 `0e57b3284342326480e82bc45c7249274f3e046113b845d3b8153622072e7a10`。Mesenで直接起動可能。前回案内した`build/weapon_perf_20261006/game.nes`も同じ修正版へ更新した。
 
 修正commit `986cad6`、別作業との合流 `7884da4`、最終表示検証と訂正記録 `6c27c65`を本流mainへpush済み。主作業ツリーの無関係な変更は保持した。
+
+## 最新ROMとエディタの起動（2026-10-06 08:36）
+
+追加依頼: 「最新の修正を反映させたromとエディタ軌道を用意して。」
+
+本流の現在のSDK（並行作業の未コミットのコンパイラ修正も含む）で`python -m tools.latest_flight_lab`を実行し、保存版を保ったままROMを再ビルドした。新しい入口は`D:\HomeBrew\FamiBASIC_Turbo_main\build\basic_only\game.nes`。ROM SHA256 `994194332c366819d59cc986b2cbcc6ec08df5ef14735254e82335227871291e`、SDK SHA256 `639f660f4290c4093d66110ad95c65b4de6cfdbac442d4022ad81f3f42272700`。BASICは直前の修正後2046行・`frame_deadline` version 2のまま、素材準備後ソースSHA `ed71b8da13513220409d56fe509badb5269295d674312d2e173f748ef385a79f`。
+
+IDEと同じ自作コアをセーブ持込なしで起動し、333フレームでRUN、タイトルからゲーム開始後900フレーム・実行時エラー0を確認。これは起動と道中の短い確認であり、新SDKの全編再検証ではない。記録と画面は`build/latest_launch_20261006/{release.json,smoke.json,gameplay.png}`。
+
+最新版入口の`--edit`で同じ保存版を新しいエディタ窓へ開いた。実PID45164のタイトルが`build/basic_only/game`を指すこと、編集UIのキャプチャ、起動ログの例外なしを確認。既存の編集窓は閉じていない。再起動用ファイルは従来どおり`D:\HomeBrew\FamiBASIC_Turbo_main\EditFlightLab.cmd`、F5でこの保存版を実行する。画面と窓情報は`build/latest_launch_20261006/{editor.png,editor_windows.json}`。
