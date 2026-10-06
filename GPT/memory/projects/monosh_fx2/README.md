@@ -1,6 +1,6 @@
 # MonoSH Super FX2 記憶入口
 
-最新は [地面修正とOBJ化](20261006_ground_obj_v001.md)。曲線の原因を調べた段階の履歴は [パースの調査](20261006_ground_perspective_diagnosis.md)。
+最新の指定RGBと列配色は [配色の修正](20261006_ground_palette_correction.md)。直線パース・OBJ化・長時間検証は [地面修正とOBJ化](20261006_ground_obj_v001.md)。曲線の原因を調べた段階の履歴は [パースの調査](20261006_ground_perspective_diagnosis.md)。
 
 NES の MonoSH を SNES の CPU と Super FX2 へ移植する新プロジェクト。2026年10月5日に設計を開始した。
 
@@ -8,7 +8,7 @@ NES の MonoSH を SNES の CPU と Super FX2 へ移植する新プロジェク�
 
 GitHubの独立リポジトリは [Nao838861/MonoSH_FX2](https://github.com/Nao838861/MonoSH_FX2)、既定ブランチmain。[2026年10月6日の公開記録](20261006_github_publish.md)に反映先・clone検証・次回の同期先を保存した。nao-u-labの作業ブランチだけへのpushでは、この独立リポジトリは更新されない。
 
-**現在は地面の直線パース・黄緑四色・紫の空、自機・自弾・反射弾のOBJ化を行ったROM。** 次回は [最新チェックポイント](20261006_ground_obj_v001.md) と [測定](../../../projects/monosh_fx2/game/v001/RESULTS.md) から再開する。表示256×180、通常57.05fps、序盤59.35fps。内部FB192行。全12KiB＋OAM68bytesは20行完了、22行でOBJ準備、23行から表示。11試験・自然な周回・C/native一致・最終PPUを確認。192行・全場面60fpsは未達。起動は [play.cmd](../../../projects/monosh_fx2/play.cmd)。[前版の高速化](20261005_render_pipeline_v001.md)、[表示修正](20261005_display_fix_v001.md)、[初版](20261005_playable_v001.md) は履歴。
+**現在は指定RGBの緑四色を暗い1/2列・明るい4/3列へ修正したROM。直線パース・紫の空、自機・自弾・反射弾のOBJ化を維持。** 次回は [配色のチェックポイント](20261006_ground_palette_correction.md) と [移植のチェックポイント](20261006_ground_obj_v001.md) と [測定](../../../projects/monosh_fx2/game/v001/RESULTS.md) から再開する。表示256×180、通常57.05fps、序盤59.35fps。内部FB192行。全12KiB＋OAM68bytesは20行完了、22行でOBJ準備、23行から表示。11試験・自然な周回・C/native一致・最終PPUを確認。192行・全場面60fpsは未達。起動は [play.cmd](../../../projects/monosh_fx2/play.cmd)。[前版の高速化](20261005_render_pipeline_v001.md)、[表示修正](20261005_display_fix_v001.md)、[初版](20261005_playable_v001.md) は履歴。
 
 ## 移植前のプローブ履歴
 
