@@ -1,5 +1,7 @@
 # MonoSH Super FX2 記憶入口
 
+性能計測の最新は [ボス戦の最悪負荷と60Hzの枠](20261007_boss_budget.md)。最大GSU19.129ms、連続60Hzの枠13.760ms、必要な時間短縮は28.1%、目標30%。CPUよりGSUが課題。単発の締切に対する22.4%と混同しない。ゲームROMは下記の入力修正版と同一。
+
 最新は [押しっぱなしの誤ポーズ修正](20261006_input_freeze_fix.md)。カラーは [自機・弾のカラーOBJ化](20261006_obj_color_v001.md)。指定RGBと列配色は [配色の修正](20261006_ground_palette_correction.md)。直線パース・OBJ化・長時間検証は [地面修正とOBJ化](20261006_ground_obj_v001.md)。曲線の原因を調べた段階の履歴は [パースの調査](20261006_ground_perspective_diagnosis.md)。
 
 NES の MonoSH を SNES の CPU と Super FX2 へ移植する新プロジェクト。2026年10月5日に設計を開始した。
