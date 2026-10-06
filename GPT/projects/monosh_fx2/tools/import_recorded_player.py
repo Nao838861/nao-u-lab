@@ -38,7 +38,8 @@ def indexed(image):
     out = Image.new('P', image.size)
     out.putpalette([c for p in colors for c in p] + [0]*720)
     pixels = []
-    for r,g,b,a in image.convert('RGBA').getdata():
+    rgba=image.convert('RGBA')
+    for r,g,b,a in rgba.getdata():
         if a < 128:
             pixels.append(0)
         else:
