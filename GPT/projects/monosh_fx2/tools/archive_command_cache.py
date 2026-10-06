@@ -41,7 +41,11 @@ def main():
         (target/(name+'.jsonl.gz')).write_bytes(gzip.compress((source/'trace.jsonl').read_bytes(),mtime=0))
     shutil.copy2(BUILD/'full_transfer_cache.json',target/'full_transfer_variant.json')
     for filename in ['game.lbl','game.map','build_mode.json']:
-        shutil.copy2(BUILD/filename,target/filename)
+        if filename=='game.map':
+            # ld65のmapは行末を空白で埋める。記録では空白を除いてdiff可能にする。
+            (target/filename).write_text('\n'.join(line.rstrip() for line in (BUILD/filename).read_text().splitlines())+'\n')
+        else:
+            shutil.copy2(BUILD/filename,target/filename)
     manifest=json.loads((ROOT/'releases/v001.json').read_text(encoding='utf-8'))
     if manifest['romSha256']!=digest:
         manifest['previousRomSha256']=manifest['romSha256']
