@@ -98,7 +98,9 @@ def verify(directory):
                     bank1|=bool(oam[i*4+3]&1)
                     view_flips.add(oam[i*4+3]&192)
         assert bank1 and view_flips=={0,64,128,192}
-        assert colors==set(range(1,9)),f'player/bullet colors missing in actual PPU captures: {colors}'
+        expected_colors={c for asset in [9,10,*range(15,31)]
+                         for c in Image.open(GAME/'assets/obj_color'/f'{asset:02d}.png').getdata() if c}
+        assert colors==expected_colors,f'player/bullet colors missing in actual PPU captures: {colors} / {expected_colors}'
         (directory/'objects_ppu.json').write_text(json.dumps({'screens':len(views),'checkedObjectPixels':pixels,
                     'secondChrTableSeen':bank1,'flips':sorted(view_flips),'opaquePaletteIndices':sorted(colors),
                     'objPaletteRgb5':planned},indent=2)+'\n')
