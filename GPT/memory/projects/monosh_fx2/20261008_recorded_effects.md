@@ -15,3 +15,5 @@
 開始時点で親ワークスペースには別の縮小パターン・GSU・DMA最適化の未commit変更があったため、独立した `.cache/bullet_export` で実装と測定をした。既存変更を残して必要な箇所だけ統合し、本修正だけを親・独立GitHubリポジトリへcommit/pushする。
 
 独立リポジトリ `Nao838861/MonoSH_FX2` の公開commitは `d508b6dcba1b823a6e6a308ee18ea3bb618ce186`、mainへのpush済み。全転送の最悪場面は18 OBJ・OAM最大80byteで、最終PPU66画面・68,057画素が一致した。
+
+親側の作業コピーの通常ROMは、並行中の最適化が更新するため、本修正の検証済み版は `releases/MonoSHFX2_recorded_effects_20261008.sfc` にも同じSHAで固定した。今回の見た目を確実に確認する時はこの名前を使う。親の最初の反映commitは `25f5429587668c246f9eeb1d90935611dedf2c38`。
