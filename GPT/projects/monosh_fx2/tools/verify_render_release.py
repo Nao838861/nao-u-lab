@@ -5,7 +5,7 @@ import argparse
 import hashlib
 import json
 
-from build_game import BUILD
+from build_game import BUILD,GAME
 
 
 def run(name, *args):
@@ -14,8 +14,8 @@ def run(name, *args):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--name',default='bossshared')
-    parser.add_argument('--fixtures',default=None)
+    parser.add_argument('--name',default='bossfinal')
+    parser.add_argument('--fixtures',default=str(GAME/'results/boss_scaling_20261008/base_fixtures.json.gz'))
     parser.add_argument('--skip-benchmark',action='store_true',help='同一ROMで完了済みの標本検証を再利用する。')
     parser.add_argument('--skip-profile',action='store_true',help='同一ROMで完了済みの自然入力検証を再利用する。')
     args=parser.parse_args()
@@ -32,7 +32,7 @@ def main():
                         ('boss',2600), ('stumble',800), ('stress',360)):
         run('test_game.py', '--scenario', name, '--frames', str(frames), '--timeout', '90')
     if not args.skip_profile:
-        run('profile_boss.py', '--frames', '18000', '--timeout', '600',
+        run('profile_boss.py', '--frames', '18000', '--timeout', '900',
             '--allow-unreleased', '--output', 'boss_profile_'+args.name)
     run('analyze_render_profile.py', str(BUILD/('boss_profile_'+args.name)),
         '--output', str(BUILD/('road_'+args.name+'.json')))

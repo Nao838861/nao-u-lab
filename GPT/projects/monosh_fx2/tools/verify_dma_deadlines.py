@@ -16,14 +16,15 @@ def run(name,*args):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output',default='boss_scaling_20261008/dma_deadlines')
+    parser.add_argument('--output',default='boss_scaling_20261008/integrated/dma_deadlines')
     args=parser.parse_args()
     results=(GAME/'results').resolve();target=(results/args.output).resolve()
     assert target.is_relative_to(results) and target!=results
     default_hash=hashlib.sha256((BUILD/'MonoSHFX2_v001.sfc').read_bytes()).hexdigest()
     try:
         run('build_game.py','--dma-deadline-probe')
-        run('test_game.py','--scenario','objects','--frames','360','--dma-probe')
+        fine=json.loads((BUILD/'build_mode.json').read_text()).get('fineDmaDeadline',False)
+        run('test_game.py','--scenario','objects','--frames','4200' if fine else '360','--timeout','240','--dma-probe')
         source=BUILD/'objects';target.mkdir(parents=True,exist_ok=True)
         rows=[json.loads(s) for s in (source/'trace.jsonl').read_text().splitlines()]
         tiers={};pending=None
@@ -38,15 +39,17 @@ def main():
                 continue
             count=pending['spans']
             assert count in (1,32)
-            expected={220:9984,226:8960,233:7680}[deadline]-count*64-768
+            limit=min(9984,(279-deadline)*170-1)//16*16 if fine else {220:9984,226:8960,233:7680}[deadline]
+            expected=limit-count*64-768
             assert row['bytes']==expected
-            assert deadline+2<=pending['dmaStartLine']<=deadline+3
+            assert deadline+2<=pending['dmaStartLine']<=deadline+4
             assert row['line']<=20
             tier=tiers.setdefault(f'{deadline}/{count}',{'bytes':expected,'spans':count,'images':0,'latestCompletionScanline':0,'maxDmaStartLine':0})
             tier['images']+=1
             tier['latestCompletionScanline']=max(tier['latestCompletionScanline'],row['line'])
             tier['maxDmaStartLine']=max(tier['maxDmaStartLine'],pending['dmaStartLine'])
-        assert set(tiers)=={f'{d}/{n}' for d in (220,226,233) for n in (1,32)} and all(t['images']>=40 for t in tiers.values())
+        deadlines=range(220,241) if fine else (220,226,233)
+        assert set(tiers)=={f'{d}/{n}' for d in deadlines for n in (1,32)} and all(t['images']>=40 for t in tiers.values())
         summary=json.loads((source/'summary.json').read_text())
         summary.update(defaultRomSha256=default_hash,deadlineTiers=tiers,
             objPrefetchScanline=22,firstVisibleScanline=23,ppuChecks=json.loads((source/'objects_ppu.json').read_text()))

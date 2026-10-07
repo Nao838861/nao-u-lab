@@ -17,6 +17,7 @@ def main():
     parser.add_argument('--fixtures', type=Path,
         default=GAME/'results/command_cache_20261007/fixtures.json.gz')
     parser.add_argument('--edges', action='store_true', help='ボス・道中素材の小幅・clip・反転・未収録幅を追加')
+    parser.add_argument('--reuse-build',action='store_true',help='完成済みROMを読み、他の計測中に再ビルドしない。')
     args, flags = parser.parse_known_args()
     assert re.fullmatch(r'[a-zA-Z0-9_-]+', args.name) and args.name != 'baseline'
     raw = args.fixtures.read_bytes()
@@ -49,7 +50,7 @@ def main():
                             (width//2,212,193),(256-width//2+1,160,127),
                             (128,20,127),(128,230,127),(0,160,127))))
                     cases.append({'name':f'margin_edge_{asset}_{width}_{flip}','count':6,'bytes':list(data)})
-    result = run_variant(args.name, flags, cases)
+    result = run_variant(args.name, flags, cases, reuse_build=args.reuse_build)
     directory = BUILD/('cache_compare_'+args.name)
     (directory/'fixtures.json.gz').write_bytes(gzip.compress(json.dumps(cases).encode(), mtime=0))
     verify_objects(directory)

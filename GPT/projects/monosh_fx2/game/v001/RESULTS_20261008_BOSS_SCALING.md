@@ -2,6 +2,8 @@
 
 縮小済み画像はボスの胴13・顔14・弾31だけにした。草・木・通常敵には最大原画を使い、透明な左右余白の情報だけを追加する。表示256×180、内部FB256×192・2bpp、ゲームロジック、描画順、Q8.8の縮小、カラー自機と弾は維持する。
 
+並行して追加された録画由来の大きい自弾・二層遠景も統合する。画像統合前の9a66版の測定と、後半の統合版の測定を分けて記録する。
+
 ## 画像容量
 
 |追加データ|変更前|今回|
@@ -48,11 +50,10 @@ ROM待ちへPLOT/LOOPを重ねる着想は、[MesenのGSU実装](https://github.
 
 ```powershell
 python -X utf8 tools/build_game.py
-python -X utf8 tools/benchmark_render.py --name bossshared --edges --fixtures game/v001/results/boss_scaling_20261008/base_fixtures.json.gz
-python -X utf8 tools/verify_render_release.py --name bossshared --skip-benchmark
-python -X utf8 tools/profile_boss.py --frames 18000 --timeout 600 --output boss_profile_bossnofire --boss-fire none
+python -X utf8 tools/verify_render_release.py
+python -X utf8 tools/profile_boss.py --frames 18000 --timeout 900 --output boss_profile_bossfinalnofire --boss-fire none
 python -X utf8 tools/verify_dma_deadlines.py
-python -X utf8 tools/verify_full_transfer_objects.py --output boss_scaling_20261008/full_transfer_objects
+python -X utf8 tools/verify_full_transfer_objects.py --output boss_scaling_20261008/integrated/full_transfer_objects
 ```
 
 `--no-row-margins`、`--no-generic-pipeline`、`--no-dynamic-dma-deadline`で今回の効果を分離できる。`--all-scaled-assets`は旧6素材を比較するための指定。最終結果はこの文書と保存済みログへ記録する。人工64体や大型物20体は回帰・保護の試験で、実ゲーム60fpsの根拠にはしない。
@@ -92,3 +93,44 @@ ROM SHA-256：`9a66b840a57758921c78635f46f8c2019ac305dd773d123288e6eda9956e7bab`
 追加の非射撃ボス長期18,000fieldは17,978画像。道中5,066画像・ボス12,912画像とも提示遅延0、60.10fps。ボスの最大GSU11.780ms、最大CPU10.759ms。通常射撃の約5分と合わせて36,000fieldを観測した。任意の入力や実機、並行して差し替えた画像版までの保証ではない。
 
 自己評価：ボス以外の縮小画像を戻さず、段階の滑らかさ・画素・描画順を保って道中の遅延を解消した。別cacheの余白省略より、cacheを維持する配置と転送量別の受付の組合せが効いた。ボスの固定標本には小さな費用増がある。人工64体ではCPUが40ms以上かかり60fpsではなく、表示192行・音・実機・任意入力は残る。
+
+## 大きい自弾・二層遠景の統合後
+
+画像差し替えを保ったまま単純統合すると、通常入力18,000fieldの道中に22回、ボスに1回の提示遅延が出た。GSUだけでなく、CPUの大きい弾のOAM生成とHDMA表作成、転送区間の反復費用が次の課題になった。以下を追加した。
+
+- **自弾の画面内経路**：反転なしで、余白込みの64×32のtile領域が画面内にある場合だけ、partごとのclip/flip/属性計算を省く。XYとpaletteを共有し、同じ順序のCHR・size・高bitをOAMへ書く。画面端・反転・容量不足は元の経路へ戻す。
+- **地面HDMA表の生成**：3bufferの上位スクロールbyteはBSS初期化時の0を維持する。各行で同じ0を書き直す処理と不要な出力Yの退避を省き、遠景の生成後はDPのfpを出力Yの退避に再利用する。ラスタースクロール・直線パース・四緑色と新しい二層遠景の座標は変えない。
+- **転送区間loop**：区間数をYで数え、各区間でWRAMのcountを読戻し・DECする費用を省く。開始時の区間数と完了時の0、次画像のclear表を維持する。
+- **DMA受付の細分化**：Wは同じ `bytes + 64×区間数 + 768`。Wが9,984以下なら `D = min(240, 278 - floor(W/170))`、超える場合は203行とする。SNESのdividerを使い、待機時間も明示する。3段階の境目で数行の余裕を捨てる問題を減らした。
+
+最初の細分化試作では、32区間を送る長めの試験で完了が21行に達し、当時の20行以内という検査に止められた。[試作の記録](results/boss_scaling_20261008/rejected_fine_dma/)を残し、区間loopをYへ移した版で検証をやり直した。受付220..240行×1/32区間の**42条件・4,200field**は各99〜100画像、すべて最遅18行に完了した。
+
+全12KiB＋最大18 OBJでは最遅21行。22行のOBJ準備・23行の表示開始に間に合い、最終PPUの66画面68,057 OBJ画素を照合した。部分転送の上限と全転送は別に検査する。表示行を減らして速度を稼ぐ変更はない。
+
+固定標本の再実行は `python -X utf8 tools/benchmark_render.py --name bossfinal --edges --fixtures game/v001/results/boss_scaling_20261008/base_fixtures.json.gz`。`--no-fine-dma-deadline`で3段階の受付へ戻せる。履歴版の途中ソースは全構成の再ビルドを保証するものではなく、保存済みROM・Lua・ログを比較の正本とする。
+
+|統合後の試作|試験field数|道中の遅延|ボスの遅延|
+|---|---:|---:|---:|
+|単純統合|18,000|22|1|
+|自弾の画面内経路|6,000|7|0|
+|DMA受付の細分化も追加|6,000|6|0|
+|地面の0書込省略も追加|6,000|1|0|
+|最終版：DP再利用＋DMA区間loopのY化も追加|18,000|**0**|**0**|
+
+試験長と通常入力で通った場面が異なるため、回数だけを速度比にはしない。最終版は地面のDP再利用とDMA区間loopのY化も加え、同じROMで固定標本・回帰・長時間を再検証する。
+
+統合後の固定標本は**523場面、2,454画像**。全FB/packet/OBJが一致し、画像統合前の523場面すべてでFBハッシュ集合も一致した。固定ボスのGSUは11.780ms。人工64体のpacket生成は40〜43msかかり、ここは60fpsではない。
+
+非射撃ボス長期18,000fieldは17,978画像、道中5,066画像・ボス12,912画像とも遅延0、60.10fps。ボス最大CPU10.669ms、最大GSU11.780ms。9種類の回帰、計8,080fieldもすべて通過した。34ファイルの固定上流hashも変わっていない。
+
+最終ROM SHA-256：`571c1d9fc0d0389aff5f58326388e43297bc3674934b7564bae00f6dd20356c2`。測定環境はMesen 2.1.1・GSU100%・NTSC・追加scanlineなし。検証用Mesenのhost側timeoutで一度終了した16,998画像も遅延0だったが、18,000field完了の結果には合算せず、[途中ログ](results/boss_scaling_20261008/integrated/partial_timeout/)へ分けた。
+
+通常射撃を含む18,000fieldも17,977画像、**道中・ボス戦・撃破後すべて遅延0、60.10fps**で完了した。各区分の最悪60field窓も新画像60枚だった。
+
+|最終統合版の区分|画像数|同区分内の提示間隔|遅延|CPU最大|GSU最大|
+|---|---:|---:|---:|---:|---:|
+|道中|15,628|15,624|0|15.092ms|12.879ms|
+|ボス戦|1,809|1,806|0|14.462ms|12.622ms|
+|撃破後|540|537|0|8.539ms|1.088ms|
+
+統合前の縮小画像削減とGSU最適化に加え、統合後はCPUのOAM・地面HDMA表・転送区間を詰めることで観測した遅延を解消できた。解像度・ゲームロジック・描画順・縮小段階を削る変更はない。保存済みの全測定は [統合版](results/boss_scaling_20261008/integrated/)、再実行した結果の保存は `python -X utf8 tools/archive_boss_scaling.py`。任意の入力や実機での保証、192行表示・音は残る。

@@ -543,9 +543,9 @@ dma_started:
   sta f:$7e1df0
   rep #$30
   ldx #0
-dma_span:
-  lda fx_dma_count
+  ldy fx_dma_count
   beq dma_finished
+dma_span:
   lda fx_dma_desc,x
   sta f:$002116
   asl
@@ -562,8 +562,10 @@ dma_span:
   inx
   inx
   inx
-  dec fx_dma_count
-  bra dma_span
+  ; 区間数をYで数え、WRAMの読戻し・DEC・BRAを各区間から外す。
+  dey
+  bne dma_span
+  stz fx_dma_count           ; 従来どおり完了時は0。次のclear表は別に保持する。
 dma_finished:
   jsr fx_commit_dma
   sep #$20
@@ -580,8 +582,7 @@ select_dma_deadline:
   .export select_dma_deadline
   rep #$30
   ; W=bytes+64*区間数+768。区間設定を64bytes換算し、HDMA等の固定費も予約。
-  ; 220+3+9984*8/1364 < 282（翌20行）、226+3+8960*8/1364 < 282、
-  ; 233+3+7680*8/1364 < 282。小さい画像に残る空白時間を使う。
+  ; 設定・OBJ転送に最大4行を予約し、完了を翌21行より前へ収める。
   ; A/Xは16bit。全FBなど大きい転送は従来の203行を守る。
   lda #203
   sta f:$7e1d10
@@ -595,6 +596,30 @@ select_dma_deadline:
   adc #768
   cmp #(FX_DMA_ADMISSION_BYTES+1)
   bcs deadline_done
+  .ifdef FX_FINE_DMA
+  ; Wを170byte/行で割り、受付を220..240行で細かく選ぶ。
+  ; D=278-floor(W/170)。D+4+W*8/1364 <283（翌21行の前）。
+  ; 768bytesの固定予約と64bytes/区間もWへ含めた保守的な上限。
+  .export dma_deadline_fine
+dma_deadline_fine:
+  sta f:$004204
+  sep #$20
+  lda #170
+  sta f:$004206
+  rep #$20
+  lda #278
+  sec
+  .repeat 8
+    nop                    ; dividerの16 CPU cyclesを確実に待つ。
+  .endrepeat
+  sbc f:$004214
+  cmp #241
+  bcc fine_save
+  lda #240
+fine_save:
+  sta f:$7e1d10
+  rts
+  .else
   ldx #220
   cmp #8961
   bcs deadline_save
@@ -605,6 +630,7 @@ select_dma_deadline:
 deadline_save:
   txa
   sta f:$7e1d10
+  .endif
 deadline_done:
   rts
   .endif

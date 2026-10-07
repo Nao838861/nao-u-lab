@@ -11,6 +11,7 @@
   "genericPipeline": true,
   "rowMargins": true,
   "dynamicDmaDeadline": true,
+  "fineDmaDeadline": true,
   "fastObj": true,
   "descriptorDma": true,
   "dmaAdmissionBytes": 9984

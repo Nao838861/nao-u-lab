@@ -1,10 +1,17 @@
--- 専用ROMだけで、1区間の最大量を220/226/233行の締切へ意図的に揃える。
+-- 専用ROMだけで、1/32区間の最大量を最終受付行へ意図的に揃える。
 -- objectsの木はFB列11..20。列8からの各転送は木と全消去跡を包含する。
 emu.addMemoryCallback(guard(function()
   if rendered==0 then return end -- 最初の全12KiB初期化はそのまま。
-  local index=rendered%6
-  local count=index<3 and 1 or 32
-  local weight=({9984,8960,7680})[1+(index%3)]
+  local tiers=labels.dma_deadline_fine and 21 or 3
+  local index=rendered%(2*tiers)
+  local count=index<tiers and 1 or 32
+  local weight
+  if labels.dma_deadline_fine then
+    local deadline=220+index%tiers
+    weight=(math.min(9984,(279-deadline)*170-1)//16)*16
+  else
+    weight=({9984,8960,7680})[1+(index%3)]
+  end
   local bytes=weight-count*64-768
   local start=count==1 and 3072 or 3328
   local function word(offset,value)

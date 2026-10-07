@@ -372,6 +372,7 @@ def main():
     generic_pipeline=fast_uv and (config.get('genericPipeline',False) or '--generic-pipeline' in sys.argv) and '--no-generic-pipeline' not in sys.argv
     dynamic_dma=(config.get('dynamicDmaDeadline',False) or '--dynamic-dma-deadline' in sys.argv) and '--no-dynamic-dma-deadline' not in sys.argv
     dma_probe='--dma-deadline-probe' in sys.argv
+    fine_dma=dynamic_dma and config.get('fineDmaDeadline',False) and '--no-fine-dma-deadline' not in sys.argv
     assert not dma_probe or dynamic_dma
     descriptor_dma=config.get('descriptorDma',True) and '--no-descriptor-dma' not in sys.argv
     dma_admission=9216 if '--legacy-dma-admission' in sys.argv else config.get('dmaAdmissionBytes',9984)
@@ -424,6 +425,7 @@ def main():
              *(['-D','FX_ROW_MARGINS=1'] if row_margins else []),
              *(['-D','FX_GENERIC_PIPELINE=1'] if generic_pipeline else []),
              *(['-D','FX_DYNAMIC_DMA=1'] if dynamic_dma else []),
+             *(['-D','FX_FINE_DMA=1'] if fine_dma else []),
              *(['-D','FX_DMA_DEADLINE_PROBE=1'] if dma_probe else []),
              *(['-D','FX_DESCRIPTOR_DMA=1'] if descriptor_dma else []),
              '-D',f'FX_DMA_ADMISSION_BYTES={dma_admission}',
@@ -439,7 +441,7 @@ def main():
     data[0x7fdc:0x7fe0]=struct.pack('<HH',checksum^65535,checksum)
     rom.write_bytes(data)
     (BUILD/'build_mode.json').write_text(json.dumps({'fullFramebufferTransfer':full_transfer,'gsuUv':gsu_uv,'gsuClip':gsu_clip,
-        'cpuClipCommands':cpu_clip_commands,'stableGsuCache':stable_cache,'scaledRows':scaled,'scaledAssetWidths':dict(scaled_limits) if scaled else {},'scaledClip':scaled_clip,'fastUv':fast_uv,'genericPipeline':generic_pipeline,'rowMargins':row_margins,'dynamicDmaDeadline':dynamic_dma,'dmaDeadlineProbe':dma_probe,'fastObj':fast_obj,'descriptorDma':descriptor_dma,'dmaAdmissionBytes':dma_admission,'bucketSort':bucket_sort})+'\n')
+        'cpuClipCommands':cpu_clip_commands,'stableGsuCache':stable_cache,'scaledRows':scaled,'scaledAssetWidths':dict(scaled_limits) if scaled else {},'scaledClip':scaled_clip,'fastUv':fast_uv,'genericPipeline':generic_pipeline,'rowMargins':row_margins,'dynamicDmaDeadline':dynamic_dma,'fineDmaDeadline':fine_dma,'dmaDeadlineProbe':dma_probe,'fastObj':fast_obj,'descriptorDma':descriptor_dma,'dmaAdmissionBytes':dma_admission,'bucketSort':bucket_sort})+'\n')
     print(f'Built {rom} ({len(data)} bytes)')
 
 if __name__=='__main__': main()
