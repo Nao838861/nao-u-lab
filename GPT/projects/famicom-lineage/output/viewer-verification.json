@@ -1,0 +1,18 @@
+{
+  "local_file_open": true,
+  "browser": "153.0.8010.48",
+  "console_errors": [],
+  "desktop_canvas_dpr": 2,
+  "search": true,
+  "year_filter": true,
+  "wheel_zoom": true,
+  "drag_pan": true,
+  "neighbor_navigation": true,
+  "hash_restore": true,
+  "minimap_navigation": true,
+  "mobile_layout": true,
+  "touch_pinch_zoom": true,
+  "overview_visible_cards": 831,
+  "overview_draw_ms": 2.1,
+  "initial_draw_ms": 0.8
+}

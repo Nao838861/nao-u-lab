@@ -4,6 +4,14 @@
 
 ## 見る画像
 
+**閲覧には [index.html](index.html) をChromeまたはEdgeで開いてください。** `Open-Viewer.cmd` のダブルクリックでも開けます。HTML一つに全作品・接続データを含むので、サーバーの起動・インストール・ネット接続は不要です。別のPCにもこのHTML一つをコピーして使えます。
+
+ドラッグで移動、ホイールで拡大縮小、タッチでは二本指で拡大縮小できます。タイトル検索と発売年の選択で作品へ移動し、作品を選ぶと前後の接続作品が右側に表示されます。そのタイトルをクリックして系譜を辿れます。「全体」と右下のマップで大きく移動し、「文字を読む」で読める倍率に戻れます。URL末尾に選んだ作品を保持するので、再読込しても同じ作品へ戻ります。
+
+画像は横49,515pxに及ぶため、縮小PNGや巨大SVGの直接表示では読みづらくなっていました。閲覧ページは画面内の範囲だけを描き、拡大のたびに文字と線を描き直します。[画面のピクセル密度に合わせる描画](https://developer.mozilla.org/en-US/docs/Web/API/Window/devicePixelRatio)により、高密度ディスプレイでも鮮明に表示します。全体表示では小さな文字を省き、拡大すると表示します。
+
+ChromeでローカルHTMLを直接開き、検索・年代絞り込み・ホイール拡大・ドラッグ移動・前後の作品への移動・再読込時の位置復元・全体マップ・スマートフォン幅を検証済みです。記録は `output/viewer-verification.json` です。
+
 - [全体のSVG](output/famicom-through1989-timeline.svg)：主成果物。ブラウザなどで拡大して眺めてください。
 - [全体のPNG](output/famicom-through1989-timeline.png)：全体を画像として扱う場合。
 - [縮小プレビュー](output/famicom-through1989-timeline-preview.png)：配置の確認用。
@@ -33,6 +41,14 @@ IDEで開いていた `output/famicom-first100-hierarchy.svg` も、最新SVGと
 python -m pip install -r GPT/projects/famicom-lineage/requirements.txt
 python GPT/projects/famicom-lineage/render.py
 ```
+
+ブラウザ閲覧ページだけを再生成する場合は、Pillowやフォントファイルの準備も不要です。
+
+```powershell
+python GPT/projects/famicom-lineage/build_viewer.py
+```
+
+`dataset.json` を編集した後はこのコマンドで `index.html` に反映してください。閲覧ページの見た目や操作は `viewer.html` を編集してから再生成します。生成済みの `index.html` を直接編集すると、次の生成で上書きされます。
 
 WindowsではMeiryoを使います。他のOSでは日本語フォントを用意し、そのファイルとSVGのフォント名を指定してください。
 
