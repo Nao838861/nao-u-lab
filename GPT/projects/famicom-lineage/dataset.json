@@ -1038,7 +1038,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": true,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ドンキーコング",
@@ -1046,7 +1049,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": true,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ドンキーコング",
@@ -1054,7 +1060,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ドンキーコングJr.",
@@ -1062,7 +1071,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ポパイ",
@@ -1070,7 +1082,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "麻雀",
@@ -1078,7 +1093,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": true,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ファミリーベーシック",
@@ -1086,7 +1104,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": true,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ギャラクシアン",
@@ -1094,7 +1115,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": true,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ロードランナー",
@@ -1102,7 +1126,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": true,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ハイパーオリンピック",
@@ -1110,7 +1137,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": true,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ハイパーオリンピック",
@@ -1118,7 +1148,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "忍者くん 魔城の冒険",
@@ -1126,7 +1159,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": true,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "パックマン",
@@ -1134,7 +1170,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": true,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "タンクバタリアン",
@@ -1142,7 +1181,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": true,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ワープ＆ワープ",
@@ -1150,7 +1192,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": true,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "アラビアン",
@@ -1158,7 +1203,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": true,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ルート16",
@@ -1166,7 +1214,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": true,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ヴォルガード",
@@ -1174,7 +1225,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": true,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ワイルドガンマン（映写式）",
@@ -1182,7 +1236,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ダックハント（玩具）",
@@ -1190,7 +1247,10 @@
       "kind": "lineage",
       "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
       "sources": [],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "マリオブラザーズ",
@@ -1200,7 +1260,10 @@
       "sources": [
         "https://news.denfaminicogamer.jp/column01/180619"
       ],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": true,
+      "selection_note": "重要な複数影響の例外として採用"
     },
     {
       "source": "パックランド",
@@ -1210,7 +1273,11 @@
       "sources": [
         "https://news.denfaminicogamer.jp/column01/180619"
       ],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": false,
+      "selection_note": "重要な複数影響の例外として採用",
+      "local_reference": true
     },
     {
       "source": "バルーンファイト",
@@ -1221,7 +1288,11 @@
         "https://www.nintendo.co.jp/wii/interview/smnj/vol2/",
         "https://news.denfaminicogamer.jp/column01/180619"
       ],
-      "status": "系譜または資料参照"
+      "status": "系譜または資料参照",
+      "display": true,
+      "sequel": false,
+      "selection_note": "重要な複数影響の例外として採用",
+      "local_reference": true
     },
     {
       "source": "エキサイトバイク",
@@ -1229,7 +1300,10 @@
       "kind": "inferred",
       "reason": "宮本チーム内でのスクロール処理・加速感の設計継承と判断。一次証言の確認は未完了。",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "ジャウスト",
@@ -1237,7 +1311,10 @@
       "kind": "inferred",
       "reason": "羽ばたき操作と上下位置による接触攻撃の構造から、主要な先行作と判断。",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "スペースパニック",
@@ -1245,7 +1322,10 @@
       "kind": "inferred",
       "reason": "多段の足場・はしごと敵を避ける空間構成",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "パックマン",
@@ -1253,7 +1333,10 @@
       "kind": "inferred",
       "reason": "キャラクター性と追跡・反撃の設計。直接の機構継承は未確認",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "ドンキーコング",
@@ -1261,7 +1344,10 @@
       "kind": "inferred",
       "reason": "足場を上下に移動し敵を避け、キャラクターを主役に据える形式",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ドンキーコング",
@@ -1269,7 +1355,10 @@
       "kind": "inferred",
       "reason": "多層の足場で追跡を避けながら回収する設計",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ドンキーコング",
@@ -1277,7 +1366,10 @@
       "kind": "inferred",
       "reason": "多段足場とはしご、敵の追跡を環境で逆転する構造",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "スペースパニック",
@@ -1285,7 +1377,10 @@
       "kind": "inferred",
       "reason": "はしごを介した多段追跡と敵の落下処理",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "マリオブラザーズ",
@@ -1293,7 +1388,10 @@
       "kind": "inferred",
       "reason": "ジャンプで足場に干渉する協力・競争アクション",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ドンキーコングJr.",
@@ -1301,7 +1399,10 @@
       "kind": "inferred",
       "reason": "上方への進行と上下位置を使うジャンプ課題",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "ドンキーコング",
@@ -1309,7 +1410,10 @@
       "kind": "inferred",
       "reason": "固定画面の足場・ジャンプ・救出目標",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ロードランナー",
@@ -1317,7 +1421,10 @@
       "kind": "inferred",
       "reason": "追跡敵を避けながらアイテムを集める面構成。FC版での改作を想定",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "マリオブラザーズ",
@@ -1325,7 +1432,10 @@
       "kind": "inferred",
       "reason": "マリオ系キャラクターと多段足場への干渉",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "ロードランナー",
@@ -1333,7 +1443,10 @@
       "kind": "inferred",
       "reason": "地形を壊して進路を変えるパズル的アクション",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ドンキーコング",
@@ -1341,7 +1454,10 @@
       "kind": "inferred",
       "reason": "多段足場をジャンプで移動して敵を処理",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "マリオブラザーズ",
@@ -1349,7 +1465,10 @@
       "kind": "inferred",
       "reason": "敵の位置と足場の上下関係を読む固定画面アクション",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ドンキーコング",
@@ -1357,7 +1476,10 @@
       "kind": "inferred",
       "reason": "階層構造の移動と敵回避。直接影響は未確認",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ジャンプバグ",
@@ -1365,7 +1487,10 @@
       "kind": "inferred",
       "reason": "ジャンプを中心とする横スクロール走破",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "ピットフォール!",
@@ -1373,7 +1498,10 @@
       "kind": "inferred",
       "reason": "ジャンプで罠を越える洞窟・地形探索",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ドンキーコング",
@@ -1381,7 +1509,10 @@
       "kind": "inferred",
       "reason": "はしご・高低差・接触による失敗の設計",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "マリオブラザーズ",
@@ -1389,7 +1520,10 @@
       "kind": "inferred",
       "reason": "固定画面ジャンプと敵の排除",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "パックランド",
@@ -1397,7 +1531,10 @@
       "kind": "inferred",
       "reason": "横スクロールで障害を避けるキャラクターアクション",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "暴走特急（Stop the Express）",
@@ -1405,7 +1542,10 @@
       "kind": "inferred",
       "reason": "列車上で移動・回避する第1面の先行形式",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "パックマン",
@@ -1413,7 +1553,10 @@
       "kind": "inferred",
       "reason": "広い俯瞰フィールドで敵を避け目標を探索",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "マッピー",
@@ -1421,7 +1564,10 @@
       "kind": "inferred",
       "reason": "多段足場を循環しながら目標を埋める設計",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "ジャンプバグ",
@@ -1429,7 +1575,10 @@
       "kind": "inferred",
       "reason": "車両のジャンプとスクロール足場の組合せ",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ジャウスト",
@@ -1437,7 +1586,10 @@
       "kind": "inferred",
       "reason": "浮遊と慣性を制御する操作感。銃の反動自体の由来は未確認",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ヘッドオン",
@@ -1445,7 +1597,10 @@
       "kind": "inferred",
       "reason": "迷路内の回収物を取り尽くす先行形式",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "パックマン",
@@ -1453,7 +1608,10 @@
       "kind": "inferred",
       "reason": "迷路の回収・追跡・一時的な反撃",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "パックマン",
@@ -1461,7 +1619,10 @@
       "kind": "inferred",
       "reason": "格子状の空間を移動して面を完成",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "パックマン",
@@ -1469,7 +1630,10 @@
       "kind": "inferred",
       "reason": "迷路内の回収と敵回避",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "平安京エイリアン",
@@ -1477,7 +1641,10 @@
       "kind": "inferred",
       "reason": "掘る地形と敵を閉じ込める設計",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "パックマン",
@@ -1485,7 +1652,10 @@
       "kind": "inferred",
       "reason": "迷路状の移動と敵の追跡を反撃へ変える構造",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "スペースパニック",
@@ -1493,7 +1663,10 @@
       "kind": "inferred",
       "reason": "穴を使って追跡敵を処理するアクション",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "平安京エイリアン",
@@ -1501,7 +1674,10 @@
       "kind": "inferred",
       "reason": "穴掘りと敵の捕獲という先行機構",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "倉庫番",
@@ -1509,7 +1685,10 @@
       "kind": "inferred",
       "reason": "物を押して所定位置へ運ぶパズル",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ロードランナー",
@@ -1517,7 +1696,10 @@
       "kind": "inferred",
       "reason": "追跡敵と足場を伴う解法探索",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "パックマン",
@@ -1525,7 +1707,10 @@
       "kind": "inferred",
       "reason": "追跡敵の進路を読み罠にまとめる形式",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "平安京エイリアン",
@@ -1533,7 +1718,10 @@
       "kind": "inferred",
       "reason": "敵を罠へ誘導して閉じ込める形式",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "パックマン",
@@ -1541,7 +1729,10 @@
       "kind": "inferred",
       "reason": "迷路・回収・敵回避を複数階へ展開する形式",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "パックマン",
@@ -1549,7 +1740,10 @@
       "kind": "inferred",
       "reason": "迷路で追跡を避けながら目的地へ向かう形式",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "パックマン",
@@ -1557,7 +1751,10 @@
       "kind": "inferred",
       "reason": "迷路内の危険回避とゴール到達",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "パックマン",
@@ -1565,7 +1762,10 @@
       "kind": "inferred",
       "reason": "格子迷路で敵の進路を読む設計",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "平安京エイリアン",
@@ -1573,7 +1773,10 @@
       "kind": "inferred",
       "reason": "敵を位置と時間で罠にかける設計",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "ロードランナー",
@@ -1581,7 +1784,10 @@
       "kind": "inferred",
       "reason": "FC版で敵の造形・エンディングの関連付け。原作誕生の原因とはしない",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "パックマン",
@@ -1589,7 +1795,10 @@
       "kind": "inferred",
       "reason": "迷路状区画での回収と敵回避",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "タンクバタリアン",
@@ -1597,7 +1806,10 @@
       "kind": "inferred",
       "reason": "俯瞰での射撃と戦車の存在。直接の継承は未確認",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "スペースインベーダー",
@@ -1605,7 +1817,10 @@
       "kind": "inferred",
       "reason": "隊列射撃から降下攻撃へ発展する先行形式",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "フェニックス",
@@ -1613,7 +1828,10 @@
       "kind": "inferred",
       "reason": "編隊射撃と段階的な敵構成",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "スペースインベーダー",
@@ -1621,7 +1839,10 @@
       "kind": "inferred",
       "reason": "隊列射撃と攻撃段階の発展",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ギャラガ",
@@ -1629,7 +1850,10 @@
       "kind": "inferred",
       "reason": "降下する敵と編隊射撃",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "スペースインベーダー",
@@ -1637,7 +1861,10 @@
       "kind": "inferred",
       "reason": "固定画面で敵を射撃する形式",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ギャラガ",
@@ -1645,7 +1872,10 @@
       "kind": "inferred",
       "reason": "固定位置から弾道を合わせ、移動する敵を処理",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ドンキーコング",
@@ -1653,7 +1883,10 @@
       "kind": "inferred",
       "reason": "動物キャラクターと救出劇。機構の直接影響は未確認",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "ギャラクシアン",
@@ -1661,7 +1894,10 @@
       "kind": "inferred",
       "reason": "下方から射撃し上方の敵・障害を押し返す形式",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "スペースインベーダー",
@@ -1669,7 +1905,10 @@
       "kind": "inferred",
       "reason": "射撃ゲームの連続進行への展開",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "スクランブル",
@@ -1677,7 +1916,10 @@
       "kind": "inferred",
       "reason": "スクロール進行と空中・地上の対象を撃ち分ける機構",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "重要な複数影響の例外として採用"
     },
     {
       "source": "ボスコニアン",
@@ -1685,7 +1927,10 @@
       "kind": "inferred",
       "reason": "空中敵と地上拠点の組合せ",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "重要な複数影響の例外として採用"
     },
     {
       "source": "ギャラガ",
@@ -1693,7 +1938,10 @@
       "kind": "inferred",
       "reason": "ナムコの編隊射撃からスクロール射撃への接続仮説",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "ディフェンダー",
@@ -1701,7 +1949,10 @@
       "kind": "inferred",
       "reason": "横方向の飛行と地上の人を救出する目的",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "チョップリフター",
@@ -1709,7 +1960,10 @@
       "kind": "inferred",
       "reason": "自由なヘリ飛行と地上拠点への関与",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ボスコニアン",
@@ -1717,7 +1971,10 @@
       "kind": "inferred",
       "reason": "全方向移動と拠点攻撃",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "ゼビウス",
@@ -1725,7 +1982,10 @@
       "kind": "inferred",
       "reason": "縦スクロールの地上・空中敵配置",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ギャラガ",
@@ -1733,7 +1993,10 @@
       "kind": "inferred",
       "reason": "敵編隊と射撃・得点のリズム",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "スクランブル",
@@ -1741,7 +2004,10 @@
       "kind": "inferred",
       "reason": "横スクロールで地形を避けながら射撃",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ディフェンダー",
@@ -1749,7 +2015,10 @@
       "kind": "inferred",
       "reason": "飛行形態の横移動と射撃",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "フロントライン",
@@ -1757,7 +2026,10 @@
       "kind": "inferred",
       "reason": "地上部隊と俯瞰戦場での進行",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ボスコニアン",
@@ -1765,7 +2037,10 @@
       "kind": "inferred",
       "reason": "移動する戦闘機と地上拠点への攻撃",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "フロントライン",
@@ -1773,7 +2048,10 @@
       "kind": "inferred",
       "reason": "俯瞰で歩行・射撃しながら敵を避ける形式",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "パックマン",
@@ -1781,7 +2059,10 @@
       "kind": "inferred",
       "reason": "回収物を集めながら敵を避ける面進行",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "ゼビウス",
@@ -1789,7 +2070,10 @@
       "kind": "inferred",
       "reason": "縦スクロールと空中編隊の配置",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ギャラガ",
@@ -1797,7 +2081,10 @@
       "kind": "inferred",
       "reason": "敵編隊の撃破・得点のリズム",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "ゼビウス",
@@ -1805,7 +2092,10 @@
       "kind": "inferred",
       "reason": "縦スクロール射撃と地上・空中の配置",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "スターフォース",
@@ -1813,7 +2103,10 @@
       "kind": "inferred",
       "reason": "連続する編隊と得点・破壊対象",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "スクランブル",
@@ -1821,7 +2114,10 @@
       "kind": "inferred",
       "reason": "横スクロールでの飛行射撃",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "フォーメーションZ",
@@ -1829,7 +2125,10 @@
       "kind": "inferred",
       "reason": "変形するメカと横スクロール射撃",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "フォーメーションZ",
@@ -1837,7 +2136,10 @@
       "kind": "inferred",
       "reason": "変形状態を選ぶ横スクロール射撃",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "フォーメーションZ",
@@ -1845,7 +2147,10 @@
       "kind": "inferred",
       "reason": "人型・飛行形態の切替による空間移動",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ゼビウス",
@@ -1853,7 +2158,10 @@
       "kind": "inferred",
       "reason": "縦スクロールで空中と地上の対象を撃つ形式",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "スターフォース",
@@ -1861,7 +2169,10 @@
       "kind": "inferred",
       "reason": "編隊の連続出現と得点の構造",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "ゼビウス",
@@ -1869,7 +2180,10 @@
       "kind": "inferred",
       "reason": "空中と地上の対象を撃ち分ける形式",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "スターフォース",
@@ -1877,7 +2191,10 @@
       "kind": "inferred",
       "reason": "空中回収物を射撃し得点・強化へ繋ぐ設計の候補",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "スターレイダース",
@@ -1885,7 +2202,10 @@
       "kind": "inferred",
       "reason": "コックピット視点と戦略マップ・補給",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "バトルゾーン",
@@ -1893,7 +2213,10 @@
       "kind": "inferred",
       "reason": "一人称照準と空間の把握",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "スターレイダース",
@@ -1901,7 +2224,10 @@
       "kind": "inferred",
       "reason": "コックピット視点の宇宙射撃",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ザクソン",
@@ -1909,7 +2235,10 @@
       "kind": "inferred",
       "reason": "奥行きと飛行位置を把握する射撃",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "ザクソン",
@@ -1917,7 +2246,10 @@
       "kind": "inferred",
       "reason": "奥行きのある飛行射撃",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "スターレイダース",
@@ -1925,7 +2257,10 @@
       "kind": "inferred",
       "reason": "一人称寄りの空戦と照準",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ポールポジション",
@@ -1933,7 +2268,10 @@
       "kind": "inferred",
       "reason": "前方へ流れる道と奥行き表現",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ワイルドガンマン",
@@ -1941,7 +2279,10 @@
       "kind": "inferred",
       "reason": "光線銃による標的の判別・反応",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ダックハント",
@@ -1949,7 +2290,10 @@
       "kind": "inferred",
       "reason": "同時期の光線銃向け標的射撃。開発順は未確認",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "スピードレース",
@@ -1957,7 +2301,10 @@
       "kind": "inferred",
       "reason": "俯瞰の道路と追い越し回避",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "モナコGP",
@@ -1965,7 +2312,10 @@
       "kind": "inferred",
       "reason": "俯瞰での走行・交通回避",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "モナコGP",
@@ -1973,7 +2323,10 @@
       "kind": "inferred",
       "reason": "俯瞰での高速走行と衝突回避",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ポールポジション",
@@ -1981,7 +2334,10 @@
       "kind": "inferred",
       "reason": "後方視点の疑似3Dレース",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ポールポジション",
@@ -1989,7 +2345,10 @@
       "kind": "inferred",
       "reason": "後方視点の道路走行",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ジッピーレース",
@@ -1997,7 +2356,10 @@
       "kind": "inferred",
       "reason": "バイクで交通を避けて走行",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "ジッピーレース",
@@ -2005,7 +2367,10 @@
       "kind": "inferred",
       "reason": "バイクの速度制御と障害物",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ポン",
@@ -2013,7 +2378,10 @@
       "kind": "inferred",
       "reason": "球の打ち返しを中心とする対戦",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ホームラン（Atari）",
@@ -2021,7 +2389,10 @@
       "kind": "inferred",
       "reason": "テレビ野球で投球・打撃をタイミング操作へ置き換える形式",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ゴルフ（Atari）",
@@ -2029,7 +2400,10 @@
       "kind": "inferred",
       "reason": "画面上のコースと打球の操作",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "サッカー（Atari）",
@@ -2037,7 +2411,10 @@
       "kind": "inferred",
       "reason": "俯瞰で選手を動かす球技",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "フットボール（Atari）",
@@ -2045,7 +2422,10 @@
       "kind": "inferred",
       "reason": "俯瞰のアメフトで攻守を操作",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "空手道",
@@ -2053,7 +2433,10 @@
       "kind": "inferred",
       "reason": "対面での打撃と技の選択",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "空手道",
@@ -2061,7 +2444,10 @@
       "kind": "inferred",
       "reason": "空手の打撃・間合いを対面格闘へ置き換える同年作品の候補",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "アーバンチャンピオン",
@@ -2069,7 +2455,10 @@
       "kind": "inferred",
       "reason": "二者の接近戦と押し出しを中心とする対戦",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     },
     {
       "source": "ザ・ビッグプロレスリング",
@@ -2077,7 +2466,10 @@
       "kind": "inferred",
       "reason": "リング上のプロレスとタッグ交代",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ポン",
@@ -2085,7 +2477,10 @@
       "kind": "inferred",
       "reason": "相手側へ球を送り返す対戦",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ビデオピンボール",
@@ -2093,7 +2488,10 @@
       "kind": "inferred",
       "reason": "機械式ピンボールを画面上で再現する先行例",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ピンボール",
@@ -2101,7 +2499,10 @@
       "kind": "inferred",
       "reason": "球の反射と物理挙動を盤面攻略へ使う構造",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "フラッピー",
@@ -2109,7 +2510,10 @@
       "kind": "inferred",
       "reason": "小物の配置と落下を盤面パズルへ用いる設計",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "Adventure（Colossal Cave）",
@@ -2117,7 +2521,10 @@
       "kind": "inferred",
       "reason": "文章コマンドによる探索をグラフィックへ展開",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "ミステリーハウス",
@@ -2125,7 +2532,10 @@
       "kind": "inferred",
       "reason": "場面探索とコマンド入力による事件解決",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "フロントライン",
@@ -2133,7 +2543,10 @@
       "kind": "inferred",
       "reason": "俯瞰で歩兵を動かす戦場アクション",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": true,
+      "sequel": false,
+      "selection_note": "主要な影響元として採用"
     },
     {
       "source": "バンゲリングベイ",
@@ -2141,14 +2554,45 @@
       "kind": "inferred",
       "reason": "広域の戦場に複数の目標を置く設計",
       "sources": [],
-      "status": "試作の編集判断"
+      "status": "試作の編集判断",
+      "display": false,
+      "sequel": false,
+      "selection_note": "主要な影響元に絞るため、この図では非表示。候補として保持"
     }
   ],
   "stats": {
     "fc_count": 100,
     "external_count": 36,
     "edge_count": 138,
-    "isolated_fc": 7
+    "isolated_fc": 8,
+    "candidate_edge_count": 138,
+    "visible_edge_count": 100,
+    "sequel_edge_count": 15
   },
-  "presentation": "矩形の作品箱・上から下への直角接続。Graphviz dotによる階層図"
+  "presentation": "狭い矩形の作品箱・全実線・続編太線。主要な影響元を原則1本として階層を表示",
+  "display_policy": {
+    "default_max_parents": 1,
+    "multiple_parent_exceptions": {
+      "スーパーマリオブラザーズ": {
+        "max_parents": 3,
+        "sources": [
+          "マリオブラザーズ",
+          "パックランド",
+          "バルーンファイト"
+        ],
+        "reason": "自作の機構継承、他社作品による開発のきっかけ、運動計算の技術継承という別々の重要な影響を証言で辿れるため3本残す。エキサイトバイクの未確認候補は表示しない。"
+      },
+      "ゼビウス": {
+        "max_parents": 2,
+        "sources": [
+          "スクランブル",
+          "ボスコニアン"
+        ],
+        "reason": "スクロールと空中・地上の撃ち分け、地上拠点を含む射撃空間という設計の中核に関する二つの仮説を残す。ギャラガとの一般的な編隊射撃の類似は表示しない。"
+      }
+    },
+    "selection_basis": "続編では直前の作品、その他は遊びの中核に関わる先行作を優先。一般的なジャンルの類似・装飾的な類似は削る。証言で異なる重要な影響が分かる場合などのみ複数を表示。",
+    "style": "全接続は実線。続編のみ太線。推定かどうかは色とデータのkindで区別。",
+    "local_reference_policy": "例外の副次影響元を同名・同じ作品番号の再掲ノードで近接表示し、横断する長い線を避ける。接続データ上は同一作品。"
+  }
 }

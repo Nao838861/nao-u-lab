@@ -1,16 +1,20 @@
 {
   "node_count": 136,
+  "box_count": 138,
+  "repeated_reference_count": 2,
   "fc_count": 100,
-  "edge_count": 138,
+  "edge_count": 100,
+  "candidate_edge_count": 138,
+  "sequel_edge_count": 15,
   "node_overlap_count": 0,
   "edge_node_overlap_count": 0,
   "non_orthogonal_segment_count": 0,
-  "segment_count": 256,
+  "segment_count": 147,
   "png_size": [
-    15942,
-    4694
+    5920,
+    6089
   ],
-  "png_dpi": 72,
+  "png_dpi": 110,
   "graphviz": "dot - graphviz version 16.1.0 (20260904.0139)",
   "font": "Meiryo"
 }
