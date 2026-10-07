@@ -1,30 +1,28 @@
 {
-  "node_count": 827,
-  "fc_count": 751,
-  "external_count": 76,
-  "box_count": 831,
+  "node_count": 465,
+  "fc_count": 398,
+  "external_count": 67,
+  "box_count": 469,
   "repeated_reference_count": 4,
-  "edge_count": 344,
-  "sequel_edge_count": 97,
+  "edge_count": 412,
+  "sequel_edge_count": 41,
   "year_counts": {
     "1983": 9,
     "1984": 20,
     "1985": 70,
     "1986": 113,
-    "1987": 186,
-    "1988": 189,
-    "1989": 164
+    "1987": 186
   },
   "node_overlap_count": 0,
   "edge_node_overlap_count": 0,
   "all_edges_solid": true,
   "all_edges_downward": true,
-  "width": 49515,
-  "height": 7746,
-  "year_band_count": 7,
+  "width": 4691,
+  "height": 2817,
+  "year_band_count": 5,
   "fc_year_band_placement": true,
   "png_size": [
-    19584,
-    3064
+    4691,
+    2817
   ]
 }

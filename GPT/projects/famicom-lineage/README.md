@@ -1,85 +1,75 @@
-﻿# ファミコンの系譜：1983–1989
+# ファミコンの系譜：1983–1987
 
-1989年末までの国内FC・ディスクシステム作品を、国内発売年が下方向へ進む大きな系譜図にしました。発売一覧のカートリッジ593件・ディスク178件から、同名移植・再発売と同内容の色違いをまとめた751作品を掲載しています。外部参考76作品、関係344本、続編の太線97本です。
+1987年末までの国内FC・FDS398作品、外部参考67作品、接続412本を掲載しています。カートリッジ304件・ディスク103件の発売レコードから同名移植・再発売を統合しました。
 
-## 見る画像
+## ブラウザで見る
 
-**閲覧には [index.html](index.html) をChromeまたはEdgeで開いてください。** `Open-Viewer.cmd` のダブルクリックでも開けます。HTML一つに全作品・接続データを含むので、サーバーの起動・インストール・ネット接続は不要です。別のPCにもこのHTML一つをコピーして使えます。
+**[index.html](index.html) をChromeまたはEdgeで開いてください。** `Open-Viewer.cmd` のダブルクリックでも開けます。データ内蔵のHTML一つなので、別のPCへコピーしてもサーバー・インストール・ネット接続なしで閲覧できます。
 
-ドラッグで移動、ホイールで拡大縮小、タッチでは二本指で拡大縮小できます。タイトル検索と発売年の選択で作品へ移動し、作品を選ぶと前後の接続作品が右側に表示されます。そのタイトルをクリックして系譜を辿れます。「全体」と右下のマップで大きく移動し、「文字を読む」で読める倍率に戻れます。URL末尾に選んだ作品を保持するので、再読込しても同じ作品へ戻ります。
+ドラッグで移動、ホイールまたは二本指で拡大縮小できます。検索と発売年でタイトルを絞り、作品をクリックすると前後の接続作品が表示されます。そのタイトルから次の作品へ移動できます。「全体」と右下のマップで遠くへ移動し、「文字を読む」で読める倍率へ戻ります。選択作品はURL末尾に保持します。
 
-画像は横49,515pxに及ぶため、縮小PNGや巨大SVGの直接表示では読みづらくなっていました。閲覧ページは画面内の範囲だけを描き、拡大のたびに文字と線を描き直します。[画面のピクセル密度に合わせる描画](https://developer.mozilla.org/en-US/docs/Web/API/Window/devicePixelRatio)により、高密度ディスプレイでも鮮明に表示します。全体表示では小さな文字を省き、拡大すると表示します。
+画面内だけを描画し、拡大ごとに文字と線を描き直します。高密度ディスプレイにも対応しています。Chromeで検索、年絞り込み、ズーム、ドラッグ、接続作品への移動、再読込、スマートフォン幅、二本指ズームを検証しました。結果は `output/viewer-verification.json` に保存しています。
 
-ChromeでローカルHTMLを直接開き、検索・年代絞り込み・ホイール拡大・ドラッグ移動・前後の作品への移動・再読込時の位置復元・全体マップ・スマートフォン幅を検証済みです。記録は `output/viewer-verification.json` です。
+## 配置と接続
 
-- [全体のSVG](output/famicom-through1989-timeline.svg)：主成果物。ブラウザなどで拡大して眺めてください。
-- [全体のPNG](output/famicom-through1989-timeline.png)：全体を画像として扱う場合。
-- [縮小プレビュー](output/famicom-through1989-timeline-preview.png)：配置の確認用。
-- [ノードのデザインの抜粋](output/famicom-through1989-timeline-detail.png)：外部参考とFCの区別。
-- [マリオを含む系統の抜粋](output/famicom-through1989-timeline-mario.png)
-- [RPGを含む系統の抜粋](output/famicom-through1989-timeline-rpg.png)
+図は4,691×2,817です。以前の49,515×7,746から対象年の削減と配置方式の変更で圧縮しました。ノード幅はタイトルに応じて76〜124、長い名前は折り返します。将来の分岐に必要な横幅を予約する方式をやめ、各年に小さな段を並べました。段間の基本間隔は約11で、配線に必要な空間を確保します。
 
-IDEで開いていた `output/famicom-first100-hierarchy.svg` も、最新SVGと同じ内容へ更新しています。初期100本版は `output/first100/` と `dataset-first100.json` に保存しています。
+背景は1983〜1987年を区切り、下方向に国内発売年が進みます。年内の上下は系譜を優先し、月日順ではありません。色付き矩形と赤い左端はFC、青い左端はFDSです。外部参考は白い角丸と初出年で区別し、影響先の近くに置きます。伝統的な盤上遊びは成立年不詳と表示します。
 
-## 図の読み方
+接続は直角の実線、続編・シリーズ継承41本は太線です。緑は原作・シリーズ継承、青は証言を参照した関係、茶は推定・仮配置です。影響元は原則1本、重要な場合だけ2〜3本です。副次的な影響元4件を近くに再掲し、再掲ラベルを添えています。
 
-色付きの矩形と赤い左端はFC、青い左端とFDSラベルはディスクシステムです。外部作品は白地の角丸と控えめな輪郭で区別し、AC・PC・MSXなどの機種と初出年を添えています。背景の年は国内FC・FDS発売年です。外部参考は、長い線を減らすため影響先の近くに置き、背景の年とは別に初出年を明記します。
+スターフォース→スターソルジャー→ヘクター’87、ムーンクレスタ→テラクレスタを補い、スペースインベーダーはアーケード原作→FC移植としました。アーガス・Bウイングなどはゼビウスからの機構上の比較で接続しています。
 
-横方向には独立した系統を並べ、1983〜1989年の境界線を図全体で揃えています。横スクロールしても見失わないよう、年を境界に繰り返し記載しています。年内の上下は系譜を優先し、発売月日順ではありません。同じ列は、時代が重ならない別の系統で再利用することがあります。
+国内作品の未接続は0本です。同社・同ジャンルの先行作品などへ補った155本は、データと閲覧欄で「仮配置」と明示します。これは歴史的な影響を断定するものではなく、全体を眺めるための比較上の配置です。「関係の理由と出典」から判断を確認できます。
 
-接続はすべて直角の実線です。太線は続編、細線は移植・派生や他作品からの影響です。緑はシリーズ・原作からの継承、青は開発者証言を参照した関係、茶は機構の比較による推定です。推定は開発者が影響を認めたという意味ではありません。理由と出典はデータに残し、SVGの線にマウスを置くと理由が見られます。
+## 画像
 
-影響元は原則1本です。マリオの3本、ゼビウスとドラゴンクエストの2本だけを例外にしています。副次的な影響元4件は近くに再掲し、「再掲」と明記しました。作品を追加したわけではありません。
+- [全体SVG](output/famicom-through1987-timeline.svg)
+- [全体PNG](output/famicom-through1987-timeline.png)：原寸。
+- [縮小プレビュー](output/famicom-through1987-timeline-preview.png)
+- [ノードの抜粋](output/famicom-through1987-timeline-detail.png)
+- [マリオ周辺](output/famicom-through1987-timeline-mario.png)
+- [RPG周辺](output/famicom-through1987-timeline-rpg.png)
 
-関係をまだ判断していない388作品は、各年の右端の棚に並べています。影響がなかったという判断ではありません。無理に同ジャンルの作品をつなぐことは避けています。751作品は今回の発売一覧の対象範囲であり、非売品や再発売を含むあらゆる数え方の総数ではありません。
+IDEで開いていた `output/famicom-first100-hierarchy.svg` も最新内容へ更新しました。初期100作品版は `output/first100/`、1989年までの画像は `output/famicom-through1989-*` に保存しています。
 
 ## 別のPCで再生成する
 
-リポジトリ内の場所は `GPT/projects/famicom-lineage/` です。Python 3.10以降とPillowを使い、現在版ではGraphvizは不要です。リポジトリのルートから実行します。
+閲覧だけなら `index.html` を開くだけです。ソースは `GPT/projects/famicom-lineage/`、正本は `dataset.json` です。作品ID、発売日、機種、接続の理由・出典・種類・続編フラグ・仮配置フラグを保存しています。
+
+Python 3.10以降、画像生成にはPillow、配置の変更にはGraphvizの `dot` を使います。GraphvizをPATHへ登録するか、環境変数 `GRAPHVIZ_DOT` に実行ファイルを指定してください。データに変更がない場合は保存済み `output/layout.json` を再利用でき、Graphvizなしでも閲覧ページを再生成できます。
+
+リポジトリのルートから実行します。
 
 ```powershell
 python -m pip install -r GPT/projects/famicom-lineage/requirements.txt
+python GPT/projects/famicom-lineage/render.py --check
 python GPT/projects/famicom-lineage/render.py
-```
-
-ブラウザ閲覧ページだけを再生成する場合は、Pillowやフォントファイルの準備も不要です。
-
-```powershell
 python GPT/projects/famicom-lineage/build_viewer.py
 ```
 
-`dataset.json` を編集した後はこのコマンドで `index.html` に反映してください。閲覧ページの見た目や操作は `viewer.html` を編集してから再生成します。生成済みの `index.html` を直接編集すると、次の生成で上書きされます。
+ブラウザの表示・操作は `viewer.html` を編集して `build_viewer.py` で反映します。生成済み `index.html` の直接編集は次回生成で上書きされます。
 
-WindowsではMeiryoを使います。他のOSでは日本語フォントを用意し、そのファイルとSVGのフォント名を指定してください。
+発売一覧と関係を再構築するときは `refine_1987.py` を使います。内部で `build_dataset.py` の1989年版を生成後、1987年版へ絞って補完します。`dataset.json` への直接編集は失われるため、再構築前にスクリプトにも反映してください。
+
+```powershell
+python GPT/projects/famicom-lineage/refine_1987.py
+```
+
+Windows以外では日本語フォントを指定します。
 
 ```sh
 python GPT/projects/famicom-lineage/render.py --font "Noto Sans CJK JP" --font-path /path/to/NotoSansCJK-Regular.ttc
 ```
 
-SVGは原寸のベクター画像です。全体PNGは60メガピクセル以内に縮小するため、細部の閲覧はSVGが適しています。PNG抜粋は各24メガピクセル以内です。
-
-## データと検証
-
-編集対象の正本は `dataset.json` です。作品の安定IDを使って接続するので、表示タイトルを直しても参照は壊れません。各作品に国内発売日・機種・発売一覧の元レコード、各接続に種類・理由・出典・続編フラグを保存しています。`catalogue.json` は発売一覧の事実データ、`build_dataset.py` は初期データと選別した関係から正本を再構築するスクリプトです。
-
-```powershell
-python GPT/projects/famicom-lineage/build_dataset.py
-python GPT/projects/famicom-lineage/render.py --check
-python GPT/projects/famicom-lineage/render.py
-```
-
-`build_dataset.py` を実行すると `dataset.json` を上書きします。正本へ直接加えた編集は、再構築する前にスクリプトにも反映してください。画像生成だけなら `render.py` だけを使います。
-
-参照・重複・循環・年代逆行・親の本数・証言の出典、全771件の発売レコードの保持、全作品と接続の描画、作品箱の重なり、別作品の箱を通る線、直角・下向きの接続、国内作品と背景年の一致を検証します。結果は `output/verification.json`、配置は `output/layout.json` に保存します。
-
-初期100本の旧版を再生成する場合だけ、Graphvizと `render_first100.py` を使います。出力先は `output/first100/` です。
+参照・重複・循環・年代逆行・親の本数・証言の出典、1987年までの発売レコード407件の保持、全作品と接続の描画、箱の重なり、別の箱を通る線、直角・下向きの接続、発売年と背景年の一致を検証します。結果は `output/verification.json`、配置は `output/layout.json`、Graphviz入力は `output/compact-layout.dot` です。
 
 ## 出典
 
 - [FC発売一覧](https://www.super-famicom.jp/etc00/gamelist/fc.html)
 - [ディスクシステム発売一覧](https://www.super-famicom.jp/etc00/gamelist/fds.html)
-- [任天堂のファミコン年表](https://www.nintendo.com/jp/famicom/history/index.html)：代表作品・続編の説明と発売日の照合。ロードランナーはこの資料の1984年7月28日へ補正。
-- [堀井雄二インタビュー](https://www.famitsu.com/article/202608/78518)：Wizardry・Ultimaとの出会い。
-- 初期100本で参照したマリオの開発者対談などのURLは `dataset-first100.json` と `dataset.json` に保持しています。
+- [任天堂のファミコン年表](https://www.nintendo.com/jp/famicom/history/index.html)
+- [ヘクター’87とキャラバンの系譜](https://game.watch.impress.co.jp/docs/kikaku/1516378.html)
+- 個別接続の開発者対談などの参照URLは `dataset.json` に保持しています。
 
-発売一覧の表記揺れや、原作のどの版を比較対象とするかには再検討の余地があります。原作の初出年は概数を含みます。今後は茶線の裏付けと未判定作品の関係を増やし、個別タイトルから編集できる閲覧環境へつなげられます。
+表記揺れや原作の版、推定の妥当性には再検討の余地があります。原作初出年は概数を含みます。今後は仮配置を個別に見直し、証言や開発上の系譜へ置き換えられます。
