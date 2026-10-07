@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-07",
+  "status": "検討案。実装・新規公開リポジトリ作成は未実施",
+  "request": "1987年発売までのファミコンソフトを入口に、影響元を通常3本・最大5本ほど辿れるツリー、年代・タイトル検索、GitHubでの共同編集手段を検討する。",
+  "reference": {"url": "https://x.com/Nao_u_/status/2107433342211936628", "access": "本文取得不可。内容を推測して要件に追加しない"},
+  "recommendation": {
+    "hosting": "GitHub Pages",
+    "frontend": "React + TypeScript + React Flow + ELK.js",
+    "canonical_data": "Git管理する作品別YAML。ビルド時に検証して閲覧用JSONへ変換",
+    "contributions": "初期はGitHub Issue Formsによる提案とPull Requestによる修正。採用後に公開サイトを更新",
+    "rationale": "クリックで作品を辿る専用UI、履歴、差分レビュー、他者による再利用を両立。公開リポジトリのGitHub PagesはGitHub Freeで利用可能"
+  },
+  "alternatives": [
+    {"approach": "Cytoscape.jsを使う専用サイト", "fit": "全体のネットワーク分析や多数の接続の俯瞰を重視する場合", "tradeoff": "カード内の操作UIはReact Flowの方が今回の設計に合わせやすいと判断"},
+    {"approach": "MediaWiki + Wikibase + 専用ビューア", "fit": "多数の参加者による辞書編集を中心にする場合", "tradeoff": "ツリー閲覧UIは別途必要。初期構築とサーバー運用が増える"},
+    {"approach": "共有表 + 専用ビューア", "fit": "少人数での初期データ収集", "tradeoff": "作品ID、関係、複数出典の整合性と変更審査を別途設計する必要がある"}
+  ],
+  "model": {
+    "structure": "有向グラフとして保存し、選択作品を起点に部分グラフをツリー風に表示。同じ影響元は安定IDで共有",
+    "scope_proposal": "入口は日本国内のFCとFDSで1987年末まで。FDSを独立フィルターにする。影響元はアーケード、PC、海外作品、1983年以前も許容",
+    "games": ["安定ID", "作品名・別名", "原作初出", "機種・地域別発売情報", "メーカー", "ジャンル", "出典"],
+    "relations": ["影響元ID", "影響先ID", "関係種別", "影響を受けた要素", "説明", "出典URL・書誌情報・該当箇所", "根拠区分", "表示優先順位", "審査状態"],
+    "evidence": ["開発者等による明言", "資料に基づく考察", "投稿者の仮説"],
+    "ranking": "表示優先順位と根拠の強さは別に保持。通常3本、展開で最大5本。根拠が少ない作品を無理に3本まで埋めない",
+    "types": "影響・移植・続編・類似を区別する。類似だけでは影響の根拠としない",
+    "release_semantics": "移植版と原作を区別。発売順は影響関係の必要十分条件ではない。同年・開発中の影響は資料で判断"
+  },
+  "interaction": [
+    "左に年代・タイトル・メーカー・ジャンル・FC/FDSの検索一覧、中央に影響ツリー、右に説明と出典",
+    "初期表示は選択作品と直接の影響元。クリックで中心作品を切り替え、別操作で枝を展開する",
+    "戻る・進むとURLによる作品やフィルター状態の共有",
+    "影響元から影響先への逆方向探索",
+    "年代フィルターは入口一覧に適用し、範囲外の影響元はバッジ付きで残して系譜の断絶を避ける",
+    "自動配置は階層表示であり厳密な時間軸とは分ける。再配置時の視点移動を抑える"
+  ],
+  "validation_proposal": ["ID一意性", "参照先の存在", "関係重複", "自己参照・循環", "日付の矛盾候補", "根拠区分と出典の整合性", "表示優先順位"],
+  "contribution_limits": "閲覧はログイン不要。GitHubでの提案にはGitHubアカウントが必要。即時編集やGitHub不要の投稿は認証・保存API・履歴・審査の追加構築が必要で、静的サイトのみでは完結しない",
+  "first_slice": "全対象作品の台帳を整備し、まず20〜30作品程度の根拠付き関係で閲覧体験を検証。未調査と影響元不明を区別。AIは資料探索と候補抽出を補助し、採用根拠は人が確認する",
+  "sources": [
+    "https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site",
+    "https://reactflow.dev/",
+    "https://reactflow.dev/learn/layouting/layouting",
+    "https://js.cytoscape.org/",
+    "https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository",
+    "https://docs.github.com/en/repositories/working-with-files/managing-files/editing-files",
+    "https://www.mediawiki.org/wiki/Wikibase/What_is_Wikibase"
+  ]
+}
