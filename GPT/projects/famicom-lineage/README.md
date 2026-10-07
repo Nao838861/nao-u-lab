@@ -1,68 +1,69 @@
-# ファミコン初期100タイトルの系譜図
+﻿# ファミコンの系譜：1983–1989
 
-国内FCの発売順100タイトルと外部の先行作品36本の系譜図です。138本の候補から主要な100本を選んで表示しています。影響元を上、影響先を下に置き、幅を詰めた矩形の作品箱と直角の実線で表示します。続編の15本は太線です。
+1989年末までの国内FC・ディスクシステム作品を、国内発売年が下方向へ進む大きな系譜図にしました。発売一覧のカートリッジ593件・ディスク178件から、同名移植・再発売と同内容の色違いをまとめた751作品を掲載しています。外部参考76作品、関係344本、続編の太線97本です。
 
-影響元は原則1本に絞り、スーパーマリオブラザーズの3本とゼビウスの2本だけを例外として残しています。離れた作品を結ぶ長い横線を避けるため、マリオへの副次的な影響元2本は、同じ作品番号を持つ「同じ作品の再掲」ノードを近くに配置しています。作品数は136、再掲を含む箱数は138です。
+## 見る画像
 
-## 閲覧するファイル
+- [全体のSVG](output/famicom-through1989-timeline.svg)：主成果物。ブラウザなどで拡大して眺めてください。
+- [全体のPNG](output/famicom-through1989-timeline.png)：全体を画像として扱う場合。
+- [縮小プレビュー](output/famicom-through1989-timeline-preview.png)：配置の確認用。
+- [ノードのデザインの抜粋](output/famicom-through1989-timeline-detail.png)：外部参考とFCの区別。
+- [マリオを含む系統の抜粋](output/famicom-through1989-timeline-mario.png)
+- [RPGを含む系統の抜粋](output/famicom-through1989-timeline-rpg.png)
 
-- `output/famicom-first100-hierarchy.svg`：拡大して眺めるための主成果物。ブラウザで開けます。
-- `output/famicom-first100-hierarchy.png`：大きな面積を使った画像。
-- `output/famicom-first100-hierarchy-preview.png`：全体配置を見る縮小画像。
-- `output/famicom-first100-hierarchy.dot`：Graphviz用の図の定義。
-- `output/verification.json`：作品・接続の件数、箱の重なり検査、描画環境。
+IDEで開いていた `output/famicom-first100-hierarchy.svg` も、最新SVGと同じ内容へ更新しています。初期100本版は `output/first100/` と `dataset-first100.json` に保存しています。
 
-## 別PCで続ける
+## 図の読み方
 
-このフォルダ全体をGitで取得してください。フォルダの絶対パスには依存しません。リポジトリ内では `GPT/projects/famicom-lineage/` にあります。現在の作業ブランチは `save-ash-c188-b2-20260516` です。
+色付きの矩形と赤い左端はFC、青い左端とFDSラベルはディスクシステムです。外部作品は白地の角丸と控えめな輪郭で区別し、AC・PC・MSXなどの機種と初出年を添えています。背景の年は国内FC・FDS発売年です。外部参考は、長い線を減らすため影響先の近くに置き、背景の年とは別に初出年を明記します。
 
-Python 3.10以降と、[Graphviz公式配布](https://graphviz.org/download/)の `dot` を用意します。Windowsではインストーラーのほか、公式ZIPを展開する方法も使えます。Graphvizの実行ファイルや一時ダウンロードはこのフォルダやGitには含めません。
+横方向には独立した系統を並べ、1983〜1989年の境界線を図全体で揃えています。横スクロールしても見失わないよう、年を境界に繰り返し記載しています。年内の上下は系譜を優先し、発売月日順ではありません。同じ列は、時代が重ならない別の系統で再利用することがあります。
 
-リポジトリのルートから実行する例です。
+接続はすべて直角の実線です。太線は続編、細線は移植・派生や他作品からの影響です。緑はシリーズ・原作からの継承、青は開発者証言を参照した関係、茶は機構の比較による推定です。推定は開発者が影響を認めたという意味ではありません。理由と出典はデータに残し、SVGの線にマウスを置くと理由が見られます。
+
+影響元は原則1本です。マリオの3本、ゼビウスとドラゴンクエストの2本だけを例外にしています。副次的な影響元4件は近くに再掲し、「再掲」と明記しました。作品を追加したわけではありません。
+
+関係をまだ判断していない388作品は、各年の右端の棚に並べています。影響がなかったという判断ではありません。無理に同ジャンルの作品をつなぐことは避けています。751作品は今回の発売一覧の対象範囲であり、非売品や再発売を含むあらゆる数え方の総数ではありません。
+
+## 別のPCで再生成する
+
+リポジトリ内の場所は `GPT/projects/famicom-lineage/` です。Python 3.10以降とPillowを使い、現在版ではGraphvizは不要です。リポジトリのルートから実行します。
 
 ```powershell
 python -m pip install -r GPT/projects/famicom-lineage/requirements.txt
 python GPT/projects/famicom-lineage/render.py
 ```
 
-GraphvizにPATHが通っていない場合は指定します。
+WindowsではMeiryoを使います。他のOSでは日本語フォントを用意し、そのファイルとSVGのフォント名を指定してください。
 
-```powershell
-python GPT/projects/famicom-lineage/render.py --dot C:/tools/Graphviz/bin/dot.exe
+```sh
+python GPT/projects/famicom-lineage/render.py --font "Noto Sans CJK JP" --font-path /path/to/NotoSansCJK-Regular.ttc
 ```
 
-日本語表示にはWindowsでMeiryo、LinuxでNoto Sans CJK JPを使います。Macなど別のフォントを使う場合は `--font "Hiragino Sans"` のように指定してください。LinuxではGraphvizに加えて日本語フォントの導入も必要です。
+SVGは原寸のベクター画像です。全体PNGは60メガピクセル以内に縮小するため、細部の閲覧はSVGが適しています。PNG抜粋は各24メガピクセル以内です。
 
-データだけを検証し、DOTを生成する場合はGraphvizやPillowは不要です。
+## データと検証
+
+編集対象の正本は `dataset.json` です。作品の安定IDを使って接続するので、表示タイトルを直しても参照は壊れません。各作品に国内発売日・機種・発売一覧の元レコード、各接続に種類・理由・出典・続編フラグを保存しています。`catalogue.json` は発売一覧の事実データ、`build_dataset.py` は初期データと選別した関係から正本を再構築するスクリプトです。
 
 ```powershell
+python GPT/projects/famicom-lineage/build_dataset.py
 python GPT/projects/famicom-lineage/render.py --check
+python GPT/projects/famicom-lineage/render.py
 ```
 
-## データを編集する
+`build_dataset.py` を実行すると `dataset.json` を上書きします。正本へ直接加えた編集は、再構築する前にスクリプトにも反映してください。画像生成だけなら `render.py` だけを使います。
 
-正本は `dataset.json` です。生成されたDOT・SVG・PNGを直接編集せず、データまたは `render.py` を変更して再生成します。
+参照・重複・循環・年代逆行・親の本数・証言の出典、全771件の発売レコードの保持、全作品と接続の描画、作品箱の重なり、別作品の箱を通る線、直角・下向きの接続、国内作品と背景年の一致を検証します。結果は `output/verification.json`、配置は `output/layout.json` に保存します。
 
-`nodes` に作品名、FC発売日、原作初出年、初期100本内の番号などを保存しています。接続の `source` / `target` は現在は作品名で参照しているため、作品名を変える場合は接続側も同時に変更してください。
+初期100本の旧版を再生成する場合だけ、Graphvizと `render_first100.py` を使います。出力先は `output/first100/` です。
 
-`edges` の一件は「影響元 → 影響先」です。`reason` に影響を受けた要素と判断理由、`sources` に資料URLを記録します。
+## 出典
 
-- `lineage`：緑実線。シリーズ、キャラクターや先行版の継承。操作の直接継承を意味するとは限りません。
-- `documented`：青実線。対談や開発者証言を参照した影響。パックランドからマリオへの線は競争上のきっかけ、バルーンファイトからの線は運動計算の技術継承です。
-- `inferred`：茶実線。Codexがゲーム内容と先行性から選んだ仮説。直接の開発者証言は確認していません。
+- [FC発売一覧](https://www.super-famicom.jp/etc00/gamelist/fc.html)
+- [ディスクシステム発売一覧](https://www.super-famicom.jp/etc00/gamelist/fds.html)
+- [任天堂のファミコン年表](https://www.nintendo.com/jp/famicom/history/index.html)：代表作品・続編の説明と発売日の照合。ロードランナーはこの資料の1984年7月28日へ補正。
+- [堀井雄二インタビュー](https://www.famitsu.com/article/202608/78518)：Wizardry・Ultimaとの出会い。
+- 初期100本で参照したマリオの開発者対談などのURLは `dataset-first100.json` と `dataset.json` に保持しています。
 
-`display` が `true` の関係だけを図に出します。外した38本は `false` として保持し、`selection_note` に選別の状態を残しています。`sequel` が `true` の15本は線幅3.6、それ以外は1.3です。続編と証言の有無は別の属性なので、マリオブラザーズからスーパーマリオブラザーズへの線は青い太線になります。
-
-`display_policy.multiple_parent_exceptions` に複数の影響元を残す作品と理由を記録しています。例外以外は1本まで、例外も3本までです。再掲を使う関係には `local_reference: true` を付けます。表示だけを複製するもので、作品データは一件のままです。実線への変更で推定が確定事項になったわけではなく、色と `kind` で根拠の区分を維持しています。
-
-対象の100本は1983年7月15日から1986年1月4日のツインビーまでです。限定版、教育ソフト、ファミリーベーシックも件数に含みます。同じ作品の原作とFC移植は一件にまとめています。候補データは各タイトル最大5本、図への表示は原則1本とし、無理な接続は保留しています。
-
-## 検証と今後の作業
-
-再生成時に、100本の件数と番号、参照先、接続重複、自己参照、循環、原作初出年の逆転、候補最大5本、表示原則1本・例外最大3本、証言ありの関係の出典を確認します。配置後は作品と再掲の箱数、表示接続数、全実線、続編の太線件数、箱同士の重なり、線の箱通過、水平・垂直の接続を確認します。配置専用の不可視辺は関係件数に含めません。線同士の交差点は作品を表さず、矢印の到着先が影響先です。
-
-SVGは原寸のベクター画像です。PNGは大きな図を別PCでも扱えるよう75メガピクセル以内に解像度を調整します。Graphviz 16.1.0で生成・検証済みで、使用したバージョンとフォントは `output/verification.json` に残ります。
-
-同年の作品を結んだ茶色の線は、開発の前後関係まで確定したものではありません。今後は推定線の裏付けを調べ、採用・修正・削除することと、対象タイトルの追加が主な作業です。年の一致や見た目の類似だけを実証された影響とは扱いません。
-
-前版は `GPT/artifacts/famicom-first100/` と `GPT/tools/render_famicom_first100.py` にあります。このフォルダの `dataset.json` は独立した正本なので、前版スクリプトを動かしても上書きされません。
+発売一覧の表記揺れや、原作のどの版を比較対象とするかには再検討の余地があります。原作の初出年は概数を含みます。今後は茶線の裏付けと未判定作品の関係を増やし、個別タイトルから編集できる閲覧環境へつなげられます。

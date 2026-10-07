@@ -1,229 +1,243 @@
-"""初期100タイトルの階層図をGraphvizで生成する。正本はdataset.json。"""
+"""国内発売年を縦軸に揃えた系譜図をSVG・PNGへ出力する。"""
 import argparse
+from collections import Counter, defaultdict
 import html
 import json
 import math
-import os
 from pathlib import Path
-import shutil
-import subprocess
-import sys
 import xml.etree.ElementTree as ET
 
-HERE = Path(__file__).resolve().parent
-COLORS = ['#fbe4e4','#eee4fa','#e3f2fc','#def5ec','#e6edfc','#fff0d5','#ffeadc','#eaf2de','#edf0f4']
-EDGE_COLORS = {'lineage':'#16724b','documented':'#1a5dba','inferred':'#8c5a22'}
-
-def quote(value):
-    return json.dumps(str(value),ensure_ascii=False)
-
-def visible_edges(data):
-    return [edge for edge in data['edges'] if edge.get('display',True)]
+HERE=Path(__file__).resolve().parent
+COLORS=['#fbe4e4','#eee4fa','#e3f2fc','#def5ec','#e6edfc','#fff0d5','#ffeadc','#eaf2de','#edf0f4']
+EDGE_COLORS={'lineage':'#227553','documented':'#2563b0','inferred':'#916238'}
+BW=174; BH=110; PITCH=208; ROW=148; LEFT=180; HEADER=170
 
 def validate(data):
-    nodes={n['title']:n for n in data['nodes']}
-    if len(nodes)!=len(data['nodes']):
-        raise ValueError('作品名が重複しています')
-    fc=[n for n in nodes.values() if not n['external']]
-    if len(fc)!=100 or {n['fc_index'] for n in fc}!=set(range(1,101)):
-        raise ValueError('初期100タイトルの番号・件数が不正です')
-    seen=set(); incoming={n:0 for n in nodes}; followers={n:[] for n in nodes}
-    for edge in data['edges']:
-        a,b=edge['source'],edge['target']
-        if a not in nodes or b not in nodes or a==b or (a,b) in seen:
-            raise ValueError(f'接続の参照・重複・自己参照が不正です: {a} -> {b}')
-        if edge['kind'] not in EDGE_COLORS or not edge['reason']:
-            raise ValueError(f'関係種別・説明が不正です: {a} -> {b}')
-        if edge['kind']=='documented' and not edge['sources']:
-            raise ValueError(f'証言ありの関係に出典がありません: {a} -> {b}')
-        if nodes[a]['original_year']>nodes[b]['original_year']:
-            raise ValueError(f'原作初出年が逆転しています: {a} -> {b}')
-        seen.add((a,b)); incoming[b]+=1; followers[a].append(b)
-        if not all(isinstance(edge.get(key,default),bool) for key,default in [('display',True),('sequel',False),('local_reference',False)]):
-            raise ValueError(f'表示・続編フラグはbooleanにしてください: {a} -> {b}')
-    pending=[n for n,count in incoming.items() if count==0]; visited=0
+    nodes={n['id']:n for n in data['nodes']}
+    assert len(nodes)==len(data['nodes']), 'ID重複'
+    incoming=Counter(); outgoing=defaultdict(list); pairs=set()
+    for e in data['edges']:
+        a,b=e['source'],e['target']
+        assert a in nodes and b in nodes and a!=b and (a,b) not in pairs, '参照・重複'
+        assert nodes[a]['year']<=nodes[b]['year'], '年の逆行'
+        assert e['kind'] in EDGE_COLORS and e['reason'], '関係種別・説明'
+        assert e['kind']!='documented' or e['sources'], '証言の出典'
+        pairs.add((a,b)); incoming[b]+=1; outgoing[a].append(b)
+    degrees=incoming.copy(); pending=[i for i in nodes if not degrees[i]]; visited=0
     while pending:
-        n=pending.pop(); visited+=1
-        for nxt in followers[n]:
-            incoming[nxt]-=1
-            if incoming[nxt]==0: pending.append(nxt)
-    if visited!=len(nodes): raise ValueError('関係に循環があります')
-    if max(sum(e['target']==n for e in data['edges']) for n in nodes)>5:
-        raise ValueError('影響元が5本を超える作品があります')
-    exceptions=data.get('display_policy',{}).get('multiple_parent_exceptions',{})
-    for name in nodes:
-        parents=sum(e['target']==name for e in visible_edges(data))
-        limit=exceptions.get(name,{}).get('max_parents',1)
-        if parents>limit or parents>3:
-            raise ValueError(f'表示する影響元は原則1本、理由を付けた例外だけ最大3本です: {name}')
+        a=pending.pop(); visited+=1
+        for b in outgoing[a]:
+            degrees[b]-=1
+            if degrees[b]==0:pending.append(b)
+    assert visited==len(nodes),'循環'
+    exceptions=data['display_policy']['multiple_parent_exceptions']
+    assert all(c<=exceptions.get(i,{}).get('max_parents',1) and c<=3 for i,c in incoming.items()), '影響元の本数'
+    fc=[n for n in nodes.values() if not n['external']]
+    assert all(1983<=n['year']<=1989 for n in fc),'対象年'
+    assert len(fc)==data['stats']['fc_count'],'作品数'
+    assert sum(len(n['releases']) for n in fc)==len(json.loads((HERE/'catalogue.json').read_text(encoding='utf-8'))['rows']),'一覧の取りこぼし'
     return nodes
 
 def title_lines(title):
-    # 日本語は全角、英数字は半角換算。短いノード内で2〜3行に折り返す。
-    familiar={
-        'スーパーマリオブラザーズ':['スーパーマリオ','ブラザーズ'],
-        'チャンピオンシップロードランナー':['チャンピオンシップ','ロードランナー'],
-        'ファミリーベーシック':['ファミリー','ベーシック'],
-        'ファミリーベーシックV3':['ファミリー','ベーシックV3'],
-        'ドンキーコングJr.の算数遊び':['ドンキーコングJr.','の算数遊び'],
-        'オバケのQ太郎 ワンワンパニック':['オバケのQ太郎','ワンワンパニック'],
-        '高機動戦闘メカ ヴォルガードII':['高機動戦闘メカ','ヴォルガードII'],
-        'キン肉マン マッスルタッグマッチ':['キン肉マン','マッスルタッグ','マッチ'],
-        'ポートピア連続殺人事件':['ポートピア','連続殺人事件'],
-        'ハイパーオリンピック':['ハイパー','オリンピック'],
-        'ハイパーオリンピック 殿様版':['ハイパー','オリンピック','殿様版'],
-        'ワイルドガンマン（映写式）':['ワイルドガンマン','（映写式）'],
-        '暴走特急（Stop the Express）':['暴走特急','Stop the Express'],
-        '本将棋 内藤九段将棋秘伝':['本将棋 内藤九段','将棋秘伝'],
-    }
-    if title in familiar: return familiar[title]
-    def width(s): return sum(1 if ord(c)>255 else .55 for c in s)
-    if width(title)<=9: return [title]
-    count=math.ceil(width(title)/9)
-    target=width(title)/count
+    familiar={'スーパーマリオブラザーズ':['スーパーマリオ','ブラザーズ'], 'スーパーマリオブラザーズ2':['スーパーマリオ','ブラザーズ2'], 'スーパーマリオブラザーズ3':['スーパーマリオ','ブラザーズ3'], 'ファイナルファンタジー':['ファイナル','ファンタジー'], 'ファイナルファンタジーII':['ファイナル','ファンタジーII']}
+    if title in familiar:return familiar[title]
+    width=lambda s:sum(1 if ord(c)>255 else .52 for c in s)
+    count=max(1,math.ceil(width(title)/10)); target=width(title)/count
     lines=[]; line=''
     for c in title:
-        if line and width(line+c)>target+.5 and len(lines)<count-1:
-            lines.append(line.strip()); line=''
+        if line and width(line+c)>target+.5 and len(lines)<count-1:lines.append(line.strip()); line=''
         line+=c
-    if line: lines.append(line.strip())
+    if line:lines.append(line.strip())
     return lines
 
-def dot_source(data,font):
-    nodes=validate(data)
-    edges=visible_edges(data)
-    ids={name:f'g{i:03}' for i,name in enumerate(nodes)}
-    legend=('ファミコン初期100タイトルの系譜図\\n'
-            '上：影響元 → 下：影響先　／　国内FC発売順 1983.07.15〜1986.01.04\\n'
-            '太線：続編　／　緑：シリーズ・先行版　青：証言のある影響　茶：推定\\n'
-            f'FC 100本 ＋ 外部先行作品 {len(nodes)-100}本　／　表示関係 {len(edges)}本\\n'
-            '影響元は原則1本。重要な例外のみ2〜3本。茶色は推定。再掲は同じ作品。')
-    lines=['digraph FamicomLineage {',
-           f'graph [rankdir=TB, splines=ortho, nodesep=0.28, ranksep=0.85, pack=60, packmode="graph", pad=0.45, bgcolor="white", outputorder=edgesfirst, concentrate=false, fontname={quote(font)}, fontsize=18, labelloc=t, label={quote(legend)}];',
-           f'node [shape=plain, fontname={quote(font)}];',
-           'edge [arrowsize=0.7, penwidth=1.3, tailport=s, headport=n];']
-    active=set(e[k] for e in edges for k in ['source','target'])
-    references={}
-    render_nodes=[(ids[name],n,False) for name,n in nodes.items()]
-    for index,e in enumerate(edges):
-        if e.get('local_reference',False):
-            identifier=f'r{index:03}'
-            references[(e['source'],e['target'])]=identifier
-            render_nodes.append((identifier,nodes[e['source']],True))
-    for identifier,n,repeated in render_nodes:
-        name=n['title']
-        title='<BR/>'.join(html.escape(s) for s in title_lines(name))
-        subtitle=(f'外部 / 初出 {n["original_year"]}' if n['external'] else
-                  f'#{n["fc_index"]:03}  FC {n["fc_date"].replace("-",".")}<BR/>初出 {n["original_year"]}')
-        fill=COLORS[n['group']]
-        marker='外部' if n['external'] else 'FC'
-        if repeated:
-            title+='<BR/><FONT POINT-SIZE="9" COLOR="#475569">同じ作品の再掲</FONT>'
-        label=(f'<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" COLOR="#475569" BGCOLOR="{fill}">'
-               f'<TR><TD WIDTH="150" HEIGHT="56"><FONT FACE="{html.escape(font)}" POINT-SIZE="15" COLOR="#152238"><B>{title}</B></FONT></TD></TR>'
-               f'<TR><TD HEIGHT="38" BORDER="1" SIDES="T" COLOR="#94a3b8" BGCOLOR="white"><FONT FACE="{html.escape(font)}" POINT-SIZE="9" COLOR="#475569">{subtitle}</FONT></TD></TR></TABLE>>')
-        lines.append(f'{identifier} [label={label}, tooltip={quote(name+" / "+marker+(" / 同じ作品の再掲" if repeated else ""))}];')
-    isolated=[ids[n] for n in nodes if n not in active]
-    if isolated:
-        lines.extend(['subgraph cluster_unlinked {',
-                      f'label="この試作では影響関係を結ばなかった作品"; fontname={quote(font)}; fontsize=18; color="#cbd5e1";',
-                      '}'])
-        # 接続なしの作品を横一列にせず、4列の小さな棚にまとめる。
-        end=lines.pop()
-        for start in range(0,len(isolated),4):
-            row=isolated[start:start+4]
-            lines.append('{rank=same; '+'; '.join(row)+';}')
-            lines.extend(f'{a} -> {b} [style=invis, weight=10];' for a,b in zip(row,row[1:]))
-            if start>=4: lines.append(f'{isolated[start-4]} -> {row[0]} [style=invis];')
-        lines.append(end)
-    for target in sorted({b for _,b in references}):
-        aliases=[identifier for (a,b),identifier in references.items() if b==target]
-        primary=next(e['source'] for e in edges if e['target']==target and not e.get('local_reference',False))
-        row=[ids[primary],*aliases]
-        lines.append('{rank=same; '+'; '.join(row)+';}')
-        # 例外の影響元だけは同じ段に隣接させ、長い横断線を作らない。
-        lines.extend(f'{a} -> {b} [style=invis, weight=1000];' for a,b in zip(row,row[1:]))
-    for e in edges:
-        kind=e['kind']; color=EDGE_COLORS[kind]
-        width=3.6 if e.get('sequel',False) else 1.3
-        weight=100 if e.get('local_reference',False) else (50 if e.get('sequel',False) else (10 if kind=='documented' else 2))
-        source_id=references.get((e['source'],e['target']),ids[e['source']])
-        lines.append(f'{source_id} -> {ids[e["target"]]} [color="{color}", style="solid", penwidth={width}, weight={weight}, tooltip={quote(e["reason"])}];')
-    lines.append('}')
-    # DOTの改行エスケープはJSONの文字列エスケープから戻す。
-    return '\n'.join(lines).replace('\\\\n','\\n')+'\n'
+def layout(data):
+    nodes=validate(data); children=defaultdict(list); parents={}; primary=[]; secondary=[]
+    for e in data['edges']:
+        b=e['target']
+        if b not in parents:parents[b]=e['source']; children[e['source']].append(b); primary.append(e)
+        else:secondary.append(e)
+    extras=Counter(e['target'] for e in secondary)
+    followers=defaultdict(list)
+    for e in data['edges']:followers[e['source']].append(e['target'])
+    years={}
+    def display_year(i):
+        if i in years:return years[i]
+        n=nodes[i]
+        years[i]=n['year'] if not n['external'] else min([display_year(c) for c in followers[i]] or [max(1983,n['year'])])
+        return years[i]
+    for i in nodes:display_year(i)
+    active={e[k] for e in primary for k in ['source','target']}
+    roots=sorted((i for i in active if i not in parents),key=lambda i:(nodes[i]['group'],nodes[i]['year'],nodes[i]['title']))
+    for ids in children.values():ids.sort(key=lambda i:(nodes[i]['year'],nodes[i]['date'],nodes[i]['title']))
+    widths={}; xpos={}; depth={}
+    def measure(i):
+        widths[i]=max(1,sum(measure(c) for c in children[i]))+extras[i]
+        return widths[i]
+    def place(i,start):
+        slot=start+extras[i]
+        for c in children[i]:place(c,slot); slot+=widths[c]
+        xpos[i]=start+extras[i]+(widths[i]-extras[i])/2
+    # 時代の重ならない小さな系統は同じ横位置を再利用する。
+    # 年代が重なる系統は矩形の専用領域を確保し、線の追いやすさを維持する。
+    total=0; components=[]; occupied=[]
+    def descendants(i):
+        yield i
+        for c in children[i]:yield from descendants(c)
+    for root in roots:measure(root)
+    for root in sorted(roots,key=lambda i:(-widths[i],nodes[i]['year'],nodes[i]['title'])):
+        subtree_years=[years[i] for i in descendants(root)]; first,last=min(subtree_years),max(subtree_years)
+        candidates=sorted({0,*[end+.6 for start,end,lo,hi in occupied]})
+        start=next(x for x in candidates if not any(max(x,a)<min(x+widths[root],b) and max(first,lo)<=min(last,hi) for a,b,lo,hi in occupied))
+        place(root,start); components.append((root,start,widths[root])); occupied.append((start,start+widths[root],first,last))
+        total=max(total,start+widths[root]+.6)
+    def stage(i):
+        if i in depth:return depth[i]
+        p=parents.get(i)
+        depth[i]=(stage(p)+2 if p and years[p]==years[i] else 0)+(2 if extras[i] and not p else 0)
+        return depth[i]
+    for i in active:stage(i)
+    unlinked=defaultdict(list)
+    for i,n in nodes.items():
+        if i not in active:unlinked[years[i]].append(i)
+    shelf_cols=16; shelf_x=total+1.1; bands={}; y=HEADER
+    for year in range(1983,1990):
+        levels=[depth[i]+1 for i in active if years[i]==year]
+        height=80+max([1,math.ceil(len(unlinked[year])/shelf_cols),*levels])*ROW
+        bands[year]=(y,y+height); y+=height
+    positions={}; cards=[]
+    def card(i,x,top,alias=False,node=None):
+        cards.append(dict(id=i,node=node or i,x=x-BW/2,y=top,w=BW,h=BH,alias=alias)); positions[i]=(x,top)
+    for i in sorted(active):card(i,LEFT+xpos[i]*PITCH,bands[years[i]][0]+65+depth[i]*ROW)
+    for year,ids in unlinked.items():
+        ids.sort(key=lambda i:(nodes[i]['external'],nodes[i]['date'],nodes[i]['title']))
+        for j,i in enumerate(ids):card(i,LEFT+(shelf_x+j%shelf_cols+.5)*PITCH,bands[year][0]+65+(j//shelf_cols)*ROW)
+    paths=[]; counts=Counter()
+    for e in primary:
+        a,b=e['source'],e['target']; ax,ay=positions[a]; bx,by=positions[b]
+        bend=ay+BH+18+min(counts[a],4)*4; counts[a]+=1
+        paths.append(dict(edge=e,points=[(ax,ay+BH),(ax,bend),(bx,bend),(bx,by-5)],source=a,target=b))
+    for j,e in enumerate(secondary):
+        target=e['target']; tx,ty=positions[target]
+        ordinal=sum(prior['target']==target for prior in secondary[:j])
+        x=tx+(-1 if ordinal==0 else 1)*PITCH; alias_id=f'r{j:03}'; top=ty-ROW
+        card(alias_id,x,top,True,e['source']); bend=top+BH+18+ordinal*5
+        paths.append(dict(edge=e,points=[(x,top+BH),(x,bend),(tx,bend),(tx,ty-5)],source=alias_id,target=target))
+    return dict(nodes=nodes,cards=cards,paths=paths,bands=bands,width=math.ceil(LEFT+(shelf_x+shelf_cols+.5)*PITCH+80),height=y+60,
+                components=components,shelf_x=LEFT+shelf_x*PITCH,primary_count=len(primary),secondary_count=len(secondary))
+
+def verify(drawing,data):
+    cards=drawing['cards']; hits=[]
+    assert {c['node'] for c in cards if not c['alias']}==set(drawing['nodes']), '描画作品の取りこぼし'
+    assert len(drawing['paths'])==len(data['edges']), '描画接続の取りこぼし'
+    for c in cards:
+        n=drawing['nodes'][c['node']]
+        if not n['external'] and not c['alias']:
+            top,bottom=drawing['bands'][n['year']]
+            assert top<=c['y'] and c['y']+c['h']<=bottom, '発売年と背景の不一致'
+    for j,a in enumerate(cards):
+        for b in cards[j+1:]:
+            if max(a['x'],b['x'])<min(a['x']+a['w'],b['x']+b['w'])-.1 and max(a['y'],b['y'])<min(a['y']+a['h'],b['y']+b['h'])-.1:raise ValueError('箱の重なり: '+a['id']+' '+b['id'])
+    for p in drawing['paths']:
+        assert p['points'][-1][1]>p['points'][0][1], '上向きの接続'
+        for a,b in zip(p['points'],p['points'][1:]):
+            assert a[0]==b[0] or a[1]==b[1], '非直角の線'
+            for c in cards:
+                if c['id'] in [p['source'],p['target']]:continue
+                x,y,w,h=c['x'],c['y'],c['w'],c['h']
+                vertical=a[0]==b[0] and x+.5<a[0]<x+w-.5 and max(min(a[1],b[1]),y+.5)<min(max(a[1],b[1]),y+h-.5)
+                horizontal=a[1]==b[1] and y+.5<a[1]<y+h-.5 and max(min(a[0],b[0]),x+.5)<min(max(a[0],b[0]),x+w-.5)
+                if vertical or horizontal:hits.append((p['source'],p['target'],c['id']))
+    if hits:raise ValueError('接続線が別の箱を通ります: '+str(hits[:8]))
+    return dict(node_count=len(data['nodes']),fc_count=data['stats']['fc_count'],external_count=data['stats']['external_count'],box_count=len(cards),
+                repeated_reference_count=drawing['secondary_count'],edge_count=len(drawing['paths']),sequel_edge_count=sum(e['sequel'] for e in data['edges']),
+                year_counts=data['stats']['year_counts'],node_overlap_count=0,edge_node_overlap_count=0,all_edges_solid=True,all_edges_downward=True,
+                width=drawing['width'],height=drawing['height'],year_band_count=7,fc_year_band_placement=True)
+
+def emit(d,data,font):
+    w,h=d['width'],d['height']; svg=[]; commands=[]; esc=html.escape
+    def rect(x,y,rw,rh,fill,stroke=None,radius=0,sw=1):
+        svg.append(f'<rect x="{x:.1f}" y="{y:.1f}" width="{rw:.1f}" height="{rh:.1f}" rx="{radius}" fill="{fill}"'+(f' stroke="{stroke}" stroke-width="{sw}"' if stroke else '')+'/>'); commands.append(('rect',(x,y,rw,rh),fill,stroke,radius,sw))
+    def text(x,y,value,size=16,color='#243348',bold=False,anchor='start'):
+        svg.append(f'<text x="{x:.1f}" y="{y:.1f}" font-size="{size}" fill="{color}" text-anchor="{anchor}"'+(' font-weight="bold"' if bold else '')+f'>{esc(value)}</text>'); commands.append(('text',(x,y),value,size,color,bold,anchor))
+    def line(points,color,width=1):
+        svg.append('<polyline points="'+' '.join(f'{x:.1f},{y:.1f}' for x,y in points)+f'" fill="none" stroke="{color}" stroke-width="{width}" stroke-linejoin="round"/>'); commands.append(('line',points,color,width))
+    rect(0,0,w,h,'white')
+    for year,(top,bottom) in d['bands'].items():
+        rect(0,top,w,bottom-top,'#f8fafc' if year%2==0 else '#ffffff'); line([(0,top),(w,top)],'#cbd5e1',1.5)
+        label=str(year); text(22,top+40,label,23,'#536579',True)
+        count=data['stats']['year_counts'].get(str(year),0); text(22,top+65,f'{count}作品',12,'#64748b')
+        for x in range(1200,w,1200):text(x,top+37,label,21,'#a5b1be')
+    # 系統間の背景線は置かない。同じ列を別の時代の系統が再利用するため。
+    shelf=d['shelf_x']; text(shelf,HEADER-18,'関係未判定の作品（発売順）',15,'#64748b',True); line([(shelf-20,HEADER),(shelf-20,h-30)],'#b9c5d0',1.5)
+    for p in d['paths']:
+        e=p['edge']; color=EDGE_COLORS[e['kind']]; thickness=3.8 if e['sequel'] else 1.5
+        svg.append(f'<g><title>{esc(d["nodes"][e["source"]]["title"]+" → "+d["nodes"][e["target"]]["title"]+"："+e["reason"])}</title>')
+        line(p['points'],'white',thickness+3); line(p['points'],color,thickness)
+        x,y=p['points'][-1]; polygon=[(x,y+5),(x-4,y-3),(x+4,y-3)]
+        svg.append('<polygon points="'+' '.join(f'{px:.1f},{py:.1f}' for px,py in polygon)+f'" fill="{color}"/>'); commands.append(('polygon',polygon,color)); svg.append('</g>')
+    for c in d['cards']:
+        n=d['nodes'][c['node']]; x,y=c['x'],c['y']; external=n['external']
+        svg.append(f'<g id="{c["id"]}"><title>{esc(n["title"]+" / "+n["platform"]+" / "+n["date"]+(" / 同じ作品の再掲" if c["alias"] else ""))}</title>')
+        rect(x,y,BW,BH,'white' if external else COLORS[n['group']], '#98a7b5' if external else '#60758a',12 if external else 2)
+        if not external:rect(x,y,4,BH,'#7693ab' if n['platform']=='FDS' else '#b64d52')
+        badge=n['platform']; badge_color='#7b8996' if external else ('#456b85' if badge=='FDS' else '#a54249')
+        rect(x+9,y+8,max(26,len(badge)*7+10),17,'#f0f3f6' if external else 'white',radius=4); text(x+14,y+21,badge,10,badge_color,True)
+        if c['alias']:text(x+BW-10,y+21,'再掲',10,'#78889a',anchor='end')
+        lines=title_lines(n['title']); size=min(15,max(7,math.floor(62/max(1,len(lines)))-3)); spacing=size+3; start=y+33+(62-spacing*len(lines))/2+size
+        for j,s in enumerate(lines):text(x+BW/2,start+j*spacing,s,size,'#445464' if external else '#1d3045',not external,'middle')
+        subtitle='初出 '+str(n['year']) if external else n['date'].replace('-','.')
+        if c['alias']:subtitle=('' if external else '発売 ')+subtitle+' の参照'
+        text(x+BW/2,y+101,subtitle,10,'#738396',anchor='middle'); svg.append('</g>')
+    text(LEFT,43,'ファミコンの系譜 1983–1989',30,'#203348',True); stats=data['stats']
+    text(LEFT,73,f'FC・ディスク {stats["fc_count"]}作品 ／ 外部参考 {stats["external_count"]}作品 ／ 関係 {stats["edge_count"]}本',15)
+    text(LEFT,99,'下ほど新しい国内発売年。影響元は原則1本。太線は続編。緑：継承　青：証言あり　茶：推定。',14,'#536579')
+    text(LEFT,123,'矩形：FC・FDS ／ 白い角丸：外部参考（初出年を添えて影響先の近くに配置）。年内の上下は系譜を優先。',13,'#64748b')
+    xml=f'<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="1989年までのファミコン作品の系譜図"><g font-family="{esc(font)}, sans-serif">\n'+ '\n'.join(svg)+'\n</g></svg>\n'
+    ET.fromstring(xml); return xml,commands
+
+def raster(commands,path,width,height,font_path,scale=1,offset=(0,0)):
+    from PIL import Image,ImageDraw,ImageFont
+    im=Image.new('RGB',(max(1,round(width*scale)),max(1,round(height*scale))),'white'); draw=ImageDraw.Draw(im); fonts={}; ox,oy=offset
+    xy=lambda p:((p[0]-ox)*scale,(p[1]-oy)*scale)
+    for op,*args in commands:
+        if op=='rect':
+            (x,y,w,h),fill,stroke,radius,sw=args
+            if x+w<ox or x>ox+width or y+h<oy or y>oy+height:continue
+            draw.rounded_rectangle([xy((x,y)),xy((x+w,y+h))],radius=radius*scale,fill=fill,outline=stroke,width=max(1,round(sw*scale)))
+        elif op=='line':
+            points,color,sw=args; draw.line([xy(p) for p in points],fill=color,width=max(1,round(sw*scale)),joint='curve')
+        elif op=='polygon':
+            points,color=args; draw.polygon([xy(p) for p in points],fill=color)
+        elif op=='text':
+            (x,y),value,size,color,bold,anchor=args
+            if y<oy-50 or y>oy+height+50 or x<ox-500 or x>ox+width+500:continue
+            key=(size,bold)
+            if key not in fonts:
+                selected=font_path.replace('meiryo.ttc','meiryob.ttc') if bold and Path(font_path.replace('meiryo.ttc','meiryob.ttc')).is_file() else font_path
+                fonts[key]=ImageFont.truetype(selected,max(1,round(size*scale)))
+            f=fonts[key]; px,py=xy((x,y)); tw=draw.textlength(value,font=f)
+            if anchor=='middle':px-=tw/2
+            elif anchor=='end':px-=tw
+            draw.text((px,py),value,font=f,fill=color,anchor='ls')
+    im.save(path,optimize=True); return im.size
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--dot',default=os.environ.get('GRAPHVIZ_DOT','dot'),help='Graphviz dot実行ファイル')
-    parser.add_argument('--font',default='Meiryo' if sys.platform=='win32' else 'Noto Sans CJK JP')
-    parser.add_argument('--check',action='store_true',help='データ検証とDOT出力のみ')
-    args=parser.parse_args()
-    data=json.loads((HERE/'dataset.json').read_text(encoding='utf-8'))
-    validate(data)
-    out=HERE/'output'; out.mkdir(exist_ok=True)
-    path=out/'famicom-first100-hierarchy.dot'
-    path.write_text(dot_source(data,args.font),encoding='utf-8')
-    if args.check:
-        print('PASS: FC 100本、参照、重複、循環、初出年、候補最大5本、表示原則1本・例外最大3本、出典を検証しました')
-        return
-    executable=shutil.which(args.dot)
-    if not executable and Path(args.dot).is_file(): executable=str(Path(args.dot).resolve())
-    if not executable: raise SystemExit('Graphvizのdotが見つかりません。READMEの手順で導入するか、--dotで指定してください。')
-    for fmt in ['svg','json']:
-        subprocess.run([executable,f'-T{fmt}',str(path),'-o',str(out/f'famicom-first100-hierarchy.{fmt}'),'-Gdpi=110'],check=True)
-    ET.parse(out/'famicom-first100-hierarchy.svg')
-    # 全作品箱と選別した接続を検証。配置専用の不可視辺は作品間の関係に数えない。
-    layout=json.loads((out/'famicom-first100-hierarchy.json').read_text(encoding='utf-8'))
-    (out/'famicom-first100-hierarchy.json').write_text(json.dumps(layout,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    x1,y1,x2,y2=map(float,layout['bb'].split(','))
-    # ベクター画像は原寸、PNGは75メガピクセル以内にして別PCのメモリ消費を抑える。
-    area_inches=((x2-x1+100.8)/72)*((y2-y1+100.8)/72)
-    png_dpi=min(110,math.floor(math.sqrt(75_000_000/area_inches)))
-    subprocess.run([executable,'-Tpng',str(path),'-o',str(out/'famicom-first100-hierarchy.png'),f'-Gdpi={png_dpi}'],check=True)
-    boxes=[o for o in layout['objects'] if 'pos' in o and o['name'].startswith(('g','r'))]
-    reference_count=sum(e.get('local_reference',False) for e in visible_edges(data))
-    rendered_edges=[e for e in layout['edges'] if e.get('style')!='invis']
-    if len(boxes)!=len(data['nodes'])+reference_count or len(rendered_edges)!=len(visible_edges(data)):
-        raise ValueError('描画した作品・接続の件数がデータと一致しません')
-    if any(e.get('style')!='solid' for e in rendered_edges):
-        raise ValueError('表示する接続線が実線になっていません')
-    if sum(float(e.get('penwidth',0))>3 for e in rendered_edges)!=sum(e.get('sequel',False) for e in visible_edges(data)):
-        raise ValueError('続編の太線件数がデータと一致しません')
-    for i,a in enumerate(boxes):
-        ax,ay=map(float,a['pos'].split(',')); aw,ah=float(a['width'])*72,float(a['height'])*72
-        for b in boxes[i+1:]:
-            bx,by=map(float,b['pos'].split(',')); bw,bh=float(b['width'])*72,float(b['height'])*72
-            if abs(ax-bx)<(aw+bw)/2-1 and abs(ay-by)<(ah+bh)/2-1:
-                raise ValueError(f'作品箱が重なっています: {a["name"]}, {b["name"]}')
-    bounds={o['_gvid']:tuple(map(float,o['pos'].split(',')))+(float(o['width'])*72,float(o['height'])*72) for o in boxes}
-    segment_count=0
-    for edge in rendered_edges:
-        for command in edge.get('_draw_',[]):
-            if command['op']!='b': continue
-            for a,b in zip(command['points'],command['points'][1:]):
-                if a==b: continue
-                segment_count+=1
-                horizontal=abs(a[1]-b[1])<.1
-                vertical=abs(a[0]-b[0])<.1
-                if not (horizontal or vertical): raise ValueError('直角以外の接続線があります')
-                for key,(x,y,w,h) in bounds.items():
-                    if key in (edge['tail'],edge['head']): continue
-                    hits_vertical=vertical and x-w/2+1<a[0]<x+w/2-1 and max(min(a[1],b[1]),y-h/2+1)<min(max(a[1],b[1]),y+h/2-1)
-                    hits_horizontal=horizontal and y-h/2+1<a[1]<y+h/2-1 and max(min(a[0],b[0]),x-w/2+1)<min(max(a[0],b[0]),x+w/2-1)
-                    if hits_vertical or hits_horizontal: raise ValueError(f'接続線が別の作品箱を通っています: {key}')
-    from PIL import Image
-    with Image.open(out/'famicom-first100-hierarchy.png') as im:
-        im.load(); original_size=im.size
-        im.thumbnail((2000,2000),Image.Resampling.LANCZOS)
-        im.save(out/'famicom-first100-hierarchy-preview.png',optimize=True)
-    version=subprocess.run([executable,'-V'],capture_output=True,text=True,check=True)
-    report=dict(node_count=len(data['nodes']),box_count=len(boxes),repeated_reference_count=reference_count,
-                fc_count=100,edge_count=len(rendered_edges),candidate_edge_count=len(data['edges']),
-                sequel_edge_count=sum(e.get('sequel',False) for e in visible_edges(data)),node_overlap_count=0,
-                edge_node_overlap_count=0,non_orthogonal_segment_count=0,segment_count=segment_count,
-                png_size=original_size,png_dpi=png_dpi,graphviz=(version.stderr or version.stdout).strip(),font=args.font)
-    (out/'verification.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    print(json.dumps(report,ensure_ascii=False))
+    parser=argparse.ArgumentParser(description=__doc__); parser.add_argument('--font',default='Meiryo'); parser.add_argument('--font-path',default='C:/Windows/Fonts/meiryo.ttc'); parser.add_argument('--check',action='store_true')
+    args=parser.parse_args(); data=json.loads((HERE/'dataset.json').read_text(encoding='utf-8')); d=layout(data); report=verify(d,data)
+    if args.check:print(json.dumps(report,ensure_ascii=False)); return
+    output=HERE/'output'; output.mkdir(exist_ok=True); svg,commands=emit(d,data,args.font); stem='famicom-through1989-timeline'
+    (output/(stem+'.svg')).write_text(svg,encoding='utf-8'); (output/'famicom-first100-hierarchy.svg').write_text(svg,encoding='utf-8')
+    w,h=d['width'],d['height']; scale=min(1,math.sqrt(60_000_000/(w*h)))
+    report['png_size']=raster(commands,output/(stem+'.png'),w,h,args.font_path,scale)
+    raster(commands,output/(stem+'-preview.png'),w,h,args.font_path,min(2200/w,1800/h))
+    mario=next(c for c in d['cards'] if d['nodes'][c['node']]['title']=='スーパーマリオブラザーズ' and not c['alias'])
+    raster(commands,output/(stem+'-detail.png'),1600,480,args.font_path,offset=(max(0,mario['x']-500),max(0,mario['y']-200)))
+    for label,title in [('mario','スーパーマリオブラザーズ'),('rpg','ドラゴンクエスト')]:
+        target=next(n['id'] for n in data['nodes'] if n['title']==title and not n['external']); parents={p['edge']['target']:p['edge']['source'] for p in d['paths'][:d['primary_count']]}; root=target
+        while root in parents:root=parents[root]
+        _,start,span=next(c for c in d['components'] if c[0]==root); x=max(0,LEFT+start*PITCH-30); cw=span*PITCH+60
+        raster(commands,output/(stem+'-'+label+'.png'),cw,h,args.font_path,min(1,math.sqrt(24_000_000/(cw*h))),offset=(x,0))
+    (output/'layout.json').write_text(json.dumps({k:v for k,v in d.items() if k!='nodes'},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    (output/'verification.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8'); print(json.dumps(report,ensure_ascii=False))
 
-if __name__=='__main__': main()
+if __name__=='__main__':main()

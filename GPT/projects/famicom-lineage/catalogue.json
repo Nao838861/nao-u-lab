@@ -1,0 +1,5407 @@
+{
+  "sources": {
+    "FC": "https://www.super-famicom.jp/etc00/gamelist/fc.html",
+    "FDS": "https://www.super-famicom.jp/etc00/gamelist/fds.html"
+  },
+  "rows": [
+    {
+      "title": "ドンキーコング",
+      "publisher": "任天堂",
+      "date": "1983-07-15",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ドンキーコングJr.",
+      "publisher": "任天堂",
+      "date": "1983-07-15",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ポパイ",
+      "publisher": "任天堂",
+      "date": "1983-07-15",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "五目ならべ 連珠",
+      "publisher": "任天堂",
+      "date": "1983-08-27",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "麻雀",
+      "publisher": "任天堂",
+      "date": "1983-08-27",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "マリオブラザーズ",
+      "publisher": "任天堂",
+      "date": "1983-09-09",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ポパイの英語遊び",
+      "publisher": "任天堂",
+      "date": "1983-11-22",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "ベースボール",
+      "publisher": "任天堂",
+      "date": "1983-12-07",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ドンキーコングJr.の算数遊び",
+      "publisher": "任天堂",
+      "date": "1983-12-12",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "テニス",
+      "publisher": "任天堂",
+      "date": "1984-01-14",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ピンボール",
+      "publisher": "任天堂",
+      "date": "1984-02-02",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "ワイルドガンマン",
+      "publisher": "任天堂",
+      "date": "1984-02-18",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ダックハント",
+      "publisher": "任天堂",
+      "date": "1984-04-21",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ゴルフ",
+      "publisher": "任天堂",
+      "date": "1984-05-01",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ホーガンズアレイ",
+      "publisher": "任天堂",
+      "date": "1984-06-12",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ファミリーベーシック",
+      "publisher": "任天堂",
+      "date": "1984-06-21",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "ドンキーコング3",
+      "publisher": "任天堂",
+      "date": "1984-07-04",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ナッツ&ミルク",
+      "publisher": "ハドソン",
+      "date": "1984-07-28",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ロードランナー",
+      "publisher": "ハドソン",
+      "date": "1984-07-28",
+      "platform": "FC",
+      "genre": "パズル",
+      "date_note": "任天堂の年表で補正。元の二次一覧は7月31日。",
+      "date_source": "https://www.nintendo.com/jp/famicom/history/index.html"
+    },
+    {
+      "title": "ギャラクシアン",
+      "publisher": "ナムコ",
+      "date": "1984-09-07",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "デビルワールド",
+      "publisher": "任天堂",
+      "date": "1984-10-05",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "4人打ち麻雀",
+      "publisher": "任天堂",
+      "date": "1984-11-02",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "F1レース",
+      "publisher": "任天堂",
+      "date": "1984-11-02",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "パックマン",
+      "publisher": "ナムコ",
+      "date": "1984-11-02",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ゼビウス",
+      "publisher": "ナムコ",
+      "date": "1984-11-08",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "アーバンチャンピオン",
+      "publisher": "任天堂",
+      "date": "1984-11-14",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "マッピー",
+      "publisher": "ナムコ",
+      "date": "1984-11-14",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "クルクルランド",
+      "publisher": "任天堂",
+      "date": "1984-11-22",
+      "platform": "FC",
+      "genre": "パズル"
+    },
+    {
+      "title": "エキサイトバイク",
+      "publisher": "任天堂",
+      "date": "1984-11-30",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "バルーンファイト",
+      "publisher": "任天堂",
+      "date": "1985-01-22",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "アイスクライマー",
+      "publisher": "任天堂",
+      "date": "1985-01-30",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "エクセリオン",
+      "publisher": "ジャレコ",
+      "date": "1985-02-11",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ファミリーベーシックV3",
+      "publisher": "任天堂",
+      "date": "1985-02-21",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "バンゲリングベイ",
+      "publisher": "ハドソン",
+      "date": "1985-02-22",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ギャラガ",
+      "publisher": "ナムコ",
+      "date": "1985-03-14",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "フォーメーションZ",
+      "publisher": "ジャレコ",
+      "date": "1985-04-04",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "サッカー",
+      "publisher": "任天堂",
+      "date": "1985-04-09",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "スペースインベーダー",
+      "publisher": "タイトー",
+      "date": "1985-04-17",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "チャンピオンシップロードランナー",
+      "publisher": "ハドソン",
+      "date": "1985-04-17",
+      "platform": "FC",
+      "genre": "パズル"
+    },
+    {
+      "title": "イーアルカンフー",
+      "publisher": "コナミ",
+      "date": "1985-04-22",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "けっきょく南極大冒険",
+      "publisher": "コナミ",
+      "date": "1985-04-22",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "忍者くん 魔城の冒険",
+      "publisher": "ジャレコ",
+      "date": "1985-05-10",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ちゃっくんぽっぷ",
+      "publisher": "タイトー",
+      "date": "1985-05-24",
+      "platform": "FC",
+      "genre": "パズル"
+    },
+    {
+      "title": "ディグダグ",
+      "publisher": "ナムコ",
+      "date": "1985-06-04",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "フラッピー",
+      "publisher": "デービーソフト",
+      "date": "1985-06-14",
+      "platform": "FC",
+      "genre": "パズル"
+    },
+    {
+      "title": "レッキングクルー",
+      "publisher": "任天堂",
+      "date": "1985-06-18",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "スパルタンX",
+      "publisher": "任天堂",
+      "date": "1985-06-21",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ハイパーオリンピック",
+      "publisher": "コナミ",
+      "date": "1985-06-21",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ハイパーオリンピック殿様版(限定発売)",
+      "publisher": "コナミ",
+      "date": "1985-06-21",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "スターフォース",
+      "publisher": "ハドソン",
+      "date": "1985-06-25",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "エレベーターアクション",
+      "publisher": "タイトー",
+      "date": "1985-06-28",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "フィールドコンバット",
+      "publisher": "ジャレコ",
+      "date": "1985-07-01",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ロードファイター",
+      "publisher": "コナミ",
+      "date": "1985-07-11",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "ワープマン",
+      "publisher": "ナムコ",
+      "date": "1985-07-12",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ジッピーレース",
+      "publisher": "アイレム",
+      "date": "1985-07-18",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "ドアドア",
+      "publisher": "エニックス",
+      "date": "1985-07-18",
+      "platform": "FC",
+      "genre": "パズル"
+    },
+    {
+      "title": "スーパーアラビアン",
+      "publisher": "サンソフト",
+      "date": "1985-07-25",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ブロック",
+      "publisher": "任天堂",
+      "date": "1985-07-26",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "フロントライン",
+      "publisher": "タイトー",
+      "date": "1985-08-01",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "本将棋 内藤九段将棋秘伝",
+      "publisher": "セタ",
+      "date": "1985-08-01",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "ドルアーガの塔",
+      "publisher": "ナムコ",
+      "date": "1985-08-06",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "アストロロボ SASA",
+      "publisher": "アスキー",
+      "date": "1985-08-09",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ジャイロ",
+      "publisher": "任天堂",
+      "date": "1985-08-13",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "ゲイモス",
+      "publisher": "アスキー",
+      "date": "1985-08-28",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "10ヤードファイト",
+      "publisher": "アイレム",
+      "date": "1985-08-30",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "バトルシティー",
+      "publisher": "ナムコ",
+      "date": "1985-09-09",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "スーパーマリオブラザーズ",
+      "publisher": "任天堂",
+      "date": "1985-09-13",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "プーヤン",
+      "publisher": "ハドソン",
+      "date": "1985-09-20",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ハイパースポーツ",
+      "publisher": "コナミ",
+      "date": "1985-09-27",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "シティコネクション",
+      "publisher": "ジャレコ",
+      "date": "1985-09-27",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "ルート16ターボ",
+      "publisher": "サンソフト",
+      "date": "1985-10-04",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "チャレンジャー",
+      "publisher": "ハドソン",
+      "date": "1985-10-15",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "キン肉マン マッスルタッグマッチ",
+      "publisher": "バンダイ",
+      "date": "1985-11-08",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "スカイデストロイヤー",
+      "publisher": "タイトー",
+      "date": "1985-11-14",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "おにゃんこTOWN",
+      "publisher": "ポニーキャニオン",
+      "date": "1985-11-15",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "忍者じゃじゃ丸くん",
+      "publisher": "ジャレコ",
+      "date": "1985-11-15",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "パチコン",
+      "publisher": "東芝EMI",
+      "date": "1985-11-21",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "パックランド",
+      "publisher": "ナムコ",
+      "date": "1985-11-21",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "マッハライダー",
+      "publisher": "任天堂",
+      "date": "1985-11-21",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "バーガータイム",
+      "publisher": "ナムコ",
+      "date": "1985-11-27",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "いっき",
+      "publisher": "サンソフト",
+      "date": "1985-11-28",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ポートピア連続殺人事件",
+      "publisher": "エニックス",
+      "date": "1985-11-29",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "カラテカ",
+      "publisher": "ソフトプロ",
+      "date": "1985-12-05",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ルナーボール",
+      "publisher": "ポニーキャニオン",
+      "date": "1985-12-05",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "スターラスター",
+      "publisher": "ナムコ",
+      "date": "1985-12-06",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "スペランカー",
+      "publisher": "アイレム",
+      "date": "1985-12-06",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "高機動戦闘メカヴォルガードII",
+      "publisher": "デービーソフト",
+      "date": "1985-12-07",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "超時空要塞マクロス",
+      "publisher": "バンダイ",
+      "date": "1985-12-10",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "1942",
+      "publisher": "カプコン",
+      "date": "1985-12-11",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ダウボーイ",
+      "publisher": "ケムコ",
+      "date": "1985-12-11",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ボコスカウォーズ",
+      "publisher": "アスキー",
+      "date": "1985-12-14",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "頭脳戦艦ガル",
+      "publisher": "デービーソフト",
+      "date": "1985-12-14",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "オバケのQ太郎  ワンワンパニック",
+      "publisher": "バンダイ",
+      "date": "1985-12-16",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "テグザー",
+      "publisher": "スクウェア",
+      "date": "1985-12-19",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "バイナリィランド",
+      "publisher": "ハドソン",
+      "date": "1985-12-19",
+      "platform": "FC",
+      "genre": "パズル"
+    },
+    {
+      "title": "ボンバーマン",
+      "publisher": "ハドソン",
+      "date": "1985-12-19",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "エグゼドエグゼス",
+      "publisher": "徳間書店",
+      "date": "1985-12-21",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ロットロット",
+      "publisher": "徳間書店",
+      "date": "1985-12-21",
+      "platform": "FC",
+      "genre": "パズル"
+    },
+    {
+      "title": "ぺんぎんくんWARS",
+      "publisher": "アスキー",
+      "date": "1985-12-25",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ツインビー",
+      "publisher": "コナミ",
+      "date": "1986-01-04",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ソンソン",
+      "publisher": "カプコン",
+      "date": "1986-02-08",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "グーニーズ",
+      "publisher": "コナミ",
+      "date": "1986-02-21",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "バルトロン",
+      "publisher": "東映動画",
+      "date": "1986-03-01",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "サーカスチャーリー",
+      "publisher": "ソフトプロ",
+      "date": "1986-03-04",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "忍者ハットリくん 忍者は修行でござるの巻",
+      "publisher": "ハドソン",
+      "date": "1986-03-05",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ジャイロダイン",
+      "publisher": "タイトー",
+      "date": "1986-03-13",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ハイドライドスペシャル",
+      "publisher": "東芝EMI",
+      "date": "1986-03-18",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "マグマックス",
+      "publisher": "日本物産",
+      "date": "1986-03-19",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "タッグチームプロレスリング",
+      "publisher": "ナムコ",
+      "date": "1986-04-02",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "アーガス",
+      "publisher": "ジャレコ",
+      "date": "1986-04-17",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "アトランチスの謎",
+      "publisher": "サンソフト",
+      "date": "1986-04-17",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ゲゲゲの鬼太郎 妖怪大魔境",
+      "publisher": "バンダイ",
+      "date": "1986-04-17",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "影の伝説",
+      "publisher": "タイトー",
+      "date": "1986-04-18",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ディグダグII",
+      "publisher": "ナムコ",
+      "date": "1986-04-19",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "マイティボンジャック",
+      "publisher": "テクモ",
+      "date": "1986-04-24",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "グラディウス",
+      "publisher": "コナミ",
+      "date": "1986-04-25",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "けいさんゲームさんすう1年",
+      "publisher": "東京書籍",
+      "date": "1986-04-25",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "けいさんゲーム算数2年",
+      "publisher": "東京書籍",
+      "date": "1986-04-25",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "けいさんゲーム算数3年",
+      "publisher": "東京書籍",
+      "date": "1986-04-25",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "スパイVSスパイ",
+      "publisher": "ケムコ",
+      "date": "1986-04-26",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "セクロス",
+      "publisher": "日本物産",
+      "date": "1986-05-19",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ドラゴンクエスト",
+      "publisher": "エニックス",
+      "date": "1986-05-27",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "バードウィーク",
+      "publisher": "東芝EMI",
+      "date": "1986-06-03",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "Bーウイング (ビーウイング)",
+      "publisher": "データイースト",
+      "date": "1986-06-03",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "スターソルジャー",
+      "publisher": "ハドソン",
+      "date": "1986-06-13",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "魔界村",
+      "publisher": "カプコン",
+      "date": "1986-06-13",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "スーパーチャイニーズ",
+      "publisher": "ナムコ",
+      "date": "1986-06-19",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "スクーン",
+      "publisher": "アイレム",
+      "date": "1986-06-26",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "チョップリフター",
+      "publisher": "ジャレコ",
+      "date": "1986-06-26",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "東海道五十三次",
+      "publisher": "サンソフト",
+      "date": "1986-07-03",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "バベルの塔",
+      "publisher": "ナムコ",
+      "date": "1986-07-18",
+      "platform": "FC",
+      "genre": "パズル"
+    },
+    {
+      "title": "がんばれゴエモン!からくり道中",
+      "publisher": "コナミ",
+      "date": "1986-07-30",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ソロモンの鍵",
+      "publisher": "テクモ",
+      "date": "1986-07-30",
+      "platform": "FC",
+      "genre": "パズル"
+    },
+    {
+      "title": "ワルキューレの冒険 時の鍵の伝説",
+      "publisher": "ナムコ",
+      "date": "1986-08-01",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "六三四の剣 ただいま修行中",
+      "publisher": "タイトー",
+      "date": "1986-08-08",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "北斗の拳",
+      "publisher": "東映動画",
+      "date": "1986-08-10",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "じゃじゃ丸の大冒険",
+      "publisher": "ジャレコ",
+      "date": "1986-08-22",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "スカイキッド",
+      "publisher": "ナムコ",
+      "date": "1986-08-22",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "機動戦士Zガンダム ホットスクランブル",
+      "publisher": "バンダイ",
+      "date": "1986-08-28",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ASO",
+      "publisher": "SNK",
+      "date": "1986-09-03",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "スーパーピットフォール",
+      "publisher": "ポニーキャニオン",
+      "date": "1986-09-05",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "バナナ",
+      "publisher": "ビクター音楽産業",
+      "date": "1986-09-08",
+      "platform": "FC",
+      "genre": "パズル"
+    },
+    {
+      "title": "高橋名人の冒険島",
+      "publisher": "ハドソン",
+      "date": "1986-09-12",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "キングスナイト",
+      "publisher": "スクウェア",
+      "date": "1986-09-18",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "スーパーゼビウス ガンプの謎",
+      "publisher": "ナムコ",
+      "date": "1986-09-19",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ゴーストバスターズ",
+      "publisher": "徳間書店",
+      "date": "1986-09-22",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "スペースハンター",
+      "publisher": "ケムコ",
+      "date": "1986-09-26",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "テラクレスタ",
+      "publisher": "日本物産",
+      "date": "1986-09-27",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "戦場の狼",
+      "publisher": "カプコン",
+      "date": "1986-09-27",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "バギーポッパー",
+      "publisher": "データイースト",
+      "date": "1986-10-08",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "うる星やつらラムのウェディングベル",
+      "publisher": "ジャレコ",
+      "date": "1986-10-23",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "けいさんゲーム算数4年",
+      "publisher": "東京書籍",
+      "date": "1986-10-30",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "けいさんゲーム算数5・6年 少数・分数のまとめ",
+      "publisher": "東京書籍",
+      "date": "1986-10-30",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "ミシシッピー殺人事件",
+      "publisher": "ジャレコ",
+      "date": "1986-10-31",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "スーパースターフォース  時空歴の秘密",
+      "publisher": "テクモ",
+      "date": "1986-11-11",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ファミリートレーナーシリーズ1 アスレチックワールド",
+      "publisher": "バンダイ",
+      "date": "1986-11-12",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "Othello(オセロ)",
+      "publisher": "河田",
+      "date": "1986-11-13",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "迷宮組曲 ミロンの大冒険",
+      "publisher": "ハドソン",
+      "date": "1986-11-13",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "アイギーナの予言 バルバルークの伝説より",
+      "publisher": "ビック東海",
+      "date": "1986-11-21",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "元祖西遊記スーパーモンキー大冒険",
+      "publisher": "バップ",
+      "date": "1986-11-21",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "長靴をはいた猫 世界一周80日大冒険",
+      "publisher": "東映動画",
+      "date": "1986-11-21",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "マッピーランド",
+      "publisher": "ナムコ",
+      "date": "1986-11-26",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "怒  IKARI",
+      "publisher": "ケイアミューズメントリース",
+      "date": "1986-11-26",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ドラゴンボール 神龍の謎",
+      "publisher": "バンダイ",
+      "date": "1986-11-27",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "キャッスルエクセレント",
+      "publisher": "アスキー",
+      "date": "1986-11-28",
+      "platform": "FC",
+      "genre": "パズル"
+    },
+    {
+      "title": "ファミリートレーナーシリーズ2 ランニングスタジアム",
+      "publisher": "バンダイ",
+      "date": "1986-12-01",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "タイガーヘリ",
+      "publisher": "ポニーキャニオン",
+      "date": "1986-12-05",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ディーヴァ ストーリー6 ナーサティアの玉座",
+      "publisher": "東芝EMI",
+      "date": "1986-12-05",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "戦え 超ロボット生命体トランスフォーマー コンボイの謎",
+      "publisher": "タカラ",
+      "date": "1986-12-05",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ホッターマンの地底探険",
+      "publisher": "ユース",
+      "date": "1986-12-06",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "たけしの挑戦状",
+      "publisher": "タイトー",
+      "date": "1986-12-10",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "プロ野球 ファミリースタジアム",
+      "publisher": "ナムコ",
+      "date": "1986-12-10",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "シャーロックホームズ 伯爵令嬢誘拐事件",
+      "publisher": "トーワチキ",
+      "date": "1986-12-11",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ドラえもん",
+      "publisher": "ハドソン",
+      "date": "1986-12-12",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "魔鐘",
+      "publisher": "アイレム",
+      "date": "1986-12-15",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "メトロクロス",
+      "publisher": "ナムコ",
+      "date": "1986-12-16",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "キングコング2 怒りのメガトンパンチ",
+      "publisher": "コナミ",
+      "date": "1986-12-18",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "マドゥーラの翼",
+      "publisher": "サンソフト",
+      "date": "1986-12-18",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "聖飢魔II 悪魔の逆襲!",
+      "publisher": "CBSソニー",
+      "date": "1986-12-18",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "レイラ",
+      "publisher": "デービーソフト",
+      "date": "1986-12-20",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "コスモジェネシス",
+      "publisher": "アスキー",
+      "date": "1986-12-23",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "闘いの挽歌",
+      "publisher": "カプコン",
+      "date": "1986-12-24",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "アルカノイド",
+      "publisher": "タイトー",
+      "date": "1986-12-26",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "クレイジークライマー",
+      "publisher": "日本物産",
+      "date": "1986-12-26",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "時空の旅人",
+      "publisher": "ケムコ",
+      "date": "1986-12-26",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "火の鳥 鳳凰編我王の冒険",
+      "publisher": "コナミ",
+      "date": "1987-01-04",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ドラゴンバスター",
+      "publisher": "ナムコ",
+      "date": "1987-01-07",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ラビリンス 魔王の迷宮",
+      "publisher": "徳間書店",
+      "date": "1987-01-07",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ドラゴンクエストII 悪霊の神々",
+      "publisher": "エニックス",
+      "date": "1987-01-26",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ファミリートレーナーシリーズ3 エアロビスタジオ",
+      "publisher": "バンダイ",
+      "date": "1987-02-01",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ザ・ブラックバス",
+      "publisher": "ホット・ビィ",
+      "date": "1987-02-06",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "新人類",
+      "publisher": "リコーエレメックス",
+      "date": "1987-02-10",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "飛龍の拳 奥義の書",
+      "publisher": "カルチャーブレーン",
+      "date": "1987-02-14",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ポケットザウルス 十王剣の謎",
+      "publisher": "バンダイ",
+      "date": "1987-02-27",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ファミリーシンセ いきなりミュージシャン",
+      "publisher": "トンキンハウス",
+      "date": "1987-03-05",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "ミッキーマウス 不思議の国の大冒険",
+      "publisher": "ハドソン",
+      "date": "1987-03-06",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "Law of the West 西部の掟",
+      "publisher": "ポニーキャニオン",
+      "date": "1987-03-06",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "タッチ ミステリーオブトライアングル",
+      "publisher": "東宝",
+      "date": "1987-03-14",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "花のスター街道",
+      "publisher": "ビクター音楽産業",
+      "date": "1987-03-17",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "グーニーズ2 フラッテリー最後の挑戦",
+      "publisher": "コナミ",
+      "date": "1987-03-18",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "失われたメッセージ ロストワードオブジェニー",
+      "publisher": "タカラ",
+      "date": "1987-03-25",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "南国指令!!スパイVSスパイ",
+      "publisher": "ケムコ",
+      "date": "1987-03-27",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "さんまの名探偵",
+      "publisher": "ナムコ",
+      "date": "1987-04-02",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "森田将棋",
+      "publisher": "セタ",
+      "date": "1987-04-14",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "魔界島 七つの島の大冒険",
+      "publisher": "カプコン",
+      "date": "1987-04-14",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "熱血硬派くにおくん",
+      "publisher": "テクノスジャパン",
+      "date": "1987-04-15",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "アルゴスの戦士 はちゃめちゃ大進撃",
+      "publisher": "テクモ",
+      "date": "1987-04-17",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "北斗の拳2 世紀末救世主伝説",
+      "publisher": "東映動画",
+      "date": "1987-04-17",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ファミリージョッキー",
+      "publisher": "ナムコ",
+      "date": "1987-04-24",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ファミリートレーナーシリーズ4 ジョギングレース",
+      "publisher": "バンダイ",
+      "date": "1987-05-01",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "妖怪倶楽部",
+      "publisher": "ジャレコ",
+      "date": "1987-05-19",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ダイナマイトボウル",
+      "publisher": "東芝EMI",
+      "date": "1987-05-24",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "北海道連鎖殺人 オホーツクに消ゆ",
+      "publisher": "アスキー",
+      "date": "1987-06-01",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "アテナ",
+      "publisher": "SNK",
+      "date": "1987-06-05",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "高橋名人のBUGってハニー",
+      "publisher": "ハドソン",
+      "date": "1987-06-05",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "闘人魔境伝 ヘラクレスの栄光",
+      "publisher": "データイースト",
+      "date": "1987-06-12",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ファミリーボクシング",
+      "publisher": "ナムコ",
+      "date": "1987-06-19",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "うっでいぽこ",
+      "publisher": "デービーソフト",
+      "date": "1987-06-20",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "燃えろ!!プロ野球",
+      "publisher": "ジャレコ",
+      "date": "1987-06-26",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "燃えろ!!プロ野球(黒)",
+      "publisher": "ジャレコ",
+      "date": "1987-06-26",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "所さんのまもるもせめるも",
+      "publisher": "エピックソニー",
+      "date": "1987-06-27",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "未来神話ジャーヴァス",
+      "publisher": "タイトー",
+      "date": "1987-06-30",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ゾンビハンター",
+      "publisher": "ハイスコアメディアワーク",
+      "date": "1987-07-03",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "月風魔伝",
+      "publisher": "コナミ",
+      "date": "1987-07-07",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ブービーキッズ",
+      "publisher": "日本物産",
+      "date": "1987-07-10",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ヘクター’87",
+      "publisher": "ハドソン",
+      "date": "1987-07-16",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ドラゴンスレイヤーIV",
+      "publisher": "ナムコ",
+      "date": "1987-07-17",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ジャンボウ",
+      "publisher": "ケイアミューズメントリース",
+      "date": "1987-07-18",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "ファンタジーゾーン",
+      "publisher": "サンソフト",
+      "date": "1987-07-20",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "バツ&テリー 魔境の鉄人レース",
+      "publisher": "ユース",
+      "date": "1987-07-22",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "カラオケスタジオ基本セット",
+      "publisher": "バンダイ",
+      "date": "1987-07-30",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "チェスターフィールド 暗黒神への挑戦",
+      "publisher": "ビック東海",
+      "date": "1987-07-30",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ファミリートレーナーシリーズ5 迷路大作戦",
+      "publisher": "バンダイ",
+      "date": "1987-07-31",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ハイウェイスター",
+      "publisher": "スクウェア",
+      "date": "1987-08-07",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "ボンバーキング",
+      "publisher": "ハドソン",
+      "date": "1987-08-07",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ミラクルロピット 2100年の冒険",
+      "publisher": "キングレコード",
+      "date": "1987-08-07",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "エルナークの財宝",
+      "publisher": "トーワチキ",
+      "date": "1987-08-10",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "聖闘士星矢 黄金伝説",
+      "publisher": "バンダイ",
+      "date": "1987-08-10",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ファミリーマージャン",
+      "publisher": "ナムコ",
+      "date": "1987-08-11",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "囲碁 九路盤対局",
+      "publisher": "BPS",
+      "date": "1987-08-11",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "天下のご意見番 水戸黄門",
+      "publisher": "サンソフト",
+      "date": "1987-08-11",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "魔城伝説II 大魔司教ガリウス",
+      "publisher": "コナミ",
+      "date": "1987-08-11",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "エアーフォートレス",
+      "publisher": "HAL研究所",
+      "date": "1987-08-17",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "夢幻戦士ヴァリス the fantasic soldier",
+      "publisher": "徳間書店",
+      "date": "1987-08-21",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "光の戦士フォトン 惑星ゾルディアスの戦い",
+      "publisher": "タカラ",
+      "date": "1987-08-28",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ファミリートレーナーシリーズ6 マンハッタンポリス",
+      "publisher": "バンダイ",
+      "date": "1987-08-31",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "シェラザード アラビアンドリーム",
+      "publisher": "カルチャーブレーン",
+      "date": "1987-09-03",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ゾイド 中央大陸の戦い",
+      "publisher": "東芝EMI",
+      "date": "1987-09-05",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "SWAT",
+      "publisher": "東映動画",
+      "date": "1987-09-11",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "デジタルデビル物語 女神転生",
+      "publisher": "ナムコ",
+      "date": "1987-09-11",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "スペランカーII 勇者への挑戦",
+      "publisher": "アイレム",
+      "date": "1987-09-18",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "つっぱり大相撲",
+      "publisher": "テクモ",
+      "date": "1987-09-18",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "バイオ戦士DAN インクリーザーとの闘い",
+      "publisher": "ジャレコ",
+      "date": "1987-09-22",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "スターゲート",
+      "publisher": "HAL研究所",
+      "date": "1987-09-24",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "井出洋介名人の実践麻雀",
+      "publisher": "カプコン",
+      "date": "1987-09-24",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "キョンシーズ2",
+      "publisher": "タイトー",
+      "date": "1987-09-25",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "沙羅曼蛇",
+      "publisher": "コナミ",
+      "date": "1987-09-25",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ミリピート 巨大昆虫の逆襲",
+      "publisher": "HAL研究所",
+      "date": "1987-10-01",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ロマンシア",
+      "publisher": "トンキンハウス",
+      "date": "1987-10-01",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "快傑ヤンチャ丸",
+      "publisher": "アイレム",
+      "date": "1987-10-02",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ウルティマ ~恐怖のエクソダス~",
+      "publisher": "ポニーキャニオン",
+      "date": "1987-10-09",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "エスパ冒険隊 魔王の砦",
+      "publisher": "ジャレコ",
+      "date": "1987-10-13",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "インドラの光",
+      "publisher": "ケムコ",
+      "date": "1987-10-20",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ミネルバトンサーガ ラゴンの復活",
+      "publisher": "タイトー",
+      "date": "1987-10-23",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "覇邪の封印",
+      "publisher": "アスキー",
+      "date": "1987-10-23",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "桃太郎伝説",
+      "publisher": "ハドソン",
+      "date": "1987-10-26",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "星をみるひと",
+      "publisher": "ホット・ビィ",
+      "date": "1987-10-27",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "カラオケスタジオ専用カセット トップヒット20Vol.1",
+      "publisher": "バンダイ",
+      "date": "1987-10-28",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "サイドポケット",
+      "publisher": "ナムコ",
+      "date": "1987-10-30",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ジャウスト",
+      "publisher": "HAL研究所",
+      "date": "1987-10-30",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "上海",
+      "publisher": "サンソフト",
+      "date": "1987-10-30",
+      "platform": "FC",
+      "genre": "パズル"
+    },
+    {
+      "title": "マイクタイソンパンチアウト",
+      "publisher": "任天堂",
+      "date": "1987-11-01",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ルパン三世 パンドラの遺産",
+      "publisher": "ナムコ",
+      "date": "1987-11-06",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "宇宙船コスモキャリア",
+      "publisher": "ジャレコ",
+      "date": "1987-11-06",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "アルテリオス",
+      "publisher": "日本物産",
+      "date": "1987-11-13",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ファザナドゥ",
+      "publisher": "ハドソン",
+      "date": "1987-11-16",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ファミリートレーナーシリーズ7 ファミトレ大運動会",
+      "publisher": "バンダイ",
+      "date": "1987-11-27",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "時空勇伝 デビアス",
+      "publisher": "ナムコ",
+      "date": "1987-11-27",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "アウトランダーズ",
+      "publisher": "ビクター音楽産業",
+      "date": "1987-12-04",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "スターウォーズ(ナムコ製)",
+      "publisher": "ナムコ",
+      "date": "1987-12-04",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ドラゴンスクロール 蘇りし魔竜",
+      "publisher": "コナミ",
+      "date": "1987-12-04",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ランボー",
+      "publisher": "パック・イン・ビデオ",
+      "date": "1987-12-04",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "JJ (ジェイジェイ)",
+      "publisher": "スクウェア",
+      "date": "1987-12-07",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ゴルフ倶楽部 バーディラッシュ",
+      "publisher": "データイースト",
+      "date": "1987-12-09",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "トップガン",
+      "publisher": "コナミ",
+      "date": "1987-12-11",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ファミリーテニス",
+      "publisher": "ナムコ",
+      "date": "1987-12-11",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "京都 龍の寺殺人事件 山村美紗サスペンスシリーズ",
+      "publisher": "タイトー",
+      "date": "1987-12-11",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "鉄道王",
+      "publisher": "デービーソフト",
+      "date": "1987-12-12",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "銀河の三人",
+      "publisher": "任天堂",
+      "date": "1987-12-15",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "エキサイティングボクシング",
+      "publisher": "コナミ",
+      "date": "1987-12-16",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ロックマン",
+      "publisher": "カプコン",
+      "date": "1987-12-17",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "カルノフ",
+      "publisher": "ナムコ",
+      "date": "1987-12-18",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "スティックハンター",
+      "publisher": "ケイアミューズメントリース",
+      "date": "1987-12-18",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "タイトーグランプリ 栄光へのライセンス",
+      "publisher": "タイトー",
+      "date": "1987-12-18",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "ファイナルファンタジー",
+      "publisher": "スクウェア",
+      "date": "1987-12-18",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "目指せパチプロ パチ夫くん",
+      "publisher": "ココナッツジャパン",
+      "date": "1987-12-18",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "ウィザードリィ",
+      "publisher": "アスキー",
+      "date": "1987-12-22",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ゲゲゲの鬼太郎2 妖怪軍団の挑戦",
+      "publisher": "バンダイ",
+      "date": "1987-12-22",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "プロ野球ファミリースタジアム87年度版",
+      "publisher": "ナムコ",
+      "date": "1987-12-22",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "メタルギア",
+      "publisher": "コナミ",
+      "date": "1987-12-22",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "マグナム危機一髪 エンパイアシティー 1931",
+      "publisher": "東芝EMI",
+      "date": "1987-12-25",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "アタックアニマル学園",
+      "publisher": "ポニーキャニオン",
+      "date": "1987-12-26",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "スーパーマン",
+      "publisher": "ケムコ",
+      "date": "1987-12-26",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ファミリートレーナーシリーズ8 突撃!風雲たけし城",
+      "publisher": "バンダイ",
+      "date": "1987-12-28",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ファミリーサーキット",
+      "publisher": "ナムコ",
+      "date": "1988-01-06",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "ソフトハウス連続殺人事件 殺意の階層",
+      "publisher": "HAL研究所",
+      "date": "1988-01-07",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "コナミワイワイワールド",
+      "publisher": "コナミ",
+      "date": "1988-01-14",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "スケバン刑事III",
+      "publisher": "東映動画",
+      "date": "1988-01-22",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "リップルアイランド",
+      "publisher": "サンソフト",
+      "date": "1988-01-23",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ドナルドランド",
+      "publisher": "データイースト",
+      "date": "1988-01-29",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ジャンボ尾崎のホールインワン プロフェッシュナル",
+      "publisher": "HAL研究所",
+      "date": "1988-02-01",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "パリダカールラリースペシャル",
+      "publisher": "CBSソニー",
+      "date": "1988-02-01",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "仮面ライダー倶楽部",
+      "publisher": "バンダイ",
+      "date": "1988-02-03",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ガーディック外伝",
+      "publisher": "アイレム",
+      "date": "1988-02-05",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "魂斗羅(コントラ)",
+      "publisher": "コナミ",
+      "date": "1988-02-09",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ドラゴンクエストIII そして伝説へ...",
+      "publisher": "エニックス",
+      "date": "1988-02-10",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "カラオケスタジオ専用カセット トップヒット20Vol.2",
+      "publisher": "バンダイ",
+      "date": "1988-02-18",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "松本亨の株式必勝学",
+      "publisher": "イマジニア",
+      "date": "1988-02-18",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "探偵 神宮寺三郎 横浜港連続殺人事件",
+      "publisher": "データイースト",
+      "date": "1988-02-26",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "鉄腕アトム",
+      "publisher": "コナミ",
+      "date": "1988-02-26",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ボールブレイザー  (ルーカスフィルムゲーム)",
+      "publisher": "ポニーキャニオン",
+      "date": "1988-03-04",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "アルカノイドII",
+      "publisher": "タイトー",
+      "date": "1988-03-08",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "シュワルツネッガーのプレデター",
+      "publisher": "パック・イン・ビデオ",
+      "date": "1988-03-10",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "釣りキチ三平 ブルーマーリン編",
+      "publisher": "ビクター音楽産業",
+      "date": "1988-03-17",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "ローリングサンダー",
+      "publisher": "ナムコ",
+      "date": "1988-03-17",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ナポレオン戦記",
+      "publisher": "アイレム",
+      "date": "1988-03-18",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "信長の野望 全国版",
+      "publisher": "光栄",
+      "date": "1988-03-18",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "谷川浩司の将棋指南II 名人への道",
+      "publisher": "ポニーキャニオン",
+      "date": "1988-03-18",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "ファイティングゴルフ",
+      "publisher": "SNK",
+      "date": "1988-03-24",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ゴルゴ13 第一章 神々の黄昏",
+      "publisher": "ビック東海",
+      "date": "1988-03-26",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "愛の伝説 オリュンポスの戦い",
+      "publisher": "イマジニア",
+      "date": "1988-03-28",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "武田信玄",
+      "publisher": "ホット・ビィ",
+      "date": "1988-03-28",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "フリートコマンダー",
+      "publisher": "アスキー",
+      "date": "1988-03-29",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "不動明王伝",
+      "publisher": "タイトー",
+      "date": "1988-03-29",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ビーバップハイスクール 高校生極楽伝説",
+      "publisher": "データイースト",
+      "date": "1988-03-30",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "独眼竜政宗",
+      "publisher": "ナムコ",
+      "date": "1988-04-05",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "ジーキル博士の彷魔が刻",
+      "publisher": "東宝",
+      "date": "1988-04-08",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "双截龍(ダブルドラゴン)",
+      "publisher": "テクノスジャパン",
+      "date": "1988-04-08",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "燃えろ!!プロテニス",
+      "publisher": "ジャレコ",
+      "date": "1988-04-15",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "怒II DOGOSOKEN",
+      "publisher": "ケイアミューズメントリース",
+      "date": "1988-04-16",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "エリュシオン",
+      "publisher": "トンキンハウス",
+      "date": "1988-04-28",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "キャプテン翼",
+      "publisher": "テクモ",
+      "date": "1988-04-28",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "砂漠の狐 戦車戦略",
+      "publisher": "ケムコ",
+      "date": "1988-04-28",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "名探偵ホームズ 霧のロンドン殺人事件",
+      "publisher": "トーワチキ",
+      "date": "1988-05-01",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ディープダンジョンIII 勇士への旅",
+      "publisher": "スクウェア",
+      "date": "1988-05-13",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "仮面の忍者 赤影",
+      "publisher": "東映動画",
+      "date": "1988-05-20",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "将軍 (SHOGUN)",
+      "publisher": "ヘクト",
+      "date": "1988-05-27",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "サラダの国のトマト姫",
+      "publisher": "ハドソン",
+      "date": "1988-05-27",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ナムコクラシック",
+      "publisher": "ナムコ",
+      "date": "1988-05-27",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "忍者くん 阿修羅の章",
+      "publisher": "ユーピーエル",
+      "date": "1988-05-27",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "聖闘士星矢 黄金伝説完結編",
+      "publisher": "バンダイ",
+      "date": "1988-05-30",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "コスモポリス ギャリバン",
+      "publisher": "日本物産",
+      "date": "1988-06-03",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "超惑星戦記 メタファイト",
+      "publisher": "サンソフト",
+      "date": "1988-06-17",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "1943",
+      "publisher": "カプコン",
+      "date": "1988-06-20",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "真田十勇士",
+      "publisher": "ケムコ",
+      "date": "1988-06-24",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "妖怪道中記",
+      "publisher": "ナムコ",
+      "date": "1988-06-24",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "究極ハリキリスタジアム",
+      "publisher": "タイトー",
+      "date": "1988-06-28",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "スーパーブラックオニキス",
+      "publisher": "BPS",
+      "date": "1988-07-14",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "じゃりん子チエ ばくだん娘のし幸せさがし",
+      "publisher": "コナミ",
+      "date": "1988-07-15",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ベストプレープロ野球",
+      "publisher": "アスキー",
+      "date": "1988-07-15",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "伝説の騎士エルロンド",
+      "publisher": "ジャレコ",
+      "date": "1988-07-15",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ヒットラーの復活 トップシークレット",
+      "publisher": "カプコン",
+      "date": "1988-07-20",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "めぞん一刻",
+      "publisher": "ボーステック",
+      "date": "1988-07-21",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "カイの冒険",
+      "publisher": "ナムコ",
+      "date": "1988-07-22",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "カケフ君のジャンプ天国 スピード地獄",
+      "publisher": "ビック東海",
+      "date": "1988-07-22",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "レインボーアイランド",
+      "publisher": "タイトー",
+      "date": "1988-07-26",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "熱血高校ドッジボール部",
+      "publisher": "テクノスジャパン",
+      "date": "1988-07-26",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "グレートタンク",
+      "publisher": "SNK",
+      "date": "1988-07-29",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "三国志 中原の覇者",
+      "publisher": "ナムコ",
+      "date": "1988-07-29",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "飛龍の拳II ドラゴンの翼",
+      "publisher": "カルチャーブレーン",
+      "date": "1988-07-29",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "スーパーリアルベースボール",
+      "publisher": "バップ",
+      "date": "1988-07-30",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "太陽の神殿 アステカII",
+      "publisher": "東京書籍",
+      "date": "1988-08-03",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "エッガーランド 迷宮の復活",
+      "publisher": "HAL研究所",
+      "date": "1988-08-09",
+      "platform": "FC",
+      "genre": "パズル"
+    },
+    {
+      "title": "ザ・マネーゲーム",
+      "publisher": "ソフエル",
+      "date": "1988-08-10",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "闘将!!拉麺男 炸裂超人一○二芸",
+      "publisher": "バンダイ",
+      "date": "1988-08-10",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "燃えろ!!プロ野球’88決定版",
+      "publisher": "ジャレコ",
+      "date": "1988-08-10",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "水戸黄門II 世界漫遊記",
+      "publisher": "サンソフト",
+      "date": "1988-08-11",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "サッカーリーグウィナーズカップ",
+      "publisher": "データイースト",
+      "date": "1988-08-12",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ドラゴンボール 大魔王復活",
+      "publisher": "バンダイ",
+      "date": "1988-08-12",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ファイナルラップ",
+      "publisher": "ナムコ",
+      "date": "1988-08-12",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "ファミコンウォーズ",
+      "publisher": "任天堂",
+      "date": "1988-08-12",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "マッドシティ",
+      "publisher": "コナミ",
+      "date": "1988-08-12",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "不如帰 (ほととぎす)",
+      "publisher": "アイレム",
+      "date": "1988-08-19",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "スーパーピンボール",
+      "publisher": "ココナッツジャパン",
+      "date": "1988-08-23",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "イース",
+      "publisher": "ビクター音楽産業",
+      "date": "1988-08-26",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "スーパーダイナミックバトミントン",
+      "publisher": "バップ",
+      "date": "1988-08-26",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "亀の恩返し",
+      "publisher": "ハドソン",
+      "date": "1988-08-26",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ファミコン名人戦",
+      "publisher": "SNK",
+      "date": "1988-09-02",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "マニアックマンション",
+      "publisher": "ジャレコ",
+      "date": "1988-09-13",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "コナミックスポーツ イン ソウル",
+      "publisher": "コナミ",
+      "date": "1988-09-16",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "霊幻道士",
+      "publisher": "ポニーキャニオン",
+      "date": "1988-09-16",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "孔雀王",
+      "publisher": "ポニーキャニオン",
+      "date": "1988-09-21",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ドナルドダック",
+      "publisher": "ケムコ",
+      "date": "1988-09-22",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "エイトアイズ",
+      "publisher": "セタ",
+      "date": "1988-09-27",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "えりかとさとるの夢冒険",
+      "publisher": "ナムコ",
+      "date": "1988-09-27",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "VIVA LAS  VEGAS",
+      "publisher": "エピックソニー",
+      "date": "1988-09-30",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "ナイトライダー",
+      "publisher": "パック・イン・ビデオ",
+      "date": "1988-09-30",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "ベストプレープロ野球 新データ",
+      "publisher": "アスキー",
+      "date": "1988-10-01",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "大戦略",
+      "publisher": "ボーステック",
+      "date": "1988-10-11",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "ザ・ブラックバスII",
+      "publisher": "ホット・ビィ",
+      "date": "1988-10-18",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "コブラコマンド",
+      "publisher": "データイースト",
+      "date": "1988-10-21",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "源平討魔伝",
+      "publisher": "ナムコ",
+      "date": "1988-10-21",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "スーパーマリオブラザーズ3",
+      "publisher": "任天堂",
+      "date": "1988-10-23",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "アメリカ大統領選挙",
+      "publisher": "ヘクト",
+      "date": "1988-10-28",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "三國志",
+      "publisher": "光栄",
+      "date": "1988-10-30",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "東方見文録",
+      "publisher": "ナツメ",
+      "date": "1988-11-10",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "アメリカンフットボール  タッチダウンフィーバー",
+      "publisher": "ケイアミューズメントリース",
+      "date": "1988-11-11",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ぎゅわんぶらあ自己中心派",
+      "publisher": "アスミック",
+      "date": "1988-11-11",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "西遊記ワールド",
+      "publisher": "ジャレコ",
+      "date": "1988-11-11",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ファミリークイズ4人はライバル",
+      "publisher": "アテナ",
+      "date": "1988-11-16",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "貝獣物語",
+      "publisher": "ナムコ",
+      "date": "1988-11-18",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ディジャブ 悪魔は本当にやって来た",
+      "publisher": "ケムコ",
+      "date": "1988-11-22",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "燃えろ!!ジュニアバスケット TWO ON TWO",
+      "publisher": "ジャレコ",
+      "date": "1988-11-22",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "たけしの戦国風雲児",
+      "publisher": "タイトー",
+      "date": "1988-11-25",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "ファミリーマージャンII 上海への道",
+      "publisher": "ナムコ",
+      "date": "1988-11-25",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "中国占星術",
+      "publisher": "ジャレコ",
+      "date": "1988-11-29",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "エイリアンシンドローム",
+      "publisher": "サンソフト",
+      "date": "1988-12-02",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "桃太郎電鉄",
+      "publisher": "ハドソン",
+      "date": "1988-12-02",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "突然!マッチョマン",
+      "publisher": "ビック東海",
+      "date": "1988-12-02",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "半熟英雄",
+      "publisher": "スクウェア",
+      "date": "1988-12-02",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "キングオブキングス",
+      "publisher": "ナムコ",
+      "date": "1988-12-09",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "ゴジラ",
+      "publisher": "東宝",
+      "date": "1988-12-09",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "中嶋悟監修F-1ヒーロー",
+      "publisher": "バリエ",
+      "date": "1988-12-09",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "忍者龍剣伝",
+      "publisher": "テクモ",
+      "date": "1988-12-09",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "89電脳九星占い by Gingukan",
+      "publisher": "インダクショウンプロディース",
+      "date": "1988-12-10",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "ファイティングロード",
+      "publisher": "東映動画",
+      "date": "1988-12-13",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "かぐや姫伝説",
+      "publisher": "ビクター音楽産業",
+      "date": "1988-12-16",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "キャプテン シルバー",
+      "publisher": "徳間書店",
+      "date": "1988-12-16",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "グラディウスII",
+      "publisher": "コナミ",
+      "date": "1988-12-16",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ザ トライアスロン",
+      "publisher": "ケイアミューズメントリース",
+      "date": "1988-12-16",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "究極ハリキリスタジアム’88選手新データバージョン",
+      "publisher": "タイトー",
+      "date": "1988-12-16",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "サイクルレースロードマン~激走!!日本一周4000km~",
+      "publisher": "東京書籍",
+      "date": "1988-12-17",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "トップライダー",
+      "publisher": "バリエ",
+      "date": "1988-12-17",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "ファイナルファンタジーII",
+      "publisher": "スクウェア",
+      "date": "1988-12-17",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ファミリートレーナーシリーズ9 風雲たけし城二",
+      "publisher": "バンダイ",
+      "date": "1988-12-20",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ファンタジーゾーンII オパオパの涙",
+      "publisher": "サンソフト",
+      "date": "1988-12-20",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "プロ野球 ファミリースタジアム’88年度版",
+      "publisher": "ナムコ",
+      "date": "1988-12-20",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ローラーボール",
+      "publisher": "HAL研究所",
+      "date": "1988-12-20",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "銀河英雄伝説 わが征くは星の大海",
+      "publisher": "ケムコ",
+      "date": "1988-12-21",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "テトリス",
+      "publisher": "BPS",
+      "date": "1988-12-22",
+      "platform": "FC",
+      "genre": "パズル"
+    },
+    {
+      "title": "燃えろ!!プロサッカー",
+      "publisher": "ジャレコ",
+      "date": "1988-12-23",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "アキラ",
+      "publisher": "タイトー",
+      "date": "1988-12-24",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "エアーウルフ",
+      "publisher": "九娯貿易",
+      "date": "1988-12-24",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "小公子セディ (ファミコンドラマ)",
+      "publisher": "フジテレビ",
+      "date": "1988-12-24",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "プロ野球?殺人事件!",
+      "publisher": "カプコン",
+      "date": "1988-12-24",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ロックマン2 Dr.ワイリーの謎",
+      "publisher": "カプコン",
+      "date": "1988-12-24",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ゲバラ",
+      "publisher": "SNK",
+      "date": "1988-12-26",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "がんばれゴエモン2",
+      "publisher": "コナミ",
+      "date": "1989-01-04",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "スペースハリアー",
+      "publisher": "タカラ",
+      "date": "1989-01-06",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "100万$キッド 幻の帝王編",
+      "publisher": "ソフエル",
+      "date": "1989-01-06",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "西村京太郎ミステリー ブルートレイン殺人事件",
+      "publisher": "アイレム",
+      "date": "1989-01-20",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "里見八犬伝",
+      "publisher": "SNK",
+      "date": "1989-01-20",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ゾイド2 ゼネバスの逆襲",
+      "publisher": "東芝EMI",
+      "date": "1989-01-27",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "モトクロスチャンピオン",
+      "publisher": "コナミ",
+      "date": "1989-01-27",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "電撃ビッグバン",
+      "publisher": "ビック東海",
+      "date": "1989-01-27",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "パチ夫くん2",
+      "publisher": "ココナッツジャパン",
+      "date": "1989-01-30",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "ファミリートレーナーシリーズ10 来来キョンシーズ ベビーキョンシーのあみだ大冒険",
+      "publisher": "バンダイ",
+      "date": "1989-01-31",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ワールドグランプリ POLE to FINISH (ポール・トゥ・フィニッシュ)",
+      "publisher": "データイースト",
+      "date": "1989-01-31",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "トムソーヤの冒険",
+      "publisher": "セタ",
+      "date": "1989-02-06",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ワギャンランド",
+      "publisher": "ナムコ",
+      "date": "1989-02-09",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "赤龍王",
+      "publisher": "サンソフト",
+      "date": "1989-02-10",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "京都 花の密室殺人事件 山村美紗サスペンスシリーズ",
+      "publisher": "タイトー",
+      "date": "1989-02-11",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ファミコンジャンプ 英雄列伝",
+      "publisher": "バンダイ",
+      "date": "1989-02-15",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ハイドライド3 闇からの訪問者",
+      "publisher": "ナムコ",
+      "date": "1989-02-17",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "飛ingヒーロー(フライングヒーロー)",
+      "publisher": "エピックソニー",
+      "date": "1989-02-17",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "スペースシャドー",
+      "publisher": "バンダイ",
+      "date": "1989-02-20",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ウィザードリィII リルガミンの遺産",
+      "publisher": "アスキー",
+      "date": "1989-02-21",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "百鬼夜行",
+      "publisher": "ユース",
+      "date": "1989-02-23",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "がんばれペナントレース!",
+      "publisher": "コナミ",
+      "date": "1989-02-28",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "魁!男塾 疾風一号生",
+      "publisher": "バンダイ",
+      "date": "1989-03-03",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "早打ちスーパー囲碁",
+      "publisher": "ナムコ",
+      "date": "1989-03-03",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "ジーザス  恐怖のバイオモンスター",
+      "publisher": "キングレコード",
+      "date": "1989-03-17",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "爆笑!!人生劇場",
+      "publisher": "タイトー",
+      "date": "1989-03-17",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "ファミリーピンボール",
+      "publisher": "ナムコ",
+      "date": "1989-03-24",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "暗黒神話 ヤマトタケル伝説",
+      "publisher": "トンキンハウス",
+      "date": "1989-03-24",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "じゃじゃ丸忍法帳",
+      "publisher": "ジャレコ",
+      "date": "1989-03-28",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ペナントリーグ ホームランナイター",
+      "publisher": "データイースト",
+      "date": "1989-03-28",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "アフターバーナー",
+      "publisher": "サンソフト",
+      "date": "1989-03-30",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "オペレーションウルフ",
+      "publisher": "タイトー",
+      "date": "1989-03-31",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "シャドウゲイト",
+      "publisher": "ケムコ",
+      "date": "1989-03-31",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "松本亨の株式必勝学II",
+      "publisher": "イマジニア",
+      "date": "1989-03-31",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "ガーフィールドの一週間",
+      "publisher": "トーワチキ",
+      "date": "1989-04-07",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ドラゴンスピリット 新たなる伝説",
+      "publisher": "ナムコ",
+      "date": "1989-04-14",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "マインドシーカー",
+      "publisher": "ナムコ",
+      "date": "1989-04-18",
+      "platform": "FC",
+      "genre": "その他"
+    },
+    {
+      "title": "蒼き狼と白き牝鹿 ジンギスカン",
+      "publisher": "光栄",
+      "date": "1989-04-20",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "ダウンタウン熱血物語",
+      "publisher": "テクノスジャパン",
+      "date": "1989-04-25",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "デビルマン",
+      "publisher": "ナムコ",
+      "date": "1989-04-25",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ドラゴンバスターII 闇の封印",
+      "publisher": "ナムコ",
+      "date": "1989-04-27",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "HOLY DIVER (ホーリーダイヴァー)",
+      "publisher": "アイレム",
+      "date": "1989-04-28",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "KEIBA SIMULATION 本命(競馬シュミレーション本命)",
+      "publisher": "日本物産",
+      "date": "1989-04-28",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "名探偵ホームズ Mからの挑戦状",
+      "publisher": "トーワチキ",
+      "date": "1989-05-01",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "株式道場 実践編",
+      "publisher": "ヘクト",
+      "date": "1989-05-02",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "激亀忍者伝",
+      "publisher": "コナミ",
+      "date": "1989-05-12",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "めざせ三冠王 ベースボールスター",
+      "publisher": "SNK",
+      "date": "1989-05-19",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "天地を喰らう",
+      "publisher": "カプコン",
+      "date": "1989-05-19",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "スーパーチャイニーズ2 ドラゴンキッド",
+      "publisher": "カルチャーブレーン",
+      "date": "1989-05-26",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "帰って来た!軍人将棋 なんやそれ?",
+      "publisher": "ソフエル",
+      "date": "1989-05-26",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "ラサール石井のチャイルズクエスト",
+      "publisher": "ナムコ",
+      "date": "1989-06-23",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "SDガンダムワールドガチャポン戦士2 カプセル戦記",
+      "publisher": "バンダイ",
+      "date": "1989-06-25",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "クインティ",
+      "publisher": "ナムコ",
+      "date": "1989-06-27",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "マーダークラブ",
+      "publisher": "セタ",
+      "date": "1989-06-30",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "脱獄  PRISONERS OF WAR",
+      "publisher": "ケイアミューズメントリース",
+      "date": "1989-06-30",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "新燃えろプロ野球",
+      "publisher": "ジャレコ",
+      "date": "1989-07-13",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ドラゴンニンジャ",
+      "publisher": "ナムコ",
+      "date": "1989-07-14",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ホワイトライオン伝説 ピラミットの彼方に",
+      "publisher": "ケムコ",
+      "date": "1989-07-14",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "囲碁指南",
+      "publisher": "ヘクト",
+      "date": "1989-07-14",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "ウィロー",
+      "publisher": "カプコン",
+      "date": "1989-07-18",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "必殺道場破り",
+      "publisher": "シグマ商事",
+      "date": "1989-07-18",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ケルナグール",
+      "publisher": "ナムコ",
+      "date": "1989-07-21",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ファリア 封印の剣",
+      "publisher": "ハイスコアメディアワーク",
+      "date": "1989-07-21",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "究極ハリキリスタジアム平成元年版",
+      "publisher": "タイトー",
+      "date": "1989-07-21",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "全米プロバスケット",
+      "publisher": "ビック東海",
+      "date": "1989-07-21",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "パーフェクト ボウリング",
+      "publisher": "トンキンハウス",
+      "date": "1989-07-25",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "MOTHER(マザー)",
+      "publisher": "任天堂",
+      "date": "1989-07-25",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "美味しんぼ 究極のメニュー三本勝負",
+      "publisher": "バンダイ",
+      "date": "1989-07-25",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ファミスタ’89開幕版",
+      "publisher": "ナムコ",
+      "date": "1989-07-28",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "スプラッターハウス わんぱくグラフィティ",
+      "publisher": "ナムコ",
+      "date": "1989-07-31",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "コズミックウォーズ",
+      "publisher": "コナミ",
+      "date": "1989-08-04",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "究極タイガー",
+      "publisher": "CBSソニー",
+      "date": "1989-08-04",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "燃えるお兄さん",
+      "publisher": "東宝",
+      "date": "1989-08-08",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "名門第三野球部",
+      "publisher": "バンダイ",
+      "date": "1989-08-08",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ムーランルージュ戦記メ ルヴィルの炎",
+      "publisher": "学習研究社",
+      "date": "1989-08-11",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "武田信玄II スーパー戦国シュミレーションゲーム",
+      "publisher": "ホット・ビィ",
+      "date": "1989-08-21",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "キャプテンED (えど)",
+      "publisher": "CBSソニー",
+      "date": "1989-08-24",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "レーサーミニ四駆 ジャパンカップ",
+      "publisher": "コナミ",
+      "date": "1989-08-25",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "ロボコップ",
+      "publisher": "データイースト",
+      "date": "1989-08-25",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "激闘プロレス!!闘魂伝説",
+      "publisher": "テクモ",
+      "date": "1989-09-01",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "アイドル八犬伝",
+      "publisher": "トーワチキ",
+      "date": "1989-09-14",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "谷川浩司の将棋指南III",
+      "publisher": "ポニーキャニオン",
+      "date": "1989-09-14",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "マルサの女",
+      "publisher": "カプコン",
+      "date": "1989-09-19",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ウルティマ 聖者への道",
+      "publisher": "ポニーキャニオン",
+      "date": "1989-09-20",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "中華大仙",
+      "publisher": "タイトー",
+      "date": "1989-09-22",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "アメリカンドリーム (AMERICAN DREAM)",
+      "publisher": "ココナッツジャパン",
+      "date": "1989-09-23",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "サンダーバード",
+      "publisher": "パック・イン・ビデオ",
+      "date": "1989-09-29",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ツインビー3 ポコポコ大魔王",
+      "publisher": "コナミ",
+      "date": "1989-09-29",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "マハラジャ",
+      "publisher": "サンソフト",
+      "date": "1989-09-29",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "悪魔の招待状",
+      "publisher": "ケムコ",
+      "date": "1989-09-29",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "明治維新",
+      "publisher": "ユース",
+      "date": "1989-09-29",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "落っことしパズルとんじゃん",
+      "publisher": "ジャレコ",
+      "date": "1989-09-29",
+      "platform": "FC",
+      "genre": "パズル"
+    },
+    {
+      "title": "甲子園",
+      "publisher": "ケイアミューズメントリース",
+      "date": "1989-10-06",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ワールドスーパーテニス",
+      "publisher": "アスミック",
+      "date": "1989-10-13",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ヴィナス戦記",
+      "publisher": "バリエ",
+      "date": "1989-10-14",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "北斗の拳3 新世紀創造 凄拳列伝",
+      "publisher": "東映動画",
+      "date": "1989-10-19",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ソフトボール天国",
+      "publisher": "トンキンハウス",
+      "date": "1989-10-27",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ドラゴンボール3 悟空伝",
+      "publisher": "バンダイ",
+      "date": "1989-10-27",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "メジャーリーグ",
+      "publisher": "アイレム",
+      "date": "1989-10-27",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "超人ウルトラベースボール",
+      "publisher": "カルチャーブレーン",
+      "date": "1989-10-27",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "田代まさしのプリンセスがいっぱい",
+      "publisher": "エピックソニー",
+      "date": "1989-10-27",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "麻雀大会",
+      "publisher": "光栄",
+      "date": "1989-10-31",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "御存知弥次喜多珍道中",
+      "publisher": "HAL研究所",
+      "date": "1989-11-07",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "U.S.チャンピオンシップ V’BALL",
+      "publisher": "テクノスジャパン",
+      "date": "1989-11-10",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ダンジョン&マジック SWORDS OF ELEMENT(ソード オブ エレメント)",
+      "publisher": "ナツメ",
+      "date": "1989-11-10",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "激突四駆バトル",
+      "publisher": "アイレム",
+      "date": "1989-11-17",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "忍者COPサイゾウ",
+      "publisher": "九娯貿易",
+      "date": "1989-11-17",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "コズミックイプシロン",
+      "publisher": "アスミック",
+      "date": "1989-11-24",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ベガスコネクション カジノより愛をこめて",
+      "publisher": "シグマ商事",
+      "date": "1989-11-24",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "寺尾のどすこい大相撲",
+      "publisher": "ジャレコ",
+      "date": "1989-11-24",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ゴルフッ子オープン",
+      "publisher": "タイトー",
+      "date": "1989-11-25",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "スクウェアのトムソーヤ",
+      "publisher": "スクウェア",
+      "date": "1989-11-30",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "コンフリクト",
+      "publisher": "ビック東海",
+      "date": "1989-12-01",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "TAO(タオ) 道",
+      "publisher": "バップ",
+      "date": "1989-12-01",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "ホステージ",
+      "publisher": "ケムコ",
+      "date": "1989-12-01",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "未来戦史ライオス",
+      "publisher": "パック・イン・ビデオ",
+      "date": "1989-12-01",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "おそ松くん バックトゥザミーの出っ歯の巻",
+      "publisher": "バンダイ",
+      "date": "1989-12-08",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "スーパーモグラたたき ぽっくんモグラー",
+      "publisher": "アイジーエス",
+      "date": "1989-12-08",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "タイトーチェイスH.Q.",
+      "publisher": "タイトー",
+      "date": "1989-12-08",
+      "platform": "FC",
+      "genre": "レース"
+    },
+    {
+      "title": "光と闇の戦い 新里見八犬伝",
+      "publisher": "東映動画",
+      "date": "1989-12-08",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "星霊狩り",
+      "publisher": "ハドソン",
+      "date": "1989-12-08",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "SUPER STAR プロレスリング",
+      "publisher": "ポニーキャニオン",
+      "date": "1989-12-09",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "アバドックス",
+      "publisher": "ナツメ",
+      "date": "1989-12-15",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "かってにシロクマ もりをすくえのまき",
+      "publisher": "CBSソニー",
+      "date": "1989-12-15",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "スウィートホーム",
+      "publisher": "カプコン",
+      "date": "1989-12-15",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "トップガン デュアルファイターズ",
+      "publisher": "コナミ",
+      "date": "1989-12-15",
+      "platform": "FC",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ピンボールクエスト",
+      "publisher": "ジャレコ",
+      "date": "1989-12-15",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "ファミコン野球盤",
+      "publisher": "エポック社",
+      "date": "1989-12-15",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "フリップル",
+      "publisher": "タイトー",
+      "date": "1989-12-15",
+      "platform": "FC",
+      "genre": "パズル"
+    },
+    {
+      "title": "激闘スタジアム",
+      "publisher": "テクモ",
+      "date": "1989-12-15",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "神仙伝",
+      "publisher": "アイレム",
+      "date": "1989-12-15",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "I LOVE ソフトボール",
+      "publisher": "ココナッツジャパン",
+      "date": "1989-12-19",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "エモやんの10倍プロ野球 セリーグ編",
+      "publisher": "ヘクト",
+      "date": "1989-12-19",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "クォーターバックスクランブル",
+      "publisher": "ポニーキャニオン",
+      "date": "1989-12-19",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ファミスタ’90",
+      "publisher": "ナムコ",
+      "date": "1989-12-19",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ザ・マネーゲームII 兜町の奇跡",
+      "publisher": "ソフエル",
+      "date": "1989-12-20",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "ザロードオブキング",
+      "publisher": "ジャレコ",
+      "date": "1989-12-21",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "TM NETWORK LIVE IN POWER BOWL",
+      "publisher": "エピックソニー",
+      "date": "1989-12-22",
+      "platform": "FC",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "バットマン",
+      "publisher": "サンソフト",
+      "date": "1989-12-22",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "マッピーキッズ",
+      "publisher": "ナムコ",
+      "date": "1989-12-22",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "悪魔城伝説",
+      "publisher": "コナミ",
+      "date": "1989-12-22",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "双截龍(ダブルドラゴン)II The Revenge",
+      "publisher": "テクノスジャパン",
+      "date": "1989-12-22",
+      "platform": "FC",
+      "genre": "アクション"
+    },
+    {
+      "title": "ヘラクレスの栄光II タイタンの滅亡",
+      "publisher": "データイースト",
+      "date": "1989-12-23",
+      "platform": "FC",
+      "genre": "RPG"
+    },
+    {
+      "title": "中国雀士物語 東風(トンフー)",
+      "publisher": "ナツメ",
+      "date": "1989-12-23",
+      "platform": "FC",
+      "genre": "テーブル"
+    },
+    {
+      "title": "名門!多古西応援団",
+      "publisher": "アスミック",
+      "date": "1989-12-25",
+      "platform": "FC",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "スーパーラグビー",
+      "publisher": "ティーエスエス",
+      "date": "1989-12-27",
+      "platform": "FC",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ゴルフ",
+      "publisher": "任天堂",
+      "date": "1986-02-21",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "サッカー",
+      "publisher": "任天堂",
+      "date": "1986-02-21",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "スーパーマリオブラザーズ",
+      "publisher": "任天堂",
+      "date": "1986-02-21",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "ゼルダの伝説",
+      "publisher": "任天堂",
+      "date": "1986-02-21",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "テニス",
+      "publisher": "任天堂",
+      "date": "1986-02-21",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ベースボール",
+      "publisher": "任天堂",
+      "date": "1986-02-21",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "麻雀 (二人用)",
+      "publisher": "任天堂",
+      "date": "1986-02-21",
+      "platform": "FDS",
+      "genre": "テーブル"
+    },
+    {
+      "title": "謎の村雨城",
+      "publisher": "任天堂",
+      "date": "1986-04-14",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "スーパーマリオブラザーズ2",
+      "publisher": "任天堂",
+      "date": "1986-06-03",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "バレーボール",
+      "publisher": "任天堂",
+      "date": "1986-07-21",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "涙の倉庫番スペシャル",
+      "publisher": "アスキー",
+      "date": "1986-07-30",
+      "platform": "FDS",
+      "genre": "パズル"
+    },
+    {
+      "title": "メトロイド",
+      "publisher": "任天堂",
+      "date": "1986-08-06",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "アイアムアティーチャー スーパーマリオのセーター",
+      "publisher": "ロイヤル工業",
+      "date": "1986-08-27",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "子猫物語",
+      "publisher": "ポニーキャニオン",
+      "date": "1986-09-19",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "アイアムアティーチャー 手あみのきそ",
+      "publisher": "ロイヤル工業",
+      "date": "1986-09-26",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "悪魔城ドラキュラ",
+      "publisher": "コナミ",
+      "date": "1986-09-26",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "Othello(オセロ)",
+      "publisher": "河田",
+      "date": "1986-10-13",
+      "platform": "FDS",
+      "genre": "テーブル"
+    },
+    {
+      "title": "プロレス",
+      "publisher": "任天堂",
+      "date": "1986-10-21",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "銀河伝承 galaxy odyssey",
+      "publisher": "イマジニア",
+      "date": "1986-11-06",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "ガルフォース",
+      "publisher": "HAL研究所",
+      "date": "1986-11-19",
+      "platform": "FDS",
+      "genre": "シューティング"
+    },
+    {
+      "title": "デット・ゾーン",
+      "publisher": "サンソフト",
+      "date": "1986-11-20",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "もえろツインビー シナモン博士を救え",
+      "publisher": "コナミ",
+      "date": "1986-11-21",
+      "platform": "FDS",
+      "genre": "シューティング"
+    },
+    {
+      "title": "きね子",
+      "publisher": "アイレム",
+      "date": "1986-11-28",
+      "platform": "FDS",
+      "genre": "パズル"
+    },
+    {
+      "title": "ザナック",
+      "publisher": "ポニーキャニオン",
+      "date": "1986-11-28",
+      "platform": "FDS",
+      "genre": "シューティング"
+    },
+    {
+      "title": "知能ゲームシリーズ アディアンの杖",
+      "publisher": "サンソフト",
+      "date": "1986-12-12",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "謎の壁 ブロックくずし",
+      "publisher": "コナミ",
+      "date": "1986-12-13",
+      "platform": "FDS",
+      "genre": "テーブル"
+    },
+    {
+      "title": "水晶の龍",
+      "publisher": "スクウェア",
+      "date": "1986-12-15",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ブリーダー",
+      "publisher": "ソフトプロ",
+      "date": "1986-12-17",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "ナイト・ロアー 魔城の狼男",
+      "publisher": "ジャレコ",
+      "date": "1986-12-19",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "光神話 パルテナの鏡",
+      "publisher": "任天堂",
+      "date": "1986-12-19",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "魔洞戦記 ディープダンジョン",
+      "publisher": "スクウェア",
+      "date": "1986-12-19",
+      "platform": "FDS",
+      "genre": "RPG"
+    },
+    {
+      "title": "消えたプリンセス",
+      "publisher": "イマジニア",
+      "date": "1986-12-20",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "プロフェッショナル麻雀 悟空",
+      "publisher": "アスキー",
+      "date": "1986-12-25",
+      "platform": "FDS",
+      "genre": "テーブル"
+    },
+    {
+      "title": "エレクトシャン",
+      "publisher": "コトブキシステム",
+      "date": "1986-12-26",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "リンクの冒険",
+      "publisher": "任天堂",
+      "date": "1987-01-14",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "ウルトラマン 怪獣帝国の逆襲",
+      "publisher": "バンダイ",
+      "date": "1987-01-29",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "エッガーランド",
+      "publisher": "HAL研究所",
+      "date": "1987-01-29",
+      "platform": "FDS",
+      "genre": "パズル"
+    },
+    {
+      "title": "ナゾラーランド増刊号",
+      "publisher": "サンソフト",
+      "date": "1987-02-06",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "きね子2",
+      "publisher": "アイレム",
+      "date": "1987-02-15",
+      "platform": "FDS",
+      "genre": "パズル"
+    },
+    {
+      "title": "エスパードリーム",
+      "publisher": "コナミ",
+      "date": "1987-02-20",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "ゴルフJAPANコース",
+      "publisher": "任天堂",
+      "date": "1987-02-21",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "メルヘンヴェール",
+      "publisher": "サンソフト",
+      "date": "1987-03-03",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "スーパーロードランナー",
+      "publisher": "アイレム",
+      "date": "1987-03-05",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "とびだせ大作戦",
+      "publisher": "スクウェア",
+      "date": "1987-03-12",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "ウインターゲームズ",
+      "publisher": "ポニーキャニオン",
+      "date": "1987-03-27",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "オトッキー",
+      "publisher": "アスキー",
+      "date": "1987-03-27",
+      "platform": "FDS",
+      "genre": "シューティング"
+    },
+    {
+      "title": "知能ゲームシリーズ2 スーパーボーイアラン",
+      "publisher": "サンソフト",
+      "date": "1987-03-27",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "知能ゲームシリーズ3 地底大陸オルドーラ",
+      "publisher": "サンソフト",
+      "date": "1987-03-27",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "ダーティペア  プロジェクトエデン",
+      "publisher": "バンダイ",
+      "date": "1987-03-28",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "アップルタウン物語 little computer people",
+      "publisher": "スクウェア",
+      "date": "1987-04-03",
+      "platform": "FDS",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "グリーンベレー",
+      "publisher": "コナミ",
+      "date": "1987-04-10",
+      "platform": "FDS",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ココナワールド",
+      "publisher": "ソフエル",
+      "date": "1987-04-10",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "レリクス  暗黒要塞",
+      "publisher": "ボースティック",
+      "date": "1987-04-10",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "風雲少林拳",
+      "publisher": "ジャレコ",
+      "date": "1987-04-15",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "愛戦士ニコル",
+      "publisher": "コナミ",
+      "date": "1987-04-24",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "探偵 神宮寺 三郎  新宿中央公園殺人事件",
+      "publisher": "データイースト",
+      "date": "1987-04-24",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "キン肉マン キン肉星王位争奪戦",
+      "publisher": "バンダイ",
+      "date": "1987-05-01",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "ハオ君の不思議な旅",
+      "publisher": "スクウェア",
+      "date": "1987-05-01",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "聖剣サイコカリバー  魔獣の森伝説",
+      "publisher": "イマジニア",
+      "date": "1987-05-19",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "セクションZ",
+      "publisher": "カプコン",
+      "date": "1987-05-25",
+      "platform": "FDS",
+      "genre": "シューティング"
+    },
+    {
+      "title": "プロゴルファー猿  影のトーナメント",
+      "publisher": "バンダイ",
+      "date": "1987-05-25",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "スマッシュピンポン",
+      "publisher": "任天堂",
+      "date": "1987-05-30",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "迷宮寺院ダババ",
+      "publisher": "コナミ",
+      "date": "1987-05-30",
+      "platform": "FDS",
+      "genre": "パズル"
+    },
+    {
+      "title": "勇士の紋章  ディープダンジョン",
+      "publisher": "スクウェア",
+      "date": "1987-05-30",
+      "platform": "FDS",
+      "genre": "RPG"
+    },
+    {
+      "title": "リフレクトワールド",
+      "publisher": "イーストキューブ",
+      "date": "1987-06-02",
+      "platform": "FDS",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "ナゾラーランド第2号",
+      "publisher": "サンソフト",
+      "date": "1987-06-12",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "ゴルフUSコース",
+      "publisher": "任天堂",
+      "date": "1987-06-14",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ドクター・カオス 地獄の扉",
+      "publisher": "ポニーキャニオン",
+      "date": "1987-06-19",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "マイケルEnglish大冒険",
+      "publisher": "スコーピオンソフト",
+      "date": "1987-06-19",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "エキサイティングビリヤード",
+      "publisher": "コナミ",
+      "date": "1987-06-26",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "磁界少年メットマグ  DOGからの挑戦状",
+      "publisher": "スクウェア",
+      "date": "1987-07-03",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "夢工場ドキドキパニック",
+      "publisher": "フジテレビ",
+      "date": "1987-07-10",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "エキサイティングバスケット",
+      "publisher": "コナミ",
+      "date": "1987-07-24",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "クレオパトラの魔宝",
+      "publisher": "スクウェア",
+      "date": "1987-07-24",
+      "platform": "FDS",
+      "genre": "RPG"
+    },
+    {
+      "title": "タイタニックミステリー 蒼の戦慄",
+      "publisher": "学習研究社",
+      "date": "1987-07-24",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "モンティのドキドキ大脱走",
+      "publisher": "ジャレコ",
+      "date": "1987-07-31",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "スーパーロードランナーII",
+      "publisher": "アイレム",
+      "date": "1987-08-01",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "麻雀家族",
+      "publisher": "アイレム",
+      "date": "1987-08-03",
+      "platform": "FDS",
+      "genre": "テーブル"
+    },
+    {
+      "title": "アルマナの奇跡",
+      "publisher": "コナミ",
+      "date": "1987-08-11",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "囲碁九路盤対局",
+      "publisher": "BPS",
+      "date": "1987-08-12",
+      "platform": "FDS",
+      "genre": "テーブル"
+    },
+    {
+      "title": "ドラキュラII 呪いの封印",
+      "publisher": "コナミ",
+      "date": "1987-08-28",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "トランスフォーマー ザ・ヘッドマスターズ",
+      "publisher": "タカラ",
+      "date": "1987-08-28",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "奇々怪界 怒涛編",
+      "publisher": "タイトー",
+      "date": "1987-08-28",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "ふぁみこんむかし話  新・鬼ヶ島 (前編)",
+      "publisher": "任天堂",
+      "date": "1987-09-04",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ふぁみこんむかし話  新・鬼ヶ島 (後編)",
+      "publisher": "任天堂",
+      "date": "1987-09-30",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "カリーンの剣",
+      "publisher": "スクウェア",
+      "date": "1987-10-02",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "パルサーの光",
+      "publisher": "ソフトプロ",
+      "date": "1987-10-02",
+      "platform": "FDS",
+      "genre": "シューティング"
+    },
+    {
+      "title": "トップルジップ",
+      "publisher": "ボースティック",
+      "date": "1987-10-09",
+      "platform": "FDS",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ファルシオン",
+      "publisher": "コナミ",
+      "date": "1987-10-21",
+      "platform": "FDS",
+      "genre": "シューティング"
+    },
+    {
+      "title": "妖怪屋敷",
+      "publisher": "アイレム",
+      "date": "1987-10-23",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "バブルボブル",
+      "publisher": "タイトー",
+      "date": "1987-10-30",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "ファミコングランプリ F1レース",
+      "publisher": "任天堂",
+      "date": "1987-10-30",
+      "platform": "FDS",
+      "genre": "レース"
+    },
+    {
+      "title": "ファミリーコンポーザー",
+      "publisher": "トンキンハウス",
+      "date": "1987-10-30",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "谷川浩司の将棋指南II  名人への道",
+      "publisher": "ポニーキャニオン",
+      "date": "1987-11-13",
+      "platform": "FDS",
+      "genre": "テーブル"
+    },
+    {
+      "title": "キックチャレンジャー エアフット 野菜の国の足戦士",
+      "publisher": "バップ",
+      "date": "1987-11-20",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "SDガンダムワールド  ガチャポン戦士スクランブルウォーズ",
+      "publisher": "バンダイ",
+      "date": "1987-11-20",
+      "platform": "FDS",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "アイドルホットライン 中山美穂のトキメキハイスクール",
+      "publisher": "任天堂",
+      "date": "1987-12-01",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "サンタクロースの宝箱",
+      "publisher": "データイースト",
+      "date": "1987-12-04",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "ドレミッコ",
+      "publisher": "コナミ",
+      "date": "1987-12-04",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "エキサイティングベースボール",
+      "publisher": "コナミ",
+      "date": "1987-12-08",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "極楽遊戯 (げーむてんごく)",
+      "publisher": "ソフエル",
+      "date": "1987-12-12",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "ウルトラマン2 出撃科特隊",
+      "publisher": "バンダイ",
+      "date": "1987-12-18",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "ナゾラーランドスペシャル  クイズ王を探せ",
+      "publisher": "サンソフト",
+      "date": "1987-12-18",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "SDガンダムワールド  ガチャポン戦士スクランブルウォーズ",
+      "publisher": "バンダイ",
+      "date": "1988-01-20",
+      "platform": "FDS",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "アイスホッケー",
+      "publisher": "任天堂",
+      "date": "1988-01-21",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ガンスモーク",
+      "publisher": "カプコン",
+      "date": "1988-01-27",
+      "platform": "FDS",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ファイヤーバム",
+      "publisher": "HAL研究所",
+      "date": "1988-02-01",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "エキサイティングサッカー",
+      "publisher": "コナミ",
+      "date": "1988-02-16",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "レプリカート",
+      "publisher": "タイトー",
+      "date": "1988-02-26",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "ドルイド 恐怖の扉",
+      "publisher": "ジャレコ",
+      "date": "1988-03-03",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "19(ヌイーゼン)",
+      "publisher": "ソフトプロ",
+      "date": "1988-03-04",
+      "platform": "FDS",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ツインビー",
+      "publisher": "コナミ",
+      "date": "1988-03-11",
+      "platform": "FDS",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ナゾラーランド第3号",
+      "publisher": "サンソフト",
+      "date": "1988-03-11",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "おもいっきり探偵団 覇悪怒組  魔天郎の挑戦状",
+      "publisher": "バンダイ",
+      "date": "1988-03-25",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "ワードナの森",
+      "publisher": "タイトー",
+      "date": "1988-03-25",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "アスピック(ASPIC) 魔蛇王の呪い",
+      "publisher": "ボースティック",
+      "date": "1988-03-31",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "ドンキーコング",
+      "publisher": "任天堂",
+      "date": "1988-04-08",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "3Dホットラリー  ファミコングランプリII",
+      "publisher": "任天堂",
+      "date": "1988-04-14",
+      "platform": "FDS",
+      "genre": "レース"
+    },
+    {
+      "title": "仮面ライダー BLACK  対決シャドームーン",
+      "publisher": "バンダイ",
+      "date": "1988-04-15",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "バイオミラクルぼくってウパ",
+      "publisher": "コナミ",
+      "date": "1988-04-22",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "風雲少林拳 暗黒の魔王",
+      "publisher": "ジャレコ",
+      "date": "1988-04-22",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "ファミコン探偵倶楽部 消えた後継者 (前編)",
+      "publisher": "任天堂",
+      "date": "1988-04-27",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ファイナルコマンドー 赤い要塞",
+      "publisher": "コナミ",
+      "date": "1988-05-02",
+      "platform": "FDS",
+      "genre": "シューティング"
+    },
+    {
+      "title": "グーニーズ",
+      "publisher": "コナミ",
+      "date": "1988-05-14",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "ファミコン探偵倶楽部 消えた後継者 (後編)",
+      "publisher": "任天堂",
+      "date": "1988-06-14",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ファイヤーロック",
+      "publisher": "ユース",
+      "date": "1988-06-20",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "リサの妖精伝説",
+      "publisher": "コナミ",
+      "date": "1988-06-21",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ムーンボールマジック",
+      "publisher": "スクウェア",
+      "date": "1988-07-12",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "亜空戦記ライジン",
+      "publisher": "スクウェア",
+      "date": "1988-07-12",
+      "platform": "FDS",
+      "genre": "シューティング"
+    },
+    {
+      "title": "遠山の金さん すぺえす帆 Mr.GOLD",
+      "publisher": "東映動画",
+      "date": "1988-07-19",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ドンキーコングJr",
+      "publisher": "任天堂",
+      "date": "1988-07-19",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "カラテ チャンプ(KARATE CHAMP)",
+      "publisher": "データイースト",
+      "date": "1988-07-22",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "コナミックアイスホッケー",
+      "publisher": "コナミ",
+      "date": "1988-07-22",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "らじかるぼんばー  地雷くん",
+      "publisher": "ジャレコ",
+      "date": "1988-07-29",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "爆闘士パットンくん",
+      "publisher": "ソフトプロ",
+      "date": "1988-08-05",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "シルヴィアーナ 愛いっぱいの冒険者",
+      "publisher": "パック・イン・ビデオ",
+      "date": "1988-08-10",
+      "platform": "FDS",
+      "genre": "RPG"
+    },
+    {
+      "title": "谷川浩司の将棋指南II 新版  つめ将棋次の一手",
+      "publisher": "ポニーキャニオン",
+      "date": "1988-08-10",
+      "platform": "FDS",
+      "genre": "テーブル"
+    },
+    {
+      "title": "ビッグチャレンジ!柔道選手権",
+      "publisher": "ジャレコ",
+      "date": "1988-08-10",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "コナミックテニス",
+      "publisher": "コナミ",
+      "date": "1988-08-19",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "エッガーランド 創造への旅立ち",
+      "publisher": "HAL研究所",
+      "date": "1988-08-20",
+      "platform": "FDS",
+      "genre": "パズル"
+    },
+    {
+      "title": "魔塔の崩壊",
+      "publisher": "ポニーキャニオン",
+      "date": "1988-09-02",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "キック&ラン",
+      "publisher": "タイトー",
+      "date": "1988-09-13",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "パチコン",
+      "publisher": "東芝EMI",
+      "date": "1988-10-04",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "ダンディー ゼウオンの復活",
+      "publisher": "ポニーキャニオン",
+      "date": "1988-10-21",
+      "platform": "FDS",
+      "genre": "RPG"
+    },
+    {
+      "title": "ビッグチャレンジ!ドッグファイトスピリッツ",
+      "publisher": "ジャレコ",
+      "date": "1988-10-21",
+      "platform": "FDS",
+      "genre": "シューティング"
+    },
+    {
+      "title": "ウルトラマン倶楽部 地球奪還作戦",
+      "publisher": "バンダイ",
+      "date": "1988-10-22",
+      "platform": "FDS",
+      "genre": "RPG"
+    },
+    {
+      "title": "遊メイズ",
+      "publisher": "タイトー",
+      "date": "1988-10-28",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "サムライソード",
+      "publisher": "カプコン",
+      "date": "1988-11-15",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "アイスクライマー",
+      "publisher": "任天堂",
+      "date": "1988-11-18",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "ジャイラス",
+      "publisher": "コナミ",
+      "date": "1988-11-18",
+      "platform": "FDS",
+      "genre": "シューティング"
+    },
+    {
+      "title": "パチンコGP(グランプリ)",
+      "publisher": "データイースト",
+      "date": "1988-11-18",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "じゃあまん探偵団魔隣組 丸秘ジゴマ捜査ファイル",
+      "publisher": "バンダイ",
+      "date": "1988-11-29",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "帰ってきたマリオブラザーズ",
+      "publisher": "任天堂",
+      "date": "1988-11-30",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "VSエキサイトバイク",
+      "publisher": "任天堂",
+      "date": "1988-12-09",
+      "platform": "FDS",
+      "genre": "レース"
+    },
+    {
+      "title": "なんきんのアドベンチャー",
+      "publisher": "サンソフト",
+      "date": "1988-12-09",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "探偵神宮寺三郎 危険な二人 (前編)",
+      "publisher": "データイースト",
+      "date": "1988-12-09",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "タロット占い",
+      "publisher": "スコーピオンソフト",
+      "date": "1988-12-23",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "ハレーウォーズ",
+      "publisher": "タイトー",
+      "date": "1989-01-14",
+      "platform": "FDS",
+      "genre": "シューティング"
+    },
+    {
+      "title": "機動警察パトレイバー 第2小隊出動せよ!",
+      "publisher": "バンダイ",
+      "date": "1989-01-24",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "レッキングクルー",
+      "publisher": "任天堂",
+      "date": "1989-02-03",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "探偵神宮寺三郎 危険な二人 (後編)",
+      "publisher": "データイースト",
+      "date": "1989-02-10",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ロジャーラビット",
+      "publisher": "コトブキシステム",
+      "date": "1989-02-16",
+      "platform": "FDS",
+      "genre": "パズル"
+    },
+    {
+      "title": "タマ&フレンズ 3丁目大冒険",
+      "publisher": "バンダイ",
+      "date": "1989-02-23",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "SDガンダムワールド ガチャポン戦士スクランブルウォーズ  マップコレクション",
+      "publisher": "バンダイ",
+      "date": "1989-03-03",
+      "platform": "FDS",
+      "genre": "シミュレーション"
+    },
+    {
+      "title": "光GENJIローラーパニック",
+      "publisher": "ポニーキャニオン",
+      "date": "1989-03-20",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ビッグチャレンジ!ガンファイター",
+      "publisher": "ジャレコ",
+      "date": "1989-03-28",
+      "platform": "FDS",
+      "genre": "シューティング"
+    },
+    {
+      "title": "フェアリーテイル",
+      "publisher": "ソフトプロ",
+      "date": "1989-04-28",
+      "platform": "FDS",
+      "genre": "RPG"
+    },
+    {
+      "title": "パット・パット・ゴルフ",
+      "publisher": "パック・イン・ビデオ",
+      "date": "1989-05-19",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ファミコン探偵倶楽部II うしろに立つ少女 (前編)",
+      "publisher": "任天堂",
+      "date": "1989-05-23",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "ピンボール",
+      "publisher": "任天堂",
+      "date": "1989-05-30",
+      "platform": "FDS",
+      "genre": "その他"
+    },
+    {
+      "title": "ビッグチャレンジ!GOGOボーリング",
+      "publisher": "ジャレコ",
+      "date": "1989-06-23",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "ファミコン探偵倶楽部II うしろに立つ少女 (後編)",
+      "publisher": "任天堂",
+      "date": "1989-06-30",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "マグマプロジェクトハッカー",
+      "publisher": "徳間書店",
+      "date": "1989-08-11",
+      "platform": "FDS",
+      "genre": "RPG"
+    },
+    {
+      "title": "バーガータイム",
+      "publisher": "データイースト",
+      "date": "1989-09-23",
+      "platform": "FDS",
+      "genre": "アクション"
+    },
+    {
+      "title": "遊遊記 ふぁみこんむかし話 (前編)",
+      "publisher": "任天堂",
+      "date": "1989-10-14",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "かっとび!童児",
+      "publisher": "パック・イン・ビデオ",
+      "date": "1989-10-20",
+      "platform": "FDS",
+      "genre": "スポーツ"
+    },
+    {
+      "title": "遊遊記 ふぁみこんむかし話 (後編)",
+      "publisher": "任天堂",
+      "date": "1989-11-14",
+      "platform": "FDS",
+      "genre": "アドベンチャー"
+    },
+    {
+      "title": "LUTTER (リュッター)",
+      "publisher": "アテナ",
+      "date": "1989-11-24",
+      "platform": "FDS",
+      "genre": "アクション"
+    }
+  ]
+}
