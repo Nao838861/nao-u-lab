@@ -1,0 +1,2703 @@
+{
+  "title": "ファミコン初期100タイトルの系譜",
+  "date": "2026-10-07",
+  "scope": "国内FCカートリッジ発売順100本。限定版・開発/教育ソフトを含む。原作とFC移植は作品ノードに集約。FDS発売以前。",
+  "sources": [
+    "https://super-famicom.jp/etc00/gamelist/fc.html",
+    "https://www.nintendo.com/jp/famicom/history/index.html",
+    "https://www.nintendo.co.jp/wii/interview/smnj/vol2/",
+    "https://news.denfaminicogamer.jp/column01/180619"
+  ],
+  "relation_semantics": {
+    "lineage": "続編・キャラクター・先行版の継承",
+    "documented": "対談・開発者証言を参照した影響",
+    "inferred": "直接証言未確認。ゲーム内容・先行性によるCodexの仮説"
+  },
+  "nodes": [
+    {
+      "title": "ドンキーコング",
+      "fc_index": 1,
+      "fc_date": "1983-07-15",
+      "original_year": 1981,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "ドンキーコングJr.",
+      "fc_index": 2,
+      "fc_date": "1983-07-15",
+      "original_year": 1982,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "ポパイ",
+      "fc_index": 3,
+      "fc_date": "1983-07-15",
+      "original_year": 1982,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "五目ならべ 連珠",
+      "fc_index": 4,
+      "fc_date": "1983-08-27",
+      "original_year": 1983,
+      "group": 8,
+      "external": false
+    },
+    {
+      "title": "麻雀",
+      "fc_index": 5,
+      "fc_date": "1983-08-27",
+      "original_year": 1983,
+      "group": 8,
+      "external": false
+    },
+    {
+      "title": "マリオブラザーズ",
+      "fc_index": 6,
+      "fc_date": "1983-09-09",
+      "original_year": 1983,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "ポパイの英語遊び",
+      "fc_index": 7,
+      "fc_date": "1983-11-22",
+      "original_year": 1983,
+      "group": 8,
+      "external": false
+    },
+    {
+      "title": "ベースボール",
+      "fc_index": 8,
+      "fc_date": "1983-12-07",
+      "original_year": 1983,
+      "group": 6,
+      "external": false
+    },
+    {
+      "title": "ドンキーコングJr.の算数遊び",
+      "fc_index": 9,
+      "fc_date": "1983-12-12",
+      "original_year": 1983,
+      "group": 8,
+      "external": false
+    },
+    {
+      "title": "テニス",
+      "fc_index": 10,
+      "fc_date": "1984-01-14",
+      "original_year": 1984,
+      "group": 6,
+      "external": false
+    },
+    {
+      "title": "ピンボール",
+      "fc_index": 11,
+      "fc_date": "1984-02-02",
+      "original_year": 1984,
+      "group": 8,
+      "external": false
+    },
+    {
+      "title": "ワイルドガンマン",
+      "fc_index": 12,
+      "fc_date": "1984-02-18",
+      "original_year": 1984,
+      "group": 4,
+      "external": false
+    },
+    {
+      "title": "ダックハント",
+      "fc_index": 13,
+      "fc_date": "1984-04-21",
+      "original_year": 1984,
+      "group": 4,
+      "external": false
+    },
+    {
+      "title": "ゴルフ",
+      "fc_index": 14,
+      "fc_date": "1984-05-01",
+      "original_year": 1984,
+      "group": 6,
+      "external": false
+    },
+    {
+      "title": "ホーガンズアレイ",
+      "fc_index": 15,
+      "fc_date": "1984-06-12",
+      "original_year": 1984,
+      "group": 4,
+      "external": false
+    },
+    {
+      "title": "ファミリーベーシック",
+      "fc_index": 16,
+      "fc_date": "1984-06-21",
+      "original_year": 1984,
+      "group": 8,
+      "external": false
+    },
+    {
+      "title": "ドンキーコング3",
+      "fc_index": 17,
+      "fc_date": "1984-07-04",
+      "original_year": 1983,
+      "group": 2,
+      "external": false
+    },
+    {
+      "title": "ナッツ＆ミルク",
+      "fc_index": 18,
+      "fc_date": "1984-07-28",
+      "original_year": 1983,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "ロードランナー",
+      "fc_index": 19,
+      "fc_date": "1984-07-28",
+      "original_year": 1983,
+      "group": 1,
+      "external": false
+    },
+    {
+      "title": "ギャラクシアン",
+      "fc_index": 20,
+      "fc_date": "1984-09-07",
+      "original_year": 1979,
+      "group": 2,
+      "external": false
+    },
+    {
+      "title": "デビルワールド",
+      "fc_index": 21,
+      "fc_date": "1984-10-05",
+      "original_year": 1984,
+      "group": 1,
+      "external": false
+    },
+    {
+      "title": "4人打ち麻雀",
+      "fc_index": 22,
+      "fc_date": "1984-11-02",
+      "original_year": 1984,
+      "group": 8,
+      "external": false
+    },
+    {
+      "title": "F1レース",
+      "fc_index": 23,
+      "fc_date": "1984-11-02",
+      "original_year": 1984,
+      "group": 5,
+      "external": false
+    },
+    {
+      "title": "パックマン",
+      "fc_index": 24,
+      "fc_date": "1984-11-02",
+      "original_year": 1980,
+      "group": 1,
+      "external": false
+    },
+    {
+      "title": "ゼビウス",
+      "fc_index": 25,
+      "fc_date": "1984-11-08",
+      "original_year": 1983,
+      "group": 3,
+      "external": false
+    },
+    {
+      "title": "アーバンチャンピオン",
+      "fc_index": 26,
+      "fc_date": "1984-11-14",
+      "original_year": 1984,
+      "group": 6,
+      "external": false
+    },
+    {
+      "title": "マッピー",
+      "fc_index": 27,
+      "fc_date": "1984-11-14",
+      "original_year": 1983,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "クルクルランド",
+      "fc_index": 28,
+      "fc_date": "1984-11-22",
+      "original_year": 1984,
+      "group": 1,
+      "external": false
+    },
+    {
+      "title": "エキサイトバイク",
+      "fc_index": 29,
+      "fc_date": "1984-11-30",
+      "original_year": 1984,
+      "group": 5,
+      "external": false
+    },
+    {
+      "title": "バルーンファイト",
+      "fc_index": 30,
+      "fc_date": "1985-01-22",
+      "original_year": 1984,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "アイスクライマー",
+      "fc_index": 31,
+      "fc_date": "1985-01-30",
+      "original_year": 1985,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "エクセリオン",
+      "fc_index": 32,
+      "fc_date": "1985-02-11",
+      "original_year": 1983,
+      "group": 2,
+      "external": false
+    },
+    {
+      "title": "ファミリーベーシックV3",
+      "fc_index": 33,
+      "fc_date": "1985-02-21",
+      "original_year": 1985,
+      "group": 8,
+      "external": false
+    },
+    {
+      "title": "バンゲリングベイ",
+      "fc_index": 34,
+      "fc_date": "1985-02-22",
+      "original_year": 1984,
+      "group": 3,
+      "external": false
+    },
+    {
+      "title": "ギャラガ",
+      "fc_index": 35,
+      "fc_date": "1985-03-14",
+      "original_year": 1981,
+      "group": 2,
+      "external": false
+    },
+    {
+      "title": "フォーメーションZ",
+      "fc_index": 36,
+      "fc_date": "1985-04-04",
+      "original_year": 1984,
+      "group": 3,
+      "external": false
+    },
+    {
+      "title": "サッカー",
+      "fc_index": 37,
+      "fc_date": "1985-04-09",
+      "original_year": 1985,
+      "group": 6,
+      "external": false
+    },
+    {
+      "title": "スペースインベーダー",
+      "fc_index": 38,
+      "fc_date": "1985-04-17",
+      "original_year": 1978,
+      "group": 2,
+      "external": false
+    },
+    {
+      "title": "チャンピオンシップロードランナー",
+      "fc_index": 39,
+      "fc_date": "1985-04-17",
+      "original_year": 1984,
+      "group": 1,
+      "external": false
+    },
+    {
+      "title": "イー・アル・カンフー",
+      "fc_index": 40,
+      "fc_date": "1985-04-22",
+      "original_year": 1985,
+      "group": 6,
+      "external": false
+    },
+    {
+      "title": "けっきょく南極大冒険",
+      "fc_index": 41,
+      "fc_date": "1985-04-22",
+      "original_year": 1983,
+      "group": 4,
+      "external": false
+    },
+    {
+      "title": "忍者くん 魔城の冒険",
+      "fc_index": 42,
+      "fc_date": "1985-05-10",
+      "original_year": 1984,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "ちゃっくんぽっぷ",
+      "fc_index": 43,
+      "fc_date": "1985-05-24",
+      "original_year": 1984,
+      "group": 1,
+      "external": false
+    },
+    {
+      "title": "ディグダグ",
+      "fc_index": 44,
+      "fc_date": "1985-06-04",
+      "original_year": 1982,
+      "group": 1,
+      "external": false
+    },
+    {
+      "title": "フラッピー",
+      "fc_index": 45,
+      "fc_date": "1985-06-14",
+      "original_year": 1983,
+      "group": 1,
+      "external": false
+    },
+    {
+      "title": "レッキングクルー",
+      "fc_index": 46,
+      "fc_date": "1985-06-18",
+      "original_year": 1984,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "スパルタンX",
+      "fc_index": 47,
+      "fc_date": "1985-06-21",
+      "original_year": 1984,
+      "group": 6,
+      "external": false
+    },
+    {
+      "title": "ハイパーオリンピック",
+      "fc_index": 48,
+      "fc_date": "1985-06-21",
+      "original_year": 1983,
+      "group": 6,
+      "external": false
+    },
+    {
+      "title": "ハイパーオリンピック 殿様版",
+      "fc_index": 49,
+      "fc_date": "1985-06-21",
+      "original_year": 1985,
+      "group": 6,
+      "external": false
+    },
+    {
+      "title": "スターフォース",
+      "fc_index": 50,
+      "fc_date": "1985-06-25",
+      "original_year": 1984,
+      "group": 3,
+      "external": false
+    },
+    {
+      "title": "エレベーターアクション",
+      "fc_index": 51,
+      "fc_date": "1985-06-28",
+      "original_year": 1983,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "フィールドコンバット",
+      "fc_index": 52,
+      "fc_date": "1985-07-01",
+      "original_year": 1985,
+      "group": 3,
+      "external": false
+    },
+    {
+      "title": "ロードファイター",
+      "fc_index": 53,
+      "fc_date": "1985-07-11",
+      "original_year": 1984,
+      "group": 5,
+      "external": false
+    },
+    {
+      "title": "ワープマン",
+      "fc_index": 54,
+      "fc_date": "1985-07-12",
+      "original_year": 1985,
+      "group": 2,
+      "external": false
+    },
+    {
+      "title": "ジッピーレース",
+      "fc_index": 55,
+      "fc_date": "1985-07-18",
+      "original_year": 1983,
+      "group": 5,
+      "external": false
+    },
+    {
+      "title": "ドアドア",
+      "fc_index": 56,
+      "fc_date": "1985-07-18",
+      "original_year": 1983,
+      "group": 1,
+      "external": false
+    },
+    {
+      "title": "スーパーアラビアン",
+      "fc_index": 57,
+      "fc_date": "1985-07-25",
+      "original_year": 1985,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "ブロック",
+      "fc_index": 58,
+      "fc_date": "1985-07-26",
+      "original_year": 1985,
+      "group": 8,
+      "external": false
+    },
+    {
+      "title": "フロントライン",
+      "fc_index": 59,
+      "fc_date": "1985-08-01",
+      "original_year": 1982,
+      "group": 3,
+      "external": false
+    },
+    {
+      "title": "本将棋 内藤九段将棋秘伝",
+      "fc_index": 60,
+      "fc_date": "1985-08-01",
+      "original_year": 1985,
+      "group": 8,
+      "external": false
+    },
+    {
+      "title": "ドルアーガの塔",
+      "fc_index": 61,
+      "fc_date": "1985-08-06",
+      "original_year": 1984,
+      "group": 1,
+      "external": false
+    },
+    {
+      "title": "アストロロボSASA",
+      "fc_index": 62,
+      "fc_date": "1985-08-09",
+      "original_year": 1983,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "ジャイロ",
+      "fc_index": 63,
+      "fc_date": "1985-08-13",
+      "original_year": 1985,
+      "group": 8,
+      "external": false
+    },
+    {
+      "title": "ゲイモス",
+      "fc_index": 64,
+      "fc_date": "1985-08-28",
+      "original_year": 1985,
+      "group": 4,
+      "external": false
+    },
+    {
+      "title": "10ヤードファイト",
+      "fc_index": 65,
+      "fc_date": "1985-08-30",
+      "original_year": 1983,
+      "group": 6,
+      "external": false
+    },
+    {
+      "title": "バトルシティー",
+      "fc_index": 66,
+      "fc_date": "1985-09-09",
+      "original_year": 1985,
+      "group": 1,
+      "external": false
+    },
+    {
+      "title": "スーパーマリオブラザーズ",
+      "fc_index": 67,
+      "fc_date": "1985-09-13",
+      "original_year": 1985,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "プーヤン",
+      "fc_index": 68,
+      "fc_date": "1985-09-20",
+      "original_year": 1982,
+      "group": 2,
+      "external": false
+    },
+    {
+      "title": "ハイパースポーツ",
+      "fc_index": 69,
+      "fc_date": "1985-09-27",
+      "original_year": 1984,
+      "group": 6,
+      "external": false
+    },
+    {
+      "title": "シティコネクション",
+      "fc_index": 70,
+      "fc_date": "1985-09-27",
+      "original_year": 1985,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "ルート16ターボ",
+      "fc_index": 71,
+      "fc_date": "1985-10-04",
+      "original_year": 1985,
+      "group": 1,
+      "external": false
+    },
+    {
+      "title": "チャレンジャー",
+      "fc_index": 72,
+      "fc_date": "1985-10-15",
+      "original_year": 1985,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "キン肉マン マッスルタッグマッチ",
+      "fc_index": 73,
+      "fc_date": "1985-11-08",
+      "original_year": 1985,
+      "group": 6,
+      "external": false
+    },
+    {
+      "title": "スカイデストロイヤー",
+      "fc_index": 74,
+      "fc_date": "1985-11-14",
+      "original_year": 1985,
+      "group": 4,
+      "external": false
+    },
+    {
+      "title": "おにゃんこTOWN",
+      "fc_index": 75,
+      "fc_date": "1985-11-15",
+      "original_year": 1985,
+      "group": 1,
+      "external": false
+    },
+    {
+      "title": "忍者じゃじゃ丸くん",
+      "fc_index": 76,
+      "fc_date": "1985-11-15",
+      "original_year": 1985,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "パチコン",
+      "fc_index": 77,
+      "fc_date": "1985-11-21",
+      "original_year": 1985,
+      "group": 8,
+      "external": false
+    },
+    {
+      "title": "パックランド",
+      "fc_index": 78,
+      "fc_date": "1985-11-21",
+      "original_year": 1984,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "マッハライダー",
+      "fc_index": 79,
+      "fc_date": "1985-11-21",
+      "original_year": 1985,
+      "group": 5,
+      "external": false
+    },
+    {
+      "title": "バーガータイム",
+      "fc_index": 80,
+      "fc_date": "1985-11-27",
+      "original_year": 1982,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "いっき",
+      "fc_index": 81,
+      "fc_date": "1985-11-28",
+      "original_year": 1985,
+      "group": 3,
+      "external": false
+    },
+    {
+      "title": "ポートピア連続殺人事件",
+      "fc_index": 82,
+      "fc_date": "1985-11-29",
+      "original_year": 1983,
+      "group": 7,
+      "external": false
+    },
+    {
+      "title": "カラテカ",
+      "fc_index": 83,
+      "fc_date": "1985-12-05",
+      "original_year": 1984,
+      "group": 6,
+      "external": false
+    },
+    {
+      "title": "ルナーボール",
+      "fc_index": 84,
+      "fc_date": "1985-12-05",
+      "original_year": 1985,
+      "group": 8,
+      "external": false
+    },
+    {
+      "title": "スターラスター",
+      "fc_index": 85,
+      "fc_date": "1985-12-06",
+      "original_year": 1985,
+      "group": 4,
+      "external": false
+    },
+    {
+      "title": "スペランカー",
+      "fc_index": 86,
+      "fc_date": "1985-12-06",
+      "original_year": 1983,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "高機動戦闘メカ ヴォルガードII",
+      "fc_index": 87,
+      "fc_date": "1985-12-07",
+      "original_year": 1985,
+      "group": 3,
+      "external": false
+    },
+    {
+      "title": "超時空要塞マクロス",
+      "fc_index": 88,
+      "fc_date": "1985-12-10",
+      "original_year": 1985,
+      "group": 3,
+      "external": false
+    },
+    {
+      "title": "1942",
+      "fc_index": 89,
+      "fc_date": "1985-12-11",
+      "original_year": 1984,
+      "group": 3,
+      "external": false
+    },
+    {
+      "title": "ダウボーイ",
+      "fc_index": 90,
+      "fc_date": "1985-12-11",
+      "original_year": 1984,
+      "group": 7,
+      "external": false
+    },
+    {
+      "title": "ボコスカウォーズ",
+      "fc_index": 91,
+      "fc_date": "1985-12-14",
+      "original_year": 1983,
+      "group": 7,
+      "external": false
+    },
+    {
+      "title": "頭脳戦艦ガル",
+      "fc_index": 92,
+      "fc_date": "1985-12-14",
+      "original_year": 1985,
+      "group": 3,
+      "external": false
+    },
+    {
+      "title": "オバケのQ太郎 ワンワンパニック",
+      "fc_index": 93,
+      "fc_date": "1985-12-16",
+      "original_year": 1985,
+      "group": 0,
+      "external": false
+    },
+    {
+      "title": "テグザー",
+      "fc_index": 94,
+      "fc_date": "1985-12-19",
+      "original_year": 1985,
+      "group": 3,
+      "external": false
+    },
+    {
+      "title": "バイナリィランド",
+      "fc_index": 95,
+      "fc_date": "1985-12-19",
+      "original_year": 1983,
+      "group": 1,
+      "external": false
+    },
+    {
+      "title": "ボンバーマン",
+      "fc_index": 96,
+      "fc_date": "1985-12-19",
+      "original_year": 1983,
+      "group": 1,
+      "external": false
+    },
+    {
+      "title": "エグゼドエグゼス",
+      "fc_index": 97,
+      "fc_date": "1985-12-21",
+      "original_year": 1985,
+      "group": 3,
+      "external": false
+    },
+    {
+      "title": "ロットロット",
+      "fc_index": 98,
+      "fc_date": "1985-12-21",
+      "original_year": 1985,
+      "group": 1,
+      "external": false
+    },
+    {
+      "title": "ぺんぎんくんWARS",
+      "fc_index": 99,
+      "fc_date": "1985-12-25",
+      "original_year": 1985,
+      "group": 6,
+      "external": false
+    },
+    {
+      "title": "ツインビー",
+      "fc_index": 100,
+      "fc_date": "1986-01-04",
+      "original_year": 1985,
+      "group": 3,
+      "external": false
+    },
+    {
+      "title": "スペースパニック",
+      "original_year": 1980,
+      "group": 0,
+      "external": true
+    },
+    {
+      "title": "ジャウスト",
+      "original_year": 1982,
+      "group": 0,
+      "external": true
+    },
+    {
+      "title": "ピットフォール!",
+      "original_year": 1982,
+      "group": 0,
+      "external": true
+    },
+    {
+      "title": "ジャンプバグ",
+      "original_year": 1981,
+      "group": 0,
+      "external": true
+    },
+    {
+      "title": "ヘッドオン",
+      "original_year": 1979,
+      "group": 1,
+      "external": true
+    },
+    {
+      "title": "平安京エイリアン",
+      "original_year": 1979,
+      "group": 1,
+      "external": true
+    },
+    {
+      "title": "倉庫番",
+      "original_year": 1982,
+      "group": 1,
+      "external": true
+    },
+    {
+      "title": "タンクバタリアン",
+      "original_year": 1980,
+      "group": 1,
+      "external": true
+    },
+    {
+      "title": "スクランブル",
+      "original_year": 1981,
+      "group": 3,
+      "external": true
+    },
+    {
+      "title": "ディフェンダー",
+      "original_year": 1981,
+      "group": 3,
+      "external": true
+    },
+    {
+      "title": "フェニックス",
+      "original_year": 1980,
+      "group": 2,
+      "external": true
+    },
+    {
+      "title": "ザクソン",
+      "original_year": 1982,
+      "group": 4,
+      "external": true
+    },
+    {
+      "title": "ボスコニアン",
+      "original_year": 1981,
+      "group": 3,
+      "external": true
+    },
+    {
+      "title": "スターレイダース",
+      "original_year": 1979,
+      "group": 4,
+      "external": true
+    },
+    {
+      "title": "バトルゾーン",
+      "original_year": 1980,
+      "group": 4,
+      "external": true
+    },
+    {
+      "title": "ポールポジション",
+      "original_year": 1982,
+      "group": 5,
+      "external": true
+    },
+    {
+      "title": "モナコGP",
+      "original_year": 1979,
+      "group": 5,
+      "external": true
+    },
+    {
+      "title": "スピードレース",
+      "original_year": 1974,
+      "group": 5,
+      "external": true
+    },
+    {
+      "title": "ポン",
+      "original_year": 1972,
+      "group": 6,
+      "external": true
+    },
+    {
+      "title": "ホームラン（Atari）",
+      "original_year": 1978,
+      "group": 6,
+      "external": true
+    },
+    {
+      "title": "サッカー（Atari）",
+      "original_year": 1980,
+      "group": 6,
+      "external": true
+    },
+    {
+      "title": "ゴルフ（Atari）",
+      "original_year": 1980,
+      "group": 6,
+      "external": true
+    },
+    {
+      "title": "フットボール（Atari）",
+      "original_year": 1978,
+      "group": 6,
+      "external": true
+    },
+    {
+      "title": "空手道",
+      "original_year": 1984,
+      "group": 6,
+      "external": true
+    },
+    {
+      "title": "ザ・ビッグプロレスリング",
+      "original_year": 1983,
+      "group": 6,
+      "external": true
+    },
+    {
+      "title": "ミステリーハウス",
+      "original_year": 1980,
+      "group": 7,
+      "external": true
+    },
+    {
+      "title": "Adventure（Colossal Cave）",
+      "original_year": 1976,
+      "group": 7,
+      "external": true
+    },
+    {
+      "title": "チョップリフター",
+      "original_year": 1982,
+      "group": 3,
+      "external": true
+    },
+    {
+      "title": "ビデオピンボール",
+      "original_year": 1977,
+      "group": 8,
+      "external": true
+    },
+    {
+      "title": "ワープ＆ワープ",
+      "original_year": 1981,
+      "group": 2,
+      "external": true
+    },
+    {
+      "title": "アラビアン",
+      "original_year": 1983,
+      "group": 0,
+      "external": true
+    },
+    {
+      "title": "ルート16",
+      "original_year": 1981,
+      "group": 1,
+      "external": true
+    },
+    {
+      "title": "ヴォルガード",
+      "original_year": 1984,
+      "group": 3,
+      "external": true
+    },
+    {
+      "title": "暴走特急（Stop the Express）",
+      "original_year": 1983,
+      "group": 0,
+      "external": true
+    },
+    {
+      "title": "ワイルドガンマン（映写式）",
+      "original_year": 1974,
+      "group": 4,
+      "external": true
+    },
+    {
+      "title": "ダックハント（玩具）",
+      "original_year": 1976,
+      "group": 4,
+      "external": true
+    }
+  ],
+  "edges": [
+    {
+      "source": "ドンキーコング",
+      "target": "ドンキーコングJr.",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "ドンキーコング",
+      "target": "ドンキーコング3",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "ドンキーコング",
+      "target": "マリオブラザーズ",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "ドンキーコングJr.",
+      "target": "ドンキーコングJr.の算数遊び",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "ポパイ",
+      "target": "ポパイの英語遊び",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "麻雀",
+      "target": "4人打ち麻雀",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "ファミリーベーシック",
+      "target": "ファミリーベーシックV3",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "ギャラクシアン",
+      "target": "ギャラガ",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "ロードランナー",
+      "target": "チャンピオンシップロードランナー",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "ハイパーオリンピック",
+      "target": "ハイパースポーツ",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "ハイパーオリンピック",
+      "target": "ハイパーオリンピック 殿様版",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "忍者くん 魔城の冒険",
+      "target": "忍者じゃじゃ丸くん",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "パックマン",
+      "target": "パックランド",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "タンクバタリアン",
+      "target": "バトルシティー",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "ワープ＆ワープ",
+      "target": "ワープマン",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "アラビアン",
+      "target": "スーパーアラビアン",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "ルート16",
+      "target": "ルート16ターボ",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "ヴォルガード",
+      "target": "高機動戦闘メカ ヴォルガードII",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "ワイルドガンマン（映写式）",
+      "target": "ワイルドガンマン",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "ダックハント（玩具）",
+      "target": "ダックハント",
+      "kind": "lineage",
+      "reason": "シリーズ・キャラクター・先行版の継承。操作の直接継承とは限らない。",
+      "sources": [],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "マリオブラザーズ",
+      "target": "スーパーマリオブラザーズ",
+      "kind": "documented",
+      "reason": "ジャンプ、ブロック下からの攻撃、敵キャラクター等の継承。",
+      "sources": [
+        "https://news.denfaminicogamer.jp/column01/180619"
+      ],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "パックランド",
+      "target": "スーパーマリオブラザーズ",
+      "kind": "documented",
+      "reason": "宮本茂の対談で、開発を動かす競争上のきっかけとして言及。ゲーム内容の模倣を意味しない。",
+      "sources": [
+        "https://news.denfaminicogamer.jp/column01/180619"
+      ],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "バルーンファイト",
+      "target": "スーパーマリオブラザーズ",
+      "kind": "documented",
+      "reason": "岩田聡から中郷俊彦への小数精度による運動計算の説明が水中ステージに役立った。踏みつけの由来を示す証言ではない。",
+      "sources": [
+        "https://www.nintendo.co.jp/wii/interview/smnj/vol2/",
+        "https://news.denfaminicogamer.jp/column01/180619"
+      ],
+      "status": "系譜または資料参照"
+    },
+    {
+      "source": "エキサイトバイク",
+      "target": "スーパーマリオブラザーズ",
+      "kind": "inferred",
+      "reason": "宮本チーム内でのスクロール処理・加速感の設計継承と判断。一次証言の確認は未完了。",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ジャウスト",
+      "target": "バルーンファイト",
+      "kind": "inferred",
+      "reason": "羽ばたき操作と上下位置による接触攻撃の構造から、主要な先行作と判断。",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "スペースパニック",
+      "target": "ドンキーコング",
+      "kind": "inferred",
+      "reason": "多段の足場・はしごと敵を避ける空間構成",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "パックマン",
+      "target": "ドンキーコング",
+      "kind": "inferred",
+      "reason": "キャラクター性と追跡・反撃の設計。直接の機構継承は未確認",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ドンキーコング",
+      "target": "ポパイ",
+      "kind": "inferred",
+      "reason": "足場を上下に移動し敵を避け、キャラクターを主役に据える形式",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ドンキーコング",
+      "target": "マッピー",
+      "kind": "inferred",
+      "reason": "多層の足場で追跡を避けながら回収する設計",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ドンキーコング",
+      "target": "バーガータイム",
+      "kind": "inferred",
+      "reason": "多段足場とはしご、敵の追跡を環境で逆転する構造",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "スペースパニック",
+      "target": "バーガータイム",
+      "kind": "inferred",
+      "reason": "はしごを介した多段追跡と敵の落下処理",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "マリオブラザーズ",
+      "target": "アイスクライマー",
+      "kind": "inferred",
+      "reason": "ジャンプで足場に干渉する協力・競争アクション",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ドンキーコングJr.",
+      "target": "アイスクライマー",
+      "kind": "inferred",
+      "reason": "上方への進行と上下位置を使うジャンプ課題",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ドンキーコング",
+      "target": "ナッツ＆ミルク",
+      "kind": "inferred",
+      "reason": "固定画面の足場・ジャンプ・救出目標",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ロードランナー",
+      "target": "ナッツ＆ミルク",
+      "kind": "inferred",
+      "reason": "追跡敵を避けながらアイテムを集める面構成。FC版での改作を想定",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "マリオブラザーズ",
+      "target": "レッキングクルー",
+      "kind": "inferred",
+      "reason": "マリオ系キャラクターと多段足場への干渉",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ロードランナー",
+      "target": "レッキングクルー",
+      "kind": "inferred",
+      "reason": "地形を壊して進路を変えるパズル的アクション",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ドンキーコング",
+      "target": "忍者くん 魔城の冒険",
+      "kind": "inferred",
+      "reason": "多段足場をジャンプで移動して敵を処理",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "マリオブラザーズ",
+      "target": "忍者くん 魔城の冒険",
+      "kind": "inferred",
+      "reason": "敵の位置と足場の上下関係を読む固定画面アクション",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ドンキーコング",
+      "target": "エレベーターアクション",
+      "kind": "inferred",
+      "reason": "階層構造の移動と敵回避。直接影響は未確認",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ジャンプバグ",
+      "target": "パックランド",
+      "kind": "inferred",
+      "reason": "ジャンプを中心とする横スクロール走破",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ピットフォール!",
+      "target": "スペランカー",
+      "kind": "inferred",
+      "reason": "ジャンプで罠を越える洞窟・地形探索",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ドンキーコング",
+      "target": "スペランカー",
+      "kind": "inferred",
+      "reason": "はしご・高低差・接触による失敗の設計",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "マリオブラザーズ",
+      "target": "アラビアン",
+      "kind": "inferred",
+      "reason": "固定画面ジャンプと敵の排除",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "パックランド",
+      "target": "オバケのQ太郎 ワンワンパニック",
+      "kind": "inferred",
+      "reason": "横スクロールで障害を避けるキャラクターアクション",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "暴走特急（Stop the Express）",
+      "target": "チャレンジャー",
+      "kind": "inferred",
+      "reason": "列車上で移動・回避する第1面の先行形式",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "パックマン",
+      "target": "チャレンジャー",
+      "kind": "inferred",
+      "reason": "広い俯瞰フィールドで敵を避け目標を探索",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "マッピー",
+      "target": "シティコネクション",
+      "kind": "inferred",
+      "reason": "多段足場を循環しながら目標を埋める設計",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ジャンプバグ",
+      "target": "シティコネクション",
+      "kind": "inferred",
+      "reason": "車両のジャンプとスクロール足場の組合せ",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ジャウスト",
+      "target": "アストロロボSASA",
+      "kind": "inferred",
+      "reason": "浮遊と慣性を制御する操作感。銃の反動自体の由来は未確認",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ヘッドオン",
+      "target": "パックマン",
+      "kind": "inferred",
+      "reason": "迷路内の回収物を取り尽くす先行形式",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "パックマン",
+      "target": "デビルワールド",
+      "kind": "inferred",
+      "reason": "迷路の回収・追跡・一時的な反撃",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "パックマン",
+      "target": "クルクルランド",
+      "kind": "inferred",
+      "reason": "格子状の空間を移動して面を完成",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "パックマン",
+      "target": "ちゃっくんぽっぷ",
+      "kind": "inferred",
+      "reason": "迷路内の回収と敵回避",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "平安京エイリアン",
+      "target": "ディグダグ",
+      "kind": "inferred",
+      "reason": "掘る地形と敵を閉じ込める設計",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "パックマン",
+      "target": "ディグダグ",
+      "kind": "inferred",
+      "reason": "迷路状の移動と敵の追跡を反撃へ変える構造",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "スペースパニック",
+      "target": "ロードランナー",
+      "kind": "inferred",
+      "reason": "穴を使って追跡敵を処理するアクション",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "平安京エイリアン",
+      "target": "ロードランナー",
+      "kind": "inferred",
+      "reason": "穴掘りと敵の捕獲という先行機構",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "倉庫番",
+      "target": "フラッピー",
+      "kind": "inferred",
+      "reason": "物を押して所定位置へ運ぶパズル",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ロードランナー",
+      "target": "フラッピー",
+      "kind": "inferred",
+      "reason": "追跡敵と足場を伴う解法探索",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "パックマン",
+      "target": "ドアドア",
+      "kind": "inferred",
+      "reason": "追跡敵の進路を読み罠にまとめる形式",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "平安京エイリアン",
+      "target": "ドアドア",
+      "kind": "inferred",
+      "reason": "敵を罠へ誘導して閉じ込める形式",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "パックマン",
+      "target": "ドルアーガの塔",
+      "kind": "inferred",
+      "reason": "迷路・回収・敵回避を複数階へ展開する形式",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "パックマン",
+      "target": "おにゃんこTOWN",
+      "kind": "inferred",
+      "reason": "迷路で追跡を避けながら目的地へ向かう形式",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "パックマン",
+      "target": "バイナリィランド",
+      "kind": "inferred",
+      "reason": "迷路内の危険回避とゴール到達",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "パックマン",
+      "target": "ボンバーマン",
+      "kind": "inferred",
+      "reason": "格子迷路で敵の進路を読む設計",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "平安京エイリアン",
+      "target": "ボンバーマン",
+      "kind": "inferred",
+      "reason": "敵を位置と時間で罠にかける設計",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ロードランナー",
+      "target": "ボンバーマン",
+      "kind": "inferred",
+      "reason": "FC版で敵の造形・エンディングの関連付け。原作誕生の原因とはしない",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "パックマン",
+      "target": "ルート16",
+      "kind": "inferred",
+      "reason": "迷路状区画での回収と敵回避",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "タンクバタリアン",
+      "target": "フロントライン",
+      "kind": "inferred",
+      "reason": "俯瞰での射撃と戦車の存在。直接の継承は未確認",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "スペースインベーダー",
+      "target": "ギャラクシアン",
+      "kind": "inferred",
+      "reason": "隊列射撃から降下攻撃へ発展する先行形式",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "フェニックス",
+      "target": "ギャラガ",
+      "kind": "inferred",
+      "reason": "編隊射撃と段階的な敵構成",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "スペースインベーダー",
+      "target": "フェニックス",
+      "kind": "inferred",
+      "reason": "隊列射撃と攻撃段階の発展",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ギャラガ",
+      "target": "エクセリオン",
+      "kind": "inferred",
+      "reason": "降下する敵と編隊射撃",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "スペースインベーダー",
+      "target": "ワープ＆ワープ",
+      "kind": "inferred",
+      "reason": "固定画面で敵を射撃する形式",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ギャラガ",
+      "target": "プーヤン",
+      "kind": "inferred",
+      "reason": "固定位置から弾道を合わせ、移動する敵を処理",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ドンキーコング",
+      "target": "プーヤン",
+      "kind": "inferred",
+      "reason": "動物キャラクターと救出劇。機構の直接影響は未確認",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ギャラクシアン",
+      "target": "ドンキーコング3",
+      "kind": "inferred",
+      "reason": "下方から射撃し上方の敵・障害を押し返す形式",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "スペースインベーダー",
+      "target": "スクランブル",
+      "kind": "inferred",
+      "reason": "射撃ゲームの連続進行への展開",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "スクランブル",
+      "target": "ゼビウス",
+      "kind": "inferred",
+      "reason": "スクロール進行と空中・地上の対象を撃ち分ける機構",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ボスコニアン",
+      "target": "ゼビウス",
+      "kind": "inferred",
+      "reason": "空中敵と地上拠点の組合せ",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ギャラガ",
+      "target": "ゼビウス",
+      "kind": "inferred",
+      "reason": "ナムコの編隊射撃からスクロール射撃への接続仮説",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ディフェンダー",
+      "target": "チョップリフター",
+      "kind": "inferred",
+      "reason": "横方向の飛行と地上の人を救出する目的",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "チョップリフター",
+      "target": "バンゲリングベイ",
+      "kind": "inferred",
+      "reason": "自由なヘリ飛行と地上拠点への関与",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ボスコニアン",
+      "target": "バンゲリングベイ",
+      "kind": "inferred",
+      "reason": "全方向移動と拠点攻撃",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ゼビウス",
+      "target": "スターフォース",
+      "kind": "inferred",
+      "reason": "縦スクロールの地上・空中敵配置",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ギャラガ",
+      "target": "スターフォース",
+      "kind": "inferred",
+      "reason": "敵編隊と射撃・得点のリズム",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "スクランブル",
+      "target": "フォーメーションZ",
+      "kind": "inferred",
+      "reason": "横スクロールで地形を避けながら射撃",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ディフェンダー",
+      "target": "フォーメーションZ",
+      "kind": "inferred",
+      "reason": "飛行形態の横移動と射撃",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "フロントライン",
+      "target": "フィールドコンバット",
+      "kind": "inferred",
+      "reason": "地上部隊と俯瞰戦場での進行",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ボスコニアン",
+      "target": "フィールドコンバット",
+      "kind": "inferred",
+      "reason": "移動する戦闘機と地上拠点への攻撃",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "フロントライン",
+      "target": "いっき",
+      "kind": "inferred",
+      "reason": "俯瞰で歩行・射撃しながら敵を避ける形式",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "パックマン",
+      "target": "いっき",
+      "kind": "inferred",
+      "reason": "回収物を集めながら敵を避ける面進行",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ゼビウス",
+      "target": "1942",
+      "kind": "inferred",
+      "reason": "縦スクロールと空中編隊の配置",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ギャラガ",
+      "target": "1942",
+      "kind": "inferred",
+      "reason": "敵編隊の撃破・得点のリズム",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ゼビウス",
+      "target": "頭脳戦艦ガル",
+      "kind": "inferred",
+      "reason": "縦スクロール射撃と地上・空中の配置",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "スターフォース",
+      "target": "頭脳戦艦ガル",
+      "kind": "inferred",
+      "reason": "連続する編隊と得点・破壊対象",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "スクランブル",
+      "target": "ヴォルガード",
+      "kind": "inferred",
+      "reason": "横スクロールでの飛行射撃",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "フォーメーションZ",
+      "target": "高機動戦闘メカ ヴォルガードII",
+      "kind": "inferred",
+      "reason": "変形するメカと横スクロール射撃",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "フォーメーションZ",
+      "target": "超時空要塞マクロス",
+      "kind": "inferred",
+      "reason": "変形状態を選ぶ横スクロール射撃",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "フォーメーションZ",
+      "target": "テグザー",
+      "kind": "inferred",
+      "reason": "人型・飛行形態の切替による空間移動",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ゼビウス",
+      "target": "エグゼドエグゼス",
+      "kind": "inferred",
+      "reason": "縦スクロールで空中と地上の対象を撃つ形式",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "スターフォース",
+      "target": "エグゼドエグゼス",
+      "kind": "inferred",
+      "reason": "編隊の連続出現と得点の構造",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ゼビウス",
+      "target": "ツインビー",
+      "kind": "inferred",
+      "reason": "空中と地上の対象を撃ち分ける形式",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "スターフォース",
+      "target": "ツインビー",
+      "kind": "inferred",
+      "reason": "空中回収物を射撃し得点・強化へ繋ぐ設計の候補",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "スターレイダース",
+      "target": "スターラスター",
+      "kind": "inferred",
+      "reason": "コックピット視点と戦略マップ・補給",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "バトルゾーン",
+      "target": "スターラスター",
+      "kind": "inferred",
+      "reason": "一人称照準と空間の把握",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "スターレイダース",
+      "target": "ゲイモス",
+      "kind": "inferred",
+      "reason": "コックピット視点の宇宙射撃",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ザクソン",
+      "target": "ゲイモス",
+      "kind": "inferred",
+      "reason": "奥行きと飛行位置を把握する射撃",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ザクソン",
+      "target": "スカイデストロイヤー",
+      "kind": "inferred",
+      "reason": "奥行きのある飛行射撃",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "スターレイダース",
+      "target": "スカイデストロイヤー",
+      "kind": "inferred",
+      "reason": "一人称寄りの空戦と照準",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ポールポジション",
+      "target": "けっきょく南極大冒険",
+      "kind": "inferred",
+      "reason": "前方へ流れる道と奥行き表現",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ワイルドガンマン",
+      "target": "ホーガンズアレイ",
+      "kind": "inferred",
+      "reason": "光線銃による標的の判別・反応",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ダックハント",
+      "target": "ホーガンズアレイ",
+      "kind": "inferred",
+      "reason": "同時期の光線銃向け標的射撃。開発順は未確認",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "スピードレース",
+      "target": "モナコGP",
+      "kind": "inferred",
+      "reason": "俯瞰の道路と追い越し回避",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "モナコGP",
+      "target": "ジッピーレース",
+      "kind": "inferred",
+      "reason": "俯瞰での走行・交通回避",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "モナコGP",
+      "target": "ロードファイター",
+      "kind": "inferred",
+      "reason": "俯瞰での高速走行と衝突回避",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ポールポジション",
+      "target": "F1レース",
+      "kind": "inferred",
+      "reason": "後方視点の疑似3Dレース",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ポールポジション",
+      "target": "マッハライダー",
+      "kind": "inferred",
+      "reason": "後方視点の道路走行",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ジッピーレース",
+      "target": "マッハライダー",
+      "kind": "inferred",
+      "reason": "バイクで交通を避けて走行",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ジッピーレース",
+      "target": "エキサイトバイク",
+      "kind": "inferred",
+      "reason": "バイクの速度制御と障害物",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ポン",
+      "target": "テニス",
+      "kind": "inferred",
+      "reason": "球の打ち返しを中心とする対戦",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ホームラン（Atari）",
+      "target": "ベースボール",
+      "kind": "inferred",
+      "reason": "テレビ野球で投球・打撃をタイミング操作へ置き換える形式",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ゴルフ（Atari）",
+      "target": "ゴルフ",
+      "kind": "inferred",
+      "reason": "画面上のコースと打球の操作",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "サッカー（Atari）",
+      "target": "サッカー",
+      "kind": "inferred",
+      "reason": "俯瞰で選手を動かす球技",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "フットボール（Atari）",
+      "target": "10ヤードファイト",
+      "kind": "inferred",
+      "reason": "俯瞰のアメフトで攻守を操作",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "空手道",
+      "target": "イー・アル・カンフー",
+      "kind": "inferred",
+      "reason": "対面での打撃と技の選択",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "空手道",
+      "target": "カラテカ",
+      "kind": "inferred",
+      "reason": "空手の打撃・間合いを対面格闘へ置き換える同年作品の候補",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "アーバンチャンピオン",
+      "target": "キン肉マン マッスルタッグマッチ",
+      "kind": "inferred",
+      "reason": "二者の接近戦と押し出しを中心とする対戦",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ザ・ビッグプロレスリング",
+      "target": "キン肉マン マッスルタッグマッチ",
+      "kind": "inferred",
+      "reason": "リング上のプロレスとタッグ交代",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ポン",
+      "target": "ぺんぎんくんWARS",
+      "kind": "inferred",
+      "reason": "相手側へ球を送り返す対戦",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ビデオピンボール",
+      "target": "ピンボール",
+      "kind": "inferred",
+      "reason": "機械式ピンボールを画面上で再現する先行例",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ピンボール",
+      "target": "ルナーボール",
+      "kind": "inferred",
+      "reason": "球の反射と物理挙動を盤面攻略へ使う構造",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "フラッピー",
+      "target": "ロットロット",
+      "kind": "inferred",
+      "reason": "小物の配置と落下を盤面パズルへ用いる設計",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "Adventure（Colossal Cave）",
+      "target": "ミステリーハウス",
+      "kind": "inferred",
+      "reason": "文章コマンドによる探索をグラフィックへ展開",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "ミステリーハウス",
+      "target": "ポートピア連続殺人事件",
+      "kind": "inferred",
+      "reason": "場面探索とコマンド入力による事件解決",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "フロントライン",
+      "target": "ダウボーイ",
+      "kind": "inferred",
+      "reason": "俯瞰で歩兵を動かす戦場アクション",
+      "sources": [],
+      "status": "試作の編集判断"
+    },
+    {
+      "source": "バンゲリングベイ",
+      "target": "ダウボーイ",
+      "kind": "inferred",
+      "reason": "広域の戦場に複数の目標を置く設計",
+      "sources": [],
+      "status": "試作の編集判断"
+    }
+  ],
+  "stats": {
+    "fc_count": 100,
+    "external_count": 36,
+    "edge_count": 138,
+    "isolated_fc": 7
+  },
+  "layout": {
+    "width": 3013,
+    "height": 5060,
+    "positions": {
+      "スペースパニック": [
+        90,
+        447.8125
+      ],
+      "ジャンプバグ": [
+        90,
+        577.4375
+      ],
+      "ジャウスト": [
+        90,
+        707.0625
+      ],
+      "ピットフォール!": [
+        90,
+        836.6875
+      ],
+      "暴走特急（Stop the Express）": [
+        90,
+        966.3125
+      ],
+      "ヘッドオン": [
+        90,
+        1095.9375
+      ],
+      "平安京エイリアン": [
+        90,
+        1225.5625
+      ],
+      "タンクバタリアン": [
+        90,
+        1355.1875
+      ],
+      "倉庫番": [
+        90,
+        1484.8125
+      ],
+      "スペースインベーダー": [
+        90,
+        1614.4375
+      ],
+      "ディフェンダー": [
+        90,
+        1744.0625
+      ],
+      "ボスコニアン": [
+        90,
+        1873.6875
+      ],
+      "ワイルドガンマン（映写式）": [
+        90,
+        2003.3125
+      ],
+      "ダックハント（玩具）": [
+        90,
+        2132.9375
+      ],
+      "スターレイダース": [
+        90,
+        2262.5625
+      ],
+      "バトルゾーン": [
+        90,
+        2392.1875
+      ],
+      "ザクソン": [
+        90,
+        2521.8125
+      ],
+      "スピードレース": [
+        90,
+        2651.4375
+      ],
+      "ポールポジション": [
+        90,
+        2781.0625
+      ],
+      "ポン": [
+        90,
+        2910.6875
+      ],
+      "ホームラン（Atari）": [
+        90,
+        3040.3125
+      ],
+      "フットボール（Atari）": [
+        90,
+        3169.9375
+      ],
+      "サッカー（Atari）": [
+        90,
+        3299.5625
+      ],
+      "ゴルフ（Atari）": [
+        90,
+        3429.1875
+      ],
+      "ザ・ビッグプロレスリング": [
+        90,
+        3558.8125
+      ],
+      "ハイパーオリンピック": [
+        90,
+        3688.4375
+      ],
+      "空手道": [
+        90,
+        3818.0625
+      ],
+      "アーバンチャンピオン": [
+        90,
+        3947.6875
+      ],
+      "Adventure（Colossal Cave）": [
+        90,
+        4077.3125
+      ],
+      "ビデオピンボール": [
+        90,
+        4206.9375
+      ],
+      "麻雀": [
+        90,
+        4336.5625
+      ],
+      "ファミリーベーシック": [
+        90,
+        4466.1875
+      ],
+      "アストロロボSASA": [
+        585,
+        566.0
+      ],
+      "バルーンファイト": [
+        585,
+        444.0
+      ],
+      "パックマン": [
+        585,
+        810.0
+      ],
+      "ロードランナー": [
+        585,
+        688.0
+      ],
+      "バトルシティー": [
+        585,
+        932.0
+      ],
+      "ギャラクシアン": [
+        585,
+        1298.0
+      ],
+      "フェニックス": [
+        585,
+        1054.0
+      ],
+      "ワープ＆ワープ": [
+        585,
+        1176.0
+      ],
+      "スクランブル": [
+        585,
+        1542.0
+      ],
+      "チョップリフター": [
+        585,
+        1664.0
+      ],
+      "フロントライン": [
+        585,
+        1420.0
+      ],
+      "けっきょく南極大冒険": [
+        585,
+        2396.0
+      ],
+      "ワイルドガンマン": [
+        585,
+        1786.0
+      ],
+      "ダックハント": [
+        585,
+        1908.0
+      ],
+      "ゲイモス": [
+        585,
+        2152.0
+      ],
+      "スカイデストロイヤー": [
+        585,
+        2274.0
+      ],
+      "スターラスター": [
+        585,
+        2030.0
+      ],
+      "モナコGP": [
+        585,
+        2518.0
+      ],
+      "F1レース": [
+        585,
+        2640.0
+      ],
+      "ベースボール": [
+        585,
+        3006.0
+      ],
+      "10ヤードファイト": [
+        585,
+        3128.0
+      ],
+      "テニス": [
+        585,
+        2762.0
+      ],
+      "ゴルフ": [
+        585,
+        3372.0
+      ],
+      "ハイパースポーツ": [
+        585,
+        3616.0
+      ],
+      "カラテカ": [
+        585,
+        3982.0
+      ],
+      "サッカー": [
+        585,
+        3250.0
+      ],
+      "イー・アル・カンフー": [
+        585,
+        3860.0
+      ],
+      "ハイパーオリンピック 殿様版": [
+        585,
+        3494.0
+      ],
+      "キン肉マン マッスルタッグマッチ": [
+        585,
+        3738.0
+      ],
+      "ぺんぎんくんWARS": [
+        585,
+        2884.0
+      ],
+      "ミステリーハウス": [
+        585,
+        4104.0
+      ],
+      "ピンボール": [
+        585,
+        4226.0
+      ],
+      "4人打ち麻雀": [
+        585,
+        4348.0
+      ],
+      "ファミリーベーシックV3": [
+        585,
+        4470.0
+      ],
+      "ドンキーコング": [
+        1080,
+        459.8148148148148
+      ],
+      "パックランド": [
+        1080,
+        613.4444444444445
+      ],
+      "チャレンジャー": [
+        1080,
+        767.0740740740741
+      ],
+      "ルート16": [
+        1080,
+        1074.3333333333335
+      ],
+      "ディグダグ": [
+        1080,
+        2303.3703703703704
+      ],
+      "フラッピー": [
+        1080,
+        2610.6296296296296
+      ],
+      "ドアドア": [
+        1080,
+        2457.0
+      ],
+      "バイナリィランド": [
+        1080,
+        1996.111111111111
+      ],
+      "ボンバーマン": [
+        1080,
+        2149.740740740741
+      ],
+      "デビルワールド": [
+        1080,
+        1227.962962962963
+      ],
+      "クルクルランド": [
+        1080,
+        1381.5925925925926
+      ],
+      "チャンピオンシップロードランナー": [
+        1080,
+        920.7037037037037
+      ],
+      "ちゃっくんぽっぷ": [
+        1080,
+        1535.2222222222222
+      ],
+      "ドルアーガの塔": [
+        1080,
+        1688.851851851852
+      ],
+      "おにゃんこTOWN": [
+        1080,
+        1842.4814814814815
+      ],
+      "ギャラガ": [
+        1080,
+        2764.259259259259
+      ],
+      "ワープマン": [
+        1080,
+        2917.8888888888887
+      ],
+      "ヴォルガード": [
+        1080,
+        3225.1481481481483
+      ],
+      "バンゲリングベイ": [
+        1080,
+        3686.037037037037
+      ],
+      "フォーメーションZ": [
+        1080,
+        3378.777777777778
+      ],
+      "フィールドコンバット": [
+        1080,
+        3532.4074074074074
+      ],
+      "いっき": [
+        1080,
+        3071.5185185185187
+      ],
+      "ホーガンズアレイ": [
+        1080,
+        3839.6666666666665
+      ],
+      "ジッピーレース": [
+        1080,
+        4146.925925925926
+      ],
+      "ロードファイター": [
+        1080,
+        3993.296296296296
+      ],
+      "ポートピア連続殺人事件": [
+        1080,
+        4300.555555555556
+      ],
+      "ルナーボール": [
+        1080,
+        4454.185185185185
+      ],
+      "ドンキーコングJr.": [
+        1575,
+        679.2857142857142
+      ],
+      "ポパイ": [
+        1575,
+        876.8095238095239
+      ],
+      "バーガータイム": [
+        1575,
+        481.7619047619048
+      ],
+      "マリオブラザーズ": [
+        1575,
+        1074.3333333333335
+      ],
+      "ナッツ＆ミルク": [
+        1575,
+        1666.904761904762
+      ],
+      "マッピー": [
+        1575,
+        1271.857142857143
+      ],
+      "エレベーターアクション": [
+        1575,
+        1469.3809523809523
+      ],
+      "スペランカー": [
+        1575,
+        2061.9523809523807
+      ],
+      "オバケのQ太郎 ワンワンパニック": [
+        1575,
+        1864.4285714285713
+      ],
+      "ルート16ターボ": [
+        1575,
+        2259.4761904761904
+      ],
+      "ロットロット": [
+        1575,
+        2457.0
+      ],
+      "プーヤン": [
+        1575,
+        2852.0476190476193
+      ],
+      "ドンキーコング3": [
+        1575,
+        2654.5238095238096
+      ],
+      "エクセリオン": [
+        1575,
+        3049.5714285714284
+      ],
+      "ゼビウス": [
+        1575,
+        3247.095238095238
+      ],
+      "高機動戦闘メカ ヴォルガードII": [
+        1575,
+        3444.6190476190477
+      ],
+      "超時空要塞マクロス": [
+        1575,
+        3642.1428571428573
+      ],
+      "テグザー": [
+        1575,
+        3839.6666666666665
+      ],
+      "エキサイトバイク": [
+        1575,
+        4234.714285714286
+      ],
+      "マッハライダー": [
+        1575,
+        4037.190476190476
+      ],
+      "ダウボーイ": [
+        1575,
+        4432.238095238095
+      ],
+      "アラビアン": [
+        2070,
+        2249.6
+      ],
+      "忍者くん 魔城の冒険": [
+        2070,
+        590.4
+      ],
+      "レッキングクルー": [
+        2070,
+        1420.0
+      ],
+      "アイスクライマー": [
+        2070,
+        1005.2
+      ],
+      "スーパーマリオブラザーズ": [
+        2070,
+        2664.4
+      ],
+      "シティコネクション": [
+        2070,
+        1834.8
+      ],
+      "スターフォース": [
+        2070,
+        3079.2
+      ],
+      "1942": [
+        2070,
+        3494.0
+      ],
+      "ポパイの英語遊び": [
+        2070,
+        4323.6
+      ],
+      "ドンキーコングJr.の算数遊び": [
+        2070,
+        3908.8
+      ],
+      "スーパーアラビアン": [
+        2565,
+        1627.4
+      ],
+      "忍者じゃじゃ丸くん": [
+        2565,
+        797.8
+      ],
+      "頭脳戦艦ガル": [
+        2565,
+        2457.0
+      ],
+      "エグゼドエグゼス": [
+        2565,
+        3286.6
+      ],
+      "ツインビー": [
+        2565,
+        4116.2
+      ],
+      "五目ならべ 連珠": [
+        90,
+        4748
+      ],
+      "スパルタンX": [
+        478,
+        4748
+      ],
+      "ブロック": [
+        866,
+        4748
+      ],
+      "本将棋 内藤九段将棋秘伝": [
+        1254,
+        4748
+      ],
+      "ジャイロ": [
+        1642,
+        4748
+      ],
+      "パチコン": [
+        2030,
+        4748
+      ],
+      "ボコスカウォーズ": [
+        2418,
+        4748
+      ]
+    }
+  }
+}

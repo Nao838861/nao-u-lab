@@ -1,0 +1,938 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3013" height="5060" viewBox="0 0 3013 5060"><rect width="100%" height="100%" fill="#0b111b"/>
+<text x="90" y="98" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="48">ファミコン初期100タイトルの系譜</text>
+<text x="90" y="150" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="25">国内発売順：1983.07.15 → 1986.01.04  ／  影響元 → 影響先</text>
+<text x="90" y="198" fill="#a8b7cb" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="25">作品単位で原作・移植を集約。横位置は系譜の段階で、時間軸ではありません。</text>
+<text x="90" y="240" fill="#f3c27d" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="25">破線はゲーム内容からの推定です。史実の確定図ではありません。</text>
+<path d="M 90 290 C 113 290 137 290 160 290" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="160,290 150,285 150,295" fill="#69d4aa"/>
+<text x="178" y="296" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="25">実線：続編・キャラクター・先行版</text>
+<path d="M 740 290 C 763 290 787 290 810 290" fill="none" stroke="#8ab9ff" stroke-width="3"/>
+<polygon points="810,290 800,285 800,295" fill="#8ab9ff"/>
+<text x="828" y="296" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="25">実線：証言のある影響</text>
+<path d="M 1390 290 C 1413 290 1437 290 1460 290" fill="none" stroke="#8b7d68" stroke-width="3" stroke-dasharray="8 8"/>
+<polygon points="1460,290 1450,285 1450,295" fill="#8b7d68"/>
+<text x="1478" y="296" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="25">破線：推定した影響</text>
+<rect x="90" y="337" width="13" height="13" rx="3" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="113" y="347" fill="#b8c5d7" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">ジャンプ・足場</text>
+<rect x="710" y="337" width="13" height="13" rx="3" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="733" y="347" fill="#b8c5d7" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">迷路・パズル</text>
+<rect x="1330" y="337" width="13" height="13" rx="3" fill="#66bade" stroke="#66bade" stroke-width="1"/>
+<text x="1353" y="347" fill="#b8c5d7" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">固定画面射撃</text>
+<rect x="1950" y="337" width="13" height="13" rx="3" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="1973" y="347" fill="#b8c5d7" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">スクロール射撃</text>
+<rect x="2570" y="337" width="13" height="13" rx="3" fill="#70a5ef" stroke="#70a5ef" stroke-width="1"/>
+<text x="2593" y="347" fill="#b8c5d7" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">奥行き・標的射撃</text>
+<rect x="90" y="374" width="13" height="13" rx="3" fill="#eab45b" stroke="#eab45b" stroke-width="1"/>
+<text x="113" y="384" fill="#b8c5d7" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">レース</text>
+<rect x="710" y="374" width="13" height="13" rx="3" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="733" y="384" fill="#b8c5d7" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">スポーツ・格闘</text>
+<rect x="1330" y="374" width="13" height="13" rx="3" fill="#90b96b" stroke="#90b96b" stroke-width="1"/>
+<text x="1353" y="384" fill="#b8c5d7" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">冒険・戦略</text>
+<rect x="1950" y="374" width="13" height="13" rx="3" fill="#adb8c6" stroke="#adb8c6" stroke-width="1"/>
+<text x="1973" y="384" fill="#b8c5d7" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">卓上・学習・周辺機器</text>
+<rect x="75" y="415" width="388" height="4168" rx="12" fill="#101925" stroke="#101925" stroke-width="1"/>
+<rect x="570" y="415" width="388" height="4168" rx="12" fill="#101925" stroke="#101925" stroke-width="1"/>
+<rect x="1065" y="415" width="388" height="4168" rx="12" fill="#101925" stroke="#101925" stroke-width="1"/>
+<rect x="1560" y="415" width="388" height="4168" rx="12" fill="#101925" stroke="#101925" stroke-width="1"/>
+<rect x="2055" y="415" width="388" height="4168" rx="12" fill="#101925" stroke="#101925" stroke-width="1"/>
+<rect x="2550" y="415" width="388" height="4168" rx="12" fill="#101925" stroke="#101925" stroke-width="1"/>
+<path d="M 1933 4281.714285714286 C 1994.65 4281.714285714286 2008.35 2711.4 2070 2711.4" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2070,2711.4 2060,2706.4 2060,2716.4" fill="#796d5d"/>
+<path d="M 448 754.0625 C 509.65 754.0625 523.35 491.0 585 491.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,491.0 575,486.0 575,496.0" fill="#796d5d"/>
+<path d="M 448 494.8125 C 504.25 494.8125 516.75 555.0 573 555.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 573 555.0 C 744.9 555.0 783.1 555.0 955 555.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 955 555.0 C 1011.25 555.0 1023.75 506.8148148148148 1080 506.8148148148148" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,506.8148148148148 1070,501.8148148148148 1070,511.8148148148148" fill="#796d5d"/>
+<path d="M 943 857.0 C 1004.65 857.0 1018.35 506.8148148148148 1080 506.8148148148148" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,506.8148148148148 1070,501.8148148148148 1070,511.8148148148148" fill="#796d5d"/>
+<path d="M 1438 506.8148148148148 C 1499.65 506.8148148148148 1513.35 923.8095238095239 1575 923.8095238095239" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,923.8095238095239 1565,918.8095238095239 1565,928.8095238095239" fill="#796d5d"/>
+<path d="M 1438 506.8148148148148 C 1499.65 506.8148148148148 1513.35 1318.857142857143 1575 1318.857142857143" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,1318.857142857143 1565,1313.857142857143 1565,1323.857142857143" fill="#796d5d"/>
+<path d="M 1438 506.8148148148148 C 1499.65 506.8148148148148 1513.35 528.7619047619048 1575 528.7619047619048" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,528.7619047619048 1565,523.7619047619048 1565,533.7619047619048" fill="#796d5d"/>
+<path d="M 448 494.8125 C 504.25 494.8125 516.75 552.0 573 552.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 573 552.0 C 744.9 552.0 783.1 552.0 955 552.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 955 552.0 C 1005.85 552.0 1017.15 583.6296296296296 1068 583.6296296296296" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1068 583.6296296296296 C 1239.9 583.6296296296296 1278.1 583.6296296296296 1450 583.6296296296296" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1450 583.6296296296296 C 1506.25 583.6296296296296 1518.75 528.7619047619048 1575 528.7619047619048" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,528.7619047619048 1565,523.7619047619048 1565,533.7619047619048" fill="#796d5d"/>
+<path d="M 1933 1121.3333333333335 C 1994.65 1121.3333333333335 2008.35 1052.2 2070 1052.2" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2070,1052.2 2060,1047.2 2060,1057.2" fill="#796d5d"/>
+<path d="M 1933 726.2857142857142 C 1994.65 726.2857142857142 2008.35 1052.2 2070 1052.2" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2070,1052.2 2060,1047.2 2060,1057.2" fill="#796d5d"/>
+<path d="M 1438 506.8148148148148 C 1499.65 506.8148148148148 1513.35 1713.904761904762 1575 1713.904761904762" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,1713.904761904762 1565,1708.904761904762 1565,1718.904761904762" fill="#796d5d"/>
+<path d="M 943 735.0 C 999.25 735.0 1011.75 1201.1481481481483 1068 1201.1481481481483" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1068 1201.1481481481483 C 1239.9 1201.1481481481483 1278.1 1201.1481481481483 1450 1201.1481481481483" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1450 1201.1481481481483 C 1506.25 1201.1481481481483 1518.75 1713.904761904762 1575 1713.904761904762" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,1713.904761904762 1565,1708.904761904762 1565,1718.904761904762" fill="#796d5d"/>
+<path d="M 1933 1121.3333333333335 C 1994.65 1121.3333333333335 2008.35 1467.0 2070 1467.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2070,1467.0 2060,1462.0 2060,1472.0" fill="#796d5d"/>
+<path d="M 943 735.0 C 999.25 735.0 1011.75 1044.5185185185187 1068 1044.5185185185187" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1068 1044.5185185185187 C 1239.9 1044.5185185185187 1278.1 1044.5185185185187 1450 1044.5185185185187" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1450 1044.5185185185187 C 1500.85 1044.5185185185187 1512.15 1220.095238095238 1563 1220.095238095238" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1563 1220.095238095238 C 1734.9 1220.095238095238 1773.1 1220.095238095238 1945 1220.095238095238" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1945 1220.095238095238 C 2001.25 1220.095238095238 2013.75 1467.0 2070 1467.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2070,1467.0 2060,1462.0 2060,1472.0" fill="#796d5d"/>
+<path d="M 1438 506.8148148148148 C 1494.25 506.8148148148148 1506.75 630.5238095238095 1563 630.5238095238095" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1563 630.5238095238095 C 1734.9 630.5238095238095 1773.1 630.5238095238095 1945 630.5238095238095" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1945 630.5238095238095 C 2001.25 630.5238095238095 2013.75 637.4 2070 637.4" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2070,637.4 2060,632.4 2060,642.4" fill="#796d5d"/>
+<path d="M 1933 1121.3333333333335 C 1994.65 1121.3333333333335 2008.35 637.4 2070 637.4" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2070,637.4 2060,632.4 2060,642.4" fill="#796d5d"/>
+<path d="M 1438 506.8148148148148 C 1499.65 506.8148148148148 1513.35 1516.3809523809523 1575 1516.3809523809523" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,1516.3809523809523 1565,1511.3809523809523 1565,1521.3809523809523" fill="#796d5d"/>
+<path d="M 448 624.4375 C 504.25 624.4375 516.75 677.0 573 677.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 573 677.0 C 744.9 677.0 783.1 677.0 955 677.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 955 677.0 C 1011.25 677.0 1023.75 660.4444444444445 1080 660.4444444444445" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,660.4444444444445 1070,655.4444444444445 1070,665.4444444444445" fill="#796d5d"/>
+<path d="M 448 883.6875 C 504.25 883.6875 516.75 1281.0 573 1281.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 573 1281.0 C 744.9 1281.0 783.1 1281.0 955 1281.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 955 1281.0 C 1005.85 1281.0 1017.15 1656.037037037037 1068 1656.037037037037" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1068 1656.037037037037 C 1239.9 1656.037037037037 1278.1 1656.037037037037 1450 1656.037037037037" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1450 1656.037037037037 C 1506.25 1656.037037037037 1518.75 2108.9523809523807 1575 2108.9523809523807" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,2108.9523809523807 1565,2103.9523809523807 1565,2113.9523809523807" fill="#796d5d"/>
+<path d="M 1438 506.8148148148148 C 1499.65 506.8148148148148 1513.35 2108.9523809523807 1575 2108.9523809523807" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,2108.9523809523807 1565,2103.9523809523807 1565,2113.9523809523807" fill="#796d5d"/>
+<path d="M 1933 1121.3333333333335 C 1994.65 1121.3333333333335 2008.35 2296.6 2070 2296.6" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2070,2296.6 2060,2291.6 2060,2301.6" fill="#796d5d"/>
+<path d="M 1438 660.4444444444445 C 1499.65 660.4444444444445 1513.35 1911.4285714285713 1575 1911.4285714285713" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,1911.4285714285713 1565,1906.4285714285713 1565,1916.4285714285713" fill="#796d5d"/>
+<path d="M 448 1013.3125 C 504.25 1013.3125 516.75 918.0 573 918.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 573 918.0 C 744.9 918.0 783.1 918.0 955 918.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 955 918.0 C 1011.25 918.0 1023.75 814.0740740740741 1080 814.0740740740741" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,814.0740740740741 1070,809.0740740740741 1070,819.0740740740741" fill="#796d5d"/>
+<path d="M 943 857.0 C 1004.65 857.0 1018.35 814.0740740740741 1080 814.0740740740741" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,814.0740740740741 1070,809.0740740740741 1070,819.0740740740741" fill="#796d5d"/>
+<path d="M 1933 1318.857142857143 C 1994.65 1318.857142857143 2008.35 1881.8 2070 1881.8" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2070,1881.8 2060,1876.8 2060,1886.8" fill="#796d5d"/>
+<path d="M 448 624.4375 C 504.25 624.4375 516.75 918.0 573 918.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 573 918.0 C 744.9 918.0 783.1 918.0 955 918.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 955 918.0 C 1005.85 918.0 1017.15 1198.1481481481483 1068 1198.1481481481483" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1068 1198.1481481481483 C 1239.9 1198.1481481481483 1278.1 1198.1481481481483 1450 1198.1481481481483" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1450 1198.1481481481483 C 1500.85 1198.1481481481483 1512.15 1615.142857142857 1563 1615.142857142857" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1563 1615.142857142857 C 1734.9 1615.142857142857 1773.1 1615.142857142857 1945 1615.142857142857" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1945 1615.142857142857 C 2001.25 1615.142857142857 2013.75 1881.8 2070 1881.8" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2070,1881.8 2060,1876.8 2060,1886.8" fill="#796d5d"/>
+<path d="M 448 754.0625 C 509.65 754.0625 523.35 613.0 585 613.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,613.0 575,608.0 575,618.0" fill="#796d5d"/>
+<path d="M 448 1142.9375 C 509.65 1142.9375 523.35 857.0 585 857.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,857.0 575,852.0 575,862.0" fill="#796d5d"/>
+<path d="M 943 857.0 C 1004.65 857.0 1018.35 1274.962962962963 1080 1274.962962962963" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,1274.962962962963 1070,1269.962962962963 1070,1279.962962962963" fill="#796d5d"/>
+<path d="M 943 857.0 C 1004.65 857.0 1018.35 1428.5925925925926 1080 1428.5925925925926" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,1428.5925925925926 1070,1423.5925925925926 1070,1433.5925925925926" fill="#796d5d"/>
+<path d="M 943 857.0 C 1004.65 857.0 1018.35 1582.2222222222222 1080 1582.2222222222222" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,1582.2222222222222 1070,1577.2222222222222 1070,1587.2222222222222" fill="#796d5d"/>
+<path d="M 448 1272.5625 C 504.25 1272.5625 516.75 1772.0 573 1772.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 573 1772.0 C 744.9 1772.0 783.1 1772.0 955 1772.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 955 1772.0 C 1011.25 1772.0 1023.75 2350.3703703703704 1080 2350.3703703703704" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,2350.3703703703704 1070,2345.3703703703704 1070,2355.3703703703704" fill="#796d5d"/>
+<path d="M 943 857.0 C 1004.65 857.0 1018.35 2350.3703703703704 1080 2350.3703703703704" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,2350.3703703703704 1070,2345.3703703703704 1070,2355.3703703703704" fill="#796d5d"/>
+<path d="M 448 494.8125 C 509.65 494.8125 523.35 735.0 585 735.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,735.0 575,730.0 575,740.0" fill="#796d5d"/>
+<path d="M 448 1272.5625 C 509.65 1272.5625 523.35 735.0 585 735.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,735.0 575,730.0 575,740.0" fill="#796d5d"/>
+<path d="M 448 1531.8125 C 504.25 1531.8125 516.75 2141.0 573 2141.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 573 2141.0 C 744.9 2141.0 783.1 2141.0 955 2141.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 955 2141.0 C 1011.25 2141.0 1023.75 2657.6296296296296 1080 2657.6296296296296" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,2657.6296296296296 1070,2652.6296296296296 1070,2662.6296296296296" fill="#796d5d"/>
+<path d="M 943 735.0 C 1004.65 735.0 1018.35 2657.6296296296296 1080 2657.6296296296296" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,2657.6296296296296 1070,2652.6296296296296 1070,2662.6296296296296" fill="#796d5d"/>
+<path d="M 943 857.0 C 1004.65 857.0 1018.35 2504.0 1080 2504.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,2504.0 1070,2499.0 1070,2509.0" fill="#796d5d"/>
+<path d="M 448 1272.5625 C 504.25 1272.5625 516.75 1897.0 573 1897.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 573 1897.0 C 744.9 1897.0 783.1 1897.0 955 1897.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 955 1897.0 C 1011.25 1897.0 1023.75 2504.0 1080 2504.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,2504.0 1070,2499.0 1070,2509.0" fill="#796d5d"/>
+<path d="M 943 857.0 C 1004.65 857.0 1018.35 1735.851851851852 1080 1735.851851851852" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,1735.851851851852 1070,1730.851851851852 1070,1740.851851851852" fill="#796d5d"/>
+<path d="M 943 857.0 C 1004.65 857.0 1018.35 1889.4814814814815 1080 1889.4814814814815" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,1889.4814814814815 1070,1884.4814814814815 1070,1894.4814814814815" fill="#796d5d"/>
+<path d="M 943 857.0 C 1004.65 857.0 1018.35 2043.111111111111 1080 2043.111111111111" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,2043.111111111111 1070,2038.111111111111 1070,2048.1111111111113" fill="#796d5d"/>
+<path d="M 943 857.0 C 1004.65 857.0 1018.35 2196.740740740741 1080 2196.740740740741" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,2196.740740740741 1070,2191.740740740741 1070,2201.740740740741" fill="#796d5d"/>
+<path d="M 448 1272.5625 C 504.25 1272.5625 516.75 1772.0 573 1772.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 573 1772.0 C 744.9 1772.0 783.1 1772.0 955 1772.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 955 1772.0 C 1011.25 1772.0 1023.75 2196.740740740741 1080 2196.740740740741" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,2196.740740740741 1070,2191.740740740741 1070,2201.740740740741" fill="#796d5d"/>
+<path d="M 943 735.0 C 1004.65 735.0 1018.35 2196.740740740741 1080 2196.740740740741" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,2196.740740740741 1070,2191.740740740741 1070,2201.740740740741" fill="#796d5d"/>
+<path d="M 943 857.0 C 1004.65 857.0 1018.35 1121.3333333333335 1080 1121.3333333333335" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,1121.3333333333335 1070,1116.3333333333335 1070,1126.3333333333335" fill="#796d5d"/>
+<path d="M 448 1402.1875 C 509.65 1402.1875 523.35 1467.0 585 1467.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,1467.0 575,1462.0 575,1472.0" fill="#796d5d"/>
+<path d="M 448 1661.4375 C 509.65 1661.4375 523.35 1345.0 585 1345.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,1345.0 575,1340.0 575,1350.0" fill="#796d5d"/>
+<path d="M 943 1101.0 C 1004.65 1101.0 1018.35 2811.259259259259 1080 2811.259259259259" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,2811.259259259259 1070,2806.259259259259 1070,2816.259259259259" fill="#796d5d"/>
+<path d="M 448 1661.4375 C 509.65 1661.4375 523.35 1101.0 585 1101.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,1101.0 575,1096.0 575,1106.0" fill="#796d5d"/>
+<path d="M 1438 2811.259259259259 C 1499.65 2811.259259259259 1513.35 3096.5714285714284 1575 3096.5714285714284" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,3096.5714285714284 1565,3091.5714285714284 1565,3101.5714285714284" fill="#796d5d"/>
+<path d="M 448 1661.4375 C 509.65 1661.4375 523.35 1223.0 585 1223.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,1223.0 575,1218.0 575,1228.0" fill="#796d5d"/>
+<path d="M 1438 2811.259259259259 C 1499.65 2811.259259259259 1513.35 2899.0476190476193 1575 2899.0476190476193" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,2899.0476190476193 1565,2894.0476190476193 1565,2904.0476190476193" fill="#796d5d"/>
+<path d="M 1438 506.8148148148148 C 1499.65 506.8148148148148 1513.35 2899.0476190476193 1575 2899.0476190476193" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,2899.0476190476193 1565,2894.0476190476193 1565,2904.0476190476193" fill="#796d5d"/>
+<path d="M 943 1345.0 C 999.25 1345.0 1011.75 1963.2962962962963 1068 1963.2962962962963" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1068 1963.2962962962963 C 1239.9 1963.2962962962963 1278.1 1963.2962962962963 1450 1963.2962962962963" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1450 1963.2962962962963 C 1506.25 1963.2962962962963 1518.75 2701.5238095238096 1575 2701.5238095238096" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,2701.5238095238096 1565,2696.5238095238096 1565,2706.5238095238096" fill="#796d5d"/>
+<path d="M 448 1661.4375 C 509.65 1661.4375 523.35 1589.0 585 1589.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,1589.0 575,1584.0 575,1594.0" fill="#796d5d"/>
+<path d="M 943 1589.0 C 999.25 1589.0 1011.75 2430.185185185185 1068 2430.185185185185" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1068 2430.185185185185 C 1239.9 2430.185185185185 1278.1 2430.185185185185 1450 2430.185185185185" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1450 2430.185185185185 C 1506.25 2430.185185185185 1518.75 3294.095238095238 1575 3294.095238095238" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,3294.095238095238 1565,3289.095238095238 1565,3299.095238095238" fill="#796d5d"/>
+<path d="M 448 1920.6875 C 504.25 1920.6875 516.75 2379.0 573 2379.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 573 2379.0 C 744.9 2379.0 783.1 2379.0 955 2379.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 955 2379.0 C 1005.85 2379.0 1017.15 2885.074074074074 1068 2885.074074074074" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1068 2885.074074074074 C 1239.9 2885.074074074074 1278.1 2885.074074074074 1450 2885.074074074074" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1450 2885.074074074074 C 1506.25 2885.074074074074 1518.75 3294.095238095238 1575 3294.095238095238" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,3294.095238095238 1565,3289.095238095238 1565,3299.095238095238" fill="#796d5d"/>
+<path d="M 1438 2811.259259259259 C 1499.65 2811.259259259259 1513.35 3294.095238095238 1575 3294.095238095238" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,3294.095238095238 1565,3289.095238095238 1565,3299.095238095238" fill="#796d5d"/>
+<path d="M 448 1791.0625 C 509.65 1791.0625 523.35 1711.0 585 1711.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,1711.0 575,1706.0 575,1716.0" fill="#796d5d"/>
+<path d="M 943 1711.0 C 1004.65 1711.0 1018.35 3733.037037037037 1080 3733.037037037037" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,3733.037037037037 1070,3728.037037037037 1070,3738.037037037037" fill="#796d5d"/>
+<path d="M 448 1920.6875 C 504.25 1920.6875 516.75 2870.0 573 2870.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 573 2870.0 C 744.9 2870.0 783.1 2870.0 955 2870.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 955 2870.0 C 1011.25 2870.0 1023.75 3733.037037037037 1080 3733.037037037037" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,3733.037037037037 1070,3728.037037037037 1070,3738.037037037037" fill="#796d5d"/>
+<path d="M 1933 3294.095238095238 C 1994.65 3294.095238095238 2008.35 3126.2 2070 3126.2" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2070,3126.2 2060,3121.2 2060,3131.2" fill="#796d5d"/>
+<path d="M 1438 2811.259259259259 C 1494.25 2811.259259259259 1506.75 2994.809523809524 1563 2994.809523809524" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1563 2994.809523809524 C 1734.9 2994.809523809524 1773.1 2994.809523809524 1945 2994.809523809524" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1945 2994.809523809524 C 2001.25 2994.809523809524 2013.75 3126.2 2070 3126.2" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2070,3126.2 2060,3121.2 2060,3131.2" fill="#796d5d"/>
+<path d="M 943 1589.0 C 1004.65 1589.0 1018.35 3425.777777777778 1080 3425.777777777778" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,3425.777777777778 1070,3420.777777777778 1070,3430.777777777778" fill="#796d5d"/>
+<path d="M 448 1791.0625 C 504.25 1791.0625 516.75 2629.0 573 2629.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 573 2629.0 C 744.9 2629.0 783.1 2629.0 955 2629.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 955 2629.0 C 1011.25 2629.0 1023.75 3425.777777777778 1080 3425.777777777778" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,3425.777777777778 1070,3420.777777777778 1070,3430.777777777778" fill="#796d5d"/>
+<path d="M 943 1467.0 C 1004.65 1467.0 1018.35 3579.4074074074074 1080 3579.4074074074074" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,3579.4074074074074 1070,3574.4074074074074 1070,3584.4074074074074" fill="#796d5d"/>
+<path d="M 448 1920.6875 C 504.25 1920.6875 516.75 2748.0 573 2748.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 573 2748.0 C 744.9 2748.0 783.1 2748.0 955 2748.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 955 2748.0 C 1011.25 2748.0 1023.75 3579.4074074074074 1080 3579.4074074074074" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,3579.4074074074074 1070,3574.4074074074074 1070,3584.4074074074074" fill="#796d5d"/>
+<path d="M 943 1467.0 C 1004.65 1467.0 1018.35 3118.5185185185187 1080 3118.5185185185187" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,3118.5185185185187 1070,3113.5185185185187 1070,3123.5185185185187" fill="#796d5d"/>
+<path d="M 943 857.0 C 1004.65 857.0 1018.35 3118.5185185185187 1080 3118.5185185185187" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,3118.5185185185187 1070,3113.5185185185187 1070,3123.5185185185187" fill="#796d5d"/>
+<path d="M 1933 3294.095238095238 C 1994.65 3294.095238095238 2008.35 3541.0 2070 3541.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2070,3541.0 2060,3536.0 2060,3546.0" fill="#796d5d"/>
+<path d="M 1438 2811.259259259259 C 1494.25 2811.259259259259 1506.75 3198.333333333333 1563 3198.333333333333" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1563 3198.333333333333 C 1734.9 3198.333333333333 1773.1 3198.333333333333 1945 3198.333333333333" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1945 3198.333333333333 C 2001.25 3198.333333333333 2013.75 3541.0 2070 3541.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2070,3541.0 2060,3536.0 2060,3546.0" fill="#796d5d"/>
+<path d="M 1933 3294.095238095238 C 1989.25 3294.095238095238 2001.75 2915.8 2058 2915.8" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 2058 2915.8 C 2229.9 2915.8 2268.1 2915.8 2440 2915.8" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 2440 2915.8 C 2496.25 2915.8 2508.75 2504.0 2565 2504.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2565,2504.0 2555,2499.0 2555,2509.0" fill="#796d5d"/>
+<path d="M 2428 3126.2 C 2489.65 3126.2 2503.35 2504.0 2565 2504.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2565,2504.0 2555,2499.0 2555,2509.0" fill="#796d5d"/>
+<path d="M 943 1589.0 C 1004.65 1589.0 1018.35 3272.1481481481483 1080 3272.1481481481483" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,3272.1481481481483 1070,3267.1481481481483 1070,3277.1481481481483" fill="#796d5d"/>
+<path d="M 1438 3425.777777777778 C 1499.65 3425.777777777778 1513.35 3491.6190476190477 1575 3491.6190476190477" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,3491.6190476190477 1565,3486.6190476190477 1565,3496.6190476190477" fill="#796d5d"/>
+<path d="M 1438 3425.777777777778 C 1499.65 3425.777777777778 1513.35 3689.1428571428573 1575 3689.1428571428573" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,3689.1428571428573 1565,3684.1428571428573 1565,3694.1428571428573" fill="#796d5d"/>
+<path d="M 1438 3425.777777777778 C 1499.65 3425.777777777778 1513.35 3886.6666666666665 1575 3886.6666666666665" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,3886.6666666666665 1565,3881.6666666666665 1565,3891.6666666666665" fill="#796d5d"/>
+<path d="M 1933 3294.095238095238 C 1989.25 3294.095238095238 2001.75 3330.6 2058 3330.6" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 2058 3330.6 C 2229.9 3330.6 2268.1 3330.6 2440 3330.6" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 2440 3330.6 C 2496.25 3330.6 2508.75 3333.6 2565 3333.6" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2565,3333.6 2555,3328.6 2555,3338.6" fill="#796d5d"/>
+<path d="M 2428 3126.2 C 2489.65 3126.2 2503.35 3333.6 2565 3333.6" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2565,3333.6 2555,3328.6 2555,3338.6" fill="#796d5d"/>
+<path d="M 1933 3294.095238095238 C 1989.25 3294.095238095238 2001.75 3751.4 2058 3751.4" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 2058 3751.4 C 2229.9 3751.4 2268.1 3751.4 2440 3751.4" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 2440 3751.4 C 2496.25 3751.4 2508.75 4163.2 2565 4163.2" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2565,4163.2 2555,4158.2 2555,4168.2" fill="#796d5d"/>
+<path d="M 2428 3126.2 C 2489.65 3126.2 2503.35 4163.2 2565 4163.2" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="2565,4163.2 2555,4158.2 2555,4168.2" fill="#796d5d"/>
+<path d="M 448 2309.5625 C 509.65 2309.5625 523.35 2077.0 585 2077.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,2077.0 575,2072.0 575,2082.0" fill="#796d5d"/>
+<path d="M 448 2439.1875 C 509.65 2439.1875 523.35 2077.0 585 2077.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,2077.0 575,2072.0 575,2082.0" fill="#796d5d"/>
+<path d="M 448 2309.5625 C 509.65 2309.5625 523.35 2199.0 585 2199.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,2199.0 575,2194.0 575,2204.0" fill="#796d5d"/>
+<path d="M 448 2568.8125 C 509.65 2568.8125 523.35 2199.0 585 2199.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,2199.0 575,2194.0 575,2204.0" fill="#796d5d"/>
+<path d="M 448 2568.8125 C 509.65 2568.8125 523.35 2321.0 585 2321.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,2321.0 575,2316.0 575,2326.0" fill="#796d5d"/>
+<path d="M 448 2309.5625 C 509.65 2309.5625 523.35 2321.0 585 2321.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,2321.0 575,2316.0 575,2326.0" fill="#796d5d"/>
+<path d="M 448 2828.0625 C 509.65 2828.0625 523.35 2443.0 585 2443.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,2443.0 575,2438.0 575,2448.0" fill="#796d5d"/>
+<path d="M 943 1833.0 C 1004.65 1833.0 1018.35 3886.6666666666665 1080 3886.6666666666665" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,3886.6666666666665 1070,3881.6666666666665 1070,3891.6666666666665" fill="#796d5d"/>
+<path d="M 943 1955.0 C 1004.65 1955.0 1018.35 3886.6666666666665 1080 3886.6666666666665" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,3886.6666666666665 1070,3881.6666666666665 1070,3891.6666666666665" fill="#796d5d"/>
+<path d="M 448 2698.4375 C 509.65 2698.4375 523.35 2565.0 585 2565.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,2565.0 575,2560.0 575,2570.0" fill="#796d5d"/>
+<path d="M 943 2565.0 C 1004.65 2565.0 1018.35 4193.925925925926 1080 4193.925925925926" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,4193.925925925926 1070,4188.925925925926 1070,4198.925925925926" fill="#796d5d"/>
+<path d="M 943 2565.0 C 1004.65 2565.0 1018.35 4040.296296296296 1080 4040.296296296296" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,4040.296296296296 1070,4035.296296296296 1070,4045.296296296296" fill="#796d5d"/>
+<path d="M 448 2828.0625 C 509.65 2828.0625 523.35 2687.0 585 2687.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,2687.0 575,2682.0 575,2692.0" fill="#796d5d"/>
+<path d="M 448 2828.0625 C 504.25 2828.0625 516.75 3239.0 573 3239.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 573 3239.0 C 744.9 3239.0 783.1 3239.0 955 3239.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 955 3239.0 C 1005.85 3239.0 1017.15 3659.222222222222 1068 3659.222222222222" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1068 3659.222222222222 C 1239.9 3659.222222222222 1278.1 3659.222222222222 1450 3659.222222222222" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1450 3659.222222222222 C 1506.25 3659.222222222222 1518.75 4084.190476190476 1575 4084.190476190476" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,4084.190476190476 1565,4079.190476190476 1565,4089.190476190476" fill="#796d5d"/>
+<path d="M 1438 4193.925925925926 C 1499.65 4193.925925925926 1513.35 4084.190476190476 1575 4084.190476190476" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,4084.190476190476 1565,4079.190476190476 1565,4089.190476190476" fill="#796d5d"/>
+<path d="M 1438 4193.925925925926 C 1499.65 4193.925925925926 1513.35 4281.714285714286 1575 4281.714285714286" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,4281.714285714286 1565,4276.714285714286 1565,4286.714285714286" fill="#796d5d"/>
+<path d="M 448 2957.6875 C 509.65 2957.6875 523.35 2809.0 585 2809.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,2809.0 575,2804.0 575,2814.0" fill="#796d5d"/>
+<path d="M 448 3087.3125 C 509.65 3087.3125 523.35 3053.0 585 3053.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,3053.0 575,3048.0 575,3058.0" fill="#796d5d"/>
+<path d="M 448 3476.1875 C 509.65 3476.1875 523.35 3419.0 585 3419.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,3419.0 575,3414.0 575,3424.0" fill="#796d5d"/>
+<path d="M 448 3346.5625 C 509.65 3346.5625 523.35 3297.0 585 3297.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,3297.0 575,3292.0 575,3302.0" fill="#796d5d"/>
+<path d="M 448 3216.9375 C 509.65 3216.9375 523.35 3175.0 585 3175.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,3175.0 575,3170.0 575,3180.0" fill="#796d5d"/>
+<path d="M 448 3865.0625 C 509.65 3865.0625 523.35 3907.0 585 3907.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,3907.0 575,3902.0 575,3912.0" fill="#796d5d"/>
+<path d="M 448 3865.0625 C 509.65 3865.0625 523.35 4029.0 585 4029.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,4029.0 575,4024.0 575,4034.0" fill="#796d5d"/>
+<path d="M 448 3994.6875 C 509.65 3994.6875 523.35 3785.0 585 3785.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,3785.0 575,3780.0 575,3790.0" fill="#796d5d"/>
+<path d="M 448 3605.8125 C 509.65 3605.8125 523.35 3785.0 585 3785.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,3785.0 575,3780.0 575,3790.0" fill="#796d5d"/>
+<path d="M 448 2957.6875 C 509.65 2957.6875 523.35 2931.0 585 2931.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,2931.0 575,2926.0 575,2936.0" fill="#796d5d"/>
+<path d="M 448 4253.9375 C 509.65 4253.9375 523.35 4273.0 585 4273.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,4273.0 575,4268.0 575,4278.0" fill="#796d5d"/>
+<path d="M 943 4273.0 C 1004.65 4273.0 1018.35 4501.185185185185 1080 4501.185185185185" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,4501.185185185185 1070,4496.185185185185 1070,4506.185185185185" fill="#796d5d"/>
+<path d="M 1438 2657.6296296296296 C 1499.65 2657.6296296296296 1513.35 2504.0 1575 2504.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,2504.0 1565,2499.0 1565,2509.0" fill="#796d5d"/>
+<path d="M 448 4124.3125 C 509.65 4124.3125 523.35 4151.0 585 4151.0" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="585,4151.0 575,4146.0 575,4156.0" fill="#796d5d"/>
+<path d="M 943 4151.0 C 1004.65 4151.0 1018.35 4347.555555555556 1080 4347.555555555556" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1080,4347.555555555556 1070,4342.555555555556 1070,4352.555555555556" fill="#796d5d"/>
+<path d="M 943 1467.0 C 999.25 1467.0 1011.75 3044.7037037037035 1068 3044.7037037037035" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1068 3044.7037037037035 C 1239.9 3044.7037037037035 1278.1 3044.7037037037035 1450 3044.7037037037035" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M 1450 3044.7037037037035 C 1506.25 3044.7037037037035 1518.75 4479.238095238095 1575 4479.238095238095" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,4479.238095238095 1565,4474.238095238095 1565,4484.238095238095" fill="#796d5d"/>
+<path d="M 1438 3733.037037037037 C 1499.65 3733.037037037037 1513.35 4479.238095238095 1575 4479.238095238095" fill="none" stroke="#796d5d" stroke-width="2" stroke-dasharray="8 8"/>
+<polygon points="1575,4479.238095238095 1565,4474.238095238095 1565,4484.238095238095" fill="#796d5d"/>
+<path d="M 1438 506.8148148148148 C 1499.65 506.8148148148148 1513.35 726.2857142857142 1575 726.2857142857142" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="1575,726.2857142857142 1565,721.2857142857142 1565,731.2857142857142" fill="#69d4aa"/>
+<path d="M 1438 506.8148148148148 C 1499.65 506.8148148148148 1513.35 2701.5238095238096 1575 2701.5238095238096" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="1575,2701.5238095238096 1565,2696.5238095238096 1565,2706.5238095238096" fill="#69d4aa"/>
+<path d="M 1438 506.8148148148148 C 1499.65 506.8148148148148 1513.35 1121.3333333333335 1575 1121.3333333333335" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="1575,1121.3333333333335 1565,1116.3333333333335 1565,1126.3333333333335" fill="#69d4aa"/>
+<path d="M 1933 726.2857142857142 C 1994.65 726.2857142857142 2008.35 3955.8 2070 3955.8" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="2070,3955.8 2060,3950.8 2060,3960.8" fill="#69d4aa"/>
+<path d="M 1933 923.8095238095239 C 1994.65 923.8095238095239 2008.35 4370.6 2070 4370.6" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="2070,4370.6 2060,4365.6 2060,4375.6" fill="#69d4aa"/>
+<path d="M 448 4383.5625 C 509.65 4383.5625 523.35 4395.0 585 4395.0" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="585,4395.0 575,4390.0 575,4400.0" fill="#69d4aa"/>
+<path d="M 448 4513.1875 C 509.65 4513.1875 523.35 4517.0 585 4517.0" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="585,4517.0 575,4512.0 575,4522.0" fill="#69d4aa"/>
+<path d="M 943 1345.0 C 1004.65 1345.0 1018.35 2811.259259259259 1080 2811.259259259259" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="1080,2811.259259259259 1070,2806.259259259259 1070,2816.259259259259" fill="#69d4aa"/>
+<path d="M 943 735.0 C 1004.65 735.0 1018.35 967.7037037037037 1080 967.7037037037037" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="1080,967.7037037037037 1070,962.7037037037037 1070,972.7037037037037" fill="#69d4aa"/>
+<path d="M 448 3735.4375 C 509.65 3735.4375 523.35 3663.0 585 3663.0" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="585,3663.0 575,3658.0 575,3668.0" fill="#69d4aa"/>
+<path d="M 448 3735.4375 C 509.65 3735.4375 523.35 3541.0 585 3541.0" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="585,3541.0 575,3536.0 575,3546.0" fill="#69d4aa"/>
+<path d="M 2428 637.4 C 2489.65 637.4 2503.35 844.8 2565 844.8" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="2565,844.8 2555,839.8 2555,849.8" fill="#69d4aa"/>
+<path d="M 943 857.0 C 1004.65 857.0 1018.35 660.4444444444445 1080 660.4444444444445" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="1080,660.4444444444445 1070,655.4444444444445 1070,665.4444444444445" fill="#69d4aa"/>
+<path d="M 448 1402.1875 C 509.65 1402.1875 523.35 979.0 585 979.0" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="585,979.0 575,974.0 575,984.0" fill="#69d4aa"/>
+<path d="M 943 1223.0 C 1004.65 1223.0 1018.35 2964.8888888888887 1080 2964.8888888888887" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="1080,2964.8888888888887 1070,2959.8888888888887 1070,2969.8888888888887" fill="#69d4aa"/>
+<path d="M 2428 2296.6 C 2489.65 2296.6 2503.35 1674.4 2565 1674.4" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="2565,1674.4 2555,1669.4 2555,1679.4" fill="#69d4aa"/>
+<path d="M 1438 1121.3333333333335 C 1499.65 1121.3333333333335 1513.35 2306.4761904761904 1575 2306.4761904761904" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="1575,2306.4761904761904 1565,2301.4761904761904 1565,2311.4761904761904" fill="#69d4aa"/>
+<path d="M 1438 3272.1481481481483 C 1499.65 3272.1481481481483 1513.35 3491.6190476190477 1575 3491.6190476190477" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="1575,3491.6190476190477 1565,3486.6190476190477 1565,3496.6190476190477" fill="#69d4aa"/>
+<path d="M 448 2050.3125 C 509.65 2050.3125 523.35 1833.0 585 1833.0" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="585,1833.0 575,1828.0 575,1838.0" fill="#69d4aa"/>
+<path d="M 448 2179.9375 C 509.65 2179.9375 523.35 1955.0 585 1955.0" fill="none" stroke="#69d4aa" stroke-width="3"/>
+<polygon points="585,1955.0 575,1950.0 575,1960.0" fill="#69d4aa"/>
+<path d="M 1933 1121.3333333333335 C 1994.65 1121.3333333333335 2008.35 2711.4 2070 2711.4" fill="none" stroke="#8ab9ff" stroke-width="3"/>
+<polygon points="2070,2711.4 2060,2706.4 2060,2716.4" fill="#8ab9ff"/>
+<path d="M 1438 660.4444444444445 C 1494.25 660.4444444444445 1506.75 1615.142857142857 1563 1615.142857142857" fill="none" stroke="#8ab9ff" stroke-width="3"/>
+<path d="M 1563 1615.142857142857 C 1734.9 1615.142857142857 1773.1 1615.142857142857 1945 1615.142857142857" fill="none" stroke="#8ab9ff" stroke-width="3"/>
+<path d="M 1945 1615.142857142857 C 2001.25 1615.142857142857 2013.75 2711.4 2070 2711.4" fill="none" stroke="#8ab9ff" stroke-width="3"/>
+<polygon points="2070,2711.4 2060,2706.4 2060,2716.4" fill="#8ab9ff"/>
+<path d="M 943 491.0 C 999.25 491.0 1011.75 1201.1481481481483 1068 1201.1481481481483" fill="none" stroke="#8ab9ff" stroke-width="3"/>
+<path d="M 1068 1201.1481481481483 C 1239.9 1201.1481481481483 1278.1 1201.1481481481483 1450 1201.1481481481483" fill="none" stroke="#8ab9ff" stroke-width="3"/>
+<path d="M 1450 1201.1481481481483 C 1500.85 1201.1481481481483 1512.15 2013.1904761904761 1563 2013.1904761904761" fill="none" stroke="#8ab9ff" stroke-width="3"/>
+<path d="M 1563 2013.1904761904761 C 1734.9 2013.1904761904761 1773.1 2013.1904761904761 1945 2013.1904761904761" fill="none" stroke="#8ab9ff" stroke-width="3"/>
+<path d="M 1945 2013.1904761904761 C 2001.25 2013.1904761904761 2013.75 2711.4 2070 2711.4" fill="none" stroke="#8ab9ff" stroke-width="3"/>
+<polygon points="2070,2711.4 2060,2706.4 2060,2716.4" fill="#8ab9ff"/>
+<rect x="1080" y="459.8148148148148" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="1080" y="467.8148148148148" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="1094" y="488.8148148148148" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ドンキーコング</text>
+<text x="1094" y="541.8148148148148" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#001  FC 1983.07.15  ／  初出 1981</text>
+<rect x="1575" y="679.2857142857142" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="1575" y="687.2857142857142" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="1589" y="708.2857142857142" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ドンキーコングJr.</text>
+<text x="1589" y="761.2857142857142" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#002  FC 1983.07.15  ／  初出 1982</text>
+<rect x="1575" y="876.8095238095239" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="1575" y="884.8095238095239" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="1589" y="905.8095238095239" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ポパイ</text>
+<text x="1589" y="958.8095238095239" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#003  FC 1983.07.15  ／  初出 1982</text>
+<rect x="90" y="4748" width="358" height="94" rx="9" fill="#192536" stroke="#adb8c6" stroke-width="2"/>
+<rect x="90" y="4756" width="5" height="78" rx="2" fill="#adb8c6" stroke="#adb8c6" stroke-width="1"/>
+<text x="104" y="4777" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">五目ならべ 連珠</text>
+<text x="104" y="4830" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#004  FC 1983.08.27  ／  初出 1983</text>
+<rect x="90" y="4336.5625" width="358" height="94.0" rx="9" fill="#192536" stroke="#adb8c6" stroke-width="2"/>
+<rect x="90" y="4344.5625" width="5" height="78.0" rx="2" fill="#adb8c6" stroke="#adb8c6" stroke-width="1"/>
+<text x="104" y="4365.5625" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">麻雀</text>
+<text x="104" y="4418.5625" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#005  FC 1983.08.27  ／  初出 1983</text>
+<rect x="1575" y="1074.3333333333335" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="1575" y="1082.3333333333335" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="1589" y="1103.3333333333335" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">マリオブラザーズ</text>
+<text x="1589" y="1156.3333333333335" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#006  FC 1983.09.09  ／  初出 1983</text>
+<rect x="2070" y="4323.6" width="358" height="94.0" rx="9" fill="#192536" stroke="#adb8c6" stroke-width="2"/>
+<rect x="2070" y="4331.6" width="5" height="78.0" rx="2" fill="#adb8c6" stroke="#adb8c6" stroke-width="1"/>
+<text x="2084" y="4352.6" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ポパイの英語遊び</text>
+<text x="2084" y="4405.6" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#007  FC 1983.11.22  ／  初出 1983</text>
+<rect x="585" y="3006.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#f1965b" stroke-width="2"/>
+<rect x="585" y="3014.0" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="599" y="3035.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ベースボール</text>
+<text x="599" y="3088.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#008  FC 1983.12.07  ／  初出 1983</text>
+<rect x="2070" y="3908.8" width="358" height="94.0" rx="9" fill="#192536" stroke="#adb8c6" stroke-width="2"/>
+<rect x="2070" y="3916.8" width="5" height="78.0" rx="2" fill="#adb8c6" stroke="#adb8c6" stroke-width="1"/>
+<text x="2084" y="3937.8" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ドンキーコングJr.の算数遊び</text>
+<text x="2084" y="3990.8" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#009  FC 1983.12.12  ／  初出 1983</text>
+<rect x="585" y="2762.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#f1965b" stroke-width="2"/>
+<rect x="585" y="2770.0" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="599" y="2791.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">テニス</text>
+<text x="599" y="2844.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#010  FC 1984.01.14  ／  初出 1984</text>
+<rect x="585" y="4226.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#adb8c6" stroke-width="2"/>
+<rect x="585" y="4234.0" width="5" height="78.0" rx="2" fill="#adb8c6" stroke="#adb8c6" stroke-width="1"/>
+<text x="599" y="4255.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ピンボール</text>
+<text x="599" y="4308.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#011  FC 1984.02.02  ／  初出 1984</text>
+<rect x="585" y="1786.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#70a5ef" stroke-width="2"/>
+<rect x="585" y="1794.0" width="5" height="78.0" rx="2" fill="#70a5ef" stroke="#70a5ef" stroke-width="1"/>
+<text x="599" y="1815.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ワイルドガンマン</text>
+<text x="599" y="1868.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#012  FC 1984.02.18  ／  初出 1984</text>
+<rect x="585" y="1908.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#70a5ef" stroke-width="2"/>
+<rect x="585" y="1916.0" width="5" height="78.0" rx="2" fill="#70a5ef" stroke="#70a5ef" stroke-width="1"/>
+<text x="599" y="1937.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ダックハント</text>
+<text x="599" y="1990.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#013  FC 1984.04.21  ／  初出 1984</text>
+<rect x="585" y="3372.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#f1965b" stroke-width="2"/>
+<rect x="585" y="3380.0" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="599" y="3401.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ゴルフ</text>
+<text x="599" y="3454.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#014  FC 1984.05.01  ／  初出 1984</text>
+<rect x="1080" y="3839.6666666666665" width="358" height="94.0" rx="9" fill="#192536" stroke="#70a5ef" stroke-width="2"/>
+<rect x="1080" y="3847.6666666666665" width="5" height="78.0" rx="2" fill="#70a5ef" stroke="#70a5ef" stroke-width="1"/>
+<text x="1094" y="3868.6666666666665" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ホーガンズアレイ</text>
+<text x="1094" y="3921.6666666666665" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#015  FC 1984.06.12  ／  初出 1984</text>
+<rect x="90" y="4466.1875" width="358" height="94.0" rx="9" fill="#192536" stroke="#adb8c6" stroke-width="2"/>
+<rect x="90" y="4474.1875" width="5" height="78.0" rx="2" fill="#adb8c6" stroke="#adb8c6" stroke-width="1"/>
+<text x="104" y="4495.1875" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ファミリーベーシック</text>
+<text x="104" y="4548.1875" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#016  FC 1984.06.21  ／  初出 1984</text>
+<rect x="1575" y="2654.5238095238096" width="358" height="94.0" rx="9" fill="#192536" stroke="#66bade" stroke-width="2"/>
+<rect x="1575" y="2662.5238095238096" width="5" height="78.0" rx="2" fill="#66bade" stroke="#66bade" stroke-width="1"/>
+<text x="1589" y="2683.5238095238096" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ドンキーコング3</text>
+<text x="1589" y="2736.5238095238096" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#017  FC 1984.07.04  ／  初出 1983</text>
+<rect x="1575" y="1666.904761904762" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="1575" y="1674.904761904762" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="1589" y="1695.904761904762" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ナッツ＆ミルク</text>
+<text x="1589" y="1748.904761904762" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#018  FC 1984.07.28  ／  初出 1983</text>
+<rect x="585" y="688.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#b792ee" stroke-width="2"/>
+<rect x="585" y="696.0" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="599" y="717.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ロードランナー</text>
+<text x="599" y="770.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#019  FC 1984.07.28  ／  初出 1983</text>
+<rect x="585" y="1298.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#66bade" stroke-width="2"/>
+<rect x="585" y="1306.0" width="5" height="78.0" rx="2" fill="#66bade" stroke="#66bade" stroke-width="1"/>
+<text x="599" y="1327.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ギャラクシアン</text>
+<text x="599" y="1380.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#020  FC 1984.09.07  ／  初出 1979</text>
+<rect x="1080" y="1227.962962962963" width="358" height="94.0" rx="9" fill="#192536" stroke="#b792ee" stroke-width="2"/>
+<rect x="1080" y="1235.962962962963" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="1094" y="1256.962962962963" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">デビルワールド</text>
+<text x="1094" y="1309.962962962963" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#021  FC 1984.10.05  ／  初出 1984</text>
+<rect x="585" y="4348.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#adb8c6" stroke-width="2"/>
+<rect x="585" y="4356.0" width="5" height="78.0" rx="2" fill="#adb8c6" stroke="#adb8c6" stroke-width="1"/>
+<text x="599" y="4377.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">4人打ち麻雀</text>
+<text x="599" y="4430.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#022  FC 1984.11.02  ／  初出 1984</text>
+<rect x="585" y="2640.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#eab45b" stroke-width="2"/>
+<rect x="585" y="2648.0" width="5" height="78.0" rx="2" fill="#eab45b" stroke="#eab45b" stroke-width="1"/>
+<text x="599" y="2669.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">F1レース</text>
+<text x="599" y="2722.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#023  FC 1984.11.02  ／  初出 1984</text>
+<rect x="585" y="810.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#b792ee" stroke-width="2"/>
+<rect x="585" y="818.0" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="599" y="839.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">パックマン</text>
+<text x="599" y="892.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#024  FC 1984.11.02  ／  初出 1980</text>
+<rect x="1575" y="3247.095238095238" width="358" height="94.0" rx="9" fill="#192536" stroke="#56c8ab" stroke-width="2"/>
+<rect x="1575" y="3255.095238095238" width="5" height="78.0" rx="2" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="1589" y="3276.095238095238" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ゼビウス</text>
+<text x="1589" y="3329.095238095238" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#025  FC 1984.11.08  ／  初出 1983</text>
+<rect x="90" y="3947.6875" width="358" height="94.0" rx="9" fill="#192536" stroke="#f1965b" stroke-width="2"/>
+<rect x="90" y="3955.6875" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="104" y="3976.6875" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">アーバンチャンピオン</text>
+<text x="104" y="4029.6875" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#026  FC 1984.11.14  ／  初出 1984</text>
+<rect x="1575" y="1271.857142857143" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="1575" y="1279.857142857143" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="1589" y="1300.857142857143" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">マッピー</text>
+<text x="1589" y="1353.857142857143" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#027  FC 1984.11.14  ／  初出 1983</text>
+<rect x="1080" y="1381.5925925925926" width="358" height="94.0" rx="9" fill="#192536" stroke="#b792ee" stroke-width="2"/>
+<rect x="1080" y="1389.5925925925926" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="1094" y="1410.5925925925926" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">クルクルランド</text>
+<text x="1094" y="1463.5925925925926" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#028  FC 1984.11.22  ／  初出 1984</text>
+<rect x="1575" y="4234.714285714286" width="358" height="94.0" rx="9" fill="#192536" stroke="#eab45b" stroke-width="2"/>
+<rect x="1575" y="4242.714285714286" width="5" height="78.0" rx="2" fill="#eab45b" stroke="#eab45b" stroke-width="1"/>
+<text x="1589" y="4263.714285714286" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">エキサイトバイク</text>
+<text x="1589" y="4316.714285714286" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#029  FC 1984.11.30  ／  初出 1984</text>
+<rect x="585" y="444.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="585" y="452.0" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="599" y="473.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">バルーンファイト</text>
+<text x="599" y="526.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#030  FC 1985.01.22  ／  初出 1984</text>
+<rect x="2070" y="1005.2" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="2070" y="1013.2" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="2084" y="1034.2" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">アイスクライマー</text>
+<text x="2084" y="1087.2" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#031  FC 1985.01.30  ／  初出 1985</text>
+<rect x="1575" y="3049.5714285714284" width="358" height="94.0" rx="9" fill="#192536" stroke="#66bade" stroke-width="2"/>
+<rect x="1575" y="3057.5714285714284" width="5" height="78.0" rx="2" fill="#66bade" stroke="#66bade" stroke-width="1"/>
+<text x="1589" y="3078.5714285714284" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">エクセリオン</text>
+<text x="1589" y="3131.5714285714284" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#032  FC 1985.02.11  ／  初出 1983</text>
+<rect x="585" y="4470.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#adb8c6" stroke-width="2"/>
+<rect x="585" y="4478.0" width="5" height="78.0" rx="2" fill="#adb8c6" stroke="#adb8c6" stroke-width="1"/>
+<text x="599" y="4499.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ファミリーベーシックV3</text>
+<text x="599" y="4552.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#033  FC 1985.02.21  ／  初出 1985</text>
+<rect x="1080" y="3686.037037037037" width="358" height="94.0" rx="9" fill="#192536" stroke="#56c8ab" stroke-width="2"/>
+<rect x="1080" y="3694.037037037037" width="5" height="78.0" rx="2" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="1094" y="3715.037037037037" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">バンゲリングベイ</text>
+<text x="1094" y="3768.037037037037" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#034  FC 1985.02.22  ／  初出 1984</text>
+<rect x="1080" y="2764.259259259259" width="358" height="94.0" rx="9" fill="#192536" stroke="#66bade" stroke-width="2"/>
+<rect x="1080" y="2772.259259259259" width="5" height="78.0" rx="2" fill="#66bade" stroke="#66bade" stroke-width="1"/>
+<text x="1094" y="2793.259259259259" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ギャラガ</text>
+<text x="1094" y="2846.259259259259" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#035  FC 1985.03.14  ／  初出 1981</text>
+<rect x="1080" y="3378.777777777778" width="358" height="94.0" rx="9" fill="#192536" stroke="#56c8ab" stroke-width="2"/>
+<rect x="1080" y="3386.777777777778" width="5" height="78.0" rx="2" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="1094" y="3407.777777777778" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">フォーメーションZ</text>
+<text x="1094" y="3460.777777777778" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#036  FC 1985.04.04  ／  初出 1984</text>
+<rect x="585" y="3250.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#f1965b" stroke-width="2"/>
+<rect x="585" y="3258.0" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="599" y="3279.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">サッカー</text>
+<text x="599" y="3332.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#037  FC 1985.04.09  ／  初出 1985</text>
+<rect x="90" y="1614.4375" width="358" height="94.0" rx="9" fill="#192536" stroke="#66bade" stroke-width="2"/>
+<rect x="90" y="1622.4375" width="5" height="78.0" rx="2" fill="#66bade" stroke="#66bade" stroke-width="1"/>
+<text x="104" y="1643.4375" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">スペースインベーダー</text>
+<text x="104" y="1696.4375" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#038  FC 1985.04.17  ／  初出 1978</text>
+<rect x="1080" y="920.7037037037037" width="358" height="94.0" rx="9" fill="#192536" stroke="#b792ee" stroke-width="2"/>
+<rect x="1080" y="928.7037037037037" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="1094" y="949.7037037037037" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">チャンピオンシッ</text>
+<text x="1094" y="974.7037037037037" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">プロードランナー</text>
+<text x="1094" y="1002.7037037037037" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#039  FC 1985.04.17  ／  初出 1984</text>
+<rect x="585" y="3860.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#f1965b" stroke-width="2"/>
+<rect x="585" y="3868.0" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="599" y="3889.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">イー・アル・カンフー</text>
+<text x="599" y="3942.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#040  FC 1985.04.22  ／  初出 1985</text>
+<rect x="585" y="2396.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#70a5ef" stroke-width="2"/>
+<rect x="585" y="2404.0" width="5" height="78.0" rx="2" fill="#70a5ef" stroke="#70a5ef" stroke-width="1"/>
+<text x="599" y="2425.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">けっきょく南極大冒険</text>
+<text x="599" y="2478.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#041  FC 1985.04.22  ／  初出 1983</text>
+<rect x="2070" y="590.4" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="2070" y="598.4" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="2084" y="619.4" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">忍者くん 魔城の冒険</text>
+<text x="2084" y="672.4" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#042  FC 1985.05.10  ／  初出 1984</text>
+<rect x="1080" y="1535.2222222222222" width="358" height="94.0" rx="9" fill="#192536" stroke="#b792ee" stroke-width="2"/>
+<rect x="1080" y="1543.2222222222222" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="1094" y="1564.2222222222222" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ちゃっくんぽっぷ</text>
+<text x="1094" y="1617.2222222222222" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#043  FC 1985.05.24  ／  初出 1984</text>
+<rect x="1080" y="2303.3703703703704" width="358" height="94.0" rx="9" fill="#192536" stroke="#b792ee" stroke-width="2"/>
+<rect x="1080" y="2311.3703703703704" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="1094" y="2332.3703703703704" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ディグダグ</text>
+<text x="1094" y="2385.3703703703704" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#044  FC 1985.06.04  ／  初出 1982</text>
+<rect x="1080" y="2610.6296296296296" width="358" height="94.0" rx="9" fill="#192536" stroke="#b792ee" stroke-width="2"/>
+<rect x="1080" y="2618.6296296296296" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="1094" y="2639.6296296296296" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">フラッピー</text>
+<text x="1094" y="2692.6296296296296" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#045  FC 1985.06.14  ／  初出 1983</text>
+<rect x="2070" y="1420.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="2070" y="1428.0" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="2084" y="1449.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">レッキングクルー</text>
+<text x="2084" y="1502.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#046  FC 1985.06.18  ／  初出 1984</text>
+<rect x="478" y="4748" width="358" height="94" rx="9" fill="#192536" stroke="#f1965b" stroke-width="2"/>
+<rect x="478" y="4756" width="5" height="78" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="492" y="4777" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">スパルタンX</text>
+<text x="492" y="4830" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#047  FC 1985.06.21  ／  初出 1984</text>
+<rect x="90" y="3688.4375" width="358" height="94.0" rx="9" fill="#192536" stroke="#f1965b" stroke-width="2"/>
+<rect x="90" y="3696.4375" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="104" y="3717.4375" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ハイパーオリンピック</text>
+<text x="104" y="3770.4375" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#048  FC 1985.06.21  ／  初出 1983</text>
+<rect x="585" y="3494.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#f1965b" stroke-width="2"/>
+<rect x="585" y="3502.0" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="599" y="3523.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ハイパーオリンピック 殿様版</text>
+<text x="599" y="3576.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#049  FC 1985.06.21  ／  初出 1985</text>
+<rect x="2070" y="3079.2" width="358" height="94.0" rx="9" fill="#192536" stroke="#56c8ab" stroke-width="2"/>
+<rect x="2070" y="3087.2" width="5" height="78.0" rx="2" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="2084" y="3108.2" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">スターフォース</text>
+<text x="2084" y="3161.2" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#050  FC 1985.06.25  ／  初出 1984</text>
+<rect x="1575" y="1469.3809523809523" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="1575" y="1477.3809523809523" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="1589" y="1498.3809523809523" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">エレベーターアクション</text>
+<text x="1589" y="1551.3809523809523" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#051  FC 1985.06.28  ／  初出 1983</text>
+<rect x="1080" y="3532.4074074074074" width="358" height="94.0" rx="9" fill="#192536" stroke="#56c8ab" stroke-width="2"/>
+<rect x="1080" y="3540.4074074074074" width="5" height="78.0" rx="2" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="1094" y="3561.4074074074074" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">フィールドコンバット</text>
+<text x="1094" y="3614.4074074074074" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#052  FC 1985.07.01  ／  初出 1985</text>
+<rect x="1080" y="3993.296296296296" width="358" height="94.0" rx="9" fill="#192536" stroke="#eab45b" stroke-width="2"/>
+<rect x="1080" y="4001.296296296296" width="5" height="78.0" rx="2" fill="#eab45b" stroke="#eab45b" stroke-width="1"/>
+<text x="1094" y="4022.296296296296" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ロードファイター</text>
+<text x="1094" y="4075.296296296296" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#053  FC 1985.07.11  ／  初出 1984</text>
+<rect x="1080" y="2917.8888888888887" width="358" height="94.0" rx="9" fill="#192536" stroke="#66bade" stroke-width="2"/>
+<rect x="1080" y="2925.8888888888887" width="5" height="78.0" rx="2" fill="#66bade" stroke="#66bade" stroke-width="1"/>
+<text x="1094" y="2946.8888888888887" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ワープマン</text>
+<text x="1094" y="2999.8888888888887" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#054  FC 1985.07.12  ／  初出 1985</text>
+<rect x="1080" y="4146.925925925926" width="358" height="94.0" rx="9" fill="#192536" stroke="#eab45b" stroke-width="2"/>
+<rect x="1080" y="4154.925925925926" width="5" height="78.0" rx="2" fill="#eab45b" stroke="#eab45b" stroke-width="1"/>
+<text x="1094" y="4175.925925925926" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ジッピーレース</text>
+<text x="1094" y="4228.925925925926" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#055  FC 1985.07.18  ／  初出 1983</text>
+<rect x="1080" y="2457.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#b792ee" stroke-width="2"/>
+<rect x="1080" y="2465.0" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="1094" y="2486.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ドアドア</text>
+<text x="1094" y="2539.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#056  FC 1985.07.18  ／  初出 1983</text>
+<rect x="2565" y="1627.4" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="2565" y="1635.4" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="2579" y="1656.4" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">スーパーアラビアン</text>
+<text x="2579" y="1709.4" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#057  FC 1985.07.25  ／  初出 1985</text>
+<rect x="866" y="4748" width="358" height="94" rx="9" fill="#192536" stroke="#adb8c6" stroke-width="2"/>
+<rect x="866" y="4756" width="5" height="78" rx="2" fill="#adb8c6" stroke="#adb8c6" stroke-width="1"/>
+<text x="880" y="4777" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ブロック</text>
+<text x="880" y="4830" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#058  FC 1985.07.26  ／  初出 1985</text>
+<rect x="585" y="1420.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#56c8ab" stroke-width="2"/>
+<rect x="585" y="1428.0" width="5" height="78.0" rx="2" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="599" y="1449.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">フロントライン</text>
+<text x="599" y="1502.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#059  FC 1985.08.01  ／  初出 1982</text>
+<rect x="1254" y="4748" width="358" height="94" rx="9" fill="#192536" stroke="#adb8c6" stroke-width="2"/>
+<rect x="1254" y="4756" width="5" height="78" rx="2" fill="#adb8c6" stroke="#adb8c6" stroke-width="1"/>
+<text x="1268" y="4777" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">本将棋 内藤九段将棋秘伝</text>
+<text x="1268" y="4830" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#060  FC 1985.08.01  ／  初出 1985</text>
+<rect x="1080" y="1688.851851851852" width="358" height="94.0" rx="9" fill="#192536" stroke="#b792ee" stroke-width="2"/>
+<rect x="1080" y="1696.851851851852" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="1094" y="1717.851851851852" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ドルアーガの塔</text>
+<text x="1094" y="1770.851851851852" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#061  FC 1985.08.06  ／  初出 1984</text>
+<rect x="585" y="566.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="585" y="574.0" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="599" y="595.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">アストロロボSASA</text>
+<text x="599" y="648.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#062  FC 1985.08.09  ／  初出 1983</text>
+<rect x="1642" y="4748" width="358" height="94" rx="9" fill="#192536" stroke="#adb8c6" stroke-width="2"/>
+<rect x="1642" y="4756" width="5" height="78" rx="2" fill="#adb8c6" stroke="#adb8c6" stroke-width="1"/>
+<text x="1656" y="4777" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ジャイロ</text>
+<text x="1656" y="4830" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#063  FC 1985.08.13  ／  初出 1985</text>
+<rect x="585" y="2152.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#70a5ef" stroke-width="2"/>
+<rect x="585" y="2160.0" width="5" height="78.0" rx="2" fill="#70a5ef" stroke="#70a5ef" stroke-width="1"/>
+<text x="599" y="2181.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ゲイモス</text>
+<text x="599" y="2234.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#064  FC 1985.08.28  ／  初出 1985</text>
+<rect x="585" y="3128.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#f1965b" stroke-width="2"/>
+<rect x="585" y="3136.0" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="599" y="3157.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">10ヤードファイト</text>
+<text x="599" y="3210.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#065  FC 1985.08.30  ／  初出 1983</text>
+<rect x="585" y="932.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#b792ee" stroke-width="2"/>
+<rect x="585" y="940.0" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="599" y="961.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">バトルシティー</text>
+<text x="599" y="1014.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#066  FC 1985.09.09  ／  初出 1985</text>
+<rect x="2070" y="2664.4" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="2070" y="2672.4" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="2084" y="2693.4" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">スーパーマリオブラザーズ</text>
+<text x="2084" y="2746.4" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#067  FC 1985.09.13  ／  初出 1985</text>
+<rect x="1575" y="2852.0476190476193" width="358" height="94.0" rx="9" fill="#192536" stroke="#66bade" stroke-width="2"/>
+<rect x="1575" y="2860.0476190476193" width="5" height="78.0" rx="2" fill="#66bade" stroke="#66bade" stroke-width="1"/>
+<text x="1589" y="2881.0476190476193" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">プーヤン</text>
+<text x="1589" y="2934.0476190476193" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#068  FC 1985.09.20  ／  初出 1982</text>
+<rect x="585" y="3616.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#f1965b" stroke-width="2"/>
+<rect x="585" y="3624.0" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="599" y="3645.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ハイパースポーツ</text>
+<text x="599" y="3698.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#069  FC 1985.09.27  ／  初出 1984</text>
+<rect x="2070" y="1834.8" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="2070" y="1842.8" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="2084" y="1863.8" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">シティコネクション</text>
+<text x="2084" y="1916.8" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#070  FC 1985.09.27  ／  初出 1985</text>
+<rect x="1575" y="2259.4761904761904" width="358" height="94.0" rx="9" fill="#192536" stroke="#b792ee" stroke-width="2"/>
+<rect x="1575" y="2267.4761904761904" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="1589" y="2288.4761904761904" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ルート16ターボ</text>
+<text x="1589" y="2341.4761904761904" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#071  FC 1985.10.04  ／  初出 1985</text>
+<rect x="1080" y="767.0740740740741" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="1080" y="775.0740740740741" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="1094" y="796.0740740740741" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">チャレンジャー</text>
+<text x="1094" y="849.0740740740741" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#072  FC 1985.10.15  ／  初出 1985</text>
+<rect x="585" y="3738.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#f1965b" stroke-width="2"/>
+<rect x="585" y="3746.0" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="599" y="3767.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">キン肉マン マッ</text>
+<text x="599" y="3792.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">スルタッグマッチ</text>
+<text x="599" y="3820.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#073  FC 1985.11.08  ／  初出 1985</text>
+<rect x="585" y="2274.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#70a5ef" stroke-width="2"/>
+<rect x="585" y="2282.0" width="5" height="78.0" rx="2" fill="#70a5ef" stroke="#70a5ef" stroke-width="1"/>
+<text x="599" y="2303.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">スカイデストロイヤー</text>
+<text x="599" y="2356.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#074  FC 1985.11.14  ／  初出 1985</text>
+<rect x="1080" y="1842.4814814814815" width="358" height="94.0" rx="9" fill="#192536" stroke="#b792ee" stroke-width="2"/>
+<rect x="1080" y="1850.4814814814815" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="1094" y="1871.4814814814815" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">おにゃんこTOWN</text>
+<text x="1094" y="1924.4814814814815" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#075  FC 1985.11.15  ／  初出 1985</text>
+<rect x="2565" y="797.8" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="2565" y="805.8" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="2579" y="826.8" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">忍者じゃじゃ丸くん</text>
+<text x="2579" y="879.8" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#076  FC 1985.11.15  ／  初出 1985</text>
+<rect x="2030" y="4748" width="358" height="94" rx="9" fill="#192536" stroke="#adb8c6" stroke-width="2"/>
+<rect x="2030" y="4756" width="5" height="78" rx="2" fill="#adb8c6" stroke="#adb8c6" stroke-width="1"/>
+<text x="2044" y="4777" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">パチコン</text>
+<text x="2044" y="4830" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#077  FC 1985.11.21  ／  初出 1985</text>
+<rect x="1080" y="613.4444444444445" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="1080" y="621.4444444444445" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="1094" y="642.4444444444445" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">パックランド</text>
+<text x="1094" y="695.4444444444445" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#078  FC 1985.11.21  ／  初出 1984</text>
+<rect x="1575" y="4037.190476190476" width="358" height="94.0" rx="9" fill="#192536" stroke="#eab45b" stroke-width="2"/>
+<rect x="1575" y="4045.190476190476" width="5" height="78.0" rx="2" fill="#eab45b" stroke="#eab45b" stroke-width="1"/>
+<text x="1589" y="4066.190476190476" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">マッハライダー</text>
+<text x="1589" y="4119.190476190476" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#079  FC 1985.11.21  ／  初出 1985</text>
+<rect x="1575" y="481.7619047619048" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="1575" y="489.7619047619048" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="1589" y="510.7619047619048" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">バーガータイム</text>
+<text x="1589" y="563.7619047619048" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#080  FC 1985.11.27  ／  初出 1982</text>
+<rect x="1080" y="3071.5185185185187" width="358" height="94.0" rx="9" fill="#192536" stroke="#56c8ab" stroke-width="2"/>
+<rect x="1080" y="3079.5185185185187" width="5" height="78.0" rx="2" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="1094" y="3100.5185185185187" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">いっき</text>
+<text x="1094" y="3153.5185185185187" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#081  FC 1985.11.28  ／  初出 1985</text>
+<rect x="1080" y="4300.555555555556" width="358" height="94.0" rx="9" fill="#192536" stroke="#90b96b" stroke-width="2"/>
+<rect x="1080" y="4308.555555555556" width="5" height="78.0" rx="2" fill="#90b96b" stroke="#90b96b" stroke-width="1"/>
+<text x="1094" y="4329.555555555556" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ポートピア連続殺人事件</text>
+<text x="1094" y="4382.555555555556" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#082  FC 1985.11.29  ／  初出 1983</text>
+<rect x="585" y="3982.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#f1965b" stroke-width="2"/>
+<rect x="585" y="3990.0" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="599" y="4011.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">カラテカ</text>
+<text x="599" y="4064.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#083  FC 1985.12.05  ／  初出 1984</text>
+<rect x="1080" y="4454.185185185185" width="358" height="94.0" rx="9" fill="#192536" stroke="#adb8c6" stroke-width="2"/>
+<rect x="1080" y="4462.185185185185" width="5" height="78.0" rx="2" fill="#adb8c6" stroke="#adb8c6" stroke-width="1"/>
+<text x="1094" y="4483.185185185185" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ルナーボール</text>
+<text x="1094" y="4536.185185185185" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#084  FC 1985.12.05  ／  初出 1985</text>
+<rect x="585" y="2030.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#70a5ef" stroke-width="2"/>
+<rect x="585" y="2038.0" width="5" height="78.0" rx="2" fill="#70a5ef" stroke="#70a5ef" stroke-width="1"/>
+<text x="599" y="2059.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">スターラスター</text>
+<text x="599" y="2112.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#085  FC 1985.12.06  ／  初出 1985</text>
+<rect x="1575" y="2061.9523809523807" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="1575" y="2069.9523809523807" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="1589" y="2090.9523809523807" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">スペランカー</text>
+<text x="1589" y="2143.9523809523807" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#086  FC 1985.12.06  ／  初出 1983</text>
+<rect x="1575" y="3444.6190476190477" width="358" height="94.0" rx="9" fill="#192536" stroke="#56c8ab" stroke-width="2"/>
+<rect x="1575" y="3452.6190476190477" width="5" height="78.0" rx="2" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="1589" y="3473.6190476190477" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">高機動戦闘メカ ヴォルガードII</text>
+<text x="1589" y="3526.6190476190477" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#087  FC 1985.12.07  ／  初出 1985</text>
+<rect x="1575" y="3642.1428571428573" width="358" height="94.0" rx="9" fill="#192536" stroke="#56c8ab" stroke-width="2"/>
+<rect x="1575" y="3650.1428571428573" width="5" height="78.0" rx="2" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="1589" y="3671.1428571428573" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">超時空要塞マクロス</text>
+<text x="1589" y="3724.1428571428573" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#088  FC 1985.12.10  ／  初出 1985</text>
+<rect x="2070" y="3494.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#56c8ab" stroke-width="2"/>
+<rect x="2070" y="3502.0" width="5" height="78.0" rx="2" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="2084" y="3523.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">1942</text>
+<text x="2084" y="3576.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#089  FC 1985.12.11  ／  初出 1984</text>
+<rect x="1575" y="4432.238095238095" width="358" height="94.0" rx="9" fill="#192536" stroke="#90b96b" stroke-width="2"/>
+<rect x="1575" y="4440.238095238095" width="5" height="78.0" rx="2" fill="#90b96b" stroke="#90b96b" stroke-width="1"/>
+<text x="1589" y="4461.238095238095" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ダウボーイ</text>
+<text x="1589" y="4514.238095238095" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#090  FC 1985.12.11  ／  初出 1984</text>
+<rect x="2418" y="4748" width="358" height="94" rx="9" fill="#192536" stroke="#90b96b" stroke-width="2"/>
+<rect x="2418" y="4756" width="5" height="78" rx="2" fill="#90b96b" stroke="#90b96b" stroke-width="1"/>
+<text x="2432" y="4777" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ボコスカウォーズ</text>
+<text x="2432" y="4830" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#091  FC 1985.12.14  ／  初出 1983</text>
+<rect x="2565" y="2457.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#56c8ab" stroke-width="2"/>
+<rect x="2565" y="2465.0" width="5" height="78.0" rx="2" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="2579" y="2486.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">頭脳戦艦ガル</text>
+<text x="2579" y="2539.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#092  FC 1985.12.14  ／  初出 1985</text>
+<rect x="1575" y="1864.4285714285713" width="358" height="94.0" rx="9" fill="#192536" stroke="#ef6f76" stroke-width="2"/>
+<rect x="1575" y="1872.4285714285713" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="1589" y="1893.4285714285713" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">オバケのQ太郎 </text>
+<text x="1589" y="1918.4285714285713" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ワンワンパニック</text>
+<text x="1589" y="1946.4285714285713" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#093  FC 1985.12.16  ／  初出 1985</text>
+<rect x="1575" y="3839.6666666666665" width="358" height="94.0" rx="9" fill="#192536" stroke="#56c8ab" stroke-width="2"/>
+<rect x="1575" y="3847.6666666666665" width="5" height="78.0" rx="2" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="1589" y="3868.6666666666665" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">テグザー</text>
+<text x="1589" y="3921.6666666666665" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#094  FC 1985.12.19  ／  初出 1985</text>
+<rect x="1080" y="1996.111111111111" width="358" height="94.00000000000023" rx="9" fill="#192536" stroke="#b792ee" stroke-width="2"/>
+<rect x="1080" y="2004.111111111111" width="5" height="78.00000000000023" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="1094" y="2025.111111111111" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">バイナリィランド</text>
+<text x="1094" y="2078.1111111111113" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#095  FC 1985.12.19  ／  初出 1983</text>
+<rect x="1080" y="2149.740740740741" width="358" height="94.0" rx="9" fill="#192536" stroke="#b792ee" stroke-width="2"/>
+<rect x="1080" y="2157.740740740741" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="1094" y="2178.740740740741" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ボンバーマン</text>
+<text x="1094" y="2231.740740740741" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#096  FC 1985.12.19  ／  初出 1983</text>
+<rect x="2565" y="3286.6" width="358" height="94.0" rx="9" fill="#192536" stroke="#56c8ab" stroke-width="2"/>
+<rect x="2565" y="3294.6" width="5" height="78.0" rx="2" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="2579" y="3315.6" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">エグゼドエグゼス</text>
+<text x="2579" y="3368.6" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#097  FC 1985.12.21  ／  初出 1985</text>
+<rect x="1575" y="2457.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#b792ee" stroke-width="2"/>
+<rect x="1575" y="2465.0" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="1589" y="2486.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ロットロット</text>
+<text x="1589" y="2539.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#098  FC 1985.12.21  ／  初出 1985</text>
+<rect x="585" y="2884.0" width="358" height="94.0" rx="9" fill="#192536" stroke="#f1965b" stroke-width="2"/>
+<rect x="585" y="2892.0" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="599" y="2913.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ぺんぎんくんWARS</text>
+<text x="599" y="2966.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#099  FC 1985.12.25  ／  初出 1985</text>
+<rect x="2565" y="4116.2" width="358" height="94.0" rx="9" fill="#192536" stroke="#56c8ab" stroke-width="2"/>
+<rect x="2565" y="4124.2" width="5" height="78.0" rx="2" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="2579" y="4145.2" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ツインビー</text>
+<text x="2579" y="4198.2" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">#100  FC 1986.01.04  ／  初出 1985</text>
+<rect x="90" y="447.8125" width="358" height="94.0" rx="9" fill="#101925" stroke="#ef6f76" stroke-width="2"/>
+<rect x="90" y="455.8125" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="104" y="476.8125" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">スペースパニック</text>
+<text x="104" y="529.8125" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1980</text>
+<rect x="90" y="707.0625" width="358" height="94.0" rx="9" fill="#101925" stroke="#ef6f76" stroke-width="2"/>
+<rect x="90" y="715.0625" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="104" y="736.0625" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ジャウスト</text>
+<text x="104" y="789.0625" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1982</text>
+<rect x="90" y="836.6875" width="358" height="94.0" rx="9" fill="#101925" stroke="#ef6f76" stroke-width="2"/>
+<rect x="90" y="844.6875" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="104" y="865.6875" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ピットフォール!</text>
+<text x="104" y="918.6875" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1982</text>
+<rect x="90" y="577.4375" width="358" height="94.0" rx="9" fill="#101925" stroke="#ef6f76" stroke-width="2"/>
+<rect x="90" y="585.4375" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="104" y="606.4375" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ジャンプバグ</text>
+<text x="104" y="659.4375" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1981</text>
+<rect x="90" y="1095.9375" width="358" height="94.0" rx="9" fill="#101925" stroke="#b792ee" stroke-width="2"/>
+<rect x="90" y="1103.9375" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="104" y="1124.9375" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ヘッドオン</text>
+<text x="104" y="1177.9375" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1979</text>
+<rect x="90" y="1225.5625" width="358" height="94.0" rx="9" fill="#101925" stroke="#b792ee" stroke-width="2"/>
+<rect x="90" y="1233.5625" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="104" y="1254.5625" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">平安京エイリアン</text>
+<text x="104" y="1307.5625" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1979</text>
+<rect x="90" y="1484.8125" width="358" height="94.0" rx="9" fill="#101925" stroke="#b792ee" stroke-width="2"/>
+<rect x="90" y="1492.8125" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="104" y="1513.8125" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">倉庫番</text>
+<text x="104" y="1566.8125" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1982</text>
+<rect x="90" y="1355.1875" width="358" height="94.0" rx="9" fill="#101925" stroke="#b792ee" stroke-width="2"/>
+<rect x="90" y="1363.1875" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="104" y="1384.1875" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">タンクバタリアン</text>
+<text x="104" y="1437.1875" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1980</text>
+<rect x="585" y="1542.0" width="358" height="94.0" rx="9" fill="#101925" stroke="#56c8ab" stroke-width="2"/>
+<rect x="585" y="1550.0" width="5" height="78.0" rx="2" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="599" y="1571.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">スクランブル</text>
+<text x="599" y="1624.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1981</text>
+<rect x="90" y="1744.0625" width="358" height="94.0" rx="9" fill="#101925" stroke="#56c8ab" stroke-width="2"/>
+<rect x="90" y="1752.0625" width="5" height="78.0" rx="2" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="104" y="1773.0625" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ディフェンダー</text>
+<text x="104" y="1826.0625" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1981</text>
+<rect x="585" y="1054.0" width="358" height="94.0" rx="9" fill="#101925" stroke="#66bade" stroke-width="2"/>
+<rect x="585" y="1062.0" width="5" height="78.0" rx="2" fill="#66bade" stroke="#66bade" stroke-width="1"/>
+<text x="599" y="1083.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">フェニックス</text>
+<text x="599" y="1136.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1980</text>
+<rect x="90" y="2521.8125" width="358" height="94.0" rx="9" fill="#101925" stroke="#70a5ef" stroke-width="2"/>
+<rect x="90" y="2529.8125" width="5" height="78.0" rx="2" fill="#70a5ef" stroke="#70a5ef" stroke-width="1"/>
+<text x="104" y="2550.8125" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ザクソン</text>
+<text x="104" y="2603.8125" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1982</text>
+<rect x="90" y="1873.6875" width="358" height="94.0" rx="9" fill="#101925" stroke="#56c8ab" stroke-width="2"/>
+<rect x="90" y="1881.6875" width="5" height="78.0" rx="2" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="104" y="1902.6875" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ボスコニアン</text>
+<text x="104" y="1955.6875" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1981</text>
+<rect x="90" y="2262.5625" width="358" height="94.0" rx="9" fill="#101925" stroke="#70a5ef" stroke-width="2"/>
+<rect x="90" y="2270.5625" width="5" height="78.0" rx="2" fill="#70a5ef" stroke="#70a5ef" stroke-width="1"/>
+<text x="104" y="2291.5625" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">スターレイダース</text>
+<text x="104" y="2344.5625" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1979</text>
+<rect x="90" y="2392.1875" width="358" height="94.0" rx="9" fill="#101925" stroke="#70a5ef" stroke-width="2"/>
+<rect x="90" y="2400.1875" width="5" height="78.0" rx="2" fill="#70a5ef" stroke="#70a5ef" stroke-width="1"/>
+<text x="104" y="2421.1875" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">バトルゾーン</text>
+<text x="104" y="2474.1875" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1980</text>
+<rect x="90" y="2781.0625" width="358" height="94.0" rx="9" fill="#101925" stroke="#eab45b" stroke-width="2"/>
+<rect x="90" y="2789.0625" width="5" height="78.0" rx="2" fill="#eab45b" stroke="#eab45b" stroke-width="1"/>
+<text x="104" y="2810.0625" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ポールポジション</text>
+<text x="104" y="2863.0625" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1982</text>
+<rect x="585" y="2518.0" width="358" height="94.0" rx="9" fill="#101925" stroke="#eab45b" stroke-width="2"/>
+<rect x="585" y="2526.0" width="5" height="78.0" rx="2" fill="#eab45b" stroke="#eab45b" stroke-width="1"/>
+<text x="599" y="2547.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">モナコGP</text>
+<text x="599" y="2600.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1979</text>
+<rect x="90" y="2651.4375" width="358" height="94.0" rx="9" fill="#101925" stroke="#eab45b" stroke-width="2"/>
+<rect x="90" y="2659.4375" width="5" height="78.0" rx="2" fill="#eab45b" stroke="#eab45b" stroke-width="1"/>
+<text x="104" y="2680.4375" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">スピードレース</text>
+<text x="104" y="2733.4375" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1974</text>
+<rect x="90" y="2910.6875" width="358" height="94.0" rx="9" fill="#101925" stroke="#f1965b" stroke-width="2"/>
+<rect x="90" y="2918.6875" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="104" y="2939.6875" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ポン</text>
+<text x="104" y="2992.6875" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1972</text>
+<rect x="90" y="3040.3125" width="358" height="94.0" rx="9" fill="#101925" stroke="#f1965b" stroke-width="2"/>
+<rect x="90" y="3048.3125" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="104" y="3069.3125" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ホームラン（Atari）</text>
+<text x="104" y="3122.3125" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1978</text>
+<rect x="90" y="3299.5625" width="358" height="94.0" rx="9" fill="#101925" stroke="#f1965b" stroke-width="2"/>
+<rect x="90" y="3307.5625" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="104" y="3328.5625" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">サッカー（Atari）</text>
+<text x="104" y="3381.5625" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1980</text>
+<rect x="90" y="3429.1875" width="358" height="94.0" rx="9" fill="#101925" stroke="#f1965b" stroke-width="2"/>
+<rect x="90" y="3437.1875" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="104" y="3458.1875" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ゴルフ（Atari）</text>
+<text x="104" y="3511.1875" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1980</text>
+<rect x="90" y="3169.9375" width="358" height="94.0" rx="9" fill="#101925" stroke="#f1965b" stroke-width="2"/>
+<rect x="90" y="3177.9375" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="104" y="3198.9375" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">フットボール（Atari）</text>
+<text x="104" y="3251.9375" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1978</text>
+<rect x="90" y="3818.0625" width="358" height="94.0" rx="9" fill="#101925" stroke="#f1965b" stroke-width="2"/>
+<rect x="90" y="3826.0625" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="104" y="3847.0625" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">空手道</text>
+<text x="104" y="3900.0625" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1984</text>
+<rect x="90" y="3558.8125" width="358" height="94.0" rx="9" fill="#101925" stroke="#f1965b" stroke-width="2"/>
+<rect x="90" y="3566.8125" width="5" height="78.0" rx="2" fill="#f1965b" stroke="#f1965b" stroke-width="1"/>
+<text x="104" y="3587.8125" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ザ・ビッグプロレスリング</text>
+<text x="104" y="3640.8125" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1983</text>
+<rect x="585" y="4104.0" width="358" height="94.0" rx="9" fill="#101925" stroke="#90b96b" stroke-width="2"/>
+<rect x="585" y="4112.0" width="5" height="78.0" rx="2" fill="#90b96b" stroke="#90b96b" stroke-width="1"/>
+<text x="599" y="4133.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ミステリーハウス</text>
+<text x="599" y="4186.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1980</text>
+<rect x="90" y="4077.3125" width="358" height="94.0" rx="9" fill="#101925" stroke="#90b96b" stroke-width="2"/>
+<rect x="90" y="4085.3125" width="5" height="78.0" rx="2" fill="#90b96b" stroke="#90b96b" stroke-width="1"/>
+<text x="104" y="4106.3125" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">Adventure（Colossal Cave）</text>
+<text x="104" y="4159.3125" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1976</text>
+<rect x="585" y="1664.0" width="358" height="94.0" rx="9" fill="#101925" stroke="#56c8ab" stroke-width="2"/>
+<rect x="585" y="1672.0" width="5" height="78.0" rx="2" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="599" y="1693.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">チョップリフター</text>
+<text x="599" y="1746.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1982</text>
+<rect x="90" y="4206.9375" width="358" height="94.0" rx="9" fill="#101925" stroke="#adb8c6" stroke-width="2"/>
+<rect x="90" y="4214.9375" width="5" height="78.0" rx="2" fill="#adb8c6" stroke="#adb8c6" stroke-width="1"/>
+<text x="104" y="4235.9375" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ビデオピンボール</text>
+<text x="104" y="4288.9375" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1977</text>
+<rect x="585" y="1176.0" width="358" height="94.0" rx="9" fill="#101925" stroke="#66bade" stroke-width="2"/>
+<rect x="585" y="1184.0" width="5" height="78.0" rx="2" fill="#66bade" stroke="#66bade" stroke-width="1"/>
+<text x="599" y="1205.0" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ワープ＆ワープ</text>
+<text x="599" y="1258.0" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1981</text>
+<rect x="2070" y="2249.6" width="358" height="94.0" rx="9" fill="#101925" stroke="#ef6f76" stroke-width="2"/>
+<rect x="2070" y="2257.6" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="2084" y="2278.6" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">アラビアン</text>
+<text x="2084" y="2331.6" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1983</text>
+<rect x="1080" y="1074.3333333333335" width="358" height="94.0" rx="9" fill="#101925" stroke="#b792ee" stroke-width="2"/>
+<rect x="1080" y="1082.3333333333335" width="5" height="78.0" rx="2" fill="#b792ee" stroke="#b792ee" stroke-width="1"/>
+<text x="1094" y="1103.3333333333335" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ルート16</text>
+<text x="1094" y="1156.3333333333335" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1981</text>
+<rect x="1080" y="3225.1481481481483" width="358" height="94.0" rx="9" fill="#101925" stroke="#56c8ab" stroke-width="2"/>
+<rect x="1080" y="3233.1481481481483" width="5" height="78.0" rx="2" fill="#56c8ab" stroke="#56c8ab" stroke-width="1"/>
+<text x="1094" y="3254.1481481481483" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ヴォルガード</text>
+<text x="1094" y="3307.1481481481483" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1984</text>
+<rect x="90" y="966.3125" width="358" height="94.0" rx="9" fill="#101925" stroke="#ef6f76" stroke-width="2"/>
+<rect x="90" y="974.3125" width="5" height="78.0" rx="2" fill="#ef6f76" stroke="#ef6f76" stroke-width="1"/>
+<text x="104" y="995.3125" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">暴走特急（Stop the Express）</text>
+<text x="104" y="1048.3125" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1983</text>
+<rect x="90" y="2003.3125" width="358" height="94.0" rx="9" fill="#101925" stroke="#70a5ef" stroke-width="2"/>
+<rect x="90" y="2011.3125" width="5" height="78.0" rx="2" fill="#70a5ef" stroke="#70a5ef" stroke-width="1"/>
+<text x="104" y="2032.3125" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ワイルドガンマン（映写式）</text>
+<text x="104" y="2085.3125" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1974</text>
+<rect x="90" y="2132.9375" width="358" height="94.0" rx="9" fill="#101925" stroke="#70a5ef" stroke-width="2"/>
+<rect x="90" y="2140.9375" width="5" height="78.0" rx="2" fill="#70a5ef" stroke="#70a5ef" stroke-width="1"/>
+<text x="104" y="2161.9375" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="22">ダックハント（玩具）</text>
+<text x="104" y="2214.9375" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">外部の先行作品  ／  初出 1976</text>
+<text x="90" y="4675" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="25">この試作では作品間の影響を結ばなかったタイトル</text>
+<text x="90" y="4955" fill="#e8eef8" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="25">対象FC 100本 ＋ 外部先行作品 36本  ／  関係 138本  ／  2026.10.07 試作</text>
+<text x="90" y="4989" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">発売順：ファミリーコンピュータ全ソフトリスト  ／  影響の推定：Codex。無理な接続は保留。</text>
+<text x="90" y="5022" fill="#9caec5" font-family="Meiryo, Noto Sans JP, sans-serif" font-size="17">玩具の先行版・教育ソフト・限定版も含む。同年の推定線は開発順を確定したものではありません。</text>
+</svg>
