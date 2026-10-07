@@ -294,8 +294,10 @@ emu.addMemoryCallback(guard(function(a,v)
   local line=s['ppu.scanline'];local count=read('fx_dma_count',2)
   local deadline=emu.read(0x7e1d10,emu.memType.snesMemory)
   assert(line>=203 and line<=deadline+3,'DMA start outside admitted blank window')
-  if deadline==220 then
-    assert(read('fx_dma_bytes',2)+count*128<=DMA_ADMISSION_BYTES,'large DMA admitted late')
+  local weight=read('fx_dma_bytes',2)+count*(labels.select_dma_deadline and 64 or 128)+(labels.select_dma_deadline and 768 or 0)
+  if deadline>203 then
+    local limit=deadline==220 and DMA_ADMISSION_BYTES or deadline==226 and 8960 or deadline==233 and 7680
+    assert(limit and weight<=math.min(limit,DMA_ADMISSION_BYTES),'large DMA admitted late')
   end
   stats.lateDmaStarts=(stats.lateDmaStarts or 0)+(line>206 and 1 or 0)
   stats.maxDmaStartLine=math.max(stats.maxDmaStartLine or 0,line)
@@ -317,6 +319,7 @@ emu.addMemoryCallback(guard(function(a,v)
   rendered=rendered+1
   local s=emu.getState()
   assert(s['ppu.scanline']<23 or s['ppu.scanline']>=203,'DMA overlaps visible area')
+  assert(s['ppu.scanline']<=20 or s['ppu.scanline']>=203,'DMA missed OBJ preparation margin')
   local duration=elapsed(s.masterClock,dma_start)
   local bytes=read('fx_dma_bytes',2)
   stats.objMaxCount=math.max(stats.objMaxCount or 0,read('fx_obj_present_count',2))

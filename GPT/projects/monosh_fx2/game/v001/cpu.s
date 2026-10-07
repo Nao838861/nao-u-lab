@@ -294,8 +294,11 @@ _fx_present:
   rep #$30
   jsr fx_plan_dma
   ; 小さい転送は203行目に間に合わなくても黒帯内で完了できる。
-  ; bytes+区間数*128が9.75KiB以下だけ220行目まで許可。全FBは203行目。
+  ; dynamicDmaDeadlineでは転送量に応じ220/226/233行目まで許可。全FBは203行目。
   ; 設定費用をbyte換算し、翌22行のOBJ準備より前に転送を終える。
+  .ifdef FX_DYNAMIC_DMA
+  jsr select_dma_deadline
+  .else
   lda #203
   sta f:$7e1d10
   lda fx_dma_count
@@ -309,6 +312,7 @@ _fx_present:
   lda #220
   sta f:$7e1d10
 :
+  .endif
   jsr fx_upload_ground
   lda _fx_ground_vptr
   sta f:$7e1d04
@@ -425,6 +429,9 @@ gsu_dma_copied:
   .endif
   lda f:$70000a
   sta fx_dma_bytes
+  .ifdef FX_DYNAMIC_DMA
+  jsr select_dma_deadline
+  .else
   lda #203
   sta f:$7e1d10
   lda fx_dma_count
@@ -438,7 +445,18 @@ gsu_dma_copied:
   lda #220
   sta f:$7e1d10
 :
+  .endif
   sep #$20
+  .endif
+  .ifdef FX_DMA_DEADLINE_PROBE
+  .export dma_probe_delay
+dma_probe_delay:
+  ; 帯域検証専用ROM: 許可された最終行まで意図的に待って転送する。
+  lda f:$00213f
+  lda f:$002137
+  lda f:$00213d
+  cmp f:$7e1d10
+  bne dma_probe_delay
   .endif
 wait_bottom:
   lda f:$00213f
@@ -506,6 +524,40 @@ dma_finished:
   plp
   rts
 render_entry_address = $8000
+
+  .ifdef FX_DYNAMIC_DMA
+select_dma_deadline:
+  .export select_dma_deadline
+  rep #$30
+  ; W=bytes+64*区間数+768。区間設定を64bytes換算し、HDMA等の固定費も予約。
+  ; 220+3+9984*8/1364 < 282（翌20行）、226+3+8960*8/1364 < 282、
+  ; 233+3+7680*8/1364 < 282。小さい画像に残る空白時間を使う。
+  ; A/Xは16bit。全FBなど大きい転送は従来の203行を守る。
+  lda #203
+  sta f:$7e1d10
+  lda fx_dma_count
+  .repeat 6
+    asl
+  .endrepeat
+  clc
+  adc fx_dma_bytes
+  clc
+  adc #768
+  cmp #(FX_DMA_ADMISSION_BYTES+1)
+  bcs deadline_done
+  ldx #220
+  cmp #8961
+  bcs deadline_save
+  ldx #226
+  cmp #7681
+  bcs deadline_save
+  ldx #233
+deadline_save:
+  txa
+  sta f:$7e1d10
+deadline_done:
+  rts
+  .endif
 
 blank_table:
   ; 22行目は輝度0でOBJ評価/CHR fetchを再開し、23行目のOBJを用意する。
