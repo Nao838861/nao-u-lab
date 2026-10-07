@@ -18,5 +18,6 @@
   "reasons_always_visible": true,
   "sources_always_visible": true,
   "neighbor_hover_highlight": true,
-  "shared_mario_trunk": true
+  "independent_mario_branches": true,
+  "crowded_branch_selection_keeps_thin": true
 }

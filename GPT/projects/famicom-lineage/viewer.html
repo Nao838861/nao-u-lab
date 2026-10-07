@@ -82,8 +82,8 @@ for(const [year,band] of Object.entries(data.bands)){if(band[1]<y0||band[0]>y1)c
 const ordered=[...paths].sort((a,b)=>Number(activeEdges.has(a.edge))-Number(activeEdges.has(b.edge))||Number(a.edge===focusedEdge)-Number(b.edge===focusedEdge));
 for(const p of ordered){const [a,b,c,d]=p.bounds;if(c<x0||a>x1||d<y0||b>y1)continue;const e=p.edge,active=!selected||activeEdges.has(e),focus=e===focusedEdge;
 ctx.globalAlpha=(focusedEdge?(focus?1:active?.25:.10):active?(selected&&e.kind==='inferred'?.75:1):.16)*(filter && nodes[e.target].year!==filter ? .12 : 1);
-const thickness=e.sequel?3.8:1.35;ctx.lineWidth=thickness;ctx.lineJoin='round';ctx.beginPath();p.points.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));
-// 選択しても細い影響線を太らせない。白い縁で交差を読み分ける。
+const crowded=(outgoing.get(e.source)||[]).filter(v=>v.kind===e.kind&&!v.sequel).length>=8;const thickness=(e.sequel?3.8:1.35)+(selected&&active&&!crowded?.7:0);ctx.lineWidth=thickness;ctx.lineJoin='round';ctx.beginPath();p.points.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));
+// 枝が集中する影響線は選択時も太らせない。個別配線を維持する。
 ctx.strokeStyle='#fff';ctx.lineWidth=thickness+1.4;ctx.stroke();ctx.strokeStyle=edgeColors[e.kind];ctx.lineWidth=thickness;ctx.stroke();
 ctx.fillStyle=edgeColors[e.kind];ctx.beginPath();p.arrow.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.closePath();ctx.fill();}
 
