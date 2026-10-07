@@ -69,6 +69,13 @@ def verify(drawing,data):
             if max(a['x'],b['x'])<min(a['x']+a['w'],b['x']+b['w'])-.1 and max(a['y'],b['y'])<min(a['y']+a['h'],b['y']+b['h'])-.1:raise ValueError('箱の重なり: '+a['id']+' '+b['id'])
     for p in drawing['paths']:
         assert p['points'][-1][1]>p['points'][0][1], '上向きの接続'
+        target=next(c for c in cards if c['id']==p['target'])
+        arrow=p['arrow'];assert len(arrow)==3,'矢印の欠落'
+        tx,ty=arrow[1];cx,cy=target['x']+target['w']/2,target['y']+target['h']/2
+        bx,by=(arrow[0][0]+arrow[2][0])/2,(arrow[0][1]+arrow[2][1])/2
+        assert (tx-bx)*(cx-tx)+(ty-by)*(cy-ty)>0,'矢印が対象を向いていない'
+        gap=math.hypot(max(target['x']-tx,0,tx-target['x']-target['w']),max(target['y']-ty,0,ty-target['y']-target['h']))
+        assert gap<=3,'対象から浮いた矢印'
         for a,b in zip(p['points'],p['points'][1:]):
             assert a[0]==b[0] or a[1]==b[1], '非直角の線'
             for c in cards:
@@ -81,7 +88,8 @@ def verify(drawing,data):
     return dict(node_count=len(data['nodes']),fc_count=data['stats']['fc_count'],external_count=data['stats']['external_count'],box_count=len(cards),
                 repeated_reference_count=drawing['secondary_count'],edge_count=len(drawing['paths']),sequel_edge_count=sum(e['sequel'] for e in data['edges']),
                 year_counts=data['stats']['year_counts'],node_overlap_count=0,edge_node_overlap_count=0,all_edges_solid=True,all_edges_downward=True,
-                width=drawing['width'],height=drawing['height'],year_band_count=len(drawing['bands']),fc_year_band_placement=True)
+                width=drawing['width'],height=drawing['height'],year_band_count=len(drawing['bands']),fc_year_band_placement=True,
+                arrowheads_point_to_target=True,arrowhead_max_gap=3)
 
 def emit(d,data,font):
     w,h=d['width'],d['height']; svg=[]; commands=[]; esc=html.escape
@@ -99,10 +107,10 @@ def emit(d,data,font):
         for x in range(1200,w,1200):text(x,top+12,label,10,'#a5b1be')
     # 系統間の背景線は置かない。同じ列を別の時代の系統が再利用するため。
     for p in d['paths']:
-        e=p['edge']; color=EDGE_COLORS[e['kind']]; thickness=3.8 if e['sequel'] else 1.5
+        e=p['edge']; color=EDGE_COLORS[e['kind']]; thickness=3.8 if e['sequel'] else 1.35
         svg.append(f'<g><title>{esc(d["nodes"][e["source"]]["title"]+" → "+d["nodes"][e["target"]]["title"]+"："+e["reason"])}</title>')
-        line(p['points'],'white',thickness+3); line(p['points'],color,thickness)
-        x,y=p['points'][-1]; polygon=[(x,y+5),(x-4,y-3),(x+4,y-3)]
+        line(p['points'],'white',thickness+1.4); line(p['points'],color,thickness)
+        polygon=p['arrow']
         svg.append('<polygon points="'+' '.join(f'{px:.1f},{py:.1f}' for px,py in polygon)+f'" fill="{color}"/>'); commands.append(('polygon',polygon,color)); svg.append('</g>')
     for c in d['cards']:
         n=d['nodes'][c['node']]; x,y=c['x'],c['y']; cw,ch=c['w'],c['h']; external=n['external']

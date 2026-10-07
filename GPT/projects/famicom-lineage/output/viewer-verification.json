@@ -14,5 +14,9 @@
   "mobile_layout": true,
   "touch_pinch_zoom": true,
   "overview_visible_cards": 469,
-  "overview_draw_ms": 4.3
+  "overview_draw_ms": 4.3,
+  "reasons_always_visible": true,
+  "sources_always_visible": true,
+  "neighbor_hover_highlight": true,
+  "shared_mario_trunk": true
 }

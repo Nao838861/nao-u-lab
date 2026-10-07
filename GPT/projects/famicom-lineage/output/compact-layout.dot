@@ -1,5 +1,5 @@
 digraph Lineage {
-graph [rankdir=TB, splines=ortho, nodesep=0.10, ranksep=0.15, margin=0, pad=0, outputorder=edgesfirst];
+graph [rankdir=TB, splines=ortho, nodesep=0.12, ranksep=0.30, margin=0, pad=0, outputorder=edgesfirst];
 node [shape=box, fixedsize=true, label=""];
 edge [tailport=s, headport=n, arrowsize=.5];
 n0000 [width=1.388889,height=0.666667];

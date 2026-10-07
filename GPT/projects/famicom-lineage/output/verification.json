@@ -17,12 +17,14 @@
   "edge_node_overlap_count": 0,
   "all_edges_solid": true,
   "all_edges_downward": true,
-  "width": 4691,
-  "height": 2817,
+  "width": 5226,
+  "height": 3202,
   "year_band_count": 5,
   "fc_year_band_placement": true,
+  "arrowheads_point_to_target": true,
+  "arrowhead_max_gap": 3,
   "png_size": [
-    4691,
-    2817
+    5226,
+    3202
   ]
 }

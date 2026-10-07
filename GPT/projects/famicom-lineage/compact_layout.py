@@ -11,7 +11,8 @@ HERE=Path(__file__).resolve().parent
 
 def compute(data,title_lines):
     nodes={n['id']:n for n in data['nodes']};edges=data['edges'];end_year=data.get('end_year',1987)
-    signature=hashlib.sha256(json.dumps(data,sort_keys=True,ensure_ascii=False).encode()).hexdigest()
+    # 配置条件の変更時も、別PCの古いキャッシュを使わない。
+    signature=hashlib.sha256(('spacing-v4:'+json.dumps(data,sort_keys=True,ensure_ascii=False)).encode()).hexdigest()
     portable=HERE.parents[1]/'.tmp/graphviz-layout/portable/Graphviz-16.1.0-win64/bin/dot.exe'
     executable=shutil.which(os.environ.get('GRAPHVIZ_DOT','dot')) or (str(portable) if portable.is_file() else None)
     if not executable:
@@ -57,7 +58,7 @@ def compute(data,title_lines):
     for j,e in enumerate(secondary):
         i=f'r{j:03}';source=e['source'];target=e['target'];ranks[i]=ranks[target]-1;sizes[i]=sizes[source]
         clones.append((i,source));secondary_ids[(source,target)]=i
-    lines=['digraph Lineage {','graph [rankdir=TB, splines=ortho, nodesep=0.10, ranksep=0.15, margin=0, pad=0, outputorder=edgesfirst];','node [shape=box, fixedsize=true, label=""];','edge [tailport=s, headport=n, arrowsize=.5];']
+    lines=['digraph Lineage {','graph [rankdir=TB, splines=ortho, nodesep=0.12, ranksep=0.30, margin=0, pad=0, outputorder=edgesfirst];','node [shape=box, fixedsize=true, label=""];','edge [tailport=s, headport=n, arrowsize=.5];']
     for i,(w,h) in sizes.items():lines.append(f'{i} [width={w/72:.6f},height={h/72:.6f}];')
     for r in range(rank):
         ids=[i for i,value in ranks.items() if value==r]
@@ -89,7 +90,7 @@ def compute(data,title_lines):
     for y in range(1983,end_year):
         boundary=(bands[y][1]+bands[y+1][0])/2;bands[y][1]=boundary;bands[y+1][0]=boundary
     lookup={o['_gvid']:o['name'] for o in graph['objects']}
-    routes={}
+    routes={};arrows={}
     for e in graph.get('edges',[]):
         if e.get('style')=='invis':continue
         points=[(left+x,header+gh-y) for c in e.get('_draw_',[]) if c['op']=='b' for x,y in c['points']]
@@ -97,11 +98,39 @@ def compute(data,title_lines):
         for point in points:
             if not clean or point!=clean[-1]:clean.append(point)
         routes[(lookup[e['tail']],lookup[e['head']])]=clean
+        arrows[(lookup[e['tail']],lookup[e['head']])]=[(left+x,header+gh-y) for c in e.get('_hdraw_',[]) if c['op']=='P' for x,y in c['points']]
     paths=[]
     for e in edges:
         a=secondary_ids.get((e['source'],e['target']),e['source']);b=e['target'];pts=routes[(a,b)]
-        x,y,w,h=positions[b]
-        pts.append((pts[-1][0],y-4))
-        paths.append(dict(edge=e,points=pts,source=a,target=b))
+        # Graphvizは混雑時に側面へ接続する。北向きの端へ強制変更すると、
+        # 矢印だけ上へ折り返して浮くため、実際の接続方向と矢印を保持する。
+        paths.append(dict(edge=e,points=pts,arrow=arrows[(a,b)],source=a,target=b))
+    # 多数の同色の枝は、障害物のない縦幹を共有する。
+    # 各枝がノード直下から平行に並ぶ「櫛」の形を避ける。
+    card_index={c['id']:c for c in cards}
+    fans=defaultdict(list)
+    for p in paths:
+        pts=p['points'];c=card_index[p['source']]
+        if len(pts)>=3 and pts[0][0]==pts[1][0] and abs(pts[0][1]-c['y']-c['h'])<.5 and pts[1][1]>pts[0][1]:
+            fans[(p['source'],p['edge']['kind'],p['edge']['sequel'])].append(p)
+    def clear_segment(a,b,p):
+        for c in cards:
+            if c['id'] in (p['source'],p['target']):continue
+            x,y,w,h=c['x'],c['y'],c['w'],c['h']
+            if a[0]==b[0] and x+.5<a[0]<x+w-.5 and max(min(a[1],b[1]),y+.5)<min(max(a[1],b[1]),y+h-.5):return False
+            if a[1]==b[1] and y+.5<a[1]<y+h-.5 and max(min(a[0],b[0]),x+.5)<min(max(a[0],b[0]),x+w-.5):return False
+        return True
+    shared_fans=0
+    for fan in fans.values():
+        if len(fan)<8:continue
+        for trunk in sorted({p['points'][0][0] for p in fan}):
+            replacements=[]
+            for p in fan:
+                pts=p['points'];new=[(trunk,pts[0][1]),(trunk,pts[1][1]),*pts[2:]]
+                if not all(clear_segment(a,b,p) for a,b in zip(new[:3],new[1:3])):break
+                replacements.append(new)
+            if len(replacements)==len(fan):
+                for p,new in zip(fan,replacements):p['points']=new
+                shared_fans+=1;break
     return dict(nodes=nodes,cards=cards,paths=paths,bands=bands,width=int(gw+left+30),height=int(gh+header+30),components=[],
-                shelf_x=0,primary_count=len(primary),secondary_count=len(secondary),signature=signature,engine='Graphviz compact ranks')
+                shelf_x=0,primary_count=len(primary),secondary_count=len(secondary),shared_fan_count=shared_fans,signature=signature,engine='Graphviz compact ranks')
