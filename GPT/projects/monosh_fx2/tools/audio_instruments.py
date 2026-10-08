@@ -70,11 +70,24 @@ def additive(period, dbs, max_harmonic, copies=2):
 # 周波数のぶれも倍音の番号に比例、基音のうなり約2.9Hz。約9セントずれた2つ目の音が、
 # 高い倍音ほど強く重なっていると同じ特徴。2つ目の音の強さの比 r（倍音ごと）は、
 # 揺れの幅（山と谷の差 = 20log((1+r)/(1-r))）から逆算した。
+# 主旋律を伸ばしている間の高域（4〜8kHz）は、倍音だけでは原作より約3dB少ない。倍音の間のノイズ成分で補う
+LEAD_GRAIN_DB = None      # 候補: -12（試聴の x3g）
 LEAD_BEAT_RATIO = [0.11, 0.17, 0.27, 0.35, 0.37, 0.30, 0.40, 0.46, 0.50, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52]
 
 
-def detuned_pair(period, dbs, ratios, max_harmonic, periods=192):
-    """period の音（periods周期）と、1周期だけ多い音（約9セント上）を重ねる。両方の周期がループ長に収まる。"""
+def loop_noise(n, low, high, rng):
+    """ループ長 n で継ぎ目なく繰り返すノイズ。low〜high（ループ再生時の周波数比、0.5=ナイキスト）の帯域だけ。"""
+    spec = np.zeros(n // 2 + 1, dtype=complex)
+    f = np.arange(n // 2 + 1) / n
+    band = (f >= low) & (f <= high)
+    spec[band] = np.exp(1j * rng.uniform(0, 2 * np.pi, band.sum()))
+    x = np.fft.irfft(spec, n)
+    return x / np.sqrt(np.mean(x * x))
+
+
+def detuned_pair(period, dbs, ratios, max_harmonic, periods=192, grain_db=None, grain_band=(0.05, 0.33)):
+    """period の音（periods周期）と、1周期だけ多い音（約9セント上）を重ねる。両方の周期がループ長に収まる。
+    grain_db: 倍音の合計に対するノイズ成分の強さ（dB）。原作のFM音源の細かいざらつき"""
     n = period * periods
     t = np.arange(n)
     y = np.zeros(n)
@@ -85,17 +98,24 @@ def detuned_pair(period, dbs, ratios, max_harmonic, periods=192):
         a1 = a / np.sqrt(1 + r * r)
         y += a1 * np.sin(2 * np.pi * (k + 1) * t / period)
         y += r * a1 * np.sin(2 * np.pi * (k + 1) * (periods + 1) * t / n + rng.uniform(0, 2 * np.pi))
+    if grain_db is not None:
+        y = y + loop_noise(n, *grain_band, rng) * np.sqrt(np.mean(y * y)) * 10 ** (grain_db / 20)
     return y, 0
 
 
 def lead():
-    # 倍音はC6（ループ周波数の約2.1倍）まで折り返さない15倍音まで
-    return detuned_pair(64, LEAD_DB, LEAD_BEAT_RATIO, 15)
+    # G5以下（ループ周波数の約1.57倍まで）。原作の主旋律は約20倍音（13kHz）まで倍音を持つ
+    return detuned_pair(64, LEAD_DB, LEAD_BEAT_RATIO, 20, grain_db=LEAD_GRAIN_DB)
+
+
+def lead_mid():
+    # G#5〜C6（約2.1倍まで）。折り返さない15倍音まで。使う音が少ないので短いループ
+    return additive(64, LEAD_DB, 15)
 
 
 def lead_hi():
-    # C6より上の音域用。G#6（約3.3倍）でも折り返さない9倍音まで
-    return detuned_pair(64, LEAD_DB, LEAD_BEAT_RATIO, 9)
+    # C6より上（G#6で約3.3倍）。折り返さない9倍音まで
+    return additive(64, LEAD_DB, 9)
 
 
 def brass():
@@ -198,13 +218,13 @@ def crash(rate=16000, length=0.75):
 
 # 名前 → (合成関数, サンプル周期 or 再生レート, 種類)
 TONAL = {
-    'lead': (lead, 64), 'lead_hi': (lead_hi, 64), 'brass': (brass, 64), 'bass': (bass, 256), 'pad': (pad, 64),
+    'lead': (lead, 64), 'lead_mid': (lead_mid, 64), 'lead_hi': (lead_hi, 64), 'brass': (brass, 64), 'bass': (bass, 256), 'pad': (pad, 64),
     'stab': (stab, 64),
 }
 DRUMS = {
     'kick': (lambda: kick(), 16000), 'kick2': (lambda: kick(top=175, bottom=55, tau=0.022, decay=15), 16000),
     'snare': (snare, 32000), 'tom': (tom, 16000), 'hat': (hat, 32000),
-    'ohat': (lambda: hat(length=0.18, decay=18, seed=46), 32000), 'crash': (crash, 16000),
+    'ohat': (lambda: hat(length=0.18, decay=18, seed=46), 32000), 'crash': (lambda: crash(rate=12000), 12000),
 }
 
 
