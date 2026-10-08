@@ -6,9 +6,11 @@
 
 前版の統合ROMで通常プレイ・長期ボス各約5分、全区分の表示遅延0、60.10fpsを確認した。固定523場面2,454画像の全FB/OBJ、42条件のDMA限界量も検証した。新版の測定は冒頭の拡縮修正の結果に分けて記録する。
 
-録画由来の大きな自弾・紫から緑の空・二層遠景を実装した。[検証結果](game/v001/RESULTS_20261008_RECORDED_EFFECTS.md)、[静止連射GIF](game/v001/results/recorded_effects_20261008/stationary_fire.gif)を保存している。以前の測定値は、その測定時のROMに対する記録。
+録画由来の大きな自弾・紫から緑の空・二層遠景を実装した。[検証結果](game/v001/RESULTS_20261008_RECORDED_EFFECTS.md)、[静止連射GIF](game/v001/results/recorded_effects_20261008/stationary_fire.gif)を保存している。遠景は録画と実PPU画像を比較し、森を9ドット上げ、山裾の透過穴とグラデーションの範囲を修正した。[修正前後の比較](game/v001/results/scenery_fix_20261008/comparison.png)、[修正内容](game/v001/RESULTS_20261008_SCENERY_FIX.md)。以前の測定値は、その測定時のROMに対する記録。
 
 GitHub: [Nao838861/MonoSH_FX2](https://github.com/Nao838861/MonoSH_FX2)。ソース、単独起動ROM、設計書、測定ログ・画像をこのリポジトリにまとめる。
+
+BGM・SEの追加は[実装方式の検討](game/v001/AUDIO_APPROACH_20261008.md)を保存した。原作の楽器サンプル＋音符列とSEサンプルを第一候補とし、音源ドライバの組み込み前の段階。
 
 自機は録画から切り出した飛行4・走行4ポーズを32×48・16色へ差し替えた。原寸の16色素材と[比較画像](game/v001/assets/player_recording/comparison.png)、[処理・検証](game/v001/RESULTS_20261007_PLAYER_RECORDING.md)も保存し、通常起動するROMへ反映している。
 
