@@ -24,7 +24,6 @@ export const S01: React.FC = () => {
       <div style={{position: 'absolute', top: 40, right: 56, display: 'flex', gap: 12, opacity: interpolate(f, [q(1), q(1) + 20], [0, 1], clamp)}}>
         <Tag color={C.green}>60 fps</Tag>
         <Tag color={C.amber}>SuperFX2</Tag>
-        <Tag color="#ffffff">モノクロ表示</Tag>
       </div>
       <div style={{position: 'absolute', top: 120, width: '100%', textAlign: 'center', opacity: endTitle}}>
         <div style={{display: 'inline-block', background: 'rgba(5,8,18,.8)', padding: '18px 40px', borderRadius: 16, fontSize: 52, fontWeight: 900}}>

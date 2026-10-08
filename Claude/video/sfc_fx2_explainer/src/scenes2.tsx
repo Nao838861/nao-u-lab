@@ -24,7 +24,7 @@ const ScanTimeline: React.FC<{p: number; bands: number}> = ({p, bands}) => {
   const visTop = bands, visBot = 224 - bands;
   const beam = (f * 4) % total;
   return (
-    <div style={{position: 'absolute', left: 1180, top: 190, width: 560, height: h + 40, opacity: p}}>
+    <div style={{position: 'absolute', left: 1320, top: 190, width: 560, height: h + 40, opacity: p}}>
       <div style={{position: 'absolute', left: 0, top: -40, fontSize: 26, color: C.sub}}>1コマ（262ライン）の中身</div>
       <div style={{position: 'absolute', left: 0, top: 0, width: 300, height: h, background: '#0b1124', border: `2px solid ${C.line}`}}>
         <div style={{position: 'absolute', left: 0, top: visTop * sc, width: '100%', height: (visBot - visTop) * sc, background: '#24406a'}} />
@@ -42,18 +42,22 @@ const ScanTimeline: React.FC<{p: number; bands: number}> = ({p, bands}) => {
 export const S07: React.FC = () => {
   const f = useCurrentFrame();
   const q = (i: number) => cueOf('S07', i);
-  const phaseA = interpolate(f, [q(1), q(1) + 20, q(5) - 15, q(5)], [0, 1, 1, 0], clamp);
+  const phaseA = interpolate(f, [q(1), q(1) + 20, q(7) - 15, q(7)], [0, 1, 1, 0], clamp);
   const flow = interpolate(f, [q(1) + 20, q(1) + 60], [0, 1], clamp);
   const scan = interpolate(f, [q(2), q(2) + 20], [0, 1], clamp);
-  const bands = interpolate(f, [q(4), q(4) + 60], [0, 16], clamp);
-  const b1 = interpolate(f, [q(3) + 20, q(3) + 70], [0, 1], clamp);
-  const b2 = interpolate(f, [q(3) + 140, q(3) + 190], [0, 1], clamp);
-  const b3 = interpolate(f, [q(4) + 70, q(4) + 130], [0, 1], clamp);
-  const short = interpolate(f, [q(4) + 140, q(4) + 160], [0, 1], clamp);
-  const phaseB = interpolate(f, [q(5), q(5) + 20], [0, 1], clamp);
-  const idx = Math.max(0, f - q(5));
+  const bands = interpolate(f, [q(6), q(6) + 60], [0, 16], clamp);
+  const b4 = interpolate(f, [q(3) + 60, q(3) + 120], [0, 1], clamp);
+  const ng = interpolate(f, [q(3) + 200, q(3) + 220], [0, 1], clamp);
+  const b2 = interpolate(f, [q(4) + 90, q(4) + 140], [0, 1], clamp);
+  const mono = usePop(q(4) + 260);
+  const bn = interpolate(f, [q(5) + 60, q(5) + 110], [0, 1], clamp);
+  const bb = interpolate(f, [q(6) + 70, q(6) + 130], [0, 1], clamp);
+  const short = interpolate(f, [q(6) + 140, q(6) + 160], [0, 1], clamp);
+  const phaseB = interpolate(f, [q(7), q(7) + 20], [0, 1], clamp);
+  const idx = Math.max(0, f - q(7));
   const n = TILES[idx % TILES.length];
-  const fallback = useIn(q(7));
+  const fallback = useIn(q(9));
+  const MAX = 24576, BW = 480, BX = 400;
   return (
     <Bg>
       <SceneTitle label="壁2　転送が間に合わない" color={C.red} />
@@ -62,20 +66,22 @@ export const S07: React.FC = () => {
         <Box x={700} y={180} w={330} h={150} color={C.green} title="ビデオメモリ" sub="画面チップが読む" fs={30} />
         <Arrow x1={435} y1={255} x2={690} y2={255} color={C.amber} p={flow} label="DMA転送" />
         {scan > 0 && <ScanTimeline p={scan} bands={bands} />}
-        <div style={{position: 'absolute', left: 100, top: 400, width: 1040}}>
-          <div style={{fontSize: 30, color: C.sub, marginBottom: 20, opacity: b1}}>256×192ドット・4色の絵 1枚 ＝ <b style={{color: C.text}}>12,288バイト</b></div>
+        <div style={{position: 'absolute', left: 100, top: 375, fontSize: 28, color: C.sub, opacity: b4}}>256×192ドットの絵 1枚の大きさ</div>
+        <Bar y={430} label="16色（4bpp）" value={24576} max={MAX} color={C.red} p={b4} unit="バイト" width={BW} x={BX} note={<span style={{opacity: ng, marginLeft: 8}}>✕ 60fpsでは無理</span>} />
+        <Bar y={520} label="4色（2bpp）" value={12288} max={MAX} color={C.amber} p={b2} unit="バイト" width={BW} x={BX} />
+        <div style={{position: 'absolute', left: 950, top: 516, opacity: Math.min(1, mono * 1.4), transform: `scale(${0.8 + 0.2 * mono})`, transformOrigin: 'left center'}}>
+          <Tag color="#ffffff" style={{background: '#000'}}>白黒に</Tag>
         </div>
-        <Bar y={470} label="送りたい量" value={12288} max={12288} color={C.amber} p={b1} unit="バイト" width={560} x={360} />
-        <Bar y={560} label="普通のすき間" value={6051} max={12288} color="#7c8db8" p={b2} unit="バイト" width={560} x={360} note={<span style={{color: C.red}}>約半分</span>} />
-        <Bar y={650} label="黒帯で拡張" value={11296} max={12288} color={C.green} p={b3} unit="バイト" width={560} x={360} />
-        <div style={{position: 'absolute', left: 620, top: 740, fontSize: 40, fontWeight: 900, color: C.red, opacity: short, transform: `scale(${0.8 + 0.2 * short})`}}>あと 992バイト 足りない！</div>
+        <Bar y={610} label="普通のすき間" value={6051} max={MAX} color="#7c8db8" p={bn} unit="バイト" width={BW} x={BX} note={<span style={{color: C.red}}>約半分</span>} />
+        <Bar y={700} label="黒帯で拡張" value={11296} max={MAX} color={C.green} p={bb} unit="バイト" width={BW} x={BX} />
+        <div style={{position: 'absolute', left: 420, top: 790, fontSize: 40, fontWeight: 900, color: C.red, opacity: short, transform: `scale(${0.8 + 0.2 * short})`}}>あと 992バイト 足りない！</div>
       </div>
       <div style={{position: 'absolute', inset: 0, opacity: phaseB}}>
         <div style={{position: 'absolute', left: 90, top: 150, width: 1024, height: 720, borderRadius: 6, overflow: 'hidden', boxShadow: '0 10px 40px rgba(0,0,0,.5)'}}>
-          <SeqImg layer="bg" offset={-q(5)} style={{position: 'absolute', width: 1024, height: 720}} />
-          <SeqImg layer="gsu" offset={-q(5)} style={{position: 'absolute', width: 1024, height: 720}} />
-          <SeqImg layer="obj" offset={-q(5)} style={{position: 'absolute', width: 1024, height: 720}} />
-          <SeqImg layer="tiles" offset={-q(5)} style={{position: 'absolute', width: 1024, height: 720, imageRendering: 'auto'}} />
+          <SeqImg layer="bg" offset={-q(7)} style={{position: 'absolute', width: 1024, height: 720}} />
+          <SeqImg layer="gsu" offset={-q(7)} style={{position: 'absolute', width: 1024, height: 720}} />
+          <SeqImg layer="obj" offset={-q(7)} style={{position: 'absolute', width: 1024, height: 720}} />
+          <SeqImg layer="tiles" offset={-q(7)} style={{position: 'absolute', width: 1024, height: 720, imageRendering: 'auto'}} />
         </div>
         <div style={{position: 'absolute', left: 1180, top: 170, width: 660}}>
           <div style={{fontSize: 30, color: C.sub}}>送るタイル（8×8ドット）</div>
@@ -199,94 +205,28 @@ export const S09: React.FC = () => {
   );
 };
 
-// ───────────────────────── S10 色とモノクロ
-const TileMix: React.FC<{mono: boolean; p: number}> = ({mono, p}) => {
-  const px = 26;
-  const A = (x: number, y: number) => (x - 5) ** 2 + (y - 7) ** 2 < 30;
-  const B = (x: number, y: number) => (x - 12) ** 2 + (y - 9) ** 2 < 26;
-  const cells: React.ReactNode[] = [];
-  for (let y = 0; y < 16; y++) for (let x = 0; x < 16; x++) {
-    const inA = A(x, y), inB = B(x, y);
-    if (!inA && !inB) continue;
-    const tileX = Math.floor(x / 8);
-    // colour mode: each 8x8 tile picks one palette; right tile uses B's palette, so A's pixels there turn wrong
-    let fill: string;
-    if (mono) fill = (x + y) % 3 ? '#e8e8e8' : '#333';
-    else if (inB) fill = (x + y) % 3 ? '#e04848' : '#7a1f1f';
-    else fill = tileX === 1 ? ((x + y) % 3 ? '#e04848' : '#7a1f1f') : ((x + y) % 3 ? '#4caf50' : '#1d5a22');
-    cells.push(<rect key={`${x}-${y}`} x={x * px} y={y * px} width={px - 2} height={px - 2} fill={fill} />);
-  }
-  return (
-    <svg width={16 * px} height={16 * px} style={{opacity: p}}>
-      <rect width={16 * px} height={16 * px} fill="#0b1124" />
-      {cells}
-      {[0, 1].map((i) => [0, 1].map((j) => <rect key={`${i}${j}`} x={i * 8 * px} y={j * 8 * px} width={8 * px} height={8 * px} fill="none" stroke={C.amber} strokeWidth={3} />))}
-      {!mono && <rect x={8 * px} y={0} width={8 * px} height={16 * px} fill="none" stroke={C.red} strokeWidth={6} strokeDasharray="12 8" />}
-    </svg>
-  );
-};
-export const S10: React.FC = () => {
-  const f = useCurrentFrame();
-  const q = (i: number) => cueOf('S10', i);
-  const mix = interpolate(f, [q(1), q(1) + 20], [0, 1], clamp);
-  const mono = useIn(q(2));
-  const fc = useIn(q(3));
-  const sel = usePop(q(0) + 30);
-  return (
-    <Bg>
-      <SceneTitle label="なぜモノクロ表示なのか" />
-      <div style={{position: 'absolute', left: 90, top: 150}}>
-        <Game field={2600} w={900} />
-        <div style={{position: 'absolute', left: 20, top: 20, transform: `scale(${sel})`, transformOrigin: 'left top'}}>
-          <Tag color="#ffffff" style={{background: 'rgba(0,0,0,.6)', fontSize: 30}}>起動直後に SELECT → モノクロ</Tag>
-        </div>
-      </div>
-      <div style={{position: 'absolute', left: 1080, top: 160, opacity: mix}}>
-        <div style={{display: 'flex', gap: 40}}>
-          <div>
-            <div style={{fontSize: 28, fontWeight: 800, marginBottom: 10, color: C.red}}>カラー：色は8×8ごとに1組</div>
-            <TileMix mono={false} p={1} />
-          </div>
-        </div>
-        <div style={{fontSize: 26, color: C.sub, marginTop: 10, width: 420, lineHeight: 1.5}}>緑の物体がはみ出した右のタイルは<br />赤い物体の色の組になってしまう</div>
-      </div>
-      <div style={{position: 'absolute', left: 1560, top: 160, opacity: mono}}>
-        <div style={{fontSize: 28, fontWeight: 800, marginBottom: 10, color: '#fff'}}>モノクロ</div>
-        <div style={{transform: 'scale(0.62)', transformOrigin: 'left top'}}><TileMix mono p={1} /></div>
-        <div style={{fontSize: 26, color: C.sub, marginTop: -150, width: 300, lineHeight: 1.5}}>混ざる色がない<br />→ 形がそのまま見える</div>
-      </div>
-      <Fade at={q(3)} style={{position: 'absolute', left: 1080, top: 800, width: 760}}>
-        <div style={{fontSize: 32, fontWeight: 800, opacity: fc}}>元になったファミコン版も<span style={{color: '#fff', background: '#000', padding: '0 10px', marginLeft: 6}}>白黒</span></div>
-      </Fade>
-    </Bg>
-  );
-};
-
-// ───────────────────────── S11 結果
+// ───────────────────────── S11 60fps達成（軽いつなぎ）
 export const S11: React.FC = () => {
+  const f = useCurrentFrame();
   const q = (i: number) => cueOf('S11', i);
-  const a = usePop(q(1));
-  const b = usePop(q(1) + 25);
-  const c = usePop(q(1) + 50);
-  const note = useIn(q(2));
-  const stat = (p: number, big: string, unit: string, sub: React.ReactNode, color: string) => (
-    <div style={{width: 520, height: 330, borderRadius: 24, background: C.panel, border: `3px solid ${color}`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', opacity: Math.min(1, p * 1.5), transform: `scale(${0.8 + 0.2 * p})`}}>
-      <div style={{fontSize: 120, fontWeight: 900, color, lineHeight: 1}}>{big}<span style={{fontSize: 44}}>{unit}</span></div>
-      <div style={{fontSize: 30, color: C.sub, marginTop: 16, textAlign: 'center', lineHeight: 1.4}}>{sub}</div>
-    </div>
-  );
+  const stamp = usePop(q(0) + 200);
+  const words = ['転送', '描く速さ', '描かない工夫'];
   return (
-    <Bg>
-      <SceneTitle label="結果" color={C.green} />
-      <div style={{position: 'absolute', top: 220, width: '100%', display: 'flex', justifyContent: 'center', gap: 50}}>
-        {stat(a, '60.10', 'fps', '道中もボス戦も', C.green)}
-        {stat(b, '0', 'コマ', '表示が遅れたコマ', C.cyan)}
-        {stat(c, '5', '分×2', <>通常プレイ5分 ＋<br />ボスを長く残す5分</>, C.amber)}
+    <AbsoluteFill style={{background: '#000'}}>
+      <AbsoluteFill style={{alignItems: 'center', justifyContent: 'center'}}>
+        <Game field={8500} w={1536} style={{borderRadius: 0}} />
+      </AbsoluteFill>
+      <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 40%)'}} />
+      <div style={{position: 'absolute', top: 70, width: '100%', display: 'flex', justifyContent: 'center', gap: 24}}>
+        {words.map((w, i) => {
+          const p = interpolate(f, [q(0) + i * 40, q(0) + i * 40 + 16], [0, 1], clamp);
+          return <Tag key={w} color={[C.cyan, C.amber, C.green][i]} style={{background: 'rgba(5,8,18,.75)', fontSize: 34, opacity: p * (1 - stamp * 0.5)}}>✔ {w}</Tag>;
+        })}
       </div>
-      <div style={{position: 'absolute', top: 640, width: '100%', textAlign: 'center', opacity: note, fontSize: 34, color: C.sub}}>
-        ※ エミュレーター（Mesen）での測定。実機での確認はこれから
+      <div style={{position: 'absolute', top: 330, width: '100%', textAlign: 'center', opacity: Math.min(1, stamp * 1.3), transform: `scale(${1.6 - 0.6 * stamp}) rotate(-4deg)`}}>
+        <span style={{display: 'inline-block', padding: '10px 50px', border: `10px solid ${C.green}`, borderRadius: 24, color: C.green, fontSize: 150, fontWeight: 900, background: 'rgba(5,8,18,.7)', textShadow: '0 4px 20px rgba(0,0,0,.6)'}}>60fps</span>
       </div>
-    </Bg>
+    </AbsoluteFill>
   );
 };
 
