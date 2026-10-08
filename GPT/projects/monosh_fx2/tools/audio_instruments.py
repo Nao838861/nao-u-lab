@@ -208,12 +208,15 @@ def hat(rate=32000, length=0.05, decay=95, seed=42):
     return n * np.exp(-t * decay) * np.minimum(1, t * rate / 4)
 
 
-def crash(rate=16000, length=0.75):
+def crash(rate=32000, length=0.30):
+    # 原作の決めの1打は、15kHzまで届く明るい成分が約0.25秒で消える。長い尾の鈍いノイズにしない
     t = np.arange(int(rate * length)) / rate
     n = _noise(len(t), 49)
-    n = n - _onepole(n, 0.25)
-    ring = np.sin(2 * np.pi * 3170 * t) * 0.15 + np.sin(2 * np.pi * 4410 * t) * 0.1
-    return (n + ring) * (0.55 * np.exp(-t * 4.0) + 0.45 * np.exp(-t * 14)) * np.minimum(1, t * rate / 4)
+    n = n - _onepole(n, 0.55)
+    ring = sum(a * np.sin(2 * np.pi * f * t + ph) for a, f, ph in
+               ((0.22, 3290, 0.3), (0.18, 4870, 1.1), (0.16, 6730, 2.0), (0.13, 8410, 0.7), (0.10, 10230, 2.6)))
+    env = 0.6 * np.exp(-t * 11) + 0.4 * np.exp(-t * 30)
+    return (n + ring) * env * np.minimum(1, t * rate / 4)
 
 
 # 名前 → (合成関数, サンプル周期 or 再生レート, 種類)
@@ -224,8 +227,11 @@ TONAL = {
 DRUMS = {
     'kick': (lambda: kick(), 16000), 'kick2': (lambda: kick(top=175, bottom=55, tau=0.022, decay=15), 16000),
     'snare': (snare, 32000), 'tom': (tom, 16000), 'hat': (hat, 32000),
-    'ohat': (lambda: hat(length=0.18, decay=18, seed=46), 32000), 'crash': (lambda: crash(rate=12000), 12000),
+    'ohat': (lambda: hat(length=0.18, decay=18, seed=46), 32000), 'crash': (crash, 32000),
 }
+
+# 決めの1打の明るさは原作サントラに合わせて、クラッシュだけ約5dB下げる
+DRUM_LEVEL = {'crash': 0.45}
 
 
 def write_all(folder):
@@ -238,6 +244,6 @@ def write_all(folder):
         write_wav(folder / f'{name}.wav', y)
         info[name] = dict(loop=loop, period=period)
     for name, (make, rate) in DRUMS.items():
-        write_wav(folder / f'{name}.wav', make(), rate=rate, level=0.8)
+        write_wav(folder / f'{name}.wav', make(), rate=rate, level=DRUM_LEVEL.get(name, 0.8))
         info[name] = dict(rate=rate)
     return info
