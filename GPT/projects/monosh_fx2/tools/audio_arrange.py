@@ -90,11 +90,16 @@ def note_token(note):
     return f'o{note // 12 - 1}{NAMES[note % 12]}'
 
 
-def lane_tokens(events, end):
-    tokens = []; cursor = 0
+def lane_tokens(events, end, high=None):
+    """high=(境界の音, 低い側の楽器, 高い側の楽器) なら、音域で楽器を切り替える（高音の折り返し対策）。"""
+    tokens = []; cursor = 0; current = high[1] if high else None
     for begin, finish, note in events:
         if begin > cursor:
             tokens.append(duration_tokens('r', begin - cursor))
+        if high:
+            want = high[2] if note > high[0] else high[1]
+            if want != current:
+                tokens.append('@' + want); current = want
         tokens.append(duration_tokens(note_token(note), finish - begin))
         cursor = finish
     if cursor < end:
@@ -149,16 +154,16 @@ def drum_bar_patterns(events, end, prefix):
     return subs, calls
 
 
-# 声ごとの楽器・音量・定位・その他（ビブラートは原作の旋律の測定: 0.4秒ほど真っ直ぐ、その後 約4Hz・±40セント）
+# 声ごとの楽器・音量・定位。原作サントラの主旋律にビブラートはない（±8セント以内）
 VOICES = {
-    'A': dict(inst='lead', volume=172, pan=64, extra='MP40,6,40'),
-    'B': dict(inst='brass', volume=118, pan=56, extra='MP25,6,48'),
+    'A': dict(inst='lead', volume=96, pan=64, extra='', high=(84, 'lead', 'lead_hi')),
+    'B': dict(inst='brass', volume=68, pan=56, extra=''),
     'C': dict(inst='square', volume=62, pan=46, extra=''),
     'D': dict(inst='saw', volume=58, pan=82, extra=''),
     'E': dict(inst='bass', volume=176, pan=64, extra=''),
     'H': dict(inst='pad', volume=72, pan=74, extra=''),
 }
-DRUM_VOLUME = {'F': (196, 64), 'G': (128, 60)}
+DRUM_VOLUME = {'F': (196, 64), 'G': (176, 60)}
 
 
 def song(tracks, beats=640, tempo=154, title='Space Harrier - native SFC arrangement v2'):
@@ -166,12 +171,15 @@ def song(tracks, beats=640, tempo=154, title='Space Harrier - native SFC arrange
     lines = ['; 音符参照: JK150 / SixtyTunes (VGMusic)。パートの役割ごとに8声へ割り振ったSFC編曲。',
              f'#Title {title}', '#Composer Hiroshi Kawaguchi',
              '#ZenLen 192', f'#Tempo {tempo}', '#MainVolume 96', '#EchoLength 0']
-    insts = sorted({v['inst'] for v in VOICES.values()} | {m[1] for m in DRUM_MAP.values()})
+    insts = sorted({v['inst'] for v in VOICES.values()} | {v['high'][2] for v in VOICES.values() if v.get('high')}
+                   | {m[1] for m in DRUM_MAP.values()})
     lines += [f'@{name} {name}' for name in insts]
     for voice, events in sorted(lanes(tracks, end).items()):
         spec = VOICES[voice]
         lines.append(f'{voice} @{spec["inst"]} V{spec["volume"]} p{spec["pan"]} {spec["extra"]} L'.replace('  ', ' '))
-        tokens = lane_tokens(events, end)
+        tokens = lane_tokens(events, end, spec.get('high'))
+        if spec.get('high'):
+            tokens.append('@' + spec['high'][1])            # ループ先頭と同じ楽器で終える
         for i in range(0, len(tokens), 16):
             lines.append(voice + ' ' + ' '.join(tokens[i:i + 16]))
     for voice, events in sorted(drum_lanes(tracks[6], end).items()):
@@ -185,11 +193,13 @@ def song(tracks, beats=640, tempo=154, title='Space Harrier - native SFC arrange
 
 
 # TAD のサンプル定義（tools/audio_instruments の周期・レートに合わせる）
+# 主旋律の減衰は原作サントラの伸ばした音（0.3秒で-7dB、0.9秒で-21dB）にSNESのADSRを合わせた（誤差0.7dB）
 ENVELOPES = {
-    'lead': 'adsr 15 3 6 10', 'brass': 'adsr 12 3 6 9', 'bass': 'adsr 15 4 5 11', 'pad': 'adsr 10 2 6 6',
-    'square': 'adsr 15 5 4 14', 'saw': 'adsr 15 5 4 14',
+    'lead': 'adsr 15 1 5 16', 'lead_hi': 'adsr 15 1 5 16', 'brass': 'adsr 13 1 5 16', 'bass': 'adsr 15 4 5 11', 'pad': 'adsr 10 2 6 6',
+    # 刻みの和音は原作では矩形波（SSG）で、鳴っている間は音量が一定
+    'square': 'adsr 15 7 7 0', 'saw': 'adsr 15 7 6 2',
 }
-OCTAVES = {'lead': (2, 6), 'brass': (2, 6), 'bass': (0, 3), 'pad': (3, 6), 'square': (2, 6), 'saw': (2, 6)}
+OCTAVES = {'lead': (2, 6), 'lead_hi': (5, 6), 'brass': (2, 6), 'bass': (0, 3), 'pad': (3, 6), 'square': (2, 6), 'saw': (2, 6)}
 # 原作のタム回しの音程（録画で 約65Hz・85Hz・110Hz・147Hz）。サンプルは16000Hzで120Hz
 TOM_RATES = [8700, 11300, 14700, 19600]
 

@@ -24,26 +24,20 @@ audio { width: 100%; display: block; }
 <body>
 <main>
 <h1>Space Harrier メインテーマ SFC版 試作（短い区間）</h1>
-<p class="note">比べる区間は、採譜の52〜96拍（録画の約19.9〜36.9秒）。決めの和音 → タム回し → 主旋律の入り（8小節）を含む。3つとも同じ拍から始め、音量（ラウドネス）を揃えた。原作は録画の音声そのままで、連射音などの効果音が常に重なっている。旧版・新版は、SFCのSPC700で鳴らしたもの（TAD v0.4.2の曲データをlibgmeで録音）。</p>
+<p class="note">区間は採譜の52〜96拍（約17秒）：決めの和音 → タム回し → 主旋律の入り（8小節）。どれも同じ拍から始め、音量（ラウドネス）を揃えた。新版・旧版はSFCのSPC700で鳴らしたもの（TAD v0.4.2の曲データをlibgmeで録音）。</p>
+<p class="note">原作の音（サントラ・録画）は著作物なので、このフォルダの <code>local/</code> にだけ置き、gitには入れていない（手元でのみ再生できる）。</p>
 
-<h2>主旋律の音色の候補（新しい）</h2>
-<p class="note">「主旋律の音が変、音量が大きい」への対処。どれも主旋律の音量を約4dB、下のブラスを約3dB下げ、主旋律と1オクターブ下のブラスのビブラートを同じ設定に揃えた（前の試作は2声で揺れ方が違い、うねりが出ていた可能性がある）。区間は下の比較と同じ。原作は下の「原作（録画）」で聞ける。</p>
-<div class="track"><div class="name">v1: 前の試作と同じ音色（明るいFM）</div><div class="desc">音量とビブラートの揃え方だけ直した。音色が原因かどうかの切り分け用。</div><audio controls preload="none" src="lead_v1.mp3"></audio></div>
-<div class="track"><div class="name">v2: 柔らかいFM</div><div class="desc">倍音を控えめにし、鼻にかかる成分（第2変調器）をなくした。ビブラートは少し浅く。</div><audio controls preload="none" src="lead_v2.mp3"></audio></div>
-<div class="track"><div class="name">v3: 柔らかいFM、ビブラートなし</div><div class="desc">v2からビブラートを外した。揺れが原因かどうかの切り分け用。</div><audio controls preload="none" src="lead_v3.mp3"></audio></div>
-<div class="track"><div class="name">v4: 丸いブラス</div><div class="desc">倍音がさらに少なく、立ち上がりも穏やか。</div><audio controls preload="none" src="lead_v4.mp3"></audio></div>
-<div class="track"><div class="name">v5: 中間</div><div class="desc">v1とv2の間の明るさ。ビブラートは浅め。</div><audio controls preload="none" src="lead_v5.mp3"></audio></div>
+<h2>サントラ（効果音なし）と新版 第2試作</h2>
+<p class="note">第2試作は、サントラで主旋律を測り直して作った。主旋律にビブラートはなく（±8セント以内）、伸ばした音は0.9秒で約−20dBまで下がる減衰型。倍音（2倍音−13dB、3倍音−17dB、4〜12倍音が−21dB前後で平ら）を測ったまま足し合わせて波形を作り、減衰はSNESのADSRで合わせた。主旋律は最初の試作より約8dB下げた。刻みの和音（原作は矩形波）は鳴っている間の音量を一定にし、ハットを明るく大きくした。サントラとの帯域ごとの音量差は、8kHz以下で±2dB以内。</p>
+<div class="track"><div class="name">原作サントラ（手元のみ）</div><audio controls preload="none" src="local/phrase_A_soundtrack.mp3"></audio></div>
+<div class="track"><div class="name">新版 第2試作</div><audio controls preload="none" src="phrase_A_v2.mp3"></audio></div>
 
-<h2>原作 → 旧版 → 新版（最初の試作、続けて再生）</h2>
-<div class="track"><div class="name">3つを続けて（間に0.8秒の無音）</div><audio controls preload="none" src="phrase_A.mp3"></audio></div>
-
-<h2>1つずつ</h2>
-<div class="track"><div class="name">原作（録画）</div><div class="desc">業務用基板（FM音源YM2203とPCMドラム）。効果音が重なっている。</div><audio controls preload="none" src="phrase_A_original.mp3"></audio></div>
-<div class="track"><div class="name">旧版（今のROM）</div><div class="desc">短い固定倍音の波形。主旋律の1オクターブ下の重ねなし。タムなし（ドラムはキック・スネア・ハット・クラッシュの代用音）。</div><audio controls preload="none" src="phrase_A_old.mp3"></audio></div>
-<div class="track"><div class="name">新版（試作）</div><div class="desc">FM合成の音源（立ち上がりは明るく、すぐ落ち着く）。主旋律は原作の測定どおり、0.4秒ほど真っ直ぐ伸ばしてから約4Hzのビブラート。1オクターブ下のブラスを重ねた。ベースは低い音が次の音まで鳴り続ける形。タム回しを原作の音程（約147→85→65Hz）で入れた。</div><audio controls preload="none" src="phrase_A_new.mp3"></audio></div>
-
-<h2>新版の曲の頭から60秒</h2>
-<div class="track"><div class="name">新版（効果音なし）</div><audio controls preload="none" src="new_bgm_60s.mp3"></audio></div>
+<h2>これまでの比較</h2>
+<div class="track"><div class="name">原作（ゲームの録画、効果音入り、手元のみ）</div><audio controls preload="none" src="local/phrase_A_original.mp3"></audio></div>
+<div class="track"><div class="name">旧版（今のROM）</div><div class="desc">短い固定倍音の波形。主旋律の1オクターブ下の重ねなし。タムなし。</div><audio controls preload="none" src="phrase_A_old.mp3"></audio></div>
+<div class="track"><div class="name">新版 第1試作</div><div class="desc">録画で測った明るいFM＋ビブラート。「主旋律の音が変、音量が大きい」との評価。</div><audio controls preload="none" src="phrase_A_new.mp3"></audio></div>
+<div class="track"><div class="name">第1試作の主旋律の候補 v1〜v5</div><div class="desc">v1 明るいFM／v2 柔らかいFM／v3 柔らかいFM・ビブラートなし／v4 丸いブラス／v5 中間（どれも音量を下げ、ビブラートを2声で揃えたもの）</div>
+<audio controls preload="none" src="lead_v1.mp3"></audio><audio controls preload="none" src="lead_v2.mp3"></audio><audio controls preload="none" src="lead_v3.mp3"></audio><audio controls preload="none" src="lead_v4.mp3"></audio><audio controls preload="none" src="lead_v5.mp3"></audio></div>
 </main>
 </body>
 </html>

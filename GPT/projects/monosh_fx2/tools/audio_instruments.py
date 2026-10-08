@@ -53,12 +53,27 @@ def fm_voice(period, attack_periods, loop_periods, index1, index2=None, ratio2=2
     return y * amp, n_attack
 
 
+# 原作サントラ（効果音なし）の主旋律 E5 の倍音（dB、基音=0）。0.1〜0.3秒の平均。
+# 2倍音-13dB、3倍音-17dB、4〜12倍音が-21dB前後で平ら、その上はなだらかに下がる
+LEAD_DB = [0.0, -12.6, -16.9, -21.5, -21.7, -21.1, -20.0, -20.6, -21.3, -20.9, -21.1, -22.8, -24.2, -25.4,
+           -26.2, -26.9, -29.4, -31.5, -32.4, -34.7, -35.8, -37.1, -37.7, -40.4]
+
+
+def additive(period, dbs, max_harmonic, copies=2):
+    """倍音の強さ（dB）から1周期の波形を作り、数周期並べてループさせる。"""
+    t = np.arange(period) / period
+    y = sum(10 ** (db / 20) * np.sin(2 * np.pi * (k + 1) * t) for k, db in enumerate(dbs[:max_harmonic]))
+    return np.tile(y, copies), 0
+
+
 def lead():
-    # 原作の主旋律: 明るい立ち上がりから落ち着くFMブラス。ビブラートはMML側で遅れて掛ける。
-    # 定常部の値は、原作の伸ばした音（E5）の倍音（2倍音-13dB、3倍音-16dB、5〜10倍音が-23dB前後で平ら）に、
-    # 下のブラスと重ねた状態で合わせた（誤差 約4.7dB）
-    return fm_voice(64, 80, 2, lambda t: env_to(t, 3.4, 2.2, 0.06),
-                    lambda t: env_to(t, 0.7, 0.4, 0.05), ratio2=4, feedback=1.6)
+    # 倍音はC6（ループ周波数の約2.1倍）まで折り返さない15倍音まで
+    return additive(64, LEAD_DB, 15)
+
+
+def lead_hi():
+    # C6より上の音域用。G#6（約3.3倍）でも折り返さない9倍音まで
+    return additive(64, LEAD_DB, 9)
 
 
 def brass():
@@ -151,7 +166,7 @@ def tom(rate=16000, length=0.42):
 def hat(rate=32000, length=0.05, decay=95, seed=42):
     t = np.arange(int(rate * length)) / rate
     n = _noise(len(t), seed)
-    n = n - _onepole(n, 0.45)                  # 高域だけ
+    n = n - _onepole(n, 0.25)                  # 高域だけ（原作サントラの4〜16kHzに合わせて明るめ）
     return n * np.exp(-t * decay) * np.minimum(1, t * rate / 4)
 
 
@@ -165,7 +180,7 @@ def crash(rate=16000, length=0.75):
 
 # 名前 → (合成関数, サンプル周期 or 再生レート, 種類)
 TONAL = {
-    'lead': (lead, 64), 'brass': (brass, 64), 'bass': (bass, 256), 'pad': (pad, 64),
+    'lead': (lead, 64), 'lead_hi': (lead_hi, 64), 'brass': (brass, 64), 'bass': (bass, 256), 'pad': (pad, 64),
     'square': (square, 64), 'saw': (saw, 64),
 }
 DRUMS = {
