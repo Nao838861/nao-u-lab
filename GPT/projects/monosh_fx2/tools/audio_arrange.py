@@ -3,14 +3,17 @@
 採譜の各トラックは原作のパートに対応する（録画と拍単位で照合済み）:
   ch0 主旋律（前半は和音） / ch4 主旋律の1オクターブ下のブラス / ch2・ch3 刻みの和音 /
   ch1 オクターブで跳ねるベース / ch5 後半のパッド / ch9 ドラム（キック2種・スネア・タム4種・ハット・クラッシュ）
-声の割り振り（効果音はTADの仕様で G・H を一時的に借りる。どちらも消えても曲の骨格が残るパート）:
-  A 主旋律（ch0 の最高音） / B ch4、ch4が休みの和音では ch0 の2番目 / C ch2 / D ch3 / E ベース /
-  F キック・タム / G スネア・クラッシュ・ハット / H ch5、ch5が休みの和音では ch0 の3番目
+声の割り振り（効果音はTADの仕様で G・H を一時的に借りる。連射音はほぼ鳴り続けるので、
+G・H には一時的に消えても曲の骨格が残るパートを置く）:
+  A 主旋律（ch0 の最高音） / B スネア・クラッシュ・ハット / C ch2 / D ch3 / E ベース / F キック・タム /
+  G ch4（主旋律の1オクターブ下）、ch4が休みの和音では ch0 の2番目 / H ch5、ch5が休みの和音では ch0 の3番目
 同じ音高の連打は1音ずつ発音し（まとめない）、採譜の音の長さ（ゲート）を保つ。
 """
 from collections import defaultdict
 
 TPB = 48                     # TAD: ZenLen 192 → 四分音符48tick
+# 旋律・和音の声（Eの付いた声）にだけ掛ける薄いエコー。ベースとドラムは乾いたまま。32msでARAMに収める
+ECHO = ['#EchoLength 32', '#EchoFeedback 36', '#EchoVolume 34', '#FirFilter 127 0 0 0 0 0 0 0']
 NAMES = ['c', 'c+', 'd', 'd+', 'e', 'f', 'f+', 'g', 'g+', 'a', 'a+', 'b']
 
 
@@ -64,7 +67,7 @@ def lanes(tracks, end):
             b.append((begin, finish, note))
         elif rank == 2 and not sounding(t5, begin):
             h.append((begin, finish, note))
-    return {'A': monophonic(a), 'B': monophonic(b), 'C': monophonic(t2), 'D': monophonic(t3),
+    return {'A': monophonic(a), 'G': monophonic(b), 'C': monophonic(t2), 'D': monophonic(t3),
             'E': legato(monophonic(bass)), 'H': monophonic(h)}
 
 
@@ -111,8 +114,8 @@ def lane_tokens(events, end, ranges=None):
 DRUM_MAP = {
     35: ('F', 'kick', 0, 14, 2), 36: ('F', 'kick2', 0, 12, 2),
     41: ('F', 'tom', 0, 20, 3), 43: ('F', 'tom', 1, 20, 3), 45: ('F', 'tom', 2, 20, 3), 47: ('F', 'tom', 3, 20, 3),
-    38: ('G', 'snare', 0, 12, 3), 40: ('G', 'snare', 0, 12, 3), 49: ('G', 'crash', 0, 36, 4), 57: ('G', 'crash', 0, 36, 4),
-    46: ('G', 'ohat', 0, 10, 2), 42: ('G', 'hat', 0, 4, 1), 44: ('G', 'hat', 0, 4, 1),
+    38: ('B', 'snare', 0, 12, 3), 40: ('B', 'snare', 0, 12, 3), 49: ('B', 'crash', 0, 36, 4), 57: ('B', 'crash', 0, 36, 4),
+    46: ('B', 'ohat', 0, 10, 2), 42: ('B', 'hat', 0, 4, 1), 44: ('B', 'hat', 0, 4, 1),
 }
 
 
@@ -156,27 +159,32 @@ def drum_bar_patterns(events, end, prefix):
 
 # 声ごとの楽器・音量・定位。原作サントラの主旋律にビブラートはない（±8セント以内）
 VOICES = {
-    'A': dict(inst='lead', volume=96, pan=64, extra='', ranges=[(79, 'lead'), (84, 'lead_mid'), (127, 'lead_hi')]),
-    'B': dict(inst='brass', volume=85, pan=56, extra=''),
-    'C': dict(inst='stab', volume=62, pan=46, extra=''),
-    'D': dict(inst='stab', volume=58, pan=82, extra=''),
+    'A': dict(inst='lead', volume=96, pan=64, extra='E', ranges=[(79, 'lead'), (84, 'lead_mid'), (127, 'lead_hi')]),
+    'G': dict(inst='brass', volume=85, pan=56, extra='E'),
+    # 刻みの和音は試聴で -6dB（原作でも主旋律の陰にある）
+    'C': dict(inst='stab', volume=31, pan=46, extra='E'),
+    'D': dict(inst='stab', volume=29, pan=82, extra='E'),
     'E': dict(inst='bass', volume=176, pan=64, extra=''),
-    'H': dict(inst='pad', volume=72, pan=74, extra=''),
+    'H': dict(inst='pad', volume=72, pan=74, extra='E'),
 }
-DRUM_VOLUME = {'F': (196, 64), 'G': (176, 60)}
+DRUM_VOLUME = {'F': (196, 64), 'B': (176, 60)}
+
+
+# 曲全体の音量。効果音（主音量だけが効く）との釣り合いを前版と同じにするため、曲の声だけ約2.2dB下げる
+MUSIC_GAIN = 0.776
 
 
 def song(tracks, beats=640, tempo=154, title='Space Harrier - native SFC arrangement v2'):
     end = beats * TPB
     lines = ['; 音符参照: JK150 / SixtyTunes (VGMusic)。パートの役割ごとに8声へ割り振ったSFC編曲。',
              f'#Title {title}', '#Composer Hiroshi Kawaguchi',
-             '#ZenLen 192', f'#Tempo {tempo}', '#MainVolume 96', '#EchoLength 0']
+             '#ZenLen 192', f'#Tempo {tempo}', '#MainVolume 96'] + ECHO
     insts = sorted({v['inst'] for v in VOICES.values()} | {i for v in VOICES.values() for _, i in v.get('ranges', [])}
                    | {m[1] for m in DRUM_MAP.values()})
     lines += [f'@{name} {name}' for name in insts]
     for voice, events in sorted(lanes(tracks, end).items()):
         spec = VOICES[voice]
-        lines.append(f'{voice} @{spec["inst"]} V{spec["volume"]} p{spec["pan"]} {spec["extra"]} L'.replace('  ', ' '))
+        lines.append(f'{voice} @{spec["inst"]} V{round(spec["volume"] * MUSIC_GAIN)} p{spec["pan"]} {spec["extra"]} L'.replace('  ', ' '))
         tokens = lane_tokens(events, end, spec.get('ranges'))
         if spec.get('ranges'):
             tokens.append('@' + spec['ranges'][0][1])       # ループ先頭と同じ楽器で終える
@@ -186,7 +194,7 @@ def song(tracks, beats=640, tempo=154, title='Space Harrier - native SFC arrange
         subs, calls = drum_bar_patterns(events, end, f'drum{voice}')
         lines += subs
         volume, pan = DRUM_VOLUME[voice]
-        lines.append(f'{voice} V{volume} p{pan} L')
+        lines.append(f'{voice} V{round(volume * MUSIC_GAIN)} p{pan} L')
         for i in range(0, len(calls), 16):
             lines.append(voice + ' ' + ' '.join(calls[i:i + 16]))
     return '\n'.join(lines) + '\n'

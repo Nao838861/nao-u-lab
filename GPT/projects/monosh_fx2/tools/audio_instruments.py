@@ -17,6 +17,26 @@ import numpy as np
 RATE = 32000
 
 
+# SPC700の再生時の補間（Gaussian）で削れる高域を、波形の段階で持ち上げる（[-a, 1+2a, -a]）
+EMPHASIS = 0.30
+
+
+def emphasize(values, loop):
+    """ループのある音はループ部分を循環として扱い、継ぎ目を崩さない。loop=None は単発の音。"""
+    a = EMPHASIS
+    x = np.asarray(values, dtype=np.float64)
+    if loop is None:
+        p = np.concatenate([[x[0]], x, [x[-1]]])
+        return (1 + 2 * a) * x - a * (p[:-2] + p[2:])
+    head, body = x[:loop], x[loop:]
+    pb = np.concatenate([[body[-1]], body, [body[0]]])
+    body = (1 + 2 * a) * body - a * (pb[:-2] + pb[2:])
+    if len(head):
+        ph = np.concatenate([[head[0]], head, [body[0]]])
+        head = (1 + 2 * a) * head - a * (ph[:-2] + ph[2:])
+    return np.concatenate([head, body])
+
+
 def write_wav(path, values, rate=RATE, level=0.70):
     values = np.asarray(values, dtype=np.float64)
     values = np.concatenate([values, np.zeros(-len(values) % 16)])
@@ -71,7 +91,7 @@ def additive(period, dbs, max_harmonic, copies=2):
 # 高い倍音ほど強く重なっていると同じ特徴。2つ目の音の強さの比 r（倍音ごと）は、
 # 揺れの幅（山と谷の差 = 20log((1+r)/(1-r))）から逆算した。
 # 主旋律を伸ばしている間の高域（4〜8kHz）は、倍音だけでは原作より約3dB少ない。倍音の間のノイズ成分で補う
-LEAD_GRAIN_DB = None      # 候補: -12（試聴の x3g）
+LEAD_GRAIN_DB = -12
 LEAD_BEAT_RATIO = [0.11, 0.17, 0.27, 0.35, 0.37, 0.30, 0.40, 0.46, 0.50, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52]
 
 
@@ -118,10 +138,13 @@ def lead_hi():
     return additive(64, LEAD_DB, 9)
 
 
+# 主旋律の1オクターブ下を重ねるブラス。倍音は控えめ、主旋律と同じく約9セント上の2つ目の音を重ねて厚くする
+BRASS_DB = [0, -10, -16, -22, -25, -28, -31, -34, -37, -40]
+BRASS_BEAT_RATIO = [0.15, 0.25, 0.35, 0.45, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+
 def brass():
-    # 主旋律の1オクターブ下を重ねるブラス。立ち上がりを少し遅く、倍音を控えめに
-    y, n = fm_voice(64, 80, 2, lambda t: env_to(t, 2.0, 1.3, 0.08), rise=0.012)
-    return y, n
+    return detuned_pair(64, BRASS_DB, BRASS_BEAT_RATIO, 10)
 
 
 def bass():
@@ -241,9 +264,9 @@ def write_all(folder):
     info = {}
     for name, (make, period) in TONAL.items():
         y, loop = make()
-        write_wav(folder / f'{name}.wav', y)
+        write_wav(folder / f'{name}.wav', emphasize(y, loop))
         info[name] = dict(loop=loop, period=period)
     for name, (make, rate) in DRUMS.items():
-        write_wav(folder / f'{name}.wav', make(), rate=rate, level=DRUM_LEVEL.get(name, 0.8))
+        write_wav(folder / f'{name}.wav', emphasize(make(), None), rate=rate, level=DRUM_LEVEL.get(name, 0.8))
         info[name] = dict(rate=rate)
     return info

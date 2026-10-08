@@ -44,7 +44,7 @@
     "monosh_far_background.h": "841daa466b357fdcd81ad47a80032d71f3db4c1f84fddd31a610e591bf6c1b95",
     "monosh_far_background_fast.asm": "6496af8a8164c350ab8d3483c690cda348e34cdb24a56c4955998c728f870458"
   },
-  "hardwareObjects": "自機17pose・自弾16段階（最大56×32、1〜3 OBJ）・反射弾。32枠確保、検査最大18 OBJ、OAMは可変長。",
+  "hardwareObjects": "自機17pose・自弾16段階（最大56×32、1〜3 OBJ）・反射弾。32枠確保、通常OBJ検証最大18、境界試験32。OAMは可変長。",
   "testedEmulator": "Mesen 2.1.1, GsuClockSpeed=100, NTSC, extra scanlines=0",
   "groundPalette": {
     "requestedRgb": [
@@ -292,18 +292,21 @@
     "source": "game/v001/assets/player_recording/source.json",
     "bulletSource": "game/v001/assets/recorded_effects/source.json",
     "objAtlasBytes": 16128,
-    "objBytesPerImageMin": 40,
+    "objBytesPerImageMin": 12,
     "objBytesPerImageMax": 80,
-    "objPaletteBytesAtBoot": 64
+    "objPaletteBytesAtBoot": 64,
+    "syntheticBoundaryObjBytesMax": 136
   },
   "playerImageSource": "game/v001/assets/player_recording/source.json",
   "recordedEffectsSource": "game/v001/assets/recorded_effects/source.json",
-  "romSha256": "98ff99ececd91b3d641d822b005c83e63317c3dcf3edb813687b5fb490035088",
+  "romSha256": "bfb35914dedf793f3178015d650c9fc040eb1b3fe810a68a8a005ffa1d5e9025",
   "romBytes": 2097152,
   "buildMode": {
     "fullFramebufferTransfer": false,
     "gsuUv": true,
     "gsuClip": true,
+    "gsuColor": true,
+    "groundHorizontalCache": true,
     "cpuClipCommands": true,
     "stableGsuCache": true,
     "scaledRows": true,
@@ -325,19 +328,17 @@
     "bucketSort": false,
     "smoothDepthSizes": true
   },
-  "verificationKind": "標準SPC700のBGM・SE。実ROMのAPUIO/DSP/SPC、曲一周、ポーズ、画素・OBJ・遠景・ボス・カラー回帰、同一論理区間の速度を検証。",
-  "verificationResults": "game/v001/results/native_audio_20261008",
+  "verificationKind": "BGM第2版（原作サントラで音色を測った8声編曲）を配色整理版へ搭載。SEは前版のまま。曲一周・ポーズ・SE命令、カラー・表示・ポーズと60場面の画素・OBJ回帰、通常と継続ボス各18,000fieldの60Hzを検証。実機は未検証。",
+  "verificationResults": "game/v001/results/native_audio_v2_20261009",
   "scenarioFrames": {
-    "audio": 16000,
-    "audio_quick": 1600,
-    "play": 6000,
-    "boss": 2600,
-    "objects": 360,
+    "color": 360,
+    "display": 720,
     "pause": 650,
-    "scenery": 800,
-    "color": 240
+    "audio": 16000,
+    "naturalProfile": 18000,
+    "sustainedBossProfile": 18000
   },
-  "previousRomSha256": "4ef5a95fec70a4ee3dfcf3b9f39ea38180aa138fd44b7709fed8b21704197025",
+  "previousRomSha256": "29cf2c2d3882b98297f6e068872eb6edb119adb70360a7e304a7eb225f780296",
   "bgColor": {
     "source": "game/v001/assets/bg_color/source.json",
     "paletteGroups": 8,
@@ -349,54 +350,245 @@
     "default": "color",
     "toggle": "SELECT",
     "toggleScope": "2bpp enemies and obstacles only",
-    "physicalHardwareTested": false
+    "physicalHardwareTested": false,
+    "attributeGeneration": "GSU exact Q8.8 tile-center sampling; CPU owns mode latching and palette/map DMA",
+    "attributeUpload": "up to 12 coalesced delta spans, staged full-map transfer for large combined DMA",
+    "structureRepair": "game/v001/assets/bg_color/silhouette_repair.json",
+    "historicalRecordingMetadata": "game/v001/assets/bg_color/source.json",
+    "rgb5": [
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          3,
+          3
+        ],
+        [
+          31,
+          3,
+          2
+        ],
+        [
+          22,
+          23,
+          25
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          7,
+          2
+        ],
+        [
+          3,
+          21,
+          4
+        ],
+        [
+          16,
+          31,
+          12
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          7,
+          2
+        ],
+        [
+          3,
+          21,
+          4
+        ],
+        [
+          22,
+          14,
+          10
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          3,
+          5
+        ],
+        [
+          15,
+          16,
+          18
+        ],
+        [
+          29,
+          29,
+          30
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          15,
+          1,
+          0
+        ],
+        [
+          31,
+          15,
+          3
+        ],
+        [
+          31,
+          30,
+          26
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          6,
+          8,
+          18
+        ],
+        [
+          13,
+          18,
+          30
+        ],
+        [
+          27,
+          30,
+          31
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          12,
+          3,
+          13
+        ],
+        [
+          24,
+          9,
+          24
+        ],
+        [
+          31,
+          24,
+          31
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          7,
+          2
+        ],
+        [
+          7,
+          23,
+          6
+        ],
+        [
+          25,
+          25,
+          20
+        ]
+      ]
+    ],
+    "titlePalette3NearWhiteRgb": [
+      239,
+      239,
+      247
+    ],
+    "titlePalette3DarkRgb": [
+      24,
+      24,
+      41
+    ],
+    "paletteCoverage": "single palette per source image; full source-cell rectangle to cover partially visible screen-tile edges"
+  },
+  "performance": {
+    "performanceGateWaived": true,
+    "longProfileRequiredForThisRelease": false,
+    "note": "This release verifies exact visual output, controls and audio; no new long-duration performance claim."
+  },
+  "verificationReport": "game/v001/RESULTS_20261009_NATIVE_AUDIO_V2.md",
+  "validation": {
+    "baseCommit": "fdf1e0853d031684eab8ca2d09936d293bfaa375",
+    "fixedScenes": 523,
+    "fixedImages": 2325,
+    "paletteCellsChecked": 1785600,
+    "sourceAssetsChecked": 25,
+    "sourcePixelsChecked": 223169,
+    "reviewedRedLensPixels": 47,
+    "matchedDisplayedMaskCases": 6,
+    "realPpuComparisonImages": 24,
+    "playerAndShotFinalPpuIdentical": true,
+    "isolatedPaletteScenes": 1696,
+    "isolatedOpaquePpuPixels": 3690832,
+    "isolatedPaletteErrors": 0,
+    "audioQuickFields": 1400,
+    "audioDataUnchangedSha256": "a6593c9a0b44d02f6ac11d6e753da3f9f1ffeb2cd512724024374ad45987ca02",
+    "hardwareTested": false,
+    "historicalResults": "game/v001/results/palette_regions_20261008/previous_release.json"
   },
   "nativeAudio": {
     "driver": "TAD v0.4.2",
     "streaming": false,
-    "musicVoices": 6,
+    "musicVoices": 8,
     "sfxVoices": 2,
+    "sfxDucksMusicVoices": "G,H",
     "songs": 1,
     "soundEffects": 6,
-    "romAudioBytes": 18246,
+    "romAudioBytes": 53392,
+    "romAudioRegion": "$59:1300..$59:FFFF",
     "physicalHardwareTested": false
   },
-  "audioPerformance": {
-    "baseline": {
-      "logicFrames": 2000,
-      "seconds": 66.773351197,
-      "fps": 29.952069,
-      "fields": 4013,
-      "audioMeanMs": 0.0,
-      "audioMaxMs": 0.0,
-      "romSha256": "4ef5a95fec70a4ee3dfcf3b9f39ea38180aa138fd44b7709fed8b21704197025",
-      "stateSha256": "ddd8edf570504f5cc0c069974302744da4036cfc7bbb09cdfcaba351ad4693d8"
-    },
-    "native": {
-      "logicFrames": 2000,
-      "seconds": 66.856546399,
-      "fps": 29.914797,
-      "fields": 4018,
-      "audioMeanMs": 0.087131783,
-      "audioMaxMs": 0.127669846,
-      "romSha256": "98ff99ececd91b3d641d822b005c83e63317c3dcf3edb813687b5fb490035088",
-      "stateSha256": "ddd8edf570504f5cc0c069974302744da4036cfc7bbb09cdfcaba351ad4693d8"
-    }
+  "strict60Hz": false,
+  "presentationRates": {
+    "natural": 60.09881186234841,
+    "sustainedBoss": 60.098811862348406
   },
-  "previousColorPerformance": {
-    "play": {
-      "presentationFps": 31.61605220316179,
-      "cpuMeanMs": 21.294204335887613,
-      "cpuMaxMs": 33.633508017219,
-      "gsuMeanMs": 4.0801669093231165,
-      "gsuMaxMs": 10.084427854711
-    },
-    "boss": {
-      "presentationFps": 33.96097679112008,
-      "cpuMeanMs": 19.607142179334918,
-      "cpuMaxMs": 39.566291286901,
-      "gsuMeanMs": 3.9826817695961996,
-      "gsuMaxMs": 12.86485546209
-    }
+  "latePresentationIntervals": {
+    "natural": 0,
+    "sustainedBoss": 0
   }
 }
