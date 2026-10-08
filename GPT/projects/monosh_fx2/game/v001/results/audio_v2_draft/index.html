@@ -27,6 +27,11 @@ audio { width: 100%; display: block; }
 <p class="note">区間は採譜の52〜96拍（約17秒）：決めの和音 → タム回し → 主旋律の入り（8小節）。どれも同じ拍から始め、音量（ラウドネス）を揃えた。新版・旧版はSFCのSPC700で鳴らしたもの（TAD v0.4.2の曲データをlibgmeで録音）。</p>
 <p class="note">原作の音（サントラ・録画）は著作物なので、このフォルダの <code>local/</code> にだけ置き、gitには入れていない（手元でのみ再生できる）。</p>
 
+<h2>ボス曲 SQUILLA 第1案（耳コピの推定）</h2>
+<p class="note">原作サントラ（効果音なし）の SQUILLA から推定した。ひと回り34.06秒（約113BPM・16小節）を5回分重ねて雑音を減らし、ドラムを分離してから、16分ごとに鳴っている音を推定した。キーはE。和音・ベースの大まかな流れは合っているが、細かい音符はまだ不正確（音名の分布の一致度は、サントラを2〜4小節ずらした程度）。音色はメインテーマの楽器を流用。どこが違うか（旋律・ベース・和音・ドラム）を教えてもらえれば、そこを詰める。</p>
+<div class="track"><div class="name">原作サントラ SQUILLA ひと回り（手元のみ）</div><audio controls preload="none" src="local/boss_squilla_soundtrack.mp3"></audio></div>
+<div class="track"><div class="name">第1案</div><audio controls preload="none" src="boss_squilla_draft1.mp3"></audio></div>
+
 <h2>新版 第6試作（x3gに決めの音を直した版）</h2>
 <p class="note">0:02あたりの決め（チャチャチャ、チャチャ）でノイズっぽく聞こえていたのは、決めの度に鳴るクラッシュシンバル。容量を空けるために12kHzにしていたので、6kHz以下だけの鈍い「ザー」というノイズが0.75秒も尾を引いていた。原作の決めの1打は、15kHzまで届く明るい成分が約0.25秒で消える。クラッシュを32kHz・0.3秒の短く明るい音（ノイズ＋金属的な高い成分）に作り直し、明るさをサントラに合わせた（1打目の高域 −17.6dB、サントラ −17.9dB）。</p>
 <div class="track"><div class="name">原作サントラ（手元のみ）</div><audio controls preload="none" src="local/phrase_A_soundtrack.mp3"></audio></div>
