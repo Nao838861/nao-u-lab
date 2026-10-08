@@ -38,3 +38,11 @@ node tools/stills.mjs
 npm run render
 ```
 `public/` と `out/` は生成物なので Git に含めない。
+
+## 投稿用プレイ動画（ボス撃破まで）
+```sh
+# 自動操縦（描画リストから敵を狙い、近い木・敵弾を避ける）。パラメータ探索でノーミスの回を選んだ
+python -X utf8 tools/record_play.py --out <rec>/final --dump --params '{"wx":80,"wy0":110,"ph":3.54,"boss_dy":40,"aim_dy":20,"minw":10,"maxw":70,"danger_w":36,"ty_min":100,"snap":99}'
+# BGM は録画中に保存した SPC700 状態から、SE は ROM の SE 状態を鳴った時刻に重ねて合成
+python -X utf8 tools/make_tweet.py --run <rec>/final --out out/monosh_fx2_mono_boss.mp4
+```
