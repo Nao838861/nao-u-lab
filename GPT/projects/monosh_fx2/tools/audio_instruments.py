@@ -97,17 +97,13 @@ def harmonics_wave(period, amps):
     return sum(a * np.sin(2 * np.pi * (k + 1) * t) for k, a in enumerate(amps))
 
 
-def square():
-    # SSG（矩形波）。高い倍音は折り返しを避けて控えめに
-    amps = [(1 / k if k % 2 else 0) * (1 if k < 12 else 0.5) for k in range(1, 20)]
-    y = np.tile(harmonics_wave(64, amps), 2)
-    return y, 0
+# 原作サントラの刻みの和音（C4・D4）の倍音（dB）。偶数倍音が中心の柔らかい音で、矩形波ではない
+# （2倍音-6.5dB、3倍音-20dB、4倍音-12.5dB、5倍音-29dB、6倍音-15dB）
+STAB_DB = [0.0, -6.5, -19.5, -12.5, -29.0, -15.5, -24.0, -22.0]
 
 
-def saw():
-    amps = [1 / k * (1 if k < 10 else 0.6) for k in range(1, 18)]
-    y = np.tile(harmonics_wave(64, amps), 2)
-    return y, 0
+def stab():
+    return additive(64, STAB_DB, len(STAB_DB))
 
 
 # ---- 打楽器 ------------------------------------------------------------------
@@ -181,7 +177,7 @@ def crash(rate=16000, length=0.75):
 # 名前 → (合成関数, サンプル周期 or 再生レート, 種類)
 TONAL = {
     'lead': (lead, 64), 'lead_hi': (lead_hi, 64), 'brass': (brass, 64), 'bass': (bass, 256), 'pad': (pad, 64),
-    'square': (square, 64), 'saw': (saw, 64),
+    'stab': (stab, 64),
 }
 DRUMS = {
     'kick': (lambda: kick(), 16000), 'kick2': (lambda: kick(top=175, bottom=55, tau=0.022, decay=15), 16000),

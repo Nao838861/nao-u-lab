@@ -157,9 +157,9 @@ def drum_bar_patterns(events, end, prefix):
 # 声ごとの楽器・音量・定位。原作サントラの主旋律にビブラートはない（±8セント以内）
 VOICES = {
     'A': dict(inst='lead', volume=96, pan=64, extra='', high=(84, 'lead', 'lead_hi')),
-    'B': dict(inst='brass', volume=68, pan=56, extra=''),
-    'C': dict(inst='square', volume=62, pan=46, extra=''),
-    'D': dict(inst='saw', volume=58, pan=82, extra=''),
+    'B': dict(inst='brass', volume=85, pan=56, extra=''),
+    'C': dict(inst='stab', volume=62, pan=46, extra=''),
+    'D': dict(inst='stab', volume=58, pan=82, extra=''),
     'E': dict(inst='bass', volume=176, pan=64, extra=''),
     'H': dict(inst='pad', volume=72, pan=74, extra=''),
 }
@@ -196,10 +196,10 @@ def song(tracks, beats=640, tempo=154, title='Space Harrier - native SFC arrange
 # 主旋律の減衰は原作サントラの伸ばした音（0.3秒で-7dB、0.9秒で-21dB）にSNESのADSRを合わせた（誤差0.7dB）
 ENVELOPES = {
     'lead': 'adsr 15 1 5 16', 'lead_hi': 'adsr 15 1 5 16', 'brass': 'adsr 13 1 5 16', 'bass': 'adsr 15 4 5 11', 'pad': 'adsr 10 2 6 6',
-    # 刻みの和音は原作では矩形波（SSG）で、鳴っている間は音量が一定
-    'square': 'adsr 15 7 7 0', 'saw': 'adsr 15 7 6 2',
+    # 刻みの和音は鳴っている間の音量が一定（原作サントラ）
+    'stab': 'adsr 15 7 7 0',
 }
-OCTAVES = {'lead': (2, 6), 'lead_hi': (5, 6), 'brass': (2, 6), 'bass': (0, 3), 'pad': (3, 6), 'square': (2, 6), 'saw': (2, 6)}
+OCTAVES = {'lead': (2, 6), 'lead_hi': (5, 6), 'brass': (2, 6), 'bass': (0, 3), 'pad': (3, 6), 'stab': (2, 6)}
 # 原作のタム回しの音程（録画で 約65Hz・85Hz・110Hz・147Hz）。サンプルは16000Hzで120Hz
 TOM_RATES = [8700, 11300, 14700, 19600]
 
