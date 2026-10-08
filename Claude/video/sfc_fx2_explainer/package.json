@@ -1,0 +1,19 @@
+{
+  "name": "sfc-fx2-explainer",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts FX2Explainer out/sfc_fx2_explainer.mp4 --codec=h264 --crf=18"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.512",
+    "remotion": "4.0.512",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "@types/react": "^19.0.0"
+  }
+}
