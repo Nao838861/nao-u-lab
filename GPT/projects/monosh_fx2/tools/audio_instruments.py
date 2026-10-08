@@ -66,14 +66,36 @@ def additive(period, dbs, max_harmonic, copies=2):
     return np.tile(y, copies), 0
 
 
+# 原作の主旋律の厚み: 高い倍音ほど深く揺れる（基音±1dB、5倍音±3dB、10倍音±5dB）、
+# 周波数のぶれも倍音の番号に比例、基音のうなり約2.9Hz。約9セントずれた2つ目の音が、
+# 高い倍音ほど強く重なっていると同じ特徴。2つ目の音の強さの比 r（倍音ごと）は、
+# 揺れの幅（山と谷の差 = 20log((1+r)/(1-r))）から逆算した。
+LEAD_BEAT_RATIO = [0.11, 0.17, 0.27, 0.35, 0.37, 0.30, 0.40, 0.46, 0.50, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52]
+
+
+def detuned_pair(period, dbs, ratios, max_harmonic, periods=192):
+    """period の音（periods周期）と、1周期だけ多い音（約9セント上）を重ねる。両方の周期がループ長に収まる。"""
+    n = period * periods
+    t = np.arange(n)
+    y = np.zeros(n)
+    rng = np.random.default_rng(1985)
+    for k in range(max_harmonic):
+        a = 10 ** (dbs[k] / 20)
+        r = ratios[min(k, len(ratios) - 1)]
+        a1 = a / np.sqrt(1 + r * r)
+        y += a1 * np.sin(2 * np.pi * (k + 1) * t / period)
+        y += r * a1 * np.sin(2 * np.pi * (k + 1) * (periods + 1) * t / n + rng.uniform(0, 2 * np.pi))
+    return y, 0
+
+
 def lead():
     # 倍音はC6（ループ周波数の約2.1倍）まで折り返さない15倍音まで
-    return additive(64, LEAD_DB, 15)
+    return detuned_pair(64, LEAD_DB, LEAD_BEAT_RATIO, 15)
 
 
 def lead_hi():
     # C6より上の音域用。G#6（約3.3倍）でも折り返さない9倍音まで
-    return additive(64, LEAD_DB, 9)
+    return detuned_pair(64, LEAD_DB, LEAD_BEAT_RATIO, 9)
 
 
 def brass():

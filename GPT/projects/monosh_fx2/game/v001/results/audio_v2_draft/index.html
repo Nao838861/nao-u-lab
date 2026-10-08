@@ -27,6 +27,13 @@ audio { width: 100%; display: block; }
 <p class="note">区間は採譜の52〜96拍（約17秒）：決めの和音 → タム回し → 主旋律の入り（8小節）。どれも同じ拍から始め、音量（ラウドネス）を揃えた。新版・旧版はSFCのSPC700で鳴らしたもの（TAD v0.4.2の曲データをlibgmeで録音）。</p>
 <p class="note">原作の音（サントラ・録画）は著作物なので、このフォルダの <code>local/</code> にだけ置き、gitには入れていない（手元でのみ再生できる）。</p>
 
+<h2>新版 第4試作（主旋律を厚くした版）と、刻みの和音の3案</h2>
+<p class="note">原作の主旋律は、高い倍音ほど音量が細かく揺れ、周波数のぶれも倍音の番号に比例して大きい（基音のうなり約2.9Hz）。わずかに音程のずれた2つ目の音が、高い倍音ほど強く重なっているときと同じ特徴なので、主旋律の波形に約9セント上の2つ目の音を混ぜ、うなりが1周する0.38秒をそのままループさせた（SPC700の声は増やさない）。ただ、サントラでは周りのパートの音も混ざるため、この揺れを主旋律だけで正確には測れていない。刻みの和音は、主旋律が薄くて表に出ていた可能性もあるので、音量違いを3つ用意した。</p>
+<div class="track"><div class="name">原作サントラ（手元のみ）</div><audio controls preload="none" src="local/phrase_A_soundtrack.mp3"></audio></div>
+<div class="track"><div class="name">a: 厚い主旋律 ＋ 刻みの和音そのまま</div><audio controls preload="none" src="phrase_A_v4a.mp3"></audio></div>
+<div class="track"><div class="name">b: 厚い主旋律 ＋ 刻みの和音 −6dB</div><audio controls preload="none" src="phrase_A_v4b.mp3"></audio></div>
+<div class="track"><div class="name">c: 厚い主旋律 ＋ 刻みの和音なし</div><audio controls preload="none" src="phrase_A_v4c.mp3"></audio></div>
+
 <h2>新版 第3試作（刻みの和音を直した版）</h2>
 <p class="note">「パ ラ ぴーらぽれ」と悪目立ちしていたのは、主旋律の下で動く刻みの和音（C4→B3→D4→C4→B3 C4）。原作では基音こそ大きいが、倍音がほとんどない柔らかい音（2倍音−6.5dB、3倍音−20dB、4倍音−12.5dB、5倍音−29dB）で、耳につく帯域に出ない。第2試作では矩形波にしていたため、3倍音が基音と同じ強さで鳴り、他の音を覆っていた。サントラで測った倍音から音を作り直し、基音・倍音ともサントラとの差を1〜2dB以内にした。1オクターブ下のブラスはサントラより2dB小さかったので上げた。</p>
 <div class="track"><div class="name">原作サントラ（手元のみ）</div><audio controls preload="none" src="local/phrase_A_soundtrack.mp3"></audio></div>
