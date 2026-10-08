@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BGM試作の聴き比べ</title>
+<style>
+:root { --bg: #f4f4f2; --fg: #1d1d1b; --muted: #5d5d58; --card: #ffffff; --line: #d8d8d2; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #171716; --fg: #ecece8; --muted: #a4a49c; --card: #222220; --line: #3a3a36; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.6 system-ui, sans-serif; }
+main { max-width: 1400px; margin: 0 auto; padding: 24px 16px 64px; }
+h1 { font-size: 24px; margin: 0 0 4px; }
+h2 { font-size: 19px; margin: 32px 0 6px; }
+p.note { color: var(--muted); margin: 4px 0 12px; }
+.track { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
+.track .name { font-weight: 600; }
+.track .desc { color: var(--muted); font-size: 14px; margin: 2px 0 6px; }
+audio { width: 100%; display: block; }
+</style>
+</head>
+<body>
+<main>
+<h1>Space Harrier メインテーマ SFC版 試作（短い区間）</h1>
+<p class="note">比べる区間は、採譜の52〜96拍（録画の約19.9〜36.9秒）。決めの和音 → タム回し → 主旋律の入り（8小節）を含む。3つとも同じ拍から始め、音量（ラウドネス）を揃えた。原作は録画の音声そのままで、連射音などの効果音が常に重なっている。旧版・新版は、SFCのSPC700で鳴らしたもの（TAD v0.4.2の曲データをlibgmeで録音）。</p>
+
+<h2>原作 → 旧版 → 新版（続けて再生）</h2>
+<div class="track"><div class="name">3つを続けて（間に0.8秒の無音）</div><audio controls preload="none" src="phrase_A.mp3"></audio></div>
+
+<h2>1つずつ</h2>
+<div class="track"><div class="name">原作（録画）</div><div class="desc">業務用基板（FM音源YM2203とPCMドラム）。効果音が重なっている。</div><audio controls preload="none" src="phrase_A_original.mp3"></audio></div>
+<div class="track"><div class="name">旧版（今のROM）</div><div class="desc">短い固定倍音の波形。主旋律の1オクターブ下の重ねなし。タムなし（ドラムはキック・スネア・ハット・クラッシュの代用音）。</div><audio controls preload="none" src="phrase_A_old.mp3"></audio></div>
+<div class="track"><div class="name">新版（試作）</div><div class="desc">FM合成の音源（立ち上がりは明るく、すぐ落ち着く）。主旋律は原作の測定どおり、0.4秒ほど真っ直ぐ伸ばしてから約4Hzのビブラート。1オクターブ下のブラスを重ねた。ベースは低い音が次の音まで鳴り続ける形。タム回しを原作の音程（約147→85→65Hz）で入れた。</div><audio controls preload="none" src="phrase_A_new.mp3"></audio></div>
+
+<h2>新版の曲の頭から60秒</h2>
+<div class="track"><div class="name">新版（効果音なし）</div><audio controls preload="none" src="new_bgm_60s.mp3"></audio></div>
+</main>
+</body>
+</html>
