@@ -90,7 +90,8 @@ def main():
     if report['comparisonRomSha256'] != report['romSha256']:
         report['cpuCodeIdentical'] = rom[0x10000:0x20000] == legacy[0x10000:0x20000]
         report['gsuCodeIdentical'] = rom[0x8000:0x10000] == legacy[0x8000:0x10000]
-        report['graphicsAndUvIdentical'] = rom[0x30000:] == legacy[0x30000:]
+        # $43はPPU背景、GSU用の原画・縮小画像・UVは$44以降。
+        report['graphicsAndUvIdentical'] = rom[0x40000:] == legacy[0x40000:]
         assert all(report[key] for key in ('gsuCodeIdentical', 'graphicsAndUvIdentical'))
     manifest = json.loads((GAME.parents[1]/'releases/v001.json').read_text(encoding='utf-8'))
     for filename, expected in manifest['sourceSha256'].items():
