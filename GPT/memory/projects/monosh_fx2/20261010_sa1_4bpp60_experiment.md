@@ -1,5 +1,29 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
+## 最新状態（2026-10-10 07:50頃）
+
+専用分岐へ `b0928e0`（三画像保持・まとめ転送）、`d28453c`（上端のROM直接呼出しとCPU負荷検証）をpush済み。**60fps未達・active goal継続。公開ROM/launcherはe5e4741から更新していない。** 道中600field/502枚・126枚一致、ボス1200field/1077枚・135枚一致まで改善。道中2field間隔6回、ボス31回が残る。固定field数で進行量が異なるので厳密な同一packet速度比ではない。証拠は`results/20261010_pipeline_buffers/`と`results/20261010_pipeline_tail/`。
+
+有効な途中構成は `--pipeline --pipeline-direct --pipeline-irq --pipeline-depth 5 --redraw-all --merge-dma --large-edge-cache --triple-bw --fast-dma`。`--temporal-sort`も安定順・画素一致を確認したが表示枚数は同じ。上端にはみ出すspriteは、行呼出し列の最初の可視行からROM末尾のRTLまで呼べる。I-RAMへ行列をコピーせず、ボスの一枚が約5.5ms→約2.3msになった。
+
+I-RAM workerは195B（0200..02c2）、CC buffer02e0..02ff、edge guard0300..06ffを1024Bへ拡大、JIT0700..07ef、trampoline07f0。行切詰めfallbackをROMへ移して空けた。退避・復元のDMA排他はchunkごと。三面BW40/41/42の再利用には三世代のdirtyを消去へ使い、PPU二面には二世代だけ送る。前者と後者を同一にすると転送が増える。BW43:0400/0460にraw二履歴、04c0にPPU向け二世代合成を保持。初回は履歴を明示初期化する。
+
+`--fast-dma`は全descriptorが非表示時間へ収まる場合だけ垂直counterの毎回確認を省く。残りbytesをmetadata+34に保持し、部分転送後も減算。96units/descriptor＋bytes/32のrefresh分を見積り、従来の2200/700予約を維持する。収まらなければ32B単位の分割へ戻る。
+
+棄却した探索: `--padded-pipeline`は512px作業面から中央をdirty領域のみコピー。草は約1.7msへ改善したがcopy/wait平均4.7msが加わり464枚/600field。`--cpu-code-copy`、`--cpu-fill`、`--cpu-far`はPPU DMA待ち中に通常命令で小さいコピー・消去・背景を代行する案。個々の画素一致は確認したがボス1050〜1070枚で直接tailの1077を改善しない。条件付きcode-copy初版でAの転送長を戻し忘れた版は画素不一致で棄却し修正済み。`--shape-cache`の2048B BWRAM寸法cacheも1077枚のまま。`bosscpu`という測定はcpu-farビルド失敗後に一つ前のcpu-fill版を測った名前であり、cpu-far評価には使わない。関数内にPPU IRQが入るので、経過時間を純粋な演算費用にしない。packet初期化/sort/copyを分離し、IRQ時間を引いた計測を追加した。
+
+### いま実装・検証中: 先行キャラクタ変換（未commit）
+
+新フラグ `--staged-conversion`（direct/IRQ/large-edge必須）。SA-1が完成したbitmapを、S-CPUのCC DMAでBW→WRAM2180へ変換し、逆DMAでWRAM→同じBW bankの8000..dfffへ保持する。24KiB最大でも8KiBずつ中継できる。PPUへの転送は普通のBW→VRAM DMAとなり、SA-1描画用DMAの223xをVBlank中に占有しない。コードは`game/sa1/v001/pipeline_stage.inc`。collectorがmetadataのsourceoffsetをcompactな8000+cursorへ直す。元のFB0..5fffと世代は保持し、テストのFB/VRAM独立照合を継続する。
+
+WRAM8KiB（7e:c000..dfff）を空けるため、地面のhorizontal_runs8680B＋horizontal_values10368BをRODATA→BOOT ROMへ移す。runsはf:00xxxx、valuesは3byteポインタ[hv],yで読み、色/形/HDMA表の値は変更しない。BOOT末尾e2fe、CPUDATAを2000..bfffに制限しBSS末尾b084。地面の読出しは`rom_ground()`が生成し、既存分岐はそのまま。
+
+PPU IRQではSA-1 DMA要求と223x設定を省く。collectorでの変換はSA-1 idle時にREQを立て、CC15/DDA02e0で変換し、95で止めてREQを落とす。変換がIRQを遅延させた場合は、live counterで表示期間ならPPU処理へ入らずRTIする。SEI中の変換をいつ行うかは今後の最適化課題。現時点は180field/85枚のFB/VRAM一致まで確認し、600field `staged` を実行中。60fps達成宣言禁止。
+
+staging末尾のREQ解除で、8bit LDA #0→REP #20だけではBの上位が残って011Eへ0200等を書き、SA-1が待ち続ける不具合が出た。REP後に16bit LDA #0を入れて修正した。初回ハング時のlogic4/presents2結果は棄却。失敗時テストはstate全項目をfailure_state.txtへ保存する。Mesenにemu.convertToJsonはないのでpairsで書く。
+
+次のアクションは現在の600field試験の完了を読み、同じROMでboss1200fieldを検証すること。ROMがロード済みでもPython終了時のlabels SHAを現ファイルから読むので、テスト中にROM/labelsをビルドし直さない。ビルド失敗後に古いROMを測らないようexit_codeを確認してからテストを呼ぶ。
+
 ## IRQ・コピー削減後の検証済み中間点（2026-10-10 07:00頃）
 
 `282bce8` を専用分岐へpush。**60fps未達、active goal継続、公開ROMはe5e4741のまま。** 現在の有効な再現は `python tools/build_sa1_game.py --pipeline --pipeline-direct --pipeline-irq --pipeline-depth 5 --redraw-all --merge-dma`。同じROM SHA `d880ab4d23e177cf259f353be9659fb15cd6268cc9225823865b78dea051226e` で道中600field/484枚（126枚FB/VRAM一致、表示間隔1field455回・2field26回）、ボス1200field/946枚（133枚一致）。証拠は `results/20261010_pipeline_irq/`。既定経路も160field/68枚一致を再確認。現在buildのROMは最後の既定再確認でe5のものになっている。
