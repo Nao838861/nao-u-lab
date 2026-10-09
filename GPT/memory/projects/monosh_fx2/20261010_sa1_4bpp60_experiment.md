@@ -1,5 +1,24 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
+## 先行描画の検証済み中間点（2026-10-10 06:30頃）
+
+専用分岐へ `8c95d5d` をpush。**60fps未達、active goal継続。公開ROMはe5e4741のまま。** `--pipeline` はBW40へ描いた結果の差分をBW41/42へコピー、`--pipeline --pipeline-direct` はBW40/41へ交互に直接描画する実験。直接方式は描画前に二世代分の変更領域を合成し、前々回の面から現画像を作る。画像コピーを省く代わりに再描画が増える。
+
+`pipeline_cpu.inc` が512B×3のmetadata、画像BWのbusy、先行転送先CHRを管理する。OBJ・地面HDMA参照先・packetを同世代として保持。一度のVIRQ203で最大一回だけ表示し、余った非表示時間で次の画像を未表示CHR面へ転送する。地面bufferの再利用待ちは`_fx_build_ground`入口へ移し、他のゲーム処理を先行する。色・形・物量は変更していない。
+
+同じ直接方式ROM SHA `894d6801365e9b357cf7001930ce6cf43af90395608512cb92c3b7d401e5feb3` で道中600field/444枚・ボス1200field/830枚。独立参照とのFB/VRAM一致は125/131枚。道中表示間隔1field380回・2field59回・3field2回、ボス1field557回・2field264回・3field6回。道中SA-1最大33.534ms、ボス29.496ms。既定版より道中が遅く、ボスは進行量が増えたが、固定field数比較はpacketが異なるため厳密な速度比ではない。証拠は`results/20261010_pipeline/`、生成`tools/report_sa1_pipeline.py`。既定経路も160field/68枚の全画素一致を確認。
+
+重要な修正・罠:
+
+- S-CPUからSA-1 DCNT($2230)は書けない。SA-1側がB1を設定し、011C=2で変換DMA許可を返す。011Eが要求。共有DMAレジスタの競合を防ぐ。
+- 協調方式では大きいnative call chain中に許可が返せずPPU転送開始が遅れるため、現在最大8行のchunkへ区切る。I-RAM worker <=05C0、CPUキャラクタ変換buffer05C0、edge cache0600、JIT0700。
+- 解放待ち中にDMA待機へ入った際、job0を見てdoneを下げただけでは、S-CPUが次job1を書いて解放を見失う。DP1Eへ解放状態を保持し、外側wait_releaseが必ず次jobへ進む。
+- 各descriptor直前に213Dの9bit垂直カウンタを読み、次fieldの22行までの残量を170 units/line（master/8）で計算し、表示切替等2800unitsを予約する。固定予算だけではIRQ遅延を吸収できない。
+- **Mesen callback内の直接Lua assertだけではエラーがPythonへ伝わらない場合があった。** `cb()`でpcallし、failure.txt＋emu.stop(1)をPythonが確認するよう変更した。世代欠落・順序違いと非表示期間超過の検査を強化。従来からPythonで行う画素照合は独立して有効。
+- Lua `f:write(assert(value,'message'))` はassertが二引数とも返すため、画像末尾へmessageまで書く。`f:write((assert(...)))` とする。
+
+次の有望な改善は、DMA排他をscanlineごとから8行程度のまとまりへ移すこと、SA-1 IRQでnative実行中も短時間で転送要求へ応答すること。S-CPU2207/8へSA-1 IRQ vector、SA-1側220A=80、S-CPU2200=80で要求、SA-1側220B=80でack可能（Mesen source確認）。DMA critical中はSEI、終了でCLIし、IRQ handlerはレジスタ全保存とDBR/DP0化が必要。まだ未実装。既定ROMを勝手に新実験版へ更新しない。
+
 ## 最新の中間到達点（2026-10-10）
 
 専用分岐へゲーム統合ROMを追加し、`e5e4741` までpush済み。元のFX2/4bpp30分岐は変更していない。起動は `D:\HomeBrew\MonoSHSA1_4bpp60_20261010\play_sa1.cmd`、ROMは同フォルダ `releases/MonoSHSA1_4bpp_experimental.sfc`。**動く中間版であり、60fpsは未達・作業継続中。active goalをcompleteにしない。**
