@@ -1,5 +1,26 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
+## IRQ・コピー削減後の検証済み中間点（2026-10-10 07:00頃）
+
+`282bce8` を専用分岐へpush。**60fps未達、active goal継続、公開ROMはe5e4741のまま。** 現在の有効な再現は `python tools/build_sa1_game.py --pipeline --pipeline-direct --pipeline-irq --pipeline-depth 5 --redraw-all --merge-dma`。同じROM SHA `d880ab4d23e177cf259f353be9659fb15cd6268cc9225823865b78dea051226e` で道中600field/484枚（126枚FB/VRAM一致、表示間隔1field455回・2field26回）、ボス1200field/946枚（133枚一致）。証拠は `results/20261010_pipeline_irq/`。既定経路も160field/68枚一致を再確認。現在buildのROMは最後の既定再確認でe5のものになっている。
+
+SA-1 IRQの重要点: S-CPU2200=80で要求、SA-1が220B=80でackしてB1を設定し011C=2で許可を返す。その後**IRQ handlerは直ちにRTIし、DMAを使わないnative描画をPPU転送中も続ける**。DMA_beginだけはREQ011Eが落ちるまで待つ。S-CPUは新要求前に011Cを0にし、前の許可2を誤って再利用しない。DMA_beginの保存P（16bit PHA後の3,s）へI=1をORしてからPLPする。PLP直後にSEIするだけでは、その間にIRQが来てDMAレジスタ競合になり得る。DMA_endでCLIする。S-CPUにはSA-1描画完了IRQも送り、mainの待ちをWAIへ変更。
+
+metadata/地面表は最大五世代。三つを超える地面表はCOLORBSSへ追加し、最初に明示clearする。WRAM→BW packetは2180逆方向DMA、BW→WRAM descriptorは通常方向DMAへ変更。検査用packet二重コピーを除きLuaで保存。自機OAMはmetadataから直接DMAし、24B＋high8Bも検査する。横帯descriptorの近い隙間をまとめ、32B単位で時間の端へ分割する。時間予約は未表示切替2200units、既に切替済み700units。これより小さい予約では走査線23・24へ超過したため採用しない。
+
+`--redraw-all` は消去をdirty bandに限定しながら、全スプライトを元順序でnative描画する。変更領域外でも全体を同じ順序で描き直せば前後関係が壊れず、画素照合で一致した。`--clip-edges` は画面端だけ行コード切詰めへ戻す案で459枚/600fieldと遅い。`--transfer-tiles`（clearはbandのまま）は462枚で遅い。保持しているが既定へ採用していない。`bossirq`という旧scene名は、旧テストが`scenario=='boss'`しか判定しなかったため**通常道中でありボス評価には使わない**。現在は`scenario:match('^boss')`。本表bossは正しいボス試験。
+
+物体別計測を追加（objectJobs）。重いのは画面端の草asset0、幅111×高さ59、中心X=-48など。最大12.83ms。一方、重い道中の実際の隠れ画素は約2〜20%で、全隠れcommandも少なく、遮蔽だけでは本命ではない。端の退避はIRAM256Bに合わせてheightを細かいchunkへ分け、各chunkで両端行も退避するため、DMA設定回数が多い。
+
+次の具体案（未実装）: **512px幅の作業FB40（stride256、中央表示byte offset64）＋256pxのcompact snapshot41/42**。以前の全中央コピーではなく、転送descriptorが示す二世代分の変更だけをcompactする。native草のはみ出しを左右128pixelの余白へ捨て、端の退避を不要にする。素材は変更しない。
+
+- 新flag例`--padded-pipeline`は`--pipeline`必須、`--pipeline-direct`/`--merge-dma`/`--transfer-tiles`と排他（snapshot copierがdescriptor一つ=8行を前提）。CPU側は既存非directのBW41/42へ渡す。
+- compiled macro chain生成の`dy*128`を`dy*256`にし、cache key/ファイルもstride別にする。native row kernelそのものは同じ。全1492寸法は維持。payload<=7E0000を再確認。
+- rendererのrowbase/背景baseはy*256+64、clear tile baseはtileY*2048+64、行increment256、dirty tile indexはphysical rowbase>>9 &FFFC。背景のbg_boundsも>>9。128という表示幅定数は変えない。
+- fast spriteBaseはtop*256+floor(left/2)+64。画面に見える幅<=128のspriteは左右余白に収まり、edge cache不要。幅最大はasset1=136、他は0=114、2=80、3=110、5/39/40/41=128等。opaqueBBoxのleft<-128pxまたはright>384pxなら、既存の行コード切詰めfallbackで可視0..128byteだけを描く。
+- `pipeline_sa1.s` snapshot: descriptorのtile-linear offsetからleftByte=(offset&03FF)/8、dest=(offset&FC00)+leftByte（stride128）、source=2*(offset&FC00)+64+leftByte（stride256）。8行をBW40→IRAM0600→BW41/42、source+=256、dest+=128。排他helperは維持。snapshotはunion2 dirty、作業FBは直前画像なのでclear/renderは現dirtyだけ。
+- native codeの0200..05C0、CC05C0、scratch0600、JIT0700分離を維持。Luaのprefetch時保存FBはcompact済みなので通常256pxとして照合する。
+
 ## 先行描画の検証済み中間点（2026-10-10 06:30頃）
 
 専用分岐へ `8c95d5d` をpush。**60fps未達、active goal継続。公開ROMはe5e4741のまま。** `--pipeline` はBW40へ描いた結果の差分をBW41/42へコピー、`--pipeline --pipeline-direct` はBW40/41へ交互に直接描画する実験。直接方式は描画前に二世代分の変更領域を合成し、前々回の面から現画像を作る。画像コピーを省く代わりに再描画が増える。
