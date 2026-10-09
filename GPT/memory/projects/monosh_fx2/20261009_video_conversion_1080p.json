@@ -1,0 +1,83 @@
+{
+  "date": "2026-10-09",
+  "input": "D:\\HomeBrew\\Mesen\\Avi\\MonoSHFX2_v001.avi",
+  "output": "D:\\HomeBrew\\Mesen\\Avi\\MonoSHFX2_v001_1080p.mp4",
+  "inputSha256": "fcd5b2f1612a2bb2d256572737a012bc0e238b902ebcf4234b099d06c481fdd1",
+  "outputSha256": "88eb2748f96bb54b5363e14893e495c125c399abe4c0be018062d1590bb3f0c6",
+  "inputProbe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "cscd",
+        "codec_type": "video",
+        "width": 256,
+        "height": 224,
+        "pix_fmt": "bgr24",
+        "r_frame_rate": "60098811/1000000",
+        "nb_frames": "5694"
+      },
+      {
+        "codec_name": "pcm_s16le",
+        "codec_type": "audio",
+        "sample_rate": "48000",
+        "channels": 2,
+        "r_frame_rate": "0/0",
+        "nb_frames": "4545926"
+      }
+    ],
+    "format": {
+      "duration": "94.743971",
+      "size": "48487212"
+    }
+  },
+  "outputProbe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "codec_type": "video",
+        "width": 1920,
+        "height": 1080,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "16:9",
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "60098811/1000000",
+        "nb_frames": "5694"
+      },
+      {
+        "codec_name": "aac",
+        "codec_type": "audio",
+        "sample_rate": "48000",
+        "channels": 2,
+        "r_frame_rate": "0/0",
+        "nb_frames": "4441"
+      }
+    ],
+    "format": {
+      "duration": "94.743971",
+      "size": "65232796"
+    }
+  },
+  "encoding": {
+    "video": "libx264",
+    "crf": 18,
+    "preset": "medium",
+    "pixelFormat": "yuv420p",
+    "audio": "aac",
+    "audioBitrate": "192k",
+    "faststart": true,
+    "filter": "scale=-2:1080:flags=neighbor,setsar=1,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:color=black"
+  },
+  "validation": {
+    "fullDecode": "passed",
+    "frameCountPreserved": true,
+    "frameRatePreserved": true,
+    "durationPreserved": true,
+    "resolution": [
+      1920,
+      1080
+    ]
+  }
+}
