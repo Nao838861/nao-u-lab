@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-09",
+  "request": "60fps版、爆発の1パターンめに真っ黒の絵が入ってる？",
+  "finding": "地上物体の爆発先頭で、爆発画像5ではなく影画像38を選択していることを現行配布ROMのMesen実行で再現。原画5自体は黒一色ではない。4bpp版の同じ分岐は修正済みだが、60fps版には残っている。今回は調査のみでゲームコード・ROMは変更していない。",
+  "rom": "D:\\AI\\Nao_u_BOT\\GPT\\projects\\monosh_fx2\\releases\\MonoSHFX2_v001.sfc",
+  "romSha256": "01a4c6d63bcf458b0c28d16f58906872376b7d501a4a5b2901ad69e0ee8f3f27",
+  "scope": "2bpp 60fps ground-object explosion",
+  "expectedAssets": [
+    5,
+    39,
+    40,
+    41,
+    40,
+    39
+  ],
+  "actualPhases": [
+    {
+      "phase": 0,
+      "asset": 38,
+      "field": 86
+    },
+    {
+      "phase": 1,
+      "asset": 39,
+      "field": 94
+    },
+    {
+      "phase": 2,
+      "asset": 40,
+      "field": 102
+    },
+    {
+      "phase": 3,
+      "asset": 41,
+      "field": 110
+    },
+    {
+      "phase": 4,
+      "asset": 40,
+      "field": 118
+    },
+    {
+      "phase": 5,
+      "asset": 39,
+      "field": 126
+    }
+  ],
+  "cause": "stage.s uses the Z flag left by CMP #4 for phase zero; selects shadow asset 38 instead of explosion asset 5",
+  "sourceLocation": "game/v001/stage.s:212",
+  "releasedRomBranchBytes": "c90400900a8da601a9060038eda601f006186926008007bfecdd7f29ff00fa9de5e9ad92019de7e9",
+  "fourBppFixCommit": "94d47c4",
+  "gameChanged": false,
+  "fixture": "At _fx_stage_render set one ground explosion at z60, timer 48-phase*8; read draw asset at _fx_build_packet; exclude the player shadow with height 8",
+  "scriptPath": "D:\\AI\\Nao_u_BOT\\GPT\\projects\\monosh_fx2\\.cache\\explosion_60fps_check\\capture.lua",
+  "luaSha256": "19ae20389337f3061640ecf9f924aea7dfa571cc0c038bde0545d1f947ef488e",
+  "artIndexCounts": {
+    "5": {
+      "3": 3507,
+      "0": 5611,
+      "1": 3042
+    },
+    "38": {
+      "0": 92,
+      "1": 164
+    }
+  }
+}
