@@ -1,5 +1,19 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
+## 最新の中間到達点（2026-10-10 05:02 JST）
+
+専用分岐へゲーム統合ROMを追加し、`51d4f5b` までpush済み。元のFX2/4bpp30分岐は変更していない。起動は `D:\HomeBrew\MonoSHSA1_4bpp60_20261010\play_sa1.cmd`、ROMは同フォルダ `releases/MonoSHSA1_4bpp_experimental.sfc`。**動く中間版であり、60fpsは未達・作業継続中。active goalをcompleteにしない。**
+
+現行ゲームでソフトウェア描画に左右・上下反転が使われていない条件を明示し、全1,492寸法・色位相・横2画素位相をコンパイルドコードとして8MiB ROM内へ保持。自機OBJの反転は従来通り。単純な全反転・全横位相の汎用コンパイルド展開23.8MBとは区別する。正常な向きの実ゲーム用コードは約5.73MB、連続行の呼び出しコード込みのpayload末尾8,201,045bytes、FFバンクはlookup専用。`tools/sa1_game_compiled.py`、`renderer_game_macros.s`、`fast_game.s` が現行経路。
+
+SA-1で差分矩形をタイルに丸めて描画。左右のクリップを省くため描画用BW-RAMを512px幅・左右128pxの余白付きにした。ただしSA-1キャラクタ変換DMAの最大幅は32タイル＝256px（MesenのSharedRegister 2231でも5にclamp）。差分行をBW-RAM→I-RAM→BW-RAMのSA-1 DMAで別の256px幅へ集め、キャラクタ変換DMAでPPUへ送る。PPU二面には直近2フレームの変更を送り、画面を一括で切り替える。
+
+現行ROM SHA256は `releases/sa1_4bpp_experimental.json`。同じROMで道中600field、ボスfixture1200fieldを検証。完成FBと独立した画像合成、さらにSNES形式へ変換した参照と転送済みVRAMを照合し、道中124枚・ボス129枚が一致。起動初期2回の全面初期化を除くSA-1最大時間は道中19.689ms、ボス26.508ms。道中の完成間隔は0field14回／1field296回／2field98回／3field3回、ボスは0field16回／1field269回／2field380回／3field24回。**同field内の複数完了を60fpsの証拠に数えない。平均時間だけでも達成扱いしない。**
+
+証拠と再現手順は `game/sa1/v001/results/20261010_game/report.md`、同JSONと `pixel_evidence.zip`。完全なゲーム進行・全操作経路は引き続き検証が必要。次は消去・背景・連続行描画・バッファ整理の内訳を測り、透明な余白を除く差分矩形、同field重複完了の抑制、重いボスの遮蔽省略を進める。行単位コード共有も全寸法を8MiBへ収め、55fixture一致・最大描画27.989msを保存済み。
+
+注意: `tools/run_probe.py` の `lua()` はPython boolを `True` / `False` のまま出してしまう。テストのboolは明示的に `true` / `false` へ変換している。65816の分岐先でMフラグが8bitなのにca65 smart解析が16bitと推定するとCMP即値の長さが壊れてBRKになる。端のコード切り詰めでは `.a8` を明示して修正済み。負のX座標を足した直後のcarryを次の余白加算へ持ち込まないようCLCも必要。
+
 ## 依頼原文
 
 また別の分岐として、SA-1を使ったソフトウェアレンダリングで60fps/4bppスプライトが描画できないか試してみてほしい。
