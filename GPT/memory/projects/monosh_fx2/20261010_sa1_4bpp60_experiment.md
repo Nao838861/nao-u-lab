@@ -1,6 +1,23 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
-## 最新状態（2026-10-10 07:50頃）
+## 最新状態（2026-10-10 08:15頃）
+
+専用分岐へ `58d16da` をpush済み。**60fps未達、active goal継続。公開ROMはe5e4741のまま。** 最新の検証済み構成は下記。道中600field/502枚・126枚一致、ボス1200field/1078枚・135枚一致。ボスの2field間隔は30回残る。ROM SHA `265cddcd70885c38a3155b3b9468340766c51940341ff2ca8988a35c4497ac42`。証拠 `game/sa1/v001/results/20261010_pipeline_stageclip/`、生成 `tools/report_sa1_pipeline_stageclip.py`。
+
+`--pipeline --pipeline-direct --pipeline-irq --pipeline-depth 5 --redraw-all --merge-dma --large-edge-cache --triple-bw --fast-dma --skip-far-clear --linear-shape`
+
+`--skip-far-clear`は遠景が全byteを上書きする14行の事前消去を省く。SA1 workerの空き29Bに全処理を置けず、設定をBOOTのhelperへ分離した。`--linear-shape`は同じ幅に対応する高さが最大4個しかないことを利用して順に比較する。ボス平均SA1時間11.47→11.16ms程度。順序・色・輪郭は独立参照と一致。
+
+追加の比較と棄却:
+
+- 現在の `--staged-conversion` は **WRAM 7E:A000..FFFFの24KiB一面**。初期8KiB往復方式とは異なり、変換BW→WRAM、PPU転送WRAM→VRAMでBWへ戻さない。地面runs/valuesと未使用ボスdraw_order_base/midをROMへ移し、BSS末尾9FA0、BOOT末尾F3DE付近。描画用DMA排他をPPU期間から外せるが、S-CPUへの追加転送・先行変換のタイミングで負け、道中494/600・ボス1010/1200（126/134枚一致）。既定にしない。
+- `--clip-edges --fast-left-clip` は可視幅64px以下の左端だけROM行コードの可視先頭を二分探索する。同じ行コード・curの結果をDP B6..BEへmemo。各spriteでBA=FFFFへ無効化。道中499/600・126枚一致で最良502枚を越えない。BRAnch距離181Bの箇所はJMPへ修正済み。右端は従来の1024B退避方式。
+- 表示中のVRAM面を一括更新する試作は、初版38枚目で予算不足の待ち続け、設定費用込み版は240枚目のVRAM不一致で棄却。途中412枚などを性能の根拠に使わない。実装・flagを削除した。
+- `pipe_flip`を直接計測する `flipMs` を各presentationTimesへ追加。最大約0.60ms（自機CHR更新含む）、通常約0.21ms。しかし2200予約を900/1900、1500/2400へ下げた二案とも長時間検証でline23越境として棄却し、flag・実装を削除。予約はDMAの見積り誤差も吸収している。`pipe_try_fast_dma`のbytes/32見積りはmaster8.25/B相当だが、実DMAは大口平均8.64/B・固定費込み最大9.0/B付近。切替実時間だけから予約を詰めない。
+
+次に検証する候補は、画面端の退避・復元だけをPPU DMA要求中にSA1命令で代行すること。過去のcpu-fill/cpu-far/code-copyは効果がなかったが、草の端で4ms近いDMA待ちがnative時間へ混ざる例がある。DMA engineと異なる命令経路で待ちを減らせるか、別flagで画素・境界を検証する。未実装。旧メモの「変換済みBWRAMへ先行保持」はハードウェアBW→BW DMA不可のためWRAMへ変更済み。
+
+## 前の状態（2026-10-10 07:50頃）
 
 専用分岐へ `b0928e0`（三画像保持・まとめ転送）、`d28453c`（上端のROM直接呼出しとCPU負荷検証）をpush済み。**60fps未達・active goal継続。公開ROM/launcherはe5e4741から更新していない。** 道中600field/502枚・126枚一致、ボス1200field/1077枚・135枚一致まで改善。道中2field間隔6回、ボス31回が残る。固定field数で進行量が異なるので厳密な同一packet速度比ではない。証拠は`results/20261010_pipeline_buffers/`と`results/20261010_pipeline_tail/`。
 
