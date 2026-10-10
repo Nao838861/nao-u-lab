@@ -1,6 +1,18 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
-## 最新状態（2026-10-10、00a8973）
+## 最新状態（2026-10-10、13966f3）
+
+専用分岐へ`13966f3`をpush済み。active goal継続、ゲーム全体の60fpsは未達。公開ROMはe5e4741のまま。途中比較19件の証拠は`results/20261010_prepare/`へ保存した。転送記述子の隙間結合、IRQを200行から準備・203行から転送、CPU準備の前倒し、安定連結リストソート、端退避の内部RAM専用コード、地面HDMA表生成の専用化、整列境界の直接反映、広い帯の1KiB一括消去を実装。空帯で獲得していないDMA使用権を解放していた点も修正。PPU転送24記述子分を展開し、IRQ専用一時変数を使う。
+
+SHA `b96563957e06e46e7fdb2910a12bd2a94a234900fb870e19d81b7343e53ac128`はボス移動・射撃1,800field/1,710枚、評価1,707間隔すべて1field、146画面FB/VRAM/OAM/CGRAM/地面表一致。単発SA-1最大19.73435ms、7枚保持の遅延で平準化する。ただし長い道中は870枚後にSA-1が停止。PC00:839Cの`unsupported_hflip`へ入り、敵弾flags=$22による上下反転が未対応だった。ボスだけの成功を全体の成功とはしない。
+
+反転弾だけ元のQ8.8 samplingで画素描画する修正は、独立fixtureで一致したが道中1,800field/1,302枚、SA-1最大84msで遅い。現在未commitの`--bullet-cache`を検証中。敵弾6/7/8/37の全横縮小・色・左右反転・横位相をROMの圧縮行へ保存し、上下反転は元のサンプル行を選んでBW43:4000..7FFFの16KiBへnative codeと11B行call chainを生成・保持する。64エントリの索引はBW43:0400..05FF、世代/カーソルは0700/0702。ROMは8MiB内、payloadEnd=8106060、FF索引55,081B。全5,992境界表は最終ROMから一致確認。fixture120枚で4弾種×3位相×4反転×5寸法・四辺clipを二巡照合して一致。ただしcold cacheで4枚の大弾を出すfixtureは最大84ms。実道中の`movestress_tracepalette_bulletcache`1,800fieldを検証中。ビルド中・検証中にROM/labelsを変えない。
+
+現在のビルドは前回コマンドに`--stack-band --early-request --list-sort --small-edge-jit --compiled-ground --unroll-ppu-dma --wide-clear --bullet-cache`を追加する。`tools/sa1_game_compiled.py`、`tools/sa1_bullet_cache.py`、`game/sa1/v001/bullet_cache_game.s`が新方式。通常敵弾の既存コンパイルドを圧縮行へ置換して容量を確保した。元のPNGは変更していない。`test_sa1_game.py`はmanifest/labelsとfinal_stateも保存し、21行を越える転送終了を禁止する。最初の反転fixtureは`--presents 120 --frames 1800 --scenario flipfixture_cache_tracepalette`。
+
+次の候補はnative code生成ループをI-RAM0300..06FFへコピーして実行すること。今はROM上から小さい命令を多数実行しておりcold生成が遅い。0200..02CFworker・02E0キャラクタ変換・0700macroJITを避ける。消去用0300のPHD列は消去完了後なら上書きでき、次jobで再ロードする。0500/0600の端退避コードも次spriteで再ロードされる。ロード時はDMA使用権をtryで取り、PPU使用中ならMVNへ退避する。依頼は自律継続であり、未達のままgoal completeにしない。
+
+## 前回状態（00a8973）
 
 専用分岐へ `00a8973` をpush済み。**全条件60fps未達、active goal継続、公開ROMはe5e4741のまま。** 7枚BWバッファの先頭に1KiBの保護領域を置き、移動時の先頭行11B不一致を修正した。遠景はBG2、近景は54個の8px OBJと48〜52px幅のソフト描画を合成し、元画像との独立照合を追加。近景OAMを512水平位置分のROM表へ保持しCPU準備時間を削減した。表はC0の未使用BOOT複製とDEの旧背景表を再利用し、DA〜DDの地面パレットとDFの自機画像を保護する。
 
