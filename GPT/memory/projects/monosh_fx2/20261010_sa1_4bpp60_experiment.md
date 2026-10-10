@@ -8,7 +8,11 @@
 
 607b101のpushは新しい証拠zipのloose object `199a2037da3601e58f85c104e220041d254a0636` のzlib破損で一度失敗。作業ファイルのgit hashが同じことを確認し、破損objectを共通git dirの `codex-object-quarantine/…_20261011` へ保管、`git hash-object -w`で再作成。`git cat-file blob`の全bytes一致とSHAを確認してpush成功・clean。commitをresetしたり他worktreeを変更していない。
 
-**進行中（未commit）：mask-clear試作。** 41画面の実画素で占有タイル平均6844B、帯の外接範囲平均9593B（約29%空白）。`tools/sa1_mask_clear.py`、`mask_clear_sa1.s`、builder/testerにflagを追加。七rawの占有maskをBW432300..43259Fへ保持し、old maskを432600へ出す。idle-clearで消した帯のmaskも零にする。CPU命令のみのfifomaskclear_v1は637表示/168一致・最大SA-1 25.791ms、DMA優先のfifomaskdma_v1も637/168一致・最大23.962msで不採用候補。後者は新logger mask_clear.jsonl（IRAM01AC消去bytes）付き。1bit走査の費用が大きく、次に8bit表引き＋隣接run結合の `--mask-clear-table` を加えた。現在 `movestress_detinput_captureburst_fifomasktable_v1_tracepalette` の800fieldテスト実行中、ROM SHAe0643ca0…、exec session55625。Python画素照合終了までROM/LBLを変えない。`--mask-clear-gap 0..3` の穴埋めも実装済みだが未測定。コマンドはfunctions store `sa1_fifo_masktable_cmd` 等にある。元の公開ROMとFX2分岐を変えていない。敵弾OBJ質問は未回答、ユーザーMesen PID70064を操作しない。
+**mask-clear試作は四件完了、1beca9cでpush済み・不採用。** 41画面の実画素で占有タイル平均6844B、帯の外接範囲平均9593B（約29%空白）。七rawの占有maskをBW432300..43259Fへ保持し、old maskを432600へ出す。idle-clearで消した帯のmaskも零にする。CPU命令のみのfifomaskclear_v1は637表示/168一致・最大SA-1 25.791ms、DMA優先fifomaskdma_v1も637/168一致・最大23.962ms。8bit表引き＋隣接run結合のfifomasktable_v1は640表示/8待ち、さらにgap2統合も640/8待ち。全件800field/168実PPU画素一致/共通世代packet一致。証拠 `results/20261011_mask_clear/`、ZIP16,244,158B、SHA d801a84736cbe3d1cbcf57f7dbffeb01018227bced60ac2d86fc382d7749d5af。消去量削減より設定・走査費用が勝つ。公開ROMは変えていない。
+
+**次の未commit試作：`--near-rom`。** `near_rom_game.s`＋`tools/sa1_near_patch_rom.py` の `cyclic()`。近景中央48/52pxの旧コードコピーを、ROM直実行8px断片と端4px断片に置換。全512開始位置×9行を持ち、8pxはFE0000から41,952B/1992kernel、4pxはFEC400から13,525B/445kernelで収まった。左端hintのpayloadEnd 7EC39Fより後ろ・全零の未使用域をassertしてから4px側を置く。旧全窓コードの共有容量測定は165,953Bで45KiB枠を越え、分割しても収まらなかったので使わない。素材・境界・表示範囲は従来どおり。
+
+最初のfifonearrom_v1は共有07F0 stubをJMLに変えたあとJSLに戻さず、後続spriteの戻りstackを壊した。速度比較から除外。v2では毎行終了時opcode22へ戻す。現在 `movestress_detinput_captureburst_fifonearrom_v2_tracepalette` の800field実行中、ROM SHA85ef9503bc2122af76371cc76e455a3e3bf3809d67a19a08d294f5e147baa7dc、exec session88434。Python画素照合終了までROM/LBLを変更しない。functions store `sa1_fifo_near_rom_cmd`=安全BW map版＋near-rom。親メモリ以外の既存差分をcommitしない。敵弾OBJ質問は未回答、ユーザーMesen PID70064を操作しない。60fps未達・goal active。
 
 ## 配置表のCPU移動は不採用（2026-10-11、11e9e6e）
 
