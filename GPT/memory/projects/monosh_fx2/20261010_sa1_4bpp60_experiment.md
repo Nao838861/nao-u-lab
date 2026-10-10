@@ -1,5 +1,15 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
+## 配置表のCPU移動は不採用（2026-10-11、11e9e6e）
+
+実装側11e9e6eをpush済み・clean。`--vram-fifo-cpu-map`でSA-1は次画面の描画を先に開始し、S-CPUが前画面の1472B配置表をWRAM 7FA000以降へ生成する。record+62は0未着手/2生成中/1完成で、未完成のmapではflipしない。SA-1のmap生成とcollect時のBW→WRAM退避DMAを省く。CPUの初期化は614表示/34待ち、初期化だけROM→WRAM DMAにした `--vram-fifo-cpu-map-dma` も632表示/16待ち（各800field）。両方168画面一致、実PPU参照と同一世代packet一致。公開版647表示/4待ちを超えず未採用。公開ROMのSHAは9934d77b…のまま。60fps未達・active goal継続。
+
+証拠 `results/20261011_cpu_map/`。zip SHA `ad7ff71029a392d45dcb446de7c3591c86e8d9589fc81cb1b1eefa07b8681fe0`、12,752,421B。成功版はfifocpumap_v4（SHA4762e3cb…）、fifocpumapdma_v1（SHA683e58c5…）。v1のWRAM関数呼出しbank00誤り、v2のraw source base未除去、v3の修正箇所誤りによる無表示を比較から除いた。CODEの論理番地はbank00のoffsetなのでCPU JSLは7F0000+symbol、COLORBSSへのlong読出しは7E0000+symbolが必要。フレーム全体のmap初期化をCPU storeで行う費用が大きい。
+
+反転正規化の理想タイルLRUでも41連続画面・512容量で8335要求/7916miss（94.97%）。1536でも7744miss（92.91%）。表示/待機中の保護・hash等の実装費用抜き。速度改善の証拠ではない。CPU配置表と反転キャッシュ案は採用しない。
+
+次に確認する候補は固定mapの差分更新の再測定。`20261010_fixed_delta` の旧結果は実PPU配置誤りで無効になったが、現在の固定map配置＋累積費用表でdirect/DMA差分版はまだ再測定していない。full-maskのみ638表示で不採用済み。候補実装は未変更・未測定。敵弾OBJの条件確認は未回答なのでOBJへの変更は行わない。ユーザーMesen PID70064を操作しない。
+
 ## 直接planar・敵弾・スタックの追加比較（2026-10-11 0時頃、8341e55）
 
 実装側は8341e55までpush済み・clean。公開ROMは変更なし。ac1d816の `results/20261010_planar_probe/` は55fixtureの固定位置コンパイル比較。packed7.583ms、planar8.440ms、bitplaneごと11.813ms、辞書planar20.514ms（描画だけ）。全件画素一致。ただし配置検索・ゲーム・PPUを含まず、全縮小コードをROMへ収録したわけでもない。全寸法の素材別密辞書は6,893,196bytes（本体・fallback等を除く）。plane別コード共有も28MB/32MBで8MiBに収まらない。128KiBの行コードRAM LRUはピーク41画面13,522行に9,936miss・974,025生成bytes（最大36,041B/画面）。zip SHA `7832520b0696708ad02698306b66342611d9250ce83d13e5595689d2511cb927`、1,371,972bytes。
