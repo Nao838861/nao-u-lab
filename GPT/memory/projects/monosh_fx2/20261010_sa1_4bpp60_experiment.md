@@ -1,6 +1,16 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
-## 最新状態（2026-10-10、f57b93e）
+## 最新状態（2026-10-10、82973f0）
+
+専用分岐へ `82973f0` をpush済み。**全条件60fpsは未達、active goal継続。公開ROMはe5e4741のまま。** 縦8位相の圧縮表5992通りを最終ROMから元画像へ照合済み。ボス1200field/1104枚/136画面一致、表示間隔1field1093回・2field7回・3field1回。証拠 `game/sa1/v001/results/20261010_aligned/`。
+
+移動試験の240枚目でraw先頭行11B不一致。stack-bandを外しても同じ。左端・上端にかかるcompiled spriteのindexedアドレスが隣bankへ書く疑い。不可視扱いで検証を緩めない。front-mask初期版は一括転送に収まらない画像で停止するため、裏面全量転送へのfallbackを追加した。末尾の停止も60fps判定へ加えた。
+
+未commit試作 `--deep-bw --pipeline-depth 8 --prefill-pipeline --prefill-count 7`。BW各32K枠の0400/8400から24Kを7枚保持し、先頭1KiBを保護領域とする。43:0000..7FFFはscratch。record0は低byte=bank、高byte=FB offset。占有履歴432000、counter432740、mask432800/2880/2900/2980、BG header433800、8版BG strip434000..7FFF。metadataはWRAM7E:A000、ground水平表と旧boss draw-order表はROMへ移しCPUDATAを2000..9FFFに収める。BW busy7枠、metadata8枠、開始前7枚の描き溜めで約100msの遅延増加。
+
+現試作sha `865af0480703ebdec942b4c406d94397e4e9246435132fd1890948a9bb4b1483` は移動450field/359枚/123画面一致、表示開始後すべて1field間隔。ボス1200fieldを検証中。**短い一条件の成功を全条件達成にしない。** 次はボス移動・長時間道中。検証中にROM/labelsを上書きしない。SNES版の武器は単一で、別NES版の武器と混同しない。
+
+## 前の状態（f57b93e）
 
 専用分岐へ`f57b93e`をpush済み。**全条件60fpsは未達、active goal継続。公開ROMはe5e4741のまま。** 背景をBG2へ移し、元の遠景・近景を14行の合成stripとして保持する。8版をBW43:8000..BFFFへ置き、整数横スクロールが変わった時だけ2KiBを更新する。地面の反転共有・VRAM再配置は全2048map要素一致、検証はFB/VRAM/BG2と地面CHR/map保護を確認する。
 
