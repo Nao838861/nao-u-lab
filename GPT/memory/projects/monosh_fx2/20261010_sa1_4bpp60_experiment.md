@@ -1,6 +1,14 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
-## 最新状態（2026-10-10、56d4265）
+## 最新状態（2026-10-10、f8dbe7c）
+
+独立分岐へ `f8dbe7c` をpush済み。**60fps未達、active goal継続。** 試遊ROMを固定map・no-history・bullet-residentの検証済み版へ更新した。`D:\HomeBrew\MonoSHSA1_4bpp60_20261010\play_sa1.cmd` から起動。release SHA `0098322453fe5ea231e39a237bcf7b603764c70b6515b89b2b8be91594d844ad`。旧公開ROMe5e4741は履歴。道中1900field/1750logic/1743表示/147画面一致・2field遅れ8回、ボス1900/1748/1741/147・遅れ9回、反転四辺fixture120画面一致。固定map一式10試験を `results/20261010_fixed_map/` へ保存、zip SHA `a351758ad1c263e79e5d5995ae7886b2a82ca904ab36139929779ac7800a621a`。
+
+固定配置はCHR二面byte0000/6000、共有BG1map BC00（有効BC40..C1FF）。遠景map C200/CA00、自機C400..C77F、草を残余へ移し、遠景・草126tile全byte維持。毎フレーム1472Bのmap転送を省く一方、二世代前の占有領域も送って消す。`--contiguous-chr-dma` は外す。`--redraw-no-history` で未使用の旧packet640B保存を省略し、`--bullet-resident` で連続敵弾のI-RAMコード再コピーを省く。左端の実行時scanは15566kernel/474877位置一致だが地面爆発が遅く未採用。
+
+現行releaseの連続捕捉 `movestress_detinput_captureburst_fixedmap_resident_v1_tracepalette` は800field/651logic/644表示/168画面一致。遅れ8回中7回は世代542..551のCHR約10..11KBが原因。前回と全く同じtileは256..544Bだけで、全面pixel比較の費用に見合わない。次は未commitの `--fixed-map-delta`：現在占有領域だけCHRを送り、消えたtileは共有mapをtile0へ変更する。map更新はflip時のみ、差分list/full-mapはWRAMの各recordが個別所有。初回v1は表示切替の期限超過で失敗、費用予約を増やしたv2を試験中。試遊releaseは変更しない。user Mesen PID70064を停止しない。ビルドROM/LBLは試験とPython画素照合の完了まで変更しない。
+
+## 過去の中間点（2026-10-10、56d4265）
 
 独立分岐へ `56d4265` をpush済み。**60fps未達、active goal継続。公開ROMはe5e4741のまま。** 敵弾6/7/8/37の透明形状651種類を色と分離して共有コード化した。コードbookは51,018BでC3へ置き、元の起動時PPU画像を23,433Bへ可逆圧縮しC2後半へ移した。素材・縮小寸法・反転を維持。ROMの実命令・99,095行・786,516word・96,659 clipを静的照合。四辺fixtureは120画面一致。
 
