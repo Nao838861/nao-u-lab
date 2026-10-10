@@ -1,6 +1,18 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
-## 最新状態（2026-10-10 08:15頃）
+## 最新状態（2026-10-10、a578989）
+
+専用分岐へ`3312524`、`a578989`をpush済み。**60fps未達、active goal継続。公開ROMはe5e4741のまま。** 最良の検証済み構成は下記。道中600field/505枚・126枚一致（2field間隔3回）、ボス1200field/1079枚・135枚一致（2field間隔29回）。条件付きCPU edge MVNとpacket indexごとのshape再利用を追加した。証拠は`results/20261010_pipeline_overlap/`。
+
+`--pipeline --pipeline-direct --pipeline-irq --pipeline-depth 5 --redraw-all --merge-dma --large-edge-cache --triple-bw --fast-dma --skip-far-clear --linear-shape --cpu-code-copy --cpu-edge-copy --packet-shapes`
+
+SA-1へのソート分担は描画完了時だけjob2で行い、ボス72回・全順序一致でも表示枚数は変わらない。FastROM CPU実行は503枚で悪化、開始時三画像の描き溜めは504枚。直接planarの全寸法コードは30.3MBで8MiBに入らない。いずれも採用しない。
+
+`a578989`はVRAM面ごとのdirty世代履歴とS-CPUの別ソートを検証した。適応更新`--adaptive-vram`はBW43:6000以降に二面分の未反映dirty・直近4世代の履歴を置き、短い更新は表示面へ一括、大きい更新は裏面へ分割する。旧試作と異なり43:04C0..051Fへ重ならない。画素一致だが道中495枚・ボス1059枚に悪化。radixは修正後1078枚、全キーbucket初版1035枚、priority別の実在範囲だけを走査する現行bucket1079枚。全ソートを独立した安定ソートで照合した。radix初期1103枚は順序不一致だったため速度根拠から除外。未使用bucketへ前回のheadが残った原因を修正し、検証ツールにも両方式の順序検査を追加した。公開版へ採用しない。証拠`results/20261010_vram_sort/`。
+
+次の作業は**遠景のBG2化**。まだ未実装。Mode1のBG2は未使用、channel7はBG4HOFSへのHDMAでMode1では使われない。遠景14×512は反転共有で64tile/2048B、地面2bpp512tileを上下左右反転共有すると399tile/6384Bで1808B空く。VRAMのCB80..CDFF、CE80..CFFF、E900以降へ遠景tileを分散できる。BG2 CHR base C000、map base C000の64×32とし、BG1で未使用のmap row24..25（C600とCE00）をBG2用に共有する。channel7のTM HDMAで遠景14行だけBG2を表示し、BG2 VOFSは102-ground、HOFSはfar。FX rawからfarだけ外しnearは維持。dirty背景領域は近景の82..91へ狭め、far x変化をraw dirtyに数えない。**skip-far-clearは必ず無効化**（farを描かなくなるので消去が必要）。FB独立参照とPPUの合成画面、地面タイルの反転再配置を検証してから評価する。現在のROM buildはbosskeyrangesの試作であり公開releaseとは別。
+
+## 過去の中間点（2026-10-10 08:15頃）
 
 専用分岐へ `58d16da` をpush済み。**60fps未達、active goal継続。公開ROMはe5e4741のまま。** 最新の検証済み構成は下記。道中600field/502枚・126枚一致、ボス1200field/1078枚・135枚一致。ボスの2field間隔は30回残る。ROM SHA `265cddcd70885c38a3155b3b9468340766c51940341ff2ca8988a35c4497ac42`。証拠 `game/sa1/v001/results/20261010_pipeline_stageclip/`、生成 `tools/report_sa1_pipeline_stageclip.py`。
 
