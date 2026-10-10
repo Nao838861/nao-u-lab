@@ -1,6 +1,16 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
-## 最新状態（2026-10-10、29dc82e）
+## 最新状態（2026-10-10、6ae4a91）
+
+独立分岐へ `6ae4a91` をpush済み。**全体60fpsは未達、active goal継続。公開ROMはe5e4741のまま。** 新しい比較証拠は `game/sa1/v001/results/20261010_compact/`。SA-1だけで透明タイルを詰めるdenseは800field/672枚で遅い。SA-1で位置表だけ作り、本体CPUがキャラクタ変換DMAで必要タイルをWRAMへ並べる `--cpu-pack` は800field/692枚・129画面一致。CPU全体もFastROMにすると短い試験は693枚だが、1,800fieldでは1,628枚・145画面一致で従来1,675枚より悪化。CPU全体のFastROMは採用しない。
+
+大きな草・木（asset0/3、幅90以上）の左端は、元のcompiled行コードの途中命令へ接続する `--left-hints` を実装。初期Aも保存し、I-RAM0300..06FFの専用ループで実行。1,114kernel×35,237clip位置の独立命令照合、実ROMの左端fixture120枚の画像一致を確認。5,992aligned境界表も一致。原素材・縮小・透明形状は変更なし。
+
+検証器はIRQの管理処理の終了時刻ではなく、420Bの実DMA開始、VRAM/OAM DMA完了、210Bへの実ページ切替書込みでforced blank/VBLANKを確認する。初期cpu-packはHDMA表示開始後のページ変更をこの検査で検出し、失敗例としてzipへ保存した。予約を増やした後の結果だけを採用。cpuStageJobsは現commitでは最後の1472Bマップ転送を含まないことに注意。
+
+現在走行中は `movestress_cpupack_sa1map_long_tracepalette`、1,800field。CPU本体はWRAM、IRQとステージ変換はC1 FastROM。ビルドは従来deep7の全フラグから `--unroll-ppu-dma` を外し `--cpu-pack --irq-fastrom --bottom-slack --dirty-iram --wide-clear-min 64 --left-hints` を加える。`--fastrom-cpu` は外す。ROM/LBLを試験中に変えない。IRAM配置・CPU stagingなど詳しくは対象ソースとcompact報告を見る。全体60fps未達のまま作業を終了しない。
+
+## 過去の中間点（2026-10-10、29dc82e）
 
 専用分岐へ `29dc82e` をpush済み。**全体60fpsは未達。active goal継続。公開ROMはe5e4741のまま。** 敵弾の反転は圧縮した全横縮小データで対応した。native codeを16KiB/65KiBへ保持する方式も試したが、接近する弾の寸法が毎フレーム変わりcold生成が多い。弾だけを4画素単位の直接合成にすると、道中1,800field/1,675枚、表示間隔1fieldが1,647回、2fieldが15回、3fieldが10回へ改善した。SA-1最大27.055205ms。4弾種×3色×4反転×5寸法×四辺clipの120枚と道中145画面が独立参照に一致。原PNGは変更なし。証拠 `results/20261010_bullet_words/`。
 
