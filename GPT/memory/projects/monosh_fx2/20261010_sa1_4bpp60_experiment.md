@@ -1,6 +1,18 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
-## 最新状態（2026-10-10、a578989）
+## 最新状態（2026-10-10、f57b93e）
+
+専用分岐へ`f57b93e`をpush済み。**全条件60fpsは未達、active goal継続。公開ROMはe5e4741のまま。** 背景をBG2へ移し、元の遠景・近景を14行の合成stripとして保持する。8版をBW43:8000..BFFFへ置き、整数横スクロールが変わった時だけ2KiBを更新する。地面の反転共有・VRAM再配置は全2048map要素一致、検証はFB/VRAM/BG2と地面CHR/map保護を確認する。
+
+`--native-background --row-dirty --row-dirty-bands`は不透明輪郭の横範囲を8行ごとにROMへRLE保持する。全1,492寸法は維持、追加RLE13,860B、payload末尾7D5979・FF索引50,977Bで8MiBに収まる。道中600field/514枚・126枚一致、表示開始後の間隔はすべて1field。しかしボスは`--wait-slots`併用でも1200field/1084枚・136枚一致、2field間隔30回が残る。道中一条件の成功を全条件達成としない。証拠`game/sa1/v001/results/20261010_native_background/`。
+
+再現: `python tools/build_sa1_game.py --pipeline --pipeline-direct --pipeline-irq --pipeline-depth 5 --redraw-all --merge-dma --large-edge-cache --triple-bw --fast-dma --linear-shape --cpu-code-copy --cpu-edge-copy --packet-shapes --native-background --row-dirty --row-dirty-bands --wait-slots`。道中の514枚はwait-slots追加前の別hashなので同一ROMの結果に混同しない。
+
+起動時release flag $1E未初期化により最初のSA-1 jobが重複する場合があり、STZ $1Eを追加した。初回全面描画はこの問題を画素検証で見えなくしていた。producerは$0188へ世代を常時送りSA-1は$0198へ開始世代を保存、Luaが実jobの連続性も確認する。背景$0194/$0196も明示初期化する。native backgroundでは全raw FB三面を初期ゼロ化し、初回全面転送を省く。
+
+未commitの次の試作: `--transfer-mask`。消去は三世代の帯状外接範囲を維持し、PPU転送だけを各物体のtile bit集合へ絞る。BW43:6800=current mask、6880=previous、6900=二世代OR。離れた物体の間を送らない。descriptorは24個までで、超える場合は既存帯方式へfallback。`backgroundbandmask`600fieldを検証中。ビルド中・検証中にROM/labelsを上書きしない。ボスDMAが大きい場面が次の焦点。左右移動・武器切替・長時間はまだ不足。
+
+## 以前の状態（a578989）
 
 専用分岐へ`3312524`、`a578989`をpush済み。**60fps未達、active goal継続。公開ROMはe5e4741のまま。** 最良の検証済み構成は下記。道中600field/505枚・126枚一致（2field間隔3回）、ボス1200field/1079枚・135枚一致（2field間隔29回）。条件付きCPU edge MVNとpacket indexごとのshape再利用を追加した。証拠は`results/20261010_pipeline_overlap/`。
 
