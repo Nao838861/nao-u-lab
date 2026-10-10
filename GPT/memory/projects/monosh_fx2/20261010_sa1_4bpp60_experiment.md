@@ -1,5 +1,19 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
+## 現在の継続地点（2026-10-11、3ac5852）
+
+実装側6de7d38（CPU範囲計算三方式）、3ac5852（8行stack試験＋追加容量）をpush済み・clean。60fps未達・goal active。公開ROMはSHA9934d77b…のまま。CPU分担は不採用、次はstack描画のゲーム統合を検討する。実行中のテストはない。ユーザーMesen PID70064は触らない。
+
+CPU範囲計算を前画面のSA-1描画と重ねた全移動版は579logic/576表示、167実PPU画面一致、最大SA-1 16.475ms。ただしCPU範囲計算が最大12.260ms、CPU本来のゲーム処理が最大10.974msあり、2field間隔70/3field1と悪化。小さい物のみCPUへ移す版は605/602表示・168一致・46待ち・最大20.134ms。縮小pattern検索だけCPUへ移す版は645/634表示・168一致・14待ち・最大20.937ms。全件800field・共通packet一致。`results/20261011_cpu_dirty/`、ZIP12,160,047B、SHA c3a37658258b4b55e88ababaf9bf56d0457ac7a28a0cbfc7c0e2526f12443885。
+
+`tools/sa1_cpu_dirty.py`。D=0400、作業7EF000..F13F、upload先BW432C00..2D3F（mask96/帯bounds96/shapePtr128）。`--cpu-dirty` 全移動、追加`--cpu-dirty-small`大小分担、追加`--cpu-dirty-shapes`検索のみ。初期版のassembler define不足・raw shape_gameのstride7→現在10変換漏れ・検索のみ版の既存shape書戻し値不足は修正した。失敗版v1/v2/cpushapes_v1は比較から除外し、全移動v3・小物v1・検索v2のみ採用。無関係なROM参照mapping不具合ではなく、10byte表へ7byte strideで検索したことが停止原因だった。
+
+stack試験は `build_sa1_planar_probe.py --packed-stack --row-calls --stack-batch 8`＋`test_sa1_probe.py`。55fixture全一致、最大描画5.528169ms/消去込み10.116275ms。一行ごとのmap/stack設定9.233msから改善。8KiB境界・描画順を越えない最大8行単位で設定・復帰する。位置・寸法検索/ゲーム/PPUは未統合。`results/20261011_stack_batch/`、ZIP156,468B、SHA70f45333b4746019d78060ade9f885c6f6a417d067dc0889a3364185dfad1453。probeROM SHA2ae9c315…、build/sa1_v001/packed_stack_rowsに全画素証拠。build/sa1_gameとは別なので混同しない。
+
+`analyze_sa1_stack_capacity.py`は既存native rowを逆順PEA/PHAへ変換し、末尾JML000700の想定で追加容量を測る。幅94の爆発40/41なら330kernel/23,215B＋右clip表3,644B＋8B行descriptor4,704B＝31,563B（lookup/padding除外）。40のみなら14,863B。39/40/41全ては50,924Bとなり空きに収まらない。元の全1,492寸法のfallbackを残して、最も重い右clipの40/41幅94だけ加速する候補。まだゲームへ追加していない。
+
+次の案：元ROMのDF7000..DFBFFF（20KiB）とFEC400..FEFFFF（15KiB、left hint後ろ）が全零・未参照であることを確認して、40/41幅94のstack row・clip表・descriptorを追加。native row末尾のJML000700はIRAM gateへ戻す。gateはhardware Sを保存・復帰し、8行/8KiB境界ごとにIRQを許可する。右clipは逆順codeの先頭をhintで飛ばし、選んだword末尾へSを置けば可視prefixだけを描ける。word読みは既存DB/raw XでLDA abs,X、部分透明はAND/OR/PHA、不透明はPEA。右端guard byteと奇数phaseを保持する。左clipにはそのまま適用できないので従来fallbackへ。サイズ・色・物量は変えない。普通のrowを全部stackへ置換するとfallback喪失や容量増大になるので、追加対象を絞って実測する。
+
 ## BW-RAM専用配置表・消去の検証（2026-10-11、607b101）
 
 実装側607b101までpush済み。固定map差分を現在のPPU配置で再測定し、direct639表示（2field間隔10、0/3間隔も残る）、DMA640表示（10待ち）。FIFOのmap初期化fallbackをDB切替＋32word展開・記入を8word展開にしたfast-fillは642表示/6待ち。配置表を12record専用のBW-RAM領域に維持して退避DMAを省く版は645表示/4待ち、広幅消去閾値32との合成は644表示/5待ち。各800field・168画面・実PPU参照・同一世代packet一致。公開固定map版647表示/4待ちを超えず、公開ROMは変更していない。証拠 `results/20261011_bw_map/` zip30,610,717B、SHA `00bac2dde3080d02d59be38627255071023a63376235ef1c490fe28d7da7ca73`。60fps未達・active goal継続。
@@ -16,7 +30,7 @@
 
 **右端処理三件は689e0abでpush済み・不採用。** `--right-clip-jit --right-clip-fast` はhelperをROMから実行し、後方STA走査で可視prefixを求めてMVNコピーするが634表示、2field13/3field1、最大33.211msで遅い。逆向き走査は56,172kernel・1,092,812境界で元描画＋クリップと一致。`--right-clip-window` はIRAM0780..07FF末尾へ一行を置き、元のROMコードを実行し、0800以降の書込無視で右端を落とす。IRAM上端128BはBW432C00へ退避・復元。最初に0F80..0FFFをmirrorと取り違えたv1は458byte不一致で除外（MesenのIRAM handlerでは0800..0FFFはread0/write無視）。正しいv2は638表示・2field9/3field1、最大27.233ms。`--right-clip-window-min 17 --right-clip-window-direct` のv3は空行を飛ばし、収まる行はrawへ直接実行し、小さいはみ出しは従来経路へ戻す。645表示/4待ち、最大22.309630ms。爆発一つで6.3→5.3msの例はあるが全体改善なし。全三件800field/168実PPU一致/共通packet一致、v2/v3は現在のコマンドで再ビルドしたSHAも同じ。`results/20261011_right_clip/`、ZIP12,189,826B、SHA52a7b9c025db713f0ae211278ba85c81344090da5ee7c9dfd03ab881161f13f9。
 
-**現在未commitの次試験：BW配置表版から `--projection-rom` を除く。** FIFO必須条件を `projectionRom OR vramFifoMapBw` に緩め、後者でCPU CODEが0..FFFFに収まるassertを加えただけ。WRAM map退避をBW専用表へ移したので、7FA000以降に投影表を戻せる。実CODEサイズFFC2（65,474B）で64KiBに収まる。S-CPUによるROM投影表参照とSA-1のROM描画の競合を避ける狙い。`sa1_fifo_bw_wram_cmd`=安全BW map版からprojection-rom削除。現在 `movestress_detinput_captureburst_fifobwwram_v1_tracepalette` の800fieldテスト中、ROM SHA554177b13a79f7a1fc451d8837651bee3d611db0143846eaa3d37ad42c30305a、exec session77845。Python画素照合完了までROM/LBL変更禁止。親メモリ以外の既存差分をcommitしない。敵弾OBJ質問は未回答、ユーザーMesen PID70064を操作しない。公開ROMは9934d77b…のまま、60fps未達・goal active。
+**WRAM投影表版は6d324d8でpush済み・不採用。** FIFO必須条件を `projectionRom OR vramFifoMapBw` に緩め、後者でCPU CODEが0..FFFFに収まるassertを追加。CODEサイズFFC2（65,474B）。`fifobwwram_v1`は800field/656logic/645表示・168実PPU一致・4待ち・最大22.330117msで、BW配置表版を改善しない。ROM SHA554177b13a79f7a1fc451d8837651bee3d611db0143846eaa3d37ad42c30305a。証拠 `results/20261011_wram_projection/`、ZIP4,052,813B、SHAb461b81e9fda62bf3a4a3a5f1c2286b8b21a7e945853f1d525c6f148c9bdd51f。全縮小のleft hint拡大容量も測定済み（39追加だけで36,666B・hash87.9%、40追加でhash113.9%）。未回答の敵弾OBJ案は適用していない。
 
 ## 配置表のCPU移動は不採用（2026-10-11、11e9e6e）
 
