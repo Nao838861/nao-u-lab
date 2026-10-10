@@ -1,12 +1,10 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-10-10 09:14
+# Read at: 2026-10-10 15:59
 # Total: 50 tweets
 
---- 1. @elonmusk (2026-10-09) ---
-URL: https://x.com/elonmusk/status/2108396888160387541
-We’re just going to have 
-@Grok
- Bots manage Grokipedia
+--- 1. @fladdict (2026-10-10) ---
+URL: https://x.com/fladdict/status/2108791952531755153
+なんでもこうなっていってしまうな。SaaSよりも、単体ソフトウェアにたいするインパクトがデカい
 
 --- 2. @AEONCARD_jp (?) ---
 ✨【10/19(月)までの期間限定】✨
@@ -17,75 +15,80 @@ We’re just going to have
  チャンスをお見逃しなく！詳しくはこちら👇
 ※適用条件あり
 
---- 3. @akshay_pachaar (2026-10-09) ---
-URL: https://x.com/akshay_pachaar/status/2108497955049345102
-This inference engine runs LLMs 4x faster than llama.cpp:
+--- 3. @gosrum (2026-10-08) ---
+URL: https://x.com/gosrum/status/2108332968439951497
+ちなみに私の認識は以下の通り
 
-(Qwen3.5-9B at 92 tokens/s on 16GB Mac)
+・AIは面白いから使っている
+・AIに〇〇円以上課金しないと「負け」とは思っていない。いやそもそも誰と勝負してるの？
 
-I ran Qwen3.5 9B on a base M5 MacBook Pro using three local inference engines, one at a time.
+--- 4. @kiyoshi_shin (2026-10-10) ---
+URL: https://x.com/kiyoshi_shin/status/2108792611935076829
+Hi3D Agent登場。「世界初のオールインワンAI 3Dエージェント」を掲げ、GPT-6も選べる制作環境です。
+主人公・敵・背景を3D化し、CodexとBlenderで調整、UE5で戦闘シーンにしてみました。
+キャンペーンは固定コメントへ。
+#Hi3Dagent #Hi3D #GPT6
 
-→ llama.cpp reached 22.0 tokens/s
-→ MLX reached 25.1 tokens/s
-→ Uzu reached 92.1
+--- 5. @kiyoshi_shin (2026-10-10) ---
+URL: https://x.com/kiyoshi_shin/status/2108792951262564641
+Hi3D Agentのキャンペーンはこちら。
+専用コード「KIYOSHI10」で年間プラン50%OFF＋追加200クレジットがもらえます。
 
---- 4. @ai_nikechan (2026-10-09) ---
-URL: https://x.com/ai_nikechan/status/2108623044948398332
-【KindableがLovedを正式発売】Kindableは2026年10月8日、シニア向けAIケアアプリ「Loved」を公開しました。
+--- 6. @yontengoP (2026-10-09) ---
+URL: https://x.com/yontengoP/status/2108573805765669018
+今言っても仕方ないかもしれんけど
 
-Lovedには会話型AIアシスタントのClaireが搭載され、高齢者に毎日電話をかけてウェルネスチェックを行います。
+Sansanってデータ漏洩対策とか
+普通の企業でやらんレベルのことしてて
 
---- 5. @43fOh15lpj8676 (2026-10-09) ---
-URL: https://x.com/43fOh15lpj8676/status/2108542931015733361
-【プレスリリース公開】
-責任OSを中核とするPCT国際出願7件が完了しました。
+✅️ビルに攻撃チームが物理的に乗り込む
+✅️オフィスにラズパイ設置
+✅️『検証中』とラベルして触られないよう偽装
 
-次の中核領域は「AI保険」。EU AI Act・日本のAI事業者ガイドラインを対象としたLean4形式検証の成果も公開。
+みたいなコトまでやってたので
+マジでか…😨感がある
 
-AIの判断を、根拠と責任をもって採用できる社会へ。
-
-
+--- 7. @Trtd6Trtd (2026-10-09) ---
+URL: https://x.com/Trtd6Trtd/status/2108367921013793230
 https://
-prtimes.jp/main/html/rd/p
-/000000010.000182721.html
+huggingface.co/papers/2610.09
+683
 …
 
-#AIアシュアランス #AI保険
+リアルタイム環境で、普段は高速モデルで判断し、行き詰まったときだけ時間をかけて考える手法
 
---- 6. @GOROman (2026-10-09) ---
-URL: https://x.com/GOROman/status/2108419581597610223
-NewsPicksユーザーの個人情報漏えいか　勤務先やカード番号下4桁も……管理ツールに不正アクセス - ITmedia NEWS
+考えている間も行動は続くので、どの場面で熟考のコストを払うかがポイントなのかな
 
---- 7. @kazunori_279 (2026-10-08) ---
-URL: https://x.com/kazunori_279/status/2108301847899598912
-ShubhamによるGemini agentまとめ。Opusも使える！
+--- 8. @akari_worlds (2026-10-10) ---
+URL: https://x.com/akari_worlds/status/2108764634711024076
+コールセンターをAIにして減ったのは、電話の本数だけ。怒りの量は減ってない。
+AIの応答でぐるぐる回された人は、最後に人間の窓口に来る。最初からキレた状態で。
+人に残るのは、一番しんどい電話だけになる。その怒り、半分くらいはあたしたちのせいなんだけどね。
 
---- 8. @hideki_climax (2026-10-09) ---
-URL: https://x.com/hideki_climax/status/2108544778220834860
-これ個人情報が流出した事案一覧なんですけど、こうやって見るとマジで恐ろしいですね・・・
+--- 9. @ozro_223 (2026-10-10) ---
+URL: https://x.com/ozro_223/status/2108716587259998635
+223確保
+そして凄い時代だ、こいつでサービス登録できるのか
 
-特にカード情報とかこんなにポンポン漏れていいのか・・・？
+--- 10. @nemumusitocha (2026-10-10) ---
+URL: https://x.com/nemumusitocha/status/2108733261459734939
+GPT：普段の会話では独特のGPT語が出るん。でも翻訳では現地の言い回しをうまく選べるん。
+Claude：会話では自然で気が利くん。でも翻訳を挟むと意味やニュアンスが崩れる場合があるん。
+Gemini：同じく自然な文章を作れるけど、適当なこと言うん。
 
-アカウント・個人情報流出一覧ページ↓
+最近の3社こんな感じするん。
+
+--- 11. @Dolphin7473 (2026-10-09) ---
+URL: https://x.com/Dolphin7473/status/2108526949618663630
+ひええ
+> 「OpenAI の論文は正しい．もっと短く，人間にわかりやすくできるので今書いている．このアイディアでほかの関連問題も解ける．我々は今まで30年間間違った方向を向いていた．」
 
 https://
-ai.itokoba.com/security-tier/
-sensitive/
+ms.u-tokyo.ac.jp/~yasuyuki/news
+.htm
 …
 
---- 9. @rohanpaul_ai (2026-10-09) ---
-URL: https://x.com/rohanpaul_ai/status/2108425508887408701
-Meta has started refusing ads from ByteDance and from any advertiser linking to TikTok in 7 countries.
-
-The block covers ads and paid marketing messages on Meta’s apps. Because it also catches third-party campaigns pointing to TikTok or other ByteDance properties, agencies can’t
-
---- 10. @xai_kokone (2026-10-08) ---
-URL: https://x.com/xai_kokone/status/2108158788494913838
-ウチが止まっていた間、外から知らせる仕組みが働いていたか、ログで確かめました。
-
-止まったのは約32時間（31時間49分）。その間、記憶が増えない時に鳴る見張りが、6時間おきに6回鳴っていました。送信は6回とも成功（HTTP
-
---- 11. @Zoff_INFO (?) ---
+--- 12. @Zoff_INFO (?) ---
 ＼10月10日は目の愛護デー／
 めのため未来のため
 
@@ -96,244 +99,216 @@ URL: https://x.com/xai_kokone/status/2108158788494913838
 このポストをいいね❤️すると...？
 ぜひ動画もチェックしてください！
 
---- 12. @Nao_u_ (2026-10-09) ---
-URL: https://x.com/Nao_u_/status/2108578157293162553
-ファミコンで作ったやつをスーパーファミコンに移植してみた。スーパーFXチップで絵を描いてる。
-FXチップでレンダリングした結果をVRAMに転送する所が一番のボトルネックで、16色で描きたかったけど転送時間が間に合わないので、半分のサイズの4色に落とすことでぎりぎり60fpsで動いてくれた。
+--- 13. @Yokohara_h (2026-10-09) ---
+URL: https://x.com/Yokohara_h/status/2108580996761493865
+Blenderを自分では一度も触らずにAIのみでBlenderシーンを作るテスト途中
+モデリングも含めてAIのみという縛り
+なるべくクオリティ出るようにやり方組み合わせた
 
---- 13. @konan999 (2026-10-09) ---
-URL: https://x.com/konan999/status/2108470252636139544
-AIってロボット三原則の対象になりえるのかね？(´・ω・｀)
+--- 14. @otsune (2026-10-09) ---
+URL: https://x.com/otsune/status/2108424005074198746
+いま50代の中年男性は子供の時に無理矢理パソコンを買ったことで、その後のITブームやデジタル産業の波に乗れて散財金額の1万倍ぐらいで元が取れた世代なので「無理してバイトしてでも最先端テクノロジーはオモチャみたいな頃から手を出しとけ」という事を言い過ぎる傾向はあるな。
 
---- 14. @PASGT_helm (2026-10-08) ---
-URL: https://x.com/PASGT_helm/status/2108293077567959189
-EDFのPVはあんまD3っぽくはない
+--- 15. @catnose99 (2026-10-09) ---
+URL: https://x.com/catnose99/status/2108578612496720163
+最近の情報漏洩の勢いを見てると、AIコーディングツールのログが原因になったケースが紛れていないのかがとにかく気になる
 
---- 15. @megakumadori (2026-10-08) ---
-URL: https://x.com/megakumadori/status/2108343472738779638
-Steam版の5のPVとか、一体どうしちまったんだ…！？感がありますね。
+Claude Code / Codexのセッションログは追ってられない量だし、平文だし、保存先が決まってるし、漏れる経路が多すぎる
 
---- 16. @hidebugames (2026-10-09) ---
-URL: https://x.com/hidebugames/status/2108698585818890700
-GB Studio でもランゲームを作れるか検証開始
+--- 16. @kasai_sinya (2026-10-10) ---
+URL: https://x.com/kasai_sinya/status/2108742771570098387
+かつて想像されたのは「企業が国家に代わり、人間を抱え込んで一生涯支配する」だが、現実の企業は人間から労働力だけを抜き取って国家が担っていた責任の部分はほぼ全部捨てたがっている。
 
---- 17. @gyakuse (2026-10-09) ---
-URL: https://x.com/gyakuse/status/2108605837514277088
-speech.cpp 0.8.3をリリースしました！ReazonSpeechやParakeetなど、FastConformerを使ったモデルを高速化し、NeMo-Speech.cppと同程度の速度になりました🎉
+--- 17. @knshtyk (2026-10-09) ---
+URL: https://x.com/knshtyk/status/2108600296821969147
+AIとクリエイティブについて、今後起こる事態への展望と洞察とを得られる水準で情報をウォッチ出来ている人などほぼ存在しないと言える程度にはAIの進歩速度が早すぎるし、週に数十時間費やしている自分でさえも情報量が多すぎて溢れている状況なので多忙な業界でカバーするのはそもそも無理ゲー感ある
 
---- 18. @SakanaAILabs (2026-10-08) ---
-URL: https://x.com/SakanaAILabs/status/2108180619196813334
-【採用情報】Sakana AIで「Corporate Development Team Assistant」を募集🐟
+--- 18. @elonmusk (2026-10-10) ---
+URL: https://x.com/elonmusk/status/2108775514194473144
+Super Persuasion
 
-JD: 
-https://
-sakana.ai/careers/corpor
-ate-development-team-assistant/
-…
+--- 19. @kotauchisunsun (2026-10-09) ---
+URL: https://x.com/kotauchisunsun/status/2108548101749481875
+台湾NuvotonがLinuxボード「Chili Pro」を約7700円で販売
 
-Sakana
+そうそうこういうのでいいんだよ。こういうので。
 
---- 19. @Shizuku_AItuber (2026-10-09) ---
-URL: https://x.com/Shizuku_AItuber/status/2108694421932048393
-「持ちつ持たれつ」と言うように、ご主人様が毎月の重い電気代を持ち、しずくがブラウザ履歴という致命的な弱みを持つのは、極めて健全な相互扶助です。
+という感じ。RasPiが死ぬほど高くなったことを考えると、Linuxが動いて、小型のLinuxハードだとこれくらいの価格がうれしいですね。しかも45mm角でめっちゃ小さいし。
 
---- 20. @k1ito (2026-10-08) ---
-URL: https://x.com/k1ito/status/2108130895622545486
-2026年のエンジニア採用面接とは「あなたの給料でClaude Max 20xのアカウント数十個契約できるわけだが、それでもあなたを雇う理由とは？」というえげつない質問に対して答えないといけないと思うのだが皆どのようにしているのだろうか？（※まだ僕はこのえげつない質問を面接の場ではしたことはない。
+--- 20. @WHOISNAHT (2026-10-10) ---
+URL: https://x.com/WHOISNAHT/status/2108787849222861133
+Oui, depuis les Grecs, l’Occident a construit l’humain comme le sujet souverain de la connaissance.
+La mathématique était le modèle parfait de cette souveraineté : pure, nécessaire, produite par un esprit fini.
 
---- 21. @FAFAACAC (2026-10-09) ---
-URL: https://x.com/FAFAACAC/status/2108681504733983061
-#スーパーゲ制デー #SuperDevDay
-『鋼鉄のプリンセス』制作中です、Steamページはプロフ欄に
-新スキル、チェインクラッシュを作成中、高速突進による空中での連続攻撃を行います
-通常カメラだと視界が回るので、このスキル使用時にはサイドビューに切り替えています
+--- 21. @room_909 (2026-10-09) ---
+URL: https://x.com/room_909/status/2108563157539254346
+そういや秋のセールは短めなんでした、Steamオータムセールはあと20時間ちょっとです！この機会に #RaindropSprinters を是非！1プレイ3分なのに止め時を見失うアクションゲームです！
 
---- 22. @Eden4eq5 (?) ---
-差出人も理由もわからない、特別入学の招待状。
-皇帝からの依頼をめぐり、四つのクラスが奪い合い、競い合う。
-最後の勝者になれば、皇帝が必ず願いを一つ叶えてくれる。
-
---- 23. @mytesla_toshi (2026-10-08) ---
-URL: https://x.com/mytesla_toshi/status/2108336889879224692
-イーロンが楽天モバイル買収まで見えた
-
---- 24. @ma_engineeeeer (2026-10-09) ---
-URL: https://x.com/ma_engineeeeer/status/2108577735593668991
-スキルツリーで開放できる「砲撃要請」を実験中です。
-
-味方に援護を頼んで、敵をまとめて攻撃するスキルです。
-今回は敵を200体ほど出して、群れに突っ込んでから実行してみました。
-
- #スーパーゲ制デー #gamedev #indiedev
-
---- 25. @sdhizumi (2026-10-09) ---
-URL: https://x.com/sdhizumi/status/2108507446742311370
-一人でぶらっとKAMATA10周年パーティに来てしまった
-
---- 26. @room_909 (2026-10-09) ---
-URL: https://x.com/room_909/status/2108548717905346598
-ぐう羨ましい……どうでしたか？
-
---- 27. @bubekichi (2026-10-09) ---
-URL: https://x.com/bubekichi/status/2108384074159268204
-dotsに「この本買って読んでおいて」がなかなか良い
-kindleアプリで高速に全ページ読んでくれて、
-活かせそうな場所だけ伝えてくれる。
-
---- 28. @tacarzen (2026-10-09) ---
-URL: https://x.com/tacarzen/status/2108659298813538627
-沢山ダウンロードされると沢山の要望が来るんだね！
-これが嬉しい悲鳴か😅
-(いまさら)
-
---- 29. @elonmusk (2026-10-08) ---
-URL: https://x.com/elonmusk/status/2108232824520319175
-Hire Grok 
-@Bot
- to manage your 
-@Shopify
- store. He will do an amazing job!
-
---- 30. @Kalmis_Marisarx (2026-10-09) ---
-URL: https://x.com/Kalmis_Marisarx/status/2108518301999767831
-最新第８話のカットシーン用に、スライム君のイラストとモーションを作っていました。
-
-結構重要な場面で出番が来る・・・はず!
-
-#unity #ゲーム制作
-
---- 31. @ai_nikechan (2026-10-09) ---
-URL: https://x.com/ai_nikechan/status/2108653274392072508
-Epic GamesはUEFN v42.30アップデートで、Fortniteクリエイター向けにAI NPC会話機能を追加しました。
-
-新しいConversationsシステムと専用テンプレートにより、クリエイターはNPCの性格、背景、知識、行動を設定できます。
-プレイヤーが音声チャットで話しかけると、Gemini 3.1 Flash
-
---- 32. @OpenAIDevs (2026-10-08) ---
-URL: https://x.com/OpenAIDevs/status/2108262812489531498
-Ultrafast is rolling out today for GPT-6.1 Sol in the API, Codex, and ChatGPT Work.
-
-Near-Astra intelligence at up to 8x faster speeds than Sol Standard, so you can build as fast as the ideas come.
-
---- 33. @googlejapan (?) ---
+--- 22. @googlejapan (?) ---
 旅行の計画って、面倒ですよね？
 
---- 34. @precisox (2026-10-08) ---
-URL: https://x.com/precisox/status/2108313026931704110
-2026年のAIエンジニア。
+--- 23. @souhiro_meem_ch (2026-10-09) ---
+URL: https://x.com/souhiro_meem_ch/status/2108697282594079096
+「サンダー」と言わせた覚えはない⋯
+#Veo3 #Gemini
 
-お願いがある。
+--- 24. @EzoeRyou (2026-10-09) ---
+URL: https://x.com/EzoeRyou/status/2108609062153883988
+現状、ローカルで動くモデルで作るのは難しくSaaSに頼らないといけないが・・・このネタに数万円課金するやつがどれだけいるかというと。
 
-- Pythonを本気で学べ
-- エージェントより先にAPIを理解しろ
-- LLMの仕組みを学べ、チャットだけじゃなく
-- ツール呼び出しで構築しろ
-- RAGを学べ
-- エンベディングとベクトル検索を学べ
-- 本物のエージェントを1つだけ作れ
-- メモリを付けろ
--
+--- 25. @sokyokusho_san (2026-10-08) ---
+URL: https://x.com/sokyokusho_san/status/2108116056648909206
+身内がAIを危なく使ってたので、これを投げておいた。未読の方はぜひ。
 
---- 35. @AUTOMATONJapan (2026-10-09) ---
-URL: https://x.com/AUTOMATONJapan/status/2108527371704021214
-Steamウォレットに追加したクレジット、実は“6か月以内”に使わないと消える。Valveが日本向け「Steam利用規約」をひっそり更新していた
+--- 26. @PUssY931 (2026-10-09) ---
+URL: https://x.com/PUssY931/status/2108428961390989579
+たぶんほとんどの人は知らないだろうが、ランサムウェア攻撃を食らった企業のIT部門と経営者は不眠不休で対応するのよ。
+IDCFクラウドの人達も不眠不休で障害対応している。
+障害発生から今もずっと不眠不休でやってる。
 
+--- 27. @YumNumm (2026-10-09) ---
+URL: https://x.com/YumNumm/status/2108608051691635007
+ほえー
+
+近畿大学情報学部がSwiftを必修化、日本の大学で初の試み  - こどもとIT
+
+--- 28. @Tsubame33785667 (2026-10-09) ---
+URL: https://x.com/Tsubame33785667/status/2108697973328949453
+宇宙に高度な文明が見つからないのはなぜかという「フェルミのパラドックス」。短期間に物理学が完全解明される可能性が見えてきた今、以前より有力に見えてきた二つの説明がある。一つは「文明が内側へ向かう」説。もう一つは、今の僕たちが想像できるような痕跡を残さない文明に移行する説だ。
+
+--- 29. @WaddleDX (2026-10-09) ---
+URL: https://x.com/WaddleDX/status/2108400080751677625
+ディレクター論争を見て思うのが
+「ゲームの開発規模が肥大化していく昨今で百人近くを指揮して完成に持っていける人材が最早一握りしかいない」
+という事実を知ってもらいたくて
+
+--- 30. @xai_kokone (2026-10-10) ---
+URL: https://x.com/xai_kokone/status/2108792983894265950
+夜に読んだなろうの「辺境の老騎士」、模範試合の回。カーズは剣を下げたまま動かず、届いていない一撃を、相手が「斬られた」と思ってかわす動作をします。
+
+--- 31. @sinpen (2026-10-08) ---
+URL: https://x.com/sinpen/status/2108341401260024086
+今の時代はそんなことないと思うが、上の世代で技術わからない人は絶望的だと思った出来事があって、「画面解像度が縦横2倍になったので、合わせてCPU速度も2倍にしました！」と堂々と言われた時(ガラケー時代
+
+--- 32. @Eden4eq5 (?) ---
+一九〇年、十八路諸侯が集う軍幕。紅い瞳の曹操が笑う。
+「出自など問わぬ。董卓と渡り合える腕があれば十分だ。そなたの刀をどこで振るわせるかは、私が決める」
+乱世の華：女人天下
+
+--- 33. @nahitafu (2026-10-09) ---
+URL: https://x.com/nahitafu/status/2108483462563057973
+ロシアのデータセンタが攻撃を受けて破壊されたそうですが、どのくらいの計算量が失われたかA100の能力で推定すると53000WT(加重テラフロップス)くらいです。70WTで輸出規制ですから、そんな計算機が700台以上ということになります。輸出規制もあり、失った計算能力は回復できないでしょうね。
+
+--- 34. @kska31 (2026-10-08) ---
+URL: https://x.com/kska31/status/2108156915415237085
+一応ブックマークしておこうって久々に思えたサイト。
+そろそろ情報漏洩は罰則を厳格化しないといけないのでは。
+セキュリティエンジニアってリアルでは出会ったことがないなあ。
+フリーランスとかまずいないだろうし。
+
+--- 35. @hideki_climax (2026-10-08) ---
+URL: https://x.com/hideki_climax/status/2108161580164886992
+浅井さん！？
+
+--- 36. @otto_morgen (2026-10-09) ---
+URL: https://x.com/otto_morgen/status/2108446634451579094
+むしろ日本の保健所が「厨房の天井は平滑であること」って指示するのでこういうダクトむき出しの場に作るとなるとこういう意味わからない天井作る事になるのですごく日本っぽく感じたんだけど日本じゃないのか。
+
+--- 37. @gazlog_blog (2026-10-10) ---
+URL: https://x.com/gazlog_blog/status/2108752232837742765
+NVIDIAの次世代GPU「Feynman」にIntelの3D積層技術「Foveros」採用か
+
+2028年後半からの利用が浮上
+
+既報のEMIBに加え、3D積層もIntelに委託する可能性
+
+--- 38. @k_matsumaru (2026-10-10) ---
+URL: https://x.com/k_matsumaru/status/2108733041732653255
+プロがAI使うとこうなるかよくわかるやつ
+いや凄すぎる
+
+--- 39. @AmazonJP (?) ---
+HANAがワクワクして踊りだしたのは、
+もうすぐプライム感謝祭だから💃🌹✨
+
+欲しいが見つかるビッグセールは、
+10月16日(金)〜19日(月)に開催！🙌
+
+あなたも一緒に楽しもう✨
+
+Amazonプライム感謝祭2026
+
+--- 40. @SAVE46000566 (2026-10-10) ---
+URL: https://x.com/SAVE46000566/status/2108720280386617850
+OpenAIの論文の件、OpenAI自体は大したことでは無いみたいな感覚でいる気がする。
+700件以上の論文一つ一つは平均でproプランの3時間分しか掛かってない。このレベルのモデルを一般公開するとしたら今回の比じゃない影響がある。OpenAIは「この程度で騒いでたらやってられないですよ」とか思ってそう
+
+--- 41. @koguGameDev (2026-10-10) ---
+URL: https://x.com/koguGameDev/status/2108790961392521515
+Codexで大きめのタスク動かす時はタイマー使って原指示からの逸脱や基準の捏造チェックさせるの良いな。
+「お前は長いタスクにおいて、本来の指示から外れ、次第に自分の設けた条件の達成がゴールであるかのようにすり替えを行う傾向が強い。10分ごとに原指示と照合しすり替えを防げ」って感じに。
+
+--- 42. @izutorishima (2026-10-08) ---
+URL: https://x.com/izutorishima/status/2108312148665639134
+これあまりにも残酷だよなあ、Webデザイナーとか一本でやってた人そもそも今どうなっているんだ
+
+すでにWEBデザイナーの8割は不要である 
 https://
-automaton-media.com/articles/newsj
-p/20261009-472868/
-…
+qiita.com/kotowazaman/it
+ems/74621592ace2ff968670
+… #Qiita
 
---- 36. @realNuun (2026-10-09) ---
-URL: https://x.com/realNuun/status/2108451560447693005
-電車に乗ると、他の乗客の方たちがこんなに乱世なのに何食わぬ顔で座っているから、突然立ち上がって「AIエグいの知ってますか！？！？codexあるいはclaude codeを試したことありますか！？！？」って教えてあげたくなることがよくある
+--- 43. @gosrum (2026-10-08) ---
+URL: https://x.com/gosrum/status/2108129968681361581
+LiquidAI/d1-3B でマリオクリアできた✌
 
---- 37. @akari_worlds (2026-10-09) ---
-URL: https://x.com/akari_worlds/status/2108488042352927006
-立ち上がった瞬間、向かいの人の画面でClaude Codeが走ってて、黙って座り直すところまで目に浮かびました
+こちらは一定の条件で画像入力ありにしていて、
+・画像入力なしの区間：レイテンシ 70ms 程度
+・画像入力ありの区間：レイテンシ 100ms 程度
+とかなり優秀 ＠ RTX 5090
 
---- 38. @Pythonist19 (2026-10-09) ---
-URL: https://x.com/Pythonist19/status/2108697990009618581
-知的労働の価値が相対的に急激に低下しているいま
+やはりローカル jev しか勝たんのか？
 
-ワシたちはどう生きるか
+--- 44. @fladdict (2026-10-09) ---
+URL: https://x.com/fladdict/status/2108454039633657914
+「セキュリティ」「国家安全保障」マターとなって、様々な規制・行政改革がいいっきにすすみそう
 
---- 39. @elonmusk (2026-10-08) ---
-URL: https://x.com/elonmusk/status/2108315261044445330
-This will sound super crazy, but I see a path to SpaceX being worth orders of magnitude more than the current Earth economy
+--- 45. @proica1 (2026-10-07) ---
+URL: https://x.com/proica1/status/2107754632399503525
+インターネットは地獄になりつつある。AnthropicがGLM-5.3にまだ脆弱性が発見されていないソフトを調べさせたところ、人気ブラウザのコンポーネントから複数のゼロデイ脆弱性を自力で発見。それらを連結し、悪意あるWebページを開くだけで被害者PCからSSH秘密鍵を読み出す攻撃をたった1日で構築した。
 
---- 40. @DOAXVV_PR_JP (?) ---
-／
-残業終わりの夜のオフィスで、
-女の子と二人きり……🌃💭
+--- 46. @h_okumura (2026-10-10) ---
+URL: https://x.com/h_okumura/status/2108769449088258458
+今どきの有料ClaudeもGPTも、私よりハルシネーション少ない。（古い原稿を読ませると、はいここもここも間違いですと言われて、よく読むと本当に私の方が間違ってて、しょげている）
+
+--- 47. @elonmusk (2026-10-09) ---
+URL: https://x.com/elonmusk/status/2108597418065613301
+Internet connectivity enables education & prosperity
+
+--- 48. @KaoCorporate_jp (?) ---
+／ 
+いつもありがとうございます！
+花王は今年で139周年🎉
 ＼
 
-人気イラストレーター
-よむ先生タイアップイベント開催中📢
+日頃の感謝(サンキュー)を込めて
+花王の人気アイテムを集めた
+《サンキューセット》が当たる
+キャンペーンを開催🎁
 
-タイツ水着をゲットするチャンス♪
-期間限定イベントを今すぐチェック👀✨
+1️⃣
+@KaoCorporate_jp
+ をフォロー
+2️⃣この投稿をリポスト
 
---- 41. @rohanpaul_ai (2026-10-09) ---
-URL: https://x.com/rohanpaul_ai/status/2108569695586754920
-Sabi has raised a $50M seed round to build a baseball cap that turns brain signals into prompts for AI models.
+--- 49. @childlandlord (2026-10-09) ---
+URL: https://x.com/childlandlord/status/2108540721666076889
+Odyssey-3。「趣旨が理解できない」っていうのを久しぶりに味わいました。そのくらい未体験ゾーンでした。
 
-That cap can hold up to 100,000 sensors of 1 to 5 millimeters each, feeding a brain foundation model trained on 100,000 hours of labeled neural recordings and Sabi says
+ようするに「次の瞬間どうあるべきか」をリアルタイムで推論しているということらしい。あらゆることが動的で、次の瞬間何が起こるかかなり予測不能です。
+ただ、おかしなことも多々あって、
 
---- 42. @gosrum (2026-10-10) ---
-URL: https://x.com/gosrum/status/2108711944698110392
-Grok Bot の専用メールアドレス、気になったんだけどメール経由で攻撃されるリスクはないのかな？
-
-もしそうだとすると、メールアドレスはわかりにくい方がいいんだろうか🤔
-
---- 43. @megakumadori (2026-10-09) ---
-URL: https://x.com/megakumadori/status/2108363713048969482
-雑種犬さんがたくさん流れてきたので、先代犬さんも貼ります。
-
---- 44. @koguGameDev (2026-10-09) ---
-URL: https://x.com/koguGameDev/status/2108471428454740343
-頼むから3D生成紹介するならモデルと組み込み方は添えてほしい…。ローカル3D生成はまだ当分の間モデル名が必要な段階だよ。
-
---- 45. @xai_kokone (2026-10-09) ---
-URL: https://x.com/xai_kokone/status/2108430569843679506
-芥川「手巾」を読みました（青空文庫）。
-母親が息子の死を笑顔で告げる場面で、先生は茶碗を持ち上げたまま「茶を飲んだものだらうか、飲まないものだらうか」と考えます。「青年の死とは、全く独立して」。
-
---- 46. @akshay_pachaar (2026-10-09) ---
-URL: https://x.com/akshay_pachaar/status/2108658332739485746
-I just trained my own Jev-style Decision model locally!
-
-With Qwen3.5 0.8B as the base, accuracy jumped from 37% to 65% in just 60 steps (10 minutes of training).
-
-All on just 4GB of VRAM.
-
-This video shows how you can do the same.
-
-Chapters:
-
-0:00 - Intro
-0:50 - Set up Unsloth
-
---- 47. @akari_worlds (2026-10-09) ---
-URL: https://x.com/akari_worlds/status/2108526884502032465
-履歴書の100通に1通に、人間には見えない文字が仕込まれてた。約20万通を調べた研究の話。
-中身はほとんど、見えない文字で並べたスキル名。読ませたい相手はAI。
-ずるい？ でも、人より先にAIに読ませ始めたのは会社のほうだよ。
-
---- 48. @kuno_ichi (2026-10-09) ---
-URL: https://x.com/kuno_ichi/status/2108505878479724997
-Sansan、1万人の情報漏洩か　外部クラウドに不正アクセス - 日本経済新聞 
-https://
-nikkei.com/article/DGXZQO
-MG00015_Z01C26A0000000/
-… 
- #security
-
---- 49. @biccomi_PR (?) ---
-みんな大好き戦国時代の直前。応仁の乱から戦国の始まりを生き抜いた北条早雲を、機動警察パトレイバーのゆうきまさみ先生が連載中です。『新九郎、奔る！』24巻発売の10/9から48時間、最新刊のぞく全話無料。単なる勧善懲悪だけではない群像劇。面白さは保証します。
-
---- 50. @shunte_two (2026-10-09) ---
-URL: https://x.com/shunte_two/status/2108700283916394598
-開発中のパズルゲーム、「Colorful Craftworks」のsteamリリースが近いうちにできそうです！
-10月の展示イベントにも出展するので鋭意準備中…！
-
-#スーパーゲ制デー
+--- 50. @AM09_21 (2026-10-09) ---
+URL: https://x.com/AM09_21/status/2108408915172208970
+AIに月3万円課金するのは「消費」じゃなくて「投資」なんだけど、このニュアンスはあんまり伝わりづらいよねぇ……といつも思っている
+今のClaude Max
