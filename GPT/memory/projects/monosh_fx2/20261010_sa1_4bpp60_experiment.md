@@ -1,6 +1,18 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
-## 最新状態（2026-10-10、82973f0）
+## 最新状態（2026-10-10、00a8973）
+
+専用分岐へ `00a8973` をpush済み。**全条件60fps未達、active goal継続、公開ROMはe5e4741のまま。** 7枚BWバッファの先頭に1KiBの保護領域を置き、移動時の先頭行11B不一致を修正した。遠景はBG2、近景は54個の8px OBJと48〜52px幅のソフト描画を合成し、元画像との独立照合を追加。近景OAMを512水平位置分のROM表へ保持しCPU準備時間を削減した。表はC0の未使用BOOT複製とDEの旧背景表を再利用し、DA〜DDの地面パレットとDFの自機画像を保護する。
+
+**旧865af048...のdeep7計測は無効。** pipeline末尾のBOOT segmentからCODEへ戻しておらず、INIDISP HDMAが別データを参照していた。raw/VRAM一致やfield間隔だけでは実表示を保証できなかったため、速度の根拠から除外。CODE復帰を修正し、実際の2100書込みで非表示期間維持を検査する。証拠 `game/sa1/v001/results/20261010_deep_near/` に無効理由も保存。
+
+修正後c2d081...は移動450field/358枚/123画面一致。ただしボス移動1800field/1317枚、1field977回・2field289回・3field44回・4field4回で未達。現d3640d1c...（OAM ROM表）は短い移動450field/360枚/124画面一致、全て1field間隔。長いボス移動では1800field/1589枚、1field1512回・2field31回・3field45回だが、240枚目でFX側パレットの一色が変わるため**画面検証不合格**。短い成功を全条件達成としない。
+
+直近の主因は転送descriptorが48個を超えた時に全面23552Bへfallbackし、裏面転送に3field必要となる点。描画済みqueueが残るのでCPU不足だけではない。まず小さい隙間をまとめて48個以内へ再生成し、全量fallbackを減らす。CGRAM破損の書込み位置・時刻も追跡中。検証中にROM/labelsを再ビルドしない。SNES版の武器は単一であり別NES版の武器と混同しない。
+
+現ビルド: `python tools/build_sa1_game.py --pipeline --pipeline-direct --pipeline-irq --pipeline-depth 8 --deep-bw --prefill-pipeline --prefill-count 7 --redraw-all --merge-dma --large-edge-cache --triple-bw --fast-dma --linear-shape --cpu-code-copy --cpu-edge-copy --packet-shapes --native-background --native-near --row-dirty --row-dirty-aligned --wait-slots --occupancy --accurate-dma-budget --transfer-mask --front-mask --visible-mask --stack-band`。
+
+## 前の状態（82973f0、deep7初期値は後に無効判定）
 
 専用分岐へ `82973f0` をpush済み。**全条件60fpsは未達、active goal継続。公開ROMはe5e4741のまま。** 縦8位相の圧縮表5992通りを最終ROMから元画像へ照合済み。ボス1200field/1104枚/136画面一致、表示間隔1field1093回・2field7回・3field1回。証拠 `game/sa1/v001/results/20261010_aligned/`。
 
@@ -8,7 +20,7 @@
 
 未commit試作 `--deep-bw --pipeline-depth 8 --prefill-pipeline --prefill-count 7`。BW各32K枠の0400/8400から24Kを7枚保持し、先頭1KiBを保護領域とする。43:0000..7FFFはscratch。record0は低byte=bank、高byte=FB offset。占有履歴432000、counter432740、mask432800/2880/2900/2980、BG header433800、8版BG strip434000..7FFF。metadataはWRAM7E:A000、ground水平表と旧boss draw-order表はROMへ移しCPUDATAを2000..9FFFに収める。BW busy7枠、metadata8枠、開始前7枚の描き溜めで約100msの遅延増加。
 
-現試作sha `865af0480703ebdec942b4c406d94397e4e9246435132fd1890948a9bb4b1483` は移動450field/359枚/123画面一致、表示開始後すべて1field間隔。ボス1200fieldを検証中。**短い一条件の成功を全条件達成にしない。** 次はボス移動・長時間道中。検証中にROM/labelsを上書きしない。SNES版の武器は単一で、別NES版の武器と混同しない。
+当時の試作sha `865af0480703ebdec942b4c406d94397e4e9246435132fd1890948a9bb4b1483` の計測は、上述のHDMA segment不備により無効。成功例として扱わない。
 
 ## 前の状態（f57b93e）
 
