@@ -1,6 +1,16 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
-## 最新状態（2026-10-10、4085735）
+## 最新状態（2026-10-10、5570ab4）
+
+**重要な検証訂正。固定map・map差分・VRAM四面の過去の正常表示判定は無効。** 検証器が意図したVRAM配置を復号し、PPUの実際のCHR・配置表の開始位置を照合していなかった。固定mapのBC00は2KiB整列を満たさず、遠景CHR指定も8KiB制約に違反。四面は210Bのシフト量/BG2指定が誤り、12KiBの奇数面に必要なタイル番号128補正も欠けた。旧報告JSON/本文に訂正を追記した。ROM/証拠自体は履歴として残す。
+
+`5570ab4` を専用分岐へpush済み。PPU状態を各捕捉世代で保存し、実参照位置で画素復号する検査を追加した。修正固定mapはBG1 map C000、BG2 CHR A000、far map C600/CE00、自機C800。遠景・草126tileはそのまま移動。修正版4試験を `results/20261010_ppu_layout/` に保存、zip SHA `0dda205298f2f0a2f977581a09fddff1043f54a76c2e5ef8f0abc229b90fba29`。道中1900/1743表示/147一致、ボス1900/1741/147一致、反転四辺120一致、爆発区間800/644/168一致。release SHA `7459afffd844ab008959d7183a374aa1f037673f68a0a3ab39fb48e70acaa48d`へ差し替えた。**60fps未達、active goal継続。**
+
+同commitには、表示検証が不完全だった四面＋最新弾コード/費用表/WRAM先行変換の7試験も訂正付きで保存。最大21..24ms、表示644以下/800で、正常表示の採用根拠に使わない。四面コードのPPU修正は実装したがまだ再試験していない。
+
+次の実行中試験は修正固定mapへ `--dirty-iram` を追加した800field、`movestress_detinput_captureburst_fixedmap_dirtyiram_v1_tracepalette`。Python検証まで完了する前にROM/LBLを変更しない。修正版固定mapの重い区間は世代542..551、SA-1総15..22ms、dirty約3.3..3.8ms、clear約2..5ms、CHR10..11KB。通常は1field表示で、道中は2field間隔8回が残る。公開版は修正固定mapを維持し、未検証試作を反映しない。ユーザーMesen PID70064を操作しない。
+
+## 過去の中間点（2026-10-10、4085735、PPU参照未検証）
 
 独立分岐へ `4085735` をpush済み。**60fps未達、goal継続。試遊releaseはf8dbe7cのまま。** `--fixed-map-delta` と `--fixed-map-delta-dma` を実装・検証したが、共に遅く不採用。現行fixedmap/residentの800field/644表示/168画面一致に対し、CPU直接map更新版v6は800/638/168、ROM列から区間DMA版v3は800/634/168。DMA版の先頭120表示も全画面一致。比較packetは同世代で一致。4正常試験・初期失敗・ROMスナップショットを `results/20261010_fixed_delta/` へ保存、zip SHA `2079c78d1710f3163d91c76661885598eb45039d59934208bc7ee838bb180b10`。
 
