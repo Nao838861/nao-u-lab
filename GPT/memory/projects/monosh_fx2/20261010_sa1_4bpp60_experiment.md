@@ -1,5 +1,15 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
+## BW-RAM専用配置表・消去の検証（2026-10-11、607b101）
+
+実装側607b101までpush済み。固定map差分を現在のPPU配置で再測定し、direct639表示（2field間隔10、0/3間隔も残る）、DMA640表示（10待ち）。FIFOのmap初期化fallbackをDB切替＋32word展開・記入を8word展開にしたfast-fillは642表示/6待ち。配置表を12record専用のBW-RAM領域に維持して退避DMAを省く版は645表示/4待ち、広幅消去閾値32との合成は644表示/5待ち。各800field・168画面・実PPU参照・同一世代packet一致。公開固定map版647表示/4待ちを超えず、公開ROMは変更していない。証拠 `results/20261011_bw_map/` zip30,610,717B、SHA `00bac2dde3080d02d59be38627255071023a63376235ef1c490fe28d7da7ca73`。60fps未達・active goal継続。
+
+新flag `--vram-fifo-fast-fill`、`--vram-fifo-map-bw`。後者はbank40/41/42それぞれ6C00/71C0/EC00/F1C0の1472B×12表。CPUはsubmit時IRAM01A8/01AAへlow/bankを渡し、collectでrecord+60/+62へ保存。SA-1はそこへ直接map生成し、rawはCHR転送完了で解放できる。既存bottom-slackの248行末までの描画は表を壊し得るので、BW専用map時だけ208行末（CMP209）までに制限した。初期fifobwmap_v1/fifobwdirty_v1は800fieldの168画面が一致したが、この未検査配置のため除外。安全版fifobwmap_v2 SHA94c0c2e1…を保存。リンク後の実表でraw（先頭保護1024B＋208行）、累積表、12mapの非重複をassertする。
+
+607b101のpushは新しい証拠zipのloose object `199a2037da3601e58f85c104e220041d254a0636` のzlib破損で一度失敗。作業ファイルのgit hashが同じことを確認し、破損objectを共通git dirの `codex-object-quarantine/…_20261011` へ保管、`git hash-object -w`で再作成。`git cat-file blob`の全bytes一致とSHAを確認してpush成功・clean。commitをresetしたり他worktreeを変更していない。
+
+**進行中（未commit）：mask-clear試作。** 41画面の実画素で占有タイル平均6844B、帯の外接範囲平均9593B（約29%空白）。`tools/sa1_mask_clear.py`、`mask_clear_sa1.s`、builder/testerにflagを追加。七rawの占有maskをBW432300..43259Fへ保持し、old maskを432600へ出す。idle-clearで消した帯のmaskも零にする。CPU命令のみのfifomaskclear_v1は637表示/168一致・最大SA-1 25.791ms、DMA優先のfifomaskdma_v1も637/168一致・最大23.962msで不採用候補。後者は新logger mask_clear.jsonl（IRAM01AC消去bytes）付き。1bit走査の費用が大きく、次に8bit表引き＋隣接run結合の `--mask-clear-table` を加えた。現在 `movestress_detinput_captureburst_fifomasktable_v1_tracepalette` の800fieldテスト実行中、ROM SHAe0643ca0…、exec session55625。Python画素照合終了までROM/LBLを変えない。`--mask-clear-gap 0..3` の穴埋めも実装済みだが未測定。コマンドはfunctions store `sa1_fifo_masktable_cmd` 等にある。元の公開ROMとFX2分岐を変えていない。敵弾OBJ質問は未回答、ユーザーMesen PID70064を操作しない。
+
 ## 配置表のCPU移動は不採用（2026-10-11、11e9e6e）
 
 実装側11e9e6eをpush済み・clean。`--vram-fifo-cpu-map`でSA-1は次画面の描画を先に開始し、S-CPUが前画面の1472B配置表をWRAM 7FA000以降へ生成する。record+62は0未着手/2生成中/1完成で、未完成のmapではflipしない。SA-1のmap生成とcollect時のBW→WRAM退避DMAを省く。CPUの初期化は614表示/34待ち、初期化だけROM→WRAM DMAにした `--vram-fifo-cpu-map-dma` も632表示/16待ち（各800field）。両方168画面一致、実PPU参照と同一世代packet一致。公開版647表示/4待ちを超えず未採用。公開ROMのSHAは9934d77b…のまま。60fps未達・active goal継続。
