@@ -1,6 +1,16 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
-## 最新状態（2026-10-10、f8dbe7c）
+## 最新状態（2026-10-10、4085735）
+
+独立分岐へ `4085735` をpush済み。**60fps未達、goal継続。試遊releaseはf8dbe7cのまま。** `--fixed-map-delta` と `--fixed-map-delta-dma` を実装・検証したが、共に遅く不採用。現行fixedmap/residentの800field/644表示/168画面一致に対し、CPU直接map更新版v6は800/638/168、ROM列から区間DMA版v3は800/634/168。DMA版の先頭120表示も全画面一致。比較packetは同世代で一致。4正常試験・初期失敗・ROMスナップショットを `results/20261010_fixed_delta/` へ保存、zip SHA `2079c78d1710f3163d91c76661885598eb45039d59934208bc7ee838bb180b10`。
+
+mapの旧・新mask差分生成はSA-1、WRAMに1472B×8 record所有枠。直接版は40変更tile以下をCPUで更新し、多ければfull-map。DMA版は変化した同じ表示状態の連続tileを最大48記述子にまとめ、自然番号列/透明列のROMから送る。どちらも表示直前にだけmap更新し、費用をDMA予算へ予約する。消去CHRの節約よりmap更新の設定費用が重かった。
+
+初期失敗の根本原因を補足：v1/v2/v3はGSUへ置いたCPU helperの後でCODEへ戻していなかったため、後続のblank table等の配置が変わった。v4は`lda $0000,x`がdirect-pageにassembleされ、WRAM DBRを使わずlistが読めなかった。`a:$0000,x`へ修正。builderに後続`fx4_wait_obj_blank`がCODE内に残るassertを追加。VRAM各byteへのemu callbackはホスト実行を大幅に遅くしたので撤去し、map入口/出口・各DMA入口/出口のblank検査へ戻した。未完走の計測器試験を速度比較に混ぜない。
+
+次は、現在のbullet-shapes-ROM＋no-history＋bullet-residentと、過去に単独では遅かったVRAM4面を組み合わせ直す。ビルドは従来best_cmd（contiguous-chr-dmaあり）へ `--bullet-mask-arithmetic --bullet-shapes --bullet-shapes-rom --vram-four-shared --redraw-no-history --bullet-resident` を追加し、fixed-map/deltaは外す。`movestress_detinput_captureburst_fourshapes_v1_tracepalette` の800field試験でMesenは終了、Python画素照合中。完了までROM/LBLを変更しない。ユーザーMesen PID70064を操作しない。
+
+## 過去の中間点（2026-10-10、f8dbe7c）
 
 独立分岐へ `f8dbe7c` をpush済み。**60fps未達、active goal継続。** 試遊ROMを固定map・no-history・bullet-residentの検証済み版へ更新した。`D:\HomeBrew\MonoSHSA1_4bpp60_20261010\play_sa1.cmd` から起動。release SHA `0098322453fe5ea231e39a237bcf7b603764c70b6515b89b2b8be91594d844ad`。旧公開ROMe5e4741は履歴。道中1900field/1750logic/1743表示/147画面一致・2field遅れ8回、ボス1900/1748/1741/147・遅れ9回、反転四辺fixture120画面一致。固定map一式10試験を `results/20261010_fixed_map/` へ保存、zip SHA `a351758ad1c263e79e5d5995ae7886b2a82ca904ab36139929779ac7800a621a`。
 
