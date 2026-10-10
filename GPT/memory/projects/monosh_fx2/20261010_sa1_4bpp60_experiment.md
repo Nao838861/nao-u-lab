@@ -1,6 +1,12 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
-## 最新状態（2026-10-10、5b96551）
+## 最新状態（2026-10-10、a5a59e2）
+
+独立分岐へ `a5a59e2` をpush済み。**60fps未達、active goal継続。公開ROMはe5e4741のまま。** 低・高byte分離マップの4試験を保存した。`--split-map-dma` は800/704枚/129画面一致、1800/1686枚/146画面一致。`--split-map-mvn`追加は800/704/129、1800/1688/146。既存最良1800/1689枚を上回らず未採用。各VRAM面の旧high=25範囲と新範囲の和を転送し、旧25から24へ戻るタイルも修復する。MVN版はROM番号列からBWへコピーする。原画像・生バッファは維持。証拠は `results/20261010_split_map/`、zip SHA `cc0203ebe4f09554fe44a1889acd43bfc8b660c8339e117d7a7efef8d4134379`。MVN版800のPython検証中にgenerator already executingが出たため、同じ保存データ・ROM・ラベルで全129枚を再照合した。画像一致を確認済み。
+
+現在は未commitの `--vram-four-shared` を実装し、800fieldの `movestress_vramfour_v1_tracepalette` が走行中。ROM/LBLはテストと画素検証が終了するまで変更しない。4×12KBのCHR（byte 0/3000/6000/9000）と共有map C000を使う。各面のtile0は透明、1..351が動的CHR。遠景64tileを8C00..8FFFとBC00..BFFFへ移し、BG2 CHR base=8000。近景/地面/playerは従来配置。CHR記述子の最後に付いていたmap記述子を本体collect時に転送対象から外し、表示切替時に生BW+6040からmap736wordをC040へ送る。完成queueは3枚、flip費用へmap1472B相当の余裕2000単位を追加。元の4面案（各面map2800とCHR末尾の飛び地）は採用していない。新ファイルは `tools/sa1_vram_four.py` と `game/sa1/v001/vram_four_cpu.s`、builder/testerも未commit変更中。まだ速度・正しさ未判定。
+
+## 過去の中間点（2026-10-10、5b96551）
 
 独立分岐へ `5b96551` をpush済み。**60fps未達、active goal継続。公開ROMはe5e4741のまま。** 走行中の試験はない。現在ROMは従来最良の引数へ `--prefix-table --dirty-iram` を追加した安全修正版費用表で、SHA `9f53a0f0a79e75062f4615cbd69c84060a37d48c3bd453658c4c29748c430c02`。1800field/1685枚/146画面一致・2field遅れ26回で最良1689枚/22回を上回らない。証拠は `results/20261010_map_probe/`。初回は計測専用MesenCore.dllの0xc0000005（Windows Application Errorで専用exeパス確認）で完了JSONなし。同一ROM再実行は正常完了した。ユーザー用Mesenは操作しない。
 
