@@ -1,6 +1,18 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
-## 最新状態（2026-10-10、996f992）
+## 最新状態（2026-10-10、f1389c4）
+
+独立分岐へ `f1389c4` をpush済み。**全体60fpsは未達、active goal継続。公開ROMはe5e4741のまま。** 新しい比較証拠は対象repoの `game/sa1/v001/results/20261010_idle_bullet/`（14試験、zip約31MB）。元の画像・色・輪郭は維持する。この時点で走行中のテストはない。
+
+現在の長区間の最良は `movestress_directsparse3_opacity_long_tracepalette`、1,800field/1,689枚・146画面一致、表示間隔2fieldが22回。SHA `f08c1564011b8948cf6c190150e3c60c8f0870ed444d2daa23226821f9b7f6ec`。従来prefix-fastromだけの1,681枚/30回の遅れより改善したが、60fpsとはしない。基本はraw7面・VRAM3面のdirect-sparse、prefix-fastrom、展開DMA、IRQだけFastROM、全左端hint、bottom-slack、bullet-words、aligned/exact dirty等。追加は `--idle-clear --bullet-left-fast --bullet-opacity --contiguous-chr-dma`。費用表とdirty-iramはこの最良版には含まない。
+
+`--idle-clear` はBW43:07A0の7word busyを本体CPUが公開し、SA-1待機中に空き面の占有帯を消す。平均消去1.5→0.4msだが重い連続描画中には待機時間が少なく、単独の長区間は1,682枚。左にはみ出した敵弾は端を抜けたら高速ループへ戻す。`--bullet-opacity` は圧縮行ヘッダ2Bへ4画素wordの不透明判定16bitを持たせ、余分な16word以降は通常マスクへ戻る。色・反転・寸法・四辺clipの120画面を照合した。連続CHRはまとまり先頭だけVMADDRを書き、途中再開時にも先頭を再設定する。32/64B隙間の結合は800field/704枚で改善しない。
+
+部分転送の線形選択は平均約1ms・最大1.9msを使う。SA-1累積費用表で二分探索を約0.3msにする版、本体CPUが収集済みWRAMから累積表を作る `--prefix-cpu-table` も実装。しかし初期費用表はIRQ内で本体除算器を使っていたので、ゲーム処理との競合を避けROM表引きへ修正した。検証器はIRQ内4202..4206書込で即失敗。修正前の費用表3試験は `performanceComparisonEligible:false` として速度比較から除外。修正後CPU費用表+dirty-iramは800field/701枚・129画面一致、SA-1最大21.664msで全体は改善しない。現ROM SHA `fcf20d2b0a069b9c7f68d347df06288b82e9bd90b711ad0596d5e69e2b468947` はこの修正後版。全5,992境界・4,998kernel/140,509左端clipを再照合済み。
+
+次はゲーム処理分離のメモリ配置を小さくして再検討する。旧 `--sa1-game` はBW40の64KB全複製でraw7→5面となり800field/669枚だった。未実装の候補は別リンクのSA-1ゲームコードを空きC3（physical430000..43FFFF）へ、近いRODATAをbank02:8000（physical010000..017FFF）へ、BSSをSA-1の6000..7FFF BW窓（2225=1B、BW43:6000..7FFF）へ置く構成。ゲームのDP保存はBW43:4000等、C stack7C00/hardware stack7FFFとしraw7面を保持する。別リンク・再配置、出力shadow、原ゲーム動作、stack深さ、RODATA容量の監査が必要。まだ着手していない。ROM/LBLは検証・照合中に変更しない。user Mesen PID70064は停止しない。
+
+## 過去の中間点（2026-10-10、996f992）
 
 独立分岐へ `996f992` をpush済み。**全体60fpsは未達、active goal継続。公開ROMはe5e4741のまま。** この時点で走行中のテストはない。比較証拠は対象repoの `game/sa1/v001/results/20261010_compact/` に集約した。以下の古い「走行中」は過去の中間状態であり、現在の状態ではない。
 
