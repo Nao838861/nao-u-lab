@@ -1,5 +1,17 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
+## 直接planar・敵弾・スタックの追加比較（2026-10-11 0時頃、8341e55）
+
+実装側は8341e55までpush済み・clean。公開ROMは変更なし。ac1d816の `results/20261010_planar_probe/` は55fixtureの固定位置コンパイル比較。packed7.583ms、planar8.440ms、bitplaneごと11.813ms、辞書planar20.514ms（描画だけ）。全件画素一致。ただし配置検索・ゲーム・PPUを含まず、全縮小コードをROMへ収録したわけでもない。全寸法の素材別密辞書は6,893,196bytes（本体・fallback等を除く）。plane別コード共有も28MB/32MBで8MiBに収まらない。128KiBの行コードRAM LRUはピーク41画面13,522行に9,936miss・974,025生成bytes（最大36,041B/画面）。zip SHA `7832520b0696708ad02698306b66342611d9250ce83d13e5595689d2511cb927`、1,371,972bytes。
+
+2bae54bの `results/20261011_clear_bullet/` は三件800field・168画面一致・実PPUとpacket確認済み。消去DMA待機645表示/6待ち、画面内敵弾高速経路646/5、FIFOとの合成642/6で、公開版647/4を超えず。zip SHA `b7d553bd614c77f6fc9be6c2f25107297899e851c31190f5fcd0d351a77faebd`、12,315,389bytes。敵弾初回v1はビルド終了前に開始したので自分のテストだけ停止・v2再測定し、v1を除外。新flag `--wait-clear-dma`、`--bullet-interior`。後者はIRAM019Eを使うためcpuPackDoubleと併用禁止。
+
+8341e55の `results/20261011_stack_probe/` でPEA描画55fixture一致。固定位置のfixture全体でstackを使うと5.546ms、同条件packed通常7.583ms。行ごとの通常呼出し7.085ms、map設定・S復帰を行ごとに行うstack版9.233ms。割り込み停止の長い固定位置版をゲームへ混ぜない。初回はDB=40で2225へabsolute書込みした誤りをlong bank0書込みへ修正して全件再実行済み。zip SHA `1860a190337aae289880a1175a5749b4a6d441a203ce6384a204ecc7c1ae6a98`、1,001,644bytes。
+
+**次の独立候補：少数行のstack描画を一まとまりにする方式（未実装）**。SA-1 BW mirrorは8KiBなので、raw物理行の64行境界を越えない最大12行のblockで一度だけ2225とSを設定・復帰する。通常JSL/RTLをS=画像のまま使えないため、row kernel末尾をJML $0007E0とし、IRAM gateが次の行プログラムへ跳ぶ。18byte/行のmacro例は LDA #dy*128+end-1 / CLC / ADC $F8 / TAX / AND #1FFF / ORA #6000 / TCS / JML kernel。Xは元BW bankの行右端、Sは対応するBW mirror。PEAは不透明word、透明を含むwordはLDA負offset,X / AND mask / ORA value / PHA。隙間はTSC/SEC/SBC gap/TCSで飛ばす。gateはLDA $01B4 / CLC / ADC #18 / STA $01B4 / JMP ($01B4)（counter初期0700）。12行×18=216Bで0700..07D7、gate07E0..07ECを避ける。終端はRTLでなくJML block_doneを付け、保存したSへ復帰してPHP/SEIを戻す。rawbank/pageを選ぶ2225への書込みはDB40なので必ずlong bank0で行う。
+
+これにはcompiled_game_packingの行stride11→18、fast helperのcopy/count/cap変更、コンパイルkernel置換、clipped pathの新しいsoft row parserが必要。全normal kernelとstack kernelを二重保持すると8MiBを超えるため、stackのPEA/BD..PHA/skipを読んで端のwordだけ合成するfallbackを作り、leftHints/smallEdgeJit/rightClipJitは新試作で無効にする案。高速経路は画面内のspriteだけに制限して行がBW pageを跨がないようにする。現時点のROM/LBL使用テストは全て終了。goalはactive、60fps未達。敵弾OBJ質問は未回答のため未変更、ユーザーMesen PID70064を操作しない。
+
 ## 可変長VRAMの実装と実測（2026-10-10 23:40頃、af1a97b）
 
 可変長VRAM FIFO、WRAMへの配置表退避、定数時間の割当、記述子コピーの省略、配置表と区間生成の統合を実装し、af1a97bをpush済み。六件とも800フィールド・168画面一致・実PPU参照確認・固定配置版との描画packet一致。表示枚数は638/638/641/642/639/642、表示待ち11/10/7/6/6/8回。開始前の完成保持11枚も6回の待ちが残る。最良の固定配置版647表示・待ち4回を超えず公開版へ未採用。60fps未達・active goal継続。証拠zipは `results/20261010_vram_fifo/evidence.zip`、26,554,307bytes、SHA256 `dea7e58b6bbe3091e65da2a5998f1cf1c644d1cada63006fe68de475475010ea`。
