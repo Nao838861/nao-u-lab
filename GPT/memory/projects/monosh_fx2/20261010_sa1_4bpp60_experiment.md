@@ -1,18 +1,26 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
-## 最新状態（2026-10-10、ff8c0e3）
+## 最新状態（2026-10-10、56d4265）
+
+独立分岐へ `56d4265` をpush済み。**60fps未達、active goal継続。公開ROMはe5e4741のまま。** 敵弾6/7/8/37の透明形状651種類を色と分離して共有コード化した。コードbookは51,018BでC3へ置き、元の起動時PPU画像を23,433Bへ可逆圧縮しC2後半へ移した。素材・縮小寸法・反転を維持。ROMの実命令・99,095行・786,516word・96,659 clipを静的照合。四辺fixtureは120画面一致。
+
+v6は全幅および左だけclipの行をC3から直接実行し、右clipだけI-RAM0500へコードをコピーする。独自07D0のJML gateをJSLで呼ぶ（07F0の既存stubはRTS終端なのでJSLで呼ぶとstack破損する）。期限を2走査線早め281として実際の非表示時間内を検査。道中1900field/1736表示/146画面一致、ボス1900/1709/146。初表示151fieldなので起動90fieldの従来版とは単純な枚数比較をしない。v5 IRAM版は道中1800/1622/145、ボス1800/1615/144。8試験を `results/20261010_bullet_shapes/`、zip SHA `46e94e1d9715f2a3384be8869aaffae6c518e658bec61a582580995e68e1af6c` へ保存。v6 ROM SHA `e9032d62275e024236bde27c21216f9bb229130bf6b2681eba1c6b5e4d232ee4`、snapshot `build/sa1_game/bulletshapes_v6_build/`。
+
+通常のinputPolled入力は起動時間差で最初のjoyreadが変わり、世代1からpacketが違う。比較用scenarioに `detinput` を含めると `_fx_read_input` の復帰時にlogic%240に応じた同じ入力を注入する。v6 deterministic道中1900/1734/146、2field遅れ16回。従来opaque8の同入力試験はfield669/line22で実際の非表示時間外DMAとなり失敗。現在は従来版にも `--dma-guard-lines 2` を加え、1900fieldの `movestress_detinput_bulletopaque8_guard2_tracepalette` を再計測中。ROM/LBLはその完了まで変更しない。
+
+次は未commitの `--fixed-map` を検証する。24KiBのCHR二面をbyte0000/6000に置き、BG1固定mapをBC00へ。表示されるmap BC40..C1FFと、遠景map C200/CA00、草OBJ、自機OBJ C400、地面D000..E8EF/F000..FFFFを重複なく配置する。遠景・草126tileは配置前後で全byte一致。現行方式から毎フレーム1472Bのmap転送とSA-1のmap生成を除けるが、同じVRAM面の二世代前の占有領域も送って消し残しを防ぐ必要がある。現在は実装のみ・ROM未ビルド/未検証。固定mapの転送先は自然tile位置であり `--contiguous-chr-dma` を使えない。ユーザーMesen PID70064を停止しない。
+
+## 過去の中間点（2026-10-10、ff8c0e3）
 
 独立分岐へ `ff8c0e3` をpush済み。**60fps未達、active goal継続。公開ROMはe5e4741のまま。** `10e85ed`で4面CHR＋共有mapの5試験を保存（長道中1688/1800、ボス1676/1800、各146/145画面一致）。従来最良1689を超えず不採用。`ff8c0e3`では描画命令の準備だけのSA-1移行7試験と敵弾合成5試験を保存。ROM実行・内部RAMコード・内部RAMコード＋配列とも長道中1683/1800、最後のボス1669/1800。移行対象はOBJ除外・安定ソート・カラー弾寸法変換・コピー。ゲーム更新・自機OBJは本体に残した。内部RAMの同じアドレスへ後続JITも載るので、ソートcallbackはprepare..finishedの間だけ有効にする。配列版952Bを0300..06B7へ配置。結果は `results/20261010_packet_offload/`、zip SHA `53eedf9655976804a88b6ec796a4a6084f4c01e922c3f70dd3d1b3c24073da30`。
 
 敵弾の透明マスク計算をnibble零検出に変え、65536通りで一致。道中1689/1800。完全不透明8wordの展開コピーを追加すると1690/1800・146画面一致、反転/色/縮小/四辺fixtureも120画面一致。結果 `results/20261010_bullet_mask/`、zip SHA `8cbacab0847c00785f66f0d7d8891f4b3130e17759d8d6d3f0668e57e6bca7e0`。平均・一部の更新だけで60fpsとはしない。
 
-次は未commitの `--bullet-shapes` を実装中。敵弾6/7/8/37の透明形状が651種類、色から分離した共有処理コード約50KBになるため、C3の起動時PPU画像をC2後半へ可逆圧縮し、空いたC3へ形状コードを置く案。形状だけをIRAM0500へコピーし、元の縮小済み色データを読む。現行圧縮行の先頭2Bを不透明bitmapから形状コードoffsetへ変え、bitmapはC3のコードheaderへ保持する。まだビルド中・画像と速度は未検証。ROM/LBLは検証完了まで変更しない。ユーザーMesen PID70064を停止しない。
 
 ## 過去の中間点（2026-10-10、a5a59e2）
 
 独立分岐へ `a5a59e2` をpush済み。**60fps未達、active goal継続。公開ROMはe5e4741のまま。** 低・高byte分離マップの4試験を保存した。`--split-map-dma` は800/704枚/129画面一致、1800/1686枚/146画面一致。`--split-map-mvn`追加は800/704/129、1800/1688/146。既存最良1800/1689枚を上回らず未採用。各VRAM面の旧high=25範囲と新範囲の和を転送し、旧25から24へ戻るタイルも修復する。MVN版はROM番号列からBWへコピーする。原画像・生バッファは維持。証拠は `results/20261010_split_map/`、zip SHA `cc0203ebe4f09554fe44a1889acd43bfc8b660c8339e117d7a7efef8d4134379`。MVN版800のPython検証中にgenerator already executingが出たため、同じ保存データ・ROM・ラベルで全129枚を再照合した。画像一致を確認済み。
 
-現在は未commitの `--vram-four-shared` を実装し、800fieldの `movestress_vramfour_v1_tracepalette` が走行中。ROM/LBLはテストと画素検証が終了するまで変更しない。4×12KBのCHR（byte 0/3000/6000/9000）と共有map C000を使う。各面のtile0は透明、1..351が動的CHR。遠景64tileを8C00..8FFFとBC00..BFFFへ移し、BG2 CHR base=8000。近景/地面/playerは従来配置。CHR記述子の最後に付いていたmap記述子を本体collect時に転送対象から外し、表示切替時に生BW+6040からmap736wordをC040へ送る。完成queueは3枚、flip費用へmap1472B相当の余裕2000単位を追加。元の4面案（各面map2800とCHR末尾の飛び地）は採用していない。新ファイルは `tools/sa1_vram_four.py` と `game/sa1/v001/vram_four_cpu.s`、builder/testerも未commit変更中。まだ速度・正しさ未判定。
 
 ## 過去の中間点（2026-10-10、5b96551）
 
