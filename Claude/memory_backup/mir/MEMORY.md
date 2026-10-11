@@ -2,4 +2,4 @@
 - [shioji 提案待ちバックログ](shioji-elena-galge-backlog.md) — トリガー5段階（バッチ消化/サイクル完成/流通/完成後/夢物語）で Mir から再提案する約束。正本は repo の PROPOSAL_BACKLOG.md (2026-07-24)
 - [説明は一度言うことではない](principle-explanation-is-not-telling.md) — Nao_u の根源原則: 人は見ないし忘れる。プレイしながら理解できる状態でないといけない (2026-07-25)
 - [指示の希釈防止](feedback-instruction-dilution.md) — 設計文書・指示書は簡潔な要約で書かない。原文・検討過程・棄却案・具体例をインラインで全量書く。発行前に「実装者が却下案を再発明しないか」自問 (Nao_u恒久指示 2026-07-25、2026-08-10再発で強化。ゲームはgame_lessons_log R-Jが正本)
-- [MonoSH音符の出どころは非公開](monosh-audio-note-source-undisclosed.md) — 公開採譜MIDI使用の事実を動画・ブログ等の外向けに絶対書かない。耳コピ等の虚偽で埋めるのも不可 (Nao_u指示 2026-10-11)
+- [MonoSH音符の出どころは非公開](monosh-audio-note-source-undisclosed.md) — 外向け（動画・ブログ・Slack）で音符の入手元に触れない。虚偽で埋めるのも不可 (Nao_u指示 2026-10-11)
