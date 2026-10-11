@@ -54,7 +54,7 @@ const Strips: React.FC<{phase: number; p: number}> = ({phase, p}) => {
 export const C08: React.FC = () => {
   const f = useCurrentFrame();
   const q = (i: number) => cueOf('C08', i);
-  const half = useIn(q(1));
+  const half = useIn(q(0) + 20);
   const strips = useIn(q(2));
   const phase = Math.floor(Math.max(0, f - q(2)) / 45) % 2;
   const lanes = useIn(q(3));
@@ -151,7 +151,7 @@ export const C09: React.FC = () => {
 export const C10: React.FC = () => {
   const f = useCurrentFrame();
   const q = (i: number) => cueOf('C10', i);
-  const table = useIn(q(1));
+  const table = useIn(q(0) + 20);
   const no = useIn(q(2));
   const bars = interpolate(f, [q(3) + 20, q(3) + 120], [0, 1], {...clamp, easing: Easing.out(Easing.cubic)});
   const rows = [

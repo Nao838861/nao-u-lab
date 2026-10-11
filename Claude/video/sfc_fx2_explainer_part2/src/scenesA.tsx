@@ -74,7 +74,7 @@ export const C01: React.FC = () => {
     {clip: 'color', label: '2bpp ＋ パレット', sub: '60fps', color: C.green},
     {clip: 'fourbpp', label: '4bpp 16色', sub: '30fps', color: C.amber},
   ];
-  const endTitle = useIn(q(1) + 160, 24);
+  const endTitle = useIn(q(1) + 70, 24);
   return (
     <AbsoluteFill style={{background: '#000'}}>
       <div style={{position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 30 * split}}>
@@ -94,11 +94,11 @@ export const C01: React.FC = () => {
       <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(0,0,0,.7) 0%, rgba(0,0,0,0) 35%)', opacity: titleO}} />
       <div style={{position: 'absolute', top: 120, width: '100%', textAlign: 'center', opacity: titleO}}>
         <div style={{fontSize: 34, fontWeight: 700, color: C.cyan, letterSpacing: 6}}>SUPER FAMICOM × SUPER FX2　第2回</div>
-        <div style={{fontSize: 88, fontWeight: 900, color: '#fff', textShadow: '0 6px 30px rgba(0,0,0,.8)', marginTop: 10}}>捨てた色と、無かった音</div>
+        <div style={{fontSize: 88, fontWeight: 900, color: '#fff', textShadow: '0 6px 30px rgba(0,0,0,.8)', marginTop: 10}}>捨てた色を、取り戻す</div>
       </div>
       <div style={{position: 'absolute', top: 90, width: '100%', textAlign: 'center', opacity: endTitle}}>
         <div style={{display: 'inline-block', background: 'rgba(5,8,18,.85)', padding: '18px 40px', borderRadius: 16, fontSize: 52, fontWeight: 900}}>
-          <span style={{color: C.green}}>色</span>をどう取り戻したか　／　<span style={{color: C.cyan}}>音</span>をどう付けたか
+          <span style={{color: C.green}}>色</span>をどう取り戻したか　—　三つの道
         </div>
       </div>
     </AbsoluteFill>
@@ -286,32 +286,12 @@ export const C05: React.FC = () => {
 };
 
 // ───────────────────────── C06 60fpsへ戻す
-const MiniGrid: React.FC<{x: number; y: number; label: string; seed: number; diff?: number; color: string}> = ({x, y, label, seed, diff = 0, color}) => {
-  const cells: React.ReactNode[] = [];
-  for (let r = 0; r < 12; r++) for (let c = 0; c < 16; c++) {
-    const v = Math.sin(r * 12.9898 + c * 78.233 + seed) * 43758.5453;
-    const k = v - Math.floor(v);
-    const changed = diff > 0 && ((r * 16 + c) % 37 === 5 || (r >= 4 && r <= 6 && c >= 5 && c <= 9));
-    cells.push(<div key={r * 16 + c} style={{position: 'absolute', left: c * 30, top: r * 30, width: 27, height: 27, borderRadius: 4, background: changed ? `rgba(255,181,71,${diff})` : k > 0.72 ? '#2c4a7a' : '#16213d'}} />);
-  }
-  return (
-    <div style={{position: 'absolute', left: x, top: y}}>
-      <div style={{fontSize: 28, fontWeight: 800, color, marginBottom: 10}}>{label}</div>
-      <div style={{position: 'relative', width: 480, height: 360}}>{cells}</div>
-    </div>
-  );
-};
 export const C06: React.FC = () => {
   const f = useCurrentFrame();
   const q = (i: number) => cueOf('C06', i);
   const move = interpolate(f, [q(0) + 60, q(0) + 150], [0, 1], {...clamp, easing: Easing.inOut(Easing.cubic)});
   const ph1 = interpolate(f, [q(2) - 20, q(2)], [1, 0], clamp);
-  const ph2 = interpolate(f, [q(2) - 10, q(2) + 10, q(3) - 10, q(3) + 10], [0, 1, 1, 0], clamp);
-  const diff = interpolate(f, [q(2) + 120, q(2) + 160], [0, 1], clamp);
-  const runs = interpolate(f, [q(2) + 220, q(2) + 260], [0, 1], clamp);
-  const ph3 = interpolate(f, [q(3), q(3) + 20, q(4) - 10, q(4) + 10], [0, 1, 1, 0], clamp);
-  const flip = interpolate(f, [q(3) + 200, q(3) + 230], [0, 1], clamp);
-  const ph4 = useIn(q(4));
+  const ph4 = useIn(q(2));
   const cx = interpolate(move, [0, 1], [190, 1290]);
   return (
     <Bg>
@@ -322,35 +302,11 @@ export const C06: React.FC = () => {
         <div style={{position: 'absolute', left: cx, top: 420, width: 330, padding: '14px 0', borderRadius: 14, border: `3px solid ${C.cyan}`, background: C.panel2, textAlign: 'center', fontSize: 32, fontWeight: 900, color: C.cyan, boxShadow: `0 0 30px ${C.cyan}66`}}>タイルの色を決める</div>
         <Arrow x1={585} y1={300} x2={1170} y2={300} color={C.amber} p={1} label="描画リスト" />
         <Fade at={q(1)} style={{position: 'absolute', left: 80, top: 600, width: 1700, display: 'flex', gap: 40, alignItems: 'center'}}>
-          <Box x={0} y={0} w={500} h={170} color={C.green} title="CPU" sub="出来上がった色の表を送るだけ" fs={30} />
+          <Box x={0} y={0} w={500} h={170} color={C.green} title="CPU" sub="色の表の、変わった所だけ送る" fs={30} />
           <div style={{position: 'absolute', left: 560, top: 50, fontSize: 34, fontWeight: 800}}>
             描くついでに色も決める → <span style={{color: C.green}}>CPUの負担が消える</span>
           </div>
         </Fade>
-      </div>
-      <div style={{opacity: ph2}}>
-        <MiniGrid x={120} y={190} label="前のコマの色の表" seed={1} color={C.sub} />
-        <MiniGrid x={700} y={190} label="今のコマの色の表" seed={1} diff={diff} color={C.amber} />
-        <div style={{position: 'absolute', left: 1280, top: 200, width: 560, opacity: runs}}>
-          <div style={{fontSize: 30, fontWeight: 800, marginBottom: 14}}>変わった所だけを送る</div>
-          {[0, 1, 2, 3, 4].map((i) => <div key={i} style={{height: 34, marginBottom: 10, width: [380, 160, 260, 90, 200][i], borderRadius: 8, background: C.amber}} />)}
-          <div style={{fontSize: 34, fontWeight: 900, color: C.amber, marginTop: 10}}>最大12区間にまとめる</div>
-          <div style={{fontSize: 26, color: C.sub, marginTop: 6}}>表全体は768バイト。毎回全部は送らない</div>
-        </div>
-      </div>
-      <div style={{opacity: ph3}}>
-        {[0, 1].map((i) => {
-          const shown = flip > 0.5 ? 1 - i : i;
-          return (
-            <div key={i} style={{position: 'absolute', left: 260 + i * 720, top: 230, width: 560, height: 380, borderRadius: 18, border: `4px solid ${shown === 0 ? C.green : C.line}`, background: C.panel, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-              <div style={{fontSize: 42, fontWeight: 900}}>色の表 {i === 0 ? '表' : '裏'}</div>
-              <div style={{fontSize: 30, color: shown === 0 ? C.green : C.amber, marginTop: 14, fontWeight: 800}}>{shown === 0 ? '表示中' : '先に送っておく'}</div>
-            </div>
-          );
-        })}
-        <div style={{position: 'absolute', left: 0, right: 0, top: 680, textAlign: 'center', fontSize: 36, fontWeight: 800}}>
-          絵が届いた瞬間に <span style={{color: C.green}}>表と裏を切り替える</span>
-        </div>
       </div>
       <div style={{position: 'absolute', inset: 0, opacity: ph4}}>
         <div style={{position: 'absolute', left: 100, top: 170}}>
