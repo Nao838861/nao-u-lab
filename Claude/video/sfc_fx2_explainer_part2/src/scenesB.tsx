@@ -41,7 +41,7 @@ const Strips: React.FC<{phase: number; p: number}> = ({phase, p}) => {
   return (
     <div style={{position: 'relative', width: W0, height: H0, opacity: p}}>
       {[0, 1, 2, 3].map((i) => {
-        const mine = phase === 0 ? i < 2 : i >= 2;
+        const mine = i % 2 === phase;
         return (
           <div key={i} style={{position: 'absolute', left: i * (W0 / 4), top: 0, width: W0 / 4 - 6, height: H0, borderRadius: 8, background: mine ? `${C.amber}55` : '#16213d', border: `3px solid ${mine ? C.amber : C.line}`, display: 'flex', alignItems: 'flex-end', justifyContent: 'center', paddingBottom: 16, boxSizing: 'border-box'}}>
             <div style={{fontSize: 26, fontWeight: 800, color: mine ? C.amber : C.sub}}>64ドット</div>
@@ -71,7 +71,7 @@ export const C08: React.FC = () => {
       </div>
       <div style={{position: 'absolute', left: 100, top: 160, opacity: strips}}>
         <Strips phase={phase} p={1} />
-        <div style={{fontSize: 32, fontWeight: 800, marginTop: 18}}>{phase === 0 ? '1フィールド目：左の2本を描いて送る' : '2フィールド目：右の2本を描いて送る'}</div>
+        <div style={{fontSize: 32, fontWeight: 800, marginTop: 18}}>{phase === 0 ? '1フィールド目：1本目と3本目を描いて送る' : '2フィールド目：2本目と4本目を描いて送る'}</div>
       </div>
       <div style={{position: 'absolute', left: 820, top: 160, opacity: strips, display: 'flex', gap: 30}}>
         {['A', 'B'].map((n, i) => {
@@ -283,14 +283,18 @@ export const C12: React.FC = () => {
         <div style={{fontSize: 24, color: C.sub, marginTop: 6}}>SA-1版（開発中のROM）</div>
       </div>
       <IntervalStrip clip="sa1" at={q(0) + 30} x={90} y={830} w={880} label="この録画の表示間隔（4秒分）　緑＝1/60秒　橙＝2/60秒　赤＝3/60秒" color={C.sub} />
-      <div style={{position: 'absolute', left: 1030, top: 170, width: 820, opacity: tries}}>
+      <Fade at={q(0) + 150} style={{position: 'absolute', left: 1030, top: 170, width: 820}}>
+        <div style={{fontSize: 28, fontWeight: 800}}>重い場面の転送量　<span style={{color: C.red}}>最大 約10.6KB</span>　<span style={{color: C.sub, fontSize: 24}}>（平均 約4.7KB）</span></div>
+        <div style={{fontSize: 24, color: C.sub, marginTop: 6}}>1回のすき間で送れる量の限界に近い</div>
+      </Fade>
+      <div style={{position: 'absolute', left: 1030, top: 290, width: 820, opacity: tries}}>
         <div style={{fontSize: 32, fontWeight: 900, marginBottom: 16}}>試したこと（一部）</div>
         {items.map(([t, good], i) => {
           const p = interpolate(f, [q(1) + i * 25, q(1) + i * 25 + 14], [0, 1], clamp);
           return <div key={t} style={{fontSize: 27, fontWeight: 700, marginBottom: 12, opacity: p, color: good ? C.text : C.sub}}><span style={{color: good ? C.green : C.red, fontWeight: 900}}>{good ? '✔' : '✕'}</span> {t}</div>;
         })}
       </div>
-      <div style={{position: 'absolute', left: 1030, top: 640, width: 820, opacity: Math.min(1, qm * 1.3), transform: `scale(${0.8 + 0.2 * qm})`, transformOrigin: 'left center'}}>
+      <div style={{position: 'absolute', left: 1030, top: 680, width: 820, opacity: Math.min(1, qm * 1.3), transform: `scale(${0.8 + 0.2 * qm})`, transformOrigin: 'left center'}}>
         <div style={{fontSize: 44, fontWeight: 900, color: C.violet}}>16色 × 60fps は</div>
         <div style={{fontSize: 64, fontWeight: 900}}>まだ挑戦中</div>
       </div>
