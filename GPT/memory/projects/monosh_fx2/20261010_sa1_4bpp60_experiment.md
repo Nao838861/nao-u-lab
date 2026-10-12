@@ -466,3 +466,21 @@ a0bb3b3を独立SA-1分岐へcommit・push済み。60fpsは未達、goalはactiv
 次の有力な具体候補は右端爆発の寸法拡張。道中の残る待ち区間（v5 field695..725）には素材41の幅76/82/85/88があり、現在のmin91では高速化対象外。幅88・中心234・bottom209は4.863839ms、幅85は4.030121ms。まず既に指定可能な `--reverse-explosions-min-width 88` を逆順v5条件で試す。native payloadEnd=0x7DF0D5、0x7E0000まで3,883B、0x7E0000..7EB000は使用不可。右端別表は21,988B、DF7080..8000/DF9200..C000/7EB000..7F0000へ置き、末尾は6,147B使用・約14KB残る。min85以下ではselectorが現在の0xA0B枠を越え得る（min91は12項目、8B/項目）。allocator開始を後ろへ移す等の拡張が必要。nativeコードは元の行を置換するため、全追加分を二重保持と見積もらない。
 
 WRAM投影版でもDF0000..6FDEには非zeroデータ8,130Bが残る。以前の記録に「空いたROM28,638B」とあるが、この領域を実装の検査なしに空きとして再利用しない。直接planar、8位相cache、FastROM全移動等の棄却済み実験を繰り返さない。
+
+## 右端の寸法拡張と容量圧縮（2026-10-13、d9179a4）
+
+d9179a4e55fabecad0262806c1c5cabee8fa8df7を独立SA-1分岐へpush済み。60fps未達でgoalはactive、公開ROMは変更しない。結果はresults/20261013_reverse_widths/README.mdとcomparison.json、6証拠zip合計79,708,216bytes。全11試験に末尾停止なし。現在自分の試験プロセスは全て終了。
+
+幅88の8byte行情報版は道中800field/656logic/645表示/168実PPU画素一致・2field間隔4回で従来v5と同じ。右hintを8項目checkpoint＋2bit差分（減少0/1/2/4）へ圧縮すると7,973→4,130B、全行情報27,143→23,300Bになるが、644表示・5回へ悪化。幅88の6byte行情報版は22,399Bで境界fixture348画面一致・最大8.843395ms、道中は未計測。6byteはcode low16/hint low16/control16（origin/2、extent/2、最大16種code bank、hint DF/FE bank）で全範囲・偶数・bank制約をassertする。
+
+幅85の6byte版は26,243B、645表示・4回・最大22.766392msで全体改善なし。幅82の6byte＋hint圧縮版は24,028B（hint9,236→4,826）、644表示・5回・最大22.772725ms。新flag --reverse-full-row-fastで全体が見える行の解読を省くと境界fixture9.918206→9.700860ms、道中は同じ。幅79は右行情報領域不足でビルド失敗、native/left payloadEnd=8,313,425。失敗途中のROMを試験しない。全1,492寸法/native90,854行/弾158,688行を元ROM照合し、幅82は2,430kernel/88,204右端境界、左6,326kernel/190,929ケース一致。
+
+stackfixturemin_*を追加。各348実PPU画面を照合し、表示metaから素材40/41×全対象高さ×横13位置×上端7位置の全組合せを検査する。幅88は高さ68/69、幅85は66/67で各364ケース、幅82は高さ64で182ケース。起動時の素材38/42は組合せ集計から除く。短いfixtureの表示成功をゲーム全体60fps扱いしない。
+
+現在buildは幅82 v2、ROM SHA c7d2601f121be6640d93c80e1c8ddf20621f3d6beb7171160b2d5123854936b4。幅79の失敗後にv2を再ビルドし、snapshotのSHAと一致を確認した。snapshotはfiforeverse88_v1_build/v2/v3、fiforeverse85_v1_build、fiforeverse82_v1_build/v2。コマンドは今回results/commands.json。炎flagは全てOFF。
+
+ホストのPython 3.10がsilent exit1した原因についてWindows Application Errorでpython310.dllの0xC0000005（03:04:19/02:34:26）とpython.exe不明module（03:09:22）を確認した。計測専用MesenCore.dllにも02:34:53の同種記録。ユーザーMesen PID36580は操作しない。bundled Python 3.12.14（C:/Users/owner/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe、NumPy2.3.5/Pillow12.3.0）へ検証を切り替え、静的/実行照合が完走した。根本原因や完全解決は未確定。
+
+Git commit時にも新しいreverse88_v1_evidence.zipのloose blob 005875237bc63eee9b48c36f339e00293309a2baでzlib incorrect data checkが発生した。common gitはD:/AI/Nao_u_BOT/GPT/projects/monosh_fx2/.cache/github_export/.git。元zipのSHA256とblob header込みSHA1を照合し、壊れた内部コピーをbuild/sa1_game/git_corrupt_<sha>.zlib.brokenへ退避後、readonly属性を一時解除して同一内容をzlibで復旧、属性を戻した。push成功。6つ全ての証拠zipについて、保存SHA256およびcommit内blobの全byteが元ファイルと一致することも確認した。原因は断定しない。
+
+次は右行情報を3byte程度のhint pointerだけにし、code pointer/originを既存native行から参照して重複をなくす方式を検討する。8→6byteの算術decodeも圧縮hintも実行費用があるため、容量だけで採用しない。幅79/76の全画像を維持しつつ対象を広げ、同じ道中/ボスで表示間隔を測る。DIRTY-IRAM単純追加、直接planar、PEA stack、SCPU FastROM全移動など既存棄却を繰り返さない。
