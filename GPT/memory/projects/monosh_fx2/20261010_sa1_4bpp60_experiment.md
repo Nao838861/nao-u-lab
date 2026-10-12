@@ -674,3 +674,27 @@ global dirty範囲をold raw画像の左右中央へ写して消去する。最�
 道中のnativeBytes/左clip/右clipはN64=5981064/404/0、N128=6137718/15/2、N192=5964063/7/374（基準5248257/239/365）。重い41世代はN64=1334739B/84/0、N128=1123641/8/0、N192=1385319/4/63。非対称案では重い場面の命令量も端helperも増える。ボス全体はN64=39629280/1788/0、N128=48584001/0/198、N192=42678396/0/2332（基準35953050/267/222）。重複は減っても新境界のclipが大幅増。対称二面の既測退行を改善する確証がないので、64/192版の実装はまだ行っていない。
 
 次の別構造の調査候補（未検証の推測）：現行のSA-1 jobはnew dirty計算→old raw消去→近景→sprite→転送準備を直列に行う。old raw消去は本来、そのrawの旧occupancyだけあれば着手できる。S-CPUがnew dirty/mask/occupancyを並行計算し、SA-1が旧rawの消去・描画を先行する形へ依存関係をほどけないか。過去--cpu-dirtyは全体退行しており、同じ試験を繰り返す前にresults/20261013_cpu_dirty等の実際の入口をrgで探して、serialized待ちと新案の違い、SCPU実測cost、BW/ROM bus競合、両CPUのqueue所有権を読むこと。dirty3msを単に遅いSCPUへ移すだけでは改善しない。new dirtyが不要な描画開始・old history消去と、new transfer metadataが必要になる時点の依存関係を図にして可否を確かめる。最大draw15ms+clear約3msのburstが残るので、planner並行化だけで達成するとはまだ言わない。
+
+## 2026-10-13 消去端の探索は不採用、座標変換短縮に小さな改善
+
+実装branchへ`cb2d99e`をcommit/pushし、clean/upstream一致。results/20261013_mask_bounds/README.md・comparison.json・commands.jsonが入口。通常buildは基準a9bcd247へ戻し、130表示/120画面照合、279fields/137logic、最大7.241609msのsmoke合格。公開ROM9934d77bはそのまま。60fpsは未達でgoalをcomplete/paused/blockedにしない。ユーザーのMesen PID36580へ触れていない。
+
+前節のCPU並行planner案を調べた結果、過去版は既にSA-1前frameとS-CPU次packetのdirty計算を並行実行していた。実入口はresults/20261011_cpu_dirty。全移管ではSCPU dirty最大12.259937ms＋logic最大10.973740ms、576表示/70二field待ち＋一回三field待ちへ退行。small版602表示/46待ち、shapes-only634表示/14待ち。単純な並行移管を未試験案として繰り返さない。
+
+`--mask-bounds`を追加。物体ごとの帯左右端更新を省き、完成した432800の24×32bitタイル集合からI-RAM0120/0122の新消去端を一度だけ求めてoccupancyへ渡す。byte探索表512BとGSU helper。`--mask-bounds-wide-table`はbyte位置ごとの加算も表へ畳み込み2048Bにする。DP E0/E2（初版はE4/E6も）を一時使用、直後のoccupancyはそれらを初期化する。元版は空矩形により空帯0..0/128..0が混在し、非空帯でも余分に広い端を持つ。基準版traceのjob122/band19と330/band3で「常に厳密な外接範囲」というverifier仮定を棄却。元版は集合包含、新版は厳密一致で判定し、実画像全byte一致で消し残しを確認した。初版表拡張は出力ループが256項目のままでjob3に失敗。1024項目へ修正してwide_v2を最初から再実行し、失敗Lua/メッセージも証拠へ保存した。
+
+新`tracebounds`計測は各jobのgen2B＋集合96B＋新消去端96Bを保存、LuaとPythonの独立bit探索で検査。全描画完了jobの24576Bバッファも保存して比較。道中800fieldの全6方式で168画面の元絵/FB/VRAM/PPU/RGB照合が通り、基準との共通652～653世代はpacket・タイル集合・全バッファがbyte一致。表探索方式で消去範囲が減ったのは12帯だけ。範囲計算の費用の方が高かったため不採用。
+
+別の`--dirty-tile-round`は元の範囲計算を維持し、dirty4箇所＋row_dirty2箇所のLSR×3/ASL×2をAND #FFF8/LSRへ短縮。16bit Aの全65536値で結果が同じ、Cはどちらも0、N/Z/Vも同じ。道中全653世代で元の新消去端も完全一致。素材や転送範囲を変えない小さな改善としてopt-inで保持する。
+
+道中800field結果（表示枚数/二field間隔回数/最大SA1ms）: 基準647/4/22.002049、表探索646/5/24.153347、表拡張646/5/22.108860、表拡張＋近景packed647/4/22.883726、座標短縮647/4/21.850168、座標短縮＋近景packed647/4/21.789173。重い41世代の平均dirty/clear/draw/bg/totalは基準3.046567/2.734632/9.707632/0.788555/16.277386ms、座標短縮単独3.000763/2.736524/9.718337/0.786349/16.241973、組合せ2.956205/2.659678/9.661603/0.307372/15.584858。表探索＋近景の改善は近景によるもので探索の採用根拠にしない。
+
+組合せ版の新1900fieldボス試験は1747表示、間隔1=1741/2=3、最大18.603014ms、最大output20.163455ms、147画面合格。前の基準1743表示/二field8回、近景単独1746/4回より少し改善。基準との全共通packet1748世代一致。ボスは1752描画完了バッファを保存、1753dirty範囲を検証（最後のjobは描画完了前に計測終了）。基準ボスには全世代FB traceがないので、全ボス世代を直接FB比較したという主張はしない。独立PPU照合は147画面。
+
+全1492寸法/native90854行/弾158688行を旧ROM94c0c2e1へ照合し、dirty5992縦位相表を元alphaから再計算した。組合せROM SHA6fdf2ba35fff0904fdc6f7f8dc7c67bf6586b1fe523d51241518018f09226d7e、snapshot build/sa1_game/maskbounds_roundpacked_build。wide合格f6eb2f85、初版mask bcad3084、packed mask fe726ee2、round単独2691a9a9。通常buildと混同しない。evidence.zip45,162,325B、SHA8a95f73f9eed025bb953c9c8162ca95ad2c14e0fb4926c5f7352e575a22c04bb。6ROM＋今回6道中/1ボス＋過去2ボスの全9シナリオ、labels/map/全buffer/metadata/PPU/VRAM/RGB/Lua/logを格納。tools/report_sa1_mask_bounds.pyで再集計。default復元smokeはzip作成後でローカルのみ。全Mesen/host検証のterminal exit0を回収済み。
+
+次のボトルネック: 組合せ道中job549はdirty3.622155＋clear5.509638＋bg0.301435＋draw12.355945＝21.789173ms。job557 draw14.694790。job429の右端爆発41（94×74、centerx265、bottom203）だけで6.206934ms。40/41の右端爆発とold raw消去を優先する。元素材/物量/クロック/縮小寸法の削減で達成扱いしない。
+
+次の未実装候補: 現行large_edge_cacheは既に全native描画の前後で、隣接行のはみ出し部分だけをI-RAM0300..06FFへ退避・復元している。edge_prepareはshape全体bbox C0/C2を使って全行共通幅C4、最大22行のchunk限界DAを決める。PPU変換中011E!=0（または幅<9）ではedge_cpu_game.sが既にMVNでコピーするので「MVNに変える」は新案でない。07EC..07EFがMVN/RTLの一時worker。次は既存の8行帯alpha表で、実際にはみ出さない帯を省き、退避幅を帯ごとに小さくできるか、まず実packetからコピー量と追加解読費を算定する。位相/左右flip/odd nibble/上下端/キャッシュ所有権とchunk境界を維持し、最初は40/41の非反転経路だけに限定してfallbackを残す案。CPU copyだけでなくDMA側も同じwidth履歴で復元する必要がある。過去reverse/right-prefix/I-RAM右窓の再実行にはしない。
+
+512px一面をCC1で直接変換すれば中央コピーを消せるという思いつきには注意。ローカル.cache/Mesen2/Core/SNES/Coprocessors/SA1/Sa1.cpp:325はCharConvWidth=min((value&1C)>>2,5)、ReadCharConvertType1はtilesPerLine=1<<CharConvWidth、4bpp bytesPerLine=tilesPerLine*4。現行MesenのCC1は最大256px stride128Bで、stride256Bの512px rawをそのまま読み出せると仮定できない。未測定の512直接案を完成扱いせず、過去512paddedの平均4.7ms中央コピー退行と区別する。
