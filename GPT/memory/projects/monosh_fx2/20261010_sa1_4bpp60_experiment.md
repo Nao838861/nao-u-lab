@@ -1,6 +1,18 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
-## 現在の継続地点（2026-10-11、3ac5852）
+## 現在の継続地点（2026-10-13、da1936a）
+
+独立SA-1分岐へda1936aをcommit/push済み。60fps未達・goal active。公開ROMはSHA9934d77b…を維持。新しいstack描画は幅94の爆発40/41、高さ73/74、横位置偶奇に対応する。追加30,712B、330共有record。DF8000..DF91FFは既存近景が使用中なので空き扱いしない。実際に使うのはDF7020..DF7FFF、DF9200..DFBFFF、FEC400..FEFFFF。helperは03E400、return gateはIRAM0700。最大8行/8KiB境界ごとにstackを元へ戻してIRQ応答の機会を作り、PPU DMA中もnative描画は続ける。
+
+道中800fieldのv1/v2/v3/修正後v4/圧縮併用は全て655logic/644表示・168実PPU画面一致・2field間隔5回、最大SA-1は23.577/24.754/22.158/22.169/22.673ms。比較元BW配置表645表示/4回と公開固定表647表示/4回を超えないので公開しない。対象外の幅91/88の右端爆発が最重処理として残る。次は圧縮で空いた領域へ幅91を追加する。
+
+長い境界fixtureで共有処理のバグを発見した。旧v2/v3は172画面一致後に停止し、不合格へ訂正。stackを外した旧BW配置表ROMでも再現。edge_cached_game.sのtop+sourceFirstで出たcarryをrowCountへ持ち越し、1行余計に退避。幅28・chunk16で本来504Bが532Bとなって0300..04FFを越え、0500の小幅edge JITを零で上書きした。rowCount加算前のCLCで修正。v4の500fieldは347表示全一致・停止0、圧縮併用も同じ347全一致。test_sa1_game.pyにstackfixtureと停止/高さ循環不足のassertを追加。元native行とstack行は330kernel・11,696右端byte境界一致。
+
+`--left-hints-compressed` は8境界ごとの基準値と0/1/2/4の2bit差分＋256B LUT。4,998kernel・77,751境界をnative命令由来の開始位置へ全照合し、50,079→25,514B、24,565B削減。payloadEndは7EC39F→7DB3A7（bank予約域の丸め回避も含む）。左端fixture320fieldは170表示/120保存画面一致、停止0。既存hintは全て保持。追加候補領域はalign(7DB3A7)..7E0000および7EB000..7EC400で、配置前の全零検査が必要。7E0000..7EB000は予約のまま。
+
+証拠 `results/20261013_stack_explosions/`、ZIP50,398,965B、SHA aac36a2b2cf385fa7b11bc8acf6f5b71e1c9faf986a4a5832aee4eac27e82b0f。現行buildROMは圧縮併用版、build/sa1_game/fifostackexpcompressed_v1_buildにsnapshot、v4はfifostackexp_v4_build。各比較の元ROM/LBL/MAPは証拠ZIPにも固定。v1..v3はCLC修正前の履歴測定、現行sourceで同じコマンドを実行しても同SHAにはならない。通常ゲームの60fpsは未達。限定fixtureでgoal60fpsAchieved=trueでも全体達成扱い禁止。テスト処理は完了しており実行中なし。ユーザーMesenの現在PIDは36580（D:\HomeBrew\Mesen\Mesen.exe）、触らない。
+
+## 以前の継続地点（2026-10-11、3ac5852）
 
 実装側6de7d38（CPU範囲計算三方式）、3ac5852（8行stack試験＋追加容量）をpush済み・clean。60fps未達・goal active。公開ROMはSHA9934d77b…のまま。CPU分担は不採用、次はstack描画のゲーム統合を検討する。実行中のテストはない。ユーザーMesen PID70064は触らない。
 
