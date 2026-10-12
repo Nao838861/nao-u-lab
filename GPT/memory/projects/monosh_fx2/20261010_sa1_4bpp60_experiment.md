@@ -452,3 +452,17 @@ SA-1独立分岐へ4593806をcommit・push済み。**60fpsは未達で、active 
 現在buildはv5、SHA `7124eab2f29ffca6904f68d1c7ee705933dd0b341bbb0082db9366468fc4a7fb`。snapshot `build/sa1_game/fiforeverseexp_v1_build`〜`v5_build`、コマンドは今回results/commands.json。道中v5成功scenarioは `movestress_detinput_captureburst_reverseexp_v5_retry2_tracepalette`。性能測定の途中でROM/LBLを書き換えない。ユーザーのMesen PID36580（D:\HomeBrew\Mesen\Mesen.exe）は操作しない。現在自分のMesen試験は全て終了。
 
 残る表示落ち時は完成画像の待ち行列が空でSA-1が描画中。単なる切替設定やFIFO追加で解決したとは扱わない。描画/消去の負荷集中をさらに削減する。直接planar方式は既に `results/20261010_planar_probe/` で容量・速度・128KiB code cacheまで棄却済み（全8位相native約28MB、楽観的code cache miss多数）。S-CPU全体のFastROM移動も過去に悪化しているので繰り返さない。
+
+## 追加の長時間ボス比較（2026-10-13、a0bb3b3）
+
+a0bb3b3を独立SA-1分岐へcommit・push済み。60fpsは未達、goalはactiveを維持する。現在自分の試験プロセスは全て終了、worktreeはclean。公開ROMは変更しない。
+
+逆順native v5をボス1,900fieldへ延長すると1705logic/1702表示、146画面一致、2field間隔45回、最大SA-1 19.229351ms。公開固定map版の1748/1742・147一致・2field間隔8回より悪い。最大SA-1時間だけで判断しない。新flag `--left-flame-hints` は素材31の幅64/66を全3色phase×横2位相でleft-inline対象へ追加するが、1698表示・2field間隔47回/3field間隔1回と悪化した。投影表をWRAMへ戻しても同じ表示間隔。旗は比較用のopt-in、採用しない。炎の単体でも中心14/6等で遅くなる。追加の左端静的検証6,546kernel/196,569ケース/108,103hint境界は正しい。
+
+炎専用fixture `leftfixtureflame_flameinline_v1_complete_tracepalette` は450field/300表示全画素一致。表示metaから幅64高さ63・幅66高さ65×phase0/1/2×中心7位置×bottom3位置の全126ケースを確認。最初の汎用500画面fixtureは一部phase組み合わせが抜けるため全位相の証拠にしない。専用テストで位相とbottom周期を独立化した。証拠 `results/20261013_flame_inline/evidence.zip` は26,833,627bytes、SHA `ebebbf0d639b53ae504a2596cce25a075124368d9325a9b96e386ed2f76dbb31`。
+
+現在buildはflameinline v2（WRAM投影）、SHA `46f9654f372fd695443b4daa041ab4062a055bdcbe23cacdebca7f3118f1faa4`。snapshot `fifoflameinline_v1_build`（ROM投影）/`fifoflameinline_v2_build`（WRAM投影）、各コマンドは追加results/commands.json。これを次の基準にしない。炎flagを外した逆順v5か既存配布版へ戻して比較する。
+
+次の有力な具体候補は右端爆発の寸法拡張。道中の残る待ち区間（v5 field695..725）には素材41の幅76/82/85/88があり、現在のmin91では高速化対象外。幅88・中心234・bottom209は4.863839ms、幅85は4.030121ms。まず既に指定可能な `--reverse-explosions-min-width 88` を逆順v5条件で試す。native payloadEnd=0x7DF0D5、0x7E0000まで3,883B、0x7E0000..7EB000は使用不可。右端別表は21,988B、DF7080..8000/DF9200..C000/7EB000..7F0000へ置き、末尾は6,147B使用・約14KB残る。min85以下ではselectorが現在の0xA0B枠を越え得る（min91は12項目、8B/項目）。allocator開始を後ろへ移す等の拡張が必要。nativeコードは元の行を置換するため、全追加分を二重保持と見積もらない。
+
+WRAM投影版でもDF0000..6FDEには非zeroデータ8,130Bが残る。以前の記録に「空いたROM28,638B」とあるが、この領域を実装の検査なしに空きとして再利用しない。直接planar、8位相cache、FastROM全移動等の棄却済み実験を繰り返さない。
