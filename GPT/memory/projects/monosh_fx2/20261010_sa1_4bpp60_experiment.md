@@ -522,3 +522,29 @@ flag OFF再ビルドが従来v5のSHA7124eab2f29ffca6904f68d1c7ee705933dd0b341bb
 analyze_sa1_opaque_rects.pyで行全体に限定すると、隠れる4,705word（3.72%）。手前の爆発39/40/41の最大不透明矩形だけで奥の行を省く場合は71word（0.056%）しかない。矩形内部の全画素不透明もassert。矩形/行全体だけの遮蔽実装を有望扱いしない。JSONと解析入力41画面も証拠へ保存した。
 
 次は手前の大きな爆発の「各行の最長不透明span」で、奥の4画素wordを何個安全に省けるか上限を測る候補。矩形whole-rowでは効果が乏しいので、word単位と区別する。元のcompiled kernelを実行途中で止めるにはROM自体を書き換えず、IRAMへのrowコピーとRTL/JML patch等の費用が増える。opacity maskを元コードから毎回デコードするだけでは描画を二度読む費用が大きいので、少量の事前span表と分割実行の容量・時間を測ってから採用を決める。direct planar辞書は既に描画20.514ms、全planeコードは28MB超で棄却済み、full-frame tile cacheも95%新規tileなので単純に繰り返さない。
+
+## 不透明span・native分割の実SA-1比較（2026-10-13、953a6a2）
+
+953a6a2を独立SA-1分岐へcommit・push済み。60fps未達でgoalはactive。これは計測と方式選択のprogressで、ゲームへ新機能を統合してはいない。worktreeはclean、自分の試験プロセスは全て終了。ユーザーのMesen PID36580を操作しない。ゲームbuildは逆順v5 SHA7124eab2f29ffca6904f68d1c7ee705933dd0b341bbb0082db9366468fc4a7fb、公開ROMはSHA9934d77b85913187be8d3ebd8315f854718eb24b08492204ce8b3288f620146cのまま。Python3.12で全検証を実行した。
+
+結果はresults/20261013_opaque_spans/。証拠zip3,567,061B、SHA646eee00067d47e69a4b7be9114fe9d73d73653a8411f7bb59554bf7d47b5970。元のpacket/FB82ファイル、基準ゲームROM、専用probe ROM/labels/全596FB/実行ログを収録した。tools/report_sa1_opaque_spans.pyとcommands.jsonで再現・集計する。
+
+tools/analyze_sa1_opaque_spans.pyで前の連続41画面を解析した。手前の爆発39/40/41幅64以上の各行で最長の完全不透明区間を1つ取り、奥の4画素word全体が含まれる場合だけ省く。合併13,840word、単一の手前spriteで13,686word（全126,381wordの10.83%）。2区間でも13,847wordで上積み小。矩形bboxの重なり面積最大を選ぶ方法でも、この標本では最良の選択と同じ削減量。省いたwordを元の順序で再合成して最終全sprite画素一致を確認。既存左右helperの対象に該当する省略は0、右min76へ広げても603word。画面内の素材40等が中心で、端のhelper拡張だけを実装しても効果が乏しい。
+
+行全体省略は1,269word・118行・29連続区間（約1%）。現在のnative順で先頭に連続して隠れるwordに限っても13,465wordあり、spriteごとに左右どちらの向きを選ぶ上限と同数。この数はA依存・hint解読・chain更新の費用を除く。
+
+tools/analyze_sa1_opaque_capacity.pyで全front対象76寸法のspan表はraw9,558B、行RLE10,527B。爆発39/40/41の幅49..79・5,665kernelのprefix境界はraw46,452B、圧縮24,675B、初期A込み232,218B。selector/pointer費用は別。tools/verify_sa1_native_fragments.pyは実ROMの8,096行・5,665kernel・77,421境界を入力FBに依存しないsymbolic表現で検証（任意prefix/suffix組合せ597,916区間に相当）。繰り返しSTAから再開する13,663境界とcross-word入力依存なしも検査した。
+
+実SA-1の計測用game/sa1/v001/renderer_fragment_probe.s（389BのI-RAM worker）とtools/probe_sa1_native_fragments.pyを追加。build/sa1_fragment_probeへ別ROMを作り、108通りの2爆発と元の41 packetを各4方式で描く。最終ROM SHAfdace89548d4f22316261028933c6860a7538c190ca478ead6ca81b18b019dc7。全596FBが元画像の独立合成と一致。これは背景・CPU物理・音・変換・PPU転送を含まない描画microprobeであり、実PPU596画面一致や60fpsゲームの証拠ではない。viewport clipping・遮蔽候補選択・表形成はホストで事前計算した楽観的条件。
+
+隠れない連続行をnative chainへまとめた最終比較では、道中41packetの描画時間合計がbaseline174.955553ms、prefix-DMA196.159736ms（+12.12%）、prefix-MVN196.438542ms（+12.28%）。2爆発108例も234.832338→261.085020/266.681821msへ悪化し、いずれも速いケース0。途中のprefixコピー＋suffix直接呼出方式は採用しない。
+
+コピーなしの事前生成oracleでは、隠れる先頭命令だけを飛ばす。最初の残存命令がSTAなら直前のLDA即値またはLDA abs,X（BD）まで戻り、余分な隠れたwordも描くことで外部からAを初期化しない。内部だけ隠れる行はfallback、全隠蔽行はcall自体を除去する。全描画をnative chainへ事前生成しているため、形成・patch費用は未測定。道中で12,535wordを実際に省き、25画面が速く16画面同じ。時間合計160.786994msで約8.10%短縮、最良約19.85%。2爆発108例は165.846109msで約29.38%短縮。ゲーム全体で8%速い、60fps達成とはしない。
+
+初回microprobeにはDMA clear起動レジスタの順序誤りがありFB不一致。次の一時版は計測開始callbackが行loop先頭と重なり最後の1行だけを測っていた。コメンタリの「全ケースで遅い」はこの時点では根拠不適切と訂正した。開始点をNOPでloopから分離し、各jobで開始callbackが1回だけとassertする。未groupの遅いdescriptor版をbaselineに残すと小さい改善が見えるが、これも最終判断へ使わない。最終596画面とnative chain基準の結果だけを上記の根拠にした。除外ログはevidence/excludedへ分けた。
+
+次の具体候補は、コピーせず元nativeの安全なLDA/BD位置から再開する実ゲーム実装。既存11B行chainのJSL pointerだけをI-RAMの0700..07EFでpatchできれば、毎行9B descriptorを解釈する今回の遅い方式を避けられる。suffixがSTAの場合は直前loadまで戻すhintを作り、A初期化の追加命令を不要にする。全行が隠れる時のchain除去やprefix-table検索には実費があるので、oracleの8.1%をそのまま改善見込みにしない。
+
+容量の案（まだ未実装）: 全front span raw9,558BはFF lookupの未使用末尾（used55,081B、残10,455B）へ入れる候補。assets39..41×幅64..128の65段×2B selector=390B、各widthのheight/pointer16列を小さくすれば収まる可能性があるが、実alloc/assertが必要。後方の安全再開hintはまず削減が大きい素材40・幅49..79のみに絞り、他寸法は従来へfallback。全1,492寸法・素材・色・物量は保持する。現行native/left末尾7DF0D5、7E0000まで3,883B、7E0000..7EB000は予約、右別表末尾後は約14KB。全3素材の境界表＋pointerを無条件に追加すると不足する。圧縮hintのdeltaが0/1/2/4以外になる場合のfallbackも既存compress実装を読む。
+
+新helperを0300..06FFへ置く案も未実装。現workerは0300未満、小さいJIT0500とbullet worker0300へ重なるため、両横端に収まる対象だけを処理し、helperコピー時に019C bullet residentを明示無効化する必要がある。decline時にrendererのc0/c2 opaque boundsを壊さない。dirty計画・PPU契約は変えない。道中800/ボス1900で実PPU画素・共通logic packet・表示間隔を測り、成功後は長時間へ進める。
