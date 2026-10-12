@@ -637,4 +637,34 @@ tools/analyze_sa1_split_viewport.pyで現行基準道中packet_trace653件を解
 
 次turnは実SA1描画の費用を測る段階。案1: test_sa1_game.pyへsplitfixture専用のpacket replayを追加し、保存済み530..570の41packetを「元256px」「左面+64」「右面-64」の123jobで順に繰り返す。元のfull描画と左右合計drawMsを比較し、全fixtureのVRAM/PPU/絵と中央再合成を検証する。元packetのdepth/painter順・phase・flipを維持し、sourceから選択した物体だけを各面へ送る。ホストでspriteを実描画するのではなく、fx_packetへ座標/寸法を渡して既存SA1rendererに描かせる。既存logic_finished fixture注入部が入口（test_sa1_game.py658以降）。最初通常ゲームframeはcoverageから除くが画素照合する。こうしたfixtureではゲーム時計は元通りでもpacketが試験内容に置き換わるので、summary.goal60fpsAchievedをゲーム達成証拠に使わない。IRQ/転送競合やCPU物量がjob間で異なるため、単独測定を最終性能とせず傾向を見る。
 
-必要なら次に専用renderer replay ROMで純描画を測り、統合へ進む。統合では二面のnative f8 offset/rawbankは0400/8400、元dirty tile x<16はCC1source band*1024+256+x*32、x>=16は+8000+band*1024+256+(x-16)*32へ写像できる。source base0400の同bankなのでbank切替なし。元の可視転送byte数は増やさないが、descriptor分割・三面キュー・消去loopの費用は増え得る。まだ未実装で、成功や60fpsを先取りしない。
+必要なら次に専用renderer replay ROMで純描画を測り、統合へ進む。統合では二面のnative f8 offset/rawbankは0400/8400、元dirty tile x<16はCC1source band*1024+256+x*32、x>=16は+8000+band*1024+256+(x-16)*32へ写像できる。source base0400の同bankなのでbank切替なし。元の可視転送byte数は増やさないが、descriptor分割・三面キュー・消去loopの費用は増え得る。この項の時点では未実装。続く項で実測と統合の結果を記録する。
+
+## 左右再生・二面統合・近景packedコピーの実測（2026-10-13、0b4a31f/7b0fcb6）
+
+独立SA-1 branch experiment/sa1-4bpp-60fps-20261010へ0b4a31f（再生）と7b0fcb6（ゲーム統合比較）をcommit・push済み。60fps未達、goalはactiveのまま。公開ROM SHA9934d77bは変更していない。最後に通常buildへ戻し、ROM SHAが現行一面基準a9bcd2478e39f479b641ededc38d77abe4e693d2b958d1bd7b4f7ab20af603f7へ完全一致することを確認した。正常道中130表示/120全画素照合の最終smokeも終了コード0（279field/137logic、最大7.241609ms）。起動play_sa1.cmdの配布ROMは既存のまま。ユーザーのMesenを操作しない。全自前Mesen試験・report processは終了済み、未回収handleはない。
+
+再生はtools/sa1_split_fixture.py + test_sa1_game.pyの--split-fixture-source。実packet530..570の41画面を一面・左+64・右-64の123job周期でSA-1へ渡す。500PPU/VRAM/RGB全画素照合、165組の左右sprite再合成一致、全41画面・499packetの全byte対応が通過。平均draw9.933918→左右計6.837607ms（約31.17%短縮、136/165組で高速）。ただしdirty2.956178→3.927190、clear0.977020→2.984176、bg0.712409→1.484172、total14.579524→15.233144（4.48%増）。通常一面ROMを使う部分画面fixtureなのでゲーム統合・二面同時所有権の試験ではない。近景stripは元位置へ描き、左右再合成はsprite alpha内だけを比較する。各表示のstripを含む全画像は通常PPU検査で照合。fixture.goal60fpsAchievedは強制false。
+
+初回fixtureは最初の通常packetが注入hookより先に取得される位相差を無視してhost verify失敗。後続の全packet列から一意な位相1を決定するよう修正してMesenを再実行。v2は全検査とterminal終了コード0。証拠drawing_replay_evidence.zip11225934B、SHA c821d50da594575338295daced011ef2979e2fa270e94f41fe00ab18df87c666。再生500presentsは712fields/507logic、間隔1=435/2=62。これを全ゲームfpsとして使わない。
+
+ゲーム二面統合はtools/sa1_split_viewports.py、game/sa1/v001/split_clear_game.s、build_sa1_game.pyの--split-viewports。三raw画像＝bank40/41/42各0400・8400。metadata pipeline_depth8は維持、rawbusy回転だけ14→6、prefill_count3。全体dirty計算は一回、occupancy raw履歴7→3、VRAM二世代前の履歴は維持。元packet順に左可視0..127に掛かる物体を+64で一回、右128..255に掛かる物体を-64でもう一回描く。draw_startのhookが二回走らないよう初回のみに置き直した。draw後019A/10を0400へ戻してtransfer/prefixを作る。01B0..01B9はpass/消去/旧近景の一時状態で、既存参照に重複がないことをrgで確認。未対応flag組合せはassert。
+
+global dirty範囲をold raw画像の左右中央へ写して消去する。最初は先行消去なし、次に三組用idle-clearを追加した。idleは転送完了したbankだけ、左右の必要面を消し終えてから履歴を空にする。元の消去helperの32B以上を1KiB wideにする候補も実測したが、余白まで転送する費用が勝ち退行。--split-wide-clear-min32で現在の候補を作れる（default128でhalf最大64Bなのでwide不使用）。否定試験の途中でhelperへ分岐を追加しているため、初期noidle/idle ROMの正本はsnapshotのROM SHAとtrace。全候補を現在のsourceからbyte同一に再buildしたと主張しない。
+
+転送maskのrunは最大256B（8tile単位）なので、512B half/band境界を跨ぐmergeだけを止めればdescriptorが半面に収まる。最大48枠は従来通り。超えたときは各half内の隙間を広く送るfallbackを繰り返す。sourceは元band+globaltileから左0500+band*1024+tilex*32、右8500+band*1024+(tilex-16)*32へ写す。CC1 base0400のまま、中央CPUコピーなし。全output jobで個数<=48、各sourceのhalf内位置100..300、元global座標とVRAM destination、sum bytes==0118をLua assert。recordの208..495内に収まる。prefix表6A00は192B以下。実PPU/VRAM/RGBと原画の全画素照合も通す。
+
+道中800fieldは、基準647表示/2field待ち4/最大22.002049ms。二面noidle645/7/20.486214、二面idle646/6/19.571201、wide32=644/8/20.794540、二面packed近景647/5/19.094790。一面packed近景647/4/21.831450。全6方式168画面一致。最大SA-1だけ短くなっても全体表示は改善しない。重い41世代の二面packed平均はdraw7.531129/dirty2.996940/clear3.724563/bg0.357297/total14.609929ms。基準は9.707632/3.046567/2.734632/0.788555/16.277386。出力準備やIRQ/PPU競合は別費用（最大output21.742612ms）。
+
+1900fieldボスは基準1743表示、間隔0=1/1=1731/2=8、最大18.954549ms、147画面一致。二面packedは1612表示、間隔1=1471/2=137/3=1、最大23.344771ms、144画面一致で大幅退行。中央128pxの境界を跨ぐボス・弾を両面に描くため。対称二面の固定128px境界は不採用。全sceneの共通packetはbyte一致（split boss1613世代、road各647～650世代）。三raw化で先行消去の機会・描き溜めも減り、最大drawだけで判断してはいけない。
+
+近景だけの新候補は--split-near-packed/--near-packed。元background4.binの512×9pixelを偶数・奇数位相ごとにpacked化し、横wrap用に各行を二回連結する9216BをFE0000へ置く。旧近景compiled code用45KiB内の置換で、他sprite code/hintに重ねない。build時、全512scroll×9行×左右9216区間について、透明0も含めて元pixelと一致することを検査。sprite前にstripを置くので0も直接書ける。0700..0703にMVN/RTLの一時workerを作り、destination bankを0102から設定。各copyでPHB/PLBしDBRを戻す。spriteの0700一時codeとは時間を分け、07F0の呼出opcodeを変えない。SA-1がROM→BWを実コピーし、ホスト描画はしない。二面bg約1.28→0.36ms、一面bg約0.79→0.31msへ短縮。
+
+一面--near-packedは従来の七raw画像を維持し、near_patch_game.sのpainting部分だけを変える。ROM SHA3fb3e2e93f0a6b7332e23068f0cfcb5580c7ec9ea25c3a178b65fdf0ae7d9645。ボス1746表示、間隔1=1739/2=4、最大18.662054ms、147画面一致。output最大20.222494ms（基準20.641728）。道中の待ち4回はそのまま。微改善の独立opt-in候補として残し、公開ROMへはまだ採用していない。全9scenarioとも共通世代までpacket全byte一致し、素材・全縮小pattern・順序・時計を維持した。
+
+二面初回buildはBOOTが2B不足し、消去helperをGSUへ移して解決。最初の130表示smokeはverifierが0102の上位byteをmaskせずbank値assertで停止した。bank&255へ修正してMesen再実行し130表示/120画面合格。その後の800/1900試験は全てexit0。失敗logを削除せず保存した。summary.jsonができただけで終了と扱わず、必ずexec terminalを回収した。
+
+新結果入口results/20261013_split_viewport/README.md・integrated_comparison.json・integrated_commands.json。integrated_evidence.zip39838107B、SHA0350d67810ff0fd34635bbb46c295626f75da4685b941c5f1d48cc488e8dc8f7。6ROM・全9scenario・Lua/PPU/VRAM/RGB/FB/metadata/packet/timing/labels/logを収録。tools/report_sa1_split_integrated.pyで再集計できる。build snapshots: flame_currentbase_build、split_integrated_noidle_build、split_integrated_idle_v1_build、split_integrated_wide32_v1_build、split_integrated_packed_v1_build、near_packed_v1_build。全てbuild/sa1_game以下。再生reportはtools/report_sa1_split_replay.py。Pythonは必ずbundled3.12を使う。
+
+次の構造候補は未実装。固定±64pxの描画biasを維持したまま、可視域の分割境界だけ64pxまたは192pxへずらすと、ボス中央128pxを二回描く費用を避けられるかもしれない。ただしN64は右canvasの左端(global64)で新たなclipを生み、N192は左canvasの右端(global192)で新たなclipを生む。重い爆発を境界に掛けると旧helperが戻り、かえって遅くなる可能性が高いので、まず全道中・ボスpacketのopaque bounds/nativeBytes/clip countsをtools/analyze_sa1_split_viewport.pyの計算を拡張して比較する。nativeBytesは速度ではない。二面のbiasは変えず、CC1 sourceはleft=origGlobalTileByte+0500、right=origGlobalTileByte+8300で境界に依存しない形にできる（band分は元global offsetに含む）。N64/128/192は8tile mask byte境界なのでrun自体を追加splitせずmerge条件の変更で対応可能。ただし消去・idle・近景の切れ目とverifierも変更が必要。分割位置をフレームごとに動かす案は旧paddingの絵が新可視域へ出る危険があり、rawごとの履歴や両面のpadding消去を別途設計するまで実装しない。
+
+一面packedの最大爆発の端費用は依然主要なボトルネック。以前のreverse/右prefix/MVN/native records/IRAM右窓・草木direct hintsを新案として繰り返さない。二面の単独描画31%短縮も全体fps達成に流用しない。近景短縮は確認できたが全体60fpsはまだ未達で、goalをcomplete/paused/blockedへ変更しない。
