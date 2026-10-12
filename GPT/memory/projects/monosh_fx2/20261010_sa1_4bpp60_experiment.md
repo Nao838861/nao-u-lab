@@ -616,3 +616,25 @@ verify_sa1_left_hints.pyにindexed初期値対応とsymbolic検証を追加。49
 証拠results/20261013_direct_left/。evidence.zip36649593B、SHAfc6235cbd10bbcd617036b64f49892890a285885282902dd3b54d289f8a975a5。tools/report_sa1_direct_left.pyが全5scenarioと2ROM、Lua/VRAM/PPU/RGB/FB/packet/直接行ログ/静的結果を収録。commands.jsonは前項flame_directのbaseline＋--direct-left-hints。実行はbundled Python3.12。
 
 次の焦点として基準hotspotを再確認。最悪field706はSA1total22.002049=draw15.037943+dirty3.269317+clear2.952517+bg0.742273ms。右端で切れる爆発41幅94高さ74中心265/bottom203が単体7.117012ms、40幅94中心267が6.854781ms。objectJobsは0.5ms超だけの記録で全物体合計ではない。既にreverse91～76、native3Brecords、可視prefixコピー、IRAM右窓を試して全画面では退行。過去の右端試験入口results/20261011_right_clip/README.md、20261013_reverse_native、reverse_widths、native_records。単体の改善を全画面改善と混同しない。dirty-IRAMも過去に試し遅延が増えて不採用（20261010_map_probe）。同じ案を新案として繰り返さず、まだ測っていない構造上の費用を探す。
+
+## 左右二面の容量算定と、コピー不要のCC1実転送（2026-10-13、ceac64c/47ca1a8）
+
+ceac64c（算定）と47ca1a8（独立転送ROM）を独立SA-1分岐へcommit・push済み。60fpsは未達、goalはactive。game本体は現行基準a9bcd247、公開9934d77bのまま。新probeは別のbuild/sa1_split_cc1で、gameのbuild ROM/LBLを変更しない。自分のMesenは全終了、ユーザーのMesenは操作しない。
+
+新候補は「512px幅へ描いて中央をコピーする旧padded-pipeline」の再試行ではない。通常256px幅のbitmapを二面用意し、それぞれ中央128pxだけを可視域とする。余白は左右64px。左はglobal x0..127の物体をx+64、右は128..255の物体をx-64で描き、各面のpacked byte32..95を連結する。全素材・寸法・色・painter順は維持する。中央を跨ぐ物体は二回描く。最大幅128程度の爆発は画面の左右端で切れていても余白内に収まりやすい。一番左へさらに外れた物体は従来の端helperが必要。
+
+Mesenのcached source .cache/Mesen2（commit b9fa69ddc6d0a331fb103fdb5eef6904305703c2）のSa1.cpp:325でCharConvWidthはmin(value>>2&7,5)、最大256px。512pxのままCC1を読む新案はこのエミュレーターでは使えない。一次ソースURLはresults/20261013_split_viewport/README.mdへ記載。実機の未定義値を測ったとは言わない。PDF manualはweb fetchが13MB上限で失敗し、コードを根拠にしている。
+
+tools/analyze_sa1_split_viewport.pyで現行基準道中packet_trace653件を解析。元6264物体→二面6965、native命令byte＋11B行macroは5248257→6137718（1.169477倍）。端は左239/右365→左15/右2（604→17）。重い530..570の41packetではnative1062117→1123641（約5.79%増）、左43/右57→左8/右0。全41packetのホスト参照絵を二面から連結し、原画の元256px絵へ全画素一致。速度測定ではなく命令量算定。圧縮弾6/7/8/37はこの入力に0件。dispatch/clear/dirty/転送/キュー費は含めず、速いとはまだ言わない。analysis.jsonに全653件、originalとsplitを保存。
+
+1画像は2×192×128=49152B、三画像147456B。既存deep-BWの40/41/42各bankの0400/8400を一画像の二面として使えば、native stride128を変えずデータ生成も再利用できる候補。raw七画像→三画像となるため描き溜め減少の退行を測る必要あり。元のdirtyをglobal256pxのまま計算し、消去・転送sourceだけ左右へ写像する案。中央を跨ぐrunはsplitしdescriptorが増える。wide-clearが余白を余分に消さないよう、消去量/設定費も要検証。表示中央128pxの境界はword整列している。余白は表示しないが、generic左/右端保護が動く遠方offscreenケースは残す。
+
+コピーを省ける転送条件は実DMAで確認済み。新game/sa1/v001/split_cc1_probe.sとtools/probe_sa1_split_cc1.pyは小さいSA1 workerとSCPU DMAループを持つ独立8MiB ROM。ホストが二面bitmapを生成しBW40/41/42へ置くので「SA1描画したprobe」ではない。SA1 workerが2230=B1、2231=15、SDA=bank:0400、DDA=07C0でCC1を開始する。SCPUが各band中央16tileずつ、左source0500+band1024/右source8500+band1024からPPU DMAし、source baseを変更せずvirtual +8000の右面を正しく変換できた。SNES VRAMの実24576Bを期待planar絵へ照合した。
+
+41ゲーム画像＋全16色・各行/tile/左右が異なるpatternの42jobが全画素一致。bank40/41/42を全て通り、prefix metadata用6A00/EA00のguard128Bも変更なし。ROM SHA6c23de6bd25d8ac19479fb7d2598934379a370db370624f2c8395f33b8374669。48descriptor/24576Bの全画面転送は10.115903～10.117765ms。常時forced blankなのでVBLANK内に収まった証拠ではない。ゲームでは引き続きdirty転送が必要。初回ROM header名が1B長いlink失敗は修正し、失敗ログもarchiveへ入れた。失敗版の性能値なし。
+
+証拠results/20261013_split_viewport/cc1_transfer_evidence.zip402378B、SHA87e7c66d09a4539404f25ea94129e13a035d45971a9fef92b73f2b810165dee6。ROM/LBL/cfg/map/Lua/入力二面/期待と実VRAM/timings/logを収録。cc1_transfer.jsonはhost入力・描画未測定・game未統合・forcedblank・visibleRasterTimingVerified=falseを明記。probeは単独python tools/probe_sa1_split_cc1.pyで再現。
+
+次turnは実SA1描画の費用を測る段階。案1: test_sa1_game.pyへsplitfixture専用のpacket replayを追加し、保存済み530..570の41packetを「元256px」「左面+64」「右面-64」の123jobで順に繰り返す。元のfull描画と左右合計drawMsを比較し、全fixtureのVRAM/PPU/絵と中央再合成を検証する。元packetのdepth/painter順・phase・flipを維持し、sourceから選択した物体だけを各面へ送る。ホストでspriteを実描画するのではなく、fx_packetへ座標/寸法を渡して既存SA1rendererに描かせる。既存logic_finished fixture注入部が入口（test_sa1_game.py658以降）。最初通常ゲームframeはcoverageから除くが画素照合する。こうしたfixtureではゲーム時計は元通りでもpacketが試験内容に置き換わるので、summary.goal60fpsAchievedをゲーム達成証拠に使わない。IRQ/転送競合やCPU物量がjob間で異なるため、単独測定を最終性能とせず傾向を見る。
+
+必要なら次に専用renderer replay ROMで純描画を測り、統合へ進む。統合では二面のnative f8 offset/rawbankは0400/8400、元dirty tile x<16はCC1source band*1024+256+x*32、x>=16は+8000+band*1024+256+(x-16)*32へ写像できる。source base0400の同bankなのでbank切替なし。元の可視転送byte数は増やさないが、descriptor分割・三面キュー・消去loopの費用は増え得る。まだ未実装で、成功や60fpsを先取りしない。
