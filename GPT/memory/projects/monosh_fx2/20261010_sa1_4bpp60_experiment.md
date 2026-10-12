@@ -440,3 +440,15 @@ SA-1で差分矩形をタイルに丸めて描画する。512px幅の余白バ�
 SA-1独立分岐へ4593806をcommit・push済み。**60fpsは未達で、active goalは継続。** 公開ROMはPPU位置を検証済みの5570ab4版を維持する。新しい比較13件を `results/20261010_transfer_trials/` へ保存した。証拠zip SHA `58df646d65b935588ee54a4bedc81c43bd1df8a4db97d4ea06c84cae565bdacc`、52,031,727bytes。全件800フィールド・168画面一致・実PPU参照位置確認。固定配置＋SA-1転送費用累積表＋部分転送は644表示から647表示へ改善（2フィールド間隔7回→4回）。比較コマンドはcommands.jsonに保存。起動準備を含む表示枚数を800で割ってfpsとはしない。
 
 独立VRAM四面（335tile）は642表示、共有map四面は645表示、WRAM一面変換631表示、二面変換629表示、SA-1描画フェーズだけ変換628表示、右端JIT627表示。dirty-IRAMと広幅消去の閾値32は644表示。固定配置の累積表でsmall reserve1600/player2700/prefetch300、gap64結合、退避JIT64バイト幅までの拡張はいずれも647表示で速度改善なし。失敗したfourOwned_v1（Luaホスト時間切れ）とdoubleStage_v1（IRQのWRAMバンク固定による画素不一致）は除外し、修正・再試行版を比較した。次は共有map四面＋累積表＋部分転送の800fieldテスト `movestress_detinput_captureburst_fourtable_v1_tracepalette` が進行中。Python画素照合終了までビルドROM/LBLを変えない。ユーザーのMesen PID70064を操作しない。
+
+## 最新状況（2026-10-13、47f8ee8）
+
+独立SA-1分岐の47f8ee8をcommit・push済み。60fps維持は未達、active goalは継続する。公開ROMはSHA `9934d77b85913187be8d3ebd8315f854718eb24b08492204ce8b3288f620146c` を維持。今回の逆順native行・左右clip hintの5試作と境界テストは `game/sa1/v001/results/20261013_reverse_native/` に保存。証拠zipは92,928,655bytes、SHA `99a5572d63dea030846f63cc2fbb3b0c37d206db5d486bb347dbe94640f35de5`。
+
+右端からはみ出す爆発40/41の幅91以上を右wordから生成し、不可視命令を飛ばす。全1,492寸法を維持し、単体の幅91・中心255の爆発は約5.462ms→2.784ms。別表v1は800field/644表示・2field間隔5回。右端ポインタを行headerへ埋めたv2と左端爆発39へhashを追加したv3は643表示・6回で悪化。左端の草木0/2/3/5（幅64以上）と爆発39（幅79以上）もheader直接ポインタにしたv4、および右端別表＋左端headerのv5は645表示・4回。既存BW map方式と表示枚数は同じで、最良更新とはしない。左端の幅79・中心25の爆発はv3の6.519264ms→v4の4.515378ms。v4最大SA-1は22.783620ms、v5は22.778591ms。
+
+静的に全寸法/native行90,854回/弾158,688回の元ROM一致、逆順1,557kernel/右端59,519境界、左端6,326kernel/190,929ケースの一致を確認。左端104,953hint境界を75,687→37,761bytesへ圧縮し、v4/v5は49,152bytesのhash表を廃止。検証は実ROMの全対象寸法からheaderをたどり、補助列挙JSONだけに依存しない。実PPUを含む道中各168画面、境界はv1右548/v3左500/v4左500・右548/v5右548画面で一致・末尾停止なし。v5の最初のホスト実行はPython Fraction例外、次はMesenプロセス終了で完走せず比較から除外。同一ROMの再実行で800field/168一致が完走した。原因をROMまたはホストに断定しない。
+
+現在buildはv5、SHA `7124eab2f29ffca6904f68d1c7ee705933dd0b341bbb0082db9366468fc4a7fb`。snapshot `build/sa1_game/fiforeverseexp_v1_build`〜`v5_build`、コマンドは今回results/commands.json。道中v5成功scenarioは `movestress_detinput_captureburst_reverseexp_v5_retry2_tracepalette`。性能測定の途中でROM/LBLを書き換えない。ユーザーのMesen PID36580（D:\HomeBrew\Mesen\Mesen.exe）は操作しない。現在自分のMesen試験は全て終了。
+
+残る表示落ち時は完成画像の待ち行列が空でSA-1が描画中。単なる切替設定やFIFO追加で解決したとは扱わない。描画/消去の負荷集中をさらに削減する。直接planar方式は既に `results/20261010_planar_probe/` で容量・速度・128KiB code cacheまで棄却済み（全8位相native約28MB、楽観的code cache miss多数）。S-CPU全体のFastROM移動も過去に悪化しているので繰り返さない。
