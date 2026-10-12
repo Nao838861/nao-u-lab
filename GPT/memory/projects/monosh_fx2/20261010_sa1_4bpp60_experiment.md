@@ -698,3 +698,25 @@ global dirty範囲をold raw画像の左右中央へ写して消去する。最�
 次の未実装候補: 現行large_edge_cacheは既に全native描画の前後で、隣接行のはみ出し部分だけをI-RAM0300..06FFへ退避・復元している。edge_prepareはshape全体bbox C0/C2を使って全行共通幅C4、最大22行のchunk限界DAを決める。PPU変換中011E!=0（または幅<9）ではedge_cpu_game.sが既にMVNでコピーするので「MVNに変える」は新案でない。07EC..07EFがMVN/RTLの一時worker。次は既存の8行帯alpha表で、実際にはみ出さない帯を省き、退避幅を帯ごとに小さくできるか、まず実packetからコピー量と追加解読費を算定する。位相/左右flip/odd nibble/上下端/キャッシュ所有権とchunk境界を維持し、最初は40/41の非反転経路だけに限定してfallbackを残す案。CPU copyだけでなくDMA側も同じwidth履歴で復元する必要がある。過去reverse/right-prefix/I-RAM右窓の再実行にはしない。
 
 512px一面をCC1で直接変換すれば中央コピーを消せるという思いつきには注意。ローカル.cache/Mesen2/Core/SNES/Coprocessors/SA1/Sa1.cpp:325はCharConvWidth=min((value&1C)>>2,5)、ReadCharConvertType1はtilesPerLine=1<<CharConvWidth、4bpp bytesPerLine=tilesPerLine*4。現行MesenのCC1は最大256px stride128Bで、stride256Bの512px rawをそのまま読み出せると仮定できない。未測定の512直接案を完成扱いせず、過去512paddedの平均4.7ms中央コピー退行と区別する。
+
+## 退避DMA切替・遅延JIT・alpha帯・1024B cacheの比較（2026-10-13、0d6323a）
+
+SA-1独立branchへ0d6323aをcommit・push。60fps未達、goal active。公開ROM SHA9934d77bは変更しない。通常buildをa9bcd247へ完全復元し、279field/137logic/130表示・120画面全照合のsmoke終了コード0、最大7.241609ms。全自前Mesen・host検証・report processは終了済み。ユーザーMesen PID36580には触れていない。
+
+tools/sa1_edge_band_guard.pyにsource変換、build_sa1_game.pyにopt-in flagを追加。--trace-edge-cacheは命令列を変えずfastのsave/restore後labelを公開。実測すると従来small-edge-jitは32B以下をDMAが空いていてもCPUコピーしていた。--edge-dma-min 9/13で空きDMAへ回し、--edge-lazy-jitで512Bコードロードを最初のCPUコピーまで遅延。寸法・offset・chunk長は先に確定し、読み込みとbank patch完了前に使わない。幅10/12はCPU、14以上は空きDMAの方が速い傾向。PPU変換中011E!=0は従来CPU経路を維持する。
+
+--edge-band-guardは40/41の非反転・右端・元cache幅<=32・w>=32/h>=24だけ、既存8行alpha帯RLEを走査してchunkごとの右端を求める。01B0をロード済みwidth tag、01B2原幅/01B4active/01B6table/01B8bankに使用。split/clipresident/dirtyIRAM/gameoffloadなど重複組合せをassert拒否。幅0は退避なし、元chunk長・512B上限を保持。帯縮小で77chunkが短くなり、片道110828→105252B。ただし判定費用が勝って退行。v2は非active helper呼出しを省く。game/sa1/v001/edge_band_guard_game.sがhelper。v1 snapshotに旧helper/sourceを保存、同じflagでも現在のsourceでv1がbyte同一になるとは主張しない。
+
+--edge-jit-max12は幅<=12だけ512B cacheとJITを使用。幅>=13はJITを使わず元の1024B cache/DAを維持し、DMA空きならDMA、使用中ならMVNを使う。広いcacheは0500..06FFの旧JITを上書きするが、そこでJITを実行せず次の小さい退避では必ず再ロードする。bandguardとの組合せは未対応として拒否。右爆発41（job429,width94,height74,left218,top109）は基準5chunk/退避復元4.140ms→4chunk/2.591ms。ROM SHA24bac32420842cb352a0c81b9446ac80ab70f54667e3591643eb0b33a04d5c46。snapshot build/sa1_game/edgeguard_large12_build。
+
+道中800fieldの全7方式は647表示、1field間隔640回/2field間隔4回、168画面の原画/FB/VRAM/PPU/RGB照合に合格。共通653世代の全24576B FB・packet・転送集合・消去端が全byte一致。基準は前回roundpacked SHA6fdf2ba3（通常default a9bcではない）。最大SA1/重い41世代の平均draw/平均total(ms): base21.789173/9.661603/15.584858、dma9=21.789173/9.693766/15.617022、lazy9=21.582909/9.579424/15.449196、lazy13=21.582909/9.567116/15.434367、band13v1=21.547522/9.728546/15.649490、band13v2=21.551620/9.679592/15.588872、large12=21.566240/9.542950/15.432164。遅延版では最初のsave区間にJITロード費が移るので、guard区間の合計だけを旧版と比較しない。
+
+band13v1の1900fieldボスは1744表示・最大18.749402ms。基準との共通1749FB/packet、1750mask/消去端一致だが表示退行。large12の1900fieldボスは基準と同じ1747表示、1field1741/2field3、最大18.623222ms、最大output20.183662ms（基準18.603014/20.163455よりわずかに遅い）。147画面照合、共通1752FB/packet・1753mask/消去端の一致に合格。改善候補の一部は速いが全体表示は改善していないのでdefault/公開へ採用しない。
+
+large12のstackfixturewideは450field/307logic/300表示、300枚すべてPPU/VRAM/RGB照合合格。40/41両方、94x73/94x74/91x71、左右13位置/上下7位置を通る。最大cache924B、512B超660chunk。DMA1931/JIT332/MVN85回。JIT実行直前に全512Bとbank patchを毎回assert。道中1584回・ボス2108回でbank40..43、幅2/4/6/8/10/12に合格。fixtureのsummaryはfixturePresentationEveryFieldを別記しgoal60fpsAchieved=falseへ強制する（試験packetへの置換をゲーム達成と誤認しない）。全1492寸法/native90854行/弾158688行、dirty5992縦位相表の独立元画像照合も合格。
+
+初回band harnessはpatternsを定義前に参照しPythonで停止、import位置を直してからMesenを実行。初回large12道中は画素合格したがedge_cacheのmode文字列がJSON引用されていなかった。引用を修正して同一ROMを800field最初から再実行したlarge12_v2を比較に使用。初回Lua/log/summaryは証拠に保存。lazy17はbuildだけで未実測、性能証拠に数えない。
+
+results/20261013_edge_guardにREADME/commands/comparison/default_restore、evidence.zip60,570,284B、SHA ed7c4e481d44eb84b02fc7b6a9ab3334e813779273a26ae62ca8400b566bce73。7候補ROM・全road/boss/fixture・全buffer・labels/map/Lua・VRAM/PPU/RGB・退避/JIT/転送ログ・独立検証結果・small_edge_templates.binを保存。tools/report_sa1_edge_guard.pyで再集計。GitHubは50MB推奨超過の警告だけでpush成功。残件を隠して完了扱いしない。
+
+次に注目する待ち: large12道中の欠落visiblefield692/696/699/702では、IRQ末尾のqueue ready=3/3/3/4、rendering=1、complete=0、flipped=0。キューが空になった描画待ちではない。前後のtransfer総量10～11KB台、fast_dmaの部分転送がfield692に1440B、699に1280B、702に640B残り、翌field表示へ持ち越す。field695 gen546は11744B/count41/cost14826/available0のfast拒否記録もある。次はrenderの平均短縮を繰り返すだけでなく、転送開始・区間・conversion/descriptor所有権・実blank期限のどこで残量が出たかを具体的に計測する。queue/fast/rejectedログはlarge12_v2にある。底/上の表示領域や物量を削って達成扱いしない。全ゲーム/全武器/敗北4000field監査もまだ必要。
