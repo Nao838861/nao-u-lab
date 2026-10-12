@@ -720,3 +720,33 @@ large12のstackfixturewideは450field/307logic/300表示、300枚すべてPPU/VR
 results/20261013_edge_guardにREADME/commands/comparison/default_restore、evidence.zip60,570,284B、SHA ed7c4e481d44eb84b02fc7b6a9ab3334e813779273a26ae62ca8400b566bce73。7候補ROM・全road/boss/fixture・全buffer・labels/map/Lua・VRAM/PPU/RGB・退避/JIT/転送ログ・独立検証結果・small_edge_templates.binを保存。tools/report_sa1_edge_guard.pyで再集計。GitHubは50MB推奨超過の警告だけでpush成功。残件を隠して完了扱いしない。
 
 次に注目する待ち: large12道中の欠落visiblefield692/696/699/702では、IRQ末尾のqueue ready=3/3/3/4、rendering=1、complete=0、flipped=0。キューが空になった描画待ちではない。前後のtransfer総量10～11KB台、fast_dmaの部分転送がfield692に1440B、699に1280B、702に640B残り、翌field表示へ持ち越す。field695 gen546は11744B/count41/cost14826/available0のfast拒否記録もある。次はrenderの平均短縮を繰り返すだけでなく、転送開始・区間・conversion/descriptor所有権・実blank期限のどこで残量が出たかを具体的に計測する。queue/fast/rejectedログはlarge12_v2にある。底/上の表示領域や物量を削って達成扱いしない。全ゲーム/全武器/敗北4000field監査もまだ必要。
+
+## 転送期限の実測・探索展開・計画一本化（2026-10-13、d1887f3）
+
+SA-1 branch `experiment/sa1-4bpp-60fps-20261010`へd1887f3をcommit・push、clean/upstream一致。60fps未達でgoal active。公開ROM9934d77bは変更なし。通常build a9bcd247へ復元、279field/137logic/130表示・120画面照合、最大7.241609ms、terminal終了コード0。自前Mesenとホスト検証/reportは全て終了。ユーザーMesen PID36580には触れていない。
+
+`--trace-transfer-deadline`は命令を変えずlabelをexport。660..720fieldのIRQ/選択/CC設定/予算/探索/全量と部分転送/420B/完了/flipを記録。SCPU C1 codeはROM物理410000+label、GSU01:8000は8000。DMA送信先はPPU state vramAddressから読む（最初のbaseだけwrite-only2116から読んだので当該項目は使わない）。pipe_reserved labelでavailableは保存前、算出値はA。
+
+基準large12 SHA24bac324の世代543はIRQ197、setup198、time_left200、prefixplan201、再time_left202、fastbegin207:366、初420B208:220。部分転送は翌field692の6:1204で止まり1440B残り、pause9:198、次IRQで転送完了215→flip216。転送選択・二度の時刻取得に数行費やしている。描画済みキューは残っていた。
+
+tools/sa1_prefix_unrolled.pyの`--prefix-unrolled-search`は累積費用表の最大48記述子を32/16/8/4/2/1の6段に展開。候補アドレスをpfMid=endで範囲検査、cost<limitの厳密不等号、YをPHY/PLYで復元。探索単体SHA5548f118の800fieldは647表示・4待ち、最大21.312856ms、168画面一致。早くなる箇所はあるが表示待ちは減らない。
+
+tools/sa1_transfer_deadline.pyの`--dma-budget-table`は(deadline−mappedline)*170を512word ROM表へ置換。mappedlineは実0..196→+262、197..202→203/hpoint0、203..511→そのまま。到達する最小mapped203、281−guardを過ぎればFFFF。旧式の締切/切替2200/2300/先行900を維持する。PHX/PLX後にAを再ロードしてN/Zを復元。表末尾のsegment漏れに注意。
+
+`--prefix-one-pass`は全量費用算出→time_left→prefixplan→time_leftの二重処理を、累積表から一度で選択する経路へ置換。途中分割済みbytes/costを差し引いたあと一度time_left、末尾costが収まる場合は6段探索も省略。pfLow==pfHighならpfPartial=0、pfBytesを使って従来の全量完了経路へ進む。部分選択時の余裕384byte相当。`--prefix-full-reserve192`は全量判定だけ余裕192、部分の384とflip/prefetch余裕は維持。既存`--dma-word-start`を組み合わせ、単独の効果とは主張しない。
+
+一本化384 SHA b69e6e4115f5c54c07e117675f8595c9061e2557e45b1022db3c09176cc7e28d、snapshot deadline_onepass_build。道中800/655logic/648表示、間隔1=642/2=3、最大21.456449ms。ボス1900/1754logic/1747表示、間隔1=1741/2=3、最大18.614561ms。道中待ちvisible693/696/700はready3、complete0でVRAM転送持越し。世代543はfast203:794、翌2:168で完了→3:16flipして旧版の待ちを解消したが別世代の待ちが残る。
+
+一本化192 SHA f685de707b32c4390b49cadf2ed51b05da446ed331eaa74421d499d59f4a9c4f、snapshot deadline_full192_build。道中800/655logic/648表示、1=642/2=3、最大21.494164ms。ボス1900/1755logic/1748表示、1=1743/2=2、最大18.615120ms。世代546は41記述子11744B、累積費用14524。384版field695 start12のlimit14444で最後128B(cost190)を除外していた。192版は全量を選び翌field696の8行でflip。ただし他の進行位相が変わり道中待ち総数は同じ。ボス待ちはlarge12の3→2へ一回改善。まだ0ではないので公開/defaultに採用しない。
+
+全road各168画面、boss各147画面の元画像/FB/VRAM/実PPU参照/RGB照合。road共通653世代以上の全24576B FB、packet、転送集合、消去端が一致。bossも前回large12との共通FB/packet等一致。全1492寸法/native90854行/弾158688行を基準94c0c2e1へ照合し、dirty5992縦位相表を元画像alphaから独立照合して合格。
+
+runtimeは各pipe_fast_begin直前にpfTablesを線形走査し、pfDesc/pfBytesが正しいとassert。途中分割済み長は元累積bytesから元descriptor長を復元し、現在のrecord+208の残量を引く。9個の元爆発40/41（94x74、3列×3段）を描く`transferfixture`を追加。描画はSA-1自身、hostはpacket設定のみ。384/192両方500field/150logic/142表示、全142画面一致。384は467選択/168途中再開/最大2848B、192は465/169/2816B、最大27記述子。共通149世代のFB/packet/mask/消去端一致。fixtureは2～3field間隔、末尾2field程度は正常な試験途中で終了したもの。goal60fpsAchieved=falseへ固定し、ゲーム達成に数えない。
+
+tools/verify_sa1_prefix_unrolled.pyは実ROMの65816命令を最小interpreterで59024探索条件、全量判定入口から58148条件（実費用上限内）、Y復元と厳密不等号を検証。予算512line×512hpoint=262144条件を旧式へ照合。384/192両ROMで合格。初回interpreterの物理位置10000誤り、ADC absolute/DEC未実装は修正して全件再実行。unsupported opcodeは無視しない。
+
+不合格: 最初のbudget_tableはGSUへsegmentを切替えたまま末尾でCODEに戻していなかった。include後のwait_blank/blank_table/math4までGSUへ漏れた。SHA d4250fceのall道中/fixtureは画素検査を通ったが、正常表示/性能の証拠から除外。最初の一本化SHA6f5372f6はfield145 line203 value35のHDMA unblankで停止。最後に`.segment "CODE"`を明示し、blank_tableをexportしてCODE<10000をbuildassert、静的検査とテスト起動前も13byte実ROM表を照合する。修正版b69eは同SHA再build確認済み。最初の不合格一本化ROM本体は上書き済みで残っていない（all不合格ROMは保存）。初回onepassのbra172超過もJMPへ修正してから実行。
+
+成果物: results/20261013_transfer_deadlineのREADME/commands/comparison/default_restore、evidence.zip42,304,565B、SHA db5b34fe9fbe9491c8039bb6e8dafbbbb6a85e4ee02e5bec18e791651872d867、CRC合格。4road/2boss/2fixtureのROM/生成source/labels/map/Lua/FB/VRAM/PPU/RGB/転送ログ/静的検査を保存。invalid_*は不合格資料、採用記録と区別。tools/report_sa1_transfer_deadline.pyで集計。通常復元は20261013_flame_direct/commands.json['baseline']をbuildする（mask_bounds_build.py baseでも同じa9bc）。通常smokeはmovestress_detinput_deadline_default_restore_tracepalette。goalはactiveのまま。
+
+次の具体候補: 現行pipe_flipは先頭でpipe_start_blankを待ち、その後にrecord→WRAM1d04..1d16/player4_present/fx4_page/pipe_obj_pointerの準備まで実blank内で行う。これらの状態準備を197～203行へ前倒しし、jsr update_ground_pointers直前だけでblankを待つopt-inを検討する。HWのHDMA送信元がこのmetadata自体を読んでいないこと、IRQがmainを止めていること、PPU/OAM/HDMAポインタの実更新はblank内であることを確認し、実PPU/全画素/待ち回数で測る。未実装・未測定なので改善と主張しない。別候補の3×16KB VRAMキューは元vram_prefetch3にあるが、固定map二面とmap転送費の違いがあり、過去の四面/FIFOをそのまま再実験しない。全ゲーム/全武器/敗北4000field監査はまだ必要。
