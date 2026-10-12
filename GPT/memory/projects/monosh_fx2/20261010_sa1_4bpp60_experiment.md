@@ -1,6 +1,20 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
-## 現在の継続地点（2026-10-13、da1936a）
+## 現在の継続地点（2026-10-13、467520d）
+
+467520dを独立SA-1分岐へcommit/push済み・clean。60fps未達・goal active。公開ROMは変更なし。前段da1936aの境界修正・hint圧縮に続き、`--stack-explosions-wide`（幅91追加）、`--stack-explosions-right-only`（右端で切れる物だけ）、`--stack-explosions-iram`（helperを0300へコピー）を検証した。全1492寸法と元素材を保持。実行中のテストなし。
+
+通常道中800field：wide_v1は654logic/643表示・168実PPU画面一致・2field間隔6回・最大24.074ms、右端限定wide_v2は655/644・168一致・5回・最大23.312ms、内部RAM版iram_v1も655/644・168一致・5回・最大23.312ms。元BW配置表645/4回、公開固定配置647/4回を超えない。幅91 asset41中心x255/bottom201は元5.462→追加3.604→右端限定3.595→IRAM3.519ms。画面内のx182/bottom191は元1.549に対して無条件stack4.454msと悪化するため、右端限定が必要。経過時間はIRQ/共有バスの影響込み。
+
+wideは613共有record/54,752B。圧縮hint後ろ7DB3C0..7DFFFFと7EB000..7EC3FFも使用、7E0000..7EAFFF予約は維持。613kernel/21,315右byte境界が静的一致。右端限定とIRAMの境界fixtureは各700field/559logic/548表示全一致・末尾停止0。wide_v2の初回host画素検査のみPython `generator already executing` で終了し、同じ保存済み548画面を同じ条件で再検査して全一致。検査条件は変更せず、初回/再実行script/logを証拠へ保存。iramは通常runnerで全完了。
+
+IRAM helperは03:E400原本→0300..0509（522B）。worker0200..02D5と05C0転送作業域の間に収まり、リンク後の領域検査を追加。DMA可能時はSA-1 DMA、PPU要求中はMVNを使う。row gateは0700。current buildROMはiram_v1 SHA e97cb62ff475ac84e5fec7bb7807ead27e9fae302a1401253d41ea645fb57e62、snapshot fifostackexpiram_v1_build。wide_v1 SHA d8ea4aec…、wide_v2 SHA17d4b39c…のsnapshotもある。証拠 `results/20261013_stack_wide/` ZIP43,349,969B、SHA ce99f0450d91fdcf1c995644232fe82f87b8c005fb769231d4c926b2865ec695。
+
+**次は逆順STAのnative行を元のcompiled ROMへ統合する案。** `tools/analyze_sa1_reverse_explosions.py` のreverse_rowは右wordからLDA/AND/OR/STAを出し、clip境界の開始命令へ入れる。1104kernel/38,662右byte境界は元nativeと静的一致。単純に追加コピーすると40/41幅94だけ45,465B、幅94/91は81,444Bで空きを超える。二重保持を避けるため、`tools/sa1_game_compiled.py` のrow_entryへ対象asset/widthだけ逆順生成を選ぶflagを足す候補。行内word同士は非重複なので、全行を実行する既存fallbackも同じ画素になる。left-hints対象0/2/3/5は順序を変えず、40/41の対象寸法のみ変える。rowcache keyに逆順flag、compiled cache keyにもflagが必要。元のforward行を保持せず追加分を減らせるかまず容量測定、その後右clip専用helperで元の逆順ROMへ途中接続する（普通のSのままX=raw行、0700にJML行、JSL000700→行RTLで復帰、偶数/奇数右端guard byte保持）。ゲームへの統合・速度は未検証。PEAのS/map切替を省ける可能性がある。
+
+過去のtile cache試算は `tools/analyze_sa1_tile_cache.py` と `results/20261010_queue_depth/README.md`：41連続画面の楽観LRUでも512tile時95%が新規。ハッシュ等の費用を含まないのでキャッシュ案を速度改善扱いしない。`--left-runtime-scan` も過去に全静的境界・fixture通過だがゲーム9待ちのまま、爆発の一部が遅く不採用。既存結果を再発見して同じ試験を繰り返さない。
+
+## 前段の継続地点（2026-10-13、da1936a）
 
 独立SA-1分岐へda1936aをcommit/push済み。60fps未達・goal active。公開ROMはSHA9934d77b…を維持。新しいstack描画は幅94の爆発40/41、高さ73/74、横位置偶奇に対応する。追加30,712B、330共有record。DF8000..DF91FFは既存近景が使用中なので空き扱いしない。実際に使うのはDF7020..DF7FFF、DF9200..DFBFFF、FEC400..FEFFFF。helperは03E400、return gateはIRAM0700。最大8行/8KiB境界ごとにstackを元へ戻してIRQ応答の機会を作り、PPU DMA中もnative描画は続ける。
 
