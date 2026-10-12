@@ -78,7 +78,7 @@
 
 ## 作業状態
 
-2026年10月13日、`77df5af` 基点の `codex/hud-friction-circle` に実装し、`bee2fc8` をpush済み。作業場所は `D:\HomeBrew\MMC5Racing_hud`。本来の開発入口 `D:\HomeBrew\MMC5Racing` は別スレッドの作業のためそのままにした。手順と検証結果は [開発入口](README.md) と [実装・合流記録](20261013_hud_implementation.md) を参照する。
+2026年10月13日、`77df5af` 基点の `codex/hud-friction-circle` に実装し、`bee2fc8` と `7df40f7` をpush済み。作業場所は `D:\HomeBrew\MMC5Racing_hud`。本来の開発入口 `D:\HomeBrew\MMC5Racing` は別スレッドの作業のためそのままにした。手順と検証結果は [開発入口](README.md) と [実装・合流記録](20261013_hud_implementation.md) を参照する。
 
 4輪は2列で前後関係を保ち、右列を16px下げる。円と点のOAM Yを103・119・135・151へ固定し、力YはCHR内の点の位置で表す。自車、時計、マスク、ゴースト2枚を含む8192姿勢で1走査線8枚以内を確認した。CPU車3台はまだ合流していない。
 

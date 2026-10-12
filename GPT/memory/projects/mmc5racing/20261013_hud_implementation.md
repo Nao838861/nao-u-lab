@@ -1,8 +1,8 @@
 # MMC5Racing HUD実装とCPU車への合流条件
 
-HUD実装commitは `bee2fc8`、ブランチは `codex/hud-friction-circle`。<https://github.com/Nao838861/MMC5Racing/tree/codex/hud-friction-circle> へpush済み。作業場所は `D:\HomeBrew\MMC5Racing_hud`。基点はユーザー指定どおり `main` の `77df5af`。
+HUD本体commitは `bee2fc8`、点の優先順修正は `7df40f7`。最新は `7df40f7`、ブランチは `codex/hud-friction-circle`。<https://github.com/Nao838861/MMC5Racing/tree/codex/hud-friction-circle> へpush済み。作業場所は `D:\HomeBrew\MMC5Racing_hud`。基点はユーザー指定どおり `main` の `77df5af`。
 
-先行するWindowsビルド用commitは `0ea74e9` と `a181509`。本体の `D:\HomeBrew\MMC5Racing` / mainには同等のセットアップ `97f5fdc` があるため、合流時はHUD本体の `bee2fc8` を中心に確認する。mainへのmergeはしていない。
+先行するWindowsビルド用commitは `0ea74e9` と `a181509`。本体の `D:\HomeBrew\MMC5Racing` / mainには同等のセットアップ `97f5fdc` があるため、合流時は `bee2fc8` と `7df40f7` を適用する。mainへのmergeはしていない。
 
 ## 今回のユーザー指示原文
 
@@ -29,11 +29,11 @@ OAM割り当てはこのチャットで共有済み：
 | --- | --- |
 | 現在周回 | 1・2・3・5・6 |
 | 合計時間 | 8・9・10・12・13 |
-| 円（左前・右前・左後・右後） | 15/16・17/19・22/23・24/26 |
-| 点（同順） | 20・27・29・30 |
+| 円（左前・右前・左後・右後） | 16/17・20/22・24/26・29/30 |
+| 点（同順） | 15・19・23・27 |
 | ステータス | 55〜59・39・46 |
 
-他車60〜63へのHUD実行時書き込みなし。自車48〜53、ゴースト4・11、境界マスクを維持。初期OAMは凍結 `ui/oam.bin` を直接書き換えず、最終ビルドで `hud.oam_patch()` を適用する。別スレッドで更新済みの他車用初期レコードを消さない。
+他車60〜63へのHUD実行時書き込みなし。自車48〜53、ゴースト4・11、境界マスクを維持。点は円より小さいOAM番号とし、円周に重なった赤い点が隠れない優先順へ調整した。HUD全体の占有番号の集合は初期共有時から同じ。初期OAMは凍結 `ui/oam.bin` を直接書き換えず、最終ビルドで `hud.oam_patch()` を適用する。別スレッドで更新済みの他車用初期レコードを消さない。
 
 追加の合流箇所は `race-src/ghost-draw.s`。39・46のYを255へ書いていた旧2命令を、同じ長さ・同じサイクルのBITへ置換した。この変更を落とすとステータスが欠ける。
 
@@ -43,13 +43,13 @@ bank120は既存 `$D411..$D8FF` 内だけを変更。ユーザーの予約範囲
 
 ROM：`D:\HomeBrew\MMC5Racing_hud\build\direct\direct-axle-shared.nes`
 
-SHA256：`df6e5c12b1be339119d5933afb03760d1ac4752b18fad3e564ee09c7d6d9de10`
+SHA256：`ca5d5acccabfb0ee83b7eb82b4cf18092798fe5164f8f660f2c4f409a8b79b03`
 
 `.\build.cmd` / `.\play.cmd` でビルド・起動。詳細は開発リポジトリの `verification/hud-live/README.md`、実画面は同ディレクトリのPNG。
 
 - 6502実行：時計18ケース、荷重・力・飽和112ケース、容量0〜240の全タイル、力Y256値を確認。物理値と保護OAMへの書き込みなし。
 - 自車の向き・操舵・揺れ8192ケース：時計・円・点・マスク・ゴースト2枚を含めて最大8枚/走査線。
-- Windows FCEUX標準PPU、8枚制限有効：110フレーム待機＋500フレーム通常入力＋10フレームの力注入。別実行でFULL描画を強制。
+- Windows FCEUX標準PPU、8枚制限有効：110フレーム待機＋500フレーム通常入力＋20フレームの力注入・円周重なり。別実行でFULL描画を強制。保存した `run_native.py` からも再実行して通過。
 - 通常入力の最小期限余裕2730サイクル、FULL強制の最小余裕1299サイクル。転送拒否カウンター0。各320 mainエピソードの測定であり、全走行条件の保証ではない。
 - CPU車は未合流。合流後にOAMの走査線数、ゴーストとの同時表示、長時間計時時の負荷、FULL期限を再確認する。
 
