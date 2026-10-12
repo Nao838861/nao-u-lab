@@ -484,3 +484,21 @@ stackfixturemin_*を追加。各348実PPU画面を照合し、表示metaから�
 Git commit時にも新しいreverse88_v1_evidence.zipのloose blob 005875237bc63eee9b48c36f339e00293309a2baでzlib incorrect data checkが発生した。common gitはD:/AI/Nao_u_BOT/GPT/projects/monosh_fx2/.cache/github_export/.git。元zipのSHA256とblob header込みSHA1を照合し、壊れた内部コピーをbuild/sa1_game/git_corrupt_<sha>.zlib.brokenへ退避後、readonly属性を一時解除して同一内容をzlibで復旧、属性を戻した。push成功。6つ全ての証拠zipについて、保存SHA256およびcommit内blobの全byteが元ファイルと一致することも確認した。原因は断定しない。
 
 次は右行情報を3byte程度のhint pointerだけにし、code pointer/originを既存native行から参照して重複をなくす方式を検討する。8→6byteの算術decodeも圧縮hintも実行費用があるため、容量だけで採用しない。幅79/76の全画像を維持しつつ対象を広げ、同じ道中/ボスで表示間隔を測る。DIRTY-IRAM単純追加、直接planar、PEA stack、SCPU FastROM全移動など既存棄却を繰り返さない。
+
+## native行を再利用する3byte別表（2026-10-13、9cd254d）
+
+9cd254dを独立SA-1分岐へcommit・push済み。前turnは3byte行情報実装・6試験の証拠を得たprogress。60fps未達、goalはactive。worktreeはclean、自分の試験プロセスは全て終了。公開ROMは変更しない。
+
+--reverse-records-nativeを実装。各行はhint pointer3Bだけを別表に置き、code pointerをnative chainの+8、originを+1からrow*128を引いて復元し、extentをkernel headerから読む。開始行はnative chainをfirst*11、hint列をfirst*3進め、毎行11/3ずつ進める。compact/inlineとの併用は禁止。既存の全素材・全寸法を維持する。
+
+幅79・非圧縮hint版は別表21,003B、hint9,813Bで収まった。SHA 8a2a2b4018203004f76829e04a286b2314e3a44d29a36af5fa1d1f0a54c01808。道中800field/655logic/644表示/168PPU画素一致、2field間隔5回、最大23.144466ms。幅76非圧縮は別表領域不足でビルド失敗、性能根拠へ使わない。幅76圧縮版は別表18,007B、hint10,219→5,357B、SHA 34e035dfcb49d1ba375595a246e33b41841d12a014de658df592860daccbad65。道中800/654/643/168一致・2field間隔6回・最大24.105575ms。最良の幅91 v5（645表示/4回）を更新しない。
+
+専用stackfixtureminは各500field/348PPU画面一致。幅79は高さ61/62、幅76は59/60、素材40/41×横13×上端7の各364ケースを表示metaで確認。右端静的検証は幅79の2,726kernel/97,388境界、幅76の3,030kernel/106,488境界が一致し、native90,854行/弾158,688行/全1,492寸法を元ROMへ照合。左は従来6,326kernel/190,929ケースを維持。
+
+--left-byte-constant-scanも別の比較用opt-inとして実装。途中のSTAから再開する時の直前LDA検索だけAを8bitにしてmaskを省く。草木・爆発の専用fixture500PPU画面一致・最大13.419768msだったが、道中644表示/5回・最大25.606418msと悪化。命令数減少だけで採用しない。SHA a924a80c6fc185469dbfe32b2593834d9a48af86a0b11f34cba81de24400633fで、現在のbuildはこの比較版。snapshot fifoleftbytescan_v1_build。新基準として採用しない。
+
+証拠はresults/20261013_native_records/、zip46,319,653B、SHA f8b6d8044ea3ec24c2bb518cc205f754f78b4a0acb27116cfdda6152a6ecf7e0。commands.jsonとreport_sa1_native_records.pyで再現・集計できる。今回はGitの破損は起きずpush成功。全6試験は末尾停止なし、道中共通logicのpacketは配布固定map版と一致。
+
+次の具体候補はI-RAM helperの繰り返しコピー削減。左helperは423B、逆順幅79非圧縮354B/幅76圧縮465Bで全て0300..04FF内。小さいedge JITは0500へ、大きいedge退避はビルド変換後0300..04FFへ、bullet words workerも0300へ置く。既存bullet residentは019Cを使い、非bulletのprepareで毎回0へ戻すのでそのまま共有tagには使わない。07FC..07FFは現在コードに参照がなく、row call chainは0700..07EF、JSL patchは07F0..07F4。ただし実装前に最新生成コードも再検索する。
+
+helper再利用を試す場合は、rendererのsa1_clear_startでtagを無効化し、left/reverseロード完了時に別のtagを立て、bullet workerの0300コピーと大きいedgeの退避で明示無効化する。small edgeの0500コピーが重ならないようleft/reverseのsize<=0200をassertする。単なるコード先頭signature比較は部分上書きや画素との偶然一致を検出できないので採用しない。弾・左右端・通常描画を意図的に混ぜたfixtureを作り、cache hitと各evictionの後も全PPU画素一致を確認し、道中/ボスの表示間隔を測る。根拠なくhelperを常駐扱いしない。
