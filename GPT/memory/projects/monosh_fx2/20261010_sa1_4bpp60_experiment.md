@@ -776,3 +776,23 @@ SA-1独立branchへ47d4abeをcommit・push済み。60fps未達、goal active。8
 次の具体probeはtools/probe_sa1_fixed_front_mask.py。前回full192の実占有maskについて、current|prev1とcurrent|prev2の転送集合を比較した。後者のbyte数/descriptor数が実DMA記録57世代と一致。重い530..570の41世代で前者は平均484.683B、cost523.049相当小さい。gen543は10400B/39→10048B/38、544は10752/38→10080/39、546は11744/41→10176/36（1568B節約）、547は10944/38→10752/38、549は11648/39→10944/42。build/sa1_game/fixed_front_mask_probe.jsonを証拠に保存。
 
 このprobeは前面一括更新が常に選べるという静的集合比較で、gameIntegrated=false/goal=false。実速度・追加準備費・ownershipは未実装。過去adaptive-vramは準備費で道中495/ボス1059へ退行したためそのまま再実験しない。固定map sparse/prefixの現行で、各VRAMページの実内容世代/占有maskを管理し、前面には全量が一回のblankに収まる時だけ書く案の費用を先に調べる。二面の内容は動的に選ぶとprev2とは限らず、SA-1は7世代先を準備しているので単純な0198 parity事前加算も使えない。SA-1/SCPUのどちらがいつmask/list/prefixを作るかと、描画完了キューからの遅延を測る必要がある。改善見込みだけで実装成功・60fps達成と主張しない。固定map24KB×3は72KBになりVRAM64KBへ収まらず、単に三面化もできない。全ゲーム/全武器/敗北4000field監査もまだ必要。
+
+## 2026-10-13 継続: 前面差分のS-CPU準備費と同一画素tileの上限（60fps未達）
+
+検証分岐へ26ea1c5（前面差分単発診断）と4ac7ea4（裏面同一画素の上限診断）をcommit/push。childはclean/upstream一致。目的はactiveのままで、前面VRAM更新・60fps達成は未実装。公開ROM9934d77b…を変更せず、既定検証ROMはa9bcd247…へ復元済み。280field smokeは138logic/131表示、原画・実PPU/VRAM/RGB120枚照合、maxSA1=7.241609ms。ユーザーのMesen PID36580のみ残存し、触っていない。
+
+前面差分の準備費を実S-CPUで測るため、game/sa1/v001/fixed_front_probe_cpu.s、--fixed-front-probe --fixed-front-probe-generation Gを追加。現在/prev1 maskを各96B DMAでWRAMへコピー、最大48descriptor、累積byte/costを構築。pipe_collectのmetadata取り込み後/ack公開前で指定世代だけ動作し、test harnessはreturn直前に終了。前面への実転送はしない。毎世代走らせるとIRQ期限を越えるため、現在のbuildは1..65535の世代指定を必須としている。CPUレジスタ/SP、mask履歴、全descriptorとprefix、最終合計をLuaが独立検査。
+
+最終sample543 e5ee8147664623e27ad332f7e7089dadfd8156a7898b953114f9f1bbecacd680は8.788174ms（copy0.152906/planning8.282337/remember0.352931）、10048B/38descriptor。sample546 a27f6e9bd0ec85a28b3a01763b1c0cc82320e4df629a5e756f7d67f14c72ab3fは8.515327ms（0.154582/8.022062/0.338684）、10176B/36。sample549 75afa4dbc903d4bd88efffa568511715a93603ec13439428b3000c7d3a8fccbfは9.690337ms（0.149181/9.178540/0.362616）、10944B/42。backとの差の削減は352/1568/704B、費用式差×8 master/21477.272で0.157189/0.711822/0.209710ms相当。後者は実DMA時間差ではなく見積もり。S-CPUでこの方式を毎フレーム行うのは費用過大として不採用。SA-1移植時の速度を推定で合格扱いしない。
+
+3本は現行harnessで再実行し、計測前まで134/138/142表示の原画・実PPU/VRAM/RGB照合。旧full192と各543/546/549世代の24,576B全FB、packet、占有mask、消去端が完全一致。各ROMの探索59024/全量判定58148/予算262144条件/Y保存/blank HDMA表CODE内配置を検証。gen543/546/549のCPU計算値は前回の静的front-mask probeとも一致する。sampleのゲーム速度/表示頻度を60fps実証に使わない。
+
+初期失敗は保存して速度証拠から除外。v1 SHA6ebf238e…はGSUの01:B437を81:B437と誤認し、spriteデータ側へ分岐。SA-1 ROMの80..BFは物理+200000で、00..3Fミラーではない。v2 SHAff88f787…はFRONTCPUをDATALOAD先頭に挿入してRODATAコピーをずらした。v3 SHA8ba16783…はRODATA/DATAの後へ移しただけで、C2のゼロ余白をBSS初期化に使うbootの前提を壊した。bootはC2:0000の64KB全体を7E:2000へMVNしwrapするため、空きROMをコード置場とみなさない。最終コードは.segment GSUで実01:xxxxをJSL、テーブルも同じROMバンク。buildにRODATA_LOAD=C20000/コードbank01 assertを追加。
+
+v4 SHA71609ae7…はDMA開始直後のexec callbackでcurrent maskの検査が止まり、REP後にNOP2個を足したv5で再検査した。v5 cdac4f51…は215世代のlist照合を通るがfield384/line27で表示中のpage flipが起きて既存検査が停止。継続版は正常表示/60fpsの証拠に使わない。前面更新を実装していないのに遅い診断をcritical IRQへ入れること自体が危険と確認した。v5 ROM・生成ソース・失敗状態は証拠に保存。最終3本は上記単発構成と新harnessで再実行し、異常なし。
+
+成果物results/20261013_front_cpuはREADME/commands/comparison/default_restore/evidence.zip。zip17,701,626B、SHA3db4a1e917fd259c13e7be79a43abddc1cdef12abee25ac29bc8305b4a626456、CRC合格。tools/report_sa1_fixed_front_cpu.pyで集計。build/frontprobe_sample{543,546,549}_final_buildとmovestress_detinput_captureburst_frontprobe_sample{G}_final_tracepalette_tracebounds_tracedeadlineに生データ。現在のlive ROMは復元済みなので、この3本を調べる時は保存snapshotを使う。
+
+追加のsource-only probeはtools/probe_sa1_fixed_back_pixels.py。commit済みtransfer_deadline/evidence.zipのroad_full192全FB654世代とmask、flip_prepare/evidence.zipの既存back集合計算を読み、current対g-2の16word/tileを比較。キャッシュに依存せず再生成できる。元back集合のbyte/descriptor/costは全対象世代で既存probeに一致。530..570の10189占有tile中同一は445=4.37%、95.63%は変化。厳密な画素比較を費用ゼロと仮定しても平均347.317B/世代しか減らない。543=10400→10016（384B）、546=11744→11296（448B）、549=11648→11232（416B）。過去pixel-deltaで比較7～12msになった失敗を、そのまま再実装しない。比較順序のgreedy診断は21646word/41世代、順序[9,0,15,14,1,4,8,5,11,13,6,10,12,2,3,7]だが、実命令速度・改善の証拠ではない。results/20261013_back_pixels/README/comparisonに全世代と入力SHAを保存。
+
+ここまで前面CPU再計算・同一画素比較はいずれも採用見込みが低い。前回の固定map full192最良道中648表示/800field・2field待ち3回とboss1748/1900・待ち2回を改善したわけではない。次は同じCPU plannerやpixel-deltaを再試行せず、転送の構造自体（既存VRAMへ再利用可能な素材や、描画順・OAM/走査線制限を保った部分native化等）の資源上限を先に確認する。検証前に成功を主張しない。
