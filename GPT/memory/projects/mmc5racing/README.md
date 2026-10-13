@@ -4,6 +4,8 @@
 
 ## ユーザーの指定
 
+最新のGRIP / DRIFT実装は [モードの設計と検証](20261014_modes_design.md) を参照。開発本体のmainでタイトル選択・モード別タイム・切替時のリプレイ破棄を実装し、DRIFTは白・赤、GRIPは青の車にした。通常の `D:\HomeBrew\MMC5Racing\play.cmd` が起動するROMが対象で、以下の別作業ツリーのHUD版へ自動合流したという意味ではない。
+
 2026年10月13日の依頼原文:
 
 > [https://github.com/Nao838861/MMC5Racing](https://github.com/Nao838861/MMC5Racing) を D:\HomeBrew に落としてきて、これをこのPCの開発場所にして。
