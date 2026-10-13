@@ -1,12 +1,12 @@
 # MMC5Racing 開発場所と作業入口
 
-2026年10月14日の[全ブランチのmain統合](20261014_main_integration.md)で `422ac2d` をorigin/mainへpush済み。HUD・CPU車・千鳥配置・モード・最適化を維持し、診断・GSU実験も資料として合流した。検証済みROMは `D:\HomeBrew\MMC5Racing_main_integration\releases\MMC5_Race5_DirectUpload_AxleShared.nes`。開発本体では別スレッドの未コミットGRIP調整が進行しており、ローカルmainの同期は保留してその差分を保全している。詳細は上記記録を参照。
+2026年10月14日の現行版は[GRIPの惰性・ブレーキ調整](20261014_grip_tuning.md)。[全ブランチのmain統合](20261014_main_integration.md) `422ac2d` も開発本体へ合流し、`b1072df` をorigin/mainへpush済み。GRIPを上段・初期選択とし、GRIPだけアクセルOFFを緩やかに、Bで前輪荷重を強めた。開発本体 `D:\HomeBrew\MMC5Racing` は同期済み・cleanで、通常の `play.cmd` から起動する。
 
 このPCでは `D:\HomeBrew\MMC5Racing` を開発場所として使う。リポジトリは <https://github.com/Nao838861/MMC5Racing>、作業ブランチは `main`。ソースとビルド成果物は同リポジトリ、Codex側の作業記憶はこのディレクトリへ保存する。外部プロジェクト内に別の記憶システムやAGENTS.mdを増やさない。
 
 ## ユーザーの指定
 
-現行版は[最新CPU車・HUDとの統合](20261014_latest_integration.md)。CPU車・高速化 `8593c50` と前後2×2 HUD・千鳥配置 `33c259d` をmainへ合流し、GRIP / DRIFT・モード別タイム・車色・読みやすいフォントを保持した。通常の `D:\HomeBrew\MMC5Racing\play.cmd` は毎回この統合版をビルドして開く。旧 `735ce36` は古いmainへのモード追加だけだったため、ユーザーから古い版との指摘を受けて統合し直した。[初回モード設計](20261014_modes_design.md)は経緯の記録。
+現行GRIP調整は[惰性とブレーキの記録](20261014_grip_tuning.md)。CPU車・高速化・前後2×2 HUD・千鳥配置・モード別タイム・車色・最新フォントを保持する。通常の `D:\HomeBrew\MMC5Racing\play.cmd` は毎回再ビルドする。[最新CPU車・HUDとの初回統合](20261014_latest_integration.md)と[初回モード設計](20261014_modes_design.md)は経緯の記録。旧 `735ce36` は古いmainへのモード追加だけだったため、最新とは扱わない。
 
 2026年10月13日の依頼原文:
 
