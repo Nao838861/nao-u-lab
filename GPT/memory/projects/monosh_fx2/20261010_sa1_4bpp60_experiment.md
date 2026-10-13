@@ -1,6 +1,26 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
-## 現在の継続地点（2026-10-13、e866054）
+## 現在の継続地点（2026-10-13、00ac0b2）
+
+独立branch experiment/sa1-4bpp-60fps-20261010へ00ac0b2をcommit/push済み、60fps未達・goal active。新しい木4の逆順native右clipと前段の草木右端prefixを併用した34226b26…は通常4000fieldで3833logic/3828表示・1:3802/2:23・最大24.084716ms・181実PPU画面一致。前段基準は28待ち/25.373ms。全own Mesen/Python終了、公開9934d77b…と既定a9bcd247…を保持。復元280field/138logic/131表示/120画面/max7.241609。ユーザーMesen PID36580は触らない。
+
+**次は左端の木4の可視prefixだけを保持して描く経路を実装・比較する。** まだ左66×152、center=-1（left=-34）で9.605596ms。逆順hintは「offset < limitとなる最初のblockのPC」なので、leftの切断終端にも同じ表を使える。rowのcur=left//2+originが負なら、hint[(-cur)//2]をコピー長としてcode[0:length]+RTLを実行すれば、見える高いword側だけを描ける。cur>=0はROM行を直接、cur+extent<=0はskip。curが奇数なら最後のwordが前行の1byteへ触るので、そのbyteを保存・復元する必要がある。top<0の最初の見える行、rowStart=0でのguard address wrapも境界試験に含める。
+
+source-only left_prefix_reuse_probe.jsonでは66×152/left=-34の152行中135行がprefix対象。同じcode pointer+curを物体内で保持すると54回を再利用し、コピー量は5910→3552B。まだ実装・速度の証拠ではない。helper自身はGSU ROM、コードだけIRAMへ置き、code/clip位置が同じ時は再コピーしない。DMA空き時はSA-1 DMA、PPU conversion中はCPUコピーへfallback。コード再利用は物体開始時に必ずresetし、他helperの上書きを跨いで使わない。
+
+左prefixの長さは最大210B+RTLで211B。0500へ置くと05C0の転送作業域に重なる可能性があるため、そのまま右の短prefix用0500を流用しない。既存fast chunk用0700..07EFは最大240Bで、211Bが入る。JSL000700でコードを呼び、ROM直接行/CPU MVNのgateは07E8..07EBなどに分ける候補（既存right_clip_game.sが07E8のMVN stubを使用）。IRQ/DMA handlerが0700や使用DPを触らないことを現コードで確認してから実装。初期targetは計測で重かった左の木、全76寸法×12中心×3topの既存treefixtureで検査する。単なるJITしきい値変更を再試行するより、画面外の描画・退避そのものを省く。
+
+今回 --reverse-tree は木4の全76寸法だけnative行を右wordから生成し、headerに1byte hint番号を追加。5751kernel/9336行、共通raw hint211種2356B+pointer633BをDF6FE0..DF7B8Cへ固定配置。元順方向を二重保持せず、全nativeコード3701091→3716029B（共有旧kernel保持分込み+14938B）。dirty表をbank詰め物8876Bへ再配置し、左hint11776BをDF9200..DFBFFFへ置く。payloadEnd=7ED94B。finish時にlegacyの空き・予約域を検査してから配置する。compiler cache key/suffixにreverse_treeを含めた。基準のredraw_allはもともとfast_tilesで無条件にfast_base_readyへ飛ぶ（build_sa1_game.py）ので、以前の「dirty fallbackが必ず問題になる」は基準構成では過剰だった。木4は専用dispatchで他の昇順clip helperへ流さない。
+
+修正版単体a00fbfcbは4000field/3827表示/24待ち/max25.270155。--reverse-tree-bypassの3068a884は3824表示/27待ち/max25.399781。全labels同一、ROM差分はdispatch6Bとchecksum4Bだけ（複製側差分なし）、この比較で直接suffixの効果を分離した。併用34226b26は3828表示/23待ち/max24.084716。新helperは各68物体/4208行/3376行のhidden code skip。右端68×158は10.929135→4.284157ms、64×148は9.139801→5.788445ms。左端の約9.6msは残る。各版は基準と3826全FB/packet・3827tile mask/消去端・3826完了game stateが一致し、死亡/復帰のlogic番号も同じ。
+
+併用のtreefixtureは2736ケース、1369実PPU画面一致（最初1通常画面）、1519fieldで停止・末尾1。全76寸法・左右12位置・上下3位置。全native1492寸法/90854行使用、弾158688行使用、dirty5992phase、木5751kernel/90588右byte境界を静的検査。任意下地mask/valueも一致。ボス5000fieldは4835表示/15待ち/max22.439815/198画面。前段草木右版5000fieldと4840全FB・4839完了game state一致。無敵/開始条件/3900stage注入あり、HP0/state2/3/stage復帰/再ボスまで。木helper実行0行なので1待ちの差を木の高速化とは解釈しない。自然なクリア確認は依然未完了。
+
+初回8f2a3888は境界1369画面が一致したが通常試験約380fieldで不完走。診断はfield265/clock94739822/PC E2C7、草0・53×29・縦位相1のdirty末尾record95FFFD=042701を捕捉。runの16bit LDAが95FFFFから余分なhigh byte960000を読む。各phaseに1byte padを追加し、verify_sa1_dirty_shapes.pyで余分なhighまで同じROM bank内で0を読むと確認。ただしこの読出しを初回停止の唯一の原因と断定したのは撤回した。同じ旧ROMでobserverだけ安全にした600fieldは451表示/125画面一致で完走、960000警告は残る。callback入口で未初期化作業値を読まず、invoke時だけcode/entryを読む修正も実施。初回停止原因は一意に未確定。初回ROMを全体合格へ戻さず、修正版4k/5k/境界の完走を証拠にする。診断read callbackは意図的stop、速度データに使わない。
+
+結果はresults/20261013_reverse_tree/README.md、commands/comparison/default_restore、5case zipとroms_sources_history.zip。後者36489661B、SHA ed9e8316c658214018a314d9553c4d252953ec4fe8f0b631508faade542adac1、CRC合格。4版ROM/labels/map/生成source、全世代FB/packet/VRAM/PPU/palette/RGB、旧版診断と同ROMobserver再生、次のleft-prefix probe scriptを保存。再集計tools/report_sa1_reverse_tree_game.py。最高jobはdirty3.790239/clear3.698701/bg0.287094/draw16.308682ms。CPUのIRQ除外logic観測最大13.704068msも記録しており、CPU余力が無制限とは考えない。sa1JobsのcpuPartsは直近CPU更新の観測で、SA1世代と同じとは限らず足し合わせ禁止。
+
+## 前段の継続地点（2026-10-13、e866054）
 
 独立branch experiment/sa1-4bpp-60fps-20261010へe866054をcommit/push済み、child clean/upstream一致。60fps未達・goal active。公開ROM9934d77b…を保持し、live ROMはa9bcd247…へ復元。280field/138logic/131表示/120実PPU画面一致/max7.241609msで回帰確認、全own Mesen/Pythonは終了。ユーザーMesen PID36580（D:\HomeBrew\Mesen\Mesen.exe）には触れない。
 
