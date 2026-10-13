@@ -26,9 +26,14 @@ def main():
     factory_rel='Core/NES/MapperFactory.cpp'
     factory=subprocess.check_output(['git','-C',str(host),'show',f'HEAD:{factory_rel}']).decode('utf-8-sig')
     factory=replace(factory,'#include "NES/MapperFactory.h"',
-                    '#include "NES/MapperFactory.h"\n#include <cstdlib>\n#include "NES/Mappers/Homebrew/NesFx/NesSuperFx.h"')
+                    '#include "NES/MapperFactory.h"\n#include <cstdlib>\n#include "NES/Mappers/Homebrew/NesFx/NesSuperFx.h"\n#include "NES/Mappers/Homebrew/NesFx/NesBitmapFx.h"')
     factory=replace(factory,'\t\tcase 0: return new NROM();','''\t\tcase 0: {
             const char* selected = std::getenv("NES_GSU_MAPPER");
+            if(selected && std::string(selected) == "n8pro-gsu-abi2") {
+                if(romData.PrgRom.size()!=32768 || romData.ChrRom.size()!=8192) return nullptr;
+                MessageManager::Log("[NES GSU] n8pro-gsu-abi2; PPU bitmap; model timing only");
+                return new NesBitmapFx();
+            }
             if(selected && std::string(selected) == "n8pro-gsu-abi1") {
                 if(romData.PrgRom.size()!=32768 || romData.ChrRom.size()!=8192) {
                     MessageManager::DisplayMessage("Error", "N8 Pro GSU ABI1 needs 32KiB PRG and 8KiB CHR ROM");
@@ -60,7 +65,7 @@ def main():
     (host/api_rel).write_text(api,encoding='utf-8')
     dest=host/'Core/NES/Mappers/Homebrew/NesFx'
     dest.mkdir(parents=True,exist_ok=True)
-    for source in (ROOT/'src/NesSuperFx.h',ROOT/'src/Board.hpp',OUT/'NesFxGsu.hpp'):
+    for source in (ROOT/'src/NesSuperFx.h',ROOT/'src/Board.hpp',ROOT/'src/NesBitmapFx.h',ROOT/'src/BitmapBoard.hpp',OUT/'NesFxGsu.hpp'):
         shutil.copy2(source,dest/source.name)
     # Full source diff is retained as reproducible evidence alongside the DLL.
     build=ROOT/'build'

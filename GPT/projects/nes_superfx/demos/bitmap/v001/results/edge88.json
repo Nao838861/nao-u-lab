@@ -1,0 +1,531 @@
+{
+  "status": "pass",
+  "kind": "solid",
+  "mode": 3,
+  "count": 2,
+  "half": 44,
+  "images": 64,
+  "gsu_pixels_checked": 3932160,
+  "ppu_rgb_pixels_checked": 3932160,
+  "intervals": [
+    2
+  ],
+  "at_30fps": true,
+  "missed": 0,
+  "gsu_max_clocks": 573802,
+  "trace": [
+    {
+      "frame": 19,
+      "updates": 1,
+      "phase": 0,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 551174
+    },
+    {
+      "frame": 21,
+      "updates": 2,
+      "phase": 1,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 548310
+    },
+    {
+      "frame": 23,
+      "updates": 3,
+      "phase": 2,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 558535
+    },
+    {
+      "frame": 25,
+      "updates": 4,
+      "phase": 3,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 560742
+    },
+    {
+      "frame": 27,
+      "updates": 5,
+      "phase": 4,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 563424
+    },
+    {
+      "frame": 29,
+      "updates": 6,
+      "phase": 5,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 566999
+    },
+    {
+      "frame": 31,
+      "updates": 7,
+      "phase": 6,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 571721
+    },
+    {
+      "frame": 33,
+      "updates": 8,
+      "phase": 7,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 573802
+    },
+    {
+      "frame": 35,
+      "updates": 9,
+      "phase": 8,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 572922
+    },
+    {
+      "frame": 37,
+      "updates": 10,
+      "phase": 9,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 573718
+    },
+    {
+      "frame": 39,
+      "updates": 11,
+      "phase": 10,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 571651
+    },
+    {
+      "frame": 41,
+      "updates": 12,
+      "phase": 11,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 566971
+    },
+    {
+      "frame": 43,
+      "updates": 13,
+      "phase": 12,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 563382
+    },
+    {
+      "frame": 45,
+      "updates": 14,
+      "phase": 13,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 560588
+    },
+    {
+      "frame": 47,
+      "updates": 15,
+      "phase": 14,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 558381
+    },
+    {
+      "frame": 49,
+      "updates": 16,
+      "phase": 15,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 547960
+    },
+    {
+      "frame": 51,
+      "updates": 17,
+      "phase": 16,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 545363
+    },
+    {
+      "frame": 53,
+      "updates": 18,
+      "phase": 17,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 545097
+    },
+    {
+      "frame": 55,
+      "updates": 19,
+      "phase": 18,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 555518
+    },
+    {
+      "frame": 57,
+      "updates": 20,
+      "phase": 19,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 557990
+    },
+    {
+      "frame": 59,
+      "updates": 21,
+      "phase": 20,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 560923
+    },
+    {
+      "frame": 61,
+      "updates": 22,
+      "phase": 21,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 564820
+    },
+    {
+      "frame": 63,
+      "updates": 23,
+      "phase": 22,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 569863
+    },
+    {
+      "frame": 65,
+      "updates": 24,
+      "phase": 23,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 572308
+    },
+    {
+      "frame": 67,
+      "updates": 25,
+      "phase": 24,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 571776
+    },
+    {
+      "frame": 69,
+      "updates": 26,
+      "phase": 25,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 572908
+    },
+    {
+      "frame": 71,
+      "updates": 27,
+      "phase": 26,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 571287
+    },
+    {
+      "frame": 73,
+      "updates": 28,
+      "phase": 27,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 566888
+    },
+    {
+      "frame": 75,
+      "updates": 29,
+      "phase": 28,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 563480
+    },
+    {
+      "frame": 77,
+      "updates": 30,
+      "phase": 29,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 560658
+    },
+    {
+      "frame": 79,
+      "updates": 31,
+      "phase": 30,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 558605
+    },
+    {
+      "frame": 81,
+      "updates": 32,
+      "phase": 31,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 548380
+    },
+    {
+      "frame": 83,
+      "updates": 33,
+      "phase": 32,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 548799
+    },
+    {
+      "frame": 85,
+      "updates": 34,
+      "phase": 33,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 548352
+    },
+    {
+      "frame": 87,
+      "updates": 35,
+      "phase": 34,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 558577
+    },
+    {
+      "frame": 89,
+      "updates": 36,
+      "phase": 35,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 560714
+    },
+    {
+      "frame": 91,
+      "updates": 37,
+      "phase": 36,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 563465
+    },
+    {
+      "frame": 93,
+      "updates": 38,
+      "phase": 37,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 566958
+    },
+    {
+      "frame": 95,
+      "updates": 39,
+      "phase": 38,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 571511
+    },
+    {
+      "frame": 97,
+      "updates": 40,
+      "phase": 39,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 573369
+    },
+    {
+      "frame": 99,
+      "updates": 41,
+      "phase": 40,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 572349
+    },
+    {
+      "frame": 101,
+      "updates": 42,
+      "phase": 41,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 572964
+    },
+    {
+      "frame": 103,
+      "updates": 43,
+      "phase": 42,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 570729
+    },
+    {
+      "frame": 105,
+      "updates": 44,
+      "phase": 43,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 565882
+    },
+    {
+      "frame": 107,
+      "updates": 45,
+      "phase": 44,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 562139
+    },
+    {
+      "frame": 109,
+      "updates": 46,
+      "phase": 45,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 559163
+    },
+    {
+      "frame": 111,
+      "updates": 47,
+      "phase": 46,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 556942
+    },
+    {
+      "frame": 113,
+      "updates": 48,
+      "phase": 47,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 546522
+    },
+    {
+      "frame": 115,
+      "updates": 49,
+      "phase": 48,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 545321
+    },
+    {
+      "frame": 117,
+      "updates": 50,
+      "phase": 49,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 546494
+    },
+    {
+      "frame": 119,
+      "updates": 51,
+      "phase": 50,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 556914
+    },
+    {
+      "frame": 121,
+      "updates": 52,
+      "phase": 51,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 559206
+    },
+    {
+      "frame": 123,
+      "updates": 53,
+      "phase": 52,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 562125
+    },
+    {
+      "frame": 125,
+      "updates": 54,
+      "phase": 53,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 565896
+    },
+    {
+      "frame": 127,
+      "updates": 55,
+      "phase": 54,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 570771
+    },
+    {
+      "frame": 129,
+      "updates": 56,
+      "phase": 55,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 573020
+    },
+    {
+      "frame": 131,
+      "updates": 57,
+      "phase": 56,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 572307
+    },
+    {
+      "frame": 133,
+      "updates": 58,
+      "phase": 57,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 573327
+    },
+    {
+      "frame": 135,
+      "updates": 59,
+      "phase": 58,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 571470
+    },
+    {
+      "frame": 137,
+      "updates": 60,
+      "phase": 59,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 566916
+    },
+    {
+      "frame": 139,
+      "updates": 61,
+      "phase": 60,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 563423
+    },
+    {
+      "frame": 141,
+      "updates": 62,
+      "phase": 61,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 560672
+    },
+    {
+      "frame": 143,
+      "updates": 63,
+      "phase": 62,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 558535
+    },
+    {
+      "frame": 145,
+      "updates": 64,
+      "phase": 63,
+      "front": 0,
+      "missed": 0,
+      "gsu_clocks": 548310
+    }
+  ],
+  "timing_model": "25MHz Mesen-derived GSU model; not RTL or hardware performance"
+}

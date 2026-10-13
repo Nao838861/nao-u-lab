@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "kind": "pattern",
+  "mode": 1,
+  "count": 1,
+  "half": 44,
+  "images": 1,
+  "gsu_pixels_checked": 16384,
+  "ppu_rgb_pixels_checked": 61440,
+  "intervals": [],
+  "at_30fps": false,
+  "missed": 0,
+  "gsu_max_clocks": 748307,
+  "trace": [
+    {
+      "frame": 19,
+      "updates": 1,
+      "phase": 0,
+      "front": 1,
+      "missed": 0,
+      "gsu_clocks": 748307
+    }
+  ],
+  "timing_model": "25MHz Mesen-derived GSU model; not RTL or hardware performance"
+}

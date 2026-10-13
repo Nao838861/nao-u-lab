@@ -13,15 +13,16 @@ ROOT=Path(__file__).resolve().parents[1]
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('rom',nargs='?',type=Path,default=ROOT/'runtime/gsu-selftest.nes')
-    parser.add_argument('--mapper',required=True,choices=['n8pro-gsu-abi1','nrom'])
+    parser.add_argument('--mapper',required=True,choices=['n8pro-gsu-abi1','n8pro-gsu-abi2','nrom'])
+    parser.add_argument('--controller-a',action='store_true',help='NESパッドを有効にし、未割当ならZをAに設定')
     args=parser.parse_args()
     rom=args.rom.resolve()
     header=rom.read_bytes()[:16]
     if len(header)!=16 or header[:4]!=b'NES\x1a': parser.error('iNES ROMを指定してください')
-    if args.mapper=='n8pro-gsu-abi1' and (header[4:6]!=bytes([2,1]) or (header[6]&0xF4) or (header[7]&0xFC)):
-        parser.error('ABI1はmapper 0・PRG32KiB・固定CHR8KiBのiNES ROMが対象です')
+    if args.mapper!='nrom' and (header[4:6]!=bytes([2,1]) or (header[6]&0xF4) or (header[7]&0xFC)):
+        parser.error('GSUマッパーはmapper 0・PRG32KiB・CHR8KiBのiNES ROMが対象です')
     env=os.environ.copy()
-    if args.mapper=='n8pro-gsu-abi1': env['NES_GSU_MAPPER']=args.mapper
+    if args.mapper!='nrom': env['NES_GSU_MAPPER']=args.mapper
     else: env.pop('NES_GSU_MAPPER',None)
     executable=ROOT/'runtime/Mesen.exe'
     if not executable.exists(): parser.error('先にtools/setup_runtime.pyを実行してください')
@@ -30,8 +31,14 @@ def main():
     if hashlib.sha256(core.read_bytes()).hexdigest()!=manifest['MesenCore.dll']:
         parser.error('専用コアのhashが異なります。tools/setup_runtime.pyを再実行してください')
     settings=ROOT/'runtime/settings.json'
-    config=json.loads(settings.read_text(encoding='utf-8'))
+    config=json.loads(settings.read_text(encoding='utf-8-sig'))
     config.setdefault('Preferences',{})['SingleInstance']=False
+    if args.controller_a:
+        port=config.setdefault('Nes',{}).setdefault('Port1',{})
+        port['Type']='NesController'
+        mapping=port.setdefault('Mapping1',{})
+        # Pinned Mesen Shared/KeyDefinitions.h: Z is 69 (not Windows VK_Z).
+        if not mapping.get('A'):mapping['A']=69
     settings.write_text(json.dumps(config,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     # The stock 2.1.1 UI tries to extract its embedded DLL before loading it.
     # A read-sharing handle makes that extraction fail safely inside its catch,

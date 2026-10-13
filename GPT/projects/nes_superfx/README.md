@@ -1,6 +1,6 @@
 # N8 Pro GSUマッパー用エミュレーター
 
-2026年10月14日。**既存の診断ROMを変更せず動かし、緑背景の `GSU SELF TEST / 0` を表示する先行版を用意した。** NES本体は固定版Mesen 2.1.1、GSUは同版の命令・キャッシュ・描画実装を分離し、N8 Pro実験回路ABI1へ接続している。
+2026年10月14日。無変更診断ROMの緑背景・結果0に加え、**GSU描画RAMのPPU直接表示、256×240の全画面、面塗り立方体の30fps回転、サイズ別個数ベンチマークまで実装した。** NES本体は固定版Mesen 2.1.1、GSUは同版の命令・キャッシュ・描画実装を分離して接続している。現行回路のABI1と、エミュレーターで先行実装した提案ABI2を明示選択する。
 
 ## 起動
 
@@ -9,6 +9,9 @@
 - [run_gsu.cmd](run_gsu.cmd)：GSU入り独自マッパーを明示して診断ROMを起動。期待は緑背景・結果0。
 - [run_nrom.cmd](run_nrom.cmd)：通常のNROMとして同じROMを起動。期待は赤背景・結果1。
 - [run_cube.cmd](run_cube.cmd)：GSUで頂点変換と線描画を行う、回転する立方体。[説明・動画・検証](demos/cube/v001/README.md)。
+- [run_solid_cube.cmd](run_solid_cube.cmd)：白・水色・紫の面塗り立方体を等倍画素で30fps回転。提案ABI2。[説明・動画・検証](demos/bitmap/v001/README.md)。
+- [run_cube_benchmark.cmd](run_cube_benchmark.cmd)：１本のROMでA（専用設定ではZキー）を押し、２→４→６→９→13→19→24→33→52→71個を切り替える。画面下のN=は個数、S=はモデル辺長。
+- [run_bitmap_128.cmd](run_bitmap_128.cmd) → [run_bitmap_band.cmd](run_bitmap_band.cmd) → [run_bitmap_full.cmd](run_bitmap_full.cmd)：直接表示の128×128、256×64、256×240段階成果。
 - 別ROMを渡す場合は `run_gsu.cmd "C:\path\diagnostic.nes"`。
 
 `runtime/Mesen.exe` を直接起動せず、上記ランチャーを使う。標準UIは起動時に内蔵DLLを展開するため、直接起動すると専用の `MesenCore.dll` が標準版で上書きされる。ランチャーはhashを確認し、読み取り共有のWindowsファイルハンドルを保持して上書きを防ぐ。標準UIの依存展開処理はこの書込み失敗を捕捉し、専用DLLを正常にロードする。この経路も実行検証済み。
@@ -63,7 +66,7 @@ CPUがGO中の所有RAMへ触る操作は診断の契約外。初版は書込み
 
 Mesen由来のGSU全命令コードを含むが、収録MiSTer GSUとの全命令・フラグ・全MMIO互換を検証した版ではない。今回見つけたSTOP内部IRQのマスク差はRTLに合わせた。ほかの差は、診断を拡張してRTLと比較する必要がある。NES側デバッガーとMMIO/RAM peekは使えるが、NES実行中の専用GSU逆アセンブラー・命令単位breakpointは未接続。
 
-次はGSU PC・opcode・レジスター・RAM・経過基準クロックを同じ操作列でRTLと照合し、差を機能差と時刻差に分ける。その後、RTL側と次のABIを決めてPPUへの描画RAM供給を追加する。MMC5との同居、既存ゲームのframe契約への接続、FPGAの合成・Fit・TimeQuest・実機確認は別の段階。
+提案ABI2では、40 KiB RAMとPPUの独立読出し経路をエミュレーターへ追加した。[回路側向け引き継ぎ仕様](demos/bitmap/v001/ABI2_HANDOFF.md)にアドレス変換・レジスター・VBlank交換をまとめている。**ABI2のRTL実装、RAMポートと帯域、FPGAの合成・Fit・TimeQuest・実機性能は未確認。ベンチマークはエミュレーター時間モデルの値。** GSU PC・opcode・レジスター・RAM・経過基準クロックを同じ操作列でRTLと照合する作業、MMC5との同居、既存ゲームへの接続は別の段階。
 
 ## 再ビルドと再検証
 

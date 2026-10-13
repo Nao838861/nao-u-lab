@@ -40,7 +40,7 @@ def main():
     shutil.copy2(ROOT/'.cache/Mesen2_host/bin/win-x64/Release/MesenCore.dll',runtime/'MesenCore.dll')
     shutil.copy2(args.rom,runtime/'gsu-selftest.nes')
     settings=runtime/'settings.json'
-    config=json.loads(settings.read_text(encoding='utf-8')) if settings.exists() else {}
+    config=json.loads(settings.read_text(encoding='utf-8-sig')) if settings.exists() else {}
     config.setdefault('Preferences',{})['SingleInstance']=False
     settings.write_text(json.dumps(config,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     manifest={p.name:digest(p) for p in runtime.iterdir() if p.is_file() and p.suffix in ('.dll','.exe','.nes')}
