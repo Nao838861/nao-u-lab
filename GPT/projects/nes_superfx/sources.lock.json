@@ -1,0 +1,10 @@
+{
+  "repository": "https://github.com/SourMesen/Mesen2.git",
+  "revision": "b9fa69ddc6d0a331fb103fdb5eef6904305703c2",
+  "license": "GPL-3.0-or-later",
+  "board": "n8pro-gsu-abi1",
+  "handoff_repository": "https://github.com/Nao838861/MMC5Racing",
+  "handoff_revision": "85bddea72743ca7b7b50b41e24b11c2df0416ea5",
+  "diagnostic_sha256": "591424840eba9fc62f7e7d28f2abb90b672f6e074bf5b1ec5baf7e52ab18e837",
+  "mapper_selection": "explicit environment NES_GSU_MAPPER=n8pro-gsu-abi1; iNES mapper remains 0"
+}

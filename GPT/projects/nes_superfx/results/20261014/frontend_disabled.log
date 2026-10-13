@@ -1,0 +1,13 @@
+------------------------------------------------------
+Loading rom: gsu-selftest.nes
+File CRC32: 0x841E8B3B
+------------------------------------------------------
+[DB] Initialized - 10655 games in DB
+PRG CRC32: 0x04A0F49F
+PRG+CHR CRC32: 0x636C91E5
+[iNes] Mapper: 0 Sub: 0
+[iNes] PRG ROM: 32 KB
+[iNes] CHR ROM: 8 KB
+[iNes] Mirroring: Vertical
+[iNes] Battery: No
+[DB] Game not found in database

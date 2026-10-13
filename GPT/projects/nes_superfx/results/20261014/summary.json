@@ -1,0 +1,250 @@
+{
+  "status": "pass",
+  "tests": [
+    {
+      "mode": "enabled",
+      "result": 0,
+      "expected": 0,
+      "result_tile": 48,
+      "background": 26,
+      "rom_sha256": "591424840eba9fc62f7e7d28f2abb90b672f6e074bf5b1ec5baf7e52ab18e837",
+      "frame": 13,
+      "gsu_r5": [
+        63,
+        0
+      ],
+      "gsu_ram_0200": [
+        54,
+        19
+      ],
+      "gsu_ram_0000": [
+        255,
+        255
+      ],
+      "timing_model": "functional; not RTL cycle accurate",
+      "screenshot_sha256": "acb6dfe2a40bdcc102672c6f68c8000986180436388a064c8047c379cce2652a",
+      "checks": {
+        "result": true,
+        "tile": true,
+        "palette": true,
+        "rendered_background": true,
+        "visible_text": true,
+        "multiply": true,
+        "add_store": true,
+        "plot": true
+      },
+      "rendered_background_rgb": [
+        12,
+        147,
+        0
+      ],
+      "status": "pass"
+    },
+    {
+      "mode": "disabled",
+      "result": 1,
+      "expected": 1,
+      "result_tile": 49,
+      "background": 22,
+      "rom_sha256": "591424840eba9fc62f7e7d28f2abb90b672f6e074bf5b1ec5baf7e52ab18e837",
+      "frame": 13,
+      "gsu_r5": [
+        80,
+        80
+      ],
+      "gsu_ram_0200": [
+        0,
+        0
+      ],
+      "gsu_ram_0000": [
+        0,
+        0
+      ],
+      "timing_model": "functional; not RTL cycle accurate",
+      "screenshot_sha256": "c013435b7e66b0bab413d11ee32734cd38d56b2dbee108c1892491001762480f",
+      "checks": {
+        "result": true,
+        "tile": true,
+        "palette": true,
+        "rendered_background": true,
+        "visible_text": true
+      },
+      "rendered_background_rgb": [
+        181,
+        49,
+        32
+      ],
+      "status": "pass"
+    },
+    {
+      "mode": "bad_add",
+      "result": 4,
+      "expected": 4,
+      "result_tile": 52,
+      "background": 22,
+      "rom_sha256": "451f02c32fe4a51fce98192886699c5c68ab398d3b2522f83428c5c42227fed9",
+      "frame": 13,
+      "gsu_r5": [
+        63,
+        0
+      ],
+      "gsu_ram_0200": [
+        104,
+        36
+      ],
+      "gsu_ram_0000": [
+        255,
+        255
+      ],
+      "timing_model": "functional; not RTL cycle accurate",
+      "screenshot_sha256": "61a53f33d84a1582f4d1788ce9810ff98de9cf5a25a57951ad271ccfd18a1292",
+      "checks": {
+        "result": true,
+        "tile": true,
+        "palette": true,
+        "rendered_background": true,
+        "visible_text": true
+      },
+      "rendered_background_rgb": [
+        181,
+        49,
+        32
+      ],
+      "status": "pass"
+    },
+    {
+      "mode": "bad_multiply",
+      "result": 4,
+      "expected": 4,
+      "result_tile": 52,
+      "background": 22,
+      "rom_sha256": "51078725457bb1c6f0a32003ff597aa0c1465baf56b22aae063c18e59240c945",
+      "frame": 13,
+      "gsu_r5": [
+        49,
+        0
+      ],
+      "gsu_ram_0200": [
+        54,
+        19
+      ],
+      "gsu_ram_0000": [
+        255,
+        255
+      ],
+      "timing_model": "functional; not RTL cycle accurate",
+      "screenshot_sha256": "61a53f33d84a1582f4d1788ce9810ff98de9cf5a25a57951ad271ccfd18a1292",
+      "checks": {
+        "result": true,
+        "tile": true,
+        "palette": true,
+        "rendered_background": true,
+        "visible_text": true
+      },
+      "rendered_background_rgb": [
+        181,
+        49,
+        32
+      ],
+      "status": "pass"
+    },
+    {
+      "mode": "bad_plot",
+      "result": 5,
+      "expected": 5,
+      "result_tile": 53,
+      "background": 22,
+      "rom_sha256": "53e9fc85c398c73a75a8903351d5308d3a7358b44077a1d26070df0784c885c3",
+      "frame": 13,
+      "gsu_r5": [
+        63,
+        0
+      ],
+      "gsu_ram_0200": [
+        54,
+        19
+      ],
+      "gsu_ram_0000": [
+        0,
+        255
+      ],
+      "timing_model": "functional; not RTL cycle accurate",
+      "screenshot_sha256": "67f2679b79ee5120db28b54a6b0d7a4719778d734705b4fb1c391ebdaea59593",
+      "checks": {
+        "result": true,
+        "tile": true,
+        "palette": true,
+        "rendered_background": true,
+        "visible_text": true
+      },
+      "rendered_background_rgb": [
+        181,
+        49,
+        32
+      ],
+      "status": "pass"
+    }
+  ],
+  "frontend": {
+    "enabled": 0,
+    "disabled": 1,
+    "screenshots_verified": true,
+    "custom_dll_preserved": true
+  },
+  "source_manifest": {
+    "revision": "b9fa69ddc6d0a331fb103fdb5eef6904305703c2",
+    "files": {
+      "Gsu.cpp": "751e6fa88cff13c58166b96a52b50a043bf1c21227165a3b981e439047096367",
+      "Gsu.h": "e9ef32a7b02ebab01499320032353d68ec2c012f0f4d01861da9d1903197d15d",
+      "Gsu.Instructions.cpp": "02b32d43548ecd934dd871b8cc8f8578bb872e9eddb7bb8671c203b95f270099",
+      "GsuRamHandler.h": "ce23e905e639cd6c5bc01020b010c9f226be804a8213bad67b4868ec9ac21388",
+      "GsuRomHandler.h": "8a4d64bae77fb81266e50ea813e6b9e45b040458aa942a7fe06587486143f75a",
+      "GsuTypes.h": "421239f1e579f4edaf4439374b1cd36d1623d3e31ab37ad22cbd32c66d8e0ed5"
+    },
+    "generated_sha256": "7bf0b0fd949d361674d53b5c6a4ab572463dfbb847f5e2bdbffa19c167a73ae1"
+  },
+  "runtime_manifest": {
+    "gsu-selftest.nes": "591424840eba9fc62f7e7d28f2abb90b672f6e074bf5b1ec5baf7e52ab18e837",
+    "libHarfBuzzSharp.dll": "eb76238c9e8e41d44b5a5b18167c4c5b39ca5db4277af5dbe92d730f0fc14a7d",
+    "libSkiaSharp.dll": "9a0d95e8caaa852c70d085af6a40a744242172ad9ea3fd6bc7599875a8a1dbcd",
+    "Mesen.exe": "d2eb03c2590c648bf329f127ebcfefd70130e7690a9e2ccdba8616faea1fe96b",
+    "MesenCore.dll": "477fd3de2d721a291125b30b44c0543fc7bbb3f4b1ba2b3c9b95a78ef8cc5ab5"
+  },
+  "handoff_sha256": {
+    "EMULATOR_HANDOFF.md": "04e4edd32d3e778b3304f6278403c7988356438155bffcc0b97df7e04c2c18fb",
+    "rtl/nes_gsu.vhd": "ac920b3ebd7e0712e3e20acebed7749fb9a593b7614f345a9ab6e659bc6d75b3",
+    "rtl/n8pro_top.vhd": "0baed6ac6f4d33b3bec1d60eb22db5f62ec8593dc6b7fa134c135efa3eb861ed",
+    "rom/selftest.s": "5101ae64e7c3acb10931f30821042d1aaeed9a61d31258283d09720eb9a41877",
+    "rom/program.inc": "41e5096a25fe41f8f4a4911cd88d3f766b16eda994af07e173bb7919e9bed8c1",
+    "vendor/GSU.vhd": "195a559b14338e99613ddd3c13ac21ff1e111d36a9822279cd7998db454d0897",
+    "vendor/GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+    "sim/tb_nes_gsu.vhd": "dd4c2885229ee0d3cf899c859d82c37de617fcf0bbb41dbacf48642b25980c92"
+  },
+  "limits": [
+    "functional timing only",
+    "not RTL-cycle-accurate",
+    "not complete MiSTer GSU compatibility",
+    "no FPGA synthesis or hardware measurements"
+  ],
+  "standalone": {
+    "status": "pass",
+    "board": "n8pro-gsu-abi1",
+    "timing": "functional",
+    "tests": [
+      "diagnostic_program",
+      "ownership",
+      "internal_irq",
+      "peek",
+      "snapshot",
+      "reset",
+      "shared_latch",
+      "ram_fold",
+      "zero_rom",
+      "cache_invalidation",
+      "cache_line_validity",
+      "signed_multiply",
+      "add_wrap",
+      "rational_clock"
+    ]
+  }
+}

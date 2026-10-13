@@ -1,0 +1,39 @@
+{
+  "mode": "enabled",
+  "result": 0,
+  "expected": 0,
+  "result_tile": 48,
+  "background": 26,
+  "rom_sha256": "591424840eba9fc62f7e7d28f2abb90b672f6e074bf5b1ec5baf7e52ab18e837",
+  "frame": 13,
+  "gsu_r5": [
+    63,
+    0
+  ],
+  "gsu_ram_0200": [
+    54,
+    19
+  ],
+  "gsu_ram_0000": [
+    255,
+    255
+  ],
+  "timing_model": "functional; not RTL cycle accurate",
+  "screenshot_sha256": "acb6dfe2a40bdcc102672c6f68c8000986180436388a064c8047c379cce2652a",
+  "checks": {
+    "result": true,
+    "tile": true,
+    "palette": true,
+    "rendered_background": true,
+    "visible_text": true,
+    "multiply": true,
+    "add_store": true,
+    "plot": true
+  },
+  "rendered_background_rgb": [
+    12,
+    147,
+    0
+  ],
+  "status": "pass"
+}

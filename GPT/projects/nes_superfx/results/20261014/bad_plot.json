@@ -1,0 +1,36 @@
+{
+  "mode": "bad_plot",
+  "result": 5,
+  "expected": 5,
+  "result_tile": 53,
+  "background": 22,
+  "rom_sha256": "53e9fc85c398c73a75a8903351d5308d3a7358b44077a1d26070df0784c885c3",
+  "frame": 13,
+  "gsu_r5": [
+    63,
+    0
+  ],
+  "gsu_ram_0200": [
+    54,
+    19
+  ],
+  "gsu_ram_0000": [
+    0,
+    255
+  ],
+  "timing_model": "functional; not RTL cycle accurate",
+  "screenshot_sha256": "67f2679b79ee5120db28b54a6b0d7a4719778d734705b4fb1c391ebdaea59593",
+  "checks": {
+    "result": true,
+    "tile": true,
+    "palette": true,
+    "rendered_background": true,
+    "visible_text": true
+  },
+  "rendered_background_rgb": [
+    181,
+    49,
+    32
+  ],
+  "status": "pass"
+}
