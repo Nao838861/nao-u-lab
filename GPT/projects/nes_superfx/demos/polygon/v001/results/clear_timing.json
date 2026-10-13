@@ -1,0 +1,54 @@
+{
+  "reference_hz": 25000000,
+  "clear_bytes": 16384,
+  "frames": [
+    {
+      "clock_select": 0,
+      "multiplier_fast": 0,
+      "phase": 0,
+      "bank": 1,
+      "writes": 16384,
+      "start_to_first_write": 242,
+      "start_to_last_write": 99862,
+      "start_to_first_counter_write": 99876,
+      "render_clocks": 1301738
+    },
+    {
+      "clock_select": 0,
+      "multiplier_fast": 0,
+      "phase": 1,
+      "bank": 0,
+      "writes": 16384,
+      "start_to_first_write": 242,
+      "start_to_last_write": 99862,
+      "start_to_first_counter_write": 99876,
+      "render_clocks": 1256850
+    },
+    {
+      "clock_select": 1,
+      "multiplier_fast": 1,
+      "phase": 0,
+      "bank": 1,
+      "writes": 16384,
+      "start_to_first_write": 191,
+      "start_to_last_write": 82353,
+      "start_to_first_counter_write": 82360,
+      "render_clocks": 779150
+    },
+    {
+      "clock_select": 1,
+      "multiplier_fast": 1,
+      "phase": 1,
+      "bank": 0,
+      "writes": 16384,
+      "start_to_first_write": 191,
+      "start_to_last_write": 82353,
+      "start_to_first_counter_write": 82360,
+      "render_clocks": 754832
+    }
+  ],
+  "payload": "build\\polygon\\fast_cube_spread_h6_n24_c1m1\\payload.bin",
+  "payload_sha256": "3bf73975d30ca5536ec36dcd503f3b4f81669662c221a1857074dd3507c2d823",
+  "probe_source_sha256": "120f71eb4380a83f796199e6f5a16de88e235621b1d1b0aab58b4b11c668f71e",
+  "hardware_verified": false
+}
