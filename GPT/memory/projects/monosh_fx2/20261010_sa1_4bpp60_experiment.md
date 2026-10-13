@@ -1,6 +1,24 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
-## 現在の継続地点（2026-10-13、467520d）
+## 現在の継続地点（2026-10-13、e866054）
+
+独立branch experiment/sa1-4bpp-60fps-20261010へe866054をcommit/push済み、child clean/upstream一致。60fps未達・goal active。公開ROM9934d77b…を保持し、live ROMはa9bcd247…へ復元。280field/138logic/131表示/120実PPU画面一致/max7.241609msで回帰確認、全own Mesen/Pythonは終了。ユーザーMesen PID36580（D:\HomeBrew\Mesen\Mesen.exe）には触れない。
+
+無敵化しない通常プレイ4000fieldを初めて実測。full192基準f685de70は3828logic/3823表示、定常1:3792/2:28、SA-1最大25.373241ms（描画20.906752、dirty2.737778、clear1.427276、bg0.301435）。短い800fieldの21ms台だけで全編を評価しない。logic3362で死亡中・3459で地上死亡状態・3567で復帰・3695でボス移行。runtime counterは死亡でもresetしない。全ゲーム全編60fpsではないが、通常4000fieldの死亡・復帰監査は完了。
+
+右端32px以下を全native素材でprefixコピーするopt-in v1（f26835a7）を実装。helperはROM、短い行だけIRAM0500へMVN、末尾RTLと境界guard byte復元。通常4000fieldは3830logic/3825表示・26待ち・max27.694579ms。669物体/15362行を通るが高い木4は平均約2.97ms悪化。新flag --right-narrow-prefix。対象をasset0/2/3/5・左端248..255の8px以下へ絞る --right-narrow-scenery（v2、7b68b7fc）は3832logic/3827表示・24待ち・max24.149901msへ改善。131物体/1389行、prefix最大24B。全3版181実PPU画面一致。v1/v2は基準と3826全FB/packet、3827tile mask/消去端、3826完了game stateが一致。既定OFF。
+
+ボスはstage条件と3900frameを注入し無敵化する別試験。基準4000fieldは3843表示/7待ち/max20.562295ms/182画面。v1/v2の5000fieldは両方4834表示/16待ち/198画面、最大22.340919/22.449499ms。最初4000fieldへ限定すると両方8待ちで改善なし。共通3848世代の全FB/game stateが基準と一致。HP0・boss state 2/3・stage復帰・注入によるボス再開まで確認。自然なエンディング確認ではない。v2のボスは新helper実行0行、差を描画高速化効果と扱わない。
+
+tools/test_sa1_game.pyに観測専用auditgameを追加。boot最初の_fx_frameがlogic_finishedを通らずaudit開始2、停止時の末尾1件が実行途中になる。初回hostの1開始assertだけ失敗したため、起動1件/終了未完了0〜1件を明記し、中途欠落を許さない形へ修正。同じ基準保存データを再検証、初回host失敗logと再検証script/resultを保存。各試作の56172 kernel/755232右byte境界は任意下地の記号mask/valueで一致。
+
+草9行目をBG2へ移す案は棄却。元512pxに透明12画素、256周期でなく左右反転共有。相対scroll512通りではnear62→32tileに減ってもfar最大96tile、合計CHRが最大64B増える。最初の「全不透明・約1KB空く」は誤りを明示訂正した。失敗した試作はROM出力前に止まり、変更を戻した。probe_sa1_near_row8_capacity.pyとnear_row8_capacity.jsonのみsource-only証拠として保存。
+
+**次は背の高い木4の逆順native行への直接接続を具体化する。** source-only probeは76寸法/9336行/5751kernel、元320664B→逆順335145B（+14481B）、圧縮hint211種類/1349B。3B pointer headerなら合計+33083Bだが、1B共通hint番号と211×3B tableなら算術上+22214B。scriptはresults/20261013_long_audit/roms_and_sources.zip内diagnostics/reverse_tree_capacity_probe.py、JSONも別保存。元nativeを二重保持せずsa1_game_compiled.py row_entryでasset4のみ逆順にする候補。実bank割付・他assetとの旧code共有・通常描画/左clip/dirty band fallbackは未解決で、容量に収まるとも速いともまだ主張しない。renderer_game_macros.sのrow_partial/clip_right/clip_leftは昇順STAを仮定するので、reverse4を入れて従来fallbackへ流すと壊れる。fast_tilesでdirty band境界に落ちる場合も含めて専用経路/対応を設計し、画素照合必須。過去の爆発40/41の逆順実装は参考にするが、同じ爆発試験を再実施しない。
+
+証拠 results/20261013_long_audit/ はREADME/commands/comparison/default_restore、6case zip（各7〜11MB）とroms_and_sources.zip（8933029B、SHA2b6565402349260da2e55ad04bce19ab39559be1bbb79d3e6144691b39a9b2ad）。全世代FB、実PPU/VRAM/palette/RGB、Lua/labels/ROM/sourceと静的結果を保存、CRC合格。再集計はtools/report_sa1_long_audit.py。元の現行MonoSHにはミサイル/レーザーなどの武器切替は無い（monosh_combatは通常3発等）。以前の「全武器4000監査」は別ゲームの文脈が混ざった記述で、今後の未完了条件に使わない。未完了は全ゲーム進行での毎field表示と自然なクリア確認。
+
+## 前段の継続地点（2026-10-13、467520d）
 
 467520dを独立SA-1分岐へcommit/push済み・clean。60fps未達・goal active。公開ROMは変更なし。前段da1936aの境界修正・hint圧縮に続き、`--stack-explosions-wide`（幅91追加）、`--stack-explosions-right-only`（右端で切れる物だけ）、`--stack-explosions-iram`（helperを0300へコピー）を検証した。全1492寸法と元素材を保持。実行中のテストなし。
 
