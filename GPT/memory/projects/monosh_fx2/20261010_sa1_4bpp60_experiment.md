@@ -750,3 +750,29 @@ tools/verify_sa1_prefix_unrolled.pyは実ROMの65816命令を最小interpreter�
 成果物: results/20261013_transfer_deadlineのREADME/commands/comparison/default_restore、evidence.zip42,304,565B、SHA db5b34fe9fbe9491c8039bb6e8dafbbbb6a85e4ee02e5bec18e791651872d867、CRC合格。4road/2boss/2fixtureのROM/生成source/labels/map/Lua/FB/VRAM/PPU/RGB/転送ログ/静的検査を保存。invalid_*は不合格資料、採用記録と区別。tools/report_sa1_transfer_deadline.pyで集計。通常復元は20261013_flame_direct/commands.json['baseline']をbuildする（mask_bounds_build.py baseでも同じa9bc）。通常smokeはmovestress_detinput_deadline_default_restore_tracepalette。goalはactiveのまま。
 
 次の具体候補: 現行pipe_flipは先頭でpipe_start_blankを待ち、その後にrecord→WRAM1d04..1d16/player4_present/fx4_page/pipe_obj_pointerの準備まで実blank内で行う。これらの状態準備を197～203行へ前倒しし、jsr update_ground_pointers直前だけでblankを待つopt-inを検討する。HWのHDMA送信元がこのmetadata自体を読んでいないこと、IRQがmainを止めていること、PPU/OAM/HDMAポインタの実更新はblank内であることを確認し、実PPU/全画素/待ち回数で測る。未実装・未測定なので改善と主張しない。別候補の3×16KB VRAMキューは元vram_prefetch3にあるが、固定map二面とmap転送費の違いがあり、過去の四面/FIFOをそのまま再実験しない。全ゲーム/全武器/敗北4000field監査はまだ必要。
+
+## 切替準備・宛先事前計算・短いI/O・転送予約（2026-10-13、47d4abe）
+
+SA-1独立branchへ47d4abeをcommit・push済み。60fps未達、goal active。8方式の道中、3方式のボス、2方式の分割fixtureを比較しても前回full192の道中3待ち/ボス2待ちを減らせなかった。通常buildをa9bcd247へ戻し、279field/137logic/130表示・120全画素一致・最大7.241609ms、terminal exit0。公開ROM9934d77bは維持。自前Mesen/ホスト検証/reportは全て終了し、ユーザーのMesen PID36580には触れていない。
+
+--early-flip-prepareはpipe_flip先頭のpipe_start_blankをWRAM状態準備の後、update_ground_pointersの直前へ移す。命令数は同じ。実行時にHDMA各channelの表/間接参照が1C00..1DFFを読んでいないことと、実PPU更新はline203以上または21以下の非表示内であることをassertする。ROM e71a4be4。道中648表示/3待ち/最大21.502638、boss1748/2/18.487823。early preparationは道中607/648、ボス1653/1748で通ったが表示改善なし。
+
+--prebank-dma（tools/sa1_prebank_dma.py）はSA-1の0198世代が奇数ならページ3000、偶数なら0の宛先をfixed_descriptorで準備する。496-pageをC0へ置き、元のSBC即値をSBC C0へ置換。S-CPUのdescriptor毎のADC pipe_fast_pageを省く。汎用分割経路も絶対宛先のまま進める。初回の対照41062794は費用表57を維持して道中648/3/21.402904。現在の同flagは省いた命令分4を割り引くので、初回対照は同じflagだけでROM再生成できない。初回ROM/生成source/ca65引数は証拠に保存。commands.jsonはその履歴と、現在のprebank_current（未測定の単独cost53版）を区別する。
+
+--dma-short-ioはprebankと併用し、DMA展開区間のみPHB/PEA0000/PLB/PLBでDB=00、WRAM読出しをlong、4305/4302/2116書込みをabsoluteへ変更。D=4200、Y=FE01のSTY0Bは維持。終端でD=0とDB=7Eへ戻す。費用をさらに2割引き、combinedの記述子費用51。ROM1a2603a9、道中648/3/21.539141。初回harnessがcpu.dbという不存在キーで停止したが、stateはcpu.dbr=126/D=0だった。cpu.dbrに修正し同一ROMを最初から実行したv2のみ性能比較に使用。初回Lua/failure/stateを別保存。
+
+--dma-unroll-count16/20は一回のDMA展開を12個から増やす。16版d1eb892bは道中648/3/21.486900、20版4f16803aは648/3/21.449186、boss1748/2/18.607484。20版CODE=FFF9 byteで残り7byteしかなく、追加CODEを安易に重ねない。展開ブロックは23byte/descriptor。DB/D復元、generationから求めたpageと実recordページの一致、表示中ページへ送らないこと、SA-1元descriptor/WRAM再開descriptorのsourceと絶対宛先・範囲・総byte数を実行時にassertする。
+
+--prefix-refresh-sixteenth（tools/sa1_prefix_refresh.py）は従来n+n/32+n/128にn/16を足す。32B単位なので3*(n/32)を利用し、SA-1累積表とSCPUのpartial控除を揃える。small1600/player2400、16展開を併用したcf48fb40は道中647/4/21.457753で退行。500field fixtureは153logic/145表示、全145枚一致、prefix455回/partial214回/最大2784B、ページ所有権490回/途中再開309回。新費用式も元の式も最終harnessはSA-1の累積bytes/costを独立再計算して照合する。
+
+--tail-flip-reserve1400はCHR更新なし・record残量1024B以下の場合だけ予約1400にする。bulk2200/player2300は維持、旧グローバル低余裕の失敗を繰り返す一律値変更ではない。16展開併用f89c8876は道中648/3/21.426837、boss1748/2/18.470223で待ち改善なし。fixture500field/152logic/144表示・全144枚一致、prefix468回/partial123回/最大2048B、所有権489回/途中再開323回。fixtureは2～3field更新でgoal60fps=false、ゲーム達成に使わない。
+
+既存sparse-merge-gap32も現行基準へ追加して55a44cc6、648/3/21.387446で変わらず。8road全て168枚原画/FB/VRAM/実PPU/RGB照合、共通654世代の全24576B FB/packet/mask/消去端一致。boss3本は各1900field/1755logic/1748表示/147枚照合、共通1753世代の全FB等一致。2fixtureは前回full192と共通149世代FB等一致。各候補7ROMで実命令59024search/58148full、予算262144条件/Y復元/blank HDMA tableを検証。最終tail ROMの全1492寸法/native90854行/弾158688行、dirty5992縦位相表の独立原画alpha照合も合格。
+
+20展開とtailの表示待ちvisible693/697/701ではready3、rendering1、complete0、flipped0。即時の描画キュー枯渇ではなくVRAM転送待ち。SA-1 maxだけの小差で採用しない。descriptor_costのraw間隔診断にはVBLANK/NMI/HDMA/refresh等が含まれ、最大を純粋な設定命令費と扱って費用を勝手に下げない。
+
+成果物はresults/20261013_flip_prepareのREADME/commands/comparison/default_restore、evidence.zip68,401,354B、SHA9fc0ce409883079a81ebccedcebeaa41f54a1c440f328ff3e1a6fca46fcde90a、CRC検証済み。tools/report_sa1_flip_prepare.pyで集計。8候補ROM、各試験の全buffer/実PPU/VRAM/RGB、Lua/labels/map/生成source/転送記録/独立検証を保存。GitHubの50MB推奨警告は出たがpush成功。既定復元は.cache/deadline_restore.py（前回flame_direct/commands.jsonのbaseline）でa9bc。同smokeはmovestress_detinput_flipprepare_default_restore_tracepalette。
+
+次の具体probeはtools/probe_sa1_fixed_front_mask.py。前回full192の実占有maskについて、current|prev1とcurrent|prev2の転送集合を比較した。後者のbyte数/descriptor数が実DMA記録57世代と一致。重い530..570の41世代で前者は平均484.683B、cost523.049相当小さい。gen543は10400B/39→10048B/38、544は10752/38→10080/39、546は11744/41→10176/36（1568B節約）、547は10944/38→10752/38、549は11648/39→10944/42。build/sa1_game/fixed_front_mask_probe.jsonを証拠に保存。
+
+このprobeは前面一括更新が常に選べるという静的集合比較で、gameIntegrated=false/goal=false。実速度・追加準備費・ownershipは未実装。過去adaptive-vramは準備費で道中495/ボス1059へ退行したためそのまま再実験しない。固定map sparse/prefixの現行で、各VRAMページの実内容世代/占有maskを管理し、前面には全量が一回のblankに収まる時だけ書く案の費用を先に調べる。二面の内容は動的に選ぶとprev2とは限らず、SA-1は7世代先を準備しているので単純な0198 parity事前加算も使えない。SA-1/SCPUのどちらがいつmask/list/prefixを作るかと、描画完了キューからの遅延を測る必要がある。改善見込みだけで実装成功・60fps達成と主張しない。固定map24KB×3は72KBになりVRAM64KBへ収まらず、単に三面化もできない。全ゲーム/全武器/敗北4000field監査もまだ必要。
