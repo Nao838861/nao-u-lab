@@ -23,3 +23,5 @@ FamiBASIC/MMC5向けの自作NESコア計画とは別。マッパー側リポジ
 起動は run_solid_cube.cmd、個数切替は run_cube_benchmark.cmd。追加依頼で１本のROMにまとめ、A（専用設定Zキー）で２→４→６→９→13→19→24→33→52→71個を順に変更する。辺長も各計測条件へ変更し、sprite HUDのN=/S=で表示する。固定条件を単独表示する場合は --edge 指定を使える。GSUが頂点変換・辺走査・span塗りを毎画像実行し、CPU画像転送は不要。64姿勢の全GSU画素と最終PPU RGB、および毎２NTSC fieldの提示・遅延0を検査する。配置上限と描画期限上限を区別し、期限上限は１個増やした失敗例も保存。詳細値は成果README/benchmark.jsonが正本。
 
 回路側への入口は [ABI2_HANDOFF.md](../../../projects/nes_superfx/demos/bitmap/v001/ABI2_HANDOFF.md)。ABI2のRTL・40 KiBのFit・独立ポート/外部RAM帯域・実機性能は未確認。数値はMesen由来GSU時間モデルでの結果であり、FPGAの実測上限とは扱わない。
+
+表示用の最新版は均等配置v002。上側256×212へ行数と行内の個数を分配し、画面全体へ等間隔に並べる。下28画素はHUD用。run_cube_benchmark.cmdの既定をv002へ変更した。ユーザーがv001の動作を確認し「チェック不要なのでROMを出して」と指定したため、v002は座標変更とビルドのみ。性能測定の正本はv001の結果。

@@ -31,6 +31,31 @@ def positions(count,half):
     return [((i%cols)*w+w//2,(i//cols)*h+h//2,(i//cols)*h+h//2-ry,2*ry+1) for i in range(count)]
 
 
+def spread_positions(count,half):
+    # Fill the screen evenly, leaving the bottom 28 pixels for the count/size HUD.
+    width,height=256,212
+    rx=math.ceil(1.42*half);ry=math.ceil(1.56*half)
+    maxcols=width//(2*rx+2);maxrows=height//(2*ry+2)
+    candidates=[]
+    for rows in range(1,min(count,maxrows)+1):
+        cols=math.ceil(count/rows)
+        if cols>maxcols:continue
+        aspect=(width/cols)/(height/rows)
+        score=abs(math.log(aspect))+.25*(cols*rows-count)/count
+        candidates.append((score,rows))
+    if not candidates:raise ValueError('spread layout does not fit')
+    rows=min(candidates)[1]
+    base,extra=divmod(count,rows)
+    result=[]
+    for row in range(rows):
+        columns=base+(row<extra)
+        cy=round((row+.5)*height/rows)
+        for col in range(columns):
+            cx=round((col+.5)*width/columns)
+            result.append((cx,cy,cy-ry,2*ry+1))
+    return result
+
+
 def faces(phase):
     # Rotation Y then X; back-face cull by transformed outward normal z.
     theta=phase*2*math.pi/64
@@ -48,11 +73,12 @@ def faces(phase):
     return result
 
 
-def build(kind='pattern',mode=3,count=1,half=44):
+def build(kind='pattern',mode=3,count=1,half=44,spread=False):
     if mode not in (1,2,3): raise ValueError('mode must be 1..3')
     if not 1<=half<=64 or not 1<=count<=448: raise ValueError('half must be 1..64, count 1..448')
     if kind=='solid' and mode!=3: raise ValueError('solid renderer requires full-screen mode 3')
-    name='interactive_v001' if kind=='interactive' else (f'bitmap_{mode}' if kind=='pattern' else f'solid_{half}_{count}')
+    if spread and kind!='interactive':raise ValueError('--spread requires --kind interactive')
+    name=('interactive_v002' if spread else 'interactive_v001') if kind=='interactive' else (f'bitmap_{mode}' if kind=='pattern' else f'solid_{half}_{count}')
     out=ROOT/'build/bitmap'/name;out.mkdir(parents=True,exist_ok=True)
     include=ROOT/'.cache/casfx'
     include.mkdir(parents=True,exist_ok=True)
@@ -84,7 +110,7 @@ def build(kind='pattern',mode=3,count=1,half=44):
         for i,r in enumerate(records):
             n,h=r['count_at_30fps'],r['half']
             verts=[tuple(h if x>0 else -h for x in v) for v in vertices]
-            objects=positions(n,h)
+            objects=spread_positions(n,h) if spread else positions(n,h)
             data=b''.join(struct.pack('<hhh',*v) for v in verts)+struct.pack('<H',n)
             data+=b''.join(struct.pack('<4H',*p) for p in objects)
             (out/f'profile_{i}.bin').write_bytes(data)
@@ -115,11 +141,14 @@ def build(kind='pattern',mode=3,count=1,half=44):
           'vertices':vertices,'matrices':matrices,'positions':positions(count,half) if kind!='pattern' else [],
           'rom_sha256':hashlib.sha256(rom.read_bytes()).hexdigest()}
     if profiles:meta['profiles']=profiles
+    if spread:meta['layout']='spread across 256x212; bottom 28 pixels reserved for HUD'
     (out/'config.json').write_text(json.dumps(meta,indent=2)+'\n')
     return out
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--kind',choices=['pattern','solid','interactive'],default='pattern');p.add_argument('--mode',type=int,default=3)
-    p.add_argument('--count',type=int,default=1);p.add_argument('--half',type=int,default=44);a=p.parse_args()
-    print(build(a.kind,a.mode,a.count,a.half))
+    p.add_argument('--count',type=int,default=1);p.add_argument('--half',type=int,default=44)
+    p.add_argument('--spread',action='store_true',help='対話版v002：画面全体へ均等配置')
+    a=p.parse_args()
+    print(build(a.kind,a.mode,a.count,a.half,a.spread))
