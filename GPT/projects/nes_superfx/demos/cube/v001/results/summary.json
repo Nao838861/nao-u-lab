@@ -1,0 +1,344 @@
+{
+  "status": "pass",
+  "rom_sha256": "df9b339c4a98d8fde994d8d119e544609ae56bc27b34729f8e0a6152686d55ac",
+  "phases": 64,
+  "vertices_checked": 512,
+  "gsu_pixels_checked": 196608,
+  "ppu_tiles_checked": 49152,
+  "ppu_rgb_pixels_checked": 3145728,
+  "display_interval_fields": [
+    8
+  ],
+  "trace": [
+    {
+      "frame": 14,
+      "phase": 0,
+      "updates": 1
+    },
+    {
+      "frame": 22,
+      "phase": 1,
+      "updates": 2
+    },
+    {
+      "frame": 30,
+      "phase": 2,
+      "updates": 3
+    },
+    {
+      "frame": 38,
+      "phase": 3,
+      "updates": 4
+    },
+    {
+      "frame": 46,
+      "phase": 4,
+      "updates": 5
+    },
+    {
+      "frame": 54,
+      "phase": 5,
+      "updates": 6
+    },
+    {
+      "frame": 62,
+      "phase": 6,
+      "updates": 7
+    },
+    {
+      "frame": 70,
+      "phase": 7,
+      "updates": 8
+    },
+    {
+      "frame": 78,
+      "phase": 8,
+      "updates": 9
+    },
+    {
+      "frame": 86,
+      "phase": 9,
+      "updates": 10
+    },
+    {
+      "frame": 94,
+      "phase": 10,
+      "updates": 11
+    },
+    {
+      "frame": 102,
+      "phase": 11,
+      "updates": 12
+    },
+    {
+      "frame": 110,
+      "phase": 12,
+      "updates": 13
+    },
+    {
+      "frame": 118,
+      "phase": 13,
+      "updates": 14
+    },
+    {
+      "frame": 126,
+      "phase": 14,
+      "updates": 15
+    },
+    {
+      "frame": 134,
+      "phase": 15,
+      "updates": 16
+    },
+    {
+      "frame": 142,
+      "phase": 16,
+      "updates": 17
+    },
+    {
+      "frame": 150,
+      "phase": 17,
+      "updates": 18
+    },
+    {
+      "frame": 158,
+      "phase": 18,
+      "updates": 19
+    },
+    {
+      "frame": 166,
+      "phase": 19,
+      "updates": 20
+    },
+    {
+      "frame": 174,
+      "phase": 20,
+      "updates": 21
+    },
+    {
+      "frame": 182,
+      "phase": 21,
+      "updates": 22
+    },
+    {
+      "frame": 190,
+      "phase": 22,
+      "updates": 23
+    },
+    {
+      "frame": 198,
+      "phase": 23,
+      "updates": 24
+    },
+    {
+      "frame": 206,
+      "phase": 24,
+      "updates": 25
+    },
+    {
+      "frame": 214,
+      "phase": 25,
+      "updates": 26
+    },
+    {
+      "frame": 222,
+      "phase": 26,
+      "updates": 27
+    },
+    {
+      "frame": 230,
+      "phase": 27,
+      "updates": 28
+    },
+    {
+      "frame": 238,
+      "phase": 28,
+      "updates": 29
+    },
+    {
+      "frame": 246,
+      "phase": 29,
+      "updates": 30
+    },
+    {
+      "frame": 254,
+      "phase": 30,
+      "updates": 31
+    },
+    {
+      "frame": 262,
+      "phase": 31,
+      "updates": 32
+    },
+    {
+      "frame": 270,
+      "phase": 32,
+      "updates": 33
+    },
+    {
+      "frame": 278,
+      "phase": 33,
+      "updates": 34
+    },
+    {
+      "frame": 286,
+      "phase": 34,
+      "updates": 35
+    },
+    {
+      "frame": 294,
+      "phase": 35,
+      "updates": 36
+    },
+    {
+      "frame": 302,
+      "phase": 36,
+      "updates": 37
+    },
+    {
+      "frame": 310,
+      "phase": 37,
+      "updates": 38
+    },
+    {
+      "frame": 318,
+      "phase": 38,
+      "updates": 39
+    },
+    {
+      "frame": 326,
+      "phase": 39,
+      "updates": 40
+    },
+    {
+      "frame": 334,
+      "phase": 40,
+      "updates": 41
+    },
+    {
+      "frame": 342,
+      "phase": 41,
+      "updates": 42
+    },
+    {
+      "frame": 350,
+      "phase": 42,
+      "updates": 43
+    },
+    {
+      "frame": 358,
+      "phase": 43,
+      "updates": 44
+    },
+    {
+      "frame": 366,
+      "phase": 44,
+      "updates": 45
+    },
+    {
+      "frame": 374,
+      "phase": 45,
+      "updates": 46
+    },
+    {
+      "frame": 382,
+      "phase": 46,
+      "updates": 47
+    },
+    {
+      "frame": 390,
+      "phase": 47,
+      "updates": 48
+    },
+    {
+      "frame": 398,
+      "phase": 48,
+      "updates": 49
+    },
+    {
+      "frame": 406,
+      "phase": 49,
+      "updates": 50
+    },
+    {
+      "frame": 414,
+      "phase": 50,
+      "updates": 51
+    },
+    {
+      "frame": 422,
+      "phase": 51,
+      "updates": 52
+    },
+    {
+      "frame": 430,
+      "phase": 52,
+      "updates": 53
+    },
+    {
+      "frame": 438,
+      "phase": 53,
+      "updates": 54
+    },
+    {
+      "frame": 446,
+      "phase": 54,
+      "updates": 55
+    },
+    {
+      "frame": 454,
+      "phase": 55,
+      "updates": 56
+    },
+    {
+      "frame": 462,
+      "phase": 56,
+      "updates": 57
+    },
+    {
+      "frame": 470,
+      "phase": 57,
+      "updates": 58
+    },
+    {
+      "frame": 478,
+      "phase": 58,
+      "updates": 59
+    },
+    {
+      "frame": 486,
+      "phase": 59,
+      "updates": 60
+    },
+    {
+      "frame": 494,
+      "phase": 60,
+      "updates": 61
+    },
+    {
+      "frame": 502,
+      "phase": 61,
+      "updates": 62
+    },
+    {
+      "frame": 510,
+      "phase": 62,
+      "updates": 63
+    },
+    {
+      "frame": 518,
+      "phase": 63,
+      "updates": 64
+    }
+  ],
+  "timing": "functional emulator; not hardware measurement",
+  "source_sha256": {
+    "cpu.s": "5c131c106b150c8d7ef3d8cb785603ad65f77751b0679c48d82fa5687191ed7d",
+    "gsu.s": "3bc6b9d50283c1256b2fb2241d2e91a0b90d517ae79e2fd3f1dab8c6c5bdabfb",
+    "rom.cfg": "5ada82376d6beafb7bb13f5fe9f8a982853c9d298ca86373ead10ac717974488",
+    "gsu.cfg": "4c8b6a127e80a5d68f4cd880b31a0be2530c981b6f81be06fb20c5f5d5699889"
+  },
+  "emulator_core_sha256": "477fd3de2d721a291125b30b44c0543fc7bbb3f4b1ba2b3c9b95a78ef8cc5ab5",
+  "capture_zip_sha256": "092d7afe013846939a6430956e6b8524131750557a44a1c479c328a81d3ca123",
+  "gsu_kernel_bytes": 199
+}

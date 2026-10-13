@@ -8,6 +8,7 @@
 
 - [run_gsu.cmd](run_gsu.cmd)：GSU入り独自マッパーを明示して診断ROMを起動。期待は緑背景・結果0。
 - [run_nrom.cmd](run_nrom.cmd)：通常のNROMとして同じROMを起動。期待は赤背景・結果1。
+- [run_cube.cmd](run_cube.cmd)：GSUで頂点変換と線描画を行う、回転する立方体。[説明・動画・検証](demos/cube/v001/README.md)。
 - 別ROMを渡す場合は `run_gsu.cmd "C:\path\diagnostic.nes"`。
 
 `runtime/Mesen.exe` を直接起動せず、上記ランチャーを使う。標準UIは起動時に内蔵DLLを展開するため、直接起動すると専用の `MesenCore.dll` が標準版で上書きされる。ランチャーはhashを確認し、読み取り共有のWindowsファイルハンドルを保持して上書きを防ぐ。標準UIの依存展開処理はこの書込み失敗を捕捉し、専用DLLを正常にロードする。この経路も実行検証済み。

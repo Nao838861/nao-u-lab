@@ -11,3 +11,7 @@
 - 標準Mesen UIは内蔵DLLを展開する。専用ランチャーのファイル共有ハンドルで上書きを防ぐ。直接 `runtime/Mesen.exe` を起動して専用DLLが戻ったら `tools/setup_runtime.py` で復元する。
 
 FamiBASIC/MMC5向けの自作NESコア計画とは別。マッパー側リポジトリ・ゲーム・既存Mesenは変更していない。
+
+## モデル表示テスト
+
+同日の追加依頼で [回転する立方体](../../../projects/nes_superfx/demos/cube/v001/README.md) を実装。`run_cube.cmd` で起動する。GSUが8頂点を固定小数点行列で変換し、12辺をBresenham描画。固定CHRの2×2画素組合せで表示するため、ABI1と回路は変更していない。64姿勢の頂点・GSU全画素・PPU全RGBが一致。機能エミュレーターでは8 field更新。面塗り・隠面・透視・実機性能は未検証。
