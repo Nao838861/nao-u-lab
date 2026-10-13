@@ -1,0 +1,82 @@
+[
+  {
+    "clear": false,
+    "dot": false,
+    "plot": false,
+    "clocks": [
+      775447,
+      811388,
+      803413
+    ]
+  },
+  {
+    "clear": false,
+    "dot": false,
+    "plot": true,
+    "clocks": [
+      787977,
+      855654,
+      836796
+    ]
+  },
+  {
+    "clear": false,
+    "dot": true,
+    "plot": false,
+    "clocks": [
+      776524,
+      809126,
+      787852
+    ]
+  },
+  {
+    "clear": false,
+    "dot": true,
+    "plot": true,
+    "clocks": [
+      786537,
+      850889,
+      818708
+    ]
+  },
+  {
+    "clear": true,
+    "dot": false,
+    "plot": false,
+    "clocks": [
+      762890,
+      798830,
+      790867
+    ]
+  },
+  {
+    "clear": true,
+    "dot": false,
+    "plot": true,
+    "clocks": [
+      772919,
+      840596,
+      821725
+    ]
+  },
+  {
+    "clear": true,
+    "dot": true,
+    "plot": false,
+    "clocks": [
+      761451,
+      794067,
+      772780
+    ]
+  },
+  {
+    "clear": true,
+    "dot": true,
+    "plot": true,
+    "clocks": [
+      771467,
+      835820,
+      803650
+    ]
+  }
+]

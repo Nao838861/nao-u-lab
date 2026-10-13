@@ -1,0 +1,200 @@
+[
+  {
+    "case": "large",
+    "renderer": "baseline",
+    "clock_select": 0,
+    "count": 5,
+    "drawn_triangles": [
+      22,
+      30
+    ],
+    "rom": "releases/GSU_Poly_large_12M_baseline_v001.nes"
+  },
+  {
+    "case": "large",
+    "renderer": "fast",
+    "clock_select": 0,
+    "count": 8,
+    "drawn_triangles": [
+      36,
+      48
+    ],
+    "rom": "releases/GSU_Poly_large_12M_v001.nes"
+  },
+  {
+    "case": "large",
+    "renderer": "fast",
+    "clock_select": 1,
+    "count": 13,
+    "drawn_triangles": [
+      58,
+      78
+    ],
+    "rom": "releases/GSU_Poly_large_25M_v001.nes"
+  },
+  {
+    "case": "medium",
+    "renderer": "baseline",
+    "clock_select": 0,
+    "count": 8,
+    "drawn_triangles": [
+      40,
+      48
+    ],
+    "rom": "releases/GSU_Poly_medium_12M_baseline_v001.nes"
+  },
+  {
+    "case": "medium",
+    "renderer": "fast",
+    "clock_select": 0,
+    "count": 10,
+    "drawn_triangles": [
+      50,
+      60
+    ],
+    "rom": "releases/GSU_Poly_medium_12M_v001.nes"
+  },
+  {
+    "case": "medium",
+    "renderer": "fast",
+    "clock_select": 1,
+    "count": 16,
+    "drawn_triangles": [
+      83,
+      96
+    ],
+    "rom": "releases/GSU_Poly_medium_25M_v001.nes"
+  },
+  {
+    "case": "small",
+    "renderer": "baseline",
+    "clock_select": 0,
+    "count": 13,
+    "drawn_triangles": [
+      66,
+      78
+    ],
+    "rom": "releases/GSU_Poly_small_12M_baseline_v001.nes"
+  },
+  {
+    "case": "small",
+    "renderer": "fast",
+    "clock_select": 0,
+    "count": 13,
+    "drawn_triangles": [
+      66,
+      78
+    ],
+    "rom": "releases/GSU_Poly_small_12M_v001.nes"
+  },
+  {
+    "case": "small",
+    "renderer": "fast",
+    "clock_select": 1,
+    "count": 24,
+    "drawn_triangles": [
+      127,
+      144
+    ],
+    "rom": "releases/GSU_Poly_small_25M_v001.nes"
+  },
+  {
+    "case": "irregular",
+    "renderer": "baseline",
+    "clock_select": 0,
+    "count": 7,
+    "drawn_triangles": [
+      61,
+      69
+    ],
+    "rom": "releases/GSU_Poly_irregular_12M_baseline_v001.nes"
+  },
+  {
+    "case": "irregular",
+    "renderer": "fast",
+    "clock_select": 0,
+    "count": 7,
+    "drawn_triangles": [
+      61,
+      69
+    ],
+    "rom": "releases/GSU_Poly_irregular_12M_v001.nes"
+  },
+  {
+    "case": "irregular",
+    "renderer": "fast",
+    "clock_select": 1,
+    "count": 13,
+    "drawn_triangles": [
+      115,
+      126
+    ],
+    "rom": "releases/GSU_Poly_irregular_25M_v001.nes"
+  },
+  {
+    "case": "overlap",
+    "renderer": "baseline",
+    "clock_select": 0,
+    "count": 8,
+    "drawn_triangles": [
+      70,
+      79
+    ],
+    "rom": "releases/GSU_Poly_overlap_12M_baseline_v001.nes"
+  },
+  {
+    "case": "overlap",
+    "renderer": "fast",
+    "clock_select": 0,
+    "count": 8,
+    "drawn_triangles": [
+      70,
+      79
+    ],
+    "rom": "releases/GSU_Poly_overlap_12M_v001.nes"
+  },
+  {
+    "case": "overlap",
+    "renderer": "fast",
+    "clock_select": 1,
+    "count": 16,
+    "drawn_triangles": [
+      141,
+      156
+    ],
+    "rom": "releases/GSU_Poly_overlap_25M_v001.nes"
+  },
+  {
+    "case": "clipped",
+    "renderer": "baseline",
+    "clock_select": 0,
+    "count": 11,
+    "drawn_triangles": [
+      27,
+      35
+    ],
+    "rom": "releases/GSU_Poly_clipped_12M_baseline_v001.nes"
+  },
+  {
+    "case": "clipped",
+    "renderer": "fast",
+    "clock_select": 0,
+    "count": 14,
+    "drawn_triangles": [
+      37,
+      46
+    ],
+    "rom": "releases/GSU_Poly_clipped_12M_v001.nes"
+  },
+  {
+    "case": "clipped",
+    "renderer": "fast",
+    "clock_select": 1,
+    "count": 23,
+    "drawn_triangles": [
+      56,
+      67
+    ],
+    "rom": "releases/GSU_Poly_clipped_25M_v001.nes"
+  }
+]

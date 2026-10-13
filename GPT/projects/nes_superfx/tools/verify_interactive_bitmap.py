@@ -1,5 +1,5 @@
 """実コントローラーのA入力で10構成を切替え、各64姿勢と長押し・一周を検査。"""
-import json, os, re, subprocess
+import argparse,json, os, re, subprocess
 from pathlib import Path
 from PIL import Image
 from build_bitmap import ROOT, FONT
@@ -8,9 +8,12 @@ from native_lock import core_lock
 
 
 def main():
-    directory=ROOT/'build/bitmap/interactive_v001'
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--directory',type=Path,default=ROOT/'build/bitmap/interactive_v001')
+    args=parser.parse_args();directory=args.directory.resolve()
     out=directory/'verification';out.mkdir(exist_ok=True)
     config=json.loads((directory/'config.json').read_text())
+    profile_count=len(config['profiles'])
     labels={n:int(a,16) for a,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(directory/'cpu.lbl').read_text())}
     code=r'''local L=LABELS local out=OUTDIR
 local frame=0 local previous=-1 local stable=0 local done=false local pressUntil=-1
@@ -32,10 +35,10 @@ emu.addEventCallback(function()
         frame,u,p,phase,word(L.switches),word(L.missed)));trace:flush()
       stable=0;previous=u
     else stable=stable+1 end
-    if wanted==10 then
-      if p==0 and word(L.switches)==10 then
+    if wanted==PROFILECOUNT then
+      if p==0 and word(L.switches)==PROFILECOUNT then
         if not wrappedAt then wrappedAt=frame end
-        assert(word(L.switches)==10,'held A repeated')
+        assert(word(L.switches)==PROFILECOUNT,'held A repeated')
         if frame-wrappedAt>=16 then done=true;trace:close();captures:close();emu.stop(0) end
       end
       return
@@ -56,7 +59,7 @@ emu.addEventCallback(function()
   end)
   if not ok then local f=assert(io.open(out..'/error.txt','w'));f:write(tostring(err));f:close();emu.stop(1) end
 end,emu.eventType.endFrame)
-'''.replace('LABELS','{'+','.join(f'{k}={v}' for k,v in labels.items())+'}').replace('OUTDIR',json.dumps(out.as_posix()))
+'''.replace('LABELS','{'+','.join(f'{k}={v}' for k,v in labels.items())+'}').replace('OUTDIR',json.dumps(out.as_posix())).replace('PROFILECOUNT',str(profile_count))
     script=out/'test.lua';script.write_text(code,encoding='utf-8')
     settings=ROOT/'runtime/settings.json';before=settings.read_bytes();cfg=json.loads(before)
     cfg.setdefault('Debug',{}).setdefault('ScriptWindow',{})['AllowIoOsAccess']=True
@@ -66,7 +69,7 @@ end,emu.eventType.endFrame)
     try:
         with core_lock(ROOT/'runtime/MesenCore.dll'):
             result=subprocess.run([str(ROOT/'runtime/Mesen.exe'),'--testRunner','--timeout=90',
-                '--doNotSaveSettings','--enableStdout',str(directory/'interactive_v001.nes'),str(script)],
+                '--doNotSaveSettings','--enableStdout',str(next(directory.glob('*.nes'))),str(script)],
                 cwd=ROOT/'runtime',env=env,capture_output=True,timeout=100,
                 creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
     finally:settings.write_bytes(before)
@@ -90,21 +93,23 @@ end,emu.eventType.endFrame)
                     off=pixel_byte(x,y,0);shift=7-(x&7)
                     color=((ram[off]>>shift)&1)|(((ram[off+1]>>shift)&1)<<1)
                     assert color==pixels[y*256+x],(p,s['phase'],x,y)
-            for row,text in enumerate([f"N={profile['count']:02d}",f"S={profile['half']*2:02d}"]):
+            lines=profile.get('hud_lines',[(8,216,f"N={profile['count']:02d}"),(8,224,f"S={profile['half']*2:02d}")])
+            font=config.get('font',FONT)
+            for x0,y0,text in lines:
                 for col,c in enumerate(text):
-                    for y,bits in enumerate(FONT[c]):
+                    for y,bits in enumerate(font[c]):
                         for x,bit in enumerate(bits):
-                            if bit=='1':expected.putpixel((8+col*8+x+1,216+row*8+y+1),(255,254,255))
+                            if bit=='1':expected.putpixel((x0+col*8+x+1,y0+y+1),(255,254,255))
             assert actual.tobytes()==expected.tobytes(),(p,s['phase'],'PPU/HUD mismatch')
             actual.save(stem.with_suffix('.png'))
             if s['sample']<20:previews.append(actual)
         report.append({'profile':p,'count':profile['count'],'model_edge':profile['half']*2,
                        'phases':64,'intervals':intervals,'status':'pass'})
-    assert trace[-1]['switches']==10 and trace[-1]['profile']==0
+    assert trace[-1]['switches']==profile_count and trace[-1]['profile']==0
     assert all(r['missed']==0 for r in trace), 'deadline missed'
     summary={'status':'pass','profiles':report,'wraparound':True,'held_a_repeats':False,
              'controller':'emu.setInput A on NES port 1; ROM reads $4016',
-             'gsu_pixels_checked':640*61440,'ppu_rgb_pixels_checked':640*61440,
+             'gsu_pixels_checked':profile_count*64*61440,'ppu_rgb_pixels_checked':profile_count*64*61440,
              'trace':trace,'timing_model':'emulator only; hardware unverified'}
     (out/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
     previews[0].save(out/'interactive.gif',save_all=True,append_images=previews[1:],

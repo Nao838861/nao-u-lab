@@ -73,12 +73,12 @@ def faces(phase):
     return result
 
 
-def build(kind='pattern',mode=3,count=1,half=44,spread=False):
+def build(kind='pattern',mode=3,count=1,half=44,spread=False,renderer='original'):
     if mode not in (1,2,3): raise ValueError('mode must be 1..3')
     if not 1<=half<=64 or not 1<=count<=448: raise ValueError('half must be 1..64, count 1..448')
     if kind=='solid' and mode!=3: raise ValueError('solid renderer requires full-screen mode 3')
     if spread and kind!='interactive':raise ValueError('--spread requires --kind interactive')
-    name=('interactive_v002' if spread else 'interactive_v001') if kind=='interactive' else (f'bitmap_{mode}' if kind=='pattern' else f'solid_{half}_{count}')
+    name=('interactive_v003' if renderer=='fast' else ('interactive_v002' if spread else 'interactive_v001')) if kind=='interactive' else (f'bitmap_{mode}' if kind=='pattern' else f'{"fast" if renderer=="fast" else "solid"}_{half}_{count}')
     out=ROOT/'build/bitmap'/name;out.mkdir(parents=True,exist_ok=True)
     include=ROOT/'.cache/casfx'
     include.mkdir(parents=True,exist_ok=True)
@@ -86,7 +86,9 @@ def build(kind='pattern',mode=3,count=1,half=44,spread=False):
     if not macro.exists():
         urllib.request.urlretrieve(f'https://raw.githubusercontent.com/ARM9/casfx/{CASFX_REV}/gsu/casfx.inc',macro)
     if hashlib.sha256((include/'casfx.inc').read_bytes()).hexdigest()!=CASFX_HASH:raise RuntimeError('casfx hash')
-    subprocess.run(['ca65','-I',str(include),'-o',str(out/'gsu.o'),str(DEMO/('pattern.s' if kind=='pattern' else 'solid.s'))],check=True)
+    source=DEMO/('pattern.s' if kind=='pattern' else 'solid.s')
+    if renderer=='fast' and kind!='pattern':source=ROOT/'demos/polygon/v001/solid_fast.s'
+    subprocess.run(['ca65','-I',str(include),'-o',str(out/'gsu.o'),str(source)],check=True)
     (out/'gsu.cfg').write_text('MEMORY {G:start=$9c00,size=$400,file=%O,fill=yes,fillval=$01;}\nSEGMENTS {GSU:load=G,type=ro;}\n')
     subprocess.run(['ld65','-C',str(out/'gsu.cfg'),'-o',str(out/'gsu.bin'),'-Ln',str(out/'gsu.lbl'),str(out/'gsu.o')],check=True)
     payload=bytearray(8192);payload[0x1c00:]= (out/'gsu.bin').read_bytes()
@@ -142,6 +144,7 @@ def build(kind='pattern',mode=3,count=1,half=44,spread=False):
           'rom_sha256':hashlib.sha256(rom.read_bytes()).hexdigest()}
     if profiles:meta['profiles']=profiles
     if spread:meta['layout']='spread across 256x212; bottom 28 pixels reserved for HUD'
+    meta['renderer']=renderer
     (out/'config.json').write_text(json.dumps(meta,indent=2)+'\n')
     return out
 
@@ -150,5 +153,6 @@ if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--kind',choices=['pattern','solid','interactive'],default='pattern');p.add_argument('--mode',type=int,default=3)
     p.add_argument('--count',type=int,default=1);p.add_argument('--half',type=int,default=44)
     p.add_argument('--spread',action='store_true',help='対話版v002：画面全体へ均等配置')
+    p.add_argument('--renderer',choices=['original','fast'],default='original')
     a=p.parse_args()
-    print(build(a.kind,a.mode,a.count,a.half,a.spread))
+    print(build(a.kind,a.mode,a.count,a.half,a.spread,a.renderer))

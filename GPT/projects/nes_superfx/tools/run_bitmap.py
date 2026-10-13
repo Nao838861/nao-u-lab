@@ -6,6 +6,10 @@ from native_lock import core_lock
 
 
 def reference(config,phase):
+    if config['kind']=='polygon':
+        from polygon_reference import reference as polygon_reference
+        pixels,image,_,_=polygon_reference(config,phase)
+        return pixels,image
     from PIL import Image
     w,h=config['width'],config['height'];pixels=bytearray(w*h)
     if config['kind']=='pattern':
@@ -117,7 +121,7 @@ end,emu.eventType.endFrame)
                 actual.save(out/'mismatch.png');canvas.save(out/'expected.png');raise RuntimeError(f'PPU mismatch phase {phase}: {out}')
             checked+=w*h
         images.append(actual)
-    if config['kind']=='solid' and samples==64 and sorted(phases)!=list(range(64)):
+    if config['kind'] in ('solid','polygon') and samples==64 and sorted(phases)!=list(range(64)):
         raise RuntimeError('64 distinct rotation phases were not captured')
     intervals=[trace[i]['frame']-trace[i-1]['frame'] for i in range(1,len(trace))]
     at30=bool(intervals) and all(x==2 for x in intervals) and trace[-1]['missed']==0

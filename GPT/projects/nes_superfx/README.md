@@ -11,6 +11,7 @@
 - [run_cube.cmd](run_cube.cmd)：GSUで頂点変換と線描画を行う、回転する立方体。[説明・動画・検証](demos/cube/v001/README.md)。
 - [run_solid_cube.cmd](run_solid_cube.cmd)：白・水色・紫の面塗り立方体を等倍画素で30fps回転。提案ABI2。[説明・動画・検証](demos/bitmap/v001/README.md)。
 - [run_cube_benchmark.cmd](run_cube_benchmark.cmd)：均等配置版v002。１本のROMでA（専用設定ではZキー）を押し、２→４→６→９→13→19→24→33→52→71個を切り替える。画面下のN=は個数、S=はモデル辺長。
+- [run_polygon_benchmark.cmd](run_polygon_benchmark.cmd)：ゲーム向けの三角形描画版。独立した回転・奥行き移動、透視投影、裏面除去、物体と面の深度順ソートをGSUで実行。Aで６条件×２設定を変更する。[30fps上限・20msの描画予算・動画](demos/polygon/v001/README.md)。
 - [run_bitmap_128.cmd](run_bitmap_128.cmd) → [run_bitmap_band.cmd](run_bitmap_band.cmd) → [run_bitmap_full.cmd](run_bitmap_full.cmd)：直接表示の128×128、256×64、256×240段階成果。
 - 別ROMを渡す場合は `run_gsu.cmd "C:\path\diagnostic.nes"`。
 
