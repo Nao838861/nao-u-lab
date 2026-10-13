@@ -4,7 +4,7 @@
 
 ## ユーザーの指定
 
-最新のGRIP / DRIFT実装は [モードの設計と検証](20261014_modes_design.md) を参照。開発本体のmainでタイトル選択・モード別タイム・切替時のリプレイ破棄を実装し、DRIFTは白・赤、GRIPは青の車にした。通常の `D:\HomeBrew\MMC5Racing\play.cmd` が起動するROMが対象で、以下の別作業ツリーのHUD版へ自動合流したという意味ではない。
+現行版は[最新CPU車・HUDとの統合](20261014_latest_integration.md)。CPU車・高速化 `8593c50` と前後2×2 HUD・千鳥配置 `33c259d` をmainへ合流し、GRIP / DRIFT・モード別タイム・車色・読みやすいフォントを保持した。通常の `D:\HomeBrew\MMC5Racing\play.cmd` は毎回この統合版をビルドして開く。旧 `735ce36` は古いmainへのモード追加だけだったため、ユーザーから古い版との指摘を受けて統合し直した。[初回モード設計](20261014_modes_design.md)は経緯の記録。
 
 2026年10月13日の依頼原文:
 
@@ -20,11 +20,11 @@ cd D:\HomeBrew\MMC5Racing
 .\play.cmd
 ```
 
-`build.cmd` は車軸内共有モデルのリリースROMを `build\direct\direct-axle-shared.nes` に生成する。Pythonは `C:\Users\owner\AppData\Local\Programs\Python\Python310\python.exe`、ca65 / ld65 は `D:\HomeBrew\CC65\bin`（V2.19）。`CC65_BIN` で変更可能。
+`build.cmd` → `build_release.py` がCPU車・最新HUD・高速化一式を含むリリースROMを `build\direct\direct-axle-shared.nes` に生成する。Pythonは `C:\Users\owner\AppData\Local\Programs\Python\Python310\python.exe`、ca65 / ld65 は `D:\HomeBrew\CC65\bin`（V2.19）。`CC65_BIN` で変更可能。
 
-`play.cmd` は `D:\HomeBrew\FCEUX\fceux64.exe` を使う。`FCEUX_EXE` で変更可能。ROMがなければ先にビルドする。初期セットアップでは実プレイ未実施。後続の操作調整では隔離したFCEUXで自動入力検査を実施し、人間の体感評価は未実施。
+`play.cmd` は毎回再ビルドして `D:\HomeBrew\FCEUX\fceux64.exe` で開く。`FCEUX_EXE` で変更可能。`play_hud.cmd` も同じ最新版をMesenで開く。隔離したMesenで両モードの通常走行・負荷試験・5周ライフサイクルを検証済み。人間の体感評価は未実施。
 
-READMEにある現行の正式ビルド入口は `build_direct.py`。`build.py` と `build_race.py` は基準版・中間生成に使う。Windowsでも、子Pythonの起動に実行中の `sys.executable` を使うように修正済み。
+現行の正式ビルド入口は `build_release.py`。`build_direct.py` は個別フラグの比較・開発用で、引数なしではCPU車を含まない。`build.py` と `build_race.py` は基準版・中間生成に使う。Windowsでも、子Pythonの起動に実行中の `sys.executable` を使う。
 
 ## 初期セットアップの検証
 
@@ -42,7 +42,9 @@ e823b1980f83245e5b19c336894fb043487fae615324a24b3d245147fd74b204
 
 最初のZIP展開先での検証は、Pythonプロセスの異常終了と、同展開先での再実行時のpy65内部TypeErrorで失敗した。原因は未確定。新しい展開先で検証全体を再実行すると3種類とも成功した。この一時的な失敗を、ソースの不具合が修正された証拠や全環境での安定性保証として扱わない。
 
-## 右側表示の改善
+## 右側表示の改善（別ブランチでの開発履歴）
+
+以下は合流前の履歴。現行はmainの `92e672c` にCPU車と最新HUDを統合済みで、通常の `D:\HomeBrew\MMC5Racing\play.cmd` から起動する。詳細と現行ハッシュは[最新統合の記録](20261014_latest_integration.md)を使う。
 
 同日の後続修正で、敵車2台の横並びをやめ、3台を約24/48/72px前の千鳥配置にした。`codex/hud-axle-load` の `33c259d` をpush済みで、上記作業ツリーの `play_hud.cmd` はこのROMを開く。[開始配置のフィードバックと検証](design_log.md)を参照。HUDのOAM契約は変えていない。
 
