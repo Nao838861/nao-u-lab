@@ -1,5 +1,7 @@
 # MMC5Racing 開発場所と作業入口
 
+2026年10月14日の[全ブランチのmain統合](20261014_main_integration.md)で `422ac2d` をorigin/mainへpush済み。HUD・CPU車・千鳥配置・モード・最適化を維持し、診断・GSU実験も資料として合流した。検証済みROMは `D:\HomeBrew\MMC5Racing_main_integration\releases\MMC5_Race5_DirectUpload_AxleShared.nes`。開発本体では別スレッドの未コミットGRIP調整が進行しており、ローカルmainの同期は保留してその差分を保全している。詳細は上記記録を参照。
+
 このPCでは `D:\HomeBrew\MMC5Racing` を開発場所として使う。リポジトリは <https://github.com/Nao838861/MMC5Racing>、作業ブランチは `main`。ソースとビルド成果物は同リポジトリ、Codex側の作業記憶はこのディレクトリへ保存する。外部プロジェクト内に別の記憶システムやAGENTS.mdを増やさない。
 
 ## ユーザーの指定
