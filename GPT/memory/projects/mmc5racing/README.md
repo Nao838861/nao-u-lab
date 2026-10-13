@@ -20,7 +20,7 @@ cd D:\HomeBrew\MMC5Racing
 
 `build.cmd` は車軸内共有モデルのリリースROMを `build\direct\direct-axle-shared.nes` に生成する。Pythonは `C:\Users\owner\AppData\Local\Programs\Python\Python310\python.exe`、ca65 / ld65 は `D:\HomeBrew\CC65\bin`（V2.19）。`CC65_BIN` で変更可能。
 
-`play.cmd` は `D:\HomeBrew\FCEUX\fceux64.exe` を使う。`FCEUX_EXE` で変更可能。ROMがなければ先にビルドする。今回エミュレーターの起動・実プレイは実施していない。
+`play.cmd` は `D:\HomeBrew\FCEUX\fceux64.exe` を使う。`FCEUX_EXE` で変更可能。ROMがなければ先にビルドする。初期セットアップでは実プレイ未実施。後続の操作調整では隔離したFCEUXで自動入力検査を実施し、人間の体感評価は未実施。
 
 READMEにある現行の正式ビルド入口は `build_direct.py`。`build.py` と `build_race.py` は基準版・中間生成に使う。Windowsでも、子Pythonの起動に実行中の `sys.executable` を使うように修正済み。
 
@@ -42,7 +42,7 @@ e823b1980f83245e5b19c336894fb043487fae615324a24b3d245147fd74b204
 
 ## 右側表示の改善
 
-操作の実装済み変更は [操作調整の記録](design_log.md) を参照する。2026年10月13日、アクセルOFF＋B＋左右で弱いブレーキ、アクセルOFF＋B＋左右なしで通常ブレーキを追加した。現在の `build.cmd` / `play.cmd` はこの操作版を使う。上の初期セットアップSHA256は変更前の記録であり、現在のROMの照合値は開発側READMEと操作調整の記録を使う。
+操作の実装済み変更は [操作調整の記録](design_log.md) を参照する。2026年10月13日の後続調整 `47e76f1` では、B保持＋A解放で減速と横滑り収束、両方解放で軽いエンジンブレーキと通常グリップ、B解放＋A保持で通常グリップへ戻して駆動を継続する。左右なしのA OFF＋Bは通常ブレーキ。現在の `build.cmd` / `play.cmd` はこの操作版を使う。上の初期セットアップSHA256は変更前の記録であり、現在のROMの照合値は開発側READMEと操作調整の記録を使う。
 
 [時間表示と摩擦円の配置](20261013_hud_layout.md)と[実装・合流記録](20261013_hud_implementation.md)を参照する。現在周回・その周の時間・合計時間へ絞り、4輪摩擦円を復帰した。`77df5af` 基点の別作業ツリー `D:\HomeBrew\MMC5Racing_hud`、ブランチ `codex/hud-friction-circle` に実装し、本体 `bee2fc8` と点の優先順修正 `7df40f7` をpush済み。CPU車側との合流はまだ行っていない。
 
