@@ -796,3 +796,23 @@ v4 SHA71609ae7…はDMA開始直後のexec callbackでcurrent maskの検査が�
 追加のsource-only probeはtools/probe_sa1_fixed_back_pixels.py。commit済みtransfer_deadline/evidence.zipのroad_full192全FB654世代とmask、flip_prepare/evidence.zipの既存back集合計算を読み、current対g-2の16word/tileを比較。キャッシュに依存せず再生成できる。元back集合のbyte/descriptor/costは全対象世代で既存probeに一致。530..570の10189占有tile中同一は445=4.37%、95.63%は変化。厳密な画素比較を費用ゼロと仮定しても平均347.317B/世代しか減らない。543=10400→10016（384B）、546=11744→11296（448B）、549=11648→11232（416B）。過去pixel-deltaで比較7～12msになった失敗を、そのまま再実装しない。比較順序のgreedy診断は21646word/41世代、順序[9,0,15,14,1,4,8,5,11,13,6,10,12,2,3,7]だが、実命令速度・改善の証拠ではない。results/20261013_back_pixels/README/comparisonに全世代と入力SHAを保存。
 
 ここまで前面CPU再計算・同一画素比較はいずれも採用見込みが低い。前回の固定map full192最良道中648表示/800field・2field待ち3回とboss1748/1900・待ち2回を改善したわけではない。次は同じCPU plannerやpixel-deltaを再試行せず、転送の構造自体（既存VRAMへ再利用可能な素材や、描画順・OAM/走査線制限を保った部分native化等）の資源上限を先に確認する。検証前に成功を主張しない。
+
+## 2026-10-13 継続: 転送時期・部分予算と実DMA時間（5a80a6e、60fps未達）
+
+独立branch experiment/sa1-4bpp-60fps-20261010へ5a80a6eをcommit/push、child clean/upstream一致。6構成とも基準full192の道中648表示/800field・2field間隔3回、ボス1748表示/1900field・2回を改善できなかった。goal active。公開ROM9934d77b…は維持、live検証ROMをa9bcd247…へ復元し280field/138logic/131表示/120画面照合/max7.241609ms、Mesen・Pythonともexit0。ユーザーMesen PID36580には触れていない。
+
+--defer-ready-collect（tools/sa1_collect_schedule.py）はIRQ最初の収集を維持し、pipe_choose_target側の二度目だけ、active targetまたはread slot readyなら省く。main/IRQ双方のpublish世代連続性、pending/done/3198一致を検査した。collectschedule_v2 SHA752f5d03…は647表示/4待ち/max21.475726ms。先行宛先/shortIO/16展開/tail1400併用2a3e6c3f…は648/3/21.416966。省いたうちcompletion pendingだったのは3回だけで効果が小さい。最初のv1はharness export不足なので性能証拠から除外。
+
+--transfer-request-line190（tools/sa1_transfer_deadline.py）は4209、wait_actual_blank下限、time_leftのpreblank mappingだけ変更。blank203/解除22/HDMA13Bは変更なし。request190_v1 SHAb6033815…は647/4/21.583561。--prearm-transfer-line190（tools/sa1_prearm_transfer.py）は190行で要求だけ発行しmainへ戻り、197行の第二IRQで既存転送へ進む。grantを第二IRQで消さない。prearm190_v2 SHAe4d6e1a1…は647/4/21.517165。late判定は194行以上なら197行まで待って同IRQで直接転送。196行指定e357014b…は648/3/21.554693、late経路654回・実197/198/200行を検証。190版issued654/transfer654/late0。先行IRQでも表示改善なし。
+
+--partial-transfer-reserve900（tools/sa1_partial_budget.py）は全量判定失敗時だけraw予算から900+384を控除しprefixを選ぶ。最後のdescriptorを必ず残す。全量・flip予約は維持、従来tail1400は1024B以下/CHRなしのみ。初期版にはpipe_time_leftが期限超過returnすると前回raw予算が残るバグがあった。1300/900版の画面照合成功も採用候補から隔離。旧tail SHA5668da59d649d520af70b0fcbaa5b00d15af3f3e849cb7b1c369817db0618f65を同SHA再生成し、field697/line25/masterClock249118568の非blank DMA開始を再現した。pipe_time_left冒頭で必ずstz pipe_unreservedする修正後、最新静的検証は旧ROMをexpected rejectionにする。Mesen stop後callbackが進んで失敗状態が上書きされたため、test_sa1_game.pyも最初の異常を保持するよう修正。再現ではline25の最初の状態を保存できた。
+
+修正版partialbudget900_tail16_v2 SHA2a276ed8eaf290beb7f210d14ee1ae90439284631903036a3dc3e2c7abeae827は道中648/3/21.429072、ボス1748/2/18.492386。fixtureは500field/161logic/153表示/全153画面一致、prefix460/途中descriptor再開60/最大partial1248B。前回tail16の144表示より増えたが2～3field更新で60fpsではない。6road各168画面、boss147画面の元画像/FB/VRAM/実PPU/RGB照合、共通653世代以上の24576B全FB/packet/mask/消去端一致。探索59024/全量58148/予算262144/Y復元/blank表CODE配置を検証。修正版は冒頭ゼロ化も確認。元1492寸法/native90854/弾158688、dirty5992縦位相表の独立原画alpha照合も合格。
+
+DMA traceはtracedmacost scenarioでSTY420B直前とDMA後次LDA実行後を記録。ROM blockの先頭BD/BF・末尾840B・stride26/23・終端A90000を検査。基準f685de70…とROM同一のdma_cost_base_v2は648/3/21.494164。1400sample/387840BをmasterClockで80complete groupへ対応付け、prefix選択個数/byte/世代一致。窓末尾の1groupは除外。NMIでfieldがgroup途中に変わるためfieldだけで対応させない。実group−費用式の差は−994～+1228master tick（平均+145.525）。重い543/546/549は−538/−226/−152、一方小groupは+1000程度もある。個別extraTicksは設定全部を含まず、groupは設定/NMI/HDMA/refresh等を含むので一律の費用割引に使わない。
+
+source-only plane pair probeも保存。currentとg-2のlow2/high2planeを別比較し16B転送単位、48descriptor制限、gap結合込みで重い530..570平均429.268B/世代の節約上限。543/546/549は144/128/208B、比較・CC1配置・実速度は未検証。改善実装と主張しない。
+
+成果物results/20261013_transfer_schedulingはREADME/commands/comparison/default_restore/evidence.zip。zip78,774,495B、SHA0f504c60dd4fc13954fcce3c9f0269a66c7788d4b0d279d8c9c90922768bec8d、CRC合格。tools/report_sa1_transfer_scheduling.pyで再集計。ROM/source/labels/map/Lua/FB/VRAM/PPU/RGB/転送/静的検査、隔離旧版と同SHA再現scriptを保存した。GitHub50MB推奨警告のみでpush成功。default復元は従来.cache/deadline_restore.py、smoke movestress_detinput_scheduling_default_restore_tracepalette。全own runtime終了確認済み。
+
+次は予約や要求時期だけの微調整・CPU mask planner・同一画素比較を繰り返さない。残った待ち世代の転送構造と素材再利用の資源上限を確認する。元の画素/縮小/描画順を保ち、OAM/走査線上限を先に測ること。全ゲーム/全武器/敗北4000field監査は依然未完了。SA-1最大21ms自体も別のボトルネックで、転送待ち解消だけで全編60fpsを宣言しない。
