@@ -1,6 +1,28 @@
 # SA-1 / 4bpp / 60fps 独立検証（進行中）
 
-## 現在の継続地点（2026-10-13、00ac0b2）
+## 現在の継続地点（2026-10-14、木の左prefix／dense stack比較）
+
+**60fps未達。左prefix・全木PEA/PHA版は実装・画素検査したが、既定には不採用。** 独立branch experiment/sa1-4bpp-60fps-20261010へ31d6694をcommit/push済み。公開9934d77bと既定a9bcd247を保持し、復元280field/138logic/131表示/120実PPU画面/max7.241609msで確認。ユーザーMesen PID36580は触らない。own MesenとPython postverifyがterminalになってからROM/LBLを再ビルドする。python3.12 runtimeを使う。
+
+左prefixは --reverse-tree-left。木4の逆順hint[(-cur)//2]までをIRAM0700へ保持し、物体内の同じcode+curを再利用する。DMA許可がない間はCPU MVNへfallback、cur奇数の前行1byteを保存・復元。v1 b4a8098aは4000field/3827表示/24待ち/max26.217762、v2は --reverse-tree-left-min-bytes 13 で11fbacca、3829表示/22待ち/max24.236318。**同配置のcache無効bce77982と経路無効82f323a4も3829表示/22待ち/同max**。全labels同一、ROM差分はそれぞれJMP1byte+checksum2B、dispatch6B+checksum4B。22対前段23をprefixの効果としない。個別左66×152はv2 9.108140ms/cacheなし10.673795/無効9.610997、全幅v1 7.864686だが小さな欠け方で全体悪化。全版181実PPU画面、共通3831世代以上の全FB/packet/masks/ゲーム状態一致。v1/v2の全2736ケース/1369画面も一致。runtime patch_completeはbuffer_readyと同PCなのでcache hitでも到達する。コピー回数はmiss/copyイベントで数える。
+
+基準34226b26を4000field再生し、HDMA実際のblank202行/unblank21行でqueueを採取した --scenario move_detinput_auditgame_treeleft_reference_queue_long4000_tracepalette_tracebounds_tracevisiblequeue。3833logic/3828表示/23待ち/max24.084716/181画面を再現。18回はblank入口ready0/rendering1/targetFFFF、unblank出口もtargetFFFF（出口では15回ready1）。5回は入口と出口に同じ転送targetが残り、後続ready3が3回/ready0が2回。全23回complete0。状態分類であり描画単独/帯域単独の因果断定ではない。slot generationは未採取。pipeline_tuned.incだけでなく生成fixed_map_cpu.incも見る。status4が表示中、5が転送済み待機、3が転送中、2が描画済。二面でflip後も次画像を転送する既存処理があるため、単にtail転送を新案として再実装しない。
+
+--dense-stack-tree は --reverse-tree必須、left/bypassと併用不可。全76寸法の木4を連続降順wordへ置換。不透明PEA、部分透過LDA/AND/OR/PHA、内部の透明穴LDA/PHA。5751kernel単体335145→226313B、最大97B。rawhint211種2356B。ROM全体のnativeCodeBytesは別のcomparison.jsonを参照。全コード/左右byte境界を独立opcode解釈で確認し、IRAM0500のprefix末尾はJML000700、全行終了は0700gate経由で通常Sへ戻ってからCLIする。IRQ handlerはPHD/D=0/PLDでDを保持。DMAとCPUコピー、物体内cacheを使用する。
+
+初回40094cd2は800field/648表示/128画面合格だが、treefixture present00013のy184/x0（offset23552）が期待132/実際0で失敗。4×9・中心0/256・bottom209。左clip末尾wordのhigh byteだけが次の8KiB窓で可視なのにlow側を選び、S8000の書込が無視された。左はhigh側の窓＋S6000、右はlow側の窓＋必要ならS8000を使う。旧ROM/sourceを .cache/build_dense_tree_history.py で再構築してhash40094も確認し別snapshotへ保管した。失敗を性能合格へ混ぜない。
+
+修正版c33bdcafは全2736ケース/1369実PPU画面一致、1520field/1373logic/1:1365・2:1、max23ms台。静的には全1492寸法/90854 native行/158688弾行、5992 dirty縦位相、木5751kernel/9336行、左右90588/84838 byte境界、569088可視byteのBW窓割当が一致。runtime observerはPSのM/X/I、S範囲、実opcodeのpush数と終了S、prefix全byte/JML、guard復元を検査。通常4000fieldは3805logic/3799表示/**1:3745・2:50・3:1**、max24.976636/181画面一致。基準の23待ちに対し52field分の待ちで悪化。画面内の木68×158が2.589→8.035ms、66×152が2.443→7.485ms。行単位のhint/header/窓/S/DB切替の費用が大きい。PEA命令数だけを速度の証拠にしない。
+
+結果は results/20261013_tree_left/ と results/20261014_dense_tree/ のREADME/comparison/commands/zip。再集計 tools/report_sa1_tree_left.py と tools/report_sa1_dense_tree.py。現行ROM/LBLは必ず復元版a9。旧失敗40094、修正版c33、v1/v2左prefix4版の個別ROMとsourceは証拠zip内。公開releaseを変更するreport_sa1_fixed_table.pyは実行しない。今回は不採用版なので新しいboss5k試験は広げていない（前段の採用比較3422はboss5k既検査）。自然なクリアの検査は依然未完了。
+
+**次の候補は、行単位helperを増やさず既存11B call chainを維持する描画方式。** 例えばtree nativeのLDA abs,X/STA abs,XをLDA dp/STA dp（offsetは34B以下）へ変換し、各kernel末尾でLDA#0/TCDしてD=0へ戻す。11B行chainのTAXだけをTCDへ替えれば、余分な19B行programを二重保持しなくて済む可能性がある。kernel保存量とD復元の費用は容量probeで検査してから実装。DBRと違いDはbank0のBW窓へ向けるので、chunkを64行/8KiB境界で区切り、rawのspriteBaseをedge_save後に窓へ補正・edge_restore前に戻す必要がある。IRQはDを保存しているが、clip JIT/hintは3B opcode前提なので流用禁止。高速JITをtreeだけ外し既存guardを使えるか、fast/edge sourceを先に読む。この案は未実装・未計測。単なるしきい値変更や毎rowの重いmetadata loopを再試行しない。
+
+補足：get_goalでstatus=blockedを観測した（この計測作業を完了とした意味ではない）。新たにcomplete/blockedへ変更していない。60fps達成の判定は実表示の毎field更新と画素・挙動の一致で続ける。
+
+git add後に新blob2件のzlib破損を検出。ea4f956d9b9ef3f34b2177b52a1ebca011c9e36f=initial_boundary_failure.zip（17331060B）とd749ab153b4571c6bd2061335bdb4b0e8d6e88fc=roms_sources.zip。元zipのCRC/SHA256、Git blob SHA1との一致を先に確認し、共通git dir D:/AI/Nao_u_BOT/GPT/projects/monosh_fx2/.cache/github_export/.git 内codex-object-quarantine/*_20261014へ破損objectを退避、git hash-object -wで同hashを再生成。全34 stage fileのblobをcat-fileで読んでSHAとzip全bytesを再照合、diff --cached --check合格後にcommitした。reset/cleanや他worktree変更はしていない。
+
+## 前段の継続地点（2026-10-13、00ac0b2）
 
 独立branch experiment/sa1-4bpp-60fps-20261010へ00ac0b2をcommit/push済み、60fps未達・goal active。新しい木4の逆順native右clipと前段の草木右端prefixを併用した34226b26…は通常4000fieldで3833logic/3828表示・1:3802/2:23・最大24.084716ms・181実PPU画面一致。前段基準は28待ち/25.373ms。全own Mesen/Python終了、公開9934d77b…と既定a9bcd247…を保持。復元280field/138logic/131表示/120画面/max7.241609。ユーザーMesen PID36580は触らない。
 
