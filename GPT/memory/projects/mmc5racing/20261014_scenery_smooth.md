@@ -31,3 +31,11 @@ Mesenの最重窓8,199レースフレーム、CPU3台・合成ゴースト付き
 未commit変更を含めた通常フォルダのビルドはSHA `81dab7e0e540795571a451a4e6b9c440a1b9f555f97dd323d9c7dd556559ee1d`。回転位置の検査は成功したが、GRIP turnsのネイティブ検査はreadyイベント不足で失敗。生記録は `build/smooth-main-grip/`、303フレーム以降イベントが途絶え、最後の1500フレームでもNMI254・published244が変わらない。今回の景物だけの版e502は同じ試験に成功しているので、別作業の調査用に差を残した。原因は断定せず、未commit変更を戻したり混ぜてcommitしたりしない。
 
 このため追加commit `bb23b9b` で `play_scenery.cmd` と固定ROM `releases/MMC5Racing_ScenerySmooth_144x168.nes`（SHA e502）をmainへpushし、通常フォルダもfast-forwardした。この起動入口は再ビルドせず検証済みの回転修正版を開く。通常のplay.cmdで未完成の別変更までビルドすることを避け、今回の成果を具体的に遊べる状態で渡した。
+
+## 後続：全修正入りのローカルROMへ更新
+
+依頼原文：ローカルのromを今の修正を全部取り込んだ最新のものにして
+
+GRIPの停止は後続 `eec41aa` で解消済み。摩擦限界の表を `$61B0..$61F0` へ配置し、約1.3倍のGRIPと木8本の回転修正を合流した。今回fetchするとさらに `d9a795a` の144×176版が届いたので、mainをfast-forwardして通常ビルドを再生成。SHA256 `bce916319dced8505ade24f6d5b2c2a8f3640afdc94eda3cdc173f9b46b462b0` が `verification/height-next/acceptance.json` の検証済みSHAと一致した。通常ビルドROM、統合176配布ROM、DirectUpload名の配布ROMも同一。過去の168版と景物単独の固定ROMは履歴として保持する。
+
+`8902afa` で `play_scenery.cmd` の参照を旧e502固定ROMから `releases/MMC5Racing_AllIntegrated_144x176.nes` へ切り替え、Mesenへ統一してmainへpush。以後 `play.cmd` は統合最新版を再ビルドして起動し、`play_scenery.cmd` は同じ最新版を再ビルドなしで開く。以前の「通常版が止まるため景物専用入口を使う」という案内は、この更新で過去の経緯になった。
