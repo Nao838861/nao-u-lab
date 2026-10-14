@@ -10,7 +10,7 @@ def verify(directory):
     directory=Path(directory)
     config=json.loads((directory/'config.json').read_text())
     exe=ROOT/'build/Release/nesfx_polygon_probe.exe'
-    flags=int(config.get('multiplier_fast',False))+2*config.get('clock_select',0)
+    flags=int(config.get('multiplier_fast',False))+2*config.get('clock_select',0)+4*int(config.get('hardware_clear',False))
     r=subprocess.run([str(exe),str(directory),'dump',str(flags)],capture_output=True,check=True,timeout=90)
     native=json.loads(r.stdout);(directory/'native.json').write_bytes(r.stdout)
     stats=[]

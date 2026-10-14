@@ -12,6 +12,14 @@
 
 FamiBASIC/MMC5向けの自作NESコア計画とは別。マッパー側リポジトリ・ゲーム・既存Mesenは変更していない。
 
+## 最新：専用クリアと最大個数 v002
+
+ユーザーの「RAM範囲フィルの速度を最優先、矩形フィルは低優先」「フレームバッファクリアの回路を追加し、処理落ち直前まで増やす」依頼を実装。[結果・RTL・ABI拡張](../../../projects/nes_superfx/demos/polygon/v002/README.md)。起動は`projects/nes_superfx/run_polygon_benchmark.cmd`、ROMは`GSU_PolygonBenchmark_A_v002.nes`。**最初は25MHz相当**で、A/Zが25→12.5MHzの順に６シーンを変更する。
+
+範囲フィルは40 KiB RAM内の開始・長さ・２バイトパターンを指定し、25MHzで１バイト/clock。16 KiBクリアは0.65536ms。GSUと重ねず、完了後にGSU開始、実ROMの期限判定には待ちも含む。25MHzの最大個数は大13→13、中16→17、小24→26、二十面体13→13、重なる二十面体16→17、画面端八面体23→25。全12条件の最大と次個数失敗を各64姿勢の画素・提示間隔で確認し、A切替12×64姿勢も確認。水平スパン専用回路は検討のみで未実装。
+
+提案ABI2にcapability `$5FE7` bit0、範囲フィル窓`$5FE8..$5FEF`を追加。旧版とABI1を維持し、対応しないコアは新ROMが検出して停止する。合成可能な独立VHDL回路とGHDL試験、エミュレーターのcontract試験を追加。**N8 ProトップへのABI2接続・RAM調停・Quartus Fit・実機は未確認**。回路側の外部リポジトリは変更していない。
+
 ## モデル表示テスト
 
 同日の追加依頼で [回転する立方体](../../../projects/nes_superfx/demos/cube/v001/README.md) を実装。`run_cube.cmd` で起動する。GSUが8頂点を固定小数点行列で変換し、12辺をBresenham描画。固定CHRの2×2画素組合せで表示するため、ABI1と回路は変更していない。64姿勢の頂点・GSU全画素・PPU全RGBが一致。機能エミュレーターでは8 field更新。面塗り・隠面・透視・実機性能は未検証。

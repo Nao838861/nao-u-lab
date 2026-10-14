@@ -22,7 +22,18 @@ int main(int argc,char** argv) {
         std::cout<<"{\"frames\":[";
         for(unsigned phase=0;phase<64;++phase) {
             unsigned back=b.front^1;b.memory[0x8004]=phase;b.memory[0x8006]=0;b.memory[0x8007]=back?0x40:0;
-            b.CpuWrite(0x5038,back?0x10:0);b.CpuWrite(0x501E,0);b.CpuWrite(0x501F,0x94);
+            b.CpuWrite(0x5038,back?0x10:0);
+            b.targetClock=b.gsu.GetState().CycleCount;
+            auto clearStart=b.gsu.GetState().CycleCount;
+            if(flags&4) {
+                b.CpuWrite(0x5fe8,0);b.CpuWrite(0x5fe9,back?0x40:0);
+                b.CpuWrite(0x5fea,0);b.CpuWrite(0x5feb,0x40);
+                b.CpuWrite(0x5fec,0);b.CpuWrite(0x5fed,0);b.CpuWrite(0x5fee,1);
+                while(b.fillBusy)b.CpuClock();
+                if(b.faults || b.lastFillClocks!=16384)throw std::runtime_error("fill failure");
+            }
+            auto fillWait=b.gsu.GetState().CycleCount-clearStart;
+            b.CpuWrite(0x501E,0);b.CpuWrite(0x501F,0x94);
             auto start=b.gsu.GetState().CycleCount;
             std::map<unsigned,uint64_t> regions;
             while(b.Busy() && b.gsu.GetState().CycleCount-start<25000000) {
@@ -32,11 +43,13 @@ int main(int argc,char** argv) {
                 regions[pc&0xfe00]+=b.gsu.GetState().CycleCount-before;
             }
             if(b.Busy()||b.faults)throw std::runtime_error("timeout/fault");
-            auto elapsed=b.gsu.GetState().CycleCount-start;
+            auto gsuElapsed=b.gsu.GetState().CycleCount-start;
+            auto elapsed=gsuElapsed+fillWait;
             b.targetClock=b.gsu.GetState().CycleCount;
             maximum=std::max(maximum,static_cast<unsigned>(elapsed));total+=elapsed;
             if(phase)std::cout<<",";
-            std::cout<<"{\"phase\":"<<phase<<",\"clocks\":"<<elapsed<<",\"vertices\":"<<word(0x8010)
+            std::cout<<"{\"phase\":"<<phase<<",\"clocks\":"<<elapsed<<",\"gsu_clocks\":"<<gsuElapsed
+                     <<",\"fill_clocks\":"<<(flags&4?b.lastFillClocks:0)<<",\"fill_wait_clocks\":"<<fillWait<<",\"vertices\":"<<word(0x8010)
                      <<",\"submitted\":"<<word(0x8012)<<",\"visible\":"<<word(0x8014)
                      <<",\"near_rejected\":"<<word(0x8016)<<",\"regions\":{";
             bool first=true;for(auto [pc,ticks]:regions){if(!first)std::cout<<",";first=false;std::cout<<"\""<<pc<<"\":"<<ticks;}

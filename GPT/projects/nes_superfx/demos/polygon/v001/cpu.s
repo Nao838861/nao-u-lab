@@ -56,6 +56,11 @@ v2:bit $2002
   lda $5ff2
   cmp #2
   jne fail
+.ifdef HW_CLEAR
+  lda $5fe7
+  and #1
+  jeq fail
+.endif
   lda #$a5
   sta $5ff0
   ldx #0
@@ -184,6 +189,30 @@ frame:
 .endif
   lda nmi_count
   sta started
+.ifdef HW_CLEAR
+  lda #0
+  sta $5fe8
+  sta $5fea
+  sta $5fec
+  sta $5fed
+  lda front
+  eor #1
+  asl
+  asl
+  asl
+  asl
+  asl
+  asl
+  sta $5fe9
+  lda #$40
+  sta $5feb
+  lda #1
+  sta $5fee
+wait_fill:
+  lda $5fef
+  and #1
+  bne wait_fill
+.endif
   lda #<$9400
   sta $501e
   lda #>$9400

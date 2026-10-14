@@ -11,46 +11,94 @@ public:
     uint64_t startClock=0,lastRunClocks=0;
     uint16_t tileX=0,tileY=0;
     bool tileInside=false;
+    uint16_t fillAddress=0,fillLength=0,fillCursor=0,fillRemaining=0,fillPosition=0;
+    uint8_t fillLow=0,fillHigh=0;
+    bool fillBusy=false,fillDone=false,fillError=false;
+    uint64_t lastFillClocks=0;
+    void FillError() { fillError=true;faults|=16; }
+    void StartFill() {
+        if(fillBusy || Busy()) { FillError();return; }
+        uint32_t end=uint32_t(fillAddress)+fillLength;
+        uint32_t protectedStart=front*16384;
+        if(end>memory.size() || fillAddress>memory.size() ||
+           (mode && fillLength && fillAddress<protectedStart+16384 && end>protectedStart)) {
+            FillError();return;
+        }
+        fillCursor=fillAddress;fillRemaining=fillLength;fillPosition=0;
+        fillBusy=fillLength!=0;fillDone=!fillBusy;fillError=false;lastFillClocks=0;
+    }
+    void TickFill(uint64_t clocks) {
+        if(!fillBusy)return;
+        auto count=std::min<uint64_t>(clocks,fillRemaining);
+        for(uint64_t i=0;i<count;++i) memory[fillCursor++]=(fillPosition++&1)?fillHigh:fillLow;
+        fillRemaining-=static_cast<uint16_t>(count);lastFillClocks+=count;
+        if(!fillRemaining) { fillBusy=false;fillDone=true; }
+    }
     void Reset() {
         Board::Reset();mode=0;page=4;front=0;faults=0;generation=0;
         lastRunClocks=0;startClock=targetClock;tileInside=false;
+        fillAddress=fillLength=fillCursor=fillRemaining=fillPosition=0;
+        fillLow=fillHigh=0;fillBusy=fillDone=fillError=false;lastFillClocks=0;
     }
     void CpuClock() {
+        auto before=gsu.GetState().CycleCount;
         bool was=Busy(); Board::CpuClock();
+        TickFill(gsu.GetState().CycleCount-before);
         if(was && !Busy()) lastRunClocks=gsu.GetState().CycleCount-startClock;
     }
-    bool Selected(uint16_t a) const { return Board::Selected(a)||(a>=0x5FD0 && a<=0x5FE7); }
+    bool Selected(uint16_t a) const { return Board::Selected(a)||(a>=0x5FD0 && a<=0x5FEF); }
     uint8_t CpuRead(uint16_t a) {
         if(a==0x5FF2) return 2;
         if(a>=0x5FD0 && a<0x5FD8) return static_cast<uint8_t>(lastRunClocks>>((a-0x5FD0)*8));
+        if(a>=0x5FD8 && a<0x5FE0) return static_cast<uint8_t>(lastFillClocks>>((a-0x5FD8)*8));
         switch(a) {
             case 0x5FE0:return mode; case 0x5FE1:return page; case 0x5FE2:return front;
             case 0x5FE3:return faults; case 0x5FE4:return generation&255; case 0x5FE5:return generation>>8;
+            case 0x5FE7:return 1; // ABI2 extension bit0: 25MHz byte range fill.
+            case 0x5FE8:return fillAddress&255;case 0x5FE9:return fillAddress>>8;
+            case 0x5FEA:return fillLength&255;case 0x5FEB:return fillLength>>8;
+            case 0x5FEC:return fillLow;case 0x5FED:return fillHigh;
+            case 0x5FEF:return fillBusy|(fillDone<<1)|(fillError<<2);
         }
         if(a>=0x6000 && a<=0x7FFF) {
-            if(Busy()) { ++blockedRamAccesses; return 0; }
+            if(Busy() || fillBusy) { ++blockedRamAccesses; return 0; }
             return memory[page*8192+(a&8191)];
         }
         return Board::CpuRead(a);
     }
     uint8_t CpuPeek(uint16_t a) {
         if(a>=0x6000 && a<=0x7FFF) return memory[page*8192+(a&8191)];
-        if(a==0x5FF2 || (a>=0x5FD0 && a<=0x5FE5)) return CpuRead(a);
+        if(a==0x5FF2 || (a>=0x5FD0 && a<=0x5FEF)) return CpuRead(a);
         return Board::CpuPeek(a);
     }
     void CpuWrite(uint16_t a,uint8_t v) {
         if(a==0x5FF0 && v==0xA5) { Reset();return; }
+        if(a>=0x5FE8 && a<=0x5FED) {
+            if(fillBusy) { FillError();return; }
+            switch(a) {
+                case 0x5FE8:fillAddress=(fillAddress&0xff00)|v;break;
+                case 0x5FE9:fillAddress=(fillAddress&255)|(v<<8);break;
+                case 0x5FEA:fillLength=(fillLength&0xff00)|v;break;
+                case 0x5FEB:fillLength=(fillLength&255)|(v<<8);break;
+                case 0x5FEC:fillLow=v;break;case 0x5FED:fillHigh=v;break;
+            }
+            return;
+        }
+        if(a==0x5FEE) { if(v==1)StartFill();else if(v)FillError();return; }
+        if(a==0x5FEF) { if(v&2)fillDone=false;if(v&4)fillError=false;return; }
+        // The fill owns the RAM port. Block GO/cache uploads until completion.
+        if(fillBusy && a>=0x5000 && a<=0x52ff) { faults|=2;return; }
         switch(a) {
-            case 0x5FE0:if(v<=3) mode=v; else faults|=4;return;
+            case 0x5FE0:if(fillBusy) { faults|=2;return; }if(v<=3) mode=v; else faults|=4;return;
             case 0x5FE1:if(v<5) page=v; else faults|=4;return;
             case 0x5FE2:
-                if(Busy()) { faults|=2;return; }
+                if(Busy() || fillBusy) { faults|=2;return; }
                 if(v>1) { faults|=4;return; }
                 front=v;++generation;return; // Host commits only in NMI/VBlank.
             case 0x5FE3:faults&=~v;return;
         }
         if(a>=0x6000 && a<=0x7FFF) {
-            if(Busy()) { ++blockedRamAccesses;return; }
+            if(Busy() || fillBusy) { ++blockedRamAccesses;return; }
             auto index=page*8192+(a&8191);
             if(mode && index<32768 && index/16384==front) faults|=1;
             memory[index]=v;return;
@@ -92,6 +140,9 @@ public:
         s.Stream(mode,"bitmapMode");s.Stream(page,"bitmapPage");s.Stream(front,"bitmapFront");s.Stream(faults,"bitmapFaults");
         s.Stream(generation,"bitmapGeneration");s.Stream(startClock,"bitmapStart");s.Stream(lastRunClocks,"bitmapLastClocks");
         s.Stream(tileX,"bitmapTileX");s.Stream(tileY,"bitmapTileY");s.Stream(tileInside,"bitmapTileInside");
+        s.Stream(fillAddress,"fillAddress");s.Stream(fillLength,"fillLength");s.Stream(fillCursor,"fillCursor");
+        s.Stream(fillRemaining,"fillRemaining");s.Stream(fillPosition,"fillPosition");s.Stream(fillLow,"fillLow");s.Stream(fillHigh,"fillHigh");
+        s.Stream(fillBusy,"fillBusy");s.Stream(fillDone,"fillDone");s.Stream(fillError,"fillError");s.Stream(lastFillClocks,"lastFillClocks");
     }
 };
 }

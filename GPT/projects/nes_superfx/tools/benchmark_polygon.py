@@ -19,7 +19,7 @@ def native(directory):
     if report.exists():
         value=json.loads(report.read_text())
         if value.get('key')==key:return value
-    flags=int(config['multiplier_fast'])+2*config['clock_select']
+    flags=int(config['multiplier_fast'])+2*config['clock_select']+4*int(config.get('hardware_clear',False))
     result=subprocess.run([str(exe),str(directory),'timing',str(flags)],capture_output=True,check=True,timeout=90)
     value=json.loads(result.stdout);value['key']=key
     report.write_text(json.dumps(value,indent=2)+'\n')

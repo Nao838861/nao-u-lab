@@ -72,14 +72,15 @@ def objects(count,half,scene):
     return result
 
 
-def build(count=8,half=16,scene='spread',mesh='cube',renderer='fast',multiplier_fast=False,clock_select=0):
+def build(count=8,half=16,scene='spread',mesh='cube',renderer='fast',multiplier_fast=False,clock_select=0,hardware_clear=False):
     if not 1<=count<=128 or not 1<=half<=64:raise ValueError('count=1..128, half=1..64')
     if renderer=='baseline' and count>64:raise ValueError('baseline span work RAM limits object list to 64')
     name=f'{renderer}_{mesh}_{scene}_h{half}_n{count}'+f'_c{clock_select}m{int(multiplier_fast)}'
+    if hardware_clear:name+='_fill'
     out=ROOT/'build/polygon'/name;out.mkdir(parents=True,exist_ok=True)
     if hashlib.sha256((ROOT/'.cache/casfx/casfx.inc').read_bytes()).hexdigest()!=CASFX_HASH:raise RuntimeError('casfx hash')
     source=DEMO/('gsu_bresenham.s' if renderer=='baseline' else 'gsu.s')
-    subprocess.run(['ca65','-I',str(ROOT/'.cache/casfx'),'-I',str(DEMO),'-o',str(out/'gsu.o'),str(source)],check=True)
+    subprocess.run(['ca65',*(['-D','HW_CLEAR=1'] if hardware_clear else []),'-I',str(ROOT/'.cache/casfx'),'-I',str(DEMO),'-o',str(out/'gsu.o'),str(source)],check=True)
     (out/'gsu.cfg').write_text('MEMORY {G:start=$9400,size=$c00,file=%O,fill=yes,fillval=$01;}\nSEGMENTS {GSU:load=G,type=ro,align=$200;}\n')
     subprocess.run(['ld65','-C',str(out/'gsu.cfg'),'-o',str(out/'gsu.bin'),'-Ln',str(out/'gsu.lbl'),str(out/'gsu.o')],check=True)
     vertices,triangles=model(mesh,half);poses=matrices();instances=objects(count,half,scene)
@@ -99,6 +100,8 @@ def build(count=8,half=16,scene='spread',mesh='cube',renderer='fast',multiplier_
     payload[0x1400:]=(out/'gsu.bin').read_bytes()
     (out/'payload.bin').write_bytes(payload)
     (out/'config.inc').write_text('KIND=1\nMODE=3\nWIDTH=256\nHEIGHT=240\n'+f'MULTIPLIER_FAST={int(multiplier_fast)}\nCLOCK_SELECT={clock_select}\n')
+    if hardware_clear:
+        with (out/'config.inc').open('a') as f:f.write('HW_CLEAR=1\n')
     subprocess.run(['ca65','-I',str(out),'-o',str(out/'cpu.o'),str(DEMO/'cpu.s')],cwd=out,check=True)
     rom=out/f'{name}.nes'
     subprocess.run(['ld65','-C',str(ROOT/'demos/cube/v001/rom.cfg'),'-o',str(rom),'-Ln',str(out/'cpu.lbl'),str(out/'cpu.o')],check=True)
@@ -106,6 +109,9 @@ def build(count=8,half=16,scene='spread',mesh='cube',renderer='fast',multiplier_
             'vertices':vertices,'triangles':triangles,'matrices':poses,'objects':instances,'depth_motion':wave,
             'rom_sha256':hashlib.sha256(rom.read_bytes()).hexdigest()}
     (out/'config.json').write_text(json.dumps(config,indent=2)+'\n')
+    if hardware_clear:
+        config['hardware_clear']=True
+        (out/'config.json').write_text(json.dumps(config,indent=2)+'\n')
     return out
 
 
@@ -114,5 +120,6 @@ if __name__=='__main__':
     p.add_argument('--scene',choices=['spread','overlap','clipped','near'],default='spread')
     p.add_argument('--mesh',choices=['cube','octahedron','icosahedron'],default='cube')
     p.add_argument('--renderer',choices=['baseline','fast'],default='fast')
-    p.add_argument('--multiplier-fast',action='store_true');p.add_argument('--clock-select',type=int,choices=[0,1],default=0);a=p.parse_args()
-    print(build(a.count,a.half,a.scene,a.mesh,a.renderer,a.multiplier_fast,a.clock_select))
+    p.add_argument('--multiplier-fast',action='store_true');p.add_argument('--clock-select',type=int,choices=[0,1],default=0)
+    p.add_argument('--hardware-clear',action='store_true');a=p.parse_args()
+    print(build(a.count,a.half,a.scene,a.mesh,a.renderer,a.multiplier_fast,a.clock_select,a.hardware_clear))

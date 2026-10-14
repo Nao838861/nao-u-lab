@@ -1,18 +1,24 @@
 """計測した6シーン×2クロック設定をAボタンで選ぶ、1本の実NES ROM。"""
-import json,struct,subprocess
+import argparse,json,struct,subprocess
 from pathlib import Path
 from build_polygon import ROOT,DEMO
 from build_bitmap import FONT
 
 
 def main():
-    summary=json.loads((ROOT/'build/polygon/benchmark/summary.json').read_text())
+    parser=argparse.ArgumentParser();parser.add_argument('--hardware-clear',action='store_true');args=parser.parse_args()
+    summary=json.loads((ROOT/('build/polygon/fill_benchmark/summary.json' if args.hardware_clear else 'build/polygon/benchmark/summary.json')).read_text())
     assert summary['status']=='pass'
     records=[r for r in summary['results'] if r['renderer']=='fast']
-    out=ROOT/'build/polygon/interactive';out.mkdir(exist_ok=True)
+    if args.hardware_clear:
+        order=list(dict.fromkeys(r['case'] for r in records))
+        records.sort(key=lambda r:(order.index(r['case']),-r['clock_select']))
+    out=ROOT/('build/polygon/interactive_v002' if args.hardware_clear else 'build/polygon/interactive');out.mkdir(exist_ok=True)
     first=ROOT/records[0]['directory']
     (out/'payload.bin').write_bytes((first/'payload.bin').read_bytes())
     (out/'config.inc').write_text(f'KIND=1\nMODE=3\nWIDTH=256\nHEIGHT=240\nMULTIPLIER_FAST=0\nCLOCK_SELECT=0\nINTERACTIVE=1\nPROFILE_COUNT={len(records)}\n')
+    if args.hardware_clear:
+        with (out/'config.inc').open('a') as f:f.write('HW_CLEAR=1\n')
     lines=[];configs=[];font=dict(FONT)
     font.update({'C':['111','100','100','100','111'],'I':['111','010','010','010','111']})
     for i,r in enumerate(records):
@@ -39,7 +45,7 @@ def main():
         for y,bits in enumerate(rows):chrdata[4096+ord(c)*16+y+1]=int(bits,2)<<4
     (out/'hud.chr').write_bytes(chrdata)
     subprocess.run(['ca65','-I',str(out),'-o',str(out/'cpu.o'),str(DEMO/'cpu.s')],cwd=out,check=True)
-    rom=out/'GSU_PolygonBenchmark_A_v001.nes'
+    rom=out/('GSU_PolygonBenchmark_A_v002.nes' if args.hardware_clear else 'GSU_PolygonBenchmark_A_v001.nes')
     subprocess.run(['ld65','-C',str(ROOT/'demos/cube/v001/rom.cfg'),'-o',str(rom),'-Ln',str(out/'cpu.lbl'),str(out/'cpu.o')],check=True)
     (out/'config.json').write_text(json.dumps({'kind':'interactive_polygon','profiles':configs,'font':font},indent=2)+'\n')
     print(rom)

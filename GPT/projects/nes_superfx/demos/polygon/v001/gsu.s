@@ -174,6 +174,7 @@ render_entry:
   cmode
   load r1,$8006
   sub r0
+.ifndef HW_CLEAR
   iwt r12,#512
   iwt r13,#clear_buffer
 clear_buffer:
@@ -185,6 +186,7 @@ clear_buffer:
   inc r1
   loop
   inc r1
+.endif
   save $8010,r0 ; transformed vertices
   save $8012,r0 ; submitted triangles
   save $8014,r0 ; visible triangles

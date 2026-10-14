@@ -1,0 +1,170 @@
+[
+  {
+    "case": "large",
+    "clock_select": 0,
+    "boundary": "max",
+    "count": 9,
+    "rom": "releases/GSU_Poly_large_12M_max_v002.nes"
+  },
+  {
+    "case": "large",
+    "clock_select": 0,
+    "boundary": "over",
+    "count": 10,
+    "rom": "releases/GSU_Poly_large_12M_over_v002.nes"
+  },
+  {
+    "case": "large",
+    "clock_select": 1,
+    "boundary": "max",
+    "count": 13,
+    "rom": "releases/GSU_Poly_large_25M_max_v002.nes"
+  },
+  {
+    "case": "large",
+    "clock_select": 1,
+    "boundary": "over",
+    "count": 14,
+    "rom": "releases/GSU_Poly_large_25M_over_v002.nes"
+  },
+  {
+    "case": "medium",
+    "clock_select": 0,
+    "boundary": "max",
+    "count": 11,
+    "rom": "releases/GSU_Poly_medium_12M_max_v002.nes"
+  },
+  {
+    "case": "medium",
+    "clock_select": 0,
+    "boundary": "over",
+    "count": 12,
+    "rom": "releases/GSU_Poly_medium_12M_over_v002.nes"
+  },
+  {
+    "case": "medium",
+    "clock_select": 1,
+    "boundary": "max",
+    "count": 17,
+    "rom": "releases/GSU_Poly_medium_25M_max_v002.nes"
+  },
+  {
+    "case": "medium",
+    "clock_select": 1,
+    "boundary": "over",
+    "count": 18,
+    "rom": "releases/GSU_Poly_medium_25M_over_v002.nes"
+  },
+  {
+    "case": "small",
+    "clock_select": 0,
+    "boundary": "max",
+    "count": 15,
+    "rom": "releases/GSU_Poly_small_12M_max_v002.nes"
+  },
+  {
+    "case": "small",
+    "clock_select": 0,
+    "boundary": "over",
+    "count": 16,
+    "rom": "releases/GSU_Poly_small_12M_over_v002.nes"
+  },
+  {
+    "case": "small",
+    "clock_select": 1,
+    "boundary": "max",
+    "count": 26,
+    "rom": "releases/GSU_Poly_small_25M_max_v002.nes"
+  },
+  {
+    "case": "small",
+    "clock_select": 1,
+    "boundary": "over",
+    "count": 27,
+    "rom": "releases/GSU_Poly_small_25M_over_v002.nes"
+  },
+  {
+    "case": "irregular",
+    "clock_select": 0,
+    "boundary": "max",
+    "count": 8,
+    "rom": "releases/GSU_Poly_irregular_12M_max_v002.nes"
+  },
+  {
+    "case": "irregular",
+    "clock_select": 0,
+    "boundary": "over",
+    "count": 9,
+    "rom": "releases/GSU_Poly_irregular_12M_over_v002.nes"
+  },
+  {
+    "case": "irregular",
+    "clock_select": 1,
+    "boundary": "max",
+    "count": 13,
+    "rom": "releases/GSU_Poly_irregular_25M_max_v002.nes"
+  },
+  {
+    "case": "irregular",
+    "clock_select": 1,
+    "boundary": "over",
+    "count": 14,
+    "rom": "releases/GSU_Poly_irregular_25M_over_v002.nes"
+  },
+  {
+    "case": "overlap",
+    "clock_select": 0,
+    "boundary": "max",
+    "count": 9,
+    "rom": "releases/GSU_Poly_overlap_12M_max_v002.nes"
+  },
+  {
+    "case": "overlap",
+    "clock_select": 0,
+    "boundary": "over",
+    "count": 10,
+    "rom": "releases/GSU_Poly_overlap_12M_over_v002.nes"
+  },
+  {
+    "case": "overlap",
+    "clock_select": 1,
+    "boundary": "max",
+    "count": 17,
+    "rom": "releases/GSU_Poly_overlap_25M_max_v002.nes"
+  },
+  {
+    "case": "overlap",
+    "clock_select": 1,
+    "boundary": "over",
+    "count": 18,
+    "rom": "releases/GSU_Poly_overlap_25M_over_v002.nes"
+  },
+  {
+    "case": "clipped",
+    "clock_select": 0,
+    "boundary": "max",
+    "count": 15,
+    "rom": "releases/GSU_Poly_clipped_12M_max_v002.nes"
+  },
+  {
+    "case": "clipped",
+    "clock_select": 0,
+    "boundary": "over",
+    "count": 16,
+    "rom": "releases/GSU_Poly_clipped_12M_over_v002.nes"
+  },
+  {
+    "case": "clipped",
+    "clock_select": 1,
+    "boundary": "max",
+    "count": 25,
+    "rom": "releases/GSU_Poly_clipped_25M_max_v002.nes"
+  },
+  {
+    "case": "clipped",
+    "clock_select": 1,
+    "boundary": "over",
+    "count": 26,
+    "rom": "releases/GSU_Poly_clipped_25M_over_v002.nes"
+  }
+]
