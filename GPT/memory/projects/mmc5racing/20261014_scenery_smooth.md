@@ -27,3 +27,7 @@ Mesenの最重窓8,199レースフレーム、CPU3台・合成ゴースト付き
 根拠・実行コマンド・画像はゲーム側 `scenery/README.md` と `verification/scenery/current-*`。自己評価は改善：容量の最大本数から自然な表示と配置の役割へ戻した。位置精度と更新間隔を別々に検査した。
 
 通常開発先 `D:\HomeBrew\MMC5Racing` へfast-forward済み。この時点で別作業のGRIP摩擦調整（build_direct.py、brake.s/build.py、scene-control.s、native runner等）が未commitだったので、それらを保存したまま合流した。検証済みリリースe502と、別作業を含むローカルビルドのSHAは区別する。
+
+未commit変更を含めた通常フォルダのビルドはSHA `81dab7e0e540795571a451a4e6b9c440a1b9f555f97dd323d9c7dd556559ee1d`。回転位置の検査は成功したが、GRIP turnsのネイティブ検査はreadyイベント不足で失敗。生記録は `build/smooth-main-grip/`、303フレーム以降イベントが途絶え、最後の1500フレームでもNMI254・published244が変わらない。今回の景物だけの版e502は同じ試験に成功しているので、別作業の調査用に差を残した。原因は断定せず、未commit変更を戻したり混ぜてcommitしたりしない。
+
+このため追加commit `bb23b9b` で `play_scenery.cmd` と固定ROM `releases/MMC5Racing_ScenerySmooth_144x168.nes`（SHA e502）をmainへpushし、通常フォルダもfast-forwardした。この起動入口は再ビルドせず検証済みの回転修正版を開く。通常のplay.cmdで未完成の別変更までビルドすることを避け、今回の成果を具体的に遊べる状態で渡した。
