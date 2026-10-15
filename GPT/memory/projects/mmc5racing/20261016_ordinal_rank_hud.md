@@ -6,9 +6,9 @@
 > アルファベット２文字は無理矢理でいいので8dotに収めて2スプライトでいけないかな？自車と重ならなければ負担にはならないはず。画像的に無理なら2文字で。
 > スプライトの残量ってどんなもの？
 
-`D:\HomeBrew\MMC5Racing` のmain `645f41b` から実装。commit `b26884840b7257c3139a16425f8672fb3bb15b72` をfeature branch `codex/rank-ordinals-20261016` とmainへpush済み。通常checkoutもfast-forward。前の「順位数字1枚」は今回のユーザー指定で2枚へ変更した。
+`D:\HomeBrew\MMC5Racing` のmain `645f41b` から実装。順位表示のcommit `b26884840b7257c3139a16425f8672fb3bb15b72` を作成後、mainへ並行して入った分秒時計 `9f008ba` を統合。最終commit `d4c32b2758b5c435cc54155f86050d430dfc6bee` をfeature branch `codex/rank-ordinals-20261016` とmainへpush済み。通常checkoutもfast-forwardしclean・remote同期を確認。前の「順位数字1枚」は今回のユーザー指定で2枚へ変更した。
 
-配布ROM `releases/MMC5Racing_RightCrop_136x184_OrdinalRank.nes`、SHA256 `359ef80e03c27c409d4fdaf6a79e3fc448ea85a9c59b4ddae6d45c40c4a1604c`。起動は `play_latest.cmd`。旧数字版は保存し、`build_release.py --rank-digits-only` で旧SHA1124dda0…へbyte一致するoverlayを確認。
+配布ROM `releases/MMC5Racing_RightCrop_136x184_OrdinalRank.nes`、SHA256 `b671d6bf5e3f60210a5d475d53b160b4153f2df1b824515974a90cd174ceb3c3`。起動は `play_latest.cmd`。旧数字版は保存し、`build_release.py --rank-digits-only` は分秒時計を維持した数字版SHA256 `affa513399292494c6092d68fa03e9c3925340d3260f3294a0d930531c4c7178` を再現する。時計統合前のSHA1124dda0…は別途保存済み。
 
 自然な英語序数表記の1st／2nd／3rd／4thを採用。数字は既存5×7、接尾辞は3×5小文字2個を1px間隔、8px幅の1spriteへ詰める。左プレイ画面x116..131／y209..215。OAM4＋11の2枚。全用途の予約は59／64、空き5枠（24／26／29／47／54）。自車は全4096姿勢とjitter込みで202行までなので順位と同じ走査線にならない。
 
@@ -16,10 +16,10 @@
 
 4接尾辞は2個の8×16パターン、64bytes。上半分st／rd、下半分nd／thを逆順で格納し、上下反転で選ぶ。Y=208から最初の7行だけを表示し、もう一方は画面下の描画停止区間へ出す。全4種類の実PPU画素と下半分の露出0を確認。
 
-CHR even124／252を使用。124は既存合成で常に隠れる自車body3（8／24／40／56方向）、252は未参照。既存のhide命令、全4096自車組合せ、背景128方向19780records、タイトル960セルを検査してから書き込む。F248／V250、装飾62、黒fill128、爆発odd249..255は触らない。sprite register5121=1／5123=3は固定。
+CHR even124／254を使用。124は既存合成で常に隠れる自車body3（8／24／40／56方向）、254は未参照。時計統合時に252のコロンを保護するため、接尾辞を252から254へ移した。既存のhide命令、全4096自車組合せ、背景128方向19780records、タイトル960セルを検査してから書き込む。F248／V250、時計コロン252、装飾62、黒fill128、爆発odd249..255は触らない。sprite register5121=1／5123=3は固定。
 
 順位変化時のみtile／属性の差し替えで19cycles増。32更新周期、位置表、CPUペース、物理、音、時計、WRAM8bytesを維持。休止27cycles、代表平均44.1875cycles。追加PPU転送やNMI処理なし。
 
-証拠は `verification/rank-ordinals/`。6502の6144状態、全4順位・goal／境界／全800位置表条件を検査。Mesenの3台可視1100framesでhold／転送拒否0。順位そのものを書かずlap比較入力だけで全4接尾辞を発生させ、実OAMと画像を確認。入力のみ1周1190NMI／1190更新、hold／main遅れ／転送拒否0。可搬ソースの空ディレクトリ再ビルドもbyte一致。全状態60fpsの保証は追加しない。
+証拠は `verification/rank-ordinals/`。6502の6144状態、全4順位・goal／境界／全800位置表条件を検査。Mesenの3台可視1100framesでhold／転送拒否0。順位そのものを書かずlap比較入力だけで全4接尾辞を発生させ、実OAMと画像を確認。入力のみ1周1190NMI／1190更新、hold／main遅れ／転送拒否0。時計統合後にもこれらを再実行し、36000tickの分秒書式、コロン、時計不変時のOAM書き込み0も確認。可搬ソースの空ディレクトリ再ビルドも最終ROMへbyte一致。全状態60fpsの保証は追加しない。
 
-配布sourceの展開中にDドライブ満杯を検出。今回のworktreeのbuild配下に自分が作ったdirect-portable一時展開先4個について、絶対パスが同じbuild直下であることを確認して削除。source ZIP・ROM・検証ログは保持。再試行の可搬ビルドは成功し、一時展開先も確認後に整理した。ユーザーの既存ファイルや元checkoutのbuildは削除しない。
+配布sourceの展開中にDドライブ満杯を検出。今回のworktreeのbuild配下に自分が作ったdirect-portable一時展開先のみ、絶対パスが同じbuild直下であることを確認して削除。source ZIP・ROM・検証ログは保持。再試行の可搬ビルドは成功し、一時展開先も確認後に整理した。ユーザーの既存ファイルや元checkoutのbuildは削除しない。
