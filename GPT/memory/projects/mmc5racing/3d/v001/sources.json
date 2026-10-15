@@ -1,7 +1,8 @@
 {
   "date": "2026-10-16",
   "status": "仕様案",
-  "implementation_changed": false,
+  "implementation_changed": true,
+  "implementation_scope": "地面描画の比較試作のみ。3Dゲーム本体とMMC5同居回路は未実装",
   "mmc5racing_revision": "d9e887eee1682bb278a3e0e6e737f4bb647fd93a",
   "camera_requirement": "走行中に4視点を選択",
   "review_rows_per_cycle": [
@@ -15,8 +16,10 @@
     "D:\\HomeBrew\\MMC5Racing\\README.md": "48f9ef8e5e748a59e206429b2e3e647a3b28b0e5f159f98843307d8466221aa0",
     "D:\\HomeBrew\\MMC5Racing\\releases\\main-release.json": "8e2402b04ad86e7510a1509e6d2c8cc870f74febcc7e24aea0594e76511ba512",
     "C:\\Users\\owner\\Downloads\\MMC5Racing\\development\\superfx-lab\\PLATFORM.md": "ba56221e1ce25a55f55cf7f28beec0000492d6d91a43fb46428a432bbacb0388",
-    "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\src\\BitmapBoard.hpp": "32a4a98b9b45bc2b4413d810da3fbae8d501333147a8296191c27313d89ff56f",
-    "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\src\\Board.hpp": "a969639914f2adccbf96ea410bf6426c03f67f4dd7b78397a21f7655441d21be"
+    "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\src\\BitmapBoard.hpp": "aecde10024a54c7b4928ffe443f754f1c879341a139f9f95d38364738a77dd21",
+    "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\src\\Board.hpp": "a969639914f2adccbf96ea410bf6426c03f67f4dd7b78397a21f7655441d21be",
+    "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\releases\\GSU_GroundCompare_v001.nes": "6a8a36421daf87d090839d791e81556d4d41bd59568f861674a99d83745c60d5",
+    "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\demos\\ground\\v001\\results\\benchmark.json": "0ed7eb53ece7567e677406598228cb6e08b5410024c1d2829c1eb92a1fbd064e"
   },
   "ground_requirement": "フラットポリゴンとMODE7風平面テクスチャの両方式を比較",
   "ground_references": [

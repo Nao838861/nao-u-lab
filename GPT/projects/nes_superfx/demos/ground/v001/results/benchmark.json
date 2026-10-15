@@ -1,0 +1,320 @@
+{
+  "status": "pass",
+  "native_frames": 1024,
+  "native_pixels_checked": 50331648,
+  "frontend_frames": 128,
+  "frontend_pixels_checked": 7864320,
+  "external_memory_reference_hz": 25000000,
+  "fill_hz": 25000000,
+  "timing_model": "Mesen-derived execution; fixed real-time memory waits; no racing physics; not FPGA performance",
+  "results": [
+    {
+      "mhz": 25,
+      "view": 1,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 31.662959999999998,
+      "gsu_ms_max": 40.08768,
+      "gsu_ms_mean": 35.954890625,
+      "fill_byte_clocks": [
+        18048
+      ],
+      "fill_ms": 0.72192,
+      "sampled_present_fields": [
+        3
+      ],
+      "sampled_fps": [
+        20.032933333333332
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 1,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 58.44828,
+      "gsu_ms_max": 65.10016,
+      "gsu_ms_mean": 61.061539374999995,
+      "fill_byte_clocks": [
+        18048
+      ],
+      "fill_ms": 0.72192,
+      "sampled_present_fields": [
+        4
+      ],
+      "sampled_fps": [
+        15.0247
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 2,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 34.89844,
+      "gsu_ms_max": 45.20852,
+      "gsu_ms_mean": 40.10005812500001,
+      "fill_byte_clocks": [
+        17280
+      ],
+      "fill_ms": 0.6912,
+      "sampled_present_fields": [
+        3
+      ],
+      "sampled_fps": [
+        20.032933333333332
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 2,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 61.20736,
+      "gsu_ms_max": 70.0672,
+      "gsu_ms_mean": 64.766739375,
+      "fill_byte_clocks": [
+        17280
+      ],
+      "fill_ms": 0.6912,
+      "sampled_present_fields": [
+        5
+      ],
+      "sampled_fps": [
+        12.01976
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 3,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 37.87356,
+      "gsu_ms_max": 49.66776,
+      "gsu_ms_mean": 43.17670687500001,
+      "fill_byte_clocks": [
+        15936
+      ],
+      "fill_ms": 0.63744,
+      "sampled_present_fields": [
+        4
+      ],
+      "sampled_fps": [
+        15.0247
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 3,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 65.10816,
+      "gsu_ms_max": 75.68575999999999,
+      "gsu_ms_mean": 70.400336875,
+      "fill_byte_clocks": [
+        15936
+      ],
+      "fill_ms": 0.63744,
+      "sampled_present_fields": [
+        5
+      ],
+      "sampled_fps": [
+        12.01976
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 4,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 48.87332,
+      "gsu_ms_max": 54.780440000000006,
+      "gsu_ms_mean": 51.62334875,
+      "fill_byte_clocks": [
+        12288
+      ],
+      "fill_ms": 0.49152,
+      "sampled_present_fields": [
+        4
+      ],
+      "sampled_fps": [
+        15.0247
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 4,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 78.15932000000001,
+      "gsu_ms_max": 91.12636,
+      "gsu_ms_mean": 84.28282,
+      "fill_byte_clocks": [
+        12288
+      ],
+      "fill_ms": 0.49152,
+      "sampled_present_fields": [
+        5,
+        6
+      ],
+      "sampled_fps": [
+        12.01976,
+        10.016466666666666
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 1,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 26.75164,
+      "gsu_ms_max": 34.25164,
+      "gsu_ms_mean": 30.530355937499994,
+      "fill_byte_clocks": [
+        18048
+      ],
+      "fill_ms": 0.72192,
+      "sampled_present_fields": [
+        3
+      ],
+      "sampled_fps": [
+        20.032933333333332
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 1,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 36.297239999999995,
+      "gsu_ms_max": 40.87656,
+      "gsu_ms_mean": 38.05023593749999,
+      "fill_byte_clocks": [
+        18048
+      ],
+      "fill_ms": 0.72192,
+      "sampled_present_fields": [
+        3
+      ],
+      "sampled_fps": [
+        20.032933333333332
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 2,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 29.68848,
+      "gsu_ms_max": 38.737559999999995,
+      "gsu_ms_mean": 34.195519062500004,
+      "fill_byte_clocks": [
+        17280
+      ],
+      "fill_ms": 0.6912,
+      "sampled_present_fields": [
+        3
+      ],
+      "sampled_fps": [
+        20.032933333333332
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 2,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 37.9891,
+      "gsu_ms_max": 44.06964,
+      "gsu_ms_mean": 40.444029375,
+      "fill_byte_clocks": [
+        17280
+      ],
+      "fill_ms": 0.6912,
+      "sampled_present_fields": [
+        3
+      ],
+      "sampled_fps": [
+        20.032933333333332
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 3,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 32.3399,
+      "gsu_ms_max": 42.82814,
+      "gsu_ms_mean": 37.04026500000001,
+      "fill_byte_clocks": [
+        15936
+      ],
+      "fill_ms": 0.63744,
+      "sampled_present_fields": [
+        3
+      ],
+      "sampled_fps": [
+        20.032933333333332
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 3,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 40.5047,
+      "gsu_ms_max": 47.417199999999994,
+      "gsu_ms_mean": 43.940395312500016,
+      "fill_byte_clocks": [
+        15936
+      ],
+      "fill_ms": 0.63744,
+      "sampled_present_fields": [
+        4
+      ],
+      "sampled_fps": [
+        15.0247
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 4,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 41.76264,
+      "gsu_ms_max": 46.99552,
+      "gsu_ms_mean": 44.1875421875,
+      "fill_byte_clocks": [
+        12288
+      ],
+      "fill_ms": 0.49152,
+      "sampled_present_fields": [
+        3,
+        4
+      ],
+      "sampled_fps": [
+        20.032933333333332,
+        15.0247
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 4,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 49.66982,
+      "gsu_ms_max": 57.15036,
+      "gsu_ms_mean": 53.137177187499994,
+      "fill_byte_clocks": [
+        12288
+      ],
+      "fill_ms": 0.49152,
+      "sampled_present_fields": [
+        4
+      ],
+      "sampled_fps": [
+        15.0247
+      ]
+    }
+  ]
+}

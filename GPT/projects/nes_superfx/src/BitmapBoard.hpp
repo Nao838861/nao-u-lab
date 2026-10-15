@@ -110,7 +110,7 @@ public:
         // The fill owns the RAM port. Block GO/cache uploads until completion.
         if(fillBusy && a>=0x5000 && a<=0x52ff) { faults|=2;return; }
         switch(a) {
-            case 0x5FE0:if(fillBusy) { faults|=2;return; }if(v<=3) mode=v; else faults|=4;return;
+            case 0x5FE0:if(fillBusy) { faults|=2;return; }if(v<=4) mode=v; else faults|=4;return;
             case 0x5FE1:if(v<5) page=v; else faults|=4;return;
             case 0x5FE2:
                 if(Busy() || fillBusy) { faults|=2;return; }
@@ -146,7 +146,7 @@ public:
     uint8_t NameFetch(uint16_t a) {
         unsigned row=(a&1023)>>5,col=a&31;
         unsigned x0=mode==1?8:0,y0=mode==1?7:(mode==2?11:0);
-        unsigned w=mode==1?16:32,h=mode==1?16:(mode==2?8:30);
+        unsigned w=mode==1?16:32,h=mode==1?16:(mode==2?8:(mode==4?24:30));
         tileInside=mode && col>=x0 && col<x0+w && row>=y0 && row<y0+h;
         tileX=static_cast<uint16_t>((col-x0)*8);tileY=static_cast<uint16_t>((row-y0)*8);
         return static_cast<uint8_t>(((row-y0)&7)*32+(col-x0));

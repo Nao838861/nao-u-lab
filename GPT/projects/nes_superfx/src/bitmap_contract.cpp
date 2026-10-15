@@ -21,6 +21,12 @@ int main(){
                 b.NameFetch(static_cast<uint16_t>(0x2000+(y/8)*32+x/8));
                 check(b.PatternFetch(y&7)==static_cast<uint8_t>(x/8+y),"tile/band/native quadrant address");
             }
+        b.CpuWrite(0x5FE0,4);
+        check(b.mode==4,"192-line viewport mode");
+        b.NameFetch(0x2000+23*32);check(b.tileInside,"last viewport tile row");
+        b.NameFetch(0x2000+24*32);check(!b.tileInside && b.PatternFetch(0)==0,"hidden texture rows");
+        b.CpuWrite(0x5FE0,5);check(b.mode==4 && (b.faults&4),"invalid viewport mode");
+        b.CpuWrite(0x5FE3,4);
         b.CpuWrite(0x5034,0);b.CpuWrite(0x503A,0x18);
         for(unsigned i=0;i<16;++i)b.CpuWrite(0x5100+i,i==0?0xFF:(i==2?0:1));
         // IWT r15,$0101 repeats in external-zero ROM only if continued; GO is visible immediately.
