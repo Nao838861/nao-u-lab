@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-16",
+  "status": "仕様案",
+  "implementation_changed": false,
+  "mmc5racing_revision": "d9e887eee1682bb278a3e0e6e737f4bb647fd93a",
+  "camera_requirement": "走行中に4視点を選択",
+  "review_rows_per_cycle": [
+    30,
+    30,
+    30
+  ],
+  "sources": {
+    "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\demos\\polygon\\v002\\results\\benchmark.json": "31a183f4cbbc9c85f8568d1fa59b98d2d378c470e19b46966078e80c780da6c2",
+    "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\demos\\polygon\\v003\\results\\benchmark.json": "3cff5adff9c54be04d3557cea04bce6e9163a5835ea813a4235f3578849c9ba5",
+    "D:\\HomeBrew\\MMC5Racing\\README.md": "48f9ef8e5e748a59e206429b2e3e647a3b28b0e5f159f98843307d8466221aa0",
+    "D:\\HomeBrew\\MMC5Racing\\releases\\main-release.json": "8e2402b04ad86e7510a1509e6d2c8cc870f74febcc7e24aea0594e76511ba512",
+    "C:\\Users\\owner\\Downloads\\MMC5Racing\\development\\superfx-lab\\PLATFORM.md": "ba56221e1ce25a55f55cf7f28beec0000492d6d91a43fb46428a432bbacb0388"
+  }
+}
