@@ -5,8 +5,9 @@ from PIL import Image
 def transform(config, view, phase):
     cx,cz,h,cs,sn,cp,sp,ox,oz,oc,os=config['views'][view]['poses'][phase]
     result=[]
+    first=config.get('own_first_vertex',64)
     for i,(x,y,z) in enumerate(config['vertices']):
-        if 64<=i<72:x,z=(x*oc//256+z*os//256+ox,z*oc//256-x*os//256+oz)
+        if first<=i<first+8:x,z=(x*oc//256+z*os//256+ox,z*oc//256-x*os//256+oz)
         x-=cx;z-=cz
         forward=x*sn//256+z*cs//256
         result.append((x*cs//256-z*sn//256,(h-y)*cp//256-forward*sp//256,
@@ -47,7 +48,7 @@ def reference(config,view,mode,phase):
     camera=transform(config,view,phase)
     visible=0
     for f,(color,cull,*ids) in enumerate(config['faces']):
-        if mode and f<48:continue
+        if mode and f<config.get('ground_face_count',48):continue
         poly=clip([camera[i] for i in ids],256)
         if len(poly)<3:continue
         poly=clip(poly,18432,True)

@@ -1,0 +1,364 @@
+{
+  "status": "pass",
+  "native_frames": 1024,
+  "native_pixels_checked": 50331648,
+  "frontend_frames": 128,
+  "frontend_pixels_checked": 7864320,
+  "external_memory_reference_hz": 25000000,
+  "fill_hz": 25000000,
+  "timing_model": "Mesen-derived execution; fixed real-time memory waits; no racing physics; not FPGA performance",
+  "results": [
+    {
+      "mhz": 25,
+      "view": 1,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 28.708119999999997,
+      "gsu_ms_max": 50.168440000000004,
+      "gsu_ms_mean": 38.94991124999999,
+      "fill_byte_clocks": [
+        18048
+      ],
+      "fill_ms": 0.72192,
+      "sampled_present_fields": [
+        3,
+        4
+      ],
+      "sampled_fps": [
+        20.032933333333332,
+        15.0247
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 1,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 57.29004,
+      "gsu_ms_max": 61.36584,
+      "gsu_ms_mean": 59.581454374999986,
+      "fill_byte_clocks": [
+        18048
+      ],
+      "fill_ms": 0.72192,
+      "sampled_present_fields": [
+        4,
+        5
+      ],
+      "sampled_fps": [
+        15.0247,
+        12.01976
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 2,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 34.53668,
+      "gsu_ms_max": 57.740919999999996,
+      "gsu_ms_mean": 44.322563124999995,
+      "fill_byte_clocks": [
+        17280
+      ],
+      "fill_ms": 0.6912,
+      "sampled_present_fields": [
+        3,
+        4
+      ],
+      "sampled_fps": [
+        20.032933333333332,
+        15.0247
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 2,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 60.065760000000004,
+      "gsu_ms_max": 65.27032,
+      "gsu_ms_mean": 62.64738437499998,
+      "fill_byte_clocks": [
+        17280
+      ],
+      "fill_ms": 0.6912,
+      "sampled_present_fields": [
+        5
+      ],
+      "sampled_fps": [
+        12.01976
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 3,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 36.622440000000005,
+      "gsu_ms_max": 62.5406,
+      "gsu_ms_mean": 47.4833475,
+      "fill_byte_clocks": [
+        15936
+      ],
+      "fill_ms": 0.63744,
+      "sampled_present_fields": [
+        3,
+        4
+      ],
+      "sampled_fps": [
+        20.032933333333332,
+        15.0247
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 3,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 64.34891999999999,
+      "gsu_ms_max": 72.07116,
+      "gsu_ms_mean": 67.92387187500002,
+      "fill_byte_clocks": [
+        15936
+      ],
+      "fill_ms": 0.63744,
+      "sampled_present_fields": [
+        5
+      ],
+      "sampled_fps": [
+        12.01976
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 4,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 42.13552,
+      "gsu_ms_max": 71.2702,
+      "gsu_ms_mean": 57.835268750000004,
+      "fill_byte_clocks": [
+        12288
+      ],
+      "fill_ms": 0.49152,
+      "sampled_present_fields": [
+        3,
+        4
+      ],
+      "sampled_fps": [
+        20.032933333333332,
+        15.0247
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 4,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 72.7388,
+      "gsu_ms_max": 91.70903999999999,
+      "gsu_ms_mean": 81.70180125,
+      "fill_byte_clocks": [
+        12288
+      ],
+      "fill_ms": 0.49152,
+      "sampled_present_fields": [
+        5
+      ],
+      "sampled_fps": [
+        12.01976
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 1,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 24.25522,
+      "gsu_ms_max": 42.44574,
+      "gsu_ms_mean": 33.08993624999999,
+      "fill_byte_clocks": [
+        18048
+      ],
+      "fill_ms": 0.72192,
+      "sampled_present_fields": [
+        3
+      ],
+      "sampled_fps": [
+        20.032933333333332
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 1,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 35.59282,
+      "gsu_ms_max": 37.63232,
+      "gsu_ms_mean": 36.737695937499986,
+      "fill_byte_clocks": [
+        18048
+      ],
+      "fill_ms": 0.72192,
+      "sampled_present_fields": [
+        3
+      ],
+      "sampled_fps": [
+        20.032933333333332
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 2,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 29.39162,
+      "gsu_ms_max": 49.73444,
+      "gsu_ms_mean": 37.77658812500001,
+      "fill_byte_clocks": [
+        17280
+      ],
+      "fill_ms": 0.6912,
+      "sampled_present_fields": [
+        3,
+        4
+      ],
+      "sampled_fps": [
+        20.032933333333332,
+        15.0247
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 2,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 37.292,
+      "gsu_ms_max": 39.89992,
+      "gsu_ms_mean": 38.58585750000001,
+      "fill_byte_clocks": [
+        17280
+      ],
+      "fill_ms": 0.6912,
+      "sampled_present_fields": [
+        3
+      ],
+      "sampled_fps": [
+        20.032933333333332
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 3,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 31.25844,
+      "gsu_ms_max": 53.86366,
+      "gsu_ms_mean": 40.6441109375,
+      "fill_byte_clocks": [
+        15936
+      ],
+      "fill_ms": 0.63744,
+      "sampled_present_fields": [
+        3,
+        4
+      ],
+      "sampled_fps": [
+        20.032933333333332,
+        15.0247
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 3,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 39.982620000000004,
+      "gsu_ms_max": 43.875339999999994,
+      "gsu_ms_mean": 41.790395937500016,
+      "fill_byte_clocks": [
+        15936
+      ],
+      "fill_ms": 0.63744,
+      "sampled_present_fields": [
+        3
+      ],
+      "sampled_fps": [
+        20.032933333333332
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 4,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 36.02606,
+      "gsu_ms_max": 60.986959999999996,
+      "gsu_ms_mean": 49.263659374999996,
+      "fill_byte_clocks": [
+        12288
+      ],
+      "fill_ms": 0.49152,
+      "sampled_present_fields": [
+        3,
+        4
+      ],
+      "sampled_fps": [
+        20.032933333333332,
+        15.0247
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 4,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 46.06722,
+      "gsu_ms_max": 55.852199999999996,
+      "gsu_ms_mean": 50.67374781250001,
+      "fill_byte_clocks": [
+        12288
+      ],
+      "fill_ms": 0.49152,
+      "sampled_present_fields": [
+        4
+      ],
+      "sampled_fps": [
+        15.0247
+      ]
+    }
+  ],
+  "course_validation": {
+    "status": "pass",
+    "source_world_size": 640,
+    "source_road_bounds": [
+      32,
+      58,
+      608,
+      608
+    ],
+    "mesh_road_bounds": [
+      32,
+      59,
+      608,
+      606
+    ],
+    "source_road_pixels": 131537,
+    "road_footprint_iou": 0.9582337096334856,
+    "centerline_max_error_source_px": 1.3245636272743355,
+    "route_max_error_source_px": 0.022982359586505244,
+    "route_poses": 64,
+    "all_poses_on_asphalt": true,
+    "cross_sections": 19,
+    "ground_quads": 57,
+    "vertices": 84,
+    "source_revision": "2a493fe0d7703b7994de0992454e16b3af5e911d",
+    "source_files": {
+      "D:\\HomeBrew\\MMC5Racing\\direct-runtime\\rival-trial\\vendor\\pc-route-study\\build\\projection-controls.json": "8008e01568bb3c2eac66c79e6ee3e12f6e896b5c5c4638741cc0ffe9d8bc2387",
+      "D:\\HomeBrew\\MMC5Racing\\race-src\\course-data.inc": "600c25ca753be407006a6f6899c5c6bf93c95ac6f74e1580448214ec34557874",
+      "D:\\HomeBrew\\MMC5Racing\\verification\\scenery\\current-map.png": "c9943a9fdbb4b8b6ccdb4b692b2aa918cc1f181c4d84c31cd9a10ebd72bf8b9a",
+      "D:\\HomeBrew\\MMC5Racing\\verification\\scenery\\current-map.json": "ce565c9a27d6d975e01f58efd181cf2f625eb759d83f5662a2c65d92d00c49c2"
+    }
+  }
+}

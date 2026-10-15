@@ -19,7 +19,10 @@
     "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\src\\BitmapBoard.hpp": "aecde10024a54c7b4928ffe443f754f1c879341a139f9f95d38364738a77dd21",
     "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\src\\Board.hpp": "a969639914f2adccbf96ea410bf6426c03f67f4dd7b78397a21f7655441d21be",
     "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\releases\\GSU_GroundCompare_v001.nes": "6a8a36421daf87d090839d791e81556d4d41bd59568f861674a99d83745c60d5",
-    "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\demos\\ground\\v001\\results\\benchmark.json": "0ed7eb53ece7567e677406598228cb6e08b5410024c1d2829c1eb92a1fbd064e"
+    "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\demos\\ground\\v001\\results\\benchmark.json": "0ed7eb53ece7567e677406598228cb6e08b5410024c1d2829c1eb92a1fbd064e",
+    "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\demos\\ground\\v002\\course.json": "bf16db6dbcfc88a83b4e7bdd1aa0eeb5b7e2dc4a7780b0bbe46e947f90c40e00",
+    "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\demos\\ground\\v002\\results\\course_validation.json": "29ec55425c7e7602ef1322103748ba33cb966fc3755956a163560de54e688e16",
+    "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\releases\\GSU_GroundCompare_v002.nes": "7a863b54254eb033427fb1c61342b76148104127e2ebc19c4c9dfd404aa35d32"
   },
   "ground_requirement": "フラットポリゴンとMODE7風平面テクスチャの両方式を比較",
   "ground_references": [

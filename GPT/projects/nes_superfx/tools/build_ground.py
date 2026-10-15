@@ -90,15 +90,24 @@ def fills(view):
             commands += [(xbase+complete*256+x*16,partial*2,0,0) for x in range(16)]
     return commands
 
-def build():
+def build(version='v001'):
+    global DEMO,OUT
+    if version not in ['v001','v002']:raise ValueError(version)
+    DEMO=ROOT/f'demos/ground/{version}';OUT=ROOT/f'build/ground/{version}'
     OUT.mkdir(parents=True,exist_ok=True)
     assert hashlib.sha256((ROOT/'.cache/casfx/casfx.inc').read_bytes()).hexdigest()==CASFX_HASH
     subprocess.run(['ca65','-g','-I',str(ROOT/'.cache/casfx'),'-o',str(OUT/'gsu.o'),str(DEMO/'gsu.s')],check=True)
     (OUT/'gsu.cfg').write_text('MEMORY {G:start=$9000,size=$1000,file=%O,fill=yes,fillval=$01;}\nSEGMENTS {GSU:load=G,type=ro,align=$200;}\n')
     subprocess.run(['ld65','-C',str(OUT/'gsu.cfg'),'-o',str(OUT/'gsu.bin'),'-Ln',str(OUT/'gsu.lbl'),str(OUT/'gsu.o')],check=True)
-    vertices,faces,rings=geometry();tex=texture(rings)
+    metadata=None
+    if version=='v002':
+        import mmc5_course
+        vertices,faces,rings,metadata=mmc5_course.geometry();tex=mmc5_course.texture(rings,inside)
+    else:vertices,faces,rings=geometry();tex=texture(rings)
     payload=bytearray(8192)
     struct.pack_into('<HH',payload,0x1e,len(vertices),len(faces))
+    if metadata is not None:
+        struct.pack_into('<HH',payload,0x28,len(rings[0])*4,0x8300+len(rings[0])*3*12)
     vdata=b''.join(struct.pack('<3h',*v) for v in vertices)
     fdata=b''.join(struct.pack('<6H',c,flag,*[0x8600+i*6 for i in ids]) for c,flag,*ids in faces)
     assert len(vdata)<=512 and len(fdata)<=768
@@ -110,7 +119,7 @@ def build():
     lines=[];config={'kind':'ground','width':256,'height':192,'texture_size':64,'vertices':vertices,'faces':faces,
                       'texture':list(tex),'palette':PALETTE,'views':[]}
     for view in range(4):
-        p,r,f=poses(view),rows(view),fills(view)
+        p,r,f=(mmc5_course.poses(view,VIEWS) if metadata is not None else poses(view)),rows(view),fills(view)
         config['views'].append({'poses':p,'rows':r,'fills':f,'camera':VIEWS[view]})
         (OUT/f'poses_{view}.bin').write_bytes(b''.join(struct.pack('<11h',*x) for x in p))
         (OUT/f'rows_{view}.bin').write_bytes(b''.join(struct.pack('<2h',*x) for x in r))
@@ -130,11 +139,16 @@ def build():
         for y,row in enumerate(bits):chrdata[4096+ord(c)*16+y+1]=int(row,2)<<4
     (OUT/'hud.chr').write_bytes(chrdata)
     subprocess.run(['ca65','-I',str(OUT),'-o',str(OUT/'cpu.o'),str(DEMO/'cpu.s')],cwd=OUT,check=True)
-    rom=OUT/'GSU_GroundCompare_v001.nes'
+    rom=OUT/f'GSU_GroundCompare_{version}.nes'
     subprocess.run(['ld65','-C',str(ROOT/'demos/cube/v001/rom.cfg'),'-o',str(rom),'-Ln',str(OUT/'cpu.lbl'),str(OUT/'cpu.o')],check=True)
     config['font']=font
+    if metadata is not None:
+        config.update(version=version,rom_name=rom.name,course=metadata,road_rings=rings,
+                      own_first_vertex=len(rings[0])*4,ground_face_count=len(rings[0])*3)
     (OUT/'config.json').write_text(json.dumps(config,indent=2)+'\n')
     print(rom)
     return OUT
 
-if __name__=='__main__': build()
+if __name__=='__main__':
+    parser=argparse.ArgumentParser();parser.add_argument('--version',choices=['v001','v002'],default='v001')
+    build(parser.parse_args().version)

@@ -13,7 +13,7 @@
 - [run_cube_benchmark.cmd](run_cube_benchmark.cmd)：均等配置版v002。１本のROMでA（専用設定ではZキー）を押し、２→４→６→９→13→19→24→33→52→71個を切り替える。画面下のN=は個数、S=はモデル辺長。
 - [run_polygon_benchmark.cmd](run_polygon_benchmark.cmd)：通常の25MHz版v002。専用RAM範囲フィルでクリアし、処理落ち直前の最大個数を表示。Aで６条件×25/12.5MHzを変更する。[専用クリア・上限・RTL・動画](demos/polygon/v002/README.md)。頂点変換・透視投影・裏面除去・深度順ソート・面塗りはGSUで実行する。[従来v001の30fps上限・20ms予算](demos/polygon/v001/README.md)も保存している。
 - [run_polygon_benchmark_50mhz.cmd](run_polygon_benchmark_50mhz.cmd)：v003はGSU 50MHz相当。外部RAMの待ちとクリア回路は従来の実時間を保つ。Aで６条件を変更する。[25MHzとの比較・上限・動画](demos/polygon/v003/README.md)。通常ランチャーは25MHzのまま。
-- [run_ground_compare.cmd](run_ground_compare.cmd)：ポリゴン／MODE7風の地面をAで切り替え、SELECTで4視点を比較する試作。Bで停止し、同じ位置を見比べられる。標準50MHz、[25MHz起動](run_ground_compare_25mhz.cmd)も用意。[操作・画像・測定](demos/ground/v001/README.md)。現在は約15〜20fpsの比較版で、レース本体の移植と30fps化は次段階。
+- [run_ground_compare.cmd](run_ground_compare.cmd)：MMC5Racingコースのv002。ポリゴン／MODE7風の地面をAで切り替え、SELECTで4視点を比較する。Bで停止し、同じ位置を見比べられる。標準50MHz、[25MHz起動](run_ground_compare_25mhz.cmd)も用意。[操作・元コースとの対応・測定](demos/ground/v002/README.md)。現在は約15〜20fpsの比較版で、レース本体の移植と30fps化は次段階。
 - [run_bitmap_128.cmd](run_bitmap_128.cmd) → [run_bitmap_band.cmd](run_bitmap_band.cmd) → [run_bitmap_full.cmd](run_bitmap_full.cmd)：直接表示の128×128、256×64、256×240段階成果。
 - 別ROMを渡す場合は `run_gsu.cmd "C:\path\diagnostic.nes"`。
 

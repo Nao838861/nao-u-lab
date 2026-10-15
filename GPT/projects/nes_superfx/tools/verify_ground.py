@@ -92,7 +92,7 @@ end,emu.eventType.endFrame)
     env.update(NES_GSU_MAPPER='n8pro-gsu-abi2',NES_GSU_CLOCK_HZ=str(mhz*1000000))
     try:
         with core_lock(ROOT/'runtime/MesenCore.dll'):
-            proc=subprocess.run([str(ROOT/'runtime/Mesen.exe'),'--testRunner','--timeout=180','--doNotSaveSettings','--enableStdout',str(OUT/'GSU_GroundCompare_v001.nes'),str(script)],cwd=ROOT/'runtime',env=env,capture_output=True,timeout=190,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+            proc=subprocess.run([str(ROOT/'runtime/Mesen.exe'),'--testRunner','--timeout=180','--doNotSaveSettings','--enableStdout',str(OUT/config.get('rom_name','GSU_GroundCompare_v001.nes')),str(script)],cwd=ROOT/'runtime',env=env,capture_output=True,timeout=190,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
     finally:settings.write_bytes(before)
     (out/'emulator.log').write_bytes(proc.stdout+proc.stderr)
     if proc.returncode:raise RuntimeError((out/'error.txt').read_text() if (out/'error.txt').exists() else proc.stdout)
@@ -118,8 +118,10 @@ end,emu.eventType.endFrame)
     return {'status':'pass','mhz':mhz,'captures':records,'trace':trace,'held_a_repeats':False,'pause_and_step':True,'gsu_pixels_checked':len(records)*256*192,'ppu_pixels_checked':len(records)*256*240}
 
 def main():
+    global OUT
     parser=argparse.ArgumentParser();parser.add_argument('--mhz',type=int,choices=[25,50],default=50)
-    parser.add_argument('--samples',type=int,default=8);parser.add_argument('--frontend-only',action='store_true');args=parser.parse_args()
+    parser.add_argument('--samples',type=int,default=8);parser.add_argument('--frontend-only',action='store_true')
+    parser.add_argument('--directory',type=Path,default=OUT);args=parser.parse_args();OUT=args.directory.resolve()
     config=json.loads((OUT/'config.json').read_text())
     result={'native':None if args.frontend_only else native(config,args.mhz),'frontend':frontend(config,args.mhz,args.samples)}
     (OUT/f'verification_{args.mhz}.json').write_text(json.dumps(result,indent=2)+'\n')
