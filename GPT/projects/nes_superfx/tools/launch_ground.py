@@ -4,7 +4,7 @@ from build_ground import ROOT
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--gsu-mhz',type=int,choices=[25,50],default=50)
-    p.add_argument('--version',choices=['v001','v002'],default='v002');args=p.parse_args()
+    p.add_argument('--version',choices=['v001','v002','v003'],default='v003');args=p.parse_args()
     rom=ROOT/f'releases/GSU_GroundCompare_{args.version}.nes'
     manifest=json.loads((ROOT/f'releases/ground_compare_{args.version}.json').read_text(encoding='utf-8'))
     if hashlib.sha256(rom.read_bytes()).hexdigest()!=manifest['rom_sha256']:p.error('ROM hash mismatch')

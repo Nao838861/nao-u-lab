@@ -2,7 +2,7 @@
 
 2026年10月16日。対象は、MMC5Racingの実際のコース形状でポリゴンとMODE7風を比較したい開発者。**楕円コースを既存コースの形状へ差し替え、自動周回も元のスタート位置・進行方向に合わせた。**
 
-起動は従来と同じ[run_ground_compare.cmd](../../../run_ground_compare.cmd)。標準50MHz、[25MHz起動](../../../run_ground_compare_25mhz.cmd)も同じ新版ROMを使う。[ROM v002](../../../releases/GSU_GroundCompare_v002.nes)、[元コースとの形状比較](results/course_overview.png)、[4視点の比較](results/comparison.png)、[実ROMの動作GIF](results/interactive_50mhz.gif)。
+通常の[run_ground_compare.cmd](../../../run_ground_compare.cmd)は、車体縮尺と物理接続を追加した[v003](../v003/README.md)を起動する。このv002を再生する場合は`python tools/launch_ground.py --version v002 --gsu-mhz 50`。[ROM v002](../../../releases/GSU_GroundCompare_v002.nes)、[元コースとの形状比較](results/course_overview.png)、[4視点の比較](results/comparison.png)、[実ROMの動作GIF](results/interactive_50mhz.gif)。
 
 ## 操作
 

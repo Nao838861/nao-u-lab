@@ -44,10 +44,15 @@ def main():
             'external_memory_reference_hz':25000000,'fill_hz':25000000,
             'timing_model':'Mesen-derived execution; fixed real-time memory waits; no racing physics; not FPGA performance',
             'results':summary}
-    if version=='v002':
+    if version in ['v002','v003']:
         course=json.loads((OUT/'course_validation.json').read_text());assert course['status']=='pass'
         report['course_validation']=course
         for name in ['course_validation.json','course_overview.png']:shutil.copy2(OUT/name,results/name)
+    if version=='v003':
+        state=json.loads((OUT/'state_validation.json').read_text())
+        assert state['status']=='pass' and state['external_state_frontend']['status']=='pass'
+        report['state_validation']=state
+        for name in ['state_validation.json','car_scale.png']:shutil.copy2(OUT/name,results/name)
     (results/'benchmark.json').write_text(json.dumps(report,indent=2)+'\n')
     (results/'verification.json').write_text(json.dumps(reports,indent=2)+'\n')
     canvas=Image.new('RGB',(512,896),(20,20,20));draw=ImageDraw.Draw(canvas)
@@ -69,14 +74,22 @@ def main():
         for name in ['config.json','payload.bin','texture.bin','gsu.bin','gsu.lbl','cpu.lbl']:
             archive.write(OUT/name,'build/'+name)
         archive.write(results/'verification.json','verification.json')
-        if version=='v002':
-            for name in ['course.json','course_reference.png']:archive.write(DEMO/name,'course/'+name)
+        if version in ['v002','v003']:
+            for name in ['course.json','course_reference.png']:archive.write(ROOT/'demos/ground/v002'/name,'course/'+name)
             archive.write(OUT/'course_validation.json','course/course_validation.json')
+        if version=='v003':
+            for name in ['states.bin','directions.bin','camera.bin']:archive.write(OUT/name,'build/'+name)
+            archive.write(DEMO/'car_source.json','state/car_source.json')
+            archive.write(OUT/'state_validation.json','state/state_validation.json')
+            for p in sorted((OUT/'state_frontend').iterdir()):
+                if p.suffix in ['.ram','.lua','.log']:archive.write(p,'state/frontend/'+p.name)
     release=ROOT/f'releases/GSU_GroundCompare_{version}.nes';shutil.copy2(OUT/release.name,release)
     sources=[DEMO/'cpu.s',DEMO/'gsu.s',ROOT/'tools/build_ground.py',ROOT/'tools/ground_reference.py',
              ROOT/'tools/verify_ground.py',ROOT/'tools/package_ground.py',ROOT/'tools/launch_ground.py',ROOT/'src/ground_probe.cpp',
              ROOT/'src/BitmapBoard.hpp',ROOT/'src/bitmap_contract.cpp',ROOT/'src/NesBitmapFx.h',ROOT/'CMakeLists.txt']
-    if version=='v002':sources += [ROOT/'tools/mmc5_course.py',ROOT/'tools/verify_mmc5_course.py',DEMO/'course.json',DEMO/'course_reference.png']
+    if version in ['v002','v003']:
+        sources += [ROOT/'tools/mmc5_course.py',ROOT/'tools/verify_mmc5_course.py',ROOT/'demos/ground/v002/course.json',ROOT/'demos/ground/v002/course_reference.png']
+    if version=='v003':sources += [ROOT/'tools/mmc5_state.py',ROOT/'tools/verify_mmc5_state.py',DEMO/'state_bridge.inc',DEMO/'car_source.json']
     manifest={'version':version.removeprefix('v'),'rom':release.relative_to(ROOT).as_posix(),'rom_sha256':sha(release),
               'default_gsu_mhz':50,'alternative_gsu_mhz':25,'mapper':'n8pro-gsu-abi2','viewport_mode':4,
               'texture':'64x64 byte indices; resident u-major; hidden RAM in both banks',

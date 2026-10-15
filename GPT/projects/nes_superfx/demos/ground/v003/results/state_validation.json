@@ -1,0 +1,349 @@
+{
+  "status": "pass",
+  "geometry": {
+    "source_opaque_bounds_exclusive": [
+      2,
+      2,
+      14,
+      15
+    ],
+    "source_width_px": 12,
+    "source_length_px": 13,
+    "render_width_source_px": 12.03125,
+    "render_length_source_px": 13.0078125,
+    "source_width_to_asphalt": 0.1875,
+    "render_width_to_asphalt": 0.18798828125,
+    "source_length_to_asphalt": 0.203125,
+    "render_length_to_asphalt": 0.2032470703125,
+    "source_files": {
+      "direct-runtime/car-style/build.py": "b99e8221f74b0360857409a183aa0fe0e6ae075b1f1b121c1c8952c93c067ec9",
+      "race-src/physics-abi.inc": "28aa5f540e71b74c56588ac2d79678648c5c6fba8340912b488765b241d26620",
+      "physics/energy-source/physics-steering-mu300.asm": "c990fb4895fdb57a0f4d9d96d9048e89eacc8d97be244b18e1d426f0affc13b0"
+    },
+    "source_revision": "31bc759eb0c5584004cd7fd767ef75c79ca77a01"
+  },
+  "cpu": {
+    "cases": 5219,
+    "status": "pass",
+    "physics_zp_unchanged": true,
+    "snapshot_unchanged": true,
+    "position_error_source_px_max": 0.03515625,
+    "conversion_cycles_min": 3975,
+    "conversion_cycles_max": 4986,
+    "conversion_ms_max_at_ntsc_cpu": 2.785828613879293,
+    "out_of_range_rejected": 2,
+    "original_abi_capture_pass": true
+  },
+  "external_state_frontend": {
+    "status": "pass",
+    "mhz": 50,
+    "frames": 16,
+    "pixels_checked": 786432,
+    "records": [
+      {
+        "state": [
+          0,
+          56,
+          2,
+          0,
+          136,
+          1,
+          0,
+          0,
+          0,
+          0,
+          200,
+          0
+        ],
+        "mode": 0,
+        "view": 2,
+        "tick": 200
+      },
+      {
+        "state": [
+          0,
+          56,
+          2,
+          0,
+          136,
+          1,
+          0,
+          0,
+          0,
+          0,
+          200,
+          0
+        ],
+        "mode": 1,
+        "view": 2,
+        "tick": 200
+      },
+      {
+        "state": [
+          128,
+          56,
+          2,
+          64,
+          136,
+          1,
+          0,
+          32,
+          0,
+          0,
+          201,
+          0
+        ],
+        "mode": 0,
+        "view": 2,
+        "tick": 201
+      },
+      {
+        "state": [
+          128,
+          56,
+          2,
+          64,
+          136,
+          1,
+          0,
+          32,
+          0,
+          0,
+          201,
+          0
+        ],
+        "mode": 1,
+        "view": 2,
+        "tick": 201
+      },
+      {
+        "state": [
+          129,
+          56,
+          2,
+          64,
+          136,
+          1,
+          0,
+          64,
+          0,
+          0,
+          202,
+          0
+        ],
+        "mode": 0,
+        "view": 2,
+        "tick": 202
+      },
+      {
+        "state": [
+          129,
+          56,
+          2,
+          64,
+          136,
+          1,
+          0,
+          64,
+          0,
+          0,
+          202,
+          0
+        ],
+        "mode": 1,
+        "view": 2,
+        "tick": 202
+      },
+      {
+        "state": [
+          0,
+          48,
+          2,
+          0,
+          94,
+          1,
+          255,
+          255,
+          0,
+          32,
+          203,
+          0
+        ],
+        "mode": 0,
+        "view": 2,
+        "tick": 203
+      },
+      {
+        "state": [
+          0,
+          48,
+          2,
+          0,
+          94,
+          1,
+          255,
+          255,
+          0,
+          32,
+          203,
+          0
+        ],
+        "mode": 1,
+        "view": 2,
+        "tick": 203
+      },
+      {
+        "state": [
+          0,
+          44,
+          1,
+          0,
+          64,
+          1,
+          0,
+          128,
+          0,
+          192,
+          204,
+          0
+        ],
+        "mode": 0,
+        "view": 2,
+        "tick": 204
+      },
+      {
+        "state": [
+          0,
+          44,
+          1,
+          0,
+          64,
+          1,
+          0,
+          128,
+          0,
+          192,
+          204,
+          0
+        ],
+        "mode": 1,
+        "view": 2,
+        "tick": 204
+      },
+      {
+        "state": [
+          0,
+          72,
+          0,
+          0,
+          217,
+          0,
+          0,
+          192,
+          0,
+          128,
+          205,
+          0
+        ],
+        "mode": 0,
+        "view": 2,
+        "tick": 205
+      },
+      {
+        "state": [
+          0,
+          72,
+          0,
+          0,
+          217,
+          0,
+          0,
+          192,
+          0,
+          128,
+          205,
+          0
+        ],
+        "mode": 1,
+        "view": 2,
+        "tick": 205
+      },
+      {
+        "state": [
+          0,
+          251,
+          1,
+          0,
+          55,
+          2,
+          0,
+          192,
+          255,
+          255,
+          206,
+          0
+        ],
+        "mode": 0,
+        "view": 2,
+        "tick": 206
+      },
+      {
+        "state": [
+          0,
+          251,
+          1,
+          0,
+          55,
+          2,
+          0,
+          192,
+          255,
+          255,
+          206,
+          0
+        ],
+        "mode": 1,
+        "view": 2,
+        "tick": 206
+      },
+      {
+        "state": [
+          0,
+          32,
+          0,
+          0,
+          58,
+          0,
+          0,
+          0,
+          0,
+          128,
+          207,
+          0
+        ],
+        "mode": 0,
+        "view": 2,
+        "tick": 207
+      },
+      {
+        "state": [
+          0,
+          32,
+          0,
+          0,
+          58,
+          0,
+          0,
+          0,
+          0,
+          128,
+          207,
+          0
+        ],
+        "mode": 1,
+        "view": 2,
+        "tick": 207
+      }
+    ]
+  }
+}

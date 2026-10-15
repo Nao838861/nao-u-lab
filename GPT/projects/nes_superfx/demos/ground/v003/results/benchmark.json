@@ -1,0 +1,709 @@
+{
+  "status": "pass",
+  "native_frames": 1024,
+  "native_pixels_checked": 50331648,
+  "frontend_frames": 128,
+  "frontend_pixels_checked": 7864320,
+  "external_memory_reference_hz": 25000000,
+  "fill_hz": 25000000,
+  "timing_model": "Mesen-derived execution; fixed real-time memory waits; no racing physics; not FPGA performance",
+  "results": [
+    {
+      "mhz": 25,
+      "view": 1,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 25.36384,
+      "gsu_ms_max": 47.18208,
+      "gsu_ms_mean": 35.58917999999999,
+      "fill_byte_clocks": [
+        18048
+      ],
+      "fill_ms": 0.72192,
+      "sampled_present_fields": [
+        3,
+        4
+      ],
+      "sampled_fps": [
+        20.032933333333332,
+        15.0247
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 1,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 53.91048,
+      "gsu_ms_max": 58.001839999999994,
+      "gsu_ms_mean": 56.21969125000001,
+      "fill_byte_clocks": [
+        18048
+      ],
+      "fill_ms": 0.72192,
+      "sampled_present_fields": [
+        4
+      ],
+      "sampled_fps": [
+        15.0247
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 2,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 33.84096,
+      "gsu_ms_max": 56.873839999999994,
+      "gsu_ms_mean": 43.73426,
+      "fill_byte_clocks": [
+        17280
+      ],
+      "fill_ms": 0.6912,
+      "sampled_present_fields": [
+        3,
+        4
+      ],
+      "sampled_fps": [
+        20.032933333333332,
+        15.0247
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 2,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 59.48744,
+      "gsu_ms_max": 64.69324,
+      "gsu_ms_mean": 62.077576875,
+      "fill_byte_clocks": [
+        17280
+      ],
+      "fill_ms": 0.6912,
+      "sampled_present_fields": [
+        5
+      ],
+      "sampled_fps": [
+        12.01976
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 3,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 36.68676,
+      "gsu_ms_max": 63.2474,
+      "gsu_ms_mean": 47.69400499999998,
+      "fill_byte_clocks": [
+        15936
+      ],
+      "fill_ms": 0.63744,
+      "sampled_present_fields": [
+        4
+      ],
+      "sampled_fps": [
+        15.0247
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 3,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 64.14428,
+      "gsu_ms_max": 72.85176,
+      "gsu_ms_mean": 68.12217999999997,
+      "fill_byte_clocks": [
+        15936
+      ],
+      "fill_ms": 0.63744,
+      "sampled_present_fields": [
+        5
+      ],
+      "sampled_fps": [
+        12.01976
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 4,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 43.23124,
+      "gsu_ms_max": 72.37224,
+      "gsu_ms_mean": 58.73377375,
+      "fill_byte_clocks": [
+        12288
+      ],
+      "fill_ms": 0.49152,
+      "sampled_present_fields": [
+        3,
+        4
+      ],
+      "sampled_fps": [
+        20.032933333333332,
+        15.0247
+      ]
+    },
+    {
+      "mhz": 25,
+      "view": 4,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 73.81444,
+      "gsu_ms_max": 92.59108,
+      "gsu_ms_mean": 82.54316562500001,
+      "fill_byte_clocks": [
+        12288
+      ],
+      "fill_ms": 0.49152,
+      "sampled_present_fields": [
+        6
+      ],
+      "sampled_fps": [
+        10.016466666666666
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 1,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 21.40184,
+      "gsu_ms_max": 39.91798,
+      "gsu_ms_mean": 30.22948875000001,
+      "fill_byte_clocks": [
+        18048
+      ],
+      "fill_ms": 0.72192,
+      "sampled_present_fields": [
+        3
+      ],
+      "sampled_fps": [
+        20.032933333333332
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 1,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 32.724599999999995,
+      "gsu_ms_max": 34.771879999999996,
+      "gsu_ms_mean": 33.878280624999995,
+      "fill_byte_clocks": [
+        18048
+      ],
+      "fill_ms": 0.72192,
+      "sampled_present_fields": [
+        3
+      ],
+      "sampled_fps": [
+        20.032933333333332
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 2,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 28.77986,
+      "gsu_ms_max": 49.06682,
+      "gsu_ms_mean": 37.3744184375,
+      "fill_byte_clocks": [
+        17280
+      ],
+      "fill_ms": 0.6912,
+      "sampled_present_fields": [
+        3,
+        4
+      ],
+      "sampled_fps": [
+        20.032933333333332,
+        15.0247
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 2,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 36.9086,
+      "gsu_ms_max": 39.5145,
+      "gsu_ms_mean": 38.2018284375,
+      "fill_byte_clocks": [
+        17280
+      ],
+      "fill_ms": 0.6912,
+      "sampled_present_fields": [
+        3
+      ],
+      "sampled_fps": [
+        20.032933333333332
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 3,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 31.35734,
+      "gsu_ms_max": 54.54544,
+      "gsu_ms_mean": 40.872967812499994,
+      "fill_byte_clocks": [
+        15936
+      ],
+      "fill_ms": 0.63744,
+      "sampled_present_fields": [
+        3,
+        4
+      ],
+      "sampled_fps": [
+        20.032933333333332,
+        15.0247
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 3,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 39.84786,
+      "gsu_ms_max": 44.7248,
+      "gsu_ms_mean": 42.00834125,
+      "fill_byte_clocks": [
+        15936
+      ],
+      "fill_ms": 0.63744,
+      "sampled_present_fields": [
+        4
+      ],
+      "sampled_fps": [
+        15.0247
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 4,
+      "mode": "polygon",
+      "poses": 64,
+      "gsu_ms_min": 37.04544,
+      "gsu_ms_max": 62.01134,
+      "gsu_ms_mean": 50.110590625,
+      "fill_byte_clocks": [
+        12288
+      ],
+      "fill_ms": 0.49152,
+      "sampled_present_fields": [
+        3,
+        4
+      ],
+      "sampled_fps": [
+        20.032933333333332,
+        15.0247
+      ]
+    },
+    {
+      "mhz": 50,
+      "view": 4,
+      "mode": "texture",
+      "poses": 64,
+      "gsu_ms_min": 47.07276,
+      "gsu_ms_max": 56.51228,
+      "gsu_ms_mean": 51.471486875000004,
+      "fill_byte_clocks": [
+        12288
+      ],
+      "fill_ms": 0.49152,
+      "sampled_present_fields": [
+        4
+      ],
+      "sampled_fps": [
+        15.0247
+      ]
+    }
+  ],
+  "course_validation": {
+    "status": "pass",
+    "source_world_size": 640,
+    "source_road_bounds": [
+      32,
+      58,
+      608,
+      608
+    ],
+    "mesh_road_bounds": [
+      32,
+      59,
+      608,
+      606
+    ],
+    "source_road_pixels": 131537,
+    "road_footprint_iou": 0.9582337096334856,
+    "centerline_max_error_source_px": 1.3245636272743355,
+    "route_max_error_source_px": 0.041601331358805206,
+    "route_poses": 64,
+    "all_poses_on_asphalt": true,
+    "cross_sections": 19,
+    "ground_quads": 57,
+    "vertices": 84,
+    "source_revision": "2a493fe0d7703b7994de0992454e16b3af5e911d",
+    "source_files": {
+      "D:\\HomeBrew\\MMC5Racing\\direct-runtime\\rival-trial\\vendor\\pc-route-study\\build\\projection-controls.json": "8008e01568bb3c2eac66c79e6ee3e12f6e896b5c5c4638741cc0ffe9d8bc2387",
+      "D:\\HomeBrew\\MMC5Racing\\race-src\\course-data.inc": "600c25ca753be407006a6f6899c5c6bf93c95ac6f74e1580448214ec34557874",
+      "D:\\HomeBrew\\MMC5Racing\\verification\\scenery\\current-map.png": "c9943a9fdbb4b8b6ccdb4b692b2aa918cc1f181c4d84c31cd9a10ebd72bf8b9a",
+      "D:\\HomeBrew\\MMC5Racing\\verification\\scenery\\current-map.json": "ce565c9a27d6d975e01f58efd181cf2f625eb759d83f5662a2c65d92d00c49c2"
+    }
+  },
+  "state_validation": {
+    "status": "pass",
+    "geometry": {
+      "source_opaque_bounds_exclusive": [
+        2,
+        2,
+        14,
+        15
+      ],
+      "source_width_px": 12,
+      "source_length_px": 13,
+      "render_width_source_px": 12.03125,
+      "render_length_source_px": 13.0078125,
+      "source_width_to_asphalt": 0.1875,
+      "render_width_to_asphalt": 0.18798828125,
+      "source_length_to_asphalt": 0.203125,
+      "render_length_to_asphalt": 0.2032470703125,
+      "source_files": {
+        "direct-runtime/car-style/build.py": "b99e8221f74b0360857409a183aa0fe0e6ae075b1f1b121c1c8952c93c067ec9",
+        "race-src/physics-abi.inc": "28aa5f540e71b74c56588ac2d79678648c5c6fba8340912b488765b241d26620",
+        "physics/energy-source/physics-steering-mu300.asm": "c990fb4895fdb57a0f4d9d96d9048e89eacc8d97be244b18e1d426f0affc13b0"
+      },
+      "source_revision": "31bc759eb0c5584004cd7fd767ef75c79ca77a01"
+    },
+    "cpu": {
+      "cases": 5219,
+      "status": "pass",
+      "physics_zp_unchanged": true,
+      "snapshot_unchanged": true,
+      "position_error_source_px_max": 0.03515625,
+      "conversion_cycles_min": 3975,
+      "conversion_cycles_max": 4986,
+      "conversion_ms_max_at_ntsc_cpu": 2.785828613879293,
+      "out_of_range_rejected": 2,
+      "original_abi_capture_pass": true
+    },
+    "external_state_frontend": {
+      "status": "pass",
+      "mhz": 50,
+      "frames": 16,
+      "pixels_checked": 786432,
+      "records": [
+        {
+          "state": [
+            0,
+            56,
+            2,
+            0,
+            136,
+            1,
+            0,
+            0,
+            0,
+            0,
+            200,
+            0
+          ],
+          "mode": 0,
+          "view": 2,
+          "tick": 200
+        },
+        {
+          "state": [
+            0,
+            56,
+            2,
+            0,
+            136,
+            1,
+            0,
+            0,
+            0,
+            0,
+            200,
+            0
+          ],
+          "mode": 1,
+          "view": 2,
+          "tick": 200
+        },
+        {
+          "state": [
+            128,
+            56,
+            2,
+            64,
+            136,
+            1,
+            0,
+            32,
+            0,
+            0,
+            201,
+            0
+          ],
+          "mode": 0,
+          "view": 2,
+          "tick": 201
+        },
+        {
+          "state": [
+            128,
+            56,
+            2,
+            64,
+            136,
+            1,
+            0,
+            32,
+            0,
+            0,
+            201,
+            0
+          ],
+          "mode": 1,
+          "view": 2,
+          "tick": 201
+        },
+        {
+          "state": [
+            129,
+            56,
+            2,
+            64,
+            136,
+            1,
+            0,
+            64,
+            0,
+            0,
+            202,
+            0
+          ],
+          "mode": 0,
+          "view": 2,
+          "tick": 202
+        },
+        {
+          "state": [
+            129,
+            56,
+            2,
+            64,
+            136,
+            1,
+            0,
+            64,
+            0,
+            0,
+            202,
+            0
+          ],
+          "mode": 1,
+          "view": 2,
+          "tick": 202
+        },
+        {
+          "state": [
+            0,
+            48,
+            2,
+            0,
+            94,
+            1,
+            255,
+            255,
+            0,
+            32,
+            203,
+            0
+          ],
+          "mode": 0,
+          "view": 2,
+          "tick": 203
+        },
+        {
+          "state": [
+            0,
+            48,
+            2,
+            0,
+            94,
+            1,
+            255,
+            255,
+            0,
+            32,
+            203,
+            0
+          ],
+          "mode": 1,
+          "view": 2,
+          "tick": 203
+        },
+        {
+          "state": [
+            0,
+            44,
+            1,
+            0,
+            64,
+            1,
+            0,
+            128,
+            0,
+            192,
+            204,
+            0
+          ],
+          "mode": 0,
+          "view": 2,
+          "tick": 204
+        },
+        {
+          "state": [
+            0,
+            44,
+            1,
+            0,
+            64,
+            1,
+            0,
+            128,
+            0,
+            192,
+            204,
+            0
+          ],
+          "mode": 1,
+          "view": 2,
+          "tick": 204
+        },
+        {
+          "state": [
+            0,
+            72,
+            0,
+            0,
+            217,
+            0,
+            0,
+            192,
+            0,
+            128,
+            205,
+            0
+          ],
+          "mode": 0,
+          "view": 2,
+          "tick": 205
+        },
+        {
+          "state": [
+            0,
+            72,
+            0,
+            0,
+            217,
+            0,
+            0,
+            192,
+            0,
+            128,
+            205,
+            0
+          ],
+          "mode": 1,
+          "view": 2,
+          "tick": 205
+        },
+        {
+          "state": [
+            0,
+            251,
+            1,
+            0,
+            55,
+            2,
+            0,
+            192,
+            255,
+            255,
+            206,
+            0
+          ],
+          "mode": 0,
+          "view": 2,
+          "tick": 206
+        },
+        {
+          "state": [
+            0,
+            251,
+            1,
+            0,
+            55,
+            2,
+            0,
+            192,
+            255,
+            255,
+            206,
+            0
+          ],
+          "mode": 1,
+          "view": 2,
+          "tick": 206
+        },
+        {
+          "state": [
+            0,
+            32,
+            0,
+            0,
+            58,
+            0,
+            0,
+            0,
+            0,
+            128,
+            207,
+            0
+          ],
+          "mode": 0,
+          "view": 2,
+          "tick": 207
+        },
+        {
+          "state": [
+            0,
+            32,
+            0,
+            0,
+            58,
+            0,
+            0,
+            0,
+            0,
+            128,
+            207,
+            0
+          ],
+          "mode": 1,
+          "view": 2,
+          "tick": 207
+        }
+      ]
+    }
+  }
+}

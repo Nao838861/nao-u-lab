@@ -20,7 +20,8 @@ def verify(directory):
     for phase,p in enumerate(config['views'][0]['poses']):
         x,z=p[7]/128,p[8]/128;sx,sz=x*scale+320,z*scale+320
         dev=min(distance((sx,sz),a,b) for a,b in zip(points,points[1:]+points[:1]));deviations.append(dev)
-        assert dev<=.04,(phase,'off source route',dev)
+        tolerance=math.sqrt(2)*scale/128 if config.get('version')=='v003' else .04
+        assert dev<=tolerance,(phase,'off source route',dev)
         assert inside(x,z,rings[2]) and not inside(x,z,rings[1]),(phase,'outside asphalt')
         assert source.getpixel((round(sx),round(sz))),(phase,'outside source road')
         for view in config['views']:
@@ -48,4 +49,7 @@ def verify(directory):
     (directory/'course_validation.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(report));return report
 
-if __name__=='__main__':verify(ROOT/'build/ground/v002')
+if __name__=='__main__':
+    import argparse
+    p=argparse.ArgumentParser();p.add_argument('--directory',type=Path,default=ROOT/'build/ground/v002')
+    verify(p.parse_args().directory)

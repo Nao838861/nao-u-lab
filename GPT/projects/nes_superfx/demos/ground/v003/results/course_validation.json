@@ -1,0 +1,32 @@
+{
+  "status": "pass",
+  "source_world_size": 640,
+  "source_road_bounds": [
+    32,
+    58,
+    608,
+    608
+  ],
+  "mesh_road_bounds": [
+    32,
+    59,
+    608,
+    606
+  ],
+  "source_road_pixels": 131537,
+  "road_footprint_iou": 0.9582337096334856,
+  "centerline_max_error_source_px": 1.3245636272743355,
+  "route_max_error_source_px": 0.041601331358805206,
+  "route_poses": 64,
+  "all_poses_on_asphalt": true,
+  "cross_sections": 19,
+  "ground_quads": 57,
+  "vertices": 84,
+  "source_revision": "2a493fe0d7703b7994de0992454e16b3af5e911d",
+  "source_files": {
+    "D:\\HomeBrew\\MMC5Racing\\direct-runtime\\rival-trial\\vendor\\pc-route-study\\build\\projection-controls.json": "8008e01568bb3c2eac66c79e6ee3e12f6e896b5c5c4638741cc0ffe9d8bc2387",
+    "D:\\HomeBrew\\MMC5Racing\\race-src\\course-data.inc": "600c25ca753be407006a6f6899c5c6bf93c95ac6f74e1580448214ec34557874",
+    "D:\\HomeBrew\\MMC5Racing\\verification\\scenery\\current-map.png": "c9943a9fdbb4b8b6ccdb4b692b2aa918cc1f181c4d84c31cd9a10ebd72bf8b9a",
+    "D:\\HomeBrew\\MMC5Racing\\verification\\scenery\\current-map.json": "ce565c9a27d6d975e01f58efd181cf2f625eb759d83f5662a2c65d92d00c49c2"
+  }
+}

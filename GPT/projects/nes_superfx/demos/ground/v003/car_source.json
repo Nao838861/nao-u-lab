@@ -1,0 +1,63 @@
+{
+  "F1": [
+    "................",
+    "................",
+    "....KCCWWCCK....",
+    ".......WW.......",
+    "...tt..WW..tt...",
+    "...tt.CWWC.tt...",
+    "...tt.CWWC.tt...",
+    "...tt.CKKC.tt...",
+    ".....CKWWKC.....",
+    ".....CCKKCC.....",
+    "....WCCCCCCW....",
+    "..KKKWCCCCWKKK..",
+    "..KKKCCCCCCKKK..",
+    "..KKK.CWWC.KKK..",
+    "...KCCCCCCCCK...",
+    "................"
+  ],
+  "COUPE": [
+    "................",
+    "................",
+    "......CCCC......",
+    ".....WCCCCW.....",
+    "...ttCCWWCCtt...",
+    "...ttCCWWCCtt...",
+    "...ttCCWWCCtt...",
+    "...ttCKKKKCtt...",
+    ".....KKKKKK.....",
+    ".....CCWWCC.....",
+    ".....CKKKKC.....",
+    "...KKCCWWCCKK...",
+    "...KKCCWWCCKK...",
+    "...KKCCWWCCKK...",
+    "......CCCC......",
+    "................"
+  ],
+  "TIRE_CENTERS": [
+    [
+      -4,
+      -2
+    ],
+    [
+      4,
+      -2
+    ]
+  ],
+  "source_revision": "31bc759eb0c5584004cd7fd767ef75c79ca77a01",
+  "source_files": {
+    "direct-runtime/car-style/build.py": "b99e8221f74b0360857409a183aa0fe0e6ae075b1f1b121c1c8952c93c067ec9",
+    "race-src/physics-abi.inc": "28aa5f540e71b74c56588ac2d79678648c5c6fba8340912b488765b241d26620",
+    "physics/energy-source/physics-steering-mu300.asm": "c990fb4895fdb57a0f4d9d96d9048e89eacc8d97be244b18e1d426f0affc13b0"
+  },
+  "position_abi": {
+    "x": "$41 signed16.8 pixels",
+    "y": "$44 signed16.8 pixels",
+    "heading": "$48 unsigned16 turn, zero north clockwise",
+    "heading_sub": "$47 fractional heading integrator; not consumed by renderer",
+    "vx": "$4B signed8.8 pixels/tick",
+    "vy": "$4E signed8.8 pixels/tick"
+  },
+  "world_source_px_per_unit": 5
+}

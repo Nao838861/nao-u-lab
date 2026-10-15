@@ -92,7 +92,7 @@ def fills(view):
 
 def build(version='v001'):
     global DEMO,OUT
-    if version not in ['v001','v002']:raise ValueError(version)
+    if version not in ['v001','v002','v003']:raise ValueError(version)
     DEMO=ROOT/f'demos/ground/{version}';OUT=ROOT/f'build/ground/{version}'
     OUT.mkdir(parents=True,exist_ok=True)
     assert hashlib.sha256((ROOT/'.cache/casfx/casfx.inc').read_bytes()).hexdigest()==CASFX_HASH
@@ -100,9 +100,17 @@ def build(version='v001'):
     (OUT/'gsu.cfg').write_text('MEMORY {G:start=$9000,size=$1000,file=%O,fill=yes,fillval=$01;}\nSEGMENTS {GSU:load=G,type=ro,align=$200;}\n')
     subprocess.run(['ld65','-C',str(OUT/'gsu.cfg'),'-o',str(OUT/'gsu.bin'),'-Ln',str(OUT/'gsu.lbl'),str(OUT/'gsu.o')],check=True)
     metadata=None
-    if version=='v002':
+    if version in ['v002','v003']:
         import mmc5_course
         vertices,faces,rings,metadata=mmc5_course.geometry();tex=mmc5_course.texture(rings,inside)
+        if version=='v003':
+            import mmc5_state
+            vertices[-8:]=mmc5_state.geometry()
+            metadata['car']=mmc5_state.CAR
+            states=mmc5_state.route_states(mmc5_course.route())
+            (OUT/'states.bin').write_bytes(b''.join(states))
+            (OUT/'directions.bin').write_bytes(b''.join(struct.pack('<hh',*mmc5_state.direction(i*64)) for i in range(1024)))
+            (OUT/'camera.bin').write_bytes(b''.join(struct.pack('<hhhh',q7(back),q7(h),coeff(math.cos(p)),coeff(math.sin(p))) for back,h,p in VIEWS))
     else:vertices,faces,rings=geometry();tex=texture(rings)
     payload=bytearray(8192)
     struct.pack_into('<HH',payload,0x1e,len(vertices),len(faces))
@@ -120,14 +128,19 @@ def build(version='v001'):
                       'texture':list(tex),'palette':PALETTE,'views':[]}
     for view in range(4):
         p,r,f=(mmc5_course.poses(view,VIEWS) if metadata is not None else poses(view)),rows(view),fills(view)
+        if version=='v003':p=[mmc5_state.pose(s,VIEWS[view]) for s in states]
         config['views'].append({'poses':p,'rows':r,'fills':f,'camera':VIEWS[view]})
         (OUT/f'poses_{view}.bin').write_bytes(b''.join(struct.pack('<11h',*x) for x in p))
         (OUT/f'rows_{view}.bin').write_bytes(b''.join(struct.pack('<2h',*x) for x in r))
         (OUT/f'fills_{view}.bin').write_bytes(bytes([len(f)])+b''.join(struct.pack('<HHBB',*x) for x in f))
     for prefix in ['poses','rows','fills']:
+        if version=='v003' and prefix=='poses':continue
         lines += [f'{prefix}_lo: .lobytes '+','.join(f'{prefix}_{i}' for i in range(4)),
                   f'{prefix}_hi: .hibytes '+','.join(f'{prefix}_{i}' for i in range(4))]
         lines += [f'{prefix}_{i}: .incbin "{prefix}_{i}.bin"' for i in range(4)]
+    if version=='v003':
+        lines += ['states: .incbin "states.bin"','directions: .incbin "directions.bin"','cameras: .incbin "camera.bin"']
+        config['state_snapshots']=[list(s) for s in states]
     (OUT/'tables.inc').write_text('\n'.join(lines)+'\n')
     font=dict(FONT)
     font.update({'P':['110','101','110','100','100'],'T':['111','010','010','010','010'],
@@ -150,5 +163,5 @@ def build(version='v001'):
     return OUT
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('--version',choices=['v001','v002'],default='v001')
+    parser=argparse.ArgumentParser();parser.add_argument('--version',choices=['v001','v002','v003'],default='v001')
     build(parser.parse_args().version)
