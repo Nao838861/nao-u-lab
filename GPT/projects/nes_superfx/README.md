@@ -11,7 +11,8 @@
 - [run_cube.cmd](run_cube.cmd)：GSUで頂点変換と線描画を行う、回転する立方体。[説明・動画・検証](demos/cube/v001/README.md)。
 - [run_solid_cube.cmd](run_solid_cube.cmd)：白・水色・紫の面塗り立方体を等倍画素で30fps回転。提案ABI2。[説明・動画・検証](demos/bitmap/v001/README.md)。
 - [run_cube_benchmark.cmd](run_cube_benchmark.cmd)：均等配置版v002。１本のROMでA（専用設定ではZキー）を押し、２→４→６→９→13→19→24→33→52→71個を切り替える。画面下のN=は個数、S=はモデル辺長。
-- [run_polygon_benchmark.cmd](run_polygon_benchmark.cmd)：最新v002は専用RAM範囲フィルでクリアし、処理落ち直前の最大個数を表示。25MHz相当で起動し、Aで６条件×25/12.5MHzを変更する。[専用クリア・上限・RTL・動画](demos/polygon/v002/README.md)。頂点変換・透視投影・裏面除去・深度順ソート・面塗りはGSUで実行する。[従来v001の30fps上限・20ms予算](demos/polygon/v001/README.md)も保存している。
+- [run_polygon_benchmark.cmd](run_polygon_benchmark.cmd)：通常の25MHz版v002。専用RAM範囲フィルでクリアし、処理落ち直前の最大個数を表示。Aで６条件×25/12.5MHzを変更する。[専用クリア・上限・RTL・動画](demos/polygon/v002/README.md)。頂点変換・透視投影・裏面除去・深度順ソート・面塗りはGSUで実行する。[従来v001の30fps上限・20ms予算](demos/polygon/v001/README.md)も保存している。
+- [run_polygon_benchmark_50mhz.cmd](run_polygon_benchmark_50mhz.cmd)：v003はGSU 50MHz相当。外部RAMの待ちとクリア回路は従来の実時間を保つ。Aで６条件を変更する。[25MHzとの比較・上限・動画](demos/polygon/v003/README.md)。通常ランチャーは25MHzのまま。
 - [run_bitmap_128.cmd](run_bitmap_128.cmd) → [run_bitmap_band.cmd](run_bitmap_band.cmd) → [run_bitmap_full.cmd](run_bitmap_full.cmd)：直接表示の128×128、256×64、256×240段階成果。
 - 別ROMを渡す場合は `run_gsu.cmd "C:\path\diagnostic.nes"`。
 

@@ -72,11 +72,14 @@ def objects(count,half,scene):
     return result
 
 
-def build(count=8,half=16,scene='spread',mesh='cube',renderer='fast',multiplier_fast=False,clock_select=0,hardware_clear=False):
+def build(count=8,half=16,scene='spread',mesh='cube',renderer='fast',multiplier_fast=False,clock_select=0,hardware_clear=False,reference_mhz=25):
     if not 1<=count<=128 or not 1<=half<=64:raise ValueError('count=1..128, half=1..64')
     if renderer=='baseline' and count>64:raise ValueError('baseline span work RAM limits object list to 64')
     name=f'{renderer}_{mesh}_{scene}_h{half}_n{count}'+f'_c{clock_select}m{int(multiplier_fast)}'
     if hardware_clear:name+='_fill'
+    if reference_mhz!=25:
+        if reference_mhz!=50:raise ValueError('reference_mhz must be 25 or 50')
+        name+='_50M'
     out=ROOT/'build/polygon'/name;out.mkdir(parents=True,exist_ok=True)
     if hashlib.sha256((ROOT/'.cache/casfx/casfx.inc').read_bytes()).hexdigest()!=CASFX_HASH:raise RuntimeError('casfx hash')
     source=DEMO/('gsu_bresenham.s' if renderer=='baseline' else 'gsu.s')
@@ -102,6 +105,8 @@ def build(count=8,half=16,scene='spread',mesh='cube',renderer='fast',multiplier_
     (out/'config.inc').write_text('KIND=1\nMODE=3\nWIDTH=256\nHEIGHT=240\n'+f'MULTIPLIER_FAST={int(multiplier_fast)}\nCLOCK_SELECT={clock_select}\n')
     if hardware_clear:
         with (out/'config.inc').open('a') as f:f.write('HW_CLEAR=1\n')
+    if reference_mhz==50:
+        with (out/'config.inc').open('a') as f:f.write('REFERENCE_MHZ=50\n')
     subprocess.run(['ca65','-I',str(out),'-o',str(out/'cpu.o'),str(DEMO/'cpu.s')],cwd=out,check=True)
     rom=out/f'{name}.nes'
     subprocess.run(['ld65','-C',str(ROOT/'demos/cube/v001/rom.cfg'),'-o',str(rom),'-Ln',str(out/'cpu.lbl'),str(out/'cpu.o')],check=True)
@@ -109,8 +114,8 @@ def build(count=8,half=16,scene='spread',mesh='cube',renderer='fast',multiplier_
             'vertices':vertices,'triangles':triangles,'matrices':poses,'objects':instances,'depth_motion':wave,
             'rom_sha256':hashlib.sha256(rom.read_bytes()).hexdigest()}
     (out/'config.json').write_text(json.dumps(config,indent=2)+'\n')
-    if hardware_clear:
-        config['hardware_clear']=True
+    if hardware_clear or reference_mhz!=25:
+        config['hardware_clear']=hardware_clear;config['reference_mhz']=reference_mhz
         (out/'config.json').write_text(json.dumps(config,indent=2)+'\n')
     return out
 
@@ -121,5 +126,5 @@ if __name__=='__main__':
     p.add_argument('--mesh',choices=['cube','octahedron','icosahedron'],default='cube')
     p.add_argument('--renderer',choices=['baseline','fast'],default='fast')
     p.add_argument('--multiplier-fast',action='store_true');p.add_argument('--clock-select',type=int,choices=[0,1],default=0)
-    p.add_argument('--hardware-clear',action='store_true');a=p.parse_args()
-    print(build(a.count,a.half,a.scene,a.mesh,a.renderer,a.multiplier_fast,a.clock_select,a.hardware_clear))
+    p.add_argument('--hardware-clear',action='store_true');p.add_argument('--reference-mhz',type=int,choices=[25,50],default=25);a=p.parse_args()
+    print(build(a.count,a.half,a.scene,a.mesh,a.renderer,a.multiplier_fast,a.clock_select,a.hardware_clear,a.reference_mhz))

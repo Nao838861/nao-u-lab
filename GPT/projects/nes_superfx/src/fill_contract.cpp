@@ -39,6 +39,16 @@ int main() {
         command(b,0x4000,16384,0);
         while(b.fillBusy)b.CpuClock();
         check(b.lastFillClocks==16384,"NES clock integration");
+        b.gsuClockHz=50000000;
+        check(b.CpuRead(0x5fe6)==50 && b.MemoryClockScale()==2,"50MHz clock and fixed memory timing");
+        b.gsu.GetState().ClockSelect=true;
+        check(b.gsu.MemoryAccessClocks()==10,"RAM access keeps 200ns at 50MHz");
+        b.targetClock=b.gsu.GetState().CycleCount;
+        auto start=b.targetClock;
+        command(b,0x4000,16384,0);
+        while(b.fillBusy)b.CpuClock();
+        auto elapsed=b.gsu.GetState().CycleCount-start;
+        check(b.lastFillClocks==16384 && elapsed>=32768 && elapsed<32800,"fill remains 25MHz at 50MHz GSU");
         std::cout<<"range fill timing/protection/pattern/reset contract PASS\n";
         return 0;
     } catch(const std::exception& e) { std::cerr<<e.what()<<'\n';return 1; }

@@ -4,6 +4,7 @@
 #include "NES/BaseNesPpu.h"
 #include "Utilities/Serializer.h"
 #include "BitmapBoard.hpp"
+#include <cstdlib>
 
 class NesBitmapFx : public BaseMapper {
     nesfx::BitmapBoard _fx;
@@ -18,6 +19,8 @@ protected:
     bool EnableCpuClockHook() override { return true; }
     bool EnableCustomVramRead() override { return true; }
     void InitMapper() override {
+        const char* clock=std::getenv("NES_GSU_CLOCK_HZ");
+        if(clock && std::string(clock)=="50000000") _fx.gsuClockHz=50000000;
         SelectPrgPage(0,0);SelectPrgPage(1,1);SelectChrPage(0,0);
         AddRegisterRange(0x5FD0,0x5FF2);AddRegisterRange(0x6000,0x7FFF);
         _emu->RegisterMemory(MemoryType::NesMapperRam,_fx.memory.data(),static_cast<uint32_t>(_fx.memory.size()));

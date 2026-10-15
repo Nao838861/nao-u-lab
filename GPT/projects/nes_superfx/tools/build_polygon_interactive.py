@@ -6,19 +6,25 @@ from build_bitmap import FONT
 
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--hardware-clear',action='store_true');args=parser.parse_args()
-    summary=json.loads((ROOT/('build/polygon/fill_benchmark/summary.json' if args.hardware_clear else 'build/polygon/benchmark/summary.json')).read_text())
+    parser=argparse.ArgumentParser();parser.add_argument('--hardware-clear',action='store_true')
+    parser.add_argument('--gsu-mhz',type=int,choices=[25,50],default=25);args=parser.parse_args()
+    if args.gsu_mhz==50 and not args.hardware_clear:parser.error('50MHz計測は専用クリア版です')
+    path='build/polygon/clock50_benchmark/summary.json' if args.gsu_mhz==50 else ('build/polygon/fill_benchmark/summary.json' if args.hardware_clear else 'build/polygon/benchmark/summary.json')
+    summary=json.loads((ROOT/path).read_text())
     assert summary['status']=='pass'
     records=[r for r in summary['results'] if r['renderer']=='fast']
     if args.hardware_clear:
         order=list(dict.fromkeys(r['case'] for r in records))
         records.sort(key=lambda r:(order.index(r['case']),-r['clock_select']))
-    out=ROOT/('build/polygon/interactive_v002' if args.hardware_clear else 'build/polygon/interactive');out.mkdir(exist_ok=True)
+    version='003' if args.gsu_mhz==50 else ('002' if args.hardware_clear else '001')
+    out=ROOT/(f'build/polygon/interactive_v{version}' if version!='001' else 'build/polygon/interactive');out.mkdir(exist_ok=True)
     first=ROOT/records[0]['directory']
     (out/'payload.bin').write_bytes((first/'payload.bin').read_bytes())
     (out/'config.inc').write_text(f'KIND=1\nMODE=3\nWIDTH=256\nHEIGHT=240\nMULTIPLIER_FAST=0\nCLOCK_SELECT=0\nINTERACTIVE=1\nPROFILE_COUNT={len(records)}\n')
     if args.hardware_clear:
         with (out/'config.inc').open('a') as f:f.write('HW_CLEAR=1\n')
+    if args.gsu_mhz==50:
+        with (out/'config.inc').open('a') as f:f.write('REFERENCE_MHZ=50\n')
     lines=[];configs=[];font=dict(FONT)
     font.update({'C':['111','100','100','100','111'],'I':['111','010','010','010','111']})
     for i,r in enumerate(records):
@@ -26,7 +32,7 @@ def main():
         payload=(directory/'payload.bin').read_bytes()
         packet=payload[:16]+payload[0x40:0x140]+payload[0x200:0x200+config['count']*8]
         (out/f'profile_{i}.bin').write_bytes(packet)
-        config['hud_lines']=[(8,216,f"N={config['count']:02d}"),(64,216,f"C={25 if r['clock_select'] else 12:02d}"),
+        config['hud_lines']=[(8,216,f"N={config['count']:02d}"),(64,216,f"C={args.gsu_mhz if r['clock_select'] else args.gsu_mhz//2:02d}"),
                              (8,224,f"IN={r['at30']['submitted_triangles']:03d}")]
         data=bytearray()
         for x,y,text in config['hud_lines']:
@@ -45,9 +51,9 @@ def main():
         for y,bits in enumerate(rows):chrdata[4096+ord(c)*16+y+1]=int(bits,2)<<4
     (out/'hud.chr').write_bytes(chrdata)
     subprocess.run(['ca65','-I',str(out),'-o',str(out/'cpu.o'),str(DEMO/'cpu.s')],cwd=out,check=True)
-    rom=out/('GSU_PolygonBenchmark_A_v002.nes' if args.hardware_clear else 'GSU_PolygonBenchmark_A_v001.nes')
+    rom=out/f'GSU_PolygonBenchmark_A_v{version}.nes'
     subprocess.run(['ld65','-C',str(ROOT/'demos/cube/v001/rom.cfg'),'-o',str(rom),'-Ln',str(out/'cpu.lbl'),str(out/'cpu.o')],check=True)
-    (out/'config.json').write_text(json.dumps({'kind':'interactive_polygon','profiles':configs,'font':font},indent=2)+'\n')
+    (out/'config.json').write_text(json.dumps({'kind':'interactive_polygon','reference_mhz':args.gsu_mhz,'profiles':configs,'font':font},indent=2)+'\n')
     print(rom)
 
 

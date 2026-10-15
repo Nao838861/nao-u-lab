@@ -11,6 +11,9 @@ public:
     uint64_t startClock=0,lastRunClocks=0;
     uint16_t tileX=0,tileY=0;
     bool tileInside=false;
+    uint32_t gsuClockHz=25000000;
+    uint64_t fillClockRemainder=0;
+    uint8_t MemoryClockScale() const override { return gsuClockHz==50000000?2:1; }
     uint16_t fillAddress=0,fillLength=0,fillCursor=0,fillRemaining=0,fillPosition=0;
     uint8_t fillLow=0,fillHigh=0;
     bool fillBusy=false,fillDone=false,fillError=false;
@@ -25,7 +28,7 @@ public:
             FillError();return;
         }
         fillCursor=fillAddress;fillRemaining=fillLength;fillPosition=0;
-        fillBusy=fillLength!=0;fillDone=!fillBusy;fillError=false;lastFillClocks=0;
+        fillBusy=fillLength!=0;fillDone=!fillBusy;fillError=false;lastFillClocks=0;fillClockRemainder=0;
     }
     void TickFill(uint64_t clocks) {
         if(!fillBusy)return;
@@ -36,14 +39,31 @@ public:
     }
     void Reset() {
         Board::Reset();mode=0;page=4;front=0;faults=0;generation=0;
+        if(gsuClockHz==50000000)resetRemaining=30;
+        fillClockRemainder=0;
         lastRunClocks=0;startClock=targetClock;tileInside=false;
         fillAddress=fillLength=fillCursor=fillRemaining=fillPosition=0;
         fillLow=fillHigh=0;fillBusy=fillDone=fillError=false;lastFillClocks=0;
     }
     void CpuClock() {
         auto before=gsu.GetState().CycleCount;
-        bool was=Busy(); Board::CpuClock();
-        TickFill(gsu.GetState().CycleCount-before);
+        bool was=Busy();
+        if(gsuClockHz==25000000) Board::CpuClock();
+        else {
+            clockRemainder+=uint64_t(gsuClockHz)*12;
+            auto clocks=clockRemainder/21477272;clockRemainder%=21477272;
+            targetClock+=clocks;
+            if(resetRemaining) {
+                auto spent=std::min<uint64_t>(clocks,resetRemaining);
+                resetRemaining-=static_cast<uint8_t>(spent);gsu.GetState().CycleCount+=spent;
+                if(resetRemaining)return;
+            }
+            gsu.RunUntil(targetClock);
+        }
+        if(fillBusy) {
+            fillClockRemainder+=(gsu.GetState().CycleCount-before)*25000000;
+            TickFill(fillClockRemainder/gsuClockHz);fillClockRemainder%=gsuClockHz;
+        }
         if(was && !Busy()) lastRunClocks=gsu.GetState().CycleCount-startClock;
     }
     bool Selected(uint16_t a) const { return Board::Selected(a)||(a>=0x5FD0 && a<=0x5FEF); }
@@ -54,11 +74,12 @@ public:
         switch(a) {
             case 0x5FE0:return mode; case 0x5FE1:return page; case 0x5FE2:return front;
             case 0x5FE3:return faults; case 0x5FE4:return generation&255; case 0x5FE5:return generation>>8;
+            case 0x5FE6:return static_cast<uint8_t>(gsuClockHz/1000000);
             case 0x5FE7:return 1; // ABI2 extension bit0: 25MHz byte range fill.
             case 0x5FE8:return fillAddress&255;case 0x5FE9:return fillAddress>>8;
             case 0x5FEA:return fillLength&255;case 0x5FEB:return fillLength>>8;
             case 0x5FEC:return fillLow;case 0x5FED:return fillHigh;
-            case 0x5FEF:return fillBusy|(fillDone<<1)|(fillError<<2);
+            case 0x5FEF:return (fillBusy?1:0)|(fillDone?2:0)|(fillError?4:0);
         }
         if(a>=0x6000 && a<=0x7FFF) {
             if(Busy() || fillBusy) { ++blockedRamAccesses; return 0; }
@@ -143,6 +164,7 @@ public:
         s.Stream(fillAddress,"fillAddress");s.Stream(fillLength,"fillLength");s.Stream(fillCursor,"fillCursor");
         s.Stream(fillRemaining,"fillRemaining");s.Stream(fillPosition,"fillPosition");s.Stream(fillLow,"fillLow");s.Stream(fillHigh,"fillHigh");
         s.Stream(fillBusy,"fillBusy");s.Stream(fillDone,"fillDone");s.Stream(fillError,"fillError");s.Stream(lastFillClocks,"lastFillClocks");
+        s.Stream(gsuClockHz,"gsuClockHz");s.Stream(fillClockRemainder,"fillClockRemainder");
     }
 };
 }

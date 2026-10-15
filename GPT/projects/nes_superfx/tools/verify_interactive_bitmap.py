@@ -66,6 +66,7 @@ end,emu.eventType.endFrame)
     cfg.setdefault('Nes',{}).setdefault('Port1',{})['Type']='NesController'
     settings.write_text(json.dumps(cfg),encoding='utf-8')
     env=os.environ.copy();env['NES_GSU_MAPPER']='n8pro-gsu-abi2'
+    env['NES_GSU_CLOCK_HZ']=str(config.get('reference_mhz',25)*1000000)
     try:
         with core_lock(ROOT/'runtime/MesenCore.dll'):
             result=subprocess.run([str(ROOT/'runtime/Mesen.exe'),'--testRunner','--timeout=90',

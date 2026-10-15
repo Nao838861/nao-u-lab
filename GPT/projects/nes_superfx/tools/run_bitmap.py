@@ -94,6 +94,7 @@ end,emu.eventType.endFrame)
     settings=ROOT/'runtime/settings.json';before=settings.read_bytes();cfg=json.loads(before)
     cfg.setdefault('Debug',{}).setdefault('ScriptWindow',{})['AllowIoOsAccess']=True
     settings.write_text(json.dumps(cfg),encoding='utf-8');env=os.environ.copy();env['NES_GSU_MAPPER']='n8pro-gsu-abi2'
+    env['NES_GSU_CLOCK_HZ']=str(config.get('reference_mhz',25)*1000000)
     try:
         with core_lock(ROOT/'runtime/MesenCore.dll'):
             result=subprocess.run([str(ROOT/'runtime/Mesen.exe'),'--testRunner','--timeout=90','--doNotSaveSettings','--enableStdout',
@@ -132,7 +133,9 @@ end,emu.eventType.endFrame)
              'images':samples,'gsu_pixels_checked':checked,'ppu_rgb_pixels_checked':samples*256*240 if validate else 0,
              'intervals':sorted(set(intervals)),'at_30fps':at30,'missed':trace[-1]['missed'],
              'gsu_max_clocks':max(s['gsu_clocks'] for s in trace),'trace':trace,
-             'timing_model':'25MHz Mesen-derived GSU model; not RTL or hardware performance'}
+             'clock_hz':config.get('reference_mhz',25)*1000000,
+             'external_memory_reference_hz':25000000,'fill_clock_hz':25000000,
+             'timing_model':f"{config.get('reference_mhz',25)}MHz Mesen-derived GSU; external-memory waits fixed in real time; not hardware performance"}
     (out/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
     print(json.dumps({k:v for k,v in summary.items() if k!='trace'}));return summary
 

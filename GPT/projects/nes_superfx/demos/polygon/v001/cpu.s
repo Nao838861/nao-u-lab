@@ -56,6 +56,11 @@ v2:bit $2002
   lda $5ff2
   cmp #2
   jne fail
+.ifdef REFERENCE_MHZ
+  lda $5fe6
+  cmp #REFERENCE_MHZ
+  jne fail
+.endif
 .ifdef HW_CLEAR
   lda $5fe7
   and #1

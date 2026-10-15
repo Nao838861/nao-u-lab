@@ -1,0 +1,3273 @@
+{
+  "status": "pass",
+  "profiles": [
+    {
+      "profile": 0,
+      "count": 17,
+      "model_edge": 48,
+      "phases": 64,
+      "intervals": [
+        2
+      ],
+      "status": "pass"
+    },
+    {
+      "profile": 1,
+      "count": 22,
+      "model_edge": 24,
+      "phases": 64,
+      "intervals": [
+        2
+      ],
+      "status": "pass"
+    },
+    {
+      "profile": 2,
+      "count": 38,
+      "model_edge": 12,
+      "phases": 64,
+      "intervals": [
+        2
+      ],
+      "status": "pass"
+    },
+    {
+      "profile": 3,
+      "count": 20,
+      "model_edge": 32,
+      "phases": 64,
+      "intervals": [
+        2
+      ],
+      "status": "pass"
+    },
+    {
+      "profile": 4,
+      "count": 26,
+      "model_edge": 24,
+      "phases": 64,
+      "intervals": [
+        2
+      ],
+      "status": "pass"
+    },
+    {
+      "profile": 5,
+      "count": 31,
+      "model_edge": 48,
+      "phases": 64,
+      "intervals": [
+        2
+      ],
+      "status": "pass"
+    }
+  ],
+  "wraparound": true,
+  "held_a_repeats": false,
+  "controller": "emu.setInput A on NES port 1; ROM reads $4016",
+  "gsu_pixels_checked": 23592960,
+  "ppu_rgb_pixels_checked": 23592960,
+  "trace": [
+    {
+      "frame": 1,
+      "updates": 0,
+      "profile": 0,
+      "phase": 0,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 20,
+      "updates": 1,
+      "profile": 0,
+      "phase": 0,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 22,
+      "updates": 2,
+      "profile": 0,
+      "phase": 1,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 24,
+      "updates": 3,
+      "profile": 0,
+      "phase": 2,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 26,
+      "updates": 4,
+      "profile": 0,
+      "phase": 3,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 28,
+      "updates": 5,
+      "profile": 0,
+      "phase": 4,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 30,
+      "updates": 6,
+      "profile": 0,
+      "phase": 5,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 32,
+      "updates": 7,
+      "profile": 0,
+      "phase": 6,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 34,
+      "updates": 8,
+      "profile": 0,
+      "phase": 7,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 36,
+      "updates": 9,
+      "profile": 0,
+      "phase": 8,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 38,
+      "updates": 10,
+      "profile": 0,
+      "phase": 9,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 40,
+      "updates": 11,
+      "profile": 0,
+      "phase": 10,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 42,
+      "updates": 12,
+      "profile": 0,
+      "phase": 11,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 44,
+      "updates": 13,
+      "profile": 0,
+      "phase": 12,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 46,
+      "updates": 14,
+      "profile": 0,
+      "phase": 13,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 48,
+      "updates": 15,
+      "profile": 0,
+      "phase": 14,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 50,
+      "updates": 16,
+      "profile": 0,
+      "phase": 15,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 52,
+      "updates": 17,
+      "profile": 0,
+      "phase": 16,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 54,
+      "updates": 18,
+      "profile": 0,
+      "phase": 17,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 56,
+      "updates": 19,
+      "profile": 0,
+      "phase": 18,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 58,
+      "updates": 20,
+      "profile": 0,
+      "phase": 19,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 60,
+      "updates": 21,
+      "profile": 0,
+      "phase": 20,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 62,
+      "updates": 22,
+      "profile": 0,
+      "phase": 21,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 64,
+      "updates": 23,
+      "profile": 0,
+      "phase": 22,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 66,
+      "updates": 24,
+      "profile": 0,
+      "phase": 23,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 68,
+      "updates": 25,
+      "profile": 0,
+      "phase": 24,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 70,
+      "updates": 26,
+      "profile": 0,
+      "phase": 25,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 72,
+      "updates": 27,
+      "profile": 0,
+      "phase": 26,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 74,
+      "updates": 28,
+      "profile": 0,
+      "phase": 27,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 76,
+      "updates": 29,
+      "profile": 0,
+      "phase": 28,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 78,
+      "updates": 30,
+      "profile": 0,
+      "phase": 29,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 80,
+      "updates": 31,
+      "profile": 0,
+      "phase": 30,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 82,
+      "updates": 32,
+      "profile": 0,
+      "phase": 31,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 84,
+      "updates": 33,
+      "profile": 0,
+      "phase": 32,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 86,
+      "updates": 34,
+      "profile": 0,
+      "phase": 33,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 88,
+      "updates": 35,
+      "profile": 0,
+      "phase": 34,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 90,
+      "updates": 36,
+      "profile": 0,
+      "phase": 35,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 92,
+      "updates": 37,
+      "profile": 0,
+      "phase": 36,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 94,
+      "updates": 38,
+      "profile": 0,
+      "phase": 37,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 96,
+      "updates": 39,
+      "profile": 0,
+      "phase": 38,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 98,
+      "updates": 40,
+      "profile": 0,
+      "phase": 39,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 100,
+      "updates": 41,
+      "profile": 0,
+      "phase": 40,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 102,
+      "updates": 42,
+      "profile": 0,
+      "phase": 41,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 104,
+      "updates": 43,
+      "profile": 0,
+      "phase": 42,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 106,
+      "updates": 44,
+      "profile": 0,
+      "phase": 43,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 108,
+      "updates": 45,
+      "profile": 0,
+      "phase": 44,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 110,
+      "updates": 46,
+      "profile": 0,
+      "phase": 45,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 112,
+      "updates": 47,
+      "profile": 0,
+      "phase": 46,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 114,
+      "updates": 48,
+      "profile": 0,
+      "phase": 47,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 116,
+      "updates": 49,
+      "profile": 0,
+      "phase": 48,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 118,
+      "updates": 50,
+      "profile": 0,
+      "phase": 49,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 120,
+      "updates": 51,
+      "profile": 0,
+      "phase": 50,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 122,
+      "updates": 52,
+      "profile": 0,
+      "phase": 51,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 124,
+      "updates": 53,
+      "profile": 0,
+      "phase": 52,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 126,
+      "updates": 54,
+      "profile": 0,
+      "phase": 53,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 128,
+      "updates": 55,
+      "profile": 0,
+      "phase": 54,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 130,
+      "updates": 56,
+      "profile": 0,
+      "phase": 55,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 132,
+      "updates": 57,
+      "profile": 0,
+      "phase": 56,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 134,
+      "updates": 58,
+      "profile": 0,
+      "phase": 57,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 136,
+      "updates": 59,
+      "profile": 0,
+      "phase": 58,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 138,
+      "updates": 60,
+      "profile": 0,
+      "phase": 59,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 140,
+      "updates": 61,
+      "profile": 0,
+      "phase": 60,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 142,
+      "updates": 62,
+      "profile": 0,
+      "phase": 61,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 144,
+      "updates": 63,
+      "profile": 0,
+      "phase": 62,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 146,
+      "updates": 64,
+      "profile": 0,
+      "phase": 63,
+      "switches": 0,
+      "missed": 0
+    },
+    {
+      "frame": 148,
+      "updates": 65,
+      "profile": 0,
+      "phase": 0,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 151,
+      "updates": 66,
+      "profile": 1,
+      "phase": 1,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 153,
+      "updates": 67,
+      "profile": 1,
+      "phase": 2,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 155,
+      "updates": 68,
+      "profile": 1,
+      "phase": 3,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 157,
+      "updates": 69,
+      "profile": 1,
+      "phase": 4,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 159,
+      "updates": 70,
+      "profile": 1,
+      "phase": 5,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 161,
+      "updates": 71,
+      "profile": 1,
+      "phase": 6,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 163,
+      "updates": 72,
+      "profile": 1,
+      "phase": 7,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 165,
+      "updates": 73,
+      "profile": 1,
+      "phase": 8,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 167,
+      "updates": 74,
+      "profile": 1,
+      "phase": 9,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 169,
+      "updates": 75,
+      "profile": 1,
+      "phase": 10,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 171,
+      "updates": 76,
+      "profile": 1,
+      "phase": 11,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 173,
+      "updates": 77,
+      "profile": 1,
+      "phase": 12,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 175,
+      "updates": 78,
+      "profile": 1,
+      "phase": 13,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 177,
+      "updates": 79,
+      "profile": 1,
+      "phase": 14,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 179,
+      "updates": 80,
+      "profile": 1,
+      "phase": 15,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 181,
+      "updates": 81,
+      "profile": 1,
+      "phase": 16,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 183,
+      "updates": 82,
+      "profile": 1,
+      "phase": 17,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 185,
+      "updates": 83,
+      "profile": 1,
+      "phase": 18,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 187,
+      "updates": 84,
+      "profile": 1,
+      "phase": 19,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 189,
+      "updates": 85,
+      "profile": 1,
+      "phase": 20,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 191,
+      "updates": 86,
+      "profile": 1,
+      "phase": 21,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 193,
+      "updates": 87,
+      "profile": 1,
+      "phase": 22,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 195,
+      "updates": 88,
+      "profile": 1,
+      "phase": 23,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 197,
+      "updates": 89,
+      "profile": 1,
+      "phase": 24,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 199,
+      "updates": 90,
+      "profile": 1,
+      "phase": 25,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 201,
+      "updates": 91,
+      "profile": 1,
+      "phase": 26,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 203,
+      "updates": 92,
+      "profile": 1,
+      "phase": 27,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 205,
+      "updates": 93,
+      "profile": 1,
+      "phase": 28,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 207,
+      "updates": 94,
+      "profile": 1,
+      "phase": 29,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 209,
+      "updates": 95,
+      "profile": 1,
+      "phase": 30,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 211,
+      "updates": 96,
+      "profile": 1,
+      "phase": 31,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 213,
+      "updates": 97,
+      "profile": 1,
+      "phase": 32,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 215,
+      "updates": 98,
+      "profile": 1,
+      "phase": 33,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 217,
+      "updates": 99,
+      "profile": 1,
+      "phase": 34,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 219,
+      "updates": 100,
+      "profile": 1,
+      "phase": 35,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 221,
+      "updates": 101,
+      "profile": 1,
+      "phase": 36,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 223,
+      "updates": 102,
+      "profile": 1,
+      "phase": 37,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 225,
+      "updates": 103,
+      "profile": 1,
+      "phase": 38,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 227,
+      "updates": 104,
+      "profile": 1,
+      "phase": 39,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 229,
+      "updates": 105,
+      "profile": 1,
+      "phase": 40,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 231,
+      "updates": 106,
+      "profile": 1,
+      "phase": 41,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 233,
+      "updates": 107,
+      "profile": 1,
+      "phase": 42,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 235,
+      "updates": 108,
+      "profile": 1,
+      "phase": 43,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 237,
+      "updates": 109,
+      "profile": 1,
+      "phase": 44,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 239,
+      "updates": 110,
+      "profile": 1,
+      "phase": 45,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 241,
+      "updates": 111,
+      "profile": 1,
+      "phase": 46,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 243,
+      "updates": 112,
+      "profile": 1,
+      "phase": 47,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 245,
+      "updates": 113,
+      "profile": 1,
+      "phase": 48,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 247,
+      "updates": 114,
+      "profile": 1,
+      "phase": 49,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 249,
+      "updates": 115,
+      "profile": 1,
+      "phase": 50,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 251,
+      "updates": 116,
+      "profile": 1,
+      "phase": 51,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 253,
+      "updates": 117,
+      "profile": 1,
+      "phase": 52,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 255,
+      "updates": 118,
+      "profile": 1,
+      "phase": 53,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 257,
+      "updates": 119,
+      "profile": 1,
+      "phase": 54,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 259,
+      "updates": 120,
+      "profile": 1,
+      "phase": 55,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 261,
+      "updates": 121,
+      "profile": 1,
+      "phase": 56,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 263,
+      "updates": 122,
+      "profile": 1,
+      "phase": 57,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 265,
+      "updates": 123,
+      "profile": 1,
+      "phase": 58,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 267,
+      "updates": 124,
+      "profile": 1,
+      "phase": 59,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 269,
+      "updates": 125,
+      "profile": 1,
+      "phase": 60,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 271,
+      "updates": 126,
+      "profile": 1,
+      "phase": 61,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 273,
+      "updates": 127,
+      "profile": 1,
+      "phase": 62,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 275,
+      "updates": 128,
+      "profile": 1,
+      "phase": 63,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 277,
+      "updates": 129,
+      "profile": 1,
+      "phase": 0,
+      "switches": 1,
+      "missed": 0
+    },
+    {
+      "frame": 279,
+      "updates": 130,
+      "profile": 1,
+      "phase": 1,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 283,
+      "updates": 131,
+      "profile": 2,
+      "phase": 2,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 285,
+      "updates": 132,
+      "profile": 2,
+      "phase": 3,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 287,
+      "updates": 133,
+      "profile": 2,
+      "phase": 4,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 289,
+      "updates": 134,
+      "profile": 2,
+      "phase": 5,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 291,
+      "updates": 135,
+      "profile": 2,
+      "phase": 6,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 293,
+      "updates": 136,
+      "profile": 2,
+      "phase": 7,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 295,
+      "updates": 137,
+      "profile": 2,
+      "phase": 8,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 297,
+      "updates": 138,
+      "profile": 2,
+      "phase": 9,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 299,
+      "updates": 139,
+      "profile": 2,
+      "phase": 10,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 301,
+      "updates": 140,
+      "profile": 2,
+      "phase": 11,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 303,
+      "updates": 141,
+      "profile": 2,
+      "phase": 12,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 305,
+      "updates": 142,
+      "profile": 2,
+      "phase": 13,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 307,
+      "updates": 143,
+      "profile": 2,
+      "phase": 14,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 309,
+      "updates": 144,
+      "profile": 2,
+      "phase": 15,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 311,
+      "updates": 145,
+      "profile": 2,
+      "phase": 16,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 313,
+      "updates": 146,
+      "profile": 2,
+      "phase": 17,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 315,
+      "updates": 147,
+      "profile": 2,
+      "phase": 18,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 317,
+      "updates": 148,
+      "profile": 2,
+      "phase": 19,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 319,
+      "updates": 149,
+      "profile": 2,
+      "phase": 20,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 321,
+      "updates": 150,
+      "profile": 2,
+      "phase": 21,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 323,
+      "updates": 151,
+      "profile": 2,
+      "phase": 22,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 325,
+      "updates": 152,
+      "profile": 2,
+      "phase": 23,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 327,
+      "updates": 153,
+      "profile": 2,
+      "phase": 24,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 329,
+      "updates": 154,
+      "profile": 2,
+      "phase": 25,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 331,
+      "updates": 155,
+      "profile": 2,
+      "phase": 26,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 333,
+      "updates": 156,
+      "profile": 2,
+      "phase": 27,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 335,
+      "updates": 157,
+      "profile": 2,
+      "phase": 28,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 337,
+      "updates": 158,
+      "profile": 2,
+      "phase": 29,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 339,
+      "updates": 159,
+      "profile": 2,
+      "phase": 30,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 341,
+      "updates": 160,
+      "profile": 2,
+      "phase": 31,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 343,
+      "updates": 161,
+      "profile": 2,
+      "phase": 32,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 345,
+      "updates": 162,
+      "profile": 2,
+      "phase": 33,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 347,
+      "updates": 163,
+      "profile": 2,
+      "phase": 34,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 349,
+      "updates": 164,
+      "profile": 2,
+      "phase": 35,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 351,
+      "updates": 165,
+      "profile": 2,
+      "phase": 36,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 353,
+      "updates": 166,
+      "profile": 2,
+      "phase": 37,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 355,
+      "updates": 167,
+      "profile": 2,
+      "phase": 38,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 357,
+      "updates": 168,
+      "profile": 2,
+      "phase": 39,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 359,
+      "updates": 169,
+      "profile": 2,
+      "phase": 40,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 361,
+      "updates": 170,
+      "profile": 2,
+      "phase": 41,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 363,
+      "updates": 171,
+      "profile": 2,
+      "phase": 42,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 365,
+      "updates": 172,
+      "profile": 2,
+      "phase": 43,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 367,
+      "updates": 173,
+      "profile": 2,
+      "phase": 44,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 369,
+      "updates": 174,
+      "profile": 2,
+      "phase": 45,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 371,
+      "updates": 175,
+      "profile": 2,
+      "phase": 46,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 373,
+      "updates": 176,
+      "profile": 2,
+      "phase": 47,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 375,
+      "updates": 177,
+      "profile": 2,
+      "phase": 48,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 377,
+      "updates": 178,
+      "profile": 2,
+      "phase": 49,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 379,
+      "updates": 179,
+      "profile": 2,
+      "phase": 50,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 381,
+      "updates": 180,
+      "profile": 2,
+      "phase": 51,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 383,
+      "updates": 181,
+      "profile": 2,
+      "phase": 52,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 385,
+      "updates": 182,
+      "profile": 2,
+      "phase": 53,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 387,
+      "updates": 183,
+      "profile": 2,
+      "phase": 54,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 389,
+      "updates": 184,
+      "profile": 2,
+      "phase": 55,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 391,
+      "updates": 185,
+      "profile": 2,
+      "phase": 56,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 393,
+      "updates": 186,
+      "profile": 2,
+      "phase": 57,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 395,
+      "updates": 187,
+      "profile": 2,
+      "phase": 58,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 397,
+      "updates": 188,
+      "profile": 2,
+      "phase": 59,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 399,
+      "updates": 189,
+      "profile": 2,
+      "phase": 60,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 401,
+      "updates": 190,
+      "profile": 2,
+      "phase": 61,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 403,
+      "updates": 191,
+      "profile": 2,
+      "phase": 62,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 405,
+      "updates": 192,
+      "profile": 2,
+      "phase": 63,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 407,
+      "updates": 193,
+      "profile": 2,
+      "phase": 0,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 409,
+      "updates": 194,
+      "profile": 2,
+      "phase": 1,
+      "switches": 2,
+      "missed": 0
+    },
+    {
+      "frame": 411,
+      "updates": 195,
+      "profile": 2,
+      "phase": 2,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 414,
+      "updates": 196,
+      "profile": 3,
+      "phase": 3,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 416,
+      "updates": 197,
+      "profile": 3,
+      "phase": 4,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 418,
+      "updates": 198,
+      "profile": 3,
+      "phase": 5,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 420,
+      "updates": 199,
+      "profile": 3,
+      "phase": 6,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 422,
+      "updates": 200,
+      "profile": 3,
+      "phase": 7,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 424,
+      "updates": 201,
+      "profile": 3,
+      "phase": 8,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 426,
+      "updates": 202,
+      "profile": 3,
+      "phase": 9,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 428,
+      "updates": 203,
+      "profile": 3,
+      "phase": 10,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 430,
+      "updates": 204,
+      "profile": 3,
+      "phase": 11,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 432,
+      "updates": 205,
+      "profile": 3,
+      "phase": 12,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 434,
+      "updates": 206,
+      "profile": 3,
+      "phase": 13,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 436,
+      "updates": 207,
+      "profile": 3,
+      "phase": 14,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 438,
+      "updates": 208,
+      "profile": 3,
+      "phase": 15,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 440,
+      "updates": 209,
+      "profile": 3,
+      "phase": 16,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 442,
+      "updates": 210,
+      "profile": 3,
+      "phase": 17,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 444,
+      "updates": 211,
+      "profile": 3,
+      "phase": 18,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 446,
+      "updates": 212,
+      "profile": 3,
+      "phase": 19,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 448,
+      "updates": 213,
+      "profile": 3,
+      "phase": 20,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 450,
+      "updates": 214,
+      "profile": 3,
+      "phase": 21,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 452,
+      "updates": 215,
+      "profile": 3,
+      "phase": 22,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 454,
+      "updates": 216,
+      "profile": 3,
+      "phase": 23,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 456,
+      "updates": 217,
+      "profile": 3,
+      "phase": 24,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 458,
+      "updates": 218,
+      "profile": 3,
+      "phase": 25,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 460,
+      "updates": 219,
+      "profile": 3,
+      "phase": 26,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 462,
+      "updates": 220,
+      "profile": 3,
+      "phase": 27,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 464,
+      "updates": 221,
+      "profile": 3,
+      "phase": 28,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 466,
+      "updates": 222,
+      "profile": 3,
+      "phase": 29,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 468,
+      "updates": 223,
+      "profile": 3,
+      "phase": 30,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 470,
+      "updates": 224,
+      "profile": 3,
+      "phase": 31,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 472,
+      "updates": 225,
+      "profile": 3,
+      "phase": 32,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 474,
+      "updates": 226,
+      "profile": 3,
+      "phase": 33,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 476,
+      "updates": 227,
+      "profile": 3,
+      "phase": 34,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 478,
+      "updates": 228,
+      "profile": 3,
+      "phase": 35,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 480,
+      "updates": 229,
+      "profile": 3,
+      "phase": 36,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 482,
+      "updates": 230,
+      "profile": 3,
+      "phase": 37,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 484,
+      "updates": 231,
+      "profile": 3,
+      "phase": 38,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 486,
+      "updates": 232,
+      "profile": 3,
+      "phase": 39,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 488,
+      "updates": 233,
+      "profile": 3,
+      "phase": 40,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 490,
+      "updates": 234,
+      "profile": 3,
+      "phase": 41,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 492,
+      "updates": 235,
+      "profile": 3,
+      "phase": 42,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 494,
+      "updates": 236,
+      "profile": 3,
+      "phase": 43,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 496,
+      "updates": 237,
+      "profile": 3,
+      "phase": 44,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 498,
+      "updates": 238,
+      "profile": 3,
+      "phase": 45,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 500,
+      "updates": 239,
+      "profile": 3,
+      "phase": 46,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 502,
+      "updates": 240,
+      "profile": 3,
+      "phase": 47,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 504,
+      "updates": 241,
+      "profile": 3,
+      "phase": 48,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 506,
+      "updates": 242,
+      "profile": 3,
+      "phase": 49,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 508,
+      "updates": 243,
+      "profile": 3,
+      "phase": 50,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 510,
+      "updates": 244,
+      "profile": 3,
+      "phase": 51,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 512,
+      "updates": 245,
+      "profile": 3,
+      "phase": 52,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 514,
+      "updates": 246,
+      "profile": 3,
+      "phase": 53,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 516,
+      "updates": 247,
+      "profile": 3,
+      "phase": 54,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 518,
+      "updates": 248,
+      "profile": 3,
+      "phase": 55,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 520,
+      "updates": 249,
+      "profile": 3,
+      "phase": 56,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 522,
+      "updates": 250,
+      "profile": 3,
+      "phase": 57,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 524,
+      "updates": 251,
+      "profile": 3,
+      "phase": 58,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 526,
+      "updates": 252,
+      "profile": 3,
+      "phase": 59,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 528,
+      "updates": 253,
+      "profile": 3,
+      "phase": 60,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 530,
+      "updates": 254,
+      "profile": 3,
+      "phase": 61,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 532,
+      "updates": 255,
+      "profile": 3,
+      "phase": 62,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 534,
+      "updates": 256,
+      "profile": 3,
+      "phase": 63,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 536,
+      "updates": 257,
+      "profile": 3,
+      "phase": 0,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 538,
+      "updates": 258,
+      "profile": 3,
+      "phase": 1,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 540,
+      "updates": 259,
+      "profile": 3,
+      "phase": 2,
+      "switches": 3,
+      "missed": 0
+    },
+    {
+      "frame": 542,
+      "updates": 260,
+      "profile": 3,
+      "phase": 3,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 545,
+      "updates": 261,
+      "profile": 4,
+      "phase": 4,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 547,
+      "updates": 262,
+      "profile": 4,
+      "phase": 5,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 549,
+      "updates": 263,
+      "profile": 4,
+      "phase": 6,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 551,
+      "updates": 264,
+      "profile": 4,
+      "phase": 7,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 553,
+      "updates": 265,
+      "profile": 4,
+      "phase": 8,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 555,
+      "updates": 266,
+      "profile": 4,
+      "phase": 9,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 557,
+      "updates": 267,
+      "profile": 4,
+      "phase": 10,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 559,
+      "updates": 268,
+      "profile": 4,
+      "phase": 11,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 561,
+      "updates": 269,
+      "profile": 4,
+      "phase": 12,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 563,
+      "updates": 270,
+      "profile": 4,
+      "phase": 13,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 565,
+      "updates": 271,
+      "profile": 4,
+      "phase": 14,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 567,
+      "updates": 272,
+      "profile": 4,
+      "phase": 15,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 569,
+      "updates": 273,
+      "profile": 4,
+      "phase": 16,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 571,
+      "updates": 274,
+      "profile": 4,
+      "phase": 17,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 573,
+      "updates": 275,
+      "profile": 4,
+      "phase": 18,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 575,
+      "updates": 276,
+      "profile": 4,
+      "phase": 19,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 577,
+      "updates": 277,
+      "profile": 4,
+      "phase": 20,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 579,
+      "updates": 278,
+      "profile": 4,
+      "phase": 21,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 581,
+      "updates": 279,
+      "profile": 4,
+      "phase": 22,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 583,
+      "updates": 280,
+      "profile": 4,
+      "phase": 23,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 585,
+      "updates": 281,
+      "profile": 4,
+      "phase": 24,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 587,
+      "updates": 282,
+      "profile": 4,
+      "phase": 25,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 589,
+      "updates": 283,
+      "profile": 4,
+      "phase": 26,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 591,
+      "updates": 284,
+      "profile": 4,
+      "phase": 27,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 593,
+      "updates": 285,
+      "profile": 4,
+      "phase": 28,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 595,
+      "updates": 286,
+      "profile": 4,
+      "phase": 29,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 597,
+      "updates": 287,
+      "profile": 4,
+      "phase": 30,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 599,
+      "updates": 288,
+      "profile": 4,
+      "phase": 31,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 601,
+      "updates": 289,
+      "profile": 4,
+      "phase": 32,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 603,
+      "updates": 290,
+      "profile": 4,
+      "phase": 33,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 605,
+      "updates": 291,
+      "profile": 4,
+      "phase": 34,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 607,
+      "updates": 292,
+      "profile": 4,
+      "phase": 35,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 609,
+      "updates": 293,
+      "profile": 4,
+      "phase": 36,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 611,
+      "updates": 294,
+      "profile": 4,
+      "phase": 37,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 613,
+      "updates": 295,
+      "profile": 4,
+      "phase": 38,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 615,
+      "updates": 296,
+      "profile": 4,
+      "phase": 39,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 617,
+      "updates": 297,
+      "profile": 4,
+      "phase": 40,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 619,
+      "updates": 298,
+      "profile": 4,
+      "phase": 41,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 621,
+      "updates": 299,
+      "profile": 4,
+      "phase": 42,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 623,
+      "updates": 300,
+      "profile": 4,
+      "phase": 43,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 625,
+      "updates": 301,
+      "profile": 4,
+      "phase": 44,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 627,
+      "updates": 302,
+      "profile": 4,
+      "phase": 45,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 629,
+      "updates": 303,
+      "profile": 4,
+      "phase": 46,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 631,
+      "updates": 304,
+      "profile": 4,
+      "phase": 47,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 633,
+      "updates": 305,
+      "profile": 4,
+      "phase": 48,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 635,
+      "updates": 306,
+      "profile": 4,
+      "phase": 49,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 637,
+      "updates": 307,
+      "profile": 4,
+      "phase": 50,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 639,
+      "updates": 308,
+      "profile": 4,
+      "phase": 51,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 641,
+      "updates": 309,
+      "profile": 4,
+      "phase": 52,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 643,
+      "updates": 310,
+      "profile": 4,
+      "phase": 53,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 645,
+      "updates": 311,
+      "profile": 4,
+      "phase": 54,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 647,
+      "updates": 312,
+      "profile": 4,
+      "phase": 55,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 649,
+      "updates": 313,
+      "profile": 4,
+      "phase": 56,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 651,
+      "updates": 314,
+      "profile": 4,
+      "phase": 57,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 653,
+      "updates": 315,
+      "profile": 4,
+      "phase": 58,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 655,
+      "updates": 316,
+      "profile": 4,
+      "phase": 59,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 657,
+      "updates": 317,
+      "profile": 4,
+      "phase": 60,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 659,
+      "updates": 318,
+      "profile": 4,
+      "phase": 61,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 661,
+      "updates": 319,
+      "profile": 4,
+      "phase": 62,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 663,
+      "updates": 320,
+      "profile": 4,
+      "phase": 63,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 665,
+      "updates": 321,
+      "profile": 4,
+      "phase": 0,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 667,
+      "updates": 322,
+      "profile": 4,
+      "phase": 1,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 669,
+      "updates": 323,
+      "profile": 4,
+      "phase": 2,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 671,
+      "updates": 324,
+      "profile": 4,
+      "phase": 3,
+      "switches": 4,
+      "missed": 0
+    },
+    {
+      "frame": 673,
+      "updates": 325,
+      "profile": 4,
+      "phase": 4,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 676,
+      "updates": 326,
+      "profile": 5,
+      "phase": 5,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 678,
+      "updates": 327,
+      "profile": 5,
+      "phase": 6,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 680,
+      "updates": 328,
+      "profile": 5,
+      "phase": 7,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 682,
+      "updates": 329,
+      "profile": 5,
+      "phase": 8,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 684,
+      "updates": 330,
+      "profile": 5,
+      "phase": 9,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 686,
+      "updates": 331,
+      "profile": 5,
+      "phase": 10,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 688,
+      "updates": 332,
+      "profile": 5,
+      "phase": 11,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 690,
+      "updates": 333,
+      "profile": 5,
+      "phase": 12,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 692,
+      "updates": 334,
+      "profile": 5,
+      "phase": 13,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 694,
+      "updates": 335,
+      "profile": 5,
+      "phase": 14,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 696,
+      "updates": 336,
+      "profile": 5,
+      "phase": 15,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 698,
+      "updates": 337,
+      "profile": 5,
+      "phase": 16,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 700,
+      "updates": 338,
+      "profile": 5,
+      "phase": 17,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 702,
+      "updates": 339,
+      "profile": 5,
+      "phase": 18,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 704,
+      "updates": 340,
+      "profile": 5,
+      "phase": 19,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 706,
+      "updates": 341,
+      "profile": 5,
+      "phase": 20,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 708,
+      "updates": 342,
+      "profile": 5,
+      "phase": 21,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 710,
+      "updates": 343,
+      "profile": 5,
+      "phase": 22,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 712,
+      "updates": 344,
+      "profile": 5,
+      "phase": 23,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 714,
+      "updates": 345,
+      "profile": 5,
+      "phase": 24,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 716,
+      "updates": 346,
+      "profile": 5,
+      "phase": 25,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 718,
+      "updates": 347,
+      "profile": 5,
+      "phase": 26,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 720,
+      "updates": 348,
+      "profile": 5,
+      "phase": 27,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 722,
+      "updates": 349,
+      "profile": 5,
+      "phase": 28,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 724,
+      "updates": 350,
+      "profile": 5,
+      "phase": 29,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 726,
+      "updates": 351,
+      "profile": 5,
+      "phase": 30,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 728,
+      "updates": 352,
+      "profile": 5,
+      "phase": 31,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 730,
+      "updates": 353,
+      "profile": 5,
+      "phase": 32,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 732,
+      "updates": 354,
+      "profile": 5,
+      "phase": 33,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 734,
+      "updates": 355,
+      "profile": 5,
+      "phase": 34,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 736,
+      "updates": 356,
+      "profile": 5,
+      "phase": 35,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 738,
+      "updates": 357,
+      "profile": 5,
+      "phase": 36,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 740,
+      "updates": 358,
+      "profile": 5,
+      "phase": 37,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 742,
+      "updates": 359,
+      "profile": 5,
+      "phase": 38,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 744,
+      "updates": 360,
+      "profile": 5,
+      "phase": 39,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 746,
+      "updates": 361,
+      "profile": 5,
+      "phase": 40,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 748,
+      "updates": 362,
+      "profile": 5,
+      "phase": 41,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 750,
+      "updates": 363,
+      "profile": 5,
+      "phase": 42,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 752,
+      "updates": 364,
+      "profile": 5,
+      "phase": 43,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 754,
+      "updates": 365,
+      "profile": 5,
+      "phase": 44,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 756,
+      "updates": 366,
+      "profile": 5,
+      "phase": 45,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 758,
+      "updates": 367,
+      "profile": 5,
+      "phase": 46,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 760,
+      "updates": 368,
+      "profile": 5,
+      "phase": 47,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 762,
+      "updates": 369,
+      "profile": 5,
+      "phase": 48,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 764,
+      "updates": 370,
+      "profile": 5,
+      "phase": 49,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 766,
+      "updates": 371,
+      "profile": 5,
+      "phase": 50,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 768,
+      "updates": 372,
+      "profile": 5,
+      "phase": 51,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 770,
+      "updates": 373,
+      "profile": 5,
+      "phase": 52,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 772,
+      "updates": 374,
+      "profile": 5,
+      "phase": 53,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 774,
+      "updates": 375,
+      "profile": 5,
+      "phase": 54,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 776,
+      "updates": 376,
+      "profile": 5,
+      "phase": 55,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 778,
+      "updates": 377,
+      "profile": 5,
+      "phase": 56,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 780,
+      "updates": 378,
+      "profile": 5,
+      "phase": 57,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 782,
+      "updates": 379,
+      "profile": 5,
+      "phase": 58,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 784,
+      "updates": 380,
+      "profile": 5,
+      "phase": 59,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 786,
+      "updates": 381,
+      "profile": 5,
+      "phase": 60,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 788,
+      "updates": 382,
+      "profile": 5,
+      "phase": 61,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 790,
+      "updates": 383,
+      "profile": 5,
+      "phase": 62,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 792,
+      "updates": 384,
+      "profile": 5,
+      "phase": 63,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 794,
+      "updates": 385,
+      "profile": 5,
+      "phase": 0,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 796,
+      "updates": 386,
+      "profile": 5,
+      "phase": 1,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 798,
+      "updates": 387,
+      "profile": 5,
+      "phase": 2,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 800,
+      "updates": 388,
+      "profile": 5,
+      "phase": 3,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 802,
+      "updates": 389,
+      "profile": 5,
+      "phase": 4,
+      "switches": 5,
+      "missed": 0
+    },
+    {
+      "frame": 804,
+      "updates": 390,
+      "profile": 5,
+      "phase": 5,
+      "switches": 6,
+      "missed": 0
+    },
+    {
+      "frame": 807,
+      "updates": 391,
+      "profile": 0,
+      "phase": 6,
+      "switches": 6,
+      "missed": 0
+    },
+    {
+      "frame": 809,
+      "updates": 392,
+      "profile": 0,
+      "phase": 7,
+      "switches": 6,
+      "missed": 0
+    },
+    {
+      "frame": 811,
+      "updates": 393,
+      "profile": 0,
+      "phase": 8,
+      "switches": 6,
+      "missed": 0
+    },
+    {
+      "frame": 813,
+      "updates": 394,
+      "profile": 0,
+      "phase": 9,
+      "switches": 6,
+      "missed": 0
+    },
+    {
+      "frame": 815,
+      "updates": 395,
+      "profile": 0,
+      "phase": 10,
+      "switches": 6,
+      "missed": 0
+    },
+    {
+      "frame": 817,
+      "updates": 396,
+      "profile": 0,
+      "phase": 11,
+      "switches": 6,
+      "missed": 0
+    },
+    {
+      "frame": 819,
+      "updates": 397,
+      "profile": 0,
+      "phase": 12,
+      "switches": 6,
+      "missed": 0
+    },
+    {
+      "frame": 821,
+      "updates": 398,
+      "profile": 0,
+      "phase": 13,
+      "switches": 6,
+      "missed": 0
+    },
+    {
+      "frame": 823,
+      "updates": 399,
+      "profile": 0,
+      "phase": 14,
+      "switches": 6,
+      "missed": 0
+    }
+  ],
+  "timing_model": "emulator only; hardware unverified"
+}

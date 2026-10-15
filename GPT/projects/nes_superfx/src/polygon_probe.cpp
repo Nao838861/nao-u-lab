@@ -15,6 +15,7 @@ int main(int argc,char** argv) {
         nesfx::BitmapBoard b;b.CpuClock();b.CpuClock();
         std::copy(payload.begin(),payload.end(),b.memory.begin()+32768);
         unsigned flags=argc>3?std::stoi(argv[3]):0;
+        if(flags&8)b.gsuClockHz=50000000;
         b.CpuWrite(0x5034,0x70);b.CpuWrite(0x5037,flags&1?0xa0:0x80);b.CpuWrite(0x5039,flags&2?1:0);
         b.CpuWrite(0x503A,0x18);b.mode=3;
         auto word=[&](unsigned a){return b.memory[a]|(b.memory[a+1]<<8);};

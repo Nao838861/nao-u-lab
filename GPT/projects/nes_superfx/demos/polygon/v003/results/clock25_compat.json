@@ -1,0 +1,77 @@
+{
+  "status": "pass",
+  "cases": [
+    {
+      "case": "large",
+      "clock_select": 0,
+      "phases": 64,
+      "status": "pass"
+    },
+    {
+      "case": "large",
+      "clock_select": 1,
+      "phases": 64,
+      "status": "pass"
+    },
+    {
+      "case": "medium",
+      "clock_select": 0,
+      "phases": 64,
+      "status": "pass"
+    },
+    {
+      "case": "medium",
+      "clock_select": 1,
+      "phases": 64,
+      "status": "pass"
+    },
+    {
+      "case": "small",
+      "clock_select": 0,
+      "phases": 64,
+      "status": "pass"
+    },
+    {
+      "case": "small",
+      "clock_select": 1,
+      "phases": 64,
+      "status": "pass"
+    },
+    {
+      "case": "irregular",
+      "clock_select": 0,
+      "phases": 64,
+      "status": "pass"
+    },
+    {
+      "case": "irregular",
+      "clock_select": 1,
+      "phases": 64,
+      "status": "pass"
+    },
+    {
+      "case": "overlap",
+      "clock_select": 0,
+      "phases": 64,
+      "status": "pass"
+    },
+    {
+      "case": "overlap",
+      "clock_select": 1,
+      "phases": 64,
+      "status": "pass"
+    },
+    {
+      "case": "clipped",
+      "clock_select": 0,
+      "phases": 64,
+      "status": "pass"
+    },
+    {
+      "case": "clipped",
+      "clock_select": 1,
+      "phases": 64,
+      "status": "pass"
+    }
+  ]
+}

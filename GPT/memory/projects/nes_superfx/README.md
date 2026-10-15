@@ -12,7 +12,15 @@
 
 FamiBASIC/MMC5向けの自作NESコア計画とは別。マッパー側リポジトリ・ゲーム・既存Mesenは変更していない。
 
-## 最新：専用クリアと最大個数 v002
+## 最新：50MHz相当・RAM待ち据え置き v003
+
+2026年10月15日の「50MHz相当だとどうなる？」で、[v003](../../../projects/nes_superfx/demos/polygon/v003/README.md)を追加。GSU基準/実行50MHz、CLSR=1/MS0=1。既存メモリー待ちの実時間を保つため5/6クロックを10/12クロックへ、cache補充・PLOT/RPIXの待ちも同様に変更するホストアダプターを追加。専用フィルは25MHzのまま0.65536ms、NES CPU/PPU/音源の時間を保つ。vendor GSUの50MHz RTLをそのまま動かした測定ではない。
+
+25MHz v002→50MHz v003の30fps最大個数は、大13→17、中17→22、小26→38、二十面体13→20、重なる二十面体17→26、画面端八面体25→31。全６条件で最大と次個数失敗を各64姿勢、A切替６×64姿勢を実ROMで確認。小型立方体は投入456・描画204〜228三角形/画像、重なる二十面体は投入520・描画236〜253三角形/画像。GSU50MHzでもRAM待ちが残り、個数比は約1.24〜1.54倍。
+
+起動は`projects/nes_superfx/run_polygon_benchmark_50mhz.cmd`、ROMは`GSU_PolygonBenchmark_A_v003.nes`。子プロセスの`NES_GSU_CLOCK_HZ=50000000`で選択、ROMは`$5FE6`の基準MHzを検査し、画面C=50。通常`run_polygon_benchmark.cmd`はv002・25MHzのまま。旧25MHz全12条件×64姿勢のクロックとカウンターは完全一致、ABI1/ABI2/フィル/cubeのcontractと無変更診断ROMのfrontendも通過。**50MHz統合回路・実機性能は未確認**。
+
+## 専用クリアと最大個数 v002
 
 ユーザーの「RAM範囲フィルの速度を最優先、矩形フィルは低優先」「フレームバッファクリアの回路を追加し、処理落ち直前まで増やす」依頼を実装。[結果・RTL・ABI拡張](../../../projects/nes_superfx/demos/polygon/v002/README.md)。起動は`projects/nes_superfx/run_polygon_benchmark.cmd`、ROMは`GSU_PolygonBenchmark_A_v002.nes`。**最初は25MHz相当**で、A/Zが25→12.5MHzの順に６シーンを変更する。
 

@@ -1,0 +1,67 @@
+Start testing: Oct 15 09:09 東京 (標準時)
+----------------------------------------------------------
+1/4 Testing: bitmap_contract
+1/4 Test: bitmap_contract
+Command: "D:/AI/Nao_u_BOT/GPT/projects/nes_superfx/build/Release/nesfx_bitmap_contract.exe"
+Directory: D:/AI/Nao_u_BOT/GPT/projects/nes_superfx/build
+"bitmap_contract" start time: Oct 15 09:09 東京 (標準時)
+Output:
+----------------------------------------------------------
+bitmap ABI2 contract passed
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"bitmap_contract" end time: Oct 15 09:09 東京 (標準時)
+"bitmap_contract" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/4 Testing: fill_contract
+2/4 Test: fill_contract
+Command: "D:/AI/Nao_u_BOT/GPT/projects/nes_superfx/build/Release/nesfx_fill_contract.exe"
+Directory: D:/AI/Nao_u_BOT/GPT/projects/nes_superfx/build
+"fill_contract" start time: Oct 15 09:09 東京 (標準時)
+Output:
+----------------------------------------------------------
+range fill timing/protection/pattern/reset contract PASS
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"fill_contract" end time: Oct 15 09:09 東京 (標準時)
+"fill_contract" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/4 Testing: board_and_gsu
+3/4 Test: board_and_gsu
+Command: "D:/AI/Nao_u_BOT/GPT/projects/nes_superfx/build/Release/nesfx_probe.exe" "D:/AI/Nao_u_BOT/GPT/projects/nes_superfx/fixtures/program.hex"
+Directory: D:/AI/Nao_u_BOT/GPT/projects/nes_superfx/build
+"board_and_gsu" start time: Oct 15 09:09 東京 (標準時)
+Output:
+----------------------------------------------------------
+{"status":"pass","board":"n8pro-gsu-abi1","timing":"functional","tests":["diagnostic_program","ownership","internal_irq","peek","snapshot","reset","shared_latch","ram_fold","zero_rom","cache_invalidation","cache_line_validity","signed_multiply","add_wrap","rational_clock"]}
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"board_and_gsu" end time: Oct 15 09:09 東京 (標準時)
+"board_and_gsu" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/4 Testing: cube_gsu_execution
+4/4 Test: cube_gsu_execution
+Command: "D:/AI/Nao_u_BOT/GPT/projects/nes_superfx/build/Release/nesfx_cube_probe.exe" "D:/AI/Nao_u_BOT/GPT/projects/nes_superfx/build/cube_v001"
+Directory: D:/AI/Nao_u_BOT/GPT/projects/nes_superfx/build
+"cube_gsu_execution" start time: Oct 15 09:09 東京 (標準時)
+Output:
+----------------------------------------------------------
+GSU cube completed 64 phases
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"cube_gsu_execution" end time: Oct 15 09:09 東京 (標準時)
+"cube_gsu_execution" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 15 09:09 東京 (標準時)

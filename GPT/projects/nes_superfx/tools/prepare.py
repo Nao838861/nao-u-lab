@@ -79,6 +79,9 @@ public:
     void Write(uint32_t addr, uint8_t value);
     GsuState& GetState();
     uint32_t DebugGetProgramCounter();
+    uint8_t MemoryAccessClocks() const {
+        return static_cast<uint8_t>((_state.ClockSelect ? 5 : 6) * _bus.MemoryClockScale());
+    }
     void RunUntil(uint64_t target) {
         while(!_stopped && _state.CycleCount < target) Exec();
         // Upstream Step narrows its delay decrement to uint8_t. Bound idle chunks.
@@ -98,9 +101,15 @@ struct Bus {
     virtual ~Bus() = default;
     virtual uint8_t GsuRead(uint32_t) = 0;
     virtual void GsuWrite(uint32_t, uint8_t) = 0;
+    virtual uint8_t MemoryClockScale() const { return 1; }
 };
 enum class MemoryOperationType { Read, Write, ExecOpCode, ExecOperand };
 ''' + types + '\nclass Gsu {\nprivate:\n    Bus& _bus;\n' + private + public
+    # Optional faster execution clock with external-memory time kept fixed.
+    # Scale=1 is exactly the pinned core's original timing, including ABI1.
+    body = replace(body, '_state.ClockSelect ? 5*16 : 6*16', '16 * MemoryAccessClocks()')
+    body = replace(body, '_state.ClockSelect ? 5 : 6', 'MemoryAccessClocks()')
+    instructions = replace(instructions, '_state.ClockSelect ? 5 : 6', 'MemoryAccessClocks()')
     body = re.sub(r'^(?=(?:[\w:*&<>]+\s+)?Gsu::)', 'inline ', body, flags=re.M)
     instructions = re.sub(r'^(?=(?:[\w:*&<>]+\s+)?Gsu::)', 'inline ', instructions, flags=re.M)
     generated += body + '\n' + instructions + '\n}\n'
