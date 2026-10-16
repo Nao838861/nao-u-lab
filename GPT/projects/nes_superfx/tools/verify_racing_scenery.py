@@ -29,16 +29,22 @@ def cases():
     return result
 
 
-def scan(probe):
+def scan(probe, compare_rom=None):
     OUT.mkdir(parents=True,exist_ok=True);profile.OUT=OUT
     original=(ROOT/'build/racing/v005/initial-test/snapshot0.bin').read_bytes()
     rom=(ROOT/'releases/GSU_MMC5Racing3D_v005.nes').read_bytes();mesh=rom[8208:16400]
     data=bytearray(original);data[0x8000:0xa000]=mesh;data[:0x8000]=bytes(0x8000)
+    reference_mesh=compare_rom.read_bytes()[8208:16400] if compare_rom else None
     rows=cases()
     for i,row in enumerate(rows):
         state=bytes(row['state'])+bytes(2);pose=mmc5_state.pose(state,VIEWS[row['view']])
         struct.pack_into('<11h',data,0x8008,*pose)
         clocks,frame=profile.run(probe,data,'probe')
+        if reference_mesh is not None:
+            reference=bytearray(data);reference[0x8000:0xa000]=reference_mesh
+            struct.pack_into('<11h',reference,0x8008,*pose)
+            _,expected=profile.run(probe,reference,'reference')
+            assert frame==expected,('framebuffer changed',row['name'])
         row.update(gsu_clocks=clocks,gsu_ms=round(clocks/50000,3))
         if (i+1)%256==0:print(f'GSU {i+1}/{len(rows)}',flush=True)
     worst=[]
@@ -51,6 +57,8 @@ def scan(probe):
     report={'clock_hz':50000000,'rom_sha256':hashlib.sha256(rom).hexdigest(),'cases':len(rows),
             'route_cases':768,'object_cases':640,'max_gsu_ms':max(r['gsu_ms'] for r in rows),
             'selected':worst,'all':rows}
+    if compare_rom:
+        report.update(identical_framebuffers=len(rows),reference_rom_sha256=hashlib.sha256(compare_rom.read_bytes()).hexdigest())
     (OUT/'scan.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({k:v for k,v in report.items() if k not in ['all','selected']}))
 
 
@@ -114,6 +122,6 @@ end,emu.eventType.endFrame)
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--probe',type=Path);p.add_argument('--emulate',action='store_true');p.add_argument('--drive-mode',type=int,choices=[0,1],default=0);a=p.parse_args()
-    if a.probe:scan(a.probe.resolve())
+    p=argparse.ArgumentParser();p.add_argument('--probe',type=Path);p.add_argument('--compare-rom',type=Path);p.add_argument('--emulate',action='store_true');p.add_argument('--drive-mode',type=int,choices=[0,1],default=0);a=p.parse_args()
+    if a.probe:scan(a.probe.resolve(),a.compare_rom)
     if a.emulate:emulate(a.drive_mode)

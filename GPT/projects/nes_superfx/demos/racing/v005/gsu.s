@@ -133,6 +133,8 @@ transform:
   save $80fa,r9
   ibt r10,#0
 vertex:
+  ; World meshes also enter here directly; keep the transform loop cached.
+  cache
   ldw (r7)
   save $8040,r0
   add2 r7

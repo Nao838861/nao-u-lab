@@ -87,16 +87,19 @@ def models():
     for a,b,mat,n in [(0,1,0x32,(0,0,-1)),(1,2,0x12,(1,0,0)),(2,3,0x32,(0,0,1)),(3,0,0x23,(-1,0,0))]:tree.face(mat,[a,b,4],n)
 
     house=Mesh()
-    house.box((-4.2,0,-3),(4.2,2.2,3),[0x32,3,3,3,0x31])
+    house.box((-4.2,0,-3),(4.2,2.2,3),[0x31,0x31,3,3,3])
     # Remove flat ceiling; gables and sloping roof cover the volume.
     del house.faces[2]
     house.vertices_add([(0,4.6,-3),(0,4.6,3)])
-    house.face(0x31,[2,8,9,6],(-1,1,0));house.face(1,[8,3,7,9],(1,1,0))
-    house.face(0x31,[2,3,8],(0,0,-1));house.face(3,[6,9,7],(0,0,1))
+    # Independent roof extends 0.35 world beyond all four walls.
+    house.vertices_add([(-4.55,2,-3.35),(4.55,2,-3.35),(-4.55,2,3.35),(4.55,2,3.35),
+                        (0,4.6,-3.35),(0,4.6,3.35)])
+    house.face(1,[10,14,15,12],(-1,1,0));house.face(1,[14,11,13,15],(1,1,0))
+    house.face(3,[2,3,8],(0,0,-1));house.face(3,[6,9,7],(0,0,1))
     f=house.vertices_add([(-.7,0,-3.02),(.7,0,-3.02),(.7,1.7,-3.02),(-.7,1.7,-3.02)])
     house.face(1,range(f,f+4),(0,0,-1))
     f=house.vertices_add([(4.22,.8,-.8),(4.22,.8,.8),(4.22,1.7,.8),(4.22,1.7,-.8)])
-    house.face(0x32,range(f,f+4),(1,0,0))
+    house.face(3,range(f,f+4),(1,0,0))
     return car,tree,house
 
 
@@ -124,27 +127,27 @@ def main():
         struct.pack_into('<HH',mesh,0x1e,len(car.vertices),len(car.faces));struct.pack_into('<HH',mesh,0x28,0,0x8200)
         tree_faces=tree.face_bytes(0x8600,world=True,planes=0x9e00);house_faces=house.face_bytes(0x8600,world=True,planes=0x9e00+len(tree.faces)*12)
         put(0x8ca0,tree_faces,0x8d00);put(0x8d00,house_faces,0x8e00)
-        # Distant silhouettes remain polygons, aligned to the camera yaw.
-        put(0x8f80,struct.pack('<6H',0x32,0,0x8600,0x8606,0x860c,0x860c),0x8f8c)
-        put(0x8f8c,struct.pack('<12H',3,0,0x8600,0x8606,0x860c,0x8612,0x31,0,0x8612,0x860c,0x8618,0x8618),0x8fa4)
-        put(0x8fa4,struct.pack('<6h',-294,0,294,0,0,691),0x8fb0)
-        put(0x8fb0,struct.pack('<10h',-538,0,538,0,538,282,-538,282,0,589),0x8fc4)
+        # First tree fits after the car faces; remaining meshes fit below $8600.
+        first_tree=0x8200+len(car.faces)*12
+        assert first_tree+len(tree.vertices)*6<=0x8300
         cursor=0x8300
         for i,center in enumerate(TREES+HOUSES):
             is_tree=i<len(TREES);m=tree if is_tree else house;fptr=0x8ca0 if is_tree else 0x8d00
             radius=math.ceil(max(math.sqrt(x*x+y*y+z*z) for x,y,z in m.vertices)*128)+16
-            data=m.vertex_bytes(center);put(cursor,data,0x8600)
-            descriptor=struct.pack('<8H',cursor,len(m.vertices),fptr,len(m.faces),fptr+(36 if is_tree else 0),4 if is_tree else 8,radius,5 if is_tree else 10)
+            address=first_tree if i==0 else cursor
+            data=m.vertex_bytes(center);put(address,data,0x8300 if i==0 else 0x8600)
+            descriptor=struct.pack('<8H',address,len(m.vertices),fptr,len(m.faces),fptr+(36 if is_tree else 0),4 if is_tree else len(m.faces),radius,5 if is_tree else len(m.vertices))
             put(0x8c00+i*16,descriptor,0x8ca0)
             put(0x8e00+i*6,struct.pack('<3h',round((center[0]-320)*128/5),0,round((center[1]-320)*128/5)),0x8e40)
-            if bank==1:mesh_report.append({'kind':'tree' if is_tree else 'house','source_position':center,'vertices':len(m.vertices),'faces':len(m.faces),'far_vertices':3 if is_tree else 5,'far_faces':1 if is_tree else 2,'radius_q7':radius})
-            cursor+=len(data)
+            if bank==1:mesh_report.append({'kind':'tree' if is_tree else 'house','source_position':center,'vertices':len(m.vertices),'faces':len(m.faces),'far_vertices':5 if is_tree else len(m.vertices),'far_faces':4 if is_tree else len(m.faces),'radius_q7':radius})
+            if i!=0:cursor+=len(data)
         put(0x9000,(OUT/'gsu.bin').read_bytes(),0xa000);rom[at:at+8192]=mesh
     assert rom[:16+8192]==original[:16+8192] and rom[16+3*8192:]==original[16+3*8192:]
     name='GSU_MMC5Racing3D_v005.nes';(ROOT/'releases'/name).write_bytes(rom);(OUT/name).write_bytes(rom)
     report={'version':'005','rom':name,'rom_sha256':hashlib.sha256(rom).hexdigest(),'base_sha256':hashlib.sha256(original).hexdigest(),
             'car':{'vertices':len(car.vertices),'faces':len(car.faces),'width_world':2.4,'length_world':2.6},'scenery':mesh_report,
-            'far_lod_depth_world':{'tree':24,'house':32},'far_lod':'camera-facing polygon silhouettes: tree 1 triangle, house wall quad + roof triangle',
+            'far_lod_depth_world':{'tree':24,'house':None},'far_lod':'tree: identical world-space canopy without trunk; house: no LOD',
+            'house_roof_overhang_world':0.35,'house_colors':'red roof; gray gables and wide walls; red/gray narrow walls',
             'gsu_mhz_target':50,'unchanged':'CPU, physics, audio, Mode7 texture, mapper core; v004 retained',
             'materials':'nonzero red/green/gray; 2-color native GSU checker; index 0 transparent'}
     (ROOT/'releases/racing_3d_v005.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report))

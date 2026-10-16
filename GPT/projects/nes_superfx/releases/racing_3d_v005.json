@@ -1,7 +1,7 @@
 {
   "version": "005",
   "rom": "GSU_MMC5Racing3D_v005.nes",
-  "rom_sha256": "1f3feb65a443fbfd71ac54891a3b3228716cf843f08c25cf13e97a1562c234ed",
+  "rom_sha256": "cb62bb356af4c86632ea061c7f1132b36f6d0502ff8de4bdf8a804802aa41a75",
   "base_sha256": "a2725d5c40ea43c1afc9fce6ced4919ea1b121c1692291111c92b1aabbbe2ad7",
   "car": {
     "vertices": 32,
@@ -18,8 +18,8 @@
       ],
       "vertices": 11,
       "faces": 7,
-      "far_vertices": 3,
-      "far_faces": 1,
+      "far_vertices": 5,
+      "far_faces": 4,
       "radius_q7": 708
     },
     {
@@ -30,8 +30,8 @@
       ],
       "vertices": 11,
       "faces": 7,
-      "far_vertices": 3,
-      "far_faces": 1,
+      "far_vertices": 5,
+      "far_faces": 4,
       "radius_q7": 708
     },
     {
@@ -42,8 +42,8 @@
       ],
       "vertices": 11,
       "faces": 7,
-      "far_vertices": 3,
-      "far_faces": 1,
+      "far_vertices": 5,
+      "far_faces": 4,
       "radius_q7": 708
     },
     {
@@ -54,8 +54,8 @@
       ],
       "vertices": 11,
       "faces": 7,
-      "far_vertices": 3,
-      "far_faces": 1,
+      "far_vertices": 5,
+      "far_faces": 4,
       "radius_q7": 708
     },
     {
@@ -66,8 +66,8 @@
       ],
       "vertices": 11,
       "faces": 7,
-      "far_vertices": 3,
-      "far_faces": 1,
+      "far_vertices": 5,
+      "far_faces": 4,
       "radius_q7": 708
     },
     {
@@ -78,8 +78,8 @@
       ],
       "vertices": 11,
       "faces": 7,
-      "far_vertices": 3,
-      "far_faces": 1,
+      "far_vertices": 5,
+      "far_faces": 4,
       "radius_q7": 708
     },
     {
@@ -90,8 +90,8 @@
       ],
       "vertices": 11,
       "faces": 7,
-      "far_vertices": 3,
-      "far_faces": 1,
+      "far_vertices": 5,
+      "far_faces": 4,
       "radius_q7": 708
     },
     {
@@ -102,8 +102,8 @@
       ],
       "vertices": 11,
       "faces": 7,
-      "far_vertices": 3,
-      "far_faces": 1,
+      "far_vertices": 5,
+      "far_faces": 4,
       "radius_q7": 708
     },
     {
@@ -112,11 +112,11 @@
         150,
         260
       ],
-      "vertices": 18,
+      "vertices": 24,
       "faces": 10,
-      "far_vertices": 5,
-      "far_faces": 2,
-      "radius_q7": 735
+      "far_vertices": 24,
+      "far_faces": 10,
+      "radius_q7": 784
     },
     {
       "kind": "house",
@@ -124,18 +124,20 @@
         620,
         245
       ],
-      "vertices": 18,
+      "vertices": 24,
       "faces": 10,
-      "far_vertices": 5,
-      "far_faces": 2,
-      "radius_q7": 735
+      "far_vertices": 24,
+      "far_faces": 10,
+      "radius_q7": 784
     }
   ],
   "far_lod_depth_world": {
     "tree": 24,
-    "house": 32
+    "house": null
   },
-  "far_lod": "camera-facing polygon silhouettes: tree 1 triangle, house wall quad + roof triangle",
+  "far_lod": "tree: identical world-space canopy without trunk; house: no LOD",
+  "house_roof_overhang_world": 0.35,
+  "house_colors": "red roof; gray gables and wide walls; red/gray narrow walls",
   "gsu_mhz_target": 50,
   "unchanged": "CPU, physics, audio, Mode7 texture, mapper core; v004 retained",
   "materials": "nonzero red/green/gray; 2-color native GSU checker; index 0 transparent"

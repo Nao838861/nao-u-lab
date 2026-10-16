@@ -90,23 +90,21 @@ tree_positive:
   dec r9
   bne tree_axis
   nop
+  ; Houses always retain the complete mesh. Far trees omit only the trunk.
+  ibt r0,#4
+  save $8f3c,r0
   load r0,$8f3a
   iwt r6,#$8c80
   cmp r6
-  bge house_lod_distance
+  bge detailed_model
   nop
-  iwt r6,#3072
-  bra lod_distance
-  nop
-house_lod_distance:
-  iwt r6,#4096
-lod_distance:
   load r0,$8f38
+  iwt r6,#3072
   cmp r6
   blt detailed_model
   nop
-  call distant_model
-  jump tree_done
+  ibt r0,#8
+  save $8f3c,r0
 detailed_model:
   ; Camera relative to this model in unrotated world coordinates.
   load r0,$8f34
@@ -133,11 +131,21 @@ detailed_model:
   add2 r3
   to r9
   ldw (r3)
+  load r0,$8f3c
+  sub #8
+  bne near_vertices
+  nop
+  ; First five input vertices are exactly the full model's canopy.
+  with r3
+  add #12
+  to r9
+  ldw (r3)
 near_vertices:
   iwt r8,#$8600
   call tree_transform
   load r0,$8f3a
-  add #4
+  load r6,$8f3c
+  add r6
   move r3,r0
 near_faces:
   to r7
@@ -156,75 +164,6 @@ tree_done:
   jump tree_next
 trees_done:
   load r11,$8f30
-  jmp r11
-  nop
-
-distant_model:
-  save $8052,r11
-  load r0,$8f3a
-  iwt r6,#$8c80
-  cmp r6
-  bge distant_house
-  nop
-  iwt r7,#$8fa4
-  ibt r9,#3
-  iwt r0,#$8f80
-  ibt r6,#1
-  bra distant_setup
-  nop
-distant_house:
-  iwt r7,#$8fb0
-  ibt r9,#5
-  iwt r0,#$8f8c
-  ibt r6,#2
-distant_setup:
-  save $80fc,r0
-  save $80fe,r6
-  save $80fa,r9
-  load r3,$8f34
-  ldw (r3)
-  save $80f0,r0
-  add2 r3
-  ldw (r3)
-  save $80f2,r0
-  add2 r3
-  ldw (r3)
-  ; The depth slot was consumed by sorting: use the preserved depth.
-  load r0,$8f38
-  save $80f4,r0
-  iwt r8,#$8600
-distant_vertex:
-  ldw (r7)
-  load r6,$80f0
-  add r6
-  stw (r8)
-  add2 r8
-  add2 r7
-  ldw (r7)
-  save $8042,r0
-  load r6,$8012
-  call mul8
-  move r6,r0
-  load r0,$80f2
-  sub r6
-  stw (r8)
-  add2 r8
-  load r0,$8042
-  load r6,$8014
-  call mul8
-  move r6,r0
-  load r0,$80f4
-  sub r6
-  stw (r8)
-  add2 r8
-  add2 r7
-  dec r9
-  bne distant_vertex
-  nop
-  load r0,$80fc
-  load r6,$80fe
-  call faces
-  load r11,$8052
   jmp r11
   nop
 

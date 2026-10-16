@@ -1,0 +1,413 @@
+{
+  "clock_hz": 50000000,
+  "rom_sha256": "cb62bb356af4c86632ea061c7f1132b36f6d0502ff8de4bdf8a804802aa41a75",
+  "cases": 1408,
+  "route_cases": 768,
+  "object_cases": 640,
+  "max_gsu_ms": 34.904,
+  "selected": [
+    {
+      "name": "route-0-36-0",
+      "state": [
+        54,
+        119,
+        0,
+        81,
+        145,
+        1,
+        172,
+        80,
+        172,
+        80
+      ],
+      "view": 0,
+      "gsu_clocks": 794578,
+      "gsu_ms": 15.892,
+      "case": 1,
+      "updates_per_120_vblanks": 60,
+      "fps": 30.0494
+    },
+    {
+      "name": "route-0-36--4096",
+      "state": [
+        54,
+        119,
+        0,
+        81,
+        145,
+        1,
+        172,
+        64,
+        172,
+        80
+      ],
+      "view": 0,
+      "gsu_clocks": 794576,
+      "gsu_ms": 15.892,
+      "case": 2,
+      "updates_per_120_vblanks": 60,
+      "fps": 30.0494
+    },
+    {
+      "name": "object-0-v0-a24576-d12",
+      "state": [
+        132,
+        151,
+        0,
+        132,
+        161,
+        0,
+        0,
+        104,
+        0,
+        96
+      ],
+      "view": 0,
+      "gsu_clocks": 1430274,
+      "gsu_ms": 28.583,
+      "case": 3,
+      "updates_per_120_vblanks": 40,
+      "fps": 20.0329
+    },
+    {
+      "name": "object-9-v0-a40960-d40",
+      "state": [
+        73,
+        136,
+        2,
+        183,
+        216,
+        0,
+        0,
+        168,
+        0,
+        160
+      ],
+      "view": 0,
+      "gsu_clocks": 1290639,
+      "gsu_ms": 25.813,
+      "case": 4,
+      "updates_per_120_vblanks": 40,
+      "fps": 20.0329
+    },
+    {
+      "name": "route-1-37--4096",
+      "state": [
+        99,
+        144,
+        0,
+        234,
+        147,
+        1,
+        222,
+        52,
+        222,
+        68
+      ],
+      "view": 1,
+      "gsu_clocks": 1176524,
+      "gsu_ms": 23.53,
+      "case": 5,
+      "updates_per_120_vblanks": 60,
+      "fps": 30.0494
+    },
+    {
+      "name": "route-1-37-4096",
+      "state": [
+        99,
+        144,
+        0,
+        234,
+        147,
+        1,
+        222,
+        84,
+        222,
+        68
+      ],
+      "view": 1,
+      "gsu_clocks": 1175659,
+      "gsu_ms": 23.513,
+      "case": 6,
+      "updates_per_120_vblanks": 60,
+      "fps": 30.0494
+    },
+    {
+      "name": "object-5-v1-a24576-d40",
+      "state": [
+        183,
+        181,
+        0,
+        183,
+        14,
+        0,
+        0,
+        104,
+        0,
+        96
+      ],
+      "view": 1,
+      "gsu_clocks": 1611246,
+      "gsu_ms": 32.225,
+      "case": 7,
+      "updates_per_120_vblanks": 40,
+      "fps": 20.0329
+    },
+    {
+      "name": "object-0-v1-a24576-d12",
+      "state": [
+        132,
+        151,
+        0,
+        132,
+        161,
+        0,
+        0,
+        104,
+        0,
+        96
+      ],
+      "view": 1,
+      "gsu_clocks": 1592718,
+      "gsu_ms": 31.854,
+      "case": 8,
+      "updates_per_120_vblanks": 40,
+      "fps": 20.0329
+    },
+    {
+      "name": "route-2-38--4096",
+      "state": [
+        207,
+        169,
+        0,
+        232,
+        149,
+        1,
+        8,
+        41,
+        8,
+        57
+      ],
+      "view": 2,
+      "gsu_clocks": 1393836,
+      "gsu_ms": 27.877,
+      "case": 9,
+      "updates_per_120_vblanks": 40,
+      "fps": 20.0329
+    },
+    {
+      "name": "route-2-38-4096",
+      "state": [
+        207,
+        169,
+        0,
+        232,
+        149,
+        1,
+        8,
+        73,
+        8,
+        57
+      ],
+      "view": 2,
+      "gsu_clocks": 1392611,
+      "gsu_ms": 27.852,
+      "case": 10,
+      "updates_per_120_vblanks": 40,
+      "fps": 20.0329
+    },
+    {
+      "name": "object-5-v2-a24576-d12",
+      "state": [
+        132,
+        201,
+        0,
+        132,
+        34,
+        0,
+        0,
+        104,
+        0,
+        96
+      ],
+      "view": 2,
+      "gsu_clocks": 1713514,
+      "gsu_ms": 34.259,
+      "case": 11,
+      "updates_per_120_vblanks": 40,
+      "fps": 20.0329
+    },
+    {
+      "name": "object-8-v2-a24576-d40",
+      "state": [
+        183,
+        121,
+        0,
+        183,
+        231,
+        0,
+        0,
+        104,
+        0,
+        96
+      ],
+      "view": 2,
+      "gsu_clocks": 1629843,
+      "gsu_ms": 32.597,
+      "case": 12,
+      "updates_per_120_vblanks": 40,
+      "fps": 20.0329
+    },
+    {
+      "name": "route-3-40-4096",
+      "state": [
+        240,
+        215,
+        0,
+        130,
+        128,
+        1,
+        50,
+        61,
+        50,
+        45
+      ],
+      "view": 3,
+      "gsu_clocks": 1745224,
+      "gsu_ms": 34.904,
+      "case": 13,
+      "updates_per_120_vblanks": 40,
+      "fps": 20.0329
+    },
+    {
+      "name": "route-3-40--4096",
+      "state": [
+        240,
+        215,
+        0,
+        130,
+        128,
+        1,
+        50,
+        29,
+        50,
+        45
+      ],
+      "view": 3,
+      "gsu_clocks": 1698819,
+      "gsu_ms": 33.976,
+      "case": 14,
+      "updates_per_120_vblanks": 40,
+      "fps": 20.0329
+    },
+    {
+      "name": "object-5-v3-a24576-d12",
+      "state": [
+        132,
+        201,
+        0,
+        132,
+        34,
+        0,
+        0,
+        104,
+        0,
+        96
+      ],
+      "view": 3,
+      "gsu_clocks": 1691563,
+      "gsu_ms": 33.831,
+      "case": 15,
+      "updates_per_120_vblanks": 40,
+      "fps": 20.0329
+    },
+    {
+      "name": "object-5-v3-a24576-d40",
+      "state": [
+        183,
+        181,
+        0,
+        183,
+        14,
+        0,
+        0,
+        104,
+        0,
+        96
+      ],
+      "view": 3,
+      "gsu_clocks": 1687062,
+      "gsu_ms": 33.741,
+      "case": 16,
+      "updates_per_120_vblanks": 40,
+      "fps": 20.0329
+    },
+    {
+      "name": "object-0-v1-a40960-d40",
+      "state": [
+        73,
+        188,
+        0,
+        183,
+        141,
+        0,
+        0,
+        168,
+        0,
+        160
+      ],
+      "view": 1,
+      "gsu_clocks": 1086870,
+      "gsu_ms": 21.737,
+      "case": 17,
+      "updates_per_120_vblanks": 60,
+      "fps": 30.0494
+    },
+    {
+      "name": "object-8-v1-a40960-d40",
+      "state": [
+        73,
+        178,
+        0,
+        183,
+        231,
+        0,
+        0,
+        168,
+        0,
+        160
+      ],
+      "view": 1,
+      "gsu_clocks": 996998,
+      "gsu_ms": 19.94,
+      "case": 18,
+      "updates_per_120_vblanks": 60,
+      "fps": 30.0494
+    },
+    {
+      "name": "object-9-v1-a40960-d40",
+      "state": [
+        73,
+        136,
+        2,
+        183,
+        216,
+        0,
+        0,
+        168,
+        0,
+        160
+      ],
+      "view": 1,
+      "gsu_clocks": 1504912,
+      "gsu_ms": 30.098,
+      "case": 19,
+      "updates_per_120_vblanks": 40,
+      "fps": 20.0329
+    }
+  ],
+  "identical_framebuffers": 1408,
+  "reference_rom_sha256": "4924b4b6fbb49a943ed4ad65f3e8174baa5a0fd26bf21bb0582be4b9eda6b5b4",
+  "min_measured_fps": 20.0329,
+  "drive_mode": 1
+}
