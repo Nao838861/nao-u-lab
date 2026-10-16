@@ -1,4 +1,4 @@
-MMC5Racing SuperFX 3D走行版 v001
+MMC5Racing SuperFX 3D走行版 v002（エンジン音・タイヤ音付き）
 
 同じフォルダーの play_mmc5racing_3d.cmd をダブルクリックしてください。
 起動・リセット後、初期化に数秒かかります。
@@ -14,16 +14,18 @@ Enter：同じモードで開始位置へ戻る
 標準はGSU 50MHz相当のエミュレーションです。
 25MHzで試す場合：play_mmc5racing_3d.cmd --gsu-mhz 25
 
-元の6502物理を使う自車の試走版です。CPU車、周回・ゴール、景物、音は未接続です。
+元の6502物理を使う自車の試走版です。CPU車、周回・ゴール、景物は未接続です。
+原版のエンジン音・タイヤ音を接続しました。走行BGMは元の通常配布版にもありません。
 描画は30fps未達ですが、物理更新は描画と独立しています。
 
-専用Mesenは .tmp/superfx-local/GPT/projects/nes_superfx/runtime にあります。
+専用Mesenは .tmp/nesfx-audio-repo/GPT/projects/nes_superfx/runtime にあります。
 Mesen.exeの直接起動は専用DLLを標準DLLで上書きするため、必ず上記cmdを使ってください。
 .tmpを削除すると実行環境も消えます。
 
 取得元：Nao838861/nao-u-lab の codex/phase1-collect-20260810
 取得revision：ed39ab03f（2026年10月16日に取得）
-ソース：.tmp/superfx-local/GPT/projects/nes_superfx
+音移植ブランチ：codex/superfx-racing-audio-20261016
+ソース：.tmp/nesfx-audio-repo/GPT/projects/nes_superfx
 Mesen基準：2.1.1 / b9fa69ddc6d0a331fb103fdb5eef6904305703c2
 このPC用コア：tools/build_superfx_portable.py で生成
 コンパイラー／SDK：.tmp/msvc（システムのPATH変更なし）

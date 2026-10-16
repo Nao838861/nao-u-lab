@@ -1,6 +1,6 @@
 @echo off
 setlocal
-set "GSU_ROOT=%~dp0.tmp\superfx-local\GPT\projects\nes_superfx"
+set "GSU_ROOT=%~dp0.tmp\nesfx-audio-repo\GPT\projects\nes_superfx"
 if not exist "%GSU_ROOT%\runtime\MesenCore.dll" (
   echo SuperFX runtime is missing: %GSU_ROOT%\runtime
   pause
