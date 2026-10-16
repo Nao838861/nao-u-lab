@@ -1112,8 +1112,8 @@
     }
   },
   "visual_source_commit": "9085aaf23f49591e99af15356a6056d1783fd38c",
-  "active_version": "004",
-  "active_rom": "GSU_MMC5Racing3D_v004.nes",
+  "active_version": "005",
+  "active_rom": "GSU_MMC5Racing3D_v005.nes",
   "mode7_source_commit": "39cc7f373caf8ef0f12dcaa4943d551febe60c34",
   "mode7_source_branch": "codex/superfx-racing-colors-20261016",
   "mode7_verification": {
@@ -1255,5 +1255,75 @@
       ],
       "rom_sha256": "a2725d5c40ea43c1afc9fce6ced4919ea1b121c1692291111c92b1aabbbe2ad7"
     }
+  },
+  "scenery_source_commit": "e9e62fadf9e7168d67a0983d73204070574d7dff",
+  "scenery_source_branch": "codex/superfx-racing-colors-20261016",
+  "scenery_verification": {
+    "rom_sha256": "1f3feb65a443fbfd71ac54891a3b3228716cf843f08c25cf13e97a1562c234ed",
+    "gsu_mhz": 50,
+    "native_cases": 1408,
+    "max_gsu_ms": 24.838,
+    "emulator_cases_per_mode": 19,
+    "grip_min_fps": 30.0494,
+    "drift_min_fps": 30.0494,
+    "initial_fx_ms": [
+      11.145,
+      9.017,
+      8.697,
+      9.126
+    ],
+    "initial_fps": [
+      30.0494,
+      60.0988,
+      60.0988,
+      60.0988
+    ],
+    "pixels": {
+      "status": "pass",
+      "ppu_pixels": 393216,
+      "fx_opaque_pixels": 3746,
+      "fx_transparent_pixels": 192862,
+      "scope": "4 views with FX + 4 views background only, complete 256x192 area; scalar color-key composition"
+    },
+    "controls": {
+      "status": "pass",
+      "held_edges": true,
+      "view_switch": true,
+      "ground_switch": true,
+      "mode_switch": true,
+      "start_reset": true,
+      "range_reset_recovery": true
+    },
+    "camera": {
+      "cases": [
+        {
+          "ticks": 1001,
+          "camera_checks": 1001,
+          "max_displayed_yaw_units": 2419,
+          "capture_tick": 661,
+          "mode": 0,
+          "physics_ticks_identical": 1000,
+          "max_displayed_yaw_degrees": 13.29
+        },
+        {
+          "ticks": 1001,
+          "camera_checks": 1001,
+          "max_displayed_yaw_units": 1379,
+          "capture_tick": 478,
+          "mode": 1,
+          "physics_ticks_identical": 1000,
+          "max_displayed_yaw_degrees": 7.58
+        }
+      ],
+      "rom_sha256": "1f3feb65a443fbfd71ac54891a3b3228716cf843f08c25cf13e97a1562c234ed"
+    },
+    "division": {
+      "status": "pass",
+      "cases": 5888,
+      "reference": "Python divmod, unsigned 32/16, quotient fits 16 bits",
+      "rom_sha256": "1f3feb65a443fbfd71ac54891a3b3228716cf843f08c25cf13e97a1562c234ed"
+    },
+    "physical_hardware_measured": false,
+    "detail": ".tmp\\nesfx-audio-repo\\GPT\\projects\\nes_superfx\\demos\\racing\\v005\\results\\scenery\\verification.json"
   }
 }
