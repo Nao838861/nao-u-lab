@@ -39,7 +39,7 @@ def main():
             span.append(j);j=(j+1)%len(points)
         error=max(mmc5_course.distance(points[k],points[first],points[last]) for k in span)
         straight.append(len(span)>1 and error<3)
-    colors=[1 if straight[i] else 0x30 for i in range(n)]
+    colors=[2 if straight[i] else 0x30 for i in range(n)]
     assert any(straight) and any(c==0x30 for c in colors)
     for bank in [1,2]:
         at=16+bank*8192
@@ -57,7 +57,7 @@ def main():
                 else:
                     source=(x*5+320,z*5+320)
                     nearest=min(range(n),key=lambda i:mmc5_course.distance(source,points[ids[i]],points[ids[(i+1)%n]]))
-                    if straight[nearest]:c=1
+                    if straight[nearest]:c=2
                     else:
                         first,last=points[ids[nearest]],points[ids[(nearest+1)%n]]
                         dx,dz=last[0]-first[0],last[1]-first[1]
