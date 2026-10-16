@@ -22,6 +22,7 @@ desired_view=$0450
 desired_ground=$0451
 desired_mode=$0452
 reset_request=$0453
+hud_key=$0456
 saved_banks=$0458
 .segment "ZEROPAGE"
 nmi_count:.res 2
@@ -79,6 +80,7 @@ reset:
   sta desired_view
 restart:
   lda #0
+  sta hud_key
   sta $2000
   sta $4015
   sta audio_ticks
@@ -300,6 +302,7 @@ fail:
   beq :-
   jmp restart
 
+RACING_FAST_OFFSETS=1
 .include "../../ground/v003/state_bridge.inc"
 texture_chunk:
   lda #0
@@ -390,6 +393,20 @@ fill_command:
   bne fill_command
   rts
 hud:
+  ; OAM only depends on these three selectors, not on simulation time.
+  lda drive_mode
+  asl a
+  ora ground
+  asl a
+  asl a
+  ora view
+  clc
+  adc #1
+  cmp hud_key
+  bne hud_changed
+  rts
+hud_changed:
+  sta hud_key
   lda #$ff
   ldx #0
 : sta $0200,x

@@ -7,7 +7,7 @@ ROOT=Path(__file__).resolve().parents[1]
 
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--rom',type=Path,default=ROOT/'releases/GSU_MMC5Racing3D_v003.nes');parser.add_argument('--results',type=Path,default=ROOT/'demos/racing/v003/results');parser.add_argument('--trees',action='store_true');args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--rom',type=Path,default=ROOT/'releases/GSU_MMC5Racing3D_v003.nes');parser.add_argument('--results',type=Path,default=ROOT/'demos/racing/v003/results');parser.add_argument('--trees',action='store_true');parser.add_argument('--dump-gsu',action='store_true');parser.add_argument('--measure-fps',action='store_true');args=parser.parse_args()
     out=args.results.resolve();out.mkdir(parents=True,exist_ok=True)
     labels={n:int(a,16) for a,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(ROOT/'build/racing/v003/cpu.lbl').read_text())}
     lua=r'''
@@ -47,7 +47,34 @@ end,emu.eventType.endFrame)
         pose_lua='local positions={'+','.join('{'+str(x)+','+str(z+40)+'}' for x,z in positions)+'}\n'
         pose_lua+="emu.addMemoryCallback(function() local p=positions[math.min(shot+1,8)] local vals={0,p[1]%256,math.floor(p[1]/256),0,p[2]%256,math.floor(p[2]/256),0,0,0,0} for i,v in ipairs(vals) do emu.write(L.original_state+i-1,v,emu.memType.nesMemory) end end,emu.callbackType.exec,L.render_from_mmc5_state)\n"
         lua=lua.replace('local function b(a)',pose_lua+'local function b(a)').replace('local ground=math.floor(shot/4) local view=shot%4','local ground=0 local view=1').replace('settle>=4','settle>=40').replace("'/ground'..ground..'-view'..view", "'/tree'..shot")
-    script=ROOT/'build/racing/v003/visual.lua' ;script.write_text(lua)
+    if args.measure_fps:
+        lua=lua.replace('local clocks={}','local clocks={} local rates={} local startUpdates=0')
+        timing=r"""local stamps={} local trace=assert(io.open(out..'/timing.csv','w'))
+local function cycles() return emu.getState()['cpu.cycleCount'] end
+emu.addMemoryCallback(function()
+ local now=cycles()
+ if stamps.start and stamps.go and stamps.hud and stamps.wait then
+  trace:write(string.format('%d,%d,%d,%d,%d,%d\n',stamps.view,stamps.ground,stamps.go-stamps.start,stamps.hud-stamps.go,stamps.wait-stamps.hud,now-stamps.wait))
+ end
+ stamps={start=now,view=emu.read(L.view,emu.memType.nesMemory),ground=emu.read(L.ground,emu.memType.nesMemory)}
+end,emu.callbackType.exec,L.frame)
+emu.addMemoryCallback(function(a,v) if v==0x90 then stamps.go=cycles() end end,emu.callbackType.write,0x481f)
+emu.addMemoryCallback(function() stamps.hud=cycles() end,emu.callbackType.exec,L.hud)
+emu.addMemoryCallback(function() if not stamps.wait then stamps.wait=cycles() end end,emu.callbackType.exec,L.wait_present)
+"""
+        lua=lua.replace('local function b(a)',timing+'local function b(a)').replace('done=true;emu.stop(0)','trace:close();done=true;emu.stop(0)')
+
+        lua=lua.replace('if settle>=4 then','if settle==4 then startUpdates=w(L.updates) end\n  if settle>=124 then\n   rates[#rates+1]=(w(L.updates)-startUpdates)*60.0988/120')
+        lua=lua.replace('done=true;emu.stop(0)',"local f=assert(io.open(out..'/fps.json','w'));f:write('['..table.concat(rates,',')..']');f:close()\n  done=true;emu.stop(0)")
+    if args.dump_gsu:
+        dump=r"""emu.addMemoryCallback(function(a,v)
+ if v~=0x90 or done then return end
+ local data={} for i=0,40959 do data[#data+1]=string.char(emu.read(i,emu.memType.nesMapperRam)) end
+ local f=assert(io.open(out..'/snapshot'..shot..'.bin','wb'));f:write(table.concat(data));f:close()
+end,emu.callbackType.write,0x481f)
+"""
+        lua=lua.replace('local function b(a)',dump+'local function b(a)')
+    script=ROOT/'build/racing/v003/visual.lua'  ;script.write_text(lua)
     settings=ROOT/'runtime/settings.json';before=settings.read_bytes();cfg=json.loads(before)
     cfg.setdefault('Debug',{}).setdefault('ScriptWindow',{})['AllowIoOsAccess']=True;settings.write_text(json.dumps(cfg))
     env=os.environ.copy();env.update(NES_GSU_MAPPER='n8pro-racing-gsu',NES_GSU_CLOCK_HZ='50000000')

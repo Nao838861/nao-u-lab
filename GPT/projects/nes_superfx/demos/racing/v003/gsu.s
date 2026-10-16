@@ -55,6 +55,15 @@ render_entry:
   cmode
   sub r0
   save $8024,r0
+  ; Cached projections are frame-local; clipped depth can never be zero.
+  save $8f94,r0
+  save $8fa0,r0
+  save $8fac,r0
+  save $8fb8,r0
+  save $8fc4,r0
+  save $8fd0,r0
+  save $8fdc,r0
+  save $8fe8,r0
   load r0,$8000
   sub #0
   beq polygon_ground
@@ -108,11 +117,16 @@ texture_row:
   iwt r0,#$2800
   with r14
   add r0
+  iwt r10,#$ffff
 texel:
   ; MERGE packs u integer in the high byte, v integer in the low byte.
   merge
   bvs grass_texel             ; either coordinate outside unsigned 0..63
   nop
+  cmp r10
+  beq cached_texel
+  nop
+  move r10,r0
   ; Resident texture is u-major: fold MERGE into u*64+v.
   lsr
   lsr
@@ -123,20 +137,24 @@ texel:
   hib
   or r9
   move r9,r0
-  iwt r10,#$800
-  cmp r10
+  iwt r6,#$800
+  cmp r6
   bcc texture_address
   nop
   with r9
-  add r10                    ; skip the visible bottom-right 2KiB block
+  add r6                     ; skip the visible bottom-right 2KiB block
 texture_address:
   from r9
   add r14
   move r9,r0
   ldb (r9)
+  move r4,r0
+cached_texel:
+  move r0,r4
   bra plot_texel
   nop
 grass_texel:
+  iwt r10,#$ffff
   ibt r0,#1
 plot_texel:
   color
@@ -378,6 +396,7 @@ faces:
   save $807a,r0
   save $807c,r6
 next_face:
+  cache
   load r7,$807a
   ldw (r7)
   save $807e,r0
@@ -511,6 +530,7 @@ curb_axis_max:
   ibt r0,#1
   save $8f20,r0
 curb_child:
+  cache
   ; t = 0..2 in Q8; pairs are A->D and B->C.
   load r0,$8f20
   dec r0
@@ -545,6 +565,108 @@ curb_child:
     call curb_vertex
   .endrepeat
 draw_quad:
+  ; Trivial near/far acceptance avoids two Sutherland-Hodgman copies.
+  iwt r3,#$8804
+  iwt r7,#$7fff
+  iwt r8,#$8000
+  ibt r9,#4
+quad_depth:
+  ldw (r3)
+  cmp r7
+  bge quad_min
+  nop
+  move r7,r0
+quad_min:
+  cmp r8
+  blt quad_max
+  nop
+  move r8,r0
+quad_max:
+  with r3
+  add #6
+  dec r9
+  bne quad_depth
+  nop
+  iwt r0,#256
+  from r8
+  cmp r0
+  jlt child_done
+  iwt r0,#18433
+  from r7
+  cmp r0
+  jge child_done
+  save $80e0,r7
+  save $80e2,r8
+  ; A loose screen cone (|x|,|y| <= z) safely rejects offscreen quads.
+  iwt r0,#30000
+  from r8
+  cmp r0
+  bge quad_cone_done
+  nop
+  from r8
+  .repeat 7
+    lsr
+  .endrepeat
+  add r8
+  add #2
+  save $80e4,r0
+  not
+  inc r0
+  save $80e6,r0
+  iwt r10,#$8800
+quad_axis:
+  move r3,r10
+  iwt r7,#$7fff
+  iwt r8,#$8000
+  ibt r9,#4
+quad_axis_corner:
+  ldw (r3)
+  cmp r7
+  bge quad_axis_min
+  nop
+  move r7,r0
+quad_axis_min:
+  cmp r8
+  blt quad_axis_max
+  nop
+  move r8,r0
+quad_axis_max:
+  with r3
+  add #6
+  dec r9
+  bne quad_axis_corner
+  nop
+  load r0,$80e4
+  from r7
+  cmp r0
+  jge child_done
+  load r0,$80e6
+  from r8
+  cmp r0
+  jlt child_done
+  add2 r10
+  iwt r0,#$8804
+  from r10
+  cmp r0
+  blt quad_axis
+  nop
+quad_cone_done:
+  load r7,$80e0
+  load r8,$80e2
+  iwt r0,#256
+  from r7
+  cmp r0
+  blt clip_quad
+  nop
+  iwt r0,#18433
+  from r8
+  cmp r0
+  bge clip_quad
+  nop
+  ibt r0,#4
+  save $806a,r0
+  jump project_quad
+clip_quad:
   iwt r0,#$8800
   save $8064,r0
   iwt r0,#$8840
@@ -573,6 +695,7 @@ draw_quad:
   load r0,$806a
   sub #3
   jlt child_done
+project_quad:
   call project_polygon
   call raster_polygon
 child_done:
@@ -599,19 +722,34 @@ faces_done:
   jmp r11
   nop
 
-; Interpolate a camera-space vertex with a shared endpoint and integer t/2.
+; Two curb pieces need only endpoints or an exact floor midpoint.
 curb_vertex:
-  save $8f24,r11
+  load r0,$8f22
+  sub #0
+  beq curb_endpoint
+  nop
+  iwt r6,#256
+  cmp r6
+  bne curb_midpoint
+  nop
+  move r7,r9
+curb_endpoint:
+  .repeat 3
+    ldw (r7)
+    stw (r8)
+    add2 r7
+    add2 r8
+  .endrepeat
+  jmp r11
+  nop
+curb_midpoint:
   ibt r10,#3
 curb_component:
   ldw (r7)
-  save $8f26,r0
   move r6,r0
   ldw (r9)
   sub r6
-  load r6,$8f22
-  call mul8
-  load r6,$8f26
+  asr
   add r6
   stw (r8)
   add2 r7
@@ -620,7 +758,6 @@ curb_component:
   dec r10
   bne curb_component
   nop
-  load r11,$8f24
   jmp r11
   nop
 
@@ -820,11 +957,64 @@ project_vertex:
   move r3,r0
   ldw (r3)
   save $80a2,r0
+  move r6,r0
+  ldw (r7)
+  xor r6
+  .repeat 4
+    lsr
+  .endrepeat
+  and #7
+  move r6,r0
+  add r0
+  add r6
+  add r0
+  add r0
+  iwt r6,#$8f90
+  add r6
+  move r10,r0
+  save $80e8,r10
+  move r3,r7
+  ibt r12,#3
+  iwt r13,#cache_compare
+cache_compare:
+  ldw (r3)
+  move r6,r0
+  ldw (r10)
+  cmp r6
+  bne cache_miss
+  nop
+  add2 r3
+  inc r10
+  loop
+  inc r10
+  ; Camera-space coordinates match exactly, so projection is identical.
+  ldw (r10)
+  stw (r8)
+  add2 r8
+  add2 r10
+  ldw (r10)
+  stw (r8)
+  add2 r8
+  with r7
+  add #6
+  bra projected_vertex
+  nop
+cache_miss:
+  load r10,$80e8
+  move r3,r7
+  .repeat 3
+    ldw (r3)
+    stw (r10)
+    add2 r3
+    add2 r10
+  .endrepeat
   ldw (r7)
   call project_coord
   iwt r6,#128
   add r6
   stw (r8)
+  stw (r10)
+  add2 r10
   add2 r7
   add2 r8
   ldw (r7)
@@ -832,12 +1022,16 @@ project_vertex:
   iwt r6,#96
   add r6
   stw (r8)
+  stw (r10)
   add2 r7
   add2 r7
   add2 r8
+projected_vertex:
   dec r9
-  bne project_vertex
+  beq projected_polygon
   nop
+  jump project_vertex
+projected_polygon:
   load r11,$80a0
   jmp r11
   nop

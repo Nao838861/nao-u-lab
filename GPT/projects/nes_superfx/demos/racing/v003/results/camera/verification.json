@@ -3,11 +3,11 @@
     {
       "ticks": 1001,
       "camera_checks": 1001,
-      "max_displayed_yaw_units": 2412,
-      "capture_tick": 663,
+      "max_displayed_yaw_units": 2394,
+      "capture_tick": 664,
       "mode": 0,
       "physics_ticks_identical": 1000,
-      "max_displayed_yaw_degrees": 13.25
+      "max_displayed_yaw_degrees": 13.15
     },
     {
       "ticks": 1001,
@@ -19,5 +19,5 @@
       "max_displayed_yaw_degrees": 7.57
     }
   ],
-  "rom_sha256": "1265e03be18ed3d334e29a8b3bfc25f12d50978fcd00bba8a8e19c41a27a57fc"
+  "rom_sha256": "ccd824e3cf64e7fa6254b12015e6d2634e58a4b013c222977ab480891b82eb2d"
 }

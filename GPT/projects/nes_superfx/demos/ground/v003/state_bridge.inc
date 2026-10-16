@@ -213,6 +213,61 @@ convert_direction:
 
 ; floor(back Q7 * signed direction Q8 / 256), using a full signed product.
 camera_offset:
+.ifdef RACING_FAST_OFFSETS
+  ; Racing cameras use back Q7 = $0000/$0500/$0900/$0D00.
+  ; Product / 256 is exactly coefficient * 0/5/9/13, including negatives.
+  lda #0
+  sta product
+  sta product+3
+  lda back+1
+  bne offset_nonzero
+  sta product+1
+  sta product+2
+  rts
+offset_nonzero:
+  lda $6000,x
+  sta mcand
+  sta product+1
+  lda $6001,x
+  sta mcand+1
+  sta product+2
+  asl product+1
+  rol product+2
+  asl product+1
+  rol product+2
+  lda back+1
+  cmp #5
+  beq offset_add_original
+  lda product+1
+  sta multiplier
+  lda product+2
+  sta multiplier+1
+  asl product+1
+  rol product+2
+  lda back+1
+  cmp #9
+  beq offset_add_original
+  clc
+  lda product+1
+  adc multiplier
+  sta product+1
+  lda product+2
+  adc multiplier+1
+  sta product+2
+offset_add_original:
+  clc
+  lda product+1
+  adc mcand
+  sta product+1
+  lda product+2
+  adc mcand+1
+  sta product+2
+  bpl offset_done
+  lda #$ff
+  sta product+3
+offset_done:
+  rts
+.else
   lda $6000,x
   sta multiplier
   lda $6001,x
@@ -278,3 +333,4 @@ multiply_loop:
   sbc product+3
   sta product+3
 : rts
+.endif

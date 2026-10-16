@@ -1,0 +1,8 @@
+{
+  "exact_pose_cases": 5120,
+  "directions": 1024,
+  "views": 4,
+  "random_cases": 1024,
+  "cpu_cycles_min": 3063,
+  "cpu_cycles_max": 3652
+}

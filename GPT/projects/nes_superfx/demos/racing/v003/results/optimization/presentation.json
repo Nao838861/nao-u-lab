@@ -1,0 +1,91 @@
+{
+  "clock_hz": 50000000,
+  "sample_frames_per_view": 120,
+  "before_fps": [
+    15.0247,
+    15.0247,
+    15.0247,
+    12.01976,
+    15.0247,
+    15.0247,
+    15.0247,
+    12.01976
+  ],
+  "after_fps": [
+    20.032933333333,
+    20.032933333333,
+    20.032933333333,
+    15.0247,
+    20.032933333333,
+    19.53211,
+    20.032933333333,
+    15.0247
+  ],
+  "scope": "spawn, views 0..3 for polygon then texture; presentation including CPU/NMI wait",
+  "cpu_phase_median_ms": [
+    {
+      "ground": 0,
+      "view": 0,
+      "prepare": 2.871,
+      "gsu_wait": 30.118,
+      "hud": 0.02,
+      "present_wait": 16.909
+    },
+    {
+      "ground": 0,
+      "view": 1,
+      "prepare": 2.928,
+      "gsu_wait": 31.652,
+      "hud": 0.02,
+      "present_wait": 15.317
+    },
+    {
+      "ground": 0,
+      "view": 2,
+      "prepare": 2.924,
+      "gsu_wait": 33.955,
+      "hud": 0.02,
+      "present_wait": 13.021
+    },
+    {
+      "ground": 0,
+      "view": 3,
+      "prepare": 2.687,
+      "gsu_wait": 50.777,
+      "hud": 0.02,
+      "present_wait": 13.073
+    },
+    {
+      "ground": 1,
+      "view": 0,
+      "prepare": 2.871,
+      "gsu_wait": 30.575,
+      "hud": 0.02,
+      "present_wait": 16.451
+    },
+    {
+      "ground": 1,
+      "view": 1,
+      "prepare": 2.928,
+      "gsu_wait": 35.629,
+      "hud": 0.02,
+      "present_wait": 11.341
+    },
+    {
+      "ground": 1,
+      "view": 2,
+      "prepare": 2.924,
+      "gsu_wait": 39.712,
+      "hud": 0.02,
+      "present_wait": 7.262
+    },
+    {
+      "ground": 1,
+      "view": 3,
+      "prepare": 2.687,
+      "gsu_wait": 52.93,
+      "hud": 0.02,
+      "present_wait": 10.922
+    }
+  ]
+}

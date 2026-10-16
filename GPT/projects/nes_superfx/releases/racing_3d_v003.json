@@ -1,7 +1,7 @@
 {
   "version": "003",
   "rom": "GSU_MMC5Racing3D_v003.nes",
-  "rom_sha256": "1265e03be18ed3d334e29a8b3bfc25f12d50978fcd00bba8a8e19c41a27a57fc",
+  "rom_sha256": "ccd824e3cf64e7fa6254b12015e6d2634e58a4b013c222977ab480891b82eb2d",
   "base_sha256": "62fb6b217380a8fbd8738f8a8d8dfe03f70e8fff1407b528e74b41fa2ced6ccc",
   "straight_segments": [
     2,

@@ -19,6 +19,7 @@ def main():
     original=bytes(rom)
     for name in ['camera.bin','physics_grip.bin','physics_drift.bin','cpu.cfg']:
         shutil.copy2(base/name,OUT/name)
+    assert [struct.unpack_from('<h',(OUT/'camera.bin').read_bytes(),i*8)[0] for i in range(4)]==[0,1280,2304,3328]
     for i,horizon in enumerate([88,72,56,0]):
         commands=[(0,0x2800,255,0),(0x3000,0x800,255,0)]
         if horizon:
@@ -40,7 +41,7 @@ def main():
     assert hashlib.sha256((include/'casfx.inc').read_bytes()).hexdigest()==CASFX_HASH
     (OUT/'gsu.cfg').write_text('MEMORY {G:start=$9000,size=$1000,file=%O,fill=yes,fillval=$01;} SEGMENTS {GSU:load=G,type=ro,align=$200;}')
     subprocess.run([str(a.cc65_bin/'ca65'),'-g','-I',str(include),'-I',str(OUT),str(ROOT/'demos/racing/v003/gsu.s'),'-o',str(OUT/'gsu.o')],check=True)
-    subprocess.run([str(a.cc65_bin/'ld65'),'-C',str(OUT/'gsu.cfg'),str(OUT/'gsu.o'),'-o',str(OUT/'gsu.bin')],check=True)
+    subprocess.run([str(a.cc65_bin/'ld65'),'-C',str(OUT/'gsu.cfg'),str(OUT/'gsu.o'),'-o',str(OUT/'gsu.bin'),'-Ln',str(OUT/'gsu.lbl')],check=True)
     rings,meta=mmc5_course.road();ids=meta['selected_indices'];points=meta['source_centerline'];n=len(ids)
     # The reduced mesh keeps each curved section, and collapses straight runs.
     straight=[]

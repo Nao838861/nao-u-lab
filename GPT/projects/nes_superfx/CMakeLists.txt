@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 project(nesfx_probe LANGUAGES CXX)
+add_executable(nesfx_racing_profile src/racing_profile.cpp)
+target_compile_features(nesfx_racing_profile PRIVATE cxx_std_17)
+target_include_directories(nesfx_racing_profile PRIVATE build/generated src)
 add_executable(nesfx_ground_probe src/ground_probe.cpp)
 target_compile_features(nesfx_ground_probe PRIVATE cxx_std_17)
 target_include_directories(nesfx_ground_probe PRIVATE build/generated src)
