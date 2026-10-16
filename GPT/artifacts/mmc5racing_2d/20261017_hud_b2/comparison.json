@@ -1,0 +1,18 @@
+{
+  "drift": {
+    "frames": 1100,
+    "state_position_publication_exact": true,
+    "outside_map_pixels_exact": false,
+    "outside_changed_hud_pixels_exact": true,
+    "hud_b2": true,
+    "screenshots": 5
+  },
+  "grip": {
+    "frames": 1100,
+    "state_position_publication_exact": true,
+    "outside_map_pixels_exact": false,
+    "outside_changed_hud_pixels_exact": true,
+    "hud_b2": true,
+    "screenshots": 5
+  }
+}

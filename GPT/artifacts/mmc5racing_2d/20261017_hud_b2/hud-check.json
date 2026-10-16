@@ -1,0 +1,90 @@
+{
+  "passed": true,
+  "status_cases": [
+    {
+      "state": "lap-1",
+      "label_cycles": 298,
+      "hud_cycles_before": 620,
+      "hud_cycles_after": 620,
+      "status_sprites_before": 5,
+      "status_sprites_after": 5
+    },
+    {
+      "state": "lap-2",
+      "label_cycles": 298,
+      "hud_cycles_before": 620,
+      "hud_cycles_after": 620,
+      "status_sprites_before": 5,
+      "status_sprites_after": 5
+    },
+    {
+      "state": "lap-3",
+      "label_cycles": 298,
+      "hud_cycles_before": 620,
+      "hud_cycles_after": 620,
+      "status_sprites_before": 5,
+      "status_sprites_after": 5
+    },
+    {
+      "state": "lap-4",
+      "label_cycles": 298,
+      "hud_cycles_before": 620,
+      "hud_cycles_after": 620,
+      "status_sprites_before": 5,
+      "status_sprites_after": 5
+    },
+    {
+      "state": "lap-5",
+      "label_cycles": 298,
+      "hud_cycles_before": 620,
+      "hud_cycles_after": 620,
+      "status_sprites_before": 5,
+      "status_sprites_after": 5
+    },
+    {
+      "state": "lap-clamp",
+      "label_cycles": 303,
+      "hud_cycles_before": 620,
+      "hud_cycles_after": 620,
+      "status_sprites_before": 5,
+      "status_sprites_after": 5
+    },
+    {
+      "state": "bad-lap",
+      "label_cycles": 287,
+      "hud_cycles_before": 621,
+      "hud_cycles_after": 617,
+      "status_sprites_before": 6,
+      "status_sprites_after": 4
+    },
+    {
+      "state": "go",
+      "label_cycles": 249,
+      "hud_cycles_before": 613,
+      "hud_cycles_after": 611,
+      "status_sprites_before": 2,
+      "status_sprites_after": 1
+    },
+    {
+      "state": "goal-on",
+      "label_cycles": 252,
+      "hud_cycles_before": 617,
+      "hud_cycles_after": 613,
+      "status_sprites_before": 4,
+      "status_sprites_after": 2
+    },
+    {
+      "state": "goal-off",
+      "label_cycles": 226,
+      "hud_cycles_before": 609,
+      "hud_cycles_after": 609,
+      "status_sprites_before": 0,
+      "status_sprites_after": 0
+    }
+  ],
+  "minute_cases": 22,
+  "clock_digits_exact": true,
+  "clock_captions_removed": true,
+  "no_additional_status_sprites": true,
+  "no_additional_runtime_cycles": true
+}
