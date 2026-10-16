@@ -1,4 +1,4 @@
-MMC5Racing Web（2026年10月16日取得、e5f4e67）
+MMC5Racing Web（2026年10月16日更新、05af9fa）
 
 同じフォルダーの play_mmc5racing_web.cmd をダブルクリックしてください。
 ローカルサーバーが起動し、標準ブラウザーで http://127.0.0.1:8066/ を開きます。
@@ -16,3 +16,9 @@ PC再起動後も同じcmdで起動できます。プレイにNode.jsは不要�
 本体：.tmp\MMC5RacingWeb（このフォルダーを消すと再取得が必要です）
 itch.io配布用：.tmp\MMC5RacingWeb\release\MMC5RacingWeb-itch.zip
 itch.ioへのアップロードは未実施です。
+
+タイム・ゴーストはGRIP/DRIFT別に自動保存します。
+リプレイの収録・タイム横の再生ボタンも実装済みです。
+ただし本番ランキングへのリプレイ対応の反映はCloudflare認証待ちです。
+finish_mmc5racing_replay.cmd を実行すると、認証画面を開き、認証後に本番反映と動作確認を進めます。
+今後、2D版更新で互換性が切れた場合は全リプレイを削除し、タイム記録は残します。
