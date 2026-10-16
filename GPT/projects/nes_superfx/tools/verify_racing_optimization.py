@@ -22,13 +22,13 @@ def main():
         labels={n:int(v,16) for v,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',z.read('gsu.lbl').decode())}
     code=(ROOT/'build/racing/v003/gsu.bin').read_bytes()
     after_labels={n:int(v,16) for v,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(ROOT/'build/racing/v003/gsu.lbl').read_text())}
-    rom=(ROOT/'releases/GSU_MMC5Racing3D_v003.nes').read_bytes();mesh=rom[16+8192:16+16384]
     initial=[];worst=[];count=0
     def compare(data,label):
         nonlocal count
         before,old=run(a.probe,data,'before')
         patched=bytearray(data);patched[0x9000:0xa000]=code
-        for lo,hi in [(0x20,0x22),(0x2a,0x2c),(0x300,0x600)]:patched[0x8000+lo:0x8000+hi]=mesh[lo:hi]
+        # Isolate GSU code optimization on the frozen original geometry.
+        # The intentionally different merged mesh is checked by verify_racing_road_merge.py.
         after,new=run(a.probe,patched,'after')
         if old!=new:
             (OUT/'failed-before.bin').write_bytes(data);(OUT/'failed-after.bin').write_bytes(patched)
@@ -54,7 +54,7 @@ def main():
                 compare(data,f'route-{mode}-{view}-{phase}')
             print(f'Compared {count} frames',flush=True)
     dst=ROOT/'demos/racing/v003/results/optimization';dst.mkdir(exist_ok=True)
-    report={'identical_framebuffers':count,'clock_hz':50000000,'scope':'8 emulator snapshots + 64 course poses x 4 views x 2 ground modes; body-camera yaw offsets -22.5/0/+22.5 degrees','initial':initial,'worst_relative_cost':sorted(worst,reverse=True)[:8]}
+    report={'identical_framebuffers':count,'clock_hz':50000000,'scope':'GSU code only, frozen pre-merge geometry; 8 emulator snapshots + 64 course poses x 4 views x 2 ground modes; body-camera yaw offsets -22.5/0/+22.5 degrees','initial':initial,'worst_relative_cost':sorted(worst,reverse=True)[:8]}
     (dst/'verification.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({'identical':count,'initial_ms':[r['after_ms'] for r in initial]}))
 
 if __name__=='__main__':main()

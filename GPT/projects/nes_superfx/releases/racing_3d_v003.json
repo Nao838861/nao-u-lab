@@ -1,7 +1,7 @@
 {
   "version": "003",
   "rom": "GSU_MMC5Racing3D_v003.nes",
-  "rom_sha256": "ccd824e3cf64e7fa6254b12015e6d2634e58a4b013c222977ab480891b82eb2d",
+  "rom_sha256": "4ebdce201a6ed8ab9d6b7062e5ff1b22397e38668381d5f1a61127e209c2f506",
   "base_sha256": "62fb6b217380a8fbd8738f8a8d8dfe03f70e8fff1407b528e74b41fa2ced6ccc",
   "straight_segments": [
     2,
@@ -10,6 +10,13 @@
     13,
     18
   ],
+  "road_geometry": {
+    "merged_straights": 5,
+    "removed_faces": 10,
+    "input_faces_including_car": 52,
+    "width": "original outer vertices",
+    "curves": "full-width road beneath separate red/white curbs"
+  },
   "edge_materials": [
     48,
     48,

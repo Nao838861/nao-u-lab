@@ -58,6 +58,19 @@ def main():
         for edge in [1,2]:
             for i,c in enumerate(colors):struct.pack_into('<H',rom,at+0x300+(edge*n+i)*12,c)
         for face in range(5):struct.pack_into('<H',rom,at+0x300+(3*n+face)*12,0x20 if face==3 else 0)
+        # Merge each straight's three gray faces using the existing outer vertices.
+        # Extend curved road faces beneath the curbs too, so every road join
+        # shares the same two endpoints instead of leaving raster T-junctions.
+        faces=[list(struct.unpack_from('<6H',rom,at+0x300+i*12)) for i in range(3*n+5)]
+        for i in range(n):
+            j=(i+1)%n
+            faces[i][2:]=[0x8600+k*6 for k in [i,3*n+i,3*n+j,j]]
+        compact=[face for i,face in enumerate(faces) if not (n<=i<3*n and straight[i%n])]
+        assert len(compact)==len(faces)-2*sum(straight)
+        assert compact[-5:]==faces[-5:]
+        struct.pack_into('<H',rom,at+0x20,len(compact))
+        struct.pack_into('<H',rom,at+0x2a,0x8300+(len(compact)-5)*12)
+        rom[at+0x300:at+0x600]=b''.join(struct.pack('<6H',*face) for face in compact).ljust(0x300,b'\0')
         rom[at+0x1000:at+0x2000]=(OUT/'gsu.bin').read_bytes()
     # Apply the same segment materials to the alternate ground texture.
     tex=[]
@@ -85,6 +98,7 @@ def main():
     name='GSU_MMC5Racing3D_v003.nes';(ROOT/'releases'/name).write_bytes(rom);(OUT/name).write_bytes(rom)
     result={'version':'003','rom':name,'rom_sha256':hashlib.sha256(rom).hexdigest(),
             'base_sha256':hashlib.sha256(original).hexdigest(),'straight_segments':[i for i,s in enumerate(straight) if s],
+            'road_geometry':{'merged_straights':sum(straight),'removed_faces':2*sum(straight),'input_faces_including_car':len(compact),'width':'original outer vertices','curves':'full-width road beneath separate red/white curbs'},
             'edge_materials':colors,'curb_geometry':{'subdivisions':2,'colors':[0,3],'group_culling':'camera-space conservative AABB'},'palette':['red','green','gray','white'],'sky_palette':['shared red','green','white','blue'],
             'sky_rows':[88,72,56,0],'requires_sky_palette_extension':True,'camera_heading_source':'original bank113 velocity_heading $C2/$C3; independent of body $48/$49','rear_material':'GSU native checkerboard red/gray','trees':trees,
             'unchanged':'PRG banks 4..127 and CHR; physics and audio preserved'}

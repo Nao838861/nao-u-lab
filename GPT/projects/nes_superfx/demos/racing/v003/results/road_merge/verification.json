@@ -1,0 +1,184 @@
+{
+  "baseline_revision": "36d7bace9",
+  "clock_hz": 50000000,
+  "cases": 520,
+  "scope": "8 spawn snapshots + 64 course poses x 4 views x 2 ground modes",
+  "identical_frames": 262,
+  "max_changed_pixels": 105,
+  "initial": [
+    {
+      "case": "spawn-0",
+      "ground": 0,
+      "view": 0,
+      "before_clocks": 1394417,
+      "after_clocks": 1171099,
+      "before_ms": 27.888,
+      "after_ms": 23.422,
+      "changed_pixels": 5
+    },
+    {
+      "case": "spawn-1",
+      "ground": 0,
+      "view": 1,
+      "before_clocks": 1580535,
+      "after_clocks": 1350714,
+      "before_ms": 31.611,
+      "after_ms": 27.014,
+      "changed_pixels": 12
+    },
+    {
+      "case": "spawn-2",
+      "ground": 0,
+      "view": 2,
+      "before_clocks": 1695776,
+      "after_clocks": 1447954,
+      "before_ms": 33.916,
+      "after_ms": 28.959,
+      "changed_pixels": 8
+    },
+    {
+      "case": "spawn-3",
+      "ground": 0,
+      "view": 3,
+      "before_clocks": 2536911,
+      "after_clocks": 2259848,
+      "before_ms": 50.738,
+      "after_ms": 45.197,
+      "changed_pixels": 14
+    },
+    {
+      "case": "spawn-4",
+      "ground": 1,
+      "view": 0,
+      "before_clocks": 1526668,
+      "after_clocks": 1522908,
+      "before_ms": 30.533,
+      "after_ms": 30.458,
+      "changed_pixels": 0
+    },
+    {
+      "case": "spawn-5",
+      "ground": 1,
+      "view": 1,
+      "before_clocks": 1779408,
+      "after_clocks": 1775648,
+      "before_ms": 35.588,
+      "after_ms": 35.513,
+      "changed_pixels": 0
+    },
+    {
+      "case": "spawn-6",
+      "ground": 1,
+      "view": 2,
+      "before_clocks": 1983604,
+      "after_clocks": 1979844,
+      "before_ms": 39.672,
+      "after_ms": 39.597,
+      "changed_pixels": 0
+    },
+    {
+      "case": "spawn-7",
+      "ground": 1,
+      "view": 3,
+      "before_clocks": 2644510,
+      "after_clocks": 2640750,
+      "before_ms": 52.89,
+      "after_ms": 52.815,
+      "changed_pixels": 0
+    }
+  ],
+  "largest_differences": [
+    {
+      "case": "route-0-2-24",
+      "ground": 0,
+      "view": 2,
+      "before_clocks": 2219455,
+      "after_clocks": 2143945,
+      "before_ms": 44.389,
+      "after_ms": 42.879,
+      "changed_pixels": 105
+    },
+    {
+      "case": "route-0-0-52",
+      "ground": 0,
+      "view": 0,
+      "before_clocks": 1103338,
+      "after_clocks": 1102163,
+      "before_ms": 22.067,
+      "after_ms": 22.043,
+      "changed_pixels": 100
+    },
+    {
+      "case": "route-0-0-41",
+      "ground": 0,
+      "view": 0,
+      "before_clocks": 1960016,
+      "after_clocks": 1752116,
+      "before_ms": 39.2,
+      "after_ms": 35.042,
+      "changed_pixels": 94
+    },
+    {
+      "case": "route-0-2-54",
+      "ground": 0,
+      "view": 2,
+      "before_clocks": 1887421,
+      "after_clocks": 1739321,
+      "before_ms": 37.748,
+      "after_ms": 34.786,
+      "changed_pixels": 75
+    },
+    {
+      "case": "route-0-3-59",
+      "ground": 0,
+      "view": 3,
+      "before_clocks": 2801426,
+      "after_clocks": 2536530,
+      "before_ms": 56.029,
+      "after_ms": 50.731,
+      "changed_pixels": 72
+    },
+    {
+      "case": "route-0-1-36",
+      "ground": 0,
+      "view": 1,
+      "before_clocks": 3329257,
+      "after_clocks": 3052636,
+      "before_ms": 66.585,
+      "after_ms": 61.053,
+      "changed_pixels": 66
+    },
+    {
+      "case": "route-0-1-24",
+      "ground": 0,
+      "view": 1,
+      "before_clocks": 1756136,
+      "after_clocks": 1718018,
+      "before_ms": 35.123,
+      "after_ms": 34.36,
+      "changed_pixels": 62
+    },
+    {
+      "case": "route-0-3-41",
+      "ground": 0,
+      "view": 3,
+      "before_clocks": 4100339,
+      "after_clocks": 3703543,
+      "before_ms": 82.007,
+      "after_ms": 74.071,
+      "changed_pixels": 62
+    }
+  ],
+  "polygon": {
+    "before_total_clocks": 585534983,
+    "after_total_clocks": 526342838,
+    "faster_cases": 259,
+    "worst_relative_cost": 1.0358657394129323
+  },
+  "texture": {
+    "before_total_clocks": 542274651,
+    "after_total_clocks": 541297051,
+    "faster_cases": 260,
+    "worst_relative_cost": 0.9988491192242084
+  }
+}
