@@ -31,9 +31,9 @@ def main():
     centers=[(round((x-320)/5*128),0,round((z-320)/5*128)) for x,z in positions]
     vertices=[]
     for cx,cy,cz in centers:
-        vertices.extend((cx+round(x*128),round(y*128),cz+round(z*128)) for y in [0,h] for x,z in [(-radius,-radius),(radius,-radius),(0,radius)])
+        vertices.extend((cx+round(x*128),round(y*128),cz+round(z*128)) for x,y,z in [(-radius,0,-radius),(radius,0,-radius),(0,0,radius),(0,h,0)])
     lines=['tree_centers:']+['.word '+','.join(str(c & 65535) for c in v) for v in centers]+['tree_vertices:']+['.word '+','.join(str(c & 65535) for c in v) for v in vertices]+['tree_faces:']
-    for color,ids in list(zip(trees['side_materials'],[[0,1,4,3],[1,2,5,4],[2,0,3,5]]))+[(1,[3,4,5,5])]:
+    for color,ids in zip(trees['side_materials'],[[0,1,3,3],[1,2,3,3],[2,0,3,3]]):
         lines.append('.word '+','.join(map(str,[color,1,*[0x8f70+6*i for i in ids]])))
     (OUT/'trees.inc').write_text('\n'.join(lines)+'\n')
     include=ROOT/'.cache/casfx'

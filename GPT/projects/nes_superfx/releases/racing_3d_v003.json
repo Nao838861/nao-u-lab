@@ -1,7 +1,7 @@
 {
   "version": "003",
   "rom": "GSU_MMC5Racing3D_v003.nes",
-  "rom_sha256": "b2cc7c4f7e3ab14dcfb5b897cbeb1384da592bc8ec18b5b60527c270ee941b6e",
+  "rom_sha256": "ebd3344393cdfdd4892284a91f01465866393a0f6b4007bee1ca29da48668be5",
   "base_sha256": "62fb6b217380a8fbd8738f8a8d8dfe03f70e8fff1407b528e74b41fa2ced6ccc",
   "straight_segments": [
     2,
@@ -101,7 +101,8 @@
       33,
       16,
       1
-    ]
+    ],
+    "geometry": "triangular pyramid"
   },
   "unchanged": "PRG banks 4..127 and CHR; physics and audio preserved"
 }

@@ -1327,7 +1327,7 @@ division_next:
   nop
   jmp r11
   nop
-; Stream scenery through a six-vertex scratch mesh, preserving road/car data.
+; Stream scenery through a four-vertex scratch mesh, preserving road/car data.
 tree_transform:
   save $8050,r11
   iwt r10,#256
@@ -1372,7 +1372,7 @@ keep_tree:
   iwt r0,#$8000
   stw (r3)
   .if TREE_GROUP_CULL
-  ; Base-centered sphere radius 4 world units encloses the entire prism.
+  ; Base-centered sphere radius 4 world units encloses the entire pyramid.
   iwt r0,#-512
   from r7
   cmp r0
@@ -1381,7 +1381,7 @@ keep_tree:
   from r7
   cmp r0
   jge tree_done
-  ; A radius-expanded cone rejects whole offscreen trees before six vertices.
+  ; A radius-expanded cone rejects whole offscreen trees before four vertices.
   from r7
   iwt r6,#1024
   add r6
@@ -1412,21 +1412,20 @@ tree_positive:
   nop
   .endif
   load r0,$8f34
-  add r0
-  add r0
   move r6,r0
   add r0
-  add r0
-  add r0
   add r6
+  add r0
+  add r0
+  add r0
   iwt r6,#tree_vertices
   add r6
   move r7,r0
   iwt r8,#$8f70
-  ibt r9,#6
+  ibt r9,#4
   call tree_transform
   iwt r0,#tree_faces
-  ibt r6,#4
+  ibt r6,#3
   call faces
 tree_done:
   load r0,$8f32
