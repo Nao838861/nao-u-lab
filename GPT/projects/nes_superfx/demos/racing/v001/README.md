@@ -48,3 +48,7 @@ CPU側の8KiB PRGバンク、128KiB WRAM、MMC5乗算を用意し、GSUレジス
 [source_snapshot.zip](source_snapshot.zip)に基準ROM、両モードの開始RAM、無変更原版の入力・状態列を保存した。`python projects/nes_superfx/tools/build_racing.py`で再ビルドできる。cc65は`D:\HomeBrew\CC65\bin`をPATHへ加える。初回はsnapshotをbuild先へ展開する。実行検証は`verify_racing.py --all`、操作は`verify_racing_controls.py`、最後に`package_racing.py`。専用コアは`build.py`と`setup_runtime.py`で更新する。
 
 原版からの新規採取は`capture_racing_baseline.py --rom <固定した原版ROM>`。現在のmainを自動選択して過去の検証基準を上書きしない。RAM全体と描画の採取データは[検証zip](results/verification.zip)、hashは[配布manifest](../../../releases/racing_3d_v001.json)に記録する。
+
+## 左右の対応
+
+左右反転の指摘を受け、GSUのカメラ横方向・車体の右方向・地面画像の走査方向を修正した。元のXは東、Yは南で、北向きなら東が画面右になる。物理や入力を変えて合わせず、描画座標の基準を直している。[方位と左右の実GSU検証](results/handedness_validation.json)、[4方向の目印](results/handedness.png)。東西南北×4視点×2方式の32画像で右の白・左の灰色が正しく出て、旧版へ同じ目印を渡すと左右逆を検出する。

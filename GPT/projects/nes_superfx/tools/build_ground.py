@@ -155,6 +155,7 @@ def build(version='v001'):
     rom=OUT/f'GSU_GroundCompare_{version}.nes'
     subprocess.run(['ld65','-C',str(ROOT/'demos/cube/v001/rom.cfg'),'-o',str(rom),'-Ln',str(OUT/'cpu.lbl'),str(OUT/'cpu.o')],check=True)
     config['font']=font
+    if version=='v003':config['source_right_axis']=True
     if metadata is not None:
         config.update(version=version,rom_name=rom.name,course=metadata,road_rings=rings,
                       own_first_vertex=len(rings[0])*4,ground_face_count=len(rings[0])*3)

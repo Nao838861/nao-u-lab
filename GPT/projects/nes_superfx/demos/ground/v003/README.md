@@ -60,3 +60,5 @@
 通常の25／50MHz × 4視点 × 2方式 × 64地点の1,024画像、実ROM128画像のPPU RGBと比較操作も通過。v001／v002の再生成ROMは既存配布hashと一致。[寸法・接続検証](results/state_validation.json)、[描画・性能](results/benchmark.json)、[検証アーカイブ](results/verification.zip)。描画速度は30fps未達の比較版として扱う。
 
 再生成は`build_ground.py --version v003`、`verify_mmc5_course.py --directory projects/nes_superfx/build/ground/v003`、`verify_mmc5_state.py --frontend`、`verify_ground.py --directory projects/nes_superfx/build/ground/v003 --mhz 25`と`--mhz 50`、最後に同じdirectoryを渡して`package_ground.py`。cc65は`D:\HomeBrew\CC65\bin`をPATHへ加える。旧版は`launch_ground.py --version v002`または`v001`で起動できる。
+
+左右反転の修正後は、北向きなら東が画面右になるようカメラ・車体・画像走査の向きを統一した。[元の方位に対する32画像の検証](results/handedness_validation.json)、[目印の画像](results/handedness.png)を追加。再生成では`verify_ground_handedness.py`もpackage前に実行する。v001/v002の過去の座標変換は履歴として保持する。

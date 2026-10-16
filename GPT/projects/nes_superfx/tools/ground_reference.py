@@ -6,11 +6,14 @@ def transform(config, view, phase):
     cx,cz,h,cs,sn,cp,sp,ox,oz,oc,os=config['views'][view]['poses'][phase]
     result=[]
     first=config.get('own_first_vertex',64)
+    east_right=config.get('source_right_axis',False)
     for i,(x,y,z) in enumerate(config['vertices']):
-        if first<=i<first+8:x,z=(x*oc//256+z*os//256+ox,z*oc//256-x*os//256+oz)
+        if first<=i<first+8:
+            x,z=(-(x*oc//256)+z*os//256+ox,z*oc//256+x*os//256+oz) if east_right else (x*oc//256+z*os//256+ox,z*oc//256-x*os//256+oz)
         x-=cx;z-=cz
         forward=x*sn//256+z*cs//256
-        result.append((x*cs//256-z*sn//256,(h-y)*cp//256-forward*sp//256,
+        horizontal=z*sn//256-x*cs//256 if east_right else x*cs//256-z*sn//256
+        result.append((horizontal,(h-y)*cp//256-forward*sp//256,
                        forward*cp//256+(h-y)*sp//256))
     return result
 
@@ -41,6 +44,10 @@ def reference(config,view,mode,phase):
             u=cx+forward*sn//256-half*cs//256+8192
             v=cz+forward*cs//256+half*sn//256+8192
             du=half*cs//32768;dv=-(half*sn//32768)
+            if config.get('source_right_axis',False):
+                u=cx+forward*sn//256+half*cs//256+8192
+                v=cz+forward*cs//256-half*sn//256+8192
+                du=-(half*cs//32768);dv=half*sn//32768
             for x in range(256):
                 a,b=u//256,v//256
                 pixels[y*256+x]=tex[b*64+a] if 0<=a<64 and 0<=b<64 else 1

@@ -49,6 +49,9 @@ def main():
         report['course_validation']=course
         for name in ['course_validation.json','course_overview.png']:shutil.copy2(OUT/name,results/name)
     if version=='v003':
+        orientation=json.loads((OUT/'handedness_validation.json').read_text());assert orientation['status']=='pass'
+        report['handedness_validation']=orientation
+        for name in ['handedness_validation.json','handedness.png']:shutil.copy2(OUT/name,results/name)
         state=json.loads((OUT/'state_validation.json').read_text())
         assert state['status']=='pass' and state['external_state_frontend']['status']=='pass'
         report['state_validation']=state
@@ -89,7 +92,7 @@ def main():
              ROOT/'src/BitmapBoard.hpp',ROOT/'src/bitmap_contract.cpp',ROOT/'src/NesBitmapFx.h',ROOT/'CMakeLists.txt']
     if version in ['v002','v003']:
         sources += [ROOT/'tools/mmc5_course.py',ROOT/'tools/verify_mmc5_course.py',ROOT/'demos/ground/v002/course.json',ROOT/'demos/ground/v002/course_reference.png']
-    if version=='v003':sources += [ROOT/'tools/mmc5_state.py',ROOT/'tools/verify_mmc5_state.py',DEMO/'state_bridge.inc',DEMO/'car_source.json']
+    if version=='v003':sources += [ROOT/'tools/mmc5_state.py',ROOT/'tools/verify_mmc5_state.py',ROOT/'tools/verify_ground_handedness.py',DEMO/'state_bridge.inc',DEMO/'car_source.json']
     manifest={'version':version.removeprefix('v'),'rom':release.relative_to(ROOT).as_posix(),'rom_sha256':sha(release),
               'default_gsu_mhz':50,'alternative_gsu_mhz':25,'mapper':'n8pro-gsu-abi2','viewport_mode':4,
               'texture':'64x64 byte indices; resident u-major; hidden RAM in both banks',

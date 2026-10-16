@@ -1,7 +1,7 @@
 {
   "version": "001",
   "rom": "releases/GSU_MMC5Racing3D_v001.nes",
-  "rom_sha256": "2d00aec4841dc9b59f5f0b116f4907e7222ab8f7304f72a5cd49df04b5f2012a",
+  "rom_sha256": "65b9b6f63e79e46750ff65bcb8b0a07d58b1fc0f4bdd80cdf6f30c91c1e701c7",
   "mapper": "n8pro-racing-gsu",
   "default_gsu_mhz": 50,
   "physics_tick_rate": "NTSC NMI, nominal60Hz independent of rendering",
@@ -37,29 +37,32 @@
     "tools/capture_racing_baseline.py": "37b3aaef68209b07adb2fdeb969a4fd08c437d61d1328240da8dcea183db7bfd",
     "tools/verify_racing.py": "19d3f02f67e535aa56874acd39bc414166ba8c174c728545267b88c031789e4b",
     "tools/verify_racing_controls.py": "b1872cebfbd108db230d7b2d7c145ec5db95a5a56bd1537d1403e3859dd610e3",
-    "tools/package_racing.py": "ec638900159a0187f4e7720bc2209048311fbebaa2965ce6ab8d9f0bb72aa992",
+    "tools/package_racing.py": "8b02cd979b3895e6a26baea5fc4cfd594d9e04ca3a730d60d5327c7a214e3e13",
     "tools/launch_racing.py": "b6f3f7283d1f30288489a66aa4fc4156bfa5fffc92c8f986152a70311be38099",
     "tools/launch.py": "9240dbd87abab067354115fe1fc2cbae4983c5c699893d070be1ee7eedd3206d",
     "tools/mmc5_course.py": "0c834952bd693447b90cd2a71edd591c839c0a540dda83479642d7018a49e6ba",
     "tools/mmc5_state.py": "067eddac82451c50b1dc28d52128d283d79d93e4dbb69cfea1dd6fd4ef344f4b",
-    "tools/build_ground.py": "49812db44a151ee190f9a8005a6f7e2a87a4a268031e3f6402a63d2cd33c377a",
-    "tools/ground_reference.py": "bb16a2017ae480d3d20ed9ccc364edf3b6fc965a9dc3d137fadc3f9ab6cc893d",
+    "tools/build_ground.py": "e07f5951f3ef6e3f627e6e2a753cf0571da635b7bd8b904178ba03f079321410",
+    "tools/ground_reference.py": "4f0dc216f15c42755ade9dea7ac04508c079f913b676e9d9247e1eb9c378568d",
     "demos/ground/v002/course.json": "bf16db6dbcfc88a83b4e7bdd1aa0eeb5b7e2dc4a7780b0bbe46e947f90c40e00",
-    "demos/ground/v003/gsu.s": "1bcd0675e3baf85e00a23c21c0e4b84338df8d2390b8a1ee6418f100963c8b45",
+    "demos/ground/v003/gsu.s": "86aadd1c595266ff9f7b127886b2954ba1b6887a1483451af8aef64c8f34afba",
     "demos/ground/v003/state_bridge.inc": "fb9065ae0268633868351dae784206e1e42f729de73b3f2c9bafa7cf0c9f6d0e",
-    "demos/racing/v001/source_snapshot.zip": "a4b49bdf444f810b6d1fc68c541f3aa44e28fad02fa5453a1e68354a1efb4e63"
+    "demos/racing/v001/source_snapshot.zip": "a4b49bdf444f810b6d1fc68c541f3aa44e28fad02fa5453a1e68354a1efb4e63",
+    "tools/verify_ground_handedness.py": "5b2621c4f432b5c37bd1402ca1559d65c1b0e0181f4f4f1d51d24f35bae0be4a"
   },
   "artifacts": {
     "demos/racing/v001/results/baseline.json": "8e2270fcbb9b3e2028e08cbc9882583f1cc76882ca98d4d432a15526104e9cd6",
-    "demos/racing/v001/results/drive_drift_50mhz.gif": "61dcd38dc231ee15a12eea347f848abea51e6ee1072233e9d94f2b5b694de606",
-    "demos/racing/v001/results/drive_grip_50mhz.gif": "44c53074d92f535e819c818e8e78a2a433112b2ade003855c86190a90b40fc9f",
-    "demos/racing/v001/results/driving.png": "41cfb579ad50b57f67d324ae05f3cb8d2404a523ee5d430da71324d1c62bd850",
-    "demos/racing/v001/results/verification.json": "6cfbd47e1306482bb746baaa95a5ef9dad93fbf474725d53a2c2ba4efa1345da",
-    "demos/racing/v001/results/verification.zip": "cac45220058b8a206cb218ce37998abd4121e5152cdc0b6b536f817f160cf86b"
+    "demos/racing/v001/results/drive_drift_50mhz.gif": "1599a9a24653f51a79e50a18c0191054cfa88e0c216575d5292ff3f2e1fe2584",
+    "demos/racing/v001/results/drive_grip_50mhz.gif": "b36484034456419ffbd42835a3b96e90ef3dce36ead282ae2800cbd22818646f",
+    "demos/racing/v001/results/driving.png": "441dbef593d60e19e2e8798eacedd206691dee56ca5f0cbe0994eb94b2824bd6",
+    "demos/racing/v001/results/handedness.png": "52931700630458da3d3e2e9b6bdbf7028662fc55940abcdcf67d5d27e74d407c",
+    "demos/racing/v001/results/handedness_validation.json": "a5081f82a2a8444b4d81fd485283278878c81bb81e1e18b59eacd3abcbd0013e",
+    "demos/racing/v001/results/verification.json": "459244311506cdd72e8b2742a2564079dff4e2eda72a57bea3d6eea4240fb8fe",
+    "demos/racing/v001/results/verification.zip": "47ba6aadadc3f70d6cbf531a36915e531b5f47784252fae48a83e09b1eb53c53"
   },
   "verification": {
     "status": "pass",
-    "rom_sha256": "2d00aec4841dc9b59f5f0b116f4907e7222ab8f7304f72a5cd49df04b5f2012a",
+    "rom_sha256": "65b9b6f63e79e46750ff65bcb8b0a07d58b1fc0f4bdd80cdf6f30c91c1e701c7",
     "original_native_replay": [
       {
         "mode": "grip",
@@ -252,6 +255,244 @@
         ]
       }
     ],
+    "handedness_validation": {
+      "status": "pass",
+      "frames": 32,
+      "gsu_sha256": "1dff46f10aeda91b658151504c327bf9dac6c040b8b8b1ce7cd78d74072a6727",
+      "source_axes": "X east, Y south; heading0 north clockwise",
+      "negative_control": {
+        "old_gsu_sha256": "20f4d72ccf7785cf95a3b64695ce2b897d636341bda6948f5559c3bbf06c073f",
+        "mirroring_detected": true,
+        "source_left_screen_x": 145.05882352941177,
+        "source_right_screen_x": 110.94117647058823
+      },
+      "cases": [
+        {
+          "heading": "north",
+          "view": 0,
+          "mode": 0,
+          "source_left_screen_x": 96.5,
+          "source_right_screen_x": 159.5
+        },
+        {
+          "heading": "north",
+          "view": 0,
+          "mode": 1,
+          "source_left_screen_x": 95.90178571428571,
+          "source_right_screen_x": 159.03571428571428
+        },
+        {
+          "heading": "north",
+          "view": 1,
+          "mode": 0,
+          "source_left_screen_x": 106.0,
+          "source_right_screen_x": 150.0
+        },
+        {
+          "heading": "north",
+          "view": 1,
+          "mode": 1,
+          "source_left_screen_x": 105.38679245283019,
+          "source_right_screen_x": 149.39622641509433
+        },
+        {
+          "heading": "north",
+          "view": 2,
+          "mode": 0,
+          "source_left_screen_x": 110.94117647058823,
+          "source_right_screen_x": 145.05882352941177
+        },
+        {
+          "heading": "north",
+          "view": 2,
+          "mode": 1,
+          "source_left_screen_x": 110.35526315789474,
+          "source_right_screen_x": 144.76315789473685
+        },
+        {
+          "heading": "north",
+          "view": 3,
+          "mode": 0,
+          "source_left_screen_x": 115.5,
+          "source_right_screen_x": 140.5
+        },
+        {
+          "heading": "north",
+          "view": 3,
+          "mode": 1,
+          "source_left_screen_x": 114.87037037037037,
+          "source_right_screen_x": 139.8846153846154
+        },
+        {
+          "heading": "east",
+          "view": 0,
+          "mode": 0,
+          "source_left_screen_x": 96.5,
+          "source_right_screen_x": 159.5
+        },
+        {
+          "heading": "east",
+          "view": 0,
+          "mode": 1,
+          "source_left_screen_x": 97.02212389380531,
+          "source_right_screen_x": 160.9646017699115
+        },
+        {
+          "heading": "east",
+          "view": 1,
+          "mode": 0,
+          "source_left_screen_x": 106.0,
+          "source_right_screen_x": 150.0
+        },
+        {
+          "heading": "east",
+          "view": 1,
+          "mode": 1,
+          "source_left_screen_x": 106.36111111111111,
+          "source_right_screen_x": 150.6320754716981
+        },
+        {
+          "heading": "east",
+          "view": 2,
+          "mode": 0,
+          "source_left_screen_x": 110.94117647058823,
+          "source_right_screen_x": 145.05882352941177
+        },
+        {
+          "heading": "east",
+          "view": 2,
+          "mode": 1,
+          "source_left_screen_x": 111.43589743589743,
+          "source_right_screen_x": 146.2077922077922
+        },
+        {
+          "heading": "east",
+          "view": 3,
+          "mode": 0,
+          "source_left_screen_x": 115.5,
+          "source_right_screen_x": 140.5
+        },
+        {
+          "heading": "east",
+          "view": 3,
+          "mode": 1,
+          "source_left_screen_x": 116.05454545454545,
+          "source_right_screen_x": 141.3148148148148
+        },
+        {
+          "heading": "south",
+          "view": 0,
+          "mode": 0,
+          "source_left_screen_x": 96.5,
+          "source_right_screen_x": 159.5
+        },
+        {
+          "heading": "south",
+          "view": 0,
+          "mode": 1,
+          "source_left_screen_x": 97.02212389380531,
+          "source_right_screen_x": 160.9646017699115
+        },
+        {
+          "heading": "south",
+          "view": 1,
+          "mode": 0,
+          "source_left_screen_x": 106.0,
+          "source_right_screen_x": 150.0
+        },
+        {
+          "heading": "south",
+          "view": 1,
+          "mode": 1,
+          "source_left_screen_x": 106.36111111111111,
+          "source_right_screen_x": 150.6320754716981
+        },
+        {
+          "heading": "south",
+          "view": 2,
+          "mode": 0,
+          "source_left_screen_x": 110.94117647058823,
+          "source_right_screen_x": 145.05882352941177
+        },
+        {
+          "heading": "south",
+          "view": 2,
+          "mode": 1,
+          "source_left_screen_x": 111.43589743589743,
+          "source_right_screen_x": 146.2077922077922
+        },
+        {
+          "heading": "south",
+          "view": 3,
+          "mode": 0,
+          "source_left_screen_x": 115.5,
+          "source_right_screen_x": 140.5
+        },
+        {
+          "heading": "south",
+          "view": 3,
+          "mode": 1,
+          "source_left_screen_x": 116.05454545454545,
+          "source_right_screen_x": 141.3148148148148
+        },
+        {
+          "heading": "west",
+          "view": 0,
+          "mode": 0,
+          "source_left_screen_x": 96.5,
+          "source_right_screen_x": 159.5
+        },
+        {
+          "heading": "west",
+          "view": 0,
+          "mode": 1,
+          "source_left_screen_x": 95.90178571428571,
+          "source_right_screen_x": 159.03571428571428
+        },
+        {
+          "heading": "west",
+          "view": 1,
+          "mode": 0,
+          "source_left_screen_x": 106.0,
+          "source_right_screen_x": 150.0
+        },
+        {
+          "heading": "west",
+          "view": 1,
+          "mode": 1,
+          "source_left_screen_x": 105.38679245283019,
+          "source_right_screen_x": 149.39622641509433
+        },
+        {
+          "heading": "west",
+          "view": 2,
+          "mode": 0,
+          "source_left_screen_x": 110.94117647058823,
+          "source_right_screen_x": 145.05882352941177
+        },
+        {
+          "heading": "west",
+          "view": 2,
+          "mode": 1,
+          "source_left_screen_x": 110.35526315789474,
+          "source_right_screen_x": 144.76315789473685
+        },
+        {
+          "heading": "west",
+          "view": 3,
+          "mode": 0,
+          "source_left_screen_x": 115.5,
+          "source_right_screen_x": 140.5
+        },
+        {
+          "heading": "west",
+          "view": 3,
+          "mode": 1,
+          "source_left_screen_x": 114.87037037037037,
+          "source_right_screen_x": 139.8846153846154
+        }
+      ]
+    },
     "controls": {
       "status": "pass",
       "held_edges": true,

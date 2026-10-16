@@ -161,7 +161,7 @@ setup_row:
   call mul8
   move r6,r0
   load r0,$805e
-  sub r6
+  add r6                    ; screen-left ray: +half*cos in east/south world
   iwt r6,#8192
   add r6
   move r7,r0
@@ -175,19 +175,20 @@ setup_row:
   load r6,$8010
   call mul8
   load r6,$805e
-  add r6
+  from r6
+  sub r0                    ; screen-left ray: -half*sin
   iwt r6,#8192
   add r6
   move r8,r0
   load r0,$805a
   load r6,$800e
   call mul15                 ; half-width*cos / 128 gives per-pixel increment
+  not
+  inc r0
   move r3,r0
   load r0,$805a
   load r6,$8010
   call mul15
-  not
-  inc r0
   move r5,r0
   load r11,$805c
   jmp r11
@@ -272,7 +273,7 @@ vertex:
   load r6,$801c
   call mul8
   load r6,$8046
-  add r6
+  sub r6                    ; body right is (-cos,+sin), not (+cos,-sin)
   load r6,$8016
   add r6
   save $8048,r0
@@ -284,7 +285,7 @@ vertex:
   load r6,$801a
   call mul8
   load r6,$8046
-  sub r6
+  add r6
   load r6,$8018
   add r6
   save $8044,r0
@@ -307,8 +308,7 @@ world_vertex:
   load r6,$8010
   call mul8
   load r6,$8046
-  from r6
-  sub r0
+  sub r6                    ; screen right = dz*sin - dx*cos
   stw (r8)
   add2 r8
   load r0,$8040

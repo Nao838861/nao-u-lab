@@ -12,6 +12,11 @@ def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
     results=DEMO/'results';results.mkdir(exist_ok=True)
     verification=json.loads((OUT/'verification.json').read_text());assert verification['status']=='pass'
+    orientation=ROOT/'build/ground/v003/handedness_validation.json'
+    orientation_report=json.loads(orientation.read_text());assert orientation_report['status']=='pass'
+    assert orientation_report['gsu_sha256']==sha(ROOT/'build/ground/v003/gsu.bin')
+    verification['handedness_validation']=orientation_report
+    for name in ['handedness_validation.json','handedness.png']:shutil.copy2(orientation.parent/name,results/name)
     rom=OUT/'GSU_MMC5Racing3D_v001.nes';assert verification['rom_sha256']==sha(rom)
     controls=json.loads((OUT/'controls/pass.json').read_text());assert controls['status']=='pass'
     config=json.loads((OUT/'config.json').read_text());total=0;timings=[]
@@ -60,6 +65,7 @@ def main():
         z.write(results/'verification.json','verification.json')
     release=ROOT/'releases'/rom.name;shutil.copy2(rom,release)
     sources=[DEMO/'cpu.s',ROOT/'src/NesRacingFx.h',ROOT/'src/BitmapBoard.hpp',ROOT/'tools/build.py',ROOT/'tools/build_racing.py',ROOT/'tools/capture_racing_baseline.py',ROOT/'tools/verify_racing.py',ROOT/'tools/verify_racing_controls.py',ROOT/'tools/package_racing.py',ROOT/'tools/launch_racing.py',ROOT/'tools/launch.py',ROOT/'tools/mmc5_course.py',ROOT/'tools/mmc5_state.py',ROOT/'tools/build_ground.py',ROOT/'tools/ground_reference.py',ROOT/'demos/ground/v002/course.json',ROOT/'demos/ground/v003/gsu.s',ROOT/'demos/ground/v003/state_bridge.inc',DEMO/'source_snapshot.zip']
+    sources.append(ROOT/'tools/verify_ground_handedness.py')
     manifest={'version':'001','rom':release.relative_to(ROOT).as_posix(),'rom_sha256':sha(release),'mapper':'n8pro-racing-gsu','default_gsu_mhz':50,'physics_tick_rate':'NTSC NMI, nominal60Hz independent of rendering','physics_baseline':json.loads((OUT/'baseline.json').read_text()),'scope':'Original self-car physics and road slowdown; free driving, scenery collisions and race lifecycle excluded','MesenCore.dll':sha(ROOT/'runtime/MesenCore.dll'),'source_hashes':{p.relative_to(ROOT).as_posix():sha(p) for p in sources},'artifacts':{p.relative_to(ROOT).as_posix():sha(p) for p in results.iterdir() if p.is_file()},'verification':verification}
     (ROOT/'releases/racing_3d_v001.json').write_text(json.dumps(manifest,indent=2)+'\n')
     print(json.dumps({'status':'pass','rom_sha256':sha(release),'physics_ticks':sum(r['ticks'] for r in verification['results']),'ppu_viewport_pixels_checked':total,'presentation':timings}))

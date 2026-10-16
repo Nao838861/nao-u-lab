@@ -1,0 +1,238 @@
+{
+  "status": "pass",
+  "frames": 32,
+  "gsu_sha256": "1dff46f10aeda91b658151504c327bf9dac6c040b8b8b1ce7cd78d74072a6727",
+  "source_axes": "X east, Y south; heading0 north clockwise",
+  "negative_control": {
+    "old_gsu_sha256": "20f4d72ccf7785cf95a3b64695ce2b897d636341bda6948f5559c3bbf06c073f",
+    "mirroring_detected": true,
+    "source_left_screen_x": 145.05882352941177,
+    "source_right_screen_x": 110.94117647058823
+  },
+  "cases": [
+    {
+      "heading": "north",
+      "view": 0,
+      "mode": 0,
+      "source_left_screen_x": 96.5,
+      "source_right_screen_x": 159.5
+    },
+    {
+      "heading": "north",
+      "view": 0,
+      "mode": 1,
+      "source_left_screen_x": 95.90178571428571,
+      "source_right_screen_x": 159.03571428571428
+    },
+    {
+      "heading": "north",
+      "view": 1,
+      "mode": 0,
+      "source_left_screen_x": 106.0,
+      "source_right_screen_x": 150.0
+    },
+    {
+      "heading": "north",
+      "view": 1,
+      "mode": 1,
+      "source_left_screen_x": 105.38679245283019,
+      "source_right_screen_x": 149.39622641509433
+    },
+    {
+      "heading": "north",
+      "view": 2,
+      "mode": 0,
+      "source_left_screen_x": 110.94117647058823,
+      "source_right_screen_x": 145.05882352941177
+    },
+    {
+      "heading": "north",
+      "view": 2,
+      "mode": 1,
+      "source_left_screen_x": 110.35526315789474,
+      "source_right_screen_x": 144.76315789473685
+    },
+    {
+      "heading": "north",
+      "view": 3,
+      "mode": 0,
+      "source_left_screen_x": 115.5,
+      "source_right_screen_x": 140.5
+    },
+    {
+      "heading": "north",
+      "view": 3,
+      "mode": 1,
+      "source_left_screen_x": 114.87037037037037,
+      "source_right_screen_x": 139.8846153846154
+    },
+    {
+      "heading": "east",
+      "view": 0,
+      "mode": 0,
+      "source_left_screen_x": 96.5,
+      "source_right_screen_x": 159.5
+    },
+    {
+      "heading": "east",
+      "view": 0,
+      "mode": 1,
+      "source_left_screen_x": 97.02212389380531,
+      "source_right_screen_x": 160.9646017699115
+    },
+    {
+      "heading": "east",
+      "view": 1,
+      "mode": 0,
+      "source_left_screen_x": 106.0,
+      "source_right_screen_x": 150.0
+    },
+    {
+      "heading": "east",
+      "view": 1,
+      "mode": 1,
+      "source_left_screen_x": 106.36111111111111,
+      "source_right_screen_x": 150.6320754716981
+    },
+    {
+      "heading": "east",
+      "view": 2,
+      "mode": 0,
+      "source_left_screen_x": 110.94117647058823,
+      "source_right_screen_x": 145.05882352941177
+    },
+    {
+      "heading": "east",
+      "view": 2,
+      "mode": 1,
+      "source_left_screen_x": 111.43589743589743,
+      "source_right_screen_x": 146.2077922077922
+    },
+    {
+      "heading": "east",
+      "view": 3,
+      "mode": 0,
+      "source_left_screen_x": 115.5,
+      "source_right_screen_x": 140.5
+    },
+    {
+      "heading": "east",
+      "view": 3,
+      "mode": 1,
+      "source_left_screen_x": 116.05454545454545,
+      "source_right_screen_x": 141.3148148148148
+    },
+    {
+      "heading": "south",
+      "view": 0,
+      "mode": 0,
+      "source_left_screen_x": 96.5,
+      "source_right_screen_x": 159.5
+    },
+    {
+      "heading": "south",
+      "view": 0,
+      "mode": 1,
+      "source_left_screen_x": 97.02212389380531,
+      "source_right_screen_x": 160.9646017699115
+    },
+    {
+      "heading": "south",
+      "view": 1,
+      "mode": 0,
+      "source_left_screen_x": 106.0,
+      "source_right_screen_x": 150.0
+    },
+    {
+      "heading": "south",
+      "view": 1,
+      "mode": 1,
+      "source_left_screen_x": 106.36111111111111,
+      "source_right_screen_x": 150.6320754716981
+    },
+    {
+      "heading": "south",
+      "view": 2,
+      "mode": 0,
+      "source_left_screen_x": 110.94117647058823,
+      "source_right_screen_x": 145.05882352941177
+    },
+    {
+      "heading": "south",
+      "view": 2,
+      "mode": 1,
+      "source_left_screen_x": 111.43589743589743,
+      "source_right_screen_x": 146.2077922077922
+    },
+    {
+      "heading": "south",
+      "view": 3,
+      "mode": 0,
+      "source_left_screen_x": 115.5,
+      "source_right_screen_x": 140.5
+    },
+    {
+      "heading": "south",
+      "view": 3,
+      "mode": 1,
+      "source_left_screen_x": 116.05454545454545,
+      "source_right_screen_x": 141.3148148148148
+    },
+    {
+      "heading": "west",
+      "view": 0,
+      "mode": 0,
+      "source_left_screen_x": 96.5,
+      "source_right_screen_x": 159.5
+    },
+    {
+      "heading": "west",
+      "view": 0,
+      "mode": 1,
+      "source_left_screen_x": 95.90178571428571,
+      "source_right_screen_x": 159.03571428571428
+    },
+    {
+      "heading": "west",
+      "view": 1,
+      "mode": 0,
+      "source_left_screen_x": 106.0,
+      "source_right_screen_x": 150.0
+    },
+    {
+      "heading": "west",
+      "view": 1,
+      "mode": 1,
+      "source_left_screen_x": 105.38679245283019,
+      "source_right_screen_x": 149.39622641509433
+    },
+    {
+      "heading": "west",
+      "view": 2,
+      "mode": 0,
+      "source_left_screen_x": 110.94117647058823,
+      "source_right_screen_x": 145.05882352941177
+    },
+    {
+      "heading": "west",
+      "view": 2,
+      "mode": 1,
+      "source_left_screen_x": 110.35526315789474,
+      "source_right_screen_x": 144.76315789473685
+    },
+    {
+      "heading": "west",
+      "view": 3,
+      "mode": 0,
+      "source_left_screen_x": 115.5,
+      "source_right_screen_x": 140.5
+    },
+    {
+      "heading": "west",
+      "view": 3,
+      "mode": 1,
+      "source_left_screen_x": 114.87037037037037,
+      "source_right_screen_x": 139.8846153846154
+    }
+  ]
+}
