@@ -1,0 +1,86 @@
+{
+  "base_sha256": "498235c9fc65b4fc1ae6e4d00d7238719b3af052f34ff5e52793da1fac839402",
+  "rom_sha256": "6bc5a7c017ef72c9dd96a18e838b9e9538ff2d4fceb9a5b19b6e234bb317c276",
+  "player": true,
+  "rect_at_fine_x_zero": [
+    192,
+    175,
+    32,
+    32
+  ],
+  "shared_fine_x_range": [
+    0,
+    7
+  ],
+  "world_scale": 20,
+  "chr_tiles": [
+    192,
+    62,
+    64,
+    65,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    190,
+    191,
+    254
+  ],
+  "patches": [
+    {
+      "bank": 108,
+      "address": "0xd400",
+      "bytes": 81
+    },
+    {
+      "bank": 127,
+      "address": "0xf3b6",
+      "bytes": 22
+    },
+    {
+      "bank": 127,
+      "address": "0xf0f6",
+      "bytes": 5
+    },
+    {
+      "bank": 127,
+      "address": "0xf18b",
+      "bytes": 20
+    },
+    {
+      "bank": 127,
+      "address": "0xf52e",
+      "bytes": 33
+    },
+    {
+      "bank": 127,
+      "address": "0xef2e",
+      "bytes": 22
+    },
+    {
+      "bank": 115,
+      "address": "0xc670",
+      "bytes": 107
+    },
+    {
+      "bank": 115,
+      "address": "0xc800",
+      "bytes": 3
+    },
+    {
+      "bank": 115,
+      "address": "0xd71d",
+      "bytes": 192
+    },
+    {
+      "bank": 109,
+      "address": "0x813c",
+      "bytes": 4
+    }
+  ],
+  "marker_oam_slot": 24,
+  "extra_ram": 0,
+  "extra_nmi_cycles": 0
+}
