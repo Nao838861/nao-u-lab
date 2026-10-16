@@ -124,7 +124,7 @@
   "visual_verification": {
     "version": "003",
     "rom": "GSU_MMC5Racing3D_v003.nes",
-    "rom_sha256": "14952d94e461602a88fea29b3e3107566ace07afde8fe4f70bb9913130bc0930",
+    "rom_sha256": "822b0b1b44f323b09514f90512a70eba95343e68ff9fd9765eb1ad713ac6c128",
     "base_sha256": "62fb6b217380a8fbd8738f8a8d8dfe03f70e8fff1407b528e74b41fa2ced6ccc",
     "straight_segments": [
       2,
@@ -136,23 +136,23 @@
     "edge_materials": [
       48,
       48,
-      1,
+      2,
       48,
       48,
       48,
-      1,
+      2,
       48,
       48,
       48,
-      1,
+      2,
       48,
       48,
-      1,
+      2,
       48,
       48,
       48,
       48,
-      1
+      2
     ],
     "palette": [
       "red",
@@ -263,5 +263,5 @@
       "scope": "spawn pose, four views; GSU render only, excludes CPU and display synchronization"
     }
   },
-  "visual_source_commit": "700221cc2"
+  "visual_source_commit": "f250af0e4"
 }
