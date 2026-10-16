@@ -124,7 +124,7 @@
   "visual_verification": {
     "version": "003",
     "rom": "GSU_MMC5Racing3D_v003.nes",
-    "rom_sha256": "0755b94042077d6843fe94f0b629025c4b5b9f5ed8a21cd8f21b7e251409fd1a",
+    "rom_sha256": "95257cc191c793e35265890883a58768e77831b212f40bb96b32b0e790d7cafc",
     "base_sha256": "62fb6b217380a8fbd8738f8a8d8dfe03f70e8fff1407b528e74b41fa2ced6ccc",
     "straight_segments": [
       2,
@@ -194,7 +194,7 @@
     "sky_pixels_verified": true,
     "rear_checkerboard_verified": true,
     "curb_geometry": {
-      "subdivisions": 8,
+      "subdivisions": 4,
       "colors": [
         0,
         3
@@ -204,33 +204,64 @@
     "kerb_comparison": {
       "identical_images": 8,
       "gsu_clocks_culled": [
+        2100965,
+        2332001,
+        2329066,
+        3752962,
+        1731283,
+        1927116,
+        2061686,
+        2503978
+      ],
+      "gsu_clocks_unculled": [
+        3896668,
+        4337648,
+        4302976,
+        5455861,
+        1716950,
+        1913293,
+        2047859,
+        2490177
+      ],
+      "polygon_savings_percent": [
+        46.1,
+        46.2,
+        45.9,
+        31.2
+      ],
+      "scope": "spawn pose, four views, both ground modes, 50MHz emulated GSU"
+    },
+    "kerb_length_comparison": {
+      "previous_subdivisions": 8,
+      "subdivisions": 4,
+      "previous_candidate_quads": 258,
+      "candidate_quads": 146,
+      "previous_clocks": [
         2806893,
         3150065,
         3193454,
-        5725112,
-        1730974,
-        1927228,
-        2061776,
-        2504089
+        5725112
       ],
-      "gsu_clocks_unculled": [
-        6435957,
-        7180808,
-        7172670,
-        9215807,
-        1717537,
-        1913769,
-        2048335,
-        2490652
+      "clocks": [
+        2100965,
+        2332001,
+        2329066,
+        3752962
       ],
-      "polygon_savings_percent": [
-        56.4,
-        56.1,
-        55.5,
-        37.9
+      "savings_percent": [
+        25.1,
+        26.0,
+        27.1,
+        34.4
       ],
-      "scope": "spawn pose, four views, both ground modes, 50MHz emulated GSU"
+      "gsu_render_ms_at_50mhz": [
+        42.02,
+        46.64,
+        46.58,
+        75.06
+      ],
+      "scope": "spawn pose, four views; GSU render only, excludes CPU and display synchronization"
     }
   },
-  "visual_source_commit": "1eead257d"
+  "visual_source_commit": "76a51e5be"
 }
