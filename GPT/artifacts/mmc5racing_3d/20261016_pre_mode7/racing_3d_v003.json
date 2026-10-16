@@ -1,0 +1,116 @@
+{
+  "version": "003",
+  "rom": "GSU_MMC5Racing3D_v003.nes",
+  "rom_sha256": "4ebdce201a6ed8ab9d6b7062e5ff1b22397e38668381d5f1a61127e209c2f506",
+  "base_sha256": "62fb6b217380a8fbd8738f8a8d8dfe03f70e8fff1407b528e74b41fa2ced6ccc",
+  "straight_segments": [
+    2,
+    6,
+    10,
+    13,
+    18
+  ],
+  "road_geometry": {
+    "merged_straights": 5,
+    "removed_faces": 10,
+    "input_faces_including_car": 52,
+    "width": "original outer vertices",
+    "curves": "full-width road beneath separate red/white curbs"
+  },
+  "edge_materials": [
+    48,
+    48,
+    2,
+    48,
+    48,
+    48,
+    2,
+    48,
+    48,
+    48,
+    2,
+    48,
+    48,
+    2,
+    48,
+    48,
+    48,
+    48,
+    2
+  ],
+  "curb_geometry": {
+    "subdivisions": 2,
+    "colors": [
+      0,
+      3
+    ],
+    "group_culling": "camera-space conservative AABB"
+  },
+  "palette": [
+    "red",
+    "green",
+    "gray",
+    "white"
+  ],
+  "sky_palette": [
+    "shared red",
+    "green",
+    "white",
+    "blue"
+  ],
+  "sky_rows": [
+    88,
+    72,
+    56,
+    0
+  ],
+  "requires_sky_palette_extension": true,
+  "camera_heading_source": "original bank113 velocity_heading $C2/$C3; independent of body $48/$49",
+  "rear_material": "GSU native checkerboard red/gray",
+  "trees": {
+    "source": "MMC5Racing/scenery/build.py TREES",
+    "source_positions": [
+      [
+        160,
+        170
+      ],
+      [
+        136,
+        328
+      ],
+      [
+        280,
+        436
+      ],
+      [
+        482,
+        502
+      ],
+      [
+        500,
+        320
+      ],
+      [
+        210,
+        43
+      ],
+      [
+        168,
+        470
+      ],
+      [
+        520,
+        630
+      ]
+    ],
+    "radius_source_px": 11,
+    "height_source_px": 11.25,
+    "side_materials": [
+      33,
+      16,
+      33
+    ],
+    "geometry": "triangular pyramid"
+  },
+  "unchanged": "PRG banks 4..127 and CHR; physics and audio preserved"
+}

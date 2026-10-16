@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-16",
+  "source_revision": "9085aaf23f49591e99af15356a6056d1783fd38c",
+  "source_tag": "mmc5racing-3d-v003-pre-mode7-20261016",
+  "source_branch": "codex/superfx-racing-colors-20261016",
+  "repository": "https://github.com/Nao838861/nao-u-lab.git",
+  "rom_sha256": "4ebdce201a6ed8ab9d6b7062e5ff1b22397e38668381d5f1a61127e209c2f506",
+  "video_original": "C:\\AI\\nao-u-lab\\GPT\\.tmp\\nesfx-audio-repo\\GPT\\projects\\nes_superfx\\runtime\\Avi\\GSU_MMC5Racing3D_v003.avi",
+  "video_metadata": {
+    "width": 256,
+    "height": 240,
+    "frames": 3922,
+    "microseconds_per_frame": 0,
+    "duration_seconds": 65.25919456210207,
+    "streams": 2,
+    "stream_scale": 1000000,
+    "stream_rate": 60098811,
+    "stream_frames": 3922,
+    "fps": 60.098811
+  },
+  "video_revision_association": "User supplied recording alongside this current revision; the AVI itself does not encode a source commit.",
+  "runtime_files_sha256": {
+    "Mesen.exe": "d2eb03c2590c648bf329f127ebcfefd70130e7690a9e2ccdba8616faea1fe96b",
+    "MesenCore.dll": "c03bb368a923479802a89a3d92a9e682dae7833cc91af478fa2a5aed51689b8b",
+    "libHarfBuzzSharp.dll": "eb76238c9e8e41d44b5a5b18167c4c5b39ca5db4277af5dbe92d730f0fc14a7d",
+    "libSkiaSharp.dll": "9a0d95e8caaa852c70d085af6a40a744242172ad9ea3fd6bc7599875a8a1dbcd",
+    "MesenNesDB.txt": "cff835b8a3d5b07d9d111382da6c49ccae150cdbaa9a0e49e15aa381af471307",
+    "Mesen-LICENSE.txt": "0b383d5a63da644f628d99c33976ea6487ed89aaa59f0b3257992deac1171e6b",
+    "runtime_manifest.json": "c8c5161c74a36fe2bcd0219597971f2686474376e22e4e9068369d40a0c21bb4"
+  },
+  "files": {
+    "GSU_MMC5Racing3D_v003.avi": {
+      "bytes": 14480876,
+      "sha256": "c94cba18ec6d5bdfa4735d08e8f611ae9758b22e5e41b35e7481e006cb39bc1d"
+    },
+    "GSU_MMC5Racing3D_v003.nes": {
+      "bytes": 1056784,
+      "sha256": "4ebdce201a6ed8ab9d6b7062e5ff1b22397e38668381d5f1a61127e209c2f506"
+    },
+    "racing_3d_v003.json": {
+      "bytes": 2009,
+      "sha256": "12572663319a5629eadb8f91172eaa29243f09fd5768e8cb2a7ba85e2978fef6"
+    },
+    "runtime.zip": {
+      "bytes": 40441777,
+      "sha256": "1b86522d96d9b90d29907d0d06c0509b3d62e06acc9ef5307e514e100433f43d"
+    },
+    "source.zip": {
+      "bytes": 64388108,
+      "sha256": "1b33cd0e50ed0f2043192c6570cd05a8c0280f5fe4bbc29eda12074a9af22f53"
+    },
+    "README.txt": {
+      "bytes": 1958,
+      "sha256": "64400c8ac8acec627abd26b0f0b33ef0bfc5fa9f1fb2e021b7010c95294e616c"
+    },
+    "design_log.md": {
+      "bytes": 7300,
+      "sha256": "6324183a74b35ae0a910ae3a74882a1e3fe3ca624455c9859f26f8761a377a3c"
+    }
+  }
+}
