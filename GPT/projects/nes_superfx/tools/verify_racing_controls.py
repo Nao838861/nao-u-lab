@@ -6,7 +6,7 @@ from native_lock import core_lock
 
 def main():
     global OUT
-    p=argparse.ArgumentParser();p.add_argument('--version',choices=['001','002'],default='001');args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--version',choices=['001','002','003'],default='001');args=p.parse_args()
     OUT=ROOT/f'build/racing/v{args.version}'
     lab={n:int(a,16) for a,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(OUT/'cpu.lbl').read_text())}
     out=OUT/'controls';out.mkdir(exist_ok=True)

@@ -3,7 +3,7 @@ import argparse,hashlib,json,subprocess,sys
 from build_ground import ROOT
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--gsu-mhz',type=int,choices=[25,50],default=50);p.add_argument('--version',choices=['001','002'],default='002');args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--gsu-mhz',type=int,choices=[25,50],default=50);p.add_argument('--version',choices=['001','002','003'],default='003');args=p.parse_args()
     rom=ROOT/f'releases/GSU_MMC5Racing3D_v{args.version}.nes'
     manifest=json.loads((ROOT/f'releases/racing_3d_v{args.version}.json').read_text())
     assert hashlib.sha256(rom.read_bytes()).hexdigest()==manifest['rom_sha256']
