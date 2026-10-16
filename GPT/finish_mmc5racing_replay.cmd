@@ -19,7 +19,7 @@ if "%~1"=="--check" (
 pushd "%MMC5_WEB%"
 set "ESBUILD_WORKER_THREADS=0"
 echo Sign in to the Cloudflare account that owns the MMC5Racing ranking.
-"%MMC5_NODE%" node_modules\wrangler\bin\wrangler.js login --scopes account:read user:read workers:write d1:write
+"%MMC5_NODE%" node_modules\wrangler\bin\wrangler.js login --scopes account:read user:read workers:write workers_scripts:write d1:write
 if errorlevel 1 goto failed
 python tools\deploy_ranking.py --node "%MMC5_NODE%"
 if errorlevel 1 goto failed
