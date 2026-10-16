@@ -26,6 +26,12 @@ python tools/verify_racing_colors.py --trees --results demos/racing/v003/results
 python tools/verify_racing_kerbs.py --trees --cc65-bin <cc65のbinフォルダー>
 ```
 
+## カメラと車体の方向
+
+走行時のNMIスナップショットでは、車体角度に `$48/$49`、カメラ角度に原版bank113 `$A000` が計算済みの `velocity_heading`（`$C2/$C3`）を使う。以前は両方に車体角度を格納していたため、滑っても自車の背面が常に正面に見えていた。元のカメラ追従処理は変更せず、その結果を3D描画へ渡す。3D投影では既存の1024方向変換を使うため、2Dの背景128方向量子化とは粒度が異なる。
+
+`tools/verify_racing_camera.py` は修正前ROM・ラベルを `build/racing/v003/camera-test/before.nes` と `before.lbl` に保存した状態で実行する。今回の比較元は `6f4d25503`。GRIP/DRIFT各1,000更新について `$40..$E9` の物理・カメラ状態が完全一致し、毎更新で車体／カメラ角度のスナップショットを原版の値と照合。音の更新数と表示faultも検査した。走行入力による角度差と確認画像は `results/camera/` に保存。
+
 ## 空の専用パレット
 
 道路・車のBGパレット0は赤・緑・グレー・白。空のBGパレット1は共通背景色の赤に加えて、緑・白・青を持つ。パレットRAM `$3F05/$3F06/$3F07` が `$1A/$30/$21`。現在の空領域は青で塗る。下段HUD背景はグレー。

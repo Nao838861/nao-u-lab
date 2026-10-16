@@ -2,7 +2,7 @@
 .macpack longbranch
 .export reset,nmi,sim_begin,sim_end,frame,updates,nmi_count,view,ground,drive_mode
 .export displayed_view,displayed_ground,displayed_tick,render_tick,front,stage,gsu_clocks
-.export audio_begin,audio_end,audio_ticks
+.export audio_begin,audio_end,audio_ticks,snapshot_ready
 audio_ticks=$0454
 .export original_state,external_state,state_error,render_from_mmc5_state
 .export desired_view,desired_ground,desired_mode,reset_request,physics_ticks,latest_state,present_ready
@@ -543,10 +543,16 @@ sim_end:
   bpl :-
   lda $48
   sta latest_state+6
-  sta latest_state+8
   lda $49
   sta latest_state+7
+  ; Bank113 $A000 already computed the original smoothed velocity camera.
+  ; Body and camera yaw must remain independent during drift.
+  lda $c2
+  sta latest_state+8
+  lda $c3
   sta latest_state+9
+snapshot_ready:
+
   lda physics_ticks
   sta latest_state+10
   lda physics_ticks+1

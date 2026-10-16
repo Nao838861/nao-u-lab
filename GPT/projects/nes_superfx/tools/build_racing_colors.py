@@ -85,7 +85,7 @@ def main():
     result={'version':'003','rom':name,'rom_sha256':hashlib.sha256(rom).hexdigest(),
             'base_sha256':hashlib.sha256(original).hexdigest(),'straight_segments':[i for i,s in enumerate(straight) if s],
             'edge_materials':colors,'curb_geometry':{'subdivisions':2,'colors':[0,3],'group_culling':'camera-space conservative AABB'},'palette':['red','green','gray','white'],'sky_palette':['shared red','green','white','blue'],
-            'sky_rows':[88,72,56,0],'requires_sky_palette_extension':True,'rear_material':'GSU native checkerboard red/gray','trees':trees,
+            'sky_rows':[88,72,56,0],'requires_sky_palette_extension':True,'camera_heading_source':'original bank113 velocity_heading $C2/$C3; independent of body $48/$49','rear_material':'GSU native checkerboard red/gray','trees':trees,
             'unchanged':'PRG banks 4..127 and CHR; physics and audio preserved'}
     (ROOT/'releases/racing_3d_v003.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))
 
