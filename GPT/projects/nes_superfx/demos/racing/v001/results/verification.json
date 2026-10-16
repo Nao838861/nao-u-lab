@@ -1,0 +1,276 @@
+{
+  "status": "pass",
+  "rom_sha256": "2d00aec4841dc9b59f5f0b116f4907e7222ab8f7304f72a5cd49df04b5f2012a",
+  "original_native_replay": [
+    {
+      "mode": "grip",
+      "native_original_ticks": 128,
+      "physical_fields": 167,
+      "status": "pass",
+      "executed_prg_banks": [
+        113,
+        115,
+        119,
+        122,
+        126,
+        127
+      ]
+    },
+    {
+      "mode": "drift",
+      "native_original_ticks": 128,
+      "physical_fields": 167,
+      "status": "pass",
+      "executed_prg_banks": [
+        113,
+        115,
+        119,
+        122,
+        126,
+        127
+      ]
+    }
+  ],
+  "results": [
+    {
+      "status": "pass",
+      "mode": "grip",
+      "mhz": 25,
+      "ground": 0,
+      "ticks": 1024,
+      "physics_fields": 167,
+      "physics_every_field": true,
+      "physics_cycles_max": 6772,
+      "offroad_ticks": 838,
+      "images_checked": 34,
+      "executed_original_banks": [
+        113,
+        115,
+        119,
+        122,
+        126,
+        127
+      ]
+    },
+    {
+      "status": "pass",
+      "mode": "grip",
+      "mhz": 25,
+      "ground": 1,
+      "ticks": 1024,
+      "physics_fields": 167,
+      "physics_every_field": true,
+      "physics_cycles_max": 6772,
+      "offroad_ticks": 838,
+      "images_checked": 31,
+      "executed_original_banks": [
+        113,
+        115,
+        119,
+        122,
+        126,
+        127
+      ]
+    },
+    {
+      "status": "pass",
+      "mode": "grip",
+      "mhz": 50,
+      "ground": 0,
+      "ticks": 1024,
+      "physics_fields": 167,
+      "physics_every_field": true,
+      "physics_cycles_max": 6772,
+      "offroad_ticks": 838,
+      "images_checked": 35,
+      "executed_original_banks": [
+        113,
+        115,
+        119,
+        122,
+        126,
+        127
+      ]
+    },
+    {
+      "status": "pass",
+      "mode": "grip",
+      "mhz": 50,
+      "ground": 1,
+      "ticks": 1024,
+      "physics_fields": 167,
+      "physics_every_field": true,
+      "physics_cycles_max": 6772,
+      "offroad_ticks": 838,
+      "images_checked": 32,
+      "executed_original_banks": [
+        113,
+        115,
+        119,
+        122,
+        126,
+        127
+      ]
+    },
+    {
+      "status": "pass",
+      "mode": "drift",
+      "mhz": 25,
+      "ground": 0,
+      "ticks": 1024,
+      "physics_fields": 167,
+      "physics_every_field": true,
+      "physics_cycles_max": 9519,
+      "offroad_ticks": 885,
+      "images_checked": 35,
+      "executed_original_banks": [
+        113,
+        115,
+        119,
+        122,
+        126,
+        127
+      ]
+    },
+    {
+      "status": "pass",
+      "mode": "drift",
+      "mhz": 25,
+      "ground": 1,
+      "ticks": 1024,
+      "physics_fields": 167,
+      "physics_every_field": true,
+      "physics_cycles_max": 9519,
+      "offroad_ticks": 885,
+      "images_checked": 31,
+      "executed_original_banks": [
+        113,
+        115,
+        119,
+        122,
+        126,
+        127
+      ]
+    },
+    {
+      "status": "pass",
+      "mode": "drift",
+      "mhz": 50,
+      "ground": 0,
+      "ticks": 1024,
+      "physics_fields": 167,
+      "physics_every_field": true,
+      "physics_cycles_max": 9519,
+      "offroad_ticks": 885,
+      "images_checked": 35,
+      "executed_original_banks": [
+        113,
+        115,
+        119,
+        122,
+        126,
+        127
+      ]
+    },
+    {
+      "status": "pass",
+      "mode": "drift",
+      "mhz": 50,
+      "ground": 1,
+      "ticks": 1024,
+      "physics_fields": 167,
+      "physics_every_field": true,
+      "physics_cycles_max": 9519,
+      "offroad_ticks": 885,
+      "images_checked": 32,
+      "executed_original_banks": [
+        113,
+        115,
+        119,
+        122,
+        126,
+        127
+      ]
+    }
+  ],
+  "controls": {
+    "status": "pass",
+    "held_edges": true,
+    "view_switch": true,
+    "ground_switch": true,
+    "mode_switch": true,
+    "start_reset": true,
+    "range_reset_recovery": true
+  },
+  "ppu_viewport_pixels_checked": 13025280,
+  "presentation_samples": [
+    {
+      "mode": "grip",
+      "mhz": 25,
+      "ground": 0,
+      "first_chase_samples_present_fields": [
+        3,
+        4
+      ]
+    },
+    {
+      "mode": "grip",
+      "mhz": 25,
+      "ground": 1,
+      "first_chase_samples_present_fields": [
+        5
+      ]
+    },
+    {
+      "mode": "grip",
+      "mhz": 50,
+      "ground": 0,
+      "first_chase_samples_present_fields": [
+        3,
+        4
+      ]
+    },
+    {
+      "mode": "grip",
+      "mhz": 50,
+      "ground": 1,
+      "first_chase_samples_present_fields": [
+        4
+      ]
+    },
+    {
+      "mode": "drift",
+      "mhz": 25,
+      "ground": 0,
+      "first_chase_samples_present_fields": [
+        3,
+        4
+      ]
+    },
+    {
+      "mode": "drift",
+      "mhz": 25,
+      "ground": 1,
+      "first_chase_samples_present_fields": [
+        5
+      ]
+    },
+    {
+      "mode": "drift",
+      "mhz": 50,
+      "ground": 0,
+      "first_chase_samples_present_fields": [
+        3,
+        4
+      ]
+    },
+    {
+      "mode": "drift",
+      "mhz": 50,
+      "ground": 1,
+      "first_chase_samples_present_fields": [
+        4
+      ]
+    }
+  ]
+}

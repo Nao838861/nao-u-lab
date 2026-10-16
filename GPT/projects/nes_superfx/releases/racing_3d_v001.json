@@ -1,0 +1,336 @@
+{
+  "version": "001",
+  "rom": "releases/GSU_MMC5Racing3D_v001.nes",
+  "rom_sha256": "2d00aec4841dc9b59f5f0b116f4907e7222ab8f7304f72a5cd49df04b5f2012a",
+  "mapper": "n8pro-racing-gsu",
+  "default_gsu_mhz": 50,
+  "physics_tick_rate": "NTSC NMI, nominal60Hz independent of rendering",
+  "physics_baseline": {
+    "rom_sha256": "be71757a0ef8844cd2306d8d07ffd8b8ff2e8eebe37cd3242b3e077de3ffb0cc",
+    "original_path": "D:\\HomeBrew\\MMC5Racing\\releases\\MMC5Racing_Results_136x184.nes",
+    "source_revision": "e8fa5f49b03aa0b421f8c81cdb23e89e742ddfee",
+    "simulation_entry": 63370,
+    "simulation_end": 63401,
+    "grip": {
+      "ticks": 128,
+      "deltas": [
+        1
+      ],
+      "initial_state_sha256": "b34e3f32709d9f2d33c90f7fca71c3dff7983304dcc47ae128074133cb110d26"
+    },
+    "drift": {
+      "ticks": 128,
+      "deltas": [
+        1
+      ],
+      "initial_state_sha256": "b34e3f32709d9f2d33c90f7fca71c3dff7983304dcc47ae128074133cb110d26"
+    }
+  },
+  "scope": "Original self-car physics and road slowdown; free driving, scenery collisions and race lifecycle excluded",
+  "MesenCore.dll": "327489552ed01e128938ee0e0ba34a9f0718a322f226311ee586acd79eef6122",
+  "source_hashes": {
+    "demos/racing/v001/cpu.s": "0f5d0d730e8ace93368a33686f2f39f755074428dac449ba4680d2820f1e482f",
+    "src/NesRacingFx.h": "fc79d3ec11f784792188d60c733ac79a4cd4d3e07ca50e8b0d338829645fe58c",
+    "src/BitmapBoard.hpp": "aecde10024a54c7b4928ffe443f754f1c879341a139f9f95d38364738a77dd21",
+    "tools/build.py": "43376b9945ce553ddf2680049a408ba29b27893866dfbcc7f1472e1906f01982",
+    "tools/build_racing.py": "a88157588d01cd9f080da806cde624dfb099386503aa3af2e116a76b6589ff3d",
+    "tools/capture_racing_baseline.py": "37b3aaef68209b07adb2fdeb969a4fd08c437d61d1328240da8dcea183db7bfd",
+    "tools/verify_racing.py": "19d3f02f67e535aa56874acd39bc414166ba8c174c728545267b88c031789e4b",
+    "tools/verify_racing_controls.py": "b1872cebfbd108db230d7b2d7c145ec5db95a5a56bd1537d1403e3859dd610e3",
+    "tools/package_racing.py": "ec638900159a0187f4e7720bc2209048311fbebaa2965ce6ab8d9f0bb72aa992",
+    "tools/launch_racing.py": "b6f3f7283d1f30288489a66aa4fc4156bfa5fffc92c8f986152a70311be38099",
+    "tools/launch.py": "9240dbd87abab067354115fe1fc2cbae4983c5c699893d070be1ee7eedd3206d",
+    "tools/mmc5_course.py": "0c834952bd693447b90cd2a71edd591c839c0a540dda83479642d7018a49e6ba",
+    "tools/mmc5_state.py": "067eddac82451c50b1dc28d52128d283d79d93e4dbb69cfea1dd6fd4ef344f4b",
+    "tools/build_ground.py": "49812db44a151ee190f9a8005a6f7e2a87a4a268031e3f6402a63d2cd33c377a",
+    "tools/ground_reference.py": "bb16a2017ae480d3d20ed9ccc364edf3b6fc965a9dc3d137fadc3f9ab6cc893d",
+    "demos/ground/v002/course.json": "bf16db6dbcfc88a83b4e7bdd1aa0eeb5b7e2dc4a7780b0bbe46e947f90c40e00",
+    "demos/ground/v003/gsu.s": "1bcd0675e3baf85e00a23c21c0e4b84338df8d2390b8a1ee6418f100963c8b45",
+    "demos/ground/v003/state_bridge.inc": "fb9065ae0268633868351dae784206e1e42f729de73b3f2c9bafa7cf0c9f6d0e",
+    "demos/racing/v001/source_snapshot.zip": "a4b49bdf444f810b6d1fc68c541f3aa44e28fad02fa5453a1e68354a1efb4e63"
+  },
+  "artifacts": {
+    "demos/racing/v001/results/baseline.json": "8e2270fcbb9b3e2028e08cbc9882583f1cc76882ca98d4d432a15526104e9cd6",
+    "demos/racing/v001/results/drive_drift_50mhz.gif": "61dcd38dc231ee15a12eea347f848abea51e6ee1072233e9d94f2b5b694de606",
+    "demos/racing/v001/results/drive_grip_50mhz.gif": "44c53074d92f535e819c818e8e78a2a433112b2ade003855c86190a90b40fc9f",
+    "demos/racing/v001/results/driving.png": "41cfb579ad50b57f67d324ae05f3cb8d2404a523ee5d430da71324d1c62bd850",
+    "demos/racing/v001/results/verification.json": "6cfbd47e1306482bb746baaa95a5ef9dad93fbf474725d53a2c2ba4efa1345da",
+    "demos/racing/v001/results/verification.zip": "cac45220058b8a206cb218ce37998abd4121e5152cdc0b6b536f817f160cf86b"
+  },
+  "verification": {
+    "status": "pass",
+    "rom_sha256": "2d00aec4841dc9b59f5f0b116f4907e7222ab8f7304f72a5cd49df04b5f2012a",
+    "original_native_replay": [
+      {
+        "mode": "grip",
+        "native_original_ticks": 128,
+        "physical_fields": 167,
+        "status": "pass",
+        "executed_prg_banks": [
+          113,
+          115,
+          119,
+          122,
+          126,
+          127
+        ]
+      },
+      {
+        "mode": "drift",
+        "native_original_ticks": 128,
+        "physical_fields": 167,
+        "status": "pass",
+        "executed_prg_banks": [
+          113,
+          115,
+          119,
+          122,
+          126,
+          127
+        ]
+      }
+    ],
+    "results": [
+      {
+        "status": "pass",
+        "mode": "grip",
+        "mhz": 25,
+        "ground": 0,
+        "ticks": 1024,
+        "physics_fields": 167,
+        "physics_every_field": true,
+        "physics_cycles_max": 6772,
+        "offroad_ticks": 838,
+        "images_checked": 34,
+        "executed_original_banks": [
+          113,
+          115,
+          119,
+          122,
+          126,
+          127
+        ]
+      },
+      {
+        "status": "pass",
+        "mode": "grip",
+        "mhz": 25,
+        "ground": 1,
+        "ticks": 1024,
+        "physics_fields": 167,
+        "physics_every_field": true,
+        "physics_cycles_max": 6772,
+        "offroad_ticks": 838,
+        "images_checked": 31,
+        "executed_original_banks": [
+          113,
+          115,
+          119,
+          122,
+          126,
+          127
+        ]
+      },
+      {
+        "status": "pass",
+        "mode": "grip",
+        "mhz": 50,
+        "ground": 0,
+        "ticks": 1024,
+        "physics_fields": 167,
+        "physics_every_field": true,
+        "physics_cycles_max": 6772,
+        "offroad_ticks": 838,
+        "images_checked": 35,
+        "executed_original_banks": [
+          113,
+          115,
+          119,
+          122,
+          126,
+          127
+        ]
+      },
+      {
+        "status": "pass",
+        "mode": "grip",
+        "mhz": 50,
+        "ground": 1,
+        "ticks": 1024,
+        "physics_fields": 167,
+        "physics_every_field": true,
+        "physics_cycles_max": 6772,
+        "offroad_ticks": 838,
+        "images_checked": 32,
+        "executed_original_banks": [
+          113,
+          115,
+          119,
+          122,
+          126,
+          127
+        ]
+      },
+      {
+        "status": "pass",
+        "mode": "drift",
+        "mhz": 25,
+        "ground": 0,
+        "ticks": 1024,
+        "physics_fields": 167,
+        "physics_every_field": true,
+        "physics_cycles_max": 9519,
+        "offroad_ticks": 885,
+        "images_checked": 35,
+        "executed_original_banks": [
+          113,
+          115,
+          119,
+          122,
+          126,
+          127
+        ]
+      },
+      {
+        "status": "pass",
+        "mode": "drift",
+        "mhz": 25,
+        "ground": 1,
+        "ticks": 1024,
+        "physics_fields": 167,
+        "physics_every_field": true,
+        "physics_cycles_max": 9519,
+        "offroad_ticks": 885,
+        "images_checked": 31,
+        "executed_original_banks": [
+          113,
+          115,
+          119,
+          122,
+          126,
+          127
+        ]
+      },
+      {
+        "status": "pass",
+        "mode": "drift",
+        "mhz": 50,
+        "ground": 0,
+        "ticks": 1024,
+        "physics_fields": 167,
+        "physics_every_field": true,
+        "physics_cycles_max": 9519,
+        "offroad_ticks": 885,
+        "images_checked": 35,
+        "executed_original_banks": [
+          113,
+          115,
+          119,
+          122,
+          126,
+          127
+        ]
+      },
+      {
+        "status": "pass",
+        "mode": "drift",
+        "mhz": 50,
+        "ground": 1,
+        "ticks": 1024,
+        "physics_fields": 167,
+        "physics_every_field": true,
+        "physics_cycles_max": 9519,
+        "offroad_ticks": 885,
+        "images_checked": 32,
+        "executed_original_banks": [
+          113,
+          115,
+          119,
+          122,
+          126,
+          127
+        ]
+      }
+    ],
+    "controls": {
+      "status": "pass",
+      "held_edges": true,
+      "view_switch": true,
+      "ground_switch": true,
+      "mode_switch": true,
+      "start_reset": true,
+      "range_reset_recovery": true
+    },
+    "ppu_viewport_pixels_checked": 13025280,
+    "presentation_samples": [
+      {
+        "mode": "grip",
+        "mhz": 25,
+        "ground": 0,
+        "first_chase_samples_present_fields": [
+          3,
+          4
+        ]
+      },
+      {
+        "mode": "grip",
+        "mhz": 25,
+        "ground": 1,
+        "first_chase_samples_present_fields": [
+          5
+        ]
+      },
+      {
+        "mode": "grip",
+        "mhz": 50,
+        "ground": 0,
+        "first_chase_samples_present_fields": [
+          3,
+          4
+        ]
+      },
+      {
+        "mode": "grip",
+        "mhz": 50,
+        "ground": 1,
+        "first_chase_samples_present_fields": [
+          4
+        ]
+      },
+      {
+        "mode": "drift",
+        "mhz": 25,
+        "ground": 0,
+        "first_chase_samples_present_fields": [
+          3,
+          4
+        ]
+      },
+      {
+        "mode": "drift",
+        "mhz": 25,
+        "ground": 1,
+        "first_chase_samples_present_fields": [
+          5
+        ]
+      },
+      {
+        "mode": "drift",
+        "mhz": 50,
+        "ground": 0,
+        "first_chase_samples_present_fields": [
+          3,
+          4
+        ]
+      },
+      {
+        "mode": "drift",
+        "mhz": 50,
+        "ground": 1,
+        "first_chase_samples_present_fields": [
+          4
+        ]
+      }
+    ]
+  }
+}

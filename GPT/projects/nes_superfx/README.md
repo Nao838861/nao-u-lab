@@ -14,6 +14,7 @@
 - [run_polygon_benchmark.cmd](run_polygon_benchmark.cmd)：通常の25MHz版v002。専用RAM範囲フィルでクリアし、処理落ち直前の最大個数を表示。Aで６条件×25/12.5MHzを変更する。[専用クリア・上限・RTL・動画](demos/polygon/v002/README.md)。頂点変換・透視投影・裏面除去・深度順ソート・面塗りはGSUで実行する。[従来v001の30fps上限・20ms予算](demos/polygon/v001/README.md)も保存している。
 - [run_polygon_benchmark_50mhz.cmd](run_polygon_benchmark_50mhz.cmd)：v003はGSU 50MHz相当。外部RAMの待ちとクリア回路は従来の実時間を保つ。Aで６条件を変更する。[25MHzとの比較・上限・動画](demos/polygon/v003/README.md)。通常ランチャーは25MHzのまま。
 - [run_ground_compare.cmd](run_ground_compare.cmd)：MMC5Racingコースのv003。元の車体／道路比率を合わせ、元の物理座標を受け取る接続処理を追加。ポリゴン／MODE7風をAで切り替え、SELECTで4視点、Bで停止する。標準50MHz、[25MHz起動](run_ground_compare_25mhz.cmd)も用意。[車体寸法・物理接続・検証](demos/ground/v003/README.md)。自動周回の比較版で、4輪物理の走行版と30fps化は次段階。
+- [run_racing_3d.cmd](run_racing_3d.cmd)：元の6502物理を接続した自車の3D走行版。A/Zがアクセル、B/Xが元のモード別操作、左右が操舵、SELECTが4視点、上が地面2方式、下がGRIP/DRIFT変更、START/Enterがリセット。[一致の範囲・操作・検証](demos/racing/v001/README.md)。物理は60Hzで描画から独立。景物衝突・CPU車・レース進行・音は未接続。[25MHz起動](run_racing_3d_25mhz.cmd)も用意。
 - [run_bitmap_128.cmd](run_bitmap_128.cmd) → [run_bitmap_band.cmd](run_bitmap_band.cmd) → [run_bitmap_full.cmd](run_bitmap_full.cmd)：直接表示の128×128、256×64、256×240段階成果。
 - 別ROMを渡す場合は `run_gsu.cmd "C:\path\diagnostic.nes"`。
 

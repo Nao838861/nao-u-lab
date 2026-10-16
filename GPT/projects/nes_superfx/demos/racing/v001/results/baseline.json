@@ -1,0 +1,21 @@
+{
+  "rom_sha256": "be71757a0ef8844cd2306d8d07ffd8b8ff2e8eebe37cd3242b3e077de3ffb0cc",
+  "original_path": "D:\\HomeBrew\\MMC5Racing\\releases\\MMC5Racing_Results_136x184.nes",
+  "source_revision": "e8fa5f49b03aa0b421f8c81cdb23e89e742ddfee",
+  "simulation_entry": 63370,
+  "simulation_end": 63401,
+  "grip": {
+    "ticks": 128,
+    "deltas": [
+      1
+    ],
+    "initial_state_sha256": "b34e3f32709d9f2d33c90f7fca71c3dff7983304dcc47ae128074133cb110d26"
+  },
+  "drift": {
+    "ticks": 128,
+    "deltas": [
+      1
+    ],
+    "initial_state_sha256": "b34e3f32709d9f2d33c90f7fca71c3dff7983304dcc47ae128074133cb110d26"
+  }
+}

@@ -2,7 +2,7 @@
   "date": "2026-10-16",
   "status": "仕様案",
   "implementation_changed": true,
-  "implementation_scope": "地面描画の比較試作のみ。3Dゲーム本体とMMC5同居回路は未実装",
+  "implementation_scope": "自車の3D自由走行版まで。原版の物理と路外減速を60Hz実行。CPU車・景物衝突・レース進行・音と正式同居回路は未実装",
   "mmc5racing_revision": "d9e887eee1682bb278a3e0e6e737f4bb647fd93a",
   "camera_requirement": "走行中に4視点を選択",
   "review_rows_per_cycle": [
@@ -26,7 +26,11 @@
     "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\releases\\GSU_GroundCompare_v003.nes": "512ecd7361157b72098b6e3aab456a29e6ea39ed41229021216b933206987ca1",
     "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\demos\\ground\\v003\\car_source.json": "67854fb6fca4a5405d052f030b9d02da9583163126a169549bb25cf8c9200df3",
     "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\demos\\ground\\v003\\results\\state_validation.json": "1bb8aeba67342e7cae05db5737628722b29cb5d59df857a596db27506fbd9cd4",
-    "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\demos\\ground\\v003\\results\\benchmark.json": "208e55ffb333a1864ae82d11fc251762ac6687eebc576bb01df2a74f9d40387c"
+    "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\demos\\ground\\v003\\results\\benchmark.json": "208e55ffb333a1864ae82d11fc251762ac6687eebc576bb01df2a74f9d40387c",
+    "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\releases\\GSU_MMC5Racing3D_v001.nes": "2d00aec4841dc9b59f5f0b116f4907e7222ab8f7304f72a5cd49df04b5f2012a",
+    "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\demos\\racing\\v001\\results\\verification.json": "6cfbd47e1306482bb746baaa95a5ef9dad93fbf474725d53a2c2ba4efa1345da",
+    "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\demos\\racing\\v001\\results\\baseline.json": "8e2270fcbb9b3e2028e08cbc9882583f1cc76882ca98d4d432a15526104e9cd6",
+    "D:\\AI\\Nao_u_BOT\\GPT\\projects\\nes_superfx\\demos\\racing\\v001\\source_snapshot.zip": "a4b49bdf444f810b6d1fc68c541f3aa44e28fad02fa5453a1e68354a1efb4e63"
   },
   "ground_requirement": "フラットポリゴンとMODE7風平面テクスチャの両方式を比較",
   "ground_references": [
@@ -46,5 +50,26 @@
       13
     ],
     "source_asphalt_width_pixels": 64
+  },
+  "racing_physics_baseline": {
+    "rom_sha256": "be71757a0ef8844cd2306d8d07ffd8b8ff2e8eebe37cd3242b3e077de3ffb0cc",
+    "original_path": "D:\\HomeBrew\\MMC5Racing\\releases\\MMC5Racing_Results_136x184.nes",
+    "source_revision": "e8fa5f49b03aa0b421f8c81cdb23e89e742ddfee",
+    "simulation_entry": 63370,
+    "simulation_end": 63401,
+    "grip": {
+      "ticks": 128,
+      "deltas": [
+        1
+      ],
+      "initial_state_sha256": "b34e3f32709d9f2d33c90f7fca71c3dff7983304dcc47ae128074133cb110d26"
+    },
+    "drift": {
+      "ticks": 128,
+      "deltas": [
+        1
+      ],
+      "initial_state_sha256": "b34e3f32709d9f2d33c90f7fca71c3dff7983304dcc47ae128074133cb110d26"
+    }
   }
 }
