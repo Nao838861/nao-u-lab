@@ -1,5 +1,5 @@
 """4視点と地面2方式の実機能画像を保存し、物理・音更新の継続を確認する。"""
-import json,os,re,subprocess
+import argparse,json,os,re,subprocess
 from pathlib import Path
 from native_lock import core_lock
 
@@ -7,10 +7,11 @@ ROOT=Path(__file__).resolve().parents[1]
 
 
 def main():
-    out=ROOT/'demos/racing/v003/results';out.mkdir(exist_ok=True)
+    parser=argparse.ArgumentParser();parser.add_argument('--rom',type=Path,default=ROOT/'releases/GSU_MMC5Racing3D_v003.nes');parser.add_argument('--results',type=Path,default=ROOT/'demos/racing/v003/results');args=parser.parse_args()
+    out=args.results.resolve();out.mkdir(parents=True,exist_ok=True)
     labels={n:int(a,16) for a,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(ROOT/'build/racing/v003/cpu.lbl').read_text())}
     lua=r'''
-local L=LABELS local out=OUTDIR local frame=0 local shot=0 local settle=0 local done=false
+local L=LABELS local out=OUTDIR local frame=0 local shot=0 local settle=0 local done=false local clocks={}
 local function b(a) return emu.read(a,emu.memType.nesMemory) end
 local function w(a) return b(a)+256*b(a+1) end
 emu.addEventCallback(function()
@@ -28,6 +29,7 @@ emu.addEventCallback(function()
    assert(emu.read(0x3f05,emu.memType.nesPpuMemory)==0x1a,'sky green')
    assert(emu.read(0x3f06,emu.memType.nesPpuMemory)==0x30,'sky white')
    assert(emu.read(0x3f07,emu.memType.nesPpuMemory)==0x21,'sky blue')
+   clocks[#clocks+1]=w(L.gsu_clocks)+65536*w(L.gsu_clocks+2)
    local f=assert(io.open(out..'/ground'..ground..'-view'..view..'.png','wb'));f:write(emu.takeScreenshot());f:close()
    shot=shot+1;settle=0
   end
@@ -35,6 +37,7 @@ emu.addEventCallback(function()
  if shot==8 then
   local f=assert(io.open(out..'/counters.json','w'))
   f:write(string.format('{"physics_ticks":%d,"audio_ticks":%d,"fault":%d,"captures":8}',w(L.physics_ticks),w(L.audio_ticks),b(0x4fe3)));f:close()
+  local t=assert(io.open(out..'/gsu_clocks.json','w'));t:write('['..table.concat(clocks,',')..']');t:close()
   done=true;emu.stop(0)
  end
 end,emu.eventType.endFrame)
@@ -45,7 +48,7 @@ end,emu.eventType.endFrame)
     env=os.environ.copy();env.update(NES_GSU_MAPPER='n8pro-racing-gsu',NES_GSU_CLOCK_HZ='50000000')
     try:
         with core_lock(ROOT/'runtime/MesenCore.dll'):
-            p=subprocess.run([str(ROOT/'runtime/Mesen.exe'),'--testRunner','--timeout=90','--doNotSaveSettings',str(ROOT/'releases/GSU_MMC5Racing3D_v003.nes'),str(script)],cwd=ROOT/'runtime',env=env,capture_output=True,timeout=100,creationflags=subprocess.CREATE_NO_WINDOW)
+            p=subprocess.run([str(ROOT/'runtime/Mesen.exe'),'--testRunner','--timeout=90','--doNotSaveSettings',str(args.rom.resolve()),str(script)],cwd=ROOT/'runtime',env=env,capture_output=True,timeout=100,creationflags=subprocess.CREATE_NO_WINDOW)
     finally:settings.write_bytes(before)
     (out/'emulator.log').write_bytes(p.stdout+p.stderr);assert p.returncode==0,(p.stdout,p.stderr)
     report=json.loads((out/'counters.json').read_text());assert report['fault']==0 and report['physics_ticks']==report['audio_ticks'],report

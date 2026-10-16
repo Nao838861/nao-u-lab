@@ -1,6 +1,9 @@
 ; Flat ground polygons / affine scanline texture, all raster work on the GSU.
 .include "casfx.inc"
 .segment "GSU"
+.ifndef KERB_GROUP_CULL
+KERB_GROUP_CULL = 1
+.endif
 .export render_entry,render_stop
 .macro load reg,address
   lm reg,(address)
@@ -144,7 +147,7 @@ texture_next:
   jmp r11
   nop
 .assert *-render_entry <= $200,error,"entry/texture block overflow"
-.align $200,$01
+.align $10,$01
 
 ; u/v are texture Q8.8: world Q9.7 naturally includes the 1/2 texture scale.
 setup_row:
@@ -234,7 +237,7 @@ mul14:
   or r4
   jmp r11
   nop
-.align $200,$01
+.align $10,$01
 
 transform:
   cache
@@ -356,7 +359,7 @@ vertices_done:
   load r11,$8050
   jmp r11
   nop
-.align $200,$01
+.align $10,$01
 
 faces:
   cache
@@ -383,6 +386,8 @@ next_face:
   cmp r6
   jlt skip_face
 copy_face:
+  ibt r0,#0
+  save $8f20,r0
   iwt r8,#$8800
   ibt r9,#4
 copy_corner:
@@ -398,6 +403,139 @@ copy_corner:
   dec r9
   bne copy_corner
   nop
+  load r0,$807e
+  iwt r6,#$30
+  cmp r6
+  jeq is_curb
+  jump draw_quad
+is_curb:
+  ; Preserve the parent curb: all children use the same transformed endpoints.
+  iwt r3,#$8800
+  iwt r8,#$8f00
+  ibt r12,#12
+  iwt r13,#save_curb
+save_curb:
+  ldw (r3)
+  stw (r8)
+  add2 r3
+  inc r8
+  loop
+  inc r8
+  .if KERB_GROUP_CULL
+  ; Conservative depth bounds of the entire convex curb group.
+  iwt r3,#$8f04
+  iwt r7,#$7fff
+  iwt r8,#$8000
+  ibt r9,#4
+curb_bounds:
+  ldw (r3)
+  cmp r7
+  bge curb_min
+  nop
+  move r7,r0
+curb_min:
+  cmp r8
+  blt curb_max
+  nop
+  move r8,r0
+curb_max:
+  with r3
+  add #6
+  dec r9
+  bne curb_bounds
+  nop
+  iwt r0,#256
+  from r8
+  cmp r0
+  jlt skip_face
+  iwt r0,#18432
+  from r7
+  cmp r0
+  jge skip_face
+  ; Conservative camera-space AABB against a widened side/top/bottom cone.
+  ; Projection is 128*x/z + 128, 128*y/z + 96. Using |y|<=z is
+  ; deliberately looser than the actual vertical cone; 2 units cover rounding.
+  from r8
+  add #2
+  save $8f28,r0
+  not
+  inc r0
+  save $8f2a,r0
+  iwt r10,#$8f00
+curb_axis:
+  move r3,r10
+  iwt r7,#$7fff
+  iwt r8,#$8000
+  ibt r9,#4
+curb_axis_corner:
+  ldw (r3)
+  cmp r7
+  bge curb_axis_min
+  nop
+  move r7,r0
+curb_axis_min:
+  cmp r8
+  blt curb_axis_max
+  nop
+  move r8,r0
+curb_axis_max:
+  with r3
+  add #6
+  dec r9
+  bne curb_axis_corner
+  nop
+  load r0,$8f28
+  from r7
+  cmp r0
+  jge skip_face
+  load r0,$8f2a
+  from r8
+  cmp r0
+  jlt skip_face
+  add2 r10
+  iwt r0,#$8f04
+  from r10
+  cmp r0
+  blt curb_axis
+  nop
+  .endif
+  ibt r0,#1
+  save $8f20,r0
+curb_child:
+  ; t = 0..8 in Q8; pairs are A->D and B->C.
+  load r0,$8f20
+  dec r0
+  and #1
+  move r6,r0
+  add r0
+  add r6
+  save $807e,r0
+  iwt r8,#$8800
+  .repeat 4,corner
+    .if corner = 0
+      iwt r7,#$8f00
+      iwt r9,#$8f12
+    .elseif corner = 1
+      iwt r7,#$8f06
+      iwt r9,#$8f0c
+    .elseif corner = 2
+      iwt r7,#$8f06
+      iwt r9,#$8f0c
+    .else
+      iwt r7,#$8f00
+      iwt r9,#$8f12
+    .endif
+    load r0,$8f20
+    .if corner < 2
+      dec r0
+    .endif
+    .repeat 5
+      add r0
+    .endrepeat
+    save $8f22,r0
+    call curb_vertex
+  .endrepeat
+draw_quad:
   iwt r0,#$8800
   save $8064,r0
   iwt r0,#$8840
@@ -411,8 +549,7 @@ copy_corner:
   call clip_plane
   load r0,$806a
   sub #3
-  blt skip_face
-  nop
+  jlt child_done
   load r0,$806a
   save $8068,r0
   iwt r0,#$8840
@@ -426,10 +563,18 @@ copy_corner:
   call clip_plane
   load r0,$806a
   sub #3
-  blt skip_face
-  nop
+  jlt child_done
   call project_polygon
   call raster_polygon
+child_done:
+  load r0,$8f20
+  sub #0
+  beq skip_face
+  nop
+  inc r0
+  save $8f20,r0
+  sub #9
+  jlt curb_child
 skip_face:
   load r0,$807a
   add #12
@@ -442,6 +587,31 @@ skip_face:
   jump next_face
 faces_done:
   load r11,$8078
+  jmp r11
+  nop
+
+; Interpolate a camera-space vertex with a shared endpoint and integer t/8.
+curb_vertex:
+  save $8f24,r11
+  ibt r10,#3
+curb_component:
+  ldw (r7)
+  save $8f26,r0
+  move r6,r0
+  ldw (r9)
+  sub r6
+  load r6,$8f22
+  call mul8
+  load r6,$8f26
+  add r6
+  stw (r8)
+  add2 r7
+  add2 r9
+  add2 r8
+  dec r10
+  bne curb_component
+  nop
+  load r11,$8f24
   jmp r11
   nop
 
@@ -543,7 +713,7 @@ yes_inside:
   ibt r0,#1
   jmp r11
   nop
-.align $200,$01
+.align $10,$01
 
 intersect:
   cache
@@ -691,7 +861,7 @@ projection_return:
   load r11,$80a4
   jmp r11
   nop
-.align $200,$01
+.align $10,$01
 
 raster_polygon:
   cache
@@ -978,7 +1148,7 @@ edge_return:
   load r11,$80c6
   jmp r11
   nop
-.align $200,$01
+.align $10,$01
 
 edge_rows:
   cache
@@ -1106,29 +1276,8 @@ fill_right_ok:
   nop
   inc r0
   move r12,r0
-  load r0,$807e
-  iwt r6,#$30
-  cmp r6
-  beq kerb_row
-  nop
   iwt r13,#flat_pixels
 flat_pixels:
-  loop
-  plot
-  bra fill_next
-  nop
-kerb_row:
-  iwt r13,#kerb_pixels
-kerb_pixels:
-  ; Four-pixel diagonal bands remain visible on narrow projected kerbs.
-  from r1
-  add r2
-  and #4
-  lsr
-  move r7,r0
-  lsr
-  add r7
-  color
   loop
   plot
 fill_next:

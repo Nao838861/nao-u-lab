@@ -1,7 +1,7 @@
 {
   "version": "003",
   "rom": "GSU_MMC5Racing3D_v003.nes",
-  "rom_sha256": "51595902aa9d11a111a0a877d95f32b3d295ce8b0c40ff97de38c9fe3189b435",
+  "rom_sha256": "0755b94042077d6843fe94f0b629025c4b5b9f5ed8a21cd8f21b7e251409fd1a",
   "base_sha256": "62fb6b217380a8fbd8738f8a8d8dfe03f70e8fff1407b528e74b41fa2ced6ccc",
   "straight_segments": [
     2,
@@ -31,6 +31,14 @@
     48,
     1
   ],
+  "curb_geometry": {
+    "subdivisions": 8,
+    "colors": [
+      0,
+      3
+    ],
+    "group_culling": "camera-space conservative AABB"
+  },
   "palette": [
     "red",
     "green",

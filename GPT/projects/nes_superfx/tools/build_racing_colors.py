@@ -73,7 +73,7 @@ def main():
     name='GSU_MMC5Racing3D_v003.nes';(ROOT/'releases'/name).write_bytes(rom);(OUT/name).write_bytes(rom)
     result={'version':'003','rom':name,'rom_sha256':hashlib.sha256(rom).hexdigest(),
             'base_sha256':hashlib.sha256(original).hexdigest(),'straight_segments':[i for i,s in enumerate(straight) if s],
-            'edge_materials':colors,'palette':['red','green','gray','white'],'sky_palette':['shared red','green','white','blue'],
+            'edge_materials':colors,'curb_geometry':{'subdivisions':8,'colors':[0,3],'group_culling':'camera-space conservative AABB'},'palette':['red','green','gray','white'],'sky_palette':['shared red','green','white','blue'],
             'sky_rows':[88,72,56,0],'requires_sky_palette_extension':True,'rear_material':'GSU native checkerboard red/gray',
             'unchanged':'PRG banks 4..127 and CHR; physics and audio preserved'}
     (ROOT/'releases/racing_3d_v003.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))
