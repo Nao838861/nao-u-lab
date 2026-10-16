@@ -1,6 +1,6 @@
 {
   "base_sha256": "498235c9fc65b4fc1ae6e4d00d7238719b3af052f34ff5e52793da1fac839402",
-  "rom_sha256": "bada7003572ccb859f203afe8261ed9ea8b6ed23ca89b81d8d3af6c019a71a03",
+  "rom_sha256": "b82a27ef2e11a508dd3b1359adbec615aa4db04d59222bb040685dfe493e6485",
   "player": true,
   "rect_at_fine_x_zero": [
     192,
@@ -130,5 +130,10 @@
   ],
   "marker_oam_slot": 24,
   "extra_ram": 0,
-  "extra_nmi_cycles": 0
+  "extra_nmi_cycles": 0,
+  "road_color": {
+    "pattern_ink": 1,
+    "nes_color": "$00",
+    "description": "gray; white/red player unchanged"
+  }
 }

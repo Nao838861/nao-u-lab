@@ -1,0 +1,7 @@
+{
+  "prg_and_header_exact": true,
+  "only_map_patterns_changed": true,
+  "all_eight_phases_white_to_gray": true,
+  "changed_tiles": 102,
+  "rom_sha256": "b82a27ef2e11a508dd3b1359adbec615aa4db04d59222bb040685dfe493e6485"
+}
