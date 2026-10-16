@@ -124,7 +124,7 @@
   "visual_verification": {
     "version": "003",
     "rom": "GSU_MMC5Racing3D_v003.nes",
-    "rom_sha256": "1265e03be18ed3d334e29a8b3bfc25f12d50978fcd00bba8a8e19c41a27a57fc",
+    "rom_sha256": "ccd824e3cf64e7fa6254b12015e6d2634e58a4b013c222977ab480891b82eb2d",
     "base_sha256": "62fb6b217380a8fbd8738f8a8d8dfe03f70e8fff1407b528e74b41fa2ced6ccc",
     "straight_segments": [
       2,
@@ -177,8 +177,8 @@
     "unchanged": "PRG banks 4..127 and CHR; physics and audio preserved",
     "core_sha256": "c03bb368a923479802a89a3d92a9e682dae7833cc91af478fa2a5aed51689b8b",
     "counters": {
-      "physics_ticks": 108,
-      "audio_ticks": 108,
+      "physics_ticks": 1047,
+      "audio_ticks": 1047,
       "fault": 0,
       "captures": 8
     },
@@ -338,14 +338,14 @@
       "scope": "spawn pose, four views, both ground modes, 50MHz emulated GSU"
     },
     "current_gsu_clocks": [
-      2142982,
-      2454362,
-      2543172,
-      3554893,
-      2169943,
-      2491741,
-      2718893,
-      3315645
+      1394423,
+      1580536,
+      1695776,
+      2536914,
+      1526675,
+      1779416,
+      1983604,
+      2644526
     ],
     "camera_heading_source": "original bank113 velocity_heading $C2/$C3; independent of body $48/$49",
     "camera_verification": {
@@ -353,11 +353,11 @@
         {
           "ticks": 1001,
           "camera_checks": 1001,
-          "max_displayed_yaw_units": 2412,
-          "capture_tick": 663,
+          "max_displayed_yaw_units": 2394,
+          "capture_tick": 664,
           "mode": 0,
           "physics_ticks_identical": 1000,
-          "max_displayed_yaw_degrees": 13.25
+          "max_displayed_yaw_degrees": 13.15
         },
         {
           "ticks": 1001,
@@ -369,8 +369,513 @@
           "max_displayed_yaw_degrees": 7.57
         }
       ],
-      "rom_sha256": "1265e03be18ed3d334e29a8b3bfc25f12d50978fcd00bba8a8e19c41a27a57fc"
+      "rom_sha256": "ccd824e3cf64e7fa6254b12015e6d2634e58a4b013c222977ab480891b82eb2d"
+    },
+    "optimization": {
+      "verification": {
+        "identical_framebuffers": 520,
+        "clock_hz": 50000000,
+        "scope": "8 emulator snapshots + 64 course poses x 4 views x 2 ground modes; body-camera yaw offsets -22.5/0/+22.5 degrees",
+        "initial": [
+          {
+            "view": 0,
+            "ground": 0,
+            "before_clocks": 2142971,
+            "after_clocks": 1394417,
+            "before_ms": 42.86,
+            "after_ms": 27.89,
+            "savings_percent": 34.9,
+            "before_profile_clocks": {
+              "render_entry": 1271,
+              "texture_ground": 0,
+              "setup_row": 0,
+              "mul8": 147692,
+              "transform": 113262,
+              "faces": 335778,
+              "curb_vertex": 40960,
+              "clip_plane": 359097,
+              "project_polygon": 324773,
+              "raster_polygon": 176449,
+              "edge_span": 168457,
+              "edge_rows": 103930,
+              "fill_spans": 151860,
+              "divide": 198414,
+              "tree_transform": 21018
+            },
+            "after_profile_clocks": {
+              "render_entry": 1748,
+              "texture_ground": 0,
+              "setup_row": 0,
+              "mul8": 125228,
+              "transform": 113262,
+              "faces": 230926,
+              "curb_vertex": 20352,
+              "clip_plane": 42975,
+              "project_polygon": 184017,
+              "raster_polygon": 144220,
+              "edge_span": 168457,
+              "edge_rows": 103930,
+              "fill_spans": 151860,
+              "divide": 86423,
+              "tree_transform": 21009
+            }
+          },
+          {
+            "view": 1,
+            "ground": 0,
+            "before_clocks": 2454360,
+            "after_clocks": 1580535,
+            "before_ms": 49.09,
+            "after_ms": 31.61,
+            "savings_percent": 35.6,
+            "before_profile_clocks": {
+              "render_entry": 1231,
+              "texture_ground": 0,
+              "setup_row": 0,
+              "mul8": 156792,
+              "transform": 124033,
+              "faces": 365515,
+              "curb_vertex": 51200,
+              "clip_plane": 419758,
+              "project_polygon": 415345,
+              "raster_polygon": 212645,
+              "edge_span": 177574,
+              "edge_rows": 112329,
+              "fill_spans": 153858,
+              "divide": 242375,
+              "tree_transform": 21695
+            },
+            "after_profile_clocks": {
+              "render_entry": 1708,
+              "texture_ground": 0,
+              "setup_row": 0,
+              "mul8": 129804,
+              "transform": 124033,
+              "faces": 281317,
+              "curb_vertex": 25440,
+              "clip_plane": 42975,
+              "project_polygon": 237817,
+              "raster_polygon": 171544,
+              "edge_span": 177574,
+              "edge_rows": 112329,
+              "fill_spans": 153858,
+              "divide": 100449,
+              "tree_transform": 21677
+            }
+          },
+          {
+            "view": 2,
+            "ground": 0,
+            "before_clocks": 2543164,
+            "after_clocks": 1695776,
+            "before_ms": 50.86,
+            "after_ms": 33.92,
+            "savings_percent": 33.3,
+            "before_profile_clocks": {
+              "render_entry": 1211,
+              "texture_ground": 0,
+              "setup_row": 0,
+              "mul8": 159392,
+              "transform": 145593,
+              "faces": 387377,
+              "curb_vertex": 51200,
+              "clip_plane": 393944,
+              "project_polygon": 446829,
+              "raster_polygon": 229267,
+              "edge_span": 195780,
+              "edge_rows": 122138,
+              "fill_spans": 133228,
+              "divide": 252960,
+              "tree_transform": 24235
+            },
+            "after_profile_clocks": {
+              "render_entry": 1688,
+              "texture_ground": 0,
+              "setup_row": 0,
+              "mul8": 138956,
+              "transform": 145593,
+              "faces": 303250,
+              "curb_vertex": 25440,
+              "clip_plane": 44064,
+              "project_polygon": 264544,
+              "raster_polygon": 185430,
+              "edge_span": 195780,
+              "edge_rows": 122138,
+              "fill_spans": 133228,
+              "divide": 111456,
+              "tree_transform": 24199
+            }
+          },
+          {
+            "view": 3,
+            "ground": 0,
+            "before_clocks": 3554882,
+            "after_clocks": 2536911,
+            "before_ms": 71.1,
+            "after_ms": 50.74,
+            "savings_percent": 28.6,
+            "before_profile_clocks": {
+              "render_entry": 1271,
+              "texture_ground": 0,
+              "setup_row": 0,
+              "mul8": 181440,
+              "transform": 156364,
+              "faces": 468935,
+              "curb_vertex": 122880,
+              "clip_plane": 458462,
+              "project_polygon": 622982,
+              "raster_polygon": 384968,
+              "edge_span": 361593,
+              "edge_rows": 226312,
+              "fill_spans": 184360,
+              "divide": 360373,
+              "tree_transform": 24932
+            },
+            "after_profile_clocks": {
+              "render_entry": 1748,
+              "texture_ground": 0,
+              "setup_row": 0,
+              "mul8": 140256,
+              "transform": 156364,
+              "faces": 433047,
+              "curb_vertex": 60736,
+              "clip_plane": 0,
+              "project_polygon": 429450,
+              "raster_polygon": 332752,
+              "edge_span": 361593,
+              "edge_rows": 226312,
+              "fill_spans": 184360,
+              "divide": 185387,
+              "tree_transform": 24896
+            }
+          },
+          {
+            "view": 0,
+            "ground": 1,
+            "before_clocks": 2169943,
+            "after_clocks": 1526500,
+            "before_ms": 43.4,
+            "after_ms": 30.53,
+            "savings_percent": 29.7,
+            "before_profile_clocks": {
+              "render_entry": 1321,
+              "texture_ground": 1328521,
+              "setup_row": 163500,
+              "mul8": 182752,
+              "transform": 113280,
+              "faces": 81623,
+              "curb_vertex": 0,
+              "clip_plane": 75460,
+              "project_polygon": 91932,
+              "raster_polygon": 30592,
+              "edge_span": 16794,
+              "edge_rows": 9298,
+              "fill_spans": 7695,
+              "divide": 45054,
+              "tree_transform": 22111
+            },
+            "after_profile_clocks": {
+              "render_entry": 1798,
+              "texture_ground": 853977,
+              "setup_row": 163500,
+              "mul8": 182752,
+              "transform": 113280,
+              "faces": 79721,
+              "curb_vertex": 0,
+              "clip_plane": 0,
+              "project_polygon": 42718,
+              "raster_polygon": 20856,
+              "edge_span": 16794,
+              "edge_rows": 9298,
+              "fill_spans": 7695,
+              "divide": 12167,
+              "tree_transform": 22102
+            }
+          },
+          {
+            "view": 1,
+            "ground": 1,
+            "before_clocks": 2491739,
+            "after_clocks": 1779352,
+            "before_ms": 49.83,
+            "after_ms": 35.59,
+            "savings_percent": 28.6,
+            "before_profile_clocks": {
+              "render_entry": 1281,
+              "texture_ground": 1381891,
+              "setup_row": 176580,
+              "mul8": 195468,
+              "transform": 124051,
+              "faces": 97089,
+              "curb_vertex": 0,
+              "clip_plane": 137001,
+              "project_polygon": 147638,
+              "raster_polygon": 59455,
+              "edge_span": 34560,
+              "edge_rows": 18591,
+              "fill_spans": 17096,
+              "divide": 78240,
+              "tree_transform": 22788
+            },
+            "after_profile_clocks": {
+              "render_entry": 1758,
+              "texture_ground": 932082,
+              "setup_row": 176580,
+              "mul8": 192192,
+              "transform": 124051,
+              "faces": 111016,
+              "curb_vertex": 0,
+              "clip_plane": 0,
+              "project_polygon": 79600,
+              "raster_polygon": 43935,
+              "edge_span": 34560,
+              "edge_rows": 18591,
+              "fill_spans": 17096,
+              "divide": 25167,
+              "tree_transform": 22770
+            }
+          },
+          {
+            "view": 2,
+            "ground": 1,
+            "before_clocks": 2718877,
+            "after_clocks": 1983464,
+            "before_ms": 54.38,
+            "after_ms": 39.67,
+            "savings_percent": 27.0,
+            "before_profile_clocks": {
+              "render_entry": 1261,
+              "texture_ground": 1488479,
+              "setup_row": 202740,
+              "mul8": 211072,
+              "transform": 145611,
+              "faces": 117306,
+              "curb_vertex": 0,
+              "clip_plane": 134315,
+              "project_polygon": 174153,
+              "raster_polygon": 65347,
+              "edge_span": 37039,
+              "edge_rows": 16432,
+              "fill_spans": 12550,
+              "divide": 87234,
+              "tree_transform": 25328
+            },
+            "after_profile_clocks": {
+              "render_entry": 1738,
+              "texture_ground": 1069696,
+              "setup_row": 202740,
+              "mul8": 211072,
+              "transform": 145611,
+              "faces": 120380,
+              "curb_vertex": 0,
+              "clip_plane": 0,
+              "project_polygon": 73902,
+              "raster_polygon": 43980,
+              "edge_span": 37039,
+              "edge_rows": 16432,
+              "fill_spans": 12550,
+              "divide": 23162,
+              "tree_transform": 25292
+            }
+          },
+          {
+            "view": 3,
+            "ground": 1,
+            "before_clocks": 3315638,
+            "after_clocks": 2644426,
+            "before_ms": 66.31,
+            "after_ms": 52.89,
+            "savings_percent": 20.2,
+            "before_profile_clocks": {
+              "render_entry": 1321,
+              "texture_ground": 1779182,
+              "setup_row": 279585,
+              "mul8": 244224,
+              "transform": 156382,
+              "faces": 131170,
+              "curb_vertex": 0,
+              "clip_plane": 162139,
+              "project_polygon": 220059,
+              "raster_polygon": 99223,
+              "edge_span": 61965,
+              "edge_rows": 23896,
+              "fill_spans": 17072,
+              "divide": 113385,
+              "tree_transform": 26025
+            },
+            "after_profile_clocks": {
+              "render_entry": 1798,
+              "texture_ground": 1468358,
+              "setup_row": 279585,
+              "mul8": 244224,
+              "transform": 156382,
+              "faces": 146781,
+              "curb_vertex": 0,
+              "clip_plane": 0,
+              "project_polygon": 109692,
+              "raster_polygon": 71689,
+              "edge_span": 61965,
+              "edge_rows": 23896,
+              "fill_spans": 17072,
+              "divide": 37069,
+              "tree_transform": 25989
+            }
+          }
+        ],
+        "worst_relative_cost": [
+          [
+            0.8571774400792673,
+            "route-1-3-21",
+            3019656,
+            2588381
+          ],
+          [
+            0.8547777285196292,
+            "route-1-3-19",
+            3099318,
+            2649228
+          ],
+          [
+            0.8541732171001276,
+            "route-1-3-20",
+            3024609,
+            2583540
+          ],
+          [
+            0.8520187944893294,
+            "route-1-3-54",
+            2913620,
+            2482459
+          ],
+          [
+            0.8466375329088051,
+            "route-1-3-55",
+            2925129,
+            2476524
+          ],
+          [
+            0.8460067420438317,
+            "route-1-3-28",
+            3431897,
+            2903408
+          ],
+          [
+            0.8452992487926193,
+            "route-1-3-39",
+            3864978,
+            3267063
+          ],
+          [
+            0.8438116207429467,
+            "route-1-3-34",
+            3470828,
+            2928725
+          ]
+        ],
+        "rom_sha256": "ccd824e3cf64e7fa6254b12015e6d2634e58a4b013c222977ab480891b82eb2d",
+        "baseline_commit": "aa0d83c37",
+        "mesen_screenshots_identical": 8
+      },
+      "bridge": {
+        "exact_pose_cases": 5120,
+        "directions": 1024,
+        "views": 4,
+        "random_cases": 1024,
+        "cpu_cycles_min": 3063,
+        "cpu_cycles_max": 3652
+      },
+      "presentation": {
+        "clock_hz": 50000000,
+        "sample_frames_per_view": 120,
+        "before_fps": [
+          15.0247,
+          15.0247,
+          15.0247,
+          12.01976,
+          15.0247,
+          15.0247,
+          15.0247,
+          12.01976
+        ],
+        "after_fps": [
+          20.032933333333,
+          20.032933333333,
+          20.032933333333,
+          15.0247,
+          20.032933333333,
+          19.53211,
+          20.032933333333,
+          15.0247
+        ],
+        "scope": "spawn, views 0..3 for polygon then texture; presentation including CPU/NMI wait",
+        "cpu_phase_median_ms": [
+          {
+            "ground": 0,
+            "view": 0,
+            "prepare": 2.871,
+            "gsu_wait": 30.118,
+            "hud": 0.02,
+            "present_wait": 16.909
+          },
+          {
+            "ground": 0,
+            "view": 1,
+            "prepare": 2.928,
+            "gsu_wait": 31.652,
+            "hud": 0.02,
+            "present_wait": 15.317
+          },
+          {
+            "ground": 0,
+            "view": 2,
+            "prepare": 2.924,
+            "gsu_wait": 33.955,
+            "hud": 0.02,
+            "present_wait": 13.021
+          },
+          {
+            "ground": 0,
+            "view": 3,
+            "prepare": 2.687,
+            "gsu_wait": 50.777,
+            "hud": 0.02,
+            "present_wait": 13.073
+          },
+          {
+            "ground": 1,
+            "view": 0,
+            "prepare": 2.871,
+            "gsu_wait": 30.575,
+            "hud": 0.02,
+            "present_wait": 16.451
+          },
+          {
+            "ground": 1,
+            "view": 1,
+            "prepare": 2.928,
+            "gsu_wait": 35.629,
+            "hud": 0.02,
+            "present_wait": 11.341
+          },
+          {
+            "ground": 1,
+            "view": 2,
+            "prepare": 2.924,
+            "gsu_wait": 39.712,
+            "hud": 0.02,
+            "present_wait": 7.262
+          },
+          {
+            "ground": 1,
+            "view": 3,
+            "prepare": 2.687,
+            "gsu_wait": 52.93,
+            "hud": 0.02,
+            "present_wait": 10.922
+          }
+        ]
+      }
     }
   },
-  "visual_source_commit": "aa0d83c37"
+  "visual_source_commit": "36d7bace9"
 }
