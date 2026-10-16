@@ -7,10 +7,10 @@ ROOT=Path(__file__).resolve().parents[1]
 
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--version',choices=['003','004'],default='003');parser.add_argument('--runtime',type=Path);parser.add_argument('--rom',type=Path);parser.add_argument('--results',type=Path);parser.add_argument('--trees',action='store_true');parser.add_argument('--dump-gsu',action='store_true');parser.add_argument('--measure-fps',action='store_true');args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--version',choices=['003','004','005'],default='003');parser.add_argument('--runtime',type=Path);parser.add_argument('--rom',type=Path);parser.add_argument('--results',type=Path);parser.add_argument('--trees',action='store_true');parser.add_argument('--dump-gsu',action='store_true');parser.add_argument('--measure-fps',action='store_true');args=parser.parse_args()
     args.rom=args.rom or ROOT/f'releases/GSU_MMC5Racing3D_v{args.version}.nes'
     args.results=args.results or ROOT/f'demos/racing/v{args.version}/results'
-    runtime=(args.runtime or ROOT/('runtime_mode7' if args.version=='004' else 'runtime')).resolve()
+    runtime=(args.runtime or ROOT/('runtime_mode7' if args.version in ['004','005'] else 'runtime')).resolve()
     out=args.results.resolve();out.mkdir(parents=True,exist_ok=True)
     labels={n:int(a,16) for a,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(ROOT/f'build/racing/v{args.version}/cpu.lbl').read_text())}
     lua=r'''
@@ -77,7 +77,7 @@ emu.addMemoryCallback(function() if not stamps.wait then stamps.wait=cycles() en
 end,emu.callbackType.write,0x481f)
 """
         lua=lua.replace('local function b(a)',dump+'local function b(a)')
-    if args.version=='004':
+    if args.version in ['004','005']:
         start=lua.index("   assert(b(0x4ff5)==1")
         end=lua.index('   clocks[#clocks+1]',start)
         lua=lua[:start]+'''   assert(b(0x4fb1)==1,'Mode7 unavailable')

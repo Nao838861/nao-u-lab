@@ -1,0 +1,6 @@
+{
+  "status": "pass",
+  "cases": 5888,
+  "reference": "Python divmod, unsigned 32/16, quotient fits 16 bits",
+  "rom_sha256": "1f3feb65a443fbfd71ac54891a3b3228716cf843f08c25cf13e97a1562c234ed"
+}

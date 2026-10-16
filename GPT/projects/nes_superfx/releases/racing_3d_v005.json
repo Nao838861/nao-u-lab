@@ -1,0 +1,142 @@
+{
+  "version": "005",
+  "rom": "GSU_MMC5Racing3D_v005.nes",
+  "rom_sha256": "1f3feb65a443fbfd71ac54891a3b3228716cf843f08c25cf13e97a1562c234ed",
+  "base_sha256": "a2725d5c40ea43c1afc9fce6ced4919ea1b121c1692291111c92b1aabbbe2ad7",
+  "car": {
+    "vertices": 32,
+    "faces": 14,
+    "width_world": 2.4,
+    "length_world": 2.6
+  },
+  "scenery": [
+    {
+      "kind": "tree",
+      "source_position": [
+        160,
+        170
+      ],
+      "vertices": 11,
+      "faces": 7,
+      "far_vertices": 3,
+      "far_faces": 1,
+      "radius_q7": 708
+    },
+    {
+      "kind": "tree",
+      "source_position": [
+        136,
+        328
+      ],
+      "vertices": 11,
+      "faces": 7,
+      "far_vertices": 3,
+      "far_faces": 1,
+      "radius_q7": 708
+    },
+    {
+      "kind": "tree",
+      "source_position": [
+        280,
+        436
+      ],
+      "vertices": 11,
+      "faces": 7,
+      "far_vertices": 3,
+      "far_faces": 1,
+      "radius_q7": 708
+    },
+    {
+      "kind": "tree",
+      "source_position": [
+        482,
+        502
+      ],
+      "vertices": 11,
+      "faces": 7,
+      "far_vertices": 3,
+      "far_faces": 1,
+      "radius_q7": 708
+    },
+    {
+      "kind": "tree",
+      "source_position": [
+        500,
+        320
+      ],
+      "vertices": 11,
+      "faces": 7,
+      "far_vertices": 3,
+      "far_faces": 1,
+      "radius_q7": 708
+    },
+    {
+      "kind": "tree",
+      "source_position": [
+        210,
+        43
+      ],
+      "vertices": 11,
+      "faces": 7,
+      "far_vertices": 3,
+      "far_faces": 1,
+      "radius_q7": 708
+    },
+    {
+      "kind": "tree",
+      "source_position": [
+        168,
+        470
+      ],
+      "vertices": 11,
+      "faces": 7,
+      "far_vertices": 3,
+      "far_faces": 1,
+      "radius_q7": 708
+    },
+    {
+      "kind": "tree",
+      "source_position": [
+        520,
+        630
+      ],
+      "vertices": 11,
+      "faces": 7,
+      "far_vertices": 3,
+      "far_faces": 1,
+      "radius_q7": 708
+    },
+    {
+      "kind": "house",
+      "source_position": [
+        150,
+        260
+      ],
+      "vertices": 18,
+      "faces": 10,
+      "far_vertices": 5,
+      "far_faces": 2,
+      "radius_q7": 735
+    },
+    {
+      "kind": "house",
+      "source_position": [
+        620,
+        245
+      ],
+      "vertices": 18,
+      "faces": 10,
+      "far_vertices": 5,
+      "far_faces": 2,
+      "radius_q7": 735
+    }
+  ],
+  "far_lod_depth_world": {
+    "tree": 24,
+    "house": 32
+  },
+  "far_lod": "camera-facing polygon silhouettes: tree 1 triangle, house wall quad + roof triangle",
+  "gsu_mhz_target": 50,
+  "unchanged": "CPU, physics, audio, Mode7 texture, mapper core; v004 retained",
+  "materials": "nonzero red/green/gray; 2-color native GSU checker; index 0 transparent"
+}

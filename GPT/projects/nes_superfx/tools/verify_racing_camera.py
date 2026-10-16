@@ -64,7 +64,7 @@ end,emu.eventType.endFrame)
     script=out/'test.lua';script.write_text(lua)
     env=os.environ.copy();env.update(NES_GSU_MAPPER='n8pro-racing-gsu',NES_GSU_CLOCK_HZ='50000000')
     rom=ROOT/f'releases/GSU_MMC5Racing3D_v{VERSION}.nes' if after else BASELINE/'before.nes'
-    runtime=ROOT/('runtime_mode7' if after and VERSION=='004' else 'runtime')
+    runtime=ROOT/('runtime_mode7' if after and VERSION in ['004','005'] else 'runtime')
     with core_lock(runtime/'MesenCore.dll'):
         p=subprocess.run([str(runtime/'Mesen.exe'),'--testRunner','--timeout=90','--doNotSaveSettings',str(rom),str(script)],cwd=runtime,env=env,capture_output=True,timeout=100,creationflags=subprocess.CREATE_NO_WINDOW)
     (out/'emulator.log').write_bytes(p.stdout+p.stderr)
@@ -73,10 +73,10 @@ end,emu.eventType.endFrame)
 
 def main():
     global OUT,VERSION
-    p=argparse.ArgumentParser();p.add_argument('--version',choices=['003','004'],default='003');args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--version',choices=['003','004','005'],default='003');args=p.parse_args()
     VERSION=args.version;OUT=ROOT/f'build/racing/v{VERSION}/camera-test';OUT.mkdir(parents=True,exist_ok=True)
     saved=[]
-    for name in (['runtime','runtime_mode7'] if VERSION=='004' else ['runtime']):
+    for name in (['runtime','runtime_mode7'] if VERSION in ['004','005'] else ['runtime']):
         settings=ROOT/name/'settings.json';before=settings.read_bytes();saved.append((settings,before));cfg=json.loads(before)
         cfg.setdefault('Debug',{}).setdefault('ScriptWindow',{})['AllowIoOsAccess']=True;settings.write_text(json.dumps(cfg))
     results=[];dst=ROOT/f'demos/racing/v{VERSION}/results/camera';dst.mkdir(parents=True,exist_ok=True)

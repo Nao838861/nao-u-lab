@@ -1,0 +1,23 @@
+{
+  "cases": [
+    {
+      "ticks": 1001,
+      "camera_checks": 1001,
+      "max_displayed_yaw_units": 2419,
+      "capture_tick": 661,
+      "mode": 0,
+      "physics_ticks_identical": 1000,
+      "max_displayed_yaw_degrees": 13.29
+    },
+    {
+      "ticks": 1001,
+      "camera_checks": 1001,
+      "max_displayed_yaw_units": 1379,
+      "capture_tick": 478,
+      "mode": 1,
+      "physics_ticks_identical": 1000,
+      "max_displayed_yaw_degrees": 7.58
+    }
+  ],
+  "rom_sha256": "1f3feb65a443fbfd71ac54891a3b3228716cf843f08c25cf13e97a1562c234ed"
+}
