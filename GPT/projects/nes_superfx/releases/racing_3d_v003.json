@@ -1,7 +1,7 @@
 {
   "version": "003",
   "rom": "GSU_MMC5Racing3D_v003.nes",
-  "rom_sha256": "ebd3344393cdfdd4892284a91f01465866393a0f6b4007bee1ca29da48668be5",
+  "rom_sha256": "f92880d0b61db7e3cd1194307ad696e1b2af43210ac496a4182a3a949ed57d0e",
   "base_sha256": "62fb6b217380a8fbd8738f8a8d8dfe03f70e8fff1407b528e74b41fa2ced6ccc",
   "straight_segments": [
     2,
@@ -100,7 +100,7 @@
     "side_materials": [
       33,
       16,
-      1
+      33
     ],
     "geometry": "triangular pyramid"
   },
