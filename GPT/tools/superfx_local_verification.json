@@ -124,7 +124,7 @@
   "visual_verification": {
     "version": "003",
     "rom": "GSU_MMC5Racing3D_v003.nes",
-    "rom_sha256": "51595902aa9d11a111a0a877d95f32b3d295ce8b0c40ff97de38c9fe3189b435",
+    "rom_sha256": "0755b94042077d6843fe94f0b629025c4b5b9f5ed8a21cd8f21b7e251409fd1a",
     "base_sha256": "62fb6b217380a8fbd8738f8a8d8dfe03f70e8fff1407b528e74b41fa2ced6ccc",
     "straight_segments": [
       2,
@@ -177,8 +177,8 @@
     "unchanged": "PRG banks 4..127 and CHR; physics and audio preserved",
     "core_sha256": "c03bb368a923479802a89a3d92a9e682dae7833cc91af478fa2a5aed51689b8b",
     "counters": {
-      "physics_ticks": 92,
-      "audio_ticks": 92,
+      "physics_ticks": 100,
+      "audio_ticks": 100,
       "fault": 0,
       "captures": 8
     },
@@ -192,7 +192,45 @@
       "range_reset_recovery": true
     },
     "sky_pixels_verified": true,
-    "rear_checkerboard_verified": true
+    "rear_checkerboard_verified": true,
+    "curb_geometry": {
+      "subdivisions": 8,
+      "colors": [
+        0,
+        3
+      ],
+      "group_culling": "camera-space conservative AABB"
+    },
+    "kerb_comparison": {
+      "identical_images": 8,
+      "gsu_clocks_culled": [
+        2806893,
+        3150065,
+        3193454,
+        5725112,
+        1730974,
+        1927228,
+        2061776,
+        2504089
+      ],
+      "gsu_clocks_unculled": [
+        6435957,
+        7180808,
+        7172670,
+        9215807,
+        1717537,
+        1913769,
+        2048335,
+        2490652
+      ],
+      "polygon_savings_percent": [
+        56.4,
+        56.1,
+        55.5,
+        37.9
+      ],
+      "scope": "spawn pose, four views, both ground modes, 50MHz emulated GSU"
+    }
   },
-  "visual_source_commit": "9f2195d2f"
+  "visual_source_commit": "1eead257d"
 }
