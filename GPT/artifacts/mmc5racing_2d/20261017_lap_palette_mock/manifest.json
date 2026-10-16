@@ -1,0 +1,50 @@
+{
+  "base_sha256": "c10af5613f146605ddcdd74ad1d98aa8ced9f7f5c45b8bcb3e88e46cb39b6e0e",
+  "gray": "$00",
+  "cases": [
+    {
+      "id": "current",
+      "palette": null,
+      "ink": null,
+      "description": "現在：変更なし"
+    },
+    {
+      "id": "A1",
+      "palette": 0,
+      "ink": 1,
+      "description": "白い車体 → 灰色"
+    },
+    {
+      "id": "A2",
+      "palette": 0,
+      "ink": 2,
+      "description": "黒いタイヤ・影 → 灰色"
+    },
+    {
+      "id": "A3",
+      "palette": 0,
+      "ink": 3,
+      "description": "緑の差し色 → 灰色"
+    },
+    {
+      "id": "B1",
+      "palette": 1,
+      "ink": 1,
+      "description": "水色の車体 → 灰色"
+    },
+    {
+      "id": "B2",
+      "palette": 1,
+      "ink": 2,
+      "description": "黒いタイヤ・影 → 灰色"
+    },
+    {
+      "id": "B3",
+      "palette": 1,
+      "ink": 3,
+      "description": "青い差し色 → 灰色"
+    }
+  ],
+  "native_screens": 14,
+  "scope": "通常LAP行のモック。BAD LAP等の全状態対応は採用後に実装。"
+}
