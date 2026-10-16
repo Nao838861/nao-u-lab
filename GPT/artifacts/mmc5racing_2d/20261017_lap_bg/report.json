@@ -1,0 +1,207 @@
+{
+  "cpu_states": [
+    {
+      "scene": 1,
+      "lap": 0,
+      "bad": 0,
+      "beep": 0,
+      "tick": 0,
+      "extra_cycles": 47
+    },
+    {
+      "scene": 1,
+      "lap": 1,
+      "bad": 0,
+      "beep": 0,
+      "tick": 0,
+      "extra_cycles": 47
+    },
+    {
+      "scene": 1,
+      "lap": 2,
+      "bad": 0,
+      "beep": 0,
+      "tick": 0,
+      "extra_cycles": 47
+    },
+    {
+      "scene": 1,
+      "lap": 3,
+      "bad": 0,
+      "beep": 0,
+      "tick": 0,
+      "extra_cycles": 47
+    },
+    {
+      "scene": 1,
+      "lap": 4,
+      "bad": 0,
+      "beep": 0,
+      "tick": 0,
+      "extra_cycles": 47
+    },
+    {
+      "scene": 1,
+      "lap": 5,
+      "bad": 0,
+      "beep": 0,
+      "tick": 0,
+      "extra_cycles": 47
+    },
+    {
+      "scene": 1,
+      "lap": 0,
+      "bad": 255,
+      "beep": 0,
+      "tick": 0,
+      "extra_cycles": 41
+    },
+    {
+      "scene": 1,
+      "lap": 0,
+      "bad": 0,
+      "beep": 18,
+      "tick": 0,
+      "extra_cycles": 41
+    },
+    {
+      "scene": 2,
+      "lap": 5,
+      "bad": 0,
+      "beep": 0,
+      "tick": 16,
+      "extra_cycles": 41
+    },
+    {
+      "scene": 2,
+      "lap": 5,
+      "bad": 0,
+      "beep": 0,
+      "tick": 0,
+      "extra_cycles": 41
+    }
+  ],
+  "marker": {
+    "cases": 6144,
+    "hook_extra_cycles": [
+      92,
+      129
+    ],
+    "scratch_and_xy_preserved": true,
+    "scroll_wait_windows": [
+      {
+        "address": "0xf18b",
+        "scene": 0,
+        "fine_x": 0,
+        "cycles": 40
+      },
+      {
+        "address": "0xf18b",
+        "scene": 0,
+        "fine_x": 1,
+        "cycles": 40
+      },
+      {
+        "address": "0xf18b",
+        "scene": 0,
+        "fine_x": 2,
+        "cycles": 40
+      },
+      {
+        "address": "0xf18b",
+        "scene": 0,
+        "fine_x": 3,
+        "cycles": 40
+      },
+      {
+        "address": "0xf18b",
+        "scene": 0,
+        "fine_x": 4,
+        "cycles": 40
+      },
+      {
+        "address": "0xf18b",
+        "scene": 0,
+        "fine_x": 5,
+        "cycles": 40
+      },
+      {
+        "address": "0xf18b",
+        "scene": 0,
+        "fine_x": 6,
+        "cycles": 40
+      },
+      {
+        "address": "0xf18b",
+        "scene": 0,
+        "fine_x": 7,
+        "cycles": 40
+      },
+      {
+        "address": "0xf18b",
+        "scene": 32,
+        "fine_x": 0,
+        "cycles": 40
+      },
+      {
+        "address": "0xef2e",
+        "scene": 0,
+        "fine_x": 0,
+        "cycles": 44
+      },
+      {
+        "address": "0xef2e",
+        "scene": 0,
+        "fine_x": 1,
+        "cycles": 44
+      },
+      {
+        "address": "0xef2e",
+        "scene": 0,
+        "fine_x": 2,
+        "cycles": 44
+      },
+      {
+        "address": "0xef2e",
+        "scene": 0,
+        "fine_x": 3,
+        "cycles": 44
+      },
+      {
+        "address": "0xef2e",
+        "scene": 0,
+        "fine_x": 4,
+        "cycles": 44
+      },
+      {
+        "address": "0xef2e",
+        "scene": 0,
+        "fine_x": 5,
+        "cycles": 44
+      },
+      {
+        "address": "0xef2e",
+        "scene": 0,
+        "fine_x": 6,
+        "cycles": 44
+      },
+      {
+        "address": "0xef2e",
+        "scene": 0,
+        "fine_x": 7,
+        "cycles": 44
+      },
+      {
+        "address": "0xef2e",
+        "scene": 32,
+        "fine_x": 0,
+        "cycles": 44
+      }
+    ]
+  },
+  "fixture_screens": 1024,
+  "race_frames_per_mode": 1100,
+  "race_states_exact": true,
+  "outside_lap_exact": true,
+  "all_status_messages_exact": true
+}

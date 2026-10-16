@@ -6,4 +6,4 @@ if not exist ".tmp\Mesen\Mesen.exe" (
   pause
   exit /b 1
 )
-start "" ".tmp\Mesen\Mesen.exe" "artifacts\mmc5racing_2d\20261017_hud_b2\MMC5Racing_HudB2_136x184.nes"
+start "" ".tmp\Mesen\Mesen.exe" "artifacts\mmc5racing_2d\20261017_lap_bg\MMC5Racing_LapBG_136x184.nes"
