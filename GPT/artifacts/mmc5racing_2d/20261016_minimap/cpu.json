@@ -1,29 +1,117 @@
 {
   "cases": 6144,
   "hook_extra_cycles": [
-    109,
-    146
+    92,
+    129
   ],
   "scratch_and_xy_preserved": true,
   "scroll_wait_windows": [
     {
       "address": "0xf18b",
       "scene": 0,
+      "fine_x": 0,
+      "cycles": 40
+    },
+    {
+      "address": "0xf18b",
+      "scene": 0,
+      "fine_x": 1,
+      "cycles": 40
+    },
+    {
+      "address": "0xf18b",
+      "scene": 0,
+      "fine_x": 2,
+      "cycles": 40
+    },
+    {
+      "address": "0xf18b",
+      "scene": 0,
+      "fine_x": 3,
+      "cycles": 40
+    },
+    {
+      "address": "0xf18b",
+      "scene": 0,
+      "fine_x": 4,
+      "cycles": 40
+    },
+    {
+      "address": "0xf18b",
+      "scene": 0,
+      "fine_x": 5,
+      "cycles": 40
+    },
+    {
+      "address": "0xf18b",
+      "scene": 0,
+      "fine_x": 6,
+      "cycles": 40
+    },
+    {
+      "address": "0xf18b",
+      "scene": 0,
+      "fine_x": 7,
       "cycles": 40
     },
     {
       "address": "0xf18b",
       "scene": 32,
+      "fine_x": 0,
       "cycles": 40
     },
     {
       "address": "0xef2e",
       "scene": 0,
+      "fine_x": 0,
+      "cycles": 44
+    },
+    {
+      "address": "0xef2e",
+      "scene": 0,
+      "fine_x": 1,
+      "cycles": 44
+    },
+    {
+      "address": "0xef2e",
+      "scene": 0,
+      "fine_x": 2,
+      "cycles": 44
+    },
+    {
+      "address": "0xef2e",
+      "scene": 0,
+      "fine_x": 3,
+      "cycles": 44
+    },
+    {
+      "address": "0xef2e",
+      "scene": 0,
+      "fine_x": 4,
+      "cycles": 44
+    },
+    {
+      "address": "0xef2e",
+      "scene": 0,
+      "fine_x": 5,
+      "cycles": 44
+    },
+    {
+      "address": "0xef2e",
+      "scene": 0,
+      "fine_x": 6,
+      "cycles": 44
+    },
+    {
+      "address": "0xef2e",
+      "scene": 0,
+      "fine_x": 7,
       "cycles": 44
     },
     {
       "address": "0xef2e",
       "scene": 32,
+      "fine_x": 0,
       "cycles": 44
     }
   ]

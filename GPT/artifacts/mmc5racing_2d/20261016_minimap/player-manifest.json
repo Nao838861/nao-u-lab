@@ -1,6 +1,6 @@
 {
   "base_sha256": "498235c9fc65b4fc1ae6e4d00d7238719b3af052f34ff5e52793da1fac839402",
-  "rom_sha256": "6bc5a7c017ef72c9dd96a18e838b9e9538ff2d4fceb9a5b19b6e234bb317c276",
+  "rom_sha256": "bada7003572ccb859f203afe8261ed9ea8b6ed23ca89b81d8d3af6c019a71a03",
   "player": true,
   "rect_at_fine_x_zero": [
     192,
@@ -8,10 +8,44 @@
     32,
     32
   ],
-  "shared_fine_x_range": [
+  "fine_x_cancelled": [
     0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
     7
   ],
+  "allocation": {
+    "patterns_moved": 107,
+    "course_pattern_checks": 1722368,
+    "split_banks": [
+      60,
+      61,
+      64,
+      128,
+      192,
+      127,
+      191,
+      254
+    ],
+    "retired_attributes": [
+      184,
+      185,
+      186,
+      188
+    ],
+    "protected_chr_pages": [
+      0,
+      1,
+      62,
+      126,
+      190,
+      255
+    ]
+  },
   "world_scale": 20,
   "chr_tiles": [
     192,
@@ -24,6 +58,10 @@
     127,
     128,
     129,
+    184,
+    185,
+    186,
+    188,
     190,
     191,
     254
@@ -32,7 +70,7 @@
     {
       "bank": 108,
       "address": "0xd400",
-      "bytes": 81
+      "bytes": 101
     },
     {
       "bank": 127,
@@ -46,6 +84,11 @@
     },
     {
       "bank": 127,
+      "address": "0xf3cc",
+      "bytes": 33
+    },
+    {
+      "bank": 127,
       "address": "0xf18b",
       "bytes": 20
     },
@@ -56,13 +99,18 @@
     },
     {
       "bank": 127,
+      "address": "0xf710",
+      "bytes": 21
+    },
+    {
+      "bank": 127,
       "address": "0xef2e",
       "bytes": 22
     },
     {
       "bank": 115,
       "address": "0xc670",
-      "bytes": 107
+      "bytes": 94
     },
     {
       "bank": 115,

@@ -1,0 +1,40 @@
+{
+  "drift": {
+    "cases": 128,
+    "screenshots": 256,
+    "fine_x": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "coarse_phases": 4,
+    "chr_quarters": 4,
+    "map_pixels_stationary": true,
+    "outside_map_exact": true,
+    "committed_bank_and_marker_exact": true
+  },
+  "grip": {
+    "cases": 128,
+    "screenshots": 256,
+    "fine_x": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "coarse_phases": 4,
+    "chr_quarters": 4,
+    "map_pixels_stationary": true,
+    "outside_map_exact": true,
+    "committed_bank_and_marker_exact": true
+  }
+}
