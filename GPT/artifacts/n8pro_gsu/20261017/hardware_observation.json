@@ -1,0 +1,22 @@
+{
+  "date_jst": "2026-10-17",
+  "evidence": "ユーザーによる実機試験の報告。こちらから実機を直接観測したものではない。",
+  "target": "EverDrive N8 Pro",
+  "package": "N8Pro_GSU_test.zip",
+  "package_rbf_sha256": "8892bcbad4a8f5db7e82ab78996a264786af5df04306f42b10bd171393ab0a09",
+  "sd_file_hash_independently_confirmed": false,
+  "rom": "GSU_Cube_v001.nes",
+  "user_report": "画面が真っ黒になって失敗したかと思ったが、リセットしたらCUBEのデモが動いた。しかし、何度リセットしてもそれしか動かなくなった。",
+  "power_cycle_followup": "電源を入れ直すとメニューに戻る",
+  "observations": {
+    "first_launch": "黒画面",
+    "console_reset": "立方体デモが動作し、以降のRESETでも立方体が再起動する",
+    "power_cycle": "EverDriveメニューへ復帰する"
+  },
+  "interpretation": "このRBFはEverDriveのメニュー復帰回路を含まないため、RESETでゲームが再起動するのは想定どおり。別ROMの選択には電源の入れ直しを使用する。初回黒画面の詳細原因は未確定。",
+  "scope": "初期立方体の実機表示と電源再投入によるメニュー復帰をユーザー報告で確認。診断ROMの結果、長時間安定性、外部バスタイミング、全GSU命令互換を確認したものではない。",
+  "console_model": null,
+  "n8pro_os_version": null,
+  "diagnostic_selftest_result": null,
+  "original_package_note": "ZIPと生成時のmanifestは改変せず、生成時点の未実機確認という記録を保持する。実機で得られた情報はこの追記ファイルを参照。"
+}
