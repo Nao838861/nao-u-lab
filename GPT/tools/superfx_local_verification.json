@@ -1,0 +1,18 @@
+{
+  "source_revision": "ed39ab03f",
+  "rom": "GSU_MMC5Racing3D_v001.nes",
+  "rom_sha256": "65b9b6f63e79e46750ff65bcb8b0a07d58b1fc0f4bdd80cdf6f30c91c1e701c7",
+  "core_sha256": "89ed554820c2c6686c584b006902a3999a18e047da0b682174d7f7dd9e7c1dc5",
+  "controls": {
+    "status": "pass",
+    "held_edges": true,
+    "view_switch": true,
+    "ground_switch": true,
+    "mode_switch": true,
+    "start_reset": true,
+    "range_reset_recovery": true
+  },
+  "interactive_window": "Mesen - GSU_MMC5Racing3D_v001",
+  "launcher": "play_mmc5racing_3d.cmd",
+  "date": "2026-10-16"
+}

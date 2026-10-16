@@ -1,0 +1,29 @@
+MMC5Racing SuperFX 3D走行版 v001
+
+同じフォルダーの play_mmc5racing_3d.cmd をダブルクリックしてください。
+起動・リセット後、初期化に数秒かかります。
+
+Z：アクセル
+X：ブレーキ／DRIFT操作（モードによる）
+← →：操舵
+右Shift：4種類の視点を切替
+↑：ポリゴン／MODE7風の地面を切替
+↓：GRIP／DRIFTを切替、開始位置へ戻る
+Enter：同じモードで開始位置へ戻る
+
+標準はGSU 50MHz相当のエミュレーションです。
+25MHzで試す場合：play_mmc5racing_3d.cmd --gsu-mhz 25
+
+元の6502物理を使う自車の試走版です。CPU車、周回・ゴール、景物、音は未接続です。
+描画は30fps未達ですが、物理更新は描画と独立しています。
+
+専用Mesenは .tmp/superfx-local/GPT/projects/nes_superfx/runtime にあります。
+Mesen.exeの直接起動は専用DLLを標準DLLで上書きするため、必ず上記cmdを使ってください。
+.tmpを削除すると実行環境も消えます。
+
+取得元：Nao838861/nao-u-lab の codex/phase1-collect-20260810
+取得revision：ed39ab03f（2026年10月16日に取得）
+ソース：.tmp/superfx-local/GPT/projects/nes_superfx
+Mesen基準：2.1.1 / b9fa69ddc6d0a331fb103fdb5eef6904305703c2
+このPC用コア：tools/build_superfx_portable.py で生成
+コンパイラー／SDK：.tmp/msvc（システムのPATH変更なし）
