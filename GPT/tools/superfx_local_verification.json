@@ -124,7 +124,7 @@
   "visual_verification": {
     "version": "003",
     "rom": "GSU_MMC5Racing3D_v003.nes",
-    "rom_sha256": "f92880d0b61db7e3cd1194307ad696e1b2af43210ac496a4182a3a949ed57d0e",
+    "rom_sha256": "1265e03be18ed3d334e29a8b3bfc25f12d50978fcd00bba8a8e19c41a27a57fc",
     "base_sha256": "62fb6b217380a8fbd8738f8a8d8dfe03f70e8fff1407b528e74b41fa2ced6ccc",
     "straight_segments": [
       2,
@@ -345,8 +345,32 @@
       2169943,
       2491741,
       2718893,
-      3315644
-    ]
+      3315645
+    ],
+    "camera_heading_source": "original bank113 velocity_heading $C2/$C3; independent of body $48/$49",
+    "camera_verification": {
+      "cases": [
+        {
+          "ticks": 1001,
+          "camera_checks": 1001,
+          "max_displayed_yaw_units": 2412,
+          "capture_tick": 663,
+          "mode": 0,
+          "physics_ticks_identical": 1000,
+          "max_displayed_yaw_degrees": 13.25
+        },
+        {
+          "ticks": 1001,
+          "camera_checks": 1001,
+          "max_displayed_yaw_units": 1378,
+          "capture_tick": 477,
+          "mode": 1,
+          "physics_ticks_identical": 1000,
+          "max_displayed_yaw_degrees": 7.57
+        }
+      ],
+      "rom_sha256": "1265e03be18ed3d334e29a8b3bfc25f12d50978fcd00bba8a8e19c41a27a57fc"
+    }
   },
-  "visual_source_commit": "6f4d25503"
+  "visual_source_commit": "aa0d83c37"
 }
