@@ -1,0 +1,442 @@
+{
+  "base_sha256": "498235c9fc65b4fc1ae6e4d00d7238719b3af052f34ff5e52793da1fac839402",
+  "rom_sha256": "fe473010c52e1cab0ae58854b0bd8bb0b63e571209a663d0dc3f0eb8b7505ff2",
+  "player": true,
+  "rect_at_fine_x_zero": [
+    192,
+    175,
+    32,
+    32
+  ],
+  "fine_x_cancelled": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "allocation": {
+    "retired": [
+      119,
+      120,
+      122,
+      173,
+      176,
+      178,
+      179,
+      180,
+      181,
+      183,
+      184,
+      185,
+      186,
+      188
+    ],
+    "safe": [
+      4,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      28,
+      29,
+      30,
+      31,
+      33,
+      34,
+      35,
+      36,
+      62,
+      64,
+      65,
+      119,
+      120,
+      122,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      131,
+      134,
+      137,
+      142,
+      148,
+      152,
+      162,
+      173,
+      174,
+      176,
+      178,
+      179,
+      180,
+      181,
+      183,
+      184,
+      185,
+      186,
+      188,
+      190,
+      191,
+      220,
+      222,
+      223,
+      225,
+      226,
+      228,
+      234,
+      235,
+      236,
+      237,
+      238,
+      239,
+      240,
+      241,
+      242,
+      243,
+      245,
+      246,
+      248,
+      254
+    ],
+    "checks": 1722368,
+    "stats": [
+      {
+        "quarter": 0,
+        "patterns_packed": 14821
+      },
+      {
+        "quarter": 1,
+        "patterns_packed": 15316
+      },
+      {
+        "quarter": 2,
+        "patterns_packed": 15272
+      },
+      {
+        "quarter": 3,
+        "patterns_packed": 15405
+      }
+    ],
+    "protected": [
+      0,
+      1,
+      62,
+      126,
+      190,
+      255
+    ],
+    "sha256": "c20804986bd97e1c62f8b8a61c6e8b6296672cc9ca2541452d121ba5ad3c55d6"
+  },
+  "world_scale": 20,
+  "chr_tiles": [
+    192,
+    4,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    28,
+    29
+  ],
+  "patches": [
+    {
+      "bank": 108,
+      "address": "0xd400",
+      "bytes": 136
+    },
+    {
+      "bank": 127,
+      "address": "0xf3b6",
+      "bytes": 22
+    },
+    {
+      "bank": 127,
+      "address": "0xf0f6",
+      "bytes": 5
+    },
+    {
+      "bank": 127,
+      "address": "0xf3cc",
+      "bytes": 33
+    },
+    {
+      "bank": 127,
+      "address": "0xf18b",
+      "bytes": 20
+    },
+    {
+      "bank": 127,
+      "address": "0xf52e",
+      "bytes": 33
+    },
+    {
+      "bank": 127,
+      "address": "0xf710",
+      "bytes": 21
+    },
+    {
+      "bank": 127,
+      "address": "0xef2e",
+      "bytes": 22
+    },
+    {
+      "bank": 115,
+      "address": "0xc670",
+      "bytes": 94
+    },
+    {
+      "bank": 115,
+      "address": "0xc800",
+      "bytes": 3
+    },
+    {
+      "bank": 115,
+      "address": "0xd71d",
+      "bytes": 192
+    },
+    {
+      "bank": 109,
+      "address": "0x813c",
+      "bytes": 4
+    },
+    {
+      "bank": 115,
+      "address": "0xcd84",
+      "bytes": 1
+    },
+    {
+      "bank": 115,
+      "address": "0xcd86",
+      "bytes": 1
+    },
+    {
+      "bank": 115,
+      "address": "0xcd88",
+      "bytes": 1
+    },
+    {
+      "bank": 115,
+      "address": "0xcd8a",
+      "bytes": 1
+    },
+    {
+      "bank": 115,
+      "address": "0xcd8c",
+      "bytes": 1
+    },
+    {
+      "bank": 115,
+      "address": "0xcd8e",
+      "bytes": 1
+    },
+    {
+      "bank": 115,
+      "address": "0xcd90",
+      "bytes": 1
+    },
+    {
+      "bank": 115,
+      "address": "0xcd92",
+      "bytes": 1
+    },
+    {
+      "bank": 115,
+      "address": "0xcd94",
+      "bytes": 1
+    },
+    {
+      "bank": 115,
+      "address": "0xcd96",
+      "bytes": 1
+    },
+    {
+      "bank": 115,
+      "address": "0xcdae",
+      "bytes": 1
+    },
+    {
+      "bank": 120,
+      "address": "0xd50a",
+      "bytes": 20
+    },
+    {
+      "bank": 120,
+      "address": "0xd52a",
+      "bytes": 10
+    },
+    {
+      "bank": 120,
+      "address": "0xd53e",
+      "bytes": 30
+    },
+    {
+      "bank": 120,
+      "address": "0xd55f",
+      "bytes": 15
+    },
+    {
+      "bank": 115,
+      "address": "0xc8e8",
+      "bytes": 6
+    },
+    {
+      "bank": 109,
+      "address": "0x81bb",
+      "bytes": 1
+    },
+    {
+      "bank": 109,
+      "address": "0x811f",
+      "bytes": 1
+    },
+    {
+      "bank": 109,
+      "address": "0x8123",
+      "bytes": 1
+    },
+    {
+      "bank": 109,
+      "address": "0x8163",
+      "bytes": 1
+    },
+    {
+      "bank": 109,
+      "address": "0x817b",
+      "bytes": 1
+    },
+    {
+      "bank": 109,
+      "address": "0x8197",
+      "bytes": 1
+    },
+    {
+      "bank": 109,
+      "address": "0x80e3",
+      "bytes": 1
+    },
+    {
+      "bank": 109,
+      "address": "0x80e7",
+      "bytes": 1
+    },
+    {
+      "bank": 109,
+      "address": "0x80eb",
+      "bytes": 1
+    },
+    {
+      "bank": 109,
+      "address": "0x80f3",
+      "bytes": 1
+    },
+    {
+      "bank": 109,
+      "address": "0x80f7",
+      "bytes": 1
+    },
+    {
+      "bank": 109,
+      "address": "0x80ff",
+      "bytes": 1
+    },
+    {
+      "bank": 109,
+      "address": "0x8103",
+      "bytes": 1
+    },
+    {
+      "bank": 109,
+      "address": "0x8107",
+      "bytes": 1
+    },
+    {
+      "bank": 109,
+      "address": "0x810f",
+      "bytes": 1
+    },
+    {
+      "bank": 109,
+      "address": "0x8113",
+      "bytes": 1
+    }
+  ],
+  "marker_oam_slot": 24,
+  "extra_ram": 0,
+  "extra_nmi_cycles": 0,
+  "road_color": {
+    "pattern_ink": 1,
+    "nes_color": "$00",
+    "description": "gray; white/red player unchanged"
+  },
+  "hud_b2": {
+    "layout": "B2",
+    "label_x": 168,
+    "value_x": 200,
+    "labels": [
+      "TIME",
+      "TOTAL"
+    ],
+    "labels_gray": true,
+    "lap_small_white": true,
+    "extra_sprite_slots": 0,
+    "extra_frame_work": 0,
+    "retired_clock_captions": [
+      "L",
+      "T"
+    ],
+    "sprite_glyphs": [
+      129,
+      131,
+      133,
+      135,
+      137,
+      139,
+      141,
+      143,
+      145
+    ],
+    "status_variants": [
+      "LAP",
+      "GO",
+      "BAD LAP",
+      "GOAL"
+    ]
+  }
+}

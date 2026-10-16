@@ -1,0 +1,136 @@
+{
+  "full_screen_exact": 522,
+  "race_frames_per_mode": 1100,
+  "race_states_positions_publication_exact": true,
+  "scroll_fine_values": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "scroll_coarse_phases": 4,
+  "scroll_chr_quarters": 4,
+  "scroll_ages_per_case": 2,
+  "cpu": {
+    "cases": 6144,
+    "hook_extra_cycles": [
+      92,
+      129
+    ],
+    "scratch_and_xy_preserved": true,
+    "scroll_wait_windows": [
+      {
+        "address": "0xf18b",
+        "scene": 0,
+        "fine_x": 0,
+        "cycles": 40
+      },
+      {
+        "address": "0xf18b",
+        "scene": 0,
+        "fine_x": 1,
+        "cycles": 40
+      },
+      {
+        "address": "0xf18b",
+        "scene": 0,
+        "fine_x": 2,
+        "cycles": 40
+      },
+      {
+        "address": "0xf18b",
+        "scene": 0,
+        "fine_x": 3,
+        "cycles": 40
+      },
+      {
+        "address": "0xf18b",
+        "scene": 0,
+        "fine_x": 4,
+        "cycles": 40
+      },
+      {
+        "address": "0xf18b",
+        "scene": 0,
+        "fine_x": 5,
+        "cycles": 40
+      },
+      {
+        "address": "0xf18b",
+        "scene": 0,
+        "fine_x": 6,
+        "cycles": 40
+      },
+      {
+        "address": "0xf18b",
+        "scene": 0,
+        "fine_x": 7,
+        "cycles": 40
+      },
+      {
+        "address": "0xf18b",
+        "scene": 32,
+        "fine_x": 0,
+        "cycles": 40
+      },
+      {
+        "address": "0xef2e",
+        "scene": 0,
+        "fine_x": 0,
+        "cycles": 44
+      },
+      {
+        "address": "0xef2e",
+        "scene": 0,
+        "fine_x": 1,
+        "cycles": 44
+      },
+      {
+        "address": "0xef2e",
+        "scene": 0,
+        "fine_x": 2,
+        "cycles": 44
+      },
+      {
+        "address": "0xef2e",
+        "scene": 0,
+        "fine_x": 3,
+        "cycles": 44
+      },
+      {
+        "address": "0xef2e",
+        "scene": 0,
+        "fine_x": 4,
+        "cycles": 44
+      },
+      {
+        "address": "0xef2e",
+        "scene": 0,
+        "fine_x": 5,
+        "cycles": 44
+      },
+      {
+        "address": "0xef2e",
+        "scene": 0,
+        "fine_x": 6,
+        "cycles": 44
+      },
+      {
+        "address": "0xef2e",
+        "scene": 0,
+        "fine_x": 7,
+        "cycles": 44
+      },
+      {
+        "address": "0xef2e",
+        "scene": 32,
+        "fine_x": 0,
+        "cycles": 44
+      }
+    ]
+  }
+}

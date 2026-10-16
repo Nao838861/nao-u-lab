@@ -1,0 +1,20 @@
+{
+  "tiles": [
+    30,
+    31,
+    33
+  ],
+  "screens": 512,
+  "fine_x": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "outside_lap_exact": true,
+  "scope": "通常LAPのみ。GO/BAD LAP/GOAL切替は未対応。"
+}
