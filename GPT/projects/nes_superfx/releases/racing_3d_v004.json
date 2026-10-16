@@ -1,0 +1,58 @@
+{
+  "version": "004",
+  "rom": "GSU_MMC5Racing3D_v004.nes",
+  "rom_sha256": "a2725d5c40ea43c1afc9fce6ced4919ea1b121c1692291111c92b1aabbbe2ad7",
+  "base_sha256": "4ebdce201a6ed8ab9d6b7062e5ff1b22397e38668381d5f1a61127e209c2f506",
+  "ground": {
+    "width": 640,
+    "height": 640,
+    "format": "row-major, four pixels per byte, high bits first",
+    "crop": [
+      144,
+      144,
+      784,
+      784
+    ],
+    "source_prg_sha256": "52b3e5ada5a1851a60d6e878a3842182ba00c695a3aec22870e2c03f41cda873",
+    "source_chr_sha256": "a5cfbc9ebd17bfb8f7d1c7f96b76f6078f63f20a7aa0430047ecaeedb5db93a4",
+    "source": "MMC5Racing assets, original angle 0; terrain palettes 0/3; palette-3 black maps to grass",
+    "palette_indices": [
+      "white",
+      "red",
+      "green",
+      "gray"
+    ],
+    "terrain_tiles": 5296,
+    "removed_scenery_tiles": 96,
+    "sha256": "a491b6fcb85cc5597dfb0fc397f2db5bb6565ce007a426b38ed3356ae093410b"
+  },
+  "fx": "car and eight pyramids only; zero transparent, colors 1..3 opaque",
+  "dsp": "fixed-function camera to 192 affine rows; provisional 25MHz/1024 clocks per row",
+  "palettes": [
+    [
+      "white",
+      "red",
+      "green",
+      "gray"
+    ],
+    [
+      "white",
+      "red",
+      "green",
+      "blue"
+    ],
+    [
+      "white",
+      "red",
+      "green",
+      "gray"
+    ],
+    [
+      "white",
+      "red",
+      "green",
+      "blue"
+    ]
+  ],
+  "unchanged": "original PRG banks 4..127, CHR, physics and audio; v003 release preserved"
+}

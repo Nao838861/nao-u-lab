@@ -14,6 +14,7 @@ def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('rom',nargs='?',type=Path,default=ROOT/'runtime/gsu-selftest.nes')
     parser.add_argument('--mapper',required=True,choices=['n8pro-gsu-abi1','n8pro-gsu-abi2','n8pro-racing-gsu','nrom'])
+    parser.add_argument('--runtime',type=Path,default=ROOT/'runtime')
     parser.add_argument('--controller-a',action='store_true',help='NESパッドを有効にし、未割当ならZをAに設定')
     parser.add_argument('--gsu-mhz',type=int,choices=[25,50],default=25,help='GSU基準MHz。50でも外部RAMとフィルの実時間を維持')
     args=parser.parse_args()
@@ -21,20 +22,21 @@ def main():
     rom=args.rom.resolve()
     header=rom.read_bytes()[:16]
     if len(header)!=16 or header[:4]!=b'NES\x1a': parser.error('iNES ROMを指定してください')
-    expected=bytes([64,1]) if args.mapper=='n8pro-racing-gsu' else bytes([2,1])
-    if args.mapper!='nrom' and (header[4:6]!=expected or (header[6]&0xF4) or (header[7]&0xFC)):
-        parser.error(f'選択したGSUマッパーはmapper 0・PRG{expected[0]*16}KiB・CHR8KiBのiNES ROMが対象です')
+    expected=[bytes([64,1]),bytes([128,1])] if args.mapper=='n8pro-racing-gsu' else [bytes([2,1])]
+    if args.mapper!='nrom' and (header[4:6] not in expected or (header[6]&0xF4) or (header[7]&0xFC)):
+        parser.error('選択したGSUマッパーのROM形式と一致しません')
     env=os.environ.copy()
     env['NES_GSU_CLOCK_HZ']=str(args.gsu_mhz*1000000)
     if args.mapper!='nrom': env['NES_GSU_MAPPER']=args.mapper
     else: env.pop('NES_GSU_MAPPER',None)
-    executable=ROOT/'runtime/Mesen.exe'
+    runtime=args.runtime.resolve()
+    executable=runtime/'Mesen.exe'
     if not executable.exists(): parser.error('先にtools/setup_runtime.pyを実行してください')
-    core=ROOT/'runtime/MesenCore.dll'
-    manifest=json.loads((ROOT/'runtime/runtime_manifest.json').read_text())
+    core=runtime/'MesenCore.dll'
+    manifest=json.loads((runtime/'runtime_manifest.json').read_text())
     if hashlib.sha256(core.read_bytes()).hexdigest()!=manifest['MesenCore.dll']:
         parser.error('専用コアのhashが異なります。tools/setup_runtime.pyを再実行してください')
-    settings=ROOT/'runtime/settings.json'
+    settings=runtime/'settings.json'
     config=json.loads(settings.read_text(encoding='utf-8-sig'))
     config.setdefault('Preferences',{})['SingleInstance']=False
     if args.controller_a:

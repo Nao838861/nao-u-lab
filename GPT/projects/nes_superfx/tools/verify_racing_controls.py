@@ -6,7 +6,8 @@ from native_lock import core_lock
 
 def main():
     global OUT
-    p=argparse.ArgumentParser();p.add_argument('--version',choices=['001','002','003'],default='001');args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--version',choices=['001','002','003','004'],default='001');args=p.parse_args()
+    runtime=ROOT/('runtime_mode7' if args.version=='004' else 'runtime')
     OUT=ROOT/f'build/racing/v{args.version}'
     lab={n:int(a,16) for a,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(OUT/'cpu.lbl').read_text())}
     out=OUT/'controls';out.mkdir(exist_ok=True)
@@ -47,13 +48,13 @@ emu.addEventCallback(function()
 end,emu.eventType.endFrame)
 '''.replace('LABELS','{'+','.join(f'{k}={v}' for k,v in lab.items())+'}').replace('OUTDIR',json.dumps(out.as_posix()))
     script=out/'test.lua';script.write_text(code)
-    settings=ROOT/'runtime/settings.json';before=settings.read_bytes();cfg=json.loads(before)
+    settings=runtime/'settings.json';before=settings.read_bytes();cfg=json.loads(before)
     cfg.setdefault('Debug',{}).setdefault('ScriptWindow',{})['AllowIoOsAccess']=True
     cfg.setdefault('Nes',{}).setdefault('Port1',{})['Type']='NesController'
     settings.write_text(json.dumps(cfg));env=os.environ.copy();env.update(NES_GSU_MAPPER='n8pro-racing-gsu',NES_GSU_CLOCK_HZ='50000000')
     try:
-        with core_lock(ROOT/'runtime/MesenCore.dll'):
-            p=subprocess.run([str(ROOT/'runtime/Mesen.exe'),'--testRunner','--timeout=90','--doNotSaveSettings',str(OUT/f'GSU_MMC5Racing3D_v{args.version}.nes'),str(script)],cwd=ROOT/'runtime',env=env,capture_output=True,timeout=100,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+        with core_lock(runtime/'MesenCore.dll'):
+            p=subprocess.run([str(runtime/'Mesen.exe'),'--testRunner','--timeout=90','--doNotSaveSettings',str(OUT/f'GSU_MMC5Racing3D_v{args.version}.nes'),str(script)],cwd=runtime,env=env,capture_output=True,timeout=100,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
     finally:settings.write_bytes(before)
     (out/'emulator.log').write_bytes(p.stdout+p.stderr)
     assert p.returncode==0,(out/'error.txt').read_text() if (out/'error.txt').exists() else p.stdout

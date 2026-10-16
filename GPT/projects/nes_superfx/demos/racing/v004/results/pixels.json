@@ -1,0 +1,7 @@
+{
+  "status": "pass",
+  "ppu_pixels": 393216,
+  "fx_opaque_pixels": 1820,
+  "fx_transparent_pixels": 194788,
+  "scope": "4 views with FX + 4 views background only, complete 256x192 area; scalar color-key composition"
+}

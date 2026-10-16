@@ -1,15 +1,17 @@
 """カメラ修正前後の物理一致と、元のカメラ角度の伝達を実ROMで検証する。"""
-import hashlib,json,os,re,subprocess
+import argparse,hashlib,json,os,re,subprocess
 from pathlib import Path
 from native_lock import core_lock
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'build/racing/v003/camera-test'
+BASELINE=OUT
+VERSION='003'
 
 def run(mode,after):
     name=('after' if after else 'before')+str(mode)
     out=OUT/name;out.mkdir(exist_ok=True)
-    labels=ROOT/'build/racing/v003/cpu.lbl' if after else OUT/'before.lbl'
+    labels=ROOT/f'build/racing/v{VERSION}/cpu.lbl' if after else BASELINE/'before.lbl'
     lab={n:int(a,16) for a,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',labels.read_text())}
     lua=r'''
 local L=LABELS local out=OUTDIR local count=0 local frames=0 local seen=0
@@ -61,18 +63,23 @@ end,emu.eventType.endFrame)
 '''.replace('LABELS','{'+','.join(f'{k}={v}' for k,v in lab.items())+'}').replace('OUTDIR',json.dumps(out.as_posix())).replace('MODE',str(mode)).replace('AFTER','true' if after else 'false')
     script=out/'test.lua';script.write_text(lua)
     env=os.environ.copy();env.update(NES_GSU_MAPPER='n8pro-racing-gsu',NES_GSU_CLOCK_HZ='50000000')
-    rom=ROOT/'releases/GSU_MMC5Racing3D_v003.nes' if after else OUT/'before.nes'
-    with core_lock(ROOT/'runtime/MesenCore.dll'):
-        p=subprocess.run([str(ROOT/'runtime/Mesen.exe'),'--testRunner','--timeout=90','--doNotSaveSettings',str(rom),str(script)],cwd=ROOT/'runtime',env=env,capture_output=True,timeout=100,creationflags=subprocess.CREATE_NO_WINDOW)
+    rom=ROOT/f'releases/GSU_MMC5Racing3D_v{VERSION}.nes' if after else BASELINE/'before.nes'
+    runtime=ROOT/('runtime_mode7' if after and VERSION=='004' else 'runtime')
+    with core_lock(runtime/'MesenCore.dll'):
+        p=subprocess.run([str(runtime/'Mesen.exe'),'--testRunner','--timeout=90','--doNotSaveSettings',str(rom),str(script)],cwd=runtime,env=env,capture_output=True,timeout=100,creationflags=subprocess.CREATE_NO_WINDOW)
     (out/'emulator.log').write_bytes(p.stdout+p.stderr)
     assert p.returncode==0,(name,p.stdout,p.stderr)
     return out
 
 def main():
-    settings=ROOT/'runtime/settings.json';before=settings.read_bytes();cfg=json.loads(before)
-    cfg.setdefault('Debug',{}).setdefault('ScriptWindow',{})['AllowIoOsAccess']=True
-    settings.write_text(json.dumps(cfg))
-    results=[];dst=ROOT/'demos/racing/v003/results/camera';dst.mkdir(exist_ok=True)
+    global OUT,VERSION
+    p=argparse.ArgumentParser();p.add_argument('--version',choices=['003','004'],default='003');args=p.parse_args()
+    VERSION=args.version;OUT=ROOT/f'build/racing/v{VERSION}/camera-test';OUT.mkdir(parents=True,exist_ok=True)
+    saved=[]
+    for name in (['runtime','runtime_mode7'] if VERSION=='004' else ['runtime']):
+        settings=ROOT/name/'settings.json';before=settings.read_bytes();saved.append((settings,before));cfg=json.loads(before)
+        cfg.setdefault('Debug',{}).setdefault('ScriptWindow',{})['AllowIoOsAccess']=True;settings.write_text(json.dumps(cfg))
+    results=[];dst=ROOT/f'demos/racing/v{VERSION}/results/camera';dst.mkdir(parents=True,exist_ok=True)
     try:
         for mode in [0,1]:
             a=run(mode,False);b=run(mode,True)
@@ -82,8 +89,9 @@ def main():
             report=json.loads((b/'report.json').read_text());report.update(mode=mode,physics_ticks_identical=1000,max_displayed_yaw_degrees=round(report['max_displayed_yaw_units']*360/65536,2))
             if (b/'slip.png').exists():(dst/f'mode{mode}-slip.png').write_bytes((b/'slip.png').read_bytes())
             results.append(report)
-    finally:settings.write_bytes(before)
-    report={'cases':results,'rom_sha256':hashlib.sha256((ROOT/'releases/GSU_MMC5Racing3D_v003.nes').read_bytes()).hexdigest()}
+    finally:
+        for settings,before in saved:settings.write_bytes(before)
+    report={'cases':results,'rom_sha256':hashlib.sha256((ROOT/f'releases/GSU_MMC5Racing3D_v{VERSION}.nes').read_bytes()).hexdigest()}
     (dst/'verification.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report))
 
 if __name__=='__main__':main()

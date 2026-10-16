@@ -30,7 +30,7 @@ def main():
     factory=replace(factory,'\t\tcase 0: return new NROM();','''\t\tcase 0: {
             const char* selected = std::getenv("NES_GSU_MAPPER");
             if(selected && std::string(selected) == "n8pro-racing-gsu") {
-                if(romData.PrgRom.size()!=1048576 || romData.ChrRom.size()!=8192) return nullptr;
+                if((romData.PrgRom.size()!=1048576 && romData.PrgRom.size()!=2097152) || romData.ChrRom.size()!=8192) return nullptr;
                 return new NesRacingFx();
             }
             if(selected && std::string(selected) == "n8pro-gsu-abi2") {
@@ -70,7 +70,7 @@ def main():
     (host/api_rel).write_text(api,encoding='utf-8')
     dest=host/'Core/NES/Mappers/Homebrew/NesFx'
     dest.mkdir(parents=True,exist_ok=True)
-    for source in (ROOT/'src/NesSuperFx.h',ROOT/'src/Board.hpp',ROOT/'src/NesBitmapFx.h',ROOT/'src/NesRacingFx.h',ROOT/'src/BitmapBoard.hpp',OUT/'NesFxGsu.hpp'):
+    for source in (ROOT/'src/NesSuperFx.h',ROOT/'src/Board.hpp',ROOT/'src/NesBitmapFx.h',ROOT/'src/NesRacingFx.h',ROOT/'src/BitmapBoard.hpp',ROOT/'src/Mode7Ground.hpp',OUT/'NesFxGsu.hpp'):
         shutil.copy2(source,dest/source.name)
     # Full source diff is retained as reproducible evidence alongside the DLL.
     build=ROOT/'build'

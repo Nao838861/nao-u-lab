@@ -1,0 +1,29 @@
+{
+  "rom_sha256": "a2725d5c40ea43c1afc9fce6ced4919ea1b121c1692291111c92b1aabbbe2ad7",
+  "core_sha256": "31dad68adac9ae430cc09cd3ae5cbca07ba893efc7c7068bf4c10ef63baded78",
+  "gsu_clock_hz": 50000000,
+  "dsp_model_clock_hz": 25000000,
+  "dsp_model_clocks_per_row": 1024,
+  "dsp_model_ms": 7.86432,
+  "initial_gsu_ms": [
+    5.573,
+    8.706,
+    9.319,
+    12.454,
+    5.577,
+    8.711,
+    9.325,
+    12.462
+  ],
+  "initial_fps": [
+    60.0988,
+    60.0988,
+    30.0494,
+    30.0494,
+    60.0988,
+    60.0988,
+    30.0494,
+    30.0494
+  ],
+  "physical_hardware_measured": false
+}

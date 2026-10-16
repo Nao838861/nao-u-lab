@@ -7,9 +7,12 @@ ROOT=Path(__file__).resolve().parents[1]
 
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--rom',type=Path,default=ROOT/'releases/GSU_MMC5Racing3D_v003.nes');parser.add_argument('--results',type=Path,default=ROOT/'demos/racing/v003/results');parser.add_argument('--trees',action='store_true');parser.add_argument('--dump-gsu',action='store_true');parser.add_argument('--measure-fps',action='store_true');args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--version',choices=['003','004'],default='003');parser.add_argument('--runtime',type=Path);parser.add_argument('--rom',type=Path);parser.add_argument('--results',type=Path);parser.add_argument('--trees',action='store_true');parser.add_argument('--dump-gsu',action='store_true');parser.add_argument('--measure-fps',action='store_true');args=parser.parse_args()
+    args.rom=args.rom or ROOT/f'releases/GSU_MMC5Racing3D_v{args.version}.nes'
+    args.results=args.results or ROOT/f'demos/racing/v{args.version}/results'
+    runtime=(args.runtime or ROOT/('runtime_mode7' if args.version=='004' else 'runtime')).resolve()
     out=args.results.resolve();out.mkdir(parents=True,exist_ok=True)
-    labels={n:int(a,16) for a,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(ROOT/'build/racing/v003/cpu.lbl').read_text())}
+    labels={n:int(a,16) for a,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(ROOT/f'build/racing/v{args.version}/cpu.lbl').read_text())}
     lua=r'''
 local L=LABELS local out=OUTDIR local frame=0 local shot=0 local settle=0 local done=false local clocks={}
 local function b(a) return emu.read(a,emu.memType.nesMemory) end
@@ -74,13 +77,25 @@ emu.addMemoryCallback(function() if not stamps.wait then stamps.wait=cycles() en
 end,emu.callbackType.write,0x481f)
 """
         lua=lua.replace('local function b(a)',dump+'local function b(a)')
-    script=ROOT/'build/racing/v003/visual.lua'  ;script.write_text(lua)
-    settings=ROOT/'runtime/settings.json';before=settings.read_bytes();cfg=json.loads(before)
+    if args.version=='004':
+        start=lua.index("   assert(b(0x4ff5)==1")
+        end=lua.index('   clocks[#clocks+1]',start)
+        lua=lua[:start]+'''   assert(b(0x4fb1)==1,'Mode7 unavailable')
+   assert(math.floor(b(0x4fb0)/4)%2==0,'Mode7 error')
+   assert(w(0x4fb4)==w(L.displayed_tick),'Mode7/FX generation mismatch')
+   local ram={} local front=b(L.front)
+   for i=0,16383 do ram[#ram+1]=string.char(emu.read(front*16384+i,emu.memType.nesMapperRam)) end
+   local f=assert(io.open(out..'/front'..shot..'.bin','wb'));f:write(table.concat(ram));f:close()
+   local pose={} for i=0,13 do pose[#pose+1]=string.char(emu.read(0x8008+i,emu.memType.nesMapperRam)) end
+   f=assert(io.open(out..'/camera'..shot..'.bin','wb'));f:write(table.concat(pose));f:close()
+'''+lua[end:]
+    script=ROOT/f'build/racing/v{args.version}/visual.lua';script.write_text(lua)
+    settings=runtime/'settings.json';before=settings.read_bytes();cfg=json.loads(before)
     cfg.setdefault('Debug',{}).setdefault('ScriptWindow',{})['AllowIoOsAccess']=True;settings.write_text(json.dumps(cfg))
     env=os.environ.copy();env.update(NES_GSU_MAPPER='n8pro-racing-gsu',NES_GSU_CLOCK_HZ='50000000')
     try:
-        with core_lock(ROOT/'runtime/MesenCore.dll'):
-            p=subprocess.run([str(ROOT/'runtime/Mesen.exe'),'--testRunner','--timeout=90','--doNotSaveSettings',str(args.rom.resolve()),str(script)],cwd=ROOT/'runtime',env=env,capture_output=True,timeout=100,creationflags=subprocess.CREATE_NO_WINDOW)
+        with core_lock(runtime/'MesenCore.dll'):
+            p=subprocess.run([str(runtime/'Mesen.exe'),'--testRunner','--timeout=90','--doNotSaveSettings',str(args.rom.resolve()),str(script)],cwd=runtime,env=env,capture_output=True,timeout=100,creationflags=subprocess.CREATE_NO_WINDOW)
     finally:settings.write_bytes(before)
     (out/'emulator.log').write_bytes(p.stdout+p.stderr);assert p.returncode==0,(p.stdout,p.stderr)
     report=json.loads((out/'counters.json').read_text());assert report['fault']==0 and report['physics_ticks']==report['audio_ticks'],report
@@ -88,8 +103,8 @@ end,emu.callbackType.write,0x481f)
     for ground in ([] if args.trees else [0,1]):
         for view,h in enumerate([88,72,56,0]):
             im=Image.open(out/f'ground{ground}-view{view}.png').convert('RGB')
-            if h:assert set(im.crop((0,0,256,h)).getdata())=={(100,176,255)},('sky pixels',ground,view)
-            assert (181,49,32) in set(im.getdata()),('red car missing',ground,view)
+            if h and args.version=='003':assert set(im.crop((0,0,256,h)).getdata())=={(100,176,255)},('sky pixels',ground,view)
+            assert (181,49,32) in set(im.getdata()),('red car/curb missing',ground,view)
     print(json.dumps(report))
 
 
