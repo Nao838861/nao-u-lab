@@ -1,31 +1,31 @@
 {
-  "previous_subdivisions": 8,
-  "subdivisions": 4,
-  "previous_candidate_quads": 258,
-  "candidate_quads": 146,
+  "previous_subdivisions": 4,
+  "subdivisions": 2,
+  "previous_candidate_quads": 146,
+  "candidate_quads": 90,
   "previous_clocks": [
-    2806893,
-    3150065,
-    3193454,
-    5725112
-  ],
-  "clocks": [
     2100965,
     2332001,
     2329066,
     3752962
   ],
+  "clocks": [
+    1720555,
+    1909013,
+    1907085,
+    2770380
+  ],
   "savings_percent": [
-    25.1,
-    26.0,
-    27.1,
-    34.4
+    18.1,
+    18.1,
+    18.1,
+    26.2
   ],
   "gsu_render_ms_at_50mhz": [
-    42.02,
-    46.64,
-    46.58,
-    75.06
+    34.41,
+    38.18,
+    38.14,
+    55.41
   ],
   "scope": "spawn pose, four views; GSU render only, excludes CPU and display synchronization"
 }
