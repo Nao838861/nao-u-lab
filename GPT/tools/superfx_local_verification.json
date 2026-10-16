@@ -124,7 +124,7 @@
   "visual_verification": {
     "version": "003",
     "rom": "GSU_MMC5Racing3D_v003.nes",
-    "rom_sha256": "822b0b1b44f323b09514f90512a70eba95343e68ff9fd9765eb1ad713ac6c128",
+    "rom_sha256": "b2cc7c4f7e3ab14dcfb5b897cbeb1384da592bc8ec18b5b60527c270ee941b6e",
     "base_sha256": "62fb6b217380a8fbd8738f8a8d8dfe03f70e8fff1407b528e74b41fa2ced6ccc",
     "straight_segments": [
       2,
@@ -177,8 +177,8 @@
     "unchanged": "PRG banks 4..127 and CHR; physics and audio preserved",
     "core_sha256": "c03bb368a923479802a89a3d92a9e682dae7833cc91af478fa2a5aed51689b8b",
     "counters": {
-      "physics_ticks": 93,
-      "audio_ticks": 93,
+      "physics_ticks": 106,
+      "audio_ticks": 106,
       "fault": 0,
       "captures": 8
     },
@@ -204,30 +204,30 @@
     "kerb_comparison": {
       "identical_images": 8,
       "gsu_clocks_culled": [
-        1720555,
-        1909013,
-        1907085,
-        2770380,
-        1731141,
-        1927759,
-        2062329,
-        2504620
+        2286052,
+        2630481,
+        2781055,
+        3855574,
+        2313395,
+        2668359,
+        2957527,
+        3617219
       ],
       "gsu_clocks_unculled": [
-        2602957,
-        2892718,
-        2883579,
-        3583058,
-        1717453,
-        1914077,
-        2048643,
-        2490958
+        3168056,
+        3614658,
+        3757182,
+        4667492,
+        2300990,
+        2656483,
+        2945793,
+        3605542
       ],
       "polygon_savings_percent": [
-        33.9,
-        34.0,
-        33.9,
-        22.7
+        27.8,
+        27.2,
+        26.0,
+        17.4
       ],
       "scope": "spawn pose, four views, both ground modes, 50MHz emulated GSU"
     },
@@ -261,7 +261,91 @@
         55.41
       ],
       "scope": "spawn pose, four views; GSU render only, excludes CPU and display synchronization"
-    }
+    },
+    "trees": {
+      "source": "MMC5Racing/scenery/build.py TREES",
+      "source_positions": [
+        [
+          160,
+          170
+        ],
+        [
+          136,
+          328
+        ],
+        [
+          280,
+          436
+        ],
+        [
+          482,
+          502
+        ],
+        [
+          500,
+          320
+        ],
+        [
+          210,
+          43
+        ],
+        [
+          168,
+          470
+        ],
+        [
+          520,
+          630
+        ]
+      ],
+      "radius_source_px": 11,
+      "height_source_px": 11.25,
+      "side_materials": [
+        33,
+        16,
+        1
+      ]
+    },
+    "tree_comparison": {
+      "identical_images": 16,
+      "gsu_clocks_culled": [
+        2286052,
+        2630481,
+        2781055,
+        3855574,
+        2313395,
+        2668359,
+        2957527,
+        3617219
+      ],
+      "gsu_clocks_unculled": [
+        2450286,
+        2751858,
+        2816699,
+        3848310,
+        2479229,
+        2790919,
+        2993565,
+        3609955
+      ],
+      "polygon_savings_percent": [
+        6.7,
+        4.4,
+        1.3,
+        -0.2
+      ],
+      "scope": "spawn pose, four views, both ground modes, 50MHz emulated GSU"
+    },
+    "current_gsu_clocks": [
+      2286052,
+      2630481,
+      2781055,
+      3855574,
+      2313395,
+      2668359,
+      2957527,
+      3617219
+    ]
   },
-  "visual_source_commit": "f250af0e4"
+  "visual_source_commit": "e27686824"
 }
