@@ -1,10 +1,13 @@
 """走行ROMの実パッドによる視点・地面・モード・リセットを確認。"""
-import json,os,re,subprocess
+import argparse,json,os,re,subprocess
 from build_ground import ROOT
 from build_racing import OUT
 from native_lock import core_lock
 
 def main():
+    global OUT
+    p=argparse.ArgumentParser();p.add_argument('--version',choices=['001','002'],default='001');args=p.parse_args()
+    OUT=ROOT/f'build/racing/v{args.version}'
     lab={n:int(a,16) for a,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(OUT/'cpu.lbl').read_text())}
     out=OUT/'controls';out.mkdir(exist_ok=True)
     code=r'''local L=LABELS local out=OUTDIR local frame=0 local phase=0 local untilFrame=0 local press={} local mark=0 local lastView=0 local done=false
@@ -50,7 +53,7 @@ end,emu.eventType.endFrame)
     settings.write_text(json.dumps(cfg));env=os.environ.copy();env.update(NES_GSU_MAPPER='n8pro-racing-gsu',NES_GSU_CLOCK_HZ='50000000')
     try:
         with core_lock(ROOT/'runtime/MesenCore.dll'):
-            p=subprocess.run([str(ROOT/'runtime/Mesen.exe'),'--testRunner','--timeout=90','--doNotSaveSettings',str(OUT/'GSU_MMC5Racing3D_v001.nes'),str(script)],cwd=ROOT/'runtime',env=env,capture_output=True,timeout=100,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+            p=subprocess.run([str(ROOT/'runtime/Mesen.exe'),'--testRunner','--timeout=90','--doNotSaveSettings',str(OUT/f'GSU_MMC5Racing3D_v{args.version}.nes'),str(script)],cwd=ROOT/'runtime',env=env,capture_output=True,timeout=100,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
     finally:settings.write_bytes(before)
     (out/'emulator.log').write_bytes(p.stdout+p.stderr)
     assert p.returncode==0,(out/'error.txt').read_text() if (out/'error.txt').exists() else p.stdout

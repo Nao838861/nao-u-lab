@@ -62,6 +62,7 @@ def main():
         config.Region=ConsoleRegion::Ntsc;
         config.RamPowerOnState=RamState::AllZeros;
         config.DisableGameDatabase=true;
+        for(auto &volume : config.ChannelVolumes) volume = 100;
         _emu->GetSettings()->SetNesConfig(config);
     }
 '''
