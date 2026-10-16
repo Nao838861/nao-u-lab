@@ -1,0 +1,41 @@
+{
+  "grip": {
+    "snapshot": {
+      "state": 1,
+      "mode": "grip",
+      "laps": 0,
+      "flags": 0,
+      "ticks": 40,
+      "lapTicks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "course_pixels": 24335
+  },
+  "drift": {
+    "snapshot": {
+      "state": 1,
+      "mode": "drift",
+      "laps": 0,
+      "flags": 0,
+      "ticks": 40,
+      "lapTicks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "course_pixels": 24417
+  },
+  "page_errors": [],
+  "ranking_status": [
+    "まだ記録がありません。最初の完走を。",
+    "まだ記録がありません。最初の完走を。"
+  ]
+}
