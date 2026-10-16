@@ -502,7 +502,7 @@ curb_axis_max:
   ibt r0,#1
   save $8f20,r0
 curb_child:
-  ; t = 0..8 in Q8; pairs are A->D and B->C.
+  ; t = 0..4 in Q8; pairs are A->D and B->C.
   load r0,$8f20
   dec r0
   and #1
@@ -529,7 +529,7 @@ curb_child:
     .if corner < 2
       dec r0
     .endif
-    .repeat 5
+    .repeat 6
       add r0
     .endrepeat
     save $8f22,r0
@@ -573,7 +573,7 @@ child_done:
   nop
   inc r0
   save $8f20,r0
-  sub #9
+  sub #5
   jlt curb_child
 skip_face:
   load r0,$807a
@@ -590,7 +590,7 @@ faces_done:
   jmp r11
   nop
 
-; Interpolate a camera-space vertex with a shared endpoint and integer t/8.
+; Interpolate a camera-space vertex with a shared endpoint and integer t/4.
 curb_vertex:
   save $8f24,r11
   ibt r10,#3
