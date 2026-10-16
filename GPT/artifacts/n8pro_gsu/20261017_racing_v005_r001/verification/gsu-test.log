@@ -1,0 +1,10 @@
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\gsu-test\tb_racing_gsu.vhd:72:7:@19947105ns:(report note): GSU finished case 0
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\gsu-test\tb_racing_gsu.vhd:78:7:@21585505ns:(report note): RACING FRAME PASS 0
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\gsu-test\tb_racing_gsu.vhd:72:7:@44644038ns:(report note): GSU finished case 1
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\gsu-test\tb_racing_gsu.vhd:78:7:@46282438ns:(report note): RACING FRAME PASS 1
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\gsu-test\tb_racing_gsu.vhd:72:7:@69931704ns:(report note): GSU finished case 2
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\gsu-test\tb_racing_gsu.vhd:78:7:@71570104ns:(report note): RACING FRAME PASS 2
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\gsu-test\tb_racing_gsu.vhd:72:7:@97993515ns:(report note): GSU finished case 3
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\gsu-test\tb_racing_gsu.vhd:78:7:@99631915ns:(report note): RACING FRAME PASS 3
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\gsu-test\tb_racing_gsu.vhd:80:5:@99631915ns:(report note): ALL RACING FRAMES PASSED
+simulation stopped @99631915ns

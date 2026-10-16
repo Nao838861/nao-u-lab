@@ -1,0 +1,6 @@
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\display-test\tb_display.vhd:84:4:@14248192ns:(report note): DISPLAY CASE PASS 0
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\display-test\tb_display.vhd:84:4:@28496352ns:(report note): DISPLAY CASE PASS 1
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\display-test\tb_display.vhd:84:4:@42744512ns:(report note): DISPLAY CASE PASS 2
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\display-test\tb_display.vhd:84:4:@56992672ns:(report note): DISPLAY CASE PASS 3
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\display-test\tb_display.vhd:86:3:@56992672ns:(report note): ALL DISPLAY PIXELS PASSED
+simulation stopped @56992672ns
