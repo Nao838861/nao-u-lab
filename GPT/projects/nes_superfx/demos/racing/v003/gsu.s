@@ -4,6 +4,9 @@
 .ifndef KERB_GROUP_CULL
 KERB_GROUP_CULL = 1
 .endif
+.ifndef TREE_GROUP_CULL
+TREE_GROUP_CULL = 1
+.endif
 .export render_entry,render_stop
 .macro load reg,address
   lm reg,(address)
@@ -59,6 +62,14 @@ render_entry:
   call texture_ground
 polygon_ground:
   call transform
+  iwt r0,#$8300
+  load r6,$8020
+  with r6
+  sub #5
+  call faces
+  call trees
+  load r0,$802a
+  ibt r6,#5
   call faces
   rpix
 render_stop:
@@ -364,10 +375,8 @@ vertices_done:
 faces:
   cache
   save $8078,r11
-  iwt r0,#$8300
   save $807a,r0
-  load r0,$8020
-  save $807c,r0
+  save $807c,r6
 next_face:
   load r7,$807a
   ldw (r7)
@@ -1220,9 +1229,9 @@ fill_spans:
   ibt r0,#$11
   cmode
   load r0,$807e
-  iwt r6,#$20
+  iwt r6,#$10
   cmp r6
-  bne material_ready
+  blt material_ready
   nop
   ibt r0,#$13
   cmode
@@ -1318,4 +1327,118 @@ division_next:
   nop
   jmp r11
   nop
+; Stream scenery through a six-vertex scratch mesh, preserving road/car data.
+tree_transform:
+  save $8050,r11
+  iwt r10,#256
+  jump vertex
+trees:
+  save $8f30,r11
+  iwt r7,#tree_centers
+  iwt r8,#$8f40
+  ibt r9,#8
+  call tree_transform
+  ibt r0,#8
+  save $8f32,r0
+tree_next:
+  iwt r3,#$8f44
+  iwt r7,#$8000
+  ibt r9,#0
+  ibt r8,#0
+select_tree:
+  ldw (r3)
+  cmp r7
+  blt keep_tree
+  nop
+  move r7,r0
+  move r8,r9
+keep_tree:
+  with r3
+  add #6
+  inc r9
+  from r9
+  sub #8
+  blt select_tree
+  nop
+  save $8f34,r8
+  ; Mark selected center as consumed.
+  from r8
+  add r8
+  add r8
+  add r0
+  iwt r6,#$8f44
+  add r6
+  move r3,r0
+  iwt r0,#$8000
+  stw (r3)
+  .if TREE_GROUP_CULL
+  ; Base-centered sphere radius 4 world units encloses the entire prism.
+  iwt r0,#-512
+  from r7
+  cmp r0
+  jlt tree_done
+  iwt r0,#18944
+  from r7
+  cmp r0
+  jge tree_done
+  ; A radius-expanded cone rejects whole offscreen trees before six vertices.
+  from r7
+  iwt r6,#1024
+  add r6
+  save $8f36,r0
+  load r0,$8f34
+  move r6,r0
+  add r0
+  add r6
+  add r0
+  iwt r6,#$8f40
+  add r6
+  move r3,r0
+  ibt r9,#2
+tree_axis:
+  ldw (r3)
+  sub #0
+  bpl tree_positive
+  nop
+  not
+  inc r0
+tree_positive:
+  load r6,$8f36
+  cmp r6
+  jge tree_done
+  add2 r3
+  dec r9
+  bne tree_axis
+  nop
+  .endif
+  load r0,$8f34
+  add r0
+  add r0
+  move r6,r0
+  add r0
+  add r0
+  add r0
+  add r6
+  iwt r6,#tree_vertices
+  add r6
+  move r7,r0
+  iwt r8,#$8f70
+  ibt r9,#6
+  call tree_transform
+  iwt r0,#tree_faces
+  ibt r6,#4
+  call faces
+tree_done:
+  load r0,$8f32
+  dec r0
+  save $8f32,r0
+  sub #0
+  jeq trees_done
+  jump tree_next
+trees_done:
+  load r11,$8f30
+  jmp r11
+  nop
+.align 2,$01
+.include "trees.inc"
 .assert *-render_entry <= $1000,error,"GSU code exceeds work RAM"

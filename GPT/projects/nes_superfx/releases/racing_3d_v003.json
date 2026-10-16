@@ -1,7 +1,7 @@
 {
   "version": "003",
   "rom": "GSU_MMC5Racing3D_v003.nes",
-  "rom_sha256": "822b0b1b44f323b09514f90512a70eba95343e68ff9fd9765eb1ad713ac6c128",
+  "rom_sha256": "b2cc7c4f7e3ab14dcfb5b897cbeb1384da592bc8ec18b5b60527c270ee941b6e",
   "base_sha256": "62fb6b217380a8fbd8738f8a8d8dfe03f70e8fff1407b528e74b41fa2ced6ccc",
   "straight_segments": [
     2,
@@ -59,5 +59,49 @@
   ],
   "requires_sky_palette_extension": true,
   "rear_material": "GSU native checkerboard red/gray",
+  "trees": {
+    "source": "MMC5Racing/scenery/build.py TREES",
+    "source_positions": [
+      [
+        160,
+        170
+      ],
+      [
+        136,
+        328
+      ],
+      [
+        280,
+        436
+      ],
+      [
+        482,
+        502
+      ],
+      [
+        500,
+        320
+      ],
+      [
+        210,
+        43
+      ],
+      [
+        168,
+        470
+      ],
+      [
+        520,
+        630
+      ]
+    ],
+    "radius_source_px": 11,
+    "height_source_px": 11.25,
+    "side_materials": [
+      33,
+      16,
+      1
+    ]
+  },
   "unchanged": "PRG banks 4..127 and CHR; physics and audio preserved"
 }

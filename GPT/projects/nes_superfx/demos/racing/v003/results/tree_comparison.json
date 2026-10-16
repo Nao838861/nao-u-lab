@@ -1,0 +1,30 @@
+{
+  "identical_images": 16,
+  "gsu_clocks_culled": [
+    2286052,
+    2630481,
+    2781055,
+    3855574,
+    2313395,
+    2668359,
+    2957527,
+    3617219
+  ],
+  "gsu_clocks_unculled": [
+    2450286,
+    2751858,
+    2816699,
+    3848310,
+    2479229,
+    2790919,
+    2993565,
+    3609955
+  ],
+  "polygon_savings_percent": [
+    6.7,
+    4.4,
+    1.3,
+    -0.2
+  ],
+  "scope": "spawn pose, four views, both ground modes, 50MHz emulated GSU"
+}

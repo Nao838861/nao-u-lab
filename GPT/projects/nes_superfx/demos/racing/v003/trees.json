@@ -1,0 +1,44 @@
+{
+  "source": "MMC5Racing/scenery/build.py TREES",
+  "source_positions": [
+    [
+      160,
+      170
+    ],
+    [
+      136,
+      328
+    ],
+    [
+      280,
+      436
+    ],
+    [
+      482,
+      502
+    ],
+    [
+      500,
+      320
+    ],
+    [
+      210,
+      43
+    ],
+    [
+      168,
+      470
+    ],
+    [
+      520,
+      630
+    ]
+  ],
+  "radius_source_px": 11,
+  "height_source_px": 11.25,
+  "side_materials": [
+    33,
+    16,
+    1
+  ]
+}

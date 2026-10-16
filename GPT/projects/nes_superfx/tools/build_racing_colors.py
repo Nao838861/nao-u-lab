@@ -25,10 +25,21 @@ def main():
             commands += [(x,horizon//8*256,255,255) for x in [0,0x1000]]
         data=bytes([len(commands)])+b''.join(struct.pack('<HHBB',*c) for c in commands)
         (OUT/f'fills_{i}.bin').write_bytes(data)
+    trees=json.loads((ROOT/'demos/racing/v003/trees.json').read_text())
+    positions=trees['source_positions'];radius=trees['radius_source_px']/5;h=trees['height_source_px']/5
+    assert len(positions)==8 and math.sqrt(2*radius*radius+h*h)<4
+    centers=[(round((x-320)/5*128),0,round((z-320)/5*128)) for x,z in positions]
+    vertices=[]
+    for cx,cy,cz in centers:
+        vertices.extend((cx+round(x*128),round(y*128),cz+round(z*128)) for y in [0,h] for x,z in [(-radius,-radius),(radius,-radius),(0,radius)])
+    lines=['tree_centers:']+['.word '+','.join(str(c & 65535) for c in v) for v in centers]+['tree_vertices:']+['.word '+','.join(str(c & 65535) for c in v) for v in vertices]+['tree_faces:']
+    for color,ids in list(zip(trees['side_materials'],[[0,1,4,3],[1,2,5,4],[2,0,3,5]]))+[(1,[3,4,5,5])]:
+        lines.append('.word '+','.join(map(str,[color,1,*[0x8f70+6*i for i in ids]])))
+    (OUT/'trees.inc').write_text('\n'.join(lines)+'\n')
     include=ROOT/'.cache/casfx'
     assert hashlib.sha256((include/'casfx.inc').read_bytes()).hexdigest()==CASFX_HASH
     (OUT/'gsu.cfg').write_text('MEMORY {G:start=$9000,size=$1000,file=%O,fill=yes,fillval=$01;} SEGMENTS {GSU:load=G,type=ro,align=$200;}')
-    subprocess.run([str(a.cc65_bin/'ca65'),'-g','-I',str(include),str(ROOT/'demos/racing/v003/gsu.s'),'-o',str(OUT/'gsu.o')],check=True)
+    subprocess.run([str(a.cc65_bin/'ca65'),'-g','-I',str(include),'-I',str(OUT),str(ROOT/'demos/racing/v003/gsu.s'),'-o',str(OUT/'gsu.o')],check=True)
     subprocess.run([str(a.cc65_bin/'ld65'),'-C',str(OUT/'gsu.cfg'),str(OUT/'gsu.o'),'-o',str(OUT/'gsu.bin')],check=True)
     rings,meta=mmc5_course.road();ids=meta['selected_indices'];points=meta['source_centerline'];n=len(ids)
     # The reduced mesh keeps each curved section, and collapses straight runs.
@@ -74,7 +85,7 @@ def main():
     result={'version':'003','rom':name,'rom_sha256':hashlib.sha256(rom).hexdigest(),
             'base_sha256':hashlib.sha256(original).hexdigest(),'straight_segments':[i for i,s in enumerate(straight) if s],
             'edge_materials':colors,'curb_geometry':{'subdivisions':2,'colors':[0,3],'group_culling':'camera-space conservative AABB'},'palette':['red','green','gray','white'],'sky_palette':['shared red','green','white','blue'],
-            'sky_rows':[88,72,56,0],'requires_sky_palette_extension':True,'rear_material':'GSU native checkerboard red/gray',
+            'sky_rows':[88,72,56,0],'requires_sky_palette_extension':True,'rear_material':'GSU native checkerboard red/gray','trees':trees,
             'unchanged':'PRG banks 4..127 and CHR; physics and audio preserved'}
     (ROOT/'releases/racing_3d_v003.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))
 
