@@ -1256,7 +1256,7 @@
       "rom_sha256": "a2725d5c40ea43c1afc9fce6ced4919ea1b121c1692291111c92b1aabbbe2ad7"
     }
   },
-  "scenery_source_commit": "e9e62fadf9e7168d67a0983d73204070574d7dff",
+  "scenery_source_commit": "ac074466fe70fd0ac2bd59e377637e3ff810c4b7",
   "scenery_source_branch": "codex/superfx-racing-colors-20261016",
   "scenery_verification": {
     "rom_sha256": "1f3feb65a443fbfd71ac54891a3b3228716cf843f08c25cf13e97a1562c234ed",
@@ -1325,5 +1325,46 @@
     },
     "physical_hardware_measured": false,
     "detail": ".tmp\\nesfx-audio-repo\\GPT\\projects\\nes_superfx\\demos\\racing\\v005\\results\\scenery\\verification.json"
+  },
+  "house_lod_verification": {
+    "rom_sha256": "cb62bb356af4c86632ea061c7f1132b36f6d0502ff8de4bdf8a804802aa41a75",
+    "gsu_mhz": 50,
+    "native_cases": 1408,
+    "max_gsu_ms": 34.904,
+    "emulator_cases_per_mode": 19,
+    "grip_min_fps": 20.0329,
+    "drift_min_fps": 20.0329,
+    "cache_optimization_identical_framebuffers": 1408,
+    "initial_fx_ms": [
+      11.061,
+      13.724,
+      14.334,
+      16.566
+    ],
+    "initial_fps": [
+      30.0494,
+      30.0494,
+      30.0494,
+      30.0494
+    ],
+    "pixels": {
+      "status": "pass",
+      "ppu_pixels": 393216,
+      "fx_opaque_pixels": 4424,
+      "fx_transparent_pixels": 192184,
+      "scope": "4 views with FX + 4 views background only, complete 256x192 area; scalar color-key composition"
+    },
+    "counters": {
+      "physics_ticks": 1024,
+      "audio_ticks": 1024,
+      "fault": 0,
+      "captures": 8
+    },
+    "house_lod": false,
+    "tree_lod": "trunk omitted only; same canopy vertices, faces, materials and world orientation",
+    "house_overhang_world": 0.35,
+    "target_30fps_met_in_all_measured_cases": false,
+    "physical_hardware_measured": false,
+    "detail": ".tmp\\nesfx-audio-repo\\GPT\\projects\\nes_superfx\\demos\\racing\\v005\\results\\house-lod\\verification.json"
   }
 }
