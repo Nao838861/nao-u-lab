@@ -1,0 +1,12 @@
+{
+  "sha256": "591424840eba9fc62f7e7d28f2abb90b672f6e074bf5b1ec5baf7e52ab18e837",
+  "bytes": 40976,
+  "mapper_header": 0,
+  "requires_custom_rbf": true,
+  "inputs": {
+    "development/superfx-lab/rom/nrom.cfg": "0a9e2ce6bb32e201532178fd80ce32e94c33f6ac896a3b7a83973b4005a58fdb",
+    "development/superfx-lab/rom/program.inc": "41e5096a25fe41f8f4a4911cd88d3f766b16eda994af07e173bb7919e9bed8c1",
+    "development/superfx-lab/rom/selftest.s": "5101ae64e7c3acb10931f30821042d1aaeed9a61d31258283d09720eb9a41877",
+    "development/superfx-lab/tools/lab.py": "755a6a43430bfe285a138d79157c254c4d5131c9b367f8d1887161160e040edd"
+  }
+}

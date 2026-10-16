@@ -1,0 +1,16 @@
+Fitter Status : Successful - Sat Oct 17 05:51:33 2026
+Quartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
+Revision Name : gsu
+Top-level Entity Name : n8pro_top
+Family : Cyclone IV E
+Device : EP4CE6F17C8
+Timing Models : Final
+Total logic elements : 3,036 / 6,272 ( 48 % )
+    Total combinational functions : 2,880 / 6,272 ( 46 % )
+    Dedicated logic registers : 731 / 6,272 ( 12 % )
+Total registers : 731
+Total pins : 161 / 180 ( 89 % )
+Total virtual pins : 0
+Total memory bits : 69,632 / 276,480 ( 25 % )
+Embedded Multiplier 9-bit elements : 4 / 30 ( 13 % )
+Total PLLs : 0 / 2 ( 0 % )

@@ -1,0 +1,21 @@
+{
+  "inputs": {
+    "development/superfx-lab/rom/nrom.cfg": "0a9e2ce6bb32e201532178fd80ce32e94c33f6ac896a3b7a83973b4005a58fdb",
+    "development/superfx-lab/rom/program.inc": "41e5096a25fe41f8f4a4911cd88d3f766b16eda994af07e173bb7919e9bed8c1",
+    "development/superfx-lab/rom/selftest.s": "5101ae64e7c3acb10931f30821042d1aaeed9a61d31258283d09720eb9a41877",
+    "development/superfx-lab/rtl/dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+    "development/superfx-lab/rtl/n8pro.sdc": "c2fce3b4722eb4b86f6057bb5573b40d112fc56a0e22fe952c40536abc14255a",
+    "development/superfx-lab/rtl/n8pro_top.vhd": "0baed6ac6f4d33b3bec1d60eb22db5f62ec8593dc6b7fa134c135efa3eb861ed",
+    "development/superfx-lab/rtl/nes_gsu.vhd": "ac920b3ebd7e0712e3e20acebed7749fb9a593b7614f345a9ab6e659bc6d75b3",
+    "development/superfx-lab/vendor/GSU.vhd": "195a559b14338e99613ddd3c13ac21ff1e111d36a9822279cd7998db454d0897",
+    "development/superfx-lab/vendor/GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+    "development/superfx-lab/vendor/LICENSE.GPL-3.0": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "development/superfx-lab/vendor/LICENSE.minimal_nrom": "2b619b881c83e13f646d9e2e4cb16677f4483e2ab2e30e26f326e1a473116edc",
+    "development/superfx-lab/vendor/SOURCES.md": "b71a3b02b7fa35f772c6f46a60fede67036a657d9d158e558abfc9a071ce2e43",
+    "build/superfx-lab/quartus/gsu.qsf": "ca3d8a73169849feae2285f9a6f753ad5b39802b946893579308c5fe8525e83f",
+    "build/superfx-lab/quartus/gsu.qpf": "1543388e88f233d4fb5fd19bb677bc69223c590c34c22b49084d0b7d596fdfe6"
+  },
+  "rbf_sha256": "8892bcbad4a8f5db7e82ab78996a264786af5df04306f42b10bd171393ab0a09",
+  "hardware_tested": false,
+  "timing_signoff": false
+}

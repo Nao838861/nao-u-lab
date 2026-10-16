@@ -1,0 +1,28 @@
+{
+  "date_jst": "2026-10-17",
+  "target": "EverDrive N8 Pro EP4CE6F17C8",
+  "circuit_repository": "https://github.com/Nao838861/MMC5Racing",
+  "circuit_commit": "cca77674b84b83a3f0dad54e66186c367872edaf",
+  "cube_repository": "https://github.com/Nao838861/nao-u-lab",
+  "cube_commit": "ac074466fe70fd0ac2bd59e377637e3ff810c4b7",
+  "hardware_tested": false,
+  "internal_timing_pass": true,
+  "external_bus_timing_signoff": false,
+  "files": {
+    "README.txt": "9e6bed8a69707fec925109a1b3918e8b4028bfcd02589986e8fea6d5f779cf97",
+    "sdcard/GSU-CUBE/gsu.rbf": "8892bcbad4a8f5db7e82ab78996a264786af5df04306f42b10bd171393ab0a09",
+    "sdcard/GSU-CUBE/GSU_Cube_v001.nes": "df9b339c4a98d8fde994d8d119e544609ae56bc27b34729f8e0a6152686d55ac",
+    "sdcard/GSU-SELFTEST/gsu-selftest.nes": "591424840eba9fc62f7e7d28f2abb90b672f6e074bf5b1ec5baf7e52ab18e837",
+    "sdcard/GSU-SELFTEST/gsu.rbf": "8892bcbad4a8f5db7e82ab78996a264786af5df04306f42b10bd171393ab0a09",
+    "source.zip": "13fcd2eb757f91df1d90744817293f71948c14feb06310351a5e5259e01f7d55",
+    "verification/bitstream-manifest.json": "72a5bdf514cd0e06b1132f28a3b0a5df76c3d609687b885a3d20c5df6061164d",
+    "verification/cube-rtl.json": "0260638c092891bb9c7c201ccc1bd13c64b306056e986a061ef2e76ad8dc29b5",
+    "verification/gsu.fit.summary": "c30d0fd98a2d370824523c15766d6ea347523d7a92b15fac28808f9f4b86c1c0",
+    "verification/gsu.pin": "7af22c0cd2e4de0014f595b6db7573639c033f372a71a1b00433a751b34c8c1b",
+    "verification/gsu.sta.rpt": "51bcf9e03e7603c49a4cd99a6e17dde43ea6a2e27e5324db21125cd096729313",
+    "verification/gsu.sta.summary": "331bf4de09b530f6a6dfeffadb8747ef9dc39d9e96e8ad40a48693b9ac7b3f38",
+    "verification/rom-manifest.json": "4f7995eadf83c70b28ef7007c2811da4316c48e9ce246f18959986cd42b1bbe3",
+    "verification/simulation-report.json": "d1f2984f4c2eb08b203897309ad7e84f8134e3a180f28fec58efba02cfda65b6",
+    "verification/verification.json": "f4bf0ad9663faf166869fad7ab92b81242abcf043895ca19fb9df5a3d9a159f5"
+  }
+}

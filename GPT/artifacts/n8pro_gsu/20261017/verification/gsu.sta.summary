@@ -1,0 +1,101 @@
+------------------------------------------------------------
+Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow 1200mV 85C Model Setup 'clk25'
+Slack : 6.851
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Setup 'clk50'
+Slack : 19.104
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'clk25'
+Slack : 0.452
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'clk50'
+Slack : 0.487
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Recovery 'clk25'
+Slack : 15.038
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Removal 'clk25'
+Slack : 3.993
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clk50'
+Slack : 9.698
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clk25'
+Slack : 19.660
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Setup 'clk25'
+Slack : 7.532
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Setup 'clk50'
+Slack : 19.198
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'clk25'
+Slack : 0.401
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'clk50'
+Slack : 0.435
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Recovery 'clk25'
+Slack : 15.372
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Removal 'clk25'
+Slack : 3.586
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clk50'
+Slack : 9.672
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clk25'
+Slack : 19.675
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Setup 'clk25'
+Slack : 14.106
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Setup 'clk50'
+Slack : 19.616
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'clk25'
+Slack : 0.184
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'clk50'
+Slack : 0.198
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Recovery 'clk25'
+Slack : 17.738
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Removal 'clk25'
+Slack : 1.757
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clk50'
+Slack : 9.285
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clk25'
+Slack : 19.702
+TNS   : 0.000
+
+------------------------------------------------------------
