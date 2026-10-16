@@ -1,8 +1,8 @@
 {
   "source_revision": "ed39ab03f",
-  "rom": "GSU_MMC5Racing3D_v002.nes",
-  "rom_sha256": "62fb6b217380a8fbd8738f8a8d8dfe03f70e8fff1407b528e74b41fa2ced6ccc",
-  "core_sha256": "e010d655c549262c3d12382d3d4ee54d03e8bae271b968e8e66b7af751ec5d00",
+  "rom": "GSU_MMC5Racing3D_v003.nes",
+  "rom_sha256": "51595902aa9d11a111a0a877d95f32b3d295ce8b0c40ff97de38c9fe3189b435",
+  "core_sha256": "c03bb368a923479802a89a3d92a9e682dae7833cc91af478fa2a5aed51689b8b",
   "controls": {
     "status": "pass",
     "held_edges": true,
@@ -12,7 +12,7 @@
     "start_reset": true,
     "range_reset_recovery": true
   },
-  "interactive_window": "Mesen - GSU_MMC5Racing3D_v002",
+  "interactive_window": "Mesen - GSU_MMC5Racing3D_v003",
   "launcher": "play_mmc5racing_3d.cmd",
   "date": "2026-10-16",
   "audio_source_branch": "codex/superfx-racing-audio-20261016",
@@ -119,5 +119,80 @@
     "peak": 827,
     "nonzero_samples": 960956
   },
-  "audio_source_commit": "dbb5b0a78"
+  "audio_source_commit": "dbb5b0a78",
+  "visual_source_branch": "codex/superfx-racing-colors-20261016",
+  "visual_verification": {
+    "version": "003",
+    "rom": "GSU_MMC5Racing3D_v003.nes",
+    "rom_sha256": "51595902aa9d11a111a0a877d95f32b3d295ce8b0c40ff97de38c9fe3189b435",
+    "base_sha256": "62fb6b217380a8fbd8738f8a8d8dfe03f70e8fff1407b528e74b41fa2ced6ccc",
+    "straight_segments": [
+      2,
+      6,
+      10,
+      13,
+      18
+    ],
+    "edge_materials": [
+      48,
+      48,
+      1,
+      48,
+      48,
+      48,
+      1,
+      48,
+      48,
+      48,
+      1,
+      48,
+      48,
+      1,
+      48,
+      48,
+      48,
+      48,
+      1
+    ],
+    "palette": [
+      "red",
+      "green",
+      "gray",
+      "white"
+    ],
+    "sky_palette": [
+      "shared red",
+      "green",
+      "white",
+      "blue"
+    ],
+    "sky_rows": [
+      88,
+      72,
+      56,
+      0
+    ],
+    "requires_sky_palette_extension": true,
+    "rear_material": "GSU native checkerboard red/gray",
+    "unchanged": "PRG banks 4..127 and CHR; physics and audio preserved",
+    "core_sha256": "c03bb368a923479802a89a3d92a9e682dae7833cc91af478fa2a5aed51689b8b",
+    "counters": {
+      "physics_ticks": 92,
+      "audio_ticks": 92,
+      "fault": 0,
+      "captures": 8
+    },
+    "controls": {
+      "status": "pass",
+      "held_edges": true,
+      "view_switch": true,
+      "ground_switch": true,
+      "mode_switch": true,
+      "start_reset": true,
+      "range_reset_recovery": true
+    },
+    "sky_pixels_verified": true,
+    "rear_checkerboard_verified": true
+  },
+  "visual_source_commit": "9f2195d2f"
 }
