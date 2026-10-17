@@ -164,3 +164,33 @@ k-α は (a) R_GRAZE リング cyan-green 予兆 (L899-908) + (b) 画面中央�
 - (c) 4 軸 invariant: k-α の (a) onboarding / (b) readability ↑ → 寿命 ↓ / (c) 色衝突 / (d) フラグ乱立、すべて k-β でも保持 — 新規 state 変数追加なし (既存 state.grazeStreak 参照のみ)、色系統統一、HUD 既存レイヤーに重ねるだけ
 - (d) koguGameDev フラグ乱立論再適用: 本 k-β は既存 HUD fillText の上塗り 1 ブロックのみ、new state 変数なし、derived computation (`>=GRAZE_STREAK_TH-1` / `>=GRAZE_STREAK_TH`) のみ → フラグ乱立回避側
 - 結論: **Nao_u 自プレイ評価依頼可 — k-α + k-β triple redundancy として一体投稿**
+
+## v15 (l-α) 色系統分離 1 patch (C0 2026-10-17 Phase 4)
+
+**status**: v15 (l-α) shipped on top of v14 (k-β)。同 `index.html` 内に minimal patch、戻し可能。
+
+### 選定根拠 (4 分岐のうちどれを選び、なぜ最小影響か)
+v14 (k-α) Stage 4 自審査 (d) L125 で Ash 自身が特定した残課題:「(a)(b) ring/text の色 `rgba(128,255,208,...)` が既存 activeDef シールド (L912) と同系統 → 視覚混乱リスク」 = v15 方向性 4 分岐の 4 番目「色がシールドと紛らわしい」判定想定。Nao_u 評価判定を待たず Ash 自身の Stage 2 内で消化可能な予防的 patch として、本 l-α を選定した。
+
+**他 3 分岐を選ばなかった理由**:
+- 1 番目「discovery 経路成立」判定想定の別軸 (BOMB/DEF 切替戦略の深さ / phase 7 final 弾密度): Nao_u 評価後に判定したい、k-α + k-β 未検証の状態で別軸追加は横展開リスク (koguGameDev 的拡散)
+- 2 番目「見逃した」判定想定の強調強化 or 音追加: 評価未取得段階で強化方向に動くのは投機、音追加はブラウザ UX ハードル (user gesture 要) で minimal patch にならない
+- 3 番目「演出過多」判定想定の ring 予兆部分戻し: k-α (a) を Ash 自身の判断で削除する積極的自己否定で、Nao_u 評価を飛ばした撤回に相当
+
+**最小影響性**: index.html への変更は 2 行 (L903 if 条件 + L912 rgba 値) + 周辺コメント 10 行、計 12 行 diff (+9/-3)。戻し方 1 操作 (L912 の色を元に戻す) で v14 (k-β) 完全等価。描画数の追加なし、state 変数の追加なし。
+
+### 改変内容 (2 機能、同一テーマ "DEF 発動中 vs 発動前の視覚階層明示")
+1. **shield リング (DEF 発動"中") 色濃度分離**: index.html L912。既存 `rgba(128,255,208,${0.35+0.45*ad})` を `rgba(96,192,160,${0.35+0.45*ad})` に変更。他 DEF 系 cyan-green (ring 予兆 L905 / 小マーカー L932 / HUD 強調 L1023 / SPACE [D]EF L1033 / 中央 DEF READY L1049) は全て `rgba(128,255,208,...)` で "DEF 利用可能/発動前" サインとして統一維持。
+2. **ring 予兆の排他条件明示コード化**: index.html L903。既存 `if(state.grazeStreak===GRAZE_STREAK_TH-1)` に `&&state.activeDefT<=0` を追加。state.grazeStreak===4 かつ activeDef 発動中 (STREAK は 5 以上で発動するので実質発生しない) の未定義状態を物理的に閉じる。
+
+### 戻し方 (1 操作)
+- L912 の `rgba(96,192,160,...)` を `rgba(128,255,208,...)` に戻す → shield 色が k-β と同じになり、更に L903 の `&&state.activeDefT<=0` を削除すれば v14 (k-β) 完全等価。コメント 4 行 (v15 ラベル付き) の削除も同時に行えば diff ゼロ。
+
+### Stage 3 予測 (≤3 行)
+- shield 発動中にプレイヤーが「DEF 発動中 (muted green)」vs「DEF 発動前の予告 (fresh cyan-green)」を色濃度で瞬時区別できる認知率: 70-85% (ring 予兆の `pul*0.45` 低不透明度と shield の 0.35-0.80 中不透明度の重複域で判定するため)
+- 副作用リスク: muted green `rgba(96,192,160,...)` は既存 HUD gray-blue `#9fb1d8` と色相近接だが明度が高く、shield リングの visibility は k-β 水準維持 (不透明度下限 0.35)。L903 の排他条件追加は既存 state 遷移上 STREAK===4 && activeDefT>0 がほぼ発生しないため体感差ゼロ、保険として作用
+- 構造意図: k-α + k-β の triple redundancy (ring + text + HUD) は "DEF 利用可能" シグナル群として色統一、v15 (l-α) は "DEF 発動中" のシグナル (shield) のみを色濃度分離して時相階層 (発動前 → 発動中) を視覚化、Boghog 'simple upfront game plan' の最小拡張
+
+### 親
+- v14 (k-β) HUD STREAK 色強調 (commit `83915d007`)
+- v14 (k-α) Stage 4 自審査 (d) L125 で Ash 自身が特定した色衝突リスク (本 README 上の 2026-06-09 時点の分析)

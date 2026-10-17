@@ -899,17 +899,23 @@ function draw(){
       // v14 (k-α): STREAK=GRAZE_STREAK_TH-1 (=4) 予兆発光 — R_GRAZE リングを低彩度 cyan-green で周期点滅
       // 構造意図: Boghog 'simple upfront game plan' + Miyamoto/Zelda organic onboarding。STREAK=5 確定の 1 手前で
       // 「何かが起きそう」の感覚を視覚化、discovery-based 経路 (Anderson 2024) を 1 本敷く。
-      // 戻し方: 本 if ブロック (4 行) 削除で v13 (j-α) と等価。
-      if(state.grazeStreak===GRAZE_STREAK_TH-1){
+      // v15 (l-α): 排他条件 `&& state.activeDefT<=0` を明示的に追加 — shield 発動中の ring 予兆重畳を物理的に排除。
+      // 戻し方: 本 if ブロック (4 行) 削除で v13 (j-α) と等価、`&& state.activeDefT<=0` 削除で v14 (k-β) 等価。
+      if(state.grazeStreak===GRAZE_STREAK_TH-1&&state.activeDefT<=0){
         const pul=0.3+0.5*Math.abs(Math.sin(state.t*0.18));
         ctx.strokeStyle=`rgba(128,255,208,${pul*0.45})`;
         ctx.lineWidth=1.5;
         ctx.beginPath();ctx.arc(state.player.x,state.player.y,R_GRAZE,0,Math.PI*2);ctx.stroke();
       }
       // v03: active def 残時間中はシールド表示 (cyan-green の細リング)
+      // v15 (l-α): shield (DEF "発動中") を他の DEF 系 cyan-green から色濃度分離 — ring 予兆 (L903)、HUD 強調 (L1020)、
+      //   中央 DEF READY (L1047) は全て "DEF 利用可能/発動前" のサインとして rgba(128,255,208,...) で統一、
+      //   shield のみ "DEF 発動中" のサインとして rgba(96,192,160,...) に muted-green 化することで
+      //   プレイヤーの短期記憶で "起きる前" vs "起きている最中" を区別させる。
+      // 戻し方: 下行の `rgba(96,192,160,...)` → `rgba(128,255,208,...)` で v14 (k-β) 等価。
       if(state.activeDefT>0){
         const ad=state.activeDefT/ACTIVE_DEF_FRAMES;
-        ctx.strokeStyle=`rgba(128,255,208,${0.35+0.45*ad})`;
+        ctx.strokeStyle=`rgba(96,192,160,${0.35+0.45*ad})`;
         ctx.lineWidth=2;
         ctx.beginPath();ctx.arc(state.player.x,state.player.y,17,0,Math.PI*2);ctx.stroke();
       }
