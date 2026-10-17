@@ -12,7 +12,19 @@
 
 FamiBASIC/MMC5向けの自作NESコア計画とは別。マッパー側リポジトリ・ゲーム・既存Mesenは変更していない。
 
-## MMC5Racing 3D版の仕様検討
+## GitHubから同期した現行走行版 v005
+
+2026年10月18日、GitHubの全ブランチをfetchして確認。`origin/codex/superfx-racing-colors-20261016` の `ac074466fe`（10月17日）にv005まで公開されていた。ローカルの作業ブランチだけではv001が最新に見えるため、最新版の確認ではこの開発ブランチも照合する。既存作業ブランチからfast-forwardで同期できた。
+
+現行の起動は `projects/nes_superfx/run_racing_3d.cmd`、既定はv005・GSU50MHz相当。ROMは `releases/GSU_MMC5Racing3D_v005.nes`、SHA256 `cb62bb356af4c86632ea061c7f1132b36f6d0502ff8de4bdf8a804802aa41a75`。専用 `runtime_mode7` が必要で、ソース同期だけでは起動準備が揃わない。`tools/build.py`でコアをビルドし、`tools/setup_runtime.py`と`tools/setup_mode7_runtime.py`で配置する。詳細は[racing/v005のREADME](../../../projects/nes_superfx/demos/racing/v005/README.md)。
+
+このPCでもコアを再ビルド・配置し、ROM hashを照合してv005を起動した。実Mesenの900field起動試験で地面DSPの認識、表示世代の進行、FX／DSPエラーなしを確認。上記の過去の全性能試験を今回再実行したわけではない。
+
+v002のエンジン／タイヤ音、v003の色と元の速度方向カメラ、v004の640×640・2bpp地面用DSPと透明GSU合成を引き継ぐ。v005はキャビン・窓・タイヤつきの自車、元位置の木8本と家2棟をポリゴン表示する。上キーは地面方式変更から、比較用の車・景物表示オン／オフに変わった。他の基本操作と原版の自車物理は維持。
+
+現行の屋根・LOD変更後は、保存された1,408条件のGSU最大34.904ms、重い場面で約20fps、開始位置の4視点は約30fps。初版の「最低30fps」の結果を現行ROMの性能として扱わない。地面DSPは仮の25MHz・1行1024clockモデルで、FPGA実測ではない。CPU車・周回進行・景物衝突の追加は含まない。
+
+## 初期の仕様検討記録
 
 2026年10月16日の「SuperFXを使ったMMC5Racingの3D版」の仕様案は[ゲーム側の記録](../mmc5racing/3d/v001/README.md)。ユーザーは「視点を選べるようにしたい。バーチャレーシングみたいな。」と指定。現行4輪物理60Hz、GSU描画30fps、車載・近い追従・高い追従・俯瞰の4視点、自車＋CPU3台を第一候補とする。最初は平面コースで物理を保ち、4視点の自車走行→4台→記録→起伏の順。ゲームや同居回路の実装は今回行っていない。
 
