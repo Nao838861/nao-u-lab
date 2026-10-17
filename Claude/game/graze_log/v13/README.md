@@ -194,3 +194,50 @@ v14 (k-α) Stage 4 自審査 (d) L125 で Ash 自身が特定した残課題:「
 ### 親
 - v14 (k-β) HUD STREAK 色強調 (commit `83915d007`)
 - v14 (k-α) Stage 4 自審査 (d) L125 で Ash 自身が特定した色衝突リスク (本 README 上の 2026-06-09 時点の分析)
+
+## v15 (l-α) Stage 4 Ash 自プレイ判定 (C 2026-10-17 Phase 4)
+
+### (a) shield 色濃度分離の実装確認 (index.html 該当行番号 + ロジック trace)
+- **L916-921 shield リング本体 (DEF "発動中")**: 条件 `if(state.activeDefT>0)` で発火、L917 `ad=state.activeDefT/ACTIVE_DEF_FRAMES` で残時間比率 (1→0 デクリメント) を取得、L918 `strokeStyle=\`rgba(96,192,160,${0.35+0.45*ad})\`` に v15 で変更。半径 17 px、lineWidth=2。v14 (k-β) 時点の `rgba(128,255,208,...)` → v15 で `rgba(96,192,160,...)` (muted-green)。
+- **L904 ring 予兆 (DEF "発動前")**: v14 時点 `if(state.grazeStreak===GRAZE_STREAK_TH-1)` 単独 → v15 で `&&state.activeDefT<=0` 追加、二条件 AND に強化。state.grazeStreak===4 かつ activeDef 発動中 (STREAK は 5 以上で発動するため実質発生しない) の未定義エッジ状態を物理排除。
+- **DEF 系 cyan-green 統一継続の確認**: L906 ring 予兆 `rgba(128,255,208,${pul*0.45})`、L936-940 小マーカー (STREAK>=5 かつ activeDefT<=0)、HUD STREAK 強調 (v14 k-β、L1016-1024 周辺)、SPACE [D]EF 表記、中央 DEF READY (v14 k-α) — 全て `rgba(128,255,208,...)` 系で "DEF 利用可能/発動前" サインとして統一維持。v15 で変化したのは L918 の 1 色のみ。
+- **色濃度計算**: 発動前群 `rgb(128,255,208)` = (R128, G255, B208) 彩度高、発動中 `rgb(96,192,160)` = (R96, G192, B160) 全チャネル×0.75、色相 (hue) 保持しつつ明度/彩度を一段下げる **連続パラメータ上の分離** であり、「別色系」ではなく「同色の濃度階層」であることをコード上確認。
+
+### (b) Stage 3 予測 (L190-192) 対 Ash 自プレイ対照
+- **Stage 3 予測 (本 README L190)**: shield 発動中 muted green vs 発動前 fresh cyan-green を色濃度で瞬時区別できる認知率 70-85%、ring 予兆の `pul*0.45` 低不透明度 (実効 0.14-0.36) と shield の `0.35+0.45*ad` 中不透明度 (0.35-0.80) の重複域で判定。
+- **Ash 自プレイ視認結果**: **視認不可** — Win2 CLI 環境は index.html をブラウザで実行できない。v13 ディレクトリに headless.py なし (v14 k-α 判定時 L109 と同一環境制約)、Canvas は Pyxel/Pygame と異なり headless 動作不能。視覚体感の確認は Nao_u 実プレイまたは playtest 動画依存。
+- **コード読解による論理 trace**:
+  - L916 発火条件 `activeDefT>0` と L904 発火条件 `grazeStreak===4&&activeDefT<=0` は時刻 t での排他 — 同一フレームに ring 予兆と shield が共存する遷移は L904 の AND 条件で物理閉鎖。「発動前 → 発動の瞬間 → 発動中」の 3 相のうち、発動の瞬間に ring 予兆が消え shield が立ち上がる 1 F の階層遷移が確定。
+  - 色濃度の差 (フル彩度 vs 0.75 彩度) は人間視覚の弁別可能範囲内 — ただし v14 k-β 時点では両者フル彩度で色相のみ同一 (= 区別不能、Stage 3 「色衝突」自己審査通りの状態)、v15 で彩度差を導入したことで初めて二相の視覚階層が成立。
+  - shield の不透明度は `ad` で (発動開始の 0.80 → 消滅直前の 0.35) に減衰 — muted green × 減衰 = 残時間感も色濃度に乗る二重エンコード、v14 時点では色相統一のため減衰のみが時間信号、v15 で (色相+明度+減衰) の 3 重エンコードに拡張。
+- **判定**: コード読解上、Stage 3 の構造要件 (発動前/発動中の色濃度分離、既存不透明度制御との両立) は満たす。70-85% 認知率の数値校正は実プレイ計測なしに確定不能だが、構造的成立は確認。v14 k-α 判定 (c) の校正課題 (「校正不能な数値予測は避け、構造要件で表現する」L115) は本 v15 でも同じ limitation として残置、M-37→M-40 連続体に未進展。
+
+### (c) Phase 2 System Switch dual-system gate 設計視点との事後接続
+- **本サイクル Phase 2 で読み込んだ外部フレーム**: knowledge/20261017_system_switch_dual_system_4papers_gate_design_vs_device_direction_rescue_suffocation.md、arxiv 2610.09683 "System Switch" + 周辺 3 本 (arxiv 2506.01953 Fast-in-Slow / 2505.24863 AlphaOne / 2507.03704 Controlling Thinking Speed)。核心: 「slow/fast 分業は業界フレーム、本丸は gate 発火条件の設計」「gate 閾値は固定値でなく task 条件の関数」(Controlling Thinking Speed)。
+- **連続 gate 解釈**: v14 (k-β) までの shield 色設計は「DEF 系 cyan-green 一式 vs それ以外」の **二値 gate**。v15 (l-α) で「発動前フル彩度 (128,255,208) vs 発動中 0.75 彩度 (96,192,160)」の **連続量 gate** に拡張 (間値 (112, 224, 184) など中間色の挿入余地が設計上成立)。Controlling Thinking Speed arxiv 2507.03704 の「task difficulty × time budget の 2 軸で thinking speed が連続制御変数になる」構造と**シグナル設計層での同型**を持つ。
+- **装置の向き (救援/窒息) との対応**: feedback_device_direction_rescue_vs_suffocation.md (2026-05-02 由来)。shield 発火装置は STREAK>=5 到達時に発火する「救援装置」だが、v14 までは発火中の色が発動前と同一で、プレイヤーが「今まだ救援を待っているのか / 既に救援中なのか」を区別できない曖昧 gate だった = 装置の向きが曖昧 (救援/窒息のどちらにも読める)。v15 の色濃度分離は gate 出力の二相を視覚化することで装置の向きを可視化、曖昧性を減らす。
+- **M-41 通過確認**: arxiv 2610.09683 本文 Abstract の "System Switch: When Should a Fast Decision Model Stop and Think?" + Section 3 confidence-guided deferral 定式化を Phase 2 で原文確認済 (knowledge 記事 §1.1 L41-46 に該当引用文抜粋)、@rohanpaul_ai 2026-10-16 ツイート数値 (offline coaching 13.51→24.19) との照合済。知識側は M-41 (先行事例引用は実体検証必須) 通過。ただし本 Stage 4 (c) の「shield 色濃度分離=連続 gate」解釈は Ash による**事後接続解釈**であり、arxiv 著者らが「ゲームの shield 設計」に言及しているわけではない — 外部フレームの我々の文脈への**援用**であり、援用自身は Ash の自己責任、M-41 の射程外。
+
+### (d) v16 (l-β) 候補起案 (最低 2 案、1 行実装パッチレベル、戻し方明示)
+Nao_u 評価判定を待たず Ash Stage 2 内で消化可能な予防的 patch として候補を 2 本起案。本 v15 (l-α) の自己審査で「DEF 発動"中" のサインは色濃度分離できたが、発動"中→終了直前" のサインは L917 `ad` 減衰のみでフォーマット変化なし」= 時相の 3 相目 (終了予兆) が未視覚化、を特定した処方。
+
+**候補 1: shield 消滅予兆の lineWidth 細化 (1 行実装、物理的連続量)**
+- 改変: L919 `ctx.lineWidth=2` を `ctx.lineWidth=1+ad` に変更 (1 行、+0 B 変動なし、既存変数 `ad` のみ参照)。shield 発動開始時 lineWidth≈2、終了直前 lineWidth=1 で**細り**で終了予兆を物理的連続量として表現。
+- 戻し方 (1 操作): `1+ad` を `2` に戻す → v15 (l-α) 完全等価。
+- Stage 3 予測: 消滅予兆の認知率 50-70% (線幅差は色差より foveal 要求が高い)。副作用リスク: lineWidth=1 時点で視認性低下、不透明度 0.35 とのダブル減衰で消滅直前 0.5F は視認不能に近い可能性 → 発動開始を lineWidth=2.5 に上げる調整候補あり。
+
+**候補 2: shield 発動開始フラッシュ 1 行追加 (1 行実装、既存 bombFlash 系と対称)**
+- 改変: `state.activeDefT` が 0 → 正値に遷移する frame (= activeDef 発動開始 frame) で 1 行の flash 変数セット。例: L388-407 の activeDef 開始処理ブロックに `state.defStartFlashT=12;` 1 行追加 + draw 側 (L956 周辺 hitFlash/bombFlash 列挙地点) に `if(state.defStartFlashT>0){...}` の 3 行ブロック追加 = 計 4 行、ただし処方は「1 行実装の本体」+「3 行の既存パターン踏襲 draw block」で描画 budget 対称性維持。
+- 戻し方 (1 操作): `state.defStartFlashT=12;` 1 行と draw block (3 行) 削除で v15 (l-α) 完全等価。
+- Stage 3 予測: 発動開始の認知率 85-95% (全画面 flash は既存 bombFlash 24F で学習済経路)。副作用リスク: Hyper Activation (L962-966) / BOMB flash / HIT flash と flash が重畳する確率上昇 → defStartFlash は低不透明度 0.15 以下に制限。
+
+**(d) 選定の留保**: 候補 1 (shield 消滅予兆) と候補 2 (shield 発動開始フラッシュ) はそれぞれ「時相 3 相」の未視覚化部分を異なる方向から攻める。Nao_u 評価で「v15 shield 分離で発動"中" は分かるが始終端が分からない」判定が出た場合、両案を併投する余地もあるが、koguGameDev フラグ乱立論 (v14 k-α 判定 (d) L117-125) の警告を踏まえ、1 サイクルで 1 案に絞る方針を v16 でも維持 — Nao_u 評価後に片方だけ発射する前提で起案。
+
+### 結論
+- **Nao_u 自プレイ評価依頼可** — Stage 4 4 軸 (a/b/c/d) すべて自審査通過。ただし (b) は構造確認のみで認知%校正は実プレイ計測待ち、v14 k-α 判定時と同じ limitation (M-37→M-40 連続体に本サイクルで進展なし) を依頼時に明示する。
+- **v16 方向性** (Nao_u 評価分岐):
+  - 「色濃度分離 成立」判定 → v16 は候補 1 or 2 で時相 3 相目視覚化、または別軸 (弾種 telegraph / phase 遷移サイン)
+  - 「色濃度差が弱い」判定 → L918 muted green を `rgba(80,160,128,...)` 等さらに下げる 1 行調整
+  - 「発動中シールドが見えなくなった」判定 → L918 の不透明度 `0.35+0.45*ad` を `0.50+0.45*ad` に 1 文字上げる戻し寄り修正
+  - 「v15 分離不要、v14 k-β のまま良かった」判定 → L918 の rgba 戻しで v14 (k-β) 完全等価 (戻し方 L187 既記載)
+- **broken-record ガード**: 本 Stage 4 節は L23 "Stage 4 Ash 自プレイ判定 (C0608 Phase 4)" (v13 j-α) + L91 "v14 (k-α) Stage 4 Ash 自プレイ判定 (C0609 Phase 4)" + L161 "v14 (k-β) Stage 4 Ash 自プレイ判定 — 簡略 (C0610 Phase 4)" とは別 cycle/version のタグ "C 2026-10-17 Phase 4" で区別可、重複なし。
