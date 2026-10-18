@@ -1,0 +1,47 @@
+{
+  "status": "pass",
+  "sources": {
+    "development/superfx-lab/rtl/dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+    "development/superfx-lab/vendor/GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+    "development/superfx-lab/vendor/GSU.vhd": "195a559b14338e99613ddd3c13ac21ff1e111d36a9822279cd7998db454d0897",
+    "development/racing-n8pro/rtl/mode7_dsp.vhd": "e1ff08436b7962a79abca8ff46816798de68ee61da0976cd50c272774dd3711a",
+    "development/racing-n8pro/rtl/racing_display.vhd": "09659069f623fc0678c0ffe3447309e8e4c41eaf0ad9d5c369db3876e78db2ed",
+    "development/racing-n8pro/rtl/racing_gsu.vhd": "2547deee09acb55192586a2367b1cd97dc77d13f69c9725e4ce785a81ecb9bb4",
+    "development/racing-n8pro/rtl/racing_top.vhd": "df359aea8da94f3a1aa34028e5a29dc58b8a02b7dd86eef294fd0008b3d3eb19",
+    "development/racing-n8pro/rtl/serial_math.vhd": "49b47f83f8c754ed49e37058edac066ae15b69c0f73242f6fb8c8e5ae7b48e8b"
+  },
+  "rom_sha256": "3e3ff75269450247a62b6b3c28076ab2a102e032ff8305db7e5b0dbb0ec11256",
+  "cases": 1,
+  "bytes_compared": 16384,
+  "native_50mhz_clocks": [
+    4698566
+  ],
+  "rtl_clock_hz": 25000000,
+  "rtl_clocks": [
+    3011486
+  ],
+  "rtl_ms": [
+    120.45944
+  ],
+  "poses": [
+    {
+      "name": "route-3-40-4096",
+      "pose": [
+        -5641,
+        3133,
+        4608,
+        -114,
+        229,
+        187,
+        174,
+        -2664,
+        1651,
+        -17,
+        255
+      ]
+    }
+  ],
+  "test_sha256": "a8b0dd0cb5ba3e215db9cfdb6d3dee289a0f33f0bee3c7dd3133aa6f3c2f4c22",
+  "poll_limit": 500000,
+  "scope": "GSU execution and compressed back RAM only; no PPU, external memory or hardware validation"
+}

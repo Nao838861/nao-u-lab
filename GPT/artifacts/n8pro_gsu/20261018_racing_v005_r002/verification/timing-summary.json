@@ -1,0 +1,50 @@
+[
+  {
+    "name": "initial-0",
+    "before_ms": 14.63964,
+    "after_ms": 11.4398,
+    "savings_percent": 21.857
+  },
+  {
+    "name": "initial-1",
+    "before_ms": 17.752,
+    "after_ms": 14.36528,
+    "savings_percent": 19.078
+  },
+  {
+    "name": "initial-2",
+    "before_ms": 18.34268,
+    "after_ms": 14.79556,
+    "savings_percent": 19.338
+  },
+  {
+    "name": "initial-3",
+    "before_ms": 21.11708,
+    "after_ms": 17.18136,
+    "savings_percent": 18.638
+  },
+  {
+    "name": "object-0-v0-a24576-d12",
+    "before_ms": 38.40912,
+    "after_ms": 32.74804,
+    "savings_percent": 14.739
+  },
+  {
+    "name": "object-5-v1-a24576-d40",
+    "before_ms": 41.09088,
+    "after_ms": 34.26156,
+    "savings_percent": 16.62
+  },
+  {
+    "name": "object-5-v2-a24576-d12",
+    "before_ms": 43.41376,
+    "after_ms": 36.27584,
+    "savings_percent": 16.442
+  },
+  {
+    "name": "route-3-40-4096",
+    "before_ms": 44.12272,
+    "after_ms": 36.79368,
+    "savings_percent": 16.611
+  }
+]

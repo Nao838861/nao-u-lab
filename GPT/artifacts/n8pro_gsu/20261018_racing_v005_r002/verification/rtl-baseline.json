@@ -1,0 +1,179 @@
+{
+  "status": "pass",
+  "sources": {
+    "development/superfx-lab/rtl/dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+    "development/superfx-lab/vendor/GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+    "development/superfx-lab/vendor/GSU.vhd": "195a559b14338e99613ddd3c13ac21ff1e111d36a9822279cd7998db454d0897",
+    "development/racing-n8pro/rtl/mode7_dsp.vhd": "e1ff08436b7962a79abca8ff46816798de68ee61da0976cd50c272774dd3711a",
+    "development/racing-n8pro/rtl/racing_display.vhd": "09659069f623fc0678c0ffe3447309e8e4c41eaf0ad9d5c369db3876e78db2ed",
+    "development/racing-n8pro/rtl/racing_gsu.vhd": "2547deee09acb55192586a2367b1cd97dc77d13f69c9725e4ce785a81ecb9bb4",
+    "development/racing-n8pro/rtl/racing_top.vhd": "df359aea8da94f3a1aa34028e5a29dc58b8a02b7dd86eef294fd0008b3d3eb19",
+    "development/racing-n8pro/rtl/serial_math.vhd": "49b47f83f8c754ed49e37058edac066ae15b69c0f73242f6fb8c8e5ae7b48e8b"
+  },
+  "rom_sha256": "cb62bb356af4c86632ea061c7f1132b36f6d0502ff8de4bdf8a804802aa41a75",
+  "cases": 8,
+  "bytes_compared": 131072,
+  "native_50mhz_clocks": [
+    553045,
+    686202,
+    716681,
+    828279,
+    1429132,
+    1611246,
+    1712935,
+    1745224
+  ],
+  "rtl_clock_hz": 25000000,
+  "rtl_clocks": [
+    365991,
+    443800,
+    458567,
+    527927,
+    960228,
+    1027272,
+    1085344,
+    1103068
+  ],
+  "rtl_ms": [
+    14.63964,
+    17.752,
+    18.34268,
+    21.11708,
+    38.40912,
+    41.09088,
+    43.41376,
+    44.12272
+  ],
+  "poses": [
+    {
+      "name": "initial-0",
+      "pose": [
+        6336,
+        1843,
+        320,
+        -256,
+        0,
+        256,
+        13,
+        6336,
+        1843,
+        -256,
+        0
+      ]
+    },
+    {
+      "name": "initial-1",
+      "pose": [
+        6336,
+        3123,
+        768,
+        -256,
+        0,
+        253,
+        36,
+        6336,
+        1843,
+        -256,
+        0
+      ]
+    },
+    {
+      "name": "initial-2",
+      "pose": [
+        6336,
+        4147,
+        1536,
+        -256,
+        0,
+        245,
+        76,
+        6336,
+        1843,
+        -256,
+        0
+      ]
+    },
+    {
+      "name": "initial-3",
+      "pose": [
+        6336,
+        5171,
+        4608,
+        -256,
+        0,
+        187,
+        174,
+        6336,
+        1843,
+        -256,
+        0
+      ]
+    },
+    {
+      "name": "object-0-v0-a24576-d12",
+      "pose": [
+        -4313,
+        -4057,
+        320,
+        181,
+        181,
+        256,
+        13,
+        -4313,
+        -4057,
+        213,
+        142
+      ]
+    },
+    {
+      "name": "object-5-v1-a24576-d40",
+      "pose": [
+        -4445,
+        -8720,
+        768,
+        181,
+        181,
+        253,
+        36,
+        -3540,
+        -7815,
+        213,
+        142
+      ]
+    },
+    {
+      "name": "object-5-v2-a24576-d12",
+      "pose": [
+        -4662,
+        -8937,
+        1536,
+        181,
+        181,
+        245,
+        76,
+        -3033,
+        -7308,
+        213,
+        142
+      ]
+    },
+    {
+      "name": "route-3-40-4096",
+      "pose": [
+        -5641,
+        3133,
+        4608,
+        -114,
+        229,
+        187,
+        174,
+        -2664,
+        1651,
+        -17,
+        255
+      ]
+    }
+  ],
+  "test_sha256": "efbb7d737342b62d272af8351c11fb19cd2666c4024d6be76c767255ceb81b0f",
+  "scope": "GSU execution and compressed back RAM only; no PPU, external memory or hardware validation"
+}

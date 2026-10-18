@@ -1,0 +1,13 @@
+{
+  "source_rom_sha256": "cb62bb356af4c86632ea061c7f1132b36f6d0502ff8de4bdf8a804802aa41a75",
+  "rom_sha256": "6bcc297d63f31414b4beebe289742d98c50328399ef13b8baad5ac27a2c91d24",
+  "code_sha256": "8b99f2ed7608a201b2e41a28f68ac20f3daace9cce77d56fc844ba4ddcf90a80",
+  "sources": {
+    "gsu/gsu.cfg": "f5e9d3b000bc8ba6018850241792bff3b845400f0fd11f38de98ae2fb7afb6a0",
+    "gsu/gsu.s": "fe83f52c8705825d39204b5bd61519f82a50420a6a671d804e024a8f3da1b6da",
+    "gsu/planes.inc": "df7ec1e42ac6d0e698c27ad0e3c9a474f229428b09ea80880530a25e5c905c06",
+    "gsu/scenery.inc": "30b2381dab2c79eff7ec75bcd2a33f3a73fd5681f2bea0d87a5289b77d13306c"
+  },
+  "changed": "Only GSU code in PRG banks 1 and 2",
+  "hardware_tested": false
+}

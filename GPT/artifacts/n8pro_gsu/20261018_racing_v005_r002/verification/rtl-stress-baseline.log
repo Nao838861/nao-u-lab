@@ -1,0 +1,5 @@
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\optimization\rtl-stress-baseline\tb_racing_gsu.vhd:73:7:@148467156ns:(report note): GSU finished case 0
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\optimization\rtl-stress-baseline\tb_racing_gsu.vhd:79:7:@148469400ns:(report note): GSU_TICKS 0 3578989
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\optimization\rtl-stress-baseline\tb_racing_gsu.vhd:85:7:@150107800ns:(report note): RACING FRAME PASS 0
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\optimization\rtl-stress-baseline\tb_racing_gsu.vhd:87:5:@150107800ns:(report note): ALL RACING FRAMES PASSED
+simulation stopped @150107800ns

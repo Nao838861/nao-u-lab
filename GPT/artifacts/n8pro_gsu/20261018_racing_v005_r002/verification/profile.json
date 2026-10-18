@@ -1,0 +1,174 @@
+{
+  "rom_sha256": "6bcc297d63f31414b4beebe289742d98c50328399ef13b8baad5ac27a2c91d24",
+  "scope": "Native instruction-model clocks grouped by code address; helper time is separate, not inclusive call time",
+  "rows": [
+    {
+      "name": "initial-0",
+      "clocks": 414183,
+      "parts": {
+        "render_entry": 1652,
+        "mul8": 572,
+        "transform": 49160,
+        "faces": 29950,
+        "clip_plane": 0,
+        "project_model_polygon": 55658,
+        "raster_polygon": 57283,
+        "edge_span": 38862,
+        "edge_rows": 39151,
+        "fill_spans": 34901,
+        "divide": 31229,
+        "tree_transform": 36105,
+        "plane_cull": 38290,
+        "car_camera": 1360,
+        "initial_pipeline": 10
+      }
+    },
+    {
+      "name": "initial-1",
+      "clocks": 540605,
+      "parts": {
+        "render_entry": 1652,
+        "mul8": 572,
+        "transform": 46970,
+        "faces": 33306,
+        "clip_plane": 0,
+        "project_model_polygon": 83090,
+        "raster_polygon": 91976,
+        "edge_span": 66952,
+        "edge_rows": 53798,
+        "fill_spans": 45537,
+        "divide": 43227,
+        "tree_transform": 36655,
+        "plane_cull": 35500,
+        "car_camera": 1360,
+        "initial_pipeline": 10
+      }
+    },
+    {
+      "name": "initial-2",
+      "clocks": 564578,
+      "parts": {
+        "render_entry": 1692,
+        "mul8": 572,
+        "transform": 46970,
+        "faces": 34485,
+        "clip_plane": 0,
+        "project_model_polygon": 88772,
+        "raster_polygon": 99720,
+        "edge_span": 76124,
+        "edge_rows": 53700,
+        "fill_spans": 38901,
+        "divide": 49037,
+        "tree_transform": 37515,
+        "plane_cull": 35720,
+        "car_camera": 1360,
+        "initial_pipeline": 10
+      }
+    },
+    {
+      "name": "initial-3",
+      "clocks": 659875,
+      "parts": {
+        "render_entry": 1692,
+        "mul8": 572,
+        "transform": 56754,
+        "faces": 46297,
+        "clip_plane": 0,
+        "project_model_polygon": 116752,
+        "raster_polygon": 118897,
+        "edge_span": 86239,
+        "edge_rows": 55532,
+        "fill_spans": 40653,
+        "divide": 57057,
+        "tree_transform": 33590,
+        "plane_cull": 44470,
+        "car_camera": 1360,
+        "initial_pipeline": 10
+      }
+    },
+    {
+      "name": "object-0-v0-a24576-d12",
+      "clocks": 1186834,
+      "parts": {
+        "render_entry": 1692,
+        "mul8": 3820,
+        "transform": 87637,
+        "faces": 83088,
+        "clip_plane": 60488,
+        "project_model_polygon": 178932,
+        "raster_polygon": 170856,
+        "edge_span": 117731,
+        "edge_rows": 152760,
+        "fill_spans": 109803,
+        "divide": 99815,
+        "tree_transform": 43492,
+        "plane_cull": 75350,
+        "car_camera": 1360,
+        "initial_pipeline": 10
+      }
+    },
+    {
+      "name": "object-5-v1-a24576-d40",
+      "clocks": 1322406,
+      "parts": {
+        "render_entry": 1692,
+        "mul8": 572,
+        "transform": 90339,
+        "faces": 83451,
+        "clip_plane": 0,
+        "project_model_polygon": 219300,
+        "raster_polygon": 244462,
+        "edge_span": 187284,
+        "edge_rows": 142933,
+        "fill_spans": 102472,
+        "divide": 124747,
+        "tree_transform": 46414,
+        "plane_cull": 77370,
+        "car_camera": 1360,
+        "initial_pipeline": 10
+      }
+    },
+    {
+      "name": "object-5-v2-a24576-d12",
+      "clocks": 1411436,
+      "parts": {
+        "render_entry": 1692,
+        "mul8": 2196,
+        "transform": 90339,
+        "faces": 86908,
+        "clip_plane": 29852,
+        "project_model_polygon": 237470,
+        "raster_polygon": 253812,
+        "edge_span": 202513,
+        "edge_rows": 145017,
+        "fill_spans": 95529,
+        "divide": 140984,
+        "tree_transform": 46434,
+        "plane_cull": 77320,
+        "car_camera": 1360,
+        "initial_pipeline": 10
+      }
+    },
+    {
+      "name": "route-3-40-4096",
+      "clocks": 1436561,
+      "parts": {
+        "render_entry": 1692,
+        "mul8": 572,
+        "transform": 88149,
+        "faces": 77987,
+        "clip_plane": 0,
+        "project_model_polygon": 218860,
+        "raster_polygon": 280723,
+        "edge_span": 223216,
+        "edge_rows": 169732,
+        "fill_spans": 110524,
+        "divide": 142905,
+        "tree_transform": 46421,
+        "plane_cull": 74410,
+        "car_camera": 1360,
+        "initial_pipeline": 10
+      }
+    }
+  ]
+}
