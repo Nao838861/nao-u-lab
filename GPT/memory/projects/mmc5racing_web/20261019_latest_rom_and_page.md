@@ -37,7 +37,7 @@ Codexの最初の案は、作った内容を説明する依頼を広告文へ加
 
 本番Workerのversion IDは `26482c77-88a9-4a15-8bc1-694b1d5fb4a3`。公開healthがROM/core/epoch/compatの最新版を返し、両モードのランキングも応答することを確認した。JudgeのWorker/DBは操作していない。
 
-CLIはWrangler4.151.1。通常PATHのNode22.14では古いため、既存npm cache内のNode24.21.0を指定して実行した。秘密情報は記憶・Git・ZIPへ転記していない。
+CLIはWrangler4.151.1。既存npm cache内のNode24.21.0を明示指定して実行した。インストール済みWranglerのpackage.jsonにあるNode要件は `>=22.0.0` と確認した。秘密情報は記憶・Git・ZIPへ転記していない。
 
 ## 検証と成果物
 
@@ -49,6 +49,6 @@ CLIはWrangler4.151.1。通常PATHのNode22.14では古いため、既存npm cac
 - itch.io ZIP展開後の下位パス `/game/` で、自動タイトル、初回操作後の音声、常時説明、ROMダウンロードのバイト一致、両モード走行、名前保存、タッチ・全画面終了、通信遮断、保存拒否を検証した。
 - 旧保存の再起動後のベスト・ゴーストを確認。新版タイトルではSELECTを12フレーム保持する試験で期待するモードにならないケースがあり、1フレームの押下と解放で検査するように修正した。二重切替などの原因までは確定していない。
 
-`release/MMC5RacingWeb-itch.zip` と `release/MMC5RacingWeb-source.zip` を再生成。プレイ用SHA256は `c65978670ab9736441d0f4c32adb87c8c9fead0f466058d2b324e89a2d2108b8`、対応ソースSHA256は `9ab2130dbc94cdc2d58befce260b0d27ddd00c984293db72c1adefbb167eae4c`。再生成後もテスト済みプレイ用ZIPとのハッシュ一致を確認した。起動入口は既存 `play_browser.cmd`。
+`release/MMC5RacingWeb-itch.zip` と `release/MMC5RacingWeb-source.zip` を再生成。プレイ用SHA256は `c65978670ab9736441d0f4c32adb87c8c9fead0f466058d2b324e89a2d2108b8`、対応ソースSHA256は `ed68a5444f48dcbcd809c81aa6c722170aa346b3bcf99e0cca978be2276f9502`。再生成後もテスト済みプレイ用ZIPとのハッシュ一致を確認した。起動入口は既存 `play_browser.cmd`。Node要件の説明とソースZIPを補正した最終commitは `76fbd1a`。
 
 itch.ioへのアップロード、今回の実機再検証、人間の操作評価、実機スマートフォンの速度測定は未実施。
