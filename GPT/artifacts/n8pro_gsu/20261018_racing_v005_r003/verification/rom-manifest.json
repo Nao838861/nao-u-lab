@@ -1,0 +1,15 @@
+{
+  "source_sha256": "6bcc297d63f31414b4beebe289742d98c50328399ef13b8baad5ac27a2c91d24",
+  "sha256": "cb2dede34f495303f3bbd3849d4b5f49ddacf7fdcb0bd363b814e8debd1245e1",
+  "palette_offset": 1778,
+  "changed_file_offsets": [
+    1788,
+    1789,
+    1791,
+    1048595
+  ],
+  "palette_bytes": "30 16 1a 00 30 16 1a 21 30 16 00 21 30 00 1a 21",
+  "ground_unchanged": true,
+  "gsu_program_unchanged": true,
+  "format": "M7R5"
+}

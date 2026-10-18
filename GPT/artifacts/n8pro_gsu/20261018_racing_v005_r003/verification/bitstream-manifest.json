@@ -1,0 +1,19 @@
+{
+  "sha256": "6784a836772e44d038689c9cd7a18c359cae6beaf543663809c6c4d5b872f976",
+  "inputs": {
+    "development/superfx-lab/rtl/dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+    "development/superfx-lab/vendor/GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+    "development/superfx-lab/vendor/GSU.vhd": "195a559b14338e99613ddd3c13ac21ff1e111d36a9822279cd7998db454d0897",
+    "development/racing-n8pro/rtl/mode7_dsp.vhd": "e1ff08436b7962a79abca8ff46816798de68ee61da0976cd50c272774dd3711a",
+    "development/racing-n8pro/rtl/racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+    "development/racing-n8pro/rtl/racing_gsu.vhd": "2547deee09acb55192586a2367b1cd97dc77d13f69c9725e4ce785a81ecb9bb4",
+    "development/racing-n8pro/rtl/racing_top.vhd": "df359aea8da94f3a1aa34028e5a29dc58b8a02b7dd86eef294fd0008b3d3eb19",
+    "development/racing-n8pro/rtl/serial_math.vhd": "49b47f83f8c754ed49e37058edac066ae15b69c0f73242f6fb8c8e5ae7b48e8b",
+    "build/racing-n8pro/quartus/racing.qsf": "da90ab7a3807388e8da08e7385ee71f2e30aa0cb1b9d61a0c0a7a91034ba6e2a",
+    "build/racing-n8pro/quartus/racing.qpf": "f6c43bcad7592d6cefe638302ff0d6f20fc1ad7915c8d5f0519412c4f4ead03f"
+  },
+  "internal_setup_min_ns": 6.246,
+  "internal_hold_min_ns": 0.103,
+  "hardware_tested": false,
+  "timing_signoff": false
+}

@@ -1,0 +1,16 @@
+Fitter Status : Successful - Sun Oct 18 19:57:23 2026
+Quartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
+Revision Name : racing
+Top-level Entity Name : racing_top
+Family : Cyclone IV E
+Device : EP4CE6F17C8
+Timing Models : Final
+Total logic elements : 6,076 / 6,272 ( 97 % )
+    Total combinational functions : 5,944 / 6,272 ( 95 % )
+    Dedicated logic registers : 2,188 / 6,272 ( 35 % )
+Total registers : 2188
+Total pins : 161 / 180 ( 89 % )
+Total virtual pins : 0
+Total memory bits : 218,240 / 276,480 ( 79 % )
+Embedded Multiplier 9-bit elements : 15 / 30 ( 50 % )
+Total PLLs : 0 / 2 ( 0 % )
