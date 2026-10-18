@@ -1,0 +1,18 @@
+{
+  "rom_sha256": "d5b6016be1127c47ba2d654d09befcb1be61f8c3a6cd532a63cb76c9051fd725",
+  "base_sha256": "b51e0294ab5ea3d930a30968859bb961a3b003568d9dde5a06da52bf7d926b04",
+  "changed_bytes": 2582,
+  "only_gsu_code_changed": true,
+  "trees": 10,
+  "houses": 3,
+  "trunk_lod_depth_world": 64,
+  "gsu_clock_hz": 25000000,
+  "rom_format": "M7R6",
+  "hardware_tested": false,
+  "sources": {
+    "gsu.s": "09f1e87b914801ec5158eb753bd38b9d8d0c9b4b1d14eed835834b54fa1a97d1",
+    "scenery.inc": "d5eaacc1a39fe5395f89ca11c2cb40fbd689d15bd2445ac4b81c8b2532ccbc77",
+    "planes.inc": "df7ec1e42ac6d0e698c27ad0e3c9a474f229428b09ea80880530a25e5c905c06",
+    "gsu.cfg": "f5e9d3b000bc8ba6018850241792bff3b845400f0fd11f38de98ae2fb7afb6a0"
+  }
+}

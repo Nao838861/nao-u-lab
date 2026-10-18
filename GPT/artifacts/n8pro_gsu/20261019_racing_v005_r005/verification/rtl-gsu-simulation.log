@@ -1,0 +1,26 @@
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:73:7:@15207216ns:(report note): GSU finished case 0
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:79:7:@15209460ns:(report note): GSU_TICKS 0 247497
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:85:7:@16847860ns:(report note): RACING FRAME PASS 0
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:73:7:@44757360ns:(report note): GSU finished case 1
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:79:7:@44759604ns:(report note): GSU_TICKS 1 565073
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:85:7:@46398004ns:(report note): RACING FRAME PASS 1
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:73:7:@64584252ns:(report note): GSU finished case 2
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:79:7:@64586496ns:(report note): GSU_TICKS 2 321987
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:85:7:@66224896ns:(report note): RACING FRAME PASS 2
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:73:7:@92263461ns:(report note): GSU finished case 3
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:79:7:@92265705ns:(report note): GSU_TICKS 3 518304
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:85:7:@93904105ns:(report note): RACING FRAME PASS 3
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:73:7:@114683856ns:(report note): GSU finished case 4
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:79:7:@114686100ns:(report note): GSU_TICKS 4 386828
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:85:7:@116324500ns:(report note): RACING FRAME PASS 4
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:73:7:@142097712ns:(report note): GSU finished case 5
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:79:7:@142099956ns:(report note): GSU_TICKS 5 511667
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:85:7:@143738356ns:(report note): RACING FRAME PASS 5
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:73:7:@171067782ns:(report note): GSU finished case 6
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:79:7:@171070026ns:(report note): GSU_TICKS 6 550576
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:85:7:@172708426ns:(report note): RACING FRAME PASS 6
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:73:7:@200063097ns:(report note): GSU finished case 7
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:79:7:@200065341ns:(report note): GSU_TICKS 7 551206
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:85:7:@201703741ns:(report note): RACING FRAME PASS 7
+C:\AI\nao-u-lab\GPT\.tmp\MMC5Racing\build\racing-n8pro\r005\release\rtl-gsu\tb_racing_gsu.vhd:87:5:@201703741ns:(report note): ALL RACING FRAMES PASSED
+simulation stopped @201703741ns

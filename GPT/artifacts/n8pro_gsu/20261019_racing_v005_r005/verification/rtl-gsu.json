@@ -1,0 +1,196 @@
+{
+  "status": "pass",
+  "sources": {
+    "development/superfx-lab/rtl/dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+    "development/superfx-lab/vendor/GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+    "development/superfx-lab/vendor/GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+    "development/racing-n8pro/rtl/mode7_dsp.vhd": "613534e80be1ac681ff3d3c8255c44667df59a012918bc00cf08567ad937b2e4",
+    "development/racing-n8pro/rtl/racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+    "development/racing-n8pro/rtl/racing_gsu.vhd": "46ca5ef539afba7287b3c3d97a0615f9069297ad60c3b5dff64a8c950df3b1fd",
+    "development/racing-n8pro/rtl/racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7",
+    "development/racing-n8pro/rtl/serial_math.vhd": "c90cb6d3127d3ac4f93555fbdb822c98d0726257b3e055f0b6d0da8869800da4"
+  },
+  "rom_sha256": "d5b6016be1127c47ba2d654d09befcb1be61f8c3a6cd532a63cb76c9051fd725",
+  "cases": 8,
+  "bytes_compared": 131072,
+  "native_50mhz_clocks": [
+    718750,
+    1470942,
+    981498,
+    1536682,
+    1208641,
+    1599796,
+    1820631,
+    1836079
+  ],
+  "rtl_clock_hz": 25000000,
+  "rtl_clocks": [
+    247497,
+    565073,
+    321987,
+    518304,
+    386828,
+    511667,
+    550576,
+    551206
+  ],
+  "rtl_ms": [
+    9.89988,
+    22.60292,
+    12.87948,
+    20.73216,
+    15.47312,
+    20.46668,
+    22.02304,
+    22.04824
+  ],
+  "poses": [
+    {
+      "name": "route-0-36-0",
+      "pose": [
+        -5140,
+        2081,
+        320,
+        102,
+        235,
+        256,
+        13,
+        -5140,
+        2081,
+        102,
+        235
+      ]
+    },
+    {
+      "name": "object-0-v0-a24576-d12",
+      "pose": [
+        -4313,
+        -4057,
+        320,
+        181,
+        181,
+        256,
+        13,
+        -4313,
+        -4057,
+        213,
+        142
+      ]
+    },
+    {
+      "name": "route-1-37-4096",
+      "pose": [
+        -5765,
+        1998,
+        768,
+        30,
+        254,
+        253,
+        36,
+        -4495,
+        2148,
+        125,
+        224
+      ]
+    },
+    {
+      "name": "object-8-v1-a24576-d12",
+      "pose": [
+        -4603,
+        -4962,
+        768,
+        181,
+        181,
+        253,
+        36,
+        -3698,
+        -4057,
+        213,
+        142
+      ]
+    },
+    {
+      "name": "route-2-35--4096",
+      "pose": [
+        -7343,
+        105,
+        1536,
+        172,
+        190,
+        245,
+        76,
+        -5633,
+        1653,
+        86,
+        241
+      ]
+    },
+    {
+      "name": "object-10-v2-a24576-d40",
+      "pose": [
+        -6705,
+        -3889,
+        1536,
+        181,
+        181,
+        245,
+        76,
+        -5076,
+        -2260,
+        213,
+        142
+      ]
+    },
+    {
+      "name": "route-3-40-4096",
+      "pose": [
+        -5641,
+        3133,
+        4608,
+        -114,
+        229,
+        187,
+        174,
+        -2664,
+        1651,
+        -17,
+        255
+      ]
+    },
+    {
+      "name": "object-2-v3-a8192-d12",
+      "pose": [
+        -3594,
+        5539,
+        4608,
+        -181,
+        181,
+        187,
+        174,
+        -1241,
+        3186,
+        -142,
+        213
+      ]
+    }
+  ],
+  "test_sha256": "a8b0dd0cb5ba3e215db9cfdb6d3dee289a0f33f0bee3c7dd3133aa6f3c2f4c22",
+  "poll_limit": 250000,
+  "scope": "GSU execution and compressed back RAM only; no PPU, external memory or hardware validation",
+  "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+  "cycle_equivalence": "pass",
+  "compared_modules": [
+    "racing_gsu"
+  ],
+  "equivalence_scope": "Every falling clock edge; all defined reference outputs; existing directed harness inputs, not formal proof",
+  "variant_sources": {
+    "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+    "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+    "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+    "mode7_dsp.vhd": "613534e80be1ac681ff3d3c8255c44667df59a012918bc00cf08567ad937b2e4",
+    "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+    "racing_gsu.vhd": "46ca5ef539afba7287b3c3d97a0615f9069297ad60c3b5dff64a8c950df3b1fd",
+    "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7",
+    "serial_math.vhd": "c90cb6d3127d3ac4f93555fbdb822c98d0726257b3e055f0b6d0da8869800da4"
+  }
+}

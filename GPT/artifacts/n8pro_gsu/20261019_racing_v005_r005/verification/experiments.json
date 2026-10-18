@@ -1,0 +1,391 @@
+[
+  {
+    "variant": "area",
+    "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+    "exit_code": 0,
+    "sources": {
+      "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+      "serial_math.vhd": "49b47f83f8c754ed49e37058edac066ae15b69c0f73242f6fb8c8e5ae7b48e8b",
+      "mode7_dsp.vhd": "e1ff08436b7962a79abca8ff46816798de68ee61da0976cd50c272774dd3711a",
+      "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+      "racing_gsu.vhd": "e503960e8719dd563783ed7ac0610cabd4e43c4156a78b11b2435c9dfe48d8e4",
+      "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7"
+    },
+    "fit_summary": "Fitter Status : Successful - Mon Oct 19 03:51:24 2026\nQuartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition\nRevision Name : racing\nTop-level Entity Name : racing_top\nFamily : Cyclone IV E\nDevice : EP4CE6F17C8\nTiming Models : Final\nTotal logic elements : 6,118 / 6,272 ( 98 % )\n    Total combinational functions : 5,930 / 6,272 ( 95 % )\n    Dedicated logic registers : 2,178 / 6,272 ( 35 % )\nTotal registers : 2178\nTotal pins : 161 / 180 ( 89 % )\nTotal virtual pins : 0\nTotal memory bits : 218,240 / 276,480 ( 79 % )\nEmbedded Multiplier 9-bit elements : 15 / 30 ( 50 % )\nTotal PLLs : 0 / 2 ( 0 % )\n",
+    "logic_elements": 6118,
+    "setup_min_ns": 3.377,
+    "hold_min_ns": 0.133
+  },
+  {
+    "variant": "rows-origin-narrow-subtract",
+    "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+    "exit_code": 3,
+    "sources": {
+      "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+      "serial_math.vhd": "bb60bce576ffc5a5252769744634abbc83456ac4df231a24e394e4279f8bf1c0",
+      "mode7_dsp.vhd": "471ed31124a48cd37fb853d5886cf752f1224209cf409ddddd619499bb165858",
+      "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+      "racing_gsu.vhd": "e503960e8719dd563783ed7ac0610cabd4e43c4156a78b11b2435c9dfe48d8e4",
+      "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7"
+    },
+    "fit_summary": "",
+    "logic_elements": null,
+    "setup_min_ns": null,
+    "hold_min_ns": null
+  },
+  {
+    "variant": "rows2-narrow-adder-positive-area",
+    "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+    "exit_code": 0,
+    "sources": {
+      "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+      "serial_math.vhd": "c90cb6d3127d3ac4f93555fbdb822c98d0726257b3e055f0b6d0da8869800da4",
+      "mode7_dsp.vhd": "66d9cf0222a609a5c725475a5078f12f2149998c1fced4627be67d823641851c",
+      "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+      "racing_gsu.vhd": "e503960e8719dd563783ed7ac0610cabd4e43c4156a78b11b2435c9dfe48d8e4",
+      "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7"
+    },
+    "fit_summary": "Fitter Status : Successful - Mon Oct 19 04:07:43 2026\nQuartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition\nRevision Name : racing\nTop-level Entity Name : racing_top\nFamily : Cyclone IV E\nDevice : EP4CE6F17C8\nTiming Models : Final\nTotal logic elements : 6,031 / 6,272 ( 96 % )\n    Total combinational functions : 5,801 / 6,272 ( 92 % )\n    Dedicated logic registers : 2,162 / 6,272 ( 34 % )\nTotal registers : 2162\nTotal pins : 161 / 180 ( 89 % )\nTotal virtual pins : 0\nTotal memory bits : 218,240 / 276,480 ( 79 % )\nEmbedded Multiplier 9-bit elements : 15 / 30 ( 50 % )\nTotal PLLs : 0 / 2 ( 0 % )\n",
+    "logic_elements": 6031,
+    "setup_min_ns": 4.582,
+    "hold_min_ns": 0.142,
+    "memory_bits": 218240,
+    "m9k_blocks": 28
+  },
+  {
+    "variant": "rows2-origin-adder-positive-area",
+    "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+    "exit_code": 0,
+    "sources": {
+      "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+      "serial_math.vhd": "c90cb6d3127d3ac4f93555fbdb822c98d0726257b3e055f0b6d0da8869800da4",
+      "mode7_dsp.vhd": "62e5989e4fa987ff57c84397d6b7d336cb6445cc3749a8ac22dfb759b5d9494d",
+      "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+      "racing_gsu.vhd": "e503960e8719dd563783ed7ac0610cabd4e43c4156a78b11b2435c9dfe48d8e4",
+      "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7"
+    },
+    "fit_summary": "Fitter Status : Successful - Mon Oct 19 04:07:40 2026\nQuartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition\nRevision Name : racing\nTop-level Entity Name : racing_top\nFamily : Cyclone IV E\nDevice : EP4CE6F17C8\nTiming Models : Final\nTotal logic elements : 6,018 / 6,272 ( 96 % )\n    Total combinational functions : 5,801 / 6,272 ( 92 % )\n    Dedicated logic registers : 2,180 / 6,272 ( 35 % )\nTotal registers : 2180\nTotal pins : 161 / 180 ( 89 % )\nTotal virtual pins : 0\nTotal memory bits : 218,240 / 276,480 ( 79 % )\nEmbedded Multiplier 9-bit elements : 15 / 30 ( 50 % )\nTotal PLLs : 0 / 2 ( 0 % )\n",
+    "logic_elements": 6018,
+    "setup_min_ns": 3.939,
+    "hold_min_ns": 0.104,
+    "memory_bits": 218240,
+    "m9k_blocks": 28
+  },
+  {
+    "variant": "rows2-origin-narrow-adder-positive-area",
+    "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+    "exit_code": 0,
+    "sources": {
+      "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+      "serial_math.vhd": "c90cb6d3127d3ac4f93555fbdb822c98d0726257b3e055f0b6d0da8869800da4",
+      "mode7_dsp.vhd": "613534e80be1ac681ff3d3c8255c44667df59a012918bc00cf08567ad937b2e4",
+      "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+      "racing_gsu.vhd": "e503960e8719dd563783ed7ac0610cabd4e43c4156a78b11b2435c9dfe48d8e4",
+      "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7"
+    },
+    "fit_summary": "Fitter Status : Successful - Mon Oct 19 03:56:55 2026\nQuartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition\nRevision Name : racing\nTop-level Entity Name : racing_top\nFamily : Cyclone IV E\nDevice : EP4CE6F17C8\nTiming Models : Final\nTotal logic elements : 5,989 / 6,272 ( 95 % )\n    Total combinational functions : 5,760 / 6,272 ( 92 % )\n    Dedicated logic registers : 2,162 / 6,272 ( 34 % )\nTotal registers : 2162\nTotal pins : 161 / 180 ( 89 % )\nTotal virtual pins : 0\nTotal memory bits : 218,240 / 276,480 ( 79 % )\nEmbedded Multiplier 9-bit elements : 15 / 30 ( 50 % )\nTotal PLLs : 0 / 2 ( 0 % )\n",
+    "logic_elements": 5989,
+    "setup_min_ns": 3.652,
+    "hold_min_ns": 0.149
+  },
+  {
+    "variant": "rows2-origin-narrow-adder-positive-compact-area",
+    "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+    "exit_code": 0,
+    "sources": {
+      "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+      "serial_math.vhd": "c90cb6d3127d3ac4f93555fbdb822c98d0726257b3e055f0b6d0da8869800da4",
+      "mode7_dsp.vhd": "613534e80be1ac681ff3d3c8255c44667df59a012918bc00cf08567ad937b2e4",
+      "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+      "racing_gsu.vhd": "46ca5ef539afba7287b3c3d97a0615f9069297ad60c3b5dff64a8c950df3b1fd",
+      "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7"
+    },
+    "fit_summary": "Fitter Status : Successful - Mon Oct 19 04:07:10 2026\nQuartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition\nRevision Name : racing\nTop-level Entity Name : racing_top\nFamily : Cyclone IV E\nDevice : EP4CE6F17C8\nTiming Models : Final\nTotal logic elements : 5,967 / 6,272 ( 95 % )\n    Total combinational functions : 5,746 / 6,272 ( 92 % )\n    Dedicated logic registers : 2,162 / 6,272 ( 34 % )\nTotal registers : 2162\nTotal pins : 161 / 180 ( 89 % )\nTotal virtual pins : 0\nTotal memory bits : 218,240 / 276,480 ( 79 % )\nEmbedded Multiplier 9-bit elements : 15 / 30 ( 50 % )\nTotal PLLs : 0 / 2 ( 0 % )\n",
+    "logic_elements": 5967,
+    "setup_min_ns": 3.338,
+    "hold_min_ns": 0.146,
+    "memory_bits": 218240,
+    "m9k_blocks": 28
+  },
+  {
+    "variant": "rows2-origin-narrow-adder-positive-compact-area-seed2",
+    "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+    "exit_code": 0,
+    "sources": {
+      "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+      "serial_math.vhd": "c90cb6d3127d3ac4f93555fbdb822c98d0726257b3e055f0b6d0da8869800da4",
+      "mode7_dsp.vhd": "613534e80be1ac681ff3d3c8255c44667df59a012918bc00cf08567ad937b2e4",
+      "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+      "racing_gsu.vhd": "46ca5ef539afba7287b3c3d97a0615f9069297ad60c3b5dff64a8c950df3b1fd",
+      "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7"
+    },
+    "fit_summary": "Fitter Status : Successful - Mon Oct 19 04:13:23 2026\nQuartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition\nRevision Name : racing\nTop-level Entity Name : racing_top\nFamily : Cyclone IV E\nDevice : EP4CE6F17C8\nTiming Models : Final\nTotal logic elements : 6,152 / 6,272 ( 98 % )\n    Total combinational functions : 5,746 / 6,272 ( 92 % )\n    Dedicated logic registers : 2,162 / 6,272 ( 34 % )\nTotal registers : 2162\nTotal pins : 161 / 180 ( 89 % )\nTotal virtual pins : 0\nTotal memory bits : 218,240 / 276,480 ( 79 % )\nEmbedded Multiplier 9-bit elements : 15 / 30 ( 50 % )\nTotal PLLs : 0 / 2 ( 0 % )\n",
+    "logic_elements": 6152,
+    "setup_min_ns": 4.047,
+    "hold_min_ns": 0.143,
+    "memory_bits": 218240,
+    "m9k_blocks": 28
+  },
+  {
+    "variant": "rows2-origin-narrow-adder-positive-compact-area-seed3",
+    "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+    "exit_code": 0,
+    "sources": {
+      "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+      "serial_math.vhd": "c90cb6d3127d3ac4f93555fbdb822c98d0726257b3e055f0b6d0da8869800da4",
+      "mode7_dsp.vhd": "613534e80be1ac681ff3d3c8255c44667df59a012918bc00cf08567ad937b2e4",
+      "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+      "racing_gsu.vhd": "46ca5ef539afba7287b3c3d97a0615f9069297ad60c3b5dff64a8c950df3b1fd",
+      "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7"
+    },
+    "fit_summary": "Fitter Status : Successful - Mon Oct 19 04:13:26 2026\nQuartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition\nRevision Name : racing\nTop-level Entity Name : racing_top\nFamily : Cyclone IV E\nDevice : EP4CE6F17C8\nTiming Models : Final\nTotal logic elements : 5,957 / 6,272 ( 95 % )\n    Total combinational functions : 5,746 / 6,272 ( 92 % )\n    Dedicated logic registers : 2,162 / 6,272 ( 34 % )\nTotal registers : 2162\nTotal pins : 161 / 180 ( 89 % )\nTotal virtual pins : 0\nTotal memory bits : 218,240 / 276,480 ( 79 % )\nEmbedded Multiplier 9-bit elements : 15 / 30 ( 50 % )\nTotal PLLs : 0 / 2 ( 0 % )\n",
+    "logic_elements": 5957,
+    "setup_min_ns": 3.602,
+    "hold_min_ns": 0.107,
+    "memory_bits": 218240,
+    "m9k_blocks": 28
+  },
+  {
+    "variant": "rows2-origin-narrow-adder-positive-compact-area-seed4",
+    "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+    "exit_code": 0,
+    "sources": {
+      "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+      "serial_math.vhd": "c90cb6d3127d3ac4f93555fbdb822c98d0726257b3e055f0b6d0da8869800da4",
+      "mode7_dsp.vhd": "613534e80be1ac681ff3d3c8255c44667df59a012918bc00cf08567ad937b2e4",
+      "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+      "racing_gsu.vhd": "46ca5ef539afba7287b3c3d97a0615f9069297ad60c3b5dff64a8c950df3b1fd",
+      "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7"
+    },
+    "fit_summary": "Fitter Status : Successful - Mon Oct 19 04:20:00 2026\nQuartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition\nRevision Name : racing\nTop-level Entity Name : racing_top\nFamily : Cyclone IV E\nDevice : EP4CE6F17C8\nTiming Models : Final\nTotal logic elements : 5,978 / 6,272 ( 95 % )\n    Total combinational functions : 5,746 / 6,272 ( 92 % )\n    Dedicated logic registers : 2,162 / 6,272 ( 34 % )\nTotal registers : 2162\nTotal pins : 161 / 180 ( 89 % )\nTotal virtual pins : 0\nTotal memory bits : 218,240 / 276,480 ( 79 % )\nEmbedded Multiplier 9-bit elements : 15 / 30 ( 50 % )\nTotal PLLs : 0 / 2 ( 0 % )\n",
+    "logic_elements": 5978,
+    "setup_min_ns": 3.586,
+    "hold_min_ns": 0.122,
+    "memory_bits": 218240,
+    "m9k_blocks": 28
+  },
+  {
+    "variant": "rows2-origin-narrow-adder-positive-compact-area-seed5",
+    "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+    "exit_code": 0,
+    "sources": {
+      "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+      "serial_math.vhd": "c90cb6d3127d3ac4f93555fbdb822c98d0726257b3e055f0b6d0da8869800da4",
+      "mode7_dsp.vhd": "613534e80be1ac681ff3d3c8255c44667df59a012918bc00cf08567ad937b2e4",
+      "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+      "racing_gsu.vhd": "46ca5ef539afba7287b3c3d97a0615f9069297ad60c3b5dff64a8c950df3b1fd",
+      "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7"
+    },
+    "fit_summary": "Fitter Status : Successful - Mon Oct 19 04:19:57 2026\nQuartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition\nRevision Name : racing\nTop-level Entity Name : racing_top\nFamily : Cyclone IV E\nDevice : EP4CE6F17C8\nTiming Models : Final\nTotal logic elements : 5,971 / 6,272 ( 95 % )\n    Total combinational functions : 5,746 / 6,272 ( 92 % )\n    Dedicated logic registers : 2,162 / 6,272 ( 34 % )\nTotal registers : 2162\nTotal pins : 161 / 180 ( 89 % )\nTotal virtual pins : 0\nTotal memory bits : 218,240 / 276,480 ( 79 % )\nEmbedded Multiplier 9-bit elements : 15 / 30 ( 50 % )\nTotal PLLs : 0 / 2 ( 0 % )\n",
+    "logic_elements": 5971,
+    "setup_min_ns": 3.787,
+    "hold_min_ns": 0.143,
+    "memory_bits": 218240,
+    "m9k_blocks": 28
+  },
+  {
+    "variant": "rows2-origin-narrow-adder-positive-compact-rowmult-area",
+    "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+    "exit_code": 0,
+    "sources": {
+      "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+      "serial_math.vhd": "c90cb6d3127d3ac4f93555fbdb822c98d0726257b3e055f0b6d0da8869800da4",
+      "mode7_dsp.vhd": "d7243e7abff3ab9430732b3390efcb5b659ebcf5f44550b9078a3debccfc14f9",
+      "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+      "racing_gsu.vhd": "46ca5ef539afba7287b3c3d97a0615f9069297ad60c3b5dff64a8c950df3b1fd",
+      "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7"
+    },
+    "fit_summary": "Fitter Status : Successful - Mon Oct 19 04:17:00 2026\nQuartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition\nRevision Name : racing\nTop-level Entity Name : racing_top\nFamily : Cyclone IV E\nDevice : EP4CE6F17C8\nTiming Models : Final\nTotal logic elements : 5,986 / 6,272 ( 95 % )\n    Total combinational functions : 5,800 / 6,272 ( 92 % )\n    Dedicated logic registers : 2,162 / 6,272 ( 34 % )\nTotal registers : 2162\nTotal pins : 161 / 180 ( 89 % )\nTotal virtual pins : 0\nTotal memory bits : 218,240 / 276,480 ( 79 % )\nEmbedded Multiplier 9-bit elements : 13 / 30 ( 43 % )\nTotal PLLs : 0 / 2 ( 0 % )\n",
+    "logic_elements": 5986,
+    "setup_min_ns": 3.646,
+    "hold_min_ns": 0.092,
+    "memory_bits": 218240,
+    "m9k_blocks": 28
+  },
+  {
+    "variant": "rows2-origin-narrow-adder-positive-compact-rowmult-mb19-area",
+    "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+    "exit_code": 0,
+    "sources": {
+      "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+      "serial_math.vhd": "c90cb6d3127d3ac4f93555fbdb822c98d0726257b3e055f0b6d0da8869800da4",
+      "mode7_dsp.vhd": "000f3d9e1d287a61653e6f71548b780982336db907ff463e72e4d6e1af4e008c",
+      "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+      "racing_gsu.vhd": "46ca5ef539afba7287b3c3d97a0615f9069297ad60c3b5dff64a8c950df3b1fd",
+      "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7"
+    },
+    "fit_summary": "Fitter Status : Successful - Mon Oct 19 04:16:57 2026\nQuartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition\nRevision Name : racing\nTop-level Entity Name : racing_top\nFamily : Cyclone IV E\nDevice : EP4CE6F17C8\nTiming Models : Final\nTotal logic elements : 5,999 / 6,272 ( 96 % )\n    Total combinational functions : 5,789 / 6,272 ( 92 % )\n    Dedicated logic registers : 2,149 / 6,272 ( 34 % )\nTotal registers : 2149\nTotal pins : 161 / 180 ( 89 % )\nTotal virtual pins : 0\nTotal memory bits : 218,240 / 276,480 ( 79 % )\nEmbedded Multiplier 9-bit elements : 13 / 30 ( 43 % )\nTotal PLLs : 0 / 2 ( 0 % )\n",
+    "logic_elements": 5999,
+    "setup_min_ns": 3.626,
+    "hold_min_ns": 0.108,
+    "memory_bits": 218240,
+    "m9k_blocks": 28
+  },
+  {
+    "variant": "rows2-origin-narrow-adder-positive-right18-area",
+    "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+    "exit_code": 0,
+    "sources": {
+      "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+      "serial_math.vhd": "7616d01f7f69ab81b405c8a7a68d453e490ee2842a9e662ed34e9ec30b1ca0ee",
+      "mode7_dsp.vhd": "f873b0914bc115636ba840afbe543ffd36188292d569f8041d72af92140cec34",
+      "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+      "racing_gsu.vhd": "e503960e8719dd563783ed7ac0610cabd4e43c4156a78b11b2435c9dfe48d8e4",
+      "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7"
+    },
+    "fit_summary": "Fitter Status : Successful - Mon Oct 19 04:03:48 2026\nQuartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition\nRevision Name : racing\nTop-level Entity Name : racing_top\nFamily : Cyclone IV E\nDevice : EP4CE6F17C8\nTiming Models : Final\nTotal logic elements : 6,116 / 6,272 ( 98 % )\n    Total combinational functions : 5,716 / 6,272 ( 91 % )\n    Dedicated logic registers : 2,118 / 6,272 ( 34 % )\nTotal registers : 2118\nTotal pins : 161 / 180 ( 89 % )\nTotal virtual pins : 0\nTotal memory bits : 218,240 / 276,480 ( 79 % )\nEmbedded Multiplier 9-bit elements : 15 / 30 ( 50 % )\nTotal PLLs : 0 / 2 ( 0 % )\n",
+    "logic_elements": 6116,
+    "setup_min_ns": 4.478,
+    "hold_min_ns": 0.124,
+    "memory_bits": 218240,
+    "m9k_blocks": 28
+  },
+  {
+    "variant": "rows2-origin-narrow-subtract-area",
+    "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+    "exit_code": 0,
+    "sources": {
+      "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+      "serial_math.vhd": "bb60bce576ffc5a5252769744634abbc83456ac4df231a24e394e4279f8bf1c0",
+      "mode7_dsp.vhd": "121954c94636fdeb0002cf5b780c3af3ecf48fa9d78e9c6befb508eaa5fb9de6",
+      "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+      "racing_gsu.vhd": "e503960e8719dd563783ed7ac0610cabd4e43c4156a78b11b2435c9dfe48d8e4",
+      "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7"
+    },
+    "fit_summary": "Fitter Status : Successful - Mon Oct 19 03:53:26 2026\nQuartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition\nRevision Name : racing\nTop-level Entity Name : racing_top\nFamily : Cyclone IV E\nDevice : EP4CE6F17C8\nTiming Models : Final\nTotal logic elements : 5,992 / 6,272 ( 96 % )\n    Total combinational functions : 5,792 / 6,272 ( 92 % )\n    Dedicated logic registers : 2,162 / 6,272 ( 34 % )\nTotal registers : 2162\nTotal pins : 161 / 180 ( 89 % )\nTotal virtual pins : 0\nTotal memory bits : 218,240 / 276,480 ( 79 % )\nEmbedded Multiplier 9-bit elements : 15 / 30 ( 50 % )\nTotal PLLs : 0 / 2 ( 0 % )\n",
+    "logic_elements": 5992,
+    "setup_min_ns": 4.471,
+    "hold_min_ns": 0.105
+  },
+  {
+    "variant": "rows2-origin-narrow-subtract-comb-area",
+    "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+    "exit_code": 0,
+    "sources": {
+      "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+      "serial_math.vhd": "bb60bce576ffc5a5252769744634abbc83456ac4df231a24e394e4279f8bf1c0",
+      "mode7_dsp.vhd": "cd8f4ef429bd4c4d72b0e7b727d8534544331295b55ccbeb45fbce5382883356",
+      "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+      "racing_gsu.vhd": "e503960e8719dd563783ed7ac0610cabd4e43c4156a78b11b2435c9dfe48d8e4",
+      "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7"
+    },
+    "fit_summary": "Fitter Status : Successful - Mon Oct 19 04:00:17 2026\nQuartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition\nRevision Name : racing\nTop-level Entity Name : racing_top\nFamily : Cyclone IV E\nDevice : EP4CE6F17C8\nTiming Models : Final\nTotal logic elements : 6,145 / 6,272 ( 98 % )\n    Total combinational functions : 5,947 / 6,272 ( 95 % )\n    Dedicated logic registers : 2,081 / 6,272 ( 33 % )\nTotal registers : 2081\nTotal pins : 161 / 180 ( 89 % )\nTotal virtual pins : 0\nTotal memory bits : 218,240 / 276,480 ( 79 % )\nEmbedded Multiplier 9-bit elements : 15 / 30 ( 50 % )\nTotal PLLs : 0 / 2 ( 0 % )\n",
+    "logic_elements": 6145,
+    "setup_min_ns": 3.541,
+    "hold_min_ns": 0.111,
+    "memory_bits": 218240,
+    "m9k_blocks": 28
+  },
+  {
+    "variant": "rows2-origin-narrow-subtract-mux",
+    "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+    "exit_code": 3,
+    "sources": {
+      "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+      "serial_math.vhd": "bb60bce576ffc5a5252769744634abbc83456ac4df231a24e394e4279f8bf1c0",
+      "mode7_dsp.vhd": "121954c94636fdeb0002cf5b780c3af3ecf48fa9d78e9c6befb508eaa5fb9de6",
+      "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+      "racing_gsu.vhd": "e503960e8719dd563783ed7ac0610cabd4e43c4156a78b11b2435c9dfe48d8e4",
+      "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7"
+    },
+    "fit_summary": "",
+    "logic_elements": null,
+    "setup_min_ns": null,
+    "hold_min_ns": null
+  },
+  {
+    "variant": "rows2-origin-narrow-subtract-muxon",
+    "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+    "exit_code": 0,
+    "sources": {
+      "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+      "serial_math.vhd": "bb60bce576ffc5a5252769744634abbc83456ac4df231a24e394e4279f8bf1c0",
+      "mode7_dsp.vhd": "121954c94636fdeb0002cf5b780c3af3ecf48fa9d78e9c6befb508eaa5fb9de6",
+      "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+      "racing_gsu.vhd": "e503960e8719dd563783ed7ac0610cabd4e43c4156a78b11b2435c9dfe48d8e4",
+      "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7"
+    },
+    "fit_summary": "Fitter Status : Successful - Mon Oct 19 03:57:42 2026\nQuartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition\nRevision Name : racing\nTop-level Entity Name : racing_top\nFamily : Cyclone IV E\nDevice : EP4CE6F17C8\nTiming Models : Final\nTotal logic elements : 5,992 / 6,272 ( 96 % )\n    Total combinational functions : 5,792 / 6,272 ( 92 % )\n    Dedicated logic registers : 2,162 / 6,272 ( 34 % )\nTotal registers : 2162\nTotal pins : 161 / 180 ( 89 % )\nTotal virtual pins : 0\nTotal memory bits : 218,240 / 276,480 ( 79 % )\nEmbedded Multiplier 9-bit elements : 15 / 30 ( 50 % )\nTotal PLLs : 0 / 2 ( 0 % )\n",
+    "logic_elements": 5992,
+    "setup_min_ns": 4.471,
+    "hold_min_ns": 0.105,
+    "memory_bits": 218240,
+    "m9k_blocks": 28
+  },
+  {
+    "variant": "rows2-origin-narrow-subtract-positive-right18-compact-area",
+    "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+    "exit_code": 0,
+    "sources": {
+      "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+      "serial_math.vhd": "b2a4f9b8e8addaf9f297ac5770481ca5444ae93d9967e4719809dfd11662881a",
+      "mode7_dsp.vhd": "f873b0914bc115636ba840afbe543ffd36188292d569f8041d72af92140cec34",
+      "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+      "racing_gsu.vhd": "46ca5ef539afba7287b3c3d97a0615f9069297ad60c3b5dff64a8c950df3b1fd",
+      "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7"
+    },
+    "fit_summary": "Fitter Status : Successful - Mon Oct 19 04:07:06 2026\nQuartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition\nRevision Name : racing\nTop-level Entity Name : racing_top\nFamily : Cyclone IV E\nDevice : EP4CE6F17C8\nTiming Models : Final\nTotal logic elements : 6,126 / 6,272 ( 98 % )\n    Total combinational functions : 5,726 / 6,272 ( 91 % )\n    Dedicated logic registers : 2,118 / 6,272 ( 34 % )\nTotal registers : 2118\nTotal pins : 161 / 180 ( 89 % )\nTotal virtual pins : 0\nTotal memory bits : 218,240 / 276,480 ( 79 % )\nEmbedded Multiplier 9-bit elements : 15 / 30 ( 50 % )\nTotal PLLs : 0 / 2 ( 0 % )\n",
+    "logic_elements": 6126,
+    "setup_min_ns": 4.09,
+    "hold_min_ns": 0.127,
+    "memory_bits": 218240,
+    "m9k_blocks": 28
+  },
+  {
+    "variant": "rows2-origin-narrow-subtract-positive-right18-shortdiv-compact-area",
+    "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+    "exit_code": 0,
+    "sources": {
+      "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+      "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+      "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+      "serial_math.vhd": "e448d7c7f3c9d6c346ccfe439a2143346a434448630f4513e6b811083e11371c",
+      "mode7_dsp.vhd": "f873b0914bc115636ba840afbe543ffd36188292d569f8041d72af92140cec34",
+      "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+      "racing_gsu.vhd": "46ca5ef539afba7287b3c3d97a0615f9069297ad60c3b5dff64a8c950df3b1fd",
+      "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7"
+    },
+    "fit_summary": "Fitter Status : Successful - Mon Oct 19 04:09:19 2026\nQuartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition\nRevision Name : racing\nTop-level Entity Name : racing_top\nFamily : Cyclone IV E\nDevice : EP4CE6F17C8\nTiming Models : Final\nTotal logic elements : 6,084 / 6,272 ( 97 % )\n    Total combinational functions : 5,698 / 6,272 ( 91 % )\n    Dedicated logic registers : 2,118 / 6,272 ( 34 % )\nTotal registers : 2118\nTotal pins : 161 / 180 ( 89 % )\nTotal virtual pins : 0\nTotal memory bits : 218,240 / 276,480 ( 79 % )\nEmbedded Multiplier 9-bit elements : 15 / 30 ( 50 % )\nTotal PLLs : 0 / 2 ( 0 % )\n",
+    "logic_elements": 6084,
+    "setup_min_ns": 4.709,
+    "hold_min_ns": 0.109,
+    "memory_bits": 218240,
+    "m9k_blocks": 28
+  }
+]

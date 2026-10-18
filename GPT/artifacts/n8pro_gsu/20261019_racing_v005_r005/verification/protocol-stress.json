@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "reference_commit": "c0304dccc3b62114d134662336486944c8df8c8a",
+  "arithmetic_cases": 2176,
+  "specialized_arithmetic_cases": 2120,
+  "dsp_cameras": 33,
+  "cycle_equivalence": "pass",
+  "busy_start": true,
+  "ready_start": true,
+  "live_register_writes": true,
+  "invalid_camera": true,
+  "wrong_commit": true,
+  "mid_frame_reset": true,
+  "sources": {
+    "dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+    "GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+    "GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+    "mode7_dsp.vhd": "613534e80be1ac681ff3d3c8255c44667df59a012918bc00cf08567ad937b2e4",
+    "racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+    "racing_gsu.vhd": "46ca5ef539afba7287b3c3d97a0615f9069297ad60c3b5dff64a8c950df3b1fd",
+    "racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7",
+    "serial_math.vhd": "c90cb6d3127d3ac4f93555fbdb822c98d0726257b3e055f0b6d0da8869800da4"
+  },
+  "hardware_tested": false
+}
