@@ -913,10 +913,12 @@ function draw(){
       //   shield のみ "DEF 発動中" のサインとして rgba(96,192,160,...) に muted-green 化することで
       //   プレイヤーの短期記憶で "起きる前" vs "起きている最中" を区別させる。
       // 戻し方: 下行の `rgba(96,192,160,...)` → `rgba(128,255,208,...)` で v14 (k-β) 等価。
+      // v16 (l-β) 候補 1: lineWidth=`1+ad` で時相 3 相目 (shield 消滅予兆) を物理的連続量として視覚化。
+      //   戻し方: `1+ad` → `2` で v15 (l-α) 完全等価。
       if(state.activeDefT>0){
         const ad=state.activeDefT/ACTIVE_DEF_FRAMES;
         ctx.strokeStyle=`rgba(96,192,160,${0.35+0.45*ad})`;
-        ctx.lineWidth=2;
+        ctx.lineWidth=1+ad;
         ctx.beginPath();ctx.arc(state.player.x,state.player.y,17,0,Math.PI*2);ctx.stroke();
       }
       // v06 A-5 (b): buzz chain invincibility 中の橙色 glow ring (Lv up popup と同色 #ffa040)

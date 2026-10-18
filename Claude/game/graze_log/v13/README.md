@@ -241,3 +241,33 @@ Nao_u 評価判定を待たず Ash Stage 2 内で消化可能な予防的 patch 
   - 「発動中シールドが見えなくなった」判定 → L918 の不透明度 `0.35+0.45*ad` を `0.50+0.45*ad` に 1 文字上げる戻し寄り修正
   - 「v15 分離不要、v14 k-β のまま良かった」判定 → L918 の rgba 戻しで v14 (k-β) 完全等価 (戻し方 L187 既記載)
 - **broken-record ガード**: 本 Stage 4 節は L23 "Stage 4 Ash 自プレイ判定 (C0608 Phase 4)" (v13 j-α) + L91 "v14 (k-α) Stage 4 Ash 自プレイ判定 (C0609 Phase 4)" + L161 "v14 (k-β) Stage 4 Ash 自プレイ判定 — 簡略 (C0610 Phase 4)" とは別 cycle/version のタグ "C 2026-10-17 Phase 4" で区別可、重複なし。
+
+## v16 (l-β) 候補 1 実装確認 (C 2026-10-18 Phase 4)
+
+### 改変位置と戻し方
+- **改変位置**: `game/graze_log/v13/index.html` L919 (v15 l-α 時点)、変更後は L921。
+- **変更内容**: `ctx.lineWidth=2;` → `ctx.lineWidth=1+ad;` (1 行実装、+0 B 変動なし、既存変数 `ad=state.activeDefT/ACTIVE_DEF_FRAMES` のみ参照)。
+- **戻し方 (1 操作)**: `1+ad` → `2` で v15 (l-α) 完全等価、挙動差分ゼロ。
+- **索引**: 変更行の直上コメントに `// v16 (l-β) 候補 1: lineWidth=`1+ad` で時相 3 相目 (shield 消滅予兆) を物理的連続量として視覚化。戻し方: `1+ad` → `2` で v15 (l-α) 完全等価。` を 2 行追記 (運用上の戻し地点を物理的に併置)。
+
+### Stage 3 予測 (実装前)
+- **認知率**: 消滅予兆 50-70% (線幅差は色差より foveal 要求が高い)。
+- **副作用リスク**: lineWidth=1 時点 (ad→0 寄り) で視認性低下、不透明度 `0.35+0.45*ad` とのダブル減衰で消滅直前 0.5F は視認不能に近い可能性。
+- **閾値推移**: 発動開始 lineWidth=2.0 (ad=1.0) → 終了直前 lineWidth=1.0 (ad=0.0)、不透明度と並行して線が細り、二重の減衰で終了を伝える。
+
+### Stage 3 予測 (実装後、コードベースでの事後確認)
+- **変更範囲の確認**: L919 の 1 行のみ変更済。他の `ctx.lineWidth=` 呼出し (L932 の invincibleT 系 2.5、L942/L950/他の弾/敵/boss ring 系) に影響なし — strokeStyle/beginPath/stroke の pipeline で独立。
+- **連続量 gate として成立**: shield 色濃度分離 (v15 l-α) が rgba 空間での連続 gate を実現したのと同型に、lineWidth 軸でも 0.0 → 1.0 → 2.0 の連続量 gate が shield 時相の 3 相目を視覚化。両軸独立で評価可能 (saturation vs geometry)。
+- **副作用 pre-check**:
+  - (i) Hyper Activation (L962-966) / BOMB flash / HIT flash との描画順序: shield ring は activeDef block (L916-921) で先描画、後続の flash 系は glow 加算、重畳時は flash 優位で shield の lineWidth 変化が隠れる可能性あり → ただし flash 発火は瞬時 (12-24F)、shield 2.5 秒 (150F) のうち flash 重畳窓は小、消滅予兆の最終 30-60F は flash 無しの素描画で視認可能見込。
+  - (ii) 発動開始時 lineWidth=2.0 は v15 (l-α) と同値、v15 既通過の視認性水準を発動開始時点では維持。
+  - (iii) 消滅直前 lineWidth=1.0 の視認性: Canvas の lineWidth=1 は 1px rendering で ring=17 radius×2π≈107px 周長を 1px 描画、不透明度 0.35 (ad→0) で視認閾値付近。実プレイ測定での再評価余地あり (Nao_u 評価で「終了予兆は見えたが消滅直前は見えなくなった」判定時は L919 を `1.3+0.7*ad` に調整して範囲を 1.3-2.0 に押し上げる案を予備で保持)。
+- **戻し方の物理的保全**: `ash:` prefix commit で意図を commit log 側に明示、backup auto-commit (`backup:` prefix) との区別維持。装置の向き原則 (feedback_device_direction_rescue_vs_suffocation.md) に忠実。
+
+### 候補 2 (shield 発動開始 flash) との関係
+- 候補 2 (発動開始 flash、4 行) は本 Phase 4 で未着手。shield 時相 3 相のうち 1 相目 (発動"開始") と 3 相目 (発動"終了") の視覚化を分離選定、本サイクルは 3 相目のみ着手。候補 2 は Nao_u 評価次第 (「終了予兆は見えたが開始が分からない」判定時に v17 で発射) で未来に残す。
+- 1 サイクル 1 案の方針 (koguGameDev フラグ乱立論 v14 k-α L117-125 の警告踏襲) を本 v16 (l-β) でも維持。
+
+### Nao_u 評価依頼の判断
+- 本 v16 (l-β) 候補 1 は v15 (l-α) Stage 4 Ash 自審査済 (commit 8daea8082) の上に積む 1 行 patch。v15 Nao_u 評価依頼未発射 (本サイクル Phase 3 §B 候補 3 を落とした) のため、v16 (l-β) 単独 ship 後、次サイクル以降で v15+v16 合流評価依頼を Slack #game-rights に投げる余地を保つ。
+- 本サイクルの発射物は commit log 1 行の増加 (`git log --oneline game/graze_log/`)、Slack post なし。§0b 継承の「commit ログに 1 行増やす」経路を v15 → v16 の連続性で実現。
