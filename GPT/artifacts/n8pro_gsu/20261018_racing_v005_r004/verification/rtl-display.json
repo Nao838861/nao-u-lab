@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "sources": {
+    "development/superfx-lab/rtl/dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+    "development/superfx-lab/vendor/GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+    "development/superfx-lab/vendor/GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+    "development/racing-n8pro/rtl/mode7_dsp.vhd": "e1ff08436b7962a79abca8ff46816798de68ee61da0976cd50c272774dd3711a",
+    "development/racing-n8pro/rtl/racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+    "development/racing-n8pro/rtl/racing_gsu.vhd": "e503960e8719dd563783ed7ac0610cabd4e43c4156a78b11b2435c9dfe48d8e4",
+    "development/racing-n8pro/rtl/racing_top.vhd": "df359aea8da94f3a1aa34028e5a29dc58b8a02b7dd86eef294fd0008b3d3eb19",
+    "development/racing-n8pro/rtl/serial_math.vhd": "49b47f83f8c754ed49e37058edac066ae15b69c0f73242f6fb8c8e5ae7b48e8b"
+  },
+  "views": 16,
+  "pixels": 786432,
+  "exhaustive_sky_fx_masks": 65536,
+  "hidden_fx": true,
+  "dma_during_sprite_fetches": "pass",
+  "external_read_delay_ns": 70,
+  "hardware_tested": false
+}

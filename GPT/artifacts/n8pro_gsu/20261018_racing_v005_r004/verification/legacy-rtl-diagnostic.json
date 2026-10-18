@@ -1,0 +1,32 @@
+{
+  "tested_at_jst": "2026-10-18T21:31:43.085209+09:00",
+  "ghdl": "GHDL 5.1.1 (4.1.0.r775.g91725e47f.dirty) [Dunoon edition]",
+  "rom_sha256": "591424840eba9fc62f7e7d28f2abb90b672f6e074bf5b1ec5baf7e52ab18e837",
+  "cases": {
+    "gsu_arithmetic_store_plot_reset_cache": "pass",
+    "host_rom_via_board_rtl": "pass",
+    "host_rom_missing_id_fault": "pass"
+  },
+  "sources": {
+    "development/superfx-lab/rom/nrom.cfg": "0a9e2ce6bb32e201532178fd80ce32e94c33f6ac896a3b7a83973b4005a58fdb",
+    "development/superfx-lab/rom/program.inc": "41e5096a25fe41f8f4a4911cd88d3f766b16eda994af07e173bb7919e9bed8c1",
+    "development/superfx-lab/rom/selftest.s": "5101ae64e7c3acb10931f30821042d1aaeed9a61d31258283d09720eb9a41877",
+    "development/superfx-lab/rtl/dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+    "development/superfx-lab/rtl/n8pro.sdc": "c2fce3b4722eb4b86f6057bb5573b40d112fc56a0e22fe952c40536abc14255a",
+    "development/superfx-lab/rtl/n8pro_top.vhd": "0baed6ac6f4d33b3bec1d60eb22db5f62ec8593dc6b7fa134c135efa3eb861ed",
+    "development/superfx-lab/rtl/nes_gsu.vhd": "ac920b3ebd7e0712e3e20acebed7749fb9a593b7614f345a9ab6e659bc6d75b3",
+    "development/superfx-lab/vendor/GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+    "development/superfx-lab/vendor/GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+    "development/superfx-lab/vendor/LICENSE.GPL-3.0": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "development/superfx-lab/vendor/LICENSE.minimal_nrom": "2b619b881c83e13f646d9e2e4cb16677f4483e2ab2e30e26f326e1a473116edc",
+    "development/superfx-lab/vendor/SOURCES.md": "c98b711e2b228fe83bafc636705881c069dc7d3b5cbcc0924fd8ad8a310801a2"
+  },
+  "harness": {
+    "development/superfx-lab/sim/missing_mapper.lua": "6189512d6e8629e4176307423be62d5db37e72f8c66093a9f117247f365c1f3d",
+    "development/superfx-lab/sim/tb_host_rom.vhd": "eab50a1c04944dd187e0055c680a6109db377e2bf0e4317bae1a2aa536b75048",
+    "development/superfx-lab/sim/tb_nes_gsu.vhd": "dd4c2885229ee0d3cf899c859d82c37de617fcf0bbb41dbacf48642b25980c92",
+    "development/superfx-lab/tools/lab.py": "755a6a43430bfe285a138d79157c254c4d5131c9b367f8d1887161160e040edd"
+  },
+  "quartus_fitted": false,
+  "hardware_tested": false
+}

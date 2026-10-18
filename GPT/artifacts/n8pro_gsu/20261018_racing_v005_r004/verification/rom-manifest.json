@@ -1,0 +1,66 @@
+{
+  "rom_sha256": "b51e0294ab5ea3d930a30968859bb961a3b003568d9dde5a06da52bf7d926b04",
+  "source_sha256": "cb2dede34f495303f3bbd3849d4b5f49ddacf7fdcb0bd363b814e8debd1245e1",
+  "trees": [
+    [
+      160,
+      170
+    ],
+    [
+      136,
+      328
+    ],
+    [
+      280,
+      436
+    ],
+    [
+      482,
+      502
+    ],
+    [
+      500,
+      320
+    ],
+    [
+      210,
+      43
+    ],
+    [
+      168,
+      470
+    ],
+    [
+      520,
+      630
+    ],
+    [
+      184,
+      170
+    ],
+    [
+      112,
+      328
+    ]
+  ],
+  "houses": [
+    [
+      150,
+      260
+    ],
+    [
+      620,
+      245
+    ],
+    [
+      420,
+      420
+    ]
+  ],
+  "trunk_lod_depth_world": 64,
+  "shared_local_meshes": true,
+  "coordinate_rounding_max_q7": 1,
+  "gsu_clock_hz": 25000000,
+  "fast_internal_ram": true,
+  "hardware_tested": false
+}

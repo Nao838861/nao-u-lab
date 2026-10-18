@@ -1,0 +1,2 @@
+adaptive_pixels=1048576 fallback_blocks=40824/65536
+{"status":"pass","composite_pixels":2097152,"projected_points":128768,"max_projection_error_px":0.028834,"table_model_ms":7.86432}

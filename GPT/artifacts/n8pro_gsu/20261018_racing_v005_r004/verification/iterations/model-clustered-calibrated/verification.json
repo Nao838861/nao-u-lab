@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "rom_sha256": "bc6c9be660e0004d59ae2d5a9ef3ad1c07fd8dabbc38d751ac819583ed902f9b",
+  "probe_sha256": "7977639a3fe8b081eabd83f531fcba544e1f187caa499748b8103de721ff140a",
+  "cases": [
+    {
+      "name": "route-0-28--4096",
+      "rtl_clocks": 341964,
+      "model_clocks": 347610,
+      "model_margin_percent": 1.651050987823277
+    },
+    {
+      "name": "object-8-v0-a40960-d12",
+      "rtl_clocks": 561087,
+      "model_clocks": 573889,
+      "model_margin_percent": 2.2816425973155585
+    },
+    {
+      "name": "route-1-30--4096",
+      "rtl_clocks": 437521,
+      "model_clocks": 453514,
+      "model_margin_percent": 3.655367399507692
+    },
+    {
+      "name": "object-10-v1-a24576-d12",
+      "rtl_clocks": 577483,
+      "model_clocks": 603169,
+      "model_margin_percent": 4.447923142326271
+    },
+    {
+      "name": "route-2-31--4096",
+      "rtl_clocks": 426139,
+      "model_clocks": 444467,
+      "model_margin_percent": 4.300944058159417
+    },
+    {
+      "name": "object-10-v2-a24576-d40",
+      "rtl_clocks": 581488,
+      "model_clocks": 608699,
+      "model_margin_percent": 4.679546267506818
+    },
+    {
+      "name": "route-3-40-4096",
+      "rtl_clocks": 597107,
+      "model_clocks": 628477,
+      "model_margin_percent": 5.253664753553378
+    },
+    {
+      "name": "object-2-v3-a8192-d12",
+      "rtl_clocks": 576371,
+      "model_clocks": 606350,
+      "model_margin_percent": 5.2013373330719315
+    }
+  ],
+  "scope": "Selected poses only; not a general cycle-accuracy guarantee or hardware timing signoff"
+}
