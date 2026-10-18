@@ -4,8 +4,9 @@
 #include <vector>
 #include <array>
 int main(int argc,char**argv){
- if(argc!=3)return 2;
+ if(argc!=3 && argc!=4)return 2;
  nesfx::BitmapBoard b;b.gsuClockHz=50000000;
+ if(argc==4){b.gsuClockHz=25000000;b.fastInternalRam=true;}
  b.CpuClock();b.CpuClock();b.CpuClock();
  std::ifstream in(argv[1],std::ios::binary);in.read((char*)b.memory.data(),b.memory.size());if(!in)return 3;
  unsigned back=b.memory[0x8005]/64;b.front=back^1;

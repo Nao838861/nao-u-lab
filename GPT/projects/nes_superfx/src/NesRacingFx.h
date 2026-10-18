@@ -18,7 +18,7 @@ class NesRacingFx : public BaseMapper {
     uint64_t _groundClockRemainder=0;
     bool _groundEnabled=false;
     bool HasGroundRom() const {
-        return _prgSize==2097152 && (std::memcmp(_prgRom+1048576,"M7R4",4)==0 || std::memcmp(_prgRom+1048576,"M7R5",4)==0);
+        return _prgSize==2097152 && std::memcmp(_prgRom+1048576,"M7R",3)==0 && _prgRom[1048579]>='4' && _prgRom[1048579]<='6';
     }
     void FetchGroundBlock() {
         auto ppu=_console->GetPpu();
@@ -31,7 +31,7 @@ class NesRacingFx : public BaseMapper {
             auto at=_fx.front*16384+nesfx::BitmapBoard::PixelByte(x,unsigned(y),0);
             lo=_fx.memory[at];hi=_fx.memory[at+1];
         }
-        _groundBlock=_ground.Fetch(x,unsigned(y),_prgRom+1048576+16,640,640,lo,hi,_prgRom[1048579]=='5');
+        _groundBlock=_ground.Fetch(x,unsigned(y),_prgRom+1048576+16,640,640,lo,hi,_prgRom[1048579]>='5');
     }
     uint8_t _banks[5]={0,0x80,0x80,0xfe,0x80};
     uint8_t _mulA=0,_mulB=0,_gsuWindow=0;
@@ -53,6 +53,7 @@ protected:
     bool EnableCpuClockHook() override {return true;}
     bool EnableCustomVramRead() override {return true;}
     void InitMapper() override {
+        _fx.fastInternalRam=HasGroundRom() && _prgRom[1048579]=='6';
         const char* clock=std::getenv("NES_GSU_CLOCK_HZ");
         if(clock && std::string(clock)=="50000000")_fx.gsuClockHz=50000000;
         SelectChrPage(0,0);

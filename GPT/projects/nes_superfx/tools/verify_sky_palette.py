@@ -12,10 +12,12 @@ COLORS=[(255,254,255),(181,49,32),(12,147,0),(102,102,102),(100,176,255)]
 def main():
     p=argparse.ArgumentParser();p.add_argument('--rom',type=Path,required=True)
     p.add_argument('--runtime',type=Path,required=True);p.add_argument('--out',type=Path,required=True)
-    p.add_argument('--legacy',action='store_true');p.add_argument('--compare-results',type=Path);a=p.parse_args()
+    p.add_argument('--legacy',action='store_true');p.add_argument('--compare-results',type=Path)
+    p.add_argument('--cases',type=Path);p.add_argument('--measure-fps',action='store_true');a=p.parse_args()
     out=a.out.resolve();out.mkdir(parents=True,exist_ok=True);runtime=a.runtime.resolve();rom=a.rom.resolve()
     rows=[r for r in cases() if re.fullmatch(r'object-(0|8|9)-v[01]-a(0|8192|40960)-d40',r['name'])]
     rows += [dict(rows[0],name='hidden-fx',hide=1)]
+    if a.cases:rows=json.loads(a.cases.read_text())
     labels={n:int(v,16) for v,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(ROOT/'build/racing/v005/cpu.lbl').read_text())}
     lua=r'''local L=LABELS local rows=ROWS local out=OUTDIR
 local shot=1 local settle=0 local frames=0 local done=false local clocks={}
@@ -53,6 +55,11 @@ end,emu.eventType.endFrame)
     lua=lua.replace('LABELS','{'+','.join(f'{k}={v}' for k,v in labels.items())+'}')
     lua=lua.replace('ROWS','{'+','.join('{name='+json.dumps(r['name'])+',view='+str(r['view'])+',hide='+str(r.get('hide',0))+',state={'+','.join(map(str,r['state']))+'}}' for r in rows)+'}')
     lua=lua.replace('OUTDIR',json.dumps(out.as_posix()));script=out/'capture.lua';script.write_text(lua)
+    if a.measure_fps:
+        lua=lua.replace('local clocks={}','local clocks={} local stamps={} local mark=0')
+        lua=lua.replace('  if settle==24 then','  if settle==10 then mark=w(L.updates) end\n  if settle==130 then\n   stamps[#stamps+1]=(w(L.updates)-mark)%65536')
+        lua=lua.replace("done=true;emu.stop(0)","dump('fps.json','['..table.concat(stamps,',')..']');done=true;emu.stop(0)")
+        script.write_text(lua)
     settings=runtime/'settings.json';before=settings.read_bytes();cfg=json.loads(before)
     cfg.setdefault('Debug',{}).setdefault('ScriptWindow',{})['AllowIoOsAccess']=True;settings.write_text(json.dumps(cfg))
     env=os.environ.copy();env.update(NES_GSU_MAPPER='n8pro-racing-gsu',NES_GSU_CLOCK_HZ='25000000')
@@ -101,6 +108,8 @@ end,emu.eventType.endFrame)
     report={'status':'pass','legacy':a.legacy,'rom_sha256':hashlib.sha256(rom.read_bytes()).hexdigest(),
             'core_sha256':hashlib.sha256((runtime/'MesenCore.dll').read_bytes()).hexdigest(),
             'ppu_pixels':pixels,'sky_gray_preserved':gray,'four_color_overflow_blocks':overflow,'cases':rows,'hardware_tested':False}
+    if a.measure_fps:
+        report['measured_fps']=[n*60.0988/120 for n in json.loads((out/'fps.json').read_text())]
     if a.compare_results:
         baseline=a.compare_results.resolve();ground_pixels=0;changed_pixels=0
         assert json.loads((baseline/'clocks.json').read_text())==json.loads((out/'clocks.json').read_text()),'GSU workload changed'

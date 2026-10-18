@@ -12,6 +12,8 @@ public:
     uint16_t tileX=0,tileY=0;
     bool tileInside=false;
     uint32_t gsuClockHz=25000000;
+    bool fastInternalRam=false; // Selected by the racing ROM format, not a saved mutable register.
+    bool FastInternalRam() const override { return fastInternalRam; }
     uint64_t fillClockRemainder=0;
     uint8_t MemoryClockScale() const override { return gsuClockHz==50000000?2:1; }
     uint16_t fillAddress=0,fillLength=0,fillCursor=0,fillRemaining=0,fillPosition=0;

@@ -30,9 +30,12 @@ def functions(text):
 
 
 def main():
+    global SOURCE
     parser = argparse.ArgumentParser()
     parser.add_argument('--fetch', action='store_true')
+    parser.add_argument('--source',type=Path)
     args = parser.parse_args()
+    if args.source:SOURCE=args.source.resolve()
     if not SOURCE.exists():
         if not args.fetch:
             parser.error('初回は --fetch を指定')
@@ -65,6 +68,8 @@ def main():
     # MiSTer GSU sets FLAG_IRQ on STOP even with IRQ_OFF=1 (GSU.vhd:335-337).
     # CFGR masks the output, not the internal flag; N8 Pro never wires IRQ to CPU.
     instructions = replace(instructions, 'if(!_state.IrqDisabled) {\n\t\t_state.SFR.Irq = true;\n\t\t// Host observes SFR.Irq.\n\t}', '_state.SFR.Irq = true;')
+    instructions = replace(instructions, 'Step(_state.HighSpeedMode ? 1 : 2);', 'if(!_bus.FastInternalRam()) Step(_state.HighSpeedMode ? 1 : 2);')
+    instructions = replace(instructions, 'Step((_state.HighSpeedMode ? 3 : 7) * (_state.ClockSelect ? 1 : 2));', 'if(!_bus.FastInternalRam()) Step((_state.HighSpeedMode ? 3 : 7) * (_state.ClockSelect ? 1 : 2));')
     serialization = methods['Serialize']
     serialization = serialization[serialization.index('{')+1:serialization.rindex('}')]
     serialization = replace(serialization, 'SVArray(_gsuRam, _gsuRamSize);', 'SV(_r15Changed); SV(_lastOpAddr);')
@@ -80,6 +85,7 @@ public:
     GsuState& GetState();
     uint32_t DebugGetProgramCounter();
     uint8_t MemoryAccessClocks() const {
+        if(_bus.FastInternalRam()) return 3; // Conservative instruction model, including RTL RAM-state overhead.
         return static_cast<uint8_t>((_state.ClockSelect ? 5 : 6) * _bus.MemoryClockScale());
     }
     void RunUntil(uint64_t target) {
@@ -102,12 +108,16 @@ struct Bus {
     virtual uint8_t GsuRead(uint32_t) = 0;
     virtual void GsuWrite(uint32_t, uint8_t) = 0;
     virtual uint8_t MemoryClockScale() const { return 1; }
+    virtual bool FastInternalRam() const { return false; }
 };
 enum class MemoryOperationType { Read, Write, ExecOpCode, ExecOperand };
 ''' + types + '\nclass Gsu {\nprivate:\n    Bus& _bus;\n' + private + public
     # Optional faster execution clock with external-memory time kept fixed.
     # Scale=1 is exactly the pinned core's original timing, including ABI1.
-    body = replace(body, '_state.ClockSelect ? 5*16 : 6*16', '16 * MemoryAccessClocks()')
+    # Internal cache RAM streams one byte per FPGA clock. Keep a conservative
+    # 16 transfer clocks plus 10 arbitration/entry/exit clocks in the instruction
+    # model. Validate conservatism against the RTL, not the desired frame rate.
+    body = replace(body, '_state.ClockSelect ? 5*16 : 6*16', '(_bus.FastInternalRam() ? 26 : 16 * MemoryAccessClocks())')
     body = replace(body, '_state.ClockSelect ? 5 : 6', 'MemoryAccessClocks()')
     instructions = replace(instructions, '_state.ClockSelect ? 5 : 6', 'MemoryAccessClocks()')
     body = re.sub(r'^(?=(?:[\w:*&<>]+\s+)?Gsu::)', 'inline ', body, flags=re.M)
