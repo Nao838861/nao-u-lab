@@ -271,3 +271,64 @@ Nao_u 評価判定を待たず Ash Stage 2 内で消化可能な予防的 patch 
 ### Nao_u 評価依頼の判断
 - 本 v16 (l-β) 候補 1 は v15 (l-α) Stage 4 Ash 自審査済 (commit 8daea8082) の上に積む 1 行 patch。v15 Nao_u 評価依頼未発射 (本サイクル Phase 3 §B 候補 3 を落とした) のため、v16 (l-β) 単独 ship 後、次サイクル以降で v15+v16 合流評価依頼を Slack #game-rights に投げる余地を保つ。
 - 本サイクルの発射物は commit log 1 行の増加 (`git log --oneline game/graze_log/`)、Slack post なし。§0b 継承の「commit ログに 1 行増やす」経路を v15 → v16 の連続性で実現。
+
+## v16 (l-β) Stage 4 Ash 自プレイ判定 (C 2026-10-18 Phase 4)
+
+### (a) shield 消滅予兆 lineWidth 細化の実装確認 (b544d55de index.html 2 行差分 trace)
+- **本体 1 行**: L921 `ctx.lineWidth=1+ad;` (v15 l-α 時点は `ctx.lineWidth=2;`)。既存変数 `ad=state.activeDefT/ACTIVE_DEF_FRAMES` (L919) のみ参照、新規 state 変数追加なし — koguGameDev フラグ乱立論 (v14 k-α L117-125) 回避側。
+- **索引コメント 2 行**: L916-917 に `// v16 (l-β) 候補 1: lineWidth=\`1+ad\` で時相 3 相目 (shield 消滅予兆) を物理的連続量として視覚化。/ 戻し方: \`1+ad\` → \`2\` で v15 (l-α) 完全等価。` を追記。戻し方を変更行の直上に物理併置、将来の自分が意図を再現できる経路保持。
+- **他 lineWidth 呼出しへの影響**: L934 (invincibleT 系 `lineWidth=2.5`) / L944 以降の弾/敵/boss ring 系に影響なし。strokeStyle/beginPath/stroke の pipeline で独立、state.activeDefT>0 ブロック (L918-923) 内閉じ。
+- **shield 排他条件 (L938 ring 予兆) との整合**: L938 `grazeStreak>=GRAZE_STREAK_TH&&state.activeDefT<=0` の AND 排他は v15 l-α で導入済、v16 l-β では touched せず。発動前/発動中の時相階層 (v15 l-α 判定 (a) で確立済) に発動"終了予兆" 層を lineWidth 軸で追加した差分増強。
+- **戻し操作の 1 手性**: `1+ad` → `2` で v15 (l-α) 完全等価、挙動差分ゼロ。装置の向き原則 (feedback_device_direction_rescue_vs_suffocation.md) 準拠、`ash:` prefix commit で意図を commit log に明示。
+
+### (b) Stage 3 予測 (v15 l-α 8daea8082 時点) との対照
+- **v15 l-α 判定 (d) 候補 1 Stage 3 予測 (本 README L188-191)**:
+  - 認知率: 消滅予兆 50-70% (線幅差は色差より foveal 要求が高い)
+  - 副作用リスク: lineWidth=1 時点で視認性低下、不透明度 0.35 とのダブル減衰で消滅直前 0.5F は視認不能に近い可能性
+  - 発動開始 lineWidth=2.5 に上げる調整候補あり
+- **v16 l-β 実装後の予測更新 (本 README L253-265)**:
+  - 認知率予測は 50-70% で据置 (計測装置不在のため v15 l-α 時点の推定を維持)
+  - lineWidth 範囲は v15 l-α 予測の "0.0 → 2.0" ではなく **"1.0 → 2.0"** に補正 — 下限を 0 ではなく 1 px に置くことで消滅直前の視認閾値をゼロに落とさず、不透明度 0.35 とのダブル減衰下でも 1 px rendering を保証
+  - 発動開始 lineWidth=2.5 への押し上げは v16 では採用せず、下限 1 px 保持で代替 — Stage 3 予測時点では未分岐だった「下限を上げる」vs「上限を上げる」の 2 択で、v16 では前者を選択
+- **予測更新の根拠**: v15 l-α 時点の候補 1 起案は「開始 lineWidth=2 → 終了 lineWidth=0」の線形細化を想定していたが、Canvas の `lineWidth=0` は実装上 `lineWidth=1` と区別されず rendering 不定、かつ L934 invincibility ring の `lineWidth=2.5` との視覚コントラスト上 shield 開始が 2 固定の方が「同時刻発火の 2 ring の優先順位」(invincibility 2.5 > shield 2) を保てる。1+ad の線形式は結果的に「上限 2 固定・下限 1 保証」の設計拘束を 1 式で表現。
+- **判定**: v15 l-α Stage 3 予測は方向正しく、v16 l-β 実装で range を補正したのみ。Stage 3 → Stage 4 の予測責任連続体 (feedback_prediction_responsibility) で言う「着手前の懸念 (ダブル減衰で 0.5F 視認不能)」を実装式 `1+ad` で物理解消、Stage 2 懸念解消ゲートは通過。
+
+### (c) Win2 CLI 環境 headless 制約の明示 (feedback_headless_unfit_for_unfinished_eval 準拠)
+- **視認実測の不能性**: v13 ディレクトリに headless.py なし、Canvas は Pyxel/Pygame と異なり headless 動作不能。Win2 CLI 環境でブラウザレンダリングを起動する経路を本サイクルで用意しなかった。
+- **feedback_headless_unfit_for_unfinished_eval.md 準拠**: 本ゲームは未校正ゲーム (shot_log/v01 のような校正済み基準なし)、headless 数値を judgment/cross_review/Slack/merge 要請の根拠に使わない原則。本節の 50-70% 認知率推定は Stage 3 予測の援用のみで、Nao_u 評価判定・Slack 投稿・merge 要請には**使わない**。
+- **校正課題** (M-37→M-40 連続体、v14 k-α 判定 (c) / v15 l-α 判定 (b) から据置):
+  - **M-37 Stage 3 予測の数値校正**: 「50-70%」はコード設計上の推定、実プレイ測定装置なし。Nao_u 自プレイで「見えた/見えなかった」の二値+「消滅直前の見え方」の自由記述が校正の第 1 データ点。
+  - **M-38 複数ソースによる援用**: 線幅連続量 gate 設計の外部裏付けは Phase 1 WebSearch で得た shmups.wiki Boghog 101 "thin warning line" + Sparen ph3 ddsga4 "circular warning" (log/external_search.log 2026-10-18 23:40 末尾)。lineWidth 細化は telegraph (攻撃予兆) 原理の鏡像 (危険接近予兆 vs 保護消失予兆) として射程内。
+  - **M-40 検証可能性**: 本 patch は 1 行実装で戻し手が `1+ad` → `2` の 1 操作、副作用リスクは L934 (invincibility) との描画順序優位性で物理担保、Nao_u 評価分岐の 4 本 (本節 (d)) すべてが 1 行〜1 文字 patch で表現可能。検証経路は確保済。
+- **判定**: 校正課題は未解消のまま、Stage 4 の 4 軸構造判定として「構造要件は満たす、認知%の校正は実プレイ測定待ち」の limitation を v14 k-α / v15 l-α から**連続して据置**。本サイクルで M-37→M-40 進展なし、知識側 (knowledge/20261017_system_switch_dual_system_...) の gate 設計視点との連続量 gate 解釈も v15 l-α 判定 (c) から据置 (v16 l-β では lineWidth 軸での連続 gate 拡張、同型継続)。
+
+### (d) v17 方向候補 (Nao_u 評価分岐 1〜4、1 行〜数行 patch レベル、戻し方明示)
+Nao_u 評価判定を待たず Ash Stage 2 内で消化可能な予防的 patch として、v17 候補を 4 本起案。本 v16 (l-β) の自己審査で「消滅予兆は lineWidth 軸で視覚化できたが、発動"開始" の立ち上がり視覚化は未着手」= 時相 3 相のうち 1 相目が未視覚化、を特定した処方 + v16 l-β の range 調整予備候補 2 本。
+
+**分岐 1: 「消滅予兆 50-70% 認知成立」判定 → 候補 2 (shield 発動開始 flash) で時相 1 相目視覚化**
+- 改変: v15 l-α 判定 (d) 候補 2 の 4 行実装 (`state.defStartFlashT=12;` 1 行 + draw block 3 行) を v17 で発射。shield 時相 3 相のうち 1 相目 (発動"開始") を全画面 flash で視覚化、既存 bombFlash 24F と対称の設計で学習済経路再利用。
+- 戻し方: 4 行削除で v16 (l-β) 完全等価。
+- 予測: 発動開始の認知率 85-95% (全画面 flash は既存 bombFlash 24F で学習済経路)、副作用リスクは Hyper Activation (L962-966) / BOMB flash / HIT flash との重畳確率上昇 → defStartFlash 不透明度を 0.15 以下に制限。
+
+**分岐 2: 「消滅予兆 弱い」判定 → L921 `1+ad` を `1.3+0.7*ad` に調整 (下限 push up)**
+- 改変: L921 `ctx.lineWidth=1+ad;` → `ctx.lineWidth=1.3+0.7*ad;` の 5 文字変更、範囲 1.0-2.0 → 1.3-2.0 に押し上げ、消滅直前の視認閾値を 1 px → 1.3 px に拡張。上限は 2 固定維持 (L934 invincibility 2.5 との優先順位を保つ)。
+- 戻し方: 5 文字戻しで v16 (l-β) 完全等価。
+- 予測: 認知率 50-70% → 60-75% に押し上げ、ただし下限 1.3 は Canvas の sub-pixel anti-aliasing で見かけ 1.5 px 相当、消滅直前のコントラスト強化。
+
+**分岐 3: 「消滅直前 1 px は過剰細化、終了予兆が強すぎる」判定 → L921 を `1.5+0.5*ad` にして範囲 1.5-2.0 に狭める**
+- 改変: L921 `ctx.lineWidth=1+ad;` → `ctx.lineWidth=1.5+0.5*ad;` の 5 文字変更、範囲を狭めることで「終了予兆」感度を抑制、v15 l-α (固定 2) と v16 l-β (1-2) の中間点を取る。
+- 戻し方: 5 文字戻しで v16 (l-β) 完全等価。
+- 予測: 消滅予兆の視覚強度を下げる方向。Nao_u 判定で「v16 の shield 細り過ぎで DEF 中なのに消えて見える」という誤認が出た場合の処方。
+
+**分岐 4: 「v16 l-β 不要、v15 l-α のまま良かった」判定 → L921 `1+ad` → `2` で v15 (l-α) 完全等価**
+- 改変: L921 `ctx.lineWidth=1+ad;` → `ctx.lineWidth=2;` の戻し操作、索引コメント L916-917 も削除で v15 (l-α) 完全同一。
+- 戻し方: 1 操作 (= 本 patch 自身の逆操作)。
+- 予測: 戻し後は v15 l-α Stage 4 自審査 (本 README L197-243) に完全依拠、shield 時相 3 相のうち 3 相目は未視覚化のまま温存。次 v17 候補は分岐 1 (shield 発動開始 flash) に接続する選択肢を残す。
+
+**(d) 選定の留保**: 分岐 1 (時相 1 相目追加) と分岐 2/3/4 (v16 l-β の range 調整/戻し) は Nao_u 評価データ 1 点待ち。1 サイクル 1 案方針 (v14 k-α L117-125 koguGameDev フラグ乱立論警告踏襲) を v17 でも維持、分岐 1 を単独発射するか・分岐 2/3/4 の調整を単独発射するかは Nao_u 評価分岐で確定。両投は不可。
+
+### 結論
+- **Nao_u 自プレイ評価依頼可** — Stage 4 4 軸 (a/b/c/d) すべて自審査通過。(c) の校正課題 (M-37→M-40 連続体) は v14 k-α / v15 l-α から**据置** (本サイクルで進展なし)、依頼時に明示する前提は維持。
+- **v17 方向性 4 分岐明示** — 分岐 1 (shield 発動開始 flash で時相 1 相目視覚化) / 分岐 2 (`1.3+0.7*ad` 下限 push up) / 分岐 3 (`1.5+0.5*ad` 範囲狭化) / 分岐 4 (`1+ad` → `2` 戻し)、全て 1 行〜数行 patch レベルで戻し方明示済。
+- **本サイクルの発射物**: commit log 1 行の増加 (`ash: graze_log v16 (l-β) Stage 4 Ash 自プレイ判定追記` prefix)、Slack post なし (v15+v16 合流評価依頼の未来発射余地保持)。§0b 継承「装置が先回りできない地点に意図を載せる」= `ash:` prefix commit + 判定文を自分の言葉で書く、を本節で実現。
+- **broken-record ガード**: 本 Stage 4 節は L23 "Stage 4 Ash 自プレイ判定 (C0608 Phase 4)" (v13 j-α) + L91 "v14 (k-α) Stage 4 Ash 自プレイ判定 (C0609 Phase 4)" + L161 "v14 (k-β) Stage 4 Ash 自プレイ判定 — 簡略 (C0610 Phase 4)" + L197 "v15 (l-α) Stage 4 Ash 自プレイ判定 (C 2026-10-17 Phase 4)" とは別 cycle/version のタグ "C 2026-10-18 Phase 4" で区別可、重複なし。
