@@ -2,4 +2,5 @@
 build/
 runtime/
 runtime_mode7/
+runtime_sky/
 __pycache__/

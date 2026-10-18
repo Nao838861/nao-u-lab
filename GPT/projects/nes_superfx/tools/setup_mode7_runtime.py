@@ -6,10 +6,11 @@ ROOT=Path(__file__).resolve().parents[1]
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--core',type=Path,default=ROOT/'.cache/Mesen2_host/bin/win-x64/Release/MesenCore.dll')
-    p.add_argument('--mesen-dir',type=Path,default=ROOT/'runtime');a=p.parse_args()
+    p.add_argument('--mesen-dir',type=Path,default=ROOT/'runtime')
+    p.add_argument('--out',type=Path,default=ROOT/'runtime_mode7');a=p.parse_args()
     assert file_version(a.mesen_dir/'Mesen.exe')[:3]==(2,1,1)
     assert a.core.is_file(),'Build the custom Mode7 core first'
-    out=ROOT/'runtime_mode7';out.mkdir(exist_ok=True)
+    out=a.out;out.mkdir(parents=True,exist_ok=True)
     for name in ['Mesen.exe','libSkiaSharp.dll','libHarfBuzzSharp.dll','MesenNesDB.txt','Mesen-LICENSE.txt']:
         source=a.mesen_dir/name
         if source.exists() and source.resolve()!=(out/name).resolve():shutil.copy2(source,out/name)

@@ -68,7 +68,23 @@ public:
         return {uint8_t((bgLow&uint8_t(~mask))|fxLow),
                 uint8_t((bgHigh&uint8_t(~mask))|fxHigh),uint8_t(bg+(mask?2:0))};
     }
-    Block Fetch(unsigned x,unsigned y,const uint8_t* texture,unsigned width,unsigned height,uint8_t fxLow,uint8_t fxHigh) const {
+    static Block CompositeAdaptive(uint8_t bgLow,uint8_t bgHigh,uint8_t fxLow,uint8_t fxHigh,uint8_t bg) {
+        const uint8_t mask=fxLow|fxHigh;
+        if(!bg) {
+            auto result=Composite(bgLow,bgHigh,fxLow,fxHigh,0);
+            result.palette=0; // Ground keeps white/red/green/gray, including source zero.
+            return result;
+        }
+        if(mask==255)return {fxLow,fxHigh,0}; // No sky holes: all three opaque FX colors fit.
+        const uint8_t red=fxLow&uint8_t(~fxHigh),green=fxHigh&uint8_t(~fxLow);
+        const uint8_t gray=fxLow&fxHigh,sky=uint8_t(~mask);
+        if(gray && !green)return {uint8_t(red|sky),uint8_t(gray|sky),2};
+        if(gray && !red)return {uint8_t(gray|sky),uint8_t(green|sky),3};
+        // All four non-backdrop colors cannot fit in one NES palette.
+        // Keep red/green/sky exact and map gray to blue only in that block.
+        return {uint8_t(fxLow|sky),uint8_t(fxHigh|sky),1};
+    }
+    Block Fetch(unsigned x,unsigned y,const uint8_t* texture,unsigned width,unsigned height,uint8_t fxLow,uint8_t fxHigh,bool adaptive=false) const {
         if(y>=Height)return {0xff,0xff,0}; // gray HUD backdrop (color 3)
         const Row& row=rows[front][y];
         uint8_t low=0,high=0;
@@ -85,7 +101,7 @@ public:
             low|=(color&1)<<(7-bit);high|=((color>>1)&1)<<(7-bit);
         }
         if(hideFx[front])fxLow=fxHigh=0;
-        return Composite(low,high,fxLow,fxHigh,row.bg);
+        return adaptive?CompositeAdaptive(low,high,fxLow,fxHigh,row.bg):Composite(low,high,fxLow,fxHigh,row.bg);
     }
     template<class S> void Serialize(S& s) {
         s.StreamArray(camera.data(),camera.size(),"m7Camera");

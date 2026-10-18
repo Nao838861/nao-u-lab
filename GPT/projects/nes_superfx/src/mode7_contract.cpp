@@ -16,6 +16,24 @@ int main(){
         }
         check(result.palette==(background&1)+((f0|f1)?2:0),"block palette selection");
     }
+    unsigned adaptivePixels=0,fallbackBlocks=0;
+    const unsigned palettes[4][4]={{0,1,2,3},{0,1,2,4},{0,1,3,4},{0,3,2,4}};
+    for(unsigned f0=0;f0<256;++f0)for(unsigned f1=0;f1<256;++f1){
+        const bool overflow=(f0|f1)!=255 && (f0&~f1) && (f1&~f0) && (f0&f1);
+        if(overflow)++fallbackBlocks;
+        for(unsigned sky=0;sky<2;++sky){
+            auto r=Mode7Ground::CompositeAdaptive(0xa5,0x3c,uint8_t(f0),uint8_t(f1),sky);
+            for(unsigned bit=0;bit<8;++bit){
+                unsigned fx=((f0>>bit)&1)|(((f1>>bit)&1)<<1);
+                unsigned bg=((0xa5>>bit)&1)|(((0x3c>>bit)&1)<<1);
+                unsigned index=((r.low>>bit)&1)|(((r.high>>bit)&1)<<1);
+                unsigned expected=sky ? (!fx || (overflow && fx==3) ? 4 : fx) : (fx?fx:bg);
+                check(palettes[r.palette][index]==expected,"adaptive physical color mismatch");
+                check(sky || r.palette==0,"ground palette changed");++adaptivePixels;
+            }
+        }
+    }
+    std::cout<<"adaptive_pixels="<<adaptivePixels<<" fallback_blocks="<<fallbackBlocks<<"/65536\n";
     double maxError=0;
     for(unsigned angle=0;angle<64;++angle)for(unsigned view=0;view<4;++view){
         double yaw=angle*6.283185307179586/64;
