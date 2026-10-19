@@ -1,0 +1,10 @@
+{
+  "status": "pass",
+  "cases": 768,
+  "below_30fps": 0,
+  "min_measured_fps": 30.049400000000002,
+  "rom_sha256": "2638cc87f63f0488a8eb361f64214f566b7e9e400697437ddfe1f415690dd511",
+  "core_sha256": "09185607cc5346b0200ee16bd1252ade63f11e23e126c30e267bf09be9c1e792",
+  "slow_cases": [],
+  "scope": "Mesen full CPU/audio/Mode7/GSU/PPU model, 24-vblank sample after 10 stable vblanks per pose; hardware unverified"
+}

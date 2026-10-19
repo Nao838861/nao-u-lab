@@ -1,0 +1,300 @@
+{
+  "status": "pass",
+  "sources": {
+    "development/superfx-lab/rtl/dpram_difclk.vhd": "2791f17d098277b4572e0242103215b966ffa5cf310821f0a45c4f49109ffce2",
+    "development/superfx-lab/vendor/GSU_PKG.vhd": "1a67df9ab04259561c599bebf716236ec35a0f62fb6a99ef5107e5a2c2d2d8a5",
+    "development/superfx-lab/vendor/GSU.vhd": "3920cdb392e649aeb516e4649b258607909a43bd4151b53fc68d542fc83c97a1",
+    "development/racing-n8pro/rtl/mode7_dsp.vhd": "613534e80be1ac681ff3d3c8255c44667df59a012918bc00cf08567ad937b2e4",
+    "development/racing-n8pro/rtl/racing_display.vhd": "a0296bb394c048c23671d429fa966be6c58b0ec06eeeb668c4e560221ee0745f",
+    "development/racing-n8pro/rtl/racing_gsu.vhd": "46ca5ef539afba7287b3c3d97a0615f9069297ad60c3b5dff64a8c950df3b1fd",
+    "development/racing-n8pro/rtl/racing_top.vhd": "850d041e9754929697878c1002eda2f1fcd3e63602a3e7edace833ade06b66d7",
+    "development/racing-n8pro/rtl/serial_math.vhd": "c90cb6d3127d3ac4f93555fbdb822c98d0726257b3e055f0b6d0da8869800da4"
+  },
+  "rom_sha256": "2638cc87f63f0488a8eb361f64214f566b7e9e400697437ddfe1f415690dd511",
+  "cases": 8,
+  "bytes_compared": 131072,
+  "native_50mhz_clocks": [
+    694623,
+    1422629,
+    952716,
+    1494459,
+    1175319,
+    1556250,
+    1770505,
+    1785485
+  ],
+  "rtl_clock_hz": 25000000,
+  "rtl_clocks": [
+    229614,
+    526102,
+    300632,
+    483775,
+    361632,
+    477916,
+    513418,
+    513821
+  ],
+  "rtl_ms": [
+    9.18456,
+    21.04408,
+    12.02528,
+    19.351,
+    14.46528,
+    19.11664,
+    20.53672,
+    20.55284
+  ],
+  "poses": [
+    {
+      "name": "route-0-36-0",
+      "state": [
+        54,
+        119,
+        0,
+        81,
+        145,
+        1,
+        172,
+        80,
+        172,
+        80
+      ],
+      "view": 0,
+      "pose": [
+        -5140,
+        2081,
+        320,
+        102,
+        235,
+        256,
+        13,
+        -5140,
+        2081,
+        102,
+        235
+      ],
+      "model_clocks": 251476,
+      "model_ms": 10.05904
+    },
+    {
+      "name": "object-0-v0-a24576-d12",
+      "state": [
+        132,
+        151,
+        0,
+        132,
+        161,
+        0,
+        0,
+        104,
+        0,
+        96
+      ],
+      "view": 0,
+      "pose": [
+        -4313,
+        -4057,
+        320,
+        181,
+        181,
+        256,
+        13,
+        -4313,
+        -4057,
+        213,
+        142
+      ],
+      "model_clocks": 576727,
+      "model_ms": 23.06908
+    },
+    {
+      "name": "route-1-37-4096",
+      "state": [
+        99,
+        144,
+        0,
+        234,
+        147,
+        1,
+        222,
+        84,
+        222,
+        68
+      ],
+      "view": 1,
+      "pose": [
+        -5765,
+        1998,
+        768,
+        30,
+        254,
+        253,
+        36,
+        -4495,
+        2148,
+        125,
+        224
+      ],
+      "model_clocks": 333556,
+      "model_ms": 13.34224
+    },
+    {
+      "name": "object-8-v1-a24576-d12",
+      "state": [
+        132,
+        175,
+        0,
+        132,
+        161,
+        0,
+        0,
+        104,
+        0,
+        96
+      ],
+      "view": 1,
+      "pose": [
+        -4603,
+        -4962,
+        768,
+        181,
+        181,
+        253,
+        36,
+        -3698,
+        -4057,
+        213,
+        142
+      ],
+      "model_clocks": 541633,
+      "model_ms": 21.66532
+    },
+    {
+      "name": "route-2-35--4096",
+      "state": [
+        245,
+        99,
+        0,
+        152,
+        128,
+        1,
+        27,
+        78,
+        27,
+        94
+      ],
+      "view": 2,
+      "pose": [
+        -7343,
+        105,
+        1536,
+        172,
+        190,
+        245,
+        76,
+        -5633,
+        1653,
+        86,
+        241
+      ],
+      "model_clocks": 406466,
+      "model_ms": 16.25864
+    },
+    {
+      "name": "object-10-v2-a24576-d40",
+      "state": [
+        183,
+        121,
+        0,
+        183,
+        231,
+        0,
+        0,
+        104,
+        0,
+        96
+      ],
+      "view": 2,
+      "pose": [
+        -6705,
+        -3889,
+        1536,
+        181,
+        181,
+        245,
+        76,
+        -5076,
+        -2260,
+        213,
+        142
+      ],
+      "model_clocks": 536571,
+      "model_ms": 21.46284
+    },
+    {
+      "name": "route-3-40-4096",
+      "state": [
+        240,
+        215,
+        0,
+        130,
+        128,
+        1,
+        50,
+        61,
+        50,
+        45
+      ],
+      "view": 3,
+      "pose": [
+        -5641,
+        3133,
+        4608,
+        -114,
+        229,
+        187,
+        174,
+        -2664,
+        1651,
+        -17,
+        255
+      ],
+      "model_clocks": 581665,
+      "model_ms": 23.2666
+    },
+    {
+      "name": "object-2-v3-a8192-d12",
+      "state": [
+        132,
+        15,
+        1,
+        124,
+        188,
+        1,
+        0,
+        40,
+        0,
+        32
+      ],
+      "view": 3,
+      "pose": [
+        -3594,
+        5539,
+        4608,
+        -181,
+        181,
+        187,
+        174,
+        -1241,
+        3186,
+        -142,
+        213
+      ],
+      "model_clocks": 582583,
+      "model_ms": 23.30332
+    }
+  ],
+  "test_sha256": "a8b0dd0cb5ba3e215db9cfdb6d3dee289a0f33f0bee3c7dd3133aa6f3c2f4c22",
+  "poll_limit": 250000,
+  "scope": "GSU execution and compressed back RAM only; no PPU, external memory or hardware validation"
+}

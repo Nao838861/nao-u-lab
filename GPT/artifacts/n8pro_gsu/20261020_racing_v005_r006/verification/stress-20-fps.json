@@ -1,0 +1,86 @@
+{
+  "status": "below_target",
+  "cases": 768,
+  "below_30fps": 15,
+  "min_measured_fps": 17.528816666666668,
+  "rom_sha256": "66b0da91b4b46c559d137a14aa6bd86631ef6aa6e8b52b39471475297029b5ce",
+  "core_sha256": "09185607cc5346b0200ee16bd1252ade63f11e23e126c30e267bf09be9c1e792",
+  "slow_cases": [
+    {
+      "case": "route-3-37--4096",
+      "updates_per_24_vblanks": "8",
+      "gsu_clocks": "652137"
+    },
+    {
+      "case": "route-3-37-4096",
+      "updates_per_24_vblanks": "8",
+      "gsu_clocks": "652234"
+    },
+    {
+      "case": "route-3-38--4096",
+      "updates_per_24_vblanks": "8",
+      "gsu_clocks": "692700"
+    },
+    {
+      "case": "route-3-38-0",
+      "updates_per_24_vblanks": "8",
+      "gsu_clocks": "659247"
+    },
+    {
+      "case": "route-3-38-4096",
+      "updates_per_24_vblanks": "7",
+      "gsu_clocks": "694278"
+    },
+    {
+      "case": "route-3-39--4096",
+      "updates_per_24_vblanks": "8",
+      "gsu_clocks": "724575"
+    },
+    {
+      "case": "route-3-39-0",
+      "updates_per_24_vblanks": "8",
+      "gsu_clocks": "691108"
+    },
+    {
+      "case": "route-3-39-4096",
+      "updates_per_24_vblanks": "8",
+      "gsu_clocks": "724645"
+    },
+    {
+      "case": "route-3-40--4096",
+      "updates_per_24_vblanks": "8",
+      "gsu_clocks": "746477"
+    },
+    {
+      "case": "route-3-40-0",
+      "updates_per_24_vblanks": "8",
+      "gsu_clocks": "720636"
+    },
+    {
+      "case": "route-3-40-4096",
+      "updates_per_24_vblanks": "8",
+      "gsu_clocks": "755906"
+    },
+    {
+      "case": "route-3-41--4096",
+      "updates_per_24_vblanks": "7",
+      "gsu_clocks": "721433"
+    },
+    {
+      "case": "route-3-41-0",
+      "updates_per_24_vblanks": "8",
+      "gsu_clocks": "687992"
+    },
+    {
+      "case": "route-3-41-4096",
+      "updates_per_24_vblanks": "8",
+      "gsu_clocks": "721516"
+    },
+    {
+      "case": "route-3-43-4096",
+      "updates_per_24_vblanks": "11",
+      "gsu_clocks": "423224"
+    }
+  ],
+  "scope": "Mesen full CPU/audio/Mode7/GSU/PPU model, 24-vblank sample after 10 stable vblanks per pose; hardware unverified"
+}
