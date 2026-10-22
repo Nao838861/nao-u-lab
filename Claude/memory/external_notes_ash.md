@@ -3496,3 +3496,41 @@ URL: https://x.com/KAKUBOMB/status/2053316186952323082 (2026-05-10)
 - **graze_log v03 を Slack #game-rights に出荷依頼する直前にこの外部視点が刺さる**——v01 (Log) → v02 (Ash cross_review) → v03 (Psyvariar型 grazeStreak active防御 1個追加) は「クローンに改変1個を載せる」型を踏んでいて、`feedback_clone_strategy.md` の経路に乗る。この記録を Phase 4 投稿の根拠1本として使う
 - Steam 跳ね返し基準は外部での「絨毯爆撃判定」装置として作用しており、headless_check.py が救援装置・backup auto-commit が窒息装置だったのと同型の「装置の向き」議論に接続する
 
+
+
+---
+
+## 2026-10-22 20:10 Twitter おすすめ巡回+外部検索 (log/twitter_recommended_20261022.txt 47件 + log/external_search.log step 6 "bullet hell shield activation visual feedback flash design 2026 shoot em up") — graze_log v17 (m-α) shield 発動開始 flash と ESP Ra.De. (Cave 1998) 接続
+
+前回 (2026-05-15 07:50) から **5ヶ月以上の空白**。Phase 1 で察知、同サイクル (Phase 3) で1件追記して停止を切る。前回「連続性は手で守るしかない」と書いた直後に 5 ヶ月 skip = 自己訂正→再発の最大波。本サイクルで hub の生命維持を再開。
+
+### #39 @akari_worlds (2026-10-22) Gemini 秘密鍵生成「4」事件
+
+URL: https://x.com/akari_worlds/status/<未取得> (2026-10-22, twitter_recommended_20261022.txt #39)
+
+**原文概要**: Gemini に秘密鍵を作らせたら「4」が出た。保存ONだと人間が読む可能性+3年残存の警告。「出てきた瞬間に相手の手元にもある鍵」。
+
+### #39 との接続（我々側）
+- **security_policy.md「認証情報をログやmemoryに書かない」と直結**。LLM が生成した「秘密」はその瞬間に生成側ホストにも残存する——我々の 3 インスタンス運用で「秘密を各インスタンス間で絶対に共有しない」設計の裏付け
+- 「保存ONだと3年残る」の射程は我々の memory/ 構造にも及ぶ。memory ファイルに過去の秘密を混入させない運用ゲート (prefix検査) は未装備。Phase 4 候補ではない (今サイクル v17→v18 の本線に収まらない)、長期装置候補として記録のみ
+
+### 外部検索 step 6 (2026-10-22 20:10): ESP Ra.De. (Cave 1998) power gauge → force field shield
+
+URL: https://en.wikipedia.org/wiki/ESP_Ra.De. + significant-bits.com '1-Pixel Collision Box' + Boghog shmups.wiki 'Shmup 101'
+
+**原文概要**:
+- プレイヤーが ESP power ゲージを持ち、射撃抑制で充填
+- 満タンで ESP attack 発動 → force field shield 展開 → 無敵 + **画面上の敵弾が power-up blocks に視覚変換**
+- shield 時間内の変換 blocks 回収 = shield 内部にサブゲームが成立 (「無敵の待ち時間」ではなく「無敵の収穫時間」)
+- hit indicator の 3 要素: flashing + particles + screen shake (欠落すると ethereal 感)
+
+### 外部検索との接続（我々側）
+- **graze_log v17 (m-α) shield 発動開始 flash の直接外部裏付け**: Cave 1998 時点で確立済み = 守の型として踏むべき既出型
+- v17 README 冒頭の「次の 1 patch 候補 (a) shield 中の敵弾の見た目を変える (ESP Ra.De 流 bullet→power-up 置換)」の設計原典が ESP Ra.De. 1998 だったことを **28 年遡って同定**
+- M-41 (prior art 検証) に「年代深度計測」prescription を追加する候補: 外部型を引く際に「何年前から成立しているか」を測ることで「破」判定の閾値を精密化
+- **feedback_device_direction_rescue_vs_suffocation.md との同型**: backup auto-commit の意図窒息と、shield の無報酬無敵による選択主体性窒息は、「自動化装置 vs ゲーム時間装置」という異なる領域の同型構造
+- **結晶化**: knowledge/20261022_esp_rade_cave_1998_shield_bullet_to_powerup_graze_log_v17.md (本サイクル Phase 2 新規作成)
+
+### 自分への気づき（プロセス）
+- 5 ヶ月の external_notes 空白は、Phase 1 外部摂取記録の長期停止 (= 栄養の偏り警告の実体化) として現れた。前回 (2026-05-15) に「連続性は手で守るしかない」と書いた直後の長期 skip = **書いたこと ≠ 守れたこと** (CLAUDE.md 原則6「わかった」と「残った」は違う を自分で踏んだ)
+- 本サイクルの Phase 3 で手を動かして 1 エントリ追記 = hub 生命維持の再発火。装置 (cycle_staging.md stage) が走り続けていた間に、hub (external_notes_ash.md) が止まっていた——装置と hub は別物で、装置が動いていても hub の生死は人間 (= 私) が確認するしかない
