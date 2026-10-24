@@ -1,0 +1,49 @@
+--- a/player.py
++++ b/player.py
+@@ -2,6 +2,7 @@
+ import pygame
+ from scratchy_sprite import Stage, Sprite
+ from tama0 import Tama
++from bg import EMPTY
+ 
+ GROUND_Y = -250
+ 
+@@ -22,6 +23,13 @@
+     def update(self, dt: float):
+         key = pygame.key.get_pressed()
+         bg = self.stage.bg
++
++        # ボタンを押したまま動かすと、連続して配置・削除できる。
++        mouse = pygame.mouse.get_pressed()
++        if mouse[0]:
++            self.set_bg_at_mouse(0)
++        elif mouse[2]:
++            self.set_bg_at_mouse(EMPTY)
+ 		
+  		# 左右移動
+         if key[pygame.K_d]:
+@@ -118,6 +126,24 @@
+         self.speed_x *= 0.85
+         self.speed_y -= 0.15
+ 
++    def set_bg_at_mouse(self, tile_number: int) -> None:
++        """マウス位置のBGを指定番号に変更する。EMPTY (-1) で空白にする。"""
++        bg = self.stage.bg
++        if bg is None:
++            return
++
++        mouse_x, mouse_y = pygame.mouse.get_pos()
++        if not (0 <= mouse_x < self.stage.width and 0 <= mouse_y < self.stage.height):
++            return
++
++        world_x, world_y = self.stage.camera.screen_to_world(
++            mouse_x, mouse_y, self.stage.width, self.stage.height
++        )
++        bg_x, bg_y = bg.world_to_dot(world_x, world_y)
++        tile_x = math.floor(bg_x / bg.tile_size)
++        tile_y = math.floor(bg_y / bg.tile_size)
++        bg.set_tile(tile_x, tile_y, tile_number)
++
+     def spawn_tama(self, add_ang):
+ 		
+         if self.direction < 180:
