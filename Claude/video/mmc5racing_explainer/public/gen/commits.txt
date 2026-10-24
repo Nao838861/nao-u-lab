@@ -1,0 +1,20 @@
+10/19|fix: prevent exterior CHR bands and isolate game over NMI
+10/17|Merge minimap fixes and B2 HUD into main
+10/16|perf: shorten exact wheel physics and stabilize course start phase
+10/16|audio: link engine pitch rise from low start and retain coast volume
+10/16|perf: adopt FULL renderer while preserving current race features
+10/16|fix: read release manifest as UTF-8 in Windows launcher
+10/16|game: add staged post-race results with lap times and record highlight
+10/16|game: adopt palette C cars as default release and record tire angle aliasing
+10/16|docs: 車デザイン・4台別パレット作業の引き継ぎ書と検証スクリプトを追加
+10/16|game: 自車を赤白、最速CPUを青緑、他2台を緑青・白赤に配色し直す
+10/16|Prototype layered engine exhaust and throttle texture on separate branch
+10/15|Diagnose GRIP exit yaw and add explicit assist bypass comparison
+10/14|直接起動用の入口を全修正入り最新176px版へ更新
+10/14|GRIPの摩擦限界を表参照の負荷を変えず約1.3倍へ調整
+10/13|全機能を保持して144x168へ拡大し表示と60fpsを検証
+10/14|game: GRIPを初期選択にして惰性とブレーキ荷重を調整
+10/14|Merge latest axle HUD and staggered rivals into the mode release
+10/13|Read exact force nibbles directly and unroll ghost axes; verify hold-free four scenes and five-lap lifecycle
+10/13|Precompute scene control paths and reduce turns publication holds to six
+10/13|Bundle validated runners for standalone feedback-energy reproduction

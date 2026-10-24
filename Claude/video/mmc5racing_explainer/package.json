@@ -1,0 +1,11 @@
+{
+  "name": "mmc5racing-explainer",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "start": "remotion studio src/index.ts",
+    "narration": "node tools/generate-narration.mjs --manifest=cuts.json",
+    "narration:force": "node tools/generate-narration.mjs --manifest=cuts.json --force",
+    "render": "remotion render src/index.ts MMC5Explainer out/mmc5racing_explainer_draft.mp4 --codec=h264 --crf=18"
+  }
+}

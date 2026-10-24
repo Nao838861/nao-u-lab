@@ -1,0 +1,12 @@
+node_modules
+public/media/
+public/narration/
+public/gen/course/
+public/gen/course18/
+public/gen/jitter/
+public/gen/check*
+out/*.mp4
+.remotion/
+out/stills/
+public/gen/jitter_check.png
+public/gen/test_*.png
