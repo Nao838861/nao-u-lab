@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-24",
+  "task": "MMC5Racing の録画を固定60fpsへ変換",
+  "source": {
+    "path": "C:\\Users\\owner\\Videos\\Captures\\MMC5Racing by Nao_u838861 - Google Chrome 2026-10-24 07-51-21.mp4",
+    "size_bytes": 67776023,
+    "width": 2560,
+    "height": 1392,
+    "r_frame_rate": "60/1",
+    "avg_frame_rate": "238500000/4350137",
+    "video_frames": 3975,
+    "video_duration_seconds": 72.502283,
+    "container_duration_seconds": 72.618646
+  },
+  "output": {
+    "path": "C:\\Users\\owner\\Videos\\Captures\\MMC5Racing by Nao_u838861 - Google Chrome 2026-10-24 07-51-21_60fps.mp4",
+    "size_bytes": 10263250,
+    "width": 2560,
+    "height": 1392,
+    "r_frame_rate": "60/1",
+    "avg_frame_rate": "60/1",
+    "video_frames": 4350,
+    "video_duration_seconds": 72.5,
+    "container_duration_seconds": 72.618667
+  },
+  "conversion": {
+    "tool": "FFmpeg 8.1.1",
+    "video_filter": "fps=60",
+    "video_encoder": "libx264",
+    "preset": "fast",
+    "crf": 18,
+    "pixel_format": "yuv420p",
+    "threads": 8,
+    "audio": "copy",
+    "movflags": "+faststart",
+    "note": "可変フレームレートを固定60fpsに変換。欠落した時刻は既存フレームを複製し、動きの補間は行っていない。元ファイルは保持。"
+  },
+  "validation": {
+    "full_decode_exit_code": 0,
+    "video_packet_count": 4350,
+    "video_time_base": "1/15360",
+    "all_4349_frame_intervals_ticks": 256,
+    "audio_packet_sha256_source": "3ff4bb53bad1ba5e422db521ba640fe05e55d64d5267d85ec88ee5d15945fe28",
+    "audio_packet_sha256_output": "3ff4bb53bad1ba5e422db521ba640fe05e55d64d5267d85ec88ee5d15945fe28",
+    "audio_packets_unchanged": true,
+    "note": "全フレームが1/60秒間隔。全編のデコード成功と、音声パケットの一致を確認。"
+  }
+}
