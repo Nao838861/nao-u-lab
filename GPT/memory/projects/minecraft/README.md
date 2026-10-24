@@ -2,7 +2,20 @@
 
 ## 対象と変更の保存先
 
-ゲーム本体は `D:\python\MineCraft`。作業開始時点では Git 管理外だったため、実ファイルを直接編集し、変更差分をこの GPT リポジトリに保存する。
+ゲーム本体は `D:\python\MineCraft`。専用の非公開リポジトリ [Nao838861/MineCraft](https://github.com/Nao838861/MineCraft) の `main` ブランチで管理する。今後のコード変更はゲーム本体側でcommit・pushし、このGPT側にはプロジェクトの作業記録を残す。
+
+## 別PCでの引き継ぎ
+
+```sh
+git clone https://github.com/Nao838861/MineCraft.git
+cd MineCraft
+```
+
+環境構築・起動・操作・BGエディター・PC間の同期手順は、ゲーム本体の [README.md](https://github.com/Nao838861/MineCraft/blob/main/README.md) を参照する。Python 3.10以降と `requirements.txt` の `pygame==2.6.1` が必要。
+
+2026-10-24にコード・画像・BGマップと起動用ドキュメントを含む24ファイルを初回pushした。初回commitは `e4e6a2ac2d65abd88d15bf7274a81c6159534231`。`__pycache__`・仮想環境・`.env`・一時ファイルは `.gitignore` で除外する。
+
+GitHubから新しくcloneし、24ファイルが元フォルダと一致することを確認した（テキストの改行コードのみ正規化して比較）。独立した仮想環境に `requirements.txt` からPygameを導入し、全Pythonファイルの構文、マップと日本語名の画像の読み込み、3フレームの更新・描画、左右のBG編集入力、終了をSDLのダミー画面で確認した。元フォルダとclone先はどちらも `main...origin/main` でclean。
 
 ## 2026-10-24 マウスでBGを配置・削除
 
@@ -15,7 +28,7 @@
 
 `Player.update()` から左ボタンで0番、右ボタンで空白を指定する。押したままカーソルを動かすと連続して編集できる。タイルの当たり判定とマップファイルの保存方法は既存の仕組みに従う。
 
-差分: [20261024_mouse_bg.patch](20261024_mouse_bg.patch)。既に実ファイルへ反映済み。復元や別環境への適用前には、対象の差分を確認する。
+差分: [20261024_mouse_bg.patch](20261024_mouse_bg.patch)。Git管理を開始する前の履歴として保存したもの。ゲーム本体と専用リポジトリには反映済みなので、clone後に追加適用する必要はない。
 
 検証結果:
 
